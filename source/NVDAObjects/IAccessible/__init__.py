@@ -7,7 +7,7 @@
 from comtypes import COMError
 import os
 import tones
-import textHandler
+import textInfos.offsets
 import time
 import IAccessibleHandler
 import oleacc
@@ -43,18 +43,44 @@ def getNVDAObjectFromPoint(x,y):
 	obj=IAccessible(IAccessibleObject=pacc,IAccessibleChildID=child)
 	return obj
 
-class IA2TextTextInfo(NVDAObjectTextInfo):
+class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
-		return self.obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+		if self.obj.IAccessibleTextObject.nCharacters>0:
+			return self.obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+		else:
+			raise NotImplementedError
 
 	def _getPointFromOffset(self,offset):
 		try:
 			res=self.obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
 		except:
 			raise NotImplementedError
-		point=textHandler.Point(res[0]+(res[2]/2),res[1]+(res[3]/2))
+		point=textInfos.Point(res[0]+(res[2]/2),res[1]+(res[3]/2))
 		return point
+
+	def _get_unit_mouseChunk(self):
+		return "mouseChunk"
+
+	def expand(self,unit):
+		if unit==self.unit_mouseChunk:
+			isMouseChunkUnit=True
+			oldStart=self._startOffset
+			oldEnd=self._endOffset
+			unit=super(IA2TextTextInfo,self).unit_mouseChunk
+		else:
+			isMouseChunkUnit=False
+		super(IA2TextTextInfo,self).expand(unit)
+		if isMouseChunkUnit:
+			text=self._getTextRange(self._startOffset,self._endOffset)
+			try:
+				self._startOffset=text.rindex(u'\ufffc',0,oldStart-self._startOffset)
+			except ValueError:
+				pass
+			try:
+				self._endOffset=text.index(u'\ufffc',oldEnd-self._startOffset)
+			except ValueError:
+				pass
 
 	def _getCaretOffset(self):
 		try:
@@ -107,8 +133,8 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 			startOffset,endOffset,attribsString=self.obj.IAccessibleTextObject.attributes(offset)
 		except COMError:
 			log.debugWarning("could not get attributes",exc_info=True)
-			return textHandler.FormatField(),(self._startOffset,self._endOffset)
-		formatField=textHandler.FormatField()
+			return textInfos.FormatField(),(self._startOffset,self._endOffset)
+		formatField=textInfos.FormatField()
 		if not attribsString and offset>0:
 			try:
 				attribsString=self.obj.IAccessibleTextObject.attributes(offset-1)[2]
@@ -207,7 +233,7 @@ class IA2TextTextInfo(NVDAObjectTextInfo):
 				raise RuntimeError("did not expand to paragraph correctly")
 			return start,end
 		except:
-			super(IA2TextTextInfo,self)._getParagraphOffsets(offset)
+			return super(IA2TextTextInfo,self)._getParagraphOffsets(offset)
 
 	def _lineNumFromOffset(self,offset):
 		return -1
@@ -283,7 +309,12 @@ the NVDAObject for IAccessible
 		if not role:
 			role=IAccessibleObject.accRole(IAccessibleChildID)
 		windowClassName=winUser.getClassName(windowHandle)
-		for key in ((windowClassName,role),(None,role),(windowClassName,None)):
+		keys=[(windowClassName,role),(None,role),(windowClassName,None)]
+		normalizedWindowClassName=Window.normalizeWindowClassName(windowClassName)
+		if normalizedWindowClassName!=windowClassName:
+			keys.insert(1,(normalizedWindowClassName,role))
+			keys.append((normalizedWindowClassName,None))
+		for key in keys: 
 			newCls=None
 			classString=_staticMap.get(key,None)
 			if classString and classString.find('.')>0:
@@ -314,19 +345,10 @@ the NVDAObject for IAccessible
 			return clsList,kwargs
 
 	@classmethod
-	def objectFromPoint(cls,x,y,oldNVDAObject=None,windowHandle=None):
-		if isinstance(oldNVDAObject,IAccessible) and windowHandle==oldNVDAObject.windowHandle:
-			res=IAccessibleHandler.accHitTest(oldNVDAObject.IAccessibleObject,x,y)
-		else:
-			res=None
+	def objectFromPoint(cls,x,y,windowHandle=None):
+		res=IAccessibleHandler.accessibleObjectFromPoint(x,y)
 		if not res:
-			res=IAccessibleHandler.accessibleObjectFromPoint(x,y)
-		if not res:
-			res=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
-		if not res:
-			return
-		if isinstance(oldNVDAObject,IAccessible) and res[0]==oldNVDAObject.IAccessibleObject and res[1]==oldNVDAObject.IAccessibleChildID:
-			return oldNVDAObject
+			return None
 		return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
 
 	@classmethod
@@ -562,6 +584,8 @@ the NVDAObject for IAccessible
 
 	def _get_states(self):
 		states=set()
+		if self.event_objectID in (winUser.OBJID_CLIENT, winUser.OBJID_WINDOW) and self.event_childID == 0:
+			states.update(super(IAccessible, self).states)
 		try:
 			IAccessibleStates=self.IAccessibleStates
 		except:
@@ -881,11 +905,6 @@ the NVDAObject for IAccessible
 		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_CARET:
 			return
 		if hasattr(self,'IAccessibleTextObject') and self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
-			if globalVars.caretMovesReviewCursor:
-				try:
-					api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
-				except (NotImplementedError, RuntimeError):
-					pass
 			self.detectPossibleSelectionChange()
 		focusObject=api.getFocusObject()
 		if self!=focusObject and not self.virtualBuffer and hasattr(self,'IAccessibleTextObject'):
@@ -906,10 +925,10 @@ the NVDAObject for IAccessible
 			if not caretInDocument:
 				return
 			try:
-				info=self.makeTextInfo(textHandler.POSITION_CARET)
+				info=self.makeTextInfo(textInfos.POSITION_CARET)
 			except RuntimeError:
 				return
-			info.expand(textHandler.UNIT_CHARACTER)
+			info.expand(textInfos.UNIT_CHARACTER)
 			try:
 				char=ord(info.text)
 			except:
@@ -1048,7 +1067,7 @@ class Dialog(IAccessible):
 			#However, graphics, static text, separators and Windows are ok.
 			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW) and children[index+1].name==childName:
 				continue
-			childText=child.makeTextInfo(textHandler.POSITION_ALL).text
+			childText=child.makeTextInfo(textInfos.POSITION_ALL).text
 			if not childText or childText.isspace() and child.TextInfo!=NVDAObjectTextInfo:
 				childText=child.basicText
 			textList.append(childText)
@@ -1224,6 +1243,7 @@ _staticMap={
 	("TWizardForm",oleacc.ROLE_SYSTEM_CLIENT):"Dialog",
 	("SysLink",oleacc.ROLE_SYSTEM_CLIENT):"SysLink",
 	("#32771",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
+	("TaskSwitcherWnd",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("ToolbarWindow32",None):"ToolbarWindow32",
 	("TGroupBox",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TGroupBox",
 	("TFormOptions",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TFormOptions",
@@ -1236,6 +1256,7 @@ _staticMap={
 	("TProgressBar",oleacc.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
 	("AVL_AVView",None):"adobe.AcrobatNode",
 	("AVL_AVView",oleacc.ROLE_SYSTEM_TEXT):"adobe.AcrobatTextNode",
+	("AcrobatSDIWindow",oleacc.ROLE_SYSTEM_CLIENT):"adobe.AcrobatSDIWindowClient",
 	("mscandui21.candidate",oleacc.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
 	("SysMonthCal32",oleacc.ROLE_SYSTEM_CLIENT):"SysMonthCal32.SysMonthCal32",
 	("hh_kwd_vlist",oleacc.ROLE_SYSTEM_LIST):"hh.KeywordList",

@@ -1,4 +1,4 @@
-#textHandler.py
+#textInfos/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
@@ -6,6 +6,7 @@
 
 import weakref
 import baseObject
+import config
 
 class Field(dict):
 	"""The base type for fields in textInfo objects"""
@@ -67,28 +68,6 @@ class Points(object):
 		self.endX=endX
 		self.endY=endY
 
-class Offsets(object):
-	"""Represents two offsets."""
-
-	def __init__(self,startOffset,endOffset):
-		"""
-		@param startOffset: the first offset.
-		@type startOffset: integer
-		@param endOffset: the second offset.
-		@type endOffset: integer
-		"""
-		self.startOffset=startOffset
-		self.endOffset=endOffset
-
-	def __eq__(self,other):
-		if isinstance(other,self.__class__) and self.startOffset==other.startOffset and self.endOffset==other.endOffset:
-			return True
-		else:
-			return False
-
-	def __ne__(self,other):
-		return not self==other
- 
 class Bookmark(baseObject.AutoPropertyObject):
 	"""The type for representing a static absolute position from a L{TextInfo} object
 @ivar infoClass: the class of the TextInfo object
@@ -161,6 +140,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def _get_obj(self):
 		return self._obj()
+
+	def _get_unit_mouseChunk(self):
+		return config.conf["mouse"]["mouseTextUnit"]
 
 	def _get_text(self):
 		raise NotImplementedError
@@ -317,97 +299,3 @@ class TextInfo(baseObject.AutoPropertyObject):
 			lineInfo.collapse(end=True)
 		import api
 		return api.copyToClip("\r\n".join(textList))
-
-def findStartOfLine(text,offset,lineLength=None):
-	"""Searches backwards through the given text from the given offset, until it finds the offset that is the start of the line. With out a set line length, it searches for new line / cariage return characters, with a set line length it simply moves back to sit on a multiple of the line length.
-@param text: the text to search
-@type text: string
-@param offset: the offset of the text to start at
-@type offset: int
-@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
-@type lineLength: int or None
-@return: the found offset
-@rtype: int 
-"""
-	if offset>=len(text):
-		offset=len(text)-1
-	start=offset
-	if isinstance(lineLength,int):
-		return offset-(offset%lineLength)
-	if text[start]=='\n' and start>=0 and text[start-1]=='\r':
-		start-=1
-	start=text.rfind('\n',0,offset)
-	if start<0:
-		start=text.rfind('\r',0,offset)
-	if start<0:
-		start=-1
-	return start+1
-
-def findEndOfLine(text,offset,lineLength=None):
-	"""Searches forwards through the given text from the given offset, until it finds the offset that is the start of the next line. With out a set line length, it searches for new line / cariage return characters, with a set line length it simply moves forward to sit on a multiple of the line length.
-@param text: the text to search
-@type text: string
-@param offset: the offset of the text to start at
-@type offset: int
-@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
-@type lineLength: int or None
-@return: the found offset
-@rtype: int 
-"""
-	if offset>=len(text):
-		offset=len(text)-1
-	if isinstance(lineLength,int):
-		return (offset-(offset%lineLength)+lineLength)
-	end=offset
-	if text[end]!='\n':
-		end=text.find('\n',offset)
-	if end<0:
-		if text[offset]!='\r':
-			end=text.find('\r',offset)
-	if end<0:
-		end=len(text)-1
-	return end+1
-
-def findStartOfWord(text,offset,lineLength=None):
-	"""Searches backwards through the given text from the given offset, until it finds the offset that is the start of the word. It checks to see if a character is alphanumeric, or is another symbol , or is white space.
-@param text: the text to search
-@type text: string
-@param offset: the offset of the text to start at
-@type offset: int
-@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
-@type lineLength: int or None
-@return: the found offset
-@rtype: int 
-"""
-	if offset>=len(text):
-		return offset
-	while offset>0 and text[offset].isspace():
-		offset-=1
-	if not text[offset].isalnum():
-		return offset
-	else:
-		while offset>0 and text[offset-1].isalnum():
-			offset-=1
-	return offset
-
-def findEndOfWord(text,offset,lineLength=None):
-	"""Searches forwards through the given text from the given offset, until it finds the offset that is the start of the next word. It checks to see if a character is alphanumeric, or is another symbol , or is white space.
-@param text: the text to search
-@type text: string
-@param offset: the offset of the text to start at
-@type offset: int
-@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
-@type lineLength: int or None
-@return: the found offset
-@rtype: int 
-"""
-	if offset>=len(text):
-		return offset+1
-	if text[offset].isalnum():
-		while offset<len(text) and text[offset].isalnum():
-			offset+=1
-	elif not text[offset].isspace() and not text[offset].isalnum():
-		offset+=1
-	while offset<len(text) and text[offset].isspace():
-		offset+=1
-	return offset

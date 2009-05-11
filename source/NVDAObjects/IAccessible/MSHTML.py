@@ -15,7 +15,7 @@ import globalVars
 import oleacc
 from keyUtils import key, sendKey
 import api
-import textHandler
+import textInfos
 from logHandler import log
 import speech
 import controlTypes
@@ -84,7 +84,7 @@ def IHTMLElementFromIAccessible(IAccessibleObject):
 	ptr=ctypes.POINTER(comtypes.automation.IDispatch)(interfaceAddress)
 	return comtypes.client.dynamic.Dispatch(ptr)
 
-class MSHTMLTextInfo(textHandler.TextInfo):
+class MSHTMLTextInfo(textInfos.TextInfo):
 
 	def _expandToLine(self,textRange):
 		parent=textRange.parentElement()
@@ -111,23 +111,23 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 		if _rangeObj:
 			self._rangeObj=_rangeObj.duplicate()
 			return
-		if position in (textHandler.POSITION_CARET,textHandler.POSITION_SELECTION):
+		if position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			if self.obj.IHTMLElement.uniqueID!=self.obj.IHTMLElement.document.activeElement.uniqueID:
 				raise RuntimeError("Only works with currently selected element")
 			self._rangeObj=self.obj.IHTMLElement.document.selection.createRange()
-			if position==textHandler.POSITION_CARET:
+			if position==textInfos.POSITION_CARET:
 				self._rangeObj.collapse()
 			return
 		self._rangeObj=self.obj.IHTMLElement.createTextRange()
-		if position==textHandler.POSITION_FIRST:
+		if position==textInfos.POSITION_FIRST:
 			self._rangeObj.collapse()
-		elif position==textHandler.POSITION_LAST:
+		elif position==textInfos.POSITION_LAST:
 			self._rangeObj.expand("textedit")
 			self.collapse(True)
 			self._rangeObj.move("character",-1)
-		elif position==textHandler.POSITION_ALL:
+		elif position==textInfos.POSITION_ALL:
 			self._rangeObj.expand("textedit")
-		elif isinstance(position,textHandler.Bookmark):
+		elif isinstance(position,textInfos.Bookmark):
 			if position.infoClass==self.__class__:
 				self._rangeObj.moveToBookmark(position.data)
 			else:
@@ -136,19 +136,19 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 			raise NotImplementedError("position: %s"%position)
 
 	def expand(self,unit):
-		if False: #unit==textHandler.UNIT_LINE and self.basePosition not in [textHandler.POSITION_SELECTION,textHandler.POSITION_CARET]:
-			unit=textHandler.UNIT_SENTENCE
-		if unit==textHandler.UNIT_READINGCHUNK:
-			unit=textHandler.UNIT_SENTENCE
-		if unit in [textHandler.UNIT_CHARACTER,textHandler.UNIT_WORD,textHandler.UNIT_SENTENCE,textHandler.UNIT_PARAGRAPH]:
+		if False: #unit==textInfos.UNIT_LINE and self.basePosition not in [textInfos.POSITION_SELECTION,textInfos.POSITION_CARET]:
+			unit=textInfos.UNIT_SENTENCE
+		if unit==textInfos.UNIT_READINGCHUNK:
+			unit=textInfos.UNIT_SENTENCE
+		if unit in [textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD,textInfos.UNIT_SENTENCE,textInfos.UNIT_PARAGRAPH]:
 			res=self._rangeObj.expand(unit)
 			if not res and unit=="word": #IHTMLTxtRange.expand fails to handle word when at the start of a field
 				res=self._rangeObj.moveEnd(unit,1)
 				if res:
 					self._rangeObj.moveStart(unit,-1)
-		elif unit==textHandler.UNIT_LINE:
+		elif unit==textInfos.UNIT_LINE:
 			self._expandToLine(self._rangeObj)
-		elif unit==textHandler.UNIT_STORY:
+		elif unit==textInfos.UNIT_STORY:
 			self._rangeObj.expand("textedit")
 		else:
 			raise NotImplementedError("unit: %s"%unit)
@@ -178,9 +178,9 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 		return text
 
 	def move(self,unit,direction, endPoint=None):
-		if unit in [textHandler.UNIT_READINGCHUNK,textHandler.UNIT_LINE]:
-			unit=textHandler.UNIT_SENTENCE
-		if unit==textHandler.UNIT_STORY:
+		if unit in [textInfos.UNIT_READINGCHUNK,textInfos.UNIT_LINE]:
+			unit=textInfos.UNIT_SENTENCE
+		if unit==textInfos.UNIT_STORY:
 			unit="textedit"
 		if endPoint=="start":
 			moveFunc=self._rangeObj.moveStart
@@ -198,7 +198,7 @@ class MSHTMLTextInfo(textHandler.TextInfo):
 		self._rangeObj.select()
 
 	def _get_bookmark(self):
-		return textHandler.Bookmark(self.__class__,self._rangeObj.getBookmark())
+		return textInfos.Bookmark(self.__class__,self._rangeObj.getBookmark())
 
 class MSHTML(IAccessible):
 

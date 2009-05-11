@@ -30,61 +30,31 @@ LOCALE_USER_DEFAULT=0x800
 DATE_LONGDATE=0x00000002 
 TIME_NOSECONDS=0x00000002
 
-class coordType(ctypes.Structure):
-	_fields_=[
-('x',ctypes.c_short),
-('y',ctypes.c_short),
-]
+def GetStdHandle(handleID):
+	h=kernel32.GetStdHandle(handleID)
+	if h==0:
+		raise WinError()
+	return h
 
-class consoleWindowRectType(ctypes.Structure):
-	_fields_=[
-('left',ctypes.c_short),
-('top',ctypes.c_short),
-('right',ctypes.c_short),
-('bottom',ctypes.c_short),
-]
+GENERIC_READ=0x80000000
+GENERIC_WRITE=0x40000000
+FILE_SHARE_READ=1
+FILE_SHARE_WRITE=2
+OPEN_EXISTING=3
 
-class consoleScreenBufferInfoType(ctypes.Structure):
-	_fields_=[
-('consoleSize',coordType),
-('cursorPosition',coordType),
-('attributes',ctypes.c_short),
-('windowRect',consoleWindowRectType),
-('maxWindowSize',coordType),
-]
+def CreateFile(fileName,desiredAccess,shareMode,securityAttributes,creationDisposition,flags,templateFile):
+	res=kernel32.CreateFileW(fileName,desiredAccess,shareMode,securityAttributes,creationDisposition,flags,templateFile)
+	if res==0:
+		raise ctypes.WinError()
+	return res
 
-def attachConsole(processID):
-	return kernel32.AttachConsole(processID)
 
-def freeConsole():
-	return kernel32.FreeConsole()
-
-def getStdHandle(handleID):
-	return kernel32.GetStdHandle(handleID)
-
-def getConsoleProcessList(processList,processCount):
-	return kernel32.GetConsoleProcessList(processList,processCount)
-
-def readConsoleOutputCharacter(handle,length,x,y):
-	point=coordType()
-	point.x=x
-	point.y=y
-	buf=ctypes.create_unicode_buffer(length)
-	kernel32.ReadConsoleOutputCharacterW(handle,buf,length,point,ctypes.byref(ctypes.c_int(0)))
-	return buf.value
-
-def getConsoleScreenBufferInfo(handle):
-	info=consoleScreenBufferInfoType()
-	kernel32.GetConsoleScreenBufferInfo(handle,ctypes.byref(info))
-	return info
 
 def openProcess(*args):
 	return kernel32.OpenProcess(*args)
 
 def closeHandle(*args):
 	return kernel32.CloseHandle(*args)
-
-
 
 #added by Rui Batista to use on Say_battery_status script 
 #copied from platform sdk documentation (with required changes to work in python) 
@@ -125,6 +95,9 @@ def writeProcessMemory(*args):
 def waitForSingleObject(handle,timeout):
 	return kernel32.WaitForSingleObject(handle,timeout)
 
+SHUTDOWN_NORETRY = 0x00000001
 
-
-
+def SetProcessShutdownParameters(level, flags):
+	res = kernel32.SetProcessShutdownParameters(level, flags)
+	if res == 0:
+		raise ctypes.WinError()

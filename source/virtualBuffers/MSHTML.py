@@ -6,7 +6,7 @@ import winUser
 import IAccessibleHandler
 import oleacc
 from logHandler import log
-import textHandler
+import textInfos
 
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
@@ -53,7 +53,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_READONLY)
 		if role==controlTypes.ROLE_UNKNOWN:
 			role=controlTypes.ROLE_TEXTFRAME
-		newAttrs=textHandler.ControlField()
+		newAttrs=textInfos.ControlField()
 		newAttrs.update(attrs)
 		if role:
 			newAttrs['role']=role

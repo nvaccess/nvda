@@ -4,25 +4,33 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 2869\n"
-"POT-Creation-Date: 2009-04-15 11:16+???? (?W???)\n"
-"PO-Revision-Date: 2009-04-15 16:38+0900\n"
+"Project-Id-Version: 2893\n"
+"POT-Creation-Date: 2009-04-27 11:05+???? (?W???)\n"
+"PO-Revision-Date: 2009-04-27 11:12+0900\n"
 "Last-Translator: Katsutoshi Tsuji <tsuji-katsutoshi@mitsue.co.jp>\n"
 "Language-Team: JA <nvdajp-dev@lists.sourceforge.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: IAccessibleHandler.py:895
+msgid "Secure Desktop"
+msgstr "安全なデスクトップ"
+
+#: IAccessibleHandler.py:901
+msgid "Inaccessible to NVDA"
+msgstr "NVDAではアクセス不可"
+
 #: NVDAObjects\IAccessible\sysTreeView32.py:169
 msgid "%s items"
 msgstr "%s項目"
 
 #: NVDAObjects\progressBar.py:42
-#: appModules\_default.py:776
+#: appModules\_default.py:785
 msgid "%d percent"
 msgstr "%dパーセント"
 
-#: NVDAObjects\window\__init__.py:279
+#: NVDAObjects\window\__init__.py:277
 msgid "Desktop"
 msgstr "デスクトップ"
 
@@ -75,653 +83,649 @@ msgstr "テーブルの外"
 msgid "Error in appModule %s"
 msgstr "appModuleの%sにエラーがあります"
 
-#: appModules\_default.py:42
-#: appModules\_default.py:139
-#: appModules\_default.py:149
-#: appModules\_default.py:159
-#: appModules\_default.py:169
-#: appModules\_default.py:663
-#: appModules\_default.py:739
-#: appModules\_default.py:749
-#: appModules\_default.py:759
+#: appModules\_default.py:43
+#: appModules\_default.py:140
+#: appModules\_default.py:150
+#: appModules\_default.py:160
+#: appModules\_default.py:170
+#: appModules\_default.py:667
+#: appModules\_default.py:748
+#: appModules\_default.py:758
+#: appModules\_default.py:768
 #: appModules\winamp.py:75
 #: appModules\winamp.py:85
 #: keyboardHandler.py:53
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
-#: virtualBuffers\__init__.py:349
+#: virtualBuffers\__init__.py:344
 msgid "on"
 msgstr "オン"
 
-#: appModules\_default.py:45
-#: appModules\_default.py:136
-#: appModules\_default.py:146
-#: appModules\_default.py:156
-#: appModules\_default.py:166
-#: appModules\_default.py:556
-#: appModules\_default.py:660
-#: appModules\_default.py:736
-#: appModules\_default.py:746
-#: appModules\_default.py:756
+#: appModules\_default.py:46
+#: appModules\_default.py:137
+#: appModules\_default.py:147
+#: appModules\_default.py:157
+#: appModules\_default.py:167
+#: appModules\_default.py:560
+#: appModules\_default.py:664
+#: appModules\_default.py:745
+#: appModules\_default.py:755
+#: appModules\_default.py:765
 #: appModules\winamp.py:77
 #: appModules\winamp.py:87
 #: gui\settingsDialogs.py:490
 #: keyboardHandler.py:53
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
-#: virtualBuffers\__init__.py:349
+#: virtualBuffers\__init__.py:344
 msgid "off"
 msgstr "オフ"
 
-#: appModules\_default.py:47
+#: appModules\_default.py:48
 msgid "keyboard help %s"
 msgstr "キーボードヘルプ%s"
 
-#: appModules\_default.py:48
+#: appModules\_default.py:49
 msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any."
 msgstr "キーボードヘルプのオンとオフ。オンの状態で任意のキーを押すと対応する機能があれば、それを説明します。"
 
-#: appModules\_default.py:64
+#: appModules\_default.py:65
 msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
 msgstr "アプリケーションカーソルのある現在行の通知。このキーを続けて2度押すと、現在行のスペルを通知します"
 
-#: appModules\_default.py:67
+#: appModules\_default.py:68
 msgid "left click"
 msgstr "左クリック"
 
-#: appModules\_default.py:70
+#: appModules\_default.py:71
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "左マウスボタンを1度クリックします"
 
-#: appModules\_default.py:73
+#: appModules\_default.py:74
 msgid "right click"
 msgstr "右クリック"
 
-#: appModules\_default.py:76
+#: appModules\_default.py:77
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "右マウスボタンを1度クリックします"
 
-#: appModules\_default.py:85
+#: appModules\_default.py:86
 #: cursorManager.py:220
 msgid "no selection"
 msgstr "選択なし"
 
-#: appModules\_default.py:87
+#: appModules\_default.py:88
 #: speech.py:263
 #: speech.py:354
 #: speech.py:367
 msgid "selected %s"
 msgstr "%s選択"
 
-#: appModules\_default.py:88
+#: appModules\_default.py:89
 msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
 msgstr "編集領域及びドキュメント内の選択項目を通知します。もしなにも選択されていなければ、選択なしと通知します。"
 
-#: appModules\_default.py:96
+#: appModules\_default.py:97
 msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
 msgstr "1度押した場合は現在時刻を通知し、もし続けて2度押した場合は現在の日付を通知します。"
 
-#: appModules\_default.py:101
-#: appModules\_default.py:110
-#: appModules\_default.py:119
-#: appModules\_default.py:128
+#: appModules\_default.py:102
+#: appModules\_default.py:111
+#: appModules\_default.py:120
+#: appModules\_default.py:129
 msgid "No settings"
 msgstr "設定なし"
 
-#: appModules\_default.py:105
+#: appModules\_default.py:106
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr "現在アクティブな音声設定項目の値を上げます"
 
-#: appModules\_default.py:114
+#: appModules\_default.py:115
 msgid "Decreases the currently active setting in the synth settings ring"
 msgstr "現在アクティブな音声設定項目の値を下げます"
 
-#: appModules\_default.py:123
+#: appModules\_default.py:124
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr "次の音声設定項目に移動する"
 
-#: appModules\_default.py:132
+#: appModules\_default.py:133
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "前の音声設定項目に移動する"
 
-#: appModules\_default.py:141
+#: appModules\_default.py:142
 msgid "speak typed characters"
 msgstr "入力文字読み上げ"
 
-#: appModules\_default.py:142
+#: appModules\_default.py:143
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "入力文字の読み上げのオンオフの切り替え"
 
-#: appModules\_default.py:151
+#: appModules\_default.py:152
 msgid "speak typed words"
 msgstr "入力単語読み上げ"
 
-#: appModules\_default.py:152
+#: appModules\_default.py:153
 msgid "Toggles on and off the speaking of typed words"
 msgstr "入力単語の読み上げオンオフの切り替え"
 
-#: appModules\_default.py:161
+#: appModules\_default.py:162
 msgid "speak command keys"
 msgstr "コマンドキー読み上げ"
 
-#: appModules\_default.py:162
+#: appModules\_default.py:163
 msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
 msgstr "文字だけでなく、押されたキーの名称の読み上げオンオフの切り替え"
 
-#: appModules\_default.py:171
+#: appModules\_default.py:172
 msgid "speak punctuation"
 msgstr "記号読み上げ"
 
-#: appModules\_default.py:172
+#: appModules\_default.py:173
 msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"
 msgstr "記号の読み上げオンオフの切り替え。オンの状態ではNVDAが記号読み上げを制御し、オフの状態では記号読み方を音声エンジンの制御に任せます。"
 
-#: appModules\_default.py:175
-msgid "Move mouse to navigator"
-msgstr "マウスをナビゲーターに移動"
-
-#: appModules\_default.py:187
+#: appModules\_default.py:188
 msgid "object has no location"
 msgstr "オブジェクトに位置情報がありません"
 
-#: appModules\_default.py:190
+#: appModules\_default.py:194
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "マウスポインターを現在のナビゲーターオブジェクトに移動"
 
-#: appModules\_default.py:193
+#: appModules\_default.py:197
 msgid "Move navigator object to mouse"
 msgstr "ナビゲーターオブジェクトをマウス位置に移動"
 
-#: appModules\_default.py:197
+#: appModules\_default.py:201
 msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
 msgstr "ナビゲーターオブジェクトを、現在のマウス位置のオブジェクトに設定します。"
 
-#: appModules\_default.py:202
-#: appModules\_default.py:232
-#: appModules\_default.py:253
-#: appModules\_default.py:266
-#: appModules\_default.py:279
-#: appModules\_default.py:292
-#: appModules\_default.py:305
-#: appModules\_default.py:328
-#: appModules\_default.py:351
-#: appModules\_default.py:370
-#: appModules\_default.py:701
+#: appModules\_default.py:206
+#: appModules\_default.py:236
+#: appModules\_default.py:257
+#: appModules\_default.py:270
+#: appModules\_default.py:283
+#: appModules\_default.py:296
+#: appModules\_default.py:309
+#: appModules\_default.py:332
+#: appModules\_default.py:355
+#: appModules\_default.py:374
+#: appModules\_default.py:710
 msgid "no navigator object"
 msgstr "ナビゲーターオブジェクトがありません"
 
-#: appModules\_default.py:224
-#: appModules\_default.py:682
+#: appModules\_default.py:228
+#: appModules\_default.py:686
 msgid "%s copied to clipboard"
 msgstr "%sをクリップボードにコピーしました"
 
-#: appModules\_default.py:227
+#: appModules\_default.py:231
 msgid "Reports the current navigator object or, if pressed three times, Copies name and value of current navigator object to the clipboard"
 msgstr "現在のナビゲーターオブジェクトについて通知するか、3回続けて押すと現在のナビゲーターオブジェクト名と状態をクリップボードにコピーします"
 
-#: appModules\_default.py:235
+#: appModules\_default.py:239
 msgid "No location information for navigator object"
 msgstr "ナビゲーターオブジェクトに対する位置情報がありません"
 
-#: appModules\_default.py:238
+#: appModules\_default.py:242
 msgid "Object edges positioned %.1f per cent right from left of screen, %.1f per cent down from top of screen, %.1f per cent left from right of screen, %.1f up from bottom of screen"
 msgstr "オブジェクトの端は、画面左端から%.1fパーセント、上端から%.1fパーセント、右端から%.1fパーセント、下端から%.1fパーセントに位置しています"
 
-#: appModules\_default.py:239
+#: appModules\_default.py:243
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "現在のナビゲーターオブジェクトの幅、高さ、位置の読み上げ"
 
-#: appModules\_default.py:244
-#: appModules\_default.py:641
+#: appModules\_default.py:248
+#: appModules\_default.py:645
 msgid "no focus"
 msgstr "フォーカスなし"
 
-#: appModules\_default.py:246
+#: appModules\_default.py:250
 msgid "move to focus"
 msgstr "フォーカス位置に移動"
 
-#: appModules\_default.py:248
+#: appModules\_default.py:252
 msgid "Sets the navigator object to the current focus"
 msgstr "ナビゲーターオブジェクトを現在のフォーカス位置に設定"
 
-#: appModules\_default.py:260
+#: appModules\_default.py:264
 msgid "No parents"
 msgstr "親オブジェクトなし"
 
-#: appModules\_default.py:261
+#: appModules\_default.py:265
 msgid "Sets the navigator object to the parent of the object it is currently on and speaks it"
 msgstr "ナビゲーターオブジェクトを現在の親オブジェクトに設定"
 
-#: appModules\_default.py:273
+#: appModules\_default.py:277
 msgid "No next"
 msgstr "次のオブジェクトなし"
 
-#: appModules\_default.py:274
+#: appModules\_default.py:278
 msgid "Sets the navigator object to the object next to the one it is currently on and speaks it"
 msgstr "ナビゲーターオブジェクトを現在の次のオブジェクトに設定"
 
-#: appModules\_default.py:286
+#: appModules\_default.py:290
 msgid "No previous"
 msgstr "前のオブジェクトなし"
 
-#: appModules\_default.py:287
+#: appModules\_default.py:291
 msgid "Sets the navigator object to the object previous to the one it is currently on and speaks it"
 msgstr "ナビゲーターオブジェクトを現在の前のオブジェクトに設定"
 
-#: appModules\_default.py:299
+#: appModules\_default.py:303
 msgid "No children"
 msgstr "子オブジェクトなし"
 
-#: appModules\_default.py:300
+#: appModules\_default.py:304
 msgid "Sets the navigator object to the first child object of the one it is currently on and speaks it"
 msgstr "ナビゲーターオブジェクトを現在の子オブジェクトに設定"
 
-#: appModules\_default.py:322
+#: appModules\_default.py:326
 msgid "end of flow"
 msgstr "フローの最後"
 
-#: appModules\_default.py:323
+#: appModules\_default.py:327
 msgid "Sets the navigator object to the object this object flows to and speaks it"
 msgstr "ナビゲーターオブジェクトを現在のオブジェクトへ流れるオブジェクトに設定"
 
-#: appModules\_default.py:345
+#: appModules\_default.py:349
 msgid "Beginning of flow"
 msgstr "フローの最初"
 
-#: appModules\_default.py:346
+#: appModules\_default.py:350
 msgid "Sets the navigator object to the object this object flows from and speaks it"
 msgstr "ナビゲーターオブジェクトを現在のオブジェクトから流れるオブジェクトに設定。"
 
-#: appModules\_default.py:356
+#: appModules\_default.py:360
 msgid "No default action"
 msgstr "デフォルトアクションなし"
 
-#: appModules\_default.py:361
+#: appModules\_default.py:365
 msgid "default action failed"
 msgstr "デフォルトアクション失敗"
 
-#: appModules\_default.py:364
+#: appModules\_default.py:368
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
 msgstr "現在のナビゲーターオブジェクトの初期動作を実行（例：もしそれがボタンであれば押す）"
 
-#: appModules\_default.py:375
+#: appModules\_default.py:379
 msgid "inside"
 msgstr "中"
 
-#: appModules\_default.py:378
+#: appModules\_default.py:382
 msgid "Reports where the current navigator object is by reporting each of its ancestors"
 msgstr "現在のナビゲーターオブジェクトがどこに位置しているのかを、その親オブジェクトとの関係で通知"
 
-#: appModules\_default.py:384
-#: appModules\_default.py:396
-#: appModules\_default.py:437
+#: appModules\_default.py:388
+#: appModules\_default.py:400
+#: appModules\_default.py:441
 msgid "top"
 msgstr "トップ"
 
-#: appModules\_default.py:386
+#: appModules\_default.py:390
 msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
 msgstr "レビューカーソルを現在のナビゲーターオブジェクトの最上行へ移動して読み上げ"
 
-#: appModules\_default.py:398
+#: appModules\_default.py:402
 msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
 msgstr "レビューカーソルを現在のナビゲーターオブジェクトの前の行に移動して読み上げ"
 
-#: appModules\_default.py:407
+#: appModules\_default.py:411
 msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled"
 msgstr "現在のナビゲーターオブジェクトでレビューカーソルが何行目に位置しているかを通知"
 
-#: appModules\_default.py:417
-#: appModules\_default.py:425
-#: appModules\_default.py:458
+#: appModules\_default.py:421
+#: appModules\_default.py:429
+#: appModules\_default.py:462
 msgid "bottom"
 msgstr "ボトム"
 
-#: appModules\_default.py:419
+#: appModules\_default.py:423
 msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
 msgstr "レビューカーソルを現在のナビゲーターオブジェクトの次の行へ移動して読み上げ"
 
-#: appModules\_default.py:427
+#: appModules\_default.py:431
 msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
 msgstr "レビューカーソルを現在のナビゲーターオブジェクトの最下行へ移動して読み上げ"
 
-#: appModules\_default.py:439
+#: appModules\_default.py:443
 msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
 msgstr "レビューカーソルを現在のナビゲーターオブジェクトの前の単語に移動して読み上げ"
 
-#: appModules\_default.py:448
+#: appModules\_default.py:452
 msgid "Speaks the word of the current navigator object where the review cursor is situated. If this key is pressed twice, the word will be spelled"
 msgstr "現在レビューカーソルのある単語を読み上げ。キーを2度続けて押すと、単語をスペル読みします。"
 
-#: appModules\_default.py:460
+#: appModules\_default.py:464
 msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
 msgstr "レビューカーソルを現在のナビゲーターオブジェクトの次の単語に移動して読み上げ"
 
-#: appModules\_default.py:468
-#: appModules\_default.py:480
+#: appModules\_default.py:472
+#: appModules\_default.py:484
 #: appModules\totalcmd.py:35
 msgid "left"
 msgstr "左"
 
-#: appModules\_default.py:470
+#: appModules\_default.py:474
 msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
 msgstr "レビューカーソルを現在のナビゲーターオブジェクト上の行頭に移動して読み上げ"
 
-#: appModules\_default.py:488
+#: appModules\_default.py:492
 msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
 msgstr "レビューカーソルを現在のナビゲーターオブジェクトの前の文字に移動して読み上げ"
 
-#: appModules\_default.py:502
+#: appModules\_default.py:506
 msgid "Reports the character of the current navigator object where the review cursor is situated. If this key is pressed twice, ascii and hexadecimal values are spoken for the character"
 msgstr "現在のナビゲーターオブジェクトのレビューカーソル位置の文字の通知。キーを2度続けて押すと、文字に対するアスキーコード及び16進コードを読み上げます。"
 
-#: appModules\_default.py:512
-#: appModules\_default.py:529
+#: appModules\_default.py:516
+#: appModules\_default.py:533
 #: appModules\totalcmd.py:37
 msgid "right"
 msgstr "右"
 
-#: appModules\_default.py:520
+#: appModules\_default.py:524
 msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
 msgstr "レビューカーソルを現在のナビゲーターオブジェクトの次の文字に移動して読み上げ。"
 
-#: appModules\_default.py:531
+#: appModules\_default.py:535
 msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
 msgstr "レビューカーソルを現在のナビゲーターオブジェクト上の行の最後に移動"
 
-#: appModules\_default.py:537
+#: appModules\_default.py:541
 msgid "No caret"
 msgstr "キャレットなし"
 
-#: appModules\_default.py:542
+#: appModules\_default.py:546
 msgid "Moves the review cursor to the position of the system caret, in the current navigator object"
 msgstr "レビューカーソルを現在のナビゲーターオブジェクトのシステムキャレット位置へ移動"
 
-#: appModules\_default.py:549
+#: appModules\_default.py:553
 msgid "Moves the system caret to the position of the review cursor , in the current navigator object"
 msgstr "システムキャレットを現在のナビゲーターオブジェクトのレビューカーソル位置へ移動"
 
-#: appModules\_default.py:558
+#: appModules\_default.py:562
 msgid "beeps"
 msgstr "ビープ"
 
-#: appModules\_default.py:560
+#: appModules\_default.py:564
 msgid "talk"
 msgstr "トーク"
 
-#: appModules\_default.py:562
+#: appModules\_default.py:566
 msgid "speech mode %s"
 msgstr "読み上げモード%s"
 
-#: appModules\_default.py:564
+#: appModules\_default.py:568
 msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr "読み上げモードをオフ、ビープ、トークの順に切り替えます。オフに設定した場合、NVDAはなにも読み上げません。ビープに設定した場合、NVDAは何か音声を発生すべき場面でビープ音を鳴らします。トークに設定した場合、NVDAは通常通りに読み上げを行います。"
 
-#: appModules\_default.py:575
+#: appModules\_default.py:579
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
 msgstr "ブラウズモードとフォーカスモードの切り替え。フォーカスモードでは、押されたキーの情報は直接アプリケーションに渡され、アプリケーションをコントロールできます。ブラウザモードでは、カーソルキーを使ってページ内を移動したり、クイックナビゲーションを行ったりすることができます。"
 
-#: appModules\_default.py:579
+#: appModules\_default.py:583
 msgid "Quits NVDA!"
 msgstr "NVDAの終了"
 
-#: appModules\_default.py:583
+#: appModules\_default.py:587
 msgid "Shows the NVDA menu"
 msgstr "NVDAメニューの表示"
 
-#: appModules\_default.py:588
+#: appModules\_default.py:592
 msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
 msgstr "レビューカーソルの位置を移動しながら、テキストを最後まで読み上げ"
 
-#: appModules\_default.py:593
+#: appModules\_default.py:597
 msgid "reads from the navigator object "
 msgstr "ナビゲーターオブジェクトから読み上げ"
 
-#: appModules\_default.py:605
+#: appModules\_default.py:609
 msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
 msgstr "システムカーソル位置を移動しながら、テキストを最後まで読み上げ"
 
-#: appModules\_default.py:627
+#: appModules\_default.py:631
 msgid "No formatting information"
 msgstr "書式情報なし"
 
-#: appModules\_default.py:631
+#: appModules\_default.py:635
 msgid "Reports formatting info for the current cursor position within a document"
 msgstr "ドキュメント中の現在カーソルがある位置の書式情報を通知"
 
-#: appModules\_default.py:642
+#: appModules\_default.py:646
 msgid "reports the object with focus"
 msgstr "フォーカスのあるオブジェクトの読み上げ"
 
-#: appModules\_default.py:647
+#: appModules\_default.py:651
 msgid "no status bar found"
 msgstr "ステータスバーなし"
 
-#: appModules\_default.py:656
+#: appModules\_default.py:660
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr "現在起動中のアプリケーションのステータス情報を読み上げ、ナビゲーションカーソルを移動"
 
-#: appModules\_default.py:665
+#: appModules\_default.py:669
 msgid "Mouse tracking"
 msgstr "マウスの追跡"
 
-#: appModules\_default.py:666
+#: appModules\_default.py:670
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "マウス通過時の情報通知の切り替え"
 
-#: appModules\_default.py:674
+#: appModules\_default.py:678
 msgid "no title"
 msgstr "タイトルなし"
 
-#: appModules\_default.py:683
+#: appModules\_default.py:687
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
 msgstr "現在使用中のアプリケーションまたは、最前面のウインドウのタイトルを通知します。2回続けて押すと、タイトルをスペルで読み上げます。3回続けて押すと、タイトルをクリップボードにコピーします。"
 
-#: appModules\_default.py:690
+#: appModules\_default.py:694
 msgid "speaks the current foreground object"
 msgstr "現在前面に表示中のオブジェクト名を通知"
 
-#: appModules\_default.py:705
+#: appModules\_default.py:714
 #: cursorManager.py:223
 msgid "copied to clipboard"
 msgstr "クリップボードにコピーしました"
 
-#: appModules\_default.py:709
+#: appModules\_default.py:718
 msgid "Control ID: %s"
 msgstr "コントロールID: %s"
 
-#: appModules\_default.py:710
+#: appModules\_default.py:719
 msgid "Class: %s"
 msgstr "クラス: %s"
 
-#: appModules\_default.py:712
+#: appModules\_default.py:721
 msgid "internal text: %s"
 msgstr "インターナルテキスト%s"
 
-#: appModules\_default.py:713
+#: appModules\_default.py:722
 msgid "text: %s"
 msgstr "テキスト: %s"
 
-#: appModules\_default.py:715
+#: appModules\_default.py:724
 msgid "reports some information about the current navigator object, mainly useful for developers. When pressed 2 times it copies control id, class and internal text to the windows clipboard"
 msgstr "主に開発者向けに、現在のナビゲーターオブジェクトに関する情報の通知。2回続けて押すと、コントロールIDとクラスおよびインターナルテキストをクリップボードにコピー"
 
-#: appModules\_default.py:721
+#: appModules\_default.py:730
 msgid "no progress bar updates"
 msgstr "プログレスバーの更新通知オフ"
 
-#: appModules\_default.py:724
+#: appModules\_default.py:733
 msgid "speak progress bar updates"
 msgstr "プログレスバー更新を読み上げ"
 
-#: appModules\_default.py:727
+#: appModules\_default.py:736
 msgid "beep for progress bar updates"
 msgstr "プログレスバー更新をビープ音で通知"
 
-#: appModules\_default.py:730
+#: appModules\_default.py:739
 msgid "beep and speak progress bar updates"
 msgstr "プログレスバーの更新をビープ音と読み上げで通知"
 
-#: appModules\_default.py:732
+#: appModules\_default.py:741
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
 msgstr "プログレスバーの更新通知方法を、ビープ音、読み上げ、ビープ音と読み上げ、オフの間で切り替えます"
 
-#: appModules\_default.py:741
+#: appModules\_default.py:750
 msgid "report dynamic content changes"
 msgstr "動的コンテンツの変化を通知"
 
-#: appModules\_default.py:742
+#: appModules\_default.py:751
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
 msgstr "DOSウインドウ上に書き込まれた新しいテキストのような、動的コンテンツの変化の通知のオンオフの繰り返し。"
 
-#: appModules\_default.py:751
+#: appModules\_default.py:760
 msgid "caret moves review cursor"
 msgstr "キャレットをレビューカーソルに移動"
 
-#: appModules\_default.py:752
+#: appModules\_default.py:761
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "キャレットの移動に応じてレビューカーソルを移動する機能のオンオフの切り替え。"
 
-#: appModules\_default.py:761
+#: appModules\_default.py:770
 msgid "focus moves navigator object"
 msgstr "フォーカスをナビゲーターオブジェクトに移動"
 
-#: appModules\_default.py:762
+#: appModules\_default.py:771
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "フォーカスの変化に応じてナビゲーターオブジェクトを移動させる機能のオンオフの切り替え。"
 
-#: appModules\_default.py:774
+#: appModules\_default.py:783
 msgid "no system battery"
 msgstr "システムバッテリーなし"
 
-#: appModules\_default.py:777
+#: appModules\_default.py:786
 msgid "AC power on"
 msgstr "AC電源オン"
 
-#: appModules\_default.py:779
+#: appModules\_default.py:788
 msgid "%d hours and %d minutes remaining"
 msgstr "残り%d時間%d分"
 
-#: appModules\_default.py:781
+#: appModules\_default.py:790
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr "電源未装着時、バッテリー残量を通知"
 
-#: appModules\_default.py:785
+#: appModules\_default.py:794
 msgid "Pass next key through"
 msgstr "次に押したキーを直接渡す"
 
-#: appModules\_default.py:786
+#: appModules\_default.py:795
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "次に押したキーはNVDAではなくWindowsに直接渡されます。"
 
-#: appModules\_default.py:791
+#: appModules\_default.py:800
 msgid "Currently running application is %s"
 msgstr "現在動作中のアプリケーションは%s"
 
-#: appModules\_default.py:794
+#: appModules\_default.py:803
 msgid " and currently loaded module is %s"
 msgstr " 読み込まれているモジュールは%s"
 
-#: appModules\_default.py:796
+#: appModules\_default.py:805
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
 msgstr "現在起動中のアプリケーションのファイル名を、読み込まれているappModuleの名前とともに読み上げます。"
 
-#: appModules\_default.py:800
+#: appModules\_default.py:809
 msgid "Shows the NVDA general settings dialog"
 msgstr "NVDAの一般設定ダイアログの表示"
 
-#: appModules\_default.py:804
+#: appModules\_default.py:813
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "NVDAの出力先設定ダイアログの表示"
 
-#: appModules\_default.py:808
+#: appModules\_default.py:817
 msgid "Shows the NVDA voice settings dialog"
 msgstr "NVDAの音声設定ダイアログを表示"
 
-#: appModules\_default.py:812
+#: appModules\_default.py:821
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "NVDAのキーボード設定ダイアログを表示"
 
-#: appModules\_default.py:816
+#: appModules\_default.py:825
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "NVDAのマウス設定ダイアログを表示"
 
-#: appModules\_default.py:820
+#: appModules\_default.py:829
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "NVDAのオブジェクトの説明設定ダイアログを表示"
 
-#: appModules\_default.py:824
+#: appModules\_default.py:833
 msgid "Shows the NVDA virtual buffers settings dialog"
 msgstr "NVDAの仮想バッファ設定ダイアログを表示"
 
-#: appModules\_default.py:828
+#: appModules\_default.py:837
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "NVDAの書式設定ダイアログを表示"
 
-#: appModules\_default.py:832
+#: appModules\_default.py:841
 msgid "Saves the current NVDA configuration"
 msgstr "現在のNVDAの設定情報を保存"
 
-#: appModules\_default.py:836
+#: appModules\_default.py:845
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr "NVDAの設定情報を読み込み、現在の変更を上書き"
 
-#: appModules\_default.py:844
+#: appModules\_default.py:853
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "主に開発に使用されるNVDAのPythonコンソールを開きます。"
 
-#: appModules\_default.py:849
+#: appModules\_default.py:858
 msgid "review"
 msgstr "レビュー"
 
-#: appModules\_default.py:852
+#: appModules\_default.py:861
 msgid "focus"
 msgstr "フォーカス"
 
-#: appModules\_default.py:853
+#: appModules\_default.py:862
 msgid "Braille tethered to %s"
 msgstr "点字は%sを表示"
 
-#: appModules\_default.py:854
+#: appModules\_default.py:863
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "点字のフォーカス位置とレビュー位置の表示切替"
 
-#: appModules\_default.py:862
+#: appModules\_default.py:871
 msgid "There is no text on the clipboard"
 msgstr "クリップボードにテキストがありません"
 
-#: appModules\_default.py:867
+#: appModules\_default.py:876
 msgid "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "クリップボードには大きなテキスト情報が含まれています。%s文字の長さです"
 
-#: appModules\_default.py:868
+#: appModules\_default.py:877
 msgid "Reports the text on the Windows clipboard"
 msgstr "ウインドウズクリップボード内のテキストの通知"
 
-#: appModules\_default.py:872
+#: appModules\_default.py:881
 msgid "Start marked"
 msgstr "開始位置をマーク"
 
-#: appModules\_default.py:873
+#: appModules\_default.py:882
 msgid "Marks the current position of the review cursor as the start of text to be copied"
 msgstr "レビューカーソルの現在位置を、コピーするテキストの始点としてマークします"
 
-#: appModules\_default.py:877
+#: appModules\_default.py:886
 msgid "No start marker set"
 msgstr "スタートマーカーがセットされていません"
 
-#: appModules\_default.py:881
+#: appModules\_default.py:890
 msgid "The start marker must reside within the same object"
 msgstr "スタートマーカーは同じオブジェクト内に属していなければなりません"
 
-#: appModules\_default.py:886
+#: appModules\_default.py:895
 msgid "Review selection copied to clipboard"
 msgstr "レビューカーソルの選択中項目をクリップボードへコピーしました"
 
-#: appModules\_default.py:888
+#: appModules\_default.py:897
 msgid "No text to copy"
 msgstr "コピーすべきテキストがありません"
 
-#: appModules\_default.py:891
+#: appModules\_default.py:900
 msgid "Retrieves the text from the previously set start marker to the current position of the review cursor and copies it to the clipboard"
 msgstr "以前に設定したスタートマーカーから、現在位置までのレビューカーソル中のテキストをクリップボードにコピーします"
 
@@ -1381,7 +1385,7 @@ msgid "heading 6"
 msgstr "見出し6"
 
 #: controlTypes.py:219
-#: textHandler.py:135
+#: textHandler.py:136
 msgid "paragraph"
 msgstr "段落"
 
@@ -1558,7 +1562,7 @@ msgid "border"
 msgstr "ボーダー"
 
 #: controlTypes.py:265
-#: textHandler.py:132
+#: textHandler.py:133
 msgid "character"
 msgstr "文字"
 
@@ -1676,7 +1680,7 @@ msgid "font chooser"
 msgstr "フォントチューザー"
 
 #: controlTypes.py:295
-#: textHandler.py:134
+#: textHandler.py:135
 msgid "line"
 msgstr "行"
 
@@ -1843,7 +1847,7 @@ msgstr "チェック可能"
 msgid "Loading subsystems, please wait..."
 msgstr "お待ちください。補助システムを読み込み中..."
 
-#: core.py:154
+#: core.py:157
 msgid "NVDA started"
 msgstr "NVDA起動"
 
@@ -3007,7 +3011,7 @@ msgstr "音声"
 msgid "variant"
 msgstr "変量"
 
-#: textHandler.py:133
+#: textHandler.py:134
 msgid "word"
 msgstr "単語"
 
@@ -3045,410 +3049,418 @@ msgstr "ブラウズモード"
 msgid "focus mode"
 msgstr "フォーカスモード"
 
-#: virtualBuffers\__init__.py:332
+#: virtualBuffers\__init__.py:327
 msgid "activates the current object in the virtual buffer"
 msgstr "仮想バッファ内の現在のオブジェクトを有効化"
 
-#: virtualBuffers\__init__.py:344
+#: virtualBuffers\__init__.py:339
 msgid "Refreshed"
 msgstr "更新完了"
 
-#: virtualBuffers\__init__.py:345
+#: virtualBuffers\__init__.py:340
 msgid "Refreshes the virtual buffer content"
 msgstr "仮想バッファーコンテンツの更新"
 
-#: virtualBuffers\__init__.py:350
+#: virtualBuffers\__init__.py:345
 msgid "use screen layout %s"
 msgstr "画面レイアウト%s"
 
-#: virtualBuffers\__init__.py:351
+#: virtualBuffers\__init__.py:346
 msgid "Toggles on and off if the screen layout is preserved while rendering the virtual buffer content"
 msgstr "仮想バッファーを利用する際、可能であれば画面レイアウトを使用する機能のオンとオフ"
 
-#: virtualBuffers\__init__.py:460
+#: virtualBuffers\__init__.py:455
 msgid "displays a list of links"
 msgstr "リンクリストを表示"
 
-#: virtualBuffers\__init__.py:724
+#: virtualBuffers\__init__.py:719
 msgid "Not in a table cell"
 msgstr "テーブルのセルないではありません"
 
-#: virtualBuffers\__init__.py:733
+#: virtualBuffers\__init__.py:728
 msgid "edge of table"
 msgstr "テーブルの端"
 
-#: virtualBuffers\__init__.py:743
+#: virtualBuffers\__init__.py:738
 msgid "moves to the next table row"
 msgstr "次のテーブル行へ移動"
 
-#: virtualBuffers\__init__.py:747
+#: virtualBuffers\__init__.py:742
 msgid "moves to the previous table row"
 msgstr "前のテーブル行へ移動"
 
-#: virtualBuffers\__init__.py:751
+#: virtualBuffers\__init__.py:746
 msgid "moves to the next table column"
 msgstr "次のテーブル列へ移動"
 
-#: virtualBuffers\__init__.py:755
+#: virtualBuffers\__init__.py:750
 msgid "moves to the previous table column"
 msgstr "前のテーブル列へ移動"
 
-#: virtualBuffers\__init__.py:792
+#: virtualBuffers\__init__.py:787
 msgid "moves to the next heading"
 msgstr "次の見出しへ移動"
 
-#: virtualBuffers\__init__.py:792
+#: virtualBuffers\__init__.py:787
 msgid "no next heading"
 msgstr "次の見出しがありません"
 
-#: virtualBuffers\__init__.py:793
+#: virtualBuffers\__init__.py:788
 msgid "moves to the previous heading"
 msgstr "前の見出しへ移動"
 
-#: virtualBuffers\__init__.py:793
+#: virtualBuffers\__init__.py:788
 msgid "no previous heading"
 msgstr "前の見出しがありません"
 
-#: virtualBuffers\__init__.py:794
+#: virtualBuffers\__init__.py:789
 msgid "moves to the next heading at level 1"
 msgstr "次の見出し1へ移動"
 
-#: virtualBuffers\__init__.py:794
+#: virtualBuffers\__init__.py:789
 msgid "no next heading at level 1"
 msgstr "次の見出し1がありません"
 
-#: virtualBuffers\__init__.py:795
+#: virtualBuffers\__init__.py:790
 msgid "moves to the previous heading at level 1"
 msgstr "前の見出し1へ移動"
 
-#: virtualBuffers\__init__.py:795
+#: virtualBuffers\__init__.py:790
 msgid "no previous heading at level 1"
 msgstr "前の見出し1がありません"
 
-#: virtualBuffers\__init__.py:796
+#: virtualBuffers\__init__.py:791
 msgid "moves to the next heading at level 2"
 msgstr "次の見出し2へ移動"
 
-#: virtualBuffers\__init__.py:796
+#: virtualBuffers\__init__.py:791
 msgid "no next heading at level 2"
 msgstr "次の見出し2がありません"
 
-#: virtualBuffers\__init__.py:797
+#: virtualBuffers\__init__.py:792
 msgid "moves to the previous heading at level 2"
 msgstr "前の見出し2へ移動"
 
-#: virtualBuffers\__init__.py:797
+#: virtualBuffers\__init__.py:792
 msgid "no previous heading at level 2"
 msgstr "前の見出し2がありません"
 
-#: virtualBuffers\__init__.py:798
+#: virtualBuffers\__init__.py:793
 msgid "moves to the next heading at level 3"
 msgstr "次の見出し3へ移動"
 
-#: virtualBuffers\__init__.py:798
+#: virtualBuffers\__init__.py:793
 msgid "no next heading at level 3"
 msgstr "次の見出し3がありません"
 
-#: virtualBuffers\__init__.py:799
+#: virtualBuffers\__init__.py:794
 msgid "moves to the previous heading at level 3"
 msgstr "前の見出し3へ移動"
 
-#: virtualBuffers\__init__.py:799
+#: virtualBuffers\__init__.py:794
 msgid "no previous heading at level 3"
 msgstr "前の見出し3がありません"
 
-#: virtualBuffers\__init__.py:800
+#: virtualBuffers\__init__.py:795
 msgid "moves to the next heading at level 4"
 msgstr "次の見出し4へ移動"
 
-#: virtualBuffers\__init__.py:800
+#: virtualBuffers\__init__.py:795
 msgid "no next heading at level 4"
 msgstr "次の見出し4がありません"
 
-#: virtualBuffers\__init__.py:801
+#: virtualBuffers\__init__.py:796
 msgid "moves to the previous heading at level 4"
 msgstr "前の見出し4へ移動"
 
-#: virtualBuffers\__init__.py:801
+#: virtualBuffers\__init__.py:796
 msgid "no previous heading at level 4"
 msgstr "前の見出し4がありません"
 
-#: virtualBuffers\__init__.py:802
+#: virtualBuffers\__init__.py:797
 msgid "moves to the next heading at level 5"
 msgstr "次の見出し5へ移動"
 
-#: virtualBuffers\__init__.py:802
+#: virtualBuffers\__init__.py:797
 msgid "no next heading at level 5"
 msgstr "次の見出し5がありません"
 
-#: virtualBuffers\__init__.py:803
+#: virtualBuffers\__init__.py:798
 msgid "moves to the previous heading at level 5"
 msgstr "前の見出し5へ移動"
 
-#: virtualBuffers\__init__.py:803
+#: virtualBuffers\__init__.py:798
 msgid "no previous heading at level 5"
 msgstr "前の見出し5がありません"
 
-#: virtualBuffers\__init__.py:804
+#: virtualBuffers\__init__.py:799
 msgid "moves to the next heading at level 6"
 msgstr "次の見出し6へ移動"
 
-#: virtualBuffers\__init__.py:804
+#: virtualBuffers\__init__.py:799
 msgid "no next heading at level 6"
 msgstr "次の見出し6がありません"
 
-#: virtualBuffers\__init__.py:805
+#: virtualBuffers\__init__.py:800
 msgid "moves to the previous heading at level 6"
 msgstr "前の見出し6へ移動"
 
-#: virtualBuffers\__init__.py:805
+#: virtualBuffers\__init__.py:800
 msgid "no previous heading at level 6"
 msgstr "前の見出し6がありません"
 
-#: virtualBuffers\__init__.py:806
+#: virtualBuffers\__init__.py:801
 msgid "moves to the next table"
 msgstr "次のテーブルへ移動"
 
-#: virtualBuffers\__init__.py:806
+#: virtualBuffers\__init__.py:801
 msgid "no next table"
 msgstr "次のテーブルがありません"
 
-#: virtualBuffers\__init__.py:807
+#: virtualBuffers\__init__.py:802
 msgid "moves to the previous table"
 msgstr "前のテーブルへ移動"
 
-#: virtualBuffers\__init__.py:807
+#: virtualBuffers\__init__.py:802
 msgid "no previous table"
 msgstr "前のテーブルがありません"
 
-#: virtualBuffers\__init__.py:808
+#: virtualBuffers\__init__.py:803
 msgid "moves to the next link"
 msgstr "次のリンクへ移動"
 
-#: virtualBuffers\__init__.py:808
+#: virtualBuffers\__init__.py:803
 msgid "no next link"
 msgstr "次のリンクがありません"
 
-#: virtualBuffers\__init__.py:809
+#: virtualBuffers\__init__.py:804
 msgid "moves to the previous link"
 msgstr "前のリンクへ移動"
 
-#: virtualBuffers\__init__.py:809
+#: virtualBuffers\__init__.py:804
 msgid "no previous link"
 msgstr "前のリンクがありません"
 
-#: virtualBuffers\__init__.py:810
+#: virtualBuffers\__init__.py:805
 msgid "moves to the next visited link"
 msgstr "次の既読リンクへ移動"
 
-#: virtualBuffers\__init__.py:810
+#: virtualBuffers\__init__.py:805
 msgid "no next visited link"
 msgstr "次の既読リンクがありません"
 
-#: virtualBuffers\__init__.py:811
+#: virtualBuffers\__init__.py:806
 msgid "moves to the previous visited link"
 msgstr "前の既読リンクへ移動"
 
-#: virtualBuffers\__init__.py:811
+#: virtualBuffers\__init__.py:806
 msgid "no previous visited link"
 msgstr "前の既読リンクがありません"
 
-#: virtualBuffers\__init__.py:812
+#: virtualBuffers\__init__.py:807
 msgid "moves to the next unvisited link"
 msgstr "次の未読リンクへ移動"
 
-#: virtualBuffers\__init__.py:812
+#: virtualBuffers\__init__.py:807
 msgid "no next unvisited link"
 msgstr "次の未読リンクがありません"
 
-#: virtualBuffers\__init__.py:813
+#: virtualBuffers\__init__.py:808
 msgid "moves to the previous unvisited link"
 msgstr "前の未読リンクへ移動"
 
-#: virtualBuffers\__init__.py:813
+#: virtualBuffers\__init__.py:808
 msgid "no previous unvisited link"
 msgstr "前の未読リンクがありません"
 
-#: virtualBuffers\__init__.py:814
+#: virtualBuffers\__init__.py:809
 msgid "moves to the next form field"
 msgstr "次のフォームフィールドへ移動"
 
-#: virtualBuffers\__init__.py:814
+#: virtualBuffers\__init__.py:809
 msgid "no next form field"
 msgstr "次のフォームフィールドがありません"
 
-#: virtualBuffers\__init__.py:815
+#: virtualBuffers\__init__.py:810
 msgid "moves to the previous form field"
 msgstr "前のフォームフィールドへ移動"
 
-#: virtualBuffers\__init__.py:815
+#: virtualBuffers\__init__.py:810
 msgid "no previous form field"
 msgstr "前のフォームフィールドがありません"
 
-#: virtualBuffers\__init__.py:816
+#: virtualBuffers\__init__.py:811
 msgid "moves to the next list"
 msgstr "次のリストへ移動"
 
-#: virtualBuffers\__init__.py:816
+#: virtualBuffers\__init__.py:811
 msgid "no next list"
 msgstr "次のリストがありません"
 
-#: virtualBuffers\__init__.py:817
+#: virtualBuffers\__init__.py:812
 msgid "moves to the previous list"
 msgstr "前のリストへ移動"
 
-#: virtualBuffers\__init__.py:817
+#: virtualBuffers\__init__.py:812
 msgid "no previous list"
 msgstr "前のリストがありません"
 
-#: virtualBuffers\__init__.py:818
+#: virtualBuffers\__init__.py:813
 msgid "moves to the next list item"
 msgstr "次のリスト項目へ移動"
 
-#: virtualBuffers\__init__.py:818
+#: virtualBuffers\__init__.py:813
 msgid "no next list item"
 msgstr "次のリスト項目がありません"
 
-#: virtualBuffers\__init__.py:819
+#: virtualBuffers\__init__.py:814
 msgid "moves to the previous list item"
 msgstr "前のリスト項目へ移動"
 
-#: virtualBuffers\__init__.py:819
+#: virtualBuffers\__init__.py:814
 msgid "no previous list item"
 msgstr "前のリスト項目がありません"
 
-#: virtualBuffers\__init__.py:820
+#: virtualBuffers\__init__.py:815
 msgid "moves to the next button"
 msgstr "次のボタンへ移動"
 
-#: virtualBuffers\__init__.py:820
+#: virtualBuffers\__init__.py:815
 msgid "no next button"
 msgstr "次のボタンがありません"
 
-#: virtualBuffers\__init__.py:821
+#: virtualBuffers\__init__.py:816
 msgid "moves to the previous button"
 msgstr "前のボタンへ移動"
 
-#: virtualBuffers\__init__.py:821
+#: virtualBuffers\__init__.py:816
 msgid "no previous button"
 msgstr "前のボタンがありません"
 
-#: virtualBuffers\__init__.py:822
+#: virtualBuffers\__init__.py:817
 msgid "moves to the next edit field"
 msgstr "次のエディットフィールドに移動"
 
-#: virtualBuffers\__init__.py:822
+#: virtualBuffers\__init__.py:817
 msgid "no next edit field"
 msgstr "次のエディットフィールドがありません"
 
-#: virtualBuffers\__init__.py:823
+#: virtualBuffers\__init__.py:818
 msgid "moves to the previous edit field"
 msgstr "前のエディットフィールドに移動"
 
-#: virtualBuffers\__init__.py:823
+#: virtualBuffers\__init__.py:818
 msgid "no previous edit field"
 msgstr "前のエディットフィールドがありません"
 
-#: virtualBuffers\__init__.py:824
+#: virtualBuffers\__init__.py:819
 msgid "moves to the next frame"
 msgstr "次のフレームへ移動"
 
-#: virtualBuffers\__init__.py:824
+#: virtualBuffers\__init__.py:819
 msgid "no next frame"
 msgstr "次のフレームがありません"
 
-#: virtualBuffers\__init__.py:825
+#: virtualBuffers\__init__.py:820
 msgid "moves to the previous frame"
 msgstr "前のフレームへ移動"
 
-#: virtualBuffers\__init__.py:825
+#: virtualBuffers\__init__.py:820
 msgid "no previous frame"
 msgstr "前のフレームがありません"
 
-#: virtualBuffers\__init__.py:826
+#: virtualBuffers\__init__.py:821
 msgid "moves to the next separator"
 msgstr "次の区切り線へ移動"
 
-#: virtualBuffers\__init__.py:826
+#: virtualBuffers\__init__.py:821
 msgid "no next separator"
 msgstr "次の区切り線がありません"
 
-#: virtualBuffers\__init__.py:827
+#: virtualBuffers\__init__.py:822
 msgid "moves to the previous separator"
 msgstr "前の区切り線へ移動"
 
-#: virtualBuffers\__init__.py:827
+#: virtualBuffers\__init__.py:822
 msgid "no previous separator"
 msgstr "前の区切り線がありません"
 
-#: virtualBuffers\__init__.py:828
+#: virtualBuffers\__init__.py:823
 msgid "moves to the next radio button"
 msgstr "次のラジオボタンへ移動"
 
-#: virtualBuffers\__init__.py:828
+#: virtualBuffers\__init__.py:823
 msgid "no next radio button"
 msgstr "次のラジオボタンがありません"
 
-#: virtualBuffers\__init__.py:829
+#: virtualBuffers\__init__.py:824
 msgid "moves to the previous radio button"
 msgstr "前のラジオボタンへ移動"
 
-#: virtualBuffers\__init__.py:829
+#: virtualBuffers\__init__.py:824
 msgid "no previous radio button"
 msgstr "前のラジオボタンがありません"
 
-#: virtualBuffers\__init__.py:830
+#: virtualBuffers\__init__.py:825
 msgid "moves to the next combo box"
 msgstr "次のコンボボックスへ移動"
 
-#: virtualBuffers\__init__.py:830
+#: virtualBuffers\__init__.py:825
 msgid "no next combo box"
 msgstr "次のコンボボックスがありません"
 
-#: virtualBuffers\__init__.py:831
+#: virtualBuffers\__init__.py:826
 msgid "moves to the previous combo box"
 msgstr "前のコンボボックスへ移動"
 
-#: virtualBuffers\__init__.py:831
+#: virtualBuffers\__init__.py:826
 msgid "no previous combo box"
 msgstr "前のコンボボックスがありません"
 
-#: virtualBuffers\__init__.py:832
+#: virtualBuffers\__init__.py:827
 msgid "moves to the next check box"
 msgstr "次のチェックボックスへ移動"
 
-#: virtualBuffers\__init__.py:832
+#: virtualBuffers\__init__.py:827
 msgid "no next check box"
 msgstr "次のチェックボックスがありません"
 
-#: virtualBuffers\__init__.py:833
+#: virtualBuffers\__init__.py:828
 msgid "moves to the previous check box"
 msgstr "前のチェックボックスへ移動"
 
-#: virtualBuffers\__init__.py:833
+#: virtualBuffers\__init__.py:828
 msgid "no previous check box"
 msgstr "前のチェックボックスがありません"
 
-#: virtualBuffers\__init__.py:834
+#: virtualBuffers\__init__.py:829
 msgid "moves to the next graphic"
 msgstr "次の画像へ移動"
 
-#: virtualBuffers\__init__.py:834
+#: virtualBuffers\__init__.py:829
 msgid "no next graphic"
 msgstr "次の画像がありません"
 
-#: virtualBuffers\__init__.py:835
+#: virtualBuffers\__init__.py:830
 msgid "moves to the previous graphic"
 msgstr "前の画像へ移動"
 
-#: virtualBuffers\__init__.py:835
+#: virtualBuffers\__init__.py:830
 msgid "no previous graphic"
 msgstr "前の画像がありません"
 
-#: virtualBuffers\__init__.py:836
+#: virtualBuffers\__init__.py:831
 msgid "moves to the next block quote"
 msgstr "次の引用文へ移動"
 
-#: virtualBuffers\__init__.py:836
+#: virtualBuffers\__init__.py:831
 msgid "no next block quote"
 msgstr "次の引用文がありません"
+
+#: virtualBuffers\__init__.py:832
+msgid "moves to the previous block quote"
+msgstr "前の引用文へ移動"
+
+#: virtualBuffers\__init__.py:832
+msgid "no previous block quote"
+msgstr "前の引用文がありません"

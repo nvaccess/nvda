@@ -32,7 +32,6 @@ mouseShapeChanged=0
 #: The time (in seconds) at which the last mouse event occurred.
 #: @type: float
 lastMouseEventTime=0
-currentMouseWindow=0
 
 def updateMouseShape(name):
 	global curMouseShape, mouseShapeChanged
@@ -41,10 +40,7 @@ def updateMouseShape(name):
 	curMouseShape=name
 	mouseShapeChanged=1
 
-def playAudioCoordinates(x, y, detectBrightness=True,blurFactor=0):
-	screenWidth,screenHeight=api.getDesktopObject().location[2:]
-	x=min(max(0,x),screenWidth-1)
-	y=min(max(0,y),screenHeight-1)
+def playAudioCoordinates(x, y, screenWidth, screenHeight, detectBrightness=True,blurFactor=0):
 	minPitch=config.conf['mouse']['audioCoordinates_minPitch']
 	maxPitch=config.conf['mouse']['audioCoordinates_maxPitch']
 	curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-y)/float(screenHeight)))
@@ -88,15 +84,22 @@ def internal_mouseEvent(msg,x,y,injected):
 
 def executeMouseMoveEvent(x,y):
 	global currentMouseWindow
-	deskLeft,deskTop,deskWidth,deskHeight=api.getDesktopObject().location
-	x=min(max(deskLeft,x),(deskLeft+deskWidth)-1)
-	y=min(max(deskTop,y),(deskTop+deskHeight)-1)
-	oldMouseObject=api.getMouseObject()
 	desktopObject=api.getDesktopObject()
-	mouseObject=desktopObject.objectFromPoint(x,y,oldNVDAObject=oldMouseObject)
+	screenLeft,screenTop,screenWidth,screenHeight=desktopObject.location
+	x=min(max(screenLeft,x),(screenLeft+screenWidth)-1)
+	y=min(max(screenTop,y),(screenTop+screenHeight)-1)
+	if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
+		playAudioCoordinates(x,y,screenWidth,screenHeight,config.conf['mouse']['audioCoordinates_detectBrightness'],config.conf['mouse']['audioCoordinates_blurFactor'])
+	oldMouseObject=api.getMouseObject()
+	mouseObject=desktopObject.objectFromPoint(x,y)
+	while mouseObject and mouseObject.beTransparentToMouse:
+		mouseObject=mouseObject.parent
 	if not mouseObject:
 		return
-	api.setMouseObject(mouseObject)
+	if oldMouseObject==mouseObject:
+		mouseObject=oldMouseObject
+	else:
+		api.setMouseObject(mouseObject)
 	try:
 		eventHandler.executeEvent("mouseMove",mouseObject,x=x,y=y)
 		oldMouseObject=mouseObject
@@ -106,15 +109,14 @@ def executeMouseMoveEvent(x,y):
 #Register internal mouse event
 
 def initialize():
-	global curMousePos, screenDC, screenWidth, screenHeight
+	global curMousePos
 	(x,y)=winUser.getCursorPos()
-	import NVDAObjects.window
-	mouseObj=NVDAObjects.window.Window.objectFromPoint(x,y)
-	if not mouseObj:
-		mouseObj=api.getDesktopObject()
-	api.setMouseObject(mouseObj)
+	desktopObject=api.getDesktopObject()
+	mouseObject=desktopObject.objectFromPoint(x,y)
+	if not mouseObject:
+		mouseObject=api.getDesktopObject()
+	api.setMouseObject(mouseObject)
 	curMousePos=(x,y)
-	screenWidth,screenHeight=api.getDesktopObject().location[2:]
 	mouseHook.initialize(internal_mouseEvent)
 
 def pumpAll():
@@ -122,8 +124,6 @@ def pumpAll():
 	if mouseMoved:
 		mouseMoved=False
 		(x,y)=curMousePos
-		if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
-			playAudioCoordinates(x,y,config.conf['mouse']['audioCoordinates_detectBrightness'],config.conf['mouse']['audioCoordinates_blurFactor'])
 		executeMouseMoveEvent(x,y)
 	if config.conf["mouse"]["reportMouseShapeChanges"] and mouseShapeChanged>0:
 		if mouseShapeChanged==10:

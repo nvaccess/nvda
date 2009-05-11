@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R2852\n"
-"POT-Creation-Date: 2009-04-08 21:53+Hora oficial do Brasil\n"
-"PO-Revision-Date: 2009-04-08 23:58+Hora oficial do Brasil\n"
+"Project-Id-Version: R2912\n"
+"POT-Creation-Date: 2009-05-09 11:46+Hora oficial do Brasil\n"
+"PO-Revision-Date: 2009-05-09 23:58+Hora oficial do Brasil\n"
 "Last-Translator: Cleverson Casarin Uliana <clever92000@yahoo.com.br>\n"
 "Language-Team: pt_BR <clever92000@yahoo.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -14,27 +14,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: NVDAObjects\IAccessible\__init__.py:1135 appModules\_default.py:776
-msgid "%d percent"
-msgstr "%d porcento"
+#: IAccessibleHandler.py:894
+msgid "Secure Desktop"
+msgstr "Área de trabalho segura"
+
+#: IAccessibleHandler.py:900
+msgid "Inaccessible to NVDA"
+msgstr "Inacessível ao NVDA"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:169
 msgid "%s items"
 msgstr "%s itens"
 
-#: NVDAObjects\window\__init__.py:279
+#: NVDAObjects\progressBar.py:42 appModules\_default.py:785
+msgid "%d percent"
+msgstr "%d porcento"
+
+#: NVDAObjects\window\__init__.py:277
 msgid "Desktop"
 msgstr "Área de trabalho"
 
-#: NVDAObjects\window\edit.py:531
+#: NVDAObjects\window\edit.py:528
 msgid "unknown"
 msgstr "desconhecido"
 
-#: NVDAObjects\window\edit.py:533
+#: NVDAObjects\window\edit.py:530
 msgid "%s embedded object"
 msgstr "%s objeto embutido"
 
-#: NVDAObjects\window\edit.py:535 controlTypes.py:236
+#: NVDAObjects\window\edit.py:532 controlTypes.py:236
 msgid "embedded object"
 msgstr "objeto embutido"
 
@@ -62,57 +70,41 @@ msgstr "até"
 msgid "has formula"
 msgstr "contém fórmula"
 
-#: NVDAObjects\window\winword.py:309 NVDAObjects\window\winword.py:325
-#: NVDAObjects\window\winword.py:341 NVDAObjects\window\winword.py:357
+#: NVDAObjects\window\winword.py:337 NVDAObjects\window\winword.py:348
+#: NVDAObjects\window\winword.py:359 NVDAObjects\window\winword.py:370
 msgid "not in table"
 msgstr "não está numa tabela"
-
-#: NVDAObjects\window\winword.py:318
-msgid "bottom of column"
-msgstr "fim da coluna"
-
-#: NVDAObjects\window\winword.py:334
-msgid "top of column"
-msgstr "início da coluna"
-
-#: NVDAObjects\window\winword.py:350
-msgid "end of row"
-msgstr "fim da linha"
-
-#: NVDAObjects\window\winword.py:366
-msgid "beginning of row"
-msgstr "Início da linha"
 
 #: appModuleHandler.py:161
 msgid "Error in appModule %s"
 msgstr "Erro no módulo de aplicação %s"
 
-#: appModules\_default.py:42 appModules\_default.py:139
-#: appModules\_default.py:149 appModules\_default.py:159
-#: appModules\_default.py:169 appModules\_default.py:663
-#: appModules\_default.py:739 appModules\_default.py:749
-#: appModules\_default.py:759 appModules\winamp.py:75 appModules\winamp.py:85
+#: appModules\_default.py:43 appModules\_default.py:140
+#: appModules\_default.py:150 appModules\_default.py:160
+#: appModules\_default.py:170 appModules\_default.py:667
+#: appModules\_default.py:748 appModules\_default.py:758
+#: appModules\_default.py:768 appModules\winamp.py:75 appModules\winamp.py:85
 #: keyboardHandler.py:51 keyboardHandler.py:53 keyboardHandler.py:55
-#: virtualBuffers\__init__.py:349
+#: virtualBuffers\__init__.py:344
 msgid "on"
 msgstr "ativado"
 
-#: appModules\_default.py:45 appModules\_default.py:136
-#: appModules\_default.py:146 appModules\_default.py:156
-#: appModules\_default.py:166 appModules\_default.py:556
-#: appModules\_default.py:660 appModules\_default.py:719
-#: appModules\_default.py:736 appModules\_default.py:746
-#: appModules\_default.py:756 appModules\winamp.py:77 appModules\winamp.py:87
-#: gui\settingsDialogs.py:486 keyboardHandler.py:51 keyboardHandler.py:53
-#: keyboardHandler.py:55 virtualBuffers\__init__.py:349
+#: appModules\_default.py:46 appModules\_default.py:137
+#: appModules\_default.py:147 appModules\_default.py:157
+#: appModules\_default.py:167 appModules\_default.py:560
+#: appModules\_default.py:664 appModules\_default.py:745
+#: appModules\_default.py:755 appModules\_default.py:765
+#: appModules\winamp.py:77 appModules\winamp.py:87 gui\settingsDialogs.py:490
+#: keyboardHandler.py:51 keyboardHandler.py:53 keyboardHandler.py:55
+#: virtualBuffers\__init__.py:344
 msgid "off"
 msgstr "desativado"
 
-#: appModules\_default.py:47
+#: appModules\_default.py:48
 msgid "keyboard help %s"
 msgstr "ajuda de teclado %s"
 
-#: appModules\_default.py:48
+#: appModules\_default.py:49
 msgid ""
 "Turns keyboard help on and off. When on, pressing a key on the keyboard will "
 "tell you what script is associated with it, if any."
@@ -120,7 +112,7 @@ msgstr ""
 "Liga e desliga a ajuda de teclado. Quando ligada, ao pressionar uma tecla é "
 "falado o script associado àquela tecla caso haja algum."
 
-#: appModules\_default.py:64 appModules\klangoplayer.py:33
+#: appModules\_default.py:65
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
 "twice will spell the current line"
@@ -128,31 +120,31 @@ msgstr ""
 "Anuncia a linha sob o cursor da aplicação. Se pressionada duas vezes, "
 "soletra a linha atual"
 
-#: appModules\_default.py:67
+#: appModules\_default.py:68
 msgid "left click"
 msgstr "clique esquerdo"
 
-#: appModules\_default.py:70
+#: appModules\_default.py:71
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "Clica uma vez com o botão esquerdo do mause na posição atual"
 
-#: appModules\_default.py:73
+#: appModules\_default.py:74
 msgid "right click"
 msgstr "clique direito"
 
-#: appModules\_default.py:76
+#: appModules\_default.py:77
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "Clica uma vez com o botão direito do mause na posição atual"
 
-#: appModules\_default.py:85 cursorManager.py:220
+#: appModules\_default.py:86 cursorManager.py:220
 msgid "no selection"
 msgstr "sem seleção"
 
-#: appModules\_default.py:87 speech.py:263 speech.py:354 speech.py:367
+#: appModules\_default.py:88 speech.py:266 speech.py:357 speech.py:370
 msgid "selected %s"
 msgstr "selecionado %s"
 
-#: appModules\_default.py:88
+#: appModules\_default.py:89
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
 "no selection it says so."
@@ -160,7 +152,7 @@ msgstr ""
 "Anuncia o texto selecionado em campos de edição e documentos. Se não "
 "houver seleção alguma ele diz isso."
 
-#: appModules\_default.py:96
+#: appModules\_default.py:97
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
@@ -168,52 +160,52 @@ msgstr ""
 "Se pressionada uma vez, anuncia a hora atual. Se pressionada duas vezes, "
 "anuncia a data atual"
 
-#: appModules\_default.py:101 appModules\_default.py:110
-#: appModules\_default.py:119 appModules\_default.py:128
+#: appModules\_default.py:102 appModules\_default.py:111
+#: appModules\_default.py:120 appModules\_default.py:129
 msgid "No settings"
 msgstr "Sem configurações"
 
-#: appModules\_default.py:105
+#: appModules\_default.py:106
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr "Aumenta a opção atualmente ativa no círculo das opções"
 
-#: appModules\_default.py:114
+#: appModules\_default.py:115
 msgid "Decreases the currently active setting in the synth settings ring"
 msgstr "Diminui a opção atualmente ativa no círculo das opções"
 
-#: appModules\_default.py:123
+#: appModules\_default.py:124
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr ""
 "Vai para a próxima opção disponível no círculo das opções de "
 "sintetizador"
 
-#: appModules\_default.py:132
+#: appModules\_default.py:133
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr ""
 "Vai para a próxima opção disponível no círculo das opções de "
 "sintetizador"
 
-#: appModules\_default.py:141
+#: appModules\_default.py:142
 msgid "speak typed characters"
 msgstr "falar caracteres digitados"
 
-#: appModules\_default.py:142
+#: appModules\_default.py:143
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "Liga e desliga leitura de caracteres digitados"
 
-#: appModules\_default.py:151
+#: appModules\_default.py:152
 msgid "speak typed words"
 msgstr "falar palavras digitadas"
 
-#: appModules\_default.py:152
+#: appModules\_default.py:153
 msgid "Toggles on and off the speaking of typed words"
 msgstr "Liga e desliga leitura de palavras digitadas"
 
-#: appModules\_default.py:161
+#: appModules\_default.py:162
 msgid "speak command keys"
 msgstr "falar teclas de comando"
 
-#: appModules\_default.py:162
+#: appModules\_default.py:163
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
@@ -221,11 +213,11 @@ msgstr ""
 "Liga e desliga leitura de teclas digitadas que não sejam propriamente "
 "caracteres"
 
-#: appModules\_default.py:171
+#: appModules\_default.py:172
 msgid "speak punctuation"
 msgstr "falar pontuação"
 
-#: appModules\_default.py:172
+#: appModules\_default.py:173
 msgid ""
 "Toggles on and off the speaking of punctuation. When on NVDA will say the "
 "names of punctuation symbols, when off it will be up to the synthesizer as "
@@ -235,23 +227,19 @@ msgstr ""
 "dos sinais de pontuação; quando desligada, o sintetizador é que escolhe "
 "como dizer a pontuação"
 
-#: appModules\_default.py:175
-msgid "Move mouse to navigator"
-msgstr "Mover mause para objeto de navegação"
-
-#: appModules\_default.py:187
+#: appModules\_default.py:188
 msgid "object has no location"
 msgstr "objeto sem local"
 
-#: appModules\_default.py:190
+#: appModules\_default.py:194
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "Move o ponteiro do mause para o objeto atual de navegação"
 
-#: appModules\_default.py:193
+#: appModules\_default.py:197
 msgid "Move navigator object to mouse"
 msgstr "Mover objeto de navegação para mause"
 
-#: appModules\_default.py:197
+#: appModules\_default.py:201
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
@@ -259,20 +247,20 @@ msgstr ""
 "Coloca como objeto de navegação aquele atualmente sob o ponteiro do mause "
 "e o fala"
 
-#: appModules\_default.py:202 appModules\_default.py:232
-#: appModules\_default.py:253 appModules\_default.py:266
-#: appModules\_default.py:279 appModules\_default.py:292
-#: appModules\_default.py:305 appModules\_default.py:328
-#: appModules\_default.py:351 appModules\_default.py:370
-#: appModules\_default.py:701
+#: appModules\_default.py:206 appModules\_default.py:236
+#: appModules\_default.py:257 appModules\_default.py:270
+#: appModules\_default.py:283 appModules\_default.py:296
+#: appModules\_default.py:309 appModules\_default.py:332
+#: appModules\_default.py:355 appModules\_default.py:374
+#: appModules\_default.py:710
 msgid "no navigator object"
 msgstr "nenhum objeto navegação"
 
-#: appModules\_default.py:224 appModules\_default.py:682
+#: appModules\_default.py:228 appModules\_default.py:686
 msgid "%s copied to clipboard"
 msgstr "%s copiado para área de transferência"
 
-#: appModules\_default.py:227
+#: appModules\_default.py:231
 msgid ""
 "Reports the current navigator object or, if pressed three times, Copies name "
 "and value of current navigator object to the clipboard"
@@ -280,11 +268,11 @@ msgstr ""
 "Anuncia o objeto atual de navegação ou, se pressionada três vezes, "
 "copianome e valor do mesmo para a área de transferência"
 
-#: appModules\_default.py:235
+#: appModules\_default.py:239
 msgid "No location information for navigator object"
 msgstr "sem informações de local para o objeto de navegação"
 
-#: appModules\_default.py:238
+#: appModules\_default.py:242
 msgid ""
 "Object edges positioned %.1f per cent right from left of screen, %.1f per "
 "cent down from top of screen, %.1f per cent left from right of screen, %.1f "
@@ -294,27 +282,27 @@ msgstr ""
 "1f porcento abaixo do topo da tela, %.1f porcento à esquerda da direita da "
 "tela, %.1f porcento acima do fundo da tela"
 
-#: appModules\_default.py:239
+#: appModules\_default.py:243
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "Anuncia altura, largura e posição do objeto atual de navegação"
 
-#: appModules\_default.py:244 appModules\_default.py:641
+#: appModules\_default.py:248 appModules\_default.py:645
 msgid "no focus"
 msgstr "sem foco"
 
-#: appModules\_default.py:246
+#: appModules\_default.py:250
 msgid "move to focus"
 msgstr "mover para o foco"
 
-#: appModules\_default.py:248
+#: appModules\_default.py:252
 msgid "Sets the navigator object to the current focus"
 msgstr "Coloca como objeto de navegação o mesmo que está com foco"
 
-#: appModules\_default.py:260
+#: appModules\_default.py:264
 msgid "No parents"
 msgstr "sem pais"
 
-#: appModules\_default.py:261
+#: appModules\_default.py:265
 msgid ""
 "Sets the navigator object to the parent of the object it is currently on and "
 "speaks it"
@@ -322,11 +310,11 @@ msgstr ""
 "Coloca como objeto de navegação o pai do objeto atual de navegação e o "
 "fala"
 
-#: appModules\_default.py:273
+#: appModules\_default.py:277
 msgid "No next"
 msgstr "último"
 
-#: appModules\_default.py:274
+#: appModules\_default.py:278
 msgid ""
 "Sets the navigator object to the object next to the one it is currently on "
 "and speaks it"
@@ -334,11 +322,11 @@ msgstr ""
 "Coloca como objeto de navegação aquele seguinte ao objeto atual de "
 "navegação e o fala"
 
-#: appModules\_default.py:286
+#: appModules\_default.py:290
 msgid "No previous"
 msgstr "primeiro"
 
-#: appModules\_default.py:287
+#: appModules\_default.py:291
 msgid ""
 "Sets the navigator object to the object previous to the one it is currently "
 "on and speaks it"
@@ -346,11 +334,11 @@ msgstr ""
 "Coloca como objeto de navegação aquele que antecede o objeto atual de "
 "navegação e o fala"
 
-#: appModules\_default.py:299
+#: appModules\_default.py:303
 msgid "No children"
 msgstr "sem filhos"
 
-#: appModules\_default.py:300
+#: appModules\_default.py:304
 msgid ""
 "Sets the navigator object to the first child object of the one it is "
 "currently on and speaks it"
@@ -358,35 +346,35 @@ msgstr ""
 "Coloca como objeto de navegação o primeiro filho do objeto atual de "
 "navegação e o fala"
 
-#: appModules\_default.py:322
+#: appModules\_default.py:326
 msgid "end of flow"
 msgstr "fim do fluxo"
 
-#: appModules\_default.py:323
+#: appModules\_default.py:327
 msgid ""
 "Sets the navigator object to the object this object flows to and speaks it"
 msgstr ""
 "Coloca como objeto de navegação aquele para o qual este flui e o fala"
 
-#: appModules\_default.py:345
+#: appModules\_default.py:349
 msgid "Beginning of flow"
 msgstr "Início do fluxo"
 
-#: appModules\_default.py:346
+#: appModules\_default.py:350
 msgid ""
 "Sets the navigator object to the object this object flows from and speaks it"
 msgstr ""
 "Coloca como objeto de navegação aquele a partir do qual este flui e o fala"
 
-#: appModules\_default.py:356
+#: appModules\_default.py:360
 msgid "No default action"
 msgstr "Sem ação padrão"
 
-#: appModules\_default.py:361
+#: appModules\_default.py:365
 msgid "default action failed"
 msgstr "falha na ação padrão"
 
-#: appModules\_default.py:364
+#: appModules\_default.py:368
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
@@ -394,11 +382,11 @@ msgstr ""
 "Executa a ação padrão do objeto atual de navegação. Por exemplo: "
 "pressiona se for um botão."
 
-#: appModules\_default.py:375
+#: appModules\_default.py:379
 msgid "inside"
 msgstr "dentro de"
 
-#: appModules\_default.py:378
+#: appModules\_default.py:382
 msgid ""
 "Reports where the current navigator object is by reporting each of its "
 "ancestors"
@@ -406,12 +394,12 @@ msgstr ""
 "Anuncia onde se encontra o objeto atual de navegação, dizendo os "
 "ancestrais do mesmo."
 
-#: appModules\_default.py:384 appModules\_default.py:396
-#: appModules\_default.py:437
+#: appModules\_default.py:388 appModules\_default.py:400
+#: appModules\_default.py:441
 msgid "top"
 msgstr "início"
 
-#: appModules\_default.py:386
+#: appModules\_default.py:390
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
@@ -419,7 +407,7 @@ msgstr ""
 "Move o cursor de revisão para a primeira linha do objeto atual de navegaçã"
 "o e o fala"
 
-#: appModules\_default.py:398
+#: appModules\_default.py:402
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
@@ -427,7 +415,7 @@ msgstr ""
 "Move o cursor de revisão para a linha anterior do objeto atual de navegaçã"
 "o e o fala"
 
-#: appModules\_default.py:407
+#: appModules\_default.py:411
 msgid ""
 "Reports the line of the current navigator object where the review cursor is "
 "situated. If this key is pressed twice, the current line will be spelled"
@@ -435,12 +423,12 @@ msgstr ""
 "Anuncia a linha do objeto atual de navegação onde está o cursor de revisã"
 "o. Se pressionada duas vezes, soletra a linha"
 
-#: appModules\_default.py:417 appModules\_default.py:425
-#: appModules\_default.py:458
+#: appModules\_default.py:421 appModules\_default.py:429
+#: appModules\_default.py:462
 msgid "bottom"
 msgstr "fim"
 
-#: appModules\_default.py:419
+#: appModules\_default.py:423
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
@@ -448,7 +436,7 @@ msgstr ""
 "Move o cursor de revisão para a próxima linha do objeto atual de navegaçã"
 "o e o fala"
 
-#: appModules\_default.py:427
+#: appModules\_default.py:431
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
@@ -456,7 +444,7 @@ msgstr ""
 "Move o cursor de revisão para a última linha do objeto atual de navegaçã"
 "o e o fala"
 
-#: appModules\_default.py:439
+#: appModules\_default.py:443
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
@@ -464,7 +452,7 @@ msgstr ""
 "Move o cursor de revisão para a palavra anterior do objeto atual de "
 "navegação e o fala"
 
-#: appModules\_default.py:448
+#: appModules\_default.py:452
 msgid ""
 "Speaks the word of the current navigator object where the review cursor is "
 "situated. If this key is pressed twice, the word will be spelled"
@@ -472,7 +460,7 @@ msgstr ""
 "Fala a palavra do objeto atual de navegação onde está o cursor de revisã"
 "o. Se pressionada duas vezes, soletra a palavra"
 
-#: appModules\_default.py:460
+#: appModules\_default.py:464
 msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
@@ -480,12 +468,12 @@ msgstr ""
 "Move o cursor de revisão para a próxima palavra do objeto atual de "
 "navegação e o fala"
 
-#: appModules\_default.py:468 appModules\_default.py:480
+#: appModules\_default.py:472 appModules\_default.py:484
 #: appModules\totalcmd.py:35
 msgid "left"
 msgstr "esquerda"
 
-#: appModules\_default.py:470
+#: appModules\_default.py:474
 msgid ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
@@ -493,7 +481,7 @@ msgstr ""
 "Move o cursor de revisão para o primeiro caractere da linha onde está "
 "cituado dentro do objeto atual de navegação, e o fala"
 
-#: appModules\_default.py:488
+#: appModules\_default.py:492
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
@@ -501,7 +489,7 @@ msgstr ""
 "Move o cursor de revisão para o caractere anterior do objeto atual de "
 "navegação e o fala"
 
-#: appModules\_default.py:502
+#: appModules\_default.py:506
 msgid ""
 "Reports the character of the current navigator object where the review "
 "cursor is situated. If this key is pressed twice, ascii and hexadecimal "
@@ -511,12 +499,12 @@ msgstr ""
 "revisão. Se pressionada duas vezes, fala os valores ASCII  e hexadecimal do "
 "caractere"
 
-#: appModules\_default.py:512 appModules\_default.py:529
+#: appModules\_default.py:516 appModules\_default.py:533
 #: appModules\totalcmd.py:37
 msgid "right"
 msgstr "direita"
 
-#: appModules\_default.py:520
+#: appModules\_default.py:524
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
@@ -524,7 +512,7 @@ msgstr ""
 "Move o cursor de revisão para o próximo caractere do objeto atual de "
 "navegação e o fala"
 
-#: appModules\_default.py:531
+#: appModules\_default.py:535
 msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
@@ -532,11 +520,11 @@ msgstr ""
 "Move o cursor de revisão para o último caractere da linha onde está "
 "cituado dentro do objeto atual de navegação, e o fala"
 
-#: appModules\_default.py:537
+#: appModules\_default.py:541
 msgid "No caret"
 msgstr "Sem cursor"
 
-#: appModules\_default.py:542
+#: appModules\_default.py:546
 msgid ""
 "Moves the review cursor to the position of the system caret, in the current "
 "navigator object"
@@ -544,7 +532,7 @@ msgstr ""
 "Move o cursor de revisão para a posição do cursor do sistema, no objeto "
 "atual de navegação"
 
-#: appModules\_default.py:549
+#: appModules\_default.py:553
 msgid ""
 "Moves the system caret to the position of the review cursor , in the current "
 "navigator object"
@@ -552,19 +540,19 @@ msgstr ""
 "Move o cursor do sistema para a posição do cursor de revisão, no objeto "
 "atual de navegação"
 
-#: appModules\_default.py:558
+#: appModules\_default.py:562
 msgid "beeps"
 msgstr "bipes"
 
-#: appModules\_default.py:560
+#: appModules\_default.py:564
 msgid "talk"
 msgstr "fala"
 
-#: appModules\_default.py:562
+#: appModules\_default.py:566
 msgid "speech mode %s"
 msgstr "modo de fala é %s"
 
-#: appModules\_default.py:564
+#: appModules\_default.py:568
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
 "will not speak anything. If beeps then NVDA will simply beep each time it "
@@ -574,7 +562,7 @@ msgstr ""
 "NVDA nada diz; no modo de bipes, ele bipa sempre quando deveria falar algo; "
 "no modo de fala, continua falando normalmente."
 
-#: appModules\_default.py:575
+#: appModules\_default.py:579
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
 "pass straight through to the application, allowing you to interact directly "
@@ -586,15 +574,15 @@ msgstr ""
 "controle diretamente. No modo de navegação você pode percorrer o "
 "documento usando setas, teclas rápidas de navegação, etc."
 
-#: appModules\_default.py:579
+#: appModules\_default.py:583
 msgid "Quits NVDA!"
 msgstr "Sai do NVDA"
 
-#: appModules\_default.py:583
+#: appModules\_default.py:587
 msgid "Shows the NVDA menu"
 msgstr "Exibe o menu do NVDA"
 
-#: appModules\_default.py:588
+#: appModules\_default.py:592
 msgid ""
 "reads from the review cursor  up to end of current text, moving the review "
 "cursor as it goes"
@@ -602,11 +590,11 @@ msgstr ""
 "lê a partir do cursor de revisão até o fim do texto atual, movendo o "
 "cursor de revisão de modo que ele acompanhe a leitura"
 
-#: appModules\_default.py:593
+#: appModules\_default.py:597
 msgid "reads from the navigator object "
 msgstr "lê a partir do objeto de navegação"
 
-#: appModules\_default.py:605 appModules\klangoplayer.py:28
+#: appModules\_default.py:609
 msgid ""
 "reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
@@ -614,43 +602,44 @@ msgstr ""
 "lê a partir do cursor do sistema até o fim do texto, movendo o cursor de "
 "modo que ele acompanhe a leitura"
 
-#: appModules\_default.py:627
+#: appModules\_default.py:631
 msgid "No formatting information"
 msgstr "sem informações de formatação"
 
-#: appModules\_default.py:631
+#: appModules\_default.py:635
 msgid ""
 "Reports formatting info for the current cursor position within a document"
 msgstr ""
-"Anuncia informações de formatação na posição atual do cursor em um documento"
+"Anuncia informações de formatação na posição atual do cursor em um "
+"documento"
 
-#: appModules\_default.py:642
+#: appModules\_default.py:646
 msgid "reports the object with focus"
 msgstr "Anuncia objeto em foco"
 
-#: appModules\_default.py:647
+#: appModules\_default.py:651
 msgid "no status bar found"
 msgstr "barra de status não achada"
 
-#: appModules\_default.py:656
+#: appModules\_default.py:660
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr ""
 "lê a barra de status da aplicação atual e move o cursor de navegação "
 "para ela"
 
-#: appModules\_default.py:665
+#: appModules\_default.py:669
 msgid "Mouse tracking"
 msgstr "Captura de mause"
 
-#: appModules\_default.py:666
+#: appModules\_default.py:670
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Alterna o anúncio de informações conforme o mause é movido."
 
-#: appModules\_default.py:674
+#: appModules\_default.py:678
 msgid "no title"
 msgstr "sem título"
 
-#: appModules\_default.py:683
+#: appModules\_default.py:687
 msgid ""
 "Reports the title of the current application or foreground window. If "
 "pressed twice, spells the title. If pressed thrice, copies the title to the "
@@ -660,31 +649,31 @@ msgstr ""
 "pressionada duas vezes, soletra o título. Se pressionada três vezes, copia "
 "o título para a área de transferência"
 
-#: appModules\_default.py:690
+#: appModules\_default.py:694
 msgid "speaks the current foreground object"
 msgstr "fala o objeto atualmente em foco"
 
-#: appModules\_default.py:705 cursorManager.py:223
+#: appModules\_default.py:714 cursorManager.py:223
 msgid "copied to clipboard"
 msgstr "copiado para área de transferência"
 
-#: appModules\_default.py:709
+#: appModules\_default.py:718
 msgid "Control ID: %s"
 msgstr "ID do controle: %s"
 
-#: appModules\_default.py:710
+#: appModules\_default.py:719
 msgid "Class: %s"
 msgstr "Classe: %s"
 
-#: appModules\_default.py:712
+#: appModules\_default.py:721
 msgid "internal text: %s"
 msgstr "Texto interno: %s"
 
-#: appModules\_default.py:713
+#: appModules\_default.py:722
 msgid "text: %s"
 msgstr "texto: %s"
 
-#: appModules\_default.py:715
+#: appModules\_default.py:724
 msgid ""
 "reports some information about the current navigator object, mainly useful "
 "for developers. When pressed 2 times it copies control id, class and "
@@ -695,35 +684,35 @@ msgstr ""
 "controle, a classe e o texto interno para a área de transferência do "
 "Windows"
 
-#: appModules\_default.py:720 gui\settingsDialogs.py:487
-msgid "Beep for visible"
-msgstr "Bipar para a visível"
+#: appModules\_default.py:730
+msgid "no progress bar updates"
+msgstr "Sem atualizações em barras de progresso"
 
-#: appModules\_default.py:721 gui\settingsDialogs.py:488
-msgid "Beep for all"
-msgstr "Bipar para todas"
+#: appModules\_default.py:733
+msgid "speak progress bar updates"
+msgstr "anunciar barras de progresso"
 
-#: appModules\_default.py:722 gui\settingsDialogs.py:489
-msgid "Speak each 10 percent"
-msgstr "Fala a cada 10 porcento"
+#: appModules\_default.py:736
+msgid "beep for progress bar updates"
+msgstr "bipar em barras de progresso"
 
-#: appModules\_default.py:732
-msgid ""
-"Toggles how NVDA reports progress bar updates. It can beep for all the "
-"progress bars or just for the progressbars in the foreground. Additionally "
-"it is possible to have current value spoken each 10 percent or it is "
-"possible to completely disable this reporting."
-msgstr ""
-"Controla como o NVDA anuncia atualizações em barras de progresso. Podem "
-"ser anunciadas todas as barras ou apenas aquelas em primeiro plano. Pode "
-"também falar os valores a cada 10 porcento ou então desativar "
-"completamente esses anúncios"
+#: appModules\_default.py:739
+msgid "beep and speak progress bar updates"
+msgstr "bipar e falar em barras de progresso"
 
 #: appModules\_default.py:741
+msgid ""
+"Toggles between beeps, speech, beeps and speech, and off, for reporting "
+"progress bar updates"
+msgstr ""
+"Alterna entre bipes, fala, bipes e fala, e desativado, para anunciar "
+"atualizações em barras de progresso."
+
+#: appModules\_default.py:750
 msgid "report dynamic content changes"
 msgstr "anuncia atualizações nos conteúdos dinâmicos"
 
-#: appModules\_default.py:742
+#: appModules\_default.py:751
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
@@ -731,49 +720,49 @@ msgstr ""
 "Liga e desliga leitura de atualizações em conteúdo dinâmico, como por "
 "exemplo novos textos em janelas do prompts de comando"
 
-#: appModules\_default.py:751
+#: appModules\_default.py:760
 msgid "caret moves review cursor"
 msgstr "Cursor do sistema move o cursor de revisão"
 
-#: appModules\_default.py:752
+#: appModules\_default.py:761
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
 "Liga e desliga o movimento do cursor de revisão conforme se move o cursor "
 "do sistema"
 
-#: appModules\_default.py:761
+#: appModules\_default.py:770
 msgid "focus moves navigator object"
 msgstr "foco move objeto de navegação"
 
-#: appModules\_default.py:762
+#: appModules\_default.py:771
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
 "Liga e desliga o movimento do objeto de navegação conforme o foco muda"
 
-#: appModules\_default.py:774
+#: appModules\_default.py:783
 msgid "no system battery"
 msgstr "sem bateria de sistema"
 
-#: appModules\_default.py:777
+#: appModules\_default.py:786
 msgid "AC power on"
 msgstr "Energia AC ligada"
 
-#: appModules\_default.py:779
+#: appModules\_default.py:788
 msgid "%d hours and %d minutes remaining"
 msgstr "%d horas e %d minutos restantes"
 
-#: appModules\_default.py:781
+#: appModules\_default.py:790
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "Anuncia a carga da bateria e o tempo restante caso o AC não esteja plugado"
 
-#: appModules\_default.py:785
+#: appModules\_default.py:794
 msgid "Pass next key through"
 msgstr "passar a próxima tecla"
 
-#: appModules\_default.py:786
+#: appModules\_default.py:795
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
@@ -781,15 +770,15 @@ msgstr ""
 "A próxima tecla pressionada não será tratada pelo NVDA; será enviada "
 "diretamente ao Windows."
 
-#: appModules\_default.py:791
+#: appModules\_default.py:800
 msgid "Currently running application is %s"
 msgstr "Aplicação atualmente executando é %s."
 
-#: appModules\_default.py:794
+#: appModules\_default.py:803
 msgid " and currently loaded module is %s"
 msgstr " e o módulo atualmente carregado é %s"
 
-#: appModules\_default.py:796
+#: appModules\_default.py:805
 msgid ""
 "Speaks the filename of the active application along with the name of the "
 "currently loaded appModule"
@@ -797,88 +786,88 @@ msgstr ""
 "Fala o nome do executável da aplicação atualmente rodando, bem como o "
 "nome do módulo de aplicação atualmente carregado"
 
-#: appModules\_default.py:800
+#: appModules\_default.py:809
 msgid "Shows the NVDA general settings dialog"
 msgstr "Exibe a janela de opções gerais do NVDA"
 
-#: appModules\_default.py:804
+#: appModules\_default.py:813
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "Exibe a janela de sintetizadores para o NVDA"
 
-#: appModules\_default.py:808
+#: appModules\_default.py:817
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Exibe a janela de opções de voz do NVDA"
 
-#: appModules\_default.py:812
+#: appModules\_default.py:821
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "Exibe a janela de opções de teclado do NVDA"
 
-#: appModules\_default.py:816
+#: appModules\_default.py:825
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "Exibe a janela de opções de mouse do NVDA"
 
-#: appModules\_default.py:820
+#: appModules\_default.py:829
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "Exibe a janela de opções para apresentação de objetos no NVDA"
 
-#: appModules\_default.py:824
+#: appModules\_default.py:833
 msgid "Shows the NVDA virtual buffers settings dialog"
 msgstr "Exibe a janela de opções para exibidores virtuais no NVDA"
 
-#: appModules\_default.py:828
+#: appModules\_default.py:837
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "Exibe a janela de opções para formatação de documentos no NVDA"
 
-#: appModules\_default.py:832
+#: appModules\_default.py:841
 msgid "Saves the current NVDA configuration"
 msgstr "Salva a configuração atual do NVDA"
 
-#: appModules\_default.py:836
+#: appModules\_default.py:845
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr ""
 "Carrega as configurações salvas do NVDA, desfazendo eventuais mudanças "
 "atuais"
 
-#: appModules\_default.py:844
+#: appModules\_default.py:853
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Ativa o terminal Python do NVDA, útil sobretudo para desenvolvimento"
 
-#: appModules\_default.py:849
+#: appModules\_default.py:858
 msgid "review"
 msgstr "revisão"
 
-#: appModules\_default.py:852
+#: appModules\_default.py:861
 msgid "focus"
 msgstr "foco"
 
-#: appModules\_default.py:853
+#: appModules\_default.py:862
 msgid "Braille tethered to %s"
 msgstr "Braile vinvulado a %s"
 
-#: appModules\_default.py:854
+#: appModules\_default.py:863
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Alterna vinculação do braile entre a posição de foco e a de revisão"
 
-#: appModules\_default.py:862
+#: appModules\_default.py:871
 msgid "There is no text on the clipboard"
 msgstr "Não há texto na área de transferência"
 
-#: appModules\_default.py:867
+#: appModules\_default.py:876
 msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
 msgstr ""
 "A área de transferência contém um texto muito grande, de %s caracteres."
 
-#: appModules\_default.py:868
+#: appModules\_default.py:877
 msgid "Reports the text on the Windows clipboard"
 msgstr "Anuncia o texto na área de transferência do Windows"
 
-#: appModules\_default.py:872
+#: appModules\_default.py:881
 msgid "Start marked"
 msgstr "Início marcado"
 
-#: appModules\_default.py:873
+#: appModules\_default.py:882
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "copied"
@@ -886,23 +875,23 @@ msgstr ""
 "Marca a posição atual do cursor de revisão como o início do texto a ser "
 "copiado"
 
-#: appModules\_default.py:877
+#: appModules\_default.py:886
 msgid "No start marker set"
 msgstr "Sem marca de início"
 
-#: appModules\_default.py:881
+#: appModules\_default.py:890
 msgid "The start marker must reside within the same object"
 msgstr "A marca de início tem que estar no mesmo objeto"
 
-#: appModules\_default.py:886
+#: appModules\_default.py:895
 msgid "Review selection copied to clipboard"
 msgstr "Rever a seleção copiada para área de transferência"
 
-#: appModules\_default.py:888
+#: appModules\_default.py:897
 msgid "No text to copy"
 msgstr "Sem texto a copiar"
 
-#: appModules\_default.py:891
+#: appModules\_default.py:900
 msgid ""
 "Retrieves the text from the previously set start marker to the current "
 "position of the review cursor and copies it to the clipboard"
@@ -1182,15 +1171,15 @@ msgstr "submnu"
 msgid "( )"
 msgstr "( )"
 
-#: braille.py:212 speech.py:621
+#: braille.py:212 speech.py:631
 msgid "not %s"
 msgstr "não %s"
 
-#: braille.py:224 speech.py:627
+#: braille.py:224 speech.py:637
 msgid "%s of %s"
 msgstr "%s de %s"
 
-#: braille.py:226 speech.py:632 speech.py:635
+#: braille.py:226 speech.py:642 speech.py:645
 msgid "level %s"
 msgstr "nível %s"
 
@@ -1202,7 +1191,7 @@ msgstr "Handy Tech braille displays"
 msgid "No braille"
 msgstr "sem braile"
 
-#: characterSymbols.py:17 characterSymbols.py:18 speech.py:79 speech.py:583
+#: characterSymbols.py:17 characterSymbols.py:18 speech.py:79 speech.py:593
 msgid "blank"
 msgstr "em branco"
 
@@ -1442,7 +1431,7 @@ msgstr "balão de ajuda"
 msgid "tool tip"
 msgstr "dica de ferramenta"
 
-#: controlTypes.py:191 speech.py:835
+#: controlTypes.py:191 speech.py:845
 msgid "link"
 msgstr "linque"
 
@@ -1550,7 +1539,7 @@ msgstr "cabeçalho 5"
 msgid "heading 6"
 msgstr "cabeçalho 6"
 
-#: controlTypes.py:219 textHandler.py:135
+#: controlTypes.py:219 textInfos\__init__.py:114
 msgid "paragraph"
 msgstr "parágrafo"
 
@@ -1726,7 +1715,7 @@ msgstr "botão de alternância"
 msgid "border"
 msgstr "borda"
 
-#: controlTypes.py:265 textHandler.py:132
+#: controlTypes.py:265 textInfos\__init__.py:111
 msgid "character"
 msgstr "caractere"
 
@@ -1842,7 +1831,7 @@ msgstr "edição de senha"
 msgid "font chooser"
 msgstr "seletor de fonte"
 
-#: controlTypes.py:295 textHandler.py:134
+#: controlTypes.py:295 textInfos\__init__.py:113
 msgid "line"
 msgstr "linha"
 
@@ -1854,7 +1843,7 @@ msgstr "nome da fonte"
 msgid "font size"
 msgstr "tamanho da fonte"
 
-#: controlTypes.py:298 speech.py:787
+#: controlTypes.py:298 speech.py:797
 msgid "bold"
 msgstr "negrito"
 
@@ -1870,11 +1859,11 @@ msgstr "cor de tela"
 msgid "background color"
 msgstr "cor de fundo"
 
-#: controlTypes.py:303 speech.py:809
+#: controlTypes.py:303 speech.py:819
 msgid "superscript"
 msgstr "superescrito"
 
-#: controlTypes.py:304 speech.py:811
+#: controlTypes.py:304 speech.py:821
 msgid "subscript"
 msgstr "subescrito"
 
@@ -2006,7 +1995,7 @@ msgstr "marcável"
 msgid "Loading subsystems, please wait..."
 msgstr "carregando componentes; por favor aguarde..."
 
-#: core.py:154
+#: core.py:157
 msgid "NVDA started"
 msgstr "NVDA ativado"
 
@@ -2318,7 +2307,7 @@ msgstr "Bem-vindo ao NVDA"
 msgid "Options"
 msgstr "Opções"
 
-#: gui\__init__.py:379 gui\settingsDialogs.py:400
+#: gui\__init__.py:379 gui\settingsDialogs.py:404
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Usar CapsLock como uma tecla modificadora do NVDA"
 
@@ -2488,287 +2477,303 @@ msgstr "Dizer &cap antes de maiúsculas"
 msgid "&Beep for capitals"
 msgstr "&Bipar em maiúsculas"
 
-#: gui\settingsDialogs.py:383
+#: gui\settingsDialogs.py:284
+msgid "Use &spelling functionality if supported"
+msgstr "Usar soletragem &melhorada quando suportado"
+
+#: gui\settingsDialogs.py:387
 msgid "Keyboard Settings"
 msgstr "Opções de teclado"
 
-#: gui\settingsDialogs.py:387
+#: gui\settingsDialogs.py:391
 msgid "&Keyboard layout"
 msgstr "&leiaute de teclado"
 
-#: gui\settingsDialogs.py:392
+#: gui\settingsDialogs.py:396
 msgid "Keyboard layout"
 msgstr "leiaute de teclado"
 
-#: gui\settingsDialogs.py:403
+#: gui\settingsDialogs.py:407
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Usar Insert do teclado numérico como uma tecla modificadora do NVDA"
 
-#: gui\settingsDialogs.py:406
+#: gui\settingsDialogs.py:410
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Usar Insert estendida como uma tecla modificadora do NVDA"
 
-#: gui\settingsDialogs.py:409
+#: gui\settingsDialogs.py:413
 msgid "Speak typed &characters"
 msgstr "Falar caracteres &digitados"
 
-#: gui\settingsDialogs.py:412
+#: gui\settingsDialogs.py:416
 msgid "Speak typed &words"
 msgstr "Falar &palavras digitadas"
 
-#: gui\settingsDialogs.py:415
+#: gui\settingsDialogs.py:419
 msgid "Speak command &keys"
 msgstr "Falar tec&las de comando"
 
-#: gui\settingsDialogs.py:438
+#: gui\settingsDialogs.py:442
 msgid "Mouse settings"
 msgstr "Opções de mouse"
 
-#: gui\settingsDialogs.py:441
+#: gui\settingsDialogs.py:445
 msgid "Report mouse &shape changes"
 msgstr "A&nunciar mudanças no formato do mouse"
 
-#: gui\settingsDialogs.py:444
+#: gui\settingsDialogs.py:448
 msgid "Report &text under the mouse"
 msgstr "An&unciar texto sob o mouse"
 
-#: gui\settingsDialogs.py:448
+#: gui\settingsDialogs.py:452
 msgid "Text &unit resolution"
 msgstr "&Unidade de texto"
 
-#: gui\settingsDialogs.py:452
+#: gui\settingsDialogs.py:456
 msgid "text reporting unit"
 msgstr "unidade mínima de texto a anunciar"
 
-#: gui\settingsDialogs.py:460
+#: gui\settingsDialogs.py:464
 msgid "Report &role when mouse enters object"
 msgstr "Anunciar &tipo do objeto quando o mouse entra nele"
 
-#: gui\settingsDialogs.py:463
+#: gui\settingsDialogs.py:467
 msgid "play audio coordinates when mouse moves"
 msgstr "Tocar sons de coordenada quando o mouse é movido"
 
-#: gui\settingsDialogs.py:466
+#: gui\settingsDialogs.py:470
 msgid "brightness controls audio coordinates volume"
 msgstr "brilho controla volume das coordenadas sonoras"
 
-#: gui\settingsDialogs.py:484
+#: gui\settingsDialogs.py:488
 msgid "Object presentation"
 msgstr "Apresentação de objetos"
 
+#: gui\settingsDialogs.py:491
+msgid "Speak"
+msgstr "Falar"
+
+#: gui\settingsDialogs.py:492
+msgid "Beep"
+msgstr "Bipar"
+
 #: gui\settingsDialogs.py:493
+msgid "Speak and beep"
+msgstr "Falar e bipar"
+
+#: gui\settingsDialogs.py:497
 msgid "Report &tooltips"
 msgstr "Anunciar &dicas de ferramentas"
 
-#: gui\settingsDialogs.py:496
+#: gui\settingsDialogs.py:500
 msgid "Report &help balloons"
 msgstr "Anunciar balões de aj&uda"
 
-#: gui\settingsDialogs.py:499
+#: gui\settingsDialogs.py:503
 msgid "Report object shortcut &keys"
 msgstr "Anunciar te&clas de atalho dos objetos"
 
-#: gui\settingsDialogs.py:502
+#: gui\settingsDialogs.py:506
 msgid "Report object &position information"
 msgstr "anunciar &Posição do objeto "
 
-#: gui\settingsDialogs.py:505
+#: gui\settingsDialogs.py:509
 msgid "Report object &descriptions"
 msgstr "anunciar &descrições dos objetos"
 
-#: gui\settingsDialogs.py:508
-msgid "Say object &state first"
-msgstr "Dizer &estado do objeto primeiro"
+#: gui\settingsDialogs.py:513
+msgid "Progress &bar output"
+msgstr "&Barras de progresso"
 
-#: gui\settingsDialogs.py:512
-msgid "Report progress &bar updates"
-msgstr "Anunciar atualização de &barras de progresso"
+#: gui\settingsDialogs.py:516
+msgid "Progress bar output"
+msgstr "Comportamento em barras de progresso"
 
-#: gui\settingsDialogs.py:515
-msgid "Report progress bar updates"
-msgstr "Anuncia barras de progresso"
+#: gui\settingsDialogs.py:525
+msgid "Report background progress bars"
+msgstr "Anunciar barras de progresso não visíveis"
 
-#: gui\settingsDialogs.py:539
+#: gui\settingsDialogs.py:543
 msgid "virtual buffers"
 msgstr "Exibidores virtuais"
 
-#: gui\settingsDialogs.py:542
+#: gui\settingsDialogs.py:546
 msgid "&Maximum number of characters on one line"
 msgstr "Má&ximo de caracteres numa linha"
 
-#: gui\settingsDialogs.py:547
+#: gui\settingsDialogs.py:551
 msgid "&Number of lines per page"
 msgstr "&Linhas por página"
 
-#: gui\settingsDialogs.py:552
+#: gui\settingsDialogs.py:556
 msgid "Use &screen layout (when supported)"
 msgstr "U&sar apresentação da tela (quando suportado)"
 
-#: gui\settingsDialogs.py:556
+#: gui\settingsDialogs.py:560
 msgid "Report &virtual presentation on focus changes"
 msgstr "An&unciar apresentação do exibidor virtual quando o foco muda"
 
-#: gui\settingsDialogs.py:559
+#: gui\settingsDialogs.py:563
 msgid "Automatic focus mode for focus changes"
 msgstr "Modo de foco automático quando o foco muda"
 
-#: gui\settingsDialogs.py:562
+#: gui\settingsDialogs.py:566
 msgid "Automatic focus mode for caret movement"
 msgstr "Modo de foco automático quando o cursor da aplicação muda"
 
-#: gui\settingsDialogs.py:565
+#: gui\settingsDialogs.py:569
 msgid "Audio indication of focus and browse modes"
 msgstr "Indicação sonora de mudança entre modo de foco e de navegação"
 
-#: gui\settingsDialogs.py:593
+#: gui\settingsDialogs.py:597
 msgid "Document formatting"
 msgstr "Formatação de documentos"
 
-#: gui\settingsDialogs.py:596
+#: gui\settingsDialogs.py:600
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "Anuncia mudanças de formato após cursor (pode causar lentidão)"
 
-#: gui\settingsDialogs.py:599
+#: gui\settingsDialogs.py:603
 msgid "Report font &name"
 msgstr "Anunciar nome d&a fonte"
 
-#: gui\settingsDialogs.py:602
+#: gui\settingsDialogs.py:606
 msgid "Report font &size"
 msgstr "Anunciar taman&ho da fonte"
 
-#: gui\settingsDialogs.py:605
+#: gui\settingsDialogs.py:609
 msgid "Report font attri&butes"
 msgstr "Anunciar atri&butos da fonte"
 
-#: gui\settingsDialogs.py:608
+#: gui\settingsDialogs.py:612
 msgid "Report &alignment"
 msgstr "Anunciar &alinhamento"
 
-#: gui\settingsDialogs.py:611
+#: gui\settingsDialogs.py:615
 msgid "Report st&yle"
 msgstr "Anunciar est&ilo"
 
-#: gui\settingsDialogs.py:614
+#: gui\settingsDialogs.py:618
 msgid "Report spelling errors"
 msgstr "Anunciar erros ortográficos"
 
-#: gui\settingsDialogs.py:617
+#: gui\settingsDialogs.py:621
 msgid "Report &pages"
 msgstr "Anunciar &páginas"
 
-#: gui\settingsDialogs.py:620
+#: gui\settingsDialogs.py:624
 msgid "Report &line numbers"
 msgstr "Anunciar o número de cada &linha"
 
-#: gui\settingsDialogs.py:623
+#: gui\settingsDialogs.py:627
 msgid "Report &tables"
 msgstr "Anunciar ta&belas"
 
-#: gui\settingsDialogs.py:626
+#: gui\settingsDialogs.py:630
 msgid "Report &links"
 msgstr "Anunciar lin&ques"
 
-#: gui\settingsDialogs.py:629
+#: gui\settingsDialogs.py:633
 msgid "Report &headings"
 msgstr "Anunciar &cabeçalhos"
 
-#: gui\settingsDialogs.py:632
+#: gui\settingsDialogs.py:636
 msgid "Report l&ists"
 msgstr "Anunciar l&istas"
 
-#: gui\settingsDialogs.py:635
+#: gui\settingsDialogs.py:639
 msgid "Report block &quotes"
 msgstr "Anunciar blocos de cita&ção"
 
-#: gui\settingsDialogs.py:662
+#: gui\settingsDialogs.py:666
 msgid "Edit dictionary entry"
 msgstr "Edita uma entrada"
 
-#: gui\settingsDialogs.py:665
+#: gui\settingsDialogs.py:669
 msgid "&Pattern"
 msgstr "&Original"
 
-#: gui\settingsDialogs.py:668
+#: gui\settingsDialogs.py:672
 msgid "&Replacement"
 msgstr "&Substituto"
 
-#: gui\settingsDialogs.py:671
+#: gui\settingsDialogs.py:675
 msgid "&Comment"
 msgstr "&Comentário"
 
-#: gui\settingsDialogs.py:674
+#: gui\settingsDialogs.py:678
 msgid "Case &sensitive"
 msgstr "distinguir &maiúsculas de minúsculas"
 
-#: gui\settingsDialogs.py:676
+#: gui\settingsDialogs.py:680
 msgid "Regular &expression"
 msgstr "&Expressão regular"
 
-#: gui\settingsDialogs.py:698
+#: gui\settingsDialogs.py:702
 msgid "&Dictionary entries"
 msgstr "Entradas do &dicionário"
 
-#: gui\settingsDialogs.py:701
+#: gui\settingsDialogs.py:705
 msgid "Comment"
 msgstr "Comentário"
 
-#: gui\settingsDialogs.py:702
+#: gui\settingsDialogs.py:706
 msgid "Pattern"
 msgstr "Original"
 
-#: gui\settingsDialogs.py:703
+#: gui\settingsDialogs.py:707
 msgid "Replacement"
 msgstr "Substituto"
 
-#: gui\settingsDialogs.py:704
+#: gui\settingsDialogs.py:708
 msgid "case sensitive"
 msgstr "distingue maiúsculas de minúsculas"
 
-#: gui\settingsDialogs.py:705
+#: gui\settingsDialogs.py:709
 msgid "Regular expression"
 msgstr "Expressão regular"
 
-#: gui\settingsDialogs.py:712
+#: gui\settingsDialogs.py:716
 msgid "&Add"
 msgstr "&Adicionar"
 
-#: gui\settingsDialogs.py:715
+#: gui\settingsDialogs.py:719
 msgid "&edit"
 msgstr "&Editar"
 
-#: gui\settingsDialogs.py:718
+#: gui\settingsDialogs.py:722
 msgid "&Remove"
 msgstr "&Remover"
 
-#: gui\settingsDialogs.py:785
+#: gui\settingsDialogs.py:789
 msgid "Braille Settings"
 msgstr "Opções de Braile"
 
-#: gui\settingsDialogs.py:789
+#: gui\settingsDialogs.py:793
 msgid "Braille &display"
 msgstr "&Linha braile"
 
-#: gui\settingsDialogs.py:803
+#: gui\settingsDialogs.py:807
 msgid "Translation &table"
 msgstr "&Tabela de tradução"
 
-#: gui\settingsDialogs.py:815
+#: gui\settingsDialogs.py:819
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "E&xpandir para braile de computador a palavra sob o cursor"
 
-#: gui\settingsDialogs.py:820
+#: gui\settingsDialogs.py:824
 msgid "Cursor blink rate (ms)"
 msgstr "Velocidade de intermitência do cursor (milésimos)"
 
-#: gui\settingsDialogs.py:828
+#: gui\settingsDialogs.py:832
 msgid "Message timeout (sec)"
 msgstr "Tempo limite de mensagem (segundos)"
 
-#: gui\settingsDialogs.py:841
+#: gui\settingsDialogs.py:845
 msgid "Braille Display Error"
 msgstr "Erro na Linha Braile"
 
-#: gui\settingsDialogs.py:841
+#: gui\settingsDialogs.py:845
 msgid "Could not load the %s display."
 msgstr "Não consegui carregar a linha braile %s."
 
@@ -2956,19 +2961,19 @@ msgstr "scroll lock %s"
 msgid "%s keyboard layout"
 msgstr "leiaute de teclado %s"
 
-#: keyboardHandler.py:178
+#: keyboardHandler.py:182
 msgid "Description: %s"
 msgstr "Descrição: %s"
 
-#: keyboardHandler.py:181
+#: keyboardHandler.py:185
 msgid "Location: %s"
 msgstr "Local: %s"
 
-#: keyboardHandler.py:196
+#: keyboardHandler.py:200
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Erro no keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:228
+#: keyboardHandler.py:236
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Erro no keyboardHandler.internal_keyUpEvent"
 
@@ -2984,135 +2989,135 @@ msgstr "Console Python do NVDA"
 msgid "cap %s"
 msgstr "cap %s"
 
-#: speech.py:298
+#: speech.py:301
 msgid "%d characters"
 msgstr "%d caracteres"
 
-#: speech.py:349
+#: speech.py:352
 msgid "selecting %s"
 msgstr "selecionando %s"
 
-#: speech.py:360
+#: speech.py:363
 msgid "unselecting %s"
 msgstr "desselecionando %s"
 
-#: speech.py:362
+#: speech.py:365
 msgid "selection removed"
 msgstr "seleção removida"
 
-#: speech.py:646 speech.py:876
+#: speech.py:656 speech.py:886
 msgid "row %s"
 msgstr "linha %s"
 
-#: speech.py:649 speech.py:872
+#: speech.py:659 speech.py:882
 msgid "column %s"
 msgstr "coluna %s"
 
-#: speech.py:654
+#: speech.py:664
 msgid "with %s rows and %s columns"
 msgstr "com %s linhas e %s colunas"
 
-#: speech.py:656
+#: speech.py:666
 msgid "with %s columns"
 msgstr "com %s colunas"
 
-#: speech.py:658
+#: speech.py:668
 msgid "with %s rows"
 msgstr "com %s linhas"
 
-#: speech.py:704
+#: speech.py:714
 msgid "with %s items"
 msgstr "com %s itens"
 
-#: speech.py:752
+#: speech.py:762
 msgid "page %s"
 msgstr "página %s"
 
-#: speech.py:759
+#: speech.py:769
 msgid "style %s"
 msgstr "estilo %s"
 
-#: speech.py:761
+#: speech.py:771
 msgid "default style"
 msgstr "estilo padrão"
 
-#: speech.py:781
+#: speech.py:791
 msgid "line %s"
 msgstr "linha %s"
 
-#: speech.py:787
+#: speech.py:797
 msgid "no bold"
 msgstr "sem negrito"
 
-#: speech.py:792
+#: speech.py:802
 msgid "italic"
 msgstr "itálico"
 
-#: speech.py:792
+#: speech.py:802
 msgid "no italic"
 msgstr "sem itálico"
 
-#: speech.py:797
+#: speech.py:807
 msgid "no strikethrough"
 msgstr "sem cancela"
 
-#: speech.py:797
+#: speech.py:807
 msgid "strikethrough"
 msgstr "cancela"
 
-#: speech.py:802
+#: speech.py:812
 msgid "not underlined"
 msgstr "não sublinhado"
 
-#: speech.py:802
+#: speech.py:812
 msgid "underlined"
 msgstr "sublinhado"
 
-#: speech.py:813
+#: speech.py:823
 msgid "baseline"
 msgstr "linha base"
 
-#: speech.py:821
+#: speech.py:831
 msgid "align left"
 msgstr "alinhamento à esquerda"
 
-#: speech.py:823
+#: speech.py:833
 msgid "align center"
 msgstr "alinhamento centrado"
 
-#: speech.py:825
+#: speech.py:835
 msgid "align right"
 msgstr "alinhamento à direita"
 
-#: speech.py:827
+#: speech.py:837
 msgid "align justify"
 msgstr "alinhamento justificado"
 
-#: speech.py:829
+#: speech.py:839
 msgid "align default"
 msgstr "alinhamento padrão"
 
-#: speech.py:835
+#: speech.py:845
 msgid "out of %s"
 msgstr "fora de %s"
 
-#: speech.py:842
+#: speech.py:852
 msgid "spelling error"
 msgstr "erro ortográfico"
 
-#: speech.py:844
+#: speech.py:854
 msgid "out of spelling error"
 msgstr "fora do erro"
 
-#: speech.py:858
+#: speech.py:868
 msgid "out of table"
 msgstr "fora da tabela"
 
-#: speech.py:867
+#: speech.py:877
 msgid "table with %s columns and %s rows"
 msgstr "tabela com %s colunas e %s linhas"
 
-#: synthDrivers\_espeak.py:305
+#: synthDrivers\_espeak.py:308
 msgid "none"
 msgstr "nada"
 
@@ -3120,23 +3125,23 @@ msgstr "nada"
 msgid "A virtual synth which displays text in a window"
 msgstr "um sintetizador virtual que exibe o texto numa janela"
 
-#: synthDrivers\newfon.py:99
+#: synthDrivers\newfon.py:170
 msgid "russian newfon synthesizer by Sergey Shishmintzev"
 msgstr "sintetizador russo newfon, autor Sergey Shishmintzev"
 
-#: synthDrivers\newfon.py:107
+#: synthDrivers\newfon.py:180
 msgid "female 1"
 msgstr "feminina 1"
 
-#: synthDrivers\newfon.py:107
+#: synthDrivers\newfon.py:180
 msgid "female 2"
 msgstr "feminina 2"
 
-#: synthDrivers\newfon.py:107
+#: synthDrivers\newfon.py:180
 msgid "male 1"
 msgstr "masculina 1"
 
-#: synthDrivers\newfon.py:107
+#: synthDrivers\newfon.py:180
 msgid "male 2"
 msgstr "masculina 2"
 
@@ -3168,7 +3173,7 @@ msgstr "voz"
 msgid "variant"
 msgstr "variante"
 
-#: textHandler.py:133
+#: textInfos\__init__.py:112
 msgid "word"
 msgstr "palavra"
 
@@ -3183,7 +3188,8 @@ msgstr "Leitor de telas livre e aberto para Windows"
 #: versionInfo.py:44
 msgid ""
 "Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>"
-msgstr "Copyright (C) 2006-2009 colaboradores do NVDA <http://www.nvda-project.org/>"
+msgstr ""
+"Copyright (C) 2006-2009 colaboradores do NVDA <http://www.nvda-project.org/>"
 
 #: versionInfo.py:45
 msgid ""
@@ -3200,9 +3206,9 @@ msgid ""
 msgstr ""
 "%(copyright)s\n"
 "%(name)s encontra-se sob a Licença Pública Geral GNU, versão 2. Pode "
-"compartilhá-lo ou modificá-lo como quiser, contanto que distribua a licença "
-"com ele e ofereça o código fonte a quem o desejar. Isso aplica-se tanto a "
-"cópias sem alteração do programa como àquelas modificadas, e também a "
+"compartilhá-lo ou modificá-lo como quiser, contanto que distribua a licenç"
+"a com ele e ofereça o código fonte a quem o desejar. Isso aplica-se tanto "
+"a cópias sem alteração do programa como àquelas modificadas, e também a "
 "qualquer programa que use código deste.\n"
 
 #: virtualBufferHandler.py:93
@@ -3213,23 +3219,23 @@ msgstr "modo de navegação"
 msgid "focus mode"
 msgstr "modo de foco"
 
-#: virtualBuffers\__init__.py:332
+#: virtualBuffers\__init__.py:327
 msgid "activates the current object in the virtual buffer"
 msgstr "Ativa o objeto atualmente no exibidor virtual"
 
-#: virtualBuffers\__init__.py:344
+#: virtualBuffers\__init__.py:339
 msgid "Refreshed"
 msgstr "atualizado"
 
-#: virtualBuffers\__init__.py:345
+#: virtualBuffers\__init__.py:340
 msgid "Refreshes the virtual buffer content"
 msgstr "Atualiza o conteúdo do exibidor virtual"
 
-#: virtualBuffers\__init__.py:350
+#: virtualBuffers\__init__.py:345
 msgid "use screen layout %s"
 msgstr "Usar apresentação da tela %s"
 
-#: virtualBuffers\__init__.py:351
+#: virtualBuffers\__init__.py:346
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "virtual buffer content"
@@ -3237,398 +3243,398 @@ msgstr ""
 "Determina se as informações devem ser mostradas pelo exibidor virtual na "
 "mesma disposição que aparecem na tela"
 
-#: virtualBuffers\__init__.py:460
+#: virtualBuffers\__init__.py:455
 msgid "displays a list of links"
 msgstr "exibe a lista dos linques"
 
-#: virtualBuffers\__init__.py:724
+#: virtualBuffers\__init__.py:719
 msgid "Not in a table cell"
 msgstr "não está numa célula de tabela"
 
-#: virtualBuffers\__init__.py:733
+#: virtualBuffers\__init__.py:728
 msgid "edge of table"
 msgstr "lado da tabela"
 
-#: virtualBuffers\__init__.py:743
+#: virtualBuffers\__init__.py:738
 msgid "moves to the next table row"
 msgstr "vai à próxima linha da tabela"
 
-#: virtualBuffers\__init__.py:747
+#: virtualBuffers\__init__.py:742
 msgid "moves to the previous table row"
 msgstr "vai à linha anterior da tabela"
 
-#: virtualBuffers\__init__.py:751
+#: virtualBuffers\__init__.py:746
 msgid "moves to the next table column"
 msgstr "vai à próxima coluna da tabela"
 
-#: virtualBuffers\__init__.py:755
+#: virtualBuffers\__init__.py:750
 msgid "moves to the previous table column"
 msgstr "vai à linha anterior da tabela"
 
-#: virtualBuffers\__init__.py:792
+#: virtualBuffers\__init__.py:787
 msgid "moves to the next heading"
 msgstr "vai ao próximo cabeçalho"
 
-#: virtualBuffers\__init__.py:792
+#: virtualBuffers\__init__.py:787
 msgid "no next heading"
 msgstr "sem cabeçalho seguinte"
 
-#: virtualBuffers\__init__.py:793
+#: virtualBuffers\__init__.py:788
 msgid "moves to the previous heading"
 msgstr "volta ao cabeçalho anterior"
 
-#: virtualBuffers\__init__.py:793
+#: virtualBuffers\__init__.py:788
 msgid "no previous heading"
 msgstr "sem cabeçalho anterior"
 
-#: virtualBuffers\__init__.py:794
+#: virtualBuffers\__init__.py:789
 msgid "moves to the next heading at level 1"
 msgstr "vai ao próximo cabeçalho no nível 1"
 
-#: virtualBuffers\__init__.py:794
+#: virtualBuffers\__init__.py:789
 msgid "no next heading at level 1"
 msgstr "sem cabeçalho seguinte no nível 1"
 
-#: virtualBuffers\__init__.py:795
+#: virtualBuffers\__init__.py:790
 msgid "moves to the previous heading at level 1"
 msgstr "volta ao cabeçalho anterior no nível 1"
 
-#: virtualBuffers\__init__.py:795
+#: virtualBuffers\__init__.py:790
 msgid "no previous heading at level 1"
 msgstr "sem cabeçalho anterior no nível 1"
 
-#: virtualBuffers\__init__.py:796
+#: virtualBuffers\__init__.py:791
 msgid "moves to the next heading at level 2"
 msgstr "vai ao próximo cabeçalho no nível 2"
 
-#: virtualBuffers\__init__.py:796
+#: virtualBuffers\__init__.py:791
 msgid "no next heading at level 2"
 msgstr "sem cabeçalho seguinte no nível 2"
 
-#: virtualBuffers\__init__.py:797
+#: virtualBuffers\__init__.py:792
 msgid "moves to the previous heading at level 2"
 msgstr "volta ao cabeçalho anterior no nível 2"
 
-#: virtualBuffers\__init__.py:797
+#: virtualBuffers\__init__.py:792
 msgid "no previous heading at level 2"
 msgstr "sem cabeçalho anterior no nível 2"
 
-#: virtualBuffers\__init__.py:798
+#: virtualBuffers\__init__.py:793
 msgid "moves to the next heading at level 3"
 msgstr "vai ao próximo cabeçalho no nível 3"
 
-#: virtualBuffers\__init__.py:798
+#: virtualBuffers\__init__.py:793
 msgid "no next heading at level 3"
 msgstr "sem cabeçalho seguinte no nível 3"
 
-#: virtualBuffers\__init__.py:799
+#: virtualBuffers\__init__.py:794
 msgid "moves to the previous heading at level 3"
 msgstr "volta ao cabeçalho anterior no nível 3"
 
-#: virtualBuffers\__init__.py:799
+#: virtualBuffers\__init__.py:794
 msgid "no previous heading at level 3"
 msgstr "sem cabeçalho anterior no nível 3"
 
-#: virtualBuffers\__init__.py:800
+#: virtualBuffers\__init__.py:795
 msgid "moves to the next heading at level 4"
 msgstr "vai ao próximo cabeçalho no nível 4"
 
-#: virtualBuffers\__init__.py:800
+#: virtualBuffers\__init__.py:795
 msgid "no next heading at level 4"
 msgstr "sem cabeçalho seguinte no nível 4"
 
-#: virtualBuffers\__init__.py:801
+#: virtualBuffers\__init__.py:796
 msgid "moves to the previous heading at level 4"
 msgstr "volta ao cabeçalho anterior no nível 4"
 
-#: virtualBuffers\__init__.py:801
+#: virtualBuffers\__init__.py:796
 msgid "no previous heading at level 4"
 msgstr "sem cabeçalho anterior no nível 4"
 
-#: virtualBuffers\__init__.py:802
+#: virtualBuffers\__init__.py:797
 msgid "moves to the next heading at level 5"
 msgstr "vai ao próximo cabeçalho no nível 5"
 
-#: virtualBuffers\__init__.py:802
+#: virtualBuffers\__init__.py:797
 msgid "no next heading at level 5"
 msgstr "sem cabeçalho seguinte no nível 5"
 
-#: virtualBuffers\__init__.py:803
+#: virtualBuffers\__init__.py:798
 msgid "moves to the previous heading at level 5"
 msgstr "volta ao cabeçalho anterior no nível 5"
 
-#: virtualBuffers\__init__.py:803
+#: virtualBuffers\__init__.py:798
 msgid "no previous heading at level 5"
 msgstr "sem cabeçalho anterior no nível 5"
 
-#: virtualBuffers\__init__.py:804
+#: virtualBuffers\__init__.py:799
 msgid "moves to the next heading at level 6"
 msgstr "vai ao próximo cabeçalho no nível 6"
 
-#: virtualBuffers\__init__.py:804
+#: virtualBuffers\__init__.py:799
 msgid "no next heading at level 6"
 msgstr "sem cabeçalho seguinte no nível 6"
 
-#: virtualBuffers\__init__.py:805
+#: virtualBuffers\__init__.py:800
 msgid "moves to the previous heading at level 6"
 msgstr "volta ao cabeçalho anterior no nível 6"
 
-#: virtualBuffers\__init__.py:805
+#: virtualBuffers\__init__.py:800
 msgid "no previous heading at level 6"
 msgstr "sem cabeçalho anterior no nível 6"
 
-#: virtualBuffers\__init__.py:806
+#: virtualBuffers\__init__.py:801
 msgid "moves to the next table"
 msgstr "vai à próxima tabela"
 
-#: virtualBuffers\__init__.py:806
+#: virtualBuffers\__init__.py:801
 msgid "no next table"
 msgstr "sem tabela seguinte"
 
-#: virtualBuffers\__init__.py:807
+#: virtualBuffers\__init__.py:802
 msgid "moves to the previous table"
 msgstr "vai à próxima tabela"
 
-#: virtualBuffers\__init__.py:807
+#: virtualBuffers\__init__.py:802
 msgid "no previous table"
 msgstr "sem tabela anterior"
 
-#: virtualBuffers\__init__.py:808
+#: virtualBuffers\__init__.py:803
 msgid "moves to the next link"
 msgstr "vai ao próximo linque"
 
-#: virtualBuffers\__init__.py:808
+#: virtualBuffers\__init__.py:803
 msgid "no next link"
 msgstr "sem linque seguinte"
 
-#: virtualBuffers\__init__.py:809
+#: virtualBuffers\__init__.py:804
 msgid "moves to the previous link"
 msgstr "volta ao linque anterior"
 
-#: virtualBuffers\__init__.py:809
+#: virtualBuffers\__init__.py:804
 msgid "no previous link"
 msgstr "sem linque anterior"
 
-#: virtualBuffers\__init__.py:810
+#: virtualBuffers\__init__.py:805
 msgid "moves to the next visited link"
 msgstr "vai ao próximo linque visitado"
 
-#: virtualBuffers\__init__.py:810
+#: virtualBuffers\__init__.py:805
 msgid "no next visited link"
 msgstr "sem linque visitado seguinte"
 
-#: virtualBuffers\__init__.py:811
+#: virtualBuffers\__init__.py:806
 msgid "moves to the previous visited link"
 msgstr "volta ao linque visitado anterior"
 
-#: virtualBuffers\__init__.py:811
+#: virtualBuffers\__init__.py:806
 msgid "no previous visited link"
 msgstr "sem linque visitado anterior"
 
-#: virtualBuffers\__init__.py:812
+#: virtualBuffers\__init__.py:807
 msgid "moves to the next unvisited link"
 msgstr "vai ao próximo linque não visitado"
 
-#: virtualBuffers\__init__.py:812
+#: virtualBuffers\__init__.py:807
 msgid "no next unvisited link"
 msgstr "sem linque não visitado seguinte"
 
-#: virtualBuffers\__init__.py:813
+#: virtualBuffers\__init__.py:808
 msgid "moves to the previous unvisited link"
 msgstr "volta ao linque não visitado anterior"
 
-#: virtualBuffers\__init__.py:813
+#: virtualBuffers\__init__.py:808
 msgid "no previous unvisited link"
 msgstr "sem linque não visitado anterior"
 
-#: virtualBuffers\__init__.py:814
+#: virtualBuffers\__init__.py:809
 msgid "moves to the next form field"
 msgstr "vai ao próximo campo de formulário"
 
-#: virtualBuffers\__init__.py:814
+#: virtualBuffers\__init__.py:809
 msgid "no next form field"
 msgstr "sem campo de formulário seguinte"
 
-#: virtualBuffers\__init__.py:815
+#: virtualBuffers\__init__.py:810
 msgid "moves to the previous form field"
 msgstr "volta ao campo de formulário anterior"
 
-#: virtualBuffers\__init__.py:815
+#: virtualBuffers\__init__.py:810
 msgid "no previous form field"
 msgstr "sem campo de formulário anterior"
 
-#: virtualBuffers\__init__.py:816
+#: virtualBuffers\__init__.py:811
 msgid "moves to the next list"
 msgstr "vai à próxima lista"
 
-#: virtualBuffers\__init__.py:816
+#: virtualBuffers\__init__.py:811
 msgid "no next list"
 msgstr "sem lista seguinte"
 
-#: virtualBuffers\__init__.py:817
+#: virtualBuffers\__init__.py:812
 msgid "moves to the previous list"
 msgstr "volta para lista anterior"
 
-#: virtualBuffers\__init__.py:817
+#: virtualBuffers\__init__.py:812
 msgid "no previous list"
 msgstr "sem lista anterior"
 
-#: virtualBuffers\__init__.py:818
+#: virtualBuffers\__init__.py:813
 msgid "moves to the next list item"
 msgstr "vai ao próximo item de lista"
 
-#: virtualBuffers\__init__.py:818
+#: virtualBuffers\__init__.py:813
 msgid "no next list item"
 msgstr "sem item de lista seguinte"
 
-#: virtualBuffers\__init__.py:819
+#: virtualBuffers\__init__.py:814
 msgid "moves to the previous list item"
 msgstr "volta ao item de lista"
 
-#: virtualBuffers\__init__.py:819
+#: virtualBuffers\__init__.py:814
 msgid "no previous list item"
 msgstr "sem item de lista anterior"
 
-#: virtualBuffers\__init__.py:820
+#: virtualBuffers\__init__.py:815
 msgid "moves to the next button"
 msgstr "vai ao próximo botão"
 
-#: virtualBuffers\__init__.py:820
+#: virtualBuffers\__init__.py:815
 msgid "no next button"
 msgstr "sem botão seguinte"
 
-#: virtualBuffers\__init__.py:821
+#: virtualBuffers\__init__.py:816
 msgid "moves to the previous button"
 msgstr "volta ao botão anterior"
 
-#: virtualBuffers\__init__.py:821
+#: virtualBuffers\__init__.py:816
 msgid "no previous button"
 msgstr "sem botão anterior"
 
-#: virtualBuffers\__init__.py:822
+#: virtualBuffers\__init__.py:817
 msgid "moves to the next edit field"
 msgstr "vai ao próximo campo de texto"
 
-#: virtualBuffers\__init__.py:822
+#: virtualBuffers\__init__.py:817
 msgid "no next edit field"
 msgstr "sem campo de texto seguinte"
 
-#: virtualBuffers\__init__.py:823
+#: virtualBuffers\__init__.py:818
 msgid "moves to the previous edit field"
 msgstr "volta ao campo de texto anterior"
 
-#: virtualBuffers\__init__.py:823
+#: virtualBuffers\__init__.py:818
 msgid "no previous edit field"
 msgstr "sem texto de formulário anterior"
 
-#: virtualBuffers\__init__.py:824
+#: virtualBuffers\__init__.py:819
 msgid "moves to the next frame"
 msgstr "vai à próxima freime"
 
-#: virtualBuffers\__init__.py:824
+#: virtualBuffers\__init__.py:819
 msgid "no next frame"
 msgstr "sem freime seguinte"
 
-#: virtualBuffers\__init__.py:825
+#: virtualBuffers\__init__.py:820
 msgid "moves to the previous frame"
 msgstr "vai para freime anterior"
 
-#: virtualBuffers\__init__.py:825
+#: virtualBuffers\__init__.py:820
 msgid "no previous frame"
 msgstr "sem freime anterior"
 
-#: virtualBuffers\__init__.py:826
+#: virtualBuffers\__init__.py:821
 msgid "moves to the next separator"
 msgstr "vai ao próximo separador"
 
-#: virtualBuffers\__init__.py:826
+#: virtualBuffers\__init__.py:821
 msgid "no next separator"
 msgstr "sem separador seguinte"
 
-#: virtualBuffers\__init__.py:827
+#: virtualBuffers\__init__.py:822
 msgid "moves to the previous separator"
 msgstr "volta ao separador anterior"
 
-#: virtualBuffers\__init__.py:827
+#: virtualBuffers\__init__.py:822
 msgid "no previous separator"
 msgstr "sem separador anterior"
 
-#: virtualBuffers\__init__.py:828
+#: virtualBuffers\__init__.py:823
 msgid "moves to the next radio button"
 msgstr "vai ao próximo botão de opção"
 
-#: virtualBuffers\__init__.py:828
+#: virtualBuffers\__init__.py:823
 msgid "no next radio button"
 msgstr "sem botão de opção seguinte"
 
-#: virtualBuffers\__init__.py:829
+#: virtualBuffers\__init__.py:824
 msgid "moves to the previous radio button"
 msgstr "volta ao botão de opção anterior"
 
-#: virtualBuffers\__init__.py:829
+#: virtualBuffers\__init__.py:824
 msgid "no previous radio button"
 msgstr "sem botão de opção anterior"
 
-#: virtualBuffers\__init__.py:830
+#: virtualBuffers\__init__.py:825
 msgid "moves to the next combo box"
 msgstr "vai à próxima caixa de combinação"
 
-#: virtualBuffers\__init__.py:830
+#: virtualBuffers\__init__.py:825
 msgid "no next combo box"
 msgstr "sem caixa de combinação seguinte"
 
-#: virtualBuffers\__init__.py:831
+#: virtualBuffers\__init__.py:826
 msgid "moves to the previous combo box"
 msgstr "volta à caixa de combinação anterior"
 
-#: virtualBuffers\__init__.py:831
+#: virtualBuffers\__init__.py:826
 msgid "no previous combo box"
 msgstr "sem caixa de combinação anterior"
 
-#: virtualBuffers\__init__.py:832
+#: virtualBuffers\__init__.py:827
 msgid "moves to the next check box"
 msgstr "vai à próxima caixa de seleção"
 
-#: virtualBuffers\__init__.py:832
+#: virtualBuffers\__init__.py:827
 msgid "no next check box"
 msgstr "sem caixa de seleção seguinte"
 
-#: virtualBuffers\__init__.py:833
+#: virtualBuffers\__init__.py:828
 msgid "moves to the previous check box"
 msgstr "volta à caixa de seleção anterior"
 
-#: virtualBuffers\__init__.py:833
+#: virtualBuffers\__init__.py:828
 msgid "no previous check box"
 msgstr "sem caixa de seleção anterior"
 
-#: virtualBuffers\__init__.py:834
+#: virtualBuffers\__init__.py:829
 msgid "moves to the next graphic"
 msgstr "vai ao próximo gráfico"
 
-#: virtualBuffers\__init__.py:834
+#: virtualBuffers\__init__.py:829
 msgid "no next graphic"
 msgstr "sem gráfico seguinte"
 
-#: virtualBuffers\__init__.py:835
+#: virtualBuffers\__init__.py:830
 msgid "moves to the previous graphic"
 msgstr "volta ao gráfico anterior"
 
-#: virtualBuffers\__init__.py:835
+#: virtualBuffers\__init__.py:830
 msgid "no previous graphic"
 msgstr "sem gráfico anterior"
 
-#: virtualBuffers\__init__.py:836
+#: virtualBuffers\__init__.py:831
 msgid "moves to the next block quote"
 msgstr "vai ao próximo bloco de citação"
 
-#: virtualBuffers\__init__.py:836
+#: virtualBuffers\__init__.py:831
 msgid "no next block quote"
 msgstr "sem bloco de citação seguinte"
 
-#: virtualBuffers\__init__.py:837
+#: virtualBuffers\__init__.py:832
 msgid "moves to the previous block quote"
 msgstr "vai ao bloco de citação anterior"
 
-#: virtualBuffers\__init__.py:837
+#: virtualBuffers\__init__.py:832
 msgid "no previous block quote"
 msgstr "sem bloco de citação anterior"

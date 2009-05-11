@@ -6,10 +6,16 @@
 
 import IAccessibleHandler
 import oleacc
+import controlTypes
 from . import IAccessible
-import textHandler
+import textInfos
 
 class Mozilla(IAccessible):
+
+	def _get_beTransparentToMouse(self):
+		if not hasattr(self,'IAccessibleTextObject') and self.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in self.states:
+			return True
+		return super(Mozilla,self).beTransparentToMouse
 
 	def _get_description(self):
 		rawDescription=super(Mozilla,self).description
@@ -63,5 +69,5 @@ class Label(Mozilla):
 	def _get_name(self):
 		name=super(Label,self)._get_name()
 		if not name or name=="":
-			name=self.makeTextInfo(textHandler.POSITION_ALL).text
+			name=self.makeTextInfo(textInfos.POSITION_ALL).text
 		return name
