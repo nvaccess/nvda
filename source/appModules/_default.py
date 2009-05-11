@@ -604,7 +604,7 @@ class AppModule(appModuleHandler.AppModule):
 		try:
 			info=o.makeTextInfo(textInfos.POSITION_CARET)
 		except NotImplementedError:
-			info=o.makeTextInfo(textInfos.POSITION_FIRST)
+			return
 		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 	script_sayAll.__doc__ = _("reads from the system caret up to the end of the text, moving the caret as it goes")
 
