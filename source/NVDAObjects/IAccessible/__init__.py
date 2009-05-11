@@ -582,7 +582,7 @@ the NVDAObject for IAccessible
 		return res if isinstance(res,int) else 0
 
 	def _get_states(self):
-		states=set()
+		states=super(IAccessible, self).states
 		try:
 			IAccessibleStates=self.IAccessibleStates
 		except:
