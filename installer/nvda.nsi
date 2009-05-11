@@ -71,6 +71,9 @@ page custom pagePrevInstall leavePagePrevInstall
 ;Directory selection page
 !insertmacro MUI_PAGE_DIRECTORY
 
+;Components selection page
+!insertmacro MUI_PAGE_COMPONENTS
+
 ;Start menu page
 Var StartMenuFolder
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKLM"
@@ -170,8 +173,7 @@ var prevUninstallChoice
 ;-----
 ;Sections
 
-;The only installable section
-Section "install"
+Section "-NVDA"
 SetShellVarContext all
 SetOutPath "$INSTDIR"
 ; open and close uninstallation log after ennumerating all the files being copied
@@ -214,10 +216,17 @@ WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString" "$INSTDIR\U
 WriteRegStr ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "" $INSTDIR
  SectionEnd
 
+section "nvda service (Windows logon / Security dialog support)"
+exec "$INSTDIR\nvda_service.exe --startup auto install"
+exec "$INSTDIR\nvda_service.exe start"
+SectionEnd
+
 ;The uninstall section
 Section "Uninstall"
 SetShellVarContext all
-
+;Stop and uninstall the service
+exec "$INSTDIR\nvda_service.exe stop"
+exec "$INSTDIR\nvda_service.exe remove"
 ; Uninstall libraries
 !insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\NVDAHelper.dll"
 !insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\VBufBase.dll"
