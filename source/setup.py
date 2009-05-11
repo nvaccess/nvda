@@ -116,6 +116,7 @@ setup(
 		"product_version": version,
 		"copyright": copyright,
 		"uac_info": ("requireAdministrator", False),
+		"cmdline_style": "pywin32",
 	}],
 	options = {"py2exe": {
 		"bundle_files": 3,
