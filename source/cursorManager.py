@@ -285,6 +285,10 @@ class ReviewCursorManager(CursorManager):
 	def makeTextInfo(self, position):
 		if position == textInfos.POSITION_SELECTION:
 			return self.selection
+		elif position == textInfos.POSITION_CARET:
+			sel = self.selection
+			sel.collapse()
+			return sel
 		return super(ReviewCursorManager, self).makeTextInfo(position)
 
 	def _get_selection(self):
