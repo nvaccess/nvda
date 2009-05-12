@@ -583,6 +583,8 @@ the NVDAObject for IAccessible
 
 	def _get_states(self):
 		states=set()
+		if self.event_objectID in (IAccessibleHandler.OBJID_CLIENT, IAccessibleHandler.OBJID_WINDOW) and self.event_childID == 0:
+			states.update(super(IAccessible, self).states)
 		try:
 			IAccessibleStates=self.IAccessibleStates
 		except:
