@@ -133,6 +133,11 @@ class GeneralSettingsDialog(SettingsDialog):
 		if not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		settingsSizer.Add(self.startAfterLogonCheckBox)
+		self.startOnLogonScreenCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("Use NVDA on the Windows logon screen"))
+		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
+		if not config.isServiceInstalled():
+			self.startOnLogonScreenCheckBox.Disable()
+		settingsSizer.Add(self.startOnLogonScreenCheckBox)
 
 	def postInit(self):
 		self.languageList.SetFocus()
@@ -154,6 +159,8 @@ class GeneralSettingsDialog(SettingsDialog):
 		logHandler.setLogLevelFromConfig()
 		if self.startAfterLogonCheckBox.IsEnabled():
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
+		if self.startOnLogonScreenCheckBox.IsEnabled():
+			config.setStartOnLogonScreen(self.startOnLogonScreenCheckBox.GetValue())
 		if self.oldLanguage!=newLanguage:
 			if wx.MessageDialog(self,_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING).ShowModal()==wx.ID_OK:
 				config.save()

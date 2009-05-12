@@ -223,3 +223,31 @@ def setStartAfterLogon(enable):
 		_winreg.SetValueEx(k, u"nvda", None, _winreg.REG_SZ, sys.argv[0])
 	else:
 		_winreg.DeleteValue(k, u"nvda")
+
+SERVICE_PATH = os.path.join(os.getcwdu(), "nvda_service.exe")
+
+def isServiceInstalled():
+	if not os.path.isfile(SERVICE_PATH):
+		return False
+	try:
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, ur"SYSTEM\CurrentControlSet\Services\nvda")
+		val = _winreg.QueryValueEx(k, u"ImagePath")[0].replace(u'"', u'')
+		return os.stat(val) == os.stat(SERVICE_PATH)
+	except (WindowsError, OSError):
+		return False
+
+NVDA_REGKEY = ur"SOFTWARE\NVDA"
+
+def getStartOnLogonScreen():
+	try:
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
+		return bool(_winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
+	except WindowsError:
+		return False
+
+def _setStartOnLogonScreen(enable):
+	k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY, 0, _winreg.KEY_WRITE)
+	_winreg.SetValueEx(k, u"startOnLogonScreen", None, _winreg.REG_DWORD, int(enable))
+
+def setStartOnLogonScreen(enable):
+	_setStartOnLogonScreen(enable)
