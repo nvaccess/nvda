@@ -6,6 +6,7 @@ import win32service
 import sys
 import os
 import time
+import _winreg
 
 CREATE_UNICODE_ENVIRONMENT=1024
 INFINITE = 0xffffffff
@@ -163,6 +164,13 @@ def execBg(func):
 	t.setDaemon(True)
 	t.start()
 
+def shouldStartOnLogonScreen():
+	try:
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, ur"SOFTWARE\NVDA")
+		return bool(_winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
+	except WindowsError:
+		return False
+
 class NVDAService(win32serviceutil.ServiceFramework):
 
 	_svc_name_="nvda"
@@ -185,8 +193,9 @@ class NVDAService(win32serviceutil.ServiceFramework):
 			self.handleDesktopSwitch()
 			execBg(self.desktopSwitchSupervisor)
 		else:
-			# We're at the logon screen, so always start NVDA.
-			execBg(self.startLauncher)
+			# We're at the logon screen.
+			if shouldStartOnLogonScreen():
+				execBg(self.startLauncher)
 			# The desktop switch supervisor will be started by the logon event.
 
 	def desktopSwitchSupervisor(self):
@@ -215,10 +224,10 @@ class NVDAService(win32serviceutil.ServiceFramework):
 		with self.launcherLock:
 			self.launcherStarted = False
 
-		if not self.isSessionLoggedOn or isUserRunningNVDA(self.session):
+		if (not self.isSessionLoggedOn and shouldStartOnLogonScreen()) or isUserRunningNVDA(self.session):
 			self.startLauncher()
 		else:
-			debug("not starting launcher; session logged on and user not running NVDA")
+			debug("not starting launcher")
 
 	def SvcOtherEx(self, control, eventType, data):
 		if control == win32service.SERVICE_CONTROL_SESSIONCHANGE:
@@ -237,7 +246,8 @@ class NVDAService(win32serviceutil.ServiceFramework):
 			debug("logoff %d" % session)
 			self.isSessionLoggedOn = False
 			# We may be heading back to the logon screen.
-			execBg(self.startLauncher)
+			if shouldStartOnLogonScreen():
+				execBg(self.startLauncher)
 		elif event == WTS_SESSION_LOCK:
 			debug("lock %d" % session)
 			if session == self.session:
