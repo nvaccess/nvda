@@ -13,6 +13,14 @@ import comtypes.gen
 import comInterfaces
 comtypes.gen.__path__.append(comInterfaces.__path__[0])
 
+#A fix for a bug in comtypes
+#Definition of ITypeLib::ReleaseTLibAttr has hresult return type, should be void
+from comtypes.typeinfo import ITypeLib
+del ITypeLib.ReleaseTLibAttr
+del ITypeLib._ITypeLib__com_ReleaseTLibAttr
+ITypeLib._methods_[9]=(None,)+ITypeLib._methods_[9][1:]
+ITypeLib._make_methods(ITypeLib._methods_)
+
 import sys
 import nvwave
 import os
