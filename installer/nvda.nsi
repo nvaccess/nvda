@@ -37,6 +37,7 @@ SetOverwrite ifdiff
 SetDateSave on
 XPStyle on
 InstProgressFlags Smooth
+RequestExecutionLevel user /* RequestExecutionLevel REQUIRED! */
 !define MUI_ABORTWARNING ;Should ask to exit
 !define MUI_UNINSTALLER ;We want an uninstaller to be generated
 
@@ -159,6 +160,8 @@ Var StartMenuFolder
 ReserveFile "${NSISDIR}\Plugins\system.dll"
 ReserveFile "${NSISDIR}\Plugins\banner.dll"
 ReserveFile "waves\${SNDLogo}"
+ReserveFile "UAC.dll"
+!addplugindir "."
 
 ;-----
 ;Include install logger code (depends on some above settings)
@@ -260,6 +263,18 @@ SectionEnd
 ;Functions
 
 Function .onInit
+UAC::RunElevated
+;If couldn't change user then fail
+strcmp 0 $0 +1 elevationFail
+;If we are the outer user process, then silently quit
+strcmp 1 $1 +1 +2
+quit
+;If we are now an admin, success
+strcmp 1 $3 elevationSuccess
+elevationFail:
+MessageBox mb_iconstop "Unable to elevate, error $0"
+quit
+elevationSuccess:
 strcpy $runAppOnInstSuccess "0"
 ; Fix an error from previous installers where the "nvda" file would be left behind after uninstall
 IfFileExists "$PROGRAMFILES\NVDA" 0
@@ -370,7 +385,7 @@ function .onInstSuccess
 !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
 Execwait "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -q"
 strcmp $runAppOnInstSuccess "1" +1 end
-Exec "$INSTDIR\${NVDAApp}"
+uac::exec "" "$INSTDIR\${NVDAApp}" "" ""
 end:
 FunctionEnd
 
@@ -381,6 +396,7 @@ functionEnd
 Function .onGUIEnd
 ; Clean up the temporary folder
 rmdir /R /REBOOTOK "$PLUGINSDIR\${NVDATempDir}"
+UAC::Unload ;Must call unload!
 FunctionEnd
 
 function makeRunAppOnInstSuccess
