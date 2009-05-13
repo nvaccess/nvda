@@ -3,18 +3,23 @@ import comtypes.client
 from comtypes import *
 import weakref
 import time
-from comInterfaces.UIAutomationClient import *
 import api
 import queueHandler
 import controlTypes
 import winUser
-import NVDAObjects.UIA
 import eventHandler
 from logHandler import log
 
+try:
+	comtypes.client.GetModule('UIAutomationCore.dll')
+	from comtypes.gen.UIAutomationClient import *
+	isUIAAvailable=True
+except (WindowsError, ImportError):
+	isUIAAvailable=False
+
 badUIAWindowClassNames=["SysTreeView32","WuDuiListView","ComboBox"]
 
-UIAControlTypesToNVDARoles={
+if isUIAAvailable: UIAControlTypesToNVDARoles={
 	UIA_ButtonControlTypeId:controlTypes.ROLE_BUTTON,
 	UIA_CalendarControlTypeId:controlTypes.ROLE_CALENDAR,
 	UIA_CheckBoxControlTypeId:controlTypes.ROLE_CHECKBOX,
@@ -56,7 +61,7 @@ UIAControlTypesToNVDARoles={
 	UIA_SeparatorControlTypeId:controlTypes.ROLE_SEPARATOR,
 }
 
-UIAPropertyIdsToNVDAEventNames={
+if isUIAAvailable: UIAPropertyIdsToNVDAEventNames={
 	UIA_NamePropertyId:"nameChange",
 	UIA_HelpTextPropertyId:"descriptionChange",
 	UIA_ExpandCollapseExpandCollapseStatePropertyId:"stateChange",
@@ -66,7 +71,7 @@ UIAPropertyIdsToNVDAEventNames={
 	UIA_RangeValueValuePropertyId:"valueChange",
 }
 
-UIAEventIdsToNVDAEventNames={
+if isUIAAvailable: UIAEventIdsToNVDAEventNames={
 	UIA_Text_TextChangedEventId:"textChanged",
 	UIA_SelectionItem_ElementSelectedEventId:"stateChange",
 	#UIA_MenuOpenedEventId:"gainFocus",
@@ -79,54 +84,55 @@ UIAEventIdsToNVDAEventNames={
 	#UIA_ToolTipClosedEventId:"hide",
 }
 
+if isUIAAvailable: 
+	class UIAEventListener(COMObject):
+		_com_interfaces_=[IUIAutomationEventHandler,IUIAutomationFocusChangedEventHandler,IUIAutomationPropertyChangedEventHandler,IUIAutomationStructureChangedEventHandler]
 
-handler=None
+		def __init__(self,UIAHandlerInstance):
+			self.UIAHandlerRef=weakref.ref(UIAHandlerInstance)
+			super(UIAEventListener,self).__init__()
 
-class UIAEventListener(COMObject):
-	_com_interfaces_=[IUIAutomationEventHandler,IUIAutomationFocusChangedEventHandler,IUIAutomationPropertyChangedEventHandler,IUIAutomationStructureChangedEventHandler]
+		def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
+			NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
+			if not NVDAEventName:
+				return
+			if not self.UIAHandlerRef().isNativeUIAElement(sender):
+				return
+			import NVDAObjects.UIA
+			obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+			if not obj:
+				return
+			eventHandler.queueEvent(NVDAEventName,obj)
 
-	def __init__(self,UIAHandlerInstance):
-		self.UIAHandlerRef=weakref.ref(UIAHandlerInstance)
-		super(UIAEventListener,self).__init__()
+		def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
+			if not self.UIAHandlerRef().isNativeUIAElement(sender):
+				return
+			try:
+				hasFocus=sender.currentHasKeyboardFocus
+			except COMError:
+				return
+			if not hasFocus: 
+				return
+			import NVDAObjects.UIA
+			if isinstance(eventHandler.lastQueuedFocusObject,NVDAObjects.UIA.UIA) and self.UIAHandlerRef().clientObject.compareElements(sender,eventHandler.lastQueuedFocusObject.UIAElement):
+				return
+			obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+			eventHandler.queueEvent("gainFocus",obj)
 
-	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
-		NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
-		if not NVDAEventName:
-			return
-		if not self.UIAHandlerRef().isNativeUIAElement(sender):
-			return
-		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
-		if not obj:
-			return
-		eventHandler.queueEvent(NVDAEventName,obj)
+		def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(self,sender,propertyId,newValue):
+			NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
+			if not NVDAEventName:
+				return
+			if not self.UIAHandlerRef().isNativeUIAElement(sender):
+				return
+			import NVDAObjects.UIA
+			obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+			if not obj:
+				return
+			eventHandler.queueEvent(NVDAEventName,obj)
 
-	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
-		if not self.UIAHandlerRef().isNativeUIAElement(sender):
-			return
-		try:
-			hasFocus=sender.currentHasKeyboardFocus
-		except COMError:
-			return
-		if not hasFocus: 
-			return
-		if isinstance(eventHandler.lastQueuedFocusObject,NVDAObjects.UIA.UIA) and self.UIAHandlerRef().clientObject.compareElements(sender,eventHandler.lastQueuedFocusObject.UIAElement):
-			return
-		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
-		eventHandler.queueEvent("gainFocus",obj)
-
-	def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(self,sender,propertyId,newValue):
-		NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
-		if not NVDAEventName:
-			return
-		if not self.UIAHandlerRef().isNativeUIAElement(sender):
-			return
-		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
-		if not obj:
-			return
-		eventHandler.queueEvent(NVDAEventName,obj)
-
-	def IUIAutomationStructureChangedEventHandler_HandleStructureChangedEvent(self,sender,changeType,runtimeID):
-		pass
+		def IUIAutomationStructureChangedEventHandler_HandleStructureChangedEvent(self,sender,changeType,runtimeID):
+			pass
 
 class UIAHandler(object):
 
@@ -161,7 +167,6 @@ class UIAHandler(object):
 			return isUIA
 		return v[0]
 
-			
 	def isNativeUIAElement(self,UIAElement):
 		try:
 			UIAElement=self.windowTreeWalker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
@@ -182,9 +187,12 @@ class UIAHandler(object):
 	def unregisterEvents(self):
 		pass #self.clientObject.RemoveAllEventHandlers()
 
+handler=None
+
 def initialize():
 	global handler
-	handler=UIAHandler()
+	if isUIAAvailable:
+		handler=UIAHandler()
 
 def terminate():
 	global handler
