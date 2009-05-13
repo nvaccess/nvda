@@ -19,7 +19,8 @@ winEventHookID=None
 
 def handleTypedCharacter(window,wParam,lParam):
 	focus=api.getFocusObject()
-	eventHandler.queueEvent("typedCharacter",focus,ch=unichr(wParam))
+	if focus.windowClassName!="ConsoleWindowClass":
+		eventHandler.queueEvent("typedCharacter",focus,ch=unichr(wParam))
 
 @ctypes.WINFUNCTYPE(None,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int)
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
