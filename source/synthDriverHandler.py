@@ -58,15 +58,15 @@ def setSynth(name):
 		return True
 	if name=='auto':
 		name='espeak'
+	if _curSynth:
+		_curSynth.cancel()
+		_curSynth.terminate()
+		prevSynthName = _curSynth.name
+		_curSynth = None
+	else:
+		prevSynthName = None
 	try:
 		newSynth=__import__(name,globals(),None,[]).SynthDriver
-		if _curSynth:
-			_curSynth.cancel()
-			_curSynth.terminate()
-			prevSynthName = _curSynth.name
-			_curSynth = None
-		else:
-			prevSynthName = None
 		newSynth=newSynth()
 		updatedConfig=config.updateSynthConfig(name)
 		if not updatedConfig:
