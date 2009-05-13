@@ -60,14 +60,13 @@ def setSynth(name):
 		name='espeak'
 	try:
 		newSynth=__import__(name,globals(),None,[]).SynthDriver
-		isSingleton = newSynth.flags & SynthDriver.fSingleton == SynthDriver.fSingleton
 		if _curSynth:
-			isSingleton |= _curSynth.flags & SynthDriver.fSingleton == SynthDriver.fSingleton
-		if _curSynth and (_curSynth.name == newSynth.name or isSingleton):
 			_curSynth.cancel()
 			_curSynth.terminate()
-			_curSynthName = _curSynth.name
+			prevSynthName = _curSynth.name
 			_curSynth = None
+		else:
+			prevSynthName = None
 		newSynth=newSynth()
 		updatedConfig=config.updateSynthConfig(name)
 		if not updatedConfig:
@@ -106,9 +105,6 @@ def setSynth(name):
 				config.conf["speech"][name]["inflection"]=newSynth.inflection
 			if newSynth.hasVolume:
 				config.conf["speech"][name]["volume"]=newSynth.volume
-		if _curSynth:
-			_curSynth.cancel()
-			_curSynth.terminate()
 		_curSynth=newSynth
 		config.conf["speech"]["synth"]=name
 		log.info("Loaded synthDriver %s"%name)
@@ -118,12 +114,12 @@ def setSynth(name):
 		return True
 	except:
 		log.error("setSynth", exc_info=True)
-		if not _curSynth and name not in ['espeak','silence']:
+		if prevSynthName:
+			setSynth(prevSynthName)
+		elif name not in ('espeak','silence'):
 			setSynth('espeak')
-		elif not _curSynth and name=='espeak':
+		elif name=='espeak':
 			setSynth('silence')
-		elif not _curSynth and isSingleton:
-			setSynth(_curSynthName)
 		return False
 
 class SynthDriver(baseObject.AutoPropertyObject):
@@ -155,10 +151,6 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@type inflection: int
 	@ivar lastIndex: The index of the chunk of text which was last spoken or C{None} if no index.
 	@type lastIndex: int
-	@ivar flags: The additional flags of the driver, 0 by default.
-	@type flags: int
-	@ivar fSingleton: Use this flag to specify that this synthDriver can not be run in coincidence with another, so NVDA will terminate current synthesizer before attempting to initialize this one.
-	@type fSingleton: int
 	"""
 
 	#: The name of the synth; must be the original module file name.
@@ -178,9 +170,6 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	hasVariant = False
 	hasInflection = False
 	inflectionMinStep = 1
-	flags = 0
-	#Use bitvise operators & and | for manipulating following flags
-	fSingleton = 0x1
 
 	@classmethod
 	def check(cls):
