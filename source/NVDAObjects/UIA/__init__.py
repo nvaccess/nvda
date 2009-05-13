@@ -7,13 +7,13 @@ import eventHandler
 import controlTypes
 import speech
 import api
-import textHandler
+import textInfos
 from logHandler import log
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, AutoSelectDetectionNVDAObject
 from NVDAObjects.progressBar import ProgressBar
 
-class UIATextInfo(textHandler.TextInfo):
+class UIATextInfo(textInfos.TextInfo):
 
 	NVDAUnitsToUIAUnits={
 		"character":UIAHandler.TextUnit_Character,
@@ -23,7 +23,7 @@ class UIATextInfo(textHandler.TextInfo):
 	}
 
 	def _getFormatFieldAtRange(self,range,formatConfig):
-		formatField=textHandler.FormatField()
+		formatField=textInfos.FormatField()
 		if formatConfig["reportFontName"]:
 			try:
 				fontNameValue=range.GetAttributeValue(UIAHandler.UIA_FontNameAttributeId)
@@ -44,7 +44,7 @@ class UIATextInfo(textHandler.TextInfo):
 		super(UIATextInfo,self).__init__(obj,position)
 		if isinstance(position,UIAHandler.IUIAutomationTextRange):
 			self._rangeObj=position.Clone()
-		elif position==textHandler.POSITION_CARET or position==textHandler.POSITION_SELECTION:
+		elif position==textInfos.POSITION_CARET or position==textInfos.POSITION_SELECTION:
 			sel=self.obj.UIATextPattern.GetSelection()
 			if sel.length>0:
 				self._rangeObj=sel.getElement(0).clone()
@@ -63,7 +63,7 @@ class UIATextInfo(textHandler.TextInfo):
 		rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
 		rangeObj.ExpandToEnclosingUnit(UIAHandler.TextUnit_Character)
 		formatField=self._getFormatFieldAtRange(rangeObj,formatConfig)
-		field=textHandler.FieldCommand("formatChange",formatField)
+		field=textInfos.FieldCommand("formatChange",formatField)
 		return [field,self.text]
 
 	def _get_text(self):
@@ -409,7 +409,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			if globalVars.caretMovesReviewCursor:
 				try:
-					api.setReviewPosition(self.makeTextInfo(textHandler.POSITION_CARET))
+					api.setReviewPosition(self.makeTextInfo(textInfos.POSITION_CARET))
 				except (NotImplementedError, RuntimeError):
 					pass
 			self.detectPossibleSelectionChange()
