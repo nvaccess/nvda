@@ -7,7 +7,7 @@
 #include <windows.h>
 #include <wchar.h>
 
-#define DLLEXPORT __declspec(dllexport)
+#define DLLEXPORT extern "C" __declspec(dllexport)
 
 //Private variables
 extern HINSTANCE moduleHandle;
