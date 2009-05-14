@@ -29,7 +29,7 @@ WTS_CURRENT_SERVER_HANDLE = 0
 WTSUserName = 5
 
 nvdaExec = os.path.join(sys.prefix,"nvda.exe")
-launcherExec = os.path.join(sys.prefix,"nvda_service_nvdaLauncher.exe")
+slaveExec = os.path.join(sys.prefix,"nvda_slave.exe")
 
 def debug(msg):
 	file(r"c:\windows\temp\nvdaserv", "a").write(msg + "\n")
@@ -262,7 +262,7 @@ class NVDAService(win32serviceutil.ServiceFramework):
 			debug("attempt launcher start")
 			token = getSessionSystemToken(self.session)
 			try:
-				process = executeProcess(ur"WinSta0\Winlogon", token, launcherExec)
+				process = executeProcess(ur"WinSta0\Winlogon", token, slaveExec, u"service_NVDALauncher")
 				self.launcherStarted = True
 				debug("launcher started")
 				windll.kernel32.CloseHandle(process)

@@ -107,7 +107,7 @@ setup(
 			"product_version":version,
 			"copyright":copyright,
 		},
-		"nvda_service_nvdaLauncher.py"
+		"nvda_slave.pyw",
 	],
 	service=[{
 		"modules": ["nvda_service"],
