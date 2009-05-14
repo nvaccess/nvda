@@ -12,6 +12,7 @@ import winUser
 from logHandler import log
 import controlTypes
 import api
+import eventHandler
 from NVDAObjects import NVDAObject
 
 re_WindowsForms=re.compile(r'^WindowsForms[0-9]*\.(.*)\.app\..*$')
@@ -63,6 +64,10 @@ An NVDAObject for a window
 		if JABHandler.isJavaWindow(windowHandle):
 			import NVDAObjects.JAB
 			return NVDAObjects.JAB.JAB
+		import UIAHandler
+		if UIAHandler.handler and UIAHandler.handler.isUIAWindow(windowHandle):
+			import NVDAObjects.UIA
+			return NVDAObjects.UIA.UIA
 		import NVDAObjects.IAccessible
 		return NVDAObjects.IAccessible.IAccessible
 
@@ -73,7 +78,7 @@ An NVDAObject for a window
 		newCls=Window
 		if windowClassName=="#32769":
 			newCls=Desktop
-		elif windowClassName=="#32771":
+		elif windowClassName in ("#32771","TaskSwitcherWnd"):
 			newCls=TaskList
 		elif windowClassName=="Edit":
 			newCls=__import__("edit",globals(),locals(),[]).Edit
@@ -268,6 +273,11 @@ An NVDAObject for a window
 
 class TaskList(Window):
 	isPresentableFocusAncestor = False
+
+	def event_gainFocus(self):
+		api.processPendingEvents(processEventQueue=False)
+		if eventHandler.lastQueuedFocusObject is self:
+			super(TaskList,self).event_gainFocus()
 
 class Desktop(Window):
 

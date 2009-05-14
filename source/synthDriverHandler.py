@@ -35,10 +35,16 @@ def getSynthList():
 		names.add(name)
 		try:
 			synth=__import__(name,globals(),locals(),[]).SynthDriver
+		except:
+			log.error("Error while importing SynthDriver %s"%name,exc_info=True)
+			continue
+		try:
 			if synth.check():
 				synthList.append((synth.name,synth.description))
+			else:
+				log.debugWarning("Synthesizer %s doesn't pass the check, excluding from list"%name)
 		except:
-			pass
+			log.error("",exc_info=True)
 	return synthList
 
 def getSynth():
@@ -52,12 +58,15 @@ def setSynth(name):
 		return True
 	if name=='auto':
 		name='espeak'
+	if _curSynth:
+		_curSynth.cancel()
+		_curSynth.terminate()
+		prevSynthName = _curSynth.name
+		_curSynth = None
+	else:
+		prevSynthName = None
 	try:
 		newSynth=__import__(name,globals(),None,[]).SynthDriver
-		if _curSynth and _curSynth.name == newSynth.name:
-			_curSynth.cancel()
-			_curSynth.terminate()
-			_curSynth = None
 		newSynth=newSynth()
 		updatedConfig=config.updateSynthConfig(name)
 		if not updatedConfig:
@@ -96,9 +105,6 @@ def setSynth(name):
 				config.conf["speech"][name]["inflection"]=newSynth.inflection
 			if newSynth.hasVolume:
 				config.conf["speech"][name]["volume"]=newSynth.volume
-		if _curSynth:
-			_curSynth.cancel()
-			_curSynth.terminate()
 		_curSynth=newSynth
 		config.conf["speech"]["synth"]=name
 		log.info("Loaded synthDriver %s"%name)
@@ -108,9 +114,11 @@ def setSynth(name):
 		return True
 	except:
 		log.error("setSynth", exc_info=True)
-		if not _curSynth and name not in ['espeak','silence']:
+		if prevSynthName:
+			setSynth(prevSynthName)
+		elif name not in ('espeak','silence'):
 			setSynth('espeak')
-		elif not _curSynth and name=='espeak':
+		elif name=='espeak':
 			setSynth('silence')
 		return False
 
@@ -144,6 +152,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@ivar lastIndex: The index of the chunk of text which was last spoken or C{None} if no index.
 	@type lastIndex: int
 	"""
+
 	#: The name of the synth; must be the original module file name.
 	#: @type: str
 	name = ""
