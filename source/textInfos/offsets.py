@@ -146,6 +146,9 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _getStoryLength(self):
 		raise NotImplementedError
 
+	def _getStoryText(self):
+		raise NotImplementedError
+
 	def _getTextRange(self,start,end):
 		raise NotImplementedError
 
@@ -174,7 +177,10 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		raise NotImplementedError
 
 	def _getLineOffsets(self,offset):
-		raise NotImplementedError
+		text=self._getStoryText()
+		start=findStartOfLine(text,offset)
+		end=findEndOfLine(text,offset)
+		return [start,end]
 
 	def _getParagraphOffsets(self,offset):
 		raise NotImplementedError

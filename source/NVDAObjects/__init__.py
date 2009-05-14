@@ -36,12 +36,6 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 		text=self._getStoryText()
 		return text[start:end]
 
-	def _getLineOffsets(self,offset):
-		storyText=self._getStoryText()
-		start=textInfos.offsets.findStartOfLine(storyText,offset)
-		end=textInfos.offsets.findEndOfLine(storyText,offset)
-		return [start,end]
-
 class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 	_dynamicClassCache={}
 

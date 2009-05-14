@@ -604,7 +604,7 @@ class AppModule(appModuleHandler.AppModule):
 		try:
 			info=o.makeTextInfo(textInfos.POSITION_CARET)
 		except NotImplementedError:
-			info=o.makeTextInfo(textInfos.POSITION_FIRST)
+			return
 		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 	script_sayAll.__doc__ = _("reads from the system caret up to the end of the text, moving the caret as it goes")
 
@@ -694,11 +694,6 @@ class AppModule(appModuleHandler.AppModule):
 	script_speakForeground.__doc__ = _("speaks the current foreground object")
 
 	def script_test_navigatorWindowInfo(self,keyPress):
-		import winConsoleHandler
-		speech.speakMessage("width %s, height %s"%(winConsoleHandler.consoleScreenBufferInfo.dwMaximumWindowSize.x,winConsoleHandler.consoleScreenBufferInfo.dwMaximumWindowSize.y))
-		focus=api.getFocusObject()
-		info=focus.makeTextInfo(textInfos.POSITION_CARET)
-		speech.speakMessage("x %s, y %s"%info._consoleCoordFromOffset(0))
 		obj=api.getNavigatorObject()
 		import ctypes
 		import winUser

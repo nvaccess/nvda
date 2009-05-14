@@ -145,6 +145,7 @@ NAVRELATION_LABELLED_BY=0x1002
 NAVRELATION_LABELLED_BY=0x1003
 NAVRELATION_NODE_CHILD_OF=0x1005
 
+import UIAHandler
 import heapq
 import itertools
 import time
@@ -729,14 +730,15 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
-		#ignore  particular objectIDs as we do not support them in winEvents
-		if objectID in (OBJID_SOUND,OBJID_ALERT,OBJID_NATIVEOM):
+		#Ignore all object IDs from alert onwards (sound, nativeom etc) as we don't support them
+		if objectID<=OBJID_ALERT: 
 			return
-
-
 		#Change window objIDs to client objIDs for better reporting of objects
 		if (objectID==0) and (childID==0):
 			objectID=OBJID_CLIENT
+		#Ignore events from UI Automation windows
+		if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
+			return
 		#Ignore events with invalid window handles
 		isWindow = winUser.isWindow(window) if window else 0
 		if window==0 or (not isWindow and eventID in (winUser.EVENT_SYSTEM_SWITCHSTART,winUser.EVENT_SYSTEM_SWITCHEND,winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPEND)):
