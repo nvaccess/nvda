@@ -18,7 +18,7 @@ def main():
 		elif action == "config_setStartOnLogonScreen":
 			enable = bool(int(args[0]))
 			import config
-			config.setStartOnLogonScreen(enable)
+			config._setStartOnLogonScreen(enable)
 		else:
 			raise ValueError("No such action")
 
