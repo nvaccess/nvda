@@ -15,6 +15,12 @@ def main():
 		if action == "service_NVDALauncher":
 			import nvda_service
 			nvda_service.nvdaLauncher()
+		elif action == "config_setStartOnLogonScreen":
+			enable = bool(int(args[0]))
+			import config
+			config.setStartOnLogonScreen(enable)
+		else:
+			raise ValueError("No such action")
 
 	except Exception, e:
 		sys.exit(e)
