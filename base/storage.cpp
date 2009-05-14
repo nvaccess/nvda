@@ -888,7 +888,9 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 			node->getTextInRange(0,node->length,text,false);
 			bool lastWasSpace = false;
 			for (int i = relative; i < node->length; i++) {
-				if (text[i] == L'\n') {
+				if ((text[i] == L'\r' && (i + 1 >= node->length || text[i + 1] != L'\n'))
+					|| text[i] == L'\n'
+				) {
 					lineEnd = bufferStart + i + 1;
 					foundHardBreak=true;
 					break;
@@ -935,7 +937,9 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 			node->getTextInRange(0,node->length,text,false);
 			bool lastWasSpace = false;
 			for (int i = relative - 1; i >= 0; i--) {
-				if (text[i] == L'\n') {
+				if ((text[i] == L'\r' && (i + 1 >= node->length || text[i + 1] != L'\n'))
+					|| text[i] == L'\n'
+				) {
 					lineStart = bufferStart + i + 1;
 					foundHardBreak=true;
 					break;
