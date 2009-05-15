@@ -898,9 +898,6 @@ class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
 	def _get_role(self):
 		return controlTypes.ROLE_PANE
 
-	def _get_description(self):
-		return _("Inaccessible to NVDA")
-
 def processDesktopSwitchWinEvent(window,objectID,childID):
 	hDesk=ctypes.windll.user32.OpenInputDesktop(0, False, 0)
 	#name = ctypes.create_string_buffer(256)
