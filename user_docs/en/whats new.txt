@@ -24,6 +24,7 @@ Changes since 0.6p3:
 *New: In Windows Vista, if the user moves to the secure desktop (either because a UAC control dialog appeared, or because control+alt+delete was pressed), NVDA will announce the fact that the user is now on the secure desktop. This desktop is still not accessible to NVDA, though the user at least is notified as to what happened.
 *Fix: better support for Dos consoles. specifically: NVDA can now read the content of particular consoles it always used to think were blank. Pressing control+break no longer terminates NVDA.
  *New: NVDA can announce text under the mouse within dos console windows.
+* new: Support for UI Automation via the UI Automation client API available in Windows 7, as well as fixes to improve the experience of NVDA in Windows 7.
 * new: NVDA can be configured to start automatically after you log on to Windows. The option is in the General Settings dialog.
 * new: NVDA can read secure Windows screens such as the Windows logon, control+alt+delete and UAC screens in Windows XP and above. Reading of the Windows logon screen can be configured from the General Settings dialog. (#97)
 * fix: On Windows Vista, the NVDA installer now starts NVDA with normal user privileges when requested to run NVDA on the finish screen.
