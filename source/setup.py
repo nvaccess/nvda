@@ -107,7 +107,13 @@ setup(
 			"product_version":version,
 			"copyright":copyright,
 		},
-		"nvda_slave.pyw",
+		{
+			"script": "nvda_slave.pyw",
+			"icon_resources": [(1,"images/nvda.ico")],
+			"version": "0.0.0.0",
+			"product_version": version,
+			"copyright": copyright,
+		},
 	],
 	service=[{
 		"modules": ["nvda_service"],
