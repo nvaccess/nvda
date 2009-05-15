@@ -98,13 +98,31 @@ setup(
 'Operating System :: Microsoft :: Windows',
 ],
 	cmdclass={"py2exe": py2exe},
-	windows = [{
-		"script":"nvda.pyw",
-		"uac_info": ("asInvoker", False),
-		"icon_resources":[(1,"images/nvda.ico")],
-		"version":"0.0.0.0",
-		"product_version":version,
-		"copyright":copyright,
+	windows=[
+		{
+			"script":"nvda.pyw",
+			"uac_info": ("asInvoker", False),
+			"icon_resources":[(1,"images/nvda.ico")],
+			"version":"0.0.0.0",
+			"product_version":version,
+			"copyright":copyright,
+		},
+		{
+			"script": "nvda_slave.pyw",
+			"icon_resources": [(1,"images/nvda.ico")],
+			"version": "0.0.0.0",
+			"product_version": version,
+			"copyright": copyright,
+		},
+	],
+	service=[{
+		"modules": ["nvda_service"],
+		"icon_resources": [(1, "images/nvda.ico")],
+		"version": "0.0.0.0",
+		"product_version": version,
+		"copyright": copyright,
+		"uac_info": ("requireAdministrator", False),
+		"cmdline_style": "pywin32",
 	}],
 	options = {"py2exe": {
 		"bundle_files": 3,
@@ -112,7 +130,6 @@ setup(
 		"packages": ["NVDAObjects","virtualBuffers"],
 		"includes": getOptionalIncludes(),
 	}},
-	zipfile = None,
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),
 		("documentation", ['../copying.txt', '../contributors.txt']),

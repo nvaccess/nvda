@@ -11,6 +11,7 @@
 !include "Library.nsh"
 !include "FileFunc.nsh"
 
+
 ;--------
 ;Settings
 
@@ -36,6 +37,7 @@ SetOverwrite ifdiff
 SetDateSave on
 XPStyle on
 InstProgressFlags Smooth
+RequestExecutionLevel user /* RequestExecutionLevel REQUIRED! */
 !define MUI_ABORTWARNING ;Should ask to exit
 !define MUI_UNINSTALLER ;We want an uninstaller to be generated
 
@@ -54,6 +56,8 @@ VIAddVersionKey "ProductVersion" "${VERSION}"
 !define MUI_CUSTOMFUNCTION_GUIINIT NVDA_GUIInit
 !define MUI_CUSTOMFUNCTION_ABORT userAbort
 
+!include "serviceLib.nsh"
+
 ;--------------------------------
 ;Pages
 
@@ -70,6 +74,9 @@ page custom pagePrevInstall leavePagePrevInstall
 
 ;Directory selection page
 !insertmacro MUI_PAGE_DIRECTORY
+
+;Components selection page
+!insertmacro MUI_PAGE_COMPONENTS
 
 ;Start menu page
 Var StartMenuFolder
@@ -153,6 +160,8 @@ Var StartMenuFolder
 ReserveFile "${NSISDIR}\Plugins\system.dll"
 ReserveFile "${NSISDIR}\Plugins\banner.dll"
 ReserveFile "waves\${SNDLogo}"
+ReserveFile "UAC.dll"
+!addplugindir "."
 
 ;-----
 ;Include install logger code (depends on some above settings)
@@ -170,8 +179,7 @@ var prevUninstallChoice
 ;-----
 ;Sections
 
-;The only installable section
-Section "install"
+Section "-NVDA"
 SetShellVarContext all
 SetOutPath "$INSTDIR"
 ; open and close uninstallation log after ennumerating all the files being copied
@@ -214,10 +222,19 @@ WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString" "$INSTDIR\U
 WriteRegStr ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "" $INSTDIR
  SectionEnd
 
+section "nvda service (Windows logon / Security dialog support)"
+!insertmacro SERVICE create "nvda" "path=$INSTDIR\nvda_service.exe;autostart=1;display=NonVisual Desktop Access;description=Runs NVDA at Windows logon and in Windows security dialogs;"
+!insertmacro SERVICE "start" "nvda" ""
+SectionEnd
+
 ;The uninstall section
 Section "Uninstall"
 SetShellVarContext all
-
+;Stop and uninstall the service
+!undef UN
+!define UN "un."
+!insertmacro SERVICE stop "nvda" ""
+!insertmacro SERVICE delete "nvda" ""
 ; Uninstall libraries
 !insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\NVDAHelper.dll"
 !insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\VBufBase.dll"
@@ -246,6 +263,18 @@ SectionEnd
 ;Functions
 
 Function .onInit
+UAC::RunElevated
+;If couldn't change user then fail
+strcmp 0 $0 +1 elevationFail
+;If we are the outer user process, then silently quit
+strcmp 1 $1 +1 +2
+quit
+;If we are now an admin, success
+strcmp 1 $3 elevationSuccess
+elevationFail:
+MessageBox mb_iconstop "Unable to elevate, error $0"
+quit
+elevationSuccess:
 strcpy $runAppOnInstSuccess "0"
 ; Fix an error from previous installers where the "nvda" file would be left behind after uninstall
 IfFileExists "$PROGRAMFILES\NVDA" 0
@@ -356,7 +385,7 @@ function .onInstSuccess
 !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
 Execwait "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -q"
 strcmp $runAppOnInstSuccess "1" +1 end
-Exec "$INSTDIR\${NVDAApp}"
+uac::exec "" "$INSTDIR\${NVDAApp}" "" ""
 end:
 FunctionEnd
 
@@ -367,6 +396,7 @@ functionEnd
 Function .onGUIEnd
 ; Clean up the temporary folder
 rmdir /R /REBOOTOK "$PLUGINSDIR\${NVDATempDir}"
+UAC::Unload ;Must call unload!
 FunctionEnd
 
 function makeRunAppOnInstSuccess
