@@ -218,6 +218,8 @@ def getStartAfterLogon():
 		return False
 
 def setStartAfterLogon(enable):
+	if getStartAfterLogon() == enable:
+		return
 	k = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, RUN_REGKEY, 0, _winreg.KEY_WRITE)
 	if enable:
 		_winreg.SetValueEx(k, u"nvda", None, _winreg.REG_SZ, sys.argv[0])
