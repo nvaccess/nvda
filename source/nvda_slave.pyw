@@ -3,6 +3,9 @@ Performs miscellaneous tasks which need to be performed in a separate process.
 """
 
 import sys
+if hasattr(sys, "frozen"):
+	# Error messages (which are only for debugging) should not cause the py2exe log message box to appear.
+	sys.stderr = sys.stdout
 
 def main():
 	try:
