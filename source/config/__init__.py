@@ -247,10 +247,9 @@ def execElevated(path, params=None, wait=False):
 	if wait:
 		try:
 			winKernel.waitForSingleObject(sei.hProcess, winKernel.INFINITE)
-			exitCode = winKernel.GetExitCodeProcess(sei.hProcess)
+			return winKernel.GetExitCodeProcess(sei.hProcess)
 		finally:
 			winKernel.closeHandle(sei.hProcess)
-		return exitCode
 
 SLAVE_FILENAME = u"nvda_slave.exe"
 
