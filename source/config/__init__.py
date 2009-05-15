@@ -224,15 +224,15 @@ def setStartAfterLogon(enable):
 	else:
 		_winreg.DeleteValue(k, u"nvda")
 
-SERVICE_PATH = os.path.join(os.getcwdu(), "nvda_service.exe")
+SERVICE_FILENAME = u"nvda_service.exe"
 
 def isServiceInstalled():
-	if not os.path.isfile(SERVICE_PATH):
+	if not os.path.isfile(SERVICE_FILENAME):
 		return False
 	try:
 		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, ur"SYSTEM\CurrentControlSet\Services\nvda")
 		val = _winreg.QueryValueEx(k, u"ImagePath")[0].replace(u'"', u'')
-		return os.stat(val) == os.stat(SERVICE_PATH)
+		return os.stat(val) == os.stat(SERVICE_FILENAME)
 	except (WindowsError, OSError):
 		return False
 
