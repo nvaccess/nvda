@@ -136,9 +136,9 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			raise NotImplementedError("position: %s"%position)
 
 	def expand(self,unit):
-		if False: #unit==textInfos.UNIT_LINE and self.basePosition not in [textInfos.POSITION_SELECTION,textInfos.POSITION_CARET]:
+		if unit==textInfos.UNIT_LINE and self.basePosition not in [textInfos.POSITION_SELECTION,textInfos.POSITION_CARET]:
 			unit=textInfos.UNIT_SENTENCE
-		if unit==textInfos.UNIT_READINGCHUNK:
+		if unit==textInfos.UNIT_READINGCHUNK or unit==textInfos.UNIT_PARAGRAPH:
 			unit=textInfos.UNIT_SENTENCE
 		if unit in [textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD,textInfos.UNIT_SENTENCE,textInfos.UNIT_PARAGRAPH]:
 			res=self._rangeObj.expand(unit)
@@ -259,9 +259,23 @@ class MSHTML(IAccessible):
 		else:
 			return super(MSHTML,self).value
 
+	def _get_basicText(self):
+		if self.IHTMLElement:
+			try:
+				text=self.IHTMLElement.innerText
+			except COMError:
+				text=None
+			if text:
+				return text
+		return super(MSHTML,self).basicText
+
 	def _get_role(self):
 		if self.IHTMLElement and self.IHTMLElement.nodeName.lower()=="body":
 			return controlTypes.ROLE_DOCUMENT
+		if self.IAccessibleChildID>0:
+			states=super(MSHTML,self).states
+			if controlTypes.STATE_LINKED in states:
+				return controlTypes.ROLE_LINK
 		return super(MSHTML,self).role
 
 	def _get_states(self):
