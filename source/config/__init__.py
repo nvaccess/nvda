@@ -236,6 +236,24 @@ def isServiceInstalled():
 	except (WindowsError, OSError):
 		return False
 
+def execElevated(path, params=None, wait=False):
+	import shellapi
+	import winKernel
+	import winUser
+	sei = shellapi.SHELLEXECUTEINFO(lpVerb=u"runas", lpFile=os.path.abspath(path), lpParameters=params, nShow=winUser.SW_HIDE)
+	if wait:
+		sei.fMask = shellapi.SEE_MASK_NOCLOSEPROCESS
+	shellapi.ShellExecuteEx(sei)
+	if wait:
+		try:
+			winKernel.waitForSingleObject(sei.hProcess, winKernel.INFINITE)
+			exitCode = winKernel.GetExitCodeProcess(sei.hProcess)
+		finally:
+			winKernel.closeHandle(sei.hProcess)
+		return exitCode
+
+SLAVE_FILENAME = u"nvda_slave.exe"
+
 NVDA_REGKEY = ur"SOFTWARE\NVDA"
 
 def getStartOnLogonScreen():
@@ -250,4 +268,12 @@ def _setStartOnLogonScreen(enable):
 	_winreg.SetValueEx(k, u"startOnLogonScreen", None, _winreg.REG_DWORD, int(enable))
 
 def setStartOnLogonScreen(enable):
-	_setStartOnLogonScreen(enable)
+	if getStartOnLogonScreen() == enable:
+		return
+	try:
+		# Try setting it directly.
+		_setStartOnLogonScreen(enable)
+	except WindowsError:
+		# We probably don't have admin privs, so we need to elevate to do this using the slave.
+		if execElevated(SLAVE_FILENAME, "config_setStartOnLogonScreen %d" % enable, wait=True) != 0:
+			raise RuntimeError("Slave failed to set startOnLogonScreen")
