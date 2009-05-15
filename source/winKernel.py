@@ -101,3 +101,9 @@ def SetProcessShutdownParameters(level, flags):
 	res = kernel32.SetProcessShutdownParameters(level, flags)
 	if res == 0:
 		raise ctypes.WinError()
+
+def GetExitCodeProcess(process):
+	exitCode = ctypes.wintypes.DWORD()
+	if not kernel32.GetExitCodeProcess(process, ctypes.byref(exitCode)):
+		raise ctypes.WinError()
+	return exitCode.value
