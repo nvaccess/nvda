@@ -215,8 +215,10 @@ class NVDAService(win32serviceutil.ServiceFramework):
 				debug("error opening event: %s" % e)
 				raise
 
-		while self.session == origSession:
+		while True:
 			windll.kernel32.WaitForSingleObject(desktopSwitchEvt, INFINITE)
+			if self.session != origSession:
+				break
 			debug("desktop switch, session %r" % self.session)
 			self.handleDesktopSwitch()
 
@@ -263,12 +265,12 @@ class NVDAService(win32serviceutil.ServiceFramework):
 			if self.launcherStarted:
 				return
 
-			debug("attempt launcher start")
+			debug("attempt launcher start on session %d" % self.session)
 			token = getSessionSystemToken(self.session)
 			try:
 				process = executeProcess(ur"WinSta0\Winlogon", token, slaveExec, u"service_NVDALauncher")
 				self.launcherStarted = True
-				debug("launcher started")
+				debug("launcher started on session %d" % self.session)
 				windll.kernel32.CloseHandle(process)
 			except Exception, e:
 				debug("error starting launcher: %s" % e)
