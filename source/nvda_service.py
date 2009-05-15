@@ -248,8 +248,9 @@ class NVDAService(win32serviceutil.ServiceFramework):
 		elif event == WTS_SESSION_LOGOFF:
 			debug("logoff %d" % session)
 			self.isSessionLoggedOn = False
-			# We may be heading back to the logon screen.
-			if shouldStartOnLogonScreen():
+			if session == 0 and shouldStartOnLogonScreen():
+				# In XP, a logoff in session 0 does not cause a new session to be created.
+				# Instead, we're probably heading back to the logon screen.
 				execBg(self.startLauncher)
 		elif event == WTS_SESSION_LOCK:
 			debug("lock %d" % session)
