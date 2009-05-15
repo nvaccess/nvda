@@ -32,7 +32,10 @@ nvdaExec = os.path.join(sys.prefix,"nvda.exe")
 slaveExec = os.path.join(sys.prefix,"nvda_slave.exe")
 
 def debug(msg):
-	file(r"c:\windows\temp\nvdaserv", "a").write(msg + "\n")
+	try:
+		file(os.path.join(os.getenv("windir"), "temp", "nvda_service.log"), "a").write(msg + "\n")
+	except (OSError, IOError):
+		pass
 
 def getInputDesktopName():
 	desktop = windll.user32.OpenInputDesktop(0, False, 0)
