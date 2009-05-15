@@ -183,7 +183,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		return [start,end]
 
 	def _getParagraphOffsets(self,offset):
-		raise NotImplementedError
+		return self._getLineOffsets(offset)
+
 
 	def _getReadingChunkOffsets(self,offset):
 		return self._getLineOffsets(offset)
