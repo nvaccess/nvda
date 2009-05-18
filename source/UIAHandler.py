@@ -17,7 +17,14 @@ try:
 except (WindowsError, ImportError):
 	isUIAAvailable=False
 
-badUIAWindowClassNames=["SysTreeView32","WuDuiListView","ComboBox"]
+badUIAWindowClassNames=[
+	"SysTreeView32",
+	"WuDuiListView",
+	"ComboBox",
+	"msctls_progress32",
+	"Edit",
+]
+
 
 if isUIAAvailable: UIAControlTypesToNVDARoles={
 	UIA_ButtonControlTypeId:controlTypes.ROLE_BUTTON,
