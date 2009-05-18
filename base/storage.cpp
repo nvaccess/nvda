@@ -559,12 +559,14 @@ bool VBufStorage_buffer_t::mergeBuffer(VBufStorage_controlFieldNode_t* parent, V
 
 bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node) {
 	DEBUG_MSG(L"Removing subtree starting at "<<node->getDebugInfo());
-	DEBUG_MSG(L"collapsing length of ancestors by "<<node->length);
-	for(VBufStorage_fieldNode_t* ancestor=node->parent;ancestor!=NULL;ancestor=ancestor->parent) {
-		DEBUG_MSG(L"Ancestor: "<<ancestor->getDebugInfo());
-		ancestor->length-=node->length;
-		assert(ancestor->length>=0); //ancestor length can't be negative
-		DEBUG_MSG(L"Ancestor length now"<<ancestor->length);
+	if(node->length>0) {
+		DEBUG_MSG(L"collapsing length of ancestors by "<<node->length);
+		for(VBufStorage_fieldNode_t* ancestor=node->parent;ancestor!=NULL;ancestor=ancestor->parent) {
+			DEBUG_MSG(L"Ancestor: "<<ancestor->getDebugInfo());
+			ancestor->length-=node->length;
+			assert(ancestor->length>=0); //ancestor length can't be negative
+			DEBUG_MSG(L"Ancestor length now"<<ancestor->length);
+		}
 	}
 	DEBUG_MSG(L"Disconnecting node from its siblings and or parent");
 	if(node->next!=NULL) {
