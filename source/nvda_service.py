@@ -256,8 +256,10 @@ class NVDAService(win32serviceutil.ServiceFramework):
 				execBg(self.startLauncher)
 		elif event == WTS_SESSION_LOCK:
 			debug("lock %d" % session)
-			if session == self.session:
-				# We always start NVDA for the lock/switch user screen.
+			# If the user was running NVDA, the desktop switch will have started NVDA on the secure desktop.
+			# This only needs to cover the case where the user was not running NVDA and the session is locked.
+			# In this case, we should treat the lock screen like the logon screen.
+			if session == self.session and shouldStartOnLogonScreen():
 				self.startLauncher()
 
 	def startLauncher(self):
