@@ -52,8 +52,11 @@ class CursorManager(baseObject.ScriptableObject):
 		braille.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self,unit,direction=None,posConstant=textInfos.POSITION_SELECTION,posUnit=None,posUnitEnd=False,extraDetail=False,handleSymbols=False):
-		info=self.makeTextInfo(posConstant)
+		oldInfo=self.makeTextInfo(posConstant)
+		info=oldInfo.copy()
 		info.collapse(end=not self._lastSelectionMovedStart)
+		if not self._lastSelectionMovedStart and not oldInfo.isCollapsed:
+			info.move(textInfos.UNIT_CHARACTER,-1)
 		if posUnit is not None:
 			info.expand(posUnit)
 			info.collapse(end=posUnitEnd)
@@ -66,6 +69,8 @@ class CursorManager(baseObject.ScriptableObject):
 		self.selection=info
 		info.expand(unit)
 		speech.speakTextInfo(info,unit=unit,reason=speech.REASON_CARET)
+		if not oldInfo.isCollapsed:
+			speech.speakSelectionChange(oldInfo,self.selection)
 
 	def doFindTextDialog(self):
 		findDialog=gui.scriptUI.TextEntryDialog(_("Type the text you wish to find"),title=_("Find"),default=self._lastFindText,callback=self.doFindText)
