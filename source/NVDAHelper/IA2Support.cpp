@@ -4,12 +4,15 @@
 //See the file Copying for details.
 #define UNICODE
 
-#include <stdio.h>
-#include <wchar.h>
+#include <cstdio>
+#include <cassert>
+#include <cwchar>
 #include <windows.h>
 #include <objbase.h>
 #include "ia2.h"
 #include "IA2Support.h"
+
+typedef ULONG(*LPFNDLLCANUNLOADNOW)();
 
 #pragma data_seg(".hookManagerShared")
 BOOL isIA2Initialized=FALSE;
@@ -35,37 +38,35 @@ IID ia2Iids[]={
 
 IID _ia2PSClsidBackups[ARRAYSIZE(ia2Iids)]={0};
 BOOL isIA2Installed=FALSE;
-HANDLE IA2DllHandle=0;
+HINSTANCE IA2DllHandle=0;
 DWORD IA2RegCooky=0;
-IUnknown* IA2DllPunk=NULL;
 
 BOOL installIA2Support() {
 	LPFNGETCLASSOBJECT IA2Dll_DllGetClassObject;
 	int i;
 	int res;
 	if(isIA2Installed) return TRUE;
-	if((IA2DllHandle=CoLoadLibrary(IA2DllPath,TRUE))==NULL) {
+	if((IA2DllHandle=CoLoadLibrary(IA2DllPath,FALSE))==NULL) {
 		fprintf(stderr,"Error loading IAccessible2 proxy dll\n");
 		return FALSE;
 	}
-	if((IA2Dll_DllGetClassObject=(LPFNGETCLASSOBJECT)GetProcAddress(static_cast<HMODULE>(IA2DllHandle),"DllGetClassObject"))==NULL) {
-		fprintf(stderr,"Error locating DllGetClassObject function in IAccessible2 proxy dll\n");
-		CoFreeUnusedLibrariesEx(0,0);
-		IA2DllHandle=0;
-		return FALSE;
-	}
-	if((res=IA2Dll_DllGetClassObject(IAccessible2ProxyIID,IID_IUnknown,(LPVOID*)&IA2DllPunk))!=S_OK) {
+	IA2Dll_DllGetClassObject=(LPFNGETCLASSOBJECT)GetProcAddress(static_cast<HMODULE>(IA2DllHandle),"DllGetClassObject");
+	assert(IA2Dll_DllGetClassObject); //IAccessible2 proxy dll must have this function
+	IUnknown* ia2ClassObjPunk=NULL;
+	if((res=IA2Dll_DllGetClassObject(IAccessible2ProxyIID,IID_IUnknown,(LPVOID*)&ia2ClassObjPunk))!=S_OK) {
 		fprintf(stderr,"Error calling DllGetClassObject, code %d\n",res);
-		CoFreeUnusedLibrariesEx(0,0);
+		CoFreeLibrary(IA2DllHandle);
 		IA2DllHandle=0;
 		return FALSE;
 	}
-	if((res=CoRegisterClassObject(IAccessible2ProxyIID,IA2DllPunk,CLSCTX_LOCAL_SERVER,REGCLS_MULTIPLEUSE,(LPDWORD)&IA2RegCooky))!=S_OK) {
+	if((res=CoRegisterClassObject(IAccessible2ProxyIID,ia2ClassObjPunk,CLSCTX_INPROC_SERVER,REGCLS_MULTIPLEUSE,(LPDWORD)&IA2RegCooky))!=S_OK) {
 		fprintf(stderr,"Error registering class object, code %d\n",res);
-		CoFreeUnusedLibrariesEx(0,0);
+		ia2ClassObjPunk->Release();
+		CoFreeLibrary(IA2DllHandle);
 		IA2DllHandle=0;
 		return FALSE;
 	}
+	ia2ClassObjPunk->Release();
 	for(i=0;i<ARRAYSIZE(ia2Iids);i++) {
 		CoGetPSClsid(ia2Iids[i],&(_ia2PSClsidBackups[i]));
 		CoRegisterPSClsid(ia2Iids[i],IAccessible2ProxyIID);
@@ -77,12 +78,19 @@ BOOL installIA2Support() {
 BOOL uninstallIA2Support() {
 	int i;
 	int res;
+	LPFNDLLCANUNLOADNOW IA2Dll_DllCanUnloadNow;
 	if(isIA2Installed) {
 	for(i=0;i<ARRAYSIZE(ia2Iids);i++) {
 			CoRegisterPSClsid(ia2Iids[i],_ia2PSClsidBackups[i]);
 		}
 		CoRevokeClassObject(IA2RegCooky);
-		CoFreeUnusedLibrariesEx(0,0);
+		IA2Dll_DllCanUnloadNow=(LPFNDLLCANUNLOADNOW)GetProcAddress(static_cast<HMODULE>(IA2DllHandle),"DllCanUnloadNow");
+		assert(IA2Dll_DllCanUnloadNow); //IAccessible2 proxy dll must have this function
+		if(IA2Dll_DllCanUnloadNow()==S_OK) {
+			CoFreeLibrary(IA2DllHandle);
+		} else {
+			Beep(550,50);
+		}
 		IA2DllHandle=0;
 		isIA2Installed=FALSE;
 	}
@@ -107,6 +115,5 @@ BOOL IA2Support_terminate() {
 		fprintf(stderr,"Error uninstalling IA2 support\n");
 		return FALSE;
 	}
-	isIA2Initialized=FALSE;
 	return TRUE;
 }

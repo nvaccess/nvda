@@ -102,6 +102,10 @@ int terminate() {
 		fprintf(stderr,"Error unregistering foreground winEvent\n");
 		return -1;
 	}
+	if(!IA2Support_terminate()) {
+		fprintf(stderr,"Error terminating IA2 support");
+		return -1;
+	}
 	isManagerInitialized=FALSE;
 	return 0;
 }
