@@ -25,8 +25,13 @@ Cambios desde 0.6 P3:
 * Nuevo: en Windows Vista, si el usuario se mueve al al escritorio seguro (o porque un diálogo de control de UAC aparezca, o porque fuese presionado control+alt+suprimir), NVDA anunciará el hecho de que el usuario está ahora en el escritorio seguro. Este escritorio todavía no es accesible para NVDA, sin embargo el usuario al menos es notificado sobre lo que ocurrió.
 * Corregido: mejor soporte para consolas del Dos. específicamente: NVDA ahora puede leer el contenido de consolas particulares que Siempre se pensó que estaban en blanco. Presionando control+break ya no apagan a NVDA.
  * Nuevo: NVDA puede anunciar texto bajo el ratón dentro de ventanas de la consola del dos.
+* nuevo: Soporte para UI Automation a través de la API cliente UI Automation disponible en Windows 7, tanto como se mejora la experiencia de NVDA en Windows 7.
+* nuevo: NVDA puede ser configurado para iniciarse automáticamente después de que te identifiques en Windows. la opción está en el diálogo Opciones Generales.
+* nuevo: NVDA puede leer pantallas seguras de Windows tales como la autentificación de Windows (logon), control+alt+suprimir y pantallas del UAC en Windows XP y posteriores. La lectura de las pantallas de autentificación de Windows (logon) puede ser configurada desde el diálogo de Opciones Generales. (#97)
+* corrección: En Windows Vista, el instalador de NVDA ahora arranca a NVDA con privilegios de un usuario normal cuando se requiera para ejecutar a NVDA en la pantalla final.
 
-   
+
+  
 Cambios desde 0.6 P2:
 
 * nuevo: Como la barra de fórmulas de Microsoft Excel es inaccesible para NVDA, se proporciona un cuadro de diálogo específico de NVDA para editar cuando el usuario presione f2 sobre una celda. 
