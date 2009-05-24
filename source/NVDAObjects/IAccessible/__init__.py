@@ -244,6 +244,8 @@ the NVDAObject for IAccessible
 @type IAccessibleChildID: int
 """
 
+	IAccessibleFocusEventNeedsFocusedState=True
+
 	@classmethod
 	def findBestClass(cls,clsList,kwargs):
 		windowHandle=kwargs.get('windowHandle',None)

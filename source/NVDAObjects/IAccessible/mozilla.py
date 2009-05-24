@@ -23,7 +23,6 @@ class Mozilla(IAccessible):
 		else:
 			return ""
 
-
 	def _get_parent(self):
 		#Special code to support Mozilla node_child_of relation (for comboboxes)
 		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVRELATION_NODE_CHILD_OF)
@@ -44,10 +43,14 @@ class Application(Mozilla):
 
 class Document(Mozilla):
 
+	IAccessibleFocusEventNeedsFocusedState=False
+
 	def _get_value(self):
 		return 
 
 class ListItem(Mozilla):
+
+	IAccessibleFocusEventNeedsFocusedState=False
 
 	def _get_name(self):
 		name=super(ListItem,self)._get_name()
