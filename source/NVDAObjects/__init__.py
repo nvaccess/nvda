@@ -424,12 +424,6 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		return None
 
-	def _get_hasFocus(self):
-		"""
-Returns true if this object has focus, false otherwise.
-"""
-		return False
-
 	def setFocus(self):
 		"""
 Tries to force this object to take the focus.
