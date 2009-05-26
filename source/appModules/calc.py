@@ -1,22 +1,45 @@
 import _default
+from keyUtils import key, sendKey, keyName
+import NVDAObjects.IAccessible
 import speech
+import config
 
 class AppModule(_default.AppModule):
 
-	def __init__(self,*args,**kwargs):
-		super(AppModule,self).__init__(*args,**kwargs)
-		self._lastValue=None
-
 	def event_NVDAObject_init(self,obj):
-		if obj.windowClassName=="Edit" and obj.windowControlID==403:
-			obj.name="Display"
+		windowClassName=obj.windowClassName
+		windowControlID=obj.windowControlID
+		if windowClassName=="Edit" and windowControlID==403:
+			self.overlayCustomNVDAObjectClass(obj,Display,outerMost=True)
+		elif windowClassName=="Static" and windowControlID==150:
+			self.overlayCustomNVDAObjectClass(obj,Display,outerMost=True)
 
-	def event_valueChange(self,obj,nextHandler):
-		if obj.windowClassName=="Edit" and obj.windowControlID==403:
-			text=obj.windowText[0:-1]
-			text=text.rstrip()[0:-1]
-			if text!=self._lastValue:
-				speech.speakText(text)
-				self._lastValue=text
-		else:
-			nextHandler()
+class Display(NVDAObjects.IAccessible.IAccessible):
+
+	IAccessibleFocusEventNeedsFocusedState=False
+
+	calcCommandChars=['!','=','@','#']
+
+	calcCommandKeys=[
+		"back","escape","ExtendedReturn","Return",
+		"f2","f3","f4","f5","f6","f7","f8","f9",
+		"l","n","o","p","r","s","t",
+	]
+
+	def _get_name(self):
+		name=super(Display,self).name
+		if not name:
+			name=_("Display")
+		return name
+
+	def event_typedCharacter(self,ch):
+		super(Display,self).event_typedCharacter(ch)
+		if ch in self.calcCommandChars:
+			speech.speakObjectProperties(self,value=True)
+
+	def script_executeAndRead(self,keyPress):
+		sendKey(keyPress)
+		speech.speakObjectProperties(self,value=True)
+
+for k in Display.calcCommandKeys:
+	Display.bindKey(k,"executeAndRead")
