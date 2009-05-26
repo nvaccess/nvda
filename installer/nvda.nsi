@@ -219,7 +219,7 @@ WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString" "$INSTDIR\U
 WriteRegStr ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "" $INSTDIR
  SectionEnd
 
-section "nvda service (Windows logon / Security dialog support)"
+section "$(section_service)"
 ExecWait "$INSTDIR\nvda_slave.exe installer_installService"
 SectionEnd
 
