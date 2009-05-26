@@ -191,15 +191,19 @@ class NVDAService(win32serviceutil.ServiceFramework):
 		self.isSessionLoggedOn = isSessionLoggedOn(session)
 		debug("session logged on: %r" % self.isSessionLoggedOn)
 
+		if self.isWindowsXP and session != 0 and not self.isSessionLoggedOn:
+			# In Windows XP, sessions other than 0 are broken before logon, so we can't do anything more here.
+			debug("Windows XP, returning before action")
+			return
+
 		if self.isSessionLoggedOn:
 			# The session is logged on, so treat this as a normal desktop switch.
 			self.handleDesktopSwitch()
-			execBg(self.desktopSwitchSupervisor)
 		else:
 			# We're at the logon screen.
 			if shouldStartOnLogonScreen():
 				execBg(self.startLauncher)
-			# The desktop switch supervisor will be started by the logon event.
+		execBg(self.desktopSwitchSupervisor)
 
 	def desktopSwitchSupervisor(self):
 		if self.desktopSwitchSupervisorStarted:
@@ -279,6 +283,7 @@ class NVDAService(win32serviceutil.ServiceFramework):
 
 	def SvcDoRun(self):
 		debug("service starting")
+		self.isWindowsXP = sys.getwindowsversion()[0:2] == (5, 1)
 		self.exitEvent = threading.Event()
 		self.initSession(windll.kernel32.WTSGetActiveConsoleSessionId())
 		self.exitEvent.wait()
