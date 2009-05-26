@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r2935\n"
+"Project-Id-Version: r2963\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2009-05-15 20:12+0300\n"
+"PO-Revision-Date: 2009-05-26 15:52+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: IAccessibleHandler.py:896
+#: IAccessibleHandler.py:890
 msgid "Secure Desktop"
 msgstr "Suojattu työpöytä"
 
@@ -138,7 +138,7 @@ msgid "Clicks the right mouse button once at the current mouse position"
 msgstr ""
 "Napsauttaa kerran hiiren oikeaa painiketta hiiren nykyisessä sijainnissa"
 
-#: appModules\_default.py:86 cursorManager.py:220
+#: appModules\_default.py:86 cursorManager.py:225
 msgid "no selection"
 msgstr "ei valintaa"
 
@@ -657,7 +657,7 @@ msgstr ""
 msgid "speaks the current foreground object"
 msgstr "ilmoittaa nykyisen objektin"
 
-#: appModules\_default.py:709 cursorManager.py:223
+#: appModules\_default.py:709 cursorManager.py:228
 msgid "copied to clipboard"
 msgstr "kopioitu leikepöydälle"
 
@@ -906,6 +906,10 @@ msgid ""
 msgstr ""
 "Hakee aiemmin asetetun alkumerkin  ja tarkastelukohdistimen nykyisen paikan "
 "välisen tekstin ja kopioi sen leikepöydälle"
+
+#: appModules\calc.py:32
+msgid "Display"
+msgstr "Näyttö"
 
 #: appModules\explorer.py:16
 msgid "Start"
@@ -1179,15 +1183,15 @@ msgstr "alavko"
 msgid "( )"
 msgstr "< >"
 
-#: braille.py:212 speech.py:631
+#: braille.py:212 speech.py:632
 msgid "not %s"
 msgstr "ei %s"
 
-#: braille.py:224 speech.py:637
+#: braille.py:224 speech.py:638
 msgid "%s of %s"
 msgstr "%s / %s"
 
-#: braille.py:226 speech.py:642 speech.py:645
+#: braille.py:226 speech.py:643 speech.py:646
 msgid "level %s"
 msgstr "taso %s"
 
@@ -1199,7 +1203,7 @@ msgstr "Handy Tech"
 msgid "No braille"
 msgstr "Ei pistenäyttöä"
 
-#: characterSymbols.py:17 characterSymbols.py:18 speech.py:79 speech.py:593
+#: characterSymbols.py:17 characterSymbols.py:18 speech.py:79 speech.py:594
 msgid "blank"
 msgstr "tyhjä"
 
@@ -1439,7 +1443,7 @@ msgstr "kuplailmoitus"
 msgid "tool tip"
 msgstr "työkaluvihje"
 
-#: controlTypes.py:195 speech.py:839
+#: controlTypes.py:195 speech.py:840
 msgid "link"
 msgstr "linkki"
 
@@ -1851,7 +1855,7 @@ msgstr "fontti"
 msgid "font size"
 msgstr "fonttikoko"
 
-#: controlTypes.py:302 speech.py:791
+#: controlTypes.py:302 speech.py:792
 msgid "bold"
 msgstr "lihavointi"
 
@@ -1867,11 +1871,11 @@ msgstr "edustan väri"
 msgid "background color"
 msgstr "taustaväri"
 
-#: controlTypes.py:307 speech.py:813
+#: controlTypes.py:307 speech.py:814
 msgid "superscript"
 msgstr "yläindeksi"
 
-#: controlTypes.py:308 speech.py:815
+#: controlTypes.py:308 speech.py:816
 msgid "subscript"
 msgstr "alaindeksi"
 
@@ -1897,11 +1901,11 @@ msgstr "tietokohta"
 
 #: controlTypes.py:315
 msgid "header item"
-msgstr "ylätunnistekohta"
+msgstr "ylätunnisteen kohta"
 
 #: controlTypes.py:316
 msgid "thum control"
-msgstr "peukalosäädin"
+msgstr "kirjanmerkki"
 
 #: controlTypes.py:317
 msgid "calendar"
@@ -2023,27 +2027,27 @@ msgstr "Ladataan alajärjestelmiä, odota..."
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
 
-#: cursorManager.py:71
+#: cursorManager.py:76
 msgid "Find"
 msgstr "Etsi"
 
-#: cursorManager.py:71
+#: cursorManager.py:76
 msgid "Type the text you wish to find"
 msgstr "Kirjoita etsittävä teksti"
 
-#: cursorManager.py:85
+#: cursorManager.py:90
 msgid "Find Error"
 msgstr "Virhe"
 
-#: cursorManager.py:85
+#: cursorManager.py:90
 msgid "text \"%s\" not found"
 msgstr "tekstiä \"%s\" ei löydy"
 
-#: cursorManager.py:91
+#: cursorManager.py:96
 msgid "find a text string from the current cursor position"
 msgstr "etsi tekstiä kohdistimen nykyisestä paikasta lähtien"
 
-#: cursorManager.py:98
+#: cursorManager.py:103
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
@@ -2051,7 +2055,7 @@ msgstr ""
 "etsi aiemmin annetun merkkijonon seuraava esiintymä kohdistimen nykyisestä "
 "paikasta lähtien"
 
-#: cursorManager.py:105
+#: cursorManager.py:110
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
@@ -2392,7 +2396,7 @@ msgstr "virheenjäljitys"
 
 #: gui\settingsDialogs.py:98
 msgid "&Language (requires restart to fully take affect)"
-msgstr "&Kieli (edellyttää NVDA:n uudelleenkäynnistystä)"
+msgstr "&Kieli (edellyttää NVDA:n uudelleenkäynnistämistä)"
 
 #: gui\settingsDialogs.py:102
 msgid "Language"
@@ -3021,7 +3025,7 @@ msgstr "Virhe kohteessa keyboardHandler.internal_keyDownEvent"
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Virhe kohteessa keyboardHandler.internal_keyUpEvent"
 
-#: mouseHandler.py:131
+#: mouseHandler.py:132
 msgid "%s cursor"
 msgstr "%s kohdistin"
 
@@ -3049,120 +3053,120 @@ msgstr "ei valita %s"
 msgid "selection removed"
 msgstr "valinta poistettu"
 
-#: speech.py:656 speech.py:880
+#: speech.py:657 speech.py:881
 msgid "row %s"
 msgstr "rivi %s"
 
-#: speech.py:659 speech.py:876
+#: speech.py:660 speech.py:877
 msgid "column %s"
 msgstr "sarake %s"
 
-#: speech.py:664
+#: speech.py:665
 msgid "with %s rows and %s columns"
 msgstr "jossa %s riviä ja %s saraketta"
 
-#: speech.py:666
+#: speech.py:667
 msgid "with %s columns"
 msgstr "jossa %s saraketta"
 
-#: speech.py:668
+#: speech.py:669
 msgid "with %s rows"
 msgstr "jossa %s riviä"
 
-#: speech.py:711 speech.py:715 speech.py:719 speech.py:727 speech.py:738
-#: speech.py:839
+#: speech.py:712 speech.py:716 speech.py:720 speech.py:728 speech.py:739
+#: speech.py:840
 msgid "out of %s"
 msgstr "%s loppuu"
 
-#: speech.py:713
+#: speech.py:714
 msgid "with %s items"
 msgstr "jossa %s osaa"
 
-#: speech.py:736
+#: speech.py:737
 msgid "in %s"
 msgstr "%s"
 
-#: speech.py:756
+#: speech.py:757
 msgid "page %s"
 msgstr "sivu %s"
 
-#: speech.py:763
+#: speech.py:764
 msgid "style %s"
 msgstr "tyyli %s"
 
-#: speech.py:765
+#: speech.py:766
 msgid "default style"
 msgstr "oletustyyli"
 
-#: speech.py:785
+#: speech.py:786
 msgid "line %s"
 msgstr "rivi %s"
 
-#: speech.py:791
+#: speech.py:792
 msgid "no bold"
 msgstr "ei lihavointia"
 
-#: speech.py:796
+#: speech.py:797
 msgid "italic"
 msgstr "kursiivi"
 
-#: speech.py:796
+#: speech.py:797
 msgid "no italic"
 msgstr "ei kursivointia"
 
-#: speech.py:801
+#: speech.py:802
 msgid "no strikethrough"
 msgstr "ei yliviivausta"
 
-#: speech.py:801
+#: speech.py:802
 msgid "strikethrough"
 msgstr "yliviivattu"
 
-#: speech.py:806
+#: speech.py:807
 msgid "not underlined"
 msgstr "ei alleviivausta"
 
-#: speech.py:806
+#: speech.py:807
 msgid "underlined"
 msgstr "alleviivattu"
 
-#: speech.py:817
+#: speech.py:818
 msgid "baseline"
 msgstr "perusviiva"
 
-#: speech.py:825
+#: speech.py:826
 msgid "align left"
 msgstr "tasaus vasemmalla"
 
-#: speech.py:827
+#: speech.py:828
 msgid "align center"
 msgstr "tasaus keskellä"
 
-#: speech.py:829
+#: speech.py:830
 msgid "align right"
 msgstr "tasaus oikealla"
 
-#: speech.py:831
+#: speech.py:832
 msgid "align justify"
 msgstr "tasaus molemmissa reunoissa"
 
-#: speech.py:833
+#: speech.py:834
 msgid "align default"
 msgstr "oletustasaus"
 
-#: speech.py:846
+#: speech.py:847
 msgid "spelling error"
 msgstr "kirjoitusvirhe"
 
-#: speech.py:848
+#: speech.py:849
 msgid "out of spelling error"
 msgstr "kirjoitusvirheen loppu"
 
-#: speech.py:862
+#: speech.py:863
 msgid "out of table"
 msgstr "taulukon loppu"
 
-#: speech.py:871
+#: speech.py:872
 msgid "table with %s columns and %s rows"
 msgstr "taulukko jossa %s saraketta ja %s riviä"
 
