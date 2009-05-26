@@ -866,7 +866,7 @@ def processFocusNVDAEvent(obj,needsFocusedState=True):
 	@rtype: boolean
 	"""
 	#this object, or one of its ancestors *must* have state_focused. Also cache the parents as we do this check
-	if needsFocusedState and obj.IAccessibleFocusEventNeedsFocusedState:
+	if needsFocusedState and isinstance(obj,NVDAObjects.IAccessible.IAccessible) and obj.IAccessibleFocusEventNeedsFocusedState:
 		testObj=obj
 		while testObj:
 			if controlTypes.STATE_FOCUSED in testObj.states:
