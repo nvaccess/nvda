@@ -73,3 +73,11 @@ class Label(Mozilla):
 		if not name or name=="":
 			name=self.makeTextInfo(textInfos.POSITION_ALL).text
 		return name
+
+class ComboBox(Mozilla):
+
+	IAccessibleFocusEventNeedsFocusedState = False
+
+class List(Mozilla):
+
+	IAccessibleFocusEventNeedsFocusedState = False

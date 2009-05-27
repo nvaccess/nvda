@@ -1218,6 +1218,8 @@ _staticMap={
 	(None,IAccessibleHandler.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
 	("MozillaUIWindowClass",IAccessibleHandler.ROLE_SYSTEM_APPLICATION):"mozilla.application",
 	("MozillaDialogClass",IAccessibleHandler.ROLE_SYSTEM_ALERT):"Dialog",
+	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_COMBOBOX):"mozilla.ComboBox",
+	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_LIST):"mozilla.List",
 	("MozillaWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"mozilla.ListItem",
 	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_LISTITEM):"mozilla.ListItem",
 	("MozillaContentWindowClass",IAccessibleHandler.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
