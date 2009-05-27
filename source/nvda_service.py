@@ -120,13 +120,17 @@ def executeProcess(desktop, token, executable, *argStrings):
 
 def nvdaLauncher():
 	desktop = getInputDesktopName()
+	debug("launcher: starting with desktop %s" % desktop)
 	if desktop == ur"WinSta0\Default":
+		debug("launcher: default desktop, exiting")
 		return
 
+	debug("launcher: starting NVDA")
 	startNVDA(desktop)
 	desktopSwitchEvt = windll.kernel32.OpenEventW(SYNCHRONIZE, False, u"WinSta0_DesktopSwitch")
 	windll.kernel32.WaitForSingleObject(desktopSwitchEvt, INFINITE)
 	windll.kernel32.CloseHandle(desktopSwitchEvt)
+	debug("launcher: desktop switch, exiting NVDA on desktop %s" % desktop)
 	exitNVDA(desktop)
 
 def startNVDA(desktop):
