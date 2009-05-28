@@ -12,6 +12,7 @@ import comtypes.automation
 from comInterfaces.servprov import IServiceProvider
 import winUser
 import globalVars
+import aria
 import IAccessibleHandler
 from keyUtils import key, sendKey
 import api
@@ -270,8 +271,17 @@ class MSHTML(IAccessible):
 		return super(MSHTML,self).basicText
 
 	def _get_role(self):
-		if self.IHTMLElement and self.IHTMLElement.nodeName.lower()=="body":
-			return controlTypes.ROLE_DOCUMENT
+		if self.IHTMLElement:
+			try:
+				ariaRole=self.IHTMLElement.getAttribute('role')
+			except COMError:
+				ariaRole=None
+			if ariaRole:
+				role=aria.ariaRolesToNVDARoles.get(ariaRole)
+				if role:
+					return role
+			if self.IHTMLElement.nodeName.lower()=="body":
+				return controlTypes.ROLE_DOCUMENT
 		if self.IAccessibleChildID>0:
 			states=super(MSHTML,self).states
 			if controlTypes.STATE_LINKED in states:
@@ -341,10 +351,6 @@ class MSHTML(IAccessible):
 		while isinstance(child,IAccessible) and child.IAccessibleChildID>0:
 			child=child.previous
 		return child
-
-	def _get_value(self):
-		if self.IHTMLElement and self.IHTMLElement.tabIndex>=0:
-			return self.IHTMLElement.innerText
 
 	def _get_columnNumber(self):
 		if not self.role==controlTypes.ROLE_TABLECELL or not self.IHTMLElement:
