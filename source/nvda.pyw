@@ -62,6 +62,7 @@ except:
 parser=NoConsoleOptionParser()
 parser.add_option('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
 parser.add_option('-r','--replace',action="store_true",dest='replace',default=False,help="Quit already running copy of NVDA and start this one")
+parser.add_option('--non-interactive',action="store_false",dest='interactive',default=True,help="No user interaction (don't display error message boxes)")
 parser.add_option('-k','--check-running',action="store_true",dest='check_running',default=False,help="Report whether NVDA is running via the exit code; 0 if running, 1 if not running")
 parser.add_option('-f','--log-file',dest='logFileName',default=logFileName,help="The file where log messages should be written to")
 parser.add_option('-l','--log-level',type="int",dest='logLevel',default=0,help="The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning") 
@@ -82,9 +83,10 @@ if oldAppWindowHandle:
 		win32gui.PostMessage(oldAppWindowHandle,win32con.WM_QUIT,0,0)
 		h=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 		if h:
-			res=winKernel.waitForSingleObject(h,10000)
+			res=winKernel.waitForSingleObject(h,4000)
 			if res!=0:
-				win32gui.MessageBox(0, "Error quitting NVDA", "Error", 0)
+				if globalVars.appArgs.interactive:
+					win32gui.MessageBox(0, "Error quitting NVDA", "Error", 0)
 				sys.exit(1)
 if globalVars.appArgs.quit or (oldAppWindowHandle and not globalVars.appArgs.replace):
 	sys.exit(0)
