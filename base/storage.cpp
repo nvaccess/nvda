@@ -517,7 +517,6 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 	assert(controlFieldNodesByIdentifier.count(controlFieldNode->identifier)==0); //node can't be previously remembered
 	controlFieldNodesByIdentifier[controlFieldNode->identifier]=controlFieldNode;
 	DEBUG_MSG(L"Added new controlFieldNode, returning node");
-	assert(false);
 	return controlFieldNode;
 }
 
