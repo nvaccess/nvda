@@ -408,6 +408,8 @@ class VBufStorage_buffer_t {
  */
 	VBufStorage_controlFieldNode_t* addControlFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, int docHandle, int ID, bool isBlock);
  
+	VBufStorage_controlFieldNode_t* addControlFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_controlFieldNode_t* node); 
+
 /**
  * Adds a text field in to the buffer.
  * @param parent the control field which should be the new field's parent, note that if also specifying previous, parent can be NULL.
@@ -416,6 +418,8 @@ class VBufStorage_buffer_t {
  * @return the newly added text field.
  */
 	VBufStorage_textFieldNode_t* addTextFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, const std::wstring& text);
+
+	VBufStorage_textFieldNode_t* addTextFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_textFieldNode_t* node);
 
 /**
  * finds out if the given node exists in this buffer.

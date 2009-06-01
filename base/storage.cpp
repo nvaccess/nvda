@@ -500,7 +500,20 @@ VBufStorage_buffer_t::~VBufStorage_buffer_t() {
 }
 
 VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, int docHandle, int ID, bool isBlock) {
-	DEBUG_MSG(L"Add controlFieldNode using parent at "<<parent<<L", previous at "<<previous<<L", docHandle of "<<docHandle<<L", ID of "<<ID);
+	DEBUG_MSG(L"Adding control field node to buffer with parent at "<<parent<<L", previous at "<<previous<<L", docHandle "<<docHandle<<L", ID "<<ID);
+	VBufStorage_controlFieldNode_t* controlFieldNode=new VBufStorage_controlFieldNode_t(docHandle,ID,isBlock);
+	assert(controlFieldNode); //controlFieldNode must have been allocated
+	DEBUG_MSG(L"Created controlFieldNode: "<<controlFieldNode->getDebugInfo());
+	if(addControlFieldNode(parent,previous,controlFieldNode)!=controlFieldNode) {
+		DEBUG_MSG(L"Error adding control field node to buffer");
+		delete controlFieldNode;
+		return NULL;
+	}
+	return controlFieldNode;
+}
+
+VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_controlFieldNode_t* controlFieldNode) {
+	DEBUG_MSG(L"Add controlFieldNode using parent at "<<parent<<L", previous at "<<previous<<L", node at "<<node);
 	if(previous!=NULL&&previous->parent!=parent) {
 		DEBUG_MSG(L"previous is not a child of parent, returning NULL");
 		return NULL;
@@ -509,9 +522,6 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 		DEBUG_MSG(L"Can not add more than one node at root level");
 		return NULL;
 	}
-	VBufStorage_controlFieldNode_t* controlFieldNode=new VBufStorage_controlFieldNode_t(docHandle,ID,isBlock);
-	assert(controlFieldNode); //controlFieldNode must have been allocated
-	DEBUG_MSG(L"Created controlFieldNode: "<<controlFieldNode->getDebugInfo());
 	DEBUG_MSG(L"Inserting controlFieldNode in to buffer");
 	insertNode(parent, previous, controlFieldNode);
 	assert(controlFieldNodesByIdentifier.count(controlFieldNode->identifier)==0); //node can't be previously remembered
@@ -522,6 +532,19 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 
 VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, const std::wstring& text) {
 	DEBUG_MSG(L"Add textFieldNode using parent at "<<parent<<L", previous at "<<previous);
+	VBufStorage_textFieldNode_t* textFieldNode=new VBufStorage_textFieldNode_t(text);
+	assert(textFieldNode); //controlFieldNode must have been allocated
+	DEBUG_MSG(L"Created textFieldNode: "<<textFieldNode->getDebugInfo());
+	if(addTextFieldNode(parent,previous,textFieldNode)!=textFieldNode) {
+		DEBUG_MSG(L"Error adding textFieldNode to buffer");
+		delete textFieldNode;
+		return NULL;
+	}
+	return textFieldNode;
+}
+
+VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_textFieldNode_t* textFieldNode) {
+	DEBUG_MSG(L"Add textFieldNode using parent at "<<parent<<L", previous at "<<previous<<L", node at "<<textFieldNode);
 	if(previous!=NULL&&previous->parent!=parent) {
 		DEBUG_MSG(L"previous is not a child of parent, returning NULL");
 		return NULL;
@@ -530,9 +553,6 @@ VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage
 		DEBUG_MSG(L"Can not add a text field node at the root of the buffer");
 		return NULL;
 	}
-	VBufStorage_textFieldNode_t* textFieldNode=new VBufStorage_textFieldNode_t(text);
-	assert(textFieldNode); //controlFieldNode must have been allocated
-	DEBUG_MSG(L"Created textFieldNode: "<<textFieldNode->getDebugInfo());
 	DEBUG_MSG(L"Inserting textFieldNode in to buffer");
 	insertNode(parent, previous, textFieldNode);
 	DEBUG_MSG(L"Added new textFieldNode, returning node");
