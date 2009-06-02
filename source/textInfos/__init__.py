@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 
 import weakref
+import re
 import baseObject
 import config
 
@@ -284,18 +285,33 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@return: C{True} if successful, C{False} otherwise.
 		@rtype: bool
 		"""
-		#To handle line lengths properly, grab each line separately
-		lineInfo=self.copy()
-		lineInfo.collapse()
-		textList=[]
-		while lineInfo.compareEndPoints(self,"startToEnd")<0:
-			lineInfo.expand(UNIT_LINE)
-			chunkInfo=lineInfo.copy()
+		import api
+		return api.copyToClip(convertToCrlf(self.text))
+
+	def getTextInChunks(self, unit):
+		"""Retrieve the text of this instance in chunks of a given unit.
+		@param unit: The unit at which chunks should be split.
+		@return: Chunks of text.
+		@rtype: generator of str
+		"""
+		unitInfo=self.copy()
+		unitInfo.collapse()
+		while unitInfo.compareEndPoints(self,"startToEnd")<0:
+			unitInfo.expand(unit)
+			chunkInfo=unitInfo.copy()
 			if chunkInfo.compareEndPoints(self,"startToStart")<0:
 				chunkInfo.setEndPoint(self,"startToStart")
 			if chunkInfo.compareEndPoints(self,"endToEnd")>0:
 				chunkInfo.setEndPoint(self,"endToEnd")
-			textList.append(chunkInfo.text.rstrip("\r\n"))
-			lineInfo.collapse(end=True)
-		import api
-		return api.copyToClip("\r\n".join(textList))
+			yield chunkInfo.text
+			unitInfo.collapse(end=True)
+
+RE_EOL = re.compile("\r\n|[\n\r]")
+def convertToCrlf(text):
+	"""Convert a string so that it contains only CRLF line endings.
+	@param text: The text to convert.
+	@type text: str
+	@return: The converted text.
+	@rtype: str
+	"""
+	return RE_EOL.sub("\r\n", text)
