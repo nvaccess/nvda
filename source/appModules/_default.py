@@ -603,7 +603,7 @@ class AppModule(appModuleHandler.AppModule):
 			o=v
 		try:
 			info=o.makeTextInfo(textInfos.POSITION_CARET)
-		except NotImplementedError:
+		except (NotImplementedError, RuntimeError):
 			return
 		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 	script_sayAll.__doc__ = _("reads from the system caret up to the end of the text, moving the caret as it goes")
@@ -618,19 +618,22 @@ class AppModule(appModuleHandler.AppModule):
 			"reportBlockQuotes":False,
 		}
 		o=api.getFocusObject()
+		v=o.virtualBuffer
+		if v and not v.passThrough:
+			o=v
 		try:
 			info=o.makeTextInfo(textInfos.POSITION_CARET)
-		except NotImplementedError:
+		except (NotImplementedError, RuntimeError):
 			info=o.makeTextInfo(textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_CHARACTER)
 		formatField=textInfos.FormatField()
 		for field in info.getTextWithFields(formatConfig):
 			if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField):
 				formatField.update(field.field)
-		if len(formatField)==0:
+		text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
+		if not text:
 			ui.message(_("No formatting information"))
 			return
-		text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig)
 		ui.message(text)
 	script_reportFormatting.__doc__ = _("Reports formatting info for the current cursor position within a document")
 
