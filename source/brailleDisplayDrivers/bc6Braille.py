@@ -64,7 +64,7 @@ ALVA_ETOUCH4 = 1 << 31
 
 #Try lo load the alvaw32.dll
 try:
-	AlvaLib=windll.alvaw32
+	AlvaLib=windll[r"brailleDisplayDrivers\alvaw32.dll"]
 except:
 	AlvaLib=None
 
