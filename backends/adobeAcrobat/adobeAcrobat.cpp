@@ -21,20 +21,22 @@ using namespace std;
 typedef std::set<VBufBackend_t*> VBufBackendSet_t;
 
 HINSTANCE backendLibHandle=NULL;
-
-#pragma comment(linker,"/entry:_DllMainCRTStartup@12")
-BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
-	if(reason==DLL_PROCESS_ATTACH) {
-		backendLibHandle=hModule;
-	}
-	return TRUE;
-}
-
 UINT wmMainThreadSetup=0;
 UINT wmMainThreadTerminate=0;
 VBufBackendSet_t backends;
 HWINEVENTHOOK winEventHookID;
 UINT_PTR mainThreadTimerID=0;
+
+#pragma comment(linker,"/entry:_DllMainCRTStartup@12")
+BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
+	if(reason==DLL_PROCESS_ATTACH) {
+		backendLibHandle=hModule;
+		wmMainThreadSetup=RegisterWindowMessage(L"VBufBackend_adobeAcrobat_mainThreadSetup");
+		wmMainThreadTerminate=RegisterWindowMessage(L"VBufBackend_adobeAcrobat_mainThreadTerminate");
+		DEBUG_MSG(L"wmMainThreadSetup message: "<<wmMainThreadSetup<<L", wmMainThreadTerminate message: "<<wmMainThreadTerminate);
+	}
+	return TRUE;
+}
 
 IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
 	int res;
@@ -387,11 +389,10 @@ void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 }
 
 void mainThreadSetup(VBufBackend_t* backend) {
-	int processID=GetCurrentProcessId();
-	int threadID=GetCurrentThreadId();
-	DEBUG_MSG(L"process ID "<<processID<<L", thread ID "<<threadID);
-	backends.insert(backend);
-	if (backends.size() == 1) {
+	if (!winEventHookID && backends.size() > 0) {
+		int processID=GetCurrentProcessId();
+		int threadID=GetCurrentThreadId();
+		DEBUG_MSG(L"process ID "<<processID<<L", thread ID "<<threadID);
 		DEBUG_MSG(L"Registering win event callback");
 		winEventHookID=SetWinEventHook(EVENT_MIN,0xffffffff,backendLibHandle,(WINEVENTPROC)mainThreadWinEventCallback,processID,threadID,WINEVENT_INCONTEXT);
 		assert(winEventHookID!=0); //winEventHookID must be non-0
@@ -412,17 +413,13 @@ LRESULT CALLBACK mainThreadCallWndProcHook(int code, WPARAM wParam,LPARAM lParam
 }
 
 void mainThreadTerminate(VBufBackend_t* backend) {
-	int threadID=GetCurrentThreadId();
-	DEBUG_MSG(L"thread ID "<<threadID);
-	if(backends.size()==1) {
-		DEBUG_MSG(L"Last backend, unhooking winEvent");
+	if (winEventHookID && backends.size() == 0) {
+		DEBUG_MSG(L"No backends, unhooking winEvent");
 		UnhookWinEvent(winEventHookID);
-		backends.clear();
-	} else {
-		DEBUG_MSG(L"Other backends present, only removing backend");
-		VBufBackendSet_t::iterator it = backends.find(backend);
-		assert(it != backends.end()); // Backend must exist in the set
-		backends.erase(it);
+		winEventHookID = 0;
+	}
+	if (mainThreadTimerID) {
+		KillTimer(0, mainThreadTimerID);
 	}
 	#ifdef DEBUG
 	Beep(880,70);
@@ -452,9 +449,7 @@ void AdobeAcrobatVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHand
 AdobeAcrobatVBufBackend_t::AdobeAcrobatVBufBackend_t(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer): VBufBackend_t(docHandle,ID,storageBuffer) {
 	int res;
 	DEBUG_MSG(L"Initializing Adobe Acrobat backend");
-	if(!wmMainThreadSetup) wmMainThreadSetup=RegisterWindowMessage(L"VBufBackend_adobeAcrobat_mainThreadSetup");
-	if(!wmMainThreadTerminate) wmMainThreadTerminate=RegisterWindowMessage(L"VBufBackend_adobeAcrobat_mainThreadTerminate");
-	DEBUG_MSG(L"wmMainThreadSetup message: "<<wmMainThreadSetup<<L", wmMainThreadTerminate message: "<<wmMainThreadTerminate);
+	backends.insert(this);
 	DEBUG_MSG(L"Setting hook");
 	HWND rootWindow=(HWND)rootDocHandle;
 	rootThreadID=GetWindowThreadProcessId(rootWindow,NULL);
@@ -473,6 +468,7 @@ AdobeAcrobatVBufBackend_t::AdobeAcrobatVBufBackend_t(int docHandle, int ID, VBuf
 AdobeAcrobatVBufBackend_t::~AdobeAcrobatVBufBackend_t() {
 	int res;
 	DEBUG_MSG(L"adobeAcrobat backend being destroied");
+	backends.erase(this);
 	DEBUG_MSG(L"Setting hook");
 	HHOOK mainThreadGetMessageHookID=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)mainThreadGetMessageHook,backendLibHandle,rootThreadID);
 	assert(mainThreadGetMessageHookID!=0); //valid hooks are not 0
