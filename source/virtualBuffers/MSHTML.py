@@ -36,7 +36,6 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 	}
 
 	def _normalizeControlField(self,attrs):
-		print attrs
 		level=None
 		accRole=attrs.get('IAccessible::role',0)
 		accRole=int(accRole) if isinstance(accRole,basestring) and accRole.isdigit() else accRole

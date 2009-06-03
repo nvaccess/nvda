@@ -4,6 +4,7 @@
 import globalVars
 import _winreg
 import os
+import sys
 from cStringIO import StringIO
 from configobj import ConfigObj
 from validate import Validator
@@ -205,3 +206,75 @@ def getUserDefaultConfigPath():
 		if ctypes.windll.shell32.SHGetSpecialFolderPathW(0,buf,CSIDL_APPDATA,0):
 			return u'%s\\nvda'%buf.value
 	return u'.\\'
+
+RUN_REGKEY = ur"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
+
+def getStartAfterLogon():
+	try:
+		k = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, RUN_REGKEY)
+		val = _winreg.QueryValueEx(k, u"nvda")[0]
+		return os.stat(val) == os.stat(sys.argv[0])
+	except (WindowsError, OSError):
+		return False
+
+def setStartAfterLogon(enable):
+	if getStartAfterLogon() == enable:
+		return
+	k = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, RUN_REGKEY, 0, _winreg.KEY_WRITE)
+	if enable:
+		_winreg.SetValueEx(k, u"nvda", None, _winreg.REG_SZ, sys.argv[0])
+	else:
+		_winreg.DeleteValue(k, u"nvda")
+
+SERVICE_FILENAME = u"nvda_service.exe"
+
+def isServiceInstalled():
+	if not os.path.isfile(SERVICE_FILENAME):
+		return False
+	try:
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, ur"SYSTEM\CurrentControlSet\Services\nvda")
+		val = _winreg.QueryValueEx(k, u"ImagePath")[0].replace(u'"', u'')
+		return os.stat(val) == os.stat(SERVICE_FILENAME)
+	except (WindowsError, OSError):
+		return False
+
+def execElevated(path, params=None, wait=False):
+	import shellapi
+	import winKernel
+	import winUser
+	sei = shellapi.SHELLEXECUTEINFO(lpVerb=u"runas", lpFile=os.path.abspath(path), lpParameters=params, nShow=winUser.SW_HIDE)
+	if wait:
+		sei.fMask = shellapi.SEE_MASK_NOCLOSEPROCESS
+	shellapi.ShellExecuteEx(sei)
+	if wait:
+		try:
+			winKernel.waitForSingleObject(sei.hProcess, winKernel.INFINITE)
+			return winKernel.GetExitCodeProcess(sei.hProcess)
+		finally:
+			winKernel.closeHandle(sei.hProcess)
+
+SLAVE_FILENAME = u"nvda_slave.exe"
+
+NVDA_REGKEY = ur"SOFTWARE\NVDA"
+
+def getStartOnLogonScreen():
+	try:
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
+		return bool(_winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
+	except WindowsError:
+		return False
+
+def _setStartOnLogonScreen(enable):
+	k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY, 0, _winreg.KEY_WRITE)
+	_winreg.SetValueEx(k, u"startOnLogonScreen", None, _winreg.REG_DWORD, int(enable))
+
+def setStartOnLogonScreen(enable):
+	if getStartOnLogonScreen() == enable:
+		return
+	try:
+		# Try setting it directly.
+		_setStartOnLogonScreen(enable)
+	except WindowsError:
+		# We probably don't have admin privs, so we need to elevate to do this using the slave.
+		if execElevated(SLAVE_FILENAME, "config_setStartOnLogonScreen %d" % enable, wait=True) != 0:
+			raise RuntimeError("Slave failed to set startOnLogonScreen")

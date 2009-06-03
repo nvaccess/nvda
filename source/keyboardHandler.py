@@ -20,7 +20,7 @@ import queueHandler
 import config
 import _winreg
 import api
-import keyHook
+import winInputHook
 
 keyUpIgnoreSet=set()
 passKeyThroughCount=-1 #If 0 or higher then key downs and key ups will be passed straight through
@@ -240,7 +240,8 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 
 def initialize():
 	"""Initialises keyboard support."""
-	keyHook.initialize(internal_keyDownEvent,internal_keyUpEvent)
+	winInputHook.initialize()
+	winInputHook.setCallbacks(keyDown=internal_keyDownEvent,keyUp=internal_keyUpEvent)
 
 def terminate():
-	keyHook.terminate()
+	winInputHook.terminate()

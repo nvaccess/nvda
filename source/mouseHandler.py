@@ -15,7 +15,7 @@ import globalVars
 import eventHandler
 from logHandler import log
 import config
-import mouseHook
+import winInputHook
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
@@ -117,7 +117,8 @@ def initialize():
 		mouseObject=api.getDesktopObject()
 	api.setMouseObject(mouseObject)
 	curMousePos=(x,y)
-	mouseHook.initialize(internal_mouseEvent)
+	winInputHook.initialize()
+	winInputHook.setCallbacks(mouse=internal_mouseEvent)
 
 def pumpAll():
 	global mouseMoved, curMousePos, mouseShapeChanged, curMouseShape
@@ -133,4 +134,4 @@ def pumpAll():
 			mouseShapeChanged+=1
 
 def terminate():
-	mouseHook.terminate()
+	winInputHook.terminate()

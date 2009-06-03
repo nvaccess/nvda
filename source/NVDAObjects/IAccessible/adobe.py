@@ -5,6 +5,12 @@ from NVDAObjects import NVDAObjectTextInfo
 
 class AcrobatNode(IAccessible):
 
+	def _get_IAccessibleFocusEventNeedsFocusedState(self):
+		#Acrobat document root objects do not have their focused state set when they have the focus.
+		if self.event_childID==0:
+			return False
+		return super(AcrobatNode,self).IAccessibleFocusEventNeedsFocusedState
+
 	def event_valueChange(self):
 		if self.event_childID==0 and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
 			# This page may die and be replaced by another with the same event params, so always grab a new one.

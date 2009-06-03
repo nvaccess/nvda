@@ -398,6 +398,7 @@ silentValuesForRoles=set([
 	controlTypes.ROLE_CHECKBOX,
 	controlTypes.ROLE_RADIOBUTTON,
 	controlTypes.ROLE_LINK,
+	controlTypes.ROLE_MENUITEM,
 ])
 
 def processPositiveStates(role, states, reason, positiveStates):
@@ -725,7 +726,7 @@ def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,re
 		return " ".join((roleText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount"))))
 	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states) or (role==controlTypes.ROLE_TABLE and "table-id" in attrs)):
 		return _("out of %s")%roleText
-	elif fieldType=="start_addedToControlFieldStack" and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER) and tableID:
+	elif fieldType=="start_addedToControlFieldStack" and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER,controlTypes.ROLE_TABLEROWHEADER) and tableID:
 		return getSpeechTextForProperties(_tableID=tableID, rowNumber=attrs.get("table-rownumber"), columnNumber=attrs.get("table-columnnumber"))
 	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
 		return getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))

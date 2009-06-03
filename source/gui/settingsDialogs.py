@@ -128,6 +128,16 @@ class GeneralSettingsDialog(SettingsDialog):
 			log.debugWarning("Could not set log level list to current log level") 
 		logLevelSizer.Add(self.logLevelList)
 		settingsSizer.Add(logLevelSizer,border=10,flag=wx.BOTTOM)
+		self.startAfterLogonCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("&Automatically start NVDA after I log on to Windows"))
+		self.startAfterLogonCheckBox.SetValue(config.getStartAfterLogon())
+		if not config.isInstalledCopy():
+			self.startAfterLogonCheckBox.Disable()
+		settingsSizer.Add(self.startAfterLogonCheckBox)
+		self.startOnLogonScreenCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("Use NVDA on the Windows logon screen (requires administrator privileges)"))
+		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
+		if not config.isServiceInstalled():
+			self.startOnLogonScreenCheckBox.Disable()
+		settingsSizer.Add(self.startOnLogonScreenCheckBox)
 
 	def postInit(self):
 		self.languageList.SetFocus()
@@ -147,6 +157,13 @@ class GeneralSettingsDialog(SettingsDialog):
 		logLevel=self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
 		config.conf["general"]["loggingLevel"]=logHandler.levelNames[logLevel]
 		logHandler.setLogLevelFromConfig()
+		if self.startAfterLogonCheckBox.IsEnabled():
+			config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
+		if self.startOnLogonScreenCheckBox.IsEnabled():
+			try:
+				config.setStartOnLogonScreen(self.startOnLogonScreenCheckBox.GetValue())
+			except (WindowsError, RuntimeError):
+				wx.MessageBox(_("This change requires administrator privileges."), _("Insufficient Privileges"), style=wx.OK | wx.ICON_ERROR)
 		if self.oldLanguage!=newLanguage:
 			if wx.MessageDialog(self,_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING).ShowModal()==wx.ID_OK:
 				config.save()

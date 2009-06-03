@@ -24,9 +24,12 @@ Cambios dende 0.6 P3:
 * Cambio: o anunciado das barras de progreso foi mellorado. O máis notable é que agora podes configurar ó NVDA para anuncialas a través de voz e pitidos ó mesmo tempo.
 * Novo: en Windows Vista, se o usuario se move ó escritorio seguro (ou porque un diálogo de control de UAC apareza, ou porque fóra premedo control+alt+suprimir), NVDA anunciará o feito de que o usuario está agora no escritorio seguro. Este escritorio aínda non é accesible para NVDA, sen embargo o usuario ó menos é notificado sobre o que ocorríu.
 * Correxido: mellor soporte para consolas do Dos. específicamente: NVDA agora pode ler o contido de consolas particulares que sempre se pensou que estaban en branco. Premendo control+break xa non pechan ó NVDA.
- * Novo: NVDA pode anunciar texto baixo o rato dentro de ventás da consola do dos.
+* Novo: NVDA pode anunciar texto baixo o rato dentro de ventás da consola do dos.
+* novo: Soporte para UI Automation a traverso da API cliente UI Automation dispoñible no Windows 7, tanto como se mellora a experiencia de NVDA en Windows 7.
+* novo: NVDA pode seren configurado para iniciarse automáticamente despois de que te identifiques en Windows. A opción está no diálogo Opcións Xerais.
+* novo: NVDA pode ler pantallas seguras de Windows tales como a autentificación de Windows (logon), control+alt+suprimir e pantallas do UAC en Windows XP e posteriores. A letura das pantallas de autentificación de Windows (logon) pode ser configurada dende O diálogo Opcións Xerais. (#97)
+* correción: No Windows Vista, o instalador do NVDA agora arranca ó NVDA con privilexios dun usuario normal cando se requira para executar ó NVDA na pantalla derradeira.
 
-   
    
 Cambios dende 0.6 P2:
 

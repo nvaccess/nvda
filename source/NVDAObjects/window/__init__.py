@@ -294,6 +294,7 @@ windowClassMap={
 	"TRichEdit":"Edit",
 	"TRichViewEdit":"Edit",
 	"TInEdit.UnicodeClass":"Edit",
+	"TInEdit":"Edit",
 	"TEdit":"Edit",
 	"TFilenameEdit":"Edit",
 	"TSpinEdit":"Edit",
@@ -316,5 +317,9 @@ windowClassMap={
 	"RichEdit20WPT":"RichEdit20",
 	"RICHEDIT60W":"RICHEDIT50W",
 	"TAltEdit.UnicodeClass":"Edit",
+	"TAltEdit":"Edit",
 	"TChatRichEdit.UnicodeClass":"RichEdit20",
+	"TMyRichEdit":"RichEdit20",
+	"TExRichEdit":"RichEdit20",
+	"RichTextWndClass":"RichEdit20",
 }

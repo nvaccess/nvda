@@ -223,7 +223,13 @@ class ListItem(IAccessible):
 		return None
 
 	def _get_value(self):
-		return super(ListItem,self)._get_description()
+		value=super(ListItem,self)._get_description()
+		if not value:
+			return None
+		#Some list view items in Vista can contain annoying left-to-right and right-to-left indicator characters which really should not be there.
+		value=value.replace(u'\u200E','')
+		value=value.replace(u'\u200F','')
+		return value
 
 	def _get_positionInfo(self):
 		info=super(ListItem,self)._get_positionInfo()

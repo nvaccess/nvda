@@ -252,6 +252,10 @@ OBJID_ALERT=-10
 OBJID_SOUND=-11
 OBJID_NATIVEOM=-16
 
+# ShowWindow() commands
+SW_HIDE = 0
+SW_SHOWNORMAL = 1
+
 def setSystemScreenReaderFlag(val):
 	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_SENDCHANGE)
 

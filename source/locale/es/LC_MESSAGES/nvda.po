@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: r2915\n"
-"POT-Creation-Date: 2009-05-12 21:23+Hora estándar romance\n"
-"PO-Revision-Date: 2009-05-12 21:26+0100\n"
+"POT-Creation-Date: 2009-05-15 16:44+Hora estándar romance\n"
+"PO-Revision-Date: 2009-05-17 22:33+0100\n"
 "Last-Translator: Juan C. Buño <Quetzatl@eresmas.net>\n"
 "Language-Team: equipo de traducción al español de NVDA <Quetzatl@eresmas.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,24 +16,24 @@ msgstr ""
 "X-Poedit-Country: SPAIN\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
-#: IAccessibleHandler.py:894
+#: IAccessibleHandler.py:896
 msgid "Secure Desktop"
-msgstr "Escritorio Seguro"
-
-#: IAccessibleHandler.py:900
-msgid "Inaccessible to NVDA"
-msgstr "Inaccesible para NVDA"
+msgstr "Escritorio seguro"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:169
 msgid "%s items"
 msgstr "%s elementos"
+
+#: NVDAObjects\UIA\__init__.py:396
+msgid "invoke"
+msgstr "invocar"
 
 #: NVDAObjects\progressBar.py:42
 #: appModules\_default.py:780
 msgid "%d percent"
 msgstr "%d porciento"
 
-#: NVDAObjects\window\__init__.py:277
+#: NVDAObjects\window\__init__.py:287
 msgid "Desktop"
 msgstr "Escritorio"
 
@@ -46,7 +46,7 @@ msgid "%s embedded object"
 msgstr "%s objeto empotrado"
 
 #: NVDAObjects\window\edit.py:532
-#: controlTypes.py:236
+#: controlTypes.py:240
 msgid "embedded object"
 msgstr "objeto incorporado"
 
@@ -63,7 +63,7 @@ msgid "Moves to a cell and speaks its coordinates and content"
 msgstr "Se mueve a una celda y verbaliza sus coordenadas y contenido"
 
 #: NVDAObjects\window\excel.py:186
-#: controlTypes.py:315
+#: controlTypes.py:323
 msgid "selected"
 msgstr "seleccionado"
 
@@ -116,7 +116,7 @@ msgstr "activado"
 #: appModules\_default.py:760
 #: appModules\winamp.py:77
 #: appModules\winamp.py:87
-#: gui\settingsDialogs.py:490
+#: gui\settingsDialogs.py:507
 #: keyboardHandler.py:51
 #: keyboardHandler.py:53
 #: keyboardHandler.py:55
@@ -1042,7 +1042,7 @@ msgid "null"
 msgstr "vacío"
 
 #: characterSymbols.py:20
-#: controlTypes.py:194
+#: controlTypes.py:198
 msgid "tab"
 msgstr "tab"
 
@@ -1164,12 +1164,12 @@ msgid "right bracket"
 msgstr "cierra corchete"
 
 #: characterSymbols.py:50
-#: controlTypes.py:264
+#: controlTypes.py:268
 msgid "caret"
 msgstr "circunflejo"
 
 #: characterSymbols.py:51
-#: controlTypes.py:300
+#: controlTypes.py:304
 msgid "underline"
 msgstr "subrayado"
 
@@ -1201,659 +1201,675 @@ msgstr "viñeta"
 msgid "dot dot dot"
 msgstr "punto punto punto"
 
-#: controlTypes.py:172
+#: controlTypes.py:176
 msgid "unknown object"
 msgstr "objeto desconocido"
 
-#: controlTypes.py:173
+#: controlTypes.py:177
 msgid "window"
 msgstr "Ventana"
 
-#: controlTypes.py:174
+#: controlTypes.py:178
 msgid "title bar"
 msgstr "barra de título"
 
-#: controlTypes.py:175
+#: controlTypes.py:179
 msgid "pane"
 msgstr "panel"
 
-#: controlTypes.py:176
+#: controlTypes.py:180
 msgid "dialog"
 msgstr "diálogo"
 
-#: controlTypes.py:177
+#: controlTypes.py:181
 msgid "check box"
 msgstr "casilla de verificación"
 
-#: controlTypes.py:178
+#: controlTypes.py:182
 msgid "radio button"
 msgstr "botón de opción"
 
-#: controlTypes.py:179
+#: controlTypes.py:183
 msgid "text"
 msgstr "texto"
 
-#: controlTypes.py:180
+#: controlTypes.py:184
 msgid "edit"
 msgstr "cuadro de edición"
 
-#: controlTypes.py:181
+#: controlTypes.py:185
 msgid "button"
 msgstr "botón"
 
-#: controlTypes.py:182
+#: controlTypes.py:186
 msgid "menu bar"
 msgstr "barra de menú"
 
-#: controlTypes.py:183
+#: controlTypes.py:187
 msgid "menu item"
 msgstr "elemento de menú"
 
-#: controlTypes.py:184
-#: controlTypes.py:291
+#: controlTypes.py:188
+#: controlTypes.py:295
 msgid "menu"
 msgstr "menú"
 
-#: controlTypes.py:185
+#: controlTypes.py:189
 msgid "combo box"
 msgstr "cuadro combinado"
 
-#: controlTypes.py:186
+#: controlTypes.py:190
 msgid "list"
 msgstr "lista"
 
-#: controlTypes.py:187
+#: controlTypes.py:191
 msgid "list item"
 msgstr "elemento de lista"
 
-#: controlTypes.py:188
+#: controlTypes.py:192
 msgid "graphic"
 msgstr "gráfico"
 
-#: controlTypes.py:189
+#: controlTypes.py:193
 msgid "help balloon"
 msgstr "globo de ayuda"
 
-#: controlTypes.py:190
+#: controlTypes.py:194
 msgid "tool tip"
 msgstr "consejo"
 
-#: controlTypes.py:191
+#: controlTypes.py:195
 #: speech.py:839
 msgid "link"
 msgstr "enlace"
 
-#: controlTypes.py:192
+#: controlTypes.py:196
 msgid "tree view"
 msgstr "árbol"
 
-#: controlTypes.py:193
+#: controlTypes.py:197
 msgid "tree view item"
 msgstr "elemento de árbol"
 
-#: controlTypes.py:195
+#: controlTypes.py:199
 msgid "tab control"
 msgstr "Control pestaña"
 
-#: controlTypes.py:196
+#: controlTypes.py:200
 msgid "slider"
 msgstr "deslizador"
 
-#: controlTypes.py:197
+#: controlTypes.py:201
 msgid "progress bar"
 msgstr "barra de progreso"
 
-#: controlTypes.py:198
+#: controlTypes.py:202
 msgid "scroll bar"
 msgstr "barra de desplazamiento"
 
-#: controlTypes.py:199
+#: controlTypes.py:203
 msgid "status bar"
 msgstr "barra de estado"
 
-#: controlTypes.py:200
+#: controlTypes.py:204
 msgid "table"
 msgstr "tabla"
 
-#: controlTypes.py:201
+#: controlTypes.py:205
 msgid "cell"
 msgstr "celda"
 
-#: controlTypes.py:202
+#: controlTypes.py:206
 msgid "column"
 msgstr "columna"
 
-#: controlTypes.py:203
+#: controlTypes.py:207
 msgid "row"
 msgstr "fila"
 
-#: controlTypes.py:204
+#: controlTypes.py:208
 msgid "frame"
 msgstr "marco"
 
-#: controlTypes.py:205
+#: controlTypes.py:209
 msgid "tool bar"
 msgstr "barra de herramientas"
 
-#: controlTypes.py:206
+#: controlTypes.py:210
 msgid "column header"
 msgstr "encabezado de columna"
 
-#: controlTypes.py:207
+#: controlTypes.py:211
 msgid "row header"
 msgstr "encabezado de fila"
 
-#: controlTypes.py:208
+#: controlTypes.py:212
 msgid "drop down button"
 msgstr "botón de menú desplegable"
 
-#: controlTypes.py:209
+#: controlTypes.py:213
 msgid "clock"
 msgstr "reloj"
 
-#: controlTypes.py:210
+#: controlTypes.py:214
 msgid "separator"
 msgstr "separador"
 
-#: controlTypes.py:211
+#: controlTypes.py:215
 msgid "form"
 msgstr "formulário"
 
-#: controlTypes.py:212
+#: controlTypes.py:216
 msgid "heading"
 msgstr "encabezado"
 
-#: controlTypes.py:213
+#: controlTypes.py:217
 msgid "heading 1"
 msgstr "encabezado 1"
 
-#: controlTypes.py:214
+#: controlTypes.py:218
 msgid "heading 2"
 msgstr "encabezado 2"
 
-#: controlTypes.py:215
+#: controlTypes.py:219
 msgid "heading 3"
 msgstr "encabezado 3"
 
-#: controlTypes.py:216
+#: controlTypes.py:220
 msgid "heading 4"
 msgstr "encabezado 4"
 
-#: controlTypes.py:217
+#: controlTypes.py:221
 msgid "heading 5"
 msgstr "encabezado 5"
 
-#: controlTypes.py:218
+#: controlTypes.py:222
 msgid "heading 6"
 msgstr "encabezado 6"
 
-#: controlTypes.py:219
+#: controlTypes.py:223
 #: textHandler.py:136
 #: textInfos\__init__.py:114
 msgid "paragraph"
 msgstr "Párrafo"
 
-#: controlTypes.py:220
+#: controlTypes.py:224
 msgid "block quote"
 msgstr "cita"
 
-#: controlTypes.py:221
+#: controlTypes.py:225
 msgid "table header"
 msgstr "encabezado de tabla"
 
-#: controlTypes.py:222
+#: controlTypes.py:226
 msgid "table body"
 msgstr "cuerpo de tabla"
 
-#: controlTypes.py:223
+#: controlTypes.py:227
 msgid "table footer"
 msgstr "pie de tabla"
 
-#: controlTypes.py:224
+#: controlTypes.py:228
 msgid "document"
 msgstr "documento"
 
-#: controlTypes.py:225
+#: controlTypes.py:229
 msgid "animation"
 msgstr "animación"
 
-#: controlTypes.py:226
+#: controlTypes.py:230
 msgid "application"
 msgstr "aplicación"
 
-#: controlTypes.py:227
+#: controlTypes.py:231
 msgid "box"
 msgstr "cuadro"
 
-#: controlTypes.py:228
+#: controlTypes.py:232
 msgid "grouping"
 msgstr "grupo"
 
-#: controlTypes.py:229
+#: controlTypes.py:233
 msgid "property page"
 msgstr "página de propiedades"
 
-#: controlTypes.py:230
+#: controlTypes.py:234
 msgid "canvas"
 msgstr "lienzo"
 
-#: controlTypes.py:231
+#: controlTypes.py:235
 msgid "caption"
 msgstr "título"
 
-#: controlTypes.py:232
+#: controlTypes.py:236
 msgid "check menu item"
 msgstr "elemento de menú verificable"
 
-#: controlTypes.py:233
+#: controlTypes.py:237
 msgid "date edit"
 msgstr "cuadro de edición de fecha"
 
-#: controlTypes.py:234
+#: controlTypes.py:238
 msgid "icon"
 msgstr "icono"
 
-#: controlTypes.py:235
+#: controlTypes.py:239
 msgid "directory pane"
 msgstr "panel de directorios"
 
-#: controlTypes.py:237
+#: controlTypes.py:241
 msgid "end note"
 msgstr "nota final"
 
-#: controlTypes.py:238
+#: controlTypes.py:242
 msgid "footer"
 msgstr "pie"
 
-#: controlTypes.py:239
+#: controlTypes.py:243
 msgid "foot note"
 msgstr "nota al pie"
 
-#: controlTypes.py:240
+#: controlTypes.py:244
 msgid "glass pane"
 msgstr "panel transparente"
 
-#: controlTypes.py:241
+#: controlTypes.py:245
 msgid "header"
 msgstr "encabezado"
 
-#: controlTypes.py:242
+#: controlTypes.py:246
 msgid "image map"
 msgstr "mapa de imagen"
 
-#: controlTypes.py:243
+#: controlTypes.py:247
 msgid "input window"
 msgstr "ventana de entrada"
 
-#: controlTypes.py:244
+#: controlTypes.py:248
 msgid "label"
 msgstr "etiqueta"
 
-#: controlTypes.py:245
+#: controlTypes.py:249
 msgid "note"
 msgstr "nota"
 
-#: controlTypes.py:246
+#: controlTypes.py:250
 msgid "page"
 msgstr "página"
 
-#: controlTypes.py:247
+#: controlTypes.py:251
 msgid "radio menu item"
 msgstr "opción de elemento de menú"
 
-#: controlTypes.py:248
+#: controlTypes.py:252
 msgid "layered pane"
 msgstr "panel solapado"
 
-#: controlTypes.py:249
+#: controlTypes.py:253
 msgid "redundant object"
 msgstr "objeto redundante"
 
-#: controlTypes.py:250
+#: controlTypes.py:254
 msgid "root pane"
 msgstr "panel raíz"
 
-#: controlTypes.py:251
+#: controlTypes.py:255
 msgid "edit bar"
 msgstr "barra de edición"
 
-#: controlTypes.py:252
+#: controlTypes.py:256
 msgid "terminal"
 msgstr "terminal"
 
-#: controlTypes.py:253
+#: controlTypes.py:257
 msgid "rich edit"
 msgstr "cuadro de edición"
 
-#: controlTypes.py:254
+#: controlTypes.py:258
 msgid "ruler"
 msgstr "regla"
 
-#: controlTypes.py:255
+#: controlTypes.py:259
 msgid "scroll pane"
 msgstr "panel deslizable"
 
-#: controlTypes.py:256
+#: controlTypes.py:260
 msgid "section"
 msgstr "sección"
 
-#: controlTypes.py:257
+#: controlTypes.py:261
 msgid "shape"
 msgstr "forma"
 
-#: controlTypes.py:258
+#: controlTypes.py:262
 msgid "split pane"
 msgstr "panel divisible"
 
-#: controlTypes.py:259
+#: controlTypes.py:263
 msgid "view port"
 msgstr "vista de puerto"
 
-#: controlTypes.py:260
+#: controlTypes.py:264
 msgid "tear off menu"
 msgstr "división de menú"
 
-#: controlTypes.py:261
+#: controlTypes.py:265
 msgid "text frame"
 msgstr "marco de texto"
 
-#: controlTypes.py:262
+#: controlTypes.py:266
 msgid "toggle button"
 msgstr "botón conmutable"
 
-#: controlTypes.py:263
+#: controlTypes.py:267
 msgid "border"
 msgstr "borde"
 
-#: controlTypes.py:265
+#: controlTypes.py:269
 #: textHandler.py:133
 #: textInfos\__init__.py:111
 msgid "character"
 msgstr "carácter"
 
-#: controlTypes.py:266
+#: controlTypes.py:270
 msgid "chart"
 msgstr "gráfico"
 
-#: controlTypes.py:267
+#: controlTypes.py:271
 msgid "cursor"
 msgstr "cursor"
 
-#: controlTypes.py:268
+#: controlTypes.py:272
 msgid "diagram"
 msgstr "diagrama"
 
-#: controlTypes.py:269
+#: controlTypes.py:273
 msgid "dial"
 msgstr "marcador"
 
-#: controlTypes.py:270
+#: controlTypes.py:274
 msgid "drop list"
 msgstr "lista desplegable"
 
-#: controlTypes.py:271
+#: controlTypes.py:275
 msgid "split button"
 msgstr "botón divisor"
 
-#: controlTypes.py:272
+#: controlTypes.py:276
 msgid "menu button"
 msgstr "botón de menú"
 
-#: controlTypes.py:273
+#: controlTypes.py:277
 msgid "drop down button grid"
 msgstr "botón desplegable de cuadrícula"
 
-#: controlTypes.py:274
+#: controlTypes.py:278
 msgid "equation"
 msgstr "ecuación"
 
-#: controlTypes.py:275
+#: controlTypes.py:279
 msgid "grip"
 msgstr "rejilla"
 
-#: controlTypes.py:276
+#: controlTypes.py:280
 msgid "hot key field"
 msgstr "campo de tecla rápida"
 
-#: controlTypes.py:277
+#: controlTypes.py:281
 msgid "indicator"
 msgstr "indicador"
 
-#: controlTypes.py:278
+#: controlTypes.py:282
 msgid "spin button"
 msgstr "Botón Transferir"
 
-#: controlTypes.py:279
+#: controlTypes.py:283
 msgid "sound"
 msgstr "sonido"
 
-#: controlTypes.py:280
+#: controlTypes.py:284
 msgid "white space"
 msgstr "espacio en blanco"
 
-#: controlTypes.py:281
+#: controlTypes.py:285
 msgid "tree view button"
 msgstr "botón de árbol"
 
-#: controlTypes.py:282
+#: controlTypes.py:286
 msgid "IP address"
 msgstr "Dirección IP"
 
-#: controlTypes.py:283
+#: controlTypes.py:287
 msgid "desktop icon"
 msgstr "icono del escritorio"
 
-#: controlTypes.py:284
-#: controlTypes.py:308
+#: controlTypes.py:288
+#: controlTypes.py:312
 msgid "alert"
 msgstr "alerta"
 
-#: controlTypes.py:285
+#: controlTypes.py:289
 msgid "IFrame"
 msgstr "Marco en línea"
 
-#: controlTypes.py:286
+#: controlTypes.py:290
 msgid "desktop pane"
 msgstr "panel del escritorio"
 
-#: controlTypes.py:287
+#: controlTypes.py:291
 msgid "option pane"
 msgstr "panel de opciones"
 
-#: controlTypes.py:288
+#: controlTypes.py:292
 msgid "color chooser"
 msgstr "selector de colores"
 
-#: controlTypes.py:289
+#: controlTypes.py:293
 msgid "file chooser"
 msgstr "Selector de ficheros"
 
-#: controlTypes.py:290
+#: controlTypes.py:294
 msgid "filler"
 msgstr "contenedor"
 
-#: controlTypes.py:292
+#: controlTypes.py:296
 msgid "panel"
 msgstr "panel"
 
-#: controlTypes.py:293
+#: controlTypes.py:297
 msgid "password edit"
 msgstr "cuadro de edición de contraseña"
 
-#: controlTypes.py:294
+#: controlTypes.py:298
 msgid "font chooser"
 msgstr "selector de fuentes"
 
-#: controlTypes.py:295
+#: controlTypes.py:299
 #: textHandler.py:135
 #: textInfos\__init__.py:113
 msgid "line"
 msgstr "subrayado"
 
-#: controlTypes.py:296
+#: controlTypes.py:300
 msgid "font name"
 msgstr "nombre de la fuente"
 
-#: controlTypes.py:297
+#: controlTypes.py:301
 msgid "font size"
 msgstr "tamaño de la fuente"
 
-#: controlTypes.py:298
+#: controlTypes.py:302
 #: speech.py:791
 msgid "bold"
 msgstr "negrita"
 
-#: controlTypes.py:299
+#: controlTypes.py:303
 msgid "ITALIC"
 msgstr "cursiva"
 
-#: controlTypes.py:301
+#: controlTypes.py:305
 msgid "foreground color"
 msgstr "color de primer plano"
 
-#: controlTypes.py:302
+#: controlTypes.py:306
 msgid "background color"
 msgstr "color de fondo"
 
-#: controlTypes.py:303
+#: controlTypes.py:307
 #: speech.py:813
 msgid "superscript"
 msgstr "superíndice"
 
-#: controlTypes.py:304
+#: controlTypes.py:308
 #: speech.py:815
 msgid "subscript"
 msgstr "subíndice"
 
-#: controlTypes.py:305
+#: controlTypes.py:309
 msgid "style"
 msgstr "estilo"
 
-#: controlTypes.py:306
+#: controlTypes.py:310
 msgid "indent"
 msgstr "sangría"
 
-#: controlTypes.py:307
+#: controlTypes.py:311
 msgid "alignment"
 msgstr "alineación"
 
-#: controlTypes.py:309
+#: controlTypes.py:313
+msgid "data grid"
+msgstr "data grid"
+
+#: controlTypes.py:314
+msgid "data item"
+msgstr "elemento de data"
+
+#: controlTypes.py:315
+msgid "header item"
+msgstr "elemento de encabezado"
+
+#: controlTypes.py:316
+msgid "thum control"
+msgstr "control thum"
+
+#: controlTypes.py:317
 msgid "calendar"
 msgstr "calendario"
 
-#: controlTypes.py:313
+#: controlTypes.py:321
 msgid "unavailable"
 msgstr "no disponible"
 
-#: controlTypes.py:314
+#: controlTypes.py:322
 msgid "focused"
 msgstr "enfocado"
 
-#: controlTypes.py:316
+#: controlTypes.py:324
 msgid "busy"
 msgstr "procesando"
 
-#: controlTypes.py:317
+#: controlTypes.py:325
 msgid "pressed"
 msgstr "pulsado"
 
-#: controlTypes.py:318
+#: controlTypes.py:326
 msgid "checked"
 msgstr "verificado"
 
-#: controlTypes.py:319
+#: controlTypes.py:327
 msgid "half checked"
 msgstr "semiverificado"
 
-#: controlTypes.py:320
+#: controlTypes.py:328
 msgid "read only"
 msgstr "sólo lectura"
 
-#: controlTypes.py:321
+#: controlTypes.py:329
 msgid "expanded"
 msgstr "expandido"
 
-#: controlTypes.py:322
+#: controlTypes.py:330
 msgid "collapsed"
 msgstr "Contraído"
 
-#: controlTypes.py:323
+#: controlTypes.py:331
 msgid "invisible"
 msgstr "invisible"
 
-#: controlTypes.py:324
+#: controlTypes.py:332
 msgid "visited"
 msgstr "visitado"
 
-#: controlTypes.py:325
+#: controlTypes.py:333
 msgid "linked"
 msgstr "enlazado"
 
-#: controlTypes.py:326
+#: controlTypes.py:334
 msgid "subMenu"
 msgstr "subMenú"
 
-#: controlTypes.py:327
+#: controlTypes.py:335
 msgid "protected"
 msgstr "contraseña"
 
-#: controlTypes.py:328
+#: controlTypes.py:336
 msgid "required"
 msgstr "requerido"
 
-#: controlTypes.py:329
+#: controlTypes.py:337
 msgid "defunct"
 msgstr "desaparecido"
 
-#: controlTypes.py:330
+#: controlTypes.py:338
 msgid "invalid entry"
 msgstr "entrada inválida"
 
-#: controlTypes.py:331
+#: controlTypes.py:339
 msgid "modal"
 msgstr "modal"
 
-#: controlTypes.py:332
+#: controlTypes.py:340
 msgid "has auto complete"
 msgstr "tiene auto completado"
 
-#: controlTypes.py:333
+#: controlTypes.py:341
 msgid "multi line"
 msgstr "multi línea"
 
-#: controlTypes.py:334
+#: controlTypes.py:342
 msgid "iconified"
 msgstr "iconificado"
 
-#: controlTypes.py:335
+#: controlTypes.py:343
 msgid "off screen"
 msgstr "off screen"
 
-#: controlTypes.py:336
+#: controlTypes.py:344
 msgid "selectable"
 msgstr "seleccionable"
 
-#: controlTypes.py:337
+#: controlTypes.py:345
 msgid "focusable"
 msgstr "enfocable"
 
-#: controlTypes.py:338
+#: controlTypes.py:346
 msgid "clickable"
 msgstr "sensible al ratón"
 
-#: controlTypes.py:339
+#: controlTypes.py:347
 msgid "editable"
 msgstr "editable"
 
-#: controlTypes.py:340
+#: controlTypes.py:348
 msgid "checkable"
 msgstr "verificable"
 
-#: core.py:87
+#: core.py:95
 msgid "Loading subsystems, please wait..."
 msgstr "cargando subsistema; por favor aguarda..."
 
-#: core.py:157
+#: core.py:168
 msgid "NVDA started"
 msgstr "NVDA activado"
 
@@ -2139,7 +2155,7 @@ msgid "Options"
 msgstr "Opciones"
 
 #: gui\__init__.py:379
-#: gui\settingsDialogs.py:404
+#: gui\settingsDialogs.py:421
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Utilizar BloqueoMayúsculas como tecla modificadora de NVDA"
 
@@ -2225,383 +2241,399 @@ msgstr "Nivel de mensajes guardados en el &Log"
 msgid "Log level"
 msgstr "Niveles en el Log"
 
-#: gui\settingsDialogs.py:142
+#: gui\settingsDialogs.py:131
+msgid "&Automatically start NVDA after I log on to Windows"
+msgstr "Iniciar NVDA &automáticamente después de autentificarse en Windows"
+
+#: gui\settingsDialogs.py:136
+msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
+msgstr "Utilizar NVDA en la ventana de autentificación de Windows (requiere privilegios de administrador)"
+
+#: gui\settingsDialogs.py:152
 msgid "Error in %s language file"
 msgstr "Error en fichero de idioma %s"
 
-#: gui\settingsDialogs.py:142
+#: gui\settingsDialogs.py:152
 msgid "Language Error"
 msgstr "Error en el Idioma"
 
-#: gui\settingsDialogs.py:151
+#: gui\settingsDialogs.py:166
+msgid "Insufficient Privileges"
+msgstr "Privilegios Insuficientes"
+
+#: gui\settingsDialogs.py:166
+msgid "This change requires administrator privileges."
+msgstr "Este cambio requiere privilegios de administrador."
+
+#: gui\settingsDialogs.py:168
 msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
 msgstr "Para que el nuevo idioma tenga efecto, la configuración debe ser guardada y NVDA debe ser reiniciado. Presiona intro para guardar y reiniciar NVDA, o cancela para guardar manualmente y salir más tarde."
 
-#: gui\settingsDialogs.py:151
+#: gui\settingsDialogs.py:168
 msgid "Language Configuration Change"
 msgstr "Cambio de Configuración de Idioma"
 
-#: gui\settingsDialogs.py:157
+#: gui\settingsDialogs.py:174
 msgid "Synthesizer"
 msgstr "Sintetizador"
 
-#: gui\settingsDialogs.py:161
+#: gui\settingsDialogs.py:178
 msgid "&Synthesizer"
 msgstr "&Sintetizador"
 
-#: gui\settingsDialogs.py:176
+#: gui\settingsDialogs.py:193
 msgid "Output &device"
 msgstr "&Dispositivo de salida"
 
-#: gui\settingsDialogs.py:196
+#: gui\settingsDialogs.py:213
 msgid "Could not load the %s synthesizer."
 msgstr "No se pudo cargar el sintetizador %s."
 
-#: gui\settingsDialogs.py:196
+#: gui\settingsDialogs.py:213
 msgid "Synthesizer Error"
 msgstr "Error de Sintetizador"
 
-#: gui\settingsDialogs.py:201
+#: gui\settingsDialogs.py:218
 msgid "Voice settings"
 msgstr "Opciones de voz"
 
-#: gui\settingsDialogs.py:211
+#: gui\settingsDialogs.py:228
 msgid "&Voice"
 msgstr "&Voz"
 
-#: gui\settingsDialogs.py:226
+#: gui\settingsDialogs.py:243
 msgid "V&ariant"
 msgstr "Va&riante"
 
-#: gui\settingsDialogs.py:240
+#: gui\settingsDialogs.py:257
 msgid "&Rate"
 msgstr "ve&locidad"
 
-#: gui\settingsDialogs.py:248
+#: gui\settingsDialogs.py:265
 msgid "&Pitch"
 msgstr "&tono"
 
-#: gui\settingsDialogs.py:256
+#: gui\settingsDialogs.py:273
 msgid "&Inflection"
 msgstr "&Inflexión"
 
-#: gui\settingsDialogs.py:264
+#: gui\settingsDialogs.py:281
 msgid "V&olume"
 msgstr "v&olumen"
 
-#: gui\settingsDialogs.py:272
+#: gui\settingsDialogs.py:289
 msgid "&Speak all punctuation"
 msgstr "&Decir toda la puntuación"
 
-#: gui\settingsDialogs.py:275
+#: gui\settingsDialogs.py:292
 msgid "Raise pitch for capitals"
 msgstr "Aumentar el tono para mayúsculas"
 
-#: gui\settingsDialogs.py:278
+#: gui\settingsDialogs.py:295
 msgid "Say &cap before capitals"
 msgstr "Decir ma&yus antes de mayúsculas"
 
-#: gui\settingsDialogs.py:281
+#: gui\settingsDialogs.py:298
 msgid "&Beep for capitals"
 msgstr "&Pitar para mayúsculas"
 
-#: gui\settingsDialogs.py:284
+#: gui\settingsDialogs.py:301
 msgid "Use &spelling functionality if supported"
 msgstr "Utilizar funcionalidad de &deletreo si está soportada"
 
-#: gui\settingsDialogs.py:387
+#: gui\settingsDialogs.py:404
 msgid "Keyboard Settings"
 msgstr "Opciones de teclado"
 
-#: gui\settingsDialogs.py:391
+#: gui\settingsDialogs.py:408
 msgid "&Keyboard layout"
 msgstr "Disposición del &teclado"
 
-#: gui\settingsDialogs.py:396
+#: gui\settingsDialogs.py:413
 msgid "Keyboard layout"
 msgstr "Disposición del teclado"
 
-#: gui\settingsDialogs.py:407
+#: gui\settingsDialogs.py:424
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Utilizar Insertar del teclado numérico como tecla modificadora de NVDA"
 
-#: gui\settingsDialogs.py:410
+#: gui\settingsDialogs.py:427
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Utilizar Insertar del teclado extendido como tecla modificadora de NVDA"
 
-#: gui\settingsDialogs.py:413
+#: gui\settingsDialogs.py:430
 msgid "Speak typed &characters"
 msgstr "verbalizar &carácteres al escribir"
 
-#: gui\settingsDialogs.py:416
+#: gui\settingsDialogs.py:433
 msgid "Speak typed &words"
 msgstr "verbalizar &palabras al escribir"
 
-#: gui\settingsDialogs.py:419
+#: gui\settingsDialogs.py:436
 msgid "Speak command &keys"
 msgstr "verbalizar &teclas de órdenes"
 
-#: gui\settingsDialogs.py:442
+#: gui\settingsDialogs.py:459
 msgid "Mouse settings"
 msgstr "Opciones de ratón"
 
-#: gui\settingsDialogs.py:445
+#: gui\settingsDialogs.py:462
 msgid "Report mouse &shape changes"
 msgstr "anunciar cambios en la &forma del ratón"
 
-#: gui\settingsDialogs.py:448
+#: gui\settingsDialogs.py:465
 msgid "Report &text under the mouse"
 msgstr "Anunciar &texto bajo el ratón"
 
-#: gui\settingsDialogs.py:452
+#: gui\settingsDialogs.py:469
 msgid "Text &unit resolution"
 msgstr "&Unidad de resolución de texto"
 
-#: gui\settingsDialogs.py:456
+#: gui\settingsDialogs.py:473
 msgid "text reporting unit"
 msgstr "Unidad de anunciado de texto"
 
-#: gui\settingsDialogs.py:464
+#: gui\settingsDialogs.py:481
 msgid "Report &role when mouse enters object"
 msgstr "Anunciar &rol cuando el ratón entre en el objeto"
 
-#: gui\settingsDialogs.py:467
+#: gui\settingsDialogs.py:484
 msgid "play audio coordinates when mouse moves"
 msgstr "reproducir audio cuando se mueve el ratón"
 
-#: gui\settingsDialogs.py:470
+#: gui\settingsDialogs.py:487
 msgid "brightness controls audio coordinates volume"
 msgstr "El brillo controla el bolúmen del audio"
 
-#: gui\settingsDialogs.py:488
+#: gui\settingsDialogs.py:505
 msgid "Object presentation"
 msgstr "Presentación de Objetos"
 
-#: gui\settingsDialogs.py:491
+#: gui\settingsDialogs.py:508
 msgid "Speak"
 msgstr "Verbalizar"
 
-#: gui\settingsDialogs.py:492
+#: gui\settingsDialogs.py:509
 msgid "Beep"
 msgstr "Pitar"
 
-#: gui\settingsDialogs.py:493
+#: gui\settingsDialogs.py:510
 msgid "Speak and beep"
 msgstr "Verbalizar y pitar"
 
-#: gui\settingsDialogs.py:497
+#: gui\settingsDialogs.py:514
 msgid "Report &tooltips"
 msgstr "Anunciar &consejos"
 
-#: gui\settingsDialogs.py:500
+#: gui\settingsDialogs.py:517
 msgid "Report &help balloons"
 msgstr "Anunciar &globos de ayuda"
 
-#: gui\settingsDialogs.py:503
+#: gui\settingsDialogs.py:520
 msgid "Report object shortcut &keys"
 msgstr "Anunciar teclas de &atajo de los objetos"
 
-#: gui\settingsDialogs.py:506
+#: gui\settingsDialogs.py:523
 msgid "Report object &position information"
 msgstr "Anunciar información de &posición del objeto"
 
-#: gui\settingsDialogs.py:509
+#: gui\settingsDialogs.py:526
 msgid "Report object &descriptions"
 msgstr "Anunciar &descripciones de objeto"
 
-#: gui\settingsDialogs.py:513
+#: gui\settingsDialogs.py:530
 msgid "Progress &bar output"
 msgstr "Salida de &barra de progreso"
 
-#: gui\settingsDialogs.py:516
+#: gui\settingsDialogs.py:533
 msgid "Progress bar output"
 msgstr "Salida de barra de progreso"
 
-#: gui\settingsDialogs.py:525
+#: gui\settingsDialogs.py:542
 msgid "Report background progress bars"
 msgstr "Anunciar barras de progreso en segundo plano"
 
-#: gui\settingsDialogs.py:543
+#: gui\settingsDialogs.py:560
 msgid "virtual buffers"
 msgstr "Modo virtual"
 
-#: gui\settingsDialogs.py:546
+#: gui\settingsDialogs.py:563
 msgid "&Maximum number of characters on one line"
 msgstr "&Máximo de carácteres en una línea"
 
-#: gui\settingsDialogs.py:551
+#: gui\settingsDialogs.py:568
 msgid "&Number of lines per page"
 msgstr "&número de líneas por página"
 
-#: gui\settingsDialogs.py:556
+#: gui\settingsDialogs.py:573
 msgid "Use &screen layout (when supported)"
 msgstr "Utilizar diseño de &pantalla (cuando esté soportado)"
 
-#: gui\settingsDialogs.py:560
+#: gui\settingsDialogs.py:577
 msgid "Report &virtual presentation on focus changes"
 msgstr "Anunciar la presentación del modo &virtual cuando el foco cambie"
 
-#: gui\settingsDialogs.py:563
+#: gui\settingsDialogs.py:580
 msgid "Automatic focus mode for focus changes"
 msgstr "Modo Foco automático para cambios del foco"
 
-#: gui\settingsDialogs.py:566
+#: gui\settingsDialogs.py:583
 msgid "Automatic focus mode for caret movement"
 msgstr "Modo automático de foco para movimiento de las flechas"
 
-#: gui\settingsDialogs.py:569
+#: gui\settingsDialogs.py:586
 msgid "Audio indication of focus and browse modes"
 msgstr "Indicación de audio de modos foco y revisión"
 
-#: gui\settingsDialogs.py:597
+#: gui\settingsDialogs.py:614
 msgid "Document formatting"
 msgstr "Formateado de documentos"
 
-#: gui\settingsDialogs.py:600
+#: gui\settingsDialogs.py:617
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "Anunciar cambios de formato después del cursor (puede provocar un retraso)"
 
-#: gui\settingsDialogs.py:603
+#: gui\settingsDialogs.py:620
 msgid "Report font &name"
 msgstr "Anunciar &nombre de la fuente"
 
-#: gui\settingsDialogs.py:606
+#: gui\settingsDialogs.py:623
 msgid "Report font &size"
 msgstr "Anunciar tama&ño de la fuente"
 
-#: gui\settingsDialogs.py:609
+#: gui\settingsDialogs.py:626
 msgid "Report font attri&butes"
 msgstr "Anunciar &atributos de la fuente"
 
-#: gui\settingsDialogs.py:612
+#: gui\settingsDialogs.py:629
 msgid "Report &alignment"
 msgstr "Anunciar &alineamiento"
 
-#: gui\settingsDialogs.py:615
+#: gui\settingsDialogs.py:632
 msgid "Report st&yle"
 msgstr "Anunciar e&stilo"
 
-#: gui\settingsDialogs.py:618
+#: gui\settingsDialogs.py:635
 msgid "Report spelling errors"
 msgstr "Anunciar errores de ortografía"
 
-#: gui\settingsDialogs.py:621
+#: gui\settingsDialogs.py:638
 msgid "Report &pages"
 msgstr "Anunciar pá&ginas"
 
-#: gui\settingsDialogs.py:624
+#: gui\settingsDialogs.py:641
 msgid "Report &line numbers"
 msgstr "Anunciar &números de línea"
 
-#: gui\settingsDialogs.py:627
+#: gui\settingsDialogs.py:644
 msgid "Report &tables"
 msgstr "Anunciar &tablas"
 
-#: gui\settingsDialogs.py:630
+#: gui\settingsDialogs.py:647
 msgid "Report &links"
 msgstr "Anunciar &enlaces"
 
-#: gui\settingsDialogs.py:633
+#: gui\settingsDialogs.py:650
 msgid "Report &headings"
 msgstr "Anunciar en&cabezados"
 
-#: gui\settingsDialogs.py:636
+#: gui\settingsDialogs.py:653
 msgid "Report l&ists"
 msgstr "Anunciar &listas"
 
-#: gui\settingsDialogs.py:639
+#: gui\settingsDialogs.py:656
 msgid "Report block &quotes"
 msgstr "Anunciar c&itas"
 
-#: gui\settingsDialogs.py:666
+#: gui\settingsDialogs.py:683
 msgid "Edit dictionary entry"
 msgstr "Edición de entrada de diccionario"
 
-#: gui\settingsDialogs.py:669
+#: gui\settingsDialogs.py:686
 msgid "&Pattern"
 msgstr "&Patrón"
 
-#: gui\settingsDialogs.py:672
+#: gui\settingsDialogs.py:689
 msgid "&Replacement"
 msgstr "&Reemplazar"
 
-#: gui\settingsDialogs.py:675
+#: gui\settingsDialogs.py:692
 msgid "&Comment"
 msgstr "&Comentario"
 
-#: gui\settingsDialogs.py:678
+#: gui\settingsDialogs.py:695
 msgid "Case &sensitive"
 msgstr "&Sensible a las mayúsculas"
 
-#: gui\settingsDialogs.py:680
+#: gui\settingsDialogs.py:697
 msgid "Regular &expression"
 msgstr "&Expresión regular"
 
-#: gui\settingsDialogs.py:702
+#: gui\settingsDialogs.py:719
 msgid "&Dictionary entries"
 msgstr "Entradas del &Diccionario"
 
-#: gui\settingsDialogs.py:705
+#: gui\settingsDialogs.py:722
 msgid "Comment"
 msgstr "Comentario"
 
-#: gui\settingsDialogs.py:706
+#: gui\settingsDialogs.py:723
 msgid "Pattern"
 msgstr "Término original"
 
-#: gui\settingsDialogs.py:707
+#: gui\settingsDialogs.py:724
 msgid "Replacement"
 msgstr "Reemplazar por"
 
-#: gui\settingsDialogs.py:708
+#: gui\settingsDialogs.py:725
 msgid "case sensitive"
 msgstr "sensible a las mayúsculas"
 
-#: gui\settingsDialogs.py:709
+#: gui\settingsDialogs.py:726
 msgid "Regular expression"
 msgstr "Expresión regular"
 
-#: gui\settingsDialogs.py:716
+#: gui\settingsDialogs.py:733
 msgid "&Add"
 msgstr "&Añadir"
 
-#: gui\settingsDialogs.py:719
+#: gui\settingsDialogs.py:736
 msgid "&edit"
 msgstr "&editar"
 
-#: gui\settingsDialogs.py:722
+#: gui\settingsDialogs.py:739
 msgid "&Remove"
 msgstr "E&liminar"
 
-#: gui\settingsDialogs.py:789
+#: gui\settingsDialogs.py:806
 msgid "Braille Settings"
 msgstr "Opciones de braille"
 
-#: gui\settingsDialogs.py:793
+#: gui\settingsDialogs.py:810
 msgid "Braille &display"
 msgstr "&Línea braille"
 
-#: gui\settingsDialogs.py:807
+#: gui\settingsDialogs.py:824
 msgid "Translation &table"
 msgstr "&tabla de transcripción"
 
-#: gui\settingsDialogs.py:819
+#: gui\settingsDialogs.py:836
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Expandir a braille de ordenador para la palabra en el cursor"
 
-#: gui\settingsDialogs.py:824
+#: gui\settingsDialogs.py:841
 msgid "Cursor blink rate (ms)"
 msgstr "Velocidad del parpadeo del cursor (en MS)"
 
-#: gui\settingsDialogs.py:832
+#: gui\settingsDialogs.py:849
 msgid "Message timeout (sec)"
 msgstr "Duración del mensaje (en seg)"
 
-#: gui\settingsDialogs.py:845
+#: gui\settingsDialogs.py:862
 msgid "Braille Display Error"
 msgstr "Error de la Línea Braille"
 
-#: gui\settingsDialogs.py:845
+#: gui\settingsDialogs.py:862
 msgid "Could not load the %s display."
 msgstr "No se pudo cargar la línea %s."
 
