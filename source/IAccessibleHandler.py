@@ -866,13 +866,7 @@ def processFocusNVDAEvent(obj,needsFocusedState=True):
 	@rtype: boolean
 	"""
 	#this object, or one of its ancestors *must* have state_focused. Also cache the parents as we do this check
-	if needsFocusedState and obj.windowClassName=="AVL_AVView":
-		#Adobe acrobat document nodes don't have the focused state
-		needsFocusedState=False
-	elif needsFocusedState and obj.windowClassName.startswith("Mozilla") and obj.IAccessibleRole in (ROLE_SYSTEM_COMBOBOX, ROLE_SYSTEM_DOCUMENT, ROLE_SYSTEM_LIST):
-		# The focused state is not set on certain Mozilla controls.
-		needsFocusedState=False
-	if needsFocusedState:
+	if needsFocusedState and isinstance(obj,NVDAObjects.IAccessible.IAccessible) and obj.IAccessibleFocusEventNeedsFocusedState:
 		testObj=obj
 		while testObj:
 			if controlTypes.STATE_FOCUSED in testObj.states:

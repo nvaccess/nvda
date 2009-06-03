@@ -109,7 +109,10 @@ class FileHandler(logging.FileHandler):
 		if record.levelno>=logging.CRITICAL:
 			winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
 		elif record.levelno>=logging.ERROR:
-			nvwave.playWaveFile("waves\\error.wav")
+			try:
+				nvwave.playWaveFile("waves\\error.wav")
+			except:
+				pass
 		return logging.FileHandler.handle(self,record)
 
 class StreamRedirector(object):

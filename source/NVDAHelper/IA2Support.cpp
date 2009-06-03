@@ -88,8 +88,6 @@ BOOL uninstallIA2Support() {
 		assert(IA2Dll_DllCanUnloadNow); //IAccessible2 proxy dll must have this function
 		if(IA2Dll_DllCanUnloadNow()==S_OK) {
 			CoFreeLibrary(IA2DllHandle);
-		} else {
-			Beep(550,50);
 		}
 		IA2DllHandle=0;
 		isIA2Installed=FALSE;

@@ -11,7 +11,6 @@
 !include "Library.nsh"
 !include "FileFunc.nsh"
 
-
 ;--------
 ;Settings
 
@@ -55,8 +54,6 @@ VIAddVersionKey "ProductVersion" "${VERSION}"
 ;set some functions as special callbacks
 !define MUI_CUSTOMFUNCTION_GUIINIT NVDA_GUIInit
 !define MUI_CUSTOMFUNCTION_ABORT userAbort
-
-!include "serviceLib.nsh"
 
 ;--------------------------------
 ;Pages
@@ -117,6 +114,7 @@ Var StartMenuFolder
 !insertmacro MUI_LANGUAGE "French"
 !insertmacro MUI_LANGUAGE "German"
 !insertmacro MUI_LANGUAGE "Spanish"
+!insertmacro MUI_LANGUAGE "SpanishInternational"
 ;!insertmacro MUI_LANGUAGE "SimpChinese"
 !insertmacro MUI_LANGUAGE "TradChinese"
 !insertmacro MUI_LANGUAGE "Japanese"
@@ -137,6 +135,7 @@ Var StartMenuFolder
 !include "locale\cs\langstrings.txt"
 !include "locale\de\langstrings.txt"
 !include "locale\en\langstrings.txt"
+!include "locale\es_es\langstrings.txt"
 !include "locale\es\langstrings.txt"
 !include "locale\fi\langstrings.txt"
 !include "locale\fr\langstrings.txt"
@@ -222,19 +221,15 @@ WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString" "$INSTDIR\U
 WriteRegStr ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "" $INSTDIR
  SectionEnd
 
-section "nvda service (Windows logon / Security dialog support)"
-!insertmacro SERVICE create "nvda" "path=$INSTDIR\nvda_service.exe;autostart=1;display=NonVisual Desktop Access;description=Runs NVDA at Windows logon and in Windows security dialogs;"
-!insertmacro SERVICE "start" "nvda" ""
+section "$(section_service)"
+ExecWait "$INSTDIR\nvda_slave.exe installer_installService"
 SectionEnd
 
 ;The uninstall section
 Section "Uninstall"
 SetShellVarContext all
 ;Stop and uninstall the service
-!undef UN
-!define UN "un."
-!insertmacro SERVICE stop "nvda" ""
-!insertmacro SERVICE delete "nvda" ""
+ExecWait "$INSTDIR\nvda_slave.exe installer_uninstallService"
 ; Uninstall libraries
 !insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\NVDAHelper.dll"
 !insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\VBufBase.dll"

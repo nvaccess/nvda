@@ -81,7 +81,7 @@ class Gecko_ia2(VirtualBuffer):
 		return docHandle,ID
 
 	def _shouldIgnoreFocus(self, obj):
-		if obj.role == controlTypes.ROLE_DOCUMENT:
+		if obj.role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE not in obj.states:
 			return True
 		return super(Gecko_ia2, self)._shouldIgnoreFocus(obj)
 

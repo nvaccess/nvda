@@ -164,6 +164,12 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
 		return speech.getXMLFieldSpeech(self,attrs,fieldType,extraDetail=extraDetail,reason=reason)
 
+	def copyToClipboard(self):
+		# Blocks should start on a new line, but they don't necessarily have an end of line indicator.
+		# Therefore, get the text in block (paragraph) chunks and join the chunks with \r\n.
+		blocks = (block.strip("\r\n") for block in self.getTextInChunks(textInfos.UNIT_PARAGRAPH))
+		return api.copyToClip("\r\n".join(blocks))
+
 class VirtualBuffer(cursorManager.CursorManager):
 
 	REASON_QUICKNAV = "quickNav"
@@ -475,7 +481,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return False
 		role = obj.role
 		if reason == speech.REASON_CARET:
-			return role == controlTypes.ROLE_EDITABLETEXT
+			return role == controlTypes.ROLE_EDITABLETEXT or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
 		if reason == speech.REASON_FOCUS and role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_RADIOBUTTON):
 			return True
 		if role in (controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_LIST, controlTypes.ROLE_SLIDER, controlTypes.ROLE_TABCONTROL, controlTypes.ROLE_TAB, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_SPINBUTTON) or controlTypes.STATE_EDITABLE in states:

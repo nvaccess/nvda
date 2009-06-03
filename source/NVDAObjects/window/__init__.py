@@ -319,4 +319,7 @@ windowClassMap={
 	"TAltEdit.UnicodeClass":"Edit",
 	"TAltEdit":"Edit",
 	"TChatRichEdit.UnicodeClass":"RichEdit20",
+	"TMyRichEdit":"RichEdit20",
+	"TExRichEdit":"RichEdit20",
+	"RichTextWndClass":"RichEdit20",
 }

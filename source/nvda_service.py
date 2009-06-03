@@ -120,18 +120,25 @@ def executeProcess(desktop, token, executable, *argStrings):
 
 def nvdaLauncher():
 	desktop = getInputDesktopName()
-	if desktop == ur"WinSta0\Default":
+	debug("launcher: starting with desktop %s" % desktop)
+	if os.path.basename(desktop) in (u"Default", u"Screen-saver"):
+		debug("launcher: default or screen-saver desktop, exiting")
 		return
 
-	startNVDA(desktop)
+	debug("launcher: starting NVDA")
+	process = startNVDA(desktop)
 	desktopSwitchEvt = windll.kernel32.OpenEventW(SYNCHRONIZE, False, u"WinSta0_DesktopSwitch")
 	windll.kernel32.WaitForSingleObject(desktopSwitchEvt, INFINITE)
 	windll.kernel32.CloseHandle(desktopSwitchEvt)
+	debug("launcher: desktop switch, exiting NVDA on desktop %s" % desktop)
 	exitNVDA(desktop)
+	# If the process hasn't died yet, forcefully kill it.
+	# If it has died already, TerminateProcess will barf, but we don't care.
+	windll.kernel32.TerminateProcess(process, 1)
+	windll.kernel32.CloseHandle(process)
 
 def startNVDA(desktop):
-	process = executeProcess(desktop, None, nvdaExec, "-m")
-	windll.kernel32.CloseHandle(process)
+	return executeProcess(desktop, None, nvdaExec, "-m")
 
 def startNVDAUIAccess(session, desktop):
 	token = duplicateTokenPrimary(getLoggedOnUserToken(session))
@@ -141,7 +148,7 @@ def startNVDAUIAccess(session, desktop):
 	windll.kernel32.CloseHandle(process)
 
 def exitNVDA(desktop):
-	process = executeProcess(desktop, None, nvdaExec, "-q")
+	process = executeProcess(desktop, None, nvdaExec, "-q --non-interactive")
 	windll.kernel32.WaitForSingleObject(process, 10000)
 	windll.kernel32.CloseHandle(process)
 
@@ -191,15 +198,19 @@ class NVDAService(win32serviceutil.ServiceFramework):
 		self.isSessionLoggedOn = isSessionLoggedOn(session)
 		debug("session logged on: %r" % self.isSessionLoggedOn)
 
+		if self.isWindowsXP and session != 0 and not self.isSessionLoggedOn:
+			# In Windows XP, sessions other than 0 are broken before logon, so we can't do anything more here.
+			debug("Windows XP, returning before action")
+			return
+
 		if self.isSessionLoggedOn:
 			# The session is logged on, so treat this as a normal desktop switch.
 			self.handleDesktopSwitch()
-			execBg(self.desktopSwitchSupervisor)
 		else:
 			# We're at the logon screen.
 			if shouldStartOnLogonScreen():
 				execBg(self.startLauncher)
-			# The desktop switch supervisor will be started by the logon event.
+		execBg(self.desktopSwitchSupervisor)
 
 	def desktopSwitchSupervisor(self):
 		if self.desktopSwitchSupervisorStarted:
@@ -279,6 +290,7 @@ class NVDAService(win32serviceutil.ServiceFramework):
 
 	def SvcDoRun(self):
 		debug("service starting")
+		self.isWindowsXP = sys.getwindowsversion()[0:2] == (5, 1)
 		self.exitEvent = threading.Event()
 		self.initSession(windll.kernel32.WTSGetActiveConsoleSessionId())
 		self.exitEvent.wait()
@@ -286,6 +298,44 @@ class NVDAService(win32serviceutil.ServiceFramework):
 
 	def SvcStop(self):
 		self.exitEvent.set()
+
+def installService(nvdaDir):
+	servicePath = os.path.join(nvdaDir, __name__ + ".exe")
+	if not os.path.isfile(servicePath):
+		raise RuntimeError("Could not find service executable")
+	win32serviceutil.InstallService(None, NVDAService._svc_name_, NVDAService._svc_display_name_, startType=win32service.SERVICE_AUTO_START, exeName=servicePath)
+
+def removeService():
+	win32serviceutil.RemoveService(NVDAService._svc_name_)
+
+def startService():
+	win32serviceutil.StartService(NVDAService._svc_name_)
+
+def stopService():
+	"""Stop the running service and wait for its process to die.
+	"""
+	scm = win32service.OpenSCManager(None,None,win32service.SC_MANAGER_ALL_ACCESS)
+	try:
+		serv = win32service.OpenService(scm, NVDAService._svc_name_, win32service.SERVICE_ALL_ACCESS)
+		try:
+			pid = win32service.QueryServiceStatusEx(serv)["ProcessId"]
+
+			# Stop the service.
+			win32service.ControlService(serv, win32service.SERVICE_CONTROL_STOP)
+
+			# Wait for the process to exit.
+			proc = windll.kernel32.OpenProcess(SYNCHRONIZE, False, pid)
+			if not proc:
+				return
+			try:
+				windll.kernel32.WaitForSingleObject(proc, INFINITE)
+			finally:
+				windll.kernel32.CloseHandle(proc)
+
+		finally:
+			win32service.CloseServiceHandle(serv)
+	finally:
+		win32service.CloseServiceHandle(scm)
 
 if __name__=='__main__':
 	if not getattr(sys, "frozen", None):
