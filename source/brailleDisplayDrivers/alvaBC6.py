@@ -78,7 +78,7 @@ if AlvaLib:
 	AlvaGetKey=getattr(AlvaLib, 'AlvaGetKey')
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
-	name = "bc6Braille"
+	name = "alvaBC6"
 	description = _("ALVA BC640/680 series")
 
 	@classmethod
