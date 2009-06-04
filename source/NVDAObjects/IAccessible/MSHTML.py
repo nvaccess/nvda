@@ -280,8 +280,14 @@ class MSHTML(IAccessible):
 				role=aria.ariaRolesToNVDARoles.get(ariaRole)
 				if role:
 					return role
-			if self.IHTMLElement.nodeName.lower()=="body":
-				return controlTypes.ROLE_DOCUMENT
+			try:
+				nodeName=self.IHTMLElement.NodeName
+			except COMError:
+				nodeName=None
+			if nodeName:
+				nodeName=nodeName.lower()
+				if nodeName in ("body","frameset"):
+					return controlTypes.ROLE_DOCUMENT
 		if self.IAccessibleChildID>0:
 			states=super(MSHTML,self).states
 			if controlTypes.STATE_LINKED in states:
