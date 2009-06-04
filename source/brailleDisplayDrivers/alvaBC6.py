@@ -11,7 +11,7 @@ from ctypes import *
 import time
 import wx
 import config
-from keyUtils import *
+from keyUtils import key, sendKey
 
 ALVA_KEY_CHECK_INTERVAL = 50
 ALVA_NO_KEY = 0xFFFF
