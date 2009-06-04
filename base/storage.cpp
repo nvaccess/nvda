@@ -513,7 +513,7 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 }
 
 VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_controlFieldNode_t* controlFieldNode) {
-	DEBUG_MSG(L"Add controlFieldNode using parent at "<<parent<<L", previous at "<<previous<<L", node at "<<node);
+	DEBUG_MSG(L"Add controlFieldNode using parent at "<<parent<<L", previous at "<<previous<<L", node at "<<controlFieldNode);
 	if(previous!=NULL&&previous->parent!=parent) {
 		DEBUG_MSG(L"previous is not a child of parent, returning NULL");
 		return NULL;
@@ -605,6 +605,18 @@ bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node) {
 		this->rootNode=NULL;
 	}
 	DEBUG_MSG(L"Removed fieldNode and descendants, returning true");
+	return true;
+}
+
+bool VBufStorage_buffer_t::clearBuffer() {
+	if(this->rootNode) {
+		if(!this->removeFieldNode(this->rootNode)) {
+			DEBUG_MSG(L"Error removing root node");
+			return false;
+		}
+	} else {
+		DEBUG_MSG(L"Buffer already empty");
+	}
 	return true;
 }
 

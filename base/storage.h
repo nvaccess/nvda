@@ -444,6 +444,11 @@ class VBufStorage_buffer_t {
  */
 	bool removeFieldNode(VBufStorage_fieldNode_t* node);
 
+/*
+ * Removes all nodes from the buffer.
+ */
+	bool clearBuffer();
+
 /**
  * Calculates the start and end character offsets of the given node in the buffer.
  * @param node the node you want the offsets of.
