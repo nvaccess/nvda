@@ -6,10 +6,11 @@
  * http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
  */
 
-#ifndef VIRTUALBUFFER_BACKENDS_EXAMPLE_H
-#define VIRTUALBUFFER_BACKENDS_EXAMPLE_H
+#ifndef VIRTUALBUFFER_BACKENDS_MSHTML_H
+#define VIRTUALBUFFER_BACKENDS_MSHTML_H
 
 #include <windows.h>
+#include <base/storage.h>
 #include <base/backend.h>
 
 class MshtmlVBufBackend_t: public VBufBackend_t {
@@ -23,7 +24,11 @@ class MshtmlVBufBackend_t: public VBufBackend_t {
 
 	MshtmlVBufBackend_t(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer);
 
+	VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle);
+
 	~MshtmlVBufBackend_t();
+
+	virtual void invalidateSubtree(VBufStorage_controlFieldNode_t* node);
 
 };
 

@@ -15,7 +15,7 @@ all: $(OUTDIR)\VBufBackend_mshtml.dll
 $(OUTDIR)\VBufBase.lib:
 	cd $(TOPDIR)\base && $(MAKE) /NOLOGO DEBUG=$(DEBUG)
 
-$(OUTDIR)\VBufBackend_mshtml.dll: mshtml.obj $(TOPDIR)\common\utils.cpp $(OUTDIR)\VBufBase.lib
+$(OUTDIR)\VBufBackend_mshtml.dll: mshtml.obj node.obj $(TOPDIR)\common\utils.cpp $(OUTDIR)\VBufBase.lib
 	$(CPP) $(CPPFLAGS) $** user32.lib kernel32.lib oleacc.lib oleaut32.lib /link /dll /out:$@ $(LINKERFLAGS)
 
 clean:

@@ -16,6 +16,7 @@
 #include <string>
 #include <sstream>
 #include <base/base.h>
+#include "node.h"
 #include "mshtml.h"
 
 using namespace std;
@@ -36,6 +37,18 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 		WM_HTML_GETOBJECT=RegisterWindowMessage(L"WM_HTML_GETOBJECT");
 	}
 	return TRUE;
+}
+
+void CALLBACK mainThreadTimerProc(HWND hwnd, UINT msg, UINT_PTR timerID, DWORD time) {
+	DEBUG_MSG(L"timer firing!");
+	KillTimer(0,mainThreadTimerID);
+	mainThreadTimerID=0;
+	DEBUG_MSG(L"Updating "<<runningBackends.size()<<L" backends");
+	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
+		DEBUG_MSG(L"Updating backend at "<<(*i));
+		(*i)->update();
+	}
+	DEBUG_MSG(L"All updated");
 }
 
 inline IAccessible* getIAccessibleFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
@@ -320,7 +333,8 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	macro_addHTMLAttributeToMap(L"src",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	pHTMLAttributeCollection2->Release();
 }
-VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle) {
+
+VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle) {
 	//Handle text nodes
 	{ 
 		BSTR text=getTextFromHTMLDOMNode(pHTMLDOMNode);
@@ -380,7 +394,8 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 	if(pacc) {
 		getIAccessibleInfo(pacc,&IARole,&IAStates);
 	}
-	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,isBlock);
+	VBufStorage_controlFieldNode_t* node=new MshtmlVBufStorage_controlFieldNode_t(docHandle,ID,isBlock,this,pHTMLDOMNode);
+	parentNode=buffer->addControlFieldNode(parentNode,previousNode,node);
 	assert(parentNode);
 	previousNode=NULL;
 	parentNode->addAttribute(L"IHTMLDOMNode::nodeName",nodeName);
@@ -447,7 +462,7 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 		if(pacc) {
 			IHTMLDOMNode* childPHTMLDOMNode=getRootDOMNodeFromIAccessibleFrame(pacc);
 			if(childPHTMLDOMNode) {
-				previousNode=fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle);
+				previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle);
 				childPHTMLDOMNode->Release();
 			}
 		}
@@ -471,7 +486,7 @@ VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_cont
 					}
 					IHTMLDOMNode* childPHTMLDOMNode=NULL;
 					if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
-						VBufStorage_fieldNode_t* tempNode=fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle);
+						VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle);
 						if(tempNode) {
 							previousNode=tempNode;
 						}
@@ -503,7 +518,12 @@ LRESULT CALLBACK mainThreadCallWndProcHook(int code, WPARAM wParam,LPARAM lParam
 	return CallNextHookEx(0,code,wParam,lParam);
 }
 
-void mainThreadTerminate(VBufBackend_t* backend) {
+void mainThreadTerminate(VBufBackend_t* backend, HANDLE e) {
+	if(mainThreadTimerID!=0) {
+		KillTimer(0,mainThreadTimerID);
+	}
+	backend->getStorageBuffer()->clearBuffer();
+	SetEvent(e);
 	#ifdef DEBUG
 	Beep(880,70);
 	#endif
@@ -512,10 +532,8 @@ void mainThreadTerminate(VBufBackend_t* backend) {
 LRESULT CALLBACK mainThreadGetMessageHook(int code, WPARAM wParam,LPARAM lParam) {
 	MSG* pmsg=(MSG*)lParam;
 	if((code==HC_ACTION)&&(pmsg->message==wmMainThreadTerminate)) {
-		mainThreadTerminate((VBufBackend_t*)(pmsg->wParam));
+		mainThreadTerminate((VBufBackend_t*)(pmsg->wParam),(HANDLE)(pmsg->lParam));
 		DEBUG_MSG(L"Removing hook");
-		int res=UnhookWindowsHookEx((HHOOK)(pmsg->lParam));
-		assert(res!=0); //unHookWindowsHookEx must return non-0
 	}
 	return CallNextHookEx(0,code,wParam,lParam);
 }
@@ -551,7 +569,7 @@ void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, in
 		return;
 	}
 	pHTMLElement->Release();
-	fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle);
+	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle);
 	pHTMLDOMNode->Release();
 }
 
@@ -583,9 +601,25 @@ MshtmlVBufBackend_t::~MshtmlVBufBackend_t() {
 	assert(mainThreadGetMessageHookID!=0); //valid hooks are not 0
 	DEBUG_MSG(L"Hook set with ID "<<mainThreadGetMessageHookID);
 	DEBUG_MSG(L"Sending wmMainThreadTerminate to thread "<<rootThreadID<<", docHandle "<<rootDocHandle<<L", ID "<<rootID<<L", backend "<<this);
-	PostThreadMessage(rootThreadID,wmMainThreadTerminate,(WPARAM)this,(LPARAM)mainThreadGetMessageHookID);
+HANDLE handles[2];
+	handles[0]=CreateEvent(NULL,true,false,NULL);
+	PostThreadMessage(rootThreadID,wmMainThreadTerminate,(WPARAM)this,(LPARAM)(handles[0]));
 	DEBUG_MSG(L"Message sent");
+	handles[1]=OpenThread(SYNCHRONIZE,false,rootThreadID);
+	WaitForMultipleObjects(2,handles,false,5000);
+	res=UnhookWindowsHookEx((HHOOK)(mainThreadGetMessageHookID));
+	assert(res!=0); //unHookWindowsHookEx must return non-0
+	CloseHandle(handles[0]);
+	CloseHandle(handles[1]);
 	DEBUG_MSG(L"MSHTML backend terminated");
+}
+
+void MshtmlVBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
+	this->VBufBackend_t::invalidateSubtree(node);
+	if(mainThreadTimerID==0) {
+		mainThreadTimerID=SetTimer(0,0,100,mainThreadTimerProc);
+		DEBUG_MSG(L"Set timer for update with ID of "<<mainThreadTimerID);
+	}
 }
 
 extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer) {
