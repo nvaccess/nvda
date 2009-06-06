@@ -84,7 +84,7 @@ class VBUFLIBENTRY VBufBackend_t {
  * marks a particular node as invalid, so that its content is re-rendered on next update.
  * @param node the node that should be invalidated.
  */
-	void invalidateSubtree(VBufStorage_controlFieldNode_t*);
+	virtual void invalidateSubtree(VBufStorage_controlFieldNode_t*);
 
 /**
  * Updates the content of the buffer. 
