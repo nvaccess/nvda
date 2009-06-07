@@ -359,14 +359,16 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode,currentStyleMap);
 	map<wstring,wstring>::iterator tempIter;
 	tempIter=currentStyleMap.find(L"visibility");
+	bool invisible=false;
 	if(tempIter!=currentStyleMap.end()&&(tempIter->second).compare(0,6,L"hidden")==0) {
 		DEBUG_MSG(L"visibility is hidden, not rendering node");
-		return NULL;
-	}
-	tempIter=currentStyleMap.find(L"display");
-	if(tempIter!=currentStyleMap.end()&&(tempIter->second).compare(0,4,L"none")==0) {
-		DEBUG_MSG(L"Display is None, not rendering node");
-		return NULL;
+		invisible=true;
+	} else {
+		tempIter=currentStyleMap.find(L"display");
+		if(tempIter!=currentStyleMap.end()&&(tempIter->second).compare(0,4,L"none")==0) {
+			DEBUG_MSG(L"Display is None, not rendering node");
+			invisible=true;
+		}
 	}
 	bool isBlock=true;
 	if(tempIter!=currentStyleMap.end()&&(tempIter->second).compare(0,6,L"inline")==0) {
@@ -421,8 +423,9 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		tempStringStream<<L"HTMLStyle::"<<tempIter->first;
 		parentNode->addAttribute(tempStringStream.str(),tempIter->second);
 	}
-	//fillAttributes(parentNode, pHTMLDOMNode,nodeName);
-	if(nodeName.compare(L"IMG")==0) {
+	if(invisible) {
+		DEBUG_MSG(L"Node is invisible, not rendering any content");
+	} else if(nodeName.compare(L"IMG")==0) {
 		bool isURL=False;
 		tempIter=HTMLAttribsMap.find(L"alt");
 		if(tempIter==HTMLAttribsMap.end()||tempIter->second.empty()) {
