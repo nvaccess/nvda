@@ -16,6 +16,9 @@ BACKEND=""
 all: 
 	if not EXIST $(OUTDIR) mkdir $(OUTDIR)
 	if not $(BACKEND)=="" cd backends\$(BACKEND) && $(MAKE) /nologo DEBUG=$(DEBUG) 
+	-if $(BACKEND)=="" cd backends\gecko_ia2 && $(MAKE) /nologo DEBUG=$(DEBUG) 
+	-if $(BACKEND)=="" cd backends\mshtml && $(MAKE) /nologo DEBUG=$(DEBUG) 
+	-if $(BACKEND)=="" cd backends\adobeAcrobat && $(MAKE) /nologo DEBUG=$(DEBUG) 
 	cd base && $(MAKE) /nologo DEBUG=$(DEBUG)
 	cd client && $(MAKE) /nologo DEBUG=$(DEBUG)
 
@@ -25,6 +28,9 @@ test:
 
 clean:
 	if not $(BACKEND)=="" cd backends\$(BACKEND) && $(MAKE) /nologo clean
+	if $(BACKEND)=="" cd backends\gecko_ia2 && $(MAKE) /nologo clean
+	if $(BACKEND)=="" cd backends\mshtml && $(MAKE) /nologo clean
+	if $(BACKEND)=="" cd backends\adobeAcrobat && $(MAKE) /nologo clean 
 	cd base && $(MAKE) /nologo clean
 	cd client && $(MAKE) /nologo clean
 	cd remoteApi && $(MAKE) /nologo clean
