@@ -456,7 +456,37 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
 		}
 	} else if(nodeName.compare(L"SELECT")==0) {
-		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+		bool gotSelection=false;
+		IHTMLSelectElement* pHTMLSelectElement=NULL;
+		pHTMLDOMNode->QueryInterface(IID_IHTMLSelectElement,(void**)&pHTMLSelectElement);
+		if(pHTMLSelectElement) {
+			long selectedIndex=-1;
+			pHTMLSelectElement->get_selectedIndex(&selectedIndex);
+			if(selectedIndex>=0) {
+				IDispatch* pDispatch=NULL;
+				VARIANT varItem;
+				varItem.vt=VT_I4;
+				varItem.lVal=selectedIndex;
+				VARIANT varSubItem;
+				varSubItem.vt=VT_I4;
+				varSubItem.lVal=0;
+				pHTMLSelectElement->item(varItem,varSubItem,&pDispatch);
+				if(pDispatch) {
+					IHTMLDOMNode* selectedPHTMLDOMNode=NULL;
+					pDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&selectedPHTMLDOMNode);
+					if(selectedPHTMLDOMNode) {
+						previousNode=this->fillVBuf(buffer,parentNode,previousNode,selectedPHTMLDOMNode,docHandle);
+						selectedPHTMLDOMNode->Release();
+						gotSelection=(previousNode&&(previousNode->getLength()>0));
+					}
+					pDispatch->Release();
+				}
+			}
+			pHTMLSelectElement->Release();
+		}
+		if(!gotSelection) {
+			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+		}
 	} else if(nodeName.compare(L"BR")==0) {
 		DEBUG_MSG(L"node is a br tag, adding a line feed as its text.");
 		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L"\n");
