@@ -260,6 +260,11 @@ class VBufStorage_fieldNode_t {
  */
 	void setIsBlock(bool isBlock);
 
+/**
+ * Retreave the length of this node.
+ */
+	int getLength();
+
 };
 
 /**

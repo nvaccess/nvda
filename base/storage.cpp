@@ -310,6 +310,10 @@ void VBufStorage_fieldNode_t::setIsBlock(bool isBlock) {
 	this->isBlock=isBlock;
 }
 
+int VBufStorage_fieldNode_t::getLength() {
+		return this->length;
+	}
+
 //controlFieldNode implementation
 
 void VBufStorage_controlFieldNode_t::generateMarkupTagName(std::wstring& text) {
