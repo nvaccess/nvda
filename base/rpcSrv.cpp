@@ -50,6 +50,8 @@ void stopServer() {
 std::wofstream* debugFile=NULL;
 #endif
 
+bool serverStarted=false;
+
 //dll initialization and termination
 //Starts and stops the server
 #pragma comment(linker,"/entry:_DllMainCRTStartup@12")
@@ -60,13 +62,21 @@ BOOL DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 		debug_start(debugFile);
 		#endif
 		startServer();
+		serverStarted=true;
 	} else if(reason==DLL_PROCESS_DETACH) {
-		stopServer();
-		#ifdef DEBUG
-		debug_end();
-		delete debugFile;
-		debugFile=NULL;
-		#endif
+		//We only clean up if freeLibrary is called, not because of process termination
+		if(lpReserved==NULL) {
+			if(serverStarted) {
+				stopServer();
+			}
+			#ifdef DEBUG
+			if(debugFile) {
+				debug_end();
+				delete debugFile;
+				debugFile=NULL;
+			}
+			#endif
+		}
 	}
 	return TRUE;
 }
