@@ -85,6 +85,24 @@ def IHTMLElementFromIAccessible(IAccessibleObject):
 	ptr=ctypes.POINTER(comtypes.automation.IDispatch)(interfaceAddress)
 	return comtypes.client.dynamic.Dispatch(ptr)
 
+def locateHTMLElementByID(document,ID):
+	element=document.getElementById(ID)
+	if element:
+		return element
+	nodeName=document.body.nodeName.lower()
+	if nodeName=="frameset":
+		tag="frame"
+	else:
+		tag="iframe"
+	frames=document.getElementsByTagName(tag)
+	for frame in frames:
+		pacc=IAccessibleFromIHTMLElement(frame)
+		childPacc=pacc.accChild(1)
+		childElement=IHTMLElementFromIAccessible(childPacc)
+		childElement=locateHTMLElementByID(childElement.document,ID)
+		if childElement:
+			return childElement
+
 class MSHTMLTextInfo(textInfos.TextInfo):
 
 	def _expandToLine(self,textRange):
