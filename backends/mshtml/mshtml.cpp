@@ -69,13 +69,14 @@ inline IAccessible* getIAccessibleFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
 	return pacc;
 }
 
-inline void getIAccessibleInfo(IAccessible* pacc, int* role, int* states) {
+inline void getIAccessibleInfo(IAccessible* pacc, int* role, int* states, wstring* keyboardShortcut) {
 	*role=0;
 	*states=0;
 	int res=0;
 	VARIANT varChild;
 	varChild.vt=VT_I4;
 	varChild.lVal=0;
+	BSTR bstrVal=NULL;
 	VARIANT varRole;
 	VariantInit(&varRole);
 	res=pacc->get_accRole(varChild,&varRole);
@@ -94,6 +95,12 @@ inline void getIAccessibleInfo(IAccessible* pacc, int* role, int* states) {
 		DEBUG_MSG(L"Failed to get states");
 	}
 	VariantClear(&varState);
+	if(pacc->get_accKeyboardShortcut(varChild,&bstrVal)==S_OK&&bstrVal!=NULL) {
+		keyboardShortcut->append(bstrVal);
+		SysFreeString(bstrVal);
+	} else {
+		DEBUG_MSG(L"IAccessible::get_accKeyboardShortcut failed");
+	}
 }
 
 inline IHTMLDOMNode* getRootDOMNodeFromIAccessibleFrame(IAccessible* pacc) {
@@ -392,15 +399,19 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 	int IARole=0;
 	int IAStates=0;
+	wstring IAKeyboardShortcut;
 	IAccessible* pacc=getIAccessibleFromHTMLDOMNode(pHTMLDOMNode);
 	if(pacc) {
-		getIAccessibleInfo(pacc,&IARole,&IAStates);
+		getIAccessibleInfo(pacc,&IARole,&IAStates,&IAKeyboardShortcut);
 	}
 	VBufStorage_controlFieldNode_t* node=new MshtmlVBufStorage_controlFieldNode_t(docHandle,ID,isBlock,this,pHTMLDOMNode);
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,node);
 	assert(parentNode);
 	previousNode=NULL;
 	parentNode->addAttribute(L"IHTMLDOMNode::nodeName",nodeName);
+	if(!IAKeyboardShortcut.empty()) {
+		parentNode->addAttribute(L"keyboardShortcut",IAKeyboardShortcut);
+	}
 	wostringstream tempStringStream;
 	tempStringStream.str(L"");
 	tempStringStream<<IARole;
