@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2009-05-17 16:11+Russian Daylight Time\n"
-"PO-Revision-Date: 2009-05-17 16:41+Moscow\n"
+"POT-Creation-Date: 2009-05-30 12:42+Russian Daylight Time\n"
+"PO-Revision-Date: 2009-05-30 12:53+Moscow\n"
 "Last-Translator: Dmitry Kaslin <dak1968@gmail.com>\n"
 "In cooperation with Aleksey Sadovoy <aleksey_s@voliacable.com>\n"
 "Language-Team: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: IAccessibleHandler.py:896
+#: IAccessibleHandler.py:890
 msgid "Secure Desktop"
 msgstr "Защищённый рабочий Стол"
 
@@ -145,7 +145,7 @@ msgstr ""
 "Выполняет одиночный щелчок правой кноп"
 "кой мыши в текущей позиции указателя"
 
-#: appModules\_default.py:86 cursorManager.py:220
+#: appModules\_default.py:86 cursorManager.py:225
 msgid "no selection"
 msgstr "Нет выделения"
 
@@ -721,7 +721,7 @@ msgstr ""
 msgid "speaks the current foreground object"
 msgstr "читает объект на переднем плане"
 
-#: appModules\_default.py:709 cursorManager.py:223
+#: appModules\_default.py:709 cursorManager.py:228
 msgid "copied to clipboard"
 msgstr "Скопировано в буфер обмена"
 
@@ -1011,6 +1011,10 @@ msgstr ""
 "включая текущую позицию просмотрового "
 "курсора, и копирует его в буфер обмена."
 
+#: appModules\calc.py:32
+msgid "Display"
+msgstr "Дисплей"
+
 #: appModules\explorer.py:16
 msgid "Start"
 msgstr "Главное"
@@ -1283,15 +1287,15 @@ msgstr "Пдменю"
 msgid "( )"
 msgstr "< >"
 
-#: braille.py:212 speech.py:631
+#: braille.py:212 speech.py:632
 msgid "not %s"
 msgstr "Не %s"
 
-#: braille.py:224 speech.py:637
+#: braille.py:224 speech.py:638
 msgid "%s of %s"
 msgstr "%s из %s"
 
-#: braille.py:226 speech.py:642 speech.py:645
+#: braille.py:226 speech.py:643 speech.py:646
 msgid "level %s"
 msgstr "Уровень %s"
 
@@ -1304,7 +1308,7 @@ msgid "No braille"
 msgstr "Нет Брайля"
 
 #: characterSymbols.py:17 characterSymbols.py:18
-#: speech.py:79 speech.py:593
+#: speech.py:79 speech.py:594
 msgid "blank"
 msgstr "Чисто"
 
@@ -1547,7 +1551,7 @@ msgstr "Всплывающее системное сообщение"
 msgid "tool tip"
 msgstr "Подсказка"
 
-#: controlTypes.py:195 speech.py:839
+#: controlTypes.py:195 speech.py:840
 msgid "link"
 msgstr "Ссылка"
 
@@ -1959,7 +1963,7 @@ msgstr "Название шрифта"
 msgid "font size"
 msgstr "Размер шрифта"
 
-#: controlTypes.py:302 speech.py:791
+#: controlTypes.py:302 speech.py:792
 msgid "bold"
 msgstr "Полужирный"
 
@@ -1975,11 +1979,11 @@ msgstr "Цвет шрифта"
 msgid "background color"
 msgstr "Цвет фона"
 
-#: controlTypes.py:307 speech.py:813
+#: controlTypes.py:307 speech.py:814
 msgid "superscript"
 msgstr "Надстрочный"
 
-#: controlTypes.py:308 speech.py:815
+#: controlTypes.py:308 speech.py:816
 msgid "subscript"
 msgstr "Подстрочный"
 
@@ -2133,29 +2137,29 @@ msgstr ""
 msgid "NVDA started"
 msgstr "NVDA готов"
 
-#: cursorManager.py:71
+#: cursorManager.py:76
 msgid "Find"
 msgstr "Поиск"
 
-#: cursorManager.py:71
+#: cursorManager.py:76
 msgid "Type the text you wish to find"
 msgstr "Введите текст для поиска"
 
-#: cursorManager.py:85
+#: cursorManager.py:90
 msgid "Find Error"
 msgstr "Ошибка поиска"
 
-#: cursorManager.py:85
+#: cursorManager.py:90
 msgid "text \"%s\" not found"
 msgstr "Текст \"%s\" не найден"
 
-#: cursorManager.py:91
+#: cursorManager.py:96
 msgid "find a text string from the current cursor position"
 msgstr ""
 "Поиск текстовой последовательности с "
 "текущей позиции курсора"
 
-#: cursorManager.py:98
+#: cursorManager.py:103
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
@@ -2164,7 +2168,7 @@ msgstr ""
 "последовательности с текущей позиции "
 "курсора"
 
-#: cursorManager.py:105
+#: cursorManager.py:110
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
@@ -2566,7 +2570,9 @@ msgstr "&Автозагрузка NVDA после входа в Windows"
 #: gui\settingsDialogs.py:136
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
-msgstr "Использовать NVDA на экране входа в Windows (требуются права администратора)"
+msgstr ""
+"Использовать NVDA на экране входа в Windows "
+"(требуются права администратора)"
 
 #: gui\settingsDialogs.py:152
 msgid "Error in %s language file"
@@ -2582,7 +2588,9 @@ msgstr "Не достаточные права"
 
 #: gui\settingsDialogs.py:166
 msgid "This change requires administrator privileges."
-msgstr "Это изменение требует прав администратора"
+msgstr ""
+"Это изменение требует прав "
+"администратора"
 
 #: gui\settingsDialogs.py:168
 msgid ""
@@ -3206,7 +3214,7 @@ msgstr "Ошибка в keyboardHandler.internal_keyDownEvent"
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Ошибка в keyboardHandler.internal_keyUpEvent"
 
-#: mouseHandler.py:131
+#: mouseHandler.py:132
 msgid "%s cursor"
 msgstr "%s курсор"
 
@@ -3234,120 +3242,120 @@ msgstr "Не выделено %s"
 msgid "selection removed"
 msgstr "Выделение удалено"
 
-#: speech.py:656 speech.py:880
+#: speech.py:657 speech.py:881
 msgid "row %s"
 msgstr "Строка %s"
 
-#: speech.py:659 speech.py:876
+#: speech.py:660 speech.py:877
 msgid "column %s"
 msgstr "Столбец %s"
 
-#: speech.py:664
+#: speech.py:665
 msgid "with %s rows and %s columns"
 msgstr "Из %s строк и %s столбцов"
 
-#: speech.py:666
+#: speech.py:667
 msgid "with %s columns"
 msgstr "из %s столбцов"
 
-#: speech.py:668
+#: speech.py:669
 msgid "with %s rows"
 msgstr "из %s строк"
 
-#: speech.py:711 speech.py:715 speech.py:719
-#: speech.py:727 speech.py:738 speech.py:839
+#: speech.py:712 speech.py:716 speech.py:720
+#: speech.py:728 speech.py:739 speech.py:840
 msgid "out of %s"
 msgstr "вне %s"
 
-#: speech.py:713
+#: speech.py:714
 msgid "with %s items"
 msgstr "из %s элементов"
 
-#: speech.py:736
+#: speech.py:737
 msgid "in %s"
 msgstr "в %s"
 
-#: speech.py:756
+#: speech.py:757
 msgid "page %s"
 msgstr "Страница %s"
 
-#: speech.py:763
+#: speech.py:764
 msgid "style %s"
 msgstr "Стиль %s"
 
-#: speech.py:765
+#: speech.py:766
 msgid "default style"
 msgstr "стиль по умолчанию"
 
-#: speech.py:785
+#: speech.py:786
 msgid "line %s"
 msgstr "Строка %s"
 
-#: speech.py:791
+#: speech.py:792
 msgid "no bold"
 msgstr "Нет полужирного"
 
-#: speech.py:796
+#: speech.py:797
 msgid "italic"
 msgstr "Курсив"
 
-#: speech.py:796
+#: speech.py:797
 msgid "no italic"
 msgstr "Нет курсива"
 
-#: speech.py:801
+#: speech.py:802
 msgid "no strikethrough"
 msgstr "Нет зачёркнутого"
 
-#: speech.py:801
+#: speech.py:802
 msgid "strikethrough"
 msgstr "Зачёркнутый"
 
-#: speech.py:806
+#: speech.py:807
 msgid "not underlined"
 msgstr "Не подчёркнутый"
 
-#: speech.py:806
+#: speech.py:807
 msgid "underlined"
 msgstr "Подчёркнутый"
 
-#: speech.py:817
+#: speech.py:818
 msgid "baseline"
 msgstr "Базовая линия"
 
-#: speech.py:825
+#: speech.py:826
 msgid "align left"
 msgstr "выравнивание по левому краю"
 
-#: speech.py:827
+#: speech.py:828
 msgid "align center"
 msgstr "выравнивание по центру"
 
-#: speech.py:829
+#: speech.py:830
 msgid "align right"
 msgstr "выравнивание по правому краю"
 
-#: speech.py:831
+#: speech.py:832
 msgid "align justify"
 msgstr "выравнивание по ширине"
 
-#: speech.py:833
+#: speech.py:834
 msgid "align default"
 msgstr "Выравнивание поумолчанию"
 
-#: speech.py:846
+#: speech.py:847
 msgid "spelling error"
 msgstr "Граматическая ошибка"
 
-#: speech.py:848
+#: speech.py:849
 msgid "out of spelling error"
 msgstr "Вне граматической ошибки"
 
-#: speech.py:862
+#: speech.py:863
 msgid "out of table"
 msgstr "Вне таблицы"
 
-#: speech.py:871
+#: speech.py:872
 msgid "table with %s columns and %s rows"
 msgstr "Таблица из %s столбцов и %s строк"
 
