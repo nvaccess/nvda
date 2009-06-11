@@ -209,7 +209,7 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int d
 	}
 	BSTR nodeName=NULL;
 	pHTMLDOMNode->get_nodeName(&nodeName);
-	if(nodeName!=NULL&&(wcsicmp(nodeName,L"frame")==0||wcsicmp(nodeName,L"iframe")==0)) {
+	if(nodeName!=NULL&&(wcsicmp(nodeName,L"frame")==0||wcsicmp(nodeName,L"iframe")==0||wcsicmp(nodeName,L"img")==0||wcsicmp(nodeName,L"input")==0)) {
 		if(this->pHTMLElement2) {
 			CDispatchChangeSink* loadSink=new CDispatchChangeSink(this);
 			if((pHTMLElement2->attachEvent(L"onload",loadSink,&varBool)==S_OK)&&varBool) {
