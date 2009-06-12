@@ -1,12 +1,16 @@
 import time
 import threading
 from ctypes import *
+import winUser
+import api
 
 #settings
 #: How often to check whether the core is alive
 CHECK_INTERVAL=0.1
-#: How long to wait for the core to be alive
-CORE_ALIVE_TIMEOUT=0.8
+#: How long to wait for the core to be alive under normal circumstances
+NORMAL_CORE_ALIVE_TIMEOUT=5
+#: The minimum time to wait for the core to be alive
+MIN_CORE_ALIVE_TIMEOUT=0.3
 #: How long to wait between recovery attempts
 RECOVER_ATTEMPT_INTERVAL = 0.05
 
@@ -27,7 +31,9 @@ def _watcher():
 	while isRunning:
 		# If the watchdog is suspended, wait until it is resumed.
 		_resumeEvent.wait()
-		_coreAliveEvent.wait(CORE_ALIVE_TIMEOUT)
+		_coreAliveEvent.wait(MIN_CORE_ALIVE_TIMEOUT)
+		if not _coreAliveEvent.isSet() and not shouldRecoverAfterMinTimeout():
+			_coreAliveEvent.wait(NORMAL_CORE_ALIVE_TIMEOUT - MIN_CORE_ALIVE_TIMEOUT)
 		while not _coreAliveEvent.isSet():
 			# The core is dead, so attempt recovery.
 			_recoverAttempt()
@@ -36,6 +42,9 @@ def _watcher():
 		_coreAliveEvent.clear()
 		# Wait a bit to avoid excessive resource consumption.
 		time.sleep(CHECK_INTERVAL)
+
+def shouldRecoverAfterMinTimeout():
+	return winUser.getForegroundWindow() != api.getForegroundObject().windowHandle
 
 def _recoverAttempt():
 	try:
