@@ -219,6 +219,7 @@ WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "URLInfoAbout" "http://www.nv
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "Publisher" "nvda-project.org"
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString" "$INSTDIR\Uninstall.exe"
 WriteRegStr ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "" $INSTDIR
+WriteRegStr ${INSTDIR_REG_ROOT} "Software\Microsoft\Windows\CurrentVersion\App Paths\${NVDAApp}" "" "$INSTDIR\${NVDAApp}" 
  SectionEnd
 
 section "$(section_service)"
@@ -251,6 +252,7 @@ Delete $DESKTOP\${PRODUCT}.lnk"
 Delete $INSTDIR\${PRODUCT}.url"
 DeleteRegKey ${INSTDIR_REG_ROOT} "SOFTWARE\${PRODUCT}"
 DeleteRegKey ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY}
+DeleteRegKey ${INSTDIR_REG_ROOT} "Software\Microsoft\Windows\CurrentVersion\App Paths\${NVDAApp}"
 Rmdir $INSTDIR
 SectionEnd
 
