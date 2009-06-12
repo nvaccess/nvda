@@ -13,6 +13,7 @@ kernel32=ctypes.windll.kernel32
 INFINITE = 0xffffffff
 #Process control
 PROCESS_ALL_ACCESS=0x1F0FFF
+PROCESS_TERMINATE=0x1
 PROCESS_VM_OPERATION=0x8
 PROCESS_VM_READ=0x10
 PROCESS_VM_WRITE=0X20
@@ -107,3 +108,7 @@ def GetExitCodeProcess(process):
 	if not kernel32.GetExitCodeProcess(process, ctypes.byref(exitCode)):
 		raise ctypes.WinError()
 	return exitCode.value
+
+def TerminateProcess(process, exitCode):
+	if not kernel32.TerminateProcess(process, exitCode):
+		raise ctypes.WinError()
