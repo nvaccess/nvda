@@ -42,8 +42,9 @@ def main():
 				raise ValueError("no user default config path")
 			if not os.path.isdir(path):
 				os.makedirs(path)
-			import ctypes
-			ctypes.windll.shell32.ShellExecuteW(0,None,path,None,None,1)
+			import shellapi
+			import winUser
+			shellapi.ShellExecute(0,None,path,None,None,winUser.SW_SHOWNORMAL)
 		else:
 			raise ValueError("No such action")
 
