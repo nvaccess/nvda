@@ -32,7 +32,7 @@ def _watcher():
 		# If the watchdog is suspended, wait until it is resumed.
 		_resumeEvent.wait()
 		_coreAliveEvent.wait(MIN_CORE_ALIVE_TIMEOUT)
-		if not _coreAliveEvent.isSet() and not shouldRecoverAfterMinTimeout():
+		if not _coreAliveEvent.isSet() and not _shouldRecoverAfterMinTimeout():
 			_coreAliveEvent.wait(NORMAL_CORE_ALIVE_TIMEOUT - MIN_CORE_ALIVE_TIMEOUT)
 		while not _coreAliveEvent.isSet():
 			# The core is dead, so attempt recovery.
@@ -43,12 +43,11 @@ def _watcher():
 		# Wait a bit to avoid excessive resource consumption.
 		time.sleep(CHECK_INTERVAL)
 
-def shouldRecoverAfterMinTimeout():
+def _shouldRecoverAfterMinTimeout():
 	info=winUser.getGUIThreadInfo(0)
 	newHwnd=info.hwndFocus if info.hwndFocus else info.hwndActive
 	newThreadID=winUser.getWindowThreadProcessID(newHwnd)[1]
 	return newThreadID!=api.getFocusObject().windowThreadID
-
 
 def _recoverAttempt():
 	try:
