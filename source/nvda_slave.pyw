@@ -43,7 +43,7 @@ def main():
 			if not os.path.isdir(path):
 				os.makedirs(path)
 			import ctypes
-			ctypes.windll.shell32.ShellExecuteW(0,u"explore",path,None,None,1)
+			ctypes.windll.shell32.ShellExecuteW(0,None,path,None,None,1)
 		else:
 			raise ValueError("No such action")
 
