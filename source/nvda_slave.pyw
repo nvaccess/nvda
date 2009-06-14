@@ -35,6 +35,15 @@ def main():
 			except:
 				pass
 			nvda_service.removeService()
+		elif action == "explore_userConfigPath":
+			import config
+			path=config.getUserDefaultConfigPath()
+			if not path:
+				raise ValueError("no user default config path")
+			if not os.path.isdir(path):
+				os.makedirs(path)
+			import ctypes
+			ctypes.windll.shell32.ShellExecuteW(0,u"explore",path,None,None,1)
 		else:
 			raise ValueError("No such action")
 
