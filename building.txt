@@ -17,6 +17,6 @@ cd deps\AcrobatAccess
 midl AcrobatAccess.idl
 
 Building the library:
-To build the core library, run nmake in the top level directory.
-To build the backends, you can change to each backend directory and run nmake. Alternatively, you can specify the backend to build by passing the BACKEND variable to nmake in the top level directory; e.g.:
+To build the library and all real backends, run nmake in the top level directory.
+IF you do not want to build all backends, you can specify the single backend to build by passing the BACKEND variable to nmake in the top level directory; e.g.:
 nmake BACKEND=gecko_ia2
