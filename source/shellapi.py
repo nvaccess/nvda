@@ -33,6 +33,10 @@ SHELLEXECUTEINFO = SHELLEXECUTEINFOW
 
 SEE_MASK_NOCLOSEPROCESS = 0x00000040
 
+def ShellExecute(hwnd, operation, file, parameters, directory, showCmd):
+	if shell32.ShellExecuteW(hwnd, operation, file, parameters, directory, showCmd) <= 32:
+		raise WinError()
+
 def ShellExecuteEx(execInfo):
 	if not shell32.ShellExecuteExW(byref(execInfo)):
 		raise WinError()

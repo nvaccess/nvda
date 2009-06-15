@@ -62,13 +62,36 @@ except:
 parser=NoConsoleOptionParser()
 parser.add_option('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
 parser.add_option('-r','--replace',action="store_true",dest='replace',default=False,help="Quit already running copy of NVDA and start this one")
-parser.add_option('--non-interactive',action="store_false",dest='interactive',default=True,help="No user interaction (don't display error message boxes)")
 parser.add_option('-k','--check-running',action="store_true",dest='check_running',default=False,help="Report whether NVDA is running via the exit code; 0 if running, 1 if not running")
 parser.add_option('-f','--log-file',dest='logFileName',default=logFileName,help="The file where log messages should be written to")
 parser.add_option('-l','--log-level',type="int",dest='logLevel',default=0,help="The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning") 
 parser.add_option('-c','--config-path',dest='configPath',default=config.getUserDefaultConfigPath(),help="The path where all settings for NVDA are stored")
 parser.add_option('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
 (globalVars.appArgs,extraArgs)=parser.parse_args()
+
+def terminateRunningNVDA(window):
+	processID,threadID=winUser.getWindowThreadProcessID(window)
+	win32gui.PostMessage(window,win32con.WM_QUIT,0,0)
+	h=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
+	if not h:
+		# The process is already dead.
+		return
+	try:
+		res=winKernel.waitForSingleObject(h,4000)
+		if res==0:
+			# The process terminated within the timeout period.
+			return
+	finally:
+		winKernel.closeHandle(h)
+
+	# The process is refusing to exit gracefully, so kill it forcefully.
+	h = winKernel.openProcess(winKernel.PROCESS_TERMINATE, False, processID)
+	if not h:
+		raise OSError("Could not open process for termination")
+	try:
+		winKernel.TerminateProcess(h, 1)
+	finally:
+		winKernel.closeHandle(h)
 
 #Handle running multiple instances of NVDA
 try:
@@ -77,17 +100,11 @@ except:
 	oldAppWindowHandle=0
 if not win32gui.IsWindow(oldAppWindowHandle):
 	oldAppWindowHandle=0
-if oldAppWindowHandle:
-	processID,threadID=winUser.getWindowThreadProcessID(oldAppWindowHandle)
-	if globalVars.appArgs.quit or globalVars.appArgs.replace:
-		win32gui.PostMessage(oldAppWindowHandle,win32con.WM_QUIT,0,0)
-		h=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
-		if h:
-			res=winKernel.waitForSingleObject(h,4000)
-			if res!=0:
-				if globalVars.appArgs.interactive:
-					win32gui.MessageBox(0, "Error quitting NVDA", "Error", 0)
-				sys.exit(1)
+if oldAppWindowHandle and (globalVars.appArgs.quit or globalVars.appArgs.replace):
+	try:
+		terminateRunningNVDA(oldAppWindowHandle)
+	except:
+		sys.exit(1)
 if globalVars.appArgs.quit or (oldAppWindowHandle and not globalVars.appArgs.replace):
 	sys.exit(0)
 elif globalVars.appArgs.check_running:

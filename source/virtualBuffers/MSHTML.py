@@ -8,6 +8,7 @@ import oleacc
 from logHandler import log
 import textInfos
 
+
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
 	nodeNamesToNVDARoles={
@@ -83,7 +84,7 @@ class MSHTML(VirtualBuffer):
 		return True
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
-		IHTMLElement=self.rootNVDAObject.IHTMLElement.document.GetElementById('ms__id%d'%ID)
+		IHTMLElement=NVDAObjects.IAccessible.MSHTML.locateHTMLElementByID(self.rootNVDAObject.IHTMLElement.document,'ms__id%d'%ID)
 		if not IHTMLElement:
 			return self.rootNVDAObject
 		while IHTMLElement:

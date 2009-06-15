@@ -202,6 +202,7 @@ CreateDirectory "$INSTDIR\lib"
 !insertmacro MUI_STARTMENU_WRITE_BEGIN application
 CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL
+CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_exploreUserSettingsDir).lnk" "$INSTDIR\nvda_slave.exe" "explore_userConfigPath" "" 0 SW_SHOWNORMAL
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_readme).lnk" "$INSTDIR\documentation\$(path_readmefile)" "" "$INSTDIR\documentation\$(path_readmefile)" 0 SW_SHOWMAXIMIZED
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_userguide).lnk" "$INSTDIR\documentation\$(path_userguide)" "" "$INSTDIR\documentation\$(path_userguide)" 0 SW_SHOWMAXIMIZED
 WriteIniStr "$INSTDIR\${PRODUCT}.url" "InternetShortcut" "URL" "${WEBSITE}"
@@ -219,6 +220,7 @@ WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "URLInfoAbout" "http://www.nv
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "Publisher" "nvda-project.org"
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString" "$INSTDIR\Uninstall.exe"
 WriteRegStr ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "" $INSTDIR
+WriteRegStr ${INSTDIR_REG_ROOT} "Software\Microsoft\Windows\CurrentVersion\App Paths\${NVDAApp}" "" "$INSTDIR\${NVDAApp}" 
  SectionEnd
 
 section "$(section_service)"
@@ -251,6 +253,7 @@ Delete $DESKTOP\${PRODUCT}.lnk"
 Delete $INSTDIR\${PRODUCT}.url"
 DeleteRegKey ${INSTDIR_REG_ROOT} "SOFTWARE\${PRODUCT}"
 DeleteRegKey ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY}
+DeleteRegKey ${INSTDIR_REG_ROOT} "Software\Microsoft\Windows\CurrentVersion\App Paths\${NVDAApp}"
 Rmdir $INSTDIR
 SectionEnd
 

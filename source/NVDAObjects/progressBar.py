@@ -19,7 +19,8 @@ class ProgressBar(NVDAObject):
  
 	def event_valueChange(self):
 		pbConf=config.conf["presentation"]["progressBarUpdates"]
-		if pbConf["progressBarOutputMode"]=="off" or controlTypes.STATE_INVISIBLE in self.states:
+		states=self.states
+		if pbConf["progressBarOutputMode"]=="off" or controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_OFFSCREEN in states:
 			return super(ProgressBar,self).event_valueChange()
 		val=self.value
 		if val:
@@ -27,12 +28,14 @@ class ProgressBar(NVDAObject):
 		if not val:
 			return super(ProgressBar,self).event_valueChange()
 		percentage = min(max(0.0, float(val)), 100.0)
-		left,top,width,height=self.location
-		x=left+width/2
-		y=top+height/2
-		screenObj=api.getDesktopObject().objectFromPoint(x,y)
-		if not pbConf["reportBackgroundProgressBars"] and self!=screenObj: 
+		if not pbConf["reportBackgroundProgressBars"] and not self.isInForeground:
 			return
+		try:
+			left,top,width,height=self.location
+		except:
+			left=top=width=height=0
+		x=left+(width/2)
+		y=top+(height/2)
 		lastBeepProgressValue=self.progressValueCache.get("beep,%d,%d"%(x,y),None)
 		if pbConf["progressBarOutputMode"] in ("beep","both") and (lastBeepProgressValue is None or abs(percentage-lastBeepProgressValue)>=pbConf["beepPercentageInterval"]):
 			tones.beep(pbConf["beepMinHZ"]*2**(percentage/25.0),40)

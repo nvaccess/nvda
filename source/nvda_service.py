@@ -126,19 +126,16 @@ def nvdaLauncher():
 		return
 
 	debug("launcher: starting NVDA")
-	process = startNVDA(desktop)
+	startNVDA(desktop)
 	desktopSwitchEvt = windll.kernel32.OpenEventW(SYNCHRONIZE, False, u"WinSta0_DesktopSwitch")
 	windll.kernel32.WaitForSingleObject(desktopSwitchEvt, INFINITE)
 	windll.kernel32.CloseHandle(desktopSwitchEvt)
 	debug("launcher: desktop switch, exiting NVDA on desktop %s" % desktop)
 	exitNVDA(desktop)
-	# If the process hasn't died yet, forcefully kill it.
-	# If it has died already, TerminateProcess will barf, but we don't care.
-	windll.kernel32.TerminateProcess(process, 1)
-	windll.kernel32.CloseHandle(process)
 
 def startNVDA(desktop):
-	return executeProcess(desktop, None, nvdaExec, "-m")
+	process = executeProcess(desktop, None, nvdaExec, "-m")
+	windll.kernel32.CloseHandle(process)
 
 def startNVDAUIAccess(session, desktop):
 	token = duplicateTokenPrimary(getLoggedOnUserToken(session))
@@ -148,7 +145,7 @@ def startNVDAUIAccess(session, desktop):
 	windll.kernel32.CloseHandle(process)
 
 def exitNVDA(desktop):
-	process = executeProcess(desktop, None, nvdaExec, "-q --non-interactive")
+	process = executeProcess(desktop, None, nvdaExec, "-q")
 	windll.kernel32.WaitForSingleObject(process, 10000)
 	windll.kernel32.CloseHandle(process)
 

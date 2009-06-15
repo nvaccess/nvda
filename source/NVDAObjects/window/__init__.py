@@ -220,6 +220,10 @@ An NVDAObject for a window
 		if parentHandle:
 			return Window(windowHandle=parentHandle)
 
+	def _get_isInForeground(self):
+		fg=winUser.getForegroundWindow()
+		return self.windowHandle==fg or winUser.isDescendantWindow(fg,self.windowHandle)
+
 	def _get_states(self):
 		states=super(Window,self)._get_states()
 		style=self.windowStyle
