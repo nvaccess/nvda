@@ -260,6 +260,12 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		return ""
 
+	def _get_isInForeground(self):
+		"""
+		Finds out if this object is currently within the foreground.
+		"""
+		raise NotImplementedError
+
 	def _get_states(self):
 		"""Retreaves the current states of this object (example: selected, focused).
 		@return: a set of  STATE_* constants from L{controlTypes}.
