@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA R2935\n"
-"POT-Creation-Date: 2009-05-16 07:29+China Standard Time\n"
-"PO-Revision-Date: 2009-05-16 17:51+0800\n"
+"Project-Id-Version: NVDA R2994\n"
+"POT-Creation-Date: 2009-06-12 18:11+China Standard Time\n"
+"PO-Revision-Date: 2009-06-12 18:21+0800\n"
 "Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
 "Language-Team: Chinese (Hong Kong)\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 # controlTypes.py:256
-#: IAccessibleHandler.py:896
+#: IAccessibleHandler.py:890
 msgid "Secure Desktop"
 msgstr "安全桌面"
 
@@ -29,7 +29,7 @@ msgstr "啟用"
 
 # appModules\_default.py:491
 #: NVDAObjects\progressBar.py:42
-#: appModules\_default.py:780
+#: appModules\_default.py:783
 msgid "%d percent"
 msgstr "百分之 %d"
 
@@ -115,16 +115,16 @@ msgstr "錯誤的模組 %s"
 #: appModules\_default.py:150
 #: appModules\_default.py:160
 #: appModules\_default.py:170
-#: appModules\_default.py:667
-#: appModules\_default.py:743
-#: appModules\_default.py:753
-#: appModules\_default.py:763
+#: appModules\_default.py:670
+#: appModules\_default.py:746
+#: appModules\_default.py:756
+#: appModules\_default.py:766
 #: appModules\winamp.py:75
 #: appModules\winamp.py:85
 #: keyboardHandler.py:51
 #: keyboardHandler.py:53
 #: keyboardHandler.py:55
-#: virtualBuffers\__init__.py:344
+#: virtualBuffers\__init__.py:350
 msgid "on"
 msgstr "開"
 
@@ -148,17 +148,17 @@ msgstr "開"
 #: appModules\_default.py:157
 #: appModules\_default.py:167
 #: appModules\_default.py:560
-#: appModules\_default.py:664
-#: appModules\_default.py:740
-#: appModules\_default.py:750
-#: appModules\_default.py:760
+#: appModules\_default.py:667
+#: appModules\_default.py:743
+#: appModules\_default.py:753
+#: appModules\_default.py:763
 #: appModules\winamp.py:77
 #: appModules\winamp.py:87
 #: gui\settingsDialogs.py:507
 #: keyboardHandler.py:51
 #: keyboardHandler.py:53
 #: keyboardHandler.py:55
-#: virtualBuffers\__init__.py:344
+#: virtualBuffers\__init__.py:350
 msgid "off"
 msgstr "關"
 
@@ -198,7 +198,7 @@ msgstr "在目前鼠標位置點擊滑鼠右鍵一次"
 
 # textBuffer.py:534
 #: appModules\_default.py:86
-#: cursorManager.py:220
+#: cursorManager.py:225
 msgid "no selection"
 msgstr "沒有選取文字"
 
@@ -365,13 +365,13 @@ msgstr "把瀏覽游標移到並報出鼠標所指的物件"
 #: appModules\_default.py:332
 #: appModules\_default.py:355
 #: appModules\_default.py:374
-#: appModules\_default.py:705
+#: appModules\_default.py:708
 msgid "no navigator object"
 msgstr "沒有瀏覽物件"
 
 # appModules\_default.py:576
 #: appModules\_default.py:228
-#: appModules\_default.py:686
+#: appModules\_default.py:689
 msgid "%s copied to clipboard"
 msgstr "%s 已複製到剪貼簿"
 
@@ -398,7 +398,7 @@ msgstr "讀出目前瀏覽物件的高度、寬度和位置"
 # appModules\_default.py:147
 # appModules\_default.py:389
 #: appModules\_default.py:248
-#: appModules\_default.py:645
+#: appModules\_default.py:648
 msgid "no focus"
 msgstr "沒有焦點"
 
@@ -693,297 +693,301 @@ msgid "reads from the system caret up to the end of the text, moving the caret a
 msgstr "從目前打字游標所在的一行開始報讀直至文字的結尾, 並且讓打字游標跟著走"
 
 # gui\settingsDialogs.py:274
-#: appModules\_default.py:631
+#: appModules\_default.py:635
 msgid "No formatting information"
 msgstr "沒有格式資訊"
 
 # virtualBuffers\__init__.py:479
-#: appModules\_default.py:635
+#: appModules\_default.py:638
 msgid "Reports formatting info for the current cursor position within a document"
 msgstr "在文件之內報出目前游標位置的格式資料"
 
 # appModules\_default.py:390
-#: appModules\_default.py:646
+#: appModules\_default.py:649
 msgid "reports the object with focus"
 msgstr "報出系統焦點所指的物件"
 
 # appModules\_default.py:399
-#: appModules\_default.py:651
+#: appModules\_default.py:654
 msgid "no status bar found"
 msgstr "找不到狀態列"
 
 # appModules\_default.py:403
-#: appModules\_default.py:660
+#: appModules\_default.py:663
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr "把瀏覽游標移到並報出目前應用軟件的狀態列"
 
 # gui\__init__.py:261
-#: appModules\_default.py:669
+#: appModules\_default.py:672
 msgid "Mouse tracking"
 msgstr "鼠標移動通知"
 
 # appModules\_default.py:413
-#: appModules\_default.py:670
+#: appModules\_default.py:673
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "切換每當鼠標移動時, 是否播放聲音或語音"
 
 # textBuffer.py:275
-#: appModules\_default.py:678
+#: appModules\_default.py:681
 msgid "no title"
 msgstr "沒有標題"
 
-#: appModules\_default.py:687
+#: appModules\_default.py:690
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
 msgstr "報出目前應用視窗的標題, 如果連按兩次則把標題拼讀出來, 連按三次則把標題複製到剪貼簿"
 
 # appModules\_default.py:426
-#: appModules\_default.py:694
+#: appModules\_default.py:697
 msgid "speaks the current foreground object"
 msgstr "讀出目前的前景物件"
 
 # appModules\_default.py:576
-#: appModules\_default.py:709
-#: cursorManager.py:223
+#: appModules\_default.py:712
+#: cursorManager.py:228
 msgid "copied to clipboard"
 msgstr "複製到剪貼簿"
 
 # appModules\_default.py:389
-#: appModules\_default.py:713
+#: appModules\_default.py:716
 msgid "Control ID: %s"
 msgstr "控制代碼 %s"
 
 # appModules\_default.py:390
-#: appModules\_default.py:714
+#: appModules\_default.py:717
 msgid "Class: %s"
 msgstr "類別 %s"
 
 # appModules\_default.py:393
-#: appModules\_default.py:716
+#: appModules\_default.py:719
 msgid "internal text: %s"
 msgstr "內部文字 %s"
 
 # controlTypes.py:86
-#: appModules\_default.py:717
+#: appModules\_default.py:720
 msgid "text: %s"
 msgstr "文字 %s"
 
 # appModules\_default.py:437
-#: appModules\_default.py:719
+#: appModules\_default.py:722
 msgid "reports some information about the current navigator object, mainly useful for developers. When pressed 2 times it copies control id, class and internal text to the windows clipboard"
 msgstr "報出目前物件的進階資訊, 這些資料對程式編寫員較有用, 連按兩次則把物件的控制代碼, 類別和內部文字也都複製到剪貼簿."
 
 # appModules\_default.py:446
-#: appModules\_default.py:725
+#: appModules\_default.py:728
 msgid "no progress bar updates"
 msgstr "進度列改變時沒有表示"
 
 # appModules\_default.py:446
-#: appModules\_default.py:728
+#: appModules\_default.py:731
 msgid "speak progress bar updates"
 msgstr "進度列改變時說出來"
 
 # appModules\_default.py:446
-#: appModules\_default.py:731
+#: appModules\_default.py:734
 msgid "beep for progress bar updates"
 msgstr "進度列改變時發出逼逼聲"
 
 # appModules\_default.py:446
-#: appModules\_default.py:734
+#: appModules\_default.py:737
 msgid "beep and speak progress bar updates"
 msgstr "進度列改變時發出逼逼聲以及說出來"
 
-#: appModules\_default.py:736
+#: appModules\_default.py:739
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
 msgstr "選擇表示進度列改變的方式, 選項包括發出逼逼聲, 說出來, 兩者皆是以及關閉"
 
 # appModules\_default.py:456
-#: appModules\_default.py:745
+#: appModules\_default.py:748
 msgid "report dynamic content changes"
 msgstr "讀出已改變的動態內容"
 
 # appModules\_default.py:457
-#: appModules\_default.py:746
+#: appModules\_default.py:749
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
 msgstr "切換讀出已改變的動態內容開關, 動態內容包括在 DOS 指令模式下的文字"
 
 # appModules\_default.py:466
-#: appModules\_default.py:755
+#: appModules\_default.py:758
 msgid "caret moves review cursor"
 msgstr "瀏覽游標跟隨打字游標走"
 
 # appModules\_default.py:467
-#: appModules\_default.py:756
+#: appModules\_default.py:759
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "切換是否讓瀏覽游標跟隨打字游標走"
 
 # appModules\_default.py:476
-#: appModules\_default.py:765
+#: appModules\_default.py:768
 msgid "focus moves navigator object"
 msgstr "瀏覽游標跟隨系統焦點走"
 
 # appModules\_default.py:477
-#: appModules\_default.py:766
+#: appModules\_default.py:769
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "切換是否讓瀏覽游標跟隨系統焦點走"
 
 # appModules\_default.py:447
-#: appModules\_default.py:778
+#: appModules\_default.py:781
 msgid "no system battery"
 msgstr "系統沒有安裝電池"
 
 # appModules\_default.py:492
-#: appModules\_default.py:781
+#: appModules\_default.py:784
 msgid "AC power on"
 msgstr "交流電源已經接通"
 
 # appModules\_default.py:494
-#: appModules\_default.py:783
+#: appModules\_default.py:786
 msgid "%d hours and %d minutes remaining"
 msgstr "還可用 %d 小時和 %d 分鐘"
 
 # appModules\_default.py:496
-#: appModules\_default.py:785
+#: appModules\_default.py:788
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr "當沒有接上交流電源時讀出電池狀態和可用多久"
 
 # appModules\_default.py:500
-#: appModules\_default.py:789
+#: appModules\_default.py:792
 msgid "Pass next key through"
 msgstr "下次按鍵指令直接操作系統"
 
 # appModules\_default.py:501
-#: appModules\_default.py:790
+#: appModules\_default.py:793
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "讓下一次按鍵指令直接操作系統,而不會操作 NVDA"
 
 # appModules\_default.py:597
-#: appModules\_default.py:795
+#: appModules\_default.py:798
 msgid "Currently running application is %s"
 msgstr "現在應用軟件所屬檔名是 %s"
 
 # appModules\_default.py:611
-#: appModules\_default.py:798
+#: appModules\_default.py:801
 msgid " and currently loaded module is %s"
 msgstr "和載入模組是 %s"
 
 # appModules\_default.py:612
-#: appModules\_default.py:800
+#: appModules\_default.py:803
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
 msgstr "報出延時應用程式所屬檔名和載入模組名稱"
 
 # appModules\_default.py:362
-#: appModules\_default.py:804
+#: appModules\_default.py:807
 msgid "Shows the NVDA general settings dialog"
 msgstr "打開 NVDA 一般設定對話方塊"
 
 # appModules\_default.py:724
-#: appModules\_default.py:808
+#: appModules\_default.py:811
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "打開 NVDA 語音合成器對話方塊"
 
 # gui\__init__.py:253
-#: appModules\_default.py:812
+#: appModules\_default.py:815
 msgid "Shows the NVDA voice settings dialog"
 msgstr "打開 NVDA 語音設定對話方塊"
 
 # appModules\_default.py:732
-#: appModules\_default.py:816
+#: appModules\_default.py:819
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "打開 NVDA 鍵盤設定對話方塊"
 
 # appModules\_default.py:736
-#: appModules\_default.py:820
+#: appModules\_default.py:823
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "打開 NVDA 滑鼠設定對話方塊"
 
 # appModules\_default.py:740
-#: appModules\_default.py:824
+#: appModules\_default.py:827
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "打開 NVDA 物件說明對話方塊"
 
 # gui\__init__.py:167
-#: appModules\_default.py:828
+#: appModules\_default.py:831
 msgid "Shows the NVDA virtual buffers settings dialog"
 msgstr "打開 NVDA 虛擬緩衝對話方塊"
 
 # appModules\_default.py:748
-#: appModules\_default.py:832
+#: appModules\_default.py:835
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "打開 NVDA 文件格式對話方塊"
 
 # gui\__init__.py:141
-#: appModules\_default.py:836
+#: appModules\_default.py:839
 msgid "Saves the current NVDA configuration"
 msgstr "寫入目前所有選項設定值到設定檔"
 
 # appModules\_default.py:757
-#: appModules\_default.py:840
+#: appModules\_default.py:843
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr "從設定檔讀取並套用所有選項設定值"
 
-#: appModules\_default.py:848
+#: appModules\_default.py:851
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "打開 NVDA Python Console,,, 它對程式編寫員較有用"
 
 # controlTypes.py:99
-#: appModules\_default.py:853
+#: appModules\_default.py:856
 msgid "review"
 msgstr "瀏覽焦點"
 
 # controlTypes.py:141
-#: appModules\_default.py:856
+#: appModules\_default.py:859
 msgid "focus"
 msgstr "系統焦點"
 
-#: appModules\_default.py:857
+#: appModules\_default.py:860
 msgid "Braille tethered to %s"
 msgstr "點字游標移到 %s"
 
-#: appModules\_default.py:858
+#: appModules\_default.py:861
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "把點字游標移到系統焦點或瀏覽焦點"
 
-#: appModules\_default.py:866
+#: appModules\_default.py:869
 msgid "There is no text on the clipboard"
 msgstr "剪貼簿內沒有文字"
 
-#: appModules\_default.py:871
+#: appModules\_default.py:874
 msgid "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "現有大量文字在剪貼簿之內, 共有 %s 個字元之多"
 
-#: appModules\_default.py:872
+#: appModules\_default.py:875
 msgid "Reports the text on the Windows clipboard"
 msgstr "報出剪貼簿內的文字"
 
-#: appModules\_default.py:876
+#: appModules\_default.py:879
 msgid "Start marked"
 msgstr "開始位置"
 
 # appModules\_default.py:336
-#: appModules\_default.py:877
+#: appModules\_default.py:880
 msgid "Marks the current position of the review cursor as the start of text to be copied"
 msgstr "訂定要複製文字的開始位置"
 
-#: appModules\_default.py:881
+#: appModules\_default.py:884
 msgid "No start marker set"
 msgstr "沒有訂定開始位置"
 
-#: appModules\_default.py:885
+#: appModules\_default.py:888
 msgid "The start marker must reside within the same object"
 msgstr "訂定的開始位置必須在同一物件中"
 
 # appModules\_default.py:576
-#: appModules\_default.py:890
+#: appModules\_default.py:893
 msgid "Review selection copied to clipboard"
 msgstr "把區域內的文字複製到剪貼簿"
 
-#: appModules\_default.py:892
+#: appModules\_default.py:895
 msgid "No text to copy"
 msgstr "沒有文字可複製"
 
-#: appModules\_default.py:895
+#: appModules\_default.py:898
 msgid "Retrieves the text from the previously set start marker to the current position of the review cursor and copies it to the clipboard"
 msgstr "把開始位置和目前瀏覽游標位置之間的文字複製到剪貼簿"
+
+#: appModules\calc.py:32
+msgid "Display"
+msgstr "顯示"
 
 # characterSymbols.py:33
 #: appModules\explorer.py:16
@@ -1300,7 +1304,7 @@ msgstr "( )"
 # virtualBuffers\IAccessible\gecko.py:282
 # virtualBuffers\IAccessible\gecko.py:286
 #: braille.py:212
-#: speech.py:631
+#: speech.py:632
 msgid "not %s"
 msgstr "沒 %s"
 
@@ -1308,22 +1312,26 @@ msgstr "沒 %s"
 # NVDAObjects\IAccessible\__init__.py:416
 # NVDAObjects\IAccessible\sysListView32.py:14
 #: braille.py:224
-#: speech.py:637
+#: speech.py:638
 msgid "%s of %s"
 msgstr "第 %s 項共 %s 項"
 
 # textBuffer.py:213
 #: braille.py:226
-#: speech.py:642
-#: speech.py:645
+#: speech.py:643
+#: speech.py:646
 msgid "level %s"
 msgstr "第 %s 級"
 
-#: brailleDisplayDrivers\handyTech.py:34
+#: brailleDisplayDrivers\alvaBC6.py:74
+msgid "ALVA BC640/680 series"
+msgstr "ALVA BC640/680 系列"
+
+#: brailleDisplayDrivers\handyTech.py:40
 msgid "Handy Tech braille displays"
 msgstr "Handy tech 點字顯示器"
 
-#: brailleDisplayDrivers\noBraille.py:7
+#: brailleDisplayDrivers\noBraille.py:13
 msgid "No braille"
 msgstr "不用點字顯示器"
 
@@ -1333,7 +1341,7 @@ msgstr "不用點字顯示器"
 #: characterSymbols.py:17
 #: characterSymbols.py:18
 #: speech.py:79
-#: speech.py:593
+#: speech.py:594
 msgid "blank"
 msgstr "空白"
 
@@ -1648,7 +1656,7 @@ msgstr "工具提示"
 
 # controlTypes.py:98
 #: controlTypes.py:195
-#: speech.py:839
+#: speech.py:840
 msgid "link"
 msgstr "連結"
 
@@ -1784,7 +1792,7 @@ msgstr "六號標題"
 
 # controlTypes.py:126
 #: controlTypes.py:223
-#: textInfos\__init__.py:114
+#: textInfos\__init__.py:115
 msgid "paragraph"
 msgstr "段落"
 
@@ -2020,7 +2028,7 @@ msgstr "邊界"
 
 # characterSymbols.py:43
 #: controlTypes.py:269
-#: textInfos\__init__.py:111
+#: textInfos\__init__.py:112
 msgid "character"
 msgstr "字元"
 
@@ -2170,7 +2178,7 @@ msgstr "字型選擇框"
 
 # characterSymbols.py:50
 #: controlTypes.py:299
-#: textInfos\__init__.py:113
+#: textInfos\__init__.py:114
 msgid "line"
 msgstr "單行"
 
@@ -2190,7 +2198,7 @@ msgstr "字體大小"
 # textBuffer.py:266
 # textBuffer.py:318
 #: controlTypes.py:302
-#: speech.py:791
+#: speech.py:792
 msgid "bold"
 msgstr "粗體"
 
@@ -2213,13 +2221,13 @@ msgstr "背景色"
 # textBuffer.py:294
 # textBuffer.py:324
 #: controlTypes.py:307
-#: speech.py:813
+#: speech.py:814
 msgid "superscript"
 msgstr "上標"
 
 # textBuffer.py:326
 #: controlTypes.py:308
-#: speech.py:815
+#: speech.py:816
 msgid "subscript"
 msgstr "下標"
 
@@ -2423,37 +2431,37 @@ msgid "NVDA started"
 msgstr "N V D A 已經啟動"
 
 # virtualBuffers\__init__.py:463
-#: cursorManager.py:71
+#: cursorManager.py:76
 msgid "Find"
 msgstr "尋找"
 
 # virtualBuffers\__init__.py:463
-#: cursorManager.py:71
+#: cursorManager.py:76
 msgid "Type the text you wish to find"
 msgstr "請打入要找尋的關鍵字詞"
 
 # virtualBuffers\__init__.py:473
-#: cursorManager.py:85
+#: cursorManager.py:90
 msgid "Find Error"
 msgstr "尋找失敗"
 
 # virtualBuffers\__init__.py:473
-#: cursorManager.py:85
+#: cursorManager.py:90
 msgid "text \"%s\" not found"
 msgstr "找不到 \"%s\""
 
 # virtualBuffers\__init__.py:479
-#: cursorManager.py:91
+#: cursorManager.py:96
 msgid "find a text string from the current cursor position"
 msgstr "從目前游標位置開始尋找關鍵字詞"
 
 # virtualBuffers\__init__.py:479
-#: cursorManager.py:98
+#: cursorManager.py:103
 msgid "find the next occurrence of the previously entered text string from the current cursor's position"
 msgstr "從當前游標位置開始向下尋找剛輸入過的關鍵字詞"
 
 # virtualBuffers\__init__.py:479
-#: cursorManager.py:105
+#: cursorManager.py:110
 msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
 msgstr "從當前游標位置開始向上尋找剛輸入過的關鍵字詞"
 
@@ -3609,7 +3617,7 @@ msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "在按鍵放開時發生錯誤"
 
 # controlTypes.py:226
-#: mouseHandler.py:131
+#: mouseHandler.py:132
 msgid "%s cursor"
 msgstr "%s 光標"
 
@@ -3654,24 +3662,24 @@ msgid "selection removed"
 msgstr "已選取的都移除了"
 
 # textBuffer.py:231
-#: speech.py:656
-#: speech.py:880
+#: speech.py:657
+#: speech.py:881
 msgid "row %s"
 msgstr "第 %s 行"
 
 # textBuffer.py:236
-#: speech.py:659
-#: speech.py:876
+#: speech.py:660
+#: speech.py:877
 msgid "column %s"
 msgstr "第 %s 列"
 
 # textBuffer.py:225
-#: speech.py:664
+#: speech.py:665
 msgid "with %s rows and %s columns"
 msgstr "有 %s 行和 %s 列"
 
 # textBuffer.py:225
-#: speech.py:666
+#: speech.py:667
 msgid "with %s columns"
 msgstr "有 %s 列"
 
@@ -3679,17 +3687,17 @@ msgstr "有 %s 列"
 # virtualBuffers\IAccessible\MSHTML.py:242
 # virtualBuffers\IAccessible\MSHTML.py:249
 # virtualBuffers\IAccessible\gecko.py:250
-#: speech.py:668
+#: speech.py:669
 msgid "with %s rows"
 msgstr "有 %s 行"
 
 # virtualBuffers\__init__.py:193
-#: speech.py:711
-#: speech.py:715
-#: speech.py:719
-#: speech.py:727
-#: speech.py:738
-#: speech.py:839
+#: speech.py:712
+#: speech.py:716
+#: speech.py:720
+#: speech.py:728
+#: speech.py:739
+#: speech.py:840
 msgid "out of %s"
 msgstr "離開 %s"
 
@@ -3697,7 +3705,7 @@ msgstr "離開 %s"
 # virtualBuffers\IAccessible\MSHTML.py:242
 # virtualBuffers\IAccessible\MSHTML.py:249
 # virtualBuffers\IAccessible\gecko.py:250
-#: speech.py:713
+#: speech.py:714
 msgid "with %s items"
 msgstr "有 %s 個項目"
 
@@ -3708,117 +3716,117 @@ msgstr "有 %s 個項目"
 # virtualBuffers\IAccessible\MSHTML.py:298
 # virtualBuffers\IAccessible\gecko.py:282
 # virtualBuffers\IAccessible\gecko.py:286
-#: speech.py:736
+#: speech.py:737
 msgid "in %s"
 msgstr "在 %s"
 
 # textBuffer.py:207
-#: speech.py:756
+#: speech.py:757
 msgid "page %s"
 msgstr "第 %s 頁"
 
 # textBuffer.py:242
 # textBuffer.py:310
-#: speech.py:763
+#: speech.py:764
 msgid "style %s"
 msgstr "樣式 %s"
 
 # appModuleHandler.py:207
-#: speech.py:765
+#: speech.py:766
 msgid "default style"
 msgstr "預設樣式"
 
 # textBuffer.py:213
-#: speech.py:785
+#: speech.py:786
 msgid "line %s"
 msgstr "第 %s 行"
 
 # textBuffer.py:268
-#: speech.py:791
+#: speech.py:792
 msgid "no bold"
 msgstr "沒有粗體"
 
 # NVDAObjects\IAccessible\excel.py:106
 # textBuffer.py:273
 # textBuffer.py:320
-#: speech.py:796
+#: speech.py:797
 msgid "italic"
 msgstr "斜體"
 
 # textBuffer.py:275
-#: speech.py:796
+#: speech.py:797
 msgid "no italic"
 msgstr "沒有斜體"
 
 # NVDAObjects\IAccessible\excel.py:64
-#: speech.py:801
+#: speech.py:802
 msgid "no strikethrough"
 msgstr "沒有刪除線"
 
 # NVDAObjects\IAccessible\excel.py:64
-#: speech.py:801
+#: speech.py:802
 msgid "strikethrough"
 msgstr "刪除線"
 
 # textBuffer.py:282
-#: speech.py:806
+#: speech.py:807
 msgid "not underlined"
 msgstr "沒有加底線"
 
 # NVDAObjects\IAccessible\excel.py:108
 # textBuffer.py:280
 # textBuffer.py:322
-#: speech.py:806
+#: speech.py:807
 msgid "underlined"
 msgstr "已加底線"
 
 # characterSymbols.py:50
-#: speech.py:817
+#: speech.py:818
 msgid "baseline"
 msgstr "基線"
 
 # textBuffer.py:248
 # textBuffer.py:312
-#: speech.py:825
+#: speech.py:826
 msgid "align left"
 msgstr "靠左對齊"
 
 # textBuffer.py:248
 # textBuffer.py:312
-#: speech.py:827
+#: speech.py:828
 msgid "align center"
 msgstr "置中對齊"
 
 # NVDAObjects\IAccessible\winword.py:278
-#: speech.py:829
+#: speech.py:830
 msgid "align right"
 msgstr "靠右對齊"
 
-#: speech.py:831
+#: speech.py:832
 msgid "align justify"
 msgstr "左右對齊"
 
 # textBuffer.py:248
 # textBuffer.py:312
-#: speech.py:833
+#: speech.py:834
 msgid "align default"
 msgstr "預設排列"
 
-#: speech.py:846
+#: speech.py:847
 msgid "spelling error"
 msgstr "拼錯字"
 
-#: speech.py:848
+#: speech.py:849
 msgid "out of spelling error"
 msgstr "離開拼錯字"
 
 # textBuffer.py:219
-#: speech.py:862
+#: speech.py:863
 msgid "out of table"
 msgstr "離開表格"
 
 # textBuffer.py:225
-#: speech.py:871
+#: speech.py:872
 msgid "table with %s columns and %s rows"
 msgstr "表格有 %s 列和 %s 行"
 
@@ -3888,7 +3896,7 @@ msgid "variant"
 msgstr "腔調"
 
 # controlTypes.py:222
-#: textInfos\__init__.py:112
+#: textInfos\__init__.py:113
 msgid "word"
 msgstr "單字"
 
@@ -3931,537 +3939,537 @@ msgid "focus mode"
 msgstr "打字模式"
 
 # virtualBuffers\__init__.py:293
-#: virtualBuffers\__init__.py:327
+#: virtualBuffers\__init__.py:333
 msgid "activates the current object in the virtual buffer"
 msgstr "嘗試啟動當前項目"
 
 # controlTypes.py:144
-#: virtualBuffers\__init__.py:339
+#: virtualBuffers\__init__.py:345
 msgid "Refreshed"
 msgstr "重新整理"
 
-#: virtualBuffers\__init__.py:340
+#: virtualBuffers\__init__.py:346
 msgid "Refreshes the virtual buffer content"
 msgstr "更新虛擬緩衝區的內容"
 
 # virtualBuffers_new\__init__.py:277
-#: virtualBuffers\__init__.py:345
+#: virtualBuffers\__init__.py:351
 msgid "use screen layout %s"
 msgstr "套用畫面檢視方式 %s"
 
-#: virtualBuffers\__init__.py:346
+#: virtualBuffers\__init__.py:352
 msgid "Toggles on and off if the screen layout is preserved while rendering the virtual buffer content"
 msgstr "開關虛擬緩衝區的畫面檢視方式"
 
 # virtualBuffers\__init__.py:342
-#: virtualBuffers\__init__.py:455
+#: virtualBuffers\__init__.py:461
 msgid "displays a list of links"
 msgstr "顯示超連結清單"
 
 # textBuffer.py:219
-#: virtualBuffers\__init__.py:719
+#: virtualBuffers\__init__.py:725
 msgid "Not in a table cell"
 msgstr "不在表格單元格中"
 
 # textBuffer.py:219
-#: virtualBuffers\__init__.py:728
+#: virtualBuffers\__init__.py:734
 msgid "edge of table"
 msgstr "表格的邊緣了"
 
 # virtualBuffers\__init__.py:361
-#: virtualBuffers\__init__.py:738
+#: virtualBuffers\__init__.py:744
 msgid "moves to the next table row"
 msgstr "在表格內移到下一行"
 
 # virtualBuffers\__init__.py:372
-#: virtualBuffers\__init__.py:742
+#: virtualBuffers\__init__.py:748
 msgid "moves to the previous table row"
 msgstr "在表格內移到上一行"
 
 # virtualBuffers\__init__.py:361
-#: virtualBuffers\__init__.py:746
+#: virtualBuffers\__init__.py:752
 msgid "moves to the next table column"
 msgstr "在表格內移到下一列"
 
 # virtualBuffers\__init__.py:372
-#: virtualBuffers\__init__.py:750
+#: virtualBuffers\__init__.py:756
 msgid "moves to the previous table column"
 msgstr "在表格內移到上一列"
 
 # virtualBuffers\__init__.py:317
-#: virtualBuffers\__init__.py:787
+#: virtualBuffers\__init__.py:793
 msgid "moves to the next heading"
 msgstr "移到下一個標題"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
-#: virtualBuffers\__init__.py:787
+#: virtualBuffers\__init__.py:793
 msgid "no next heading"
 msgstr "沒有下一個標題了"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:788
+#: virtualBuffers\__init__.py:794
 msgid "moves to the previous heading"
 msgstr "移到上一個標題"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:788
+#: virtualBuffers\__init__.py:794
 msgid "no previous heading"
 msgstr "沒有上一個標題了"
 
 # virtualBuffers\__init__.py:317
-#: virtualBuffers\__init__.py:789
+#: virtualBuffers\__init__.py:795
 msgid "moves to the next heading at level 1"
 msgstr "移到下一個第一級標題"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
-#: virtualBuffers\__init__.py:789
+#: virtualBuffers\__init__.py:795
 msgid "no next heading at level 1"
 msgstr "沒有下一個第一級標題了"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:790
+#: virtualBuffers\__init__.py:796
 msgid "moves to the previous heading at level 1"
 msgstr "移到上一個第一級標題"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:790
+#: virtualBuffers\__init__.py:796
 msgid "no previous heading at level 1"
 msgstr "沒有上一個第一級標題了"
 
 # virtualBuffers\__init__.py:317
-#: virtualBuffers\__init__.py:791
+#: virtualBuffers\__init__.py:797
 msgid "moves to the next heading at level 2"
 msgstr "移到下一個第二級標題"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
-#: virtualBuffers\__init__.py:791
+#: virtualBuffers\__init__.py:797
 msgid "no next heading at level 2"
 msgstr "沒有下一個第二級標題了"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:792
+#: virtualBuffers\__init__.py:798
 msgid "moves to the previous heading at level 2"
 msgstr "移到上一個第二級標題"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:792
+#: virtualBuffers\__init__.py:798
 msgid "no previous heading at level 2"
 msgstr "沒有上一個第二級標題了"
 
 # virtualBuffers\__init__.py:317
-#: virtualBuffers\__init__.py:793
+#: virtualBuffers\__init__.py:799
 msgid "moves to the next heading at level 3"
 msgstr "移到下一個第三級標題"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
-#: virtualBuffers\__init__.py:793
+#: virtualBuffers\__init__.py:799
 msgid "no next heading at level 3"
 msgstr "沒有下一個第三級標題了"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:794
+#: virtualBuffers\__init__.py:800
 msgid "moves to the previous heading at level 3"
 msgstr "移到上一個第三級標題"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:794
+#: virtualBuffers\__init__.py:800
 msgid "no previous heading at level 3"
 msgstr "沒有上一個第三級標題了"
 
 # virtualBuffers\__init__.py:317
-#: virtualBuffers\__init__.py:795
+#: virtualBuffers\__init__.py:801
 msgid "moves to the next heading at level 4"
 msgstr "移到下一個第四級標題"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
-#: virtualBuffers\__init__.py:795
+#: virtualBuffers\__init__.py:801
 msgid "no next heading at level 4"
 msgstr "沒有下一個第四級標題了"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:796
+#: virtualBuffers\__init__.py:802
 msgid "moves to the previous heading at level 4"
 msgstr "移到上一個第四級標題"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:796
+#: virtualBuffers\__init__.py:802
 msgid "no previous heading at level 4"
 msgstr "沒有上一個第四級標題了"
 
 # virtualBuffers\__init__.py:317
-#: virtualBuffers\__init__.py:797
+#: virtualBuffers\__init__.py:803
 msgid "moves to the next heading at level 5"
 msgstr "移到下一個第五級標題"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
-#: virtualBuffers\__init__.py:797
+#: virtualBuffers\__init__.py:803
 msgid "no next heading at level 5"
 msgstr "沒有下一個第五級標題了"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:798
+#: virtualBuffers\__init__.py:804
 msgid "moves to the previous heading at level 5"
 msgstr "移到上一個第五級標題"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:798
+#: virtualBuffers\__init__.py:804
 msgid "no previous heading at level 5"
 msgstr "沒有上一個第五級標題了"
 
 # virtualBuffers\__init__.py:317
-#: virtualBuffers\__init__.py:799
+#: virtualBuffers\__init__.py:805
 msgid "moves to the next heading at level 6"
 msgstr "移到下一個第六級標題"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
-#: virtualBuffers\__init__.py:799
+#: virtualBuffers\__init__.py:805
 msgid "no next heading at level 6"
 msgstr "沒有下一個第六級標題了"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:800
+#: virtualBuffers\__init__.py:806
 msgid "moves to the previous heading at level 6"
 msgstr "移到上一個第六級標題"
 
 # virtualBuffers\__init__.py:328
-#: virtualBuffers\__init__.py:800
+#: virtualBuffers\__init__.py:806
 msgid "no previous heading at level 6"
 msgstr "沒有上一個第六級標題了"
 
 # virtualBuffers\__init__.py:361
-#: virtualBuffers\__init__.py:801
+#: virtualBuffers\__init__.py:807
 msgid "moves to the next table"
 msgstr "移到下一個表格"
 
 # textBuffer.py:219
-#: virtualBuffers\__init__.py:801
+#: virtualBuffers\__init__.py:807
 msgid "no next table"
 msgstr "沒有下一個表格了"
 
 # virtualBuffers\__init__.py:372
-#: virtualBuffers\__init__.py:802
+#: virtualBuffers\__init__.py:808
 msgid "moves to the previous table"
 msgstr "移到上一個表格"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:802
+#: virtualBuffers\__init__.py:808
 msgid "no previous table"
 msgstr "沒有上一個表格了"
 
 # virtualBuffers\__init__.py:383
-#: virtualBuffers\__init__.py:803
+#: virtualBuffers\__init__.py:809
 msgid "moves to the next link"
 msgstr "移到下一個連結"
 
 # virtualBuffers\__init__.py:382
 # virtualBuffers\__init__.py:393
-#: virtualBuffers\__init__.py:803
+#: virtualBuffers\__init__.py:809
 msgid "no next link"
 msgstr "沒有下一個連結了"
 
 # virtualBuffers\__init__.py:394
-#: virtualBuffers\__init__.py:804
+#: virtualBuffers\__init__.py:810
 msgid "moves to the previous link"
 msgstr "移到上一個連結"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:804
+#: virtualBuffers\__init__.py:810
 msgid "no previous link"
 msgstr "沒有上一個連結了"
 
 # virtualBuffers\__init__.py:383
-#: virtualBuffers\__init__.py:805
+#: virtualBuffers\__init__.py:811
 msgid "moves to the next visited link"
 msgstr "移到下一個到訪過的連結"
 
 # virtualBuffers_new\__init__.py:352
-#: virtualBuffers\__init__.py:805
+#: virtualBuffers\__init__.py:811
 msgid "no next visited link"
 msgstr "沒有下一個到訪過的連結了"
 
 # virtualBuffers\__init__.py:394
-#: virtualBuffers\__init__.py:806
+#: virtualBuffers\__init__.py:812
 msgid "moves to the previous visited link"
 msgstr "移到上一個到訪過的連結"
 
 # virtualBuffers_new\__init__.py:357
-#: virtualBuffers\__init__.py:806
+#: virtualBuffers\__init__.py:812
 msgid "no previous visited link"
 msgstr "沒有上一個到訪過的連結了"
 
 # virtualBuffers\__init__.py:383
-#: virtualBuffers\__init__.py:807
+#: virtualBuffers\__init__.py:813
 msgid "moves to the next unvisited link"
 msgstr "移到下一個未到過的連結"
 
 # virtualBuffers_new\__init__.py:362
-#: virtualBuffers\__init__.py:807
+#: virtualBuffers\__init__.py:813
 msgid "no next unvisited link"
 msgstr "沒有下一個未到過的連結了"
 
 # virtualBuffers\__init__.py:394
-#: virtualBuffers\__init__.py:808
+#: virtualBuffers\__init__.py:814
 msgid "moves to the previous unvisited link"
 msgstr "移到上一個未到過的連結"
 
 # virtualBuffers_new\__init__.py:367
-#: virtualBuffers\__init__.py:808
+#: virtualBuffers\__init__.py:814
 msgid "no previous unvisited link"
 msgstr "沒有上一個未到過的連結了"
 
 # virtualBuffers\__init__.py:449
-#: virtualBuffers\__init__.py:809
+#: virtualBuffers\__init__.py:815
 msgid "moves to the next form field"
 msgstr "移到下一個表單欄位"
 
 # virtualBuffers\__init__.py:448
 # virtualBuffers\__init__.py:459
-#: virtualBuffers\__init__.py:809
+#: virtualBuffers\__init__.py:815
 msgid "no next form field"
 msgstr "沒有下一個表單欄位了"
 
 # virtualBuffers\__init__.py:460
-#: virtualBuffers\__init__.py:810
+#: virtualBuffers\__init__.py:816
 msgid "moves to the previous form field"
 msgstr "移到上一個表單欄位"
 
 # virtualBuffers\__init__.py:448
 # virtualBuffers\__init__.py:459
-#: virtualBuffers\__init__.py:810
+#: virtualBuffers\__init__.py:816
 msgid "no previous form field"
 msgstr "沒有上一個表單欄位了"
 
 # virtualBuffers\__init__.py:405
-#: virtualBuffers\__init__.py:811
+#: virtualBuffers\__init__.py:817
 msgid "moves to the next list"
 msgstr "移到下一個清單"
 
 # virtualBuffers\__init__.py:382
 # virtualBuffers\__init__.py:393
-#: virtualBuffers\__init__.py:811
+#: virtualBuffers\__init__.py:817
 msgid "no next list"
 msgstr "沒有下一個清單了"
 
 # virtualBuffers\__init__.py:416
-#: virtualBuffers\__init__.py:812
+#: virtualBuffers\__init__.py:818
 msgid "moves to the previous list"
 msgstr "移到上一個清單"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:812
+#: virtualBuffers\__init__.py:818
 msgid "no previous list"
 msgstr "沒有上一個清單了"
 
 # virtualBuffers\__init__.py:427
-#: virtualBuffers\__init__.py:813
+#: virtualBuffers\__init__.py:819
 msgid "moves to the next list item"
 msgstr "移到下一個清單項目"
 
 # virtualBuffers\__init__.py:426
 # virtualBuffers\__init__.py:437
-#: virtualBuffers\__init__.py:813
+#: virtualBuffers\__init__.py:819
 msgid "no next list item"
 msgstr "沒有下一個清單項目了"
 
 # virtualBuffers\__init__.py:438
-#: virtualBuffers\__init__.py:814
+#: virtualBuffers\__init__.py:820
 msgid "moves to the previous list item"
 msgstr "移到上一個清單項目"
 
 # virtualBuffers\__init__.py:426
 # virtualBuffers\__init__.py:437
-#: virtualBuffers\__init__.py:814
+#: virtualBuffers\__init__.py:820
 msgid "no previous list item"
 msgstr "沒有上一個清單項目了"
 
 # virtualBuffers\__init__.py:383
-#: virtualBuffers\__init__.py:815
+#: virtualBuffers\__init__.py:821
 msgid "moves to the next button"
 msgstr "移到下一個按鈕"
 
 # virtualBuffers\__init__.py:382
 # virtualBuffers\__init__.py:393
-#: virtualBuffers\__init__.py:815
+#: virtualBuffers\__init__.py:821
 msgid "no next button"
 msgstr "沒有下一個按鈕了"
 
 # virtualBuffers\__init__.py:394
-#: virtualBuffers\__init__.py:816
+#: virtualBuffers\__init__.py:822
 msgid "moves to the previous button"
 msgstr "移到上一個按鈕"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:816
+#: virtualBuffers\__init__.py:822
 msgid "no previous button"
 msgstr "沒有上一個按鈕了"
 
 # virtualBuffers\__init__.py:449
-#: virtualBuffers\__init__.py:817
+#: virtualBuffers\__init__.py:823
 msgid "moves to the next edit field"
 msgstr "移到下一個文字編輯欄位"
 
 # virtualBuffers\__init__.py:448
 # virtualBuffers\__init__.py:459
-#: virtualBuffers\__init__.py:817
+#: virtualBuffers\__init__.py:823
 msgid "no next edit field"
 msgstr "沒有下一個文字編輯欄位了"
 
 # virtualBuffers\__init__.py:460
-#: virtualBuffers\__init__.py:818
+#: virtualBuffers\__init__.py:824
 msgid "moves to the previous edit field"
 msgstr "移到上一個文字編輯欄位"
 
 # virtualBuffers\__init__.py:448
 # virtualBuffers\__init__.py:459
-#: virtualBuffers\__init__.py:818
+#: virtualBuffers\__init__.py:824
 msgid "no previous edit field"
 msgstr "沒有上一個文字編輯欄位了"
 
 # virtualBuffers\__init__.py:361
-#: virtualBuffers\__init__.py:819
+#: virtualBuffers\__init__.py:825
 msgid "moves to the next frame"
 msgstr "移到下一個頁框"
 
 # controlTypes.py:111
-#: virtualBuffers\__init__.py:819
+#: virtualBuffers\__init__.py:825
 msgid "no next frame"
 msgstr "沒有下一個頁框了"
 
 # virtualBuffers\__init__.py:372
-#: virtualBuffers\__init__.py:820
+#: virtualBuffers\__init__.py:826
 msgid "moves to the previous frame"
 msgstr "移到上一個頁框"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:820
+#: virtualBuffers\__init__.py:826
 msgid "no previous frame"
 msgstr "沒有上一個頁框了"
 
 # virtualBuffers\__init__.py:339
-#: virtualBuffers\__init__.py:821
+#: virtualBuffers\__init__.py:827
 msgid "moves to the next separator"
 msgstr "移到下一個格位符"
 
 # controlTypes.py:117
-#: virtualBuffers\__init__.py:821
+#: virtualBuffers\__init__.py:827
 msgid "no next separator"
 msgstr "沒有下一個隔位符了"
 
 # virtualBuffers\__init__.py:350
-#: virtualBuffers\__init__.py:822
+#: virtualBuffers\__init__.py:828
 msgid "moves to the previous separator"
 msgstr "移到上一個格位符"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:822
+#: virtualBuffers\__init__.py:828
 msgid "no previous separator"
 msgstr "沒有上一個格位符了"
 
 # virtualBuffers\__init__.py:383
-#: virtualBuffers\__init__.py:823
+#: virtualBuffers\__init__.py:829
 msgid "moves to the next radio button"
 msgstr "移到下一個單選鈕"
 
 # virtualBuffers\__init__.py:382
 # virtualBuffers\__init__.py:393
-#: virtualBuffers\__init__.py:823
+#: virtualBuffers\__init__.py:829
 msgid "no next radio button"
 msgstr "沒有下一個單選鈕了"
 
 # virtualBuffers\__init__.py:394
-#: virtualBuffers\__init__.py:824
+#: virtualBuffers\__init__.py:830
 msgid "moves to the previous radio button"
 msgstr "移到上一個單選鈕"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:824
+#: virtualBuffers\__init__.py:830
 msgid "no previous radio button"
 msgstr "沒有上一個單選鈕了"
 
 # virtualBuffers\__init__.py:383
-#: virtualBuffers\__init__.py:825
+#: virtualBuffers\__init__.py:831
 msgid "moves to the next combo box"
 msgstr "移到下一個下拉方塊"
 
 # controlTypes.py:92
-#: virtualBuffers\__init__.py:825
+#: virtualBuffers\__init__.py:831
 msgid "no next combo box"
 msgstr "沒有下一個下拉方塊了"
 
 # virtualBuffers\__init__.py:394
-#: virtualBuffers\__init__.py:826
+#: virtualBuffers\__init__.py:832
 msgid "moves to the previous combo box"
 msgstr "移到上一個下拉方塊"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:826
+#: virtualBuffers\__init__.py:832
 msgid "no previous combo box"
 msgstr "沒有上一個下拉方塊了"
 
 # virtualBuffers\__init__.py:383
-#: virtualBuffers\__init__.py:827
+#: virtualBuffers\__init__.py:833
 msgid "moves to the next check box"
 msgstr "移到下一個核取方塊"
 
 # controlTypes.py:84
-#: virtualBuffers\__init__.py:827
+#: virtualBuffers\__init__.py:833
 msgid "no next check box"
 msgstr "沒有下一個核取方塊了"
 
 # virtualBuffers\__init__.py:394
-#: virtualBuffers\__init__.py:828
+#: virtualBuffers\__init__.py:834
 msgid "moves to the previous check box"
 msgstr "移到上一個核取方塊"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:828
+#: virtualBuffers\__init__.py:834
 msgid "no previous check box"
 msgstr "沒有上一個核取方塊了"
 
 # virtualBuffers\__init__.py:339
-#: virtualBuffers\__init__.py:829
+#: virtualBuffers\__init__.py:835
 msgid "moves to the next graphic"
 msgstr "移到下一張圖片"
 
 # virtualBuffers\__init__.py:316
 # virtualBuffers\__init__.py:327
-#: virtualBuffers\__init__.py:829
+#: virtualBuffers\__init__.py:835
 msgid "no next graphic"
 msgstr "沒有下一張圖片了"
 
 # virtualBuffers\__init__.py:350
-#: virtualBuffers\__init__.py:830
+#: virtualBuffers\__init__.py:836
 msgid "moves to the previous graphic"
 msgstr "移到上一張圖片"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:830
+#: virtualBuffers\__init__.py:836
 msgid "no previous graphic"
 msgstr "沒有上一張圖片了"
 
 # virtualBuffers\__init__.py:361
-#: virtualBuffers\__init__.py:831
+#: virtualBuffers\__init__.py:837
 msgid "moves to the next block quote"
 msgstr "移到下一個引述區"
 
 # controlTypes.py:127
-#: virtualBuffers\__init__.py:831
+#: virtualBuffers\__init__.py:837
 msgid "no next block quote"
 msgstr "沒有下一個引述區了"
 
 # virtualBuffers\__init__.py:372
-#: virtualBuffers\__init__.py:832
+#: virtualBuffers\__init__.py:838
 msgid "moves to the previous block quote"
 msgstr "移到上一個引述區"
 
 # appModules\_default.py:189
-#: virtualBuffers\__init__.py:832
+#: virtualBuffers\__init__.py:838
 msgid "no previous block quote"
 msgstr "沒有上一個引述區了"
