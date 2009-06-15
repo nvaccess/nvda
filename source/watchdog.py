@@ -15,6 +15,7 @@ MIN_CORE_ALIVE_TIMEOUT=0.3
 RECOVER_ATTEMPT_INTERVAL = 0.05
 
 isRunning=False
+isAttemptingRecovery = False
 
 _coreAliveEvent = threading.Event()
 _resumeEvent = threading.Event()
@@ -28,6 +29,7 @@ def alive():
 	_coreAliveEvent.set()
 
 def _watcher():
+	global isAttemptingRecovery
 	while isRunning:
 		# If the watchdog is suspended, wait until it is resumed.
 		_resumeEvent.wait()
@@ -36,8 +38,10 @@ def _watcher():
 			_coreAliveEvent.wait(NORMAL_CORE_ALIVE_TIMEOUT - MIN_CORE_ALIVE_TIMEOUT)
 		while not _coreAliveEvent.isSet():
 			# The core is dead, so attempt recovery.
+			isAttemptingRecovery = True
 			_recoverAttempt()
 			_coreAliveEvent.wait(RECOVER_ATTEMPT_INTERVAL)
+		isAttemptingRecovery = False
 		# At this point, the core is alive.
 		_coreAliveEvent.clear()
 		# Wait a bit to avoid excessive resource consumption.
