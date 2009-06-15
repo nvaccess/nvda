@@ -8,7 +8,7 @@ import api
 #: How often to check whether the core is alive
 CHECK_INTERVAL=0.1
 #: How long to wait for the core to be alive under normal circumstances
-NORMAL_CORE_ALIVE_TIMEOUT=5
+NORMAL_CORE_ALIVE_TIMEOUT=10
 #: The minimum time to wait for the core to be alive
 MIN_CORE_ALIVE_TIMEOUT=0.3
 #: How long to wait between recovery attempts
