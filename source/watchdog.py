@@ -33,15 +33,28 @@ def _watcher():
 	while isRunning:
 		# If the watchdog is suspended, wait until it is resumed.
 		_resumeEvent.wait()
-		_coreAliveEvent.wait(MIN_CORE_ALIVE_TIMEOUT)
-		if not _coreAliveEvent.isSet() and not _shouldRecoverAfterMinTimeout():
-			_coreAliveEvent.wait(NORMAL_CORE_ALIVE_TIMEOUT - MIN_CORE_ALIVE_TIMEOUT)
+
+		# Wait for the core to be alive.
+		# Wait a maximum of NORMAL_CORE_ALIVE_TIMEOUT, but shorten this to a minimum of MIN_CORE_ALIVE_TIMEOUT under special circumstances.
+		waited = 0
+		while True:
+			# Wait MIN_CORE_ALIVE_TIMEOUT, unless there is less than that time remaining for NORMAL_CORE_ALIVE_TIMEOUT.
+			timeout = min(MIN_CORE_ALIVE_TIMEOUT, NORMAL_CORE_ALIVE_TIMEOUT - waited)
+			if timeout <= 0:
+				# Timeout elapsed.
+				break
+			_coreAliveEvent.wait(timeout)
+			waited += timeout
+			if _coreAliveEvent.isSet() or _shouldRecoverAfterMinTimeout():
+				break
+
 		while not _coreAliveEvent.isSet():
 			# The core is dead, so attempt recovery.
 			isAttemptingRecovery = True
 			_recoverAttempt()
 			_coreAliveEvent.wait(RECOVER_ATTEMPT_INTERVAL)
 		isAttemptingRecovery = False
+
 		# At this point, the core is alive.
 		_coreAliveEvent.clear()
 		# Wait a bit to avoid excessive resource consumption.
