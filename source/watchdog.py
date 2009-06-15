@@ -44,7 +44,11 @@ def _watcher():
 		time.sleep(CHECK_INTERVAL)
 
 def shouldRecoverAfterMinTimeout():
-	return winUser.getForegroundWindow() != api.getForegroundObject().windowHandle
+	info=winUser.getGUIThreadInfo(0)
+	newHwnd=info.hwndFocus if info.hwndFocus else info.hwndActive
+	newThreadID=winUser.getWindowThreadProcessID(newHwnd)[1]
+	return newThreadID!=api.getFocusObject().windowThreadID
+
 
 def _recoverAttempt():
 	try:
