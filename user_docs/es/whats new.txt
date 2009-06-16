@@ -29,7 +29,7 @@ Cambios desde 0.6 P3:
 * nuevo: NVDA puede ser configurado para iniciarse automáticamente después de que te identifiques en Windows. la opción está en el diálogo Opciones Generales.
 * nuevo: NVDA puede leer pantallas seguras de Windows tales como la autentificación de Windows (logon), control+alt+suprimir y pantallas del UAC en Windows XP y posteriores. La lectura de las pantallas de autentificación de Windows (logon) puede ser configurada desde el diálogo de Opciones Generales. (#97)
 * corrección: En Windows Vista, el instalador de NVDA ahora arranca a NVDA con privilegios de un usuario normal cuando se requiera para ejecutar a NVDA en la pantalla final.
-
+* nuevo: Añadido un controlador para las líneas braille de la serie Optelec ALVA BC6.
 
   
 Cambios desde 0.6 P2:
@@ -110,6 +110,7 @@ Cambios desde 0.6 P1:
 * Soporte para grupos de elementos en controles SysListView32, encontrados principalmente en Windows Vista. (#27)
 * Informar del estado verificado de elementos de vista en árbol en controles SysTreeview32.
 * Añadidas teclas de atajo para muchos de los diálogos de configuración de NVDA
+
 * Soporte para IAccessible2 habilitado para aplicaciones tales como Mozilla Firefox cuando se ejecuta a NVDA desde un medio portátil, sin tener que registrar ningún fichero Dll en especial
 * Corregido un pete con la lista de enlaces del modo virtual en aplicaciones Gecko. (#48)
 * NVDA no debería petar ya con aplicaciones Mozilla Gecko tales como Firefox y Thunderbird si NVDA está ejecutándose con privilegios más altos que los de la aplicación Mozilla Gecko. Ej. NVDA está ejecutándose como Administrador.
