@@ -34,12 +34,17 @@ class CDispatchChangeSink : public IDispatch {
 	}
 
 	HRESULT STDMETHODCALLTYPE IUnknown::QueryInterface(REFIID riid, void** pvpObject) {
-		if(riid==IID_IDispatch||riid==IID_IUnknown) {
-			*pvpObject=this;
-			this->refCount++;
-			return S_OK;
+		if(!pvpObject) return E_INVALIDARG;
+		*pvpObject=NULL;
+		if(riid==__uuidof(IDispatch)) {
+			*pvpObject=static_cast<IDispatch*>(this);
+		} else if(riid==__uuidof(IUnknown)) {
+			*pvpObject=static_cast<IUnknown*>(this);
+		} else {
+			return E_NOINTERFACE;
 		}
-		return E_INVALIDARG;
+		this->AddRef();
+		return S_OK;
 	}
 
 	ULONG STDMETHODCALLTYPE IUnknown::AddRef() {
@@ -118,12 +123,17 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 	}
 
 	HRESULT STDMETHODCALLTYPE IUnknown::QueryInterface(REFIID riid, void** pvpObject) {
-		if(riid==IID_IUnknown||riid==IID_IHTMLChangeSink) { 
-			*pvpObject=this;
-			this->refCount++;
-			return S_OK;
+		if(!pvpObject) return E_INVALIDARG;
+		*pvpObject=NULL;
+		if(riid==__uuidof(IHTMLChangeSink)) {
+			*pvpObject=static_cast<IHTMLChangeSink*>(this);
+		} else if(riid==__uuidof(IUnknown)) {
+			*pvpObject=static_cast<IUnknown*>(this);
+		} else {
+			return E_NOINTERFACE;
 		}
-		return E_NOINTERFACE;
+		this->AddRef();
+		return S_OK;
 	}
 
 	ULONG STDMETHODCALLTYPE IUnknown::AddRef() {
