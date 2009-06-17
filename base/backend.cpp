@@ -66,12 +66,8 @@ void VBufBackend_t::update() {
 			render(tempBuf,docHandle,ID);
 			DEBUG_MSG(L"Rendered content in temp buffer");
 			this->storageBuffer->lock.acquire();
-			VBufStorage_controlFieldNode_t* parent=node->getParent();
-			VBufStorage_fieldNode_t* previous=node->getPrevious();
-			DEBUG_MSG(L"Removing old node");
-			this->storageBuffer->removeFieldNode(node);
-			DEBUG_MSG(L"Merging temp buffer content in to backend buffer with a parent at "<<parent<<L" and a previous at "<<previous);
-			this->storageBuffer->mergeBuffer(parent,previous,tempBuf);
+			DEBUG_MSG(L"Replacing node with content of temp buffer");
+			this->storageBuffer->replaceSubtree(node,tempBuf);
 			DEBUG_MSG(L"Merged");
 			this->storageBuffer->lock.release();
 			DEBUG_MSG(L"Deleting temp buffer");

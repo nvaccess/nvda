@@ -492,7 +492,7 @@ void VBufStorage_buffer_t::deleteSubtree(VBufStorage_fieldNode_t* node) {
 	DEBUG_MSG(L"Deleted subtree");
 }
 
-VBufStorage_buffer_t::VBufStorage_buffer_t(): rootNode(NULL), controlFieldNodesByIdentifier(), selectionStart(0), selectionEnd(0), lock() {
+VBufStorage_buffer_t::VBufStorage_buffer_t(): rootNode(NULL), controlFieldNodesByIdentifier(), selectionStart(0), selectionLength(0), lock() {
 	DEBUG_MSG(L"buffer initializing");
 }
 
@@ -580,6 +580,42 @@ bool VBufStorage_buffer_t::mergeBuffer(VBufStorage_controlFieldNode_t* parent, V
 	return true;
 }
 
+bool VBufStorage_buffer_t::replaceSubtree(VBufStorage_fieldNode_t* node, VBufStorage_buffer_t* buffer) {
+	assert(node);
+	assert(buffer);
+	int relativeSelectionStart=0;
+	int selectionDocHandle, selectionID;
+	bool foundRelativeSelection=false;
+	if(this->getTextLength()>0) {
+		int textNodeStart, textNodeEnd;
+		VBufStorage_fieldNode_t* textNode=this->locateTextFieldNodeAtOffset(this->selectionStart,&textNodeStart,&textNodeEnd);
+		relativeSelectionStart=this->selectionStart-textNodeStart;
+		for(VBufStorage_fieldNode_t* tempNode=textNode->previous;tempNode!=NULL;relativeSelectionStart+=tempNode->length,tempNode=tempNode->previous);
+		selectionDocHandle=textNode->parent->identifier.docHandle;
+		selectionID=textNode->parent->identifier.ID;
+		foundRelativeSelection=true;
+	} 
+	VBufStorage_controlFieldNode_t* parent=node->parent;
+	VBufStorage_fieldNode_t* previous=node->previous;
+	if(!this->removeFieldNode(node)) {
+		DEBUG_MSG(L"Error removing node");
+		return false;
+	}
+	if(!this->mergeBuffer(parent,previous,buffer)) {
+		DEBUG_MSG(L"Error rmerging buffer");
+		return false;
+	}
+	if(foundRelativeSelection) {
+		VBufStorage_controlFieldNode_t* controlNode=this->getControlFieldNodeWithIdentifier(selectionDocHandle,selectionID);
+		if(controlNode!=NULL&&controlNode->length>0) {
+			int controlNodeStart, controlNodeEnd;
+			this->getFieldNodeOffsets(controlNode,&controlNodeStart,&controlNodeEnd);
+			this->selectionStart=max(relativeSelectionStart+controlNodeStart,controlNode->length-1);
+		}
+	}
+	return true;
+}
+ 
 bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node) {
 	DEBUG_MSG(L"Removing subtree starting at "<<node->getDebugInfo());
 	if(node->length>0) {
@@ -701,11 +737,11 @@ VBufStorage_controlFieldNode_t* VBufStorage_buffer_t::getControlFieldNodeWithIde
 }
 
 bool VBufStorage_buffer_t::getSelectionOffsets(int *startOffset, int *endOffset) const {
-	assert(this->selectionStart>=0&&this->selectionEnd>=0); //Selection can't be negative
+	assert(this->selectionStart>=0&&this->selectionLength>=0); //Selection can't be negative
 	int minStartOffset=0;
 	int maxEndOffset=(this->rootNode)?this->rootNode->length:0;
 	*startOffset=max(minStartOffset,this->selectionStart);
-	*endOffset=min(this->selectionEnd,maxEndOffset);
+	*endOffset=min(this->selectionStart+this->selectionLength,maxEndOffset);
 	DEBUG_MSG(L"Selection is "<<*startOffset<<L" and "<<*endOffset<<L", returning true");
 	return true;
 }
@@ -716,7 +752,7 @@ bool VBufStorage_buffer_t::setSelectionOffsets(int startOffset, int endOffset) {
 		return false;
 	}
 	this->selectionStart=startOffset;
-	this->selectionEnd=endOffset;
+	this->selectionLength=endOffset-startOffset;
 	DEBUG_MSG(L"Selection set to "<<startOffset<<L" and "<<endOffset<<L", returning true");
 	return true;
 }
@@ -982,6 +1018,6 @@ bool VBufStorage_buffer_t::isDescendantNode(VBufStorage_fieldNode_t* parent, VBu
  
 std::wstring VBufStorage_buffer_t::getDebugInfo() const {
 	std::wostringstream s;
-	s<<L"buffer at "<<this<<L", selectionStart is "<<selectionStart<<L", selectionEnd is "<<selectionEnd;
+	s<<L"buffer at "<<this<<L", selectionStart is "<<selectionStart<<L", selectionEnd is "<<selectionLength+selectionStart;
 	return s.str();
 }

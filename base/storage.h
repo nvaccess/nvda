@@ -363,9 +363,9 @@ class VBufStorage_buffer_t {
 	int selectionStart;
 
 /**
- * The offset where the selection ends (the offset past the last character).
+ * The length of the selection.
  */
-	int selectionEnd;
+	int selectionLength;
 
 /**
  * removes the controlFieldNode from the buffer's controlFieldNodesByIdentifier set.
@@ -441,6 +441,13 @@ class VBufStorage_buffer_t {
  * @return true if the content was inserted, false otherwise.
  */
 	bool mergeBuffer(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_buffer_t* buffer);
+
+/**
+ * Removes the given node from the buffer and then merges the content of the new buffer in the removed node's position. It also tries to keep the selection relative to the control field it was in before the replacement.
+ * @param node the node to remove.
+ * @param buffer the buffer holding the new content to merge.
+ */
+	bool replaceSubtree(VBufStorage_fieldNode_t* node, VBufStorage_buffer_t* buffer);
 
 /**
  * disassociates from this buffer, and deletes, the given field and its descendants.
