@@ -331,7 +331,9 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	}
 	IHTMLDOMAttribute* tempAttribNode=NULL;
 	VARIANT tempVar;
-	if(nodeName.compare(L"INPUT")==0) {
+	if(nodeName.compare(L"TABLE")==0) {
+		macro_addHTMLAttributeToMap(L"summary",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	} else if(nodeName.compare(L"INPUT")==0) {
 		macro_addHTMLAttributeToMap(L"type",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 		macro_addHTMLAttributeToMap(L"value",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	}
@@ -433,6 +435,10 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		tempStringStream.str(L"");
 		tempStringStream<<L"HTMLStyle::"<<tempIter->first;
 		parentNode->addAttribute(tempStringStream.str(),tempIter->second);
+	}
+	tempIter=HTMLAttribsMap.find(L"summary");
+	if(!invisible&&nodeName.compare(L"TABLE")==0&&tempIter!=HTMLAttribsMap.end()&&!tempIter->second.empty()) {
+		previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempIter->second);
 	}
 	if(invisible) {
 		DEBUG_MSG(L"Node is invisible, not rendering any content");
