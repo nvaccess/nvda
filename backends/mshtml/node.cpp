@@ -20,9 +20,11 @@ class CDispatchChangeSink : public IDispatch {
 
 	public:
 	MshtmlVBufStorage_controlFieldNode_t* storageNode;
+	bool allowDelete;
 
 	CDispatchChangeSink(MshtmlVBufStorage_controlFieldNode_t* storageNode) {
 		this->refCount=1;
+		this->allowDelete=true;
 		assert(storageNode);
 		this->storageNode=storageNode;
 	}
@@ -53,10 +55,17 @@ class CDispatchChangeSink : public IDispatch {
 	}
 
 	ULONG STDMETHODCALLTYPE IUnknown::Release() {
-		assert(this->refCount>0);
-		this->refCount--;
+		if(this->refCount>0)
+			this->refCount--;
 		if(this->refCount==0) {
-			delete this;
+			if (this->allowDelete) {
+				delete this;
+			} else {
+				#ifdef DEBUG
+				Beep(660,50);
+				#endif
+				DEBUG_MSG(L"refCount hit 0 before it should, not deleting, node info: " << this->storageNode->getDebugInfo());
+			}
 			return 0;
 		}
 		return this->refCount;
@@ -212,6 +221,9 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int d
 		CDispatchChangeSink* propChangeSink=new CDispatchChangeSink(this);
 		if((pHTMLElement2->attachEvent(L"onpropertychange",propChangeSink,&varBool)==S_OK)&&varBool) {
 			this->propChangeSink=propChangeSink;
+			// It seems that IE 6 sometimes calls Release() once too many times.
+			// We don't want propChangeSink to be deleted until we're finished with it.
+			propChangeSink->allowDelete=false;
 		} else {
 			DEBUG_MSG(L"Error attaching onPropertyChange event sink to IHTMLElement2 at "<<pHTMLElement2);
 			propChangeSink->Release();
@@ -270,6 +282,7 @@ MshtmlVBufStorage_controlFieldNode_t::~MshtmlVBufStorage_controlFieldNode_t() {
 		if(pHTMLElement2->detachEvent(L"onpropertychange",this->propChangeSink)!=S_OK) {
 			DEBUG_MSG(L"Error detaching onpropertychange event sink from IHTMLElement2");
 		}
+		static_cast<CDispatchChangeSink*>(this->propChangeSink)->allowDelete=true;
 		this->propChangeSink->Release();
 	}
 	if(this->loadSink) {
