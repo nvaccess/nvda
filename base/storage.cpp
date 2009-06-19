@@ -517,6 +517,8 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 }
 
 VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_controlFieldNode_t* controlFieldNode) {
+	assert(!parent||this->isNodeInBuffer(parent));
+	assert(!previous||this->isNodeInBuffer(previous));
 	DEBUG_MSG(L"Add controlFieldNode using parent at "<<parent<<L", previous at "<<previous<<L", node at "<<controlFieldNode);
 	if(previous!=NULL&&previous->parent!=parent) {
 		DEBUG_MSG(L"previous is not a child of parent, returning NULL");
@@ -548,6 +550,8 @@ VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage
 }
 
 VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_textFieldNode_t* textFieldNode) {
+	assert(!parent||this->isNodeInBuffer(parent));
+	assert(!previous||this->isNodeInBuffer(previous));
 	DEBUG_MSG(L"Add textFieldNode using parent at "<<parent<<L", previous at "<<previous<<L", node at "<<textFieldNode);
 	if(previous!=NULL&&previous->parent!=parent) {
 		DEBUG_MSG(L"previous is not a child of parent, returning NULL");
@@ -566,6 +570,8 @@ VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage
 bool VBufStorage_buffer_t::mergeBuffer(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_buffer_t* buffer) {
 	assert(buffer); //Buffer can't be NULL
 	assert(buffer!=this); //cannot merge a buffer into itself
+	assert(!parent||this->isNodeInBuffer(parent));
+	assert(!previous||this->isNodeInBuffer(previous));
 	DEBUG_MSG(L"Merging buffer at "<<buffer<<L" in to this buffer with parent at "<<parent<<L" and previous at "<<previous);
 	if(buffer->rootNode) {
 		DEBUG_MSG(L"Inserting nodes from buffer");
@@ -582,6 +588,7 @@ bool VBufStorage_buffer_t::mergeBuffer(VBufStorage_controlFieldNode_t* parent, V
 
 bool VBufStorage_buffer_t::replaceSubtree(VBufStorage_fieldNode_t* node, VBufStorage_buffer_t* buffer) {
 	assert(node);
+	assert(this->isNodeInBuffer(node));
 	assert(buffer);
 	int relativeSelectionStart=0;
 	int selectionDocHandle, selectionID;
@@ -617,6 +624,7 @@ bool VBufStorage_buffer_t::replaceSubtree(VBufStorage_fieldNode_t* node, VBufSto
 }
  
 bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node) {
+	assert(this->isNodeInBuffer(node));
 	DEBUG_MSG(L"Removing subtree starting at "<<node->getDebugInfo());
 	if(node->length>0) {
 		DEBUG_MSG(L"collapsing length of ancestors by "<<node->length);
@@ -661,6 +669,7 @@ bool VBufStorage_buffer_t::clearBuffer() {
 }
 
 bool VBufStorage_buffer_t::getFieldNodeOffsets(VBufStorage_fieldNode_t* node, int *startOffset, int *endOffset) {
+	assert(this->isNodeInBuffer(node));
 	*startOffset=node->calculateOffsetInTree();
 	*endOffset=(*startOffset)+node->length;
 	DEBUG_MSG(L"node has offsets "<<*startOffset<<L" and "<<*endOffset<<L", returning true");
@@ -668,6 +677,7 @@ bool VBufStorage_buffer_t::getFieldNodeOffsets(VBufStorage_fieldNode_t* node, in
 }
 
 bool VBufStorage_buffer_t::isFieldNodeAtOffset(VBufStorage_fieldNode_t* node, int offset) {
+	assert(this->isNodeInBuffer(node));
 	int startOffset, endOffset;
 	if(!getFieldNodeOffsets(node,&startOffset,&endOffset)) {
 		DEBUG_MSG(L"Could not get offsets for node at "<<node<<L", returning false");
@@ -1015,7 +1025,20 @@ bool VBufStorage_buffer_t::isDescendantNode(VBufStorage_fieldNode_t* parent, VBu
 	DEBUG_MSG(L"Not a descendant");
 	return false;
 }
- 
+
+bool VBufStorage_buffer_t::isNodeInBuffer(VBufStorage_fieldNode_t* node) {
+	assert(node);
+	DEBUG_MSG(L"Walking parents to top from node "<<node);
+	for(;node->parent!=NULL;node=node->parent);
+	DEBUG_MSG(L"Comparing node "<<node<<L" with buffer's root node "<<node);
+	if(node==this->rootNode) {
+		DEBUG_MSG(L"Node is in buffer");
+		return true;
+	}
+	DEBUG_MSG(L"Node is not in buffer");
+	return false;
+}
+
 std::wstring VBufStorage_buffer_t::getDebugInfo() const {
 	std::wostringstream s;
 	s<<L"buffer at "<<this<<L", selectionStart is "<<selectionStart<<L", selectionEnd is "<<selectionLength+selectionStart;
