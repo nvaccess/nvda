@@ -62,6 +62,9 @@ def _watcher():
 
 def _shouldRecoverAfterMinTimeout():
 	info=winUser.getGUIThreadInfo(0)
+	if not winUser.isDescendantWindow(info.hwndActive, api.getFocusObject().windowHandle):
+		# The foreground window has changed.
+		return True
 	newHwnd=info.hwndFocus if info.hwndFocus else info.hwndActive
 	newThreadID=winUser.getWindowThreadProcessID(newHwnd)[1]
 	return newThreadID!=api.getFocusObject().windowThreadID
