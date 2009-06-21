@@ -1,14 +1,15 @@
 ;Chinese Traditional
 LangString msg_WelcomePageTitle ${LANG_TRADCHINESE} "安裝 ${PRODUCT}, ${VERSION} 版本"
 LangString msg_WelcomePageText ${LANG_TRADCHINESE} "歡迎安裝 ${PRODUCT} (Non-Visual Desktop Access), 一套免費且開放源代碼的微軟視窗螢幕報讀程式.$\n\
-版權 2006 - 2008 NVDA 的貢獻者.$\n\
+版權 2006 - 2009 NVDA 的貢獻者.$\n\
 此精靈會協助你安裝 ${PRODUCT}; 建議你先把所有程式關閉才繼續安裝.$\n"
 LangString msg_NVDAWebSite ${LANG_TRADCHINESE} "造訪 NVDA 官方網站"
-LangString msg_NVDARunning ${LANG_TRADCHINESE} "另一個 NVDA 程式正在運行中, 現在安裝程式必須把它關閉才可繼續."
-LangString msg_pagePrevInstallLabel ${LANG_TRADCHINESE} "發現系統已經安裝前一版本的 NVDA, 強烈建議先把它移除才繼續安裝程式."
-LangString msg_pagePrevInstallUninstallCheckBox ${LANG_TRADCHINESE} "先移除程式(建議)"
+LangString msg_NVDARunning ${LANG_TRADCHINESE} "另一個 NVDA 程式正在運行當中, 現在安裝程式必須把它關閉才可繼續."
+LangString msg_pagePrevInstallLabel ${LANG_TRADCHINESE} "發現系統已經安裝了舊版本的 NVDA, 強烈建議先把它移除才繼續安裝新版本的程式."
+LangString msg_pagePrevInstallUninstallCheckBox ${LANG_TRADCHINESE} "先移除舊版本程式(建議)"
 LangString shortcut_uninstall $(LANG_TRADCHINESE) "解除安裝"
 LangString shortcut_website $(LANG_TRADCHINESE) "程式網站"
+LangString shortcut_exploreUserSettingsDir $(LANG_TRADCHINESE) "開啟用戶設定檔資料夾"
 LangString shortcut_readme $(LANG_TRADCHINESE) "讀我檔案"
 LangString shortcut_userguide $(LANG_TRADCHINESE) "用戶指南"
 LangString path_userguide $(LANG_TRADCHINESE) "zh\user guide.html"
@@ -16,7 +17,7 @@ LangString path_readmefile $(LANG_TRADCHINESE) "zh\readme.txt"
 LangString UNLOG_HEADER ${LANG_TRADCHINESE} "=========== 解除安裝記錄檔 \
                                          請不要更改此一檔案 ==========="
 LangString UNLOG_DAT_NOT_FOUND ${LANG_TRADCHINESE} "${UNINST_DAT} 遺失了, \
-                                                未能解除安裝程式."
+                                                未能把程式解除安裝."
 LangString UNLOG_DEL_FILE ${LANG_TRADCHINESE} '刪除檔案 "$R9"?'
 LangString UNLOG_DEL_DIR ${LANG_TRADCHINESE} '刪除資料夾 "$R9"?'
 LangString UNLOG_EMPTY_DIR ${LANG_TRADCHINESE} "發現程式已經安裝在 $0.$\n\
@@ -25,4 +26,4 @@ LangString UNLOG_EMPTY_DIR ${LANG_TRADCHINESE} "發現程式已經安裝在 $0.$\n\
                                             然後重裝一次."
 LangString UNLOG_ERROR_LOG ${LANG_TRADCHINESE} "記錄檔案 ${UNINSTALL_LOG} 錯誤."
 LangString UNLOG_ERROR_CREATE ${LANG_TRADCHINESE} "建立記錄檔 ${UNINSTALL_LOG} 時發生錯誤."
-LangString section_service ${LANG_TRADCHINESE} "nvda service (Windows logon / Security dialog support)"
+LangString section_service ${LANG_TRADCHINESE} "NVDA 服務 (Windows 登入 / 安全對話方塊支援)"
