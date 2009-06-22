@@ -11,6 +11,7 @@
 #include <cassert>
 #include <string>
 #include <map>
+#include <list>
 #include <set>
 #include <sstream>
 #include "debug.h"
@@ -590,34 +591,50 @@ bool VBufStorage_buffer_t::replaceSubtree(VBufStorage_fieldNode_t* node, VBufSto
 	assert(node);
 	assert(this->isNodeInBuffer(node));
 	assert(buffer);
-	int relativeSelectionStart=0;
-	int selectionDocHandle, selectionID;
-	bool foundRelativeSelection=false;
+	VBufStorage_controlFieldNode_t* parent=NULL;
+	VBufStorage_fieldNode_t* previous=NULL;
+	//Using the current selection start, record a list of ancestor fields by their identifier, 
+	//and a relative offset of the selection start to those fields, so that the selection can be corrected after the replacement.
+	list<pair<VBufStorage_controlFieldNodeIdentifier_t,int>> identifierList;
 	if(this->getTextLength()>0) {
-		int textNodeStart, textNodeEnd;
-		VBufStorage_fieldNode_t* textNode=this->locateTextFieldNodeAtOffset(this->selectionStart,&textNodeStart,&textNodeEnd);
-		relativeSelectionStart=this->selectionStart-textNodeStart;
-		for(VBufStorage_fieldNode_t* tempNode=textNode->previous;tempNode!=NULL;relativeSelectionStart+=tempNode->length,tempNode=tempNode->previous);
-		selectionDocHandle=textNode->parent->identifier.docHandle;
-		selectionID=textNode->parent->identifier.ID;
-		foundRelativeSelection=true;
+		int controlDocHandle, controlID, controlNodeStart, controlNodeEnd;
+		parent=this->locateControlFieldNodeAtOffset(this->selectionStart,&controlNodeStart,&controlNodeEnd,&controlDocHandle,&controlID);
+		int relativeSelectionStart=this->selectionStart-controlNodeStart;
+		for(;parent!=NULL;parent=parent->parent) {
+			identifierList.push_front(pair<VBufStorage_controlFieldNodeIdentifier_t,int>(parent->identifier,relativeSelectionStart));
+			for(previous=parent->previous;previous!=NULL;relativeSelectionStart+=previous->length,previous=previous->previous);
+		}
 	} 
-	VBufStorage_controlFieldNode_t* parent=node->parent;
-	VBufStorage_fieldNode_t* previous=node->previous;
+	//Remove the given node and replace it with the content of the given buffer
+	parent=node->parent;
+	previous=node->previous;
 	if(!this->removeFieldNode(node)) {
 		DEBUG_MSG(L"Error removing node");
 		return false;
 	}
 	if(!this->mergeBuffer(parent,previous,buffer)) {
-		DEBUG_MSG(L"Error rmerging buffer");
+		DEBUG_MSG(L"Error merging buffer");
 		return false;
 	}
-	if(foundRelativeSelection) {
-		VBufStorage_controlFieldNode_t* controlNode=this->getControlFieldNodeWithIdentifier(selectionDocHandle,selectionID);
-		if(controlNode!=NULL&&controlNode->length>0) {
-			int controlNodeStart, controlNodeEnd;
-			this->getFieldNodeOffsets(controlNode,&controlNodeStart,&controlNodeEnd);
-			this->selectionStart=max(relativeSelectionStart+controlNodeStart,controlNode->length-1);
+	//Find the deepest field the selection started in that still exists, 
+	//and correct the selection so its still positioned accurately relative to that field. 
+	if(!identifierList.empty()) {
+		VBufStorage_controlFieldNode_t* lastAncestorNode=NULL;
+		int lastRelativeSelectionStart=0;
+		for(list<pair<VBufStorage_controlFieldNodeIdentifier_t,int> >::iterator i=identifierList.begin();i!=identifierList.end();i++) {
+			VBufStorage_controlFieldNode_t* currentAncestorNode=this->getControlFieldNodeWithIdentifier(i->first.docHandle,i->first.ID);
+			if(currentAncestorNode==NULL) break;
+			if(currentAncestorNode->parent!=lastAncestorNode) break;
+			lastAncestorNode=currentAncestorNode;
+			lastRelativeSelectionStart=i->second;
+		}
+		if(lastAncestorNode!=NULL) {
+			int lastAncestorStartOffset, lastAncestorEndOffset;
+			if(!this->getFieldNodeOffsets(lastAncestorNode,&lastAncestorStartOffset,&lastAncestorEndOffset)) {
+				DEBUG_MSG(L"Error getting offsets for last ancestor node");
+				return false;
+			}
+			this->selectionStart=max(lastAncestorStartOffset+lastRelativeSelectionStart,max(lastAncestorNode->length-1,0));
 		}
 	}
 	return true;
