@@ -399,7 +399,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	}
 	DEBUG_MSG(L"IA2TextLength is "<<IA2TextLength);
 	int IA2TextIsUnneededSpace=1;
-	if(IA2TextLength>0&&(role!=ROLE_SYSTEM_TEXT||(states&STATE_SYSTEM_READONLY))&&!(IA2States&IA2_STATE_EDITABLE)&&!(states&STATE_SYSTEM_LINKED)&&(!defaction||wcscmp(defaction,L"jump")==0)) {
+	if(IA2TextLength>0&&(role!=ROLE_SYSTEM_TEXT||(states&STATE_SYSTEM_READONLY))&&!(IA2States&IA2_STATE_EDITABLE)) {
 		for(int i=0;i<IA2TextLength;i++) {
 			if(IA2Text[i]==L'\n'||IA2Text[i]==L'\xfffc'||!iswspace(IA2Text[i])) {
 				DEBUG_MSG(L"IA2Text is not whitespace");
