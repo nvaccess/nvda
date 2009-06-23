@@ -634,7 +634,7 @@ bool VBufStorage_buffer_t::replaceSubtree(VBufStorage_fieldNode_t* node, VBufSto
 				DEBUG_MSG(L"Error getting offsets for last ancestor node");
 				return false;
 			}
-			this->selectionStart=max(lastAncestorStartOffset+lastRelativeSelectionStart,max(lastAncestorNode->length-1,0));
+			this->selectionStart=lastAncestorStartOffset+min(lastRelativeSelectionStart,max(lastAncestorNode->length-1,0));
 		}
 	}
 	return true;
