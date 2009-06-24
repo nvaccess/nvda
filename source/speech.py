@@ -377,6 +377,9 @@ def speakTypedCharacters(ch):
 		realChar=ch
 	if ch.isalnum():
 		curWordChars.append(realChar)
+	elif ch=="\b":
+		# Backspace, so remove the last character from our buffer.
+		del curWordChars[-1:]
 	elif len(curWordChars)>0:
 		typedWord="".join(curWordChars)
 		curWordChars=[]

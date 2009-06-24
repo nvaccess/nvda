@@ -29,6 +29,7 @@ Changes since 0.6p3:
 * new: NVDA can read secure Windows screens such as the Windows logon, control+alt+delete and UAC screens in Windows XP and above. Reading of the Windows logon screen can be configured from the General Settings dialog. (#97)
 * fix: On Windows Vista, the NVDA installer now starts NVDA with normal user privileges when requested to run NVDA on the finish screen.
 * new: Added a driver for the Optelec ALVA BC6 series braille displays.
+* fix: Backspace is now handled correctly when speaking typed words. (#306)
 
 Changes since 0.6 P2:
 * new: As Microsoft Excel's formula bar is inaccessible to NVDA, provide an NVDA specific dialog box for editing when the user presses f2 on a cell. 
