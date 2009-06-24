@@ -667,7 +667,7 @@ HANDLE handles[2];
 void MshtmlVBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
 	this->VBufBackend_t::invalidateSubtree(node);
 	if(mainThreadTimerID==0) {
-		mainThreadTimerID=SetTimer(0,0,100,mainThreadTimerProc);
+		mainThreadTimerID=SetTimer(0,0,250,mainThreadTimerProc);
 		DEBUG_MSG(L"Set timer for update with ID of "<<mainThreadTimerID);
 	}
 }

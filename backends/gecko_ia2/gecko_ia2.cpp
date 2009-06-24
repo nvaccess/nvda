@@ -802,7 +802,7 @@ void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	DEBUG_MSG(L"Invalidating subtree with node at "<<node);
 	backend->invalidateSubtree(node);
 	if(mainThreadTimerID==0) {
-		mainThreadTimerID=SetTimer(0,0,100,mainThreadTimerProc);
+		mainThreadTimerID=SetTimer(0,0,250,mainThreadTimerProc);
 		DEBUG_MSG(L"Set timer for update with ID of "<<mainThreadTimerID);
 	}
 }
