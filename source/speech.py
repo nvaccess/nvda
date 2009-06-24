@@ -290,8 +290,11 @@ This function will not speak if L{speechMode} is false.
 	if isPaused:
 		cancelSpeech()
 	beenCanceled=False
-	text=processText(text)
-	if text and not text.isspace():
+	if text is None:
+		text=""
+	else:
+		text=processText(text)
+	if not text or not text.isspace():
 		getSynth().speakText(text,index=index)
 
 def speakSelectionMessage(message,text):
@@ -604,6 +607,8 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 	# Only speak if there is speakable text. Reporting of blank text is handled above.
 	if text and (not text.isspace() or "\t" in text):
 		speakText(text,index=index)
+	else: #We still need to alert the synth of the given index
+		speakText(None,index=index)
 
 def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	global oldTreeLevel, oldTableID, oldRowNumber, oldColumnNumber
