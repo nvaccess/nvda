@@ -55,6 +55,8 @@ TABLES = (
 	("No-No-g3.ctb", _("Norwegian grade 3")),
 	("Pl-Pl-g1.utb", _("Polish grade 1")),
 	("Pt-Pt-g1.utb", _("Portuguese grade 1")),
+	("ru.ctb", _("Russian 8 dot computer braille")),
+	("ru-ru-g1.utb", _("Russian grade 1")),
 	("Se-Se-g1.utb", _("Swedish grade 1")),
 	("sk-sk-g1.utb", _("Slovak")),
 	("UEBC-g1.utb", _("Unified English Braille Code grade 1")),
