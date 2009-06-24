@@ -29,6 +29,11 @@ import logHandler
 import globalVars
 from logHandler import log
 
+def restart():
+	"""Restarts NVDA by starting a new copy with -r."""
+	import subprocess
+	subprocess.Popen([sys.executable]+sys.argv+['-r'])
+
 def resetConfiguration():
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
 	"""

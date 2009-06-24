@@ -336,11 +336,6 @@ def quit():
 	if not isExitDialog:
 		wx.PostEvent(mainFrame, ExternalCommandEvent(wx.ID_EXIT))
 
-def restart():
-	globalVars.restart=True
-	wx.GetApp().ExitMainLoop()
-#	wx.PostEvent(mainFrame, ExternalCommandEvent(wx.ID_EXIT))
-
 def execute(func, callback=None, *args, **kwargs):
 	"""Execute a function in the GUI thread.
 	This should be used when scripts need to interact with the user via the GUI.

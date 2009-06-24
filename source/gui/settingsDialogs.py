@@ -21,6 +21,7 @@ import appModuleHandler
 import scriptUI
 import queueHandler
 import braille
+import core
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -167,7 +168,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		if self.oldLanguage!=newLanguage:
 			if wx.MessageDialog(self,_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING).ShowModal()==wx.ID_OK:
 				config.save()
-				queueHandler.queueFunction(queueHandler.eventQueue,gui.restart)
+				queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 		super(GeneralSettingsDialog, self).onOk(evt)
 
 class SynthesizerDialog(SettingsDialog):
