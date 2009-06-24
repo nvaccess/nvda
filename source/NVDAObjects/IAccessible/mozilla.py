@@ -11,6 +11,8 @@ import textInfos
 
 class Mozilla(IAccessible):
 
+	IAccessibleTableUsesTableCellIndexAttrib=True
+
 	def _get_beTransparentToMouse(self):
 		if not hasattr(self,'IAccessibleTextObject') and self.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in self.states:
 			return True

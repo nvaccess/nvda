@@ -245,6 +245,7 @@ the NVDAObject for IAccessible
 """
 
 	IAccessibleFocusEventNeedsFocusedState=True
+	IAccessibleTableUsesTableCellIndexAttrib=False #: Should the table-cell-index IAccessible2 object attribute be used rather than indexInParent?
 
 	@classmethod
 	def findBestClass(cls,clsList,kwargs):
@@ -767,8 +768,14 @@ the NVDAObject for IAccessible
 	def _get_rowNumber(self):
 		table=self.table
 		if table:
-			attribsMap=IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
-			index=attribsMap.get('table-cell-index',self.IAccessibleObject.indexInParent)
+			if self.IAccessibleTableUsesTableCellIndexAttrib:
+				attribsMap=IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
+				try:
+					index=attribsMap['table-cell-index']
+				except KeyError:
+					raise NotImplementedError
+			else:
+				index=self.IAccessibleObject.indexInParent
 			index=int(index)
 			try:
 				return table.IAccessibleTableObject.rowIndex(index)+1
@@ -779,8 +786,14 @@ the NVDAObject for IAccessible
 	def _get_columnNumber(self):
 		table=self.table
 		if table:
-			attribsMap=IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
-			index=attribsMap.get('table-cell-index',self.IAccessibleObject.indexInParent)
+			if self.IAccessibleTableUsesTableCellIndexAttrib:
+				attribsMap=IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
+				try:
+					index=attribsMap['table-cell-index']
+				except KeyError:
+					raise NotImplementedError
+			else:
+				index=self.IAccessibleObject.indexInParent
 			index=int(index)
 			try:
 				return table.IAccessibleTableObject.columnIndex(index)+1
@@ -810,14 +823,14 @@ the NVDAObject for IAccessible
 		table=getattr(self,'_table',None)
 		if table:
 			return table
-		try:
-			attribs=self.IAccessibleObject.attributes
-		except COMError:
-			attribs=None
-		if attribs and 'table-cell-index:' in attribs:
-			checkAncestors=True
-		else:
-			checkAncestors=False
+		checkAncestors=False
+		if self.IAccessibleTableUsesTableCellIndexAttrib:
+			try:
+				attribs=self.IAccessibleObject.attributes
+			except COMError:
+				attribs=None
+			if attribs and 'table-cell-index:' in attribs:
+				checkAncestors=True
 		obj=self.parent
 		while checkAncestors and obj and not hasattr(obj,'IAccessibleTableObject'):
 			parent=obj.parent=obj.parent
