@@ -353,11 +353,11 @@ doPrevUninstall:
 ReadRegStr $0 ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString"
 ${GetParent} $0 $1
 GetTempFileName $2
-CopyFiles "$0" "$2"
+CopyFiles /SILENT "$0" "$2"
 HideWindow
 ExecWait "$2 /nonInteractive _?=$1"
-delete "$2"
 bringToFront
+delete "$2"
 end:
 functionEnd
 
