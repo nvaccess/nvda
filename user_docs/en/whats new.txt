@@ -30,6 +30,7 @@ Changes since 0.6p3:
 * fix: On Windows Vista, the NVDA installer now starts NVDA with normal user privileges when requested to run NVDA on the finish screen.
 * new: Added a driver for the Optelec ALVA BC6 series braille displays.
 * fix: Backspace is now handled correctly when speaking typed words. (#306)
+* fix: Don't incorrectly report "Start menu" for certain context menus in Windows Explorer/the Windows shell. (#257)
 
 Changes since 0.6 P2:
 * new: As Microsoft Excel's formula bar is inaccessible to NVDA, provide an NVDA specific dialog box for editing when the user presses f2 on a cell. 
