@@ -328,6 +328,12 @@ class MSHTML(IAccessible):
 				isMultiline=False
 			if self.TextInfo==MSHTMLTextInfo and isMultiline: 
 				states.add(controlTypes.STATE_MULTILINE)
+			try:
+				required=e.getAttribute('aria-required')
+			except COMError:
+				required=None
+			if required and required.lower()=='true':
+				states.add(controlTypes.STATE_REQUIRED)
 		return states
 
 	def _get_isContentEditable(self):
