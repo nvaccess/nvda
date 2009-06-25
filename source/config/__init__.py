@@ -9,10 +9,7 @@ from cStringIO import StringIO
 from configobj import ConfigObj
 from validate import Validator
 from logHandler import log
-import ctypes
-
-CSIDL_APPDATA=26
-MAX_PATH=256
+import shlobj
 
 val = Validator()
 
@@ -202,10 +199,19 @@ def isInstalledCopy():
 
 def getUserDefaultConfigPath():
 	if isInstalledCopy():
-		buf=ctypes.create_unicode_buffer(MAX_PATH)
-		if ctypes.windll.shell32.SHGetSpecialFolderPathW(0,buf,CSIDL_APPDATA,0):
-			return u'%s\\nvda'%buf.value
+		try:
+			return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_APPDATA), "nvda")
+		except WindowsError:
+			pass
 	return u'.\\'
+
+def getSystemConfigPath():
+	if isInstalledCopy():
+		try:
+			return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_COMMON_APPDATA), "nvda")
+		except WindowsError:
+			pass
+	return None
 
 RUN_REGKEY = ur"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
