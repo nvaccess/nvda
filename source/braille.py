@@ -25,13 +25,13 @@ TABLES_DIR = r"louis\tables"
 #: The table filenames and descriptions.
 TABLES = (
 	("ar-ar-g1.utb", _("Arabic grade 1")),
+	("bg.ctb", _("Bulgarian 8 dot computer braille")),
 	("cy-cy-g1.utb", _("Welsh grade 1")),
 	("cy-cy-g2.ctb", _("Welsh grade 2")),
 	("cz-cz-g1.utb", _("Czech grade 1")),
 	("da-dk-g1.utb", _("Danish grade 1")),
 	("de-de-g0.utb", _("German grade 0")),
 	("de-de-g1.ctb", _("German grade 1")),
-	("de-de-g2.ctb", _("German grade 2")),
 	("en-gb-g1.utb", _("English (U.K.) grade 1")),
 	("en-GB-g2.ctb", _("English (U.K.) grade 2")),
 	("en-us-comp6.ctb", _("English (U.S.) 6 dot computer braille")),
@@ -45,6 +45,7 @@ TABLES = (
 	("fr-bfu-comp8.utb", _("French (unified) 8 dot computer braille")),
 	("fr-bfu-g2.ctb", _("French (unified) Grade 2")),	("gr-gr-g1.utb", _("Greek (Greece) grade 1")),
 	("hi-in-g1.utb", _("Hindi grade 1")),
+	("hr.ctb", _("Croatian 8 dot computer braille")),
 	("it-it-g1.utb2", _("Italian grade 1")),
 	("Lv-Lv-g1.utb", _("Latvian grade 1")),
 	("nl-be-g1.utb", _("Dutch (Belgium) grade 1")),
