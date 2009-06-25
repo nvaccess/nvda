@@ -110,6 +110,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	def onEndSession(evt):
 		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
 		config.saveOnExit()
+		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal:
 			nvwave.playWaveFile("waves\\exit.wav",async=False)
 		log.info("Windows session ending")
