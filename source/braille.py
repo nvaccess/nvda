@@ -64,16 +64,17 @@ TABLES = (
 
 roleLabels = {
 	controlTypes.ROLE_EDITABLETEXT: _("edt"),
-	controlTypes.ROLE_LISTITEM: None,
+	controlTypes.ROLE_LIST: _("lst"),
 	controlTypes.ROLE_MENUBAR: _("mnubar"),
 	controlTypes.ROLE_POPUPMENU: _("mnu"),
-	controlTypes.ROLE_MENUITEM: None,
 	controlTypes.ROLE_BUTTON: _("btn"),
 	controlTypes.ROLE_CHECKBOX: _("chk"),
 	controlTypes.ROLE_RADIOBUTTON: _("rbtn"),
 	controlTypes.ROLE_COMBOBOX: _("cbo"),
 	controlTypes.ROLE_LINK: _("lnk"),
 	controlTypes.ROLE_DIALOG: _("dlg"),
+	controlTypes.ROLE_TREEVIEW: _("tv"),
+	controlTypes.ROLE_TABLE: _("tb"),
 }
 
 positiveStateLabels = {
@@ -198,7 +199,10 @@ def getBrailleTextForProperties(**propertyValues):
 		textList.append(name)
 	role = propertyValues.get("role")
 	if role is not None:
-		roleText = roleLabels.get(role, controlTypes.speechRoleLabels[role])
+		if role in speech.silentRolesOnFocus:
+			roleText = None
+		else:
+			roleText = roleLabels.get(role, controlTypes.speechRoleLabels[role])
 	else:
 		role = propertyValues.get("_role")
 		roleText = None
