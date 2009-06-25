@@ -301,6 +301,16 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 		}
 	}
 	parentNode->setIsBlock(isBlockElement);
+	DEBUG_MSG(L"getting accName");
+	BSTR name=NULL;
+	if((res=pacc->get_accName(varChild,&name))!=S_OK) {
+		DEBUG_MSG(L"IAccessible::get_accName returned "<<res);
+		name=NULL;
+	}
+	if(name!=NULL&&SysStringLen(name)==0) {
+		SysFreeString(name);
+		name=NULL;
+	}
 	// Handle table cell information.
 	map<wstring,wstring>::const_iterator IA2AttribsMapIt;
 	// If paccTable is not NULL, it is the table interface for the table above this object.
@@ -361,6 +371,9 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 				s << count;
 				parentNode->addAttribute(L"table-columncount", s.str());
 			}
+			// Add the table summary if one is present and the table is visible.
+			if (name && width > 0 && height > 0 && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
+				previousNode = tempNode;
 		}
 	}
 	IAccessibleText* paccText=NULL;
@@ -412,16 +425,6 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 		}
 	} else {
 		IA2TextIsUnneededSpace=0;
-	}
-	DEBUG_MSG(L"getting accName");
-	BSTR name=NULL;
-	if((res=pacc->get_accName(varChild,&name))!=S_OK) {
-		DEBUG_MSG(L"IAccessible::get_accName returned "<<res);
-		name=NULL;
-	}
-	if(name!=NULL&&SysStringLen(name)==0) {
-		SysFreeString(name);
-		name=NULL;
 	}
 	DEBUG_MSG(L"getting accValue");
 	BSTR value=NULL;
