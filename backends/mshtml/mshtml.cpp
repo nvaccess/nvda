@@ -343,7 +343,7 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	pHTMLAttributeCollection2->Release();
 }
 
-VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle) {
+VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, int tableID, long rowIndex) {
 	//Handle text nodes
 	{ 
 		BSTR text=getTextFromHTMLDOMNode(pHTMLDOMNode);
@@ -436,9 +436,78 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		tempStringStream<<L"HTMLStyle::"<<tempIter->first;
 		parentNode->addAttribute(tempStringStream.str(),tempIter->second);
 	}
-	tempIter=HTMLAttribsMap.find(L"summary");
-	if(!invisible&&nodeName.compare(L"TABLE")==0&&tempIter!=HTMLAttribsMap.end()&&!tempIter->second.empty()) {
-		previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempIter->second);
+	//Handle table summaries and needed table attribs
+	if(!invisible&&nodeName.compare(L"TABLE")==0) {
+		//Find summary attribute and add it as a text node.
+		tempIter=HTMLAttribsMap.find(L"summary");
+		if(tempIter!=HTMLAttribsMap.end()&&!tempIter->second.empty()) {
+			previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempIter->second);
+		}
+		//Collect tableID, and row and column counts
+		IHTMLTable* pHTMLTable=NULL;
+		pHTMLDOMNode->QueryInterface(IID_IHTMLTable,(void**)&pHTMLTable);
+		if(pHTMLTable) {
+			tableID=ID;
+			tempStringStream.str(L"");
+			tempStringStream<<ID;
+			parentNode->addAttribute(L"table-id",tempStringStream.str());
+			long colCount=0;
+			pHTMLTable->get_cols(&colCount);
+			if(colCount>0) {
+				tempStringStream.str(L"");
+				tempStringStream<<colCount;
+				parentNode->addAttribute(L"table-columncount",tempStringStream.str());
+			}
+			IHTMLElementCollection* pHTMLElementCollection=NULL;
+			pHTMLTable->get_rows(&pHTMLElementCollection);
+			if(pHTMLElementCollection) {
+				long rowCount=0;
+				pHTMLElementCollection->get_length(&rowCount);
+				if(rowCount>0) {
+					tempStringStream.str(L"");
+					tempStringStream<<rowCount;
+					parentNode->addAttribute(L"table-rowcount",tempStringStream.str());
+				}
+				pHTMLElementCollection->Release();
+			}
+			pHTMLTable->Release();
+		}
+	}
+	//Collect row information
+	if(tableID!=0&&!invisible&&nodeName.compare(L"TR")==0) {
+		IHTMLTableRow* pHTMLTableRow=NULL;
+		pHTMLDOMNode->QueryInterface(IID_IHTMLTableRow,(void**)&pHTMLTableRow);
+		if(pHTMLTableRow) {
+			pHTMLTableRow->get_rowIndex(&rowIndex);
+			rowIndex++;
+			pHTMLTableRow->Release();
+		}
+	}
+	//Collect table cell information
+	if(tableID!=0&&!invisible&&(nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0)) {
+		tempStringStream.str(L"");
+		tempStringStream<<tableID;
+		parentNode->addAttribute(L"table-id",tempStringStream.str());
+		tableID=0;
+		if(rowIndex>0) {
+			tempStringStream.str(L"");
+			tempStringStream<<rowIndex;
+			parentNode->addAttribute(L"table-rownumber",tempStringStream.str());
+			rowIndex=0;
+		}
+		IHTMLTableCell* pHTMLTableCell=NULL;
+		pHTMLDOMNode->QueryInterface(IID_IHTMLTableCell,(void**)&pHTMLTableCell);
+		if(pHTMLTableCell) {
+			long columnIndex=0;
+			pHTMLTableCell->get_cellIndex(&columnIndex);
+			columnIndex++;
+			pHTMLTableCell->Release();
+			if(columnIndex>0) {
+				tempStringStream.str(L"");
+				tempStringStream<<columnIndex;
+				parentNode->addAttribute(L"table-columnnumber",tempStringStream.str());
+			}
+		}
 	}
 	if(invisible) {
 		DEBUG_MSG(L"Node is invisible, not rendering any content");
@@ -492,7 +561,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 					IHTMLDOMNode* selectedPHTMLDOMNode=NULL;
 					pDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&selectedPHTMLDOMNode);
 					if(selectedPHTMLDOMNode) {
-						previousNode=this->fillVBuf(buffer,parentNode,previousNode,selectedPHTMLDOMNode,docHandle);
+						previousNode=this->fillVBuf(buffer,parentNode,previousNode,selectedPHTMLDOMNode,docHandle,tableID,rowIndex);
 						selectedPHTMLDOMNode->Release();
 						gotSelection=(previousNode&&(previousNode->getLength()>0));
 					}
@@ -512,7 +581,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		if(pacc) {
 			IHTMLDOMNode* childPHTMLDOMNode=getRootDOMNodeFromIAccessibleFrame(pacc);
 			if(childPHTMLDOMNode) {
-				previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle);
+				previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableID,rowIndex);
 				childPHTMLDOMNode->Release();
 			}
 		}
@@ -536,7 +605,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 					}
 					IHTMLDOMNode* childPHTMLDOMNode=NULL;
 					if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
-						VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle);
+						VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableID,rowIndex);
 						if(tempNode) {
 							previousNode=tempNode;
 						}
@@ -619,7 +688,7 @@ void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, in
 		return;
 	}
 	pHTMLElement->Release();
-	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle);
+	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,0,0);
 	pHTMLDOMNode->Release();
 }
 
