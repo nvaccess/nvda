@@ -17,6 +17,7 @@ import speech
 import queueHandler
 import textInfos
 from NVDAObjects import NVDAObjectTextInfo
+import api
 
 consoleObject=None #:The console window that is currently in the foreground.
 consoleWinEventHookHandles=[] #:a list of currently registered console win events.
@@ -242,7 +243,6 @@ class WinConsoleTextInfo(NVDAObjectTextInfo):
 			start=end=self._getCaretOffset()
 		return start,end
 
-
 	def _getTextRange(self,start,end):
 		startX,startY=self._consoleCoordFromOffset(start)
 		return wincon.ReadConsoleOutputCharacter(consoleOutputHandle,end-start,startX,startY)
@@ -263,3 +263,7 @@ class WinConsoleTextInfo(NVDAObjectTextInfo):
 	def _getStoryLength(self):
 		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 		return consoleScreenBufferInfo.dwSize.x*((consoleScreenBufferInfo.srWindow.Bottom+1)-consoleScreenBufferInfo.srWindow.Top)
+
+	def copyToClipboard(self):
+		blocks = (block.rstrip() for block in self.getTextInChunks(textInfos.UNIT_LINE))
+		return api.copyToClip("\r\n".join(blocks))
