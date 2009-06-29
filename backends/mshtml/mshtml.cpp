@@ -51,6 +51,38 @@ void CALLBACK mainThreadTimerProc(HWND hwnd, UINT msg, UINT_PTR timerID, DWORD t
 	DEBUG_MSG(L"All updated");
 }
 
+VBufStorage_controlFieldNode_t* MshtmlVBufBackend_t::getDeepestControlFieldNodeForHTMLElement(IHTMLElement* pHTMLElement) {
+	bool elementNeedsRelease=false;
+	while(pHTMLElement) {
+		IHTMLUniqueName* pHTMLUniqueName=NULL;
+		pHTMLElement->QueryInterface(IID_IHTMLUniqueName,(void**)&pHTMLUniqueName);
+		if(pHTMLUniqueName) {
+			int ID=0;
+			pHTMLUniqueName->get_uniqueNumber((long*)&ID);
+			pHTMLUniqueName->Release();
+			if(ID!=0) {
+				VBufStorage_controlFieldNode_t* node=this->getStorageBuffer()->getControlFieldNodeWithIdentifier(this->getRootDocHandle(),ID); 
+				if(node) {
+					if(elementNeedsRelease) pHTMLElement->Release();
+					return node;
+				} else {
+					DEBUG_MSG(L"No node for element");
+				}
+			} else {
+				DEBUG_MSG(L"Could not get unique number from IHTMLUniqueName");
+			}
+		} else {
+			DEBUG_MSG(L"Could not queryInterface from IHTMLElement to IHTMLUniqueName");
+		}
+		IHTMLElement* parentPHTMLElement=NULL;
+		pHTMLElement->get_parentElement(&parentPHTMLElement);
+		if(elementNeedsRelease) pHTMLElement->Release();
+		pHTMLElement=parentPHTMLElement;
+		elementNeedsRelease=true;
+	}
+	return NULL;
+}
+
 inline IAccessible* getIAccessibleFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
 	int res=0;
 	IServiceProvider* pServProv=NULL;

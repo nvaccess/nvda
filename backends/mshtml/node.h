@@ -17,14 +17,14 @@
 class MshtmlVBufStorage_controlFieldNode_t : public VBufStorage_controlFieldNode_t {
 
 	public:
-	VBufBackend_t* backend;
+	MshtmlVBufBackend_t* backend;
 	IHTMLElement2* pHTMLElement2;
 	IDispatch* propChangeSink;
 	IDispatch* loadSink;
 	IMarkupContainer2* pMarkupContainer2;
 	IHTMLChangeSink* pHTMLChangeSink;
 	DWORD HTMLChangeSinkCookey;
-	MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, VBufBackend_t* backend, IHTMLDOMNode* pHTMLDOMNode);
+	MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, IHTMLDOMNode* pHTMLDOMNode);
 	~MshtmlVBufStorage_controlFieldNode_t();
 
 };

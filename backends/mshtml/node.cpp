@@ -6,13 +6,16 @@
  * http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
  */
 
-#include <cassert>
+#include <list>
+ #include <cassert>
 #include <windows.h>
 #include <oleidl.h>
 #include <mshtml.h>
 #include <base/debug.h>
 #include "mshtml.h"
 #include "node.h"
+
+using namespace std;
 
 class CDispatchChangeSink : public IDispatch {
 	private:
@@ -172,29 +175,42 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 		}
 		IHTMLElement* pHTMLElement=NULL;
 		this->pMarkupPointerBegin->CurrentScope(&pHTMLElement);
+		VBufStorage_controlFieldNode_t* beginningNode=this->storageNode->backend->getDeepestControlFieldNodeForHTMLElement(pHTMLElement);
 		if(pHTMLElement) {
-			IHTMLUniqueName* pHTMLUniqueName=NULL;
-			pHTMLElement->QueryInterface(IID_IHTMLUniqueName,(void**)&pHTMLUniqueName);
 			pHTMLElement->Release();
-			if(pHTMLUniqueName) {
-				int ID=0;
-				pHTMLUniqueName->get_uniqueNumber((long*)&ID);
-				pHTMLUniqueName->Release();
-				if(ID!=0) {
-					VBufStorage_controlFieldNode_t* node=this->storageNode->backend->getStorageBuffer()->getControlFieldNodeWithIdentifier(this->storageNode->backend->getRootDocHandle(),ID); 
-					if(node) {
-						this->storageNode->backend->invalidateSubtree(node);
-					} else {
-						DEBUG_MSG(L"Unknown ID "<<ID);
-					}
-				} else {
-					DEBUG_MSG(L"Could not get unique number from IHTMLUniqueName");
-				}
-			} else {
-				DEBUG_MSG(L"Could not queryInterface from IHTMLElement to IHTMLUniqueName");
+			pHTMLElement=NULL;
+		}
+		this->pMarkupPointerEnd->CurrentScope(&pHTMLElement);
+		VBufStorage_controlFieldNode_t* endNode=this->storageNode->backend->getDeepestControlFieldNodeForHTMLElement(pHTMLElement);
+		if(pHTMLElement) pHTMLElement->Release();
+		VBufStorage_controlFieldNode_t* invalidNode=NULL;
+		if((beginningNode==endNode)||(beginningNode&&!endNode)) {
+			invalidNode=beginningNode;
+		} else if(endNode&&!beginningNode) {
+			invalidNode=endNode;
+		} else if(beginningNode&&endNode) {
+			list<VBufStorage_controlFieldNode_t*> beginningAncestors;
+			while(beginningNode) {
+				beginningAncestors.push_front(beginningNode);
+				beginningNode=beginningNode->getParent();
 			}
-		} else {
-			DEBUG_MSG(L"Could not get IHTMLElement from IMarkupPointer");
+			list<VBufStorage_controlFieldNode_t*> endAncestors;
+			while(endNode) {
+				endAncestors.push_front(endNode);
+				endNode=endNode->getParent();
+			}
+			list<VBufStorage_controlFieldNode_t*>::iterator i=beginningAncestors.begin();
+			list<VBufStorage_controlFieldNode_t*>::iterator j=endAncestors.begin();
+			for(;i!=beginningAncestors.end()&&j!=endAncestors.end();i++,j++) {
+				if(*i==*j) {
+					invalidNode=*i;
+					break;
+				}
+			}
+			assert(invalidNode);
+		}
+		if(invalidNode) {
+			this->storageNode->backend->invalidateSubtree(invalidNode);
 		}
 		DEBUG_MSG(L"notify done, returning S_OK");
 		return S_OK;
@@ -202,7 +218,7 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 
 };
 
-MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, VBufBackend_t* backend, IHTMLDOMNode* pHTMLDOMNode): VBufStorage_controlFieldNode_t(docHandle,ID,isBlock) {
+MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, IHTMLDOMNode* pHTMLDOMNode): VBufStorage_controlFieldNode_t(docHandle,ID,isBlock) {
 	int res;
 	VARIANT_BOOL varBool;
 	assert(backend);

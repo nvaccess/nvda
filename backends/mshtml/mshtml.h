@@ -26,6 +26,7 @@ class MshtmlVBufBackend_t: public VBufBackend_t {
 
 	VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, int tableID, long rowIndex);
 
+	VBufStorage_controlFieldNode_t* getDeepestControlFieldNodeForHTMLElement(IHTMLElement* pHTMLElement);
 	~MshtmlVBufBackend_t();
 
 	virtual void invalidateSubtree(VBufStorage_controlFieldNode_t* node);
