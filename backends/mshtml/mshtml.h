@@ -24,7 +24,7 @@ class MshtmlVBufBackend_t: public VBufBackend_t {
 
 	MshtmlVBufBackend_t(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer);
 
-	VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, int tableID, long rowIndex);
+	VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, int tableID, long rowIndex, int* LIIndexPtr);
 
 	VBufStorage_controlFieldNode_t* getDeepestControlFieldNodeForHTMLElement(IHTMLElement* pHTMLElement);
 	~MshtmlVBufBackend_t();

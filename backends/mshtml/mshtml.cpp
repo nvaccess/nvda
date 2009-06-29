@@ -375,7 +375,7 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	pHTMLAttributeCollection2->Release();
 }
 
-VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, int tableID, long rowIndex) {
+VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, int tableID, long rowIndex, int* LIIndexPtr) {
 	//Handle text nodes
 	{ 
 		BSTR text=getTextFromHTMLDOMNode(pHTMLDOMNode);
@@ -468,8 +468,26 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		tempStringStream<<L"HTMLStyle::"<<tempIter->first;
 		parentNode->addAttribute(tempStringStream.str(),tempIter->second);
 	}
-	//Handle table summaries and needed table attribs
-	if(!invisible&&nodeName.compare(L"TABLE")==0) {
+	int LIIndex=0;
+	if(!invisible&&nodeName.compare(L"OL")==0) {
+		//Ordered lists should number their list items
+		LIIndex=1;
+		LIIndexPtr=&LIIndex;
+	} else if(!invisible&&(nodeName.compare(L"UL")==0||nodeName.compare(L"DL")==0)) {
+		//Unordered lists should not be numbered
+		LIIndexPtr=NULL;
+	} else if(!invisible&&nodeName.compare(L"LI")==0) {
+		if(LIIndexPtr!=NULL) {
+			tempStringStream.str(L"");
+			tempStringStream<<*LIIndexPtr<<L". ";
+			previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempStringStream.str());
+			(*LIIndexPtr)++;
+		} else {
+			tempStringStream.str(L"");
+			tempStringStream<<L"\x2022 "; //Bullet
+			previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempStringStream.str());
+		}
+	} else if(!invisible&&nodeName.compare(L"TABLE")==0) {
 		//Find summary attribute and add it as a text node.
 		tempIter=HTMLAttribsMap.find(L"summary");
 		if(tempIter!=HTMLAttribsMap.end()&&!tempIter->second.empty()) {
@@ -593,7 +611,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 					IHTMLDOMNode* selectedPHTMLDOMNode=NULL;
 					pDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&selectedPHTMLDOMNode);
 					if(selectedPHTMLDOMNode) {
-						previousNode=this->fillVBuf(buffer,parentNode,previousNode,selectedPHTMLDOMNode,docHandle,tableID,rowIndex);
+						previousNode=this->fillVBuf(buffer,parentNode,previousNode,selectedPHTMLDOMNode,docHandle,tableID,rowIndex,LIIndexPtr);
 						selectedPHTMLDOMNode->Release();
 						gotSelection=(previousNode&&(previousNode->getLength()>0));
 					}
@@ -613,7 +631,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		if(pacc) {
 			IHTMLDOMNode* childPHTMLDOMNode=getRootDOMNodeFromIAccessibleFrame(pacc);
 			if(childPHTMLDOMNode) {
-				previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableID,rowIndex);
+				previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableID,rowIndex,LIIndexPtr);
 				childPHTMLDOMNode->Release();
 			}
 		}
@@ -637,7 +655,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 					}
 					IHTMLDOMNode* childPHTMLDOMNode=NULL;
 					if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
-						VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableID,rowIndex);
+						VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableID,rowIndex,LIIndexPtr);
 						if(tempNode) {
 							previousNode=tempNode;
 						}
@@ -720,7 +738,7 @@ void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, in
 		return;
 	}
 	pHTMLElement->Release();
-	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,0,0);
+	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,0,0,NULL);
 	pHTMLDOMNode->Release();
 }
 
