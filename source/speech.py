@@ -503,7 +503,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 
 	#Get speech text for any fields in the old controlFieldStack that are not in the new controlFieldStack 
 	for count in reversed(range(commonFieldCount,len(controlFieldStackCache))):
-		text=getControlFieldSpeech(controlFieldStackCache[count],"end_removedFromControlFieldStack",formatConfig,extraDetail,reason=reason)
+		text=getControlFieldSpeech(controlFieldStackCache[count],controlFieldStackCache[0:count],"end_removedFromControlFieldStack",formatConfig,extraDetail,reason=reason)
 		if text:
 			textList.append(text)
 	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't entering any new fields and there is no text).
@@ -512,13 +512,13 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 	#Get speech text for any fields that are in both controlFieldStacks, if extra detail is not requested
 	if not extraDetail:
 		for count in range(commonFieldCount):
-			text=getControlFieldSpeech(newControlFieldStack[count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
+			text=getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
 				textList.append(text)
 
 	#Get speech text for any fields in the new controlFieldStack that are not in the old controlFieldStack
 	for count in range(commonFieldCount,len(newControlFieldStack)):
-		text=getControlFieldSpeech(newControlFieldStack[count],"start_addedToControlFieldStack",formatConfig,extraDetail,reason=reason)
+		text=getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"start_addedToControlFieldStack",formatConfig,extraDetail,reason=reason)
 		if text:
 			textList.append(text)
 		commonFieldCount+=1
@@ -566,13 +566,13 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 					lastTextOkToMerge=True
 		elif isinstance(commandList[count],textInfos.FieldCommand) and commandList[count].command=="controlStart":
 			lastTextOkToMerge=False
-			text=getControlFieldSpeech(commandList[count].field,"start_relative",formatConfig,extraDetail,reason=reason)
+			text=getControlFieldSpeech(commandList[count].field,newControlFieldStack,"start_relative",formatConfig,extraDetail,reason=reason)
 			if text:
 				relativeTextList.append(text)
 			newControlFieldStack.append(commandList[count].field)
 		elif isinstance(commandList[count],textInfos.FieldCommand) and commandList[count].command=="controlEnd":
 			lastTextOkToMerge=False
-			text=getControlFieldSpeech(newControlFieldStack[-1],"end_relative",formatConfig,extraDetail,reason=reason)
+			text=getControlFieldSpeech(newControlFieldStack[-1],newControlFieldStack[0:-1],"end_relative",formatConfig,extraDetail,reason=reason)
 			if text:
 				relativeTextList.append(text)
 			del newControlFieldStack[-1]
@@ -591,7 +591,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 	#Finally get speech text for any fields left in new controlFieldStack that are common with the old controlFieldStack (for closing), if extra detail is not requested
 	if not extraDetail:
 		for count in reversed(range(min(len(newControlFieldStack),commonFieldCount))):
-			text=getControlFieldSpeech(newControlFieldStack[count],"end_inControlFieldStack",formatConfig,extraDetail,reason=reason)
+			text=getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"end_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
 				textList.append(text)
 
@@ -679,7 +679,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		oldTableID = None
 	return " ".join([x for x in textList if x])
 
-def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
+def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 	childCount=int(attrs['_childcount'])
