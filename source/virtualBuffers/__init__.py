@@ -706,17 +706,17 @@ class VirtualBuffer(cursorManager.CursorManager):
 			raise LookupError("Not in a table cell")
 		return int(attrs["table-id"]), int(attrs["table-rownumber"]), int(attrs["table-columnnumber"])
 
-	def _getCell(self, tableID, row, column):
-		try:
-			node, start, end = next(self._iterNodesByAttribs({"table-id": [str(tableID)], "table-rownumber": [str(row)], "table-columnnumber": [str(column)]}))
-			info = self.makeTextInfo(textInfos.offsets.Offsets(start, end))
-		except StopIteration:
-			raise LookupError("No such table cell")
-		if info.isCollapsed:
-			raise LookupError("Cell present but occupies no space")
-		return info
+	def _iterTableCells(self, tableID, startPos=None, direction="next", row=None, column=None):
+		attrs = {"table-id": [str(tableID)]}
+		if row:
+			attrs["table-rownumber"] = [str(row)]
+		if column:
+			attrs["table-columnnumber"] = [str(column)]
+		startPos = startPos._startOffset if startPos else -1
+		for node, start, end in self._iterNodesByAttribs(attrs, offset=startPos, direction=direction):
+			yield self.makeTextInfo(textInfos.offsets.Offsets(start, end))
 
-	def _tableMovementScriptHelper(self, row, column, relative=False):
+	def _tableMovementScriptHelper(self, movement="next", axis=None):
 		formatConfig=config.conf["documentFormatting"].copy()
 		formatConfig["reportTables"]=True
 		try:
@@ -724,35 +724,47 @@ class VirtualBuffer(cursorManager.CursorManager):
 		except LookupError:
 			ui.message(_("Not in a table cell"))
 			return
-		if relative:
-			row = oldRow + row
-			column = oldColumn + column
+
+		row = None
+		column = None
+		if axis == "row":
+			column = oldColumn
+		elif axis == "column":
+			row = oldRow
+		if movement == "first":
+			startPos = None
+			direction = "next"
+		elif movement == "last":
+			startPos = self.makeTextInfo(textInfos.POSITION_LAST)
+			direction = "previous"
+		else:
+			startPos = self.selection
+			direction = movement
 
 		try:
-			info = self._getCell(tableID, row, column)
-		except LookupError:
+			info = next(self._iterTableCells(tableID, startPos=startPos, direction=direction, row=row, column=column))
+		except StopIteration:
 			speech.speakMessage(_("edge of table"))
-			info = self._getCell(tableID, oldRow, oldColumn)
-
+			info = next(self._iterTableCells(tableID, row=oldRow, column=oldColumn))
 
 		speech.speakTextInfo(info,formatConfig=formatConfig,reason=speech.REASON_CARET)
 		info.collapse()
 		self.selection = info
 
 	def script_nextRow(self, keyPress):
-		self._tableMovementScriptHelper(1, 0, True)
+		self._tableMovementScriptHelper(axis="row", movement="next")
 	script_nextRow.__doc__ = _("moves to the next table row")
 
 	def script_previousRow(self, keyPress):
-		self._tableMovementScriptHelper(-1, 0, True)
+		self._tableMovementScriptHelper(axis="row", movement="previous")
 	script_previousRow.__doc__ = _("moves to the previous table row")
 
 	def script_nextColumn(self, keyPress):
-		self._tableMovementScriptHelper(0, 1, True)
+		self._tableMovementScriptHelper(axis="column", movement="next")
 	script_nextColumn.__doc__ = _("moves to the next table column")
 
 	def script_previousColumn(self, keyPress):
-		self._tableMovementScriptHelper(0, -1, True)
+		self._tableMovementScriptHelper(axis="column", movement="previous")
 	script_previousColumn.__doc__ = _("moves to the previous table column")
 
 	APPLICATION_ROLES = (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG)
