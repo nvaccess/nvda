@@ -717,6 +717,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 			yield self.makeTextInfo(textInfos.offsets.Offsets(start, end))
 
 	def _tableMovementScriptHelper(self, movement="next", axis=None):
+		if isScriptWaiting():
+			return
 		formatConfig=config.conf["documentFormatting"].copy()
 		formatConfig["reportTables"]=True
 		try:
