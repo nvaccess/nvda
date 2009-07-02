@@ -641,8 +641,10 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 					if(value!=NULL) {
 						DEBUG_MSG(L"adding value to buffer");
 						previousNode=buffer->addTextFieldNode(parentNode,previousNode,value);
-					} else if(role!=ROLE_SYSTEM_CELL&&role!=IA2_ROLE_SECTION&&(width>0&&height>0)) {
+					} else if(role!=IA2_ROLE_SECTION&&(width>0&&height>0)) {
 						previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+						if (role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_ROWHEADER || role == ROLE_SYSTEM_COLUMNHEADER)
+							parentNode->setIsBlock(false);
 					}
 				}
 			}
