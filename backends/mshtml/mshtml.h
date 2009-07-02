@@ -13,6 +13,13 @@
 #include <base/storage.h>
 #include <base/backend.h>
 
+typedef struct {
+	int tableID;
+	long curRowIndex;
+	bool definitData;
+} fillVBuf_tableInfo;
+
+
 class MshtmlVBufBackend_t: public VBufBackend_t {
 	private:
 
@@ -24,7 +31,7 @@ class MshtmlVBufBackend_t: public VBufBackend_t {
 
 	MshtmlVBufBackend_t(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer);
 
-	VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, int tableID, long rowIndex, int* LIIndexPtr);
+	VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr);
 
 	VBufStorage_controlFieldNode_t* getDeepestControlFieldNodeForHTMLElement(IHTMLElement* pHTMLElement);
 	~MshtmlVBufBackend_t();
