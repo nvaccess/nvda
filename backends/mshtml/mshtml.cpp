@@ -564,7 +564,6 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 				tempStringStream<<columnIndex;
 				parentNode->addAttribute(L"table-columnnumber",tempStringStream.str());
 			}
-		}
 			long colSpan=0;
 			pHTMLTableCell->get_colSpan(&colSpan);
 			if(colSpan>1) {
@@ -580,6 +579,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 				parentNode->addAttribute(L"table-rowsspanned",tempStringStream.str());
 			}
 			pHTMLTableCell->Release();
+		}
 	}
 	if(invisible) {
 		DEBUG_MSG(L"Node is invisible, not rendering any content");
