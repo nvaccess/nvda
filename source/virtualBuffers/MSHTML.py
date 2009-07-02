@@ -69,9 +69,9 @@ class MSHTML(VirtualBuffer):
 		super(MSHTML,self).__init__(rootNVDAObject,backendLibPath=r"lib\VBufBackend_mshtml.dll")
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
-		if not isinstance(obj,NVDAObjects.IAccessible.MSHTML.MSHTML) or not obj.IHTMLElement:
+		if not obj.windowClassName.startswith("Internet Explorer_"):
 			return False
-		return bool(obj.windowHandle==self.rootDocHandle)
+		return bool(winUser.isDescendantWindow(self.rootDocHandle, obj.windowHandle))
 
 	def isAlive(self):
 		root=self.rootNVDAObject
