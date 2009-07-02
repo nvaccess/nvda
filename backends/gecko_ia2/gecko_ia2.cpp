@@ -331,6 +331,16 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 			s.str(L"");
 			s << column + 1;
 			parentNode->addAttribute(L"table-columnnumber", s.str());
+			if (columnExtents > 1) {
+				s.str(L"");
+				s << columnExtents;
+				parentNode->addAttribute(L"table-columnsspanned", s.str());
+			}
+			if (rowExtents > 1) {
+				s.str(L"");
+				s << rowExtents;
+				parentNode->addAttribute(L"table-rowsspanned", s.str());
+			}
 		}
 		// We're now within a cell, so descendant nodes shouldn't refer to this table anymore.
 		paccTable = NULL;
