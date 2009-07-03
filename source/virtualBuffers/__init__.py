@@ -692,10 +692,11 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 		return False
 
-	def _getCurrentCellCoords(self):
-		caret = self.makeTextInfo(textInfos.POSITION_CARET)
-		caret.expand(textInfos.UNIT_CHARACTER)
-		for field in reversed(caret.getTextWithFields()):
+	def _getTableCellCoords(self, info):
+		if info.isCollapsed:
+			info = info.copy()
+			info.expand(textInfos.UNIT_CHARACTER)
+		for field in reversed(info.getTextWithFields()):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
 				# Not a control field.
 				continue
@@ -704,7 +705,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 				break
 		else:
 			raise LookupError("Not in a table cell")
-		return int(attrs["table-id"]), int(attrs["table-rownumber"]), int(attrs["table-columnnumber"])
+		return (int(attrs["table-id"]),
+			int(attrs["table-rownumber"]), int(attrs["table-columnnumber"]),
+			int(attrs.get("table-rowsspanned", 1)), int(attrs.get("table-columnsspanned", 1)))
 
 	def _iterTableCells(self, tableID, startPos=None, direction="next", row=None, column=None):
 		attrs = {"table-id": [str(tableID)]}
@@ -713,8 +716,48 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if column:
 			attrs["table-columnnumber"] = [str(column)]
 		startPos = startPos._startOffset if startPos else -1
-		for node, start, end in self._iterNodesByAttribs(attrs, offset=startPos, direction=direction):
+		results = self._iterNodesByAttribs(attrs, offset=startPos, direction=direction)
+		if not row and not column and direction == "next":
+			# The first match will be the table itself, so skip it.
+			next(results)
+		for node, start, end in results:
 			yield self.makeTextInfo(textInfos.offsets.Offsets(start, end))
+
+	def _getNearestTableCell(self, tableID, origRow, origCol, movement, axis):
+		if not axis:
+			# First or last.
+			if movement == "first":
+				startPos = None
+				direction = "next"
+			elif movement == "last":
+				startPos = self.makeTextInfo(textInfos.POSITION_LAST)
+				direction = "previous"
+			try:
+				return next(self._iterTableCells(tableID, startPos=startPos, direction=direction))
+			except StopIteration:
+				raise LookupError
+
+		destRow = origRow
+		destCol = origCol
+		if axis == "row":
+			destRow += 1 if movement == "next" else -1
+		elif axis == "column":
+			destCol += 1 if movement == "next" else -1
+		if destCol < 1:
+			# Optimisation: We're definitely at the edge of the column.
+			raise LookupError
+
+		# Search from the start of the table for the desired cell.
+		for info in self._iterTableCells(tableID):
+			_ignore, row, col, rowSpan, colSpan = self._getTableCellCoords(info)
+			if row == origRow and col == origCol:
+				# Update the destination row and column with span information.
+				destRow += rowSpan - 1
+				destCol += colSpan - 1
+			if row <= destRow < row + rowSpan and col <= destCol < col + colSpan:
+				return info
+		else:
+			raise LookupError
 
 	def _tableMovementScriptHelper(self, movement="next", axis=None):
 		if isScriptWaiting():
@@ -722,32 +765,17 @@ class VirtualBuffer(cursorManager.CursorManager):
 		formatConfig=config.conf["documentFormatting"].copy()
 		formatConfig["reportTables"]=True
 		try:
-			tableID, oldRow, oldColumn = self._getCurrentCellCoords()
+			tableID, origRow, origCol, origRowSpan, origColSpan = self._getTableCellCoords(self.selection)
 		except LookupError:
 			ui.message(_("Not in a table cell"))
 			return
 
-		row = None
-		column = None
-		if axis == "row":
-			column = oldColumn
-		elif axis == "column":
-			row = oldRow
-		if movement == "first":
-			startPos = None
-			direction = "next"
-		elif movement == "last":
-			startPos = self.makeTextInfo(textInfos.POSITION_LAST)
-			direction = "previous"
-		else:
-			startPos = self.selection
-			direction = movement
-
 		try:
-			info = next(self._iterTableCells(tableID, startPos=startPos, direction=direction, row=row, column=column))
-		except StopIteration:
-			speech.speakMessage(_("edge of table"))
-			info = next(self._iterTableCells(tableID, row=oldRow, column=oldColumn))
+			info = self._getNearestTableCell(tableID, origRow, origCol, movement, axis)
+		except LookupError:
+			ui.message(_("edge of table"))
+			# Retrieve the cell on which we started.
+			info = next(self._iterTableCells(tableID, row=origRow, column=origCol))
 
 		speech.speakTextInfo(info,formatConfig=formatConfig,reason=speech.REASON_CARET)
 		info.collapse()
