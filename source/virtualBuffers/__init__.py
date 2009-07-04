@@ -355,6 +355,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		pass
 
 	def _iterNodesByType(self,nodeType,direction="next",offset=-1):
+		if nodeType == "notLinkBlock":
+			return self._iterNotLinkBlock(direction=direction, offset=offset)
 		attribs=self._searchableAttribsForNodeType(nodeType)
 		if not attribs:
 			return iter(())
@@ -813,6 +815,21 @@ class VirtualBuffer(cursorManager.CursorManager):
 			obj = obj.parent
 		return True
 
+	NOT_LINK_BLOCK_MIN_LEN = 30
+	def _iterNotLinkBlock(self, direction="next", offset=-1):
+		links = self._iterNodesByType("link", direction=direction, offset=offset)
+		# We want to compare each link against the next link.
+		link1node, link1start, link1end = next(links)
+		while True:
+			link2node, link2start, link2end = next(links)
+			# If the distance between the links is small, this is probably just a piece of non-link text within a block of links; e.g. an inactive link of a nav bar.
+			if direction == "next" and link2start - link1end > self.NOT_LINK_BLOCK_MIN_LEN:
+				yield 0, link1end, link2start
+			# If we're moving backwards, the order of the links in the document will be reversed.
+			elif direction == "previous" and link1start - link2end > self.NOT_LINK_BLOCK_MIN_LEN:
+				yield 0, link2end, link1start
+			link1node, link1start, link1end = link2node, link2start, link2end
+
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
 	("Return","activatePosition"),
 	("Space","activatePosition"),
@@ -878,4 +895,6 @@ qn("graphic", key="g", nextDoc=_("moves to the next graphic"), nextError=_("no n
 	prevDoc=_("moves to the previous graphic"), prevError=_("no previous graphic"))
 qn("blockQuote", key="q", nextDoc=_("moves to the next block quote"), nextError=_("no next block quote"),
 	prevDoc=_("moves to the previous block quote"), prevError=_("no previous block quote"))
+qn("notLinkBlock", key="n", nextDoc=_("skips forward past a block of links"), nextError=_("no more text forward after a block of links"),
+	prevDoc=_("skips backward past a block of links"), prevError=_("no more text behind a block of links"), readUnit=textInfos.UNIT_LINE)
 del qn
