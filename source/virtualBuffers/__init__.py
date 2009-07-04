@@ -895,6 +895,6 @@ qn("graphic", key="g", nextDoc=_("moves to the next graphic"), nextError=_("no n
 	prevDoc=_("moves to the previous graphic"), prevError=_("no previous graphic"))
 qn("blockQuote", key="q", nextDoc=_("moves to the next block quote"), nextError=_("no next block quote"),
 	prevDoc=_("moves to the previous block quote"), prevError=_("no previous block quote"))
-qn("notLinkBlock", key="n", nextDoc=_("skips forward past a block of links"), nextError=_("no more text forward after a block of links"),
-	prevDoc=_("skips backward past a block of links"), prevError=_("no more text behind a block of links"), readUnit=textInfos.UNIT_LINE)
+qn("notLinkBlock", key="n", nextDoc=_("skips forward past a block of links"), nextError=_("no more text after a block of links"),
+	prevDoc=_("skips backward past a block of links"), prevError=_("no more text before a block of links"), readUnit=textInfos.UNIT_LINE)
 del qn
