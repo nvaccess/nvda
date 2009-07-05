@@ -831,6 +831,29 @@ class VirtualBuffer(cursorManager.CursorManager):
 				yield 0, link2end, link1start
 			link1node, link1start, link1end = link2node, link2start, link2end
 
+	def _guessFormFieldLabel(self, fieldInfo, fieldObj):
+		guessInfo = fieldInfo.copy()
+		# Turn off screen layout so that all control fields are on separate lines.
+		guessInfo.useScreenLayout = False
+
+		if fieldObj.role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON):
+			# For check boxes and radio buttons, the label is normally after the field, so try the line after.
+			guessInfo.move(textInfos.UNIT_LINE, 1, endPoint="end")
+			text = guessInfo.text
+			if text and not text.isspace():
+				return text
+
+		# Reset guessInfo to fieldInfo.
+		guessInfo.setEndPoint(fieldInfo, "endToEnd")
+
+		# Otherwise, the label is normally before the field, so try the line before.
+		guessInfo.move(textInfos.UNIT_LINE, -1, endPoint="start")
+		text = guessInfo.text
+		if text and not text.isspace():
+			return text
+
+		return None
+
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
 	("Return","activatePosition"),
 	("Space","activatePosition"),
