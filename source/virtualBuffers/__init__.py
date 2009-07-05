@@ -80,6 +80,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			start,end=self._getOffsetsFromNVDAObject(position)
 			position=textInfos.offsets.Offsets(start,end)
 		super(VirtualBufferTextInfo,self).__init__(obj,position)
+		self.useScreenLayout = config.conf["virtualBuffers"]["useScreenLayout"]
 
 	def _get_NVDAObjectAtStart(self):
 		return self._getNVDAObjectFromOffset(self._startOffset)
@@ -133,7 +134,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getLineOffsets(self,offset):
 		lineStart=ctypes.c_int()
 		lineEnd=ctypes.c_int()
-		VBufClient.VBufRemote_getLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],config.conf["virtualBuffers"]["useScreenLayout"],ctypes.byref(lineStart),ctypes.byref(lineEnd))
+		VBufClient.VBufRemote_getLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],self.useScreenLayout,ctypes.byref(lineStart),ctypes.byref(lineEnd))
 		return lineStart.value,lineEnd.value
  
 	def _getParagraphOffsets(self,offset):
