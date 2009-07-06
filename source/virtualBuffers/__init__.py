@@ -713,19 +713,20 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def _iterTableCells(self, tableID, startPos=None, direction="next", row=None, column=None):
 		attrs = {"table-id": [str(tableID)]}
-		if row:
+		# row could be 0.
+		if row is not None:
 			attrs["table-rownumber"] = [str(row)]
-		if column:
+		if column is not None:
 			attrs["table-columnnumber"] = [str(column)]
 		startPos = startPos._startOffset if startPos else -1
 		results = self._iterNodesByAttribs(attrs, offset=startPos, direction=direction)
-		if not row and not column and direction == "next":
+		if not startPos and not row and not column and direction == "next":
 			# The first match will be the table itself, so skip it.
 			next(results)
 		for node, start, end in results:
 			yield self.makeTextInfo(textInfos.offsets.Offsets(start, end))
 
-	def _getNearestTableCell(self, tableID, origRow, origCol, movement, axis):
+	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
 		if not axis:
 			# First or last.
 			if movement == "first":
@@ -739,27 +740,49 @@ class VirtualBuffer(cursorManager.CursorManager):
 			except StopIteration:
 				raise LookupError
 
+		# Determine destination row and column.
 		destRow = origRow
 		destCol = origCol
 		if axis == "row":
-			destRow += 1 if movement == "next" else -1
+			destRow += origRowSpan if movement == "next" else -1
 		elif axis == "column":
-			destCol += 1 if movement == "next" else -1
+			destCol += origColSpan if movement == "next" else -1
+
 		if destCol < 1:
 			# Optimisation: We're definitely at the edge of the column.
 			raise LookupError
 
-		# Search from the start of the table for the desired cell.
-		for info in self._iterTableCells(tableID):
+		# Optimisation: Try searching for exact destination coordinates.
+		# This won't work if they are covered by a cell spanning multiple rows/cols, but this won't be true in the majority of cases.
+		try:
+			return next(self._iterTableCells(tableID, row=destRow, column=destCol))
+		except StopIteration:
+			pass
+
+		# Cells are grouped by row, so in most cases, we simply need to search in the right direction.
+		for info in self._iterTableCells(tableID, direction=movement, startPos=startPos):
 			_ignore, row, col, rowSpan, colSpan = self._getTableCellCoords(info)
-			if row == origRow and col == origCol:
-				# Update the destination row and column with span information.
-				destRow += rowSpan - 1
-				destCol += colSpan - 1
 			if row <= destRow < row + rowSpan and col <= destCol < col + colSpan:
 				return info
-		else:
+			elif row > destRow and movement == "next":
+				# Optimisation: We've gone forward past destRow, so we know we won't find the cell.
+				# We can't reverse this logic when moving backwards because there might be a prior cell on an earlier row which spans multiple rows.
+				break
+
+		if axis == "row" or (axis == "column" and movement == "previous"):
+			# In most cases, there's nothing more to try.
 			raise LookupError
+
+		else:
+			# We're moving forward by column.
+			# In this case, there might be a cell on an earlier row which spans multiple rows.
+			# Therefore, try searching backwards.
+			for info in self._iterTableCells(tableID, direction="previous", startPos=startPos):
+				_ignore, row, col, rowSpan, colSpan = self._getTableCellCoords(info)
+				if row <= destRow < row + rowSpan and col <= destCol < col + colSpan:
+					return info
+			else:
+				raise LookupError
 
 	def _tableMovementScriptHelper(self, movement="next", axis=None):
 		if isScriptWaiting():
@@ -773,7 +796,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return
 
 		try:
-			info = self._getNearestTableCell(tableID, origRow, origCol, movement, axis)
+			info = self._getNearestTableCell(tableID, self.selection, origRow, origCol, origRowSpan, origColSpan, movement, axis)
 		except LookupError:
 			ui.message(_("edge of table"))
 			# Retrieve the cell on which we started.
