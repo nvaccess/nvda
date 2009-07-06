@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3024\n"
-"POT-Creation-Date: 2009-06-26 01:48+Hora estándar romance\n"
-"PO-Revision-Date: 2009-07-02 16:12+0100\n"
+"Project-Id-Version: r3040\n"
+"POT-Creation-Date: 2009-07-05 13:50+Hora estándar romance\n"
+"PO-Revision-Date: 2009-07-05 14:01+0100\n"
 "Last-Translator: Juan C. Buño <Quetzatl@eresmas.net>\n"
 "Language-Team: Equipo de tradución ó Galego <quetzatl@eresmas.net>\n"
 "MIME-Version: 1.0\n"
@@ -739,6 +739,14 @@ msgstr "Display"
 #: appModules\explorer.py:16
 msgid "Start"
 msgstr "Comezo"
+
+#: appModules\foobar2000.py:44
+msgid "No track playing"
+msgstr "Non hai pista en reprodución"
+
+#: appModules\foobar2000.py:50
+msgid "Reports the remaining time of the currently playing track, if any"
+msgstr "Anuncia o tempo restante da pista actualmente en reprodución, se hai algunha"
 
 #: appModules\msimn.py:19
 msgid "Attachments"
@@ -3131,399 +3139,415 @@ msgstr "utilizá-lo deseño da pantalla %s"
 msgid "Toggles on and off if the screen layout is preserved while rendering the virtual buffer content"
 msgstr "Actívase e desactívase se a disposición da pantalla é preservada mentres se renderiza o contido do modo virtual"
 
-#: virtualBuffers\__init__.py:461
+#: virtualBuffers\__init__.py:463
 msgid "displays a list of links"
 msgstr "Mostra unha lista de ligas"
 
-#: virtualBuffers\__init__.py:725
+#: virtualBuffers\__init__.py:772
 msgid "Not in a table cell"
 msgstr "Non estás nunha celda da táboa"
 
-#: virtualBuffers\__init__.py:734
+#: virtualBuffers\__init__.py:778
 msgid "edge of table"
 msgstr "borde da táboa"
 
-#: virtualBuffers\__init__.py:744
+#: virtualBuffers\__init__.py:788
 msgid "moves to the next table row"
 msgstr "móvese á seguinte fila da táboa"
 
-#: virtualBuffers\__init__.py:748
+#: virtualBuffers\__init__.py:792
 msgid "moves to the previous table row"
 msgstr "móvese á anterior fila da táboa"
 
-#: virtualBuffers\__init__.py:752
+#: virtualBuffers\__init__.py:796
 msgid "moves to the next table column"
 msgstr "móvese á seguinte columna da táboa"
 
-#: virtualBuffers\__init__.py:756
+#: virtualBuffers\__init__.py:800
 msgid "moves to the previous table column"
 msgstr "móvese á anterior columna da táboa"
 
-#: virtualBuffers\__init__.py:793
+#: virtualBuffers\__init__.py:852
 msgid "moves to the next heading"
 msgstr "Móvese á seguinte cabeceira"
 
-#: virtualBuffers\__init__.py:793
+#: virtualBuffers\__init__.py:852
 msgid "no next heading"
 msgstr "non hai seguinte cabeceira"
 
-#: virtualBuffers\__init__.py:794
+#: virtualBuffers\__init__.py:853
 msgid "moves to the previous heading"
 msgstr "móvese á anterior cabeceira"
 
-#: virtualBuffers\__init__.py:794
+#: virtualBuffers\__init__.py:853
 msgid "no previous heading"
 msgstr "non hai anterior cabeceira"
 
-#: virtualBuffers\__init__.py:795
+#: virtualBuffers\__init__.py:854
 msgid "moves to the next heading at level 1"
 msgstr "Móvese á seguinte cabeceira de nivel 1"
 
-#: virtualBuffers\__init__.py:795
+#: virtualBuffers\__init__.py:854
 msgid "no next heading at level 1"
 msgstr "non hai seguinte cabeceira de nivel 1"
 
-#: virtualBuffers\__init__.py:796
+#: virtualBuffers\__init__.py:855
 msgid "moves to the previous heading at level 1"
 msgstr "móvese á anterior cabeceira de nivel 1"
 
-#: virtualBuffers\__init__.py:796
+#: virtualBuffers\__init__.py:855
 msgid "no previous heading at level 1"
 msgstr "non hai anterior cabeceira de nivel 1"
 
-#: virtualBuffers\__init__.py:797
+#: virtualBuffers\__init__.py:856
 msgid "moves to the next heading at level 2"
 msgstr "Móvese á seguinte cabeceira de nivel 2"
 
-#: virtualBuffers\__init__.py:797
+#: virtualBuffers\__init__.py:856
 msgid "no next heading at level 2"
 msgstr "non hai seguinte cabeceira de nivel 2"
 
-#: virtualBuffers\__init__.py:798
+#: virtualBuffers\__init__.py:857
 msgid "moves to the previous heading at level 2"
 msgstr "móvese á anterior cabeceira de nivel 2"
 
-#: virtualBuffers\__init__.py:798
+#: virtualBuffers\__init__.py:857
 msgid "no previous heading at level 2"
 msgstr "non hai anterior cabeceira de nivel 2"
 
-#: virtualBuffers\__init__.py:799
+#: virtualBuffers\__init__.py:858
 msgid "moves to the next heading at level 3"
 msgstr "Móvese á seguinte cabeceira de nivel 3"
 
-#: virtualBuffers\__init__.py:799
+#: virtualBuffers\__init__.py:858
 msgid "no next heading at level 3"
 msgstr "non hai seguinte cabeceira de nivel 3"
 
-#: virtualBuffers\__init__.py:800
+#: virtualBuffers\__init__.py:859
 msgid "moves to the previous heading at level 3"
 msgstr "móvese á anterior cabeceira de nivel 3"
 
-#: virtualBuffers\__init__.py:800
+#: virtualBuffers\__init__.py:859
 msgid "no previous heading at level 3"
 msgstr "non hai anterior cabeceira de nivel 3"
 
-#: virtualBuffers\__init__.py:801
+#: virtualBuffers\__init__.py:860
 msgid "moves to the next heading at level 4"
 msgstr "Móvese á seguinte cabeceira de nivel 4"
 
-#: virtualBuffers\__init__.py:801
+#: virtualBuffers\__init__.py:860
 msgid "no next heading at level 4"
 msgstr "non hai seguinte cabeceira de nivel 4"
 
-#: virtualBuffers\__init__.py:802
+#: virtualBuffers\__init__.py:861
 msgid "moves to the previous heading at level 4"
 msgstr "móvese á anterior cabeceira de nivel 4"
 
-#: virtualBuffers\__init__.py:802
+#: virtualBuffers\__init__.py:861
 msgid "no previous heading at level 4"
 msgstr "non hai anterior cabeceira de nivel 4"
 
-#: virtualBuffers\__init__.py:803
+#: virtualBuffers\__init__.py:862
 msgid "moves to the next heading at level 5"
 msgstr "Móvese á seguinte cabeceira de nivel 5"
 
-#: virtualBuffers\__init__.py:803
+#: virtualBuffers\__init__.py:862
 msgid "no next heading at level 5"
 msgstr "non hai seguinte cabeceira de nivel 5"
 
-#: virtualBuffers\__init__.py:804
+#: virtualBuffers\__init__.py:863
 msgid "moves to the previous heading at level 5"
 msgstr "móvese á anterior cabeceira de nivel 5"
 
-#: virtualBuffers\__init__.py:804
+#: virtualBuffers\__init__.py:863
 msgid "no previous heading at level 5"
 msgstr "non hai anterior cabeceira de nivel 5"
 
-#: virtualBuffers\__init__.py:805
+#: virtualBuffers\__init__.py:864
 msgid "moves to the next heading at level 6"
 msgstr "Móvese á seguinte cabeceira de nivel 6"
 
-#: virtualBuffers\__init__.py:805
+#: virtualBuffers\__init__.py:864
 msgid "no next heading at level 6"
 msgstr "non hai seguinte cabeceira de nivel 6"
 
-#: virtualBuffers\__init__.py:806
+#: virtualBuffers\__init__.py:865
 msgid "moves to the previous heading at level 6"
 msgstr "móvese á anterior cabeceira de nivel 6"
 
-#: virtualBuffers\__init__.py:806
+#: virtualBuffers\__init__.py:865
 msgid "no previous heading at level 6"
 msgstr "non hai anterior cabeceira de nivel 6"
 
-#: virtualBuffers\__init__.py:807
+#: virtualBuffers\__init__.py:866
 msgid "moves to the next table"
 msgstr "móvese á seguinte táboa"
 
-#: virtualBuffers\__init__.py:807
+#: virtualBuffers\__init__.py:866
 msgid "no next table"
 msgstr "non hay táboa seguinte"
 
-#: virtualBuffers\__init__.py:808
+#: virtualBuffers\__init__.py:867
 msgid "moves to the previous table"
 msgstr "móvese á táboa anterior "
 
-#: virtualBuffers\__init__.py:808
+#: virtualBuffers\__init__.py:867
 msgid "no previous table"
 msgstr "non hay táboa anterior"
 
-#: virtualBuffers\__init__.py:809
+#: virtualBuffers\__init__.py:868
 msgid "moves to the next link"
 msgstr "móvese á liga seguinte"
 
-#: virtualBuffers\__init__.py:809
+#: virtualBuffers\__init__.py:868
 msgid "no next link"
 msgstr "non hai seguinte liga"
 
-#: virtualBuffers\__init__.py:810
+#: virtualBuffers\__init__.py:869
 msgid "moves to the previous link"
 msgstr "móvese á liga anterior"
 
-#: virtualBuffers\__init__.py:810
+#: virtualBuffers\__init__.py:869
 msgid "no previous link"
 msgstr "non hai anterior liga"
 
-#: virtualBuffers\__init__.py:811
+#: virtualBuffers\__init__.py:870
 msgid "moves to the next visited link"
 msgstr "móvese á seguinte liga visitada"
 
-#: virtualBuffers\__init__.py:811
+#: virtualBuffers\__init__.py:870
 msgid "no next visited link"
 msgstr "non hai seguinte liga visitada"
 
-#: virtualBuffers\__init__.py:812
+#: virtualBuffers\__init__.py:871
 msgid "moves to the previous visited link"
 msgstr "móvese á anterior liga visitada"
 
-#: virtualBuffers\__init__.py:812
+#: virtualBuffers\__init__.py:871
 msgid "no previous visited link"
 msgstr "non hai anterior liga visitada"
 
-#: virtualBuffers\__init__.py:813
+#: virtualBuffers\__init__.py:872
 msgid "moves to the next unvisited link"
 msgstr "móvese á seguinte liga por se visitar"
 
-#: virtualBuffers\__init__.py:813
+#: virtualBuffers\__init__.py:872
 msgid "no next unvisited link"
 msgstr "non hai seguinte liga sen visitar"
 
-#: virtualBuffers\__init__.py:814
+#: virtualBuffers\__init__.py:873
 msgid "moves to the previous unvisited link"
 msgstr "móvese á anterior liga por se visitar"
 
-#: virtualBuffers\__init__.py:814
+#: virtualBuffers\__init__.py:873
 msgid "no previous unvisited link"
 msgstr "non hai anterior liga sen visitar"
 
-#: virtualBuffers\__init__.py:815
+#: virtualBuffers\__init__.py:874
 msgid "moves to the next form field"
 msgstr "móvese ó seguinte campo de formulario"
 
-#: virtualBuffers\__init__.py:815
+#: virtualBuffers\__init__.py:874
 msgid "no next form field"
 msgstr "non hai seguinte campo de formulario"
 
-#: virtualBuffers\__init__.py:816
+#: virtualBuffers\__init__.py:875
 msgid "moves to the previous form field"
 msgstr "móvese ó anterior campo de formulario"
 
-#: virtualBuffers\__init__.py:816
+#: virtualBuffers\__init__.py:875
 msgid "no previous form field"
 msgstr "non hai anterior campo de formulario"
 
-#: virtualBuffers\__init__.py:817
+#: virtualBuffers\__init__.py:876
 msgid "moves to the next list"
 msgstr "móvese á lista seguinte"
 
-#: virtualBuffers\__init__.py:817
+#: virtualBuffers\__init__.py:876
 msgid "no next list"
 msgstr "non hai lista seguinte"
 
-#: virtualBuffers\__init__.py:818
+#: virtualBuffers\__init__.py:877
 msgid "moves to the previous list"
 msgstr "móvese á lista anterior"
 
-#: virtualBuffers\__init__.py:818
+#: virtualBuffers\__init__.py:877
 msgid "no previous list"
 msgstr "non hai lista anterior"
 
-#: virtualBuffers\__init__.py:819
+#: virtualBuffers\__init__.py:878
 msgid "moves to the next list item"
 msgstr "Móvese ó seguinte elemento na lista"
 
-#: virtualBuffers\__init__.py:819
+#: virtualBuffers\__init__.py:878
 msgid "no next list item"
 msgstr "non hai seguinte elemento de lista"
 
-#: virtualBuffers\__init__.py:820
+#: virtualBuffers\__init__.py:879
 msgid "moves to the previous list item"
 msgstr "Móvese ó anterior elemento na lista"
 
-#: virtualBuffers\__init__.py:820
+#: virtualBuffers\__init__.py:879
 msgid "no previous list item"
 msgstr "non hai anterior elemento de lista"
 
-#: virtualBuffers\__init__.py:821
+#: virtualBuffers\__init__.py:880
 msgid "moves to the next button"
 msgstr "móvese ó seguinte botón"
 
-#: virtualBuffers\__init__.py:821
+#: virtualBuffers\__init__.py:880
 msgid "no next button"
 msgstr "non hai seguinte botón"
 
-#: virtualBuffers\__init__.py:822
+#: virtualBuffers\__init__.py:881
 msgid "moves to the previous button"
 msgstr "móvese ó botón anterior"
 
-#: virtualBuffers\__init__.py:822
+#: virtualBuffers\__init__.py:881
 msgid "no previous button"
 msgstr "non hai botón anterior"
 
-#: virtualBuffers\__init__.py:823
+#: virtualBuffers\__init__.py:882
 msgid "moves to the next edit field"
 msgstr "móvese ó seguinte campo de edición"
 
-#: virtualBuffers\__init__.py:823
+#: virtualBuffers\__init__.py:882
 msgid "no next edit field"
 msgstr "non hai seguinte campo de edición"
 
-#: virtualBuffers\__init__.py:824
+#: virtualBuffers\__init__.py:883
 msgid "moves to the previous edit field"
 msgstr "móvese ó anterior campo de edición"
 
-#: virtualBuffers\__init__.py:824
+#: virtualBuffers\__init__.py:883
 msgid "no previous edit field"
 msgstr "non hai anterior campo de edición"
 
-#: virtualBuffers\__init__.py:825
+#: virtualBuffers\__init__.py:884
 msgid "moves to the next frame"
 msgstr "móvese ó seguinte marco"
 
-#: virtualBuffers\__init__.py:825
+#: virtualBuffers\__init__.py:884
 msgid "no next frame"
 msgstr "non hai seguinte marco"
 
-#: virtualBuffers\__init__.py:826
+#: virtualBuffers\__init__.py:885
 msgid "moves to the previous frame"
 msgstr "móvese ó anterior marco"
 
-#: virtualBuffers\__init__.py:826
+#: virtualBuffers\__init__.py:885
 msgid "no previous frame"
 msgstr "non hai anterior marco"
 
-#: virtualBuffers\__init__.py:827
+#: virtualBuffers\__init__.py:886
 msgid "moves to the next separator"
 msgstr "móvese ó seguinte separador"
 
-#: virtualBuffers\__init__.py:827
+#: virtualBuffers\__init__.py:886
 msgid "no next separator"
 msgstr "non hai seguinte separador"
 
-#: virtualBuffers\__init__.py:828
+#: virtualBuffers\__init__.py:887
 msgid "moves to the previous separator"
 msgstr "móvese ó anterior separador"
 
-#: virtualBuffers\__init__.py:828
+#: virtualBuffers\__init__.py:887
 msgid "no previous separator"
 msgstr "non hai anterior separador"
 
-#: virtualBuffers\__init__.py:829
+#: virtualBuffers\__init__.py:888
 msgid "moves to the next radio button"
 msgstr "móvese ó seguinte botón de opción"
 
-#: virtualBuffers\__init__.py:829
+#: virtualBuffers\__init__.py:888
 msgid "no next radio button"
 msgstr "non hai seguinte botón de opción"
 
-#: virtualBuffers\__init__.py:830
+#: virtualBuffers\__init__.py:889
 msgid "moves to the previous radio button"
 msgstr "móvese ó anterior botón de opción"
 
-#: virtualBuffers\__init__.py:830
+#: virtualBuffers\__init__.py:889
 msgid "no previous radio button"
 msgstr "non hai anterior botón de opción"
 
-#: virtualBuffers\__init__.py:831
+#: virtualBuffers\__init__.py:890
 msgid "moves to the next combo box"
 msgstr "móvese ó seguinte cadro combinado"
 
-#: virtualBuffers\__init__.py:831
+#: virtualBuffers\__init__.py:890
 msgid "no next combo box"
 msgstr "non hai seguinte cadro combinado"
 
-#: virtualBuffers\__init__.py:832
+#: virtualBuffers\__init__.py:891
 msgid "moves to the previous combo box"
 msgstr "móvese ó anterior cadro combinado"
 
-#: virtualBuffers\__init__.py:832
+#: virtualBuffers\__init__.py:891
 msgid "no previous combo box"
 msgstr "non hai anterior cadro combinado"
 
-#: virtualBuffers\__init__.py:833
+#: virtualBuffers\__init__.py:892
 msgid "moves to the next check box"
 msgstr "móveese á seguinte casiña de verificación"
 
-#: virtualBuffers\__init__.py:833
+#: virtualBuffers\__init__.py:892
 msgid "no next check box"
 msgstr "non hai seguinte casiña de verificación"
 
-#: virtualBuffers\__init__.py:834
+#: virtualBuffers\__init__.py:893
 msgid "moves to the previous check box"
 msgstr "móvese á anterior casiña de verificación"
 
-#: virtualBuffers\__init__.py:834
+#: virtualBuffers\__init__.py:893
 msgid "no previous check box"
 msgstr "non hai anterior casiña de verificación"
 
-#: virtualBuffers\__init__.py:835
+#: virtualBuffers\__init__.py:894
 msgid "moves to the next graphic"
 msgstr "móvese ó seguinte gráfico"
 
-#: virtualBuffers\__init__.py:835
+#: virtualBuffers\__init__.py:894
 msgid "no next graphic"
 msgstr "non hai seguinte gráfico"
 
-#: virtualBuffers\__init__.py:836
+#: virtualBuffers\__init__.py:895
 msgid "moves to the previous graphic"
 msgstr "móvese ó anterior gráfico"
 
-#: virtualBuffers\__init__.py:836
+#: virtualBuffers\__init__.py:895
 msgid "no previous graphic"
 msgstr "non hai anterior gráfico"
 
-#: virtualBuffers\__init__.py:837
+#: virtualBuffers\__init__.py:896
 msgid "moves to the next block quote"
 msgstr "móvese a seguinte cita"
 
-#: virtualBuffers\__init__.py:837
+#: virtualBuffers\__init__.py:896
 msgid "no next block quote"
 msgstr "non hai seguinte cita"
 
-#: virtualBuffers\__init__.py:838
+#: virtualBuffers\__init__.py:897
 msgid "moves to the previous block quote"
 msgstr "móvese á anterior cita"
 
-#: virtualBuffers\__init__.py:838
+#: virtualBuffers\__init__.py:897
 msgid "no previous block quote"
 msgstr "non hay cita anterior"
+
+#: virtualBuffers\__init__.py:898
+msgid "no more text after a block of links"
+msgstr "non hai máis texto despois dun bloque de ligas"
+
+#: virtualBuffers\__init__.py:898
+msgid "skips forward past a block of links"
+msgstr "salta cara adiante pasando un bloque de ligas"
+
+#: virtualBuffers\__init__.py:899
+msgid "no more text before a block of links"
+msgstr "non hai máis texto antes dun bloque de ligas"
+
+#: virtualBuffers\__init__.py:899
+msgid "skips backward past a block of links"
+msgstr "salta cara atrás pasando un bloque de ligas"
 
