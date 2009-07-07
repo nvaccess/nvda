@@ -6,6 +6,8 @@ import winUser
 import IAccessibleHandler
 from logHandler import log
 import textInfos
+from comtypes.gen.IAccessible2Lib import IAccessible2
+from comtypes import COMError
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
@@ -164,3 +166,30 @@ class Gecko_ia2(VirtualBuffer):
 	def event_scrollingStart(self, obj, nextHandler):
 		if not self._handleScrollTo(obj):
 			return nextHandler()
+
+	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
+		if not axis:
+			# First or last.
+			return super(Gecko_ia2, self)._getNearestTableCell(tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis)
+
+		# Determine destination row and column.
+		destRow = origRow
+		destCol = origCol
+		if axis == "row":
+			destRow += origRowSpan if movement == "next" else -1
+		elif axis == "column":
+			destCol += origColSpan if movement == "next" else -1
+
+		if destCol < 1:
+			# Optimisation: We're definitely at the edge of the column.
+			raise LookupError
+
+		# For Gecko, we can use the table object to directly retrieve the cell with the exact destination coordinates.
+		docHandle = startPos.NVDAObjectAtStart.windowHandle
+		table = self.getNVDAObjectFromIdentifier(docHandle, tableID)
+		try:
+			cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
+			cell = NVDAObjects.IAccessible.IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
+			return self.makeTextInfo(cell)
+		except (COMError, RuntimeError):
+			raise LookupError
