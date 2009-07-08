@@ -103,16 +103,24 @@ bool VBufStorage_fieldNode_t::matchAttributes(const std::wstring& attribsString)
 		DEBUG_MSG(L"Checking for attrib "<<i->first);
 		VBufStorage_attributeMap_t::iterator foundIterator=attributes.find(i->first);
 		const std::wstring& foundValue=(foundIterator!=attributes.end())?foundIterator->second:L"";
+		wstring foundValueTrailingSpaces=L" "+foundValue+L" ";
 		DEBUG_MSG(L"node's value for this attribute is "<<foundValue);
 		multiValueAttribsMap::iterator upperBound=attribsMap.upper_bound(i->first);
 		bool innerMatch=false;
 		for(multiValueAttribsMap::iterator j=i;j!=upperBound;j++) { 
+			i=j;
+			if(innerMatch)
+				continue;
 			DEBUG_MSG(L"Checking value "<<j->second);
-			if(!innerMatch&&(j->second==foundValue)) {
+			if(
+				// Word match.
+				(j->second.compare(0, 2, L"~w")==0&&foundValueTrailingSpaces.find(L" "+j->second.substr(2)+L" ")!=wstring::npos)
+				// Full match.
+				||(j->second==foundValue)
+			) {
 				DEBUG_MSG(L"values match");
 				innerMatch=true;
 			}
-			i=j;
 		}
 		outerMatch=innerMatch;
 		if(!outerMatch) { 
