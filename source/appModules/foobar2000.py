@@ -29,7 +29,7 @@ class AppModule(_default.AppModule):
 
 	def getElapsedAndTotal(self):
 		if not self.statusBar: return None
-		text = api.getStatusBarText(self.statusBar)
+		text = self.statusBar.firstChild.name
 		try:
 			ltime = text.split("|")[4].split(" / ")
 		except IndexError:
