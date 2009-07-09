@@ -1,4 +1,4 @@
-from . import VirtualBuffer, VirtualBufferTextInfo
+from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
 import virtualBufferHandler
 import controlTypes
 import NVDAObjects.IAccessible
@@ -8,6 +8,7 @@ from logHandler import log
 import textInfos
 from comtypes.gen.IAccessible2Lib import IAccessible2
 from comtypes import COMError
+import aria
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
@@ -26,12 +27,17 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 			role=controlTypes.ROLE_TEXTFRAME
 		level=attrs.get('IAccessible2::attribute_level',"")
+		xmlRoles=attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
+		# Get the first landmark role, if any.
+		landmark=next((xr for xr in xmlRoles if xr in aria.landmarkRoles),None)
 		newAttrs=textInfos.ControlField()
 		newAttrs.update(attrs)
 		newAttrs['role']=role
 		newAttrs['states']=states
 		if level is not "" and level is not None:
 			newAttrs['level']=level
+		if landmark:
+			newAttrs["landmark"]=landmark
 		return newAttrs
 
 class Gecko_ia2(VirtualBuffer):
@@ -154,6 +160,8 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible2::attribute_tag":["BLOCKQUOTE"]}
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
+		elif nodeType=="landmark":
+			attrs={"IAccessible2::attribute_xml-roles":[VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]}
 		else:
 			return None
 		return attrs

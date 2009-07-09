@@ -26,10 +26,14 @@ import queueHandler
 from logHandler import log
 import keyUtils
 import ui
+import aria
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
 VBufStorage_findDirection_up=2
+
+def VBufStorage_findMatch_word(word):
+	return "~w%s" % word
 
 def dictToMultiValueAttribsString(d):
 	mainList=[]
@@ -169,6 +173,14 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# Therefore, get the text in block (paragraph) chunks and join the chunks with \r\n.
 		blocks = (block.strip("\r\n") for block in self.getTextInChunks(textInfos.UNIT_PARAGRAPH))
 		return api.copyToClip("\r\n".join(blocks))
+
+	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
+		textList = []
+		landmark = attrs.get("landmark")
+		if fieldType == "start_addedToControlFieldStack" and landmark:
+			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
+		textList.append(super(VirtualBufferTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
+		return " ".join(textList)
 
 class VirtualBuffer(cursorManager.CursorManager):
 
@@ -920,4 +932,6 @@ qn("blockQuote", key="q", nextDoc=_("moves to the next block quote"), nextError=
 	prevDoc=_("moves to the previous block quote"), prevError=_("no previous block quote"))
 qn("notLinkBlock", key="n", nextDoc=_("skips forward past a block of links"), nextError=_("no more text after a block of links"),
 	prevDoc=_("skips backward past a block of links"), prevError=_("no more text before a block of links"), readUnit=textInfos.UNIT_LINE)
+qn("landmark", key=";", nextDoc=_("moves to the next landmark"), nextError=_("no next landmark"),
+	prevDoc=_("moves to the previous landmark"), prevError=_("no previous landmark"), readUnit=textInfos.UNIT_LINE)
 del qn
