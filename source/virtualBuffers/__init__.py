@@ -26,6 +26,7 @@ import queueHandler
 from logHandler import log
 import keyUtils
 import ui
+import aria
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
@@ -172,6 +173,14 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# Therefore, get the text in block (paragraph) chunks and join the chunks with \r\n.
 		blocks = (block.strip("\r\n") for block in self.getTextInChunks(textInfos.UNIT_PARAGRAPH))
 		return api.copyToClip("\r\n".join(blocks))
+
+	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
+		textList = []
+		landmark = attrs.get("landmark")
+		if fieldType == "start_addedToControlFieldStack" and landmark:
+			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
+		textList.append(super(VirtualBufferTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
+		return " ".join(textList)
 
 class VirtualBuffer(cursorManager.CursorManager):
 
