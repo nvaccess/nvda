@@ -31,6 +31,9 @@ VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
 VBufStorage_findDirection_up=2
 
+def VBufStorage_findMatch_word(word):
+	return "~w%s" % word
+
 def dictToMultiValueAttribsString(d):
 	mainList=[]
 	for k,v in d.iteritems():
@@ -920,4 +923,6 @@ qn("blockQuote", key="q", nextDoc=_("moves to the next block quote"), nextError=
 	prevDoc=_("moves to the previous block quote"), prevError=_("no previous block quote"))
 qn("notLinkBlock", key="n", nextDoc=_("skips forward past a block of links"), nextError=_("no more text after a block of links"),
 	prevDoc=_("skips backward past a block of links"), prevError=_("no more text before a block of links"), readUnit=textInfos.UNIT_LINE)
+qn("landmark", key=";", nextDoc=_("moves to the next landmark"), nextError=_("no next landmark"),
+	prevDoc=_("moves to the previous landmark"), prevError=_("no previous landmark"), readUnit=textInfos.UNIT_LINE)
 del qn
