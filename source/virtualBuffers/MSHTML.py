@@ -1,4 +1,4 @@
-from . import VirtualBuffer, VirtualBufferTextInfo
+from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
 import virtualBufferHandler
 import controlTypes
 import NVDAObjects.IAccessible.MSHTML
@@ -6,7 +6,7 @@ import winUser
 import IAccessibleHandler
 from logHandler import log
 import textInfos
-
+import aria
 
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
@@ -52,6 +52,9 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_READONLY)
 		if role==controlTypes.ROLE_UNKNOWN:
 			role=controlTypes.ROLE_TEXTFRAME
+		ariaRoles=attrs.get("HTMLAttrib::role", "").split(" ")
+		# Get the first landmark role, if any.
+		landmark=next((ar for ar in ariaRoles if ar in aria.landmarkRoles),None)
 		newAttrs=textInfos.ControlField()
 		newAttrs.update(attrs)
 		if role:
@@ -59,6 +62,8 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		newAttrs['states']=states
 		if level:
 			newAttrs["level"] = level
+		if landmark:
+			newAttrs["landmark"]=landmark
 		return newAttrs
 
 class MSHTML(VirtualBuffer):
@@ -137,6 +142,8 @@ class MSHTML(VirtualBuffer):
 			attrs = {"IHTMLDOMNode::nodeName": ["FRAME","IFRAME"]}
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
+		elif nodeType=="landmark":
+			attrs={"HTMLAttrib::role":[VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]}
 		else:
 			return None
 		return attrs
