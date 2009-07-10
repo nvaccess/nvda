@@ -198,7 +198,10 @@ def isInstalledCopy():
 	except WindowsError:
 		return False
 	_winreg.CloseKey(k)
-	return os.stat(instDir)==os.stat(os.getcwdu()) 
+	try:
+		return os.stat(instDir)==os.stat(os.getcwdu()) 
+	except WindowsError:
+		return False
 
 def getUserDefaultConfigPath():
 	if isInstalledCopy():
