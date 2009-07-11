@@ -244,19 +244,26 @@ class ElementsListDialog(wx.Dialog):
 		caret.expand("character")
 
 		defaultTreeItem = None
+		lastElement = None
 		for node, start, end in self.vbuf._iterNodesByType(elType):
 			element = self.vbuf.makeTextInfo(textInfos.offsets.Offsets(start, end))
-			treeItem = self.tree.AppendItem(self.treeRoot, self.getElementText(element, elType))
+			# If this should be lower in the hierarchy than the last element, use the last tree item as the parent.
+			parentTreeItem = treeItem if lastElement and self.isChildElement(lastElement, element) else self.treeRoot
+			treeItem = self.tree.AppendItem(parentTreeItem, self.getElementText(element, elType))
 			self.tree.SetItemPyData(treeItem, element)
 			if defaultTreeItem is None and (element.isOverlapping(caret) or element.compareEndPoints(caret, "startToStart") > 0):
 				# The caret is inside this element or was not inside a matching element, so make this the default selection.
 				defaultTreeItem = treeItem
+			lastElement = element
 
 		if defaultTreeItem:
 			self.tree.SelectItem(defaultTreeItem)
 
 	def getElementText(self, element, elType):
 		return element.text
+
+	def isChildElement(self, parent, child):
+		return parent.isOverlapping(child)
 
 	def onTreeChar(self, evt):
 		if evt.GetKeyCode() == wx.WXK_RETURN:
