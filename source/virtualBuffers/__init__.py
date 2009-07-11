@@ -1,22 +1,16 @@
 import ctypes
-import weakref
-import time
 import os
 import XMLFormatting
-import baseObject
 from keyUtils import sendKey
 import scriptHandler
 from scriptHandler import isScriptWaiting
 import speech
 import NVDAObjects
-import winUser
 import api
 import sayAllHandler
 import controlTypes
 import textInfos.offsets
-import globalVars
 import config
-import api
 import cursorManager
 from gui import scriptUI
 import virtualBufferHandler
@@ -24,7 +18,6 @@ import eventHandler
 import braille
 import queueHandler
 from logHandler import log
-import keyUtils
 import ui
 import aria
 
@@ -594,11 +587,11 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def script_tab(self, keyPress):
 		if not self._tabOverride("next"):
-			keyUtils.sendKey(keyPress)
+			sendKey(keyPress)
 
 	def script_shiftTab(self, keyPress):
 		if not self._tabOverride("previous"):
-			keyUtils.sendKey(keyPress)
+			sendKey(keyPress)
 
 	def event_focusEntered(self,obj,nextHandler):
 		if self.passThrough:
