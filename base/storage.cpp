@@ -43,10 +43,10 @@ bool VBufStorage_controlFieldNodeIdentifier_t::operator==(const VBufStorage_cont
 
 //field  node implementation
 
-VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::nextNodeByDepthFirst(bool moveBackwards, VBufStorage_fieldNode_t* limitNode, int *relativeStartOffset) {
+VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::nextNodeInTree(int direction, VBufStorage_fieldNode_t* limitNode, int *relativeStartOffset) {
 	int relativeOffset=0;
 	VBufStorage_fieldNode_t* tempNode=this;
-	if(!moveBackwards) {
+	if(direction==TREEDIRECTION_FORWARD) {
 		DEBUG_MSG(L"moving forward");
 		if(tempNode->firstChild!=NULL) {
 			DEBUG_MSG(L"Moving to first child");
@@ -65,8 +65,26 @@ VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::nextNodeByDepthFirst(bool move
 			relativeOffset=this->length;
 			tempNode=tempNode->next;
 		}
-	} else {
+	} else if(direction==TREEDIRECTION_BACK) {
 		DEBUG_MSG(L"Moving backwards");
+		if(tempNode->previous!=NULL) {
+			if(tempNode->previous==limitNode) return NULL;
+			DEBUG_MSG(L"Using previous node");
+			tempNode=tempNode->previous;
+			while(tempNode->lastChild!=NULL&&tempNode->lastChild!=limitNode) {
+				DEBUG_MSG(L"Using lastChild");
+				tempNode=tempNode->lastChild;
+			}
+			relativeOffset-=tempNode->length;
+		} else if(tempNode->parent!=NULL) {
+			DEBUG_MSG(L"Using parent");
+			tempNode=tempNode->parent;
+		} else {
+			DEBUG_MSG(L"No parent or previous, returning NULL");
+			return NULL;
+		}
+	} else if(direction==TREEDIRECTION_SYMMETRICAL_BACK) {
+		DEBUG_MSG(L"Moving symmetrical backwards");
 		if(tempNode->lastChild!=NULL) {
 			DEBUG_MSG(L"Moving to last child");
 			tempNode=tempNode->lastChild;
@@ -842,7 +860,7 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 	DEBUG_MSG(L"initial start is "<<bufferStart<<L" and initial end is "<<bufferEnd);
 	if(direction==VBufStorage_findDirection_forward) {
 		DEBUG_MSG(L"searching forward");
-		for(node=node->nextNodeByDepthFirst(false,NULL,&tempRelativeStart);node!=NULL;node=node->nextNodeByDepthFirst(false,NULL,&tempRelativeStart)) {
+		for(node=node->nextNodeInTree(TREEDIRECTION_FORWARD,NULL,&tempRelativeStart);node!=NULL;node=node->nextNodeInTree(TREEDIRECTION_FORWARD,NULL,&tempRelativeStart)) {
 			bufferStart+=tempRelativeStart;
 			bufferEnd=bufferStart+node->length;
 			DEBUG_MSG(L"start is now "<<bufferStart<<L" and end is now "<<bufferEnd);
@@ -854,11 +872,18 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 		}
 	} else if(direction==VBufStorage_findDirection_back) {
 		DEBUG_MSG(L"searching back");
-		for(node=node->nextNodeByDepthFirst(true,NULL,&tempRelativeStart);node!=NULL;node=node->nextNodeByDepthFirst(true,NULL,&tempRelativeStart)) {
+		bool skippedFirstMatch=false;
+		for(node=node->nextNodeInTree(TREEDIRECTION_BACK,NULL,&tempRelativeStart);node!=NULL;node=node->nextNodeInTree(TREEDIRECTION_BACK,NULL,&tempRelativeStart)) {
 			bufferStart+=tempRelativeStart;
 			bufferEnd=bufferStart+node->length;
 			DEBUG_MSG(L"start is now "<<bufferStart<<L" and end is now "<<bufferEnd);
 			if(node->length>0&&node->matchAttributes(attribsString)) {
+				//Skip first containing parent match or parent match where offset hasn't changed 
+				if((bufferStart==offset)||(!skippedFirstMatch&&bufferStart<offset&&bufferEnd>offset)) {
+					DEBUG_MSG(L"skipping initial parent");
+					skippedFirstMatch=true;
+					continue;
+				}
 				DEBUG_MSG(L"found match");
 				break;
 			}
@@ -944,7 +969,7 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 			}
 		}
 		//Move on to the next node.
-		node = node->nextNodeByDepthFirst(false,limitNode,&tempRelativeStart);
+		node = node->nextNodeInTree(TREEDIRECTION_FORWARD,limitNode,&tempRelativeStart);
 		//If not using screen layout, make sure not to pass in to another control field node
 		if(node&&((!useScreenLayout&&node->firstChild)||node->isBlock)) {
 			node=NULL;
@@ -993,7 +1018,7 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 			}
 		}
 		//Move on to the previous node.
-		node = node->nextNodeByDepthFirst(true,limitNode,&tempRelativeStart);
+		node = node->nextNodeInTree(TREEDIRECTION_SYMMETRICAL_BACK,limitNode,&tempRelativeStart);
 		//If not using screen layout, make sure not to pass in to another control field node
 		if(node&&((!useScreenLayout&&node->firstChild)||node->isBlock)) {
 			node=NULL;

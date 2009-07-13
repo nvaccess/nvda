@@ -24,6 +24,15 @@ typedef enum {
 	VBufStorage_findDirection_up
 } VBufStorage_findDirection_t;
 
+/**
+ * values defining the direction to walk a tree
+ */
+typedef enum {
+	TREEDIRECTION_FORWARD,
+	TREEDIRECTION_BACK,
+	TREEDIRECTION_SYMMETRICAL_BACK
+} TreeDirection;
+
 class VBUFLIBENTRY VBufStorage_buffer_t;
 class VBUFLIBENTRY VBufStorage_fieldNode_t;
 class VBUFLIBENTRY VBufStorage_controlFieldNode_t;
@@ -123,12 +132,12 @@ class VBufStorage_fieldNode_t {
 
 /**
  * moves to the next node, in depth-first order.
-* @param moveBackwards if true then it will use lastChild and previous, rather than firstChild and next.
+* @param direction the direction to walk
  * @param limitNode the node which can not be passed
  * @param relativeStartOffset memory to place the start offset of the next node relative to the start offset of the original node
  * @return the next node.
  */
-	VBufStorage_fieldNode_t* nextNodeByDepthFirst(bool moveBackwards, VBufStorage_fieldNode_t* limitNode, int *relativeStartOffset);
+	VBufStorage_fieldNode_t* nextNodeInTree(int direction, VBufStorage_fieldNode_t* limitNode, int *relativeStartOffset);
 
 /**
  * work out if the attributes in the given string exist on this node.
