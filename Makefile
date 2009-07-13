@@ -14,13 +14,13 @@ BACKEND=""
 !endif
 
 all: 
-	if not EXIST $(OUTDIR) mkdir $(OUTDIR)
-	if not $(BACKEND)=="" cd backends\$(BACKEND) && $(MAKE) /nologo DEBUG=$(DEBUG) 
-	-if $(BACKEND)=="" cd backends\gecko_ia2 && $(MAKE) /nologo DEBUG=$(DEBUG) 
-	-if $(BACKEND)=="" cd backends\mshtml && $(MAKE) /nologo DEBUG=$(DEBUG) 
-	-if $(BACKEND)=="" cd backends\adobeAcrobat && $(MAKE) /nologo DEBUG=$(DEBUG) 
 	cd base && $(MAKE) /nologo DEBUG=$(DEBUG)
 	cd client && $(MAKE) /nologo DEBUG=$(DEBUG)
+	if not EXIST $(OUTDIR) mkdir $(OUTDIR)
+	if not $(BACKEND)=="" cd backends\$(BACKEND) && $(MAKE) /nologo DEBUG=$(DEBUG) 
+	if $(BACKEND)=="" cd backends\gecko_ia2 && $(MAKE) /nologo DEBUG=$(DEBUG) 
+	if $(BACKEND)=="" cd backends\mshtml && $(MAKE) /nologo DEBUG=$(DEBUG) 
+	if $(BACKEND)=="" cd backends\adobeAcrobat && $(MAKE) /nologo DEBUG=$(DEBUG) 
 
 test:
 	if not EXIST $(OUTDIR) mkdir $(OUTDIR)
