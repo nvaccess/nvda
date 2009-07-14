@@ -693,7 +693,19 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	level=attrs.get('level',None)
-	tableID=attrs.get('table-id')
+	if formatConfig["includeLayoutTables"]:
+		tableLayout=None
+	else:
+		tableLayout=attrs.get('table-layout',None)
+		if tableLayout is None:
+			for x in reversed(ancestorAttrs):
+				tableLayout=x.get('table-layout',None)
+				if tableLayout is not None:
+					break
+	if not tableLayout:
+		tableID=attrs.get('table-id')
+	else:
+		tableID=None
 	if reason in (REASON_CARET,REASON_SAYALL,REASON_FOCUS) and (
 		(role==controlTypes.ROLE_LINK and not formatConfig["reportLinks"]) or 
 		(role==controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"]) or
@@ -732,7 +744,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
 	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
 		return " ".join((roleText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount"))))
-	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states) or (role==controlTypes.ROLE_TABLE and "table-id" in attrs)):
+	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states) or (role==controlTypes.ROLE_TABLE and not tableLayout and "table-id" in attrs)):
 		return _("out of %s")%roleText
 	elif fieldType=="start_addedToControlFieldStack" and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER,controlTypes.ROLE_TABLEROWHEADER) and tableID:
 		return getSpeechTextForProperties(_tableID=tableID, rowNumber=attrs.get("table-rownumber"), columnNumber=attrs.get("table-columnnumber"))

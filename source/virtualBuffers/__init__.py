@@ -140,6 +140,12 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return lineStart.value,lineEnd.value
 
 	def _normalizeControlField(self,attrs):
+		tableLayout=attrs.get('table-layout',False)
+		if tableLayout=="1":
+			tableLayout=True
+		else:
+			tableLayout=False
+		attrs['table-layout']=tableLayout
 		return attrs
 
 	def _getLineNumFromOffset(self, offset):
@@ -794,6 +800,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return
 		formatConfig=config.conf["documentFormatting"].copy()
 		formatConfig["reportTables"]=True
+		formatConfig["includeLayoutTables"]=True
 		try:
 			tableID, origRow, origCol, origRowSpan, origColSpan = self._getTableCellCoords(self.selection)
 		except LookupError:
