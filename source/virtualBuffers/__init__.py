@@ -335,8 +335,9 @@ class ElementsListDialog(wx.Dialog):
 
 		elif key == wx.WXK_BACK:
 			# Cancel filtering.
-			self._filterText = ""
-			self.updateFilter()
+			if self._filterText:
+				self._filterText = ""
+				self.updateFilter()
 			# If we don't pass this event on, we miss a subsequent character. No idea why, but it doesn't seem to have any effect anyway.
 			evt.Skip()
 
