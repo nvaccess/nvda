@@ -76,7 +76,23 @@ class MSHTML(VirtualBuffer):
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		if not obj.windowClassName.startswith("Internet Explorer_"):
 			return False
-		return bool(winUser.isDescendantWindow(self.rootDocHandle, obj.windowHandle))
+		#Combo box lists etc are popup windows, so rely on accessibility hierarchi instead of window hierarchi for those.
+		#However only helps in IE8.
+		if obj.windowStyle&winUser.WS_POPUP:
+			parent=obj.parent
+			obj.parent=parent
+			while parent and parent.windowHandle==obj.windowHandle:
+				newParent=parent.parent
+				parent.parent=newParent
+				parent=newParent
+			if parent and parent.windowClassName.startswith('Internet Explorer_'):
+				obj=parent
+		if obj.windowHandle==self.rootDocHandle:
+			return True
+		if winUser.isDescendantWindow(self.rootDocHandle,obj.windowHandle):
+			return True
+		return False
+
 
 	def isAlive(self):
 		root=self.rootNVDAObject
