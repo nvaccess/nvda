@@ -2,6 +2,7 @@ import ctypes
 import weakref
 import time
 import os
+import collections
 import XMLFormatting
 import baseObject
 from keyUtils import sendKey
@@ -189,6 +190,7 @@ class ElementsListDialog(wx.Dialog):
 		("heading", _("&Headings")),
 		("landmark", _("Lan&dmarks")),
 	)
+	Element = collections.namedtuple("Element", ("textInfo", "text", "isChild"))
 
 	def __init__(self, vbuf):
 		self.vbuf = vbuf
@@ -237,27 +239,55 @@ class ElementsListDialog(wx.Dialog):
 			# No other element type can be activated.
 			self.activateButton.Disable()
 			self.SetAffirmativeId(self.moveButton.GetId())
-		# Clear the tree.
-		self.tree.DeleteChildren(self.treeRoot)
+
+		# Gather the elements of this type.
+		self._elements = []
+		self._initialElement = None
 
 		caret = self.vbuf.selection
 		caret.expand("character")
 
-		defaultTreeItem = None
-		lastElement = None
+		lastElInfo = None
 		for node, start, end in self.vbuf._iterNodesByType(elType):
-			element = self.vbuf.makeTextInfo(textInfos.offsets.Offsets(start, end))
-			# If this should be lower in the hierarchy than the last element, use the last tree item as the parent.
-			parentTreeItem = treeItem if lastElement and self.isChildElement(lastElement, element) else self.treeRoot
-			treeItem = self.tree.AppendItem(parentTreeItem, self.getElementText(element, elType))
-			self.tree.SetItemPyData(treeItem, element)
-			if defaultTreeItem is None and (element.isOverlapping(caret) or element.compareEndPoints(caret, "startToStart") > 0):
-				# The caret is inside this element or was not inside a matching element, so make this the default selection.
-				defaultTreeItem = treeItem
-			lastElement = element
+			elInfo = self.vbuf.makeTextInfo(textInfos.offsets.Offsets(start, end))
+			element = self.Element(elInfo, self.getElementText(elInfo, elType), lastElInfo and self.isChildElement(lastElInfo, elInfo))
+			self._elements.append(element)
+			if not self._initialElement and (elInfo.isOverlapping(caret) or elInfo.compareEndPoints(caret, "startToStart") > 0):
+				# The caret is inside this element or was not inside a matching element, so this should be the initially selected element.
+				self._initialElement = element
+			lastElInfo = elInfo
 
-		if defaultTreeItem:
-			self.tree.SelectItem(defaultTreeItem)
+		# Start with no filtering.
+		self._filterText = ""
+		self.updateFilter(newElementType=True)
+
+	def updateFilter(self, newElementType=False):
+		# If this is a new element type, use the element nearest the cursor.
+		# Otherwise, use the currently selected element.
+		defaultElement = self._initialElement if newElementType else self.tree.GetItemPyData(self.tree.GetSelection())
+		# Clear the tree.
+		self.tree.DeleteChildren(self.treeRoot)
+
+		# Populate the tree with elements matching the filter text.
+		item = None
+		defaultItem = None
+		matched = False
+		for element in self._elements:
+			if self._filterText not in element.text.lower():
+				item = None
+				continue
+			matched = True
+			item = self.tree.AppendItem(item if item and element.isChild else self.treeRoot, element.text)
+			self.tree.SetItemPyData(item, element)
+			if element == defaultElement:
+				defaultItem = item
+
+		if self._filterText and not matched:
+			wx.Bell()
+			return
+
+		# If there's no default item, use the first item in the tree.
+		self.tree.SelectItem(defaultItem or self.tree.GetFirstChild(self.treeRoot)[0])
 
 	def getElementText(self, element, elType):
 		return element.text
@@ -266,18 +296,35 @@ class ElementsListDialog(wx.Dialog):
 		return parent.isOverlapping(child)
 
 	def onTreeChar(self, evt):
-		if evt.GetKeyCode() == wx.WXK_RETURN:
+		key = evt.KeyCode
+
+		if key == wx.WXK_RETURN:
 			# Activate the current default button.
 			evt = wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_ANY)
 			self.FindWindowById(self.GetAffirmativeId()).ProcessEvent(evt)
-			return
-		evt.Skip()
+
+		elif key == wx.WXK_BACK:
+			# Cancel filtering.
+			self._filterText = ""
+			self.updateFilter()
+			# If we don't pass this event on, we miss a subsequent character. No idea why, but it doesn't seem to have any effect anyway.
+			evt.Skip()
+
+		elif key >= wx.WXK_START:
+			# Non-printable character.
+			evt.Skip()
+
+		else:
+			# Filter the list.
+			char = unichr(evt.UnicodeKey)
+			self._filterText += char.lower()
+			self.updateFilter()
 
 	def onAction(self, activate):
 		self.Close()
 
 		item = self.tree.GetSelection()
-		element = self.tree.GetItemPyData(item)
+		element = self.tree.GetItemPyData(item).textInfo
 		newCaret = element.copy()
 		newCaret.collapse()
 		self.vbuf.selection = newCaret
