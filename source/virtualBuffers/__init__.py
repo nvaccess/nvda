@@ -282,6 +282,8 @@ class ElementsListDialog(wx.Dialog):
 			if element == defaultElement:
 				defaultItem = item
 
+		self.tree.ExpandAll()
+
 		if self._filterText and not matched:
 			wx.Bell()
 			return
