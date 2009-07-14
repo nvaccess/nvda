@@ -368,6 +368,8 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	} else if(nodeName.compare(L"INPUT")==0) {
 		macro_addHTMLAttributeToMap(L"type",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 		macro_addHTMLAttributeToMap(L"value",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	} else if(nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0) {
+		macro_addHTMLAttributeToMap(L"headers",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	}
 	macro_addHTMLAttributeToMap(L"alt",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"title",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
@@ -549,6 +551,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		tempStringStream.str(L"");
 		tempStringStream<<tableInfoPtr->tableID;
 		parentNode->addAttribute(L"table-id",tempStringStream.str());
+		//A cell with the headers attribute is definitly a data table
+		tempIter=HTMLAttribsMap.find(L"headers");
+		if(tempIter!=HTMLAttribsMap.end()&&!tempIter->second.empty()) {
+			tableInfoPtr->definitData=true;
+		}
 		if(tableInfoPtr->curRowIndex>0) {
 			tempStringStream.str(L"");
 			tempStringStream<<tableInfoPtr->curRowIndex;
