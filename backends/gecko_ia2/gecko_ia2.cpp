@@ -350,9 +350,9 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	// Don't release the table unless it was created in this call.
 	bool releaseTable = false;
 	// If paccTable is not NULL, we're within a table but not yet within a cell, so don't bother to query for table info.
-	if (!paccTable && (IA2AttribsMapIt = IA2AttribsMap.find(L"layout-guess")) == IA2AttribsMap.end()) {
+	if (!paccTable) {
 		// Try to get table information.
-		DEBUG_MSG(L"paccTable is NULL and this is not a layout table, trying to get table information");
+		DEBUG_MSG(L"paccTable is NULL, trying to get table information");
 		DEBUG_MSG(L"get paccTable with IAccessible2::QueryInterface and IID_IAccessibleTable");
 		if((res=pacc->QueryInterface(IID_IAccessibleTable,(void**)(&paccTable)))!=S_OK&&res!=E_NOINTERFACE) {
 			DEBUG_MSG(L"pacc->QueryInterface, with IID_IAccessibleTable, returned "<<res);
@@ -363,6 +363,10 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 			// We did the QueryInterface for paccTable, so we must release it after all calls that use it are done.
 			releaseTable = true;
 			// This is a table, so add its information as attributes.
+			if((IA2AttribsMapIt = IA2AttribsMap.find(L"layout-guess")) != IA2AttribsMap.end()) {
+				DEBUG_MSG(L"Found a layout table, setting table-layout attrib");
+				parentNode->addAttribute(L"table-layout",L"1");
+			}
 			wostringstream s;
 			tableID = ID;
 			s << ID;
