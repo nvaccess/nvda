@@ -190,7 +190,7 @@ class ElementsListDialog(wx.Dialog):
 		("heading", _("&Headings")),
 		("landmark", _("Lan&dmarks")),
 	)
-	Element = collections.namedtuple("Element", ("textInfo", "text", "isChild"))
+	Element = collections.namedtuple("Element", ("textInfo", "text", "parent"))
 
 	def __init__(self, vbuf):
 		self.vbuf = vbuf
@@ -247,15 +247,30 @@ class ElementsListDialog(wx.Dialog):
 		caret = self.vbuf.selection
 		caret.expand("character")
 
-		lastElInfo = None
+		parentElements = []
 		for node, start, end in self.vbuf._iterNodesByType(elType):
 			elInfo = self.vbuf.makeTextInfo(textInfos.offsets.Offsets(start, end))
-			element = self.Element(elInfo, self.getElementText(elInfo, elType), lastElInfo and self.isChildElement(elType, lastElInfo, elInfo))
+
+			# Find the parent element, if any.
+			for parent in reversed(parentElements):
+				if self.isChildElement(elType, parent.textInfo, elInfo):
+					break
+				else:
+					# We're not a child of this parent, so this parent has no more children and can be removed from the stack.
+					parentElements.pop()
+			else:
+				# No parent found, so we're at the root.
+				# Note that parentElements will be empty at this point, as all parents are no longer relevant and have thus been removed from the stack.
+				parent = None
+
+			element = self.Element(elInfo, self.getElementText(elInfo, elType), parent)
 			self._elements.append(element)
 			if not self._initialElement and (elInfo.isOverlapping(caret) or elInfo.compareEndPoints(caret, "startToStart") > 0):
 				# The caret is inside this element or was not inside a matching element, so this should be the initially selected element.
 				self._initialElement = element
-			lastElInfo = elInfo
+
+			# This could be the parent of a subsequent element, so add it to the parents stack.
+			parentElements.append(element)
 
 		# Start with no filtering.
 		self._filterText = ""
@@ -269,6 +284,7 @@ class ElementsListDialog(wx.Dialog):
 		self.tree.DeleteChildren(self.treeRoot)
 
 		# Populate the tree with elements matching the filter text.
+		elementsToTreeItems = {}
 		item = None
 		defaultItem = None
 		matched = False
@@ -277,8 +293,11 @@ class ElementsListDialog(wx.Dialog):
 				item = None
 				continue
 			matched = True
-			item = self.tree.AppendItem(item if item and element.isChild else self.treeRoot, element.text)
+			parent = element.parent
+			parent = elementsToTreeItems[parent] if parent else self.treeRoot
+			item = self.tree.AppendItem(parent, element.text)
 			self.tree.SetItemPyData(item, element)
+			elementsToTreeItems[element] = item
 			if element == defaultElement:
 				defaultItem = item
 
