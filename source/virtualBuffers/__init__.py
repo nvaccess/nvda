@@ -289,8 +289,26 @@ class ElementsListDialog(wx.Dialog):
 		# If there's no default item, use the first item in the tree.
 		self.tree.SelectItem(defaultItem or self.tree.GetFirstChild(self.treeRoot)[0])
 
-	def getElementText(self, element, elType):
-		return element.text
+	def _getControlFieldAttrib(self, info, attrib):
+		info = info.copy()
+		info.expand(textInfos.UNIT_CHARACTER)
+		for field in reversed(info.getTextWithFields()):
+			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
+				# Not a control field.
+				continue
+			val = field.field.get(attrib)
+			if val:
+				return val
+		return None
+
+	def getElementText(self, elInfo, elType):
+		if elType == "landmark":
+			landmark = self._getControlFieldAttrib(elInfo, "landmark")
+			if landmark:
+				return aria.landmarkRoles[landmark]
+
+		else:
+			return elInfo.text.strip()
 
 	def isChildElement(self, parent, child):
 		return parent.isOverlapping(child)
