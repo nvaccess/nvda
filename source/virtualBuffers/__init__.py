@@ -250,7 +250,7 @@ class ElementsListDialog(wx.Dialog):
 		lastElInfo = None
 		for node, start, end in self.vbuf._iterNodesByType(elType):
 			elInfo = self.vbuf.makeTextInfo(textInfos.offsets.Offsets(start, end))
-			element = self.Element(elInfo, self.getElementText(elInfo, elType), lastElInfo and self.isChildElement(lastElInfo, elInfo))
+			element = self.Element(elInfo, self.getElementText(elInfo, elType), lastElInfo and self.isChildElement(elType, lastElInfo, elInfo))
 			self._elements.append(element)
 			if not self._initialElement and (elInfo.isOverlapping(caret) or elInfo.compareEndPoints(caret, "startToStart") > 0):
 				# The caret is inside this element or was not inside a matching element, so this should be the initially selected element.
@@ -310,8 +310,18 @@ class ElementsListDialog(wx.Dialog):
 		else:
 			return elInfo.text.strip()
 
-	def isChildElement(self, parent, child):
-		return parent.isOverlapping(child)
+	def isChildElement(self, elType, parent, child):
+		if parent.isOverlapping(child):
+			return True
+
+		elif elType == "heading":
+			try:
+				if int(self._getControlFieldAttrib(child, "level")) > int(self._getControlFieldAttrib(parent, "level")):
+					return True
+			except (ValueError, TypeError):
+				return False
+
+		return False
 
 	def onTreeChar(self, evt):
 		key = evt.KeyCode
