@@ -30,6 +30,11 @@ class CDispatchChangeSink : public IDispatch {
 		this->allowDelete=true;
 		assert(storageNode);
 		this->storageNode=storageNode;
+		incBackendLibRefCount();
+	}
+
+	~CDispatchChangeSink() {
+		decBackendLibRefCount();
 	}
 
 	void CDispatchChangeSink::onChange() {
@@ -123,6 +128,7 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 			pMarkupServices2->CreateMarkupPointer(&(this->pMarkupPointerEnd));
 			pMarkupServices2->Release();
 		}
+		incBackendLibRefCount();
 	}
 
 	~CHTMLChangeSink() {
@@ -132,6 +138,7 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 		if(this->pMarkupPointerEnd) {
 			this->pMarkupPointerEnd->Release();
 		}
+		decBackendLibRefCount();
 	}
 
 	HRESULT STDMETHODCALLTYPE IUnknown::QueryInterface(REFIID riid, void** pvpObject) {

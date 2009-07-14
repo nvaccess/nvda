@@ -19,6 +19,8 @@ typedef struct {
 	bool definitData;
 } fillVBuf_tableInfo;
 
+void incBackendLibRefCount();
+void decBackendLibRefCount();
 
 class MshtmlVBufBackend_t: public VBufBackend_t {
 	private:
