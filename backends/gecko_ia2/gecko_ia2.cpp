@@ -696,7 +696,7 @@ void CALLBACK mainThreadTimerProc(HWND hwnd, UINT msg, UINT_PTR timerID, DWORD t
 	DEBUG_MSG(L"All updated");
 }
 
-bool getNodeChildOf(HWND* hwnd, long* childID) {
+bool getDocumentFrame(HWND* hwnd, long* childID) {
 	int res;
 	IAccessible2* pacc=IAccessible2FromIdentifier((int)*hwnd,*childID);
 	if (!pacc) {
@@ -735,6 +735,14 @@ bool getNodeChildOf(HWND* hwnd, long* childID) {
 
 	if(parentPacc==pacc) {
 		DEBUG_MSG(L"parentPacc and pacc are equal, bad relation");
+		parentPacc->Release();
+		pacc->Release();
+		return false;
+	}
+
+	long role;
+	if((res=parentPacc->role(&role))!=S_OK||role!=IA2_ROLE_INTERNAL_FRAME) {
+		DEBUG_MSG(L"parentPacc is not a frame");
 		parentPacc->Release();
 		pacc->Release();
 		return false;
@@ -802,14 +810,14 @@ void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	DEBUG_MSG(L"found active backend for this window at "<<backend);
 	VBufStorage_buffer_t* buffer=backend->getStorageBuffer();
 	VBufStorage_controlFieldNode_t* node=buffer->getControlFieldNodeWithIdentifier(docHandle,ID);
-	if(node==NULL&&docHandle!=backend->getRootDocHandle()&&eventID==EVENT_OBJECT_STATECHANGE) {
-		// This event is probably due to a new document loading in a subframe.
-		// Gecko doesn't fire a reorder on the iframe, so we need to use NODE_CHILD_OF in this case so that frames will reload.
-		#ifdef DEBUG
-		Beep(2000,50);
-		#endif
+	if(node==NULL&&eventID==EVENT_OBJECT_STATECHANGE) {
+		// This event is possibly due to a new document loading in a subframe.
+		// Gecko doesn't fire a reorder on the iframe (Mozilla bug 420845), so we need to use NODE_CHILD_OF in this case so that frames will reload.
 		DEBUG_MSG(L"State change on an unknown node in a subframe, try NODE_CHILD_OF");
-		if (getNodeChildOf(&hwnd, &childID)) {
+		if (getDocumentFrame(&hwnd, &childID)) {
+			#ifdef DEBUG
+			Beep(2000,50);
+			#endif
 			DEBUG_MSG(L"Got NODE_CHILD_OF, recursing");
 			mainThreadWinEventCallback(hookID,eventID,hwnd,OBJID_CLIENT,childID,threadID,time);
 		} else {
