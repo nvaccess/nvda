@@ -1,5 +1,6 @@
 import ctypes
 import os
+import collections
 import XMLFormatting
 from keyUtils import sendKey
 import scriptHandler
@@ -12,7 +13,8 @@ import controlTypes
 import textInfos.offsets
 import config
 import cursorManager
-from gui import scriptUI
+import gui
+import wx
 import virtualBufferHandler
 import eventHandler
 import braille
@@ -180,6 +182,219 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
 		textList.append(super(VirtualBufferTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
 		return " ".join(textList)
+
+class ElementsListDialog(wx.Dialog):
+	ELEMENT_TYPES = (
+		("link", _("Lin&ks")),
+		("heading", _("&Headings")),
+		("landmark", _("Lan&dmarks")),
+	)
+	Element = collections.namedtuple("Element", ("textInfo", "text", "parent"))
+
+	def __init__(self, vbuf):
+		self.vbuf = vbuf
+		super(ElementsListDialog, self).__init__(gui.mainFrame, wx.ID_ANY, _("Elements List"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+		child = wx.RadioBox(self, wx.ID_ANY, label=_("Type:"), choices=tuple(et[1] for et in self.ELEMENT_TYPES))
+		child.Bind(wx.EVT_RADIOBOX, self.onElementTypeChange)
+		mainSizer.Add(child)
+
+		self.tree = wx.TreeCtrl(self, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE)
+		# The enter key should be propagated to the dialog and thus activate the default button,
+		# but this is broken (wx ticket #3725).
+		# Therefore, we must catch the enter key here.
+		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
+		self.treeRoot = self.tree.AddRoot("root")
+		mainSizer.Add(self.tree)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		self.activateButton = wx.Button(self, wx.ID_ANY, _("&Activate"))
+		self.activateButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(True))
+		sizer.Add(self.activateButton)
+		self.moveButton = wx.Button(self, wx.ID_ANY, _("&Move to"))
+		self.moveButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(False))
+		sizer.Add(self.moveButton)
+		sizer.Add(wx.Button(self, wx.ID_CANCEL))
+		mainSizer.Add(sizer)
+
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+
+		self.tree.SetFocus()
+		self.initElementType(self.ELEMENT_TYPES[0][0])
+
+	def onElementTypeChange(self, evt):
+		# We need to make sure this gets executed after the focus event.
+		# Otherwise, NVDA doesn't seem to get the event.
+		queueHandler.queueFunction(queueHandler.eventQueue, self.initElementType, self.ELEMENT_TYPES[evt.GetInt()][0])
+
+	def initElementType(self, elType):
+		if elType == "link":
+			# Links can be activated.
+			self.activateButton.Enable()
+			self.SetAffirmativeId(self.activateButton.GetId())
+		else:
+			# No other element type can be activated.
+			self.activateButton.Disable()
+			self.SetAffirmativeId(self.moveButton.GetId())
+
+		# Gather the elements of this type.
+		self._elements = []
+		self._initialElement = None
+
+		caret = self.vbuf.selection
+		caret.expand("character")
+
+		parentElements = []
+		for node, start, end in self.vbuf._iterNodesByType(elType):
+			elInfo = self.vbuf.makeTextInfo(textInfos.offsets.Offsets(start, end))
+
+			# Find the parent element, if any.
+			for parent in reversed(parentElements):
+				if self.isChildElement(elType, parent.textInfo, elInfo):
+					break
+				else:
+					# We're not a child of this parent, so this parent has no more children and can be removed from the stack.
+					parentElements.pop()
+			else:
+				# No parent found, so we're at the root.
+				# Note that parentElements will be empty at this point, as all parents are no longer relevant and have thus been removed from the stack.
+				parent = None
+
+			element = self.Element(elInfo, self.getElementText(elInfo, elType), parent)
+			self._elements.append(element)
+
+			if not self._initialElement and elInfo.compareEndPoints(caret, "startToStart") > 0:
+				# The element immediately preceding or overlapping the caret should be the initially selected element.
+				# This element immediately follows the caret, so we want the previous element.
+				try:
+					self._initialElement = self._elements[-2]
+				except IndexError:
+					# No previous element.
+					pass
+
+			# This could be the parent of a subsequent element, so add it to the parents stack.
+			parentElements.append(element)
+
+		# Start with no filtering.
+		self._filterText = ""
+		self.updateFilter(newElementType=True)
+
+	def updateFilter(self, newElementType=False):
+		# If this is a new element type, use the element nearest the cursor.
+		# Otherwise, use the currently selected element.
+		defaultElement = self._initialElement if newElementType else self.tree.GetItemPyData(self.tree.GetSelection())
+		# Clear the tree.
+		self.tree.DeleteChildren(self.treeRoot)
+
+		# Populate the tree with elements matching the filter text.
+		elementsToTreeItems = {}
+		item = None
+		defaultItem = None
+		matched = False
+		for element in self._elements:
+			if self._filterText not in element.text.lower():
+				item = None
+				continue
+			matched = True
+			parent = element.parent
+			if parent:
+				parent = elementsToTreeItems.get(parent)
+			item = self.tree.AppendItem(parent or self.treeRoot, element.text)
+			self.tree.SetItemPyData(item, element)
+			elementsToTreeItems[element] = item
+			if element == defaultElement:
+				defaultItem = item
+
+		self.tree.ExpandAll()
+
+		if self._filterText and not matched:
+			wx.Bell()
+			return
+
+		# If there's no default item, use the first item in the tree.
+		self.tree.SelectItem(defaultItem or self.tree.GetFirstChild(self.treeRoot)[0])
+
+	def _getControlFieldAttrib(self, info, attrib):
+		info = info.copy()
+		info.expand(textInfos.UNIT_CHARACTER)
+		for field in reversed(info.getTextWithFields()):
+			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
+				# Not a control field.
+				continue
+			val = field.field.get(attrib)
+			if val:
+				return val
+		return None
+
+	def getElementText(self, elInfo, elType):
+		if elType == "landmark":
+			landmark = self._getControlFieldAttrib(elInfo, "landmark")
+			if landmark:
+				return aria.landmarkRoles[landmark]
+
+		else:
+			return elInfo.text.strip()
+
+	def isChildElement(self, elType, parent, child):
+		if parent.isOverlapping(child):
+			return True
+
+		elif elType == "heading":
+			try:
+				if int(self._getControlFieldAttrib(child, "level")) > int(self._getControlFieldAttrib(parent, "level")):
+					return True
+			except (ValueError, TypeError):
+				return False
+
+		return False
+
+	def onTreeChar(self, evt):
+		key = evt.KeyCode
+
+		if key == wx.WXK_RETURN:
+			# Activate the current default button.
+			evt = wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_ANY)
+			self.FindWindowById(self.GetAffirmativeId()).ProcessEvent(evt)
+
+		elif key == wx.WXK_BACK:
+			# Cancel filtering.
+			if self._filterText:
+				self._filterText = ""
+				self.updateFilter()
+			# If we don't pass this event on, we miss a subsequent character. No idea why, but it doesn't seem to have any effect anyway.
+			evt.Skip()
+
+		elif key >= wx.WXK_START:
+			# Non-printable character.
+			evt.Skip()
+
+		else:
+			# Filter the list.
+			char = unichr(evt.UnicodeKey)
+			self._filterText += char.lower()
+			self.updateFilter()
+
+	def onAction(self, activate):
+		self.Close()
+
+		item = self.tree.GetSelection()
+		element = self.tree.GetItemPyData(item).textInfo
+		newCaret = element.copy()
+		newCaret.collapse()
+		self.vbuf.selection = newCaret
+
+		if activate:
+			self.vbuf._activatePosition(element)
+		else:
+			wx.CallLater(100, self._reportElement, element)
+
+		self.Destroy()
+
+	def _reportElement(self, element):
+		speech.cancelSpeech()
+		speech.speakTextInfo(element,reason=speech.REASON_FOCUS)
 
 class VirtualBuffer(cursorManager.CursorManager):
 
@@ -436,42 +651,16 @@ class VirtualBuffer(cursorManager.CursorManager):
 		setattr(cls, funcName, script)
 		cls.bindKey("shift+%s" % key, scriptName)
 
-	def script_linksList(self,keyPress):
+	def script_elementsList(self,keyPress):
 		if self.VBufHandle is None:
 			return
-
-		nodes = []
-		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		caretOffset=info._startOffset
-		defaultIndex = None
-		for node, startOffset, endOffset in self._iterNodesByType("link"):
-			if defaultIndex is None:
-				if startOffset <= caretOffset and caretOffset < endOffset:
-					# The caret is inside this link, so make it the default selection.
-					defaultIndex = len(nodes)
-				elif startOffset > caretOffset:
-					# The caret wasn't inside a link, so set the default selection to be the next link.
-					defaultIndex = len(nodes)
-			text = self.makeTextInfo(textInfos.offsets.Offsets(startOffset,endOffset)).text
-			nodes.append((text, startOffset, endOffset))
-
-		def action(args):
-			if args is None:
-				return
-			activate, index, text = args
-			text, startOffset, endOffset = nodes[index]
-			info=self.makeTextInfo(textInfos.offsets.Offsets(startOffset,endOffset))
-			newCaret = info.copy()
-			newCaret.collapse()
-			self.selection = newCaret
-			if activate:
-				self._activatePosition(info)
-			else:
-				speech.cancelSpeech()
-				speech.speakTextInfo(info,reason=speech.REASON_FOCUS)
-
-		scriptUI.LinksListDialog(choices=[node[0] for node in nodes], default=defaultIndex if defaultIndex is not None else 0, callback=action).run()
-	script_linksList.__doc__ = _("displays a list of links")
+		# We need this to be a modal dialog, but it mustn't block this script.
+		def run():
+			gui.mainFrame.prePopup()
+			ElementsListDialog(self).ShowModal()
+			gui.mainFrame.postPopup()
+		wx.CallAfter(run)
+	script_elementsList.__doc__ = _("Presents a list of links, headings or landmarks")
 
 	def shouldPassThrough(self, obj, reason=None):
 		"""Determine whether pass through mode should be enabled or disabled for a given object.
@@ -870,7 +1059,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	("Space","activatePosition"),
 	("NVDA+f5","refreshBuffer"),
 	("NVDA+v","toggleScreenLayout"),
-	("NVDA+f7","linksList"),
+	("NVDA+f7","elementsList"),
 	("escape","disablePassThrough"),
 	("alt+extendedUp","collapseOrExpandControl"),
 	("alt+extendedDown","collapseOrExpandControl"),
