@@ -31,9 +31,13 @@ class AppModule(_default.AppModule):
 				obj.name = None
 			return
 
-		if obj.windowClassName == "#32768" and not obj.parent.parent:
-			# We don't trust the names that Explorer gives to context menus, so better to have no name at all.
-			obj.name = None
+		if obj.windowClassName == "#32768":
+			# Standard menu.
+			parent = obj.parent
+			if not parent.parent:
+				# Context menu.
+				# We don't trust the names that Explorer gives to context menus, so better to have no name at all.
+				obj.name = None
 
 	def event_gainFocus(self, obj, nextHandler):
 		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_MENUITEM and obj.parent.role == controlTypes.ROLE_MENUBAR and eventHandler.isPendingEvents("gainFocus"):
