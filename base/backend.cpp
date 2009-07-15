@@ -63,7 +63,7 @@ void VBufBackend_t::update() {
 			node->getIdentifier(&docHandle,&ID);
 			DEBUG_MSG(L"subtree node has docHandle "<<docHandle<<L" and ID "<<ID);
 			DEBUG_MSG(L"Rendering content");
-			render(tempBuf,docHandle,ID);
+			render(tempBuf,docHandle,ID,node);
 			DEBUG_MSG(L"Rendered content in temp buffer");
 			this->storageBuffer->lock.acquire();
 			DEBUG_MSG(L"Replacing node with content of temp buffer");

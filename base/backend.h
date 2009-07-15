@@ -52,8 +52,9 @@ class VBUFLIBENTRY VBufBackend_t {
  * @param buffer the buffer to render content in.
  * @param docHandle the doc handle to start from
  * @param ID the ID to start from.
+ * @param oldNode an optional node that will be replaced by the rendered content (useful for retreaving cached data) 
  */
-	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID)=0;
+	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode=NULL)=0;
 
 	public:
 

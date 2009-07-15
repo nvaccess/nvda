@@ -27,7 +27,7 @@ class MshtmlVBufBackend_t: public VBufBackend_t {
 
 	int rootThreadID;
 
-	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID);
+	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode=NULL);
 
 	public:
 

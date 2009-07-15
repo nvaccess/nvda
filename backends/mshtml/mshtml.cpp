@@ -765,7 +765,7 @@ LRESULT CALLBACK mainThreadGetMessageHook(int code, WPARAM wParam,LPARAM lParam)
 	return CallNextHookEx(0,code,wParam,lParam);
 }
 
-void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID) {
+void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	DEBUG_MSG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
 	DEBUG_MSG(L"Getting document from window "<<docHandle);
 	int res=SendMessage((HWND)docHandle,WM_HTML_GETOBJECT,0,0);
@@ -773,29 +773,36 @@ void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, in
 		DEBUG_MSG(L"Error getting document using WM_HTML_GETOBJECT");
 		return;
 	}
-	IHTMLDocument3* pHTMLDocument3=NULL;
-	if(ObjectFromLresult(res,IID_IHTMLDocument3,0,(void**)&pHTMLDocument3)!=S_OK) {
-		DEBUG_MSG(L"Error in ObjectFromLresult");
-		return;
-	}
-	DEBUG_MSG(L"Locating DOM node with ID");
-	IHTMLElement* pHTMLElement=NULL;
-	wostringstream s;
-	s<<L"ms__id"<<ID;
-	if(pHTMLDocument3->getElementById((wchar_t*)(s.str().c_str()),(IHTMLElement**)&pHTMLElement)!=S_OK||!pHTMLElement) {
-		DEBUG_MSG(L"Failed to find element with ID"<<s.str().c_str());
+IHTMLDOMNode* pHTMLDOMNode=NULL;
+	if(oldNode!=NULL) {
+		IHTMLElement2* pHTMLElement2=(static_cast<MshtmlVBufStorage_controlFieldNode_t*>(oldNode))->pHTMLElement2;
+		assert(pHTMLElement2);
+		pHTMLElement2->QueryInterface(IID_IHTMLDOMNode,(void**)&pHTMLDOMNode);
+	} else {
+		IHTMLDocument3* pHTMLDocument3=NULL;
+		if(ObjectFromLresult(res,IID_IHTMLDocument3,0,(void**)&pHTMLDocument3)!=S_OK) {
+			DEBUG_MSG(L"Error in ObjectFromLresult");
+			return;
+		}
+		DEBUG_MSG(L"Locating DOM node with ID");
+		IHTMLElement* pHTMLElement=NULL;
+		wostringstream s;
+		s<<L"ms__id"<<ID;
+		if(pHTMLDocument3->getElementById((wchar_t*)(s.str().c_str()),(IHTMLElement**)&pHTMLElement)!=S_OK||!pHTMLElement) {
+			DEBUG_MSG(L"Failed to find element with ID"<<s.str().c_str());
+			pHTMLDocument3->Release();
+			return;
+		}
 		pHTMLDocument3->Release();
-		return;
-	}
-	pHTMLDocument3->Release();
-	DEBUG_MSG(L"queryInterface to IHTMLDOMNode from IHTMLElement");
-	IHTMLDOMNode* pHTMLDOMNode=NULL;
-	if(pHTMLElement->QueryInterface(IID_IHTMLDOMNode,(void**)&pHTMLDOMNode)!=S_OK) {
-		DEBUG_MSG(L"Could not get IHTMLDOMNode");
+		DEBUG_MSG(L"queryInterface to IHTMLDOMNode from IHTMLElement");
+		if(pHTMLElement->QueryInterface(IID_IHTMLDOMNode,(void**)&pHTMLDOMNode)!=S_OK) {
+			DEBUG_MSG(L"Could not get IHTMLDOMNode");
+			pHTMLElement->Release();
+			return;
+		}
 		pHTMLElement->Release();
-		return;
 	}
-	pHTMLElement->Release();
+	assert(pHTMLDOMNode);
 	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,NULL,NULL);
 	pHTMLDOMNode->Release();
 }

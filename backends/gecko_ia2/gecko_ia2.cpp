@@ -885,7 +885,7 @@ LRESULT CALLBACK mainThreadGetMessageHook(int code, WPARAM wParam,LPARAM lParam)
 	return CallNextHookEx(0,code,wParam,lParam);
 }
 
-void GeckoVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID) {
+void GeckoVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	DEBUG_MSG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
 	IAccessible2* pacc=IAccessible2FromIdentifier(docHandle,ID);
 	if(pacc==NULL) {
