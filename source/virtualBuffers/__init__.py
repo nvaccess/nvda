@@ -265,9 +265,15 @@ class ElementsListDialog(wx.Dialog):
 
 			element = self.Element(elInfo, self.getElementText(elInfo, elType), parent)
 			self._elements.append(element)
-			if not self._initialElement and (elInfo.isOverlapping(caret) or elInfo.compareEndPoints(caret, "startToStart") > 0):
-				# The caret is inside this element or was not inside a matching element, so this should be the initially selected element.
-				self._initialElement = element
+
+			if not self._initialElement and elInfo.compareEndPoints(caret, "startToStart") > 0:
+				# The element immediately preceding or overlapping the caret should be the initially selected element.
+				# This element immediately follows the caret, so we want the previous element.
+				try:
+					self._initialElement = self._elements[-2]
+				except IndexError:
+					# No previous element.
+					pass
 
 			# This could be the parent of a subsequent element, so add it to the parents stack.
 			parentElements.append(element)
