@@ -300,8 +300,9 @@ class ElementsListDialog(wx.Dialog):
 				continue
 			matched = True
 			parent = element.parent
-			parent = elementsToTreeItems[parent] if parent else self.treeRoot
-			item = self.tree.AppendItem(parent, element.text)
+			if parent:
+				parent = elementsToTreeItems.get(parent)
+			item = self.tree.AppendItem(parent or self.treeRoot, element.text)
 			self.tree.SetItemPyData(item, element)
 			elementsToTreeItems[element] = item
 			if element == defaultElement:
