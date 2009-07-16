@@ -31,15 +31,14 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		xmlRoles=attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
 		# Get the first landmark role, if any.
 		landmark=next((xr for xr in xmlRoles if xr in aria.landmarkRoles),None)
-		newAttrs=textInfos.ControlField()
-		newAttrs.update(attrs)
-		newAttrs['role']=role
-		newAttrs['states']=states
+
+		attrs['role']=role
+		attrs['states']=states
 		if level is not "" and level is not None:
-			newAttrs['level']=level
+			attrs['level']=level
 		if landmark:
-			newAttrs["landmark"]=landmark
-		return newAttrs
+			attrs["landmark"]=landmark
+		return super(Gecko_ia2_TextInfo,self)._normalizeControlField(attrs)
 
 class Gecko_ia2(VirtualBuffer):
 

@@ -56,16 +56,15 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		ariaRoles=attrs.get("HTMLAttrib::role", "").split(" ")
 		# Get the first landmark role, if any.
 		landmark=next((ar for ar in ariaRoles if ar in aria.landmarkRoles),None)
-		newAttrs=textInfos.ControlField()
-		newAttrs.update(attrs)
+
 		if role:
-			newAttrs['role']=role
-		newAttrs['states']=states
+			attrs['role']=role
+		attrs['states']=states
 		if level:
-			newAttrs["level"] = level
+			attrs["level"] = level
 		if landmark:
-			newAttrs["landmark"]=landmark
-		return newAttrs
+			attrs["landmark"]=landmark
+		return super(MSHTMLTextInfo,self)._normalizeControlField(attrs)
 
 class MSHTML(VirtualBuffer):
 
