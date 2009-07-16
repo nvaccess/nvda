@@ -79,7 +79,7 @@ outputDevice = string(default=default)
 	reportTextUnderMouse = boolean(default=True)
 	mouseTextUnit = string(default="paragraph")
 	reportObjectRoleOnMouseEnter = boolean(default=False)
-	audioCoordinatesOnMouseMove = boolean(default=True)
+	audioCoordinatesOnMouseMove = boolean(default=False)
 	audioCoordinates_detectBrightness = boolean(default=False)
 	audioCoordinates_blurFactor = integer(default=3)
 	audioCoordinates_minVolume = float(default=0.1)
@@ -121,6 +121,7 @@ outputDevice = string(default=default)
 	reportPage = boolean(default=true)
 	reportLineNumber = boolean(default=False)
 	reportTables = boolean(default=true)
+	includeLayoutTables = boolean(default=False)
 	reportLinks = boolean(default=true)
 	reportLists = boolean(default=true)
 	reportHeadings = boolean(default=true)
@@ -198,7 +199,10 @@ def isInstalledCopy():
 	except WindowsError:
 		return False
 	_winreg.CloseKey(k)
-	return os.stat(instDir)==os.stat(os.getcwdu()) 
+	try:
+		return os.stat(instDir)==os.stat(os.getcwdu()) 
+	except WindowsError:
+		return False
 
 def getUserDefaultConfigPath():
 	if isInstalledCopy():

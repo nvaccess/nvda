@@ -8,6 +8,7 @@ import weakref
 import re
 import baseObject
 import config
+import speech
 
 class Field(dict):
 	"""The base type for fields in textInfo objects"""
@@ -305,6 +306,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 				chunkInfo.setEndPoint(self,"endToEnd")
 			yield chunkInfo.text
 			unitInfo.collapse(end=True)
+
+	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
+		return speech.getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason)
 
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):

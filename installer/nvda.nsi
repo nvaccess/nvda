@@ -47,7 +47,7 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 Name "NVDA"
 VIProductVersion "0.0.0.0" ;Needs to be here so other version info shows up
 VIAddVersionKey "ProductName" "${PRODUCT}"
-VIAddVersionKey "LegalCopyright" "Copyright 2006 - 2008 NVDA Contributers <http://www.nvda-project.org/>"
+VIAddVersionKey "LegalCopyright" "Copyright 2006 - 2009 NVDA Contributors <http://www.nvda-project.org/>"
 VIAddVersionKey "FileDescription" "NVDA installer file"
 VIAddVersionKey "ProductVersion" "${VERSION}"
 
@@ -204,6 +204,7 @@ CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_exploreUserSettingsDir).lnk" "$INSTDIR\nvda_slave.exe" "explore_userConfigPath" "" 0 SW_SHOWNORMAL
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_readme).lnk" "$INSTDIR\documentation\$(path_readmefile)" "" "$INSTDIR\documentation\$(path_readmefile)" 0 SW_SHOWMAXIMIZED
+CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_keycom).lnk" "$INSTDIR\documentation\$(path_keycomfile)" "" "$INSTDIR\documentation\$(path_keycomfile)" 0 SW_SHOWMAXIMIZED
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_userguide).lnk" "$INSTDIR\documentation\$(path_userguide)" "" "$INSTDIR\documentation\$(path_userguide)" 0 SW_SHOWMAXIMIZED
 WriteIniStr "$INSTDIR\${PRODUCT}.url" "InternetShortcut" "URL" "${WEBSITE}"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_website).lnk" "$INSTDIR\${PRODUCT}.url" "" "$INSTDIR\${PRODUCT}.url" 0
@@ -353,11 +354,11 @@ doPrevUninstall:
 ReadRegStr $0 ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString"
 ${GetParent} $0 $1
 GetTempFileName $2
-CopyFiles "$0" "$2"
+CopyFiles /SILENT "$0" "$2"
 HideWindow
 ExecWait "$2 /nonInteractive _?=$1"
-delete "$2"
 bringToFront
+delete "$2"
 end:
 functionEnd
 

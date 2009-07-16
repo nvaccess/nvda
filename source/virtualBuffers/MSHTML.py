@@ -1,4 +1,4 @@
-from . import VirtualBuffer, VirtualBufferTextInfo
+from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
 import virtualBufferHandler
 import controlTypes
 import NVDAObjects.IAccessible.MSHTML
@@ -7,7 +7,8 @@ import IAccessibleHandler
 import oleacc
 from logHandler import log
 import textInfos
-
+import aria
+import config
 
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
@@ -53,14 +54,18 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_READONLY)
 		if role==controlTypes.ROLE_UNKNOWN:
 			role=controlTypes.ROLE_TEXTFRAME
-		newAttrs=textInfos.ControlField()
-		newAttrs.update(attrs)
+		ariaRoles=attrs.get("HTMLAttrib::role", "").split(" ")
+		# Get the first landmark role, if any.
+		landmark=next((ar for ar in ariaRoles if ar in aria.landmarkRoles),None)
+
 		if role:
-			newAttrs['role']=role
-		newAttrs['states']=states
+			attrs['role']=role
+		attrs['states']=states
 		if level:
-			newAttrs["level"] = level
-		return newAttrs
+			attrs["level"] = level
+		if landmark:
+			attrs["landmark"]=landmark
+		return super(MSHTMLTextInfo,self)._normalizeControlField(attrs)
 
 class MSHTML(VirtualBuffer):
 
@@ -70,9 +75,25 @@ class MSHTML(VirtualBuffer):
 		super(MSHTML,self).__init__(rootNVDAObject,backendLibPath=r"lib\VBufBackend_mshtml.dll")
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
-		if not isinstance(obj,NVDAObjects.IAccessible.MSHTML.MSHTML) or not obj.IHTMLElement:
+		if not obj.windowClassName.startswith("Internet Explorer_"):
 			return False
-		return bool(obj.windowHandle==self.rootDocHandle)
+		#Combo box lists etc are popup windows, so rely on accessibility hierarchi instead of window hierarchi for those.
+		#However only helps in IE8.
+		if obj.windowStyle&winUser.WS_POPUP:
+			parent=obj.parent
+			obj.parent=parent
+			while parent and parent.windowHandle==obj.windowHandle:
+				newParent=parent.parent
+				parent.parent=newParent
+				parent=newParent
+			if parent and parent.windowClassName.startswith('Internet Explorer_'):
+				obj=parent
+		if obj.windowHandle==self.rootDocHandle:
+			return True
+		if winUser.isDescendantWindow(self.rootDocHandle,obj.windowHandle):
+			return True
+		return False
+
 
 	def isAlive(self):
 		root=self.rootNVDAObject
@@ -122,6 +143,8 @@ class MSHTML(VirtualBuffer):
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_CHECKBUTTON],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="table":
 			attrs={"IHTMLDOMNode::nodeName":["TABLE"]}
+			if not config.conf["documentFormatting"]["includeLayoutTables"]:
+				attrs["table-layout"]=[None]
 		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
 			attrs = {"IHTMLDOMNode::nodeName": ["H%s" % nodeType[7:]]}
 		elif nodeType == "heading":
@@ -138,6 +161,8 @@ class MSHTML(VirtualBuffer):
 			attrs = {"IHTMLDOMNode::nodeName": ["FRAME","IFRAME"]}
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
+		elif nodeType=="landmark":
+			attrs={"HTMLAttrib::role":[VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]}
 		else:
 			return None
 		return attrs

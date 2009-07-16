@@ -133,8 +133,5 @@ except:
 	sys.exit(1)
 finally:
 	winUser.setSystemScreenReaderFlag(False)
-if globalVars.restart:
-	os.spawnv(os.P_NOWAIT,sys.executable,[os.path.basename(sys.executable)]+sys.argv)
-	sys.exit(0)
 
 log.info("NVDA exit")

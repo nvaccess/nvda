@@ -1,4 +1,4 @@
-from . import VirtualBuffer, VirtualBufferTextInfo
+from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
 import virtualBufferHandler
 import controlTypes
 import NVDAObjects.IAccessible
@@ -7,6 +7,10 @@ import IAccessibleHandler
 import oleacc
 from logHandler import log
 import textInfos
+from comtypes.gen.IAccessible2Lib import IAccessible2
+from comtypes import COMError
+import aria
+import config
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
@@ -25,13 +29,17 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 			role=controlTypes.ROLE_TEXTFRAME
 		level=attrs.get('IAccessible2::attribute_level',"")
-		newAttrs=textInfos.ControlField()
-		newAttrs.update(attrs)
-		newAttrs['role']=role
-		newAttrs['states']=states
+		xmlRoles=attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
+		# Get the first landmark role, if any.
+		landmark=next((xr for xr in xmlRoles if xr in aria.landmarkRoles),None)
+
+		attrs['role']=role
+		attrs['states']=states
 		if level is not "" and level is not None:
-			newAttrs['level']=level
-		return newAttrs
+			attrs['level']=level
+		if landmark:
+			attrs["landmark"]=landmark
+		return super(Gecko_ia2_TextInfo,self)._normalizeControlField(attrs)
 
 class Gecko_ia2(VirtualBuffer):
 
@@ -121,6 +129,8 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_HEADING]}
 		elif nodeType=="table":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TABLE]}
+			if not config.conf["documentFormatting"]["includeLayoutTables"]:
+				attrs["table-layout"]=[None]
 		elif nodeType=="link":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1]}
 		elif nodeType=="visitedLink":
@@ -153,6 +163,8 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible2::attribute_tag":["BLOCKQUOTE"]}
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
+		elif nodeType=="landmark":
+			attrs={"IAccessible2::attribute_xml-roles":[VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]}
 		else:
 			return None
 		return attrs
@@ -165,3 +177,30 @@ class Gecko_ia2(VirtualBuffer):
 	def event_scrollingStart(self, obj, nextHandler):
 		if not self._handleScrollTo(obj):
 			return nextHandler()
+
+	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
+		if not axis:
+			# First or last.
+			return super(Gecko_ia2, self)._getNearestTableCell(tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis)
+
+		# Determine destination row and column.
+		destRow = origRow
+		destCol = origCol
+		if axis == "row":
+			destRow += origRowSpan if movement == "next" else -1
+		elif axis == "column":
+			destCol += origColSpan if movement == "next" else -1
+
+		if destCol < 1:
+			# Optimisation: We're definitely at the edge of the column.
+			raise LookupError
+
+		# For Gecko, we can use the table object to directly retrieve the cell with the exact destination coordinates.
+		docHandle = startPos.NVDAObjectAtStart.windowHandle
+		table = self.getNVDAObjectFromIdentifier(docHandle, tableID)
+		try:
+			cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
+			cell = NVDAObjects.IAccessible.IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
+			return self.makeTextInfo(cell)
+		except (COMError, RuntimeError):
+			raise LookupError

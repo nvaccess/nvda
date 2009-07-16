@@ -327,4 +327,5 @@ windowClassMap={
 	"TMyRichEdit":"RichEdit20",
 	"TExRichEdit":"RichEdit20",
 	"RichTextWndClass":"RichEdit20",
+	"ScintillaWindowImpl":"Scintilla",
 }

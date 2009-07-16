@@ -24,8 +24,20 @@ class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self, obj):
 		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_POPUPMENU and obj.parent.windowClassName == "SysPager":
-			# Classic Start menu.
-			self.overlayCustomNVDAObjectClass(obj,ClassicStartMenu,outerMost=True)
+			if obj.windowStyle & 0x80:
+				self.overlayCustomNVDAObjectClass(obj,ClassicStartMenu,outerMost=True)
+			else:
+				# This is the menu for a group of icons on the task bar, which Windows stupidly names "Application".
+				obj.name = None
+			return
+
+		if obj.windowClassName == "#32768":
+			# Standard menu.
+			parent = obj.parent
+			if not parent.parent:
+				# Context menu.
+				# We don't trust the names that Explorer gives to context menus, so better to have no name at all.
+				obj.name = None
 
 	def event_gainFocus(self, obj, nextHandler):
 		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_MENUITEM and obj.parent.role == controlTypes.ROLE_MENUBAR and eventHandler.isPendingEvents("gainFocus"):

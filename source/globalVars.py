@@ -45,7 +45,6 @@ lastProgressValue=0
 reportDynamicContentChanges=True
 caretMovesReviewCursor=True
 focusMovesNavigatorObject=True
-restart=False
 appArgs=None
 settingsRing = None
 speechDictionaryProcessing=True

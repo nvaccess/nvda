@@ -21,6 +21,7 @@ import appModuleHandler
 import scriptUI
 import queueHandler
 import braille
+import core
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -95,7 +96,7 @@ class GeneralSettingsDialog(SettingsDialog):
 
  	def makeSettings(self, settingsSizer):
 		languageSizer=wx.BoxSizer(wx.HORIZONTAL)
-		languageLabel=wx.StaticText(self,-1,label=_("&Language (requires restart to fully take affect)"))
+		languageLabel=wx.StaticText(self,-1,label=_("&Language (requires restart to fully take affect):"))
 		languageSizer.Add(languageLabel)
 		languageListID=wx.NewId()
 		self.languageNames=languageHandler.getAvailableLanguages()
@@ -115,7 +116,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		self.askToExitCheckBox.SetValue(config.conf["general"]["askToExit"])
 		settingsSizer.Add(self.askToExitCheckBox,border=10,flag=wx.BOTTOM)
 		logLevelSizer=wx.BoxSizer(wx.HORIZONTAL)
-		logLevelLabel=wx.StaticText(self,-1,label=_("L&ogging level"))
+		logLevelLabel=wx.StaticText(self,-1,label=_("L&ogging level:"))
 		logLevelSizer.Add(logLevelLabel)
 		logLevelListID=wx.NewId()
 		self.logLevelList=wx.Choice(self,logLevelListID,name=_("Log level"),choices=[name for level, name in self.LOG_LEVELS])
@@ -167,7 +168,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		if self.oldLanguage!=newLanguage:
 			if wx.MessageDialog(self,_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING).ShowModal()==wx.ID_OK:
 				config.save()
-				queueHandler.queueFunction(queueHandler.eventQueue,gui.restart)
+				queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 		super(GeneralSettingsDialog, self).onOk(evt)
 
 class SynthesizerDialog(SettingsDialog):
@@ -175,7 +176,7 @@ class SynthesizerDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		synthListSizer=wx.BoxSizer(wx.HORIZONTAL)
-		synthListLabel=wx.StaticText(self,-1,label=_("&Synthesizer"))
+		synthListLabel=wx.StaticText(self,-1,label=_("&Synthesizer:"))
 		synthListID=wx.NewId()
 		driverList=getSynthList()
 		self.synthNames=[x[0] for x in driverList]
@@ -190,7 +191,7 @@ class SynthesizerDialog(SettingsDialog):
 		synthListSizer.Add(self.synthList)
 		settingsSizer.Add(synthListSizer,border=10,flag=wx.BOTTOM)
 		deviceListSizer=wx.BoxSizer(wx.HORIZONTAL)
-		deviceListLabel=wx.StaticText(self,-1,label=_("Output &device"))
+		deviceListLabel=wx.StaticText(self,-1,label=_("Output &device:"))
 		deviceListID=wx.NewId()
 		deviceNames=nvwave.getOutputDeviceNames()
 		self.deviceList=wx.Choice(self,deviceListID,choices=deviceNames)
@@ -225,7 +226,7 @@ class VoiceSettingsDialog(SettingsDialog):
 	def makeSettings(self, settingsSizer):
 		if getSynth().hasVoice:
 			sizer=wx.BoxSizer(wx.HORIZONTAL)
-			label=wx.StaticText(self,wx.ID_ANY,label=_("&Voice"))
+			label=wx.StaticText(self,wx.ID_ANY,label=_("&Voice:"))
 			self._voices=getSynth().availableVoices
 			self.voiceList=wx.Choice(self,wx.ID_ANY,name="Voice:",choices=[x.name for x in self._voices])
 			try:
@@ -240,7 +241,7 @@ class VoiceSettingsDialog(SettingsDialog):
 			settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
 		if getSynth().hasVariant:
 			sizer=wx.BoxSizer(wx.HORIZONTAL)
-			label=wx.StaticText(self,wx.ID_ANY,label=_("V&ariant"))
+			label=wx.StaticText(self,wx.ID_ANY,label=_("V&ariant:"))
 			self._variants=getSynth().availableVariants
 			self.variantList=wx.Choice(self,wx.ID_ANY,name="Variant:",choices=[x.name for x in self._variants])
 			try:
@@ -254,7 +255,7 @@ class VoiceSettingsDialog(SettingsDialog):
 			sizer.Add(self.variantList)
 			settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label=_("&Rate"))
+		label=wx.StaticText(self,wx.ID_ANY,label=_("&Rate:"))
 		self.rateSlider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100,name="Rate:")
 		self.rateSlider.Bind(wx.EVT_SLIDER,self.onRateChange)
 		self._setSliderStepSizes(self.rateSlider,getSynth().rateMinStep)
@@ -262,7 +263,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		sizer.Add(self.rateSlider)
 		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label=_("&Pitch"))
+		label=wx.StaticText(self,wx.ID_ANY,label=_("&Pitch:"))
 		self.pitchSlider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100)
 		self._setSliderStepSizes(self.pitchSlider,getSynth().pitchMinStep)
 		self.pitchSlider.Bind(wx.EVT_SLIDER,self.onPitchChange)
@@ -270,7 +271,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		sizer.Add(self.pitchSlider)
 		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label=_("&Inflection"))
+		label=wx.StaticText(self,wx.ID_ANY,label=_("&Inflection:"))
 		self.inflectionSlider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100)
 		self._setSliderStepSizes(self.inflectionSlider,getSynth().inflectionMinStep)
 		self.inflectionSlider.Bind(wx.EVT_SLIDER,self.onInflectionChange)
@@ -278,7 +279,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		sizer.Add(self.inflectionSlider)
 		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label=_("V&olume"))
+		label=wx.StaticText(self,wx.ID_ANY,label=_("V&olume:"))
 		self.volumeSlider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100)
 		self._setSliderStepSizes(self.volumeSlider,getSynth().volumeMinStep)
 		self.volumeSlider.Bind(wx.EVT_SLIDER,self.onVolumeChange)
@@ -405,7 +406,7 @@ class KeyboardSettingsDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		kbdSizer=wx.BoxSizer(wx.HORIZONTAL)
-		kbdLabel=wx.StaticText(self,-1,label=_("&Keyboard layout"))
+		kbdLabel=wx.StaticText(self,-1,label=_("&Keyboard layout:"))
 		kbdSizer.Add(kbdLabel)
 		kbdListID=wx.NewId()
 		self.kbdNames=list(set(os.path.splitext(x)[0].split('_')[-1] for x in glob.glob('appModules/*.kbd')))
@@ -466,7 +467,7 @@ class MouseSettingsDialog(SettingsDialog):
 		self.reportTextCheckBox.SetValue(config.conf["mouse"]["reportTextUnderMouse"])
 		settingsSizer.Add(self.reportTextCheckBox,border=10,flag=wx.BOTTOM)
 		textUnitSizer=wx.BoxSizer(wx.HORIZONTAL)
-		textUnitLabel=wx.StaticText(self,-1,label=_("Text &unit resolution"))
+		textUnitLabel=wx.StaticText(self,-1,label=_("Text &unit resolution:"))
 		textUnitSizer.Add(textUnitLabel)
 		import textInfos
 		self.textUnits=[textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD,textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH]
@@ -527,7 +528,7 @@ class ObjectPresentationDialog(SettingsDialog):
 		self.descriptionCheckBox.SetValue(config.conf["presentation"]["reportObjectDescriptions"])
 		settingsSizer.Add(self.descriptionCheckBox,border=10,flag=wx.BOTTOM)
 		progressSizer=wx.BoxSizer(wx.HORIZONTAL)
-		progressLabel=wx.StaticText(self,-1,label=_("Progress &bar output"))
+		progressLabel=wx.StaticText(self,-1,label=_("Progress &bar output:"))
 		progressSizer.Add(progressLabel)
 		progressListID=wx.NewId()
 		self.progressList=wx.Choice(self,progressListID,name=_("Progress bar output"),choices=[name for setting, name in self.progressLabels])
@@ -573,6 +574,9 @@ class VirtualBuffersDialog(SettingsDialog):
 		self.useScreenLayoutCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Use &screen layout (when supported)"))
 		self.useScreenLayoutCheckBox.SetValue(config.conf["virtualBuffers"]["useScreenLayout"])
 		settingsSizer.Add(self.useScreenLayoutCheckBox,border=10,flag=wx.BOTTOM)
+		self.layoutTablesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report l&ayout tables"))
+		self.layoutTablesCheckBox.SetValue(config.conf["documentFormatting"]["includeLayoutTables"])
+		settingsSizer.Add(self.layoutTablesCheckBox,border=10,flag=wx.BOTTOM)
 
 		self.presentationfocusCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &virtual presentation on focus changes"))
 		self.presentationfocusCheckBox.SetValue(config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"])
@@ -604,6 +608,7 @@ class VirtualBuffersDialog(SettingsDialog):
 		if newPageLines >=5 and newPageLines <=150:
 			config.conf["virtualBuffers"]["linesPerPage"]=newPageLines
 		config.conf["virtualBuffers"]["useScreenLayout"]=self.useScreenLayoutCheckBox.IsChecked()
+		config.conf["documentFormatting"]["includeLayoutTables"]=self.layoutTablesCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["reportVirtualPresentationOnFocusChanges"]=self.presentationfocusCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"]=self.autoPassThroughOnFocusChangeCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]=self.autoPassThroughOnCaretMoveCheckBox.IsChecked()
@@ -807,7 +812,7 @@ class BrailleSettingsDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		label = wx.StaticText(self, wx.ID_ANY, label=_("Braille &display"))
+		label = wx.StaticText(self, wx.ID_ANY, label=_("Braille &display:"))
 		driverList = braille.getDisplayList()
 		self.displayNames = [driver[0] for driver in driverList]
 		self.displayList = wx.Choice(self, wx.ID_ANY, choices=[driver[1] for driver in driverList])
@@ -821,7 +826,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		label = wx.StaticText(self, wx.ID_ANY, label=_("Translation &table"))
+		label = wx.StaticText(self, wx.ID_ANY, label=_("Translation &table:"))
 		self.tableNames = [table[0] for table in braille.TABLES]
 		self.tableList = wx.Choice(self, wx.ID_ANY, choices=[table[1] for table in braille.TABLES])
 		try:

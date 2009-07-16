@@ -29,6 +29,11 @@ import logHandler
 import globalVars
 from logHandler import log
 
+def restart():
+	"""Restarts NVDA by starting a new copy with -r."""
+	import subprocess
+	subprocess.Popen([sys.executable]+sys.argv+['-r'])
+
 def resetConfiguration():
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
 	"""
@@ -105,6 +110,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	def onEndSession(evt):
 		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
 		config.saveOnExit()
+		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal:
 			nvwave.playWaveFile("waves\\exit.wav",async=False)
 		log.info("Windows session ending")

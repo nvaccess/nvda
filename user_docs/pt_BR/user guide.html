@@ -1,0 +1,2347 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="user%20guide_arquivos/filelist.xml">
+<title>Guia do NVDA 0.6</title>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="metricconverter"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="PersonName"/>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>*</o:Author>
+  <o:LastAuthor>*</o:LastAuthor>
+  <o:Revision>6</o:Revision>
+  <o:TotalTime>264</o:TotalTime>
+  <o:Created>2009-06-29T11:39:00Z</o:Created>
+  <o:LastSaved>2009-06-29T18:13:00Z</o:LastSaved>
+  <o:Pages>14</o:Pages>
+  <o:Words>7421</o:Words>
+  <o:Characters>40075</o:Characters>
+  <o:Lines>333</o:Lines>
+  <o:Paragraphs>94</o:Paragraphs>
+  <o:CharactersWithSpaces>47402</o:CharactersWithSpaces>
+  <o:Version>11.5606</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:Zoom>75</w:Zoom>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:HyphenationZone>21</w:HyphenationZone>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]--><!--[if !mso]><object
+ classid="clsid:38481807-CA0E-42D2-BF39-B33AF135CC4D" id=ieooui></object>
+<style>
+st1\:*{behavior:url(#ieooui) }
+</style>
+<![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
+	font-size:24.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h2
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	font-size:18.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h3
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:3;
+	font-size:13.5pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h4
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:4;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h5
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:5;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h6
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:6;
+	font-size:7.5pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:70.85pt 3.0cm 70.85pt 3.0cm;
+	mso-header-margin:35.4pt;
+	mso-footer-margin:35.4pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:143594339;
+	mso-list-template-ids:-371680896;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l0:level2
+	{mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level3
+	{mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level4
+	{mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level5
+	{mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level6
+	{mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level7
+	{mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level8
+	{mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level9
+	{mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1
+	{mso-list-id:440540937;
+	mso-list-template-ids:-1226510518;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level2
+	{mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level3
+	{mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level4
+	{mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level5
+	{mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level6
+	{mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level7
+	{mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level8
+	{mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level9
+	{mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l2
+	{mso-list-id:647441142;
+	mso-list-template-ids:-1140717192;}
+@list l2:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2:level2
+	{mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l2:level3
+	{mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l2:level4
+	{mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l2:level5
+	{mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l2:level6
+	{mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l2:level7
+	{mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l2:level8
+	{mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l2:level9
+	{mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l3
+	{mso-list-id:766846859;
+	mso-list-template-ids:2008182062;}
+@list l3:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level2
+	{mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l3:level3
+	{mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l3:level4
+	{mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l3:level5
+	{mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l3:level6
+	{mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l3:level7
+	{mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l3:level8
+	{mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l3:level9
+	{mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l4
+	{mso-list-id:883250127;
+	mso-list-template-ids:-594232538;}
+@list l4:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4:level2
+	{mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l4:level3
+	{mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l4:level4
+	{mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l4:level5
+	{mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l4:level6
+	{mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l4:level7
+	{mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l4:level8
+	{mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l4:level9
+	{mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l5
+	{mso-list-id:1463110232;
+	mso-list-template-ids:-1191287490;}
+@list l5:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level2
+	{mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l5:level3
+	{mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l5:level4
+	{mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l5:level5
+	{mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l5:level6
+	{mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l5:level7
+	{mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l5:level8
+	{mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l5:level9
+	{mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l6
+	{mso-list-id:1491629742;
+	mso-list-template-ids:-1800134622;}
+@list l6:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6:level2
+	{mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l6:level3
+	{mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l6:level4
+	{mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l6:level5
+	{mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l6:level6
+	{mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l6:level7
+	{mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l6:level8
+	{mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l6:level9
+	{mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l7
+	{mso-list-id:1913655626;
+	mso-list-template-ids:1560288764;}
+@list l7:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l7:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l7:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l7:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l7:level5
+	{mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l7:level6
+	{mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l7:level7
+	{mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l7:level8
+	{mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l7:level9
+	{mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Tabela normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]-->
+<meta name=CREATED content="0;0">
+<meta name=CHANGED content="20090218;21111400">
+<meta name="Informações 1" content="">
+<meta name="Informações 2" content="">
+<meta name="Informações 3" content="">
+<meta name="Informações 4" content="">
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1026"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=PT-BR link=blue vlink=blue style='tab-interval:35.4pt'>
+
+<div class=Section1>
+
+<h1>Guia do usuário do NVDA 0.6</h1>
+
+<p>Última atualização em 23 de Dezembro de 2008 </p>
+
+<p>Nota de tradução: O termo “<span class=SpellE>Numpad</span>” refere-se ao
+teclado numérico. </p>
+
+<h1>Sumário</h1>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level1 lfo2;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#1">1. Introdução</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#1.1">1.1. Características Gerais</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#1.2">1.2. Internacionalização</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#1.3">1.3. Suporte de Sintetizador de
+Voz</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#1.4">1.4. Suporte PARA Braille</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#1.5">1.5. Inovação e Experimentação</a>
+</p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#1.6">1.6. Arquitetura e <span
+class=GramE>Implementação</span></a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#1.7">1.7. Licença e Copyright</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level1 lfo2;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#2">2. Requerimentos do Sistema</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level1 lfo2;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#3">3. Obtendo o NVDA</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level1 lfo2;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#4">4. Instalando o NVDA</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#4.1">4.1. O Instalador do NVDA</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#4.2">4.2. O arquivo <span
+class=SpellE>Zip</span> Portátil</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level1 lfo2;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#5">5. Começando Com o NVDA</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#5.1">5.1. Executando NVDA</a> </p>
+
+<p><a href="#5.2">5.2. Sobre os Comandos do Teclado do NVDA</a> </p>
+
+<p><a href="#6">6. O <span class=GramE>Menu</span> do NVDA</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#6.1">6.1. acessando o <span
+class=GramE>Menu</span> do NVDA</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#6.2">6.2. Configurando o NVDA</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:108.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level3 lfo2;tab-stops:
+list 108.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Wingdings;mso-fareast-font-family:Wingdings;mso-bidi-font-family:
+Wingdings'><span style='mso-list:Ignore'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#6.2.1">6.2.1. O <span class=GramE>Menu</span>
+Preferências</a> </p>
+
+<p><a href="#6.2.1.1">6.2.1.1. Opções Gerais</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:144.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level4 lfo2;tab-stops:
+list 144.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Wingdings;mso-fareast-font-family:Wingdings;mso-bidi-font-family:
+Wingdings'><span style='mso-list:Ignore'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#6.2.1.2">6.2.1.2. Seleção de
+Sintetizador</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:144.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level4 lfo2;tab-stops:
+list 144.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Wingdings;mso-fareast-font-family:Wingdings;mso-bidi-font-family:
+Wingdings'><span style='mso-list:Ignore'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#6.2.1.3">6.2.1.3. Opções de Voz</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:144.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level4 lfo2;tab-stops:
+list 144.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Wingdings;mso-fareast-font-family:Wingdings;mso-bidi-font-family:
+Wingdings'><span style='mso-list:Ignore'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#6.2.1.4">6.2.1.4. Opções de Braille</a>
+</p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:144.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level4 lfo2;tab-stops:
+list 144.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Wingdings;mso-fareast-font-family:Wingdings;mso-bidi-font-family:
+Wingdings'><span style='mso-list:Ignore'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#6.2.1.5">6.2.1.5. Opções do Teclado</a></p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:144.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level4 lfo2;tab-stops:
+list 144.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Wingdings;mso-fareast-font-family:Wingdings;mso-bidi-font-family:
+Wingdings'><span style='mso-list:Ignore'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#6.2.1.6">6.2.1.6. Opções do mouse </a><a
+href="#6.2.1.7">6.2.1.7. Definições de Apresentação de Objeto</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:144.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level4 lfo2;tab-stops:
+list 144.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Wingdings;mso-fareast-font-family:Wingdings;mso-bidi-font-family:
+Wingdings'><span style='mso-list:Ignore'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#6.2.1.8">6.2.1.8. exibidores Virtuais</a>
+</p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:144.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level4 lfo2;tab-stops:
+list 144.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Wingdings;mso-fareast-font-family:Wingdings;mso-bidi-font-family:
+Wingdings'><span style='mso-list:Ignore'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#6.2.1.9">6.2.1.9. Formatação de
+Documentos</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:108.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level3 lfo2;tab-stops:
+list 108.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Wingdings;mso-fareast-font-family:Wingdings;mso-bidi-font-family:
+Wingdings'><span style='mso-list:Ignore'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#6.2.2">6.2.2. salvar e Restaurar A
+Configuração</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level1 lfo2;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#7">7. navegação Com o NVDA</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#7.1">7.1. Navegando com o Foco</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#7.2">7.2. navegando Com o Cursor do
+Sistema</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#7.3">7.3. Navegação de Objetos</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#7.4">7.4. Rever Texto no Objeto Atual</a>
+</p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#7.5">7.5. navegando Com o mouse</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level1 lfo2;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#8">8. exibidores Virtuais</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#8.1">8.1. Navegação Por <span
+class=SpellE>Caracter</span></a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#8.2">8.2. Formulários E OS Modos de
+Foco e Navegação</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:72.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l7 level2 lfo2;tab-stops:
+list 72.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#8.3">8.3. A Lista <span class=GramE>De</span>
+<span class=SpellE>Links</span></a> </p>
+
+<p style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l7 level1 lfo2;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;
+mso-bidi-font-family:Symbol'><span style='mso-list:Ignore'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#9">9. Problemas Com o NVDA</a> </p>
+
+<h2><a name=1></a>1. Introdução</h2>
+
+<h3><a name=1.1></a>1.1. Características Gerais</h3>
+
+<p>O <span class=GramE>feedback</span> fornecido pelo NVDA através de voz
+sintética permite às pessoas cegas acessarem e interagirem com o sistema
+operacional Windows e diversas aplicações de terceiros. </p>
+
+<p>As características principais são: </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l6 level1 lfo4;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Permite a sua execução diretamente através de
+dispositivos USB ou de outras mídias portáteis sem necessitar de instalação; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l6 level1 lfo4;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Instalação com voz e fácil de usar; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l6 level1 lfo4;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Navegar na <span class=SpellE>Web</span> com o <a
+href="http://www.getfirefox.com/"><span class=SpellE>Mozilla</span> <span
+class=SpellE>Firefox</span> <span class=GramE>3</span>;</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l6 level1 lfo4;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Trabalha com o programa de gestão de correio <span
+class=SpellE>eletrónico</span> <a
+href="http://www.mozillamessaging.com/en-US/thunderbird/early_releases/"><span
+class=SpellE>Mozilla</span> <span class=SpellE>Thunderbird</span> <span
+class=GramE>3</span>;</a> </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l6 level1 lfo4;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Suporte precário para o Microsoft Internet
+Explorer; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l6 level1 lfo4;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Suporte básico para o Microsoft Outlook Express
+/ Windows <span class=SpellE>Mail</span>; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l6 level1 lfo4;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Suporte básico para o Microsoft Word e Excel; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l6 level1 lfo4;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Suporte para aplicações Java acessíveis; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l6 level1 lfo4;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Suporte precário para o Adobe <span
+class=SpellE>Reader</span>; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l6 level1 lfo4;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Suporte precário para o IBM <span class=SpellE>Lotus</span>
+<span class=SpellE>Symphony</span>; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l6 level1 lfo4;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Suporte para a <span class=SpellE>Prompt</span>
+de Comando do Windows e aplicações de console; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l6 level1 lfo4;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Anúncio automático do texto por baixo do mouse e
+indicação em áudio opcional da posição deste periférico; </p>
+
+<p style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l6 level1 lfo4;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;
+mso-bidi-font-family:Symbol'><span style='mso-list:Ignore'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Suporte para quaisquer linhas Braille que sejam
+controladas através dos <span class=SpellE>drivers</span> de Braille da <span
+class=SpellE>Freedom</span> <span class=SpellE>Scientific</span> ou do BRLTTY. </p>
+
+<h3><a name=1.2></a>1.2. Internacionalização</h3>
+
+<p>É importante que as pessoas em qualquer parte do mundo, independentemente do
+idioma que falem, obtenham o mesmo acesso às tecnologias. O NVDA está traduzido
+em mais de 20 idiomas incluindo: <span class=GramE>o Português do Brasil,
+Croata, Checo</span>, Finlandês, Francês, Galego, Alemão, Húngaro, Italiano,
+Japonês, Português, Russo, Eslovaco, Espanhol, Tailandês, Chinês Tradicional,
+Ucraniano, Holandês Sul-Africano, Polaco e Vietnamita. </p>
+
+<h3><a name=1.3></a>1.3. Suporte <span class=GramE>De</span> Sintetizador De
+Voz</h3>
+
+<p><span class=GramE>além</span> de fornecer mensagens e interface em diversos
+idiomas, o NVDA também pode permitir ao usuário ler o conteúdo em qualquer
+língua, tendo em conta que deverá dispor de um sintetizador de voz que possa
+falar esse idioma em particular. </p>
+
+<p>O NVDA vem com o <a href="http://espeak.sourceforge.net/"><span
+class=SpellE><span class=GramE>eSpeak</span></span></a> incluído, um
+sintetizador de voz livre, <span class=SpellE>open-source</span> e <span
+class=SpellE>multi-idioma</span>. Adicionalmente, este leitor de telas pode
+usar ambos os motores de voz SAPI4 e SAPI5 para permitir a saída de voz, bem
+como com o sintetizador de voz <span class=SpellE>Audiologic</span>. </p>
+
+<h3><a name=1.4></a>1.4. Suporte de Braille</h3>
+
+<p>Para os usuários que têm uma linha Braille, o NVDA pode transmitir a
+informação neste sistema de leitura e escrita. Este leitor de telas suporta as
+linhas Braille <span class=SpellE>Pacmate</span> e <span class=SpellE>Focus</span>
+da <span class=SpellE>Freedom</span> <span class=SpellE>Scientific</span>, <span
+class=SpellE>Handy</span> <span class=SpellE>Tech</span> e outras suportadas
+pelo pacote do BRLTTY se estiverem disponíveis. </p>
+
+<h3><a name=1.5></a>1.5. Inovação E Experimentação</h3>
+
+<p>O NVDA não se encontra limitado pela necessidade de seguir tendências e
+demandas do mercado. Os Leitores de telas comerciais têm boas características,
+mas algumas vezes estão dependentes do que o mercado pretende, em vez das
+mesmas serem realmente úteis para o usuário. O NVDA poderá não ser sempre tão
+estável como outros leitores de telas são, mas poderá certamente servir como
+uma ferramenta experimental e de teste. Pode experimentar facilmente e
+rapidamente novas <span class=SpellE>ideias</span> e características que talvez
+não tenham sido encontradas <st1:PersonName ProductID="em outros Leitores"
+w:st="on">em outros Leitores</st1:PersonName> de telas para o Sistema
+operacional Windows. Um exemplo disso é a capacidade do NVDA utilizar <span
+class=SpellE>beeps</span> para indicar ao usuário que uma Barra de progressão
+está se <span class=GramE>movendo .</span> O <span class=SpellE>beep</span>
+mais alto e agudo indica que a mesma está chegando ao fim. As pessoas
+adicionaram esta característica a outros leitores de telas através de scripts
+personalizados e similares, mas nunca foi oficialmente <span class=SpellE>adoptada</span>
+completamente no núcleo de nenhum outro leitor de telas para o Windows. </p>
+
+<h3><a name=1.6></a>1.6. Arquitetura e <span class=GramE>Implementação</span></h3>
+
+<p>O NVDA é escrito na <a href="http://www.python.org/">linguagem de
+programação <span class=SpellE>Python</span></a>, é construído com uma
+arquitetura modular e muito do seu código pode ser adicionado e estendido
+facilmente para dar suporte a novos programas ou a controles no Windows. As <span
+class=SpellE>App</span> Modules podem ser escritas para se adicionar suporte
+total a uma aplicação específica, os <span class=SpellE>Buffers</span> Virtuais
+podem ser escritos para permitirem que o NVDA mostre documentos complexos ou
+outros dados e os Objetos deste leitor de telas podem ser escritos para se
+adicionar suporte a controles específicos ou janelas. O NVDA tenta tornar
+constantemente os controles e elementos de um programa ou Sistema operacional
+como acessíveis sempre que lhe seja possível, para que o usuário possa procurar
+ativamente toda a informação <span class=GramE>desejada .</span> Este leitor de
+telas não se encontra sujeito a características especiais tal como filtrar e
+anunciar informação particular que o usuário pretenda saber. </p>
+
+<p>Para comunicar com o Sistema operacional e programas, o NVDA usa o conjunto
+de funções do Windows, Microsoft <span class=SpellE>Active</span> <span
+class=SpellE>Accessibility</span> (MSAA), IAccessible2, Java Access <span
+class=SpellE>Bridge</span> e interfaces de programação específicas fornecidas
+por determinadas aplicações. Este leitor de telas não utiliza quaisquer <span
+class=SpellE>drivers</span> específicos de <span class=SpellE>Interceptador</span>
+de Vídeo ou display <span class=SpellE>hooks</span> e tentará adquirir sempre
+que possível o maior número de informações a partir das interfaces de
+programação adequadas, antes de recorrer a outro método. </p>
+
+<h3><a name=1.7></a>1.7. Licença e Copyright</h3>
+
+<p>NVDA copyright © 2006-2009 <span class=SpellE>Contribuidores</span> do NVDA.
+</p>
+
+<p>O NVDA está Licenciado pela GNU General <span class=SpellE>Public</span> <span
+class=SpellE>License</span> (Versão <span class=GramE>2</span>). É livre para
+partilhar ou alterar este programa da forma que pretender desde que distribua
+sempre a licença, software e todo o respectivo código disponível. Para quem
+quiser o programa, as regras anteriormente mencionadas aplicam-se ao software
+original e a todas as cópias modificadas, incluindo todos os programas que
+contenham código descendente deste. Para maiores detalhes, VEJA <a
+href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">a licença <span
+class=GramE>completa.</span></a> </p>
+
+<h2><a name=2></a>2. Requerimentos <span class=GramE>Do</span> Sistema</h2>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level1 lfo6;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Sistemas operacionais: Todas as versões 32-bit
+do Windows XP e do Windows Vista (incluindo as versões Server), pode trabalhar
+parcialmente no Windows 2000 e em versões 64-bit do Windows XP. </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level1 lfo6;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Memória: 256 <span class=SpellE><span
+class=GramE>mb</span></span> ou mais de RAM. </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level1 lfo6;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Velocidade do processador: 1.0 GHz ou superior. </p>
+
+<p style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo6;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;
+mso-bidi-font-family:Symbol'><span style='mso-list:Ignore'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Aproximadamente 50 MB de espaço livre. </p>
+
+<h2><a name=3></a>3. Baixando O NVDA</h2>
+
+<p>Se não tiver uma cópia do NVDA, pode fazer o <span class=SpellE>download</span>
+em: <a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a> </p>
+
+<p>Entre na seção <span class=SpellE>download</span> e procure o link para
+baixar a última versão deste leitor de <span class=GramE>telas .</span> </p>
+
+<p>Atualmente, existem duas formas em que o NVDA é distribuído. Uma é um
+Instalador que falará através do processo de instalação esta opção permite ao
+usuário executá-lo a qualquer momento a partir do <span class=GramE>Menu</span>
+Iniciar. O outro é um arquivo <span class=SpellE>zip</span> que contém a versão
+completa portátil do NVDA, que pode ser executada a partir de qualquer lugar,
+incluindo-se os dispositivos USB ou CD. </p>
+
+<h2><a name=4></a>4. Instalando O NVDA</h2>
+
+<h3><a name=4.1></a>4.1. O Instalador <span class=GramE>Do</span> NVDA</h3>
+
+<p>Se já tiver o instalador do NVDA, pressione simplesmente <span class=SpellE>Enter</span>
+ou um duplo clique esquerdo no arquivo e o mesmo será <span class=GramE>iniciado
+.</span> </p>
+
+<p>Enquanto a instalação estiver sendo carregada, ouvirá a música de instalação
+do NVDA. Após estar carregado, uma cópia temporária deste leitor de telas
+permitirá que prossiga pelas telas do instalador e instale o NVDA. Note que se
+estiver executando outra cópia do <span class=SpellE>nvda</span> no momento em
+que iniciou o instalador, uma mensagem aparecerá avisando que a sua cópia
+anterior do NVDA será encerrada. Quando pressionar <span class=SpellE>Enter</span>
+nesta mensagem, o instalador concluirá a mesma e iniciará a sua própria cópia.
+Isto é necessário para que o instalador possa atualizar adequadamente qualquer
+arquivo modificado. , se já tiver outra cópia do NVDA instalada, o instalador
+desinstalará a mesma automaticamente e iniciará a instalação da<span
+class=GramE> <span style='mso-spacerun:yes'> </span></span>nova versão. </p>
+
+<p>Uma vez que tenha completado corretamente a instalação, o instalador
+alertará que o processo foi concluído e perguntará se deseja reiniciar o
+sistema. Isto é muito importante para que não <span class=GramE>hajam</span> <span
+class=SpellE>consequências</span> desagradáveis. </p>
+
+<h3><a name=4.2></a>4.2. O arquivo <span class=SpellE>Zip</span> Portátil</h3>
+
+<p>Se tiver a versão do arquivo <span class=SpellE>zip</span> do NVDA, então
+tudo o que tem de fazer é descompactá-lo para qualquer lugar que deseje no seu
+disco local ou em outra mídia portátil. </p>
+
+<h2><a name=5></a>5. Iniciando o NVDA</h2>
+
+<h3><a name=5.1></a>5.1. executando O NVDA</h3>
+
+<p>Se tiver o NVDA <span class=GramE>instalado ,</span> então iniciar o NVDA é
+realmente simples basta pressionar <span class=SpellE>Control</span>+<span
+class=SpellE>Alt</span>+N, ou escolher o NVDA a partir do Menu Iniciar,
+programas, <span class=SpellE>submenu</span> NVDA. </p>
+
+<p>Para iniciar a versão do arquivo <span class=SpellE>zip</span> portátil, vá
+para a pasta onde descompactou o NVDA e pressione <span class=SpellE>Enter</span>
+ou um duplo clique esquerdo em nvda.exe. </p>
+
+<p>Assim que o NVDA for <span class=GramE>executado ,</span> ouvirá
+primeiramente um conjunto de tons ascendentes (informando que o mesmo está
+sendo carregado). Então deverá ouvir a<span class=GramE> <span
+style='mso-spacerun:yes'> </span></span>mensagem &quot;NVDA ativado&quot;.
+Dependendo da rapidez do seu computador, ou se estiver executando este leitor
+de telas através de um dispositivo USB ou de outra mídia mais lenta, poderá
+demorar <span class=SpellE>un</span> pouco para iniciar. Se o NVDA estiver
+demorando um tempo maior do que o previsto, o leitor de tela dirá
+&quot;carregando componentes. <span class=GramE>Por favor</span> aguarde...&quot;
+</p>
+
+<p>Se não ouvir nada disto, ou escutar um som de erro do Windows, ou um
+conjunto de sons descendentes, então isto significa que o NVDA tem um erro, e
+necessitará possivelmente de comunicar o <span class=SpellE>bug</span> aos
+programadores. <span class=GramE>Por favor</span> procure na página do NVDA
+para saber qual o procedimento. </p>
+
+<p>Quando o NVDA for iniciado pela primeira vez, será apresentada uma caixa de
+diálogo que lhe fornece informações básicas sobre a tecla modificadora do NVDA
+e o <span class=GramE>menu</span> deste leitor de tela. (<span class=GramE>Por
+favor</span> consulte as seções seguintes para maiores informações acerca
+desses tópicos). A caixa de diálogo contém também duas caixas de verificação. A
+primeira permite-lhe controlar se o NVDA utiliza o <span class=SpellE>capslock</span>
+como uma tecla modificadora do NVDA e a segunda permite configurar se este
+diálogo de boas vindas será exibido sempre que o NVDA for iniciado. </p>
+
+<h3><a name=5.2></a>5.2. Comandos <span class=GramE>Do</span> Teclado Do NVDA</h3>
+
+<p>Muitos dos comandos específicos do teclado deste leitor de tela consistem
+normalmente no pressionar da tecla modificadora do NVDA em conjunto com uma ou
+mais outras teclas. Uma exceção a isto são os comandos que servem para se rever
+o texto que utilizam somente o teclado numérico. </p>
+
+<p>Por padrão o <span class=SpellE>Insert</span> do teclado numérico e o <span
+class=SpellE>Insert</span> do bloco intermédio podem ser utilizados como teclas
+modificadoras do NVDA. Contudo, poderá configurar também este leitor de tela
+para que a tecla <span class=SpellE><span class=GramE>CapsLock</span></span>
+também se torne numa tecla modificadora do NVDA. Quando isto estiver
+configurado , pressionar ou <span class=GramE>manter</span> pressionado o <span
+class=SpellE>CapsLock</span> faz com que este funcione como uma tecla
+modificadora do NVDA mas ao pressionar duas vezes rapidamente faz com que
+funcione como a tecla <span class=SpellE>CapsLock</span> normal. </p>
+
+<p>Muitas das teclas de comando são mencionadas ao longo deste guia do usuário<span
+class=GramE> mas</span> uma maneira fácil para explorá-las é ativar a ajuda do
+teclado. </p>
+
+<p>Para ativar a ajuda do teclado, pressione NVDA+1. Para desativar, tecle
+NVDA+1 novamente. Enquanto estiver na ajuda do teclado, ao pressionar qualquer
+tecla o leitor de tela anunciará o que faz (se tiver alguma ação associada). As
+teclas não executarão a sua função enquanto estiver no modo de ajuda do
+teclado, desta forma poderemos pressionar as teclas que <span class=GramE>desejarmos
+.</span> </p>
+
+<h2><a name=6></a>6. O <span class=GramE>Menu</span> Do NVDA</h2>
+
+<p>O <span class=GramE>menu</span> do NVDA permite-lhe controlar as configurações
+deste leitor de tela, Acessar à ajuda, salvar/restaurar a configuração e sair
+do NVDA. </p>
+
+<h3><a name=6.1></a>6.1. Acessando o <span class=GramE>Menu</span> Do NVDA</h3>
+
+<p>Se este leitor de tela estiver em execução, podemos Acessar seu <span
+class=GramE>menu</span> a partir de qualquer lugar do Windows pressionando
+NVDA+N. Podemos Acessar também o menu do NVDA através da área de notificação do
+Windows. Basta clicar com o botão direito no ícone do NVDA que lá se encontra,
+ou mover-se para a área de notificação pressionando a tecla com o logotipo do
+Windows + B, andar com a Seta para baixo, até o ícone deste leitor de tela e
+pressionar a Tecla das Aplicações que se encontra em diversos teclados antes do
+<span class=SpellE>Control</span> direito. Quando o <span class=GramE>menu</span>
+for exibido, poderá usar as setas direcionais para navegar pelo menu e ativar
+um item com a tecla <span class=SpellE>Enter</span>. O <span class=GramE>menu</span>
+Preferências permite-lhe configurar o NVDA ao seu gosto, o menu Ferramentas
+contém uma ou duas ferramentas úteis como o <span class=SpellE>visualizador</span>
+de registro do NVDA e o console do <span class=SpellE>Python</span> para
+programadores e o menu Ajuda permite-lhe Acessar o guia do usuário, guia rápido
+de teclas de atalho, e muito mais. O <span class=GramE>menu</span> do NVDA
+também contém itens que lhe permitem salvar ou restaurar a sua configuração.
+Por fim, existe uma opção que lhe permite sair do NVDA, apesar de conseguir
+fazer isto com mais eficiência se pressionar NVDA+Q. </p>
+
+<p>As opções que se encontram no <span class=GramE>menu</span> preferências
+também podem ser acessadas através de teclas de atalho, bem como as opções
+salvar e restaurar a configuração que já foram abordadas neste capítulo. Para
+maiores informações, acesse<span class=GramE> por favor</span> o guia rápido de
+teclas de atalho do NVDA. </p>
+
+<h3><a name=6.2></a>6.2. Configurando O NVDA</h3>
+
+<h4><a name=6.2.1></a>6.2.1. O <span class=GramE>Menu</span> Preferências</h4>
+
+<h5><a name=6.2.1.1></a>6.2.1.1. Opções Gerais</h5>
+
+<p>A caixa de diálogo das Opções gerais encontra-se no <span class=GramE>menu</span>
+Preferências e também pode ser acessada pressionando NVDA+<span class=SpellE>Control</span>+G.
+Para Salvar as opções depois de modificar as configurações , pressione o botão
+OK. Para cancelar, pressione o botão cancelar ou a tecla escape. A mesma contém
+as seguintes opções: </p>
+
+<h6>Idioma</h6>
+
+<p>Uma caixa de combinação que lhe permite selecionar o idioma da interface do
+Usuário e mensagens do NVDA. Existem diversos idiomas, contudo, a opção padrão
+é &quot;<span class=SpellE>User</span> Default, Windows&quot;. Esta opção
+informa ao NVDA para utilizar o idioma que o Windows tem definido atualmente
+(nas Opções Regionais e de Idioma no Painel de Controle). Observe <span
+class=GramE>por favor</span> que o NVDA precisa ser reiniciado. Quando escolher
+o idioma, este leitor de tela perguntará se deseja reiniciar para que a
+alteração seja efetuada. Pressione OK e o NVDA irá reiniciar. </p>
+
+<h6>Salvar A Configuração ao Sair</h6>
+
+<p>Uma caixa de verificação que quando está marcada informa ao leitor de tela
+para Salvar automaticamente a configuração atual quando sair. </p>
+
+<h6>Alertar antes de sair do NVDA</h6>
+
+<p>Uma caixa de verificação que lhe permite escolher se deseja que apareça um
+diálogo quando fechar o NVDA com a pergunta se deseja sair. Quando marcada, o
+diálogo aparecerá quando tentar fechar o NVDA perguntando se deseja sair. </p>
+
+<h6>Nível de registro</h6>
+
+<p>Uma caixa de combinação que lhe permite selecionar a quantidade de
+informação que o NVDA coloca no registro quando estiver <st1:PersonName
+ProductID="em execu&#65511;&#65507;o. Geralmente" w:st="on">em execução.
+ Geralmente</st1:PersonName>, os Usuários não necessitam alterar isto já que
+não é muito amigável. Contudo, se pretender adicionar informação ao relatório
+de <span class=SpellE>bugs</span> etc., então será importante ajustar para um
+nível mais elevado. </p>
+
+<h5><a name=6.2.1.2></a>6.2.1.2. Seleção de Sintetizador</h5>
+
+<p>O diálogo do Sintetizador<span class=GramE>, pode</span> ser encontrado no
+item &quot;Sintetizador...&quot; no menu Preferências ou pressionando NVDA+<span
+class=SpellE>Control</span>+S, permitindo-lhe selecionar qual é o sintetizador
+que o NVDA utilizará para falar. </p>
+
+<p>Esta caixa de diálogo exibe uma caixa de combinação simples que apresenta
+todos os sintetizadores disponíveis. Selecione o sintetizador que deseja
+utilizar com as setas e por fim pressione <span class=SpellE>ok</span>. Se
+existir um erro ao carregar o sintetizador, uma caixa de mensagem aparecerá
+alertando para este fato e o sintetizador anteriormente carregado será mantido.
+</p>
+
+<p>A lista atual de sintetizadores que o NVDA suporta é: <span class=SpellE><span
+class=GramE>eSpeak</span></span>, SAPI4, SAPI5, <span class=SpellE>Audiologic</span>,
+Display, e <span class=SpellE>Silence</span>. </p>
+
+<p>O sintetizador <span class=SpellE><span class=GramE>eSpeak</span></span>
+está compilado diretamente com o NVDA e não depende de quaisquer outros <span
+class=SpellE>drivers</span> especiais ou bibliotecas SAPI para ser instalado.
+Este leitor de tela inicia utilizando o <span class=SpellE><span class=GramE>eSpeak</span></span>
+por predefinição. O sintetizador em questão trabalhará em qualquer sistema em
+que o NVDA trabalhe e funcionará definitivamente quando executar este leitor de
+tela através de uma unidade de memória USB ou CD, ou em qualquer outro sistema.
+</p>
+
+<p>A opção SAPI4 permite-lhe usar sintetizadores SAPI. As vozes que estão
+disponíveis no item SAPI4 incluem as do <span class=SpellE>Eloquence</span>,
+bem como outras SAPI4 que tenha <span class=GramE>instaladas</span> no sistema.
+</p>
+
+<p>O sintetizador SAPI5 permite-lhe usar vozes da Microsoft que estão incluídas
+na sua máquina. No XP, a voz Sapi5 predefinida é o Microsoft <span
+class=SpellE>Sam</span>. Já no Vista, a voz padrão é a Microsoft Anna.
+Dependendo de quais vozes tem <span class=GramE>instaladas</span>, outras
+poderão aparecer no item SAPI5. </p>
+
+<p>O sintetizador Display é útil para programadores com visão que pretendam ler
+o que é que o NVDA está <span class=GramE>anunciando .</span> Desta forma,
+podem testar o NVDA em suas aplicações. </p>
+
+<p>O <span class=SpellE>driver</span> do sintetizador <span class=SpellE>Silence</span>
+não é útil, a não ser que não deseje ter nenhuma voz todas as vezes que
+executar o NVDA. </p>
+
+<p>Por favor, Observe que não importam quantas vozes diferentes SAPI4 ou SAPI5
+(ou motores) tem <span class=GramE>instalados</span> no seu sistema, somente os
+sintetizadores SAPI4 e SAPI5 atuais serão apresentados no diálogo dos
+sintetizadores. Para selecionar um dos motores (vozes), <span class=SpellE>seleccione</span>
+ou o SAPI4 ou o SAPI5 e então, no diálogo das Opções de voz, escolha a voz <span
+class=GramE>desejada .</span> </p>
+
+<h5><a name=6.2.1.3></a>6.2.1.3. Opções de Voz</h5>
+
+<p>O diálogo das Opções de voz encontra-se no <span class=GramE>menu</span>
+Preferências ou pode ser acessado através de NVDA+<span class=SpellE>Control</span>+V
+e contém opções que lhe permitem alterar o som da voz. Pode também configurar
+diversas opções a partir de qualquer local pressionando NVDA+<span
+class=SpellE>Control</span> juntamente com uma das setas. As Setas Esquerda e
+Direita movem-no através de várias opções e as Setas Acima e Abaixo aumentam ou
+diminuem essa opção respectivamente. </p>
+
+<p>Esta caixa de diálogo contém as seguintes opções: </p>
+
+<h6>Voz</h6>
+
+<p>A primeira opção que se encontra neste diálogo é uma caixa de combinação que
+lista todas as vozes do sintetizador atual que tem instalado. Pode utilizar as
+setas para ouvir os diversos itens. As setas Acima e Esquerda sobem pela lista,
+enquanto as Setas Abaixo e Direita descem pela lista. </p>
+
+<h6>Variante</h6>
+
+<p>Se estiver utilizando o <span class=SpellE><span class=GramE>eSpeak</span></span>
+que acompanha o NVDA, esta é uma caixa de combinação que lhe permite selecionar
+a Variante do sintetizador com a qual deveria falar. As variantes do <span
+class=SpellE><span class=GramE>eSpeak</span></span> são parecidas às vozes, mas
+proporcionam atributos ligeiramente diferentes da voz principal. Algumas
+variantes são semelhantes a homens, mulheres e algumas <span class=GramE>parecem-se</span>
+com sapos. </p>
+
+<h6>Velocidade</h6>
+
+<p>Esta opção permite-lhe alterar a velocidade da voz. Contém uma barra de
+controle que lhe possibilita andar a partir do <span class=GramE>0</span> até
+100, (sendo <st1:metricconverter ProductID="0 a" w:st="on">0 a</st1:metricconverter>
+velocidade mais lenta e <st1:metricconverter ProductID="100 a" w:st="on">100 a</st1:metricconverter>
+mais rápida). </p>
+
+<h6>Entoação</h6>
+
+<p>Esta opção permite-lhe alterar a entoação da voz. Contém uma barra de
+controle que lhe possibilita andar a partir do <span class=GramE>0</span> até
+ao 100, (sendo o <st1:metricconverter ProductID="0 a" w:st="on">0 a</st1:metricconverter>
+entoação mais grave e <st1:metricconverter ProductID="100 a" w:st="on">100 a</st1:metricconverter>
+mais aguda). </p>
+
+<h6>Volume</h6>
+
+<p>Esta opção é uma barra de controle que lhe permite andar a partir do <span
+class=GramE>0</span> até 100, (sendo o 0 o volume mais baixo e 100 o mais alto).
+</p>
+
+<h6>Inflexão</h6>
+
+<p>Uma barra de controle que lhe permite escolher quanta inflexão (subida e
+descida na entoação) que o sintetizador usaria para falar. (Somente o <span
+class=SpellE><span class=GramE>eSpeak</span></span> fornece esta função por
+padrão ). </p>
+
+<h6>Falar toda a pontuação</h6>
+
+<p>Esta opção contém uma caixa de verificação que quando marcada informa ao
+NVDA para anunciar todos os símbolos de pontuação como palavras (muito útil
+para testes de leitura). Quando desmarcada, o NVDA deixa a pontuação sem
+alterá-la, desta forma, o sintetizador lerá frases com a inflexão <span
+class=SpellE>correcta</span>. Contudo, os símbolos não serão falados em voz
+alta. </p>
+
+<h6>Aumentar Entoação Para Maiúsculas</h6>
+
+<p>Se esta opção estiver selecionada, aumentará a entoação nas maiúsculas. </p>
+
+<h6>Anunciar &quot;Maiúscula&quot; Antes <span class=GramE>De</span> Letras
+Maiúsculas</h6>
+
+<p>Esta opção é uma caixa de verificação que quando marcada informa ao NVDA
+para anunciar a palavra &quot;maiúscula&quot; antes de qualquer letra
+maiúscula, quando se anda sobre a mesma ou anuncia-a quando está sendo escrita.
+Normalmente, o NVDA aumenta ligeiramente a entoação para qualquer letra
+maiúscula, mas alguns sintetizadores não suportam corretamente esta
+configuração, assim, esta opção poderá ser utilizada. </p>
+
+<h6><span class=SpellE>Beep</span> para maiúsculas</h6>
+
+<p>Se esta caixa de verificação estiver marcada, o NVDA produzirá um pequeno <span
+class=SpellE>beep</span> cada vez que estiver anunciando um <span class=SpellE>Caracter</span>
+maiúsculo. Tal como a caixa de verificação 'anunciar maiúscula antes de letras
+maiúsculas', esta é útil para sintetizadores que não possam alterar a sua
+entoação para letras maiúsculas. </p>
+
+<h5><a name=6.2.1.4></a>6.2.1.4. Opções de Braille</h5>
+
+<p>A caixa de diálogo das Opções de Braille pode ser acessada através do <span
+class=GramE>menu</span> Preferências, item Opções de Braille. </p>
+
+<h6>Linha Braille</h6>
+
+<p>A primeira opção que encontrará no diálogo das Opções de Braille é uma caixa
+de combinação que se denomina &quot;Linha Braille&quot;. Esta aparecerá com
+três opções. Desloque-se pelas mesmas com as Setas. </p>
+
+<p>O item sem Braille significa que não está utilizando o Braille. </p>
+
+<p>A opção <span class=SpellE>Freedom</span> <span class=SpellE>Scientific</span>
+é para as linhas Braille da <span class=SpellE>Freedom</span> <span
+class=SpellE>Scientific</span> <span class=SpellE>Focus</span>/<span
+class=SpellE>Pacmate</span>. Atente que esta opção aparece somente se tiver
+instalado o <span class=SpellE>driver</span> de Braille da <span class=SpellE>Freedom</span>
+<span class=SpellE>Scientific</span>. <a
+href="http://www.freedomscientific.com/PACMATE-HQ/FS_Braille_Display_Driver.asp">Consulte
+a página oficial dos <span class=SpellE>drivers</span> de Braille desta empresa</a>
+para mais informações sobre como obter e instalar os <span class=SpellE>drivers</span>.
+</p>
+
+<p>O item <span class=SpellE>Handy</span> <span class=SpellE>Tech</span> é para
+as linhas <span class=SpellE>Handy</span> <span class=SpellE>Tech</span>.
+Observe que esta opção só aparecerá se tiver instalado o <a
+href="ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1111a.exe"><span
+class=SpellE>driver</span> universal <span class=SpellE>Handy</span> <span
+class=SpellE><span class=GramE>Tech</span></span><span class=GramE>.</span></a>
+</p>
+
+<p>O BRLTTY permite-lhe utilizar uma vasta lista de linhas Braille. Por favor,
+instale a versão <a href="http://brl.thefreecat.org/brltty/">para Windows do
+BRLTTY</a> para ter suporte para estas linhas. </p>
+
+<h6>Tabela de Tradução</h6>
+
+<p>A opção seguinte que se encontra neste diálogo é uma caixa de combinação
+para as tabelas Braille. Nesta caixa de combinação, encontrará tabelas Braille
+para diversos idiomas. Pode-se mover de tabela Braille <st1:PersonName
+ProductID="em tabela Braille" w:st="on">em tabela Braille</st1:PersonName> na
+lista utilizando as Setas. </p>
+
+<h6>Expandir Para Braille <span class=GramE>De</span> Computador Palavras Sobre
+O Foco</h6>
+
+<p>Esta opção permite que a palavra que está sobre o cursor apareça em Braille
+de computador não contraído. </p>
+
+<h6>Velocidade de intermitência do Cursor</h6>
+
+<p>Esta opção é um campo numérico que lhe permite alterar a velocidade de
+intermitência do cursor em milésimos de segundo. </p>
+
+<h6>Tempo de Permanência de Mensagens (segundos)</h6>
+
+<p>Esta opção é um campo numérico que controla durante quanto tempo são
+apresentadas <span class=GramE>as</span> mensagens do sistema na linha Braille.
+</p>
+
+<h6>Miscelânea</h6>
+
+<p>Quando pressionar NVDA+<span class=SpellE>Control</span>+T, pode controlar o
+que vai ser apresentado na linha Braille. As duas opções são foco e revisão. O
+foco mostra o que vai ser acessado através das setas e da tecla <span
+class=SpellE>tab</span>, em suma, navegação com o foco. A revisão permite-lhe
+rever o que está na tela, ou seja, navegação de objetos. Pode mover-se
+rapidamente entre estas opções se pressionar <span class=SpellE>control</span>+NVDA+T.
+</p>
+
+<h5><a name=6.2.1.5></a>6.2.1.5. Opções do Teclado</h5>
+
+<p>Esta caixa de diálogo encontra-se no <span class=GramE>menu</span>
+Preferências, no item &quot;Opções do teclado...&quot; e pode ser acessada
+pressionando NVDA+<span class=SpellE>Control</span>+K. Contém as seguintes
+opções: </p>
+
+<h6>Layout de teclado</h6>
+
+<p>Esta caixa de combinação permite-lhe escolher qual é o tipo do layout do
+teclado que o NVDA utilizará. Atualmente, os dois que vêm com o NVDA são o <span
+class=SpellE>Desktop</span> (computador de mesa) e o Laptop (computador
+portátil). </p>
+
+<h6>Utilizar o <span class=SpellE><span class=GramE>CapsLock</span></span> como
+uma tecla modificadora do NVDA</h6>
+
+<p>Se esta caixa de verificação estiver marcada, o <span class=SpellE><span
+class=GramE>CapsLock</span></span> pode ser usado como uma tecla modificadora
+do NVDA. </p>
+
+<h6>Utilizar <span class=SpellE>Insert</span> do bloco intermédio como uma
+tecla modificadora do NVDA</h6>
+
+<p>Se esta caixa de verificação estiver marcada, a tecla <span class=SpellE>Insert</span>
+do bloco intermédio (encontra-se normalmente acima das setas, perto do <span
+class=SpellE>Home</span> e <span class=SpellE>End</span>) pode ser usada como
+uma tecla modificadora do NVDA. </p>
+
+<h6>Utilizar <span class=SpellE>Insert</span> do teclado numérico como uma
+tecla modificadora do NVDA</h6>
+
+<p>Se esta caixa de verificação estiver marcada, a tecla <span class=SpellE>Insert</span>
+do teclado numérico poderá ser utilizada como uma tecla modificadora do NVDA. </p>
+
+<h6>Falar Caracteres digitados Uma caixa de verificação que quando marcada
+informa que o NVDA anunciará todos os caracteres que escrever no teclado. Pode
+também configurar esta opção a partir de qualquer local pressionando NVDA+2. </h6>
+
+<h6>Falar Palavras digitadas Uma caixa de verificação que quando está marcada
+informa que o NVDA anunciará todas as palavras que escrever no teclado. Pode
+também configurar esta opção a partir de qualquer local pressionando NVDA+3. </h6>
+
+<h6>Falar Teclas de Comando</h6>
+
+<p>Uma caixa de verificação que quando marcada informa que o NVDA anunciará
+todas as teclas que não são <span class=GramE>caracteres pressionadas no
+teclado</span>. Isto inclui combinações de teclas tais como o <span
+class=SpellE>control</span> mais outra letra. Pode também configurar esta opção
+a partir de qualquer local pressionando NVDA+4. </p>
+
+<h5><a name=6.2.1.6></a>6.2.1.6. Opções do Mouse O diálogo das Opções do Mouse
+encontra-se no <span class=GramE>menu</span> Preferências, mais propriamente no
+item &quot;Opções do Mouse...&quot; e pode ser acessado adicionalmente
+pressionando NVDA+<span class=SpellE>Control</span>+M. Esta configuração contém
+as seguintes opções: </h5>
+
+<h6>Informar Alterações No Mouse </h6>
+
+<p>Uma caixa de verificação que quando selecionada informa que o NVDA anunciará
+a qualquer momento alterações na forma do ponteiro do <span class=GramE>Mouse .</span>
+O ponteiro do Mouse altera a sua forma no Windows para fornecer determinada
+informação tal como quando algo é <span class=SpellE>editável</span>, ou quando
+alguma coisa está sendo <span class=GramE>carregada ,</span> etc. </p>
+
+<h6>Anunciar Texto sob o Mouse</h6>
+
+<p>Uma caixa de verificação que quando marcada significa que o NVDA anunciará o
+texto atual sobre o ponteiro do <span class=GramE>Mouse ,</span> conforme se
+move pela tela. Isto permite procurar coisas na tela, através do movimento
+físico do <span class=GramE>Mouse ,</span> antes que precise tentar
+encontrá-las através da navegação de objetos. </p>
+
+<h6>Anunciar Tipo <span class=GramE>De</span> Controle Quando O mouse entra
+nele Se esta caixa de verificação estiver ativada, o NVDA anunciará o tipo do
+objeto quando o Mouse se mover sobre ele. </h6>
+
+<h6>Tocar sons de coordenadas quando o Mouse é movido Ao marcar esta caixa de
+verificação faz com que o NVDA reproduza <span class=SpellE>beeps</span> quando
+o Mouse se mover. Desta forma, o Usuário poderá saber onde é que o Mouse se
+encontra levando em conta as dimensões da tela. </h6>
+
+<h6>Brilho controla o volume das coordenadas sonoras Se a caixa de verificação
+'tocar as coordenadas de áudio quando o Mouse se mover' estiver marcada, então
+ao <span class=SpellE>seleccionar</span> esta caixa de verificação significa
+que o volume dos <span class=SpellE>beeps</span> das coordenadas de áudio é
+controlado através do brilho da tela que está sobre o <span class=GramE>Mouse .</span>
+Isto poderá causar alguns problemas de rendimento no Windows Vista, desta <span
+class=GramE>forma,</span>por padrão está desmarcada . </h6>
+
+<h5><a name=6.2.1.7></a>6.2.1.7. Apresentação de Objeto</h5>
+
+<p>Encontra-se no <span class=GramE>menu</span> Preferências no item
+&quot;Apresentação de Objeto...&quot; ou pressionando NVDA+<span class=SpellE>Control</span>+O,
+esta caixa de diálogo contém as seguintes opções: </p>
+
+<h6><span class=GramE>anunciar</span> dicas de Ferramentas</h6>
+
+<p>Uma caixa de verificação que quando marcada informa ao NVDA para anunciar
+sugestões conforme apareçam. Muitas janelas e controles mostram uma pequena
+mensagem (ou sugestão) quando move o ponteiro do Mouse sobre elas, ou algumas
+vezes quando move o foco por elas. </p>
+
+<h6>Informar Balões de Ajuda</h6>
+
+<p>Esta caixa de verificação quando marcada informa ao NVDA para anunciar
+balões de ajuda conforme apareçam. Os Balões de Ajuda são como pequenas
+sugestões, mas por norma são maiores em tamanho e estão associados com os
+eventos do sistema tal como o cabo de rede ser desligado, ou talvez para
+alertá-lo sobre problemas de segurança do Windows. </p>
+
+<h6>Anunciar Teclas de atalho dos Objetos</h6>
+
+<p>Quando esta caixa de verificação estiver selecionada, o NVDA incluirá a
+tecla de atalho que está associada a um determinado objeto ou controle quando o
+mesmo for anunciado. <span class=GramE>Por exemplo</span> o menu Arquivo na
+barra de menus poderá ter a tecla de atalho <span class=SpellE>Alt</span>+F. </p>
+
+<h6>Anunciar Descrições de Objetos</h6>
+
+<p>Desmarque esta caixa de verificação se não necessita ouvir a descrição
+anunciada juntamente com os objetos. </p>
+
+<h6>Dizer Estado do Objeto primeiro </h6>
+
+<p>Quando esta caixa de verificação está marcada, o NVDA anunciará o estado de
+um objeto antes de qualquer outra informação. Por exemplo, um botão com o nome
+&quot;reproduzir&quot; e estado &quot;pressionado&quot; será anunciado como
+&quot;pressionado reproduzir botão&quot; em vez de &quot;reproduzir botão
+pressionado&quot;. Isto é algumas vezes útil se andar com o <span class=SpellE>Tab</span>
+por objetos do mesmo tipo e estiver realmente só interessado em ver se estão
+&quot;pressionados&quot;, ou &quot;marcados&quot; etc. </p>
+
+<h6>Dar <span class=SpellE>Beeps</span> em Atualizações de Barras de Progresso</h6>
+
+<p>Uma barra de progresso é um controle que se parece um pouco com uma régua.
+Conforme uma tarefa está a ser lentamente completada, a barra vai aumentando.
+Também mostra um valor de percentagem numérico informando-o quando vai
+avançando. As barras de progresso são apresentadas para coisas como
+carregamento de páginas da <span class=SpellE>Web</span>, descarregar o seu
+e-mail, ou processar um arquivo de som etc. Se esta caixa de verificação
+estiver marcada, o NVDA utilizará <span class=SpellE>beeps</span> para <span
+class=GramE>o informar</span> sobre o avanço da barra de progresso. Isto <span
+class=GramE>é</span> algumas vezes mais agradável do que ouvir muitos números. </p>
+
+<h5><a name=6.2.1.8></a>6.2.1.8. Definições do Buffer Virtual</h5>
+
+<p>O diálogo das definições do Buffer Virtual pode ser encontrado no <span
+class=GramE>menu</span> Preferências, no item &quot;exibidores
+virtuais...&quot;. Alternativamente, pode ser acessado pressionando NVDA+<span
+class=SpellE>Control</span>+B. Observe que muitas destas definições neste
+diálogo poderão afetar somente os <span class=SpellE>Buffers</span> Virtuais
+antigos (usados para <span class=GramE>o Internet Explorer</span> e Adobe <span
+class=SpellE>Reader</span>). Em versões futuras do NVDA este problema será
+resolvido. O diálogo contém as seguintes opções: </p>
+
+<h6>Número máximo de Caracteres Por Linha</h6>
+
+<p>Este campo define o comprimento máximo de uma linha do Buffer Virtual (em
+caracteres). Não garante que todas as linhas acabarão tendo esta largura ou
+inferior, mas a maioria deveria ser assim. </p>
+
+<h6>Número Máximo de Linhas Por Página</h6>
+
+<p>Pois bem, os <span class=SpellE>Buffers</span> Virtuais não têm realmente
+páginas. Este campo define a quantidade de linhas ao mover-se quando pressiona <span
+class=SpellE>page</span> <span class=SpellE>up</span> ou <span class=SpellE>page</span>
+<span class=SpellE>down</span> no Buffer Virtual. </p>
+
+<h6>Usar apresentação da tela quando suportado</h6>
+
+<p>Esta caixa de verificação quando selecionada informa ao NVDA para anunciar o
+texto e informação sobre apresentação no Buffer Virtual para um controle,
+conforme obtenha o foco, em vez de questionar simplesmente ao Windows pela
+informação do controle. Por exemplo, ao andar com o <span class=SpellE>Tab</span>
+para um link denominado &quot;gatos&quot; <span class=GramE>dirá</span>
+&quot;link gatos&quot; em vez de &quot;gatos link&quot; porque nos <span
+class=SpellE>Buffers</span> Virtuais quando navegar, o tipo é sempre anunciado
+antes do texto. Poderá ser conveniente que em certos casos não tenha esta opção
+disponível já que isto significa que o controle será anunciado em uma ordem um
+pouco melhor. Contudo, para alguns navegadores da <span class=SpellE>Web</span>,
+poderá obter um anúncio mais exato quando isto estiver disponível. </p>
+
+<h6>Configurar O Anúncio de Campos Tais Como <span class=SpellE>Links</span> E
+Títulos</h6>
+
+<p>As versões anteriores do NVDA permitiam-lhe utilizar as opções do diálogo do
+Buffer Virtual para configurar se o NVDA deveria anunciar o tipo de campo assim
+que entrava nele e informaria isso através de conteúdo da <span class=SpellE>Web</span>.
+São como exemplos os tipos de campos <span class=SpellE>links</span>, títulos,
+tabelas e listas. Para configurar isto, <span class=GramE>por favor</span>
+localize as novas opções no <a href="#6.2.1.9">diálogo das definições de formatação
+de documentos.</a> Atualmente estas opções não afetam somente o Buffer Virtual,
+mas sim qualquer documento que possa ter este tipo de campos que são
+anunciados. </p>
+
+<h6>Anunciar apresentação do<span class=GramE><span style='mso-spacerun:yes'> 
+</span></span>exibidor virtual quando o foco muda</h6>
+
+<p>Esta opção permite ao modo de foco ser chamado quando o cursor é modificado.
+Por exemplo, quando numa página <span class=SpellE>Web</span>, se pressionar <span
+class=SpellE>Tab</span> e encontrar um formulário, caso esta opção esteja
+marcada, o modo de foco será chamado automaticamente. </p>
+
+<h6>Modo de Foco Automático quando o foco muda</h6>
+
+<p>Esta opção quando está marcada permite que o NVDA chame e deixe o modo de
+foco quando andar com as setas direcionais. Por exemplo, se for pressionando
+Seta Abaixo numa página <span class=SpellE>Web</span> e encontrar uma área de
+edição, este leitor de tela ativará automaticamente o modo de foco. Se
+pressionar as setas para sair da área de edição, o NVDA voltará a chamar o modo
+de navegação. </p>
+
+<h5><a name=6.2.1.9></a>6.2.1.9.<span class=GramE><span
+style='mso-spacerun:yes'>  </span></span>Formatação de Documentos</h5>
+
+<p>Esta caixa de diálogo está no <span class=GramE>menu</span> Preferências, no
+item &quot;Formatação de Documentos...&quot; e pode ser Acessada pressionando
+NVDA+<span class=SpellE>Control</span>+D. Todas as caixas de verificação neste
+diálogo permitem-lhe configurar qual é o tipo de formatação que pretende ouvir
+automaticamente quando se mover com o cursor pelos documentos no <span
+class=SpellE>WordPad</span> ou no Microsoft Word. Por exemplo, se selecionar a
+caixa de verificação para informar o nome do tipo de letra de cada vez que anda
+pelo texto com tipos de letra diferentes, o nome do tipo de letra será
+anunciado. Pode configurar o nome do tipo de letra, tamanho do tipo de letra,
+atributos do tipo de letra, alinhamento de texto, estilo de texto, tabelas,
+números de página, números de linha, erros de ortografia, <span class=SpellE>links</span>,
+títulos, listas e blocos de citação. </p>
+
+<h4><a name=6.2.2></a>6.2.2. Salvar E Restaurar A Configuração</h4>
+
+<p>O NVDA Salva as suas configurações em um<span class=GramE><span
+style='mso-spacerun:yes'>  </span></span>arquivo denominado <span class=SpellE>nvda</span>.<span
+class=SpellE>ini</span> na sua própria pasta. Provavelmente, nunca terá que
+tocar nele<span class=GramE> mas</span> para os usuários avançados, este
+arquivo permite-lhes alterar algumas opções extras que não se encontram nas
+caixas de diálogo. </p>
+
+<p>O NVDA não Salva automaticamente as suas configurações. Desta forma, se sair
+do NVDA e reiniciá-lo, estas voltarão ao ponto anterior com os valores
+originais. Observe que pode alterar esta configuração predefinida através do
+item &quot;Opções gerais...&quot; que se encontra no <span class=GramE>menu</span>
+Preferências. Para guardar as configurações, ou escolhe a qualquer momento o
+item opções no <span class=GramE>menu</span> do NVDA ou pressione NVDA+<span
+class=SpellE>Control</span>+c a partir de qualquer lugar. </p>
+
+<p>Se o NVDA tem um arquivo em um sistema só de leitura, como um CD, não será
+possível Salvar as suas configurações e o leitor de tela informará. </p>
+
+<p>Se nunca se engana com as suas <span class=SpellE>configuraçõese</span>
+necessita voltar a trás nas configurações <span class=GramE>Salvas ,</span>
+pode sempre escolher o item &quot;Restaurar para as Opções Salvas” no menu do
+NVDA, ou pode pressionar NVDA+<span class=SpellE>Control</span>+r a partir de
+qualquer local. </p>
+
+<h2><a name=7></a>7. Navegar Com O NVDA</h2>
+
+<h3><a name=7.1></a>7.1. Navegando Com O Foco</h3>
+
+<p>A forma mais comum de navegar pelo Windows com o NVDA é simplesmente
+mover-se com os comandos de teclado normais, tais como <span class=SpellE>tab</span>
+e <span class=SpellE>Shift</span> <span class=SpellE>tab</span> para se mover <span
+class=GramE>para a</span> frente e para trás entre controles, pressionar <span
+class=SpellE>alt</span> para acessar a barra de menus e utilizar as setas para
+navegar pelos menus e usar <span class=SpellE>alt-tab</span> para se mover
+entre aplicações <st1:PersonName ProductID="em execu&#65511;&#65507;o. Ao"
+w:st="on">em execução. Ao</st1:PersonName> fazer isto, o NVDA anunciará o que
+está sobre o foco. Quando o NVDA anuncia um objeto (ex.: quando recebe o foco),
+dirá normalmente o nome do objeto, tipo, estado, valor, descrição, atalho do
+teclado e informação da posição. Isto é bastante parecido em outros leitores de
+tela, o que não impede que os tipos de objetos possam ser um pouco diferentes. </p>
+
+<p>Existem alguns comandos de teclado úteis quando se move com o foco: </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level1 lfo8;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>NVDA+<span class=SpellE>Tab</span> – Informa
+onde está o foco atual; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level1 lfo8;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>NVDA+B – Anuncia toda a janela em primeiro plano
+(útil para ler uma caixa de diálogo); </p>
+
+<p style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l4 level1 lfo8;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;
+mso-bidi-font-family:Symbol'><span style='mso-list:Ignore'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>NVDA+T – Fala o título da janela atual em
+primeiro plano. </p>
+
+<h3><a name=7.2></a>7.2. Navegar Com O Cursor do Sistema</h3>
+
+<p>Quando o foco está sobre um objeto que tem um cursor de edição (cursor do
+sistema), pode andar com as setas e editar normalmente como pretender. O NVDA
+anunciará como se mover por <span class=SpellE>Caracter</span>, palavra, linha
+e também informará a seleção ou não seleção de texto. Quando se mover com o
+cursor do sistema, a posição do cursor de revisão também será atualizada para
+se juntar ao mesmo. Pode também ler todo o texto (leitura contínua) com
+NVDA+Seta Abaixo. Note que isto é diferente do <span class=SpellE><span
+class=GramE>NumpadMais</span></span> o qual move somente o cursor de revisão,
+enquanto o primeiro move o cursor do sistema conforme se vai movimentando. </p>
+
+<h3><a name=7.3></a>7.3. Navegação <span class=GramE>De</span> Objetos</h3>
+
+<p>Se pretende ter uma visão da aplicação atual ou sistema <span class=GramE>Operacional
+,</span> contudo sem mover o foco, pode utilizar a navegação de objetos do
+NVDA. Isto <span class=GramE>permite-lhe</span> mover-se de um objeto para
+outro numa árvore estruturada. </p>
+
+<p>A árvore estruturada dos objetos inicia-se na janela da área de trabalho, ou
+seja, na raiz da mesma. As primeiras ramificações da árvore são as aplicações
+atualmente em execução, e como <span class=GramE>é</span> óbvio, estas
+aplicações têm as suas próprias ramificações (objetos), que representam
+diversas partes da aplicação. </p>
+
+<p>A estrutura em árvore pode ser muito grande, mas permite-lhe navegar numa
+ordem lógica, de forma a conseguir encontrar a informação que necessita. Esta
+estrutura não tem nada a ver com a forma em que os objetos estão dispostos na
+tela, mas sim como estão relacionados logicamente. Isto poderá demorar algum
+tempo até que comece a utilizar, mas uma vez que compreenda isto, deverá
+conseguir mover-se com muita facilidade. Atualmente o NVDA não pode navegar
+pelos objetos através do layout baseado na tela porque não tem nenhum <span
+class=SpellE>driver</span> de <span class=SpellE>intercepção</span> de vídeo ou
+display <span class=SpellE>hooks</span>. O NVDA não escolhe interagir com a
+tela porque deve permitir acima de tudo mais clareza e mais percepção lógica de
+uma aplicação e do sistema operativo, antes de tentar captar a disposição do
+layout da tela. Nem todas as aplicações têm uma estrutura em árvore perfeita,
+mas isto depende do programador dessa aplicação <st1:PersonName
+ProductID="em particular. A" w:st="on">em particular. A</st1:PersonName>
+maioria está correta e certamente, grande parte das caixas de diálogo e
+aplicações muito estruturadas <span class=GramE>parecem estar</span> bem. </p>
+
+<p>Para navegar através de objetos utilize as teclas seguintes: </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l3 level1 lfo10;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>NVDA+Numpad5: Anuncia o objeto <span
+class=SpellE>actual</span>; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l3 level1 lfo10;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>NVDA+Numpad8: Move para o objeto ascendente
+(Movendo na direção da raiz da árvore); </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l3 level1 lfo10;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>NVDA+Numpad4: Move para o objeto anterior (o <span
+class=SpellE>objecto</span> imediatamente anterior a este no mesmo nível); </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l3 level1 lfo10;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>NVDA+Numpad6: Move para o objeto seguinte (O
+objeto imediatamente seguinte a este no mesmo nível); </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l3 level1 lfo10;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>NVDA+Numpad2: Move para o primeiro objeto
+descendente (O primeiro ramo que sai deste <span class=SpellE>objecto</span>); </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l3 level1 lfo10;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>NVDA+<span class=SpellE>Shift</span>+Numpad4:
+Move para o objeto anterior no fluxo (Atravessa automaticamente fronteiras de
+ascendentes e descendentes até encontrar o anterior); </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l3 level1 lfo10;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>NVDA+<span class=SpellE>Shift</span>+Numpad6:
+Move para o próximo objeto no fluxo (Atravessa automaticamente fronteiras de
+ascendentes e descendentes até encontrar o próximo); </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l3 level1 lfo10;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>NVDA+<span class=SpellE><span class=GramE>NumpadMenos</span></span>:
+Move para o foco; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l3 level1 lfo10;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>NVDA+<span class=SpellE>Numpad</span> <span
+class=SpellE>Enter</span>: Ativar o objeto atual (ex. pressionar <span
+class=SpellE>Enter</span> / clique / duplo clique); </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l3 level1 lfo10;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>NVDA+<span class=SpellE><span class=GramE>NumpadBarra</span></span>:
+Move o Mouse para o objeto atual; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l3 level1 lfo10;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>NVDA+<span class=SpellE><span class=GramE>NumpadAsterisco</span></span>:
+Move para o Mouse ; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l3 level1 lfo10;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>NVDA+<span class=SpellE>Shift</span>+Numpad5:
+anunciar as dimensões atuais dos objetos referentes <span class=GramE>a</span>
+tela; </p>
+
+<p style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l3 level1 lfo10;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;
+mso-bidi-font-family:Symbol'><span style='mso-list:Ignore'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>NVDA+<span class=SpellE><span class=GramE>NumpadMais</span></span>:
+Leitura contínua de todos os objetos – Começa a ler do objeto atual,
+prosseguindo pelos próximos no fluxo. </p>
+
+<p>Nota: As teclas do teclado numérico requerem que o <span class=SpellE><span
+class=GramE>NumLock</span></span> esteja desativado para que possam trabalhar
+adequadamente. Quando se mover com o foco, o objeto de navegação atual
+altera-se juntamente com ele. Contudo, se pretende bloquear a navegação de
+objeto para um objeto específico, para que este não se altere com o foco, pode
+desativar o foco a Mover o Objeto de navegação com NVDA+7. </p>
+
+<h3><a name=7.4></a>7.4. Rever Texto No Objeto Atual</h3>
+
+<p>O NVDA permite-lhe ler o conteúdo da navegação de objetos atual, por
+caracteres, palavras ou linhas. Isto é muito útil na consola do <span
+class=GramE>Dos</span> do Windows e noutros locais onde há um cursor do sistema
+limitado ou inexistente. </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo12;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE>Shift</span>+Numpad7:
+Primeira linha; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo12;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Numpad7: Linha anterior; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo12;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Numpad8: Linha atual; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo12;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Numpad9: Linha seguinte; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo12;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE>Shift</span>+Numpad9: Última
+linha; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo12;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Numpad4: Palavra anterior; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo12;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Numpad5: Palavra atual; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo12;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Numpad6: Palavra seguinte; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo12;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE>Shift</span>+Numpad1: Início
+da linha; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo12;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Numpad1: <span class=SpellE>Caracter</span>
+anterior; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo12;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Numpad2: <span class=SpellE>Caracter</span> <span
+class=SpellE>actual</span>; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo12;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Numpad3: <span class=SpellE>Caracter</span>
+seguinte; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo12;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE>Shift</span>+Numpad3: Fim da
+linha; </p>
+
+<p style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l0 level1 lfo12;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;
+mso-bidi-font-family:Symbol'><span style='mso-list:Ignore'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE><span class=GramE>NumpadMais</span></span>:
+Leitura contínua de todo o texto; </p>
+
+<p>Nota: As teclas do teclado numérico requerem que o <span class=SpellE><span
+class=GramE>NumLock</span></span> esteja desativado para que possam funcionar
+adequadamente. </p>
+
+<p>Quando um objeto tem um cursor de edição (cursor do sistema) e move-se, o
+cursor de revisão é também atualizado para essa posição. <span class=GramE>Se
+pretende</span> que o cursor de navegação permaneça onde está e que não se mova
+com o cursor do sistema, pode desativar o &quot;Cursor do sistema Move O Cursor
+de Navegação&quot; ao pressionar NVDA+6. </p>
+
+<p>É possível copiar partes de um conteúdo que está a rever. Por exemplo,
+poderá querer copiar um endereço da Internet que alguém lhe enviou num texto
+num programa de conversação. Para copiar o conteúdo, comece por mover o cursor
+de navegação até o primeiro <span class=SpellE>caracter</span> do texto que
+pretende copiar e pressione NVDA+F9. Por fim, mova-se para o final do texto e
+pressione NVDA+F10. O conteúdo será copiado para a área de transferência, o que
+lhe possibilita copiar o conteúdo onde <span class=GramE>desejar .</span>
+Atente que o programa que está utilizando já lhe possibilita mover-se ao longo
+do texto utilizando o cursor do sistema e copiar através do comando normal <span
+class=SpellE>Control</span>+C, o que lhe trará melhores resultados. </p>
+
+<h3><a name=7.5></a>7.5. navegando Com O Mouse Quando mover o <span
+class=GramE>mouse ,</span> o NVDA informará por predefinição o texto que se
+encontra diretamente sobre o ponteiro deste periférico, assim que este se mova
+pelo texto. Quando suportado, este leitor de tela lerá o conteúdo de parágrafos
+de texto, contudo em alguns controles só poderá ler por linha. </h3>
+
+<p>O NVDA também pode ser configurado para anunciar o tipo de controle ou o
+objeto onde está atualmente o Mouse conforme se movimente (ex. lista, botão
+etc.), o que é muito útil para usuários totalmente cegos quando algumas vezes o
+texto não for suficiente. </p>
+
+<p>O NVDA fornece um modo para que os Usuários compreendam onde está o mouse no
+que se refere às dimensões da tela através da reprodução das coordenadas atuais
+do mouse com <span class=SpellE>beeps</span> audíveis. Quanto mais alto estiver
+o mouse na tela, mais agudo será o tom dos <span class=SpellE>beeps</span>.
+Quanto mais à esquerda ou à direita estiver o mouse na tela, mais parecerá que
+o som está à esquerda ou à direita (assumindo-se que o usuário tem umas colunas
+<span class=SpellE>stereo</span>). </p>
+
+<p>Estas características adicionais do Mouse não se encontram ativadas por
+padrão no NVDA, mas se desejar utilizar esses <span class=GramE>recursos ,</span>
+pode configurá-las a partir do diálogo das opções do mouse, que se encontram no
+item Preferências no menu do NVDA. </p>
+
+<h2><a name=8></a>8. <span class=SpellE>Buffers</span> Virtuais</h2>
+
+<p>Os documentos complexos só de leitura, tais como páginas <span class=SpellE>Web</span>,
+são representados no NVDA <st1:PersonName ProductID="em um  Buffer Virtual"
+w:st="on">em um<span class=GramE><span style='mso-spacerun:yes'>  </span></span>Buffer
+ Virtual</st1:PersonName>, (exibidor virtual). </p>
+
+<p>Um Buffer Virtual é uma representação plana textual do documento, que
+permite ao usuário acesso<span class=GramE><span style='mso-spacerun:yes'> 
+</span></span>ao texto e aos<span style='mso-spacerun:yes'>   </span>campos
+existentes no documento.<span style='mso-spacerun:yes'>  </span><span
+class=GramE>além</span> de conseguir mover-se, também pode pressionar <span
+class=SpellE>Enter</span> ou espaço em <span class=SpellE>links</span> e botões
+para os ativar, pressionar <span class=SpellE>Enter</span> ou espaço em áreas
+de edição para editar o conteúdo respectivo, carregar no <span class=SpellE>Enter</span>
+ou no espaço em caixas de verificação ou em botões de opção para os selecionar
+e pressione <span class=SpellE>Enter</span> ou espaço em caixas de combinação
+para modificar imediatamente a sua seleção. </p>
+
+<p>Quando está num Buffer Virtual, existem dois modos de interação. O modo de
+navegação é onde se pode mover pelo texto utilizando um cursor virtual. O modo
+de foco é onde pode interagir diretamente com um controle (área de edição,
+caixa de combinação, botões de opção) utilizando adequadamente as teclas que
+usaria normalmente. Quando estiver no modo de navegação, o NVDA ativará
+automaticamente o modo de foco se andar com o <span class=SpellE>tab</span> ou
+clicar num controle em particular que solicite isso. Também pode evocar
+manualmente o modo de foco com NVDA+Espaço. Se o NVDA alternou para o modo de
+foco automaticamente por causa de algum <span class=SpellE>Tab</span> ou
+clique, poderá voltar ao ponto anterior para o modo de navegação uma vez que
+pressionou <span class=SpellE>tab</span> ou clique algumas vezes em algo que
+não precisava disto. Contudo, se evocou o modo de foco com NVDA+Espaço, ele
+permanecerá assim até que volte manualmente ao modo de navegação. Quando
+estiver no modo de foco, pode voltar para o modo de navegação a qualquer
+momento pressionando Escape ou NVDA+Espaço. O diálogo das definições do Buffer
+Virtual no <span class=GramE>menu</span> Preferências do menu do NVDA
+permite-lhe <span class=SpellE>desactivar</span> automaticamente o alternar
+entre os modos de navegação e foco. </p>
+
+<p>Atualmente o NVDA utiliza os <span class=SpellE>Buffers</span> Virtuais para
+ler documentos no <span class=SpellE>Mozilla</span> <span class=SpellE>Firefox</span>,
+Microsoft Internet Explorer e Adobe <span class=SpellE>Reader</span>. </p>
+
+<p>Note que os <span class=SpellE>Buffers</span> Virtuais usados para <span
+class=GramE>o Internet Explorer</span> e Adobe <span class=SpellE>Reader</span>
+são muito básicos e requerem muito mais tempo para carregar. Estes <span
+class=SpellE>Buffers</span> Virtuais antigos nem sequer tratam muito bem
+conteúdo dinâmico, nem fornecem suporte à Lista de <span class=SpellE>Links</span>
+ou a algumas teclas de navegação rápida do Buffer Virtual. Para uma melhor <span
+class=GramE>performance</span> e facilidade de uso, teste o <a
+href="http://www.getfirefox.com/"><span class=SpellE>Mozilla</span> <span
+class=SpellE>Firefox</span></a> para navegar na <span class=SpellE>Web</span>. </p>
+
+<h3><a name=8.1></a>8.1. Navegação Por <span class=SpellE>Caracter</span></h3>
+
+<p>Para uma navegação rápida, o NVDA também fornece teclas de <span
+class=SpellE>caracter</span> simples para saltar para determinados campos no
+Buffer Virtual. </p>
+
+<p>Somente a letra salta para o próximo campo, acompanhada com a tecla <span
+class=SpellE>Shift</span> salta para o campo anterior. </p>
+
+<p>Teclas suportadas pelos <span class=SpellE>Buffers</span> Virtuais antigos e
+novos: </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo14;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>H: Título; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo14;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>L: Lista; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo14;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>I: Item de lista; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo14;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>T: Tabela; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo14;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>K: Link; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo14;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>P: Parágrafo; </p>
+
+<p style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l2 level1 lfo14;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;
+mso-bidi-font-family:Symbol'><span style='mso-list:Ignore'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>F: Campo de formulário. </p>
+
+<p>Teclas não suportadas pelo Buffer Virtual antigo: </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo16;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>U: Link não visitado; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo16;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>V: Link visitado; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo16;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>E: Área de edição; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo16;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>B: Botão; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo16;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>X: Caixa de verificação; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo16;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>C: Caixa de combinação; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo16;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>R: Botão de opção; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo16;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Q: Bloco de citação; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo16;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>S: Separador; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo16;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>M: Frame; </p>
+
+<p style='margin-top:5.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:36.0pt;
+margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo16;tab-stops:
+list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>G: Gráfico; </p>
+
+<p style='margin-left:36.0pt;text-indent:-18.0pt;mso-list:l5 level1 lfo16;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;
+mso-bidi-font-family:Symbol'><span style='mso-list:Ignore'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=GramE>1</span> até 6: Títulos de
+nível 1 até 6 respectivamente. </p>
+
+<h3><a name=8.2></a>8.2. Formulários E OS Modos de Foco e Navegação</h3>
+
+<p>Algumas vezes precisará interagir com campos de formulário alternando entre o
+modo de foco e o de navegação,<span class=GramE> <span
+style='mso-spacerun:yes'> </span></span>com as teclas do Buffer Virtual. O modo
+de foco foi criado para este propósito e pode ser ativado e desativado com
+NVDA+espaço. </p>
+
+<h3><a name=8.3></a>8.3. A Lista de <span class=SpellE>Links</span></h3>
+
+<p>Para Acessar <span class=GramE>à</span> lista de <span class=SpellE>links</span>
+para o Buffer Virtual atual, pressione NVDA+f7. A partir do diálogo que será exibido<span
+class=GramE>, ,</span> pode selecionar o link no qual está interessado e então,
+ou move-se para ele, ou ativa-o utilizando os botões fornecidos. </p>
+
+<h2><a name=9></a>9. Problemas Com O NVDA</h2>
+
+<p>Sabendo-se que o NVDA está em constante atualização, não há garantia que
+todos os conteúdos aqui presentes estejam corretos. Se tiver algum problema com
+os pontos referidos neste guia do <span class=GramE>usuário ,</span> visite por
+favor: <a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a>
+para obter mais assistência. </p>
+
+</div>
+
+</body>
+
+</html>

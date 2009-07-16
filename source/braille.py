@@ -25,13 +25,13 @@ TABLES_DIR = r"louis\tables"
 #: The table filenames and descriptions.
 TABLES = (
 	("ar-ar-g1.utb", _("Arabic grade 1")),
+	("bg.ctb", _("Bulgarian 8 dot computer braille")),
 	("cy-cy-g1.utb", _("Welsh grade 1")),
 	("cy-cy-g2.ctb", _("Welsh grade 2")),
 	("cz-cz-g1.utb", _("Czech grade 1")),
 	("da-dk-g1.utb", _("Danish grade 1")),
 	("de-de-g0.utb", _("German grade 0")),
 	("de-de-g1.ctb", _("German grade 1")),
-	("de-de-g2.ctb", _("German grade 2")),
 	("en-gb-g1.utb", _("English (U.K.) grade 1")),
 	("en-GB-g2.ctb", _("English (U.K.) grade 2")),
 	("en-us-comp6.ctb", _("English (U.S.) 6 dot computer braille")),
@@ -45,6 +45,7 @@ TABLES = (
 	("fr-bfu-comp8.utb", _("French (unified) 8 dot computer braille")),
 	("fr-bfu-g2.ctb", _("French (unified) Grade 2")),	("gr-gr-g1.utb", _("Greek (Greece) grade 1")),
 	("hi-in-g1.utb", _("Hindi grade 1")),
+	("hr.ctb", _("Croatian 8 dot computer braille")),
 	("it-it-g1.utb2", _("Italian grade 1")),
 	("Lv-Lv-g1.utb", _("Latvian grade 1")),
 	("nl-be-g1.utb", _("Dutch (Belgium) grade 1")),
@@ -55,6 +56,7 @@ TABLES = (
 	("No-No-g3.ctb", _("Norwegian grade 3")),
 	("Pl-Pl-g1.utb", _("Polish grade 1")),
 	("Pt-Pt-g1.utb", _("Portuguese grade 1")),
+	("ru-ru-g1.utb", _("Russian grade 1")),
 	("Se-Se-g1.utb", _("Swedish grade 1")),
 	("sk-sk-g1.utb", _("Slovak")),
 	("UEBC-g1.utb", _("Unified English Braille Code grade 1")),
@@ -63,16 +65,17 @@ TABLES = (
 
 roleLabels = {
 	controlTypes.ROLE_EDITABLETEXT: _("edt"),
-	controlTypes.ROLE_LISTITEM: None,
+	controlTypes.ROLE_LIST: _("lst"),
 	controlTypes.ROLE_MENUBAR: _("mnubar"),
 	controlTypes.ROLE_POPUPMENU: _("mnu"),
-	controlTypes.ROLE_MENUITEM: None,
 	controlTypes.ROLE_BUTTON: _("btn"),
 	controlTypes.ROLE_CHECKBOX: _("chk"),
 	controlTypes.ROLE_RADIOBUTTON: _("rbtn"),
 	controlTypes.ROLE_COMBOBOX: _("cbo"),
 	controlTypes.ROLE_LINK: _("lnk"),
 	controlTypes.ROLE_DIALOG: _("dlg"),
+	controlTypes.ROLE_TREEVIEW: _("tv"),
+	controlTypes.ROLE_TABLE: _("tb"),
 }
 
 positiveStateLabels = {
@@ -197,7 +200,10 @@ def getBrailleTextForProperties(**propertyValues):
 		textList.append(name)
 	role = propertyValues.get("role")
 	if role is not None:
-		roleText = roleLabels.get(role, controlTypes.speechRoleLabels[role])
+		if role in speech.silentRolesOnFocus:
+			roleText = None
+		else:
+			roleText = roleLabels.get(role, controlTypes.speechRoleLabels[role])
 	else:
 		role = propertyValues.get("_role")
 		roleText = None

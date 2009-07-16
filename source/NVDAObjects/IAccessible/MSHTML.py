@@ -273,7 +273,8 @@ class MSHTML(IAccessible):
 		return super(MSHTML, self)._isEqual(other)
 
 	def _get_value(self):
-		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_PANE:
+		IARole=self.IAccessibleRole
+		if IARole in (oleacc.ROLE_SYSTEM_PANE,oleacc.ROLE_SYSTEM_TEXT):
 			return ""
 		else:
 			return super(MSHTML,self).value
@@ -328,6 +329,12 @@ class MSHTML(IAccessible):
 				isMultiline=False
 			if self.TextInfo==MSHTMLTextInfo and isMultiline: 
 				states.add(controlTypes.STATE_MULTILINE)
+			try:
+				required=e.getAttribute('aria-required')
+			except COMError:
+				required=None
+			if required and required.lower()=='true':
+				states.add(controlTypes.STATE_REQUIRED)
 		return states
 
 	def _get_isContentEditable(self):
