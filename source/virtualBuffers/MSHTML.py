@@ -7,6 +7,7 @@ import IAccessibleHandler
 from logHandler import log
 import textInfos
 import aria
+import config
 
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
@@ -142,6 +143,8 @@ class MSHTML(VirtualBuffer):
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_CHECKBUTTON],"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="table":
 			attrs={"IHTMLDOMNode::nodeName":["TABLE"]}
+			if not config.conf["documentFormatting"]["includeLayoutTables"]:
+				attrs["table-layout"]=[None]
 		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
 			attrs = {"IHTMLDOMNode::nodeName": ["H%s" % nodeType[7:]]}
 		elif nodeType == "heading":

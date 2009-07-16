@@ -9,6 +9,7 @@ import textInfos
 from comtypes.gen.IAccessible2Lib import IAccessible2
 from comtypes import COMError
 import aria
+import config
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
@@ -128,6 +129,8 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_HEADING]}
 		elif nodeType=="table":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_TABLE]}
+			if not config.conf["documentFormatting"]["includeLayoutTables"]:
+				attrs["table-layout"]=[None]
 		elif nodeType=="link":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%IAccessibleHandler.STATE_SYSTEM_LINKED:[1]}
 		elif nodeType=="visitedLink":
