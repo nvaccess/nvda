@@ -696,12 +696,19 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	if formatConfig["includeLayoutTables"]:
 		tableLayout=None
 	else:
-		tableLayout=attrs.get('table-layout',None)
-		if tableLayout is None:
+		# Find the nearest table.
+		if role==controlTypes.ROLE_TABLE:
+			# This is the nearest table.
+			tableLayout=attrs.get('table-layout',None)
+		else:
+			# Search ancestors for the nearest table.
 			for x in reversed(ancestorAttrs):
-				tableLayout=x.get('table-layout',None)
-				if tableLayout is not None:
+				if x.get("role")==controlTypes.ROLE_TABLE:
+					tableLayout=x.get('table-layout',None)
 					break
+			else:
+				# No table in the ancestors.
+				tableLayout=None
 	if not tableLayout:
 		tableID=attrs.get('table-id')
 	else:

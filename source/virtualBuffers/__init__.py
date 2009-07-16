@@ -142,12 +142,9 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return lineStart.value,lineEnd.value
 
 	def _normalizeControlField(self,attrs):
-		tableLayout=attrs.get('table-layout',False)
-		if tableLayout=="1":
-			tableLayout=True
-		else:
-			tableLayout=False
-		attrs['table-layout']=tableLayout
+		tableLayout=attrs.get('table-layout')
+		if tableLayout:
+			attrs['table-layout']=tableLayout=="1"
 		return attrs
 
 	def _getLineNumFromOffset(self, offset):
