@@ -28,7 +28,10 @@ import queueHandler
 from NVDAObjects.progressBar import ProgressBar
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
-	accHandle=IAccessibleHandler.accessibleObjectFromEvent(hwnd,objectID,childID)
+	try:
+		accHandle=IAccessibleHandler.accessibleObjectFromEvent(hwnd,objectID,childID)
+	except:
+		accHandle=None
 	if not accHandle:
 		return None
 	(pacc,accChildID)=accHandle
