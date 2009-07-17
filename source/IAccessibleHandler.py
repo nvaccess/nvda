@@ -332,10 +332,10 @@ def normalizeIAccessible(pacc):
 	return pacc
 
 def accessibleObjectFromEvent(window,objectID,childID):
-	try:
-		pacc,childID=oleacc.AccessibleObjectFromEvent_safe(window,objectID,childID)
-	except:
-		return None
+	wmResult=c_long()
+	if windll.user32.SendMessageTimeoutW(window,winUser.WM_NULL,0,0,winUser.SMTO_ABORTIFHUNG,2000,byref(wmResult))==0:
+		raise OSError("Window is not responding")
+	pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
 	return (normalizeIAccessible(pacc),childID)
 
 def accessibleObjectFromPoint(x,y):
