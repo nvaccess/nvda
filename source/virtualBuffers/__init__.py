@@ -831,6 +831,19 @@ class VirtualBuffer(cursorManager.CursorManager):
 				yield 0, link2end, link1start
 			link1node, link1start, link1end = link2node, link2start, link2end
 
+	def _couldBeFormFieldLabel(self, info):
+		for field in info.getTextWithFields():
+			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
+				# Not a control field.
+				continue
+			attrs = field.field
+			states = attrs.get("states")
+			if controlTypes.STATE_READONLY in states:
+				continue
+			if controlTypes.STATE_FOCUSABLE in states:
+				return False
+		return True
+
 	def _guessFormFieldLabel(self, fieldInfo, fieldObj):
 		guessInfo = fieldInfo.copy()
 		# Turn off screen layout so that all control fields are on separate lines.
@@ -838,16 +851,23 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 		if fieldObj.role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON):
 			# For check boxes and radio buttons, the label is normally after the field, so try the line after.
-			guessInfo.move(textInfos.UNIT_LINE, 1, endPoint="end")
+			guessInfo.move(textInfos.UNIT_LINE, 1)
+			guessInfo.expand(textInfos.UNIT_LINE)
+			if not self._couldBeFormFieldLabel(guessInfo):
+				return
 			text = guessInfo.text
 			if text and not text.isspace():
 				return text
 
 		# Reset guessInfo to fieldInfo.
+		guessInfo.setEndPoint(fieldInfo, "startToStart")
 		guessInfo.setEndPoint(fieldInfo, "endToEnd")
 
 		# Otherwise, the label is normally before the field, so try the line before.
-		guessInfo.move(textInfos.UNIT_LINE, -1, endPoint="start")
+		guessInfo.move(textInfos.UNIT_LINE, -1)
+		guessInfo.expand(textInfos.UNIT_LINE)
+		if not self._couldBeFormFieldLabel(guessInfo):
+			return
 		text = guessInfo.text
 		if text and not text.isspace():
 			return text
