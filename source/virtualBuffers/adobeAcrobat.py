@@ -99,9 +99,9 @@ class AdobeAcrobat(VirtualBuffer):
 		elif nodeType == "formField":
 			attrs = {"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_READONLY: [None]}
 		elif nodeType == "list":
-			attrs = {"acrobat::stdname": ["L"]},
+			attrs = {"acrobat::stdname": ["L"]}
 		elif nodeType == "listItem":
-			attrs = {"acrobat::stdname": ["LI"]},
+			attrs = {"acrobat::stdname": ["LI"]}
 		elif nodeType=="button":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON]}
 		elif nodeType=="edit":
