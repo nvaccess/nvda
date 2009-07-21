@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3064\n"
+"Project-Id-Version: r3075\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2009-07-16 09:45+0300\n"
+"PO-Revision-Date: 2009-07-21 16:48+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -1424,6 +1424,26 @@ msgstr "nuoli"
 msgid "dot dot dot"
 msgstr "piste piste piste"
 
+#: config\__init__.py:23
+msgid "Badly formed configuration file"
+msgstr "Huonosti muotoiltu asetustiedosto"
+
+#: config\__init__.py:38
+msgid "%s: %s, defaulting to %s"
+msgstr "%s: %s, käytetään oletusta %s"
+
+#: config\__init__.py:172
+msgid "Error parsing configuration file: %s"
+msgstr "Virhe jäsenneltäessä asetustiedostoa: %s"
+
+#: config\__init__.py:177
+msgid ""
+"Errors in configuration file '%s':\n"
+"%s"
+msgstr ""
+"Virheitä asetustiedostossa '%s':\n"
+"%s"
+
 #: controlTypes.py:176
 msgid "unknown object"
 msgstr "tuntematon objekti"
@@ -2076,11 +2096,11 @@ msgstr "muokattavissa"
 msgid "checkable"
 msgstr "valittava"
 
-#: core.py:100
+#: core.py:108
 msgid "Loading subsystems, please wait..."
 msgstr "Ladataan alijärjestelmiä, odota..."
 
-#: core.py:174
+#: core.py:179
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
 
@@ -2398,6 +2418,20 @@ msgstr "Käytä Caps Lockia  NVDA-näppäimenä"
 #: gui\__init__.py:377
 msgid "Show this dialog when NVDA starts"
 msgstr "Näytä tämä valintaikkuna NVDA:n käynnistyessä"
+
+#: gui\__init__.py:411
+msgid ""
+"Your configuration file contains errors. \n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
+"edit your config file at a later stage to make corrections. More details "
+"about the errors can be found in the log file.\n"
+msgstr ""
+"Asetustiedostossasi on virheitä. \n"
+"Paina 'OK' korjataksesi virheet, tai paina 'Peruuta', jos haluat tehdä korjaukset käsin asetustiedostoon myöhemmin. Lisätietoja virheistä löytyy lokitiedostosta.\n"
+
+#: gui\__init__.py:416
+msgid "Configuration File Error"
+msgstr "Asetustiedostovirhe"
 
 #: gui\logViewer.py:17
 msgid "NVDA Log Viewer"

@@ -1,18 +1,21 @@
 ;Portuguese
 LangString msg_WelcomePageTitle ${LANG_PORTUGUESE} "Instalação do ${PRODUCT}, Versão ${VERSION}"
-LangString msg_WelcomePageText ${LANG_PORTUGUESE} "Bem vindo a instalação do ${PRODUCT} (Non-Visual Desktop Access), um leitor de ecrã livre e open-source para o Microsoft Windows.$\n\
+LangString msg_WelcomePageText ${LANG_PORTUGUESE} "Bem vindo à instalação do ${PRODUCT} (Non-Visual Desktop Access), um leitor de ecrã livre e open-source para o Microsoft Windows.$\n\
 Copyright 2006 - 2009 Contribuidores do NVDA.$\n\
-Este assistente irá guiá-lo através da instalação do ${PRODUCT}. É recomendado a fechar todas  as outras aplicações antes de iniciar esta instalação.$\n"
+Este assistente irá guiá-lo através da instalação do ${PRODUCT}. É recomendado que feche todas  as outras aplicações antes de iniciar esta instalação.$\n"
 LangString msg_NVDAWebSite ${LANG_PORTUGUESE} "Visitar o website oficial do NVDA"
 LangString msg_NVDARunning ${LANG_PORTUGUESE} "Já existe uma outra cópia do NVDA em execução. Terá que fechá-la antes de continuar com a instalação."
-LangString msg_pagePrevInstallLabel ${LANG_PORTUGUESE} "Foi detectada uma instalação anterior do NVDA no seu sistema. É extremamente recomendado a desinstalá-lo antes de continuar com a instalação."
+LangString msg_pagePrevInstallLabel ${LANG_PORTUGUESE} "Foi detectada uma instalação anterior do NVDA no seu sistema. É extremamente recomendado que a remova antes de continuar com a instalação."
 LangString msg_pagePrevInstallUninstallCheckBox ${LANG_PORTUGUESE} "Desinstalar (recomendado)"
 LangString shortcut_uninstall $(LANG_PORTUGUESE) "Desinstalar"
 LangString shortcut_website $(LANG_PORTUGUESE) "Website"
+LangString shortcut_exploreUserSettingsDir $(LANG_PORTUGUESE) "Explorar o directório das definições do utilizador"
 LangString shortcut_readme $(LANG_PORTUGUESE) "Readme"
+LangString shortcut_keycom $(LANG_ENGLISH) "Teclas de atalho"
 LangString shortcut_userguide $(LANG_PORTUGUESE) "Guia do utilizador"
 LangString path_userguide $(LANG_PORTUGUESE) "pt_PT\user guide.html"
 LangString path_readmefile $(LANG_PORTUGUESE) "pt_PT\readme.txt"
+LangString path_keycomfile $(LANG_PORTUGUESE) "pt_PT\key commands.txt"
 LangString UNLOG_HEADER ${LANG_PORTUGUESE} "=========== Registo de Desinstalação \
                                          por favor, não edite este fichheiro ==========="
 LangString UNLOG_DAT_NOT_FOUND ${LANG_PORTUGUESE} "O ${UNINST_DAT} não foi encontrado, \
@@ -20,9 +23,9 @@ LangString UNLOG_DAT_NOT_FOUND ${LANG_PORTUGUESE} "O ${UNINST_DAT} não foi encon
 LangString UNLOG_DEL_FILE ${LANG_PORTUGUESE} 'Pretende eliminar o ficheiro "$R9"?'
 LangString UNLOG_DEL_DIR ${LANG_PORTUGUESE} 'Pretende remover a pasta "$R9"?'
 LangString UNLOG_EMPTY_DIR ${LANG_PORTUGUESE} "Foi detectada uma instalação anterior em $0.$\n\
-                                            O ficheiro requerido ${UNINSTALL_LOG}.dat está a faltar.$\n$\n\
-                                            É extremamente recomendado a seleccionar uma \
+                                            O ficheiro requerido ${UNINSTALL_LOG}.dat está em falta.$\n$\n\
+                                            É extremamente recomendado que seleccione uma \
                                             pasta vazia e executar uma nova instalação."
 LangString UNLOG_ERROR_LOG ${LANG_PORTUGUESE} "Erro no registo ${UNINSTALL_LOG}."
-LangString UNLOG_ERROR_CREATE ${LANG_PORTUGUESE} "Erro a criar o ${UNINSTALL_LOG}."
-LangString section_service ${LANG_PORTUGUESE} "nvda service (Windows logon / Security dialog support)"
+LangString UNLOG_ERROR_CREATE ${LANG_PORTUGUESE} "Erro ao criar o ${UNINSTALL_LOG}."
+LangString section_service ${LANG_PORTUGUESE} "NVDA service (Janela de logon / Suporte aos diálogos de segurança)"
