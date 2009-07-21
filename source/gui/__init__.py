@@ -402,3 +402,40 @@ class WelcomeDialog(wx.Dialog):
 		mainFrame.prePopup()
 		cls(mainFrame).ShowModal()
 		mainFrame.postPopup()
+
+class ConfigFileErrorDialog(wx.Dialog):
+	"""A configuration file error dialog.
+	This dialog tells the user that their configuration file is broken.
+	"""
+
+	MESSAGE=_("""
+Your configuration file contains errors. 
+NVDA has restored its configuration to factory defaults. 
+Pressing 'Ok' will wipe out your previous configuration file so that you will not see this message again.
+Pressing 'Cancel' will allow you to manually edit the configuration file at a later stage, and NVDA will continue to show this message on startup until the errors are fixed.
+Please view NVDA's log file to see the details of the error.
+	""")
+
+	def __init__(self, parent):
+		super(ConfigFileErrorDialog, self).__init__(parent, wx.ID_ANY, _("Configuration File Error"))
+		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		messageText = wx.StaticText(self, wx.ID_ANY, self.MESSAGE)
+		mainSizer.Add(messageText,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
+		mainSizer.Add(self.CreateButtonSizer(wx.OK|wx.CANCEL),flag=wx.TOP|wx.BOTTOM|wx.ALIGN_CENTER_HORIZONTAL,border=20)
+		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
+		self.SetSizer(mainSizer)
+		mainSizer.Fit(self)
+
+	def onOk(self, evt):
+		globalVars.configFileError=None
+		config.save()
+		self.Destroy()
+
+	@classmethod
+	def run(cls):
+		"""Prepare and display an instance of this dialog.
+		This does not require the dialog to be instantiated.
+		"""
+		mainFrame.prePopup()
+		cls(mainFrame).ShowModal()
+		mainFrame.postPopup()

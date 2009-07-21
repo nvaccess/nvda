@@ -14,6 +14,19 @@ import ctypes
 CSIDL_APPDATA=26
 MAX_PATH=256
 
+def collectValidationErrors(validationResult,keyList=None):
+	invalidKeys=[]
+	for k,v in validationResult.iteritems():
+		if v is True:
+			continue
+		newKeyList=list(keyList) if keyList is not None else []
+		newKeyList.append(k)
+		if isinstance(v,dict):
+			invalidKeys.extend(collectValidationErrors(v,newKeyList))
+		else:
+			invalidKeys.append((".".join(newKeyList),v))
+	return invalidKeys
+
 val = Validator()
 
 #: The configuration specification
@@ -143,7 +156,20 @@ def load():
 	conf = ConfigObj(configFileName, configspec = confspec, indent_type = "\t", encoding="UTF-8")
 	# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 	conf.newlines = "\r\n"
-	conf.validate(val)
+	res=conf.validate(val,preserve_errors=True)
+	if isinstance(res,dict):
+		errorList=collectValidationErrors(res)
+		if errorList:
+			globalVars.configFileError=_("Errors in configuration file '%s':\n%s")%(conf.filename,"\n".join("%s: %s"%(x,str(y)) for x,y in errorList))
+	elif not res:
+		globalVars.configFileError=_("Badly formed configuration file '%s'")%conf.filename
+	if globalVars.configFileError:
+		log.warn(globalVars.configFileError)
+		log.warn("Using default values for config")
+		conf = ConfigObj(None,  configspec = confspec, indent_type = "\t", encoding="UTF-8")
+		conf.newlines = "\r\n"
+		conf.validate(val)
+		conf.filename=configFileName
 
 def updateSynthConfig(name):
 	"""Makes sure that the config contains a specific synth section for the given synth name.
@@ -163,6 +189,8 @@ def save():
 	"""Saves the configuration to the config file.
 	"""
 	global conf
+	if globalVars.configFileError:
+		raise RuntimeError("config file errors still exist")
 	if not os.path.isdir(globalVars.appArgs.configPath):
 		try:
 			os.makedirs(globalVars.appArgs.configPath)

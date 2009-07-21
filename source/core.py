@@ -29,6 +29,14 @@ import logHandler
 import globalVars
 from logHandler import log
 
+def doStartupDialogs():
+	import config
+	import gui
+	if config.conf["general"]["showWelcomeDialogAtStartup"]:
+		gui.WelcomeDialog.run()
+	if globalVars.configFileError:
+		gui.ConfigFileErrorDialog.run()
+
 def restart():
 	"""Restarts NVDA by starting a new copy with -r."""
 	import subprocess
@@ -167,13 +175,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("initializing mouse handler")
 	mouseHandler.initialize()
 	if not globalVars.appArgs.minimal:
-		if config.conf["general"]["showWelcomeDialogAtStartup"]:
-			wx.CallAfter(gui.WelcomeDialog.run)
-		else:
-			try:
-				braille.handler.message(_("NVDA started"))
-			except:
-				log.error("", exc_info=True)
+		try:
+			braille.handler.message(_("NVDA started"))
+		except:
+			log.error("", exc_info=True)
+		wx.CallAfter(doStartupDialogs)
 	if api.getFocusObject()==api.getDesktopObject():
 		import eventHandler
 		eventHandler.queueEvent('gainFocus',api.getDesktopObject().objectWithFocus())
