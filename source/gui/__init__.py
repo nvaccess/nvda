@@ -408,13 +408,9 @@ class ConfigFileErrorDialog(wx.Dialog):
 	This dialog tells the user that their configuration file is broken.
 	"""
 
-	MESSAGE=_("""
-Your configuration file contains errors. 
-NVDA has restored its configuration to factory defaults. 
-Pressing 'Ok' will wipe out your previous configuration file so that you will not see this message again.
-Pressing 'Cancel' will allow you to manually edit the configuration file at a later stage, and NVDA will continue to show this message on startup until the errors are fixed.
-Please view NVDA's log file to see the details of the error.
-	""")
+	MESSAGE=_("""Your configuration file contains errors. 
+Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.
+""")
 
 	def __init__(self, parent):
 		super(ConfigFileErrorDialog, self).__init__(parent, wx.ID_ANY, _("Configuration File Error"))

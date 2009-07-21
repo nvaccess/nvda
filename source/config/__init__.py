@@ -6,7 +6,7 @@ import _winreg
 import os
 import sys
 from cStringIO import StringIO
-from configobj import ConfigObj
+from configobj import ConfigObj, ConfigObjError
 from validate import Validator
 from logHandler import log
 import ctypes
@@ -14,18 +14,29 @@ import ctypes
 CSIDL_APPDATA=26
 MAX_PATH=256
 
-def collectValidationErrors(validationResult,keyList=None):
-	invalidKeys=[]
+def validateConfig(configObj,validator,validationResult=None,keyList=None):
+	if validationResult is None:
+		validationResult=configObj.validate(validator,preserve_errors=True)
+	if validationResult is True:
+		return None #No errors
+	if validationResult is False:
+		return _("Badly formed configuration file")
+	errorStrings=[]
 	for k,v in validationResult.iteritems():
 		if v is True:
 			continue
 		newKeyList=list(keyList) if keyList is not None else []
 		newKeyList.append(k)
 		if isinstance(v,dict):
-			invalidKeys.extend(collectValidationErrors(v,newKeyList))
+			errorStrings.extend(validateConfig(configObj[k],validator,v,newKeyList))
 		else:
-			invalidKeys.append((".".join(newKeyList),v))
-	return invalidKeys
+			#If a key is invalid configObj does not record its default, thus we need to get and set the default manually 
+			defaultValue=validator.get_default_value(configObj.configspec[k])
+			configObj[k]=defaultValue
+			if k not in configObj.defaults:
+				configObj.defaults.append(k)
+			errorStrings.append(_("%s: %s, defaulting to %s")%(k,v,defaultValue))
+	return errorStrings
 
 val = Validator()
 
@@ -153,23 +164,18 @@ def load():
 	"""
 	global conf
 	configFileName=os.path.join(globalVars.appArgs.configPath,"nvda.ini")
-	conf = ConfigObj(configFileName, configspec = confspec, indent_type = "\t", encoding="UTF-8")
+	try:
+		conf = ConfigObj(configFileName, configspec = confspec, indent_type = "\t", encoding="UTF-8")
+	except ConfigObjError as e:
+		conf = ConfigObj(None, configspec = confspec, indent_type = "\t", encoding="UTF-8")
+		conf.filename=configFileName
+		globalVars.configFileError=_("%s"%e)
 	# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 	conf.newlines = "\r\n"
-	res=conf.validate(val,preserve_errors=True)
-	if isinstance(res,dict):
-		errorList=collectValidationErrors(res)
-		if errorList:
-			globalVars.configFileError=_("Errors in configuration file '%s':\n%s")%(conf.filename,"\n".join("%s: %s"%(x,str(y)) for x,y in errorList))
-	elif not res:
-		globalVars.configFileError=_("Badly formed configuration file '%s'")%conf.filename
-	if globalVars.configFileError:
+	errorList=validateConfig(conf,val)
+	if errorList:
+		globalVars.configFileError=_("Errors in configuration file '%s':\n%s")%(conf.filename,"\n".join(errorList))
 		log.warn(globalVars.configFileError)
-		log.warn("Using default values for config")
-		conf = ConfigObj(None,  configspec = confspec, indent_type = "\t", encoding="UTF-8")
-		conf.newlines = "\r\n"
-		conf.validate(val)
-		conf.filename=configFileName
 
 def updateSynthConfig(name):
 	"""Makes sure that the config contains a specific synth section for the given synth name.
