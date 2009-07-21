@@ -170,8 +170,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		if config.conf["general"]["showWelcomeDialogAtStartup"]:
 			wx.CallAfter(gui.WelcomeDialog.run)
 		else:
-			import ui
-			braille.handler.message(_("NVDA started"))
+			try:
+				braille.handler.message(_("NVDA started"))
+			except:
+				log.error("", exc_info=True)
 	if api.getFocusObject()==api.getDesktopObject():
 		import eventHandler
 		eventHandler.queueEvent('gainFocus',api.getDesktopObject().objectWithFocus())

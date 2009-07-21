@@ -273,7 +273,8 @@ class MSHTML(IAccessible):
 		return super(MSHTML, self)._isEqual(other)
 
 	def _get_value(self):
-		if self.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_PANE:
+		IARole=self.IAccessibleRole
+		if IARole in (IAccessibleHandler.ROLE_SYSTEM_PANE,IAccessibleHandler.ROLE_SYSTEM_TEXT):
 			return ""
 		else:
 			return super(MSHTML,self).value

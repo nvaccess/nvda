@@ -33,6 +33,10 @@ Changes since 0.6p3:
 * fix: Don't incorrectly report "Start menu" for certain context menus in Windows Explorer/the Windows shell. (#257)
 * fix: NVDA now correctly handles ARIA labels in Mozilla Gecko when there is no other useful content. (#156)
 * fix: NVDA no longer incorrectly enables focus mode automatically for editable text fields which update their value when the focus changes; e.g. http://tigerdirect.com/. (#220)
+* new: When browsing web documents, you can now press n and shift+n to skip forward and backward past blocks of links, respectively.
+* new: When browsing web documents, ARIA landmarks are now reported, and you can move forward and backward through them using d and shift+d, respectively. (#192)
+* new: The Links List dialog available when browsing web documents has now become an Elements List dialog which can list links, headings and landmarks. Headings and landmarks are presented hierarchically. (#363)
+* new: The new Elements List dialog filters the list as you type to contain only those items including the text that was typed. You can press backspace to clear the filter so that all items are again presented. (#173)
 
 Changes since 0.6 P2:
 * new: As Microsoft Excel's formula bar is inaccessible to NVDA, provide an NVDA specific dialog box for editing when the user presses f2 on a cell. 

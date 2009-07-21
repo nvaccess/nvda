@@ -503,7 +503,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 
 	#Get speech text for any fields in the old controlFieldStack that are not in the new controlFieldStack 
 	for count in reversed(range(commonFieldCount,len(controlFieldStackCache))):
-		text=getControlFieldSpeech(controlFieldStackCache[count],"end_removedFromControlFieldStack",formatConfig,extraDetail,reason=reason)
+		text=info.getControlFieldSpeech(controlFieldStackCache[count],controlFieldStackCache[0:count],"end_removedFromControlFieldStack",formatConfig,extraDetail,reason=reason)
 		if text:
 			textList.append(text)
 	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't entering any new fields and there is no text).
@@ -512,13 +512,13 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 	#Get speech text for any fields that are in both controlFieldStacks, if extra detail is not requested
 	if not extraDetail:
 		for count in range(commonFieldCount):
-			text=getControlFieldSpeech(newControlFieldStack[count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
+			text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
 				textList.append(text)
 
 	#Get speech text for any fields in the new controlFieldStack that are not in the old controlFieldStack
 	for count in range(commonFieldCount,len(newControlFieldStack)):
-		text=getControlFieldSpeech(newControlFieldStack[count],"start_addedToControlFieldStack",formatConfig,extraDetail,reason=reason)
+		text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"start_addedToControlFieldStack",formatConfig,extraDetail,reason=reason)
 		if text:
 			textList.append(text)
 		commonFieldCount+=1
@@ -566,13 +566,13 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 					lastTextOkToMerge=True
 		elif isinstance(commandList[count],textInfos.FieldCommand) and commandList[count].command=="controlStart":
 			lastTextOkToMerge=False
-			text=getControlFieldSpeech(commandList[count].field,"start_relative",formatConfig,extraDetail,reason=reason)
+			text=info.getControlFieldSpeech(commandList[count].field,newControlFieldStack,"start_relative",formatConfig,extraDetail,reason=reason)
 			if text:
 				relativeTextList.append(text)
 			newControlFieldStack.append(commandList[count].field)
 		elif isinstance(commandList[count],textInfos.FieldCommand) and commandList[count].command=="controlEnd":
 			lastTextOkToMerge=False
-			text=getControlFieldSpeech(newControlFieldStack[-1],"end_relative",formatConfig,extraDetail,reason=reason)
+			text=info.getControlFieldSpeech(newControlFieldStack[-1],newControlFieldStack[0:-1],"end_relative",formatConfig,extraDetail,reason=reason)
 			if text:
 				relativeTextList.append(text)
 			del newControlFieldStack[-1]
@@ -591,7 +591,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 	#Finally get speech text for any fields left in new controlFieldStack that are common with the old controlFieldStack (for closing), if extra detail is not requested
 	if not extraDetail:
 		for count in reversed(range(min(len(newControlFieldStack),commonFieldCount))):
-			text=getControlFieldSpeech(newControlFieldStack[count],"end_inControlFieldStack",formatConfig,extraDetail,reason=reason)
+			text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"end_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
 				textList.append(text)
 
@@ -679,7 +679,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		oldTableID = None
 	return " ".join([x for x in textList if x])
 
-def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
+def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 	childCount=int(attrs['_childcount'])
@@ -693,7 +693,26 @@ def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,re
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	level=attrs.get('level',None)
-	tableID=attrs.get('table-id')
+	if formatConfig["includeLayoutTables"]:
+		tableLayout=None
+	else:
+		# Find the nearest table.
+		if role==controlTypes.ROLE_TABLE:
+			# This is the nearest table.
+			tableLayout=attrs.get('table-layout',None)
+		else:
+			# Search ancestors for the nearest table.
+			for x in reversed(ancestorAttrs):
+				if x.get("role")==controlTypes.ROLE_TABLE:
+					tableLayout=x.get('table-layout',None)
+					break
+			else:
+				# No table in the ancestors.
+				tableLayout=None
+	if not tableLayout:
+		tableID=attrs.get('table-id')
+	else:
+		tableID=None
 	if reason in (REASON_CARET,REASON_SAYALL,REASON_FOCUS) and (
 		(role==controlTypes.ROLE_LINK and not formatConfig["reportLinks"]) or 
 		(role==controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"]) or
@@ -732,7 +751,7 @@ def getControlFieldSpeech(attrs,fieldType,formatConfig=None,extraDetail=False,re
 		return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
 	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
 		return " ".join((roleText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount"))))
-	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states) or (role==controlTypes.ROLE_TABLE and "table-id" in attrs)):
+	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states) or (role==controlTypes.ROLE_TABLE and not tableLayout and "table-id" in attrs)):
 		return _("out of %s")%roleText
 	elif fieldType=="start_addedToControlFieldStack" and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER,controlTypes.ROLE_TABLEROWHEADER) and tableID:
 		return getSpeechTextForProperties(_tableID=tableID, rowNumber=attrs.get("table-rownumber"), columnNumber=attrs.get("table-columnnumber"))

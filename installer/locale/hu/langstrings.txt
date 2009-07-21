@@ -1,25 +1,22 @@
 ;Hungarian
 LangString msg_WelcomePageTitle ${LANG_HUNGARIAN} "${PRODUCT} telepítõ, Verzió ${VERSION}"
 LangString msg_WelcomePageText ${LANG_HUNGARIAN} "Üdvözöljük az ${PRODUCT} (Non-Visual Desktop Access), Microsoft Windows operációs rendszerei alatt futtatható, ingyenes, nyilt forráskódu képernyõolvasójának telepítõjében.$\n\
-Copyright 2006 - 2008 NVDA közremûködõk.$\n\
+Copyright 2006 - 2009 NVDA közremûködõk.$\n\
 A varázsló végigvezeti önt az ${PRODUCT} telepítésének lépésein; a telepítés idejére ajánlott bezárni minden egyéb alkalmazást.$\n"
-LangString msg_READMEText ${LANG_HUNGARIAN} "Olvassa el a readme fájlt (ajánlott)"
 LangString msg_NVDAWebSite ${LANG_HUNGARIAN} "Az NVDA hivatalos weboldalának meglátogatása"
 LangString msg_NVDARunning ${LANG_HUNGARIAN} "Már fut egy NVDA alkalmazás. A telepítés folytatása elõtt az alkalmazás bezárul."
 LangString msg_pagePrevInstallLabel ${LANG_HUNGARIAN} "Az NVDA egy elõzõ verziója található a számítógépén. Erõsen ajánlott az eltávolítása a telepítés folytatása elött."
 LangString msg_pagePrevInstallUninstallCheckBox ${LANG_HUNGARIAN} "Eltávolítás (ajánlott)"
-LangString msg_SpeechInstall ${LANG_HUNGARIAN} "Szeretne beszédtámogatást az NVDA telepítése közben? Nyomja meg az enter billentyût a beszédtámogatás elindításához, vagy nyomja meg az ESCAPE billentyût a beszédtámogatás nélküli telepítéshez."
-LangString msg_RemoveNVDA ${LANG_HUNGARIAN} "Biztosan törölni szeretné az $(^Name) programot az összes összetevõjével eggyütt?"
-LangString msg_NVDAConfigFound ${LANG_HUNGARIAN} "A telepítõ NVDA konfigurációs fájlt talált a számítógépen. Szeretné törölni ezt a fájlt?"
-LangString Msg_UninsPrev ${LANG_HUNGARIAN} "az NVDA régebbi verziója található a számítógépén, ami el lesz távolítva a folytatás elött."
-LangString msg_NVDASuccessfullyRemoved ${LANG_HUNGARIAN} "Az $(^Name) sikeresen el let távolítva a számítógéprõl."
-LangString shortcut_Wiki $(LANG_HUNGARIAN) "NVDA információs center"
 LangString shortcut_uninstall $(LANG_HUNGARIAN) "Eltávolítás"
 LangString shortcut_website $(LANG_HUNGARIAN) "Weboldal"
+LangString shortcut_exploreUserSettingsDir $(LANG_HUNGARIAN) "A felhasználói beállítások tallózása"
 LangString shortcut_readme $(LANG_HUNGARIAN) "A readme fájl megtekintése"
-LangString shortcut_userguide $(LANG_HUNGARIAN) "Felhasználói útmutató"
+LangString shortcut_keycom $(LANG_HUNGARIAN) "A billentyû parancsok listájának megtekintése"
+LangString shortcut_userguide $(LANG_HUNGARIAN) "A felhasználói útmutató megtekintése"
 LangString path_userguide $(LANG_HUNGARIAN) "hu\user guide.html"
+
 LangString path_readmefile $(LANG_HUNGARIAN) "hu\readme.txt"
+LangString path_keycomfile $(LANG_HUNGARIAN) "hu\key commands.txt"
 LangString UNLOG_HEADER ${LANG_HUNGARIAN} "=========== Eltávolítási Napló \
                                          ne szerkessze ezt a fájlt! ==========="
 LangString UNLOG_DAT_NOT_FOUND ${LANG_HUNGARIAN} "${UNINST_DAT} nem található, \
@@ -32,4 +29,4 @@ LangString UNLOG_EMPTY_DIR ${LANG_HUNGARIAN} "Meglévõ telepítés a $0 helyen.$\n\
                                             megadása az új verzió telepítéséhez."
 LangString UNLOG_ERROR_LOG ${LANG_HUNGARIAN} "Hiba az ${UNINSTALL_LOG} log fájlban."
 LangString UNLOG_ERROR_CREATE ${LANG_HUNGARIAN} "Nem sikerült létrehozni az ${UNINSTALL_LOG} fájlt."
-LangString section_service ${LANG_HUNGARIAN} "nvda service (Windows logon / Security dialog support)"
+LangString section_service ${LANG_HUNGARIAN} "NVDA folyamat (Windows bejelentkezõ/ biztonsági párbeszédablak támogatása)"

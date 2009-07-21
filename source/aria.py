@@ -58,3 +58,12 @@ ariaRolesToNVDARoles={
 	"menuitem":controlTypes.ROLE_MENUITEM,
 	"breadcrumbs":controlTypes.ROLE_LIST,
 }
+
+landmarkRoles = {
+	"banner": _("banner"),
+	"complementary": _("complementary"),
+	"contentinfo": _("content info"),
+	"main": _("main"),
+	"navigation": _("navigation"),
+	"search": _("search"),
+}

@@ -30,6 +30,15 @@ Cambios desde 0.6 P3:
 * nuevo: NVDA puede leer pantallas seguras de Windows tales como la autentificación de Windows (logon), control+alt+suprimir y pantallas del UAC en Windows XP y posteriores. La lectura de las pantallas de autentificación de Windows (logon) puede ser configurada desde el diálogo de Opciones Generales. (#97)
 * corrección: En Windows Vista, el instalador de NVDA ahora arranca a NVDA con privilegios de un usuario normal cuando se requiera para ejecutar a NVDA en la pantalla final.
 * nuevo: Añadido un controlador para las líneas braille de la serie Optelec ALVA BC6.
+* corrección: El Retroceso ahora es manejado correctamente cuando se verbalizan palabras al escribir. (#306)
+* corrección: No se anuncia incorrectamente "Menú inicio" para ciertos menús de contexto en Windows Explorer/Windows shell. (#257)
+* corrección: NVDA ahora maneja correctamente etiquetas de ARIA en Mozilla Gecko cuando no hay otro contenido útil. (#156)
+* corrección: NVDA ya no activa incorrectamente el modo foco automáticamente para campos de texto editable que actualizan su valor cuando el foco cambia; ej.: http://tigerdirect.com/. (#220)
+* nuevo: Cuando se navega por documentos web, ahora puedes presionar n y shift+n para saltar adelante y atrás pasando bloques de enlaces, respectivamente.
+* nuevo: Cuando se navega por documentos web, los marcadores de ARIA ahora son anunciados, y puedes moverte adelante y atrás a través de ellos utilizando d y shift+d, respectivamente. (#192)
+* nuevo: El diálogo de lista de enlaces disponible cuando se exploran documentos web se ha convertido ahora en un diálogo Lista de Elementos el cual puede listar enlaces, encabezados y marcadores. Los encabezados y marcadores son presentados jerárquicamente. (#363)
+* nuevo: El nuevo diálogo Lista de Elementos filtra la lista según escribas para contener sólo aquéllos elementos incluído el texto que fue tecleado. Puedes presionar retroceso para limpiar el filtro tal que todos los elementos sean presentados nuevamente. (#173)
+
 
   
 Cambios desde 0.6 P2:
@@ -110,7 +119,6 @@ Cambios desde 0.6 P1:
 * Soporte para grupos de elementos en controles SysListView32, encontrados principalmente en Windows Vista. (#27)
 * Informar del estado verificado de elementos de vista en árbol en controles SysTreeview32.
 * Añadidas teclas de atajo para muchos de los diálogos de configuración de NVDA
-
 * Soporte para IAccessible2 habilitado para aplicaciones tales como Mozilla Firefox cuando se ejecuta a NVDA desde un medio portátil, sin tener que registrar ningún fichero Dll en especial
 * Corregido un pete con la lista de enlaces del modo virtual en aplicaciones Gecko. (#48)
 * NVDA no debería petar ya con aplicaciones Mozilla Gecko tales como Firefox y Thunderbird si NVDA está ejecutándose con privilegios más altos que los de la aplicación Mozilla Gecko. Ej. NVDA está ejecutándose como Administrador.

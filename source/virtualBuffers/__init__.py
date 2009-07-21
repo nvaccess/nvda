@@ -1,35 +1,34 @@
 import ctypes
-import weakref
-import time
 import os
+import collections
 import XMLFormatting
-import baseObject
 from keyUtils import sendKey
 import scriptHandler
 from scriptHandler import isScriptWaiting
 import speech
 import NVDAObjects
-import winUser
 import api
 import sayAllHandler
 import controlTypes
 import textInfos.offsets
-import globalVars
 import config
-import api
 import cursorManager
-from gui import scriptUI
+import gui
+import wx
 import virtualBufferHandler
 import eventHandler
 import braille
 import queueHandler
 from logHandler import log
-import keyUtils
 import ui
+import aria
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
 VBufStorage_findDirection_up=2
+
+def VBufStorage_findMatch_word(word):
+	return "~w%s" % word
 
 def dictToMultiValueAttribsString(d):
 	mainList=[]
@@ -143,6 +142,9 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return lineStart.value,lineEnd.value
 
 	def _normalizeControlField(self,attrs):
+		tableLayout=attrs.get('table-layout')
+		if tableLayout:
+			attrs['table-layout']=tableLayout=="1"
 		return attrs
 
 	def _getLineNumFromOffset(self, offset):
@@ -169,6 +171,227 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# Therefore, get the text in block (paragraph) chunks and join the chunks with \r\n.
 		blocks = (block.strip("\r\n") for block in self.getTextInChunks(textInfos.UNIT_PARAGRAPH))
 		return api.copyToClip("\r\n".join(blocks))
+
+	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
+		textList = []
+		landmark = attrs.get("landmark")
+		if fieldType == "start_addedToControlFieldStack" and landmark:
+			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
+		textList.append(super(VirtualBufferTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
+		return " ".join(textList)
+
+class ElementsListDialog(wx.Dialog):
+	ELEMENT_TYPES = (
+		("link", _("Lin&ks")),
+		("heading", _("&Headings")),
+		("landmark", _("Lan&dmarks")),
+	)
+	Element = collections.namedtuple("Element", ("textInfo", "text", "parent"))
+
+	def __init__(self, vbuf):
+		self.vbuf = vbuf
+		super(ElementsListDialog, self).__init__(gui.mainFrame, wx.ID_ANY, _("Elements List"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+		child = wx.RadioBox(self, wx.ID_ANY, label=_("Type:"), choices=tuple(et[1] for et in self.ELEMENT_TYPES))
+		child.Bind(wx.EVT_RADIOBOX, self.onElementTypeChange)
+		mainSizer.Add(child)
+
+		self.tree = wx.TreeCtrl(self, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE)
+		# The enter key should be propagated to the dialog and thus activate the default button,
+		# but this is broken (wx ticket #3725).
+		# Therefore, we must catch the enter key here.
+		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
+		self.treeRoot = self.tree.AddRoot("root")
+		mainSizer.Add(self.tree)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		self.activateButton = wx.Button(self, wx.ID_ANY, _("&Activate"))
+		self.activateButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(True))
+		sizer.Add(self.activateButton)
+		self.moveButton = wx.Button(self, wx.ID_ANY, _("&Move to"))
+		self.moveButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(False))
+		sizer.Add(self.moveButton)
+		sizer.Add(wx.Button(self, wx.ID_CANCEL))
+		mainSizer.Add(sizer)
+
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+
+		self.tree.SetFocus()
+		self.initElementType(self.ELEMENT_TYPES[0][0])
+
+	def onElementTypeChange(self, evt):
+		# We need to make sure this gets executed after the focus event.
+		# Otherwise, NVDA doesn't seem to get the event.
+		queueHandler.queueFunction(queueHandler.eventQueue, self.initElementType, self.ELEMENT_TYPES[evt.GetInt()][0])
+
+	def initElementType(self, elType):
+		if elType == "link":
+			# Links can be activated.
+			self.activateButton.Enable()
+			self.SetAffirmativeId(self.activateButton.GetId())
+		else:
+			# No other element type can be activated.
+			self.activateButton.Disable()
+			self.SetAffirmativeId(self.moveButton.GetId())
+
+		# Gather the elements of this type.
+		self._elements = []
+		self._initialElement = None
+
+		caret = self.vbuf.selection
+		caret.expand("character")
+
+		parentElements = []
+		for node, start, end in self.vbuf._iterNodesByType(elType):
+			elInfo = self.vbuf.makeTextInfo(textInfos.offsets.Offsets(start, end))
+
+			# Find the parent element, if any.
+			for parent in reversed(parentElements):
+				if self.isChildElement(elType, parent.textInfo, elInfo):
+					break
+				else:
+					# We're not a child of this parent, so this parent has no more children and can be removed from the stack.
+					parentElements.pop()
+			else:
+				# No parent found, so we're at the root.
+				# Note that parentElements will be empty at this point, as all parents are no longer relevant and have thus been removed from the stack.
+				parent = None
+
+			element = self.Element(elInfo, self.getElementText(elInfo, elType), parent)
+			self._elements.append(element)
+
+			if not self._initialElement and elInfo.compareEndPoints(caret, "startToStart") > 0:
+				# The element immediately preceding or overlapping the caret should be the initially selected element.
+				# This element immediately follows the caret, so we want the previous element.
+				try:
+					self._initialElement = self._elements[-2]
+				except IndexError:
+					# No previous element.
+					pass
+
+			# This could be the parent of a subsequent element, so add it to the parents stack.
+			parentElements.append(element)
+
+		# Start with no filtering.
+		self._filterText = ""
+		self.updateFilter(newElementType=True)
+
+	def updateFilter(self, newElementType=False):
+		# If this is a new element type, use the element nearest the cursor.
+		# Otherwise, use the currently selected element.
+		defaultElement = self._initialElement if newElementType else self.tree.GetItemPyData(self.tree.GetSelection())
+		# Clear the tree.
+		self.tree.DeleteChildren(self.treeRoot)
+
+		# Populate the tree with elements matching the filter text.
+		elementsToTreeItems = {}
+		item = None
+		defaultItem = None
+		matched = False
+		for element in self._elements:
+			if self._filterText not in element.text.lower():
+				item = None
+				continue
+			matched = True
+			parent = element.parent
+			if parent:
+				parent = elementsToTreeItems.get(parent)
+			item = self.tree.AppendItem(parent or self.treeRoot, element.text)
+			self.tree.SetItemPyData(item, element)
+			elementsToTreeItems[element] = item
+			if element == defaultElement:
+				defaultItem = item
+
+		self.tree.ExpandAll()
+
+		if self._filterText and not matched:
+			wx.Bell()
+			return
+
+		# If there's no default item, use the first item in the tree.
+		self.tree.SelectItem(defaultItem or self.tree.GetFirstChild(self.treeRoot)[0])
+
+	def _getControlFieldAttrib(self, info, attrib):
+		info = info.copy()
+		info.expand(textInfos.UNIT_CHARACTER)
+		for field in reversed(info.getTextWithFields()):
+			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
+				# Not a control field.
+				continue
+			val = field.field.get(attrib)
+			if val:
+				return val
+		return None
+
+	def getElementText(self, elInfo, elType):
+		if elType == "landmark":
+			landmark = self._getControlFieldAttrib(elInfo, "landmark")
+			if landmark:
+				return aria.landmarkRoles[landmark]
+
+		else:
+			return elInfo.text.strip()
+
+	def isChildElement(self, elType, parent, child):
+		if parent.isOverlapping(child):
+			return True
+
+		elif elType == "heading":
+			try:
+				if int(self._getControlFieldAttrib(child, "level")) > int(self._getControlFieldAttrib(parent, "level")):
+					return True
+			except (ValueError, TypeError):
+				return False
+
+		return False
+
+	def onTreeChar(self, evt):
+		key = evt.KeyCode
+
+		if key == wx.WXK_RETURN:
+			# Activate the current default button.
+			evt = wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_ANY)
+			self.FindWindowById(self.GetAffirmativeId()).ProcessEvent(evt)
+
+		elif key == wx.WXK_BACK:
+			# Cancel filtering.
+			if self._filterText:
+				self._filterText = ""
+				self.updateFilter()
+			# If we don't pass this event on, we miss a subsequent character. No idea why, but it doesn't seem to have any effect anyway.
+			evt.Skip()
+
+		elif key >= wx.WXK_START:
+			# Non-printable character.
+			evt.Skip()
+
+		else:
+			# Filter the list.
+			char = unichr(evt.UnicodeKey)
+			self._filterText += char.lower()
+			self.updateFilter()
+
+	def onAction(self, activate):
+		self.Close()
+
+		item = self.tree.GetSelection()
+		element = self.tree.GetItemPyData(item).textInfo
+		newCaret = element.copy()
+		newCaret.collapse()
+		self.vbuf.selection = newCaret
+
+		if activate:
+			self.vbuf._activatePosition(element)
+		else:
+			wx.CallLater(100, self._reportElement, element)
+
+		self.Destroy()
+
+	def _reportElement(self, element):
+		speech.cancelSpeech()
+		speech.speakTextInfo(element,reason=speech.REASON_FOCUS)
 
 class VirtualBuffer(cursorManager.CursorManager):
 
@@ -355,6 +578,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		pass
 
 	def _iterNodesByType(self,nodeType,direction="next",offset=-1):
+		if nodeType == "notLinkBlock":
+			return self._iterNotLinkBlock(direction=direction, offset=offset)
 		attribs=self._searchableAttribsForNodeType(nodeType)
 		if not attribs:
 			return iter(())
@@ -423,42 +648,16 @@ class VirtualBuffer(cursorManager.CursorManager):
 		setattr(cls, funcName, script)
 		cls.bindKey("shift+%s" % key, scriptName)
 
-	def script_linksList(self,keyPress):
+	def script_elementsList(self,keyPress):
 		if self.VBufHandle is None:
 			return
-
-		nodes = []
-		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		caretOffset=info._startOffset
-		defaultIndex = None
-		for node, startOffset, endOffset in self._iterNodesByType("link"):
-			if defaultIndex is None:
-				if startOffset <= caretOffset and caretOffset < endOffset:
-					# The caret is inside this link, so make it the default selection.
-					defaultIndex = len(nodes)
-				elif startOffset > caretOffset:
-					# The caret wasn't inside a link, so set the default selection to be the next link.
-					defaultIndex = len(nodes)
-			text = self.makeTextInfo(textInfos.offsets.Offsets(startOffset,endOffset)).text
-			nodes.append((text, startOffset, endOffset))
-
-		def action(args):
-			if args is None:
-				return
-			activate, index, text = args
-			text, startOffset, endOffset = nodes[index]
-			info=self.makeTextInfo(textInfos.offsets.Offsets(startOffset,endOffset))
-			newCaret = info.copy()
-			newCaret.collapse()
-			self.selection = newCaret
-			if activate:
-				self._activatePosition(info)
-			else:
-				speech.cancelSpeech()
-				speech.speakTextInfo(info,reason=speech.REASON_FOCUS)
-
-		scriptUI.LinksListDialog(choices=[node[0] for node in nodes], default=defaultIndex if defaultIndex is not None else 0, callback=action).run()
-	script_linksList.__doc__ = _("displays a list of links")
+		# We need this to be a modal dialog, but it mustn't block this script.
+		def run():
+			gui.mainFrame.prePopup()
+			ElementsListDialog(self).ShowModal()
+			gui.mainFrame.postPopup()
+		wx.CallAfter(run)
+	script_elementsList.__doc__ = _("Presents a list of links, headings or landmarks")
 
 	def shouldPassThrough(self, obj, reason=None):
 		"""Determine whether pass through mode should be enabled or disabled for a given object.
@@ -580,11 +779,11 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def script_tab(self, keyPress):
 		if not self._tabOverride("next"):
-			keyUtils.sendKey(keyPress)
+			sendKey(keyPress)
 
 	def script_shiftTab(self, keyPress):
 		if not self._tabOverride("previous"):
-			keyUtils.sendKey(keyPress)
+			sendKey(keyPress)
 
 	def event_focusEntered(self,obj,nextHandler):
 		if self.passThrough:
@@ -692,10 +891,11 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 		return False
 
-	def _getCurrentCellCoords(self):
-		caret = self.makeTextInfo(textInfos.POSITION_CARET)
-		caret.expand(textInfos.UNIT_CHARACTER)
-		for field in reversed(caret.getTextWithFields()):
+	def _getTableCellCoords(self, info):
+		if info.isCollapsed:
+			info = info.copy()
+			info.expand(textInfos.UNIT_CHARACTER)
+		for field in reversed(info.getTextWithFields()):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
 				# Not a control field.
 				continue
@@ -704,55 +904,120 @@ class VirtualBuffer(cursorManager.CursorManager):
 				break
 		else:
 			raise LookupError("Not in a table cell")
-		return int(attrs["table-id"]), int(attrs["table-rownumber"]), int(attrs["table-columnnumber"])
+		return (int(attrs["table-id"]),
+			int(attrs["table-rownumber"]), int(attrs["table-columnnumber"]),
+			int(attrs.get("table-rowsspanned", 1)), int(attrs.get("table-columnsspanned", 1)))
 
-	def _getCell(self, tableID, row, column):
+	def _iterTableCells(self, tableID, startPos=None, direction="next", row=None, column=None):
+		attrs = {"table-id": [str(tableID)]}
+		# row could be 0.
+		if row is not None:
+			attrs["table-rownumber"] = [str(row)]
+		if column is not None:
+			attrs["table-columnnumber"] = [str(column)]
+		startPos = startPos._startOffset if startPos else -1
+		results = self._iterNodesByAttribs(attrs, offset=startPos, direction=direction)
+		if not startPos and not row and not column and direction == "next":
+			# The first match will be the table itself, so skip it.
+			next(results)
+		for node, start, end in results:
+			yield self.makeTextInfo(textInfos.offsets.Offsets(start, end))
+
+	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
+		if not axis:
+			# First or last.
+			if movement == "first":
+				startPos = None
+				direction = "next"
+			elif movement == "last":
+				startPos = self.makeTextInfo(textInfos.POSITION_LAST)
+				direction = "previous"
+			try:
+				return next(self._iterTableCells(tableID, startPos=startPos, direction=direction))
+			except StopIteration:
+				raise LookupError
+
+		# Determine destination row and column.
+		destRow = origRow
+		destCol = origCol
+		if axis == "row":
+			destRow += origRowSpan if movement == "next" else -1
+		elif axis == "column":
+			destCol += origColSpan if movement == "next" else -1
+
+		if destCol < 1:
+			# Optimisation: We're definitely at the edge of the column.
+			raise LookupError
+
+		# Optimisation: Try searching for exact destination coordinates.
+		# This won't work if they are covered by a cell spanning multiple rows/cols, but this won't be true in the majority of cases.
 		try:
-			node, start, end = next(self._iterNodesByAttribs({"table-id": [str(tableID)], "table-rownumber": [str(row)], "table-columnnumber": [str(column)]}))
-			info = self.makeTextInfo(textInfos.offsets.Offsets(start, end))
+			return next(self._iterTableCells(tableID, row=destRow, column=destCol))
 		except StopIteration:
-			raise LookupError("No such table cell")
-		if info.isCollapsed:
-			raise LookupError("Cell present but occupies no space")
-		return info
+			pass
 
-	def _tableMovementScriptHelper(self, row, column, relative=False):
+		# Cells are grouped by row, so in most cases, we simply need to search in the right direction.
+		for info in self._iterTableCells(tableID, direction=movement, startPos=startPos):
+			_ignore, row, col, rowSpan, colSpan = self._getTableCellCoords(info)
+			if row <= destRow < row + rowSpan and col <= destCol < col + colSpan:
+				return info
+			elif row > destRow and movement == "next":
+				# Optimisation: We've gone forward past destRow, so we know we won't find the cell.
+				# We can't reverse this logic when moving backwards because there might be a prior cell on an earlier row which spans multiple rows.
+				break
+
+		if axis == "row" or (axis == "column" and movement == "previous"):
+			# In most cases, there's nothing more to try.
+			raise LookupError
+
+		else:
+			# We're moving forward by column.
+			# In this case, there might be a cell on an earlier row which spans multiple rows.
+			# Therefore, try searching backwards.
+			for info in self._iterTableCells(tableID, direction="previous", startPos=startPos):
+				_ignore, row, col, rowSpan, colSpan = self._getTableCellCoords(info)
+				if row <= destRow < row + rowSpan and col <= destCol < col + colSpan:
+					return info
+			else:
+				raise LookupError
+
+	def _tableMovementScriptHelper(self, movement="next", axis=None):
+		if isScriptWaiting():
+			return
 		formatConfig=config.conf["documentFormatting"].copy()
 		formatConfig["reportTables"]=True
+		formatConfig["includeLayoutTables"]=True
 		try:
-			tableID, oldRow, oldColumn = self._getCurrentCellCoords()
+			tableID, origRow, origCol, origRowSpan, origColSpan = self._getTableCellCoords(self.selection)
 		except LookupError:
 			ui.message(_("Not in a table cell"))
 			return
-		if relative:
-			row = oldRow + row
-			column = oldColumn + column
 
 		try:
-			info = self._getCell(tableID, row, column)
+			info = self._getNearestTableCell(tableID, self.selection, origRow, origCol, origRowSpan, origColSpan, movement, axis)
 		except LookupError:
-			speech.speakMessage(_("edge of table"))
-			info = self._getCell(tableID, oldRow, oldColumn)
-
+			ui.message(_("edge of table"))
+			# Retrieve the cell on which we started.
+			info = next(self._iterTableCells(tableID, row=origRow, column=origCol))
 
 		speech.speakTextInfo(info,formatConfig=formatConfig,reason=speech.REASON_CARET)
 		info.collapse()
 		self.selection = info
 
 	def script_nextRow(self, keyPress):
-		self._tableMovementScriptHelper(1, 0, True)
+		self._tableMovementScriptHelper(axis="row", movement="next")
 	script_nextRow.__doc__ = _("moves to the next table row")
 
 	def script_previousRow(self, keyPress):
-		self._tableMovementScriptHelper(-1, 0, True)
+		self._tableMovementScriptHelper(axis="row", movement="previous")
 	script_previousRow.__doc__ = _("moves to the previous table row")
 
 	def script_nextColumn(self, keyPress):
-		self._tableMovementScriptHelper(0, 1, True)
+		self._tableMovementScriptHelper(axis="column", movement="next")
 	script_nextColumn.__doc__ = _("moves to the next table column")
 
 	def script_previousColumn(self, keyPress):
-		self._tableMovementScriptHelper(0, -1, True)
+		self._tableMovementScriptHelper(axis="column", movement="previous")
 	script_previousColumn.__doc__ = _("moves to the previous table column")
 
 	APPLICATION_ROLES = (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG)
@@ -771,12 +1036,27 @@ class VirtualBuffer(cursorManager.CursorManager):
 			obj = obj.parent
 		return True
 
+	NOT_LINK_BLOCK_MIN_LEN = 30
+	def _iterNotLinkBlock(self, direction="next", offset=-1):
+		links = self._iterNodesByType("link", direction=direction, offset=offset)
+		# We want to compare each link against the next link.
+		link1node, link1start, link1end = next(links)
+		while True:
+			link2node, link2start, link2end = next(links)
+			# If the distance between the links is small, this is probably just a piece of non-link text within a block of links; e.g. an inactive link of a nav bar.
+			if direction == "next" and link2start - link1end > self.NOT_LINK_BLOCK_MIN_LEN:
+				yield 0, link1end, link2start
+			# If we're moving backwards, the order of the links in the document will be reversed.
+			elif direction == "previous" and link1start - link2end > self.NOT_LINK_BLOCK_MIN_LEN:
+				yield 0, link2end, link1start
+			link1node, link1start, link1end = link2node, link2start, link2end
+
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
 	("Return","activatePosition"),
 	("Space","activatePosition"),
 	("NVDA+f5","refreshBuffer"),
 	("NVDA+v","toggleScreenLayout"),
-	("NVDA+f7","linksList"),
+	("NVDA+f7","elementsList"),
 	("escape","disablePassThrough"),
 	("alt+extendedUp","collapseOrExpandControl"),
 	("alt+extendedDown","collapseOrExpandControl"),
@@ -836,4 +1116,8 @@ qn("graphic", key="g", nextDoc=_("moves to the next graphic"), nextError=_("no n
 	prevDoc=_("moves to the previous graphic"), prevError=_("no previous graphic"))
 qn("blockQuote", key="q", nextDoc=_("moves to the next block quote"), nextError=_("no next block quote"),
 	prevDoc=_("moves to the previous block quote"), prevError=_("no previous block quote"))
+qn("notLinkBlock", key="n", nextDoc=_("skips forward past a block of links"), nextError=_("no more text after a block of links"),
+	prevDoc=_("skips backward past a block of links"), prevError=_("no more text before a block of links"), readUnit=textInfos.UNIT_LINE)
+qn("landmark", key="d", nextDoc=_("moves to the next landmark"), nextError=_("no next landmark"),
+	prevDoc=_("moves to the previous landmark"), prevError=_("no previous landmark"), readUnit=textInfos.UNIT_LINE)
 del qn

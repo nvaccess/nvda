@@ -38,7 +38,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 				role = self.stdNamesToRoles[stdName]
 			except KeyError:
 				pass
-	
+
 		if not role:
 			accRole=attrs['IAccessible::role']
 			if accRole.isdigit():
@@ -49,13 +49,11 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 
-		newAttrs=textInfos.ControlField()
-		newAttrs.update(attrs)
-		newAttrs['role']=role
-		newAttrs['states']=states
+		attrs['role']=role
+		attrs['states']=states
 		if level:
-			newAttrs["level"] = level
-		return newAttrs
+			attrs["level"] = level
+		return super(AdobeAcrobat_TextInfo, self)._normalizeControlField(attrs)
 
 class AdobeAcrobat(VirtualBuffer):
 	TextInfo = AdobeAcrobat_TextInfo
@@ -101,9 +99,9 @@ class AdobeAcrobat(VirtualBuffer):
 		elif nodeType == "formField":
 			attrs = {"IAccessible::state_%s"%IAccessibleHandler.STATE_SYSTEM_READONLY: [None]}
 		elif nodeType == "list":
-			attrs = {"acrobat::stdname": ["L"]},
+			attrs = {"acrobat::stdname": ["L"]}
 		elif nodeType == "listItem":
-			attrs = {"acrobat::stdname": ["LI"]},
+			attrs = {"acrobat::stdname": ["LI"]}
 		elif nodeType=="button":
 			attrs={"IAccessible::role":[IAccessibleHandler.ROLE_SYSTEM_PUSHBUTTON]}
 		elif nodeType=="edit":
