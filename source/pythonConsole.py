@@ -6,6 +6,7 @@ import __builtin__
 import os
 import code
 import sys
+import pydoc
 import wx
 from baseObject import AutoPropertyObject
 import speech
@@ -14,6 +15,37 @@ import api
 import gui
 from logHandler import log
 import braille
+
+class HelpCommand(object):
+	"""
+	Emulation of the 'help' command found in the Python interactive shell.
+	"""
+
+	_reprMessage=_("Type help(object) to get help about object.")
+
+	def __repr__(self):
+		return self._reprMessage
+
+	def __call__(self,*args,**kwargs):
+		return pydoc.help(*args,**kwargs)
+
+class ExitConsoleCommand(object):
+
+	"""
+	An object that can be used as an exit command that can close the console or print a friendly message for its repr.
+	"""
+
+	def __init__(self,consoleUIObject):
+		if not isinstance(consoleUIObject,ConsoleUI):
+			raise ValueError("consoleUIObject must be of type ConsoleUI")
+		self.consoleUIObject=consoleUIObject
+
+	_reprMessage=_("Type exit() to exit the console")
+	def __repr__(self):
+		return self._reprMessage
+
+	def __call__(self):
+		self.consoleUIObject.Close()
 
 #: The singleton Python console UI instance.
 consoleUI = None
@@ -82,6 +114,9 @@ class ConsoleUI(wx.Frame):
 		#: @type: dict
 		# Populate with useful modules.
 		self.namespace = {
+			"help":HelpCommand(),
+			"exit":ExitConsoleCommand(self),
+			"quit":ExitConsoleCommand(self),
 			"sys": sys,
 			"os": os,
 			"wx": wx,
