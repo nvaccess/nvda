@@ -355,9 +355,13 @@ ReadRegStr $0 ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString"
 ${GetParent} $0 $1
 GetTempFileName $2
 CopyFiles /SILENT "$0" "$2"
+;Save startOnLogonScreen setting which will be removed by uninstaller
+ReadRegStr $3 ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "startOnLogonScreen"
 HideWindow
 ExecWait "$2 /nonInteractive _?=$1"
 bringToFront
+;Restore the startOnLogonScreen setting
+WriteRegStr ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "startOnLogonScreen" "$3"
 delete "$2"
 end:
 functionEnd
