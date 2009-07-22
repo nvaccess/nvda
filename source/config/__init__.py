@@ -288,3 +288,29 @@ def setStartOnLogonScreen(enable):
 		# We probably don't have admin privs, so we need to elevate to do this using the slave.
 		if execElevated(SLAVE_FILENAME, "config_setStartOnLogonScreen %d" % enable, wait=True) != 0:
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
+
+def getConfigDirs(subpath=None):
+	"""Retrieve all directories that should be used when searching for configuration.
+	IF C{subpath} is provided, it will be added to each directory returned.
+	@param subpath: The path to be added to each directory, C{None} for none.
+	@type subpath: str
+	@return: The configuration directories in the order in which they should be searched.
+	@rtype: list of str
+	"""
+	return [os.path.join(dir, subpath) if subpath else dir
+		for dir in (getUserDefaultConfigPath(),)
+	]
+
+def addConfigDirsToPythonPackagePath(module, subdir=None):
+	"""Add the configuration directories to the module search path (__path__) of a Python package.
+	C{subdir} is added to each configuration directory. It defaults to the name of the Python package.
+	@param module: The root module of the package.
+	@type module: module
+	@param subdir: The subdirectory to be used, C{None} for the name of C{module}.
+	@type subdir: str
+	"""
+	if not subdir:
+		subdir = module.__name__
+	dirs = getConfigDirs(subdir)
+	dirs.extend(module.__path__ )
+	module.__path__ = dirs
