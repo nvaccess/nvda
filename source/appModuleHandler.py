@@ -19,7 +19,7 @@ import pkgutil
 import baseObject
 import globalVars
 from logHandler import log
-import speech
+import ui
 import winUser
 import winKernel
 import config
@@ -166,7 +166,7 @@ def fetchAppModule(processID,appName,useDefault=False):
 		mod = __import__("appModules.%s" % appName, globals(), locals(), ("appModules",)).AppModule(processID, friendlyAppName)
 	except:
 		log.error("error in appModule %s"%appName, exc_info=True)
-		speech.speakMessage(_("Error in appModule %s")%appName)
+		ui.message(_("Error in appModule %s")%appName)
 		return None
 
 	mod.loadKeyMap()
