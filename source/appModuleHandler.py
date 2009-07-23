@@ -85,7 +85,7 @@ def getKeyMapFileName(appName,layout):
 	@returns: file path of key map file (.kbd file)
 	@rtype: str
 	"""
-	for dir in appModules.__path__:
+	for dir in appModules.__path__+['.\\appModules']:
 		fname = os.path.join(dir, '%s_%s.kbd' % (appName, layout))
 		if os.path.isfile(fname):
 			log.debug("Found keymap file for %s at %s"%(appName,fname)) 
