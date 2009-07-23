@@ -217,6 +217,23 @@ def getSystemConfigPath():
 			pass
 	return None
 
+def initConfigPath(configPath=None):
+	"""
+	Creates the current configuration path if it doesn't exist. Also makes sure that various sub directories also exist.
+	@param configPath: an optional path which should be used instead (only useful when being called from outside of NVDA)
+	@type configPath: basestring
+	"""
+	if not configPath:
+		configPath=globalVars.appArgs.configPath
+	if not os.path.isdir(configPath):
+		os.makedirs(configPath)
+	for subdir in ("appModules","brailleDisplayDrivers","synthDrivers"):
+		subdir=os.path.join(configPath,subdir)
+		if not os.path.isdir(subdir):
+			os.makedirs(subdir)
+
+
+
 RUN_REGKEY = ur"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
 def getStartAfterLogon():

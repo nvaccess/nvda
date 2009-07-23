@@ -111,6 +111,9 @@ elif globalVars.appArgs.check_running:
 	# NVDA is not running.
 	sys.exit(1)
 
+#Initialize the config path (make sure it exists)
+config.initConfigPath()
+
 #os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
 #import pychecker.checker
 #Initial logging and logging code
