@@ -136,14 +136,14 @@ class SynthDriver(baseObject.AutoPropertyObject):
 
 	hasVoice = False
 	hasPitch = False
-	pitchMinStep = 1
+	pitchMinStep = 5
 	hasRate = False
-	rateMinStep = 1
+	rateMinStep = 5
 	hasVolume = False
 	volumeMinStep = 1
 	hasVariant = False
 	hasInflection = False
-	inflectionMinStep = 1
+	inflectionMinStep = 5
 
 	@classmethod
 	def check(cls):

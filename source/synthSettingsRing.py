@@ -1,15 +1,14 @@
 import baseObject
 import synthDriverHandler
 import config
-import itertools
 
 class SynthSetting(baseObject.AutoPropertyObject):
 	""" a synth setting. Has functions to set, get, increase and decrease its value """
-	def __init__(self,name,min=0,max=100,step=1):
-		self.name=name
+	def __init__(self,setting,min=0,max=100):
+		self.setting=setting
 		self.min=min
 		self.max=max
-		self.step = step
+		self.step = setting.data if isinstance(setting.data,int) else 1
 
 	def increase(self):
 		val = min(self.max,self.value+self.step)
@@ -22,11 +21,11 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		return self._getReportValue(val)
 
 	def _get_value(self):
-		return getattr(synthDriverHandler.getSynth(),self.name)
+		return getattr(synthDriverHandler.getSynth(),self.setting.name)
 
 	def _set_value(self,value):
-		setattr(synthDriverHandler.getSynth(),self.name,value)
-		config.conf["speech"][synthDriverHandler.getSynth().name][self.name]=value
+		setattr(synthDriverHandler.getSynth(),self.setting.name,value)
+		config.conf["speech"][synthDriverHandler.getSynth().name][self.setting.name]=value
 
 	def _getReportValue(self, val):
 		return str(val)
@@ -34,53 +33,31 @@ class SynthSetting(baseObject.AutoPropertyObject):
 	def _get_reportValue(self):
 		return self._getReportValue(self.value)
 
-class VoiceSynthSetting(SynthSetting):
+class StringSynthSetting(SynthSetting):
 
-	def __init__(self):
-		self._voices=synthDriverHandler.getSynth().availableVoices
-		super(VoiceSynthSetting,self).__init__("voice",0,len(self._voices)-1)
+	def __init__(self,setting):
+		self._values=getattr(synthDriverHandler.getSynth(),"available%ss"%setting.name.capitalize())
+		super(StringSynthSetting,self).__init__(setting,0,len(self._values)-1)
 
 	def _get_value(self):
-		curID=synthDriverHandler.getSynth().voice
-		for e,v in enumerate(self._voices):
+		curID=getattr(synthDriverHandler.getSynth(),self.setting.name)
+		for e,v in enumerate(self._values):
 			if curID==v.ID:
 				return e 
 
 	def _set_value(self,value):
 		"""Overridden to use code that supports updating speech dicts when changing voice"""
-		ID=self._voices[value].ID
+		ID=self._values[value].ID
 		synth=synthDriverHandler.getSynth()
-		synthDriverHandler.changeVoice(synth,ID)
-		synthName=synth.name
-		config.conf["speech"][synthName]["voice"]=ID
-		# Voice parameters may change when the voice changes, so update the config.
-		config.conf["speech"][synthName]["rate"]=synth.rate
-		config.conf["speech"][synthName]["pitch"]=synth.pitch
-		config.conf["speech"][synthName]["inflection"]=synth.inflection
-		config.conf["speech"][synthName]["volume"]=synth.volume
+		if self.setting.name=="voice":
+			synthDriverHandler.changeVoice(synth,ID)
+			# Voice parameters may change when the voice changes, so update the config.
+			synth.saveSettings()
+		else:
+			setattr(synth,self.setting.name,ID)
 
 	def _getReportValue(self, val):
-		return self._voices[val].name
-
-class VariantSynthSetting(SynthSetting):
-
-	def __init__(self):
-		self._variants=synthDriverHandler.getSynth().availableVariants
-		super(VariantSynthSetting,self).__init__("variant",0,len(self._variants)-1)
-
-	def _get_value(self):
-		curID=synthDriverHandler.getSynth().variant
-		for e,v in enumerate(self._variants):
-			if curID==v.ID:
-				return e 
-
-	def _set_value(self,value):
-		ID=self._variants[value].ID
-		synthDriverHandler.getSynth().variant=ID
-		config.conf["speech"][synthDriverHandler.getSynth().name]["variant"]=ID
-
-	def _getReportValue(self, val):
-		return self._variants[val].name
+		return self._values[val].name
 
 class SynthSettingsRing(baseObject.AutoPropertyObject):
 	"""
@@ -88,23 +65,13 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 	It was written to facilitate the implementation of a way to change the settings resembling the window-eyes way.
 	"""
 
-	#dictionary with each attribute name translated so the settings name is returned 
-	#in the users language
-	_I18nAttributeNames = {
-	"rate": _("rate"),
-	"pitch": _("pitch"),
-	"volume": _("volume"),
-	"inflection": _("inflection"),
-	"voice": _("voice"),
-	"variant": _("variant")}
-
 	def __init__(self):
 		self.updateSupportedSettings()
 
 	def _get_currentSettingName(self):
 		""" returns the current setting's name """
 		if self._current is not None:
-			return SynthSettingsRing._I18nAttributeNames[self.settings[self._current].name]
+			return self.settings[self._current].setting.i18nName
 		return None
 
 	def _get_currentSettingValue(self):
@@ -142,12 +109,11 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 	def updateSupportedSettings(self):
 		list = []
 		synth = synthDriverHandler.getSynth()
-		if synth.hasRate: list.append(SynthSetting("rate",step=max(synth.rateMinStep, 5)))
-		if synth.hasPitch: list.append(SynthSetting("pitch", step=max(synth.pitchMinStep, 5)))
-		if synth.hasVolume: list.append(SynthSetting("volume", step=max(synth.volumeMinStep, 10)))
-		if synth.hasInflection: list.append(SynthSetting("inflection",step = max(synth.inflectionMinStep, 5)))
-		if synth.hasVoice: list.append(VoiceSynthSetting())
-		if synth.hasVariant: list.append(VariantSynthSetting())
+		for s in synth.supportedSettings:
+			if isinstance(s.data,int):
+				list.append(SynthSetting(s))
+			else:
+				list.append(StringSynthSetting(s))
 		if len(list) == 0:
 			self._current = None
 			self.settings = None
