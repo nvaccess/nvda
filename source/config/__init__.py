@@ -207,7 +207,7 @@ def getUserDefaultConfigPath():
 			return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_APPDATA), "nvda")
 		except WindowsError:
 			pass
-	return u'.\\'
+	return u'.\\profile\\'
 
 def getSystemConfigPath():
 	if isInstalledCopy():
