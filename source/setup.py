@@ -129,7 +129,7 @@ setup(
 	}],
 	options = {"py2exe": {
 		"bundle_files": 3,
-		"excludes": ["comInterfaces"],
+		"excludes": ["comInterfaces", "Tkinter"],
 		"packages": ["NVDAObjects","virtualBuffers"],
 		"includes": getOptionalIncludes(),
 	}},
