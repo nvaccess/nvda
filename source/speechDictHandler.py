@@ -15,7 +15,7 @@ import config
 
 dictionaries = {}
 dictTypes = ("temp", "voice", "default", "builtin") # ordered by their priority E.G. voice specific speech dictionary is processed before the default
-speechDictsPath=os.path.join(globalVars.appArgs.configPath, "speechdicts")
+speechDictsPath=os.path.join(globalVars.appArgs.configPath, "speechDicts")
 
 class SpeechDictEntry:
 
