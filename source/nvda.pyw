@@ -8,7 +8,6 @@
  
 import os
 import sys
-import tempfile
 import locale
 import gettext
 import time
@@ -45,11 +44,9 @@ if getattr(sys, "frozen", None):
 	# Append the path of the executable to sys so we can import modules from the dist dir.
 	sys.path.append(sys.prefix)
 	os.chdir(sys.prefix)
-	logFileName='%s\\nvda.log'%tempfile.gettempdir()
 else:
 	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
 	os.chdir(os.path.normpath(os.path.dirname(__file__)))
-	logFileName='nvda.log'
 
 #Localization settings
 locale.setlocale(locale.LC_ALL,'')
@@ -63,7 +60,7 @@ parser=NoConsoleOptionParser()
 parser.add_option('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
 parser.add_option('-r','--replace',action="store_true",dest='replace',default=False,help="Quit already running copy of NVDA and start this one")
 parser.add_option('-k','--check-running',action="store_true",dest='check_running',default=False,help="Report whether NVDA is running via the exit code; 0 if running, 1 if not running")
-parser.add_option('-f','--log-file',dest='logFileName',default=logFileName,help="The file where log messages should be written to")
+parser.add_option('-f','--log-file',dest='logFileName',help="The file where log messages should be written to")
 parser.add_option('-l','--log-level',type="int",dest='logLevel',default=0,help="The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning") 
 parser.add_option('-c','--config-path',dest='configPath',default=config.getUserDefaultConfigPath(),help="The path where all settings for NVDA are stored")
 parser.add_option('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
