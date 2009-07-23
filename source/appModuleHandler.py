@@ -85,15 +85,18 @@ def getKeyMapFileName(appName,layout):
 	@returns: file path of key map file (.kbd file)
 	@rtype: str
 	"""
-	fname='appModules/%s_%s.kbd'%(appName,layout)
-	if os.path.isfile(fname):
-		log.debug("Found keymap file for %s at %s"%(appName,fname)) 
-		return fname
-	elif layout!='desktop':
+	for dir in appModules.__path__:
+		fname = os.path.join(dir, '%s_%s.kbd' % (appName, layout))
+		if os.path.isfile(fname):
+			log.debug("Found keymap file for %s at %s"%(appName,fname)) 
+			return fname
+
+	if layout!='desktop':
+		# Fall back to desktop.
 		return getKeyMapFileName(appName,'desktop')
-	else:
-		log.debug("No keymapFile for %s"%appName)
-		return None
+
+	log.debug("No keymapFile for %s"%appName)
+	return None
 
 def getAppModuleForNVDAObject(obj):
 	if not isinstance(obj,NVDAObjects.NVDAObject):
