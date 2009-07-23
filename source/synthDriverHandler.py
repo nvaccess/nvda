@@ -24,6 +24,9 @@ def changeVoice(synth, voice):
 	synth.voice = voice
 	fileName=r"%s\%s-%s.dic"%(speechDictHandler.speechDictsPath,synth.name,api.filterFileName(voiceName))
 	speechDictHandler.dictionaries["voice"].load(fileName)
+	c=config.conf["speech"][synth.name]
+	c.configspec=synth.getConfigSpec()
+	config.conf.validate(config.val, copy = True,section = c)
 
 def getSynthList():
 	synthList=[]
@@ -68,7 +71,7 @@ def setSynth(name):
 	try:
 		newSynth=__import__(name,globals(),None,[]).SynthDriver
 		newSynth=newSynth()
-		updatedConfig=config.updateSynthConfig(name)
+		updatedConfig=config.updateSynthConfig(newSynth)
 		if not updatedConfig:
 			if newSynth.hasVoice:
 				voice=config.conf["speech"][name]["voice"]
@@ -279,6 +282,31 @@ class SynthDriver(baseObject.AutoPropertyObject):
 			self._availableVariants=self._getAvailableVariants()
 		return self._availableVariants
 
+	def _getSupportedSettings(self):
+		"""By default, this checks old-styled 'has_xxx' and constructs the list of settings.
+		@returns: dictionary of supported settings
+		@rtype: l{list}
+		"""
+		result=[]
+		if self.hasRate: result.append(SynthSetting("rate",_("Rate"),self.rateMinStep))
+		if self.hasPitch: result.append(SynthSetting("pitch",_("Pitch"),self.pitchMinStep))
+		if self.hasVolume: result.append(SynthSetting("volume",_("Volume"),self.volumeMinStep))
+		if self.hasInflection: result.append(SynthSetting("inflection",_("Inflection"),self.inflectionMinStep,False))
+		if self.hasVariant: result.append(SynthSetting("variant",_("Variant"),False))
+		if self.hasVoice: result.append(SynthSetting("voice",_("Voice")))
+		return result
+
+	def getConfigSpec(self):
+		spec=config.conf["speech"].configspec["__many__"]
+		for setting in self.supportedSettings:
+			spec[setting.name]=setting.getConfigSpec()
+		return spec
+
+	def _get_supportedSettings(self):
+		if not hasattr(self,'_supportedSettings'):
+			self._supportedSettings=self._getSupportedSettings()
+		return self._supportedSettings
+
 	def _get_inflection(self):
 		return 0
 
@@ -340,3 +368,23 @@ class VoiceInfo(object):
 		#: The name of the voice, visible to the user.
 		#: @type: str
 		self.name=name
+
+class SynthSetting:
+	def __init__(self,name,i18nName,data="",availableInSynthSettingsRink=True):
+		"""@param name: internal name of the setting
+		@param name: str
+		@param i18nName: the localized string
+		@type i18nName: str
+		@param data: step size for numeric options, l{basestring} for string options like voice or variant
+		@type data: str or int
+		@param availableInSynthSettingsRink: Will option be available in synthesizer settings rink?
+		@type availableInSynthSettingsRink: bool
+		"""
+		self.name=name
+		self.i18nName=i18nName
+		self.data=data
+		self.availableInSynthSettingsRink=availableInSynthSettingsRink
+
+	def getConfigSpec(self):
+		s="string(default=None)" if isinstance(self.data,basestring) else "integer(default=50,min=0,max=100)"
+		return s
