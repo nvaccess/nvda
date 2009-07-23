@@ -175,7 +175,7 @@ def load():
 def updateSynthConfig(synth):
 	"""Makes sure that the config contains a specific synth section for the given synth name and assigns the appropriate config spec.
 @param synth: the synth
-@type name: l{synthDriverHandler.BaseSynthDriver}
+@type synth: l{synthDriverHandler.BaseSynthDriver}
 """ 
 	speech = conf["speech"]
 	# If there are no settings for this synth, make sure there are defaults.

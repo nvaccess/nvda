@@ -73,41 +73,12 @@ def setSynth(name):
 		newSynth=newSynth()
 		updatedConfig=config.updateSynthConfig(newSynth)
 		if not updatedConfig:
-			if newSynth.hasVoice:
-				voice=config.conf["speech"][name]["voice"]
-				try:
-					changeVoice(newSynth,voice)
-				except LookupError:
-					log.warning("No such voice: %s" % voice)
-					# Update the configuration with the correct voice.
-					config.conf["speech"][name]["voice"]=newSynth.voice
-					# We need to call changeVoice here so voice dictionaries can be managed
-					changeVoice(newSynth,newSynth.voice)
-			if newSynth.hasVariant:
-				newSynth.variant=config.conf["speech"][name]["variant"]
-			if newSynth.hasRate:
-				newSynth.rate=config.conf["speech"][name]["rate"]
-			if newSynth.hasPitch:
-				newSynth.pitch=config.conf["speech"][name]["pitch"]
-			if newSynth.hasInflection:
-				newSynth.inflection=config.conf["speech"][name]["inflection"]
-			if newSynth.hasVolume:
-				newSynth.volume=config.conf["speech"][name]["volume"]
+			newSynth.loadSettings()
 		else:
 			if newSynth.hasVoice:
-				config.conf["speech"][name]["voice"]=newSynth.voice
 				#We need to call changeVoice here so voice dictionaries can be managed
 				changeVoice(newSynth,newSynth.voice)
-			if newSynth.hasVariant:
-				config.conf["speech"][name]["variant"]=newSynth.variant
-			if newSynth.hasRate:
-				config.conf["speech"][name]["rate"]=newSynth.rate
-			if newSynth.hasPitch:
-				config.conf["speech"][name]["pitch"]=newSynth.pitch
-			if newSynth.hasInflection:
-				config.conf["speech"][name]["inflection"]=newSynth.inflection
-			if newSynth.hasVolume:
-				config.conf["speech"][name]["volume"]=newSynth.volume
+			newSynth.saveSettings() #save defaults
 		_curSynth=newSynth
 		config.conf["speech"]["synth"]=name
 		log.info("Loaded synthDriver %s"%name)
@@ -292,7 +263,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		if self.hasPitch: result.append(SynthSetting("pitch",_("Pitch"),self.pitchMinStep))
 		if self.hasVolume: result.append(SynthSetting("volume",_("Volume"),self.volumeMinStep))
 		if self.hasInflection: result.append(SynthSetting("inflection",_("Inflection"),self.inflectionMinStep,False))
-		if self.hasVariant: result.append(SynthSetting("variant",_("Variant"),False))
+		if self.hasVariant: result.append(SynthSetting("variant",_("Variant"),availableInSynthSettingsRink=False))
 		if self.hasVoice: result.append(SynthSetting("voice",_("Voice")))
 		return result
 
@@ -356,6 +327,33 @@ class SynthDriver(baseObject.AutoPropertyObject):
 			if v.ID==ID:
 				return v
 		raise LookupError("No such voice")
+
+	def isSupported(self,settingName):
+		"""Checks whether given setting is supported by the synthesizer.
+		@rtype: l{bool}
+		"""
+		for s in self.supportedSettings:
+			if s.name==settingName: return True
+		return False
+
+	def saveSettings(self):
+		conf=config.conf["speech"][self.name]
+		for setting in self.supportedSettings:
+			conf[setting.name]=getattr(self,setting.name)
+
+	def loadSettings(self):
+		c=config.conf["speech"][self.name]
+		if self.isSupported("voice"):
+			voice=c["voice"]
+			try:
+				changeVoice(self,voice)
+			except LookupError:
+				log.warning("No such voice: %s" % voice)
+				# Update the configuration with the correct voice.
+				c["voice"]=self.voice
+				# We need to call changeVoice here so voice dictionaries can be managed
+				changeVoice(self,newSynth.voice)
+		[setattr(self,s.name,c[s.name]) for s in self.supportedSettings if s.name!="voice"]
 
 class VoiceInfo(object):
 	"""Provides information about a single synthesizer voice.
