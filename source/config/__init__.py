@@ -298,7 +298,7 @@ def getConfigDirs(subpath=None):
 	@rtype: list of str
 	"""
 	return [os.path.join(dir, subpath) if subpath else dir
-		for dir in (getUserDefaultConfigPath(),)
+		for dir in (globalVars.appArgs.configPath,)
 	]
 
 def addConfigDirsToPythonPackagePath(module, subdir=None):
