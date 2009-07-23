@@ -110,6 +110,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 		list = []
 		synth = synthDriverHandler.getSynth()
 		for s in synth.supportedSettings:
+			if not s.availableInSynthSettingsRink: continue
 			if isinstance(s.data,int):
 				list.append(SynthSetting(s))
 			else:
