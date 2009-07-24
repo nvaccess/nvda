@@ -110,13 +110,13 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 	def updateSupportedSettings(self,synth):
 		import ui
 		from scriptHandler import _isScriptRunning
+		#Save name of the current setting to restore ring position after reconstruction
 		prevName=self.settings[self._current].setting.name if hasattr(self,'settings') else None
 		list = []
 		for s in synth.supportedSettings:
 			if not s.availableInSynthSettingsRing: continue
-			index=0
-			if prevName==s.name:
-				index=len(list)
+			if prevName==s.name: #restore the last setting
+				self._current=len(list)
 			p=SynthSetting if s.isNumeric() else StringSynthSetting
 			list.append(p(synth,s))
 		if len(list) == 0:
@@ -124,8 +124,9 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			self.settings = None
 		else:
 			self.settings = list
-			if index>=len(list):
-				index = 0
-			self._current = index
-		if _isScriptRunning and prevName!=self.settings[self._current].setting.name:
+		if prevName!=self.settings[self._current].setting.name:
+			#Previous chosen setting doesn't exists. Set position to default
+			self._current = 0
+		if _isScriptRunning:
+			#User changed some setting from ring and that setting no more exists. We have just reverted to first setting, so report this change to user
 			ui.message("%s %s" % (self.currentSettingName,self.currentSettingValue))
