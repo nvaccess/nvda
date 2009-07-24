@@ -39,9 +39,7 @@ Changes since 0.6p3:
 * new: The new Elements List dialog filters the list as you type to contain only those items including the text that was typed. You can press backspace to clear the filter so that all items are again presented. (#173)
 *New: Portable versions of NVDA now look in the 'userConfig' directory inside the NVDA directory, for the user's configuration. Like for the installer version, this keeps the user's configuration separate from NVDA itself.  
 *New: Custom app modules, braille display drivers and synth drivers can now be stored in the user's configuration directory.  
-   *New: NVDA's log file can now be found in the user's configuration directory.  however as to not degrade flash drives,  the log file is stored in the user's temp directory if NVDA is running from a removable drive (such as a USB flash drive).
    
-
 
 Changes since 0.6 P2:
 * new: As Microsoft Excel's formula bar is inaccessible to NVDA, provide an NVDA specific dialog box for editing when the user presses f2 on a cell. 
