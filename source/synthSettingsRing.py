@@ -67,7 +67,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 
 	def __init__(self,synth):
 		self._current=0
-		self.updateSupportedSettings(synth,init=True)
+		self.updateSupportedSettings(synth)
 
 	def _get_currentSettingName(self):
 		""" returns the current setting's name """
@@ -107,12 +107,16 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			return self.settings[self._current].decrease()
 		return None
 
-	def updateSupportedSettings(self,synth,init=False):
+	def updateSupportedSettings(self,synth):
 		import ui
+		from scriptHandler import _isScriptRunning
 		prevName=self.currentSettingName
 		list = []
 		for s in synth.supportedSettings:
 			if not s.availableInSynthSettingsRing: continue
+			index=0
+			if prevName==s.i18nName:
+				index=len(list)
 			p=SynthSetting if s.isNumeric() else StringSynthSetting
 			list.append(p(synth,s))
 		if len(list) == 0:
@@ -120,7 +124,8 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			self.settings = None
 		else:
 			self.settings = list
-			if self._current>=len(list):
-				self._current = 0
-		if not init and prevName!=self.currentSettingName:
+			if index>=len(list):
+				index = 0
+			self._current = index
+		if _isScriptRunning and prevName!=self.currentSettingName:
 			ui.message("%s %s" % (self.currentSettingName,self.currentSettingValue))
