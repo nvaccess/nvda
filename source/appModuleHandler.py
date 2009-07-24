@@ -5,37 +5,34 @@
 #See the file COPYING for more details.
 
 """Manages appModules.
-@var default: holds the default appModule.
-@type default: appModule
 @var runningTable: a dictionary of the currently running appModules, using their application's main window handle as a key.
 @type runningTable: dict
 @var re_keyScript: a compiled regular expression that can grab a keyName and a script name from a line in a NVDA key map file (kbd file).
 @type re_keyScript: regular expression
 """
 
-import imp
 import itertools
 import re
 import ctypes
 import os
+import pkgutil
 import baseObject
 import globalVars
 from logHandler import log
-import speech
+import ui
 import winUser
 import winKernel
 import config
 import NVDAObjects #Catches errors before loading default appModule
 import api
 import unicodedata
-
-#This is here so that the appModules are able to import modules from the appModules dir themselves
-__path__=['.\\appModules']
+import appModules
 
 #Dictionary of processID:appModule paires used to hold the currently running modules
 runningTable={}
 #: The process ID of NVDA itself.
 NVDAProcessID=None
+_importers=None
 
 #regexp to collect the key and script from a line in a keyMap file 
 re_keyScript=re.compile(r'^\s*(?P<key>[\S]+)\s*=\s*(?P<script>[\S]+)\s*$')
@@ -88,15 +85,18 @@ def getKeyMapFileName(appName,layout):
 	@returns: file path of key map file (.kbd file)
 	@rtype: str
 	"""
-	fname='appModules/%s_%s.kbd'%(appName,layout)
-	if os.path.isfile(fname):
-		log.debug("Found keymap file for %s at %s"%(appName,fname)) 
-		return fname
-	elif layout!='desktop':
+	for dir in appModules.__path__+['.\\appModules']:
+		fname = os.path.join(dir, '%s_%s.kbd' % (appName, layout))
+		if os.path.isfile(fname):
+			log.debug("Found keymap file for %s at %s"%(appName,fname)) 
+			return fname
+
+	if layout!='desktop':
+		# Fall back to desktop.
 		return getKeyMapFileName(appName,'desktop')
-	else:
-		log.debug("No keymapFile for %s"%appName)
-		return None
+
+	log.debug("No keymapFile for %s"%appName)
+	return None
 
 def getAppModuleForNVDAObject(obj):
 	if not isinstance(obj,NVDAObjects.NVDAObject):
@@ -134,6 +134,9 @@ def update(processID):
 				deadMod.event_appLoseFocus();
 		getAppModuleFromProcessID(processID)
 
+def doesAppModuleExist(name):
+	return any(importer.find_module("appModules.%s" % name) for importer in _importers)
+
 def fetchAppModule(processID,appName,useDefault=False):
 	"""Returns an appModule found in the appModules directory, for the given application name.
 	@param processID: process ID for it to be associated with
@@ -143,34 +146,39 @@ def fetchAppModule(processID,appName,useDefault=False):
 	@returns: the appModule, or None if not found
 	@rtype: AppModule
 	"""  
-	mod=None
 	friendlyAppName=appName
 	if useDefault:
 		appName='_default'
-	try:
-		try:
-			found=imp.find_module(appName,__path__)
-		except UnicodeEncodeError:
-			# since python can't handle unicode characters in the module names we do need to decompose unicode string and strip out accents
-			found=imp.find_module(unicodedata.normalize("NFD", appName).encode("ASCII", "ignore"),__path__)
-		try:
-			#best to use imp.load_module but then imports of other appModules in this module fail
-			mod=__import__(appName,globals(),locals(),[]).AppModule(processID,friendlyAppName)
-		except:
-			log.error("error in appModule %s"%appName,exc_info=True)
-			speech.speakMessage(_("Error in appModule %s")%appName)
-	except ImportError: #find_module couldn't find an appModule
-		pass
-	if mod and isinstance(mod,AppModule):
-		mod.loadKeyMap()
-		return mod
 
+	# First, check whether the module exists.
+	# We need to do this separately because even though an ImportError is raised when a module can't be found, it might also be raised for other reasons.
+	try:
+		exists = doesAppModuleExist(appName)
+	except UnicodeEncodeError:
+		# Since Python can't handle unicode characters in module names, we need to decompose unicode string and strip out accents.
+		appName = unicodedata.normalize("NFD", appName)
+		exists = doesAppModuleExist(appName)
+	if not exists:
+		# It is not an error if the module doesn't exist.
+		return None
+
+	try:
+		mod = __import__("appModules.%s" % appName, globals(), locals(), ("appModules",)).AppModule(processID, friendlyAppName)
+	except:
+		log.error("error in appModule %s"%appName, exc_info=True)
+		ui.message(_("Error in appModule %s")%appName)
+		return None
+
+	mod.loadKeyMap()
+	return mod
 
 def initialize():
 	"""Initializes the appModule subsystem. 
 	"""
-	global NVDAProcessID,default
+	global NVDAProcessID,_importers
 	NVDAProcessID=os.getpid()
+	config.addConfigDirsToPythonPackagePath(appModules)
+	_importers=list(pkgutil.iter_importers("appModules._default"))
 
 #base class for appModules
 class AppModule(baseObject.ScriptableObject):

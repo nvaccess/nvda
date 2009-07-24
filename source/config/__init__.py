@@ -9,10 +9,7 @@ from cStringIO import StringIO
 from configobj import ConfigObj, ConfigObjError
 from validate import Validator
 from logHandler import log
-import ctypes
-
-CSIDL_APPDATA=26
-MAX_PATH=256
+import shlobj
 
 def validateConfig(configObj,validator,validationResult=None,keyList=None):
 	if validationResult is None:
@@ -241,10 +238,36 @@ def isInstalledCopy():
 
 def getUserDefaultConfigPath():
 	if isInstalledCopy():
-		buf=ctypes.create_unicode_buffer(MAX_PATH)
-		if ctypes.windll.shell32.SHGetSpecialFolderPathW(0,buf,CSIDL_APPDATA,0):
-			return u'%s\\nvda'%buf.value
-	return u'.\\'
+		try:
+			return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_APPDATA), "nvda")
+		except WindowsError:
+			pass
+	return u'.\\userConfig\\'
+
+def getSystemConfigPath():
+	if isInstalledCopy():
+		try:
+			return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_COMMON_APPDATA), "nvda")
+		except WindowsError:
+			pass
+	return None
+
+def initConfigPath(configPath=None):
+	"""
+	Creates the current configuration path if it doesn't exist. Also makes sure that various sub directories also exist.
+	@param configPath: an optional path which should be used instead (only useful when being called from outside of NVDA)
+	@type configPath: basestring
+	"""
+	if not configPath:
+		configPath=globalVars.appArgs.configPath
+	if not os.path.isdir(configPath):
+		os.makedirs(configPath)
+	for subdir in ("appModules","brailleDisplayDrivers","speechDicts","synthDrivers"):
+		subdir=os.path.join(configPath,subdir)
+		if not os.path.isdir(subdir):
+			os.makedirs(subdir)
+
+
 
 RUN_REGKEY = ur"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
@@ -317,3 +340,29 @@ def setStartOnLogonScreen(enable):
 		# We probably don't have admin privs, so we need to elevate to do this using the slave.
 		if execElevated(SLAVE_FILENAME, "config_setStartOnLogonScreen %d" % enable, wait=True) != 0:
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
+
+def getConfigDirs(subpath=None):
+	"""Retrieve all directories that should be used when searching for configuration.
+	IF C{subpath} is provided, it will be added to each directory returned.
+	@param subpath: The path to be added to each directory, C{None} for none.
+	@type subpath: str
+	@return: The configuration directories in the order in which they should be searched.
+	@rtype: list of str
+	"""
+	return [os.path.join(dir, subpath) if subpath else dir
+		for dir in (globalVars.appArgs.configPath,)
+	]
+
+def addConfigDirsToPythonPackagePath(module, subdir=None):
+	"""Add the configuration directories to the module search path (__path__) of a Python package.
+	C{subdir} is added to each configuration directory. It defaults to the name of the Python package.
+	@param module: The root module of the package.
+	@type module: module
+	@param subdir: The subdirectory to be used, C{None} for the name of C{module}.
+	@type subdir: str
+	"""
+	if not subdir:
+		subdir = module.__name__
+	dirs = getConfigDirs(subdir)
+	dirs.extend(module.__path__ )
+	module.__path__ = dirs

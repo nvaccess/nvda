@@ -152,6 +152,16 @@ def redirectStdout(logger):
 #: @type: L{Logger}
 log = Logger("nvda")
 
+def _getDefaultLogFilePath():
+	# If the config dir is on removable media, don't store the log file there.
+	# This is because it is very likely removable flash media and we don't want to pointlessly "wear out" the drive.
+	import winKernel
+	if winKernel.GetDriveType(os.path.abspath(globalVars.appArgs.configPath)[:3]) == winKernel.DRIVE_REMOVABLE:
+		import tempfile
+		return os.path.join(tempfile.gettempdir(), "nvda.log")
+	else:
+		return os.path.join(globalVars.appArgs.configPath, "nvda.log")
+
 def initialize():
 	"""Initialize logging.
 	This must be called before any logging can occur.
@@ -160,6 +170,8 @@ def initialize():
 	global log
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
+	if not globalVars.appArgs.logFileName:
+		globalVars.appArgs.logFileName = _getDefaultLogFilePath()
 	# HACK: Don't specify an encoding, as a bug in Python 2.6's logging module causes problems if we do.
 	logHandler = FileHandler(globalVars.appArgs.logFileName, "w")
 	logFormatter=logging.Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")

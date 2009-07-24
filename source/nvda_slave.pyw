@@ -40,8 +40,7 @@ def main():
 			path=config.getUserDefaultConfigPath()
 			if not path:
 				raise ValueError("no user default config path")
-			if not os.path.isdir(path):
-				os.makedirs(path)
+			config.initConfigPath(path)
 			import shellapi
 			import winUser
 			shellapi.ShellExecute(0,None,path,None,None,winUser.SW_SHOWNORMAL)
