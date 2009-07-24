@@ -67,11 +67,11 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 
 	def __init__(self,synth):
 		self._current=0
-		self.updateSupportedSettings(synth)
+		self.updateSupportedSettings(synth,init=True)
 
 	def _get_currentSettingName(self):
 		""" returns the current setting's name """
-		if self._current is not None:
+		if self._current is not None and hasattr(self,'settings'):
 			return self.settings[self._current].setting.i18nName
 		return None
 
@@ -107,7 +107,9 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			return self.settings[self._current].decrease()
 		return None
 
-	def updateSupportedSettings(self,synth):
+	def updateSupportedSettings(self,synth,init=False):
+		import ui
+		prevName=self.currentSettingName
 		list = []
 		for s in synth.supportedSettings:
 			if not s.availableInSynthSettingsRing: continue
@@ -120,3 +122,5 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			self.settings = list
 			if self._current>=len(list):
 				self._current = 0
+		if not init and prevName!=self.currentSettingName:
+			ui.message("%s %s" % (self.currentSettingName,self.currentSettingValue))
