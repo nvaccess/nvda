@@ -231,7 +231,7 @@ class StringSettingChanger(SettingChanger):
 	def __call__(self,evt):
 		if self.setting.name=="voice":
 			changeVoice(getSynth(),getattr(self.dialog,"_%ss"%self.setting.name)[evt.GetSelection()].ID)
-			self.dialog._setVoiceParameters()
+			self.dialog.updateVoiceSettings()
 		else:
 			setattr(getSynth(),self.setting.name,getattr(self.dialog,"_%ss"%self.setting.name)[evt.GetSelection()].ID)
 
@@ -260,7 +260,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		label=wx.StaticText(self,wx.ID_ANY,label="&%s:"%setting.i18nName)
 		synth=getSynth()
 		setattr(self,"_%ss"%setting.name,getattr(synth,"available%ss"%setting.name.capitalize()))
-		l=getattr(self,"_%ss"%setting.name)
+		l=getattr(self,"_%ss"%setting.name)###
 		lCombo=wx.Choice(self,wx.ID_ANY,name="%s:"%setting.i18nName,choices=[x.name for x in l])
 		setattr(self,"%sList"%setting.name,lCombo)
 		try:
@@ -275,12 +275,8 @@ class VoiceSettingsDialog(SettingsDialog):
 		return sizer
 
 	def makeSettings(self, settingsSizer):
-		for setting in reversed(getSynth().supportedSettings):
-			if isinstance(setting.data,int):
-				settingsSizer.Add(self.makeSettingControl(setting),border=10,flag=wx.BOTTOM)
-			else:
-				settingsSizer.Add(self.makeStringSettingControl(setting),border=10,flag=wx.BOTTOM)
-		#self._setVoiceParameters()
+		self.sizerDict={}
+		self.updateVoiceSettings()
 		self.punctuationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Speak all punctuation"))
 		self.punctuationCheckBox.SetValue(config.conf["speech"]["speakPunctuation"])
 		settingsSizer.Add(self.punctuationCheckBox,border=10,flag=wx.BOTTOM)
@@ -298,39 +294,41 @@ class VoiceSettingsDialog(SettingsDialog):
 		settingsSizer.Add(self.useSpellingFunctionalityCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
-		if hasattr(self,'voiceList'):
-			self.voiceList.SetFocus()
-			return
-		if hasattr(self,'variantList'):
-			self.variantList.SetFocus()
-			return
-		for s in (self.rateSlider,self.pitchSlider,self.inflectionSlider,self.volumeSlider):
-			if s.IsEnabled():
-				s.SetFocus()
-				return
-		self.punctuationCheckBox.SetFocus()
+		try:
+			setting=getSynth().supportedSettings[-1]
+			control=getattr(self,"%sSlider"%setting.name) if isinstance(setting.data,int) else getattr(self,"%sList"%setting.name)
+			control.SetFocus()
+		except IndexError:
+			self.punctuationCheckBox.SetFocus()
 
-	def _setVoiceParameters(self):
-		if getSynth().hasRate:
-			self.rateSlider.Enable()
-			self.rateSlider.SetValue(getSynth().rate)
-		else:
-			self.rateSlider.Disable()
-		if getSynth().hasPitch:
-			self.pitchSlider.Enable()
-			self.pitchSlider.SetValue(getSynth().pitch)
-		else:
-			self.pitchSlider.Disable()
-		if getSynth().hasInflection:
-			self.inflectionSlider.Enable()
-			self.inflectionSlider.SetValue(getSynth().inflection)
-		else:
-			self.inflectionSlider.Disable()
-		if getSynth().hasVolume:
-			self.volumeSlider.Enable()
-			self.volumeSlider.SetValue(getSynth().volume)
-		else:
-			self.volumeSlider.Disable()
+	def updateVoiceSettings(self):
+		synth=getSynth()
+		#firstly check already created options
+		for name,sizer in self.sizerDict.iteritems():
+			if not synth.isSupported(name):
+				self.settingsSizer.Hide(sizer)
+		#Create new controls, update exists
+		for setting in reversed(synth.supportedSettings):
+			b=isinstance(setting.data,int)
+			if self.sizerDict.has_key(setting.name): #update a value
+				self.settingsSizer.Show(self.sizerDict[setting.name])
+				if b:
+					getattr(self,"%sSlider"%setting.name).SetValue(getattr(synth,setting.name))
+				else:
+					l=getattr(self,"_%ss"%setting.name)
+					lCombo=getattr(self,"%sList"%setting.name)
+					try:
+						cur=getattr(synth,setting.name)
+						i=[x.ID for x in l].index(cur)
+						lCombo.SetSelection(i)
+					except ValueError:
+						pass
+			else: #create a new control
+				settingMaker=self.makeSettingControl if b else self.makeStringSettingControl
+				s=settingMaker(setting)
+				self.sizerDict[setting.name]=s
+				self.settingsSizer.Add(s,border=10,flag=wx.BOTTOM)
+		self.settingsSizer.Layout()
 
 	def onCancel(self,evt):
 		#unbind voice and variant change events as wx closes combo boxes on cancel
@@ -342,18 +340,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		super(VoiceSettingsDialog, self).onCancel(evt)
 
 	def onOk(self,evt):
-		if getSynth().hasVoice:
-			config.conf["speech"][getSynth().name]["voice"]=self._voices[self.voiceList.GetSelection()].ID
-		if getSynth().hasVariant:
-			config.conf["speech"][getSynth().name]["variant"]=self._variants[self.variantList.GetSelection()].ID
-		if getSynth().hasRate:
-			config.conf["speech"][getSynth().name]["rate"]=self.rateSlider.GetValue()
-		if getSynth().hasPitch:
-			config.conf["speech"][getSynth().name]["pitch"]=self.pitchSlider.GetValue()
-		if getSynth().hasInflection:
-			config.conf["speech"][getSynth().name]["inflection"]=self.inflectionSlider.GetValue()
-		if getSynth().hasVolume:
-			config.conf["speech"][getSynth().name]["volume"]=self.volumeSlider.GetValue()
+		getSynth().saveSettings()
 		config.conf["speech"]["speakPunctuation"]=self.punctuationCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["raisePitchForCapitals"]=self.raisePitchForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
