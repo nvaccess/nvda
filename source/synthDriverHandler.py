@@ -78,7 +78,7 @@ def setSynth(name):
 		if not updatedConfig:
 			newSynth.loadSettings()
 		else:
-			if newSynth.hasVoice:
+			if newSynth.isSupported("voice"):
 				#We need to call changeVoice here so voice dictionaries can be managed
 				changeVoice(newSynth,newSynth.voice)
 			newSynth.saveSettings() #save defaults
