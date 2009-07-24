@@ -46,9 +46,9 @@ class SettingsDialog(wx.Dialog):
 		"""
 		super(SettingsDialog, self).__init__(parent, wx.ID_ANY, self.title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		settingsSizer=wx.BoxSizer(wx.VERTICAL)
-		self.makeSettings(settingsSizer)
-		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
+		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		self.makeSettings(self.settingsSizer)
+		mainSizer.Add(self.settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Fit(self)
@@ -250,6 +250,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		setattr(self,"%sSlider"%setting.name,slider)
 		slider.Bind(wx.EVT_SLIDER,SettingChanger(setting))
 		self._setSliderStepSizes(slider,setting.data)
+		slider.SetValue(getattr(getSynth(),setting.name))
 		sizer.Add(label)
 		sizer.Add(slider)
 		return sizer
