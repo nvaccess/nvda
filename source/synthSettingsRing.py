@@ -8,7 +8,7 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		self.setting=setting
 		self.min=min
 		self.max=max
-		self.step = setting.data if isinstance(setting.data,int) else 1
+		self.step = setting.data if setting.isNumeric() else 1
 
 	def increase(self):
 		val = min(self.max,self.value+self.step)
@@ -111,10 +111,8 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 		synth = synthDriverHandler.getSynth()
 		for s in synth.supportedSettings:
 			if not s.availableInSynthSettingsRink: continue
-			if isinstance(s.data,int):
-				list.append(SynthSetting(s))
-			else:
-				list.append(StringSynthSetting(s))
+			p=SynthSetting if s.isNumeric() else StringSynthSetting
+			list.append(p(s))
 		if len(list) == 0:
 			self._current = None
 			self.settings = None

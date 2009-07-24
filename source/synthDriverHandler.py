@@ -384,5 +384,8 @@ class SynthSetting:
 		self.availableInSynthSettingsRink=availableInSynthSettingsRink
 
 	def getConfigSpec(self):
-		s="string(default=None)" if isinstance(self.data,basestring) else "integer(default=50,min=0,max=100)"
+		s="integer(default=50,min=0,max=100)" if self.isNumeric() else "string(default=None)"
 		return s
+
+	def isNumeric(self):
+		return isinstance(self.data,int)
