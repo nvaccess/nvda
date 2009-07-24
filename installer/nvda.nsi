@@ -202,7 +202,7 @@ CreateDirectory "$INSTDIR\lib"
 !insertmacro MUI_STARTMENU_WRITE_BEGIN application
 CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL
-CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_exploreUserSettingsDir).lnk" "$INSTDIR\nvda_slave.exe" "explore_userConfigPath" "" 0 SW_SHOWNORMAL
+CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_exploreUserConfigDir).lnk" "$INSTDIR\nvda_slave.exe" "explore_userConfigPath" "" 0 SW_SHOWNORMAL
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_readme).lnk" "$INSTDIR\documentation\$(path_readmefile)" "" "$INSTDIR\documentation\$(path_readmefile)" 0 SW_SHOWMAXIMIZED
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_keycom).lnk" "$INSTDIR\documentation\$(path_keycomfile)" "" "$INSTDIR\documentation\$(path_keycomfile)" 0 SW_SHOWMAXIMIZED
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_userguide).lnk" "$INSTDIR\documentation\$(path_userguide)" "" "$INSTDIR\documentation\$(path_userguide)" 0 SW_SHOWMAXIMIZED
