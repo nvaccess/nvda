@@ -1,6 +1,6 @@
 #synthDrivers/sapi5.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -9,7 +9,7 @@ import os
 import comtypes.client
 import _winreg
 import globalVars
-import synthDriverHandler
+from synthDriverHandler import SynthDriver,VoiceInfo
 import config
 import nvwave
 
@@ -20,12 +20,8 @@ class constants:
 
 COM_CLASS = "SAPI.SPVoice"
 
-class SynthDriver(synthDriverHandler.SynthDriver):
-
-	hasVoice=True
-	hasRate=True
-	hasPitch=True
-	hasVolume=True
+class SynthDriver(SynthDriver):
+	_supportedSettings=[SynthDriver.Rate,SynthDriver.Pitch,SynthDriver.Volume,SynthDriver.Voice]
 
 	name="sapi5"
 	description="Microsoft Speech API version 5 (sapi.SPVoice)"
@@ -51,7 +47,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		for v in self.tts.GetVoices():
 			ID=v.Id
 			name=v.GetDescription()
-			voices.append(synthDriverHandler.VoiceInfo(ID,name))
+			voices.append(VoiceInfo(ID,name))
 		return voices
 
 	def _get_rate(self):

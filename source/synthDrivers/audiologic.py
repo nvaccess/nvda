@@ -1,24 +1,20 @@
 #synthDrivers/audiologic.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import _audiologic
-import synthDriverHandler
+from synthDriverHandler import SynthDriver
 import _winreg
+from copy import copy
 
-class SynthDriver(synthDriverHandler.SynthDriver):
-
-	hasVoice=True
-	hasPitch=True
-	hasRate=True
-	hasVolume=True
-	hasVariant=False
-	hasInflection=True
-	inflectionMinStep=10
-	volumeMinStep=2
-	pitchMinStep=5
+class SynthDriver(SynthDriver):
+	Volume=copy(SynthDriver.Volume)
+	Volume.data=2
+	Inflection=copy(SynthDriver.Inflection)
+	Inflection.data=10
+	_supportedSettings=[SynthDriver.Rate,SynthDriver.Pitch,Volume,Inflection]
 
 	description="Tts3"
 	name="audiologic"

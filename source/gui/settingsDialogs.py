@@ -253,6 +253,9 @@ class VoiceSettingsDialog(SettingsDialog):
 		slider.SetValue(getattr(getSynth(),setting.name))
 		sizer.Add(label)
 		sizer.Add(slider)
+		if self.lastControl:
+			slider.MoveAfterInTabOrder(self.lastControl)
+		self.lastControl=slider
 		return sizer
 
 	def makeStringSettingControl(self,setting):
@@ -272,10 +275,14 @@ class VoiceSettingsDialog(SettingsDialog):
 		lCombo.Bind(wx.EVT_CHOICE,StringSettingChanger(setting,self))
 		sizer.Add(label)
 		sizer.Add(lCombo)
+		if self.lastControl:
+			lCombo.MoveAfterInTabOrder(self.lastControl)
+		self.lastControl=lCombo
 		return sizer
 
 	def makeSettings(self, settingsSizer):
 		self.sizerDict={}
+		self.lastControl=None
 		self.updateVoiceSettings()
 		self.punctuationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Speak all punctuation"))
 		self.punctuationCheckBox.SetValue(config.conf["speech"]["speakPunctuation"])
@@ -327,7 +334,7 @@ class VoiceSettingsDialog(SettingsDialog):
 				settingMaker=self.makeSettingControl if b else self.makeStringSettingControl
 				s=settingMaker(setting)
 				self.sizerDict[setting.name]=s
-				self.settingsSizer.Add(s,border=10,flag=wx.BOTTOM)
+				self.settingsSizer.Insert(len(self.sizerDict)-1,s,border=10,flag=wx.BOTTOM)
 		self.settingsSizer.Layout()
 
 	def onCancel(self,evt):
