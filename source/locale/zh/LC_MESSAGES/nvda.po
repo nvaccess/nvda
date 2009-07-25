@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA R3067\n"
-"POT-Creation-Date: 2009-07-16 15:12+China Standard Time\n"
-"PO-Revision-Date: 2009-07-17 17:38+0800\n"
+"Project-Id-Version: NVDA R3084\n"
+"POT-Creation-Date: 2009-07-22 21:41+China Standard Time\n"
+"PO-Revision-Date: 2009-07-24 18:18+0800\n"
 "Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
 "Language-Team: Chinese (Hong Kong)\n"
 "MIME-Version: 1.0\n"
@@ -923,7 +923,7 @@ msgstr "從設定檔讀取並套用所有選項設定值"
 
 #: appModules\_default.py:851
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "打開 NVDA Python Console,,, 它對程式編寫員較有用"
+msgstr "打開 NVDA Python 主控台, 它對程式編寫員較有用"
 
 # controlTypes.py:99
 #: appModules\_default.py:856
@@ -1617,6 +1617,28 @@ msgstr "小圓球"
 #: characterSymbols.py:58
 msgid "dot dot dot"
 msgstr "點 點 點"
+
+# gui\__init__.py:141
+#: config\__init__.py:23
+msgid "Badly formed configuration file"
+msgstr "嚴重錯誤的設定檔"
+
+#: config\__init__.py:38
+msgid "%s: %s, defaulting to %s"
+msgstr "%s: %s, 預設到 %s"
+
+# appModuleHandler.py:188
+#: config\__init__.py:172
+msgid "Error parsing configuration file: %s"
+msgstr "載入設定檔 %s 時發生錯誤"
+
+#: config\__init__.py:177
+msgid ""
+"Errors in configuration file '%s':\n"
+"%s"
+msgstr ""
+"含有錯誤項目的設定檔 '%s':\n"
+"%s"
 
 # controlTypes.py:79
 #: controlTypes.py:176
@@ -2484,12 +2506,12 @@ msgid "checkable"
 msgstr "可核取"
 
 # core.py:74
-#: core.py:100
+#: core.py:108
 msgid "Loading subsystems, please wait..."
 msgstr "載入程式中, 請稍後..."
 
 # core.py:87
-#: core.py:174
+#: core.py:179
 msgid "NVDA started"
 msgstr "N V D A 已經啟動"
 
@@ -2733,7 +2755,7 @@ msgstr "檢視事件記錄 (&V)"
 # pythonConsole.py:61
 #: gui\__init__.py:277
 msgid "Python console"
-msgstr "Python Console"
+msgstr "Python 主控台"
 
 # gui\__init__.py:243
 #: gui\__init__.py:279
@@ -2854,6 +2876,19 @@ msgstr "把大寫鎖鍵設為 NVDA 的組合鍵(&L)"
 #: gui\__init__.py:377
 msgid "Show this dialog when NVDA starts"
 msgstr "每當 NVDA 啟動時顯示此對話方塊(&S)"
+
+#: gui\__init__.py:411
+msgid ""
+"Your configuration file contains errors. \n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
+msgstr ""
+"發現程式的設定檔包含錯誤項目. \n"
+"現在可按 'OK' 修正這些錯誤又或按 'Cancel' 然後手動編輯設定檔來修正這些錯誤. 要獲取更多有關資料可在程式的記錄檔 'log file' 找到.\n"
+
+# gui\__init__.py:223
+#: gui\__init__.py:416
+msgid "Configuration File Error"
+msgstr "設定檔錯誤"
 
 # gui\logViewer.py:14
 #: gui\logViewer.py:17
@@ -3675,10 +3710,18 @@ msgstr "在按鍵放開時發生錯誤"
 msgid "%s cursor"
 msgstr "%s 光標"
 
+#: pythonConsole.py:24
+msgid "Type help(object) to get help about object."
+msgstr "要取得某一物件的說明, 可輸入 help(物件名)"
+
+#: pythonConsole.py:43
+msgid "Type exit() to exit the console"
+msgstr "要離開主控台, 可輸入 exit()"
+
 # pythonConsole.py:61
-#: pythonConsole.py:64
+#: pythonConsole.py:96
 msgid "NVDA Python Console"
-msgstr "NVDA Python Console"
+msgstr "NVDA Python 主控台"
 
 # speech.py:274
 #: speech.py:171
