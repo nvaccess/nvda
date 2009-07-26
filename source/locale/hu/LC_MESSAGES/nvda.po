@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2009-07-21 21:15+Közép-európai téli idõ\n"
-"PO-Revision-Date: 2009-07-22 15:02+0100\n"
-"Last-Translator: erion <rob.mail@freemail.hu>\n"
+"POT-Creation-Date: 2009-07-26 17:58+Közép-európai téli idõ\n"
+"PO-Revision-Date: 2009-07-26 19:03+0100\n"
+"Last-Translator: NVDA honosítási project <nvda@nvda.hu>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -77,7 +77,7 @@ msgstr "képletet tartalmaz"
 msgid "not in table"
 msgstr "csak táblázatban használható"
 
-#: appModuleHandler.py:161
+#: appModuleHandler.py:169
 msgid "Error in appModule %s"
 msgstr "Hiba történt a(z) %s alkalmazás szkriptjében"
 
@@ -153,9 +153,9 @@ msgid "no selection"
 msgstr "nincs kijelölve szöveg"
 
 #: appModules\_default.py:88
-#: speech.py:266
-#: speech.py:360
-#: speech.py:373
+#: speech.py:268
+#: speech.py:362
+#: speech.py:375
 msgid "selected %s"
 msgstr "%s. Kijelölve"
 
@@ -1071,18 +1071,18 @@ msgid "( )"
 msgstr "( )"
 
 #: braille.py:222
-#: speech.py:640
+#: speech.py:642
 msgid "not %s"
 msgstr "nincs %s"
 
 #: braille.py:234
-#: speech.py:646
+#: speech.py:648
 msgid "%s of %s"
 msgstr "%s per %s"
 
 #: braille.py:236
-#: speech.py:651
-#: speech.py:654
+#: speech.py:653
+#: speech.py:656
 msgid "level %s"
 msgstr "%s. szint"
 
@@ -1100,8 +1100,8 @@ msgstr "Nincs braille kijelző"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18
-#: speech.py:79
-#: speech.py:600
+#: speech.py:81
+#: speech.py:602
 msgid "blank"
 msgstr "üres"
 
@@ -1269,19 +1269,19 @@ msgstr "listaelem"
 msgid "dot dot dot"
 msgstr "pont pont pont"
 
-#: config\__init__.py:23
+#: config\__init__.py:20
 msgid "Badly formed configuration file"
 msgstr "Hibás beállításfájl"
 
-#: config\__init__.py:38
+#: config\__init__.py:35
 msgid "%s: %s, defaulting to %s"
 msgstr "%s: %s, az alapértelmezett %s"
 
-#: config\__init__.py:172
+#: config\__init__.py:169
 msgid "Error parsing configuration file: %s"
 msgstr "Hiba történt a(z) %s beállításfájl beolvasásakor"
 
-#: config\__init__.py:177
+#: config\__init__.py:174
 msgid ""
 "Errors in configuration file '%s':\n"
 "%s"
@@ -1367,7 +1367,7 @@ msgid "tool tip"
 msgstr "eszköztipp"
 
 #: controlTypes.py:195
-#: speech.py:867
+#: speech.py:869
 msgid "link"
 msgstr "hivatkozás"
 
@@ -1622,7 +1622,7 @@ msgstr "gördítősáv"
 
 #: controlTypes.py:260
 msgid "section"
-msgstr "fejezet"
+msgstr "bekezdés"
 
 #: controlTypes.py:261
 msgid "shape"
@@ -1784,7 +1784,7 @@ msgid "font size"
 msgstr "méret"
 
 #: controlTypes.py:302
-#: speech.py:819
+#: speech.py:821
 msgid "bold"
 msgstr "félkövér"
 
@@ -1801,12 +1801,12 @@ msgid "background color"
 msgstr "háttérszín"
 
 #: controlTypes.py:307
-#: speech.py:841
+#: speech.py:843
 msgid "superscript"
 msgstr "felső index"
 
 #: controlTypes.py:308
-#: speech.py:843
+#: speech.py:845
 msgid "subscript"
 msgstr "alsó index"
 
@@ -2933,150 +2933,158 @@ msgstr "Hiba a keyboardHandler.internal_keyUpEvent szkriptben"
 msgid "%s cursor"
 msgstr "%s kurzor"
 
-#: pythonConsole.py:64
+#: pythonConsole.py:24
+msgid "Type help(object) to get help about object."
+msgstr "Írja be a help (objektum) parancsot hogy segítséget kapjon az objektumról."
+
+#: pythonConsole.py:43
+msgid "Type exit() to exit the console"
+msgstr "Írja be az exit () parancsot a konzol bezárásához."
+
+#: pythonConsole.py:96
 msgid "NVDA Python Console"
 msgstr "NVDA Python Konzol"
 
-#: speech.py:171
+#: speech.py:173
 msgid "cap %s"
 msgstr "Nagy %s"
 
-#: speech.py:304
+#: speech.py:306
 msgid "%d characters"
 msgstr "%d karakter"
 
-#: speech.py:355
+#: speech.py:357
 msgid "selecting %s"
 msgstr "%s. Kijelölve"
 
-#: speech.py:366
+#: speech.py:368
 msgid "unselecting %s"
 msgstr "%s. Nincs kijelölve"
 
-#: speech.py:368
+#: speech.py:370
 msgid "selection removed"
 msgstr "a kijelölés törölve"
 
-#: speech.py:665
-#: speech.py:908
+#: speech.py:667
+#: speech.py:910
 msgid "row %s"
 msgstr "%s. sor"
 
-#: speech.py:668
-#: speech.py:904
+#: speech.py:670
+#: speech.py:906
 msgid "column %s"
 msgstr "%s. oszlop"
 
-#: speech.py:673
+#: speech.py:675
 msgid "with %s rows and %s columns"
 msgstr "%s oszloppal és %s sorral"
 
-#: speech.py:675
+#: speech.py:677
 msgid "with %s columns"
 msgstr "%s oszloppal"
 
-#: speech.py:677
+#: speech.py:679
 msgid "with %s rows"
 msgstr "%s sorral"
 
-#: speech.py:739
-#: speech.py:743
-#: speech.py:747
-#: speech.py:755
-#: speech.py:766
-#: speech.py:867
+#: speech.py:741
+#: speech.py:745
+#: speech.py:749
+#: speech.py:757
+#: speech.py:768
+#: speech.py:869
 msgid "out of %s"
 msgstr "%s vége"
 
-#: speech.py:741
+#: speech.py:743
 msgid "with %s items"
 msgstr "%s elemmel"
 
-#: speech.py:764
+#: speech.py:766
 msgid "in %s"
-msgstr "%s elemen belül"
+msgstr "%s eleje"
 
-#: speech.py:784
+#: speech.py:786
 msgid "page %s"
 msgstr "%s. oldal"
 
-#: speech.py:791
+#: speech.py:793
 msgid "style %s"
 msgstr "%s stílus"
 
-#: speech.py:793
+#: speech.py:795
 msgid "default style"
 msgstr "alapértelmezett stílus"
 
-#: speech.py:813
+#: speech.py:815
 msgid "line %s"
 msgstr "%s. sor"
 
-#: speech.py:819
+#: speech.py:821
 msgid "no bold"
 msgstr "nem félkövér"
 
-#: speech.py:824
+#: speech.py:826
 msgid "italic"
 msgstr "dőlt"
 
-#: speech.py:824
+#: speech.py:826
 msgid "no italic"
 msgstr "nem dőlt"
 
-#: speech.py:829
+#: speech.py:831
 msgid "no strikethrough"
 msgstr "nem sorkizárt"
 
-#: speech.py:829
+#: speech.py:831
 msgid "strikethrough"
 msgstr "sorkizárt"
 
-#: speech.py:834
+#: speech.py:836
 msgid "not underlined"
 msgstr "nincs aláhúzva"
 
-#: speech.py:834
+#: speech.py:836
 msgid "underlined"
 msgstr "aláhúzott"
 
-#: speech.py:845
+#: speech.py:847
 msgid "baseline"
 msgstr "alap"
 
-#: speech.py:853
+#: speech.py:855
 msgid "align left"
 msgstr "balra igazítás"
 
-#: speech.py:855
+#: speech.py:857
 msgid "align center"
 msgstr "középre igazítás"
 
-#: speech.py:857
+#: speech.py:859
 msgid "align right"
 msgstr "jobbra igazítás"
 
-#: speech.py:859
+#: speech.py:861
 msgid "align justify"
 msgstr "sorkizárt igazítás"
 
-#: speech.py:861
+#: speech.py:863
 msgid "align default"
 msgstr "alapértelmezett igazítás"
 
-#: speech.py:874
+#: speech.py:876
 msgid "spelling error"
 msgstr "Helyesírási hiba"
 
-#: speech.py:876
+#: speech.py:878
 msgid "out of spelling error"
 msgstr "A helyesírási hibán kívül"
 
-#: speech.py:890
+#: speech.py:892
 msgid "out of table"
 msgstr "a táblázat vége"
 
-#: speech.py:899
+#: speech.py:901
 msgid "table with %s columns and %s rows"
 msgstr "%s oszlopból és %s sorból álló táblázat"
 
