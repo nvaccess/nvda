@@ -448,6 +448,14 @@ This field sets the maximum length of a line of a virtual buffer (in characters)
 <p>
 Although virtual buffers don't really have pages, this field sets the amount of lines you will move by when pressing page up or page down while in a virtual buffer.
 </p>
+<h6>Use screen layout</h6>
+<p>
+This option allows you to specify whether content in the virtualBuffer should place  content such as links and other fields on their own line, or if it should keep them in the flow of text as it is visually shown. If the option is enabled then things will stay as they are visually shown, but if it is disabled then  fields will be placed on their own line.
+</p>
+<h6>Report layout tables</h6>
+<p>
+When disabled this option makes NVDA only report tables that contain tabular data (where it makes sence to know that this is a table). But if enabled, NVDA will also report tables used purely for visual presentation.
+</p>
 <h6>Configuring announcement of fields such as links and headings</h6>
 <p>
 Previous versions of NVDA allowed you to use the Virtual Buffer settings dialog to configure whether NVDA should announce the type of field that you entered while reading through web content. Examples of field types are links, headings, tables, and lists. To configure these, please find new options in the <a href="#6.2.1.9">Document Formatting Settings dialog</a>. These options now not only affect virtualBuffers, but any documents that may cause these types of fields to be announced.
