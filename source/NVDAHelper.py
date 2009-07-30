@@ -35,13 +35,13 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 def initialize():
 	global helperLib, winEventHookID
 	helperLib=ctypes.windll.LoadLibrary('lib/NVDAHelper.dll')
-	if helperLib.initialize() < 0:
+	if helperLib.nvdaHelper_initialize() < 0:
 		raise RuntimeError("Error initializing NVDAHelper")
 	winEventHookID=winUser.setWinEventHook(EVENT_TYPEDCHARACTER,EVENT_INPUTLANGCHANGE,0,winEventCallback,0,0,0)
 
 def terminate():
 	global helperLib
 	winUser.unhookWinEvent(winEventHookID)
-	if helperLib.terminate() < 0:
+	if helperLib.nvdaHelper_terminate() < 0:
 		raise RuntimeError("Error terminating NVDAHelper")
 	del helperLib

@@ -3,7 +3,7 @@ MIDLFLAGS=/nologo /notlb
 LINKER=link
 LINKERFLAGS=/NOLOGO
 CFLAGS=/nologo
-CPPFLAGS=/nologo
+CPPFLAGS=/nologo /EHsc
 !if defined(DEBUG)
 CFLAGS=$(CFLAGS) /DDEBUG /Zi
 CPPFLAGS=$(CPPFLAGS) /DDEBUG /Zi
@@ -23,7 +23,7 @@ ia2_i.obj: ia2.h ia2_i.c
 ia2.h ia2_i.c: ..\include\ia2_api_all.idl
 	$(MIDL) $(MIDLFLAGS) $** /h ia2.h /iid ia2_i.c
 
-NVDAHelper.dll: hookManager.obj inputLangChange.obj typedCharacter.obj IA2Support.obj ia2_i.obj
+NVDAHelper.dll: nvdaHelper.obj inputLangChange.obj typedCharacter.obj IA2Support.obj ia2_i.obj
 	$(LINKER) -dll $** $(NEEDEDLIBS) /out:$@ $(LINKERFLAGS)
 
 clean:

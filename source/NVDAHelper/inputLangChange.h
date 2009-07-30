@@ -10,7 +10,7 @@
 //Event IDs
 #define EVENT_INPUTLANGCHANGE 0x1001
 
-//Private functions
-void hook_inputLangChange(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+void inputLangChange_inThread_initialize();
+void inputLangChange_inThread_terminate();
 
 #endif

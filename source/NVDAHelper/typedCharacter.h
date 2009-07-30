@@ -10,7 +10,7 @@
 //Event IDs
 #define EVENT_TYPEDCHARACTER 0x1000
 
-//Private functions
-void hook_typedCharacter(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+void typedCharacter_inThread_initialize();
+void typedCharacter_inThread_terminate();
 
 #endif

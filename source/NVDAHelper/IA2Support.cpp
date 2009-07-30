@@ -115,3 +115,11 @@ BOOL IA2Support_terminate() {
 	}
 	return TRUE;
 }
+
+void IA2Support_inProcess_initialize() {
+	installIA2Support();
+}
+
+void IA2Support_inProcess_terminate() {
+	uninstallIA2Support();
+}
