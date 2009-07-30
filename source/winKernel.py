@@ -123,10 +123,3 @@ DRIVE_RAMDISK = 6
 
 def GetDriveType(rootPathName):
 	return kernel32.GetDriveTypeW(rootPathName)
-
-def GetShortPathName(LongPath):
-	# This function is not unicode aware because we do need to convert ansi data for the appmoduleHandler. Bah python is giving us ansi paths for the modules
-	len=kernel32.GetShortPathNameA(LongPath,None,0)
-	buf=ctypes.create_string_buffer("", len+1)
-	kernel32.GetShortPathNameA(LongPath,buf,len)
-	return buf.value

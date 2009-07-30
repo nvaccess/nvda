@@ -39,7 +39,6 @@ Changes since 0.6p3:
 * new: The new Elements List dialog filters the list as you type to contain only those items including the text that was typed. You can press backspace to clear the filter so that all items are again presented. (#173)
 *New: Portable versions of NVDA now look in the 'userConfig' directory inside the NVDA directory, for the user's configuration. Like for the installer version, this keeps the user's configuration separate from NVDA itself.  
 *New: Custom app modules, braille display drivers and synth drivers can now be stored in the user's configuration  directory. (#337)
-*Fix: No longer fail to initialize  while seeking for custom appModules and user configuration directory contains non ascii characters. (#377)
  
 
 Changes since 0.6 P2:

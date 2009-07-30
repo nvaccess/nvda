@@ -86,8 +86,7 @@ def getKeyMapFileName(appName,layout):
 	@rtype: str
 	"""
 	for dir in appModules.__path__+['.\\appModules']:
-		fname = os.path.join(winKernel.GetShortPathName(dir), '%s_%s.kbd' % (appName, layout))
-		log.debug("looking for keymap file for %s at %s"%(appName,fname)) 
+		fname = os.path.join(dir, '%s_%s.kbd' % (appName, layout))
 		if os.path.isfile(fname):
 			log.debug("Found keymap file for %s at %s"%(appName,fname)) 
 			return fname
@@ -179,7 +178,7 @@ def initialize():
 	global NVDAProcessID,_importers
 	NVDAProcessID=os.getpid()
 	config.addConfigDirsToPythonPackagePath(appModules)
-	_importers=list(pkgutil.iter_importers(u"appModules._default"))
+	_importers=list(pkgutil.iter_importers("appModules._default"))
 
 #base class for appModules
 class AppModule(baseObject.ScriptableObject):
