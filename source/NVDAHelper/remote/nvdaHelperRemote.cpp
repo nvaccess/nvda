@@ -12,7 +12,7 @@
 #include "typedCharacter.h"
 #include "IA2Support.h"
 #include "hookRegistration.h"
-#include "nvdaHelper.h"
+#include "nvdaHelperRemote.h"
 
 using namespace std;
 
