@@ -16,14 +16,14 @@ LINKERFLAGS=$(LINKERFLAGS) /RELEASE
 
 NEEDEDLIBS=user32.lib ole32.lib  
 
-all: NVDAHelper.dll
+all: NVDAHelperRemote.dll
 
 ia2_i.obj: ia2.h ia2_i.c
 
 ia2.h ia2_i.c: ..\include\ia2_api_all.idl
 	$(MIDL) $(MIDLFLAGS) $** /h ia2.h /iid ia2_i.c
 
-NVDAHelper.dll: nvdaHelper.obj inputLangChange.obj typedCharacter.obj IA2Support.obj ia2_i.obj
+NVDAHelperRemote.dll: NVDAHelperRemote.obj inputLangChange.obj typedCharacter.obj IA2Support.obj ia2_i.obj
 	$(LINKER) -dll $** $(NEEDEDLIBS) /out:$@ $(LINKERFLAGS)
 
 clean:
