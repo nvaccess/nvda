@@ -12,9 +12,11 @@ TOPDIR=.
 all: 
 	if not EXIST $(OUTDIR) mkdir $(OUTDIR)
 	cd remote && $(MAKE) /nologo DEBUG=$(DEBUG) DEBUGLOG=$(DEBUGLOG)
+	cd local && $(MAKE) /nologo DEBUG=$(DEBUG) DEBUGLOG=$(DEBUGLOG)
 
 clean:
 	cd remote && $(MAKE) /nologo clean
+	cd local && $(MAKE) /nologo clean
 
 distclean: clean
  	-rmdir /Q /s build 2>NUL
