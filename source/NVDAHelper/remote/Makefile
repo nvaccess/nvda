@@ -1,31 +1,22 @@
-MIDL=midl
-MIDLFLAGS=/nologo /notlb
-LINKER=link
-LINKERFLAGS=/NOLOGO
-CFLAGS=/nologo
-CPPFLAGS=/nologo /EHsc
-!if defined(DEBUG)
-CFLAGS=$(CFLAGS) /DDEBUG /Zi
-CPPFLAGS=$(CPPFLAGS) /DDEBUG /Zi
-LINKERFLAGS=$(LINKERFLAGS) /DEBUG
-!else
-CFLAGS=$(CFLAGS) /O2
-CPPFLAGS=$(CPPFLAGS) /O2
-LINKERFLAGS=$(LINKERFLAGS) /RELEASE
-!endif
+###
+# remote/Makefile
+# Part of NVDA Helper
+# This library is copyright 2007, 2008 NV Virtual Buffer Library Contributors
+# This library is licensed under the GNU Lesser General Public Licence. See license.txt which is included with this library, or see
+# http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+###
 
-NEEDEDLIBS=user32.lib ole32.lib  
+TOPDIR=..
+!include $(TOPDIR)\make.opts
 
-all: NVDAHelperRemote.dll
+all: $(OUTDIR)\NVDAHelperRemote.dll
 
-ia2_i.obj: ia2.h ia2_i.c
+#IAccessible2
+$(TOPDIR)\..\include\ia2\ia2_i.c: $(TOPDIR)\..\include\ia2\ia2.idl
+	cd $(TOPDIR)\..\include\ia2 && $(MAKE) /NOLOGO DEBUG=$(DEBUG) DEBUGLOG=$(DEBUGLOG)
 
-ia2.h ia2_i.c: ..\include\ia2_api_all.idl
-	$(MIDL) $(MIDLFLAGS) $** /h ia2.h /iid ia2_i.c
-
-NVDAHelperRemote.dll: NVDAHelperRemote.obj inputLangChange.obj typedCharacter.obj IA2Support.obj ia2_i.obj
-	$(LINKER) -dll $** $(NEEDEDLIBS) /out:$@ $(LINKERFLAGS)
+$(OUTDIR)\NVDAHelperRemote.dll: NVDAHelperRemote.cpp inputLangChange.cpp typedCharacter.cpp IA2Support.cpp $(TOPDIR)\..\include\ia2\ia2_i.c 
+	$(CPP) $(CPPFLAGS) $** /link $(LINKERFLAGS) user32.lib ole32.lib /dll /out:$@
 
 clean:
 	-del *.obj 2>NUL
-	-del ia2.h ia2.tlb ia2_i.c ia2_p.c dlldata.c 2>NUL

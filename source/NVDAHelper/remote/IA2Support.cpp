@@ -9,7 +9,7 @@
 #include <cwchar>
 #include <windows.h>
 #include <objbase.h>
-#include "ia2.h"
+#include "ia2/ia2.h"
 #include "IA2Support.h"
 
 typedef ULONG(*LPFNDLLCANUNLOADNOW)();
