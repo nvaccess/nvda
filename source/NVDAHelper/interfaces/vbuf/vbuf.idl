@@ -1,4 +1,4 @@
-//IVirtualBuffer.idl
+//vbuf.idl
 
 #define DLLEXPORT __declspec(dllexport)
 
@@ -9,10 +9,10 @@
 uuid(28efdf2b-039b-48ec-b4d5-230eee90d186),
 version(2.0)
 ]
-interface VBufRemote {
+interface VBuf {
 
-	typedef [context_handle] void* VBufRemote_bufferHandle_t;
-	typedef long VBufRemote_nodeHandle_t;
+	typedef [context_handle] void* VBuf_bufferHandle_t;
+	typedef long VBuf_nodeHandle_t;
 
 /**
  * Creates a new virtualBuffer
@@ -22,13 +22,13 @@ interface VBufRemote {
  * @param backendPath an absolute path to the backend library that the virtualBuffer should use
  * @return a handle identifying the new virtual buffer.
  */
-	DLLEXPORT VBufRemote_bufferHandle_t createBuffer([in] handle_t bindingHandle, [in] int docHandle, [in] int ID, [in,string] const char* backendPath);
+	DLLEXPORT VBuf_bufferHandle_t createBuffer([in] handle_t bindingHandle, [in] int docHandle, [in] int ID, [in,string] const char* backendPath);
 
 /**
  * Destroies a virtual buffer
  * @param buffer a pointer to the virtual buffer you want to destroy
  */
-	DLLEXPORT void destroyBuffer(VBufRemote_bufferHandle_t* buffer);
+	DLLEXPORT void destroyBuffer(VBuf_bufferHandle_t* buffer);
 
 /**
  * Calculates the start and end character offsets of the given node in the buffer.
@@ -38,7 +38,7 @@ interface VBufRemote {
  * @param endOffset memory where this method can place the found end offset.
  * @return true if successful, false otherwize.
  */
-	DLLEXPORT int getFieldNodeOffsets([in] VBufRemote_bufferHandle_t buffer, [in] VBufRemote_nodeHandle_t node, [out] int *startOffset, [out] int *endOffset);
+	DLLEXPORT int getFieldNodeOffsets([in] VBuf_bufferHandle_t buffer, [in] VBuf_nodeHandle_t node, [out] int *startOffset, [out] int *endOffset);
 
 /**
  * finds out if a given field is positioned at a given character offset in this buffer.
@@ -47,7 +47,7 @@ interface VBufRemote {
  * @param offset the character offset you are interested in.
  * @return true if the field is at the offset, false otherwise.
  */
-	DLLEXPORT int isFieldNodeAtOffset([in] VBufRemote_bufferHandle_t buffer, [in] VBufRemote_nodeHandle_t node, [in] int offset);
+	DLLEXPORT int isFieldNodeAtOffset([in] VBuf_bufferHandle_t buffer, [in] VBuf_nodeHandle_t node, [in] int offset);
 
 /**
  * locates the text field node at the given offset
@@ -57,7 +57,7 @@ interface VBufRemote {
  * @param nodeEndOffset memory where the found text field's end offset will be placed.
  * @return the located text field node.
  */
-	DLLEXPORT VBufRemote_nodeHandle_t locateTextFieldNodeAtOffset([in] VBufRemote_bufferHandle_t buffer, [in] int offset, [out] int *nodeStartOffset, [out] int *nodeEndOffset);
+	DLLEXPORT VBuf_nodeHandle_t locateTextFieldNodeAtOffset([in] VBuf_bufferHandle_t buffer, [in] int offset, [out] int *nodeStartOffset, [out] int *nodeEndOffset);
 
 /**
  * locates the deepest control field node at the given offset
@@ -69,7 +69,7 @@ interface VBufRemote {
  * @param ID memory where the ID of the found control field node will be placed.
  * @return the located control field node.
  */
-	DLLEXPORT  VBufRemote_nodeHandle_t locateControlFieldNodeAtOffset([in] VBufRemote_bufferHandle_t buffer, [in] int offset, [out] int *startOffset, [out] int *endOffset, [out] int* docHandle, [out] int* ID);
+	DLLEXPORT  VBuf_nodeHandle_t locateControlFieldNodeAtOffset([in] VBuf_bufferHandle_t buffer, [in] int offset, [out] int *startOffset, [out] int *endOffset, [out] int* docHandle, [out] int* ID);
 
 /**
  * locates the controlFieldNode with the given identifier
@@ -78,7 +78,7 @@ interface VBufRemote {
  * @param ID the ID of the control field node you wish to find
  * @return the controlFieldNode with the given identifier
  */
-	DLLEXPORT VBufRemote_nodeHandle_t getControlFieldNodeWithIdentifier([in] VBufRemote_bufferHandle_t buffer, [in] int docHandle, [in] int ID);
+	DLLEXPORT VBuf_nodeHandle_t getControlFieldNodeWithIdentifier([in] VBuf_bufferHandle_t buffer, [in] int docHandle, [in] int ID);
 
 /**
  * Finds a field node that contains particular attributes.
@@ -90,7 +90,7 @@ interface VBufRemote {
  * @param endOffset memory where the end offset of the found node will be placed
  * @return the found field node
  */
-	DLLEXPORT VBufRemote_nodeHandle_t findNodeByAttributes([in] VBufRemote_bufferHandle_t buffer, [in] int offset, [in] int direction, [in,string] const wchar_t* attribsString, [out] int *startOffset, [out] int *endOffset);
+	DLLEXPORT VBuf_nodeHandle_t findNodeByAttributes([in] VBuf_bufferHandle_t buffer, [in] int offset, [in] int direction, [in,string] const wchar_t* attribsString, [out] int *startOffset, [out] int *endOffset);
 
 /**
  * Retreaves the current selection offsets for the buffer
@@ -99,7 +99,7 @@ interface VBufRemote {
  * @param endOffset memory where the end offset of the selection will be placed
  * @return true if successfull, false otherwize.
  */
-	DLLEXPORT int getSelectionOffsets([in] VBufRemote_bufferHandle_t buffer, [out] int* startOffset, [out] int *endOffset);
+	DLLEXPORT int getSelectionOffsets([in] VBuf_bufferHandle_t buffer, [out] int* startOffset, [out] int *endOffset);
 
 /**
  * sets the selection offsets for the buffer.
@@ -108,14 +108,14 @@ interface VBufRemote {
  * @param endOffset the offset the end of the selection should be set to.
  * @return true if successfull, false otherwize.
  */
-	DLLEXPORT int setSelectionOffsets([in] VBufRemote_bufferHandle_t buffer, [in] int startOffset, [in] int endOffset);
+	DLLEXPORT int setSelectionOffsets([in] VBuf_bufferHandle_t buffer, [in] int startOffset, [in] int endOffset);
  
 /**
  * retreaves the length of all the text in the buffer.
  * @param buffer the virtual buffer to use
  * @return the length in characters of the text
  */
-	DLLEXPORT int getTextLength([in] VBufRemote_bufferHandle_t buffer) const;
+	DLLEXPORT int getTextLength([in] VBuf_bufferHandle_t buffer) const;
 
 /**
  * Retreaves the text in the buffer between given offsets, optionally containing markup.
@@ -126,7 +126,7 @@ interface VBufRemote {
  * @param useMarkup if true then markup is included in the text denoting field starts and ends.
  * @return the text.
  */
-	DLLEXPORT int getTextInRange([in] VBufRemote_bufferHandle_t buffer, [in] int startOffset, [in] int endOffset, [out,string] wchar_t** text, [in] int useMarkup);
+	DLLEXPORT int getTextInRange([in] VBuf_bufferHandle_t buffer, [in] int startOffset, [in] int endOffset, [out,string] wchar_t** text, [in] int useMarkup);
 
 /**
  * Expands the given offset to the start and end offsets of the containing line.
@@ -138,6 +138,6 @@ interface VBufRemote {
  * @param endOffset memory to place the calculated line end offset
   * @return true if successfull, false otherwize.
  */ 
-	DLLEXPORT int getLineOffsets([in] VBufRemote_bufferHandle_t buffer, [in] int offset, [in] int maxLineLength, [in] int useScreenLayout, [out] int *startOffset, [out] int *endOffset);
+	DLLEXPORT int getLineOffsets([in] VBuf_bufferHandle_t buffer, [in] int offset, [in] int maxLineLength, [in] int useScreenLayout, [out] int *startOffset, [out] int *endOffset);
 
  }
