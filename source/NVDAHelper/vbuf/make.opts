@@ -1,0 +1,32 @@
+###
+# make.opts
+# Part of the NV  Virtual Buffer Library
+# This library is copyright 2007, 2008 NV Virtual Buffer Library Contributors
+# This library is licensed under the GNU Lesser General Public Licence. See license.txt which is included with this library, or see
+# http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+###
+
+OUTDIR=$(TOPDIR)\build
+LINKER=link
+LINKERFLAGS=/NOLOGO
+CFLAGS=/nologo /D_CRT_SECURE_NO_DEPRECATE /I$(TOPDIR) /I$(TOPDIR)\deps /D_WIN32
+CPPFLAGS=/nologo /D_CRT_SECURE_NO_DEPRECATE /EHsc /I$(TOPDIR) /I$(TOPDIR)\deps /D_WIN32
+MIDL=midl
+MIDLFLAGS=/win32
+
+!if !defined(DEBUG)
+DEBUG=0
+!endif
+
+!if $(DEBUG)
+OUTDIR=$(OUTDIR)_debug
+CFLAGS=$(CFLAGS) /DDEBUG /Zi /Od
+CPPFLAGS=$(CPPFLAGS) /DDEBUG /Zi /Od
+LINKERFLAGS=$(LINKERFLAGS) /DEBUG
+MIDLFLAGS=$(MIDLFLAGS) /DDEBUG
+!else
+CFLAGS=$(CFLAGS) /DNDEBUG /O2
+CPPFLAGS=$(CPPFLAGS) /DNDEBUG /O2
+LINKERFLAGS=$(LINKERFLAGS) /RELEASE
+MIDLFLAGS=$(MIDLFLAGS) /DNDEBUG
+!endif
