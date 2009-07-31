@@ -19,4 +19,5 @@ $(OUTDIR)\NVDAHelperRemote.dll: NVDAHelperRemote.cpp inputLangChange.cpp typedCh
 	$(CPP) $(CPPFLAGS) $** /link $(LINKERFLAGS) user32.lib ole32.lib /dll /out:$@
 
 clean:
+	cd $(TOPDIR)\..\include\ia2 && $(MAKE) /NOLOGO clean
 	-del *.obj 2>NUL
