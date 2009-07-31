@@ -249,7 +249,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		slider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100,name="%s:"%setting.i18nName)
 		setattr(self,"%sSlider"%setting.name,slider)
 		slider.Bind(wx.EVT_SLIDER,SettingChanger(setting))
-		self._setSliderStepSizes(slider,setting.data)
+		self._setSliderStepSizes(slider,setting.minStep)
 		slider.SetValue(getattr(getSynth(),setting.name))
 		sizer.Add(label)
 		sizer.Add(slider)
@@ -303,7 +303,7 @@ class VoiceSettingsDialog(SettingsDialog):
 	def postInit(self):
 		try:
 			setting=getSynth().supportedSettings[-1]
-			control=getattr(self,"%sSlider"%setting.name) if setting.isNumeric() else getattr(self,"%sList"%setting.name)
+			control=getattr(self,"%sSlider"%setting.name) if isinstance(setting,NumericSynthSetting) else getattr(self,"%sList"%setting.name)
 			control.SetFocus()
 		except IndexError:
 			self.punctuationCheckBox.SetFocus()
@@ -316,8 +316,8 @@ class VoiceSettingsDialog(SettingsDialog):
 				self.settingsSizer.Hide(sizer)
 		#Create new controls, update exists
 		for setting in reversed(synth.supportedSettings):
-			b=setting.isNumeric()
-			if self.sizerDict.has_key(setting.name): #update a value
+			b=isinstance(setting,NumericSynthSetting)
+			if setting.name in self.sizerDict: #update a value
 				self.settingsSizer.Show(self.sizerDict[setting.name])
 				if b:
 					getattr(self,"%sSlider"%setting.name).SetValue(getattr(synth,setting.name))
@@ -340,7 +340,7 @@ class VoiceSettingsDialog(SettingsDialog):
 	def onCancel(self,evt):
 		#unbind change events for string settings as wx closes combo boxes on cancel
 		for setting in getSynth().supportedSettings:
-			if setting.isNumeric(): continue
+			if isinstance(setting,NumericSynthSetting): continue
 			getattr(self,"%sList"%setting.name).Unbind(wx.EVT_CHOICE)
 		#restore settings
 		getSynth().loadSettings()

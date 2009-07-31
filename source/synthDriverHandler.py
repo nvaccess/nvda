@@ -96,28 +96,35 @@ def setSynth(name):
 			setSynth('silence')
 		return False
 
-class SynthSetting:
-	def __init__(self,name,i18nName,data="",availableInSynthSettingsRing=True):
+class SynthSetting(object):
+	"""Represents a synthesizer setting such as voice or variant.
+	@ivar configSpec: Configuration specification of this particular setting for config file validator.
+	@type configSpec: L{str}
+	"""
+	configSpec="string(default=None)"
+
+	def __init__(self,name,i18nName,availableInSynthSettingsRing=True):
 		"""@param name: internal name of the setting
-		@param name: str
+		@type name: L{str}
 		@param i18nName: the localized string
-		@type i18nName: str
-		@param data: step size for numeric options, l{basestring} for string options like voice or variant
-		@type data: str or int
+		@type i18nName: L{str}
 		@param availableInSynthSettingsRing: Will this option be available in synthesizer settings ring?
-		@type availableInSynthSettingsRing: bool
+		@type availableInSynthSettingsRing: L{bool}
 		"""
 		self.name=name
 		self.i18nName=i18nName
-		self.data=data
 		self.availableInSynthSettingsRing=availableInSynthSettingsRing
 
-	def getConfigSpec(self):
-		s="integer(default=50,min=0,max=100)" if self.isNumeric() else "string(default=None)"
-		return s
+class NumericSynthSetting(SynthSetting):
+	"""Represents a numeric synthesizer setting such as rate, volume or pitch."""
+	configSpec="integer(default=50,min=0,max=100)"
 
-	def isNumeric(self):
-		return isinstance(self.data,int)
+	def __init__(self,name,i18nName,availableInSynthSettingsRing=True,minStep=5):
+		"""@param minStep: specifies the minimum step between valid values for each numeric setting. For example, if L{minStep} is set to 10, setting values can only be multiples of 10; 10, 20, 30, etc.
+		@type minStep: L{int}
+		"""
+		super(NumericSynthSetting,self).__init__(name,i18nName,availableInSynthSettingsRing)
+		self.minStep=minStep
 
 class SynthDriver(baseObject.AutoPropertyObject):
 	"""Abstract base synthesizer driver.
@@ -159,10 +166,10 @@ class SynthDriver(baseObject.AutoPropertyObject):
 
 	Voice=SynthSetting("voice",_("Voice"))
 	Variant=SynthSetting("variant",_("Variant"))
-	Rate=SynthSetting("rate",_("Rate"),5)
-	Volume=SynthSetting("volume",_("Volume"),5)
-	Pitch=SynthSetting("pitch",_("Pitch"),5)
-	Inflection=SynthSetting("inflection",_("Inflection"),5)
+	Rate=NumericSynthSetting("rate",_("Rate"))
+	Volume=NumericSynthSetting("volume",_("Volume"))
+	Pitch=NumericSynthSetting("pitch",_("Pitch"))
+	Inflection=NumericSynthSetting("inflection",_("Inflection"))
 
 	@classmethod
 	def check(cls):
@@ -288,7 +295,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def getConfigSpec(self):
 		spec=config.conf["speech"].configspec["__many__"]
 		for setting in self.supportedSettings:
-			spec[setting.name]=setting.getConfigSpec()
+			spec[setting.name]=setting.configSpec
 		return spec
 
 	def _get_supportedSettings(self):
