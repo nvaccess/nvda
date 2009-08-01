@@ -106,4 +106,9 @@ int VBufRemote_getLineOffsets(VBufRemote_bufferHandle_t buffer, int offset, int 
 	return res;
 }
 
+//Special cleanup method for VBufRemote when client is lost
+void __RPC_USER VBuf_bufferHandle_t_rundown(VBuf_bufferHandle_t buffer) {
+	VBufRemote_destroyBuffer(&buffer);
+}
+
 }

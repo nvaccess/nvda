@@ -1,21 +1,23 @@
 #define UNICODE
 #include <cstdio>
-#include <fstream>
 #include <sstream>
 #include <windows.h>
-#include <remoteApi/remoteApi.h>
-#include "debug.h"
+#include <interfaces/vbuf/vbuf.h>
+#include "rpcSrv.h"
 
-//Special cleanup method for VBufRemote when client is lost
-void __RPC_USER VBufRemote_bufferHandle_t_rundown(VBufRemote_bufferHandle_t buffer) {
-	VBufRemote_destroyBuffer(&buffer);
+void rpcSrv_inProcess_initialize() {
+	startServer();
+}
+
+void rpcSrv_inProcess_terminate() {
+	stopServer();
 }
 
 RPC_STATUS startServer() {
 	RPC_STATUS status;
 	//Set the protocol
 	std::wostringstream endPoint;
-	endPoint<<L"nvVBufSrv_"<<GetCurrentProcessId();
+	endPoint<<L"nvdaHelperRemote_"<<GetCurrentProcessId();
 	status=RpcServerUseProtseqEp((RPC_WSTR)L"ncalrpc",RPC_C_PROTSEQ_MAX_REQS_DEFAULT,(RPC_WSTR)(endPoint.str().c_str()),NULL);
 	//We can ignore the error where the endpoint is already set
 	if(status!=RPC_S_OK&&status!=RPC_S_DUPLICATE_ENDPOINT) {
@@ -25,7 +27,7 @@ RPC_STATUS startServer() {
 	//Register the interfaces
 	printf("Registering interface...\n");
 	//if((status=RpcServerRegisterIfEx(VBufRemote_VBufRemote_v2_0_s_ifspec,NULL,NULL,RPC_IF_AUTOLISTEN,RPC_C_LISTEN_MAX_CALLS_DEFAULT,NULL))!=RPC_S_OK) {
-	if((status=RpcServerRegisterIf(VBufRemote_VBufRemote_v2_0_s_ifspec,NULL,NULL))!=RPC_S_OK) {
+	if((status=RpcServerRegisterIf(VBufRemote_VBuf_v2_0_s_ifspec,NULL,NULL))!=RPC_S_OK) {
 		fprintf(stderr,"Error registering interface, code 0X%X\n",status);
 		return status;
 	}
@@ -42,43 +44,8 @@ RPC_STATUS startServer() {
 
 void stopServer() {
 	printf("unregistering interface...\n");
-	RpcServerUnregisterIf(VBufRemote_VBufRemote_v2_0_s_ifspec,NULL,1);
+	RpcServerUnregisterIf(VBufRemote_VBuf_v2_0_s_ifspec,NULL,1);
 	printf("Done\n");
-}
-
-#ifdef DEBUG
-std::wofstream* debugFile=NULL;
-#endif
-
-bool serverStarted=false;
-
-//dll initialization and termination
-//Starts and stops the server
-#pragma comment(linker,"/entry:_DllMainCRTStartup@12")
-BOOL DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
-	if(reason==DLL_PROCESS_ATTACH) {
-		#ifdef DEBUG
-		debugFile=new std::wofstream("c:\\users\\mick\\VBuf.log");
-		debug_start(debugFile);
-		#endif
-		startServer();
-		serverStarted=true;
-	} else if(reason==DLL_PROCESS_DETACH) {
-		//We only clean up if freeLibrary is called, not because of process termination
-		if(lpReserved==NULL) {
-			if(serverStarted) {
-				stopServer();
-			}
-			#ifdef DEBUG
-			if(debugFile) {
-				debug_end();
-				delete debugFile;
-				debugFile=NULL;
-			}
-			#endif
-		}
-	}
-	return TRUE;
 }
 
 //memory allocation functions
