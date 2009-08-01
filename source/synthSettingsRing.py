@@ -3,7 +3,7 @@ import config
 import synthDriverHandler
 
 class SynthSetting(baseObject.AutoPropertyObject):
-	""" a synth setting. Has functions to set, get, increase and decrease its value """
+	"""a numeric synth setting. Has functions to set, get, increase and decrease its value """
 	def __init__(self,synth,setting,min=0,max=100):
 		self.synth=synth
 		self.setting=setting
@@ -35,7 +35,6 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		return self._getReportValue(self.value)
 
 class StringSynthSetting(SynthSetting):
-
 	def __init__(self,synth,setting):
 		self._values=getattr(synth,"available%ss"%setting.name.capitalize())
 		super(StringSynthSetting,self).__init__(synth,setting,0,len(self._values)-1)
@@ -72,7 +71,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 	def _get_currentSettingName(self):
 		""" returns the current setting's name """
 		if self._current is not None and hasattr(self,'settings'):
-			return self.settings[self._current].setting.i18nName
+			return self.settings[self._current].setting.i18nName.replace('&','')
 		return None
 
 	def _get_currentSettingValue(self):
@@ -124,9 +123,9 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			self.settings = None
 		else:
 			self.settings = list
-		if prevName!=self.settings[self._current].setting.name:
+		if prevName is not None and prevName!=self.settings[self._current].setting.name:
 			#Previous chosen setting doesn't exists. Set position to default
 			self._current = 0
-		if _isScriptRunning:
-			#User changed some setting from ring and that setting no more exists. We have just reverted to first setting, so report this change to user
-			ui.message("%s %s" % (self.currentSettingName,self.currentSettingValue))
+			if _isScriptRunning:
+				#User changed some setting from ring and that setting no more exists. We have just reverted to first setting, so report this change to user
+				ui.message("%s %s" % (self.currentSettingName,self.currentSettingValue))

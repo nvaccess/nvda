@@ -7,14 +7,9 @@
 import _audiologic
 from synthDriverHandler import SynthDriver
 import _winreg
-from copy import copy
 
 class SynthDriver(SynthDriver):
-	Volume=copy(SynthDriver.Volume)
-	Volume.data=2
-	Inflection=copy(SynthDriver.Inflection)
-	Inflection.data=10
-	_supportedSettings=[SynthDriver.Rate,SynthDriver.Pitch,Volume,Inflection]
+	_supportedSettings=[SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.VolumeSetting(minStep=2),SynthDriver.InflectionSetting(minStep=10)]
 
 	description="Tts3"
 	name="audiologic"

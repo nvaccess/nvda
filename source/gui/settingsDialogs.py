@@ -216,6 +216,8 @@ class SynthesizerDialog(SettingsDialog):
 		super(SynthesizerDialog, self).onOk(evt)
 
 class SettingChanger(object):
+	"""Functor which acts as calback for GUI events."""
+
 	def __init__(self,setting):
 		self.setting=setting
 
@@ -224,6 +226,7 @@ class SettingChanger(object):
 		setattr(getSynth(),self.setting.name,val)
 
 class StringSettingChanger(SettingChanger):
+	"""Same as L{SettingChanger} but handles combobox events."""
 	def __init__(self,setting,dialog):
 		self.dialog=dialog
 		super(StringSettingChanger,self).__init__(setting)
@@ -244,8 +247,14 @@ class VoiceSettingsDialog(SettingsDialog):
 		slider.SetPageSize(max(minStep, 10))
 
 	def makeSettingControl(self,setting):
+		"""Constructs appropriate GUI controls for given L{SynthSetting} such as label and slider.
+		@param setting: Setting to construct controls for
+		@type setting: L{SynthSetting}
+		@returns: WXSizer containing newly created controls.
+		@rtype: L{wx.BoxSizer}
+		"""
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label="&%s:"%setting.i18nName)
+		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.i18nName)
 		slider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100,name="%s:"%setting.i18nName)
 		setattr(self,"%sSlider"%setting.name,slider)
 		slider.Bind(wx.EVT_SLIDER,SettingChanger(setting))
@@ -259,8 +268,9 @@ class VoiceSettingsDialog(SettingsDialog):
 		return sizer
 
 	def makeStringSettingControl(self,setting):
+		"""Same as L{makeSettingControl} but for string settings. Returns sizer with label and combobox."""
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label="&%s:"%setting.i18nName)
+		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.i18nName)
 		synth=getSynth()
 		setattr(self,"_%ss"%setting.name,getattr(synth,"available%ss"%setting.name.capitalize()))
 		l=getattr(self,"_%ss"%setting.name)###
@@ -283,6 +293,7 @@ class VoiceSettingsDialog(SettingsDialog):
 	def makeSettings(self, settingsSizer):
 		self.sizerDict={}
 		self.lastControl=None
+		#Create controls for Synth Settings
 		self.updateVoiceSettings()
 		self.punctuationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Speak all punctuation"))
 		self.punctuationCheckBox.SetValue(config.conf["speech"]["speakPunctuation"])
@@ -309,12 +320,13 @@ class VoiceSettingsDialog(SettingsDialog):
 			self.punctuationCheckBox.SetFocus()
 
 	def updateVoiceSettings(self):
+		"""Creates, hides or updates existing GUI controls for all of supported settings."""
 		synth=getSynth()
 		#firstly check already created options
 		for name,sizer in self.sizerDict.iteritems():
 			if not synth.isSupported(name):
 				self.settingsSizer.Hide(sizer)
-		#Create new controls, update exists
+		#Create new controls, update already existing
 		for setting in reversed(synth.supportedSettings):
 			b=isinstance(setting,NumericSynthSetting)
 			if setting.name in self.sizerDict: #update a value
@@ -335,6 +347,7 @@ class VoiceSettingsDialog(SettingsDialog):
 				s=settingMaker(setting)
 				self.sizerDict[setting.name]=s
 				self.settingsSizer.Insert(len(self.sizerDict)-1,s,border=10,flag=wx.BOTTOM)
+		#Update graphical layout of the dialog
 		self.settingsSizer.Layout()
 
 	def onCancel(self,evt):

@@ -27,7 +27,7 @@ class SynthDriver(SynthDriver):
 
 	name="sapi4"
 	description="Microsoft Speech API version 4"
-	_supportedSettings=[SynthDriver.Voice]
+	_supportedSettings=[SynthDriver.VoiceSetting()]
 
 	@classmethod
 	def check(cls):
@@ -90,6 +90,13 @@ class SynthDriver(SynthDriver):
 		else:
 			self._ttsCentral.AudioResume()
 
+	def removeSetting(self,name):
+		#Putting it here because currently no other synths make use of it. OrderedDict, where you are?
+		for i,s in enumerate(self._supportedSettings):
+			if s.name==name:
+				del self._supportedSettings[i]
+				return
+
 	def _set_voice(self,val):
 		try:
 			val=GUID(val)
@@ -127,10 +134,10 @@ class SynthDriver(SynthDriver):
 			except COMError:
 				hasRate=False
 		if hasRate:
-			if SynthDriver.Rate not in self._supportedSettings:
-				self._supportedSettings.insert(0,SynthDriver.Rate)
+			if not self.isSupported('rate'):
+				self._supportedSettings.insert(0,SynthDriver.RateSetting())
 		else:
-			if self.isSupported("rate"): self._supportedSettings.remove(SynthDriver.Rate)
+			if self.isSupported("rate"): self.removeSetting("rate")
 		#Find out pitch limits
 		hasPitch=bool(mode.dwFeatures&TTSFEATURE_PITCH)
 		if hasPitch:
@@ -150,10 +157,10 @@ class SynthDriver(SynthDriver):
 			except COMError:
 				hasPitch=False
 		if hasPitch:
-			if SynthDriver.Pitch not in self._supportedSettings:
-				self._supportedSettings.insert(1,SynthDriver.Pitch)
+			if not self.isSupported('pitch'):
+				self._supportedSettings.insert(1,SynthDriver.PitchSetting())
 		else:
-			if self.isSupported('pitch'): self._supportedSettings.remove(SynthDriver.Pitch)
+			if self.isSupported('pitch'): self.removeSetting('pitch')
 		#Find volume limits
 		hasVolume=bool(mode.dwFeatures&TTSFEATURE_VOLUME)
 		if hasVolume:
@@ -173,10 +180,10 @@ class SynthDriver(SynthDriver):
 			except COMError:
 				hasVolume=False
 		if hasVolume:
-			if SynthDriver.Volume not in self._supportedSettings:
-				self._supportedSettings.insert(1,SynthDriver.Volume)
+			if not self.isSupported('volume'):
+				self._supportedSettings.insert(1,SynthDriver.VolumeSetting())
 		else:
-			if self.isSupported('volume'): self._supportedSettings.remove(SynthDriver.Volume)
+			if self.isSupported('volume'): self.removeSetting('volume')
 
 	def _get_voice(self):
 		return str(self._currentMode.gModeID)

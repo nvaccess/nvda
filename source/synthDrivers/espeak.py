@@ -15,7 +15,7 @@ class SynthDriver(SynthDriver):
 	name = "espeak"
 	description = "eSpeak"
 
-	_supportedSettings=[SynthDriver.Rate,SynthDriver.Pitch,SynthDriver.Volume,SynthDriver.Inflection,SynthDriver.Variant,SynthDriver.Voice]
+	_supportedSettings=[SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.VolumeSetting(),SynthDriver.InflectionSetting(),SynthDriver.VariantSetting(),SynthDriver.VoiceSetting()]
 
 	@classmethod
 	def check(cls):

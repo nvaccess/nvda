@@ -164,12 +164,32 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	#: @type: str
 	description = ""
 
-	Voice=SynthSetting("voice",_("Voice"))
-	Variant=SynthSetting("variant",_("Variant"))
-	Rate=NumericSynthSetting("rate",_("Rate"))
-	Volume=NumericSynthSetting("volume",_("Volume"))
-	Pitch=NumericSynthSetting("pitch",_("Pitch"))
-	Inflection=NumericSynthSetting("inflection",_("Inflection"))
+	@classmethod
+	def VoiceSetting(cls):
+		"""Factory function for creating voice setting."""
+		return SynthSetting("voice",_("&Voice"))
+	@classmethod
+	def VariantSetting(cls):
+		"""Factory function for creating variant setting."""
+		return SynthSetting("variant",_("V&ariant"))
+
+	@classmethod
+	def RateSetting(cls,minStep=5):
+		"""Factory function for creating rate setting."""
+		return NumericSynthSetting("rate",_("&Rate"),minStep)
+	@classmethod
+	def VolumeSetting(cls,minStep=5):
+		"""Factory function for creating volume setting."""
+		return NumericSynthSetting("volume",_("V&olume"),minStep)
+	@classmethod
+	def PitchSetting(cls,minStep=5):
+		"""Factory function for creating pitch setting."""
+		return NumericSynthSetting("pitch",_("Pitch"),minStep)
+
+	@classmethod
+	def InflectionSetting(cls,minStep=5):
+		"""Factory function for creating inflection setting."""
+		return NumericSynthSetting("inflection",_("&Inflection"),minStep)
 
 	@classmethod
 	def check(cls):
@@ -285,11 +305,13 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		@rtype: l{list}
 		"""
 		result=[]
-		settings=[("rate",self.Rate),("pitch",self.Pitch),("volume",self.Volume),("inflection",self.Inflection),("variant",self.Variant),("voice",self.Voice)]
+		settings=[("rate",self.RateSetting),("pitch",self.PitchSetting),("volume",self.VolumeSetting),("inflection",self.InflectionSetting),("variant",self.VariantSetting),("voice",self.VoiceSetting)]
 		for name,setting in settings:
 			if not getattr(self,"has%s"%name.capitalize(),False): continue
-			minStep=getattr(self,"%sMinStep"%name,5)
-			result.append(setting)
+			if hasattr(self,"%sMinStep"%name):
+				result.append(setting(getattr(self,"%sMinStep"%name)))
+			else:
+				result.append(setting())
 		return result
 
 	def getConfigSpec(self):
