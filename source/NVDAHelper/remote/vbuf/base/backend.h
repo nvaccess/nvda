@@ -10,8 +10,8 @@
 #define VIRTUALBUFFER_BACKEND_H
 
 #include <set>
-#include "libEntry.h"
 #include "storage.h"
+#include "lock.h"
 
 class VBufBackend_t;
 
@@ -23,7 +23,7 @@ typedef std::set<VBufBackend_t*> VBufBackendSet_t;
 /**
  * Renders content in to a storage buffer for linea access.
  */
-class VBUFLIBENTRY VBufBackend_t {
+class VBufBackend_t  : public VBufStorage_buffer_t {
 	protected:
 
 /**
@@ -39,7 +39,6 @@ class VBUFLIBENTRY VBufBackend_t {
 /**
  * The storage buffer the backend uses for rendering
  */
-	VBufStorage_buffer_t* storageBuffer;
 
 /**
  * the set of control field nodes that should be re-rendered the next time the backend is updated.
@@ -64,7 +63,7 @@ class VBUFLIBENTRY VBufBackend_t {
  * @param ID uniquely identifies where to start rendering from in the document or window
  * @param storageBuffer the storage buffer to render the content in
  */
-	VBufBackend_t(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer);
+	VBufBackend_t(int docHandle, int ID);
 
 /**
  * identifies the window or document where the backend starts rendering from
@@ -75,11 +74,6 @@ class VBUFLIBENTRY VBufBackend_t {
  * Represents the ID in the window or document where the backend starts rendering
  */
 	int getRootID();
-
-/**
- * The storage buffer the backend uses for rendering
- */
-	VBufStorage_buffer_t* getStorageBuffer();
 
 /**
  * marks a particular node as invalid, so that its content is re-rendered on next update.
@@ -98,11 +92,16 @@ class VBUFLIBENTRY VBufBackend_t {
  */
 	virtual ~VBufBackend_t();
 
+	/**
+ * Useful for cerializing access to the buffer
+ */
+	VBufLock_t lock;
+
 };
 
 /**
  * a function signature for the VBufBackend_create factory function all backend libraries must implement to create a backend.
  */
-typedef VBufBackend_t*(*VBufBackend_create_proc)(int,int,VBufStorage_buffer_t*);
+typedef VBufBackend_t*(*VBufBackend_create_proc)(int,int);
 
 #endif

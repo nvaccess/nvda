@@ -11,7 +11,7 @@
 #include "storage.h"
 #include "backend.h"
 
-VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg, VBufStorage_buffer_t* storageBufferArg): rootDocHandle(docHandleArg), rootID(IDArg), storageBuffer(storageBufferArg), invalidSubtrees() {
+VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): rootDocHandle(docHandleArg), rootID(IDArg), VBufStorage_buffer_t(), invalidSubtrees() {
 	DEBUG_MSG(L"Initializing backend with docHandle "<<docHandleArg<<L", ID "<<IDArg<<L", storageBuffer "<<storageBufferArg);
 }
 
@@ -21,10 +21,6 @@ int VBufBackend_t::getRootDocHandle() {
 
 int VBufBackend_t::getRootID() {
 	return rootID;
-}
-
-VBufStorage_buffer_t*  VBufBackend_t::getStorageBuffer() {
-	return storageBuffer;
 }
 
 void VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {

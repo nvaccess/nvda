@@ -12,8 +12,6 @@
 #include <string>
 #include <map>
 #include <set>
-#include "libEntry.h"
-#include "lock.h"
 
 /**
  * values to indicate a direction for searching
@@ -33,11 +31,11 @@ typedef enum {
 	TREEDIRECTION_SYMMETRICAL_BACK
 } TreeDirection;
 
-class VBUFLIBENTRY VBufStorage_buffer_t;
-class VBUFLIBENTRY VBufStorage_fieldNode_t;
-class VBUFLIBENTRY VBufStorage_controlFieldNode_t;
-class VBUFLIBENTRY VBufStorage_textFieldNode_t;
-class VBUFLIBENTRY VBufStorage_controlFieldNodeIdentifier_t;
+class VBufStorage_buffer_t;
+class VBufStorage_fieldNode_t;
+class VBufStorage_controlFieldNode_t;
+class VBufStorage_textFieldNode_t;
+class VBufStorage_controlFieldNodeIdentifier_t;
 
 /**
  * a set of control field nodes.
@@ -440,7 +438,7 @@ class VBufStorage_buffer_t {
  * @param node the node you wish to check.
  * @return true if it is in the buffer, false otherwise.
  */
-	bool isNodeInBuffer(VBufStorage_fieldNode_t* node);
+	virtual bool isNodeInBuffer(VBufStorage_fieldNode_t* node);
 
 /**
  * inserts the content of a   buffer in to this buffer at a particular position and sets that buffer's root node to NULL as all the nodes are now in the other buffer.
@@ -477,7 +475,7 @@ class VBufStorage_buffer_t {
  * @param endOffset memory where this method can place the found end offset.
  * @return true if successful, false otherwize.
  */
-	bool getFieldNodeOffsets(VBufStorage_fieldNode_t* node, int *startOffset, int *endOffset);
+	virtual bool getFieldNodeOffsets(VBufStorage_fieldNode_t* node, int *startOffset, int *endOffset);
 
 /**
  * finds out if a given field is positioned at a given character offset in this buffer.
@@ -485,7 +483,7 @@ class VBufStorage_buffer_t {
  * @param offset the character offset you are interested in.
  * @return true if the field is at the offset, false otherwise.
  */
-	bool isFieldNodeAtOffset(VBufStorage_fieldNode_t* node, int offset);
+	virtual bool isFieldNodeAtOffset(VBufStorage_fieldNode_t* node, int offset);
 
 /**
  * locates the text field node at the given offset
@@ -494,7 +492,7 @@ class VBufStorage_buffer_t {
  * @param nodeEndOffset memory where the found text field's end offset will be placed.
  * @return the located text field node.
  */
-	VBufStorage_textFieldNode_t* locateTextFieldNodeAtOffset(int offset, int *nodeStartOffset, int *nodeEndOffset);
+	virtual VBufStorage_textFieldNode_t* locateTextFieldNodeAtOffset(int offset, int *nodeStartOffset, int *nodeEndOffset);
 
 /**
  * locates the deepest control field node at the given offset
@@ -505,7 +503,7 @@ class VBufStorage_buffer_t {
  * @param ID memory where the ID of the found control field node will be placed.
  * @return the located control field node.
  */
-	VBufStorage_controlFieldNode_t* locateControlFieldNodeAtOffset(int offset, int *startOffset, int *endOffset, int* docHandle, int* ID);
+	virtual VBufStorage_controlFieldNode_t* locateControlFieldNodeAtOffset(int offset, int *startOffset, int *endOffset, int* docHandle, int* ID);
  
 /**
  * locates the controlFieldNode with the given identifier
@@ -513,7 +511,7 @@ class VBufStorage_buffer_t {
  * @param ID the ID of the control field node you wish to find
  * @return the controlFieldNode with the given identifier
  */
-	VBufStorage_controlFieldNode_t* getControlFieldNodeWithIdentifier(int docHandle, int ID);
+	virtual VBufStorage_controlFieldNode_t* getControlFieldNodeWithIdentifier(int docHandle, int ID);
 
 /**
  * Finds a field node that contains particular attributes.
@@ -524,7 +522,7 @@ class VBufStorage_buffer_t {
  * @param endOffset memory where the end offset of the found node will be placed
  * @return the found field node
  */
-	VBufStorage_fieldNode_t* findNodeByAttributes(int offset, VBufStorage_findDirection_t  direction, const std::wstring &attribsString, int *startOffset, int *endOffset);
+	virtual VBufStorage_fieldNode_t* findNodeByAttributes(int offset, VBufStorage_findDirection_t  direction, const std::wstring &attribsString, int *startOffset, int *endOffset);
 
 /**
  * Retreaves the current selection offsets for the buffer
@@ -532,7 +530,7 @@ class VBufStorage_buffer_t {
  * @param endOffset memory where the end offset of the selection will be placed
  * @return true if successfull, false otherwize.
  */
-	bool getSelectionOffsets(int* startOffset, int *endOffset) const;
+	virtual bool getSelectionOffsets(int* startOffset, int *endOffset) const;
 
 /**
  * sets the selection offsets for the buffer.
@@ -540,13 +538,13 @@ class VBufStorage_buffer_t {
  * @param endOffset the offset the end of the selection should be set to.
  * @return true if successfull, false otherwize.
  */
-	bool setSelectionOffsets(int startOffset, int endOffset);
+	virtual bool setSelectionOffsets(int startOffset, int endOffset);
 
 /**
  * retreaves the length of all the text in the buffer.
  * @return the length in characters of the text
  */
-	int getTextLength() const;
+	virtual int getTextLength() const;
 
 /**
  * Retreaves the text in the buffer between given offsets, optionally containing markup.
@@ -556,7 +554,7 @@ class VBufStorage_buffer_t {
  * @param useMarkup if true then markup is included in the text denoting field starts and ends.
  * @return the text.
  */
-	bool getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup=false);
+	virtual bool getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup=false);
 
 /**
  * Expands the given offset to the start and end offsets of the containing line.
@@ -567,13 +565,13 @@ class VBufStorage_buffer_t {
  * @param endOffset memory to place the calculated line end offset
   * @return true if successfull, false otherwize.
  */ 
-	bool getLineOffsets(int offset, int maxLineLength, bool useScreenLayout, int *startOffset, int *endOffset);
+	virtual bool getLineOffsets(int offset, int maxLineLength, bool useScreenLayout, int *startOffset, int *endOffset);
 
 /**
  * Does this buffer have content?
  * true if there is content, false otherwise.
  */
-	bool hasContent();
+	virtual bool hasContent();
 
 /**
  * Is one node a descendant of another.
@@ -581,14 +579,9 @@ class VBufStorage_buffer_t {
  * @param descendant the descendant node.
  * @returns True if descendant is a descendant of parent, false otherwise.
  */
-	bool isDescendantNode(VBufStorage_fieldNode_t* parent, VBufStorage_fieldNode_t* descendant);
+	virtual bool isDescendantNode(VBufStorage_fieldNode_t* parent, VBufStorage_fieldNode_t* descendant);
 
-	std::wstring getDebugInfo() const;
-
-	/**
- * Useful for cerializing access to the buffer
- */
-	VBufLock_t lock;
+	virtual std::wstring getDebugInfo() const;
 
 };
 

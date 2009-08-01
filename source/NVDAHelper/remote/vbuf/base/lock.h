@@ -9,12 +9,10 @@
 #ifndef VIRTUALBUFFER_LOCK_H
 #define VIRTUALBUFFER_LOCK_H
 
-#include "libEntry.h"
-
 /**
  * a generic locking interface
  */
-class VBUFLIBENTRY VBufLock_t {
+class VBufLock_t {
 	private:
 
 /**
@@ -33,12 +31,12 @@ class VBUFLIBENTRY VBufLock_t {
 /**
  * acquires the lock for the caller, until release is called.
  */
-	void acquire();
+	virtual void acquire();
 
 /**
  * Releases the lock from the caller
  */
-	void release();
+	virtual void release();
 
 /**
  * destructor
