@@ -12,7 +12,7 @@ TOPDIR=..\..
 all: vbuf.h
 
 vbuf.h vbuf_c.c vbuf_s.c: vbuf.idl
-	$(MIDL) $(MIDLFLAGS) /prefix all VBuf_ $**
+	$(MIDL) $(MIDLFLAGS) /prefix client VBuf_ /prefix server VBufRemote_ $**
 
 clean:
 	-del vbuf_s.c 2>NUL
