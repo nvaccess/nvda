@@ -8,6 +8,7 @@
 #include <set>
 #include <map>
 #include <windows.h>
+#include "rpcSrv.h"
 #include "inputLangChange.h"
 #include "typedCharacter.h"
 #include "IA2Support.h"
@@ -51,6 +52,7 @@ void inThread_terminate() {
 
 void inProcess_initialize() {
 	Beep(220,35);
+	rpcSrv_inProcess_initialize();
 	IA2Support_inProcess_initialize();
 	inThread_initialize();
 	inProcess_isInitialized=true;
@@ -59,6 +61,7 @@ void inProcess_initialize() {
 void inProcess_terminate() {
 	inThread_terminate();
 	IA2Support_inProcess_terminate();
+	rpcSrv_inProcess_terminate();
 	inProcess_isInitialized=false;
 	Beep(440,35);
 }

@@ -6,6 +6,8 @@
 
 #include <windows.h>
 
+#define DLLEXPORT extern "C" __declspec(dllexport)
+
 //Win event registration
 
 /**
@@ -13,14 +15,14 @@
  * @param procHook the callback function which should be called
  * @return true if the hook was registered, false otherwise.
  */
-bool registerWinEventHook(WINEVENTPROC hookProc);
+DLLEXPORT bool registerWinEventHook(WINEVENTPROC hookProc);
 
 /**
  * Unregisters a previously registered callback function for a win event for the calling thread
  * @param hookProc the callback function to be unregistered
  * @return True if it was unregistered, false otherwize.
  */
-bool unregisterWinEventHook(WINEVENTPROC hookProc);
+DLLEXPORT bool unregisterWinEventHook(WINEVENTPROC hookProc);
 
 //Windows hook registration
 
@@ -30,7 +32,7 @@ bool unregisterWinEventHook(WINEVENTPROC hookProc);
  * @param procHook the callback function which should be called
  * @return true if the hook was registered, false otherwise.
  */
-bool registerWindowsHook(int hookType, HOOKPROC hookProc);
+DLLEXPORT bool registerWindowsHook(int hookType, HOOKPROC hookProc);
 
 /**
  * Unregisters a previously registered callback function for a windows hook for the calling thread with the given hook type
@@ -38,6 +40,6 @@ bool registerWindowsHook(int hookType, HOOKPROC hookProc);
  * @param hookProc the callback function to be unregistered
  * @return True if it was unregistered, false otherwize.
  */
-bool unregisterWindowsHook(int hookType, HOOKPROC hookProc);
+DLLEXPORT bool unregisterWindowsHook(int hookType, HOOKPROC hookProc);
 
 #endif

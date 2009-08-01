@@ -15,9 +15,14 @@ all: $(OUTDIR)\NVDAHelperRemote.dll
 $(TOPDIR)\..\include\ia2\ia2_i.c: $(TOPDIR)\..\include\ia2\ia2.idl
 	cd $(TOPDIR)\..\include\ia2 && $(MAKE) /NOLOGO DEBUG=$(DEBUG) DEBUGLOG=$(DEBUGLOG)
 
-$(OUTDIR)\NVDAHelperRemote.dll: NVDAHelperRemote.cpp inputLangChange.cpp typedCharacter.cpp IA2Support.cpp $(TOPDIR)\..\include\ia2\ia2_i.c 
-	$(CPP) $(CPPFLAGS) $** /link $(LINKERFLAGS) user32.lib ole32.lib /dll /out:$@
+#VBuf interface
+$(TOPDIR)\interfaces\vbuf\vbuf_s.c: $(TOPDIR)\interfaces\vbuf\vbuf.acf $(TOPDIR)\interfaces\vbuf\vbuf.idl
+	cd $(TOPDIR)\interfaces\vbuf && $(MAKE) /nologo DEBUG=$(DEBUG) DEBUGLOG=$(DEBUGLOG)
+
+$(OUTDIR)\NVDAHelperRemote.dll: NVDAHelperRemote.cpp inputLangChange.cpp typedCharacter.cpp IA2Support.cpp $(TOPDIR)\..\include\ia2\ia2_i.c rpcSrv.cpp vbufRemote.cpp $(TOPDIR)\interfaces\vbuf\vbuf_s.c 
+	$(CPP) $(CPPFLAGS) $** /link $(LINKERFLAGS) user32.lib ole32.lib rpcrt4.lib /dll /out:$@
 
 clean:
 	cd $(TOPDIR)\..\include\ia2 && $(MAKE) /NOLOGO clean
+	cd $(TOPDIR)\interfaces\vbuf && $(MAKE) /nologo clean
 	-del *.obj 2>NUL

@@ -5,12 +5,14 @@
 #include <interfaces/vbuf/vbuf.h>
 #include "rpcSrv.h"
 
-void rpcSrv_inProcess_initialize() {
-	startServer();
+//memory allocation functions
+
+void* __RPC_USER midl_user_allocate(size_t size) {
+	return malloc(size);
 }
 
-void rpcSrv_inProcess_terminate() {
-	stopServer();
+void __RPC_USER midl_user_free(void* p) {
+	free(p);
 }
 
 RPC_STATUS startServer() {
@@ -48,12 +50,11 @@ void stopServer() {
 	printf("Done\n");
 }
 
-//memory allocation functions
-
-void* __RPC_USER midl_user_allocate(size_t size) {
-	return malloc(size);
+void rpcSrv_inProcess_initialize() {
+	startServer();
 }
 
-void __RPC_USER midl_user_free(void* p) {
-	free(p);
+void rpcSrv_inProcess_terminate() {
+	stopServer();
 }
+

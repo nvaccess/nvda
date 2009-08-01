@@ -4,7 +4,7 @@
 #ifndef RPCSRV_H
 #define RPCSRV_H
 
-void rpcSrv_inThread_initialize();
-void rpcSrv_inThread_terminate();
+void rpcSrv_inProcess_initialize();
+void rpcSrv_inProcess_terminate();
 
 #endif
