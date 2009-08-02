@@ -10,8 +10,8 @@
 #define VIRTUALBUFFER_BACKENDS_NODE_H
 
 #include <mshtml.h>
-#include <base/storage.h>
-#include <base/backend.h>
+#include <vbufBase/storage.h>
+#include <vbufBase/backend.h>
 #include "mshtml.h"
 
 class MshtmlVBufStorage_controlFieldNode_t : public VBufStorage_controlFieldNode_t {

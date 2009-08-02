@@ -12,7 +12,9 @@ TOPDIR=..
 all: 
 	cd gecko_ia2 && $(MAKE) /nologo DEBUG=$(DEBUG) DEBUGLOG=$(DEBUGLOG) 
 	cd adobeAcrobat && $(MAKE) /nologo DEBUG=$(DEBUG) DEBUGLOG=$(DEBUGLOG) 
+	cd mshtml && $(MAKE) /nologo DEBUG=$(DEBUG) DEBUGLOG=$(DEBUGLOG) 
 
 clean:
 	cd gecko_ia2 && $(MAKE) /nologo clean
 	cd adobeAcrobat && $(MAKE) /nologo clean
+	cd mshtml && $(MAKE) /nologo clean

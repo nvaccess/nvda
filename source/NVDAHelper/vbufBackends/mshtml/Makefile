@@ -8,16 +8,14 @@
 
 TOPDIR=..\..
 !include $(TOPDIR)\make.opts
-CPPFLAGS=$(CPPFLAGS) /DVBUFLIBENTRYTYPE=2
 
 all: $(OUTDIR)\VBufBackend_mshtml.dll
 
-$(OUTDIR)\VBufBase.lib:
-	cd $(TOPDIR)\base && $(MAKE) /NOLOGO DEBUG=$(DEBUG)
-
-$(OUTDIR)\VBufBackend_mshtml.dll: mshtml.obj node.obj $(TOPDIR)\common\utils.cpp $(OUTDIR)\VBufBase.lib
-	$(CPP) $(CPPFLAGS) $** user32.lib kernel32.lib oleacc.lib oleaut32.lib /link /dll /out:$@ $(LINKERFLAGS)
+$(OUTDIR)\VBufBackend_mshtml.dll: mshtml.cpp node.cpp
+	cd $(TOPDIR)\vbufBase && $(MAKE) /NOLOGO DEBUG=$(DEBUG) DEBUGLOG=$(DEBUGLOG)
+	$(CPP) $(CPPFLAGS) $** $(OUTDIR)\VBufBase_static.lib user32.lib kernel32.lib oleacc.lib oleaut32.lib /link /dll /out:$@ $(LINKERFLAGS)
 
 clean:
+	cd $(TOPDIR)\vbufBase && $(MAKE) /NOLOGO clean
 	-del *.obj 2>NUL
 	-del *.pdb 2>NUL

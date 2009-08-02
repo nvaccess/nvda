@@ -15,7 +15,9 @@
 #include <set>
 #include <string>
 #include <sstream>
-#include <base/base.h>
+#include <vbufBase/backend.h>
+#include <vbufBase/utils.h>
+#include <vbufBase/debug.h>
 #include "node.h"
 #include "mshtml.h"
 
@@ -74,7 +76,7 @@ VBufStorage_controlFieldNode_t* MshtmlVBufBackend_t::getDeepestControlFieldNodeF
 			pHTMLUniqueName->get_uniqueNumber((long*)&ID);
 			pHTMLUniqueName->Release();
 			if(ID!=0) {
-				VBufStorage_controlFieldNode_t* node=this->getStorageBuffer()->getControlFieldNodeWithIdentifier(this->getRootDocHandle(),ID); 
+				VBufStorage_controlFieldNode_t* node=this->getControlFieldNodeWithIdentifier(this->getRootDocHandle(),ID); 
 				if(node) {
 					if(elementNeedsRelease) pHTMLElement->Release();
 					return node;
@@ -654,7 +656,7 @@ void mainThreadTerminate(VBufBackend_t* backend, HANDLE e) {
 	if(mainThreadTimerID!=0) {
 		KillTimer(0,mainThreadTimerID);
 	}
-	backend->getStorageBuffer()->clearBuffer();
+	backend->clearBuffer();
 	SetEvent(e);
 	#ifdef DEBUG
 	Beep(880,70);
@@ -712,7 +714,7 @@ IHTMLDOMNode* pHTMLDOMNode=NULL;
 	pHTMLDOMNode->Release();
 }
 
-MshtmlVBufBackend_t::MshtmlVBufBackend_t(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer): VBufBackend_t(docHandle,ID,storageBuffer) {
+MshtmlVBufBackend_t::MshtmlVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID) {
 	int res;
 	DEBUG_MSG(L"Initializing MSHTML backend");
 	runningBackends.insert(this);
@@ -761,8 +763,8 @@ void MshtmlVBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node
 	}
 }
 
-extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer) {
-	VBufBackend_t* backend=new MshtmlVBufBackend_t(docHandle,ID,storageBuffer);
+extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
+	VBufBackend_t* backend=new MshtmlVBufBackend_t(docHandle,ID);
 	DEBUG_MSG(L"Created new backend at "<<backend);
 	return backend;
 }

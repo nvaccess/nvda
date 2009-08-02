@@ -9,9 +9,8 @@
 #ifndef VIRTUALBUFFER_BACKENDS_MSHTML_H
 #define VIRTUALBUFFER_BACKENDS_MSHTML_H
 
-#include <windows.h>
-#include <base/storage.h>
-#include <base/backend.h>
+#include <vbufBase/storage.h>
+#include <vbufBase/backend.h>
 
 typedef struct {
 	int tableID;
@@ -31,11 +30,12 @@ class MshtmlVBufBackend_t: public VBufBackend_t {
 
 	public:
 
-	MshtmlVBufBackend_t(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer);
+	MshtmlVBufBackend_t(int docHandle, int ID);
 
 	VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr);
 
 	VBufStorage_controlFieldNode_t* getDeepestControlFieldNodeForHTMLElement(IHTMLElement* pHTMLElement);
+
 	~MshtmlVBufBackend_t();
 
 	virtual void invalidateSubtree(VBufStorage_controlFieldNode_t* node);
