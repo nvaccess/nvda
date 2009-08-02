@@ -8,19 +8,18 @@
 
 TOPDIR=..\..
 !include $(TOPDIR)\make.opts
-CPPFLAGS=$(CPPFLAGS) /DVBUFLIBENTRYTYPE=2
 
 all: $(OUTDIR)\VBufBackend_gecko_ia2.dll
 
-$(TOPDIR)\deps\ia2\ia2_i.c:
-	cd $(TOPDIR)\deps\ia2 && $(MAKE) /NOLOGO DEBUG=$(DEBUG)
+$(TOPDIR)\..\include\ia2\ia2_i.c:
+	cd $(TOPDIR)\..\include\ia2 && $(MAKE) /NOLOGO DEBUG=$(DEBUG)
 
-$(OUTDIR)\VBufBase.lib:
-	cd $(TOPDIR)\base && $(MAKE) /NOLOGO DEBUG=$(DEBUG)
-
-$(OUTDIR)\VBufBackend_gecko_ia2.dll: gecko_ia2.cpp $(TOPDIR)\common\utils.cpp $(TOPDIR)\common\ia2utils.cpp $(TOPDIR)\deps\ia2\ia2_i.c $(OUTDIR)\VBufBase.lib
-	$(CPP) $(CPPFLAGS) $** user32.lib kernel32.lib oleacc.lib oleaut32.lib /link /dll /out:$@ $(LINKERFLAGS)
+$(OUTDIR)\VBufBackend_gecko_ia2.dll: gecko_ia2.cpp $(TOPDIR)\vbufBase\ia2Utils.cpp $(TOPDIR)\..\include\ia2\ia2_i.c
+	cd $(TOPDIR)\vbufBase && $(MAKE) /NOLOGO DEBUG=$(DEBUG)
+	$(CPP) $(CPPFLAGS) $** /link $(OUTDIR)\vbufBase_static.lib user32.lib kernel32.lib oleacc.lib oleaut32.lib /dll /out:$@ 
 
 clean:
+	cd $(TOPDIR)\vbufBase && $(MAKE) /NOLOGO clean
+	cd $(TOPDIR)\..\include\ia2 && $(MAKE) /NOLOGO clean
 	-del *.obj 2>NUL
 	-del *.pdb 2>NUL

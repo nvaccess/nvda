@@ -9,8 +9,7 @@
 #ifndef VIRTUALBUFFER_BACKENDS_EXAMPLE_H
 #define VIRTUALBUFFER_BACKENDS_EXAMPLE_H
 
-#include <windows.h>
-#include <base/backend.h>
+#include <vbufBase/backend.h>
 
 class GeckoVBufBackend_t: public VBufBackend_t {
 	private:
@@ -21,7 +20,7 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 
 	public:
 
-	GeckoVBufBackend_t(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer);
+	GeckoVBufBackend_t(int docHandle, int ID);
 
 	~GeckoVBufBackend_t();
 

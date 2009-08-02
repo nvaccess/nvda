@@ -13,8 +13,10 @@
 #include <string>
 #include <sstream>
 #include <ia2/ia2.h>
-#include <common/ia2utils.h>
-#include <base/base.h>
+#include <vbufBase/ia2utils.h>
+#include <vbufBase/backend.h>
+#include <vbufBase/debug.h>
+#include <vbufBase/utils.h>
 #include "gecko_ia2.h"
 
 using namespace std;
@@ -808,7 +810,7 @@ void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 		return;
 	}
 	DEBUG_MSG(L"found active backend for this window at "<<backend);
-	VBufStorage_buffer_t* buffer=backend->getStorageBuffer();
+	VBufStorage_buffer_t* buffer=backend;
 	VBufStorage_controlFieldNode_t* node=buffer->getControlFieldNodeWithIdentifier(docHandle,ID);
 	if(node==NULL&&eventID==EVENT_OBJECT_STATECHANGE) {
 		// This event is possibly due to a new document loading in a subframe.
@@ -898,7 +900,7 @@ void GeckoVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int
 	DEBUG_MSG(L"Rendering done");
 }
 
-GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer): VBufBackend_t(docHandle,ID,storageBuffer) {
+GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID) {
 	int res;
 	DEBUG_MSG(L"Initializing Gecko backend");
 	runningBackends.insert(this);
@@ -931,8 +933,8 @@ GeckoVBufBackend_t::~GeckoVBufBackend_t() {
 	DEBUG_MSG(L"Gecko backend terminated");
 }
 
-extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer) {
-	VBufBackend_t* backend=new GeckoVBufBackend_t(docHandle,ID,storageBuffer);
+extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
+	VBufBackend_t* backend=new GeckoVBufBackend_t(docHandle,ID);
 	DEBUG_MSG(L"Created new backend at "<<backend);
 	return backend;
 }
