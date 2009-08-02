@@ -9,8 +9,7 @@
 #ifndef VIRTUALBUFFER_BACKENDS_ADOBEACROBAT_H
 #define VIRTUALBUFFER_BACKENDS_ADOBEACROBAT_H
 
-#include <windows.h>
-#include <base/backend.h>
+#include <vbufBase/backend.h>
 
 class AdobeAcrobatVBufBackend_t: public VBufBackend_t {
 	private:
@@ -19,7 +18,7 @@ class AdobeAcrobatVBufBackend_t: public VBufBackend_t {
 
 	public:
 
-	AdobeAcrobatVBufBackend_t(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer);
+	AdobeAcrobatVBufBackend_t(int docHandle, int ID);
 
 	~AdobeAcrobatVBufBackend_t();
 

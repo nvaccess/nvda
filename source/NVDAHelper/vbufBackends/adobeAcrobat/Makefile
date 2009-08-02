@@ -8,16 +8,14 @@
 
 TOPDIR=..\..
 !include $(TOPDIR)\make.opts
-CPPFLAGS=$(CPPFLAGS) /DVBUFLIBENTRYTYPE=2
 
 all: $(OUTDIR)\VBufBackend_adobeAcrobat.dll
 
-$(OUTDIR)\VBufBase.lib:
-	cd $(TOPDIR)\base && $(MAKE) /NOLOGO DEBUG=$(DEBUG)
-
-$(OUTDIR)\VBufBackend_adobeAcrobat.dll: adobeAcrobat.obj $(TOPDIR)\deps\AcrobatAccess\AcrobatAccess_i.c $(OUTDIR)\VBufBase.lib
-	$(CPP) $(CPPFLAGS) $** user32.lib kernel32.lib oleacc.lib oleaut32.lib /link /dll /out:$@ $(LINKERFLAGS)
+$(OUTDIR)\VBufBackend_adobeAcrobat.dll: adobeAcrobat.obj $(TOPDIR)\..\include\AcrobatAccess\AcrobatAccess_i.c
+	cd $(TOPDIR)\vbufBase && $(MAKE) /NOLOGO DEBUG=$(DEBUG) DEBUGLOG=$(DEBUGLOG)
+	$(CPP) $(CPPFLAGS) $** $(OUTDIR)\vbufBase_static.lib user32.lib kernel32.lib oleacc.lib oleaut32.lib /link /dll /out:$@ $(LINKERFLAGS)
 
 clean:
+	cd $(TOPDIR)\vbufBase && $(MAKE) /NOLOGO clean
 	-del *.obj 2>NUL
 	-del *.pdb 2>NUL

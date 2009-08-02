@@ -11,9 +11,10 @@
  #include <sstream>
  #include <cassert>
 #include <windows.h>
-#include <base/base.h>
 #include <oleacc.h>
 #include <AcrobatAccess/AcrobatAccess.h>
+#include <vbufBase/backend.h>
+#include <vbufBase/debug.h>
 #include "adobeAcrobat.h"
 
 using namespace std;
@@ -373,7 +374,7 @@ void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	}
 	DEBUG_MSG(L"found active backend for this window at "<<backend);
 
-	VBufStorage_buffer_t* buffer=backend->getStorageBuffer();
+	VBufStorage_buffer_t* buffer=backend;
 	VBufStorage_controlFieldNode_t* node=buffer->getControlFieldNodeWithIdentifier(docHandle,ID);
 	if(!node) {
 		DEBUG_MSG(L"No nodes to use, returning");
@@ -446,7 +447,7 @@ void AdobeAcrobatVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHand
 	DEBUG_MSG(L"Rendering done");
 }
 
-AdobeAcrobatVBufBackend_t::AdobeAcrobatVBufBackend_t(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer): VBufBackend_t(docHandle,ID,storageBuffer) {
+AdobeAcrobatVBufBackend_t::AdobeAcrobatVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID) {
 	int res;
 	DEBUG_MSG(L"Initializing Adobe Acrobat backend");
 	backends.insert(this);
@@ -479,8 +480,8 @@ AdobeAcrobatVBufBackend_t::~AdobeAcrobatVBufBackend_t() {
 	DEBUG_MSG(L"Adobe Acrobat backend terminated");
 }
 
-extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID, VBufStorage_buffer_t* storageBuffer) {
-	VBufBackend_t* backend=new AdobeAcrobatVBufBackend_t(docHandle,ID,storageBuffer);
+extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
+	VBufBackend_t* backend=new AdobeAcrobatVBufBackend_t(docHandle,ID);
 	DEBUG_MSG(L"Created new backend at "<<backend);
 	return backend;
 }
