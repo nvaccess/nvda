@@ -15,7 +15,7 @@
 #include <set>
 #include <sstream>
 #include "debug.h"
-#include <common/utils.h>
+#include "utils.h"
 #include "storage.h"
 
 using namespace std;
@@ -519,7 +519,7 @@ void VBufStorage_buffer_t::deleteSubtree(VBufStorage_fieldNode_t* node) {
 	DEBUG_MSG(L"Deleted subtree");
 }
 
-VBufStorage_buffer_t::VBufStorage_buffer_t(): rootNode(NULL), controlFieldNodesByIdentifier(), selectionStart(0), selectionLength(0), lock() {
+VBufStorage_buffer_t::VBufStorage_buffer_t(): rootNode(NULL), controlFieldNodesByIdentifier(), selectionStart(0), selectionLength(0) {
 	DEBUG_MSG(L"buffer initializing");
 }
 

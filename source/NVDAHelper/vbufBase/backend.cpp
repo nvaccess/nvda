@@ -11,8 +11,8 @@
 #include "storage.h"
 #include "backend.h"
 
-VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): rootDocHandle(docHandleArg), rootID(IDArg), VBufStorage_buffer_t(), invalidSubtrees() {
-	DEBUG_MSG(L"Initializing backend with docHandle "<<docHandleArg<<L", ID "<<IDArg<<L", storageBuffer "<<storageBufferArg);
+VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): rootDocHandle(docHandleArg), rootID(IDArg), lock(), invalidSubtrees() {
+	DEBUG_MSG(L"Initializing backend with docHandle "<<docHandleArg<<L", ID "<<IDArg);
 }
 
 int VBufBackend_t::getRootDocHandle() {
@@ -31,10 +31,10 @@ void VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
 		if(node==existingNode) {
 			DEBUG_MSG(L"Node already invalidated");
 			return;
-		} else if(storageBuffer->isDescendantNode(existingNode,node)) {
+		} else if(isDescendantNode(existingNode,node)) {
 			DEBUG_MSG(L"An ancestor is already invalidated, returning");
 			return;
-		} else if(storageBuffer->isDescendantNode(node,existingNode)) {
+		} else if(isDescendantNode(node,existingNode)) {
 			DEBUG_MSG(L"removing a descendant node from the invalid nodes");
 			invalidSubtrees.erase(i++);
 		} else {
@@ -47,7 +47,7 @@ void VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
 }
 
 void VBufBackend_t::update() {
-	if(this->storageBuffer->hasContent()) {
+	if(this->hasContent()) {
 		DEBUG_MSG(L"Updating "<<invalidSubtrees.size()<<L" subtrees");
 		for(VBufStorage_controlFieldNodeSet_t::iterator i=invalidSubtrees.begin();i!=invalidSubtrees.end();i++) {
 			VBufStorage_controlFieldNode_t* node=*i;
@@ -61,11 +61,11 @@ void VBufBackend_t::update() {
 			DEBUG_MSG(L"Rendering content");
 			render(tempBuf,docHandle,ID,node);
 			DEBUG_MSG(L"Rendered content in temp buffer");
-			this->storageBuffer->lock.acquire();
+			this->lock.acquire();
 			DEBUG_MSG(L"Replacing node with content of temp buffer");
-			this->storageBuffer->replaceSubtree(node,tempBuf);
+			this->replaceSubtree(node,tempBuf);
 			DEBUG_MSG(L"Merged");
-			this->storageBuffer->lock.release();
+			this->lock.release();
 			DEBUG_MSG(L"Deleting temp buffer");
 			delete tempBuf;
 			DEBUG_MSG(L"Re-rendered subtree");
@@ -74,9 +74,9 @@ void VBufBackend_t::update() {
 		invalidSubtrees.clear();
 	} else {
 		DEBUG_MSG(L"Initial render");
-		this->storageBuffer->lock.acquire();
-		render(this->storageBuffer,rootDocHandle,rootID);
-		this->storageBuffer->lock.release();
+		this->lock.acquire();
+		render(this,rootDocHandle,rootID);
+		this->lock.release();
 	}
 	DEBUG_MSG(L"Update complete");
 }

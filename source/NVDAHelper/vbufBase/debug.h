@@ -10,13 +10,12 @@
 #define DEBUG_H
 
 #include <iostream>
-#include "libEntry.h"
 
-extern VBUFLIBENTRY std::wostream* _debugFile;
+extern std::wostream* _debugFile;
 
 //initialization and termination functions
-VBUFLIBENTRY void debug_start(std::wostream* s);
-VBUFLIBENTRY void debug_end();
+void debug_start(std::wostream* s);
+void debug_end();
 
 #ifdef DEBUG
 
