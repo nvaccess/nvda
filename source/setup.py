@@ -47,11 +47,10 @@ class py2exe(build_exe.py2exe):
 		self.distribution.data_files.extend(
 			[
 				("comInterfaces", glob("comInterfaces/*%s"%compiledModExtention)),
-				("appModules", glob("appModules/*%s"%compiledModExtention)),
 			]
 			+ getLocaleDataFiles()
-			+ getRecursiveDataFiles("synthDrivers", "synthDrivers", excludes=("*%s"%sourceModExtention,))
-			+ getRecursiveDataFiles("brailleDisplayDrivers", "brailleDisplayDrivers", excludes=("*%s"%sourceModExtention,))
+			+ getRecursiveDataFiles("synthDrivers", "synthDrivers", excludes=("*%s"%sourceModExtention,"*%s"%compiledModExtention))
+			+ getRecursiveDataFiles("brailleDisplayDrivers", "brailleDisplayDrivers", excludes=("*%s"%sourceModExtention,"*%s"%compiledModExtention))
 		)
 		build_exe.py2exe.run(self)
 
@@ -70,16 +69,6 @@ def getRecursiveDataFiles(dest,source,excludes=()):
 		[f for f in glob("%s/*"%source) if not any(fnmatch.fnmatch(f,exclude) for exclude in excludes) and os.path.isfile(f)]))
 	[rulesList.extend(getRecursiveDataFiles(os.path.join(dest,dirName),os.path.join(source,dirName))) for dirName in os.listdir(source) if os.path.isdir(os.path.join(source,dirName)) and not dirName.startswith('.')]
 	return rulesList
-
-def getOptionalIncludes():
-	includes = []
-	try:
-		# The explicit inclusion of brlapi is required because it is only imported by the brltty display driver, which is not a bundled module.
-		import brlapi
-		includes.append("brlapi")
-	except:
-		pass
-	return includes
 
 setup(
 	name = name,
@@ -129,9 +118,8 @@ setup(
 	}],
 	options = {"py2exe": {
 		"bundle_files": 3,
-		"excludes": ["comInterfaces"],
-		"packages": ["NVDAObjects","virtualBuffers"],
-		"includes": getOptionalIncludes(),
+		"excludes": ["comInterfaces", "Tkinter"],
+		"packages": ["NVDAObjects","virtualBuffers","appModules","brailleDisplayDrivers","synthDrivers"],
 	}},
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),

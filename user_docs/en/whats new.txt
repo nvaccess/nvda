@@ -21,13 +21,13 @@ Changes since 0.6p3:
 *Fix: Better support for edit fields found in Microsoft Word dialogs (e.g. the Font dialog). It is now possible  to navigate these controls with the arrow keys.
 *New: support for Windows Live Mail (specifically now plane text messages can be read).
 *Change: Progress bar reporting has been improved. Most notably you can now configure NVDA to announce via both speech and beeps at the same time.
-*New: In Windows Vista, if the user moves to the secure desktop (either because a UAC control dialog appeared, or because control+alt+delete was pressed), NVDA will announce the fact that the user is now on the secure desktop. This desktop is still not accessible to NVDA, though the user at least is notified as to what happened.
+*New: In Windows Vista, if the user moves to the secure desktop (either because a UAC control dialog appeared, or because control+alt+delete was pressed), NVDA will announce the fact that the user is now on the secure desktop.
 *Fix: better support for Dos consoles. specifically: NVDA can now read the content of particular consoles it always used to think were blank. Pressing control+break no longer terminates NVDA.
  *New: NVDA can announce text under the mouse within dos console windows.
 * new: Support for UI Automation via the UI Automation client API available in Windows 7, as well as fixes to improve the experience of NVDA in Windows 7.
 * new: NVDA can be configured to start automatically after you log on to Windows. The option is in the General Settings dialog.
 * new: NVDA can read secure Windows screens such as the Windows logon, control+alt+delete and UAC screens in Windows XP and above. Reading of the Windows logon screen can be configured from the General Settings dialog. (#97)
-* fix: On Windows Vista, the NVDA installer now starts NVDA with normal user privileges when requested to run NVDA on the finish screen.
+* fix: On Windows Vista and above, the NVDA installer now starts NVDA with normal user privileges when requested to run NVDA on the finish screen.
 * new: Added a driver for the Optelec ALVA BC6 series braille displays.
 * fix: Backspace is now handled correctly when speaking typed words. (#306)
 * fix: Don't incorrectly report "Start menu" for certain context menus in Windows Explorer/the Windows shell. (#257)
@@ -37,6 +37,9 @@ Changes since 0.6p3:
 * new: When browsing web documents, ARIA landmarks are now reported, and you can move forward and backward through them using d and shift+d, respectively. (#192)
 * new: The Links List dialog available when browsing web documents has now become an Elements List dialog which can list links, headings and landmarks. Headings and landmarks are presented hierarchically. (#363)
 * new: The new Elements List dialog filters the list as you type to contain only those items including the text that was typed. You can press backspace to clear the filter so that all items are again presented. (#173)
+*New: Portable versions of NVDA now look in the 'userConfig' directory inside the NVDA directory, for the user's configuration. Like for the installer version, this keeps the user's configuration separate from NVDA itself.  
+*New: Custom app modules, braille display drivers and synth drivers can now be stored in the user's configuration  directory. (#337)
+ 
 
 Changes since 0.6 P2:
 * new: As Microsoft Excel's formula bar is inaccessible to NVDA, provide an NVDA specific dialog box for editing when the user presses f2 on a cell. 

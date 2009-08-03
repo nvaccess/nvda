@@ -152,6 +152,13 @@ def redirectStdout(logger):
 #: @type: L{Logger}
 log = Logger("nvda")
 
+def _getDefaultLogFilePath():
+	if getattr(sys, "frozen", None):
+		import tempfile
+		return os.path.join(tempfile.gettempdir(), "nvda.log")
+	else:
+		return ".\\nvda.log"
+
 def initialize():
 	"""Initialize logging.
 	This must be called before any logging can occur.
@@ -160,6 +167,8 @@ def initialize():
 	global log
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
+	if not globalVars.appArgs.logFileName:
+		globalVars.appArgs.logFileName = _getDefaultLogFilePath()
 	# HACK: Don't specify an encoding, as a bug in Python 2.6's logging module causes problems if we do.
 	logHandler = FileHandler(globalVars.appArgs.logFileName, "w")
 	logFormatter=logging.Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")

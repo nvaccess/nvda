@@ -194,6 +194,8 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		text=self._rangeObj.text
 		if not text:
 			text=""
+		if controlTypes.STATE_PROTECTED in self.obj.states:
+			text='*'*len(text)
 		return text
 
 	def move(self,unit,direction, endPoint=None):

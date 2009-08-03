@@ -6,13 +6,34 @@ import _winreg
 import os
 import sys
 from cStringIO import StringIO
-from configobj import ConfigObj
+from configobj import ConfigObj, ConfigObjError
 from validate import Validator
 from logHandler import log
-import ctypes
+import shlobj
 
-CSIDL_APPDATA=26
-MAX_PATH=256
+def validateConfig(configObj,validator,validationResult=None,keyList=None):
+	if validationResult is None:
+		validationResult=configObj.validate(validator,preserve_errors=True)
+	if validationResult is True:
+		return None #No errors
+	if validationResult is False:
+		return _("Badly formed configuration file")
+	errorStrings=[]
+	for k,v in validationResult.iteritems():
+		if v is True:
+			continue
+		newKeyList=list(keyList) if keyList is not None else []
+		newKeyList.append(k)
+		if isinstance(v,dict):
+			errorStrings.extend(validateConfig(configObj[k],validator,v,newKeyList))
+		else:
+			#If a key is invalid configObj does not record its default, thus we need to get and set the default manually 
+			defaultValue=validator.get_default_value(configObj.configspec[k])
+			configObj[k]=defaultValue
+			if k not in configObj.defaults:
+				configObj.defaults.append(k)
+			errorStrings.append(_("%s: %s, defaulting to %s")%(k,v,defaultValue))
+	return errorStrings
 
 val = Validator()
 
@@ -44,7 +65,7 @@ outputDevice = string(default=default)
 		inflection = integer(default=50,min=0,max=100)
 		capPitchChange = integer(default=30,min=-100,max=100)
 		volume = integer(default=100,min=0,max=100)
-		voice = string()
+		voice = string(default=None)
 		raisePitchForCapitals = boolean(default=true)
 		sayCapForCapitals = boolean(default=false)
 		beepForCapitals = boolean(default=false)
@@ -102,8 +123,6 @@ outputDevice = string(default=default)
 	maxLineLength = integer(default=100)
 	linesPerPage = integer(default=25)
 	useScreenLayout = boolean(default=True)
-	reportVirtualPresentationOnFocusChanges = boolean(default=true)
-	updateContentDynamically = boolean(default=true)
 	autoPassThroughOnFocusChange = boolean(default=true)
 	autoPassThroughOnCaretMove = boolean(default=false)
 	passThroughAudioIndication = boolean(default=true)
@@ -140,10 +159,19 @@ def load():
 	"""
 	global conf
 	configFileName=os.path.join(globalVars.appArgs.configPath,"nvda.ini")
-	conf = ConfigObj(configFileName, configspec = confspec, indent_type = "\t", encoding="UTF-8")
+	try:
+		conf = ConfigObj(configFileName, configspec = confspec, indent_type = "\t", encoding="UTF-8")
+	except ConfigObjError as e:
+		conf = ConfigObj(None, configspec = confspec, indent_type = "\t", encoding="UTF-8")
+		conf.filename=configFileName
+		globalVars.configFileError=_("Error parsing configuration file: %s")%e
 	# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 	conf.newlines = "\r\n"
-	conf.validate(val)
+	errorList=validateConfig(conf,val)
+	if errorList:
+		globalVars.configFileError=_("Errors in configuration file '%s':\n%s")%(conf.filename,"\n".join(errorList))
+	if globalVars.configFileError:
+		log.warn(globalVars.configFileError)
 
 def updateSynthConfig(name):
 	"""Makes sure that the config contains a specific synth section for the given synth name.
@@ -163,6 +191,8 @@ def save():
 	"""Saves the configuration to the config file.
 	"""
 	global conf
+	if globalVars.configFileError:
+		raise RuntimeError("config file errors still exist")
 	if not os.path.isdir(globalVars.appArgs.configPath):
 		try:
 			os.makedirs(globalVars.appArgs.configPath)
@@ -206,10 +236,36 @@ def isInstalledCopy():
 
 def getUserDefaultConfigPath():
 	if isInstalledCopy():
-		buf=ctypes.create_unicode_buffer(MAX_PATH)
-		if ctypes.windll.shell32.SHGetSpecialFolderPathW(0,buf,CSIDL_APPDATA,0):
-			return u'%s\\nvda'%buf.value
-	return u'.\\'
+		try:
+			return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_APPDATA), "nvda")
+		except WindowsError:
+			pass
+	return u'.\\userConfig\\'
+
+def getSystemConfigPath():
+	if isInstalledCopy():
+		try:
+			return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_COMMON_APPDATA), "nvda")
+		except WindowsError:
+			pass
+	return None
+
+def initConfigPath(configPath=None):
+	"""
+	Creates the current configuration path if it doesn't exist. Also makes sure that various sub directories also exist.
+	@param configPath: an optional path which should be used instead (only useful when being called from outside of NVDA)
+	@type configPath: basestring
+	"""
+	if not configPath:
+		configPath=globalVars.appArgs.configPath
+	if not os.path.isdir(configPath):
+		os.makedirs(configPath)
+	for subdir in ("appModules","brailleDisplayDrivers","speechDicts","synthDrivers"):
+		subdir=os.path.join(configPath,subdir)
+		if not os.path.isdir(subdir):
+			os.makedirs(subdir)
+
+
 
 RUN_REGKEY = ur"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
@@ -282,3 +338,30 @@ def setStartOnLogonScreen(enable):
 		# We probably don't have admin privs, so we need to elevate to do this using the slave.
 		if execElevated(SLAVE_FILENAME, "config_setStartOnLogonScreen %d" % enable, wait=True) != 0:
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
+
+def getConfigDirs(subpath=None):
+	"""Retrieve all directories that should be used when searching for configuration.
+	IF C{subpath} is provided, it will be added to each directory returned.
+	@param subpath: The path to be added to each directory, C{None} for none.
+	@type subpath: str
+	@return: The configuration directories in the order in which they should be searched.
+	@rtype: list of str
+	"""
+	return [os.path.join(dir, subpath) if subpath else dir
+		for dir in (globalVars.appArgs.configPath,)
+	]
+
+def addConfigDirsToPythonPackagePath(module, subdir=None):
+	"""Add the configuration directories to the module search path (__path__) of a Python package.
+	C{subdir} is added to each configuration directory. It defaults to the name of the Python package.
+	@param module: The root module of the package.
+	@type module: module
+	@param subdir: The subdirectory to be used, C{None} for the name of C{module}.
+	@type subdir: str
+	"""
+	if not subdir:
+		subdir = module.__name__
+	# Python 2.x doesn't properly handle unicode import paths, so convert them.
+	dirs = [dir.encode("mbcs") for dir in getConfigDirs(subdir)]
+	dirs.extend(module.__path__ )
+	module.__path__ = dirs

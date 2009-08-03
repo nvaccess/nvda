@@ -16,6 +16,7 @@ import api
 import controlTypes
 import config
 import tones
+import synthDriverHandler
 from synthDriverHandler import *
 import re
 import textInfos
@@ -48,6 +49,7 @@ oldColumnNumber=None
 
 def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini."""
+	synthDriverHandler.initialize()
 	setSynth(config.conf["speech"]["synth"])
 
 def terminate():

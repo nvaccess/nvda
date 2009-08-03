@@ -14,16 +14,14 @@
 <li><a href="#1.2">1.2. Internationalization</a></li>
 <li><a href="#1.3">1.3. Speech synthesizer support</a></li>
 <li><a href="#1.4">1.4. Braille support</a></li>
-<li><a href="#1.5">1.5. Innovation and experimentation</a></li>
-<li><a href="#1.6">1.6. Design and implementation</a></li>
-<li><a href="#1.7">1.7. License and copyright</a></li>
+<li><a href="#1.5">1.5. License and copyright</a></li>
 </ul>
 <li><a href="#2">2. System Requirements</a></li> 
 <li><a href="#3">3. Getting NVDA</a></li>
 <li><a href="#4">4. Installing NVDA</a></li>
 <ul>
 <li><a href="#4.1">4.1. The NVDA Installer</a></li>
-<li><a href="#4.2">4.2. The NVDA Portable Zip File</a></li>
+<li><a href="#4.2">4.2. NVDA Portable</a></li>
 </ul>
 <li><a href="#5">5. Getting started with NVDA</a></li>
 <ul>
@@ -79,15 +77,16 @@ Major highlights include:
 <li>Easy to use talking installer </li>
 <li>Browsing the web with <a href="http://www.getfirefox.com/">Mozilla Firefox 3</a></li>
 <li>Working with email using <a href="http://www.mozillamessaging.com/en-US/thunderbird/early_releases/">Mozilla Thunderbird 3</a></li>
-<li>Early support for Microsoft Internet Explorer</li>
+<li>Support for Microsoft Internet Explorer</li>
 <li>Basic support for Microsoft Outlook Express / Windows Mail</li>
 <li>support for Microsoft Word and Excel</li>
 <li>Support for accessible Java applications</li>
-<li>Early support for Adobe Reader</li>
+<li>Support for Adobe Reader</li>
 <li>Early support for IBM Lotus Symphony</li>
 <li>support for Windows Command Prompt and console applications   </li>
 <li>Automatic announcement of text under the mouse and optional audible indication of the mouse position</li>
-<li>Braille Support for displays that are handled either by Freedom Scientific braille drivers or BRLTTY.</li></ul>
+<li>Support for many refreshable Braille displays</li>
+</ul>
 <h3 id="1.2">1.2. Internationalization</h3>
 <p>
 It is important that people anywhere in the world, no matter what language they speak, get the same access to technologies. NVDA currently has been translated into   over 20 languages including: Brazilian Portuguese, Croatian, Czech, Finnish, French, Galician, German, Hungarian, Italian, Japanese, Portuguese, Russian, Slovak, Spanish, Thai, Traditional Chinese, Ukrainian, Afrikaans, Polish and Vietnamese.
@@ -97,24 +96,16 @@ It is important that people anywhere in the world, no matter what language they 
 Apart from providing its messages and interface in several languages, NVDA can also enable the user to read content in any language, as long as they have a speech synthesizer that can speak that particular language.
 </p>
 <p>
-NVDA is bundled with <a href="http://espeak.sourceforge.net/">eSpeak</a>, a free, open-source, multi-lingual speech synthesizer. Additionally, NVDA can use both SAPI4 and SAPI5  speech engines to provide speech output, as well as the Audiologic speech synthesizer.
+NVDA is bundled with <a href="http://espeak.sourceforge.net/">eSpeak</a>, a free, open-source, multi-lingual speech synthesizer. Additionally, NVDA can use both SAPI4 and SAPI5  speech engines to provide speech output, as well as the Audiologic and NewFon speech synthesizers.
 </p>
 <h3 id="1.4">1.4. Braille support</h3>
 <p>
 For users that own a refreshable braille display, NVDA can output its information in braille. NVDA supports Freedom Scientific Pacmate and Focus displays, Handy Tech displays, plus many others supported by the BRLTTY package  if it is available.
 </p>
-<h3 id="1.5">1.5. Innovation and Experimentation</h3>
 <p>
-NVDA is not restricted by a need to follow market trends and demands. Commercial screen readers implement really good features, but sometimes this is biased by what the market wants, rather than what will be really useful for the user. NVDA may not be always as stable as other screen readers, but it can certainly act as an experimental testing tool.  It can easily and quickly test new ideas and features perhaps not seen in other screen readers for the Windows Operating System. An example of this is NVDA's ability to use beeps to communicate to the user that a progress bar is moving. The higher the beep, the closer the progress bar is to the end. People have added this feature in to other screen readers through custom scripts and the like, but it has never been officially adopted completely in to the core of any other Windows screen reader.  
- </p>
-<h3 id="1.6">1.6. Design and Implementation</h3>
-<p>
-NVDA is written in the <a href="http://www.python.org/">Python programming language</a>, and is built with a modular design, and much of its code can easily be extended and added to in order to support new programs and/or controls in Windows. App Modules can be written to add overall support for a specific application, virtual buffers can be written to allow NVDA to display complex documents or other data, and NVDA Objects can be written to add support for specific controls or Windows. NVDA always tries to make controls and elements of a program or Operating System as accessible as possible, so that the user can actively seek any information they require. NVDA is not so concerned with special features such as filtering and announcing particular information it thinks the user may want to know. 
+NVDA supports many braille codes covering a large set of languages. In many cases grade 1 and 2 versions of the codes are available. For English readers both U.S. English braille  and Unified English braille (UEB) codes are included.     
 </p>
-<p>
-To communicate with the Operating System and programs, NVDA uses a mix of Operating System functions, Microsoft Active Accessibility (MSAA), IAccessible2, Java Access Bridge and specific programming interfaces provided by certain applications. NVDA does not use any special Video Intercept drivers or display hooks, and will always try to gain as much information from Accessibility specific interfaces as possible, before resorting to other means. 
- </p>
-<h3 id="1.7">1.7. Licence and Copyright</h3>
+<h3 id="1.5">1.5. Licence and Copyright</h3>
 <p>
 NVDA is copyright 2006-2009 NVDA contributors.
 </p>
@@ -137,7 +128,7 @@ If you have not yet got a copy of NVDA, you can download it from the NVDA websit
 Go to the download section and you will find a link to download the latest version of NVDA.
 </p>
 <p>
-There are currently two ways NVDA is packaged. One is an Installer which will talk you through installing NVDA so that you can then run it at any time from the Start Menu. The other is a zip file that contains a fully portable version of NVDA, which you can run from anywhere, including a USB  thumb drive or CD.
+There are currently two ways NVDA is packaged. One is an Installer which will talk you through installing NVDA so that you can then run it at any time from the Start Menu. The other is a self-extracting archive file that contains a fully portable version of NVDA, which you can run from anywhere, including a USB  thumb drive or CD.
  </p>
 <h2 id="4">4. Installing NVDA</h2>
 <h3 id="4.1">4.1. The NVDA Installer</h3>
@@ -148,11 +139,11 @@ If you already have the NVDA installer, simply press enter or double click on th
 As the installer loads, you will hear the NVDA installation music. Once loaded, a temporary copy of NVDA will allow you to follow the prompts of the installer and install NVDA. Note that if you were running another copy of NVDA at the time you started the installer, a message will appear telling you that your previous copy of NVDA will be closed. When you press enter on this message, the installer will close your previous copy and start its own one. This is necessary so that the installer can properly update any changed files. At this point, if you have another copy of NVDA already installed, the NVDA installer will uninstall it for you, and then it will commence to install NVDA.
 </p>
 <p>
-Once you have successfully completed the installation, the installer will alert you that the install of NVDA has finished, and ask you to reboot the system. It is very important that you reboot the system as failing to do so will have undesirable consequences.
+Once you have successfully completed the installation, the installer will alert you that the install of NVDA has finished. If reinstalling NVDA, It may ask you to reboot the system at this point. It is very important that you reboot the system as failing to do so will have undesirable consequences. If it did not ask you to reboot, pressing Finnish will close the installer and start the newly installed version of NVDA.
 </p>
-<h3 id="4.2">4.2. The Portable Zip File</h3>
+<h3 id="4.2">4.2. NVDA portable</h3>
 <p>
-If you have the zip file version of NVDA, then all you have to do is unzip this file to any place you like on your hard drive or other portable media.
+If you have the portable version of NVDA, then all you have to do is to press enter or double click on the file, and follow the prompts. It will ask you where on your system you wish to place the files. 
 </p>
 <h2 id="5">5. Getting started with NVDA</h2>
 <h3 id="5.1">5.1. Launching NVDA</h3>
@@ -160,10 +151,10 @@ If you have the zip file version of NVDA, then all you have to do is unzip this 
 If you have installed NVDA with the installer, then starting NVDA is as simple as either pressing control+alt+n, or choosing NVDA from the NVDA menu under Programs on the Start Menu.
 </p>
 <p>
-To start the portable zip file version, go to the directory you unzipped NVDA to, and press enter or double click on nvda.exe.
+To start the portable version, go to the directory you unpacked NVDA to, and press enter or double click on nvda.exe.
  </p>
 <p>
-As NVDA starts, you will first hear an ascending set of tones (telling you that NVDA is loading). You should then hear it say "NVDA Started". Depending on how fast your computer is, or if you are running NVDA off a USB key or other slower medium, it may take a little while to start. If it is taking an extra long time, NVDA should say "Loading subsystems. Please wait...?
+As NVDA starts, you will first hear an ascending set of tones (telling you that NVDA is loading). You should then hear it say "NVDA Started". Depending on how fast your computer is, or if you are running NVDA off a USB key or other slower medium, it may take a little while to start. If it is taking an extra long time, NVDA should say "Loading subsystems. Please wait..."
 </p>
 <p>
 If you don't hear any of this, or you hear the Windows error sound, or a descending set of tones, then this means that NVDA has an error, and you will need to possibly report a bug to the developers. Please check out the NVDA website for how to do this.
@@ -213,6 +204,14 @@ This option is a check box that, when checked, tells NVDA to automatically save 
 <h6>Warn before exiting NVDA</h6>
 <p>
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks whether or not you would like to exit. When checked, a dialog will appear when you attempt to exit NVDA asking whether or not you want to exit.
+</p>
+<h6>Automatically start nvda after I log on to windows</h6>
+<p>
+If this option is enabled, NVDA will start automatically as soon as you log on to Windows.
+</p>
+<h6>Use nvda on the windows log on screen (requires administrative privileges)</h6>
+<p>
+If you log on to Windows by providing a user name and password, then enabling this option will  make NVDA start automatically at the logon screen when Windows starts.
 </p>
 <h6>Logging level</h6>
 <p>
@@ -378,6 +377,10 @@ A checkbox, that when checked means that NVDA will announce the shape of the mou
 <p>
 A check box that when checked means that NVDA will announce the text currently under the mouse pointer, as you move it around the screen. This allows you to find things on the screen, by physically moving the mouse, rather than trying to find them through object navigation. 
 </p>
+<h6>Text unit resolution</h6>
+<p>
+If NVDA is set to announce the text under the mouse as you move it, this option allows you to choose exactly how much text will be spoken. The options are character, word, line and paragraph.
+</p>
 <h6>Report role when mouse enters object</h6>
 <p>
 If this checkbox is checked, NVDA will announce the role (type) of object as the mouse moves in side it.
@@ -402,6 +405,10 @@ A check box that when checked tells NVDA to announce tool tips as they appear. M
 <p>
 This check box when checked tells NVDA to announce help balloons as they appear. Help Balloons are like tool tips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
 </p>
+<h6>Report object position information</h6>
+<p>
+This option lets you choose whether you wish to have an object's position (e.g. 1 of 4) reported when moving to the object with the focus or object navigation.
+</p> 
 <h6>Report Object Shortcut Keys</h6>
 <p>
 When this check box is checked, NVDA will include the shortcut key that is associated with a certain object or control when it is announced. For example the File menu on a menu bar may have a shortcut key of alt+f.
@@ -410,28 +417,44 @@ When this check box is checked, NVDA will include the shortcut key that is assoc
 <p>
 Uncheck this checkbox if you feel you don't need to hear the description announced along with objects.
 </p>
-<h6>Beep on Progress Bar Updates</h6>
+<h6>Progress bar output</h6>
 <p>
-A progress bar is a control which looks a bit like a ruler. As a task is slowly being completed, more of the bar gets highlighted. It also shows a percentage value, to numerically tell you how far along it is. Progress bars are shown for things like loading a web page, checking your email, or processing a sound file etc. If this check box is checked, NVDA will use beeps to let you know how far along a progress bar is as it moves. This is sometimes a lot nicer than hearing lots of numbers.
+A progress bar is a control which looks a bit like a ruler. As a task is slowly being completed, more of the bar gets highlighted. It also shows a percentage value, to numerically tell you how far along it is. Progress bars are shown for things like loading a web page, checking your email, or processing a sound file etc. 
+</p>
+<p>
+This option   presents you with a combo box wich  controls how nvda reports  progress bar updates to you. It has the following options:
+</p>
+<ul>
+<li>Off: Progress bars will not be reported as they change.</li>
+<li>Speak: This  option tells nvda to speak the progress bar in percentages. Each time the progress bar changes, nvda will speak the new value.</li>
+<li>Beep: This tells nvda to beep each time the progress bar changes. The higher the beep, the closer the progress bar is to completion.</li>
+<li>Beep and speak: This option tells nvda to both beep and speak when a progress bar updates.</li>
+</ul>
+<h6>Report background progress bars</h6>
+<p>
+This is an option that, when checked, tells nvda to keep report a progress bar, even if it is not physically in the foreground. If you minimize or switch away from a window that contains a progress bar, nvda will keep track of it, allowing you to do other things  while nvda tracks the progress bar.
 </p>
 <h5 id="6.2.1.8">6.2.1.8. Virtual Buffer Settings</h5>
 <p>
-The Virtual Buffer settings dialog can be found in the Preferences menu, under "Virtual Buffers...". Alternatively, it can be accessed by pressing NVDA+Control+B. Note: Because virtual buffer support is being rewritten for applications such as microsoft internet explorer, outlook, and Adobe Reader, some of the features that are presented in this dialog only apply to the virtual buffers that have already been completed, such as the ones found in Mozilla Firefox 3.0, Thunderbird 3.0, and Seamonkey 2.0.
-</p>
+The Virtual Buffer settings dialog can be found in the Preferences menu, under "Virtual Buffers...". Alternatively, it can be accessed by pressing NVDA+Control+B. </p>
 <p>
 The dialog contains the following options:
 </p>
 <h6>Maximum Number of Characters on One Line</h6>
 <p>
-This field sets the maximum length of a line of a virtual buffer (in characters). Its not guaranteed that all lines will end up being this length or under, but most should.
+This field sets the maximum length of a line of a virtual buffer (in characters).
 </p> 
 <h6>Maximum Lines Per Page</h6>
 <p>
 Although virtual buffers don't really have pages, this field sets the amount of lines you will move by when pressing page up or page down while in a virtual buffer.
 </p>
-<h6>Report Virtual Presentation on Focus Changes</h6>
+<h6>Use screen layout</h6>
 <p>
-This check box when checked tells NVDA to announce the text and presentation information in the virtual buffer for a control, as it gets focus, rather than simply asking Windows for the control information. For example, tabbing to a link called "cats" will say "link cats" rather than "cats link" because in virtual buffers when arrowing around, the type is always said before the text. It may be desirable in certain cases then to not have this option enabled since this means the control will be announced in a some what better order. However, for some web browsers, you may get more accurate information announced when this is enabled.
+This option allows you to specify whether content in the virtualBuffer should place  content such as links and other fields on their own line, or if it should keep them in the flow of text as it is visually shown. If the option is enabled then things will stay as they are visually shown, but if it is disabled then  fields will be placed on their own line.
+</p>
+<h6>Report layout tables</h6>
+<p>
+When disabled this option makes NVDA only report tables that contain tabular data (where it makes sense to know that this is a table). But if enabled, NVDA will also report tables used purely for visual presentation.
 </p>
 <h6>Configuring announcement of fields such as links and headings</h6>
 <p>
@@ -444,6 +467,10 @@ This option allows focus mode to be invoked if focus changes. For example, when 
 <h6>Automatic focus mode for carrot movement</h6>
 <p>
 This option, when checked, allows NVDA to enter and leave focus mode when using arrow keys. For example, if arrowing down a webpage and you land on an edit box, NVDA will automatically bring you into focus mode. If you arrow out of the edit box, NVDA will put you back in browse mode.
+</p>
+<h6>Audio indication of Focus and Browse modes</h6>
+<p>
+If this option is enabled, NVDA will play special sounds when it switches between browse mode and focus mode in a virtualBuffer, rather than speaking the change. 
 </p>
 <h5 id="6.2.1.9">6.2.1.9. Document Formatting Settings</h5>
 <p>

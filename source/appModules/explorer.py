@@ -34,7 +34,7 @@ class AppModule(_default.AppModule):
 		if obj.windowClassName == "#32768":
 			# Standard menu.
 			parent = obj.parent
-			if not parent.parent:
+			if parent and not parent.parent:
 				# Context menu.
 				# We don't trust the names that Explorer gives to context menus, so better to have no name at all.
 				obj.name = None

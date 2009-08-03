@@ -202,7 +202,7 @@ CreateDirectory "$INSTDIR\lib"
 !insertmacro MUI_STARTMENU_WRITE_BEGIN application
 CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL
-CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_exploreUserSettingsDir).lnk" "$INSTDIR\nvda_slave.exe" "explore_userConfigPath" "" 0 SW_SHOWNORMAL
+CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_exploreUserConfigDir).lnk" "$INSTDIR\nvda_slave.exe" "explore_userConfigPath" "" 0 SW_SHOWNORMAL
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_readme).lnk" "$INSTDIR\documentation\$(path_readmefile)" "" "$INSTDIR\documentation\$(path_readmefile)" 0 SW_SHOWMAXIMIZED
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_keycom).lnk" "$INSTDIR\documentation\$(path_keycomfile)" "" "$INSTDIR\documentation\$(path_keycomfile)" 0 SW_SHOWMAXIMIZED
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_userguide).lnk" "$INSTDIR\documentation\$(path_userguide)" "" "$INSTDIR\documentation\$(path_userguide)" 0 SW_SHOWMAXIMIZED
@@ -355,9 +355,13 @@ ReadRegStr $0 ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString"
 ${GetParent} $0 $1
 GetTempFileName $2
 CopyFiles /SILENT "$0" "$2"
+;Save startOnLogonScreen setting which will be removed by uninstaller
+ReadRegStr $3 ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "startOnLogonScreen"
 HideWindow
 ExecWait "$2 /nonInteractive _?=$1"
 bringToFront
+;Restore the startOnLogonScreen setting
+WriteRegStr ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "startOnLogonScreen" "$3"
 delete "$2"
 end:
 functionEnd

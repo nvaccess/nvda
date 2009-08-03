@@ -14,16 +14,14 @@
 <li><a href="#1.2">1.2. Internationalisation</a></li>
 <li><a href="#1.3">1.3. Support des synthèses vocales</a></li>
 <li><a href="#1.4">1.4. Support du braille</a></li>
-<li><a href="#1.5">1.5. Innovation et expérimentation</a></li>
-<li><a href="#1.6">1.6. Architecture et implémentation</a></li>
-<li><a href="#1.7">1.7. Licence et copyright</a></li>
+<li><a href="#1.5">1.5. Licence et copyright</a></li>
 </ul>
 <li><a href="#2">2. Configuration Système Requise</a></li>
 <li><a href="#3">3. Se procurer NVDA</a></li>
 <li><a href="#4">4. Installer NVDA</a></li>
 <ul>
 <li><a href="#4.1">4.1. L'installateur de NVDA</a></li>
-<li><a href="#4.2">4.2. Le fichier zip portable</a></li>
+<li><a href="#4.2">4.2. NVDA portable</a></li>
 </ul>
 <li><a href="#5">5. Prise en main de NVDA</a></li>
 <ul>
@@ -79,14 +77,16 @@ Ses principales caractéristiques sont :
 <li>La navigation sur le web avec <a href="http://www.getfirefox.com/">Mozilla Firefox 3</a></li>
 <li>Un installateur parlant facile à utiliser</li>
 <li>Le traitement du courrier électronique en utilisant <a href="http://www.mozillamessaging.com/en-US/thunderbird/early_releases/">Mozilla Thunderbird 3</a></li>
-<li>Une ébauche de support pour Microsoft Internet Explorer</li>
+<li>Le support de Microsoft Internet Explorer</li>
 <li>Un support de base pour Microsoft Outlook Express / Windows Mail</li>
-<li>Un support de base pour Microsoft Word et Excel</li>
+<li>Le support de Microsoft Word et Excel</li>
 <li>Le support des applications Java accessibles</li>
-<li>Une ébauche de support pour Adobe Reader</li>
+<li>Le support d'Adobe Reader</li>
 <li>Une ébauche de support pour IBM Lotus Symphony</li>
 <li>Le support de l'invite de commande Windows et des applications en mode console</li>
 <li>L'annonce automatique du texte sous la souris et l'indication sonore optionnelle de la position de la souris</li>
+<li>Le support de beaucoup d'afficheurs Braille</li>
+
 </ul>
 <h3 id="1.2">1.2. Internationalisation.</h3>
 <p>
@@ -104,34 +104,10 @@ NVDA est fourni avec <a href="http://espeak.sourceforge.net/">eSpeak</a>, un syn
 <p>
 Pour les utilisateurs possédant un afficheur Braille, NVDA peut afficher ses informations en Braille. NVDA supporte les afficheurs Packmate et Focus de Freedom Scientific, les afficheurs Handy Tech ainsi que beaucoup d'autres supportés par l'application BRLTTY si elle est installée.
 </p>
-<h3 id="1.5">1.5. Innovation et Expérimentation.</h3>
 <p>
-NVDA n'est pas limité par le besoin de suivre les tendances et les demandes
-du marché. Les revues d'écran commerciales proposent des fonctionnalités
-vraiment intéressantes, mais parfois elles sont biaisées par la volonté du
-marché, plutôt que par ce qui serait vraiment utile pour l'utilisateur.
-NVDA ne peut pas être toujours aussi stable que d'autres lecteurs d'écran,
-mais il peut certainement être utilisé en tant qu'outil expérimental et de test.
-Il peut facilement et rapidement tester de nouvelles idées et dispositifs
-peut-être absents dans d'autres revues d'écran pour Windows.
-Un exemple de ceci est la capacité de NVDA d'émettre des signaux sonores pour
-indiquer à l'utilisateur l'évolution d'une barre de progression. Plus le signal
-sonore est haut, plus la barre de progression approche de la fin.
-Ce dispositif a été ajouté dans d'autres revues d'écran au
-moyen de scripts ou équivalent, mais il n'a jamais été complètement intégré
-officiellement au noyau d'aucune autre revue d'écran pour Windows.
+NVDA propose beaucoup de codes Braille couvrant un grand ensemble de langues. Dans bien des cas, le Braille intégral et abrégé sont disponibles. Pour les utilisateurs francophones, le code Braille français unifié est disponible en intégral et abrégé.
 </p>
-<h3 id="1.6">1.6. Architecture et Implémentation.</h3>
-<p>
-NVDA est écrit dans le <a href="http://www.python.org/">langage de programmation Python</a>, et est construit avec une architecture modulaire, et la plus grande partie de son code peut facilement être modifiée ou augmentée pour supporter de nouveaux programmes et/ou contrôles de Windows. Des Modules spécifiques peuvent être écrits pour ajouter le support d'une application particulière, des tampons virtuels peuvent être écrits pour permettre à NVDA d'afficher des documents complexes ou d'autres données, et des objets NVDA peuvent être écrits pour ajouter le support de contrôles ou de fenêtres spécifiques. NVDA essaie toujours de rendre les éléments et contrôles d'un programme ou du système d'exploitation aussi accessibles que possible
-pour que l'utilisateur puisse toujours trouver l'information dont il a besoin.
-NVDA ne se préoccupe pas trop de filtrer et annoncer des informations dont il pense que l'utilisateur pourrait avoir besoin.
-</p>
-<p>
-Pour communiquer avec le système d'exploitation et les programmes, NVDA utilise un mélange de fonctions du système d'exploitation, Microsoft Active Accessibility (MSAA), IAccessible2, Java Access Bridge, des interfaces de programation spécifiques fournis par certaines applications.
- NVDA n'utilise aucun pilote d'interception vidéo spécifique, et essaiera toujours d'obtenir autant d'informations que possible de la part des interfaces spécifiques d'accessibilité avant de recourir à d'autres moyens.
-</p>
-<h3 id="1.7">1.7. Licence et Copyright.</h3>
+<h3 id="1.5">1.5. Licence et Copyright.</h3>
 <p>
 NVDA est Copyright (C) 2006-2008 NVDA contributers.
 </p>
@@ -155,7 +131,7 @@ Si vous ne vous êtes pas encore procuré une copie de NVDA, vous pouvez la téléch
 Rendez-vous à la section "Download" où vous trouverez un lien pour le téléchargement de la dernière révision de NVDA.
 </p>
 <p>
-Il y a actuellement deux présentations de NVDA. L'une comporte un installateur  qui vous guidera vocalement  pour l'installation de NVDA de sorte que vous pourrez ensuite lancer NVDA à volonté  par le menu Démarrer. L'autre est un fichier zip qui contient une version complètement autonome de NVDA, qu'on peut lancer de n'importe où,  y compris une clé USB ou un CD.
+Il y a actuellement deux présentations de NVDA. L'une comporte un installateur  qui vous guidera vocalement  pour l'installation de NVDA de sorte que vous pourrez ensuite lancer NVDA à volonté  par le menu Démarrer. L'autre est une archive autoextractible qui contient une version complètement autonome de NVDA, qu'on peut lancer de n'importe où,  y compris une clé USB ou un CD.
 </p>
 <h2 id="4">4. Installer NVDA.</h2>
 <h3 id="4.1">4.1. L'installateur de NVDA.</h3>
@@ -166,14 +142,14 @@ Si vous avez l'installateur NVDA, appuyez simplement sur entrée ou double-clique
 Pendant que l'installateur se charge, vous entendrez la musique d'installation de NVDA.
 Une fois chargé, une copie temporaire de NVDA vous permettra de suivre les dialogues d'installation et installera NVDA.
 Notez que si une autre copie de NVDA est active au moment de l'installation, un message apparaîtra vous indiquant que la copie en cours sera fermée.  Si vous pressez la touche "entrée" sur ce message, l'installateur fermera votre copie actuelle de NVDA pour ouvrir la sienne.
-Cela est nécessaire pour que l'installateur puisse mettre à jour tous les fichiers modifiés.
+Cela est nécessaire pour que l'installateur puisse mettre à jour tous les fichiers modifiés. Si vous avez déjà installé NVDA, votre copie sera désinstallée puis le programme démarrera l'installation de la nouvelle version.
 </p>
 <p>
-Quand vous aurez fini avec succès l'installation de NVDA, l'installateur démarrera pour vous la nouvelle copie de NVDA.
+Quand vous aurez fini avec succès l'installation, l'installateur vous indiquera que l'installation est terminée. S'il s'agit d'une réinstallation, il peut arriver qu'il vous demande de redémarrer le système. Il est très important d'effectuer ce redémarrage pour ne pas risquer de conséquences indésirables. Si l'installateur ne demande pas de redémarrage, un appui sur la touche Entrée arrêtera l'installateur et démarrera la nouvelle copie de NVDA.
 </p>
-<h3 id="4.2">4.2. Le Fichier Zip Portable.</h3>
+<h3 id="4.2">4.2. NVDA Portable.</h3>
 <p>
-Si vous avez la version de NVDA en fichier zip, il vous suffit de décompresser  ce fichier à l'endroit que vous voulez sur votre disque dur. Vous pouvez aussi le décompresser sur un média nomade  comme une clé USB ou un CD.
+Si vous avez la version portable de NVDA, il vous suffit d'appuyer sur Entrée ou de doublecliquer sur le fichier. Le programme vous demandera l'endroit où vous désirez placer les fichiers sur votre système.
 </p>
 <h2 id="5">5. Prise en main de NVDA.</h2>
 <h3 id="5.1">5.1. Démarrer NVDA.</h3>
@@ -181,7 +157,7 @@ Si vous avez la version de NVDA en fichier zip, il vous suffit de décompresser  
 Si NVDA a été installé à l'aide de l'installateur, alors il suffit, ou bien de frapper la combinaison control+alt+n, ou alors de choisir dans le menu Démarrer / Programmes / NVDA / NVDA.
 </p>
 <p>
-Pour démarrer la version portable extraite du fichier zip, rendez-vous dans le dossier où NVDA a été décompressé, et appuyez sur  entrée ou double-cliquez sur nvda.exe.
+Pour démarrer la version portable, rendez-vous dans le dossier où NVDA a été décompressé, et appuyez sur  entrée ou double-cliquez sur nvda.exe.
 </p>
 <p>
 Au lancement de NVDA, on entend d'abord une série de sons ascendants (indiquant que NVDA se charge). On doit ensuite l'entendre dire "NVDA chargé". Suivant la rapidité de votre ordinateur, ou si vous exécutez NVDA à partir d'une clé USB ou d'un autre périphérique lent, le démarrage peut demander un certain temps. Si ça prend encore plus longtemps, NVDA dira "chargement de sous-système. Attendez s'il vous plait...".
@@ -238,6 +214,14 @@ Une case à cocher qui une fois cochée, indique à NVDA de sauvegarder automatique
 <h6>Avertir avant de quitter NVDA.</h6>
 <p>
 Une case à cocher vous permettant d'indiquer si NVDA doit vous demander de confirmer quand vous voulez quitter NVDA.
+</p>
+<h6>Démerrer NVDA automatiquement après ma connexion à Windows</h6>
+<p>
+Si cette option est activée, NVDA démarrera automatiquement dès que vous vous connecterez à Windows.
+</p>
+<h6>Utiliser nvda sur l'écran de connexion à Windows (nécessite des privilèges administrateur)</h6>
+<p>
+Si vous vous connectez à Windows en fournissant un nom d'utilisateur et un mot de passe, l'activation de cette option permettra à NVDA de démarrer automatiquement dès l'écran de connexion au démarrage de Windows.
 </p>
 <h6>Niveau de log.</h6>
 <p>
@@ -401,6 +385,10 @@ Une case à cocher qui, cochée, fera que NVDA annonce la forme du pointeur souris
 <p>
 Une case à cocher qui, cochée, fera que NVDA annonce le texte présentement sous le pointeur souris, lorsqu'on la déplace sur l'écran. De cette façon, on peut trouver quelque chose qui apparaît à l'écran, en déplaçant physiquement la souris, plutôt que d'essayer de la trouver à l'aide de la navigation par objets.
 </p>
+<h6>Resolution d'unités de texte</h6>
+<p>
+Si NVDA est configuré pour annoncer le texte sous la souris quand vous la déplacez, cette option vous permet de choisir précisément la quantité de texte qui sera lue. Les options sont caractère, mot, ligne ou paragraphe.
+</p>
 <h6>Quand la souris entre dans un objet, annoncer son type</h6>
 <p>
 Si cette case à cocher est cochée, NVDA annoncera le type de l'objet quand la souris y entre.
@@ -426,6 +414,10 @@ Une case à cocher qui, cochée,  fera que NVDA annonce les suggestions à leur app
 <p>
 Lorsque cette case à cocher est cochée, NVDA annonce les bulles d'aide à leur apparition. Les bulles d'aide sont semblables aux suggestions mais généralement de plus grande taille, et sont associées à des évènements système tels que le débranchement d'un câble réseau, ou bien des alertes relatives à la sécurité.
 </p>
+<h6>Annoncer l'information de position de l'objet</h6>
+<p>
+Cette option vous permet de  choisir si vous voulez avoir l'information de position de l'objet (ex: 1 sur 4) annoncée quand vous allez sur un objet au moyen du focus ou de la navigation par objet.
+</p> 
 <h6>Annoncer les raccourcis clavier des objets.</h6>
 <p>
 Lorsque cette case à cocher est cochée, NVDA incluera, à l'annonce d'un objet ou d'une commande, le raccourci clavier qui lui est associé. Par exemple, le menu fichier d'une barre de menu peut avoir pour raccourci clavier alt+f.
@@ -440,12 +432,24 @@ Lorsque cette case à cocher est cochée, NVDA annonce l'état d'un objet avant tou
 </p>
 <h6>Annonce de l'avancement des barres de progression par des beeps.</h6>
 <p>
-Une barre de progression est un élément de contrôle qui se présente un peu comme une règle. Au fur et à mesure de l'avancement d'une tâche, une portion croîssante de la barre est mise en surbrillance. L'indication quantitative de l'avancement de la tâche est aussi indiqué en pourcentage. Des barres de progression sont affichées pour des tâches telles que le chargement d'une page Web, le retrait du courrier électronique,  le traitement d'un fichier son, etc. Si la case à cocher est cochée, NVDA fait entendre des beeps pour indiquer l'état d'avancement de la barre de progression. Ce peut être plus agréable que d'entendre l'annonce d'une suite de nombres.
+Une barre de progression est un élément de contrôle qui se présente un peu comme une règle. Au fur et à mesure de l'avancement d'une tâche, une portion croîssante de la barre est mise en surbrillance. L'indication quantitative de l'avancement de la tâche est aussi indiqué en pourcentage. Des barres de progression sont affichées pour des tâches telles que le chargement d'une page Web, le retrait du courrier électronique,  le traitement d'un fichier son, etc.
+</p>
+<p>
+Cette option   vous présente une liste déroulante qui contrôle la manière dont NVDA vous annonce l'évolution des barres de progression. Elle propose les options suivantes :
+</p>
+<ul>
+<li>Désactivé: L'évolution des barres de progression ne sera pas annoncée.</li>
+<li>Parler: Cette option Dit à NVDA d'annoncer l'évolution des barres de progression en pourcentage.  Chaque fois que la barre changera, NVDA dira la nouvelle valeur.</li>
+<li>Emettre des bips: Cette option dit à NVDA d'émettre un bip à chaque évolution de la barre de progression. Plus le bip est aigu, plus on approche de la fin de la barre.</li>
+<li>Parler et émettre des bips: Cette option dit à NVDA de parler et d'émettre des bips lors de la mise à jour de la barre de progression.</li>
+</ul>
+<h6>Suivre les barres de progression en arrière-plan</h6>
+<p>
+Cette option quand elle est cochée, dit à NVDA d'annoncer les barres de progression même si elles ne sont pas physiquement sur la fenêtre en avant-plan. Si vous minimisez ou quittez une fenêtre qui contient une barre de progression, NVDA continuera à la surveiller, vous permettant de faire autre chose pendant ce temps.
 </p>
 <h5 id="6.2.1.8">6.2.1.8. Paramètres du Tampon Virtuel.</h5>
 <p>
-Le dialogue des paramètres du tampon virtuel se trouve dans le menu des Préférences, sous "Tampon virtuel...".
-Les paramètres contenus dans ce dialogue n'affectent que l'ancienne version des tampons virtuels utilisée par Internet Explorer et Adobe Reader. Ce problème devrait être résolu dans les versions futures de NVDA.
+Le dialogue des paramètres du tampon virtuel se trouve dans le menu des Préférences, sous "Tampon virtuel...". On peut aussi y accéder par la combinaison de touches NVDA+Control+B.
 </p>
 <p>
 Ce dialogue comporte les options suivantes :
@@ -458,9 +462,14 @@ Ce champ définit, en nombre de caractères, la longueur maximum d'une ligne d'un 
 <p>
 Bien que les tampons virtuels ne soient pas réellement découpés en pages, ce champ définit le nombre de lignes dont on se déplace par appui sur  page préc ou page suiv dans le tampon virtuel.
 </p>
-<h6>Annoncer la présentation virtuelle aux changements du focus.</h6>
+<h6>Utiliser l'affichage tel qu'à l'écran</h6>
 <p>
-Quand cette case à cocher est cochée, NVDA annonce l'information textuelle et la présentation dans le tampon virtuel pour la commande atteinte par le focus, au lieu de se contenter de l'information de la commande fournie par Windows. Par exemple, tabuler jusqu'au lien nommé "chiens"  provoquera l'énoncé "lien chiens" au lieu de "chiens lien" parce que,  quand on se déplace dans le tampon virtuel avec les flèches, le type est toujours annoncé avant le texte. On peut, dans certains cas, désirer que cette option ne soit pas disponible, parce qu'ainsi, l'information serait présentée dans un meilleur ordre. Cependant, avec certains navigateurs Web, on peut avoir une information plus précise quand ceci est activé.
+Cette option vous permet d'indiquer si vous voulez que les objets tels que les liens ou autres champs soient placés sur leur propre ligne., ou s'ils doivent apparaître tels qu'à l'écran. Si l'option est activée, la représentation correspondra à l'aspect visuel. Sinon, chaque champ sera placé sur sa propre ligne.
+</p>
+<h6>Annoncer les  tables de visualisation</h6>
+<p>
+Quand cette option est désactivée, NVDA n'annonce que les tableaux de données quand il apparaît qu'il s'agit bien d'un tableau.
+Quand elle est activée, NVDA annonce également les tableaux utilisés simplement pour la présentation visuelle.
 </p>
 <h6>Configurer l'annonce de champs tels que liens et titres</h6>
 <p>
@@ -477,6 +486,10 @@ Cette option permet au mode formulaire d'être invoqué au changement de focus. Pa
 <p>
 Cette option, quand elle est cochée, permet à NVDA d'activer ou désactiver le mode formulaire quand on se déplace avec les flèches.
 Par exemple, si vous naviguez dans une page web avec les flèches et que vous arrivez sur une zone d'édition, NVDA passera automatiquement en mode formulaire. Si vous sortez de la zone d'écition, le mode formulaire sera automatiquement désactiv"é.
+</p>
+<h6>Indication audio du mode formulaire ou navigation</h6>
+<p>
+Si cette option est activée, NVDA émettra des sons particulier au passage du mode formulaire au mode navigation plutôt que d'anoncer le changement verbalement.
 </p>
 <h5 id="6.2.1.9">6.2.1.9. Format du document.</h5>
 <p>
