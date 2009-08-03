@@ -8,7 +8,6 @@
 
 from ctypes import *
 from ctypes.wintypes import *
-from logHandler import log
 
 #dll handles
 user32=windll.user32
@@ -347,16 +346,6 @@ def unhookWinEvent(*args):
 def sendMessage(hwnd,msg,param1,param2):
 	return user32.SendMessageW(hwnd,msg,param1,param2)
 
-def sendMessage2(hwnd,msg,param1,param2):
-	res=c_int()
-	log.debug("%s, %s, %s, %s"%(hwnd,msg,param1,param2))
-	ret=user32.SendMessageTimeoutW(hwnd,msg,param1,param2,SMTO_ABORTIFHUNG,500,byref(res))
-	log.debug("done (%s"%ret)
-	if ret:
-		return res.value
-	else:
-		raise OSError("sendMessage failed")
-
 def getWindowThreadProcessID(hwnd):
 	processID=c_int()
 	threadID=user32.GetWindowThreadProcessId(hwnd,byref(processID))
@@ -430,3 +419,19 @@ def getKeyNameText(scanCode,extended):
 	buf=create_unicode_buffer(32)
 	user32.GetKeyNameTextW((scanCode<<16)|(extended<<24),buf,31)
 	return buf.value
+
+def FindWindow(className, windowName):
+	res = user32.FindWindowW(className, windowName)
+	if res == 0:
+		raise WinError()
+	return res
+
+def MessageBox(hwnd, text, caption, type):
+	res = user32.MessageBoxW(hwnd, text, caption, type)
+	if res == 0:
+		raise WinError()
+	return res
+
+def PostMessage(hwnd, msg, wParam, lParam):
+	if not user32.PostMessageW(hwnd, msg, wParam, lParam):
+		raise WinError()
