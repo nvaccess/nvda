@@ -34,8 +34,8 @@ class WindowProcessHandleContainer(object):
 		@type windowHandle: int
 		"""
 		self.windowHandle=windowHandle
-		import IAccessibleHandler
-		self.processHandle=IAccessibleHandler.getProcessHandleFromHwnd(self.windowHandle)
+		import oleacc
+		self.processHandle=oleacc.GetProcessHandleFromHwnd(self.windowHandle)
 
 	def __del__(self):
 		winKernel.closeHandle(self.processHandle)

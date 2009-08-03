@@ -1,6 +1,8 @@
+import threading
 import ctypes
 import os
 import collections
+import wx
 import XMLFormatting
 from keyUtils import sendKey
 import scriptHandler
@@ -14,7 +16,6 @@ import textInfos.offsets
 import config
 import cursorManager
 import gui
-import wx
 import virtualBufferHandler
 import eventHandler
 import braille
@@ -408,6 +409,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.disableAutoPassThrough = False
 		self.rootDocHandle,self.rootID=self.getIdentifierFromNVDAObject(self.rootNVDAObject)
 		self._lastFocusObj = None
+		self._hadFirstGainFocus = False
 
 	def _get_passThrough(self):
 		return self._passThrough
@@ -422,12 +424,30 @@ class VirtualBuffer(cursorManager.CursorManager):
 			braille.handler.handleGainFocus(self)
 
 	def loadBuffer(self):
+		self.isLoading = True
+		self._loadProgressCallLater = wx.CallLater(1000, self._loadProgress)
+		threading.Thread(target=self._loadBuffer).start()
+
+	def _loadBuffer(self):
 		self.bindingHandle=VBufClient.VBufClient_connect(self.rootNVDAObject.processID)
 		if not self.bindingHandle:
 			raise RuntimeError("Could not inject VBuf lib")
 		self.VBufHandle=VBufClient.VBufRemote_createBuffer(self.bindingHandle,self.rootDocHandle,self.rootID,self.backendLibPath)
 		if not self.VBufHandle:
 			raise RuntimeError("Could not remotely create virtualBuffer")
+		queueHandler.queueFunction(queueHandler.eventQueue, self._loadBufferDone)
+
+	def _loadBufferDone(self):
+		self._loadProgressCallLater.Stop()
+		self.isLoading = False
+		if self._hadFirstGainFocus:
+			# If this buffer has already had focus once while loaded, this is a refresh.
+			speech.speakMessage(_("Refreshed"))
+		if api.getFocusObject().virtualBuffer == self:
+			self.event_virtualBuffer_gainFocus()
+
+	def _loadProgress(self):
+		ui.message(_("Loading document..."))
 
 	def unloadBuffer(self):
 		if self.VBufHandle is not None:
@@ -471,20 +491,21 @@ class VirtualBuffer(cursorManager.CursorManager):
 		"""
 		raise NotImplementedError
 
-	def event_virtualBuffer_firstGainFocus(self):
-		"""Triggered the first time this virtual buffer ever gains focus.
-		"""
-		speech.cancelSpeech()
-		virtualBufferHandler.reportPassThrough(self)
-		speech.speakObjectProperties(self.rootNVDAObject,name=True)
-		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
-
 	def event_virtualBuffer_gainFocus(self):
 		"""Triggered when this virtual buffer gains focus.
 		This event is only fired upon entering this buffer when it was not the current buffer before.
 		This is different to L{event_gainFocus}, which is fired when an object inside this buffer gains focus, even if that object is in the same buffer.
 		"""
+		if not self._hadFirstGainFocus:
+			# This buffer is gaining focus for the first time.
+			if not self.passThrough:
+				speech.cancelSpeech()
+				virtualBufferHandler.reportPassThrough(self)
+				speech.speakObjectProperties(self.rootNVDAObject,name=True)
+				info=self.makeTextInfo(textInfos.POSITION_CARET)
+				sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
+			self._hadFirstGainFocus = True
+
 		virtualBufferHandler.reportPassThrough(self)
 		braille.handler.handleGainFocus(self)
 
@@ -565,7 +586,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return sendKey(keyPress)
 		self.unloadBuffer()
 		self.loadBuffer()
-		speech.speakMessage(_("Refreshed"))
 	script_refreshBuffer.__doc__ = _("Refreshes the virtual buffer content")
 
 	def script_toggleScreenLayout(self,keyPress):
