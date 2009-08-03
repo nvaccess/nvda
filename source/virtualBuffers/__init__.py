@@ -583,7 +583,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def script_refreshBuffer(self,keyPress):
 		if self.VBufHandle is None:
-			return sendKey(keyPress)
+			return
 		self.unloadBuffer()
 		self.loadBuffer()
 	script_refreshBuffer.__doc__ = _("Refreshes the virtual buffer content")
