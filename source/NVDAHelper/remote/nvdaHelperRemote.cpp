@@ -66,19 +66,21 @@ void inProcess_terminate() {
 	Beep(440,35);
 }
 
-bool registerWinEventHook(WINEVENTPROC hookProc) {
-	inProcess_registeredWinEventHooks.insert(winEventHookRegistry_t::value_type(GetCurrentThreadId(),hookProc));
+bool registerWinEventHook(WINEVENTPROC hookProc, int threadID) {
+	if(threadID==0) threadID=GetCurrentThreadId();
+	inProcess_registeredWinEventHooks.insert(winEventHookRegistry_t::value_type(threadID,hookProc));
 	return true;
 }
 
-bool unregisterWinEventHook(WINEVENTPROC hookProc) {
-	winEventHookRegistry_t::iterator i=inProcess_registeredWinEventHooks.find(GetCurrentThreadId());
+bool unregisterWinEventHook(WINEVENTPROC hookProc, int threadID) {
+	if(threadID==0) threadID=GetCurrentThreadId();
+	winEventHookRegistry_t::iterator i=inProcess_registeredWinEventHooks.find(threadID);
 	if(i==inProcess_registeredWinEventHooks.end()) return false;
 	inProcess_registeredWinEventHooks.erase(i);
 return true;
 }
 
-bool registerWindowsHook(int hookType, HOOKPROC hookProc) {
+bool registerWindowsHook(int hookType, HOOKPROC hookProc, int threadID) {
 	windowsHookRegistry_t* r=NULL;
 	if(hookType==WH_GETMESSAGE) {
 		r=&inProcess_registeredGetMessageWindowsHooks;
@@ -86,11 +88,12 @@ bool registerWindowsHook(int hookType, HOOKPROC hookProc) {
 		r=&inProcess_registeredCallWndProcWindowsHooks;
 	}
 	if(r==NULL) return false;
-	r->insert(windowsHookRegistry_t::value_type(GetCurrentThreadId(),hookProc));
+	if(threadID==0) threadID=GetCurrentThreadId();
+	r->insert(windowsHookRegistry_t::value_type(threadID,hookProc));
 	return true;
 }
 
-bool unregisterWindowsHook(int hookType, HOOKPROC hookProc) {
+bool unregisterWindowsHook(int hookType, HOOKPROC hookProc, int threadID) {
 	windowsHookRegistry_t* r=NULL;
 	if(hookType==WH_GETMESSAGE) {
 		r=&inProcess_registeredGetMessageWindowsHooks;
@@ -98,7 +101,8 @@ bool unregisterWindowsHook(int hookType, HOOKPROC hookProc) {
 		r=&inProcess_registeredCallWndProcWindowsHooks;
 	}
 	if(r==NULL) return false;
-	r->erase(GetCurrentThreadId());
+	if(threadID==0) threadID=GetCurrentThreadId();
+	r->erase(threadID);
 	return true;
 }
 
