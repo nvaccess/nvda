@@ -15,6 +15,9 @@ all:
 	cd local && $(MAKE) /nologo DEBUG=$(DEBUG) DEBUGLOG=$(DEBUGLOG)
 	cd vbufBackends && $(MAKE) /nologo DEBUG=$(DEBUG) DEBUGLOG=$(DEBUGLOG)
 
+install: all
+	xcopy $(OUTDIR)\*.dll ..\lib
+
 clean:
 	cd remote && $(MAKE) /nologo clean
 	cd local && $(MAKE) /nologo clean
