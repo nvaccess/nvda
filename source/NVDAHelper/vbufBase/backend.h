@@ -55,6 +55,11 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
  */
 	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode=NULL)=0;
 
+/**
+ * Destructor, (protected as you must use the destroy method).
+ */
+	virtual ~VBufBackend_t();
+
 	public:
 
 /**
@@ -87,12 +92,12 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
  */
 	void update();
 
-/**
- * Destructor
+ /*
+ * Destroies and deletes the backend.
  */
-	virtual ~VBufBackend_t();
+	virtual void destroy();
 
-	/**
+ /**
  * Useful for cerializing access to the buffer
  */
 	VBufLock_t lock;

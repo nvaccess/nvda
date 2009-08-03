@@ -34,7 +34,7 @@ void VBufRemote_destroyBuffer(VBufRemote_bufferHandle_t* buffer) {
 	HINSTANCE backendLibHandle=i->second;
 	backendLibHandles.erase(i); 
 	backend->lock.acquire();
-	delete backend;
+	backend->destroy();
 	FreeLibrary(backendLibHandle);
 	*buffer=NULL;
 }

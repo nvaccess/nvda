@@ -81,6 +81,10 @@ void VBufBackend_t::update() {
 	DEBUG_MSG(L"Update complete");
 }
 
+void VBufBackend_t::destroy() {
+	delete this;
+}
+
 VBufBackend_t::~VBufBackend_t() {
 	DEBUG_MSG(L"Backend being destroied");
 }
