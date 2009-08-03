@@ -20,6 +20,18 @@
 
 using namespace std;
 
+VBufStorage_textContainer_t::VBufStorage_textContainer_t(wstring str): wstring(str) {}
+
+VBufStorage_textContainer_t::~VBufStorage_textContainer_t() {}
+
+const wstring& VBufStorage_textContainer_t::getString() {
+	return *this;
+}
+
+void VBufStorage_textContainer_t::destroy() {
+	delete this;
+}
+
 //controlFieldNodeIdentifier implementation
 
 VBufStorage_controlFieldNodeIdentifier_t::VBufStorage_controlFieldNodeIdentifier_t(int docHandleArg, int IDArg) : docHandle(docHandleArg), ID(IDArg) {
@@ -816,7 +828,7 @@ int VBufStorage_buffer_t::getTextLength() const {
 	return length;
 }
 
-bool VBufStorage_buffer_t::getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup) {
+VBufStorage_textContainer_t*  VBufStorage_buffer_t::getTextInRange(int startOffset, int endOffset, bool useMarkup) {
 	if(this->rootNode==NULL) {
 		DEBUG_MSG(L"buffer is empty, returning false");
 		return false;
@@ -825,9 +837,10 @@ bool VBufStorage_buffer_t::getTextInRange(int startOffset, int endOffset, std::w
 		DEBUG_MSG(L"Bad offsets of "<<startOffset<<L" and "<<endOffset<<L", returning false");
 		return false;
 	}
+	wstring text;
 	this->rootNode->getTextInRange(startOffset,endOffset,text,useMarkup);
 	DEBUG_MSG(L"Got text between offsets "<<startOffset<<L" and "<<endOffset<<L", returning true");
-	return true;
+	return new VBufStorage_textContainer_t(text);
 }
 
 VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, VBufStorage_findDirection_t direction, const std::wstring& attribsString, int *startOffset, int *endOffset) {

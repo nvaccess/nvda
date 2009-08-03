@@ -115,12 +115,15 @@ int VBufRemote_getTextLength(VBufRemote_bufferHandle_t buffer) {
 
 int VBufRemote_getTextInRange(VBufRemote_bufferHandle_t buffer, int startOffset, int endOffset, wchar_t** text, int useMarkup) {
 	VBufBackend_t* backend=(VBufBackend_t*)buffer;
-	std::wstring s;
 	backend->lock.acquire();
-	int res=backend->getTextInRange(startOffset,endOffset,s,useMarkup);
+	VBufStorage_textContainer_t* textContainer=backend->getTextInRange(startOffset,endOffset,useMarkup);
 	backend->lock.release();
-	*text=_wcsdup(s.c_str());
-	return res;
+	if(textContainer==NULL) {
+		return false;
+	}
+	*text=_wcsdup(textContainer->getString().c_str());
+	textContainer->destroy();
+	return true;
 }
 
 int VBufRemote_getLineOffsets(VBufRemote_bufferHandle_t buffer, int offset, int maxLineLength, int useScreenLayout, int *startOffset, int *endOffset) {
