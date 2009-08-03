@@ -35,8 +35,8 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 
 def initialize():
 	global remoteLib, localLib, winEventHookID
-	localLib=windll.LoadLibrary('lib/nvdaHelperLocal.dll')
-	remoteLib=windll.LoadLibrary('lib/NVDAHelperRemote.dll')
+	localLib=cdll.LoadLibrary('lib/nvdaHelperLocal.dll')
+	remoteLib=cdll.LoadLibrary('lib/NVDAHelperRemote.dll')
 	if remoteLib.nvdaHelper_initialize() < 0:
 		raise RuntimeError("Error initializing NVDAHelper")
 	winEventHookID=winUser.setWinEventHook(EVENT_TYPEDCHARACTER,EVENT_INPUTLANGCHANGE,0,winEventCallback,0,0,0)

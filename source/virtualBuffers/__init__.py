@@ -3,6 +3,7 @@ import ctypes
 import os
 import collections
 import wx
+import NVDAHelper
 import XMLFormatting
 from keyUtils import sendKey
 import scriptHandler
@@ -46,8 +47,6 @@ def dictToMultiValueAttribsString(d):
 		mainList.append(attrib)
 	return "%s;"%";".join(mainList)
 
-VBufClient=ctypes.cdll.LoadLibrary('lib/VBufClient.dll')
-
 class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	UNIT_CONTROLFIELD = "controlField"
@@ -57,7 +56,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		endOffset = ctypes.c_int()
 		docHandle = ctypes.c_int()
 		ID = ctypes.c_int()
-		VBufClient.VBufRemote_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID))
+		NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID))
 		return docHandle.value, ID.value
 
 	def _getNVDAObjectFromOffset(self,offset):
@@ -66,12 +65,12 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getOffsetsFromNVDAObject(self,obj):
 		docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
-		node = VBufClient.VBufRemote_getControlFieldNodeWithIdentifier(self.obj.VBufHandle, docHandle, ID)
+		node = NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(self.obj.VBufHandle, docHandle, ID)
 		if not node:
 			raise LookupError
 		start = ctypes.c_int()
 		end = ctypes.c_int()
-		VBufClient.VBufRemote_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
+		NVDAHelper.localLib.VBuf_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
 		return start.value, end.value
 
 	def __init__(self,obj,position):
@@ -87,11 +86,11 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getSelectionOffsets(self):
 		start=ctypes.c_int()
 		end=ctypes.c_int()
-		VBufClient.VBufRemote_getSelectionOffsets(self.obj.VBufHandle,ctypes.byref(start),ctypes.byref(end))
+		NVDAHelper.localLib.VBuf_getSelectionOffsets(self.obj.VBufHandle,ctypes.byref(start),ctypes.byref(end))
 		return start.value,end.value
 
 	def _setSelectionOffsets(self,start,end):
-		VBufClient.VBufRemote_setSelectionOffsets(self.obj.VBufHandle,start,end)
+		NVDAHelper.localLib.VBuf_setSelectionOffsets(self.obj.VBufHandle,start,end)
 
 	def _getCaretOffset(self):
 		return self._getSelectionOffsets()[0]
@@ -100,13 +99,13 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return self._setSelectionOffsets(offset,offset)
 
 	def _getStoryLength(self):
-		return VBufClient.VBufRemote_getTextLength(self.obj.VBufHandle)
+		return NVDAHelper.localLib.VBuf_getTextLength(self.obj.VBufHandle)
 
 	def _getTextRange(self,start,end):
 		if start==end:
 			return ""
 		text=ctypes.c_wchar_p()
-		VBufClient.VBufRemote_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),False)
+		NVDAHelper.localLib.VBuf_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),False)
 		return text.value
 
 	def getTextWithFields(self,formatConfig=None):
@@ -115,7 +114,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if start==end:
 			return ""
 		text=ctypes.c_wchar_p()
-		VBufClient.VBufRemote_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),True)
+		NVDAHelper.localLib.VBuf_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),True)
 		commandList=XMLFormatting.XMLTextParser().parse(text.value)
 		for index in xrange(len(commandList)):
 			if isinstance(commandList[index],textInfos.FieldCommand) and isinstance(commandList[index].field,textInfos.ControlField):
@@ -123,23 +122,23 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return commandList
 
 	def _getWordOffsets(self,offset):
-		#Use VBufClient_getBufferLineOffsets with out screen layout to find out the range of the current field
+		#Use VBuf_getBufferLineOffsets with out screen layout to find out the range of the current field
 		lineStart=ctypes.c_int()
 		lineEnd=ctypes.c_int()
-		VBufClient.VBufRemote_getLineOffsets(self.obj.VBufHandle,offset,0,False,ctypes.byref(lineStart),ctypes.byref(lineEnd))
+		NVDAHelper.localLib.VBuf_getLineOffsets(self.obj.VBufHandle,offset,0,False,ctypes.byref(lineStart),ctypes.byref(lineEnd))
 		word_startOffset,word_endOffset=super(VirtualBufferTextInfo,self)._getWordOffsets(offset)
 		return (max(lineStart.value,word_startOffset),min(lineEnd.value,word_endOffset))
 
 	def _getLineOffsets(self,offset):
 		lineStart=ctypes.c_int()
 		lineEnd=ctypes.c_int()
-		VBufClient.VBufRemote_getLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],config.conf["virtualBuffers"]["useScreenLayout"],ctypes.byref(lineStart),ctypes.byref(lineEnd))
+		NVDAHelper.localLib.VBuf_getLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],config.conf["virtualBuffers"]["useScreenLayout"],ctypes.byref(lineStart),ctypes.byref(lineEnd))
 		return lineStart.value,lineEnd.value
  
 	def _getParagraphOffsets(self,offset):
 		lineStart=ctypes.c_int()
 		lineEnd=ctypes.c_int()
-		VBufClient.VBufRemote_getLineOffsets(self.obj.VBufHandle,offset,0,True,ctypes.byref(lineStart),ctypes.byref(lineEnd))
+		NVDAHelper.localLib.VBuf_getLineOffsets(self.obj.VBufHandle,offset,0,True,ctypes.byref(lineStart),ctypes.byref(lineEnd))
 		return lineStart.value,lineEnd.value
 
 	def _normalizeControlField(self,attrs):
@@ -160,7 +159,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			endOffset=ctypes.c_int()
 			docHandle=ctypes.c_int()
 			ID=ctypes.c_int()
-			VBufClient.VBufRemote_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID))
+			NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID))
 			return startOffset.value,endOffset.value
 		return super(VirtualBufferTextInfo, self)._getUnitOffsets(unit, offset)
 
@@ -401,7 +400,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	TextInfo=VirtualBufferTextInfo
 
 	def __init__(self,rootNVDAObject,backendLibPath=None):
-		self.backendLibPath=os.path.join(os.getcwd(),backendLibPath)
+		self.backendLibPath=os.path.join(os.getcwdu(),backendLibPath)
 		self.rootNVDAObject=rootNVDAObject
 		super(VirtualBuffer,self).__init__()
 		self.VBufHandle=None
@@ -429,10 +428,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		threading.Thread(target=self._loadBuffer).start()
 
 	def _loadBuffer(self):
-		self.bindingHandle=VBufClient.VBufClient_connect(self.rootNVDAObject.processID)
-		if not self.bindingHandle:
-			raise RuntimeError("Could not inject VBuf lib")
-		self.VBufHandle=VBufClient.VBufRemote_createBuffer(self.bindingHandle,self.rootDocHandle,self.rootID,self.backendLibPath)
+		self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,self.backendLibPath)
 		if not self.VBufHandle:
 			raise RuntimeError("Could not remotely create virtualBuffer")
 		queueHandler.queueFunction(queueHandler.eventQueue, self._loadBufferDone)
@@ -452,11 +448,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def unloadBuffer(self):
 		if self.VBufHandle is not None:
 			try:
-				VBufClient.VBufRemote_destroyBuffer(ctypes.byref(ctypes.c_int(self.VBufHandle)))
-			except WindowsError:
-				pass
-			try:
-				VBufClient.VBufClient_disconnect(self.bindingHandle)
+				NVDAHelper.localLib.VBuf_destroyBuffer(ctypes.byref(ctypes.c_int(self.VBufHandle)))
 			except WindowsError:
 				pass
 			self.VBufHandle=None
@@ -619,7 +611,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			raise ValueError("unknown direction: %s"%direction)
 		while True:
 			try:
-				node=VBufClient.VBufRemote_findNodeByAttributes(self.VBufHandle,offset,direction,attribs,ctypes.byref(startOffset),ctypes.byref(endOffset))
+				node=NVDAHelper.localLib.VBuf_findNodeByAttributes(self.VBufHandle,offset,direction,attribs,ctypes.byref(startOffset),ctypes.byref(endOffset))
 			except:
 				return
 			if not node:
