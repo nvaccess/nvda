@@ -6,7 +6,6 @@
 
 from ctypes import *
 from ctypes.wintypes import *
-import IAccessibleHandler
 import winKernel
 import winUser
 from NVDAObjects.IAccessible import IAccessible, PropertyPage
@@ -17,7 +16,7 @@ from keyUtils import sendKey
 from scriptHandler import isScriptWaiting
 import api
 import mouseHandler
-import IAccessibleHandler
+import oleacc
 
 #contact list window messages
 CLM_FIRST=0x1000    #this is the same as LVM_FIRST
@@ -85,7 +84,7 @@ class AppModule(_default.AppModule):
 			obj.__class__=mirandaIMHyperlink
 		elif obj.windowClassName=="ColourPicker":
 			obj.role=controlTypes.ROLE_COLORCHOOSER
-		elif obj.IAccessibleRole==IAccessibleHandler.ROLE_SYSTEM_PROPERTYPAGE:
+		elif obj.IAccessibleRole==oleacc.ROLE_SYSTEM_PROPERTYPAGE:
 			obj.__class__=MPropertyPage
 
 class mirandaIMContactList(IAccessible):

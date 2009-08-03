@@ -7,7 +7,7 @@
 import ctypes
 import comtypes.client
 import comtypes.automation
-import IAccessibleHandler
+import winUser
 import globalVars
 import speech
 from keyUtils import sendKey, key
@@ -321,7 +321,7 @@ class WordDocument(Window):
 	def _get_WinwordDocumentObject(self):
 		if not hasattr(self,'_WinwordDocumentObject'): 
 			ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
-			if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,IAccessibleHandler.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
+			if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,winUser.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
 				raise OSError("No native object model")
 			self._WinwordDocumentObject=comtypes.client.dynamic.Dispatch(ptr)
  		return self._WinwordDocumentObject

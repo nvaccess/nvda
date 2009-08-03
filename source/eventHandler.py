@@ -1,4 +1,3 @@
-import CoCallCancellationHandler
 import queueHandler
 import api
 import speech
@@ -100,15 +99,6 @@ def doPreGainFocus(obj):
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
 		executeEvent("focusEntered",parent)
-	if len(globalVars.focusAncestors)>1 and (obj.windowClassName=="SALTMPSUBFRAME" or 
-(globalVars.focusAncestors[1].windowClassName=="TformMain" and 
-globalVars.focusAncestors[1].name=="SpyBot - Search & Destroy") or 
-globalVars.focusAncestors[1].windowClassName=="NativeHWNDHost"): 
-		if not CoCallCancellationHandler.isRunning: 
-			CoCallCancellationHandler.start() 
-	elif CoCallCancellationHandler.isRunning:
-		import wx
-		wx.CallAfter(CoCallCancellationHandler.stop)
 	return True
  
 def doPreDocumentLoadComplete(obj):
@@ -119,11 +109,6 @@ def doPreDocumentLoadComplete(obj):
 			obj.virtualBuffer=v
 			#Focus may be in this new virtualBuffer, so force focus to look up its virtualBuffer
 			focusObject.virtualBuffer=virtualBufferHandler.getVirtualBuffer(focusObject)
-			if focusObject.virtualBuffer==v:
-				if hasattr(v,"event_virtualBuffer_firstGainFocus"):
-					v.event_virtualBuffer_firstGainFocus()
-				if hasattr(v,"event_virtualBuffer_gainFocus"):
-					v.event_virtualBuffer_gainFocus()
 	return True
 
 def executeEvent_appModuleLevel(name,obj,**kwargs):

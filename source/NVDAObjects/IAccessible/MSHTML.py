@@ -12,8 +12,8 @@ import comtypes.automation
 from comInterfaces.servprov import IServiceProvider
 import winUser
 import globalVars
+import oleacc
 import aria
-import IAccessibleHandler
 from keyUtils import key, sendKey
 import api
 import textInfos
@@ -64,10 +64,10 @@ def nextIAccessibleInDom(IHTMLElement,back=False):
 def IAccessibleFromIHTMLElement(IHTMLElement):
 	try:
 		s=IHTMLElement.QueryInterface(IServiceProvider)
-		interfaceAddress=s.QueryService(ctypes.byref(IAccessibleHandler.IAccessible._iid_),ctypes.byref(IAccessibleHandler.IAccessible._iid_))
+		interfaceAddress=s.QueryService(ctypes.byref(oleacc.IAccessible._iid_),ctypes.byref(oleacc.IAccessible._iid_))
 	except COMError:
 		raise NotImplementedError
-	ptr=ctypes.POINTER(IAccessibleHandler.IAccessible)(interfaceAddress)
+	ptr=ctypes.POINTER(oleacc.IAccessible)(interfaceAddress)
 	return ptr
 
 def IHTMLElementHasIAccessible(IHTMLElement):
@@ -194,6 +194,8 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		text=self._rangeObj.text
 		if not text:
 			text=""
+		if controlTypes.STATE_PROTECTED in self.obj.states:
+			text='*'*len(text)
 		return text
 
 	def move(self,unit,direction, endPoint=None):
@@ -274,7 +276,7 @@ class MSHTML(IAccessible):
 
 	def _get_value(self):
 		IARole=self.IAccessibleRole
-		if IARole in (IAccessibleHandler.ROLE_SYSTEM_PANE,IAccessibleHandler.ROLE_SYSTEM_TEXT):
+		if IARole in (oleacc.ROLE_SYSTEM_PANE,oleacc.ROLE_SYSTEM_TEXT):
 			return ""
 		else:
 			return super(MSHTML,self).value

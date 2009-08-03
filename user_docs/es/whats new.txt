@@ -38,6 +38,10 @@ Cambios desde 0.6 P3:
 * nuevo: Cuando se navega por documentos web, los marcadores de ARIA ahora son anunciados, y puedes moverte adelante y atrás a través de ellos utilizando d y shift+d, respectivamente. (#192)
 * nuevo: El diálogo de lista de enlaces disponible cuando se exploran documentos web se ha convertido ahora en un diálogo Lista de Elementos el cual puede listar enlaces, encabezados y marcadores. Los encabezados y marcadores son presentados jerárquicamente. (#363)
 * nuevo: El nuevo diálogo Lista de Elementos filtra la lista según escribas para contener sólo aquéllos elementos incluído el texto que fue tecleado. Puedes presionar retroceso para limpiar el filtro tal que todos los elementos sean presentados nuevamente. (#173)
+* Nuevo: Las versiones portátiles de NVDA ahora buscan en el directorio 'userConfig' dentro del directorio de NVDA, las configuraciones del usuario. Como la versión del instalador, esto mantiene la configuración del usuario separada de NVDA.  
+* Nuevo: Los módulos personales de apps, los controladores de líneas braille y los controladores de sintetizadores ahora pueden ser almacenados en el directorio de la configuración del usuario. (#337)
+* Corrección: Ya no falla al inicializar mientras se busca los appModules personales y el directorio de configuración del usuario contiene caracteres que no son ascii. (#377)
+ 
 
 
   

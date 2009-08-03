@@ -361,6 +361,7 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	"""
 	if not subdir:
 		subdir = module.__name__
-	dirs = getConfigDirs(subdir)
+	# Python 2.x doesn't properly handle unicode import paths, so convert them.
+	dirs = [dir.encode("mbcs") for dir in getConfigDirs(subdir)]
 	dirs.extend(module.__path__ )
 	module.__path__ = dirs

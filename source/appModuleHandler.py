@@ -86,6 +86,8 @@ def getKeyMapFileName(appName,layout):
 	@rtype: str
 	"""
 	for dir in appModules.__path__+['.\\appModules']:
+		# Python's import paths aren't unicode, but we prefer to deal with unicode, so convert them.
+		dir = dir.decode("mbcs")
 		fname = os.path.join(dir, '%s_%s.kbd' % (appName, layout))
 		if os.path.isfile(fname):
 			log.debug("Found keymap file for %s at %s"%(appName,fname)) 
