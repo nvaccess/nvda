@@ -12,7 +12,6 @@ import locale
 import gettext
 import time
 import optparse
-import win32gui
 import win32con
 import globalVars
 import config
@@ -26,7 +25,7 @@ class NoConsoleOptionParser(optparse.OptionParser):
 
 	def print_help(self, file=None):
 		"""Shows help in a standard Windows message dialog"""
-		win32gui.MessageBox(0, self.format_help(), "Help", 0)
+		winUser.MessageBox(0, unicode(self.format_help()), u"Help", 0)
 
 	def error(self, msg):
 		"""Shows an error in a standard Windows message dialog, and then exits NVDA"""
@@ -34,7 +33,7 @@ class NoConsoleOptionParser(optparse.OptionParser):
 		if self.usage:
 			out = self.get_usage()
 		out += "\nerror: %s" % msg
-		win32gui.MessageBox(0, out, "Error", 0)
+		winUser.MessageBox(0, unicode(out), u"Error", 0)
 		sys.exit(2)
 
 globalVars.startTime=time.time()
@@ -68,7 +67,7 @@ parser.add_option('-m','--minimal',action="store_true",dest='minimal',default=Fa
 
 def terminateRunningNVDA(window):
 	processID,threadID=winUser.getWindowThreadProcessID(window)
-	win32gui.PostMessage(window,win32con.WM_QUIT,0,0)
+	winUser.PostMessage(window,win32con.WM_QUIT,0,0)
 	h=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 	if not h:
 		# The process is already dead.
@@ -92,10 +91,10 @@ def terminateRunningNVDA(window):
 
 #Handle running multiple instances of NVDA
 try:
-	oldAppWindowHandle=win32gui.FindWindow('wxWindowClassNR','NVDA')
+	oldAppWindowHandle=winUser.FindWindow(u'wxWindowClassNR',u'NVDA')
 except:
 	oldAppWindowHandle=0
-if not win32gui.IsWindow(oldAppWindowHandle):
+if not winUser.isWindow(oldAppWindowHandle):
 	oldAppWindowHandle=0
 if oldAppWindowHandle and (globalVars.appArgs.quit or globalVars.appArgs.replace):
 	try:

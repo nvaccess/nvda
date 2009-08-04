@@ -40,7 +40,10 @@ Cambios dende 0.6 P3:
 * novo: O novo diálogo Lista de Elementos filtra a lista segundo se teclea para conter só aqueles elementos incluíndose o texto que foi escribido. Podes premer retroceso para limpar o filtrado tal que todos os elementos sexan presentados de novo. (#173)
 * Novo: As versións portátiles do NVDA agora buscan no directorio 'userConfig' dentro do directorio do NVDA, as configuracións do usuario. Como a versión do instalador, esto mantén a configuración do usuario separada do NVDA.  
 * Novo: Os módulos personais de apps, os controladores de liñas braille e os controladores de sintetizadores agora poden ser almacenados no directorio da configuración do usuario. (#337)
-* Correción: Xa non falla ó inicializar mentres se buscan os appModules personais e o directorio de configuración do usuario contén caracteres que non son ascii. (#377)
+* correción: NVDA agora tentará recuperarse dalgunhas situacións que anteriormente causarían que se colgara completamente. Poderá tomar sobre 10 segundos para que NVDA detecte e se recupere de tales colgaduras.
+* novo: Ls modos virtuais agora son interpretados no fondo, permitindo ó usuario interactuar co sistema ata certo punto durante o proceso de interpretado. O usuario será notificado de que o documento está sendo interpretado se lle lebara máis dun segundo.
+* novo: Se NVDA detecta que se colgou por algunha razón, Pasará automáticamente por todas as pulsacións para que o usuario teña unha mellor posibilidade de recuperación do sistema.
+
 
 
 

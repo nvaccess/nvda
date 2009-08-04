@@ -428,14 +428,21 @@ class VirtualBuffer(cursorManager.CursorManager):
 		threading.Thread(target=self._loadBuffer).start()
 
 	def _loadBuffer(self):
-		self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,self.backendLibPath)
-		if not self.VBufHandle:
-			raise RuntimeError("Could not remotely create virtualBuffer")
+		try:
+			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,self.backendLibPath)
+			if not self.VBufHandle:
+				raise RuntimeError("Could not remotely create virtualBuffer")
+		except:
+			log.error("", exc_info=True)
+			queueHandler.queueFunction(queueHandler.eventQueue, self._loadBufferDone, success=False)
+			return
 		queueHandler.queueFunction(queueHandler.eventQueue, self._loadBufferDone)
 
-	def _loadBufferDone(self):
+	def _loadBufferDone(self, success=True):
 		self._loadProgressCallLater.Stop()
 		self.isLoading = False
+		if not success:
+			return
 		if self._hadFirstGainFocus:
 			# If this buffer has already had focus once while loaded, this is a refresh.
 			speech.speakMessage(_("Refreshed"))
@@ -575,7 +582,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def script_refreshBuffer(self,keyPress):
 		if self.VBufHandle is None:
-			return sendKey(keyPress)
+			return
 		self.unloadBuffer()
 		self.loadBuffer()
 	script_refreshBuffer.__doc__ = _("Refreshes the virtual buffer content")

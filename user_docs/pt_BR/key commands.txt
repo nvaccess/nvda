@@ -58,7 +58,7 @@ NVDA+f2 - passa a próxima tecla:
 Permite que a próxima tecla seja enviada diretamente ao sistema, sem executar o comando correspondente do NVDA caso haja algum.
 
 Shift+NVDA+seta cima - anuncia seleção atual:
-Anuncia o texto atualmente selecionado em campos de edição e documentos. Se não houver seleção ele diz isso.
+Anuncia o texto atualmente selecionado em campos de edição e documentos. Se não houver seleção ele diz que não há.
 	
 NVDA+seta cima- anuncia linha atual:
 Anuncia a linha atual em campos de edição e documentos.
@@ -72,8 +72,8 @@ Lê informações sobre o objeto de navegação atual (útil para desenvolvedore
 Control+NVDA+c - salva configuração:
 Salva a configuração.
 
-Control+NVDA+r - reverte à configuração:
-Volta à última configuração salva.
+Control+NVDA+r - restaura à configuração:
+Volta à configuração padrão.
 
 Alterar opções encontradas nas janelas de configurações
 
@@ -102,10 +102,10 @@ Control+NVDA+seta direita - parâmetro seguinte:
 Move e anuncia o parâmetro de voz seguinte.
 
 Control+NVDA+seta cima - aumenta parâmetro:
-Aumenta o parâmetro de voz atual.
+Aumenta o valor do parâmetro de voz atual.
 
 Control+NVDA+seta baixo - diminui parâmetro:
-Diminui o parâmetro de voz atual.
+Diminui o valor do parâmetro de voz atual.
 
 Mostrar janelas de configuração
 
@@ -157,13 +157,13 @@ NVDA+num 4 - objeto anterior de navegação:
 Coloca como objeto de navegação aquele antes do atual no mesmo nível.
 
 Shift+NVDA+num 4 - objeto anterior de navegação em fluxo:
-Coloca como objeto de navegação aquele antes do atual no fluxo total dos objetos, isto é, não necessariamente no mesmo nível.
+Coloca como objeto de navegação aquele antes do atual no fluxo total dos objetos, isto é, não necessariamente o que estiver no mesmo nível.
 
 NVDA+num 6 - próximo objeto de navegação:
 Coloca como objeto de navegação aquele depois do atual no mesmo nível.
 
 Shift+NVDA+num 6 - próximo objeto de navegação em fluxo:
-Coloca como objeto de navegação aquele depois do atual no fluxo total dos objetos, isto é, não necessariamente no mesmo nível.
+Coloca como objeto de navegação aquele depois do atual no fluxo total dos objetos, isto é, não necessariamente o que estiver no mesmo nível.
 
 NVDA+num Enter - ação padrão do objeto de navegação:
 Executa a ação padrão do objeto atual, por exemplo, pressiona um botão, ativa um item de lista, etc.

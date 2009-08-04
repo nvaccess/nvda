@@ -2,6 +2,7 @@
 
 import os
 import sys
+import warnings
 import logging
 from logging import _levelNames as levelNames
 import inspect
@@ -159,6 +160,12 @@ def _getDefaultLogFilePath():
 	else:
 		return ".\\nvda.log"
 
+def _excepthook(*exc_info):
+	log.error("", exc_info=exc_info, codepath="unhandled exception")
+
+def _showwarning(message, category, filename, lineno, file=None, line=None):
+	log.debugWarning(warnings.formatwarning(message, category, filename, lineno, line).rstrip(), codepath="Python warning")
+
 def initialize():
 	"""Initialize logging.
 	This must be called before any logging can occur.
@@ -175,6 +182,8 @@ def initialize():
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
 	redirectStdout(log)
+	sys.excepthook = _excepthook
+	warnings.showwarning = _showwarning
 
 def setLogLevelFromConfig():
 	"""Set the log level based on the current configuration.
