@@ -9,7 +9,7 @@ import ctypes
 from comtypes import COMError
 import comtypes.client
 import comtypes.automation
-from comInterfaces.servprov import IServiceProvider
+from comtypes import IServiceProvider
 import winUser
 import globalVars
 import oleacc
@@ -64,11 +64,9 @@ def nextIAccessibleInDom(IHTMLElement,back=False):
 def IAccessibleFromIHTMLElement(IHTMLElement):
 	try:
 		s=IHTMLElement.QueryInterface(IServiceProvider)
-		interfaceAddress=s.QueryService(ctypes.byref(oleacc.IAccessible._iid_),ctypes.byref(oleacc.IAccessible._iid_))
+		return s.QueryService(oleacc.IAccessible._iid_,oleacc.IAccessible)
 	except COMError:
 		raise NotImplementedError
-	ptr=ctypes.POINTER(oleacc.IAccessible)(interfaceAddress)
-	return ptr
 
 def IHTMLElementHasIAccessible(IHTMLElement):
 	try:
@@ -79,11 +77,9 @@ def IHTMLElementHasIAccessible(IHTMLElement):
 def IHTMLElementFromIAccessible(IAccessibleObject):
 	try:
 		s=IAccessibleObject.QueryInterface(IServiceProvider)
-		interfaceAddress=s.QueryService(ctypes.byref(IID_IHTMLElement),ctypes.byref(comtypes.automation.IDispatch._iid_))
+		return comtypes.client.dynamic.Dispatch(s.QueryService(IID_IHTMLElement,comtypes.automation.IDispatch))
 	except COMError:
 		raise NotImplementedError
-	ptr=ctypes.POINTER(comtypes.automation.IDispatch)(interfaceAddress)
-	return comtypes.client.dynamic.Dispatch(ptr)
 
 def locateHTMLElementByID(document,ID):
 	element=document.getElementById(ID)

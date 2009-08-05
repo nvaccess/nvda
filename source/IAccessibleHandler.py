@@ -35,13 +35,12 @@ from ctypes import *
 from ctypes.wintypes import *
 from comtypes.automation import *
 from comtypes.server import *
-from comtypes import GUID
+from comtypes import GUID, IServiceProvider
 import comtypes.client
 import comtypes.client.lazybind
 import Queue
 from comInterfaces.Accessibility import *
 from comInterfaces.IAccessible2Lib import *
-from comInterfaces.servprov import *
 import tones
 import globalVars
 from logHandler import log
@@ -325,8 +324,7 @@ def normalizeIAccessible(pacc):
 	if not isinstance(pacc,IAccessible2):
 		try:
 			s=pacc.QueryInterface(IServiceProvider)
-			i=s.QueryService(byref(IAccessible._iid_),byref(IAccessible2._iid_))
-			pacc=POINTER(IAccessible2)(i)
+			pacc=s.QueryService(IAccessible._iid_,IAccessible2)
 		except:
 			pass
 	return pacc
