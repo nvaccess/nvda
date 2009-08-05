@@ -1,0 +1,154 @@
+Novità, cambiamenti e problemi risolti dalla versione 0.6p3 in poi
+
+
+Novità .
+
+
+
+* Aggiunto il supporto ai sintetizzatori Newfon. (nota, non
+commercializzato in Italia, Russia o giu' di li'".
+* Nel buffer virtuale, le impostazioni della modalità focus o della
+modalità buffer virtuale possono venir riportate tramite suoni, che e'
+l'impostazione predefinita, oltre che normalmente annunciate a parole. In
+pratica, vi saranno dei beep all'attivazione/disattivazione della modalità
+focus.
+* La sintesi vocale non smette più di funzionare quando l'utente
+modifica il volume con la tastiera, naturalmente per quelle tastiere che
+prevedono tale funzione, permettendo quindi di continuare ad usare lo screen
+reader correttamente.
+* totalmente riscritto il supporto per Internet Explorer e Acrobat
+Reader. Tale funzione e' stata inglobata con il supporto per Firefox,
+cosicche' ora è possibile utilizzare tutte le facilitazioni e i tasti rapidi
+presenti, nonche' il supporto braille nelle pagine web. Non ci dovrebbero
+essere più differenze tra Firefox e Internet Explorer in fase di
+navigazione.
+* migliorata la gestione del controllo della selezione Data/ora in
+Windows Vista.
+* Migliorato il supporto al nuovo menù di avvio di Windows Xp, in special 
+modo dalla voce tutti i programmi, i livelli vengono pronunciati 
+correttamente.
+* La quantità di testo che viene letta scorrendo con il mouse ora è 
+configurabile dalle impostazioni Mouse: le scelte disponibili sono 
+paragrafo, riga, parola e carattere.
+* In Microsoft Word ora vengono notificati gli errori ortografici della 
+parola corrente.
+* Supporto per il controllo ortografico di Microsoft Word 2007. Altre 
+versioni di Word possono funzionare ma non è garantito.
+* Supporto per Windows Mail, nello specifico, vengono letti correttamente 
+anche i messaggi in testo semplice.
+* In Windows Vista, quando appare la finestra di sicurezza di richiesta di 
+autorizzazione dell'utente, oppure quando l'utente preme ctrl+alt+canc, NVDA 
+notifica che non ci si trova più nell'interfaccia classica ed accessibile.
+* NVDA è in grado di leggere il testo sotto il Mouse anche nelle finestre 
+Dos.
+* Supporto per la tecnologia Ui Automation  presente in Windows7, che 
+renderà la gestione di tale sistema operativo molto più agevole da parte 
+dello screen reader.
+* NVDA può essere impostato in modo da venir eseguito automaticamente 
+all'avvio di Windows, subito dopo aver effettuato il login, sempre che ve ne 
+sia bisogno. L'opzione si trova nella schermata di configurazione generale, 
+solo per NVDA Installer.
+*  NVDA è in grado di leggere le videate inerenti la sicurezza, le finestre 
+di login e quelle generate premendo la combinazione di tasti ctrl+alt+canc, 
+a partire da Windows XP in poi. Anche questa impostazione la si trova in 
+preferenze, impostazioni generali, solo per NVDA Installer.
+* Aggiunto un driver per i display Braille Optelec ALVA BC6 series.
+* In una pagina web, è possibile premere i tasti n e shift+n per saltare 
+interi blocchi di link.
+* In una pagina web, vengono riportate le "sezioni", in inglese ARIA 
+Landmarks. E' possibile passare da una sezione all'altra con i tasti d o 
+Shift+d.
+* L'elenco dei links che si richiamava con la combinazione di tasti NVDA+f7 
+è ora diventata una finestra di dialogo con la possibilità da parte 
+dell'utente di filtrare cosa visualizzare tra links, intestazioni e sezioni. 
+Si noti che intestazioni e sezioni vengono presentate in modo gerarchico.
+* Questa nuova finestra di dialogo è in grado di filtrare anche gli elementi 
+man mano che l'utente scrive. Esempio aggiuntivo del traduttore di questo 
+documento: se premiamo NVDA+f7, e ci troviamo con un elenco di 55 links ed 
+iniziamo a scrivere qualcosa, per esempio la lettera l, ci verranno mostrati 
+solo quei links che contengono al loro interno la lettera l. Possiamo 
+scrivere qualunque cosa, anche parole intere, in questo modo andremo 
+direttamente sul link o l'elemento specifico, ad esempio se scrivo "video", 
+e tale elemento esiste sulla pagina, mi verrà visualizzato soltanto il link 
+"video" e premendo invio verrà attivato. Si noti che premendo Backspace 
+verranno resettati i filtri e tutti gli elementi saranno visualizzati 
+nuovamente.
+* La versione portatile di NVDA ora ricerca le configurazioni dell'utente 
+nella cartella  user Config situata all'interno della cartella NVDA. In 
+questo modo, come avviene con la versione installer, seppur con percorsi 
+diversi, le configurazioni dell'utente sono indipendenti dalla struttura 
+principale di NVDA.
+* Moduli personalizzati per le applicazioni, driver di sintesi vocali e 
+driver per Display Braille possono essere salvati nella cartella userConfig.
+* L'elaborazione di lunghi o complessi documenti riguardanti il buffer 
+virtuale vengono effettuati in background, in modo che l'utente possa 
+interagire con il sistema operativo in altro modo, verrà avvisato non appena 
+il documento sarà stato processato e pronto all'uso.
+* Se NVDA si accorge di non funzionare più correttamente, tutti i tasti 
+premuti dall'utente non verranno più intercettati dallo screen reader, in 
+modo da facilitare l'utilizzatore nelle operazioni di recupero del sistema.
+
+Cambiamenti:
+* NVDA non pronuncia più "NVDA avviato" quando viene lanciato.
+* I suoni di avvio e chiusura dello screen reader vengono  eseguiti
+utilizzando le impostazioni di output scheda audio presenti in NVDA,
+piuttosto che quelle predefinite di sistema.
+* Migliorata la gestione delle barre di avanzamento. Ora è possibile 
+selezionare come NVDA deve avvertire l'utente sul  loro stato, o con segnali 
+acustici, o a parole, o con entrambe le cose.
+
+Problemi risolti:
+
+* Quando NVDA viene eseguito da un percorso Dos standard, nome di 8
+caratteri seguito da un punto e estensioni di 3 caratteri, ma è installato
+nel relativo percorso con nome lungo ((esempio:  progra~1 punta a
+programmi), NVDA  sarà in grado di identificare che si sta eseguendo una
+versione installata e caricherà i settaggi dell'utente.
+* la funzione insert+t che permette di leggere il titolo della finestra
+corrente ora funziona anche se premuta all'interno di un menù.
+* non vengono più visualizzate informazioni inutili sulla riga Braille
+in presenza di elementi non etichettati.
+* Non vengono più annunciate informazioni inutili quando si passa da un
+elemento ad un altro in applicazioni Java o lotus-notes.
+* Migliorata la gestione delle ricerche nelle finestre di aiuto delle 
+applicazioni (.hlp, .chm).
+* Viene riportato correttamente il numero di pagina nei documenti Word.
+* Migliorato il supporto della gestione dei campi editazione in Microsoft 
+Word nelle finestre di dialogo, ad esempio quella inerente la gestione 
+caratteri/font. Utilizzare i tasti cursore per navigare in questi controlli.
+* Migliorato il supporto alle finestre del prompt dei comandi, soprattutto 
+in quelle circostanze in cui NVDA non riconosceva alcun carattere.
+* In Windows Vista l'Installer di NVDA eseguirà il programma con i privilegi 
+effettivi dell'utente quando la casella di controllo Esegui NVDA è attivata.
+* Il tasto Backspace ora non crea più problemi quando NVDA è configurato per 
+pronunciare le parole digitate.
+* NVDA in alcune situazioni cercherà di riavviarsi automaticamente in caso 
+di blocco dello screen reader. Il processo impiegherà circa 10 secondi.
+
+--
+Simone Dal Maso.
+Tutti i miei progetti:
+SpazioAusili, schede tecniche, forum, mailing list e discussioni sugli 
+Ausili informatici per non vedenti e non solo!
+http://www.spazioausili.net
+
+NVDA: comunità italiana dello screen reader Gratuito, con mailing list e 
+forum:
+http://www.nvda.it
+
+Iscriviti a Chiediaiuto, la nuova mailing list con contenuti informatici e 
+tecnologici e consigli sempre nuovi! Basta un messaggio indirizzato a:
+chiediaiuto-request@spazioausili.net
+e nell'oggetto del messaggio scrivere "subscribe" senza le virgolette. 
+Rispondere semplicemente poi al messaggio di conferma.
+
+Il mio blog:
+http://www.spazioausili.net/blog/simonedalmaso
+
+Progetto musicale Juvox:
+http://www.juvox.it
+
+_______________________________________________
+Nvda mailing list
+Nvda@spazioausili.net
+http://lists.spazioausili.net/cgi-bin/mailman/listinfo/nvda
