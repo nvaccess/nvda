@@ -118,8 +118,12 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		VBufClient.VBufRemote_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),True)
 		commandList=XMLFormatting.XMLTextParser().parse(text.value)
 		for index in xrange(len(commandList)):
-			if isinstance(commandList[index],textInfos.FieldCommand) and isinstance(commandList[index].field,textInfos.ControlField):
-				commandList[index].field=self._normalizeControlField(commandList[index].field)
+			if isinstance(commandList[index],textInfos.FieldCommand):
+				field=commandList[index].field
+				if isinstance(field,textInfos.ControlField):
+					commandList[index].field=self._normalizeControlField(field)
+				elif isinstance(field,textInfos.FormatField):
+					commandList[index].field=self._normalizeFormatField(field)
 		return commandList
 
 	def _getWordOffsets(self,offset):
@@ -146,6 +150,9 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		tableLayout=attrs.get('table-layout')
 		if tableLayout:
 			attrs['table-layout']=tableLayout=="1"
+		return attrs
+
+	def _normalizeFormatField(self, attrs):
 		return attrs
 
 	def _getLineNumFromOffset(self, offset):
