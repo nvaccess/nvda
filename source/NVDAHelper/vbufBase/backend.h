@@ -10,21 +10,49 @@
 #define VIRTUALBUFFER_BACKEND_H
 
 #include <set>
+#include <windows.h>
 #include "storage.h"
 #include "lock.h"
 
 class VBufBackend_t;
 
-/**
- * a type for A set of backends
- */
 typedef std::set<VBufBackend_t*> VBufBackendSet_t;
 
 /**
  * Renders content in to a storage buffer for linea access.
  */
 class VBufBackend_t  : public VBufStorage_buffer_t {
+	private:
+
+	static const UINT wmRenderThreadInitialize;
+	static const UINT wmRenderThreadTerminate;
+
+/**
+ * A callback to manage Initialize and termination of code in the render thread of backends.
+ */
+	static LRESULT CALLBACK renderThread_callWndProcHook(int code, WPARAM wParam, LPARAM lParam);
+
+/**
+ * The ID of the current timer for this backend.
+ */
+	UINT_PTR renderThreadTimerID;
+
+/**
+ * A timer callback that will rerender invalid subtrees
+ */
+	static void CALLBACK renderThread_timerProc(HWND hwnd, UINT msg, UINT_PTR timerID, DWORD time);
+
+/**
+ * A winEvent callback that will watch for destroy of a backend's root window and clear the backend.
+ */
+	static void CALLBACK renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time);
+
 	protected:
+
+/**
+ * The set of currently running backends
+ */
+	static VBufBackendSet_t runningBackends;
 
 /**
  * identifies the window or document where the backend starts rendering from
@@ -37,13 +65,24 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
 	int rootID;
 
 /**
- * The storage buffer the backend uses for rendering
- */
-
-/**
  * the set of control field nodes that should be re-rendered the next time the backend is updated.
  */
 	VBufStorage_controlFieldNodeSet_t invalidSubtrees;
+
+/**
+ * Indicates whether code in the render thread for this backend is initialized or not.
+ */
+	bool renderThreadIsInitialized;
+
+/**
+ * Sets up any code in the render thread
+ */
+	virtual void renderThread_initialize();
+
+/**
+ * Terminates any code in the render thread
+ */
+	virtual void renderThread_terminate();
 
 /**
  * Renders content starting from the given doc handle and ID, in to the given buffer.

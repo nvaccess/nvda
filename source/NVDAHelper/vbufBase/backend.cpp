@@ -7,12 +7,82 @@
  */
 
 #include <cassert>
- #include "debug.h"
+#include <windows.h>
+#include <remote/hookRegistration.h>
+#include "debug.h"
 #include "storage.h"
 #include "backend.h"
 
-VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): rootDocHandle(docHandleArg), rootID(IDArg), lock(), invalidSubtrees() {
+const UINT VBufBackend_t::wmRenderThreadInitialize=RegisterWindowMessage(L"VBufBackend_t::wmRenderThreadInitialize");
+const UINT VBufBackend_t::wmRenderThreadTerminate=RegisterWindowMessage(L"VBufBackend_t::wmRenderThreadTerminate");
+
+VBufBackendSet_t VBufBackend_t::runningBackends;
+
+VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): rootDocHandle(docHandleArg), rootID(IDArg), lock(), renderThreadIsInitialized(false), renderThreadTimerID(0), invalidSubtrees() {
 	DEBUG_MSG(L"Initializing backend with docHandle "<<docHandleArg<<L", ID "<<IDArg);
+	int renderThreadID=GetWindowThreadProcessId((HWND)rootDocHandle,NULL);
+	DEBUG_MSG(L"render threadID "<<renderThreadID);
+	registerWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook,renderThreadID);
+	DEBUG_MSG(L"Registered hook, sending message...");
+	SendMessage((HWND)rootDocHandle,wmRenderThreadInitialize,(WPARAM)this,0);
+	DEBUG_MSG(L"Message sent, unregistering hook");
+	unregisterWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook,renderThreadID);
+}
+
+LRESULT CALLBACK VBufBackend_t::renderThread_callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
+	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
+	if((pcwp->message==wmRenderThreadInitialize)) {
+		DEBUG_MSG(L"Calling renderThread_initialize on backend at "<<wParam);
+		((VBufBackend_t*)wParam)->renderThread_initialize();
+	} else if((pcwp->message==wmRenderThreadTerminate)) {
+		DEBUG_MSG(L"Calling renderThread_terminate on backend at "<<wParam);
+		((VBufBackend_t*)wParam)->renderThread_terminate();
+	}
+	return 0;
+}
+
+void CALLBACK VBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
+	if(eventID==EVENT_OBJECT_DESTROY&&objectID==0&&childID==0) {
+		DEBUG_MSG(L"Detected destruction of window "<<hwnd);
+		for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
+			if(hwnd==(HWND)((*i)->rootDocHandle)||IsChild(hwnd,(HWND)((*i)->rootDocHandle))) {
+				DEBUG_MSG(L"Calling renderThread_terminate for backend at "<<*i);
+				(*i)->renderThread_terminate();
+			}
+		}
+	}
+}
+
+void CALLBACK VBufBackend_t::renderThread_timerProc(HWND hwnd, UINT msg, UINT_PTR timerID, DWORD time) {
+	DEBUG_MSG(L"Timer fired");
+	KillTimer(hwnd,timerID);
+	VBufBackend_t* backend=NULL;
+	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
+		if((HWND)((*i)->rootDocHandle)==hwnd&&(*i)->renderThreadTimerID==timerID) {
+			backend=*i;
+			break;
+		}
+	}
+	assert(backend); //Timer must be associated with a backend
+	DEBUG_MSG(L"Calling update on backend at "<<backend);
+	backend->update();
+	backend->renderThreadTimerID=0;
+}
+
+void VBufBackend_t::renderThread_initialize() {
+	DEBUG_MSG(L"Registering winEvent hook for window destructions");
+	registerWinEventHook(renderThread_winEventProcHook);
+	DEBUG_MSG(L"Calling update on backend at "<<backend);
+	this->update();
+	runningBackends.insert(this);
+}
+
+void VBufBackend_t::renderThread_terminate() {
+	unregisterWinEventHook(renderThread_winEventProcHook);
+	DEBUG_MSG(L"Unregistered winEvent hook for window destructions");
+	DEBUG_MSG(L"Calling clearBuffer on backend at "<<backend);
+	this->clearBuffer();
+	runningBackends.erase(this);
 }
 
 int VBufBackend_t::getRootDocHandle() {
@@ -44,6 +114,9 @@ void VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
 	DEBUG_MSG(L"Adding node to invalid nodes");
 	invalidSubtrees.insert(node);
 	DEBUG_MSG(L"invalid subtree count now "<<invalidSubtrees.size());
+	if(renderThreadTimerID==0) {
+		renderThreadTimerID=SetTimer((HWND)rootDocHandle,0,250,VBufBackend_t::renderThread_timerProc);
+	}
 }
 
 void VBufBackend_t::update() {
@@ -87,4 +160,16 @@ void VBufBackend_t::destroy() {
 
 VBufBackend_t::~VBufBackend_t() {
 	DEBUG_MSG(L"Backend being destroied");
+	if(runningBackends.count(this)>0) {
+		DEBUG_MSG(L"Render thread not terminated yet");
+		int renderThreadID=GetWindowThreadProcessId((HWND)rootDocHandle,NULL);
+		DEBUG_MSG(L"render threadID "<<renderThreadID);
+		registerWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook,renderThreadID);
+		DEBUG_MSG(L"Registered hook, sending message...");
+		SendMessage((HWND)rootDocHandle,wmRenderThreadTerminate,(WPARAM)this,0);
+		DEBUG_MSG(L"Message sent, unregistering hook");
+		unregisterWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook,renderThreadID);
+	} else {
+		DEBUG_MSG(L"render thread already terminated");
+	}
 }
