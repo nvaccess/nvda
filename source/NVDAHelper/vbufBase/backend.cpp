@@ -85,14 +85,6 @@ void VBufBackend_t::renderThread_terminate() {
 	runningBackends.erase(this);
 }
 
-int VBufBackend_t::getRootDocHandle() {
-	return rootDocHandle;
-}
-
-int VBufBackend_t::getRootID() {
-	return rootID;
-}
-
 void VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
 	assert(node); //node can not be NULL
 	DEBUG_MSG(L"Invalidating node "<<node->getDebugInfo());

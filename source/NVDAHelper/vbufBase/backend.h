@@ -47,27 +47,17 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
  */
 	static void CALLBACK renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time);
 
+/**
+ * the set of control field nodes that should be re-rendered the next time the backend is updated.
+ */
+	VBufStorage_controlFieldNodeSet_t invalidSubtrees;
+
 	protected:
 
 /**
  * The set of currently running backends
  */
 	static VBufBackendSet_t runningBackends;
-
-/**
- * identifies the window or document where the backend starts rendering from
- */
-	int rootDocHandle;
-
-/**
- * Represents the ID in the window or document where the backend starts rendering
- */
-	int rootID;
-
-/**
- * the set of control field nodes that should be re-rendered the next time the backend is updated.
- */
-	VBufStorage_controlFieldNodeSet_t invalidSubtrees;
 
 /**
  * Indicates whether code in the render thread for this backend is initialized or not.
@@ -95,6 +85,18 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
 	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode=NULL)=0;
 
 /**
+ * marks a particular node as invalid, so that its content is re-rendered on next update.
+ * @param node the node that should be invalidated.
+ */
+	virtual void invalidateSubtree(VBufStorage_controlFieldNode_t*);
+
+/**
+ * Updates the content of the buffer. 
+ * If no content yet exists it renders the entire document. If content exists it only re-renders nodes marked as invalid.
+ */
+	void update();
+
+/**
  * Destructor, (protected as you must use the destroy method).
  */
 	virtual ~VBufBackend_t();
@@ -112,26 +114,14 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
 /**
  * identifies the window or document where the backend starts rendering from
  */
-	int getRootDocHandle();
+	const int rootDocHandle;
 
 /**
  * Represents the ID in the window or document where the backend starts rendering
  */
-	int getRootID();
+	const int rootID;
 
 /**
- * marks a particular node as invalid, so that its content is re-rendered on next update.
- * @param node the node that should be invalidated.
- */
-	virtual void invalidateSubtree(VBufStorage_controlFieldNode_t*);
-
-/**
- * Updates the content of the buffer. 
- * If no content yet exists it renders the entire document. If content exists it only re-renders nodes marked as invalid.
- */
-	void update();
-
- /*
  * Destroies and deletes the backend.
  */
 	virtual void destroy();
