@@ -7,6 +7,14 @@ import oleacc
 from logHandler import log
 import textInfos
 
+# PDDom font attributes
+PDDOM_FONTATTR_ITALIC = 0x1
+PDDOM_FONTATTR_SMALLCAP = 0x2
+PDDOM_FONTATTR_ALLCAP = 0x4
+PDDOM_FONTATTR_SCRIPT = 0x8
+PDDOM_FONTATTR_BOLD = 0x10
+PDDOM_FONTATTR_LIGHT = 0x20
+
 class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 	stdNamesToRoles = {
 		# part? art?
@@ -55,6 +63,21 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 		if level:
 			attrs["level"] = level
 		return super(AdobeAcrobat_TextInfo, self)._normalizeControlField(attrs)
+
+	def _normalizeFormatField(self, attrs):
+		fontFlags = attrs.get("acrobat::fontFlags")
+		if fontFlags:
+			try:
+				fontFlags = int(fontFlags)
+			except (TypeError, ValueError):
+				fontFlags = None
+		if fontFlags:
+			if fontFlags & PDDOM_FONTATTR_ITALIC:
+				attrs["italic"] = True
+			if fontFlags & PDDOM_FONTATTR_BOLD:
+				attrs["bold"] = True
+
+		return super(AdobeAcrobat_TextInfo, self)._normalizeFormatField(attrs)
 
 class AdobeAcrobat(VirtualBuffer):
 	TextInfo = AdobeAcrobat_TextInfo
