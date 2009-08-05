@@ -18,7 +18,7 @@ const UINT VBufBackend_t::wmRenderThreadTerminate=RegisterWindowMessage(L"VBufBa
 
 VBufBackendSet_t VBufBackend_t::runningBackends;
 
-VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): rootDocHandle(docHandleArg), rootID(IDArg), lock(), renderThreadIsInitialized(false), renderThreadTimerID(0), invalidSubtrees() {
+VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): rootDocHandle(docHandleArg), rootID(IDArg), lock(), renderThreadTimerID(0), invalidSubtrees() {
 	DEBUG_MSG(L"Initializing backend with docHandle "<<docHandleArg<<L", ID "<<IDArg);
 	int renderThreadID=GetWindowThreadProcessId((HWND)rootDocHandle,NULL);
 	DEBUG_MSG(L"render threadID "<<renderThreadID);

@@ -60,11 +60,6 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
 	static VBufBackendSet_t runningBackends;
 
 /**
- * Indicates whether code in the render thread for this backend is initialized or not.
- */
-	bool renderThreadIsInitialized;
-
-/**
  * Sets up any code in the render thread
  */
 	virtual void renderThread_initialize();
