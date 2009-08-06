@@ -32,11 +32,11 @@ VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): rootDocHandle(docHand
 LRESULT CALLBACK VBufBackend_t::renderThread_callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
 	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
 	if((pcwp->message==wmRenderThreadInitialize)) {
-		DEBUG_MSG(L"Calling renderThread_initialize on backend at "<<wParam);
-		((VBufBackend_t*)wParam)->renderThread_initialize();
+		DEBUG_MSG(L"Calling renderThread_initialize on backend at "<<pcwp->wParam);
+		((VBufBackend_t*)(pcwp->wParam))->renderThread_initialize();
 	} else if((pcwp->message==wmRenderThreadTerminate)) {
-		DEBUG_MSG(L"Calling renderThread_terminate on backend at "<<wParam);
-		((VBufBackend_t*)wParam)->renderThread_terminate();
+		DEBUG_MSG(L"Calling renderThread_terminate on backend at "<<pcwp->wParam);
+		((VBufBackend_t*)(pcwp->wParam))->renderThread_terminate();
 	}
 	return 0;
 }
