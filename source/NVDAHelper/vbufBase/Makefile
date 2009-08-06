@@ -12,7 +12,7 @@ TOPDIR=..
 all: $(OUTDIR)\VBufBase_static.lib
 
 $(OUTDIR)\VBufBase_static.lib: storage.obj utils.obj lock.obj backend.obj debug.obj
-	lib /nologo $** /out:$@
+	lib /nologo $** $(OUTDIR)\nvdaHelperRemote.lib /out:$@
 
 clean:
 	-del *.obj 2>NUL
