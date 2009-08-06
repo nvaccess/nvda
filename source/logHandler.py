@@ -109,7 +109,7 @@ class FileHandler(logging.FileHandler):
 	def handle(self,record):
 		if record.levelno>=logging.CRITICAL:
 			winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
-		elif record.levelno>=logging.ERROR:
+		elif record.levelno>=logging.ERROR and log.level<=log.DEBUGWARNING:
 			try:
 				nvwave.playWaveFile("waves\\error.wav")
 			except:
