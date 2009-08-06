@@ -60,6 +60,21 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
 	static VBufBackendSet_t runningBackends;
 
 /**
+ * The thread ID of the rendering thread
+ */
+	const int renderThreadID;
+
+/**
+ * Requests that the backend should update any invalid nodes  when it can in the next little while.
+ */
+	void requestUpdate();
+
+/**
+ * Cancels any pending request to update invalid nodes.
+ */
+	void cancelPendingUpdate();
+
+/**
  * Sets up any code in the render thread
  */
 	virtual void renderThread_initialize();

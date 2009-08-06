@@ -18,7 +18,7 @@ const UINT VBufBackend_t::wmRenderThreadTerminate=RegisterWindowMessage(L"VBufBa
 
 VBufBackendSet_t VBufBackend_t::runningBackends;
 
-VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): rootDocHandle(docHandleArg), rootID(IDArg), lock(), renderThreadTimerID(0), invalidSubtrees() {
+VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): renderThreadID(GetWindowThreadProcessId((HWND)docHandleArg,NULL)), rootDocHandle(docHandleArg), rootID(IDArg), lock(), renderThreadTimerID(0), invalidSubtrees() {
 	DEBUG_MSG(L"Initializing backend with docHandle "<<docHandleArg<<L", ID "<<IDArg);
 }
 
@@ -56,12 +56,29 @@ void CALLBACK VBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID,
 	}
 }
 
+void VBufBackend_t::requestUpdate() {
+	if(renderThreadTimerID==0) {
+		renderThreadTimerID=SetTimer(0,0,250,renderThread_timerProc);
+		assert(renderThreadTimerID);
+		DEBUG_MSG(L"Set timer with ID "<<renderThreadTimerID);
+	}
+}
+
+void VBufBackend_t::cancelPendingUpdate() {
+	if(renderThreadTimerID>0) {
+		KillTimer(0,renderThreadTimerID);
+		DEBUG_MSG(L"Killed timer with ID "<<renderThreadTimerID);
+	}
+}
+
+
 void CALLBACK VBufBackend_t::renderThread_timerProc(HWND hwnd, UINT msg, UINT_PTR timerID, DWORD time) {
 	DEBUG_MSG(L"Timer fired");
-	KillTimer(hwnd,timerID);
+	KillTimer(0,timerID);
+	int threadID=GetCurrentThreadId();
 	VBufBackend_t* backend=NULL;
 	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
-		if((HWND)((*i)->rootDocHandle)==hwnd&&(*i)->renderThreadTimerID==timerID) {
+		if((*i)->renderThreadID==threadID&&(*i)->renderThreadTimerID==timerID) {
 			backend=*i;
 			break;
 		}
@@ -81,7 +98,7 @@ void VBufBackend_t::renderThread_initialize() {
 }
 
 void VBufBackend_t::renderThread_terminate() {
-	if(renderThreadTimerID>0) KillTimer((HWND)rootDocHandle,renderThreadTimerID);
+	cancelPendingUpdate();
 	unregisterWinEventHook(renderThread_winEventProcHook);
 	DEBUG_MSG(L"Unregistered winEvent hook for window destructions");
 	DEBUG_MSG(L"Calling clearBuffer on backend at "<<backend);
@@ -110,9 +127,7 @@ void VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
 	DEBUG_MSG(L"Adding node to invalid nodes");
 	invalidSubtrees.insert(node);
 	DEBUG_MSG(L"invalid subtree count now "<<invalidSubtrees.size());
-	if(renderThreadTimerID==0) {
-		renderThreadTimerID=SetTimer((HWND)rootDocHandle,0,250,VBufBackend_t::renderThread_timerProc);
-	}
+	this->requestUpdate();
 }
 
 void VBufBackend_t::update() {
