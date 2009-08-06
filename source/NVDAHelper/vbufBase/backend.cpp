@@ -78,6 +78,7 @@ void VBufBackend_t::renderThread_initialize() {
 }
 
 void VBufBackend_t::renderThread_terminate() {
+	if(renderThreadTimerID>0) KillTimer((HWND)rootDocHandle,renderThreadTimerID);
 	unregisterWinEventHook(renderThread_winEventProcHook);
 	DEBUG_MSG(L"Unregistered winEvent hook for window destructions");
 	DEBUG_MSG(L"Calling clearBuffer on backend at "<<backend);
