@@ -15,6 +15,7 @@
 #include <set>
 #include <string>
 #include <sstream>
+#include <remote/hookRegistration.h>
 #include <vbufBase/backend.h>
 #include <vbufBase/utils.h>
 #include <vbufBase/debug.h>
@@ -24,18 +25,12 @@
 using namespace std;
 
 HINSTANCE backendLibHandle=NULL;
-UINT wmMainThreadSetup=0;
-UINT wmMainThreadTerminate=0;
 UINT WM_HTML_GETOBJECT;
-VBufBackendSet_t runningBackends;
-UINT_PTR mainThreadTimerID=0;
 
 #pragma comment(linker,"/entry:_DllMainCRTStartup@12")
 BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if(reason==DLL_PROCESS_ATTACH) {
 		backendLibHandle=hModule;
-		wmMainThreadSetup=RegisterWindowMessage(L"VBufBackend_ie_mshtml_mainThreadSetup");
-		wmMainThreadTerminate=RegisterWindowMessage(L"VBufBackend_ie_mshtml_mainThreadTerminate");
 		WM_HTML_GETOBJECT=RegisterWindowMessage(L"WM_HTML_GETOBJECT");
 	}
 	return TRUE;
@@ -54,18 +49,6 @@ void decBackendLibRefCount() {
 	DEBUG_MSG(L"Decreased backend lib ref count");
 }
 
-void CALLBACK mainThreadTimerProc(HWND hwnd, UINT msg, UINT_PTR timerID, DWORD time) {
-	DEBUG_MSG(L"timer firing!");
-	KillTimer(0,mainThreadTimerID);
-	mainThreadTimerID=0;
-	DEBUG_MSG(L"Updating "<<runningBackends.size()<<L" backends");
-	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
-		DEBUG_MSG(L"Updating backend at "<<(*i));
-		(*i)->update();
-	}
-	DEBUG_MSG(L"All updated");
-}
-
 VBufStorage_controlFieldNode_t* MshtmlVBufBackend_t::getDeepestControlFieldNodeForHTMLElement(IHTMLElement* pHTMLElement) {
 	bool elementNeedsRelease=false;
 	while(pHTMLElement) {
@@ -76,7 +59,7 @@ VBufStorage_controlFieldNode_t* MshtmlVBufBackend_t::getDeepestControlFieldNodeF
 			pHTMLUniqueName->get_uniqueNumber((long*)&ID);
 			pHTMLUniqueName->Release();
 			if(ID!=0) {
-				VBufStorage_controlFieldNode_t* node=this->getControlFieldNodeWithIdentifier(this->getRootDocHandle(),ID); 
+				VBufStorage_controlFieldNode_t* node=this->getControlFieldNodeWithIdentifier(this->rootDocHandle,ID); 
 				if(node) {
 					if(elementNeedsRelease) pHTMLElement->Release();
 					return node;
@@ -637,41 +620,6 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	return parentNode;
 }
 
-void mainThreadSetup(VBufBackend_t* backend) {
-	backend->update();
-	#ifdef DEBUG
-	Beep(220,70);
-	#endif
-}
-
-LRESULT CALLBACK mainThreadCallWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
-	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
-	if((code==HC_ACTION)&&(pcwp->message==wmMainThreadSetup)) {
-		mainThreadSetup((VBufBackend_t*)(pcwp->wParam));
-	}
-	return CallNextHookEx(0,code,wParam,lParam);
-}
-
-void mainThreadTerminate(VBufBackend_t* backend, HANDLE e) {
-	if(mainThreadTimerID!=0) {
-		KillTimer(0,mainThreadTimerID);
-	}
-	backend->clearBuffer();
-	SetEvent(e);
-	#ifdef DEBUG
-	Beep(880,70);
-	#endif
-}
-
-LRESULT CALLBACK mainThreadGetMessageHook(int code, WPARAM wParam,LPARAM lParam) {
-	MSG* pmsg=(MSG*)lParam;
-	if((code==HC_ACTION)&&(pmsg->message==wmMainThreadTerminate)) {
-		mainThreadTerminate((VBufBackend_t*)(pmsg->wParam),(HANDLE)(pmsg->lParam));
-		DEBUG_MSG(L"Removing hook");
-	}
-	return CallNextHookEx(0,code,wParam,lParam);
-}
-
 void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	DEBUG_MSG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
 	DEBUG_MSG(L"Getting document from window "<<docHandle);
@@ -715,52 +663,11 @@ IHTMLDOMNode* pHTMLDOMNode=NULL;
 }
 
 MshtmlVBufBackend_t::MshtmlVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID) {
-	int res;
-	DEBUG_MSG(L"Initializing MSHTML backend");
-	runningBackends.insert(this);
-	DEBUG_MSG(L"Setting hook");
-	HWND rootWindow=(HWND)rootDocHandle;
-	rootThreadID=GetWindowThreadProcessId(rootWindow,NULL);
-	HHOOK mainThreadCallWndProcHookID=SetWindowsHookEx(WH_CALLWNDPROC,(HOOKPROC)mainThreadCallWndProcHook,backendLibHandle,rootThreadID);
-	assert(mainThreadCallWndProcHookID!=0); //valid hooks are not 0
-	DEBUG_MSG(L"Hook set with ID "<<mainThreadCallWndProcHookID);
-	DEBUG_MSG(L"Sending wmMainThreadSetup to window, docHandle "<<rootDocHandle<<L", ID "<<rootID<<L", backend "<<this);
-	SendMessage(rootWindow,wmMainThreadSetup,(WPARAM)this,0);
-	DEBUG_MSG(L"Message sent");
-	DEBUG_MSG(L"Removing hook");
-	res=UnhookWindowsHookEx(mainThreadCallWndProcHookID);
-	assert(res!=0); //unHookWindowsHookEx must return non-0
-	DEBUG_MSG(L"MSHTML backend initialized");
+	DEBUG_MSG(L"Mshtml backend constructor");
 }
 
 MshtmlVBufBackend_t::~MshtmlVBufBackend_t() {
-	int res;
-	DEBUG_MSG(L"MSHTML backend being destroied");
-	runningBackends.erase(this);
-	DEBUG_MSG(L"Setting hook");
-	HHOOK mainThreadGetMessageHookID=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)mainThreadGetMessageHook,backendLibHandle,rootThreadID);
-	assert(mainThreadGetMessageHookID!=0); //valid hooks are not 0
-	DEBUG_MSG(L"Hook set with ID "<<mainThreadGetMessageHookID);
-	DEBUG_MSG(L"Sending wmMainThreadTerminate to thread "<<rootThreadID<<", docHandle "<<rootDocHandle<<L", ID "<<rootID<<L", backend "<<this);
-HANDLE handles[2];
-	handles[0]=CreateEvent(NULL,true,false,NULL);
-	PostThreadMessage(rootThreadID,wmMainThreadTerminate,(WPARAM)this,(LPARAM)(handles[0]));
-	DEBUG_MSG(L"Message sent");
-	handles[1]=OpenThread(SYNCHRONIZE,false,rootThreadID);
-	WaitForMultipleObjects(2,handles,false,5000);
-	res=UnhookWindowsHookEx((HHOOK)(mainThreadGetMessageHookID));
-	assert(res!=0); //unHookWindowsHookEx must return non-0
-	CloseHandle(handles[0]);
-	CloseHandle(handles[1]);
-	DEBUG_MSG(L"MSHTML backend terminated");
-}
-
-void MshtmlVBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
-	this->VBufBackend_t::invalidateSubtree(node);
-	if(mainThreadTimerID==0) {
-		mainThreadTimerID=SetTimer(0,0,250,mainThreadTimerProc);
-		DEBUG_MSG(L"Set timer for update with ID of "<<mainThreadTimerID);
-	}
+	DEBUG_MSG(L"Mshtml backend destructor");
 }
 
 extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {

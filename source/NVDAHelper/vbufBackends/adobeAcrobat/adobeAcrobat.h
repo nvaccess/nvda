@@ -12,15 +12,21 @@
 #include <vbufBase/backend.h>
 
 class AdobeAcrobatVBufBackend_t: public VBufBackend_t {
-	private:
-	int rootThreadID;
+	protected:
+
+	static void CALLBACK renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time);
+
+	virtual void renderThread_initialize();
+
+	virtual void renderThread_terminate();
+
 	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode);
+
+	virtual ~AdobeAcrobatVBufBackend_t();
 
 	public:
 
 	AdobeAcrobatVBufBackend_t(int docHandle, int ID);
-
-	~AdobeAcrobatVBufBackend_t();
 
 };
 

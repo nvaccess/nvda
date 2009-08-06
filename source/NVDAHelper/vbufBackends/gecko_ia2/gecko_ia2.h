@@ -12,17 +12,21 @@
 #include <vbufBase/backend.h>
 
 class GeckoVBufBackend_t: public VBufBackend_t {
-	private:
+	protected:
 
-	int rootThreadID;
+	static void CALLBACK renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time);
+
+	virtual void renderThread_initialize();
+
+	virtual void renderThread_terminate();
 
 	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode=NULL);
+
+	virtual ~GeckoVBufBackend_t();
 
 	public:
 
 	GeckoVBufBackend_t(int docHandle, int ID);
-
-	~GeckoVBufBackend_t();
 
 };
 

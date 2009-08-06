@@ -14,6 +14,7 @@
 #include <sstream>
 #include <ia2/ia2.h>
 #include <vbufBase/ia2utils.h>
+#include <remote/hookRegistration.h>
 #include <vbufBase/backend.h>
 #include <vbufBase/debug.h>
 #include <vbufBase/utils.h>
@@ -25,25 +26,6 @@ using namespace std;
 #define IGNORE_UNNEEDED_GRAPHICS_IN_LINKS 1
 
 #define NAVRELATION_NODE_CHILD_OF 0x1005
-
-typedef std::set<VBufBackend_t*> VBufBackendSet_t;
-
-HINSTANCE backendLibHandle=NULL;
-UINT wmMainThreadSetup=0;
-UINT wmMainThreadTerminate=0;
-VBufBackendSet_t runningBackends;
-HWINEVENTHOOK mainThreadWinEventHookID=0;
-UINT_PTR mainThreadTimerID=0;
-
-#pragma comment(linker,"/entry:_DllMainCRTStartup@12")
-BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
-	if(reason==DLL_PROCESS_ATTACH) {
-		backendLibHandle=hModule;
-		wmMainThreadSetup=RegisterWindowMessage(L"VBufBackend_gecko_ia2_mainThreadSetup");
-		wmMainThreadTerminate=RegisterWindowMessage(L"VBufBackend_gecko_ia2_mainThreadTerminate");
-	}
-	return TRUE;
-}
 
 HWND findRealMozillaWindow(HWND hwnd) {
 	DEBUG_MSG(L"Finding real window for window "<<hwnd);
@@ -687,17 +669,6 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	return parentNode;
 }
 
-void CALLBACK mainThreadTimerProc(HWND hwnd, UINT msg, UINT_PTR timerID, DWORD time) {
-	KillTimer(0,mainThreadTimerID);
-	mainThreadTimerID=0;
-	DEBUG_MSG(L"Updating "<<runningBackends.size()<<L" backends");
-	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
-		DEBUG_MSG(L"Updating backend at "<<(*i));
-		(*i)->update();
-	}
-	DEBUG_MSG(L"All updated");
-}
-
 bool getDocumentFrame(HWND* hwnd, long* childID) {
 	int res;
 	IAccessible2* pacc=IAccessible2FromIdentifier((int)*hwnd,*childID);
@@ -772,7 +743,7 @@ bool getDocumentFrame(HWND* hwnd, long* childID) {
 	return true;
 }
 
-void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
+void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	int res;
 	switch(eventID) {
 		case IA2_EVENT_TEXT_INSERTED:
@@ -800,7 +771,7 @@ void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	VBufBackend_t* backend=NULL;
 	DEBUG_MSG(L"Searching for backend in collection of "<<runningBackends.size()<<L" running backends");
 	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
-		HWND rootWindow=(HWND)((*i)->getRootDocHandle());
+		HWND rootWindow=(HWND)((*i)->rootDocHandle);
 		DEBUG_MSG(L"Comparing backends root window "<<rootWindow<<L" with window "<<hwnd);
 		if(rootWindow==hwnd||IsChild(rootWindow,hwnd)) {
 			backend=(*i);
@@ -810,8 +781,7 @@ void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 		return;
 	}
 	DEBUG_MSG(L"found active backend for this window at "<<backend);
-	VBufStorage_buffer_t* buffer=backend;
-	VBufStorage_controlFieldNode_t* node=buffer->getControlFieldNodeWithIdentifier(docHandle,ID);
+	VBufStorage_controlFieldNode_t* node=backend->getControlFieldNodeWithIdentifier(docHandle,ID);
 	if(node==NULL&&eventID==EVENT_OBJECT_STATECHANGE) {
 		// This event is possibly due to a new document loading in a subframe.
 		// Gecko doesn't fire a reorder on the iframe (Mozilla bug 420845), so we need to use NODE_CHILD_OF in this case so that frames will reload.
@@ -821,7 +791,7 @@ void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 			Beep(2000,50);
 			#endif
 			DEBUG_MSG(L"Got NODE_CHILD_OF, recursing");
-			mainThreadWinEventCallback(hookID,eventID,hwnd,OBJID_CLIENT,childID,threadID,time);
+			renderThread_winEventProcHook(hookID,eventID,hwnd,OBJID_CLIENT,childID,threadID,time);
 		} else {
 			DEBUG_MSG(L"NODE_CHILD_OF failed, returning");
 		}
@@ -833,58 +803,18 @@ void CALLBACK mainThreadWinEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	}
 	DEBUG_MSG(L"Invalidating subtree with node at "<<node);
 	backend->invalidateSubtree(node);
-	if(mainThreadTimerID==0) {
-		mainThreadTimerID=SetTimer(0,0,250,mainThreadTimerProc);
-		DEBUG_MSG(L"Set timer for update with ID of "<<mainThreadTimerID);
-	}
 }
 
-void mainThreadSetup(VBufBackend_t* backend) {
-	if(mainThreadWinEventHookID==0&&runningBackends.size()>0) {
-		int threadID=GetCurrentThreadId();
-		int processID=GetCurrentProcessId();
-		DEBUG_MSG(L"Registering win event callback");
-		mainThreadWinEventHookID=SetWinEventHook(EVENT_MIN,0xffffffff,backendLibHandle,(WINEVENTPROC)mainThreadWinEventCallback,processID,threadID,WINEVENT_INCONTEXT);
-		assert(mainThreadWinEventHookID!=0); //winEventHookID must be non-0
-		DEBUG_MSG(L"Registered win event callback, with ID "<<mainThreadWinEventHookID);
-	}
-	backend->update();
-	#ifdef DEBUG
-	Beep(220,70);
-	#endif
+void GeckoVBufBackend_t::renderThread_initialize() {
+	registerWinEventHook(renderThread_winEventProcHook);
+	DEBUG_MSG(L"Registered win event callback");
+	VBufBackend_t::renderThread_initialize();
 }
 
-LRESULT CALLBACK mainThreadCallWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
-	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
-	if((code==HC_ACTION)&&(pcwp->message==wmMainThreadSetup)) {
-		mainThreadSetup((VBufBackend_t*)(pcwp->wParam));
-	}
-	return CallNextHookEx(0,code,wParam,lParam);
-}
-
-void mainThreadTerminate(VBufBackend_t* backend) {
-	if(mainThreadWinEventHookID!=0&&runningBackends.size()==0) {
-		DEBUG_MSG(L"No backends, unhooking winEvent");
-		UnhookWinEvent(mainThreadWinEventHookID);
-		mainThreadWinEventHookID=0;
-	}
-	if(mainThreadTimerID!=0) {
-		KillTimer(0,mainThreadTimerID);
-	}
-	#ifdef DEBUG
-	Beep(880,70);
-	#endif
-}
-
-LRESULT CALLBACK mainThreadGetMessageHook(int code, WPARAM wParam,LPARAM lParam) {
-	MSG* pmsg=(MSG*)lParam;
-	if((code==HC_ACTION)&&(pmsg->message==wmMainThreadTerminate)) {
-		mainThreadTerminate((VBufBackend_t*)(pmsg->wParam));
-		DEBUG_MSG(L"Removing hook");
-		int res=UnhookWindowsHookEx((HHOOK)(pmsg->lParam));
-		assert(res!=0); //unHookWindowsHookEx must return non-0
-	}
-	return CallNextHookEx(0,code,wParam,lParam);
+void GeckoVBufBackend_t::renderThread_terminate() {
+	unregisterWinEventHook(renderThread_winEventProcHook);
+	DEBUG_MSG(L"Unregistered winEvent hook");
+	VBufBackend_t::renderThread_terminate();
 }
 
 void GeckoVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
@@ -901,36 +831,11 @@ void GeckoVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int
 }
 
 GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID) {
-	int res;
-	DEBUG_MSG(L"Initializing Gecko backend");
-	runningBackends.insert(this);
-	DEBUG_MSG(L"Setting hook");
-	HWND rootWindow=(HWND)rootDocHandle;
-	rootThreadID=GetWindowThreadProcessId(rootWindow,NULL);
-	HHOOK mainThreadCallWndProcHookID=SetWindowsHookEx(WH_CALLWNDPROC,(HOOKPROC)mainThreadCallWndProcHook,backendLibHandle,rootThreadID);
-	assert(mainThreadCallWndProcHookID!=0); //valid hooks are not 0
-	DEBUG_MSG(L"Hook set with ID "<<mainThreadCallWndProcHookID);
-	DEBUG_MSG(L"Sending wmMainThreadSetup to window, docHandle "<<rootDocHandle<<L", ID "<<rootID<<L", backend "<<this);
-	SendMessage(rootWindow,wmMainThreadSetup,(WPARAM)this,0);
-	DEBUG_MSG(L"Message sent");
-	DEBUG_MSG(L"Removing hook");
-	res=UnhookWindowsHookEx(mainThreadCallWndProcHookID);
-	assert(res!=0); //unHookWindowsHookEx must return non-0
-	DEBUG_MSG(L"Gecko backend initialized");
+	DEBUG_MSG(L"Gecko backend constructor");
 }
 
 GeckoVBufBackend_t::~GeckoVBufBackend_t() {
-	int res;
-	DEBUG_MSG(L"Gecko backend being destroied");
-	runningBackends.erase(this);
-	DEBUG_MSG(L"Setting hook");
-	HHOOK mainThreadGetMessageHookID=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)mainThreadGetMessageHook,backendLibHandle,rootThreadID);
-	assert(mainThreadGetMessageHookID!=0); //valid hooks are not 0
-	DEBUG_MSG(L"Hook set with ID "<<mainThreadGetMessageHookID);
-	DEBUG_MSG(L"Sending wmMainThreadTerminate to thread "<<rootThreadID<<", docHandle "<<rootDocHandle<<L", ID "<<rootID<<L", backend "<<this);
-	PostThreadMessage(rootThreadID,wmMainThreadTerminate,(WPARAM)this,(LPARAM)mainThreadGetMessageHookID);
-	DEBUG_MSG(L"Message sent");
-	DEBUG_MSG(L"Gecko backend terminated");
+	DEBUG_MSG(L"Gecko backend destructor");
 }
 
 extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {

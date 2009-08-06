@@ -22,23 +22,19 @@ void incBackendLibRefCount();
 void decBackendLibRefCount();
 
 class MshtmlVBufBackend_t: public VBufBackend_t {
-	private:
-
-	int rootThreadID;
+	protected:
 
 	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode=NULL);
+
+	VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr);
+
+	virtual ~MshtmlVBufBackend_t();
 
 	public:
 
 	MshtmlVBufBackend_t(int docHandle, int ID);
 
-	VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr);
-
 	VBufStorage_controlFieldNode_t* getDeepestControlFieldNodeForHTMLElement(IHTMLElement* pHTMLElement);
-
-	~MshtmlVBufBackend_t();
-
-	virtual void invalidateSubtree(VBufStorage_controlFieldNode_t* node);
 
 };
 
