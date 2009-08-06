@@ -101,6 +101,11 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
 	VBufBackend_t(int docHandle, int ID);
 
 /**
+ * Initializes the state of the backend and performs an initial rendering of content.
+ */
+	virtual void initialize();
+
+/**
  * identifies the window or document where the backend starts rendering from
  */
 	const int rootDocHandle;
@@ -117,7 +122,12 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
 	virtual void invalidateSubtree(VBufStorage_controlFieldNode_t*);
 
 /**
- * Destroies and deletes the backend.
+ * Clears the content of the backend and terminates any code used for rendering.
+ */
+	virtual void terminate();
+
+/**
+ * Destructs and deletes the backend. Must be used rather than delete as this will handle crossing CRT boundaries.
  */
 	virtual void destroy();
 

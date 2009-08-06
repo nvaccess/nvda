@@ -20,6 +20,9 @@ VBufBackendSet_t VBufBackend_t::runningBackends;
 
 VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): rootDocHandle(docHandleArg), rootID(IDArg), lock(), renderThreadTimerID(0), invalidSubtrees() {
 	DEBUG_MSG(L"Initializing backend with docHandle "<<docHandleArg<<L", ID "<<IDArg);
+}
+
+void VBufBackend_t::initialize() {
 	int renderThreadID=GetWindowThreadProcessId((HWND)rootDocHandle,NULL);
 	DEBUG_MSG(L"render threadID "<<renderThreadID);
 	registerWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook,renderThreadID);
@@ -147,12 +150,7 @@ void VBufBackend_t::update() {
 	DEBUG_MSG(L"Update complete");
 }
 
-void VBufBackend_t::destroy() {
-	delete this;
-}
-
-VBufBackend_t::~VBufBackend_t() {
-	DEBUG_MSG(L"Backend being destroied");
+void VBufBackend_t::terminate() {
 	if(runningBackends.count(this)>0) {
 		DEBUG_MSG(L"Render thread not terminated yet");
 		int renderThreadID=GetWindowThreadProcessId((HWND)rootDocHandle,NULL);
@@ -165,4 +163,12 @@ VBufBackend_t::~VBufBackend_t() {
 	} else {
 		DEBUG_MSG(L"render thread already terminated");
 	}
+}
+
+void VBufBackend_t::destroy() {
+	delete this;
+}
+
+VBufBackend_t::~VBufBackend_t() {
+	DEBUG_MSG(L"base Backend destructor called"); 
 }

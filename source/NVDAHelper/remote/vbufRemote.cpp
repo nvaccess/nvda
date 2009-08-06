@@ -23,11 +23,13 @@ VBufRemote_bufferHandle_t VBufRemote_createBuffer(handle_t bindingHandle, int do
 		return NULL;
 	}
 	backendLibHandles[backend]=backendLibHandle;
+	backend->initialize();
 	return (VBufRemote_bufferHandle_t)backend;
 }
 
 void VBufRemote_destroyBuffer(VBufRemote_bufferHandle_t* buffer) {
 	VBufBackend_t* backend=(VBufBackend_t*)*buffer;
+	backend->terminate();
 	map<VBufBackend_t*,HINSTANCE>::iterator i=backendLibHandles.find(backend);
 	if(i==backendLibHandles.end()) return;
 	HINSTANCE backendLibHandle=i->second;
