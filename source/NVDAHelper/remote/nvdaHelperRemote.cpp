@@ -3,7 +3,6 @@
 //This file is covered by the GNU General Public Licence
 //See the file Copying for details.
  
-#define UNICODE
 #include <cstdio>
 #include <set>
 #include <map>

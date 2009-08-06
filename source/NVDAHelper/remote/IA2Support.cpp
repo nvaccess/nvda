@@ -2,7 +2,6 @@
 //Copyright (c) 2007 Michael Curran <mick@kulgan.net>
 //This file is covered by the GNU General Public Licence
 //See the file Copying for details.
-#define UNICODE
 
 #include <cstdio>
 #include <cassert>

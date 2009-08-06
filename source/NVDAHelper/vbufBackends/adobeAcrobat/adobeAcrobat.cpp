@@ -6,8 +6,7 @@
  * http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
  */
 
-#define UNICODE
- #include <set>
+#include <set>
  #include <sstream>
  #include <cassert>
 #include <windows.h>

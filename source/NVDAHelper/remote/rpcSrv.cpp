@@ -1,4 +1,3 @@
-#define UNICODE
 #include <cstdio>
 #include <sstream>
 #include <windows.h>

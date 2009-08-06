@@ -1,4 +1,3 @@
-#define UNICODE
 #include <map>
 #include <windows.h>
 #include <interfaces/vbuf/vbuf.h>

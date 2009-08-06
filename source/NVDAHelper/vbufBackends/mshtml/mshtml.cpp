@@ -6,8 +6,7 @@
  * http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
  */
 
-#define UNICODE
- #include <cassert>
+#include <cassert>
 #include <windows.h>
 #include <oleacc.h>
 #include <oleidl.h>
