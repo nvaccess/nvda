@@ -80,12 +80,6 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
 	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode=NULL)=0;
 
 /**
- * marks a particular node as invalid, so that its content is re-rendered on next update.
- * @param node the node that should be invalidated.
- */
-	virtual void invalidateSubtree(VBufStorage_controlFieldNode_t*);
-
-/**
  * Updates the content of the buffer. 
  * If no content yet exists it renders the entire document. If content exists it only re-renders nodes marked as invalid.
  */
@@ -115,6 +109,12 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
  * Represents the ID in the window or document where the backend starts rendering
  */
 	const int rootID;
+
+/**
+ * marks a particular node as invalid, so that its content is re-rendered on next update.
+ * @param node the node that should be invalidated.
+ */
+	virtual void invalidateSubtree(VBufStorage_controlFieldNode_t*);
 
 /**
  * Destroies and deletes the backend.
