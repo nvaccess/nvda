@@ -3,6 +3,7 @@
 
 import globalVars
 import _winreg
+from copy import deepcopy
 import os
 import sys
 from cStringIO import StringIO
@@ -151,12 +152,15 @@ confspec.newlines = "\r\n"
 #: The active configuration, C{None} if it has not yet been loaded.
 #: @type: ConfigObj
 conf = None
+#: template config spec for concrete synthesizer's settings. It is used in SynthDriver.getConfigSpec() to build a real spec
+#: @type: L{configobj.Section}
+synthSpec=None
 
 def load():
 	"""Loads the configuration from the configFile.
 	It also takes note of the file's modification time so that L{save} won't lose any changes made to the file while NVDA is running. 
 	"""
-	global conf
+	global conf,synthSpec
 	configFileName=os.path.join(globalVars.appArgs.configPath,"nvda.ini")
 	try:
 		conf = ConfigObj(configFileName, configspec = confspec, indent_type = "\t", encoding="UTF-8")
@@ -167,6 +171,8 @@ def load():
 	# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 	conf.newlines = "\r\n"
 	errorList=validateConfig(conf,val)
+	if synthSpec is None: 
+		synthSpec=deepcopy(conf["speech"].configspec["__many__"])
 	if errorList:
 		globalVars.configFileError=_("Errors in configuration file '%s':\n%s")%(conf.filename,"\n".join(errorList))
 	if globalVars.configFileError:
@@ -182,7 +188,7 @@ def updateSynthConfig(synth):
 	if not speech.has_key(synth.name):
 		speech[synth.name] = {}
 		speech[synth.name].configspec=synth.getConfigSpec()
-		conf.validate(val, copy = True)
+		conf.validate(val, copy = True,section=speech[synth.name])
 		return True
 	else:
 		return False

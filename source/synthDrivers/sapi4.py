@@ -27,7 +27,7 @@ class SynthDriver(SynthDriver):
 
 	name="sapi4"
 	description="Microsoft Speech API version 4"
-	_supportedSettings=[SynthDriver.VoiceSetting()]
+	supportedSettings=[SynthDriver.VoiceSetting()]
 
 	@classmethod
 	def check(cls):
@@ -92,9 +92,9 @@ class SynthDriver(SynthDriver):
 
 	def removeSetting(self,name):
 		#Putting it here because currently no other synths make use of it. OrderedDict, where you are?
-		for i,s in enumerate(self._supportedSettings):
+		for i,s in enumerate(self.supportedSettings):
 			if s.name==name:
-				del self._supportedSettings[i]
+				del self.supportedSettings[i]
 				return
 
 	def _set_voice(self,val):
@@ -135,7 +135,7 @@ class SynthDriver(SynthDriver):
 				hasRate=False
 		if hasRate:
 			if not self.isSupported('rate'):
-				self._supportedSettings.insert(0,SynthDriver.RateSetting())
+				self.supportedSettings.insert(0,SynthDriver.RateSetting())
 		else:
 			if self.isSupported("rate"): self.removeSetting("rate")
 		#Find out pitch limits
@@ -158,7 +158,7 @@ class SynthDriver(SynthDriver):
 				hasPitch=False
 		if hasPitch:
 			if not self.isSupported('pitch'):
-				self._supportedSettings.insert(1,SynthDriver.PitchSetting())
+				self.supportedSettings.insert(1,SynthDriver.PitchSetting())
 		else:
 			if self.isSupported('pitch'): self.removeSetting('pitch')
 		#Find volume limits
@@ -181,7 +181,7 @@ class SynthDriver(SynthDriver):
 				hasVolume=False
 		if hasVolume:
 			if not self.isSupported('volume'):
-				self._supportedSettings.insert(1,SynthDriver.VolumeSetting())
+				self.supportedSettings.insert(1,SynthDriver.VolumeSetting())
 		else:
 			if self.isSupported('volume'): self.removeSetting('volume')
 

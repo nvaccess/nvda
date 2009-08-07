@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from copy import deepcopy
 import imp
 import os
 import config
@@ -299,10 +300,10 @@ class SynthDriver(baseObject.AutoPropertyObject):
 			self._availableVariants=self._getAvailableVariants()
 		return self._availableVariants
 
-	def _getSupportedSettings(self):
+	def _get_supportedSettings(self):
 		"""By default, this checks old-styled 'has_xxx' and constructs the list of settings.
 		@returns: list of supported settings
-		@rtype: l{list}
+		@rtype: l{tuple}
 		"""
 		result=[]
 		settings=[("rate",self.RateSetting),("pitch",self.PitchSetting),("volume",self.VolumeSetting),("inflection",self.InflectionSetting),("variant",self.VariantSetting),("voice",self.VoiceSetting)]
@@ -312,18 +313,13 @@ class SynthDriver(baseObject.AutoPropertyObject):
 				result.append(setting(getattr(self,"%sMinStep"%name)))
 			else:
 				result.append(setting())
-		return result
+		return tuple(result)
 
 	def getConfigSpec(self):
-		spec=config.conf["speech"].configspec["__many__"]
+		spec=deepcopy(config.synthSpec)
 		for setting in self.supportedSettings:
 			spec[setting.name]=setting.configSpec
 		return spec
-
-	def _get_supportedSettings(self):
-		if not hasattr(self,'_supportedSettings'):
-			self._supportedSettings=self._getSupportedSettings()
-		return self._supportedSettings
 
 	def _get_inflection(self):
 		return 0
@@ -399,7 +395,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 				# Update the configuration with the correct voice.
 				c["voice"]=self.voice
 				# We need to call changeVoice here so voice dictionaries can be managed
-				changeVoice(self,newSynth.voice)
+				changeVoice(self,self.voice)
 		[setattr(self,s.name,c[s.name]) for s in self.supportedSettings if s.name!="voice"]
 
 class VoiceInfo(object):
