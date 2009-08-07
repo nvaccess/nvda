@@ -17,10 +17,10 @@ LRESULT CALLBACK inputLangChange_callWndProcHook(int code, WPARAM wParam, LPARAM
 	return 0;
 }
 
-void inputLangChange_inThread_initialize() {
+void inputLangChange_inProcess_initialize() {
 	registerWindowsHook(WH_CALLWNDPROC,inputLangChange_callWndProcHook);
 }
 
-void inputLangChange_inThread_terminate() {
+void inputLangChange_inProcess_terminate() {
 	unregisterWindowsHook(WH_CALLWNDPROC,inputLangChange_callWndProcHook);
 }

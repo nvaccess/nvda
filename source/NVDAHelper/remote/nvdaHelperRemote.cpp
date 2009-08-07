@@ -4,6 +4,8 @@
 //See the file Copying for details.
  
 #include <cstdio>
+#include <cassert>
+#include <list>
 #include <set>
 #include <map>
 #include <windows.h>
@@ -16,13 +18,12 @@
 
 using namespace std;
 
-typedef map<int,map<WINEVENTPROC,size_t> > winEventHookRegistry_t;
-typedef map<int,map<HOOKPROC,size_t> > windowsHookRegistry_t;
+typedef map<WINEVENTPROC,size_t> winEventHookRegistry_t;
+typedef map<HOOKPROC,size_t> windowsHookRegistry_t;
 
 HINSTANCE moduleHandle;
 BOOL isInitialized=false;
 BOOL inProcess_isInitialized=false;
-set<int> inProcess_initializedThreads;
 winEventHookRegistry_t inProcess_registeredWinEventHooks;
 windowsHookRegistry_t inProcess_registeredCallWndProcWindowsHooks;
 windowsHookRegistry_t inProcess_registeredGetMessageWindowsHooks;
@@ -31,64 +32,44 @@ HHOOK callWndProcHookID=0;
 HWINEVENTHOOK winEventHookID=0; 
 DWORD desktopProcessID=0;
 
-void inThread_initialize() {
-	Beep(880,35);
-	inProcess_initializedThreads.insert(GetCurrentThreadId());
-	typedCharacter_inThread_initialize();
-	inputLangChange_inThread_initialize();
-}
-
-void inThread_terminate() {
-	inputLangChange_inThread_terminate();
-	typedCharacter_inThread_terminate();
-	int threadID=GetCurrentThreadId();
-	inProcess_initializedThreads.erase(threadID);
-	inProcess_registeredWinEventHooks.erase(threadID);
-	inProcess_registeredCallWndProcWindowsHooks.erase(threadID);
-	inProcess_registeredGetMessageWindowsHooks.erase(threadID);
-	Beep(1760,35);
-}
-
 void inProcess_initialize() {
 	Beep(220,35);
+	assert(!inProcess_isInitialized);
 	rpcSrv_inProcess_initialize();
 	IA2Support_inProcess_initialize();
-	inThread_initialize();
+	typedCharacter_inProcess_initialize();
+	inputLangChange_inProcess_initialize();
 	inProcess_isInitialized=true;
 }
 
 void inProcess_terminate() {
-	inThread_terminate();
+	assert(inProcess_isInitialized);
+	inputLangChange_inProcess_terminate();
+	typedCharacter_inProcess_terminate();
 	IA2Support_inProcess_terminate();
 	rpcSrv_inProcess_terminate();
 	inProcess_isInitialized=false;
 	Beep(440,35);
 }
 
-bool registerWinEventHook(WINEVENTPROC hookProc, int threadID) {
-	if(threadID==0) threadID=GetCurrentThreadId();
-	inProcess_registeredWinEventHooks[threadID][hookProc]+=1;
+bool registerWinEventHook(WINEVENTPROC hookProc) {
+	inProcess_registeredWinEventHooks[hookProc]+=1;
 	return true;
 }
 
-bool unregisterWinEventHook(WINEVENTPROC hookProc, int threadID) {
-	if(threadID==0) threadID=GetCurrentThreadId();
-	winEventHookRegistry_t::iterator i=inProcess_registeredWinEventHooks.find(threadID);
+bool unregisterWinEventHook(WINEVENTPROC hookProc) {
+	winEventHookRegistry_t::iterator i=inProcess_registeredWinEventHooks.find(hookProc);
 	if(i==inProcess_registeredWinEventHooks.end()) return false;
-	winEventHookRegistry_t::mapped_type::iterator j=i->second.find(hookProc);
-	if(j==i->second.end()) return false;
-	if(j->second>1) {
-		j->second-=1;
+	if(i->second>1) {
+		i->second-=1;
 	} else {
-		i->second.erase(j);
-		if(i->second.empty()) {
-			inProcess_registeredWinEventHooks.erase(i);
-		}
+		assert(i->second==1);
+		inProcess_registeredWinEventHooks.erase(i);
 	}
 	return true;
 }
 
-bool registerWindowsHook(int hookType, HOOKPROC hookProc, int threadID) {
+bool registerWindowsHook(int hookType, HOOKPROC hookProc) {
 	windowsHookRegistry_t* r=NULL;
 	if(hookType==WH_GETMESSAGE) {
 		r=&inProcess_registeredGetMessageWindowsHooks;
@@ -96,12 +77,11 @@ bool registerWindowsHook(int hookType, HOOKPROC hookProc, int threadID) {
 		r=&inProcess_registeredCallWndProcWindowsHooks;
 	}
 	if(r==NULL) return false;
-	if(threadID==0) threadID=GetCurrentThreadId();
-	(*r)[threadID][hookProc]+=1;
+	(*r)[hookProc]+=1;
 	return true;
 }
 
-bool unregisterWindowsHook(int hookType, HOOKPROC hookProc, int threadID) {
+bool unregisterWindowsHook(int hookType, HOOKPROC hookProc) {
 	windowsHookRegistry_t* r=NULL;
 	if(hookType==WH_GETMESSAGE) {
 		r=&inProcess_registeredGetMessageWindowsHooks;
@@ -109,18 +89,13 @@ bool unregisterWindowsHook(int hookType, HOOKPROC hookProc, int threadID) {
 		r=&inProcess_registeredCallWndProcWindowsHooks;
 	}
 	if(r==NULL) return false;
-	if(threadID==0) threadID=GetCurrentThreadId();
-	windowsHookRegistry_t::iterator i=r->find(threadID);
+	windowsHookRegistry_t::iterator i=r->find(hookProc);
 	if(i==r->end()) return false;
-	windowsHookRegistry_t::mapped_type::iterator j=i->second.find(hookProc);
-	if(j==i->second.end()) return false;
-	if(j->second>1) {
-		j->second-=1;
+	if(i->second>1) {
+		i->second-=1;
 	} else {
-		i->second.erase(j);
-		if(i->second.empty()) {
-			r->erase(i);
-		}
+		assert(i->second==1);
+		r->erase(i);
 	}
 	return true;
 }
@@ -130,8 +105,6 @@ BOOL DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if((reason==DLL_PROCESS_ATTACH)&&(moduleHandle==NULL)) {
 		moduleHandle=hModule;
 		GetWindowThreadProcessId(GetDesktopWindow(),&desktopProcessID);
-	} else if(reason==DLL_THREAD_DETACH) {
-		if(inProcess_initializedThreads.count(GetCurrentThreadId())>0) inThread_terminate();
 	} else if(reason==DLL_PROCESS_DETACH) {
 	if(inProcess_isInitialized) inProcess_terminate();
 	}
@@ -143,11 +116,13 @@ LRESULT CALLBACK getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
 	if(code<0) {
 		return CallNextHookEx(0,code,wParam,lParam);
 	}
-	windowsHookRegistry_t::iterator i=inProcess_registeredGetMessageWindowsHooks.find(GetCurrentThreadId());
-	if(i!=inProcess_registeredGetMessageWindowsHooks.end()) {
-		for(windowsHookRegistry_t::mapped_type::iterator j=i->second.begin();j!=i->second.end();j++) {
-			j->first(code,wParam,lParam);
-		}
+	//Hookprocs may unregister or register hooks themselves, so we must copy the hookprocs before executing
+	list<windowsHookRegistry_t::key_type> hookProcList;
+	for(windowsHookRegistry_t::iterator i=inProcess_registeredGetMessageWindowsHooks.begin();i!=inProcess_registeredGetMessageWindowsHooks.end();i++) {
+		hookProcList.push_back(i->first);
+	}
+	for(list<windowsHookRegistry_t::key_type>::iterator j=hookProcList.begin();j!=hookProcList.end();j++) {
+		(*j)(code,wParam,lParam);
 	}
 	return CallNextHookEx(0,code,wParam,lParam);
 }
@@ -157,11 +132,13 @@ LRESULT CALLBACK callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
 	if(code<0) {
 		return CallNextHookEx(0,code,wParam,lParam);
 	}
-	windowsHookRegistry_t::iterator i=inProcess_registeredCallWndProcWindowsHooks.find(GetCurrentThreadId());
-	if(i!=inProcess_registeredCallWndProcWindowsHooks.end()) {
-		for(windowsHookRegistry_t::mapped_type::iterator j=i->second.begin();j!=i->second.end();j++) {
-			j->first(code,wParam,lParam);
-		}
+	//Hookprocs may unregister or register hooks themselves, so we must copy the hookprocs before executing
+	list<windowsHookRegistry_t::key_type> hookProcList;
+	for(windowsHookRegistry_t::iterator i=inProcess_registeredCallWndProcWindowsHooks.begin();i!=inProcess_registeredCallWndProcWindowsHooks.end();i++) {
+		hookProcList.push_back(i->first);
+	}
+	for(list<windowsHookRegistry_t::key_type>::iterator j=hookProcList.begin();j!=hookProcList.end();j++) {
+		(*j)(code,wParam,lParam);
 	}
 	return CallNextHookEx(0,code,wParam,lParam);
 }
@@ -169,19 +146,19 @@ LRESULT CALLBACK callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
 //winEvent callback
 void winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	DWORD curProcessID=0;
-	int curThreadID=GetCurrentThreadId();
 	if(eventID==EVENT_SYSTEM_FOREGROUND||eventID==EVENT_OBJECT_FOCUS) {
 		GetWindowThreadProcessId(hwnd,&curProcessID);
 		if(curProcessID!=desktopProcessID) {
 			if(!inProcess_isInitialized) inProcess_initialize();
-			if(inProcess_initializedThreads.count(curThreadID)==0) inThread_initialize();
 		}
 	}
-	winEventHookRegistry_t::iterator i=inProcess_registeredWinEventHooks.find(threadID);
-	if(i!=inProcess_registeredWinEventHooks.end()) {
-		for(winEventHookRegistry_t::mapped_type::iterator j=i->second.begin();j!=i->second.end();j++) {
-			j->first(hookID, eventID, hwnd, objectID, childID, threadID, time);
-		}
+	//Hookprocs may unregister or register hooks themselves, so we must copy the hookprocs before executing
+	list<winEventHookRegistry_t::key_type> hookProcList;
+	for(winEventHookRegistry_t::iterator i=inProcess_registeredWinEventHooks.begin();i!=inProcess_registeredWinEventHooks.end();i++) {
+		hookProcList.push_back(i->first);
+	}
+	for(list<winEventHookRegistry_t::key_type>::iterator j=hookProcList.begin();j!=hookProcList.end();j++) {
+		(*j)(hookID, eventID, hwnd, objectID, childID, threadID, time);
 	}
 }
 

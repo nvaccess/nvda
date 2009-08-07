@@ -25,11 +25,11 @@ VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): renderThreadID(GetWin
 void VBufBackend_t::initialize() {
 	int renderThreadID=GetWindowThreadProcessId((HWND)rootDocHandle,NULL);
 	DEBUG_MSG(L"render threadID "<<renderThreadID);
-	registerWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook,renderThreadID);
+	registerWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
 	DEBUG_MSG(L"Registered hook, sending message...");
 	SendMessage((HWND)rootDocHandle,wmRenderThreadInitialize,(WPARAM)this,0);
 	DEBUG_MSG(L"Message sent, unregistering hook");
-	unregisterWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook,renderThreadID);
+	unregisterWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
 }
 
 LRESULT CALLBACK VBufBackend_t::renderThread_callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
@@ -170,11 +170,11 @@ void VBufBackend_t::terminate() {
 		DEBUG_MSG(L"Render thread not terminated yet");
 		int renderThreadID=GetWindowThreadProcessId((HWND)rootDocHandle,NULL);
 		DEBUG_MSG(L"render threadID "<<renderThreadID);
-		registerWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook,renderThreadID);
+		registerWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
 		DEBUG_MSG(L"Registered hook, sending message...");
 		SendMessage((HWND)rootDocHandle,wmRenderThreadTerminate,(WPARAM)this,0);
 		DEBUG_MSG(L"Message sent, unregistering hook");
-		unregisterWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook,renderThreadID);
+		unregisterWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
 	} else {
 		DEBUG_MSG(L"render thread already terminated");
 	}

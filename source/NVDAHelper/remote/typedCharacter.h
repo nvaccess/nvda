@@ -10,7 +10,7 @@
 //Event IDs
 #define EVENT_TYPEDCHARACTER 0x1000
 
-void typedCharacter_inThread_initialize();
-void typedCharacter_inThread_terminate();
+void typedCharacter_inProcess_initialize();
+void typedCharacter_inProcess_terminate();
 
 #endif

@@ -22,10 +22,10 @@ LRESULT CALLBACK typedCharacter_getMessageHook(int code, WPARAM wParam, LPARAM l
 	return 0;
 }
 
-void typedCharacter_inThread_initialize() {
+void typedCharacter_inProcess_initialize() {
 	registerWindowsHook(WH_GETMESSAGE,typedCharacter_getMessageHook);
 }
 
-void typedCharacter_inThread_terminate() {
+void typedCharacter_inProcess_terminate() {
 	unregisterWindowsHook(WH_GETMESSAGE,typedCharacter_getMessageHook);
 }

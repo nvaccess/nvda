@@ -10,7 +10,7 @@
 //Event IDs
 #define EVENT_INPUTLANGCHANGE 0x1001
 
-void inputLangChange_inThread_initialize();
-void inputLangChange_inThread_terminate();
+void inputLangChange_inProcess_initialize();
+void inputLangChange_inProcess_terminate();
 
 #endif
