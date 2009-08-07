@@ -32,7 +32,6 @@
 	* NVDA no longer announces "NVDA started" when it starts.
 	* The startup and exit sounds are now played using NVDA's configured audio output device instead of the Windows default audio output device. (#164)
 	* Progress bar reporting has been improved. Most notably you can now configure NVDA to announce via both speech and beeps at the same time.
-	* The NVDA error sound is no longer played if the log level is set to info (the default). Most errors aren't significant for most users, so this sound is undesirable. The log level can easily be changed to hear the sound when debugging a particular problem.
 
 === Bug Fixes ===
 	* When NVDA is run from an 8.3 dos path, but it is installed in the related long path (e.g. progra~1 verses program files) NVDA will correctly  identify that it is an installed copy and properly load the user's settings.
