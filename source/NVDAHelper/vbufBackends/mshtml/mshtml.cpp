@@ -201,15 +201,26 @@ inline BSTR getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
 	return data;
 }
 
-#define macro_addHTMLCurrentStyleToMap(styleNameArg,currentStyleObjArg,styleMapArg,tempBSTRArg) {\
-	currentStyleObjArg->get_##styleNameArg(&tempBSTRArg);\
-	if(tempBSTRArg) {\
-		DEBUG_MSG(L"Got "<<L#styleNameArg);\
-		styleInfo[L#styleNameArg]=tempBSTRArg;\
-		SysFreeString(tempBSTRArg);\
-		tempBSTRArg=NULL;\
+#define macro_addHTMLCurrentStyleToNodeAttrs(styleName,attrName,node,currentStyleObj,tempBSTR) {\
+	currentStyleObj->get_##styleName(&tempBSTR);\
+	if(tempBSTR) {\
+		DEBUG_MSG(L"Got "<<L#styleName);\
+		node->addAttribute(L#attrName,tempBSTR);\
+		SysFreeString(tempBSTR);\
+		tempBSTR=NULL;\
 	} else {\
-		DEBUG_MSG(L"Failed to get "<<L#styleNameArg);\
+		DEBUG_MSG(L"Failed to get "<<L#styleName);\
+	}\
+}
+
+#define macro_addHTMLCurrentStyleToNodeAttrs_var(styleName,attrName,node,currentStyleObj,tempVar) {\
+	currentStyleObj->get_##styleName(&tempVar);\
+	if(tempVar.vt==VT_BSTR && tempVar.bstrVal) {\
+		DEBUG_MSG(L"Got "<<L#styleName);\
+		node->addAttribute(L#attrName,tempVar.bstrVal);\
+		VariantClear(&tempVar);\
+	} else {\
+		DEBUG_MSG(L"Failed to get "<<L#styleName);\
 	}\
 }
 
@@ -247,11 +258,10 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
 	} else {
-		DEBUG_MSG(L"Failed to get display");\
+		DEBUG_MSG(L"Failed to get display");
 	}
 	if (pHTMLCurrentStyle) pHTMLCurrentStyle->Release();
 }
-
 
 #define macro_addHTMLAttributeToMap(attribName,attribsObj,attribsMap,tempVar,tempAttrObj) {\
 	attribsObj->getNamedItem(attribName,&tempAttrObj);\
@@ -299,6 +309,50 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	pHTMLAttributeCollection2->Release();
 }
 
+inline void fillTextFormatting_helper(IHTMLElement2* pHTMLElement2, VBufStorage_fieldNode_t* node) {
+	IHTMLCurrentStyle* pHTMLCurrentStyle=NULL;
+	if(pHTMLElement2->get_currentStyle(&pHTMLCurrentStyle)!=S_OK||!pHTMLCurrentStyle) {
+		DEBUG_MSG(L"Could not get IHTMLCurrentStyle");
+		return;
+	}
+	BSTR tempBSTR=NULL;
+	macro_addHTMLCurrentStyleToNodeAttrs(textAlign,text-align,node,pHTMLCurrentStyle,tempBSTR);
+	VARIANT tempVar;
+	macro_addHTMLCurrentStyleToNodeAttrs_var(fontSize,font-size,node,pHTMLCurrentStyle,tempVar);
+	macro_addHTMLCurrentStyleToNodeAttrs(fontFamily,font-family,node,pHTMLCurrentStyle,tempBSTR);
+	//font style
+	pHTMLCurrentStyle->get_fontStyle(&tempBSTR);
+	if(tempBSTR) {
+		DEBUG_MSG(L"Got "<<L#styleName);
+		if (wcsicmp(tempBSTR,L"normal")!=0) {
+			node->addAttribute((wcsicmp(tempBSTR,L"oblique")!=0) ? tempBSTR : L"italic", L"");
+		}
+		SysFreeString(tempBSTR);
+		tempBSTR=NULL;
+	} else {
+		DEBUG_MSG(L"Failed to get "<<L#styleName);
+	}
+	pHTMLCurrentStyle->Release();
+}
+
+inline void fillTextFormattingForNode(IHTMLDOMNode* pHTMLDOMNode, VBufStorage_fieldNode_t* node) {
+	IHTMLElement2* pHTMLElement2=NULL;
+	int res=pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
+	if(res!=S_OK||!pHTMLElement2) {
+		DEBUG_MSG(L"Could not get IHTMLElement2");
+		return;
+	}
+	fillTextFormatting_helper(pHTMLElement2,node);
+	pHTMLElement2->Release();
+}
+
+inline void fillTextFormattingForTextNode(VBufStorage_controlFieldNode_t* parentNode, VBufStorage_textFieldNode_t* textNode)
+	//text nodes don't support IHTMLElement2 interface, so using style information from parent node
+	{
+	IHTMLElement2* pHTMLElement2=(static_cast<MshtmlVBufStorage_controlFieldNode_t*>(parentNode))->pHTMLElement2;
+	fillTextFormatting_helper(pHTMLElement2,textNode);
+}
+
 VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr) {
 	BSTR tempBSTR=NULL;
 	IHTMLElement2* pHTMLElement2=NULL;
@@ -309,6 +363,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		if(tempBSTR!=NULL) {
 			DEBUG_MSG(L"Got text from node");
 			VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,tempBSTR);
+			fillTextFormattingForTextNode(parentNode,textNode);
 			SysFreeString(tempBSTR);
 			return textNode;
 		}
@@ -393,6 +448,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			tempStringStream<<L"\x2022 "; //Bullet
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempStringStream.str());
 		}
+		fillTextFormattingForTextNode(parentNode,static_cast<VBufStorage_textFieldNode_t*>(previousNode));
 	}
 	//Many in-table elements identify a data table
 	if(!invisible&&(nodeName.compare(L"THEAD")==0||nodeName.compare(L"TFOOT")==0||nodeName.compare(L"TH")==0||nodeName.compare(L"CAPTION")==0||nodeName.compare(L"COLGROUP")==0||nodeName.compare(L"ROWGROUP")==0)) {
@@ -407,6 +463,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		tempIter=HTMLAttribsMap.find(L"summary");
 		if(tempIter!=HTMLAttribsMap.end()&&!tempIter->second.empty()) {
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempIter->second);
+			fillTextFormattingForNode(pHTMLDOMNode,previousNode);
 			tableInfoPtr->definitData=true;
 		}
 		//Collect tableID, and row and column counts
@@ -511,6 +568,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 				previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempIter->second);
 			}
 		}
+		fillTextFormattingForNode(pHTMLDOMNode,previousNode);
 	} else if(nodeName.compare(L"INPUT")==0) {
 		tempIter=HTMLAttribsMap.find(L"type");
 		if(tempIter!=HTMLAttribsMap.end()&&tempIter->second.compare(L"hidden")==0) {
@@ -523,6 +581,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		} else {
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
 		}
+		fillTextFormattingForNode(pHTMLDOMNode,previousNode);
 	} else if(nodeName.compare(L"SELECT")==0) {
 		bool gotSelection=false;
 		IHTMLSelectElement* pHTMLSelectElement=NULL;
