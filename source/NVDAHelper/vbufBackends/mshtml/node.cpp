@@ -25,9 +25,9 @@ class CDispatchChangeSink : public IDispatch {
 	MshtmlVBufStorage_controlFieldNode_t* storageNode;
 	bool allowDelete;
 
-	CDispatchChangeSink(MshtmlVBufStorage_controlFieldNode_t* storageNode) {
-		this->refCount=1;
-		this->allowDelete=true;
+	CDispatchChangeSink(MshtmlVBufStorage_controlFieldNode_t* storageNode):
+	refCount(1),
+	allowDelete(true) {
 		assert(storageNode);
 		this->storageNode=storageNode;
 		incBackendLibRefCount();

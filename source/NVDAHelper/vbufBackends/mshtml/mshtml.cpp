@@ -213,11 +213,10 @@ inline BSTR getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
 	}\
 }
 
-inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, map<wstring,wstring>& styleInfo) {
-	int res=0;
+inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool& invisible, bool& isBlock) {
 	BSTR tempBSTR=NULL;
 	IHTMLElement2* pHTMLElement2=NULL;
-	res=pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
+	int res=pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
 	if(res!=S_OK||!pHTMLElement2) {
 		DEBUG_MSG(L"Could not get IHTMLElement2");
 		return;
@@ -229,10 +228,30 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, map<w
 		DEBUG_MSG(L"Could not get IHTMLCurrentStyle");
 		return;
 	}
-	macro_addHTMLCurrentStyleToMap(display,pHTMLCurrentStyle,styleInfo,tempBSTR);
-	macro_addHTMLCurrentStyleToMap(visibility,pHTMLCurrentStyle,styleInfo,tempBSTR);
-	pHTMLCurrentStyle->Release();
+	//get visibility
+	pHTMLCurrentStyle->get_visibility(&tempBSTR);
+	if(tempBSTR) {
+		DEBUG_MSG(L"Got visibility");
+		invisible=(wcsicmp(tempBSTR,L"hidden")==0);
+		SysFreeString(tempBSTR);
+		tempBSTR=NULL;
+	} else {
+		DEBUG_MSG(L"Failed to get visibility");\
+	}
+	//get display
+	pHTMLCurrentStyle->get_display(&tempBSTR);
+	if(tempBSTR) {
+		DEBUG_MSG(L"Got display");
+		if (wcsicmp(tempBSTR,L"none")==0) invisible=true;
+		if (wcsicmp(tempBSTR,L"inline")==0) isBlock=false;
+		SysFreeString(tempBSTR);
+		tempBSTR=NULL;
+	} else {
+		DEBUG_MSG(L"Failed to get display");\
+	}
+	if (pHTMLCurrentStyle) pHTMLCurrentStyle->Release();
 }
+
 
 #define macro_addHTMLAttributeToMap(attribName,attribsObj,attribsMap,tempVar,tempAttrObj) {\
 	attribsObj->getNamedItem(attribName,&tempAttrObj);\
@@ -281,13 +300,16 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 }
 
 VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr) {
+	BSTR tempBSTR=NULL;
+	IHTMLElement2* pHTMLElement2=NULL;
+	IHTMLCurrentStyle* pHTMLCurrentStyle=NULL;
 	//Handle text nodes
 	{ 
-		BSTR text=getTextFromHTMLDOMNode(pHTMLDOMNode);
-		if(text!=NULL) {
+		tempBSTR=getTextFromHTMLDOMNode(pHTMLDOMNode);
+		if(tempBSTR!=NULL) {
 			DEBUG_MSG(L"Got text from node");
-			VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,text);
-			SysFreeString(text);
+			VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,tempBSTR);
+			SysFreeString(tempBSTR);
 			return textNode;
 		}
 	}
@@ -301,28 +323,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		DEBUG_MSG(L"Node already exists with docHandle "<<docHandle<<L" and ID "<<ID<<L", not adding to buffer");
 		return NULL;
 	}
-	map<wstring,wstring> currentStyleMap;
-	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode,currentStyleMap);
-	map<wstring,wstring>::iterator tempIter;
-	tempIter=currentStyleMap.find(L"visibility");
 	bool invisible=false;
-	if(tempIter!=currentStyleMap.end()&&(tempIter->second).compare(0,6,L"hidden")==0) {
-		DEBUG_MSG(L"visibility is hidden, not rendering node");
-		invisible=true;
-	} else {
-		tempIter=currentStyleMap.find(L"display");
-		if(tempIter!=currentStyleMap.end()&&(tempIter->second).compare(0,4,L"none")==0) {
-			DEBUG_MSG(L"Display is None, not rendering node");
-			invisible=true;
-		}
-	}
 	bool isBlock=true;
-	if(tempIter!=currentStyleMap.end()&&(tempIter->second).compare(0,6,L"inline")==0) {
-		DEBUG_MSG(L"node is inline, setting isBlock to false");
-		isBlock=false;
-	}
+	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode, invisible, isBlock);
 	map<wstring,wstring> HTMLAttribsMap;
-	BSTR tempBSTR=NULL;
+	map<wstring,wstring>::const_iterator tempIter;
 	DEBUG_MSG(L"Trying to get IHTMLDOMNode::nodeName");
 	if(pHTMLDOMNode->get_nodeName(&tempBSTR)!=S_OK||!tempBSTR) {
 		DEBUG_MSG(L"Failed to get IHTMLDOMNode::nodeName");
@@ -331,11 +336,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	wstring nodeName=tempBSTR;
 	SysFreeString(tempBSTR);
 	DEBUG_MSG(L"Got IHTMLDOMNode::nodeName of "<<nodeName);
-	getAttributesFromHTMLDOMNode(pHTMLDOMNode,nodeName,HTMLAttribsMap);
 	if(nodeName.compare(L"#COMMENT")==0||nodeName.compare(L"SCRIPT")==0) {
 		DEBUG_MSG(L"nodeName not supported");
 		return NULL;
 	}
+	getAttributesFromHTMLDOMNode(pHTMLDOMNode,nodeName,HTMLAttribsMap);
 	int IARole=0;
 	int IAStates=0;
 	wstring IAKeyboardShortcut;
@@ -366,11 +371,6 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	for(tempIter=HTMLAttribsMap.begin();tempIter!=HTMLAttribsMap.end();tempIter++) {
 		tempStringStream.str(L"");
 		tempStringStream<<L"HTMLAttrib::"<<tempIter->first;
-		parentNode->addAttribute(tempStringStream.str(),tempIter->second);
-	}
-	for(tempIter=currentStyleMap.begin();tempIter!=currentStyleMap.end();tempIter++) {
-		tempStringStream.str(L"");
-		tempStringStream<<L"HTMLStyle::"<<tempIter->first;
 		parentNode->addAttribute(tempStringStream.str(),tempIter->second);
 	}
 	int LIIndex=0;
