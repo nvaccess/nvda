@@ -319,18 +319,41 @@ inline void fillTextFormatting_helper(IHTMLElement2* pHTMLElement2, VBufStorage_
 	macro_addHTMLCurrentStyleToNodeAttrs(textAlign,text-align,node,pHTMLCurrentStyle,tempBSTR);
 	VARIANT tempVar;
 	macro_addHTMLCurrentStyleToNodeAttrs_var(fontSize,font-size,node,pHTMLCurrentStyle,tempVar);
+	macro_addHTMLCurrentStyleToNodeAttrs_var(verticalAlign,text-position,node,pHTMLCurrentStyle,tempVar);
 	macro_addHTMLCurrentStyleToNodeAttrs(fontFamily,font-family,node,pHTMLCurrentStyle,tempBSTR);
 	//font style
 	pHTMLCurrentStyle->get_fontStyle(&tempBSTR);
 	if(tempBSTR) {
-		DEBUG_MSG(L"Got "<<L#styleName);
+		DEBUG_MSG(L"Got fontStyle");
 		if (wcsicmp(tempBSTR,L"normal")!=0) {
-			node->addAttribute((wcsicmp(tempBSTR,L"oblique")!=0) ? tempBSTR : L"italic", L"");
+			node->addAttribute((wcsicmp(tempBSTR,L"oblique")!=0) ? tempBSTR : L"italic", L"1");
 		}
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
 	} else {
-		DEBUG_MSG(L"Failed to get "<<L#styleName);
+		DEBUG_MSG(L"Failed to get fontStyle");
+	}
+	//font weight
+	if (pHTMLCurrentStyle->get_fontWeight(&tempVar)==S_OK && tempVar.vt==VT_I4) {
+		DEBUG_MSG(L"Got fontWeight");
+		if (tempVar.lVal >=700) {
+			node->addAttribute(L"bold",L"1");
+		}
+		VariantClear(&tempVar);
+	} else {
+		DEBUG_MSG(L"Failed to get fontWeight");
+	}
+	//textDecoration
+	pHTMLCurrentStyle->get_textDecoration(&tempBSTR);
+	if(tempBSTR) {
+		DEBUG_MSG(L"Got textDecoration");
+		if (wcsicmp(tempBSTR,L"none")!=0) {
+			node->addAttribute((wcsicmp(tempBSTR,L"line-through")!=0) ? tempBSTR : L"strikethrough", L"1");
+		}
+		SysFreeString(tempBSTR);
+		tempBSTR=NULL;
+	} else {
+		DEBUG_MSG(L"Failed to get textDecoration");
 	}
 	pHTMLCurrentStyle->Release();
 }
