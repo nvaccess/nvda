@@ -26,7 +26,6 @@ using namespace std;
 HINSTANCE backendLibHandle=NULL;
 UINT WM_HTML_GETOBJECT;
 
-#pragma comment(linker,"/entry:_DllMainCRTStartup@12")
 BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if(reason==DLL_PROCESS_ATTACH) {
 		backendLibHandle=hModule;

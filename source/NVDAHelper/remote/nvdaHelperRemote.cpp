@@ -100,7 +100,6 @@ bool unregisterWindowsHook(int hookType, HOOKPROC hookProc) {
 	return true;
 }
 
-#pragma comment(linker,"/entry:_DllMainCRTStartup@12")
 BOOL DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if((reason==DLL_PROCESS_ATTACH)&&(moduleHandle==NULL)) {
 		moduleHandle=hModule;

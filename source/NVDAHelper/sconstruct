@@ -1,0 +1,55 @@
+import customBuilders
+
+#BUser build variables
+vars=Variables()
+vars.Add(BoolVariable('release','Set to true to build a release version',False))
+
+#Create a new environment for our project
+env=DefaultEnvironment(tools=['default','msvc','midl','mssdk'],variables=vars)
+
+#Make our MSRPCStubs custom builder accessible to the environment
+env['BUILDERS']['MSRPCStubs']=customBuilders.MSRPCStubs
+
+#Some defines and includes for the environment
+env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE'])
+env.Append(CXXFLAGS=['/EHsc'])
+env.Append(CPPPATH=['#.','#../include'])
+env.Append(LINKFLAGS='/incremental:no')
+
+if env['release']:
+	print "Building release version"
+	env.Append(CCFLAGS='/O2')
+	env.Append(LINKFLAGS='/release')
+else:
+	print "Building debug version"
+	env.Append(PDB='${TARGET}.pdb')
+
+Export('env')
+
+acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
+Export('acrobatAccessRPCStubs')
+
+ia2RPCStubs=env.SConscript('ia2_sconscript')
+Export('ia2RPCStubs')
+
+vbufRPCStubs=env.SConscript('interfaces/vbuf/sconscript')
+Export('vbufRPCStubs')
+
+localLib=env.SConscript('local/sconscript',export=['vbufRPCStubs'])
+Export('localLib')
+
+remoteLib=env.SConscript('remote/sconscript',export=['ia2RPCStubs','vbufRPCStubs'])
+Export('remoteLib')
+
+vbufBaseStaticLib=env.SConscript('vbufBase/sconscript',export=['remoteLib'])
+Export('vbufBaseStaticLib')
+
+vbufBackendLibs=env.SConscript('vbufBackends/sconscript',export=['vbufBaseStaticLib'])
+Export('vbufBackendLibs')
+
+if 'install' in BUILD_TARGETS:
+	env.Install('../lib',[remoteLib[0],localLib[0]]+[x[0] for x in vbufBackendLibs])
+	env.Alias('install','#../lib')
+
+#By default we will build particular targets:
+env.Default([remoteLib,localLib,vbufBackendLibs])

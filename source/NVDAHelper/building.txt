@@ -1,22 +1,29 @@
 Build Instructions
 
 Prerequisites:
-The library should be built with the Microsoft Windows SDK, version 6.1 or later. You can find it here:
+NVDAHelper needs The Microsoft Windows SDK, version 6.1 or later. You can find it here:
 http://msdn.microsoft.com/en-us/windows/bb980924.aspx
+Note this includes MSVC 9.0 which is used to compile NVDAHelper.
 
-The gecko_ia2 backend requires the IAccessible2 IDL file. You can obtain it here:
+The gecko_ia2 virtual buffer backend requires the IAccessible2 IDL file. You can obtain it here:
 http://www.linuxfoundation.org/en/Accessibility/IAccessible2
-Download the merged IDL and copy it to deps\ia2\ia2.idl. Then, build it with midl; e.g.:
-cd deps\ia2
-midl ia2.idl
+Download the merged IDL and copy it to ..\include\ia2\ia2.idl.
 
-The adobeAcrobat backend requires the Adobe Acrobat accessibility IDL and header files. This is rather difficult to find, so here is a direct link:
+The adobeAcrobat virtual buffer backend requires the Adobe Acrobat accessibility IDL and header files. This is rather difficult to find, so here is a direct link:
 http://www.adobe.com/devnet/acrobat/downloads/ClientFiles.zip
-Extract the files into deps\AcrobatAccess. Then, build the IDL with midl; e.g.:
-cd deps\AcrobatAccess
-midl AcrobatAccess.idl
+Extract the files into ..\include\AcrobatAccess.
+
+The NVDAHelper build is managed by the SCons build system:
+http://scons.sourceforge.net/
+Please download the win32 package and install it. You may find it useful to make sure that the 'scripts' directory of your Python installation is in your path variable (e.g. c:\python26\scripts) so that you can easily run SCons.
 
 Building the library:
-To build the library and all real backends, run nmake in the top level directory.
-IF you do not want to build all backends, you can specify the single backend to build by passing the BACKEND variable to nmake in the top level directory; e.g.:
-nmake BACKEND=gecko_ia2
+
+To build the library and all virtual buffer backends, open a command prompt, cd to the top-level directory of nvdaHelper and run the command scons.
+There is no need to use the MSVC environment command prompt, scons will locate what it needs automatically in any standard environment.
+
+By default a version with debugging symbols will be generated. To build a release version, provide release=1 on the commandline when running scons:
+scons release=1
+
+To install the produced libraries in to your NVDA source directory, run the following command:
+ scons install.
