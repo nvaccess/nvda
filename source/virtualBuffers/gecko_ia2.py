@@ -25,6 +25,10 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		defaultAction=attrs.get('defaultAction','')
 		if defaultAction=="click":
 			states.add(controlTypes.STATE_CLICKABLE)
+		if "IAccessible2::attribute_grab" in attrs:
+			states.add(controlTypes.STATE_DRAGGABLE)
+		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
+			states.add(controlTypes.STATE_DROPTARGET)
 		if role==controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 			role=controlTypes.ROLE_TEXTFRAME
