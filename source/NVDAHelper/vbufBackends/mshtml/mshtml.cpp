@@ -433,6 +433,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	if(!IAKeyboardShortcut.empty()) {
 		parentNode->addAttribute(L"keyboardShortcut",IAKeyboardShortcut);
 	}
+	if (nodeName.compare(L"HR")==0) {
+		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+		IARole=ROLE_SYSTEM_SEPARATOR;
+		parentNode->setIsBlock(true);
+	}
 	wostringstream tempStringStream;
 	tempStringStream.str(L"");
 	tempStringStream<<IARole;
@@ -682,6 +687,10 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		}
 	}
 	if(pacc) pacc->Release();
+	if (!invisible && nodeName.compare(L"TEXTAREA")==0) {
+		if(parentNode->getLength()==0) 
+			buffer->addTextFieldNode(parentNode,previousNode,L" ");
+	}
 	if(!invisible&&nodeName.compare(L"TABLE")==0) {
 		assert(tableInfoPtr);
 		if(!tableInfoPtr->definitData) {
