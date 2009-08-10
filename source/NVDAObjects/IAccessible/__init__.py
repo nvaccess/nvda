@@ -773,13 +773,15 @@ the NVDAObject for IAccessible
 		except:
 			return []
 
+	def _get_IA2Attributes(self):
+		return IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
+
 	def _get_rowNumber(self):
 		table=self.table
 		if table:
 			if self.IAccessibleTableUsesTableCellIndexAttrib:
-				attribsMap=IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
 				try:
-					index=attribsMap['table-cell-index']
+					index=self.IA2Attributes['table-cell-index']
 				except KeyError:
 					raise NotImplementedError
 			else:
@@ -795,9 +797,8 @@ the NVDAObject for IAccessible
 		table=self.table
 		if table:
 			if self.IAccessibleTableUsesTableCellIndexAttrib:
-				attribsMap=IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
 				try:
-					index=attribsMap['table-cell-index']
+					index=self.IA2Attributes['table-cell-index']
 				except KeyError:
 					raise NotImplementedError
 			else:
