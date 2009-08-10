@@ -599,6 +599,7 @@ the NVDAObject for IAccessible
 		else:
 			states.update(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessibleStates) if IAccessibleHandler.IAccessibleStatesToNVDAStates.has_key(x))
 		if not hasattr(self.IAccessibleObject,'states'):
+			# Not an IA2 object.
 			return states
 		try:
 			IAccessible2States=self.IAccessibleObject.states
@@ -606,6 +607,16 @@ the NVDAObject for IAccessible
 			log.debugWarning("could not get IAccessible2 states",exc_info=True)
 			IAccessible2States=IAccessibleHandler.IA2_STATE_DEFUNCT
 		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessible2States) if IAccessibleHandler.IAccessible2StatesToNVDAStates.has_key(x))
+		try:
+			IA2Attribs=self.IA2Attributes
+		except COMError:
+			log.debugWarning("could not get IAccessible2 attributes",exc_info=True)
+			IA2Attribs=None
+		if IA2Attribs:
+			if "grab" in IA2Attribs:
+				states.add(controlTypes.STATE_DRAGGABLE)
+			if IA2Attribs.get("dropeffect", "none") != "none":
+				states.add(controlTypes.STATE_DROPTARGET)
 		if controlTypes.STATE_HASPOPUP in states and controlTypes.STATE_AUTOCOMPLETE in states:
 			states.remove(controlTypes.STATE_HASPOPUP)
 		if controlTypes.STATE_HALFCHECKED in states:
@@ -774,7 +785,10 @@ the NVDAObject for IAccessible
 			return []
 
 	def _get_IA2Attributes(self):
-		return IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
+		attribs = self.IAccessibleObject.attributes
+		if attribs:
+			return IAccessibleHandler.splitIA2Attribs(attribs)
+		return {}
 
 	def _get_rowNumber(self):
 		table=self.table
