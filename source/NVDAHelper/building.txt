@@ -1,11 +1,12 @@
 Build Instructions
 
 Prerequisites:
+
 NVDAHelper needs The Microsoft Windows SDK, version 6.1 or later. You can find it here:
 http://msdn.microsoft.com/en-us/windows/bb980924.aspx
-Note this includes MSVC 9.0 which is used to compile NVDAHelper.
+Note this includes MSVC which is used to compile NVDAHelper.
 
-The gecko_ia2 virtual buffer backend requires the IAccessible2 IDL file. You can obtain it here:
+ The gecko_ia2 virtual buffer backend requires the IAccessible2 IDL file. You can obtain it here:
 http://www.linuxfoundation.org/en/Accessibility/IAccessible2
 Download the merged IDL and copy it to ..\include\ia2\ia2.idl.
 
@@ -14,8 +15,8 @@ http://www.adobe.com/devnet/acrobat/downloads/ClientFiles.zip
 Extract the files into ..\include\AcrobatAccess.
 
 The NVDAHelper build is managed by the SCons build system:
-http://scons.sourceforge.net/
-Please download the win32 package and install it. You may find it useful to make sure that the 'scripts' directory of your Python installation is in your path variable (e.g. c:\python26\scripts) so that you can easily run SCons.
+For now you need to fetch a development version from:
+http://scons.tigris.org/svn/scons/trunk
 
 Building the library:
 

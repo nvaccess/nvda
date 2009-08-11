@@ -1,8 +1,10 @@
 import customBuilders
 
-#BUser build variables
+#User build variables
 vars=Variables()
 vars.Add(BoolVariable('release','Set to true to build a release version',False))
+vars.Add('TARGET_ARCH','Target architecture')
+vars.Add('HOST_ARCH','Host architecture')
 
 #Create a new environment for our project
 env=DefaultEnvironment(tools=['default','msvc','midl','mssdk'],variables=vars)
@@ -15,13 +17,16 @@ env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE'])
 env.Append(CXXFLAGS=['/EHsc'])
 env.Append(CPPPATH=['#.','#../include'])
 env.Append(LINKFLAGS='/incremental:no')
+TARGET_ARCH=env['TARGET_ARCH']
+if TARGET_ARCH=='x86_64':
+	env.Append(MIDLFLAGS='/x64')
 
 if env['release']:
-	print "Building release version"
+	print "Building %s release version"%TARGET_ARCH
 	env.Append(CCFLAGS='/O2')
 	env.Append(LINKFLAGS='/release')
 else:
-	print "Building debug version"
+	print "Building %s debug version"%TARGET_ARCH
 	env.Append(PDB='${TARGET}.pdb')
 
 Export('env')
@@ -47,9 +52,12 @@ Export('vbufBaseStaticLib')
 vbufBackendLibs=env.SConscript('vbufBackends/sconscript',export=['vbufBaseStaticLib'])
 Export('vbufBackendLibs')
 
-if 'install' in BUILD_TARGETS:
-	env.Install('../lib',[remoteLib[0],localLib[0]]+[x[0] for x in vbufBackendLibs])
-	env.Alias('install','#../lib')
+if TARGET_ARCH=='x86_64':
+	installDir=Dir('../lib64')
+else:
+	installDir=Dir('../lib')
+env.Install(installDir,[remoteLib[0],localLib[0]]+[x[0] for x in vbufBackendLibs])
+env.Alias('install',installDir)
 
 #By default we will build particular targets:
 env.Default([remoteLib,localLib,vbufBackendLibs])
