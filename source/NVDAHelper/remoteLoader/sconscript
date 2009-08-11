@@ -1,0 +1,12 @@
+Import('env','remoteLib')
+
+env=env.Clone()
+env.Append(LINKFLAGS='/subsystem:windows')
+
+remoteLoaderProgram=env.Program(
+	target='nvdaHelperRemoteLoader',
+	source=['loader.cpp'],
+	LIBS=[remoteLib[1] if env['release'] else remoteLib[2],'kernel32'],
+)
+
+Return('remoteLoaderProgram')

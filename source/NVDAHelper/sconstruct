@@ -46,6 +46,9 @@ Export('localLib')
 remoteLib=env.SConscript('remote/sconscript',export=['ia2RPCStubs','vbufRPCStubs'])
 Export('remoteLib')
 
+remoteLoaderProgram=env.SConscript('remoteLoader/sconscript')
+Export('remoteLoaderProgram')
+
 vbufBaseStaticLib=env.SConscript('vbufBase/sconscript',export=['remoteLib'])
 Export('vbufBaseStaticLib')
 
@@ -56,8 +59,8 @@ if TARGET_ARCH=='x86_64':
 	installDir=Dir('../lib64')
 else:
 	installDir=Dir('../lib')
-env.Install(installDir,[remoteLib[0],localLib[0]]+[x[0] for x in vbufBackendLibs])
+env.Install(installDir,[remoteLib[0],remoteLoaderProgram[0],localLib[0]]+[x[0] for x in vbufBackendLibs])
 env.Alias('install',installDir)
 
 #By default we will build particular targets:
-env.Default([remoteLib,localLib,vbufBackendLibs])
+env.Default([remoteLib,remoteLoaderProgram,localLib,vbufBackendLibs])
