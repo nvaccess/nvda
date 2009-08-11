@@ -3,7 +3,7 @@ Import(['env','ia2RPCStubs','vbufRPCStubs'])
 remoteLib=env.SharedLibrary(
 	target="nvdaHelperRemote",
 	source=["nvdaHelperRemote.cpp","inputLangChange.cpp","typedCharacter.cpp","ia2Support.cpp",ia2RPCStubs[2],"rpcSrv.cpp","vbufRemote.cpp",vbufRPCStubs[2]],
-	LIBS=["user32","ole32","rpcrt4"],
+	LIBS=["user32","ole32","rpcrt4","shlwapi"],
 )
 
 Return('remoteLib')

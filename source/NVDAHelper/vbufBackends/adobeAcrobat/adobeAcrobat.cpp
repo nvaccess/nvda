@@ -12,7 +12,7 @@
 #include <windows.h>
 #include <oleacc.h>
 #include <AcrobatAccess/AcrobatAccess.h>
-#include <remote/hookRegistration.h>
+#include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
 #include <vbufBase/debug.h>
 #include "adobeAcrobat.h"

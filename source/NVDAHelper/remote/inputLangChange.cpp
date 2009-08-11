@@ -4,7 +4,7 @@
 //See the file Copying for details.
 
 #include <windows.h>
-#include "hookRegistration.h"
+#include "nvdaHelperRemote.h"
 #include "inputLangChange.h"
 
 LRESULT CALLBACK inputLangChange_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {

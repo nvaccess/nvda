@@ -14,7 +14,6 @@
 #include <set>
 #include <string>
 #include <sstream>
-#include <remote/hookRegistration.h>
 #include <vbufBase/backend.h>
 #include <vbufBase/utils.h>
 #include <vbufBase/debug.h>

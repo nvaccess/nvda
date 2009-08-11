@@ -8,7 +8,7 @@
 
 #include <cassert>
 #include <windows.h>
-#include <remote/hookRegistration.h>
+#include <remote/nvdaHelperRemote.h>
 #include "debug.h"
 #include "storage.h"
 #include "backend.h"

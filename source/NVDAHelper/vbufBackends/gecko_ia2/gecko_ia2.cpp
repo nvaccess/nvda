@@ -13,7 +13,7 @@
 #include <sstream>
 #include <ia2/ia2.h>
 #include <vbufBase/ia2utils.h>
-#include <remote/hookRegistration.h>
+#include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
 #include <vbufBase/debug.h>
 #include <vbufBase/utils.h>

@@ -9,11 +9,12 @@
 #include <windows.h>
 #include <objbase.h>
 #include "ia2/ia2.h"
+#include "nvdaHelperRemote.h"
 #include "IA2Support.h"
 
 typedef ULONG(*LPFNDLLCANUNLOADNOW)();
 
-#pragma data_seg(".hookManagerShared")
+#pragma data_seg(".ia2SupportShared")
 BOOL isIA2Initialized=FALSE;
 wchar_t IA2DllPath[256]={0};
 IID ia2Iids[]={
@@ -31,7 +32,7 @@ IID ia2Iids[]={
 	IID_IAccessibleValue,
 };
 #pragma data_seg()
-#pragma comment(linker, "/section:.hookManagerShared,rws")
+#pragma comment(linker, "/section:.ia2SupportShared,rws")
 
 #define IAccessible2ProxyIID IID_IAccessible2
 
@@ -95,9 +96,8 @@ BOOL uninstallIA2Support() {
 }
 
 BOOL IA2Support_initialize() {
-	int count=0;
 	if(!isIA2Initialized) {
-		GetFullPathName(L"lib/IAccessible2Proxy.dll",256,IA2DllPath,NULL);
+		wsprintf(IA2DllPath,L"%s\\IAccessible2Proxy.dll",dllDirectory);
 		isIA2Initialized=TRUE;
 	}
 	if(!installIA2Support()) {

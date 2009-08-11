@@ -9,17 +9,22 @@
 #include <set>
 #include <map>
 #include <windows.h>
+#include <shlwapi.h>
 #include "rpcSrv.h"
 #include "inputLangChange.h"
 #include "typedCharacter.h"
 #include "IA2Support.h"
-#include "hookRegistration.h"
 #include "nvdaHelperRemote.h"
 
 using namespace std;
 
 typedef map<WINEVENTPROC,size_t> winEventHookRegistry_t;
 typedef map<HOOKPROC,size_t> windowsHookRegistry_t;
+
+#pragma data_seg(".remoteShared")
+	wchar_t dllDirectory[MAX_PATH]={0};
+#pragma data_seg()
+#pragma comment(linker, "/section:.remoteShared,rws")
 
 HINSTANCE moduleHandle;
 BOOL isInitialized=false;
@@ -166,6 +171,9 @@ int nvdaHelper_initialize() {
 		fprintf(stderr,"Already initialized\n");
 		return -1;
 	}
+	//Find the directory name of this dll
+	GetModuleFileName(moduleHandle,dllDirectory,MAX_PATH);
+	PathRemoveFileSpec(dllDirectory);
 	if(!IA2Support_initialize()) {
 		fprintf(stderr,"Error initializing IA2 support\n");
 		return -1;

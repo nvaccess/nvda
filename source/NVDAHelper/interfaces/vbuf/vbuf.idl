@@ -19,10 +19,10 @@ interface VBuf {
  * @param bindingHandle the binding handle for the inproc worker's rpc server
  * @param docHandle uniquely identifies the document or window being virtualized
  * @param ID uniquely identifies the object with in the document or window where rendering should start from
- * @param backendPath an absolute path to the backend library that the virtualBuffer should use
+ * @param backendName The name of the backend (the path to the correct dll will be calculated automatically)
  * @return a handle identifying the new virtual buffer.
  */
-	DLLEXPORT VBufRemote_bufferHandle_t createBuffer([in] handle_t bindingHandle, [in] int docHandle, [in] int ID, [in,string] const wchar_t* backendPath);
+	DLLEXPORT VBufRemote_bufferHandle_t createBuffer([in] handle_t bindingHandle, [in] int docHandle, [in] int ID, [in,string] const wchar_t* backendName);
 
 /**
  * Destroies a virtual buffer

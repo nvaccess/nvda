@@ -5,7 +5,7 @@
 
 #include <windows.h>
 #include <wchar.h>
-#include "hookRegistration.h"
+#include "nvdaHelperRemote.h"
 #include "typedCharacter.h"
 
 LRESULT CALLBACK typedCharacter_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
