@@ -38,7 +38,9 @@ HWINEVENTHOOK winEventHookID=0;
 DWORD desktopProcessID=0;
 
 void inProcess_initialize() {
+	#ifndef NDEBUG
 	Beep(220,35);
+	#endif
 	assert(!inProcess_isInitialized);
 	rpcSrv_inProcess_initialize();
 	IA2Support_inProcess_initialize();
@@ -54,7 +56,9 @@ void inProcess_terminate() {
 	IA2Support_inProcess_terminate();
 	rpcSrv_inProcess_terminate();
 	inProcess_isInitialized=false;
+	#ifndef NDEBUG
 	Beep(440,35);
+	#endif
 }
 
 bool registerWinEventHook(WINEVENTPROC hookProc) {
