@@ -15,8 +15,7 @@
 typedef ULONG(*LPFNDLLCANUNLOADNOW)();
 
 #pragma data_seg(".ia2SupportShared")
-BOOL isIA2Initialized=FALSE;
-wchar_t IA2DllPath[256]={0};
+wchar_t IA2DllPath[MAX_PATH]={0};
 IID ia2Iids[]={
 	IID_IAccessible2,
 	IID_IAccessibleAction,
@@ -40,6 +39,7 @@ IID _ia2PSClsidBackups[ARRAYSIZE(ia2Iids)]={0};
 BOOL isIA2Installed=FALSE;
 HINSTANCE IA2DllHandle=0;
 DWORD IA2RegCooky=0;
+BOOL isIA2Initialized=FALSE;
 
 BOOL installIA2Support() {
 	LPFNGETCLASSOBJECT IA2Dll_DllGetClassObject;
@@ -96,22 +96,16 @@ BOOL uninstallIA2Support() {
 }
 
 BOOL IA2Support_initialize() {
-	if(!isIA2Initialized) {
-		wsprintf(IA2DllPath,L"%s\\IAccessible2Proxy.dll",dllDirectory);
-		isIA2Initialized=TRUE;
-	}
-	if(!installIA2Support()) {
-		fprintf(stderr,"Error installing IA2 support\n");
-		return FALSE;
-	}
+	assert(!isIA2Initialized);
+	wsprintf(IA2DllPath,L"%s\\IAccessible2Proxy.dll",dllDirectory);
+	isIA2Initialized=TRUE;
+	installIA2Support();
 	return TRUE;
 }
 
 BOOL IA2Support_terminate() {
-	if(!uninstallIA2Support()) {
-		fprintf(stderr,"Error uninstalling IA2 support\n");
-		return FALSE;
-	}
+	assert(isIA2Initialized);
+	uninstallIA2Support();
 	return TRUE;
 }
 

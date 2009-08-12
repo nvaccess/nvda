@@ -148,7 +148,7 @@ LRESULT CALLBACK callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
 }
 
 //winEvent callback
-void winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
+void CALLBACK winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	DWORD curProcessID=0;
 	if(eventID==EVENT_SYSTEM_FOREGROUND||eventID==EVENT_OBJECT_FOCUS) {
 		GetWindowThreadProcessId(hwnd,&curProcessID);
@@ -168,26 +168,27 @@ void winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID,
 
 int nvdaHelper_initialize() {
 	if(isInitialized) {
-		fprintf(stderr,"Already initialized\n");
+		MessageBox(NULL,L"Already initialized",L"nvdaHelperRemote (nvdaHelper_initialize)",0);
 		return -1;
 	}
 	//Find the directory name of this dll
+	assert(moduleHandle);
 	GetModuleFileName(moduleHandle,dllDirectory,MAX_PATH);
 	PathRemoveFileSpec(dllDirectory);
 	if(!IA2Support_initialize()) {
-		fprintf(stderr,"Error initializing IA2 support\n");
+		MessageBox(NULL,L"Error initializing IA2 support",L"nvdaHelperRemote (nvdaHelper_initialize)",0);
 		return -1;
 	}
 	if((getMessageHookID=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)getMessageHook,moduleHandle,0))==0) {
-		fprintf(stderr,"Error registering window message hook\n");
+		MessageBox(NULL,L"Error registering getMessage Windows hook",L"nvdaHelperRemote (nvdaHelper_initialize)",0);
 		return -1;
 	}
 	if((callWndProcHookID=SetWindowsHookEx(WH_CALLWNDPROC,(HOOKPROC)callWndProcHook,moduleHandle,0))==0) {
-		fprintf(stderr,"Error registering window message hook\n");
+		MessageBox(NULL,L"Error registering callWndProc Windows hook",L"nvdaHelperRemote (nvdaHelper_initialize)",0);
 		return -1;
 	}
 	if((winEventHookID=SetWinEventHook(0,0xFFFFFFFF,moduleHandle,(WINEVENTPROC)winEventHook,0,0,WINEVENT_INCONTEXT|WINEVENT_SKIPOWNPROCESS))==0) {
-		fprintf(stderr,"Error registering winEvent hook\n");
+		MessageBox(NULL,L"Error registering winEvent hook",L"nvdaHelperRemote (nvdaHelper_initialize)",0);
 		return -1;
 	}
 	isInitialized=TRUE;
