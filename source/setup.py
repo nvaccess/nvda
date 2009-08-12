@@ -126,6 +126,7 @@ setup(
 		("documentation", ['../copying.txt', '../contributors.txt']),
 		("appModules", glob("appModules/*.kbd")),
 		("lib", glob("lib/*")),
+		("lib64", glob("lib64/*")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("louis/tables",glob("louis/tables/*"))
