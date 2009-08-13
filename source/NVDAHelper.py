@@ -42,7 +42,7 @@ def initialize():
 	if _remoteLib.nvdaHelper_initialize() < 0:
 		raise RuntimeError("Error initializing NVDAHelper")
 	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':
-		_remoteLoader64=subprocess.Popen('lib64/nvdaHelperRemoteLoader.exe',stdin=subprocess.PIPE,stdout=None,stderr=None)
+		_remoteLoader64=subprocess.Popen('lib64/nvdaHelperRemoteLoader.exe',stdin=subprocess.PIPE,stdout=file("nul","w"),stderr=subprocess.STDOUT)
 	winEventHookID=winUser.setWinEventHook(EVENT_TYPEDCHARACTER,EVENT_INPUTLANGCHANGE,0,winEventCallback,0,0,0)
 
 def terminate():
