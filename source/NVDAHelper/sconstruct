@@ -32,36 +32,43 @@ else:
 
 Export('env')
 
+neededTargets=[]
+
 acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
-Export('acrobatAccessRPCStubs')
 
 ia2RPCStubs=env.SConscript('ia2_sconscript')
-Export('ia2RPCStubs')
 
 vbufRPCStubs=env.SConscript('interfaces/vbuf/sconscript')
-Export('vbufRPCStubs')
 
-localLib=env.SConscript('local/sconscript',export=['vbufRPCStubs'])
-Export('localLib')
+if TARGET_ARCH=='x86':
+	localLib=env.SConscript('local/sconscript',exports=['vbufRPCStubs'])
+	neededTargets.append(localLib)
 
-remoteLib=env.SConscript('remote/sconscript',export=['ia2RPCStubs','vbufRPCStubs'])
-Export('remoteLib')
+remoteLib=env.SConscript('remote/sconscript',exports=['ia2RPCStubs','vbufRPCStubs'])
+neededTargets.append(remoteLib)
 
-remoteLoaderProgram=env.SConscript('remoteLoader/sconscript')
-Export('remoteLoaderProgram')
+if TARGET_ARCH=='x86_64':
+	remoteLoaderProgram=env.SConscript('remoteLoader/sconscript',exports=['remoteLib'])
+	neededTargets.append(remoteLoaderProgram)
 
-vbufBaseStaticLib=env.SConscript('vbufBase/sconscript',export=['remoteLib'])
-Export('vbufBaseStaticLib')
+vbufBaseStaticLib=env.SConscript('vbufBase/sconscript',exports=['remoteLib'])
 
-vbufBackendLibs=env.SConscript('vbufBackends/sconscript',export=['vbufBaseStaticLib'])
-Export('vbufBackendLibs')
+adobeAcrobatVBufBackend=env.SConscript('vbufBackends/adobeAcrobat/sconscript',exports=['vbufBaseStaticLib','acrobatAccessRPCStubs'])
+neededTargets.append(adobeAcrobatVBufBackend)
+
+geckoVBufBackend=env.SConscript('vbufBackends/gecko_ia2/sconscript',exports=['vbufBaseStaticLib','ia2RPCStubs'])
+neededTargets.append(geckoVBufBackend)
+
+mshtmlVBufBackend=env.SConscript('vbufBackends/mshtml/sconscript',exports=['vbufBaseStaticLib'])
+neededTargets.append(mshtmlVBufBackend)
 
 if TARGET_ARCH=='x86_64':
 	installDir=Dir('../lib64')
 else:
 	installDir=Dir('../lib')
-env.Install(installDir,[remoteLib[0],remoteLoaderProgram[0],localLib[0]]+[x[0] for x in vbufBackendLibs])
-env.Alias('install',installDir)
+installedFiles=env.Install(installDir,neededTargets)
+env.Requires(installedFiles,neededTargets)
+env.Alias('install',installedFiles)
 
 #By default we will build particular targets:
-env.Default([remoteLib,remoteLoaderProgram,localLib,vbufBackendLibs])
+env.Default(neededTargets)
