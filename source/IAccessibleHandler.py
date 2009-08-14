@@ -459,6 +459,7 @@ winUser.EVENT_OBJECT_STATECHANGE:"stateChange",
 winUser.EVENT_OBJECT_VALUECHANGE:"valueChange",
 IA2_EVENT_TEXT_CARET_MOVED:"caret",
 IA2_EVENT_DOCUMENT_LOAD_COMPLETE:"documentLoadComplete",
+IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED:"IA2AttributeChange",
 }
 
 def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):

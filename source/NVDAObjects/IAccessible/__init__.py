@@ -792,6 +792,10 @@ the NVDAObject for IAccessible
 			return IAccessibleHandler.splitIA2Attribs(attribs)
 		return {}
 
+	def event_IA2AttributeChange(self):
+		# We currently only care about changes to the accessible drag and drop attributes, which we map to states, so treat this as a stateChange.
+		self.event_stateChange()
+
 	def _get_rowNumber(self):
 		table=self.table
 		if table:
