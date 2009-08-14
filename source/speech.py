@@ -419,6 +419,9 @@ def processPositiveStates(role, states, reason, positiveStates):
 	positiveStates.discard(controlTypes.STATE_SELECTABLE)
 	positiveStates.discard(controlTypes.STATE_FOCUSABLE)
 	positiveStates.discard(controlTypes.STATE_CHECKABLE)
+	if controlTypes.STATE_DRAGGING in positiveStates:
+		# It's obvious that the control is draggable if it's being dragged.
+		positiveStates.discard(controlTypes.STATE_DRAGGABLE)
 	if reason == REASON_QUERY:
 		return positiveStates
 	positiveStates.discard(controlTypes.STATE_MODAL)

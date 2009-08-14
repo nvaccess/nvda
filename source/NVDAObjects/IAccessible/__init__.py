@@ -615,6 +615,8 @@ the NVDAObject for IAccessible
 		if IA2Attribs:
 			if "grab" in IA2Attribs:
 				states.add(controlTypes.STATE_DRAGGABLE)
+			if IA2Attribs.get("grabbed") == "true":
+				states.add(controlTypes.STATE_DRAGGING)
 			if IA2Attribs.get("dropeffect", "none") != "none":
 				states.add(controlTypes.STATE_DROPTARGET)
 		if controlTypes.STATE_HASPOPUP in states and controlTypes.STATE_AUTOCOMPLETE in states:
