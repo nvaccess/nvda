@@ -72,7 +72,7 @@ class MSHTML(VirtualBuffer):
 	TextInfo=MSHTMLTextInfo
 
 	def __init__(self,rootNVDAObject):
-		super(MSHTML,self).__init__(rootNVDAObject,backendLibPath=r"lib\VBufBackend_mshtml.dll")
+		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		if not obj.windowClassName.startswith("Internet Explorer_"):

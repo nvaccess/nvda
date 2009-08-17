@@ -2,21 +2,20 @@
 //Copyright (c) 2007 Michael Curran <mick@kulgan.net>
 //This file is covered by the GNU General Public Licence
 //See the file Copying for details.
-#define UNICODE
 
 #include <cstdio>
 #include <cassert>
 #include <cwchar>
 #include <windows.h>
 #include <objbase.h>
-#include "ia2.h"
+#include "ia2/ia2.h"
+#include "nvdaHelperRemote.h"
 #include "IA2Support.h"
 
 typedef ULONG(*LPFNDLLCANUNLOADNOW)();
 
-#pragma data_seg(".hookManagerShared")
-BOOL isIA2Initialized=FALSE;
-wchar_t IA2DllPath[256]={0};
+#pragma data_seg(".ia2SupportShared")
+wchar_t IA2DllPath[MAX_PATH]={0};
 IID ia2Iids[]={
 	IID_IAccessible2,
 	IID_IAccessibleAction,
@@ -32,7 +31,7 @@ IID ia2Iids[]={
 	IID_IAccessibleValue,
 };
 #pragma data_seg()
-#pragma comment(linker, "/section:.hookManagerShared,rws")
+#pragma comment(linker, "/section:.ia2SupportShared,rws")
 
 #define IAccessible2ProxyIID IID_IAccessible2
 
@@ -40,6 +39,7 @@ IID _ia2PSClsidBackups[ARRAYSIZE(ia2Iids)]={0};
 BOOL isIA2Installed=FALSE;
 HINSTANCE IA2DllHandle=0;
 DWORD IA2RegCooky=0;
+BOOL isIA2Initialized=FALSE;
 
 BOOL installIA2Support() {
 	LPFNGETCLASSOBJECT IA2Dll_DllGetClassObject;
@@ -96,22 +96,23 @@ BOOL uninstallIA2Support() {
 }
 
 BOOL IA2Support_initialize() {
-	int count=0;
-	if(!isIA2Initialized) {
-		GetFullPathName(L"lib/IAccessible2Proxy.dll",256,IA2DllPath,NULL);
-		isIA2Initialized=TRUE;
-	}
-	if(!installIA2Support()) {
-		fprintf(stderr,"Error installing IA2 support\n");
-		return FALSE;
-	}
+	assert(!isIA2Initialized);
+	wsprintf(IA2DllPath,L"%s\\IAccessible2Proxy.dll",dllDirectory);
+	isIA2Initialized=TRUE;
+	installIA2Support();
 	return TRUE;
 }
 
 BOOL IA2Support_terminate() {
-	if(!uninstallIA2Support()) {
-		fprintf(stderr,"Error uninstalling IA2 support\n");
-		return FALSE;
-	}
+	assert(isIA2Initialized);
+	uninstallIA2Support();
 	return TRUE;
+}
+
+void IA2Support_inProcess_initialize() {
+	installIA2Support();
+}
+
+void IA2Support_inProcess_terminate() {
+	uninstallIA2Support();
 }

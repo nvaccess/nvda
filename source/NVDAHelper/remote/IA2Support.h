@@ -4,16 +4,10 @@
 #ifndef IA2SUPPORT_H
 #define IA2SUPPORT_H
 
-#include <windows.h>
-#include <wchar.h>
-
-//Private variables
-extern BOOL isIA2Initialized;
-
 //Private functions
 BOOL IA2Support_initialize();
-BOOL installIA2Support();
-BOOL uninstallIA2Support();
+void IA2Support_inProcess_initialize();
+void IA2Support_inProcess_terminate();
 BOOL IA2Support_terminate();
 
 #endif
