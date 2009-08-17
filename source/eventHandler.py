@@ -79,7 +79,7 @@ def executeEvent(eventName,obj,**kwargs):
 			return
 		executeEvent_appModuleLevel(eventName,obj,**kwargs)
 	except:
-		log.error("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs),exc_info=True)
+		log.exception("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs))
 
 
 def doPreGainFocus(obj):

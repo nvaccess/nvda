@@ -197,7 +197,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				queueHandler.pumpAll()
 				mouseHandler.pumpAll()
 			except:
-				log.error("errors in this core pump cycle",exc_info=True)
+				log.exception("errors in this core pump cycle")
 			watchdog.alive()
 	log.debug("starting core pump")
 	pump = CorePump()

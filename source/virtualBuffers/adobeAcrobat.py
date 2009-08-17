@@ -98,7 +98,7 @@ class AdobeAcrobat(VirtualBuffer):
 		elif nodeType == "heading":
 			attrs = {"acrobat::stdname": ["H1", "H2", "H3", "H4", "H5", "H6"]}
 		elif nodeType == "formField":
-			attrs = {"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY: [None]}
+			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_PUSHBUTTON, oleacc.ROLE_SYSTEM_RADIOBUTTON, oleacc.ROLE_SYSTEM_CHECKBUTTON, oleacc.ROLE_SYSTEM_COMBOBOX, oleacc.ROLE_SYSTEM_LIST, oleacc.ROLE_SYSTEM_OUTLINE, oleacc.ROLE_SYSTEM_TEXT], "IAccessible::state_%s" % oleacc.STATE_SYSTEM_READONLY: [None]}
 		elif nodeType == "list":
 			attrs = {"acrobat::stdname": ["L"]}
 		elif nodeType == "listItem":

@@ -11,6 +11,10 @@ import nvwave
 from types import MethodType
 import globalVars
 
+RPC_S_CALL_FAILED_DNE = 1727
+RPC_E_CALL_REJECTED = -2147418111
+RPC_E_CALL_CANCELED = -2147418110
+
 moduleCache={}
 
 def makeModulePathFromFilePath(path):
@@ -103,6 +107,26 @@ class Logger(logging.Logger):
 		if not self.isEnabledFor(self.IO):
 			return
 		self._log(log.IO, msg, args, **kwargs)
+
+	def exception(self, msg="", exc_info=True):
+		"""Log an exception at an appropriate levle.
+		Normally, it will be logged at level "ERROR".
+		However, certain exceptions which aren't considered errors (or aren't errors that we can fix) are expected and will therefore be logged at a lower level.
+		"""
+		import comtypes
+		if exc_info is True:
+			exc_info = sys.exc_info()
+
+		exc = exc_info[1]
+		if (
+			(isinstance(exc, WindowsError) and exc.winerror == RPC_S_CALL_FAILED_DNE)
+			or (isinstance(exc, comtypes.COMError) and exc.hresult in (RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED))
+		):
+			level = self.DEBUGWARNING
+		else:
+			level = self.ERROR
+
+		self._log(level, msg, (), exc_info=exc_info)
 
 class FileHandler(logging.FileHandler):
 
