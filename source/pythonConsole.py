@@ -7,6 +7,9 @@ import os
 import code
 import sys
 import pydoc
+import re
+import itertools
+import rlcompleter
 import wx
 from baseObject import AutoPropertyObject
 import speech
@@ -163,6 +166,7 @@ class ConsoleUI(wx.Frame):
 		mainSizer.Fit(self)
 
 		self.console = PythonConsole(outputFunc=self.output, echoFunc=self.echo, setPromptFunc=self.setPrompt, exitFunc=self.Close)
+		self.completer = rlcompleter.Completer(namespace=self.console.namespace)
 		# Even the most recent line has a position in the history, so initialise with one blank line.
 		self.inputHistory = [""]
 		self.inputHistoryPos = 0
@@ -216,6 +220,41 @@ class ConsoleUI(wx.Frame):
 		self.inputCtrl.SetInsertionPointEnd()
 		return True
 
+	RE_COMPLETE_UNIT = re.compile(r"[\w.]*$")
+	def complete(self):
+		try:
+			original = self.RE_COMPLETE_UNIT.search(self.inputCtrl.GetValue()).group(0)
+		except AttributeError:
+			return False
+
+		completions = list(self._getCompletions(original))
+		completed = self._findBestCompletion(original, completions)
+		if not completed:
+			return False
+		self._insertCompletion(original, completed)
+		return True
+
+	def _getCompletions(self, original):
+		for state in itertools.count():
+			completion = self.completer.complete(original, state)
+			if not completion:
+				break
+			yield completion
+
+	def _findBestCompletion(self, original, completions):
+		# Just return the first possible completion for now.
+		# TODO: Return the best possible completion instead.
+		try:
+			return completions[0]
+		except IndexError:
+			return None
+
+	def _insertCompletion(self, original, completed):
+		insert = completed[len(original):]
+		self.inputCtrl.SetValue(self.inputCtrl.GetValue() + insert)
+		queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, insert)
+		self.inputCtrl.SetInsertionPointEnd()
+
 	def onInputChar(self, evt):
 		key = evt.GetKeyCode()
 		if key == wx.WXK_RETURN:
@@ -227,6 +266,10 @@ class ConsoleUI(wx.Frame):
 		elif key == wx.WXK_F6:
 			self.outputCtrl.SetFocus()
 			return
+		elif key == wx.WXK_TAB:
+			line = self.inputCtrl.GetValue()
+			if line and not line.isspace() and self.complete():
+				return
 		elif key == wx.WXK_ESCAPE:
 			self.Close()
 			return
