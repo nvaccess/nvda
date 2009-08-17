@@ -180,28 +180,21 @@ var prevUninstallChoice
 
 Section "-NVDA"
 SetShellVarContext all
-SetOutPath "$INSTDIR"
 ;Unregister and remove any old ia2.dll
 !define LIBRARY_COM
 !insertmacro UninstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\ia2.dll"
 !undef LIBRARY_COM
 ;Get rid of any old lib or lib64 directories
-IfFileExists "lib\*.*" libExists noLibExists
+IfFileExists "$INSTDIR\lib\*.*" libExists noLibExists
 libExists:
 GetTempFileName $0 "$INSTDIR"
 Delete "$0"
-Rename "lib" "$0"
+Rename "$INSTDIR\lib" "$0"
 Rmdir /REBOOTOK /r "$0"
 noLibExists:
-IfFileExists "lib64\*.*" lib64Exists noLib64Exists
-lib64Exists:
-GetTempFileName $0
-Delete "$0"
-Rename "lib64" "$0"
-Rmdir /REBOOTOK /r "$0"
-noLib64Exists:
 ; open and close uninstallation log after ennumerating all the files being copied
 !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+SetOutPath "$INSTDIR"
 File /r "${NVDASourceDir}\"
 !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 ;Shortcuts
@@ -252,7 +245,6 @@ Delete $INSTDIR\${PRODUCT}.url"
 DeleteRegKey ${INSTDIR_REG_ROOT} "SOFTWARE\${PRODUCT}"
 DeleteRegKey ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY}
 DeleteRegKey ${INSTDIR_REG_ROOT} "Software\Microsoft\Windows\CurrentVersion\App Paths\${NVDAApp}"
-Rmdir $INSTDIR
 SectionEnd
 
 ;-----
