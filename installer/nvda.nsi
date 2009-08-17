@@ -181,23 +181,29 @@ var prevUninstallChoice
 Section "-NVDA"
 SetShellVarContext all
 SetOutPath "$INSTDIR"
-; open and close uninstallation log after ennumerating all the files being copied
-!insertmacro UNINSTALL.LOG_OPEN_INSTALL
-File /r /x lib "${NVDASourceDir}\"
-CreateDirectory "$INSTDIR\lib"
-!insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 ;Unregister and remove any old ia2.dll
 !define LIBRARY_COM
 !insertmacro UninstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\ia2.dll"
 !undef LIBRARY_COM
-; Install libraries
-!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\NVDAHelper.dll" "$INSTDIR\lib\NVDAHelper.dll" "$INSTDIR\lib"
-!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\VBufBase.dll" "$INSTDIR\lib\VBufBase.dll" "$INSTDIR\lib"
-!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\VBufClient.dll" "$INSTDIR\lib\VBufClient.dll" "$INSTDIR\lib"
-!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\VBufBackend_adobeAcrobat.dll" "$INSTDIR\lib\VBufBackend_adobeAcrobat.dll" "$INSTDIR\lib"
-!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\VBufBackend_gecko_ia2.dll" "$INSTDIR\lib\VBufBackend_gecko_ia2.dll" "$INSTDIR\lib"
-!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\VBufBackend_mshtml.dll" "$INSTDIR\lib\VBufBackend_mshtml.dll" "$INSTDIR\lib"
-!insertmacro InstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "${NVDASourceDir}\lib\IAccessible2Proxy.dll" "$INSTDIR\lib\IAccessible2Proxy.dll" "$INSTDIR\lib"
+;Get rid of any old lib or lib64 directories
+IfFileExists "lib\*.*" libExists noLibExists
+libExists:
+GetTempFileName $0 "$INSTDIR"
+Delete "$0"
+Rename "lib" "$0"
+Rmdir /REBOOTOK /r "$0"
+noLibExists:
+IfFileExists "lib64\*.*" lib64Exists noLib64Exists
+lib64Exists:
+GetTempFileName $0
+Delete "$0"
+Rename "lib64" "$0"
+Rmdir /REBOOTOK /r "$0"
+noLib64Exists:
+; open and close uninstallation log after ennumerating all the files being copied
+!insertmacro UNINSTALL.LOG_OPEN_INSTALL
+File /r "${NVDASourceDir}\"
+!insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 ;Shortcuts
 !insertmacro MUI_STARTMENU_WRITE_BEGIN application
 CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
@@ -233,15 +239,6 @@ Section "Uninstall"
 SetShellVarContext all
 ;Stop and uninstall the service
 ExecWait "$INSTDIR\nvda_slave.exe installer_uninstallService"
-; Uninstall libraries
-!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\NVDAHelper.dll"
-!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\VBufBase.dll"
-!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\VBufClient.dll"
-!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\VBufBackend_adobeAcrobat.dll"
-!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\VBufBackend_gecko_ia2.dll"
-!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\VBufBackend_mshtml.dll"
-!insertmacro UninstallLib DLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\lib\IAccessible2Proxy.dll"
-
 ;Uninstall all files logged as being installed
 !insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR"
 ;end uninstall, after uninstall from all logged paths has been performed

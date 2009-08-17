@@ -213,11 +213,17 @@
 				IfFileExists "$R9\*.*" isdir
 		
 			isfile:
-				Delete /rebootok "$R9"
+				GetTempFileName $R0 "$INSTDIR"
+				Delete "$R0"
+				Rename "$R9" "$R0"
+				Delete /rebootok "$R0"
 				goto end
 		
 		    isdir:
-				RmDir /rebootok "$R9"
+				GetTempFileName $R0 "$INSTDIR"
+				Delete "$R0"
+				Rename "$R9" "$R0"
+				Rmdir /rebootok "$R0"
 				IntOp $unlog_tmp_1 $unlog_tmp_1 + 1
 				goto end
 		
@@ -245,11 +251,17 @@
 				IfFileExists "$R9\*.*" isdir
 	
 			isfile:
-				Delete /rebootok "$R9"
+				GetTempFileName $R0 "$INSTDIR"
+				Delete "$R0"
+				Rename "$R9" "$R0"
+				Delete /rebootok "$R0"
 				goto end
 	
 			isdir:
-				RmDir /rebootok "$R9"
+				GetTempFileName $R0 "$INSTDIR"
+				Delete "$R0"
+				Rename "$R9" "$R0"
+				Rmdir /rebootok "$R0"
 				IntOp $unlog_tmp_1 $unlog_tmp_1 + 1
 				goto end
 	
