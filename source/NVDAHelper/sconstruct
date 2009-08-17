@@ -66,7 +66,7 @@ if TARGET_ARCH=='x86_64':
 	installDir=Dir('../lib64')
 else:
 	installDir=Dir('../lib')
-installedFiles=env.Install(installDir,neededTargets)
+installedFiles=env.Install(installDir,[x[0] for x in neededTargets] if env['release'] else [x[0:2] for x in neededTargets])
 env.Requires(installedFiles,neededTargets)
 env.Alias('install',installedFiles)
 
