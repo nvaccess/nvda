@@ -267,7 +267,7 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 			if not info.isCollapsed:
 				speakSelectionMessage(_("selected %s"),info.text)
 			else:
-				info.expand(textInfos.UNIT_READINGCHUNK)
+				info.expand(textInfos.UNIT_LINE)
 				speakTextInfo(info,reason=reason)
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
