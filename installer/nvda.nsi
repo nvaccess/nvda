@@ -193,8 +193,8 @@ Rename "$INSTDIR\lib" "$0"
 Rmdir /REBOOTOK /r "$0"
 noLibExists:
 ; open and close uninstallation log after ennumerating all the files being copied
-!insertmacro UNINSTALL.LOG_OPEN_INSTALL
 SetOutPath "$INSTDIR"
+!insertmacro UNINSTALL.LOG_OPEN_INSTALL
 File /r "${NVDASourceDir}\"
 !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 ;Shortcuts
@@ -245,6 +245,7 @@ Delete $INSTDIR\${PRODUCT}.url"
 DeleteRegKey ${INSTDIR_REG_ROOT} "SOFTWARE\${PRODUCT}"
 DeleteRegKey ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY}
 DeleteRegKey ${INSTDIR_REG_ROOT} "Software\Microsoft\Windows\CurrentVersion\App Paths\${NVDAApp}"
+Rmdir /REBOOTOK "$INSTDIR" 
 SectionEnd
 
 ;-----
