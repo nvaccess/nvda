@@ -2,6 +2,7 @@ import threading
 import ctypes
 import os
 import collections
+import itertools
 import wx
 import NVDAHelper
 import XMLFormatting
@@ -205,12 +206,18 @@ class ElementsListDialog(wx.Dialog):
 		mainSizer.Add(child)
 
 		self.tree = wx.TreeCtrl(self, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE)
-		# The enter key should be propagated to the dialog and thus activate the default button,
-		# but this is broken (wx ticket #3725).
-		# Therefore, we must catch the enter key here.
+		self.tree.Bind(wx.EVT_SET_FOCUS, self.onTreeSetFocus)
 		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
 		self.treeRoot = self.tree.AddRoot("root")
 		mainSizer.Add(self.tree)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		label = wx.StaticText(self, wx.ID_ANY, _("&Filter by:"))
+		sizer.Add(label)
+		self.filterEdit = wx.TextCtrl(self, wx.ID_ANY)
+		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
+		sizer.Add(self.filterEdit)
+		mainSizer.Add(sizer)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		self.activateButton = wx.Button(self, wx.ID_ANY, _("&Activate"))
@@ -282,10 +289,9 @@ class ElementsListDialog(wx.Dialog):
 			parentElements.append(element)
 
 		# Start with no filtering.
-		self._filterText = ""
-		self.updateFilter(newElementType=True)
+		self.filter("", newElementType=True)
 
-	def updateFilter(self, newElementType=False):
+	def filter(self, filterText, newElementType=False):
 		# If this is a new element type, use the element nearest the cursor.
 		# Otherwise, use the currently selected element.
 		defaultElement = self._initialElement if newElementType else self.tree.GetItemPyData(self.tree.GetSelection())
@@ -298,7 +304,7 @@ class ElementsListDialog(wx.Dialog):
 		defaultItem = None
 		matched = False
 		for element in self._elements:
-			if self._filterText not in element.text.lower():
+			if filterText not in element.text.lower():
 				item = None
 				continue
 			matched = True
@@ -313,8 +319,7 @@ class ElementsListDialog(wx.Dialog):
 
 		self.tree.ExpandAll()
 
-		if self._filterText and not matched:
-			wx.Bell()
+		if filterText and not matched:
 			return
 
 		# If there's no default item, use the first item in the tree.
@@ -354,31 +359,80 @@ class ElementsListDialog(wx.Dialog):
 
 		return False
 
+	def onTreeSetFocus(self, evt):
+		# Start with no search.
+		self._searchText = ""
+		self._searchCallLater = None
+		evt.Skip()
+
 	def onTreeChar(self, evt):
 		key = evt.KeyCode
 
 		if key == wx.WXK_RETURN:
+			# The enter key should be propagated to the dialog and thus activate the default button,
+			# but this is broken (wx ticket #3725).
+			# Therefore, we must catch the enter key here.
 			# Activate the current default button.
 			evt = wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_ANY)
 			self.FindWindowById(self.GetAffirmativeId()).ProcessEvent(evt)
 
-		elif key == wx.WXK_BACK:
-			# Cancel filtering.
-			if self._filterText:
-				self._filterText = ""
-				self.updateFilter()
-			# If we don't pass this event on, we miss a subsequent character. No idea why, but it doesn't seem to have any effect anyway.
-			evt.Skip()
-
-		elif key >= wx.WXK_START:
+		elif key >= wx.WXK_START or key == wx.WXK_BACK:
 			# Non-printable character.
+			self._searchText = ""
 			evt.Skip()
 
 		else:
-			# Filter the list.
-			char = unichr(evt.UnicodeKey)
-			self._filterText += char.lower()
-			self.updateFilter()
+			# Search the list.
+			# We have to implement this ourselves, as tree views don't accept space as a search character.
+			char = unichr(evt.UnicodeKey).lower()
+			# IF the same character is typed twice, do the same search.
+			if self._searchText != char:
+				self._searchText += char
+			if self._searchCallLater:
+				self._searchCallLater.Restart()
+			else:
+				self._searchCallLater = wx.CallLater(1000, self._clearSearchText)
+			self.search(self._searchText)
+
+	def _clearSearchText(self):
+		self._searchText = ""
+
+	def search(self, searchText):
+		item = self.tree.GetSelection()
+		if not item:
+			# No items.
+			return
+
+		# First try searching from the current item.
+		# Failing that, search from the first item.
+		items = itertools.chain(self._iterReachableTreeItemsFromItem(item), self._iterReachableTreeItemsFromItem(self.tree.GetFirstChild(self.treeRoot)[0]))
+		if len(searchText) == 1:
+			# If only a single character has been entered, skip (search after) the current item.
+			next(items)
+
+		for item in items:
+			if self.tree.GetItemText(item).lower().startswith(searchText):
+				self.tree.SelectItem(item)
+				return
+
+		# Not found.
+		wx.Bell()
+
+	def _iterReachableTreeItemsFromItem(self, item):
+		while item:
+			yield item
+
+			childItem = self.tree.GetFirstChild(item)[0]
+			if childItem and self.tree.IsExpanded(item):
+				# Has children and is reachable, so recurse.
+				for childItem in self._iterReachableTreeItemsFromItem(childItem):
+					yield childItem
+
+			item = self.tree.GetNextSibling(item)
+
+	def onFilterEditTextChange(self, evt):
+		self.filter(self.filterEdit.GetValue())
+		evt.Skip()
 
 	def onAction(self, activate):
 		self.Close()
