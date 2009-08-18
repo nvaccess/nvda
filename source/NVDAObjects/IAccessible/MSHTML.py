@@ -119,6 +119,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			lineRight=parentRect.right 
 		else:
 			lineRight=parentRect.left+parent.clientWidth
+		textRange.collapse()
 		tempRange=textRange.duplicate()
 		tempRange.moveToPoint(lineLeft,lineTop)
 		textRange.setEndPoint("startToStart",tempRange)
@@ -130,14 +131,19 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		if _rangeObj:
 			self._rangeObj=_rangeObj.duplicate()
 			return
+		self._rangeObj=self.obj.IHTMLElement.createTextRange()
 		if position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			if self.obj.IHTMLElement.uniqueID!=self.obj.IHTMLElement.document.activeElement.uniqueID:
 				raise RuntimeError("Only works with currently selected element")
-			self._rangeObj=self.obj.IHTMLElement.document.selection.createRange()
+			mark=self.obj.IHTMLElement.document.selection.createRange().GetBookmark()
+			self._rangeObj.MoveToBookmark(mark)
+			t=self._rangeObj.duplicate()
+			if not t.expand("word"):
+				self._rangeObj.expand("textedit")
+				self._rangeObj.collapse(False)
 			if position==textInfos.POSITION_CARET:
 				self._rangeObj.collapse()
 			return
-		self._rangeObj=self.obj.IHTMLElement.createTextRange()
 		if position==textInfos.POSITION_FIRST:
 			self._rangeObj.collapse()
 		elif position==textInfos.POSITION_LAST:
@@ -155,16 +161,21 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			raise NotImplementedError("position: %s"%position)
 
 	def expand(self,unit):
+		if unit==textInfos.UNIT_PARAGRAPH:
+			unit=textInfos.UNIT_LINE
 		if unit==textInfos.UNIT_LINE and self.basePosition not in [textInfos.POSITION_SELECTION,textInfos.POSITION_CARET]:
 			unit=textInfos.UNIT_SENTENCE
-		if unit==textInfos.UNIT_READINGCHUNK or unit==textInfos.UNIT_PARAGRAPH:
+		if unit==textInfos.UNIT_READINGCHUNK:
 			unit=textInfos.UNIT_SENTENCE
-		if unit in [textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD,textInfos.UNIT_SENTENCE,textInfos.UNIT_PARAGRAPH]:
-			res=self._rangeObj.expand(unit)
-			if not res and unit=="word": #IHTMLTxtRange.expand fails to handle word when at the start of a field
-				res=self._rangeObj.moveEnd(unit,1)
-				if res:
-					self._rangeObj.moveStart(unit,-1)
+		if unit==textInfos.UNIT_CHARACTER:
+			self._rangeObj.expand("character")
+		elif unit==textInfos.UNIT_WORD:
+			#Expand to word at the start of a control is broken in MSHTML
+			#Unless we expand to character first.
+			self._rangeObj.expand("character")
+			self._rangeObj.expand("word")
+		elif unit==textInfos.UNIT_SENTENCE:
+			self._rangeObj.expand("sentence")
 		elif unit==textInfos.UNIT_LINE:
 			self._expandToLine(self._rangeObj)
 		elif unit==textInfos.UNIT_STORY:
@@ -236,6 +247,8 @@ class MSHTML(IAccessible):
 				("ExtendedDown","moveByLine"),
 				("ExtendedLeft","moveByCharacter"),
 				("ExtendedRight","moveByCharacter"),
+				("Control+ExtendedUp","moveByParagraph"),
+				("Control+ExtendedDown","moveByParagraph"),
 				("Control+ExtendedLeft","moveByWord"),
 				("Control+ExtendedRight","moveByWord"),
 				("Shift+ExtendedRight","changeSelection"),
