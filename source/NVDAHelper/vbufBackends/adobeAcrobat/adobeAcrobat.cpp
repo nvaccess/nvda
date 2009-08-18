@@ -11,10 +11,11 @@
  #include <cassert>
 #include <windows.h>
 #include <oleacc.h>
-#include <AcrobatAccess/AcrobatAccess.h>
 #include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
 #include <vbufBase/debug.h>
+#include <AcrobatAccess/AcrobatAccess.h>
+#include <AcrobatAccess/IPDDom.h>
 #include "adobeAcrobat.h"
 
 using namespace std;
@@ -79,6 +80,84 @@ IPDDomNode* getPDDomNode(VARIANT& varChild, IServiceProvider* servprov) {
 	pget->Release();
 
 	return domNode;
+}
+
+VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
+	VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
+	IPDDomNode* domNode
+) {
+	HRESULT res;
+	VBufStorage_fieldNode_t* tempNode;
+
+	// Grab the font info for this node.
+	long fontStatus, fontFlags;
+	BSTR fontName = NULL;
+	float fontSize, red, green, blue;
+	if ((res = domNode->GetFontInfo(&fontStatus, &fontName, &fontSize, &fontFlags, &red, &green, &blue)) != S_OK) {
+		DEBUG_MSG(L"IPDDomNode::GetFontInfo returned " << res);
+		return NULL;
+	}
+
+	if (fontStatus == FontInfo_MixedInfo) {
+		// This node contains text in more than one font.
+		// We need to descend further to get font information.
+		DEBUG_MSG(L"Mixed font info, descending");
+		long childCount;
+		if ((res = domNode->GetChildCount(&childCount)) != S_OK) {
+			DEBUG_MSG(L"IPDDomNode::GetChildCount returned " << res);
+			childCount = 0;
+		}
+		if (childCount == 0) {
+			DEBUG_MSG(L"Child count is 0");
+		}
+
+		// Iterate through the children.
+		for (long childIndex = 0; childIndex < childCount; childIndex++) {
+			IPDDomNode* domChild;
+			if ((res = domNode->GetChild(childIndex, &domChild)) != S_OK) {
+				DEBUG_MSG(L"IPDDomNode::GetChild returned " << res);
+				continue;
+			}
+			// Recursive call: render text for this child and its descendants.
+			if (tempNode = renderText(buffer, parentNode, previousNode, domChild))
+				previousNode = tempNode;
+			domChild->Release();
+		}
+	} else {
+
+		// We don't need to descend, so add the font info and text for this node.
+		BSTR text = NULL;
+		if ((res = domNode->GetTextContent(&text)) != S_OK) {
+			DEBUG_MSG(L"IPDDomNode::GetTextContent returned " << res);
+			text = NULL;
+		}
+		if (text && SysStringLen(text) == 0) {
+			SysFreeString(text);
+			text = NULL;
+		}
+
+		if (text) {
+			previousNode = buffer->addTextFieldNode(parentNode, previousNode, text);
+			if (previousNode && fontStatus == FontInfo_Valid) {
+				previousNode->addAttribute(L"font-name", fontName);
+				wostringstream s;
+				s << fontSize << "pt";
+				previousNode->addAttribute(L"font-size", s.str());
+				s.str(L"");
+				s << fontFlags;
+				previousNode->addAttribute(L"acrobat::fontFlags", s.str());
+			}
+			SysFreeString(text);
+		} else {
+			// No text to add, so communicate this to the caller.
+			previousNode = NULL;
+		}
+	}
+
+	if (fontName)
+		SysFreeString(fontName);
+
+	return previousNode;
 }
 
 VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
@@ -264,39 +343,39 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 		free(varChildren);
 	} else {
 
-		// Get the value (text) with accValue
-		BSTR value=NULL;
-		if((res=pacc->get_accValue(varChild,&value))!=S_OK) {
-			DEBUG_MSG(L"IAccessible::get_accValue returned "<<res);
-			value=NULL;
+		// No children, so this is a text leaf node.
+		// Get the name.
+		BSTR name = NULL;
+		if (states & STATE_SYSTEM_FOCUSABLE && (res = pacc->get_accName(varChild, &name)) != S_OK) {
+			DEBUG_MSG(L"IAccessible::get_accName returned " << res);
+			name = NULL;
 		}
-		if(value!=NULL&&SysStringLen(value)==0) {
-			SysFreeString(value);
-			value=NULL;
-		}
-
-		// Where accValue isn't useful, use the name instead.
-		if(!value && (res=pacc->get_accName(varChild,&value))!=S_OK) {
-			DEBUG_MSG(L"IAccessible::get_accName returned "<<res);
-			value=NULL;
-		}
-		if(value!=NULL&&SysStringLen(value)==0) {
-			SysFreeString(value);
-			value=NULL;
+		if(name && SysStringLen(name) == 0) {
+			SysFreeString(name);
+			name = NULL;
 		}
 
-		if (value != NULL) {
-			if((tempNode=buffer->addTextFieldNode(parentNode,previousNode,value))!=NULL) {
-				previousNode=tempNode;
-			}
-			SysFreeString(value);
-			value = NULL;
-		} else if (STATE_SYSTEM_FOCUSABLE & states) {
+		// If there is a name, render it before this node, except for certain controls.
+		if (name && role != ROLE_SYSTEM_LINK && role != ROLE_SYSTEM_PUSHBUTTON && role != ROLE_SYSTEM_RADIOBUTTON && role != ROLE_SYSTEM_CHECKBUTTON) {
+			buffer->addTextFieldNode(parentNode->getParent(), parentNode->getPrevious(), name);
+		}
+
+		if (name && (role == ROLE_SYSTEM_RADIOBUTTON || role == ROLE_SYSTEM_CHECKBUTTON)) {
+			// Acrobat renders "Checked"/"Unchecked" as the text for radio buttons/check boxes, which is not what we want.
+			// Render the name as the text for radio buttons and check boxes.
+			if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name))
+				previousNode = tempNode;
+		} else if (tempNode = renderText(buffer, parentNode, previousNode, domNode))
+			previousNode = tempNode;
+
+		if (name)
+			SysFreeString(name);
+
+		if (!tempNode && states & STATE_SYSTEM_FOCUSABLE) {
 			// This node is focusable, but contains no text.
 			// Therefore, add it with a space so that the user can get to it.
-			if((tempNode=buffer->addTextFieldNode(parentNode,previousNode,L" "))!=NULL) {
+			if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, L" "))
 				previousNode=tempNode;
-			}
 		}
 	}
 
