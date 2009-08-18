@@ -601,9 +601,22 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			DEBUG_MSG(L"Node is input of type hidden, ignoring");
 			return parentNode;
 		}
+		bool isProtected=false;
+		if(tempIter!=HTMLAttribsMap.end()&&tempIter->second.compare(L"password")==0) {
+			isProtected=true;
+		}
 		tempIter=HTMLAttribsMap.find(L"value");
 		if(tempIter!=HTMLAttribsMap.end()&&!tempIter->second.empty()) {
-			previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempIter->second);
+			//IE does not keep the value of passwords secure
+			if(isProtected) {
+				wstring protectedValue=tempIter->second;
+				for(wstring::iterator i=protectedValue.begin();i!=protectedValue.end();i++) {
+					*i=L'*';
+				}
+				previousNode=buffer->addTextFieldNode(parentNode,previousNode,protectedValue);
+			} else {
+				previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempIter->second);
+			}
 		} else {
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
 		}
