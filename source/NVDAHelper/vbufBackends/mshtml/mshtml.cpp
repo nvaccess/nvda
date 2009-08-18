@@ -593,8 +593,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			} else {
 				previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempIter->second);
 			}
+			fillTextFormattingForNode(pHTMLDOMNode,previousNode);
 		}
-		fillTextFormattingForNode(pHTMLDOMNode,previousNode);
 	} else if(nodeName.compare(L"INPUT")==0) {
 		tempIter=HTMLAttribsMap.find(L"type");
 		if(tempIter!=HTMLAttribsMap.end()&&tempIter->second.compare(L"hidden")==0) {
