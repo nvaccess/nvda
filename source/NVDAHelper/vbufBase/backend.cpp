@@ -47,7 +47,9 @@ LRESULT CALLBACK VBufBackend_t::renderThread_callWndProcHook(int code, WPARAM wP
 void CALLBACK VBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	if(eventID==EVENT_OBJECT_DESTROY&&objectID==0&&childID==0) {
 		DEBUG_MSG(L"Detected destruction of window "<<hwnd);
-		for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
+		// Copy the set, as it might be mutated by renderThread_terminate() during iteration.
+		VBufBackendSet_t backends=runningBackends;
+		for(VBufBackendSet_t::iterator i=backends.begin();i!=backends.end();i++) {
 			if(hwnd==(HWND)((*i)->rootDocHandle)||IsChild(hwnd,(HWND)((*i)->rootDocHandle))) {
 				DEBUG_MSG(L"Calling renderThread_terminate for backend at "<<*i);
 				(*i)->renderThread_terminate();
@@ -186,4 +188,5 @@ void VBufBackend_t::destroy() {
 
 VBufBackend_t::~VBufBackend_t() {
 	DEBUG_MSG(L"base Backend destructor called"); 
+	assert(runningBackends.count(this) == 0);
 }
