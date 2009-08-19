@@ -107,7 +107,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			return ""
 		text=ctypes.c_wchar_p()
 		NVDAHelper.localLib.VBuf_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),False)
-		return text.value
+		return text.value or ""
 
 	def getTextWithFields(self,formatConfig=None):
 		start=self._startOffset
@@ -116,6 +116,8 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			return ""
 		text=ctypes.c_wchar_p()
 		NVDAHelper.localLib.VBuf_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),True)
+		if not text.value:
+			return ""
 		commandList=XMLFormatting.XMLTextParser().parse(text.value)
 		for index in xrange(len(commandList)):
 			if isinstance(commandList[index],textInfos.FieldCommand):
