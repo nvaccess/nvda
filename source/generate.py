@@ -25,7 +25,6 @@ from glob import glob
 COM_INTERFACES = (
 	("UI Automation", comtypes.client.GetModule, "UIAutomationCore.dll"),
 	("IAccessible 2", comtypes.client.GetModule, "typelibs/ia2.tlb"),
-	("IService Provider library", comtypes.client.GetModule, "typelibs/servprov.tlb"),
 	("MS Active Accessibility", comtypes.client.GetModule, "oleacc.dll"),
 	("Rich Edit library", comtypes.client.GetModule, "msftedit.dll"),
 	("SAPI 5", comtypes.client.CreateObject, "Sapi.SPVoice"),
