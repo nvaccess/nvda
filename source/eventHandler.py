@@ -122,7 +122,7 @@ def executeEvent_appModuleLevel(name,obj,**kwargs):
 
 def executeEvent_virtualBufferLevel(name,obj,**kwargs):
 	virtualBuffer=obj.virtualBuffer
-	if hasattr(virtualBuffer,'event_%s'%name):
+	if hasattr(virtualBuffer,'event_%s'%name) and not virtualBuffer.isLoading and virtualBuffer.VBufHandle:
 		getattr(virtualBuffer,'event_%s'%name)(obj,lambda: executeEvent_NVDAObjectLevel(name,obj,**kwargs),**kwargs)
 	else:
 		executeEvent_NVDAObjectLevel(name,obj,**kwargs)

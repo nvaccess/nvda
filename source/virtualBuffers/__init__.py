@@ -559,6 +559,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 		"""
 		if not self._hadFirstGainFocus:
 			# This buffer is gaining focus for the first time.
+			# Fake a focus event on the focus object, as the buffer may have missed the actual focus event.
+			focus = api.getFocusObject()
+			self.event_gainFocus(focus, lambda: focus.event_gainFocus())
 			if not self.passThrough:
 				speech.cancelSpeech()
 				virtualBufferHandler.reportPassThrough(self)
@@ -916,7 +919,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
 		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
 		caretInfo.expand(textInfos.UNIT_CHARACTER)
-		if not focusInfo.isOverlapping(caretInfo):
+		if not self._hadFirstGainFocus or not focusInfo.isOverlapping(caretInfo):
+			# The virtual buffer caret has already been moved inside the focus node.
 			if not self.passThrough:
 				# If pass-through is disabled, cancel speech, as a focus change should cause page reading to stop.
 				# This must be done before auto-pass-through occurs, as we want to stop page reading even if pass-through will be automatically enabled by this focus change.
