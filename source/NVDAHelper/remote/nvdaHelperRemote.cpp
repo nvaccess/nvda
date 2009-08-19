@@ -203,7 +203,7 @@ int nvdaHelper_initialize() {
 		MessageBox(NULL,L"Error registering callWndProc Windows hook",L"nvdaHelperRemote (nvdaHelper_initialize)",0);
 		return -1;
 	}
-	if((winEventHookID=SetWinEventHook(0,0xFFFFFFFF,moduleHandle,(WINEVENTPROC)winEventHook,0,0,WINEVENT_INCONTEXT|WINEVENT_SKIPOWNPROCESS))==0) {
+	if((winEventHookID=SetWinEventHook(0,0xFFFFFFFF,moduleHandle,(WINEVENTPROC)winEventHook,0,0,WINEVENT_INCONTEXT))==0) {
 		MessageBox(NULL,L"Error registering winEvent hook",L"nvdaHelperRemote (nvdaHelper_initialize)",0);
 		return -1;
 	}
