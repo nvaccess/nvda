@@ -119,7 +119,6 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			lineRight=parentRect.right 
 		else:
 			lineRight=parentRect.left+parent.clientWidth
-		textRange.collapse()
 		tempRange=textRange.duplicate()
 		tempRange.moveToPoint(lineLeft,lineTop)
 		textRange.setEndPoint("startToStart",tempRange)
@@ -131,16 +130,24 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		if _rangeObj:
 			self._rangeObj=_rangeObj.duplicate()
 			return
-		self._rangeObj=self.obj.IHTMLElement.createTextRange()
+		try:
+			editableBody=self.obj.IHTMLElement.tagName=="BODY" and self.obj.IHTMLElement.isContentEditable
+		except:
+			editableBody=False
+		if editableBody:
+			self._rangeObj=self.obj.IHTMLElement.document.selection.createRange()
+		else:
+			self._rangeObj=self.obj.IHTMLElement.createTextRange()
 		if position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			if self.obj.IHTMLElement.uniqueID!=self.obj.IHTMLElement.document.activeElement.uniqueID:
 				raise RuntimeError("Only works with currently selected element")
-			mark=self.obj.IHTMLElement.document.selection.createRange().GetBookmark()
-			self._rangeObj.MoveToBookmark(mark)
-			t=self._rangeObj.duplicate()
-			if not t.expand("word"):
-				self._rangeObj.expand("textedit")
-				self._rangeObj.collapse(False)
+			if not editableBody:
+				mark=self.obj.IHTMLElement.document.selection.createRange().GetBookmark()
+				self._rangeObj.MoveToBookmark(mark)
+				t=self._rangeObj.duplicate()
+				if not t.expand("word"):
+					self._rangeObj.expand("textedit")
+					self._rangeObj.collapse(False)
 			if position==textInfos.POSITION_CARET:
 				self._rangeObj.collapse()
 			return
