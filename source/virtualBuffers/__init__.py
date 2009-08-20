@@ -493,7 +493,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _loadBuffer(self):
 		try:
 			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName))
-			print "backend name %s, vbufHandle %s"%(self.backendName,self.VBufHandle)
 			if not self.VBufHandle:
 				raise RuntimeError("Could not remotely create virtualBuffer")
 		except:
