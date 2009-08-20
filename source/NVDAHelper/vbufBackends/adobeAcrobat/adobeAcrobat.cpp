@@ -8,6 +8,7 @@
 
 #include <set>
  #include <sstream>
+ #include <iomanip>
  #include <cassert>
 #include <windows.h>
 #include <oleacc.h>
@@ -141,11 +142,11 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 			if (previousNode && fontStatus == FontInfo_Valid) {
 				previousNode->addAttribute(L"font-name", fontName);
 				wostringstream s;
-				s << fontSize << "pt";
+				s.setf(ios::fixed);
+				s << setprecision(1) << fontSize << "pt";
 				previousNode->addAttribute(L"font-size", s.str());
-				s.str(L"");
-				s << fontFlags;
-				previousNode->addAttribute(L"acrobat::fontFlags", s.str());
+				if (fontFlags&PDDOM_FONTATTR_ITALIC==PDDOM_FONTATTR_ITALIC) previousNode->addAttribute(L"italic", L"1");
+				if (fontFlags&PDDOM_FONTATTR_BOLD==PDDOM_FONTATTR_BOLD) previousNode->addAttribute(L"bold", L"1");
 			}
 			SysFreeString(text);
 		} else {
