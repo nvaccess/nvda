@@ -321,11 +321,19 @@ class ElementsListDialog(wx.Dialog):
 
 		self.tree.ExpandAll()
 
-		if filterText and not matched:
+		if not matched:
+			# No items, so disable the buttons.
+			self.activateButton.Disable()
+			self.moveButton.Disable()
 			return
 
 		# If there's no default item, use the first item in the tree.
 		self.tree.SelectItem(defaultItem or self.tree.GetFirstChild(self.treeRoot)[0])
+		# Enable the button(s).
+		# If the activate button isn't the default button, it is disabled for this element type and shouldn't be enabled here.
+		if self.AffirmativeId == self.activateButton.Id:
+			self.activateButton.Enable()
+		self.moveButton.Enable()
 
 	def _getControlFieldAttrib(self, info, attrib):
 		info = info.copy()
@@ -376,7 +384,11 @@ class ElementsListDialog(wx.Dialog):
 			# Therefore, we must catch the enter key here.
 			# Activate the current default button.
 			evt = wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_ANY)
-			self.FindWindowById(self.GetAffirmativeId()).ProcessEvent(evt)
+			button = self.FindWindowById(self.AffirmativeId)
+			if button.Enabled:
+				button.ProcessEvent(evt)
+			else:
+				wx.Bell()
 
 		elif key >= wx.WXK_START or key == wx.WXK_BACK:
 			# Non-printable character.
