@@ -1,6 +1,5 @@
 #include <cstdio>
 #include <sstream>
-#include <windows.h>
 #include "nvdaHelperLocal.h"
 
 handle_t createConnection(int processID) {
