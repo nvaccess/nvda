@@ -35,13 +35,12 @@ from ctypes import *
 from ctypes.wintypes import *
 from comtypes.automation import *
 from comtypes.server import *
-from comtypes import GUID
+from comtypes import GUID, IServiceProvider
 import comtypes.client
 import comtypes.client.lazybind
 import Queue
 from comInterfaces.Accessibility import *
 from comInterfaces.IAccessible2Lib import *
-from comInterfaces.servprov import *
 import tones
 import globalVars
 from logHandler import log
@@ -325,8 +324,7 @@ def normalizeIAccessible(pacc):
 	if not isinstance(pacc,IAccessible2):
 		try:
 			s=pacc.QueryInterface(IServiceProvider)
-			i=s.QueryService(byref(IAccessible._iid_),byref(IAccessible2._iid_))
-			pacc=POINTER(IAccessible2)(i)
+			pacc=s.QueryService(IAccessible._iid_,IAccessible2)
 		except:
 			pass
 	return pacc
@@ -517,8 +515,9 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		elif not isWindow:
 			return
 
-		while window and not winUser.getWindowStyle(window)&winUser.WS_POPUP and winUser.getClassName(window)=="MozillaWindowClass":
-			window=winUser.getAncestor(window,winUser.GA_PARENT)
+		if childID<0:
+			while window and not winUser.getWindowStyle(window)&winUser.WS_POPUP and winUser.getClassName(window)=="MozillaWindowClass":
+				window=winUser.getAncestor(window,winUser.GA_PARENT)
 		windowClassName=winUser.getClassName(window)
 		#At the moment we can't handle show, hide or reorder events on Mozilla Firefox Location bar,as there are just too many of them
 		#Ignore show, hide and reorder on MozillaDropShadowWindowClass windows.

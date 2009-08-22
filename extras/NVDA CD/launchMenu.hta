@@ -1,0 +1,101 @@
+<head>
+<title>NVDA CD Launch Menu</title>
+<HTA:APPLICATION 
+	APPLICATIONNAME="NVDA CD Launch Menu"
+	SCROLL="yes"
+	SINGLEINSTANCE="yes"
+WINDOWSTATE="maximize"
+>
+</head>
+
+<script language="JScript">
+function start() {
+	runTarget("nvdaLauncher.exe /checkScreenReaderFlag")
+}
+
+function runTarget(path) {
+	setTimeout(function () {_runTarget(path);}, 0);
+}
+
+function _runTarget(path) {
+	try {
+		shell = new ActiveXObject("WScript.Shell");
+		shell.Run(path);
+	} catch (e) {
+		// Just ignore the error, as displaying an alert box will cause NVDA to freeze with the old IE buffers.
+	}
+}
+</script>
+
+<body onLoad="start();">
+<h1>Welcome to the NVDA CD!</h1>
+<p>NonVisual Desktop Access (NVDA) is a free, open source screen reader for Microsoft windows. Providing feedback via synthetic speech and braille, it enables blind and vision impaired users to 
+access a computer running Microsoft Windows for no more cost than a sighted person.</p>
+<p>If you were not running a screen reader already, NVDA will have automatically started from this CD. IF it did not start automatically and you want to start it, select <strong>Start NVDA from CD</strong> from the options below.</p>
+<p>
+Please also read further on for more information about NVDA.
+</p>
+<h2>Options</h2>
+<input type="button" onClick="runTarget('nvdaLauncher.exe');" value="Run NVDA from CD">
+<input type="button" onClick="runTarget('nvda_0.6p3.2_installer.exe');" value="Install NVDA 0.6p3.2">
+<input type="button" onClick="runTarget('Firefox3.5Setup.exe');" value="Install Firefox 3.5">
+<h2>Introducing NVDA</h2>
+<p>Version 0.6p3.2 (Released 13th March 2009)</p>
+<p>
+Providing feedback by synthetic speech and braille, Nonvisual Desktop Access allows blind and vision impaired people to access and interact with the Windows operating system and many third party applications.
+</p> 
+<p>
+Major highlights include: 
+</p>
+<ul>
+<li>Ability to run entirely from a USB stick or other portable media without the need for installation</li>
+<li>Easy to use talking installer</li>
+<li>Browsing the web with Mozilla Firefox 3</li>
+<li>Working with email using Mozilla Thunderbird 3</li>
+<li>Early support for Microsoft Internet Explorer</li>
+<li>Basic support for Microsoft Outlook Express / Windows Mail</li>
+<li>Support for Microsoft Word and Excel</li>
+<li>Support for accessible Java applications</li>
+<li>Early support for Adobe Reader</li>
+<li>Early support for IBM Lotus Symphony</li>
+<li>Support for Windows Command Prompt and console applications </li>
+<li>Automatic announcement of text under the mouse and optional audible indication of the mouse position</li>
+<li>Braille Support for various popular braille displays</li>
+</ul> 
+<h2>Testimonials</h2>
+<blockquote>
+NVDA gives you complete access to the Windows operating system by speech. The level of access is much the same than you know from commercial screen readers. Also applications like Microsoft Word, Microsoft Outlook, Outlook Express and Skype are made accessible and can be used without problems with NVDA. 
+Commercial screen readers install there own video drivers on your system, often causing a lot of problems. NVDA does not use any special video driver and can run from a USB stick. 
+</blockquote>
+<p>
+The Screen Magnifiers Homepage: <a href="http://www.magnifiers.org/popularnews.php?action=fullnews&id=290">http://www.magnifiers.org/popularnews.php?action=fullnews&id=290</a>
+</p>
+<blockquote>
+NVDA (Non Visual Desktop Access) is not new. When tested over a year ago, its capabilities seemed quite limited. With constant development, it has reached the point where it has quite a lot to offer. One significant feature is that it is free. Another is that it does not employ any video intercepts. This means it can be run on any computer, regardless of whether the user has administration rights. Its portability is further enhanced by having its default synthesizer included in the software. 
+The synthesizer supplied with NVDA is eSpeak. The sound is very mechanical, but having adjusted to that, pronunciation is quite accurate. Remarkably, 20 languages are included. It is also possible to choose from any SAPI 4 or SAPI 5 voices installed on the host computer. A wide variety of speech speed and quality adjustments is available, including a dictionary for words that are mispronounced. 
+NVDA is suitable for basic computing tasks. Microsoft Word support includes ability to report font size and attributes and style changes. For web browsing, Firefox 3 is recommended, but we had some success with IE 7 as well. Thunderbird 3 is recommended for email, but there is some support for Microsoft Outlook Express. We can report that Microsoft Outlook is not well supported. Correctly structured PDF files can be read effectively, but Bookmarks cannot be used. 
+</blockquote>
+<p>
+The Centre for Learning Innovation (NSW, Australia): <a href="http://www.cli.nsw.edu.au/cli/e-learning/adaptive_technologies/adaptive_latest.shtm#nvda">http://www.cli.nsw.edu.au/cli/e-learning/adaptive_technologies/adaptive_latest.shtm#nvda</a>
+</p>
+<h2>Brief History of the NVDA Project</h2>
+<p>
+The NVDA project is an initiative started by Michael Curran in April 2006 to create a free and open source screen reader for the Windows ® Operating System. At the time he did not believe that he had all the skills for this task; he was just a uni student in his first year of a bachelor of computer science degree and had no real work experience. He wanted to “have a go” and see just “how far he could get”. Over the next few months he found himself spending more and more time on the project. He was able to overcome barriers to his lack of knowledge by laboriously going through scarce documentation or simply by conducting searches on the internet. 
+</p>
+<p>
+Michael made the first release in July, just two months after he started. It was rather incomplete and buggy, but it was almost an equivalent to Narrator (the Microsoft Windows® inbuilt screen reader). It was around this time when Michael decided to leave his university degree and spend all his time on the project, as he was extremely happy with the progress he had made so far. Around this time James Teh, a long-time friend and fellow programmer of Michael’s took interest in the project, and started providing contributions to both the code and its design.
+</p>
+<p>
+Both Michael and James really believe in the power and philosophy of open source software, as it makes sure that the software is fully available to whomever needs it, rather than only available to whomever is able to pay for it. Of course the other advantage is that anyone is able to contribute to the project, whether it is bug fixing, new features or writing documentation. This is one of the major strengths of NVDA as it allows for the software to grow from contributions of volunteers around the world. An example of this is evident in the fact that NVDA has to date been translated into 22 languages!
+</p>
+<p>
+Over the last two years, NVDA has grown to be a very usable and well respected product that allows blind and vision impaired people across the world to access the Windows ® Operating System. To promote and seek funding for NVDA, a non-profit organization called NV Access was set up by Michael, James and others. To date this organization has been successful in securing grants from companies such as Mozilla (the makers of the Firefox web browser), and Microsoft, which has allowed more rapid growth of NVDA through employing both Michael and James to work on the project full-time.
+</p> 
+<h2>For further info</h2>
+<p>
+NVDA Homepage: <a href="http://www.nvda-project.org/">www.nvda-project.org</a>
+</p>
+<p>
+NV Access: <a href="http://www.nvaccess.org/">www.nvaccess.org</a>
+</p>
+</body>

@@ -267,7 +267,7 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 			if not info.isCollapsed:
 				speakSelectionMessage(_("selected %s"),info.text)
 			else:
-				info.expand(textInfos.UNIT_READINGCHUNK)
+				info.expand(textInfos.UNIT_LINE)
 				speakTextInfo(info,reason=reason)
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
@@ -731,7 +731,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut)
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
 	levelText=getSpeechTextForProperties(reason=reason,positionInfo_level=level)
-	if not extraDetail and ((reason==REASON_FOCUS and fieldType in ("end_relative","end_inControlFieldStack")) or (reason in (REASON_CARET,REASON_SAYALL) and fieldType in ("start_inControlFieldStack","start_addedToControlFieldStack","start_relative"))) and role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB):
+	if not extraDetail and ((reason==REASON_FOCUS and fieldType in ("end_relative","end_inControlFieldStack")) or (reason in (REASON_CARET,REASON_SAYALL) and fieldType in ("start_inControlFieldStack","start_addedToControlFieldStack","start_relative"))) and role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_EMBEDDEDOBJECT):
 		if role==controlTypes.ROLE_LINK:
 			return " ".join([x for x in stateText,roleText,keyboardShortcutText])
 		else:

@@ -44,6 +44,8 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		nodeName=attrs.get('IHTMLDOMNode::nodeName',"").lower()
+		if nodeName=="textarea":
+			states.add(controlTypes.STATE_MULTILINE)
 		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE):
 			role=self.nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_UNKNOWN)
 		if role==controlTypes.ROLE_UNKNOWN:
@@ -72,7 +74,7 @@ class MSHTML(VirtualBuffer):
 	TextInfo=MSHTMLTextInfo
 
 	def __init__(self,rootNVDAObject):
-		super(MSHTML,self).__init__(rootNVDAObject,backendLibPath=r"lib\VBufBackend_mshtml.dll")
+		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		if not obj.windowClassName.startswith("Internet Explorer_"):

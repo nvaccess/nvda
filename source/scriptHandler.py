@@ -99,7 +99,7 @@ def executeScript(script,keyPress):
 		_lastScriptTime=scriptTime
 		script(keyPress)
 	except:
-		log.error("error executing script: %s with key %s"%(script,keyPress),exc_info=True)
+		log.exception("error executing script: %s with key %s"%(script,keyPress))
 	finally:
 		_isScriptRunning=False
 

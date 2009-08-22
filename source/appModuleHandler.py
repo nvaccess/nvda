@@ -19,6 +19,7 @@ import pkgutil
 import baseObject
 import globalVars
 from logHandler import log
+import NVDAHelper
 import ui
 import winUser
 import winKernel
@@ -197,6 +198,7 @@ class AppModule(baseObject.ScriptableObject):
 
 	def __init__(self,processID,appName=None):
 		self.processID=processID
+		self.helperLocalBindingHandle=NVDAHelper.localLib.createConnection(processID)
 		if appName is None:
 			appName=getAppNameFromProcessID(processID)
 		self.appName=appName
@@ -213,6 +215,7 @@ class AppModule(baseObject.ScriptableObject):
 
 	def __del__(self):
 		winKernel.closeHandle(self.processHandle)
+		NVDAHelper.localLib.destroyConnection(self.helperLocalBindingHandle)
 
 	def overlayCustomNVDAObjectClass(self,obj,customClass,outerMost=False):
 		"""Overlays the given custom class on to the class structure of the given NVDAObject.

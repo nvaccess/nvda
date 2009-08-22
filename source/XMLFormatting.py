@@ -20,7 +20,7 @@ class XMLTextParser(object):
 		elif tagName=='text':
 			newAttrs=textInfos.FormatField()
 			for name,value in attrs.iteritems():
-				newAttrs[name.lower()]=value
+				newAttrs[name]=value
 			self._commandList.append(textInfos.FieldCommand("formatChange",newAttrs))
 		else:
 			raise ValueError("Unknown tag name: %s"%tagName)

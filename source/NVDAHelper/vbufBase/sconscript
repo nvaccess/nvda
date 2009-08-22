@@ -1,0 +1,8 @@
+Import(['env','remoteLib'])
+
+vbufBaseStaticLib=env.StaticLibrary(
+	target="vbufBase_static",
+	source=["storage.cpp","utils.cpp","lock.cpp","backend.cpp","debug.cpp",remoteLib[1] if env['release'] else remoteLib[2]],
+)
+
+Return('vbufBaseStaticLib')

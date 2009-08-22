@@ -60,7 +60,7 @@ class AdobeAcrobat(VirtualBuffer):
 	TextInfo = AdobeAcrobat_TextInfo
 
 	def __init__(self,rootNVDAObject):
-		super(AdobeAcrobat,self).__init__(rootNVDAObject,backendLibPath=r"lib\VBufBackend_adobeAcrobat.dll")
+		super(AdobeAcrobat,self).__init__(rootNVDAObject,backendName="adobeAcrobat")
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		if self.rootNVDAObject.windowHandle==obj.windowHandle:

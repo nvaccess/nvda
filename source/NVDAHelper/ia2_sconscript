@@ -1,0 +1,8 @@
+Import('env')
+
+tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFile=env.TypeLibrary(source=['../include/ia2/ia2.idl'])
+iidObjFile=env.Object(iidSourceFile)
+proxyObjFile=env.Object(proxySourceFile)
+dlldataObjFile=env.Object(dlldataSourceFile)
+
+Return(['tlbFile','headerFile','iidObjFile','proxyObjFile','dlldataObjFile'])

@@ -23,12 +23,14 @@ class ClassicStartMenu(Window):
 class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self, obj):
-		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_POPUPMENU and obj.parent.windowClassName == "SysPager":
-			if obj.windowStyle & 0x80:
-				self.overlayCustomNVDAObjectClass(obj,ClassicStartMenu,outerMost=True)
-			else:
-				# This is the menu for a group of icons on the task bar, which Windows stupidly names "Application".
-				obj.name = None
+		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_POPUPMENU:
+			parent = obj.parent
+			if parent and parent.windowClassName == "SysPager":
+				if obj.windowStyle & 0x80:
+					self.overlayCustomNVDAObjectClass(obj,ClassicStartMenu,outerMost=True)
+				else:
+					# This is the menu for a group of icons on the task bar, which Windows stupidly names "Application".
+					obj.name = None
 			return
 
 		if obj.windowClassName == "#32768":
