@@ -11,6 +11,7 @@ import nvwave
 from types import MethodType
 import globalVars
 
+RPC_S_SERVER_UNAVAILABLE = 1722
 RPC_S_CALL_FAILED_DNE = 1727
 RPC_E_CALL_REJECTED = -2147418111
 RPC_E_CALL_CANCELED = -2147418110
@@ -119,7 +120,7 @@ class Logger(logging.Logger):
 
 		exc = exc_info[1]
 		if (
-			(isinstance(exc, WindowsError) and exc.winerror == RPC_S_CALL_FAILED_DNE)
+			(isinstance(exc, WindowsError) and exc.winerror in (RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE))
 			or (isinstance(exc, comtypes.COMError) and exc.hresult in (RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED))
 		):
 			level = self.DEBUGWARNING
