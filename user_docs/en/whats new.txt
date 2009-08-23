@@ -49,6 +49,7 @@
 	* NVDA now correctly handles ARIA labels in Mozilla Gecko when there is no other useful content. (#156)
 	* NVDA no longer incorrectly enables focus mode automatically for editable text fields which update their value when the focus changes; e.g. http://tigerdirect.com/. (#220)
 	* NVDA will now attempt to recover from some situations which would previously cause it to freeze completely. It may take up to 10 seconds for NVDA to detect and recover from such a freeze.
+	* When the NVDA language is set to "User default", use the user's Windows  display language setting instead of the Windows locale setting. (#353)
 
 == 0.6p3 ==
 
