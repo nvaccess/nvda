@@ -4,7 +4,7 @@ This document describes how to prepare and use the NVDA source code. For more in
 http://www.nvda-project.org/
 
 == Dependencies ==
-The NVDA source depends on several other packages to run correctly, as described below. All directories mentioned are relative to the root of the NVDA source distribution/checkout.
+The NVDA source depends on several other packages to run correctly, as described below. All directories mentioned are relative to the root of the NVDA source distribution/checkout. Please create any directories mentioned that don't already exist.
 
 General dependencies:
 	* Python, version 2.6.2: http://www.python.org/
@@ -26,9 +26,10 @@ General dependencies:
 	* liblouis, version 1.7.0, Windows dll and Python bindings:
 		* Official web site: http://code.google.com/p/liblouis/
 		* A pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
-		* Copy the Python louis package directory into the source directory.
+		* Copy the louis Python package directory into the source directory.
 		* Copy the liblouis dll into the source directory.
 		* Copy the liblouis translation tables into the source\louis\tables directory.
+			* In the pre-built version, this has already been done.
 	* NVDA media (images and sounds): http://www.nvda-project.org/nvda-media/
 		* Extract the archive into the root of your NVDA source distribution.
 	* System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest:
@@ -46,6 +47,7 @@ To use the brltty braille display driver:
 
 To use the Alva BC640/680 braille display driver:
 	* ALVA BC6 generic dll, version 2.0.3.0 or later: http://www.nvda-project.org/3rdParty/alvaw32.dll
+		* Copy alvaw32.dll into the source\brailleDisplayDrivers directory.
 
 To build a binary version of NVDA:
 	* Py2Exe (for Python 2.6), version 0.6.9 or later: http://www.sourceforge.net/projects/py2exe/
