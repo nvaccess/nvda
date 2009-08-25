@@ -40,6 +40,8 @@ def findStartOfLine(text,offset,lineLength=None):
 @return: the found offset
 @rtype: int 
 """
+	if not text:
+		return 0
 	if offset>=len(text):
 		offset=len(text)-1
 	start=offset
@@ -65,6 +67,8 @@ def findEndOfLine(text,offset,lineLength=None):
 @return: the found offset
 @rtype: int 
 """
+	if not text:
+		return 0
 	if offset>=len(text):
 		offset=len(text)-1
 	if isinstance(lineLength,int):
