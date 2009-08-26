@@ -41,7 +41,7 @@ def update(obj):
 		else:
 			return
 	#Adobe documents with IAccessible
- 	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName=="AVL_AVView" and role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE) and controlTypes.STATE_READONLY in states:
+ 	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName=="AVL_AVView" and role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE):
 		classString="virtualBuffers.adobeAcrobat.AdobeAcrobat"
 	#MSHTML
  	elif isinstance(obj,NVDAObjects.IAccessible.MSHTML.MSHTML) and obj.IHTMLElement and windowClassName=="Internet Explorer_Server" and obj.role==controlTypes.ROLE_DOCUMENT and not obj.isContentEditable:

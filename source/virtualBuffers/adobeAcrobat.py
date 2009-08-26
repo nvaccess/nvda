@@ -71,8 +71,7 @@ class AdobeAcrobat(VirtualBuffer):
 		root=self.rootNVDAObject
 		if not root:
 			return False
-		states=root.states
-		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_READONLY not in states:
+		if not winUser.isWindow(root.windowHandle) or root.role == controlTypes.ROLE_UNKNOWN:
 			return False
 		return True
 
