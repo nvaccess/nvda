@@ -38,10 +38,15 @@ Cambios dende 0.6 P3:
 * novo: Cando se navega por documentos web, os marcadores de ARIA agora son anunciados, e podes moverte cara adiante e cara atrás a través deles utilizando d e shift+d, respectivamente. (#192)
 * novo: O diálogo de lista de ligas dispoñible cando se navegan documentos web agora convértese nun diálogo de lista de elementos o cal pode listar ligas, cabeceiras e marcadores. As cabeceiras e os marcadores son presentados nunha xerarquía. (#363)
 * novo: O novo diálogo Lista de Elementos filtra a lista segundo se teclea para conter só aqueles elementos incluíndose o texto que foi escribido. Podes premer retroceso para limpar o filtrado tal que todos os elementos sexan presentados de novo. (#173)
+* Novo: As versións portátiles do NVDA agora buscan no directorio 'userConfig' dentro do directorio do NVDA, as configuracións do usuario. Como a versión do instalador, esto mantén a configuración do usuario separada do NVDA.  
+* Novo: Os módulos personais de apps, os controladores de liñas braille e os controladores de sintetizadores agora poden ser almacenados no directorio da configuración do usuario. (#337)
+* correción: NVDA agora tentará recuperarse dalgunhas situacións que anteriormente causarían que se colgara completamente. Poderá tomar sobre 10 segundos para que NVDA detecte e se recupere de tales colgaduras.
+* novo: Ls modos virtuais agora son interpretados no fondo, permitindo ó usuario interactuar co sistema ata certo punto durante o proceso de interpretado. O usuario será notificado de que o documento está sendo interpretado se lle lebara máis dun segundo.
+* novo: Se NVDA detecta que se colgou por algunha razón, Pasará automáticamente por todas as pulsacións para que o usuario teña unha mellor posibilidade de recuperación do sistema.
 
 
 
-   
+
 Cambios dende 0.6 P2:
 
 * novo: Como a barra de fórmulas de Microsoft Excel é inaccesible para NVDA, proporciónase un cadro de diálogo específico de NVDA para editar cando o usuario prema f2 sobre unha celda. 

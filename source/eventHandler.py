@@ -1,4 +1,3 @@
-import CoCallCancellationHandler
 import queueHandler
 import api
 import speech
@@ -80,7 +79,7 @@ def executeEvent(eventName,obj,**kwargs):
 			return
 		executeEvent_appModuleLevel(eventName,obj,**kwargs)
 	except:
-		log.error("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs),exc_info=True)
+		log.exception("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs))
 
 
 def doPreGainFocus(obj):
@@ -100,15 +99,6 @@ def doPreGainFocus(obj):
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
 		executeEvent("focusEntered",parent)
-	if len(globalVars.focusAncestors)>1 and (obj.windowClassName=="SALTMPSUBFRAME" or 
-(globalVars.focusAncestors[1].windowClassName=="TformMain" and 
-globalVars.focusAncestors[1].name=="SpyBot - Search & Destroy") or 
-globalVars.focusAncestors[1].windowClassName=="NativeHWNDHost"): 
-		if not CoCallCancellationHandler.isRunning: 
-			CoCallCancellationHandler.start() 
-	elif CoCallCancellationHandler.isRunning:
-		import wx
-		wx.CallAfter(CoCallCancellationHandler.stop)
 	return True
  
 def doPreDocumentLoadComplete(obj):
@@ -119,11 +109,6 @@ def doPreDocumentLoadComplete(obj):
 			obj.virtualBuffer=v
 			#Focus may be in this new virtualBuffer, so force focus to look up its virtualBuffer
 			focusObject.virtualBuffer=virtualBufferHandler.getVirtualBuffer(focusObject)
-			if focusObject.virtualBuffer==v:
-				if hasattr(v,"event_virtualBuffer_firstGainFocus"):
-					v.event_virtualBuffer_firstGainFocus()
-				if hasattr(v,"event_virtualBuffer_gainFocus"):
-					v.event_virtualBuffer_gainFocus()
 	return True
 
 def executeEvent_appModuleLevel(name,obj,**kwargs):
@@ -137,7 +122,7 @@ def executeEvent_appModuleLevel(name,obj,**kwargs):
 
 def executeEvent_virtualBufferLevel(name,obj,**kwargs):
 	virtualBuffer=obj.virtualBuffer
-	if hasattr(virtualBuffer,'event_%s'%name):
+	if hasattr(virtualBuffer,'event_%s'%name) and not virtualBuffer.isLoading and virtualBuffer.VBufHandle:
 		getattr(virtualBuffer,'event_%s'%name)(obj,lambda: executeEvent_NVDAObjectLevel(name,obj,**kwargs),**kwargs)
 	else:
 		executeEvent_NVDAObjectLevel(name,obj,**kwargs)

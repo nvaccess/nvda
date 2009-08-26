@@ -29,7 +29,7 @@ def getVirtualBuffer(obj):
 
 def update(obj):
 	for v in list(runningTable):
-		if not v.isAlive():
+		if not v.isLoading and not v.isAlive():
 			killVirtualBuffer(v)
 	windowClassName=obj.windowClassName
 	role=obj.role

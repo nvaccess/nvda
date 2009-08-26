@@ -2,6 +2,7 @@
 
 import os
 import sys
+import warnings
 import logging
 from logging import _levelNames as levelNames
 import inspect
@@ -9,6 +10,12 @@ import winsound
 import nvwave
 from types import MethodType
 import globalVars
+
+RPC_S_SERVER_UNAVAILABLE = 1722
+RPC_S_CALL_FAILED_DNE = 1727
+E_ACCESSDENIED = -2147024891
+RPC_E_CALL_REJECTED = -2147418111
+RPC_E_CALL_CANCELED = -2147418110
 
 moduleCache={}
 
@@ -103,6 +110,26 @@ class Logger(logging.Logger):
 			return
 		self._log(log.IO, msg, args, **kwargs)
 
+	def exception(self, msg="", exc_info=True):
+		"""Log an exception at an appropriate levle.
+		Normally, it will be logged at level "ERROR".
+		However, certain exceptions which aren't considered errors (or aren't errors that we can fix) are expected and will therefore be logged at a lower level.
+		"""
+		import comtypes
+		if exc_info is True:
+			exc_info = sys.exc_info()
+
+		exc = exc_info[1]
+		if (
+			(isinstance(exc, WindowsError) and exc.winerror in (RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE))
+			or (isinstance(exc, comtypes.COMError) and exc.hresult in (E_ACCESSDENIED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED))
+		):
+			level = self.DEBUGWARNING
+		else:
+			level = self.ERROR
+
+		self._log(level, msg, (), exc_info=exc_info)
+
 class FileHandler(logging.FileHandler):
 
 	def handle(self,record):
@@ -152,6 +179,19 @@ def redirectStdout(logger):
 #: @type: L{Logger}
 log = Logger("nvda")
 
+def _getDefaultLogFilePath():
+	if getattr(sys, "frozen", None):
+		import tempfile
+		return os.path.join(tempfile.gettempdir(), "nvda.log")
+	else:
+		return ".\\nvda.log"
+
+def _excepthook(*exc_info):
+	log.error("", exc_info=exc_info, codepath="unhandled exception")
+
+def _showwarning(message, category, filename, lineno, file=None, line=None):
+	log.debugWarning(warnings.formatwarning(message, category, filename, lineno, line).rstrip(), codepath="Python warning")
+
 def initialize():
 	"""Initialize logging.
 	This must be called before any logging can occur.
@@ -160,12 +200,16 @@ def initialize():
 	global log
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
+	if not globalVars.appArgs.logFileName:
+		globalVars.appArgs.logFileName = _getDefaultLogFilePath()
 	# HACK: Don't specify an encoding, as a bug in Python 2.6's logging module causes problems if we do.
 	logHandler = FileHandler(globalVars.appArgs.logFileName, "w")
 	logFormatter=logging.Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
 	redirectStdout(log)
+	sys.excepthook = _excepthook
+	warnings.showwarning = _showwarning
 
 def setLogLevelFromConfig():
 	"""Set the log level based on the current configuration.

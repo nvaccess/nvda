@@ -2,7 +2,6 @@ import eventHandler
 import winUser
 from . import IAccessible, getNVDAObjectFromEvent
 from NVDAObjects import NVDAObjectTextInfo
-import IAccessibleHandler
 
 class AcrobatNode(IAccessible):
 
@@ -26,7 +25,7 @@ class AcrobatTextInfo(NVDAObjectTextInfo):
 		return self.obj.value or ""
 
 	def _getCaretOffset(self):
-		caret = getNVDAObjectFromEvent(self.obj.windowHandle, IAccessibleHandler.OBJID_CARET, 0)
+		caret = getNVDAObjectFromEvent(self.obj.windowHandle, winUser.OBJID_CARET, 0)
 		if not caret:
 			raise RuntimeError("No caret")
 		try:

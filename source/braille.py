@@ -4,9 +4,9 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import imp
 import itertools
 import os
+import pkgutil
 import wx
 import louis
 import baseObject
@@ -16,8 +16,7 @@ import controlTypes
 import api
 import textInfos
 import speech
-
-__path__ = ["brailleDisplayDrivers"]
+import brailleDisplayDrivers
 
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
@@ -88,16 +87,13 @@ negativeStateLabels = {
 }
 
 def _getDisplayDriver(name):
-	return __import__(name,globals(),locals(),[]).BrailleDisplayDriver
+	return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
 
 def getDisplayList():
 	displayList = []
-	names = set()
-	modExtentions=[x[0] for x in imp.get_suffixes()]
-	for name, ext in (os.path.splitext(fn) for fn in os.listdir(__path__[0])):
-		if name.startswith('_') or ext not in modExtentions or name in names:
+	for loader, name, isPkg in pkgutil.iter_modules(brailleDisplayDrivers.__path__):
+		if name.startswith('_'):
 			continue
-		names.add(name)
 		try:
 			display = _getDisplayDriver(name)
 			if display.check():
@@ -841,6 +837,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 def initialize():
 	global handler
+	config.addConfigDirsToPythonPackagePath(brailleDisplayDrivers)
 	log.info("Using liblouis version %s" % louis.version())
 	handler = BrailleHandler()
 	handler.setDisplayByName(config.conf["braille"]["display"])

@@ -7,7 +7,7 @@
 import time
 from ctypes import *
 from ctypes.wintypes import *
-import IAccessibleHandler
+import oleacc
 import controlTypes
 import speech
 import api
@@ -102,7 +102,7 @@ class NMLVDispInfoStruct(Structure):
 
 def getListGroupInfo(windowHandle,groupIndex):
 	(processID,threadID)=winUser.getWindowThreadProcessID(windowHandle)
-	processHandle=IAccessibleHandler.getProcessHandleFromHwnd(windowHandle)
+	processHandle=oleacc.GetProcessHandleFromHwnd(windowHandle)
 	localInfo=LVGROUP()
 	localInfo.cbSize=sizeof(LVGROUP)
 	localInfo.mask=LVGF_HEADER|LVGF_FOOTER|LVGF_STATE|LVGF_ALIGN|LVGF_GROUPID

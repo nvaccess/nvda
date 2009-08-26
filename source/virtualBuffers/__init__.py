@@ -1,6 +1,10 @@
+import threading
 import ctypes
 import os
 import collections
+import itertools
+import wx
+import NVDAHelper
 import XMLFormatting
 from keyUtils import sendKey
 import scriptHandler
@@ -14,7 +18,6 @@ import textInfos.offsets
 import config
 import cursorManager
 import gui
-import wx
 import virtualBufferHandler
 import eventHandler
 import braille
@@ -45,8 +48,6 @@ def dictToMultiValueAttribsString(d):
 		mainList.append(attrib)
 	return "%s;"%";".join(mainList)
 
-VBufClient=ctypes.cdll.LoadLibrary('lib/VBufClient.dll')
-
 class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	UNIT_CONTROLFIELD = "controlField"
@@ -56,7 +57,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		endOffset = ctypes.c_int()
 		docHandle = ctypes.c_int()
 		ID = ctypes.c_int()
-		VBufClient.VBufRemote_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID))
+		NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID))
 		return docHandle.value, ID.value
 
 	def _getNVDAObjectFromOffset(self,offset):
@@ -65,12 +66,12 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getOffsetsFromNVDAObject(self,obj):
 		docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
-		node = VBufClient.VBufRemote_getControlFieldNodeWithIdentifier(self.obj.VBufHandle, docHandle, ID)
+		node = NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(self.obj.VBufHandle, docHandle, ID)
 		if not node:
 			raise LookupError
 		start = ctypes.c_int()
 		end = ctypes.c_int()
-		VBufClient.VBufRemote_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
+		NVDAHelper.localLib.VBuf_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
 		return start.value, end.value
 
 	def __init__(self,obj,position):
@@ -86,11 +87,11 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getSelectionOffsets(self):
 		start=ctypes.c_int()
 		end=ctypes.c_int()
-		VBufClient.VBufRemote_getSelectionOffsets(self.obj.VBufHandle,ctypes.byref(start),ctypes.byref(end))
+		NVDAHelper.localLib.VBuf_getSelectionOffsets(self.obj.VBufHandle,ctypes.byref(start),ctypes.byref(end))
 		return start.value,end.value
 
 	def _setSelectionOffsets(self,start,end):
-		VBufClient.VBufRemote_setSelectionOffsets(self.obj.VBufHandle,start,end)
+		NVDAHelper.localLib.VBuf_setSelectionOffsets(self.obj.VBufHandle,start,end)
 
 	def _getCaretOffset(self):
 		return self._getSelectionOffsets()[0]
@@ -99,14 +100,14 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return self._setSelectionOffsets(offset,offset)
 
 	def _getStoryLength(self):
-		return VBufClient.VBufRemote_getTextLength(self.obj.VBufHandle)
+		return NVDAHelper.localLib.VBuf_getTextLength(self.obj.VBufHandle)
 
 	def _getTextRange(self,start,end):
 		if start==end:
 			return ""
 		text=ctypes.c_wchar_p()
-		VBufClient.VBufRemote_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),False)
-		return text.value
+		NVDAHelper.localLib.VBuf_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),False)
+		return text.value or ""
 
 	def getTextWithFields(self,formatConfig=None):
 		start=self._startOffset
@@ -114,37 +115,46 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if start==end:
 			return ""
 		text=ctypes.c_wchar_p()
-		VBufClient.VBufRemote_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),True)
+		NVDAHelper.localLib.VBuf_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),True)
+		if not text.value:
+			return ""
 		commandList=XMLFormatting.XMLTextParser().parse(text.value)
 		for index in xrange(len(commandList)):
-			if isinstance(commandList[index],textInfos.FieldCommand) and isinstance(commandList[index].field,textInfos.ControlField):
-				commandList[index].field=self._normalizeControlField(commandList[index].field)
+			if isinstance(commandList[index],textInfos.FieldCommand):
+				field=commandList[index].field
+				if isinstance(field,textInfos.ControlField):
+					commandList[index].field=self._normalizeControlField(field)
+				elif isinstance(field,textInfos.FormatField):
+					commandList[index].field=self._normalizeFormatField(field)
 		return commandList
 
 	def _getWordOffsets(self,offset):
-		#Use VBufClient_getBufferLineOffsets with out screen layout to find out the range of the current field
+		#Use VBuf_getBufferLineOffsets with out screen layout to find out the range of the current field
 		lineStart=ctypes.c_int()
 		lineEnd=ctypes.c_int()
-		VBufClient.VBufRemote_getLineOffsets(self.obj.VBufHandle,offset,0,False,ctypes.byref(lineStart),ctypes.byref(lineEnd))
+		NVDAHelper.localLib.VBuf_getLineOffsets(self.obj.VBufHandle,offset,0,False,ctypes.byref(lineStart),ctypes.byref(lineEnd))
 		word_startOffset,word_endOffset=super(VirtualBufferTextInfo,self)._getWordOffsets(offset)
 		return (max(lineStart.value,word_startOffset),min(lineEnd.value,word_endOffset))
 
 	def _getLineOffsets(self,offset):
 		lineStart=ctypes.c_int()
 		lineEnd=ctypes.c_int()
-		VBufClient.VBufRemote_getLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],config.conf["virtualBuffers"]["useScreenLayout"],ctypes.byref(lineStart),ctypes.byref(lineEnd))
+		NVDAHelper.localLib.VBuf_getLineOffsets(self.obj.VBufHandle,offset,config.conf["virtualBuffers"]["maxLineLength"],config.conf["virtualBuffers"]["useScreenLayout"],ctypes.byref(lineStart),ctypes.byref(lineEnd))
 		return lineStart.value,lineEnd.value
  
 	def _getParagraphOffsets(self,offset):
 		lineStart=ctypes.c_int()
 		lineEnd=ctypes.c_int()
-		VBufClient.VBufRemote_getLineOffsets(self.obj.VBufHandle,offset,0,True,ctypes.byref(lineStart),ctypes.byref(lineEnd))
+		NVDAHelper.localLib.VBuf_getLineOffsets(self.obj.VBufHandle,offset,0,True,ctypes.byref(lineStart),ctypes.byref(lineEnd))
 		return lineStart.value,lineEnd.value
 
 	def _normalizeControlField(self,attrs):
 		tableLayout=attrs.get('table-layout')
 		if tableLayout:
 			attrs['table-layout']=tableLayout=="1"
+		return attrs
+
+	def _normalizeFormatField(self, attrs):
 		return attrs
 
 	def _getLineNumFromOffset(self, offset):
@@ -159,7 +169,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			endOffset=ctypes.c_int()
 			docHandle=ctypes.c_int()
 			ID=ctypes.c_int()
-			VBufClient.VBufRemote_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID))
+			NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID))
 			return startOffset.value,endOffset.value
 		return super(VirtualBufferTextInfo, self)._getUnitOffsets(unit, offset)
 
@@ -198,12 +208,18 @@ class ElementsListDialog(wx.Dialog):
 		mainSizer.Add(child)
 
 		self.tree = wx.TreeCtrl(self, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE)
-		# The enter key should be propagated to the dialog and thus activate the default button,
-		# but this is broken (wx ticket #3725).
-		# Therefore, we must catch the enter key here.
+		self.tree.Bind(wx.EVT_SET_FOCUS, self.onTreeSetFocus)
 		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
 		self.treeRoot = self.tree.AddRoot("root")
 		mainSizer.Add(self.tree)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		label = wx.StaticText(self, wx.ID_ANY, _("&Filter by:"))
+		sizer.Add(label)
+		self.filterEdit = wx.TextCtrl(self, wx.ID_ANY)
+		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
+		sizer.Add(self.filterEdit)
+		mainSizer.Add(sizer)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		self.activateButton = wx.Button(self, wx.ID_ANY, _("&Activate"))
@@ -275,10 +291,9 @@ class ElementsListDialog(wx.Dialog):
 			parentElements.append(element)
 
 		# Start with no filtering.
-		self._filterText = ""
-		self.updateFilter(newElementType=True)
+		self.filter("", newElementType=True)
 
-	def updateFilter(self, newElementType=False):
+	def filter(self, filterText, newElementType=False):
 		# If this is a new element type, use the element nearest the cursor.
 		# Otherwise, use the currently selected element.
 		defaultElement = self._initialElement if newElementType else self.tree.GetItemPyData(self.tree.GetSelection())
@@ -291,7 +306,7 @@ class ElementsListDialog(wx.Dialog):
 		defaultItem = None
 		matched = False
 		for element in self._elements:
-			if self._filterText not in element.text.lower():
+			if filterText not in element.text.lower():
 				item = None
 				continue
 			matched = True
@@ -306,12 +321,19 @@ class ElementsListDialog(wx.Dialog):
 
 		self.tree.ExpandAll()
 
-		if self._filterText and not matched:
-			wx.Bell()
+		if not matched:
+			# No items, so disable the buttons.
+			self.activateButton.Disable()
+			self.moveButton.Disable()
 			return
 
 		# If there's no default item, use the first item in the tree.
 		self.tree.SelectItem(defaultItem or self.tree.GetFirstChild(self.treeRoot)[0])
+		# Enable the button(s).
+		# If the activate button isn't the default button, it is disabled for this element type and shouldn't be enabled here.
+		if self.AffirmativeId == self.activateButton.Id:
+			self.activateButton.Enable()
+		self.moveButton.Enable()
 
 	def _getControlFieldAttrib(self, info, attrib):
 		info = info.copy()
@@ -347,31 +369,84 @@ class ElementsListDialog(wx.Dialog):
 
 		return False
 
+	def onTreeSetFocus(self, evt):
+		# Start with no search.
+		self._searchText = ""
+		self._searchCallLater = None
+		evt.Skip()
+
 	def onTreeChar(self, evt):
 		key = evt.KeyCode
 
 		if key == wx.WXK_RETURN:
+			# The enter key should be propagated to the dialog and thus activate the default button,
+			# but this is broken (wx ticket #3725).
+			# Therefore, we must catch the enter key here.
 			# Activate the current default button.
 			evt = wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_ANY)
-			self.FindWindowById(self.GetAffirmativeId()).ProcessEvent(evt)
+			button = self.FindWindowById(self.AffirmativeId)
+			if button.Enabled:
+				button.ProcessEvent(evt)
+			else:
+				wx.Bell()
 
-		elif key == wx.WXK_BACK:
-			# Cancel filtering.
-			if self._filterText:
-				self._filterText = ""
-				self.updateFilter()
-			# If we don't pass this event on, we miss a subsequent character. No idea why, but it doesn't seem to have any effect anyway.
-			evt.Skip()
-
-		elif key >= wx.WXK_START:
+		elif key >= wx.WXK_START or key == wx.WXK_BACK:
 			# Non-printable character.
+			self._searchText = ""
 			evt.Skip()
 
 		else:
-			# Filter the list.
-			char = unichr(evt.UnicodeKey)
-			self._filterText += char.lower()
-			self.updateFilter()
+			# Search the list.
+			# We have to implement this ourselves, as tree views don't accept space as a search character.
+			char = unichr(evt.UnicodeKey).lower()
+			# IF the same character is typed twice, do the same search.
+			if self._searchText != char:
+				self._searchText += char
+			if self._searchCallLater:
+				self._searchCallLater.Restart()
+			else:
+				self._searchCallLater = wx.CallLater(1000, self._clearSearchText)
+			self.search(self._searchText)
+
+	def _clearSearchText(self):
+		self._searchText = ""
+
+	def search(self, searchText):
+		item = self.tree.GetSelection()
+		if not item:
+			# No items.
+			return
+
+		# First try searching from the current item.
+		# Failing that, search from the first item.
+		items = itertools.chain(self._iterReachableTreeItemsFromItem(item), self._iterReachableTreeItemsFromItem(self.tree.GetFirstChild(self.treeRoot)[0]))
+		if len(searchText) == 1:
+			# If only a single character has been entered, skip (search after) the current item.
+			next(items)
+
+		for item in items:
+			if self.tree.GetItemText(item).lower().startswith(searchText):
+				self.tree.SelectItem(item)
+				return
+
+		# Not found.
+		wx.Bell()
+
+	def _iterReachableTreeItemsFromItem(self, item):
+		while item:
+			yield item
+
+			childItem = self.tree.GetFirstChild(item)[0]
+			if childItem and self.tree.IsExpanded(item):
+				# Has children and is reachable, so recurse.
+				for childItem in self._iterReachableTreeItemsFromItem(childItem):
+					yield childItem
+
+			item = self.tree.GetNextSibling(item)
+
+	def onFilterEditTextChange(self, evt):
+		self.filter(self.filterEdit.GetValue())
+		evt.Skip()
 
 	def onAction(self, activate):
 		self.Close()
@@ -399,8 +474,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	TextInfo=VirtualBufferTextInfo
 
-	def __init__(self,rootNVDAObject,backendLibPath=None):
-		self.backendLibPath=os.path.join(os.getcwd(),backendLibPath)
+	def __init__(self,rootNVDAObject,backendName=None):
+		self.backendName=backendName
 		self.rootNVDAObject=rootNVDAObject
 		super(VirtualBuffer,self).__init__()
 		self.VBufHandle=None
@@ -408,6 +483,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.disableAutoPassThrough = False
 		self.rootDocHandle,self.rootID=self.getIdentifierFromNVDAObject(self.rootNVDAObject)
 		self._lastFocusObj = None
+		self._hadFirstGainFocus = False
 
 	def _get_passThrough(self):
 		return self._passThrough
@@ -422,21 +498,39 @@ class VirtualBuffer(cursorManager.CursorManager):
 			braille.handler.handleGainFocus(self)
 
 	def loadBuffer(self):
-		self.bindingHandle=VBufClient.VBufClient_connect(self.rootNVDAObject.processID)
-		if not self.bindingHandle:
-			raise RuntimeError("Could not inject VBuf lib")
-		self.VBufHandle=VBufClient.VBufRemote_createBuffer(self.bindingHandle,self.rootDocHandle,self.rootID,self.backendLibPath)
-		if not self.VBufHandle:
-			raise RuntimeError("Could not remotely create virtualBuffer")
+		self.isLoading = True
+		self._loadProgressCallLater = wx.CallLater(1000, self._loadProgress)
+		threading.Thread(target=self._loadBuffer).start()
+
+	def _loadBuffer(self):
+		try:
+			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName))
+			if not self.VBufHandle:
+				raise RuntimeError("Could not remotely create virtualBuffer")
+		except:
+			log.error("", exc_info=True)
+			queueHandler.queueFunction(queueHandler.eventQueue, self._loadBufferDone, success=False)
+			return
+		queueHandler.queueFunction(queueHandler.eventQueue, self._loadBufferDone)
+
+	def _loadBufferDone(self, success=True):
+		self._loadProgressCallLater.Stop()
+		self.isLoading = False
+		if not success:
+			return
+		if self._hadFirstGainFocus:
+			# If this buffer has already had focus once while loaded, this is a refresh.
+			speech.speakMessage(_("Refreshed"))
+		if api.getFocusObject().virtualBuffer == self:
+			self.event_virtualBuffer_gainFocus()
+
+	def _loadProgress(self):
+		ui.message(_("Loading document..."))
 
 	def unloadBuffer(self):
 		if self.VBufHandle is not None:
 			try:
-				VBufClient.VBufRemote_destroyBuffer(ctypes.byref(ctypes.c_int(self.VBufHandle)))
-			except WindowsError:
-				pass
-			try:
-				VBufClient.VBufClient_disconnect(self.bindingHandle)
+				NVDAHelper.localLib.VBuf_destroyBuffer(ctypes.byref(ctypes.c_int(self.VBufHandle)))
 			except WindowsError:
 				pass
 			self.VBufHandle=None
@@ -471,20 +565,24 @@ class VirtualBuffer(cursorManager.CursorManager):
 		"""
 		raise NotImplementedError
 
-	def event_virtualBuffer_firstGainFocus(self):
-		"""Triggered the first time this virtual buffer ever gains focus.
-		"""
-		speech.cancelSpeech()
-		virtualBufferHandler.reportPassThrough(self)
-		speech.speakObjectProperties(self.rootNVDAObject,name=True)
-		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
-
 	def event_virtualBuffer_gainFocus(self):
 		"""Triggered when this virtual buffer gains focus.
 		This event is only fired upon entering this buffer when it was not the current buffer before.
 		This is different to L{event_gainFocus}, which is fired when an object inside this buffer gains focus, even if that object is in the same buffer.
 		"""
+		if not self._hadFirstGainFocus:
+			# This buffer is gaining focus for the first time.
+			# Fake a focus event on the focus object, as the buffer may have missed the actual focus event.
+			focus = api.getFocusObject()
+			self.event_gainFocus(focus, lambda: focus.event_gainFocus())
+			if not self.passThrough:
+				speech.cancelSpeech()
+				virtualBufferHandler.reportPassThrough(self)
+				speech.speakObjectProperties(self.rootNVDAObject,name=True)
+				info=self.makeTextInfo(textInfos.POSITION_CARET)
+				sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
+			self._hadFirstGainFocus = True
+
 		virtualBufferHandler.reportPassThrough(self)
 		braille.handler.handleGainFocus(self)
 
@@ -562,10 +660,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def script_refreshBuffer(self,keyPress):
 		if self.VBufHandle is None:
-			return sendKey(keyPress)
+			return
 		self.unloadBuffer()
 		self.loadBuffer()
-		speech.speakMessage(_("Refreshed"))
 	script_refreshBuffer.__doc__ = _("Refreshes the virtual buffer content")
 
 	def script_toggleScreenLayout(self,keyPress):
@@ -599,7 +696,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			raise ValueError("unknown direction: %s"%direction)
 		while True:
 			try:
-				node=VBufClient.VBufRemote_findNodeByAttributes(self.VBufHandle,offset,direction,attribs,ctypes.byref(startOffset),ctypes.byref(endOffset))
+				node=NVDAHelper.localLib.VBuf_findNodeByAttributes(self.VBufHandle,offset,direction,attribs,ctypes.byref(startOffset),ctypes.byref(endOffset))
 			except:
 				return
 			if not node:
@@ -835,7 +932,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
 		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
 		caretInfo.expand(textInfos.UNIT_CHARACTER)
-		if not focusInfo.isOverlapping(caretInfo):
+		if not self._hadFirstGainFocus or not focusInfo.isOverlapping(caretInfo):
+			# The virtual buffer caret has already been moved inside the focus node.
 			if not self.passThrough:
 				# If pass-through is disabled, cancel speech, as a focus change should cause page reading to stop.
 				# This must be done before auto-pass-through occurs, as we want to stop page reading even if pass-through will be automatically enabled by this focus change.

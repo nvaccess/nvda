@@ -16,16 +16,14 @@
 <li><a href="#1.2">1.2. Medzinárodná podpora</a></li>
 <li><a href="#1.3.">1.3. Podpora hlasového výstupu</a></li>
 <li><a href="#1.4">1.4. Podpora braillovských zobrazovačov</a></li>
-<li><a href="#1.5">1.5. Nápady a vylepšenia</a></li>
-<li><a href="#1.6">1.6. Vývoj programu a uvedenie do praxe</a></li>
-<li><a href="#1.7">1.7. Licencia a autorské práva</a></li>
+<li><a href="#1.5">1.5. Licencia a autorské práva</a></li>
 </ul>
 <li><a href="#2">2. Systémové požiadavky</a></li>
 <li><a href="#3">3.Získanie NVDA</a></li>
 <li><a href="#4">4. Inštalácia NVDA</a></li>
 <ul>
 <li><a href="#4.1">4.1. NVDA inštalátor</a></li>
-<li><a href="#4.2">4.2. Prenositeľnosť NVDA</a></li>
+<li><a href="#4.2">4.2. Prenositeľná verzia NVDA</a></li>
 </ul>
 <li><a href="#5">5. Začíname pracovať s NVDA</a></li>
 <ul>
@@ -84,15 +82,15 @@ Najvýznamnejšie prednosti programu:
 <li>Ozvučený inštalátor</li>
 <li>Surfovanie na internete s programom <a href="http://www.getfirefox.com">Mozila Firefox 3</a></li>
 <li>Práca s e-mailom, využívanie mailového klienta <a href="http://www.mozillamessaging.com/en-US/thunderbird/early_releases/">Thunderbird 3</a></li>
-<li>Začínajúca podpora programu Internet Explorer</li>
+<li>Podpora programu Internet Explorer</li>
 <li>Základná podpora programov Outlook Express/Windows Mail</li>
 <li>Podpora pre programy Microsoft Word a Microsoft Excel</li>
 <li>Podpora pre prístupné Java aplikácie</li>
-<li>Začínajúca podpora programu Adobe Reader</li>
+<li>Podpora programu Adobe Reader</li>
 <li>Začínajúca podpora programu IBM Lotus Symphony</li>
 <li>Podpora pre prostredie príkazového riadku windows a konzolové aplikácie</li>
 <li>Automatické ohlasovanie textu pod kurzorom myši a volitelné akustické ohlasovanie pozície myši</li>
-<li>Podpora braillovských zobrazovačov Freedom scientific, Handi Tech, alebo zobrazovačov podporovaných systémom BRLTTY.</li>
+<li>Podpora množstva braillovských zobrazovačov</li>
 </ul>
 <h3 id="1.2">1.2. Medzinárodná podpora</h3>
 <p>
@@ -106,24 +104,16 @@ Nvda bol dodnes preložený do viac než dvadsiatich jazykov. Napr. Brazílčina
 Bez ohľadu na poskytovanie hlásení, a rozhraní v niekoľkých jazykoch, NVDA ponúka možnosť čítaniatextov v akomkoľvek jazyku, pokiaľ je dostupný hlasový výstup pre daný jazyk.
 </p>
 <p>
-NVDA je distribuovanýs viacjazyčným voľne šíriteľným/open-source hlasovým výstupom <a href="http://espeak.sourceforge.net">Espeak</a>, Okrem Sapy 4 a Sapy 5 hlasových výstupov, NVDA spolupracuje Aj s hlasovým výstupom Audiologic.
+NVDA je distribuovanýs viacjazyčným voľne šíriteľným/open-source hlasovým výstupom <a href="http://espeak.sourceforge.net">Espeak</a>, Okrem Sapy 4 a Sapy 5 hlasových výstupov, NVDA spolupracuje Aj s hlasovými výstupmi Audiologic a newfon.
 </p>
 <h3 id="1.4">1.4. Podpora braillovských zobrazovačov</h3>
 <p>
-Pre používateľov, ktorí vlastnia braillovský zobrazovač - ľudovo nazývaný tiež braillovský riadok, NVDA umožňuje výstup v braillovom písme. NVDA podporuje zobrazovače od Freedom Scientific (Pacmate a Focus), zobrazovače Handy Tech a mnoho ďalších s využitím programu BRLTTY .
-</p>
-<h3 id="1.5">1.5. Nápady a vylepšenia</h3>
-<p>
-NVDA nie je obmedzovaný za každú cenu kopírovať požiadavky trhu. Komerčné odčítavače v sebe zahŕňajú veľké množstvo funkcií, čo je však znovu ovplyvnené trhom a nie tým, čo skutočne používateľ potrebuje. NVDA sa nemôže popýšiť takou stabilitou, akú majú ostatné odčítavače, no môže sa však uplatniť ako šikovný nástroj pre rôzne testovania a experimenty. Do praxe sa tak môžu naše nápady dostať oveľa rýchlejšie, než v platených odčítavačoch pre systém Windows. Takýmto príkladom je schopnosť NVDA indikovať priebeh operácie za pomoci pípania. Čím vyššie pípanie je, tým bližšie je koniec procesu. Používatelia túto funkciu zapracovali do odčítavačov za pomoci skriptov, no nikdy sa indikátor priebehu neuplatnil naplno ako základ programu.
-</p>
-<h3 id="1.6">1.6. Vývoj programu a uvedenie do praxe</h3>
-<p>
-NVDA je napísaný v programovacom <a href="http://www.python.org">jazyku Python</a> a programovaný na tzv. stavebnicovej konštrukcii,. Väčšina kódu môže byť ľahko rozšírená a upravovaná pri tvorbe nových programov, či ovládacích prvkov Windows. Pre všeobecnú podporu špecifických aplikácií môžu byť pridané ďalšie aplikačné moduly. Pre zobrazenie zložitejších textov či iných dát, môžu byť napísané virtuálne prehliadače rovnako, ako sa môžu naprogramovať tzv. objekty NVDA v rámci pridávania podpory pre špecifické ovládacie prvky. NVDA sa vždy snaží, aby boli ovládacie prvky dostupné v maximálnej možnej miere. tak, aby v nich používateľ mohol aktívne vyhľadávať potrebné informácie. NVDA sa nezameriava na filtrovanie a hlásenie špecifických informácií , o ktorých si myslí, že by o nich používateľ mal vedieť.
+Pre používateľov, ktorí vlastnia braillovský zobrazovač - ľudovo nazývaný tiež braillovský riadok, NVDA umožňuje výstup v braillovom písme. NVDA podporuje zobrazovače od Freedom Scientific (Pacmate a Focus), zobrazovače Handy Tech, ALVA (BC640/680) a mnoho ďalších s využitím programu BRLTTY .
 </p>
 <p>
-Pre komunikáciu s operačným systémom a programami NVDA využíva kombináciu funkcií operačného systému Microsoft Active Accessibility (MSAA), IAccessible2, Java Access Bridge, a špecifické aplikačné rozhrania, ktoré poskytujú niektoré programy. NVDA nevyužíva grafický ovládač pre zachytávanie videa a tak sa bude vždy snažiť získať maximálne množstvo informácií zo spomínaných rozhraní s ohľadom na dostupnosť daných programov.
+NVDA podporuje rôzne kódové tabuľky umožňujúce tak čítať brailový výstup vo viacerých jazykoch. V mnohých prípadoch existujú tabuľky pre plnopis aj skratkopis pre ten ktorý národný brail. Pre anglicky hovoriacich čitateľov sú k dispozícii oba druhy tabuliek americký brail aj zjednotený brail.
 </p>
-<h3 id="1.7">1.7. Licencia a autorské práva</h3>
+<h3 id="1.5">1.5. Licencia a autorské práva</h3>
 <p>
 NVDA je chránený autorskými právami Copyright ©2006-2008 <a href="http://www.nvda-project.org">Tím NVDA</a> pod licenciou GNU General Public License 2.0. Tento produkt môžete voľne šíriť a meniť rôznym spôsobom, podmienkou však je pripojiť k nemu túto licenciu a sprístupniť zdrojový kód každému, kto si to vyžiada. Týka sa to oboch pôvodných, aj upravených kópií daného softwaru. Pre viac informácií si môžete pozrieť <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">detailnejšiu licenciu</a>. 
 </p>
@@ -142,7 +132,7 @@ Ak ešte nemáte kópiu NVDA, môžete si ju stiahnuť z vebovskej stránky: <a 
 Vstúpte do sekcie download, kde nájdete priamy odkaz na stiahnutie najnovšej verzie. 
 </p>
 <p>
-NVDA tu nájdete v dvoch balíčkoch. Ako inštalátor a prenositeľnú verziu balenú v samorozbaľovacom 7Zip archíve. Inštalátor vás hlasom prevedie inštaláciou programu, budete ho môcť spustiť kedykoľvek z ponuky štart. 7Zip archív obsahuje plne prenositeľnú verziu, ktorú môžete spustiť odkiaľ koľvek, buď z kľúčenky USB, alebo z CD. 
+NVDA tu nájdete v dvoch balíčkoch. Ako inštalátor a prenositeľnú verziu balenú v samorozbaľovacom archíve. Inštalátor vás hlasom prevedie inštaláciou programu, budete ho môcť spustiť kedykoľvek z ponuky štart. Samorozbaľovací archív obsahuje plne prenositeľnú verziu, ktorú môžete spustiť odkiaľ koľvek, buď z kľúčenky USB, alebo z CD. 
 </p>
 <h2 id="4">4. Inštalácia NVDA</h2>
 <h3 id="4.1">4.1. Inštalátor</h3>
@@ -153,11 +143,11 @@ Ak už máte stiahnutý inštalátor NVDA, jednoducho stlačte enter, alebo klik
 Počas spúšťania inštalátora budete počuť zvukový signál a samotnou inštaláciou vás prevedie automaticky spustená dočasná kópia programu NVDA. Inštalátor vás pred spustením tejto dočasnej kópie podľa potreby upozorní, že je nutné ukončiť práve spustenú kópiu programu NVDA nainštalovanú v počítači. Pred kopírovaním súborov vás inštalátor NVDA vyzve na odinštalovanie predchádzajúcej verzii NVDA. Okrem týchto upozornení je inštalácia bezproblémová, sledujte len pokiny na obrazovke a NVDA sa korektne nainštaluje.
 </p>
 <p>
-Po úspešnej inštalácii vás inštalátor na túto skutočnosť upozorní a podľa potreby ponúkne reštart systému. Odporúča sa reštart systému skutočne vykonať v tejto chvíli, pretože jeho zamietnutie môže mať vážne dôsledky.
+Po úspešnej inštalácii vás inštalátor na túto skutočnosť upozorní a pokiaľ sa jedná o reinštaláciu alebo aktualizáciu NVDA podľa potreby ponúkne reštart systému. Odporúča sa reštart systému skutočne vykonať, pretože jeho zamietnutie môže mať vážne dôsledky. V prípade, že inštalátor neponúkne reštart, po potvrdení tlačidla Dokončiť sa spustí práve nainštalovaná kópia programu NVDA.
 </p>
-<h3 id="4.2">4.2. Prenositeľnosť NVDA</h3>
+<h3 id="4.2">4.2. Prenositeľná verzia NVDA</h3>
 <p>
-Ak ste si stiahli prenositeľnú verziu NVDA, jediné čo musíte urobiť je rozbaliť ju na ľubovoľné miesto na disku. Môžete ju tiež rozbaliť na prenositeľné médium ako napríklad USB disk, alebo CD. 
+Ak ste si stiahli prenositeľnú verziu NVDA, jediné čo musíte urobiť je rozbaliť ju na ľubovoľné miesto na disku. Môžete ju tiež rozbaliť na prenositeľné médium ako napríklad USB disk, alebo napáliť na CD. 
 </p>
 <h2 id="5">5. Začíname pracovať s NVDA</h2>
 <h3 id="5.1">5.1. Spustenie NVDA</h3>
@@ -165,13 +155,13 @@ Ak ste si stiahli prenositeľnú verziu NVDA, jediné čo musíte urobiť je roz
 Ak už máte nainštalovaný NVDA podľa pokynov inštalátora, spustiť NVDA je veľmi jednoduché. Stačí stlačiť klávesovú skratku ctrl+alt+N, alebo vybrať položku NVDA zo skupiny NVDA z menu štart/programy.
 </p>
 <p>
-Na spustenie prenositeľnej verzie vstúpte do adresára, kam ste si NVDA rozbalili a stlačte enter, alebo kliknite na súbor NVDA.exe. 
+Na spustenie prenositeľnej verzie vstúpte do adresára, kam ste si NVDA rozbalili a stlačte enter, alebo kliknite na súbor NVDA.exe.
 </p>
 <p>
-Hneď ako sa NVDA spustí, prvé čo budete počuť je rad stúpajúcich tónov, ktoré vám hovoria, že sa NVDA práve načítava. Objaví sa hláška NVDA spustený. V závislosti od toho, aký rýchly je váš počítač, alebo médium z ktorého NVDA spúšťate môže chvíľu trvať, kým sa program načíta. Ak spúšťanie trvá príliš dlho, budete počuť aj hlášku, "Nahrávam podporné systémy, prosím čakajte". 
+Hneď ako sa NVDA spustí, prvé čo budete počuť je rad stúpajúcich tónov, ktoré vám hovoria, že sa NVDA práve načítava. Objaví sa hláška NVDA spustený. V závislosti od toho, aký rýchly je váš počítač, alebo médium z ktorého NVDA spúšťate môže chvíľu trvať, kým sa program načíta. Ak spúšťanie trvá príliš dlho, budete počuť aj hlášku, "Nahrávam podporné systémy, prosím čakajte".
 </p>
 <p>
-Ak sa neobjaví nič z uvedeného a vy nebudete počuť žiadne hlásenie, alebo sa objaví chyba ohlásená zvukom Windows, prípadne rad klesajúcich tónov, znamená to, že NVDA má problém pri spúšťaní a túto chybu by ste mali ohlásiť tvorcom programu. Informácie o tom, ako chybu ohlásiť nájdete na <a href="http://www.nvda-project.org/">stránkach NVDA</a>. 
+Ak sa neobjaví nič z uvedeného a vy nebudete počuť žiadne hlásenie, alebo sa objaví chyba ohlásená zvukom Windows, prípadne rad klesajúcich tónov, znamená to, že NVDA má problém pri spúšťaní a túto chybu by ste mali ohlásiť tvorcom programu. Informácie o tom, ako chybu ohlásiť nájdete na <a href="http://www.nvda-project.org/">stránkach NVDA</a>.
 </p>
 <p>
 Ak sa program spustí správne, malo by sa objaviť uvítacie okno informujúce o použití tzv. klávesu NVDA a základné informácie o NVDA menu. Viac podrobností si môžete prečítať <a href="#5.2">v nasledujúcej kapitole</a>. Ďalej toto okno obsahuje dve začiarkávacie políčka. Prvé políčko umožní zvoliť, či chcete používať capslock ako modifikačný kláves NVDA. Ak sa toto políčko nezačiarkne, pre NVDA to bude signál, že jeho hlavným klávesom zostáva insert. Druhé začiarkávacie políčko umožňuje nastaviť, či sa uvítacie okno má zobraziť po každom štarte NVDA. Jeho začiarknutím danú voľbu potvrdíme.
@@ -230,6 +220,14 @@ Začiarkávacie políčko,  ktorého začiarknutím sa bude NVDA pred ukončení
 <h6>Úroveň záznamu</h6>
 <p>
 Zoznamový rámik, ktorý umožňuje používateľovi zvoliť, aké množstvo dát má zaznamenať počas svojho vlastného behu. Všeobecne sa používateľ týmto nastavením nemusí zaoberať. No ak chcete tvorcom programu poskytnúť informácie o chybových hláseniach, je dobré nastaviť túto voľbu na vyššiu úroveň.
+</p>
+<h6>Automaticky spustiť NVDA po prihlásení do Windows</h6>
+<p>
+Ak je táto voľba zaškrtnutá, NVDA spustí hneď ako sa prihlásite do Windows..
+</p>
+<h6>Spúšťať NVDA pri zobrazení prihlasovacej obrazovky (vyžaduje administrátorské práva)</h6>
+<p>
+Ak sa do Windows prihlasujete zadaním vašeho prihlasovacieho mena a hesla, zaškrtnutím tejto voľby zaistíte, aby sa NVDA spustil už pri zobrazení práve spomínanej obrazovky..
 </p>
 <h5 id="6.2.1.2">6.2.1.2. Výber hlasového výstupu</h5>
 <p>
@@ -393,6 +391,10 @@ Začiarkávacie políčko ktoré ak začiarknete, NVDA bude ohlasovať zmenu tva
 <p>
 Začiarkávacie políčko, ktoré ak začiarknete, NVDA bude hlásiť text cez ktorý prechádza kurzor myši. Takto môžete nájsť položky na obrazovke za pomoci myši a nemusíte použiť objektovú navigáciu. Táto možnosť sa dá vypnúť aj zapnúť klávesovou skratkou NVDA+m. 
 </p>
+<h6>Jednotka oznamovania pri zameraní textu</h6>
+<p>
+Ak je zaškrtnutá voľba Oznamovať text pod kurzorom myši toto nastavenie určuje aké množstvo textu bude prečítané. Je možno vyberať z: znak, slovo, riadok alebo odstavec.
+</p>
 <h6>Oznamovať typ prvku pri zameraní kurzorom myši</h6>
 <p>
 Ak je toto začiarkávacie políčko začiarknuté, NVDA bude ohlasovať typ objektu pri prechode myšou cez objekt.
@@ -424,35 +426,53 @@ Toto začiarkávacie políčko ak je začiarknuté, NVDA bude ohlasovať bublink
 <p>
 Ak je toto začiarkávacie políčko začiarknuté, NVDA bude ohlasovať klávesové skratky, ktoré sú viazané ku rôznym príkazom a objektom. Napríklad: menu súbor má skratku Alt +S, takže súčasťou popisu objektu pri ohlásení bude aj jeho klávesová skratka. 
 </p>
+<h6>Oznamovať pozíciu objektu</h6>
+<p>
+Táto voľba umožňuje prispôsobenie čítania informácií o pozícii objektu v prípade získania fokusu alebo zamerania objektovou navigáciou. Je to napr. informácia o položke zoznamu (1 z 10) a pod.
+</p> 
 <h6>Oznamovať popisky objektov</h6>
 <p>
 Odčiarknite toto políčko, ak si myslíte, že vás popisy objektov obťažujú.
 </p>
-<h6>Pípať pri aktualizácii priebehu</h6>
+<h6>Oznamovanie aktualizácie indikátora priebehu:</h6>
 <p>
-Indikátor priebehu je ovládací prvok vyzerajúci ako pravítko. Pri priebehu dlhšie trvajúcej akcie sa postupne lišta zvýrazňuje. Tento prvok zobrazuje túto možnosť i v percentách. Platí to pre dlhšie trvajúce operácie ako napríklad: načítanie stránky, kontrolu pošty, či spracovanie zvukového súboru. Ak toto políčko začiarknete, NVDA bude stúpajúcim pípaním ohlasovať priebeh procesu. Je to lepšie, než počúvať hromadu čísel. 
+Indikátor priebehu je ovládací prvok vyzerajúci ako pravítko. Pri priebehu dlhšie trvajúcej akcie sa postupne lišta zvýrazňuje. Tento prvok zobrazuje túto možnosť i v percentách. Platí to pre dlhšie trvajúce operácie ako napríklad: načítanie stránky, kontrolu pošty, či spracovanie zvukového súboru. 
+</p>
+<p>
+Toto nastavenie je zoznamový rámik, ktorý riadi ako NVDA oznamuje aktualizáciu indikátora priebehu. Momentáľne sú dostupné tieto možnosti:
+</p>
+<ul>
+<li>Vypnuté: aktualizácia indikátora priebehu nebude oznamovaná.</li>
+<li>Čítať: Toto zaistí čítanie hodnoty indikátora priebehu v percentách. Vždy ak sa hodnota zmení, NVDA na túto skutočnosť upozorní.</li>
+<li>Pípať: Toto nastavenie zaistí, že pri každej aktualizácii indikátora priebehu NVDA zapípa. Čím je tón pípania vyšší, tým je akcia sprevádzajúca indikátorom priebehu bližšie ku koncu.</li>
+<li>Čítať a pípať: Táto voľba je kombináciou dvoch predchádzajúcich. NVDA zároveň pípa aj oznamuje aktualizáciu indikátora priebehu hlasom.</li>
+</ul>
+<h6>Oznamovať aktualizáciu indikátorov priebehu na pozadí</h6>
+<p>
+Ak je táto voľba začiarknutá, NVDA bude sledovať aj priebeh takých indikátorov, ktoré nie sú zobrazené v okne v popredí. Znamená to, že ak minimalizujete okno, v ktorom je zobrazený indikátor priebehu, môžete robiť niečo úplne iné, zatiaľ čo NVDA naďalej oznamuje aktualizáciu tohoto priebehu.
 </p>
 <h5 id="6.2.1.8">6.2.1.8. Nastavenia virtuálneho prehliadača</h3>
 <p>
 Toto nastavenie nájdeme v možnostiach programu NVDA, pod názvom virtuálny prehliadač. Je tiež možné ho vyvolať stlačením ctrl+NVDA+b.
 </p>
 <p>
-Všimnite si, že niektoré nastavenia v tomto dialógovom okne platia len pre nový virtuálny prehliadač použitý s programami ako napr. Mozilla Firefox a Mozilla Thunderbird. Na podpore pre internet explorer a outlook express sa práve pracuje.
-</p>
-<p>
 Toto dialógové okno Obsahuje nasledovné nastavenia: 
 </p>
 <h6>Maximálny počet znakov na riadku</h6>
 <p>
-V tomto editačnom poli nastavíte počet znakov v jednom riadku v virtuálnom prehliadači. Nie je však zaručené, že všetky zakončenia riadkov budú túto dĺžku rešpektovať, ale mnohé riadky by sa mali zobrazovať správne. 
+V tomto editačnom poli nastavíte počet znakov na jeden riadok virtuálneho prehliadača.
 </p>
 <h6>Maximálny počet riadkov na jednej stránke</h6>
 <p>
 Virtuálny prehliadač nemá stránky, no toto nastavenie určuje o koľko riadkov sa má NVDA posunúť pri pohybe po stlačení page up a page down.
 </p>
-<h6>pri zmene fokusu načítať informácie o objekte z virtuálneho prehliadača</h6>
+<h6>Zachovať vzhľad ako na obrazovke</h6>
 <p>
-Ak toto políčko začiarknete, NVDA bude hlásiť text a ostatné informácie priamo z virtuálneho prehliadača a nebude vyžadovať informácie od Windows. Napríklad: Pri presune na odkaz mačky, NVDA prečíta Odkaz Mačky a nie Mačky Odkaz. Je to preto, že v virtuálnom prehliadači je najskôr ohlásený prvok odkaz a až potom samotný text. Niekedy si budete priať, aby táto možnosť zapnutá nebola, aby ste od systému dostali podrobnejší popis. V niektorých internetových prehliadačoch však použitím tohoto nastavenia zaistíte presnejšie informácie. 
+Umožňuje nastaviť zalamovanie obsahu vo virtuálnom prehliadači. Ak je to začiarknuté, odkazy a tiež ďalšie prvky budú zobrazené sami na riadku. Ak je to odčiarknuté, všetky prvky budú zobrazené tak, ako sú rozmiestnené na obrazovke.
+</p>
+<h6>Oznamovať tabuľky formujúce vzhľad</h6>
+<p>
+Ak je táto voľba odčiarknutá NVDA bude oznamovať len tabuľky, ktoré obsahujú tabulárne dáta (kde je to naozaj nevyhnutné vedieť, že sa jedná o tabuľku). Naopak ak je voľba začiarknutá, NVDA bude oznamovať aj také tabuľky, ktoré slúžia čisto na dotvorenie vizuálnej prezentácie stránky.
 </p>
 <h6>Ohlásenie podrobných nastavení prvkov</h6>
 <p>
@@ -465,6 +485,10 @@ Táto možnosť umožňuje automatické zapínanie režimu fokusu v prípade, ž
 <h6>Automaticky aktivovať režim fokusu pri pohybe kurzorom</h6>
 <p>
 Po zapnutí tejto voľby NVDA dokáže automaticky zapínať a vypínať režim fokusu pri navigovaní vo virtuálnom prehliadači. Toto platí pre klávesy rýchlej navigácie ako aj pre navigáciu po riadkoch, slovách či iných jednotkách. Napríklad ak sa po riadkoch posúvate po stránke a zameráte týmto spôsobom prepínač, automaticky sa aktivuje režim fokusu. Ak budete v navigácii pokračovať po vystriedaní všetkých prepínačov v skupine sa režim fokusu automaticky vypne a budete môcť pokračovať v navigácii.
+</p>
+<h6>Prehliadací režim a režim fokusu oznamovať zvukom</h6>
+<p>
+Ak je táto voľba začiarknutá, NVDA bude namiesto oznamovania prepínania prehliadacieho režimu a režimu fokusu prehrávať zvuky špeciálne priradené k týmto akciám.
 </p>
 <h5 id="6.2.1.9">6.2.1.9. Nastavenia čítania textu</h3>
 <p>
@@ -587,7 +611,7 @@ Napríklad: Položka zoznamu uvedená v zozname bude mať svoje meno, hodnotu a 
 Ak objekt obsahuje textový kurzor a jeho poloha sa zmení, zmení sa tiež pozícia prehliadacieho kurzora na tú istú hodnotu/pozíciu. Ak chcete prehliadací kurzor ponechať na rovnakom mieste a textovým kurzorom ďalej čítať, stlačíte NVDA+6.
 </p>
 <p>
-Použitím prehliadacieho kurzora je tiež možné kopírovať časti textu . Napríklad môžete skopírovať adresu, ktorú vám niekto poslal v online konverzácii. Začnite tým, že prehliadací kurzor presuniete na prvý znak textu, ktorý chcete skopírovať a stlačte NVDA+f9. Potom prejdite na koniec textu a stlačte NVDA+f10. Takto vybratý text bude skopírovaný do schránky windows a vy ho môžete štandardným spôsobom prilepiť do ľubovoľného editačného poľa. Môžete si tiež nechať obsah schránky prečítať stlačením ctrl+NVDA+c. Pochopiteľne ak prvok, z ktorého chcete kopírovať má systémový kurzor a umožňuje štandardný spôsob kopírovania, odporúčame použiť túto cestu.
+Použitím prehliadacieho kurzora je tiež možné kopírovať časti textu . Napríklad môžete skopírovať adresu, ktorú vám niekto poslal v online konverzácii. Začnite tým, že prehliadací kurzor presuniete na prvý znak textu, ktorý chcete skopírovať a stlačte NVDA+f9. Potom prejdite na koniec textu a stlačte NVDA+f10. Takto vybratý text bude skopírovaný do schránky windows a vy ho môžete štandardným spôsobom prilepiť do ľubovoľného editačného poľa. Môžete si tiež nechať obsah schránky prečítať stlačením NVDA+c. Pochopiteľne ak prvok, z ktorého chcete kopírovať má systémový kurzor a umožňuje štandardný spôsob kopírovania, odporúčame použiť túto cestu.
 </p> 
 <h3 id="7.5">7.5. Pohyb myšou</h3>
 <p>

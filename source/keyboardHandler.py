@@ -21,6 +21,7 @@ import config
 import _winreg
 import api
 import winInputHook
+import watchdog
 
 keyUpIgnoreSet=set()
 passKeyThroughCount=-1 #If 0 or higher then key downs and key ups will be passed straight through
@@ -79,6 +80,9 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 """
 	try:
 		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unpauseByShiftUp 
+		if watchdog.isAttemptingRecovery:
+			# The core is dead, so let keys pass through unhindered.
+			return True
 		focusObject=api.getFocusObject()
 		focusAppModule=focusObject.appModule
 		if focusAppModule and focusAppModule.selfVoicing:
@@ -204,6 +208,9 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event that pyHook calls when it receives keyUps"""
 	try:
 		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unpauseByShiftUp 
+		if watchdog.isAttemptingRecovery:
+			# The core is dead, so let keys pass through unhindered.
+			return True
 		focusObject=api.getFocusObject()
 		focusAppModule=focusObject.appModule
 		if focusAppModule and focusAppModule.selfVoicing:

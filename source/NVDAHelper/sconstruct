@@ -1,0 +1,74 @@
+import customBuilders
+
+#User build variables
+vars=Variables()
+vars.Add(BoolVariable('release','Set to true to build a release version',False))
+vars.Add('TARGET_ARCH','Target architecture')
+vars.Add('HOST_ARCH','Host architecture')
+
+#Create a new environment for our project
+env=DefaultEnvironment(tools=['default','msvc','midl','mssdk'],variables=vars)
+
+#Make our MSRPCStubs custom builder accessible to the environment
+env['BUILDERS']['MSRPCStubs']=customBuilders.MSRPCStubs
+
+#Some defines and includes for the environment
+env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE'])
+env.Append(CXXFLAGS=['/EHsc'])
+env.Append(CPPPATH=['#.','#../include'])
+env.Append(LINKFLAGS='/incremental:no')
+TARGET_ARCH=env['TARGET_ARCH']
+if TARGET_ARCH=='x86_64':
+	env.Append(MIDLFLAGS='/x64')
+
+if env['release']:
+	print "Building %s release version"%TARGET_ARCH
+	env.Append(CPPDEFINES=['NDEBUG'])
+	env.Append(CCFLAGS='/O2')
+	env.Append(LINKFLAGS='/release')
+else:
+	print "Building %s debug version"%TARGET_ARCH
+	env.Append(PDB='${TARGET}.pdb')
+
+Export('env')
+
+neededTargets=[]
+
+acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
+
+ia2RPCStubs=env.SConscript('ia2_sconscript')
+
+vbufRPCStubs=env.SConscript('interfaces/vbuf/sconscript')
+
+if TARGET_ARCH=='x86':
+	localLib=env.SConscript('local/sconscript',exports=['vbufRPCStubs'])
+	neededTargets.append(localLib)
+
+remoteLib=env.SConscript('remote/sconscript',exports=['ia2RPCStubs','vbufRPCStubs'])
+neededTargets.append(remoteLib)
+
+if TARGET_ARCH=='x86_64':
+	remoteLoaderProgram=env.SConscript('remoteLoader/sconscript',exports=['remoteLib'])
+	neededTargets.append(remoteLoaderProgram)
+
+vbufBaseStaticLib=env.SConscript('vbufBase/sconscript',exports=['remoteLib'])
+
+adobeAcrobatVBufBackend=env.SConscript('vbufBackends/adobeAcrobat/sconscript',exports=['vbufBaseStaticLib','acrobatAccessRPCStubs'])
+neededTargets.append(adobeAcrobatVBufBackend)
+
+geckoVBufBackend=env.SConscript('vbufBackends/gecko_ia2/sconscript',exports=['vbufBaseStaticLib','ia2RPCStubs'])
+neededTargets.append(geckoVBufBackend)
+
+mshtmlVBufBackend=env.SConscript('vbufBackends/mshtml/sconscript',exports=['vbufBaseStaticLib'])
+neededTargets.append(mshtmlVBufBackend)
+
+if TARGET_ARCH=='x86_64':
+	installDir=Dir('../lib64')
+else:
+	installDir=Dir('../lib')
+installedFiles=env.Install(installDir,[x[0] for x in neededTargets] if env['release'] else [x[0:2] for x in neededTargets])
+env.Requires(installedFiles,neededTargets)
+env.Alias('install',installedFiles)
+
+#By default we will build particular targets:
+env.Default(neededTargets)

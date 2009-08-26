@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 
 import IAccessibleHandler
+import oleacc
 import controlTypes
 from . import IAccessible
 import textInfos
@@ -56,15 +57,15 @@ class ListItem(Mozilla):
 
 	def _get_name(self):
 		name=super(ListItem,self)._get_name()
-		if self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_READONLY:
+		if self.IAccessibleStates&oleacc.STATE_SYSTEM_READONLY:
 			children=super(ListItem,self)._get_children()
-			if len(children)>0 and (children[0].IAccessibleRole in ["bullet",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT]):
+			if len(children)>0 and (children[0].IAccessibleRole in ["bullet",oleacc.ROLE_SYSTEM_STATICTEXT]):
 				name=children[0].value
 		return name
 
 	def _get_children(self):
 		children=super(ListItem,self)._get_children()
-		if self.IAccessibleStates&IAccessibleHandler.STATE_SYSTEM_READONLY and len(children)>0 and (children[0].IAccessibleRole in ("bullet",IAccessibleHandler.ROLE_SYSTEM_STATICTEXT)):
+		if self.IAccessibleStates&oleacc.STATE_SYSTEM_READONLY and len(children)>0 and (children[0].IAccessibleRole in ("bullet",oleacc.ROLE_SYSTEM_STATICTEXT)):
 			del children[0]
 		return children
 

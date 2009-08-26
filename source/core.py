@@ -13,14 +13,6 @@ import comtypes.gen
 import comInterfaces
 comtypes.gen.__path__.append(comInterfaces.__path__[0])
 
-#A fix for a bug in comtypes
-#Definition of ITypeLib::ReleaseTLibAttr has hresult return type, should be void
-from comtypes.typeinfo import ITypeLib
-del ITypeLib.ReleaseTLibAttr
-del ITypeLib._ITypeLib__com_ReleaseTLibAttr
-ITypeLib._methods_[9]=(None,)+ITypeLib._methods_[9][1:]
-ITypeLib._make_methods(ITypeLib._methods_)
-
 import sys
 import nvwave
 import os
@@ -145,6 +137,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		locale.Init(lang,wxLang)
 	except:
 		pass
+	import appModuleHandler
+	log.debug("Initializing appModule Handler")
+	appModuleHandler.initialize()
 	import api
 	import winUser
 	import NVDAObjects.window
@@ -153,9 +148,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	api.setFocusObject(desktopObject)
 	api.setNavigatorObject(desktopObject)
 	api.setMouseObject(desktopObject)
-	import appModuleHandler
-	log.debug("Initializing appModule Handler")
-	appModuleHandler.initialize()
 	import JABHandler
 	log.debug("initializing Java Access Bridge support")
 	JABHandler.initialize()
@@ -182,8 +174,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		wx.CallAfter(doStartupDialogs)
 	if api.getFocusObject()==api.getDesktopObject():
 		import eventHandler
-		eventHandler.queueEvent('gainFocus',api.getDesktopObject().objectWithFocus())
+		focus=api.getDesktopObject().objectWithFocus()
+		if focus:
+			eventHandler.queueEvent('gainFocus',focus)
 	import queueHandler
+	import watchdog
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
 		def __init__(self,*args,**kwargs):
@@ -196,16 +191,21 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				queueHandler.pumpAll()
 				mouseHandler.pumpAll()
 			except:
-				log.error("errors in this core pump cycle",exc_info=True)
+				log.exception("errors in this core pump cycle")
+			watchdog.alive()
 	log.debug("starting core pump")
 	pump = CorePump()
 	pump.Start(1)
+	log.debug("Initializing watchdog")
+	watchdog.initialize()
 	log.info("NVDA initialized")
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
 
 	log.info("Exiting")
+	log.debug("Terminating watchdog")
+	watchdog.terminate()
 	log.debug("Terminating GUI")
 	gui.terminate()
 	config.saveOnExit()

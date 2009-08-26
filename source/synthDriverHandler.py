@@ -5,19 +5,20 @@
 #See the file COPYING for more details.
 
 from copy import deepcopy
-import imp
 import os
+import pkgutil
 import config
 import baseObject
 import globalVars
 from logHandler import log
 from  synthSettingsRing import SynthSettingsRing
 import speechDictHandler
-
-#This is here so that the synthDrivers are able to import modules from the synthDrivers dir themselves
-__path__=['.\\synthDrivers']
+import synthDrivers
 
 _curSynth=None
+
+def initialize():
+	config.addConfigDirsToPythonPackagePath(synthDrivers)
 
 def changeVoice(synth, voice):
 	import api
@@ -32,16 +33,16 @@ def changeVoice(synth, voice):
 	if globalVars.settingsRing: globalVars.settingsRing.updateSupportedSettings(synth)
 	else:  globalVars.settingsRing = SynthSettingsRing(synth)
 
+def _getSynthDriver(name):
+	return __import__("synthDrivers.%s" % name, globals(), locals(), ("synthDrivers",)).SynthDriver
+
 def getSynthList():
 	synthList=[]
-	names = set()
-	modExtentions=[x[0] for x in imp.get_suffixes()]
-	for name, ext in (os.path.splitext(fn) for fn in os.listdir(__path__[0])):
-		if name.startswith('_') or ext not in modExtentions or name in names:
+	for loader, name, isPkg in pkgutil.iter_modules(synthDrivers.__path__):
+		if name.startswith('_'):
 			continue
-		names.add(name)
 		try:
-			synth=__import__(name,globals(),locals(),[]).SynthDriver
+			synth=_getSynthDriver(name)
 		except:
 			log.error("Error while importing SynthDriver %s"%name,exc_info=True)
 			continue
@@ -73,8 +74,7 @@ def setSynth(name):
 	else:
 		prevSynthName = None
 	try:
-		newSynth=__import__(name,globals(),None,[]).SynthDriver
-		newSynth=newSynth()
+		newSynth=_getSynthDriver(name)()
 		updatedConfig=config.updateSynthConfig(newSynth)
 		if not updatedConfig:
 			newSynth.loadSettings()

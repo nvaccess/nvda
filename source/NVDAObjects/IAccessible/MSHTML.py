@@ -9,11 +9,11 @@ import ctypes
 from comtypes import COMError
 import comtypes.client
 import comtypes.automation
-from comInterfaces.servprov import IServiceProvider
+from comtypes import IServiceProvider
 import winUser
 import globalVars
+import oleacc
 import aria
-import IAccessibleHandler
 from keyUtils import key, sendKey
 import api
 import textInfos
@@ -64,11 +64,9 @@ def nextIAccessibleInDom(IHTMLElement,back=False):
 def IAccessibleFromIHTMLElement(IHTMLElement):
 	try:
 		s=IHTMLElement.QueryInterface(IServiceProvider)
-		interfaceAddress=s.QueryService(ctypes.byref(IAccessibleHandler.IAccessible._iid_),ctypes.byref(IAccessibleHandler.IAccessible._iid_))
+		return s.QueryService(oleacc.IAccessible._iid_,oleacc.IAccessible)
 	except COMError:
 		raise NotImplementedError
-	ptr=ctypes.POINTER(IAccessibleHandler.IAccessible)(interfaceAddress)
-	return ptr
 
 def IHTMLElementHasIAccessible(IHTMLElement):
 	try:
@@ -79,11 +77,9 @@ def IHTMLElementHasIAccessible(IHTMLElement):
 def IHTMLElementFromIAccessible(IAccessibleObject):
 	try:
 		s=IAccessibleObject.QueryInterface(IServiceProvider)
-		interfaceAddress=s.QueryService(ctypes.byref(IID_IHTMLElement),ctypes.byref(comtypes.automation.IDispatch._iid_))
+		return comtypes.client.dynamic.Dispatch(s.QueryService(IID_IHTMLElement,comtypes.automation.IDispatch))
 	except COMError:
 		raise NotImplementedError
-	ptr=ctypes.POINTER(comtypes.automation.IDispatch)(interfaceAddress)
-	return comtypes.client.dynamic.Dispatch(ptr)
 
 def locateHTMLElementByID(document,ID):
 	element=document.getElementById(ID)
@@ -130,14 +126,27 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		if _rangeObj:
 			self._rangeObj=_rangeObj.duplicate()
 			return
+		try:
+			editableBody=self.obj.IHTMLElement.tagName=="BODY" and self.obj.IHTMLElement.isContentEditable
+		except:
+			editableBody=False
+		if editableBody:
+			self._rangeObj=self.obj.IHTMLElement.document.selection.createRange()
+		else:
+			self._rangeObj=self.obj.IHTMLElement.createTextRange()
 		if position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			if self.obj.IHTMLElement.uniqueID!=self.obj.IHTMLElement.document.activeElement.uniqueID:
 				raise RuntimeError("Only works with currently selected element")
-			self._rangeObj=self.obj.IHTMLElement.document.selection.createRange()
+			if not editableBody:
+				mark=self.obj.IHTMLElement.document.selection.createRange().GetBookmark()
+				self._rangeObj.MoveToBookmark(mark)
+				t=self._rangeObj.duplicate()
+				if not t.expand("word"):
+					self._rangeObj.expand("textedit")
+					self._rangeObj.collapse(False)
 			if position==textInfos.POSITION_CARET:
 				self._rangeObj.collapse()
 			return
-		self._rangeObj=self.obj.IHTMLElement.createTextRange()
 		if position==textInfos.POSITION_FIRST:
 			self._rangeObj.collapse()
 		elif position==textInfos.POSITION_LAST:
@@ -155,16 +164,21 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			raise NotImplementedError("position: %s"%position)
 
 	def expand(self,unit):
+		if unit==textInfos.UNIT_PARAGRAPH:
+			unit=textInfos.UNIT_LINE
 		if unit==textInfos.UNIT_LINE and self.basePosition not in [textInfos.POSITION_SELECTION,textInfos.POSITION_CARET]:
 			unit=textInfos.UNIT_SENTENCE
-		if unit==textInfos.UNIT_READINGCHUNK or unit==textInfos.UNIT_PARAGRAPH:
+		if unit==textInfos.UNIT_READINGCHUNK:
 			unit=textInfos.UNIT_SENTENCE
-		if unit in [textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD,textInfos.UNIT_SENTENCE,textInfos.UNIT_PARAGRAPH]:
-			res=self._rangeObj.expand(unit)
-			if not res and unit=="word": #IHTMLTxtRange.expand fails to handle word when at the start of a field
-				res=self._rangeObj.moveEnd(unit,1)
-				if res:
-					self._rangeObj.moveStart(unit,-1)
+		if unit==textInfos.UNIT_CHARACTER:
+			self._rangeObj.expand("character")
+		elif unit==textInfos.UNIT_WORD:
+			#Expand to word at the start of a control is broken in MSHTML
+			#Unless we expand to character first.
+			self._rangeObj.expand("character")
+			self._rangeObj.expand("word")
+		elif unit==textInfos.UNIT_SENTENCE:
+			self._rangeObj.expand("sentence")
 		elif unit==textInfos.UNIT_LINE:
 			self._expandToLine(self._rangeObj)
 		elif unit==textInfos.UNIT_STORY:
@@ -194,6 +208,8 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		text=self._rangeObj.text
 		if not text:
 			text=""
+		if controlTypes.STATE_PROTECTED in self.obj.states:
+			text='*'*len(text)
 		return text
 
 	def move(self,unit,direction, endPoint=None):
@@ -234,6 +250,8 @@ class MSHTML(IAccessible):
 				("ExtendedDown","moveByLine"),
 				("ExtendedLeft","moveByCharacter"),
 				("ExtendedRight","moveByCharacter"),
+				("Control+ExtendedUp","moveByParagraph"),
+				("Control+ExtendedDown","moveByParagraph"),
 				("Control+ExtendedLeft","moveByWord"),
 				("Control+ExtendedRight","moveByWord"),
 				("Shift+ExtendedRight","changeSelection"),
@@ -274,7 +292,7 @@ class MSHTML(IAccessible):
 
 	def _get_value(self):
 		IARole=self.IAccessibleRole
-		if IARole in (IAccessibleHandler.ROLE_SYSTEM_PANE,IAccessibleHandler.ROLE_SYSTEM_TEXT):
+		if IARole in (oleacc.ROLE_SYSTEM_PANE,oleacc.ROLE_SYSTEM_TEXT):
 			return ""
 		else:
 			return super(MSHTML,self).value

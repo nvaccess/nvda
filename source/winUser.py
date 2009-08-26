@@ -8,7 +8,6 @@
 
 from ctypes import *
 from ctypes.wintypes import *
-from logHandler import log
 
 #dll handles
 user32=windll.user32
@@ -57,6 +56,7 @@ WS_GROUP=0x20000
 WS_SYSMENU=0x80000
 BS_GROUPBOX=7
 ES_MULTILINE=4
+WM_NULL=0
 WM_NOTIFY=78
 WM_USER=1024
 #PeekMessage
@@ -79,6 +79,7 @@ GW_OWNER=4
 WM_GETTEXT=13
 WM_GETTEXTLENGTH=14
 WM_PAINT=0x000F
+WM_GETOBJECT=0x003D
 #Clipboard formats
 CF_TEXT=1
 #mapVirtualKey constants
@@ -236,6 +237,20 @@ EVENT_CONSOLE_UPDATE_SCROLL=0x4004
 EVENT_CONSOLE_LAYOUT=0x4005
 EVENT_CONSOLE_START_APPLICATION=0x4006
 EVENT_CONSOLE_END_APPLICATION=0x4007
+#IAccessible Object IDs
+OBJID_WINDOW=0
+OBJID_SYSMENU=-1
+OBJID_TITLEBAR=-2
+OBJID_MENU=-3
+OBJID_CLIENT=-4
+OBJID_VSCROLL=-5
+OBJID_HSCROLL=-6
+OBJID_SIZEGRIP=-7
+OBJID_CARET=-8
+OBJID_CURSOR=-9
+OBJID_ALERT=-10
+OBJID_SOUND=-11
+OBJID_NATIVEOM=-16
 
 # ShowWindow() commands
 SW_HIDE = 0
@@ -331,16 +346,6 @@ def unhookWinEvent(*args):
 def sendMessage(hwnd,msg,param1,param2):
 	return user32.SendMessageW(hwnd,msg,param1,param2)
 
-def sendMessage2(hwnd,msg,param1,param2):
-	res=c_int()
-	log.debug("%s, %s, %s, %s"%(hwnd,msg,param1,param2))
-	ret=user32.SendMessageTimeoutW(hwnd,msg,param1,param2,SMTO_ABORTIFHUNG,500,byref(res))
-	log.debug("done (%s"%ret)
-	if ret:
-		return res.value
-	else:
-		raise OSError("sendMessage failed")
-
 def getWindowThreadProcessID(hwnd):
 	processID=c_int()
 	threadID=user32.GetWindowThreadProcessId(hwnd,byref(processID))
@@ -414,3 +419,19 @@ def getKeyNameText(scanCode,extended):
 	buf=create_unicode_buffer(32)
 	user32.GetKeyNameTextW((scanCode<<16)|(extended<<24),buf,31)
 	return buf.value
+
+def FindWindow(className, windowName):
+	res = user32.FindWindowW(className, windowName)
+	if res == 0:
+		raise WinError()
+	return res
+
+def MessageBox(hwnd, text, caption, type):
+	res = user32.MessageBoxW(hwnd, text, caption, type)
+	if res == 0:
+		raise WinError()
+	return res
+
+def PostMessage(hwnd, msg, wParam, lParam):
+	if not user32.PostMessageW(hwnd, msg, wParam, lParam):
+		raise WinError()

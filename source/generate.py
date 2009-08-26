@@ -8,7 +8,6 @@
 This script:
 * Generates Python code for COM interfaces to avoid doing this at runtime;
 * Compiles source language files into binary form for use by NVDA;
-* Compiles appModules, synthDrivers and brailleDisplayDrivers into Python byte code to eliminate the need to do this on launch.
 This should be run prior to executing NVDA from a clean source tree for the first time and before building a binary distribution with py2exe.
 """
 
@@ -22,17 +21,14 @@ sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),lo
 import os
 import sys
 from glob import glob
-import compileall
 
 COM_INTERFACES = (
 	("UI Automation", comtypes.client.GetModule, "UIAutomationCore.dll"),
 	("IAccessible 2", comtypes.client.GetModule, "typelibs/ia2.tlb"),
-	("IService Provider library", comtypes.client.GetModule, "typelibs/servprov.tlb"),
 	("MS Active Accessibility", comtypes.client.GetModule, "oleacc.dll"),
 	("Rich Edit library", comtypes.client.GetModule, "msftedit.dll"),
 	("SAPI 5", comtypes.client.CreateObject, "Sapi.SPVoice"),
 )
-COMPILE_DIRS = ("appModules", "synthDrivers", "brailleDisplayDrivers")
 
 def main():
 	print "COM interfaces:"
@@ -51,10 +47,6 @@ def main():
 		print f
 		os.spawnv(os.P_WAIT,r"%s\python.exe"%sys.exec_prefix,['python',r'"%s\Tools\i18n\msgfmt.py"'%sys.exec_prefix,f])
 	print
-
-	print "Byte code compilation:"
-	for dir in COMPILE_DIRS:
-		compileall.compile_dir(dir, maxlevels=0)
 
 if __name__ == "__main__":
 	main()
