@@ -107,21 +107,21 @@ class MSHTML(VirtualBuffer):
 		return True
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
-		IHTMLElement=NVDAObjects.IAccessible.MSHTML.locateHTMLElementByID(self.rootNVDAObject.IHTMLElement.document,'ms__id%d'%ID)
-		if not IHTMLElement:
+		HTMLNode=NVDAObjects.IAccessible.MSHTML.locateHTMLElementByID(self.rootNVDAObject.HTMLNode.document,'ms__id%d'%ID)
+		if not HTMLNode:
 			return self.rootNVDAObject
-		while IHTMLElement:
+		while HTMLNode:
 			try:
-				pacc=NVDAObjects.IAccessible.MSHTML.IAccessibleFromIHTMLElement(IHTMLElement)
+				pacc=NVDAObjects.IAccessible.MSHTML.IAccessibleFromHTMLNode(HTMLNode)
 			except NotImplementedError:
 				pacc=None
 			if pacc:
 				return NVDAObjects.IAccessible.IAccessible(IAccessibleObject=pacc,IAccessibleChildID=0)
-			IHTMLElement=IHTMLElement.parentElement
+			HTMLNode=HTMLNode.parentElement
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
-		ID=obj.IHTMLElement.uniqueNumber
+		ID=obj.HTMLNode.uniqueNumber
 		return docHandle,ID
 
 	def _searchableAttribsForNodeType(self,nodeType):

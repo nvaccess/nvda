@@ -28,25 +28,25 @@ lastMSHTMLEditGainFocusTimeStamp=0
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
-def nextIAccessibleInDom(IHTMLElement,back=False):
+def nextIAccessibleInDom(HTMLNode,back=False):
 	notFound=False
 	firstLoop=True
-	while IHTMLElement: 
+	while HTMLNode: 
 		if not firstLoop:
-			child=IHTMLElement.firstChild if not back else IHTMLElement.lastChild
+			child=HTMLNode.firstChild if not back else HTMLNode.lastChild
 		else:
 			child=None
 			firstLoop=False
 		if child:
-			IHTMLElement=child
+			HTMLNode=child
 		else:
-			sibling=IHTMLElement.nextSibling if not back else IHTMLElement.previousSibling
+			sibling=HTMLNode.nextSibling if not back else HTMLNode.previousSibling
 			if not sibling:
 				try:
-					parent=IHTMLElement.parentNode
+					parent=HTMLNode.parentNode
 				except COMError:
 					parent=None
-				while parent and not IHTMLElementHasIAccessible(parent):
+				while parent and not HTMLNodeHasIAccessible(parent):
 					sibling=parent.nextSibling if not back else parent.previousSibling
 					if sibling:
 						break
@@ -54,27 +54,27 @@ def nextIAccessibleInDom(IHTMLElement,back=False):
 						parent=parent.parentElement
 					except COMError:
 						parent=None
-			IHTMLElement=sibling
-		if IHTMLElement:
+			HTMLNode=sibling
+		if HTMLNode:
 			try:
-				return IAccessibleFromIHTMLElement(IHTMLElement)
+				return IAccessibleFromHTMLNode(HTMLNode)
 			except NotImplementedError:
 				pass
 
-def IAccessibleFromIHTMLElement(IHTMLElement):
+def IAccessibleFromHTMLNode(HTMLNode):
 	try:
-		s=IHTMLElement.QueryInterface(IServiceProvider)
+		s=HTMLNode.QueryInterface(IServiceProvider)
 		return s.QueryService(oleacc.IAccessible._iid_,oleacc.IAccessible)
 	except COMError:
 		raise NotImplementedError
 
-def IHTMLElementHasIAccessible(IHTMLElement):
+def HTMLNodeHasIAccessible(HTMLNode):
 	try:
-		return bool(IAccessibleFromIHTMLElement(IHTMLElement))
+		return bool(IAccessibleFromHTMLNode(HTMLNode))
 	except NotImplementedError:
 		return False
 
-def IHTMLElementFromIAccessible(IAccessibleObject):
+def HTMLNodeFromIAccessible(IAccessibleObject):
 	try:
 		s=IAccessibleObject.QueryInterface(IServiceProvider)
 		return comtypes.client.dynamic.Dispatch(s.QueryService(IID_IHTMLElement,comtypes.automation.IDispatch))
@@ -92,9 +92,9 @@ def locateHTMLElementByID(document,ID):
 		tag="iframe"
 	frames=document.getElementsByTagName(tag)
 	for frame in frames:
-		pacc=IAccessibleFromIHTMLElement(frame)
+		pacc=IAccessibleFromHTMLNode(frame)
 		childPacc=pacc.accChild(1)
-		childElement=IHTMLElementFromIAccessible(childPacc)
+		childElement=HTMLNodeFromIAccessible(childPacc)
 		childElement=locateHTMLElementByID(childElement.document,ID)
 		if childElement:
 			return childElement
@@ -111,7 +111,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		lineTop=comtypes.client.dynamic._Dispatch(textRange._comobj).offsetTop
 		lineLeft=parentRect.left+parent.clientLeft
 		#editable documents have a different right most boundary to <textarea> elements.
-		if self.obj.IHTMLElement.document.body.isContentEditable:
+		if self.obj.HTMLNode.document.body.isContentEditable:
 			lineRight=parentRect.right 
 		else:
 			lineRight=parentRect.left+parent.clientWidth
@@ -127,18 +127,18 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			self._rangeObj=_rangeObj.duplicate()
 			return
 		try:
-			editableBody=self.obj.IHTMLElement.tagName=="BODY" and self.obj.IHTMLElement.isContentEditable
+			editableBody=self.obj.HTMLNode.tagName=="BODY" and self.obj.HTMLNode.isContentEditable
 		except:
 			editableBody=False
 		if editableBody:
-			self._rangeObj=self.obj.IHTMLElement.document.selection.createRange()
+			self._rangeObj=self.obj.HTMLNode.document.selection.createRange()
 		else:
-			self._rangeObj=self.obj.IHTMLElement.createTextRange()
+			self._rangeObj=self.obj.HTMLNode.createTextRange()
 		if position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
-			if self.obj.IHTMLElement.uniqueID!=self.obj.IHTMLElement.document.activeElement.uniqueID:
+			if self.obj.HTMLNode.uniqueID!=self.obj.HTMLNode.document.activeElement.uniqueID:
 				raise RuntimeError("Only works with currently selected element")
 			if not editableBody:
-				mark=self.obj.IHTMLElement.document.selection.createRange().GetBookmark()
+				mark=self.obj.HTMLNode.document.selection.createRange().GetBookmark()
 				self._rangeObj.MoveToBookmark(mark)
 				t=self._rangeObj.duplicate()
 				if not t.expand("word"):
@@ -240,7 +240,7 @@ class MSHTML(IAccessible):
 	def __init__(self,*args,**kwargs):
 		super(MSHTML,self).__init__(*args,**kwargs)
 		try:
-			self.IHTMLElement.createTextRange()
+			self.HTMLNode.createTextRange()
 			self.TextInfo=MSHTMLTextInfo
 		except:
 			pass
@@ -272,20 +272,20 @@ class MSHTML(IAccessible):
 				("Back","backspace"),
 			]]
 
-	def _get_IHTMLElement(self):
+	def _get_HTMLNode(self):
 		if self.IAccessibleChildID>0:
 			return
-		if not hasattr(self,'_IHTMLElement'):
+		if not hasattr(self,'_HTMLNode'):
 			try:
-				IHTMLElement=IHTMLElementFromIAccessible(self.IAccessibleObject)
+				HTMLNode=HTMLNodeFromIAccessible(self.IAccessibleObject)
 			except NotImplementedError:
-				IHTMLElement=None
-			self._IHTMLElement=IHTMLElement
-		return self._IHTMLElement
+				HTMLNode=None
+			self._HTMLNode=HTMLNode
+		return self._HTMLNode
 
 	def _isEqual(self, other):
 		try:
-			return self.windowHandle == other.windowHandle and self.IHTMLElement.uniqueNumber == other.IHTMLElement.uniqueNumber
+			return self.windowHandle == other.windowHandle and self.HTMLNode.uniqueNumber == other.HTMLNode.uniqueNumber
 		except (COMError, AttributeError):
 			pass
 		return super(MSHTML, self)._isEqual(other)
@@ -298,9 +298,9 @@ class MSHTML(IAccessible):
 			return super(MSHTML,self).value
 
 	def _get_basicText(self):
-		if self.IHTMLElement:
+		if self.HTMLNode:
 			try:
-				text=self.IHTMLElement.innerText
+				text=self.HTMLNode.innerText
 			except COMError:
 				text=None
 			if text:
@@ -308,9 +308,9 @@ class MSHTML(IAccessible):
 		return super(MSHTML,self).basicText
 
 	def _get_role(self):
-		if self.IHTMLElement:
+		if self.HTMLNode:
 			try:
-				ariaRole=self.IHTMLElement.getAttribute('role')
+				ariaRole=self.HTMLNode.getAttribute('role')
 			except COMError:
 				ariaRole=None
 			if ariaRole:
@@ -318,7 +318,7 @@ class MSHTML(IAccessible):
 				if role:
 					return role
 			try:
-				nodeName=self.IHTMLElement.NodeName
+				nodeName=self.HTMLNode.NodeName
 			except COMError:
 				nodeName=None
 			if nodeName:
@@ -333,7 +333,7 @@ class MSHTML(IAccessible):
 
 	def _get_states(self):
 		states=super(MSHTML,self).states
-		e=self.IHTMLElement
+		e=self.HTMLNode
 		if e:
 			try:
 				isContentEditable=e.isContentEditable
@@ -356,9 +356,9 @@ class MSHTML(IAccessible):
 		return states
 
 	def _get_isContentEditable(self):
-		if self.IHTMLElement:
+		if self.HTMLNode:
 			try:
-				return bool(self.IHTMLElement.isContentEditable)
+				return bool(self.HTMLNode.isContentEditable)
 			except:
 				return False
 		else:
@@ -371,7 +371,7 @@ class MSHTML(IAccessible):
 				return IAccessible(IAccessibleObject=self.IAccessibleObject.accChild(newChildID),IAccessibleChildID=0)
 			except COMError:
 				return IAccessible(IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newChildID)
-		pacc=nextIAccessibleInDom(self.IHTMLElement,back=True)
+		pacc=nextIAccessibleInDom(self.HTMLNode,back=True)
 		if pacc:
 			return IAccessible(IAccessibleObject=pacc,IAccessibleChildID=0)
 
@@ -385,7 +385,7 @@ class MSHTML(IAccessible):
 				except COMError:
 					return IAccessible(IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newChildID)
 			return None
-		pacc=nextIAccessibleInDom(self.IHTMLElement)
+		pacc=nextIAccessibleInDom(self.HTMLNode)
 		if pacc:
 			return IAccessible(IAccessibleObject=pacc,IAccessibleChildID=0)
 
@@ -402,38 +402,38 @@ class MSHTML(IAccessible):
 		return child
 
 	def _get_columnNumber(self):
-		if not self.role==controlTypes.ROLE_TABLECELL or not self.IHTMLElement:
+		if not self.role==controlTypes.ROLE_TABLECELL or not self.HTMLNode:
 			raise NotImplementedError
 		try:
-			return self.IHTMLElement.cellIndex+1
+			return self.HTMLNode.cellIndex+1
 		except:
 			raise NotImplementedError
 
 	def _get_rowNumber(self):
-		if not self.role==controlTypes.ROLE_TABLECELL or not self.IHTMLElement:
+		if not self.role==controlTypes.ROLE_TABLECELL or not self.HTMLNode:
 			raise NotImplementedError
-		IHTMLElement=self.IHTMLElement
-		while IHTMLElement:
+		HTMLNode=self.HTMLNode
+		while HTMLNode:
 			try:
-				return IHTMLElement.rowIndex+1
+				return HTMLNode.rowIndex+1
 			except:
 				pass
-			IHTMLElement=IHTMLElement.parentNode
+			HTMLNode=HTMLNode.parentNode
 		raise NotImplementedError
 
 	def _get_rowCount(self):
-		if self.role!=controlTypes.ROLE_TABLE or not self.IHTMLElement:
+		if self.role!=controlTypes.ROLE_TABLE or not self.HTMLNode:
 			raise NotImplementedError
 		try:
-			return len([x for x in self.IHTMLElement.rows])
+			return len([x for x in self.HTMLNode.rows])
 		except:
 			raise NotImplementedError
 
 	def scrollIntoView(self):
-		if not self.IHTMLElement:
+		if not self.HTMLNode:
 			return
 		try:
-			self.IHTMLElement.scrollInToView()
+			self.HTMLNode.scrollInToView()
 		except COMError:
 			pass
 
