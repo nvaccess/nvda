@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: r3097\n"
-"POT-Creation-Date: 2009-08-03 14:22+Hora estándar romance\n"
-"PO-Revision-Date: 2009-08-03 14:24+0100\n"
+"POT-Creation-Date: 2009-08-26 22:29+Hora de verano romance\n"
+"PO-Revision-Date: 2009-08-26 22:57+0100\n"
 "Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
 "Language-Team: equipo de traducción al español de NVDA <Quetzatl@eresmas.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Poedit-Country: SPAIN\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
-#: IAccessibleHandler.py:660
+#: IAccessibleHandler.py:659
 msgid "Secure Desktop"
 msgstr "Escritorio seguro"
 
@@ -48,7 +48,7 @@ msgstr "%s objeto empotrado"
 #: NVDAObjects\window\edit.py:532
 #: controlTypes.py:240
 msgid "embedded object"
-msgstr "objeto incorporado"
+msgstr "objeto empotrado"
 
 #: NVDAObjects\window\excel.py:47
 msgid "NVDA Excel Cell Editor"
@@ -82,7 +82,7 @@ msgstr "tiene fórmula"
 msgid "not in table"
 msgstr "no estás en una tabla"
 
-#: appModuleHandler.py:171
+#: appModuleHandler.py:172
 msgid "Error in appModule %s"
 msgstr "Error en módulo app %s"
 
@@ -100,7 +100,7 @@ msgstr "Error en módulo app %s"
 #: keyboardHandler.py:52
 #: keyboardHandler.py:54
 #: keyboardHandler.py:56
-#: virtualBuffers\__init__.py:593
+#: virtualBuffers\__init__.py:670
 msgid "on"
 msgstr "activado"
 
@@ -120,7 +120,7 @@ msgstr "activado"
 #: keyboardHandler.py:52
 #: keyboardHandler.py:54
 #: keyboardHandler.py:56
-#: virtualBuffers\__init__.py:593
+#: virtualBuffers\__init__.py:670
 msgid "off"
 msgstr "desactivado"
 
@@ -170,7 +170,7 @@ msgstr "Anuncia la selección actual en controles de edición y documentos. Si n
 
 #: appModules\_default.py:97
 msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
-msgstr "Si se presionó una vez, anuncia la hora actual. Si se presionó dos veces rápidamente, anuncia la fecha actual"
+msgstr "Si se presionó una vez, anuncia la hora actual. Si se presionó dos veces, anuncia la fecha actual"
 
 #: appModules\_default.py:102
 #: appModules\_default.py:111
@@ -213,7 +213,7 @@ msgstr "Activa y desactiva la verbalización de palabras al escribir"
 
 #: appModules\_default.py:162
 msgid "speak command keys"
-msgstr "verbalizar teclas de comando"
+msgstr "verbalizar teclas de órdenes"
 
 #: appModules\_default.py:163
 msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
@@ -221,7 +221,7 @@ msgstr "Activa y desactiva la verbalización de teclas al escribir, las cuales n
 
 #: appModules\_default.py:172
 msgid "speak punctuation"
-msgstr "decir la puntuación"
+msgstr "verbalizar la puntuación"
 
 #: appModules\_default.py:173
 msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"
@@ -521,7 +521,7 @@ msgstr "sin título"
 
 #: appModules\_default.py:690
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
-msgstr "Anuncia el título de la aplicación actual o ventana en primer plano. Si se presiona dos veces, deletrea el título. Si se presiona tres veces, copia el título al portapapeles"
+msgstr "Anuncia el título de la aplicación actual o ventana en primer plano. Si se presionó dos veces, deletrea el título. Si se presionó tres veces, copia el título al portapapeles"
 
 #: appModules\_default.py:697
 msgid "speaks the current foreground object"
@@ -590,7 +590,7 @@ msgstr "Activa y desactiva el movimiento del cursor de revisión debido al movim
 
 #: appModules\_default.py:768
 msgid "focus moves navigator object"
-msgstr "el foco mueve el navegador de objetos"
+msgstr "el foco mueve al navegador de objetos"
 
 #: appModules\_default.py:769
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
@@ -658,7 +658,7 @@ msgstr "Muestra el diálogo Presentación de Objetos de NVDA"
 
 #: appModules\_default.py:831
 msgid "Shows the NVDA virtual buffers settings dialog"
-msgstr "Muestra el diálogo Opciones del Modo virtual de NVDA"
+msgstr "Muestra el diálogo Opciones de los Modos virtuales de NVDA"
 
 #: appModules\_default.py:835
 msgid "Shows the NVDA document formatting settings dialog"
@@ -812,7 +812,7 @@ msgstr "recibido: %s"
 
 #: appModules\outlook.py:35
 msgid "unread"
-msgstr "ilegible"
+msgstr "no leído"
 
 #: appModules\outlook.py:37
 msgid "attachment"
@@ -1603,7 +1603,7 @@ msgstr "terminal"
 
 #: controlTypes.py:257
 msgid "rich edit"
-msgstr "cuadro de edición"
+msgstr "cuadro de edición multilínea"
 
 #: controlTypes.py:258
 msgid "ruler"
@@ -1855,11 +1855,11 @@ msgstr "pulsado"
 
 #: controlTypes.py:326
 msgid "checked"
-msgstr "verificado"
+msgstr "marcado"
 
 #: controlTypes.py:327
 msgid "half checked"
-msgstr "semiverificado"
+msgstr "semi marcado"
 
 #: controlTypes.py:328
 msgid "read only"
@@ -1923,7 +1923,7 @@ msgstr "iconificado"
 
 #: controlTypes.py:343
 msgid "off screen"
-msgstr "off screen"
+msgstr "fuera de pantalla"
 
 #: controlTypes.py:344
 msgid "selectable"
@@ -1943,13 +1943,13 @@ msgstr "editable"
 
 #: controlTypes.py:348
 msgid "checkable"
-msgstr "verificable"
+msgstr "marcable"
 
-#: core.py:108
+#: core.py:100
 msgid "Loading subsystems, please wait..."
 msgstr "cargando subsistema; por favor aguarda..."
 
-#: core.py:179
+#: core.py:171
 msgid "NVDA started"
 msgstr "NVDA activado"
 
@@ -2025,7 +2025,7 @@ msgstr "Derechos Reservados"
 
 #: gui\__init__.py:220
 msgid "url"
-msgstr "URL"
+msgstr "Dirección Web"
 
 #: gui\__init__.py:220
 msgid "version"
@@ -2535,7 +2535,7 @@ msgstr "Anunciar barras de progreso en segundo plano"
 
 #: gui\settingsDialogs.py:561
 msgid "virtual buffers"
-msgstr "Modo virtual"
+msgstr "Modos virtuales"
 
 #: gui\settingsDialogs.py:564
 msgid "&Maximum number of characters on one line"
@@ -3171,487 +3171,491 @@ msgstr "modo navegación"
 msgid "focus mode"
 msgstr "modo foco"
 
-#: virtualBuffers\__init__.py:180
+#: virtualBuffers\__init__.py:189
 msgid "%s landmark"
 msgstr "%s marcador"
 
-#: virtualBuffers\__init__.py:186
+#: virtualBuffers\__init__.py:195
 msgid "Lin&ks"
 msgstr "&Enlaces"
 
-#: virtualBuffers\__init__.py:187
+#: virtualBuffers\__init__.py:196
 msgid "&Headings"
 msgstr "En&cabezados"
 
-#: virtualBuffers\__init__.py:188
+#: virtualBuffers\__init__.py:197
 msgid "Lan&dmarks"
 msgstr "Ma&rcadores"
 
-#: virtualBuffers\__init__.py:194
+#: virtualBuffers\__init__.py:203
 msgid "Elements List"
 msgstr "Lista de Elementos"
 
-#: virtualBuffers\__init__.py:197
+#: virtualBuffers\__init__.py:206
 msgid "Type:"
 msgstr "Tipo:"
 
-#: virtualBuffers\__init__.py:210
+#: virtualBuffers\__init__.py:217
+msgid "&Filter by:"
+msgstr "&Filtrar por:"
+
+#: virtualBuffers\__init__.py:225
 msgid "&Activate"
 msgstr "&Activar"
 
-#: virtualBuffers\__init__.py:213
+#: virtualBuffers\__init__.py:228
 msgid "&Move to"
 msgstr "&Moverse a"
 
-#: virtualBuffers\__init__.py:445
+#: virtualBuffers\__init__.py:523
 msgid "Refreshed"
 msgstr "Refrescado"
 
-#: virtualBuffers\__init__.py:450
+#: virtualBuffers\__init__.py:528
 msgid "Loading document..."
 msgstr "Cargando documento..."
 
-#: virtualBuffers\__init__.py:577
+#: virtualBuffers\__init__.py:654
 msgid "activates the current object in the virtual buffer"
 msgstr "activa el objeto actual en el formulario virtual"
 
-#: virtualBuffers\__init__.py:589
+#: virtualBuffers\__init__.py:666
 msgid "Refreshes the virtual buffer content"
 msgstr "Refresca el contenido del modo virtual"
 
-#: virtualBuffers\__init__.py:594
+#: virtualBuffers\__init__.py:671
 msgid "use screen layout %s"
 msgstr "utilizar Disposición de pantalla %s"
 
-#: virtualBuffers\__init__.py:595
+#: virtualBuffers\__init__.py:672
 msgid "Toggles on and off if the screen layout is preserved while rendering the virtual buffer content"
 msgstr "Se activa y desactiva si la disposición de la pantalla es preservada mientras se renderiza el contenido del modo virtual"
 
-#: virtualBuffers\__init__.py:680
+#: virtualBuffers\__init__.py:757
 msgid "Presents a list of links, headings or landmarks"
 msgstr "Presenta una lista de enlaces, encabezados o marcadores"
 
-#: virtualBuffers\__init__.py:1013
+#: virtualBuffers\__init__.py:1091
 msgid "Not in a table cell"
 msgstr "No estás en una celda de tabla"
 
-#: virtualBuffers\__init__.py:1019
+#: virtualBuffers\__init__.py:1097
 msgid "edge of table"
 msgstr "borde de la tabla"
 
-#: virtualBuffers\__init__.py:1029
+#: virtualBuffers\__init__.py:1107
 msgid "moves to the next table row"
 msgstr "Se mueve a la siguiente fila de la tabla"
 
-#: virtualBuffers\__init__.py:1033
+#: virtualBuffers\__init__.py:1111
 msgid "moves to the previous table row"
 msgstr "se mueve a la anterior fila de la tabla"
 
-#: virtualBuffers\__init__.py:1037
+#: virtualBuffers\__init__.py:1115
 msgid "moves to the next table column"
 msgstr "se mueve a la siguiente columna de la tabla"
 
-#: virtualBuffers\__init__.py:1041
+#: virtualBuffers\__init__.py:1119
 msgid "moves to the previous table column"
 msgstr "se mueve a la anterior columna de la tabla"
 
-#: virtualBuffers\__init__.py:1093
+#: virtualBuffers\__init__.py:1171
 msgid "moves to the next heading"
 msgstr "se mueve al siguiente encabezado"
 
-#: virtualBuffers\__init__.py:1093
+#: virtualBuffers\__init__.py:1171
 msgid "no next heading"
 msgstr "no hay siguiente encabezado"
 
-#: virtualBuffers\__init__.py:1094
+#: virtualBuffers\__init__.py:1172
 msgid "moves to the previous heading"
 msgstr "se mueve al anterior encabezado"
 
-#: virtualBuffers\__init__.py:1094
+#: virtualBuffers\__init__.py:1172
 msgid "no previous heading"
 msgstr "no hay anterior encabezado"
 
-#: virtualBuffers\__init__.py:1095
+#: virtualBuffers\__init__.py:1173
 msgid "moves to the next heading at level 1"
 msgstr "se mueve al siguiente encabezado de nivel 1"
 
-#: virtualBuffers\__init__.py:1095
+#: virtualBuffers\__init__.py:1173
 msgid "no next heading at level 1"
 msgstr "no hay siguiente encabezado de nivel 1"
 
-#: virtualBuffers\__init__.py:1096
+#: virtualBuffers\__init__.py:1174
 msgid "moves to the previous heading at level 1"
 msgstr "se mueve al anterior encabezado de nivel 1"
 
-#: virtualBuffers\__init__.py:1096
+#: virtualBuffers\__init__.py:1174
 msgid "no previous heading at level 1"
 msgstr "no hay anterior encabezado de nivel 1"
 
-#: virtualBuffers\__init__.py:1097
+#: virtualBuffers\__init__.py:1175
 msgid "moves to the next heading at level 2"
 msgstr "se mueve al siguiente encabezado de nivel 2"
 
-#: virtualBuffers\__init__.py:1097
+#: virtualBuffers\__init__.py:1175
 msgid "no next heading at level 2"
 msgstr "no hay siguiente encabezado de nivel 2"
 
-#: virtualBuffers\__init__.py:1098
+#: virtualBuffers\__init__.py:1176
 msgid "moves to the previous heading at level 2"
 msgstr "se mueve al anterior encabezado de nivel 2"
 
-#: virtualBuffers\__init__.py:1098
+#: virtualBuffers\__init__.py:1176
 msgid "no previous heading at level 2"
 msgstr "no hay anterior encabezado de nivel 2"
 
-#: virtualBuffers\__init__.py:1099
+#: virtualBuffers\__init__.py:1177
 msgid "moves to the next heading at level 3"
 msgstr "se mueve al siguiente encabezado de nivel 3"
 
-#: virtualBuffers\__init__.py:1099
+#: virtualBuffers\__init__.py:1177
 msgid "no next heading at level 3"
 msgstr "no hay siguiente encabezado de nivel 3"
 
-#: virtualBuffers\__init__.py:1100
+#: virtualBuffers\__init__.py:1178
 msgid "moves to the previous heading at level 3"
 msgstr "se mueve al anterior encabezado de nivel 3"
 
-#: virtualBuffers\__init__.py:1100
+#: virtualBuffers\__init__.py:1178
 msgid "no previous heading at level 3"
 msgstr "no hay anterior encabezado de nivel 3"
 
-#: virtualBuffers\__init__.py:1101
+#: virtualBuffers\__init__.py:1179
 msgid "moves to the next heading at level 4"
 msgstr "se mueve al siguiente encabezado de nivel 4"
 
-#: virtualBuffers\__init__.py:1101
+#: virtualBuffers\__init__.py:1179
 msgid "no next heading at level 4"
 msgstr "no hay siguiente encabezado de nivel 4"
 
-#: virtualBuffers\__init__.py:1102
+#: virtualBuffers\__init__.py:1180
 msgid "moves to the previous heading at level 4"
 msgstr "se mueve al anterior encabezado de nivel 4"
 
-#: virtualBuffers\__init__.py:1102
+#: virtualBuffers\__init__.py:1180
 msgid "no previous heading at level 4"
 msgstr "no hay anterior encabezado de nivel 4"
 
-#: virtualBuffers\__init__.py:1103
+#: virtualBuffers\__init__.py:1181
 msgid "moves to the next heading at level 5"
 msgstr "se mueve al siguiente encabezado de nivel 5"
 
-#: virtualBuffers\__init__.py:1103
+#: virtualBuffers\__init__.py:1181
 msgid "no next heading at level 5"
 msgstr "no hay siguiente encabezado de nivel 5"
 
-#: virtualBuffers\__init__.py:1104
+#: virtualBuffers\__init__.py:1182
 msgid "moves to the previous heading at level 5"
 msgstr "se mueve al anterior encabezado de nivel 5"
 
-#: virtualBuffers\__init__.py:1104
+#: virtualBuffers\__init__.py:1182
 msgid "no previous heading at level 5"
 msgstr "no hay anterior encabezado de nivel 5"
 
-#: virtualBuffers\__init__.py:1105
+#: virtualBuffers\__init__.py:1183
 msgid "moves to the next heading at level 6"
 msgstr "se mueve al siguiente encabezado de nivel 6"
 
-#: virtualBuffers\__init__.py:1105
+#: virtualBuffers\__init__.py:1183
 msgid "no next heading at level 6"
 msgstr "no hay siguiente encabezado de nivel 6"
 
-#: virtualBuffers\__init__.py:1106
+#: virtualBuffers\__init__.py:1184
 msgid "moves to the previous heading at level 6"
 msgstr "se mueve al anterior encabezado de nivel 6"
 
-#: virtualBuffers\__init__.py:1106
+#: virtualBuffers\__init__.py:1184
 msgid "no previous heading at level 6"
 msgstr "no hay anterior encabezado de nivel 6"
 
-#: virtualBuffers\__init__.py:1107
+#: virtualBuffers\__init__.py:1185
 msgid "moves to the next table"
 msgstr "se mueve a la tabla siguiente "
 
-#: virtualBuffers\__init__.py:1107
+#: virtualBuffers\__init__.py:1185
 msgid "no next table"
 msgstr "no hay tabla siguiente"
 
-#: virtualBuffers\__init__.py:1108
+#: virtualBuffers\__init__.py:1186
 msgid "moves to the previous table"
 msgstr "se mueve a la tabla anterior "
 
-#: virtualBuffers\__init__.py:1108
+#: virtualBuffers\__init__.py:1186
 msgid "no previous table"
 msgstr "no hay tabla anterior"
 
-#: virtualBuffers\__init__.py:1109
+#: virtualBuffers\__init__.py:1187
 msgid "moves to the next link"
 msgstr "se mueve al enlace siguiente"
 
-#: virtualBuffers\__init__.py:1109
+#: virtualBuffers\__init__.py:1187
 msgid "no next link"
 msgstr "no hay siguiente enlace"
 
-#: virtualBuffers\__init__.py:1110
+#: virtualBuffers\__init__.py:1188
 msgid "moves to the previous link"
 msgstr "se mueve al enlace anterior"
 
-#: virtualBuffers\__init__.py:1110
+#: virtualBuffers\__init__.py:1188
 msgid "no previous link"
 msgstr "no hay anterior enlace"
 
-#: virtualBuffers\__init__.py:1111
+#: virtualBuffers\__init__.py:1189
 msgid "moves to the next visited link"
 msgstr "se mueve al siguiente enlace visitado"
 
-#: virtualBuffers\__init__.py:1111
+#: virtualBuffers\__init__.py:1189
 msgid "no next visited link"
 msgstr "no hay siguiente enlace visitado"
 
-#: virtualBuffers\__init__.py:1112
+#: virtualBuffers\__init__.py:1190
 msgid "moves to the previous visited link"
 msgstr "se mueve al anterior enlace visitado"
 
-#: virtualBuffers\__init__.py:1112
+#: virtualBuffers\__init__.py:1190
 msgid "no previous visited link"
 msgstr "no hay anterior enlace visitado"
 
-#: virtualBuffers\__init__.py:1113
+#: virtualBuffers\__init__.py:1191
 msgid "moves to the next unvisited link"
 msgstr "se mueve al siguiente enlace sin visitar"
 
-#: virtualBuffers\__init__.py:1113
+#: virtualBuffers\__init__.py:1191
 msgid "no next unvisited link"
 msgstr "no hay siguiente enlace sin visitar"
 
-#: virtualBuffers\__init__.py:1114
+#: virtualBuffers\__init__.py:1192
 msgid "moves to the previous unvisited link"
 msgstr "se mueve al anterior enlace sin visitar"
 
-#: virtualBuffers\__init__.py:1114
+#: virtualBuffers\__init__.py:1192
 msgid "no previous unvisited link"
 msgstr "no hay anterior enlace sin visitar"
 
-#: virtualBuffers\__init__.py:1115
+#: virtualBuffers\__init__.py:1193
 msgid "moves to the next form field"
 msgstr "se mueve al siguiente campo de formulario"
 
-#: virtualBuffers\__init__.py:1115
+#: virtualBuffers\__init__.py:1193
 msgid "no next form field"
 msgstr "no hay siguiente campo de formulario"
 
-#: virtualBuffers\__init__.py:1116
+#: virtualBuffers\__init__.py:1194
 msgid "moves to the previous form field"
 msgstr "se mueve al anterior campo de formulario"
 
-#: virtualBuffers\__init__.py:1116
+#: virtualBuffers\__init__.py:1194
 msgid "no previous form field"
 msgstr "no hay anterior campo de formulario"
 
-#: virtualBuffers\__init__.py:1117
+#: virtualBuffers\__init__.py:1195
 msgid "moves to the next list"
 msgstr "se mueve a la lista siguiente"
 
-#: virtualBuffers\__init__.py:1117
+#: virtualBuffers\__init__.py:1195
 msgid "no next list"
 msgstr "no hay lista siguiente"
 
-#: virtualBuffers\__init__.py:1118
+#: virtualBuffers\__init__.py:1196
 msgid "moves to the previous list"
 msgstr "se mueve a la lista anterior"
 
-#: virtualBuffers\__init__.py:1118
+#: virtualBuffers\__init__.py:1196
 msgid "no previous list"
 msgstr "no hay lista anterior"
 
-#: virtualBuffers\__init__.py:1119
+#: virtualBuffers\__init__.py:1197
 msgid "moves to the next list item"
 msgstr "se mueve al siguiente elemento de lista"
 
-#: virtualBuffers\__init__.py:1119
+#: virtualBuffers\__init__.py:1197
 msgid "no next list item"
 msgstr "no hay siguiente elemento de lista"
 
-#: virtualBuffers\__init__.py:1120
+#: virtualBuffers\__init__.py:1198
 msgid "moves to the previous list item"
 msgstr "Se mueve al anterior elemento de lista"
 
-#: virtualBuffers\__init__.py:1120
+#: virtualBuffers\__init__.py:1198
 msgid "no previous list item"
 msgstr "no hay siguiente elemento de lista"
 
-#: virtualBuffers\__init__.py:1121
+#: virtualBuffers\__init__.py:1199
 msgid "moves to the next button"
 msgstr "se mueve al siguiente botón"
 
-#: virtualBuffers\__init__.py:1121
+#: virtualBuffers\__init__.py:1199
 msgid "no next button"
 msgstr "no hay siguiente botón"
 
-#: virtualBuffers\__init__.py:1122
+#: virtualBuffers\__init__.py:1200
 msgid "moves to the previous button"
 msgstr "se mueve al botón anterior"
 
-#: virtualBuffers\__init__.py:1122
+#: virtualBuffers\__init__.py:1200
 msgid "no previous button"
 msgstr "no hay botón anterior"
 
-#: virtualBuffers\__init__.py:1123
+#: virtualBuffers\__init__.py:1201
 msgid "moves to the next edit field"
 msgstr "se mueve al siguiente campo de edición"
 
-#: virtualBuffers\__init__.py:1123
+#: virtualBuffers\__init__.py:1201
 msgid "no next edit field"
 msgstr "no hay siguiente campo de edición"
 
-#: virtualBuffers\__init__.py:1124
+#: virtualBuffers\__init__.py:1202
 msgid "moves to the previous edit field"
 msgstr "se mueve al anterior campo de edición"
 
-#: virtualBuffers\__init__.py:1124
+#: virtualBuffers\__init__.py:1202
 msgid "no previous edit field"
 msgstr "no hay anterior campo de edición"
 
-#: virtualBuffers\__init__.py:1125
+#: virtualBuffers\__init__.py:1203
 msgid "moves to the next frame"
 msgstr "se mueve al siguiente marco"
 
-#: virtualBuffers\__init__.py:1125
+#: virtualBuffers\__init__.py:1203
 msgid "no next frame"
 msgstr "no hay siguiente marco"
 
-#: virtualBuffers\__init__.py:1126
+#: virtualBuffers\__init__.py:1204
 msgid "moves to the previous frame"
 msgstr "Se mueve al marco anterior"
 
-#: virtualBuffers\__init__.py:1126
+#: virtualBuffers\__init__.py:1204
 msgid "no previous frame"
 msgstr "no hay marco anterior"
 
-#: virtualBuffers\__init__.py:1127
+#: virtualBuffers\__init__.py:1205
 msgid "moves to the next separator"
 msgstr "Se mueve al siguiente separador"
 
-#: virtualBuffers\__init__.py:1127
+#: virtualBuffers\__init__.py:1205
 msgid "no next separator"
 msgstr "no hay siguiente separador"
 
-#: virtualBuffers\__init__.py:1128
+#: virtualBuffers\__init__.py:1206
 msgid "moves to the previous separator"
 msgstr "Se mueve al separador anterior"
 
-#: virtualBuffers\__init__.py:1128
+#: virtualBuffers\__init__.py:1206
 msgid "no previous separator"
 msgstr "no hay separador anterior"
 
-#: virtualBuffers\__init__.py:1129
+#: virtualBuffers\__init__.py:1207
 msgid "moves to the next radio button"
 msgstr "se mueve al siguiente botón de opción"
 
-#: virtualBuffers\__init__.py:1129
+#: virtualBuffers\__init__.py:1207
 msgid "no next radio button"
 msgstr "no hay siguiente botón de opción"
 
-#: virtualBuffers\__init__.py:1130
+#: virtualBuffers\__init__.py:1208
 msgid "moves to the previous radio button"
 msgstr "se mueve al anterior botón de opción"
 
-#: virtualBuffers\__init__.py:1130
+#: virtualBuffers\__init__.py:1208
 msgid "no previous radio button"
 msgstr "no hay anterior botón de opción"
 
-#: virtualBuffers\__init__.py:1131
+#: virtualBuffers\__init__.py:1209
 msgid "moves to the next combo box"
 msgstr "se mueve al siguiente cuadro combinado"
 
-#: virtualBuffers\__init__.py:1131
+#: virtualBuffers\__init__.py:1209
 msgid "no next combo box"
 msgstr "no hay siguiente cuadro combinado"
 
-#: virtualBuffers\__init__.py:1132
+#: virtualBuffers\__init__.py:1210
 msgid "moves to the previous combo box"
 msgstr "Se mueve al anterior cuadro combinado"
 
-#: virtualBuffers\__init__.py:1132
+#: virtualBuffers\__init__.py:1210
 msgid "no previous combo box"
 msgstr "no hay anterior cuadro combinado"
 
-#: virtualBuffers\__init__.py:1133
+#: virtualBuffers\__init__.py:1211
 msgid "moves to the next check box"
 msgstr "se mueve a la siguiente casilla de verificación"
 
-#: virtualBuffers\__init__.py:1133
+#: virtualBuffers\__init__.py:1211
 msgid "no next check box"
 msgstr "no hay siguiente casilla de verificación"
 
-#: virtualBuffers\__init__.py:1134
+#: virtualBuffers\__init__.py:1212
 msgid "moves to the previous check box"
 msgstr "se mueve a la anterior casilla de verificación"
 
-#: virtualBuffers\__init__.py:1134
+#: virtualBuffers\__init__.py:1212
 msgid "no previous check box"
 msgstr "no hay anterior casilla de verificación"
 
-#: virtualBuffers\__init__.py:1135
+#: virtualBuffers\__init__.py:1213
 msgid "moves to the next graphic"
 msgstr "se mueve al siguiente gráfico"
 
-#: virtualBuffers\__init__.py:1135
+#: virtualBuffers\__init__.py:1213
 msgid "no next graphic"
 msgstr "no hay siguiente gráfico"
 
-#: virtualBuffers\__init__.py:1136
+#: virtualBuffers\__init__.py:1214
 msgid "moves to the previous graphic"
 msgstr "se mueve al anterior gráfico"
 
-#: virtualBuffers\__init__.py:1136
+#: virtualBuffers\__init__.py:1214
 msgid "no previous graphic"
 msgstr "no hay anterior gráfico"
 
-#: virtualBuffers\__init__.py:1137
+#: virtualBuffers\__init__.py:1215
 msgid "moves to the next block quote"
 msgstr "Se mueve a la siguiente cita"
 
-#: virtualBuffers\__init__.py:1137
+#: virtualBuffers\__init__.py:1215
 msgid "no next block quote"
 msgstr "no hay siguiente cita"
 
-#: virtualBuffers\__init__.py:1138
+#: virtualBuffers\__init__.py:1216
 msgid "moves to the previous block quote"
 msgstr "se mueve a la cita anterior"
 
-#: virtualBuffers\__init__.py:1138
+#: virtualBuffers\__init__.py:1216
 msgid "no previous block quote"
 msgstr "no hay cita anterior"
 
-#: virtualBuffers\__init__.py:1139
+#: virtualBuffers\__init__.py:1217
 msgid "no more text after a block of links"
 msgstr "no hay más texto después de un bloque de enlaces"
 
-#: virtualBuffers\__init__.py:1139
+#: virtualBuffers\__init__.py:1217
 msgid "skips forward past a block of links"
 msgstr "salta adelante pasando un bloque de enlaces"
 
-#: virtualBuffers\__init__.py:1140
+#: virtualBuffers\__init__.py:1218
 msgid "no more text before a block of links"
 msgstr "no hay más texto antes de un bloque de enlaces"
 
-#: virtualBuffers\__init__.py:1140
+#: virtualBuffers\__init__.py:1218
 msgid "skips backward past a block of links"
 msgstr "Salta atrás pasando un bloque de enlaces"
 
-#: virtualBuffers\__init__.py:1141
+#: virtualBuffers\__init__.py:1219
 msgid "moves to the next landmark"
 msgstr "se mueve al siguiente marcador"
 
-#: virtualBuffers\__init__.py:1141
+#: virtualBuffers\__init__.py:1219
 msgid "no next landmark"
 msgstr "no hay siguiente marcador"
 
-#: virtualBuffers\__init__.py:1142
+#: virtualBuffers\__init__.py:1220
 msgid "moves to the previous landmark"
 msgstr "se mueve al anterior marcador"
 
-#: virtualBuffers\__init__.py:1142
+#: virtualBuffers\__init__.py:1220
 msgid "no previous landmark"
 msgstr "no hay anterior marcador"
 
