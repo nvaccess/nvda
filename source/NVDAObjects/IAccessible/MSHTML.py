@@ -335,10 +335,7 @@ class MSHTML(IAccessible):
 				role=aria.ariaRolesToNVDARoles.get(ariaRole)
 				if role:
 					return role
-			try:
-				nodeName=self.HTMLNode.NodeName
-			except COMError:
-				nodeName=None
+			nodeName=self.HTMLNodeName
 			if nodeName:
 				if nodeName in ("BODY","FRAMESET"):
 					return controlTypes.ROLE_DOCUMENT
@@ -360,10 +357,7 @@ class MSHTML(IAccessible):
 				isContentEditable=False
 			if isContentEditable:
 				states.add(controlTypes.STATE_EDITABLE)
-			try:
-				nodeName=e.nodeName
-			except COMError:
-				nodeName=None
+			nodeName=self.HTMLNodeName
 			if nodeName=="TEXTAREA":
 				states.add(controlTypes.STATE_MULTILINE)
 			try:
@@ -478,3 +472,14 @@ class MSHTML(IAccessible):
 			except (COMError,NameError):
 				pass
 		super(MSHTML,self).doAction(index=index)
+
+	def _get_HTMLNodeName(self):
+		if not self.HTMLNode:
+			return ""
+		if not hasattr(self,'_HTMLNodeName'):
+			try:
+				nodeName=self.HTMLNode.nodeName
+			except (COMError,NameError):
+				nodeName=""
+			self._HTMLNodeName=nodeName
+		return self._HTMLNodeName
