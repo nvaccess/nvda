@@ -221,6 +221,9 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 
 class MSHTML(IAccessible):
 
+	HTMLNodeNameNavSkipList=['#comment','SCRIPT']
+	HTMLNodeNameChildNavUseIAccessibleList=['OBJECT','EMBED']
+
 	@classmethod
 	def findBestClass(cls,clsList,kwargs):
 		clsList.append(cls)
@@ -398,7 +401,10 @@ class MSHTML(IAccessible):
 				previousNode=self.HTMLNode.previousSibling
 			except COMError:
 				return None
-			return MSHTML(HTMLNode=previousNode)
+			obj=MSHTML(HTMLNode=previousNode)
+			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
+				obj=obj.previous
+			return obj
 		return super(MSHTML,self).parent
 
 	def _get_next(self):
@@ -407,26 +413,39 @@ class MSHTML(IAccessible):
 				nextNode=self.HTMLNode.nextSibling
 			except COMError:
 				return None
-			return MSHTML(HTMLNode=nextNode)
+			obj=MSHTML(HTMLNode=nextNode)
+			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
+				obj=obj.next
+			return obj
 		return super(MSHTML,self).parent
 
 	def _get_firstChild(self):
 		if self.HTMLNode:
+			if self.HTMLNodeName in self.HTMLNodeNameChildNavUseIAccessibleList:
+				return super(MSHTML,self).firstChild
 			try:
 				childNode=self.HTMLNode.firstChild
 			except COMError:
 				return None
-			return MSHTML(HTMLNode=childNode)
+			obj=MSHTML(HTMLNode=childNode)
+			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
+				return None
+			return obj
 		return super(MSHTML,self).firstChild
 
 	def _get_lastChild(self):
 		if self.HTMLNode:
+			if self.HTMLNodeName in self.HTMLNodeNameChildNavUseIAccessibleList:
+				return super(MSHTML,self).lastChild
 			try:
 				childNode=self.HTMLNode.lastChild
 			except COMError:
 				return None
-			return MSHTML(HTMLNode=childNode)
-		return super(MSHTML,self).lastChild
+			obj=MSHTML(HTMLNode=childNode)
+			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
+				return None
+			return obj
+		return super(MSHTML,self).firstChild
 
 	def _get_columnNumber(self):
 		if not self.role==controlTypes.ROLE_TABLECELL or not self.HTMLNode:
@@ -483,3 +502,4 @@ class MSHTML(IAccessible):
 				nodeName=""
 			self._HTMLNodeName=nodeName
 		return self._HTMLNodeName
+
