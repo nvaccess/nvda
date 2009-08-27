@@ -28,38 +28,28 @@ lastMSHTMLEditGainFocusTimeStamp=0
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
-def nextIAccessibleInDom(HTMLNode,back=False):
-	notFound=False
-	firstLoop=True
-	while HTMLNode: 
-		if not firstLoop:
-			child=HTMLNode.firstChild if not back else HTMLNode.lastChild
-		else:
-			child=None
-			firstLoop=False
-		if child:
-			HTMLNode=child
-		else:
-			sibling=HTMLNode.nextSibling if not back else HTMLNode.previousSibling
-			if not sibling:
-				try:
-					parent=HTMLNode.parentNode
-				except COMError:
-					parent=None
-				while parent and not HTMLNodeHasIAccessible(parent):
-					sibling=parent.nextSibling if not back else parent.previousSibling
-					if sibling:
-						break
-					try:
-						parent=parent.parentElement
-					except COMError:
-						parent=None
-			HTMLNode=sibling
-		if HTMLNode:
-			try:
-				return IAccessibleFromHTMLNode(HTMLNode)
-			except NotImplementedError:
-				pass
+nodeNamesToNVDARoles={
+	"#text":controlTypes.ROLE_STATICTEXT,
+	"H1":controlTypes.ROLE_HEADING,
+	"H2":controlTypes.ROLE_HEADING,
+	"H3":controlTypes.ROLE_HEADING,
+	"H4":controlTypes.ROLE_HEADING,
+	"H5":controlTypes.ROLE_HEADING,
+	"H6":controlTypes.ROLE_HEADING,
+	"DIV":controlTypes.ROLE_SECTION,
+	"P":controlTypes.ROLE_PARAGRAPH,
+	"FORM":controlTypes.ROLE_FORM,
+	"UL":controlTypes.ROLE_LIST,
+	"oL":controlTypes.ROLE_LIST,
+	"dL":controlTypes.ROLE_LIST,
+	"LI":controlTypes.ROLE_LISTITEM,
+	"DD":controlTypes.ROLE_LISTITEM,
+	"DT":controlTypes.ROLE_LISTITEM,
+	"TR":controlTypes.ROLE_TABLEROW,
+	"THEAD":controlTypes.ROLE_TABLEHEADER,
+	"TBODY":controlTypes.ROLE_TABLEBODY,
+	"HR":controlTypes.ROLE_SEPARATOR,
+}
 
 def IAccessibleFromHTMLNode(HTMLNode):
 	try:
@@ -67,12 +57,6 @@ def IAccessibleFromHTMLNode(HTMLNode):
 		return s.QueryService(oleacc.IAccessible._iid_,oleacc.IAccessible)
 	except COMError:
 		raise NotImplementedError
-
-def HTMLNodeHasIAccessible(HTMLNode):
-	try:
-		return bool(IAccessibleFromHTMLNode(HTMLNode))
-	except NotImplementedError:
-		return False
 
 def HTMLNodeFromIAccessible(IAccessibleObject):
 	try:
@@ -85,8 +69,8 @@ def locateHTMLElementByID(document,ID):
 	element=document.getElementById(ID)
 	if element:
 		return element
-	nodeName=document.body.nodeName.lower()
-	if nodeName=="frameset":
+	nodeName=document.body.nodeName
+	if nodeName=="FRAMESET":
 		tag="frame"
 	else:
 		tag="iframe"
@@ -237,8 +221,36 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 
 class MSHTML(IAccessible):
 
-	def __init__(self,*args,**kwargs):
-		super(MSHTML,self).__init__(*args,**kwargs)
+	@classmethod
+	def findBestClass(cls,clsList,kwargs):
+		clsList.append(cls)
+		tempNode=HTMLNode=kwargs.get('HTMLNode')
+		while tempNode:
+			try:
+				IAccessibleObject=IAccessibleFromHTMLNode(tempNode)
+			except NotImplementedError:
+				IAccessibleObject=None
+			if IAccessibleObject:
+				kwargs['IAccessibleObject']=IAccessibleObject
+				kwargs['IAccessibleChildID']=0
+				if tempNode is not HTMLNode:
+					kwargs['HTMLNodeHasAncestorIAccessible']=True
+				break
+			try:
+				tempNode=tempNode.parentNode
+			except COMError:
+				tempNode=None
+		return super(MSHTML,cls).findBestClass(clsList,kwargs)
+
+	def __init__(self,HTMLNode=None,HTMLNodeHasAncestorIAccessible=False,**kwargs):
+		super(MSHTML,self).__init__(**kwargs)
+		self.HTMLNodeHasAncestorIAccessible=HTMLNodeHasAncestorIAccessible
+		if not HTMLNode and self.IAccessibleChildID==0:
+			try:
+				HTMLNode=HTMLNodeFromIAccessible(self.IAccessibleObject)
+			except NotImplementedError:
+				pass
+		self.HTMLNode=HTMLNode
 		try:
 			self.HTMLNode.createTextRange()
 			self.TextInfo=MSHTMLTextInfo
@@ -272,30 +284,36 @@ class MSHTML(IAccessible):
 				("Back","backspace"),
 			]]
 
-	def _get_HTMLNode(self):
-		if self.IAccessibleChildID>0:
-			return
-		if not hasattr(self,'_HTMLNode'):
-			try:
-				HTMLNode=HTMLNodeFromIAccessible(self.IAccessibleObject)
-			except NotImplementedError:
-				HTMLNode=None
-			self._HTMLNode=HTMLNode
-		return self._HTMLNode
-
 	def _isEqual(self, other):
-		try:
-			return self.windowHandle == other.windowHandle and self.HTMLNode.uniqueNumber == other.HTMLNode.uniqueNumber
-		except (COMError, AttributeError):
-			pass
+		if self.HTMLNode:
+			try:
+				return self.windowHandle == other.windowHandle and self.HTMLNode.uniqueNumber == other.HTMLNode.uniqueNumber
+			except (COMError,NameError):
+				pass
 		return super(MSHTML, self)._isEqual(other)
 
+	def _get_name(self):
+		if self.HTMLNodeHasAncestorIAccessible:
+			return ""
+		return super(MSHTML,self).name
+
 	def _get_value(self):
+		if self.HTMLNodeHasAncestorIAccessible:
+			try:
+				value=self.HTMLNode.data
+			except (COMError,NameError):
+				value=""
+			return value
 		IARole=self.IAccessibleRole
 		if IARole in (oleacc.ROLE_SYSTEM_PANE,oleacc.ROLE_SYSTEM_TEXT):
 			return ""
 		else:
 			return super(MSHTML,self).value
+
+	def _get_description(self):
+		if self.HTMLNodeHasAncestorIAccessible:
+			return ""
+		return super(MSHTML,self).description
 
 	def _get_basicText(self):
 		if self.HTMLNode:
@@ -311,7 +329,7 @@ class MSHTML(IAccessible):
 		if self.HTMLNode:
 			try:
 				ariaRole=self.HTMLNode.getAttribute('role')
-			except COMError:
+			except (COMError, NameError):
 				ariaRole=None
 			if ariaRole:
 				role=aria.ariaRolesToNVDARoles.get(ariaRole)
@@ -322,9 +340,10 @@ class MSHTML(IAccessible):
 			except COMError:
 				nodeName=None
 			if nodeName:
-				nodeName=nodeName.lower()
-				if nodeName in ("body","frameset"):
+				if nodeName in ("BODY","FRAMESET"):
 					return controlTypes.ROLE_DOCUMENT
+				if self.HTMLNodeHasAncestorIAccessible:
+					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_TEXTFRAME)
 		if self.IAccessibleChildID>0:
 			states=super(MSHTML,self).states
 			if controlTypes.STATE_LINKED in states:
@@ -337,19 +356,19 @@ class MSHTML(IAccessible):
 		if e:
 			try:
 				isContentEditable=e.isContentEditable
-			except COMError:
+			except (COMError,NameError):
 				isContentEditable=False
 			if isContentEditable:
 				states.add(controlTypes.STATE_EDITABLE)
 			try:
-				isMultiline=e.isMultiline
+				nodeName=e.nodeName
 			except COMError:
-				isMultiline=False
-			if self.TextInfo==MSHTMLTextInfo and isMultiline: 
+				nodeName=None
+			if nodeName=="TEXTAREA":
 				states.add(controlTypes.STATE_MULTILINE)
 			try:
 				required=e.getAttribute('aria-required')
-			except COMError:
+			except (COMError, NameError):
 				required=None
 			if required and required.lower()=='true':
 				states.add(controlTypes.STATE_REQUIRED)
@@ -364,42 +383,56 @@ class MSHTML(IAccessible):
 		else:
 			return False
 
-	def _get_previous(self):
-		if self.IAccessibleChildID>1:
-			newChildID=self.IAccessibleChildID-1
+	def _get_parent(self):
+		if self.HTMLNode:
 			try:
-				return IAccessible(IAccessibleObject=self.IAccessibleObject.accChild(newChildID),IAccessibleChildID=0)
+				parentNode=self.HTMLNode.parentElement
+			except (COMError,NameError):
+				parentNode=None
+			if not parentNode and self.HTMLNodeHasAncestorIAccessible:
+				try:
+					parentNode=self.HTMLNode.parentNode
+				except (COMError,NameError):
+					parentNode=None
+			if parentNode:
+				return MSHTML(HTMLNode=parentNode)
+		return super(MSHTML,self).parent
+
+	def _get_previous(self):
+		if self.HTMLNode:
+			try:
+				previousNode=self.HTMLNode.previousSibling
 			except COMError:
-				return IAccessible(IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newChildID)
-		pacc=nextIAccessibleInDom(self.HTMLNode,back=True)
-		if pacc:
-			return IAccessible(IAccessibleObject=pacc,IAccessibleChildID=0)
+				return None
+			return MSHTML(HTMLNode=previousNode)
+		return super(MSHTML,self).parent
 
 	def _get_next(self):
-		if self.IAccessibleChildID>0:
-			if self.IAccessibleChildID<self.childCount:
-				newChildID=self.IAccessibleChildID+1
-				try:
-					pacc=self.IAccessibleObject.accChild(newChildID)
-					return IAccessible(IAccessibleObject=pacc,IAccessibleChildID=0)
-				except COMError:
-					return IAccessible(IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newChildID)
-			return None
-		pacc=nextIAccessibleInDom(self.HTMLNode)
-		if pacc:
-			return IAccessible(IAccessibleObject=pacc,IAccessibleChildID=0)
+		if self.HTMLNode:
+			try:
+				nextNode=self.HTMLNode.nextSibling
+			except COMError:
+				return None
+			return MSHTML(HTMLNode=nextNode)
+		return super(MSHTML,self).parent
 
 	def _get_firstChild(self):
-		child=super(MSHTML,self).firstChild
-		while isinstance(child,IAccessible) and child.IAccessibleChildID>0:
-			child=child.next
-		return child
+		if self.HTMLNode:
+			try:
+				childNode=self.HTMLNode.firstChild
+			except COMError:
+				return None
+			return MSHTML(HTMLNode=childNode)
+		return super(MSHTML,self).firstChild
 
 	def _get_lastChild(self):
-		child=super(MSHTML,self).lastChild
-		while isinstance(child,IAccessible) and child.IAccessibleChildID>0:
-			child=child.previous
-		return child
+		if self.HTMLNode:
+			try:
+				childNode=self.HTMLNode.lastChild
+			except COMError:
+				return None
+			return MSHTML(HTMLNode=childNode)
+		return super(MSHTML,self).lastChild
 
 	def _get_columnNumber(self):
 		if not self.role==controlTypes.ROLE_TABLECELL or not self.HTMLNode:
@@ -434,22 +467,14 @@ class MSHTML(IAccessible):
 			return
 		try:
 			self.HTMLNode.scrollInToView()
-		except COMError:
+		except (COMError,NameError):
 			pass
 
 	def doAction(self, index=None):
-		states = self.states
-		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_OFFSCREEN in states:
-			raise NotImplementedError
-		l = self.location
-		if not l:
-			raise NotImplementedError
-		x = l[0] + (l[2] / 2)
-		y = l[1] + (l[3] / 2)
-		if x < 0 or y < 0:
-			return
-		oldX, oldY = winUser.getCursorPos()
-		winUser.setCursorPos(x, y)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0, None, None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP, 0, 0, None, None)
-		winUser.setCursorPos(oldX, oldY)
+		if self.HTMLNode:
+			try:
+				self.HTMLNode.click()
+				return
+			except (COMError,NameError):
+				pass
+		super(MSHTML,self).doAction(index=index)
