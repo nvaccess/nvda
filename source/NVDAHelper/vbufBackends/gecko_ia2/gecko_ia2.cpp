@@ -752,6 +752,7 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		case EVENT_OBJECT_VALUECHANGE:
 		case EVENT_OBJECT_DESCRIPTIONCHANGE:
 		case EVENT_OBJECT_STATECHANGE:
+		case IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED:
 		break;
 		default:
 		return;
