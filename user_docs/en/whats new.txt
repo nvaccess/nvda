@@ -28,7 +28,7 @@
 	* Custom app modules, braille display drivers and synth drivers can now be stored in the user's configuration  directory. (#337)
 	* Virtual buffers are now rendered in the background, allowing the user to interact with the system to some extent during the rendering process. The user will be notified that the document is being rendered if it takes longer than a second.
 	* If NVDA detects that it has frozen for some reason, it will automatically pass all keystrokes through so that the user has a better chance of recovering the system.
-	* Support for ARIA drag and drop in Mozilla Gecko.
+	* Support for ARIA drag and drop in Mozilla Gecko. (#239)
 
 === Changes ===
 	* NVDA no longer announces "NVDA started" when it starts.
