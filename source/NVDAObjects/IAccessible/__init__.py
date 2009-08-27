@@ -599,6 +599,7 @@ the NVDAObject for IAccessible
 		else:
 			states.update(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessibleStates) if IAccessibleHandler.IAccessibleStatesToNVDAStates.has_key(x))
 		if not hasattr(self.IAccessibleObject,'states'):
+			# Not an IA2 object.
 			return states
 		try:
 			IAccessible2States=self.IAccessibleObject.states
@@ -606,6 +607,19 @@ the NVDAObject for IAccessible
 			log.debugWarning("could not get IAccessible2 states",exc_info=True)
 			IAccessible2States=IAccessibleHandler.IA2_STATE_DEFUNCT
 		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessible2States) if IAccessibleHandler.IAccessible2StatesToNVDAStates.has_key(x))
+		try:
+			IA2Attribs=self.IA2Attributes
+		except COMError:
+			log.debugWarning("could not get IAccessible2 attributes",exc_info=True)
+			IA2Attribs=None
+		if IA2Attribs:
+			grabbed = IA2Attribs.get("grabbed")
+			if grabbed == "false":
+				states.add(controlTypes.STATE_DRAGGABLE)
+			elif grabbed == "true":
+				states.add(controlTypes.STATE_DRAGGING)
+			if IA2Attribs.get("dropeffect", "none") != "none":
+				states.add(controlTypes.STATE_DROPTARGET)
 		if controlTypes.STATE_HASPOPUP in states and controlTypes.STATE_AUTOCOMPLETE in states:
 			states.remove(controlTypes.STATE_HASPOPUP)
 		if controlTypes.STATE_HALFCHECKED in states:
@@ -773,13 +787,22 @@ the NVDAObject for IAccessible
 		except:
 			return []
 
+	def _get_IA2Attributes(self):
+		attribs = self.IAccessibleObject.attributes
+		if attribs:
+			return IAccessibleHandler.splitIA2Attribs(attribs)
+		return {}
+
+	def event_IA2AttributeChange(self):
+		# We currently only care about changes to the accessible drag and drop attributes, which we map to states, so treat this as a stateChange.
+		self.event_stateChange()
+
 	def _get_rowNumber(self):
 		table=self.table
 		if table:
 			if self.IAccessibleTableUsesTableCellIndexAttrib:
-				attribsMap=IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
 				try:
-					index=attribsMap['table-cell-index']
+					index=self.IA2Attributes['table-cell-index']
 				except KeyError:
 					raise NotImplementedError
 			else:
@@ -795,9 +818,8 @@ the NVDAObject for IAccessible
 		table=self.table
 		if table:
 			if self.IAccessibleTableUsesTableCellIndexAttrib:
-				attribsMap=IAccessibleHandler.splitIA2Attribs(self.IAccessibleObject.attributes)
 				try:
-					index=attribsMap['table-cell-index']
+					index=self.IA2Attributes['table-cell-index']
 				except KeyError:
 					raise NotImplementedError
 			else:

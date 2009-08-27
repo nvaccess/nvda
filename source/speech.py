@@ -419,6 +419,9 @@ def processPositiveStates(role, states, reason, positiveStates):
 	positiveStates.discard(controlTypes.STATE_SELECTABLE)
 	positiveStates.discard(controlTypes.STATE_FOCUSABLE)
 	positiveStates.discard(controlTypes.STATE_CHECKABLE)
+	if controlTypes.STATE_DRAGGING in positiveStates:
+		# It's obvious that the control is draggable if it's being dragged.
+		positiveStates.discard(controlTypes.STATE_DRAGGABLE)
 	if reason == REASON_QUERY:
 		return positiveStates
 	positiveStates.discard(controlTypes.STATE_MODAL)
@@ -445,6 +448,8 @@ def processNegativeStates(role, states, reason, negativeStates):
 	if (role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON) or controlTypes.STATE_CHECKABLE in states)  and (controlTypes.STATE_HALFCHECKED not in states) and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
 		speakNegatives.add(controlTypes.STATE_CHECKED)
 	if reason == REASON_CHANGE:
+		# We want to speak this state only if it is changing to negative.
+		speakNegatives.add(controlTypes.STATE_DROPTARGET)
 		# We were given states which have changed to negative.
 		# Return only those supplied negative states which should be spoken;
 		# i.e. the states in both sets.
@@ -639,6 +644,10 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		negativeStates=None
 	if negativeStates is not None or (reason != REASON_CHANGE and states is not None):
 		negativeStates=processNegativeStates(role, realStates, reason, negativeStates)
+		if controlTypes.STATE_DROPTARGET in negativeStates:
+			# "not drop target" doesn't make any sense, so use a custom message.
+			textList.append(_("done dragging"))
+			negativeStates.discard(controlTypes.STATE_DROPTARGET)
 		textList.extend([_("not %s")%controlTypes.speechStateLabels[x] for x in negativeStates])
 	if 'description' in propertyValues:
 		textList.append(propertyValues['description'])
