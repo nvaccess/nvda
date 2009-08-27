@@ -351,7 +351,10 @@ class MSHTML(IAccessible):
 		return super(MSHTML,self).role
 
 	def _get_states(self):
-		states=super(MSHTML,self).states
+		if not self.HTMLNodeHasAncestorIAccessible:
+			states=super(MSHTML,self).states
+		else:
+			states=set()
 		e=self.HTMLNode
 		if e:
 			try:
