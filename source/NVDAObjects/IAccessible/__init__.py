@@ -613,9 +613,10 @@ the NVDAObject for IAccessible
 			log.debugWarning("could not get IAccessible2 attributes",exc_info=True)
 			IA2Attribs=None
 		if IA2Attribs:
-			if "grab" in IA2Attribs:
+			grabbed = IA2Attribs.get("grabbed")
+			if grabbed == "false":
 				states.add(controlTypes.STATE_DRAGGABLE)
-			if IA2Attribs.get("grabbed") == "true":
+			elif grabbed == "true":
 				states.add(controlTypes.STATE_DRAGGING)
 			if IA2Attribs.get("dropeffect", "none") != "none":
 				states.add(controlTypes.STATE_DROPTARGET)
