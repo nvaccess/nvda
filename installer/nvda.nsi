@@ -269,7 +269,7 @@ strcpy $runAppOnInstSuccess "0"
 IfFileExists "$PROGRAMFILES\NVDA" 0
 Delete "$PROGRAMFILES\NVDA"
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
-System::Call 'kernel32::GetThreadLocale() i .r0'
+System::Call 'kernel32::GetUserDefaultUILanguage() i .r0'
 StrCpy $LANGUAGE $0
 
 ;prepare log always within .onInit function
