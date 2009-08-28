@@ -491,7 +491,9 @@ class MSHTML(IAccessible):
 			try:
 				self.HTMLNode.click()
 				return
-			except (COMError,NameError):
+			except COMError:
+				return
+			except NameError:
 				pass
 		super(MSHTML,self).doAction(index=index)
 
