@@ -570,7 +570,18 @@ class AppModule(appModuleHandler.AppModule):
 	def script_toggleVirtualBufferPassThrough(self,keyPress):
 		vbuf = api.getFocusObject().virtualBuffer
 		if not vbuf:
+			# We might be in an embedded object or application, so try searching the ancestry for a document object.
+			for ancestor in reversed(api.getFocusAncestors()):
+				if ancestor.role == controlTypes.ROLE_DOCUMENT:
+					break
+			else:
+				# No document found in the ancestry.
+				return
+			# Set focus to the root object of the buffer.
+			ancestor.setFocus()
 			return
+
+		# Toggle virtual buffer pass-through.
 		vbuf.passThrough = not vbuf.passThrough
 		# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
 		# If we're disabling pass-through, re-enable auto-pass-through.
