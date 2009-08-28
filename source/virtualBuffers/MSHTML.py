@@ -12,47 +12,22 @@ import config
 
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
-	nodeNamesToNVDARoles={
-		"frame":controlTypes.ROLE_FRAME,
-		"iframe":controlTypes.ROLE_FRAME,
-		"frameset":controlTypes.ROLE_DOCUMENT,
-		"body":controlTypes.ROLE_DOCUMENT,
-		"p":controlTypes.ROLE_PARAGRAPH,
-		"ul":controlTypes.ROLE_LIST,
-		"ol":controlTypes.ROLE_LIST,
-		"li":controlTypes.ROLE_LISTITEM,
-		"dl":controlTypes.ROLE_LIST,
-		"dt":controlTypes.ROLE_LISTITEM,
-		"dd":controlTypes.ROLE_LISTITEM,
-		"table":controlTypes.ROLE_TABLE,
-		"thead":controlTypes.ROLE_TABLEHEADER,
-		"th":controlTypes.ROLE_TABLECOLUMNHEADER,
-		"tbody":controlTypes.ROLE_TABLEBODY,
-		"tr":controlTypes.ROLE_TABLEROW,
-		"td":controlTypes.ROLE_TABLECELL,
-		"img":controlTypes.ROLE_GRAPHIC,
-		"a":controlTypes.ROLE_LINK,
-		"div":controlTypes.ROLE_SECTION,
-		"label":controlTypes.ROLE_LABEL,
-		"form": controlTypes.ROLE_FORM,
-	}
-
 	def _normalizeControlField(self,attrs):
 		level=None
 		accRole=attrs.get('IAccessible::role',0)
 		accRole=int(accRole) if isinstance(accRole,basestring) and accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
-		nodeName=attrs.get('IHTMLDOMNode::nodeName',"").lower()
-		if nodeName=="textarea":
+		nodeName=attrs.get('IHTMLDOMNode::nodeName',"")
+		if nodeName=="TEXTAREA":
 			states.add(controlTypes.STATE_MULTILINE)
-		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE):
-			role=self.nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_UNKNOWN)
+		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE,controlTypes.ROLE_WINDOW):
+			role=NVDAObjects.IAccessible.MSHTML.nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_UNKNOWN)
 		if role==controlTypes.ROLE_UNKNOWN:
-			if "h1"<=nodeName<="h6":
+			if "H1"<=nodeName<="H6":
 				role=controlTypes.ROLE_HEADING
 				level=nodeName[1:]
-		if nodeName in ("ul","ol","dl"):
+		if nodeName in ("UL","OL","DL"):
 			states.add(controlTypes.STATE_READONLY)
 		if role==controlTypes.ROLE_UNKNOWN:
 			role=controlTypes.ROLE_TEXTFRAME

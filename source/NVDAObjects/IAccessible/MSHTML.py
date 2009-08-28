@@ -29,6 +29,14 @@ lastMSHTMLEditGainFocusTimeStamp=0
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
 nodeNamesToNVDARoles={
+	"frame":controlTypes.ROLE_FRAME,
+	"iframe":controlTypes.ROLE_FRAME,
+	"frameset":controlTypes.ROLE_DOCUMENT,
+	"body":controlTypes.ROLE_DOCUMENT,
+	"th":controlTypes.ROLE_TABLECELL,
+	"img":controlTypes.ROLE_GRAPHIC,
+	"a":controlTypes.ROLE_LINK,
+	"label":controlTypes.ROLE_LABEL,
 	"#text":controlTypes.ROLE_STATICTEXT,
 	"H1":controlTypes.ROLE_HEADING,
 	"H2":controlTypes.ROLE_HEADING,
@@ -49,6 +57,9 @@ nodeNamesToNVDARoles={
 	"THEAD":controlTypes.ROLE_TABLEHEADER,
 	"TBODY":controlTypes.ROLE_TABLEBODY,
 	"HR":controlTypes.ROLE_SEPARATOR,
+	"OBJECT":controlTypes.ROLE_EMBEDDEDOBJECT,
+	"APPLET":controlTypes.ROLE_EMBEDDEDOBJECT,
+	"EMBED":controlTypes.ROLE_EMBEDDEDOBJECT,
 }
 
 def IAccessibleFromHTMLNode(HTMLNode):
