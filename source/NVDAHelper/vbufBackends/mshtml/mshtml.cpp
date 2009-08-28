@@ -436,6 +436,9 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
 		IARole=ROLE_SYSTEM_SEPARATOR;
 		parentNode->setIsBlock(true);
+	} else if (!invisible && (nodeName.compare(L"OBJECT")==0 || nodeName.compare(L"APPLET")==0)) {
+		parentNode->setIsBlock(true);
+		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
 	}
 	wostringstream tempStringStream;
 	tempStringStream.str(L"");
