@@ -222,7 +222,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 class MSHTML(IAccessible):
 
 	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD']
-	HTMLNodeNameChildNavUseIAccessibleList=['OBJECT','EMBED']
+	HTMLNodeNameEmbedList=['OBJECT','EMBED','APPLET']
 
 	@classmethod
 	def findBestClass(cls,clsList,kwargs):
@@ -340,6 +340,8 @@ class MSHTML(IAccessible):
 					return role
 			nodeName=self.HTMLNodeName
 			if nodeName:
+				if nodeName in self.HTMLNodeNameEmbedList:
+					return controlTypes.ROLE_EMBEDDEDOBJECT
 				if nodeName in ("BODY","FRAMESET"):
 					return controlTypes.ROLE_DOCUMENT
 				if self.HTMLNodeHasAncestorIAccessible:
@@ -424,7 +426,7 @@ class MSHTML(IAccessible):
 
 	def _get_firstChild(self):
 		if self.HTMLNode:
-			if self.HTMLNodeName in self.HTMLNodeNameChildNavUseIAccessibleList:
+			if self.HTMLNodeName in self.HTMLNodeNameEmbedList:
 				return super(MSHTML,self).firstChild
 			try:
 				childNode=self.HTMLNode.firstChild
@@ -438,7 +440,7 @@ class MSHTML(IAccessible):
 
 	def _get_lastChild(self):
 		if self.HTMLNode:
-			if self.HTMLNodeName in self.HTMLNodeNameChildNavUseIAccessibleList:
+			if self.HTMLNodeName in self.HTMLNodeNameEmbedList:
 				return super(MSHTML,self).lastChild
 			try:
 				childNode=self.HTMLNode.lastChild
