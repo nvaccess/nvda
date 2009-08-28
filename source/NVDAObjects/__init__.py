@@ -478,7 +478,7 @@ Tries to force this object to take the focus.
 			return False
 		name = self.name
 		description = self.description
-		if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_OPTIONPANE) and not name and not description:
+		if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME) and not name and not description:
 			return False
 		if not name and not description and role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and not config.conf["documentFormatting"]["reportTables"]:
 			return False
