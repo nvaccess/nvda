@@ -613,6 +613,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 			obj.setFocus()
 			self.passThrough = True
 			virtualBufferHandler.reportPassThrough(self)
+		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT:
+			obj.setFocus()
+			speech.speakObject(obj, reason=speech.REASON_FOCUS)
 		else:
 			self._activateNVDAObject(obj)
 
