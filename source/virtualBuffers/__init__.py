@@ -583,6 +583,18 @@ class VirtualBuffer(cursorManager.CursorManager):
 				sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 			self._hadFirstGainFocus = True
 
+		else:
+			# This buffer has had focus before.
+			if not self.passThrough:
+				# Speak it like we would speak focus on any other document object.
+				speech.speakObject(self.rootNVDAObject, reason=speech.REASON_FOCUS)
+				info = self.selection
+				if not info.isCollapsed:
+					speech.speakSelectionMessage(_("selected %s"), info.text)
+				else:
+					info.expand(textInfos.UNIT_LINE)
+					speech.speakTextInfo(info, reason=speech.REASON_CARET)
+
 		virtualBufferHandler.reportPassThrough(self)
 		braille.handler.handleGainFocus(self)
 

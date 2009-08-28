@@ -29,6 +29,7 @@
 	* Virtual buffers are now rendered in the background, allowing the user to interact with the system to some extent during the rendering process. The user will be notified that the document is being rendered if it takes longer than a second.
 	* If NVDA detects that it has frozen for some reason, it will automatically pass all keystrokes through so that the user has a better chance of recovering the system.
 	* Support for ARIA drag and drop in Mozilla Gecko. (#239)
+	* The document title and current line or selection is now spoken when you move focus inside a virtual buffer. This makes the behaviour when moving focus into virtual buffers consistent with that for normal document objects. (#210)
 
 === Changes ===
 	* NVDA no longer announces "NVDA started" when it starts.
