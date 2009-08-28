@@ -221,7 +221,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 
 class MSHTML(IAccessible):
 
-	HTMLNodeNameNavSkipList=['#comment','SCRIPT']
+	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD']
 	HTMLNodeNameChildNavUseIAccessibleList=['OBJECT','EMBED']
 
 	@classmethod
@@ -288,7 +288,7 @@ class MSHTML(IAccessible):
 			]]
 
 	def _isEqual(self, other):
-		if self.HTMLNode:
+		if self.HTMLNode and other.HTMLNode:
 			try:
 				return self.windowHandle == other.windowHandle and self.HTMLNode.uniqueNumber == other.HTMLNode.uniqueNumber
 			except (COMError,NameError):
