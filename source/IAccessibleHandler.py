@@ -274,6 +274,7 @@ IAccessibleRolesToNVDARoles={
 	"hbox":controlTypes.ROLE_BOX,
 	"embed":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"object":controlTypes.ROLE_EMBEDDEDOBJECT,
+	"applet":controlTypes.ROLE_EMBEDDEDOBJECT,
 }
 
 IAccessibleStatesToNVDAStates={
