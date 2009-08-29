@@ -237,7 +237,6 @@ class MSHTML(IAccessible):
 
 	@classmethod
 	def findBestClass(cls,clsList,kwargs):
-		clsList.append(cls)
 		tempNode=HTMLNode=kwargs.get('HTMLNode')
 		while tempNode:
 			try:
@@ -254,17 +253,22 @@ class MSHTML(IAccessible):
 				tempNode=tempNode.parentNode
 			except COMError:
 				tempNode=None
-		return super(MSHTML,cls).findBestClass(clsList,kwargs)
+		clsList,kwargs=super(MSHTML,cls).findBestClass(clsList,kwargs)
+		#IAccessible may have already chosen MSHTML as a best class
+		#So only add it if it doesn't already exist
+		if MSHTML not in clsList:
+			clsList.insert(0,MSHTML)
+		return clsList,kwargs
 
-	def __init__(self,HTMLNode=None,HTMLNodeHasAncestorIAccessible=False,**kwargs):
-		super(MSHTML,self).__init__(**kwargs)
+	def __init__(self,HTMLNode=None,HTMLNodeHasAncestorIAccessible=False,IAccessibleObject=None,IAccessibleChildID=None,**kwargs):
 		self.HTMLNodeHasAncestorIAccessible=HTMLNodeHasAncestorIAccessible
-		if not HTMLNode and self.IAccessibleChildID==0:
+		if not HTMLNode and IAccessibleChildID==0:
 			try:
-				HTMLNode=HTMLNodeFromIAccessible(self.IAccessibleObject)
+				HTMLNode=HTMLNodeFromIAccessible(IAccessibleObject)
 			except NotImplementedError:
 				pass
 		self.HTMLNode=HTMLNode
+		super(MSHTML,self).__init__(IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,**kwargs)
 		try:
 			self.HTMLNode.createTextRange()
 			self.TextInfo=MSHTMLTextInfo
