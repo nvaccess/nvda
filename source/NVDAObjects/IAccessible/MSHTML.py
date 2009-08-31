@@ -232,7 +232,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 
 class MSHTML(IAccessible):
 
-	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD']
+	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD','HTML']
 	HTMLNodeNameEmbedList=['OBJECT','EMBED','APPLET']
 
 	@classmethod
@@ -412,7 +412,9 @@ class MSHTML(IAccessible):
 				except (COMError,NameError):
 					parentNode=None
 			if parentNode:
-				return MSHTML(HTMLNode=parentNode)
+				obj=MSHTML(HTMLNode=parentNode)
+				if obj and obj.HTMLNodeName not in self.HTMLNodeNameNavSkipList:
+					return obj
 		return super(MSHTML,self).parent
 
 	def _get_previous(self):
