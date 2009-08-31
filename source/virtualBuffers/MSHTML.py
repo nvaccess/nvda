@@ -18,6 +18,19 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		accRole=int(accRole) if isinstance(accRole,basestring) and accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		if attrs.get('HTMLAttrib::aria-required','false')=='true':
+			states.add(controlTypes.STATE_REQUIRED)
+		if attrs.get('HTMLAttrib::aria-invalid','false')=='true':
+			states.add(controlTypes.STATE_INVALID)
+		if attrs.get('HTMLAttrib::aria-multiline','false')=='true':
+			states.add(controlTypes.STATE_MULTILINE)
+		if attrs.get('HTMLAttrib::aria-dropeffect','none')!='none':
+			states.add(controlTypes.STATE_DROPTARGET)
+		ariaGrabbed=attrs.get('HTMLAttrib::aria-grabbed',None)
+		if ariaGrabbed=='false':
+			states.add(controlTypes.STATE_DRAGGABLE)
+		elif ariaGrabbed=='true':
+			states.add(controlTypes.STATE_DRAGGING)
 		nodeName=attrs.get('IHTMLDOMNode::nodeName',"")
 		if nodeName=="TEXTAREA":
 			states.add(controlTypes.STATE_MULTILINE)

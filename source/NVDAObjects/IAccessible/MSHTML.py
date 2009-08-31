@@ -375,6 +375,32 @@ class MSHTML(IAccessible):
 		e=self.HTMLNode
 		if e:
 			try:
+				ariaRequired=e.GetAttribute('aria-required')
+			except (COMError, NameError):
+				ariaRequired=None
+			if ariaRequired=="true":
+				states.add(controlTypes.STATE_REQUIRED)
+			try:
+				ariaInvalid=e.GetAttribute('aria-invalid')
+			except (COMError, NameError):
+				ariaInvalid=None
+			if ariaInvalid=="true":
+				states.add(controlTypes.STATE_INVALID)
+			try:
+				ariaGrabbed=e.GetAttribute('aria-grabbed')
+			except (COMError, NameError):
+				ariaGrabbed=None
+			if ariaGrabbed=="true":
+				states.add(controlTypes.STATE_DRAGGING)
+			elif ariaGrabbed=="false":
+				states.add(controlTypes.STATE_DRAGGABLE)
+			try:
+				ariaDropeffect=e.GetAttribute('aria-dropeffect')
+			except (COMError, NameError):
+				ariaDropeffect='none'
+			if ariaDropeffect and ariaDropeffect!="none":
+				states.add(controlTypes.STATE_DROPTARGET)
+			try:
 				isContentEditable=e.isContentEditable
 			except (COMError,NameError):
 				isContentEditable=False
