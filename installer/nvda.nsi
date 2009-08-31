@@ -299,12 +299,7 @@ pop $oldNVDAWindowHandle
 IntCmp $1 1 +1 Continue
 MessageBox MB_OK $(msg_NVDARunning)
 Continue:
-IfFileExists "$APPDATA\nvda\nvda.ini" +1 +4
-GetFullPathName /SHORT $0 "$APPDATA\nvda"
-Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -r -m -c $0"
-goto Running
 Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -r -m"
-Running:
 Banner::destroy
 functionEnd
 
