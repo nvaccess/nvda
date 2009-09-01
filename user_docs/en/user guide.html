@@ -59,8 +59,8 @@
 <li><a href="#8">8. Virtual Buffers</a></li>
 <ul>
 <li><a href="#8.1">8.1. Single Letter Navigation</a></li>
-<li><a href="#8.2">8.2. Forms and Virtual Buffer Pass-Through Mode</a></li>
-<li><a href="#8.3">8.3. The Links list</a></li>
+<li><a href="#8.2">8.2. Forms and Focus Mode</a></li>
+<li><a href="#8.3">8.3. The Elements list</a></li>
 </ul>
 <li><a href="#9">9. Troubleshooting NVDA</a></li>
 </ul>
@@ -611,14 +611,11 @@ Complex read-only documents, such as web pages, are represented in NVDA with in 
 A virtual buffer is a flat representation of content such as a web page, that can be moved around in with the arrow keys. Information such as whether text is a link, heading etc is announced along with the text as you move.
 </p>
 <p>
-While in a virtual buffer, there are two modes of interaction. Browse mode is where you can move around all the text using a virtual cursor. Focus mode is where you can directly interact with the control (edit field, combo box, radio buttons) using what ever keys you would normally use. When in Browse mode, NVDA will automatically switch to focus mode if you tab to or click on a particular control that requires it. You can also manually change to focus mode with NVDA+space. If NVDA automatically changed to focus mode because of a tab or click, it will change back to browse mode once you tab or click on to something that doesn't require it. However, if you changed to focus mode with NVDA+space, it will stay in focus mode until you manually go back to browse mode. At any time when you are in focus mode, you can manually switch back to browse mode by pressing escape, or NVDA+space. The virtual buffer settings dialog in the preferences menu in the NVDA menu allows you to disable automatic switching of browse mode and focus mode.
+While in a virtual buffer, there are two modes of interaction. Browse mode is where you can move around all the text using a virtual cursor. Focus mode is where you can directly interact with the control (edit field, combo box, radio buttons) using what ever keys you would normally use. When in Browse mode, NVDA will automatically switch to focus mode if you tab to or click on a particular control that requires it. Note that pressing enter or space on controls that require it will also switch to focus mode. You can also manually change to focus mode with NVDA+space. If NVDA automatically changed to focus mode because of a tab, click or enter/space key press, it will change back to browse mode once you tab or click on to something that doesn't require it, or if you press escape. However, if you changed to focus mode with NVDA+space, it will stay in focus mode until you manually go back to browse mode. At any time when you are in focus mode, you can manually switch back to browse mode by pressing escape, or NVDA+space. The virtual buffer settings dialog in the preferences menu in the NVDA menu allows you to disable automatic switching of browse mode and focus mode.
 </p> 
 <p>
 Currently NVDA uses Virtual Buffers for reading documents in Mozilla Firefox, Microsoft Internet Explorer, and Adobe Reader.
 </p>
-<p>
-Note that the virtualBuffers used for Internet Explorer and Adobe Reader are much more basic, and take much more time to load. These older virtualBuffers also cannot deal very well with dynamic content, nore do they support a Links List or some of the virtualBuffer quick keys. For best performance and ease of use, try <a href="http://www.getfirefox.com/">Mozilla Firefox</a> for browsing the Web.
-</p> 
 <h3 id="8.1">8.1. Single Letter Navigation</h3>
 <p>
 While in browse mode, For quicker navigation NVDA also provides single character keys to jump to certain fields in a virtual buffer.
@@ -627,7 +624,7 @@ While in browse mode, For quicker navigation NVDA also provides single character
 By themselves they jump to the next field, with the shift key they jump to the previous field.
 </p>
 <p>
-Keys supported by both old and new virtualBuffers:
+Available keys:
 </p>
 <ul>
 <li>h: heading</li>
@@ -635,13 +632,8 @@ Keys supported by both old and new virtualBuffers:
 <li>i: list item</li>
 <li>t: table</li>
 <li>k: link</li>
-<li>p: paragraph (only used in the old virtual Buffer, use Control+Up/DownArrow in the new virtual Buffer)</li>
+<li>n: nonLinked text</li>
 <li>f: form field</li>
-</ul>
-<p>
-Keys not supported by the older virtualBuffers:
-</p>
-<ul>
 <li>u: unvisited link</li>
 <li>v: visited link</li>
 <li>e: edit field</li>
@@ -653,15 +645,16 @@ Keys not supported by the older virtualBuffers:
 <li>s: separator</li>
 <li>m: frame</li>
 <li>g: graphic</li>
+<li>d: ARIA landmark</li>
 <li>1 to 6: headings 1 to 6 respectively</li> 
 </ul>
-<h3 id="8.2">8.2. Forms and Focus/Browse Mode</h3>
+<h3 id="8.2">8.2. Forms and Focus Mode</h3>
 <p>
 Sometimes you may wish to interact with form fields with out the virtual buffer keys getting in the way. Focus mode is created for this purpose, and can be toggled on and off with NVDA+space.
 </p>
-<h3 id="8.3">8.3. The Links List</h3>
+<h3 id="8.3">8.3. The Elements List</h3>
 <p>
-To access a list of links for the current virtualBuffer, press NVDA+f7. From the dialog that appears, you can select the link you are interested in, and then either move to it or activate it using the buttons provided.
+The elements list (available by pressing NVDA+f7 while in a virtual buffer) provides access to a list of either links, headings or ARIA landmarks on the page. Radio buttons allow you to switch between these three types of information. An edit field is also provided in the dialog which allows you to filter the list to help you search for a particular item on the page. Once you have chosen an item, you can use the provided buttons in the dialog to move to, or activate, that item. 
 </p>
 <h3 id="9">9. Further information</h3>
 <p>
