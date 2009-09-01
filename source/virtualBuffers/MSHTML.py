@@ -36,10 +36,8 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_MULTILINE)
 		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE,controlTypes.ROLE_WINDOW):
 			role=NVDAObjects.IAccessible.MSHTML.nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_UNKNOWN)
-		if role==controlTypes.ROLE_UNKNOWN:
-			if "H1"<=nodeName<="H6":
-				role=controlTypes.ROLE_HEADING
-				level=nodeName[1:]
+		if "H1"<=nodeName<="H6":
+			level=nodeName[1:]
 		if nodeName in ("UL","OL","DL"):
 			states.add(controlTypes.STATE_READONLY)
 		if role==controlTypes.ROLE_UNKNOWN:
