@@ -611,26 +611,54 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			DEBUG_MSG(L"Node is input of type hidden, ignoring");
 			return parentNode;
 		}
+		bool usesValue=true;
+		bool usesTitle=true;
 		bool isProtected=false;
-		if(tempIter!=HTMLAttribsMap.end()&&tempIter->second.compare(L"password")==0) {
-			isProtected=true;
+		bool isFileUpload=false;
+		if(tempIter!=HTMLAttribsMap.end()) {
+			if(tempIter->second.compare(L"password")==0) {
+				isProtected=true;
+				usesTitle=false;
+			} else if(tempIter->second.compare(L"file")==0) {
+				isFileUpload=true;
+				usesTitle=false;
+			} else if(tempIter->second.compare(L"text")==0) {
+				usesTitle=false;
+			} else if(tempIter->second.compare(L"checkbox")==0||tempIter->second.compare(L"radio")==0) {
+				usesValue=false;
+			}
 		}
-		tempIter=HTMLAttribsMap.find(L"value");
-		if(tempIter!=HTMLAttribsMap.end()&&!tempIter->second.empty()) {
+		if(usesValue) {
+			tempIter=HTMLAttribsMap.find(L"value");
+			wstring inputValue=(tempIter!=HTMLAttribsMap.end())?tempIter->second:L"";
 			//IE does not keep the value of passwords secure
 			if(isProtected) {
-				wstring protectedValue=tempIter->second;
-				for(wstring::iterator i=protectedValue.begin();i!=protectedValue.end();i++) {
+				for(wstring::iterator i=inputValue.begin();i!=inputValue.end();i++) {
 					*i=L'*';
 				}
-				previousNode=buffer->addTextFieldNode(parentNode,previousNode,protectedValue);
-			} else {
+			} else if(isFileUpload) {
+				inputValue+=L"...";
+				tempStringStream.str(L"");
+				tempStringStream<<ROLE_SYSTEM_PUSHBUTTON;
+				parentNode->addAttribute(L"IAccessible::role",tempStringStream.str());
+			}
+			if(!inputValue.empty()) {
+				previousNode=buffer->addTextFieldNode(parentNode,previousNode,inputValue);
+			}
+		}
+		if(previousNode==NULL&&usesTitle) {
+			tempIter=HTMLAttribsMap.find(L"title");
+			if(tempIter!=HTMLAttribsMap.end()&&!tempIter->second.empty()) {
 				previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempIter->second);
 			}
-		} else {
+		}
+		if(previousNode==NULL) {
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
 		}
-		fillTextFormattingForNode(pHTMLDOMNode,previousNode);
+		if(previousNode) {
+			fillTextFormattingForNode(pHTMLDOMNode,previousNode);
+		}
+		return parentNode;
 	} else if(nodeName.compare(L"SELECT")==0) {
 		bool gotSelection=false;
 		IHTMLSelectElement* pHTMLSelectElement=NULL;
