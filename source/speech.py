@@ -424,6 +424,7 @@ def processPositiveStates(role, states, reason, positiveStates):
 		positiveStates.discard(controlTypes.STATE_DRAGGABLE)
 	if reason == REASON_QUERY:
 		return positiveStates
+	positiveStates.discard(controlTypes.STATE_DEFUNCT)
 	positiveStates.discard(controlTypes.STATE_MODAL)
 	positiveStates.discard(controlTypes.STATE_FOCUSED)
 	positiveStates.discard(controlTypes.STATE_OFFSCREEN)
