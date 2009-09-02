@@ -628,13 +628,16 @@ class VirtualBuffer(cursorManager.CursorManager):
 		else:
 			self._activateNVDAObject(obj)
 
-	def _set_selection(self, info, reason=speech.REASON_CARET):
+	def _set_selection(self, info, reason=speech.REASON_CARET, _obj=None):
 		super(VirtualBuffer, self)._set_selection(info)
 		if isScriptWaiting() or not info.isCollapsed:
 			return
 		api.setReviewPosition(info)
 		if reason == speech.REASON_FOCUS:
 			obj = api.getFocusObject()
+		elif _obj:
+			# Optimisation: The caller already has the right object, so don't bother fetching it ourselves.
+			obj = _obj
 		else:
 			obj = info.NVDAObjectAtStart
 			if not obj:
@@ -719,6 +722,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _quickNavScript(self,keyPress, nodeType, direction, errorMessage, readUnit):
 		if self.VBufHandle is None:
 			return sendKey(keyPress)
+
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		startOffset=info._startOffset
 		endOffset=info._endOffset
@@ -728,6 +732,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			speech.speakMessage(errorMessage)
 			return
 		info = self.makeTextInfo(textInfos.offsets.Offsets(startOffset, endOffset))
+
 		if readUnit:
 			fieldInfo = info.copy()
 			info.collapse()
@@ -735,9 +740,11 @@ class VirtualBuffer(cursorManager.CursorManager):
 			if info.compareEndPoints(fieldInfo, "endToEnd") > 0:
 				# We've expanded past the end of the field, so limit to the end of the field.
 				info.setEndPoint(fieldInfo, "endToEnd")
-		speech.speakTextInfo(info, reason=speech.REASON_FOCUS)
+
+		obj = info.NVDAObjectAtStart
+		self._reportFocus(obj, info)
 		info.collapse()
-		self._set_selection(info, reason=self.REASON_QUICKNAV)
+		self._set_selection(info, reason=self.REASON_QUICKNAV, _obj=obj)
 
 	@classmethod
 	def addQuickNav(cls, nodeType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
@@ -951,13 +958,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 				# This must be done before auto-pass-through occurs, as we want to stop page reading even if pass-through will be automatically enabled by this focus change.
 				speech.cancelSpeech()
 			self.passThrough=self.shouldPassThrough(obj,reason=speech.REASON_FOCUS)
-			if not self.passThrough:
-				# We read the info from the buffer instead of the control itself.
-				speech.speakTextInfo(focusInfo,reason=speech.REASON_FOCUS)
-				# However, we still want to update the speech property cache so that property changes will be spoken properly.
-				speech.speakObject(obj,speech.REASON_ONLYCACHE)
-			else:
-				nextHandler()
+			self._reportFocus(obj, focusInfo, passThroughHandler=nextHandler)
 			focusInfo.collapse()
 			self._set_selection(focusInfo,reason=speech.REASON_FOCUS)
 		else:
@@ -1160,6 +1161,19 @@ class VirtualBuffer(cursorManager.CursorManager):
 			elif direction == "previous" and link1start - link2end > self.NOT_LINK_BLOCK_MIN_LEN:
 				yield 0, link2end, link1start
 			link1node, link1start, link1end = link2node, link2start, link2end
+
+	def _reportFocus(self, obj, info, passThroughHandler=None):
+		if self.passThrough:
+			if not passThroughHandler:
+				passThroughHandler = obj.event_gainFocus
+			passThroughHandler()
+		elif controlTypes.STATE_FOCUSABLE not in obj.states or obj.role == controlTypes.ROLE_LINK:
+			# We want to read the info from the buffer instead of the control itself.
+			speech.speakTextInfo(info, reason=speech.REASON_FOCUS)
+			# However, we still want to update the speech property cache so that property changes will be spoken properly.
+			speech.speakObject(obj, reason=speech.REASON_ONLYCACHE)
+		else:
+			speech.speakObject(obj, reason=speech.REASON_FOCUS)
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
 	("Return","activatePosition"),
