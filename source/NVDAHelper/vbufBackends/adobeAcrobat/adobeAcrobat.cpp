@@ -273,10 +273,14 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 
 	//Get the child count
 	int childCount=0;
-	DEBUG_MSG(L"get childCount with IAccessible::get_accChildCount");
-	if((res=pacc->get_accChildCount((long*)(&childCount)))!=S_OK) {
-		DEBUG_MSG(L"pacc->get_accChildCount returned "<<res);
-		childCount=0;
+	// We don't want to descend into lists and combo boxes.
+	// Besides, Acrobat reports the child count, but the children can't be accessed.
+	if (role != ROLE_SYSTEM_LIST && role != ROLE_SYSTEM_COMBOBOX) {
+		DEBUG_MSG(L"get childCount with IAccessible::get_accChildCount");
+		if((res=pacc->get_accChildCount((long*)(&childCount)))!=S_OK) {
+			DEBUG_MSG(L"pacc->get_accChildCount returned "<<res);
+			childCount=0;
+		}
 	}
 	DEBUG_MSG(L"childCount is "<<childCount);
 
