@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3151\n"
+"Project-Id-Version: r3171\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2009-08-27 11:05+0300\n"
+"PO-Revision-Date: 2009-09-01 08:02+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: IAccessibleHandler.py:660
+#: IAccessibleHandler.py:661
 msgid "Secure Desktop"
 msgstr "Suojattu työpöytä"
 
@@ -84,7 +84,7 @@ msgstr "Virhe sovellusmoduulissa %s"
 #: appModules\_default.py:746 appModules\_default.py:756
 #: appModules\_default.py:766 appModules\winamp.py:75 appModules\winamp.py:85
 #: keyboardHandler.py:52 keyboardHandler.py:54 keyboardHandler.py:56
-#: virtualBuffers\__init__.py:670
+#: virtualBuffers\__init__.py:682
 msgid "on"
 msgstr "päällä"
 
@@ -95,7 +95,7 @@ msgstr "päällä"
 #: appModules\_default.py:753 appModules\_default.py:763
 #: appModules\winamp.py:77 appModules\winamp.py:87 gui\settingsDialogs.py:508
 #: keyboardHandler.py:52 keyboardHandler.py:54 keyboardHandler.py:56
-#: virtualBuffers\__init__.py:670
+#: virtualBuffers\__init__.py:682
 msgid "off"
 msgstr "pois"
 
@@ -143,6 +143,7 @@ msgid "no selection"
 msgstr "ei valintaa"
 
 #: appModules\_default.py:88 speech.py:268 speech.py:362 speech.py:375
+#: virtualBuffers\__init__.py:593
 msgid "selected %s"
 msgstr "valittu %s"
 
@@ -976,23 +977,23 @@ msgstr "Avainsanat:"
 msgid "BCC:"
 msgstr "Piilokopio:"
 
-#: appModules\outlook.py:30 appModules\outlook.py:43
+#: appModules\outlook.py:25 appModules\outlook.py:38
 msgid "subject: %s"
 msgstr "aihe: %s"
 
-#: appModules\outlook.py:31
+#: appModules\outlook.py:26
 msgid "received: %s"
 msgstr "vastaanotettu: %s"
 
-#: appModules\outlook.py:35
+#: appModules\outlook.py:30
 msgid "unread"
 msgstr "lukematon"
 
-#: appModules\outlook.py:37
+#: appModules\outlook.py:32
 msgid "attachment"
 msgstr "liite"
 
-#: appModules\outlook.py:44
+#: appModules\outlook.py:39
 msgid "sent: %s"
 msgstr "lähetetty: %s"
 
@@ -1022,7 +1023,7 @@ msgstr "haku"
 
 #: braille.py:26
 msgid "Arabic grade 1"
-msgstr "Arabia, grade 1"
+msgstr "Arabia, taso 1"
 
 #: braille.py:27
 msgid "Bulgarian 8 dot computer braille"
@@ -1030,35 +1031,35 @@ msgstr "Bulgaria, 8 pisteen tietokonemerkistö"
 
 #: braille.py:28
 msgid "Welsh grade 1"
-msgstr "Wales, grade 1"
+msgstr "Wales, taso 1"
 
 #: braille.py:29
 msgid "Welsh grade 2"
-msgstr "Wales, grade 2"
+msgstr "Wales, taso 2"
 
 #: braille.py:30
 msgid "Czech grade 1"
-msgstr "Tsekki, grade 1"
+msgstr "Tsekki, taso 1"
 
 #: braille.py:31
 msgid "Danish grade 1"
-msgstr "Tanska, grade 1"
+msgstr "Tanska, taso 1"
 
 #: braille.py:32
 msgid "German grade 0"
-msgstr "Saksa, grade 0"
+msgstr "Saksa, taso 0"
 
 #: braille.py:33
 msgid "German grade 1"
-msgstr "Saksa, grade 1"
+msgstr "Saksa, taso 1"
 
 #: braille.py:34
 msgid "English (U.K.) grade 1"
-msgstr "Englanti (Iso-Britannia), grade 1"
+msgstr "Englanti (Iso-Britannia), taso 1"
 
 #: braille.py:35
 msgid "English (U.K.) grade 2"
-msgstr "Englanti (Iso-Britannia), grade 2"
+msgstr "Englanti (Iso-Britannia), taso 2"
 
 #: braille.py:36
 msgid "English (U.S.) 6 dot computer braille"
@@ -1070,23 +1071,23 @@ msgstr "Englanti (Yhdysvallat), 8 pisteen tietokonemerkistö"
 
 #: braille.py:38
 msgid "English (U.S.) grade 1"
-msgstr "Englanti (Yhdysvallat), grade 1"
+msgstr "Englanti (Yhdysvallat), taso 1"
 
 #: braille.py:39
 msgid "English (U.S.) grade 2"
-msgstr "Englanti (Yhdysvallat), grade 2"
+msgstr "Englanti (Yhdysvallat), taso 2"
 
 #: braille.py:40
 msgid "Spanish grade 1"
-msgstr "Espanja, grade 1"
+msgstr "Espanja, taso 1"
 
 #: braille.py:41
 msgid "French (Canada) grade 1"
-msgstr "Ranska (Kanada), grade 1"
+msgstr "Ranska (Kanada), taso 1"
 
 #: braille.py:42
 msgid "French (Canada) grade 2"
-msgstr "Ranska (Kanada), grade 2"
+msgstr "Ranska (Kanada), taso 2"
 
 #: braille.py:43
 msgid "French (unified) 6 dot computer braille"
@@ -1098,153 +1099,161 @@ msgstr "Ranska (yhdenmukaistettu), 8 pisteen tietokonemerkistö"
 
 #: braille.py:45
 msgid "French (unified) Grade 2"
-msgstr "Ranska (yhdenmukaistettu), grade 2"
+msgstr "Ranska (yhdenmukaistettu), taso 2"
 
 #: braille.py:45
 msgid "Greek (Greece) grade 1"
-msgstr "Kreikka, grade 1"
+msgstr "Kreikka, taso 1"
 
 #: braille.py:46
 msgid "Hindi grade 1"
-msgstr "Hindi, grade 1"
+msgstr "Hindi, taso 1"
 
 #: braille.py:47
 msgid "Croatian 8 dot computer braille"
 msgstr "Kroatia, 8 pisteen tietokonemerkistö"
 
 #: braille.py:48
-msgid "Italian grade 1"
-msgstr "Italia, grade 1"
+msgid "Hungarian 8 dot computer braille"
+msgstr "Unkari, 8 pisteen tietokonemerkistö"
 
 #: braille.py:49
-msgid "Latvian grade 1"
-msgstr "Latvia, grade 1"
+msgid "Hungarian 8 dot computer braille 1"
+msgstr "Unkari, 8 pisteen tietokonemerkistö 1"
 
 #: braille.py:50
-msgid "Dutch (Belgium) grade 1"
-msgstr "Hollanti (Belgia), grade 1"
+msgid "Italian grade 1"
+msgstr "Italia, taso 1"
 
 #: braille.py:51
-msgid "Dutch (netherlands) grade 1"
-msgstr "Hollanti (Alankomaat), grade 1"
+msgid "Latvian grade 1"
+msgstr "Latvia, taso 1"
 
 #: braille.py:52
-msgid "Norwegian grade 0"
-msgstr "Norja, grade 0"
+msgid "Dutch (Belgium) grade 1"
+msgstr "Hollanti (Belgia), taso 1"
 
 #: braille.py:53
-msgid "Norwegian grade 1"
-msgstr "Norja, grade 1"
+msgid "Dutch (netherlands) grade 1"
+msgstr "Hollanti (Alankomaat), taso 1"
 
 #: braille.py:54
-msgid "Norwegian grade 2"
-msgstr "Norja, grade 2"
+msgid "Norwegian grade 0"
+msgstr "Norja, taso 0"
 
 #: braille.py:55
-msgid "Norwegian grade 3"
-msgstr "Norja, grade 3"
+msgid "Norwegian grade 1"
+msgstr "Norja, taso 1"
 
 #: braille.py:56
-msgid "Polish grade 1"
-msgstr "Puola, grade 1"
+msgid "Norwegian grade 2"
+msgstr "Norja, taso 2"
 
 #: braille.py:57
-msgid "Portuguese grade 1"
-msgstr "Portugali, grade 1"
+msgid "Norwegian grade 3"
+msgstr "Norja, taso 3"
 
 #: braille.py:58
-msgid "Russian grade 1"
-msgstr "Venäjä, grade 1"
+msgid "Polish grade 1"
+msgstr "Puola, taso 1"
 
 #: braille.py:59
-msgid "Swedish grade 1"
-msgstr "Ruotsi, grade 1"
+msgid "Portuguese grade 1"
+msgstr "Portugali, taso 1"
 
 #: braille.py:60
+msgid "Russian grade 1"
+msgstr "Venäjä, taso 1"
+
+#: braille.py:61
+msgid "Swedish grade 1"
+msgstr "Ruotsi, taso 1"
+
+#: braille.py:62
 msgid "Slovak"
 msgstr "Slovakia"
 
-#: braille.py:61
+#: braille.py:63
 msgid "Unified English Braille Code grade 1"
-msgstr "Englanti (yhdenmukaistettu), grade 1"
+msgstr "Englanti (yhdenmukaistettu), taso 1"
 
-#: braille.py:62
+#: braille.py:64
 msgid "Unified English Braille Code grade 2"
-msgstr "Englanti (yhdenmukaistettu), grade 2"
+msgstr "Englanti (yhdenmukaistettu), taso 2"
 
-#: braille.py:66
+#: braille.py:68
 msgid "edt"
 msgstr "muo"
 
-#: braille.py:67
+#: braille.py:69
 msgid "lst"
 msgstr "lue"
 
-#: braille.py:68
+#: braille.py:70
 msgid "mnubar"
 msgstr "vkrivi"
 
-#: braille.py:69
+#: braille.py:71
 msgid "mnu"
 msgstr "vko"
 
-#: braille.py:70
+#: braille.py:72
 msgid "btn"
 msgstr "pnk"
 
-#: braille.py:71
+#: braille.py:73
 msgid "chk"
 msgstr "vln"
 
-#: braille.py:72
+#: braille.py:74
 msgid "rbtn"
 msgstr "vpnk"
 
-#: braille.py:73
+#: braille.py:75
 msgid "cbo"
 msgstr "yhd"
 
-#: braille.py:74
+#: braille.py:76
 msgid "lnk"
 msgstr "lnk"
 
-#: braille.py:75
+#: braille.py:77
 msgid "dlg"
 msgstr "vli"
 
-#: braille.py:76
+#: braille.py:78
 msgid "tv"
 msgstr "pn"
 
-#: braille.py:77
+#: braille.py:79
 msgid "tb"
 msgstr "tl"
 
-#: braille.py:81
+#: braille.py:83
 msgid "(x)"
 msgstr "<x>"
 
-#: braille.py:82
+#: braille.py:84
 msgid "sel"
 msgstr "val"
 
-#: braille.py:83
+#: braille.py:85
 msgid "submnu"
 msgstr "alavko"
 
-#: braille.py:86
+#: braille.py:88
 msgid "( )"
 msgstr "< >"
 
-#: braille.py:214 speech.py:651
+#: braille.py:216 speech.py:651
 msgid "not %s"
 msgstr "ei %s"
 
-#: braille.py:226 speech.py:657
+#: braille.py:228 speech.py:657
 msgid "%s of %s"
 msgstr "%s / %s"
 
-#: braille.py:228 speech.py:662 speech.py:665
+#: braille.py:230 speech.py:662 speech.py:665
 msgid "level %s"
 msgstr "taso %s"
 
@@ -3285,23 +3294,23 @@ msgstr ""
 "Virtuaalisyntetisaattori, joka näyttää ikkunassa tavallisen "
 "syntetisaattorin lukeman tekstin"
 
-#: synthDrivers\newfon.py:170
+#: synthDrivers\newfon.py:171
 msgid "russian newfon synthesizer by Sergey Shishmintzev"
 msgstr "Venäläinen Newfon-syntetisaattori"
 
-#: synthDrivers\newfon.py:180
+#: synthDrivers\newfon.py:181
 msgid "female 1"
 msgstr "nainen 1"
 
-#: synthDrivers\newfon.py:180
+#: synthDrivers\newfon.py:181
 msgid "female 2"
 msgstr "nainen 2"
 
-#: synthDrivers\newfon.py:180
+#: synthDrivers\newfon.py:181
 msgid "male 1"
 msgstr "mies 1"
 
-#: synthDrivers\newfon.py:180
+#: synthDrivers\newfon.py:181
 msgid "male 2"
 msgstr "mies 2"
 
@@ -3425,19 +3434,19 @@ msgstr "Päivitetty"
 msgid "Loading document..."
 msgstr "Ladataan dokumenttia..."
 
-#: virtualBuffers\__init__.py:654
+#: virtualBuffers\__init__.py:666
 msgid "activates the current object in the virtual buffer"
 msgstr "Aktivoi kohdalla olevan objektin näennäispuskurissa"
 
-#: virtualBuffers\__init__.py:666
+#: virtualBuffers\__init__.py:678
 msgid "Refreshes the virtual buffer content"
 msgstr "Päivittää näennäispuskurin sisällön"
 
-#: virtualBuffers\__init__.py:671
+#: virtualBuffers\__init__.py:683
 msgid "use screen layout %s"
 msgstr "ruutuasettelu %s"
 
-#: virtualBuffers\__init__.py:672
+#: virtualBuffers\__init__.py:684
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "virtual buffer content"
@@ -3445,430 +3454,430 @@ msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä asetuksen, joka määrittää, "
 "säilytetäänkö näytön ulkoasu näennäispuskurin sisältöä ladattaessa"
 
-#: virtualBuffers\__init__.py:757
+#: virtualBuffers\__init__.py:769
 msgid "Presents a list of links, headings or landmarks"
 msgstr "Tuo näkyviin luettelon linkeistä, otsikoista ja maamerkeistä"
 
-#: virtualBuffers\__init__.py:1091
+#: virtualBuffers\__init__.py:1103
 msgid "Not in a table cell"
 msgstr "Ei taulukon solussa"
 
-#: virtualBuffers\__init__.py:1097
+#: virtualBuffers\__init__.py:1109
 msgid "edge of table"
 msgstr "taulukon reuna"
 
-#: virtualBuffers\__init__.py:1107
+#: virtualBuffers\__init__.py:1119
 msgid "moves to the next table row"
 msgstr "siirtää seuraavan taulukon rivin kohdalle"
 
-#: virtualBuffers\__init__.py:1111
+#: virtualBuffers\__init__.py:1123
 msgid "moves to the previous table row"
 msgstr "siirtää edellisen taulukon rivin kohdalle"
 
-#: virtualBuffers\__init__.py:1115
+#: virtualBuffers\__init__.py:1127
 msgid "moves to the next table column"
 msgstr "siirtää seuraavan taulukon sarakkeen kohdalle"
 
-#: virtualBuffers\__init__.py:1119
+#: virtualBuffers\__init__.py:1131
 msgid "moves to the previous table column"
 msgstr "siirtää edellisen taulukon sarakkeen kohdalle"
 
-#: virtualBuffers\__init__.py:1171
+#: virtualBuffers\__init__.py:1183
 msgid "moves to the next heading"
 msgstr "siirtää seuraavan otsikon kohdalle"
 
-#: virtualBuffers\__init__.py:1171
+#: virtualBuffers\__init__.py:1183
 msgid "no next heading"
 msgstr "ei enempää otsikoita"
 
-#: virtualBuffers\__init__.py:1172
+#: virtualBuffers\__init__.py:1184
 msgid "moves to the previous heading"
 msgstr "siirtää edellisen otsikon kohdalle"
 
-#: virtualBuffers\__init__.py:1172
+#: virtualBuffers\__init__.py:1184
 msgid "no previous heading"
 msgstr "ei enempää edellisiä otsikoita"
 
-#: virtualBuffers\__init__.py:1173
+#: virtualBuffers\__init__.py:1185
 msgid "moves to the next heading at level 1"
 msgstr "siirtää seuraavan otsikon kohdalle tasolla 1"
 
-#: virtualBuffers\__init__.py:1173
+#: virtualBuffers\__init__.py:1185
 msgid "no next heading at level 1"
 msgstr "ei enempää otsikoita tasolla 1"
 
-#: virtualBuffers\__init__.py:1174
+#: virtualBuffers\__init__.py:1186
 msgid "moves to the previous heading at level 1"
 msgstr "siirtää edellisen otsikon kohdalle tasolla 1"
 
-#: virtualBuffers\__init__.py:1174
+#: virtualBuffers\__init__.py:1186
 msgid "no previous heading at level 1"
 msgstr "ei enempää edellisiä otsikoita tasolla 1"
 
-#: virtualBuffers\__init__.py:1175
+#: virtualBuffers\__init__.py:1187
 msgid "moves to the next heading at level 2"
 msgstr "siirtää seuraavan otsikon kohdalle tasolla 2"
 
-#: virtualBuffers\__init__.py:1175
+#: virtualBuffers\__init__.py:1187
 msgid "no next heading at level 2"
 msgstr "ei enempää otsikoita tasolla 2"
 
-#: virtualBuffers\__init__.py:1176
+#: virtualBuffers\__init__.py:1188
 msgid "moves to the previous heading at level 2"
 msgstr "siirtää edellisen otsikon kohdalle tasolla 2"
 
-#: virtualBuffers\__init__.py:1176
+#: virtualBuffers\__init__.py:1188
 msgid "no previous heading at level 2"
 msgstr "ei enempää edellisiä otsikoita tasolla 2"
 
-#: virtualBuffers\__init__.py:1177
+#: virtualBuffers\__init__.py:1189
 msgid "moves to the next heading at level 3"
 msgstr "siirtää seuraavan otsikon kohdalle tasolla 3"
 
-#: virtualBuffers\__init__.py:1177
+#: virtualBuffers\__init__.py:1189
 msgid "no next heading at level 3"
 msgstr "ei enempää otsikoita tasolla 3"
 
-#: virtualBuffers\__init__.py:1178
+#: virtualBuffers\__init__.py:1190
 msgid "moves to the previous heading at level 3"
 msgstr "siirtää edellisen otsikon kohdalle tasolla 3"
 
-#: virtualBuffers\__init__.py:1178
+#: virtualBuffers\__init__.py:1190
 msgid "no previous heading at level 3"
 msgstr "ei enempää edellisiä otsikoita tasolla 3"
 
-#: virtualBuffers\__init__.py:1179
+#: virtualBuffers\__init__.py:1191
 msgid "moves to the next heading at level 4"
 msgstr "siirtää seuraavan otsikon kohdalle tasolla 4"
 
-#: virtualBuffers\__init__.py:1179
+#: virtualBuffers\__init__.py:1191
 msgid "no next heading at level 4"
 msgstr "ei enempää otsikoita tasolla 4"
 
-#: virtualBuffers\__init__.py:1180
+#: virtualBuffers\__init__.py:1192
 msgid "moves to the previous heading at level 4"
 msgstr "siirtää edellisen otsikon kohdalle tasolla 4"
 
-#: virtualBuffers\__init__.py:1180
+#: virtualBuffers\__init__.py:1192
 msgid "no previous heading at level 4"
 msgstr "ei enempää edellisiä otsikoita tasolla 4"
 
-#: virtualBuffers\__init__.py:1181
+#: virtualBuffers\__init__.py:1193
 msgid "moves to the next heading at level 5"
 msgstr "siirtää seuraavan otsikon kohdalle tasolla 5"
 
-#: virtualBuffers\__init__.py:1181
+#: virtualBuffers\__init__.py:1193
 msgid "no next heading at level 5"
 msgstr "ei enempää otsikoita tasolla 5"
 
-#: virtualBuffers\__init__.py:1182
+#: virtualBuffers\__init__.py:1194
 msgid "moves to the previous heading at level 5"
 msgstr "siirtää edellisen otsikon kohdalle tasolla 5"
 
-#: virtualBuffers\__init__.py:1182
+#: virtualBuffers\__init__.py:1194
 msgid "no previous heading at level 5"
 msgstr "ei enempää edellisiä otsikoita tasolla 5"
 
-#: virtualBuffers\__init__.py:1183
+#: virtualBuffers\__init__.py:1195
 msgid "moves to the next heading at level 6"
 msgstr "siirtää seuraavan otsikon kohdalle tasolla 6"
 
-#: virtualBuffers\__init__.py:1183
+#: virtualBuffers\__init__.py:1195
 msgid "no next heading at level 6"
 msgstr "ei enempää otsikoita tasolla 6"
 
-#: virtualBuffers\__init__.py:1184
+#: virtualBuffers\__init__.py:1196
 msgid "moves to the previous heading at level 6"
 msgstr "siirtää edellisen otsikon kohdalle tasolla 6"
 
-#: virtualBuffers\__init__.py:1184
+#: virtualBuffers\__init__.py:1196
 msgid "no previous heading at level 6"
 msgstr "ei enempää edellisiä otsikoita tasolla 6"
 
-#: virtualBuffers\__init__.py:1185
+#: virtualBuffers\__init__.py:1197
 msgid "moves to the next table"
 msgstr "siirtää seuraavan taulukon kohdalle"
 
-#: virtualBuffers\__init__.py:1185
+#: virtualBuffers\__init__.py:1197
 msgid "no next table"
 msgstr "ei enempää taulukoita"
 
-#: virtualBuffers\__init__.py:1186
+#: virtualBuffers\__init__.py:1198
 msgid "moves to the previous table"
 msgstr "siirtää edellisen taulukon kohdalle"
 
-#: virtualBuffers\__init__.py:1186
+#: virtualBuffers\__init__.py:1198
 msgid "no previous table"
 msgstr "ei enempää edellisiä taulukoita"
 
-#: virtualBuffers\__init__.py:1187
+#: virtualBuffers\__init__.py:1199
 msgid "moves to the next link"
 msgstr "siirtää seuraavan linkin kohdalle"
 
-#: virtualBuffers\__init__.py:1187
+#: virtualBuffers\__init__.py:1199
 msgid "no next link"
 msgstr "ei enempää linkkejä"
 
-#: virtualBuffers\__init__.py:1188
+#: virtualBuffers\__init__.py:1200
 msgid "moves to the previous link"
 msgstr "siirtää edellisen linkin kohdalle"
 
-#: virtualBuffers\__init__.py:1188
+#: virtualBuffers\__init__.py:1200
 msgid "no previous link"
 msgstr "ei enempää edellisiä linkkejä"
 
-#: virtualBuffers\__init__.py:1189
+#: virtualBuffers\__init__.py:1201
 msgid "moves to the next visited link"
 msgstr "siirtää seuraavan avatun linkin kohdalle"
 
-#: virtualBuffers\__init__.py:1189
+#: virtualBuffers\__init__.py:1201
 msgid "no next visited link"
 msgstr "ei enempää avattuja linkkejä"
 
-#: virtualBuffers\__init__.py:1190
+#: virtualBuffers\__init__.py:1202
 msgid "moves to the previous visited link"
 msgstr "siirtää edellisen avatun linkin kohdalle"
 
-#: virtualBuffers\__init__.py:1190
+#: virtualBuffers\__init__.py:1202
 msgid "no previous visited link"
 msgstr "ei enempää edellisiä avattuja linkkejä"
 
-#: virtualBuffers\__init__.py:1191
+#: virtualBuffers\__init__.py:1203
 msgid "moves to the next unvisited link"
 msgstr "siirtää seuraavan avaamattoman linkin kohdalle"
 
-#: virtualBuffers\__init__.py:1191
+#: virtualBuffers\__init__.py:1203
 msgid "no next unvisited link"
 msgstr "ei enempää avaamattomia linkkejä"
 
-#: virtualBuffers\__init__.py:1192
+#: virtualBuffers\__init__.py:1204
 msgid "moves to the previous unvisited link"
 msgstr "siirtää edellisen avaamattoman linkin kohdalle"
 
-#: virtualBuffers\__init__.py:1192
+#: virtualBuffers\__init__.py:1204
 msgid "no previous unvisited link"
 msgstr "ei enempää edellisiä avaamattomia linkkejä"
 
-#: virtualBuffers\__init__.py:1193
+#: virtualBuffers\__init__.py:1205
 msgid "moves to the next form field"
 msgstr "siirtää seuraavan lomakekentän kohdalle"
 
-#: virtualBuffers\__init__.py:1193
+#: virtualBuffers\__init__.py:1205
 msgid "no next form field"
 msgstr "ei enempää lomakekenttiä"
 
-#: virtualBuffers\__init__.py:1194
+#: virtualBuffers\__init__.py:1206
 msgid "moves to the previous form field"
 msgstr "siirtää edellisen lomakekentän kohdalle"
 
-#: virtualBuffers\__init__.py:1194
+#: virtualBuffers\__init__.py:1206
 msgid "no previous form field"
 msgstr "ei enempää edellisiä lomakekenttiä"
 
-#: virtualBuffers\__init__.py:1195
+#: virtualBuffers\__init__.py:1207
 msgid "moves to the next list"
 msgstr "siirtää seuraavan luettelon kohdalle"
 
-#: virtualBuffers\__init__.py:1195
+#: virtualBuffers\__init__.py:1207
 msgid "no next list"
 msgstr "ei enempää luetteloita"
 
-#: virtualBuffers\__init__.py:1196
+#: virtualBuffers\__init__.py:1208
 msgid "moves to the previous list"
 msgstr "siirtää edellisen luettelon kohdalle"
 
-#: virtualBuffers\__init__.py:1196
+#: virtualBuffers\__init__.py:1208
 msgid "no previous list"
 msgstr "ei enempää edellisiä luetteloita"
 
-#: virtualBuffers\__init__.py:1197
+#: virtualBuffers\__init__.py:1209
 msgid "moves to the next list item"
 msgstr "siirtää seuraavaan luettelon kohtaan"
 
-#: virtualBuffers\__init__.py:1197
+#: virtualBuffers\__init__.py:1209
 msgid "no next list item"
 msgstr "ei enempää luettelon kohtia"
 
-#: virtualBuffers\__init__.py:1198
+#: virtualBuffers\__init__.py:1210
 msgid "moves to the previous list item"
 msgstr "siirtää edelliseen luettelon kohtaan"
 
-#: virtualBuffers\__init__.py:1198
+#: virtualBuffers\__init__.py:1210
 msgid "no previous list item"
 msgstr "ei enempää edellisiä luettelon kohtia"
 
-#: virtualBuffers\__init__.py:1199
+#: virtualBuffers\__init__.py:1211
 msgid "moves to the next button"
 msgstr "siirtää seuraavan painikkeen kohdalle"
 
-#: virtualBuffers\__init__.py:1199
+#: virtualBuffers\__init__.py:1211
 msgid "no next button"
 msgstr "ei enempää painikkeita"
 
-#: virtualBuffers\__init__.py:1200
+#: virtualBuffers\__init__.py:1212
 msgid "moves to the previous button"
 msgstr "siirtää edellisen painikkeen kohdalle"
 
-#: virtualBuffers\__init__.py:1200
+#: virtualBuffers\__init__.py:1212
 msgid "no previous button"
 msgstr "ei enempää edellisiä painikkeita"
 
-#: virtualBuffers\__init__.py:1201
+#: virtualBuffers\__init__.py:1213
 msgid "moves to the next edit field"
 msgstr "siirtää seuraavan muokkauskentän kohdalle"
 
-#: virtualBuffers\__init__.py:1201
+#: virtualBuffers\__init__.py:1213
 msgid "no next edit field"
 msgstr "ei enempää muokkauskenttiä"
 
-#: virtualBuffers\__init__.py:1202
+#: virtualBuffers\__init__.py:1214
 msgid "moves to the previous edit field"
 msgstr "siirtää edellisen muokkauskentän kohdalle"
 
-#: virtualBuffers\__init__.py:1202
+#: virtualBuffers\__init__.py:1214
 msgid "no previous edit field"
 msgstr "ei enempää edellisiä muokkauskenttiä"
 
-#: virtualBuffers\__init__.py:1203
+#: virtualBuffers\__init__.py:1215
 msgid "moves to the next frame"
 msgstr "siirtää seuraavan kehyksen kohdalle"
 
-#: virtualBuffers\__init__.py:1203
+#: virtualBuffers\__init__.py:1215
 msgid "no next frame"
 msgstr "ei enempää kehyksiä"
 
-#: virtualBuffers\__init__.py:1204
+#: virtualBuffers\__init__.py:1216
 msgid "moves to the previous frame"
 msgstr "siirtää edellisen kehyksen kohdalle"
 
-#: virtualBuffers\__init__.py:1204
+#: virtualBuffers\__init__.py:1216
 msgid "no previous frame"
 msgstr "ei enempää edellisiä kehyksiä"
 
-#: virtualBuffers\__init__.py:1205
+#: virtualBuffers\__init__.py:1217
 msgid "moves to the next separator"
 msgstr "siirtää seuraavan erottimen kohdalle"
 
-#: virtualBuffers\__init__.py:1205
+#: virtualBuffers\__init__.py:1217
 msgid "no next separator"
 msgstr "ei enempää erottimia"
 
-#: virtualBuffers\__init__.py:1206
+#: virtualBuffers\__init__.py:1218
 msgid "moves to the previous separator"
 msgstr "siirtää edellisen erottimen kohdalle"
 
-#: virtualBuffers\__init__.py:1206
+#: virtualBuffers\__init__.py:1218
 msgid "no previous separator"
 msgstr "ei enempää edellisiä erottimia"
 
-#: virtualBuffers\__init__.py:1207
+#: virtualBuffers\__init__.py:1219
 msgid "moves to the next radio button"
 msgstr "siirtää seuraavan valintapainikkeen kohdalle"
 
-#: virtualBuffers\__init__.py:1207
+#: virtualBuffers\__init__.py:1219
 msgid "no next radio button"
 msgstr "ei enempää valintapainikkeita"
 
-#: virtualBuffers\__init__.py:1208
+#: virtualBuffers\__init__.py:1220
 msgid "moves to the previous radio button"
 msgstr "siirtää edellisen valintapainikkeen kohdalle"
 
-#: virtualBuffers\__init__.py:1208
+#: virtualBuffers\__init__.py:1220
 msgid "no previous radio button"
 msgstr "ei enempää edellisiä valintapainikkeita"
 
-#: virtualBuffers\__init__.py:1209
+#: virtualBuffers\__init__.py:1221
 msgid "moves to the next combo box"
 msgstr "siirtää seuraavan yhdistelmäruudun kohdalle"
 
-#: virtualBuffers\__init__.py:1209
+#: virtualBuffers\__init__.py:1221
 msgid "no next combo box"
 msgstr "ei enempää yhdistelmäruutuja"
 
-#: virtualBuffers\__init__.py:1210
+#: virtualBuffers\__init__.py:1222
 msgid "moves to the previous combo box"
 msgstr "siirtää edellisen yhdistelmäruudun kohdalle"
 
-#: virtualBuffers\__init__.py:1210
+#: virtualBuffers\__init__.py:1222
 msgid "no previous combo box"
 msgstr "ei enempää edellisiä yhdistelmäruutuja"
 
-#: virtualBuffers\__init__.py:1211
+#: virtualBuffers\__init__.py:1223
 msgid "moves to the next check box"
 msgstr "siirtää seuraavan valintaruudun kohdalle"
 
-#: virtualBuffers\__init__.py:1211
+#: virtualBuffers\__init__.py:1223
 msgid "no next check box"
 msgstr "ei enempää valintaruutuja"
 
-#: virtualBuffers\__init__.py:1212
+#: virtualBuffers\__init__.py:1224
 msgid "moves to the previous check box"
 msgstr "siirtää edellisen valintaruudun kohdalle"
 
-#: virtualBuffers\__init__.py:1212
+#: virtualBuffers\__init__.py:1224
 msgid "no previous check box"
 msgstr "ei enempää edellisiä valintaruutuja"
 
-#: virtualBuffers\__init__.py:1213
+#: virtualBuffers\__init__.py:1225
 msgid "moves to the next graphic"
 msgstr "siirtää seuraavan kuvan kohdalle"
 
-#: virtualBuffers\__init__.py:1213
+#: virtualBuffers\__init__.py:1225
 msgid "no next graphic"
 msgstr "ei enempää kuvia"
 
-#: virtualBuffers\__init__.py:1214
+#: virtualBuffers\__init__.py:1226
 msgid "moves to the previous graphic"
 msgstr "siirtää edellisen kuvan kohdalle"
 
-#: virtualBuffers\__init__.py:1214
+#: virtualBuffers\__init__.py:1226
 msgid "no previous graphic"
 msgstr "ei enempää edellisiä kuvia"
 
-#: virtualBuffers\__init__.py:1215
+#: virtualBuffers\__init__.py:1227
 msgid "moves to the next block quote"
 msgstr "siirtää seuraavan kappaleenvaihdollisen sisennyksen kohdalle"
 
-#: virtualBuffers\__init__.py:1215
+#: virtualBuffers\__init__.py:1227
 msgid "no next block quote"
 msgstr "ei enempää kappaleenvaihdollisia sisennyksiä"
 
-#: virtualBuffers\__init__.py:1216
+#: virtualBuffers\__init__.py:1228
 msgid "moves to the previous block quote"
 msgstr "siirtää edellisen kappaleenvaihdollisen sisennyksen kohdalle"
 
-#: virtualBuffers\__init__.py:1216
+#: virtualBuffers\__init__.py:1228
 msgid "no previous block quote"
 msgstr "ei enempää edellisiä kappaleenvaihdollisia sisennyksiä"
 
-#: virtualBuffers\__init__.py:1217
+#: virtualBuffers\__init__.py:1229
 msgid "no more text after a block of links"
 msgstr "ei enempää linkkilohkon jälkeistä tekstiä"
 
-#: virtualBuffers\__init__.py:1217
+#: virtualBuffers\__init__.py:1229
 msgid "skips forward past a block of links"
 msgstr "Siirtää eteenpäin linkkilohkon  jälkeiseen tekstiin"
 
-#: virtualBuffers\__init__.py:1218
+#: virtualBuffers\__init__.py:1230
 msgid "no more text before a block of links"
 msgstr "Ei enempää ennen linkkilohkoa olevaa tekstiä"
 
-#: virtualBuffers\__init__.py:1218
+#: virtualBuffers\__init__.py:1230
 msgid "skips backward past a block of links"
 msgstr "Siirtää taaksepäin ennen linkkilohkoa olevaan tekstiin"
 
-#: virtualBuffers\__init__.py:1219
+#: virtualBuffers\__init__.py:1231
 msgid "moves to the next landmark"
 msgstr "siirtää seuraavan maamerkin kohdalle"
 
-#: virtualBuffers\__init__.py:1219
+#: virtualBuffers\__init__.py:1231
 msgid "no next landmark"
 msgstr "ei enempää maamerkkejä"
 
-#: virtualBuffers\__init__.py:1220
+#: virtualBuffers\__init__.py:1232
 msgid "moves to the previous landmark"
 msgstr "siirtää edellisen maamerkin kohdalle"
 
-#: virtualBuffers\__init__.py:1220
+#: virtualBuffers\__init__.py:1232
 msgid "no previous landmark"
 msgstr "ei enempää edellisiä maamerkkejä"

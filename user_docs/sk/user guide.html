@@ -62,7 +62,7 @@
 <ul>
 <li><a href="#8.1">8.1. Príkazy rýchlej navigácie</a></li>
 <li><a href="#8.2">8.2. Formuláre, režim fokusu a prehliadací režim</a></li>
-<li><a href="#8.3">8.3. Zoznam odkazov</a></li>
+<li><a href="#8.3">8.3. Zoznam prvkov</a></li>
 </ul>
 <li><a href="#9">9. Ako získať viac informácií</a></li>
 </ul>
@@ -628,13 +628,10 @@ Súhrnnejšie dokumenty, ako napríklad vebové stránky, nám NVDA dokáže zob
 Virtuálny prehliadač je plošné zobrazenie obsahu štruktúrovaných dokumentov ako napríklad webových stránok. Na navigáciu po obsahu je možno použiť kurzorové klávesy a počas posúvania sú čítané informácie o prvkoch dokumentu.
 </p>
 <p>
-Vo virtuálnom prehliadači sú dva režimy navigácie. Prehliadací režim znamená, že sa môžete po texte pohybovať virtuálnym kurzorom. Režim fokusu umožňuje priamu interakciu s formulárovými prvkami ako napr. editačným poľom, zoznamovým rámikom štandardne na to určenými klávesmi. Ak v prehliadacom režime kliknete alebo stlačením klávesu tab prejdete na prvok, ktorý si vyžaduje režim fokusu, tento bude automaticky zapnutý. Prepínať medzi týmito dvoma režimami je tiež možné ručne stláčaním NVDA+medzerník. Ak bol režim fokusu zapnutý dôsledkom kliknutia alebo zmeny fokusu, po zmene fokusu na položku, ktorá si nevyžaduje režim fokusu bude opetovne zapnutý prehliadací režim. Ak ale režim fokusu zapnete ručne, opetovná zmena na prehliadací režim sa nevykoná. Prepnúť z režimu fokusu do prehliadacieho režimu môžete tiež stlačením klávesu escape. Automatické prepínanie týchto dvoch režimov je možné zakázať v dialógu virtuálny prehliadač.
+Vo virtuálnom prehliadači sú dva režimy navigácie. Prehliadací režim znamená, že sa môžete po texte pohybovať virtuálnym kurzorom. Režim fokusu umožňuje priamu interakciu s formulárovými prvkami ako napr. editačným poľom, zoznamovým rámikom štandardne na to určenými klávesmi. Ak v prehliadacom režime kliknete alebo stlačením klávesu tab prejdete na prvok, ktorý si vyžaduje režim fokusu, tento bude automaticky zapnutý. Režim fokusu je pre interaktívne prvky možné tiež zapnúť stlačením klávesu enter alebo medzerníka. Prepínať medzi týmito dvoma režimami je tiež možné ručne stláčaním NVDA+medzerník. Ak bol režim fokusu zapnutý dôsledkom kliknutia alebo zmeny fokusu, po zmene fokusu na položku, ktorá si nevyžaduje režim fokusu bude opetovne zapnutý prehliadací režim. Ak ale režim fokusu zapnete ručne, opetovná zmena na prehliadací režim sa nevykoná. Prepnúť z režimu fokusu do prehliadacieho režimu môžete tiež stlačením klávesu escape. Automatické prepínanie týchto dvoch režimov je možné zakázať v dialógu virtuálny prehliadač.
 </p>
 <p>
 NVDA používa zobrazenie vo virtuálnom prehliadači rovnako pre Internet Explorer, ako aj pre Mozilla Firefox a Adobe Reader.
-</p>
-<p>
-Virtuálne prehliadače pre internet explorer a Adobe reader nie sú tak prepracované ako by sa očakávalo. Nie sú totiž stavané na kvalitné vysporiadanie sa s dinamickými stránkami, rovnako ako s podporou zoznamov odkazov, či klávesovými skratkami prehliadača. Pre najlepšiu funkčnosť a využitie maximálnych možností použite program Mozila Firefox.
 </p>
 <h3 id="8.1">8.1. Príkazy rýchlej navigácie</h3>
 <p>
@@ -644,7 +641,7 @@ V prehliadacom režime NVDA podporuje jednoznakové príkazy pre rýchlejší po
 Za pomoci nich sa môžete posúvať na nasledujúce pole, v opačnom smere sa môžete pohybovať kombinovaním príkazov s klávesom shift. 
 </p>
 <p>
-Príkazy podporované novým aj starším prehliadačom:
+Podporované príkazy:
 </p>
 <ul>
 <li>h: nadpis</li>
@@ -652,13 +649,8 @@ Príkazy podporované novým aj starším prehliadačom:
 <li>i: položka zoznamu</li>
 <li>t: tabuľka</li>
 <li>k: odkaz</li>
-<li>p: odstavec - funguje len v staršom prehliadači. s Firefox 3 použite ctrl+šípka hore a ctrl+šípka dolu.</li>
+<li>n: text, ktorý nie je odkazom</li>
 <li>f: prvok formulára</li>
-</ul>
-<p>
-Skratky, ktoré nie sú podporované starším virtuálnym prehliadačom
-</p>
-<ul>
 <li>u: nenavštívený odkaz</li>
 <li>v: navštívený odkaz</li>
 <li>e: editačné pole</li>
@@ -670,6 +662,7 @@ Skratky, ktoré nie sú podporované starším virtuálnym prehliadačom
 >li>s: oddeľovač</li>
 <li>m: rámik</li>
 <li>g: grafika</li>
+<li>d: orientačný bod</li>
 <li>1-6: nadpis príslušnej úrovne</li>
 </ul>
 <h3 id="8.2">8.2. Formuláre, prehliadací režim a režim fokusu </h3>
@@ -679,9 +672,9 @@ Niekedy si budete želať pracovať s prvkami formulára tak, aby príkazy virtu
 <p>
 Tento režim sa automaticky zapne pri aktivovaní prvku formulára, no ak sa načíta nová stránka, režim sa automaticky vypne. 
 </p>
-<h3 id="8.3">8.3 Zoznam odkazov</h3>
+<h3 id="8.3">8.3 Zoznam prvkov</h3>
 <p>
-Pre sprístupnenie zoznamu odkazov v aktuálnom virtuálnom prehliadači, stlačte kláves NVDA+F7. V dialógovom okne, ktoré sa objaví si môžete vybrať odkaz, o ktorý máte záujem. Môžete naň premiestniť kurzor virtuálneho prehliadača, alebo aktivovať použitím príslušných tlačidiel.
+Dialóg zoznam prvkov, ktorý je dostupný po stlačení kombinácie NVDA+F7 vo virtuálnom prehliadači, zobrazuje zoznam odkazov, nadpisov alebo zoznam orientačných bodov. Orientačné body a nadpisy sú znázornené hierarchicky. Dialóg obsahuje editačné pole, pomocou ktorého je možné filtrovať obsah práve zobrazeného zoznamu. Pomocou výberového políčka je možné sa prepínať medzi jednotlivými typmi obsahu. Tlačidlami prejsť na alebo aktivovať vykonávate akcie pre prvky vybraté v zozname.
 </p>
 <h3 id="9">9. Ako získať viac informácií</h3>
 <p>

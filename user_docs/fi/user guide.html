@@ -4,7 +4,7 @@
 </head>
 <body>
 <h1>NVDA 0.6 käyttöohje</h1>
-<span>Päivitetty viimeksi 27. heinäkuuta 2009</span>
+<span>Päivitetty viimeksi 2. syyskuuta 2009</span>
 
 <h2>Sisällys</h2>
 <ul>
@@ -59,8 +59,8 @@
 <li><a href="#8">8. Näennäispuskurit</a></li>
 <ul>
 <li><a href="#8.1">8.1. Yksikirjaiminen navigointi</a></li>
-<li><a href="#8.2">8.2. Lomakkeet ja näennäispuskurin läpivientitila</a></li>
-<li><a href="#8.3">8.3. Linkkilista</a></li>
+<li><a href="#8.2">8.2. Lomakkeet ja kohdistustila</li>
+<li><a href="#8.3">8.3. Elementtiluettelo</a></li>
 </ul>
 <li><a href="#9">9. NVDA:n vianmääritys</a></li>
 </ul>
@@ -609,17 +609,14 @@ Nämä lisäominaisuudet eivät ole oletuksena käytössä, mutta jos haluat, voit otta
 Monimutkaiset, ei-muokattavat asiakirjat kuten web-sivut, esitetään NVDA:ssa näennäispuskurissa.
 </p>
 <p>
-Näennäispuskuri on tasainen esitys esim. web-sivusta, jossa voi liikkua nuolinäppäimillä. Liikkuessasi tekstin lisäksi luetaan tiedot, kuten onko kohdalla oleva teksti linkki, otsikko tms.
+Näennäispuskuri on tasattu esitys esim. web-sivusta, jossa voi liikkua nuolinäppäimillä. Liikkuessasi tekstin lisäksi luetaan tiedot, kuten onko kohdalla oleva teksti linkki, otsikko tms.
 </p>
 <p>
-Näennäispuskurissa on kaksi toimintatilaa. Selaustilassa voit liikkua tekstissä näennäiskohdistinta käyttäen. Kohdistustilassa voit olla suoraan vuorovaikutuksessa säädinten(muokkauskenttä, yhdistelmäruutu, valintapainike) kanssa millä tahansa normaalisti käyttämilläsi näppäimillä. Kun olet selaustilassa, NVDA vaihtaa automaattisesti kohdistustilaan siirtyessäsi sarkaimella tai napsauttaessasi hiirellä sellaisen säätimen kohdalle, joka edellyttää sitä. Voit vaihtaa kohdistustilaan myös manuaalisesti painamalla NVDA+välilyönti. Jos NVDA vaihtaa automaattisesti kohdistustilaan, selaustilaan palataan automaattisesti kun siirryt sarkaimella tai napsautat hiirellä johonkin, joka ei edellytä kohdistustilaa. Jos kuitenkin vaihdoit kohdistustilaan NVDA+välilyönnillä, kohdistustila on käytössä kunnes siirryt manuaalisesti takaisin selaustilaan. Voit milloin tahansa kohdistustilassa ollessasi vaihtaa takaisin selaustilaan painamalla Esc tai NVDA+välilyönti. Voit poistaa käytöstä automaattisen selaus- ja kohdistustilan Näennäispuskurin asetukset -valintaikkunasta, joka löytyy Asetukset-valikosta.
+Näennäispuskurissa on kaksi toimintatilaa. Selaustilassa voit liikkua tekstissä näennäiskohdistinta käyttäen. Kohdistustilassa voit olla suorassa vuorovaikutuksessa säädinten(muokkauskenttä, yhdistelmäruutu, valintapainike) kanssa millä tahansa normaalisti käyttämilläsi näppäimillä. Kun olet selaustilassa, NVDA vaihtaa automaattisesti kohdistustilaan siirtyessäsi sarkaimella tai napsauttaessasi hiirellä sellaisen säätimen kohdalle, joka edellyttää sitä. Huomaa, että Enterin tai välilyönnin painaminen tällaisten säädinten kohdalla vaihtaa myös kohdistustilaan. Lisäksi voit siirtyä kohdistustilaan manuaalisesti painamalla NVDA+välilyönti. Jos NVDA siirtyy automaattisesti kohdistustilaan, takaisin selaustilaan palataan painaessasi Enteriä, välilyöntiä tai Esciä, siirtyessäsi sarkaimella tai napsauttaessasi hiirellä johonkin, joka ei edellytä kohdistustilaa. Jos kuitenkin siirryit kohdistustilaan NVDA+välilyönnillä, se on käytössä kunnes siirryt manuaalisesti takaisin selaustilaan. Voit milloin tahansa kohdistustilassa ollessasi vaihtaa takaisin selaustilaan painamalla Esc tai NVDA+välilyönti. Voit poistaa käytöstä automaattisen selaus- ja kohdistustilan Näennäispuskurin asetukset -valintaikkunasta, joka löytyy Asetukset-valikosta.
 </p> 
 <p>
 NVDA käyttää tällä hetkellä näennäispuskureita dokumenttien lukemiseen Firefoxissa, Internet Explorerissa ja Adobe Readerissa.
 </p>
-<p>
-Huomaa, että Internet Explorerille ja Adobe Readerille tarkoitetut näennäispuskurit ovat paljon alkeellisempia ja niiden latautuminen kestää paljon kauemmin. Ne eivät myöskään pysty kovin hyvin käsittelemään dynaamista sisältöä, eivätkä ne tue linkkilistaa tai joitakin näennäispuskurin pikanäppäimiä. Kokeile internetin selaamiseen <a href="http://www.getfirefox.com/">Mozilla Firefoxia.</a>
-</p> 
 <h3 id="8.1">8.1. Yksikirjaiminen navigointi</h3>
 <p>
 NVDA:ssa on selaustilaa käytettäessä navigoinnin nopeuttamiseksi myös yksikirjaimisia komentoja, joilla voi siirtyä tiettyihin kenttiin näennäispuskurissa.
@@ -628,7 +625,7 @@ NVDA:ssa on selaustilaa käytettäessä navigoinnin nopeuttamiseksi myös yksikirjai
 Yksinään nämä komennot siirtävät seuraavan, ja Shift-näppäimen kanssa painettuna edellisen kentän kohdalle.
 </p>
 <p>
-Sekä vanhan että uuden näennäispuskurin tukemat komennot:
+Käytettävissä olevat komennot:
 </p>
 <ul>
 <li>h: otsikko</li>
@@ -636,13 +633,8 @@ Sekä vanhan että uuden näennäispuskurin tukemat komennot:
 <li>i: luettelon osa</li>
 <li>t: taulukko</li>
 <li>k: linkki</li>
-<li>p: kappale (käytetään vain vanhassa näennäispuskurissa, käytä uudessa Control+ylä/alanuoli-näppäimiä)</li>
+<li>n: siirtyy tekstiin, joka ei ole linkki</li>
 <li>f: lomakekenttä</li>
-</ul>
-<p>
-Komennot, joita vanha näennäispuskuri ei tue:
-</p>
-<ul>
 <li>u: avaamaton linkki</li>
 <li>v: avattu linkki</li>
 <li>e: muokkauskenttä</li>
@@ -654,15 +646,16 @@ Komennot, joita vanha näennäispuskuri ei tue:
 <li>s: erotin</li>
 <li>m: kehys</li>
 <li>g: kuva</li>
+<li>d: ARIA-maamerkki</li>
 <li>numerot 1 - 6: otsikot 1 - 6</li> 
 </ul>
-<h3 id="8.2">8.2. Lomakkeet ja kohdistus/selaustila</h3>
+<h3 id="8.2">8.2. Lomakkeet ja kohdistustila</h3>
 <p>
 Saatat joskus haluta tutkia lomakekenttiä ilman, että näennäispuskurin näppäinkomennot ovat tiellä. Kohdistustila on juuri tätä tarkoitusta varten. Se otetaan käyttöön ja poistetaan käytöstä painamalla NVDA+välilyönti.
 </p>
-<h3 id="8.3">8.3. Linkkilista</h3>
+<h3 id="8.3">8.3. Elementtiluettelo</h3>
 <p>
-Saadaksesi listan nykyisen näennäispuskurin linkeistä, paina NVDA+f7. Esiin tulevasta valintaikkunasta voit valita haluamasi linkin ja sitten joko siirtyä sen kohdalle tai avata sen käyttämällä tarjottuja painikkeita.
+Elementtiluettelo (avataan painamalla NVDA+f7 näennäispuskurin ollessa aktiivisena) antaa luettelon sivulla olevista linkeistä, otsikoista tai ARIA-maamerkeistä. Valintapainikkeilla voit valita näiden kolmen näytettävän elementtityypin väliltä. Valintaikkunassa on myös muokkauskenttä, jonka avulla voit suodattaa listaa etsiäksesi sivulta jotain tiettyä kohdetta. Voit siirtyä valitsemasi kohteen kohdalle tai avata sen käyttämällä valintaikkunan painikkeita.
 </p>
 <h3 id="9">9. NVDA:n vianmääritys</h3>
 <p>
