@@ -42,6 +42,10 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_READONLY)
 		if role==controlTypes.ROLE_UNKNOWN:
 			role=controlTypes.ROLE_TEXTFRAME
+		if role==controlTypes.ROLE_GRAPHIC:
+			# MSHTML puts the unavailable state on all graphics when the showing of graphics is disabled.
+			# This is rather annoying and irrelevant to our users, so discard it.
+			states.discard(controlTypes.STATE_UNAVAILABLE)
 		ariaRoles=attrs.get("HTMLAttrib::role", "").split(" ")
 		# Get the first landmark role, if any.
 		landmark=next((ar for ar in ariaRoles if ar in aria.landmarkRoles),None)
