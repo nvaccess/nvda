@@ -312,13 +312,21 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		return self._correctRelationForWindow(UIA(UIAElement=parentElement))
 
 	def _get_previous(self):
-		previousElement=UIAHandler.handler.baseTreeWalker.GetPreviousSiblingElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+		try:
+			previousElement=UIAHandler.handler.baseTreeWalker.GetPreviousSiblingElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+		except COMError:
+			log.debugWarning("Tree walker failed", exc_info=True)
+			return None
 		if not previousElement:
 			return None
 		return self._correctRelationForWindow(UIA(UIAElement=previousElement))
 
 	def _get_next(self):
-		nextElement=UIAHandler.handler.baseTreeWalker.GetNextSiblingElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+		try:
+			nextElement=UIAHandler.handler.baseTreeWalker.GetNextSiblingElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+		except COMError:
+			log.debugWarning("Tree walker failed", exc_info=True)
+			return None
 		if not nextElement:
 			return None
 		return self._correctRelationForWindow(UIA(UIAElement=nextElement))
