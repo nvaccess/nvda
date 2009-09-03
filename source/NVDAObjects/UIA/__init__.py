@@ -332,13 +332,21 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		return self._correctRelationForWindow(UIA(UIAElement=nextElement))
 
 	def _get_firstChild(self):
-		firstChildElement=UIAHandler.handler.baseTreeWalker.GetFirstChildElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+		try:
+			firstChildElement=UIAHandler.handler.baseTreeWalker.GetFirstChildElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+		except COMError:
+			log.debugWarning("Tree walker failed", exc_info=True)
+			return None
 		if not firstChildElement:
 			return None
 		return self._correctRelationForWindow(UIA(UIAElement=firstChildElement))
 
 	def _get_lastChild(self):
-		lastChildElement=UIAHandler.handler.baseTreeWalker.GetLastChildElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+		try:
+			lastChildElement=UIAHandler.handler.baseTreeWalker.GetLastChildElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
+		except COMError:
+			log.debugWarning("Tree walker failed", exc_info=True)
+			return None
 		if not lastChildElement:
 			return None
 		return self._correctRelationForWindow(UIA(UIAElement=lastChildElement))
