@@ -7,6 +7,8 @@
  */
 
 #include <cassert>
+#include <map>
+#include <algorithm>
 #include <windows.h>
 #include <oleacc.h>
 #include <oleidl.h>
@@ -96,7 +98,7 @@ inline IAccessible* getIAccessibleFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
 	return pacc;
 }
 
-inline void getIAccessibleInfo(IAccessible* pacc, int* role, int* states, wstring* keyboardShortcut) {
+inline void getIAccessibleInfo(IAccessible* pacc, wstring* name, int* role, wstring* value, int* states, wstring* description, wstring* keyboardShortcut) {
 	*role=0;
 	*states=0;
 	int res=0;
@@ -104,6 +106,13 @@ inline void getIAccessibleInfo(IAccessible* pacc, int* role, int* states, wstrin
 	varChild.vt=VT_I4;
 	varChild.lVal=0;
 	BSTR bstrVal=NULL;
+	if(pacc->get_accName(varChild,&bstrVal)==S_OK&&bstrVal!=NULL) {
+		name->append(bstrVal);
+		SysFreeString(bstrVal);
+		bstrVal=NULL;
+	} else {
+		DEBUG_MSG(L"IAccessible::get_accName failed");
+	}
 	VARIANT varRole;
 	VariantInit(&varRole);
 	res=pacc->get_accRole(varChild,&varRole);
@@ -113,6 +122,13 @@ inline void getIAccessibleInfo(IAccessible* pacc, int* role, int* states, wstrin
 		DEBUG_MSG(L"Failed to get role");
 	}
 	VariantClear(&varRole);
+	if(pacc->get_accValue(varChild,&bstrVal)==S_OK&&bstrVal!=NULL) {
+		value->append(bstrVal);
+		SysFreeString(bstrVal);
+		bstrVal=NULL;
+	} else {
+		DEBUG_MSG(L"IAccessible::get_accValue failed");
+	}
 	VARIANT varState;
 	VariantInit(&varState);
 	res=pacc->get_accState(varChild,&varState);
@@ -122,6 +138,13 @@ inline void getIAccessibleInfo(IAccessible* pacc, int* role, int* states, wstrin
 		DEBUG_MSG(L"Failed to get states");
 	}
 	VariantClear(&varState);
+	if(pacc->get_accDescription(varChild,&bstrVal)==S_OK&&bstrVal!=NULL) {
+		description->append(bstrVal);
+		SysFreeString(bstrVal);
+		bstrVal=NULL;
+	} else {
+		DEBUG_MSG(L"IAccessible::get_accDescription failed");
+	}
 	if(pacc->get_accKeyboardShortcut(varChild,&bstrVal)==S_OK&&bstrVal!=NULL) {
 		keyboardShortcut->append(bstrVal);
 		SysFreeString(bstrVal);
@@ -263,15 +286,15 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 
 #define macro_addHTMLAttributeToMap(attribName,attribsObj,attribsMap,tempVar,tempAttrObj) {\
 	attribsObj->getNamedItem(attribName,&tempAttrObj);\
-	if(tempAttribNode) {\
+	if(tempAttrObj) {\
 		VariantInit(&tempVar);\
-	tempAttribNode->get_nodeValue(&tempVar);\
-		if(tempVar.vt==VT_BSTR&&tempVar.bstrVal) {\
-			attribsMap[attribName]=tempVar.bstrVal;\
+	tempAttrObj->get_nodeValue(&tempVar);\
+		if(tempVar.vt==VT_BSTR&&tempVar.bstrVal&&SysStringLen(tempVar.bstrVal)>0) {\
+			attribsMap[L"HTMLAttrib::"##attribName]=tempVar.bstrVal;\
 		}\
 		VariantClear(&tempVar);\
-		tempAttribNode->Release();\
-		tempAttribNode=NULL;\
+		tempAttrObj->Release();\
+		tempAttrObj=NULL;\
 	}\
 }
 
@@ -303,6 +326,9 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	macro_addHTMLAttributeToMap(L"alt",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"title",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"src",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"onclick",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"onmousedown",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"onmouseup",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	//ARIA properties:
 	macro_addHTMLAttributeToMap(L"role",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-required",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
@@ -381,10 +407,110 @@ inline void fillTextFormattingForTextNode(VBufStorage_controlFieldNode_t* parent
 	fillTextFormatting_helper(pHTMLElement2,textNode);
 }
 
+inline fillVBuf_tableInfo* fillVBuf_helper_collectAndUpdateTableInfo(IHTMLDOMNode* pHTMLDOMNode, wstring nodeName, int ID, fillVBuf_tableInfo* tableInfoPtr, map<wstring,wstring>& attribsMap) {
+	map<wstring,wstring>::const_iterator tempIter;
+wostringstream tempStringStream;
+	//Many in-table elements identify a data table
+	if((nodeName.compare(L"THEAD")==0||nodeName.compare(L"TFOOT")==0||nodeName.compare(L"TH")==0||nodeName.compare(L"CAPTION")==0||nodeName.compare(L"COLGROUP")==0||nodeName.compare(L"ROWGROUP")==0)) {
+		if(tableInfoPtr) tableInfoPtr->definitData=true;
+	}
+if(nodeName.compare(L"TABLE")==0) {
+		tableInfoPtr=new fillVBuf_tableInfo;
+		tableInfoPtr->tableID=ID;
+		tableInfoPtr->curRowIndex=0;
+		tableInfoPtr->definitData=false;
+		//summary attribute suggests a data table
+		tempIter=attribsMap.find(L"HTMLAttrib::summary");
+		if(tempIter!=attribsMap.end()) {
+			tableInfoPtr->definitData=true;
+		}
+		//Collect tableID, and row and column counts
+		IHTMLTable* pHTMLTable=NULL;
+		pHTMLDOMNode->QueryInterface(IID_IHTMLTable,(void**)&pHTMLTable);
+		if(pHTMLTable) {
+			tempStringStream.str(L"");
+			tempStringStream<<ID;
+			attribsMap[L"table-id"]=tempStringStream.str();
+			long colCount=0;
+			pHTMLTable->get_cols(&colCount);
+			if(colCount>0) {
+				tempStringStream.str(L"");
+				tempStringStream<<colCount;
+				attribsMap[L"table-columncount"]=tempStringStream.str();
+			}
+			IHTMLElementCollection* pHTMLElementCollection=NULL;
+			pHTMLTable->get_rows(&pHTMLElementCollection);
+			if(pHTMLElementCollection) {
+				long rowCount=0;
+				pHTMLElementCollection->get_length(&rowCount);
+				if(rowCount>0) {
+					tempStringStream.str(L"");
+					tempStringStream<<rowCount;
+					attribsMap[L"table-rowcount"]=tempStringStream.str();
+				}
+				pHTMLElementCollection->Release();
+			}
+			pHTMLTable->Release();
+		}
+	} else if(tableInfoPtr&&nodeName.compare(L"TR")==0) {
+		IHTMLTableRow* pHTMLTableRow=NULL;
+		pHTMLDOMNode->QueryInterface(IID_IHTMLTableRow,(void**)&pHTMLTableRow);
+		if(pHTMLTableRow) {
+			pHTMLTableRow->get_rowIndex(&(tableInfoPtr->curRowIndex));
+			(tableInfoPtr->curRowIndex)++;
+			pHTMLTableRow->Release();
+		}
+	}
+	//Collect table cell information
+	if(tableInfoPtr&&(nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0)) {
+		tempStringStream.str(L"");
+		tempStringStream<<tableInfoPtr->tableID;
+		attribsMap[L"table-id"]=tempStringStream.str();
+		//A cell with the headers attribute is definitly a data table
+		tempIter=attribsMap.find(L"HTMLAttrib::headers");
+		if(tempIter!=attribsMap.end()) {
+			tableInfoPtr->definitData=true;
+		}
+		if(tableInfoPtr->curRowIndex>0) {
+			tempStringStream.str(L"");
+			tempStringStream<<tableInfoPtr->curRowIndex;
+			attribsMap[L"table-rownumber"]=tempStringStream.str();
+		}
+		IHTMLTableCell* pHTMLTableCell=NULL;
+		pHTMLDOMNode->QueryInterface(IID_IHTMLTableCell,(void**)&pHTMLTableCell);
+		if(pHTMLTableCell) {
+			long columnIndex=0;
+			pHTMLTableCell->get_cellIndex(&columnIndex);
+			columnIndex++;
+			if(columnIndex>0) {
+				tempStringStream.str(L"");
+				tempStringStream<<columnIndex;
+				attribsMap[L"table-columnnumber"]=tempStringStream.str();
+			}
+			long colSpan=0;
+			pHTMLTableCell->get_colSpan(&colSpan);
+			if(colSpan>1) {
+				tempStringStream.str(L"");
+				tempStringStream<<colSpan;
+				attribsMap[L"table-columnsspanned"]=tempStringStream.str();
+			}
+			long rowSpan=0;
+			pHTMLTableCell->get_rowSpan(&rowSpan);
+			if(rowSpan>1) {
+				tempStringStream.str(L"");
+				tempStringStream<<rowSpan;
+				attribsMap[L"table-rowsspanned"]=tempStringStream.str();
+			}
+			pHTMLTableCell->Release();
+		}
+	}
+	return tableInfoPtr;
+}
+
 VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr) {
 	BSTR tempBSTR=NULL;
-	IHTMLElement2* pHTMLElement2=NULL;
-	IHTMLCurrentStyle* pHTMLCurrentStyle=NULL;
+	wostringstream tempStringStream;
+
 	//Handle text nodes
 	{ 
 		tempBSTR=getTextFromHTMLDOMNode(pHTMLDOMNode);
@@ -396,6 +522,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			return textNode;
 		}
 	}
+
 	//Get node's ID
 	int ID=getIDFromHTMLDOMNode(pHTMLDOMNode);
 	if(ID==0) {
@@ -406,11 +533,12 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		DEBUG_MSG(L"Node already exists with docHandle "<<docHandle<<L" and ID "<<ID<<L", not adding to buffer");
 		return NULL;
 	}
+
+	//Find out block and visibility style
 	bool invisible=false;
 	bool isBlock=true;
 	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode, invisible, isBlock);
-	map<wstring,wstring> HTMLAttribsMap;
-	map<wstring,wstring>::const_iterator tempIter;
+
 	DEBUG_MSG(L"Trying to get IHTMLDOMNode::nodeName");
 	if(pHTMLDOMNode->get_nodeName(&tempBSTR)!=S_OK||!tempBSTR) {
 		DEBUG_MSG(L"Failed to get IHTMLDOMNode::nodeName");
@@ -418,344 +546,260 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 	wstring nodeName=tempBSTR;
 	SysFreeString(tempBSTR);
+	tempBSTR=NULL;
 	DEBUG_MSG(L"Got IHTMLDOMNode::nodeName of "<<nodeName);
+
+	//We can safely ignore script and comment tags
 	if(nodeName.compare(L"#COMMENT")==0||nodeName.compare(L"SCRIPT")==0) {
 		DEBUG_MSG(L"nodeName not supported");
 		return NULL;
 	}
-	getAttributesFromHTMLDOMNode(pHTMLDOMNode,nodeName,HTMLAttribsMap);
-	int IARole=0;
-	int IAStates=0;
-	wstring IAKeyboardShortcut;
-	IAccessible* pacc=getIAccessibleFromHTMLDOMNode(pHTMLDOMNode);
-	if(pacc) {
-		getIAccessibleInfo(pacc,&IARole,&IAStates,&IAKeyboardShortcut);
+
+	map<wstring,wstring> attribsMap;
+	map<wstring,wstring>::const_iterator tempIter;
+	attribsMap[L"IHTMLDOMNode::nodeName"]=nodeName;
+
+	//Collect needed HTML attributes
+	getAttributesFromHTMLDOMNode(pHTMLDOMNode,nodeName,attribsMap);
+
+	//input nodes of type hidden must be treeted as being invisible.
+	if(!invisible&&nodeName.compare(L"INPUT")==0) {
+		tempIter=attribsMap.find(L"HTMLAttrib::type");
+		if(tempIter!=attribsMap.end()&&tempIter->second.compare(L"hidden")==0) {
+			invisible=true;
+		}
 	}
+
+	//Add the node to the buffer
 	VBufStorage_controlFieldNode_t* node=new MshtmlVBufStorage_controlFieldNode_t(docHandle,ID,isBlock,this,pHTMLDOMNode);
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,node);
 	assert(parentNode);
 	previousNode=NULL;
-	parentNode->addAttribute(L"IHTMLDOMNode::nodeName",nodeName);
-	if(!IAKeyboardShortcut.empty()) {
-		parentNode->addAttribute(L"keyboardShortcut",IAKeyboardShortcut);
+
+	//We do not want to render any content for invisible nodes
+	if(invisible) {
+		return parentNode;
 	}
+
+	//Collect available IAccessible information
+	wstring IAName=L"";
+	int IARole=0;
+	wstring IAValue=L"";
+	int IAStates=0;
+	wstring IADescription=L"";
+	wstring IAKeyboardShortcut=L"";
+	IAccessible* pacc=getIAccessibleFromHTMLDOMNode(pHTMLDOMNode);
+	if(pacc) {
+		getIAccessibleInfo(pacc,&IAName,&IARole,&IAValue,&IAStates,&IADescription,&IAKeyboardShortcut);
+	}
+
+	//Is this node interactive?
+	bool isInteractive=(IAStates&STATE_SYSTEM_FOCUSABLE)||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end());
+	//Set up numbering for lists
+	int LIIndex=0;
+	if(nodeName.compare(L"OL")==0) {
+		//Ordered lists should number their list items
+		LIIndex=1;
+		LIIndexPtr=&LIIndex;
+	} else if((nodeName.compare(L"UL")==0||nodeName.compare(L"DL")==0)) {
+		//Unordered lists should not be numbered
+		LIIndexPtr=NULL;
+	}
+
+	//Collect and update table information
+	tableInfoPtr=fillVBuf_helper_collectAndUpdateTableInfo(pHTMLDOMNode, nodeName, ID, tableInfoPtr, attribsMap); 
+
+	//Generate content for nodes
+	wstring contentString=L"";
+	bool renderChildren=false;
 	if (nodeName.compare(L"HR")==0) {
-		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+		contentString=L" ";
+		isBlock=true;
 		IARole=ROLE_SYSTEM_SEPARATOR;
-		parentNode->setIsBlock(true);
-	} else if (!invisible && (nodeName.compare(L"OBJECT")==0 || nodeName.compare(L"APPLET")==0)) {
-		parentNode->setIsBlock(true);
-		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+	} else if ((nodeName.compare(L"OBJECT")==0 || nodeName.compare(L"APPLET")==0)) {
+		isBlock=true;
+		contentString=L" ";
+	} else if(nodeName.compare(L"LI")==0) {
+		renderChildren=true;
+		if(LIIndexPtr!=NULL) {
+			tempStringStream.str(L"");
+			tempStringStream<<*LIIndexPtr<<L". ";
+			contentString=tempStringStream.str();
+			(*LIIndexPtr)++;
+		} else {
+			tempStringStream.str(L"");
+			tempStringStream<<L"\x2022 "; //Bullet
+			contentString=tempStringStream.str();
+		}
+	} else if(nodeName.compare(L"TABLE")==0) {
+		renderChildren=true;
+ 		tempIter=attribsMap.find(L"HTMLAttrib::summary");
+		if(tempIter!=attribsMap.end()) {
+			contentString=tempIter->second;
+		}
+	} else if(nodeName.compare(L"IMG")==0) {
+		tempIter=attribsMap.find(L"HTMLAttrib::alt");
+		if(tempIter!=attribsMap.end()) {
+			contentString=tempIter->second;
+		} else {
+			tempIter=attribsMap.find(L"HTMLAttrib::title");
+			if(tempIter!=attribsMap.end()) {
+				contentString=tempIter->second;
+			} else if(isInteractive&&!IAValue.empty()) {
+				contentString=getNameForURL(IAValue);
+			} 
+		}
+	} else if(nodeName.compare(L"INPUT")==0) {
+		tempIter=attribsMap.find(L"HTMLAttrib::type");
+		if(tempIter!=attribsMap.end()&&tempIter->second.compare(L"file")==0) {
+			contentString=IAValue;
+			contentString.append(L"...");
+			IARole=ROLE_SYSTEM_PUSHBUTTON;
+		} else if(IARole==ROLE_SYSTEM_TEXT) {
+			contentString=IAValue;
+			if(IAStates&STATE_SYSTEM_PROTECTED) {
+				fill(contentString.begin(),contentString.end(),L'*');
+			}
+			if(!IAName.empty()) {
+				attribsMap[L"name"]=IAName;
+			}
+		} else if(IARole==ROLE_SYSTEM_PUSHBUTTON) {
+			contentString=IAName;
+		} else if(IARole==ROLE_SYSTEM_RADIOBUTTON||IARole==ROLE_SYSTEM_CHECKBUTTON) {
+			if(!IAName.empty()) {
+				attribsMap[L"name"]=IAName;
+			}
+		}
+		if(contentString.empty()) {
+			contentString=L" ";
+		}
+	} else if(nodeName.compare(L"SELECT")==0) {
+		if(!IAValue.empty()) {
+			contentString=IAValue;
+		} else {
+			contentString=L" ";
+		}
+		if(!IAName.empty()) {
+			attribsMap[L"name"]=IAName;
+		}
+	} else if(nodeName.compare(L"TEXTAREA")==0) {
+		isBlock=true;
+		if(!IAValue.empty()) {
+			contentString=IAValue;
+		} else {
+			contentString=L" ";
+		}
+		if(!IAName.empty()) {
+			attribsMap[L"name"]=IAName;
+		}
+	} else if(nodeName.compare(L"BR")==0) {
+		DEBUG_MSG(L"node is a br tag, adding a line feed as its text.");
+		contentString=L"\n";
+	} else {
+		renderChildren=true;
 	}
-	wostringstream tempStringStream;
+
+	//Add a textNode to the buffer containing any special content retreaved
+	if(!contentString.empty()) {
+		previousNode=buffer->addTextFieldNode(parentNode,previousNode,contentString);
+		fillTextFormattingForNode(pHTMLDOMNode,previousNode);
+	}
+
+	//record IAccessible information as attributes
+	if(!IAKeyboardShortcut.empty()) {
+		attribsMap[L"keyboardShortcut"]=IAKeyboardShortcut;
+	}
 	tempStringStream.str(L"");
 	tempStringStream<<IARole;
-	parentNode->addAttribute(L"IAccessible::role",tempStringStream.str());
+	attribsMap[L"IAccessible::role"]=tempStringStream.str();
 	for(int i=0;i<32;i++) {
 		int state=1<<i;
 		if(state&IAStates) {
 			tempStringStream.str(L"");
 			tempStringStream<<L"IAccessible::state_"<<state;
-			parentNode->addAttribute(tempStringStream.str(),L"1");
+			attribsMap[tempStringStream.str()]=L"1";
 		}
 	}
-	for(tempIter=HTMLAttribsMap.begin();tempIter!=HTMLAttribsMap.end();tempIter++) {
-		tempStringStream.str(L"");
-		tempStringStream<<L"HTMLAttrib::"<<tempIter->first;
-		parentNode->addAttribute(tempStringStream.str(),tempIter->second);
-	}
-	int LIIndex=0;
-	if(!invisible&&nodeName.compare(L"OL")==0) {
-		//Ordered lists should number their list items
-		LIIndex=1;
-		LIIndexPtr=&LIIndex;
-	} else if(!invisible&&(nodeName.compare(L"UL")==0||nodeName.compare(L"DL")==0)) {
-		//Unordered lists should not be numbered
-		LIIndexPtr=NULL;
-	}
-	if(!invisible&&nodeName.compare(L"LI")==0) {
-		if(LIIndexPtr!=NULL) {
-			tempStringStream.str(L"");
-			tempStringStream<<*LIIndexPtr<<L". ";
-			previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempStringStream.str());
-			(*LIIndexPtr)++;
-		} else {
-			tempStringStream.str(L"");
-			tempStringStream<<L"\x2022 "; //Bullet
-			previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempStringStream.str());
-		}
-		fillTextFormattingForTextNode(parentNode,static_cast<VBufStorage_textFieldNode_t*>(previousNode));
-	}
-	//Many in-table elements identify a data table
-	if(!invisible&&(nodeName.compare(L"THEAD")==0||nodeName.compare(L"TFOOT")==0||nodeName.compare(L"TH")==0||nodeName.compare(L"CAPTION")==0||nodeName.compare(L"COLGROUP")==0||nodeName.compare(L"ROWGROUP")==0)) {
-		if(tableInfoPtr) tableInfoPtr->definitData=true;
-	}
-	if(!invisible&&nodeName.compare(L"TABLE")==0) {
-		tableInfoPtr=new fillVBuf_tableInfo;
-		tableInfoPtr->tableID=ID;
-		tableInfoPtr->curRowIndex=0;
-		tableInfoPtr->definitData=false;
-		//Find summary attribute and add it as a text node.
-		tempIter=HTMLAttribsMap.find(L"summary");
-		if(tempIter!=HTMLAttribsMap.end()&&!tempIter->second.empty()) {
-			previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempIter->second);
-			fillTextFormattingForNode(pHTMLDOMNode,previousNode);
-			tableInfoPtr->definitData=true;
-		}
-		//Collect tableID, and row and column counts
-		IHTMLTable* pHTMLTable=NULL;
-		pHTMLDOMNode->QueryInterface(IID_IHTMLTable,(void**)&pHTMLTable);
-		if(pHTMLTable) {
-			tempStringStream.str(L"");
-			tempStringStream<<ID;
-			parentNode->addAttribute(L"table-id",tempStringStream.str());
-			long colCount=0;
-			pHTMLTable->get_cols(&colCount);
-			if(colCount>0) {
-				tempStringStream.str(L"");
-				tempStringStream<<colCount;
-				parentNode->addAttribute(L"table-columncount",tempStringStream.str());
-			}
-			IHTMLElementCollection* pHTMLElementCollection=NULL;
-			pHTMLTable->get_rows(&pHTMLElementCollection);
-			if(pHTMLElementCollection) {
-				long rowCount=0;
-				pHTMLElementCollection->get_length(&rowCount);
-				if(rowCount>0) {
-					tempStringStream.str(L"");
-					tempStringStream<<rowCount;
-					parentNode->addAttribute(L"table-rowcount",tempStringStream.str());
-				}
-				pHTMLElementCollection->Release();
-			}
-			pHTMLTable->Release();
-		}
-	}
-	//Collect row information
-	if(tableInfoPtr&&!invisible&&nodeName.compare(L"TR")==0) {
-		IHTMLTableRow* pHTMLTableRow=NULL;
-		pHTMLDOMNode->QueryInterface(IID_IHTMLTableRow,(void**)&pHTMLTableRow);
-		if(pHTMLTableRow) {
-			pHTMLTableRow->get_rowIndex(&(tableInfoPtr->curRowIndex));
-			(tableInfoPtr->curRowIndex)++;
-			pHTMLTableRow->Release();
-		}
-	}
-	//Collect table cell information
-	if(tableInfoPtr&&!invisible&&(nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0)) {
-		tempStringStream.str(L"");
-		tempStringStream<<tableInfoPtr->tableID;
-		parentNode->addAttribute(L"table-id",tempStringStream.str());
-		//A cell with the headers attribute is definitly a data table
-		tempIter=HTMLAttribsMap.find(L"headers");
-		if(tempIter!=HTMLAttribsMap.end()&&!tempIter->second.empty()) {
-			tableInfoPtr->definitData=true;
-		}
-		if(tableInfoPtr->curRowIndex>0) {
-			tempStringStream.str(L"");
-			tempStringStream<<tableInfoPtr->curRowIndex;
-			parentNode->addAttribute(L"table-rownumber",tempStringStream.str());
-		}
-		IHTMLTableCell* pHTMLTableCell=NULL;
-		pHTMLDOMNode->QueryInterface(IID_IHTMLTableCell,(void**)&pHTMLTableCell);
-		if(pHTMLTableCell) {
-			long columnIndex=0;
-			pHTMLTableCell->get_cellIndex(&columnIndex);
-			columnIndex++;
-			if(columnIndex>0) {
-				tempStringStream.str(L"");
-				tempStringStream<<columnIndex;
-				parentNode->addAttribute(L"table-columnnumber",tempStringStream.str());
-			}
-			long colSpan=0;
-			pHTMLTableCell->get_colSpan(&colSpan);
-			if(colSpan>1) {
-				tempStringStream.str(L"");
-				tempStringStream<<colSpan;
-				parentNode->addAttribute(L"table-columnsspanned",tempStringStream.str());
-			}
-			long rowSpan=0;
-			pHTMLTableCell->get_rowSpan(&rowSpan);
-			if(rowSpan>1) {
-				tempStringStream.str(L"");
-				tempStringStream<<rowSpan;
-				parentNode->addAttribute(L"table-rowsspanned",tempStringStream.str());
-			}
-			pHTMLTableCell->Release();
-		}
-	}
-	if(invisible) {
-		DEBUG_MSG(L"Node is invisible, not rendering any content");
-	} else if(nodeName.compare(L"IMG")==0) {
-		bool isURL=False;
-		tempIter=HTMLAttribsMap.find(L"alt");
-		if(tempIter==HTMLAttribsMap.end()||tempIter->second.empty()) {
-			tempIter=HTMLAttribsMap.find(L"title");
-			if(tempIter==HTMLAttribsMap.end()||tempIter->second.empty()) {
-				tempIter=HTMLAttribsMap.find(L"src");
-				isURL=True;
-			}
-		}
-		if(tempIter!=HTMLAttribsMap.end()&&!tempIter->second.empty()) {
-			if(isURL) {
-				wstring src=getNameForURL(tempIter->second);
-				previousNode=buffer->addTextFieldNode(parentNode,previousNode,src);
-			} else {
-				previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempIter->second);
-			}
-			fillTextFormattingForNode(pHTMLDOMNode,previousNode);
-		}
-	} else if(nodeName.compare(L"INPUT")==0) {
-		tempIter=HTMLAttribsMap.find(L"type");
-		if(tempIter!=HTMLAttribsMap.end()&&tempIter->second.compare(L"hidden")==0) {
-			DEBUG_MSG(L"Node is input of type hidden, ignoring");
-			return parentNode;
-		}
-		bool usesValue=true;
-		bool usesTitle=true;
-		bool isProtected=false;
-		bool isFileUpload=false;
-		if(tempIter!=HTMLAttribsMap.end()) {
-			if(tempIter->second.compare(L"password")==0) {
-				isProtected=true;
-				usesTitle=false;
-			} else if(tempIter->second.compare(L"file")==0) {
-				isFileUpload=true;
-				usesTitle=false;
-			} else if(tempIter->second.compare(L"text")==0) {
-				usesTitle=false;
-			} else if(tempIter->second.compare(L"checkbox")==0||tempIter->second.compare(L"radio")==0) {
-				usesValue=false;
-			}
-		}
-		if(usesValue) {
-			tempIter=HTMLAttribsMap.find(L"value");
-			wstring inputValue=(tempIter!=HTMLAttribsMap.end())?tempIter->second:L"";
-			//IE does not keep the value of passwords secure
-			if(isProtected) {
-				for(wstring::iterator i=inputValue.begin();i!=inputValue.end();i++) {
-					*i=L'*';
-				}
-			} else if(isFileUpload) {
-				inputValue+=L"...";
-				tempStringStream.str(L"");
-				tempStringStream<<ROLE_SYSTEM_PUSHBUTTON;
-				parentNode->addAttribute(L"IAccessible::role",tempStringStream.str());
-			}
-			if(!inputValue.empty()) {
-				previousNode=buffer->addTextFieldNode(parentNode,previousNode,inputValue);
-			}
-		}
-		if(previousNode==NULL&&usesTitle) {
-			tempIter=HTMLAttribsMap.find(L"title");
-			if(tempIter!=HTMLAttribsMap.end()&&!tempIter->second.empty()) {
-				previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempIter->second);
-			}
-		}
-		if(previousNode==NULL) {
-			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
-		}
-		if(previousNode) {
-			fillTextFormattingForNode(pHTMLDOMNode,previousNode);
-		}
-		return parentNode;
-	} else if(nodeName.compare(L"SELECT")==0) {
-		bool gotSelection=false;
-		IHTMLSelectElement* pHTMLSelectElement=NULL;
-		pHTMLDOMNode->QueryInterface(IID_IHTMLSelectElement,(void**)&pHTMLSelectElement);
-		if(pHTMLSelectElement) {
-			long selectedIndex=-1;
-			pHTMLSelectElement->get_selectedIndex(&selectedIndex);
-			if(selectedIndex>=0) {
-				IDispatch* pDispatch=NULL;
-				VARIANT varItem;
-				varItem.vt=VT_I4;
-				varItem.lVal=selectedIndex;
-				VARIANT varSubItem;
-				varSubItem.vt=VT_I4;
-				varSubItem.lVal=0;
-				pHTMLSelectElement->item(varItem,varSubItem,&pDispatch);
-				if(pDispatch) {
-					IHTMLDOMNode* selectedPHTMLDOMNode=NULL;
-					pDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&selectedPHTMLDOMNode);
-					if(selectedPHTMLDOMNode) {
-						previousNode=this->fillVBuf(buffer,parentNode,previousNode,selectedPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr);
-						selectedPHTMLDOMNode->Release();
-						gotSelection=(previousNode&&(previousNode->getLength()>0));
-					}
-					pDispatch->Release();
+
+	//Render content of children if we are allowed to
+	if(renderChildren) {
+		//For children of frames we must get the child document via IAccessible
+		if(nodeName.compare(L"FRAME")==0||nodeName.compare(L"IFRAME")==0) {
+			DEBUG_MSG(L"using getRoodDOMNodeOfHTMLFrame to get the frame's child");
+			if(pacc) {
+				IHTMLDOMNode* childPHTMLDOMNode=getRootDOMNodeFromIAccessibleFrame(pacc);
+				if(childPHTMLDOMNode) {
+					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr);
+					childPHTMLDOMNode->Release();
 				}
 			}
-			pHTMLSelectElement->Release();
-		}
-		if(!gotSelection) {
-			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
-		}
-	} else if(nodeName.compare(L"BR")==0) {
-		DEBUG_MSG(L"node is a br tag, adding a line feed as its text.");
-		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L"\n");
-	} else if(nodeName.compare(L"FRAME")==0||nodeName.compare(L"IFRAME")==0) {
-		DEBUG_MSG(L"using getRoodDOMNodeOfHTMLFrame to get the frame's child");
-		if(pacc) {
-			IHTMLDOMNode* childPHTMLDOMNode=getRootDOMNodeFromIAccessibleFrame(pacc);
-			if(childPHTMLDOMNode) {
-				previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr);
-				childPHTMLDOMNode->Release();
-			}
-		}
-	} else {
-		IHTMLDOMChildrenCollection* pHTMLDOMChildrenCollection=NULL;
-		DEBUG_MSG(L"Getting IHTMLDOMNode::childNodes");
-		IDispatch* pDispatch=NULL;
-		if(pHTMLDOMNode->get_childNodes(&pDispatch)==S_OK) {
+		} else { //use childNodes
 			IHTMLDOMChildrenCollection* pHTMLDOMChildrenCollection=NULL;
-			if(pDispatch->QueryInterface(IID_IHTMLDOMChildrenCollection,(void**)&pHTMLDOMChildrenCollection)==S_OK) {
-				DEBUG_MSG(L"Got IHTMLDOMNode::childNodes");
-				DEBUG_MSG(L"Getting IHTMLDOMChildrenCollection::length");
-				long length=0;
-				pHTMLDOMChildrenCollection->get_length(&length);
-				DEBUG_MSG(L"length "<<length);
-				for(int i=0;i<length;i++) {
-					DEBUG_MSG(L"Fetching child "<<i);
-					IDispatch* childPDispatch=NULL;
-					if(pHTMLDOMChildrenCollection->item(i,&childPDispatch)!=S_OK) {
-						continue;
-					}
-					IHTMLDOMNode* childPHTMLDOMNode=NULL;
-					if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
-						VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr);
-						if(tempNode) {
-							previousNode=tempNode;
+			DEBUG_MSG(L"Getting IHTMLDOMNode::childNodes");
+			IDispatch* pDispatch=NULL;
+			if(pHTMLDOMNode->get_childNodes(&pDispatch)==S_OK) {
+				IHTMLDOMChildrenCollection* pHTMLDOMChildrenCollection=NULL;
+				if(pDispatch->QueryInterface(IID_IHTMLDOMChildrenCollection,(void**)&pHTMLDOMChildrenCollection)==S_OK) {
+					DEBUG_MSG(L"Got IHTMLDOMNode::childNodes");
+					DEBUG_MSG(L"Getting IHTMLDOMChildrenCollection::length");
+					long length=0;
+					pHTMLDOMChildrenCollection->get_length(&length);
+					DEBUG_MSG(L"length "<<length);
+					for(int i=0;i<length;i++) {
+						DEBUG_MSG(L"Fetching child "<<i);
+						IDispatch* childPDispatch=NULL;
+						if(pHTMLDOMChildrenCollection->item(i,&childPDispatch)!=S_OK) {
+							continue;
 						}
-						childPHTMLDOMNode->Release();
+						IHTMLDOMNode* childPHTMLDOMNode=NULL;
+						if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
+							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr);
+							if(tempNode) {
+								previousNode=tempNode;
+							}
+							childPHTMLDOMNode->Release();
+						}
+						childPDispatch->Release();
 					}
-					childPDispatch->Release();
+					pHTMLDOMChildrenCollection->Release();
 				}
-				pHTMLDOMChildrenCollection->Release();
+				pDispatch->Release();
 			}
-			pDispatch->Release();
 		}
 	}
-	if(pacc) pacc->Release();
-	if (!invisible && nodeName.compare(L"TEXTAREA")==0) {
-		if(parentNode->getLength()==0) 
-			buffer->addTextFieldNode(parentNode,previousNode,L" ");
+
+	//We no longer need the IAccessible
+	if(pacc) {
+		pacc->Release();
+		pacc=NULL;
 	}
-	if(!invisible&&nodeName.compare(L"TABLE")==0) {
+
+	//Update attributes with table info
+	if(nodeName.compare(L"TABLE")==0) {
 		assert(tableInfoPtr);
 		if(!tableInfoPtr->definitData) {
-			parentNode->addAttribute(L"table-layout",L"1");
+			attribsMap[L"table-layout"]=L"1";
 		}
 		delete tableInfoPtr;
 		tableInfoPtr=NULL;
 	}
+
 	//Table cells should always be represented by at least a space, but if a space, then they should not be block.
-	if(!invisible&&(nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0)) {
+	if((nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0)) {
 		if(parentNode->getLength()==0) {
-			parentNode->setIsBlock(false);
+			isBlock=false;
 			buffer->addTextFieldNode(parentNode,previousNode,L" ");
 		}
 	}
+
+	//Update block setting on node
+	parentNode->setIsBlock(isBlock);
+
+	//Add all the collected attributes to the node
+	for(tempIter=attribsMap.begin();tempIter!=attribsMap.end();tempIter++) {
+		parentNode->addAttribute(tempIter->first,tempIter->second);
+	}
+
 	return parentNode;
 }
 
