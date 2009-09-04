@@ -388,11 +388,13 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 			buffer->addTextFieldNode(parentNode->getParent(), parentNode->getPrevious(), name);
 		}
 
-		if (name && (role == ROLE_SYSTEM_RADIOBUTTON || role == ROLE_SYSTEM_CHECKBUTTON)) {
+		if (role == ROLE_SYSTEM_RADIOBUTTON || role == ROLE_SYSTEM_CHECKBUTTON) {
 			// Acrobat renders "Checked"/"Unchecked" as the text for radio buttons/check boxes, which is not what we want.
-			// Render the name as the text for radio buttons and check boxes.
-			if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name))
+			// Render the name (if any) as the text for radio buttons and check boxes.
+			if (name && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
 				previousNode = tempNode;
+			else
+				tempNode = NULL; // Signal no text.
 		} else if (tempNode = renderText(buffer, parentNode, previousNode, domNode))
 			previousNode = tempNode;
 
