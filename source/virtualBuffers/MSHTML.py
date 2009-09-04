@@ -18,6 +18,8 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		accRole=int(accRole) if isinstance(accRole,basestring) and accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		if 'HTMLAttrib::onclick' in attrs or 'HTMLAttrib::onmousedown' in attrs or 'HTMLAttrib::onmouseup' in attrs:
+			states.add(controlTypes.STATE_CLICKABLE)
 		if attrs.get('HTMLAttrib::aria-required','false')=='true':
 			states.add(controlTypes.STATE_REQUIRED)
 		if attrs.get('HTMLAttrib::aria-invalid','false')=='true':
