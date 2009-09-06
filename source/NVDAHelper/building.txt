@@ -4,7 +4,6 @@ Prerequisites:
 
 NVDAHelper needs The Microsoft Windows SDK, version 6.1 or later. You can find it here:
 http://msdn.microsoft.com/en-us/windows/bb980924.aspx
-Note this includes MSVC which is used to compile NVDAHelper.
 
  The gecko_ia2 virtual buffer backend requires the IAccessible2 IDL file. You can obtain it here:
 http://www.linuxfoundation.org/en/Accessibility/IAccessible2
@@ -23,8 +22,12 @@ Building the library:
 To build the library and all virtual buffer backends, open a command prompt, cd to the top-level directory of nvdaHelper and run the command scons.
 There is no need to use the MSVC environment command prompt, scons will locate what it needs automatically in any standard environment.
 
-By default a version with debugging symbols will be generated. To build a release version, provide release=1 on the commandline when running scons:
+By default a version with debugging symbols will be generated. To build a release version, provide release=1 on the command line when running scons:
 scons release=1
 
 To install the produced libraries in to your NVDA source directory, run the following command:
- scons install.
+scons install
+You will need to add release=1 to this command line as well if you want to install a release version.
+
+To build the 64 bit version of the libraries, specify TARGET_ARCH=x86_64 on the command line; e.g.:
+scons install release=1 TARGET_ARCH=x86_64
