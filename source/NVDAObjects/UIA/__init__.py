@@ -267,10 +267,13 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			states.add(controlTypes.STATE_FOCUSABLE)
 		if self.UIAElement.cachedIsPassword:
 			states.add(controlTypes.STATE_PROTECTED)
+		# Don't fetch the role unless we must, but never fetch it more than once.
+		role=None
 		if self.UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId):
-			states.add(controlTypes.STATE_SELECTABLE)
+			role=self.role
+			states.add(controlTypes.STATE_CHECKABLE if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTABLE)
 			if self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId):
-				states.add(controlTypes.STATE_SELECTED)
+				states.add(controlTypes.STATE_CHECKED if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTED)
 		try:
 			s=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
 		except COMError:
@@ -285,8 +288,9 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		except COMError:
 			s=UIAHandler.handler.reservedNotSupportedValue
 		if s!=UIAHandler.handler.reservedNotSupportedValue:
-			r=self.role
-			if r in (controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX) and s==UIAHandler.ToggleState_On:
+			if not role:
+				role=self.role
+			if role==controlTypes.ROLE_CHECKBOX and s==UIAHandler.ToggleState_On:
 				states.add(controlTypes.STATE_CHECKED)
 			elif s==UIAHandler.ToggleState_On:
 				states.add(controlTypes.STATE_PRESSED)
