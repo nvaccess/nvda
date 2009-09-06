@@ -108,7 +108,7 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 	float fontSize, red, green, blue;
 	if ((res = domNode->GetFontInfo(&fontStatus, &fontName, &fontSize, &fontFlags, &red, &green, &blue)) != S_OK) {
 		DEBUG_MSG(L"IPDDomNode::GetFontInfo returned " << res);
-		return NULL;
+		fontStatus = FontInfo_NoInfo;
 	}
 
 	if (fontStatus == FontInfo_MixedInfo) {
