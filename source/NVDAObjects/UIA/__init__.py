@@ -157,7 +157,11 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 
 	@classmethod
 	def objectWithFocus(cls,windowHandle=None):
-		UIAElement=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
+		try:
+			UIAElement=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
+		except COMError:
+			log.debugWarning("getFocusedElement failed", exc_info=True)
+			return None
 		return UIA(UIAElement=UIAElement)
 
 	def __new__(cls,windowHandle=None,UIAElement=None):
