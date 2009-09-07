@@ -233,7 +233,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 class MSHTML(IAccessible):
 
 	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD','HTML']
-	HTMLNodeNameEmbedList=['OBJECT','EMBED','APPLET']
+	HTMLNodeNameEmbedList=['OBJECT','EMBED','APPLET','FRAME','IFRAME']
 
 	@classmethod
 	def findBestClass(cls,clsList,kwargs):
