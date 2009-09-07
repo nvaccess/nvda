@@ -577,9 +577,6 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	@returns: True if the focus is valid and was handled, False otherwise.
 	@rtype: boolean
 	"""
-	#Ignore focus events on invisible windows
-	if not winUser.isWindowVisible(window):
-		return False
 	#Ignore focus  events on the parent of the desktop and taskbar
 	windowClassName=winUser.getClassName(window)
 	if windowClassName in ("Progman","Shell_TrayWnd"):
