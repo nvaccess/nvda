@@ -13,12 +13,7 @@ class AcrobatNode(IAccessible):
 		return super(AcrobatNode,self).IAccessibleFocusEventNeedsFocusedState
 
 	def event_valueChange(self):
-		# If this event indicates that a page is being replaced, this object will be an old object fetched from the IAccessible cache.
-		# ROLE_UNKNOWN indicates a dead page object.
-		# A read only edit field is probably the status text which is presented while a document is being rendered.
-		if (self.event_childID==0 and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle)
-			and (self.role==controlTypes.ROLE_UNKNOWN or (self.role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in self.states))
-		):
+		if self.event_childID==0 and self.event_objectID == winUser.OBJID_CLIENT and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
 			# Acrobat has indicated that a page has died and been replaced by a new one.
 			# The new page has the same event params, so we must bypass NVDA's IAccessible caching.
 			obj = getNVDAObjectFromEvent(self.windowHandle, -4, 0)
