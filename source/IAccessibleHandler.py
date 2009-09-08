@@ -325,7 +325,12 @@ def normalizeIAccessible(pacc):
 	if not isinstance(pacc,IAccessible2):
 		try:
 			s=pacc.QueryInterface(IServiceProvider)
-			pacc=s.QueryService(IAccessible._iid_,IAccessible2)
+			pacc2=s.QueryService(IAccessible._iid_,IAccessible2)
+			if not pacc2:
+				# QueryService should fail if IA2 is not supported, but some applications such as AIM 7 misbehave and return a null COM pointer.
+				# Treat this as if QueryService failed.
+				raise ValueError
+			pacc=pacc2
 		except:
 			pass
 	return pacc
