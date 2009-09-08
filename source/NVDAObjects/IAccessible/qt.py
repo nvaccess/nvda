@@ -4,8 +4,75 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import re
+from comtypes import COMError
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
+import eventHandler
+
+class Widget(IAccessible):
+	IAccessibleFocusEventNeedsFocusedState = False
+
+class Client(Widget):
+
+	def event_gainFocus(self):
+		if eventHandler.isPendingEvents("gainFocus"):
+			return
+
+		# If there is only one child, this is probably a widget container.
+		child = self.firstChild
+		if child and not child.next:
+			# Redirect the focus, since QT doesn't do it properly.
+			self.event_focusEntered()
+			eventHandler.executeEvent("gainFocus", child)
+			return
+
+		return super(Client, self).event_gainFocus()
+
+class Container(Widget):
+
+	def _get_activeChild(self):
+		# QT doesn't do accFocus properly, so find the active child ourselves.
+		child = self.firstChild
+		while child:
+			states = child.states
+			if controlTypes.STATE_FOCUSED in states or controlTypes.STATE_SELECTED in states:
+				return child
+			child = child.next
+		return None
+
+	def event_gainFocus(self):
+		if eventHandler.isPendingEvents("gainFocus"):
+			return
+
+		child = self.activeChild
+		if child:
+			# QT doesn't fire focus on the active child as it should, so redirect the focus.
+			self.event_focusEntered()
+			eventHandler.executeEvent("gainFocus", child)
+			return
+
+		return super(Container, self).event_gainFocus()
+
+class TreeViewItem(Widget):
+	RE_POSITION_INFO = re.compile(r"L(?P<level>\d)+, (?P<indexInGroup>\d)+ of (?P<similarItemsInGroup>\d)+ with \d+")
+
+	# The description and value should not be user visible.
+	description = None
+	value = None
+
+	def _get_positionInfo(self):
+		# QT encodes the position info in the accDescription.
+		try:
+			desc = self.IAccessibleObject.accDescription(self.IAccessibleChildID)
+		except COMError:
+			return super(TreeViewItem, self).positionInfo
+
+		m = self.RE_POSITION_INFO.match(desc)
+		if m:
+			return m.groupdict()
+
+		return super(TreeViewItem, self).positionInfo
 
 class Menu(IAccessible):
 
