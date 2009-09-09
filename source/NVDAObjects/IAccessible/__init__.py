@@ -266,17 +266,11 @@ the NVDAObject for IAccessible
 		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
 			try:
 				windowHandle=IAccessibleObject.windowHandle
-			except:
-				log.debugWarning("IAccessible2::windowHandle failed",exc_info=True)
+			except COMError, e:
+				log.debugWarning("IAccessible2::windowHandle failed: %s" % e)
 			#Mozilla Gecko: we can never use a MozillaWindowClass window
 			while windowHandle and winUser.getClassName(windowHandle)=="MozillaWindowClass":
 				windowHandle=winUser.getAncestor(windowHandle,winUser.GA_PARENT)
-		if not windowHandle and event_windowHandle:
-			windowHandle=event_windowHandle
-		if not windowHandle:
-			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
-		if not windowHandle:
-			raise RuntimeError("Can't get a window handle from IAccessible")
 		try:
 			Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
 		except:
@@ -287,6 +281,16 @@ the NVDAObject for IAccessible
 			event_objectID=Identity['objectID']
 		if event_childID is None and Identity and 'childID' in Identity:
 			event_childID=Identity['childID']
+		if not windowHandle and event_windowHandle:
+			windowHandle=event_windowHandle
+		if not windowHandle:
+			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
+		if not windowHandle:
+			log.debugWarning("Resorting to WindowFromPoint on accLocation")
+			left,top,width,height = IAccessibleObject.accLocation(0)
+			windowHandle=winUser.user32.WindowFromPoint(winUser.POINT(left,top))
+		if not windowHandle:
+			raise RuntimeError("Can't get a window handle from IAccessible")
 		if event_windowHandle is None:
 			event_windowHandle=windowHandle
 		if event_objectID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
