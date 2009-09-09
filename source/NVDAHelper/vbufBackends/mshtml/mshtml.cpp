@@ -593,6 +593,12 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		getIAccessibleInfo(pacc,&IAName,&IARole,&IAValue,&IAStates,&IADescription,&IAKeyboardShortcut);
 	}
 
+	//IE doesn't seem to support aria-label yet so we want to override IAName with it
+	tempIter=attribsMap.find(L"HTMLAttrib::aria-label");
+	if(tempIter!=attribsMap.end()) {
+		IAName=tempIter->second;
+	}
+
 	//Is this node interactive?
 	bool isInteractive=(IAStates&STATE_SYSTEM_FOCUSABLE)||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end());
 	//Set up numbering for lists
@@ -782,9 +788,17 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		if(isWhitespace(contentString.c_str())) length=0;
 	}
 	if(length==0) {
-		tempIter=attribsMap.find(L"HTMLAttrib::title");
-		if(tempIter!=attribsMap.end()) {
-			previousNode=buffer->addTextFieldNode(parentNode,NULL,tempIter->second);
+		contentString=L"";
+		if(!IAName.empty()) {
+			contentString=IAName;
+		} else {
+			tempIter=attribsMap.find(L"HTMLAttrib::title");
+			if(tempIter!=attribsMap.end()) {
+				contentString=tempIter->second;
+			}
+		}
+		if(!contentString.empty()) {
+			previousNode=buffer->addTextFieldNode(parentNode,NULL,contentString);
 			fillTextFormattingForNode(pHTMLDOMNode,previousNode);
 		}
 	}
