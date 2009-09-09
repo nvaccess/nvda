@@ -82,3 +82,8 @@ class Menu(IAccessible):
 		# The focus on the menu is invalid, so remove its focused state so it will be treated as such.
 		states.discard(controlTypes.STATE_FOCUSED)
 		return states
+
+class LayeredPane(Widget):
+	# QT < 4.6 uses ROLE_SYSTEM_IPADDRESS for layered pane.
+	# See QT task 258413.
+	role = controlTypes.ROLE_LAYEREDPANE
