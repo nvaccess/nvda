@@ -259,10 +259,14 @@ the NVDAObject for IAccessible
 		event_windowHandle=kwargs.get('event_windowHandle',None)
 		event_objectID=kwargs.get('event_objectID',None)
 		event_childID=kwargs.get('event_childID',None)
+
+		# If we have a window but no IAccessible, get the window from the IAccessible.
 		if windowHandle and not IAccessibleObject:
 			IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
 			if IAccessibleHandler.accNavigate(IAccessibleObject,IAccessibleChildID,oleacc.NAVDIR_PREVIOUS) or IAccessibleHandler.accNavigate(IAccessibleObject,IAccessibleChildID,oleacc.NAVDIR_NEXT):
 				IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_WINDOW,0)
+
+		# Try every trick in the book to get the window handle if we don't have it.
 		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
 			try:
 				windowHandle=IAccessibleObject.windowHandle
@@ -291,6 +295,8 @@ the NVDAObject for IAccessible
 			windowHandle=winUser.user32.WindowFromPoint(winUser.POINT(left,top))
 		if not windowHandle:
 			raise RuntimeError("Can't get a window handle from IAccessible")
+
+		# Set the event params based on our calculated/construction info if we must.
 		if event_windowHandle is None:
 			event_windowHandle=windowHandle
 		if event_objectID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
@@ -302,14 +308,17 @@ the NVDAObject for IAccessible
 				log.debugWarning("could not get IAccessible2::uniqueID to use as event_childID",exc_info=True)
 		if event_childID is None:
 			event_childID=IAccessibleChildID
+
 		kwargs['windowHandle']=windowHandle
 		kwargs['IAccessibleObject']=IAccessibleObject
 		kwargs['IAccessibleChildID']=IAccessibleChildID
 		kwargs['event_windowHandle']=event_windowHandle
 		kwargs['event_objectID']=event_objectID
 		kwargs['event_childID']=event_childID
+
 		if event_objectID==winUser.OBJID_CLIENT and JABHandler.isJavaWindow(windowHandle): 
 			clsList.append(JavaVMRoot)
+
 		role=0
 		if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
 			try:
@@ -319,6 +328,8 @@ the NVDAObject for IAccessible
 		if not role:
 			role=IAccessibleObject.accRole(IAccessibleChildID)
 		windowClassName=winUser.getClassName(windowHandle)
+
+		# Use window class name and role to search for a class match in our static map.
 		keys=[(windowClassName,role),(None,role),(windowClassName,None)]
 		normalizedWindowClassName=Window.normalizeWindowClassName(windowClassName)
 		if normalizedWindowClassName!=windowClassName:
@@ -336,6 +347,8 @@ the NVDAObject for IAccessible
 				newCls=globals()[classString]
 			if newCls:
 				clsList.append(newCls)
+
+		# Some special cases.
 		if windowClassName=="Internet Explorer_Server" and (event_objectID is None or event_objectID==winUser.OBJID_CLIENT or event_objectID>0):
 			MSHTML=__import__("MSHTML",globals(),locals(),[]).MSHTML
 			clsList.append(MSHTML)
@@ -348,10 +361,14 @@ the NVDAObject for IAccessible
 		if windowClassName.startswith('RichEdit') and winUser.getClassName(winUser.getAncestor(windowHandle,winUser.GA_PARENT)).startswith('bosa_sdm'):
 			sdmCls=__import__("msOffice",globals(),locals(),[]).RichEditSDMChild
 			clsList.append(sdmCls)
+
 		clsList.append(IAccessible)
+
 		if event_objectID==winUser.OBJID_CLIENT and event_childID==0:
+			# This is the main (client) area of the window, so we can use other classes at the window level.
 			return super(IAccessible,cls).findBestClass(clsList,kwargs)
 		else:
+			# This IAccessible does not represent the main part of the window, so we can only use IAccessible classes.
 			return clsList,kwargs
 
 	@classmethod
