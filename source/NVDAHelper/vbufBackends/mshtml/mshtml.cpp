@@ -774,6 +774,21 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		}
 	}
 
+	//A node that has no content, or its content is only some small whitespace should have title as its content
+	int length=parentNode->getLength();
+	if(length>0&&length<=3) {
+	contentString=L" ";
+		parentNode->getTextInRange(0,length,contentString,false);
+		if(isWhitespace(contentString.c_str())) length=0;
+	}
+	if(length==0) {
+		tempIter=attribsMap.find(L"HTMLAttrib::title");
+		if(tempIter!=attribsMap.end()) {
+			previousNode=buffer->addTextFieldNode(parentNode,NULL,tempIter->second);
+			fillTextFormattingForNode(pHTMLDOMNode,previousNode);
+		}
+	}
+
 	//We no longer need the IAccessible
 	if(pacc) {
 		pacc->Release();
