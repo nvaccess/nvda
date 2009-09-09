@@ -673,6 +673,12 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		if(contentString.empty()) {
 			contentString=L" ";
 		}
+	} else if(nodeName.compare(L"BUTTON")==0) {
+		if(!IAName.empty()) {
+			contentString=IAName;
+		} else {
+			contentString=L" ";
+		}
 	} else if(nodeName.compare(L"SELECT")==0) {
 		if(!IAValue.empty()) {
 			contentString=IAValue;
