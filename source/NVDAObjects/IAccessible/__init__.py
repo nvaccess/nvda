@@ -1328,7 +1328,6 @@ _staticMap={
 	("hh_kwd_vlist",oleacc.ROLE_SYSTEM_LIST):"hh.KeywordList",
 	("Scintilla",oleacc.ROLE_SYSTEM_CLIENT):"scintilla.Scintilla",
 	("MSOUNISTAT",oleacc.ROLE_SYSTEM_CLIENT):"msOffice.MSOUNISTAT",
-	("QWidget",None):"qt.Widget",
 	("QWidget",oleacc.ROLE_SYSTEM_CLIENT):"qt.Client",
 	("QWidget",oleacc.ROLE_SYSTEM_LIST):"qt.Container",
 	("QWidget",oleacc.ROLE_SYSTEM_OUTLINE):"qt.Container",
@@ -1336,4 +1335,5 @@ _staticMap={
 	("QWidget",oleacc.ROLE_SYSTEM_OUTLINEITEM):"qt.TreeViewItem",
 	("QPopup",oleacc.ROLE_SYSTEM_MENUPOPUP):"qt.Menu",
 	("QWidget",oleacc.ROLE_SYSTEM_IPADDRESS):"qt.LayeredPane",
+	("QWidget",oleacc.ROLE_SYSTEM_APPLICATION):"qt.Application",
 }

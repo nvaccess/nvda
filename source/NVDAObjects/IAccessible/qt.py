@@ -13,7 +13,7 @@ import eventHandler
 class Widget(IAccessible):
 	IAccessibleFocusEventNeedsFocusedState = False
 
-class Client(Widget):
+class Client(IAccessible):
 
 	def event_gainFocus(self):
 		if eventHandler.isPendingEvents("gainFocus"):
@@ -29,7 +29,7 @@ class Client(Widget):
 
 		return super(Client, self).event_gainFocus()
 
-class Container(Widget):
+class Container(IAccessible):
 
 	def _get_activeChild(self):
 		# QT doesn't do accFocus properly, so find the active child ourselves.
@@ -54,7 +54,7 @@ class Container(Widget):
 
 		return super(Container, self).event_gainFocus()
 
-class TreeViewItem(Widget):
+class TreeViewItem(IAccessible):
 	RE_POSITION_INFO = re.compile(r"L(?P<level>\d)+, (?P<indexInGroup>\d)+ of (?P<similarItemsInGroup>\d)+ with \d+")
 
 	# The description and value should not be user visible.
@@ -83,7 +83,18 @@ class Menu(IAccessible):
 		states.discard(controlTypes.STATE_FOCUSED)
 		return states
 
-class LayeredPane(Widget):
+class LayeredPane(IAccessible):
 	# QT < 4.6 uses ROLE_SYSTEM_IPADDRESS for layered pane.
 	# See QT task 258413.
 	role = controlTypes.ROLE_LAYEREDPANE
+
+class Application(IAccessible):
+	# QT sets the path of the application in the description, which is irrelevant to the user.
+	description = None
+
+	def _get_states(self):
+		states = super(Application, self)._get_states()
+		# The application should not have the focused state.
+		# Otherwise, checks for the focused state will always hit the application and assume the focus is valid.
+		states.discard(controlTypes.STATE_FOCUSED)
+		return states
