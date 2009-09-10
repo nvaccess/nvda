@@ -778,30 +778,31 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 				pDispatch->Release();
 			}
 		}
-	}
 
-	//A node that has no content, or its content is only some small whitespace should have title as its content
-	int length=parentNode->getLength();
-	if(length>0&&length<=3) {
-	contentString=L" ";
-		parentNode->getTextInRange(0,length,contentString,false);
-		if(isWhitespace(contentString.c_str())) length=0;
-	}
-	if(length==0) {
-		contentString=L"";
-		if(!IAName.empty()) {
-			contentString=IAName;
-		} else {
-			tempIter=attribsMap.find(L"HTMLAttrib::title");
-			if(tempIter!=attribsMap.end()) {
-				contentString=tempIter->second;
+		//A node wwho's rendered children produces no content, or only a small amount of whitespace should render its title
+		int length=parentNode->getLength();
+		if(length>0&&length<=3) {
+		contentString=L" ";
+			parentNode->getTextInRange(0,length,contentString,false);
+			if(isWhitespace(contentString.c_str())) length=0;
+		}
+		if(length==0) {
+			contentString=L"";
+			if(!IAName.empty()) {
+				contentString=IAName;
+			} else {
+				tempIter=attribsMap.find(L"HTMLAttrib::title");
+				if(tempIter!=attribsMap.end()) {
+					contentString=tempIter->second;
+				}
+			}
+			if(!contentString.empty()) {
+				previousNode=buffer->addTextFieldNode(parentNode,NULL,contentString);
+				fillTextFormattingForNode(pHTMLDOMNode,previousNode);
 			}
 		}
-		if(!contentString.empty()) {
-			previousNode=buffer->addTextFieldNode(parentNode,NULL,contentString);
-			fillTextFormattingForNode(pHTMLDOMNode,previousNode);
-		}
 	}
+
 
 	//We no longer need the IAccessible
 	if(pacc) {
