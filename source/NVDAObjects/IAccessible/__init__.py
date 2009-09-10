@@ -248,7 +248,6 @@ the NVDAObject for IAccessible
 @type IAccessibleChildID: int
 """
 
-	IAccessibleFocusEventNeedsFocusedState=True
 	IAccessibleTableUsesTableCellIndexAttrib=False #: Should the table-cell-index IAccessible2 object attribute be used rather than indexInParent?
 
 	@classmethod
@@ -455,6 +454,26 @@ the NVDAObject for IAccessible
 		if None not in (event_windowHandle,event_objectID,event_childID):
 			IAccessibleHandler.liveNVDAObjectTable[(event_windowHandle,event_objectID,event_childID)]=self
 		self._doneInit=True
+
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		"""Determine whether a focus event should be allowed for this object.
+		Normally, this checks for the focused state to help eliminate redundant or invalid focus events.
+		However, some implementations do not correctly set the focused state, so this must be overridden.
+		@return: C{True} if the focus event should be allowed.
+		@rtype: bool
+		"""
+		#this object or one of its ancestors must have state_focused.
+		testObj = self
+		while testObj:
+			if controlTypes.STATE_FOCUSED in testObj.states:
+				break
+			parent = testObj.parent
+			# Cache the parent.
+			testObj.parent = parent
+			testObj = parent
+		else:
+			return False
+		return True
 
 	def _get_TextInfo(self):
 		if hasattr(self,'IAccessibleTextObject'):

@@ -569,7 +569,7 @@ def processGenericWinEvent(eventID,window,objectID,childID):
 	eventHandler.queueEvent(*NVDAEvent)
 	return True
 
-def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
+def processFocusWinEvent(window,objectID,childID,force=False):
 	"""checks to see if the focus win event is not the same as the existing focus, 
 	then converts the win event to an NVDA event (instanciating an NVDA Object) then calls processFocusNVDAEvent. If all is ok it returns True.
 	@type window: integer
@@ -577,8 +577,8 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 	@type objectID: integer
 	@param childID: a win event's child ID
 	@type childID: integer
-	@param needsFocusedState: If true then the object or one of its ancestors, for this focus event *must* have state_focused.
-	@type needsFocusedState: boolean
+	@param force: If True, the shouldAllowIAccessibleFocusEvent property of the object is ignored.
+	@type force: boolean
 	@returns: True if the focus is valid and was handled, False otherwise.
 	@rtype: boolean
 	"""
@@ -626,29 +626,20 @@ def processFocusWinEvent(window,objectID,childID,needsFocusedState=True):
 			realObj=NVDAObjects.IAccessible.IAccessible(IAccessibleObject=obj.IAccessibleObject,IAccessibleChildID=realChildID,event_windowHandle=window,event_objectID=objectID,event_childID=realChildID)
 			if realObj:
 				obj=realObj
-	return processFocusNVDAEvent(obj,needsFocusedState=needsFocusedState)
+	return processFocusNVDAEvent(obj,force=force)
 
-def processFocusNVDAEvent(obj,needsFocusedState=True):
+def processFocusNVDAEvent(obj,force=False):
 	"""Processes a focus NVDA event.
 	If the focus event is valid, it is queued.
 	@param obj: the NVDAObject the focus event is for
 	@type obj: L{NVDAObjects.NVDAObject}
-	@param needsFocusedState: If true then the object or one of its ancestors, for this focus event *must* have state_focused.
-	@type needsFocusedState: boolean
+	@param force: If True, the shouldAllowIAccessibleFocusEvent property of the object is ignored.
+	@type force: boolean
 	@return: C{True} if the focus event is valid and was queued, C{False} otherwise.
 	@rtype: boolean
 	"""
-	#this object, or one of its ancestors *must* have state_focused. Also cache the parents as we do this check
-	if needsFocusedState and isinstance(obj,NVDAObjects.IAccessible.IAccessible) and obj.IAccessibleFocusEventNeedsFocusedState:
-		testObj=obj
-		while testObj:
-			if controlTypes.STATE_FOCUSED in testObj.states:
-				break
-			parent=testObj.parent
-			testObj.parent=parent
-			testObj=parent
-		if not testObj:
-			return False
+	if not force and isinstance(obj,NVDAObjects.IAccessible.IAccessible) and not obj.shouldAllowIAccessibleFocusEvent:
+		return False
 	eventHandler.queueEvent('gainFocus',obj)
 	return True
 
@@ -745,7 +736,7 @@ def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 	if obj.IAccessibleRole != oleacc.ROLE_SYSTEM_MENUPOPUP:
 		# menuStart on anything other than a menu is silly.
 		return
-	processFocusNVDAEvent(obj, needsFocusedState=False)
+	processFocusNVDAEvent(obj, force=True)
 
 def processFakeFocusWinEvent(eventID, window, objectID, childID):
 	"""Process a fake focus win event.

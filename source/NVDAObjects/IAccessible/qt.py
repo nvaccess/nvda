@@ -10,9 +10,6 @@ import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 import eventHandler
 
-class Widget(IAccessible):
-	IAccessibleFocusEventNeedsFocusedState = False
-
 class Client(IAccessible):
 
 	def event_gainFocus(self):
@@ -75,13 +72,9 @@ class TreeViewItem(IAccessible):
 		return super(TreeViewItem, self).positionInfo
 
 class Menu(IAccessible):
-
-	def _get_states(self):
-		states = super(Menu, self)._get_states()
-		# QT fires a focus event on the parent menu immediately after firing focus on the menu item.
-		# The focus on the menu is invalid, so remove its focused state so it will be treated as such.
-		states.discard(controlTypes.STATE_FOCUSED)
-		return states
+	# QT incorrectly fires a focus event on the parent menu immediately after (correctly) firing focus on the menu item.
+	# This is probably QT task 241161, which was apparently fixed in QT 4.5.1.
+	shouldAllowIAccessibleFocusEvent = False
 
 class LayeredPane(IAccessible):
 	# QT < 4.6 uses ROLE_SYSTEM_IPADDRESS for layered pane.
