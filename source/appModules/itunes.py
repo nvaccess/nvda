@@ -7,7 +7,7 @@ class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if isinstance(obj,NVDAObjects.IAccessible.IAccessible):
-			obj.IAccessibleFocusEventNeedsFocusedState=False
+			obj.shouldAllowIAccessibleFocusEvent=True
 		windowClassName=obj.windowClassName
 		role=obj.role
 		if windowClassName=="iTunesSources" and role==controlTypes.ROLE_TREEVIEWITEM:
