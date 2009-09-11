@@ -82,13 +82,6 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 """
 	try:
 		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, lastPassThroughKeyDown, unpauseByShiftUp 
-		if watchdog.isAttemptingRecovery:
-			# The core is dead, so let keys pass through unhindered.
-			return True
-		focusObject=api.getFocusObject()
-		focusAppModule=focusObject.appModule
-		if focusAppModule and focusAppModule.selfVoicing:
-			return True
 		#Injected keys should be ignored
 		if injected:
 			return True
@@ -97,6 +90,13 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		if passKeyThroughCount>=0 and lastPassThroughKeyDown!=(vkCode,extended):
 			passKeyThroughCount+=1
 			lastPassThroughKeyDown=(vkCode,extended)
+			return True
+		if watchdog.isAttemptingRecovery:
+			# The core is dead, so let keys pass through unhindered.
+			return True
+		focusObject=api.getFocusObject()
+		focusAppModule=focusObject.appModule
+		if focusAppModule and focusAppModule.selfVoicing:
 			return True
 		#pass the volume controlling keys
 		if extended and vkCode >= winUser.VK_VOLUME_MUTE and vkCode <= winUser.VK_VOLUME_UP: return True
@@ -213,19 +213,19 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event that pyHook calls when it receives keyUps"""
 	try:
 		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unpauseByShiftUp 
+		if injected:
+			return True
+		if passKeyThroughCount>=1:
+			passKeyThroughCount-=1
+			if passKeyThroughCount==0:
+				passKeyThroughCount=-1
+			return True
 		if watchdog.isAttemptingRecovery:
 			# The core is dead, so let keys pass through unhindered.
 			return True
 		focusObject=api.getFocusObject()
 		focusAppModule=focusObject.appModule
 		if focusAppModule and focusAppModule.selfVoicing:
-			return True
-		if injected:
-			return True
-		elif passKeyThroughCount>=1:
-			passKeyThroughCount-=1
-			if passKeyThroughCount==0:
-				passKeyThroughCount=-1
 			return True
 		if unpauseByShiftUp and vkCode in (winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT):
 			queueHandler.queueFunction(queueHandler.eventQueue,speech.pauseSpeech,False)
