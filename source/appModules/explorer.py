@@ -41,6 +41,10 @@ class AppModule(_default.AppModule):
 				# We don't trust the names that Explorer gives to context menus, so better to have no name at all.
 				obj.name = None
 
+		if obj.windowClassName == "DV2ControlHost" and obj.role == controlTypes.ROLE_PANE:
+			# Windows Vista/7 start menu.
+			obj.isPresentableFocusAncestor = True
+
 	def event_gainFocus(self, obj, nextHandler):
 		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_MENUITEM and obj.parent.role == controlTypes.ROLE_MENUBAR and eventHandler.isPendingEvents("gainFocus"):
 			# When exiting a menu, Explorer fires focus on the top level menu item before it returns to the previous focus.
