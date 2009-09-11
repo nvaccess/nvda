@@ -336,11 +336,13 @@ class MSHTML(IAccessible):
 	def _get_basicText(self):
 		if self.HTMLNode:
 			try:
-				text=self.HTMLNode.innerText
-			except COMError:
-				text=None
-			if text:
-				return text
+				return self.HTMLNode.data or ""
+			except (COMError, AttributeError, NameError):
+				pass
+			try:
+				return self.HTMLNode.innerText or ""
+			except (COMError, AttributeError, NameError):
+				pass
 		return super(MSHTML,self).basicText
 
 	def _get_role(self):
