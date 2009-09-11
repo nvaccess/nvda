@@ -691,6 +691,9 @@ def processForegroundWinEvent(window,objectID,childID):
 	#Ignore foreground events on the parent of the desktop and taskbar
 	if winUser.getClassName(window) in ("Progman","Shell_TrayWnd"):
 		return False
+	# If there is a pending gainFocus, it will handle the foreground object.
+	if eventHandler.isPendingEvents("gainFocus"):
+		return False
 	oldFocus=eventHandler.lastQueuedFocusObject
 	#If this foreground win event's window is an ancestor of the existing focus's window, then ignore it
 	if isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and winUser.isDescendantWindow(window,oldFocus.windowHandle):
