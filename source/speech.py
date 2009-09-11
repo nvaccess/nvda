@@ -409,6 +409,12 @@ silentValuesForRoles=set([
 	controlTypes.ROLE_MENUITEM,
 ])
 
+silentDescriptionsForRoles=frozenset((
+	controlTypes.ROLE_MENUBAR,
+	controlTypes.ROLE_MENU,
+	controlTypes.ROLE_POPUPMENU,
+))
+
 def processPositiveStates(role, states, reason, positiveStates):
 	positiveStates = positiveStates.copy()
 	# The user never cares about certain states.
@@ -650,7 +656,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 			textList.append(_("done dragging"))
 			negativeStates.discard(controlTypes.STATE_DROPTARGET)
 		textList.extend([_("not %s")%controlTypes.speechStateLabels[x] for x in negativeStates])
-	if 'description' in propertyValues:
+	if 'description' in propertyValues and (reason==REASON_QUERY or role not in silentDescriptionsForRoles):
 		textList.append(propertyValues['description'])
 	if 'keyboardShortcut' in propertyValues:
 		textList.append(propertyValues['keyboardShortcut'])
