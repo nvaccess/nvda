@@ -53,7 +53,7 @@ class StringSynthSetting(SynthSetting):
 			# Voice parameters may change when the voice changes, so update the config.
 			self.synth.saveSettings()
 		else:
-			setattr(self.synth,self.setting.name,ID)
+			super(StringSynthSetting,self)._set_value(ID)
 
 	def _getReportValue(self, val):
 		return self._values[val].name
