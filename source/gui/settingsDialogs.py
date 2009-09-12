@@ -215,7 +215,7 @@ class SynthesizerDialog(SettingsDialog):
 			return 
 		super(SynthesizerDialog, self).onOk(evt)
 
-class SettingChanger(object):
+class SynthSettingChanger(object):
 	"""Functor which acts as calback for GUI events."""
 
 	def __init__(self,setting):
@@ -225,11 +225,11 @@ class SettingChanger(object):
 		val=evt.GetSelection()
 		setattr(getSynth(),self.setting.name,val)
 
-class StringSettingChanger(SettingChanger):
-	"""Same as L{SettingChanger} but handles combobox events."""
+class StringSynthSettingChanger(SynthSettingChanger):
+	"""Same as L{SynthSettingChanger} but handles combobox events."""
 	def __init__(self,setting,dialog):
 		self.dialog=dialog
-		super(StringSettingChanger,self).__init__(setting)
+		super(StringSynthSettingChanger,self).__init__(setting)
 
 	def __call__(self,evt):
 		if self.setting.name=="voice":
@@ -257,7 +257,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.i18nName)
 		slider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100,name="%s:"%setting.i18nName)
 		setattr(self,"%sSlider"%setting.name,slider)
-		slider.Bind(wx.EVT_SLIDER,SettingChanger(setting))
+		slider.Bind(wx.EVT_SLIDER,SynthSettingChanger(setting))
 		self._setSliderStepSizes(slider,setting.minStep)
 		slider.SetValue(getattr(getSynth(),setting.name))
 		sizer.Add(label)
@@ -282,7 +282,7 @@ class VoiceSettingsDialog(SettingsDialog):
 			lCombo.SetSelection(i)
 		except ValueError:
 			pass
-		lCombo.Bind(wx.EVT_CHOICE,StringSettingChanger(setting,self))
+		lCombo.Bind(wx.EVT_CHOICE,StringSynthSettingChanger(setting,self))
 		sizer.Add(label)
 		sizer.Add(lCombo)
 		if self.lastControl:
