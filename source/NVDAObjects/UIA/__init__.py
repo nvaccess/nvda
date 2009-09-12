@@ -294,10 +294,13 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		if s!=UIAHandler.handler.reservedNotSupportedValue:
 			if not role:
 				role=self.role
-			if role==controlTypes.ROLE_CHECKBOX and s==UIAHandler.ToggleState_On:
-				states.add(controlTypes.STATE_CHECKED)
-			elif s==UIAHandler.ToggleState_On:
-				states.add(controlTypes.STATE_PRESSED)
+			if role==controlTypes.ROLE_BUTTON:
+				if s==UIAHandler.ToggleState_On:
+					states.add(controlTypes.STATE_PRESSED)
+			else:
+				states.add(controlTypes.STATE_CHECKABLE)
+				if s==UIAHandler.ToggleState_On:
+					states.add(controlTypes.STATE_CHECKED)
 		return states
 
 	def _correctRelationForWindow(self,obj):
