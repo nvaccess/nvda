@@ -515,6 +515,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def _loadBufferDone(self, success=True):
 		self._loadProgressCallLater.Stop()
+		del self._loadProgressCallLater
 		self.isLoading = False
 		if not success:
 			return
