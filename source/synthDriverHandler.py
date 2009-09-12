@@ -396,7 +396,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 				c["voice"]=self.voice
 				# We need to call changeVoice here so voice dictionaries can be managed
 				changeVoice(self,self.voice)
-		[setattr(self,s.name,c[s.name]) for s in self.supportedSettings if s.name!="voice"]
+		[setattr(self,s.name,c[s.name]) for s in self.supportedSettings if not s.name=="voice" and c[s.name] is not None]
 
 class VoiceInfo(object):
 	"""Provides information about a single synthesizer voice.
