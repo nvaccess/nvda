@@ -37,6 +37,7 @@
 
 * Az NVDA nem mondja be a "Az NVDA elindult" szöveget induláskor.
 * A folyamatjelzõk felolvasását továbbfejlesztették. A legfontosabb, hogy most már be lehet állítani az NVDA-t úgy, hogy a folyamatjelzõk változását egyszerre beszéddel és hanggal is jelezze.
+* A menük leírását az NVDA többé nem olvassa fel.
 
 	=Hiba javítások=
 * Az NVDA induló és kilépõ hangját a beállított hang-kimeneten játsza le, nem a Windows alapértelmezett hangeszközén. (#164)
@@ -55,6 +56,8 @@
 *  Az NVDA már nem engedélyezi automatikusan az interaktív módot olyan szerkesztõmezõknél, melyek dinamikusan frissítik tartalmukat amikor a fókusz megváltozik; pl. http://tigerdirect.com/. (#220)
 * Az NVDA megpróbál helyreállni néhány esetben, amelyek ezelõtt a program teljes lefagyását eredményezték. Ez tíz másodpercet vehet igénybe.
 * Az "User default" beállítása esetén az NVDA mostantól a Windows megjelenítési nyelvét veszi figyelembe, a területi beállítások helyett. (#353)
+* Az NVDA mostantól felismeri a vezérlõelemeket az AIM 7 programban.
+	* A billentyûparancs átadása parancs nem aktiválódik végérvényesen egy billentyû nyomva tartásakor. Elõzõleg, ha ez bekövetkezett, az NVDA nem vett figyelembe billentyûleütéseket és a hibát csak a program újraindításával lehetett orvosolni. (#413)
 
 		=0.6 P3=
 	=Újdonságok=
