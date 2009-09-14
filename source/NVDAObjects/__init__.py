@@ -547,12 +547,8 @@ Tries to force this object to take the focus.
 		braille.handler.handleUpdate(self)
 
 	def event_focusEntered(self):
-		role=self.role
-		if role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENU,controlTypes.ROLE_MENUITEM):
+		if self.role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM):
 			speech.cancelSpeech()
-		if role==controlTypes.ROLE_MENUBAR:
-			# Don't speak menu bars.
-			# We still want them rendered in braille, which is why we don't just return False for them in isPresentableFocusAncestor.
 			return
 		if self.isPresentableFocusAncestor:
 			speech.speakObjectProperties(self,name=True,role=True,description=True,positionInfo_indexInGroup=True,positionInfo_similarItemsInGroup=True,rowNumber=True,columnNumber=True,rowCount=True,columnCount=True,reason=speech.REASON_FOCUS)
