@@ -59,12 +59,19 @@ class AcrobatNode(IAccessible):
 			except COMError:
 				log.debugWarning("Failed to get ID from IAccID", exc_info=True)
 
-		# Get the IPDDomElement.
+		# Get the IPDDomNode.
 		try:
-			self.pdDomElement = serv.QueryService(SID_GetPDDomNode, IGetPDDomNode).get_PDDomNode(self.IAccessibleChildID).QueryInterface(IPDDomElement)
+			self.pdDomNode = serv.QueryService(SID_GetPDDomNode, IGetPDDomNode).get_PDDomNode(self.IAccessibleChildID)
 		except COMError:
-			self.pdDomElement = None
-			log.debugWarning("Error getting IPDDomElement", exc_info=True)
+			self.pdDomNode = None
+			log.debugWarning("Error getting IPDDomNode")
+
+		if self.pdDomNode:
+			# If this node has IPDDomElement, query to that.
+			try:
+				self.pdDomNode = self.pdDomNode.QueryInterface(IPDDomElement)
+			except COMError:
+				pass
 
 	def _get_shouldAllowIAccessibleFocusEvent(self):
 		#Acrobat document root objects do not have their focused state set when they have the focus.
@@ -74,7 +81,7 @@ class AcrobatNode(IAccessible):
 
 	def _get_role(self):
 		try:
-			return normalizeStdName(self.pdDomElement.GetStdName())[0]
+			return normalizeStdName(self.pdDomNode.GetStdName())[0]
 		except (AttributeError, LookupError, COMError):
 			pass
 
