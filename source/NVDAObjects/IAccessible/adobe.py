@@ -3,8 +3,38 @@ import eventHandler
 import winUser
 from . import IAccessible, getNVDAObjectFromEvent
 from NVDAObjects import NVDAObjectTextInfo
+from comtypes import GUID, COMError, IServiceProvider
+from comtypes.gen.AcrobatAccessLib import IAccID, IGetPDDomNode, IPDDomElement
+from logHandler import log
+
+SID_AccID = GUID("{449D454B-1F46-497e-B2B6-3357AED9912B}")
+SID_GetPDDomNode = GUID("{C0A1D5E9-1142-4cf3-B607-82FC3B96A4DF}")
 
 class AcrobatNode(IAccessible):
+
+	def __init__(self, **kwargs):
+		super(AcrobatNode, self).__init__(**kwargs)
+
+		try:
+			serv = self.IAccessibleObject.QueryInterface(IServiceProvider)
+		except COMError:
+			log.debugWarning("Could not get IServiceProvider")
+			return
+
+		if self.event_objectID is None:
+			# This object does not have real event parameters.
+			# Get the real child ID using IAccID.
+			try:
+				self.event_childID = serv.QueryService(SID_AccID, IAccID).get_accID()
+			except COMError:
+				log.debugWarning("Failed to get ID from IAccID", exc_info=True)
+
+		# Get the IPDDomElement.
+		try:
+			self.pdDomElement = serv.QueryService(SID_GetPDDomNode, IGetPDDomNode).get_PDDomNode(self.IAccessibleChildID).QueryInterface(IPDDomElement)
+		except COMError:
+			self.pdDomElement = None
+			log.debugWarning("Error getting IPDDomElement", exc_info=True)
 
 	def _get_shouldAllowIAccessibleFocusEvent(self):
 		#Acrobat document root objects do not have their focused state set when they have the focus.
