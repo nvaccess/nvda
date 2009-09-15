@@ -93,7 +93,7 @@ class OrderedWinEventLimiter(object):
 		@param threadID: the threadID of the winEvent
 		@type threadID: integer
 		"""
-		if eventID==winUser.EVENT_OBJECT_FOCUS:
+		if eventID in (winUser.EVENT_OBJECT_FOCUS,winUser.EVENT_SYSTEM_FOREGROUND):
 			if objectID in (winUser.OBJID_SYSMENU,winUser.OBJID_MENU) and childID==0:
 				# This is a focus event on a menu bar itself, which is just silly. Ignore it.
 				return
@@ -115,18 +115,18 @@ class OrderedWinEventLimiter(object):
 				del self._genericEventCache[k]
 				return
 		elif eventID in MENU_EVENTIDS:
-			if self._lastMenuEvent:
-				# We only care about the most recent menu event.
-				del self._genericEventCache[self._lastMenuEvent]
-			self._lastMenuEvent=(eventID,window,objectID,childID,threadID)
+			self._lastMenuEvent=(next(self._eventCounter),eventID,window,objectID,childID,threadID)
+			return
 		self._genericEventCache[(eventID,window,objectID,childID,threadID)]=next(self._eventCounter)
 
 	def flushEvents(self):
 		"""Returns a list of winEvents (tuples of eventID,window,objectID,childID) that have been added, though due to limiting, it will not necessarily be all the winEvents that were originally added. They are definitely garenteed to be in the correct order though.
 		"""
+		if self._lastMenuEvent is not None:
+			heapq.heappush(self._eventHeap,self._lastMenuEvent)
+			self._lastMenuEvent=None
 		g=self._genericEventCache
 		self._genericEventCache={}
-		self._lastMenuEvent=None
 		threadCounters={}
 		for k,v in sorted(g.iteritems(),key=lambda item: item[1],reverse=True):
 			threadCount=threadCounters.get(k[-1],0)
