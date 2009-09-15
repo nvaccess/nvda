@@ -8,6 +8,7 @@ from __future__ import with_statement
 import oleacc
 
 MAX_WINEVENTS=500
+MAX_WINEVENTS_PER_THREAD=10
 
 #Constants
 #OLE constants
@@ -79,7 +80,7 @@ class OrderedWinEventLimiter(object):
 		self._eventCounter=itertools.count()
 		self._lastMenuEvent=None
 
-	def addEvent(self,eventID,window,objectID,childID):
+	def addEvent(self,eventID,window,objectID,childID,threadID):
 		"""Adds a winEvent to the limiter.
 		@param eventID: the winEvent type
 		@type eventID: integer
@@ -89,25 +90,27 @@ class OrderedWinEventLimiter(object):
 		@type objectID: integer
 		@param childID: the childID of the winEvent
 		@type childID: integer
+		@param threadID: the threadID of the winEvent
+		@type threadID: integer
 		"""
 		if eventID==winUser.EVENT_OBJECT_FOCUS:
 			if objectID in (winUser.OBJID_SYSMENU,winUser.OBJID_MENU) and childID==0:
 				# This is a focus event on a menu bar itself, which is just silly. Ignore it.
 				return
-			self._focusEventCache[(eventID,window,objectID,childID)]=next(self._eventCounter)
+			self._focusEventCache[(eventID,window,objectID,childID,threadID)]=next(self._eventCounter)
 			return
 		elif eventID==winUser.EVENT_OBJECT_SHOW:
-			k=(winUser.EVENT_OBJECT_HIDE,window,objectID,childID)
+			k=(winUser.EVENT_OBJECT_HIDE,window,objectID,childID,threadID)
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
 				return
 		elif eventID==winUser.EVENT_OBJECT_HIDE:
-			k=(winUser.EVENT_OBJECT_SHOW,window,objectID,childID)
+			k=(winUser.EVENT_OBJECT_SHOW,window,objectID,childID,threadID)
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
 				return
 		elif eventID==winUser.EVENT_OBJECT_DESTROY:
-			k=(winUser.EVENT_OBJECT_CREATE,window,objectID,childID)
+			k=(winUser.EVENT_OBJECT_CREATE,window,objectID,childID,threadID)
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
 				return
@@ -115,8 +118,8 @@ class OrderedWinEventLimiter(object):
 			if self._lastMenuEvent:
 				# We only care about the most recent menu event.
 				del self._genericEventCache[self._lastMenuEvent]
-			self._lastMenuEvent=(eventID,window,objectID,childID)
-		self._genericEventCache[(eventID,window,objectID,childID)]=next(self._eventCounter)
+			self._lastMenuEvent=(eventID,window,objectID,childID,threadID)
+		self._genericEventCache[(eventID,window,objectID,childID,threadID)]=next(self._eventCounter)
 
 	def flushEvents(self):
 		"""Returns a list of winEvents (tuples of eventID,window,objectID,childID) that have been added, though due to limiting, it will not necessarily be all the winEvents that were originally added. They are definitely garenteed to be in the correct order though.
@@ -124,8 +127,13 @@ class OrderedWinEventLimiter(object):
 		g=self._genericEventCache
 		self._genericEventCache={}
 		self._lastMenuEvent=None
-		for k,v in g.iteritems():
+		threadCounters={}
+		for k,v in sorted(g.iteritems(),key=lambda item: item[1],reverse=True):
+			threadCount=threadCounters.get(k[-1],0)
+			if threadCount>MAX_WINEVENTS_PER_THREAD:
+				continue
 			heapq.heappush(self._eventHeap,(v,)+k)
+			threadCounters[k[-1]]=threadCount+1
 		f=self._focusEventCache
 		self._focusEventCache={}
 		for k,v in sorted(f.iteritems(),key=lambda item: item[1])[0-self.maxFocusItems:]:
@@ -134,7 +142,7 @@ class OrderedWinEventLimiter(object):
 		self._eventHeap=[]
 		r=[]
 		for count in xrange(len(e)):
-			r.append(heapq.heappop(e)[1:])
+			r.append(heapq.heappop(e)[1:-1])
 		return r
 
 #The win event limiter for all winEvents
@@ -454,7 +462,7 @@ winUser.EVENT_OBJECT_HIDE:"hide",
 winUser.EVENT_OBJECT_DESCRIPTIONCHANGE:"descriptionChange",
 winUser.EVENT_OBJECT_LOCATIONCHANGE:"locationChange",
 winUser.EVENT_OBJECT_NAMECHANGE:"nameChange",
-winUser.EVENT_OBJECT_REORDER:"reorder",
+#winUser.EVENT_OBJECT_REORDER:"reorder",
 winUser.EVENT_OBJECT_SELECTION:"selection",
 winUser.EVENT_OBJECT_SELECTIONADD:"selectionAdd",
 winUser.EVENT_OBJECT_SELECTIONREMOVE:"selectionRemove",
@@ -508,6 +516,9 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		#Ignore all object IDs from alert onwards (sound, nativeom etc) as we don't support them
 		if objectID<=winUser.OBJID_ALERT: 
 			return
+		#Ignore all locationChange events except ones for the caret
+		if eventID==winUser.EVENT_OBJECT_LOCATIONCHANGE and objectID!=winUser.OBJID_CARET:
+			return
 		#Change window objIDs to client objIDs for better reporting of objects
 		if (objectID==0) and (childID==0):
 			objectID=winUser.OBJID_CLIENT
@@ -532,7 +543,7 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			#Move up the ancestry to find the real mozilla Window and use that
 			if winUser.getClassName(window)=='MozillaDropShadowWindowClass':
 				return
-		winEventLimiter.addEvent(eventID,window,objectID,childID)
+		winEventLimiter.addEvent(eventID,window,objectID,childID,threadID)
 	except:
 		log.error("winEventCallback", exc_info=True)
 
