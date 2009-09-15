@@ -829,6 +829,8 @@ class AppModule(appModuleHandler.AppModule):
 	script_revertToSavedConfiguration.__doc__ = _("loads the saved NVDA configuration, overriding current changes")
 
 	def script_activatePythonConsole(self,keyPress):
+		if globalVars.appArgs.secure:
+			return
 		import pythonConsole
 		if not pythonConsole.consoleUI:
 			pythonConsole.initialize()

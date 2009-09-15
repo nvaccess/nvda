@@ -274,8 +274,9 @@ class SysTrayIcon(wx.TaskBarIcon):
 		menu_tools = wx.Menu()
 		item = menu_tools.Append(wx.ID_ANY, _("View log"))
 		self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
-		item = menu_tools.Append(wx.ID_ANY, _("Python console"))
-		self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
+		if not globalVars.appArgs.secure:
+			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
+			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
 
 		menu_help = wx.Menu()
