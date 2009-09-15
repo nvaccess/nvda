@@ -10,6 +10,36 @@ from logHandler import log
 SID_AccID = GUID("{449D454B-1F46-497e-B2B6-3357AED9912B}")
 SID_GetPDDomNode = GUID("{C0A1D5E9-1142-4cf3-B607-82FC3B96A4DF}")
 
+stdNamesToRoles = {
+	# Part? Art?
+	"Sect": controlTypes.ROLE_SECTION,
+	"Div": controlTypes.ROLE_SECTION,
+	"BlockQuote": controlTypes.ROLE_BLOCKQUOTE,
+	"Caption": controlTypes.ROLE_CAPTION,
+	# Toc? Toci? Index? Nonstruct? Private? 
+	# Table, TR, TH, TD covered by IAccessible
+	"L": controlTypes.ROLE_LIST,
+	"LI": controlTypes.ROLE_LISTITEM,
+	"Lbl": controlTypes.ROLE_LABEL,
+	# LBody
+	"P": controlTypes.ROLE_PARAGRAPH,
+	"H": controlTypes.ROLE_HEADING,
+	# H1 to H6 handled separately
+	# Span, Quote, Note, Reference, BibEntry, Code, Figure, Formula
+	"Form": controlTypes.ROLE_FORM,
+}
+
+def normalizeStdName(stdName):
+	if "H1" <= stdName <= "H6":
+		return controlTypes.ROLE_HEADING, stdName[1]
+
+	try:
+		return stdNamesToRoles[stdName], None
+	except KeyError:
+		pass
+
+	raise LookupError
+
 class AcrobatNode(IAccessible):
 
 	def __init__(self, **kwargs):
@@ -41,6 +71,18 @@ class AcrobatNode(IAccessible):
 		if self.event_childID==0:
 			return True
 		return super(AcrobatNode,self).shouldAllowIAccessibleFocusEvent
+
+	def _get_role(self):
+		try:
+			return normalizeStdName(self.pdDomElement.GetStdName())[0]
+		except (AttributeError, LookupError, COMError):
+			pass
+
+		role = super(AcrobatNode, self).role
+		if role == controlTypes.ROLE_PANE:
+			# Pane doesn't make sense for nodes in a document.
+			role = controlTypes.ROLE_TEXTFRAME
+		return role
 
 	def event_valueChange(self):
 		if self.event_childID==0 and self.event_objectID == winUser.OBJID_CLIENT and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):

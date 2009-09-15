@@ -1,6 +1,7 @@
 from . import VirtualBuffer, VirtualBufferTextInfo
 import controlTypes
 import NVDAObjects.IAccessible
+from NVDAObjects.IAccessible.adobe import normalizeStdName
 import winUser
 import IAccessibleHandler
 import oleacc
@@ -8,37 +9,13 @@ from logHandler import log
 import textInfos
 
 class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
-	stdNamesToRoles = {
-		# part? art?
-		"sect": controlTypes.ROLE_SECTION,
-		"div": controlTypes.ROLE_SECTION,
-		"blockquote": controlTypes.ROLE_BLOCKQUOTE,
-		"caption": controlTypes.ROLE_CAPTION,
-		# toc? toci? index? nonstruct? private? 
-		"l": controlTypes.ROLE_LIST,
-		"li": controlTypes.ROLE_LISTITEM,
-		"lbl": controlTypes.ROLE_LABEL,
-		# lbody
-		"p": controlTypes.ROLE_PARAGRAPH,
-		"h": controlTypes.ROLE_HEADING,
-		# h1 to h6 handled separately
-		# span, quote, note, reference, bibentry, code, figure, formula
-		"form": controlTypes.ROLE_FORM,
-	}
 
 	def _normalizeControlField(self,attrs):
-		role = None
-		level = None
-
-		stdName = attrs.get("acrobat::stdname", "").lower()
-		if "h1" <= stdName <= "h6":
-			role = controlTypes.ROLE_HEADING
-			level = stdName[1]
-		if not role:
-			try:
-				role = self.stdNamesToRoles[stdName]
-			except KeyError:
-				pass
+		stdName = attrs.get("acrobat::stdname", "")
+		try:
+			role, level = normalizeStdName(stdName)
+		except LookupError:
+			role, level = None, None
 
 		if not role:
 			accRole=attrs['IAccessible::role']
