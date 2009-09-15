@@ -100,6 +100,9 @@ class AcrobatNode(IAccessible):
 				return
 			eventHandler.queueEvent("gainFocus",obj)
 
+	def scrollIntoView(self):
+		self.pdDomNode.ScrollTo()
+
 class AcrobatTextInfo(NVDAObjectTextInfo):
 
 	def _getStoryText(self):
