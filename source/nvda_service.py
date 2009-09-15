@@ -134,7 +134,7 @@ def nvdaLauncher():
 	exitNVDA(desktop)
 
 def startNVDA(desktop):
-	process = executeProcess(desktop, None, nvdaExec, "-m")
+	process = executeProcess(desktop, None, nvdaExec, "-m", "--secure")
 	windll.kernel32.CloseHandle(process)
 
 def startNVDAUIAccess(session, desktop):
