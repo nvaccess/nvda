@@ -79,9 +79,7 @@ class AdobeAcrobat(VirtualBuffer):
 		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
 
 	def getIdentifierFromNVDAObject(self,obj):
-		docHandle=obj.windowHandle
-		ID=obj.event_childID
-		return docHandle,ID
+		return obj.windowHandle, obj.event_childID
 
 	def event_focusEntered(self,obj,nextHandler):
 		if self.passThrough:
