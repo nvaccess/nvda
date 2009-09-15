@@ -81,10 +81,6 @@ class AdobeAcrobat(VirtualBuffer):
 	def getIdentifierFromNVDAObject(self,obj):
 		return obj.windowHandle, obj.event_childID
 
-	def event_focusEntered(self,obj,nextHandler):
-		if self.passThrough:
-			nextHandler()
-
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType in ("link", "unvisitedLink"):
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK]}
