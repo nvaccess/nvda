@@ -54,7 +54,7 @@ if isUIAAvailable: UIAControlTypesToNVDARoles={
 	UIA_TreeItemControlTypeId:controlTypes.ROLE_TREEVIEWITEM,
 	UIA_CustomControlTypeId:controlTypes.ROLE_UNKNOWN,
 	UIA_GroupControlTypeId:controlTypes.ROLE_GROUPING,
-	UIA_ThumbControlTypeId:controlTypes.ROLE_THUM,
+	UIA_ThumbControlTypeId:controlTypes.ROLE_THUMB,
 	UIA_DataGridControlTypeId:controlTypes.ROLE_DATAGRID,
 	UIA_DataItemControlTypeId:controlTypes.ROLE_DATAITEM,
 	UIA_DocumentControlTypeId:controlTypes.ROLE_DOCUMENT,
