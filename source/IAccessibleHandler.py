@@ -141,8 +141,16 @@ class OrderedWinEventLimiter(object):
 		e=self._eventHeap
 		self._eventHeap=[]
 		r=[]
+		UIAWindowCache=set()
 		for count in xrange(len(e)):
-			r.append(heapq.heappop(e)[1:-1])
+			event=heapq.heappop(e)[1:-1]
+			window=event[1]
+			if window in UIAWindowCache:
+				continue
+			elif UIAHandler.handler.isUIAWindow(window):
+				UIAWindowCache.add(window)
+				continue
+			r.append(event)
 		return r
 
 #The win event limiter for all winEvents
@@ -347,7 +355,11 @@ def accessibleObjectFromEvent(window,objectID,childID):
 	wmResult=c_long()
 	if windll.user32.SendMessageTimeoutW(window,winUser.WM_NULL,0,0,winUser.SMTO_ABORTIFHUNG,2000,byref(wmResult))==0:
 		raise OSError("Window is not responding")
-	pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
+	try:
+		pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
+	except Exception as e:
+		log.debugWarning("oleacc.AccessibleObjectFromEvent with window %s, objectID %s and childID %s: %s"%(window,objectID,childID,e))
+		return None
 	return (normalizeIAccessible(pacc),childID)
 
 def accessibleObjectFromPoint(x,y):
@@ -522,9 +534,6 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		#Change window objIDs to client objIDs for better reporting of objects
 		if (objectID==0) and (childID==0):
 			objectID=winUser.OBJID_CLIENT
-		#Ignore events from UI Automation windows
-		if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
-			return
 		#Ignore events with invalid window handles
 		isWindow = winUser.isWindow(window) if window else 0
 		if window==0 or (not isWindow and eventID in (winUser.EVENT_SYSTEM_SWITCHSTART,winUser.EVENT_SYSTEM_SWITCHEND,winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPEND)):
