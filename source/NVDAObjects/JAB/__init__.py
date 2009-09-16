@@ -173,7 +173,7 @@ class JAB(Window):
 			return
 		return focusObject
 
-	def __init__(self,windowHandle=None,jabContext=None):
+	def __init__(self,relation=None,windowHandle=None,jabContext=None):
 		if windowHandle and not jabContext:
 			jabContext=JABHandler.JABContext(hwnd=windowHandle)
 		elif jabContext and not windowHandle:

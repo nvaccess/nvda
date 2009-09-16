@@ -142,7 +142,7 @@ An NVDAObject for a window
 			return APIClass.objectInForeground(windowHandle=windowHandle)
 		return APIClass(windowHandle=windowHandle)
 
-	def __init__(self,windowHandle=None,windowClassName=None):
+	def __init__(self,relation=None,windowHandle=None,windowClassName=None):
 		if not windowHandle:
 			pass #raise ValueError("invalid or not specified window handle")
 		if windowClassName:
@@ -199,26 +199,26 @@ An NVDAObject for a window
 		while nextWindow and (not winUser.isWindowVisible(nextWindow) or not winUser.isWindowEnabled(nextWindow)):
 			nextWindow=winUser.getWindow(nextWindow,winUser.GW_HWNDNEXT)
 		if nextWindow:
-			return Window(windowHandle=nextWindow)
+			return self.correctAPIForRelation(Window(windowHandle=nextWindow))
 
 	def _get_previous(self):
 		prevWindow=winUser.getWindow(self.windowHandle,winUser.GW_HWNDPREV)
 		while prevWindow and (not winUser.isWindowVisible(prevWindow) or not winUser.isWindowEnabled(prevWindow)):
 			prevWindow=winUser.getWindow(prevWindow,winUser.GW_HWNDPREV)
 		if prevWindow:
-			return Window(windowHandle=prevWindow)
+			return self.correctAPIForRelation(Window(windowHandle=prevWindow))
 
 	def _get_firstChild(self):
 		childWindow=winUser.getTopWindow(self.windowHandle)
 		while childWindow and (not winUser.isWindowVisible(childWindow) or not winUser.isWindowEnabled(childWindow)):
 			childWindow=winUser.getWindow(childWindow,winUser.GW_HWNDNEXT)
 		if childWindow:
-			return Window(windowHandle=childWindow)
+			return self.correctAPIForRelation(Window(windowHandle=childWindow))
 
 	def _get_parent(self):
 		parentHandle=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 		if parentHandle:
-			return Window(windowHandle=parentHandle)
+			return self.correctAPIForRelation(Window(windowHandle=parentHandle),relation="parent")
 
 	def _get_isInForeground(self):
 		fg=winUser.getForegroundWindow()
@@ -241,6 +241,20 @@ An NVDAObject for a window
 			self._isWindowUnicode=bool(ctypes.windll.user32.IsWindowUnicode(self.windowHandle))
  		return self._isWindowUnicode
 
+	def correctAPIForRelation(self,obj,relation=None):
+		if not obj:
+			return None
+		windowHandle=obj.windowHandle
+		newWindowHandle=obj.windowHandle
+		oldWindowHandle=self.windowHandle
+		if newWindowHandle and oldWindowHandle and newWindowHandle!=oldWindowHandle:
+			newAPIClass=Window.findBestAPIClass(windowHandle=newWindowHandle)
+			oldAPIClass=Window.findBestAPIClass(windowHandle=oldWindowHandle)
+			if newAPIClass!=oldAPIClass:
+				return newAPIClass(windowHandle=windowHandle,relation=relation)
+		return obj
+
+ 
 	def _get_processHandle(self):
 		if not hasattr(self,'_processHandleContainer'):
 			self._processHandleContainer=WindowProcessHandleContainer(self.windowHandle)
