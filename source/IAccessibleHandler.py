@@ -147,7 +147,7 @@ class OrderedWinEventLimiter(object):
 			window=event[1]
 			if window in UIAWindowCache:
 				continue
-			elif UIAHandler.handler.isUIAWindow(window):
+			elif UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
 				UIAWindowCache.add(window)
 				continue
 			r.append(event)
