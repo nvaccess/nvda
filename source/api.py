@@ -14,6 +14,7 @@ import sayAllHandler
 import virtualBufferHandler
 import NVDAObjects
 import NVDAObjects.IAccessible
+import NVDAObjects.placeholder
 import winUser
 import controlTypes
 import win32clipboard
@@ -330,3 +331,17 @@ def filterFileName(name):
 	for c in invalidChars:
 		name=name.replace(c,'_')
 	return name
+
+def correctFocus(oldFocus=None):
+	if oldFocus and oldFocus is not getFocusObject():
+		# The focus has changed - no need to correct it.
+		return
+	elif eventHandler.isPendingEvents("gainFocus"):
+		# We'll have a new focus soon.
+		return
+
+	focus = getDesktopObject().objectWithFocus()
+	if not focus:
+		# The focus could not be found, so use a placeholder to inform the user.
+		focus = NVDAObjects.placeholder.NoFocus()
+	eventHandler.queueEvent("gainFocus", focus)

@@ -77,6 +77,8 @@ def executeEvent(eventName,obj,**kwargs):
 			return
 		elif eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
 			return
+		elif eventName=="destroy" and not doPreDestroy(obj):
+			return
 		executeEvent_appModuleLevel(eventName,obj,**kwargs)
 	except:
 		log.exception("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs))
@@ -110,6 +112,10 @@ def doPreDocumentLoadComplete(obj):
 			#Focus may be in this new virtualBuffer, so force focus to look up its virtualBuffer
 			focusObject.virtualBuffer=virtualBufferHandler.getVirtualBuffer(focusObject)
 	return True
+
+def doPreDestroy(obj):
+	if obj is api.getFocusObject():
+		api.correctFocus()
 
 def executeEvent_appModuleLevel(name,obj,**kwargs):
 	appModule=obj.appModule
