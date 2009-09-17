@@ -1,3 +1,4 @@
+import eventHandler
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
 import virtualBufferHandler
 import controlTypes
@@ -67,6 +68,14 @@ class MSHTML(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
+		url=getattr(rootNVDAObject.HTMLNode.document,'url',"").split('#')
+		if not url or len(url)!=2:
+			return
+		anchorName=url[-1]
+		if not anchorName:
+			return
+		obj=self._getNVDAObjectByAnchorName(anchorName)
+		eventHandler.queueEvent("gainFocus",obj)
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		if not obj.windowClassName.startswith("Internet Explorer_"):
@@ -153,3 +162,24 @@ class MSHTML(VirtualBuffer):
 		else:
 			return None
 		return attrs
+
+	def _activateNVDAObject(self,obj):
+		super(MSHTML,self)._activateNVDAObject(obj)
+		#If we activated a same-page link, then generate a scrollingStart event to its anchor
+		if obj.HTMLNodeName=="A":
+			anchorName=getattr(obj.HTMLNode,'hash')
+			if not anchorName:
+				return 
+			obj=self._getNVDAObjectByAnchorName(anchorName[1:],HTMLDocument=obj.HTMLNode.document)
+			if not obj:
+				return
+			eventHandler.queueEvent("gainFocus",obj)
+
+	def _getNVDAObjectByAnchorName(self,name,HTMLDocument=None):
+		if not HTMLDocument:
+			HTMLDocument=self.rootNVDAObject.HTMLNode.document
+		HTMLNode=HTMLDocument.getElementById(name)
+		if not HTMLNode:
+			raise ValueError("node %s"%name)
+		obj=NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=HTMLNode)
+		return obj

@@ -954,6 +954,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 			self.passThrough=self.shouldPassThrough(obj,reason=speech.REASON_FOCUS)
 			if not self.passThrough:
 				# We read the info from the buffer instead of the control itself.
+				if focusInfo.isCollapsed:
+					focusInfo.expand(textInfos.UNIT_LINE)
 				speech.speakTextInfo(focusInfo,reason=speech.REASON_FOCUS)
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,speech.REASON_ONLYCACHE)
@@ -995,6 +997,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
 		caretInfo.expand(textInfos.UNIT_CHARACTER)
 		if not scrollInfo.isOverlapping(caretInfo):
+			if scrollInfo.isCollapsed:
+				scrollInfo.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(scrollInfo,reason=speech.REASON_CARET)
 			scrollInfo.collapse()
 			self.selection = scrollInfo
