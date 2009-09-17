@@ -93,12 +93,18 @@ class OrderedWinEventLimiter(object):
 		@param threadID: the threadID of the winEvent
 		@type threadID: integer
 		"""
-		if eventID in (winUser.EVENT_OBJECT_FOCUS,winUser.EVENT_SYSTEM_FOREGROUND):
+		if eventID==winUser.EVENT_OBJECT_FOCUS:
 			if objectID in (winUser.OBJID_SYSMENU,winUser.OBJID_MENU) and childID==0:
 				# This is a focus event on a menu bar itself, which is just silly. Ignore it.
 				return
+			#We do not need a focus event on an object if we already got a foreground event for it
+			if (winUser.EVENT_SYSTEM_FOREGROUND,window,objectID,childID,threadID) in self._focusEventCache:
+				return
 			self._focusEventCache[(eventID,window,objectID,childID,threadID)]=next(self._eventCounter)
 			return
+		elif eventID==winUser.EVENT_SYSTEM_FOREGROUND:
+			self._focusEventCache.pop((winUser.EVENT_OBJECT_FOCUS,window,objectID,childID,threadID),None)
+			self._focusEventCache[(eventID,window,objectID,childID,threadID)]=next(self._eventCounter)
 		elif eventID==winUser.EVENT_OBJECT_SHOW:
 			k=(winUser.EVENT_OBJECT_HIDE,window,objectID,childID,threadID)
 			if k in self._genericEventCache:
@@ -615,13 +621,6 @@ def processFocusWinEvent(window,objectID,childID,force=False):
 			window=hwndFocus
 			objectID=winUser.OBJID_CLIENT
 			childID=0
-	oldFocus=eventHandler.lastQueuedFocusObject
-	#If the existing focus has the same win event params as these, then ignore this event
-	#However don't ignore if its SysListView32 and the childID is 0 as this could be a groupItem
-	if isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible)  and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID and ("SysListView32" not in windowClassName or childID!=0 or objectID!=winUser.OBJID_CLIENT) :
-		# Don't actually process the event, as it is the same as the current focus.
-		# However, it is still a valid event, so return True.
-		return True
 	#Notify appModuleHandler of this new foreground window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#If Java access bridge is running, and this is a java window, then pass it to java and forget about it
