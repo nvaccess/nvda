@@ -197,7 +197,7 @@ def getBrailleTextForProperties(**propertyValues):
 		textList.append(name)
 	role = propertyValues.get("role")
 	if role is not None:
-		if role in speech.silentRolesOnFocus:
+		if name and role in speech.silentRolesOnFocus:
 			roleText = None
 		else:
 			roleText = roleLabels.get(role, controlTypes.speechRoleLabels[role])

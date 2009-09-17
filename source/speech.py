@@ -396,6 +396,10 @@ def speakTypedCharacters(ch):
 		speakSpelling(realChar)
 
 silentRolesOnFocus=set([
+	controlTypes.ROLE_PANE,
+	controlTypes.ROLE_FRAME,
+	controlTypes.ROLE_UNKNOWN,
+	controlTypes.ROLE_APPLICATION,
 	controlTypes.ROLE_TABLECELL,
 	controlTypes.ROLE_LISTITEM,
 	controlTypes.ROLE_MENUITEM,
@@ -621,11 +625,12 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	global oldTreeLevel, oldTableID, oldRowNumber, oldColumnNumber
 	textList=[]
-	if 'name' in propertyValues:
-		textList.append(propertyValues['name'])
+	name=propertyValues.get('name')
+	if name:
+		textList.append(name)
 	if 'role' in propertyValues:
 		role=propertyValues['role']
-		if reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or role not in silentRolesOnFocus:
+		if reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or not name or role not in silentRolesOnFocus:
 			textList.append(controlTypes.speechRoleLabels[role])
 	elif '_role' in propertyValues:
 		role=propertyValues['_role']
