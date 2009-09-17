@@ -602,10 +602,7 @@ def processFocusWinEvent(window,objectID,childID,force=False):
 	@returns: True if the focus is valid and was handled, False otherwise.
 	@rtype: boolean
 	"""
-	#Ignore focus  events on the parent of the desktop and taskbar
 	windowClassName=winUser.getClassName(window)
-	if windowClassName in ("Progman","Shell_TrayWnd"):
-		return False
 	rootWindow=winUser.getAncestor(window,winUser.GA_ROOT)
 	# If this window's root window is not the foreground window and this window or its root window is not a popup window:
 	if rootWindow!=winUser.getForegroundWindow() and not (winUser.getWindowStyle(window) & winUser.WS_POPUP or winUser.getWindowStyle(rootWindow)&winUser.WS_POPUP):

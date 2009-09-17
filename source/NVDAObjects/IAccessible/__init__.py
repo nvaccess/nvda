@@ -1281,6 +1281,9 @@ class MenuItem(IAccessible):
 			return
 		super(MenuItem, self).event_gainFocus()
 
+class Taskbar(IAccessible):
+	name = _("Taskbar")
+
 ###class mappings
 
 _staticMap={
@@ -1347,4 +1350,5 @@ _staticMap={
 	("QPopup",oleacc.ROLE_SYSTEM_MENUPOPUP):"qt.Menu",
 	("QWidget",oleacc.ROLE_SYSTEM_IPADDRESS):"qt.LayeredPane",
 	("QWidget",oleacc.ROLE_SYSTEM_APPLICATION):"qt.Application",
+	("Shell_TrayWnd",oleacc.ROLE_SYSTEM_CLIENT):"Taskbar",
 }
