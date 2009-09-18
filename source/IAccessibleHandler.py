@@ -704,9 +704,6 @@ def processForegroundWinEvent(window,objectID,childID):
 	#Ignore foreground events on windows that aren't the current foreground window
 	if window!=winUser.getForegroundWindow():
 		return False
-	#Ignore foreground events on the parent of the desktop and taskbar
-	if winUser.getClassName(window) in ("Progman","Shell_TrayWnd"):
-		return False
 	# If there is a pending gainFocus, it will handle the foreground object.
 	if eventHandler.isPendingEvents("gainFocus"):
 		return False
@@ -792,6 +789,7 @@ def pumpAll():
 	winEvents=winEventLimiter.flushEvents()
 	focusWinEvents=[]
 	validFocus=False
+	foregroundEvent=None
 	fakeFocusEvent=None
 	for winEvent in winEvents[0-MAX_WINEVENTS:]:
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
@@ -805,7 +803,8 @@ def pumpAll():
 					break
 			focusWinEvents=[]
 			if winEvent[0]==winUser.EVENT_SYSTEM_FOREGROUND:
-				processForegroundWinEvent(*(winEvent[1:]))
+				# We will only use this if there is no valid focus event.
+				foregroundEvent=winEvent[1:]
 			elif winEvent[0]==winUser.EVENT_SYSTEM_DESKTOPSWITCH:
 				processDesktopSwitchWinEvent(*winEvent[1:])
 			elif winEvent[0]==winUser.EVENT_OBJECT_DESTROY:
@@ -819,6 +818,8 @@ def pumpAll():
 		if processFocusWinEvent(*(focusWinEvent[1:])):
 			validFocus=True
 			break
+	if foregroundEvent and not validFocus:
+		processForegroundWinEvent(*foregroundEvent)
 	if fakeFocusEvent:
 		# Try this as a last resort.
 		if fakeFocusEvent[0] in (winUser.EVENT_SYSTEM_MENUSTART, winUser.EVENT_SYSTEM_MENUPOPUPSTART):
