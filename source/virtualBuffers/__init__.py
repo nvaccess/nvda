@@ -573,6 +573,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		"""
 		if not self._hadFirstGainFocus:
 			# This buffer is gaining focus for the first time.
+			self._setInitialCaretPos()
 			# Fake a focus event on the focus object, as the buffer may have missed the actual focus event.
 			focus = api.getFocusObject()
 			self.event_gainFocus(focus, lambda: focus.event_gainFocus())
@@ -954,8 +955,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 			self.passThrough=self.shouldPassThrough(obj,reason=speech.REASON_FOCUS)
 			if not self.passThrough:
 				# We read the info from the buffer instead of the control itself.
-				if focusInfo.isCollapsed:
-					focusInfo.expand(textInfos.UNIT_LINE)
 				speech.speakTextInfo(focusInfo,reason=speech.REASON_FOCUS)
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,speech.REASON_ONLYCACHE)
@@ -1165,6 +1164,14 @@ class VirtualBuffer(cursorManager.CursorManager):
 			elif direction == "previous" and link1start - link2end > self.NOT_LINK_BLOCK_MIN_LEN:
 				yield 0, link2end, link1start
 			link1node, link1start, link1end = link2node, link2start, link2end
+
+	def _setInitialCaretPos(self):
+		"""Set the initial position of the caret after the buffer has been loaded.
+		The return value is primarily used so that overriding methods can determine whether they need to set an initial position.
+		@return: C{True} if an initial position was set.
+		@rtype: bool
+		"""
+		return False
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
 	("Return","activatePosition"),
