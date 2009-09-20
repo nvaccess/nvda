@@ -820,7 +820,11 @@ the NVDAObject for IAccessible
 			return []
 
 	def _get_IA2Attributes(self):
-		attribs = self.IAccessibleObject.attributes
+		try:
+			attribs = self.IAccessibleObject.attributes
+		except COMError as e:
+			log.debugWarning("IAccessibleObject.attributes COMError %s"%e)
+			attribs=None
 		if attribs:
 			return IAccessibleHandler.splitIA2Attribs(attribs)
 		return {}
