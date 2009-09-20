@@ -16,7 +16,7 @@ blankList=[' ','\n','\r','\0','',None]
 names={
 None:_("blank"),
 "":_("blank"),
-"\0":_("null"),
+"\0":_("blank"),
 "\t":_("tab"),
 "\n":_("line feed"),
 "\f":_("page break"),
