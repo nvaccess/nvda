@@ -184,6 +184,7 @@ class MSHTML(VirtualBuffer):
 			HTMLDocument=self.rootNVDAObject.HTMLNode.document
 		HTMLNode=HTMLDocument.getElementById(name)
 		if not HTMLNode:
-			raise ValueError("node %s"%name)
+			log.debugWarning("GetElementById can't find node with ID %s"%name)
+			return None
 		obj=NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=HTMLNode)
 		return obj
