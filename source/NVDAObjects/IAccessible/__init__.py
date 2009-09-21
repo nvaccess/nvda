@@ -457,6 +457,13 @@ the NVDAObject for IAccessible
 			IAccessibleHandler.liveNVDAObjectTable[(event_windowHandle,event_objectID,event_childID)]=self
 		self._doneInit=True
 
+	def isDuplicateIAccessibleEvent(self,obj):
+		"""Compaires the object of an event to self to see if the event should be treeted as duplicate."""
+		#MSAA child elements do not have unique winEvent params as a childID could be reused if an element was deleted etc
+		if self.IAccessibleChildID>0:
+			return False
+		return obj.event_windowHandle==self.event_windowHandle and obj.event_objectID==self.event_objectID and obj.event_childID==self.event_childID
+
 	def _get_shouldAllowIAccessibleFocusEvent(self):
 		"""Determine whether a focus event should be allowed for this object.
 		Normally, this checks for the focused state to help eliminate redundant or invalid focus events.

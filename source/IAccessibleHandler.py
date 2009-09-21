@@ -657,8 +657,12 @@ def processFocusNVDAEvent(obj,force=False):
 	@return: C{True} if the focus event is valid and was queued, C{False} otherwise.
 	@rtype: boolean
 	"""
-	if not force and isinstance(obj,NVDAObjects.IAccessible.IAccessible) and not obj.shouldAllowIAccessibleFocusEvent:
-		return False
+	if not force and isinstance(obj,NVDAObjects.IAccessible.IAccessible):
+		focus=api.getFocusObject()
+		if isinstance(focus,NVDAObjects.IAccessible.IAccessible) and focus.isDuplicateIAccessibleEvent(obj):
+			return True
+		if not obj.shouldAllowIAccessibleFocusEvent:
+			return False
 	eventHandler.queueEvent('gainFocus',obj)
 	return True
 
