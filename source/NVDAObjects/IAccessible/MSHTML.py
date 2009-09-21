@@ -302,6 +302,13 @@ class MSHTML(IAccessible):
 				("Back","backspace"),
 			]]
 
+	def isDuplicateIAccessibleEvent(self,obj):
+		if not super(MSHTML,self).isDuplicateIAccessibleEvent(obj):
+			return False
+		#MSHTML winEvents can't be trusted for uniqueness, so just do normal object comparison.
+		return self==obj
+
+
 	def _isEqual(self, other):
 		if self.HTMLNode and other.HTMLNode:
 			try:
