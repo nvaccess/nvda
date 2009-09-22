@@ -1230,6 +1230,16 @@ class SysLink(IAccessible):
 	def reportFocus(self):
 		pass
 
+class TaskList(IAccessible):
+	isPresentableFocusAncestor = False
+
+	def event_gainFocus(self):
+		# Normally, we don't want to act on this focus event.
+		if self.childCount == 0:
+			# However, in Windows 7, the task list gets focus even if alt+tab is pressed with no applications open.
+			# In this case, we must report the focus so the user knows where the focus has landed.
+			return super(TaskList, self).event_gainFocus()
+
 class TaskListIcon(IAccessible):
 
 	def _get_role(self):
@@ -1333,6 +1343,8 @@ _staticMap={
 	("ATL:SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TWizardForm",oleacc.ROLE_SYSTEM_CLIENT):"Dialog",
 	("SysLink",oleacc.ROLE_SYSTEM_CLIENT):"SysLink",
+	("#32771",oleacc.ROLE_SYSTEM_LIST):"TaskList",
+	("TaskSwitcherWnd",oleacc.ROLE_SYSTEM_LIST):"TaskList",
 	("#32771",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("TaskSwitcherWnd",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("ToolbarWindow32",None):"ToolbarWindow32",
