@@ -179,14 +179,19 @@ class UIAHandler(object):
 			return isUIA
 		return v[0]
 
-	def isNativeUIAElement(self,UIAElement):
+	def getNearestWindowHandle(self,UIAElement):
 		try:
 			UIAElement=self.windowTreeWalker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
 		except COMError:
-			return False
+			return None
 		try:
-			windowHandle=UIAElement.cachedNativeWindowHandle
+			return UIAElement.cachedNativeWindowHandle
 		except COMError:
+			return None
+
+	def isNativeUIAElement(self,UIAElement):
+		windowHandle=self.getNearestWindowHandle(UIAElement)
+		if not windowHandle:
 			return False
 		return self.isUIAWindow(windowHandle)
 

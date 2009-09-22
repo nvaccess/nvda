@@ -122,10 +122,14 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 	def findBestClass(cls,clsList,kwargs):
 		windowHandle=kwargs.get('windowHandle',None)
 		UIAElement=kwargs.get('UIAElement',None)
+		isWindowElement=True
 		if windowHandle and not UIAElement:
 			UIAElement=UIAHandler.handler.clientObject.ElementFromHandleBuildCache(windowHandle,UIAHandler.handler.baseCacheRequest)
 		elif UIAElement and not windowHandle:
 			windowHandle=UIAElement.cachedNativeWindowHandle
+			if not windowHandle:
+				isWindowElement=False
+				windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		else:
 			raise ValueError("needs either a UIA element or window handle")
 		kwargs['windowHandle']=windowHandle
@@ -145,7 +149,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
 			clsList.append(TreeviewItem)
 		clsList.append(UIA)
-		if windowHandle:
+		if isWindowElement:
 			return super(UIA,cls).findBestClass(clsList,kwargs)
 		else:
 			return clsList,kwargs
