@@ -40,7 +40,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 	_dynamicClassCache={}
 
 	def __call__(self,*args,**kwargs):
-		if True: #'findBestAPIClass' not in self.__dict__:
+		if 'findBestAPIClass' not in self.__dict__:
 			APIClass=self
 		else:
 			APIClass=self.findBestAPIClass(**kwargs)
@@ -66,6 +66,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 				newCls=type(name,bases,{})
 				self._dynamicClassCache[bases]=newCls
 		obj=self.__new__(newCls,*args,**kwargs)
+		obj.APIClass=APIClass
 		if isinstance(obj,self):
 			obj.__init__(*args,**kwargs)
 		return obj
