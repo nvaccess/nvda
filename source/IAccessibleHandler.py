@@ -796,23 +796,20 @@ def pumpAll():
 	winEvents=winEventLimiter.flushEvents()
 	focusWinEvents=[]
 	validFocus=False
-	foregroundEvent=None
 	fakeFocusEvent=None
 	for winEvent in winEvents[0-MAX_WINEVENTS:]:
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
-		if winEvent[0]==winUser.EVENT_OBJECT_FOCUS:
+		if winEvent[0] in (winUser.EVENT_OBJECT_FOCUS,winUser.EVENT_SYSTEM_FOREGROUND):
 			focusWinEvents.append(winEvent)
 			continue
 		else:
 			for focusWinEvent in reversed(focusWinEvents):
-				if processFocusWinEvent(*(focusWinEvent[1:])):
+				procFunc=processForegroundWinEvent if focusWinEvent[0]==winUser.EVENT_SYSTEM_FOREGROUND else processFocusWinEvent
+				if procFunc(*(focusWinEvent[1:])):
 					validFocus=True
 					break
 			focusWinEvents=[]
-			if winEvent[0]==winUser.EVENT_SYSTEM_FOREGROUND:
-				# We will only use this if there is no valid focus event.
-				foregroundEvent=winEvent[1:]
-			elif winEvent[0]==winUser.EVENT_SYSTEM_DESKTOPSWITCH:
+			if winEvent[0]==winUser.EVENT_SYSTEM_DESKTOPSWITCH:
 				processDesktopSwitchWinEvent(*winEvent[1:])
 			elif winEvent[0]==winUser.EVENT_OBJECT_DESTROY:
 				processDestroyWinEvent(*winEvent[1:])
@@ -822,11 +819,10 @@ def pumpAll():
 			else:
 				processGenericWinEvent(*winEvent)
 	for focusWinEvent in reversed(focusWinEvents):
-		if processFocusWinEvent(*(focusWinEvent[1:])):
+		procFunc=processForegroundWinEvent if focusWinEvent[0]==winUser.EVENT_SYSTEM_FOREGROUND else processFocusWinEvent
+		if procFunc(*(focusWinEvent[1:])):
 			validFocus=True
 			break
-	if foregroundEvent and not validFocus:
-		processForegroundWinEvent(*foregroundEvent)
 	if fakeFocusEvent:
 		# Try this as a last resort.
 		if fakeFocusEvent[0] in (winUser.EVENT_SYSTEM_MENUSTART, winUser.EVENT_SYSTEM_MENUPOPUPSTART):
