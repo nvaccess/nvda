@@ -54,6 +54,7 @@ import sayAllHandler
 import api
 import queueHandler
 import NVDAObjects.IAccessible
+import NVDAObjects.window
 import appModuleHandler
 import config
 import mouseHandler
@@ -712,11 +713,9 @@ def processForegroundWinEvent(window,objectID,childID):
 	if window!=winUser.getForegroundWindow():
 		return False
 	# If there is a pending gainFocus, it will handle the foreground object.
-	if eventHandler.isPendingEvents("gainFocus"):
-		return False
 	oldFocus=eventHandler.lastQueuedFocusObject
 	#If this foreground win event's window is an ancestor of the existing focus's window, then ignore it
-	if isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and winUser.isDescendantWindow(window,oldFocus.windowHandle):
+	if isinstance(oldFocus,NVDAObjects.window.Window) and winUser.isDescendantWindow(window,oldFocus.windowHandle):
 		return False
 	#If the existing focus has the same win event params as these, then ignore this event
 	if isinstance(oldFocus,NVDAObjects.IAccessible.IAccessible) and window==oldFocus.event_windowHandle and objectID==oldFocus.event_objectID and childID==oldFocus.event_childID:
