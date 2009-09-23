@@ -100,6 +100,9 @@ if isUIAAvailable:
 			super(UIAEventListener,self).__init__()
 
 		def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
+			if not handler:
+				# UIAHandler hasn't finished initialising yet, so just ignore this event.
+				return
 			NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
 			if not NVDAEventName:
 				return
@@ -112,6 +115,9 @@ if isUIAAvailable:
 			eventHandler.queueEvent(NVDAEventName,obj)
 
 		def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
+			if not handler:
+				# UIAHandler hasn't finished initialising yet, so just ignore this event.
+				return
 			if not self.UIAHandlerRef().isNativeUIAElement(sender):
 				return
 			try:
@@ -132,6 +138,9 @@ if isUIAAvailable:
 			eventHandler.queueEvent("gainFocus",obj)
 
 		def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(self,sender,propertyId,newValue):
+			if not handler:
+				# UIAHandler hasn't finished initialising yet, so just ignore this event.
+				return
 			NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
 			if not NVDAEventName:
 				return
