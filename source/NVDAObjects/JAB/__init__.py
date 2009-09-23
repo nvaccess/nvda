@@ -130,8 +130,8 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		text=self.obj.jabContext.getAccessibleTextRange(start,end-1)
 		return text
 
-	def _lineNumFromOffset(self,offset):
-		return -1
+	def _getLineNumFromOffset(self,offset):
+		return None
 
 	def _getLineOffsets(self,offset):
 		(start,end)=self.obj.jabContext.getAccessibleTextLineBounds(offset)
