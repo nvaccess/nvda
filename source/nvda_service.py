@@ -126,16 +126,19 @@ def nvdaLauncher():
 		return
 
 	debug("launcher: starting NVDA")
-	startNVDA(desktop)
+	process = startNVDA(desktop)
 	desktopSwitchEvt = windll.kernel32.OpenEventW(SYNCHRONIZE, False, u"WinSta0_DesktopSwitch")
 	windll.kernel32.WaitForSingleObject(desktopSwitchEvt, INFINITE)
 	windll.kernel32.CloseHandle(desktopSwitchEvt)
 	debug("launcher: desktop switch, exiting NVDA on desktop %s" % desktop)
 	exitNVDA(desktop)
+	# NVDA should never ever be left running on other desktops, so make certain it is dead.
+	# It may still be running if it hasn't quite finished initialising yet, in which case -q won't work.
+	windll.kernel32.TerminateProcess(process, 1)
+	windll.kernel32.CloseHandle(process)
 
 def startNVDA(desktop):
-	process = executeProcess(desktop, None, nvdaExec, "-m", "--secure")
-	windll.kernel32.CloseHandle(process)
+	return executeProcess(desktop, None, nvdaExec, "-m", "--secure")
 
 def startNVDAUIAccess(session, desktop):
 	token = duplicateTokenPrimary(getLoggedOnUserToken(session))
