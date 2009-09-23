@@ -84,6 +84,8 @@ def executeEvent(eventName,obj,**kwargs):
 
 def doPreGainFocus(obj):
 	oldForeground=api.getForegroundObject()
+	oldFocus=api.getFocusObject()
+	oldVirtualBuffer=oldFocus.virtualBuffer if oldFocus else None
 	api.setFocusObject(obj)
 	if globalVars.focusDifferenceLevel<=1:
 		newForeground=api.getDesktopObject().objectInForeground()
@@ -99,6 +101,11 @@ def doPreGainFocus(obj):
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
 		executeEvent("focusEntered",parent)
+	if obj.virtualBuffer is not oldVirtualBuffer:
+		if hasattr(oldVirtualBuffer,"event_virtualBuffer_loseFocus"):
+			oldVirtualBuffer.event_virtualBuffer_loseFocus()
+		if obj.virtualBuffer and not obj.virtualBuffer.isLoading and hasattr(obj.virtualBuffer,"event_virtualBuffer_gainFocus"):
+			obj.virtualBuffer.event_virtualBuffer_gainFocus()
 	return True
  
 def doPreDocumentLoadComplete(obj):
