@@ -29,10 +29,8 @@ class AboutBlankDocument(MSHTML):
 class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self, obj):
-		if obj.windowClassName == "Internet Explorer_Server" and obj.role == controlTypes.ROLE_DOCUMENT:
-			parent = obj.parent
-			if parent.name == "about:blank":
-				self.overlayCustomNVDAObjectClass(obj,AboutBlankDocument,outerMost=True)
+		if obj.windowClassName == "Internet Explorer_Server" and obj.role == controlTypes.ROLE_DOCUMENT and obj.HTMLNode and obj.HTMLNode.document.url=="about:blank": 
+			self.overlayCustomNVDAObjectClass(obj,AboutBlankDocument,outerMost=True)
 
 	def event_gainFocus(self,obj,nextHandler):
 		nextHandler()
