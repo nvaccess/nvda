@@ -251,6 +251,12 @@ the NVDAObject for IAccessible
 	IAccessibleTableUsesTableCellIndexAttrib=False #: Should the table-cell-index IAccessible2 object attribute be used rather than indexInParent?
 
 	@classmethod
+	def windowHasExtraIAccessibles(cls,windowHandle):
+		"""Finds out whether this window has things such as a system menu / titleBar / scroll bars, which would be represented as extra IAccessibles"""
+		style=winUser.getWindowStyle(windowHandle)
+		return bool(style&winUser.WS_SYSMENU or style&winUser.WS_THICKFRAME or style&winUser.WS_CAPTION or style&winUser.WS_VSCROLL or style&winUser.WS_HSCROLL)
+
+	@classmethod
 	def findBestClass(cls,clsList,kwargs):
 		relation=kwargs.get('relation',None)
 		windowHandle=kwargs.get('windowHandle',None)
@@ -262,10 +268,10 @@ the NVDAObject for IAccessible
 
 		# If we have a window but no IAccessible, get the window from the IAccessible.
 		if windowHandle and not IAccessibleObject:
-			IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
-
-			if relation!="parent" and (IAccessibleHandler.accNavigate(IAccessibleObject,IAccessibleChildID,oleacc.NAVDIR_PREVIOUS) or IAccessibleHandler.accNavigate(IAccessibleObject,IAccessibleChildID,oleacc.NAVDIR_NEXT)):
+			if relation!="parent" and cls.windowHasExtraIAccessibles(windowHandle): 
 				IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_WINDOW,0)
+			else:
+				IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
 
 		# Try every trick in the book to get the window handle if we don't have it.
 		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
@@ -277,7 +283,7 @@ the NVDAObject for IAccessible
 			while windowHandle and winUser.getClassName(windowHandle)=="MozillaWindowClass":
 				windowHandle=winUser.getAncestor(windowHandle,winUser.GA_PARENT)
 		try:
-			Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
+			raise ValueError #Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
 		except:
 			Identity=None
 		if event_windowHandle is None and Identity and 'windowHandle' in Identity:
@@ -719,7 +725,7 @@ the NVDAObject for IAccessible
 
 	def _get_parent(self):
 		if self.IAccessibleChildID>0:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=0)
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=0) or super(IAccessible,self).parent
 		#Support for groupbox windows
 		groupboxObj=IAccessibleHandler.findGroupboxObject(self)
 		if groupboxObj:
@@ -728,14 +734,14 @@ the NVDAObject for IAccessible
 		if res:
 			try:
 				parentRole=res[0].accRole(res[1])
-			except:
+			except COMError:
 				log.debugWarning("parent has bad role",exc_info=True)
-				return None
-			if parentRole!=oleacc.ROLE_SYSTEM_WINDOW or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_NEXT) or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_PREVIOUS): 
-				return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]),relation="parent")
+				return super(IAccessible,self).parent
+			if parentRole!=oleacc.ROLE_SYSTEM_WINDOW or self.windowHasExtraIAccessibles(self.windowHandle): 
+				return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]),relation="parent") or super(IAccessible,self).parent
 			res=IAccessibleHandler.accParent(res[0],res[1])
 			if res:
-				return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]),relation="parent")
+				return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]),relation="parent") or super(IAccessible,self).parent
 		return super(IAccessible,self).parent
 
 	def _get_next(self):
