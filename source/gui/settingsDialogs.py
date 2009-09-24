@@ -233,6 +233,8 @@ class StringSynthSettingChanger(SynthSettingChanger):
 
 	def __call__(self,evt):
 		if self.setting.name=="voice":
+			# Cancel speech first so that the voice will change immediately instead of the change being queued.
+			speech.cancelSpeech()
 			changeVoice(getSynth(),getattr(self.dialog,"_%ss"%self.setting.name)[evt.GetSelection()].ID)
 			self.dialog.updateVoiceSettings()
 		else:
