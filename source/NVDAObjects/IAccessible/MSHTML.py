@@ -462,7 +462,7 @@ class MSHTML(IAccessible):
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
 				obj=obj.previous
 			return obj
-		return super(MSHTML,self).parent
+		return super(MSHTML,self).previous
 
 	def _get_next(self):
 		if self.HTMLNode:
@@ -474,7 +474,7 @@ class MSHTML(IAccessible):
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
 				obj=obj.next
 			return obj
-		return super(MSHTML,self).parent
+		return super(MSHTML,self).next
 
 	def _get_firstChild(self):
 		if self.HTMLNode:
