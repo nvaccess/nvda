@@ -63,6 +63,7 @@ parser.add_option('-f','--log-file',dest='logFileName',help="The file where log 
 parser.add_option('-l','--log-level',type="int",dest='logLevel',default=0,help="The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning") 
 parser.add_option('-c','--config-path',dest='configPath',default=config.getUserDefaultConfigPath(),help="The path where all settings for NVDA are stored")
 parser.add_option('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
+parser.add_option('-s','--secure',action="store_true",dest='secure',default=False,help="Secure mode (disable Python console)")
 (globalVars.appArgs,extraArgs)=parser.parse_args()
 
 def terminateRunningNVDA(window):

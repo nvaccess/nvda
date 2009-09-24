@@ -8,7 +8,7 @@ import winKernel
 import winUser
 # Include functions from oleacc.dll in the module namespace.
 m=comtypes.client.GetModule('oleacc.dll')
-globals().update(m.__dict__)
+globals().update((key, val) for key, val in m.__dict__.iteritems() if not key.startswith("_"))
 
 NAVDIR_MIN=0
 NAVDIR_UP=1

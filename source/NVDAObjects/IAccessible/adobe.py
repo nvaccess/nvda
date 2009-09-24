@@ -1,3 +1,4 @@
+import controlTypes
 import eventHandler
 import winUser
 from . import IAccessible, getNVDAObjectFromEvent
@@ -5,15 +6,16 @@ from NVDAObjects import NVDAObjectTextInfo
 
 class AcrobatNode(IAccessible):
 
-	def _get_IAccessibleFocusEventNeedsFocusedState(self):
+	def _get_shouldAllowIAccessibleFocusEvent(self):
 		#Acrobat document root objects do not have their focused state set when they have the focus.
 		if self.event_childID==0:
-			return False
-		return super(AcrobatNode,self).IAccessibleFocusEventNeedsFocusedState
+			return True
+		return super(AcrobatNode,self).shouldAllowIAccessibleFocusEvent
 
 	def event_valueChange(self):
-		if self.event_childID==0 and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
-			# This page may die and be replaced by another with the same event params, so always grab a new one.
+		if self.event_childID==0 and self.event_objectID == winUser.OBJID_CLIENT and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
+			# Acrobat has indicated that a page has died and been replaced by a new one.
+			# The new page has the same event params, so we must bypass NVDA's IAccessible caching.
 			obj = getNVDAObjectFromEvent(self.windowHandle, -4, 0)
 			if not obj:
 				return

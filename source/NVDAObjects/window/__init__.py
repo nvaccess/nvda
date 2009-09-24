@@ -56,7 +56,7 @@ An NVDAObject for a window
 """
 
 	@classmethod
-	def findBestAPIClass(cls,windowHandle=None):
+	def findBestAPIClass(cls,relation=None,windowHandle=None):
 		windowClassName=winUser.getClassName(windowHandle)
 		if windowClassName=="#32769":
 			return Window
@@ -78,8 +78,6 @@ An NVDAObject for a window
 		newCls=Window
 		if windowClassName=="#32769":
 			newCls=Desktop
-		elif windowClassName in ("#32771","TaskSwitcherWnd"):
-			newCls=TaskList
 		elif windowClassName=="Edit":
 			newCls=__import__("edit",globals(),locals(),[]).Edit
 		elif windowClassName=="RichEdit":
@@ -142,7 +140,7 @@ An NVDAObject for a window
 			return APIClass.objectInForeground(windowHandle=windowHandle)
 		return APIClass(windowHandle=windowHandle)
 
-	def __init__(self,windowHandle=None,windowClassName=None):
+	def __init__(self,relation=None,windowHandle=None,windowClassName=None):
 		if not windowHandle:
 			pass #raise ValueError("invalid or not specified window handle")
 		if windowClassName:
@@ -218,7 +216,7 @@ An NVDAObject for a window
 	def _get_parent(self):
 		parentHandle=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 		if parentHandle:
-			return Window(windowHandle=parentHandle)
+			return Window(relation="parent",windowHandle=parentHandle)
 
 	def _get_isInForeground(self):
 		fg=winUser.getForegroundWindow()
@@ -241,6 +239,20 @@ An NVDAObject for a window
 			self._isWindowUnicode=bool(ctypes.windll.user32.IsWindowUnicode(self.windowHandle))
  		return self._isWindowUnicode
 
+	def correctAPIForRelation(self,obj,relation=None):
+		if not obj:
+			return None
+		windowHandle=obj.windowHandle
+		newWindowHandle=obj.windowHandle
+		oldWindowHandle=self.windowHandle
+		if newWindowHandle and oldWindowHandle and newWindowHandle!=oldWindowHandle:
+			newAPIClass=Window.findBestAPIClass(windowHandle=newWindowHandle)
+			oldAPIClass=Window.findBestAPIClass(windowHandle=oldWindowHandle)
+			if newAPIClass!=oldAPIClass:
+				return newAPIClass(windowHandle=windowHandle,relation=relation)
+		return obj
+
+ 
 	def _get_processHandle(self):
 		if not hasattr(self,'_processHandleContainer'):
 			self._processHandleContainer=WindowProcessHandleContainer(self.windowHandle)
@@ -274,14 +286,6 @@ An NVDAObject for a window
 		return newName
 
 	normalizedWindowClassNameCache={}
-
-class TaskList(Window):
-	isPresentableFocusAncestor = False
-
-	def event_gainFocus(self):
-		api.processPendingEvents(processEventQueue=False)
-		if eventHandler.lastQueuedFocusObject is self:
-			super(TaskList,self).event_gainFocus()
 
 class Desktop(Window):
 

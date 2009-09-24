@@ -63,16 +63,13 @@ class AdobeAcrobat(VirtualBuffer):
 		super(AdobeAcrobat,self).__init__(rootNVDAObject,backendName="adobeAcrobat")
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
-		if self.rootNVDAObject.windowHandle==obj.windowHandle:
-			return True
-		return False
+		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)
 
 	def isAlive(self):
 		root=self.rootNVDAObject
 		if not root:
 			return False
-		states=root.states
-		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_READONLY not in states:
+		if not winUser.isWindow(root.windowHandle) or root.role == controlTypes.ROLE_UNKNOWN:
 			return False
 		return True
 

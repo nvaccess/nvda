@@ -60,7 +60,7 @@
 <ul>
 <li><a href="#8.1">8.1. Les touches de navigation rapide</a></li>
 <li><a href="#8.2">8.2. Les formulaires et le mode formulaire</a></li>
-<li><a href="#8.3">8.3. La liste des liens</a></li>
+<li><a href="#8.3">8.3. La liste d'éléments</a></li>
 </ul>
 <li><a href="#9">9. Informations additionnelles</a></li>
 </ul>
@@ -638,33 +638,23 @@ Par défaut, ces fonctions additionnelles de la souris ne sont pas activées dans 
 Les documents complexes, tels que les pages web, sont représentés dans NVDA à l'intérieur d'un Tampon Virtuel.
 </p>
 <p>
-Un Tampon Virtuel est une représentation platement textuelle du document, qui permet à l'utilisateur de se déplacer à l'aide des flèches, de lire le texte et les champs que le document contient. En plus des mouvements avec les flèches, on peut aussi appuyer sur entrer ou espace sur les liens et les boutons pour les activer, appuyer sur entrer ou espace dans les champs d'édition pour ensuite éditer leur contenu, appuyer sur entrer ou espace sur les cases à cocher ou les radio-boutons pour les sélectionner, et appuyer sur entrer ou espace dans les zones de liste déroulante pour pouvoir ensuite modifier leur sélection.
+Un Tampon Virtuel est une représentation platement textuelle du document dans laquelle on peut se déplacer avec les flèches de navigation. Des informations indiquant si le texte est un lien, un titre etc sont annoncées avec le texte pendant que vous vous déplacez.
 </p>
 <p>
-Quand on se trouve dans un tampon virtuel, il y a deux modes d'interaction. Le mode navigation permet de se déplacer dans le texte au moyen d'un curseur virtuel. Le mode formulaire permet d'interagir directement avec les champs d'édition, les listes déroulantes, les boutons radio en utilisant les touches habituelles.
-Quand vous êtes en mode navigation, NVDA basculera automatiquement en mode formulaire si vous arrivez sur un champ qui le nécessite. Vous pouvez aussi passer manuellement en mode formulaire par NVDA+espace.
-Si NVDA bascule automatiquement en mode formulaire à la suite d'une tabulation ou d'un click, il retournera automatiquement en mode navigation quand vous tabulerez ou cliquerez sur un champ qui ne requiert pas le mode formulaire.
-Cependant, si vous passez en mode formulaire par NVDA+espace, il restera dans ce mode jusqu'à ce que vous passiez manuellement en mode navigation.
-A tout moment, quand vous êtes en mode formulaire, vous pouvez repasser en mode navigation en pressant échap ou NVDA+espace.
-Le dialogue de paramétrage du tampon virtuel, dans le menu préférences du menu NVDA, vous permet de désactiver la bascule automatique entre mode formulaire et mode navigation.
+Dans un tampon virtuel, il y a deux modes d'interaction. En mode navigation, vous pouvez vous déplacer dans le texte en utilisant un curseur virtuel. En mode formulaire, vous pouvez interagir directement avec les champs d'édition, les listed déroulantes, les boutons radio en utilisant les touches que vous utiliseriez habituellement. En mode navigation, NVDA passera automatiquement en mode formulaire si vous tabulez ou cliquez sur un champ qui le requiert. Notez que presser la barre d'espace ou la touche entrée passera également NVDA en mode formulaire si le champ le requiert. Vous pouvez aussi passer manuellement NVDA en mode formulaire par la combinaison de touches NVDA+Espace. Si NVDA passe automatiquement en mode formulaire suite à un clic, une pression de la touche Tab, Espace, ou Entrée, Il repassera en mode navigation si vous tabulez ou cliquez sur un champ qui le requiert, ou si vous appuyez sur la touche Echap. Cependant, si vous passez manuellement en mode formulaire par la combinaison NVDA+Espace, NVDA restera en mode formulaire jusqu'à ce que vous retourniez manuellement en mode navigation. A tout moment, en mode formulaire, vous pouvez retourner en mode navigation en appuyant sur Echap ou sur la combinaison de touches NVDA+Espace. Le dialogue tampons virtuels du menu préférences du menu NVDA vous permet de désactiver le passage automatique du mode navigation au mode formulaire.
 </p> 
 <p>
-Dans l'état actuel, NVDA utilise les Tampons Virtuels pour Internet Explorer, Mozilla Firefox et Adobe Reader.
-</p>
-<p>
-Notons que les tampons virtuels utilisés dans Internet Explorer ou Adobe Reader sont beaucoup plus primitifs et prennent beaucoup de temps à se charger.
-Cette ancienne version des tampons virtuels ne se comporte pas très bien avec les contenus dynamiques et ne dispose ni des listes de liens ni de certains raccourcis clavier.
- Pour de meilleurs performances et une utilisation simplifiée, essayez <a href="http://www.getfirefox.com/">Mozilla Firefox</a> pour naviguer sur le Web.
+Actuellement, NVDA utilise des tampons virtuels pour lire les documents dans Mozilla Firefox, Microsoft Internet Explorer et Adobe Reader.
 </p>
 <h3 id="8.1">8.1. Les touches de navigation rapide.</h3>
 <p>
-Pour une navigation plus rapide, NVDA dispose de raccourcis clavier où l'appui d'une seule touche amène à certains champs  dans le tampon virtuel.
+En mode navigation, pour une navigation plus rapide, NVDA dispose de raccourcis clavier où l'appui d'une seule touche amène à certains champs  dans le tampon virtuel.
 </p>
 <p>
 L'appui de la touche amène au champ suivant, en combinaison avec la touche maj, il amène au champ précédent.
 </p>
 <p<
-Touches utilisées à la fois par l'ancienne et la nouvelle version des tampons virtuels :
+Touches disponibles :
 </p>
 <ul>
 <li>h : titre.</li>
@@ -672,36 +662,29 @@ Touches utilisées à la fois par l'ancienne et la nouvelle version des tampons vi
 <li>i : élément de liste.</li>
 <li>t : tableau.</li>
 <li>k : lien.</li>
-<li>p : paragraphe.</li>
-<li>f : Champ de formulaire.</li>
-</ul>
-<p>
-Touches non utilisées par l'ancienne version :
-</p>
-<ul>
-<li>u : lien non visité.</li>
-<li>v : lien visité.</li>
-<li>e : Zone d'édition.</li>
-<li>b : Bouton.</li>
-<li>x : Case à cocher.</li>
-<li>c : Liste déroulante.</li>
-<li>r : Bouton radio.</li>
-<li>q : Balise de citation.</li>
-<li>s : Séparateur.</li>
-<li>m : Cadre.</li>
-<li>g : Graphique.</li>
+<li>n: texte hors lien</li>
+<li>f: champ de formulaire</li>
+<li>u: lien non visités/li>
+<li>v: lien visités/li>
+<li>e: zone d'édition/li>
+<li>b: bouton</li>
+<li>x: case à cocher</li>
+<li>c: liste déroulante</li>
+<li>r: bouton radio</li>
+<li>q: balise de citation</li>
+<li>s: séparateur</li>
+<li>m: cadre</li>
+<li>g: graphique</li>
+<li>d: repère</li>
 <li>1 ... 6 : Titres 1 ... 6.</li>
 </ul>
 <h3 id="8.2">8.2. Les Formulaires et le Mode Formulaire.</h3>
 <p>
-Lorsqu'on désire entrer dans un champ de formulaire, il ne faut pas que les commandes associées aux raccourcis clavier demeurent actives. Le "mode formulaire" du Tampon Virtuel est fait pour ce problème et peut être activé ou désactivé par MVDA+espace.
+Parfois, vous voulez interagir avec des champs de formulaire sans que les touches de navigation rapide agissent. Le mode formulaire a été créé pourcela. Il peut être éctivé ou désactivé par la combinaison de touches NVDA+Espace. 
 </p>
+<h3 id="8.3">8.3. La Liste d'éléments.</h3>
 <p>
-D'une façon générale, la frappe de la touche entrer sur un champ de formulaire active le mode formulaire et lorsqu'une nouvelle page est chargée, il est  désactivé.
-</p>
-<h3 id="8.3">8.3. La Liste des Liens.</h3>
-<p>
-Pour accéder à la liste des liens du tampon virtuel en cours, appuyer sur NVDA+f7. Depuis le dialogue qui apparaît, vous pouvez sélectionner le lien qui vous intéresse, puis vous y rendre ou l'activer en utilisant les boutons prévus à cet effet.
+La liste d'éléments (accessible en appuyant sur NVDA+F7 dans un tampon virtuel) fournit une liste de liens, titres, ou repères dans la page. Des boutons radio vous permettent de choisir entre ces trois types d'informations. Une zone d'édition est également présente dans le dialogue, elle vous permet de filtrer la liste pour faciliter la recherche d'un élément particulier dans la page. Quand vous avez choisi un élément, des boutons vous permettent de vous y rendre ou de l'activer.
 </p>
 <h3 id="9">9. Informations additionnelles</h3>
 <p>

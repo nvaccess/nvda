@@ -515,6 +515,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def _loadBufferDone(self, success=True):
 		self._loadProgressCallLater.Stop()
+		del self._loadProgressCallLater
 		self.isLoading = False
 		if not success:
 			return
@@ -572,6 +573,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		"""
 		if not self._hadFirstGainFocus:
 			# This buffer is gaining focus for the first time.
+			self._setInitialCaretPos()
 			# Fake a focus event on the focus object, as the buffer may have missed the actual focus event.
 			focus = api.getFocusObject()
 			self.event_gainFocus(focus, lambda: focus.event_gainFocus())
@@ -582,6 +584,18 @@ class VirtualBuffer(cursorManager.CursorManager):
 				info=self.makeTextInfo(textInfos.POSITION_CARET)
 				sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 			self._hadFirstGainFocus = True
+
+		else:
+			# This buffer has had focus before.
+			if not self.passThrough:
+				# Speak it like we would speak focus on any other document object.
+				speech.speakObject(self.rootNVDAObject, reason=speech.REASON_FOCUS)
+				info = self.selection
+				if not info.isCollapsed:
+					speech.speakSelectionMessage(_("selected %s"), info.text)
+				else:
+					info.expand(textInfos.UNIT_LINE)
+					speech.speakTextInfo(info, reason=speech.REASON_CARET)
 
 		virtualBufferHandler.reportPassThrough(self)
 		braille.handler.handleGainFocus(self)
@@ -982,6 +996,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
 		caretInfo.expand(textInfos.UNIT_CHARACTER)
 		if not scrollInfo.isOverlapping(caretInfo):
+			if scrollInfo.isCollapsed:
+				scrollInfo.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(scrollInfo,reason=speech.REASON_CARET)
 			scrollInfo.collapse()
 			self.selection = scrollInfo
@@ -1148,6 +1164,14 @@ class VirtualBuffer(cursorManager.CursorManager):
 			elif direction == "previous" and link1start - link2end > self.NOT_LINK_BLOCK_MIN_LEN:
 				yield 0, link2end, link1start
 			link1node, link1start, link1end = link2node, link2start, link2end
+
+	def _setInitialCaretPos(self):
+		"""Set the initial position of the caret after the buffer has been loaded.
+		The return value is primarily used so that overriding methods can determine whether they need to set an initial position.
+		@return: C{True} if an initial position was set.
+		@rtype: bool
+		"""
+		return False
 
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
 	("Return","activatePosition"),

@@ -1,3 +1,4 @@
+import eventHandler
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
 import virtualBufferHandler
 import controlTypes
@@ -12,50 +13,42 @@ import config
 
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
-	nodeNamesToNVDARoles={
-		"frame":controlTypes.ROLE_FRAME,
-		"iframe":controlTypes.ROLE_FRAME,
-		"frameset":controlTypes.ROLE_DOCUMENT,
-		"body":controlTypes.ROLE_DOCUMENT,
-		"p":controlTypes.ROLE_PARAGRAPH,
-		"ul":controlTypes.ROLE_LIST,
-		"ol":controlTypes.ROLE_LIST,
-		"li":controlTypes.ROLE_LISTITEM,
-		"dl":controlTypes.ROLE_LIST,
-		"dt":controlTypes.ROLE_LISTITEM,
-		"dd":controlTypes.ROLE_LISTITEM,
-		"table":controlTypes.ROLE_TABLE,
-		"thead":controlTypes.ROLE_TABLEHEADER,
-		"th":controlTypes.ROLE_TABLECOLUMNHEADER,
-		"tbody":controlTypes.ROLE_TABLEBODY,
-		"tr":controlTypes.ROLE_TABLEROW,
-		"td":controlTypes.ROLE_TABLECELL,
-		"img":controlTypes.ROLE_GRAPHIC,
-		"a":controlTypes.ROLE_LINK,
-		"div":controlTypes.ROLE_SECTION,
-		"label":controlTypes.ROLE_LABEL,
-		"form": controlTypes.ROLE_FORM,
-	}
-
 	def _normalizeControlField(self,attrs):
 		level=None
 		accRole=attrs.get('IAccessible::role',0)
 		accRole=int(accRole) if isinstance(accRole,basestring) and accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
-		nodeName=attrs.get('IHTMLDOMNode::nodeName',"").lower()
-		if nodeName=="textarea":
+		if 'HTMLAttrib::onclick' in attrs or 'HTMLAttrib::onmousedown' in attrs or 'HTMLAttrib::onmouseup' in attrs:
+			states.add(controlTypes.STATE_CLICKABLE)
+		if attrs.get('HTMLAttrib::aria-required','false')=='true':
+			states.add(controlTypes.STATE_REQUIRED)
+		if attrs.get('HTMLAttrib::aria-invalid','false')=='true':
+			states.add(controlTypes.STATE_INVALID)
+		if attrs.get('HTMLAttrib::aria-multiline','false')=='true':
 			states.add(controlTypes.STATE_MULTILINE)
-		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE):
-			role=self.nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_UNKNOWN)
-		if role==controlTypes.ROLE_UNKNOWN:
-			if "h1"<=nodeName<="h6":
-				role=controlTypes.ROLE_HEADING
-				level=nodeName[1:]
-		if nodeName in ("ul","ol","dl"):
+		if attrs.get('HTMLAttrib::aria-dropeffect','none')!='none':
+			states.add(controlTypes.STATE_DROPTARGET)
+		ariaGrabbed=attrs.get('HTMLAttrib::aria-grabbed',None)
+		if ariaGrabbed=='false':
+			states.add(controlTypes.STATE_DRAGGABLE)
+		elif ariaGrabbed=='true':
+			states.add(controlTypes.STATE_DRAGGING)
+		nodeName=attrs.get('IHTMLDOMNode::nodeName',"")
+		if nodeName=="TEXTAREA":
+			states.add(controlTypes.STATE_MULTILINE)
+		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE,controlTypes.ROLE_WINDOW):
+			role=NVDAObjects.IAccessible.MSHTML.nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_UNKNOWN)
+		if "H1"<=nodeName<="H6":
+			level=nodeName[1:]
+		if nodeName in ("UL","OL","DL"):
 			states.add(controlTypes.STATE_READONLY)
 		if role==controlTypes.ROLE_UNKNOWN:
 			role=controlTypes.ROLE_TEXTFRAME
+		if role==controlTypes.ROLE_GRAPHIC:
+			# MSHTML puts the unavailable state on all graphics when the showing of graphics is disabled.
+			# This is rather annoying and irrelevant to our users, so discard it.
+			states.discard(controlTypes.STATE_UNAVAILABLE)
 		ariaRoles=attrs.get("HTMLAttrib::role", "").split(" ")
 		# Get the first landmark role, if any.
 		landmark=next((ar for ar in ariaRoles if ar in aria.landmarkRoles),None)
@@ -75,6 +68,18 @@ class MSHTML(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
+
+	def _setInitialCaretPos(self):
+		if super(MSHTML,self)._setInitialCaretPos():
+			return
+		url=getattr(self.rootNVDAObject.HTMLNode.document,'url',"").split('#')
+		if not url or len(url)!=2:
+			return False
+		anchorName=url[-1]
+		if not anchorName:
+			return False
+		obj=self._getNVDAObjectByAnchorName(anchorName)
+		self._handleScrollTo(obj)
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		if not obj.windowClassName.startswith("Internet Explorer_"):
@@ -107,21 +112,14 @@ class MSHTML(VirtualBuffer):
 		return True
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
-		IHTMLElement=NVDAObjects.IAccessible.MSHTML.locateHTMLElementByID(self.rootNVDAObject.IHTMLElement.document,'ms__id%d'%ID)
-		if not IHTMLElement:
+		HTMLNode=NVDAObjects.IAccessible.MSHTML.locateHTMLElementByID(self.rootNVDAObject.HTMLNode.document,'ms__id%d'%ID)
+		if not HTMLNode:
 			return self.rootNVDAObject
-		while IHTMLElement:
-			try:
-				pacc=NVDAObjects.IAccessible.MSHTML.IAccessibleFromIHTMLElement(IHTMLElement)
-			except NotImplementedError:
-				pacc=None
-			if pacc:
-				return NVDAObjects.IAccessible.IAccessible(IAccessibleObject=pacc,IAccessibleChildID=0)
-			IHTMLElement=IHTMLElement.parentElement
+		return NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=HTMLNode)
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
-		ID=obj.IHTMLElement.uniqueNumber
+		ID=obj.HTMLNode.uniqueNumber
 		return docHandle,ID
 
 	def _searchableAttribsForNodeType(self,nodeType):
@@ -168,3 +166,25 @@ class MSHTML(VirtualBuffer):
 		else:
 			return None
 		return attrs
+
+	def _activateNVDAObject(self,obj):
+		super(MSHTML,self)._activateNVDAObject(obj)
+		#If we activated a same-page link, then scroll to its anchor
+		if obj.HTMLNodeName=="A":
+			anchorName=getattr(obj.HTMLNode,'hash')
+			if not anchorName:
+				return 
+			obj=self._getNVDAObjectByAnchorName(anchorName[1:],HTMLDocument=obj.HTMLNode.document)
+			if not obj:
+				return
+			self._handleScrollTo(obj)
+
+	def _getNVDAObjectByAnchorName(self,name,HTMLDocument=None):
+		if not HTMLDocument:
+			HTMLDocument=self.rootNVDAObject.HTMLNode.document
+		HTMLNode=HTMLDocument.getElementById(name)
+		if not HTMLNode:
+			log.debugWarning("GetElementById can't find node with ID %s"%name)
+			return None
+		obj=NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=HTMLNode)
+		return obj

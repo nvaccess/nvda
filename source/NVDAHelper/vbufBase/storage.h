@@ -194,16 +194,6 @@ class VBufStorage_fieldNode_t {
 	void generateMarkupClosingTag(std::wstring& text);
 
 /**
- * fetches the text between given offsets in this node and its descendants, with optional markup.
- * @param startOffset the offset to start from.
- * @param endOffset the offset to end at. Use -1 to mean node's end offset. 
- * @param text a string in whish to append the text.
- * @param useMarkup if true then markup indicating opening and closing of fields will be included.
- * @return true if successfull, false otherwize.
- */ 
-	virtual void getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup=false);
-
-/**
  * Disassociates this node from its buffer.
  * @param buffer the buffer to disassociate from
  */
@@ -265,6 +255,16 @@ class VBufStorage_fieldNode_t {
  * @return a string of all the attributes in this field, format of name:value pares separated by a semi colon.
  */
 	std::wstring getAttributesString() const;
+
+/**
+ * fetches the text between given offsets in this node and its descendants, with optional markup.
+ * @param startOffset the offset to start from.
+ * @param endOffset the offset to end at. Use -1 to mean node's end offset. 
+ * @param text a string in whish to append the text.
+ * @param useMarkup if true then markup indicating opening and closing of fields will be included.
+ * @return true if successfull, false otherwize.
+ */ 
+	virtual void getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup=false);
 
 /**
  * @return a string providing information about this node's type, and its state.

@@ -83,6 +83,18 @@ IPDDomNode* getPDDomNode(VARIANT& varChild, IServiceProvider* servprov) {
 	return domNode;
 }
 
+inline void processText(BSTR inText, wstring& outText) {
+	for (wchar_t* ch = inText; *ch; ch++) {
+		switch (*ch) {
+			case L'\r':
+			case L'\n':
+				break;
+			default:
+				outText += *ch;
+		}
+	}
+}
+
 VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 	VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
 	IPDDomNode* domNode
@@ -96,7 +108,7 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 	float fontSize, red, green, blue;
 	if ((res = domNode->GetFontInfo(&fontStatus, &fontName, &fontSize, &fontFlags, &red, &green, &blue)) != S_OK) {
 		DEBUG_MSG(L"IPDDomNode::GetFontInfo returned " << res);
-		return NULL;
+		fontStatus = FontInfo_NoInfo;
 	}
 
 	if (fontStatus == FontInfo_MixedInfo) {
@@ -138,7 +150,9 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 		}
 
 		if (text) {
-			previousNode = buffer->addTextFieldNode(parentNode, previousNode, text);
+			wstring procText;
+			processText(text, procText);
+			previousNode = buffer->addTextFieldNode(parentNode, previousNode, procText);
 			if (previousNode && fontStatus == FontInfo_Valid) {
 				previousNode->addAttribute(L"font-name", fontName);
 				wostringstream s;
@@ -258,25 +272,31 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 	}
 
 	// Get stdName.
+	BSTR stdName = NULL;
 	if (domElement) {
-		BSTR stdName;
 		if ((res = domElement->GetStdName(&stdName)) != S_OK) {
 			DEBUG_MSG(L"IPDDomElement::GetStdName returned " << res);
 			stdName = NULL;
 		}
 		if (stdName) {
 			parentNode->addAttribute(L"acrobat::stdname", stdName);
-			SysFreeString(stdName);
-			stdName = NULL;
+			if (wcscmp(stdName, L"Span") == 0 || wcscmp(stdName, L"Link") == 0 || wcscmp(stdName, L"Quote") == 0) {
+				// This is an inline element.
+				parentNode->setIsBlock(false);
+			}
 		}
 	}
 
 	//Get the child count
 	int childCount=0;
-	DEBUG_MSG(L"get childCount with IAccessible::get_accChildCount");
-	if((res=pacc->get_accChildCount((long*)(&childCount)))!=S_OK) {
-		DEBUG_MSG(L"pacc->get_accChildCount returned "<<res);
-		childCount=0;
+	// We don't want to descend into lists and combo boxes.
+	// Besides, Acrobat reports the child count, but the children can't be accessed.
+	if (role != ROLE_SYSTEM_LIST && role != ROLE_SYSTEM_COMBOBOX) {
+		DEBUG_MSG(L"get childCount with IAccessible::get_accChildCount");
+		if((res=pacc->get_accChildCount((long*)(&childCount)))!=S_OK) {
+			DEBUG_MSG(L"pacc->get_accChildCount returned "<<res);
+			childCount=0;
+		}
 	}
 	DEBUG_MSG(L"childCount is "<<childCount);
 
@@ -310,6 +330,8 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 		VARIANT* varChildren;
 		if((varChildren=(VARIANT*)malloc(sizeof(VARIANT)*childCount))==NULL) {
 			DEBUG_MSG(L"Error allocating varChildren memory");
+			if (stdName)
+				SysFreeString(stdName);
 			return NULL;
 		}
 		DEBUG_MSG(L"Fetch children with AccessibleChildren");
@@ -345,6 +367,11 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 	} else {
 
 		// No children, so this is a text leaf node.
+		if (!stdName) {
+			// Text leaf nodes with no stdName are inline.
+			parentNode->setIsBlock(false);
+		}
+
 		// Get the name.
 		BSTR name = NULL;
 		if (states & STATE_SYSTEM_FOCUSABLE && (res = pacc->get_accName(varChild, &name)) != S_OK) {
@@ -361,11 +388,13 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 			buffer->addTextFieldNode(parentNode->getParent(), parentNode->getPrevious(), name);
 		}
 
-		if (name && (role == ROLE_SYSTEM_RADIOBUTTON || role == ROLE_SYSTEM_CHECKBUTTON)) {
+		if (role == ROLE_SYSTEM_RADIOBUTTON || role == ROLE_SYSTEM_CHECKBUTTON) {
 			// Acrobat renders "Checked"/"Unchecked" as the text for radio buttons/check boxes, which is not what we want.
-			// Render the name as the text for radio buttons and check boxes.
-			if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name))
+			// Render the name (if any) as the text for radio buttons and check boxes.
+			if (name && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
 				previousNode = tempNode;
+			else
+				tempNode = NULL; // Signal no text.
 		} else if (tempNode = renderText(buffer, parentNode, previousNode, domNode))
 			previousNode = tempNode;
 
@@ -380,6 +409,8 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 		}
 	}
 
+	if (stdName)
+		SysFreeString(stdName);
 	if (domElement) {
 		DEBUG_MSG(L"Releasing IPDDomElement");
 		domElement->Release();

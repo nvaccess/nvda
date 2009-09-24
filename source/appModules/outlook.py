@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 
 import time
+from comtypes import COMError
 import comtypes.client
 import _default
 import api
@@ -14,12 +15,6 @@ import controlTypes
 from keyUtils import key, sendKey
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
-
-try:
-	nativeOm=comtypes.client.GetActiveObject("outlook.application",dynamic=True)
-except:
-	nativeOm=comtypes.client.CreateObject("outlook.Application",dynamic=True)
-outlookVersion=int(nativeOm.version.split('.')[0])
 
 def getContactString(obj):
 		return ", ".join([x for x in [obj.fullName,obj.companyName,obj.jobTitle,obj.email1address] if x and not x.isspace()])
@@ -46,6 +41,23 @@ def getSentMessageString(obj):
 
 class AppModule(_default.AppModule):
 
+	def _get_nativeOm(self):
+		if not getattr(self,'_nativeOm',None):
+			try:
+				nativeOm=comtypes.client.GetActiveObject("outlook.application",dynamic=True)
+			except (COMError,WindowsError):
+				nativeOm=None
+			self._nativeOm=nativeOm
+		return self._nativeOm
+
+	def _get_outlookVersion(self):
+		nativeOm=self.nativeOm
+		if nativeOm:
+			outlookVersion=int(nativeOm.version.split('.')[0])
+		else:
+			outlookVersion=0
+		return outlookVersion
+
 	def event_NVDAObject_init(self,obj):
 		role=obj.role
 		if role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_MENUITEM):
@@ -55,7 +67,8 @@ class AppModule(_default.AppModule):
 		controlID=obj.windowControlID
 		className=obj.windowClassName
 		if (className=="SUPERGRID" and controlID==4704) or (className=="rctrl_renwnd32" and controlID==109):
-			if outlookVersion<=9 and isinstance(obj,IAccessible):
+			outlookVersion=self.outlookVersion
+			if outlookVersion and outlookVersion<=9 and isinstance(obj,IAccessible):
 				obj.__class__=MessageList_pre2003
 			elif obj.role==controlTypes.ROLE_UNKNOWN:
 				obj.role=controlTypes.ROLE_ICON
@@ -81,7 +94,7 @@ class MessageList_pre2003(IAccessible):
 
 	def event_gainFocus(self):
 		try:
-			msg=nativeOm.ActiveExplorer().selection[0]
+			msg=self.nativeOm.ActiveExplorer().selection[0]
 		except:
 			msg=None
 			pass
@@ -98,7 +111,7 @@ class MessageList_pre2003(IAccessible):
 			oldEntryID=None
 		sendKey(keyPress)
 		try:
-			msg=nativeOm.ActiveExplorer().selection[0]
+			msg=self.nativeOm.ActiveExplorer().selection[0]
 		except:
 			msg=None
 			pass

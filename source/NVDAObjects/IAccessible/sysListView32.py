@@ -153,7 +153,7 @@ class GroupingItem(Window):
 		return (cls,), kwargs
 
 	def __init__(self,parent,groupInfo):
-		super(GroupingItem,self).__init__(parent.windowHandle)
+		super(GroupingItem,self).__init__(windowHandle=parent.windowHandle)
 		self.parent=parent
 		self.groupInfo=groupInfo
 
