@@ -630,15 +630,18 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		textList.append(name)
 	if 'role' in propertyValues:
 		role=propertyValues['role']
-		if reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or not name or role not in silentRolesOnFocus:
-			textList.append(controlTypes.speechRoleLabels[role])
+		speakRole=True
 	elif '_role' in propertyValues:
+		speakRole=False
 		role=propertyValues['_role']
 	else:
+		speakRole=False
 		role=controlTypes.ROLE_UNKNOWN
-	if 'value' in propertyValues:
-		if not role in silentValuesForRoles:
-			textList.append(propertyValues['value'])
+	value=propertyValues.get('value') if role not in silentValuesForRoles else None
+	if speakRole and (reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or not (name or value) or role not in silentRolesOnFocus):
+		textList.append(controlTypes.speechRoleLabels[role])
+	if value:
+		textList.append(value)
 	states=propertyValues.get('states')
 	realStates=propertyValues.get('_states',states)
 	if states is not None:
