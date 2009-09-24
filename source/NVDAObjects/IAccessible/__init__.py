@@ -254,7 +254,7 @@ the NVDAObject for IAccessible
 	def windowHasExtraIAccessibles(cls,windowHandle):
 		"""Finds out whether this window has things such as a system menu / titleBar / scroll bars, which would be represented as extra IAccessibles"""
 		style=winUser.getWindowStyle(windowHandle)
-		return bool(style&winUser.WS_SYSMENU or style&winUser.WS_THICKFRAME or style&winUser.WS_CAPTION or style&winUser.WS_VSCROLL or style&winUser.WS_HSCROLL)
+		return bool(style&winUser.WS_SYSMENU or style&winUser.WS_SIZEBOX or style&winUser.WS_VSCROLL or style&winUser.WS_HSCROLL)
 
 	@classmethod
 	def findBestClass(cls,clsList,kwargs):
