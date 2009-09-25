@@ -236,7 +236,7 @@ class StringSynthSettingChanger(SynthSettingChanger):
 			# Cancel speech first so that the voice will change immediately instead of the change being queued.
 			speech.cancelSpeech()
 			changeVoice(getSynth(),getattr(self.dialog,"_%ss"%self.setting.name)[evt.GetSelection()].ID)
-			self.dialog.updateVoiceSettings()
+			self.dialog.updateVoiceSettings(changedSetting=self.setting.name)
 		else:
 			setattr(getSynth(),self.setting.name,getattr(self.dialog,"_%ss"%self.setting.name)[evt.GetSelection()].ID)
 
@@ -321,15 +321,21 @@ class VoiceSettingsDialog(SettingsDialog):
 		except IndexError:
 			self.punctuationCheckBox.SetFocus()
 
-	def updateVoiceSettings(self):
+	def updateVoiceSettings(self, changedSetting=None):
 		"""Creates, hides or updates existing GUI controls for all of supported settings."""
 		synth=getSynth()
 		#firstly check already created options
 		for name,sizer in self.sizerDict.iteritems():
+			if name == changedSetting:
+				# Changing a setting shouldn't cause that setting itself to disappear.
+				continue
 			if not synth.isSupported(name):
 				self.settingsSizer.Hide(sizer)
 		#Create new controls, update already existing
 		for setting in reversed(synth.supportedSettings):
+			if setting.name == changedSetting:
+				# Changing a setting shouldn't cause that setting's own values to change.
+				continue
 			b=isinstance(setting,NumericSynthSetting)
 			if setting.name in self.sizerDict: #update a value
 				self.settingsSizer.Show(self.sizerDict[setting.name])
