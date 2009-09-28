@@ -12,7 +12,7 @@
 
 
 <h1>NVDA 0.6 felhasználói útmutató</h1>
-<span>Utolsó frissítés dátuma: 2009 június 26.</span>
+<span>Utolsó frissítés dátuma: 2009 szeptember 25.</span>
 <BR>A fordításban részt vettek:
 <BR>Németh Dávid, Osztolykán Róbert, Ócsvári Áron, Dr. Simon Gergely
 <h2 ID="content"> tartalomjegyzék </h2>
@@ -30,16 +30,14 @@
 <li><a href="#1.2">1.2. Honosítás</a></li>
 <li><a href="#1.3">1.3. Beszédszintetizátor támogatás</a></li>
 <li><a href="#1.4">1.4. Braille támogatás</a></li>
-<li><a href="#1.5">1.5. Újítás és kísérletezés</a></li>
-<li><a href="#1.6">1.6. Tervezés És Megvalósítás</a></li>
-<li><a href="#1.7">1.7. Licensz és copyright</a></li>
+<li><a href="#1.5">1.5. Licensz és copyright</a></li>
 </ul>
 <li><a href="#2">2. Rendszer követelmények</a></li> 
-<li><a href="#3">3. Az NVDA megszerzése</a></li>
+<li><a href="#3">3. Az NVDA letöltése</a></li>
 <li><a href="#4">4. Az NVDA telepítése</a></li>
 <ul>
 <li><a href="#4.1">4.1. Az NVDA telepítõ</a></li>
-<li><a href="#4.2">4.2. Az NVDA hordozható zip (vagy exe) fájl</a></li>
+<li><a href="#4.2">4.2. Az NVDA hordozható exe fájl</a></li>
 </ul>
 <li><a href="#5">5. Az elsõ lépések az NVDA-val</a></li>
 <ul>
@@ -157,15 +155,15 @@ Fõbb jellemzõi:
 <li>Webböngészés a <a href="http://www.getfirefox.com/">Mozilla Firefox 3</a> használatával</li>
 <li>Könnyen használható, beszédtámogatást nyújtó telepítõ</li>
 <li>Email-ek használata a <a href="http://www.mozillamessaging.com/en-US/thunderbird/early_releases/">Mozilla Thunderbird 3</a> program segítségével</li>
-<li>A Microsoft Internet Explorer program alap szintû támogatása</li>
+<li>A Microsoft Internet Explorer program támogatása</li>
 <li>Alapvetõ támogatás a Microsoft Outlook Express / Windows Mail programok használatakor</li>
-<li>Alapvetõ támogatás a Microsoft Word és Excel használatakor</li>
+<li>A Microsoft Word és Excel támogatása</li>
 <li>A vakbarát Java alkalmazások támogatása</li>
-<li> alapvetõ támogatás az Adobe Reader program használatakor</li>
+<li> Az Adobe Reader program támogatása</li>
 <li> alapvetõ támogatás az IBM Lotus Symphony program használatakor</li>
 <li>A Windows Parancssor és konzolos alkalmazások támogatása</li>
 <li>Az egérmutatónál lévõ szöveg automatikus bemondása és választható hangjelzés az egér pozíciójának megállapításához</li>
-<li> a Freedom Scientific valamint a BRLTTY drivereket használó braille kijelzõk támogatása </li>
+<li> a frissíthetõ braille kijelzõk támogatása </li>
 </ul>
 
 <A HREF="#content">Vissza a tartalomjegyzékhez</A>
@@ -189,32 +187,17 @@ Az NVDA tartalmazza az <a href="http://espeak.sourceforge.net/">eSpeak</a>, egy 
 
 <h3 id="1.4">1.4. Braille támogatás</h3>
 <p>
-A Braille kijelzõvel rendelkezõ felhasználók számára az NVDA lehetõséget biztosít az információ megjelenítésére a kijelzõn. Az NVDA a Freedom Scientific Pacmate és Focus kijelzõket, a Handy Tech kijelzõt, valamint a BRLTTY programcsomagban található kijelzõket támogatja.
-</p>
-
-<A HREF="#content">Vissza a tartalomjegyzékhez</A>
-
-<h3 id="1.5">1.5. Újítás És Kísérletezés</h3>
-<p>
-Az NVDA fejlesztését nem kizárólag a piaci irányelvek, elvárások határozzák meg. A kereskedelmi képernyõolvasók számos kiváló lehetõséggel rendelkeznek, ám ez olykor a piaci elvárások követésével, s nem a felhasználó számára ténylegesen hasznos lehetõségek megvalósításával jár. Az NVDA talán nem mindig olyan stabil mint a többi képernyõolvasó, de egyértelmûen tekinthetõ kísérleti, újító eszközként. Könnyen és gyorsan tesztelhet új ötleteket és lehetõségeket, esetenként olyan funkciókat is, melyek nem találhatóak meg a Windows operációs rendszerhez készült képernyõolvasókban. Ilyen például az NVDA egyik nagyszerû képessége, a folyamatjelzõ változásának egyre magasabb hanggal való jelzése. Minnél magasabb a hangjelzés, annál közelebb ér a folyamatjelzõ a teljesen telt állapothoz. Habár ezt már felhasználók egyéni szkriptekkel az egyes képernyõolvasókban megvalósították, hivatalosan egyik képernyõolvasónak sem vált részévé.
-
- </p>
-
-<A HREF="#content">Vissza a tartalomjegyzékhez</A>
-
-<h3 id="1.6">1.6. Tervezés És Megvalósítás</h3>
-<p>
-Az NVDA-t <a href="http://www.python.org/">Python programozási nyelven</a> írták meg, moduláris tervezéssel, a kód legtöbb része kiegészíthetõ, lehetõvé téve új alkalmazások, vagy vezérlõelemek támogatását. Szkriptek segítségével támogatás írható egy adott alkalmazáshoz, virtuális kijelzõk hozhatók létre összetett dokumentumok, vagy egyéb adatok megjelenítéséhez, valamint NVDA objektumok hozhatóak létre vezérlõelemek vagy ablakok támogatásához. Az NVDA törekszik a lehetõ leghozzáférhetõbbé tenni a vezérlõelemeket, vagy az operációs rendszer részeit, lehetõvé téve az információk gyors és könnyû megkeresését. Nem törekszik azonban kitalálni a felhasználó szándékát, többek között szûréssel, vagy az NVDA által hasznosnak ítélt szövegek felolvasásával. 
+A Braille kijelzõvel rendelkezõ felhasználók számára az NVDA lehetõséget biztosít az információ megjelenítésére a kijelzõn. Az NVDA a Freedom Scientific Pacmate és Focus kijelzõket, a Handy Tech kijelzõt, valamint a BRLTTY programcsomagban található kijelzõket támogatja, ha ezek fel vannak telepítve a számítógépre.
 </p>
 <p>
-Az operációs rendszerrel és a programokkal való kommunikáláshoz az NVDA néhány az operációs rendszer nyújtotta lehetõséget, Microsoft Active Accessibility (MSAA), IAccessible2, Java Access Bridge és testreszabott, egyéb alkalmazások nyújtotta programozói felületeket használ. Az NVDA nem használ különleges, úgy nevezett Video Intercept vagy képernyõhurok technológiát, ám mindig a lehetõ legtöbb információt igyekszik kinyerni újabb technológiák használata elõtt. 
- </p>
-
+Az NVDA sok nyelv braille tábláját támogatja. A legtöbb esetben a rövidítési fokozat 1 és 2 is elérhetõ. Az angol felhasználóknak az egységes és az US braille kódok is használhatóak.
+</p>
 <A HREF="#content">Vissza a tartalomjegyzékhez</A>
-
-<h3 id="1.7">1.7. Licensz és Copyright</h3>
+<h3 id="1.5">1.5. Licensz és Copyright</h3>
 <p>
 Copyright (C) 2006-2009 NVDA Közremûködõk <http://www.nvda-project.org/>
+<BR>
+Copyright (C) NVDA honosítási project 2008-2009 <http://www.nvda.hu>
 </p>
 <p>
 Az NVDA GNU Általános Nyilvános Licensz (2-es verzió) alatt áll. A szoftver szabadon közzétehetõ vagy módosítható a licensz és a forráskód bárki számára elérhetõvé tételével. Ez az eredeti és módosított szoftverre, valamint bármilyen a szoftver forráskódjából származó kódrészletre vonatkozik.
@@ -234,17 +217,15 @@ vagy nézze meg a szoftverhez mellékelt Copying.txt fájlt.
 
 <A HREF="#content">Vissza a tartalomjegyzékhez</A>
 
-<h2 id="3">3. Az NVDA megszerzése</h2>
+<h2 id="3">3. Az NVDA letöltése</h2>
 <p>
-Ha még  nincs NVDA képernyõolvasója, az NVDA weboldaláról letöltheti: 
+Ha még  nincs NVDA képernyõolvasója, az NVDA hivatalos oldaláról, vagy a honosítócsapat weboldaláról letöltheti: 
 <a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a>
+<A HREF ="http://www.nvda.hu">http://www.nvda.hu</A>
 a letöltés oldalon az NVDA legfrissebb verziójára mutató hivatkozásra kattintva.
 </p>
-<p>Megtalálható az NVDA hivatalos magyar oldalán is:
-<A HREF ="http://www.nvda.hu">http://www.nvda.hu</A>
-</P>
 <P>
-Az NVDA jelenleg két formátumban érhetõ el. Az egyik egy telepítõ, mely telepítés közben beszédtámogatást nyújt. A másik egy zip (vagy önkibontó zip (.exe)) fájl, az NVDA hordozható verzió, amelyet bárhonnan futtathat, akár thumb drive/pen drive-rõl, vagy CD-rõl is.
+Az NVDA jelenleg két formátumban érhetõ el. Az egyik egy telepítõ, mely telepítés közben beszédtámogatást nyújt. A másik egy önkibontó (.exe) fájl, az NVDA hordozható verzió, amelyet bárhonnan futtathat, akár thumb drive/pen drive-rõl, vagy CD-rõl is.
  </p>
 
 <A HREF="#content">Vissza a tartalomjegyzékhez</A>
@@ -255,20 +236,19 @@ Az NVDA jelenleg két formátumban érhetõ el. Az egyik egy telepítõ, mely telepíté
 Ha már rendelkezik az NVDA telepítõjével, keresse meg és jelölje ki, majd nyomja meg az enter billentyût, vagy kattintson duplán a fájlon. Ekkor a telepítõ elindul.
 </p>
 <p>
-A telepítõ betöltésekor az NVDA telepítési zenéje hallható. Betöltés után, az NVDA egy átmeneti példánya lehetõvé teszi a telepítõ utasításainak végrehajtását, ezzel az NVDA telepítését. Ha a telepítés elindítása elõtt ön már futtatott egy NVDA verziót, a telepítõ egy üzenetben tájékoztat a korábbi NVDA verzió bezárása elõtt. Az enter billentyû megnyomása után a futó NVDA program bezárul. Ez azért szükséges, hogy a telepítõ hibátlanul frissíteni tudja a szükséges fájlokat.
+A telepítõ betöltésekor az NVDA telepítési zenéje hallható. Betöltés után, az NVDA egy átmeneti példánya lehetõvé teszi a telepítõ utasításainak végrehajtását, ezzel az NVDA telepítését. Ha a telepítés elindítása elõtt ön már futtatott egy NVDA verziót, a telepítõ egy üzenetben tájékoztat a korábbi NVDA verzió bezárása elõtt. Az enter billentyû megnyomása után a futó NVDA program bezárul. Ez azért szükséges, hogy a telepítõ hibátlanul frissíteni tudja a szükséges fájlokat. A fájlok frissítése elött a telepítõ eltávolítja a régebbi verziót a számítógéprõl, csak a felhasználói beállításokat hagyja meg.
 </p>
 <p>
-A telepítés befejezése után a telepítõ elindítja az újonnan telepített NVDA programot.
+A telepítés befejezése után a telepítõ elindítja az újonnan telepített NVDA programot az elõzõ verzió beállításaival.
 </p>
 
 <A HREF="#content">Vissza a tartalomjegyzékhez</A>
 
-<h3 id="4.2">4.2. Az NVDA Hordozható Zip Fájl</h3>
+<h3 id="4.2">4.2. Az NVDA Hordozható exe Fájl</h3>
 <p>
-Ha az NVDA hordozható zip fájlt töltötte le, használat elõtt ki kell csomagolnia a merevlemezre, vagy bármilyen más háttértárolóra.
+Ha az NVDA hordozható exe fájlt töltötte le, használat elõtt ki kell csomagolnia a merevlemezre, vagy bármilyen más háttértárolóra.
 </p>
-
-<P> Ha a program önkibontó zip fájlként áll rendelkezésére, indítsa el az .exe fájlt és kövesse a képernyõn megjelenõ utasításokat a fájlnak egy tetszõleges mappába történõ kicsomagolásához.
+<P> Indítsa el az .exe fájlt és kövesse a képernyõn megjelenõ utasításokat a fájlnak egy tetszõleges mappába történõ kicsomagolásához.
 <BR> <BR>
 Ha az NVDA programot nem önkibontó .zip fájlban töltötte le, használjon olyan szoftvert, amely a .zip fájlok kicsomagolására képes, például a Windows Xp. részét képezõ "Tömörített mappa" alkalmazást, a Winrart, Winzipet vagy más hasonló szoftvert, és a kicsomagolás során járjon el a szoftver útmutatásai szerint.
 </P>
@@ -276,25 +256,16 @@ Ha az NVDA programot nem önkibontó .zip fájlban töltötte le, használjon olyan sz
 <P>
 Amennyiben szeretne az NVDA-hoz parancsikont készíteni, keresse meg az nvda.exe fájlt, majd Windows Xp esetén válassza a "küldés asztalra (parancsikon)" menüt a fájlhoz tartozó helyi menübõl. Ezt követõen a parancsikont tetszõlegesen átnevezheti, tulajdonságlapján, amelyet az alt-enterrel hívhat elõ, billentyûparancsot is adhat a programnak, például a 0 meghatározásával a magyar NVDA az alt-kontroll-0 billentyûparanccsal is indítható.
 </P>
-
-<P>
-Lehetõsége van az NVDA-t a Windows rendszer korlátai között automatikusan is indítani. Ha a hordozható verziót cd-re írja ki, készíthet hozzá autorun.inf fájlt, de ha az indítópultba másolja a fent írtak szerint elkészített parancsikont, az NVDA bejelentkezés után automatikusan elindul. Ha a Windows Xp-t üdvözlõképernyõvel, gyors bejelentkezéssel és jelszó nélkül, egyfelhasználós módban használja (ez a géphasználat egyébiránt nem ajánlatos), akkor a gép bekapcsolásától kezdve mindenféle beavatkozás nélkül elindíthatja automatikusan a programot. Fontos azonban tudni, hogy az NVDA felhasználói szintû programként fut, szolgáltatásként történõ aktiválása egyelõre még nincs megoldva.
-Ezért fordul elõ például, hogy régi típusú ki- és bejelentkezés esetén az NVDA nem mûködik kijelentkezés után, vagy akkor, ha a rendszerbiztonság-párbeszédpanelt hívjuk elõ az alt-kontroll-dellel.
-
-</P>
-
 <A HREF="#content">Vissza a tartalomjegyzékhez</A>
 
 <h2 id="5">5. Az Elsõ Lépések Az NVDA-val</h2>
 <h3 id="5.1">5.1. Az NVDA Elindítása</h3>
 <p>
-Ha az NVDA programot a telepítõ segítségével installálta, az NVDA elindítható a control+alt+n billentyûparanccsal, valamint az enter billentyû megnyomásával a start menü NVDA almenüjébõl.
+Ha az NVDA programot a telepítõ segítségével installálta, az NVDA elindítható a control+alt+n billentyûparanccsal, az enter billentyû megnyomásával a start menü NVDA almenüjébõl. A futtatás menübõl is elindíthatja a programot (start gomb +r), írja be a megjelenõ mezõbe, hogy NVDA, majd nyomja meg az entert.
 </p>
 <p>
-Ha a hordozható zip fájl verziót szeretné elindítani, nyissa meg a kicsomagolt fájlok mappáját, jelölje ki az nvda.exe fájlt, nyomja meg az enter billentyût, vagy kattintson kétszer az nvda.exe fájlra.
-<BR> <BR>
-Ha bizonytalan abban, hogy hol van az nvda.exe fájl vagy hogy az van-e kijelölve, a startgomb+R billentyûparanccsal nyissa meg a futtatás ablakot és a szerkesztõmezõbe gépelje be a [meghajtó]\[útvonal]\nvda.exe parancsot és nyomja meg az entert! Megjegyzés: a [] közé értelemszerûen helyettesítse be a megfelelõ információkat, például: c:\nvda\nvda.exe vagy "c:\program files\nvda\nvda.exe". Ha a mappa neve szóközt tartalmaz, biztonság kedvéért az egész parancsot tegye idézõjelek közé.
- </p>
+Ha a hordozható exe fájl verziót szeretné elindítani, nyissa meg a kicsomagolt fájlok mappáját, jelölje ki az nvda.exe fájlt, nyomja meg az enter billentyût, vagy kattintson kétszer az nvda.exe fájlra.
+</p>
 <p>
 Az NVDA elindulásakor egy emelkedõ hangjelzés hallható (közölve, hogy az NVDA betöltése folyamatban). Ha a betöltés befejezõdött, az NVDA az "az NVDA elindult" üzenettel tájékoztat a folyamat befejezõdésérõl. Ez a számítógép, vagy egy lassabb hordozható eszköz sebességétõl függõen akár pár percig is eltarthat. Ha ez eltér a megszokottól , az NVDA az "Az NVDA betöltése folyamatban, kérem várjon..." üzenettel tájékoztat.
 </p>
@@ -329,7 +300,7 @@ Ha rendszerezett billentyûparancs-listát szeretne, nyissa meg az NVDA menüjét az
 
 <h2 id="6">6. Az NVDA Menüje</h2>
 <p>
-Az NVDA menüje elérhetõvé teszi az NVDA beállításait, ugyanitt megtekintheti a súgót, elmentheti és betöltheti a beállításokat, valamint kiléphet az NVDA programból. 
+Az NVDA menüje elérhetõvé teszi az NVDA beállításait, ugyanitt megtekintheti a súgót, elmentheti és betöltheti a beállításokat, módosíthatja a kivétel szótárt, elolvashatja a  napló fájlt, valamint kiléphet az NVDA programból. 
 </p>
 <h3 id="6.1">6.1. Az NVDA Menü Elérése</h3>
 <p>
@@ -350,7 +321,7 @@ Az Általános beállítások párbeszédpanel a beállítások menüben található. Ezt elé
 <h6>Nyelv</h6>
 <p>
 Ebben a kombinált listamezõben kiválaszthatja az NVDA felhasználói felület és az üzenetek nyelvét. A lista sok nyelvet tartalmaz, ám az alap beállítás a "User default, Windows". E beállítás esetén az NVDA a windows területi és nyelvi beállításaihoz igazítja saját beállításait (Ld. vezérlõpult, területi és nyelvi beállítások).
-
+<BR>
 Fontos: a nyelv megváltoztatása csak az NVDA újbóli elindításával következik be.
  AzNVDA rákérdez, hogy szeretné-e ezt a mûveletet. Nyomja meg az igen gombot, és az NVDA újraindul.
 </p>
@@ -374,7 +345,7 @@ Ez a beállítás csak az NVDA telepíthetõ verziójában érhetõ el. Ha bejelöli ezt a
 </P>
 <H6>Az NVDA elindítása a Windows bejelentkezõ képernyõ használatakor</H6>
 <P>
-Ez a funkció csak az NVDA telepíthetõ verziójában érhetõ el. A jelölõnégyzet bejelölése után az NVDA minden rendszer indításkor a bejelentkezõ ablakban beszédtámogatást nyújt (a beállításhoz rendszergazdai jog szükséges).
+A jelölõnégyzet bejelölése után az NVDA minden rendszer indításkor a bejelentkezõ ablakban beszédtámogatást nyújt (a beállításhoz rendszergazdai jog szükséges)
 </P>
 <A HREF="#content">Vissza a tartalomjegyzékhez</A>
 <h5 id="6.2.1.2">6.2.1.2. Szintetizátor választás</h5>
@@ -596,6 +567,10 @@ E jelölõnégyzet bejelölése esetén az NVDA mindig bemondja, ha az egérmutató alak
 E jelölõnégyzet bejelölése esetén az NVDA bemondja azt a szöveget, amely az egérmutató alatt van, miközben mozgatjuk az egérmutatót a képernyõn. Ez lehetõvé teszi, hogy az egér valódi mozgatásával térképezzük fel a képernyõt, ne pedig az elemek közötti navigációval.
 
 </p>
+<h6>Szöveg feldolgozási egység</H6>
+<P>
+Ha az NVDA úgy van beállítva, hogy bemondja a szöveget az egér mozgása közben, akkor ezzel a beállítással beállítható, hogy az NVDA mennyi szöveget olvasson  fel. A beállítás lehet karakter, szó, sor, és bekezdés.
+</P>
 <h6>Vezérlõelem típusának bemondása az egérmutató mozgásakor</h6>
 <p>
 Ha ez a jelölõnégyzet be van jelölve, az NVDA bemondja az egérmutató alatt lévõ vezérlõelem típusát.
@@ -657,8 +632,7 @@ Ha e jelölõnégyzet be van jelölve, az NVDA felolvassa az elemhez vagy vezérlõele
 <H6> Elem pozíciójának felolvasása </H6>
 
 <P>
-
-Kapcsolja be ezt a jelölõnégyzetet, ha szeretné, hogy az NVDA bemondja egy elem pozícióját. Ez hasznos lehet pl. sok elemet tartalmazó listanézetben, ahol megtudhatja, hány listaelem van és abból hanyadik van kijelölve.
+Ezzel a beállítással kiválaszthatjuk, hogy az objektum pozicíója elhangozzon-e, amikor a fókusz vagy a navigátor kurzor rálép az objektumra.
 
 </P>
 
@@ -669,14 +643,6 @@ Kapcsolja be ezt a jelölõnégyzetet, ha szeretné, hogy az NVDA bemondja egy elem 
 Kapcsolja ki ezt a jelölõnégyzetet, ha nem kívánja, hogy az NVDA felolvassa az elemhez tartozó leírást.
 
 </p>
-
-<h6>az elem állapotának jelzése elsõként </h6>
-<p>
-
-Ha e jelölõnégyzet be van jelölve, az NVDA elõször az elem állapotát mondja, aztán a többi információt. Pl. a "lejátszás gomb lenyomva" helyett azt mondja, hogy "lenyomva, lejátszás gomb". Ez olyankor hasznos, ha sok hasonló elem van, és arra vagyunk kíváncsiak, hogy melyik gomb van lenyomva vagy melyik jelölõnégyzet van bejelölve.
-
-</p>
-
 <h6>Hangjelzés folyamatjelzõ változásakor </h6>
 
 <p>
@@ -696,7 +662,10 @@ A folyamatjelzõ egy olyan vezérlõelem, amely egy vonalzóra hasonlít. Egy lassú f
 <DT> Minden tizedik százalék bemondása
 <DD> Tíz százalékonként bemondja, hol tart a feladat.
 </DL>
-
+<H6>A háttérben lévõ folyamatjelzõk változásának jelzése</H6>
+<P>
+Ha ezt a jelölõnégyzetet bejelöli, és lerakja kis méretre a folyamatot, az NVDA akkoris jelezni fogja a változást. Az NVDA egyszerre több folyamat jelzésére is képes ezáltal.
+</P>
 <A HREF="#content">Vissza a tartalomjegyzékhez</A>
 
 <h5 id="6.2.1.8">6.2.1.8. A virtuális kijelzõ beállításai </h5>
@@ -727,7 +696,18 @@ E mezõben állíthatjuk be, hogy a virtuális kijelzõ egy-egy sorában maximum hány 
 Annak ellenére, hogy a virtuális kijelzõben valójában nincsenek lapok, ebben a mezõben lehet megadni, hogy a page up és page down billentyûk megnyomásakor hány sort lépjen az NVDA a virtuális kijelzõn.
 
 </p>
-
+<H6>Szerkezeti táblázatok jelzése</H6>
+<P>
+Amikor ez a lehetõség le van tiltva, akkor az NVDA csak táblázatos adatokat jelez (ahol szükséges a táblázatos elrendezés). Ha a lehetõség engedéllyezve van, az NVDA ezek mellett azokat a táblázatokat is jelzi, amellyek csak látványi célt szolgálnak (Pl egy weboldal navigációs menüje egy táblázatban).
+</P>
+<H6>Az elemtipusok bemondásának beállítása</H6>
+<P>
+Az NVDA elõzõ verziói lehetõvé tették, az elemtipusok bemondását a weboldalakon. Példák a mezõk tipusaira:
+Hivatkozások, címsorok, táblázatok, és listák
+<BR>Ezek beállításához használja az beállításokat a Dokumentum formázás párbeszédpanelen. Ezek a beállítások már nemcsak a virtuális kijelzõben mûködnek, hanem bármilyen dokumentumban, amely ezeknek az elemeknek a bemondása lehetséges.
+<H6>Képernyõ elrendezés használata</H6>
+<p>
+Ezzel a beállítással megadható, hogy a virtuális kijelzõben az elemek és a mezõk külön sorban legyenek, vagy tartsák meg a képernyõn lévõ helyüket. Ha ez a beállítás engedéllyezve van, akkor minden a képernyõn látható módon jelenik meg, de ha le van tiltva, akkor az elemek külön sorban fognak megjelenni.
 <h6> Automatikus váltás interaktív módba a fókusz változásakor </h6>
 
 <p>
@@ -743,6 +723,10 @@ Ez az opció lehetõvé teszi, hogy a fókusz változásakor az NVDA automatikusan int
 Ha ez a jelölõnégyzet be van jelölve, az NVDA a nyíl billentyûk mozgatása közben automatikusan vált interaktív és böngészõ mód között. Ha például egy weboldalon haladunk lefelé a nyíllal és az NVDA talál pl. egy szerkesztõmezõt, automatikusan interaktív módba lép, ha azonban a szerkesztõmezõt elhagyjuk, visszavált böngészõ módba.
 </p>
 
+<H6>Az interaktív és a böngészõmód jelzése hangjelzéssel</H6>
+<P>
+Ha bekapcsolja ezt a beállítást, akkor az interaktív és a böngészõmód közötti váltást hangjelzéssel jelzi a program.
+</P>
 <A HREF="#content">Vissza a tartalomjegyzékhez</A>
 
 <h5 id="6.2.1.9"> 6.2.1.9. Dokumentum Formázási beállítások </h5>
@@ -1044,14 +1028,7 @@ A virtuális kijelzõben kétféleképpen használhatjuk az NVDA-t. Böngészõ módban eg
 <p>
 
 Az NVDA jelenleg a Mozilla Firefoxban, a Microsoft Internet Explorerben és az Adobe Readerben használ virtuális kijelzõt a dokumentumok olvasásához. 
-
 </p>
-<p>
-
-Vegyük figyelembe, hogy az NVDA az Internet Explorerben és az Adobe Readerben a virtuális kijelzõ egy régebbi változatát használja, és ez esetben a dokumentumok is lassabban töltõdnek be. Ezek a régebbi virtuális kijelzõk nem kezelik jól a dinamikusan frissülõ tartalmakat, nem támogatják a hivatkozások listáját és egyéb navigációs gyorsbillentyûket sem. A legjobb teljesítmény és a könnyebb használhatóság érdekében próbálja ki inkább a <A HREF="http://download.mozilla.org/?product=firefox-3.0.8&os=win&lang=hu"> Firefox 3.08 Windows-hoz (magyar) </A> webböngészõt.
-
-</p> 
-
 <A HREF="#content">Vissza a tartalomjegyzékhez</A>
 
 <h3 id="8.1">8.1. Navigációs gyorsbillentyûk </h3>
@@ -1070,33 +1047,14 @@ Egymagukban a következõ, a shifttel együtt használva az elõzõ területre ugranak.
 
 </p>
 
-
-<p>
-
-a régi és az új virtuális kijelzõ által egyaránt támogatott navigációs gyorsbillentyûk:
-
-</p>
-
-
 <UL>
 <LI> H: címsor </LI>
 <LI> L: lista </LI>
 <LI> i: listaelem </LI>
 <LI> T: táblázat </LI>
 <LI> K: hivatkozás </LI>
-<LI> P: bekezdés (ez csak a régi virtuális kijelzõben használható, az újban a kontrol+fel és kontrol+lenyíl használható helyette) </LI>
+<LI> Kontrol fel és le nyíl: bekezdés</LI>
 <LI> F: ûrlapmezõ </LI>
-</UL>
-
-
-<p>
-
-A régi virtuális kijelzõben nem támogatott billentyûk:
-
-</p>
-
-
-<UL>
 <LI> U: meg nem látogatott hivatkozás </LI>
 <LI> V: meglátogatott hivatkozás </LI>
 <LI> E: szerkesztõmezõ </LI>

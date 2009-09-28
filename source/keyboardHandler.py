@@ -1,6 +1,6 @@
 #keyboardHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -25,6 +25,7 @@ import watchdog
 
 keyUpIgnoreSet=set()
 passKeyThroughCount=-1 #If 0 or higher then key downs and key ups will be passed straight through
+lastPassThroughKeyDown=None
 NVDAModifierKey=None
 usedNVDAModifierKey=False
 lastNVDAModifierKey=None
@@ -32,9 +33,10 @@ lastNVDAModifierKeyTime=None
 unpauseByShiftUp=False
 
 def passNextKeyThrough():
-	global passKeyThroughCount
+	global passKeyThroughCount, lastPassThroughKeyDown
 	if passKeyThroughCount==-1:
 		passKeyThroughCount=0
+		lastPassThroughKeyDown=None
 
 def isNVDAModifierKey(vkCode,extended):
 	if config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"] and vkCode==winUser.VK_INSERT and not extended:
@@ -79,19 +81,22 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by keyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
 """
 	try:
-		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unpauseByShiftUp 
+		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, lastPassThroughKeyDown, unpauseByShiftUp 
+		#Injected keys should be ignored
+		if injected:
+			return True
+		# IF we're passing keys through, increment the pass key through count,
+		# but only if this isn't a repeat of the previous key down, as we don't receive key ups for repeated key downs.
+		if passKeyThroughCount>=0 and lastPassThroughKeyDown!=(vkCode,extended):
+			passKeyThroughCount+=1
+			lastPassThroughKeyDown=(vkCode,extended)
+			return True
 		if watchdog.isAttemptingRecovery:
 			# The core is dead, so let keys pass through unhindered.
 			return True
 		focusObject=api.getFocusObject()
 		focusAppModule=focusObject.appModule
 		if focusAppModule and focusAppModule.selfVoicing:
-			return True
-		#Injected keys should be ignored
-		if injected:
-			return True
-		if passKeyThroughCount>=0:
-			passKeyThroughCount+=1
 			return True
 		#pass the volume controlling keys
 		if extended and vkCode >= winUser.VK_VOLUME_MUTE and vkCode <= winUser.VK_VOLUME_UP: return True
@@ -208,20 +213,19 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event that pyHook calls when it receives keyUps"""
 	try:
 		global NVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, unpauseByShiftUp 
+		if injected:
+			return True
+		if passKeyThroughCount>=1:
+			passKeyThroughCount-=1
+			if passKeyThroughCount==0:
+				passKeyThroughCount=-1
+			return True
 		if watchdog.isAttemptingRecovery:
 			# The core is dead, so let keys pass through unhindered.
 			return True
 		focusObject=api.getFocusObject()
 		focusAppModule=focusObject.appModule
 		if focusAppModule and focusAppModule.selfVoicing:
-			return True
-		lastPressedKeyTime=time.time()
-		if injected:
-			return True
-		elif passKeyThroughCount>=1:
-			passKeyThroughCount-=1
-			if passKeyThroughCount==0:
-				passKeyThroughCount=-1
 			return True
 		if unpauseByShiftUp and vkCode in (winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT):
 			queueHandler.queueFunction(queueHandler.eventQueue,speech.pauseSpeech,False)

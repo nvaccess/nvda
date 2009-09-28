@@ -284,6 +284,8 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return self._setSelectionOffsets(offset,offset)
 
 	def _getStoryText(self):
+		if controlTypes.STATE_PROTECTED in self.obj.states:
+			return '*'*(self._getStoryLength()-1)
 		return self.obj.windowText
 
 	def _getStoryLength(self):

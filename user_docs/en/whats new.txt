@@ -23,17 +23,19 @@
 	* When browsing web documents, you can now press n and shift+n to skip forward and backward past blocks of links, respectively.
 	* When browsing web documents, ARIA landmarks are now reported, and you can move forward and backward through them using d and shift+d, respectively. (#192)
 	* The Links List dialog available when browsing web documents has now become an Elements List dialog which can list links, headings and landmarks. Headings and landmarks are presented hierarchically. (#363)
-	* The new Elements List dialog filters the list as you type to contain only those items including the text that was typed. You can press backspace to clear the filter so that all items are again presented. (#173)
+	* The new Elements List dialog contains a "Filter by" field which allows you to filter the list to contain only those items including the text that was typed. (#173)
 	* Portable versions of NVDA now look in the 'userConfig' directory inside the NVDA directory, for the user's configuration. Like for the installer version, this keeps the user's configuration separate from NVDA itself.
 	* Custom app modules, braille display drivers and synth drivers can now be stored in the user's configuration  directory. (#337)
 	* Virtual buffers are now rendered in the background, allowing the user to interact with the system to some extent during the rendering process. The user will be notified that the document is being rendered if it takes longer than a second.
 	* If NVDA detects that it has frozen for some reason, it will automatically pass all keystrokes through so that the user has a better chance of recovering the system.
 	* Support for ARIA drag and drop in Mozilla Gecko. (#239)
+	* The document title and current line or selection is now spoken when you move focus inside a virtual buffer. This makes the behaviour when moving focus into virtual buffers consistent with that for normal document objects. (#210)
 
 === Changes ===
 	* NVDA no longer announces "NVDA started" when it starts.
 	* The startup and exit sounds are now played using NVDA's configured audio output device instead of the Windows default audio output device. (#164)
 	* Progress bar reporting has been improved. Most notably you can now configure NVDA to announce via both speech and beeps at the same time.
+	* Some generic roles, such as pane, application and frame, are no longer reported on focus unless the control is unnamed.
 
 === Bug Fixes ===
 	* When NVDA is run from an 8.3 dos path, but it is installed in the related long path (e.g. progra~1 verses program files) NVDA will correctly  identify that it is an installed copy and properly load the user's settings.
@@ -51,6 +53,10 @@
 	* NVDA no longer incorrectly enables focus mode automatically for editable text fields which update their value when the focus changes; e.g. http://tigerdirect.com/. (#220)
 	* NVDA will now attempt to recover from some situations which would previously cause it to freeze completely. It may take up to 10 seconds for NVDA to detect and recover from such a freeze.
 	* When the NVDA language is set to "User default", use the user's Windows  display language setting instead of the Windows locale setting. (#353)
+	* NVDA now recognises the existence of controls in AIM 7.
+	* The pass key through command no longer gets stuck if a key is held down. Previously, NVDA stopped accepting commands if this occurred and had to be restarted. (#413)
+	* The taskbar is no longer ignored when it receives focus, which often occurs when exiting an application. Previously, NVDA behaved as if the focus had not changed at all.
+	* When reading text fields in applications which use the Java Access Bridge (including OpenOffice.org), NVDA now functions correctly when reporting of line numbers is enabled.
 
 == 0.6p3 ==
 

@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>NVDA 0.6 Používateľská príručka</h1>
-<span>Posledná aktualizácia 23 December 2008</span>
+<span>Posledná aktualizácia 13 September 2009</span>
 
 <h2>Obsah</h2>
 <ul>
@@ -62,7 +62,7 @@
 <ul>
 <li><a href="#8.1">8.1. Príkazy rýchlej navigácie</a></li>
 <li><a href="#8.2">8.2. Formuláre, režim fokusu a prehliadací režim</a></li>
-<li><a href="#8.3">8.3. Zoznam odkazov</a></li>
+<li><a href="#8.3">8.3. Zoznam prvkov</a></li>
 </ul>
 <li><a href="#9">9. Ako získať viac informácií</a></li>
 </ul>
@@ -152,13 +152,13 @@ Ak ste si stiahli prenositeľnú verziu NVDA, jediné čo musíte urobiť je roz
 <h2 id="5">5. Začíname pracovať s NVDA</h2>
 <h3 id="5.1">5.1. Spustenie NVDA</h3>
 <p>
-Ak už máte nainštalovaný NVDA podľa pokynov inštalátora, spustiť NVDA je veľmi jednoduché. Stačí stlačiť klávesovú skratku ctrl+alt+N, alebo vybrať položku NVDA zo skupiny NVDA z menu štart/programy.
+Ak už máte nainštalovaný NVDA podľa pokynov inštalátora, spustiť NVDA je veľmi jednoduché. Stačí stlačiť klávesovú skratku ctrl+alt+N, alebo vybrať položku NVDA zo skupiny NVDA z menu štart/programy. Tiež môžete NVDA spustiť napísaním &quot;nvda&quot; do okna Spustiť v ponuke štart.
 </p>
 <p>
 Na spustenie prenositeľnej verzie vstúpte do adresára, kam ste si NVDA rozbalili a stlačte enter, alebo kliknite na súbor NVDA.exe.
 </p>
 <p>
-Hneď ako sa NVDA spustí, prvé čo budete počuť je rad stúpajúcich tónov, ktoré vám hovoria, že sa NVDA práve načítava. Objaví sa hláška NVDA spustený. V závislosti od toho, aký rýchly je váš počítač, alebo médium z ktorého NVDA spúšťate môže chvíľu trvať, kým sa program načíta. Ak spúšťanie trvá príliš dlho, budete počuť aj hlášku, "Nahrávam podporné systémy, prosím čakajte".
+Hneď ako sa NVDA spustí, prvé čo budete počuť je rad stúpajúcich tónov, ktoré vám hovoria, že sa NVDA práve načítava. V závislosti od toho, aký rýchly je váš počítač, alebo médium z ktorého NVDA spúšťate môže chvíľu trvať, kým sa program načíta. Ak spúšťanie trvá príliš dlho, budete počuť aj hlášku, &quot;Nahrávam podporné systémy, prosím čakajte&quot;.
 </p>
 <p>
 Ak sa neobjaví nič z uvedeného a vy nebudete počuť žiadne hlásenie, alebo sa objaví chyba ohlásená zvukom Windows, prípadne rad klesajúcich tónov, znamená to, že NVDA má problém pri spúšťaní a túto chybu by ste mali ohlásiť tvorcom programu. Informácie o tom, ako chybu ohlásiť nájdete na <a href="http://www.nvda-project.org/">stránkach NVDA</a>.
@@ -181,7 +181,7 @@ Klávesovú nápovedu spustíte stlačením kombinácie NVDA+1, pre zrušenie n�
 </p>
 <h2 id="6">6. používateľské rozhranie</h2>
 <p>
-Z ponuky programu NVDA NVDA+N, je možné upravovať nastavenia, pristupovať k pomoci, znovu načítať či uložiť nastavenia a NVDA aj ukončiť.
+Z ponuky programu NVDA NVDA+N, je možné upravovať nastavenia, pristupovať k pomoci, znovu načítať či uložiť nastavenia, upravovať rečové slovníky a NVDA aj ukončiť.
 </p>
 <h3 id="6.1">6.1. Zobrazenie menu NVDA</h3>
 <p>
@@ -207,7 +207,7 @@ Obsahuje tieto funkcie:
 </p>
 <h6>Jazyk</h6>
 <p>
-Je to zoznam, kde je možné vybrať jazyk, ktorý NVDA bude používať a v ňom zobrazovať všetky hlásenia. Nachádza sa tu mnoho jazykov a poslednou položkou zoznamu je Windows. Táto posledná voľba hovorí NVDA, aby používal jazyk, ktorý je nastavený v miestnych nastaveniach systému Windows. Ak sa jazyk zmení, NVDA potrebuje reštart. NVDA sa bude pýtať, či sa má automaticky reštartovať, ak sa jazyk zmení.
+Je to zoznam, kde je možné vybrať jazyk, ktorý NVDA bude používať a v ňom zobrazovať všetky hlásenia. Nachádza sa tu mnoho jazykov a poslednou položkou zoznamu je Windows. Táto posledná voľba hovorí NVDA, aby používal jazyk, v ktorom sú zobrazované dialógy Windows. Ak sa jazyk zmení, NVDA potrebuje reštart. NVDA sa bude pýtať, či sa má automaticky reštartovať, ak sa jazyk zmení.
 </p>
 <h6>Uložiť nastavenia pri ukončení</h6>
 <p>
@@ -243,10 +243,10 @@ Aktuálne NVDA podporuje hlasový výstup eSpeak, hlasové výstupy SAPI4, SAPI5
 ESpeak je priamo zabudovaný do NVDA a nie je závislý na iných ovládačoch, alebo SAPI, ktoré by sa muselo doinštalovať. NVDA sa predvolene spúšťa s hlasovým výstupom eSpeak. Tento hlas by mal pracovať na každom systéme, kde beží NVDA, čo znamená, že NVDA môžete spúšťať na ľubovoľnom počítači dokonca aj z USB kľúčenky alebo CD.
 </p>
 <p>
-Možnosť Sapi4 sprístupní rôzne hlasy ktoré môžete mať už nainštalované v systéme. Zahŕňa to hlas eloquence a niektoré ďalšie.
+Možnosť SAPI4 sprístupní rôzne hlasy ktoré môžete mať už nainštalované v systéme. Zahŕňa to hlas eloquence a niektoré ďalšie.
 </p>
 <p>
-Ovládač Sapi5 umožní použitie predvolených hlasov zabudovaných do operačného systému. Systém Windows XP ma predinštalovaný hlas Microsoft Sam a systém Windows Vista je dodávaný s hlasom Microsoft Anna. Sapi5 môže tiež sprístupniť niektoré ďalšie hlasové výstupy.
+Ovládač SAPI5 umožní použitie predvolených hlasov zabudovaných do operačného systému. Systém Windows XP ma predinštalovaný hlas Microsoft Sam a systém Windows Vista je dodávaný s hlasom Microsoft Anna. SAPI5 môže tiež sprístupniť niektoré ďalšie hlasové výstupy.
 </p>
 <p>
 Výstup silence, ktorý nastaví NVDA na tichý režim/bez hlasu nie je príliš v praxi použiteľný, iba ak by ste si priali, aby vám NVDA štartoval bez zvuku. Tohoto istého efektu je možné docieliť aj vypnutím režimu reči (stláčaním NVDA+s). Tento hlasový výstup má za úlohu slúžiť potenciálnym vývojárom, ktorý by chceli pridať podporu pre ďalší hlasový výstup.
@@ -294,11 +294,11 @@ Začiarkávacie políčko, ktoré ak začiarknete, NVDA bude čítať všetkú i
 </p>
 <h6>Veľké písmená čítať zvýšeným hlasom</h6>
 <p>
-Ak je toto políčko zaškrtnuté, spôsobí zmenu výšky hlasu počas hláskovania veľkých písmen.
+Ak je toto políčko začiarknuté, spôsobí zmenu výšky hlasu počas hláskovania veľkých písmen.
 </p>
-<h6>Vysloviť veľké pred prečítaním veľkého písmena</h6>
+<h6>Vysloviť &quot;veľké&quot; pred prečítaním veľkého písmena</h6>
 <p>
-Začiarkávacie políčko, ktoré nastaví NVDA tak, aby čítal slovo veľké vždy pred veľkým písmenom pri čítaní po znakoch. NVDA normálne pri takomto písmene zvýši hlas, ale niektoré hlasové výstupy majú s takýmto ohlasovaním problém, a tak táto funkcia nemôže byť použitá.
+Začiarkávacie políčko, ktoré nastaví NVDA tak, aby čítal slovo &quot;veľké&quot; vždy pred veľkým písmenom pri čítaní po znakoch. NVDA normálne pri takomto písmene zvýši hlas, ale niektoré hlasové výstupy majú s takýmto ohlasovaním problém, a tak táto funkcia nemôže byť použitá.
 </p>
 <h6>Pípať pred hláskovaním veľkých písmen</h6>
 <p>
@@ -365,7 +365,7 @@ Ak je toto políčko začiarknuté, rozšírený insert nájdeme v blízkosti kl
 </p>
 <h6>Používať numerický insert ako kláves NVDA</h6>
 <p>
-Ak je toto políčko zaškrtnuté, numerický Insert môže byť použitý ako NVDA kláves.
+Ak je toto políčko začiarknuté, numerický Insert môže byť použitý ako NVDA kláves.
 </p>
 <h6>Čítať napísané znaky</h6>
 <p>
@@ -468,7 +468,7 @@ Virtuálny prehliadač nemá stránky, no toto nastavenie určuje o koľko riadk
 </p>
 <h6>Zachovať vzhľad ako na obrazovke</h6>
 <p>
-Umožňuje nastaviť zalamovanie obsahu vo virtuálnom prehliadači. Ak je to začiarknuté, odkazy a tiež ďalšie prvky budú zobrazené sami na riadku. Ak je to odčiarknuté, všetky prvky budú zobrazené tak, ako sú rozmiestnené na obrazovke.
+Umožňuje nastaviť zalamovanie obsahu vo virtuálnom prehliadači. Ak je toto začiarknuté, odkazy a tiež ďalšie prvky budú zobrazené sami na riadku. Naopak ak to nie je začiarknuté, všetky prvky budú zobrazené tak, ako sú rozmiestnené na obrazovke.
 </p>
 <h6>Oznamovať tabuľky formujúce vzhľad</h6>
 <p>
@@ -628,13 +628,10 @@ Súhrnnejšie dokumenty, ako napríklad vebové stránky, nám NVDA dokáže zob
 Virtuálny prehliadač je plošné zobrazenie obsahu štruktúrovaných dokumentov ako napríklad webových stránok. Na navigáciu po obsahu je možno použiť kurzorové klávesy a počas posúvania sú čítané informácie o prvkoch dokumentu.
 </p>
 <p>
-Vo virtuálnom prehliadači sú dva režimy navigácie. Prehliadací režim znamená, že sa môžete po texte pohybovať virtuálnym kurzorom. Režim fokusu umožňuje priamu interakciu s formulárovými prvkami ako napr. editačným poľom, zoznamovým rámikom štandardne na to určenými klávesmi. Ak v prehliadacom režime kliknete alebo stlačením klávesu tab prejdete na prvok, ktorý si vyžaduje režim fokusu, tento bude automaticky zapnutý. Prepínať medzi týmito dvoma režimami je tiež možné ručne stláčaním NVDA+medzerník. Ak bol režim fokusu zapnutý dôsledkom kliknutia alebo zmeny fokusu, po zmene fokusu na položku, ktorá si nevyžaduje režim fokusu bude opetovne zapnutý prehliadací režim. Ak ale režim fokusu zapnete ručne, opetovná zmena na prehliadací režim sa nevykoná. Prepnúť z režimu fokusu do prehliadacieho režimu môžete tiež stlačením klávesu escape. Automatické prepínanie týchto dvoch režimov je možné zakázať v dialógu virtuálny prehliadač.
+Vo virtuálnom prehliadači sú dva režimy navigácie. Prehliadací režim znamená, že sa môžete po texte pohybovať virtuálnym kurzorom. Režim fokusu umožňuje priamu interakciu s formulárovými prvkami ako napr. editačným poľom, zoznamovým rámikom štandardne na to určenými klávesmi. Ak v prehliadacom režime kliknete alebo stlačením klávesu tab prejdete na prvok, ktorý si vyžaduje režim fokusu, tento bude automaticky zapnutý. Režim fokusu je pre interaktívne prvky možné tiež zapnúť stlačením klávesu enter alebo medzerníka. Prepínať medzi týmito dvoma režimami je tiež možné ručne stláčaním NVDA+medzerník. Ak bol režim fokusu zapnutý dôsledkom kliknutia alebo zmeny fokusu, po zmene fokusu na položku, ktorá si nevyžaduje režim fokusu bude opetovne zapnutý prehliadací režim. Ak ale režim fokusu zapnete ručne, opetovná zmena na prehliadací režim sa nevykoná. Prepnúť z režimu fokusu do prehliadacieho režimu môžete tiež stlačením klávesu escape. Automatické prepínanie týchto dvoch režimov je možné zakázať v dialógu virtuálny prehliadač.
 </p>
 <p>
 NVDA používa zobrazenie vo virtuálnom prehliadači rovnako pre Internet Explorer, ako aj pre Mozilla Firefox a Adobe Reader.
-</p>
-<p>
-Virtuálne prehliadače pre internet explorer a Adobe reader nie sú tak prepracované ako by sa očakávalo. Nie sú totiž stavané na kvalitné vysporiadanie sa s dinamickými stránkami, rovnako ako s podporou zoznamov odkazov, či klávesovými skratkami prehliadača. Pre najlepšiu funkčnosť a využitie maximálnych možností použite program Mozila Firefox.
 </p>
 <h3 id="8.1">8.1. Príkazy rýchlej navigácie</h3>
 <p>
@@ -644,7 +641,7 @@ V prehliadacom režime NVDA podporuje jednoznakové príkazy pre rýchlejší po
 Za pomoci nich sa môžete posúvať na nasledujúce pole, v opačnom smere sa môžete pohybovať kombinovaním príkazov s klávesom shift. 
 </p>
 <p>
-Príkazy podporované novým aj starším prehliadačom:
+Podporované príkazy:
 </p>
 <ul>
 <li>h: nadpis</li>
@@ -652,13 +649,8 @@ Príkazy podporované novým aj starším prehliadačom:
 <li>i: položka zoznamu</li>
 <li>t: tabuľka</li>
 <li>k: odkaz</li>
-<li>p: odstavec - funguje len v staršom prehliadači. s Firefox 3 použite ctrl+šípka hore a ctrl+šípka dolu.</li>
+<li>n: text, ktorý nie je odkazom</li>
 <li>f: prvok formulára</li>
-</ul>
-<p>
-Skratky, ktoré nie sú podporované starším virtuálnym prehliadačom
-</p>
-<ul>
 <li>u: nenavštívený odkaz</li>
 <li>v: navštívený odkaz</li>
 <li>e: editačné pole</li>
@@ -670,6 +662,7 @@ Skratky, ktoré nie sú podporované starším virtuálnym prehliadačom
 >li>s: oddeľovač</li>
 <li>m: rámik</li>
 <li>g: grafika</li>
+<li>d: orientačný bod</li>
 <li>1-6: nadpis príslušnej úrovne</li>
 </ul>
 <h3 id="8.2">8.2. Formuláre, prehliadací režim a režim fokusu </h3>
@@ -679,9 +672,9 @@ Niekedy si budete želať pracovať s prvkami formulára tak, aby príkazy virtu
 <p>
 Tento režim sa automaticky zapne pri aktivovaní prvku formulára, no ak sa načíta nová stránka, režim sa automaticky vypne. 
 </p>
-<h3 id="8.3">8.3 Zoznam odkazov</h3>
+<h3 id="8.3">8.3 Zoznam prvkov</h3>
 <p>
-Pre sprístupnenie zoznamu odkazov v aktuálnom virtuálnom prehliadači, stlačte kláves NVDA+F7. V dialógovom okne, ktoré sa objaví si môžete vybrať odkaz, o ktorý máte záujem. Môžete naň premiestniť kurzor virtuálneho prehliadača, alebo aktivovať použitím príslušných tlačidiel.
+Dialóg zoznam prvkov, ktorý je dostupný po stlačení kombinácie NVDA+F7 vo virtuálnom prehliadači, zobrazuje zoznam odkazov, nadpisov alebo zoznam orientačných bodov. Orientačné body a nadpisy sú znázornené hierarchicky. Dialóg obsahuje editačné pole, pomocou ktorého je možné filtrovať obsah práve zobrazeného zoznamu. Pomocou výberového políčka je možné sa prepínať medzi jednotlivými typmi obsahu. Tlačidlami prejsť na alebo aktivovať vykonávame  akcie pre prvky vybraté v zozname.
 </p>
 <h3 id="9">9. Ako získať viac informácií</h3>
 <p>

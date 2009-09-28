@@ -38,7 +38,11 @@ def connectConsole(obj):
 	#Get the process ID of the console this NVDAObject is fore
 	processID,threadID=winUser.getWindowThreadProcessID(obj.windowHandle)
 	#Attach NVDA to this console so we can access its text etc
-	wincon.AttachConsole(processID)
+	try:
+		wincon.AttachConsole(processID)
+	except WindowsError as e:
+		log.debugWarning("Could not attach console: %s"%e)
+		return False
 	wincon.SetConsoleCtrlHandler(_consoleCtrlHandler,True)
 	consoleOutputHandle=winKernel.CreateFile(u"CONOUT$",winKernel.GENERIC_READ|winKernel.GENERIC_WRITE,winKernel.FILE_SHARE_READ|winKernel.FILE_SHARE_WRITE,None,winKernel.OPEN_EXISTING,0,None)                                                     
 	lastConsoleVisibleLines=getConsoleVisibleLines()
@@ -55,9 +59,13 @@ def connectConsole(obj):
 	consoleObject=obj
 	monitorThread=threading.Thread(target=monitorThreadFunc)
 	monitorThread.start()
+	return True
 
 def disconnectConsole():
 	global consoleObject, consoleOutputHandle, consoleWinEventHookHandles, keepAliveMonitorThread
+	if not consoleObject:
+		log.debugWarning("console was not connected")
+		return False
 	#Unregister any win events we are using
 	for handle in consoleWinEventHookHandles:
 		winUser.unhookWinEvent(handle)
@@ -77,6 +85,7 @@ def disconnectConsole():
 		wincon.FreeConsole()
 	except WindowsError:
 		pass
+	return True
 
 def isConsoleDead():
 	#Every console should have at least one process associated with it

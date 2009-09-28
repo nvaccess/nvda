@@ -8,6 +8,7 @@ import ctypes
 import comtypes.client
 import comtypes.automation
 import winUser
+import oleacc
 import globalVars
 import speech
 from keyUtils import sendKey, key
@@ -319,15 +320,20 @@ class WordDocument(Window):
 		return controlTypes.ROLE_EDITABLETEXT
 
 	def _get_WinwordDocumentObject(self):
-		if not hasattr(self,'_WinwordDocumentObject'): 
-			ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
-			if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,winUser.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
-				raise OSError("No native object model")
-			self._WinwordDocumentObject=comtypes.client.dynamic.Dispatch(ptr)
+		if not getattr(self,'_WinwordDocumentObject',None): 
+			try:
+				pDispatch=oleacc.AccessibleObjectFromWindow(self.windowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
+			except (COMError, WindowsError):
+				log.debugWarning("Could not get MS Word object model",exc_info=True)
+				return None
+			self._WinwordDocumentObject=comtypes.client.dynamic.Dispatch(pDispatch)
  		return self._WinwordDocumentObject
 
 	def _get_WinwordSelectionObject(self):
-		if not hasattr(self,'_WinwordSelectionObject'):
+		if not getattr(self,'_WinwordSelectionObject',None):
+			doc=self.WinwordDocumentObject
+			if not doc:
+				return None
 			self._WinwordSelectionObject=self.WinwordDocumentObject.selection
 		return self._WinwordSelectionObject
 

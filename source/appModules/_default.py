@@ -367,20 +367,6 @@ class AppModule(appModuleHandler.AppModule):
 		ui.message("%s"%action)
 	script_navigatorObject_doDefaultAction.__doc__=_("Performs the default action on the current navigator object (example: presses it if it is a button).")
 
-	def script_navigatorObject_where(self,keyPress):
-		"""Reports where the current navigator object is by reporting each of its ancestors""" 
-		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObject):
-			speech.speakMessage(_("no navigator object"))
-			return
-		speech.speakObject(curObject,reason=speech.REASON_QUERY)
-		curObject=curObject.parent
-		while curObject is not None:
-			speech.speakMessage(_("inside"))
-			speech.speakObject(curObject,reason=speech.REASON_QUERY)
-			curObject=curObject.parent
-	script_navigatorObject_where.__doc__=_("Reports where the current navigator object is by reporting each of its ancestors")
-
 	def script_review_top(self,keyPress):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
 		api.setReviewPosition(info.copy())
@@ -854,6 +840,8 @@ class AppModule(appModuleHandler.AppModule):
 	script_revertToSavedConfiguration.__doc__ = _("loads the saved NVDA configuration, overriding current changes")
 
 	def script_activatePythonConsole(self,keyPress):
+		if globalVars.appArgs.secure:
+			return
 		import pythonConsole
 		if not pythonConsole.consoleUI:
 			pythonConsole.initialize()

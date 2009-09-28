@@ -9,6 +9,7 @@ import re
 import ctypes
 import comtypes.automation
 import wx
+import oleacc
 import textInfos.offsets
 import eventHandler
 import gui
@@ -61,10 +62,16 @@ class ExcelGrid(Window):
 
 	def __init__(self,*args,**vars):
 		super(ExcelGrid,self).__init__(*args,**vars)
-		ptr=ctypes.POINTER(comtypes.automation.IDispatch)()
-		if ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,winUser.OBJID_NATIVEOM,ctypes.byref(comtypes.automation.IDispatch._iid_),ctypes.byref(ptr))!=0:
-			raise OSError("No native object model")
-		self.excelObject=comtypes.client.dynamic.Dispatch(ptr)
+
+	def _get_excelObject(self):
+		if not getattr(self,'_excelObject',None):
+			try:
+				pDispatch=oleacc.AccessibleObjectFromWindow(self.windowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
+			except (COMError,WindowsError):
+				log.debugWarning("Could not get Excel object model",exc_info=True)
+				return None
+			self._excelObject=comtypes.client.dynamic.Dispatch(pDispatch)
+		return self._excelObject
 
 	def _get_role(self):
 		return controlTypes.ROLE_TABLE
@@ -163,7 +170,7 @@ class ExcelCell(Window):
 			self.lastCell=cellRange.Item(count)
 		else:
 			self.lastCell=None
-		super(ExcelCell,self).__init__(parentNVDAObject.windowHandle)
+		super(ExcelCell,self).__init__(windowHandle=parentNVDAObject.windowHandle)
 
 	def _isEqual(self,other):
 		if not super(ExcelCell,self)._isEqual(other):

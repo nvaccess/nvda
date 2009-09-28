@@ -5,11 +5,11 @@ Copyright 2006 - 2009 NVDA Contributors.$\n\
 このウィザードで、${PRODUCT} のインストールをご案内します。なお、このセットアップを続行する前に、他のアプリケーションはすべて終了させてください。$\n"
 LangString msg_NVDAWebSite ${LANG_JAPANESE} "NVDA 公式 Web サイトを開く"
 LangString msg_NVDARunning ${LANG_JAPANESE} "すでに NVDA が起動しています。インストールを続行するために、自動的に終了します。"
-LangString msg_pagePrevInstallLabel ${LANG_JAPANESE} "以前にインストールされた、前のバージョンのNVDAがシステムにみつかりました。インストールを行う前に、これを削除することを強くお勧めします。"
+LangString msg_pagePrevInstallLabel ${LANG_JAPANESE} "以前にインストールされた、前のバージョンのNVDAがシステムに見つかりました。インストールを行う前に、これを削除することを強くお勧めします。"
 LangString msg_pagePrevInstallUninstallCheckBox ${LANG_JAPANESE} "アンインストール(推奨)"
 LangString shortcut_uninstall $(LANG_JAPANESE) "アンインストール"
 LangString shortcut_website $(LANG_JAPANESE) "Web サイト"
-LangString shortcut_exploreUserSettingsDir $(LANG_JAPANESE) "ユーザー設定ディレクトリを開く"
+LangString shortcut_exploreUserConfigDir $(LANG_JAPANESE) "ユーザー設定ディレクトリを開く"
 LangString shortcut_keycom $(LANG_JAPANESE) "コマンドキークイックリファレンス"
 LangString shortcut_readme $(LANG_JAPANESE) "お読みください"
 LangString shortcut_userguide $(LANG_JAPANESE) "ユーザーガイド"
@@ -18,12 +18,12 @@ LangString path_readmefile $(LANG_JAPANESE) "ja\readme.txt"
 LangString path_keycomfile $(LANG_JAPANESE) "ja\key commands.txt"
 LangString UNLOG_HEADER ${LANG_JAPANESE} "=========== Uninstaller Log \
                                          このファイルを編集しないでください ==========="
-LangString UNLOG_DAT_NOT_FOUND ${LANG_JAPANESE} "${UNINST_DAT}がみつかりません \
-                                                Uninstall作業をじっこうできません。"
+LangString UNLOG_DAT_NOT_FOUND ${LANG_JAPANESE} "${UNINST_DAT}が見つかりません \
+                                                アンインストール作業を実行できません。"
 LangString UNLOG_DEL_FILE ${LANG_JAPANESE} 'ファイル削除中 "$R9"?'
 LangString UNLOG_DEL_DIR ${LANG_JAPANESE} 'ディレクトリ削除中"$R9"?'
-LangString UNLOG_EMPTY_DIR ${LANG_JAPANESE} "以前のInstallが$0にみつかりました。$\n\
-                                            必要なファイル${UNINSTALL_LOG}.datがみつかりません。$\n$\n\
+LangString UNLOG_EMPTY_DIR ${LANG_JAPANESE} "以前にインストールされたNVDAが$0に見つかりました。$\n\
+                                            必要なファイル${UNINSTALL_LOG}.datが見つかりません。$\n$\n\
                                             空のディレクトリを選択して\
                                             新規インストールをすることを強く推奨します。"
 LangString UNLOG_ERROR_LOG ${LANG_JAPANESE} "${UNINSTALL_LOG}にエラーがあります。"

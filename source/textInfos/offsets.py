@@ -44,11 +44,10 @@ def findStartOfLine(text,offset,lineLength=None):
 		return 0
 	if offset>=len(text):
 		offset=len(text)-1
-	start=offset
 	if isinstance(lineLength,int):
 		return offset-(offset%lineLength)
-	if text[start]=='\n' and start>=0 and text[start-1]=='\r':
-		start-=1
+	if text[offset]=='\n' and offset>=0 and text[offset-1]=='\r':
+		offset-=1
 	start=text.rfind('\n',0,offset)
 	if start<0:
 		start=text.rfind('\r',0,offset)

@@ -248,37 +248,42 @@ the NVDAObject for IAccessible
 @type IAccessibleChildID: int
 """
 
-	IAccessibleFocusEventNeedsFocusedState=True
 	IAccessibleTableUsesTableCellIndexAttrib=False #: Should the table-cell-index IAccessible2 object attribute be used rather than indexInParent?
 
 	@classmethod
+	def windowHasExtraIAccessibles(cls,windowHandle):
+		"""Finds out whether this window has things such as a system menu / titleBar / scroll bars, which would be represented as extra IAccessibles"""
+		style=winUser.getWindowStyle(windowHandle)
+		return bool(style&winUser.WS_SYSMENU or style&winUser.WS_SIZEBOX or style&winUser.WS_VSCROLL or style&winUser.WS_HSCROLL)
+
+	@classmethod
 	def findBestClass(cls,clsList,kwargs):
+		relation=kwargs.get('relation',None)
 		windowHandle=kwargs.get('windowHandle',None)
 		IAccessibleObject=kwargs.get('IAccessibleObject',None)
 		IAccessibleChildID=kwargs.get('IAccessibleChildID',None)
 		event_windowHandle=kwargs.get('event_windowHandle',None)
 		event_objectID=kwargs.get('event_objectID',None)
 		event_childID=kwargs.get('event_childID',None)
+
+		# If we have a window but no IAccessible, get the window from the IAccessible.
 		if windowHandle and not IAccessibleObject:
-			IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
-			if IAccessibleHandler.accNavigate(IAccessibleObject,IAccessibleChildID,oleacc.NAVDIR_PREVIOUS) or IAccessibleHandler.accNavigate(IAccessibleObject,IAccessibleChildID,oleacc.NAVDIR_NEXT):
+			if relation!="parent" and cls.windowHasExtraIAccessibles(windowHandle): 
 				IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_WINDOW,0)
+			else:
+				IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
+
+		# Try every trick in the book to get the window handle if we don't have it.
 		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
 			try:
 				windowHandle=IAccessibleObject.windowHandle
-			except:
-				log.debugWarning("IAccessible2::windowHandle failed",exc_info=True)
+			except COMError, e:
+				log.debugWarning("IAccessible2::windowHandle failed: %s" % e)
 			#Mozilla Gecko: we can never use a MozillaWindowClass window
 			while windowHandle and winUser.getClassName(windowHandle)=="MozillaWindowClass":
 				windowHandle=winUser.getAncestor(windowHandle,winUser.GA_PARENT)
-		if not windowHandle and event_windowHandle:
-			windowHandle=event_windowHandle
-		if not windowHandle:
-			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
-		if not windowHandle:
-			raise RuntimeError("Can't get a window handle from IAccessible")
 		try:
-			Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
+			raise ValueError #Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
 		except:
 			Identity=None
 		if event_windowHandle is None and Identity and 'windowHandle' in Identity:
@@ -287,6 +292,18 @@ the NVDAObject for IAccessible
 			event_objectID=Identity['objectID']
 		if event_childID is None and Identity and 'childID' in Identity:
 			event_childID=Identity['childID']
+		if not windowHandle and event_windowHandle:
+			windowHandle=event_windowHandle
+		if not windowHandle:
+			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
+		if not windowHandle:
+			log.debugWarning("Resorting to WindowFromPoint on accLocation")
+			left,top,width,height = IAccessibleObject.accLocation(0)
+			windowHandle=winUser.user32.WindowFromPoint(winUser.POINT(left,top))
+		if not windowHandle:
+			raise RuntimeError("Can't get a window handle from IAccessible")
+
+		# Set the event params based on our calculated/construction info if we must.
 		if event_windowHandle is None:
 			event_windowHandle=windowHandle
 		if event_objectID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
@@ -298,14 +315,17 @@ the NVDAObject for IAccessible
 				log.debugWarning("could not get IAccessible2::uniqueID to use as event_childID",exc_info=True)
 		if event_childID is None:
 			event_childID=IAccessibleChildID
+
 		kwargs['windowHandle']=windowHandle
 		kwargs['IAccessibleObject']=IAccessibleObject
 		kwargs['IAccessibleChildID']=IAccessibleChildID
 		kwargs['event_windowHandle']=event_windowHandle
 		kwargs['event_objectID']=event_objectID
 		kwargs['event_childID']=event_childID
+
 		if event_objectID==winUser.OBJID_CLIENT and JABHandler.isJavaWindow(windowHandle): 
 			clsList.append(JavaVMRoot)
+
 		role=0
 		if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
 			try:
@@ -315,6 +335,8 @@ the NVDAObject for IAccessible
 		if not role:
 			role=IAccessibleObject.accRole(IAccessibleChildID)
 		windowClassName=winUser.getClassName(windowHandle)
+
+		# Use window class name and role to search for a class match in our static map.
 		keys=[(windowClassName,role),(None,role),(windowClassName,None)]
 		normalizedWindowClassName=Window.normalizeWindowClassName(windowClassName)
 		if normalizedWindowClassName!=windowClassName:
@@ -332,6 +354,8 @@ the NVDAObject for IAccessible
 				newCls=globals()[classString]
 			if newCls:
 				clsList.append(newCls)
+
+		# Some special cases.
 		if windowClassName=="Internet Explorer_Server" and (event_objectID is None or event_objectID==winUser.OBJID_CLIENT or event_objectID>0):
 			MSHTML=__import__("MSHTML",globals(),locals(),[]).MSHTML
 			clsList.append(MSHTML)
@@ -344,10 +368,14 @@ the NVDAObject for IAccessible
 		if windowClassName.startswith('RichEdit') and winUser.getClassName(winUser.getAncestor(windowHandle,winUser.GA_PARENT)).startswith('bosa_sdm'):
 			sdmCls=__import__("msOffice",globals(),locals(),[]).RichEditSDMChild
 			clsList.append(sdmCls)
+
 		clsList.append(IAccessible)
+
 		if event_objectID==winUser.OBJID_CLIENT and event_childID==0:
+			# This is the main (client) area of the window, so we can use other classes at the window level.
 			return super(IAccessible,cls).findBestClass(clsList,kwargs)
 		else:
+			# This IAccessible does not represent the main part of the window, so we can only use IAccessible classes.
 			return clsList,kwargs
 
 	@classmethod
@@ -374,7 +402,7 @@ the NVDAObject for IAccessible
 			return None
 		return getNVDAObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
 
-	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
+	def __init__(self,relation=None,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
 @param pacc: a pointer to an IAccessible object
 @type pacc: ctypes.POINTER(IAccessible)
@@ -434,6 +462,33 @@ the NVDAObject for IAccessible
 		if None not in (event_windowHandle,event_objectID,event_childID):
 			IAccessibleHandler.liveNVDAObjectTable[(event_windowHandle,event_objectID,event_childID)]=self
 		self._doneInit=True
+
+	def isDuplicateIAccessibleEvent(self,obj):
+		"""Compaires the object of an event to self to see if the event should be treeted as duplicate."""
+		#MSAA child elements do not have unique winEvent params as a childID could be reused if an element was deleted etc
+		if self.IAccessibleChildID>0:
+			return False
+		return obj.event_windowHandle==self.event_windowHandle and obj.event_objectID==self.event_objectID and obj.event_childID==self.event_childID
+
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		"""Determine whether a focus event should be allowed for this object.
+		Normally, this checks for the focused state to help eliminate redundant or invalid focus events.
+		However, some implementations do not correctly set the focused state, so this must be overridden.
+		@return: C{True} if the focus event should be allowed.
+		@rtype: bool
+		"""
+		#this object or one of its ancestors must have state_focused.
+		testObj = self
+		while testObj:
+			if controlTypes.STATE_FOCUSED in testObj.states:
+				break
+			parent = testObj.parent
+			# Cache the parent.
+			testObj.parent = parent
+			testObj = parent
+		else:
+			return False
+		return True
 
 	def _get_TextInfo(self):
 		if hasattr(self,'IAccessibleTextObject'):
@@ -668,19 +723,9 @@ the NVDAObject for IAccessible
 		except:
 			return None
 
-	def _correctRelationForWindow(self,obj):
-		if not obj:
-			return None
-		windowHandle=obj.windowHandle
-		if windowHandle!=self.windowHandle:
-			APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
-			if not issubclass(APIClass,IAccessible):
-				return APIClass(windowHandle=windowHandle)
-		return obj
- 
 	def _get_parent(self):
 		if self.IAccessibleChildID>0:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=0)
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=0) or super(IAccessible,self).parent
 		#Support for groupbox windows
 		groupboxObj=IAccessibleHandler.findGroupboxObject(self)
 		if groupboxObj:
@@ -689,14 +734,14 @@ the NVDAObject for IAccessible
 		if res:
 			try:
 				parentRole=res[0].accRole(res[1])
-			except:
+			except COMError:
 				log.debugWarning("parent has bad role",exc_info=True)
-				return None
-			if parentRole!=oleacc.ROLE_SYSTEM_WINDOW or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_NEXT) or IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_PREVIOUS): 
-				return self._correctRelationForWindow(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]))
+				return super(IAccessible,self).parent
+			if parentRole!=oleacc.ROLE_SYSTEM_WINDOW or self.windowHasExtraIAccessibles(self.windowHandle): 
+				return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]),relation="parent") or super(IAccessible,self).parent
 			res=IAccessibleHandler.accParent(res[0],res[1])
 			if res:
-				return self._correctRelationForWindow(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]))
+				return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]),relation="parent") or super(IAccessible,self).parent
 		return super(IAccessible,self).parent
 
 	def _get_next(self):
@@ -709,13 +754,13 @@ the NVDAObject for IAccessible
 				if parentNext and parentNext[0].accRole(parentNext[1])>0:
 					next=parentNext
 		if next and next[0]==self.IAccessibleObject:
-			return self._correctRelationForWindow(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=next[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=next[1]))
+			return self.correctAPIForRelation(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=next[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=next[1]))
 		if next and next[0].accRole(next[1])==oleacc.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(next[0],-4)
 			if not IAccessibleHandler.accNavigate(child[0],child[1],oleacc.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],oleacc.NAVDIR_NEXT):
 				next=child
 		if next and next[0].accRole(next[1])>0:
-			return self._correctRelationForWindow(IAccessible(IAccessibleObject=next[0],IAccessibleChildID=next[1]))
+			return self.correctAPIForRelation(IAccessible(IAccessibleObject=next[0],IAccessibleChildID=next[1]))
  
 	def _get_previous(self):
 		previous=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_PREVIOUS)
@@ -727,13 +772,13 @@ the NVDAObject for IAccessible
 				if parentPrevious and parentPrevious[0].accRole(parentPrevious[1])>0:
 					previous=parentPrevious
 		if previous and previous[0]==self.IAccessibleObject:
-			return self._correctRelationForWindow(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=previous[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=previous[1]))
+			return self.correctAPIForRelation(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=previous[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=previous[1]))
 		if previous and previous[0].accRole(previous[1])==oleacc.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(previous[0],-4)
 			if not IAccessibleHandler.accNavigate(child[0],child[1],oleacc.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],oleacc.NAVDIR_NEXT):
 				previous=child
 		if previous and previous[0].accRole(previous[1])>0:
-			return self._correctRelationForWindow(IAccessible(IAccessibleObject=previous[0],IAccessibleChildID=previous[1]))
+			return self.correctAPIForRelation(IAccessible(IAccessibleObject=previous[0],IAccessibleChildID=previous[1]))
 
 	def _get_firstChild(self):
 		firstChild=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_FIRSTCHILD)
@@ -742,7 +787,7 @@ the NVDAObject for IAccessible
 			if len(children)>0:
 				firstChild=children[0]
 		if firstChild and firstChild[0]==self.IAccessibleObject:
-			return self._correctRelationForWindow(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=firstChild[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=firstChild[1]))
+			return self.correctAPIForRelation(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=firstChild[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=firstChild[1]))
 		if firstChild and firstChild[0].accRole(firstChild[1])==oleacc.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(firstChild[0],-4)
 			if not child:
@@ -752,12 +797,12 @@ the NVDAObject for IAccessible
 		if firstChild and firstChild[0].accRole(firstChild[1])>0:
 			obj=IAccessible(IAccessibleObject=firstChild[0],IAccessibleChildID=firstChild[1])
 			if (obj and winUser.isDescendantWindow(self.windowHandle,obj.windowHandle)) or self.windowHandle==winUser.getDesktopWindow():
-				return self._correctRelationForWindow(obj)
+				return self.correctAPIForRelation(obj)
 
 	def _get_lastChild(self):
 		lastChild=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_LASTCHILD)
 		if lastChild and lastChild[0]==self.IAccessibleObject:
-			return self._correctRelationForWindow(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=lastChild[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=lastChild[1]))
+			return self.correctAPIForRelation(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=lastChild[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=lastChild[1]))
 		if lastChild and lastChild[0].accRole(lastChild[1])==oleacc.ROLE_SYSTEM_WINDOW:
 			child=IAccessibleHandler.accChild(lastChild[0],-4)
 			if not IAccessibleHandler.accNavigate(child[0],child[1],oleacc.NAVDIR_PREVIOUS) and not IAccessibleHandler.accNavigate(child[0],child[1],oleacc.NAVDIR_NEXT):
@@ -765,7 +810,7 @@ the NVDAObject for IAccessible
 		if lastChild and lastChild[0].accRole(lastChild[1])>0:
 			obj=IAccessible(IAccessibleObject=lastChild[0],IAccessibleChildID=lastChild[1])
 			if (obj and winUser.isDescendantWindow(self.windowHandle,obj.windowHandle)) or self.windowHandle==winUser.getDesktopWindow():
-				return self._correctRelationForWindow(obj)
+				return self.correctAPIForRelation(obj)
 
 	def _get_children(self):
 		try:
@@ -779,16 +824,20 @@ the NVDAObject for IAccessible
 				if child[0]==self.IAccessibleObject:
 					children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1]))
 				elif child[0].accRole(child[1])==oleacc.ROLE_SYSTEM_WINDOW:
-					children.append(self._correctRelationForWindow(getNVDAObjectFromEvent(IAccessibleHandler.windowFromAccessibleObject(child[0]),winUser.OBJID_CLIENT,0)))
+					children.append(self.correctAPIForRelation(getNVDAObjectFromEvent(IAccessibleHandler.windowFromAccessibleObject(child[0]),winUser.OBJID_CLIENT,0)))
 				else:
-					children.append(self._correctRelationForWindow(IAccessible(IAccessibleObject=child[0],IAccessibleChildID=child[1])))
+					children.append(self.correctAPIForRelation(IAccessible(IAccessibleObject=child[0],IAccessibleChildID=child[1])))
 			children=[x for x in children if x and winUser.isDescendantWindow(self.windowHandle,x.windowHandle)]
 			return children
 		except:
 			return []
 
 	def _get_IA2Attributes(self):
-		attribs = self.IAccessibleObject.attributes
+		try:
+			attribs = self.IAccessibleObject.attributes
+		except COMError as e:
+			log.debugWarning("IAccessibleObject.attributes COMError %s"%e)
+			attribs=None
 		if attribs:
 			return IAccessibleHandler.splitIA2Attribs(attribs)
 		return {}
@@ -1187,6 +1236,16 @@ class SysLink(IAccessible):
 	def reportFocus(self):
 		pass
 
+class TaskList(IAccessible):
+	isPresentableFocusAncestor = False
+
+	def event_gainFocus(self):
+		# Normally, we don't want to act on this focus event.
+		if self.childCount == 0:
+			# However, in Windows 7, the task list gets focus even if alt+tab is pressed with no applications open.
+			# In this case, we must report the focus so the user knows where the focus has landed.
+			return super(TaskList, self).event_gainFocus()
+
 class TaskListIcon(IAccessible):
 
 	def _get_role(self):
@@ -1200,7 +1259,10 @@ class TaskListIcon(IAccessible):
 class ToolbarWindow32(IAccessible):
 
 	def event_gainFocus(self):
-		if (self.parent if self.IAccessibleRole == oleacc.ROLE_SYSTEM_TOOLBAR else self.parent.parent).windowClassName == "SysPager":
+		toolbarParent = self.parent
+		if toolbarParent and self.IAccessibleRole != oleacc.ROLE_SYSTEM_TOOLBAR:
+			toolbarParent = toolbarParent.parent
+		if toolbarParent and toolbarParent.windowClassName == "SysPager":
 			# This is the system tray.
 			if not self.sysTrayGainFocus():
 				return
@@ -1246,6 +1308,9 @@ class MenuItem(IAccessible):
 			return
 		super(MenuItem, self).event_gainFocus()
 
+class Taskbar(IAccessible):
+	name = _("Taskbar")
+
 ###class mappings
 
 _staticMap={
@@ -1284,6 +1349,8 @@ _staticMap={
 	("ATL:SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TWizardForm",oleacc.ROLE_SYSTEM_CLIENT):"Dialog",
 	("SysLink",oleacc.ROLE_SYSTEM_CLIENT):"SysLink",
+	("#32771",oleacc.ROLE_SYSTEM_LIST):"TaskList",
+	("TaskSwitcherWnd",oleacc.ROLE_SYSTEM_LIST):"TaskList",
 	("#32771",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("TaskSwitcherWnd",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("ToolbarWindow32",None):"ToolbarWindow32",
@@ -1304,4 +1371,13 @@ _staticMap={
 	("hh_kwd_vlist",oleacc.ROLE_SYSTEM_LIST):"hh.KeywordList",
 	("Scintilla",oleacc.ROLE_SYSTEM_CLIENT):"scintilla.Scintilla",
 	("MSOUNISTAT",oleacc.ROLE_SYSTEM_CLIENT):"msOffice.MSOUNISTAT",
+	("QWidget",oleacc.ROLE_SYSTEM_CLIENT):"qt.Client",
+	("QWidget",oleacc.ROLE_SYSTEM_LIST):"qt.Container",
+	("QWidget",oleacc.ROLE_SYSTEM_OUTLINE):"qt.Container",
+	("QWidget",oleacc.ROLE_SYSTEM_MENUBAR):"qt.Container",
+	("QWidget",oleacc.ROLE_SYSTEM_OUTLINEITEM):"qt.TreeViewItem",
+	("QPopup",oleacc.ROLE_SYSTEM_MENUPOPUP):"qt.Menu",
+	("QWidget",oleacc.ROLE_SYSTEM_IPADDRESS):"qt.LayeredPane",
+	("QWidget",oleacc.ROLE_SYSTEM_APPLICATION):"qt.Application",
+	("Shell_TrayWnd",oleacc.ROLE_SYSTEM_CLIENT):"Taskbar",
 }
