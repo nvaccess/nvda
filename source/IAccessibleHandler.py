@@ -80,6 +80,7 @@ class OrderedWinEventLimiter(object):
 		self._eventHeap=[]
 		self._eventCounter=itertools.count()
 		self._lastMenuEvent=None
+		self.UIAWindowCache=set()
 
 	def addEvent(self,eventID,window,objectID,childID,threadID):
 		"""Adds a winEvent to the limiter.
@@ -94,6 +95,13 @@ class OrderedWinEventLimiter(object):
 		@param threadID: the threadID of the winEvent
 		@type threadID: integer
 		"""
+		#Filter out any events for UIA windows
+		if window in self.UIAWindowCache:
+			return
+		elif UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
+			UIAWindowCache.add(window)
+			return
+
 		if eventID==winUser.EVENT_OBJECT_FOCUS:
 			if objectID in (winUser.OBJID_SYSMENU,winUser.OBJID_MENU) and childID==0:
 				# This is a focus event on a menu bar itself, which is just silly. Ignore it.
@@ -129,6 +137,7 @@ class OrderedWinEventLimiter(object):
 	def flushEvents(self):
 		"""Returns a list of winEvents (tuples of eventID,window,objectID,childID) that have been added, though due to limiting, it will not necessarily be all the winEvents that were originally added. They are definitely garenteed to be in the correct order though.
 		"""
+		self.UIAWindowCache.clear()
 		if self._lastMenuEvent is not None:
 			heapq.heappush(self._eventHeap,self._lastMenuEvent)
 			self._lastMenuEvent=None
@@ -148,15 +157,8 @@ class OrderedWinEventLimiter(object):
 		e=self._eventHeap
 		self._eventHeap=[]
 		r=[]
-		UIAWindowCache=set()
 		for count in xrange(len(e)):
 			event=heapq.heappop(e)[1:-1]
-			window=event[1]
-			if window in UIAWindowCache:
-				continue
-			elif UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
-				UIAWindowCache.add(window)
-				continue
 			r.append(event)
 		return r
 
