@@ -99,7 +99,7 @@ class OrderedWinEventLimiter(object):
 		if window in self.UIAWindowCache:
 			return
 		elif UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
-			UIAWindowCache.add(window)
+			self.UIAWindowCache.add(window)
 			return
 
 		if eventID==winUser.EVENT_OBJECT_FOCUS:
