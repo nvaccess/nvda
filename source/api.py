@@ -106,13 +106,15 @@ Before overriding the last object, this function calls event_loseFocus on the ob
   	for addedMod in newAppModuleSet-oldAppModuleSet:
 		if hasattr(addedMod,'event_appGainFocus'):
 			addedMod.event_appGainFocus()
-	if not obj.virtualBuffer or not obj.virtualBuffer.isAlive():
-		virtualBufferObject=None
-		for o in ancestors[focusDifferenceLevel:]+[obj]:
-			virtualBufferObject=virtualBufferHandler.update(o)
-			if virtualBufferObject:
-				break
-		obj.virtualBuffer=virtualBufferObject
+	virtualBufferHandler.cleanup()
+	for o in ancestors[focusDifferenceLevel:]+[obj]:
+		virtualBufferObject=virtualBufferHandler.update(o)
+		if virtualBufferObject:
+			#If the focus object is definitly in the new virtualBuffer then cache it
+			#Stops virtualBufferHandler.getVirtualBuffer from being called possibly when looking up scripts from the winInputHook thread
+			if o is obj or virtualBufferObject.isNVDAObjectInVirtualBuffer(obj):
+				obj.virtualBuffer=virtualBufferObject
+			break
 	# Set global focus variables.
 	globalVars.focusDifferenceLevel=focusDifferenceLevel
 	globalVars.focusObject=obj
