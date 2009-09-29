@@ -554,12 +554,9 @@ class AppModule(appModuleHandler.AppModule):
 	script_speechMode.__doc__=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally.")
 
 	def _getDocumentForFocusedEmbeddedObject(self):
-		focus = api.getFocusObject()
-		if focus.windowClassName == "MozillaWindowClass":
-			# Gecko.
-			for ancestor in reversed(api.getFocusAncestors()):
-				if ancestor.role == controlTypes.ROLE_DOCUMENT:
-					return ancestor
+		for ancestor in reversed(api.getFocusAncestors()):
+			if ancestor.role == controlTypes.ROLE_DOCUMENT:
+				return ancestor
 
 	def script_toggleVirtualBufferPassThrough(self,keyPress):
 		vbuf = api.getFocusObject().virtualBuffer
