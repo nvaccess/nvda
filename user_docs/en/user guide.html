@@ -44,6 +44,7 @@
 <li><a href="#6.2.1.7">6.2.1.7. Object Presentation Settings</a></li>
 <li><a href="#6.2.1.8">6.2.1.8. Virtual Buffer Settings</a></li>
 <li><a href="#6.2.1.9">6.2.1.9. Document Formatting Settings</a></li>
+<li><a href="#6.2.1.10">6.2.1.10. Speech dictionaries</a></li>
 </ul>
 <li><a href="#6.2.2">6.2.2: Saving and Reverting Configuration</a></li>
 </ul>
@@ -177,7 +178,7 @@ To turn on keyboard help, press NVDA+1. To turn it off again, press NVDA+1 again
 </p>
 <h2 id="6">6. The NVDA menu</h2>
 <p>
-The NVDA menu allows you to control NVDA's settings, access help, save/revert your configuration, Modify the speech dictionarry, read the log file, and exit NVDA.
+The NVDA menu allows you to control NVDA's settings, access help, save/revert your configuration, Modify speech dictionaries, read the log file, and exit NVDA.
 </p>
 <h3 id="6.1">6.1. Accessing the NVDA menu</h3>
 <p>
@@ -478,6 +479,26 @@ This dialog box is found in the Preferences menu, under "Document Formatting..."
 </p>
 <p>
 You can configure announcement of font name, font size, font attributes, style, text alignment, text style, tables, page numbers, line numbers, spelling errors, links, headings, lists and blockquotes.
+</p>
+<h5 id="6.2.1.10">6.2.1.10. Speech dictionaries</h5>
+<p>
+The speech dictionaries menu (found in the Preferences menu) contains dialogs that allow you to manage the way NVDA pronounces particular words or phrases. There are currently three different types of speech dictionaries. They are:
+ <ul>
+<li>Default: rules in this dictionary affect all speech in NVDA.</li>
+<li>Voice: a dictionary whos rules affect speech for the synthesizer voice currently being used.</li>
+<li>Temporary: rules in this dictionary affect all speech in NVDA, but only for the current session. These rules are temporary and will be lost if NVDA is restarted.</li>
+</ul>
+<p>
+All dictionary dialogs contain a list of rules which will be used for processing the speech. The dialog also contains Add, Edit and remove buttons.
+</p>
+<p>
+To add a new rule to the dictionary, press the Add button, and fill in the fields in the dialog box that appears and then press Ok. You will then see your new rule in the list of rules. However to make sure your rule is actually saved, make sure to press Ok to exit the dictionary dialog all together once you have finished adding/editing rules.
+</p>
+<p>
+The rules for NVDA's speech dictionaries allow you to change one string of characters in to another.  A simple example would be that you want to have NVDA say the word frog each time it is supposed to say the word bird. In the Add rule dialog, the easiest way to do this is to type the word bird in the Pattern field, and the word frog in the Replacement field. You may also want to type a description of the rule in the Comment field (something like: changes bird to frog).
+</p>
+<p>
+NVDA's speech dictionaries however are much more powerful than simple word replacement. The Add rule dialog also contains a checkbox to say whether or not you want the rule to be case sensitive (meaning that NVDA should care whether the characters are uppercase or lowercase. NVDA ignores case by default). Another chekbox allows you to state whether your pattern is a "Regular expression". A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples. Regular expressions are not covered in this user guide, but there are many tutorials on the web which can provide you with more information.
 </p>
 <h3 id="6.2.2.">6.2.2. Saving and Reloading the configuration</h3>
 <p>
