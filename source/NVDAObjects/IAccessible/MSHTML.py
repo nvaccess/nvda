@@ -551,6 +551,14 @@ class MSHTML(IAccessible):
 				pass
 		super(MSHTML,self).doAction(index=index)
 
+	def setFocus(self):
+		if self.HTMLNodeHasAncestorIAccessible:
+			try:
+				self.HTMLNode.focus()
+			except (COMError, AttributeError, NameError):
+				pass
+		super(MSHTML,self).setFocus()
+
 	def _get_HTMLNodeName(self):
 		if not self.HTMLNode:
 			return ""
