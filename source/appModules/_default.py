@@ -877,7 +877,7 @@ class AppModule(appModuleHandler.AppModule):
 			return
 		pos.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
 		pos.setEndPoint(self._copyStartMarker, "startToStart")
-		if pos.copyToClipboard():
+		if pos.compareEndPoints(pos, "startToEnd") < 0 and pos.copyToClipboard():
 			ui.message(_("Review selection copied to clipboard"))
 		else:
 			ui.message(_("No text to copy"))
