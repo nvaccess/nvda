@@ -28,9 +28,10 @@ def getVirtualBuffer(obj):
 			return v
 
 def update(obj):
-	for v in list(runningTable):
-		if not v.isLoading and not v.isAlive():
-			killVirtualBuffer(v)
+	#If this object already has a virtualBuffer, just return that and don't bother trying to create one
+	v=obj.virtualBuffer
+	if v:
+		return v
 	windowClassName=obj.windowClassName
 	role=obj.role
 	states=obj.states
@@ -67,6 +68,12 @@ def update(obj):
 	runningTable.add(virtualBufferObject)
 	return virtualBufferObject
 
+def cleanup():
+	"""Kills off any virtualBuffers that are no longer alive."""
+	for v in list(runningTable):
+		if not v.isLoading and not v.isAlive():
+			killVirtualBuffer(v)
+
 def killVirtualBuffer(virtualBufferObject):
 	try:
 		runningTable.remove(virtualBufferObject)
@@ -75,7 +82,7 @@ def killVirtualBuffer(virtualBufferObject):
 	if hasattr(virtualBufferObject,'unloadBuffer'):
 		virtualBufferObject.unloadBuffer()
 
-def cleanupVirtualBuffers():
+def terminate():
 	"""Kills any currently running virtualBuffers"""
 	for v in list(runningTable):
 		killVirtualBuffer(v)
