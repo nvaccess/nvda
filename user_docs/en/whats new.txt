@@ -37,6 +37,7 @@
 	* The startup and exit sounds are now played using NVDA's configured audio output device instead of the Windows default audio output device. (#164)
 	* Progress bar reporting has been improved. Most notably you can now configure NVDA to announce via both speech and beeps at the same time.
 	* Some generic roles, such as pane, application and frame, are no longer reported on focus unless the control is unnamed.
+	* The review copy command (NVDA+f10) copies the text from the start marker up to and including the current review position, rather than excluding the current position. This allows the last character of a line to be copied, which was not previously possible. (#430)
 
 === Bug Fixes ===
 	* When NVDA is run from an 8.3 dos path, but it is installed in the related long path (e.g. progra~1 verses program files) NVDA will correctly  identify that it is an installed copy and properly load the user's settings.
@@ -58,6 +59,7 @@
 	* The pass key through command no longer gets stuck if a key is held down. Previously, NVDA stopped accepting commands if this occurred and had to be restarted. (#413)
 	* The taskbar is no longer ignored when it receives focus, which often occurs when exiting an application. Previously, NVDA behaved as if the focus had not changed at all.
 	* When reading text fields in applications which use the Java Access Bridge (including OpenOffice.org), NVDA now functions correctly when reporting of line numbers is enabled.
+	* The review copy command (NVDA+f10) gracefully handles the case where it is used on a position before the start marker. Previously, this could cause problems such as crashes in Notepad++.
 
 == 0.6p3 ==
 

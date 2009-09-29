@@ -562,6 +562,7 @@ class MSHTML(IAccessible):
 				self.HTMLNode.focus()
 			except (COMError, AttributeError, NameError):
 				pass
+			return
 		super(MSHTML,self).setFocus()
 
 	def _get_HTMLNodeName(self):

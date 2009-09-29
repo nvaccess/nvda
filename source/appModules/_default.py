@@ -887,12 +887,12 @@ class AppModule(appModuleHandler.AppModule):
 		if self._copyStartMarker.obj != pos.obj:
 			ui.message(_("The start marker must reside within the same object"))
 			return
-		pos.collapse()
+		pos.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
 		pos.setEndPoint(self._copyStartMarker, "startToStart")
-		if pos.copyToClipboard():
+		if pos.compareEndPoints(pos, "startToEnd") < 0 and pos.copyToClipboard():
 			ui.message(_("Review selection copied to clipboard"))
 		else:
 			ui.message(_("No text to copy"))
 			return
 		self._copyStartMarker = None
-	script_review_copy.__doc__ = _("Retrieves the text from the previously set start marker to the current position of the review cursor and copies it to the clipboard")
+	script_review_copy.__doc__ = _("Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard")
