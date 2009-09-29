@@ -232,7 +232,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 
 class MSHTML(IAccessible):
 
-	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD','HTML']
+	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD','HTML','PARAM']
 	HTMLNodeNameEmbedList=['OBJECT','EMBED','APPLET','FRAME','IFRAME']
 
 	@classmethod
@@ -269,6 +269,9 @@ class MSHTML(IAccessible):
 				pass
 		self.HTMLNode=HTMLNode
 		super(MSHTML,self).__init__(IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,**kwargs)
+		#object and embed nodes give back an incorrect IAccessible via queryService, so we must treet it as an ancestor IAccessible
+		if self.HTMLNodeName in ("OBJECT","EMBED"):
+			self.HTMLNodeHasAncestorIAccessible=True
 		try:
 			self.HTMLNode.createTextRange()
 			self.TextInfo=MSHTMLTextInfo
@@ -364,11 +367,9 @@ class MSHTML(IAccessible):
 					return role
 			nodeName=self.HTMLNodeName
 			if nodeName:
-				if nodeName in self.HTMLNodeNameEmbedList:
+				if nodeName in ("OBJECT","EMBED","APPLET"):
 					return controlTypes.ROLE_EMBEDDEDOBJECT
-				if nodeName in ("BODY","FRAMESET"):
-					return controlTypes.ROLE_DOCUMENT
-				if self.HTMLNodeHasAncestorIAccessible:
+				if self.HTMLNodeHasAncestorIAccessible or nodeName in ("BODY","FRAMESET","FRAME","IFRAME"):
 					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_TEXTFRAME)
 		if self.IAccessibleChildID>0:
 			states=super(MSHTML,self).states
@@ -478,7 +479,7 @@ class MSHTML(IAccessible):
 
 	def _get_firstChild(self):
 		if self.HTMLNode:
-			if self.HTMLNodeName in self.HTMLNodeNameEmbedList:
+			if self.HTMLNodeName in ("FRAME","IFRAME"):
 				return super(MSHTML,self).firstChild
 			try:
 				childNode=self.HTMLNode.firstChild
@@ -488,11 +489,13 @@ class MSHTML(IAccessible):
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
 				return None
 			return obj
+		if self.HTMLNodeHasAncestorIAccessible:
+			return None
 		return super(MSHTML,self).firstChild
 
 	def _get_lastChild(self):
 		if self.HTMLNode:
-			if self.HTMLNodeName in self.HTMLNodeNameEmbedList:
+			if self.HTMLNodeName in ("FRAME","IFRAME"):
 				return super(MSHTML,self).lastChild
 			try:
 				childNode=self.HTMLNode.lastChild
@@ -502,6 +505,8 @@ class MSHTML(IAccessible):
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
 				return None
 			return obj
+		if self.HTMLNodeHasAncestorIAccessible:
+			return None
 		return super(MSHTML,self).firstChild
 
 	def _get_columnNumber(self):
