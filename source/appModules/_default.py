@@ -233,13 +233,20 @@ class AppModule(appModuleHandler.AppModule):
 	def script_navigatorObject_currentDimensions(self,keyPress):
 		obj=api.getNavigatorObject()
 		if not obj:
-			speech.speakMessage(_("no navigator object"))
+			ui.message(_("no navigator object"))
 		location=obj.location
 		if not location:
-			speech.speakMessage(_("No location information for navigator object"))
+			ui.message(_("No location information for navigator object"))
 		(left,top,width,height)=location
-		(deskLeft,deskTop,deskWidth,deskHeight)=api.getDesktopObject().location
-		speech.speakMessage(_("Object edges positioned %.1f per cent right from left of screen, %.1f per cent down from top of screen, %.1f per cent left from right of screen, %.1f up from bottom of screen")%((float(left)/deskWidth)*100,(float(top)/deskHeight)*100,100-((float(width+left)/deskWidth)*100),100-(float(height+top)/deskHeight)*100))
+		deskLocation=api.getDesktopObject().location
+		if not deskLocation:
+			ui.message(_("No location information for screen"))
+		(deskLeft,deskTop,deskWidth,deskHeight)=deskLocation
+		percentFromLeft=(float(left-deskLeft)/deskWidth)*100
+		percentFromTop=(float(top-deskTop)/deskHeight)*100
+		percentWidth=(float(width)/deskWidth)*100
+		percentHeight=(float(height)/deskHeight)*100
+		ui.message(_("Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen")%(percentFromLeft,percentFromTop,percentWidth,percentHeight))
 	script_navigatorObject_currentDimensions.__doc__=_("Reports the hight, width and position of the current navigator object")
 
 	def script_navigatorObject_toFocus(self,keyPress):
