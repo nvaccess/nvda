@@ -107,14 +107,18 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 		if hasattr(addedMod,'event_appGainFocus'):
 			addedMod.event_appGainFocus()
 	virtualBufferHandler.cleanup()
+	virtualBufferObject=None
+	o=None
 	for o in ancestors[focusDifferenceLevel:]+[obj]:
 		virtualBufferObject=virtualBufferHandler.update(o)
 		if virtualBufferObject:
-			#If the focus object is definitly in the new virtualBuffer then cache it
-			#Stops virtualBufferHandler.getVirtualBuffer from being called possibly when looking up scripts from the winInputHook thread
-			if o is obj or virtualBufferObject.isNVDAObjectInVirtualBuffer(obj):
-				obj.virtualBuffer=virtualBufferObject
 			break
+	#Always make sure that the focus object's virtualBuffer is forced to either the found virtualBuffer (if its in it) or to None
+	#This is to make sure that the virtualBuffer does not have to be looked up, which can cause problems for winInputHook
+	if obj is o or virtualBufferObject.isNVDAObjectInVirtualBuffer(obj):
+		obj.virtualBuffer=virtualBufferObject
+	else:
+		obj.virtualBuffer=None
 	# Set global focus variables.
 	globalVars.focusDifferenceLevel=focusDifferenceLevel
 	globalVars.focusObject=obj
