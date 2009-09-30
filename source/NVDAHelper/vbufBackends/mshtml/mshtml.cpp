@@ -662,7 +662,13 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			contentString.append(L"...");
 			IARole=ROLE_SYSTEM_PUSHBUTTON;
 		} else if(IARole==ROLE_SYSTEM_TEXT) {
-			contentString=IAValue;
+			//Sometimes IAccessible::accValue can fail on protected fields, so fall back to value attribute if it exists.
+			tempIter=attribsMap.find(L"HTMLAttrib::value");
+			if(IAValue.empty()&&tempIter!=attribsMap.end()) {
+				contentString=tempIter->second;
+			} else {
+				contentString=IAValue;
+			}
 			if(IAStates&STATE_SYSTEM_PROTECTED) {
 				fill(contentString.begin(),contentString.end(),L'*');
 			}
