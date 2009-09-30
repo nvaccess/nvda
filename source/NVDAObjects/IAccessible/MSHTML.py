@@ -135,8 +135,10 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			if not editableBody:
 				mark=self.obj.HTMLNode.document.selection.createRange().GetBookmark()
 				self._rangeObj.MoveToBookmark(mark)
+				#When the caret is at the end of some edit fields, the rangeObj fetched is actually positioned on a magic position before the start
+				#So if we detect this, force it to the end
 				t=self._rangeObj.duplicate()
-				if not t.expand("word"):
+				if not t.expand("word") and t.expand("textedit") and t.compareEndPoints("startToStart",self._rangeObj)<0:
 					self._rangeObj.expand("textedit")
 					self._rangeObj.collapse(False)
 			if position==textInfos.POSITION_CARET:
