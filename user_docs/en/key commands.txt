@@ -64,9 +64,6 @@ Announces the current line in edit controls and documents.
 NVDA+downArrow: sayAll
 Starts reading from the current position in a document or edit control 
 
-NVDA+f1: test_navigatorWindowInfo
-Reads Information about the current navigator object (mainly useful for developers).
-
 Control+NVDA+c: saveConfiguration
 Saves the configuration.
 
@@ -139,12 +136,9 @@ navigator object navigation
 NVDA+numPad5: navigatorObject_current
 Announces the current navigator object. If pressed twice spels it out and if pressed three times copyes its name and value to the clipboard.
 
-Shift+NVDA+numPad5: navigatorObject_currentDimensions
+NVDA+numpadDelete: navigatorObject_currentDimensions
 Announces the size and location of the current navigator object.
  
-Control+Shift+NVDA+numPad5: navigatorObject_where
-Announces the ancestors of the current navigator object.
-
 NVDA+numPad8: navigatorObject_parent
 Sets the navigator object to the current navigator object's parent (i.e. the object that contains it).
 
