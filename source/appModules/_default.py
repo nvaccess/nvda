@@ -539,8 +539,13 @@ class AppModule(appModuleHandler.AppModule):
 	script_review_moveToCaret.__doc__=_("Moves the review cursor to the position of the system caret, in the current navigator object")
 
 	def script_review_moveCaretHere(self,keyPress):
-		api.getReviewPosition().updateCaret()
-		info=api.getReviewPosition().copy()
+		review=api.getReviewPosition()
+		try:
+			review.updateCaret()
+		except NotImplementedError:
+			ui.message(_("no caret"))
+			return
+		info=review.copy()
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(info,reason=speech.REASON_CARET)
 	script_review_moveCaretHere.__doc__=_("Moves the system caret to the position of the review cursor , in the current navigator object")
