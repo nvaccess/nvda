@@ -31,7 +31,11 @@ WTSUserName = 5
 nvdaExec = os.path.join(sys.prefix,"nvda.exe")
 slaveExec = os.path.join(sys.prefix,"nvda_slave.exe")
 
+isDebug = False
+
 def debug(msg):
+	if not isDebug:
+		return
 	try:
 		file(os.path.join(os.getenv("windir"), "temp", "nvda_service.log"), "a").write(msg + "\n")
 	except (OSError, IOError):
@@ -119,6 +123,7 @@ def executeProcess(desktop, token, executable, *argStrings):
 	return processInformation.hProcess
 
 def nvdaLauncher():
+	initDebug()
 	desktop = getInputDesktopName()
 	debug("launcher: starting with desktop %s" % desktop)
 	if os.path.basename(desktop) in (u"Default", u"Screen-saver"):
@@ -138,7 +143,10 @@ def nvdaLauncher():
 	windll.kernel32.CloseHandle(process)
 
 def startNVDA(desktop):
-	return executeProcess(desktop, None, nvdaExec, "-m", "--secure")
+	args = [desktop, None, nvdaExec, "-m"]
+	if not isDebug:
+		args.append("--secure")
+	executeProcess(*args)
 
 def startNVDAUIAccess(session, desktop):
 	token = duplicateTokenPrimary(getLoggedOnUserToken(session))
@@ -180,6 +188,14 @@ def shouldStartOnLogonScreen():
 		return bool(_winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
 	except WindowsError:
 		return False
+
+def initDebug():
+	global isDebug
+	try:
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, ur"SOFTWARE\NVDA")
+		isDebug = bool(_winreg.QueryValueEx(k, u"serviceDebug")[0])
+	except WindowsError:
+		isDebug = False
 
 class NVDAService(win32serviceutil.ServiceFramework):
 
@@ -289,6 +305,7 @@ class NVDAService(win32serviceutil.ServiceFramework):
 				debug("error starting launcher: %s" % e)
 
 	def SvcDoRun(self):
+		initDebug()
 		debug("service starting")
 		self.isWindowsXP = sys.getwindowsversion()[0:2] == (5, 1)
 		self.exitEvent = threading.Event()
