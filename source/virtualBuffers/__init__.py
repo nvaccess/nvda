@@ -1245,4 +1245,6 @@ qn("notLinkBlock", key="n", nextDoc=_("skips forward past a block of links"), ne
 	prevDoc=_("skips backward past a block of links"), prevError=_("no more text before a block of links"), readUnit=textInfos.UNIT_LINE)
 qn("landmark", key="d", nextDoc=_("moves to the next landmark"), nextError=_("no next landmark"),
 	prevDoc=_("moves to the previous landmark"), prevError=_("no previous landmark"), readUnit=textInfos.UNIT_LINE)
+qn("embeddedObject", key="o", nextDoc=_("moves to the next embedded object"), nextError=_("no next embedded object"),
+	prevDoc=_("moves to the previous embedded object"), prevError=_("no previous embedded object"))
 del qn

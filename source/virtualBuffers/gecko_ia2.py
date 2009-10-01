@@ -172,6 +172,8 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":
 			attrs={"IAccessible2::attribute_xml-roles":[VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]}
+		elif nodeType=="embeddedObject":
+			attrs={"IAccessible2::attribute_tag":["EMBED","OBJECT","APPLET"]}
 		else:
 			return None
 		return attrs
