@@ -46,6 +46,7 @@
 <li><a href="#6.2.1.7">6.2.1.7. Prezentácia objektov</a></li>
 <li><a href="#6.2.1.8">6.2.1.8. Nastavenia virtuálneho prehliadača</a></li>
 <li><a href="#6.2.1.9">6.2.1.9. Nastavenia čítania textu</a></li>
+<li><a href="#6.2.1.10">6.2.1.10. Rečové slovníky</a></li>
 </ul>
 <li><a href="#6.2.2">6.2.2: Uloženie a opätovné načítanie konfigurácie</a></li>
 </ul>
@@ -63,6 +64,7 @@
 <li><a href="#8.1">8.1. Príkazy rýchlej navigácie</a></li>
 <li><a href="#8.2">8.2. Formuláre, režim fokusu a prehliadací režim</a></li>
 <li><a href="#8.3">8.3. Zoznam prvkov</a></li>
+<li><a href="#8.4">8.4. Vnorené objekty</a></li>
 </ul>
 <li><a href="#9">9. Ako získať viac informácií</a></li>
 </ul>
@@ -119,7 +121,7 @@ NVDA je chránený autorskými právami Copyright ©2006-2008 <a href="http://ww
 </p>
 <h2 id="2">2. Systémové požiadavky</h2>
 <ul>
-<li>NVDA spustíte na systémoch Windows XP a Vista.Taktiež môže pracovať i na systéme Windows 2000, no túto možnosť veľa ľudí ešte netestovalo. NVDA nepracuje pod systémami Windows 95/98/me a tiež nie je pôvodne navrhnutý pre 64 bitové systémy.</li>
+<li>NVDA spustíte na 32 aj 64 bitových verziách systémov Windows XP, Vista a Windows 7. Taktiež môže pracovať i na systéme Windows 2000, no túto možnosť veľa ľudí ešte netestovalo. NVDA nepracuje pod systémami Windows 95/98/me.</li>
 <li>Mali by ste mať najmenej 256 MB operačnej pamäte</li>
 <li>Výkonnosť procesora sa odhaduje na 1 GHZ alebo rýchlejší. Spustíte ho i na pomalších počítačoch, ale štart programu bude pomalý, prejaví sa to najmä na načítaní internetových stránok.</li>
 <li>Mali by ste mať aspoň 50 MB voľného miesta na disku</li>
@@ -497,6 +499,26 @@ Toto dialógové okno nájdeme v možnostiach programu NVDA pod položkou Nastav
 <p>
 Takto môžete nastaviť názvy typu písma, veľkosť písma, vlastnosti písma, zarovnanie textu, štýl textu, tabuľky, číslovanie strán, číslovanie riadkov, pravopisné chyby, odkazy, nadpisy, zoznamy a citácie.
 </p>
+<h5 id="6.2.1.10">6.2.1.10. Rečové slovníky</h5>
+<p>
+Ponuka Rečové slovníky (vnorená v ponuke Možnosti) obsahuje dialógy, v ktorých môžete nastaviť ako bude NVDA vyslovovať konkrétne slová alebo frázy. Existujú 3 typy rečových slovníkov:
+<ul>
+<li>Predvolený: Pravidlá v tomto slovníku ovplivnia každý rečový prejav NVDA.</li>
+<li>Slovník pre aktuálny hlas: Slovník, ktorého pravidlá ovplivnia reč aktuálneho hlasu práve použitého hlasového výstupu.</li>
+<li>Dočasný: Pravidlá v tomto slovníku ovplivnia každý rečový prejav NVDA ale len počas aktuálneho spustenia NVDA. Po reštarte NVDA sa obsah tohoto slovníka stratí.</li>
+</ul>
+<p>
+Všetky dialógy rečových slovníkov obsahujú zoznam pravidiel spracovania reči a tlačidlá Pridať, Upraviť a Odstrániť.
+</p>
+<p>
+Stlačením tlačidla Pridať a vyplnením dialógu, ktorý sa otvorí pridáte položku do zoznamu pravidiel. Aby ste si boli istí, že práve pridané pravidlo sa skutočne uloží a vstúpi do platnosti musíte potom, ako skončíte s úpravami pravidiel, ukončiť dialóg slovníka stlačením tlačidla OK.
+</p>
+<p>
+Pravidlá pre rečové slovníky NVDA umožňujú zmeniť sled znakov na úplne niečo iné. Napríklad si predstavte, že chcete aby NVDA povedal slovo &quot;žaba&quot; vždy ak sa v texte vyskytne slovo &quot;vták&quot;. Najjednoduchšie tohoto docielite ak v dialógu Upraviť položku slovníka vložíte do poľa Vzor slovo vták a do poľa Nahradiť s slovo žaba. Aby ste sa v zozname pravidiel nestratili, je vhodné zadať nejaký text vystihujúci aktuálne pravidlo do políčka Komentár.
+</p>
+<p>
+Rečové slovníky NVDA toho dokážu ešte viac než len zamieňať slová. Dialóg Upraviť položku slovníka obsahuje začiarkavacie políčko Rozlišovať malé a veľké písmená, čím môžete NVDA prinútiť rozlišovať či text je písaný veľkými písmenami alebo nie. Predvolene NVDA ignoruje veľkosť písmen. Ďalšie začiarkavacie políčko Regulárny výraz hovorí o tom, či v poli Vzor sa nachádza jednoduchý text alebo tzv. regulárny výraz. Regulárny výraz je špeciálny druh vzoru, ktorý umožňuje filtrovať len znaky, len číslice alebo ľubovolný počet ľubovoľných znakov v rôznych kombináciách. Regulárne výrazy nie sú podrobne vysvetlené v tejto príručke, ale na internete je na túto tému možné nájsť množstvo zaujímavých článkov.
+</p>
 <h4 id="6.2.2">6.2.2. Uloženie a opätovné načítanie konfigurácie</h4>
 <p>
 NVDA svoje nastavenia ukladá do súboru NVDA.ini, ktorý sa nachádza v inštalačnom adresári programu. Nikdy nebudete musieť do tohoto súboru zasahovať, ale pokročilí používatelia v ňom nájdu niektoré nastavenia, ktoré ešte nie sú zapracované priamo v dialógových oknách s nastaveniami. 
@@ -663,6 +685,7 @@ Podporované príkazy:
 <li>m: rámik</li>
 <li>g: grafika</li>
 <li>d: orientačný bod</li>
+<li>o: vnorený objekt</li>
 <li>1-6: nadpis príslušnej úrovne</li>
 </ul>
 <h3 id="8.2">8.2. Formuláre, prehliadací režim a režim fokusu </h3>
@@ -675,6 +698,10 @@ Tento režim sa automaticky zapne pri aktivovaní prvku formulára, no ak sa na�
 <h3 id="8.3">8.3 Zoznam prvkov</h3>
 <p>
 Dialóg zoznam prvkov, ktorý je dostupný po stlačení kombinácie NVDA+F7 vo virtuálnom prehliadači, zobrazuje zoznam odkazov, nadpisov alebo zoznam orientačných bodov. Orientačné body a nadpisy sú znázornené hierarchicky. Dialóg obsahuje editačné pole, pomocou ktorého je možné filtrovať obsah práve zobrazeného zoznamu. Pomocou výberového políčka je možné sa prepínať medzi jednotlivými typmi obsahu. Tlačidlami prejsť na alebo aktivovať vykonávame  akcie pre prvky vybraté v zozname.
+</p>
+<h3 id="8.4">8.4. Vnorené objekty</h3>
+<p>
+Moderné webové stránky môžu byť obohatené o prvký Adobe flash alebo Sun java. Ak sa tieto nachádzajú vo virtuálnom prehliadači, NVDA oznámy &quot;vnorený objekt&quot; Stlačením klávesu enter môžete premiestniť fokus do takéhoto vnoreného objektu. Ak je objekt prístupný, môžete sa v objekte pohybovať stláčaním klávesov tab alebo shift+tab. Stlačením NVDA+medzerník sa môžete prepnúť späť do virtuálneho prehliadača.
 </p>
 <h3 id="9">9. Ako získať viac informácií</h3>
 <p>

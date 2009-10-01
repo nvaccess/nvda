@@ -68,9 +68,6 @@ annonce la ligne courante dans une zone d''édition ou un document.
 NVDA+flèche bas: sayAll
 démarre la lecture à la position courante dans un document ou une zone d'édition.
 
-NVDA+f1: test_navigatorWindowInfo
-Lit les informations concernant l'objet de navigation courant (principalement utile pour les développeurs).
-
 Control+NVDA+c: saveConfiguration
 Sauvegarde la configuration.
 
@@ -147,16 +144,10 @@ Affiche la console Python.
 Naviguer avec l'objet de navigation
 
 NVDA+pavNum5: navigatorObject_current
-Annonce l'objet de navigation courant.
+Annonce l'objet de navigation courant. Une double pression épelle le nom de l'objet,  une triple pression copie le nom et le contenu de l'objet dans le presse-papier.
 
-maj+NVDA+pavNum5: navigatorObject_currentDimensions
+NVDA+pavNumDelete: navigatorObject_currentDimensions
 Annonce la taille et la position de l'objet de navigation courant.
- 
-Control+maj+NVDA+pavNum5: navigatorObject_where
-Annonce l'ancêtre de l'objet de navigation courant.
-
-NVDA+pavNumMoins: navigatorObject_toFocus
-Déplace l'objet de navigation à l'objet actuellement en focus.
 
 NVDA+pavNum8: navigatorObject_parent
 Déplace l'objet de navigation à son parent (l'objet qui le contient).
@@ -186,23 +177,26 @@ Déplace le pointeur de la souris à l'objet de navigation courant.
 NVDA+pavNumMultiplié: moveNavigatorObjectToMouse
 Déplace l'objet de navigation à l'objet sous le pointeur de la souris.
 
-pavNumDivisé: leftMouseClick
-Clique le bouton gauche de la souris quelle que soit la position de celle-ci à ce moment.
-
-pavNumMultiplié: rightMouseClick
-Clique le bouton droit de la souris quelle que soit la position de celle-ci à ce moment.
-
-NVDA+pavNumPlus: navigatorObject_sayAll
-Démarre la lecture de tous les objets après l'objet de navigation, dans l'ordre de l'arborescence.
-
 pavNumMoins: review_moveToCaret
 amène le pointeur de revue d'écran au curseur applicatif.
 
 Control+pavNumMoins: review_moveCaretHere
 déplace le curseur applicatif au pointeur de revue d'écran.
 
+NVDA+pavNumMoins: navigatorObject_toFocus
+Déplace l'objet de navigation à l'objet actuellement en focus.
+
+pavNumDivisé: leftMouseClick
+Clique le bouton gauche de la souris quelle que soit la position de celle-ci à ce moment.
+
+pavNumMultiplié: rightMouseClick
+Clique le bouton droit de la souris quelle que soit la position de celle-ci à ce moment.
+
 pavNumPlus: review_sayAll
 utilise le pointeur de revue d'écran pour lire depuis sa position jusqu'à la fin du texte disponible.
+
+NVDA+pavNumPlus: navigatorObject_sayAll
+Démarre la lecture de tous les objets après l'objet de navigation, dans l'ordre de l'arborescence.
 
 
 Lecture des objets
