@@ -30,6 +30,8 @@
 	* If NVDA detects that it has frozen for some reason, it will automatically pass all keystrokes through so that the user has a better chance of recovering the system.
 	* Support for ARIA drag and drop in Mozilla Gecko. (#239)
 	* The document title and current line or selection is now spoken when you move focus inside a virtual buffer. This makes the behaviour when moving focus into virtual buffers consistent with that for normal document objects. (#210)
+	* In virtual buffers, you can now interact with embedded objects (such as Adobe Flash and Sun Java content) by pressing enter on the object. If it is accessible, you can then tab around it like any other application. To return focus to the document, press NVDA+space. (#431)
+	* In virtual buffers, o and shift+o move to the next and previous embedded object, respectively.
 
 === Changes ===
 	* NVDA no longer announces "NVDA started" when it starts.
