@@ -170,7 +170,7 @@ class ExcelCell(Window):
 			self.lastCell=cellRange.Item(count)
 		else:
 			self.lastCell=None
-		super(ExcelCell,self).__init__(parentNVDAObject.windowHandle)
+		super(ExcelCell,self).__init__(windowHandle=parentNVDAObject.windowHandle)
 
 	def _isEqual(self,other):
 		if not super(ExcelCell,self)._isEqual(other):

@@ -66,6 +66,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 				newCls=type(name,bases,{})
 				self._dynamicClassCache[bases]=newCls
 		obj=self.__new__(newCls,*args,**kwargs)
+		obj.APIClass=APIClass
 		if isinstance(obj,self):
 			obj.__init__(*args,**kwargs)
 		return obj

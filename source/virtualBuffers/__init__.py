@@ -573,6 +573,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		"""
 		if not self._hadFirstGainFocus:
 			# This buffer is gaining focus for the first time.
+			self._setInitialCaretPos()
 			# Fake a focus event on the focus object, as the buffer may have missed the actual focus event.
 			focus = api.getFocusObject()
 			self.event_gainFocus(focus, lambda: focus.event_gainFocus())
@@ -626,6 +627,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 			obj.setFocus()
 			self.passThrough = True
 			virtualBufferHandler.reportPassThrough(self)
+		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT:
+			obj.setFocus()
+			speech.speakObject(obj, reason=speech.REASON_FOCUS)
 		else:
 			self._activateNVDAObject(obj)
 
@@ -995,6 +999,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
 		caretInfo.expand(textInfos.UNIT_CHARACTER)
 		if not scrollInfo.isOverlapping(caretInfo):
+			if scrollInfo.isCollapsed:
+				scrollInfo.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(scrollInfo,reason=speech.REASON_CARET)
 			scrollInfo.collapse()
 			self.selection = scrollInfo
@@ -1162,6 +1168,14 @@ class VirtualBuffer(cursorManager.CursorManager):
 				yield 0, link2end, link1start
 			link1node, link1start, link1end = link2node, link2start, link2end
 
+	def _setInitialCaretPos(self):
+		"""Set the initial position of the caret after the buffer has been loaded.
+		The return value is primarily used so that overriding methods can determine whether they need to set an initial position.
+		@return: C{True} if an initial position was set.
+		@rtype: bool
+		"""
+		return False
+
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
 	("Return","activatePosition"),
 	("Space","activatePosition"),
@@ -1231,4 +1245,6 @@ qn("notLinkBlock", key="n", nextDoc=_("skips forward past a block of links"), ne
 	prevDoc=_("skips backward past a block of links"), prevError=_("no more text before a block of links"), readUnit=textInfos.UNIT_LINE)
 qn("landmark", key="d", nextDoc=_("moves to the next landmark"), nextError=_("no next landmark"),
 	prevDoc=_("moves to the previous landmark"), prevError=_("no previous landmark"), readUnit=textInfos.UNIT_LINE)
+qn("embeddedObject", key="o", nextDoc=_("moves to the next embedded object"), nextError=_("no next embedded object"),
+	prevDoc=_("moves to the previous embedded object"), prevError=_("no previous embedded object"))
 del qn

@@ -118,10 +118,10 @@ Pour plus de détails, on peut lire la licence en ligne à :
 </p>
 <h2 id="2">2. Configuration système requise.</h2>
 <ul>
-<li>Systèmes d'Exploitation : Toutes les variantes de Windows XP et Windows Vista (y compris les versions Serveur). Il est possible qu'il fonctionne partiellement sous Windows 2000.</li>
+<li>Systèmes d'Exploitation : Toutes les variantes, 32 ou 64 bits, de Windows XP, Windows Vista et Windows 7 (y compris les versions Serveur). Il est possible qu'il fonctionne partiellement sous Windows 2000.</li>
 <li>Mémoire : 256 mo de RAM ou plus.</li>
 <li>Vitesse processeur : 1.0 ghz ou plus.</li>
-</ul>
+<li>Environ 50 MO d'espace mémoire.</li></ul>
 <h2 id="3">3. Se procurer NVDA.</h2>
 <p>
 Si vous ne vous êtes pas encore procuré une copie de NVDA, vous pouvez la télécharger sur le site Web de NVDA à l'adresse :
@@ -154,13 +154,13 @@ Si vous avez la version portable de NVDA, il vous suffit d'appuyer sur Entrée ou
 <h2 id="5">5. Prise en main de NVDA.</h2>
 <h3 id="5.1">5.1. Démarrer NVDA.</h3>
 <p>
-Si NVDA a été installé à l'aide de l'installateur, alors il suffit, ou bien de frapper la combinaison control+alt+n, ou alors de choisir dans le menu Démarrer / Programmes / NVDA / NVDA.
+Si NVDA a été installé à l'aide de l'installateur, alors il suffit, ou bien de frapper la combinaison control+alt+n, ou alors de choisir dans le menu Démarrer / Programmes / NVDA / NVDA. Vous pouvez aussi taper NVDA dans le dialogue Exécuter puis presser Entrer.
 </p>
 <p>
 Pour démarrer la version portable, rendez-vous dans le dossier où NVDA a été décompressé, et appuyez sur  entrée ou double-cliquez sur nvda.exe.
 </p>
 <p>
-Au lancement de NVDA, on entend d'abord une série de sons ascendants (indiquant que NVDA se charge). On doit ensuite l'entendre dire "NVDA chargé". Suivant la rapidité de votre ordinateur, ou si vous exécutez NVDA à partir d'une clé USB ou d'un autre périphérique lent, le démarrage peut demander un certain temps. Si ça prend encore plus longtemps, NVDA dira "chargement de sous-système. Attendez s'il vous plait...".
+Au lancement de NVDA, on entend d'abord une série de sons ascendants (indiquant que NVDA se charge). Suivant la rapidité de votre ordinateur, ou si vous exécutez NVDA à partir d'une clé USB ou d'un autre périphérique lent, le démarrage peut demander un certain temps. Si ça prend encore plus longtemps, NVDA dira "chargement des sous-système. Veuillez patienter...".
 </p>
 <p>
 Si vous n'entendez rien de tout cela, ou si vous entendez le signal sonore d'erreur de Windows, ou une série de sons descendants, cela indique un problème de NVDA et vous pourrez, si vous le voulez, envoyer un rapport d'erreur au développeurs. Rapportez-vous au site Web pour les détails de la procédure.
@@ -186,7 +186,7 @@ Pour activer l'aide clavier, appuyez sur NVDA+1. Pour la désactiver, appuyez à n
 </p>
 <h2 id="6">6. Le menu NVDA.</h2>
 <p>
-Le  menu NVDA vous permet de contrôler les paramètres de NVDA, d'obtenir de l'aide, sauvegarder ou recharger la configuration et quitter NVDA.
+Le  menu NVDA vous permet de contrôler les paramètres de NVDA, d'obtenir de l'aide, sauvegarder ou recharger la configuration, modifier le dictionnaire de prononciation, lire le fichier log et quitter NVDA.
 </p>
 <h3 id="6.1">6.1. Accéder au menu NVDA.</h3>
 <p>
@@ -200,12 +200,12 @@ On peut également accéder au menu NVDA par l'icône NVDA de la barre des tâches s
 <h4 id="6.2.1">6.2.1 Préférences</h4>
 <h5 id="6.2.1.1">6.2.1.1. Paramètres Généraux.</h5>
 <p>
-Le dialogue Paramètres généraux qui se trouve sous "Paramètres généraux..." dans le menu Ppréférences comporte les options suivantes :
+La boîte de dialogue Paramètres généraux se trouve dans le menu Préférences. On peut aussi y accéder en pressant NVDA+Control+G. Pour sauvegarder les options après modification des paramètres, appuyez sur le bouton Accepter, pour annuler, appuyez sur le bouton Annuler ou sur la touche Echap. Elle contient les options suivantes:
 </p>
 <h6>Langue.</h6>
 <p>
-Une liste déroulante permet de choisir la langue de l'interface utilisateur et des messages de NVDA.  La liste comporte de nombreuses langues et le dernier élément est dénommé "Windows".  Ce choix indique à NVDA d'utiliser la langue   de Windows c'est-à-dire celle qui est actuellement sélectionnée  dans les options régionales et linguistiques du panneau de configuration.
-Noter qu'il faut relancer NVDA quand on a changé la langue, un message demandera si on désire relancer NVDA après qu'on ait changé la langue et validé sur OK.
+Une liste déroulante permet de choisir la langue de l'interface utilisateur et des messages de NVDA.  La liste comporte de nombreuses langues et le dernier élément est dénommé "Windows".  Ce choix indique à NVDA d'utiliser la langue de Windows.
+Noter qu'il faut relancer NVDA quand on change la langue. NVDA vous demandera si vous désirez le redémarrer quand vous changez la sélection. Appuyez sur "Accepter" et NVDA redémarrera.
 </p>
 <h6>Sauvegarder la configuration en quittant.</h6>
 <p>
@@ -215,6 +215,10 @@ Une case à cocher qui une fois cochée, indique à NVDA de sauvegarder automatique
 <p>
 Une case à cocher vous permettant d'indiquer si NVDA doit vous demander de confirmer quand vous voulez quitter NVDA.
 </p>
+<h6>Niveau de log.</h6>
+<p>
+Une liste déroulante qui vous permet de choisir la quantité d'information que NVDA consignera dans son journal durant son exécution. Généralement, l'utilisateur n'aura pas besoin de modifier ce paramètre dans la mesure où peu d'informations sont consignées. Cependant, si vous voulez fournir des informations lors d'un rapport d'erreur, il est peut-être bon d'augmenter cette valeur.
+</p>  
 <h6>Démerrer NVDA automatiquement après ma connexion à Windows</h6>
 <p>
 Si cette option est activée, NVDA démarrera automatiquement dès que vous vous connecterez à Windows.
@@ -223,10 +227,6 @@ Si cette option est activée, NVDA démarrera automatiquement dès que vous vous co
 <p>
 Si vous vous connectez à Windows en fournissant un nom d'utilisateur et un mot de passe, l'activation de cette option permettra à NVDA de démarrer automatiquement dès l'écran de connexion au démarrage de Windows.
 </p>
-<h6>Niveau de log.</h6>
-<p>
-Une liste déroulante qui vous permet de choisir la quantité d'information que NVDA consignera dans son journal durant son exécution. Généralement, l'utilisateur n'aura pas besoin de modifier ce paramètre dans la mesure où peu d'informations sont consignées. Cependant, si vous voulez fournir des informations lors d'un rapport d'erreur, il est peut-être bon d'augmenter cette valeur.
-</p>  
 <h5 id="6.2.1.2">6.2.1.2. Choix du Synthétiseur.</h5>
 <p>
 Le dialogue Synthétiseur, qui se trouve sous "Synthétiseur..." du menu Préférences, permet de choisir la synthèse vocale que NVDA va utiliser.

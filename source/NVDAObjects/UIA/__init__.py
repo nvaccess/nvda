@@ -122,10 +122,14 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 	def findBestClass(cls,clsList,kwargs):
 		windowHandle=kwargs.get('windowHandle',None)
 		UIAElement=kwargs.get('UIAElement',None)
+		isWindowElement=True
 		if windowHandle and not UIAElement:
 			UIAElement=UIAHandler.handler.clientObject.ElementFromHandleBuildCache(windowHandle,UIAHandler.handler.baseCacheRequest)
 		elif UIAElement and not windowHandle:
 			windowHandle=UIAElement.cachedNativeWindowHandle
+			if not windowHandle:
+				isWindowElement=False
+				windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		else:
 			raise ValueError("needs either a UIA element or window handle")
 		kwargs['windowHandle']=windowHandle
@@ -145,7 +149,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
 			clsList.append(TreeviewItem)
 		clsList.append(UIA)
-		if windowHandle:
+		if isWindowElement:
 			return super(UIA,cls).findBestClass(clsList,kwargs)
 		else:
 			return clsList,kwargs
@@ -164,7 +168,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			return None
 		return UIA(UIAElement=UIAElement)
 
-	def __new__(cls,windowHandle=None,UIAElement=None):
+	def __new__(cls,relation=None,windowHandle=None,UIAElement=None):
 		try:
 			runtimeId=UIAElement.getRuntimeId()
 		except COMError:
@@ -180,12 +184,12 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			obj.UIAElement=UIAElement
 		return obj
 
-	def __init__(self,windowHandle=None,UIAElement=None):
+	def __init__(self,relation=None,windowHandle=None,UIAElement=None):
 		if getattr(self,'_doneInit',False):
 			return
 		self._doneInit=True
 		self.UIAElement=UIAElement
-		super(UIA,self).__init__(windowHandle)
+		super(UIA,self).__init__(windowHandle=windowHandle)
 		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
 			self.TextInfo=UIATextInfo
 			self.initAutoSelectDetection()
@@ -303,15 +307,11 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 					states.add(controlTypes.STATE_CHECKED)
 		return states
 
-	def _correctRelationForWindow(self,obj):
-		if not obj:
-			return None
-		windowHandle=obj.windowHandle
-		if windowHandle and self.windowHandle and windowHandle!=self.windowHandle:
-			APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
-			if not issubclass(APIClass,UIA):
-				return APIClass(windowHandle=windowHandle)
-		return obj
+	def correctAPIForRelation(self, obj, relation=None):
+		if self.windowHandle != obj.windowHandle and not obj.UIAElement.cachedNativeWindowHandle:
+			# The target element is not the root element for the window, so don't change API class; i.e. always use UIA.
+			return obj
+		return super(UIA, self).correctAPIForRelation(obj, relation)
 
 	def _get_parent(self):
 		try:
@@ -320,7 +320,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			parentElement=None
 		if not parentElement:
 			return super(UIA,self).parent
-		return self._correctRelationForWindow(UIA(UIAElement=parentElement))
+		return self.correctAPIForRelation(UIA(UIAElement=parentElement),relation="parent")
 
 	def _get_previous(self):
 		try:
@@ -330,7 +330,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			return None
 		if not previousElement:
 			return None
-		return self._correctRelationForWindow(UIA(UIAElement=previousElement))
+		return self.correctAPIForRelation(UIA(UIAElement=previousElement))
 
 	def _get_next(self):
 		try:
@@ -340,7 +340,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			return None
 		if not nextElement:
 			return None
-		return self._correctRelationForWindow(UIA(UIAElement=nextElement))
+		return self.correctAPIForRelation(UIA(UIAElement=nextElement))
 
 	def _get_firstChild(self):
 		try:
@@ -350,7 +350,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			return None
 		if not firstChildElement:
 			return None
-		return self._correctRelationForWindow(UIA(UIAElement=firstChildElement))
+		return self.correctAPIForRelation(UIA(UIAElement=firstChildElement))
 
 	def _get_lastChild(self):
 		try:
@@ -360,7 +360,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			return None
 		if not lastChildElement:
 			return None
-		return self._correctRelationForWindow(UIA(UIAElement=lastChildElement))
+		return self.correctAPIForRelation(UIA(UIAElement=lastChildElement))
 
 	def _get_rowNumber(self):
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridItemRowPropertyId,True)

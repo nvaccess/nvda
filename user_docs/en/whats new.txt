@@ -30,11 +30,17 @@
 	* If NVDA detects that it has frozen for some reason, it will automatically pass all keystrokes through so that the user has a better chance of recovering the system.
 	* Support for ARIA drag and drop in Mozilla Gecko. (#239)
 	* The document title and current line or selection is now spoken when you move focus inside a virtual buffer. This makes the behaviour when moving focus into virtual buffers consistent with that for normal document objects. (#210)
+	* In virtual buffers, you can now interact with embedded objects (such as Adobe Flash and Sun Java content) by pressing enter on the object. If it is accessible, you can then tab around it like any other application. To return focus to the document, press NVDA+space. (#431)
+	* In virtual buffers, o and shift+o move to the next and previous embedded object, respectively.
 
 === Changes ===
 	* NVDA no longer announces "NVDA started" when it starts.
 	* The startup and exit sounds are now played using NVDA's configured audio output device instead of the Windows default audio output device. (#164)
 	* Progress bar reporting has been improved. Most notably you can now configure NVDA to announce via both speech and beeps at the same time.
+	* Some generic roles, such as pane, application and frame, are no longer reported on focus unless the control is unnamed.
+	* The review copy command (NVDA+f10) copies the text from the start marker up to and including the current review position, rather than excluding the current position. This allows the last character of a line to be copied, which was not previously possible. (#430)
+	* the navigatorObject_where script (ctrl+NVDA+numpad5) has been removed. This key combination did not work on some keyboards, nore was the script found to be that useful.
+	* the navigatorObject_currentDimentions script has been remapped to NVDA+numpadDelete. The old key combination did not work on some keyboards. This script also now reports the width and height of the object instead of the right/bottom coordinates.
 
 === Bug Fixes ===
 	* When NVDA is run from an 8.3 dos path, but it is installed in the related long path (e.g. progra~1 verses program files) NVDA will correctly  identify that it is an installed copy and properly load the user's settings.
@@ -54,6 +60,9 @@
 	* When the NVDA language is set to "User default", use the user's Windows  display language setting instead of the Windows locale setting. (#353)
 	* NVDA now recognises the existence of controls in AIM 7.
 	* The pass key through command no longer gets stuck if a key is held down. Previously, NVDA stopped accepting commands if this occurred and had to be restarted. (#413)
+	* The taskbar is no longer ignored when it receives focus, which often occurs when exiting an application. Previously, NVDA behaved as if the focus had not changed at all.
+	* When reading text fields in applications which use the Java Access Bridge (including OpenOffice.org), NVDA now functions correctly when reporting of line numbers is enabled.
+	* The review copy command (NVDA+f10) gracefully handles the case where it is used on a position before the start marker. Previously, this could cause problems such as crashes in Notepad++.
 
 == 0.6p3 ==
 

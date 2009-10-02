@@ -16,7 +16,7 @@ class KeywordList(IAccessible):
 		# Overridden so that accNavigate next/prev won't be called, as it causes the focus to move to another list item, even when called on the list.
 		res = IAccessibleHandler.accParent(self.IAccessibleObject, self.IAccessibleChildID)
 		if res:
-			return self._correctRelationForWindow(IAccessible(IAccessibleObject=res[0], IAccessibleChildID=res[1]))
+			return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0], IAccessibleChildID=res[1]), relation="parent")
 
 	def _get_next(self):
 		# accNavigate on this list returns a child and moves the focus, both of which are wrong. Grrr!

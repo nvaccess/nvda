@@ -1,4 +1,5 @@
 import keyUtils
+import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 import _default
 
@@ -16,9 +17,7 @@ class PasswordField(IAccessible):
 		# This means that the new selected user is not reported.
 		# Therefore, override the name of the password field to be the selected user name.
 		try:
-			# The accessibility hierarchy is totally screwed here, so NVDA gets confused.
-			# Therefore, we'll have to do it the ugly way...
-			return self.IAccessibleObject.accParent.accName(0)
+			return self.parent.name
 		except:
 			return super(PasswordField, self).name
 
@@ -38,7 +37,9 @@ class AppModule(_default.AppModule):
 			obj.isPresentableFocusAncestor = True
 			return
 
-		if obj.windowClassName == "Edit" and not obj.name and not obj.parent:
-			self.overlayCustomNVDAObjectClass(obj, PasswordField, outerMost=True)
-			obj.bindKeys()
-			return
+		if obj.windowClassName == "Edit" and not obj.name:
+			parent = obj.parent
+			if parent.role == controlTypes.ROLE_LISTITEM:
+				self.overlayCustomNVDAObjectClass(obj, PasswordField, outerMost=True)
+				obj.bindKeys()
+				return

@@ -135,8 +135,10 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			if not editableBody:
 				mark=self.obj.HTMLNode.document.selection.createRange().GetBookmark()
 				self._rangeObj.MoveToBookmark(mark)
+				#When the caret is at the end of some edit fields, the rangeObj fetched is actually positioned on a magic position before the start
+				#So if we detect this, force it to the end
 				t=self._rangeObj.duplicate()
-				if not t.expand("word"):
+				if not t.expand("word") and t.expand("textedit") and t.compareEndPoints("startToStart",self._rangeObj)<0:
 					self._rangeObj.expand("textedit")
 					self._rangeObj.collapse(False)
 			if position==textInfos.POSITION_CARET:
@@ -232,7 +234,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 
 class MSHTML(IAccessible):
 
-	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD','HTML']
+	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD','HTML','PARAM']
 	HTMLNodeNameEmbedList=['OBJECT','EMBED','APPLET','FRAME','IFRAME']
 
 	@classmethod
@@ -269,6 +271,9 @@ class MSHTML(IAccessible):
 				pass
 		self.HTMLNode=HTMLNode
 		super(MSHTML,self).__init__(IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,**kwargs)
+		#object and embed nodes give back an incorrect IAccessible via queryService, so we must treet it as an ancestor IAccessible
+		if self.HTMLNodeName in ("OBJECT","EMBED"):
+			self.HTMLNodeHasAncestorIAccessible=True
 		try:
 			self.HTMLNode.createTextRange()
 			self.TextInfo=MSHTMLTextInfo
@@ -301,6 +306,13 @@ class MSHTML(IAccessible):
 				("ExtendedDelete","moveByCharacter"),
 				("Back","backspace"),
 			]]
+
+	def isDuplicateIAccessibleEvent(self,obj):
+		if not super(MSHTML,self).isDuplicateIAccessibleEvent(obj):
+			return False
+		#MSHTML winEvents can't be trusted for uniqueness, so just do normal object comparison.
+		return self==obj
+
 
 	def _isEqual(self, other):
 		if self.HTMLNode and other.HTMLNode:
@@ -357,11 +369,9 @@ class MSHTML(IAccessible):
 					return role
 			nodeName=self.HTMLNodeName
 			if nodeName:
-				if nodeName in self.HTMLNodeNameEmbedList:
+				if nodeName in ("OBJECT","EMBED","APPLET"):
 					return controlTypes.ROLE_EMBEDDEDOBJECT
-				if nodeName in ("BODY","FRAMESET"):
-					return controlTypes.ROLE_DOCUMENT
-				if self.HTMLNodeHasAncestorIAccessible:
+				if self.HTMLNodeHasAncestorIAccessible or nodeName in ("BODY","FRAMESET","FRAME","IFRAME"):
 					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_TEXTFRAME)
 		if self.IAccessibleChildID>0:
 			states=super(MSHTML,self).states
@@ -455,7 +465,7 @@ class MSHTML(IAccessible):
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
 				obj=obj.previous
 			return obj
-		return super(MSHTML,self).parent
+		return super(MSHTML,self).previous
 
 	def _get_next(self):
 		if self.HTMLNode:
@@ -467,11 +477,11 @@ class MSHTML(IAccessible):
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
 				obj=obj.next
 			return obj
-		return super(MSHTML,self).parent
+		return super(MSHTML,self).next
 
 	def _get_firstChild(self):
 		if self.HTMLNode:
-			if self.HTMLNodeName in self.HTMLNodeNameEmbedList:
+			if self.HTMLNodeName in ("FRAME","IFRAME"):
 				return super(MSHTML,self).firstChild
 			try:
 				childNode=self.HTMLNode.firstChild
@@ -481,11 +491,13 @@ class MSHTML(IAccessible):
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
 				return None
 			return obj
+		if self.HTMLNodeHasAncestorIAccessible:
+			return None
 		return super(MSHTML,self).firstChild
 
 	def _get_lastChild(self):
 		if self.HTMLNode:
-			if self.HTMLNodeName in self.HTMLNodeNameEmbedList:
+			if self.HTMLNodeName in ("FRAME","IFRAME"):
 				return super(MSHTML,self).lastChild
 			try:
 				childNode=self.HTMLNode.lastChild
@@ -495,6 +507,8 @@ class MSHTML(IAccessible):
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
 				return None
 			return obj
+		if self.HTMLNodeHasAncestorIAccessible:
+			return None
 		return super(MSHTML,self).firstChild
 
 	def _get_columnNumber(self):
@@ -543,6 +557,15 @@ class MSHTML(IAccessible):
 			except NameError:
 				pass
 		super(MSHTML,self).doAction(index=index)
+
+	def setFocus(self):
+		if self.HTMLNodeHasAncestorIAccessible:
+			try:
+				self.HTMLNode.focus()
+			except (COMError, AttributeError, NameError):
+				pass
+			return
+		super(MSHTML,self).setFocus()
 
 	def _get_HTMLNodeName(self):
 		if not self.HTMLNode:

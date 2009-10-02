@@ -35,9 +35,10 @@
 
 	=Változások=
 
+* Az indító és a kilépõ hangjelzések mostantól a kiválasztott hangeszközön hallhatók, az eddigi windows alapértelmezett hangeszköz helyett. (#164)
 * Az NVDA nem mondja be a "Az NVDA elindult" szöveget induláskor.
 * A folyamatjelzõk felolvasását továbbfejlesztették. A legfontosabb, hogy most már be lehet állítani az NVDA-t úgy, hogy a folyamatjelzõk változását egyszerre beszéddel és hanggal is jelezze.
-* A menük leírását az NVDA többé nem olvassa fel.
+* Néhány általános elem, pl. Ablak, alkalmazás és keret mostantól nem hangzik el, hacsak a vezérlõelem nincs feliratozva.
 
 	=Hiba javítások=
 * Az NVDA induló és kilépõ hangját a beállított hang-kimeneten játsza le, nem a Windows alapértelmezett hangeszközén. (#164)
@@ -58,6 +59,7 @@
 * Az "User default" beállítása esetén az NVDA mostantól a Windows megjelenítési nyelvét veszi figyelembe, a területi beállítások helyett. (#353)
 * Az NVDA mostantól felismeri a vezérlõelemeket az AIM 7 programban.
 	* A billentyûparancs átadása parancs nem aktiválódik végérvényesen egy billentyû nyomva tartásakor. Elõzõleg, ha ez bekövetkezett, az NVDA nem vett figyelembe billentyûleütéseket és a hibát csak a program újraindításával lehetett orvosolni. (#413)
+* A tálca mostantól nincs figyelmen kívül hagyva ha a fókusz rákerül, amely gyakran megtörténik egy alkalmazásból való kilépés esetén. Az NVDA elõzõleg úgy viselkedett, mintha a fókusz nem változott volna meg.
 
 		=0.6 P3=
 	=Újdonságok=

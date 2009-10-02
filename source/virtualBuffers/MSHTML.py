@@ -1,3 +1,4 @@
+import eventHandler
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
 import virtualBufferHandler
 import controlTypes
@@ -67,6 +68,18 @@ class MSHTML(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
+
+	def _setInitialCaretPos(self):
+		if super(MSHTML,self)._setInitialCaretPos():
+			return
+		url=getattr(self.rootNVDAObject.HTMLNode.document,'url',"").split('#')
+		if not url or len(url)!=2:
+			return False
+		anchorName=url[-1]
+		if not anchorName:
+			return False
+		obj=self._getNVDAObjectByAnchorName(anchorName)
+		self._handleScrollTo(obj)
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
 		if not obj.windowClassName.startswith("Internet Explorer_"):
@@ -150,6 +163,30 @@ class MSHTML(VirtualBuffer):
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":
 			attrs={"HTMLAttrib::role":[VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]}
+		elif nodeType == "embeddedObject":
+			attrs = {"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET"]}
 		else:
 			return None
 		return attrs
+
+	def _activateNVDAObject(self,obj):
+		super(MSHTML,self)._activateNVDAObject(obj)
+		#If we activated a same-page link, then scroll to its anchor
+		if obj.HTMLNodeName=="A":
+			anchorName=getattr(obj.HTMLNode,'hash')
+			if not anchorName:
+				return 
+			obj=self._getNVDAObjectByAnchorName(anchorName[1:],HTMLDocument=obj.HTMLNode.document)
+			if not obj:
+				return
+			self._handleScrollTo(obj)
+
+	def _getNVDAObjectByAnchorName(self,name,HTMLDocument=None):
+		if not HTMLDocument:
+			HTMLDocument=self.rootNVDAObject.HTMLNode.document
+		HTMLNode=HTMLDocument.getElementById(name)
+		if not HTMLNode:
+			log.debugWarning("GetElementById can't find node with ID %s"%name)
+			return None
+		obj=NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=HTMLNode)
+		return obj

@@ -54,7 +54,7 @@ if isUIAAvailable: UIAControlTypesToNVDARoles={
 	UIA_TreeItemControlTypeId:controlTypes.ROLE_TREEVIEWITEM,
 	UIA_CustomControlTypeId:controlTypes.ROLE_UNKNOWN,
 	UIA_GroupControlTypeId:controlTypes.ROLE_GROUPING,
-	UIA_ThumbControlTypeId:controlTypes.ROLE_THUM,
+	UIA_ThumbControlTypeId:controlTypes.ROLE_THUMB,
 	UIA_DataGridControlTypeId:controlTypes.ROLE_DATAGRID,
 	UIA_DataItemControlTypeId:controlTypes.ROLE_DATAITEM,
 	UIA_DocumentControlTypeId:controlTypes.ROLE_DOCUMENT,
@@ -100,6 +100,9 @@ if isUIAAvailable:
 			super(UIAEventListener,self).__init__()
 
 		def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
+			if not handler:
+				# UIAHandler hasn't finished initialising yet, so just ignore this event.
+				return
 			NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
 			if not NVDAEventName:
 				return
@@ -112,6 +115,9 @@ if isUIAAvailable:
 			eventHandler.queueEvent(NVDAEventName,obj)
 
 		def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
+			if not handler:
+				# UIAHandler hasn't finished initialising yet, so just ignore this event.
+				return
 			if not self.UIAHandlerRef().isNativeUIAElement(sender):
 				return
 			try:
@@ -132,6 +138,9 @@ if isUIAAvailable:
 			eventHandler.queueEvent("gainFocus",obj)
 
 		def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(self,sender,propertyId,newValue):
+			if not handler:
+				# UIAHandler hasn't finished initialising yet, so just ignore this event.
+				return
 			NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
 			if not NVDAEventName:
 				return
@@ -179,14 +188,19 @@ class UIAHandler(object):
 			return isUIA
 		return v[0]
 
-	def isNativeUIAElement(self,UIAElement):
+	def getNearestWindowHandle(self,UIAElement):
 		try:
 			UIAElement=self.windowTreeWalker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
 		except COMError:
-			return False
+			return None
 		try:
-			windowHandle=UIAElement.cachedNativeWindowHandle
+			return UIAElement.cachedNativeWindowHandle
 		except COMError:
+			return None
+
+	def isNativeUIAElement(self,UIAElement):
+		windowHandle=self.getNearestWindowHandle(UIAElement)
+		if not windowHandle:
 			return False
 		return self.isUIAWindow(windowHandle)
 

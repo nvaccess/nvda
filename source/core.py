@@ -244,7 +244,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("Cleaning up running virtualBuffers")
 	try:
 		import virtualBufferHandler
-		virtualBufferHandler.cleanupVirtualBuffers()
+		virtualBufferHandler.terminate()
 	except:
 		log.error("Error cleaning up virtualBuffers",exc_info=True)
 	log.debug("Terminating IAccessible support")

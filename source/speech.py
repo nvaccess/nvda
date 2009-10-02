@@ -396,6 +396,10 @@ def speakTypedCharacters(ch):
 		speakSpelling(realChar)
 
 silentRolesOnFocus=set([
+	controlTypes.ROLE_PANE,
+	controlTypes.ROLE_FRAME,
+	controlTypes.ROLE_UNKNOWN,
+	controlTypes.ROLE_APPLICATION,
 	controlTypes.ROLE_TABLECELL,
 	controlTypes.ROLE_LISTITEM,
 	controlTypes.ROLE_MENUITEM,
@@ -621,19 +625,23 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	global oldTreeLevel, oldTableID, oldRowNumber, oldColumnNumber
 	textList=[]
-	if 'name' in propertyValues:
-		textList.append(propertyValues['name'])
+	name=propertyValues.get('name')
+	if name:
+		textList.append(name)
 	if 'role' in propertyValues:
 		role=propertyValues['role']
-		if reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or role not in silentRolesOnFocus:
-			textList.append(controlTypes.speechRoleLabels[role])
+		speakRole=True
 	elif '_role' in propertyValues:
+		speakRole=False
 		role=propertyValues['_role']
 	else:
+		speakRole=False
 		role=controlTypes.ROLE_UNKNOWN
-	if 'value' in propertyValues:
-		if not role in silentValuesForRoles:
-			textList.append(propertyValues['value'])
+	value=propertyValues.get('value') if role not in silentValuesForRoles else None
+	if speakRole and (reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or not (name or value) or role not in silentRolesOnFocus):
+		textList.append(controlTypes.speechRoleLabels[role])
+	if value:
+		textList.append(value)
 	states=propertyValues.get('states')
 	realStates=propertyValues.get('_states',states)
 	if states is not None:
