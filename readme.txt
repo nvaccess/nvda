@@ -41,6 +41,10 @@ General dependencies:
 		* You can build this yourself, although you need to have the Windows SDK installed, which is quite large. See source\nvdaHelper\building.txt for instructions.
 		* Alternatively, a pre-built version has been provided for convenience at http://www.nvda-project.org/nvdaHelper/
 			* Extract this archive into the root of your NVDA source distribution.
+	* Adobe AcrobatAccess interface typelib:
+		* You can build this yourself using midl from the idl located at http://www.adobe.com/devnet/acrobat/downloads/ClientFiles.zip
+		* Alternatively, a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/AcrobatAccess.tlb
+		* Copy AcrobatAccess.tlb into the source\typelibs directory.
 
 To use the brltty braille display driver:
 	* brlapi Python bindings, version 0.5.3 or later, distributed with BRLTTY for Windows, version 4.0-2 or later:
