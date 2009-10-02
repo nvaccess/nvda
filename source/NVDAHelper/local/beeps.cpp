@@ -14,8 +14,9 @@ unsigned generateBeep(short* buf, const float hz, const unsigned length, const u
 	if (!buf) { //just return buffer length
 		return totalSamples*4;
 	}
+	const float sinFreq=PITWO/samplesPerCycle;
 	for (unsigned sampleNum=0; sampleNum<totalSamples; ++sampleNum) {
-		const short sample=min(max(sin((sampleNum%sampleRate)*PITWO*(hz/sampleRate))*2,-1),1)*amplitude;
+		const short sample=min(max(sin((sampleNum%sampleRate)*sinFreq)*2,-1),1)*amplitude;
 		const short leftSample=sample*(left/100.0);
 		const short rightSample=sample*(right/100.0);
 		buf[sampleNum*2]=leftSample;
