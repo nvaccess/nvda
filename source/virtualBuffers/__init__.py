@@ -1,3 +1,4 @@
+import time
 import threading
 import ctypes
 import os
@@ -473,6 +474,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	REASON_QUICKNAV = "quickNav"
 
 	TextInfo=VirtualBufferTextInfo
+	programmaticScrollMayFireEvent = False
 
 	def __init__(self,rootNVDAObject,backendName=None):
 		self.backendName=backendName
@@ -484,6 +486,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.rootDocHandle,self.rootID=self.getIdentifierFromNVDAObject(self.rootNVDAObject)
 		self._lastFocusObj = None
 		self._hadFirstGainFocus = False
+		self._lastProgrammaticScrollTime = None
 
 	def _get_passThrough(self):
 		return self._passThrough
@@ -649,6 +652,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return
 		if reason != speech.REASON_FOCUS:
 			obj.scrollIntoView()
+			if self.programmaticScrollMayFireEvent:
+				self._lastProgrammaticScrollTime = time.time()
 			if not eventHandler.isPendingEvents("gainFocus") and obj != api.getFocusObject() and self._shouldSetFocusToObj(obj):
 				obj.setFocus()
 		self.passThrough=self.shouldPassThrough(obj,reason=reason)
@@ -988,6 +993,12 @@ class VirtualBuffer(cursorManager.CursorManager):
 		"""
 		if not self.VBufHandle:
 			return False
+
+		if self.programmaticScrollMayFireEvent and time.time() - self._lastProgrammaticScrollTime < 0.4:
+			# This event was probably caused by this buffer's call to scrollIntoView().
+			# Therefore, ignore it. Otherwise, the cursor may bounce back to the scroll point.
+			# However, pretend we handled it, as we don't want it to be passed on to the object either.
+			return True
 
 		try:
 			scrollInfo = self.makeTextInfo(obj)

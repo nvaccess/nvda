@@ -35,6 +35,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 
 class AdobeAcrobat(VirtualBuffer):
 	TextInfo = AdobeAcrobat_TextInfo
+	programmaticScrollMayFireEvent = True
 
 	def __init__(self,rootNVDAObject):
 		super(AdobeAcrobat,self).__init__(rootNVDAObject,backendName="adobeAcrobat")
