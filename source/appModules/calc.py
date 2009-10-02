@@ -16,7 +16,7 @@ class AppModule(_default.AppModule):
 
 class Display(NVDAObjects.IAccessible.IAccessible):
 
-	IAccessibleFocusEventNeedsFocusedState=False
+	shouldAllowIAccessibleFocusEvent=True
 
 	calcCommandChars=['!','=','@','#']
 

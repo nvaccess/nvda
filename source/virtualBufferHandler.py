@@ -28,9 +28,10 @@ def getVirtualBuffer(obj):
 			return v
 
 def update(obj):
-	for v in list(runningTable):
-		if not v.isLoading and not v.isAlive():
-			killVirtualBuffer(v)
+	#If this object already has a virtualBuffer, just return that and don't bother trying to create one
+	v=obj.virtualBuffer
+	if v:
+		return v
 	windowClassName=obj.windowClassName
 	role=obj.role
 	states=obj.states
@@ -41,10 +42,10 @@ def update(obj):
 		else:
 			return
 	#Adobe documents with IAccessible
- 	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName=="AVL_AVView" and role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE) and controlTypes.STATE_READONLY in states:
+ 	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName=="AVL_AVView" and role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE):
 		classString="virtualBuffers.adobeAcrobat.AdobeAcrobat"
 	#MSHTML
- 	elif isinstance(obj,NVDAObjects.IAccessible.MSHTML.MSHTML) and obj.IHTMLElement and windowClassName=="Internet Explorer_Server" and obj.role==controlTypes.ROLE_DOCUMENT and not obj.isContentEditable:
+ 	elif isinstance(obj,NVDAObjects.IAccessible.MSHTML.MSHTML) and obj.HTMLNode and windowClassName=="Internet Explorer_Server" and obj.role==controlTypes.ROLE_DOCUMENT and not obj.isContentEditable:
 		classString="virtualBuffers.MSHTML.MSHTML"
 	else:
 		return
@@ -67,6 +68,12 @@ def update(obj):
 	runningTable.add(virtualBufferObject)
 	return virtualBufferObject
 
+def cleanup():
+	"""Kills off any virtualBuffers that are no longer alive."""
+	for v in list(runningTable):
+		if not v.isLoading and not v.isAlive():
+			killVirtualBuffer(v)
+
 def killVirtualBuffer(virtualBufferObject):
 	try:
 		runningTable.remove(virtualBufferObject)
@@ -75,7 +82,7 @@ def killVirtualBuffer(virtualBufferObject):
 	if hasattr(virtualBufferObject,'unloadBuffer'):
 		virtualBufferObject.unloadBuffer()
 
-def cleanupVirtualBuffers():
+def terminate():
 	"""Kills any currently running virtualBuffers"""
 	for v in list(runningTable):
 		killVirtualBuffer(v)

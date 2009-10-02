@@ -1,6 +1,7 @@
 from . import VirtualBuffer, VirtualBufferTextInfo
 import controlTypes
 import NVDAObjects.IAccessible
+from NVDAObjects.IAccessible.adobe import normalizeStdName
 import winUser
 import IAccessibleHandler
 import oleacc
@@ -8,37 +9,13 @@ from logHandler import log
 import textInfos
 
 class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
-	stdNamesToRoles = {
-		# part? art?
-		"sect": controlTypes.ROLE_SECTION,
-		"div": controlTypes.ROLE_SECTION,
-		"blockquote": controlTypes.ROLE_BLOCKQUOTE,
-		"caption": controlTypes.ROLE_CAPTION,
-		# toc? toci? index? nonstruct? private? 
-		"l": controlTypes.ROLE_LIST,
-		"li": controlTypes.ROLE_LISTITEM,
-		"lbl": controlTypes.ROLE_LABEL,
-		# lbody
-		"p": controlTypes.ROLE_PARAGRAPH,
-		"h": controlTypes.ROLE_HEADING,
-		# h1 to h6 handled separately
-		# span, quote, note, reference, bibentry, code, figure, formula
-		"form": controlTypes.ROLE_FORM,
-	}
 
 	def _normalizeControlField(self,attrs):
-		role = None
-		level = None
-
-		stdName = attrs.get("acrobat::stdname", "").lower()
-		if "h1" <= stdName <= "h6":
-			role = controlTypes.ROLE_HEADING
-			level = stdName[1]
-		if not role:
-			try:
-				role = self.stdNamesToRoles[stdName]
-			except KeyError:
-				pass
+		stdName = attrs.get("acrobat::stdname", "")
+		try:
+			role, level = normalizeStdName(stdName)
+		except LookupError:
+			role, level = None, None
 
 		if not role:
 			accRole=attrs['IAccessible::role']
@@ -58,21 +35,19 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 
 class AdobeAcrobat(VirtualBuffer):
 	TextInfo = AdobeAcrobat_TextInfo
+	programmaticScrollMayFireEvent = True
 
 	def __init__(self,rootNVDAObject):
 		super(AdobeAcrobat,self).__init__(rootNVDAObject,backendName="adobeAcrobat")
 
 	def isNVDAObjectInVirtualBuffer(self,obj):
-		if self.rootNVDAObject.windowHandle==obj.windowHandle:
-			return True
-		return False
+		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)
 
 	def isAlive(self):
 		root=self.rootNVDAObject
 		if not root:
 			return False
-		states=root.states
-		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_READONLY not in states:
+		if not winUser.isWindow(root.windowHandle) or root.role == controlTypes.ROLE_UNKNOWN:
 			return False
 		return True
 
@@ -80,13 +55,7 @@ class AdobeAcrobat(VirtualBuffer):
 		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
 
 	def getIdentifierFromNVDAObject(self,obj):
-		docHandle=obj.windowHandle
-		ID=obj.event_childID
-		return docHandle,ID
-
-	def event_focusEntered(self,obj,nextHandler):
-		if self.passThrough:
-			nextHandler()
+		return obj.windowHandle, obj.event_childID
 
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType in ("link", "unvisitedLink"):

@@ -106,14 +106,19 @@ Before overriding the last object, this function calls event_loseFocus on the ob
   	for addedMod in newAppModuleSet-oldAppModuleSet:
 		if hasattr(addedMod,'event_appGainFocus'):
 			addedMod.event_appGainFocus()
-	if not obj.virtualBuffer or not obj.virtualBuffer.isAlive():
-		virtualBufferObject=None
-		for o in ancestors[focusDifferenceLevel:]+[obj]:
-			virtualBufferObject=virtualBufferHandler.update(o)
-			if virtualBufferObject:
-				break
+	virtualBufferHandler.cleanup()
+	virtualBufferObject=None
+	o=None
+	for o in ancestors[focusDifferenceLevel:]+[obj]:
+		virtualBufferObject=virtualBufferHandler.update(o)
+		if virtualBufferObject:
+			break
+	#Always make sure that the focus object's virtualBuffer is forced to either the found virtualBuffer (if its in it) or to None
+	#This is to make sure that the virtualBuffer does not have to be looked up, which can cause problems for winInputHook
+	if obj is o or virtualBufferObject.isNVDAObjectInVirtualBuffer(obj):
 		obj.virtualBuffer=virtualBufferObject
-	oldVirtualBuffer=globalVars.focusObject.virtualBuffer if globalVars.focusObject else None
+	else:
+		obj.virtualBuffer=None
 	# Set global focus variables.
 	globalVars.focusDifferenceLevel=focusDifferenceLevel
 	globalVars.focusObject=obj
@@ -121,11 +126,6 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
 	if globalVars.focusMovesNavigatorObject:
 		setNavigatorObject(obj)
-	if obj.virtualBuffer is not oldVirtualBuffer:
-		if hasattr(oldVirtualBuffer,"event_virtualBuffer_loseFocus"):
-			oldVirtualBuffer.event_virtualBuffer_loseFocus()
-		if obj.virtualBuffer and not obj.virtualBuffer.isLoading and hasattr(obj.virtualBuffer,"event_virtualBuffer_gainFocus"):
-			obj.virtualBuffer.event_virtualBuffer_gainFocus()
 	if log.isEnabledFor(log.DEBUG):
 		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	return True

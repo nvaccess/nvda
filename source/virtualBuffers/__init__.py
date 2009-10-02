@@ -1,3 +1,4 @@
+import time
 import threading
 import ctypes
 import os
@@ -473,6 +474,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	REASON_QUICKNAV = "quickNav"
 
 	TextInfo=VirtualBufferTextInfo
+	programmaticScrollMayFireEvent = False
 
 	def __init__(self,rootNVDAObject,backendName=None):
 		self.backendName=backendName
@@ -484,6 +486,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.rootDocHandle,self.rootID=self.getIdentifierFromNVDAObject(self.rootNVDAObject)
 		self._lastFocusObj = None
 		self._hadFirstGainFocus = False
+		self._lastProgrammaticScrollTime = None
 
 	def _get_passThrough(self):
 		return self._passThrough
@@ -515,6 +518,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def _loadBufferDone(self, success=True):
 		self._loadProgressCallLater.Stop()
+		del self._loadProgressCallLater
 		self.isLoading = False
 		if not success:
 			return
@@ -572,6 +576,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		"""
 		if not self._hadFirstGainFocus:
 			# This buffer is gaining focus for the first time.
+			self._setInitialCaretPos()
 			# Fake a focus event on the focus object, as the buffer may have missed the actual focus event.
 			focus = api.getFocusObject()
 			self.event_gainFocus(focus, lambda: focus.event_gainFocus())
@@ -582,6 +587,18 @@ class VirtualBuffer(cursorManager.CursorManager):
 				info=self.makeTextInfo(textInfos.POSITION_CARET)
 				sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 			self._hadFirstGainFocus = True
+
+		else:
+			# This buffer has had focus before.
+			if not self.passThrough:
+				# Speak it like we would speak focus on any other document object.
+				speech.speakObject(self.rootNVDAObject, reason=speech.REASON_FOCUS)
+				info = self.selection
+				if not info.isCollapsed:
+					speech.speakSelectionMessage(_("selected %s"), info.text)
+				else:
+					info.expand(textInfos.UNIT_LINE)
+					speech.speakTextInfo(info, reason=speech.REASON_CARET)
 
 		virtualBufferHandler.reportPassThrough(self)
 		braille.handler.handleGainFocus(self)
@@ -613,6 +630,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 			obj.setFocus()
 			self.passThrough = True
 			virtualBufferHandler.reportPassThrough(self)
+		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT:
+			obj.setFocus()
+			speech.speakObject(obj, reason=speech.REASON_FOCUS)
 		else:
 			self._activateNVDAObject(obj)
 
@@ -632,6 +652,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return
 		if reason != speech.REASON_FOCUS:
 			obj.scrollIntoView()
+			if self.programmaticScrollMayFireEvent:
+				self._lastProgrammaticScrollTime = time.time()
 			if not eventHandler.isPendingEvents("gainFocus") and obj != api.getFocusObject() and self._shouldSetFocusToObj(obj):
 				obj.setFocus()
 		self.passThrough=self.shouldPassThrough(obj,reason=reason)
@@ -972,6 +994,12 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if not self.VBufHandle:
 			return False
 
+		if self.programmaticScrollMayFireEvent and time.time() - self._lastProgrammaticScrollTime < 0.4:
+			# This event was probably caused by this buffer's call to scrollIntoView().
+			# Therefore, ignore it. Otherwise, the cursor may bounce back to the scroll point.
+			# However, pretend we handled it, as we don't want it to be passed on to the object either.
+			return True
+
 		try:
 			scrollInfo = self.makeTextInfo(obj)
 		except:
@@ -982,6 +1010,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
 		caretInfo.expand(textInfos.UNIT_CHARACTER)
 		if not scrollInfo.isOverlapping(caretInfo):
+			if scrollInfo.isCollapsed:
+				scrollInfo.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(scrollInfo,reason=speech.REASON_CARET)
 			scrollInfo.collapse()
 			self.selection = scrollInfo
@@ -1149,6 +1179,14 @@ class VirtualBuffer(cursorManager.CursorManager):
 				yield 0, link2end, link1start
 			link1node, link1start, link1end = link2node, link2start, link2end
 
+	def _setInitialCaretPos(self):
+		"""Set the initial position of the caret after the buffer has been loaded.
+		The return value is primarily used so that overriding methods can determine whether they need to set an initial position.
+		@return: C{True} if an initial position was set.
+		@rtype: bool
+		"""
+		return False
+
 [VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
 	("Return","activatePosition"),
 	("Space","activatePosition"),
@@ -1218,4 +1256,6 @@ qn("notLinkBlock", key="n", nextDoc=_("skips forward past a block of links"), ne
 	prevDoc=_("skips backward past a block of links"), prevError=_("no more text before a block of links"), readUnit=textInfos.UNIT_LINE)
 qn("landmark", key="d", nextDoc=_("moves to the next landmark"), nextError=_("no next landmark"),
 	prevDoc=_("moves to the previous landmark"), prevError=_("no previous landmark"), readUnit=textInfos.UNIT_LINE)
+qn("embeddedObject", key="o", nextDoc=_("moves to the next embedded object"), nextError=_("no next embedded object"),
+	prevDoc=_("moves to the previous embedded object"), prevError=_("no previous embedded object"))
 del qn

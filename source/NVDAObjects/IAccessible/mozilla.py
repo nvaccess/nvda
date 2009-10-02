@@ -46,14 +46,14 @@ class Application(Mozilla):
 
 class Document(Mozilla):
 
-	IAccessibleFocusEventNeedsFocusedState=False
+	shouldAllowIAccessibleFocusEvent=True
 
 	def _get_value(self):
 		return 
 
 class ListItem(Mozilla):
 
-	IAccessibleFocusEventNeedsFocusedState=False
+	shouldAllowIAccessibleFocusEvent=True
 
 	def _get_name(self):
 		name=super(ListItem,self)._get_name()
@@ -79,8 +79,8 @@ class Label(Mozilla):
 
 class ComboBox(Mozilla):
 
-	IAccessibleFocusEventNeedsFocusedState = False
+	shouldAllowIAccessibleFocusEvent=True
 
 class List(Mozilla):
 
-	IAccessibleFocusEventNeedsFocusedState = False
+	shouldAllowIAccessibleFocusEvent=True

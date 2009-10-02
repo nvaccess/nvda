@@ -233,13 +233,20 @@ class AppModule(appModuleHandler.AppModule):
 	def script_navigatorObject_currentDimensions(self,keyPress):
 		obj=api.getNavigatorObject()
 		if not obj:
-			speech.speakMessage(_("no navigator object"))
+			ui.message(_("no navigator object"))
 		location=obj.location
 		if not location:
-			speech.speakMessage(_("No location information for navigator object"))
+			ui.message(_("No location information for navigator object"))
 		(left,top,width,height)=location
-		(deskLeft,deskTop,deskWidth,deskHeight)=api.getDesktopObject().location
-		speech.speakMessage(_("Object edges positioned %.1f per cent right from left of screen, %.1f per cent down from top of screen, %.1f per cent left from right of screen, %.1f up from bottom of screen")%((float(left)/deskWidth)*100,(float(top)/deskHeight)*100,100-((float(width+left)/deskWidth)*100),100-(float(height+top)/deskHeight)*100))
+		deskLocation=api.getDesktopObject().location
+		if not deskLocation:
+			ui.message(_("No location information for screen"))
+		(deskLeft,deskTop,deskWidth,deskHeight)=deskLocation
+		percentFromLeft=(float(left-deskLeft)/deskWidth)*100
+		percentFromTop=(float(top-deskTop)/deskHeight)*100
+		percentWidth=(float(width)/deskWidth)*100
+		percentHeight=(float(height)/deskHeight)*100
+		ui.message(_("Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen")%(percentFromLeft,percentFromTop,percentWidth,percentHeight))
 	script_navigatorObject_currentDimensions.__doc__=_("Reports the hight, width and position of the current navigator object")
 
 	def script_navigatorObject_toFocus(self,keyPress):
@@ -366,20 +373,6 @@ class AppModule(appModuleHandler.AppModule):
 			return
 		ui.message("%s"%action)
 	script_navigatorObject_doDefaultAction.__doc__=_("Performs the default action on the current navigator object (example: presses it if it is a button).")
-
-	def script_navigatorObject_where(self,keyPress):
-		"""Reports where the current navigator object is by reporting each of its ancestors""" 
-		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObject):
-			speech.speakMessage(_("no navigator object"))
-			return
-		speech.speakObject(curObject,reason=speech.REASON_QUERY)
-		curObject=curObject.parent
-		while curObject is not None:
-			speech.speakMessage(_("inside"))
-			speech.speakObject(curObject,reason=speech.REASON_QUERY)
-			curObject=curObject.parent
-	script_navigatorObject_where.__doc__=_("Reports where the current navigator object is by reporting each of its ancestors")
 
 	def script_review_top(self,keyPress):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
@@ -546,8 +539,13 @@ class AppModule(appModuleHandler.AppModule):
 	script_review_moveToCaret.__doc__=_("Moves the review cursor to the position of the system caret, in the current navigator object")
 
 	def script_review_moveCaretHere(self,keyPress):
-		api.getReviewPosition().updateCaret()
-		info=api.getReviewPosition().copy()
+		review=api.getReviewPosition()
+		try:
+			review.updateCaret()
+		except NotImplementedError:
+			ui.message(_("no caret"))
+			return
+		info=review.copy()
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(info,reason=speech.REASON_CARET)
 	script_review_moveCaretHere.__doc__=_("Moves the system caret to the position of the review cursor , in the current navigator object")
@@ -567,10 +565,22 @@ class AppModule(appModuleHandler.AppModule):
 		speech.speechMode=newMode
 	script_speechMode.__doc__=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally.")
 
+	def _getDocumentForFocusedEmbeddedObject(self):
+		for ancestor in reversed(api.getFocusAncestors()):
+			if ancestor.role == controlTypes.ROLE_DOCUMENT:
+				return ancestor
+
 	def script_toggleVirtualBufferPassThrough(self,keyPress):
 		vbuf = api.getFocusObject().virtualBuffer
 		if not vbuf:
+			# We might be in an embedded object or application, so try searching the ancestry for an object which can return focus to the document.
+			docObj = self._getDocumentForFocusedEmbeddedObject()
+			if not docObj:
+				return
+			docObj.setFocus()
 			return
+
+		# Toggle virtual buffer pass-through.
 		vbuf.passThrough = not vbuf.passThrough
 		# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
 		# If we're disabling pass-through, re-enable auto-pass-through.
@@ -843,6 +853,8 @@ class AppModule(appModuleHandler.AppModule):
 	script_revertToSavedConfiguration.__doc__ = _("loads the saved NVDA configuration, overriding current changes")
 
 	def script_activatePythonConsole(self,keyPress):
+		if globalVars.appArgs.secure:
+			return
 		import pythonConsole
 		if not pythonConsole.consoleUI:
 			pythonConsole.initialize()
@@ -887,12 +899,12 @@ class AppModule(appModuleHandler.AppModule):
 		if self._copyStartMarker.obj != pos.obj:
 			ui.message(_("The start marker must reside within the same object"))
 			return
-		pos.collapse()
+		pos.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
 		pos.setEndPoint(self._copyStartMarker, "startToStart")
-		if pos.copyToClipboard():
+		if pos.compareEndPoints(pos, "startToEnd") < 0 and pos.copyToClipboard():
 			ui.message(_("Review selection copied to clipboard"))
 		else:
 			ui.message(_("No text to copy"))
 			return
 		self._copyStartMarker = None
-	script_review_copy.__doc__ = _("Retrieves the text from the previously set start marker to the current position of the review cursor and copies it to the clipboard")
+	script_review_copy.__doc__ = _("Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard")

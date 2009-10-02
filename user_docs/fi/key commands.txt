@@ -53,7 +53,7 @@ NVDA+sarkain: lue nykyinen kohdistus
 Kertoo objektin, jossa kohdistus on.
  
 NVDA+f2: päästä läpi seuraava näppäinpainallus
-Kun painat tätä näppäintä, NVDA antaa seuraavan näppäinpainalluksen suoraan käyttöjärjestelmän käsiteltäväksi suorittamatta näppäimen mahdollista NVDA-komentoa.
+Kun painat tätä näppäintä, NVDA välittää seuraavan näppäinpainalluksen suoraan käyttöjärjestelmän käsiteltäväksi suorittamatta näppäimen mahdollista NVDA-komentoa.
 
 Shift+NVDA+ylänuoli: lue valittu teksti
 Lukee valitun tekstin muokkaussäätimissä ja asiakirjoissa. Jos valintaa ei ole, siitä ilmoitetaan.
@@ -63,9 +63,6 @@ Lukee nykyisen rivin muokkaussäätimissä ja asiakirjoissa.
 
 NVDA+alanuoli: lue kaikki
 Lukee kaiken asiakirjan tai muokkaussäätimen tekstin nykyisestä paikasta lähtien.
-
-NVDA+f1: navigointiobjektin tiedot
-Lukee tietoja nykyisestä navigointiobjektista (hyödyllinen pääasiassa kehittäjille).
 
 Control+NVDA+c: tallenna asetukset
 Tallentaa asetukset.
@@ -103,7 +100,7 @@ Nostaa nykyistä puheasetusta
 Control+NVDA+alanuoli: pienennä asetusta
 Laskee nykyistä puheasetusta
 
-Asetusvalintaikkunoiden avaaminen:
+Asetusvalintaikkunat:
 
 Control+NVDA+g: yleiset asetukset
 Avaa Yleiset asetukset -valintaikkunan.
@@ -137,11 +134,8 @@ Navigointiobjektilla navigoiminen
 NVDA+laskinnäppäimistön 5: lue nykyinen navigointiobjekti
 Kertoo nykyisen navigointiobjektin. Kahdesti painettaessa objektin nimi tavataan ja kolmesti painettaessa se kopioidaan leikepöydälle.
 
-Shift+NVDA+laskinnäppäimistön 5: navigointiobjektin koko ja sijainti
+NVDA+laskinnäppäimistön Delete: navigointiobjektin koko ja sijainti
 Kertoo nykyisen navigointiobjektin koon ja sijainnin.
- 
-Control+Shift+NVDA+laskinnäppäimistön 5: missä olen
-Kertoo, missä navigointiobjekti on.
 
 NVDA+laskinnäppäimistön 8: ylemmän tason objekti
 Siirtää navigointiobjektin sitä ylemmän tason objektiin (ts. objektiin, jossa navigointiobjekti on).
@@ -232,27 +226,23 @@ Siirtää tarkastelukohdistimen seuraavalle riville
 Shift+laskinnäppäimistön 9: alin rivi
 Siirtää tarkastelukohdistimen viimeiselle riville
 
-Näennäispuskurin komennot Firefox 3:lle (jotkin näistä saattavat toimia myös Internet Explorerissa tai Firefox 2:ssa):
+Näennäispuskurin komennot:
 
 NVDA+välilyönti: näennäispuskurin läpivienti
 Ottaa käyttöön tai poistaa käytöstä näennäispuskurin läpivientitilan.
 
-control+NVDA+f: etsi (Control+f Firefox 2:ssa ja Internet Explorerissa)
+control+NVDA+f: etsi
 NVDA+f3: etsi seuraava
-NVDA+f7: linkkilista (ei toimi Firefox 2:ssa tai internet explorerissa)
-NVDA+f5: päivitä näennäispuskuri (ei toimi Firefox 2:ssa tai Internet Explorerissa)
+NVDA+f7: elementtiluettelo
+NVDA+f5: päivitä näennäispuskuri
 
 Näennäispuskurin pikanäppäimet seuraavaan elementtiin siirtymiseksi (käytä shiftiä näiden näppäinten kanssa siirtyäksesi edelliseen):
-
-Sekä vanhan että uuden näennäispuskurin tukemat komennot:
 h: otsikko
 l: luettelo
 i: luettelon osa
 t: taulukko
 k: linkki
-p: kappale (käytetään vain vanhassa näennäispuskurissa, käytä uudessa näppäimiä Control+ylä/alanuoli)
 f: lomakekenttä
-Komennot, joita vanha näennäispuskuri ei tue:
 u: avaamaton linkki
 v: avattu linkki
 e: muokkauskenttä
@@ -264,4 +254,7 @@ q: kappaleenvaihdollinen sisennys
 s: erotin
 m: kehys
 g: kuva
+d: ARIA-maamerkki
+n: siirtyy tekstiin, joka ei ole linkki
+o: upotettu objekti
 numerot 1 - 6: otsikot tasolla 1 - 6

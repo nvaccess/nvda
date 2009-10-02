@@ -1,3 +1,9 @@
+#nvda_service.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 from ctypes import *
 from ctypes.wintypes import *
 import threading
@@ -31,7 +37,11 @@ WTSUserName = 5
 nvdaExec = os.path.join(sys.prefix,"nvda.exe")
 slaveExec = os.path.join(sys.prefix,"nvda_slave.exe")
 
+isDebug = False
+
 def debug(msg):
+	if not isDebug:
+		return
 	try:
 		file(os.path.join(os.getenv("windir"), "temp", "nvda_service.log"), "a").write(msg + "\n")
 	except (OSError, IOError):
@@ -119,6 +129,7 @@ def executeProcess(desktop, token, executable, *argStrings):
 	return processInformation.hProcess
 
 def nvdaLauncher():
+	initDebug()
 	desktop = getInputDesktopName()
 	debug("launcher: starting with desktop %s" % desktop)
 	if os.path.basename(desktop) in (u"Default", u"Screen-saver"):
@@ -126,16 +137,22 @@ def nvdaLauncher():
 		return
 
 	debug("launcher: starting NVDA")
-	startNVDA(desktop)
+	process = startNVDA(desktop)
 	desktopSwitchEvt = windll.kernel32.OpenEventW(SYNCHRONIZE, False, u"WinSta0_DesktopSwitch")
 	windll.kernel32.WaitForSingleObject(desktopSwitchEvt, INFINITE)
 	windll.kernel32.CloseHandle(desktopSwitchEvt)
 	debug("launcher: desktop switch, exiting NVDA on desktop %s" % desktop)
 	exitNVDA(desktop)
+	# NVDA should never ever be left running on other desktops, so make certain it is dead.
+	# It may still be running if it hasn't quite finished initialising yet, in which case -q won't work.
+	windll.kernel32.TerminateProcess(process, 1)
+	windll.kernel32.CloseHandle(process)
 
 def startNVDA(desktop):
-	process = executeProcess(desktop, None, nvdaExec, "-m")
-	windll.kernel32.CloseHandle(process)
+	args = [desktop, None, nvdaExec, "-m"]
+	if not isDebug:
+		args.append("--secure")
+	executeProcess(*args)
 
 def startNVDAUIAccess(session, desktop):
 	token = duplicateTokenPrimary(getLoggedOnUserToken(session))
@@ -177,6 +194,14 @@ def shouldStartOnLogonScreen():
 		return bool(_winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
 	except WindowsError:
 		return False
+
+def initDebug():
+	global isDebug
+	try:
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, ur"SOFTWARE\NVDA")
+		isDebug = bool(_winreg.QueryValueEx(k, u"serviceDebug")[0])
+	except WindowsError:
+		isDebug = False
 
 class NVDAService(win32serviceutil.ServiceFramework):
 
@@ -286,6 +311,7 @@ class NVDAService(win32serviceutil.ServiceFramework):
 				debug("error starting launcher: %s" % e)
 
 	def SvcDoRun(self):
+		initDebug()
 		debug("service starting")
 		self.isWindowsXP = sys.getwindowsversion()[0:2] == (5, 1)
 		self.exitEvent = threading.Event()

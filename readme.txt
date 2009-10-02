@@ -4,17 +4,19 @@ This document describes how to prepare and use the NVDA source code. For more in
 http://www.nvda-project.org/
 
 == Dependencies ==
-The NVDA source depends on several other packages to run correctly, as described below. All directories mentioned are relative to the root of the NVDA source distribution/checkout.
+The NVDA source depends on several other packages to run correctly, as described below. All directories mentioned are relative to the root of the NVDA source distribution/checkout. Please create any directories mentioned that don't already exist.
 
 General dependencies:
 	* Python, version 2.6.2: http://www.python.org/
 	* comtypes, version 0.6.1 or later: http://www.sourceforge.net/projects/comtypes/
 	* wxPython unicode (for Python 2.6), version 2.8.9.1 or later: http://www.wxpython.org/
 	* Python Windows Extensions (for Python 2.6), build 212 or later: http://www.sourceforge.net/projects/pywin32/ 
-	* eSpeak, version 1.40.02 or later, Windows dll:
+	* eSpeak, version 1.41.01 or later, Windows dll:
 		* Official web site: http://espeak.sourceforge.net/
 		* The Windows dll is tricky to build, so a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
 		* Copy espeak.dll and espeak-data into the source\synthDrivers directory.
+	* Additional variants for eSpeak: http://www.nvda-project.org/espeak-variants/
+		* Extract the archive into the source\synthDrivers directory.
 	* IAccessible2, version 1.0.2.0 or later:
 		* The proxy dll and typelib are required.
 		* Pre-built versions have been provided for convenience at http://www.nvda-project.org/3rdParty/
@@ -23,11 +25,13 @@ General dependencies:
 	* ConfigObj, version 4.6.0 or later:
 		* Web site: http://www.voidspace.org.uk/python/configobj.html
 		* Copy configobj.py and validate.py into the source directory.
-	* liblouis, version 1.6.2, Windows dll and Python bindings:
+	* liblouis, version 1.7.0, Windows dll and Python bindings:
 		* Official web site: http://code.google.com/p/liblouis/
 		* A pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
-		* Copy the Python louis package directory into the source directory.
+		* Copy the louis Python package directory into the source directory.
+		* Copy the liblouis dll into the source directory.
 		* Copy the liblouis translation tables into the source\louis\tables directory.
+			* In the pre-built version, this has already been done.
 	* NVDA media (images and sounds): http://www.nvda-project.org/nvda-media/
 		* Extract the archive into the root of your NVDA source distribution.
 	* System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest:
@@ -37,6 +41,10 @@ General dependencies:
 		* You can build this yourself, although you need to have the Windows SDK installed, which is quite large. See source\nvdaHelper\building.txt for instructions.
 		* Alternatively, a pre-built version has been provided for convenience at http://www.nvda-project.org/nvdaHelper/
 			* Extract this archive into the root of your NVDA source distribution.
+	* Adobe AcrobatAccess interface typelib:
+		* You can build this yourself using midl from the idl located at http://www.adobe.com/devnet/acrobat/downloads/ClientFiles.zip
+		* Alternatively, a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/AcrobatAccess.tlb
+		* Copy AcrobatAccess.tlb into the source\typelibs directory.
 
 To use the brltty braille display driver:
 	* brlapi Python bindings, version 0.5.3 or later, distributed with BRLTTY for Windows, version 4.0-2 or later:
@@ -45,6 +53,7 @@ To use the brltty braille display driver:
 
 To use the Alva BC640/680 braille display driver:
 	* ALVA BC6 generic dll, version 2.0.3.0 or later: http://www.nvda-project.org/3rdParty/alvaw32.dll
+		* Copy alvaw32.dll into the source\brailleDisplayDrivers directory.
 
 To build a binary version of NVDA:
 	* Py2Exe (for Python 2.6), version 0.6.9 or later: http://www.sourceforge.net/projects/py2exe/

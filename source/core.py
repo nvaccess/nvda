@@ -21,6 +21,28 @@ import logHandler
 import globalVars
 from logHandler import log
 
+# Work around a bug in comtypes.
+# CoTaskMemFree returns void, but oledll (which assumes HRESULT) is used to access it in comtypes.GUID.
+# We have to use sys.modules because GUID is overridden in comtypes to refer to the class.
+GUID = sys.modules["comtypes.GUID"]
+GUID._CoTaskMemFree = GUID.windll.ole32.CoTaskMemFree
+del GUID
+
+# Work around an issue with comtypes where __del__ seems to be called twice on COM pointers.
+# This causes Release() to be called more than it should, which is very nasty and will eventually cause us to access pointers which have been freed.
+from comtypes import _compointer_base
+_cpbDel = _compointer_base.__del__
+def newCpbDel(self):
+	if hasattr(self, "_deleted"):
+		# Don't allow this to be called more than once.
+		log.debugWarning("COM pointer %r already deleted" % self)
+		return
+	_cpbDel(self)
+	self._deleted = True
+newCpbDel.__name__ = "__del__"
+_compointer_base.__del__ = newCpbDel
+del _compointer_base
+
 def doStartupDialogs():
 	import config
 	import gui
@@ -174,7 +196,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		wx.CallAfter(doStartupDialogs)
 	if api.getFocusObject()==api.getDesktopObject():
 		import eventHandler
-		eventHandler.queueEvent('gainFocus',api.getDesktopObject().objectWithFocus())
+		focus=api.getDesktopObject().objectWithFocus()
+		if focus:
+			eventHandler.queueEvent('gainFocus',focus)
 	import queueHandler
 	import watchdog
 	class CorePump(wx.Timer):
@@ -220,7 +244,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("Cleaning up running virtualBuffers")
 	try:
 		import virtualBufferHandler
-		virtualBufferHandler.cleanupVirtualBuffers()
+		virtualBufferHandler.terminate()
 	except:
 		log.error("Error cleaning up virtualBuffers",exc_info=True)
 	log.debug("Terminating IAccessible support")

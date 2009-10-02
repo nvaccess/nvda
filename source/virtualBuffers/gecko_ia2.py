@@ -25,6 +25,13 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		defaultAction=attrs.get('defaultAction','')
 		if defaultAction=="click":
 			states.add(controlTypes.STATE_CLICKABLE)
+		grabbed = attrs.get("IAccessible2::attribute_grabbed")
+		if grabbed == "false":
+			states.add(controlTypes.STATE_DRAGGABLE)
+		elif grabbed == "true":
+			states.add(controlTypes.STATE_DRAGGING)
+		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
+			states.add(controlTypes.STATE_DROPTARGET)
 		if role==controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 			role=controlTypes.ROLE_TEXTFRAME
@@ -165,6 +172,8 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":
 			attrs={"IAccessible2::attribute_xml-roles":[VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]}
+		elif nodeType=="embeddedObject":
+			attrs={"IAccessible2::attribute_tag":["EMBED","OBJECT","APPLET"]}
 		else:
 			return None
 		return attrs

@@ -130,8 +130,8 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		text=self.obj.jabContext.getAccessibleTextRange(start,end-1)
 		return text
 
-	def _lineNumFromOffset(self,offset):
-		return -1
+	def _getLineNumFromOffset(self,offset):
+		return None
 
 	def _getLineOffsets(self,offset):
 		(start,end)=self.obj.jabContext.getAccessibleTextLineBounds(offset)
@@ -173,7 +173,7 @@ class JAB(Window):
 			return
 		return focusObject
 
-	def __init__(self,windowHandle=None,jabContext=None):
+	def __init__(self,relation=None,windowHandle=None,jabContext=None):
 		if windowHandle and not jabContext:
 			jabContext=JABHandler.JABContext(hwnd=windowHandle)
 		elif jabContext and not windowHandle:

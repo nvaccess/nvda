@@ -43,8 +43,10 @@ TABLES = (
 	("fr-bfu-comp6.utb", _("French (unified) 6 dot computer braille")),
 	("fr-bfu-comp8.utb", _("French (unified) 8 dot computer braille")),
 	("fr-bfu-g2.ctb", _("French (unified) Grade 2")),	("gr-gr-g1.utb", _("Greek (Greece) grade 1")),
+	("he.ctb", _("Hebrew 8 dot computer braille")),
 	("hi-in-g1.utb", _("Hindi grade 1")),
 	("hr.ctb", _("Croatian 8 dot computer braille")),
+	("hu1.ctb", _("Hungarian 8 dot computer braille")),
 	("it-it-g1.utb2", _("Italian grade 1")),
 	("Lv-Lv-g1.utb", _("Latvian grade 1")),
 	("nl-be-g1.utb", _("Dutch (Belgium) grade 1")),
@@ -196,7 +198,7 @@ def getBrailleTextForProperties(**propertyValues):
 		textList.append(name)
 	role = propertyValues.get("role")
 	if role is not None:
-		if role in speech.silentRolesOnFocus:
+		if name and role in speech.silentRolesOnFocus:
 			roleText = None
 		else:
 			roleText = roleLabels.get(role, controlTypes.speechRoleLabels[role])

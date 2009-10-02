@@ -69,7 +69,7 @@ def setLanguage(lang):
 	global curLang
 	try:
 		if lang=="Windows":
-			windowsLCID=ctypes.windll.kernel32.GetUserDefaultLCID()
+			windowsLCID=ctypes.windll.kernel32.GetUserDefaultUILanguage()
 			localeName=locale.windows_locale[windowsLCID]
 			gettext.translation('nvda',localedir='locale',languages=[localeName]).install(True)
 			curLang=localeName

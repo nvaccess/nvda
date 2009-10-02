@@ -28,6 +28,7 @@ COM_INTERFACES = (
 	("MS Active Accessibility", comtypes.client.GetModule, "oleacc.dll"),
 	("Rich Edit library", comtypes.client.GetModule, "msftedit.dll"),
 	("SAPI 5", comtypes.client.CreateObject, "Sapi.SPVoice"),
+	("Acrobat Access", comtypes.client.GetModule, "typelibs/AcrobatAccess.tlb"),
 )
 
 def main():
