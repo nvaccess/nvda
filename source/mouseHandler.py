@@ -59,8 +59,8 @@ def playAudioCoordinates(x, y, screenWidth, screenHeight, detectBrightness=True,
 		ctypes.windll.user32.ReleaseDC(0,screenDC)
 	else:
 		brightness=config.conf['mouse']['audioCoordinates_maxVolume']
-	leftVolume=(85*((screenWidth-float(x))/screenWidth))*brightness
-	rightVolume=(85*(float(x)/screenWidth))*brightness
+	leftVolume=int((85*((screenWidth-float(x))/screenWidth))*brightness)
+	rightVolume=int((85*(float(x)/screenWidth))*brightness)
 	tones.beep(curPitch,40,left=leftVolume,right=rightVolume)
 
 #Internal mouse event

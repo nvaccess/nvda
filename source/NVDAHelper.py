@@ -17,6 +17,7 @@ EVENT_INPUTLANGCHANGE=0X1001
 _remoteLib=None
 _remoteLoader64=None
 localLib=None
+generateBeep=None
 
 winEventHookID=None
 
@@ -36,8 +37,11 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		log.error("helper.winEventCallback", exc_info=True)
 
 def initialize():
-	global _remoteLib, _remoteLoader64, localLib, winEventHookID
+	global _remoteLib, _remoteLoader64, localLib, winEventHookID,generateBeep
 	localLib=cdll.LoadLibrary('lib/nvdaHelperLocal.dll')
+	generateBeep=localLib.generateBeep
+	generateBeep.argtypes=[c_char_p,c_float,c_uint,c_ubyte,c_ubyte]
+	generateBeep.restype=c_uint
 	_remoteLib=cdll.LoadLibrary('lib/NVDAHelperRemote.dll')
 	if _remoteLib.nvdaHelper_initialize() < 0:
 		raise RuntimeError("Error initializing NVDAHelper")

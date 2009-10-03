@@ -7,17 +7,12 @@
 """Utilities to generate and play tones"""
 
 import nvwave
-import struct
-import math
 import config
 import globalVars
 from logHandler import log
-
-piTwo=math.pi*2
+from ctypes import create_string_buffer, byref
 
 sampleRate=44100
-amplitude=14000
-
 player = nvwave.WavePlayer(channels=2, samplesPerSec=int(sampleRate), bitsPerSample=16, outputDevice=config.conf["speech"]["outputDevice"])
 
 def beep(hz,length,left=50,right=50):
@@ -31,18 +26,10 @@ def beep(hz,length,left=50,right=50):
 	@param right: volume of the right channel (0 to 100)
 	@type right: float
 	""" 
+	from NVDAHelper import generateBeep
 	log.io("Beep at pitch %s, for %s ms, left volume %s, right volume %s"%(hz,length,left,right))
-	hz=float(hz)
+	bufSize=generateBeep(None,hz,length,left,right)
+	buf=create_string_buffer(bufSize)
+	generateBeep(buf,hz,length,left,right)
 	player.stop()
-	samplesPerCycle=(sampleRate/hz)
-	totalSamples=(length/1000.0)/(1.0/sampleRate)
-	totalSamples=totalSamples+(samplesPerCycle-(totalSamples%samplesPerCycle))
-	data=""
-	sampleNum=0
-	while sampleNum<totalSamples:
-		sample=min(max(math.sin((sampleNum%sampleRate)*piTwo*(hz/sampleRate))*2,-1),1)*amplitude
-		leftSample=sample*(left/100.0)
-		rightSample=sample*(right/100.0)
-		data+=struct.pack('hh',int(leftSample),int(rightSample))
-		sampleNum+=1
-	player.feed(data)
+	player.feed(buf.raw)

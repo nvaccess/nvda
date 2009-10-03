@@ -1,5 +1,6 @@
 #ifndef NVDAHELPERLOCAL_H
 #define NVDAHELPERLOCAL_H
+#include <windows.h>
 
 #define DLLEXPORT extern "C" __declspec(dllexport)
 

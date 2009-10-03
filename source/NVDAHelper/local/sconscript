@@ -2,7 +2,7 @@ Import(['env','vbufRPCStubs'])
 
 localLib=env.SharedLibrary(
 	target="nvdaHelperLocal",
-	source=["nvdaHelperLocal.cpp",vbufRPCStubs[1]],
+	source=["nvdaHelperLocal.cpp","beeps.cpp",vbufRPCStubs[1]],
 	LIBS=["rpcrt4"],
 )
 
