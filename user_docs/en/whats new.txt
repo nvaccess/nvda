@@ -1,13 +1,14 @@
 = What's New in NVDA =
 
 == 2009.1 ==
+Major highlights of this release include support for 64 bit editions of Windows; greatly improved support for Microsoft Internet Explorer and Adobe Reader documents; support for Windows 7; reading of the Windows logon, control+alt+delete and User Account Control (UAC) screens; and the ability to interact with Adobe Flash and Sun Java content on web pages. There have also been several significant stability fixes and improvements to the general user experience.
 
 === New Features ===
 	* Official support for 64 bit editions of Windows! (#309)
 	* Added a synthesizer driver for the Newfon synthesizer. Note that this requires a special version of Newfon. (#206)
 	* In virtual buffers, focus mode and browse mode can now be reported using sounds instead of speech. This is enabled by default. It can be configured from the Virtual buffers dialog. (#244)
 	* NVDA no longer cancels speech when volume control keys are pressed on the keyboard, allowing the user to change the volume and listen to actual results immediately. (#287)
-	* Completely rewritten support for Microsoft Internet Explorer and Adobe Acrobat documents. This support has been unified with the core support used for Mozilla Gecko, so features such as fast page rendering, extensive quick navigation, links list, text selection, auto focus mode and braille support are now available with these documents.
+	* Completely rewritten support for Microsoft Internet Explorer and Adobe Reader documents. This support has been unified with the core support used for Mozilla Gecko, so features such as fast page rendering, extensive quick navigation, links list, text selection, auto focus mode and braille support are now available with these documents.
 	* Improved support for the date selection control found in the Windows Vista Date / Time properties dialog.
 	* improved support for the Modern XP/Vista start menu (specifically the all programs, and places menus). Appropriate level information is now announced.
 	* The amount of text that is announced when moving the mouse is now configurable from the Mouse settings dialog. A choice of paragraph, line, word or character can be made.
@@ -18,7 +19,7 @@
 	* NVDA can announce text under the mouse within dos console windows.
 	* Support for UI Automation via the UI Automation client API available in Windows 7, as well as fixes to improve the experience of NVDA in Windows 7.
 	* NVDA can be configured to start automatically after you log on to Windows. The option is in the General Settings dialog.
-	* NVDA can read secure Windows screens such as the Windows logon, control+alt+delete and UAC screens in Windows XP and above. Reading of the Windows logon screen can be configured from the General Settings dialog. (#97)
+	* NVDA can read secure Windows screens such as the Windows logon, control+alt+delete and User Account Control (UAC) screens in Windows XP and above. Reading of the Windows logon screen can be configured from the General Settings dialog. (#97)
 	* Added a driver for the Optelec ALVA BC6 series braille displays.
 	* When browsing web documents, you can now press n and shift+n to skip forward and backward past blocks of links, respectively.
 	* When browsing web documents, ARIA landmarks are now reported, and you can move forward and backward through them using d and shift+d, respectively. (#192)
