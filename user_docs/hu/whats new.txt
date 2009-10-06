@@ -32,6 +32,9 @@
 * Az ARIA fogd és vidd támogatása a Mozilla Gecko-ban. (#239)
  * A dokumentum címe és a jelenlegi sor vagy a kijelölés felolvasásra kerül amikor a fókusz megváltozik egy virtuális kijelzõben. Ez a viselkedés megegyezik a normál dokumentumobjektumokéival. (#210)
 * Magyar 8 pontos braille támogatás
+* A Java Access Bridge támogatással rendelkezõ alkalmazásokban (többek között az OpenOffice.org) az NVDA jól mûködik a sorszámok használatakor.
+* A virtuális kijelzõkben az o és a shift+o billentyûkkel a beágyazott objektumok között lehet mozogni.
+
 
 	=Változások=
 
@@ -39,6 +42,8 @@
 * Az NVDA nem mondja be a "Az NVDA elindult" szöveget induláskor.
 * A folyamatjelzõk felolvasását továbbfejlesztették. A legfontosabb, hogy most már be lehet állítani az NVDA-t úgy, hogy a folyamatjelzõk változását egyszerre beszéddel és hanggal is jelezze.
 * Néhány általános elem, pl. Ablak, alkalmazás és keret mostantól nem hangzik el, hacsak a vezérlõelem nincs feliratozva.
+* Az áttekintõszöveg másolás parancs (NVDA+f10) mostantól nem okoz hibát ha a kijelölés vége a kijelölés kezdete elõtt található. Elõzõleg ez problémákat okozott egyes alkalmazásokban, mint pl. A Notepad++.
+* A navigatorObject_currentDimentions szkript új billentyûparancsa a NVDA+numerikus Delete. A régi kombináció nem mûködött minden billentyûzeten. A szkript mostantól bemondja az objektum szélességi és magassági adatait, az alsó és a jobb oldali koordináták helyett.
 
 	=Hiba javítások=
 * Az NVDA induló és kilépõ hangját a beállított hang-kimeneten játsza le, nem a Windows alapértelmezett hangeszközén. (#164)

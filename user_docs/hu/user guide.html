@@ -60,6 +60,7 @@
 <li><a href="#6.2.1.7">6.2.1.7. Objektum megjelenítési beállítások</a></li>
 <li><a href="#6.2.1.8">6.2.1.8. A virtuális kijelzõ beállításai</a></li>
 <li><a href="#6.2.1.9">6.2.1.9. Dokumentum formázási beállítások</a></li>
+<li><a href="#6.2.1.10">6.2.1.10. Kivételszótárak beállításai</a></li>
 </ul>
 <li><a href="#6.2.2">6.2.2: A beállítások elmentése és betöltése</a></li>
 </ul>
@@ -210,7 +211,7 @@ vagy nézze meg a szoftverhez mellékelt Copying.txt fájlt.
 
 <h2 id="2">2. Rendszerkövetelmények</h2>
 <ul>
-<li>Operációs rendszerek: a Windows XP és Windows Vista bármely verziója (beleértve a szerver operációs rendszereket is), valamint részlegesen mûködhet Windows 2000 operációs rendszer alatt is</li>
+<li>Operációs rendszerek: a Windows XP, Windows Vista, és Windows 7 bármely verziója (beleértve a szerver operációs rendszereket is), valamint részlegesen mûködhet Windows 2000 operációs rendszer alatt is</li>
 <li>Memória: 256 mb vagy több</li>
 <li>Processzor sebesség: 1.0 ghz vagy gyorsabb</li>
 </ul>
@@ -758,9 +759,28 @@ Be lehet állítani a:
 </OL> 
 bemondását.
 </p>
-
 <A HREF="#content">Vissza a tartalomjegyzékhez</A>
-
+<h5 id="6.2.1.10">6.2.1.10. Kivételszótárak beállításai</h5>
+<p>
+A beállítások menüben található kivételszótárak menü olyan lehetõségeket tartalmaz, melyekkel megadható, hogy az NVDA miként ejtsen ki egyes szavakat, kifejezéseket. Jelenleg háromféle szótártípus létezik:
+ <ul>
+<li>Alapértelmezett: az itt megadott szabályok az NVDA minden hangkarakterére érvényesek.</li>
+<li>Hangkarakter: az itt megadott szabályok csak az éppen használt hangkarakterre érvényesek.</li>
+<li>Ideiglenes: az itt megadott szabályok az NVDA minden hangkarakterére érvényesek, de csak a jelenlegi munkameneten belül. A szabályok csak átmeneti jellegûek, melyek az NVDA újraindításakor érvényüket vesztik.</li>
+</ul>
+<p>
+Minden párbeszédablak tartalmaz egy szabálylistát, mely a szöveg feldolgozása közben hajtódik végre. Itt szintén elérhetõ a hozzáadás, szerkesztés és az eltávolítás gomb is.
+</p>
+<p>
+Új szabály hozzáadásához használja a hozzáadás gombot. Töltse ki a mezõket a felbukkanó párbeszédablakban, majd nyomja meg az OK gombot. A szabály megjelenik a szabályok listájában. A szótár mentéséhez nyomja meg az OK gombot ha végzett a szabályok hozzáadásával/szerkesztésével.
+</p>
+<p>
+A szabályok az NVDA kivételszótáraiban lehetõvé teszik, hogy egy szövegrészt behelyettesítsen egy másik szövegrésszel. Egy egyszerû példa erre, ha az NVDA a madár szó helyett béka szót mond. A szabály hozzáadása párbeszédablakban a tényleges kifejezés mezõbe írjuk be: madár. A behelyettesített kifejezés mezõbe pedig a béka szó kerüljön. Megadhatja a szabály leírását a megjegyzés mezõben (pl.: a madár helyett békát mond).
+</p>
+<p>
+Az NVDA kivételszótárai azonban ennél jóval többre képesek. A párbeszédablak tartalmaz egy kis- és nagybetûk megkülönbözttetése jelölõnégyzetet, mely bejelölése esetén az NVDA különbséget tesz a kis- és nagybetûk között. Alapértelmezettként az NVDA figyelmen kívül hagyja a kis- és nagybetûket. Egy másik jelölõnégyzettel beállítható, hogy a kifejezés egy "szabályozott kifejezés" legyen-e. Egy szabályozott kifejezés egy speciális karaktereket tartalmazó kifejezés, mellyel egyszerre töb karakterre, számra, vagy csak betûkre is rákereshetünk. A szabályozott kifejezések nem képezik az útmutató részét, de rengeteg leírás létezik, melyekkel bõvebben megismerheti a használatukat.
+</p>
+<A HREF="#content">Vissza a tartalomjegyzékhez</A>
 <h3 id="6.2.2">6.2.2. A Beállítások Elmentése És Betöltése</h3>
 <p>
 Az NVDA különbözõ beállításait az nvda.ini fájlban tárolja a program mappájában. Ezt a fájlt valószínûleg soha nem kell kézzel szerkesztenie, de haladó felhasználók számára ez egy jó lehetõség a különbözõ, az NVDA beállítások párbeszédablakaiban még nem elérhetõ beállítások megváltoztatására.
@@ -898,7 +918,7 @@ Az elemek közötti közlekedéshez használjuk a következõ billentyûparancsokat:
 <DT> NVDA+mínusz a számbillentyûzeten
 <DD> a fókuszhoz ugrik <
 <DT> NVDA+enter a számbillentyûzeten
-<DD> aktivizálja az aktuális elemet (pl. enter, szimpla vagy dupla kattintás) <DT> NVDA+ / (perjel) a számbillentyûzeten
+<DD> aktiválja az aktuális elemet (pl. enter, szimpla vagy dupla kattintás) <DT> NVDA+ / (perjel) a számbillentyûzeten
 <DD> Az egérmutatót az aktuális elemhez helyezi át 
 <DT> NVDA+ csillag a számbillentyûzeten
 <DD> az egérmutatóhoz ugrik 
@@ -1104,13 +1124,13 @@ Az aktuális virtuális kijelzõben a hivatkozások listájának megjelenítéséhez nyom
 
 <p>
 
-Mivel az NVDA-t folyamatosan frissítik, nem lehet szavatolni, hogy az e felhasználói kézikönyvben írott útmutatások mindegyike alkalmazható lesz. Ha bármilyen észrevétele van az e kézikönyvben írott útmutatásokkal kapcsolatban, kérjük, magyar nyelvû javaslata, kérése, kérdése esetén látogassa meg az: <A HREF="http://www.nvda.hu"> NVDA Honosító Csapat </A> oldalát, angol nyelvû kérés, kérdés, javaslat esetén pedig <a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a> weboldalt további segítségért.
+Mivel az NVDA-t folyamatosan frissítik, nem lehet szavatolni, hogy az e felhasználói kézikönyvben írott útmutatások mindegyike alkalmazható lesz. Ha bármilyen észrevétele van az e kézikönyvben írott útmutatásokkal kapcsolatban, kérjük, magyar nyelvû javaslata, kérése, kérdése esetén látogassa meg az: <A HREF="http://www.nvda.hu"> NVDA Honosítási project </A> weboldalát, angol nyelvû kérés, kérdés, javaslat esetén pedig az <a href="http://www.nvda-project.org/">NVDA hivatalos weboldalát</a> további segítségért.
 
 </p>
 
 <A HREF="#content">Vissza a tartalomjegyzékhez</A>
 
-<H3 ID="10"> 10. Fogalommeghatározások </H2>
+<H2 ID="10"> 10. Fogalommeghatározások </H2>
 
 Ebben a dokumentumban a következõ fogalmakon az alábbi meghatározásokat értjük:
 
