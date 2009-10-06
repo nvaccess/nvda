@@ -308,7 +308,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		return states
 
 	def correctAPIForRelation(self, obj, relation=None):
-		if self.windowHandle != obj.windowHandle and not obj.UIAElement.cachedNativeWindowHandle:
+		if obj and self.windowHandle != obj.windowHandle and not obj.UIAElement.cachedNativeWindowHandle:
 			# The target element is not the root element for the window, so don't change API class; i.e. always use UIA.
 			return obj
 		return super(UIA, self).correctAPIForRelation(obj, relation)
