@@ -208,7 +208,8 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_LINE)
 			return start,end
 		except:
-			return super(IA2TextTextInfo,self)._getLineOffsets(offset)
+			log.debugWarning("IAccessibleText::textAtOffset failed",exc_info=True)
+			return offset,offset+1
 
 	def _getSentenceOffsets(self,offset):
 		try:
