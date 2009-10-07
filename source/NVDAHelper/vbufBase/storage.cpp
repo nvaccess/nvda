@@ -20,6 +20,33 @@
 
 using namespace std;
 
+inline void appendCharToXML(const wchar_t c, wstring& xml) {
+	switch(c) {
+		case L'"':
+		xml+=L"&quot;";
+		break;
+		case L'<':
+		xml+=L"&lt;";
+		break;
+		case L'>':
+		xml+=L"&gt;";
+		break;
+		case L'&':
+		xml+=L"&amp;";
+		break;
+		default:
+		if (c == 0x9 || c == 0xA || c == 0xD
+			|| (c >= 0x20 && c <= 0xD7FF) || (c >= 0xE000 && c <= 0xFFFD)
+		) {
+			// Valid XML character.
+			xml+=c;
+		} else {
+			// Invalid XML character.
+			xml += 0xfffd; // Unicode replacement character
+		}
+	}
+}
+
 VBufStorage_textContainer_t::VBufStorage_textContainer_t(wstring str): wstring(str) {}
 
 VBufStorage_textContainer_t::~VBufStorage_textContainer_t() {}
@@ -215,22 +242,7 @@ void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring
 		text+=i->first;
 		text+=L"=\"";
 		for(std::wstring::iterator j=i->second.begin();j!=i->second.end();j++) {
-			switch(*j) {
-				case L'"':
-				text+=L"&quot;";
-				break;
-				case L'<':
-				text+=L"&lt;";
-				break;
-				case L'>':
-				text+=L"&gt;";
-				break;
-				case L'&':
-				text+=L"&amp;";
-				break;
-				default:
-				text+=*j;
-			}
+			appendCharToXML(*j,text);
 		}
 		text+=L"\" ";
 	}
@@ -414,30 +426,7 @@ void VBufStorage_textFieldNode_t::getTextInRange(int startOffset, int endOffset,
 		wchar_t c;
 		for(int offset=startOffset;offset<endOffset;offset++) {
 			c=this->text[offset];
-			switch(c) {
-				case L'"':
-				text+=L"&quot;";
-				break;
-				case L'<':
-				text+=L"&lt;";
-				break;
-				case L'>':
-				text+=L"&gt;";
-				break;
-				case L'&':
-				text+=L"&amp;";
-				break;
-				default:
-				if (c == 0x9 || c == 0xA || c == 0xD
-					|| (c >= 0x20 && c <= 0xD7FF) || (c >= 0xE000 && c <= 0xFFFD)
-				) {
-					// Valid XML character.
-					text+=c;
-				} else {
-					// Invalid XML character.
-					text += 0xfffd; // Unicode replacement character
-				}
-			}
+			appendCharToXML(c,text);
 		}
 	} else {
 		text.append(this->text,startOffset,endOffset-startOffset);
