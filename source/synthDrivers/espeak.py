@@ -38,6 +38,8 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		self.inflection=75
 
 	def speakText(self,text,index=None):
+		# Replace \01, as this is used for embedded commands.
+		text = text.replace(u'\01', u' ')
 		_espeak.speak(text, index=index)
 
 	def speakCharacter(self,character,index=None):
