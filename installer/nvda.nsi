@@ -115,7 +115,7 @@ Var StartMenuFolder
 !insertmacro MUI_LANGUAGE "German"
 !insertmacro MUI_LANGUAGE "Spanish"
 !insertmacro MUI_LANGUAGE "SpanishInternational"
-;!insertmacro MUI_LANGUAGE "SimpChinese"
+!insertmacro MUI_LANGUAGE "SimpChinese"
 !insertmacro MUI_LANGUAGE "TradChinese"
 !insertmacro MUI_LANGUAGE "Japanese"
 !insertmacro MUI_LANGUAGE "Italian"
@@ -152,7 +152,7 @@ Var StartMenuFolder
 !include "locale\ru\langstrings.txt"
 ;!include "locale\se\langstrings.txt"
 !include "locale\sk\langstrings.txt"
-;!include "locale\zh\langstrings.txt"
+!include "locale\zh\langstrings.txt"
 !include "locale\zh_tw\langstrings.txt"
 
 ;--------------------------------

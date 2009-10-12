@@ -44,6 +44,7 @@
 * Néhány általános elem, pl. Ablak, alkalmazás és keret mostantól nem hangzik el, hacsak a vezérlõelem nincs feliratozva.
 * Az áttekintõszöveg másolás parancs (NVDA+f10) mostantól nem okoz hibát ha a kijelölés vége a kijelölés kezdete elõtt található. Elõzõleg ez problémákat okozott egyes alkalmazásokban, mint pl. A Notepad++.
 * A navigatorObject_currentDimentions szkript új billentyûparancsa a NVDA+numerikus Delete. A régi kombináció nem mûködött minden billentyûzeten. A szkript mostantól bemondja az objektum szélességi és magassági adatait, az alsó és a jobb oldali koordináták helyett.
+* Hatékonyabb mûködés (különösen netbookokon) ha több hangjelzés hallható egyszerre, pl. Gyors egérmozgáskor ha a hangjelzés engedélyezve van. (#396).
 
 	=Hiba javítások=
 * Az NVDA induló és kilépõ hangját a beállított hang-kimeneten játsza le, nem a Windows alapértelmezett hangeszközén. (#164)
@@ -65,6 +66,7 @@
 * Az NVDA mostantól felismeri a vezérlõelemeket az AIM 7 programban.
 	* A billentyûparancs átadása parancs nem aktiválódik végérvényesen egy billentyû nyomva tartásakor. Elõzõleg, ha ez bekövetkezett, az NVDA nem vett figyelembe billentyûleütéseket és a hibát csak a program újraindításával lehetett orvosolni. (#413)
 * A tálca mostantól nincs figyelmen kívül hagyva ha a fókusz rákerül, amely gyakran megtörténik egy alkalmazásból való kilépés esetén. Az NVDA elõzõleg úgy viselkedett, mintha a fókusz nem változott volna meg.
+* Egy adott vezérlõkarakter (0x1) többé nem okoz furcsa viselkedést (mint pl. A magasság és a hangerõ megváltozása) ha elõfordul egy szövegben. (#437).
 
 		=0.6 P3=
 	=Újdonságok=
