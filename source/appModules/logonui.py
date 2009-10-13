@@ -16,6 +16,9 @@ class PasswordField(IAccessible):
 		# Focus automatically jumps to the password field when a user is selected. This field has no name.
 		# This means that the new selected user is not reported.
 		# Therefore, override the name of the password field to be the selected user name.
+		# When the user is changed, the parent list item changes.
+		# However, the cached parent isn't updated, so force it to update.
+		self.parent = self._get_parent()
 		try:
 			return self.parent.name
 		except:
@@ -25,7 +28,7 @@ class PasswordField(IAccessible):
 		# The up and down arrow keys change the selected user, but there's no reliable NVDA event for detecting this.
 		oldName = self.name
 		keyUtils.sendKey(key)
-		if oldName == self.name:
+		if oldName == self.name or controlTypes.STATE_FOCUSED not in self.states:
 			return
 		self.event_gainFocus()
 
