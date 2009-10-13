@@ -435,8 +435,8 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	}
 	//Get the child count
 	int childCount=0;
-	if(IA2TextIsUnneededSpace||role==ROLE_SYSTEM_COMBOBOX||(role==ROLE_SYSTEM_LIST&&!(states&STATE_SYSTEM_READONLY))||role==IA2_ROLE_UNKNOWN) {
-		DEBUG_MSG(L"This is either a list or combo box, force childCount to 0 as we don't want their children");
+	if(IA2TextIsUnneededSpace||role==ROLE_SYSTEM_COMBOBOX||(role==ROLE_SYSTEM_LIST&&!(states&STATE_SYSTEM_READONLY))||role==IA2_ROLE_UNKNOWN||role==IA2_ROLE_EMBEDDED_OBJECT) {
+		DEBUG_MSG(L"Forcing childCount to 0 as we don't want this node's children");
 		childCount=0;
 	} else {
 		DEBUG_MSG(L"get childCount with IAccessible::get_accChildCount");
