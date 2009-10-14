@@ -101,7 +101,10 @@ class AcrobatNode(IAccessible):
 			eventHandler.queueEvent("gainFocus",obj)
 
 	def scrollIntoView(self):
-		self.pdDomNode.ScrollTo()
+		try:
+			self.pdDomNode.ScrollTo()
+		except (AttributeError, COMError):
+			log.debugWarning("IPDDomNode::ScrollTo failed", exc_info=True)
 
 class AcrobatTextInfo(NVDAObjectTextInfo):
 
