@@ -3,7 +3,7 @@
 !define SPI_GETSCREENREADER 70
 
 !define launcher_appDir "nvda_2009.1beta1_portable"
-!define launcher_appExe "nvda.exe"
+!define launcher_appExe "nvdaLauncher.exe"
 
 setcompress off
 SilentInstall silent
