@@ -81,8 +81,11 @@ class AppModule(appModuleHandler.AppModule):
 		virtualBuffer=obj.virtualBuffer
 		if hasattr(virtualBuffer,'TextInfo') and not virtualBuffer.passThrough:
 			obj=virtualBuffer
-		info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
-		if info.isCollapsed:
+		try:
+			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
+		except (RuntimeError, NotImplementedError):
+			info=None
+		if not info or info.isCollapsed:
 			speech.speakMessage(_("no selection"))
 		else:
 			speech.speakMessage(_("selected %s")%info.text)
