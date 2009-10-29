@@ -179,8 +179,9 @@ class UIAHandler(object):
 		now=time.time()
 		v=self.UIAWindowHandleCache.get(hwnd,None)
 		if not v or (now-v[1])>0.5:
-			windowClassName=winUser.getClassName(hwnd)
-			if windowClassName in badUIAWindowClassNames:
+			if windll.kernel32.GetCurrentProcessId()==winUser.getWindowThreadProcessID(hwnd)[0]:
+				isUIA=False
+			elif winUser.getClassName(hwnd) in badUIAWindowClassNames:
 				isUIA=False
 			else:
 				isUIA=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
@@ -199,6 +200,14 @@ class UIAHandler(object):
 			return None
 
 	def isNativeUIAElement(self,UIAElement):
+		#Due to issues dealing with UIA elements coming from the same process, we do not class these UIA elements as usable.
+		#It seems to be safe enough to retreave the cached processID, but using tree walkers or fetching other properties causes a freeze.
+		try:
+			processID=UIAElement.cachedProcessId
+		except COMError:
+			return False
+		if processID==windll.kernel32.GetCurrentProcessId():
+			return False
 		windowHandle=self.getNearestWindowHandle(UIAElement)
 		if not windowHandle:
 			return False

@@ -1,9 +1,9 @@
-NonVisual Desktop Access (NVDA)
+Non-Visual Desktop Access (NVDA)
 URL: http://www.nvda-project.org/
 
-NonVisual Desktop Access (NVDA) on avoimen lähdekoodin ruudunlukuohjelma Windows-käyttöjärjestelmälle. NVDA mahdollistaa sokeiden ja heikkonäköisten Windows-tietokoneiden käytön samaan hintaan kuin näkeväkin henkilö. NVDA sallii käyttäjän selvittää, mitä ruudulla tapahtuu kysymällä käyttöjärjestelmältä ja käyttämällä puhesyntetisaattoria tietojen tulostamiseen.
+Non-Visual Desktop Access (NVDA) on avoimeen lähdekoodiin perustuva ruudunlukuohjelma Windows-käyttöjärjestelmälle. NVDA:n avulla sokeat ja heikkonäköiset voivat käyttää Windowsia samaan hintaan kuin näkevätkin henkilöt. NVDA tulostaa tiedot ruudun tapahtumista synteettisenä puheena ja pistekirjoituksella.
 
-Katso mukana toimitettua käyttöohjetta saadaksesi enemmän tietoja. Lisätietoja ja resursseja löytyy NVDA:n web-sivustolta.
+Lisää tietoa saat katsomalla mukana toimitettua käyttöohjetta. NVDA:n web-sivustolta löytyy myös lisätietoja ja -resursseja.
 
 Tekijänoikeus:
 Copyright (C) 2006-2008 NVDA-avustajat <http://www.nvda-project.org/>

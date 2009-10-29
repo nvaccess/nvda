@@ -284,7 +284,7 @@ the NVDAObject for IAccessible
 			while windowHandle and winUser.getClassName(windowHandle)=="MozillaWindowClass":
 				windowHandle=winUser.getAncestor(windowHandle,winUser.GA_PARENT)
 		try:
-			raise ValueError #Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
+			Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
 		except:
 			Identity=None
 		if event_windowHandle is None and Identity and 'windowHandle' in Identity:

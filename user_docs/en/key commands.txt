@@ -70,6 +70,9 @@ Saves the configuration.
 Control+NVDA+r: revertToSavedConfiguration
 Resets the configuration.
 
+NVDA+c: reportClipboardText
+Reports the text on the Windows clipboard.
+
 Change Settings (found in the settings dialogues)
 
 NVDA+2: toggleSpeakTypedCharacters
@@ -228,15 +231,16 @@ Moves the review cursor to the previous line.
 Shift+numpad9: review_bottom
 Moves the review cursor to the last line.
 
-VirtualBuffer commands for Firefox3 (some of these may work for Internet Explorer or Firefox2):
+VirtualBuffer commands:
 
 NVDA+space: toggleVirtualBufferPassThrough
 Turns virtualBuffer pass-through mode on or off.
 
-control+NVDA+f: find (control+f in firefox2 / internet explorer)
+control+NVDA+f: find
 NVDA+f3: find next
 NVDA+f7: elements list
-NVDA+f5: refresh buffer (not in Firefox2 or Internet Explorer)
+NVDA+f5: refresh buffer
+NVDA+v: toggleScreenLayout
 
 VirtualBuffer quick keys to skip to the next element of a particular type (also use shift with the key to go backwards):
 h: heading
