@@ -6,6 +6,7 @@
 
 """The NVDA launcher. It can handle some command-line arguments (including help). It sets up logging, and then starts the core."""
  
+import ctypes
 import os
 import sys
 import locale
@@ -123,6 +124,12 @@ logHandler.log.setLevel(logLevel)
 
 log.info("Starting NVDA")
 winUser.setSystemScreenReaderFlag(True)
+#Accept wm_quit from other processes, even if running with higher privilages
+try:
+	if not ctypes.windll.user32.ChangeWindowMessageFilter(win32con.WM_QUIT,1):
+		raise WinError()
+except AttributeError:
+	pass
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
 try:
