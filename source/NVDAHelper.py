@@ -1,5 +1,6 @@
 import subprocess
 import os
+import winKernel
 
 from ctypes import *
 import keyboardHandler
@@ -35,6 +36,32 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			keyboardHandler.speakKeyboardLayout(childID)
 	except:
 		log.error("helper.winEventCallback", exc_info=True)
+
+class RemoteLoader64(object):
+
+	def __init__(self):
+		pipeRead, self._pipeWrite = winKernel.CreatePipe(None, 0)
+		nul = file("nul", "w")
+		nulHandle = nul.fileno()
+		si = winKernel.STARTUPINFO(dwFlags=winKernel.STARTF_USESTDHANDLES, hSTDInput=pipeRead, hSTDOutput=nulHandle, hSTDError=nulHandle)
+		pi = winKernel.PROCESS_INFORMATION()
+		token = winKernel.OpenProcessToken(winKernel.GetCurrentProcess(), winKernel.MAXIMUM_ALLOWED)
+		try:
+			winKernel.CreateProcessAsUser(token, None, u"d:/a.exe", None, None, True, None, None, None, si, pi)
+			winKernel.closeHandle(pi.hThread)
+			self._process = pi.hProcess
+		except:
+			winKernel.closeHandle(self._pipeWrite)
+			raise
+		finally:
+			winKernel.closeHandle(pipeRead)
+			nul.close()
+			winKernel.closeHandle(token)
+
+	def terminate(self):
+		winKernel.closeHandle(self._pipeWrite)
+		winKernel.waitForSingleObject(self._process, winKernel.INFINITE)
+		winKernel.closeHandle(self._process)
 
 def initialize():
 	global _remoteLib, _remoteLoader64, localLib, winEventHookID,generateBeep

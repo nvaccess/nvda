@@ -6,8 +6,11 @@
 
 import ctypes
 import ctypes.wintypes
+from ctypes import *
+from ctypes.wintypes import *
 
 kernel32=ctypes.windll.kernel32
+advapi32 = windll.advapi32
 
 #Constants
 INFINITE = 0xffffffff
@@ -23,6 +26,8 @@ READ_CONTROL=0x20000
 MEM_COMMIT=0x1000
 MEM_RELEASE=0x8000
 PAGE_READWRITE=0x4
+MAXIMUM_ALLOWED = 0x2000000
+STARTF_USESTDHANDLES = 0x00000100
 #Console handles
 STD_INPUT_HANDLE=-10
 STD_OUTPUT_HANDLE=-11
@@ -123,3 +128,56 @@ DRIVE_RAMDISK = 6
 
 def GetDriveType(rootPathName):
 	return kernel32.GetDriveTypeW(rootPathName)
+
+def CreatePipe(pipeAttributes, size):
+	read = ctypes.wintypes.HANDLE()
+	write = ctypes.wintypes.HANDLE()
+	if kernel32.CreatePipe(ctypes.byref(read), ctypes.byref(write), pipeAttributes, ctypes.wintypes.DWORD(size)) == 0:
+		raise ctypes.WinError()
+	return read.value, write.value
+
+class STARTUPINFOW(Structure):
+	_fields_=(
+		('cb',DWORD),
+		('lpReserved',LPWSTR),
+		('lpDesktop',LPWSTR),
+		('lpTitle',LPWSTR),
+		('dwX',DWORD),
+		('dwY',DWORD),
+		('dwXSize',DWORD),
+		('dwYSize',DWORD),
+		('dwXCountChars',DWORD),
+		('dwYCountChars',DWORD),
+		('dwFillAttribute',DWORD),
+		('dwFlags',DWORD),
+		('wShowWindow',WORD),
+		('cbReserved2',WORD),
+		('lpReserved2',POINTER(c_byte)),
+		('hSTDInput',HANDLE),
+		('hSTDOutput',HANDLE),
+		('hSTDError',HANDLE),
+	)
+	def __init__(self, **kwargs):
+		super(STARTUPINFOW, self).__init__(cb=sizeof(self), **kwargs)
+STARTUPINFO = STARTUPINFOW
+
+class PROCESS_INFORMATION(Structure):
+	_fields_=(
+		('hProcess',HANDLE),
+		('hThread',HANDLE),
+		('dwProcessID',DWORD),
+		('dwThreadID',DWORD),
+	)
+
+def CreateProcessAsUser(token, applicationName, commandLine, processAttributes, threadAttributes, inheritHandles, creationFlags, environment, currentDirectory, startupInfo, processInformation):
+	if advapi32.CreateProcessAsUserW(token, applicationName, commandLine, processAttributes, threadAttributes, inheritHandles, creationFlags, environment, currentDirectory, byref(startupInfo), byref(processInformation)) == 0:
+		raise WinError()
+
+def GetCurrentProcess():
+	return kernel32.GetCurrentProcess()
+
+def OpenProcessToken(ProcessHandle, DesiredAccess):
+	token = HANDLE()
+	if advapi32.OpenProcessToken(ProcessHandle, DesiredAccess, byref(token)) == 0:
+		raise WinError()
+	return token.value
