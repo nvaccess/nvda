@@ -209,19 +209,23 @@ class AppModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("no navigator object"))
 			return
 		if scriptHandler.getLastScriptRepeatCount()>=1:
-			textList=[prop for prop in (curObject.name, curObject.value) if prop and isinstance(prop, basestring) and not prop.isspace()]
 			if curObject.TextInfo!=NVDAObjectTextInfo:
+				textList=[]
+				if curObject.name and isinstance(curObject.name, basestring) and not curObject.name.isspace():
+					textList.append(curObject.name)
 				try:
 					info=curObject.makeTextInfo(textInfos.POSITION_SELECTION)
 					if not info.isCollapsed:
 						textList.append(info.text)
 					else:
-						info.expand(textInfos.UNIT_READINGCHUNK)
+						info.expand(textInfos.UNIT_LINE)
 						if not info.isCollapsed:
 							textList.append(info.text)
 				except (RuntimeError, NotImplementedError):
 					# No caret or selection on this object.
 					pass
+			else:
+				textList=[prop for prop in (curObject.name, curObject.value) if prop and isinstance(prop, basestring) and not prop.isspace()]
 			text=" ".join(textList)
 			if len(text)>0 and not text.isspace():
 				if scriptHandler.getLastScriptRepeatCount()==1:
