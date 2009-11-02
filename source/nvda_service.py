@@ -152,7 +152,7 @@ def startNVDA(desktop):
 	args = [desktop, None, nvdaExec, "-m"]
 	if not isDebug:
 		args.append("--secure")
-	executeProcess(*args)
+	return executeProcess(*args)
 
 def startNVDAUIAccess(session, desktop):
 	token = duplicateTokenPrimary(getLoggedOnUserToken(session))
