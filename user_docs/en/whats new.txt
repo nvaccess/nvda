@@ -67,6 +67,8 @@ Major highlights of this release include support for 64 bit editions of Windows;
 	* The review copy command (NVDA+f10) gracefully handles the case where it is used on a position before the start marker. Previously, this could cause problems such as crashes in Notepad++.
 	* A certain control character (0x1) no longer causes strange eSpeak behaviour (such as changes in volume and pitch) when it is encountered in text. (#437)
 	* The report text selection command (NVDA+shift+upArrow) now gracefully reports that there is no selection in objects which do not support text selection.
+	* Fixed a problem with Miranda-IM appmodule where pressing the enter key on Miranda-IM specific buttons or links was causing NVDA to freeze. (#440)
+	* When spelling or copying current navigator object current line or current selection was not properly respected.
 
 == 0.6p3 ==
 

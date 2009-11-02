@@ -1,33 +1,36 @@
 #Afrikaans translation of NVDA
-# Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+# Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
+# This file is distributed under the same license as the PACKAGE NVDA.
 # FIRST AUTHOR <wvdwalt@csir.co.za>, 2007.
+# UPDATED by Rynhardt Kruger <rynkruger@gmail.com> with help from Willem Venter -- 2009.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2007-06-30 15:55+AUS Eastern Standard Time\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-10-29 14:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Willem van der Walt <wvdwalt@csir.co.za>\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: ENCODING\n"
-"Generated-By: pygettext.py 1.5\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-
-#: IAccessibleHandler.py:136 controlTypes.py:133
+#: IAccessibleHandler.py:136 controlTypes.py:133 controlTypes.py:180
 msgid "window"
 msgstr "venster"
 
 #: IAccessibleHandler.py:137 characterSymbols.py:20 controlTypes.py:154
+#: characterSymbols.py:20 controlTypes.py:201
 msgid "tab"
 msgstr "tab"
 
-#: IAccessibleHandler.py:138 controlTypes.py:140
+#: IAccessibleHandler.py:138 controlTypes.py:140 controlTypes.py:187
 msgid "edit"
 msgstr "redigeer"
 
-#: IAccessibleHandler.py:139 controlTypes.py:141
+#: IAccessibleHandler.py:139 controlTypes.py:141 controlTypes.py:188
 msgid "button"
 msgstr "knoppie"
 
@@ -46,7 +49,8 @@ msgstr "sub-kieslys"
 #: virtualBuffers/IAccessible/adobe.py:289
 #: virtualBuffers/IAccessible/adobe.py:293
 #: virtualBuffers/IAccessible/gecko.py:282
-#: virtualBuffers/IAccessible/gecko.py:286
+#: virtualBuffers/IAccessible/gecko.py:286 braille.py:216 speech.py:660
+#, python-format
 msgid "not %s"
 msgstr "nie %s nie"
 
@@ -56,11 +60,14 @@ msgstr "het fokus verloor"
 
 #: NVDAObjects/IAccessible/__init__.py:67
 #: NVDAObjects/IAccessible/__init__.py:435
-#: NVDAObjects/IAccessible/sysListView32.py:83
+#: NVDAObjects/IAccessible/sysListView32.py:83 braille.py:228 speech.py:666
+#, python-format
 msgid "%s of %s"
 msgstr "%s van %s"
 
 #: NVDAObjects/IAccessible/__init__.py:71
+#: NVDAObjects/IAccessible/sysTreeView32.py:169
+#, python-format
 msgid "%s items"
 msgstr "%s items"
 
@@ -68,19 +75,20 @@ msgstr "%s items"
 msgid "%d items"
 msgstr "%d items"
 
-#: NVDAObjects/IAccessible/excel.py:64
+#: NVDAObjects/IAccessible/excel.py:64 NVDAObjects/window/excel.py:205
 msgid "through"
 msgstr "deur"
 
 #: NVDAObjects/IAccessible/excel.py:64 controlTypes.py:248
+#: NVDAObjects/window/excel.py:193 controlTypes.py:326
 msgid "selected"
 msgstr "gekose"
 
-#: NVDAObjects/IAccessible/excel.py:68
+#: NVDAObjects/IAccessible/excel.py:68 NVDAObjects/window/excel.py:209
 msgid "has formula"
 msgstr "het formule"
 
-#: NVDAObjects/IAccessible/excel.py:97
+#: NVDAObjects/IAccessible/excel.py:97 NVDAObjects/window/excel.py:105
 msgid "Moves to a cell and speaks its coordinates and content"
 msgstr "gaan na 'n sel en gee sy ko-ordinate en inhoud"
 
@@ -93,14 +101,17 @@ msgid "point"
 msgstr "punt"
 
 #: NVDAObjects/IAccessible/excel.py:104 textBuffer.py:266 textBuffer.py:318
+#: speech.py:839 controlTypes.py:305
 msgid "bold"
 msgstr "vetdruk"
 
 #: NVDAObjects/IAccessible/excel.py:106 textBuffer.py:273 textBuffer.py:320
+#: speech.py:844
 msgid "italic"
 msgstr "kursief"
 
 #: NVDAObjects/IAccessible/excel.py:108 textBuffer.py:280 textBuffer.py:322
+#: characterSymbols.py:51 controlTypes.py:307
 msgid "underline"
 msgstr "onderstreep"
 
@@ -110,26 +121,32 @@ msgstr "%d van %d"
 
 #: NVDAObjects/__init__.py:376 NVDAObjects/__init__.py:404 textBuffer.py:364
 #: textBuffer.py:391 textBuffer.py:412 textBuffer.py:433
-#: virtualBuffers/__init__.py:272
+#: virtualBuffers/__init__.py:272 appModules/_default.py:384
+#: appModules/_default.py:396 appModules/_default.py:437
 msgid "top"
 msgstr "bo"
 
 #: NVDAObjects/__init__.py:389 NVDAObjects/__init__.py:417 textBuffer.py:369
 #: textBuffer.py:382 textBuffer.py:403 textBuffer.py:424
-#: virtualBuffers/__init__.py:287
+#: virtualBuffers/__init__.py:287 appModules/_default.py:417
+#: appModules/_default.py:425 appModules/_default.py:458
 msgid "bottom"
 msgstr "onder"
 
-#: NVDAObjects/__init__.py:431
+#: NVDAObjects/__init__.py:431 appModules/totalcmd.py:35
+#: appModules/_default.py:468 appModules/_default.py:480
 msgid "left"
 msgstr "links"
 
-#: NVDAObjects/__init__.py:444
+#: NVDAObjects/__init__.py:444 appModules/totalcmd.py:37
+#: appModules/_default.py:512 appModules/_default.py:529
 msgid "right"
 msgstr "regs"
 
 #: NVDAObjects/__init__.py:528 textBuffer.py:537 textBuffer.py:541
-#: textBuffer.py:543 textBuffer.py:549
+#: textBuffer.py:543 textBuffer.py:549 appModules/_default.py:91
+#: speech.py:268 speech.py:362 speech.py:375 virtualBuffers/__init__.py:598
+#, python-format
 msgid "selected %s"
 msgstr "het %s gekies"
 
@@ -154,6 +171,14 @@ msgstr "virtuele buffer deurlaat"
 #: dist/appModules/_default.py:441 dist/appModules/_default.py:451
 #: dist/appModules/_default.py:461 dist/appModules/_default.py:471
 #: keyboardHandler.py:48 keyboardHandler.py:50 keyboardHandler.py:52
+#: keyboardHandler.py:54 keyboardHandler.py:56 keyboardHandler.py:58
+#: appModules/_default.py:46 appModules/_default.py:140
+#: appModules/_default.py:150 appModules/_default.py:160
+#: appModules/_default.py:170 appModules/_default.py:561
+#: appModules/_default.py:680 appModules/_default.py:756
+#: appModules/_default.py:766 appModules/_default.py:776
+#: appModules/winamp.py:77 appModules/winamp.py:87
+#: virtualBuffers/__init__.py:692 gui/settingsDialogs.py:508
 msgid "off"
 msgstr "af"
 
@@ -168,16 +193,30 @@ msgstr "af"
 #: dist/appModules/_default.py:444 dist/appModules/_default.py:454
 #: dist/appModules/_default.py:464 dist/appModules/_default.py:474
 #: keyboardHandler.py:48 keyboardHandler.py:50 keyboardHandler.py:52
+#: keyboardHandler.py:54 keyboardHandler.py:56 keyboardHandler.py:58
+#: appModules/_default.py:43 appModules/_default.py:143
+#: appModules/_default.py:153 appModules/_default.py:163
+#: appModules/_default.py:173 appModules/_default.py:683
+#: appModules/_default.py:759 appModules/_default.py:769
+#: appModules/_default.py:779 appModules/winamp.py:75 appModules/winamp.py:85
+#: virtualBuffers/__init__.py:692
 msgid "on"
 msgstr "aan"
 
 #: appModules/_default.py:44 dist/appModules/_default.py:44
+#: appModules/_default.py:48
+#, python-format
 msgid "keyboard help %s"
 msgstr "sleutelbord hulp %s"
 
 #: appModules/_default.py:45 dist/appModules/_default.py:45
-msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any."
-msgstr "Sit sleutelbord hulp aan en af.  Terwyl dit aan is, en 'n sleutel gedruk word, word sy funksie verduidelik as hy een het."
+#: appModules/_default.py:49
+msgid ""
+"Turns keyboard help on and off. When on, pressing a key on the keyboard will "
+"tell you what script is associated with it, if any."
+msgstr ""
+"Sit sleutelbord hulp aan en af.  Terwyl dit aan is, en 'n sleutel gedruk "
+"word, word sy funksie verduidelik as hy een het."
 
 #: appModules/_default.py:53 dist/appModules/_default.py:55
 msgid "Reports the current date and time"
@@ -197,43 +236,60 @@ msgid "decreases the speech rate by 5 percent"
 msgstr "maak die spraakspoed 5 persent stadiger"
 
 #: appModules/_default.py:76 dist/appModules/_default.py:78
+#: appModules/_default.py:145
 msgid "speak typed characters"
 msgstr "praat getikte karakters"
 
 #: appModules/_default.py:77 dist/appModules/_default.py:79
+#: appModules/_default.py:146
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "sit die lees van getikte karakters aan of af."
 
 #: appModules/_default.py:86 dist/appModules/_default.py:88
+#: appModules/_default.py:155
 msgid "speak typed words"
 msgstr "praat getikte woorde"
 
 #: appModules/_default.py:87 dist/appModules/_default.py:89
+#: appModules/_default.py:156
 msgid "Toggles on and off the speaking of typed words"
 msgstr "sit die lees van getikte woorde aan of af"
 
 #: appModules/_default.py:96 dist/appModules/_default.py:98
+#: appModules/_default.py:165
 msgid "speak command keys"
 msgstr "lees bevelsleutels"
 
 #: appModules/_default.py:97 dist/appModules/_default.py:99
-msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
+#: appModules/_default.py:166
+msgid ""
+"Toggles on and off the speaking of typed keys, that are not specifically "
+"characters"
 msgstr "sit die lees van getikte sleutels wat nie karakters is nie, ann of af"
 
 #: appModules/_default.py:106 dist/appModules/_default.py:108
+#: appModules/_default.py:175
 msgid "speak punctuation"
 msgstr "lees leestekens"
 
 #: appModules/_default.py:107 dist/appModules/_default.py:109
-msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"
-msgstr "sit die lees van leestekens aan of af.  As dit aan is, lees nvda die leestekenname.  As dit af is word dit aan die sintetiseerder oorgelaat."
+#: appModules/_default.py:176
+msgid ""
+"Toggles on and off the speaking of punctuation. When on NVDA will say the "
+"names of punctuation symbols, when off it will be up to the synthesizer as "
+"to how it speaks punctuation"
+msgstr ""
+"sit die lees van leestekens aan of af.  As dit aan is, lees nvda die "
+"leestekenname.  As dit af is word dit aan die sintetiseerder oorgelaat."
 
 #: appModules/_default.py:112 dist/appModules/_default.py:114
 msgid "Moves the mouse pointer to the current navigator object."
 msgstr "beweeg die muis na die huidige navigator voorwerp"
 
 #: appModules/_default.py:121 dist/appModules/_default.py:123
-msgid "Sets the navigator object to the object that is directly under the mouse pointer"
+msgid ""
+"Sets the navigator object to the object that is directly under the mouse "
+"pointer"
 msgstr "maak die navigatorvoorwerp die een wat reg onder die muis is."
 
 #: appModules/_default.py:126 appModules/_default.py:135
@@ -251,6 +307,11 @@ msgstr "maak die navigatorvoorwerp die een wat reg onder die muis is."
 #: dist/appModules/_default.py:296 dist/appModules/_default.py:304
 #: dist/appModules/_default.py:312 dist/appModules/_default.py:320
 #: dist/appModules/_default.py:328 dist/appModules/_default.py:336
+#: appModules/_default.py:209 appModules/_default.py:239
+#: appModules/_default.py:267 appModules/_default.py:280
+#: appModules/_default.py:293 appModules/_default.py:306
+#: appModules/_default.py:319 appModules/_default.py:342
+#: appModules/_default.py:365 appModules/_default.py:721
 msgid "no navigator object"
 msgstr "geen navigatorvoorwerp nie"
 
@@ -259,6 +320,7 @@ msgid "Reports the current navigator object"
 msgstr "lees die huidige navigatorvoorwerp."
 
 #: appModules/_default.py:138 dist/appModules/_default.py:140
+#: appModules/_default.py:242
 msgid "No location information for navigator object"
 msgstr "geen posisieinligting beskikbaar vir navigatorvoorwerp nie."
 
@@ -267,139 +329,222 @@ msgid "%d wide by %d high, located %d from left and %d from top"
 msgstr "%d wyd by %d hoog, geposisioneer %d van links en %d van bo"
 
 #: appModules/_default.py:141 dist/appModules/_default.py:143
+#: appModules/_default.py:253
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "lees die hoogte, wydte en posisie van die huidige navigatorvoorwerp"
 
 #: appModules/_default.py:146 appModules/_default.py:346
 #: dist/appModules/_default.py:148 dist/appModules/_default.py:390
+#: appModules/_default.py:258 appModules/_default.py:661
 msgid "no focus"
 msgstr "geen fokus nie"
 
 #: appModules/_default.py:148 dist/appModules/_default.py:150
+#: appModules/_default.py:260
 msgid "move to focus"
 msgstr "beweeg na fokus"
 
 #: appModules/_default.py:150 dist/appModules/_default.py:152
+#: appModules/_default.py:262
 msgid "Sets the navigator object to the current focus"
 msgstr "stel die navigatorvoorwerp na die huidige fokus"
 
 #: appModules/_default.py:162 dist/appModules/_default.py:164
+#: appModules/_default.py:274
 msgid "No parents"
 msgstr "geen ouers nie"
 
 #: appModules/_default.py:163 dist/appModules/_default.py:165
-msgid "Sets the navigator object to the parent of the object it is currently on."
+msgid ""
+"Sets the navigator object to the parent of the object it is currently on."
 msgstr "verstel die navigatorvoorwerp na die ouer van die een waarop hy nou is"
 
 #: appModules/_default.py:175 dist/appModules/_default.py:177
+#: appModules/_default.py:287
 msgid "No next"
 msgstr "geen volgende nie"
 
 #: appModules/_default.py:176 dist/appModules/_default.py:178
-msgid "Sets the navigator object to the next object to the one it is currently on"
+msgid ""
+"Sets the navigator object to the next object to the one it is currently on"
 msgstr "verstel die navigatorvoorwerp na die een wat op die huidige een volg."
 
 #: appModules/_default.py:188 dist/appModules/_default.py:190
+#: appModules/_default.py:300
 msgid "No previous"
 msgstr "geen vorige nie"
 
 #: appModules/_default.py:189 dist/appModules/_default.py:191
-msgid "Sets the navigator object to the previous object to the one it is currently on"
-msgstr "verstel die navigatorvoorwerp na die een wat die huidige een vooraf gaan."
+msgid ""
+"Sets the navigator object to the previous object to the one it is currently "
+"on"
+msgstr ""
+"verstel die navigatorvoorwerp na die een wat die huidige een vooraf gaan."
 
 #: appModules/_default.py:201 dist/appModules/_default.py:203
+#: appModules/_default.py:313
 msgid "No children"
 msgstr "geen kinders nie"
 
 #: appModules/_default.py:202 dist/appModules/_default.py:204
-msgid "Sets the navigator object to the first child object to the one it is currently on"
+msgid ""
+"Sets the navigator object to the first child object to the one it is "
+"currently on"
 msgstr "verstel die navigatorvoorwerp na die huidige een se eerste kind"
 
 #: appModules/_default.py:210 dist/appModules/_default.py:212
-msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
-msgstr "voer die verstek aksie op die huidige navigatorvoorwerp uit, byvoorbeeld, druk dit as dit 'n knoppie is."
+#: appModules/_default.py:378
+msgid ""
+"Performs the default action on the current navigator object (example: "
+"presses it if it is a button)."
+msgstr ""
+"voer die verstek aksie op die huidige navigatorvoorwerp uit, byvoorbeeld, "
+"druk dit as dit 'n knoppie is."
 
 #: appModules/_default.py:223 dist/appModules/_default.py:225
-msgid "Reports where the current navigator object is by reporting each of its ancestors"
-msgstr "lees waar die huidige navigatorvoorwerp is, deur al sy voorouers te lees."
+msgid ""
+"Reports where the current navigator object is by reporting each of its "
+"ancestors"
+msgstr ""
+"lees waar die huidige navigatorvoorwerp is, deur al sy voorouers te lees."
 
 #: appModules/_default.py:228 dist/appModules/_default.py:233
 msgid "Moves the review cursor to the top line of the current navigator object"
-msgstr "beweeg die weerkykwyser na die boonste lyn van die huidige navigatorvoorwerp"
+msgstr ""
+"beweeg die weerkykwyser na die boonste lyn van die huidige navigatorvoorwerp"
 
 #: appModules/_default.py:233 dist/appModules/_default.py:249
-msgid "Moves the review cursor to the previous line of the current navigator object"
-msgstr "beweeg die weerkykwyser na die vorige lyn van die huidige navigatorvoorwerp"
+msgid ""
+"Moves the review cursor to the previous line of the current navigator object"
+msgstr ""
+"beweeg die weerkykwyser na die vorige lyn van die huidige navigatorvoorwerp"
 
 #: appModules/_default.py:238 dist/appModules/_default.py:257
-msgid "Reports the line of the current navigator object where the review cursor is situated"
-msgstr "lees die lyn van die huidige navigatorvoorwerp waar die weerkykwyser nou is."
+msgid ""
+"Reports the line of the current navigator object where the review cursor is "
+"situated"
+msgstr ""
+"lees die lyn van die huidige navigatorvoorwerp waar die weerkykwyser nou is."
 
 #: appModules/_default.py:243 dist/appModules/_default.py:265
-msgid "Moves the review cursor to the next line of the current navigator object"
-msgstr "beweeg die weerkykwyser na die volgende lyn van die huidige navigatorvoorwerp"
+msgid ""
+"Moves the review cursor to the next line of the current navigator object"
+msgstr ""
+"beweeg die weerkykwyser na die volgende lyn van die huidige navigatorvoorwerp"
 
 #: appModules/_default.py:248 dist/appModules/_default.py:241
-msgid "Moves the review cursor to the bottom line of the current navigator object"
-msgstr "beweeg die weerkykwyser na die onderste lyn van die huidige navigatorvoorwerp"
+msgid ""
+"Moves the review cursor to the bottom line of the current navigator object"
+msgstr ""
+"beweeg die weerkykwyser na die onderste lyn van die huidige navigatorvoorwerp"
 
 #: appModules/_default.py:253 dist/appModules/_default.py:273
-msgid "Moves the review cursor to the previous word of the current navigator object"
-msgstr "beweeg die weerkykwyser na die vorige woord van die huidige navigatorvoorwerp"
+msgid ""
+"Moves the review cursor to the previous word of the current navigator object"
+msgstr ""
+"beweeg die weerkykwyser na die vorige woord van die huidige navigatorvoorwerp"
 
 #: appModules/_default.py:258 dist/appModules/_default.py:281
-msgid "Speaks the word of the current navigator object where the review cursor is situated"
-msgstr "lees die woord in die huidige navigatorvoorwerp waar die weerkykwyser nou is"
+msgid ""
+"Speaks the word of the current navigator object where the review cursor is "
+"situated"
+msgstr ""
+"lees die woord in die huidige navigatorvoorwerp waar die weerkykwyser nou is"
 
 #: appModules/_default.py:263 dist/appModules/_default.py:289
-msgid "Moves the review cursor to the next word of the current navigator object"
-msgstr "beweeg die weerkykwyser na die volgende woord van die huidige navigatorvoorwerp"
+msgid ""
+"Moves the review cursor to the next word of the current navigator object"
+msgstr ""
+"beweeg die weerkykwyser na die volgende woord van die huidige "
+"navigatorvoorwerp"
 
 #: appModules/_default.py:268 dist/appModules/_default.py:321
-msgid "Moves the review cursor to the start of the line where it is situated, in the current navigator object"
-msgstr "beweeg die weerkykwyser na die begin van die huidige lyn in die navigatorvoorwerp"
+msgid ""
+"Moves the review cursor to the start of the line where it is situated, in "
+"the current navigator object"
+msgstr ""
+"beweeg die weerkykwyser na die begin van die huidige lyn in die "
+"navigatorvoorwerp"
 
 #: appModules/_default.py:273 dist/appModules/_default.py:297
-msgid "Moves the review cursor to the previous character of the current navigator object"
-msgstr "beweeg die weerkykwyser na die vorige karakter in die huidige navigatorvoorwerp"
+msgid ""
+"Moves the review cursor to the previous character of the current navigator "
+"object"
+msgstr ""
+"beweeg die weerkykwyser na die vorige karakter in die huidige "
+"navigatorvoorwerp"
 
 #: appModules/_default.py:278 dist/appModules/_default.py:305
-msgid "Reports the character of the current navigator object where the review cursor is situated"
-msgstr "lees die karakter waarop die weerkykwyser staan inb die huidige navigatorvoorwerp"
+msgid ""
+"Reports the character of the current navigator object where the review "
+"cursor is situated"
+msgstr ""
+"lees die karakter waarop die weerkykwyser staan inb die huidige "
+"navigatorvoorwerp"
 
 #: appModules/_default.py:283 dist/appModules/_default.py:313
-msgid "Moves the review cursor to the next character of the current navigator object"
-msgstr "beweeg die weerkykwyser na die volgende karakter van die huidige navigatorvoorwerp"
+msgid ""
+"Moves the review cursor to the next character of the current navigator object"
+msgstr ""
+"beweeg die weerkykwyser na die volgende karakter van die huidige "
+"navigatorvoorwerp"
 
 #: appModules/_default.py:288 dist/appModules/_default.py:329
-msgid "Moves the review cursor to the end of the line where it is situated, in the current navigator object"
-msgstr "beweeg die weerkykwyser na die einde van die huidige lyn in die huidige navigatorvoorwerp"
+msgid ""
+"Moves the review cursor to the end of the line where it is situated, in the "
+"current navigator object"
+msgstr ""
+"beweeg die weerkykwyser na die einde van die huidige lyn in die huidige "
+"navigatorvoorwerp"
 
 #: appModules/_default.py:293 dist/appModules/_default.py:337
-msgid "Moves the review cursor to the position of the system caret, in the current navigator object"
-msgstr "beweeg die weerkykwyser na die posisie van die stelselwyser in die huidige navigatorvoorwerp"
+#: appModules/_default.py:542
+msgid ""
+"Moves the review cursor to the position of the system caret, in the current "
+"navigator object"
+msgstr ""
+"beweeg die weerkykwyser na die posisie van die stelselwyser in die huidige "
+"navigatorvoorwerp"
 
 #: appModules/_default.py:302 dist/appModules/_default.py:346
+#: appModules/_default.py:563
 msgid "beeps"
 msgstr "biep"
 
 #: appModules/_default.py:304 dist/appModules/_default.py:348
+#: appModules/_default.py:565
 msgid "talk"
 msgstr "praat"
 
 #: appModules/_default.py:305 dist/appModules/_default.py:349
+#: appModules/_default.py:567
+#, python-format
 msgid "speech mode %s"
 msgstr "spraakmode %s"
 
 #: appModules/_default.py:307 dist/appModules/_default.py:351
-msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr "stel tussen die spraakverstellings, af, biep en praat. As dit af is, sal NVDA niks lees nie.  Op biep, sal NVDA net biep elke keer wanneer hy iets sou gelees het. Op praat sal NVDA normaal lees."
+#: appModules/_default.py:569
+msgid ""
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA wil just speak normally."
+msgstr ""
+"stel tussen die spraakverstellings, af, biep en praat. As dit af is, sal "
+"NVDA niks lees nie.  Op biep, sal NVDA net biep elke keer wanneer hy iets "
+"sou gelees het. Op praat sal NVDA normaal lees."
 
 #: appModules/_default.py:311 dist/appModules/_default.py:355
-msgid "Toggles virtualBuffer pass-through mode on and off. When on, keys will pass straight through the current virtualBuffer, allowing you to interact with a control without the virtualBuffer doing something else with the key."
-msgstr "stel tussen virtuele buffer deurlaat aan en af. As deurlaatbuffer aan is, gaan alle sleuteldrukke direk na die onderliggende program deur, sonder dat die buffer hulle onderskep."
+msgid ""
+"Toggles virtualBuffer pass-through mode on and off. When on, keys will pass "
+"straight through the current virtualBuffer, allowing you to interact with a "
+"control without the virtualBuffer doing something else with the key."
+msgstr ""
+"stel tussen virtuele buffer deurlaat aan en af. As deurlaatbuffer aan is, "
+"gaan alle sleuteldrukke direk na die onderliggende program deur, sonder dat "
+"die buffer hulle onderskep."
 
 #: appModules/_default.py:315 dist/appModules/_default.py:359
+#: appModules/_default.py:596
 msgid "Quits NVDA!"
 msgstr "Gaan uit NVDA uit"
 
@@ -412,6 +557,7 @@ msgid "reads from cursor up to end of current text"
 msgstr "lees vanaf die wyser tot aan die einde van huidige teks"
 
 #: appModules/_default.py:347 dist/appModules/_default.py:391
+#: appModules/_default.py:662
 msgid "reports the object with focus"
 msgstr "lees die voorwerp wat fokus het"
 
@@ -420,12 +566,15 @@ msgid "no foreground object"
 msgstr "geen voorgrondvoorwerp nie."
 
 #: appModules/_default.py:356 dist/appModules/_default.py:400
+#: appModules/_default.py:667
 msgid "no status bar found"
 msgstr "kry geen statuslyn nie"
 
 #: appModules/_default.py:360 dist/appModules/_default.py:404
-msgid "reads the current aplication status bar and moves the navigation cursor to it"
-msgstr "lees die huidige applikasie statuslyn en beweeg die navigatorwyser daarheen."
+msgid ""
+"reads the current aplication status bar and moves the navigation cursor to it"
+msgstr ""
+"lees die huidige applikasie statuslyn en beweeg die navigatorwyser daarheen."
 
 #: appModules/_default.py:369 dist/appModules/_default.py:413
 msgid "Report object under mouse"
@@ -440,12 +589,17 @@ msgid "Reports the title of the current application or foreground window"
 msgstr "lees die titel van die huidige applikasie of voorgrondvenster"
 
 #: appModules/_default.py:383 dist/appModules/_default.py:427
+#: appModules/_default.py:710
 msgid "speaks the current foreground object"
 msgstr "lees die huidige voorgrondvoorwerp"
 
 #: appModules/_default.py:396 dist/appModules/_default.py:437
-msgid "reports some info about the current navigator object, mainly useful for developers: control id, class and internal text"
-msgstr "lees seker inligting oor die huidige navigatorvoorwerp, hoofsaaklik nuttig vir ontwikkelaars: control id, class en internal text"
+msgid ""
+"reports some info about the current navigator object, mainly useful for "
+"developers: control id, class and internal text"
+msgstr ""
+"lees seker inligting oor die huidige navigatorvoorwerp, hoofsaaklik nuttig "
+"vir ontwikkelaars: control id, class en internal text"
 
 #: appModules/_default.py:405 dist/appModules/_default.py:446
 msgid "Beep on progress bar updates"
@@ -456,103 +610,132 @@ msgid "Toggles on and off the beeping on progress bar updates"
 msgstr "sit die biep tydens vorderingslyn opdaterings aan en af"
 
 #: appModules/_default.py:415 dist/appModules/_default.py:456
+#: appModules/_default.py:761
 msgid "report dynamic content changes"
 msgstr "lees dinamiese inhoudsveranderings"
 
 #: appModules/_default.py:416 dist/appModules/_default.py:457
-msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
-msgstr "sit die lees van dinamiese inhoudsveranderings aan en af, soos nuwe teks in dos konsole vensters."
+#: appModules/_default.py:762
+msgid ""
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
+msgstr ""
+"sit die lees van dinamiese inhoudsveranderings aan en af, soos nuwe teks in "
+"dos konsole vensters."
 
 #: appModules/_default.py:425 dist/appModules/_default.py:466
+#: appModules/_default.py:771
 msgid "caret moves review cursor"
 msgstr "wyser beweeg kykweerwyser"
 
 #: appModules/_default.py:426 dist/appModules/_default.py:467
-msgid "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "sit beweging van die weerkykwyser na aanlyding van die beweging van die wyser, aan of af"
+#: appModules/_default.py:772
+msgid ""
+"Toggles on and off the movement of the review cursor due to the caret moving."
+msgstr ""
+"sit beweging van die weerkykwyser na aanlyding van die beweging van die "
+"wyser, aan of af"
 
 #: appModules/_default.py:435 dist/appModules/_default.py:476
+#: appModules/_default.py:781
 msgid "focus moves navigator object"
 msgstr "fokus beweeg navigatorvoorwerp"
 
 #: appModules/_default.py:436 dist/appModules/_default.py:477
-msgid "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "sit die beweging van die navigatorvoorwerp na aanlyding van fokusveranderings, aan of af."
+#: appModules/_default.py:782
+msgid ""
+"Toggles on and off the movement of the navigator object due to focus changes"
+msgstr ""
+"sit die beweging van die navigatorvoorwerp na aanlyding van "
+"fokusveranderings, aan of af."
 
 #: appModules/_default.py:450 dist/appModules/_default.py:491
+#: NVDAObjects/progressBar.py:45 appModules/_default.py:796
+#, python-format
 msgid "%d percent"
 msgstr "%d persent"
 
 #: appModules/_default.py:451 dist/appModules/_default.py:492
+#: appModules/_default.py:797
 msgid "AC power on"
 msgstr "A C krag aan"
 
 #: appModules/_default.py:453 dist/appModules/_default.py:494
+#: appModules/_default.py:799
+#, python-format
 msgid "%d hours and %d minutes remaining"
 msgstr "%d ure en %d minute nog oor"
 
 #: appModules/_default.py:455 dist/appModules/_default.py:496
+#: appModules/_default.py:801
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr "lees battarystatus en oorblywende tyd as elektrisiteit nie ingeprop is nie."
+msgstr ""
+"lees battarystatus en oorblywende tyd as elektrisiteit nie ingeprop is nie."
 
 #: appModules/_default.py:459 dist/appModules/_default.py:500
+#: appModules/_default.py:805
 msgid "Pass next key through"
 msgstr "laat volgende sleutel deur"
 
 #: appModules/_default.py:460 dist/appModules/_default.py:501
-msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
-msgstr "Die volgende sleutel wat gedruk word, sal glad nie deur NVDA hanteer word nie, maar direk na Windows aangestuur word."
+#: appModules/_default.py:806
+msgid ""
+"The next key that is pressed will not be handled at all by NVDA, it will be "
+"passed directly through to Windows."
+msgstr ""
+"Die volgende sleutel wat gedruk word, sal glad nie deur NVDA hanteer word "
+"nie, maar direk na Windows aangestuur word."
 
-#: appModules/msimn.py:20 dist/appModules/msimn.py:14
+#: appModules/msimn.py:20 dist/appModules/msimn.py:14 appModules/msimn.py:18
 msgid "Attachments"
 msgstr "aanhangsels"
 
-#: appModules/msimn.py:21 dist/appModules/msimn.py:15
+#: appModules/msimn.py:21 dist/appModules/msimn.py:15 appModules/msimn.py:19
 msgid "To:"
 msgstr "na:"
 
-#: appModules/msimn.py:22
+#: appModules/msimn.py:22 appModules/msimn.py:20
 msgid "Newsgroup:"
 msgstr "nuusgroep"
 
-#: appModules/msimn.py:23 dist/appModules/msimn.py:16
+#: appModules/msimn.py:23 dist/appModules/msimn.py:16 appModules/msimn.py:21
 msgid "CC:"
 msgstr "koolstof kopie"
 
-#: appModules/msimn.py:24 dist/appModules/msimn.py:17
+#: appModules/msimn.py:24 dist/appModules/msimn.py:17 appModules/msimn.py:22
 msgid "Subject:"
 msgstr "onderwerp"
 
 #: appModules/msimn.py:25 appModules/msimn.py:33 dist/appModules/msimn.py:18
-#: dist/appModules/msimn.py:21
+#: dist/appModules/msimn.py:21 appModules/msimn.py:23 appModules/msimn.py:31
 msgid "From:"
 msgstr "van:"
 
-#: appModules/msimn.py:26 dist/appModules/msimn.py:19
+#: appModules/msimn.py:26 dist/appModules/msimn.py:19 appModules/msimn.py:24
 msgid "Date:"
 msgstr "Datum:"
 
-#: appModules/msimn.py:27
+#: appModules/msimn.py:27 appModules/msimn.py:25
 msgid "Forward to:"
 msgstr "stuur aan na:"
 
-#: appModules/msimn.py:28
+#: appModules/msimn.py:28 appModules/msimn.py:26
 msgid "Answer to:"
 msgstr "antwoord na:"
 
-#: appModules/msimn.py:29
+#: appModules/msimn.py:29 appModules/msimn.py:27
 msgid "Organisation:"
 msgstr "organisasie:"
 
-#: appModules/msimn.py:30
+#: appModules/msimn.py:30 appModules/msimn.py:28
 msgid "Distribution:"
 msgstr "verspreiding:"
 
-#: appModules/msimn.py:31
+#: appModules/msimn.py:31 appModules/msimn.py:29
 msgid "Key words:"
 msgstr "sleutelwoorde:"
 
-#: appModules/msimn.py:32 dist/appModules/msimn.py:20
+#: appModules/msimn.py:32 dist/appModules/msimn.py:20 appModules/msimn.py:30
 msgid "BCC:"
 msgstr "blinde koolstofkopie:"
 
@@ -561,6 +744,8 @@ msgid "History"
 msgstr "geskiedenis"
 
 #: characterSymbols.py:17 characterSymbols.py:18 speech.py:55
+#: characterSymbols.py:17 characterSymbols.py:18 characterSymbols.py:19
+#: speech.py:81 speech.py:612
 msgid "blank"
 msgstr "leeg"
 
@@ -568,179 +753,180 @@ msgstr "leeg"
 msgid "null"
 msgstr "niks"
 
-#: characterSymbols.py:21
+#: characterSymbols.py:21 characterSymbols.py:21
 msgid "line feed"
 msgstr "lynvoer"
 
-#: characterSymbols.py:22
+#: characterSymbols.py:22 characterSymbols.py:23
 msgid "carriage return"
 msgstr "enter"
 
-#: characterSymbols.py:23
+#: characterSymbols.py:23 keyUtils.py:120 characterSymbols.py:24
 msgid "space"
 msgstr "spasie"
 
-#: characterSymbols.py:24
+#: characterSymbols.py:24 characterSymbols.py:25
 msgid "bang"
 msgstr "uitroep"
 
-#: characterSymbols.py:25
+#: characterSymbols.py:25 characterSymbols.py:26
 msgid "quote"
 msgstr "haal aan"
 
-#: characterSymbols.py:26
+#: characterSymbols.py:26 characterSymbols.py:27
 msgid "number"
 msgstr "nommer"
 
-#: characterSymbols.py:27
+#: characterSymbols.py:27 characterSymbols.py:28
 msgid "dollar"
 msgstr "doller"
 
-#: characterSymbols.py:28
+#: characterSymbols.py:28 characterSymbols.py:29
 msgid "percent"
 msgstr "persent"
 
-#: characterSymbols.py:29
+#: characterSymbols.py:29 characterSymbols.py:30
 msgid "and"
 msgstr "en"
 
-#: characterSymbols.py:30
+#: characterSymbols.py:30 characterSymbols.py:31
 msgid "tick"
 msgstr "tiek"
 
-#: characterSymbols.py:31
+#: characterSymbols.py:31 characterSymbols.py:32
 msgid "left paren"
 msgstr "links hakkie"
 
-#: characterSymbols.py:32
+#: characterSymbols.py:32 characterSymbols.py:33
 msgid "right paren"
 msgstr "sluit hakkie"
 
-#: characterSymbols.py:33
+#: characterSymbols.py:33 characterSymbols.py:34
 msgid "star"
 msgstr "ster"
 
-#: characterSymbols.py:34
+#: characterSymbols.py:34 characterSymbols.py:35
 msgid "plus"
 msgstr "plus"
 
-#: characterSymbols.py:35
+#: characterSymbols.py:35 characterSymbols.py:36
 msgid "comma"
 msgstr "komma"
 
-#: characterSymbols.py:36
+#: characterSymbols.py:36 characterSymbols.py:37
 msgid "dash"
 msgstr "minus"
 
-#: characterSymbols.py:37
+#: characterSymbols.py:37 characterSymbols.py:38
 msgid "dot"
 msgstr "punt"
 
-#: characterSymbols.py:38
+#: characterSymbols.py:38 characterSymbols.py:39
 msgid "slash"
 msgstr "skuinsstreep"
 
-#: characterSymbols.py:39
+#: characterSymbols.py:39 characterSymbols.py:40
 msgid "colon"
 msgstr "dubbelpunt"
 
-#: characterSymbols.py:40
+#: characterSymbols.py:40 characterSymbols.py:41
 msgid "semi"
 msgstr "kommapunt"
 
-#: characterSymbols.py:41
+#: characterSymbols.py:41 characterSymbols.py:42
 msgid "less"
 msgstr "kleiner as"
 
-#: characterSymbols.py:42
+#: characterSymbols.py:42 characterSymbols.py:43
 msgid "equals"
 msgstr "gelyk aan"
 
-#: characterSymbols.py:43
+#: characterSymbols.py:43 characterSymbols.py:44
 msgid "greater"
 msgstr "groter as"
 
-#: characterSymbols.py:44
+#: characterSymbols.py:44 characterSymbols.py:45
 msgid "question"
 msgstr "vraagteken"
 
-#: characterSymbols.py:45
+#: characterSymbols.py:45 characterSymbols.py:46
 msgid "at"
 msgstr "by"
 
-#: characterSymbols.py:46
+#: characterSymbols.py:46 characterSymbols.py:47
 msgid "left bracket"
 msgstr "links blokhakkie"
 
-#: characterSymbols.py:47
+#: characterSymbols.py:47 characterSymbols.py:48
 msgid "back slash"
 msgstr "trustreep"
 
-#: characterSymbols.py:48
+#: characterSymbols.py:48 characterSymbols.py:49
 msgid "right bracket"
 msgstr "sluit blokhakkie"
 
-#: characterSymbols.py:49 controlTypes.py:224
+#: characterSymbols.py:49 controlTypes.py:224 characterSymbols.py:50
+#: controlTypes.py:271
 msgid "caret"
 msgstr "karet"
 
-#: characterSymbols.py:50
+#: characterSymbols.py:50 textInfos/__init__.py:115 controlTypes.py:302
 msgid "line"
 msgstr "lyn"
 
-#: characterSymbols.py:51
+#: characterSymbols.py:51 characterSymbols.py:52
 msgid "graav"
 msgstr "grafis"
 
-#: characterSymbols.py:52
+#: characterSymbols.py:52 characterSymbols.py:53
 msgid "left brace"
 msgstr "links krulhakkie"
 
-#: characterSymbols.py:53
+#: characterSymbols.py:53 characterSymbols.py:54
 msgid "bar"
 msgstr "afstreep"
 
-#: characterSymbols.py:54
+#: characterSymbols.py:54 characterSymbols.py:55
 msgid "right brace"
 msgstr "sluit krulhakkie"
 
-#: characterSymbols.py:55
+#: characterSymbols.py:55 characterSymbols.py:56
 msgid "tilda"
 msgstr "tilde"
 
-#: controlTypes.py:132
+#: controlTypes.py:132 controlTypes.py:179
 msgid "unknown object"
 msgstr "onbekende voorwerp"
 
-#: controlTypes.py:134
+#: controlTypes.py:134 controlTypes.py:181
 msgid "title bar"
 msgstr "titellyn"
 
-#: controlTypes.py:135
+#: controlTypes.py:135 controlTypes.py:182
 msgid "pane"
 msgstr "ruit"
 
-#: controlTypes.py:136
+#: controlTypes.py:136 controlTypes.py:183
 msgid "dialog"
 msgstr "dialoog"
 
-#: controlTypes.py:137
+#: controlTypes.py:137 controlTypes.py:184
 msgid "check box"
 msgstr "merkblokkie"
 
-#: controlTypes.py:138
+#: controlTypes.py:138 controlTypes.py:185
 msgid "radio button"
 msgstr "radioknoppie"
 
-#: controlTypes.py:139
+#: controlTypes.py:139 controlTypes.py:186
 msgid "text"
 msgstr "teks"
 
-#: controlTypes.py:142
+#: controlTypes.py:142 controlTypes.py:189
 msgid "menu bar"
 msgstr "keuselyn"
 
-#: controlTypes.py:143
+#: controlTypes.py:143 controlTypes.py:190
 msgid "menu item"
 msgstr "keuse item"
 
@@ -748,460 +934,461 @@ msgstr "keuse item"
 msgid "popup menu"
 msgstr "opspring kieslys"
 
-#: controlTypes.py:145
+#: controlTypes.py:145 controlTypes.py:192
 msgid "combo box"
 msgstr "kombo blok"
 
-#: controlTypes.py:146
+#: controlTypes.py:146 controlTypes.py:193
 msgid "list"
 msgstr "lys"
 
-#: controlTypes.py:147
+#: controlTypes.py:147 controlTypes.py:194
 msgid "list item"
 msgstr "lysitem"
 
-#: controlTypes.py:148
+#: controlTypes.py:148 controlTypes.py:195
 msgid "graphic"
 msgstr "grafies"
 
-#: controlTypes.py:149
+#: controlTypes.py:149 controlTypes.py:196
 msgid "help balloon"
 msgstr "hulp ballon"
 
-#: controlTypes.py:150
+#: controlTypes.py:150 controlTypes.py:197
 msgid "tool tip"
 msgstr "werktuigpunt"
 
-#: controlTypes.py:151
+#: controlTypes.py:151 speech.py:887 controlTypes.py:198
 msgid "link"
 msgstr "skakel"
 
-#: controlTypes.py:152
+#: controlTypes.py:152 controlTypes.py:199
 msgid "tree view"
 msgstr "boom aansig"
 
-#: controlTypes.py:153
+#: controlTypes.py:153 controlTypes.py:200
 msgid "tree view item"
 msgstr "boom aansig item"
 
-#: controlTypes.py:155
+#: controlTypes.py:155 controlTypes.py:202
 msgid "tab control"
 msgstr "tab beheer"
 
-#: controlTypes.py:156
+#: controlTypes.py:156 controlTypes.py:203
 msgid "slider"
 msgstr "skuifknoppie"
 
-#: controlTypes.py:157
+#: controlTypes.py:157 controlTypes.py:204
 msgid "progress bar"
 msgstr "vorderingslyn"
 
-#: controlTypes.py:158
+#: controlTypes.py:158 controlTypes.py:205
 msgid "scroll bar"
 msgstr "scroll lyn"
 
-#: controlTypes.py:159
+#: controlTypes.py:159 controlTypes.py:206
 msgid "status bar"
 msgstr "statuslyn"
 
-#: controlTypes.py:160
+#: controlTypes.py:160 controlTypes.py:207
 msgid "table"
 msgstr "tabel"
 
-#: controlTypes.py:161
+#: controlTypes.py:161 controlTypes.py:208
 msgid "cell"
 msgstr "sel"
 
-#: controlTypes.py:162
+#: controlTypes.py:162 controlTypes.py:209
 msgid "column"
 msgstr "kolom"
 
-#: controlTypes.py:163
+#: controlTypes.py:163 controlTypes.py:210
 msgid "row"
 msgstr "ry"
 
-#: controlTypes.py:164
+#: controlTypes.py:164 controlTypes.py:211
 msgid "frame"
 msgstr "raam"
 
-#: controlTypes.py:165
+#: controlTypes.py:165 controlTypes.py:212
 msgid "tool bar"
 msgstr "werktuiglyn"
 
-#: controlTypes.py:166
+#: controlTypes.py:166 controlTypes.py:213
 msgid "column header"
 msgstr "kolomopskrif"
 
-#: controlTypes.py:167
+#: controlTypes.py:167 controlTypes.py:214
 msgid "row header"
 msgstr "ryopskrif"
 
-#: controlTypes.py:168
+#: controlTypes.py:168 controlTypes.py:215
 msgid "drop down button"
 msgstr "afslaanknoppie"
 
-#: controlTypes.py:169
+#: controlTypes.py:169 controlTypes.py:216
 msgid "clock"
 msgstr "horlosie"
 
-#: controlTypes.py:170
+#: controlTypes.py:170 controlTypes.py:217
 msgid "separator"
 msgstr "skeier"
 
-#: controlTypes.py:171
+#: controlTypes.py:171 controlTypes.py:218
 msgid "form"
 msgstr "vorm"
 
-#: controlTypes.py:172
+#: controlTypes.py:172 controlTypes.py:219
 msgid "heading"
 msgstr "opskrif"
 
-#: controlTypes.py:173
+#: controlTypes.py:173 controlTypes.py:220
 msgid "heading 1"
 msgstr "opskrif 1"
 
-#: controlTypes.py:174
+#: controlTypes.py:174 controlTypes.py:221
 msgid "heading 2"
 msgstr "opskrif 2"
 
-#: controlTypes.py:175
+#: controlTypes.py:175 controlTypes.py:222
 msgid "heading 3"
 msgstr "opskrif 3"
 
-#: controlTypes.py:176
+#: controlTypes.py:176 controlTypes.py:223
 msgid "heading 4"
 msgstr "opskrif 4"
 
-#: controlTypes.py:177
+#: controlTypes.py:177 controlTypes.py:224
 msgid "heading 5"
 msgstr "opskrif 5"
 
-#: controlTypes.py:178
+#: controlTypes.py:178 controlTypes.py:225
 msgid "heading 6"
 msgstr "opskrif 6"
 
-#: controlTypes.py:179
+#: controlTypes.py:179 textInfos/__init__.py:116 controlTypes.py:226
 msgid "paragraph"
 msgstr "paragraaf"
 
-#: controlTypes.py:180
+#: controlTypes.py:180 controlTypes.py:227
 msgid "block quote"
 msgstr "blok-aanhaal"
 
-#: controlTypes.py:181
+#: controlTypes.py:181 controlTypes.py:228
 msgid "table header"
 msgstr "tabel opskrif"
 
-#: controlTypes.py:182
+#: controlTypes.py:182 controlTypes.py:229
 msgid "table body"
 msgstr "tabel romp"
 
-#: controlTypes.py:183
+#: controlTypes.py:183 controlTypes.py:230
 msgid "table footer"
 msgstr "tabelvoet"
 
 #: controlTypes.py:184 virtualBuffers/IAccessible/adobe.py:36
-#: virtualBuffers/IAccessible/gecko.py:41
+#: virtualBuffers/IAccessible/gecko.py:41 controlTypes.py:231
 msgid "document"
 msgstr "dokument"
 
-#: controlTypes.py:185
+#: controlTypes.py:185 controlTypes.py:232
 msgid "animation"
 msgstr "animasie"
 
-#: controlTypes.py:186
+#: controlTypes.py:186 controlTypes.py:233
 msgid "application"
 msgstr "aplikasie"
 
-#: controlTypes.py:187
+#: controlTypes.py:187 controlTypes.py:234
 msgid "box"
 msgstr "blok"
 
-#: controlTypes.py:188
+#: controlTypes.py:188 controlTypes.py:235
 msgid "grouping"
 msgstr "groepering"
 
-#: controlTypes.py:189
+#: controlTypes.py:189 controlTypes.py:236
 msgid "property page"
 msgstr "eienskapbladsy"
 
-#: controlTypes.py:190
+#: controlTypes.py:190 controlTypes.py:237
 msgid "canvas"
 msgstr "doek"
 
-#: controlTypes.py:191
+#: controlTypes.py:191 controlTypes.py:238
 msgid "caption"
 msgstr "opskrif"
 
-#: controlTypes.py:192
+#: controlTypes.py:192 controlTypes.py:239
 msgid "check menu item"
 msgstr "merk keuse item"
 
-#: controlTypes.py:193
+#: controlTypes.py:193 controlTypes.py:240
 msgid "date edit"
 msgstr "datum redigeering"
 
-#: controlTypes.py:194
+#: controlTypes.py:194 controlTypes.py:241
 msgid "icon"
 msgstr "ikoon"
 
-#: controlTypes.py:195
+#: controlTypes.py:195 controlTypes.py:242
 msgid "directory pane"
 msgstr "gidsruit"
 
-#: controlTypes.py:196
+#: controlTypes.py:196 NVDAObjects/window/edit.py:534 controlTypes.py:243
 msgid "embedded object"
 msgstr "ingeslote voorwerp"
 
-#: controlTypes.py:197
+#: controlTypes.py:197 controlTypes.py:244
 msgid "end note"
 msgstr "eind nota"
 
-#: controlTypes.py:198
+#: controlTypes.py:198 controlTypes.py:245
 msgid "footer"
 msgstr "voet"
 
-#: controlTypes.py:199
+#: controlTypes.py:199 controlTypes.py:246
 msgid "foot note"
 msgstr "voetnota"
 
-#: controlTypes.py:200
+#: controlTypes.py:200 controlTypes.py:247
 msgid "glass pane"
 msgstr "glasruit"
 
-#: controlTypes.py:201
+#: controlTypes.py:201 controlTypes.py:248
 msgid "header"
 msgstr "opskrif"
 
-#: controlTypes.py:202
+#: controlTypes.py:202 controlTypes.py:249
 msgid "image map"
 msgstr "grafiese kaart"
 
-#: controlTypes.py:203
+#: controlTypes.py:203 controlTypes.py:250
 msgid "input window"
 msgstr "toevoervenster"
 
-#: controlTypes.py:204
+#: controlTypes.py:204 controlTypes.py:251
 msgid "label"
 msgstr "ettiket"
 
-#: controlTypes.py:205
+#: controlTypes.py:205 controlTypes.py:252
 msgid "note"
 msgstr "nota"
 
-#: controlTypes.py:206
+#: controlTypes.py:206 controlTypes.py:253
 msgid "page"
 msgstr "bladsy"
 
-#: controlTypes.py:207
+#: controlTypes.py:207 controlTypes.py:254
 msgid "radio menu item"
 msgstr "radio kieslys item"
 
-#: controlTypes.py:208
+#: controlTypes.py:208 controlTypes.py:255
 msgid "layered pane"
 msgstr "laagruit"
 
-#: controlTypes.py:209
+#: controlTypes.py:209 controlTypes.py:256
 msgid "redundant object"
 msgstr "oorbodige voorwerp"
 
-#: controlTypes.py:210
+#: controlTypes.py:210 controlTypes.py:257
 msgid "root pane"
 msgstr "basisruit"
 
-#: controlTypes.py:211
+#: controlTypes.py:211 controlTypes.py:258
 msgid "edit bar"
 msgstr "redigeerlyn"
 
-#: controlTypes.py:212
+#: controlTypes.py:212 controlTypes.py:259
 msgid "terminal"
 msgstr "terminaal"
 
-#: controlTypes.py:213
+#: controlTypes.py:213 controlTypes.py:260
 msgid "rich edit"
 msgstr "ryk redigering"
 
-#: controlTypes.py:214
+#: controlTypes.py:214 controlTypes.py:261
 msgid "ruler"
 msgstr "liniaal"
 
-#: controlTypes.py:215
+#: controlTypes.py:215 controlTypes.py:262
 msgid "scroll pane"
 msgstr "scroll ruit"
 
-#: controlTypes.py:216
+#: controlTypes.py:216 controlTypes.py:263
 msgid "section"
 msgstr "seksie"
 
-#: controlTypes.py:217
+#: controlTypes.py:217 controlTypes.py:264
 msgid "shape"
 msgstr "vorm"
 
-#: controlTypes.py:218
+#: controlTypes.py:218 controlTypes.py:265
 msgid "split pane"
 msgstr "gesplete ruit"
 
-#: controlTypes.py:219
+#: controlTypes.py:219 controlTypes.py:266
 msgid "view port"
 msgstr "kyk na poort"
 
-#: controlTypes.py:220
+#: controlTypes.py:220 controlTypes.py:267
 msgid "tear off menu"
 msgstr "afskeur kieslys"
 
-#: controlTypes.py:221
+#: controlTypes.py:221 controlTypes.py:268
 msgid "text frame"
 msgstr "teksraam"
 
-#: controlTypes.py:222
+#: controlTypes.py:222 controlTypes.py:269
 msgid "toggle button"
 msgstr "aanafknoppie"
 
-#: controlTypes.py:223
+#: controlTypes.py:223 controlTypes.py:270
 msgid "border"
 msgstr "grens"
 
-#: controlTypes.py:225
+#: controlTypes.py:225 textInfos/__init__.py:113 controlTypes.py:272
 msgid "character"
 msgstr "karakter"
 
-#: controlTypes.py:226
+#: controlTypes.py:226 controlTypes.py:273
 msgid "chart"
 msgstr "kaart"
 
-#: controlTypes.py:227
+#: controlTypes.py:227 controlTypes.py:274
 msgid "cursor"
 msgstr "wyser"
 
-#: controlTypes.py:228
+#: controlTypes.py:228 controlTypes.py:275
 msgid "diagram"
 msgstr "diagram"
 
-#: controlTypes.py:229
+#: controlTypes.py:229 controlTypes.py:276
 msgid "dial"
 msgstr "bel"
 
-#: controlTypes.py:230
+#: controlTypes.py:230 controlTypes.py:277
 msgid "drop list"
 msgstr "afslaanlys"
 
-#: controlTypes.py:231
+#: controlTypes.py:231 controlTypes.py:278
 msgid "split button"
 msgstr "verdeelknoppie"
 
-#: controlTypes.py:232
+#: controlTypes.py:232 controlTypes.py:279
 msgid "menu button"
 msgstr "kieslysknoppie"
 
-#: controlTypes.py:233
+#: controlTypes.py:233 controlTypes.py:280
 msgid "drop down button grid"
 msgstr "afslaanknoppie roster"
 
-#: controlTypes.py:234
+#: controlTypes.py:234 controlTypes.py:281
 msgid "equation"
 msgstr "vergelyking"
 
-#: controlTypes.py:235
+#: controlTypes.py:235 controlTypes.py:282
 msgid "grip"
 msgstr "handvatsel"
 
-#: controlTypes.py:236
+#: controlTypes.py:236 controlTypes.py:283
 msgid "hot key field"
 msgstr "kitssleutelveld"
 
-#: controlTypes.py:237
+#: controlTypes.py:237 controlTypes.py:284
 msgid "indicator"
 msgstr "aanduier"
 
-#: controlTypes.py:238
+#: controlTypes.py:238 controlTypes.py:285
 msgid "spin button"
 msgstr "spinknoppie"
 
-#: controlTypes.py:239
+#: controlTypes.py:239 controlTypes.py:286
 msgid "sound"
 msgstr "klank"
 
-#: controlTypes.py:240
+#: controlTypes.py:240 controlTypes.py:287
 msgid "white space"
 msgstr "wit spasie"
 
-#: controlTypes.py:241
+#: controlTypes.py:241 controlTypes.py:288
 msgid "tree view button"
 msgstr "boomaansigknoppie"
 
-#: controlTypes.py:242
+#: controlTypes.py:242 controlTypes.py:289
 msgid "IP address"
 msgstr "IP adres"
 
-#: controlTypes.py:246
+#: controlTypes.py:246 controlTypes.py:324
 msgid "unavailable"
 msgstr "onbeskikbaar"
 
-#: controlTypes.py:247
+#: controlTypes.py:247 controlTypes.py:325
 msgid "focused"
 msgstr "gefokus"
 
-#: controlTypes.py:249
+#: controlTypes.py:249 controlTypes.py:327
 msgid "busy"
 msgstr "besig"
 
-#: controlTypes.py:250
+#: controlTypes.py:250 controlTypes.py:328
 msgid "pressed"
 msgstr "gedruk"
 
-#: controlTypes.py:251
+#: controlTypes.py:251 controlTypes.py:329
 msgid "checked"
 msgstr "gemerk"
 
-#: controlTypes.py:252
+#: controlTypes.py:252 controlTypes.py:330
 msgid "half checked"
 msgstr "halfgemerk"
 
-#: controlTypes.py:253
+#: controlTypes.py:253 controlTypes.py:331
 msgid "read only"
 msgstr "slegs lees"
 
-#: controlTypes.py:254
+#: controlTypes.py:254 controlTypes.py:332
 msgid "expanded"
 msgstr "uitgestrek"
 
-#: controlTypes.py:255
+#: controlTypes.py:255 controlTypes.py:333
 msgid "collapsed"
 msgstr "ingekrimp"
 
-#: controlTypes.py:256
+#: controlTypes.py:256 controlTypes.py:334
 msgid "invisible"
 msgstr "onsigbaar"
 
-#: controlTypes.py:257
+#: controlTypes.py:257 controlTypes.py:335
 msgid "visited"
 msgstr "besoekde"
 
-#: controlTypes.py:258
+#: controlTypes.py:258 controlTypes.py:336
 msgid "linked"
 msgstr "geskakelde"
 
-#: controlTypes.py:259
+#: controlTypes.py:259 controlTypes.py:337
 msgid "subMenu"
 msgstr "sub-kieslys"
 
 #: controlTypes.py:260 virtualBuffers/IAccessible/MSHTML.py:287
+#: controlTypes.py:338
 msgid "protected"
 msgstr "beskermde"
 
-#: controlTypes.py:261
+#: controlTypes.py:261 controlTypes.py:339
 msgid "required"
 msgstr "vereisde"
 
-#: core.py:45
+#: core.py:45 gui/__init__.py:147
 msgid "configuration applied"
 msgstr "konfigurasie toegepas"
 
-#: core.py:72
+#: core.py:72 core.py:122
 msgid "Loading subsystems, please wait..."
 msgstr "besig om substelsels te laai, wag asseblief?"
 
-#: core.py:85
+#: core.py:85 core.py:193
 msgid "NVDA started"
 msgstr "NVDA gereed"
 
@@ -1222,16 +1409,32 @@ msgid ""
 "%(copyrightInfo)s\n"
 "----------------------\n"
 "\n"
-"This is the NVDA interface window. It enables you to control NVDA's settings, and also to exit NVDA altogether.\n"
+"This is the NVDA interface window. It enables you to control NVDA's "
+"settings, and also to exit NVDA altogether.\n"
 "\n"
-"To bring this window up at any time, press insert+n. To close this window without exiting NVDA, press alt+f4.\n"
+"To bring this window up at any time, press insert+n. To close this window "
+"without exiting NVDA, press alt+f4.\n"
 "\n"
-"To exit NVDA completely, either press insert+q from anywhere, or choose 'exit' from the NVDA menuin this window. NVDA will then bring up a dialog box asking you if you want to exit, and you can either press the yes or no button.\n"
+"To exit NVDA completely, either press insert+q from anywhere, or choose "
+"'exit' from the NVDA menuin this window. NVDA will then bring up a dialog "
+"box asking you if you want to exit, and you can either press the yes or no "
+"button.\n"
 "\n"
-"To set the preferences (such as voice settings, key Settings, reading of tooltips etc),\n"
-"Use the alt key to move to the menu bar and then use the arrow keys to navigate the menus and find the settings you want to change. Pressing enter on many of the menu items will bring up a dialog box in which you can change the individual settings. Most settings will take effect straight away (such as changing the rate or pitch of the voice) so you can easily find what settings most suit you. However, if you cancel out of the dialog box the settings will go back to what they were before you changed them. \n"
+"To set the preferences (such as voice settings, key Settings, reading of "
+"tooltips etc),\n"
+"Use the alt key to move to the menu bar and then use the arrow keys to "
+"navigate the menus and find the settings you want to change. Pressing enter "
+"on many of the menu items will bring up a dialog box in which you can change "
+"the individual settings. Most settings will take effect straight away (such "
+"as changing the rate or pitch of the voice) so you can easily find what "
+"settings most suit you. However, if you cancel out of the dialog box the "
+"settings will go back to what they were before you changed them. \n"
 "\n"
-"By default settings are not kept for the next time you run NVDA unless you press ctrl+s or choose 'save configuration' from the NVDA menu. You can set NVDA to automatically save the settings on exit by going to 'user interface...' in the Preferences menu and checking the 'Save configuration on exit' checkbox and press ing ok.\n"
+"By default settings are not kept for the next time you run NVDA unless you "
+"press ctrl+s or choose 'save configuration' from the NVDA menu. You can set "
+"NVDA to automatically save the settings on exit by going to 'user "
+"interface...' in the Preferences menu and checking the 'Save configuration "
+"on exit' checkbox and press ing ok.\n"
 "\n"
 "Some usefull key commands when using NVDA are:\n"
 "\n"
@@ -1244,7 +1447,8 @@ msgid ""
 "insert+f12 - report time and date\n"
 "insert+2 - turn speaking of typed characters on and off\n"
 "insert+3 turn speaking of typed words on and off\n"
-"insert+4 - turn speaking of typed command keys (such as space, arrows, control and shift combinations) on and off\n"
+"insert+4 - turn speaking of typed command keys (such as space, arrows, "
+"control and shift combinations) on and off\n"
 "insert+pageUp - increase rate of speech\n"
 "insert+pageDown - decrease rate of speech\n"
 "insert+p - turn reading of punctuation on and off\n"
@@ -1286,22 +1490,41 @@ msgstr ""
 "NVDA (%(description)s)\n"
 "Weergawe: %(version)s\n"
 "URL: %(url)s\n"
-"Stuur asseblief foute en voorstelle aan: %(maintainer)s <%(maintainer_email)s>.\n"
+"Stuur asseblief foute en voorstelle aan: %(maintainer)s <%(maintainer_email)"
+"s>.\n"
 "\n"
 "--- Kopiereginligting --- \n"
 "%(copyrightInfo)s\n"
 "----------------------\n"
 "\n"
-"Hierdie is die NVDA koppelvlakvenster.  Dit stel jou instaat om NVDA se verstellings te beheer, en om heeltemal uit NVDA uit te gaan.\n"
+"Hierdie is die NVDA koppelvlakvenster.  Dit stel jou instaat om NVDA se "
+"verstellings te beheer, en om heeltemal uit NVDA uit te gaan.\n"
 "\n"
-"Om hierdie venster ten alle tye op te roep, druk insert + n.  Om hierdie venster toe te maak sonder om NVDA ook toe te maak, druk alt + f4.\n"
+"Om hierdie venster ten alle tye op te roep, druk insert + n.  Om hierdie "
+"venster toe te maak sonder om NVDA ook toe te maak, druk alt + f4.\n"
 "\n"
-"Om van enige plek af uit NVDA uit te gaan, druk insert + q, of kies 'gaan uit' op die NVDA keuselys in hierdie venster.  NVDA sal dan 'n dialoogblokkie oproep, en jou vra of jy uit wil gaan. Jy kan dan die ja of nee knoppie druk.\n"
+"Om van enige plek af uit NVDA uit te gaan, druk insert + q, of kies 'gaan "
+"uit' op die NVDA keuselys in hierdie venster.  NVDA sal dan 'n "
+"dialoogblokkie oproep, en jou vra of jy uit wil gaan. Jy kan dan die ja of "
+"nee knoppie druk.\n"
 "\n"
-"om die voorkeure te verstel, (soos stemverstellings, sleutelverstellings, die lees van werktuigpunte etc),\n"
-"gebruik die alt sleutel om na die keuselyn te gaan, en gebruik dan die peiltjies om die keuselyste te navigeer en die verstellings wat jy wil verander optespoor.  Deur enter op baie van die keuselys items te druk, word 'n dialoogblokkie opgeroep waarin die individuele verstellings gemaak kan word.  Die meeste verstellings sal dadelik effektief wees, (soos veranderings aan die spoed of toonhoogte van die stem) so jy kan maklik uitvind watter verstellings jou die beste pas.  As jy egter kanseleer uit die dialoogblokkie uit, keer die verstellings terug na wat hulle was voor jy hulle verander het.\n"
+"om die voorkeure te verstel, (soos stemverstellings, sleutelverstellings, "
+"die lees van werktuigpunte etc),\n"
+"gebruik die alt sleutel om na die keuselyn te gaan, en gebruik dan die "
+"peiltjies om die keuselyste te navigeer en die verstellings wat jy wil "
+"verander optespoor.  Deur enter op baie van die keuselys items te druk, word "
+"'n dialoogblokkie opgeroep waarin die individuele verstellings gemaak kan "
+"word.  Die meeste verstellings sal dadelik effektief wees, (soos "
+"veranderings aan die spoed of toonhoogte van die stem) so jy kan maklik "
+"uitvind watter verstellings jou die beste pas.  As jy egter kanseleer uit "
+"die dialoogblokkie uit, keer die verstellings terug na wat hulle was voor jy "
+"hulle verander het.\n"
 "\n"
-"By verstek word jou verstellings nie onthou vir die volgende keer wat jy NVDA gebruik nmie, tensy jy beheer + s druk, of 'stoor konfigurasie' van die NVDA keuselys af kies.  NVDA kan verstel word om die verstellings outomaties te stoor wanneer jy uitgaan, deur 'stoor konfigurasie as jy uitgaan' in die voorkeure keuselys in 'gebruikerskoppelvlak' te merk en OK te kies.\n"
+"By verstek word jou verstellings nie onthou vir die volgende keer wat jy "
+"NVDA gebruik nmie, tensy jy beheer + s druk, of 'stoor konfigurasie' van die "
+"NVDA keuselys af kies.  NVDA kan verstel word om die verstellings outomaties "
+"te stoor wanneer jy uitgaan, deur 'stoor konfigurasie as jy uitgaan' in die "
+"voorkeure keuselys in 'gebruikerskoppelvlak' te merk en OK te kies.\n"
 "\n"
 "Sommige handige bevelsleutels vir die gebruik van NVDA is:\n"
 "\n"
@@ -1309,12 +1532,14 @@ msgstr ""
 "beheer - stop spraak\n"
 "insert + 1 sit sleutelbordhulp aan en af\n"
 "insert + op-peiltjie lees die voorwerp wat fokus het\n"
-"insert + af-peiltjie - begin 'lees alles' (druk beheer of enige ander sleutel om te stop).\n"
+"insert + af-peiltjie - begin 'lees alles' (druk beheer of enige ander "
+"sleutel om te stop).\n"
 "insert + t - lees titel\n"
 "insert + f12 - lees datum en tyd\n"
-"insert + 2 - sit lees van getikte karakters aan en af\n" 
+"insert + 2 - sit lees van getikte karakters aan en af\n"
 "insert + 3 - sit lees van getikte woorde aan en af\n"
-"insert + 4 - sit lees van bevelsleutels (soos spasie, peiltjies, beheer en bokas kombinasies aan en af\n"
+"insert + 4 - sit lees van bevelsleutels (soos spasie, peiltjies, beheer en "
+"bokas kombinasies aan en af\n"
 "insert + blaai-op - verhoog spraakspoed\n"
 "insert + blaai-af - verlaag spraakspoed\n"
 "insert + p - sit lees van leestekens aan en af\n"
@@ -1332,7 +1557,8 @@ msgstr ""
 "insert + nommerblok 2 - eerste kind van voorwerp\n"
 "insert + nommerblok minus - beweeg na fokusvoorwerp\n"
 "insert + end - beweeg na statuslyn\n"
-"insert + nommerblok skuinsstreep - beweeg die muis na die huidige navigatorvoorwerp\n"
+"insert + nommerblok skuinsstreep - beweeg die muis na die huidige "
+"navigatorvoorwerp\n"
 "insert + nommerblok ster - beweeg na muis\n"
 "insert + nommerblok enter - aktiveer huidige voorwerp\n"
 "\n"
@@ -1363,15 +1589,16 @@ msgstr "stel alle verstellings terug na die in nvda.ini"
 msgid "&Save configuration\tCtrl+S"
 msgstr "&stoor konfigurasie\tkontrole-s"
 
-#: gui/__init__.py:141
+#: gui/__init__.py:141 gui/__init__.py:306
 msgid "Write the current configuration to nvda.ini"
 msgstr "skryf die huidige konfigurasie in nvda.ini"
 
-#: gui/__init__.py:143
+#: gui/__init__.py:143 gui/__init__.py:309 gui/logViewer.py:33
 msgid "E&xit"
 msgstr "gaan &uit"
 
-#: gui/__init__.py:143 gui/__init__.py:235
+#: gui/__init__.py:143 gui/__init__.py:235 gui/__init__.py:178
+#: gui/__init__.py:309
 msgid "Exit NVDA"
 msgstr "gaan uit NVDA uit"
 
@@ -1387,7 +1614,7 @@ msgstr "&gebruikerskoppelvlak...\tbeheer + bokas + U"
 msgid "Change user interface settings"
 msgstr "verander gebruikerskoppelvlakverstellings"
 
-#: gui/__init__.py:152
+#: gui/__init__.py:152 gui/__init__.py:248
 msgid " the synthesizer to use"
 msgstr "die sintetiseerder wat gebruik moet word"
 
@@ -1399,7 +1626,7 @@ msgstr "7sintetiseerder...\tbeheer + bokas + S"
 msgid "&Voice settings...\tCtrl+Shift+V"
 msgstr "&stemverstellings...\tbeheer + bokas + V"
 
-#: gui/__init__.py:155
+#: gui/__init__.py:155 gui/__init__.py:250
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "Kies die stem, spoed, toonhoogte en volume om te gebruik"
 
@@ -1407,9 +1634,13 @@ msgstr "Kies die stem, spoed, toonhoogte en volume om te gebruik"
 msgid "&Keyboard Settings...\tCtrl+K"
 msgstr "&sleutelbordverstellings...\tbeheer + K"
 
-#: gui/__init__.py:158
-msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-msgstr "konfigureer sleutelborduitleg, die lees van getikte karakters, woorde of bevelsleutels."
+#: gui/__init__.py:158 gui/__init__.py:254
+msgid ""
+"Configure keyboard layout, speaking of typed characters, words or command "
+"keys"
+msgstr ""
+"konfigureer sleutelborduitleg, die lees van getikte karakters, woorde of "
+"bevelsleutels."
 
 #: gui/__init__.py:161
 msgid "&Mouse settings...\tCtrl+M"
@@ -1423,11 +1654,11 @@ msgstr "verander lees van: lees voorwerp onder muis"
 msgid "&Object presentation...\tCtrl+Shift+O"
 msgstr "&voorwerpvoorstelling...\tbeheer + bokas + O"
 
-#: gui/__init__.py:164
+#: gui/__init__.py:164 gui/__init__.py:258
 msgid "Change reporting of objects"
 msgstr "Verander die lees van voorwerpe"
 
-#: gui/__init__.py:167
+#: gui/__init__.py:167 gui/__init__.py:260
 msgid "Change virtual buffers specific settings"
 msgstr "verander virtuele buffers spesifieke verstellings"
 
@@ -1435,7 +1666,7 @@ msgstr "verander virtuele buffers spesifieke verstellings"
 msgid "Virtual &buffers...\tCtrl+Shift+B"
 msgstr "virtuele &buffers...\tbeheer + bokas + B"
 
-#: gui/__init__.py:170
+#: gui/__init__.py:170 gui/__init__.py:262
 msgid "Change Settings of document properties"
 msgstr "verander verstellings van dokumenteienskappe"
 
@@ -1443,7 +1674,7 @@ msgstr "verander verstellings van dokumenteienskappe"
 msgid "Document &formatting...\tCtrl+Shift+F"
 msgstr "dokument en &formatering...\tbeheer + bokas + F"
 
-#: gui/__init__.py:172 gui/__init__.py:173
+#: gui/__init__.py:172 gui/__init__.py:173 gui/__init__.py:272
 msgid "&Preferences"
 msgstr "&voorkeure"
 
@@ -1463,30 +1694,33 @@ msgstr "NVDA wikki"
 msgid "Opens NVDA wiki in the default browser"
 msgstr "maak nvda wiki in die verstek webleser oop."
 
-#: gui/__init__.py:181
+#: gui/__init__.py:181 gui/__init__.py:300
 msgid "About..."
 msgstr "in verband met..."
 
-#: gui/__init__.py:181 gui/__init__.py:295
+#: gui/__init__.py:181 gui/__init__.py:295 gui/__init__.py:222
+#: gui/__init__.py:300
 msgid "About NVDA"
 msgstr "in verband met nvda"
 
-#: gui/__init__.py:183 gui/__init__.py:184
+#: gui/__init__.py:183 gui/__init__.py:184 gui/__init__.py:302
 msgid "&Help"
 msgstr "&hulp"
 
 #: gui/__init__.py:196 gui/scriptUI.py:52 gui/scriptUI.py:61
+#: gui/scriptUI.py:74 gui/scriptUI.py:53 gui/scriptUI.py:62
 #: gui/scriptUI.py:74
 msgid "NVDA"
 msgstr "NVDA"
 
-#: gui/__init__.py:223
+#: gui/__init__.py:223 gui/__init__.py:152
 msgid "configuration saved"
 msgstr "konfigurasie gestoor."
 
-#: gui/__init__.py:225
+#: gui/__init__.py:225 gui/__init__.py:155
 msgid "Could not save configuration - probably read only file system"
-msgstr "kon nie die konfigurasie stoor nie, waarskynlik 'n slegslees leeerstelsel."
+msgstr ""
+"kon nie die konfigurasie stoor nie, waarskynlik 'n slegslees leeerstelsel."
 
 #: gui/__init__.py:235
 msgid "Press OK to quit NVDA"
@@ -1496,35 +1730,35 @@ msgstr "druk OK om uit NVDA uit te gaan."
 msgid "User interface settings"
 msgstr "gebruikerskoppelvlakverstellings"
 
-#: gui/__init__.py:255
+#: gui/__init__.py:255 gui/settingsDialogs.py:175
 msgid "Synthesizer"
 msgstr "sintetiseerder"
 
-#: gui/__init__.py:259
+#: gui/__init__.py:259 gui/settingsDialogs.py:219
 msgid "Voice settings"
 msgstr "stemverstellings"
 
-#: gui/__init__.py:263
+#: gui/__init__.py:263 gui/settingsDialogs.py:405
 msgid "Keyboard Settings"
 msgstr "sleutelbordverstellings"
 
-#: gui/__init__.py:267
+#: gui/__init__.py:267 gui/settingsDialogs.py:460
 msgid "Mouse settings"
 msgstr "muisverstellings"
 
-#: gui/__init__.py:271
+#: gui/__init__.py:271 gui/settingsDialogs.py:506
 msgid "Object presentation"
 msgstr "voorwerpvoorstelling"
 
-#: gui/__init__.py:275
+#: gui/__init__.py:275 gui/settingsDialogs.py:561
 msgid "virtual buffers"
 msgstr "virtuele buffers"
 
-#: gui/__init__.py:279
+#: gui/__init__.py:279 gui/settingsDialogs.py:615
 msgid "Document formatting"
 msgstr "dokumentformatering"
 
-#: gui/__init__.py:294
+#: gui/__init__.py:294 gui/__init__.py:220
 msgid "copyright"
 msgstr "kopiereg"
 
@@ -1532,11 +1766,11 @@ msgstr "kopiereg"
 msgid "maintainer"
 msgstr "onderhouer"
 
-#: gui/__init__.py:294
+#: gui/__init__.py:294 gui/__init__.py:220
 msgid "url"
 msgstr "URL"
 
-#: gui/__init__.py:294
+#: gui/__init__.py:294 gui/__init__.py:220
 msgid "version"
 msgstr "weergawe"
 
@@ -1552,11 +1786,11 @@ msgstr "&aktiveer skakel"
 msgid "&Move to link"
 msgstr "&beweeg na skakel"
 
-#: gui/settingsDialogs.py:25
+#: gui/settingsDialogs.py:25 gui/settingsDialogs.py:99
 msgid "&Language (requires restart to fully take affect):"
 msgstr "&taal (vereis weerbegin om ten volle in aksie te kom."
 
-#: gui/settingsDialogs.py:29
+#: gui/settingsDialogs.py:29 gui/settingsDialogs.py:103
 msgid "Language"
 msgstr "Taal"
 
@@ -1564,99 +1798,107 @@ msgstr "Taal"
 msgid "&Hide user interface on startup"
 msgstr "&verberg gebruikerskoppelvlak tydens laaiproses."
 
-#: gui/settingsDialogs.py:41
+#: gui/settingsDialogs.py:41 gui/settingsDialogs.py:112
 msgid "&Save configuration on exit"
 msgstr "&stoor konfigurasie as jy uit gaan."
 
-#: gui/settingsDialogs.py:44
+#: gui/settingsDialogs.py:44 gui/settingsDialogs.py:115
 msgid "&Warn before exiting NVDA"
 msgstr "&waarsku voor uit NVDA uitgegaan word."
 
-#: gui/settingsDialogs.py:62
+#: gui/settingsDialogs.py:62 gui/settingsDialogs.py:153
+#, python-format
 msgid "Error in %s language file"
 msgstr "fout in %s taal leeer."
 
-#: gui/settingsDialogs.py:62
+#: gui/settingsDialogs.py:62 gui/settingsDialogs.py:153
 msgid "Language Error"
 msgstr "taalfout"
 
-#: gui/settingsDialogs.py:69
-msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
-msgstr "Vir die nuwe taal om in aksie te kom, moet die konfigurasie gestoor word en NVDA oor begin word. Andersens, kanseleer en stoor met die hand en gaan later uit die program uit."
+#: gui/settingsDialogs.py:69 gui/settingsDialogs.py:169
+msgid ""
+"For the new language to take effect, the configuration must be saved and "
+"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
+"manually save and exit at a later time."
+msgstr ""
+"Vir die nuwe taal om in aksie te kom, moet die konfigurasie gestoor word en "
+"NVDA oor begin word. Andersens, kanseleer en stoor met die hand en gaan "
+"later uit die program uit."
 
-#: gui/settingsDialogs.py:69
+#: gui/settingsDialogs.py:69 gui/settingsDialogs.py:169
 msgid "Language Configuration Change"
 msgstr "taalkonfigurasieverandering"
 
-#: gui/settingsDialogs.py:81
+#: gui/settingsDialogs.py:81 gui/settingsDialogs.py:179
 msgid "&Synthesizer:"
 msgstr "&sintetiseerder"
 
-#: gui/settingsDialogs.py:107
+#: gui/settingsDialogs.py:107 gui/settingsDialogs.py:214
+#, python-format
 msgid "Could not load the %s synthesizer."
 msgstr "kon nie die %s sintetiseerder laai nie."
 
-#: gui/settingsDialogs.py:107
+#: gui/settingsDialogs.py:107 gui/settingsDialogs.py:214
 msgid "Synthesizer Error"
 msgstr "sintetiseerder fout"
 
-#: gui/settingsDialogs.py:119
+#: gui/settingsDialogs.py:119 gui/settingsDialogs.py:229
 msgid "&Voice:"
 msgstr "&stem"
 
-#: gui/settingsDialogs.py:135
+#: gui/settingsDialogs.py:135 gui/settingsDialogs.py:244
 msgid "V&ariant:"
 msgstr "V&arihiteit"
 
-#: gui/settingsDialogs.py:147
+#: gui/settingsDialogs.py:147 gui/settingsDialogs.py:258
 msgid "&Rate:"
 msgstr "&spoed"
 
-#: gui/settingsDialogs.py:156
+#: gui/settingsDialogs.py:156 gui/settingsDialogs.py:266
 msgid "&Pitch:"
 msgstr "&toonhoogte"
 
-#: gui/settingsDialogs.py:165
+#: gui/settingsDialogs.py:165 gui/settingsDialogs.py:274
 msgid "&Inflection:"
 msgstr "&infleksie"
 
-#: gui/settingsDialogs.py:174
+#: gui/settingsDialogs.py:174 gui/settingsDialogs.py:282
 msgid "V&olume:"
 msgstr "&Volume"
 
-#: gui/settingsDialogs.py:181
+#: gui/settingsDialogs.py:181 gui/settingsDialogs.py:290
 msgid "&Speak all punctuation"
 msgstr "&lees alle leestekens."
 
-#: gui/settingsDialogs.py:184
+#: gui/settingsDialogs.py:184 gui/settingsDialogs.py:296
 msgid "Say &cap before capitals"
 msgstr "lees &hoofletter voor alle hoofletters."
 
-#: gui/settingsDialogs.py:264
+#: gui/settingsDialogs.py:264 gui/__init__.py:375 gui/settingsDialogs.py:422
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "gebr&uik die sluitkassleutel as 'n NVDA modifikasiesleutel"
 
-#: gui/settingsDialogs.py:267
+#: gui/settingsDialogs.py:267 gui/settingsDialogs.py:425
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "gebruit nommerblok insert as 'n NVDA modifikasiesleutel"
 
-#: gui/settingsDialogs.py:270
+#: gui/settingsDialogs.py:270 gui/settingsDialogs.py:428
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "gebruik ekstra insert as 'n NVDA modifikasiesleutel"
 
-#: gui/settingsDialogs.py:273
+#: gui/settingsDialogs.py:273 gui/settingsDialogs.py:431
 msgid "Speak typed &characters"
 msgstr "lees getikte &karakters"
 
-#: gui/settingsDialogs.py:276
+#: gui/settingsDialogs.py:276 gui/settingsDialogs.py:434
 msgid "Speak typed &words"
 msgstr "lees getikte &woorde"
 
-#: gui/settingsDialogs.py:279
+#: gui/settingsDialogs.py:279 gui/settingsDialogs.py:437
 msgid "Speak command &keys"
 msgstr "lees bevel&sleutels"
 
-#: gui/settingsDialogs.py:305
+#: gui/settingsDialogs.py:305 gui/settingsDialogs.py:463
 msgid "Report mouse &shape changes"
 msgstr "lees muis en vormveranderings"
 
@@ -1664,19 +1906,19 @@ msgstr "lees muis en vormveranderings"
 msgid "Report &object under mouse"
 msgstr "lees v&oorwerp onder muis"
 
-#: gui/settingsDialogs.py:330
+#: gui/settingsDialogs.py:330 gui/settingsDialogs.py:515
 msgid "Report &tooltips"
 msgstr "lees &werktuigpunte"
 
-#: gui/settingsDialogs.py:333
+#: gui/settingsDialogs.py:333 gui/settingsDialogs.py:518
 msgid "Report &help balloons"
 msgstr "lees &hulpballonne"
 
-#: gui/settingsDialogs.py:336
+#: gui/settingsDialogs.py:336 gui/settingsDialogs.py:521
 msgid "Report object shortcut &keys"
 msgstr "lees voorwerp &kortpadsleutels"
 
-#: gui/settingsDialogs.py:339
+#: gui/settingsDialogs.py:339 gui/settingsDialogs.py:524
 msgid "Report object &position information"
 msgstr "lees voorwerp &posisie inligting"
 
@@ -1692,11 +1934,11 @@ msgstr "lees voorwerp en &status eerste"
 msgid "&Beep on progress bar updates"
 msgstr "&biep tydens vorderingslynopdaterings"
 
-#: gui/settingsDialogs.py:375
+#: gui/settingsDialogs.py:375 gui/settingsDialogs.py:564
 msgid "&Maximum number of characters on one line"
 msgstr "&maksimum hoeveelheid karakters op een lyn"
 
-#: gui/settingsDialogs.py:380
+#: gui/settingsDialogs.py:380 gui/settingsDialogs.py:569
 msgid "&Number of lines per page"
 msgstr "hoeveelheid ly&ne per bladsy"
 
@@ -1720,11 +1962,12 @@ msgstr "lees &lyste"
 msgid "Report list &items"
 msgstr "lees lys&items"
 
-#: gui/settingsDialogs.py:400
+#: gui/settingsDialogs.py:400 gui/settingsDialogs.py:651
 msgid "Report &headings"
 msgstr "lees &opskrifte"
 
 #: gui/settingsDialogs.py:403 gui/settingsDialogs.py:484
+#: gui/settingsDialogs.py:645
 msgid "Report &tables"
 msgstr "lees &tabelle"
 
@@ -1740,7 +1983,7 @@ msgstr "lees v&orms"
 msgid "Report form &fields"
 msgstr "lees vorm&velde"
 
-#: gui/settingsDialogs.py:415
+#: gui/settingsDialogs.py:415 gui/settingsDialogs.py:657
 msgid "Report block &quotes"
 msgstr "lees blok&aanhalings"
 
@@ -1752,51 +1995,56 @@ msgstr "lees &paragrawe"
 msgid "Report f&rames"
 msgstr "lees &rame"
 
-#: gui/settingsDialogs.py:466
+#: gui/settingsDialogs.py:466 gui/settingsDialogs.py:621
 msgid "Report font &name"
 msgstr "lees font&naam"
 
-#: gui/settingsDialogs.py:469
+#: gui/settingsDialogs.py:469 gui/settingsDialogs.py:624
 msgid "Report font &size"
 msgstr "lees font&grote"
 
-#: gui/settingsDialogs.py:472
+#: gui/settingsDialogs.py:472 gui/settingsDialogs.py:627
 msgid "Report font attri&butes"
 msgstr "lees fontatrib&ute"
 
-#: gui/settingsDialogs.py:475
+#: gui/settingsDialogs.py:475 gui/settingsDialogs.py:633
 msgid "Report st&yle"
 msgstr "lees ste&il"
 
-#: gui/settingsDialogs.py:478
+#: gui/settingsDialogs.py:478 gui/settingsDialogs.py:639
 msgid "Report &pages"
 msgstr "lees &bladsye"
 
-#: gui/settingsDialogs.py:481
+#: gui/settingsDialogs.py:481 gui/settingsDialogs.py:642
 msgid "Report &line numbers"
 msgstr "lees &lynnommers"
 
-#: gui/settingsDialogs.py:487
+#: gui/settingsDialogs.py:487 gui/settingsDialogs.py:630
 msgid "Report &alignment"
 msgstr "lees &oplyning"
 
-#: keyboardHandler.py:48
+#: keyboardHandler.py:48 keyboardHandler.py:54
+#, python-format
 msgid "caps lock %s"
 msgstr "sluitkassleutel %s"
 
-#: keyboardHandler.py:50
+#: keyboardHandler.py:50 keyboardHandler.py:56
+#, python-format
 msgid "num lock %s"
 msgstr "Nommerslot %s"
 
-#: keyboardHandler.py:52
+#: keyboardHandler.py:52 keyboardHandler.py:58
+#, python-format
 msgid "scroll lock %s"
 msgstr "scrollslot %s"
 
-#: keyboardHandler.py:119
+#: keyboardHandler.py:119 keyboardHandler.py:191
+#, python-format
 msgid "Description: %s"
 msgstr "beskrywing %s"
 
-#: keyboardHandler.py:120
+#: keyboardHandler.py:120 keyboardHandler.py:194
+#, python-format
 msgid "Location: %s"
 msgstr "plek %s"
 
@@ -1808,7 +2056,8 @@ msgstr "vlak %d"
 msgid "contains %s"
 msgstr "bevat %s"
 
-#: speech.py:280
+#: speech.py:280 speech.py:173
+#, python-format
 msgid "cap %s"
 msgstr "hoofletter %s"
 
@@ -1820,7 +2069,7 @@ msgstr "bladsy %d"
 msgid "line %d"
 msgstr "lyn %d"
 
-#: textBuffer.py:219
+#: textBuffer.py:219 speech.py:910
 msgid "out of table"
 msgstr "uit die tabel uit"
 
@@ -1836,7 +2085,8 @@ msgstr "ry %d"
 msgid "column %d"
 msgstr "kolom %d"
 
-#: textBuffer.py:242 textBuffer.py:310
+#: textBuffer.py:242 textBuffer.py:310 speech.py:811
+#, python-format
 msgid "style %s"
 msgstr "steil %s"
 
@@ -1864,7 +2114,8 @@ msgstr "nie kursief nie"
 msgid "not underline"
 msgstr "nie onderstreep nie"
 
-#: textBuffer.py:287 textBuffer.py:294 textBuffer.py:324
+#: textBuffer.py:287 textBuffer.py:294 textBuffer.py:324 speech.py:861
+#: controlTypes.py:310
 msgid "superscript"
 msgstr "boskrif"
 
@@ -1876,7 +2127,7 @@ msgstr "nie boskrif nie"
 msgid "not subscript"
 msgstr "nie onderskrif nie"
 
-#: textBuffer.py:326
+#: textBuffer.py:326 speech.py:863 controlTypes.py:311
 msgid "subscript"
 msgstr "onderskrif"
 
@@ -1920,28 +2171,36 @@ msgstr "skrap die karakter en lees die nuwe huidige karakter"
 msgid "Reads the character before the current character and then deletes it"
 msgstr "lees die karakter voor die huidige karakter en skrap hom dan"
 
-#: versionInfo.py:8
+#: versionInfo.py:8 versionInfo.py:40
 msgid "NonVisual Desktop Access"
 msgstr "nie-visuele lessenaarblad toegang"
 
-#: versionInfo.py:10
+#: versionInfo.py:10 versionInfo.py:42
 msgid "A free and open-source screen reader for MS Windows"
 msgstr "'n vrye en oop-bronkode skermleser vir MS-Windows"
 
 #: versionInfo.py:14
 msgid ""
 "Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>\n"
-"%(name)s is covered by the GNU General Public License. You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it. This applies to both origional and modified copies of the software, plus any software that uses code taken from this software.\n"
+"%(name)s is covered by the GNU General Public License. You are free to share "
+"or change this software in any way you like as long as you distribute the "
+"licence along with the software, and make all source code available to "
+"anyone who wants it. This applies to both origional and modified copies of "
+"the software, plus any software that uses code taken from this software.\n"
 "For further details, you can view the licence online at:\n"
 "http://www.gnu.org/licenses/gpl.html\n"
 "Or see the file Copying.txt that came with this software."
 msgstr ""
 "Kopiereg (C) 2006-2007 NVDA bydraers <http://www.nvda-project.org/>\n"
-"%(name)s word gedek deur die 'GNU General Public License'. Dit staan jou vry om hierdie software uit te deel of te verander op enige manier wat jy lus kry, solank as wat jy die lisensie saammet die sagteware versprei, en alle bronkode beskikbaar stel aan enigeen wat dit vra.  Dit is van toepassing op beide oorspronklike en veranderde kopiee van die sagteware, asook enige sagteware wat kode bevat wat vanuit hierdie sagteware geneem is.\n"
+"%(name)s word gedek deur die 'GNU General Public License'. Dit staan jou vry "
+"om hierdie software uit te deel of te verander op enige manier wat jy lus "
+"kry, solank as wat jy die lisensie saammet die sagteware versprei, en alle "
+"bronkode beskikbaar stel aan enigeen wat dit vra.  Dit is van toepassing op "
+"beide oorspronklike en veranderde kopiee van die sagteware, asook enige "
+"sagteware wat kode bevat wat vanuit hierdie sagteware geneem is.\n"
 "Vir verdere detail kan jy die lisensie aanlyn lees by\n"
 "http://www.gnu.org/licenses/gpl.html\n"
 "of lees die leeer COPYING wat saammet hierdie sagteware gekom het."
-
 
 #: virtualBuffers/IAccessible/MSHTML.py:136
 #: virtualBuffers/IAccessible/adobe.py:159
@@ -1959,7 +2218,8 @@ msgstr "klaar"
 #: virtualBuffers/IAccessible/MSHTML.py:242
 #: virtualBuffers/IAccessible/MSHTML.py:249
 #: virtualBuffers/IAccessible/adobe.py:257
-#: virtualBuffers/IAccessible/gecko.py:250
+#: virtualBuffers/IAccessible/gecko.py:250 speech.py:761
+#, python-format
 msgid "with %s items"
 msgstr "met %s items"
 
@@ -1968,7 +2228,7 @@ msgstr "met %s items"
 #: virtualBuffers/IAccessible/adobe.py:252
 #: virtualBuffers/IAccessible/adobe.py:263
 #: virtualBuffers/IAccessible/gecko.py:245
-#: virtualBuffers/IAccessible/gecko.py:256
+#: virtualBuffers/IAccessible/gecko.py:256 characterSymbols.py:57
 msgid "bullet"
 msgstr "peil"
 
@@ -1985,7 +2245,7 @@ msgstr "definisie"
 msgid "file upload"
 msgstr "oplaai van leeer"
 
-#: virtualBuffers/IAccessible/MSHTML.py:316
+#: virtualBuffers/IAccessible/MSHTML.py:316 controlTypes.py:349
 msgid "clickable"
 msgstr "klikbare"
 
@@ -1994,7 +2254,9 @@ msgstr "klikbare"
 msgid "protected %s"
 msgstr "%s beskermd"
 
-#: virtualBuffers/__init__.py:193
+#: virtualBuffers/__init__.py:193 speech.py:759 speech.py:763 speech.py:767
+#: speech.py:775 speech.py:786 speech.py:887
+#, python-format
 msgid "out of %s"
 msgstr "van %s"
 
@@ -2006,7 +2268,7 @@ msgstr "beweeg 1 bladsy op in die virtuele buffer se huidige dokument"
 msgid "moves one page down in the virtual buffer's current document"
 msgstr "beweeg 1 bladsy af in die virtuele buffer se huidige dokument"
 
-#: virtualBuffers/__init__.py:293
+#: virtualBuffers/__init__.py:293 virtualBuffers/__init__.py:676
 msgid "activates the current object in the virtual buffer"
 msgstr "aktiveer die huidige voorwerp in die virtuele buffer"
 
@@ -2014,11 +2276,11 @@ msgstr "aktiveer die huidige voorwerp in die virtuele buffer"
 msgid "no more headings"
 msgstr "geen verdere opskrifte nie"
 
-#: virtualBuffers/__init__.py:317
+#: virtualBuffers/__init__.py:317 virtualBuffers/__init__.py:1209
 msgid "moves to the next heading"
 msgstr "beweeg na die volgende opskrif"
 
-#: virtualBuffers/__init__.py:328
+#: virtualBuffers/__init__.py:328 virtualBuffers/__init__.py:1210
 msgid "moves to the previous heading"
 msgstr "beweeg na die vorige opskrif"
 
@@ -2038,11 +2300,11 @@ msgstr "beweeg na die vorige paragraaf"
 msgid "no more tables"
 msgstr "geen verdere tabelle nie"
 
-#: virtualBuffers/__init__.py:361
+#: virtualBuffers/__init__.py:361 virtualBuffers/__init__.py:1223
 msgid "moves to the next table"
 msgstr "beweeg na die volgende tabel"
 
-#: virtualBuffers/__init__.py:372
+#: virtualBuffers/__init__.py:372 virtualBuffers/__init__.py:1224
 msgid "moves to the previous table"
 msgstr "beweeg na die vorige tabel"
 
@@ -2050,11 +2312,11 @@ msgstr "beweeg na die vorige tabel"
 msgid "no more links"
 msgstr "geen verdere skakels nie"
 
-#: virtualBuffers/__init__.py:383
+#: virtualBuffers/__init__.py:383 virtualBuffers/__init__.py:1225
 msgid "moves to the next link"
 msgstr "beweeg na die volgende skakel"
 
-#: virtualBuffers/__init__.py:394
+#: virtualBuffers/__init__.py:394 virtualBuffers/__init__.py:1226
 msgid "moves to the previous link"
 msgstr "beweeg na die vorige skakel"
 
@@ -2062,11 +2324,11 @@ msgstr "beweeg na die vorige skakel"
 msgid "no more lists"
 msgstr "geen verdere lyste nie"
 
-#: virtualBuffers/__init__.py:405
+#: virtualBuffers/__init__.py:405 virtualBuffers/__init__.py:1233
 msgid "moves to the next list"
 msgstr "beweeg na die volgende lys"
 
-#: virtualBuffers/__init__.py:416
+#: virtualBuffers/__init__.py:416 virtualBuffers/__init__.py:1234
 msgid "moves to the previous list"
 msgstr "beweeg na die vorige lys"
 
@@ -2074,11 +2336,11 @@ msgstr "beweeg na die vorige lys"
 msgid "no more list items"
 msgstr "geen verdere lysitems nie"
 
-#: virtualBuffers/__init__.py:427
+#: virtualBuffers/__init__.py:427 virtualBuffers/__init__.py:1235
 msgid "moves to the next list item"
 msgstr "beweeg na die volgende lysitem"
 
-#: virtualBuffers/__init__.py:438
+#: virtualBuffers/__init__.py:438 virtualBuffers/__init__.py:1236
 msgid "moves to the previous list item"
 msgstr "beweeg na die vorige lysitem"
 
@@ -2090,19 +2352,19 @@ msgstr "geen verdere vormvelde nie"
 msgid "Moves to the next form field"
 msgstr "beweeg na die volgende vormveld"
 
-#: virtualBuffers/__init__.py:460
+#: virtualBuffers/__init__.py:460 virtualBuffers/__init__.py:1232
 msgid "moves to the previous form field"
 msgstr "beweeg na die vorige vormveld"
 
-#: virtualBuffers/__init__.py:463
+#: virtualBuffers/__init__.py:463 cursorManager.py:76
 msgid "Find"
 msgstr "soek"
 
-#: virtualBuffers/__init__.py:463
+#: virtualBuffers/__init__.py:463 cursorManager.py:76
 msgid "Type the text you wish to find"
 msgstr "tik die teks waarna jy soek"
 
-#: virtualBuffers/__init__.py:473
+#: virtualBuffers/__init__.py:473 cursorManager.py:90
 msgid "Find Error"
 msgstr "soekfout"
 
@@ -2145,3 +2407,2363 @@ msgstr "l=lys spoedsleutel"
 #: virtualBuffers/__init__.py:514 virtualBuffers/__init__.py:515
 msgid "i=listItemQuickKey"
 msgstr "i=lysitem spoedsleutel"
+
+#: braille.py:26
+msgid "Arabic grade 1"
+msgstr ""
+
+#: braille.py:27
+msgid "Bulgarian 8 dot computer braille"
+msgstr ""
+
+#: braille.py:28
+msgid "Welsh grade 1"
+msgstr ""
+
+#: braille.py:29
+msgid "Welsh grade 2"
+msgstr ""
+
+#: braille.py:30
+msgid "Czech grade 1"
+msgstr ""
+
+#: braille.py:31
+msgid "Danish grade 1"
+msgstr ""
+
+#: braille.py:32
+msgid "German grade 0"
+msgstr ""
+
+#: braille.py:33
+msgid "German grade 1"
+msgstr ""
+
+#: braille.py:34
+msgid "English (U.K.) grade 1"
+msgstr ""
+
+#: braille.py:35
+msgid "English (U.K.) grade 2"
+msgstr ""
+
+#: braille.py:36
+msgid "English (U.S.) 6 dot computer braille"
+msgstr ""
+
+#: braille.py:37
+msgid "English (U.S.) 8 dot computer braille"
+msgstr ""
+
+#: braille.py:38
+msgid "English (U.S.) grade 1"
+msgstr ""
+
+#: braille.py:39
+msgid "English (U.S.) grade 2"
+msgstr ""
+
+#: braille.py:40
+msgid "Spanish grade 1"
+msgstr ""
+
+#: braille.py:41
+msgid "French (Canada) grade 1"
+msgstr ""
+
+#: braille.py:42
+msgid "French (Canada) grade 2"
+msgstr ""
+
+#: braille.py:43
+msgid "French (unified) 6 dot computer braille"
+msgstr ""
+
+#: braille.py:44
+msgid "French (unified) 8 dot computer braille"
+msgstr ""
+
+#: braille.py:45
+msgid "French (unified) Grade 2"
+msgstr ""
+
+#: braille.py:45
+msgid "Greek (Greece) grade 1"
+msgstr ""
+
+#: braille.py:46
+msgid "Hebrew 8 dot computer braille"
+msgstr ""
+
+#: braille.py:47
+msgid "Hindi grade 1"
+msgstr ""
+
+#: braille.py:48
+msgid "Croatian 8 dot computer braille"
+msgstr ""
+
+#: braille.py:49
+msgid "Hungarian 8 dot computer braille"
+msgstr ""
+
+#: braille.py:50
+msgid "Italian grade 1"
+msgstr ""
+
+#: braille.py:51
+msgid "Latvian grade 1"
+msgstr ""
+
+#: braille.py:52
+msgid "Dutch (Belgium) grade 1"
+msgstr ""
+
+#: braille.py:53
+msgid "Dutch (netherlands) grade 1"
+msgstr ""
+
+#: braille.py:54
+msgid "Norwegian grade 0"
+msgstr ""
+
+#: braille.py:55
+msgid "Norwegian grade 1"
+msgstr ""
+
+#: braille.py:56
+msgid "Norwegian grade 2"
+msgstr ""
+
+#: braille.py:57
+msgid "Norwegian grade 3"
+msgstr ""
+
+#: braille.py:58
+msgid "Polish grade 1"
+msgstr ""
+
+#: braille.py:59
+msgid "Portuguese grade 1"
+msgstr ""
+
+#: braille.py:60
+msgid "Russian grade 1"
+msgstr ""
+
+#: braille.py:61
+msgid "Swedish grade 1"
+msgstr ""
+
+#: braille.py:62
+msgid "Slovak"
+msgstr ""
+
+#: braille.py:63
+msgid "Unified English Braille Code grade 1"
+msgstr ""
+
+#: braille.py:64
+msgid "Unified English Braille Code grade 2"
+msgstr ""
+
+#: braille.py:68
+msgid "edt"
+msgstr ""
+
+#: braille.py:69
+msgid "lst"
+msgstr ""
+
+#: braille.py:70
+msgid "mnubar"
+msgstr ""
+
+#: braille.py:71
+msgid "mnu"
+msgstr ""
+
+#: braille.py:72
+msgid "btn"
+msgstr ""
+
+#: braille.py:73
+msgid "chk"
+msgstr ""
+
+#: braille.py:74
+msgid "rbtn"
+msgstr ""
+
+#: braille.py:75
+msgid "cbo"
+msgstr ""
+
+#: braille.py:76
+msgid "lnk"
+msgstr ""
+
+#: braille.py:77
+msgid "dlg"
+msgstr ""
+
+#: braille.py:78
+msgid "tv"
+msgstr ""
+
+#: braille.py:79
+msgid "tb"
+msgstr ""
+
+#: braille.py:83
+msgid "(x)"
+msgstr ""
+
+#: braille.py:84
+msgid "sel"
+msgstr ""
+
+#: braille.py:85
+msgid "submnu"
+msgstr ""
+
+#: braille.py:88
+msgid "( )"
+msgstr ""
+
+#: braille.py:230 speech.py:671 speech.py:674
+#, python-format
+msgid "level %s"
+msgstr "vlak %s"
+
+#: keyboardHandler.py:78
+#, python-format
+msgid "%s keyboard layout"
+msgstr "%s sleutelbord uitleg"
+
+#: keyboardHandler.py:209
+msgid "Error in keyboardHandler.internal_keyDownEvent"
+msgstr "fout in keyboardHandler.internal_keyDownEvent"
+
+#: keyboardHandler.py:247
+msgid "Error in keyboardHandler.internal_keyUpEvent"
+msgstr "fout in keyboardHandler.internal_keyUpEvent"
+
+#: keyUtils.py:111
+msgid "backspace"
+msgstr ""
+
+#: keyUtils.py:112
+msgid "caps lock"
+msgstr ""
+
+#: keyUtils.py:113
+msgid "ctrl"
+msgstr ""
+
+#: keyUtils.py:114
+msgid "alt"
+msgstr ""
+
+#: keyUtils.py:115
+msgid "shift"
+msgstr "bokas"
+
+#: keyUtils.py:116
+msgid "windows"
+msgstr ""
+
+#: keyUtils.py:117
+msgid "enter"
+msgstr ""
+
+#: keyUtils.py:118
+msgid "numpad enter"
+msgstr ""
+
+#: keyUtils.py:119
+msgid "escape"
+msgstr ""
+
+#: keyUtils.py:121
+msgid "page up"
+msgstr ""
+
+#: keyUtils.py:122
+msgid "page down"
+msgstr ""
+
+#: keyUtils.py:123
+msgid "end"
+msgstr ""
+
+#: keyUtils.py:124
+msgid "home"
+msgstr ""
+
+#: keyUtils.py:125
+msgid "delete"
+msgstr "uitvee"
+
+#: keyUtils.py:126
+msgid "left arrow"
+msgstr "lings pyltjie"
+
+#: keyUtils.py:127
+msgid "right arrow"
+msgstr "regs pyltjie"
+
+#: keyUtils.py:128
+msgid "up arrow"
+msgstr "op pyltjie"
+
+#: keyUtils.py:129
+msgid "down arrow"
+msgstr "af pyltjie"
+
+#: keyUtils.py:130
+msgid "applications"
+msgstr "toepassings"
+
+#: keyUtils.py:131
+msgid "num lock"
+msgstr ""
+
+#: keyUtils.py:132
+msgid "snapshot"
+msgstr ""
+
+#: keyUtils.py:133
+msgid "scroll lock"
+msgstr ""
+
+#: keyUtils.py:134
+msgid "numpad left"
+msgstr ""
+
+#: keyUtils.py:135
+msgid "numpad right"
+msgstr ""
+
+#: keyUtils.py:136
+msgid "numpad up"
+msgstr ""
+
+#: keyUtils.py:137
+msgid "numpad down"
+msgstr ""
+
+#: keyUtils.py:138
+msgid "numpad page up"
+msgstr ""
+
+#: keyUtils.py:139
+msgid "numpad page down"
+msgstr ""
+
+#: keyUtils.py:140
+msgid "numpad end"
+msgstr ""
+
+#: keyUtils.py:141
+msgid "numpad home"
+msgstr ""
+
+#: keyUtils.py:142
+msgid "numpad slash"
+msgstr ""
+
+#: keyUtils.py:143
+msgid "numpad star"
+msgstr ""
+
+#: keyUtils.py:144
+msgid "numpad minus"
+msgstr ""
+
+#: keyUtils.py:145
+msgid "numpad plus"
+msgstr ""
+
+#: keyUtils.py:146
+msgid "left control"
+msgstr "lings kontrole"
+
+#: keyUtils.py:147
+msgid "right control"
+msgstr "regs kontrole"
+
+#: keyUtils.py:148
+msgid "left windows"
+msgstr "lings windows"
+
+#: keyUtils.py:149
+msgid "left shift"
+msgstr "links bokas"
+
+#: keyUtils.py:150
+msgid "right shift"
+msgstr "regs bokas"
+
+#: keyUtils.py:151
+msgid "left alt"
+msgstr "lings alt"
+
+#: keyUtils.py:152
+msgid "right alt"
+msgstr "regs alt"
+
+#: keyUtils.py:153
+msgid "right windows"
+msgstr "regs windows"
+
+#: synthDrivers/silence.py:13
+msgid "No speech"
+msgstr "geen spraak"
+
+#: synthDrivers/_espeak.py:308
+msgid "none"
+msgstr "geen"
+
+#: synthDrivers/display.py:31
+msgid "A virtual synth which displays text in a window"
+msgstr "'n virtuele sintitiseerder wat teks in 'n venster vertoon"
+
+#: synthDrivers/newfon.py:171
+msgid "russian newfon synthesizer by Sergey Shishmintzev"
+msgstr ""
+
+#: synthDrivers/newfon.py:181
+msgid "male 1"
+msgstr ""
+
+#: synthDrivers/newfon.py:181
+msgid "female 1"
+msgstr ""
+
+#: synthDrivers/newfon.py:181
+msgid "male 2"
+msgstr ""
+
+#: synthDrivers/newfon.py:181
+msgid "female 2"
+msgstr ""
+
+#: NVDAObjects/UIA/__init__.py:423
+msgid "invoke"
+msgstr "gebruik"
+
+#: NVDAObjects/window/edit.py:530
+msgid "unknown"
+msgstr "onbekend"
+
+#: NVDAObjects/window/edit.py:532
+#, python-format
+msgid "%s embedded object"
+msgstr "%s ingevoegde voorwerp"
+
+#: NVDAObjects/window/__init__.py:295
+msgid "Desktop"
+msgstr "lessenaarblad"
+
+#: NVDAObjects/window/excel.py:48
+msgid "NVDA Excel Cell Editor"
+msgstr "NVDA excel sel redigeerder"
+
+#: NVDAObjects/window/excel.py:50
+msgid "Enter cell contents"
+msgstr "sleutel sel inhoud in"
+
+#: NVDAObjects/window/winword.py:343 NVDAObjects/window/winword.py:354
+#: NVDAObjects/window/winword.py:365 NVDAObjects/window/winword.py:376
+msgid "not in table"
+msgstr "nie in 'n tabel nie"
+
+#: NVDAObjects/IAccessible/__init__.py:1313
+msgid "Taskbar"
+msgstr "taakbalk"
+
+#: mouseHandler.py:132
+#, python-format
+msgid "%s cursor"
+msgstr "%s pyltjie"
+
+#: brailleDisplayDrivers/noBraille.py:13
+msgid "No braille"
+msgstr "geen braille"
+
+#: brailleDisplayDrivers/alvaBC6.py:74
+msgid "ALVA BC640/680 series"
+msgstr "ALVA BC640/680 reeks"
+
+#: brailleDisplayDrivers/handyTech.py:40
+msgid "Handy Tech braille displays"
+msgstr "Handy Tech braille vertoners"
+
+#: aria.py:63
+msgid "banner"
+msgstr "bannier"
+
+#: aria.py:64
+msgid "complementary"
+msgstr "komplementé¤²"
+
+#: aria.py:65
+msgid "content info"
+msgstr "inhoud inligting"
+
+#: aria.py:66
+msgid "main"
+msgstr "hoof"
+
+#: aria.py:67
+msgid "navigation"
+msgstr "navigasie"
+
+#: aria.py:68
+msgid "search"
+msgstr "soek"
+
+#: appModuleHandler.py:172
+#, python-format
+msgid "Error in appModule %s"
+msgstr "fout in toepassings module %s"
+
+#: appModules/outlook.py:25 appModules/outlook.py:38
+#, python-format
+msgid "subject: %s"
+msgstr "onderwerp"
+
+#: appModules/outlook.py:26
+#, python-format
+msgid "received: %s"
+msgstr "ontvang"
+
+#: appModules/outlook.py:30
+msgid "unread"
+msgstr "ongelees"
+
+#: appModules/outlook.py:32
+msgid "attachment"
+msgstr "aanhegsel"
+
+#: appModules/outlook.py:39
+#, python-format
+msgid "sent: %s"
+msgstr "gestuur %s"
+
+#: appModules/explorer.py:16
+msgid "Start"
+msgstr "begin"
+
+#: appModules/_default.py:65
+msgid ""
+"Reports the current line under the application cursor. Pressing this key "
+"twice will spell the current line"
+msgstr "lees die huidige lyn onder die stelselpyltjie. Druk twee keer om die lyn te spel."
+
+#: appModules/_default.py:68
+msgid "left click"
+msgstr "lingsklik"
+
+#: appModules/_default.py:71
+msgid "Clicks the left mouse button once at the current mouse position"
+msgstr "klik die linker muisknoppie by die huidige muisposisie"
+
+#: appModules/_default.py:74
+msgid "right click"
+msgstr "regsklik"
+
+#: appModules/_default.py:77
+msgid "Clicks the right mouse button once at the current mouse position"
+msgstr "klik die regter muisknoppie by die huidige muisposisie"
+
+#: appModules/_default.py:89 cursorManager.py:225
+msgid "no selection"
+msgstr "geen seleksie"
+
+#: appModules/_default.py:92
+msgid ""
+"Announces the current selection in edit controls and documents. If there is "
+"no selection it says so."
+msgstr "raporteer die huidige seleksie in redigeringsvelde en dokumente."
+
+#: appModules/_default.py:100
+msgid ""
+"If pressed once, reports the current time. If pressed twice, reports the "
+"current date"
+msgstr "As dit een keer gedruk word, word die tyd gelees. As dit twee keer gedruk word, word die datum gelees."
+
+#: appModules/_default.py:105 appModules/_default.py:114
+#: appModules/_default.py:123 appModules/_default.py:132
+msgid "No settings"
+msgstr "geen verstellers"
+
+#: appModules/_default.py:109
+msgid "Increases the currently active setting in the synth settings ring"
+msgstr "vermeerder die huidige versteller in die sintitiseerder verstellings ring"
+
+#: appModules/_default.py:118
+msgid "Decreases the currently active setting in the synth settings ring"
+msgstr "verminder die aktiewe versteller in die sintitiseerder verstellings ring"
+
+#: appModules/_default.py:127
+msgid "Moves to the next available setting in the synth settings ring"
+msgstr "beweeg na die volgende beskikbare versteller in die sintitiseerder verstellings ring"
+
+#: appModules/_default.py:136
+msgid "Moves to the previous available setting in the synth settings ring"
+msgstr "beweeg na die vorige beskikbare versteller in die sintitiseerder verstellings ring"
+
+#: appModules/_default.py:191
+msgid "object has no location"
+msgstr "voorwerp het geen posisie nie"
+
+#: appModules/_default.py:197
+msgid "Moves the mouse pointer to the current navigator object"
+msgstr "beweeg die muis na die huidige navigator voorwerp"
+
+#: appModules/_default.py:200
+msgid "Move navigator object to mouse"
+msgstr "beweeg navigator voorwerp na die muis"
+
+#: appModules/_default.py:204
+msgid ""
+"Sets the navigator object to the current object under the mouse pointer and "
+"speaks it"
+msgstr "beweeg die navigator voorwerp na die huidige voorwerp onder die muis en lees dit"
+
+#: appModules/_default.py:231 appModules/_default.py:702
+#, python-format
+msgid "%s copied to clipboard"
+msgstr "%s gekopieer na klipbord"
+
+#: appModules/_default.py:234
+msgid ""
+"Reports the current navigator object or, if pressed three times, Copies name "
+"and value of current navigator object to the clipboard"
+msgstr "raporteer die huidige navigator voorwerp of as dit drie keer gedruk word, kopieer die naam en waarde na die klipbord"
+
+#: appModules/_default.py:246
+msgid "No location information for screen"
+msgstr "geen posisie inligting vir skerm"
+
+#: appModules/_default.py:252
+#, python-format
+msgid ""
+"Object edges positioned %.1f per cent from left edge of screen, %.1f per "
+"cent from top edge of screen, width is %.1f per cent of screen, height is "
+"%.1f per cent of screen"
+msgstr "voorwerp is %.1f persent van die linkerkant van die skerm en %.1f persent van die bokant van die skerm. Die wyte is %.1f persent van die skerm, en hoogte is %.1f persent van die skerm"
+
+#: appModules/_default.py:275
+msgid ""
+"Sets the navigator object to the parent of the object it is currently on and "
+"speaks it"
+msgstr "beweeg die navigator voorwerp na die ouer van die huidige voorwerp en lees dit"
+
+#: appModules/_default.py:288
+msgid ""
+"Sets the navigator object to the object next to the one it is currently on "
+"and speaks it"
+msgstr "beweeg die navigator voorwerp na die volgende voorwerp en lees dit"
+
+#: appModules/_default.py:301
+msgid ""
+"Sets the navigator object to the object previous to the one it is currently "
+"on and speaks it"
+msgstr "beweeg die navigator voorwerp na die vorige voorwerp en lees dit"
+
+#: appModules/_default.py:314
+msgid ""
+"Sets the navigator object to the first child object of the one it is "
+"currently on and speaks it"
+msgstr "beweeg die navigatorvoorwerp na die eerste kind vin die heidige voorwerp en lees dit"
+
+#: appModules/_default.py:336
+msgid "end of flow"
+msgstr "einde van vloei"
+
+#: appModules/_default.py:337
+msgid ""
+"Sets the navigator object to the object this object flows to and speaks it"
+msgstr "beweeg die navigator voorwerp na die voorwerp waarna hierdie voorwerp vloei"
+
+#: appModules/_default.py:359
+msgid "Beginning of flow"
+msgstr "begin van vloei"
+
+#: appModules/_default.py:360
+msgid ""
+"Sets the navigator object to the object this object flows from and speaks it"
+msgstr "beweeg die navigator voorwerp na die voorwerp waarvan hierdie voorwerp vloei"
+
+#: appModules/_default.py:370
+msgid "No default action"
+msgstr "geen verstek aksie"
+
+#: appModules/_default.py:375
+msgid "default action failed"
+msgstr "verstek aksie het mislik"
+
+#: appModules/_default.py:386
+msgid ""
+"Moves the review cursor to the top line of the current navigator object and "
+"speaks it"
+msgstr "beweeg die oorsigpyltjie na die boonste lyn en lees dit"
+
+#: appModules/_default.py:398
+msgid ""
+"Moves the review cursor to the previous line of the current navigator object "
+"and speaks it"
+msgstr "beweeg die oorsigpyltjie na die vorige lyn en lees dit"
+
+#: appModules/_default.py:407
+msgid ""
+"Reports the line of the current navigator object where the review cursor is "
+"situated. If this key is pressed twice, the current line will be spelled"
+msgstr "lees die huidige lyn waar die oorsigpyltjie is. As hierdie sleutel tweemaal gedruk word word die lyn gespel"
+
+#: appModules/_default.py:419
+msgid ""
+"Moves the review cursor to the next line of the current navigator object and "
+"speaks it"
+msgstr "beweeg die oorsigpyltjie na die volgende lyn en lees dit"
+
+#: appModules/_default.py:427
+msgid ""
+"Moves the review cursor to the bottom line of the current navigator object "
+"and speaks it"
+msgstr "beweeg die oorsigpyltjie na die onderste lyn en lees dit"
+
+#: appModules/_default.py:439
+msgid ""
+"Moves the review cursor to the previous word of the current navigator object "
+"and speaks it"
+msgstr "beweeg die oorsigpyltjie na die vorige woord en lees dit"
+
+#: appModules/_default.py:448
+msgid ""
+"Speaks the word of the current navigator object where the review cursor is "
+"situated. If this key is pressed twice, the word will be spelled"
+msgstr "lees die huidige woord waar die oorsigpyltjie is"
+
+#: appModules/_default.py:460
+msgid ""
+"Moves the review cursor to the next word of the current navigator object and "
+"speaks it"
+msgstr "Beweeg die oorsigpyltjie na die volgende woord en lees dit"
+
+#: appModules/_default.py:470
+msgid ""
+"Moves the review cursor to the first character of the line where it is "
+"situated in the current navigator object and speaks it"
+msgstr "beweeg die oorsigpyltjie na die eerste karakter van die lyn en lees dit"
+
+#: appModules/_default.py:488
+msgid ""
+"Moves the review cursor to the previous character of the current navigator "
+"object and speaks it"
+msgstr "beweeg die oorsigpyltjie na die vorige karakter en lees dit"
+
+#: appModules/_default.py:502
+msgid ""
+"Reports the character of the current navigator object where the review "
+"cursor is situated. If this key is pressed twice, ascii and hexadecimal "
+"values are spoken for the character"
+msgstr "lees die huidige karakter van die oorsigpyltjie. As hierdie sleutel tweemaal gedruk word word ascii en hexidesimale waardes word geraporteer"
+
+#: appModules/_default.py:520
+msgid ""
+"Moves the review cursor to the next character of the current navigator "
+"object and speaks it"
+msgstr "beweeg die oorsigpyltjie na die volgende karakter en lees dit"
+
+#: appModules/_default.py:531
+msgid ""
+"Moves the review cursor to the last character of the line where it is "
+"situated in the current navigator object and speaks it"
+msgstr "Beweeg die oorsigpyltjie tot by die laaste karakter van die lyn en lees dit"
+
+#: appModules/_default.py:537
+msgid "No caret"
+msgstr "geen pyltjie"
+
+#: appModules/_default.py:549
+msgid "no caret"
+msgstr "geen pyltjie"
+
+#: appModules/_default.py:554
+msgid ""
+"Moves the system caret to the position of the review cursor , in the current "
+"navigator object"
+msgstr "Beweeg die stelsel pyltjie tot by die posisie van die oorsigpyltjie in die huidige navigator voorwerp"
+
+#: appModules/_default.py:592
+msgid ""
+"Toggles between browse mode and focus mode. When in focus mode, keys will "
+"pass straight through to the application, allowing you to interact directly "
+"with a control. When in browse mode, you can navigate the document with the "
+"cursor, quick navigation keys, etc."
+msgstr "Skakel tussen blaaimode en fokusmode. In fokusmode kan direkte aksie op 'n kontrole uitgevoer word. In blaaimode kan die dokument met die pyltjies gelees word en spoednavigasiesleutels kan gebruik word"
+
+#: appModules/_default.py:600
+msgid "Shows the NVDA menu"
+msgstr "vertoon die NVDA kieslys"
+
+#: appModules/_default.py:605
+msgid ""
+"reads from the review cursor  up to end of current text, moving the review "
+"cursor as it goes"
+msgstr "Lees vanaf die oorsig pyltjie tot die einde van die teks en beweeg die oorsigpyltjie daarme saam"
+
+#: appModules/_default.py:610
+msgid "reads from the navigator object "
+msgstr "lees vanaf die navigator voorwerp"
+
+#: appModules/_default.py:622
+msgid ""
+"reads from the system caret up to the end of the text, moving the caret as "
+"it goes"
+msgstr "Lees van die pyltjieposisie tot aan die einde van die dokument en beweeg die pyltjie daarmee saam"
+
+#: appModules/_default.py:648
+msgid "No formatting information"
+msgstr "geen formateringsinligting"
+
+#: appModules/_default.py:651
+msgid ""
+"Reports formatting info for the current cursor position within a document"
+msgstr "Raporteer formateringsinligting vir die huidige pyltjie posisie in 'n dokument"
+
+#: appModules/_default.py:676
+msgid "reads the current application status bar and moves the navigator to it"
+msgstr "Lees die huidige program se statuslyn en beweeg die navigator tot by dit"
+
+#: appModules/_default.py:685
+msgid "Mouse tracking"
+msgstr "muis volging"
+
+#: appModules/_default.py:686
+msgid "Toggles the reporting of information as the mouse moves"
+msgstr "skakel die raportering van inligting soos die muis beweeg"
+
+#: appModules/_default.py:694
+msgid "no title"
+msgstr "geen titel"
+
+#: appModules/_default.py:703
+msgid ""
+"Reports the title of the current application or foreground window. If "
+"pressed twice, spells the title. If pressed thrice, copies the title to the "
+"clipboard"
+msgstr "Raporteer die heidige program se titel. As dit twee keer gedruk word wor die titel gespel. As dit drie keer gedruk word, word die titel na die klipbord gekopieer."
+
+#: appModules/_default.py:725 cursorManager.py:228
+msgid "copied to clipboard"
+msgstr "gekopieer na klipbord"
+
+#: appModules/_default.py:729
+#, python-format
+msgid "Control ID: %s"
+msgstr "Kontrole ID: %s"
+
+#: appModules/_default.py:730
+#, python-format
+msgid "Class: %s"
+msgstr "klas: %s"
+
+#: appModules/_default.py:732
+#, python-format
+msgid "internal text: %s"
+msgstr "interne teks: %s"
+
+#: appModules/_default.py:733
+#, python-format
+msgid "text: %s"
+msgstr "teks: %s"
+
+#: appModules/_default.py:735
+msgid ""
+"reports some information about the current navigator object, mainly useful "
+"for developers. When pressed 2 times it copies control id, class and "
+"internal text to the windows clipboard"
+msgstr "raporteer inligting oor die huidige navigator voorwerp, meestal nuttig vir ontwikkelaars. As dit twee keer gedruk word, word kontrole ID, klas en interne teks na die Windows klipbord gekopieer."
+
+#: appModules/_default.py:741
+msgid "no progress bar updates"
+msgstr "geen vorderingslyn opdaterings"
+
+#: appModules/_default.py:744
+msgid "speak progress bar updates"
+msgstr "lees vorderingslynopdaterings"
+
+#: appModules/_default.py:747
+msgid "beep for progress bar updates"
+msgstr "biep vir vorderingslynopdaterings"
+
+#: appModules/_default.py:750
+msgid "beep and speak progress bar updates"
+msgstr "biep en lees vorderingslynopdaterings"
+
+#: appModules/_default.py:752
+msgid ""
+"Toggles between beeps, speech, beeps and speech, and off, for reporting "
+"progress bar updates"
+msgstr "Skakel tussen bieps, spraak, spraak en bieps en af vir vorderingslyn opdaterings."
+
+#: appModules/_default.py:794
+msgid "no system battery"
+msgstr "geen stelselbattery"
+
+#: appModules/_default.py:811
+#, python-format
+msgid "Currently running application is %s"
+msgstr "Huidige uitvoerende toepassing is %s "
+
+#: appModules/_default.py:814
+#, python-format
+msgid " and currently loaded module is %s"
+msgstr "en huidige gelaaide module is %s."
+
+#: appModules/_default.py:816
+msgid ""
+"Speaks the filename of the active application along with the name of the "
+"currently loaded appModule"
+msgstr "sèŸ¤ie lé¤²naam van die huidige toepassing sowel as die huidige toepassingsmodule"
+
+#: appModules/_default.py:820
+msgid "Shows the NVDA general settings dialog"
+msgstr "vertoon die NVDA algemene verstellings dialoogblokkie"
+
+#: appModules/_default.py:824
+msgid "Shows the NVDA synthesizer dialog"
+msgstr "vertoon die NVDA sintitiseerder verstellings dialoogblokkie"
+
+#: appModules/_default.py:828
+msgid "Shows the NVDA voice settings dialog"
+msgstr "vertoon die NVDA stem verstellings dialoogblokkie"
+
+#: appModules/_default.py:832
+msgid "Shows the NVDA keyboard settings dialog"
+msgstr "vertoon die NVDA sleutelbord verstellings dialoogblokkie"
+
+#: appModules/_default.py:836
+msgid "Shows the NVDA mouse settings dialog"
+msgstr "vertoon die NVDA muis verstellings dialoogblokkie"
+
+#: appModules/_default.py:840
+msgid "Shows the NVDA object presentation settings dialog"
+msgstr "vertoon die NVDA voorwerp aanbieding verstellings dialoogblokkie"
+
+#: appModules/_default.py:844
+msgid "Shows the NVDA virtual buffers settings dialog"
+msgstr "vertoon die NVDA virtuele buffer verstellings dialoogblokkie"
+
+#: appModules/_default.py:848
+msgid "Shows the NVDA document formatting settings dialog"
+msgstr "vertoon die NVDA dokumentformateering verstellings dialoogblokkie"
+
+#: appModules/_default.py:852
+msgid "Saves the current NVDA configuration"
+msgstr "stoor die huidige NVDA konfigurasie"
+
+#: appModules/_default.py:856
+msgid "loads the saved NVDA configuration, overriding current changes"
+msgstr "laai die gestoorde NVDA konfigurasie en vervang die huidige konfigurasie."
+
+#: appModules/_default.py:866
+msgid "Activates the NVDA Python Console, primarily useful for development"
+msgstr "Aktifeer die NVDA python konsole, hoofsaaklik nuttig vir ontwikkelaars."
+
+#: appModules/_default.py:871
+msgid "review"
+msgstr "oorsig"
+
+#: appModules/_default.py:874
+msgid "focus"
+msgstr "fokus"
+
+#: appModules/_default.py:875
+#, python-format
+msgid "Braille tethered to %s"
+msgstr "braille verbind tot %s"
+
+#: appModules/_default.py:876
+msgid "Toggle tethering of braille between the focus and the review position"
+msgstr "skakel die verbinding van braille tussen die oorsig en die fokus posisie"
+
+#: appModules/_default.py:884
+msgid "There is no text on the clipboard"
+msgstr "Daar is geen teks op die klipbord nie."
+
+#: appModules/_default.py:889
+#, python-format
+msgid ""
+"The clipboard contains a large portion of text. It is %s characters long"
+msgstr "Die klipbord bevat 'n groot hoefeelheid teks. Dit is %s karakters lank."
+
+#: appModules/_default.py:890
+msgid "Reports the text on the Windows clipboard"
+msgstr "raporteer die teks op die Windows klipbord"
+
+#: appModules/_default.py:894
+msgid "Start marked"
+msgstr "begin gemerk"
+
+#: appModules/_default.py:895
+msgid ""
+"Marks the current position of the review cursor as the start of text to be "
+"copied"
+msgstr "merks die huidige posisie van die oorsigpyltjie as die begin van teks wat gekopieer moet word"
+
+#: appModules/_default.py:899
+msgid "No start marker set"
+msgstr "geen beginmarker was gestel nie"
+
+#: appModules/_default.py:903
+msgid "The start marker must reside within the same object"
+msgstr "die begin merker moet binne dieselfde voorwerp wees"
+
+#: appModules/_default.py:908
+msgid "Review selection copied to clipboard"
+msgstr "oorsig seleksie gekopieer tot klipbord"
+
+#: appModules/_default.py:910
+msgid "No text to copy"
+msgstr "geen teks om te kopieer nie"
+
+#: appModules/_default.py:913
+msgid ""
+"Retrieves the text from the previously set start marker up to and including "
+"the current position of the review cursor and copies it to the clipboard"
+msgstr "verkry die teks vanaf die vorige gestelde merker tot by en insluitende die huidige pyltjie posisie en kopieer dit tot die klipbord"
+
+#: appModules/calc.py:32
+msgid "Display"
+msgstr "vertoon"
+
+#: appModules/foobar2000.py:44
+msgid "No track playing"
+msgstr "geen snit speel nie"
+
+#: appModules/foobar2000.py:50
+msgid "Reports the remaining time of the currently playing track, if any"
+msgstr "raporteer die huidig oorblywende tyd van die snit wat speel"
+
+#: versionInfo.py:44
+msgid ""
+"Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>"
+msgstr ""
+
+#: versionInfo.py:45
+#, python-format
+msgid ""
+"%(copyright)s\r\n"
+"%(name)s is covered by the GNU General Public License (Version 2). You are "
+"free to share or change this software in any way you like as long as you "
+"distribute the licence along with the software, and make all source code "
+"available to anyone who wants it. This applies to both origional and "
+"modified copies of the software, plus any software that uses code taken from "
+"this software.\r\n"
+"For further details, you can view the licence online at:\r\n"
+"http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\r\n"
+"Or see the file Copying.txt that came with this software."
+msgstr ""
+
+#: characterSymbols.py:22
+msgid "page break"
+msgstr "bladsy breuk"
+
+#: characterSymbols.py:58
+msgid "dot dot dot"
+msgstr "dot dot dot"
+
+#: speech.py:306
+#, python-format
+msgid "%d characters"
+msgstr "%d karakters"
+
+#: speech.py:357
+#, python-format
+msgid "selecting %s"
+msgstr "selekteer %s"
+
+#: speech.py:368
+#, python-format
+msgid "unselecting %s"
+msgstr "onselekteer %s"
+
+#: speech.py:370
+msgid "selection removed"
+msgstr "seleksie verwyder"
+
+#: speech.py:658
+msgid "done dragging"
+msgstr "klaar gesleep"
+
+#: speech.py:685 speech.py:928
+#, python-format
+msgid "row %s"
+msgstr "ry %s"
+
+#: speech.py:688 speech.py:924
+#, python-format
+msgid "column %s"
+msgstr "kolom %s"
+
+#: speech.py:693
+#, python-format
+msgid "with %s rows and %s columns"
+msgstr "met %s rye en %s kolomme"
+
+#: speech.py:695
+#, python-format
+msgid "with %s columns"
+msgstr "met %s kolomme"
+
+#: speech.py:697
+#, python-format
+msgid "with %s rows"
+msgstr "met %s rye"
+
+#: speech.py:784
+#, python-format
+msgid "in %s"
+msgstr "binne %s"
+
+#: speech.py:804
+#, python-format
+msgid "page %s"
+msgstr "bladsy %s"
+
+#: speech.py:813
+msgid "default style"
+msgstr "verstek styl"
+
+#: speech.py:833
+#, python-format
+msgid "line %s"
+msgstr "lyn %s"
+
+#: speech.py:839
+msgid "no bold"
+msgstr "geen vetdruk"
+
+#: speech.py:844
+msgid "no italic"
+msgstr "geen kersuuf"
+
+#: speech.py:849
+msgid "strikethrough"
+msgstr "streep deur"
+
+#: speech.py:849
+msgid "no strikethrough"
+msgstr "geen deurstreep"
+
+#: speech.py:854
+msgid "underlined"
+msgstr "geonderstreep"
+
+#: speech.py:854
+msgid "not underlined"
+msgstr "nie geonderstreep nie"
+
+#: speech.py:865
+msgid "baseline"
+msgstr "basislyn"
+
+#: speech.py:873
+msgid "align left"
+msgstr "lings belyning"
+
+#: speech.py:875
+msgid "align center"
+msgstr "gesentreerde belyning"
+
+#: speech.py:877
+msgid "align right"
+msgstr "regs belyning"
+
+#: speech.py:879
+msgid "align justify"
+msgstr "justeerde belyning"
+
+#: speech.py:881
+msgid "align default"
+msgstr "verstek belyning"
+
+#: speech.py:894
+msgid "spelling error"
+msgstr "spelfout"
+
+#: speech.py:896
+msgid "out of spelling error"
+msgstr "buite spelfout"
+
+#: speech.py:919
+#, python-format
+msgid "table with %s columns and %s rows"
+msgstr "tabel %s rye en %s kolomme"
+
+#: cursorManager.py:90
+#, python-format
+msgid "text \"%s\" not found"
+msgstr "teks %s nie gevind nie"
+
+#: cursorManager.py:96
+msgid "find a text string from the current cursor position"
+msgstr "vind 'n teks string vanaf die huidige pyltjie posisie."
+
+#: cursorManager.py:103
+msgid ""
+"find the next occurrence of the previously entered text string from the "
+"current cursor's position"
+msgstr "vind die volgende voorkoms van die vorige ingetikte teks vanaf die huidige pyltjie posisie."
+
+#: cursorManager.py:110
+msgid ""
+"find the previous occurrence of the previously entered text string from the "
+"current cursor's position"
+msgstr "vind die vorige voorkoms van die vorige ingetikte teks vanaf die huidige pyltjie posisie."
+
+#: virtualBufferHandler.py:100
+msgid "focus mode"
+msgstr "fokusmode"
+
+#: virtualBufferHandler.py:100
+msgid "browse mode"
+msgstr "blaaimode"
+
+#: textInfos/__init__.py:114
+msgid "word"
+msgstr "word"
+
+#: controlTypes.py:191 controlTypes.py:298
+msgid "menu"
+msgstr "kieslys"
+
+#: controlTypes.py:290
+msgid "desktop icon"
+msgstr "lesenaarblad ikoon"
+
+#: controlTypes.py:291 controlTypes.py:315
+msgid "alert"
+msgstr "kenisgewing"
+
+#: controlTypes.py:292
+msgid "IFrame"
+msgstr "i raam"
+
+#: controlTypes.py:293
+msgid "desktop pane"
+msgstr "lesenaarblad ruit"
+
+#: controlTypes.py:294
+msgid "option pane"
+msgstr "opsie ruit"
+
+#: controlTypes.py:295
+msgid "color chooser"
+msgstr "kleur kieser"
+
+#: controlTypes.py:296
+msgid "file chooser"
+msgstr "lé¤² kieser"
+
+#: controlTypes.py:297
+msgid "filler"
+msgstr "plekhouer"
+
+#: controlTypes.py:299
+msgid "panel"
+msgstr "paneel"
+
+#: controlTypes.py:300
+msgid "password edit"
+msgstr "wagwoord redigeer"
+
+#: controlTypes.py:301
+msgid "font chooser"
+msgstr "font kieser"
+
+#: controlTypes.py:303
+msgid "font name"
+msgstr "font naam"
+
+#: controlTypes.py:304
+msgid "font size"
+msgstr "font grote"
+
+#: controlTypes.py:306
+msgid "ITALIC"
+msgstr "kersuuf"
+
+#: controlTypes.py:308
+msgid "foreground color"
+msgstr "voorgrond kleur"
+
+#: controlTypes.py:309
+msgid "background color"
+msgstr "agtergrond kleur"
+
+#: controlTypes.py:312
+msgid "style"
+msgstr "styl"
+
+#: controlTypes.py:313
+msgid "indent"
+msgstr "inkeep"
+
+#: controlTypes.py:314
+msgid "alignment"
+msgstr "belyningg"
+
+#: controlTypes.py:316
+msgid "data grid"
+msgstr "data rooster"
+
+#: controlTypes.py:317
+msgid "data item"
+msgstr "data item"
+
+#: controlTypes.py:318
+msgid "header item"
+msgstr "opskrif item"
+
+#: controlTypes.py:319
+msgid "thumb control"
+msgstr "duimkontrole"
+
+#: controlTypes.py:320
+msgid "calendar"
+msgstr "kalender"
+
+#: controlTypes.py:340
+msgid "defunct"
+msgstr "buitewerking"
+
+#: controlTypes.py:341
+msgid "invalid entry"
+msgstr "ontoelaatbare inskrywing"
+
+#: controlTypes.py:342
+msgid "modal"
+msgstr "model"
+
+#: controlTypes.py:343
+msgid "has auto complete"
+msgstr "het auto voltooi"
+
+#: controlTypes.py:344
+msgid "multi line"
+msgstr "multie lyn"
+
+#: controlTypes.py:345
+msgid "iconified"
+msgstr "geikoniseerd"
+
+#: controlTypes.py:346
+msgid "off screen"
+msgstr "afskerm"
+
+#: controlTypes.py:347
+msgid "selectable"
+msgstr "kiesbaar"
+
+#: controlTypes.py:348
+msgid "focusable"
+msgstr "fokusbaar"
+
+#: controlTypes.py:350
+msgid "editable"
+msgstr "redigeerbaar"
+
+#: controlTypes.py:351
+msgid "checkable"
+msgstr "merkbaar"
+
+#: controlTypes.py:352
+msgid "draggable"
+msgstr "sleepbaar"
+
+#: controlTypes.py:353
+msgid "dragging"
+msgstr "sleep"
+
+#: controlTypes.py:354
+msgid "drop target"
+msgstr "los teiken"
+
+#: IAccessibleHandler.py:680
+msgid "Secure Desktop"
+msgstr "vylige lessenaarblad"
+
+#: pythonConsole.py:24
+msgid "Type help(object) to get help about object."
+msgstr "Tik help(voorwerp) om help oor 'n voorwerp te verkry."
+
+#: pythonConsole.py:43
+msgid "Type exit() to exit the console"
+msgstr "Tik 'exit' om die konsole toe te maak."
+
+#: pythonConsole.py:96
+msgid "NVDA Python Console"
+msgstr "NVDA python konsole"
+
+#: synthSettingsRing.py:94
+msgid "rate"
+msgstr "spoed"
+
+#: synthSettingsRing.py:95
+msgid "pitch"
+msgstr "toonhoogte"
+
+#: synthSettingsRing.py:96
+msgid "volume"
+msgstr "volume"
+
+#: synthSettingsRing.py:97
+msgid "inflection"
+msgstr "infleksie"
+
+#: synthSettingsRing.py:98
+msgid "voice"
+msgstr "stem"
+
+#: synthSettingsRing.py:99
+msgid "variant"
+msgstr "variant"
+
+#: virtualBuffers/__init__.py:190
+#, python-format
+msgid "%s landmark"
+msgstr "%s baken"
+
+#: virtualBuffers/__init__.py:196
+msgid "Lin&ks"
+msgstr "&skakels"
+
+#: virtualBuffers/__init__.py:197
+msgid "&Headings"
+msgstr "&opskrifte"
+
+#: virtualBuffers/__init__.py:198
+msgid "Lan&dmarks"
+msgstr "&bakens"
+
+#: virtualBuffers/__init__.py:204
+msgid "Elements List"
+msgstr "elemente lys"
+
+#: virtualBuffers/__init__.py:207
+msgid "Type:"
+msgstr "tipe: "
+
+#: virtualBuffers/__init__.py:218
+msgid "&Filter by:"
+msgstr "&filter met:"
+
+#: virtualBuffers/__init__.py:226
+msgid "&Activate"
+msgstr "&aktiveer"
+
+#: virtualBuffers/__init__.py:229
+msgid "&Move to"
+msgstr "&beweeg na"
+
+#: virtualBuffers/__init__.py:527
+msgid "Refreshed"
+msgstr "hernu"
+
+#: virtualBuffers/__init__.py:532
+msgid "Loading document..."
+msgstr "besig om dokument te laai"
+
+#: virtualBuffers/__init__.py:688
+msgid "Refreshes the virtual buffer content"
+msgstr "hernu die virtuele buffer inhoud"
+
+#: virtualBuffers/__init__.py:693
+#, python-format
+msgid "use screen layout %s"
+msgstr "gebruik skermuitleg %s"
+
+#: virtualBuffers/__init__.py:694
+msgid ""
+"Toggles on and off if the screen layout is preserved while rendering the "
+"virtual buffer content"
+msgstr "skakel aan en af die preservering van die skermuitleg by die vertoon van die virtuele buffer"
+
+#: virtualBuffers/__init__.py:779
+msgid "Presents a list of links, headings or landmarks"
+msgstr "vertoon 'n lys van skakels, opskrifte of bakens."
+
+#: virtualBuffers/__init__.py:1121
+msgid "Not in a table cell"
+msgstr "nie in die sel van 'n tabel nie"
+
+#: virtualBuffers/__init__.py:1127
+msgid "edge of table"
+msgstr "kant van tabel"
+
+#: virtualBuffers/__init__.py:1137
+msgid "moves to the next table row"
+msgstr "beweeg na die volgende ry in die tabel"
+
+#: virtualBuffers/__init__.py:1141
+msgid "moves to the previous table row"
+msgstr "beweeg na die vorige ry in die tabel"
+
+#: virtualBuffers/__init__.py:1145
+msgid "moves to the next table column"
+msgstr "beweeg na die volgende kolom van die tabel"
+
+#: virtualBuffers/__init__.py:1149
+msgid "moves to the previous table column"
+msgstr "beweeg na die vorige kolom van die tabel"
+
+#: virtualBuffers/__init__.py:1209
+msgid "no next heading"
+msgstr "geen volgende opskrif nie"
+
+#: virtualBuffers/__init__.py:1210
+msgid "no previous heading"
+msgstr "geen vorige opskrif nie"
+
+#: virtualBuffers/__init__.py:1211
+msgid "moves to the next heading at level 1"
+msgstr "beweeg na die volgende opskrif op vlak 1"
+
+#: virtualBuffers/__init__.py:1211
+msgid "no next heading at level 1"
+msgstr "geen volgende opskrif op vlak 1 nie"
+
+#: virtualBuffers/__init__.py:1212
+msgid "moves to the previous heading at level 1"
+msgstr "beweeg na die vorige opskrif op vlak 1"
+
+#: virtualBuffers/__init__.py:1212
+msgid "no previous heading at level 1"
+msgstr "geen vorige opskrif op vlak 1 nie"
+
+#: virtualBuffers/__init__.py:1213
+msgid "moves to the next heading at level 2"
+msgstr "beweeg na die volgende opskrif op vlak 2"
+
+#: virtualBuffers/__init__.py:1213
+msgid "no next heading at level 2"
+msgstr "geen volgende opskrif op vlak 2 nie"
+
+#: virtualBuffers/__init__.py:1214
+msgid "moves to the previous heading at level 2"
+msgstr "beweeg na die vorige opskrif op vlak 2"
+
+#: virtualBuffers/__init__.py:1214
+msgid "no previous heading at level 2"
+msgstr "geen vorige opskrif op vlak 2 nie"
+
+#: virtualBuffers/__init__.py:1215
+msgid "moves to the next heading at level 3"
+msgstr "beweeg na die volgende opskrif op vlak 3"
+
+#: virtualBuffers/__init__.py:1215
+msgid "no next heading at level 3"
+msgstr "geen volgende opskrif op vlak 3 nie"
+
+#: virtualBuffers/__init__.py:1216
+msgid "moves to the previous heading at level 3"
+msgstr "beweeg na die vorige opskrif op vlak 3"
+
+#: virtualBuffers/__init__.py:1216
+msgid "no previous heading at level 3"
+msgstr "geen vorige opskrif op vlak 3 nie"
+
+#: virtualBuffers/__init__.py:1217
+msgid "moves to the next heading at level 4"
+msgstr "beweeg na die volgende opskrif op vlak 4"
+
+#: virtualBuffers/__init__.py:1217
+msgid "no next heading at level 4"
+msgstr "geen volgende opskrif op vlak 4 nie"
+
+#: virtualBuffers/__init__.py:1218
+msgid "moves to the previous heading at level 4"
+msgstr "beweeg na die vorige opskrif op vlak 4"
+
+#: virtualBuffers/__init__.py:1218
+msgid "no previous heading at level 4"
+msgstr "geen vorige opskrif op vlak 4 nie"
+
+#: virtualBuffers/__init__.py:1219
+msgid "moves to the next heading at level 5"
+msgstr "beweeg na die volgende opskrif op vlak 5"
+
+#: virtualBuffers/__init__.py:1219
+msgid "no next heading at level 5"
+msgstr "geen volgende opskrif op vlak 5 nie"
+
+#: virtualBuffers/__init__.py:1220
+msgid "moves to the previous heading at level 5"
+msgstr "beweeg na die vorige opskrif op vlak 5"
+
+#: virtualBuffers/__init__.py:1220
+msgid "no previous heading at level 5"
+msgstr "geen vorige opskrif op vlak 5 nie"
+
+#: virtualBuffers/__init__.py:1221
+msgid "moves to the next heading at level 6"
+msgstr "beweeg na die volgende opskrif op vlak 6"
+
+#: virtualBuffers/__init__.py:1221
+msgid "no next heading at level 6"
+msgstr "geen volgende opskrif op vlak 6 nie"
+
+#: virtualBuffers/__init__.py:1222
+msgid "moves to the previous heading at level 6"
+msgstr "beweeg nba die vorige opskrif op vlak 6"
+
+#: virtualBuffers/__init__.py:1222
+msgid "no previous heading at level 6"
+msgstr "geen vorige opskrif op vlak 6 nie"
+
+#: virtualBuffers/__init__.py:1223
+msgid "no next table"
+msgstr "geen volgende tabel nie"
+
+#: virtualBuffers/__init__.py:1224
+msgid "no previous table"
+msgstr "geen vorige tabel nie"
+
+#: virtualBuffers/__init__.py:1225
+msgid "no next link"
+msgstr "geen volgende skakel nie"
+
+#: virtualBuffers/__init__.py:1226
+msgid "no previous link"
+msgstr "geen vorige skakel nie"
+
+#: virtualBuffers/__init__.py:1227
+msgid "moves to the next visited link"
+msgstr "beweeg na die volgende besoekde skakel"
+
+#: virtualBuffers/__init__.py:1227
+msgid "no next visited link"
+msgstr "geen volgende besoekde skakel nie"
+
+#: virtualBuffers/__init__.py:1228
+msgid "moves to the previous visited link"
+msgstr "beweeg na die vorige besoekde skakel"
+
+#: virtualBuffers/__init__.py:1228
+msgid "no previous visited link"
+msgstr "geen vorige besoekde skakel nie"
+
+#: virtualBuffers/__init__.py:1229
+msgid "moves to the next unvisited link"
+msgstr "beweeg na die volgende onbesoekde skakel"
+
+#: virtualBuffers/__init__.py:1229
+msgid "no next unvisited link"
+msgstr "geen volgende onbesoekde skakel nie"
+
+#: virtualBuffers/__init__.py:1230
+msgid "moves to the previous unvisited link"
+msgstr "beweeg na die vorige onbesoekde skakel"
+
+#: virtualBuffers/__init__.py:1230
+msgid "no previous unvisited link"
+msgstr "geen vorige onbesoekde skakel nie"
+
+#: virtualBuffers/__init__.py:1231
+msgid "moves to the next form field"
+msgstr "beweeg na die volgende formveld"
+
+#: virtualBuffers/__init__.py:1231
+msgid "no next form field"
+msgstr "geen volgende formveld nie"
+
+#: virtualBuffers/__init__.py:1232
+msgid "no previous form field"
+msgstr "geen vorige formveld nie"
+
+#: virtualBuffers/__init__.py:1233
+msgid "no next list"
+msgstr "geen volgende lys nie"
+
+#: virtualBuffers/__init__.py:1234
+msgid "no previous list"
+msgstr "geen vorige lys nie"
+
+#: virtualBuffers/__init__.py:1235
+msgid "no next list item"
+msgstr "geen volgende lysitem nie"
+
+#: virtualBuffers/__init__.py:1236
+msgid "no previous list item"
+msgstr "geen vorige lysitem nie"
+
+#: virtualBuffers/__init__.py:1237
+msgid "moves to the next button"
+msgstr "beweeg na die volgende knoppie"
+
+#: virtualBuffers/__init__.py:1237
+msgid "no next button"
+msgstr "geen volgende knoppie nie"
+
+#: virtualBuffers/__init__.py:1238
+msgid "moves to the previous button"
+msgstr "beweeg na die vorige knoppie"
+
+#: virtualBuffers/__init__.py:1238
+msgid "no previous button"
+msgstr "geen vorige knoppie nie"
+
+#: virtualBuffers/__init__.py:1239
+msgid "moves to the next edit field"
+msgstr "beweeg na die volgende redigeringsveld"
+
+#: virtualBuffers/__init__.py:1239
+msgid "no next edit field"
+msgstr "geen volgende redigeringsveld nie"
+
+#: virtualBuffers/__init__.py:1240
+msgid "moves to the previous edit field"
+msgstr "beweeg nie die vorige redigeringsveld"
+
+#: virtualBuffers/__init__.py:1240
+msgid "no previous edit field"
+msgstr "geen vorige redigeringsveld nie"
+
+#: virtualBuffers/__init__.py:1241
+msgid "moves to the next frame"
+msgstr "beweeg na die volgende raam"
+
+#: virtualBuffers/__init__.py:1241
+msgid "no next frame"
+msgstr "geen volgende raam nie"
+
+#: virtualBuffers/__init__.py:1242
+msgid "moves to the previous frame"
+msgstr "beweeg na die vorige raam"
+
+#: virtualBuffers/__init__.py:1242
+msgid "no previous frame"
+msgstr "geen vorige raam nie"
+
+#: virtualBuffers/__init__.py:1243
+msgid "moves to the next separator"
+msgstr "beweeg na die volgende verdeler"
+
+#: virtualBuffers/__init__.py:1243
+msgid "no next separator"
+msgstr "geen volgende verdeler nie"
+
+#: virtualBuffers/__init__.py:1244
+msgid "moves to the previous separator"
+msgstr "beweeg na die vorige verdeler"
+
+#: virtualBuffers/__init__.py:1244
+msgid "no previous separator"
+msgstr "geen vorige verdeler nie"
+
+#: virtualBuffers/__init__.py:1245
+msgid "moves to the next radio button"
+msgstr "beweeg na die volgende radioknoppie"
+
+#: virtualBuffers/__init__.py:1245
+msgid "no next radio button"
+msgstr "geen volgende radioknoppie nie"
+
+#: virtualBuffers/__init__.py:1246
+msgid "moves to the previous radio button"
+msgstr "beweeg na die vorige radioknoppie"
+
+#: virtualBuffers/__init__.py:1246
+msgid "no previous radio button"
+msgstr "geen vorige radioknoppie nie"
+
+#: virtualBuffers/__init__.py:1247
+msgid "moves to the next combo box"
+msgstr "beweeg na die volgende komboblok"
+
+#: virtualBuffers/__init__.py:1247
+msgid "no next combo box"
+msgstr "geen volgende komboblok nie"
+
+#: virtualBuffers/__init__.py:1248
+msgid "moves to the previous combo box"
+msgstr "beweeg na die vorige komboblok"
+
+#: virtualBuffers/__init__.py:1248
+msgid "no previous combo box"
+msgstr "geen vorige kombo blok nie"
+
+#: virtualBuffers/__init__.py:1249
+msgid "moves to the next check box"
+msgstr "beweeg na die volgende merkblokkie"
+
+#: virtualBuffers/__init__.py:1249
+msgid "no next check box"
+msgstr "geen volgende merkblokkie nie"
+
+#: virtualBuffers/__init__.py:1250
+msgid "moves to the previous check box"
+msgstr "beweeg na die vorige merkblokkie"
+
+#: virtualBuffers/__init__.py:1250
+msgid "no previous check box"
+msgstr "geen vorige merkblokkie nie"
+
+#: virtualBuffers/__init__.py:1251
+msgid "moves to the next graphic"
+msgstr "beweeg na die volginde prent"
+
+#: virtualBuffers/__init__.py:1251
+msgid "no next graphic"
+msgstr "geen volginde prent nie"
+
+#: virtualBuffers/__init__.py:1252
+msgid "moves to the previous graphic"
+msgstr "beweeg na die vorige prent"
+
+#: virtualBuffers/__init__.py:1252
+msgid "no previous graphic"
+msgstr "geen vorige prent nie"
+
+#: virtualBuffers/__init__.py:1253
+msgid "moves to the next block quote"
+msgstr "beweeg na die volgende blok aanhaling"
+
+#: virtualBuffers/__init__.py:1253
+msgid "no next block quote"
+msgstr "geen volgende blok aanhaling nie"
+
+#: virtualBuffers/__init__.py:1254
+msgid "moves to the previous block quote"
+msgstr "beweeg na die vorige blok aanhaling"
+
+#: virtualBuffers/__init__.py:1254
+msgid "no previous block quote"
+msgstr "geen vorige blok aanhaling"
+
+#: virtualBuffers/__init__.py:1255
+msgid "skips forward past a block of links"
+msgstr "spring voort verby 'n blok van skakels"
+
+#: virtualBuffers/__init__.py:1255
+msgid "no more text after a block of links"
+msgstr "geen meer teks na 'n blok van skakels nie"
+
+#: virtualBuffers/__init__.py:1256
+msgid "skips backward past a block of links"
+msgstr "spring terug verby 'n blok van skakels"
+
+#: virtualBuffers/__init__.py:1256
+msgid "no more text before a block of links"
+msgstr "geen meer teks voor 'n blok van skakels nie"
+
+#: virtualBuffers/__init__.py:1257
+msgid "moves to the next landmark"
+msgstr "beweeg na die volgende baken"
+
+#: virtualBuffers/__init__.py:1257
+msgid "no next landmark"
+msgstr "geen volgende baken nie"
+
+#: virtualBuffers/__init__.py:1258
+msgid "moves to the previous landmark"
+msgstr "beweeg na die vorige baken"
+
+#: virtualBuffers/__init__.py:1258
+msgid "no previous landmark"
+msgstr "geen vorige baken nie"
+
+#: virtualBuffers/__init__.py:1259
+msgid "moves to the next embedded object"
+msgstr "beweeg na die volgende ingevoegde voorwerp"
+
+#: virtualBuffers/__init__.py:1259
+msgid "no next embedded object"
+msgstr "geen volgende ingevoegde voorwerp nie"
+
+#: virtualBuffers/__init__.py:1260
+msgid "moves to the previous embedded object"
+msgstr "beweeg na die vorige ingevoegde voorwerp"
+
+#: virtualBuffers/__init__.py:1260
+msgid "no previous embedded object"
+msgstr "geen vorige ingevoegde voorwerp nie"
+
+#: gui/__init__.py:155 gui/logViewer.py:73
+msgid "Error"
+msgstr "fout"
+
+#: gui/__init__.py:164
+msgid "Default dictionary"
+msgstr "verstekwoordeboek"
+
+#: gui/__init__.py:167
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "stemwoordeboek (%s)"
+
+#: gui/__init__.py:170
+msgid "Temporary dictionary"
+msgstr "tydelike woordeboek"
+
+#: gui/__init__.py:178
+msgid "Are you sure you want to quit NVDA?"
+msgstr "Is U seker U wil NVDA toemaak?"
+
+#: gui/__init__.py:246
+msgid "&General settings..."
+msgstr "&algemene verstellings"
+
+#: gui/__init__.py:246 gui/settingsDialogs.py:89
+msgid "General settings"
+msgstr "algemene verstellings"
+
+#: gui/__init__.py:248
+msgid "&Synthesizer..."
+msgstr "&sintitiseerder"
+
+#: gui/__init__.py:250
+msgid "&Voice settings..."
+msgstr "s&tem verstellings"
+
+#: gui/__init__.py:252
+msgid "B&raille settings..."
+msgstr "b&raille verstellings"
+
+#: gui/__init__.py:254
+msgid "&Keyboard Settings..."
+msgstr "&sleutelbord verstellings"
+
+#: gui/__init__.py:256
+msgid "&Mouse settings..."
+msgstr "&muis verstellings"
+
+#: gui/__init__.py:256
+msgid "Change reporting of mouse shape and object under mouse"
+msgstr "Verander raportering van muisvorm en voorwerp onder die muis."
+
+#: gui/__init__.py:258
+msgid "&Object presentation..."
+msgstr "&voorwerp voorstelling"
+
+#: gui/__init__.py:260
+msgid "Virtual &buffers..."
+msgstr "vertuele &buffers"
+
+#: gui/__init__.py:262
+msgid "Document &formatting..."
+msgstr "dokument &formatering"
+
+#: gui/__init__.py:265
+msgid "&Default dictionary..."
+msgstr "&verstek woordeboek"
+
+#: gui/__init__.py:265
+msgid ""
+"dialog where you can set default dictionary by adding dictionary entries to "
+"the list"
+msgstr "Dialoogblokkie waar U die verstek woordeboek kan opstel deur woordeboekinskrywings tot die lys by te voeg."
+
+#: gui/__init__.py:267
+msgid "&Voice dictionary..."
+msgstr "&stem woordeboek"
+
+#: gui/__init__.py:267
+msgid ""
+"dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr "Dialoogblokkie waar U 'n stemwoordeboek kan opstel deur woordeboekinskrywings tot die lys by te voeg."
+
+#: gui/__init__.py:269
+msgid "&Temporary dictionary..."
+msgstr "&tydelike woordeboek"
+
+#: gui/__init__.py:269
+msgid ""
+"dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr "dialoogblokkie waar U 'n tydelike woordeboek kan opstel deur woordeboekinskrywings by te voeg tot die redigeringsblokkie"
+
+#: gui/__init__.py:271
+msgid "Speech &dictionaries"
+msgstr "spraak &woordeboeke"
+
+#: gui/__init__.py:275
+msgid "View log"
+msgstr "vertoon log"
+
+#: gui/__init__.py:278
+msgid "Python console"
+msgstr "python konsole"
+
+#: gui/__init__.py:280
+msgid "Tools"
+msgstr "gereedskap"
+
+#: gui/__init__.py:283
+msgid "User guide"
+msgstr "verbruikers gids"
+
+#: gui/__init__.py:285
+msgid "Key Command Quick Reference"
+msgstr "vinnige sleutel opdragte verwysing"
+
+#: gui/__init__.py:287
+msgid "What's &new"
+msgstr "wats &nuut"
+
+#: gui/__init__.py:289
+msgid "Web site"
+msgstr "web werf"
+
+#: gui/__init__.py:291
+msgid "Readme"
+msgstr "read me"
+
+#: gui/__init__.py:293
+msgid "License"
+msgstr "lisensie"
+
+#: gui/__init__.py:295
+msgid "Contributors"
+msgstr "bydraers"
+
+#: gui/__init__.py:297
+msgid "We&lcome dialog"
+msgstr "we&lkom dialoogblokkie"
+
+#: gui/__init__.py:304
+msgid "&Revert to saved configuration"
+msgstr "&keer terug tot gestoorde konfigurasie"
+
+#: gui/__init__.py:304
+msgid "Reset all settings to saved state"
+msgstr "Herstel alle verstellings tot gestoorde staat"
+
+#: gui/__init__.py:306
+msgid "&Save configuration"
+msgstr "&stoor konfigurasie"
+
+#: gui/__init__.py:361
+msgid "Welcome to NVDA!\n"
+msgstr "Welkom by NVDA!\n"
+
+#: gui/__init__.py:370
+msgid "Welcome to NVDA"
+msgstr "Welkom by NVDA"
+
+#: gui/__init__.py:374
+msgid "Options"
+msgstr "opsies"
+
+#: gui/__init__.py:378
+msgid "Show this dialog when NVDA starts"
+msgstr "Vertoon hierdie dialoogblokkie wanneer NVDA laai"
+
+#: gui/__init__.py:412
+msgid ""
+"Your configuration file contains errors. \r\n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
+"edit your config file at a later stage to make corrections. More details "
+"about the errors can be found in the log file.\r\n"
+msgstr "Daar is foute in U konfigurasie lé¤².\ndruk OK om die foute te herstel, of druk kanseleer as U die konfigurasielé¤² self wil redigeer. \nMeer inligting oor die foute kan gevind word in die log.\n"
+
+#: gui/__init__.py:417
+msgid "Configuration File Error"
+msgstr "Konfigurasie lé¤² fout"
+
+#: gui/settingsDialogs.py:91
+msgid "info"
+msgstr "inligting"
+
+#: gui/settingsDialogs.py:92
+msgid "debug warning"
+msgstr "ontfoutings waarskuwing"
+
+#: gui/settingsDialogs.py:93
+msgid "input/output"
+msgstr "toevoer/afvoer"
+
+#: gui/settingsDialogs.py:94
+msgid "debug"
+msgstr "ontfout"
+
+#: gui/settingsDialogs.py:119
+msgid "L&ogging level:"
+msgstr "l&og vlak"
+
+#: gui/settingsDialogs.py:122
+msgid "Log level"
+msgstr "log vlak"
+
+#: gui/settingsDialogs.py:132
+msgid "&Automatically start NVDA after I log on to Windows"
+msgstr "&laai NVDA automaties na ek ingeteken het tot Windows"
+
+#: gui/settingsDialogs.py:137
+msgid ""
+"Use NVDA on the Windows logon screen (requires administrator privileges)"
+msgstr "Gebruik NVDA op die inteken skerm (benodig adminestratiewe voorregte)"
+
+#: gui/settingsDialogs.py:167
+msgid "This change requires administrator privileges."
+msgstr "hierdie verandering benodig adminastratiewe voorregte"
+
+#: gui/settingsDialogs.py:167
+msgid "Insufficient Privileges"
+msgstr "Onvoldoende voorregte"
+
+#: gui/settingsDialogs.py:194
+msgid "Output &device:"
+msgstr "afvoer &toestel"
+
+#: gui/settingsDialogs.py:293
+msgid "Raise pitch for capitals"
+msgstr "verhoog toonhoogte vir hoofletters"
+
+#: gui/settingsDialogs.py:299
+msgid "&Beep for capitals"
+msgstr "&beep vir hoofletters"
+
+#: gui/settingsDialogs.py:302
+msgid "Use &spelling functionality if supported"
+msgstr "gebruik &spelfunksionaliteid wanneer toegelaat word"
+
+#: gui/settingsDialogs.py:409
+msgid "&Keyboard layout:"
+msgstr "&sleutelbord uitleg"
+
+#: gui/settingsDialogs.py:414
+msgid "Keyboard layout"
+msgstr "sleutelbord uitleg"
+
+#: gui/settingsDialogs.py:466
+msgid "Report &text under the mouse"
+msgstr "raporteer &teks onder die muis"
+
+#: gui/settingsDialogs.py:470
+msgid "Text &unit resolution:"
+msgstr "teks &eenheid resolusie"
+
+#: gui/settingsDialogs.py:474
+msgid "text reporting unit"
+msgstr "teks raporteerings eenheid"
+
+#: gui/settingsDialogs.py:482
+msgid "Report &role when mouse enters object"
+msgstr "raporteer &rol as muis vorwerp binne beweeg"
+
+#: gui/settingsDialogs.py:485
+msgid "play audio coordinates when mouse moves"
+msgstr "Speel audio koí¶†í³©nate as die muis beweeg"
+
+#: gui/settingsDialogs.py:488
+msgid "brightness controls audio coordinates volume"
+msgstr "helderheid beheer audio volume"
+
+#: gui/settingsDialogs.py:509
+msgid "Speak"
+msgstr "praat"
+
+#: gui/settingsDialogs.py:510
+msgid "Beep"
+msgstr "biep"
+
+#: gui/settingsDialogs.py:511
+msgid "Speak and beep"
+msgstr "praat en biep"
+
+#: gui/settingsDialogs.py:527
+msgid "Report object &descriptions"
+msgstr "raporteer voorwerp &beskrywings"
+
+#: gui/settingsDialogs.py:531
+msgid "Progress &bar output:"
+msgstr "&vorderingslyn afvoer"
+
+#: gui/settingsDialogs.py:534
+msgid "Progress bar output"
+msgstr "vorderingslyn afvoer"
+
+#: gui/settingsDialogs.py:543
+msgid "Report background progress bars"
+msgstr "raporteer agtergrond vorderingslyn opdaterings"
+
+#: gui/settingsDialogs.py:574
+msgid "Use &screen layout (when supported)"
+msgstr "Gebruik s&kermuitleg wanneer toegelaat"
+
+#: gui/settingsDialogs.py:577
+msgid "Report l&ayout tables"
+msgstr "Raporteer uit&legtabelle"
+
+#: gui/settingsDialogs.py:581
+msgid "Automatic focus mode for focus changes"
+msgstr "Automatiese fokusmode vir fokusveranderinge"
+
+#: gui/settingsDialogs.py:584
+msgid "Automatic focus mode for caret movement"
+msgstr "Automatiese fokusmode vir pyltjiebeweging"
+
+#: gui/settingsDialogs.py:587
+msgid "Audio indication of focus and browse modes"
+msgstr "Klankaanduidings van fokus en blaaimodes"
+
+#: gui/settingsDialogs.py:618
+msgid "Announce formatting changes after the cursor (can cause a lag)"
+msgstr "noem formateeringsveranderinge na pyltjie (kan vertraging veroorsaak)"
+
+#: gui/settingsDialogs.py:636
+msgid "Report spelling errors"
+msgstr "raporteer spelfoute"
+
+#: gui/settingsDialogs.py:648
+msgid "Report &links"
+msgstr "raporteer &skakels"
+
+#: gui/settingsDialogs.py:654
+msgid "Report l&ists"
+msgstr "raporteer l&yste"
+
+#: gui/settingsDialogs.py:684
+msgid "Edit dictionary entry"
+msgstr "redigeer woordeboek inskrywing"
+
+#: gui/settingsDialogs.py:687
+msgid "&Pattern"
+msgstr "&teks patroon"
+
+#: gui/settingsDialogs.py:690
+msgid "&Replacement"
+msgstr "&vervanging"
+
+#: gui/settingsDialogs.py:693
+msgid "&Comment"
+msgstr "&kommentaar"
+
+#: gui/settingsDialogs.py:696
+msgid "Case &sensitive"
+msgstr "hoofletter &sensitief"
+
+#: gui/settingsDialogs.py:698
+msgid "Regular &expression"
+msgstr "'Regular &expression'"
+
+#: gui/settingsDialogs.py:720
+msgid "&Dictionary entries"
+msgstr "&woordeboek inskrywings"
+
+#: gui/settingsDialogs.py:723
+msgid "Comment"
+msgstr "kommentaar"
+
+#: gui/settingsDialogs.py:724
+msgid "Pattern"
+msgstr "teks patroon"
+
+#: gui/settingsDialogs.py:725
+msgid "Replacement"
+msgstr "vervanging"
+
+#: gui/settingsDialogs.py:726
+msgid "case sensitive"
+msgstr "hoofletter sensitief"
+
+#: gui/settingsDialogs.py:727
+msgid "Regular expression"
+msgstr "'Regular expression'"
+
+#: gui/settingsDialogs.py:734
+msgid "&Add"
+msgstr "&voeg by"
+
+#: gui/settingsDialogs.py:737
+msgid "&edit"
+msgstr "&redigeer"
+
+#: gui/settingsDialogs.py:740
+msgid "&Remove"
+msgstr "v&erwyder"
+
+#: gui/settingsDialogs.py:807
+msgid "Braille Settings"
+msgstr "braille verstellings"
+
+#: gui/settingsDialogs.py:811
+msgid "Braille &display:"
+msgstr "braille &vertoner"
+
+#: gui/settingsDialogs.py:825
+msgid "Translation &table:"
+msgstr "vertaal &tabel"
+
+#: gui/settingsDialogs.py:837
+msgid "E&xpand to computer braille for the word at the cursor"
+msgstr "&brei die woord by die pyltjie uit in rekenaar braille"
+
+#: gui/settingsDialogs.py:842
+msgid "Cursor blink rate (ms)"
+msgstr "Pyltjie flits spoed (ms)"
+
+#: gui/settingsDialogs.py:850
+msgid "Message timeout (sec)"
+msgstr "boodskap tydsbeperking (sek)"
+
+#: gui/settingsDialogs.py:863
+#, python-format
+msgid "Could not load the %s display."
+msgstr "Kon nie die vertoner %s laai nie"
+
+#: gui/settingsDialogs.py:863
+msgid "Braille Display Error"
+msgstr "braille vertoon fout"
+
+#: gui/logViewer.py:17
+msgid "NVDA Log Viewer"
+msgstr "NVDA log besigtiger"
+
+#: gui/logViewer.py:28
+msgid "Refresh\tF5"
+msgstr "Hernu\tF5"
+
+#: gui/logViewer.py:35
+msgid "Log"
+msgstr "log"
+
+#: gui/logViewer.py:65
+msgid "Save As"
+msgstr "Stoor as"
+
+#: gui/logViewer.py:73
+#, python-format
+msgid "Error saving log: %s"
+msgstr "Probleem ondervind met die stoor van log: %s"
+
+#: config/__init__.py:20
+msgid "Badly formed configuration file"
+msgstr "Swak gevormde konfigurasie lé¤²."
+
+#: config/__init__.py:35
+#, python-format
+msgid "%s: %s, defaulting to %s"
+msgstr "%s: %s, gebruik verstek waarde %s."
+
+#: config/__init__.py:167
+#, python-format
+msgid "Error parsing configuration file: %s"
+msgstr "Probleme ondervind met die lees van die konfigurasie lé¤²: %s"
+
+#: config/__init__.py:172
+#, python-format
+msgid ""
+"Errors in configuration file '%s':\n"
+"%s"
+msgstr "foute in konfigurasie lé¤² '%s':\n %s"

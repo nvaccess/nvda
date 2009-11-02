@@ -154,8 +154,18 @@ def startNVDA(desktop):
 	args = [desktop, token, nvdaExec, "-m"]
 	if not isDebug:
 		args.append("--secure")
-	executeProcess(*args)
-	windll.kernel32.CloseHandle(token)
+	try:
+		return executeProcess(*args)
+	finally:
+		windll.kernel32.CloseHandle(token)
+
+def startNVDAUIAccess(session, desktop):
+	token = duplicateTokenPrimary(getLoggedOnUserToken(session))
+	uiAccess = ULONG(1)
+	windll.advapi32.SetTokenInformation(token, TokenUIAccess, byref(uiAccess), sizeof(ULONG))
+	process = executeProcess(desktop, token, nvdaExec, "-m")
+	windll.kernel32.CloseHandle(process)
+>>>>>>> MERGE-SOURCE
 
 def exitNVDA(desktop):
 	token=duplicateTokenPrimary(getOwnToken())

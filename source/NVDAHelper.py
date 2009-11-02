@@ -11,6 +11,7 @@ import queueHandler
 import api
 import globalVars
 from logHandler import log
+import time
 
 EVENT_TYPEDCHARACTER=0X1000
 EVENT_INPUTLANGCHANGE=0X1001
@@ -19,6 +20,7 @@ _remoteLib=None
 _remoteLoader64=None
 localLib=None
 generateBeep=None
+lastKeyboardLayoutChangeEventTime=None
 
 winEventHookID=None
 
@@ -29,10 +31,12 @@ def handleTypedCharacter(window,wParam,lParam):
 
 @winUser.WINEVENTPROC
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
+	global lastKeyboardLayoutChangeEventTime
 	try:
 		if eventID==EVENT_TYPEDCHARACTER:
 			handleTypedCharacter(window,objectID,childID)
-		elif eventID==EVENT_INPUTLANGCHANGE:
+		elif eventID==EVENT_INPUTLANGCHANGE and (not lastKeyboardLayoutChangeEventTime or (time.time()-lastKeyboardLayoutChangeEventTime)>0.2):
+			lastKeyboardLayoutChangeEventTime=time.time()
 			keyboardHandler.speakKeyboardLayout(childID)
 	except:
 		log.error("helper.winEventCallback", exc_info=True)

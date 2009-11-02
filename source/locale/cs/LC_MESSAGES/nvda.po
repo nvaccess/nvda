@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: r2910\n"
 "POT-Creation-Date: 2007-05-22 07:35+Central Europe Standard Time\n"
-"PO-Revision-Date: 2009-10-25 17:52+0100\n"
+"PO-Revision-Date: 2009-10-31 17:17+0100\n"
 "Last-Translator: Radek Zalud <radek.zalud@seznam.cz>\n"
 "Language-Team: CS <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -222,7 +222,7 @@ msgstr "hlásit příkazové klávesy"
 
 #: appModules\_default.py:166
 msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
-msgstr "Zapíná a vypíná hlášení kláves, které nevkládají zvláštní znaky"
+msgstr "Zapíná a vypíná ohlašování kláves, které nevkládají znaky"
 
 #: appModules\_default.py:175
 msgid "speak punctuation"
@@ -280,7 +280,6 @@ msgid "No location information for screen"
 msgstr "Informace o pozici prohlíženého objektu není k dispozici"
 
 #: appModules\_default.py:252
-#, fuzzy
 msgid "Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen"
 msgstr "Umístění okrajů objektu %.1f procent z leva do prava, %.1f procent od shora dolů, %.1f procent z prava do leva, %.1f procent se zdola nahoru"
 
@@ -561,7 +560,7 @@ msgstr "Ohlásí informace o prohlíženém objektu, užitečné především pr
 
 #: appModules\_default.py:741
 msgid "no progress bar updates"
-msgstr "Neohlašovat indikátor průběhu"
+msgstr "Neohlašovat aktualizaci indikátoru průběhu"
 
 #: appModules\_default.py:744
 msgid "speak progress bar updates"
@@ -569,15 +568,15 @@ msgstr "Ohlašovat aktualizaci indikátoru průběhu"
 
 #: appModules\_default.py:747
 msgid "beep for progress bar updates"
-msgstr "Pípat během indikátoru průběhu"
+msgstr "Pípat při aktualizaci indikátoru průběhu"
 
 #: appModules\_default.py:750
 msgid "beep and speak progress bar updates"
-msgstr "Pípat a ohlašovat během indikátoru průběhu"
+msgstr "Pípat a ohlašovat aktualizaci indikátoru průběhu"
 
 #: appModules\_default.py:752
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
-msgstr "Přepíná režim indikátoru průběhu mezi pípat, ohlašovat, pípat a ohlašovat, nebo vypnout"
+msgstr "Přepíná režim ohlašování indikátoru průběhu mezi pípat, ohlašovat, pípat a ohlašovat, nebo vypnout"
 
 #: appModules\_default.py:761
 msgid "report dynamic content changes"
@@ -3227,7 +3226,7 @@ msgstr "Propouštění zapnuto"
 
 #: virtualBuffers\__init__.py:190
 msgid "%s landmark"
-msgstr "záchytný bod %s"
+msgstr "%s oblast stránky"
 
 #: virtualBuffers\__init__.py:196
 msgid "Lin&ks"
@@ -3239,7 +3238,7 @@ msgstr "&Nadpisy"
 
 #: virtualBuffers\__init__.py:198
 msgid "Lan&dmarks"
-msgstr "záchytné &body"
+msgstr "oblasti stránky"
 
 #: virtualBuffers\__init__.py:204
 msgid "Elements List"
@@ -3251,7 +3250,7 @@ msgstr "Typ"
 
 #: virtualBuffers\__init__.py:218
 msgid "&Filter by:"
-msgstr "filtr"
+msgstr "filtrovat podle"
 
 #: virtualBuffers\__init__.py:226
 msgid "&Activate"
@@ -3287,7 +3286,7 @@ msgstr "Zapíná a vypíná zachování vzhledu jako na obrazovce"
 
 #: virtualBuffers\__init__.py:779
 msgid "Presents a list of links, headings or landmarks"
-msgstr "Zobrazí seznam odkazů, nadpisů, nebo záchytných bodů."
+msgstr "Zobrazí seznam odkazů, nadpisů, nebo oblastí stránky."
 
 #: virtualBuffers\__init__.py:1121
 msgid "Not in a table cell"
@@ -3699,19 +3698,19 @@ msgstr "přeskočí předchozí skupinu odkazů"
 
 #: virtualBuffers\__init__.py:1257
 msgid "moves to the next landmark"
-msgstr "Přejde na následující záchytný bod"
+msgstr "Přejde na následující oblast stránky"
 
 #: virtualBuffers\__init__.py:1257
 msgid "no next landmark"
-msgstr "Žádný další záchytný bod"
+msgstr "Žádná další oblast stránky"
 
 #: virtualBuffers\__init__.py:1258
 msgid "moves to the previous landmark"
-msgstr "Přejde na předchozí záchytný bod"
+msgstr "Přejde na předchozí oblast stránky"
 
 #: virtualBuffers\__init__.py:1258
 msgid "no previous landmark"
-msgstr "Žádný předchozí záchytný bod"
+msgstr "Žádná předchozí oblast stránky"
 
 #: virtualBuffers\__init__.py:1259
 msgid "moves to the next embedded object"
@@ -3728,3 +3727,4 @@ msgstr "Přejde na předchozí vnořený objekt"
 #: virtualBuffers\__init__.py:1260
 msgid "no previous embedded object"
 msgstr "Žádný předchozí vnořený objekt"
+

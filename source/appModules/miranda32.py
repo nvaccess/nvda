@@ -138,8 +138,7 @@ class mirandaIMButton(IAccessible):
 		return controlTypes.ROLE_BUTTON
 
 	def doDefaultAction(self):
-		winUser.sendMessage(self.windowHandle,mouseHandler.WM_LBUTTONDOWN,0,0)
-		winUser.sendMessage(self.windowHandle,mouseHandler.WM_LBUTTONUP,0,0)
+		sendKey(((),"SPACE"))
 
 	def script_doDefaultAction(self,keyPress):
 		self.doDefaultAction()
@@ -148,9 +147,6 @@ class mirandaIMHyperlink(mirandaIMButton):
 
 	def _get_role(self):
 		return controlTypes.ROLE_LINK
-
-	def doDefaultAction(self):
-		winUser.sendMessage(self.windowHandle,mouseHandler.WM_LBUTTONDOWN,0,0)
 
 class MPropertyPage(PropertyPage):
 

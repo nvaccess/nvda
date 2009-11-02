@@ -18,7 +18,7 @@
 * Az NVDA jelzi, ha a felhasználó a Vistában az ún. "biztonságos asztal"-ra lép, mert például egy felhasználói fiók felügyeleti ablak felbukkan, vagy mert megnyomták a kontrol-alt-del kombinációt. Az NVDA még ezt a "biztonsági asztalt" nem tudja ugyan kezelni, de legalább tájékoztatja a felhasználót.
 * AZ NVDA a parancssorablakban is képes felolvasni az egérmutató alatti szövegeket.
 *  Az UI Automation támogatása az elérhetõ UI Automation client API segítségével, valamint megnövelt hatékonyság Windows 7 alatt.
-*  Az NVDA beállítható úgy, hogy elinduljon a windows bejelentkezés után. A beállítás az általános beállítások párbeszédablakban található.
+*  Az NVDA beállítható úgy, hogy elinduljon a windows bejelentkezése után. A beállítás az általános beállítások párbeszédablakban található.
 *  Az NVDA képes felolvasni biztonsági képernyõket, pl. a Windows bejelentkezési képernyõjét, a control+alt+delete és UAC képernyõket a Windows XP-tõl kezdve. A windows bejelentkezõ képernyõ felolvasása beállítható az általános beállítások párbeszédablakban. (#97)
 *  driver az Optelec ALVA BC6 sorozatú braille kijelzõkhöz.
 *  weboldalak böngészésekor az n és a shift+n billentyûkombinációk használhatóak hivatkozásblokkok átugrásához.
@@ -47,7 +47,6 @@
 * Hatékonyabb mûködés (különösen netbookokon) ha több hangjelzés hallható egyszerre, pl. Gyors egérmozgáskor ha a hangjelzés engedélyezve van. (#396).
 
 	=Hiba javítások=
-* Az NVDA induló és kilépõ hangját a beállított hang-kimeneten játsza le, nem a Windows alapértelmezett hangeszközén. (#164)
 * Amikor az NVDA a 8.3-as Dos alól fut, aminek egy összefüggõ hosszú címe van (pl progra~1 program files helyett), az NVDA rögtön felismeri, és betölti helyesen a felhasználói beállításokat.
 * a háttérben lévõ ablak címének bemondása (NVDA+T) nem mûködött jól a menükben.
 * Brailleben nem mutatja a használhatatlan információkat az összefüggõ címkétlen mezõkben.
@@ -67,6 +66,9 @@
 	* A billentyûparancs átadása parancs nem aktiválódik végérvényesen egy billentyû nyomva tartásakor. Elõzõleg, ha ez bekövetkezett, az NVDA nem vett figyelembe billentyûleütéseket és a hibát csak a program újraindításával lehetett orvosolni. (#413)
 * A tálca mostantól nincs figyelmen kívül hagyva ha a fókusz rákerül, amely gyakran megtörténik egy alkalmazásból való kilépés esetén. Az NVDA elõzõleg úgy viselkedett, mintha a fókusz nem változott volna meg.
 * Egy adott vezérlõkarakter (0x1) többé nem okoz furcsa viselkedést (mint pl. A magasság és a hangerõ megváltozása) ha elõfordul egy szövegben. (#437).
+* A kijelölt szöveg bemondása parancs (NVDA+shift+fel nyíl) közli ha egy objektumban a szövegkijelöés nem támogatott.
+	* Egy hiba kijavítva a Miranda-IM szkriptben. Miranda-IM specifikus gombokon vagy hivatkozásokon az enter megnyomása az NVDA lefagyását eredményezte. (#440)
+* Az aktuális objektum betûzése vagy másolásakor a navigátor kurzor használata esetén az aktuális sor vagy kijelölés nem volt figyelembe véve.
 
 		=0.6 P3=
 	=Újdonságok=
