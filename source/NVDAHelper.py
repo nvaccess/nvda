@@ -44,7 +44,8 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 class RemoteLoader64(object):
 
 	def __init__(self):
-		pipeRead, self._pipeWrite = winKernel.CreatePipe(None, 0)
+		sa = winKernel.SECURITY_ATTRIBUTES(bInheritHandle=True)
+		pipeRead, self._pipeWrite = winKernel.CreatePipe(sa, 0)
 		nul = file("nul", "w")
 		nulHandle = nul.fileno()
 		si = winKernel.STARTUPINFO(dwFlags=winKernel.STARTF_USESTDHANDLES, hSTDInput=pipeRead, hSTDOutput=nulHandle, hSTDError=nulHandle)

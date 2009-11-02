@@ -129,10 +129,19 @@ DRIVE_RAMDISK = 6
 def GetDriveType(rootPathName):
 	return kernel32.GetDriveTypeW(rootPathName)
 
+class SECURITY_ATTRIBUTES(Structure):
+	_fields_ = (
+		("nLength", DWORD),
+		("lpSecurityDescriptor", LPVOID),
+		("bInheritHandle", BOOL)
+	)
+	def __init__(self, **kwargs):
+		super(SECURITY_ATTRIBUTES, self).__init__(nLength=sizeof(self), **kwargs)
+
 def CreatePipe(pipeAttributes, size):
 	read = ctypes.wintypes.HANDLE()
 	write = ctypes.wintypes.HANDLE()
-	if kernel32.CreatePipe(ctypes.byref(read), ctypes.byref(write), pipeAttributes, ctypes.wintypes.DWORD(size)) == 0:
+	if kernel32.CreatePipe(ctypes.byref(read), ctypes.byref(write), byref(pipeAttributes) if pipeAttributes else None, ctypes.wintypes.DWORD(size)) == 0:
 		raise ctypes.WinError()
 	return read.value, write.value
 
