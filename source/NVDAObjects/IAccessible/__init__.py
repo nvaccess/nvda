@@ -1232,10 +1232,21 @@ class InternetExplorerClient(IAccessible):
 	def _get_description(self):
 		return None
 
-class SysLink(IAccessible):
+class SysLinkClient(IAccessible):
 
 	def reportFocus(self):
 		pass
+
+class SysLink(IAccessible):
+
+	def _get_name(self):
+		#Workaround for #451 - explorer returns incorrect string length, thus it can contain garbage characters
+		name=super(SysLink,self).name
+		if name: 
+			#Remove any data after the null character
+			i=name.find('\0')
+			if i>=0: name=name[:i]
+		return name
 
 class TaskList(IAccessible):
 	isPresentableFocusAncestor = False
@@ -1349,7 +1360,8 @@ _staticMap={
 	("SysTreeView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysTreeView32.TreeViewItem",
 	("ATL:SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TWizardForm",oleacc.ROLE_SYSTEM_CLIENT):"Dialog",
-	("SysLink",oleacc.ROLE_SYSTEM_CLIENT):"SysLink",
+	("SysLink",oleacc.ROLE_SYSTEM_CLIENT):"SysLinkClient",
+	("SysLink",oleacc.ROLE_SYSTEM_LINK):"SysLink",
 	("#32771",oleacc.ROLE_SYSTEM_LIST):"TaskList",
 	("TaskSwitcherWnd",oleacc.ROLE_SYSTEM_LIST):"TaskList",
 	("#32771",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
