@@ -190,3 +190,11 @@ def OpenProcessToken(ProcessHandle, DesiredAccess):
 	if advapi32.OpenProcessToken(ProcessHandle, DesiredAccess, byref(token)) == 0:
 		raise WinError()
 	return token.value
+
+DUPLICATE_SAME_ACCESS = 0x00000002
+
+def DuplicateHandle(sourceProcessHandle, sourceHandle, targetProcessHandle, desiredAccess, inheritHandle, options):
+	targetHandle = HANDLE()
+	if kernel32.DuplicateHandle(sourceProcessHandle, sourceHandle, targetProcessHandle, byref(targetHandle), desiredAccess, inheritHandle, options) == 0:
+		raise WinError()
+	return targetHandle.value
