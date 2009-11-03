@@ -69,6 +69,7 @@ Major highlights of this release include support for 64 bit editions of Windows;
 	* The report text selection command (NVDA+shift+upArrow) now gracefully reports that there is no selection in objects which do not support text selection.
 	* Fixed the issue where pressing the enter key on certain Miranda-IM buttons or links was causing NVDA to freeze. (#440)
 	* The current line or selection is now properly respected when spelling or copying the current navigator object.
+	* Worked around a Windows bug which was causing garbage to be spoken after the name of link controls in Windows Explorer and Internet Explorer dialogs. (#451)
 
 == 0.6p3 ==
 
