@@ -194,6 +194,13 @@ Delete "$0"
 Rename "$INSTDIR\lib" "$0"
 Rmdir /REBOOTOK /r "$0"
 noLibExists:
+IfFileExists "$INSTDIR\lib64\*.*" lib64Exists noLib64Exists
+lib64Exists:
+GetTempFileName $0 "$INSTDIR"
+Delete "$0"
+Rename "$INSTDIR\lib64" "$0"
+Rmdir /REBOOTOK /r "$0"
+noLib64Exists:
 ; open and close uninstallation log after ennumerating all the files being copied
 SetOutPath "$INSTDIR"
 !insertmacro UNINSTALL.LOG_OPEN_INSTALL
