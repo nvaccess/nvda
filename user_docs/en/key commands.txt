@@ -231,6 +231,12 @@ Moves the review cursor to the previous line.
 Shift+numpad9: review_bottom
 Moves the review cursor to the last line.
 
+NVDA+f9: review_markStartForCopy
+Marks the current position of the review cursor as the start of text to be copied.
+
+NVDA+f10: review_copy
+Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard.
+
 VirtualBuffer commands:
 
 NVDA+space: toggleVirtualBufferPassThrough
