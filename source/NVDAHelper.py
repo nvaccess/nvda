@@ -1,4 +1,3 @@
-import subprocess
 import os
 import winKernel
 
@@ -59,7 +58,7 @@ class RemoteLoader64(object):
 		# Therefore, explicitly specify our own process token, which causes them to be inherited.
 		token = winKernel.OpenProcessToken(winKernel.GetCurrentProcess(), winKernel.MAXIMUM_ALLOWED)
 		try:
-			winKernel.CreateProcessAsUser(token, None, u"d:/a.exe", None, None, True, None, None, None, si, pi)
+			winKernel.CreateProcessAsUser(token, None, u"lib64/nvdaHelperRemoteLoader.exe", None, None, True, None, None, None, si, pi)
 			# We don't need the thread handle.
 			winKernel.closeHandle(pi.hThread)
 			self._process = pi.hProcess
@@ -91,7 +90,7 @@ def initialize():
 	if _remoteLib.nvdaHelper_initialize() < 0:
 		raise RuntimeError("Error initializing NVDAHelper")
 	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':
-		_remoteLoader64=subprocess.Popen('lib64/nvdaHelperRemoteLoader.exe',stdin=subprocess.PIPE,stdout=file("nul","w"),stderr=subprocess.STDOUT)
+		_remoteLoader64=RemoteLoader64()
 	winEventHookID=winUser.setWinEventHook(EVENT_TYPEDCHARACTER,EVENT_INPUTLANGCHANGE,0,winEventCallback,0,0,0)
 
 def terminate():
@@ -101,7 +100,6 @@ def terminate():
 		raise RuntimeError("Error terminating NVDAHelper")
 	_remoteLib=None
 	if _remoteLoader64:
-		_remoteLoader64.stdin.close()
-		_remoteLoader64.wait()
+		_remoteLoader64.terminate()
 		_remoteLoader64=None
 	localLib=None
