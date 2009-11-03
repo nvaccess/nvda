@@ -159,14 +159,6 @@ def startNVDA(desktop):
 	finally:
 		windll.kernel32.CloseHandle(token)
 
-def startNVDAUIAccess(session, desktop):
-	token = duplicateTokenPrimary(getLoggedOnUserToken(session))
-	uiAccess = ULONG(1)
-	windll.advapi32.SetTokenInformation(token, TokenUIAccess, byref(uiAccess), sizeof(ULONG))
-	process = executeProcess(desktop, token, nvdaExec, "-m")
-	windll.kernel32.CloseHandle(process)
->>>>>>> MERGE-SOURCE
-
 def exitNVDA(desktop):
 	token=duplicateTokenPrimary(getOwnToken())
 	windll.advapi32.SetTokenInformation(token,TokenUIAccess,byref(c_ulong(1)),sizeof(c_ulong))
