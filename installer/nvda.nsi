@@ -414,7 +414,7 @@ var un.isNonInteractive
 Function un.onInit
 ;!insertmacro MUI_UNGETLANGUAGE
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
-System::Call 'kernel32::GetThreadLocale() i .r0'
+System::Call 'kernel32::GetUserDefaultUILanguage() i .r0'
 StrCpy $LANGUAGE $0
 
 ; Start uninstalling with a log
