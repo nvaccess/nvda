@@ -1,8 +1,8 @@
 NVDA:n näppäinkomentojen pikaopas
 
-Monet näistä komennoista käyttävät NVDA-näppäintä, joka on joko numeroryhmästä tai läheltä delete-, home-, end-, page up- ja page down -näppäimiä löytyvä insert-näppäin. NVDA voidaan määrittää myös niin, että voit käyttää Capslock-näppäintä NVDA-näppäimenä.
+Monet näistä komennoista käyttävät NVDA-näppäintä, joka on joko laskinnäppäimistöstä tai läheltä delete-, home-, end-, page up- ja page down -näppäimiä löytyvä insert-näppäin. NVDA voidaan määrittää myös niin, että Capslock-näppäintä voidaan käyttää NVDA-näppäimenä.
 
-Yleiset komennot
+Yleiset komennot:
 
 Control: keskeytä puhe
 Shift: jatka puhetta
@@ -10,7 +10,7 @@ Shift: jatka puhetta
 NVDA+1: näppäinohje
 Tämä komento ottaa käyttöön näppäinohjeen, jossa NVDA kertoo mitä tahansa näppäinyhdistelmää painettaessa kyseisen näppäinyhdistelmän ja minkä toiminnon se suorittaa. Poista näppäinohje käytöstä painamalla uudelleen NVDA+1.
 
-NVDA+t: nimi
+NVDA+T: nimi
 Kertoo aktiivisen sovelluksen nimen. Kahdesti painettaessa nimi tavataan ja kolmesti painettaessa se kopioidaan leikepöydälle.
 
 NVDA+B: lue ikkuna
@@ -105,7 +105,7 @@ Nostaa nykyistä puheasetusta
 Control+NVDA+alanuoli: pienennä asetusta
 Laskee nykyistä puheasetusta
 
-Asetusvalintaikkunat
+Asetusvalintaikkunat:
 
 Control+NVDA+G: yleiset asetukset
 Avaa Yleiset asetukset -valintaikkunan.
@@ -134,102 +134,108 @@ Avaa Asiakirjojen muotoiluasetukset -valintaikkunan.
 Control+NVDA+Z: Python-konsoli
 Avaa Python-konsolin.
 
-Navigointiobjektilla navigoiminen
+Navigointiobjektilla navigoiminen:
 
-NVDA+numeroryhmän 5: lue nykyinen navigointiobjekti
+NVDA+laskinnäppäimistön 5: lue nykyinen navigointiobjekti
 Kertoo nykyisen navigointiobjektin. Kahdesti painettaessa objektin nimi tavataan ja kolmesti painettaessa se kopioidaan leikepöydälle.
 
-NVDA+numeroryhmän delete: navigointiobjektin koko ja sijainti
+NVDA+laskinnäppäimistön delete: navigointiobjektin koko ja sijainti
 Kertoo nykyisen navigointiobjektin koon ja sijainnin.
 
-NVDA+numeroryhmän 8: ylemmän tason objekti
+NVDA+laskinnäppäimistön 8: ylemmän tason objekti
 Siirtää navigointiobjektin sitä ylemmän tason objektiin (ts. objektiin, jossa navigointiobjekti on).
 
-NVDA+numeroryhmän 2: ensimmäinen alemman tason objekti
+NVDA+laskinnäppäimistön 2: ensimmäinen alemman tason objekti
 Siirtää navigointiobjektin sen ensimmäiseen alemman tason objektiin (ts. ensimmäiseen navigointiobjektin sisällä olevaan objektiin)
 
-NVDA+numeroryhmän 4: edellinen objekti
+NVDA+laskinnäppäimistön 4: edellinen objekti
 Siirtää navigointiobjektin siitä edellisenä olevaan objektiin (ts. navigointiobjektia ennen olevaan saman tason objektiin).
 
-Shift+NVDA+numeroryhmän 4: edellinen objektipuun objekti
+Shift+NVDA+laskinnäppäimistön 4: edellinen objektipuun objekti
 Siirtää navigointiobjektin siitä edellisenä navigointipuussa olevaan objektiin (ts. navigointiobjektia ennen olevaan, ei välttämättä saman tason objektiin).
 
-NVDA+numeroryhmän 6: seuraava objekti
+NVDA+laskinnäppäimistön 6: seuraava objekti
 Siirtää navigointiobjektin siitä seuraavana olevaan objektiin (ts. navigointiobjektin jälkeiseen saman tason objektiin).
 
-Shift+NVDA+numeroryhmän 6: seuraava objektipuun objekti
+Shift+NVDA+laskinnäppäimistön 6: seuraava objektipuun objekti
 Siirtää navigointiobjektin siitä seuraavana objektipuussa olevaan objektiin (ts. navigointiobjektin jälkeiseen, ei välttämättä saman tason objektiin).
 
-NVDA+numeroryhmän Enter: suorita objektin oletustoiminto
+NVDA+laskinnäppäimistön Enter: suorita objektin oletustoiminto
 Suorittaa oletustoiminnon navigointiobjektille (esim. painaa painiketta tai aktivoi luettelon osan).
 
-NVDA+numeroryhmän /: siirrä hiiri navigointiobjektiin
+NVDA+laskinnäppäimistön /: siirrä hiiri navigointiobjektiin
 Siirrä hiirikohdistin nykyiseen navigointiobjektiin
  
-NVDA+numeroryhmän *: siirrä navigointiobjekti hiiren kohdalle
+NVDA+laskinnäppäimistön *: siirrä navigointiobjekti hiiren kohdalle
 Siirtää navigointiobjektin hiirikohdistimen alla olevaan objektiin
 
-Numeroryhmän miinus: siirrä tarkastelukohdistin järjestelmäkohdistimen kohdalle
+Laskinnäppäimistön miinus: siirrä tarkastelukohdistin järjestelmäkohdistimen kohdalle
 Siirtää tarkastelukohdistimen järjestelmäkohdistimen kohdalle.
 
-Control+numeroryhmän miinus: siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle
+Control+laskinnäppäimistön miinus: siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle
 Siirtää järjestelmäkohdistimen tarkastelukohdistimen kohdalle
 
-NVDA+numeroryhmän miinus: siirrä navigointiobjekti kohdistukseen
+NVDA+laskinnäppäimistön miinus: siirrä navigointiobjekti kohdistukseen
 Siirtää navigointiobjektin siihen objektiin, jossa kohdistus on.
 
-Numeroryhmän /: hiiren vasen napsautus
+Laskinnäppäimistön /: hiiren vasen napsautus
 Napsauttaa kerran hiiren vasenta painiketta hiiren sen hetkisessä sijainnissa.
 
-Numeroryhmän *: hiiren oikea napsautus
+Laskinnäppäimistön *: hiiren oikea napsautus
 Napsauttaa kerran hiiren oikeaa painiketta hiiren sen hetkisessä sijainnissa.
 
-Numeroryhmän plus: lue kaikki
+Laskinnäppäimistön plus: lue kaikki
 Lukee kaiken tekstin tarkastelukohdistimen nykyisestä paikasta lähtien.
 
-NVDA+numeroryhmän plus: lue kaikki objektit
+NVDA+laskinnäppäimistön plus: lue kaikki objektit
 Lukee kaikki navigointiobjektin jälkeiset objektit puumaisessa järjestyksessä.
 
-Objektien lukeminen
+Objektien lukeminen:
 
-Numeroryhmän 1: edellinen merkki
+Laskinnäppäimistön 1: edellinen merkki
 Siirtää tarkastelukohdistimen edellisen merkin kohdalle
 
-Shift+numeroryhmän 1: rivin alku
+Shift+laskinnäppäimistön 1: rivin alku
 Siirtää tarkastelukohdistimen rivin alkuun
 
-Numeroryhmän 2: nykyinen merkki
+Laskinnäppäimistön 2: nykyinen merkki
 Lukee tarkastelukohdistimen kohdalla olevan merkin
 
-Numeroryhmän 3: seuraava merkki
+Laskinnäppäimistön 3: seuraava merkki
 Siirtää tarkastelukohdistimen seuraavan merkin kohdalle
 
-Shift+numeroryhmän 3: rivin loppu
+Shift+laskinnäppäimistön 3: rivin loppu
 Siirtää tarkastelukohdistimen rivin loppuun
 
-Numeroryhmän 4: edellinen sana
+Laskinnäppäimistön 4: edellinen sana
 Siirtää tarkastelukohdistimen edellisen sanan kohdalle
 
-Numeroryhmän 5: nykyinen sana
+Laskinnäppäimistön 5: nykyinen sana
 Lukee tarkastelukohdistimen kohdalla olevan sanan
 
-Numeroryhmän 6: seuraava sana
+Laskinnäppäimistön 6: seuraava sana
 Siirtää tarkastelukohdistimen seuraavan sanan kohdalle
 
-Numeroryhmän 7: edellinen rivi
+Laskinnäppäimistön 7: edellinen rivi
 Siirtää tarkastelukohdistimen edelliselle riville
 
-Shift+numeroryhmän 7: ylin rivi
+Shift+laskinnäppäimistön 7: ylin rivi
 Siirtää tarkastelukohdistimen ensimmäiselle riville
  
-Numeroryhmän 8: nykyinen rivi
+Laskinnäppäimistön 8: nykyinen rivi
 Lukee tarkastelukohdistimen kohdalla olevan rivin
 
-Numeroryhmän 9: seuraava rivi
+Laskinnäppäimistön 9: seuraava rivi
 Siirtää tarkastelukohdistimen seuraavalle riville
 
-Shift+numeroryhmän 9: alin rivi
+Shift+laskinnäppäimistön 9: alin rivi
 Siirtää tarkastelukohdistimen viimeiselle riville
+
+NVDA+F9: aseta alkumerkki
+Merkitsee tarkastelukohdistimen nykyisen sijainnin kopioitavan tekstin alkukohdaksi.
+
+NVDA+F10: kopioi teksti
+Hakee tekstin aiemmin asetetusta alkumerkistä lähtien tarkastelukohdistimen nykyiseen sijaintiin saakka ja kopioi sen leikepöydälle.
 
 Näennäispuskurin komennot:
 

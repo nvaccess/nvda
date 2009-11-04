@@ -33,6 +33,7 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 	* Názov dokumentu a aktuálny výber alebo aktuálny riadok je automaticky prečítaný, ak fokus prejde do virtuálneho prehliadača. Oznamovanie fokusu pri vstupe do virtuálneho prehliadača je takto konzistentné s oznamovaním ostatných dokumentov. (#210)
 	* Vo virtuálnom prehliadači je možné stlačením klávesu enter vstúpiť do vnorených objektov ako napr. prvky flash alebo java. Ak je takýto prvok prístupný, je možné na navigáciu používať štandardné navigačné klávesy. Na návrat do virtuálneho prehliadača stlačte NVDA+medzerník (#431)
 	* Vo virtuálnom prehliadači je možné na navigáciu po vnorených objektoch používať klávesy o a shift+o.
+	* NVDA konečne dokáže sprístupniť aplikácie bežiace s administrátorskými oprávneniami v systémoch Windows Vista a novších. Táto funkcionalita je dostupná len v oficiálnych verziách. Nebude to fungovať v prenositeľných verziách a snapshotoch.  (#397)
 
 === Zmeny ===
 	* Pri štarte programu NVDA nepovie "NVDA spustený".
@@ -69,6 +70,7 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 	* Skript na oznamovanie aktuálneho výberu správne rozpozná prvky, ktoré nepodporujú označovanie textu do bloku.
 	* V programe Miranda-IM NVDA zamrzol pri stlačení klávesu enter na niektorých špecifických tlačidlách alebo odkazoch. (#440)
 	* Opravený problém s hláskovaním a kopírovaním navigačného objektu do schránky. Namiesto aktuálneho riadku alebo aktuálneho výberu bol skopírovaný celý text.
+	* Obídená chyba Windows, ktorá spôsobovala čítanie nadbytočného textu v názvoch odkazov v dialógoch prieskumníka a internet exploreru. (#451)
 
 == 0.6p3 ==
 

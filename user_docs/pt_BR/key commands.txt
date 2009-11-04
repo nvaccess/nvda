@@ -72,6 +72,9 @@ Salva a configuração.
 Control+NVDA+r - restaura à configuração:
 Volta à configuração padrão.
 
+NVDA+c - anuncia texto da área de transferência:
+Lê o texto que estiver na área de transferência do Windows.
+
 Alterar opções encontradas nas janelas de configurações
 
 NVDA+2 - alterna fala de caracteres digitados:
@@ -138,7 +141,7 @@ NAVEGAÇÃO ENTRE OBJETOS
 NVDA+num 5 - objeto de navegação atual:
 Anuncia o objeto de navegação atual. Se pressionada duas vezes, soletra o objeto; se pressionada três vezes, copia-o para a ârea de transferência.
 
-Shift+NVDA+num 5 - dimenções do objeto de navegação atual:
+NVDA+num del - dimenções do objeto de navegação atual:
 Anuncia tamanho e posição do objeto de navegação atual.
 
 NVDA+num 8 - objeto de navegação pai:
@@ -230,17 +233,24 @@ Move o cursor de revisão para a próxima linha.
 Shift+num 9 - fundo:
 Move o cursor de revisão para a última linha.
 
-COMANDOS DE EXIBIDOR VIRTUAL PARA FIREFOX 3 (ALGUNS FUNCIONAM EM INTERNET EXPLORER E FIREFOX 2)
+NVDA+f9 - marcador de revisão inicial para cópia:
+Marca a posilção atual do cursor de revisão como o início do texto a ser copiado.
+
+NVDA+f10 - copia revisão:
+Pega o texto desde o marcador anteriormente colocado até a posição atual do cursor de revisão, inclusive o texto aí contido, e copia-o para a área de transferência.
+
+COMANDOS DE EXIBIDOR VIRTUAL
 
 NVDA+Espaço - alterna o passe:
 Liga e desliga o passe de teclas pelo exibidor virtual.
 
 Control+NVDA+f: localizar (Control+f no Firefox 2 e no Internet Explorer);
 NVDA+f3: localizar próxima;
-NVDA+f7: lista de linques (não funciona em Firefox 2 e Internet Explorer);
-NVDA+f5: atualiza o exibidor (não funciona em Firefox 2 e Internet Explorer);
+NVDA+f7: lista de elementos;
+NVDA+f5: atualiza o exibidor;
+NVDA+v: alterna modos de apresentação da tela.
 
-TECLAS RÁPIDAS PARA avançar ENTRE ELEMENTOS DE MESMO TIPO EM EXIBIDORES VIRTUAIS (USE SHIFT PARA RETROCEDER)
+TECLAS RÁPIDAS PARA avançar ENTRE ELEMENTOS DE MESMO TIPO EM EXIBIDORES VIRTUAIS (USE SHIFT COM A TECLA CORRESPONDENTE PARA RETROCEDER)
 
 h: cabeçalho;
 l: lista;
@@ -253,7 +263,7 @@ v: linque visitado;
 e: campo de edição;
 b: botão;
 x: caixa de seleção;
-c: caixa combinada;
+c: caixa de combinação;
 r: botão de opção;
 q: bloco de citação.
 s: separador;
