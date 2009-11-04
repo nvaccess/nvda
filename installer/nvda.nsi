@@ -308,9 +308,9 @@ MessageBox MB_OK $(msg_NVDARunning)
 Continue:
 IfFileExists "$APPDATA\nvda\nvda.ini" +1 +4
 GetFullPathName /SHORT $0 "$APPDATA\nvda"
-Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -r -m -c $0"
+ExecShell "open" "$PLUGINSDIR\${NVDATempDir}\${NVDAApp}" "-r -m -c $0" SW_SHOWNORMAL
 goto Running
-Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -r -m"
+ExecShell "open" "$PLUGINSDIR\${NVDATempDir}\${NVDAApp}" "-r -m" SW_SHOWNORMAL
 Running:
 Banner::destroy
 functionEnd
@@ -385,9 +385,9 @@ FunctionEnd
 function .onInstSuccess
 ;create/update log always within .onInstSuccess function
 !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
-Execwait "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -q"
+uac::shellExecWait "open" SW_SHOWNORMAL "$INSTDIR\${NVDAApp}" "-q" "$INSTDIR"
 strcmp $runAppOnInstSuccess "1" +1 end
-uac::exec "" "$INSTDIR\${NVDAApp}" "" ""
+uac::shellExec "open" SW_SHOWNORMAL "$INSTDIR\${NVDAApp}" "" "$INSTDIR"
 end:
 FunctionEnd
 

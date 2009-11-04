@@ -1,5 +1,5 @@
-import subprocess
 import os
+import winKernel
 
 from ctypes import *
 import keyboardHandler
@@ -40,6 +40,46 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	except:
 		log.error("helper.winEventCallback", exc_info=True)
 
+class RemoteLoader64(object):
+
+	def __init__(self):
+		# Create a pipe so we can write to stdin of the loader process.
+		pipeReadOrig, self._pipeWrite = winKernel.CreatePipe(None, 0)
+		# Make the read end of the pipe inheritable.
+		pipeRead = self._duplicateAsInheritable(pipeReadOrig)
+		winKernel.closeHandle(pipeReadOrig)
+		# stdout/stderr of the loader process should go to nul.
+		with file("nul", "w") as nul:
+			nulHandle = self._duplicateAsInheritable(nul.fileno())
+		# Set the process to start with the appropriate std* handles.
+		si = winKernel.STARTUPINFO(dwFlags=winKernel.STARTF_USESTDHANDLES, hSTDInput=pipeRead, hSTDOutput=nulHandle, hSTDError=nulHandle)
+		pi = winKernel.PROCESS_INFORMATION()
+		# Even if we have uiAccess privileges, they will not be inherited by default.
+		# Therefore, explicitly specify our own process token, which causes them to be inherited.
+		token = winKernel.OpenProcessToken(winKernel.GetCurrentProcess(), winKernel.MAXIMUM_ALLOWED)
+		try:
+			winKernel.CreateProcessAsUser(token, None, u"lib64/nvdaHelperRemoteLoader.exe", None, None, True, None, None, None, si, pi)
+			# We don't need the thread handle.
+			winKernel.closeHandle(pi.hThread)
+			self._process = pi.hProcess
+		except:
+			winKernel.closeHandle(self._pipeWrite)
+			raise
+		finally:
+			winKernel.closeHandle(pipeRead)
+			winKernel.closeHandle(token)
+
+	def _duplicateAsInheritable(self, handle):
+		curProc = winKernel.GetCurrentProcess()
+		return winKernel.DuplicateHandle(curProc, handle, curProc, 0, True, winKernel.DUPLICATE_SAME_ACCESS)
+
+	def terminate(self):
+		# Closing the write end of the pipe will cause EOF for the waiting loader process, which will then exit gracefully.
+		winKernel.closeHandle(self._pipeWrite)
+		# Wait until it's dead.
+		winKernel.waitForSingleObject(self._process, winKernel.INFINITE)
+		winKernel.closeHandle(self._process)
+
 def initialize():
 	global _remoteLib, _remoteLoader64, localLib, winEventHookID,generateBeep
 	localLib=cdll.LoadLibrary('lib/nvdaHelperLocal.dll')
@@ -50,7 +90,7 @@ def initialize():
 	if _remoteLib.nvdaHelper_initialize() < 0:
 		raise RuntimeError("Error initializing NVDAHelper")
 	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':
-		_remoteLoader64=subprocess.Popen('lib64/nvdaHelperRemoteLoader.exe',stdin=subprocess.PIPE,stdout=file("nul","w"),stderr=subprocess.STDOUT)
+		_remoteLoader64=RemoteLoader64()
 	winEventHookID=winUser.setWinEventHook(EVENT_TYPEDCHARACTER,EVENT_INPUTLANGCHANGE,0,winEventCallback,0,0,0)
 
 def terminate():
@@ -60,7 +100,6 @@ def terminate():
 		raise RuntimeError("Error terminating NVDAHelper")
 	_remoteLib=None
 	if _remoteLoader64:
-		_remoteLoader64.stdin.close()
-		_remoteLoader64.wait()
+		_remoteLoader64.terminate()
 		_remoteLoader64=None
 	localLib=None
