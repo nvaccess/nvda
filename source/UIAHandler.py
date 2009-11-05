@@ -23,6 +23,7 @@ badUIAWindowClassNames=[
 	"ComboBox",
 	"msctls_progress32",
 	"Edit",
+	"CommonPlacesWrapperWndClass",
 ]
 
 
