@@ -35,7 +35,7 @@ class PasswordField(IAccessible):
 class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self, obj):
-		if obj.windowClassName == "NativeHWNDHost" and obj.parent and not obj.parent.parent:
+		if obj.windowClassName in ("NativeHWNDHost", "AUTHUI.DLL: LogonUI Logon Window") and obj.parent and not obj.parent.parent:
 			# Make sure the top level pane is always presented.
 			obj.isPresentableFocusAncestor = True
 			return
