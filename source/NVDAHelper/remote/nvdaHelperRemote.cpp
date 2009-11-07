@@ -14,6 +14,7 @@
 #include "inputLangChange.h"
 #include "typedCharacter.h"
 #include "IA2Support.h"
+#include "winEventFilter.h"
 #include "nvdaHelperRemote.h"
 
 using namespace std;
@@ -45,6 +46,7 @@ void inProcess_initialize() {
 	assert(!inProcess_isRunning);
 	assert(!inProcess_wasInitializedOnce);
 	rpcSrv_inProcess_initialize();
+	winEventFilter_inProcess_initialize();
 	IA2Support_inProcess_initialize();
 	typedCharacter_inProcess_initialize();
 	inputLangChange_inProcess_initialize();
@@ -57,6 +59,7 @@ void inProcess_terminate() {
 	inputLangChange_inProcess_terminate();
 	typedCharacter_inProcess_terminate();
 	IA2Support_inProcess_terminate();
+	winEventFilter_inProcess_terminate();
 	rpcSrv_inProcess_terminate();
 	inProcess_isRunning=false;
 	#ifndef NDEBUG
@@ -195,6 +198,10 @@ int nvdaHelper_initialize() {
 		MessageBox(NULL,L"Error initializing IA2 support",L"nvdaHelperRemote (nvdaHelper_initialize)",0);
 		return -1;
 	}
+	if(!winEventFilter_initialize()) {
+		MessageBox(NULL,L"Error initializing winEvent filter",L"nvdaHelperRemote (nvdaHelper_initialize)",0);
+		return -1;
+	}
 	if((getMessageHookID=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)getMessageHook,moduleHandle,0))==0) {
 		MessageBox(NULL,L"Error registering getMessage Windows hook",L"nvdaHelperRemote (nvdaHelper_initialize)",0);
 		return -1;
@@ -232,6 +239,7 @@ int nvdaHelper_terminate() {
 		fprintf(stderr,"Error terminating IA2 support");
 		return -1;
 	}
+	winEventFilter_terminate();
 	isInitialized=FALSE;
 	return 0;
 }
