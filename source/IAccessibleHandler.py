@@ -4,7 +4,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from __future__ import with_statement
 import oleacc
 
 MAX_WINEVENTS=500
@@ -59,6 +58,7 @@ import appModuleHandler
 import config
 import mouseHandler
 import controlTypes
+import NVDAHelper
 
 MENU_EVENTIDS=(winUser.EVENT_SYSTEM_MENUSTART,winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPSTART,winUser.EVENT_SYSTEM_MENUPOPUPEND)
 
@@ -164,6 +164,7 @@ class OrderedWinEventLimiter(object):
 
 #The win event limiter for all winEvents
 winEventLimiter=OrderedWinEventLimiter()
+winEventArray=NVDAHelper.WinEventArray()
 
 #A place to store live IAccessible NVDAObjects, that can be looked up by their window,objectID,childID event params.
 liveNVDAObjectTable=weakref.WeakValueDictionary()
@@ -338,9 +339,6 @@ IAccessible2StatesToNVDAStates={
 
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 winEventHookIDs=[]
-
-eventCounter=itertools.count()
-eventHeap=[]
 
 def normalizeIAccessible(pacc):
 	if isinstance(pacc,comtypes.client.lazybind.Dispatch) or isinstance(pacc,comtypes.client.dynamic._Dispatch) or isinstance(pacc,IUnknown):
@@ -785,14 +783,13 @@ cWinEventCallback=WINFUNCTYPE(None,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(wi
 
 def initialize():
 	focusObject=api.getDesktopObject().objectWithFocus()
-	for eventType in winEventIDsToNVDAEventNames.keys():
-		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
-		if hookID:
-			winEventHookIDs.append(hookID)
-		else:
-			log.error("initialize: could not register callback for event %s (%s)"%(eventType,winEventIDsToNVDAEventNames[eventType]))
 
 def pumpAll():
+	global winEventArray
+	#Request NVDAHelper for winEvents
+	evs=NVDAHelper._remoteLib.getWinEvents(winEventArray,NVDAHelper.winEventArrayLength)
+	for i in xrange(evs):
+		winEventLimiter.addEvent(winEventArray[i].event,winEventArray[i].window,winEventArray[i].objectID,winEventArray[i].childID,winEventArray[i].thread)
 	#Receive all the winEvents from the limiter for this cycle
 	winEvents=winEventLimiter.flushEvents()
 	focusWinEvents=[]
@@ -834,8 +831,8 @@ def pumpAll():
 			processFakeFocusWinEvent(*fakeFocusEvent)
 
 def terminate():
-	for handle in winEventHookIDs:
-		winUser.unhookWinEvent(handle)
+	global winEventArray
+	del winEventArray
 
 def getIAccIdentity(pacc,childID):
 	IAccIdentityObject=pacc.QueryInterface(IAccIdentity)

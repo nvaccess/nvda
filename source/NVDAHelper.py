@@ -2,6 +2,7 @@ import os
 import winKernel
 
 from ctypes import *
+from ctypes.wintypes import *
 import keyboardHandler
 import winUser
 import speech
@@ -22,6 +23,18 @@ generateBeep=None
 lastKeyboardLayoutChangeEventTime=None
 
 winEventHookID=None
+class WinEvent_t(Structure):
+	_fields_=[
+		("event",DWORD),
+		("window",HWND),
+		("objectID",c_long),
+		("childID",c_long),
+		("thread",DWORD),
+	]
+	_pack_=4
+
+winEventArrayLength=600
+WinEventArray=WinEvent_t*winEventArrayLength
 
 def handleTypedCharacter(window,wParam,lParam):
 	focus=api.getFocusObject()
@@ -87,6 +100,7 @@ def initialize():
 	generateBeep.argtypes=[c_char_p,c_float,c_uint,c_ubyte,c_ubyte]
 	generateBeep.restype=c_uint
 	_remoteLib=cdll.LoadLibrary('lib/NVDAHelperRemote.dll')
+	_remoteLib.getWinEvents.argtypes = [WinEventArray, c_uint]
 	if _remoteLib.nvdaHelper_initialize() < 0:
 		raise RuntimeError("Error initializing NVDAHelper")
 	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':

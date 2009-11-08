@@ -163,6 +163,7 @@ LRESULT CALLBACK callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
 
 //winEvent callback
 void CALLBACK winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
+	winEventFilterHook(hookID, eventID, hwnd, objectID, childID, threadID, time);
 	if(!inProcess_wasInitializedOnce) {
 		assert(!inProcess_isRunning);
 		DWORD curProcessID=0;
@@ -172,7 +173,7 @@ void CALLBACK winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long 
 				inProcess_initialize();
 			}
 		}
-	} 
+	}
 	if(inProcess_isRunning) {
 		//Hookprocs may unregister or register hooks themselves, so we must copy the hookprocs before executing
 		list<winEventHookRegistry_t::key_type> hookProcList;

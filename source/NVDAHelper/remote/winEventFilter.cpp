@@ -36,7 +36,6 @@ struct sharedInfo_t {
 HANDLE hMapFile=0;
 sharedInfo_t* pBuf=NULL;
 
-void CALLBACK winEventFilterHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time);
 
 bool winEventFilter_initialize() {
 	hMapFile = CreateFileMapping(INVALID_HANDLE_VALUE,NULL,PAGE_READWRITE,0,sharedMemSize,winEventFilterSharedMem);
@@ -73,15 +72,16 @@ void winEventFilter_inProcess_initialize() {
 		fprintf(stderr,"Error: MapVievOfFile failed (%d).\n",GetLastError());
 		return;
 	}
-	registerWinEventHook(winEventFilterHook);
+	//registerWinEventHook(winEventFilterHook);
 }
 
 void winEventFilter_inProcess_terminate() {
-	unregisterWinEventHook(winEventFilterHook);
+	//unregisterWinEventHook(winEventFilterHook);
 	winEventFilter_terminate();
 }
 
 void CALLBACK winEventFilterHook(HWINEVENTHOOK hookID, DWORD eventID, HWND window, long objectID, long childID, DWORD threadID, DWORD time) {
+	if (!pBuf) return;
 	try {
 		//Ignore all object IDs from alert onwards (sound, nativeom etc) as we don't support them
 		if ((objectID<=OBJID_ALERT) ||
@@ -122,7 +122,6 @@ void CALLBACK winEventFilterHook(HWINEVENTHOOK hookID, DWORD eventID, HWND windo
 			return;
 		}
 		delete []buf;
-		//Beep(1000,35);
 		LONG offset=(InterlockedIncrement(&pBuf->eventWritten)-1) % bufLength; //We have a circular array
 		//Get a reference to our struct
 		winEventRecord_t& r=pBuf->events[offset];
@@ -136,4 +135,25 @@ void CALLBACK winEventFilterHook(HWINEVENTHOOK hookID, DWORD eventID, HWND windo
 		//Temporary, just play a beep
 		Beep(440,35);
 	}
+}
+
+//Client part
+LONG eventReadCount=0; //how many events we've processed
+
+int getWinEvents(winEvent_t* arr, unsigned arrLength) {
+	if (!arr) return -1;
+	if (pBuf->eventWritten-eventReadCount>bufLength) { //we are late. Skip some events
+		eventReadCount+=pBuf->eventWritten-eventReadCount-bufLength;
+	}
+	unsigned totalEvents=min(arrLength,pBuf->eventWritten-eventReadCount); //How many to read
+	totalEvents=min(totalEvents,bufLength);
+	for (unsigned i=0; i<totalEvents; i++) {
+		if (pBuf->events[eventReadCount%bufLength].readyFlag!=readyFlag) { //Yet unfinished data! Stopping
+			return i;
+		}
+		memcpy(&arr[i],&pBuf->events[eventReadCount%bufLength],sizeof(winEvent_t));
+		InterlockedExchange(&pBuf->events[eventReadCount%bufLength].readyFlag,0);
+		eventReadCount++;
+	}
+	return totalEvents;
 }
