@@ -10,6 +10,7 @@
 
 //The directory name where this dll is situated
 extern wchar_t dllDirectory[MAX_PATH];
+extern HINSTANCE moduleHandle;
 
 //Exported functions
 DLLEXPORT int nvdaHelper_initialize();

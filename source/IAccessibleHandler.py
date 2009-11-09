@@ -6,9 +6,6 @@
 
 import oleacc
 
-MAX_WINEVENTS=500
-MAX_WINEVENTS_PER_THREAD=10
-
 #Constants
 #OLE constants
 REGCLS_SINGLEUSE = 0       # class object only generates one instance
@@ -62,103 +59,6 @@ import NVDAHelper
 
 MENU_EVENTIDS=(winUser.EVENT_SYSTEM_MENUSTART,winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPSTART,winUser.EVENT_SYSTEM_MENUPOPUPEND)
 
-class OrderedWinEventLimiter(object):
-	"""Collects and limits winEvents based on whether they are focus changes, or just generic (all other ones).
-
-	Only allow a max of L{maxFocusItems}, if more are added then the oldest focus event is removed to make room.
-	Only allow one event for one specific object at a time, though push it further forward in time if a duplicate tries to get added. This is true for both generic and focus events.
- 	"""
-
-	def __init__(self,maxFocusItems=3):
-		"""
-		@param maxFocusItems: the amount of focus changed events allowed to be queued.
-		@type maxFocusItems: integer
-		"""
-		self.maxFocusItems=maxFocusItems
-		self._focusEventCache={}
-		self._genericEventCache={}
-		self._eventHeap=[]
-		self._eventCounter=itertools.count()
-		self._lastMenuEvent=None
-
-	def addEvent(self,eventID,window,objectID,childID,threadID):
-		"""Adds a winEvent to the limiter.
-		@param eventID: the winEvent type
-		@type eventID: integer
-		@param window: the window handle of the winEvent
-		@type window: integer
-		@param objectID: the objectID of the winEvent
-		@type objectID: integer
-		@param childID: the childID of the winEvent
-		@type childID: integer
-		@param threadID: the threadID of the winEvent
-		@type threadID: integer
-		"""
-		#Filter out any events for UIA windows
-		if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
-			return
-
-		if eventID==winUser.EVENT_OBJECT_FOCUS:
-			if objectID in (winUser.OBJID_SYSMENU,winUser.OBJID_MENU) and childID==0:
-				# This is a focus event on a menu bar itself, which is just silly. Ignore it.
-				return
-			#We do not need a focus event on an object if we already got a foreground event for it
-			if (winUser.EVENT_SYSTEM_FOREGROUND,window,objectID,childID,threadID) in self._focusEventCache:
-				return
-			self._focusEventCache[(eventID,window,objectID,childID,threadID)]=next(self._eventCounter)
-			return
-		elif eventID==winUser.EVENT_SYSTEM_FOREGROUND:
-			self._focusEventCache.pop((winUser.EVENT_OBJECT_FOCUS,window,objectID,childID,threadID),None)
-			self._focusEventCache[(eventID,window,objectID,childID,threadID)]=next(self._eventCounter)
-		elif eventID==winUser.EVENT_OBJECT_SHOW:
-			k=(winUser.EVENT_OBJECT_HIDE,window,objectID,childID,threadID)
-			if k in self._genericEventCache:
-				del self._genericEventCache[k]
-				return
-		elif eventID==winUser.EVENT_OBJECT_HIDE:
-			k=(winUser.EVENT_OBJECT_SHOW,window,objectID,childID,threadID)
-			if k in self._genericEventCache:
-				del self._genericEventCache[k]
-				return
-		elif eventID==winUser.EVENT_OBJECT_DESTROY:
-			k=(winUser.EVENT_OBJECT_CREATE,window,objectID,childID,threadID)
-			if k in self._genericEventCache:
-				del self._genericEventCache[k]
-				return
-		elif eventID in MENU_EVENTIDS:
-			self._lastMenuEvent=(next(self._eventCounter),eventID,window,objectID,childID,threadID)
-			return
-		self._genericEventCache[(eventID,window,objectID,childID,threadID)]=next(self._eventCounter)
-
-	def flushEvents(self):
-		"""Returns a list of winEvents (tuples of eventID,window,objectID,childID) that have been added, though due to limiting, it will not necessarily be all the winEvents that were originally added. They are definitely garenteed to be in the correct order though.
-		"""
-		if self._lastMenuEvent is not None:
-			heapq.heappush(self._eventHeap,self._lastMenuEvent)
-			self._lastMenuEvent=None
-		g=self._genericEventCache
-		self._genericEventCache={}
-		threadCounters={}
-		for k,v in sorted(g.iteritems(),key=lambda item: item[1],reverse=True):
-			threadCount=threadCounters.get(k[-1],0)
-			if threadCount>MAX_WINEVENTS_PER_THREAD:
-				continue
-			heapq.heappush(self._eventHeap,(v,)+k)
-			threadCounters[k[-1]]=threadCount+1
-		f=self._focusEventCache
-		self._focusEventCache={}
-		for k,v in sorted(f.iteritems(),key=lambda item: item[1])[0-self.maxFocusItems:]:
-			heapq.heappush(self._eventHeap,(v,)+k)
-		e=self._eventHeap
-		self._eventHeap=[]
-		r=[]
-		for count in xrange(len(e)):
-			event=heapq.heappop(e)[1:-1]
-			r.append(event)
-		return r
-
-#The win event limiter for all winEvents
-winEventLimiter=OrderedWinEventLimiter()
 winEventArray=NVDAHelper.WinEventArray()
 
 #A place to store live IAccessible NVDAObjects, that can be looked up by their window,objectID,childID event params.
@@ -331,9 +231,6 @@ IAccessible2StatesToNVDAStates={
 	IA2_STATE_ICONIFIED:controlTypes.STATE_ICONIFIED,
 	IA2_STATE_EDITABLE:controlTypes.STATE_EDITABLE,
 }
-
-#A list to store handles received from setWinEventHook, for use with unHookWinEvent  
-winEventHookIDs=[]
 
 def normalizeIAccessible(pacc):
 	if isinstance(pacc,comtypes.client.lazybind.Dispatch) or isinstance(pacc,comtypes.client.dynamic._Dispatch) or isinstance(pacc,IUnknown):
@@ -524,42 +421,6 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 	if not obj:
 		return None
 	return (NVDAEventName,obj)
-
-def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
-	try:
-		#Ignore all object IDs from alert onwards (sound, nativeom etc) as we don't support them
-		if objectID<=winUser.OBJID_ALERT: 
-			return
-		#Ignore all locationChange events except ones for the caret
-		if eventID==winUser.EVENT_OBJECT_LOCATIONCHANGE and objectID!=winUser.OBJID_CARET:
-			return
-		#Change window objIDs to client objIDs for better reporting of objects
-		if (objectID==0) and (childID==0):
-			objectID=winUser.OBJID_CLIENT
-		#Ignore events with invalid window handles
-		isWindow = winUser.isWindow(window) if window else 0
-		if window==0 or (not isWindow and eventID in (winUser.EVENT_SYSTEM_SWITCHSTART,winUser.EVENT_SYSTEM_SWITCHEND,winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPEND)):
-			window=winUser.getDesktopWindow()
-		elif not isWindow:
-			return
-
-		if childID<0:
-			while window and not winUser.getWindowStyle(window)&winUser.WS_POPUP and winUser.getClassName(window)=="MozillaWindowClass":
-				window=winUser.getAncestor(window,winUser.GA_PARENT)
-		windowClassName=winUser.getClassName(window)
-		#At the moment we can't handle show, hide or reorder events on Mozilla Firefox Location bar,as there are just too many of them
-		#Ignore show, hide and reorder on MozillaDropShadowWindowClass windows.
-		if windowClassName.startswith('Mozilla') and eventID in (winUser.EVENT_OBJECT_SHOW,winUser.EVENT_OBJECT_HIDE,winUser.EVENT_OBJECT_REORDER) and childID<0:
-			#Mozilla Gecko can sometimes fire win events on a catch-all window which isn't really the real window
-			#Move up the ancestry to find the real mozilla Window and use that
-			if winUser.getClassName(window)=='MozillaDropShadowWindowClass':
-				return
-		#We never want to see foreground events for the Program Manager or Shell (task bar) 
-		if eventID==winUser.EVENT_SYSTEM_FOREGROUND and windowClassName in ("Progman","Shell_TrayWnd"):
-			return
-		winEventLimiter.addEvent(eventID,window,objectID,childID,threadID)
-	except:
-		log.error("winEventCallback", exc_info=True)
 
 def processGenericWinEvent(eventID,window,objectID,childID):
 	"""Converts the win event to an NVDA event,
@@ -774,23 +635,33 @@ def _fakeFocus(oldFocus):
 	processFocusNVDAEvent(focus)
 
 #Register internal object event with IAccessible
-cWinEventCallback=WINFUNCTYPE(None,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
 def initialize():
 	focusObject=api.getDesktopObject().objectWithFocus()
+#eventLog=open("eventlog.txt","w")
+
+def logEvent(e):
+	s=[]
+	s.append(winEventIDsToNVDAEventNames.get(e[0],e[0]))
+	s.append(winUser.getClassName(e[1]))
+	s.append(e[2])
+	s.append(e[3])
+	eventLog.write("%s\n"%str(s))
 
 def pumpAll():
 	global winEventArray
 	#Request NVDAHelper for winEvents
-	evs=NVDAHelper._remoteLib.getWinEvents(winEventArray,NVDAHelper.winEventArrayLength)
-	for i in xrange(evs):
-		winEventLimiter.addEvent(winEventArray[i].event,winEventArray[i].window,winEventArray[i].objectID,winEventArray[i].childID,winEventArray[i].thread)
-	#Receive all the winEvents from the limiter for this cycle
-	winEvents=winEventLimiter.flushEvents()
+	evs=NVDAHelper._remoteLib.getWinEvents(winEventArray,NVDAHelper.winEventArrayLength-1)
+	if evs<0:
+		log.debugWarning("NVDAHelperRemote.getWinEvents returned %d"%evs)
+		return
 	focusWinEvents=[]
 	validFocus=False
 	fakeFocusEvent=None
-	for winEvent in winEvents[0-MAX_WINEVENTS:]:
+	for w in winEventArray[:evs]:
+		if UIAHandler.handler and UIAHandler.handler.isUIAWindow(e.window): continue
+		winEvent=(w.event,w.window,w.objectID,w.childID)
+		#logEvent(winEvent)
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
 		if winEvent[0] in (winUser.EVENT_OBJECT_FOCUS,winUser.EVENT_SYSTEM_FOREGROUND):
 			focusWinEvents.append(winEvent)

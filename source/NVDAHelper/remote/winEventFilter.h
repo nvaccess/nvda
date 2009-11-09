@@ -13,10 +13,14 @@ struct winEvent_t {
 	LONG objectID;
 	LONG childID;
 	DWORD thread;
+	winEvent_t(DWORD _event=0, HWND _window=0, LONG _objectID=0, LONG _childID=0, DWORD _thread=0):
+		event(_event),window(_window),objectID(_objectID),childID(_childID),thread(_thread) { }
+	bool operator< (const winEvent_t& other) const {
+		return memcmp(this,&other,sizeof(winEvent_t))<0;
+	}
 };
 #pragma pack(pop)
 
-void CALLBACK winEventFilterHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time);
 bool winEventFilter_initialize();
 void winEventFilter_terminate();
 void winEventFilter_inProcess_initialize();

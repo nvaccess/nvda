@@ -163,7 +163,6 @@ LRESULT CALLBACK callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
 
 //winEvent callback
 void CALLBACK winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
-	winEventFilterHook(hookID, eventID, hwnd, objectID, childID, threadID, time);
 	if(!inProcess_wasInitializedOnce) {
 		assert(!inProcess_isRunning);
 		DWORD curProcessID=0;
