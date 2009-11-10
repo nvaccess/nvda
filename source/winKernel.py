@@ -70,17 +70,20 @@ class SYSTEM_POWER_STATUS(ctypes.Structure):
 
 def GetSystemPowerStatus(sps):
 	return kernel32.GetSystemPowerStatus(ctypes.byref(sps))
+
 def getThreadLocale():
 	return kernel32.GetThreadLocale()
 
 def GetDateFormat(Locale,dwFlags,lpDate,lpFormat):
-	buf=ctypes.create_unicode_buffer("", 32)
-	kernel32.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, buf, ctypes.sizeof(buf))
+	bufferLength=kernel32.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, None, 0)
+	buf=ctypes.create_unicode_buffer("", bufferLength)
+	kernel32.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, buf, bufferLength)
 	return buf.value
 
 def GetTimeFormat(Locale,dwFlags,lpTime,lpFormat):
-	buf=ctypes.create_unicode_buffer("", 32)
-	kernel32.GetTimeFormatW(Locale,dwFlags,lpTime,lpFormat, buf, ctypes.sizeof(buf))
+	bufferLength=kernel32.GetTimeFormatW(Locale,dwFlags,lpTime,lpFormat, None, 0)
+	buf=ctypes.create_unicode_buffer("", bufferLength)
+	kernel32.GetTimeFormatW(Locale,dwFlags,lpTime,lpFormat, buf, bufferLength)
 	return buf.value
 
 def openProcess(*args):
