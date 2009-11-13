@@ -41,7 +41,7 @@
 	* NVDA больше не озвучивает "NVDA готов" во время запуска.
 	* Звуки по загрузке и выгрузке "NVDA", теперь, воспроизводятся через звуковое устройство, на которое выводится речь "NVDA", вместо воспроизведения через устройство "Windows", выбранное по умолчанию. (#164)
 	* Улучшено озвучивание строки состояния. Теперь “NVDA” может озвучивать изменения как речью, так и при помощи речи и сигналов одновременно.
-	* Теперь, при попадании в фокус,  не озвучиваются такие настраиваемые контроллеры, как панель, приложение, фрейм,если только контроллер не является безымянным. 
+	* Теперь, при попадании в фокус,  не озвучиваются такие настраиваемые элементы управления, как панель, приложение, фрейм,если только они не являются безымянными. 
 	* По команде «копировать размеченный текст в буфер обмена» (NVDA+f10) теперь копируется текст от начала фрагмента до текущей позиции просмотрового курсора, включая символ под курсором. Это позволяет копировать последний символ строки, что ранее было невозможно. (#430)
 	* Удален скрипт местоположения объекта (ctrl+NVDA+numpad5). Эта комбинация клавиш не работала на некоторых клавиатурах, и скрипт оказался не слишком востребованным.
 	* Скрипт, озвучивающий размеры текущего объекта, переназначен на сочетание клавиш NVDA+numpadDelete. Старая комбинация не работала на некоторых клавиатурах. Вместо координат объекта, теперь произносятся его ширина и высота.
@@ -65,30 +65,29 @@
 	• Теперь NVDA будет пробовать возобновить собственную работоспособность в некоторых ситуациях, которые до этого приводили к полному зависанию.
 На самодиагностику и восстановление в отдельных случаях может уйти до 10 секунд.
 	* Если языком «NVDA» выбран язык системы по умолчанию, То используется язык, установленный в качестве основного в региональных настройках Windows. (#353)
-	* “NVDA” теперь определяет контроллеры в AIM 7.
+	* “NVDA” теперь определяет контроллеры в IM 7.
 	* “NVDA” больше не вылетает при выполнении команды «Пропуск клавиши». Ранее, если клавиша была нажата и удерживалась, “NVDA” зависала, и ее приходилось перезапускать. (#413)
 	* Больше не игнорируется панель задач, когда на нее перемещается курсор. Такое часто случалось при выходе из приложений. “NVDA» не сообщала о том, что фокус изменился.
 	* В приложениях, использующих Java Access Bridge (включая OpenOffice.org) “NVDA” теперь правильно сообщает о включении/отключении нумерации строк.
 	* Корректно обрабатывается команда копирования размеченного фрагмента (NVDA+f10), в случаях, когда курсор находится перед маркером, отмечающим начало фрагмента. Ранее, в подобных ситуациях возникали проблемы, в частности, зависания при работе в \Блокноте.
 	* Больше самопроизвольно не изменяются громкость и высота тембра синтезатора eSpeak, что раньше наблюдалось, если в тексте встречался управляющий символ 0x1. (#437)
-	* По команде "произнести выделенный текст" (NVDA+shift+стрелка вверх), в тех объектах, где выделение текста не поддерживается, “NVDA” теперь сообщает о том, что выделенного текста нет.
-	• Исправлена ошибка, приводившая к зависанию “NVDA” при нажатии клавиши enter на какой-либо кнопке в Миранде (Miranda-im). (#440)
+	* По команде »произнести выделенный текст» (NVDA+shift+стрелка вверх), в тех объектах, где выделение текста не поддерживается, “NVDA” теперь сообщает о том, что выделенного текста нет.
+	• Исправлена ошибка, приводившая к зависанию “NVDA” при нажатии клавиши enter на какой-либо кнопке в Миранде (Miranda-Aim). (#440)
 	* Исправлена обработка текущей строки, или выделенного текста при чтении по буквам, либо копировании объекта навигатора. 
 	• Реализован обход ошибки в windows, из-за которой в ссылках, которые можно найти в диалогах “свойства папки” и других диалогах проводника и Internet Explorer
 к тексту ссылки добавлялся мусор (#451) 
+	* Исправлена команда произнесения даты и времени (NVDA+f12). В некоторых случаях дата произносилась неверно. (#471)
 
 
-
-== 0.6p3 ==
-
-=== New Features ===
-	* As Microsoft Excel's formula bar is inaccessible to NVDA, provide an NVDA specific dialog box for editing when the user presses f2 on a cell.
-	* Support for formatting in IAccessible2 text controls, including Mozilla applications.
-	* Spelling errors can now be reported where possible. This is configurable from the Document Formatting preferences dialog.
-	* NVDA can be configured to beep for either all or only visible progress bars. Alternatively, it can be configured to speak progress bar values every 10%.
-	* Links can now be identified in richedit controls.
-	* The mouse can now be moved to the character under the review cursor in most editable text controls. Previously, the mouse could only be moved to the center of the control.
-	* In virtual buffers, the review cursor now reviews the text of the buffer, rather than just the internal text of the navigator object (which is often not useful to the user). This means that you can navigate the virtual buffer hierarchically using object navigation and the review cursor will move to that point in the buffer.
+== Версия 0.6p3 ==
+=== Новое===
+* Поскольку для «NVDA» недоступна строка формулы в Microsoft Excel, создано специальное диалоговое окно для “NVDA”, которое появляется, когда пользователь нажимает f2 на ячейке.
+* Поддержка форматирования в элементах управления стандарта IAccessible2 text, включая приложения Mozilla
+* Где возможно, озвучиваются грамматические ошибки. Параметр доступен из диалога настроек форматирования документа.
+* Добавилась настройка, изменяющая озвучивание строк состояния. Сигнал может издаваться при изменении всех, или только видимых строк состояния. При желании, «NVDA» можно настроить на проговаривание каждых 10%.
+* Теперь определяются ссылки в  элементах управления richedit.
+* В большинстве редактируемых элементов управления курсор мыши теперь можно перемещать на символ, находящийся под просмотровым курсором. Прежде, он перемещался только к центру элемента управления.
+* В виртуальных буферах, при помощи просмотрового курсора, теперь можно читать текст непосредственно самого буфера, а не только текст, находящийся внутри объекта навигатора, часто неинформативный для пользователя. Это значит, что по виртуальному буферу можно перемещаться иерархически, используя объектную навигацию, и просмотровый курсор будет следовать за курсором навигатора.
 	* Handle some additional states on Java controls.
 	* If the title command (NVDA+t) is pressed twice, it spells the title. If pressed thrice, it is copied to the clipboard.
 	* Keyboard help now reads the names of modifier keys when pressed alone.
@@ -291,7 +290,7 @@
 
 === APIs and toolkits ===
 	* Improved object navigation for MSAA objects. If a window has a system menu, title bar, or scroll bars, you can now navigate to them.
-	* Added support for the IAccessible2 accessibility API. A part from the ability to announce more control types, this also allows NVDA to access the cursor in applications such as Firefox 3 and Thunderbird 3, allowing you to navigate, select or edit text. 
+	* Added support for the IAccessible2 accessibility API. A part from the ability to announce more control types, this also allows NVDA to access the cursor in applications such as Firefox 3 and Thunderbird 3, allowing you to navigate, select or edit text.
 	* Added support for Scintilla edit controls (such controls can be found in Notepad++ or Tortoise SVN).
 	* Added support for Java applications (via the Java Access Bridge). This can provide basic support for Open Office (if Java is enabled), and any other stand-alone Java application. Note that java applets with in a web browser may not work yet.
 
