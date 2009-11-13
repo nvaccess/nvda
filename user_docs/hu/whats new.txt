@@ -30,11 +30,11 @@
 * A virtuális kijelzõk a háttérben kerülnek feldolgozásra, hatékonyabb kommunikálást lehetõvé téve a rendszerrel. Ha a kijelzõ feldolgozása több mint egy másodpercet vesz igénybe, az NVDA errõl tájékoztat.
 	* Ha az NVDA valamilyen oknál fogva lefagy, a billentyûk automatikusan a rendszernek lesznek továbbítva, megnövelve a hatékonyabb helyreállást.
 * Az ARIA fogd és vidd támogatása a Mozilla Gecko-ban. (#239)
- * A dokumentum címe és a jelenlegi sor vagy a kijelölés felolvasásra kerül amikor a fókusz megváltozik egy virtuális kijelzõben. Ez a viselkedés megegyezik a normál dokumentumobjektumokéival. (#210)
+ * A dokumentum címe és a jelenlegi sor vagy a kijelölés felolvasásra kerül amikor a fókusz megváltozik egy virtuális kijelzõben. Ez a viselkedés megegyezik a normál dokumentum objektumokéival. (#210)
 * Magyar 8 pontos braille támogatás
 * A Java Access Bridge támogatással rendelkezõ alkalmazásokban (többek között az OpenOffice.org) az NVDA jól mûködik a sorszámok használatakor.
 * A virtuális kijelzõkben az o és a shift+o billentyûkkel a beágyazott objektumok között lehet mozogni.
-
+* Az NVDA együttmûködik az adminisztrátori joggal futó alkalmazásokkal (Windows Vista és késõbbi operációs rendszerek). Ez csak az NVDA hivatalos verziójában mûködik, hordozható és snapshot verziókban nem. (#397)
 
 	=Változások=
 
@@ -42,12 +42,12 @@
 * Az NVDA nem mondja be a "Az NVDA elindult" szöveget induláskor.
 * A folyamatjelzõk felolvasását továbbfejlesztették. A legfontosabb, hogy most már be lehet állítani az NVDA-t úgy, hogy a folyamatjelzõk változását egyszerre beszéddel és hanggal is jelezze.
 * Néhány általános elem, pl. Ablak, alkalmazás és keret mostantól nem hangzik el, hacsak a vezérlõelem nincs feliratozva.
-* Az áttekintõszöveg másolás parancs (NVDA+f10) mostantól nem okoz hibát ha a kijelölés vége a kijelölés kezdete elõtt található. Elõzõleg ez problémákat okozott egyes alkalmazásokban, mint pl. A Notepad++.
+* Az áttekintõ szöveg másolás parancs (NVDA+f10) mostantól nem okoz hibát ha a kijelölés vége a kijelölés kezdete elõtt található. Elõzõleg ez problémákat okozott egyes alkalmazásokban, mint pl. A Notepad++.
 * A navigatorObject_currentDimentions szkript új billentyûparancsa a NVDA+numerikus Delete. A régi kombináció nem mûködött minden billentyûzeten. A szkript mostantól bemondja az objektum szélességi és magassági adatait, az alsó és a jobb oldali koordináták helyett.
 * Hatékonyabb mûködés (különösen netbookokon) ha több hangjelzés hallható egyszerre, pl. Gyors egérmozgáskor ha a hangjelzés engedélyezve van. (#396).
 
 	=Hiba javítások=
-* Amikor az NVDA a 8.3-as Dos alól fut, aminek egy összefüggõ hosszú címe van (pl progra~1 program files helyett), az NVDA rögtön felismeri, és betölti helyesen a felhasználói beállításokat.
+* Amikor az NVDA a 8.3-as Dos alól fut, aminek egy összefüggõ hosszú címe van (pl progra~1 program files helyett), az NVDA felismeri ezt, és betölti helyesen a felhasználói beállításokat.
 * a háttérben lévõ ablak címének bemondása (NVDA+T) nem mûködött jól a menükben.
 * Brailleben nem mutatja a használhatatlan információkat az összefüggõ címkétlen mezõkben.
 * A felesleges információk bemondásának leállítása, amikor a fókusz változik, ilyenek a root, a layered, és a scroll mezõk a Java vagy a Lotus alkalmazásokban.
@@ -66,9 +66,11 @@
 	* A billentyûparancs átadása parancs nem aktiválódik végérvényesen egy billentyû nyomva tartásakor. Elõzõleg, ha ez bekövetkezett, az NVDA nem vett figyelembe billentyûleütéseket és a hibát csak a program újraindításával lehetett orvosolni. (#413)
 * A tálca mostantól nincs figyelmen kívül hagyva ha a fókusz rákerül, amely gyakran megtörténik egy alkalmazásból való kilépés esetén. Az NVDA elõzõleg úgy viselkedett, mintha a fókusz nem változott volna meg.
 * Egy adott vezérlõkarakter (0x1) többé nem okoz furcsa viselkedést (mint pl. A magasság és a hangerõ megváltozása) ha elõfordul egy szövegben. (#437).
-* A kijelölt szöveg bemondása parancs (NVDA+shift+fel nyíl) közli ha egy objektumban a szövegkijelöés nem támogatott.
+* A kijelölt szöveg bemondása parancs (NVDA+shift+fel nyíl) közli ha egy objektumban a szövegkijelölés nem támogatott.
 	* Egy hiba kijavítva a Miranda-IM szkriptben. Miranda-IM specifikus gombokon vagy hivatkozásokon az enter megnyomása az NVDA lefagyását eredményezte. (#440)
 * Az aktuális objektum betûzése vagy másolásakor a navigátor kurzor használata esetén az aktuális sor vagy kijelölés nem volt figyelembe véve.
+* Egy hiba kijavítva ahol az NVDA értelmetlen szöveget olvasott fel hivatkozás vezérlõelemeknél a windows és az Internet explorerben. (#451)
+*Egy hiba kijavítva a dátum bemondásakor (NVDA+F12), egyes rendszereken eddig csonkítva hangzott el (#471)
 
 		=0.6 P3=
 	=Újdonságok=
@@ -79,7 +81,7 @@
 * Beállítható, hogy mindegyik, vagy csak bizonyos folyamatjelzõket jelezze az NVDA hangokkal. Például megadható, hogy csak 10%os változásnál legyen hangjelzés.
 * A hivatkozások felismerhetõk richedit vezérlõkben.
 * Az egérkurzor elmozdítható az áttekintõ kurzor alatt lévõ karakterhez a legtöbb szerkeszthetõ  szöveges vezérlõ esetében. Korábban csupán a vezérlõ közepére lehetett navigálni.
-* A virtuális kijelzõkben az áttekintõkurzor mostantól képes felolvasni a bufferben lévõ szöveget, az egy adott elemen lévõ navigátorkurzor belsõ szövege helyett (amely gyakran nem túl hasznos a felhasználó számára). Ez azt jelenti, hogy mostantól lehetõség van hierarchikusan bejárni a buffert a navigátorkurzorral, az áttekintõkurzor követni fogja azt.
+* A virtuális kijelzõkben az áttekintõ kurzor mostantól képes felolvasni a bufferben lévõ szöveget, az egy adott elemen lévõ navigátor kurzor belsõ szövege helyett (amely gyakran nem túl hasznos a felhasználó számára). Ez azt jelenti, hogy mostantól lehetõség van hierarchikusan bejárni a buffert a navigátor kurzorral, az áttekintõ kurzor követni fogja azt.
 * a Java vezérlõelemek további állapotainak támogatása.
 * NVDA+t kétszeri gyors leütésre az NVDA lebetûzi az aktuális ablak címsorát, gyors háromszori leütésnél a vágólapra másolja azt.
 * A billentyûzetsúgó felolvassa a módosító billentyûk nevét, amennyiben egyedüliként vannak lenyomva.
@@ -87,14 +89,14 @@
 * SiRecognizer-ben a felismert szövegmezõ elérhetõ az NVDA-val. (#198)
 * Braille kijelzõk támogatása.
 * NVDA+c felolvassa a vágólap szöveges tartalmát. (#193)
-* ha az nvda automatikusan interaktív módba vált, az escape billentyû használható a böngészõmódba váltáshoz. Az NVDA+szóköz változatlanul használható. 
+* ha az nvda automatikusan interaktív módba vált, az escape billentyû használható a böngészõ módba váltáshoz. Az NVDA+szóköz változatlanul használható. 
 * A virtuális kijelzõben a fókusz megváltozásakor és kurzor mozgásakor az NVDA automatikusan vált a böngészõ- és az interaktív módok között, a kurzor alatti vezérlõelemnek megfelelõen. Ez beállítható a virtuális kijelzõ párbeszédablakban. (#157)
 * újraírt SAPI4 szintetizátor driver, amely a sapi4serotek és a sapi4activeVoice drivereket hivatott felváltani, valamint kijavítja az ezek használatából adódó hibákat.
 * Az NVDA alkalmazás mostantól tartalmaz egy manifest-et, amely hatására a program már nem kell hogy kompatibilis módban fusson Windows Vista alatt.
 * Néhány szerkesztõmezõ támogatása a pinacle tv szoftverben.
 * Az NVDA a beállításfájlt és a kivételszótárak fájljait a felhasználó application data könyvtárába menti, ha az NVDA a telepítõ verzióval lett feltelepítve. Ez Windows Vista alatt szükséges, valamint lehetõvé teszi a többfelhasználós módot (külön beállítás minden NVDA felhasználónak).
 * Pozícióinformáció az IAccessible2 vezérlõelemekhez.
-* Mostantól lehetõség van az áttekintõkurzorral szöveget másolni a vágólapra. Az NVDA+f9 beállítja a kezdõpontot az áttekintõkurzor aktuális pozíciójához. Az NVDA+f10 kinyeri a szöveget a kezdõponttól az áttekintõkurzor aktuális pozíciójáig. (#240)
+* Mostantól lehetõség van az áttekintõ kurzorral szöveget másolni a vágólapra. Az NVDA+f9 beállítja a kezdõpontot az áttekintõ kurzor aktuális pozíciójához. Az NVDA+f10 kinyeri a szöveget a kezdõponttól az áttekintõ kurzor aktuális pozíciójáig. (#240)
 * a hosszabb kijelölések felolvasásakor (512 karakter vagy több), az NVDA a kijelölés szövege helyett a kijelölt karakterek számát olvassa fel. (#249)
 
 	=Változások=

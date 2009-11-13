@@ -3,7 +3,7 @@ Web: http://www.nvda-project.org/
 
 NonVisual Desktop Access (NVDA) je voľne šíriteľný open-source odčítač obrazovky pre microsoft windows.
 
-Viacej informácií sa môžete dočítať v používateľskej príručke. Ďalším dostupným zdrojom informácií je webstránka NVDA, alebo web stránka českých a slovenských fanúšikov projektu NVDA na adrese http://nvda.venik.org.
+Viacej informácií sa môžete dočítať v používateľskej príručke. Ďalším dostupným zdrojom informácií je webstránka NVDA, alebo web stránka českých a slovenských fanúšikov projektu NVDA na adrese http://sk.nvda-community.org.
 
 Licenčné podmienky
 
