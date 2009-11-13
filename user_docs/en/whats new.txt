@@ -73,6 +73,7 @@ Major highlights of this release include support for 64 bit editions of Windows;
 	* The current line or selection is now properly respected when spelling or copying the current navigator object.
 	* Worked around a Windows bug which was causing garbage to be spoken after the name of link controls in Windows Explorer and Internet Explorer dialogs. (#451)
 	* Fixed a problem with the report date and time command (NVDA+f12). Previously, date reporting was truncated on some systems. (#471)
+	* Fixed the issue where the system screen reader flag was sometimes inappropriately cleared after interacting with secure Windows screens. This could cause problems in applications which check the screen reader flag, including Skype, Adobe Reader and Jart. (#462)
 
 == 0.6p3 ==
 
