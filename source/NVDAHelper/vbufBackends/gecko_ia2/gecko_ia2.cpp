@@ -66,6 +66,7 @@ IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	DEBUG_MSG(L"calling IAccessible::QueryInterface with IID_IServiceProvider");
 	if((res=pacc->QueryInterface(IID_IServiceProvider,(void**)(&pserv)))!=S_OK) {
 		DEBUG_MSG(L"IAccessible::QueryInterface returned "<<res);
+		pacc->Release();
 		return NULL;
 	}  
 	DEBUG_MSG(L"IServiceProvider at "<<pserv);
@@ -74,9 +75,10 @@ IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	DEBUG_MSG(L"calling IServiceProvider::QueryService with IID_IAccessible2");
 	if((res=pserv->QueryService(IID_IAccessible,IID_IAccessible2,(void**)(&pacc2)))!=S_OK) {
 		DEBUG_MSG(L"IServiceProvider::QueryService returned "<<res);
-		return NULL;
-	} 
-	DEBUG_MSG(L"IAccessible2 at "<<pacc2);
+		pacc2=NULL;
+	}  else {
+		DEBUG_MSG(L"IAccessible2 at "<<pacc2);
+	}
 	DEBUG_MSG(L"releasingIServiceProvider");
 	pserv->Release();
 	return pacc2;
