@@ -48,6 +48,13 @@ class Document(Mozilla):
 
 	shouldAllowIAccessibleFocusEvent=True
 
+	def _get_virtualBufferClass(self):
+		states=self.states
+		if controlTypes.STATE_READONLY in states and controlTypes.STATE_BUSY not in states and self.windowClassName=="MozillaContentWindowClass":
+			import virtualBuffers.gecko_ia2
+			return virtualBuffers.gecko_ia2.Gecko_ia2
+		return super(Document,self).virtualBufferClass
+
 	def _get_value(self):
 		return 
 

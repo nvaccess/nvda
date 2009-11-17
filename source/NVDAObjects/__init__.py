@@ -164,6 +164,13 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		return not self.__eq__(other)
 
+	def _get_virtualBufferClass(self):
+		"""
+		If this NVDAObject should use a virtualBuffer, then this property provides the L{virtualBuffers.VirtualBuffer} class it should use. 
+		If not then it should be not implemented.
+		"""
+		raise NotImplementedError
+
 	def _get_virtualBuffer(self):
 		"""Retreaves the virtualBuffer associated with this object.
 		If a virtualBuffer has not been specifically set, the L{virtualBufferHandler} is asked if it can find a virtualBuffer containing this object.
