@@ -429,7 +429,7 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 void CALLBACK AdobeAcrobatVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	if (eventID != EVENT_OBJECT_STATECHANGE && eventID != EVENT_OBJECT_VALUECHANGE)
 		return;
-	if (eventID == EVENT_OBJECT_VALUECHANGE && childID == CHILDID_SELF) {
+	if (eventID == EVENT_OBJECT_VALUECHANGE && objectID == OBJID_CLIENT && childID == CHILDID_SELF) {
 		// This indicates that a new document or page replaces this one.
 		// The client will ditch this buffer and create a new one, so there's no point rendering it here.
 		return;
@@ -438,7 +438,7 @@ void CALLBACK AdobeAcrobatVBufBackend_t::renderThread_winEventProcHook(HWINEVENT
 	DEBUG_MSG(L"winEvent for window "<<hwnd);
 
 	int docHandle=(int)hwnd;
-	int ID=childID;
+	int ID=(objectID>0)?objectID:childID;
 	VBufBackend_t* backend=NULL;
 	DEBUG_MSG(L"Searching for backend in collection of "<<backends.size()<<L" running backends");
 	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
