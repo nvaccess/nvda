@@ -149,6 +149,19 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 			text = NULL;
 		}
 
+		if (!text) {
+			// GetTextContent() failed or returned nothing.
+			// This should mean there is no text, but GetValue() sometimes works nevertheless, so try it.
+			if ((res = domNode->GetValue(&text)) != S_OK) {
+				DEBUG_MSG(L"IPDDomNode::GetTextContent returned " << res);
+				text = NULL;
+			}
+			if (text && SysStringLen(text) == 0) {
+				SysFreeString(text);
+				text = NULL;
+			}
+		}
+
 		if (text) {
 			wstring procText;
 			processText(text, procText);
