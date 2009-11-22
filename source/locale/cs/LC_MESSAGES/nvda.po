@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: r2910\n"
 "POT-Creation-Date: 2007-05-22 07:35+Central Europe Standard Time\n"
-"PO-Revision-Date: 2009-11-04 17:33+0100\n"
+"PO-Revision-Date: 2009-11-16 11:09+0100\n"
 "Last-Translator: Radek Zalud <radek.zalud@seznam.cz>\n"
 "Language-Team: CS <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -56,7 +56,7 @@ msgstr "vnořený objekt"
 
 #: NVDAObjects\window\excel.py:48
 msgid "NVDA Excel Cell Editor"
-msgstr "NVDA Excel editor pro buňky"
+msgstr "NVDA Excel editor buněk"
 
 #: NVDAObjects\window\excel.py:50
 msgid "Enter cell contents"
@@ -171,7 +171,7 @@ msgstr "vybráno %s"
 
 #: appModules\_default.py:92
 msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
-msgstr "V editačních polích a dokumentech přečte označený text. Pokud žádný text označen není, o této skutečnosti informuje."
+msgstr "V editačních polích a dokumentech přečte označený text. Pokud žádný text označen není, NVDA to ohlásí."
 
 #: appModules\_default.py:100
 msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
@@ -268,7 +268,7 @@ msgstr "%s zkopírováno do schránky"
 
 #: appModules\_default.py:234
 msgid "Reports the current navigator object or, if pressed three times, Copies name and value of current navigator object to the clipboard"
-msgstr "Ohlásí aktuální prohlížený objekt. Stiskne-li se 3krát rychle za sebou, zkopíruje jméno a hodnotu objektu do schránky."
+msgstr "Ohlásí aktuální prohlížený objekt.Stiskne-li se dvakrát rychle po sobě, objekt bude vyhláskován a trojitý stisk ho zkopíruje do schránky."
 
 #: appModules\_default.py:242
 msgid "No location information for navigator object"
@@ -290,7 +290,7 @@ msgstr "Ohlásí šířku, výšku a pozici prohlíženého objektu"
 #: appModules\_default.py:258
 #: appModules\_default.py:661
 msgid "no focus"
-msgstr "žádný fokus"
+msgstr "bez zaměření"
 
 #: appModules\_default.py:260
 msgid "move to focus"
@@ -298,7 +298,7 @@ msgstr "přesunout na fokus"
 
 #: appModules\_default.py:262
 msgid "Sets the navigator object to the current focus"
-msgstr "Prohlíženým objektem se stane objekt s fokusem"
+msgstr "Prohlíženým objektem se stane zaměřený objekt"
 
 #: appModules\_default.py:274
 msgid "No parents"
@@ -467,11 +467,11 @@ msgstr "režim řeči %s"
 
 #: appModules\_default.py:569
 msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr "Přepíná režimy řeči mezi vypnuto, pípání a mluvení. Při vypnuté řeči je NVDA zticha, při pípání jsou hlášení nahrazena pípnutím, mluvení dává normální hlasovou odezvu"
+msgstr "Přepíná režimy řeči mezi vypnuto, pípání a mluvení. Při vypnuté řeči je NVDA zticha, při pípání jsou hlášení nahrazena pípnutím a mluvení zajišťuje normální hlasovou odezvu"
 
 #: appModules\_default.py:592
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr "Zapíná a vypíná propouštění přes virtuální prohlížeč. Při zapnutém propouštění můžete procházet formulářové prvky na webových stránkách či v dokumentech a přímo je upravovat, zatímco při vypnutém propouštění se můžete po dokumentu či webové stránce pouze pohybovat kurzorovými šipkami, využívat navygační klávesy atd."
+msgstr "Přepíná mezi režimem prohlížení a formulářovým režimem. Při formulářovém režimu můžete přímo obsluhovat formulářové prvky na webových stránkách a dokumentech, zatímco v režimu prohlížení můžete procházet dokument kurzorovými šipkami a klávesovými zkratkami pro různé typy prvků"
 
 #: appModules\_default.py:596
 msgid "Quits NVDA!"
@@ -499,11 +499,11 @@ msgstr "Žádné informace o formátování"
 
 #: appModules\_default.py:651
 msgid "Reports formatting info for the current cursor position within a document"
-msgstr "Během dokumentu ohlašuje informace o formátování na aktuální pozici kurzoru"
+msgstr "během dokumentu ohlašuje informace o formátování na aktuální pozici kurzoru"
 
 #: appModules\_default.py:662
 msgid "reports the object with focus"
-msgstr "ohlásí objekt s fokusem"
+msgstr "ohlásí zaměřený objekt"
 
 #: appModules\_default.py:667
 msgid "no status bar found"
@@ -552,7 +552,7 @@ msgstr "vnitřní text: %s"
 
 #: appModules\_default.py:733
 msgid "text: %s"
-msgstr "text"
+msgstr "text: %s"
 
 #: appModules\_default.py:735
 msgid "reports some information about the current navigator object, mainly useful for developers. When pressed 2 times it copies control id, class and internal text to the windows clipboard"
@@ -608,7 +608,7 @@ msgstr "žádná baterie není k dispozici"
 
 #: appModules\_default.py:797
 msgid "AC power on"
-msgstr "Napájení ze sítě zapnuto"
+msgstr "Napájení zapnuto"
 
 #: appModules\_default.py:799
 msgid "%d hours and %d minutes remaining"
@@ -628,11 +628,11 @@ msgstr "Další stisknutá klávesa nebude interpretována programem NVDA, ale b
 
 #: appModules\_default.py:811
 msgid "Currently running application is %s"
-msgstr "Aktuální běžící aplikace je %s"
+msgstr "Aplikace na popředí je %s"
 
 #: appModules\_default.py:814
 msgid " and currently loaded module is %s"
-msgstr "a aktuálně zavedený modul je %s"
+msgstr "a je zaveden aplikační modul %s"
 
 #: appModules\_default.py:816
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
@@ -640,15 +640,15 @@ msgstr "Přečte a vyhláskuje název souboru právě spuštěné aplikace spolu
 
 #: appModules\_default.py:820
 msgid "Shows the NVDA general settings dialog"
-msgstr "Zobrazí dialog obecné Nastavení NVDA"
+msgstr "Zobrazí dialog s obecnými Nastavení NVDA"
 
 #: appModules\_default.py:824
 msgid "Shows the NVDA synthesizer dialog"
-msgstr "Zobrazí dialog hlasové výstupy NVDA"
+msgstr "Zobrazí dialog s výběrem hlasových výstupů NVDA"
 
 #: appModules\_default.py:828
 msgid "Shows the NVDA voice settings dialog"
-msgstr "Zobrazí dialog nastavení hlasu NVDA"
+msgstr "Zobrazí dialog s nastavením hlasu NVDA"
 
 #: appModules\_default.py:832
 msgid "Shows the NVDA keyboard settings dialog"
@@ -656,19 +656,19 @@ msgstr "Zobrazí dialog nastavení klávesnice NVDA"
 
 #: appModules\_default.py:836
 msgid "Shows the NVDA mouse settings dialog"
-msgstr "Zobrazí dialog nastavení myši NVDA"
+msgstr "Zobrazí dialog s nastavením myši NVDA"
 
 #: appModules\_default.py:840
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr "Zobrazí dialog prezentace objektů NVDA"
+msgstr "Zobrazí dialog s nastavením prezentace objektů"
 
 #: appModules\_default.py:844
 msgid "Shows the NVDA virtual buffers settings dialog"
-msgstr "Zobrazí dialog nastavení virtuálního prohlížeče NVDA"
+msgstr "Zobrazí dialog s nastavením virtuálního prohlížeče"
 
 #: appModules\_default.py:848
 msgid "Shows the NVDA document formatting settings dialog"
-msgstr "Zobrazí dialog nastavení čtení formátování textu NVDA"
+msgstr "Zobrazí dialog s nastavením ohlašování formátování dokumentu"
 
 #: appModules\_default.py:852
 msgid "Saves the current NVDA configuration"
@@ -1350,7 +1350,7 @@ msgstr "tlačítko"
 
 #: controlTypes.py:189
 msgid "menu bar"
-msgstr "pruh nabídek"
+msgstr "panel nabídek"
 
 #: controlTypes.py:190
 msgid "menu item"
@@ -1964,7 +1964,7 @@ msgstr "Podporuje výběr položek"
 
 #: controlTypes.py:348
 msgid "focusable"
-msgstr "má fokus"
+msgstr "zaměřitelné"
 
 #: controlTypes.py:349
 msgid "clickable"
@@ -2148,7 +2148,7 @@ msgstr "Změnit způsob hlášení vlastností dokumentu"
 
 #: gui\__init__.py:262
 msgid "Document &formatting..."
-msgstr "Nastavení čtení &formátování textu"
+msgstr "Ohlašování &formátování dokumentu"
 
 #: gui\__init__.py:265
 msgid "&Default dictionary..."
@@ -2465,7 +2465,7 @@ msgstr "&Pípat před hláskováním velkých písmen"
 
 #: gui\settingsDialogs.py:302
 msgid "Use &spelling functionality if supported"
-msgstr "Použít funkci hláskování je-li podporována"
+msgstr "Hláskování řídí hlasový výstup je-li podporováno"
 
 #: gui\settingsDialogs.py:405
 msgid "Keyboard Settings"
@@ -2585,7 +2585,7 @@ msgstr "Virtuální prohlížeč"
 
 #: gui\settingsDialogs.py:564
 msgid "&Maximum number of characters on one line"
-msgstr "&Maximální počet znaků na řádku"
+msgstr "Maximální počet &znaků na řádku"
 
 #: gui\settingsDialogs.py:569
 msgid "&Number of lines per page"
@@ -2593,7 +2593,7 @@ msgstr "Počet &řádků na stránce"
 
 #: gui\settingsDialogs.py:574
 msgid "Use &screen layout (when supported)"
-msgstr "zachovat stejný &vzhled jako na obrazovce (pokud je podporováno)"
+msgstr "zachovat stejný &vzhled jako na obrazovce"
 
 #: gui\settingsDialogs.py:577
 msgid "Report l&ayout tables"
@@ -2601,19 +2601,19 @@ msgstr "Hlásit vzhledové &tabulky"
 
 #: gui\settingsDialogs.py:581
 msgid "Automatic focus mode for focus changes"
-msgstr "Automaticky zapnout propouštění při změně fokusu"
+msgstr "Automaticky přepínat &formulářový režim při změně zaměření"
 
 #: gui\settingsDialogs.py:584
 msgid "Automatic focus mode for caret movement"
-msgstr "Automaticky zapnout propouštění při pohybu šipkami"
+msgstr "Automaticky přepínat formulářový režim při pohybu &šipkami"
 
 #: gui\settingsDialogs.py:587
 msgid "Audio indication of focus and browse modes"
-msgstr "Zapnutí a vypnutí propouštění signalizovat zvukem"
+msgstr "Zvuková &indikace formulářového režimu a režimu prohlížení"
 
 #: gui\settingsDialogs.py:615
 msgid "Document formatting"
-msgstr "Nastavení čtení formátování textu"
+msgstr "Ohlašování formátování dokumentu"
 
 #: gui\settingsDialogs.py:618
 msgid "Announce formatting changes after the cursor (can cause a lag)"
@@ -3214,11 +3214,11 @@ msgstr ""
 
 #: virtualBufferHandler.py:100
 msgid "browse mode"
-msgstr "propouštění vypnuto"
+msgstr "režim prohlížení"
 
 #: virtualBufferHandler.py:100
 msgid "focus mode"
-msgstr "Propouštění zapnuto"
+msgstr "Formulářový režim"
 
 #: virtualBuffers\__init__.py:190
 msgid "%s landmark"
@@ -3486,19 +3486,19 @@ msgstr "Žádný předchozí nenavštívený odkaz"
 
 #: virtualBuffers\__init__.py:1231
 msgid "moves to the next form field"
-msgstr "Přejde na následující prvek formuláře"
+msgstr "Přejde na následující formulářový prvek"
 
 #: virtualBuffers\__init__.py:1231
 msgid "no next form field"
-msgstr "Žádný další prvek formuláře"
+msgstr "Žádný další formulářový prvek"
 
 #: virtualBuffers\__init__.py:1232
 msgid "moves to the previous form field"
-msgstr "Přejde na předchozí prvek formuláře"
+msgstr "Přejde na předchozí formulářový prvek"
 
 #: virtualBuffers\__init__.py:1232
 msgid "no previous form field"
-msgstr "Žádný předchozí prvek formuláře"
+msgstr "Žádný předchozí formulářový prvek"
 
 #: virtualBuffers\__init__.py:1233
 msgid "moves to the next list"
@@ -3686,7 +3686,7 @@ msgstr "přeskočí následující skupinu odkazů"
 
 #: virtualBuffers\__init__.py:1256
 msgid "no more text before a block of links"
-msgstr "žádný předchozí text po skupině odkazů"
+msgstr "žádný předchozí text před skupinou odkazů"
 
 #: virtualBuffers\__init__.py:1256
 msgid "skips backward past a block of links"

@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3349\n"
+"Project-Id-Version: r3374\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2009-11-03 18:02+0200\n"
+"PO-Revision-Date: 2009-11-16 17:00+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: IAccessibleHandler.py:680
+#: IAccessibleHandler.py:672
 msgid "Secure Desktop"
 msgstr "Suojattu työpöytä"
 
@@ -1437,7 +1437,7 @@ msgstr "Huonosti muotoiltu asetustiedosto"
 
 #: config\__init__.py:35
 msgid "%s: %s, defaulting to %s"
-msgstr "%s: %s, käytetään oletusta %s"
+msgstr "%s: %s, käytetään oletusarvoa %s"
 
 #: config\__init__.py:167
 msgid "Error parsing configuration file: %s"
@@ -1501,7 +1501,7 @@ msgstr "valikon osa"
 
 #: controlTypes.py:191 controlTypes.py:298
 msgid "menu"
-msgstr "alavalikko"
+msgstr "valikko"
 
 #: controlTypes.py:192
 msgid "combo box"
@@ -1733,7 +1733,7 @@ msgstr "syöttöikkuna"
 
 #: controlTypes.py:251
 msgid "label"
-msgstr "nimi"
+msgstr "luokka"
 
 #: controlTypes.py:252
 msgid "note"
@@ -1833,7 +1833,7 @@ msgstr "arvosäädin"
 
 #: controlTypes.py:277
 msgid "drop list"
-msgstr "pudotuslista"
+msgstr "pudotusluettelo"
 
 #: controlTypes.py:278
 msgid "split button"
@@ -1889,7 +1889,7 @@ msgstr "työpöydän kuvake"
 
 #: controlTypes.py:291 controlTypes.py:315
 msgid "alert"
-msgstr "hälytys"
+msgstr "ilmoitus"
 
 #: controlTypes.py:292
 msgid "IFrame"
@@ -2017,7 +2017,7 @@ msgstr "valittu"
 
 #: controlTypes.py:330
 msgid "half checked"
-msgstr "puoliksi valittu"
+msgstr "osittain valittu"
 
 #: controlTypes.py:331
 msgid "read only"
@@ -2045,7 +2045,7 @@ msgstr "linkitetty"
 
 #: controlTypes.py:337
 msgid "subMenu"
-msgstr "valikko"
+msgstr "alavalikko"
 
 #: controlTypes.py:338
 msgid "protected"
@@ -2061,7 +2061,7 @@ msgstr "kuollut"
 
 #: controlTypes.py:341
 msgid "invalid entry"
-msgstr "virheellinen merkintä"
+msgstr "virheellinen syöte"
 
 #: controlTypes.py:342
 msgid "modal"
@@ -2115,11 +2115,11 @@ msgstr "vedetään"
 msgid "drop target"
 msgstr "pudotuksen kohde"
 
-#: core.py:122
+#: core.py:123
 msgid "Loading subsystems, please wait..."
 msgstr "Ladataan alijärjestelmiä, odota..."
 
-#: core.py:193
+#: core.py:194
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
 
@@ -2456,7 +2456,7 @@ msgstr "Asetustiedostovirhe"
 
 #: gui\logViewer.py:17
 msgid "NVDA Log Viewer"
-msgstr "NVDA-lokinäyttäjä"
+msgstr "NVDA-lokin tarkastelu"
 
 #: gui\logViewer.py:28
 msgid "Refresh\tF5"
@@ -2570,7 +2570,7 @@ msgstr "&Syntetisaattori:"
 
 #: gui\settingsDialogs.py:194
 msgid "Output &device:"
-msgstr "&Käytettävä äänikortti:"
+msgstr "&Käytettävä äänilaite:"
 
 #: gui\settingsDialogs.py:214
 msgid "Could not load the %s synthesizer."
@@ -2831,7 +2831,7 @@ msgstr "Ilmoita l&uettelot"
 
 #: gui\settingsDialogs.py:657
 msgid "Report block &quotes"
-msgstr "Ilmoita sisennykset joissa kappaleen&vaihto"
+msgstr "Ilmoita sisennykset, joissa kappaleen&vaihto"
 
 #: gui\settingsDialogs.py:684
 msgid "Edit dictionary entry"
@@ -3192,7 +3192,7 @@ msgstr "%s loppuu"
 
 #: speech.py:761
 msgid "with %s items"
-msgstr "jossa %s kohtaa"
+msgstr "jossa %s kohdetta"
 
 #: speech.py:784
 msgid "in %s"
@@ -3280,7 +3280,7 @@ msgstr "taulukon loppu"
 
 #: speech.py:919
 msgid "table with %s columns and %s rows"
-msgstr "taulukko jossa %s saraketta ja %s riviä"
+msgstr "taulukko, jossa %s saraketta ja %s riviä"
 
 #: synthDrivers\_espeak.py:308
 msgid "none"
@@ -3346,7 +3346,7 @@ msgstr "sana"
 
 #: versionInfo.py:40
 msgid "NonVisual Desktop Access"
-msgstr "NonVisual Desktop Access"
+msgstr "Non-Visual Desktop Access"
 
 #: versionInfo.py:42
 msgid "A free and open-source screen reader for MS Windows"
@@ -3371,11 +3371,10 @@ msgid ""
 "Or see the file Copying.txt that came with this software."
 msgstr ""
 "%(name)s on suojattu GNU General Public License (versio 2) -lisenssillä. "
-"Voit vapaasti jakaa tai muuttaa tätä ohjelmistoa millä tahansa tavalla, "
-"kunhan jaat lisenssiä sen mukana ja pidät lähdekoodin kaikkien "
-"saatavilla. Tämä koskee sekä alkuperäisiä että muokattuja "
-"ohjelmistokopioita, lisäksi kaikkia tämän ohjelmiston koodia käyttäviä "
-"ohjelmistoja.\n"
+"Voit vapaasti jakaa tai muuttaa tätä ohjelmistoa miten tahansa, kunhan "
+"jaat lisenssiä sen mukana ja pidät lähdekoodin kaikkien saatavilla. Tämä"
+" koskee sekä alkuperäisiä että muokattuja ohjelmistokopioita, lisäksi "
+"kaikkia tämän ohjelmiston koodia käyttäviä ohjelmistoja.\n"
 "Saadaksesi lisätietoja, voit tarkastella lisenssiä verkossa osoitteessa:\n"
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html,\n"
 "tai katso tämän ohjelmiston mukana toimitettua Copying.txt-tiedostoa."
@@ -3430,7 +3429,7 @@ msgstr "Päivitetty"
 
 #: virtualBuffers\__init__.py:532
 msgid "Loading document..."
-msgstr "Ladataan dokumenttia..."
+msgstr "Ladataan sivua..."
 
 #: virtualBuffers\__init__.py:676
 msgid "activates the current object in the virtual buffer"
@@ -3454,7 +3453,7 @@ msgstr ""
 
 #: virtualBuffers\__init__.py:779
 msgid "Presents a list of links, headings or landmarks"
-msgstr "Tuo näkyviin luettelon linkeistä, otsikoista ja maamerkeistä"
+msgstr "Näyttää luettelon linkeistä, otsikoista ja maamerkeistä"
 
 #: virtualBuffers\__init__.py:1121
 msgid "Not in a table cell"
@@ -3486,7 +3485,7 @@ msgstr "siirtää seuraavan otsikon kohdalle"
 
 #: virtualBuffers\__init__.py:1209
 msgid "no next heading"
-msgstr "ei otsikoita"
+msgstr "ei enempää otsikoita"
 
 #: virtualBuffers\__init__.py:1210
 msgid "moves to the previous heading"
@@ -3502,7 +3501,7 @@ msgstr "siirtää seuraavan otsikon kohdalle tasolla 1"
 
 #: virtualBuffers\__init__.py:1211
 msgid "no next heading at level 1"
-msgstr "ei otsikoita tasolla 1"
+msgstr "ei enempää otsikoita tasolla 1"
 
 #: virtualBuffers\__init__.py:1212
 msgid "moves to the previous heading at level 1"
@@ -3518,7 +3517,7 @@ msgstr "siirtää seuraavan otsikon kohdalle tasolla 2"
 
 #: virtualBuffers\__init__.py:1213
 msgid "no next heading at level 2"
-msgstr "ei otsikoita tasolla 2"
+msgstr "ei enempää otsikoita tasolla 2"
 
 #: virtualBuffers\__init__.py:1214
 msgid "moves to the previous heading at level 2"
@@ -3534,7 +3533,7 @@ msgstr "siirtää seuraavan otsikon kohdalle tasolla 3"
 
 #: virtualBuffers\__init__.py:1215
 msgid "no next heading at level 3"
-msgstr "ei otsikoita tasolla 3"
+msgstr "ei enempää otsikoita tasolla 3"
 
 #: virtualBuffers\__init__.py:1216
 msgid "moves to the previous heading at level 3"
@@ -3550,7 +3549,7 @@ msgstr "siirtää seuraavan otsikon kohdalle tasolla 4"
 
 #: virtualBuffers\__init__.py:1217
 msgid "no next heading at level 4"
-msgstr "ei otsikoita tasolla 4"
+msgstr "ei enempää otsikoita tasolla 4"
 
 #: virtualBuffers\__init__.py:1218
 msgid "moves to the previous heading at level 4"
@@ -3566,7 +3565,7 @@ msgstr "siirtää seuraavan otsikon kohdalle tasolla 5"
 
 #: virtualBuffers\__init__.py:1219
 msgid "no next heading at level 5"
-msgstr "ei otsikoita tasolla 5"
+msgstr "ei enempää otsikoita tasolla 5"
 
 #: virtualBuffers\__init__.py:1220
 msgid "moves to the previous heading at level 5"
@@ -3582,7 +3581,7 @@ msgstr "siirtää seuraavan otsikon kohdalle tasolla 6"
 
 #: virtualBuffers\__init__.py:1221
 msgid "no next heading at level 6"
-msgstr "ei otsikoita tasolla 6"
+msgstr "ei enempää otsikoita tasolla 6"
 
 #: virtualBuffers\__init__.py:1222
 msgid "moves to the previous heading at level 6"
@@ -3598,7 +3597,7 @@ msgstr "siirtää seuraavan taulukon kohdalle"
 
 #: virtualBuffers\__init__.py:1223
 msgid "no next table"
-msgstr "ei taulukoita"
+msgstr "ei enempää taulukoita"
 
 #: virtualBuffers\__init__.py:1224
 msgid "moves to the previous table"
@@ -3614,7 +3613,7 @@ msgstr "siirtää seuraavan linkin kohdalle"
 
 #: virtualBuffers\__init__.py:1225
 msgid "no next link"
-msgstr "ei linkkejä"
+msgstr "ei enempää linkkejä"
 
 #: virtualBuffers\__init__.py:1226
 msgid "moves to the previous link"
@@ -3630,7 +3629,7 @@ msgstr "siirtää seuraavan avatun linkin kohdalle"
 
 #: virtualBuffers\__init__.py:1227
 msgid "no next visited link"
-msgstr "ei avattuja linkkejä"
+msgstr "ei enempää avattuja linkkejä"
 
 #: virtualBuffers\__init__.py:1228
 msgid "moves to the previous visited link"
@@ -3646,7 +3645,7 @@ msgstr "siirtää seuraavan avaamattoman linkin kohdalle"
 
 #: virtualBuffers\__init__.py:1229
 msgid "no next unvisited link"
-msgstr "ei avaamattomia linkkejä"
+msgstr "ei enempää avaamattomia linkkejä"
 
 #: virtualBuffers\__init__.py:1230
 msgid "moves to the previous unvisited link"
@@ -3662,7 +3661,7 @@ msgstr "siirtää seuraavan lomakekentän kohdalle"
 
 #: virtualBuffers\__init__.py:1231
 msgid "no next form field"
-msgstr "ei lomakekenttiä"
+msgstr "ei enempää lomakekenttiä"
 
 #: virtualBuffers\__init__.py:1232
 msgid "moves to the previous form field"
@@ -3678,7 +3677,7 @@ msgstr "siirtää seuraavaan luetteloon"
 
 #: virtualBuffers\__init__.py:1233
 msgid "no next list"
-msgstr "ei luetteloita"
+msgstr "ei enempää luetteloita"
 
 #: virtualBuffers\__init__.py:1234
 msgid "moves to the previous list"
@@ -3694,7 +3693,7 @@ msgstr "siirtää seuraavan luettelon osan kohdalle"
 
 #: virtualBuffers\__init__.py:1235
 msgid "no next list item"
-msgstr "ei luettelon osia"
+msgstr "ei enempää luettelon osia"
 
 #: virtualBuffers\__init__.py:1236
 msgid "moves to the previous list item"
@@ -3710,7 +3709,7 @@ msgstr "siirtää seuraavan painikkeen kohdalle"
 
 #: virtualBuffers\__init__.py:1237
 msgid "no next button"
-msgstr "ei painikkeita"
+msgstr "ei enempää painikkeita"
 
 #: virtualBuffers\__init__.py:1238
 msgid "moves to the previous button"
@@ -3726,7 +3725,7 @@ msgstr "siirtää seuraavan muokkauskentän kohdalle"
 
 #: virtualBuffers\__init__.py:1239
 msgid "no next edit field"
-msgstr "ei muokkauskenttiä"
+msgstr "ei enempää muokkauskenttiä"
 
 #: virtualBuffers\__init__.py:1240
 msgid "moves to the previous edit field"
@@ -3742,7 +3741,7 @@ msgstr "siirtää seuraavan kehyksen kohdalle"
 
 #: virtualBuffers\__init__.py:1241
 msgid "no next frame"
-msgstr "ei kehyksiä"
+msgstr "ei enempää kehyksiä"
 
 #: virtualBuffers\__init__.py:1242
 msgid "moves to the previous frame"
@@ -3758,7 +3757,7 @@ msgstr "siirtää seuraavan erottimen kohdalle"
 
 #: virtualBuffers\__init__.py:1243
 msgid "no next separator"
-msgstr "ei erottimia"
+msgstr "ei enempää erottimia"
 
 #: virtualBuffers\__init__.py:1244
 msgid "moves to the previous separator"
@@ -3774,7 +3773,7 @@ msgstr "siirtää seuraavan valintapainikkeen kohdalle"
 
 #: virtualBuffers\__init__.py:1245
 msgid "no next radio button"
-msgstr "ei valintapainikkeita"
+msgstr "ei enempää valintapainikkeita"
 
 #: virtualBuffers\__init__.py:1246
 msgid "moves to the previous radio button"
@@ -3790,7 +3789,7 @@ msgstr "siirtää seuraavan yhdistelmäruudun kohdalle"
 
 #: virtualBuffers\__init__.py:1247
 msgid "no next combo box"
-msgstr "ei yhdistelmäruutuja"
+msgstr "ei enempää yhdistelmäruutuja"
 
 #: virtualBuffers\__init__.py:1248
 msgid "moves to the previous combo box"
@@ -3806,7 +3805,7 @@ msgstr "siirtää seuraavan valintaruudun kohdalle"
 
 #: virtualBuffers\__init__.py:1249
 msgid "no next check box"
-msgstr "ei valintaruutuja"
+msgstr "ei enempää valintaruutuja"
 
 #: virtualBuffers\__init__.py:1250
 msgid "moves to the previous check box"
@@ -3822,7 +3821,7 @@ msgstr "siirtää seuraavan kuvan kohdalle"
 
 #: virtualBuffers\__init__.py:1251
 msgid "no next graphic"
-msgstr "ei kuvia"
+msgstr "ei enempää kuvia"
 
 #: virtualBuffers\__init__.py:1252
 msgid "moves to the previous graphic"
@@ -3838,7 +3837,7 @@ msgstr "siirtää seuraavan kappaleenvaihdollisen sisennyksen kohdalle"
 
 #: virtualBuffers\__init__.py:1253
 msgid "no next block quote"
-msgstr "ei kappaleenvaihdollisia sisennyksiä"
+msgstr "ei enempää kappaleenvaihdollisia sisennyksiä"
 
 #: virtualBuffers\__init__.py:1254
 msgid "moves to the previous block quote"
@@ -3858,7 +3857,7 @@ msgstr "Siirtää eteenpäin linkkilohkon  jälkeiseen tekstiin"
 
 #: virtualBuffers\__init__.py:1256
 msgid "no more text before a block of links"
-msgstr "Ei ennen linkkilohkoa olevaa tekstiä"
+msgstr "Ei enempää ennen linkkilohkoa olevaa tekstiä"
 
 #: virtualBuffers\__init__.py:1256
 msgid "skips backward past a block of links"
@@ -3870,7 +3869,7 @@ msgstr "siirtää seuraavan maamerkin kohdalle"
 
 #: virtualBuffers\__init__.py:1257
 msgid "no next landmark"
-msgstr "ei maamerkkejä"
+msgstr "ei enempää maamerkkejä"
 
 #: virtualBuffers\__init__.py:1258
 msgid "moves to the previous landmark"
@@ -3886,7 +3885,7 @@ msgstr "siirtää seuraavan upotetun objektin kohdalle"
 
 #: virtualBuffers\__init__.py:1259
 msgid "no next embedded object"
-msgstr "ei upotettuja objekteja"
+msgstr "ei enempää upotettuja objekteja"
 
 #: virtualBuffers\__init__.py:1260
 msgid "moves to the previous embedded object"
