@@ -36,9 +36,9 @@ def nvdaController_getNVDAVersionString(version):
 
 @CFUNCTYPE(None,c_long,c_wchar_p)
 def nvdaController_speakText(bindingHandle,text):
+	import queueHandler
 	import speech
-	speech.speakText(text)
-	globalVars.lastLiveText=text
+	queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,text)
 
 def handleTypedCharacter(window,wParam,lParam):
 	focus=api.getFocusObject()
