@@ -39,12 +39,13 @@ acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
 ia2RPCStubs=env.SConscript('ia2_sconscript')
 
 vbufRPCStubs=env.SConscript('interfaces/vbuf/sconscript')
+nvdaControllerRPCStubs=env.SConscript('interfaces/nvdaController/sconscript')
 
 if TARGET_ARCH=='x86':
-	localLib=env.SConscript('local/sconscript',exports=['vbufRPCStubs'])
+	localLib=env.SConscript('local/sconscript',exports=['vbufRPCStubs','nvdaControllerRPCStubs'])
 	neededTargets.append(localLib)
 
-remoteLib=env.SConscript('remote/sconscript',exports=['ia2RPCStubs','vbufRPCStubs'])
+remoteLib=env.SConscript('remote/sconscript',exports=['ia2RPCStubs','vbufRPCStubs','nvdaControllerRPCStubs'])
 neededTargets.append(remoteLib)
 
 if TARGET_ARCH=='x86_64':

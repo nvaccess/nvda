@@ -11,6 +11,7 @@ import api
 import globalVars
 from logHandler import log
 import time
+import globalVars
 
 EVENT_TYPEDCHARACTER=0X1000
 EVENT_INPUTLANGCHANGE=0X1001
@@ -22,6 +23,22 @@ generateBeep=None
 lastKeyboardLayoutChangeEventTime=None
 
 winEventHookID=None
+
+#utility function to point an exported function pointer in a dll  to a ctypes wrapped python function
+def _setDllFuncPointer(dll,name,cfunc):
+	cast(getattr(dll,name),POINTER(c_void_p)).contents.value=cast(cfunc,c_void_p).value
+
+#Implementation of nvdaController methods
+@CFUNCTYPE(None,POINTER(c_wchar_p))
+def nvdaController_getNVDAVersionString(version):
+	import versionInfo
+	version.contents.value=versionInfo.version
+
+@CFUNCTYPE(None,c_long,c_wchar_p)
+def nvdaController_speakText(bindingHandle,text):
+	import speech
+	speech.speakText(text)
+	globalVars.lastLiveText=text
 
 def handleTypedCharacter(window,wParam,lParam):
 	focus=api.getFocusObject()
@@ -83,6 +100,8 @@ class RemoteLoader64(object):
 def initialize():
 	global _remoteLib, _remoteLoader64, localLib, winEventHookID,generateBeep
 	localLib=cdll.LoadLibrary('lib/nvdaHelperLocal.dll')
+	_setDllFuncPointer(localLib,"_nvdaController_speakText",nvdaController_speakText)
+	localLib.startServer()
 	generateBeep=localLib.generateBeep
 	generateBeep.argtypes=[c_char_p,c_float,c_uint,c_ubyte,c_ubyte]
 	generateBeep.restype=c_uint
