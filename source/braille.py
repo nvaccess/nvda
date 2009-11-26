@@ -63,6 +63,7 @@ TABLES = (
 	("sk-sk-g1.utb", _("Slovak")),
 	("UEBC-g1.utb", _("Unified English Braille Code grade 1")),
 	("UEBC-g2.ctb", _("Unified English Braille Code grade 2")),
+	("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)")),
 )
 
 roleLabels = {
