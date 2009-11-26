@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <ia2/ia2.h>
 #include <interfaces/nvdaController/nvdaController.h>
+#include <common/ia2utils.h>
 #include "nvdaHelperRemote.h"
 
 using namespace std;
@@ -114,14 +115,25 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 		pacc2->Release();
 		return;
 	}
-	wstring attribsString=attribs;
+	map<wstring,wstring> attribsMap;
+	IA2AttribsToMap(attribs,attribsMap);
 	SysFreeString(attribs);
-	if(attribsString.find(L"live:polite",0)==wstring::npos&&attribsString.find(L"live:assertive",0)==wstring::npos) {
+	map<wstring,wstring>::iterator i;
+	i=attribsMap.find(L"container-live");
+	bool live=(i!=attribsMap.end()&&(i->second.compare(L"polite")==0||i->second.compare(L"assertive")==0||i->second.compare(L"rude")==0));
+	if(!live) {
 		pacc2->Release();
 		return;
 	}
-	bool allowAdditions=attribsString.find(L"relevant:additions",0)!=wstring::npos;
-	bool allowText=attribsString.find(L"relevant:text",0)!=wstring::npos;
+	i=attribsMap.find(L"container-relevant");
+	bool allowAdditions=false;
+	bool allowText=false;
+	if(i==attribsMap.end()||i->second.compare(L"all")==0) {
+		allowText=allowAdditions=true;
+	} else {
+		allowText=(i->second.find(L"text",0)!=wstring::npos);
+		allowAdditions=(i->second.find(L"additions",0)!=wstring::npos);
+	} 
 	wstring textBuf;
 	if(!allowText&&allowAdditions&&eventID==EVENT_OBJECT_SHOW) {
 		getTextFromIAccessible(textBuf,pacc2,false,true);
