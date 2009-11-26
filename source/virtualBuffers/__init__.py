@@ -994,7 +994,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if not self.VBufHandle:
 			return False
 
-		if self.programmaticScrollMayFireEvent and time.time() - self._lastProgrammaticScrollTime < 0.4:
+		if self.programmaticScrollMayFireEvent and self._lastProgrammaticScrollTime and time.time() - self._lastProgrammaticScrollTime < 0.4:
 			# This event was probably caused by this buffer's call to scrollIntoView().
 			# Therefore, ignore it. Otherwise, the cursor may bounce back to the scroll point.
 			# However, pretend we handled it, as we don't want it to be passed on to the object either.

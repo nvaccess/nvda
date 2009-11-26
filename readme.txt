@@ -63,6 +63,7 @@ To build a binary version of NVDA:
 To build an installer:
 	* Nulsoft Install System, version 2.42 or later: http://nsis.sourceforge.net/
 	* NSIS UAC plug-in, version 0.0.11c or later: http://nsis.sourceforge.net/UAC_plug-in
+		* Copy UAC.dll into the installer directory.
 
 == Preparing the Source Tree ==
 Before you can run the NVDA source code, you must run generate.py located in the source directory.

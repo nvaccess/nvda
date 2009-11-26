@@ -460,6 +460,8 @@ void CALLBACK AdobeAcrobatVBufBackend_t::renderThread_winEventProcHook(HWINEVENT
 		DEBUG_MSG(L"No nodes to use, returning");
 		return;
 	}
+
+	backend->invalidateSubtree(node);
 }
 
 void AdobeAcrobatVBufBackend_t::renderThread_initialize() {
