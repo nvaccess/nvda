@@ -471,7 +471,6 @@ winUser.EVENT_SYSTEM_SWITCHEND:"switchEnd",
 winUser.EVENT_OBJECT_FOCUS:"gainFocus",
 winUser.EVENT_OBJECT_SHOW:"show",
 winUser.EVENT_OBJECT_DESTROY:"destroy",
-winUser.EVENT_OBJECT_HIDE:"hide",
 winUser.EVENT_OBJECT_DESCRIPTIONCHANGE:"descriptionChange",
 winUser.EVENT_OBJECT_LOCATIONCHANGE:"locationChange",
 winUser.EVENT_OBJECT_NAMECHANGE:"nameChange",
@@ -727,6 +726,14 @@ def processForegroundWinEvent(window,objectID,childID):
 	eventHandler.queueEvent(*NVDAEvent)
 	return True
 
+def processShowWinEvent(window,objectID,childID):
+	className=winUser.getClassName(window)
+	#For now we only support 'show' event for tooltips as otherwize we get flooded
+	if className=="tooltips_class32" and objectID==winUser.OBJID_CLIENT:
+		NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_SHOW,window,objectID,childID)
+		if NVDAEvent:
+			eventHandler.queueEvent(*NVDAEvent)
+
 def processDestroyWinEvent(window,objectID,childID):
 	"""Process a destroy win event.
 	This removes the object associated with the event parameters from L{liveNVDAObjectTable} if such an object exists.
@@ -806,6 +813,8 @@ def pumpAll():
 				processDesktopSwitchWinEvent(*winEvent[1:])
 			elif winEvent[0]==winUser.EVENT_OBJECT_DESTROY:
 				processDestroyWinEvent(*winEvent[1:])
+			elif winEvent[0]==winUser.EVENT_OBJECT_SHOW:
+				processShowWinEvent(*winEvent[1:])
 			elif winEvent[0] in MENU_EVENTIDS+(winUser.EVENT_SYSTEM_SWITCHEND,):
 				# If there is no valid focus event, we may need to use this to fake the focus later.
 				fakeFocusEvent=winEvent
