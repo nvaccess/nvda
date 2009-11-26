@@ -32,30 +32,10 @@ def update(obj):
 	v=obj.virtualBuffer
 	if v:
 		return v
-	windowClassName=obj.windowClassName
-	role=obj.role
-	states=obj.states
-	#Gecko with IAccessible2 support
-	if isinstance(obj,NVDAObjects.IAccessible.IAccessible) and isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2) and windowClassName.startswith('Mozilla') and role==controlTypes.ROLE_DOCUMENT:
-		if controlTypes.STATE_READONLY in states and controlTypes.STATE_BUSY not in states and windowClassName=="MozillaContentWindowClass":
-			classString="virtualBuffers.gecko_ia2.Gecko_ia2"
-		else:
-			return
-	#Adobe documents with IAccessible
- 	elif isinstance(obj,NVDAObjects.IAccessible.IAccessible) and windowClassName=="AVL_AVView" and role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE):
-		classString="virtualBuffers.adobeAcrobat.AdobeAcrobat"
-	#MSHTML
- 	elif isinstance(obj,NVDAObjects.IAccessible.MSHTML.MSHTML) and obj.HTMLNode and windowClassName=="Internet Explorer_Server" and obj.role==controlTypes.ROLE_DOCUMENT and not obj.isContentEditable:
-		classString="virtualBuffers.MSHTML.MSHTML"
-	else:
-		return
-	modString,classString=os.path.splitext(classString)
-	classString=classString[1:]
-	log.debug("loading module %s, class %s"%(modString,classString))
-	mod=__import__(modString,globals(),locals(),[""])
-	log.debug("mod contains %s"%dir(mod))
-	newClass=getattr(mod,classString)
-	log.debug("virtualBuffers.IAccessible.update: adding %s at %s (%s)"%(newClass,obj.windowHandle,obj.windowClassName))
+	try:
+		newClass=obj.virtualBufferClass
+	except NotImplementedError:
+		return None
 	virtualBufferObject=newClass(obj)
 	if not virtualBufferObject.isAlive():
 		return None
@@ -66,6 +46,7 @@ def update(obj):
 			log.error("error loading buffer",exc_info=True)
 			return None
 	runningTable.add(virtualBufferObject)
+	log.debug("Adding new virtualBuffer to runningTable: %s"%virtualBufferObject)
 	return virtualBufferObject
 
 def cleanup():

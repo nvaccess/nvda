@@ -38,6 +38,7 @@ TABLES = (
 	("en-us-g1.ctb", _("English (U.S.) grade 1")),
 	("en-us-g2.ctb", _("English (U.S.) grade 2")),
 	("Es-Es-g1.utb", _("Spanish grade 1")),
+	("fi-fi-8dot.ctb", _("Finnish 8 dot computer braille")),
 	("fr-ca-g1.utb", _("French (Canada) grade 1")),
 	("Fr-Ca-g2.ctb", _("French (Canada) grade 2")),
 	("fr-bfu-comp6.utb", _("French (unified) 6 dot computer braille")),
@@ -62,6 +63,7 @@ TABLES = (
 	("sk-sk-g1.utb", _("Slovak")),
 	("UEBC-g1.utb", _("Unified English Braille Code grade 1")),
 	("UEBC-g2.ctb", _("Unified English Braille Code grade 2")),
+	("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)")),
 )
 
 roleLabels = {
