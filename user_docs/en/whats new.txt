@@ -6,11 +6,11 @@
 	* NVDA no longer fails to start on a system with no audio output devices. Obviously, a braille display or the Display synthesiser will need to be used for output in this case. (#425)
 	* A report landmarks checkbox has been added to the Document Formatting settings dialog which allows you to configure whether NVDA should announce landmarks in web documents. For compatibility with the previous release, the option is on by default.
 
-
 === Changes ===
 
 === Bug Fixes ===
 	* NVDA no longer fails to start if UI Automation support appears to be available but fails to initialise for some reason. (#483)
+	* The entire contents of a table row is no longer sometimes reported when moving focus inside a cell  in Mozilla applications. (#482)
 
 == 2009.1 ==
 Major highlights of this release include support for 64 bit editions of Windows; greatly improved support for Microsoft Internet Explorer and Adobe Reader documents; support for Windows 7; reading of the Windows logon, control+alt+delete and User Account Control (UAC) screens; and the ability to interact with Adobe Flash and Sun Java content on web pages. There have also been several significant stability fixes and improvements to the general user experience.

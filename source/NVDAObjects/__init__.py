@@ -490,6 +490,15 @@ Tries to force this object to take the focus.
 			return False
 		if not name and not description and role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and not config.conf["documentFormatting"]["reportTables"]:
 			return False
+		if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN):
+			try:
+				table=self.table
+			except NotImplementedError:
+				table=None
+			if table:
+				# This is part of a real table, so the cells will report row/column information.
+				# Therefore, we don't want to present this in the ancestry.
+				return False
 		return True
 
 	def _get_statusBar(self):
