@@ -135,7 +135,7 @@ class SynthDriver(SynthDriver):
 				hasRate=False
 		if hasRate:
 			if not self.isSupported('rate'):
-				self.supportedSettings.insert(0,SynthDriver.RateSetting())
+				self.supportedSettings.insert(1,SynthDriver.RateSetting())
 		else:
 			if self.isSupported("rate"): self.removeSetting("rate")
 		#Find out pitch limits
@@ -158,7 +158,7 @@ class SynthDriver(SynthDriver):
 				hasPitch=False
 		if hasPitch:
 			if not self.isSupported('pitch'):
-				self.supportedSettings.insert(1,SynthDriver.PitchSetting())
+				self.supportedSettings.insert(2,SynthDriver.PitchSetting())
 		else:
 			if self.isSupported('pitch'): self.removeSetting('pitch')
 		#Find volume limits
@@ -181,7 +181,7 @@ class SynthDriver(SynthDriver):
 				hasVolume=False
 		if hasVolume:
 			if not self.isSupported('volume'):
-				self.supportedSettings.insert(1,SynthDriver.VolumeSetting())
+				self.supportedSettings.insert(3,SynthDriver.VolumeSetting())
 		else:
 			if self.isSupported('volume'): self.removeSetting('volume')
 

@@ -315,7 +315,7 @@ class VoiceSettingsDialog(SettingsDialog):
 
 	def postInit(self):
 		try:
-			setting=getSynth().supportedSettings[-1]
+			setting=getSynth().supportedSettings[0]
 			control=getattr(self,"%sSlider"%setting.name) if isinstance(setting,NumericSynthSetting) else getattr(self,"%sList"%setting.name)
 			control.SetFocus()
 		except IndexError:
@@ -332,7 +332,7 @@ class VoiceSettingsDialog(SettingsDialog):
 			if not synth.isSupported(name):
 				self.settingsSizer.Hide(sizer)
 		#Create new controls, update already existing
-		for setting in reversed(synth.supportedSettings):
+		for setting in synth.supportedSettings:
 			if setting.name == changedSetting:
 				# Changing a setting shouldn't cause that setting's own values to change.
 				continue

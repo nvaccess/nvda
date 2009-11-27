@@ -21,7 +21,7 @@ class constants:
 COM_CLASS = "SAPI.SPVoice"
 
 class SynthDriver(SynthDriver):
-	supportedSettings=(SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.VolumeSetting(),SynthDriver.VoiceSetting())
+	supportedSettings=(SynthDriver.VoiceSetting(),SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.VolumeSetting())
 
 	name="sapi5"
 	description="Microsoft Speech API version 5 (sapi.SPVoice)"

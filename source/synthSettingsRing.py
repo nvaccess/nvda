@@ -65,7 +65,10 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 	"""
 
 	def __init__(self,synth):
-		self._current=0
+		try:
+			self._current = synth.supportedSettings.index(synth.initialSettingsRingSetting)
+		except IndexError:
+			self._current=None
 		self.updateSupportedSettings(synth)
 
 	def _get_currentSettingName(self):
@@ -125,7 +128,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			self.settings = list
 		if prevName is not None and prevName!=self.settings[self._current].setting.name:
 			#Previous chosen setting doesn't exists. Set position to default
-			self._current = 0
+			self._current = synth.supportedSettings.index(synth.initialSettingsRingSetting)
 			if _isScriptRunning:
 				#User changed some setting from ring and that setting no more exists. We have just reverted to first setting, so report this change to user
 				ui.message("%s %s" % (self.currentSettingName,self.currentSettingValue))
