@@ -188,7 +188,12 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	IAccessibleHandler.initialize()
 	import UIAHandler
 	log.debug("Initializing UIA support")
-	UIAHandler.initialize()
+	try:
+		UIAHandler.initialize()
+	except NotImplementedError:
+		log.warning("UIA not available")
+	except:
+		log.error("Error initializing UIA support", exc_info=True)
 	import keyboardHandler
 	log.debug("Initializing keyboard handler")
 	keyboardHandler.initialize()
