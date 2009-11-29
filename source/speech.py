@@ -638,7 +638,9 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		speakRole=False
 		role=controlTypes.ROLE_UNKNOWN
 	value=propertyValues.get('value') if role not in silentValuesForRoles else None
-	if speakRole and (reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or not (name or value) or role not in silentRolesOnFocus):
+	rowNumber=propertyValues.get('rowNumber')
+	columnNumber=propertyValues.get('columnNumber')
+	if speakRole and (reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or not (name or value or rowNumber or columnNumber) or role not in silentRolesOnFocus):
 		textList.append(controlTypes.speechRoleLabels[role])
 	if value:
 		textList.append(value)
@@ -672,8 +674,6 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 			oldTreeLevel=level
 		elif level:
 			textList.append(_('level %s')%propertyValues['positionInfo_level'])
-	rowNumber = propertyValues.get("rowNumber")
-	columnNumber = propertyValues.get("columnNumber")
 	if rowNumber or columnNumber:
 		tableID = propertyValues.get("_tableID")
 		# Always treat the table as different if there is no tableID.
