@@ -1,11 +1,26 @@
 = Mitä uutta NVDA:ssa =
 
+== 2010.1 ==
+
+=== Uudet ominaisuudet ===
+* NVDA käynnistyy nyt järjestelmissä, joissa ei ole äänilaitteita. Tietojen tulostamiseen on tällöin käytettävä pistenäyttöä tai Display-syntetisaattoria.
+* Asiakirjojen muotoilu -valintaikkunaan on lisätty "Ilmoita maamerkit" -valintaruutu, jolla voidaan määrittää, ilmoittaako NVDA web-sivuilla olevia maamerkkejä. Asetus on oletusarvoisesti käytössä edellisen NVDA-version yhteensopivuuden säilyttämiseksi.
+
+=== Muutokset ===
+
+=== Vikojen korjaukset ===
+* NVDA käynnistyy nyt sellaisessa tilanteessa, jossa UI Automation -tuki on käytettävissä, mutta sen alustus ei jostakin syystä onnistu.
+* Taulukon rivin koko sisältöä ei enää toisinaan lueta Mozilla-sovelluksissa siirrettäessä kohdistusta solussa.
+* Paljon alakohtia sisältävien puunäkymien laajentaminen ei enää aiheuta pitkää viivettä.
+* Vialliset SAPI 5 -puheäänet yritetään nyt havaita käytettävissä olevien SAPI 5 -puheäänien listaa haettaessa, jotta niitä ei näytetä Ääniasetukset-valintaikkunassa eikä sisällytetä syntetisaattorin asetusrenkaaseen. Aiemmin vain yksi viallinen puheääni saattoi joissakin tapauksissa aiheuttaa sen, ettei NVDA:n SAPI 5 -ajuri toiminut.
+* Objektien lukuasetukset -valintaikkunan "Lue objektien pikanäppäimet" -asetus vaikuttaa nyt näennäispuskureihin.
+
 == 2009.1 ==
 Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioille, huomattavasti paranneltu tuki Internet Explorerille ja Adobe Readerille, tuki Windows 7:lle, Windowsin kirjautumis- ja Control+Alt+Delete-ruutujen sekä Käyttäjätilien valvonnan (UAC) kehotteiden lukeminen sekä mahdollisuus olla vuorovaikutuksessa web-sivujen Flash- ja Java-sisällön kanssa. Lisäksi on useita merkittäviä korjauksia NVDA:n vakauteen ja parannuksia yleiseen käyttäjäkokemukseen.
 
 === Uudet ominaisuudet ===
 * Virallinen tuki Windowsin 64-bittisille versioille
-* Lisätty ajuri venäjänkieliselle Newfon-syntetisaattorille. (Edellyttää Newfonin erikoisversiota)
+* Lisätty ajuri venäjänkieliselle Newfon-puhesyntetisaattorille. (Edellyttää Newfonin erikoisversiota)
 * Näennäispuskureiden kohdistus- ja selaustila voidaan nyt ilmoittaa puheen sijasta äänimerkeillä. Tämä on oletuksena käytössä. Asetusta voidaan muuttaa näennäispuskureiden asetusvalintaikkunasta.
 * NVDA ei enää keskeytä puhetta näppäimistön äänenvoimakkuusnäppäimiä painettaessa, mikä mahdollistaa äänenvoimakkuuden muuttamisen ja puheen kuuntelemisen välittömästi uudella voimakkuudella.
 * Täysin uudelleenkirjoitettu tuki Internet Explorerille ja Adobe Readerille, joka on yhdenmukaistettu  Mozilla Geckon käyttämän ydintuen kanssa, joten sellaiset ominaisuudet kuin nopea sivun lataaminen, kattava pikanavigointi, elementtiluettelo, tekstin valitseminen, automaattinen kohdistustila ja pistenäyttötuki ovat nyt käytettävissä.
@@ -26,7 +41,7 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioil
 * Linkkilista-valintaikkuna, joka on käytettävissä web-sivuja selatessa, on korvattu Elementtiluettelo-valintaikkunalla, joka näyttää luettelon linkeistä, otsikoista ja maamerkeistä. Otsikot ja maamerkit näytetään hierarkisesti.
 * Uudessa Elementtiluettelo-valintaikkunassa on "Suodata"-kenttä, jonka avulla listaa voidaan suodattaa näyttämään vain ne kohteet, joissa annettu teksti esiintyy.
 * Mukana kuljetettava NVDA:n versio etsii asetustiedostoaan NVDA-kansiossa olevasta 'userConfig'-kansiosta. Kuten asennettavassakin versiossa, tämä pitää käyttäjän asetukset erillään NVDA:sta itsestään.
-* Mukautetut sovellusmoduulit sekä pistenäyttö- ja syntetisaattoriajurit tallennetaan nyt käyttäjän asetushakemistoon.
+* Mukautetut sovellusmoduulit sekä pistenäyttö- ja puhesyntetisaattoriajurit tallennetaan nyt käyttäjän asetushakemistoon.
 * Näennäispuskurit ladataan nyt taustalla, mikä mahdollistaa sen, että järjestelmää voidaan käyttää jossain määrin latausprosessin aikana. Käyttäjälle ilmoitetaan, jos lataaminen kestää sekuntia kauemmin.
 * Jos NVDA havaitsee lakanneensa toimimasta jostakin syystä, kaikki näppäilyt välitetään eteenpäin, jotta käyttäjällä on parempi mahdollisuus järjestelmän elvyttämiseen.
 * Tuki ARIA:n vedä ja pudota -toiminnolle Mozillan Gecko-moottoria käyttävissä sovelluksissa
@@ -95,7 +110,7 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioil
 * Lisätty komento NVDA+C, joka lukee leikepöydällä olevan tekstin.
 * Jos NVDA vaihtaa näennäispuskureissa automaattisesti kohdistustilaan, voidaan takaisin selaustilaan vaihtaa painamalla Esc. Näppäimiä NVDA+välilyönti voidaan myös edelleen käyttää.
 * Kun kohdistus muuttuu tai kohdistinta liikutetaan näennäispuskureissa, NVDA voi automaattisesti vaihtaa kohdistus- tai selaustilaan riippuen kohdistimen alla olevasta säätimestä. Asetus määritetään Näennäispuskureiden asetukset -valintaikkunasta.
-* Uudelleenkirjoitettu SAPI 4 -syntetisaattoriajuri, joka korvaa sapi4serotek- ja sapi4activeVoice-ajurit, sekä korjaa niiden kanssa ilmenneitä ongelmia.
+* Uudelleenkirjoitettu SAPI 4 -puhesyntetisaattoriajuri, joka korvaa sapi4serotek- ja sapi4activeVoice-ajurit, sekä korjaa niiden kanssa ilmenneitä ongelmia.
 * NVDA:ssa on nyt manifesti, mikä tarkoittaa, ettei sitä enää Windows Vistassa ajeta yhteensopivuustilassa.
 * Asetustiedosto ja puhesanastot tallennetaan nyt käyttäjän Application Data -hakemistoon jos NVDA on asennettu asennusohjelmalla. Tämä on välttämätöntä Windows Vistassa ja mahdollistaa myös useiden käyttäjien yksilölliset asetukset.
 * Lisätty tuki IAccessible2-säädinten sijaintitiedoille.
@@ -106,7 +121,7 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioil
 === Muutokset ===
 * Jos käytettäväksi äänilaitteeksi on asetettu Windowsin oletuslaite (Microsoft Sound Mapper), NVDA vaihtaa uuden oletuslaitteen eSpeakille ja äänille, kun oletuslaite muuttuu. NVDA esim. siirtyy käyttämään USB-äänilaitetta, jos siitä tulee automaattisesti oletuslaite sen ollessa kytkettynä.
 * Paranneltu eSpeakin suorituskykyä joidenkin Windows Vistan ääniajureiden kanssa.
-* Linkkien, otsikoiden, taulukoiden, luetteloiden ja kappaleenvaihdollisten sisennysten ilmoittaminen määritetään nyt Asiakirjojen muotoiluasetukset -valintaikkunasta. Asetukset määritettiin ennen Näennäispuskurien asetukset -valintaikkunaa.  Näitä asetuksia käytetään nyt kaikissa asiakirjoissa.
+* Linkkien, otsikoiden, taulukoiden, luetteloiden ja kappaleenvaihdollisten sisennysten ilmoittaminen määritetään nyt Asiakirjojen muotoiluasetukset -valintaikkunasta. Näitä asetuksia käytetään nyt kaikissa asiakirjoissa.
 * Nopeus on nyt oletusasetuksena puhesyntetisaattorin asetusrenkaassa.
 * Sovellusmoduulien lataamista ja muistista poistoa paranneltu.
 * Nykyisen ikkunan nimen puhutuskomento (NVDA+t) lukee nyt vain nimen koko objektin sijasta. Jos objektilla ei ole nimeä, käytetään sovelluksen prosessinimeä.
@@ -132,7 +147,7 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioil
 * Korjattu hiiren seuranta Java-objekteissa.
 * NVDA ei enää ilmoita kutistetuiksi sellaisia Java-puunäkymäkohteita, joilla ei ole alempaa tasoa.
 * Kohdistettu objekti ilmoitetaan, kun Java-ikkuna tulee etualalle. Aiemmin vain ylimmän tason objekti ilmoitettiin.
-* eSpeak-syntetisaattoriajuri ei enää lakkaa kokonaan puhumasta yksittäisen virheen jälkeen.
+* eSpeak-puhesyntetisaattoriajuri ei enää lakkaa kokonaan puhumasta yksittäisen virheen jälkeen.
 * Korjattu ongelma, jossa päivitettyjä puheäänen parametreja (nopeus, korkeus jne) ei tallennettu, kun puheääntä vaihdettiin syntetisaattorin asetusrenkaasta.
 * Kirjoitettujen merkkien ja sanojen lukemista paranneltu.
 * Konsolisovelluksissa (esim. joissakin tekstiseikkailupeleissä) luetaannyt tekstiä, jota ei aiemmin luettu.
@@ -169,8 +184,8 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioil
 * Paranneltu tilarivin havaitsemisen tarkkuutta monissa sovelluksissa
 * Lisätty vuorovaikutteinen NVDA Python -konsoli, jonka avulla kehittäjät voivat tarkastella ja käsitellä NVDA:n sisäistä toimintaa sen ollessa käynnissä.
 * Lue kaikki- sekä valinnan ja nykyisen rivin lukukomennot toimivat nyt oikein näennäispuskurin läpivientitilassa.
-* Puheen nopeutus- ja hidastuskomennot poistettu. Näiden asetusten muuttamiseen tulisi käyttää syntetisaattorin asetusrengasta (Ctrl+NVDA+ylä- ja alanuoli) tai ääniasetusten valintaikkunaa.
-* Paranneltu edistymispalkkeja ilmaisevien äänimerkkien äänialaa ja skaalausta
+* Puheen nopeutus- ja hidastuskomennot poistettu. Näiden asetusten muuttamiseen tulisi käyttää puhesyntetisaattorin asetusrengasta (Ctrl+NVDA+ylä- ja alanuoli) tai ääniasetusten valintaikkunaa.
+* Paranneltu edistymispalkkeja ilmaisevien äänimerkkien äänialaa ja skaalausta.
 * Uuteen näennäispuskuriin lisätty pikanavigointinäppäimiä: l=luettelo, i=luettelon osa, e=muokkauskenttä, b=painike, x=valintaruutu, r=valintapainike, g=kuva, q=kappaleenvaihdollinen sisennys, c=yhdistelmäruutu, numerot 1 - 6=niitä vastaavat otsikkotasot, s=erotin, m=kehys.
 * Uuden web-sivun latauksen peruuttaminen Firefoxissa mahdollistaa entisen sivun sisältävän näennäispuskurin käytön, mikäli sitä ei ole vielä tuhottu.
 * Näennäispuskureissa sana kerrallaan liikkuminen on nyt tarkempaa, koska sanat eivät enää satunnaisesti sisällä tekstiä useammasta kuin yhdestä kentästä.
@@ -200,8 +215,8 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioil
 * Lisätty komennot hiiren vasemman ja oikean näppäimen napsautukselle (laskinnäppäimistön / ja laskinnäppäimistön *)
 * Windowsin järjestelmätarjottimen käyttöä paranneltu. Kohdistuksen ei enää pitäisi hypätä takaisin tiettyyn kohtaan.
 * Suorituskykyä paranneltu sekä estetty NVDA:ta lukemasta Ylimääräistä tekstiä pidettäessä nuolinäppäintä alhaalla ja tultaessa tekstin loppuun muokkauskentässä.
-* Poistettu mahdollisuus, joka pakottaa odottamaan sen aikaa kun tiettyjä ilmoituksia luetaan. Tämä korjaa joitakin kaatumisia ja jumiutumisia erinäisillä syntetisaattoreilla.
-* Lisätty tuki italiankieliselle Audiologic TTS 3 -syntetisaattorille
+* Poistettu mahdollisuus, joka pakottaa odottamaan sen aikaa kun tiettyjä ilmoituksia luetaan. Tämä korjaa joitakin kaatumisia ja jumiutumisia erinäisillä puhesyntetisaattoreilla.
+* Lisätty tuki italiankieliselle Audiologic TTS 3 -puhesyntetisaattorille
 * Mahdollinen suorituskyvyn parannus liikuttaessa Word-asiakirjoissa
 * Paranneltu ilmoitusten tekstin lukemisen tarkkuutta Mozilla Gecko -sovelluksissa
 * Korjattu mahdollisia kaatumisia yritettäessä tallentaa NVDA:n asetuksia muun kuin englannninkielisissä Windows-versioissa.
@@ -251,15 +266,15 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioil
 === Puhe ===
 * NVDA:ssa on nyt eSpeakin 1.33-versio, jossa on useita parannuksia, joita ovat mm. paranneltu kielituki, nimetyt puheäänimuunnelmat ja mahdollisuus puhua nopeammin.
 * Ääniasetukset-valintaikkunasta on nyt mahdollista vaihtaa käytettävän syntetisaattorin puheäänimuunnelmaa, jos sellaisia tuetaan. Muunnelma on yleensä muunnos nykyisestä puheäänestä. (eSpeak tukee muunnelmia).
-* Ääniasetukset-valintaikkunaan lisätty mahdollisuus muuttaa käytettävän syntetisaattorin äänensävyä, jos tätä tuetaan. (eSpeak tukee äänensävyn muuttamista).
+* Ääniasetukset-valintaikkunaan lisätty mahdollisuus muuttaa käytettävän puhesyntetisaattorin äänensävyä, jos tätä tuetaan. (eSpeak tukee äänensävyn muuttamista).
 * Lisätty mahdollisuus objektin sijaintitietojen lukemisen (esim. 1 / 4) käytöstä poistamiseen. Asetus löytyy Objektien lukuasetukset -valintaikkunasta.
 * NVDA voi antaa nyt äänimerkin isoa kirjainta luettaessa. Asetus voidaan ottaa käyttöön ja poistaa käytöstä Ääniasetukset-valintaikkunasta. Lisätty myös "Nosta äänenkorkeutta isojen kirjainten kohdalla" -valintaruutu, jolla voidaan määrittää, tulisiko NVDA:n nostaa äänenkorkeutta isojen kirjainten kohdalla. Joten NVDA voi nyt joko nostaa äänenkorkeutta, sanoa "iso" tai antaa äänimerkin.
 * NVDA:han lisätty mahdollisuus puheen keskeyttämiseen (samoin kuin Mac-käyttöjärjestelmän VoiceOver-ruudunlukijassa). Kun NVDA puhuu jotakin, voidaan puhe keskeyttää painamalla Control- tai Shift-näppäintä kuten normaalistikin, mutta jos tämän jälkeen painetaan uudestaan Shift-näppäintä (kunhan mitään muita näppäimiä ei ole painettu), puhe jatkuu täsmälleen siitä kohdasta, mihin se jäi.
-* Lisätty virtuaalisyntetisaattori, joka tulostaa tekstin ikkunaan sen puhumisen sijasta. Tämä on miellyttävämpää näkeville kehittäjille, jotka eivät ole tottuneet puhesynteesiin, mutta jotka haluavat tietää, mitä NVDA puhuu. Vikoja vielä luultavasti on, joten palaute on ehdottomasti tervetullutta.
+* Lisätty virtuaalipuhesyntetisaattori, joka tulostaa tekstin ikkunaan sen puhumisen sijasta. Tämä on miellyttävämpää näkeville kehittäjille, jotka eivät ole tottuneet puhesynteesiin, mutta jotka haluavat tietää, mitä NVDA puhuu. Vikoja vielä luultavasti on, joten palaute on ehdottomasti tervetullutta.
 * NVDA ei enää oletusarvoisesti lue välimerkkejä, niiden lukeminen voidaan ottaa käyttöön painamalla NVDA+P.
 * eSpeak puhuu nyt oletusarvoisesti hiukan hitaammin, mikä pitäisi olla helpompaa sitä ensi kertaa käyttäville.
 * Lisätty käyttäjäsanastoja, joiden avulla NVDA saadaan lukemaan tietyt sanat eri tavalla. Sanastoja on kolmea eri tyyppiä: oletus, puheäänikohtainen ja tilapäinen. Oletussanastoon lisätyt sanat vaikuttavat NVDA:han jatkuvasti ja puheäänikohtaiset sanastot vain nykyiseen puheääneen. Tilapäissanasto on sellaisia tilanteita varten, joissa halutaan nopeasti lisätä sana jotakin tiettyä tehtävää varten, mutta sitä ei haluta pysyväksi (se häviää kun NVDA suljetaan). Sanastoihin lisättävät säännöt ovat toistaiseksi säännöllisiä lausekkeita.
-* Syntetisaattorin käyttämä äänilaite voidaan nyt valita Syntetisaattori-valintaikkunasta.
+* Puhesyntetisaattorin käyttämä äänilaite voidaan nyt valita Syntetisaattori-valintaikkunasta.
 
 === Suorituskyky ===
 * NVDA ei vie enää paljon muistia muokattaessa viestejä MSHTML-muokkaussäätimissä
@@ -270,7 +285,7 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioil
 
 === Näppäinkomennot ===
 * Näppäimet NVDA+Shift+laskinnäppäimistön 6 ja NVDA+Shift+laskinnäppäimistön 4 mahdollistavat navigoinnin eteen- ja taaksepäin koko objektihierarkiassa. Tämä tarkoittaa, että sovelluksen ikkunan kaikkia osia voidaan selata tarvitsematta siirtyä ylempään tai ensimmäiseen alemman tason objektiin. Jos hierarkian taso vaihtuu näitä komentoja käytettäessä, siitä ilmoitetaan äänimerkeillä.
-* Ääniasetukset voidaan nyt määrittää myös avaamatta Ääniasetukset-valintaikkunaa syntetisaattorin asetusrenkaan avulla. Haluttu asetus (puheääni, äänenkorkeus jne).) valitaan painamalla Control+NVDA+oikea nuoli tai Control+NVDA+vasen nuoli, ja valitun asetuksen arvoa muutetaan painamalla Control+NVDA+ylänuoli tai Control+NVDA+alanuoli.
+* Ääniasetukset voidaan nyt määrittää myös avaamatta Ääniasetukset-valintaikkunaa puhesyntetisaattorin asetusrenkaan avulla. Haluttu asetus (puheääni, äänenkorkeus jne).) valitaan painamalla Control+NVDA+oikea nuoli tai Control+NVDA+vasen nuoli, ja valitun asetuksen arvoa muutetaan painamalla Control+NVDA+ylänuoli tai Control+NVDA+alanuoli.
 * Lisätty komento nykyisen valinnan lukemiseksi muokkauskentissä (NVDA+shift+ylänuoli).
 * Melko monet jotain tekstiä puhuttavat NVDA:n komennot (sellaiset kuin nykyisen rivin lukeminen jne.) voivat nyt tavata tekstin, jos niitä painetaan kolme kertaa nopeasti.
 * Capslockia ja sekä laskinnäppäimistön että laajennettua Insert-näppäintä voidaan käyttää NVDA-näppäimenä. Lisäksi, jos jotain näistä näppäimistä painetaan kahdesti ilman mitään muuta näppäintä sen ollessa käytössä,  välitetään kyseinen näppäinpainallus käyttöjärjestelmälle aivan kuin sitä olisi painettu kun NVDA ei ollut käynnissä. NVDA-näppäin voidaan määrittää näppäimistöasetusten valintaikkunasta.
@@ -310,7 +325,7 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioil
 * "Ilmoita objektiryhmien nimet" -valintaruutu poistettu Objektien lukeminen -valintaikkunasta. Objektiryhmiä käsitellään nyt eri tavalla.
 
 == 0.5 ==
-* NVDA:ssa on nyt sisäänrakennettu eSpeak-puhesyntetisaattori. Se tukee useita eri kieliä ja on erittäin herkkä ja kevyt. SAPI-syntetisaattoreita voidaan edelleen käyttää, mutta eSpeakia käytetään oletusarvoisesti.
+* NVDA:ssa on nyt sisäänrakennettu eSpeak-puhesyntetisaattori, joka tukee useita kieliä ja on erittäin herkkä ja kevyt. SAPI-syntetisaattoreita voidaan edelleen käyttää, mutta eSpeakia käytetään oletusarvoisesti.
 eSpeak ei ole riippuvainen mistään erikoisohjelmistoista, joten sitä voidaan käyttää NVDA:ssa millä tahansa tietokoneella, muistitikulla jne.
 Saadaksesi lisätietoja eSpeakista tai ladataksesi sen muita versioita, käy osoitteessa http://espeak.sourceforge.net/.
 * Korjattu vika, joka aiheutti  väärän merkin lukemisen painettaessa Delete-näppäintä Internet Explorerin ja Outlook Expressin muokkausruuduissa.
@@ -344,12 +359,12 @@ Saadaksesi lisätietoja eSpeakista tai ladataksesi sen muita versioita, käy osoit
 * Korjattu Ongelma Outlook Expressissä, jossa askelpalauttimen painaminen muokattavan viestin alussa aiheutti virheen.
 * Lisätty komento kannettavien akun tilan lukemiseen (Insert+Shift+B).
 * Lisätty Ei puhetta -syntetisaattoriajuri. Tällä ajurilla NVDA:n saa pysymään koko ajan täysin hiljaa. Tätä voidaan käyttää yhdessä pistenäyttötuen kanssa, kunhan sellainen tulee.
-* Lisätty "Nosta äänenkorkeutta isojen kirjainten kohdalla" -asetus puhesyntetisaattoreille
-* lue hiiren alla oleva objekti -komento on nyt enemmän muiden asetuskomentojen kaltainen (ilmoittaa päällä/pois sen sijaan, että koko ilmoitus muuttuu).
+* Puhesyntetisaattoreille lisätty asetus "Nosta äänenkorkeutta isojen kirjainten kohdalla"
+* Lue hiiren alla oleva objekti -komento on nyt enemmän muiden asetuskomentojen kaltainen (ilmoittaa päällä/pois sen sijaan, että koko ilmoitus muuttuu).
 * Lisätty espanjankielinen käännös.
 * Lisätty unkarinkielinen käännös.
 * Lisätty portugalinkielinen käännös.
-* Puheäänen vaihtaminen Ääniasetukset-valintaikkunasta asettaa nyt nopeus-, korkeus- ja voimakkuus-liukusäätimet vanhojen arvojen sijasta syntetisaattorin mukaisiin uusiin arvoihin. Tämä korjaa ongelmia, jotka saivat esimerkiksi IBM ViaVoice -syntetisaattorin puhumaan paljon muita nopeammin.
+* Puheäänen vaihtaminen Ääniasetukset-valintaikkunasta asettaa nyt nopeus-, korkeus- ja voimakkuus-liukusäätimet vanhojen arvojen sijasta puhesyntetisaattorin mukaisiin uusiin arvoihin. Tämä korjaa ongelmia, jotka saivat esimerkiksi IBM ViaVoice -syntetisaattorin puhumaan paljon muita nopeammin.
 * Korjattu vika, joka aiheutti konsoli-ikkunoissa puheen keskeytymisen tai NVDA:n täydellisen kaatumisen.
 * NVDA:n käyttöliittymä voidaan näyttää ja ilmoitukset puhua automaattisesti Windowsin käyttämällä kielellä, jos NVDA:ssa vain on tuki kyseiselle kielelle. Kieli voidaan myös edelleen valita manuaalisesti Käyttöliittymän asetukset -valintaikkunasta.
 * Lisätty komento 'ilmoita dynaamisen sisällön muutokset' (Insert+5). Tämä asetus määrittää, luetaanko ruudulle tuleva uusi teksti tai muut dynaamiset muutokset automaattisesti. Toimii toistaiseksi vain konsoli-ikkunoissa.
@@ -363,9 +378,9 @@ Saadaksesi lisätietoja eSpeakista tai ladataksesi sen muita versioita, käy osoit
 * Lisätty komento "päästä läpi seuraava näppäinpainallus" (Insert+F2). Kun tätä näppäinyhdistelmää painetaan, seuraavaksi painettu näppäin välitetään suoraan Windowsin käsiteltäväksi. Tästä on hyötyä sovelluksissa, joissa on painettava jotain näppäinyhdistelmää, joka on NVDA:n käytössä.
 * NVDA ei enää jumiudu yli minuutiksi avattaessa suuria asiakirjoja Wordissa.
 * Korjattu ongelma, joka aiheutti Wordissa pois taulukosta ja takaisin siirryttäessä sen, ettei nykyistä rivin ja sarakkeen numeroa luettu, jos siirryttiin takaisin samaan soluun.
-* Jos NVDA:ta käynnistettäessä on käytössä syntetisaattori, jota ei ole tai joka ei toimi, jokin SAPI 5 -syntetisaattori yritetään ladata sen sijaan. Jos SAPI 5 -syntetisaattorin lataaminen ei onnistu, käytettäväksi syntetisaattoriksi asetetaan "ei puhetta".
+* Jos NVDA:ta käynnistettäessä on käytössä puhesyntetisaattori, jota ei ole tai joka ei toimi, jokin SAPI 5 -syntetisaattori yritetään ladata sen sijaan. Jos sellaisen lataaminen ei onnistu, käytettäväksi syntetisaattoriksi asetetaan "ei puhetta".
 * Puheen nopeutus- ja hidastuskomennot eivät voi enää  muuttaa nopeutta arvoihin, jotka ovat yli 100 tai alle 0.
 * Käyttäjälle ilmoitetaan, jos käyttöliittymän asetusvalintaikkunasta valitun kielen kielitiedostossa on virheitä.
 * Jos kieltä on vaihdettu käyttöliittymän asetusvalintaikkunassa, käyttäjältä kysytään, tallennetaanko asetukset ja käynnistetäänkö NVDA uudelleen. NVDA on käynnistettävä uudelleen, jotta uusi kieli voidaan ottaa käyttöön.
-* Jos syntetisaattoria ei voida ladata, kun se valitaan Syntetisaattori-valintaikkunasta, siitä ilmoittava viestiruutu näytetään.
-* Kun syntetisaattori ladataan ensimmäistä kertaa, NVDA antaa sen valita sopivimmat puheääni-, nopeus- ja korkeusparametrit sen sijaan, että se pakotetaan NVDA:n valitsemiin oletuksiin. Tämä korjaa ongelman, jossa Eloquence ja ViaVoice SAPI 4 -syntetisaattorit alkavat puhua aivan liian nopeasti.
+* Jos puhesyntetisaattoria ei voida ladata, kun se valitaan Syntetisaattori-valintaikkunasta, siitä ilmoittava viestiruutu näytetään.
+* Kun puhesyntetisaattori ladataan ensimmäistä kertaa, NVDA antaa sen valita sopivimmat puheääni-, nopeus- ja korkeusparametrit sen sijaan, että se pakotetaan NVDA:n valitsemiin oletuksiin. Tämä korjaa ongelman, jossa Eloquence ja ViaVoice SAPI 4 -syntetisaattorit alkavat puhua aivan liian nopeasti.

@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3374\n"
+"Project-Id-Version: r3396\n"
 "POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2009-11-16 17:00+0200\n"
+"PO-Revision-Date: 2009-11-29 13:31+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr "Suojattu työpöytä"
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
 
-#: NVDAObjects\IAccessible\sysTreeView32.py:169
+#: NVDAObjects\IAccessible\sysTreeView32.py:179
 msgid "%s items"
 msgstr "%s kohtaa"
 
@@ -798,11 +798,14 @@ msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n yleisiä asetuksia"
 #: appModules\_default.py:828
 msgid "Shows the NVDA synthesizer dialog"
 msgstr ""
-"Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n syntetisaattoriasetuksia"
+"Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n käyttämää "
+"puhesyntetisaattoria"
 
 #: appModules\_default.py:832
 msgid "Shows the NVDA voice settings dialog"
-msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n ääniasetuksia"
+msgstr ""
+"Avaa valintaikkunan, jossa voidaan muuttaa käytettävän syntetisaattorin "
+"puheääniasetuksia"
 
 #: appModules\_default.py:836
 msgid "Shows the NVDA keyboard settings dialog"
@@ -875,27 +878,27 @@ msgstr "Lukee leikepöydällä olevan tekstin"
 
 #: appModules\_default.py:898
 msgid "Start marked"
-msgstr "Alku merkitty"
+msgstr "Tekstilohkon alku merkitty"
 
 #: appModules\_default.py:899
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "copied"
 msgstr ""
-"Merkitsee tarkastelukohdistimen nykyisen paikan kopioitavan tekstin "
+"Merkitsee tarkastelukohdistimen nykyisen sijainnin kopioitavan tekstin "
 "alkukohdaksi"
 
 #: appModules\_default.py:903
 msgid "No start marker set"
-msgstr "Alkumerkkiä ei asetettu"
+msgstr "Tekstilohkon alkumerkkiä ei asetettu"
 
 #: appModules\_default.py:907
 msgid "The start marker must reside within the same object"
-msgstr "Alkumerkin on oltava samassa objektissa"
+msgstr "Tekstilohkon alkumerkin on oltava samassa objektissa"
 
 #: appModules\_default.py:912
 msgid "Review selection copied to clipboard"
-msgstr "Valinta kopioitu leikepöydälle"
+msgstr "Valittu teksti kopioitu leikepöydälle"
 
 #: appModules\_default.py:914
 msgid "No text to copy"
@@ -1083,178 +1086,186 @@ msgid "Spanish grade 1"
 msgstr "Espanja, taso 1"
 
 #: braille.py:41
+msgid "Finnish 8 dot computer braille"
+msgstr "Suomi, 8 pisteen tietokonemerkistö"
+
+#: braille.py:42
 msgid "French (Canada) grade 1"
 msgstr "Ranska (Kanada), taso 1"
 
-#: braille.py:42
+#: braille.py:43
 msgid "French (Canada) grade 2"
 msgstr "Ranska (Kanada), taso 2"
 
-#: braille.py:43
+#: braille.py:44
 msgid "French (unified) 6 dot computer braille"
 msgstr "Ranska (yhdenmukaistettu), 6 pisteen tietokonemerkistö"
 
-#: braille.py:44
+#: braille.py:45
 msgid "French (unified) 8 dot computer braille"
 msgstr "Ranska (yhdenmukaistettu), 8 pisteen tietokonemerkistö"
 
-#: braille.py:45
+#: braille.py:46
 msgid "French (unified) Grade 2"
 msgstr "Ranska (yhdenmukaistettu), taso 2"
 
-#: braille.py:45
+#: braille.py:46
 msgid "Greek (Greece) grade 1"
 msgstr "Kreikka, taso 1"
 
-#: braille.py:46
+#: braille.py:47
 msgid "Hebrew 8 dot computer braille"
 msgstr "Hebrea, 8 pisteen tietokonemerkistö"
 
-#: braille.py:47
+#: braille.py:48
 msgid "Hindi grade 1"
 msgstr "Hindi, taso 1"
 
-#: braille.py:48
+#: braille.py:49
 msgid "Croatian 8 dot computer braille"
 msgstr "Kroatia, 8 pisteen tietokonemerkistö"
 
-#: braille.py:49
+#: braille.py:50
 msgid "Hungarian 8 dot computer braille"
 msgstr "Unkari, 8 pisteen tietokonemerkistö"
 
-#: braille.py:50
+#: braille.py:51
 msgid "Italian grade 1"
 msgstr "Italia, taso 1"
 
-#: braille.py:51
+#: braille.py:52
 msgid "Latvian grade 1"
 msgstr "Latvia, taso 1"
 
-#: braille.py:52
+#: braille.py:53
 msgid "Dutch (Belgium) grade 1"
 msgstr "Hollanti (Belgia), taso 1"
 
-#: braille.py:53
+#: braille.py:54
 msgid "Dutch (netherlands) grade 1"
 msgstr "Hollanti (Alankomaat), taso 1"
 
-#: braille.py:54
+#: braille.py:55
 msgid "Norwegian grade 0"
 msgstr "Norja, taso 0"
 
-#: braille.py:55
+#: braille.py:56
 msgid "Norwegian grade 1"
 msgstr "Norja, taso 1"
 
-#: braille.py:56
+#: braille.py:57
 msgid "Norwegian grade 2"
 msgstr "Norja, taso 2"
 
-#: braille.py:57
+#: braille.py:58
 msgid "Norwegian grade 3"
 msgstr "Norja, taso 3"
 
-#: braille.py:58
+#: braille.py:59
 msgid "Polish grade 1"
 msgstr "Puola, taso 1"
 
-#: braille.py:59
+#: braille.py:60
 msgid "Portuguese grade 1"
 msgstr "Portugali, taso 1"
 
-#: braille.py:60
+#: braille.py:61
 msgid "Russian grade 1"
 msgstr "Venäjä, taso 1"
 
-#: braille.py:61
+#: braille.py:62
 msgid "Swedish grade 1"
 msgstr "Ruotsi, taso 1"
 
-#: braille.py:62
+#: braille.py:63
 msgid "Slovak"
 msgstr "Slovakia"
 
-#: braille.py:63
+#: braille.py:64
 msgid "Unified English Braille Code grade 1"
 msgstr "Englanti (yhdenmukaistettu), taso 1"
 
-#: braille.py:64
+#: braille.py:65
 msgid "Unified English Braille Code grade 2"
 msgstr "Englanti (yhdenmukaistettu), taso 2"
 
-#: braille.py:68
+#: braille.py:66
+msgid "Chinese (Hong Kong, Cantonese)"
+msgstr "Kantoninkiina (Hong Kong)"
+
+#: braille.py:70
 msgid "edt"
 msgstr "muo"
 
-#: braille.py:69
+#: braille.py:71
 msgid "lst"
 msgstr "lue"
 
-#: braille.py:70
+#: braille.py:72
 msgid "mnubar"
 msgstr "vkrivi"
 
-#: braille.py:71
+#: braille.py:73
 msgid "mnu"
 msgstr "vko"
 
-#: braille.py:72
+#: braille.py:74
 msgid "btn"
 msgstr "pnk"
 
-#: braille.py:73
+#: braille.py:75
 msgid "chk"
 msgstr "vln"
 
-#: braille.py:74
+#: braille.py:76
 msgid "rbtn"
 msgstr "vpnk"
 
-#: braille.py:75
+#: braille.py:77
 msgid "cbo"
 msgstr "yhd"
 
-#: braille.py:76
+#: braille.py:78
 msgid "lnk"
 msgstr "lnk"
 
-#: braille.py:77
+#: braille.py:79
 msgid "dlg"
 msgstr "vli"
 
-#: braille.py:78
+#: braille.py:80
 msgid "tv"
 msgstr "pn"
 
-#: braille.py:79
+#: braille.py:81
 msgid "tb"
 msgstr "tl"
 
-#: braille.py:83
+#: braille.py:85
 msgid "(x)"
 msgstr "<x>"
 
-#: braille.py:84
+#: braille.py:86
 msgid "sel"
 msgstr "val"
 
-#: braille.py:85
+#: braille.py:87
 msgid "submnu"
 msgstr "alavko"
 
-#: braille.py:88
+#: braille.py:90
 msgid "( )"
 msgstr "< >"
 
-#: braille.py:216 speech.py:660
+#: braille.py:218 speech.py:662
 msgid "not %s"
 msgstr "ei %s"
 
-#: braille.py:228 speech.py:666
+#: braille.py:230 speech.py:668
 msgid "%s of %s"
 msgstr "%s / %s"
 
-#: braille.py:230 speech.py:671 speech.py:674
+#: braille.py:232 speech.py:673 speech.py:676
 msgid "level %s"
 msgstr "taso %s"
 
@@ -1401,7 +1412,7 @@ msgstr "hattu"
 
 #: characterSymbols.py:51 controlTypes.py:307
 msgid "underline"
-msgstr "alleviivaus"
+msgstr "alaviiva"
 
 #: characterSymbols.py:52
 msgid "graav"
@@ -1439,11 +1450,11 @@ msgstr "Huonosti muotoiltu asetustiedosto"
 msgid "%s: %s, defaulting to %s"
 msgstr "%s: %s, käytetään oletusarvoa %s"
 
-#: config\__init__.py:167
+#: config\__init__.py:168
 msgid "Error parsing configuration file: %s"
 msgstr "Virhe jäsenneltäessä asetustiedostoa: %s"
 
-#: config\__init__.py:172
+#: config\__init__.py:173
 msgid ""
 "Errors in configuration file '%s':\n"
 "%s"
@@ -2115,11 +2126,11 @@ msgstr "vedetään"
 msgid "drop target"
 msgstr "pudotuksen kohde"
 
-#: core.py:123
+#: core.py:126
 msgid "Loading subsystems, please wait..."
 msgstr "Ladataan alijärjestelmiä, odota..."
 
-#: core.py:194
+#: core.py:205
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
 
@@ -2553,8 +2564,8 @@ msgid ""
 msgstr ""
 "Jotta uusi kieli voidaan ottaa käyttöön, asetukset on tallennettava ja "
 "NVDA on käynnistettävä uudelleen. Tallenna asetukset ja käynnistä NVDA "
-"uudelleen painamalla Enter, tai tallenna asetukset ja käynnistä NVDA "
-"uudelleen myöhemmin painamalla Peruuta."
+"uudelleen painamalla Enter, tai tallenna asetukset ja käynnistä NVDA myö"
+"hemmin uudelleen painamalla Peruuta."
 
 #: gui\settingsDialogs.py:169
 msgid "Language Configuration Change"
@@ -2562,11 +2573,11 @@ msgstr "Kieliasetuksen muutos"
 
 #: gui\settingsDialogs.py:175
 msgid "Synthesizer"
-msgstr "Syntetisaattori"
+msgstr "Puhesyntetisaattori"
 
 #: gui\settingsDialogs.py:179
 msgid "&Synthesizer:"
-msgstr "&Syntetisaattori:"
+msgstr "&Puhesyntetisaattori:"
 
 #: gui\settingsDialogs.py:194
 msgid "Output &device:"
@@ -2574,11 +2585,11 @@ msgstr "&Käytettävä äänilaite:"
 
 #: gui\settingsDialogs.py:214
 msgid "Could not load the %s synthesizer."
-msgstr "Syntetisaattoria %s ei voitu ladata."
+msgstr "Puhesyntetisaattoria %s ei voitu ladata."
 
 #: gui\settingsDialogs.py:214
 msgid "Synthesizer Error"
-msgstr "Syntetisaattorivirhe"
+msgstr "Puhesyntetisaattorivirhe"
 
 #: gui\settingsDialogs.py:219
 msgid "Voice settings"
@@ -2833,95 +2844,99 @@ msgstr "Ilmoita l&uettelot"
 msgid "Report block &quotes"
 msgstr "Ilmoita sisennykset, joissa kappaleen&vaihto"
 
-#: gui\settingsDialogs.py:684
+#: gui\settingsDialogs.py:660
+msgid "Report lan&dmarks"
+msgstr "Ilmoita &maa&merkit"
+
+#: gui\settingsDialogs.py:688
 msgid "Edit dictionary entry"
 msgstr "Muokkaa sanastomerkintää"
 
-#: gui\settingsDialogs.py:687
+#: gui\settingsDialogs.py:691
 msgid "&Pattern"
 msgstr "&Korvattava"
 
-#: gui\settingsDialogs.py:690
+#: gui\settingsDialogs.py:694
 msgid "&Replacement"
 msgstr "K&orvaava"
 
-#: gui\settingsDialogs.py:693
+#: gui\settingsDialogs.py:697
 msgid "&Comment"
 msgstr "&Kommentti"
 
-#: gui\settingsDialogs.py:696
+#: gui\settingsDialogs.py:700
 msgid "Case &sensitive"
 msgstr "Sama &kirjainkoko"
 
-#: gui\settingsDialogs.py:698
+#: gui\settingsDialogs.py:702
 msgid "Regular &expression"
 msgstr "Säännöllinen l&auseke"
 
-#: gui\settingsDialogs.py:720
+#: gui\settingsDialogs.py:724
 msgid "&Dictionary entries"
 msgstr "&Sanastomerkinnät"
 
-#: gui\settingsDialogs.py:723
+#: gui\settingsDialogs.py:727
 msgid "Comment"
 msgstr "Kommentti"
 
-#: gui\settingsDialogs.py:724
+#: gui\settingsDialogs.py:728
 msgid "Pattern"
 msgstr "Korvattava"
 
-#: gui\settingsDialogs.py:725
+#: gui\settingsDialogs.py:729
 msgid "Replacement"
 msgstr "Korvaava"
 
-#: gui\settingsDialogs.py:726
+#: gui\settingsDialogs.py:730
 msgid "case sensitive"
 msgstr "Sama kirjainkoko"
 
-#: gui\settingsDialogs.py:727
+#: gui\settingsDialogs.py:731
 msgid "Regular expression"
 msgstr "Säännöllinen lauseke"
 
-#: gui\settingsDialogs.py:734
+#: gui\settingsDialogs.py:738
 msgid "&Add"
 msgstr "&Lisää"
 
-#: gui\settingsDialogs.py:737
+#: gui\settingsDialogs.py:741
 msgid "&edit"
 msgstr "&Muokkaa"
 
-#: gui\settingsDialogs.py:740
+#: gui\settingsDialogs.py:744
 msgid "&Remove"
 msgstr "&Poista"
 
-#: gui\settingsDialogs.py:807
+#: gui\settingsDialogs.py:811
 msgid "Braille Settings"
 msgstr "Pistenäytön asetukset"
 
-#: gui\settingsDialogs.py:811
+#: gui\settingsDialogs.py:815
 msgid "Braille &display:"
 msgstr "Piste&näyttö:"
 
-#: gui\settingsDialogs.py:825
+#: gui\settingsDialogs.py:829
 msgid "Translation &table:"
 msgstr "Piste&taulukko:"
 
-#: gui\settingsDialogs.py:837
+#: gui\settingsDialogs.py:841
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Laajenna kohdistimen kohdalla oleva sana"
 
-#: gui\settingsDialogs.py:842
+#: gui\settingsDialogs.py:846
 msgid "Cursor blink rate (ms)"
 msgstr "&Kohdistimen vilkkumisnopeus (ms):"
 
-#: gui\settingsDialogs.py:850
+#: gui\settingsDialogs.py:854
 msgid "Message timeout (sec)"
 msgstr "&Ilmoitusten aikakatkaisu (sek):"
 
-#: gui\settingsDialogs.py:863
+#: gui\settingsDialogs.py:867
 msgid "Braille Display Error"
 msgstr "Pistenäyttövirhe"
 
-#: gui\settingsDialogs.py:863
+#: gui\settingsDialogs.py:867
 msgid "Could not load the %s display."
 msgstr "Pistenäyttöä %s ei voitu ladata."
 
@@ -3161,7 +3176,7 @@ msgstr "ei valita %s"
 msgid "selection removed"
 msgstr "valinta peruttu"
 
-#: speech.py:658
+#: speech.py:660
 msgid "done dragging"
 msgstr "vedetty"
 
@@ -3294,7 +3309,7 @@ msgstr ""
 
 #: synthDrivers\newfon.py:171
 msgid "russian newfon synthesizer by Sergey Shishmintzev"
-msgstr "Venäläinen Newfon-syntetisaattori"
+msgstr "Venäläinen Newfon-puhesyntetisaattori"
 
 #: synthDrivers\newfon.py:181
 msgid "female 1"
@@ -3379,11 +3394,11 @@ msgstr ""
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html,\n"
 "tai katso tämän ohjelmiston mukana toimitettua Copying.txt-tiedostoa."
 
-#: virtualBufferHandler.py:100
+#: virtualBufferHandler.py:81
 msgid "browse mode"
 msgstr "selaustila"
 
-#: virtualBufferHandler.py:100
+#: virtualBufferHandler.py:81
 msgid "focus mode"
 msgstr "kohdistustila"
 

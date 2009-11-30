@@ -1,5 +1,18 @@
 = Qué hay de nuevo en NVDA =
 
+
+== 2010.1 ==
+
+=== Nuevas características ===
+	* NVDA ya no falla al arrancar en un sistema sin dispositivos de salida de audio. Obviamente, será necesario utilizar una línea braille o el Display synthesiser para la salida en este caso. (#425)
+	* Ha sido añadida una casilla de verificación Anunciar Zonas al diálogo de Opciones de formato de Documento que te permite configurar si NVDA debería anunciar zonas en documentos web. Para compatibilidad con la versión anterior, la opción está activada de forma predeterminada.
+
+=== Cambios ===
+
+=== Corrección de Fallos ===
+	* NVDA ya no falla al arrancar si el soporte UI Automation parece estár disponible pero falla al inicializarse por alguna razón. (#483)
+	* Todo el contenido de una fila de una tabla ya no es anunciado a veces cuando se mueve el foco entre celdas en aplicaciones de Mozilla. (#482)
+
 == 2009.1 ==
 Lo más resaltable de esta release incluye el soporte para ediciones de 64 bit de Windows; soporte muy mejorado para los documentos de Microsoft Internet Explorer y de Adobe Reader; soporte para Windows 7; la lectura de las pantallas de  logon de Windows, control+alt+supr y el control de cuentas de usuario (UAC); y la capacidad para interactuar con contenidos de Adobe Flash y de Sun Java en páginas web. También hemos tenido varias correcciones significativas de estabilidad y mejoras a la experiencia de usuario general.
 
@@ -463,7 +476,6 @@ Cambios desde la revisión 297:
 * Añadido un script para anunciar el título de la ventana activa (insert+t). Como Verbalizar título en muchos otros lectores de pantalla.
 * El script del navegador Donde estoy? (insert+Más del teclado numérico) ahora empieza desde el objeto que es un padre del actual navegador de objetos, en lugar de empezar desde el actual navegador de objetos. Esto es hacerlo más rápido para encontrar dónde estás  ya que aún puedes anunciar el actual navegador de objetos con insert+5 del teclado numérico. El script ahora también dice la palabra 'en' antes de cada objeto para separar los objetos más claramente.
 * Añadido un script para informar de las dimensiones y localización (en pixeles)of del actual navegador de objetos (shift+insert+5 del teclado numérico) 
-
 
 Cambios desde la revisión 293:
 * Los gráficos en los modos virtuales de Mozilla Gecko ahora son ignorados si no tienen un título / atributo alt.

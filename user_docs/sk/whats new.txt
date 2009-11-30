@@ -1,5 +1,18 @@
 = Čo je nové v NVDA =
 
+== 2010.1 ==
+
+=== Nové vlastnosti ===
+	* NVDA sa neodmieta spustiť ak v systéme nie sú nainštalované žiadne zvukové zariadenia. Samozrejme, v takomto prípade musí byť použitý brailovský riadok alebo hlasový výstup display. (#425)
+	* Do dialógu Nastavenia čítania textu bolo pridané začiarkavacie políčko oznamovať oblasti stránky, ktoré určuje, či sa vo virtuálnom prehliadači budú oznamovať oblasti stránky. Kvôli kompatibilite s predchádzajúcou verziou je toto predvolene zapnuté.
+
+=== Opravy ===
+	* NVDA sa viac neodmieta spustiť, ak dôjde k chybe pri pokuse o inicializáciu podpori UI Automation. (#483)
+	* Celý obsah bunky tabuľky nie je viacej oznamovaný pri zmene fokusu vrámci bunky tabuľky v aplikáciách Mozilla. (#482)
+	* Vylepšená práca so stromovými zoznamami. Pri rozbaľovaní vetvy, ktorá má množstvo podpoložiek je načítanie položiek omnoho rýchlejšie.
+	* Pri pokuse načítať Sapi5 hlasy NVDA ignoruje hlasy, ktoré vracajú chybu. Doteraz jeden chybný Sapi5 hlas mohol spôsobiť, že sa vôbec nenačítal ovládač hlasových výstupov Sapi5.
+	* Nastavenie Čítať skratkové klávesy objektov sa uplatní aj vo virtuálnom prehliadači. (#486)
+
 == 2009.1 ==
 Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windows, úplne prepracovaná podpora pre čítanie dokumentov v programoch Microsoft Internet explorer a Adobe Reader, podpora pre Windows 7, možnosť čítať prihlasovaciu obrazovku Windows a schopnosť interakcie s prvkami flash a java na webových stránkach. Táto verzia obsahuje tiež množstvo všeobecných opráv, čo prispieva k celkovej stabilite programu.
 
