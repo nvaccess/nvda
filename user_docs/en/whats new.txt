@@ -12,8 +12,7 @@
 	* NVDA no longer fails to start if UI Automation support appears to be available but fails to initialise for some reason. (#483)
 	* The entire contents of a table row is no longer sometimes reported when moving focus inside a cell  in Mozilla applications. (#482)
 	* NVDA no longer lags for a long time when expanding tree view items that contain a very large amount of sub-items.
-	* When listing Sapi5 voices try to detects buggy voices and don't include them in the voice settings dialog nor synth settings ring. Prewiously when there was just one problematic voice NVDA's Sapi5 driver would not start in some cases.
- 
+	* When listing SAPI 5 voices, NVDA now tries to detect buggy voices and excludes them from the Voice Settings dialog and synthesiser settings ring. Previously, when there was just one problematic voice, NVDA's SAPI 5 driver would sometimes fail to start.
 
 == 2009.1 ==
 Major highlights of this release include support for 64 bit editions of Windows; greatly improved support for Microsoft Internet Explorer and Adobe Reader documents; support for Windows 7; reading of the Windows logon, control+alt+delete and User Account Control (UAC) screens; and the ability to interact with Adobe Flash and Sun Java content on web pages. There have also been several significant stability fixes and improvements to the general user experience.
