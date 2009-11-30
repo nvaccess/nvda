@@ -176,7 +176,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	wstring textBuf;
 	if(!allowText&&allowAdditions&&eventID==EVENT_OBJECT_SHOW) {
 		getTextFromIAccessible(textBuf,pacc2,false,true);
-	} else if(allowText&&IA2_EVENT_TEXT_INSERTED) {
+	} else if(allowText&&eventID==IA2_EVENT_TEXT_INSERTED) {
  		getTextFromIAccessible(textBuf,pacc2,true,allowAdditions);
 	}
 	if(!textBuf.empty()) speakText(textBuf.c_str());
