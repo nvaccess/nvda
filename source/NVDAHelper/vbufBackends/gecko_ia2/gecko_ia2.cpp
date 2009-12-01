@@ -12,10 +12,10 @@
 #include <string>
 #include <sstream>
 #include <ia2/ia2.h>
-#include <vbufBase/ia2utils.h>
+#include <common/ia2utils.h>
 #include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
-#include <vbufBase/debug.h>
+#include <common/debug.h>
 #include <vbufBase/utils.h>
 #include "gecko_ia2.h"
 

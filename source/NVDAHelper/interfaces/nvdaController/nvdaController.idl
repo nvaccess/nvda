@@ -1,0 +1,26 @@
+//NVDAController_appModuleHelper.idl
+
+/**
+ * Allows the controling of NVDA from a remote process
+ */
+[
+	uuid(ec0ac5e3-de3f-49dc-b9d8-571abd7ddd92),
+	version(1.0),
+]
+interface NvdaController {
+
+/**
+ * Retreaves the version of NVDA.
+ * @param bindinghandle_t the binding handle_t to NVDA
+ * @param version  a pointer to the version string, must be freed when finnished with
+ */
+	boolean getNVDAVersionString([in] handle_t bindingHandle, [out,string] wchar_t** version);
+
+/**
+ * Instructs NVDA to speak the given text.
+ * @param text the text to speak.
+ */
+	boolean speakText([in] handle_t bindingHandle, [in,string] const wchar_t* text);
+
+};
+

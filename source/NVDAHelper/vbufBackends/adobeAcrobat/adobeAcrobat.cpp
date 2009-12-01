@@ -14,7 +14,7 @@
 #include <oleacc.h>
 #include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
-#include <vbufBase/debug.h>
+#include <common/debug.h>
 #include <AcrobatAccess/AcrobatAccess.h>
 #include <AcrobatAccess/IPDDom.h>
 #include "adobeAcrobat.h"

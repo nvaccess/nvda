@@ -1045,20 +1045,6 @@ the NVDAObject for IAccessible
 				child.speakDescendantObjects(hashList=hashList)
 			child=child.next
 
-	def event_show(self):
-		if not winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle) or not winUser.isWindowVisible(self.windowHandle) or controlTypes.STATE_INVISIBLE in self.states: 
-			return
-		try:
-			attribs=self.IAccessibleObject.attributes
-		except:
-			return
-		if attribs and ('live:polite' in attribs or 'live:assertive' in attribs): 
-			text=IAccessibleHandler.getRecursiveTextFromIAccessibleTextObject(self.IAccessibleObject)
-			if text and not text.isspace():
-				if 'live:rude' in attribs:
-					speech.cancelSpeech()
-				speech.speakMessage(text)
-
 	def event_gainFocus(self):
 		if hasattr(self,'IAccessibleTextObject'):
 			self.initAutoSelectDetection()
