@@ -100,7 +100,10 @@ class RemoteLoader64(object):
 def initialize():
 	global _remoteLib, _remoteLoader64, localLib, winEventHookID,generateBeep
 	localLib=cdll.LoadLibrary('lib/nvdaHelperLocal.dll')
-	_setDllFuncPointer(localLib,"_nvdaController_speakText",nvdaController_speakText)
+	try:
+		_setDllFuncPointer(localLib,"_nvdaController_speakText",nvdaController_speakText)
+	except AttributeError:
+		log.error("nvdaHelperLocal function pointer for speakText could not be found, possibly old nvdaHelperLocal dll")
 	localLib.startServer()
 	generateBeep=localLib.generateBeep
 	generateBeep.argtypes=[c_char_p,c_float,c_uint,c_ubyte,c_ubyte]
