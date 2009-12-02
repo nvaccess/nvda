@@ -695,6 +695,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		textList.append(_("with %s columns")%columnCount)
 	elif rowCount and not columnCount:
 		textList.append(_("with %s rows")%rowCount)
+	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		oldTableID = None
 	return " ".join([x for x in textList if x])
