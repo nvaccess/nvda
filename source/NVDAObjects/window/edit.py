@@ -33,6 +33,7 @@ selOffsetsAtLastCaretEvent=None
 #Edit control window messages
 EM_GETSEL=176
 EM_SETSEL=177
+EM_SCROLLCARET=0xb7
 EM_GETLINE=196
 EM_GETLINECOUNT=186
 EM_LINEFROMCHAR=201
@@ -276,6 +277,8 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			winKernel.virtualFreeEx(processHandle,internalCharRange,0,winKernel.MEM_RELEASE)
 		else:
 			winUser.sendMessage(self.obj.windowHandle,EM_SETSEL,start,end)
+		#Make sure the Window is always scrolled to the caret
+		winUser.sendMessage(self.obj.windowHandle,EM_SCROLLCARET,0,0)
 
 	def _getCaretOffset(self):
 		return self._getSelectionOffsets()[0]
