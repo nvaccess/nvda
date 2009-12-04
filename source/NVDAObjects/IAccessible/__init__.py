@@ -456,7 +456,8 @@ the NVDAObject for IAccessible
 					("control+extendedHome","moveByLine"),
 					("control+extendedEnd","moveByLine"),
 					("ExtendedDelete","delete"),
-					("Back","backspace"),
+					("Back","backspaceCharacter"),
+					("Control+Back","backspaceWord"),
 				]]
 		except:
 			pass

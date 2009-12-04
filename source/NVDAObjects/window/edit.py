@@ -762,7 +762,8 @@ class Edit(Window):
 	("control+extendedHome","moveByLine"),
 	("control+extendedEnd","moveByLine"),
 	("ExtendedDelete","delete"),
-	("Back","backspace"),
+	("Back","backspaceCharacter"),
+	("Control+Back","backspaceWord"),
 ]]
 
 class RichEdit(Edit):

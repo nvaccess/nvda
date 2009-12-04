@@ -310,7 +310,8 @@ class MSHTML(IAccessible):
 				("control+shift+extendedHome","changeSelection"),
 				("control+shift+extendedEnd","changeSelection"),
 				("ExtendedDelete","moveByCharacter"),
-				("Back","backspace"),
+				("Back","backspaceCharacter"),
+				("Control+Back","backspaceWord"),
 			]]
 
 	def isDuplicateIAccessibleEvent(self,obj):
