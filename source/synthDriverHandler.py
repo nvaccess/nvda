@@ -399,7 +399,6 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		[setattr(self,s.name,c[s.name]) for s in self.supportedSettings if not s.name=="voice" and c[s.name] is not None]
 
 	def _get_initialSettingsRingSetting (self):
-		if hasattr(self,"initialSettingsRingSetting "): return self.initialSettingsRingSetting 
 		if not self.isSupported("rate") and len(self.supportedSettings)>0:
 			#Choose first as an initial one
 			for s in self.supportedSettings: 
