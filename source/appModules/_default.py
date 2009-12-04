@@ -55,7 +55,7 @@ class AppModule(appModuleHandler.AppModule):
 			obj=virtualBuffer
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_CARET)
-		except NotImplementedError:
+		except (NotImplementedError, RuntimeError):
 			info=obj.makeTextInfo(textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_LINE)
 		if scriptHandler.getLastScriptRepeatCount()==0:
