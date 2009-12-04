@@ -5,6 +5,9 @@
 === Uudet ominaisuudet ===
 * NVDA käynnistyy nyt järjestelmissä, joissa ei ole äänilaitteita. Tietojen tulostamiseen on tällöin käytettävä pistenäyttöä tai Display-syntetisaattoria.
 * Asiakirjojen muotoilu -valintaikkunaan on lisätty "Ilmoita maamerkit" -valintaruutu, jolla voidaan määrittää, ilmoittaako NVDA web-sivuilla olevia maamerkkejä. Asetus on oletusarvoisesti käytössä edellisen NVDA-version yhteensopivuuden säilyttämiseksi.
+* Jos Lue komentonäppäimet -asetus on käytössä, NVDA kertoo multimedianäppäinten nimet niitä painettaessa (esim. toista, pysäytä, kotisivu jne).
+* NVDA lukee nyt sanan, joka poistetaan painettaessa Control+askelpalautin säätimissä, jotka tukevat sitä.
+* Tekstiä voidaan nyt selata ja lukea nuolinäppäimillä Web Formator -sovelluksessa.
 
 === Muutokset ===
 
@@ -12,8 +15,10 @@
 * NVDA käynnistyy nyt sellaisessa tilanteessa, jossa UI Automation -tuki on käytettävissä, mutta sen alustus ei jostakin syystä onnistu.
 * Taulukon rivin koko sisältöä ei enää toisinaan lueta Mozilla-sovelluksissa siirrettäessä kohdistusta solussa.
 * Paljon alakohtia sisältävien puunäkymien laajentaminen ei enää aiheuta pitkää viivettä.
-* Vialliset SAPI 5 -puheäänet yritetään nyt havaita käytettävissä olevien SAPI 5 -puheäänien listaa haettaessa, jotta niitä ei näytetä Ääniasetukset-valintaikkunassa eikä sisällytetä syntetisaattorin asetusrenkaaseen. Aiemmin vain yksi viallinen puheääni saattoi joissakin tapauksissa aiheuttaa sen, ettei NVDA:n SAPI 5 -ajuri toiminut.
+* Virheen palauttavia puheääniä ei huomioida käytettävissä olevien SAPI 5 -puheäänten listaa ladattaessa. Aiemmin yksi viallinen puheääni saattoi joissakin tapauksissa aiheuttaa sen, ettei mitään SAPI 5 -puheääniä voitu käyttää.
 * Objektien lukuasetukset -valintaikkunan "Lue objektien pikanäppäimet" -asetus vaikuttaa nyt näennäispuskureihin.
+* Rivien ja sarakkeiden otsikoiden koordinaatteja ei enää virheellisesti lueta näennäispuskureissa, kun taulukoiden ilmoittaminen on poistettu käytöstä.
+* Rivien ja sarakkeiden koordinaatit luetaan nyt näennäispuskureissa oikein taulukosta poistuttaessa ja palattaessa saman taulukon soluun käymättä ensin jossain toisessa solussa (esim. painamalla ylä- ja alanuolta taulukon ensimmäisessä solussa).
 
 == 2009.1 ==
 Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioille, huomattavasti paranneltu tuki Internet Explorerille ja Adobe Readerille, tuki Windows 7:lle, Windowsin kirjautumis- ja Control+Alt+Delete-ruutujen sekä Käyttäjätilien valvonnan (UAC) kehotteiden lukeminen sekä mahdollisuus olla vuorovaikutuksessa web-sivujen Flash- ja Java-sisällön kanssa. Lisäksi on useita merkittäviä korjauksia NVDA:n vakauteen ja parannuksia yleiseen käyttäjäkokemukseen.
