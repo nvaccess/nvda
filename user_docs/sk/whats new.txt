@@ -5,6 +5,9 @@
 === Nové vlastnosti ===
 	* NVDA sa neodmieta spustiť ak v systéme nie sú nainštalované žiadne zvukové zariadenia. Samozrejme, v takomto prípade musí byť použitý brailovský riadok alebo hlasový výstup display. (#425)
 	* Do dialógu Nastavenia čítania textu bolo pridané začiarkavacie políčko oznamovať oblasti stránky, ktoré určuje, či sa vo virtuálnom prehliadači budú oznamovať oblasti stránky. Kvôli kompatibilite s predchádzajúcou verziou je toto predvolene zapnuté.
+	* Ak je zapnuté čítanie príkazových skratiek, NVDA bude oznamovať názvy multimediálnych klávesov ako napríklad play, stop, domovská stránka... )#472)
+	* NVDA po stlačení ctrl+backspace oznámy práve vymazané slovo v prvkoch, ktoré to podporujú. (#491)
+	* Kurzorové klávesy umožňujú navigáciu a čítanie v okne programu Web formator. (#452)
 
 === Opravy ===
 	* NVDA sa viac neodmieta spustiť, ak dôjde k chybe pri pokuse o inicializáciu podpori UI Automation. (#483)
@@ -12,6 +15,8 @@
 	* Vylepšená práca so stromovými zoznamami. Pri rozbaľovaní vetvy, ktorá má množstvo podpoložiek je načítanie položiek omnoho rýchlejšie.
 	* Pri pokuse načítať Sapi5 hlasy NVDA ignoruje hlasy, ktoré vracajú chybu. Doteraz jeden chybný Sapi5 hlas mohol spôsobiť, že sa vôbec nenačítal ovládač hlasových výstupov Sapi5.
 	* Nastavenie Čítať skratkové klávesy objektov sa uplatní aj vo virtuálnom prehliadači. (#486)
+	* Info o pozícii v tabuľke nie je nesprávne oznamované pre hlavičky riadkov a hlavičky stĺpcov vo virtuálnom prehliadači ak je vypnuté oznamovanie tabuliek.
+	* Vo virtuálnom prehliadači je správne oznamovaná pozícia o aktuálnej bunke ak opustíte tabuľku a neskôr bez navštívenia inej tabuľky sa opätovne vrátite do tej istej tabuľky, napr. stlačením šípky hore a šípky dolu v prvej bunke tabuľky.  (#378)
 
 == 2009.1 ==
 Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windows, úplne prepracovaná podpora pre čítanie dokumentov v programoch Microsoft Internet explorer a Adobe Reader, podpora pre Windows 7, možnosť čítať prihlasovaciu obrazovku Windows a schopnosť interakcie s prvkami flash a java na webových stránkach. Táto verzia obsahuje tiež množstvo všeobecných opráv, čo prispieva k celkovej stabilite programu.
