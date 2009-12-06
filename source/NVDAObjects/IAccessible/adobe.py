@@ -145,7 +145,7 @@ class AcrobatTextNode(AcrobatNode):
 	("control+extendedHome","moveByLine"),
 	("control+extendedEnd","moveByLine"),
 	("ExtendedDelete","delete"),
-	("Back","backspace"),
+	("Back","backspaceCharacter"),
 ]]
 
 class AcrobatSDIWindowClient(IAccessible):
