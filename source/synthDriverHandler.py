@@ -50,7 +50,7 @@ def getSynthList():
 			if synth.check():
 				synthList.append((synth.name,synth.description))
 			else:
-				log.debugWarning("Synthesizer %s doesn't pass the check, excluding from list"%name)
+				log.debugWarning("Synthesizer '%s' doesn't pass the check, excluding from list"%name)
 		except:
 			log.error("",exc_info=True)
 	return synthList
@@ -84,6 +84,10 @@ def setSynth(name):
 				changeVoice(newSynth,newSynth.voice)
 			newSynth.saveSettings() #save defaults
 		_curSynth=newSynth
+		#start or update the synthSettingsRing (for those synths which do not support 'voice')
+		if not newSynth.isSupported('voice'):
+			if globalVars.settingsRing: globalVars.settingsRing.updateSupportedSettings(newSynth)
+			else:  globalVars.settingsRing = SynthSettingsRing(newSynth)
 		config.conf["speech"]["synth"]=name
 		log.info("Loaded synthDriver %s"%name)
 		return True
@@ -306,7 +310,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		@rtype: l{tuple}
 		"""
 		result=[]
-		settings=[("rate",self.RateSetting),("pitch",self.PitchSetting),("volume",self.VolumeSetting),("inflection",self.InflectionSetting),("variant",self.VariantSetting),("voice",self.VoiceSetting)]
+		settings=(("voice",self.VoiceSetting),("variant",self.VariantSetting),("rate",self.RateSetting),("pitch",self.PitchSetting),("inflection",self.InflectionSetting),("volume",self.VolumeSetting))
 		for name,setting in settings:
 			if not getattr(self,"has%s"%name.capitalize(),False): continue
 			if hasattr(self,"%sMinStep"%name):
@@ -401,11 +405,11 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def _get_initialSettingsRingSetting (self):
 		if not self.isSupported("rate") and len(self.supportedSettings)>0:
 			#Choose first as an initial one
-			for s in self.supportedSettings: 
-				if s.availableInSynthSettingsRing: return s 
+			for i,s in enumerate(self.supportedSettings): 
+				if s.availableInSynthSettingsRing: return i
 			return None
-		for s in self.supportedSettings:
-			if s.name=="rate": return s
+		for i,s in enumerate(self.supportedSettings):
+			if s.name=="rate": return i
 		return None
 
 class VoiceInfo(object):
