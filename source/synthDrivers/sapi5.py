@@ -52,7 +52,7 @@ class SynthDriver(SynthDriver):
 				name=v[i].GetDescription()
 			except COMError:
 				log.warning("Could not get the voice info. Skipping...")
-			voices.append(synthDriverHandler.VoiceInfo(ID,name))
+			voices.append(VoiceInfo(ID,name))
 		return voices
 
 	def _get_rate(self):
