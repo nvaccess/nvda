@@ -189,7 +189,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@classmethod
 	def PitchSetting(cls,minStep=5):
 		"""Factory function for creating pitch setting."""
-		return NumericSynthSetting("pitch",_("Pitch"),minStep)
+		return NumericSynthSetting("pitch",_("&Pitch"),minStep)
 
 	@classmethod
 	def InflectionSetting(cls,minStep=5):
