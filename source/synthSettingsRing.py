@@ -1,6 +1,7 @@
 import baseObject
 import config
 import synthDriverHandler
+import queueHandler
 
 class SynthSetting(baseObject.AutoPropertyObject):
 	"""a numeric synth setting. Has functions to set, get, increase and decrease its value """
@@ -113,7 +114,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 		import ui
 		from scriptHandler import _isScriptRunning
 		#Save name of the current setting to restore ring position after reconstruction
-		prevName=self.settings[self._current].setting.name if self._current and hasattr(self,'settings') else None
+		prevName=self.settings[self._current].setting.name if self._current is not None and hasattr(self,'settings') else None
 		list = []
 		for s in synth.supportedSettings:
 			if not s.availableInSynthSettingsRing: continue
@@ -131,4 +132,4 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			self._current = synth.initialSettingsRingSetting
 			if _isScriptRunning:
 				#User changed some setting from ring and that setting no more exists. We have just reverted to first setting, so report this change to user
-				ui.message("%s %s" % (self.currentSettingName,self.currentSettingValue))
+				queueHandler.queueFunction(queueHandler.eventQueue,ui.message,"%s %s" % (self.currentSettingName,self.currentSettingValue))
