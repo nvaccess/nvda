@@ -297,10 +297,12 @@ class TextInfoRegion(Region):
 			log.debugWarning("", exc_info=True)
 
 	def update(self):
-		caret = self._getSelection()
-		caret.collapse()
+		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
+		# so use the original caret TextInfo for line and copy for caret.
+		self._line = line = self._getSelection()
+		line.collapse()
+		caret = line.copy()
 		# Get the line at the caret.
-		self._line = line = caret.copy()
 		line.expand(textInfos.UNIT_LINE)
 		# Not all text APIs support offsets, so we can't always get the offset of the caret relative to the start of the line.
 		# Therefore, grab the line in two parts.

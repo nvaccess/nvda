@@ -97,13 +97,16 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 
 
 
-	def _expandToLine(self,rangeObj):
-		sel=self.obj.WinwordSelectionObject
-		oldSel=sel.range
-		sel.SetRange(rangeObj.start,rangeObj.end)
-		sel.Expand(wdLine)
-		rangeObj.SetRange(sel.Start,sel.End)
-		sel.SetRange(oldSel.Start,oldSel.End)
+	def _expandToLineFromCaret(self):
+		info=winUser.getGUIThreadInfo(self.obj.windowThreadID)
+		caretPoint=ctypes.wintypes.POINT(info.rcCaret.left,info.rcCaret.top)
+		ctypes.windll.user32.ClientToScreen(self.obj.windowHandle,ctypes.byref(caretPoint))
+		caretY=caretPoint.y
+		clientLeft,clientTop,clientWidth,clientHeight=self.obj.location
+		tempRange=self.obj.WinwordDocumentObject.application.activeWindow.rangeFromPoint(clientLeft,caretY)
+		self._rangeObj.Start=tempRange.Start
+		tempRange=self.obj.WinwordDocumentObject.application.activeWindow.rangeFromPoint(clientLeft+clientWidth,caretY)
+		self._rangeObj.End=tempRange.Start
 
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textInfos.FormatField()
@@ -221,7 +224,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if unit==textInfos.UNIT_LINE and self.basePosition not in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			unit=textInfos.UNIT_SENTENCE
 		if unit==textInfos.UNIT_LINE:
-			self._expandToLine(self._rangeObj)
+			self._expandToLineFromCaret()
 		elif unit==textInfos.UNIT_CHARACTER:
 			self._rangeObj.moveEnd(wdCharacter,1)
 		elif unit in NVDAUnitsToWordUnits:
