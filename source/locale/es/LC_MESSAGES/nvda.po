@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3391\n"
-"POT-Creation-Date: 2009-11-27 12:01+Hora estándar romance\n"
-"PO-Revision-Date: 2009-11-27 12:06+0100\n"
+"Project-Id-Version: r3413\n"
+"POT-Creation-Date: 2009-12-04 22:54+Hora estándar romance\n"
+"PO-Revision-Date: 2009-12-04 23:02+0100\n"
 "Last-Translator: Juan Carlos Buño Suárez <quetzatl@eresmas.net>\n"
 "Language-Team: equipo de traducción al español de NVDA <Quetzatl@eresmas.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,19 +16,19 @@ msgstr ""
 "X-Poedit-Country: SPAIN\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
-#: IAccessibleHandler.py:672
+#: IAccessibleHandler.py:671
 msgid "Secure Desktop"
 msgstr "Escritorio seguro"
 
-#: NVDAObjects\IAccessible\__init__.py:1324
+#: NVDAObjects\IAccessible\__init__.py:1321
 msgid "Taskbar"
 msgstr "Barra de tareas"
 
-#: NVDAObjects\IAccessible\sysTreeView32.py:169
+#: NVDAObjects\IAccessible\sysTreeView32.py:179
 msgid "%s items"
 msgstr "%s elementos"
 
-#: NVDAObjects\UIA\__init__.py:423
+#: NVDAObjects\UIA\__init__.py:424
 msgid "invoke"
 msgstr "invocar"
 
@@ -41,15 +41,15 @@ msgstr "%d porciento"
 msgid "Desktop"
 msgstr "Escritorio"
 
-#: NVDAObjects\window\edit.py:530
+#: NVDAObjects\window\edit.py:533
 msgid "unknown"
 msgstr "desconocido"
 
-#: NVDAObjects\window\edit.py:532
+#: NVDAObjects\window\edit.py:535
 msgid "%s embedded object"
 msgstr "%s objeto empotrado"
 
-#: NVDAObjects\window\edit.py:534
+#: NVDAObjects\window\edit.py:537
 #: controlTypes.py:243
 msgid "embedded object"
 msgstr "objeto empotrado"
@@ -1083,18 +1083,18 @@ msgid "( )"
 msgstr "( )"
 
 #: braille.py:218
-#: speech.py:660
+#: speech.py:662
 msgid "not %s"
 msgstr "no %s"
 
 #: braille.py:230
-#: speech.py:666
+#: speech.py:668
 msgid "%s of %s"
 msgstr "%s de %s"
 
 #: braille.py:232
-#: speech.py:671
-#: speech.py:674
+#: speech.py:673
+#: speech.py:676
 msgid "level %s"
 msgstr "nivel %s"
 
@@ -1136,7 +1136,7 @@ msgid "carriage return"
 msgstr "Retorno de carro"
 
 #: characterSymbols.py:24
-#: keyUtils.py:120
+#: keyUtils.py:138
 msgid "space"
 msgstr "espacio"
 
@@ -1376,7 +1376,7 @@ msgid "tool tip"
 msgstr "consejo"
 
 #: controlTypes.py:198
-#: speech.py:887
+#: speech.py:888
 msgid "link"
 msgstr "enlace"
 
@@ -1796,7 +1796,7 @@ msgid "font size"
 msgstr "tamaño de la fuente"
 
 #: controlTypes.py:305
-#: speech.py:839
+#: speech.py:840
 msgid "bold"
 msgstr "negrita"
 
@@ -1813,12 +1813,12 @@ msgid "background color"
 msgstr "color de fondo"
 
 #: controlTypes.py:310
-#: speech.py:861
+#: speech.py:862
 msgid "superscript"
 msgstr "superíndice"
 
 #: controlTypes.py:311
-#: speech.py:863
+#: speech.py:864
 msgid "subscript"
 msgstr "subíndice"
 
@@ -2751,170 +2751,242 @@ msgid "Could not load the %s display."
 msgstr "No se pudo cargar la línea %s."
 
 #: keyUtils.py:111
+msgid "back"
+msgstr "atrás"
+
+#: keyUtils.py:112
+msgid "forward"
+msgstr "adelante"
+
+#: keyUtils.py:113
+msgid "refresh"
+msgstr "refrescar"
+
+#: keyUtils.py:114
+msgid "browser stop"
+msgstr "detener navegador"
+
+#: keyUtils.py:115
+msgid "search page"
+msgstr "buscar página"
+
+#: keyUtils.py:116
+msgid "favorites"
+msgstr "favoritos"
+
+#: keyUtils.py:117
+msgid "home page"
+msgstr "página de inicio"
+
+#: keyUtils.py:118
+msgid "mute"
+msgstr "silencio"
+
+#: keyUtils.py:119
+msgid "volume down"
+msgstr "bajar volumen"
+
+#: keyUtils.py:120
+msgid "volume up"
+msgstr "subir volumen"
+
+#: keyUtils.py:121
+msgid "next track"
+msgstr "pista siguiente"
+
+#: keyUtils.py:122
+msgid "previous track"
+msgstr "pista anterior"
+
+#: keyUtils.py:123
+msgid "stop"
+msgstr "detener"
+
+#: keyUtils.py:124
+msgid "play pause"
+msgstr "reproducir pausar"
+
+#: keyUtils.py:125
+msgid "email"
+msgstr "correo"
+
+#: keyUtils.py:126
+msgid "media player"
+msgstr "reproductor multimedia"
+
+#: keyUtils.py:127
+msgid "custom applications key one"
+msgstr "personalizar tecla de aplicaciones uno"
+
+#: keyUtils.py:128
+msgid "custom applications key two"
+msgstr "personalizar tecla de aplicaciones dos"
+
+#: keyUtils.py:129
 msgid "backspace"
 msgstr "retroceso"
 
-#: keyUtils.py:112
+#: keyUtils.py:130
 msgid "caps lock"
 msgstr "bloqueo mayúsculas"
 
-#: keyUtils.py:113
+#: keyUtils.py:131
 msgid "ctrl"
 msgstr "control"
 
-#: keyUtils.py:114
+#: keyUtils.py:132
 msgid "alt"
 msgstr "alt"
 
-#: keyUtils.py:115
+#: keyUtils.py:133
 msgid "shift"
 msgstr "shift"
 
-#: keyUtils.py:116
+#: keyUtils.py:134
 msgid "windows"
 msgstr "windows"
 
-#: keyUtils.py:117
+#: keyUtils.py:135
 msgid "enter"
 msgstr "intro"
 
-#: keyUtils.py:118
+#: keyUtils.py:136
 msgid "numpad enter"
 msgstr "intro teclado numérico"
 
-#: keyUtils.py:119
+#: keyUtils.py:137
 msgid "escape"
 msgstr "escape"
 
-#: keyUtils.py:121
+#: keyUtils.py:139
 msgid "page up"
 msgstr "retroceso página"
 
-#: keyUtils.py:122
+#: keyUtils.py:140
 msgid "page down"
 msgstr "avance página"
 
-#: keyUtils.py:123
+#: keyUtils.py:141
 msgid "end"
 msgstr "fin"
 
-#: keyUtils.py:124
+#: keyUtils.py:142
 msgid "home"
 msgstr "inicio"
 
-#: keyUtils.py:125
+#: keyUtils.py:143
 msgid "delete"
 msgstr "suprimir"
 
-#: keyUtils.py:126
+#: keyUtils.py:144
 msgid "left arrow"
 msgstr "flecha izquierda"
 
-#: keyUtils.py:127
+#: keyUtils.py:145
 msgid "right arrow"
 msgstr "flecha derecha"
 
-#: keyUtils.py:128
+#: keyUtils.py:146
 msgid "up arrow"
 msgstr "flecha arriba"
 
-#: keyUtils.py:129
+#: keyUtils.py:147
 msgid "down arrow"
 msgstr "flecha abajo"
 
-#: keyUtils.py:130
+#: keyUtils.py:148
 msgid "applications"
 msgstr "aplicaciones"
 
-#: keyUtils.py:131
+#: keyUtils.py:149
 msgid "num lock"
 msgstr "bloqueo numérico"
 
-#: keyUtils.py:132
+#: keyUtils.py:150
 msgid "snapshot"
 msgstr "Imprimir pantalla"
 
-#: keyUtils.py:133
+#: keyUtils.py:151
 msgid "scroll lock"
 msgstr "Bloqueo de Desplazamiento"
 
-#: keyUtils.py:134
+#: keyUtils.py:152
 msgid "numpad left"
 msgstr "izquierda teclado numérico"
 
-#: keyUtils.py:135
+#: keyUtils.py:153
 msgid "numpad right"
 msgstr "derecha teclado numérico"
 
-#: keyUtils.py:136
+#: keyUtils.py:154
 msgid "numpad up"
 msgstr "arriba teclado numérico"
 
-#: keyUtils.py:137
+#: keyUtils.py:155
 msgid "numpad down"
 msgstr "abajo teclado numérico"
 
-#: keyUtils.py:138
+#: keyUtils.py:156
 msgid "numpad page up"
 msgstr "retroceso página teclado numérico"
 
-#: keyUtils.py:139
+#: keyUtils.py:157
 msgid "numpad page down"
 msgstr "avance Página teclado numérico"
 
-#: keyUtils.py:140
+#: keyUtils.py:158
 msgid "numpad end"
 msgstr "fin teclado numérico"
 
-#: keyUtils.py:141
+#: keyUtils.py:159
 msgid "numpad home"
 msgstr "Inicio teclado numérico"
 
-#: keyUtils.py:142
+#: keyUtils.py:160
 msgid "numpad slash"
 msgstr "barra teclado numérico"
 
-#: keyUtils.py:143
+#: keyUtils.py:161
 msgid "numpad star"
 msgstr "asterisco teclado numérico"
 
-#: keyUtils.py:144
+#: keyUtils.py:162
 msgid "numpad minus"
 msgstr "menos teclado numérico"
 
-#: keyUtils.py:145
+#: keyUtils.py:163
 msgid "numpad plus"
 msgstr "más teclado numérico"
 
-#: keyUtils.py:146
+#: keyUtils.py:164
 msgid "left control"
 msgstr "control izquierda"
 
-#: keyUtils.py:147
+#: keyUtils.py:165
 msgid "right control"
 msgstr "control derecha"
 
-#: keyUtils.py:148
+#: keyUtils.py:166
 msgid "left windows"
 msgstr "windows izquierda"
 
-#: keyUtils.py:149
+#: keyUtils.py:167
 msgid "left shift"
 msgstr "shift izquierda"
 
-#: keyUtils.py:150
+#: keyUtils.py:168
 msgid "right shift"
 msgstr "shift derecha"
 
-#: keyUtils.py:151
+#: keyUtils.py:169
 msgid "left alt"
 msgstr "alt izquierda"
 
-#: keyUtils.py:152
+#: keyUtils.py:170
 msgid "right alt"
 msgstr "alt derecha"
 
-#: keyUtils.py:153
+#: keyUtils.py:171
 msgid "right windows"
 msgstr "windows derecha"
 
@@ -2986,17 +3058,17 @@ msgstr "Deseleccionando %s"
 msgid "selection removed"
 msgstr "selección eliminada"
 
-#: speech.py:658
+#: speech.py:660
 msgid "done dragging"
 msgstr "arrastrado hecho"
 
 #: speech.py:685
-#: speech.py:928
+#: speech.py:929
 msgid "row %s"
 msgstr "fila %s"
 
 #: speech.py:688
-#: speech.py:924
+#: speech.py:925
 msgid "column %s"
 msgstr "columna %s"
 
@@ -3012,104 +3084,104 @@ msgstr "con %s columnas"
 msgid "with %s rows"
 msgstr "con %s filas"
 
-#: speech.py:759
-#: speech.py:763
-#: speech.py:767
-#: speech.py:775
-#: speech.py:786
-#: speech.py:887
+#: speech.py:760
+#: speech.py:764
+#: speech.py:768
+#: speech.py:776
+#: speech.py:787
+#: speech.py:888
 msgid "out of %s"
 msgstr "fuera de %s"
 
-#: speech.py:761
+#: speech.py:762
 msgid "with %s items"
 msgstr " con %s elementos"
 
-#: speech.py:784
+#: speech.py:785
 msgid "in %s"
 msgstr " en %s"
 
-#: speech.py:804
+#: speech.py:805
 msgid "page %s"
 msgstr "página %s"
 
-#: speech.py:811
+#: speech.py:812
 msgid "style %s"
 msgstr "estilo %s"
 
-#: speech.py:813
+#: speech.py:814
 msgid "default style"
 msgstr "estilo predeterminado"
 
-#: speech.py:833
+#: speech.py:834
 msgid "line %s"
 msgstr "línea %s"
 
-#: speech.py:839
+#: speech.py:840
 msgid "no bold"
 msgstr "no hay negritas"
 
-#: speech.py:844
+#: speech.py:845
 msgid "italic"
 msgstr "cursiva"
 
-#: speech.py:844
+#: speech.py:845
 msgid "no italic"
 msgstr "no hay cursivas"
 
-#: speech.py:849
+#: speech.py:850
 msgid "no strikethrough"
 msgstr "no hay tachado"
 
-#: speech.py:849
+#: speech.py:850
 msgid "strikethrough"
 msgstr "tachado"
 
-#: speech.py:854
+#: speech.py:855
 msgid "not underlined"
 msgstr "no hay subrayado"
 
-#: speech.py:854
+#: speech.py:855
 msgid "underlined"
 msgstr "subrayado"
 
-#: speech.py:865
+#: speech.py:866
 msgid "baseline"
 msgstr "línea de base"
 
-#: speech.py:873
+#: speech.py:874
 msgid "align left"
 msgstr "alineación a la izquierda"
 
-#: speech.py:875
+#: speech.py:876
 msgid "align center"
 msgstr "alineación al centro"
 
-#: speech.py:877
+#: speech.py:878
 msgid "align right"
 msgstr "alineación a la derecha"
 
-#: speech.py:879
+#: speech.py:880
 msgid "align justify"
 msgstr "alineación justificar"
 
-#: speech.py:881
+#: speech.py:882
 msgid "align default"
 msgstr "alineación predeterminada"
 
-#: speech.py:894
+#: speech.py:895
 msgid "spelling error"
 msgstr "error de ortografía"
 
-#: speech.py:896
+#: speech.py:897
 msgid "out of spelling error"
 msgstr "fuera de error de ortografía"
 
-#: speech.py:910
+#: speech.py:911
 msgid "out of table"
 msgstr "fuera de tabla"
 
-#: speech.py:919
+#: speech.py:920
 msgid "table with %s columns and %s rows"
 msgstr "tabla con %s columnas y %s filas"
 

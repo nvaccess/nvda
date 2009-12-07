@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3396\n"
-"POT-Creation-Date: 2007-03-03 09:45+Normaaliaika\n"
-"PO-Revision-Date: 2009-11-29 13:31+0200\n"
+"Project-Id-Version: r3408\n"
+"POT-Creation-Date: 2007-03-04 15:37+Normaaliaika\n"
+"PO-Revision-Date: 2009-12-03 13:17+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -13,11 +13,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: IAccessibleHandler.py:672
+#: IAccessibleHandler.py:671
 msgid "Secure Desktop"
 msgstr "Suojattu työpöytä"
 
-#: NVDAObjects\IAccessible\__init__.py:1324
+#: NVDAObjects\IAccessible\__init__.py:1321
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
 
@@ -25,7 +25,7 @@ msgstr "Tehtäväpalkki"
 msgid "%s items"
 msgstr "%s kohtaa"
 
-#: NVDAObjects\UIA\__init__.py:423
+#: NVDAObjects\UIA\__init__.py:424
 msgid "invoke"
 msgstr "käynnistä"
 
@@ -37,15 +37,15 @@ msgstr "%d prosenttia"
 msgid "Desktop"
 msgstr "Työpöytä"
 
-#: NVDAObjects\window\edit.py:530
+#: NVDAObjects\window\edit.py:533
 msgid "unknown"
 msgstr "tuntematon"
 
-#: NVDAObjects\window\edit.py:532
+#: NVDAObjects\window\edit.py:535
 msgid "%s embedded object"
 msgstr "%s upotettu objekti"
 
-#: NVDAObjects\window\edit.py:534 controlTypes.py:243
+#: NVDAObjects\window\edit.py:537 controlTypes.py:243
 msgid "embedded object"
 msgstr "upotettu objekti"
 
@@ -1302,7 +1302,7 @@ msgstr "sivunvaihto"
 msgid "carriage return"
 msgstr "rivinvaihto"
 
-#: characterSymbols.py:24 keyUtils.py:120
+#: characterSymbols.py:24 keyUtils.py:138
 msgid "space"
 msgstr "väli"
 
@@ -1538,7 +1538,7 @@ msgstr "kuplailmoitus"
 msgid "tool tip"
 msgstr "työkaluvihje"
 
-#: controlTypes.py:198 speech.py:887
+#: controlTypes.py:198 speech.py:888
 msgid "link"
 msgstr "linkki"
 
@@ -1950,7 +1950,7 @@ msgstr "fontti"
 msgid "font size"
 msgstr "fonttikoko"
 
-#: controlTypes.py:305 speech.py:839
+#: controlTypes.py:305 speech.py:840
 msgid "bold"
 msgstr "lihavointi"
 
@@ -1966,11 +1966,11 @@ msgstr "edustan väri"
 msgid "background color"
 msgstr "taustaväri"
 
-#: controlTypes.py:310 speech.py:861
+#: controlTypes.py:310 speech.py:862
 msgid "superscript"
 msgstr "yläindeksi"
 
-#: controlTypes.py:311 speech.py:863
+#: controlTypes.py:311 speech.py:864
 msgid "subscript"
 msgstr "alaindeksi"
 
@@ -2941,170 +2941,242 @@ msgid "Could not load the %s display."
 msgstr "Pistenäyttöä %s ei voitu ladata."
 
 #: keyUtils.py:111
+msgid "back"
+msgstr "edellinen"
+
+#: keyUtils.py:112
+msgid "forward"
+msgstr "seuraava"
+
+#: keyUtils.py:113
+msgid "refresh"
+msgstr "päivitä"
+
+#: keyUtils.py:114
+msgid "browser stop"
+msgstr "keskeytä sivun lataus"
+
+#: keyUtils.py:115
+msgid "search page"
+msgstr "hakusivu"
+
+#: keyUtils.py:116
+msgid "favorites"
+msgstr "suosikit"
+
+#: keyUtils.py:117
+msgid "home page"
+msgstr "kotisivu"
+
+#: keyUtils.py:118
+msgid "mute"
+msgstr "mykistä"
+
+#: keyUtils.py:119
+msgid "volume down"
+msgstr "vähennä äänenvoimakkuutta"
+
+#: keyUtils.py:120
+msgid "volume up"
+msgstr "lisää äänenvoimakkuutta"
+
+#: keyUtils.py:121
+msgid "next track"
+msgstr "seuraava kappale"
+
+#: keyUtils.py:122
+msgid "previous track"
+msgstr "edellinen kappale"
+
+#: keyUtils.py:123
+msgid "stop"
+msgstr "keskeytä"
+
+#: keyUtils.py:124
+msgid "play pause"
+msgstr "toista pysäytä"
+
+#: keyUtils.py:125
+msgid "email"
+msgstr "sähköposti"
+
+#: keyUtils.py:126
+msgid "media player"
+msgstr "mediasoitin"
+
+#: keyUtils.py:127
+msgid "custom applications key one"
+msgstr "mukautettava sovellusnäppäin yksi"
+
+#: keyUtils.py:128
+msgid "custom applications key two"
+msgstr "mukautettava sovellusnäppäin kaksi"
+
+#: keyUtils.py:129
 msgid "backspace"
 msgstr "askelpalautin"
 
-#: keyUtils.py:112
+#: keyUtils.py:130
 msgid "caps lock"
 msgstr "caps lock"
 
-#: keyUtils.py:113
+#: keyUtils.py:131
 msgid "ctrl"
 msgstr "control"
 
-#: keyUtils.py:114
+#: keyUtils.py:132
 msgid "alt"
 msgstr "alt"
 
-#: keyUtils.py:115
+#: keyUtils.py:133
 msgid "shift"
 msgstr "vaihto"
 
-#: keyUtils.py:116
+#: keyUtils.py:134
 msgid "windows"
 msgstr "windows"
 
-#: keyUtils.py:117
+#: keyUtils.py:135
 msgid "enter"
 msgstr "enter"
 
-#: keyUtils.py:118
+#: keyUtils.py:136
 msgid "numpad enter"
 msgstr "laskimen enter"
 
-#: keyUtils.py:119
+#: keyUtils.py:137
 msgid "escape"
 msgstr "esc"
 
-#: keyUtils.py:121
+#: keyUtils.py:139
 msgid "page up"
 msgstr "sivu ylös"
 
-#: keyUtils.py:122
+#: keyUtils.py:140
 msgid "page down"
 msgstr "sivu alas"
 
-#: keyUtils.py:123
+#: keyUtils.py:141
 msgid "end"
 msgstr "end"
 
-#: keyUtils.py:124
+#: keyUtils.py:142
 msgid "home"
 msgstr "home"
 
-#: keyUtils.py:125
+#: keyUtils.py:143
 msgid "delete"
 msgstr "del"
 
-#: keyUtils.py:126
+#: keyUtils.py:144
 msgid "left arrow"
 msgstr "vasen"
 
-#: keyUtils.py:127
+#: keyUtils.py:145
 msgid "right arrow"
 msgstr "oikea"
 
-#: keyUtils.py:128
+#: keyUtils.py:146
 msgid "up arrow"
 msgstr "ylös"
 
-#: keyUtils.py:129
+#: keyUtils.py:147
 msgid "down arrow"
 msgstr "alas"
 
-#: keyUtils.py:130
+#: keyUtils.py:148
 msgid "applications"
 msgstr "sovellukset"
 
-#: keyUtils.py:131
+#: keyUtils.py:149
 msgid "num lock"
 msgstr "num lock"
 
-#: keyUtils.py:132
+#: keyUtils.py:150
 msgid "snapshot"
 msgstr "print screen"
 
-#: keyUtils.py:133
+#: keyUtils.py:151
 msgid "scroll lock"
 msgstr "scroll lock"
 
-#: keyUtils.py:134
+#: keyUtils.py:152
 msgid "numpad left"
 msgstr "laskimen vasen"
 
-#: keyUtils.py:135
+#: keyUtils.py:153
 msgid "numpad right"
 msgstr "laskimen oikea"
 
-#: keyUtils.py:136
+#: keyUtils.py:154
 msgid "numpad up"
 msgstr "laskimen ylös"
 
-#: keyUtils.py:137
+#: keyUtils.py:155
 msgid "numpad down"
 msgstr "laskimen alas"
 
-#: keyUtils.py:138
+#: keyUtils.py:156
 msgid "numpad page up"
 msgstr "laskimen sivu ylös"
 
-#: keyUtils.py:139
+#: keyUtils.py:157
 msgid "numpad page down"
 msgstr "laskimen sivu alas"
 
-#: keyUtils.py:140
+#: keyUtils.py:158
 msgid "numpad end"
 msgstr "laskimen end"
 
-#: keyUtils.py:141
+#: keyUtils.py:159
 msgid "numpad home"
 msgstr "laskimen home"
 
-#: keyUtils.py:142
+#: keyUtils.py:160
 msgid "numpad slash"
 msgstr "laskimen kautta"
 
-#: keyUtils.py:143
+#: keyUtils.py:161
 msgid "numpad star"
 msgstr "laskimen tähti"
 
-#: keyUtils.py:144
+#: keyUtils.py:162
 msgid "numpad minus"
 msgstr "laskimen miinus"
 
-#: keyUtils.py:145
+#: keyUtils.py:163
 msgid "numpad plus"
 msgstr "laskimen plus"
 
-#: keyUtils.py:146
+#: keyUtils.py:164
 msgid "left control"
 msgstr "vasen control"
 
-#: keyUtils.py:147
+#: keyUtils.py:165
 msgid "right control"
 msgstr "oikea control"
 
-#: keyUtils.py:148
+#: keyUtils.py:166
 msgid "left windows"
 msgstr "vasen windows"
 
-#: keyUtils.py:149
+#: keyUtils.py:167
 msgid "left shift"
 msgstr "vasen vaihto"
 
-#: keyUtils.py:150
+#: keyUtils.py:168
 msgid "right shift"
 msgstr "oikea vaihto"
 
-#: keyUtils.py:151
+#: keyUtils.py:169
 msgid "left alt"
 msgstr "vasen alt"
 
-#: keyUtils.py:152
+#: keyUtils.py:170
 msgid "right alt"
 msgstr "oikea alt"
 
-#: keyUtils.py:153
+#: keyUtils.py:171
 msgid "right windows"
 msgstr "oikea windows"
 
@@ -3180,11 +3252,11 @@ msgstr "valinta peruttu"
 msgid "done dragging"
 msgstr "vedetty"
 
-#: speech.py:685 speech.py:928
+#: speech.py:685 speech.py:929
 msgid "row %s"
 msgstr "rivi %s"
 
-#: speech.py:688 speech.py:924
+#: speech.py:688 speech.py:925
 msgid "column %s"
 msgstr "sarake %s"
 
@@ -3200,100 +3272,100 @@ msgstr "jossa %s saraketta"
 msgid "with %s rows"
 msgstr "jossa %s riviä"
 
-#: speech.py:759 speech.py:763 speech.py:767 speech.py:775 speech.py:786
-#: speech.py:887
+#: speech.py:760 speech.py:764 speech.py:768 speech.py:776 speech.py:787
+#: speech.py:888
 msgid "out of %s"
 msgstr "%s loppuu"
 
-#: speech.py:761
+#: speech.py:762
 msgid "with %s items"
 msgstr "jossa %s kohdetta"
 
-#: speech.py:784
+#: speech.py:785
 msgid "in %s"
 msgstr "%s"
 
-#: speech.py:804
+#: speech.py:805
 msgid "page %s"
 msgstr "sivu %s"
 
-#: speech.py:811
+#: speech.py:812
 msgid "style %s"
 msgstr "tyyli %s"
 
-#: speech.py:813
+#: speech.py:814
 msgid "default style"
 msgstr "oletustyyli"
 
-#: speech.py:833
+#: speech.py:834
 msgid "line %s"
 msgstr "rivi %s"
 
-#: speech.py:839
+#: speech.py:840
 msgid "no bold"
 msgstr "ei lihavointia"
 
-#: speech.py:844
+#: speech.py:845
 msgid "italic"
 msgstr "kursiivi"
 
-#: speech.py:844
+#: speech.py:845
 msgid "no italic"
 msgstr "ei kursivointia"
 
-#: speech.py:849
+#: speech.py:850
 msgid "no strikethrough"
 msgstr "ei yliviivausta"
 
-#: speech.py:849
+#: speech.py:850
 msgid "strikethrough"
 msgstr "yliviivaus"
 
-#: speech.py:854
+#: speech.py:855
 msgid "not underlined"
 msgstr "ei alleviivausta"
 
-#: speech.py:854
+#: speech.py:855
 msgid "underlined"
 msgstr "alleviivattu"
 
-#: speech.py:865
+#: speech.py:866
 msgid "baseline"
 msgstr "perusviiva"
 
-#: speech.py:873
+#: speech.py:874
 msgid "align left"
 msgstr "tasaus vasemmalla"
 
-#: speech.py:875
+#: speech.py:876
 msgid "align center"
 msgstr "tasaus keskellä"
 
-#: speech.py:877
+#: speech.py:878
 msgid "align right"
 msgstr "tasaus oikealla"
 
-#: speech.py:879
+#: speech.py:880
 msgid "align justify"
 msgstr "tasaus molemmissa reunoissa"
 
-#: speech.py:881
+#: speech.py:882
 msgid "align default"
 msgstr "oletustasaus"
 
-#: speech.py:894
+#: speech.py:895
 msgid "spelling error"
 msgstr "kirjoitusvirhe"
 
-#: speech.py:896
+#: speech.py:897
 msgid "out of spelling error"
 msgstr "kirjoitusvirheen loppu"
 
-#: speech.py:910
+#: speech.py:911
 msgid "out of table"
 msgstr "taulukon loppu"
 
-#: speech.py:919
+#: speech.py:920
 msgid "table with %s columns and %s rows"
 msgstr "taulukko, jossa %s saraketta ja %s riviä"
 

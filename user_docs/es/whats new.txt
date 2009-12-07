@@ -6,12 +6,22 @@
 === Nuevas características ===
 	* NVDA ya no falla al arrancar en un sistema sin dispositivos de salida de audio. Obviamente, será necesario utilizar una línea braille o el Display synthesiser para la salida en este caso. (#425)
 	* Ha sido añadida una casilla de verificación Anunciar Zonas al diálogo de Opciones de formato de Documento que te permite configurar si NVDA debería anunciar zonas en documentos web. Para compatibilidad con la versión anterior, la opción está activada de forma predeterminada.
+	* Si verbalizar teclas de órdenes está activada NVDA ahora anunciará los nombres de las teclas multimedia (ex.: reproducir, detener, página de inicio, etc.) cuando sean presionadas. (#472)
+	* NVDA ahora anuncia la palabra que esté siendo eliminada cuando se presiona control+retroceso en controles que lo soporten. (#491)
+	* Las flechas de cursor ahora pueden ser utilizadas en la ventana del formateador Web para navegar y leer el texto. (#452)
+
 
 === Cambios ===
 
 === Corrección de Fallos ===
 	* NVDA ya no falla al arrancar si el soporte UI Automation parece estár disponible pero falla al inicializarse por alguna razón. (#483)
 	* Todo el contenido de una fila de una tabla ya no es anunciado a veces cuando se mueve el foco entre celdas en aplicaciones de Mozilla. (#482)
+	* NVDA ya no se retrasa durante un tiempo largo cuando se expanden elementos de la vista en árbol que contengan una cantidad muy grande de sub-elementos.
+	* Cuando se listan voces SAPI 5, NVDA ahora intenta detectar voces defectuosas y excluirlas del diálogo de Opciones de Voz y del grupo de Opciones de Sintetizador. Anteriormente, cuando había una voz problemática, el controlador SAPI 5 de NVDA fallaba algunas veces al iniciarse.
+	* Los modos virtuales ahora anuncian las teclas de atajo del objeto opción que se encuentra en el diálogo Presentación de Objetos. (#486)
+	* En los modos virtuales, las coordenadas de fila/columna ya no se leen incorrectamente por encabezados de fila y columna cuando el anunciado de tablas está desactivado.
+	* En los modos virtuales, las coordenadas de fila/columna ahora son correctamente leídas cuando abandonas una tabla y luego vuelves a entrar en la misma celda de la tabla sin visitar otra celda primero; ej.: presionando flecha arriba y luego flecha abajo sobre la primera celda de una tabla. (#378)
+
 
 == 2009.1 ==
 Lo más resaltable de esta release incluye el soporte para ediciones de 64 bit de Windows; soporte muy mejorado para los documentos de Microsoft Internet Explorer y de Adobe Reader; soporte para Windows 7; la lectura de las pantallas de  logon de Windows, control+alt+supr y el control de cuentas de usuario (UAC); y la capacidad para interactuar con contenidos de Adobe Flash y de Sun Java en páginas web. También hemos tenido varias correcciones significativas de estabilidad y mejoras a la experiencia de usuario general.
