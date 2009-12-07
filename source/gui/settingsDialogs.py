@@ -46,9 +46,9 @@ class SettingsDialog(wx.Dialog):
 		"""
 		super(SettingsDialog, self).__init__(parent, wx.ID_ANY, self.title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		settingsSizer=wx.BoxSizer(wx.VERTICAL)
-		self.makeSettings(settingsSizer)
-		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
+		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		self.makeSettings(self.settingsSizer)
+		mainSizer.Add(self.settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Fit(self)
@@ -215,6 +215,31 @@ class SynthesizerDialog(SettingsDialog):
 			return 
 		super(SynthesizerDialog, self).onOk(evt)
 
+class SynthSettingChanger(object):
+	"""Functor which acts as calback for GUI events."""
+
+	def __init__(self,setting):
+		self.setting=setting
+
+	def __call__(self,evt):
+		val=evt.GetSelection()
+		setattr(getSynth(),self.setting.name,val)
+
+class StringSynthSettingChanger(SynthSettingChanger):
+	"""Same as L{SynthSettingChanger} but handles combobox events."""
+	def __init__(self,setting,dialog):
+		self.dialog=dialog
+		super(StringSynthSettingChanger,self).__init__(setting)
+
+	def __call__(self,evt):
+		if self.setting.name=="voice":
+			# Cancel speech first so that the voice will change immediately instead of the change being queued.
+			speech.cancelSpeech()
+			changeVoice(getSynth(),getattr(self.dialog,"_%ss"%self.setting.name)[evt.GetSelection()].ID)
+			self.dialog.updateVoiceSettings(changedSetting=self.setting.name)
+		else:
+			setattr(getSynth(),self.setting.name,getattr(self.dialog,"_%ss"%self.setting.name)[evt.GetSelection()].ID)
+
 class VoiceSettingsDialog(SettingsDialog):
 	title = _("Voice settings")
 
@@ -223,70 +248,55 @@ class VoiceSettingsDialog(SettingsDialog):
 		slider.SetLineSize(minStep)
 		slider.SetPageSize(max(minStep, 10))
 
+	def makeSettingControl(self,setting):
+		"""Constructs appropriate GUI controls for given L{SynthSetting} such as label and slider.
+		@param setting: Setting to construct controls for
+		@type setting: L{SynthSetting}
+		@returns: WXSizer containing newly created controls.
+		@rtype: L{wx.BoxSizer}
+		"""
+		sizer=wx.BoxSizer(wx.HORIZONTAL)
+		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.i18nName)
+		slider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100,name="%s:"%setting.i18nName)
+		setattr(self,"%sSlider"%setting.name,slider)
+		slider.Bind(wx.EVT_SLIDER,SynthSettingChanger(setting))
+		self._setSliderStepSizes(slider,setting.minStep)
+		slider.SetValue(getattr(getSynth(),setting.name))
+		sizer.Add(label)
+		sizer.Add(slider)
+		if self.lastControl:
+			slider.MoveAfterInTabOrder(self.lastControl)
+		self.lastControl=slider
+		return sizer
+
+	def makeStringSettingControl(self,setting):
+		"""Same as L{makeSettingControl} but for string settings. Returns sizer with label and combobox."""
+		sizer=wx.BoxSizer(wx.HORIZONTAL)
+		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.i18nName)
+		synth=getSynth()
+		setattr(self,"_%ss"%setting.name,getattr(synth,"available%ss"%setting.name.capitalize()))
+		l=getattr(self,"_%ss"%setting.name)###
+		lCombo=wx.Choice(self,wx.ID_ANY,name="%s:"%setting.i18nName,choices=[x.name for x in l])
+		setattr(self,"%sList"%setting.name,lCombo)
+		try:
+			cur=getattr(synth,setting.name)
+			i=[x.ID for x in l].index(cur)
+			lCombo.SetSelection(i)
+		except ValueError:
+			pass
+		lCombo.Bind(wx.EVT_CHOICE,StringSynthSettingChanger(setting,self))
+		sizer.Add(label)
+		sizer.Add(lCombo)
+		if self.lastControl:
+			lCombo.MoveAfterInTabOrder(self.lastControl)
+		self.lastControl=lCombo
+		return sizer
+
 	def makeSettings(self, settingsSizer):
-		if getSynth().hasVoice:
-			sizer=wx.BoxSizer(wx.HORIZONTAL)
-			label=wx.StaticText(self,wx.ID_ANY,label=_("&Voice:"))
-			self._voices=getSynth().availableVoices
-			self.voiceList=wx.Choice(self,wx.ID_ANY,name="Voice:",choices=[x.name for x in self._voices])
-			try:
-				curVoice=getSynth().voice
-				voiceIndex=[x.ID for x in self._voices].index(curVoice)
-				self.voiceList.SetSelection(voiceIndex)
-			except ValueError:
-				pass
-			self.voiceList.Bind(wx.EVT_CHOICE,self.onVoiceChange)
-			sizer.Add(label)
-			sizer.Add(self.voiceList)
-			settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
-		if getSynth().hasVariant:
-			sizer=wx.BoxSizer(wx.HORIZONTAL)
-			label=wx.StaticText(self,wx.ID_ANY,label=_("V&ariant:"))
-			self._variants=getSynth().availableVariants
-			self.variantList=wx.Choice(self,wx.ID_ANY,name="Variant:",choices=[x.name for x in self._variants])
-			try:
-				curVariant=getSynth().variant
-				variantIndex=[x.ID for x in self._variants].index(curVariant)
-				self.variantList.SetSelection(variantIndex)
-			except ValueError:
-				pass
-			self.variantList.Bind(wx.EVT_CHOICE,self.onVariantChange)
-			sizer.Add(label)
-			sizer.Add(self.variantList)
-			settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
-		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label=_("&Rate:"))
-		self.rateSlider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100,name="Rate:")
-		self.rateSlider.Bind(wx.EVT_SLIDER,self.onRateChange)
-		self._setSliderStepSizes(self.rateSlider,getSynth().rateMinStep)
-		sizer.Add(label)
-		sizer.Add(self.rateSlider)
-		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
-		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label=_("&Pitch:"))
-		self.pitchSlider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100)
-		self._setSliderStepSizes(self.pitchSlider,getSynth().pitchMinStep)
-		self.pitchSlider.Bind(wx.EVT_SLIDER,self.onPitchChange)
-		sizer.Add(label)
-		sizer.Add(self.pitchSlider)
-		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
-		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label=_("&Inflection:"))
-		self.inflectionSlider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100)
-		self._setSliderStepSizes(self.inflectionSlider,getSynth().inflectionMinStep)
-		self.inflectionSlider.Bind(wx.EVT_SLIDER,self.onInflectionChange)
-		sizer.Add(label)
-		sizer.Add(self.inflectionSlider)
-		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
-		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label=_("V&olume:"))
-		self.volumeSlider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100)
-		self._setSliderStepSizes(self.volumeSlider,getSynth().volumeMinStep)
-		self.volumeSlider.Bind(wx.EVT_SLIDER,self.onVolumeChange)
-		sizer.Add(label)
-		sizer.Add(self.volumeSlider)
-		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
-		self._setVoiceParameters()
+		self.sizerDict={}
+		self.lastControl=None
+		#Create controls for Synth Settings
+		self.updateVoiceSettings()
 		self.punctuationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Speak all punctuation"))
 		self.punctuationCheckBox.SetValue(config.conf["speech"]["speakPunctuation"])
 		settingsSizer.Add(self.punctuationCheckBox,border=10,flag=wx.BOTTOM)
@@ -304,96 +314,61 @@ class VoiceSettingsDialog(SettingsDialog):
 		settingsSizer.Add(self.useSpellingFunctionalityCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
-		if hasattr(self,'voiceList'):
-			self.voiceList.SetFocus()
-			return
-		if hasattr(self,'variantList'):
-			self.variantList.SetFocus()
-			return
-		for s in (self.rateSlider,self.pitchSlider,self.inflectionSlider,self.volumeSlider):
-			if s.IsEnabled():
-				s.SetFocus()
-				return
-		self.punctuationCheckBox.SetFocus()
+		try:
+			setting=getSynth().supportedSettings[0]
+			control=getattr(self,"%sSlider"%setting.name) if isinstance(setting,NumericSynthSetting) else getattr(self,"%sList"%setting.name)
+			control.SetFocus()
+		except IndexError:
+			self.punctuationCheckBox.SetFocus()
 
-	def _setVoiceParameters(self):
-		if getSynth().hasRate:
-			self.rateSlider.Enable()
-			self.rateSlider.SetValue(getSynth().rate)
-		else:
-			self.rateSlider.Disable()
-		if getSynth().hasPitch:
-			self.pitchSlider.Enable()
-			self.pitchSlider.SetValue(getSynth().pitch)
-		else:
-			self.pitchSlider.Disable()
-		if getSynth().hasInflection:
-			self.inflectionSlider.Enable()
-			self.inflectionSlider.SetValue(getSynth().inflection)
-		else:
-			self.inflectionSlider.Disable()
-		if getSynth().hasVolume:
-			self.volumeSlider.Enable()
-			self.volumeSlider.SetValue(getSynth().volume)
-		else:
-			self.volumeSlider.Disable()
-
-	def onVoiceChange(self,evt):
-		changeVoice(getSynth(),self._voices[evt.GetSelection()].ID)
-		self._setVoiceParameters()
-
-	def onVariantChange(self,evt):
-		getSynth().variant=self._variants[evt.GetSelection()].ID
-
-	def onRateChange(self,evt):
-		val=evt.GetSelection()
-		getSynth().rate=val
-
-	def onPitchChange(self,evt):
-		val=evt.GetSelection()
-		getSynth().pitch=val
-
-	def onInflectionChange(self,evt):
-		val=evt.GetSelection()
-		getSynth().inflection=val
-
-	def onVolumeChange(self,evt):
-		val=evt.GetSelection()
-		getSynth().volume=val
+	def updateVoiceSettings(self, changedSetting=None):
+		"""Creates, hides or updates existing GUI controls for all of supported settings."""
+		synth=getSynth()
+		#firstly check already created options
+		for name,sizer in self.sizerDict.iteritems():
+			if name == changedSetting:
+				# Changing a setting shouldn't cause that setting itself to disappear.
+				continue
+			if not synth.isSupported(name):
+				self.settingsSizer.Hide(sizer)
+		#Create new controls, update already existing
+		for setting in synth.supportedSettings:
+			if setting.name == changedSetting:
+				# Changing a setting shouldn't cause that setting's own values to change.
+				continue
+			b=isinstance(setting,NumericSynthSetting)
+			if setting.name in self.sizerDict: #update a value
+				self.settingsSizer.Show(self.sizerDict[setting.name])
+				if b:
+					getattr(self,"%sSlider"%setting.name).SetValue(getattr(synth,setting.name))
+				else:
+					l=getattr(self,"_%ss"%setting.name)
+					lCombo=getattr(self,"%sList"%setting.name)
+					try:
+						cur=getattr(synth,setting.name)
+						i=[x.ID for x in l].index(cur)
+						lCombo.SetSelection(i)
+					except ValueError:
+						pass
+			else: #create a new control
+				settingMaker=self.makeSettingControl if b else self.makeStringSettingControl
+				s=settingMaker(setting)
+				self.sizerDict[setting.name]=s
+				self.settingsSizer.Insert(len(self.sizerDict)-1,s,border=10,flag=wx.BOTTOM)
+		#Update graphical layout of the dialog
+		self.settingsSizer.Layout()
 
 	def onCancel(self,evt):
-		#unbind voice and variant change events as wx closes combo boxes on cancel
-		if getSynth().hasVoice:
-			self.voiceList.Unbind(wx.EVT_CHOICE)
-		if getSynth().hasVariant:
-			self.variantList.Unbind(wx.EVT_CHOICE)
-		if getSynth().hasVoice:
-			changeVoice(getSynth(),config.conf["speech"][getSynth().name]["voice"])
-		if getSynth().hasVariant:
-			getSynth().variant=config.conf["speech"][getSynth().name]["variant"]
-		if getSynth().hasRate:
-			getSynth().rate=config.conf["speech"][getSynth().name]["rate"]
-		if getSynth().hasPitch:
-			getSynth().pitch=config.conf["speech"][getSynth().name]["pitch"]
-		if getSynth().hasInflection:
-			getSynth().inflection=config.conf["speech"][getSynth().name]["inflection"]
-		if getSynth().hasVolume:
-			getSynth().volume=config.conf["speech"][getSynth().name]["volume"]
+		#unbind change events for string settings as wx closes combo boxes on cancel
+		for setting in getSynth().supportedSettings:
+			if isinstance(setting,NumericSynthSetting): continue
+			getattr(self,"%sList"%setting.name).Unbind(wx.EVT_CHOICE)
+		#restore settings
+		getSynth().loadSettings()
 		super(VoiceSettingsDialog, self).onCancel(evt)
 
 	def onOk(self,evt):
-		if getSynth().hasVoice:
-			config.conf["speech"][getSynth().name]["voice"]=self._voices[self.voiceList.GetSelection()].ID
-		if getSynth().hasVariant:
-			config.conf["speech"][getSynth().name]["variant"]=self._variants[self.variantList.GetSelection()].ID
-		if getSynth().hasRate:
-			config.conf["speech"][getSynth().name]["rate"]=self.rateSlider.GetValue()
-		if getSynth().hasPitch:
-			config.conf["speech"][getSynth().name]["pitch"]=self.pitchSlider.GetValue()
-		if getSynth().hasInflection:
-			config.conf["speech"][getSynth().name]["inflection"]=self.inflectionSlider.GetValue()
-		if getSynth().hasVolume:
-			config.conf["speech"][getSynth().name]["volume"]=self.volumeSlider.GetValue()
+		getSynth().saveSettings()
 		config.conf["speech"]["speakPunctuation"]=self.punctuationCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["raisePitchForCapitals"]=self.raisePitchForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()

@@ -1,6 +1,6 @@
 #synthDrivers/espeak.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -8,19 +8,14 @@ import _espeak
 import Queue
 import threading
 import languageHandler
-import synthDriverHandler
+from synthDriverHandler import SynthDriver,VoiceInfo
 from logHandler import log
 
-class SynthDriver(synthDriverHandler.SynthDriver):
+class SynthDriver(SynthDriver):
 	name = "espeak"
 	description = "eSpeak"
 
-	hasVoice=True
-	hasPitch=True
-	hasRate=True
-	hasVolume=True
-	hasVariant=True
-	hasInflection=True
+	supportedSettings=(SynthDriver.VoiceSetting(),SynthDriver.VariantSetting(),SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.InflectionSetting(),SynthDriver.VolumeSetting())
 
 	@classmethod
 	def check(cls):
@@ -82,7 +77,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		_espeak.setParameter(_espeak.espeakVOLUME,volume,0)
 
 	def _getAvailableVoices(self):
-		return [synthDriverHandler.VoiceInfo(voice.identifier, "%s (%s)" % (voice.name, voice.identifier)) for voice in _espeak.getVoiceList()]
+		return [VoiceInfo(voice.identifier, "%s (%s)" % (voice.name, voice.identifier)) for voice in _espeak.getVoiceList()]
 
 	def _get_voice(self):
 		curVoice = _espeak.getCurrentVoice()
@@ -109,4 +104,4 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		_espeak.setVoiceAndVariant(variant=val)
 
 	def _getAvailableVariants(self):
-		return [synthDriverHandler.VoiceInfo(ID, name) for ID, name in self._variantDict.iteritems()]
+		return [VoiceInfo(ID, name) for ID, name in self._variantDict.iteritems()]
