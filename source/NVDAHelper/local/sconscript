@@ -1,9 +1,22 @@
-Import(['env','vbufRPCStubs','nvdaControllerRPCStubs'])
+Import([
+	'env',
+	'vbufRPCStubs',
+	'nvdaControllerRPCStubs',
+])
 
 localLib=env.SharedLibrary(
 	target="nvdaHelperLocal",
-	source=["nvdaHelperLocal.cpp","beeps.cpp",vbufRPCStubs[1],'rpcSrv.cpp','nvdaController.c',nvdaControllerRPCStubs[2]],
-	LIBS=["rpcrt4"],
+	source=[
+		"nvdaHelperLocal.cpp",
+		"beeps.cpp",
+		vbufRPCStubs[1],
+		'rpcSrv.cpp',
+		'nvdaController.c',
+		nvdaControllerRPCStubs[2],
+	],
+	LIBS=[
+		"rpcrt4",
+	],
 )
 
 Return('localLib')

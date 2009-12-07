@@ -1,11 +1,25 @@
-Import(['env','vbufBaseStaticLib','ia2RPCStubs'])
+Import([
+	'env',
+	'vbufBaseStaticLib',
+	'ia2RPCStubs',
+])
 
 ia2utilsObj=env.Object("./ia2utils","#common/ia2utils.cpp")
 
 geckoBackendLib=env.SharedLibrary(
 	target="VBufBackend_gecko_ia2",
-	source=["gecko_ia2.cpp",ia2utilsObj,ia2RPCStubs[2]],
-	LIBS=[vbufBaseStaticLib,"user32","kernel32","oleacc","oleaut32"],
+	source=[
+		"gecko_ia2.cpp",
+		ia2utilsObj,
+		ia2RPCStubs[2],
+	],
+	LIBS=[
+		vbufBaseStaticLib,
+		"user32",
+		"kernel32",
+		"oleacc",
+		"oleaut32",
+	],
 )
 
 Return('geckoBackendLib')
