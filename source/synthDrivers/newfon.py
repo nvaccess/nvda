@@ -172,9 +172,9 @@ class SynthDriver(SynthDriver):
 	description = _("russian newfon synthesizer by Sergey Shishmintzev")
 	supportedSettings=(
 		SynthDriver.VoiceSetting(),
-		SynthSetting("language",_("&Language")),
+		SynthSetting("language",_("&Language:")),
 		SynthDriver.RateSetting(),
-		SynthSetting("accel",_("&Acceleration")),
+		SynthSetting("accel",_("&Acceleration:")),
 		SynthDriver.PitchSetting(),
 		SynthDriver.InflectionSetting(10),
 		SynthDriver.VolumeSetting(),
