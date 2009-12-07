@@ -62,11 +62,11 @@ A billentyûparancs megnyomásakor az NVDA bemondja az akkumulátor töltöttségi szi
 NVDA+5: a frissülõ tartalom jelzése
 Be és ki tudja kapcsolni a frissülõ információ bemondását (ez pl. a parancssorban hasznos)
 
-NVDA+6: áttekintõkurzor
-Az áttekintõkurzor be és kikapcsolása. Bekapcsolt állapotban az áttekintõkurzor követi a kurzor mozgását.
+NVDA+6: áttekintõ kurzor
+Az áttekintõ kurzor be és kikapcsolása. Bekapcsolt állapotban az áttekintõ kurzor követi a kurzor mozgását.
 
-NVDA+7: az aktív elem mozgatja a navigátorkurzort
-A navigátorkurzor mozgatásának ki és be kapcsolása Az aktív elem megváltozásakor.
+NVDA+7: az aktív elem mozgatja a navigátor kurzort
+A navigátor kurzor mozgatásának ki és be kapcsolása Az aktív elem megváltozásakor.
 
 NVDA+Tab: az aktuális vezérlõelem bemondása
 Bemondja az aktuális vezérlõelem nevét.
@@ -95,14 +95,13 @@ Csökkenti a jelenlegi hangbeállítást.
 NVDA+Le nyíl: folyamatos felolvasás
 A kurzor jelenlegi pozíciójától felolvassa a dokumentum vagy szerkesztõmezõ tartalmát.
 
-NVDA+f1: eleminformáció
-Különbözõ adatokat olvas fel a navigátorkurzor jelenlegi pozíciójánál lévõ elemrõl. Ez fõként fejlesztõknek lehet hasznos.
-
 Control+NVDA+c: a beállítások elmentése
 Az NVDA beállításainak elmentése.
 
 Control+NVDA+r: visszatérés egy elmentett beállításhoz
 Visszaállítja az NVDA beállításait az elmentett beállításoknak megfelelõen.
+NVDA+C: a vágólap tartalmának felolvasása
+A vágólapon található szöveg felolvasása
 
 Az NVDA ablakainak megjelenítése:
 
@@ -133,46 +132,43 @@ Az NVDA dokumentumformázási beállításainak megjelenítése.
 Control+NVDA+z: a Python konzol megjelenítése
 Megjeleníti a Python konzolt.
 
-A navigátorkurzor használata
+A navigátor kurzor használata
 
 NVDA+5 a numerikus billentyûzeten: az aktuális objektum bemondása
 Bemondja az aktuális objektum nevét.
 
-Shift+NVDA+5 a numerikus billentyûzeten: az aktuális objektum elhelyezkedése
+Shift+NVDA+Delete a numerikus billentyûzeten: az aktuális objektum elhelyezkedése
 Bemondja az aktuális objektum pozícióját és méretét.
  
-Control+Shift+NVDA+5 a számbillentyûzeten: az aktuális objektum szülõelemei
-Bemondja az aktuális objektum szülõelemeinek nevét.
+NVDA+Minusz a numerikus billentyûzeten: navigátor kurzor az aktuális elemhez
+A navigátor kurzort az aktuális vezérlõelemhez helyezi.
 
-NVDA+Minusz a numerikus billentyûzeten: navigátorkurzor az aktuális elemhez
-A navigátorkurzort az aktuális vezérlõelemhez helyezi.
+NVDA+8 a numerikus billentyûzeten: navigátor kurzor a szülõobjektumhoz
+A navigátor kurzor áthelyezése az aktuális elemet tartalmazó elemhez (szülõelem).
 
-NVDA+8 a numerikus billentyûzeten: navigátorkurzor a szülõobjektumhoz
-A navigátorkurzor áthelyezése az aktuális elemet tartalmazó elemhez (szülõelem).
+NVDA+2 a numerikus billentyûzeten: navigátor kurzor az elsõ gyermekelemhez
+A navigátor kurzor áthelyezése az aktuális elemben lévõ elsõ elemhez (gyermekelem).
 
-NVDA+2 a numerikus billentyûzeten: navigátorkurzor az elsõ gyermekelemhez
-A navigátorkurzor áthelyezése az aktuális elemben lévõ elsõ elemhez (gyermekelem).
+NVDA+4 a numerikus billentyûzeten: navigátor kurzor az elõzõ elemhez
+A navigátor kurzor áthelyezése az elõzõ, azonos szinten lévõ elemhez.
 
-NVDA+4 a numerikus billentyûzeten: navigátorkurzor az elõzõ elemhez
-A navigátorkurzor áthelyezése az elõzõ, azonos szinten lévõ elemhez.
+Shift+NVDA+4 a numerikus billentyûzeten: navigátor kurzor az elõzõ térbeli objektumhoz
+A navigátor kurzor áthelyezése az elõzõ térbeli objektumhoz, amely nem feltétlen azonos szinten helyezkedik el.
 
-Shift+NVDA+4 a numerikus billentyûzeten: navigátorkurzor az elõzõ térbeli objektumhoz
-A navigátorkurzor áthelyezése az elõzõ térbeli objektumhoz, amely nem feltétlen azonos szinten helyezkedik el.
+NVDA+6 a numerikus billentyûzeten: navigátor kurzor a következõ elemhez
+A navigátor kurzor áthelyezése a következõ, azonos szinten lévõ elemhez.
 
-NVDA+6 a numerikus billentyûzeten: navigátorkurzor a következõ elemhez
-A navigátorkurzor áthelyezése a következõ, azonos szinten lévõ elemhez.
+Shift+NVDA+6 a numerikus billentyûzeten: navigátor kurzor a következõ térbeli elemhez
+A navigátor kurzor áthelyezése az elõzõ térbeli elemhez, amely nem feltétlen azonos szinten helyezkedik el.
 
-Shift+NVDA+6 a numerikus billentyûzeten: navigátorkurzor a következõ térbeli elemhez
-A navigátorkurzor áthelyezése az elõzõ térbeli elemhez, amely nem feltétlen azonos szinten helyezkedik el.
-
-NVDA+Enter a numerikus billentyûzeten: alapértelmezett mûvelet a navigátorkurzorral
+NVDA+Enter a numerikus billentyûzeten: alapértelmezett mûvelet a navigátor kurzorral
 Végrehajtja az alapértelmezett mûveletet az aktuális elemen (pl. megnyom egy gombot, aktivál egy listaelemet).
 
 NVDA+Per a numerikus billentyûzeten: az egérmutató áthelyezése az aktuális elemhez
 Áthelyezi az egérmutatót az aktuális elemhez.
  
-NVDA+Csillag a numerikus billentyûzeten: a navigátorkurzor áthelyezése az egérmutatóhoz
-Áthelyezi a navigátorkurzort az egérmutatónál lévõ elemhez.
+NVDA+Csillag a numerikus billentyûzeten: a navigátor kurzor áthelyezése az egérmutatóhoz
+Áthelyezi a navigátor kurzort az egérmutatónál lévõ elemhez.
 
 perjel a numerikus billentyûzeten: bal egérkattintás
 Bal egérkattintást végez az aktuális egérmutató pozíciójánál.
@@ -180,58 +176,61 @@ Bal egérkattintást végez az aktuális egérmutató pozíciójánál.
 csillag a numerikus billentyûzeten: jobb egérkattintás
 Jobb egérkattintást végez az aktuális egérmutató pozíciójánál.
 
-NVDA+Plusz a numerikus billentyûzeten: folyamatos felolvasás a navigátorkurzorral
+NVDA+Plusz a numerikus billentyûzeten: folyamatos felolvasás a navigátor kurzorral
 Az aktuális objektumtól elkezdve folyamatosan felolvassa az objektumokat bejárási sorrendben.
 
-Minusz a numerikus billentyûzeten: áttekintõkurzor a kurzorhoz
-Az áttekintõkurzort a kurzorhoz helyezi.
+Minusz a numerikus billentyûzeten: áttekintõ kurzor a kurzorhoz
+Az áttekintõ kurzort a kurzorhoz helyezi.
 
-Control+Minusz a numerikus billentyûzeten: kurzor az áttekintõkurzorhoz
-A kurzort az áttekintõkurzorhoz helyezi.
+Control+Minusz a numerikus billentyûzeten: kurzor az áttekintõ kurzorhoz
+A kurzort az áttekintõ kurzorhoz helyezi.
 
-Plusz a numerikus billentyûzeten: folyamatos felolvasás az áttekintõkurzorral
-Egy elemen belül az áttekintõkurzor pozíciójától elkezdve folyamatos felolvasást végez.
+Plusz a numerikus billentyûzeten: folyamatos felolvasás az áttekintõ kurzorral
+Egy elemen belül az áttekintõ kurzor pozíciójától elkezdve folyamatos felolvasást végez.
 
 Elemek felolvasása
 
-1 a numerikus billentyûzeten: elõzõ karakter az áttekintõkurzorral
-Az áttekintõkurzort az elõzõ karakterhez helyezi.
+1 a numerikus billentyûzeten: elõzõ karakter az áttekintõ kurzorral
+Az áttekintõ kurzort az elõzõ karakterhez helyezi.
 
-Shift+1 a numerikus billentyûzeten: áttekintõkurzor a sor elejéhez
-Az áttekintõkurzort a sor elejéhez helyezi.
+Shift+1 a numerikus billentyûzeten: áttekintõ kurzor a sor elejéhez
+Az áttekintõ kurzort a sor elejéhez helyezi.
 
-2 a numerikus billentyûzeten: az aktuális karakter az áttekintõkurzornál
-Bemondja az áttekintõkurzornál lévõ karaktert.
+2 a numerikus billentyûzeten: az aktuális karakter az áttekintõ kurzornál
+Bemondja az áttekintõ kurzornál lévõ karaktert.
 
-3 a numerikus billentyûzeten: következõ karakter az áttekintõkurzorral
-Az áttekintõkurzort a következõ karakterhez helyezi.
+3 a numerikus billentyûzeten: következõ karakter az áttekintõ kurzorral
+Az áttekintõ kurzort a következõ karakterhez helyezi.
 
-Shift+3 a numerikus billentyûzeten: áttekintõkurzor a sor végéhez
-Az áttekintõkurzort a sor végéhez helyezi.
+Shift+3 a numerikus billentyûzeten: áttekintõ kurzor a sor végéhez
+Az áttekintõ kurzort a sor végéhez helyezi.
 
-4 a numerikus billentyûzeten: elõzõ szó az áttekintõkurzorral
-Az áttekintõkurzort az elõzõ szóhoz helyezi.
+4 a numerikus billentyûzeten: elõzõ szó az áttekintõ kurzorral
+Az áttekintõ kurzort az elõzõ szóhoz helyezi.
 
-5 a numerikus billentyûzeten: az aktuális szó az áttekintõkurzornál
-Bemondja az aktuális szót az áttekintõkurzornál.
+5 a numerikus billentyûzeten: az aktuális szó az áttekintõ kurzornál
+Bemondja az aktuális szót az áttekintõ kurzornál.
 
-6 a numerikus billentyûzeten: következõ szó az áttekintõkurzornál
-Az áttekintõkurzort a következõ szóhoz helyezi.
+6 a numerikus billentyûzeten: következõ szó az áttekintõ kurzornál
+Az áttekintõ kurzort a következõ szóhoz helyezi.
 
-7 a numerikus billentyûzeten: az elõzõ sor az áttekintõkurzorral
-Az áttekintõkurzort az elõzõ sorra helyezi.
+7 a numerikus billentyûzeten: az elõzõ sor az áttekintõ kurzorral
+Az áttekintõ kurzort az elõzõ sorra helyezi.
 
-Shift+7 a numerikus billentyûzeten: az elsõ sor az áttekintõkurzorral
-Az áttekintõkurzort a legelsõ sorhoz helyezi.
+Shift+7 a numerikus billentyûzeten: az elsõ sor az áttekintõ kurzorral
+Az áttekintõ kurzort a legelsõ sorhoz helyezi.
 
-8 a numerikus billentyûzeten: az aktuális sor az áttekintõkurzorral
-Bemondja az áttekintõkurzornál lévõ sort.
+8 a numerikus billentyûzeten: az aktuális sor az áttekintõ kurzorral
+Bemondja az áttekintõ kurzornál lévõ sort.
 
-9 a numerikus billentyûzeten: a következõ sor az áttekintõkurzorral
-Az áttekintõkurzort a következõ sorhoz helyezi.
+9 a numerikus billentyûzeten: a következõ sor az áttekintõ kurzorral
+Az áttekintõ kurzort a következõ sorhoz helyezi.
 
-Shift+9 a numerikus billentyûzeten: az utolsó sor az áttekintõkurzorral
-Az áttekintõkurzort az utolsó sorhoz helyezi.
+Shift+9 a numerikus billentyûzeten: az utolsó sor az áttekintõ kurzorral
+Az áttekintõ kurzort az utolsó sorhoz helyezi.
+
+NVDA+F9 szöveg megjelölése: Az áttekintõ kurzor aktuális helyén elhelyez egy kijelölési kezdõpontot.
+NVDA+f10 a megjelölt szöveg kimásolása: A kijelölési kezdõponttól a navigátor kurzor aktuális pozíciójáig a szöveget kijelöli, és a vágólapra másolja.
 
 Parancsok a virtuális kijelzõhöz Firefox3 használatakor (néhány parancs Internet Explorer vagy Firefox2 használatakor is mûködhet):
 
@@ -240,12 +239,14 @@ Be- és kikapcsolja a virtuális kijelzõ megkerülése módot.
 
 control+NVDA+f: keresés (control+f firefox2 illetve internet explorer használatakor)
 NVDA+f3: következõ keresése
-NVDA+f7: hivatkozáslista (nem mûködik firefox2 vagy internet explorer használatakor)
 NVDA+f5: a virtuális kijelzõ frissítése (nem mûködik Firefox2 vagy Internet Explorer használatakor)
+NVDA+V: képernyõelrendezés ki és bekapcsolása
+NVDA+F7: elemek listája
 
 Gyorsgombok a következõ elemre ugráshoz a virtuális kijelzõben (használja a parancsot a shift billentyûvel az elõzõ elemre való ugráshoz):
 b: gomb
 c: kombinált listamezõ
+d: jelzõpont
 e: szerkesztõmezõ
 f: ûrlapmezõ
 g: ábra
@@ -255,6 +256,8 @@ i: listaelem
 k: hivatkozás
 l: lista
 m: keret
+n: Hivatkozás nélküli szöveg
+o: beágyazott objektum
 q: idézetblokk
 r: választógomb
 s: elválasztó

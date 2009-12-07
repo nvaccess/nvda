@@ -12,10 +12,10 @@
 #include <string>
 #include <sstream>
 #include <ia2/ia2.h>
-#include <vbufBase/ia2utils.h>
+#include <common/ia2utils.h>
 #include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
-#include <vbufBase/debug.h>
+#include <common/debug.h>
 #include <vbufBase/utils.h>
 #include "gecko_ia2.h"
 
@@ -66,6 +66,7 @@ IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	DEBUG_MSG(L"calling IAccessible::QueryInterface with IID_IServiceProvider");
 	if((res=pacc->QueryInterface(IID_IServiceProvider,(void**)(&pserv)))!=S_OK) {
 		DEBUG_MSG(L"IAccessible::QueryInterface returned "<<res);
+		pacc->Release();
 		return NULL;
 	}  
 	DEBUG_MSG(L"IServiceProvider at "<<pserv);
@@ -74,9 +75,10 @@ IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	DEBUG_MSG(L"calling IServiceProvider::QueryService with IID_IAccessible2");
 	if((res=pserv->QueryService(IID_IAccessible,IID_IAccessible2,(void**)(&pacc2)))!=S_OK) {
 		DEBUG_MSG(L"IServiceProvider::QueryService returned "<<res);
-		return NULL;
-	} 
-	DEBUG_MSG(L"IAccessible2 at "<<pacc2);
+		pacc2=NULL;
+	}  else {
+		DEBUG_MSG(L"IAccessible2 at "<<pacc2);
+	}
 	DEBUG_MSG(L"releasingIServiceProvider");
 	pserv->Release();
 	return pacc2;
@@ -435,8 +437,8 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	}
 	//Get the child count
 	int childCount=0;
-	if(IA2TextIsUnneededSpace||role==ROLE_SYSTEM_COMBOBOX||(role==ROLE_SYSTEM_LIST&&!(states&STATE_SYSTEM_READONLY))||role==IA2_ROLE_UNKNOWN) {
-		DEBUG_MSG(L"This is either a list or combo box, force childCount to 0 as we don't want their children");
+	if(IA2TextIsUnneededSpace||role==ROLE_SYSTEM_COMBOBOX||(role==ROLE_SYSTEM_LIST&&!(states&STATE_SYSTEM_READONLY))||role==IA2_ROLE_UNKNOWN||role==IA2_ROLE_EMBEDDED_OBJECT) {
+		DEBUG_MSG(L"Forcing childCount to 0 as we don't want this node's children");
 		childCount=0;
 	} else {
 		DEBUG_MSG(L"get childCount with IAccessible::get_accChildCount");

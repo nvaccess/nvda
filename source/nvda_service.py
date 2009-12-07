@@ -1,3 +1,9 @@
+#nvda_service.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 from ctypes import *
 from ctypes.wintypes import *
 import threading
@@ -31,7 +37,11 @@ WTSUserName = 5
 nvdaExec = os.path.join(sys.prefix,"nvda.exe")
 slaveExec = os.path.join(sys.prefix,"nvda_slave.exe")
 
+isDebug = False
+
 def debug(msg):
+	if not isDebug:
+		return
 	try:
 		file(os.path.join(os.getenv("windir"), "temp", "nvda_service.log"), "a").write(msg + "\n")
 	except (OSError, IOError):
@@ -119,6 +129,7 @@ def executeProcess(desktop, token, executable, *argStrings):
 	return processInformation.hProcess
 
 def nvdaLauncher():
+	initDebug()
 	desktop = getInputDesktopName()
 	debug("launcher: starting with desktop %s" % desktop)
 	if os.path.basename(desktop) in (u"Default", u"Screen-saver"):
@@ -138,27 +149,33 @@ def nvdaLauncher():
 	windll.kernel32.CloseHandle(process)
 
 def startNVDA(desktop):
-	return executeProcess(desktop, None, nvdaExec, "-m", "--secure")
-
-def startNVDAUIAccess(session, desktop):
-	token = duplicateTokenPrimary(getLoggedOnUserToken(session))
-	uiAccess = ULONG(1)
-	windll.advapi32.SetTokenInformation(token, TokenUIAccess, byref(uiAccess), sizeof(ULONG))
-	process = executeProcess(desktop, token, nvdaExec, "-m")
-	windll.kernel32.CloseHandle(process)
+	token=duplicateTokenPrimary(getOwnToken())
+	windll.advapi32.SetTokenInformation(token,TokenUIAccess,byref(c_ulong(1)),sizeof(c_ulong))
+	args = [desktop, token, nvdaExec, "-m", "--no-sr-flag"]
+	if not isDebug:
+		args.append("--secure")
+	try:
+		return executeProcess(*args)
+	finally:
+		windll.kernel32.CloseHandle(token)
 
 def exitNVDA(desktop):
-	process = executeProcess(desktop, None, nvdaExec, "-q")
+	token=duplicateTokenPrimary(getOwnToken())
+	windll.advapi32.SetTokenInformation(token,TokenUIAccess,byref(c_ulong(1)),sizeof(c_ulong))
+	process = executeProcess(desktop, token, nvdaExec, "-q")
 	windll.kernel32.WaitForSingleObject(process, 10000)
 	windll.kernel32.CloseHandle(process)
+	windll.kernel32.CloseHandle(token)
 
 def isUserRunningNVDA(session):
-	token = getSessionSystemToken(session)
+	token = duplicateTokenPrimary(getSessionSystemToken(session))
+	windll.advapi32.SetTokenInformation(token,TokenUIAccess,byref(c_ulong(1)),sizeof(c_ulong))
 	process = executeProcess(ur"WinSta0\Default", token, nvdaExec, u"--check-running")
 	windll.kernel32.WaitForSingleObject(process, INFINITE)
 	exitCode = DWORD()
 	windll.kernel32.GetExitCodeProcess(process, byref(exitCode))
 	windll.kernel32.CloseHandle(process)
+	windll.kernel32.CloseHandle(token)
 	return exitCode.value == 0
 
 def isSessionLoggedOn(session):
@@ -180,6 +197,14 @@ def shouldStartOnLogonScreen():
 		return bool(_winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
 	except WindowsError:
 		return False
+
+def initDebug():
+	global isDebug
+	try:
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, ur"SOFTWARE\NVDA")
+		isDebug = bool(_winreg.QueryValueEx(k, u"serviceDebug")[0])
+	except WindowsError:
+		isDebug = False
 
 class NVDAService(win32serviceutil.ServiceFramework):
 
@@ -289,6 +314,7 @@ class NVDAService(win32serviceutil.ServiceFramework):
 				debug("error starting launcher: %s" % e)
 
 	def SvcDoRun(self):
+		initDebug()
 		debug("service starting")
 		self.isWindowsXP = sys.getwindowsversion()[0:2] == (5, 1)
 		self.exitEvent = threading.Event()

@@ -208,7 +208,8 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_LINE)
 			return start,end
 		except:
-			return super(IA2TextTextInfo,self)._getLineOffsets(offset)
+			log.debugWarning("IAccessibleText::textAtOffset failed",exc_info=True)
+			return offset,offset+1
 
 	def _getSentenceOffsets(self,offset):
 		try:
@@ -254,7 +255,7 @@ the NVDAObject for IAccessible
 	def windowHasExtraIAccessibles(cls,windowHandle):
 		"""Finds out whether this window has things such as a system menu / titleBar / scroll bars, which would be represented as extra IAccessibles"""
 		style=winUser.getWindowStyle(windowHandle)
-		return bool(style&winUser.WS_SYSMENU or style&winUser.WS_THICKFRAME or style&winUser.WS_CAPTION or style&winUser.WS_VSCROLL or style&winUser.WS_HSCROLL)
+		return bool(style&winUser.WS_SYSMENU or style&winUser.WS_SIZEBOX or style&winUser.WS_VSCROLL or style&winUser.WS_HSCROLL)
 
 	@classmethod
 	def findBestClass(cls,clsList,kwargs):
@@ -283,7 +284,7 @@ the NVDAObject for IAccessible
 			while windowHandle and winUser.getClassName(windowHandle)=="MozillaWindowClass":
 				windowHandle=winUser.getAncestor(windowHandle,winUser.GA_PARENT)
 		try:
-			raise ValueError #Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
+			Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
 		except:
 			Identity=None
 		if event_windowHandle is None and Identity and 'windowHandle' in Identity:
@@ -455,7 +456,8 @@ the NVDAObject for IAccessible
 					("control+extendedHome","moveByLine"),
 					("control+extendedEnd","moveByLine"),
 					("ExtendedDelete","delete"),
-					("Back","backspace"),
+					("Back","backspaceCharacter"),
+					("Control+Back","backspaceWord"),
 				]]
 		except:
 			pass
@@ -550,6 +552,16 @@ the NVDAObject for IAccessible
 			res=self.IAccessibleObject.accName(self.IAccessibleChildID)
 		except:
 			res=None
+		if not res and hasattr(self,'IAccessibleTextObject'):
+			try:
+				res=self.makeTextInfo(textInfos.POSITION_CARET).text
+				if res:
+					return
+			except (NotImplementedError, RuntimeError):
+				try:
+					res=self.makeTextInfo(textInfos.POSITION_ALL).text
+				except (NotImplementedError, RuntimeError):
+					res=None
 		return res if isinstance(res,basestring) and not res.isspace() else None
 
 	def _get_value(self):
@@ -1044,20 +1056,6 @@ the NVDAObject for IAccessible
 				child.speakDescendantObjects(hashList=hashList)
 			child=child.next
 
-	def event_show(self):
-		if not winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle) or not winUser.isWindowVisible(self.windowHandle) or controlTypes.STATE_INVISIBLE in self.states: 
-			return
-		try:
-			attribs=self.IAccessibleObject.attributes
-		except:
-			return
-		if attribs and ('live:polite' in attribs or 'live:assertive' in attribs): 
-			text=IAccessibleHandler.getRecursiveTextFromIAccessibleTextObject(self.IAccessibleObject)
-			if text and not text.isspace():
-				if 'live:rude' in attribs:
-					speech.cancelSpeech()
-				speech.speakMessage(text)
-
 	def event_gainFocus(self):
 		if hasattr(self,'IAccessibleTextObject'):
 			self.initAutoSelectDetection()
@@ -1231,10 +1229,21 @@ class InternetExplorerClient(IAccessible):
 	def _get_description(self):
 		return None
 
-class SysLink(IAccessible):
+class SysLinkClient(IAccessible):
 
 	def reportFocus(self):
 		pass
+
+class SysLink(IAccessible):
+
+	def _get_name(self):
+		#Workaround for #451 - explorer returns incorrect string length, thus it can contain garbage characters
+		name=super(SysLink,self).name
+		if name: 
+			#Remove any data after the null character
+			i=name.find('\0')
+			if i>=0: name=name[:i]
+		return name
 
 class TaskList(IAccessible):
 	isPresentableFocusAncestor = False
@@ -1332,7 +1341,6 @@ _staticMap={
 	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_LISTITEM):"mozilla.ListItem",
 	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
 	("MozillaWindowClass",oleacc.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
-	("MozillaUIWindowClass",IAccessibleHandler.IA2_ROLE_LABEL):"mozilla.Label",
 	("ConsoleWindowClass",oleacc.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
 	(None,oleacc.ROLE_SYSTEM_LIST):"List",
 	(None,oleacc.ROLE_SYSTEM_COMBOBOX):"ComboBox",
@@ -1348,7 +1356,8 @@ _staticMap={
 	("SysTreeView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysTreeView32.TreeViewItem",
 	("ATL:SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TWizardForm",oleacc.ROLE_SYSTEM_CLIENT):"Dialog",
-	("SysLink",oleacc.ROLE_SYSTEM_CLIENT):"SysLink",
+	("SysLink",oleacc.ROLE_SYSTEM_CLIENT):"SysLinkClient",
+	("SysLink",oleacc.ROLE_SYSTEM_LINK):"SysLink",
 	("#32771",oleacc.ROLE_SYSTEM_LIST):"TaskList",
 	("TaskSwitcherWnd",oleacc.ROLE_SYSTEM_LIST):"TaskList",
 	("#32771",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
@@ -1380,4 +1389,5 @@ _staticMap={
 	("QWidget",oleacc.ROLE_SYSTEM_IPADDRESS):"qt.LayeredPane",
 	("QWidget",oleacc.ROLE_SYSTEM_APPLICATION):"qt.Application",
 	("Shell_TrayWnd",oleacc.ROLE_SYSTEM_CLIENT):"Taskbar",
+	("Internet Explorer_TridentCmboBx",oleacc.ROLE_SYSTEM_COMBOBOX):"MSHTML.V6ComboBox",
 }

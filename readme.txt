@@ -6,15 +6,19 @@ http://www.nvda-project.org/
 == Dependencies ==
 The NVDA source depends on several other packages to run correctly, as described below. All directories mentioned are relative to the root of the NVDA source distribution/checkout. Please create any directories mentioned that don't already exist.
 
+If you are running a 64 bit version of Windows, you should install the 32 bit versions of any dependencies that provide both 32 bit and 64 bit versions.
+
 General dependencies:
 	* Python, version 2.6.2: http://www.python.org/
 	* comtypes, version 0.6.1 or later: http://www.sourceforge.net/projects/comtypes/
 	* wxPython unicode (for Python 2.6), version 2.8.9.1 or later: http://www.wxpython.org/
 	* Python Windows Extensions (for Python 2.6), build 212 or later: http://www.sourceforge.net/projects/pywin32/ 
-	* eSpeak, version 1.40.02 or later, Windows dll:
+	* eSpeak, version 1.41.01 or later, Windows dll:
 		* Official web site: http://espeak.sourceforge.net/
 		* The Windows dll is tricky to build, so a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
 		* Copy espeak.dll and espeak-data into the source\synthDrivers directory.
+	* Additional variants for eSpeak: http://www.nvda-project.org/espeak-variants/
+		* Extract the archive into the source\synthDrivers directory.
 	* IAccessible2, version 1.0.2.0 or later:
 		* The proxy dll and typelib are required.
 		* Pre-built versions have been provided for convenience at http://www.nvda-project.org/3rdParty/
@@ -39,6 +43,10 @@ General dependencies:
 		* You can build this yourself, although you need to have the Windows SDK installed, which is quite large. See source\nvdaHelper\building.txt for instructions.
 		* Alternatively, a pre-built version has been provided for convenience at http://www.nvda-project.org/nvdaHelper/
 			* Extract this archive into the root of your NVDA source distribution.
+	* Adobe AcrobatAccess interface typelib:
+		* You can build this yourself using midl from the idl located at http://www.adobe.com/devnet/acrobat/downloads/ClientFiles.zip
+		* Alternatively, a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/AcrobatAccess.tlb
+		* Copy AcrobatAccess.tlb into the source\typelibs directory.
 
 To use the brltty braille display driver:
 	* brlapi Python bindings, version 0.5.3 or later, distributed with BRLTTY for Windows, version 4.0-2 or later:
@@ -55,6 +63,7 @@ To build a binary version of NVDA:
 To build an installer:
 	* Nulsoft Install System, version 2.42 or later: http://nsis.sourceforge.net/
 	* NSIS UAC plug-in, version 0.0.11c or later: http://nsis.sourceforge.net/UAC_plug-in
+		* Copy UAC.dll into the installer directory.
 
 == Preparing the Source Tree ==
 Before you can run the NVDA source code, you must run generate.py located in the source directory.

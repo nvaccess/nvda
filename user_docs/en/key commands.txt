@@ -64,14 +64,14 @@ Announces the current line in edit controls and documents.
 NVDA+downArrow: sayAll
 Starts reading from the current position in a document or edit control 
 
-NVDA+f1: test_navigatorWindowInfo
-Reads Information about the current navigator object (mainly useful for developers).
-
 Control+NVDA+c: saveConfiguration
 Saves the configuration.
 
 Control+NVDA+r: revertToSavedConfiguration
 Resets the configuration.
+
+NVDA+c: reportClipboardText
+Reports the text on the Windows clipboard.
 
 Change Settings (found in the settings dialogues)
 
@@ -139,12 +139,9 @@ navigator object navigation
 NVDA+numPad5: navigatorObject_current
 Announces the current navigator object. If pressed twice spels it out and if pressed three times copyes its name and value to the clipboard.
 
-Shift+NVDA+numPad5: navigatorObject_currentDimensions
+NVDA+numpadDelete: navigatorObject_currentDimensions
 Announces the size and location of the current navigator object.
  
-Control+Shift+NVDA+numPad5: navigatorObject_where
-Announces the ancestors of the current navigator object.
-
 NVDA+numPad8: navigatorObject_parent
 Sets the navigator object to the current navigator object's parent (i.e. the object that contains it).
 
@@ -234,28 +231,30 @@ Moves the review cursor to the previous line.
 Shift+numpad9: review_bottom
 Moves the review cursor to the last line.
 
-VirtualBuffer commands for Firefox3 (some of these may work for Internet Explorer or Firefox2):
+NVDA+f9: review_markStartForCopy
+Marks the current position of the review cursor as the start of text to be copied.
+
+NVDA+f10: review_copy
+Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard.
+
+VirtualBuffer commands:
 
 NVDA+space: toggleVirtualBufferPassThrough
 Turns virtualBuffer pass-through mode on or off.
 
-control+NVDA+f: find (control+f in firefox2 / internet explorer)
+control+NVDA+f: find
 NVDA+f3: find next
-NVDA+f7: links list (not in firefox2 or internet explorer)
-NVDA+f5: refresh buffer (not in Firefox2 or Internet Explorer)
+NVDA+f7: elements list
+NVDA+f5: refresh buffer
+NVDA+v: toggleScreenLayout
 
 VirtualBuffer quick keys to skip to the next element of a particular type (also use shift with the key to go backwards):
-
-Keys supported by both old and new virtualBuffers: 
 h: heading
 l: list
 i: list item
 t: table
 k: link
-p: paragraph (only used in the old virtual Buffer, use Control+Up/DownArrow in the new virtual 
-Buffer)
 f: form field
-Keys not supported by the older virtualBuffers: 
 u: unvisited link
 v: visited link
 e: edit field
@@ -267,4 +266,7 @@ q: block quote
 s: separator
 m: frame
 g: graphic
+d: ARIA landmark
+n: nonLinked text
+o: embedded object
 1 to 6: headings 1 to 6 respectively

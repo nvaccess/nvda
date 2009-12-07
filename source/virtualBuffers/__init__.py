@@ -1,3 +1,4 @@
+import time
 import threading
 import ctypes
 import os
@@ -185,7 +186,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
 		textList = []
 		landmark = attrs.get("landmark")
-		if fieldType == "start_addedToControlFieldStack" and landmark:
+		if formatConfig["reportLandmarks"] and fieldType == "start_addedToControlFieldStack" and landmark:
 			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
 		textList.append(super(VirtualBufferTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
 		return " ".join(textList)
@@ -473,6 +474,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 	REASON_QUICKNAV = "quickNav"
 
 	TextInfo=VirtualBufferTextInfo
+	programmaticScrollMayFireEvent = False
 
 	def __init__(self,rootNVDAObject,backendName=None):
 		self.backendName=backendName
@@ -484,6 +486,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		self.rootDocHandle,self.rootID=self.getIdentifierFromNVDAObject(self.rootNVDAObject)
 		self._lastFocusObj = None
 		self._hadFirstGainFocus = False
+		self._lastProgrammaticScrollTime = None
 
 	def _get_passThrough(self):
 		return self._passThrough
@@ -627,6 +630,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 			obj.setFocus()
 			self.passThrough = True
 			virtualBufferHandler.reportPassThrough(self)
+		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT:
+			obj.setFocus()
+			speech.speakObject(obj, reason=speech.REASON_FOCUS)
 		else:
 			self._activateNVDAObject(obj)
 
@@ -646,6 +652,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return
 		if reason != speech.REASON_FOCUS:
 			obj.scrollIntoView()
+			if self.programmaticScrollMayFireEvent:
+				self._lastProgrammaticScrollTime = time.time()
 			if not eventHandler.isPendingEvents("gainFocus") and obj != api.getFocusObject() and self._shouldSetFocusToObj(obj):
 				obj.setFocus()
 		self.passThrough=self.shouldPassThrough(obj,reason=reason)
@@ -986,6 +994,12 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if not self.VBufHandle:
 			return False
 
+		if self.programmaticScrollMayFireEvent and self._lastProgrammaticScrollTime and time.time() - self._lastProgrammaticScrollTime < 0.4:
+			# This event was probably caused by this buffer's call to scrollIntoView().
+			# Therefore, ignore it. Otherwise, the cursor may bounce back to the scroll point.
+			# However, pretend we handled it, as we don't want it to be passed on to the object either.
+			return True
+
 		try:
 			scrollInfo = self.makeTextInfo(obj)
 		except:
@@ -1242,4 +1256,6 @@ qn("notLinkBlock", key="n", nextDoc=_("skips forward past a block of links"), ne
 	prevDoc=_("skips backward past a block of links"), prevError=_("no more text before a block of links"), readUnit=textInfos.UNIT_LINE)
 qn("landmark", key="d", nextDoc=_("moves to the next landmark"), nextError=_("no next landmark"),
 	prevDoc=_("moves to the previous landmark"), prevError=_("no previous landmark"), readUnit=textInfos.UNIT_LINE)
+qn("embeddedObject", key="o", nextDoc=_("moves to the next embedded object"), nextError=_("no next embedded object"),
+	prevDoc=_("moves to the previous embedded object"), prevError=_("no previous embedded object"))
 del qn

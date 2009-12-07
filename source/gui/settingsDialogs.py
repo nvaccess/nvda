@@ -632,6 +632,9 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.blockQuotesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report block &quotes"))
 		self.blockQuotesCheckBox.SetValue(config.conf["documentFormatting"]["reportBlockQuotes"])
 		settingsSizer.Add(self.blockQuotesCheckBox,border=10,flag=wx.BOTTOM)
+		self.landmarksCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report lan&dmarks"))
+		self.landmarksCheckBox.SetValue(config.conf["documentFormatting"]["reportLandmarks"])
+		settingsSizer.Add(self.landmarksCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.detectFormatAfterCursorCheckBox.SetFocus()
@@ -651,6 +654,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportHeadings"]=self.headingsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLists"]=self.listsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportBlockQuotes"]=self.blockQuotesCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportLandmarks"]=self.landmarksCheckBox.IsChecked()
 		super(DocumentFormattingDialog, self).onOk(evt)
 
 class DictionaryEntryDialog(wx.Dialog):

@@ -94,6 +94,10 @@ class OrderedWinEventLimiter(object):
 		@param threadID: the threadID of the winEvent
 		@type threadID: integer
 		"""
+		#Filter out any events for UIA windows
+		if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
+			return
+
 		if eventID==winUser.EVENT_OBJECT_FOCUS:
 			if objectID in (winUser.OBJID_SYSMENU,winUser.OBJID_MENU) and childID==0:
 				# This is a focus event on a menu bar itself, which is just silly. Ignore it.
@@ -148,15 +152,8 @@ class OrderedWinEventLimiter(object):
 		e=self._eventHeap
 		self._eventHeap=[]
 		r=[]
-		UIAWindowCache=set()
 		for count in xrange(len(e)):
 			event=heapq.heappop(e)[1:-1]
-			window=event[1]
-			if window in UIAWindowCache:
-				continue
-			elif UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
-				UIAWindowCache.add(window)
-				continue
 			r.append(event)
 		return r
 
@@ -337,9 +334,6 @@ IAccessible2StatesToNVDAStates={
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 winEventHookIDs=[]
 
-eventCounter=itertools.count()
-eventHeap=[]
-
 def normalizeIAccessible(pacc):
 	if isinstance(pacc,comtypes.client.lazybind.Dispatch) or isinstance(pacc,comtypes.client.dynamic._Dispatch) or isinstance(pacc,IUnknown):
 		pacc=pacc.QueryInterface(IAccessible)
@@ -477,7 +471,6 @@ winUser.EVENT_SYSTEM_SWITCHEND:"switchEnd",
 winUser.EVENT_OBJECT_FOCUS:"gainFocus",
 winUser.EVENT_OBJECT_SHOW:"show",
 winUser.EVENT_OBJECT_DESTROY:"destroy",
-winUser.EVENT_OBJECT_HIDE:"hide",
 winUser.EVENT_OBJECT_DESCRIPTIONCHANGE:"descriptionChange",
 winUser.EVENT_OBJECT_LOCATIONCHANGE:"locationChange",
 winUser.EVENT_OBJECT_NAMECHANGE:"nameChange",
@@ -733,6 +726,14 @@ def processForegroundWinEvent(window,objectID,childID):
 	eventHandler.queueEvent(*NVDAEvent)
 	return True
 
+def processShowWinEvent(window,objectID,childID):
+	className=winUser.getClassName(window)
+	#For now we only support 'show' event for tooltips as otherwize we get flooded
+	if className=="tooltips_class32" and objectID==winUser.OBJID_CLIENT:
+		NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_SHOW,window,objectID,childID)
+		if NVDAEvent:
+			eventHandler.queueEvent(*NVDAEvent)
+
 def processDestroyWinEvent(window,objectID,childID):
 	"""Process a destroy win event.
 	This removes the object associated with the event parameters from L{liveNVDAObjectTable} if such an object exists.
@@ -812,6 +813,8 @@ def pumpAll():
 				processDesktopSwitchWinEvent(*winEvent[1:])
 			elif winEvent[0]==winUser.EVENT_OBJECT_DESTROY:
 				processDestroyWinEvent(*winEvent[1:])
+			elif winEvent[0]==winUser.EVENT_OBJECT_SHOW:
+				processShowWinEvent(*winEvent[1:])
 			elif winEvent[0] in MENU_EVENTIDS+(winUser.EVENT_SYSTEM_SWITCHEND,):
 				# If there is no valid focus event, we may need to use this to fake the focus later.
 				fakeFocusEvent=winEvent

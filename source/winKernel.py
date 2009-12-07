@@ -6,8 +6,11 @@
 
 import ctypes
 import ctypes.wintypes
+from ctypes import *
+from ctypes.wintypes import *
 
 kernel32=ctypes.windll.kernel32
+advapi32 = windll.advapi32
 
 #Constants
 INFINITE = 0xffffffff
@@ -23,6 +26,8 @@ READ_CONTROL=0x20000
 MEM_COMMIT=0x1000
 MEM_RELEASE=0x8000
 PAGE_READWRITE=0x4
+MAXIMUM_ALLOWED = 0x2000000
+STARTF_USESTDHANDLES = 0x00000100
 #Console handles
 STD_INPUT_HANDLE=-10
 STD_OUTPUT_HANDLE=-11
@@ -65,17 +70,20 @@ class SYSTEM_POWER_STATUS(ctypes.Structure):
 
 def GetSystemPowerStatus(sps):
 	return kernel32.GetSystemPowerStatus(ctypes.byref(sps))
+
 def getThreadLocale():
 	return kernel32.GetThreadLocale()
 
 def GetDateFormat(Locale,dwFlags,lpDate,lpFormat):
-	buf=ctypes.create_unicode_buffer("", 32)
-	kernel32.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, buf, ctypes.sizeof(buf))
+	bufferLength=kernel32.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, None, 0)
+	buf=ctypes.create_unicode_buffer("", bufferLength)
+	kernel32.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, buf, bufferLength)
 	return buf.value
 
 def GetTimeFormat(Locale,dwFlags,lpTime,lpFormat):
-	buf=ctypes.create_unicode_buffer("", 32)
-	kernel32.GetTimeFormatW(Locale,dwFlags,lpTime,lpFormat, buf, ctypes.sizeof(buf))
+	bufferLength=kernel32.GetTimeFormatW(Locale,dwFlags,lpTime,lpFormat, None, 0)
+	buf=ctypes.create_unicode_buffer("", bufferLength)
+	kernel32.GetTimeFormatW(Locale,dwFlags,lpTime,lpFormat, buf, bufferLength)
 	return buf.value
 
 def openProcess(*args):
@@ -123,3 +131,73 @@ DRIVE_RAMDISK = 6
 
 def GetDriveType(rootPathName):
 	return kernel32.GetDriveTypeW(rootPathName)
+
+class SECURITY_ATTRIBUTES(Structure):
+	_fields_ = (
+		("nLength", DWORD),
+		("lpSecurityDescriptor", LPVOID),
+		("bInheritHandle", BOOL)
+	)
+	def __init__(self, **kwargs):
+		super(SECURITY_ATTRIBUTES, self).__init__(nLength=sizeof(self), **kwargs)
+
+def CreatePipe(pipeAttributes, size):
+	read = ctypes.wintypes.HANDLE()
+	write = ctypes.wintypes.HANDLE()
+	if kernel32.CreatePipe(ctypes.byref(read), ctypes.byref(write), byref(pipeAttributes) if pipeAttributes else None, ctypes.wintypes.DWORD(size)) == 0:
+		raise ctypes.WinError()
+	return read.value, write.value
+
+class STARTUPINFOW(Structure):
+	_fields_=(
+		('cb',DWORD),
+		('lpReserved',LPWSTR),
+		('lpDesktop',LPWSTR),
+		('lpTitle',LPWSTR),
+		('dwX',DWORD),
+		('dwY',DWORD),
+		('dwXSize',DWORD),
+		('dwYSize',DWORD),
+		('dwXCountChars',DWORD),
+		('dwYCountChars',DWORD),
+		('dwFillAttribute',DWORD),
+		('dwFlags',DWORD),
+		('wShowWindow',WORD),
+		('cbReserved2',WORD),
+		('lpReserved2',POINTER(c_byte)),
+		('hSTDInput',HANDLE),
+		('hSTDOutput',HANDLE),
+		('hSTDError',HANDLE),
+	)
+	def __init__(self, **kwargs):
+		super(STARTUPINFOW, self).__init__(cb=sizeof(self), **kwargs)
+STARTUPINFO = STARTUPINFOW
+
+class PROCESS_INFORMATION(Structure):
+	_fields_=(
+		('hProcess',HANDLE),
+		('hThread',HANDLE),
+		('dwProcessID',DWORD),
+		('dwThreadID',DWORD),
+	)
+
+def CreateProcessAsUser(token, applicationName, commandLine, processAttributes, threadAttributes, inheritHandles, creationFlags, environment, currentDirectory, startupInfo, processInformation):
+	if advapi32.CreateProcessAsUserW(token, applicationName, commandLine, processAttributes, threadAttributes, inheritHandles, creationFlags, environment, currentDirectory, byref(startupInfo), byref(processInformation)) == 0:
+		raise WinError()
+
+def GetCurrentProcess():
+	return kernel32.GetCurrentProcess()
+
+def OpenProcessToken(ProcessHandle, DesiredAccess):
+	token = HANDLE()
+	if advapi32.OpenProcessToken(ProcessHandle, DesiredAccess, byref(token)) == 0:
+		raise WinError()
+	return token.value
+
+DUPLICATE_SAME_ACCESS = 0x00000002
+
+def DuplicateHandle(sourceProcessHandle, sourceHandle, targetProcessHandle, desiredAccess, inheritHandle, options):
+	targetHandle = HANDLE()
+	if kernel32.DuplicateHandle(sourceProcessHandle, sourceHandle, targetProcessHandle, byref(targetHandle), desiredAccess, inheritHandle, options) == 0:
+		raise WinError()
+	return targetHandle.value

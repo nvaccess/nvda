@@ -52,5 +52,5 @@ class WinConsole(Window):
 	("control+shift+extendedHome","changeSelection"),
 	("control+shift+extendedEnd","changeSelection"),
 	("ExtendedDelete","delete"),
-	("Back","backspace"),
+	("Back","backspaceCharacter"),
 ]]

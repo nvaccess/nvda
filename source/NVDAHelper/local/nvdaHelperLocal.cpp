@@ -1,6 +1,5 @@
 #include <cstdio>
 #include <sstream>
-#include <windows.h>
 #include "nvdaHelperLocal.h"
 
 handle_t createConnection(int processID) {
@@ -17,14 +16,4 @@ handle_t createConnection(int processID) {
 
 void destroyConnection(handle_t bindingHandle) {
 	RpcBindingFree(&bindingHandle);
-}
-
-//memory allocation functions
-
-void* __RPC_USER midl_user_allocate(size_t size) {
-	return malloc(size);
-}
-
-void __RPC_USER midl_user_free(void* p) {
-	free(p);
 }

@@ -367,6 +367,15 @@ def initialize():
 		):
 			func.errcheck = _errcheck
 		bridgeDll.Windows_run()
+		#Accept wm_copydata and any wm_user messages from other processes even if running with higher privilages
+		ChangeWindowMessageFilter=getattr(windll.user32,'ChangeWindowMessageFilter',None)
+		if ChangeWindowMessageFilter:
+			if not ChangeWindowMessageFilter(winUser.WM_COPYDATA,1):
+				raise WinError()
+			for msg in xrange(winUser.WM_USER+1,65535):
+				if not ChangeWindowMessageFilter(msg,1):
+					raise WinError()
+		#Register java events
 		bridgeDll.setFocusGainedFP(internal_event_focusGained)
 		bridgeDll.setPropertyActiveDescendentChangeFP(internal_event_activeDescendantChange)
 		bridgeDll.setPropertyStateChangeFP(internal_event_stateChange)
@@ -374,6 +383,7 @@ def initialize():
 		isRunning=True
 		return True
 	except:
+		log.debugWarning("Error initializing java access bridge",exc_info=True)
 		return False
 
 def pumpAll():

@@ -135,7 +135,17 @@ class TreeViewItem(IAccessible):
 		return children
 
 	def _get_childCount(self):
-		return len(self.children)
+		hItem=self.treeview_hItem
+		if not hItem:
+			return 0
+		childItem=winUser.sendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_CHILD,hItem)
+		if childItem<=0:
+			return 0
+		numItems=0
+		while childItem>0:
+			numItems+=1
+			childItem=winUser.sendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_NEXT,childItem)
+		return numItems
 
 	def _get_positionInfo(self):
 		if self.IAccessibleChildID==0:

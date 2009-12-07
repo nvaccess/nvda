@@ -35,31 +35,40 @@ Export('env')
 neededTargets=[]
 
 acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
+Export('acrobatAccessRPCStubs')
 
 ia2RPCStubs=env.SConscript('ia2_sconscript')
+Export('ia2RPCStubs')
 
 vbufRPCStubs=env.SConscript('interfaces/vbuf/sconscript')
+Export('vbufRPCStubs')
+
+nvdaControllerRPCStubs=env.SConscript('interfaces/nvdaController/sconscript')
+Export('nvdaControllerRPCStubs')
 
 if TARGET_ARCH=='x86':
-	localLib=env.SConscript('local/sconscript',exports=['vbufRPCStubs'])
+	localLib=env.SConscript('local/sconscript')
+	Export('localLib')
 	neededTargets.append(localLib)
 
-remoteLib=env.SConscript('remote/sconscript',exports=['ia2RPCStubs','vbufRPCStubs'])
+remoteLib=env.SConscript('remote/sconscript')
+Export('remoteLib')
 neededTargets.append(remoteLib)
 
 if TARGET_ARCH=='x86_64':
-	remoteLoaderProgram=env.SConscript('remoteLoader/sconscript',exports=['remoteLib'])
+	remoteLoaderProgram=env.SConscript('remoteLoader/sconscript')
 	neededTargets.append(remoteLoaderProgram)
 
-vbufBaseStaticLib=env.SConscript('vbufBase/sconscript',exports=['remoteLib'])
+vbufBaseStaticLib=env.SConscript('vbufBase/sconscript')
+Export('vbufBaseStaticLib')
 
-adobeAcrobatVBufBackend=env.SConscript('vbufBackends/adobeAcrobat/sconscript',exports=['vbufBaseStaticLib','acrobatAccessRPCStubs'])
+adobeAcrobatVBufBackend=env.SConscript('vbufBackends/adobeAcrobat/sconscript')
 neededTargets.append(adobeAcrobatVBufBackend)
 
-geckoVBufBackend=env.SConscript('vbufBackends/gecko_ia2/sconscript',exports=['vbufBaseStaticLib','ia2RPCStubs'])
+geckoVBufBackend=env.SConscript('vbufBackends/gecko_ia2/sconscript')
 neededTargets.append(geckoVBufBackend)
 
-mshtmlVBufBackend=env.SConscript('vbufBackends/mshtml/sconscript',exports=['vbufBaseStaticLib'])
+mshtmlVBufBackend=env.SConscript('vbufBackends/mshtml/sconscript')
 neededTargets.append(mshtmlVBufBackend)
 
 if TARGET_ARCH=='x86_64':

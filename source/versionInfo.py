@@ -49,3 +49,5 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 Or see the file Copying.txt that came with this software.""")%globals()
 
 _updateVersionFromVCS()
+# A test version is anything other than a final or rc release.
+isTestVersion = not version[0].isdigit() or "alpha" in version or "beta" in version

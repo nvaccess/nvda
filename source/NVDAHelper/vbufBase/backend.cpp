@@ -9,7 +9,7 @@
 #include <cassert>
 #include <windows.h>
 #include <remote/nvdaHelperRemote.h>
-#include "debug.h"
+#include <common/debug.h>
 #include "storage.h"
 #include "backend.h"
 

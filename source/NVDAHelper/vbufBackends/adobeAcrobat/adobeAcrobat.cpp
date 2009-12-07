@@ -14,7 +14,7 @@
 #include <oleacc.h>
 #include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
-#include <vbufBase/debug.h>
+#include <common/debug.h>
 #include <AcrobatAccess/AcrobatAccess.h>
 #include <AcrobatAccess/IPDDom.h>
 #include "adobeAcrobat.h"
@@ -460,6 +460,8 @@ void CALLBACK AdobeAcrobatVBufBackend_t::renderThread_winEventProcHook(HWINEVENT
 		DEBUG_MSG(L"No nodes to use, returning");
 		return;
 	}
+
+	backend->invalidateSubtree(node);
 }
 
 void AdobeAcrobatVBufBackend_t::renderThread_initialize() {

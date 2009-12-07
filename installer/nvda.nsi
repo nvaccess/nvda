@@ -115,7 +115,7 @@ Var StartMenuFolder
 !insertmacro MUI_LANGUAGE "German"
 !insertmacro MUI_LANGUAGE "Spanish"
 !insertmacro MUI_LANGUAGE "SpanishInternational"
-;!insertmacro MUI_LANGUAGE "SimpChinese"
+!insertmacro MUI_LANGUAGE "SimpChinese"
 !insertmacro MUI_LANGUAGE "TradChinese"
 !insertmacro MUI_LANGUAGE "Japanese"
 !insertmacro MUI_LANGUAGE "Italian"
@@ -131,8 +131,10 @@ Var StartMenuFolder
 !insertmacro MUI_LANGUAGE "Hungarian"
 !insertmacro MUI_LANGUAGE "Galician"
 !insertmacro MUI_LANGUAGE "Dutch"
+!insertmacro MUI_LANGUAGE "Arabic"
 
 ;Include installer specific language strings
+!include "locale\ar\langstrings.txt"
 !include "locale\cs\langstrings.txt"
 !include "locale\de\langstrings.txt"
 !include "locale\en\langstrings.txt"
@@ -152,7 +154,7 @@ Var StartMenuFolder
 !include "locale\ru\langstrings.txt"
 ;!include "locale\se\langstrings.txt"
 !include "locale\sk\langstrings.txt"
-;!include "locale\zh\langstrings.txt"
+!include "locale\zh\langstrings.txt"
 !include "locale\zh_tw\langstrings.txt"
 
 ;--------------------------------
@@ -194,6 +196,13 @@ Delete "$0"
 Rename "$INSTDIR\lib" "$0"
 Rmdir /REBOOTOK /r "$0"
 noLibExists:
+IfFileExists "$INSTDIR\lib64\*.*" lib64Exists noLib64Exists
+lib64Exists:
+GetTempFileName $0 "$INSTDIR"
+Delete "$0"
+Rename "$INSTDIR\lib64" "$0"
+Rmdir /REBOOTOK /r "$0"
+noLib64Exists:
 ; open and close uninstallation log after ennumerating all the files being copied
 SetOutPath "$INSTDIR"
 !insertmacro UNINSTALL.LOG_OPEN_INSTALL
@@ -204,9 +213,10 @@ File /r "${NVDASourceDir}\"
 CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_exploreUserConfigDir).lnk" "$INSTDIR\nvda_slave.exe" "explore_userConfigPath" "" 0 SW_SHOWNORMAL
-CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_readme).lnk" "$INSTDIR\documentation\$(path_readmefile)" "" "$INSTDIR\documentation\$(path_readmefile)" 0 SW_SHOWMAXIMIZED
-CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_keycom).lnk" "$INSTDIR\documentation\$(path_keycomfile)" "" "$INSTDIR\documentation\$(path_keycomfile)" 0 SW_SHOWMAXIMIZED
-CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_userguide).lnk" "$INSTDIR\documentation\$(path_userguide)" "" "$INSTDIR\documentation\$(path_userguide)" 0 SW_SHOWMAXIMIZED
+CreateDirectory "$SMPROGRAMS\$StartMenuFolder\$(docFolder)"
+CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(docFolder)\$(shortcut_readme).lnk" "$INSTDIR\documentation\$(path_readmefile)" "" "$INSTDIR\documentation\$(path_readmefile)" 0 SW_SHOWMAXIMIZED
+CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(docFolder)\$(shortcut_keycom).lnk" "$INSTDIR\documentation\$(path_keycomfile)" "" "$INSTDIR\documentation\$(path_keycomfile)" 0 SW_SHOWMAXIMIZED
+CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(docFolder)\$(shortcut_userguide).lnk" "$INSTDIR\documentation\$(path_userguide)" "" "$INSTDIR\documentation\$(path_userguide)" 0 SW_SHOWMAXIMIZED
 WriteIniStr "$INSTDIR\${PRODUCT}.url" "InternetShortcut" "URL" "${WEBSITE}"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_website).lnk" "$INSTDIR\${PRODUCT}.url" "" "$INSTDIR\${PRODUCT}.url" 0
 CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
@@ -240,6 +250,8 @@ ExecWait "$INSTDIR\nvda_slave.exe installer_uninstallService"
 !insertmacro UNINSTALL.LOG_END_UNINSTALL
 !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
 ;Cleanup shortcuts
+Delete "$SMPROGRAMS\$StartMenuFolder\$(docFolder)\*.*"
+RmDir "$SMPROGRAMS\$StartMenuFolder\$(docFolder)"
 Delete "$SMPROGRAMS\$StartMenuFolder\*.*"
 RmDir "$SMPROGRAMS\$StartMenuFolder"
 Delete $DESKTOP\${PRODUCT}.lnk"
@@ -301,9 +313,9 @@ MessageBox MB_OK $(msg_NVDARunning)
 Continue:
 IfFileExists "$APPDATA\nvda\nvda.ini" +1 +4
 GetFullPathName /SHORT $0 "$APPDATA\nvda"
-Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -r -m -c $0"
+ExecShell "open" "$PLUGINSDIR\${NVDATempDir}\${NVDAApp}" "-r -m -c $0" SW_SHOWNORMAL
 goto Running
-Exec "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -r -m"
+ExecShell "open" "$PLUGINSDIR\${NVDATempDir}\${NVDAApp}" "-r -m" SW_SHOWNORMAL
 Running:
 Banner::destroy
 functionEnd
@@ -378,9 +390,9 @@ FunctionEnd
 function .onInstSuccess
 ;create/update log always within .onInstSuccess function
 !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
-Execwait "$PLUGINSDIR\${NVDATempDir}\${NVDAApp} -q"
+uac::shellExecWait "open" SW_SHOWNORMAL "$INSTDIR\${NVDAApp}" "-q" "$INSTDIR"
 strcmp $runAppOnInstSuccess "1" +1 end
-uac::exec "" "$INSTDIR\${NVDAApp}" "" ""
+uac::shellExec "open" SW_SHOWNORMAL "$INSTDIR\${NVDAApp}" "" "$INSTDIR"
 end:
 FunctionEnd
 
@@ -405,7 +417,7 @@ var un.isNonInteractive
 Function un.onInit
 ;!insertmacro MUI_UNGETLANGUAGE
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
-System::Call 'kernel32::GetThreadLocale() i .r0'
+System::Call 'kernel32::GetUserDefaultUILanguage() i .r0'
 StrCpy $LANGUAGE $0
 
 ; Start uninstalling with a log

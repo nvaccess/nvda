@@ -208,7 +208,8 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 				("control+extendedHome","moveByLine"),
 				("control+extendedEnd","moveByLine"),
 				("ExtendedDelete","delete"),
-				("Back","backspace"),
+				("Back","backspaceCharacter"),
+				("Control+Back","backspaceWord"),
 			]]
 
 	def _isEqual(self,other):
@@ -306,6 +307,12 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 				if s==UIAHandler.ToggleState_On:
 					states.add(controlTypes.STATE_CHECKED)
 		return states
+
+	def correctAPIForRelation(self, obj, relation=None):
+		if obj and self.windowHandle != obj.windowHandle and not obj.UIAElement.cachedNativeWindowHandle:
+			# The target element is not the root element for the window, so don't change API class; i.e. always use UIA.
+			return obj
+		return super(UIA, self).correctAPIForRelation(obj, relation)
 
 	def _get_parent(self):
 		try:

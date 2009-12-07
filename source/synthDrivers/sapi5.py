@@ -12,6 +12,7 @@ import globalVars
 from synthDriverHandler import SynthDriver,VoiceInfo
 import config
 import nvwave
+from logHandler import log
 
 class constants:
 	SVSFlagsAsync = 1
@@ -44,10 +45,14 @@ class SynthDriver(SynthDriver):
 
 	def _getAvailableVoices(self):
 		voices=[]
-		for v in self.tts.GetVoices():
-			ID=v.Id
-			name=v.GetDescription()
-			voices.append(VoiceInfo(ID,name))
+		v=self.tts.GetVoices()
+		for i in range(len(v)):
+			try:
+				ID=v[i].Id
+				name=v[i].GetDescription()
+			except COMError:
+				log.warning("Could not get the voice info. Skipping...")
+			voices.append(synthDriverHandler.VoiceInfo(ID,name))
 		return voices
 
 	def _get_rate(self):
@@ -86,14 +91,15 @@ class SynthDriver(SynthDriver):
 			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
 
 	def _set_voice(self,value):
-		for v in self.tts.GetVoices():
-			if value==v.Id:
+		v=self.tts.GetVoices()
+		for i in range(len(v)):
+			if value==v[i].Id:
 				break
 		else:
 			# Voice not found.
 			return
 		self._initTts()
-		self.tts.voice=v
+		self.tts.voice=v[i]
 
 	def performSpeak(self,text,index=None,isCharacter=False):
 		flags=constants.SVSFIsXML

@@ -38,11 +38,13 @@ TABLES = (
 	("en-us-g1.ctb", _("English (U.S.) grade 1")),
 	("en-us-g2.ctb", _("English (U.S.) grade 2")),
 	("Es-Es-g1.utb", _("Spanish grade 1")),
+	("fi-fi-8dot.ctb", _("Finnish 8 dot computer braille")),
 	("fr-ca-g1.utb", _("French (Canada) grade 1")),
 	("Fr-Ca-g2.ctb", _("French (Canada) grade 2")),
 	("fr-bfu-comp6.utb", _("French (unified) 6 dot computer braille")),
 	("fr-bfu-comp8.utb", _("French (unified) 8 dot computer braille")),
 	("fr-bfu-g2.ctb", _("French (unified) Grade 2")),	("gr-gr-g1.utb", _("Greek (Greece) grade 1")),
+	("he.ctb", _("Hebrew 8 dot computer braille")),
 	("hi-in-g1.utb", _("Hindi grade 1")),
 	("hr.ctb", _("Croatian 8 dot computer braille")),
 	("hu1.ctb", _("Hungarian 8 dot computer braille")),
@@ -61,6 +63,7 @@ TABLES = (
 	("sk-sk-g1.utb", _("Slovak")),
 	("UEBC-g1.utb", _("Unified English Braille Code grade 1")),
 	("UEBC-g2.ctb", _("Unified English Braille Code grade 2")),
+	("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)")),
 )
 
 roleLabels = {
@@ -294,10 +297,12 @@ class TextInfoRegion(Region):
 			log.debugWarning("", exc_info=True)
 
 	def update(self):
-		caret = self._getSelection()
-		caret.collapse()
+		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
+		# so use the original caret TextInfo for line and copy for caret.
+		self._line = line = self._getSelection()
+		line.collapse()
+		caret = line.copy()
 		# Get the line at the caret.
-		self._line = line = caret.copy()
 		line.expand(textInfos.UNIT_LINE)
 		# Not all text APIs support offsets, so we can't always get the offset of the caret relative to the start of the line.
 		# Therefore, grab the line in two parts.

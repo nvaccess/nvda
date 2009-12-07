@@ -1,21 +1,30 @@
 ;Chinese Simplified
-LangString msg_WelcomePageTitle ${LANG_SIMPCHINESE} "Welcome to the installation of ${PRODUCT}, a free and open source screen reader for Windows"
-LangString msg_WelcomePageText ${LANG_SIMPCHINESE} "Copyright 2006 - 2009 by Michael Curran\n\
-This wizard will guide you through the installation of ${PRODUCT}\n\
-It is recommended that you close all other applications before starting Setup. This will allow Setup to update certain \
-system files without rebooting your computer.$\n"
-LangString msg_READMEText ${LANG_SIMPCHINESE} "View README file (recommended)"
-LangString msg_NVDAWebSite ${LANG_SIMPCHINESE} "Visit the official NVDA web site"
-LangString msg_NVDARunning ${LANG_SIMPCHINESE} "Another copy of NVDA is already running. It will be shut down before the installer can continue."
-LangString msg_SpeechInstall ${LANG_SIMPCHINESE} "Would you like to use speech during installation of NVDA? Press ENTER key to continue with speech, press ESCAPE key to install without speech."
-LangString msg_RemoveNVDA ${LANG_SIMPCHINESE} "Are you sure you want to completely remove $(^Name) and all of its components?"
-LangString msg_NVDAConfigFound ${LANG_SIMPCHINESE} "The installer found existing configuration file for NVDA. Would youlike to delete NVDA configuration file?"
-LangString Msg_UninsPrev ${LANG_SIMPCHINESE} "A previous version of NVDA has been found on your system, it will be uninstalled before continuing."
-LangString msg_NVDASuccessfullyRemoved ${LANG_SIMPCHINESE} "$(^Name) was successfully removed from your computer.."
-LangString shortcut_Wiki $(LANG_SIMPCHINESE) "NVDA Info WIKI"
-LangString shortcut_uninstall $(LANG_SIMPCHINESE) "Uninstall"
-LangString shortcut_website $(LANG_SIMPCHINESE) "Website"
-LangString shortcut_readme $(LANG_SIMPCHINESE) "Readme"
-LangString shortcut_userguide $(LANG_SIMPCHINESE) "User Guide"
+LangString msg_WelcomePageTitle ${LANG_SIMPCHINESE} "安装 ${PRODUCT}, ${VERSION} 版本"
+LangString msg_WelcomePageText ${LANG_SIMPCHINESE} "欢迎安装 ${PRODUCT} (Non-Visual Desktop Access) —— 一套视窗操作系统下免费且开放源代码的读屏软件。$\n\
+版权 2006 - 2009 NVDA 的贡献者。$\n\
+本向导会协助你安装 ${PRODUCT}；建议您先把其它应用程序关闭再继续安装。$\n"
+LangString msg_NVDAWebSite ${LANG_SIMPCHINESE} "访问 NVDA 官方网站"
+LangString msg_NVDARunning ${LANG_SIMPCHINESE} "另一个 NVDA 应用程序正在运行中, 安装向导需把它关闭才可继续."
+LangString msg_pagePrevInstallLabel ${LANG_SIMPCHINESE} "发现系统已经安装了旧版本的 NVDA, 强烈建议您先把它卸载再安装新版本。"
+LangString msg_pagePrevInstallUninstallCheckBox ${LANG_SIMPCHINESE} "卸载(建议)"
+LangString shortcut_uninstall $(LANG_SIMPCHINESE) "卸载"
+LangString shortcut_website $(LANG_SIMPCHINESE) "网址"
+LangString shortcut_exploreUserConfigDir $(LANG_SIMPCHINESE) "浏览用户配置文件夹"
+LangString shortcut_readme $(LANG_SIMPCHINESE) "说明文档"
+LangString shortcut_keycom $(LANG_SIMPCHINESE) "按键指令列表"
+LangString shortcut_userguide $(LANG_SIMPCHINESE) "用户指南"
 LangString path_userguide $(LANG_SIMPCHINESE) "en\user guide.html"
 LangString path_readmefile $(LANG_SIMPCHINESE) "en\readme.txt"
+LangString path_keycomfile $(LANG_SIMPCHINESE) "en\key commands.txt"
+LangString UNLOG_HEADER ${LANG_SIMPCHINESE} "=========== 卸载日志 \
+                                         请不要编辑该文件 ==========="
+LangString UNLOG_DAT_NOT_FOUND ${LANG_SIMPCHINESE} "找不到 ${UNINST_DAT}, \
+                                                无法卸载应用程序。"
+LangString UNLOG_DEL_FILE ${LANG_SIMPCHINESE} '删除文件 "$R9"?'
+LangString UNLOG_DEL_DIR ${LANG_SIMPCHINESE} '删除文件夹 "$R9"?'
+LangString UNLOG_EMPTY_DIR ${LANG_SIMPCHINESE} "发现应用程序已经安装在 $0.$\n\
+                                            但找不到所需文件 ${UNINSTALL_LOG}.dat。$\n$\n\
+                                            强烈建议选择一个空的文件夹重装一次。"
+LangString UNLOG_ERROR_LOG ${LANG_SIMPCHINESE} "日志 ${UNINSTALL_LOG} 中有错误。"
+LangString UNLOG_ERROR_CREATE ${LANG_SIMPCHINESE} "创建日志 ${UNINSTALL_LOG} 时发生错误."
+LangString section_service ${LANG_SIMPCHINESE} "NVDA 服务(视窗操作系统登录/安全对话模块支持)"

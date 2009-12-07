@@ -135,8 +135,10 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			if not editableBody:
 				mark=self.obj.HTMLNode.document.selection.createRange().GetBookmark()
 				self._rangeObj.MoveToBookmark(mark)
+				#When the caret is at the end of some edit fields, the rangeObj fetched is actually positioned on a magic position before the start
+				#So if we detect this, force it to the end
 				t=self._rangeObj.duplicate()
-				if not t.expand("word"):
+				if not t.expand("word") and t.expand("textedit") and t.compareEndPoints("startToStart",self._rangeObj)<0:
 					self._rangeObj.expand("textedit")
 					self._rangeObj.collapse(False)
 			if position==textInfos.POSITION_CARET:
@@ -232,7 +234,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 
 class MSHTML(IAccessible):
 
-	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD','HTML']
+	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD','HTML','PARAM']
 	HTMLNodeNameEmbedList=['OBJECT','EMBED','APPLET','FRAME','IFRAME']
 
 	@classmethod
@@ -260,6 +262,12 @@ class MSHTML(IAccessible):
 			clsList.insert(0,MSHTML)
 		return clsList,kwargs
 
+	def _get_virtualBufferClass(self):
+		if self.HTMLNode and self.role==controlTypes.ROLE_DOCUMENT and not self.isContentEditable:
+			import virtualBuffers.MSHTML
+			return virtualBuffers.MSHTML.MSHTML
+		return super(MSHTML,self).virtualBufferClass
+
 	def __init__(self,HTMLNode=None,HTMLNodeHasAncestorIAccessible=False,IAccessibleObject=None,IAccessibleChildID=None,**kwargs):
 		self.HTMLNodeHasAncestorIAccessible=HTMLNodeHasAncestorIAccessible
 		if not HTMLNode and IAccessibleChildID==0:
@@ -269,6 +277,9 @@ class MSHTML(IAccessible):
 				pass
 		self.HTMLNode=HTMLNode
 		super(MSHTML,self).__init__(IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,**kwargs)
+		#object and embed nodes give back an incorrect IAccessible via queryService, so we must treet it as an ancestor IAccessible
+		if self.HTMLNodeName in ("OBJECT","EMBED"):
+			self.HTMLNodeHasAncestorIAccessible=True
 		try:
 			self.HTMLNode.createTextRange()
 			self.TextInfo=MSHTMLTextInfo
@@ -299,7 +310,8 @@ class MSHTML(IAccessible):
 				("control+shift+extendedHome","changeSelection"),
 				("control+shift+extendedEnd","changeSelection"),
 				("ExtendedDelete","moveByCharacter"),
-				("Back","backspace"),
+				("Back","backspaceCharacter"),
+				("Control+Back","backspaceWord"),
 			]]
 
 	def isDuplicateIAccessibleEvent(self,obj):
@@ -364,11 +376,9 @@ class MSHTML(IAccessible):
 					return role
 			nodeName=self.HTMLNodeName
 			if nodeName:
-				if nodeName in self.HTMLNodeNameEmbedList:
+				if nodeName in ("OBJECT","EMBED","APPLET"):
 					return controlTypes.ROLE_EMBEDDEDOBJECT
-				if nodeName in ("BODY","FRAMESET"):
-					return controlTypes.ROLE_DOCUMENT
-				if self.HTMLNodeHasAncestorIAccessible:
+				if self.HTMLNodeHasAncestorIAccessible or nodeName in ("BODY","FRAMESET","FRAME","IFRAME"):
 					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_TEXTFRAME)
 		if self.IAccessibleChildID>0:
 			states=super(MSHTML,self).states
@@ -478,7 +488,7 @@ class MSHTML(IAccessible):
 
 	def _get_firstChild(self):
 		if self.HTMLNode:
-			if self.HTMLNodeName in self.HTMLNodeNameEmbedList:
+			if self.HTMLNodeName in ("FRAME","IFRAME"):
 				return super(MSHTML,self).firstChild
 			try:
 				childNode=self.HTMLNode.firstChild
@@ -488,11 +498,13 @@ class MSHTML(IAccessible):
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
 				return None
 			return obj
+		if self.HTMLNodeHasAncestorIAccessible:
+			return None
 		return super(MSHTML,self).firstChild
 
 	def _get_lastChild(self):
 		if self.HTMLNode:
-			if self.HTMLNodeName in self.HTMLNodeNameEmbedList:
+			if self.HTMLNodeName in ("FRAME","IFRAME"):
 				return super(MSHTML,self).lastChild
 			try:
 				childNode=self.HTMLNode.lastChild
@@ -502,6 +514,8 @@ class MSHTML(IAccessible):
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
 				return None
 			return obj
+		if self.HTMLNodeHasAncestorIAccessible:
+			return None
 		return super(MSHTML,self).firstChild
 
 	def _get_columnNumber(self):
@@ -551,6 +565,15 @@ class MSHTML(IAccessible):
 				pass
 		super(MSHTML,self).doAction(index=index)
 
+	def setFocus(self):
+		if self.HTMLNodeHasAncestorIAccessible:
+			try:
+				self.HTMLNode.focus()
+			except (COMError, AttributeError, NameError):
+				pass
+			return
+		super(MSHTML,self).setFocus()
+
 	def _get_HTMLNodeName(self):
 		if not self.HTMLNode:
 			return ""
@@ -562,3 +585,15 @@ class MSHTML(IAccessible):
 			self._HTMLNodeName=nodeName
 		return self._HTMLNodeName
 
+class V6ComboBox(IAccessible):
+	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
+	"""
+
+	def event_valueChange(self):
+		focus = api.getFocusObject()
+		if controlTypes.STATE_FOCUSED not in self.states or focus.role != controlTypes.ROLE_COMBOBOX:
+			# This combo box is not focused.
+			return super(V6ComboBox, self).event_valueChange()
+		# This combo box is focused. However, the value change is not fired on the real focus object.
+		# Therefore, redirect this event to the real focus object.
+		focus.event_valueChange()

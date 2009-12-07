@@ -164,6 +164,13 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		return not self.__eq__(other)
 
+	def _get_virtualBufferClass(self):
+		"""
+		If this NVDAObject should use a virtualBuffer, then this property provides the L{virtualBuffers.VirtualBuffer} class it should use. 
+		If not then it should be not implemented.
+		"""
+		raise NotImplementedError
+
 	def _get_virtualBuffer(self):
 		"""Retreaves the virtualBuffer associated with this object.
 		If a virtualBuffer has not been specifically set, the L{virtualBufferHandler} is asked if it can find a virtualBuffer containing this object.
@@ -483,6 +490,15 @@ Tries to force this object to take the focus.
 			return False
 		if not name and not description and role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and not config.conf["documentFormatting"]["reportTables"]:
 			return False
+		if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN):
+			try:
+				table=self.table
+			except NotImplementedError:
+				table=None
+			if table:
+				# This is part of a real table, so the cells will report row/column information.
+				# Therefore, we don't want to present this in the ancestry.
+				return False
 		return True
 
 	def _get_statusBar(self):
@@ -720,7 +736,7 @@ This code is executed if a gain focus event is received by this object.
 			info.expand(textInfos.UNIT_PARAGRAPH)
 			speech.speakTextInfo(info)
 
-	def script_backspace(self,keyPress):
+	def _backspaceScriptHelper(self,unit,keyPress):
 		try:
 			oldInfo=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
@@ -730,13 +746,16 @@ This code is executed if a gain focus event is received by this object.
 		testInfo=oldInfo.copy()
 		res=testInfo.move(textInfos.UNIT_CHARACTER,-1)
 		if res<0:
-			testInfo.expand(textInfos.UNIT_CHARACTER)
-			delChar=testInfo.text
+			testInfo.expand(unit)
+			delChunk=testInfo.text
 		else:
-			delChar=""
+			delChunk=""
 		sendKey(keyPress)
 		if self._hasCaretMoved(oldBookmark):
-			speech.speakSpelling(delChar)
+			if len(delChunk)>1:
+				speech.speakMessage(delChunk)
+			else:
+				speech.speakSpelling(delChunk)
 			focus=api.getFocusObject()
 			try:
 				info=focus.makeTextInfo(textInfos.POSITION_CARET)
@@ -744,6 +763,12 @@ This code is executed if a gain focus event is received by this object.
 				return
 			if globalVars.caretMovesReviewCursor:
 				api.setReviewPosition(info)
+
+	def script_backspaceCharacter(self,keyPress):
+		self._backspaceScriptHelper(textInfos.UNIT_CHARACTER,keyPress)
+
+	def script_backspaceWord(self,keyPress):
+		self._backspaceScriptHelper(textInfos.UNIT_WORD,keyPress)
 
 	def script_delete(self,keyPress):
 		try:

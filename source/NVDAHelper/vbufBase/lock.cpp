@@ -9,7 +9,7 @@
 #ifdef _WIN32
 #include <windows.h>
 #endif
-#include "debug.h"
+#include <common/debug.h>
 #include "lock.h"
 
 VBufLock_t::VBufLock_t() {

@@ -54,6 +54,7 @@ WS_VISIBLE=0x10000000
 WS_POPUP=0x80000000
 WS_GROUP=0x20000
 WS_THICKFRAME=0x40000
+WS_SIZEBOX=WS_THICKFRAME
 WS_SYSMENU=0x80000
 WS_HSCROLL=0x100000
 WS_VSCROLL=0x200000
@@ -61,6 +62,7 @@ WS_CAPTION=0xC00000
 BS_GROUPBOX=7
 ES_MULTILINE=4
 WM_NULL=0
+WM_COPYDATA=74
 WM_NOTIFY=78
 WM_USER=1024
 #PeekMessage
@@ -262,6 +264,11 @@ SW_SHOWNORMAL = 1
 
 def setSystemScreenReaderFlag(val):
 	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_SENDCHANGE)
+
+def getSystemScreenReaderFlag():
+	val = BOOL()
+	user32.SystemParametersInfoW(SPI_GETSCREENREADER, 0, byref(val), 0)
+	return bool(val.value)
 
 def LOBYTE(word):
 	return word&0xFF

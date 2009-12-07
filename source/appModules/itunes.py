@@ -18,7 +18,7 @@ class AppModule(_default.AppModule):
 class ITunesItem(NVDAObjects.IAccessible.IAccessible):
 	"""Retreaves position information encoded in the accDescription"""
 
-	RE_POSITION_INFO = re.compile(r"L(?P<level>\d)+, (?P<indexInGroup>\d)+ of (?P<similarItemsInGroup>\d)+")
+	RE_POSITION_INFO = re.compile(r"L(?P<level>\d+), (?P<indexInGroup>\d+) of (?P<similarItemsInGroup>\d+)")
 
 	# The description and value should not be user visible.
 	description = None

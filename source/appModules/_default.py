@@ -55,7 +55,7 @@ class AppModule(appModuleHandler.AppModule):
 			obj=virtualBuffer
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_CARET)
-		except NotImplementedError:
+		except (NotImplementedError, RuntimeError):
 			info=obj.makeTextInfo(textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_LINE)
 		if scriptHandler.getLastScriptRepeatCount()==0:
@@ -81,8 +81,11 @@ class AppModule(appModuleHandler.AppModule):
 		virtualBuffer=obj.virtualBuffer
 		if hasattr(virtualBuffer,'TextInfo') and not virtualBuffer.passThrough:
 			obj=virtualBuffer
-		info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
-		if info.isCollapsed:
+		try:
+			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
+		except (RuntimeError, NotImplementedError):
+			info=None
+		if not info or info.isCollapsed:
 			speech.speakMessage(_("no selection"))
 		else:
 			speech.speakMessage(_("selected %s")%info.text)
@@ -90,9 +93,9 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_dateTime(self,keyPress):
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			text=winKernel.GetTimeFormat(winKernel.getThreadLocale(), winKernel.TIME_NOSECONDS, None, None)
+			text=winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, None, None)
 		else:
-			text=winKernel.GetDateFormat(winKernel.getThreadLocale(), winKernel.DATE_LONGDATE, None, None)
+			text=winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, None, None)
 		ui.message(text)
 	script_dateTime.__doc__=_("If pressed once, reports the current time. If pressed twice, reports the current date")
 
@@ -206,19 +209,23 @@ class AppModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("no navigator object"))
 			return
 		if scriptHandler.getLastScriptRepeatCount()>=1:
-			textList=[prop for prop in (curObject.name, curObject.value) if prop and isinstance(prop, basestring) and not prop.isspace()]
 			if curObject.TextInfo!=NVDAObjectTextInfo:
+				textList=[]
+				if curObject.name and isinstance(curObject.name, basestring) and not curObject.name.isspace():
+					textList.append(curObject.name)
 				try:
 					info=curObject.makeTextInfo(textInfos.POSITION_SELECTION)
 					if not info.isCollapsed:
 						textList.append(info.text)
 					else:
-						info.expand(textInfos.UNIT_READINGCHUNK)
+						info.expand(textInfos.UNIT_LINE)
 						if not info.isCollapsed:
 							textList.append(info.text)
 				except (RuntimeError, NotImplementedError):
 					# No caret or selection on this object.
 					pass
+			else:
+				textList=[prop for prop in (curObject.name, curObject.value) if prop and isinstance(prop, basestring) and not prop.isspace()]
 			text=" ".join(textList)
 			if len(text)>0 and not text.isspace():
 				if scriptHandler.getLastScriptRepeatCount()==1:
@@ -233,13 +240,20 @@ class AppModule(appModuleHandler.AppModule):
 	def script_navigatorObject_currentDimensions(self,keyPress):
 		obj=api.getNavigatorObject()
 		if not obj:
-			speech.speakMessage(_("no navigator object"))
+			ui.message(_("no navigator object"))
 		location=obj.location
 		if not location:
-			speech.speakMessage(_("No location information for navigator object"))
+			ui.message(_("No location information for navigator object"))
 		(left,top,width,height)=location
-		(deskLeft,deskTop,deskWidth,deskHeight)=api.getDesktopObject().location
-		speech.speakMessage(_("Object edges positioned %.1f per cent right from left of screen, %.1f per cent down from top of screen, %.1f per cent left from right of screen, %.1f up from bottom of screen")%((float(left)/deskWidth)*100,(float(top)/deskHeight)*100,100-((float(width+left)/deskWidth)*100),100-(float(height+top)/deskHeight)*100))
+		deskLocation=api.getDesktopObject().location
+		if not deskLocation:
+			ui.message(_("No location information for screen"))
+		(deskLeft,deskTop,deskWidth,deskHeight)=deskLocation
+		percentFromLeft=(float(left-deskLeft)/deskWidth)*100
+		percentFromTop=(float(top-deskTop)/deskHeight)*100
+		percentWidth=(float(width)/deskWidth)*100
+		percentHeight=(float(height)/deskHeight)*100
+		ui.message(_("Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen")%(percentFromLeft,percentFromTop,percentWidth,percentHeight))
 	script_navigatorObject_currentDimensions.__doc__=_("Reports the hight, width and position of the current navigator object")
 
 	def script_navigatorObject_toFocus(self,keyPress):
@@ -532,8 +546,13 @@ class AppModule(appModuleHandler.AppModule):
 	script_review_moveToCaret.__doc__=_("Moves the review cursor to the position of the system caret, in the current navigator object")
 
 	def script_review_moveCaretHere(self,keyPress):
-		api.getReviewPosition().updateCaret()
-		info=api.getReviewPosition().copy()
+		review=api.getReviewPosition()
+		try:
+			review.updateCaret()
+		except NotImplementedError:
+			ui.message(_("no caret"))
+			return
+		info=review.copy()
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(info,reason=speech.REASON_CARET)
 	script_review_moveCaretHere.__doc__=_("Moves the system caret to the position of the review cursor , in the current navigator object")
@@ -553,10 +572,22 @@ class AppModule(appModuleHandler.AppModule):
 		speech.speechMode=newMode
 	script_speechMode.__doc__=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally.")
 
+	def _getDocumentForFocusedEmbeddedObject(self):
+		for ancestor in reversed(api.getFocusAncestors()):
+			if ancestor.role == controlTypes.ROLE_DOCUMENT:
+				return ancestor
+
 	def script_toggleVirtualBufferPassThrough(self,keyPress):
 		vbuf = api.getFocusObject().virtualBuffer
 		if not vbuf:
+			# We might be in an embedded object or application, so try searching the ancestry for an object which can return focus to the document.
+			docObj = self._getDocumentForFocusedEmbeddedObject()
+			if not docObj:
+				return
+			docObj.setFocus()
 			return
+
+		# Toggle virtual buffer pass-through.
 		vbuf.passThrough = not vbuf.passThrough
 		# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
 		# If we're disabling pass-through, re-enable auto-pass-through.
@@ -875,12 +906,12 @@ class AppModule(appModuleHandler.AppModule):
 		if self._copyStartMarker.obj != pos.obj:
 			ui.message(_("The start marker must reside within the same object"))
 			return
-		pos.collapse()
+		pos.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
 		pos.setEndPoint(self._copyStartMarker, "startToStart")
-		if pos.copyToClipboard():
+		if pos.compareEndPoints(pos, "startToEnd") < 0 and pos.copyToClipboard():
 			ui.message(_("Review selection copied to clipboard"))
 		else:
 			ui.message(_("No text to copy"))
 			return
 		self._copyStartMarker = None
-	script_review_copy.__doc__ = _("Retrieves the text from the previously set start marker to the current position of the review cursor and copies it to the clipboard")
+	script_review_copy.__doc__ = _("Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard")

@@ -1,24 +1,24 @@
 #tones.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 """Utilities to generate and play tones"""
 
 import nvwave
-import struct
-import math
 import config
 import globalVars
 from logHandler import log
+from ctypes import create_string_buffer, byref
 
-piTwo=math.pi*2
+SAMPLE_RATE = 44100
 
-sampleRate=44100
-amplitude=14000
-
-player = nvwave.WavePlayer(channels=2, samplesPerSec=int(sampleRate), bitsPerSample=16, outputDevice=config.conf["speech"]["outputDevice"])
+try:
+	player = nvwave.WavePlayer(channels=2, samplesPerSec=int(SAMPLE_RATE), bitsPerSample=16, outputDevice=config.conf["speech"]["outputDevice"])
+except:
+	log.warning("Failed to initialize audio for tones")
+	player = None
 
 def beep(hz,length,left=50,right=50):
 	"""Plays a tone at the given hz, length, and stereo balance.
@@ -32,17 +32,11 @@ def beep(hz,length,left=50,right=50):
 	@type right: float
 	""" 
 	log.io("Beep at pitch %s, for %s ms, left volume %s, right volume %s"%(hz,length,left,right))
-	hz=float(hz)
+	if not player:
+		return
+	from NVDAHelper import generateBeep
+	bufSize=generateBeep(None,hz,length,left,right)
+	buf=create_string_buffer(bufSize)
+	generateBeep(buf,hz,length,left,right)
 	player.stop()
-	samplesPerCycle=(sampleRate/hz)
-	totalSamples=(length/1000.0)/(1.0/sampleRate)
-	totalSamples=totalSamples+(samplesPerCycle-(totalSamples%samplesPerCycle))
-	data=""
-	sampleNum=0
-	while sampleNum<totalSamples:
-		sample=min(max(math.sin((sampleNum%sampleRate)*piTwo*(hz/sampleRate))*2,-1),1)*amplitude
-		leftSample=sample*(left/100.0)
-		rightSample=sample*(right/100.0)
-		data+=struct.pack('hh',int(leftSample),int(rightSample))
-		sampleNum+=1
-	player.feed(data)
+	player.feed(buf.raw)

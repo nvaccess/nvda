@@ -1,5 +1,5 @@
-import subprocess
 import os
+import winKernel
 
 from ctypes import *
 import keyboardHandler
@@ -10,6 +10,8 @@ import queueHandler
 import api
 import globalVars
 from logHandler import log
+import time
+import globalVars
 
 EVENT_TYPEDCHARACTER=0X1000
 EVENT_INPUTLANGCHANGE=0X1001
@@ -17,8 +19,26 @@ EVENT_INPUTLANGCHANGE=0X1001
 _remoteLib=None
 _remoteLoader64=None
 localLib=None
+generateBeep=None
+lastKeyboardLayoutChangeEventTime=None
 
 winEventHookID=None
+
+#utility function to point an exported function pointer in a dll  to a ctypes wrapped python function
+def _setDllFuncPointer(dll,name,cfunc):
+	cast(getattr(dll,name),POINTER(c_void_p)).contents.value=cast(cfunc,c_void_p).value
+
+#Implementation of nvdaController methods
+@CFUNCTYPE(None,POINTER(c_wchar_p))
+def nvdaController_getNVDAVersionString(version):
+	import versionInfo
+	version.contents.value=versionInfo.version
+
+@CFUNCTYPE(None,c_long,c_wchar_p)
+def nvdaController_speakText(bindingHandle,text):
+	import queueHandler
+	import speech
+	queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,text)
 
 def handleTypedCharacter(window,wParam,lParam):
 	focus=api.getFocusObject()
@@ -27,22 +47,72 @@ def handleTypedCharacter(window,wParam,lParam):
 
 @winUser.WINEVENTPROC
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
+	global lastKeyboardLayoutChangeEventTime
 	try:
 		if eventID==EVENT_TYPEDCHARACTER:
 			handleTypedCharacter(window,objectID,childID)
-		elif eventID==EVENT_INPUTLANGCHANGE:
+		elif eventID==EVENT_INPUTLANGCHANGE and (not lastKeyboardLayoutChangeEventTime or (time.time()-lastKeyboardLayoutChangeEventTime)>0.2):
+			lastKeyboardLayoutChangeEventTime=time.time()
 			keyboardHandler.speakKeyboardLayout(childID)
 	except:
 		log.error("helper.winEventCallback", exc_info=True)
 
+class RemoteLoader64(object):
+
+	def __init__(self):
+		# Create a pipe so we can write to stdin of the loader process.
+		pipeReadOrig, self._pipeWrite = winKernel.CreatePipe(None, 0)
+		# Make the read end of the pipe inheritable.
+		pipeRead = self._duplicateAsInheritable(pipeReadOrig)
+		winKernel.closeHandle(pipeReadOrig)
+		# stdout/stderr of the loader process should go to nul.
+		with file("nul", "w") as nul:
+			nulHandle = self._duplicateAsInheritable(nul.fileno())
+		# Set the process to start with the appropriate std* handles.
+		si = winKernel.STARTUPINFO(dwFlags=winKernel.STARTF_USESTDHANDLES, hSTDInput=pipeRead, hSTDOutput=nulHandle, hSTDError=nulHandle)
+		pi = winKernel.PROCESS_INFORMATION()
+		# Even if we have uiAccess privileges, they will not be inherited by default.
+		# Therefore, explicitly specify our own process token, which causes them to be inherited.
+		token = winKernel.OpenProcessToken(winKernel.GetCurrentProcess(), winKernel.MAXIMUM_ALLOWED)
+		try:
+			winKernel.CreateProcessAsUser(token, None, u"lib64/nvdaHelperRemoteLoader.exe", None, None, True, None, None, None, si, pi)
+			# We don't need the thread handle.
+			winKernel.closeHandle(pi.hThread)
+			self._process = pi.hProcess
+		except:
+			winKernel.closeHandle(self._pipeWrite)
+			raise
+		finally:
+			winKernel.closeHandle(pipeRead)
+			winKernel.closeHandle(token)
+
+	def _duplicateAsInheritable(self, handle):
+		curProc = winKernel.GetCurrentProcess()
+		return winKernel.DuplicateHandle(curProc, handle, curProc, 0, True, winKernel.DUPLICATE_SAME_ACCESS)
+
+	def terminate(self):
+		# Closing the write end of the pipe will cause EOF for the waiting loader process, which will then exit gracefully.
+		winKernel.closeHandle(self._pipeWrite)
+		# Wait until it's dead.
+		winKernel.waitForSingleObject(self._process, winKernel.INFINITE)
+		winKernel.closeHandle(self._process)
+
 def initialize():
-	global _remoteLib, _remoteLoader64, localLib, winEventHookID
+	global _remoteLib, _remoteLoader64, localLib, winEventHookID,generateBeep
 	localLib=cdll.LoadLibrary('lib/nvdaHelperLocal.dll')
+	try:
+		_setDllFuncPointer(localLib,"_nvdaController_speakText",nvdaController_speakText)
+	except AttributeError:
+		log.error("nvdaHelperLocal function pointer for speakText could not be found, possibly old nvdaHelperLocal dll")
+	localLib.startServer()
+	generateBeep=localLib.generateBeep
+	generateBeep.argtypes=[c_char_p,c_float,c_uint,c_ubyte,c_ubyte]
+	generateBeep.restype=c_uint
 	_remoteLib=cdll.LoadLibrary('lib/NVDAHelperRemote.dll')
 	if _remoteLib.nvdaHelper_initialize() < 0:
 		raise RuntimeError("Error initializing NVDAHelper")
 	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':
-		_remoteLoader64=subprocess.Popen('lib64/nvdaHelperRemoteLoader.exe',stdin=subprocess.PIPE,stdout=file("nul","w"),stderr=subprocess.STDOUT)
+		_remoteLoader64=RemoteLoader64()
 	winEventHookID=winUser.setWinEventHook(EVENT_TYPEDCHARACTER,EVENT_INPUTLANGCHANGE,0,winEventCallback,0,0,0)
 
 def terminate():
@@ -52,7 +122,6 @@ def terminate():
 		raise RuntimeError("Error terminating NVDAHelper")
 	_remoteLib=None
 	if _remoteLoader64:
-		_remoteLoader64.stdin.close()
-		_remoteLoader64.wait()
+		_remoteLoader64.terminate()
 		_remoteLoader64=None
 	localLib=None

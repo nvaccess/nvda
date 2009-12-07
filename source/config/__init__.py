@@ -140,6 +140,7 @@ outputDevice = string(default=default)
 	reportLists = boolean(default=true)
 	reportHeadings = boolean(default=true)
 	reportBlockQuotes = boolean(default=true)
+	reportLandmarks = boolean(default=true)
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"
