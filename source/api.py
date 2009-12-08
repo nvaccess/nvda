@@ -74,7 +74,16 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	focusDifferenceLevel=0
 	oldFocusLineLength=len(oldFocusLine)
 	# Starting from the focus, move up the ancestor chain.
+	safetyCount=0
 	while tempObj:
+		if safetyCount<100:
+			safetyCount+=1
+		else:
+			try:
+				log.error("Never ending focus ancestry: last object: %s, %s, window class %s, application name %s"%(tempObj.name,controlTypes.speechRoleLabels[tempObj.role],tempObj.windowClassName,tempObj.appModule.appName))
+			except:
+				pass
+			tempObj=getDesktopObject()
 		# Scan backwards through the old ancestors looking for a match.
 		for index in xrange(oldFocusLineLength-1,-1,-1):
 			if tempObj==oldFocusLine[index]:
