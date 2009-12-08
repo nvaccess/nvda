@@ -1,6 +1,6 @@
 #synthDrivers/sapi5.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -9,9 +9,10 @@ import os
 import comtypes.client
 import _winreg
 import globalVars
-import synthDriverHandler
+from synthDriverHandler import SynthDriver,VoiceInfo
 import config
 import nvwave
+from logHandler import log
 
 class constants:
 	SVSFlagsAsync = 1
@@ -20,12 +21,8 @@ class constants:
 
 COM_CLASS = "SAPI.SPVoice"
 
-class SynthDriver(synthDriverHandler.SynthDriver):
-
-	hasVoice=True
-	hasRate=True
-	hasPitch=True
-	hasVolume=True
+class SynthDriver(SynthDriver):
+	supportedSettings=(SynthDriver.VoiceSetting(),SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.VolumeSetting())
 
 	name="sapi5"
 	description="Microsoft Speech API version 5 (sapi.SPVoice)"
@@ -48,10 +45,14 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 
 	def _getAvailableVoices(self):
 		voices=[]
-		for v in self.tts.GetVoices():
-			ID=v.Id
-			name=v.GetDescription()
-			voices.append(synthDriverHandler.VoiceInfo(ID,name))
+		v=self.tts.GetVoices()
+		for i in range(len(v)):
+			try:
+				ID=v[i].Id
+				name=v[i].GetDescription()
+			except COMError:
+				log.warning("Could not get the voice info. Skipping...")
+			voices.append(VoiceInfo(ID,name))
 		return voices
 
 	def _get_rate(self):
@@ -90,14 +91,15 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
 
 	def _set_voice(self,value):
-		for v in self.tts.GetVoices():
-			if value==v.Id:
+		v=self.tts.GetVoices()
+		for i in range(len(v)):
+			if value==v[i].Id:
 				break
 		else:
 			# Voice not found.
 			return
 		self._initTts()
-		self.tts.voice=v
+		self.tts.voice=v[i]
 
 	def performSpeak(self,text,index=None,isCharacter=False):
 		flags=constants.SVSFIsXML

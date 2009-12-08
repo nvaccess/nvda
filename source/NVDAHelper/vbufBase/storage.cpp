@@ -14,7 +14,7 @@
 #include <list>
 #include <set>
 #include <sstream>
-#include "debug.h"
+#include <common/debug.h>
 #include "utils.h"
 #include "storage.h"
 

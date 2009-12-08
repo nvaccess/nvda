@@ -4,7 +4,7 @@
 #Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-from synthDriverHandler import SynthDriver,VoiceInfo
+from synthDriverHandler import SynthDriver,VoiceInfo,SynthSetting,NumericSynthSetting
 from ctypes import *
 import os
 import config
@@ -110,16 +110,17 @@ u"є": u"е"
 letters = {}
 letters.update(englishLetters)
 letters.update(russianLetters)
+russianZeros=[u"ноль ",u"ноля",u"нолей"]
+ukrainianZeros=[u"нуль ",u"нулі ",u"нулів "]
 
-def subRussianZeros(match):
+def subZeros(match,zeros):
 	l = len(match.group(1))
-	if l == 1: return u" ноль "
+	if l == 1: return zeros[0]
 	text = " " + str(l) + " "
 	l = l%10
-	if l == 1: text += u"ноль"
-	elif l <5: text+= u"ноля"
-	else: text+=u"нолей"
-	return text+" "
+	if l == 1: return text+ zeros[0]
+	elif l <5: return text+zeros[1]
+	else: return text+zeros[2]
 
 def expandAbbreviation(match):
 	loweredText = match.group(1).lower()
@@ -151,16 +152,16 @@ def preprocessUkrainianText(text):
 		text = text.replace(s.upper(), ukrainianPronunciation[s])
 	return text
 
-def processText(text,variant):
+def processText(text,language):
 	if len(text) == 1:
 		letter = text.lower()
-		if variant == "ukr" and ukrainianLetters.has_key(letter): return ukrainianLetters[letter]
+		if language == "ukr" and ukrainianLetters.has_key(letter): return ukrainianLetters[letter]
 		elif letters.has_key(letter): return letters[letter]
 		else: return letter
 	text = re_omittedCharacters.sub(" ", text)
-	if variant == "ukr":
+	text = re_zeros.sub(lambda match: subZeros(match,russianZeros if language=="rus" else ukrainianZeros),text)
+	if language == "ukr":
 		text = preprocessUkrainianText(text)
-	else: text = re_zeros.sub(subRussianZeros,text)
 	text = re_words.sub(expandAbbreviation,text) #this also lowers the text
 	text = preprocessEnglishText(text)
 	text = re_afterNumber.sub(r"\1-\2", text)
@@ -169,17 +170,25 @@ def processText(text,variant):
 class SynthDriver(SynthDriver):
 	name="newfon"
 	description = _("russian newfon synthesizer by Sergey Shishmintzev")
-	hasVoice=True
-	hasVolume = True
-	hasRate=True
-	hasVariant=True
+	supportedSettings=(
+		SynthDriver.VoiceSetting(),
+		SynthSetting("language",_("&Language:")),
+		SynthDriver.RateSetting(),
+		SynthSetting("accel",_("&Acceleration:")),
+		SynthDriver.PitchSetting(),
+		SynthDriver.InflectionSetting(10),
+		SynthDriver.VolumeSetting(),
+	)
 	_volume = 100
-	_variant="rus"
-	hasPitch = True
+	_language="rus"
 	_pitch = 50
+	_accel=0
+	_inflection=50
 	_rate=70
 	availableVoices = (VoiceInfo("0", _("male 1")), VoiceInfo("1", _("female 1")), VoiceInfo("2", _("male 2")), VoiceInfo("3", _("female 2")))
-	availableVariants = (VoiceInfo("rus", u"русский"), VoiceInfo("ukr", u"український"))
+	availableAccels=[VoiceInfo(str(x),str(x)) for x in xrange(8)]
+	pitchTable=[(90,130),(190,330),(60,120),(220,340)]
+	availableLanguages = (VoiceInfo("rus", u"русский"), VoiceInfo("ukr", u"український"))
 	newfon_lib = None
 	sdrvxpdbDll = None
 	dictDll = None
@@ -187,6 +196,17 @@ class SynthDriver(SynthDriver):
 	@classmethod
 	def check(cls):
 		return os.path.isfile('synthDrivers/newfon_nvda.dll')
+
+	def calculateMinMaxPitch(self,pitch,inflection):
+		min,max=self.pitchTable[int(self.voice)]
+		i=max-min
+		i=int((i/50.0)*((inflection-50)/2))
+		min-=i
+		max+=i
+		i=int((pitch-50)/1.3)
+		min+=i
+		max+=i
+		return min,max
 
 	def __init__(self):
 		global player
@@ -199,6 +219,7 @@ class SynthDriver(SynthDriver):
 		self.newfon_lib.speakText.argtypes = [c_char_p, c_int]
 		if not self.newfon_lib.initialize(): raise Exception
 		self.newfon_lib.set_callback(processAudio)
+		self.newfon_lib.set_dictionary(1)
 
 	def terminate(self):
 		self.cancel()
@@ -214,7 +235,7 @@ class SynthDriver(SynthDriver):
 	def speakText(self, text, index=None):
 		global isSpeaking
 		isSpeaking = True
-		text = processText(text, self._variant)
+		text = processText(text, self._language)
 		if index is not None: 
 			self.newfon_lib.speakText(text,index)
 		else:
@@ -234,6 +255,7 @@ class SynthDriver(SynthDriver):
 
 	def _set_voice(self, value):
 		self.newfon_lib.set_voice(int(value))
+		self._set_pitch(self._pitch)
 
 	def _get_volume(self):
 		return self._volume
@@ -250,9 +272,12 @@ class SynthDriver(SynthDriver):
 		self._rate = value
 
 	def _set_pitch(self, value):
-		if value <= 50: value = 50
-		self.newfon_lib.set_accel(value/5 -10 )
+		#if value <= 50: value = 50
+		#self.newfon_lib.set_accel(value/5 -10 )
 		self._pitch = value
+		min,max=self.calculateMinMaxPitch(self._pitch,self._inflection)
+		self.newfon_lib.set_pitch_min(min)
+		self.newfon_lib.set_pitch_max(max)
 
 	def _get_pitch(self):
 		return self._pitch
@@ -261,11 +286,25 @@ class SynthDriver(SynthDriver):
 		global player
 		player.pause(switch)
 
-	def _get_variant(self):
-		return self._variant
+	def _get_language(self):
+		return self._language
 
-	def _set_variant(self, variant):
-		self._variant = variant
+	def _set_language(self, language):
+		self._language = language
 		if not self.hasDictLib: return
-		if variant == "rus": self.newfon_lib.set_dictionary(1)
+		if language == "rus": self.newfon_lib.set_dictionary(1)
 		else: self.newfon_lib.set_dictionary(0)
+
+	def _set_inflection(self,inflection):
+		self._inflection=inflection
+		self._set_pitch(self._pitch)
+
+	def _get_inflection(self):
+		return self._inflection
+
+	def _set_accel(self,a):
+		self._accel=a
+		self.newfon_lib.set_accel(int(a))
+
+	def _get_accel(self):
+		return self._accel

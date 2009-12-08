@@ -208,7 +208,8 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 				("control+extendedHome","moveByLine"),
 				("control+extendedEnd","moveByLine"),
 				("ExtendedDelete","delete"),
-				("Back","backspace"),
+				("Back","backspaceCharacter"),
+				("Control+Back","backspaceWord"),
 			]]
 
 	def _isEqual(self,other):

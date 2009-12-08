@@ -638,7 +638,9 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		speakRole=False
 		role=controlTypes.ROLE_UNKNOWN
 	value=propertyValues.get('value') if role not in silentValuesForRoles else None
-	if speakRole and (reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or not (name or value) or role not in silentRolesOnFocus):
+	rowNumber=propertyValues.get('rowNumber')
+	columnNumber=propertyValues.get('columnNumber')
+	if speakRole and (reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or not (name or value or rowNumber or columnNumber) or role not in silentRolesOnFocus):
 		textList.append(controlTypes.speechRoleLabels[role])
 	if value:
 		textList.append(value)
@@ -672,8 +674,6 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 			oldTreeLevel=level
 		elif level:
 			textList.append(_('level %s')%propertyValues['positionInfo_level'])
-	rowNumber = propertyValues.get("rowNumber")
-	columnNumber = propertyValues.get("columnNumber")
 	if rowNumber or columnNumber:
 		tableID = propertyValues.get("_tableID")
 		# Always treat the table as different if there is no tableID.
@@ -695,6 +695,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		textList.append(_("with %s columns")%columnCount)
 	elif rowCount and not columnCount:
 		textList.append(_("with %s rows")%rowCount)
+	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		oldTableID = None
 	return " ".join([x for x in textList if x])
@@ -737,13 +738,13 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		(role==controlTypes.ROLE_LINK and not formatConfig["reportLinks"]) or 
 		(role==controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"]) or
 		(role==controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"]) or
-		(role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN) and not formatConfig["reportTables"]) or
+		(role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROWHEADER,controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"]) or
 		(role in (controlTypes.ROLE_LIST,controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
 	):
 			return ""
 	roleText=getSpeechTextForProperties(reason=reason,role=role)
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
-	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut)
+	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
 	levelText=getSpeechTextForProperties(reason=reason,positionInfo_level=level)
 	if not extraDetail and ((reason==REASON_FOCUS and fieldType in ("end_relative","end_inControlFieldStack")) or (reason in (REASON_CARET,REASON_SAYALL) and fieldType in ("start_inControlFieldStack","start_addedToControlFieldStack","start_relative"))) and role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_EMBEDDEDOBJECT):

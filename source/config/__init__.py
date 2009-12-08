@@ -3,6 +3,7 @@
 
 import globalVars
 import _winreg
+from copy import deepcopy
 import os
 import sys
 from cStringIO import StringIO
@@ -59,13 +60,7 @@ confspec = ConfigObj(StringIO(
 outputDevice = string(default=default)
 
 	[[__many__]]
-		variant = string(default=None)
-		rate = integer(default=50,min=0,max=100)
-		pitch = integer(default=50,min=0,max=100)
-		inflection = integer(default=50,min=0,max=100)
 		capPitchChange = integer(default=30,min=-100,max=100)
-		volume = integer(default=100,min=0,max=100)
-		voice = string(default=None)
 		raisePitchForCapitals = boolean(default=true)
 		sayCapForCapitals = boolean(default=false)
 		beepForCapitals = boolean(default=false)
@@ -145,6 +140,7 @@ outputDevice = string(default=default)
 	reportLists = boolean(default=true)
 	reportHeadings = boolean(default=true)
 	reportBlockQuotes = boolean(default=true)
+	reportLandmarks = boolean(default=true)
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"
@@ -152,12 +148,15 @@ confspec.newlines = "\r\n"
 #: The active configuration, C{None} if it has not yet been loaded.
 #: @type: ConfigObj
 conf = None
+#: template config spec for concrete synthesizer's settings. It is used in SynthDriver.getConfigSpec() to build a real spec
+#: @type: L{configobj.Section}
+synthSpec=None
 
 def load():
 	"""Loads the configuration from the configFile.
 	It also takes note of the file's modification time so that L{save} won't lose any changes made to the file while NVDA is running. 
 	"""
-	global conf
+	global conf,synthSpec
 	configFileName=os.path.join(globalVars.appArgs.configPath,"nvda.ini")
 	try:
 		conf = ConfigObj(configFileName, configspec = confspec, indent_type = "\t", encoding="UTF-8")
@@ -168,21 +167,24 @@ def load():
 	# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 	conf.newlines = "\r\n"
 	errorList=validateConfig(conf,val)
+	if synthSpec is None: 
+		synthSpec=deepcopy(conf["speech"].configspec["__many__"])
 	if errorList:
 		globalVars.configFileError=_("Errors in configuration file '%s':\n%s")%(conf.filename,"\n".join(errorList))
 	if globalVars.configFileError:
 		log.warn(globalVars.configFileError)
 
-def updateSynthConfig(name):
-	"""Makes sure that the config contains a specific synth section for the given synth name.
-@param name: the synth name
-@type name: string
+def updateSynthConfig(synth):
+	"""Makes sure that the config contains a specific synth section for the given synth name and assigns the appropriate config spec.
+@param synth: the synth
+@type synth: l{synthDriverHandler.BaseSynthDriver}
 """ 
 	speech = conf["speech"]
 	# If there are no settings for this synth, make sure there are defaults.
-	if not speech.has_key(name):
-		speech[name] = {}
-		conf.validate(val, copy = True)
+	if not speech.has_key(synth.name):
+		speech[synth.name] = {}
+		speech[synth.name].configspec=synth.getConfigSpec()
+		conf.validate(val, copy = True,section=speech[synth.name])
 		return True
 	else:
 		return False

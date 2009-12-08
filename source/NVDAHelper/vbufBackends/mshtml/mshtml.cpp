@@ -18,7 +18,7 @@
 #include <sstream>
 #include <vbufBase/backend.h>
 #include <vbufBase/utils.h>
-#include <vbufBase/debug.h>
+#include <common/debug.h>
 #include "node.h"
 #include "mshtml.h"
 

@@ -84,7 +84,7 @@ class CursorManager(baseObject.ScriptableObject):
 		if res:
 			self.selection=info
 			speech.cancelSpeech()
-			info.expand(textInfos.UNIT_LINE)
+			info.move(textInfos.UNIT_LINE,1,endPoint="end")
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
 			errorDialog=gui.scriptUI.MessageDialog(_("text \"%s\" not found")%text,title=_("Find Error"),style=gui.scriptUI.wx.OK|gui.scriptUI.wx.ICON_ERROR)

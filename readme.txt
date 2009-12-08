@@ -6,6 +6,8 @@ http://www.nvda-project.org/
 == Dependencies ==
 The NVDA source depends on several other packages to run correctly, as described below. All directories mentioned are relative to the root of the NVDA source distribution/checkout. Please create any directories mentioned that don't already exist.
 
+If you are running a 64 bit version of Windows, you should install the 32 bit versions of any dependencies that provide both 32 bit and 64 bit versions.
+
 General dependencies:
 	* Python, version 2.6.2: http://www.python.org/
 	* comtypes, version 0.6.1 or later: http://www.sourceforge.net/projects/comtypes/
@@ -61,6 +63,7 @@ To build a binary version of NVDA:
 To build an installer:
 	* Nulsoft Install System, version 2.42 or later: http://nsis.sourceforge.net/
 	* NSIS UAC plug-in, version 0.0.11c or later: http://nsis.sourceforge.net/UAC_plug-in
+		* Copy UAC.dll into the installer directory.
 
 == Preparing the Source Tree ==
 Before you can run the NVDA source code, you must run generate.py located in the source directory.

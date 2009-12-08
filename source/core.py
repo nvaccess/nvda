@@ -92,7 +92,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import config
 	config.load()
 	if not globalVars.appArgs.minimal:
-		nvwave.playWaveFile("waves\\start.wav")
+		try:
+			nvwave.playWaveFile("waves\\start.wav")
+		except:
+			pass
 	log.debug("Trying to save config")
 	try:
 		config.save()
@@ -135,7 +138,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		config.saveOnExit()
 		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal:
-			nvwave.playWaveFile("waves\\exit.wav",async=False)
+			try:
+				nvwave.playWaveFile("waves\\exit.wav",async=False)
+			except:
+				pass
 		log.info("Windows session ending")
 	app.Bind(wx.EVT_END_SESSION, onEndSession)
 	import braille
@@ -182,7 +188,12 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	IAccessibleHandler.initialize()
 	import UIAHandler
 	log.debug("Initializing UIA support")
-	UIAHandler.initialize()
+	try:
+		UIAHandler.initialize()
+	except NotImplementedError:
+		log.warning("UIA not available")
+	except:
+		log.error("Error initializing UIA support", exc_info=True)
 	import keyboardHandler
 	log.debug("Initializing keyboard handler")
 	keyboardHandler.initialize()
@@ -294,5 +305,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	except:
 		log.error("Error terminating speech",exc_info=True)
 	if not globalVars.appArgs.minimal:
-		nvwave.playWaveFile("waves\\exit.wav",async=False)
+		try:
+			nvwave.playWaveFile("waves\\exit.wav",async=False)
+		except:
+			pass
 	log.debug("core done")

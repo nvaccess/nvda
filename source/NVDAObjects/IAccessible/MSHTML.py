@@ -262,6 +262,12 @@ class MSHTML(IAccessible):
 			clsList.insert(0,MSHTML)
 		return clsList,kwargs
 
+	def _get_virtualBufferClass(self):
+		if self.HTMLNode and self.role==controlTypes.ROLE_DOCUMENT and not self.isContentEditable:
+			import virtualBuffers.MSHTML
+			return virtualBuffers.MSHTML.MSHTML
+		return super(MSHTML,self).virtualBufferClass
+
 	def __init__(self,HTMLNode=None,HTMLNodeHasAncestorIAccessible=False,IAccessibleObject=None,IAccessibleChildID=None,**kwargs):
 		self.HTMLNodeHasAncestorIAccessible=HTMLNodeHasAncestorIAccessible
 		if not HTMLNode and IAccessibleChildID==0:
@@ -304,7 +310,8 @@ class MSHTML(IAccessible):
 				("control+shift+extendedHome","changeSelection"),
 				("control+shift+extendedEnd","changeSelection"),
 				("ExtendedDelete","moveByCharacter"),
-				("Back","backspace"),
+				("Back","backspaceCharacter"),
+				("Control+Back","backspaceWord"),
 			]]
 
 	def isDuplicateIAccessibleEvent(self,obj):
@@ -578,3 +585,15 @@ class MSHTML(IAccessible):
 			self._HTMLNodeName=nodeName
 		return self._HTMLNodeName
 
+class V6ComboBox(IAccessible):
+	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
+	"""
+
+	def event_valueChange(self):
+		focus = api.getFocusObject()
+		if controlTypes.STATE_FOCUSED not in self.states or focus.role != controlTypes.ROLE_COMBOBOX:
+			# This combo box is not focused.
+			return super(V6ComboBox, self).event_valueChange()
+		# This combo box is focused. However, the value change is not fired on the real focus object.
+		# Therefore, redirect this event to the real focus object.
+		focus.event_valueChange()

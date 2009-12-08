@@ -52,7 +52,7 @@ class Container(IAccessible):
 		return super(Container, self).event_gainFocus()
 
 class TreeViewItem(IAccessible):
-	RE_POSITION_INFO = re.compile(r"L(?P<level>\d)+, (?P<indexInGroup>\d)+ of (?P<similarItemsInGroup>\d)+ with \d+")
+	RE_POSITION_INFO = re.compile(r"L(?P<level>\d+), (?P<indexInGroup>\d+) of (?P<similarItemsInGroup>\d+) with \d+")
 
 	# The description and value should not be user visible.
 	description = None

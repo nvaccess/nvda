@@ -460,7 +460,8 @@ the NVDAObject for IAccessible
 					("control+extendedHome","moveByLine"),
 					("control+extendedEnd","moveByLine"),
 					("ExtendedDelete","delete"),
-					("Back","backspace"),
+					("Back","backspaceCharacter"),
+					("Control+Back","backspaceWord"),
 				]]
 		except:
 			pass
@@ -555,6 +556,16 @@ the NVDAObject for IAccessible
 			res=self.IAccessibleObject.accName(self.IAccessibleChildID)
 		except:
 			res=None
+		if not res and hasattr(self,'IAccessibleTextObject'):
+			try:
+				res=self.makeTextInfo(textInfos.POSITION_CARET).text
+				if res:
+					return
+			except (NotImplementedError, RuntimeError):
+				try:
+					res=self.makeTextInfo(textInfos.POSITION_ALL).text
+				except (NotImplementedError, RuntimeError):
+					res=None
 		return res if isinstance(res,basestring) and not res.isspace() else None
 
 	def _get_value(self):
@@ -1049,20 +1060,6 @@ the NVDAObject for IAccessible
 				child.speakDescendantObjects(hashList=hashList)
 			child=child.next
 
-	def event_show(self):
-		if not winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle) or not winUser.isWindowVisible(self.windowHandle) or controlTypes.STATE_INVISIBLE in self.states: 
-			return
-		try:
-			attribs=self.IAccessibleObject.attributes
-		except:
-			return
-		if attribs and ('live:polite' in attribs or 'live:assertive' in attribs): 
-			text=IAccessibleHandler.getRecursiveTextFromIAccessibleTextObject(self.IAccessibleObject)
-			if text and not text.isspace():
-				if 'live:rude' in attribs:
-					speech.cancelSpeech()
-				speech.speakMessage(text)
-
 	def event_gainFocus(self):
 		if hasattr(self,'IAccessibleTextObject'):
 			self.initAutoSelectDetection()
@@ -1348,7 +1345,6 @@ _staticMap={
 	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_LISTITEM):"mozilla.ListItem",
 	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
 	("MozillaWindowClass",oleacc.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
-	("MozillaUIWindowClass",IAccessibleHandler.IA2_ROLE_LABEL):"mozilla.Label",
 	("ConsoleWindowClass",oleacc.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
 	(None,oleacc.ROLE_SYSTEM_LIST):"List",
 	(None,oleacc.ROLE_SYSTEM_COMBOBOX):"ComboBox",
@@ -1397,4 +1393,5 @@ _staticMap={
 	("QWidget",oleacc.ROLE_SYSTEM_IPADDRESS):"qt.LayeredPane",
 	("QWidget",oleacc.ROLE_SYSTEM_APPLICATION):"qt.Application",
 	("Shell_TrayWnd",oleacc.ROLE_SYSTEM_CLIENT):"Taskbar",
+	("Internet Explorer_TridentCmboBx",oleacc.ROLE_SYSTEM_COMBOBOX):"MSHTML.V6ComboBox",
 }

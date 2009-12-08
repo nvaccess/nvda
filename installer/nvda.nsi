@@ -213,9 +213,10 @@ File /r "${NVDASourceDir}\"
 CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_exploreUserConfigDir).lnk" "$INSTDIR\nvda_slave.exe" "explore_userConfigPath" "" 0 SW_SHOWNORMAL
-CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_readme).lnk" "$INSTDIR\documentation\$(path_readmefile)" "" "$INSTDIR\documentation\$(path_readmefile)" 0 SW_SHOWMAXIMIZED
-CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_keycom).lnk" "$INSTDIR\documentation\$(path_keycomfile)" "" "$INSTDIR\documentation\$(path_keycomfile)" 0 SW_SHOWMAXIMIZED
-CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_userguide).lnk" "$INSTDIR\documentation\$(path_userguide)" "" "$INSTDIR\documentation\$(path_userguide)" 0 SW_SHOWMAXIMIZED
+CreateDirectory "$SMPROGRAMS\$StartMenuFolder\$(docFolder)"
+CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(docFolder)\$(shortcut_readme).lnk" "$INSTDIR\documentation\$(path_readmefile)" "" "$INSTDIR\documentation\$(path_readmefile)" 0 SW_SHOWMAXIMIZED
+CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(docFolder)\$(shortcut_keycom).lnk" "$INSTDIR\documentation\$(path_keycomfile)" "" "$INSTDIR\documentation\$(path_keycomfile)" 0 SW_SHOWMAXIMIZED
+CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(docFolder)\$(shortcut_userguide).lnk" "$INSTDIR\documentation\$(path_userguide)" "" "$INSTDIR\documentation\$(path_userguide)" 0 SW_SHOWMAXIMIZED
 WriteIniStr "$INSTDIR\${PRODUCT}.url" "InternetShortcut" "URL" "${WEBSITE}"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_website).lnk" "$INSTDIR\${PRODUCT}.url" "" "$INSTDIR\${PRODUCT}.url" 0
 CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
@@ -249,6 +250,8 @@ ExecWait "$INSTDIR\nvda_slave.exe installer_uninstallService"
 !insertmacro UNINSTALL.LOG_END_UNINSTALL
 !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
 ;Cleanup shortcuts
+Delete "$SMPROGRAMS\$StartMenuFolder\$(docFolder)\*.*"
+RmDir "$SMPROGRAMS\$StartMenuFolder\$(docFolder)"
 Delete "$SMPROGRAMS\$StartMenuFolder\*.*"
 RmDir "$SMPROGRAMS\$StartMenuFolder"
 Delete $DESKTOP\${PRODUCT}.lnk"
