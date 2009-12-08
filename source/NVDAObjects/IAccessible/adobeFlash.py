@@ -79,7 +79,7 @@ class InputTextField(IAccessible):
 	("control+extendedEnd","moveByLine"),
 	("shift+control+extendedEnd","changeSelection"),
 	("ExtendedDelete","delete"),
-	("Back","backspace"),
+	("Back","backspaceCharacter"),
 	("control+a","changeSelection"),
 ]]
 
