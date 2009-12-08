@@ -63,7 +63,7 @@ class AppModule(_default.AppModule):
 		if role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_MENUITEM):
 			obj.description=None
 		if role in (controlTypes.ROLE_TREEVIEW,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LIST,controlTypes.ROLE_LISTITEM):
-			obj.reportFocusNeedsIAccessibleFocusState=False
+			obj.shouldAllowIAccessibleFocusEvent=True
 		controlID=obj.windowControlID
 		className=obj.windowClassName
 		if (className=="SUPERGRID" and controlID==4704) or (className=="rctrl_renwnd32" and controlID==109):
