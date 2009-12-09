@@ -44,6 +44,8 @@ class AppModule(_default.AppModule):
 		if obj.windowClassName == "DV2ControlHost" and obj.role == controlTypes.ROLE_PANE:
 			# Windows Vista/7 start menu.
 			obj.isPresentableFocusAncestor = True
+			# In Windows 7, the description of this pane is extremely verbose help text, so nuke it.
+			obj.description = None
 
 	def event_gainFocus(self, obj, nextHandler):
 		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_MENUITEM and obj.parent.role == controlTypes.ROLE_MENUBAR and eventHandler.isPendingEvents("gainFocus"):
