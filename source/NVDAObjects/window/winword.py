@@ -5,8 +5,10 @@
 #See the file COPYING for more details.
 
 import ctypes
+from comtypes import COMError, GUID
 import comtypes.client
 import comtypes.automation
+from logHandler import log
 import winUser
 import oleacc
 import globalVars
@@ -57,6 +59,8 @@ wdGoToNext=2
 wdGoToPage=1
 wdGoToLine=3
 
+winwordWindowIid=GUID('{00020962-0000-0000-C000-000000000046}')
+
 NVDAUnitsToWordUnits={
 	textInfos.UNIT_CHARACTER:wdCharacter,
 	textInfos.UNIT_WORD:wdWord,
@@ -93,20 +97,23 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			return False
 		return True
 
-
-
-
-
-	def _expandToLineFromCaret(self):
-		info=winUser.getGUIThreadInfo(self.obj.windowThreadID)
-		caretPoint=ctypes.wintypes.POINT(info.rcCaret.left,info.rcCaret.top)
-		ctypes.windll.user32.ClientToScreen(self.obj.windowHandle,ctypes.byref(caretPoint))
-		caretY=caretPoint.y
-		clientLeft,clientTop,clientWidth,clientHeight=self.obj.location
-		tempRange=self.obj.WinwordDocumentObject.application.activeWindow.rangeFromPoint(clientLeft,caretY)
-		self._rangeObj.Start=tempRange.Start
-		tempRange=self.obj.WinwordDocumentObject.application.activeWindow.rangeFromPoint(clientLeft+clientWidth,caretY)
-		self._rangeObj.End=tempRange.Start
+	def _expandToLineAtCaret(self):
+		if self.obj.WinwordSupportsRangeFromPoint:
+			info=winUser.getGUIThreadInfo(self.obj.windowThreadID)
+			caretPoint=ctypes.wintypes.POINT(info.rcCaret.left,info.rcCaret.top)
+			ctypes.windll.user32.ClientToScreen(self.obj.windowHandle,ctypes.byref(caretPoint))
+			caretY=caretPoint.y
+			clientLeft,clientTop,clientWidth,clientHeight=self.obj.location
+			tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft,caretY)
+			self._rangeObj.Start=tempRange.Start
+			tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft+clientWidth,caretY)
+			self._rangeObj.End=tempRange.Start
+		else:
+			curLineNum=self._rangeObj.Information(wdFirstCharacterLineNumber)
+			tempRange=self.obj.WinwordDocumentObject.goto(wdGoToLine,wdGoToAbsolute,curLineNum)
+			self._rangeObj.Start=tempRange.Start
+			tempRange=self.obj.WinwordDocumentObject.goto(wdGoToLine,wdGoToAbsolute,curLineNum+1)
+			self._rangeObj.End=tempRange.Start
 
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textInfos.FormatField()
@@ -174,7 +181,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			self._rangeObj=_rangeObj.Duplicate
 			return
 		if isinstance(position,textInfos.Point):
-			self._rangeObj=self.obj.WinwordDocumentObject.application.activeWindow.RangeFromPoint(position.x,position.y)
+			self._rangeObj=self.obj.WinwordDocumentObject.activeWindow.RangeFromPoint(position.x,position.y)
 		elif position==textInfos.POSITION_SELECTION:
 			self._rangeObj=self.obj.WinwordSelectionObject.range
 		elif position==textInfos.POSITION_CARET:
@@ -224,7 +231,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if unit==textInfos.UNIT_LINE and self.basePosition not in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			unit=textInfos.UNIT_SENTENCE
 		if unit==textInfos.UNIT_LINE:
-			self._expandToLineFromCaret()
+			self._expandToLineAtCaret()
 		elif unit==textInfos.UNIT_CHARACTER:
 			self._rangeObj.moveEnd(wdCharacter,1)
 		elif unit in NVDAUnitsToWordUnits:
@@ -316,28 +323,36 @@ class WordDocument(Window):
 
 	TextInfo=WordDocumentTextInfo
 
+	WinwordSupportsRangeFromPoint=False
+
 	def __init__(self,*args,**kwargs):
 		super(WordDocument,self).__init__(*args,**kwargs)
 
 	def _get_role(self):
 		return controlTypes.ROLE_EDITABLETEXT
 
-	def _get_WinwordDocumentObject(self):
-		if not getattr(self,'_WinwordDocumentObject',None): 
+	def _get_WinwordWindowObject(self):
+		if not getattr(self,'_WinwordWindowObject',None): 
 			try:
 				pDispatch=oleacc.AccessibleObjectFromWindow(self.windowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
 			except (COMError, WindowsError):
 				log.debugWarning("Could not get MS Word object model",exc_info=True)
 				return None
-			self._WinwordDocumentObject=comtypes.client.dynamic.Dispatch(pDispatch)
+			self._WinwordWindowObject=comtypes.client.dynamic.Dispatch(pDispatch)
+ 		return self._WinwordWindowObject
+
+	def _get_WinwordDocumentObject(self):
+		if not getattr(self,'_WinwordDocumentObject',None): 
+			windowObject=self.WinwordWindowObject
+			if not windowObject: return None
+			self._WinwordDocumentObject=windowObject.document
  		return self._WinwordDocumentObject
 
 	def _get_WinwordSelectionObject(self):
 		if not getattr(self,'_WinwordSelectionObject',None):
-			doc=self.WinwordDocumentObject
-			if not doc:
-				return None
-			self._WinwordSelectionObject=self.WinwordDocumentObject.selection
+			windowObject=self.WinwordWindowObject
+			if not windowObject: return None
+			self._WinwordSelectionObject=windowObject.selection
 		return self._WinwordSelectionObject
 
 	def script_nextRow(self,keyPress):
