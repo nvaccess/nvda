@@ -98,22 +98,17 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return True
 
 	def _expandToLineAtCaret(self):
-		if self.obj.WinwordSupportsRangeFromPoint:
-			info=winUser.getGUIThreadInfo(self.obj.windowThreadID)
-			caretPoint=ctypes.wintypes.POINT(info.rcCaret.left,info.rcCaret.top)
-			ctypes.windll.user32.ClientToScreen(self.obj.windowHandle,ctypes.byref(caretPoint))
-			caretY=caretPoint.y
-			clientLeft,clientTop,clientWidth,clientHeight=self.obj.location
-			tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft,caretY)
-			self._rangeObj.Start=tempRange.Start
-			tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft+clientWidth,caretY)
-			self._rangeObj.End=tempRange.Start
-		else:
-			curLineNum=self._rangeObj.Information(wdFirstCharacterLineNumber)
-			tempRange=self.obj.WinwordDocumentObject.goto(wdGoToLine,wdGoToAbsolute,curLineNum)
-			self._rangeObj.Start=tempRange.Start
-			tempRange=self.obj.WinwordDocumentObject.goto(wdGoToLine,wdGoToAbsolute,curLineNum+1)
-			self._rangeObj.End=tempRange.Start
+		from ctypes import c_long, pointer
+		rangeLeft=c_long()
+		rangeTop=c_long()
+		rangeWidth=c_long()
+		rangeHeight=c_long()
+		self.obj.WinwordWindowObject.getPoint(pointer(rangeLeft),pointer(rangeTop),pointer(rangeWidth),pointer(rangeHeight),self._rangeObj)
+		clientLeft,clientTop,clientWidth,clientHeight=self.obj.location
+		tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft,rangeTop)
+		self._rangeObj.Start=tempRange.Start
+		tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft+clientWidth,rangeTop)
+		self._rangeObj.End=tempRange.Start
 
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textInfos.FormatField()
@@ -322,8 +317,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 class WordDocument(Window):
 
 	TextInfo=WordDocumentTextInfo
-
-	WinwordSupportsRangeFromPoint=False
 
 	def __init__(self,*args,**kwargs):
 		super(WordDocument,self).__init__(*args,**kwargs)
