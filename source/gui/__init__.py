@@ -21,6 +21,7 @@ from settingsDialogs import *
 import speechDictHandler
 import languageHandler
 import logViewer
+import speechViewer
 import winUser
 import api
 
@@ -228,6 +229,14 @@ class MainFrame(wx.Frame):
 	def onViewLogCommand(self, evt):
 		logViewer.activate()
 
+	def onToggleSpeechViewerCommand(self, evt):
+		if not speechViewer.isActive:
+			speechViewer.activate()
+			self.sysTrayIcon.menu_tools_toggleSpeechViewer.Check(True)
+		else:
+			speechViewer.deactivate()
+			self.sysTrayIcon.menu_tools_toggleSpeechViewer.Check(False)
+
 	def onPythonConsoleCommand(self, evt):
 		import pythonConsole
 		if not pythonConsole.consoleUI:
@@ -274,6 +283,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		menu_tools = wx.Menu()
 		item = menu_tools.Append(wx.ID_ANY, _("View log"))
 		self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
+		item=self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
+		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
 		if not globalVars.appArgs.secure:
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)

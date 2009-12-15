@@ -54,6 +54,7 @@ def initialize():
 
 def terminate():
 	setSynth(None)
+	speechViewerObj=None
 
 RE_PROCESS_SYMBOLS = re.compile(
 	# Groups 1-3: expand symbols where the actual symbol should be preserved to provide correct entonation.
@@ -143,6 +144,9 @@ This function will not speak if L{speechMode} is false.
 
 def speakSpelling(text):
 	global beenCanceled
+	import speechViewer
+	if speechViewer.isActive:
+		speechViewer.appendText(text)
 	if not isinstance(text,basestring) or len(text)==0:
 		return getSynth().speakText(processSymbol(""))
 	if speechMode==speechMode_off:
@@ -282,6 +286,9 @@ This function will not speak if L{speechMode} is false.
 @param index: the index to mark this current text with, its best to use the character position of the text if you know it 
 @type index: int
 """
+	import speechViewer
+	if speechViewer.isActive:
+		speechViewer.appendText(text)
 	global beenCanceled, curWordChars
 	curWordChars=[]
 	if speechMode==speechMode_off:
