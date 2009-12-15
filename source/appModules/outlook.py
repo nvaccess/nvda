@@ -60,13 +60,15 @@ class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		role=obj.role
+		windowClassName=obj.windowClassName
+		controlID=obj.windowControlID
+		if role==controlTypes.ROLE_LISTITEM and windowClassName=="OUTEXVLB":
+			self.overlayCustomNVDAObjectClass(obj,AddressBookEntry,outerMost=True)
 		if role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_MENUITEM):
 			obj.description=None
 		if role in (controlTypes.ROLE_TREEVIEW,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LIST,controlTypes.ROLE_LISTITEM):
 			obj.shouldAllowIAccessibleFocusEvent=True
-		controlID=obj.windowControlID
-		className=obj.windowClassName
-		if (className=="SUPERGRID" and controlID==4704) or (className=="rctrl_renwnd32" and controlID==109):
+		if (windowClassName=="SUPERGRID" and controlID==4704) or (windowClassName=="rctrl_renwnd32" and controlID==109):
 			outlookVersion=self.outlookVersion
 			if outlookVersion and outlookVersion<=9 and isinstance(obj,IAccessible):
 				obj.__class__=MessageList_pre2003
@@ -154,3 +156,16 @@ class MessageItem(Window):
 	def _get_states(self):
 		return frozenset([controlTypes.STATE_SELECTED])
 
+class AddressBookEntry(IAccessible):
+
+	def script_moveByEntry(self,keyPress):
+		sendKey(keyPress)
+		eventHandler.queueEvent("nameChange",self)
+
+[AddressBookEntry.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("extendedDown","moveByEntry"),
+	("extendedUp","moveByEntry"),
+	("extendedHome","moveByEntry"),
+	("extendedEnd","moveByEntry"),
+	("extendedDelete","moveByEntry"),
+]]
