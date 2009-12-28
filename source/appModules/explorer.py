@@ -6,6 +6,7 @@
 
 import _default
 import controlTypes
+import winUser
 import api
 import speech
 import eventHandler
@@ -46,6 +47,11 @@ class AppModule(_default.AppModule):
 			obj.isPresentableFocusAncestor = True
 			# In Windows 7, the description of this pane is extremely verbose help text, so nuke it.
 			obj.description = None
+
+		#The Address bar is embedded inside a progressbar, how strange.
+		#Lets hide that
+		if obj.windowClassName=="msctls_progress32" and winUser.getClassName(winUser.getAncestor(obj.windowHandle,winUser.GA_PARENT))=="Address Band Root":
+			obj.isPresentable=False
 
 	def event_gainFocus(self, obj, nextHandler):
 		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_MENUITEM and obj.parent.role == controlTypes.ROLE_MENUBAR and eventHandler.isPendingEvents("gainFocus"):
