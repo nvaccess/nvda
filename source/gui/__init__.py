@@ -204,6 +204,9 @@ class MainFrame(wx.Frame):
 	def onMouseSettingsCommand(self,evt):
 		self._popupSettingsDialog(MouseSettingsDialog)
 
+	def onReviewCursorCommand(self,evt):
+		self._popupSettingsDialog(ReviewCursorDialog)
+
 	def onObjectPresentationCommand(self,evt):
 		self._popupSettingsDialog(ObjectPresentationDialog)
 
@@ -264,6 +267,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onKeyboardSettingsCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse shape and object under mouse"))
 		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("&Review cursor..."),_("Configure how and when the review cursor moves")) 
+		self.Bind(wx.EVT_MENU, frame.onReviewCursorCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Object presentation..."),_("Change reporting of objects")) 
 		self.Bind(wx.EVT_MENU, frame.onObjectPresentationCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("Virtual &buffers..."),_("Change virtual buffers specific settings")) 

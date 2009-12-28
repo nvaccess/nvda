@@ -463,7 +463,7 @@ class NVDAObject(baseObject.ScriptableObject):
 @param down: a list which all objects we moved down in to will be placed
 @type down: list
 """
-		skipUselessObjects=config.conf["navigation"]["navigatorObjectSkipsUselessObjects"]
+		skipUselessObjects=config.conf["reviewCursor"]["skipUselessObjects"]
 		child=self.firstChildPresentable if skipUselessObjects else self.firstChild
 		if child:
 			if isinstance(down,list):
@@ -489,7 +489,7 @@ class NVDAObject(baseObject.ScriptableObject):
 @param down: a list which all objects we moved down in to will be placed
 @type down: list
 """
-		skipUselessObjects=config.conf["navigation"]["navigatorObjectSkipsUselessObjects"]
+		skipUselessObjects=config.conf["reviewCursor"]["skipUselessObjects"]
 		prev=self.previousPresentable if skipUselessObjects else self.previous
 		if prev:
 			lastLastChild=prev
@@ -620,13 +620,15 @@ Tries to force this object to take the focus.
 		else:
 			speechWasCanceled=False
 		self._mouseEntered=True
-		if not config.conf['mouse']['reportTextUnderMouse']:
-			return
 		try:
 			info=self.makeTextInfo(textInfos.Point(x,y))
 			info.expand(info.unit_mouseChunk)
 		except:
 			info=NVDAObjectTextInfo(self,textInfos.POSITION_ALL)
+		if config.conf["reviewCursor"]["followMouse"]:
+			api.setReviewPosition(info)
+		if not config.conf["mouse"]["reportTextUnderMouse"]:
+			return
 		oldInfo=getattr(self,'_lastMouseTextInfoObject',None)
 		self._lastMouseTextInfoObject=info
 		if not oldInfo or info.__class__!=oldInfo.__class__ or info.compareEndPoints(oldInfo,"startToStart")!=0 or info.compareEndPoints(oldInfo,"endToEnd")!=0:
@@ -690,7 +692,7 @@ This code is executed if a gain focus event is received by this object.
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				try:
 					api.setReviewPosition(self.makeTextInfo(textInfos.POSITION_CARET))
 				except (NotImplementedError, RuntimeError):
@@ -751,7 +753,7 @@ This code is executed if a gain focus event is received by this object.
 				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				api.setReviewPosition(info.copy())
 			info.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(info)
@@ -772,7 +774,7 @@ This code is executed if a gain focus event is received by this object.
 				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				api.setReviewPosition(info.copy())
 			info.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER)
@@ -793,7 +795,7 @@ This code is executed if a gain focus event is received by this object.
 				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				api.setReviewPosition(info.copy())
 			info.expand(textInfos.UNIT_WORD)
 			speech.speakTextInfo(info,unit=textInfos.UNIT_WORD)
@@ -814,7 +816,7 @@ This code is executed if a gain focus event is received by this object.
 				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				api.setReviewPosition(info.copy())
 			info.expand(textInfos.UNIT_PARAGRAPH)
 			speech.speakTextInfo(info)
@@ -844,7 +846,7 @@ This code is executed if a gain focus event is received by this object.
 				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				api.setReviewPosition(info)
 
 	def script_backspaceCharacter(self,keyPress):
@@ -869,7 +871,7 @@ This code is executed if a gain focus event is received by this object.
 				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				api.setReviewPosition(info.copy())
 			info.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER)

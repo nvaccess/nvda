@@ -5,6 +5,7 @@ import UIAHandler
 import globalVars
 import eventHandler
 import controlTypes
+import config
 import speech
 import api
 import textInfos
@@ -435,7 +436,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 	def event_caret(self):
 		super(UIA, self).event_caret()
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				try:
 					api.setReviewPosition(self.makeTextInfo(textInfos.POSITION_CARET))
 				except (NotImplementedError, RuntimeError):
