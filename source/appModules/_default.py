@@ -270,7 +270,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject=curObject.parent
+		skipUselessObjects=config.conf["navigation"]["navigatorObjectSkipsUselessObjects"]
+		curObject=curObject.parentPresentable if skipUselessObjects else curObject.parent
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -283,7 +284,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject=curObject.next
+		skipUselessObjects=config.conf["navigation"]["navigatorObjectSkipsUselessObjects"]
+		curObject=curObject.nextPresentable if skipUselessObjects else curObject.next
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -296,7 +298,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject=curObject.previous
+		skipUselessObjects=config.conf["navigation"]["navigatorObjectSkipsUselessObjects"]
+		curObject=curObject.previousPresentable if skipUselessObjects else curObject.previous
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -309,7 +312,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject=curObject.firstChild
+		skipUselessObjects=config.conf["navigation"]["navigatorObjectSkipsUselessObjects"]
+		curObject=curObject.firstChildPresentable if skipUselessObjects else curObject.firstChild
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)

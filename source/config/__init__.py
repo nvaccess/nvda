@@ -141,6 +141,9 @@ outputDevice = string(default=default)
 	reportHeadings = boolean(default=true)
 	reportBlockQuotes = boolean(default=true)
 	reportLandmarks = boolean(default=true)
+
+[navigation]
+	navigatorObjectSkipsUselessObjects = boolean(default=True)
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"
