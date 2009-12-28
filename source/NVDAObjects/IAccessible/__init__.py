@@ -1073,6 +1073,12 @@ the NVDAObject for IAccessible
 	def event_selectionWithIn(self):
 		return self.event_stateChange()
 
+	def _get_isPresentable(self):
+		if not self.windowHasExtraIAccessibles(self.windowHandle) and self.role==controlTypes.ROLE_WINDOW:
+			return False
+		return super(IAccessible,self).isPresentable
+
+
 	def _get_isPresentableFocusAncestor(self):
 		IARole = self.IAccessibleRole
 		if IARole == oleacc.ROLE_SYSTEM_CLIENT and self.windowStyle & winUser.WS_SYSMENU:
