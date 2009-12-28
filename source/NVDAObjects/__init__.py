@@ -382,7 +382,7 @@ class NVDAObject(baseObject.ScriptableObject):
 			return False
 		if controlTypes.STATE_FOCUSED in states:
 			return True
-		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION,controlTypes.ROLE_FORM,controlTypes.ROLE_PARAGRAPH):
+		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION,controlTypes.ROLE_FORM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_TITLEBAR,controlTypes.ROLE_TEXTFRAME):
 			return False
 		return True
 
