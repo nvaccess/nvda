@@ -463,20 +463,21 @@ class NVDAObject(baseObject.ScriptableObject):
 @param down: a list which all objects we moved down in to will be placed
 @type down: list
 """
-		child=self.firstChild
+		skipUselessObjects=config.conf["navigation"]["navigatorObjectSkipsUselessObjects"]
+		child=self.firstChildPresentable if skipUselessObjects else self.firstChild
 		if child:
 			if isinstance(down,list):
 				down.append(self)
 			return child
-		next=self.next
+		next=self.nextPresentable if skipUselessObjects else self.next
 		if next:
 			return next
 		parent=self.parent
 		while not next and parent:
-			next=parent.next
+			next=parent.nextPresentable if skipUselessObjects else parent.next
 			if isinstance(up,list):
 				up.append(parent)
-			parent=parent.parent
+			parent=parent.parentPresentable if skipUselessObjects else parent.parent
 		return next
 
 	_get_nextInFlow=getNextInFlow
@@ -488,17 +489,18 @@ class NVDAObject(baseObject.ScriptableObject):
 @param down: a list which all objects we moved down in to will be placed
 @type down: list
 """
-		prev=self.previous
+		skipUselessObjects=config.conf["navigation"]["navigatorObjectSkipsUselessObjects"]
+		prev=self.previousPresentable if skipUselessObjects else self.previous
 		if prev:
 			lastLastChild=prev
-			lastChild=prev.lastChild
+			lastChild=prev.lastChildPresentable if skipUselessObjects else prev.lastChild
 			while lastChild:
 				if isinstance(down,list):
 					down.append(lastLastChild)
 				lastLastChild=lastChild
-				lastChild=lastChild.lastChild
+				lastChild=lastChild.lastChildPresentable if skipUselessObjects else lastChild.lastChild
 			return lastLastChild
-		parent=self.parent
+		parent=self.parentPresentable if skipUselessObjects else self.parent
 		if parent:
 			if isinstance(up,list):
 				up.append(self)
