@@ -44,6 +44,7 @@ class AppModule(_default.AppModule):
 
 		if obj.windowClassName == "DV2ControlHost" and obj.role == controlTypes.ROLE_PANE:
 			# Windows Vista/7 start menu.
+			obj.isPresentable=True
 			obj.isPresentableFocusAncestor = True
 			# In Windows 7, the description of this pane is extremely verbose help text, so nuke it.
 			obj.description = None
