@@ -786,11 +786,7 @@ the NVDAObject for IAccessible
 
 	def _get_lastChild(self):
 		child=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_LASTCHILD)
-		if not child and self.IAccessibleChildID==0:
-			children=IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,1)
-			if len(children)>0:
-				child=children[-1]
-		if not child and self.IAccessibleChildID==0:
+		if not child and self.event_objectID==winUser.OBJID_CLIENT and self.IAccessibleChildID==0:
 			return super(IAccessible,self).lastChild
 		if child and child[0]==self.IAccessibleObject:
 			return self.correctAPIForRelation(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1]))
