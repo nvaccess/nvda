@@ -3,9 +3,9 @@
 == 2010.1 ==
 
 === Uudet ominaisuudet ===
-* NVDA käynnistyy nyt järjestelmissä, joissa ei ole äänilaitteita. Tietojen tulostamiseen on tällöin käytettävä pistenäyttöä tai Display-syntetisaattoria.
+* NVDA käynnistyy nyt järjestelmissä, joissa ei ole äänilaitteita. Tietojen tulostamiseen on tällöin käytettävä pistenäyttöä tai Display-syntetisaattoria yhdessä Puheen tarkastelu -toiminnon kanssa.
 * Asiakirjojen muotoilu -valintaikkunaan on lisätty "Ilmoita maamerkit" -valintaruutu, jolla voidaan määrittää, ilmoittaako NVDA web-sivuilla olevia maamerkkejä. Asetus on oletusarvoisesti käytössä edellisen NVDA-version yhteensopivuuden säilyttämiseksi.
-* Jos Lue komentonäppäimet -asetus on käytössä, NVDA kertoo multimedianäppäinten nimet niitä painettaessa (esim. toista, pysäytä, kotisivu jne).
+* Jos Lue komentonäppäimet -asetus on käytössä, NVDA kertoo monien näppäimistöjen multimedianäppäinten nimet niitä painettaessa (esim. toista, pysäytä, kotisivu jne).
 * NVDA lukee nyt sanan, joka poistetaan painettaessa Control+askelpalautin säätimissä, jotka tukevat sitä.
 * Tekstiä voidaan nyt selata ja lukea nuolinäppäimillä Web Formator -sovelluksessa.
 * Paranneltu tuki upotetuille  muokattaville dokumenteille Internet Explorerissa.
@@ -23,6 +23,7 @@
 * Rivien ja sarakkeiden otsikoiden koordinaatteja ei enää virheellisesti lueta näennäispuskureissa, kun taulukoiden ilmoittaminen on poistettu käytöstä.
 * Rivien ja sarakkeiden koordinaatit luetaan nyt näennäispuskureissa oikein taulukosta poistuttaessa ja palattaessa saman taulukon soluun käymättä ensin jossain toisessa solussa (esim. painamalla ylä- ja alanuolta taulukon ensimmäisessä solussa).
 * Word-asiakirjojen ja  HTML-muokkaussäädinten tyhjät rivit näytetään nyt asianmukaisesti pistenäytöllä. NVDA näytti aiemmin vain nykyisen virkkeen.
+* Useita tietoturvakorjauksia käytettäessä NVDA:ta Windowsiin kirjauduttaessa ja muilla suojatuilla työpöydillä.
 
 == 2009.1 ==
 Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioille, huomattavasti paranneltu tuki Internet Explorerille ja Adobe Readerille, tuki Windows 7:lle, Windowsin kirjautumis- ja Control+Alt+Delete-ruutujen sekä Käyttäjätilien valvonnan (UAC) kehotteiden lukeminen sekä mahdollisuus olla vuorovaikutuksessa web-sivujen Flash- ja Java-sisällön kanssa. Lisäksi on useita merkittäviä korjauksia NVDA:n vakauteen ja parannuksia yleiseen käyttäjäkokemukseen.
