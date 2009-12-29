@@ -265,6 +265,14 @@ class AppModule(appModuleHandler.AppModule):
 		speech.speakObject(obj,reason=speech.REASON_QUERY)
 	script_navigatorObject_toFocus.__doc__=_("Sets the navigator object to the current focus")
 
+	def script_navigatorObject_moveFocus(self,keyPress):
+		obj=api.getNavigatorObject()
+		if not isinstance(obj,NVDAObject):
+			speech.speakMessage(_("no focus"))
+		obj.setFocus()
+		speech.speakMessage(_("move focus"))
+	script_navigatorObject_toFocus.__doc__=_("Sets the keyboard focus to the navigator object")
+
 	def script_navigatorObject_parent(self,keyPress):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
