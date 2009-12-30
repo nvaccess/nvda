@@ -367,7 +367,7 @@ class CursorManagerRegion(TextInfoRegion):
 class ReviewTextInfoRegion(TextInfoRegion):
 
 	def _getSelection(self):
-		return api.getReviewPosition()
+		return api.getReviewPosition().copy()
 
 	def _setSelection(self, info):
 		api.setReviewPosition(info)
