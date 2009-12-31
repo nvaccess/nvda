@@ -73,6 +73,9 @@ outputDevice = string(default=default)
 	expandAtCursor = boolean(default=true)
 	cursorBlinkRate = integer(default=500,min=0,max=2000)
 	messageTimeout = integer(default=4,min=1,max=20)
+	tetherTo = string(default="focus")
+
+
 
 # Presentation settings
 [presentation]

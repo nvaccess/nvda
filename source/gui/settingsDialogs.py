@@ -101,6 +101,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		languageListID=wx.NewId()
 		self.languageNames=languageHandler.getAvailableLanguages()
 		self.languageList=wx.Choice(self,languageListID,name=_("Language"),choices=[x[1] for x in self.languageNames])
+		self.languageList.SetToolTip(wx.ToolTip("Choose the language NVDA's messages and user interface should be presented in."))
 		try:
 			self.oldLanguage=config.conf["general"]["language"]
 			index=[x[0] for x in self.languageNames].index(self.oldLanguage)
@@ -860,6 +861,20 @@ class BrailleSettingsDialog(SettingsDialog):
 		sizer.Add(self.messageTimeoutEdit)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		label = wx.StaticText(self, wx.ID_ANY, label=_("Braille tethered to:"))
+		self.tetherValues=[("focus",_("focus")),("review",_("review"))]
+		self.tetherList = wx.Choice(self, wx.ID_ANY, choices=[x[1] for x in self.tetherValues])
+		tetherConfig=braille.handler.tether
+		selection = (x for x,y in enumerate(self.tetherValues) if y[0]==tetherConfig).next()  
+		try:
+			self.tetherList.SetSelection(selection)
+		except:
+			pass
+		sizer.Add(label)
+		sizer.Add(self.tetherList)
+		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
+
 	def postInit(self):
 		self.displayList.SetFocus()
 
@@ -883,4 +898,5 @@ class BrailleSettingsDialog(SettingsDialog):
 		if 1 <= val <= 20:
 			config.conf["braille"]["messageTimeout"] = val
 		braille.handler.configDisplay()
+		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		super(BrailleSettingsDialog,  self).onOk(evt)

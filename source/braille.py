@@ -656,18 +656,18 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
 		self.buffer = self.mainBuffer
-		self._tether = self.TETHER_FOCUS
+		#config.conf["braille"]["tetherTo"] = self.TETHER_FOCUS
 		#: Whether braille is enabled.
 		#: @type: bool
 		self.enabled = False
 
 	def _get_tether(self):
-		return self._tether
+		return config.conf["braille"]["tetherTo"]
 
 	def _set_tether(self, tether):
-		if tether == self._tether:
+		if tether == config.conf["braille"]["tetherTo"]:
 			return
-		self._tether = tether
+		config.conf["braille"]["tetherTo"] = tether
 		self.mainBuffer.clear()
 		if tether == self.TETHER_REVIEW:
 			self.handleReviewMove()
