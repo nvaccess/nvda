@@ -62,6 +62,13 @@ class AppModule(_default.AppModule):
 		role=obj.role
 		windowClassName=obj.windowClassName
 		controlID=obj.windowControlID
+		#The control showing plain text messages has very stuffed parents
+		#Use the grandparent window as its parent
+		if role==controlTypes.ROLE_EDITABLETEXT and windowClassName=="RichEdit20W" and controlID==8224:
+			obj.parent=Window._get_parent(Window._get_parent(obj))
+		#The control that shows HTML messages has stuffed parents. Use the control's parent window as its parent
+		if windowClassName=="Internet Explorer_Server" and role==controlTypes.ROLE_PANE and not getattr(obj,'HTMLNode'):
+			obj.parent=Window._get_parent(Window._get_parent(obj))
 		if role==controlTypes.ROLE_LISTITEM and windowClassName=="OUTEXVLB":
 			self.overlayCustomNVDAObjectClass(obj,AddressBookEntry,outerMost=True)
 		if role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_MENUITEM):
