@@ -9,6 +9,8 @@
 	* NVDA now announces the word being deleted when pressing control+backspace in controls that support it. (#491)
 	* Arrow keys can now be used in the Web formator window to navigate and read the text. (#452)
 	* NVDA better supports embedded editable (design mode) documents in Internet Explorer. (#402)
+	* a new script (nvda+shift+numpadMinus) allows you to move the system focus to the current navigator object.
+	* New scripts to lock and unlock the left and right mouse buttons. Useful for performing drag and drop operations. shift+numpadDivide to lock/unlock the left, shift+numpadMultiply to lock/unlock the right.
 
 === Changes ===
 	* The extremely verbose keyboard help message in the Windows 7 Start menu is no longer reported.
@@ -24,7 +26,8 @@
 	* In virtual buffers, row/column coordinates are now correctly read when you leave a table and then re-enter the same table cell without visiting another cell first; e.g. pressing upArrow then downArrow on the first cell of a table. (#378)
 	* Blank lines in Microsoft Word documents and  Microsoft HTML edit controls are now shown appropriatly on braille displays. Previously NVDA was displaying the current sentence on the display, not the current line for these situations. (#420)
 	* Multiple security fixes when running NVDA at Windows logon and on other secure desktops.
- 
+	* The cursor position (caret) is now correctly updated when performing a Say All that goes off the bottom of the screen, in standard Windows edit fields and Microsoft Word documents. (#418)
+
 == 2009.1 ==
 Major highlights of this release include support for 64 bit editions of Windows; greatly improved support for Microsoft Internet Explorer and Adobe Reader documents; support for Windows 7; reading of the Windows logon, control+alt+delete and User Account Control (UAC) screens; and the ability to interact with Adobe Flash and Sun Java content on web pages. There have also been several significant stability fixes and improvements to the general user experience.
 
