@@ -15,6 +15,7 @@
 === Changes ===
 	* The extremely verbose keyboard help message in the Windows 7 Start menu is no longer reported.
 	* The Display synth has now been replaced with a new Speech Viewer. To activate it, choose Speech Viewer from the Tools menu. The speech viewer can be used independently of what ever speech synthesizer you are using.
+	* Messages on the braille display will automatically be dismissed if the user presses a key that results in a change such as the focus moving. Previously the message would always stay around for its configured time.
 
 === Bug Fixes ===
 	* NVDA no longer fails to start if UI Automation support appears to be available but fails to initialise for some reason. (#483)
