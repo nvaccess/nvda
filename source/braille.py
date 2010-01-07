@@ -9,6 +9,7 @@ import os
 import pkgutil
 import wx
 import louis
+import globalVars
 import baseObject
 import config
 from logHandler import log
@@ -660,6 +661,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		#: Whether braille is enabled.
 		#: @type: bool
 		self.enabled = False
+		self._keyCounterForLastMessage=0
 
 	def _get_tether(self):
 		return self._tether
@@ -732,6 +734,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""Display a message to the user which times out after a configured interval.
 		The timeout will be reset if the user scrolls the display.
 		The message will be dismissed immediately if the user presses a cursor routing key.
+		If a key is pressed the message will be dismissed by the next text being written to the display
 		@postcondition: The message is displayed.
 		"""
 		if not self.enabled:
@@ -746,6 +749,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.buffer.update()
 		self.update()
 		self._resetMessageTimer()
+		self._keyCountForLastMessage=globalVars.keyCounter
 
 	def _resetMessageTimer(self):
 		"""Reset the message timeout.
@@ -787,6 +791,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
 		if self.buffer is self.mainBuffer:
 			self.update()
+		elif self.buffer is self.messageBuffer and globalVars.keyCounter>self._keyCountForLastMessage:
+			self._dismissMessage()
 
 	def handleCaretMove(self, obj):
 		if not self.enabled:
@@ -809,6 +815,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
 		if self.buffer is self.mainBuffer:
 			self.update()
+		elif self.buffer is self.messageBuffer and globalVars.keyCounter>self._keyCountForLastMessage:
+			self._dismissMessage()
 
 	def handleUpdate(self, obj):
 		if not self.enabled:
@@ -827,6 +835,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.restoreWindow(ignoreErrors=True)
 		if self.buffer is self.mainBuffer:
 			self.update()
+		elif self.buffer is self.messageBuffer and globalVars.keyCounter>self._keyCountForLastMessage:
+			self._dismissMessage()
 
 	def handleReviewMove(self):
 		if not self.enabled:
