@@ -274,6 +274,11 @@ class TextInfoRegion(Region):
 		self.obj = obj
 
 	def _isMultiline(self):
+		#A regions object can either be an NVDAObject or a virtualBuffer
+		#virtualBuffers should always be multiline
+		import virtualBuffers
+		if isinstance(self.obj,virtualBuffers.VirtualBuffer):
+			return True
 		# Terminals are inherently multiline, so they don't have the multiline state.
 		return (self.obj.role == controlTypes.ROLE_TERMINAL or controlTypes.STATE_MULTILINE in self.obj.states)
 
