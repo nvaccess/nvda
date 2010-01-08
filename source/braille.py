@@ -373,9 +373,6 @@ class ReviewTextInfoRegion(TextInfoRegion):
 	def _setSelection(self, info):
 		api.setReviewPosition(info)
 
-	def _isMultiline(self):
-		return True
-
 class BrailleBuffer(baseObject.AutoPropertyObject):
 
 	def __init__(self, handler):
