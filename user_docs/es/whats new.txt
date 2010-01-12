@@ -10,10 +10,14 @@
 	* NVDA ahora anuncia la palabra que esté siendo eliminada cuando se presiona control+retroceso en controles que lo soporten. (#491)
 	* Las flechas de cursor ahora pueden ser utilizadas en la ventana del formateador Web para navegar y leer el texto. (#452)
 	* Mejor soporte de documentos empotrados editables de NVDA (modo de diseño) en Internet Explorer. (#402)
+	* Un script nuevo (nvda+shift+menos del teclado numérico) te permite mover el foco del sistema al navegador de objetos actual.
+	* Nuevos scripts para bloquear y desbloquear los botones izquierdo y derecho del ratón. Útil para llevar a cabo operaciones de arrastrar y soltar. shift+dividir del teclado numérico para bloquear/desbloquear el izquierdo, shift+multiplicar del teclado numérico para bloquear/desbloquear el derecho.
 
 === Cambios ===
 	* El mensaje de ayuda de teclado extremadamente verboso en el menú de Inicio de Windows 7 ya no se anuncia.
 	* El sintetizador Display ahora ha sido reemplazado con un nuevo Visualizador de Habla. Para activarlo, elige Visor de Habla desde el menú Herramientas. El Visualizador de Habla puede ser utilizado independientemente de con qué otro sintetizador de voz estés trabajando.
+	* Los mensajes en la línea braille serán rechazados automáticamente si el usuario presiona una tecla que signifique un cambio tal como el movimiento del foco. Anteriormente el mensaje siempre permanecería según su tiempo configurado.
+	* La Opción para ajustar el braille al foco o al cursor de revisión (NVDA+control+t) ahora puede ser también configurada desde el diálogo de opciones braille, y ahora también se guarda en la configuración del usuario.
 
 === Corrección de Fallos ===
 	* NVDA ya no falla al arrancar si el soporte UI Automation parece estár disponible pero falla al inicializarse por alguna razón. (#483)
@@ -24,6 +28,9 @@
 	* En los modos virtuales, las coordenadas de fila/columna ya no se leen incorrectamente por encabezados de fila y columna cuando el anunciado de tablas está desactivado.
 	* En los modos virtuales, las coordenadas de fila/columna ahora son correctamente leídas cuando abandonas una tabla y luego vuelves a entrar en la misma celda de la tabla sin visitar otra celda primero; ej.: presionando flecha arriba y luego flecha abajo sobre la primera celda de una tabla. (#378)
 	* Las líneas en blanco en documentos de Microsoft Word y de controles de edición de Microsoft HTML ahora son mostradas apropiadamente en líneas braille. Anteriormente NVDA mostraba la frase actual en la línea, no la línea actual para estas situaciones. (#420)
+	* Múltiples correcciones de seguridad cuando se ejecuta NVDA en el Logon de Windows y en otros Escritorios Seguros.
+	* La posición del cursor (cursor del sistema) ahora se actualiza correctamente cuando se lleva a cabo una Lectura Completa que se pase del final de la pantalla, en campos de edición estándar de Windows y documentos de Microsoft Word. (#418)
+
 
 
 == 2009.1 ==
@@ -142,7 +149,6 @@ Lo más resaltable de esta release incluye el soporte para ediciones de 64 bit de
 	* Si verbalizar palabras al escribir está habilitado, anuncia la palabra cuando se presione intro.
 	* Corregidos algunos grupos de sucesiones de caracteres en documentos enriquecidos.
 preferencias de Formato de Documentos. Esto incluye modos virtuales de Mozilla Gecko.
-
 	* El visualizador de log de NVDA ahora utiliza cuadros multilínea en lugar de sólo editar para mostrar el log. Esto mejora la lectura por palabras con NVDA y le permite leer el texto del log más allá de los 65535 bytes.
 	* Corregidos algunos fallos relacionados con objetos empotrados en controles de edición multilínea.
 	* NVDA ahora lee los números de página en Microsoft Word. (#120)

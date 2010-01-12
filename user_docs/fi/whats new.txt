@@ -6,13 +6,17 @@
 * NVDA käynnistyy nyt järjestelmissä, joissa ei ole äänilaitteita. Tietojen tulostamiseen on tällöin käytettävä pistenäyttöä tai Display-syntetisaattoria yhdessä Puheen tarkastelu -toiminnon kanssa.
 * Asiakirjojen muotoilu -valintaikkunaan on lisätty "Ilmoita maamerkit" -valintaruutu, jolla voidaan määrittää, ilmoittaako NVDA web-sivuilla olevia maamerkkejä. Asetus on oletusarvoisesti käytössä edellisen NVDA-version yhteensopivuuden säilyttämiseksi.
 * Jos Lue komentonäppäimet -asetus on käytössä, NVDA kertoo monien näppäimistöjen multimedianäppäinten nimet niitä painettaessa (esim. toista, pysäytä, kotisivu jne).
-* NVDA lukee nyt sanan, joka poistetaan painettaessa Control+askelpalautin säätimissä, jotka tukevat sitä.
+* NVDA lukee nyt sanan, joka poistetaan painettaessa Ctrl+askelpalautin säätimissä, jotka tukevat sitä.
 * Tekstiä voidaan nyt selata ja lukea nuolinäppäimillä Web Formator -sovelluksessa.
 * Paranneltu tuki upotetuille  muokattaville dokumenteille Internet Explorerissa.
+* Lisätty komento NVDA+Shift+laskinnäppäimistön miinus, joka siirtää kohdistuksen nykyiseen navigointiobjektiin.
+* Lisätty komennot vasemman ja oikean hiirinäppäimen lukitsemiseksi ja lukituksen vapauttamiseksi. Näistä  on hyötyä esim. vedä ja pudota -toiminnoissa. Shift+laskinnäppäimistön / lukitsee tai vapauttaa vasemman hiirinäppäimen ja Shift+laskinnäppäimistön * oikean.
 
 === Muutokset ===
 * Hyvin pitkää näppäimistökäytöstä kertovaa ohjeviestiä ei enää lueta Windows 7:n Käynnistä-valikossa.
 * Display-syntetisaattori on korvattu uudella Puheen tarkastelu -toiminnolla. Sitä voidaan käyttää itsenäisesti minkä tahansa puhesyntetisaattorin kanssa, ja se aktivoidaan valitsemalla Työkalut-valikosta Puheen tarkastelu.
+* Pistenäytöllä näkyvät ilmoitukset hylätään automaattisesti jos painetaan näppäintä, joka aiheuttaa muutoksen, kuten esimerkiksi kohdistuksen siirtymisen. Aiemmin ilmoitukset pysyivät näkyvillä koko niille määritetyn ajan.
+* Asetusta, joka määrittää, seuraako pistenäyttö kohdistusta vai tarkastelukohdistinta (NVDA+Ctrl+T), voidaan nyt muuttaa Pistenäytön asetukset -valintaikkunasta. Asetus tallennetaan myös käyttäjän asetustiedostoon.
 
 === Vikojen korjaukset ===
 * NVDA käynnistyy nyt sellaisessa tilanteessa, jossa UI Automation -tuki on käytettävissä, mutta sen alustus ei jostakin syystä onnistu.
@@ -24,9 +28,10 @@
 * Rivien ja sarakkeiden koordinaatit luetaan nyt näennäispuskureissa oikein taulukosta poistuttaessa ja palattaessa saman taulukon soluun käymättä ensin jossain toisessa solussa (esim. painamalla ylä- ja alanuolta taulukon ensimmäisessä solussa).
 * Word-asiakirjojen ja  HTML-muokkaussäädinten tyhjät rivit näytetään nyt asianmukaisesti pistenäytöllä. NVDA näytti aiemmin vain nykyisen virkkeen.
 * Useita tietoturvakorjauksia käytettäessä NVDA:ta Windowsiin kirjauduttaessa ja muilla suojatuilla työpöydillä.
+* Järjestelmäkohdistimen sijainti päivitetään nyt oikein standardeissa Windowsin muokkauskentissä ja Word-asiakirjoissa käytettäessä Lue kaikki -komentoa, joka siirtää ruudun alareunan ulkopuolelle.
 
 == 2009.1 ==
-Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioille, huomattavasti paranneltu tuki Internet Explorerille ja Adobe Readerille, tuki Windows 7:lle, Windowsin kirjautumis- ja Control+Alt+Delete-ruutujen sekä Käyttäjätilien valvonnan (UAC) kehotteiden lukeminen sekä mahdollisuus olla vuorovaikutuksessa web-sivujen Flash- ja Java-sisällön kanssa. Lisäksi on useita merkittäviä korjauksia NVDA:n vakauteen ja parannuksia yleiseen käyttäjäkokemukseen.
+Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioille, huomattavasti paranneltu tuki Internet Explorerille ja Adobe Readerille, tuki Windows 7:lle, Windowsin kirjautumis- ja Ctrl+Alt+Delete-ruutujen sekä Käyttäjätilien valvonnan (UAC) kehotteiden lukeminen sekä mahdollisuus olla vuorovaikutuksessa web-sivujen Flash- ja Java-sisällön kanssa. Lisäksi on useita merkittäviä korjauksia NVDA:n vakauteen ja parannuksia yleiseen käyttäjäkokemukseen.
 
 === Uudet ominaisuudet ===
 * Virallinen tuki Windowsin 64-bittisille versioille
@@ -40,13 +45,13 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioil
 * Kohdistimen kohdalla olevat kirjoitusvirheet luetaan nyt Wordissa.
 * Tuki Word 2007:n oikeinkirjoituksen tarkistukselle. Osittainen tuki saattaa olla käytettävissä myös aiemmissa Wordin versioissa.
 * Tuki Windows Live Mailille (pelkkää tekstiä sisältävät viestit voidaan nyt lukea).
-* Jos käyttäjä siirtyy Windows Vistassa suojatulle työpöydälle (joko siksi, että Käyttäjätilien valvonnan valintaikkuna tuli näkyviin tai koska painettiin Control+Alt+Delete), NVDA ilmoittaa, että suojattu työpöytä on aktiivisena.
+* Jos käyttäjä siirtyy Windows Vistassa suojatulle työpöydälle (joko siksi, että Käyttäjätilien valvonnan valintaikkuna tuli näkyviin tai koska painettiin Ctrl+Alt+Delete), NVDA ilmoittaa, että suojattu työpöytä on aktiivisena.
 * NVDA voi lukea hiiren alla olevan tekstin komentorivi-ikkunoissa.
 * Lisätty UI Automation -tuki Windows 7:ään sisältyvän UI Automation -asiakasrajapinnan kautta, sekä tehty korjauksia NVDA:n käyttökokemuksen parantamiseksi Windows 7:ssä.
 * NVDA voidaan määrittää käynnistymään automaattisesti Windowsiin kirjautumisen jälkeen. Asetus löytyy Yleiset asetukset -valintaikkunasta.
-* NVDA voi nyt lukea Windowsin suojatut ruudut, kuten kirjautumis- ja Control+Alt+Delete-ruudun sekä Windows Vistan ja uudempien Käyttäjätilien valvonnan kehotteet. Windowsin kirjautumisruudun lukeminen voidaan määrittää Yleiset asetukset -valintaikkunasta.
+* NVDA voi nyt lukea Windowsin suojatut ruudut, kuten kirjautumis- ja Ctrl+Alt+Delete-ruudun sekä Windows Vistan ja uudempien Käyttäjätilien valvonnan kehotteet. Windowsin kirjautumisruudun lukeminen voidaan määrittää Yleiset asetukset -valintaikkunasta.
 * Lisätty ajuri Optelec ALVA BC6 -sarjan pistenäytöille
-* Linkkilohkojen jälkeen ja ennen olevaan tekstiin voidaan nyt web-sivuja selatessa siirtyä painamalla n ja shift+n.
+* Linkkilohkojen jälkeen ja ennen olevaan tekstiin voidaan nyt web-sivuja selatessa siirtyä painamalla n ja Shift+n.
 * ARIA-maamerkit luetaan nyt web-sivuja selatessa , ja niiden välillä voidaan liikkua eteen- ja taaksepäin painamalla d ja shift+d.
 * Linkkilista-valintaikkuna, joka on käytettävissä web-sivuja selatessa, on korvattu Elementtiluettelo-valintaikkunalla, joka näyttää luettelon linkeistä, otsikoista ja maamerkeistä. Otsikot ja maamerkit näytetään hierarkisesti.
 * Uudessa Elementtiluettelo-valintaikkunassa on "Suodata"-kenttä, jonka avulla listaa voidaan suodattaa näyttämään vain ne kohteet, joissa annettu teksti esiintyy.
@@ -79,7 +84,7 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioil
 * Windowsin ohjeen Avainsana-hakukentästä tehty paljon käyttökelpoisempi. Kyseisen säätimen viallisuuden vuoksi nykyistä avainsanaa ei voitu lukea, koska se muuttuu jatkuvasti.
 * Oikeat sivunumerot  luetaan Wordissa, jos asiakirjan sivunumerointi on erikseen asetettu.
 * Parempi tuki Wordin valintaikkunoiden muokkauskentille (esim. Fontti-valintaikkuna). Näissä säätimissä on nyt mahdollista liikkua nuolinäppäimillä.
-* Parempi tuki konsoli-ikkunoille. NVDA voi nyt erityisesti lukea tiettyjen konsoleiden sisällön, joiden se aiemmin ilmoitti olevan tyhjiä. Control+Pause-näppäinyhdistelmän painaminen ei enää sulje NVDA:ta.
+* Parempi tuki konsoli-ikkunoille. NVDA voi nyt erityisesti lukea tiettyjen konsoleiden sisällön, joiden se aiemmin ilmoitti olevan tyhjiä. Ctrl+Pause-näppäinyhdistelmän painaminen ei enää sulje NVDA:ta.
 * Asennusohjelma käynnistää NVDA:n normaalein käyttäjän oikeuksin Windows Vistassa ja uudemmissa, kun sen käynnistäminen on valittuna asennuksen viimeisessä vaiheessa.
 * Askelpalauttimen painaminen käsitellään nyt oikein kirjoitettuja sanoja luettaessa.
 * Tietyistä Resurssienhallinnan ja Windowsin käyttöliittymän tilannekohtaisista valikoista ei enää virheellisesti ilmoiteta "Käynnistä-valikko".
@@ -251,10 +256,10 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioil
 === Web-sisällön käyttäminen uusilla näennäispuskureilla (toistaiseksi vain Mozilla Gecko 1.9 -sovelluksissa kuten Firefox 3 ja Thunderbird 3) ===
 * Web-sivujen lataus on lähes 30 kertaa nopeampaa (useimpien sivujen latautumista ei tarvitse odottaa enää lainkaan).
 * Lisätty linkkilista (NVDA+F7)
-* Paranneltu Etsi-valintaikkunaa (Control+NVDA+F) niin, että haku ei ota kirjainkokoa huomioon, sekä korjattu muutamia kohdistusongelmia.
+* Paranneltu Etsi-valintaikkunaa (Ctrl+NVDA+F) niin, että haku ei ota kirjainkokoa huomioon, sekä korjattu muutamia kohdistusongelmia.
 * Tekstin valitseminen ja kopiointi on nyt mahdollista.
 * Uudet näennäispuskurit näyttävät web-sivun ruutuasettelussa (linkit ja säätimet eivät ole riveillä, elleivät ne ole niin visuaalisesti). Asetus voidaan ottaa käyttöön ja poistaa käytöstä painamalla NVDA+V.
-* Nyt on mahdollista siirtyä kappale kerrallaan painamalla Control+ylänuoli ja Control+alanuoli.
+* Nyt on mahdollista siirtyä kappale kerrallaan painamalla Ctrl+ylänuoli ja Ctrl+alanuoli.
 * Dynaamisen sisällön tukea paranneltu
 * Paranneltu rivien ja kenttien lukemisen tarkkuutta siirryttäessä nuolinäppäimillä ylös ja alas.
 
@@ -279,7 +284,7 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioil
 * Ääniasetukset-valintaikkunaan lisätty mahdollisuus muuttaa käytettävän puhesyntetisaattorin äänensävyä, jos tätä tuetaan. (eSpeak tukee äänensävyn muuttamista).
 * Lisätty mahdollisuus objektin sijaintitietojen lukemisen (esim. 1 / 4) käytöstä poistamiseen. Asetus löytyy Objektien lukuasetukset -valintaikkunasta.
 * NVDA voi antaa nyt äänimerkin isoa kirjainta luettaessa. Asetus voidaan ottaa käyttöön ja poistaa käytöstä Ääniasetukset-valintaikkunasta. Lisätty myös "Nosta äänenkorkeutta isojen kirjainten kohdalla" -valintaruutu, jolla voidaan määrittää, tulisiko NVDA:n nostaa äänenkorkeutta isojen kirjainten kohdalla. Joten NVDA voi nyt joko nostaa äänenkorkeutta, sanoa "iso" tai antaa äänimerkin.
-* NVDA:han lisätty mahdollisuus puheen keskeyttämiseen (samoin kuin Mac-käyttöjärjestelmän VoiceOver-ruudunlukijassa). Kun NVDA puhuu jotakin, voidaan puhe keskeyttää painamalla Control- tai Shift-näppäintä kuten normaalistikin, mutta jos tämän jälkeen painetaan uudestaan Shift-näppäintä (kunhan mitään muita näppäimiä ei ole painettu), puhe jatkuu täsmälleen siitä kohdasta, mihin se jäi.
+* NVDA:han lisätty mahdollisuus puheen keskeyttämiseen (sama toiminto kuin Mac-käyttöjärjestelmän VoiceOver-ruudunlukijassa). Kun NVDA puhuu jotakin, voidaan puhe keskeyttää painamalla Ctrl- tai Shift-näppäintä kuten tavallisesti, mutta jos tämän jälkeen painetaan uudestaan Shift-näppäintä (kunhan mitään muita näppäimiä ei ole painettu), puhe jatkuu täsmälleen siitä kohdasta, mihin se jäi.
 * Lisätty virtuaalipuhesyntetisaattori, joka tulostaa tekstin ikkunaan sen puhumisen sijasta. Tämä on miellyttävämpää näkeville kehittäjille, jotka eivät ole tottuneet puhesynteesiin, mutta jotka haluavat tietää, mitä NVDA puhuu. Vikoja vielä luultavasti on, joten palaute on ehdottomasti tervetullutta.
 * NVDA ei enää oletusarvoisesti lue välimerkkejä, niiden lukeminen voidaan ottaa käyttöön painamalla NVDA+P.
 * eSpeak puhuu nyt oletusarvoisesti hiukan hitaammin, mikä pitäisi olla helpompaa sitä ensi kertaa käyttäville.
@@ -295,13 +300,13 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioil
 
 === Näppäinkomennot ===
 * Näppäimet NVDA+Shift+laskinnäppäimistön 6 ja NVDA+Shift+laskinnäppäimistön 4 mahdollistavat navigoinnin eteen- ja taaksepäin koko objektihierarkiassa. Tämä tarkoittaa, että sovelluksen ikkunan kaikkia osia voidaan selata tarvitsematta siirtyä ylempään tai ensimmäiseen alemman tason objektiin. Jos hierarkian taso vaihtuu näitä komentoja käytettäessä, siitä ilmoitetaan äänimerkeillä.
-* Ääniasetukset voidaan nyt määrittää myös avaamatta Ääniasetukset-valintaikkunaa puhesyntetisaattorin asetusrenkaan avulla. Haluttu asetus (puheääni, äänenkorkeus jne).) valitaan painamalla Control+NVDA+oikea nuoli tai Control+NVDA+vasen nuoli, ja valitun asetuksen arvoa muutetaan painamalla Control+NVDA+ylänuoli tai Control+NVDA+alanuoli.
+* Ääniasetukset voidaan nyt määrittää myös avaamatta Ääniasetukset-valintaikkunaa puhesyntetisaattorin asetusrenkaan avulla. Haluttu asetus (puheääni, äänenkorkeus jne).) valitaan painamalla Ctrl+NVDA+oikea nuoli tai Ctrl+NVDA+vasen nuoli, ja valitun asetuksen arvoa muutetaan painamalla Ctrl+NVDA+ylänuoli tai Ctrl+NVDA+alanuoli.
 * Lisätty komento nykyisen valinnan lukemiseksi muokkauskentissä (NVDA+shift+ylänuoli).
 * Melko monet jotain tekstiä puhuttavat NVDA:n komennot (sellaiset kuin nykyisen rivin lukeminen jne.) voivat nyt tavata tekstin, jos niitä painetaan kolme kertaa nopeasti.
 * Capslockia ja sekä laskinnäppäimistön että laajennettua Insert-näppäintä voidaan käyttää NVDA-näppäimenä. Lisäksi, jos jotain näistä näppäimistä painetaan kahdesti ilman mitään muuta näppäintä sen ollessa käytössä,  välitetään kyseinen näppäinpainallus käyttöjärjestelmälle aivan kuin sitä olisi painettu kun NVDA ei ollut käynnissä. NVDA-näppäin voidaan määrittää näppäimistöasetusten valintaikkunasta.
 
 === Sovellustuki ===
-* Firefox 3:n ja Thunderbird 3:n tukea paranneltu. Latausajat ovat lähes 30 kertaa nopeampia, ruutuasettelua käytetään oletusarvoisesti (asetusta voidaan vaihtaa painamalla NVDA+V), lisätty linkkilista (NVDA+F7), Etsi-valintaikkunassa (Control+NVDA+F) kirjainkoolla ei ole väliä, paljon parempi dynaamisen sisällön tuki, tekstin valitseminen ja kopioiminen on nyt mahdollista.
+* Firefox 3:n ja Thunderbird 3:n tukea paranneltu. Latausajat ovat lähes 30 kertaa nopeampia, ruutuasettelua käytetään oletusarvoisesti (asetusta voidaan vaihtaa painamalla NVDA+V), lisätty linkkilista (NVDA+F7), Etsi-valintaikkunassa (Ctrl+NVDA+F) kirjainkoolla ei ole väliä, paljon parempi dynaamisen sisällön tuki, tekstin valitseminen ja kopioiminen on nyt mahdollista.
 * Tekstin valitseminen ja kopioiminen on nyt mahdollista MSN Messengerin ja Windows Live Messengerin historialuetteloissa.
 * Audacity-äänieditorin tukea paranneltu.
 * Lisätty tuki muutamille Skypen muokkaus- ja tekstisäätimille.
@@ -313,9 +318,9 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioil
 
 === Sovellusrajapinnat ===
 * Paranneltu objektinavigointia MSAA-objekteissa. Jos ikkunassa on järjestelmävalikko, otsikkopalkki tai vierityspalkkeja, niihin voidaan nyt siirtyä objektinavigoinnilla.
-* Lisätty tuki IAccessible2-esteettömyysrajapinnalle. A part from the ability to announce more control types, Tämän avulla NVDA voi myös käyttää kohdistinta sellaisissa sovelluksissa kuin Firefox 3 ja Thunderbird 3 mahdollistaen tekstissä liikkumisen sekä tekstin valitsemisen ja muokkaamisen.
+* Lisätty tuki IAccessible2-esteettömyysrajapinnalle. Entistä useampien säädintyyppien tunnistamisen lisäksi NVDA voi tämän avulla käyttää kohdistinta myös sellaisissa sovelluksissa kuin Firefox 3 ja Thunderbird 3 mahdollistaen tekstissä liikkumisen sekä tekstin valitsemisen ja muokkaamisen.
 * Lisätty tuki Scintilla-muokkaussäätimille, joita on esim. Notepad++:ssa ja TortoiseSVN:ssä.
-* Lisätty tuki Java-sovelluksille Java Access Bridgen avulla. Tämä tarjoaa perustuen Open Officelle ja muille Java-sovelluksille, Jos Java on asennettu. Web-selaimessa toimivat Java-sovelmat eivät vielä toimi.
+* Lisätty tuki Java-sovelluksille Java Access Bridgen avulla. Tämä tarjoaa alkeellisen tuen Open Officelle ja muille Java-sovelluksille, Jos Java on asennettu. Web-selaimessa toimivat Java-sovelmat eivät vielä toimi.
 
 === Hiiri ===
 * Paranneltu hiiren alla olevan tekstin lukemista. Se on nyt paljon nopeampaa, ja lisäksi joissakin säätimissä, kuten standardeissa muokkauskentissä sekä Java- ja IAccessible2-säätimissä, on mahdollista lukea myös nykyinen sana, eikä vain nykyistä objektia. Tästä voi olla hyötyä joillekin heikkonäköisille käyttäjille, jotka haluavat lukea hiiren avulla vain jonkin tietyn osan tekstistä.
@@ -354,12 +359,12 @@ Saadaksesi lisätietoja eSpeakista tai ladataksesi sen muita versioita, käy osoit
 * Lisätty ranskankielinen käännös.
 * Lisätty komento Insert+U, joka ottaa käyttöön ja poistaa käytöstä edistymispalkkien ilmaisemisen äänimerkeillä.
 * Useampien NVDA:n ilmoitusten kääntäminen eri kielille on nyt mahdollista. Näihin kuuluvat näppäinohjeen komentojen kuvaukset.
-* Internet Explorerin ja Firefoxin näennäispuskureihin lisätty Etsi-valintaikkuna. Web-sivulla Control+F:n painaminen avaa valintaikkunan, johon voidaan kirjoittaa haettava teksti. Enterin painaminen aloittaa haun ja sijoittaa kohdistimen riville, jolta haettu teksti löytyy. Annetun tekstin seuraavaa esiintymää voidaan etsiä painamalla F3.
+* Internet Explorerin ja Firefoxin näennäispuskureihin lisätty Etsi-valintaikkuna. Web-sivulla Ctrl+F:n painaminen avaa valintaikkunan, johon voidaan kirjoittaa haettava teksti. Enterin painaminen aloittaa haun ja sijoittaa kohdistimen riville, jolta haettu teksti löytyy. Annetun tekstin seuraavaa esiintymää voidaan etsiä painamalla F3.
 * Kun "Lue kirjoitetut merkit" on valittuna, useampien merkkien puhuminen pitäisi nyt olla mahdollista. Teknisesti ottaen ASCII-merkit väliltä 32 - 255 voidaan nyt puhua.
 * Uudelleennimetty joitakin säädintyyppejä luettavuuden parantamiseksi. Muokattava teksti on nyt muokattava, runko on nyt puunäkymä ja painonappi on nyt painike.
 * Nuolinäppäimillä liikkumisen nopeuttamiseksi luettelon tai puunäkymän kohteissa, säätimen tyyppiä (luettelon tai puunäkymän kohdetta) ei enää lueta.
 * Ilmoitus "sisältää ponnahdusvalikon", joka ilmaisee, että valikossa on alavalikko, ilmoitetaan nyt alavalikkona.
-* NVDA voi nyt lukea joissakin kielissä Control- ja Alt (tai AltGr) -näppäimien avulla tehtävät erikoismerkit kirjoitettujen merkkien lukemisen ollessa käytössä.
+* NVDA voi nyt lukea joissakin kielissä Ctrl- ja Alt (tai AltGr) -näppäimien avulla tehtävät erikoismerkit kirjoitettujen merkkien lukemisen ollessa käytössä.
 * Korjattu joitakin ongelmia staattisten tekstisäädinten tarkastelussa.
 * Lisätty perinteisen Kiinan käännös.
 * Uudelleenjärjestetty tärkeä osa NVDA:n koodista, jonka pitäisi korjata useita NVDA:n käyttöliittymän ongelmia (asetusvalintaikkunat mukaan lukien).
