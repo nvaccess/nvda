@@ -6,8 +6,17 @@
 	* NVDA sa neodmieta spustiť ak v systéme nie sú nainštalované žiadne zvukové zariadenia. Samozrejme, v takomto prípade musí byť použitý brailovský riadok alebo hlasový výstup display. (#425)
 	* Do dialógu Nastavenia čítania textu bolo pridané začiarkavacie políčko oznamovať oblasti stránky, ktoré určuje, či sa vo virtuálnom prehliadači budú oznamovať oblasti stránky. Kvôli kompatibilite s predchádzajúcou verziou je toto predvolene zapnuté.
 	* Ak je zapnuté čítanie príkazových skratiek, NVDA bude oznamovať názvy multimediálnych klávesov ako napríklad play, stop, domovská stránka... )#472)
-	* NVDA po stlačení ctrl+backspace oznámy práve vymazané slovo v prvkoch, ktoré to podporujú. (#491)
+	* NVDA po stlačení ctrl+backspace oznámi práve vymazané slovo v prvkoch, ktoré to podporujú. (#491)
 	* Kurzorové klávesy umožňujú navigáciu a čítanie v okne programu Web formator. (#452)
+	* Lepšia podpora pre vnorené editovateľné dokumenty v programe internet explorer. (#402)
+	* Nový skript (nvda+shift+numpadMinus) umožňuje premiestnenie systémového fokusu na prvok zameraný objektovou navigáciou.
+	* Nové skripty na uzamknutie a odomknutie ľavého a pravého tlačidla myši; určené na vykonávanie operácie drag'n'drop. shift+numpad lomeno uzamknutie/odomknutie ľavého, shift+numpad krát na uzamknutie a odomknutie pravého tlačidla.
+
+=== Zmeny ===
+	* Veľmi dlhý popis v ponuke štart Windows 7 nie je viacej oznamovaný.
+	* Ovládač hlasového výstupu display bol nahradený zobrazovačom reči. Môže byť použitý nezávisle na aktuálne použitom hlasovom výstupe a je prístupný z menu nástroje. (#44)
+	* Správy na braillovskom zobrazovači automaticky zmiznú po stlačení klávesu, ktorý spôsobí zmenu fokusu. Doteraz boli správy vždy zobrazené po celú nastavenú dobu.
+	* Nastavovanie previazania braillovského kurzoru so systémovým fokusom alebo s prehliadacím kurzorom je možné urobiť aj z dialógu nastavenia brailu. Nastavenie sa tiež ukladá do používateľskej konfigurácii.
 
 === Opravy ===
 	* NVDA sa viac neodmieta spustiť, ak dôjde k chybe pri pokuse o inicializáciu podpori UI Automation. (#483)
@@ -17,6 +26,10 @@
 	* Nastavenie Čítať skratkové klávesy objektov sa uplatní aj vo virtuálnom prehliadači. (#486)
 	* Info o pozícii v tabuľke nie je nesprávne oznamované pre hlavičky riadkov a hlavičky stĺpcov vo virtuálnom prehliadači ak je vypnuté oznamovanie tabuliek.
 	* Vo virtuálnom prehliadači je správne oznamovaná pozícia o aktuálnej bunke ak opustíte tabuľku a neskôr bez navštívenia inej tabuľky sa opätovne vrátite do tej istej tabuľky, napr. stlačením šípky hore a šípky dolu v prvej bunke tabuľky.  (#378)
+	* Prázdne riadky v okne programu MS Word a v editačných prvkoch programu Internet explorer sú správne zobrazované v brailly. Doteraz sa v týchto situáciách zobrazovali aktuálne vety. (#420)
+	* Viacnásobné bezpečnostné opravy pri používaní NVDA na prihlasovacej obrazovke.
+	* Pozícia kurzora je správne aktualizovaná pri plynulom čítaní, ak v štandardných editačných poliach a programe ms word dôjde k prečítaniu väčšieho množstva textu ako sa vojde na obrazovku. (#418)
+
 
 == 2009.1 ==
 Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windows, úplne prepracovaná podpora pre čítanie dokumentov v programoch Microsoft Internet explorer a Adobe Reader, podpora pre Windows 7, možnosť čítať prihlasovaciu obrazovku Windows a schopnosť interakcie s prvkami flash a java na webových stránkach. Táto verzia obsahuje tiež množstvo všeobecných opráv, čo prispieva k celkovej stabilite programu.

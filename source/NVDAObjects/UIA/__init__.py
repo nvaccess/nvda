@@ -238,6 +238,9 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 				self._UIATextPattern=None
 		return self._UIATextPattern
 
+	def setFocus(self):
+		self.UIAElement.setFocus()
+
 	def _get_name(self):
 		try:
 			return self.UIAElement.currentName

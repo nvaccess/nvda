@@ -23,13 +23,13 @@ class AppModule(_default.AppModule):
 
 class SpellCheckErrorField(WordDocument):
 
-	def _get_WinwordDocumentObject(self):
-		if not hasattr(self,'_WinwordDocumentObject'):
+	def _get_WinwordWindowObject(self):
+		if not hasattr(self,'_WinwordWindowObject'):
 			try:
-				self._WinwordDocumentObject=comtypes.client.dynamic.Dispatch(comtypes.client.GetActiveObject('word.application',interface=comtypes.automation.IDispatch)).activeWindow.activePane
+				self._WinwordWindowObject=comtypes.client.dynamic.Dispatch(comtypes.client.GetActiveObject('word.application',interface=comtypes.automation.IDispatch)).activeWindow.activePane
 			except:
 				return None
-		return self._WinwordDocumentObject
+		return self._WinwordWindowObject
 
 	def _get_name(self):
 		return super(SpellCheckErrorField,self).description

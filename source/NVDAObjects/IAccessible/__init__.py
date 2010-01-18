@@ -1085,6 +1085,21 @@ the NVDAObject for IAccessible
 			return False
 		return super(IAccessible, self).isPresentableFocusAncestor
 
+class ShellDocObjectView(IAccessible):
+
+	def event_gainFocus(self):
+		#Sometimes Shell DocObject View gets focus, when really the document inside it should
+		#Adobe Reader 9 licence agreement
+		if eventHandler.isPendingEvents("gainFocus") or self.childCount!=1:
+			return super(ShellDocObjectView,self).event_gainFocus()
+		child=self.firstChild
+		if not child or child.windowClassName!="Internet Explorer_Server" or child.role!=controlTypes.ROLE_PANE:
+			return super(ShellDocObjectView,self).event_gainFocus()
+		child=child.firstChild
+		if not child or child.windowClassName!="Internet Explorer_Server" or child.role!=controlTypes.ROLE_DOCUMENT:
+			return super(ShellDocObjectView,self).event_gainFocus()
+		eventHandler.queueEvent("gainFocus",child)
+
 class JavaVMRoot(IAccessible):
 
 	def _get_firstChild(self):
@@ -1394,4 +1409,5 @@ _staticMap={
 	("QWidget",oleacc.ROLE_SYSTEM_APPLICATION):"qt.Application",
 	("Shell_TrayWnd",oleacc.ROLE_SYSTEM_CLIENT):"Taskbar",
 	("Internet Explorer_TridentCmboBx",oleacc.ROLE_SYSTEM_COMBOBOX):"MSHTML.V6ComboBox",
+	("Shell DocObject View",oleacc.ROLE_SYSTEM_CLIENT):"ShellDocObjectView",
 }

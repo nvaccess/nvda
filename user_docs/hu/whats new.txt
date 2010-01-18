@@ -1,6 +1,32 @@
 			=Újdonságok az NVDA-ban=
+		=2010.1=
+
+	=Újdonságok=
+	* Az NVDA mostantól elindul hangeszközzel nem rendelkezõ számítógépeken is. Természetesen, egy braille kijelzõ vagy a virtuális szintetizátort lehet csak használni. (#425)
+	* A jelzõpontok jelzése jelölõnégyzet bekerült a dokumentum formázási beállítások közé. Így a felhasználó ki és be tudja kapcsolni a jelzõpontok bemondását. Az elõzõ stabil verzióban ez alapértelmezetten be volt kapcsolva.
+* Az NVDA mostantól bemondja a multimédiás gombokat (pl. play, stop, home page stb) ha a parancsbillentyûk bemondása be van kapcsolva.
+* Az NVDA bemondja a kitörölt szót a control+backspace billentyû használatakor a vezérlõelemekben, ha azok támogatják azt. (#491)
+	* A nyíl billentyûk mûködnek a Web formator ablakában a weboldalon való navigáláskor. (#452)
+* Az NVDA a beágyazott szerkeszthetõ (tervezõ módú) dokumentumokat az Internet Explorer programban. (#402)
+
+	=Változások=
+
+* A NVDA már nem mondja be a kimondottan hosszú start menü billentyûzetsúgó üzenetet Windows 7 alatt.
+* A virtuális szintetizátort egy új, beszédnézõ váltotta fel. Aktiválásához használja a beszédnézõ menüelemet az NVDA eszközök menüjében. A beszédnézõ használható, független attól, milyen beszédszintetizátor van használatban.
+
+	=hiba javítások=
+	* Az NVDA mostantól akkor is elindul, ha az UI Automation támogatás elérhetõ, de egyéb okok miatt nem lehet betölteni. (#483)
+	* Egy táblázat néha elhangzó teljes sora már nem hangzik el a Mozilla alkalmazásokban. (#482)
+	* Az NVDA már nem fagy le hosszú idõre ha megnyit egy faszerkezetben egy sok elemet tartalmazó ágat.
+	* A SAPI 5 hangok kilistázásakor az NVDA megpróbálja kiszûrni a hibás hangokat. Elõzõleg, ha egy problémás hang szerepelt alistában, az NVDA Sapi drivere néha nem töltõdött be.
+	* A Virtuális kijelzõk már figyelembe veszik az objektum billentyûparancsának bemondása lehetõséget (#486)
+* A virtuális kijelzõkben egy táblázat fejléceinél a sor és oszlopkoordinátákat az NVDA már helyesen olvassa fel.
+* A virtuális kijelzõkben a program most már helyesen mondja be a sor és oszlopkoordinátákat ha egy táblázatból kilépünk, majd ugyanabba a cellába lépünk vissza egy másik táblázatba lépés nélkül. (pl. a fel és le nyíl használatakor egy táblázat elsõ celláján. (#378)
+* Az üres sorok a Microsoft Word dokumentumokban és a Microsoft HTML vezérlõelemeken már helyesen megjelennek egy braille kijelzõn. Elõzõleg az NVDA az aktuális mondatot, nem pedig az aktuális sort jelenítette meg. (#420)
 
 		=2009.1=
+
+A legfontosabb fejlesztések közé tartozik a 64 bites  Windows támogatása; nagy mértékben fejlõdött a Microsoft Internet Explorer és Adobe Reader dokumentumok használata; a Windows 7 támogatása; A Windows bejelentkezõ képernyõ olvasása, control+alt+delete és az User Account Control (UAC) képernyõk használata; az Adobe Flash és Sun Java tartalmak elérése a weboldalakon.   Stabilitási és egyéb javítások történtek a felhasználói élmény fokozása érdekében.
 
 	=Újdonságok=
 
@@ -81,7 +107,7 @@
 * Beállítható, hogy mindegyik, vagy csak bizonyos folyamatjelzõket jelezze az NVDA hangokkal. Például megadható, hogy csak 10%os változásnál legyen hangjelzés.
 * A hivatkozások felismerhetõk richedit vezérlõkben.
 * Az egérkurzor elmozdítható az áttekintõ kurzor alatt lévõ karakterhez a legtöbb szerkeszthetõ  szöveges vezérlõ esetében. Korábban csupán a vezérlõ közepére lehetett navigálni.
-* A virtuális kijelzõkben az áttekintõ kurzor mostantól képes felolvasni a bufferben lévõ szöveget, az egy adott elemen lévõ navigátor kurzor belsõ szövege helyett (amely gyakran nem túl hasznos a felhasználó számára). Ez azt jelenti, hogy mostantól lehetõség van hierarchikusan bejárni a buffert a navigátor kurzorral, az áttekintõ kurzor követni fogja azt.
+* A virtuális kijelzõkben az áttekintõ kurzor mostantól képes felolvasni a kijelzõben lévõ szöveget, az egy adott elemen lévõ navigátor kurzor belsõ szövege helyett (amely gyakran nem túl hasznos a felhasználó számára). Ez azt jelenti, hogy mostantól lehetõség van hierarchikusan bejárni a kijelzõt a navigátor kurzorral, az áttekintõ kurzor követni fogja azt.
 * a Java vezérlõelemek további állapotainak támogatása.
 * NVDA+t kétszeri gyors leütésre az NVDA lebetûzi az aktuális ablak címsorát, gyors háromszori leütésnél a vágólapra másolja azt.
 * A billentyûzetsúgó felolvassa a módosító billentyûk nevét, amennyiben egyedüliként vannak lenyomva.
@@ -114,7 +140,7 @@
 
 * Távoli asztali szerveren Espeakkal használva az NVDA-t, a hangok utolsó részei nem tûnnek el.
 * Hibák javítása a kivétel szótárak mentésénél bizonyos hangokhoz.
-* Mozilla Gecko virtuális bufferekben jobb navigálhatóság amennyiben nem soronként, szavanként, stb. navigál egy hosszú szöveges dokumentumban. (155)
+* Mozilla Gecko virtuális kijelzõkben jobb navigálhatóság amennyiben nem soronként, szavanként, stb. navigál egy hosszú szöveges dokumentumban. (155)
 * Ha a begépelt szavak kimondása engedélyezve van, a szó felismerése "ENTER" leütésekor.
 * Néhány karakterbeállítási hiba  javítva richedit dokumentumokban.
 * Az NVDA naplómegjelenítõ richedit vezérlõt használ a napló megjelenítéséhez. Ezáltal lehetõség van szavankénti léptetésre az NVDA-val.

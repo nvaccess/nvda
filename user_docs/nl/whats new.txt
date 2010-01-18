@@ -1,22 +1,18 @@
-= What's New in NVDA =
+= Nieuw in nvda =
 
 == 2010.1 ==
 
-=== New Features ===
-	* NVDA no longer fails to start on a system with no audio output devices. Obviously, a braille display or the Silence synthesiser in conjunction with the Speech Viewer will need to be used for output in this case. (#425)
-	* A report landmarks checkbox has been added to the Document Formatting settings dialog which allows you to configure whether NVDA should announce landmarks in web documents. For compatibility with the previous release, the option is on by default.
-	* If speak command keys is enabled, NVDA will now announce the names of multimedia keys (e.g. play, stop, home page, etc.) on many keyboards when they are pressed. (#472)
-	* NVDA now announces the word being deleted when pressing control+backspace in controls that support it. (#491)
-	* Arrow keys can now be used in the Web formator window to navigate and read the text. (#452)
-	* NVDA better supports embedded editable (design mode) documents in Internet Explorer. (#402)
-	* a new script (nvda+shift+numpadMinus) allows you to move the system focus to the current navigator object.
-	* New scripts to lock and unlock the left and right mouse buttons. Useful for performing drag and drop operations. shift+numpadDivide to lock/unlock the left, shift+numpadMultiply to lock/unlock the right.
+=== Nieuwe mogelijkheden ===
+	* NVDA kan vanaf nu ook gestart worden op systemen die niet over een geluidskaart beschikken. Uiteraard zal er gebruik gemaakt moeten worden van een brailleregel of de "Silence" synthesizer.  (#425)
+	* Aan het dialoogvenster "Documentopmaak" werd een optie toegevoegd om de weergave van landmarks in of uit te schakelen. Om de compatibiliteit met de vorige versie te behouden, is deze optie standaardmatig ingeschakeld.
+	* Wanneer de optie "Commando-toetsen uitspreken" ingeschakeld is, zullen bij het indrukken ook de multimedia-toetsen (volume, webbrowser ...) uitgesproken worden.  (#472)
+	* NVDA zal het verwijderde woord uitspreken wanneer er op Ctrl+Backspace gedrukt wordt, in controls die dit toelaten.  (#491)
+	* De pijltjes-toetsen kunnen in het venster van WebFormator gebruikt worden om doorheen de tekst te navigeren. (#452)
+	* NVDA heeft een betere ondersteuning van ingebedde invoervelden (design mode) binnen Internet Explorer. (#402)
 
-=== Changes ===
-	* The extremely verbose keyboard help message in the Windows 7 Start menu is no longer reported.
-	* The Display synth has now been replaced with a new Speech Viewer. To activate it, choose Speech Viewer from the Tools menu. The speech viewer can be used independently of what ever speech synthesizer you are using.
-	* Messages on the braille display will automatically be dismissed if the user presses a key that results in a change such as the focus moving. Previously the message would always stay around for its configured time.
-	* Setting whether braille should be tethered to the focus or the review cursor (NVDA+control+t) can now be also set from the braille settings dialog, and is also now saved in the user's configuration.
+=== Wijzigingen ===
+	* De vrij lange helpboodschap in het Windows 7 Startmenu, wordt niet meer uitgesproken.
+	* De "Display" synthesizer is nu vervangen door de Speech viewer. Om deze te activeren, kiest u "Speech Viewer" in de menu "Extra". De "Speech viewer" kan onafhankelijk van uw gebruikte synthesizer ingeschakeld worden.
 
 === Bug Fixes ===
 	* NVDA no longer fails to start if UI Automation support appears to be available but fails to initialise for some reason. (#483)
@@ -28,8 +24,7 @@
 	* In virtual buffers, row/column coordinates are now correctly read when you leave a table and then re-enter the same table cell without visiting another cell first; e.g. pressing upArrow then downArrow on the first cell of a table. (#378)
 	* Blank lines in Microsoft Word documents and  Microsoft HTML edit controls are now shown appropriatly on braille displays. Previously NVDA was displaying the current sentence on the display, not the current line for these situations. (#420)
 	* Multiple security fixes when running NVDA at Windows logon and on other secure desktops.
-	* The cursor position (caret) is now correctly updated when performing a Say All that goes off the bottom of the screen, in standard Windows edit fields and Microsoft Word documents. (#418)
-
+ 
 == 2009.1 ==
 Major highlights of this release include support for 64 bit editions of Windows; greatly improved support for Microsoft Internet Explorer and Adobe Reader documents; support for Windows 7; reading of the Windows logon, control+alt+delete and User Account Control (UAC) screens; and the ability to interact with Adobe Flash and Sun Java content on web pages. There have also been several significant stability fixes and improvements to the general user experience.
 

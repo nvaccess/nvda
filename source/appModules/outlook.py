@@ -60,13 +60,22 @@ class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		role=obj.role
+		windowClassName=obj.windowClassName
+		controlID=obj.windowControlID
+		#The control showing plain text messages has very stuffed parents
+		#Use the grandparent window as its parent
+		if role==controlTypes.ROLE_EDITABLETEXT and windowClassName=="RichEdit20W" and controlID==8224:
+			obj.parent=Window._get_parent(Window._get_parent(obj))
+		#The control that shows HTML messages has stuffed parents. Use the control's parent window as its parent
+		if windowClassName=="Internet Explorer_Server" and role==controlTypes.ROLE_PANE and not getattr(obj,'HTMLNode'):
+			obj.parent=Window._get_parent(Window._get_parent(obj))
+		if role==controlTypes.ROLE_LISTITEM and windowClassName=="OUTEXVLB":
+			self.overlayCustomNVDAObjectClass(obj,AddressBookEntry,outerMost=True)
 		if role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_MENUITEM):
 			obj.description=None
 		if role in (controlTypes.ROLE_TREEVIEW,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LIST,controlTypes.ROLE_LISTITEM):
-			obj.reportFocusNeedsIAccessibleFocusState=False
-		controlID=obj.windowControlID
-		className=obj.windowClassName
-		if (className=="SUPERGRID" and controlID==4704) or (className=="rctrl_renwnd32" and controlID==109):
+			obj.shouldAllowIAccessibleFocusEvent=True
+		if (windowClassName=="SUPERGRID" and controlID==4704) or (windowClassName=="rctrl_renwnd32" and controlID==109):
 			outlookVersion=self.outlookVersion
 			if outlookVersion and outlookVersion<=9 and isinstance(obj,IAccessible):
 				obj.__class__=MessageList_pre2003
@@ -154,3 +163,16 @@ class MessageItem(Window):
 	def _get_states(self):
 		return frozenset([controlTypes.STATE_SELECTED])
 
+class AddressBookEntry(IAccessible):
+
+	def script_moveByEntry(self,keyPress):
+		sendKey(keyPress)
+		eventHandler.queueEvent("nameChange",self)
+
+[AddressBookEntry.bindKey(keyName,scriptName) for keyName,scriptName in [
+	("extendedDown","moveByEntry"),
+	("extendedUp","moveByEntry"),
+	("extendedHome","moveByEntry"),
+	("extendedEnd","moveByEntry"),
+	("extendedDelete","moveByEntry"),
+]]

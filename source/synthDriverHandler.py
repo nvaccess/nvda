@@ -172,29 +172,29 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@classmethod
 	def VoiceSetting(cls):
 		"""Factory function for creating voice setting."""
-		return SynthSetting("voice",_("&Voice:"))
+		return SynthSetting("voice",_("&Voice"))
 	@classmethod
 	def VariantSetting(cls):
 		"""Factory function for creating variant setting."""
-		return SynthSetting("variant",_("V&ariant:"))
+		return SynthSetting("variant",_("V&ariant"))
 
 	@classmethod
 	def RateSetting(cls,minStep=5):
 		"""Factory function for creating rate setting."""
-		return NumericSynthSetting("rate",_("&Rate:"),minStep)
+		return NumericSynthSetting("rate",_("&Rate"),minStep)
 	@classmethod
 	def VolumeSetting(cls,minStep=5):
 		"""Factory function for creating volume setting."""
-		return NumericSynthSetting("volume",_("V&olume:"),minStep)
+		return NumericSynthSetting("volume",_("V&olume"),minStep)
 	@classmethod
 	def PitchSetting(cls,minStep=5):
 		"""Factory function for creating pitch setting."""
-		return NumericSynthSetting("pitch",_("&Pitch:"),minStep)
+		return NumericSynthSetting("pitch",_("&Pitch"),minStep)
 
 	@classmethod
 	def InflectionSetting(cls,minStep=5):
 		"""Factory function for creating inflection setting."""
-		return NumericSynthSetting("inflection",_("&Inflection:"),minStep)
+		return NumericSynthSetting("inflection",_("&Inflection"),minStep)
 
 	@classmethod
 	def check(cls):

@@ -425,6 +425,7 @@ class MSHTML(IAccessible):
 				isContentEditable=False
 			if isContentEditable:
 				states.add(controlTypes.STATE_EDITABLE)
+				states.discard(controlTypes.STATE_READONLY)
 			nodeName=self.HTMLNodeName
 			if nodeName=="TEXTAREA":
 				states.add(controlTypes.STATE_MULTILINE)

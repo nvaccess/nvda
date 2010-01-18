@@ -9,6 +9,7 @@ import os
 import pkgutil
 import wx
 import louis
+import globalVars
 import baseObject
 import config
 from logHandler import log
@@ -273,6 +274,11 @@ class TextInfoRegion(Region):
 		self.obj = obj
 
 	def _isMultiline(self):
+		#A regions object can either be an NVDAObject or a virtualBuffer
+		#virtualBuffers should always be multiline
+		import virtualBuffers
+		if isinstance(self.obj,virtualBuffers.VirtualBuffer):
+			return True
 		# Terminals are inherently multiline, so they don't have the multiline state.
 		return (self.obj.role == controlTypes.ROLE_TERMINAL or controlTypes.STATE_MULTILINE in self.obj.states)
 
@@ -367,13 +373,10 @@ class CursorManagerRegion(TextInfoRegion):
 class ReviewTextInfoRegion(TextInfoRegion):
 
 	def _getSelection(self):
-		return api.getReviewPosition()
+		return api.getReviewPosition().copy()
 
 	def _setSelection(self, info):
 		api.setReviewPosition(info)
-
-	def _isMultiline(self):
-		return True
 
 class BrailleBuffer(baseObject.AutoPropertyObject):
 
@@ -656,18 +659,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
 		self.buffer = self.mainBuffer
-		self._tether = self.TETHER_FOCUS
+		#config.conf["braille"]["tetherTo"] = self.TETHER_FOCUS
 		#: Whether braille is enabled.
 		#: @type: bool
 		self.enabled = False
+		self._keyCounterForLastMessage=0
 
 	def _get_tether(self):
-		return self._tether
+		return config.conf["braille"]["tetherTo"]
 
 	def _set_tether(self, tether):
-		if tether == self._tether:
+		if tether == config.conf["braille"]["tetherTo"]:
 			return
-		self._tether = tether
+		config.conf["braille"]["tetherTo"] = tether
 		self.mainBuffer.clear()
 		if tether == self.TETHER_REVIEW:
 			self.handleReviewMove()
@@ -732,6 +736,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""Display a message to the user which times out after a configured interval.
 		The timeout will be reset if the user scrolls the display.
 		The message will be dismissed immediately if the user presses a cursor routing key.
+		If a key is pressed the message will be dismissed by the next text being written to the display
 		@postcondition: The message is displayed.
 		"""
 		if not self.enabled:
@@ -746,6 +751,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.buffer.update()
 		self.update()
 		self._resetMessageTimer()
+		self._keyCountForLastMessage=globalVars.keyCounter
 
 	def _resetMessageTimer(self):
 		"""Reset the message timeout.
@@ -787,6 +793,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
 		if self.buffer is self.mainBuffer:
 			self.update()
+		elif self.buffer is self.messageBuffer and globalVars.keyCounter>self._keyCountForLastMessage:
+			self._dismissMessage()
 
 	def handleCaretMove(self, obj):
 		if not self.enabled:
@@ -809,6 +817,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
 		if self.buffer is self.mainBuffer:
 			self.update()
+		elif self.buffer is self.messageBuffer and globalVars.keyCounter>self._keyCountForLastMessage:
+			self._dismissMessage()
 
 	def handleUpdate(self, obj):
 		if not self.enabled:
@@ -827,6 +837,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.restoreWindow(ignoreErrors=True)
 		if self.buffer is self.mainBuffer:
 			self.update()
+		elif self.buffer is self.messageBuffer and globalVars.keyCounter>self._keyCountForLastMessage:
+			self._dismissMessage()
 
 	def handleReviewMove(self):
 		if not self.enabled:

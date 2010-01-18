@@ -562,6 +562,16 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	//Collect needed HTML attributes
 	getAttributesFromHTMLDOMNode(pHTMLDOMNode,nodeName,attribsMap);
 
+	//Find out if this node is editable
+	BOOL isEditable=false;
+	IHTMLElement3* pHTMLElement3=NULL;
+	if(pHTMLDOMNode->QueryInterface(IID_IHTMLElement3,(void**)&pHTMLElement3)==S_OK) {
+		VARIANT_BOOL varEditable=VARIANT_FALSE;
+		pHTMLElement3->get_isContentEditable(&varEditable);
+		isEditable=(varEditable==VARIANT_TRUE);
+		if(isEditable) attribsMap[L"IHTMLElement::isContentEditable"]=L"1";
+	}
+
 	//input nodes of type hidden must be treeted as being invisible.
 	if(!invisible&&nodeName.compare(L"INPUT")==0) {
 		tempIter=attribsMap.find(L"HTMLAttrib::type");
@@ -593,6 +603,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		getIAccessibleInfo(pacc,&IAName,&IARole,&IAValue,&IAStates,&IADescription,&IAKeyboardShortcut);
 	}
 
+	//IE sometimes sets the readonly state on editable nodes, this does not make sence
+	if(isEditable&&IAStates&STATE_SYSTEM_READONLY) {
+		IAStates-=STATE_SYSTEM_READONLY;
+	}
+
 	//IE doesn't seem to support aria-label yet so we want to override IAName with it
 	tempIter=attribsMap.find(L"HTMLAttrib::aria-label");
 	if(tempIter!=attribsMap.end()) {
@@ -600,7 +615,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 
 	//Is this node interactive?
-	bool isInteractive=(IAStates&STATE_SYSTEM_FOCUSABLE)||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end());
+	bool isInteractive=isEditable||(IAStates&STATE_SYSTEM_FOCUSABLE)||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end());
 	//Set up numbering for lists
 	int LIIndex=0;
 	if(nodeName.compare(L"OL")==0) {
@@ -833,6 +848,12 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			buffer->addTextFieldNode(parentNode,previousNode,L" ");
 		}
 	}
+
+	//If a node is interactive, and still has no content, add a space
+	if(isInteractive&&parentNode->getLength()==0) {
+		buffer->addTextFieldNode(parentNode,previousNode,L" ");
+	}
+
 
 	//Update block setting on node
 	parentNode->setIsBlock(isBlock);

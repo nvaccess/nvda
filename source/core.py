@@ -13,6 +13,24 @@ import comtypes.gen
 import comInterfaces
 comtypes.gen.__path__.append(comInterfaces.__path__[0])
 
+#Monkey patch comtypes to support byref in variants
+from comtypes.automation import VARIANT, VT_BYREF
+from ctypes import cast, c_void_p
+from _ctypes import _Pointer
+oldVARIANT_value_fset=VARIANT.value.fset
+def newVARIANT_value_fset(self,value):
+	realValue=value
+	if isinstance(value,_Pointer):
+		try:
+			value=value.contents
+		except (NameError,AttributeError):
+			pass
+	oldVARIANT_value_fset(self,value)
+	if realValue is not value:
+		self.vt|=VT_BYREF
+		self._.c_void_p=cast(realValue,c_void_p)
+VARIANT.value=property(VARIANT.value.fget,newVARIANT_value_fset,VARIANT.value.fdel)
+
 import sys
 import nvwave
 import os
