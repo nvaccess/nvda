@@ -3,7 +3,7 @@ import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 import _default
 
-class PasswordField(IAccessible):
+class XPPasswordField(IAccessible):
 
 	def bindKeys(self):
 		for key, script in (
@@ -22,7 +22,7 @@ class PasswordField(IAccessible):
 		try:
 			return self.parent.name
 		except:
-			return super(PasswordField, self).name
+			return super(XPPasswordField, self).name
 
 	def script_changeUser(self, key):
 		# The up and down arrow keys change the selected user, but there's no reliable NVDA event for detecting this.
@@ -43,6 +43,6 @@ class AppModule(_default.AppModule):
 		if obj.windowClassName == "Edit" and not obj.name:
 			parent = obj.parent
 			if parent.role == controlTypes.ROLE_LISTITEM:
-				self.overlayCustomNVDAObjectClass(obj, PasswordField, outerMost=True)
+				self.overlayCustomNVDAObjectClass(obj, XPPasswordField, outerMost=True)
 				obj.bindKeys()
 				return
