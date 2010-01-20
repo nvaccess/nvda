@@ -2,27 +2,33 @@
 		=2010.1=
 
 	=Újdonságok=
-	* Az NVDA mostantól elindul hangeszközzel nem rendelkezõ számítógépeken is. Természetesen, egy braille kijelzõ vagy a virtuális szintetizátort lehet csak használni. (#425)
+	* Az NVDA mostantól elindul hangeszközzel nem rendelkezõ számítógépeken is. Természetesen ilyenkor csak egy braille kijelzõt vagy a virtuális szintetizátort lehet használni. (#425)
 	* A jelzõpontok jelzése jelölõnégyzet bekerült a dokumentum formázási beállítások közé. Így a felhasználó ki és be tudja kapcsolni a jelzõpontok bemondását. Az elõzõ stabil verzióban ez alapértelmezetten be volt kapcsolva.
 * Az NVDA mostantól bemondja a multimédiás gombokat (pl. play, stop, home page stb) ha a parancsbillentyûk bemondása be van kapcsolva.
 * Az NVDA bemondja a kitörölt szót a control+backspace billentyû használatakor a vezérlõelemekben, ha azok támogatják azt. (#491)
 	* A nyíl billentyûk mûködnek a Web formator ablakában a weboldalon való navigáláskor. (#452)
-* Az NVDA a beágyazott szerkeszthetõ (tervezõ módú) dokumentumokat az Internet Explorer programban. (#402)
+* Az NVDA jobban kezeli a beágyazott szerkeszthetõ (tervezõ módú) dokumentumokat az Internet Explorer programban. (#402)
+*Egy szkript segítségével a kurzor áthelyezhetõ a navigátor kurzorhoz (nvda+shift+numerikus minusz).
+*lehetõség van az egér jobb és bal gombjának zárolására és feloldására. A shift+numerikus per a bal, a shift+numerikus csillag pedig a jobb egérgombot zárolja és oldja fel.
 
 	=Változások=
 
 * A NVDA már nem mondja be a kimondottan hosszú start menü billentyûzetsúgó üzenetet Windows 7 alatt.
 * A virtuális szintetizátort egy új, beszédnézõ váltotta fel. Aktiválásához használja a beszédnézõ menüelemet az NVDA eszközök menüjében. A beszédnézõ használható, független attól, milyen beszédszintetizátor van használatban.
+* A braille kijelzõn lévõ üzenetek automatikusan eltûnnek, ha a felhasználó egy változást eredményezõ billentyût üt le (pl. fókuszváltozáskor). Elõzõleg az üzenetek láthatóak voltak a beállított ideig.
+* A fókusz vagy az áttekintõ kurzor követése a braille kurzorral (NVDA+control+t) lehetõség most már a braille beállítások párbeszédpanelen is megadható, valamint a beállítások elmentésekor a beállítás is elmentésre kerül.
 
 	=hiba javítások=
 	* Az NVDA mostantól akkor is elindul, ha az UI Automation támogatás elérhetõ, de egyéb okok miatt nem lehet betölteni. (#483)
 	* Egy táblázat néha elhangzó teljes sora már nem hangzik el a Mozilla alkalmazásokban. (#482)
 	* Az NVDA már nem fagy le hosszú idõre ha megnyit egy faszerkezetben egy sok elemet tartalmazó ágat.
-	* A SAPI 5 hangok kilistázásakor az NVDA megpróbálja kiszûrni a hibás hangokat. Elõzõleg, ha egy problémás hang szerepelt alistában, az NVDA Sapi drivere néha nem töltõdött be.
+	* A SAPI 5 hangok kilistázásakor az NVDA megpróbálja kiszûrni a hibás hangokat. Elõzõleg, ha egy problémás hang szerepelt a listában, az NVDA Sapi drivere néha nem töltõdött be.
 	* A Virtuális kijelzõk már figyelembe veszik az objektum billentyûparancsának bemondása lehetõséget (#486)
 * A virtuális kijelzõkben egy táblázat fejléceinél a sor és oszlopkoordinátákat az NVDA már helyesen olvassa fel.
 * A virtuális kijelzõkben a program most már helyesen mondja be a sor és oszlopkoordinátákat ha egy táblázatból kilépünk, majd ugyanabba a cellába lépünk vissza egy másik táblázatba lépés nélkül. (pl. a fel és le nyíl használatakor egy táblázat elsõ celláján. (#378)
 * Az üres sorok a Microsoft Word dokumentumokban és a Microsoft HTML vezérlõelemeken már helyesen megjelennek egy braille kijelzõn. Elõzõleg az NVDA az aktuális mondatot, nem pedig az aktuális sort jelenítette meg. (#420)
+*Összetett hibajavítás történt a windows bejelentkezõ képernyõ és a többi biztonságos asztal kezelésében
+* A kurzor követi a folyamatos felolvasáskor a szöveget a Windows szövegmezõiben, és a Microsoft Word dokumentumokban. (#418)
 
 		=2009.1=
 

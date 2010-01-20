@@ -1,729 +1,1679 @@
-﻿<html>
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
 <head>
-<META http-equiv=Content-Type content="text/html; charset=utf-8">
-<meta http-equiv="Content-Language" content="cz">
-<title>NVDA 2009.1 Uživateľská příručka</title>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="user%20guide_soubory/filelist.xml">
+<title>NVDA 2009.1 Uživatelská příručka</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Asus</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Asus</o:LastAuthor>
+  <o:Revision>5</o:Revision>
+  <o:TotalTime>146</o:TotalTime>
+  <o:Created>2010-01-19T09:02:00Z</o:Created>
+  <o:LastSaved>2010-01-19T11:28:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>6967</o:Words>
+  <o:Characters>41106</o:Characters>
+  <o:Lines>342</o:Lines>
+  <o:Paragraphs>95</o:Paragraphs>
+  <o:CharactersWithSpaces>47978</o:CharactersWithSpaces>
+  <o:Version>11.5606</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:HyphenationZone>21</w:HyphenationZone>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
+	font-size:24.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h2
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	font-size:18.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h3
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:3;
+	font-size:13.5pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h4
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:4;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h5
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:5;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h6
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:6;
+	font-size:7.5pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:70.85pt 70.85pt 70.85pt 70.85pt;
+	mso-header-margin:35.4pt;
+	mso-footer-margin:35.4pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:31076834;
+	mso-list-template-ids:-1665133346;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l0:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l0:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l1
+	{mso-list-id:865603208;
+	mso-list-template-ids:1170388968;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2
+	{mso-list-id:917524070;
+	mso-list-template-ids:-618216286;}
+@list l2:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3
+	{mso-list-id:1029644108;
+	mso-list-template-ids:-598456608;}
+@list l3:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4
+	{mso-list-id:1263880201;
+	mso-list-template-ids:-1468644828;}
+@list l4:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5
+	{mso-list-id:1670282660;
+	mso-list-template-ids:2120893668;}
+@list l5:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6
+	{mso-list-id:1723168903;
+	mso-list-template-ids:1841359232;}
+@list l6:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l7
+	{mso-list-id:1728916373;
+	mso-list-template-ids:1021606012;}
+@list l7:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l8
+	{mso-list-id:2143964406;
+	mso-list-template-ids:-1823566580;}
+@list l8:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Normální tabulka";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]-->
+<meta http-equiv=Content-Language content=cz>
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="2050"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
 </head>
-<body>
-<h1>NVDA 2009.1 Uživateľská příručka</h1>
-<span>Poslední aktualizace 13 Zaří 2009</span>
+
+<body lang=CS link=blue vlink=blue style='tab-interval:35.4pt'>
+
+<div class=Section1>
+
+<h1>NVDA 2009.1 Uživatelská příručka</h1>
+
+<p class=MsoNormal>Poslední aktualizace 19. ledna 2010 </p>
 
 <h2>Obsah</h2>
-<ul>
-<li><a href="#1">1. Úvod</a></li>
-<ul>
-<li><a href="#1.1">1.1. Stručný přehled</a></li>
-<li><a href="#1.2">1.2. Mezinárodní podpora</a></li>
-<li><a href="#1.3.">1.3. Podpora hlasového výstupu</a></li>
-<li><a href="#1.4">1.4. Podpora braillských řádků</a></li>
-<li><a href="#1.5">1.5. Licence a autorská práva</a></li>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo1;tab-stops:list 36.0pt'><a href="#1">1. Úvod</a></li>
+ <ul type=circle>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#1.1">1.1.
+      Stručný přehled</a></li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#1.2">1.2.
+      Mezinárodní podpora</a></li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#1.3.">1.3.
+      Podpora hlasového výstupu</a></li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#1.4">1.4.
+      Podpora <span class=SpellE>braillských</span> řádků</a></li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#1.5">1.5.
+      Licence a autorská práva</a></li>
+ </ul>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo1;tab-stops:list 36.0pt'><a href="#2">2. Systémové
+     požadavky</a></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo1;tab-stops:list 36.0pt'><a href="#3">3.Jak získat
+     NVDA</a></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo1;tab-stops:list 36.0pt'><a href="#4">4. Instalace
+     NVDA</a></li>
+ <ul type=circle>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#4.1">4.1.
+      NVDA instalátor</a></li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#4.2">4.2.
+      Přenosná verze NVDA</a></li>
+ </ul>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo1;tab-stops:list 36.0pt'><a href="#5">5. Začínáme s
+     NVDA</a></li>
+ <ul type=circle>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#5.1">5.1.
+      Spuštění NVDA</a></li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#5.2">5.2.
+      Klávesové zkratky NVDA</a></li>
+ </ul>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo1;tab-stops:list 36.0pt'><a href="#6">6. Nabídka
+     NVDA</a></li>
+ <ul type=circle>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#6.1">6.1.
+      Zobrazení nabídky NVDA</a></li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#6.2">6.2.
+      Nastavení NVDA</a></li>
+  <ul type=square>
+   <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+       auto;mso-list:l0 level3 lfo1;tab-stops:list 108.0pt'><a href="#6.2.1">6.2.1
+       Nabídka možností</a></li>
+   <ul type=square>
+    <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+        auto;mso-list:l0 level4 lfo1;tab-stops:list 144.0pt'><a href="#6.2.1.1">6.2.1.1.
+        Obecné nastavení</a></li>
+    <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+        auto;mso-list:l0 level4 lfo1;tab-stops:list 144.0pt'><a href="#6.2.1.2">6.2.1.2.
+        Výběr hlasového výstupu</a></li>
+    <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+        auto;mso-list:l0 level4 lfo1;tab-stops:list 144.0pt'><a href="#6.2.1.3">6.2.1.3.
+        Nastavení hlasu</a></li>
+    <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+        auto;mso-list:l0 level4 lfo1;tab-stops:list 144.0pt'><a href="#6.2.1.4">6.2.1.4.
+        <span class=SpellE>Braillské</span> nastavení</a></li>
+    <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+        auto;mso-list:l0 level4 lfo1;tab-stops:list 144.0pt'><a href="#6.2.1.5">6.2.1.5.
+        Nastavení klávesnice</a></li>
+    <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+        auto;mso-list:l0 level4 lfo1;tab-stops:list 144.0pt'><a href="#6.2.1.6">6.2.1.6.
+        Nastavení myši</a></li>
+    <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+        auto;mso-list:l0 level4 lfo1;tab-stops:list 144.0pt'><a href="#6.2.1.7">6.2.1.7.
+        Prezentace objektů</a></li>
+    <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+        auto;mso-list:l0 level4 lfo1;tab-stops:list 144.0pt'><a href="#6.2.1.8">6.2.1.8.
+        Nastavení virtuálního prohlížeče</a></li>
+    <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+        auto;mso-list:l0 level4 lfo1;tab-stops:list 144.0pt'><a href="#6.2.1.9">6.2.1.9.
+        Nastavení ohlašování formátování dokumentu</a></li>
+    <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+        auto;mso-list:l0 level4 lfo1;tab-stops:list 144.0pt'><a href="#6.2.1.10">6.2.1.10.
+        Řečové slovníky</a></li>
+   </ul>
+   <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+       auto;mso-list:l0 level3 lfo1;tab-stops:list 108.0pt'><a href="#6.2.2">6.2.2:
+       Uložení a znovunačtení nastavení</a></li>
+  </ul>
+ </ul>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo1;tab-stops:list 36.0pt'><a href="#7">7. Pohyb s
+     NVDA</a></li>
+ <ul type=circle>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#7.1">7.1.
+      Pohyb pomocí zaměření fokusu</a></li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#7.2">7.2.
+      Pohyb pomocí textového kurzoru</a></li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#7.3">7.3.
+      Objektová navigace</a></li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#7.4">7.4.
+      Prohlížení textu v aktuálním objektu</a></li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#7.5">7.5.
+      Navigace pomocí myši</a></li>
+ </ul>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo1;tab-stops:list 36.0pt'><a href="#8">8. Virtuální
+     prohlížeč</a></li>
+ <ul type=circle>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#8.1">8.1.
+      Příkazy pro rychlou navigaci</a></li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#8.2">8.2.
+      Seznam prvků</a></li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l0 level2 lfo1;tab-stops:list 72.0pt'><a href="#8.3">8.3.
+      Vnořené objekty</a></li>
+ </ul>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo1;tab-stops:list 36.0pt'><a href="#9">9. Jak získat
+     více informací</a><o:p></o:p></li>
 </ul>
-<li><a href="#2">2. Systémové požadavky</a></li>
-<li><a href="#3">3.Jak získat NVDA</a></li>
-<li><a href="#4">4. Instalace NVDA</a></li>
-<ul>
-<li><a href="#4.1">4.1. NVDA instalátor</a></li>
-<li><a href="#4.2">4.2. Přenosná verze NVDA</a></li>
+
+<h2 id=1>1. Úvod<o:p></o:p></h2>
+
+<h3 id=1.1>1.1. Stručný&nbsp; přehled</h3>
+
+<p>Díky zpětné vazbě hlasového výstupu zpřístupňuje NVDA nevidomým a zrakově
+postiženým práci s operačním systémem Windows a s dalšími aplikacemi. NVDA je <span
+class=SpellE>odečítač</span> obrazovky pro operační systém Windows umožňující
+uživateli pracovat s počítačem bez nutnosti vidět na obrazovku. NVDA získává od
+operačního systému informace o tom, kde se uživatel právě nachází, jaká okna a
+ovládací prvky jsou právě na obrazovce, sleduje, k jakým změnám v systému
+dochází. Získané informace pak zpracovává a prezentuje uživateli formou mluvené
+řeči tvořené hlasovým výstupem, aby uživatel věděl, co se na obrazovce děje.
+Texty uživatelského rozhraní a zprávy programu jsou nyní přeloženy do 24
+různých jazyků. NVDA by měl být schopen číst texty v libovolném jazyce, pro
+který je v systému přítomen hlasový výstup. <span class=SpellE>ESpeak</span>
+zvládá řadu jazyků, je také samozřejmě možné použít SAPI4 nebo SAPI5 hlasový
+výstup podporující vámi žádaný jazyk. </p>
+
+<p>NVDA spolupracuje s mnoha programy a to, jak dobře se s nimi bude pracovat,
+závisí především na tom, jak pamatovali tvůrci aplikací na jejich přístupnost. </p>
+
+<p>Tato uživatelská příručka není uceleným návodem k obsluze NVDA a Windows,
+obsahuje ovšem dostatek informací k tomu, abyste mohli začít s NVDA pracovat a
+sami pak následně objevovat, jak si poradit s mnoha dalšími úkoly. </p>
+
+<p>Nejvýznamnější přednosti programu: </p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l6 level1 lfo2;tab-stops:list 36.0pt'>Možnost spuštění programu z
+     USB klíče, nebo jiného přenosného zařízení, bez nutnosti instalace</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l6 level1 lfo2;tab-stops:list 36.0pt'>Snadný ozvučený instalátor</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l6 level1 lfo2;tab-stops:list 36.0pt'>Surfování po internetu
+     pomocí programu <a href="http://www.getfirefox.com"><span class=SpellE>Mozilla</span>
+     <span class=SpellE>Firefox</span> 3</a></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l6 level1 lfo2;tab-stops:list 36.0pt'>Práce s poštou pomocí
+     programu <a
+     href="http://www.mozillamessaging.com/en-US/thunderbird/early_releases/"><span
+     class=SpellE>Thunderbird</span> 3</a></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l6 level1 lfo2;tab-stops:list 36.0pt'>Podpora programu Microsoft
+     Internet Explorer</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l6 level1 lfo2;tab-stops:list 36.0pt'>Základní podpora programů
+     Outlook Express/Windows Mail</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l6 level1 lfo2;tab-stops:list 36.0pt'>Podpora pro programy
+     Microsoft Word a Microsoft Excel</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l6 level1 lfo2;tab-stops:list 36.0pt'>Podpora pro přístupné Java
+     aplikace</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l6 level1 lfo2;tab-stops:list 36.0pt'>Podpora programu Adobe <span
+     class=SpellE>Reader</span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l6 level1 lfo2;tab-stops:list 36.0pt'>Začínající podpora programu
+     IBM Lotus <span class=SpellE>Symphony</span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l6 level1 lfo2;tab-stops:list 36.0pt'>Podpora prostředí
+     příkazového řádku a konzolových aplikací</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l6 level1 lfo2;tab-stops:list 36.0pt'>Automatické ohlašování
+     textu pod kurzorem myši a volitelná akustická indikace pozice myši</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l6 level1 lfo2;tab-stops:list 36.0pt'>Podpora mnoha <span
+     class=SpellE>braillských</span> řádků<o:p></o:p></li>
 </ul>
-<li><a href="#5">5. Začínáme s NVDA</a></li>
-<ul>
-<li><a href="#5.1">5.1. Spuštění NVDA</a></li>
-<li><a href="#5.2">5.2. Klávesové zkratky NVDA</a></li>
+
+<h3 id=1.2>1.2. Mezinárodní podpora</h3>
+
+<p>Je nezbytné, aby lidé, kdekoli na světě, hovořící jakýmkoli jazykem, měli
+stejný přístup k speciálním technologiím. </p>
+
+<p>NVDA byl dodnes přeložen do těchto 24 jazyků: afrikánština, arabština, <span
+class=SpellE>brazilština</span>, čeština, finština, francouzština, galština,
+holandština, chorvatština, italština, japonština, maďarština, němčina,
+polština, portugalština, ruština, slovenština, španělština, švédština,
+thajština, tradiční čínština, turečtina, ukrajinština a vietnamština. <o:p></o:p></p>
+
+<h3 id=1.3>1.3. Podpora hlasového výstupu</h3>
+
+<p>Bez ohledu na poskytování hlášení a rozhraní v několika jazycích NVDA
+poskytuje&nbsp; možnost čtení textů v jakémkoli jazyce, jestliže je dostupný
+hlasový výstup pro daný jazyk. </p>
+
+<p>NVDA je distribuován s vícejazyčným volně <span class=SpellE>šiřitelným</span>/<span
+class=SpellE>open</span>-<span class=SpellE>source</span> hlasovým výstupem <span
+class=SpellE>eSpeak</span>. Kromě rozhraní SAPI4 a SAPI5 NVDA spolupracuje i s
+hlasovými výstupy <span class=SpellE>Audiologic</span> a <span class=SpellE>Newfon</span>.
+<o:p></o:p></p>
+
+<h3 id=1.4>1.4. Podpora <span class=SpellE>braillských</span> řádků</h3>
+
+<p>Pro uživatele, kteří vlastní <span class=SpellE>braillský</span> řádek,
+umožňuje NVDA hmatový výstup v <span class=SpellE>braillském</span> písmu. NVDA
+podporuje <span class=SpellE>braillské</span> řádky od <span class=SpellE>Freedom</span>
+<span class=SpellE>Scientific</span> (<span class=SpellE>Pacmate</span> a <span
+class=SpellE>Focus</span>), řádky <span class=SpellE>Handy</span> <span
+class=SpellE>Tech</span>, ALVA (BC640/680) a mnoho jiných s využitím programu
+BRLTTY . </p>
+
+<p>NVDA podporuje různé kódové tabulky, které tak umožňují číst hmatový výstup
+ve více jazycích. V mnoha případech existují tabulky pro <span class=SpellE>plnopis</span>
+i zkratkopis pro kterýkoli národ, který čte a píše <span class=SpellE>braillským</span>
+písmem. Pro české uživatele NVDA je k dispozici jedna tabulka. <o:p></o:p></p>
+
+<h3 id=1.5>1.5. Licence a autorská práva</h3>
+
+<p>Copyright (C) 2006-2009 Tým NVDA <http: _x002f_www.nvda-project.org/></p>
+
+<p>NVDA je chráněn licencí GNU <span class=SpellE>General</span> Public <span
+class=SpellE>License</span> verze 2.0. Program můžete libovolně šířit a
+upravovat za předpokladu, že k němu přiložíte tuto licenci a zpřístupníte jeho
+zdrojový kód všem zájemcům. Toto se vztahuje jak na původní, tak upravené kopie
+tohoto programu a také na software užívající kód převzatý z tohoto programu.
+Podrobnosti najdete na následující webové stránce: <a
+href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</a>
+&nbsp;&quot;Viz též soubor <span class=SpellE>Copying</span>.<span
+class=SpellE>txt</span>&nbsp; přiložený k tomuto programu.&quot; <o:p></o:p></p>
+
+<h2 id=2>2. Systémové požadavky</h2>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo3;tab-stops:list 36.0pt'>NVDA je možno spustit na
+     všech 32 i 64 - bitových verzích systémů Windows XP, Vista i Windows 7.
+     Stejně tak&nbsp; může NVDA pracovat i na systému Windows 2000, nicméně
+     tuto možnost mnoho uživatelů ještě nezkoušelo. NVDA nepracuje na systémech
+     Windows 95/98/ME.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo3;tab-stops:list 36.0pt'>Měli byste mít nejméně 256
+     MB operační paměti.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo3;tab-stops:list 36.0pt'>Výkonnost procesoru se
+     odhaduje na 1 <span class=SpellE>GHz</span> nebo rychlejší. NVDA lze
+     spustit i na pomalejších počítačích, ale start programu bude pomalý a
+     přinejmenším se to projeví např. na načítání internetových stránek.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo3;tab-stops:list 36.0pt'>Měli byste mít aspoň 50 MB
+     volného místa na disku.<o:p></o:p></li>
 </ul>
-<li><a href="#6">6. nabídka NVDA</a></li>
-<ul>
-<li><a href="#6.1">6.1. Zobrazení nabídky NVDA</a></li>
-<li><a href="#6.2">6.2. nastavení NVDA</a></li>
-<ul>
-<li><a href="#6.2.1">6.2.1 nabídka možnosti</a></li>
-<ul>
-<li><a href="#6.2.1.1">6.2.1.1. Obecné nastavení</a></li>
-<li><a href="#6.2.1.2">6.2.1.2. Výběr hlasového výstupu</a></li>
-<li><a href="#6.2.1.3">6.2.1.3. Nastavení hlasu</a></li>
-<li><a href="#6.2.1.4">6.2.1.4. Braillské nastavení</a></li>
-<li><a href="#6.2.1.5">6.2.1.5. Nastavení klávesnice</a></li>
-<li><a href="#6.2.1.6">6.2.1.6. Nastavení myši</a></li>
-<li><a href="#6.2.1.7">6.2.1.7. Prezentace objektů</a></li>
-<li><a href="#6.2.1.8">6.2.1.8. Nastavení virtuálního prohlížeče</a></li>
-<li><a href="#6.2.1.9">6.2.1.9. Nastavení ohlašování formátování dokumentu</a></li>
-<li><a href="#6.2.1.10">6.2.1.10. Řečové slovníky</a></li>
-</ul>
-<li><a href="#6.2.2">6.2.2: Uložení a znovunačtení nastavení</a></li>
-</ul>
-</ul>
-<li><a href="#7">7. Pohyb s NVDA</a></li>
-<ul>
-<li><a href="#7.1">7.1. Pohyb pomocí zaměření fokusu</a></li>
-<li><a href="#7.2">7.2. Pohyb pomocí textového kurzoru</a></li>
-<li><a href="#7.3">7.3. Objektová navigace</a></li>
-<li><a href="#7.4">7.4. Prohlížení textu v aktuálním objektu</a></li>
-<li><a href="#7.5">7.5. Navigace pomocí myši</a></li>
-</ul>
-<li><a href="#8">8. Virtuální prohlížeč</a></li>
-<ul>
-<li><a href="#8.1">8.1. Příkazy pro rychlou navigaci</a></li>
-<li><a href="#8.2">8.2. Seznam prvků</a></li>
-<li><a href="#8.3">8.3. Vnořené objekty</a></li>
-</ul>
-<li><a href="#9">9. Jak získat více informací</a></li>
-</ul>
-<h2 id="1">1. Úvod</h2>
-<h3 id="1.1">1.1. stručný  přehled</h3>
-<p>
-Díky zpětné vazbě hlasového výstupu zpřístupňuje NVDA nevidomým a zrakově postiženým práci s operačním systémem Windows a s dalšími aplikacemi. NVDA je odečítač obrazovky pro operační systém Windows umožňující uživateli pracovat s počítačem bez nutnosti vidět na obrazovku. NVDA získává od operačního systému informace o tom, kde se uživatel právě nachází, jaká okna a ovládací prvky jsou právě na obrazovce, sleduje, k jakým změnám v systému dochází, získané informace zpracovává a prezentuje uživateli formou mluvené řeči tvořené hlasovým výstupem, aby uživatel věděl, co se na obrazovce děje. Texty uživatelského rozhraní a zprávy programu jsou nyní přeloženy do 24 různých jazyků. NVDA by měl být schopen číst texty v libovolném jazyce, pro který je v systému přítomen hlasový výstup. ESpeak zvládá řadu jazyků, je také samozřejmě možné použít SAPI4 nebo SAPI5 hlasový výstup podporující vámi žádaný jazyk. </p>
+
+<h2 id=3>3. Jak získat&nbsp; NVDA</h2>
+
+<p>Pokud dosud nevlastníte kopii programu NVDA, můžete si ji stáhnout ze
+stránek: <a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a>.
 </p>
-<p>
-NVDA spolupracuje s mnoha programy a to, jak dobře se s nimi bude pracovat, závisí především na tom, jak pamatovali tvůrci aplikací na jejich přístupnost.
-</p>
-<p>
-Tato uživatelská příručka není uceleným návodem k obsluze NVDA a Windows, obsahuje ovšem dostatek informací k tomu, abyste mohli začít s NVDA pracovat a sami pak následně objevovat, jak si poradit s mnoha dalšími úkoly.
-</p>
-<p>
-Nejvýznamnější přednosti programu:
-</p>
-<ul>
-<li>Možnost spuštění programu z USB klíče, nebo jiného přenosného zařízení, bez nutnosti instalace</li>
-<li>Snadný ozvučený instalátor</li>
-<li>Surfování po internetu pomocí programu <a href="http://www.getfirefox.com">Mozilla Firefox 3</a></li>
-<li>Práce s poštou pomocí programu <a href="http://www.mozillamessaging.com/en-US/thunderbird/early_releases/">Thunderbird 3</a></li>
-<li>Podpora programu Microsoft Internet Explorer</li>
-<li>Základní podpora programů Outlook Express/Windows Mail</li>
-<li>Podpora pro programy Microsoft Word a Microsoft Excel</li>
-<li>Podpora pro přístupné Java aplikace</li>
-<li>Podpora programu Adobe Reader</li>
-<li>Začínající podpora programu IBM Lotus Symphony</li>
-<li>Podpora prostředí příkazového řádku a konzolových aplikací</li>
-<li>Automatické ohlašování textu pod kurzorem myši a volitelná akustická indikace pozice myši</li>
-<li>Podpora mnoha braillských řádků</li>
-</ul>
-<h3 id="1.2">1.2. Mezinárodní podpora</h3>
-<p>
-Je nezbytné, aby lidé, kdekoli na světě hovořící jakýmkoli jazykem, měli stejný přístup k speciálním technologiím.
-</p>
-<p>
-Nvda byl dodnes přeložen do těchto 24 jazyků:
-afrikánština, arabština, brazilština, čeština, finština, francouzština, galština, holandština, chorvatština, italština, japonština, maďarština, němčina, polština, portugalština, ruština, slovenština, španělština, švédština, thajština, tradiční čínština, turečtina, ukrajinština a vietnamština.
-</p>
-<h3 id="1.3">1.3. Podpora hlasového výstupu</h3>
-<p>
-Bez ohledu na poskytování hlášení a rozhraní v několika jazycích NVDA poskytuje  možnost čtení textů v jakémkoli jazyce, jestliže je dostupný hlasový výstup pro daný jazyk.
-</p>
-<p>
-NVDA je distribuován s vícejazyčným volně šiřiteľným/open-source hlasovým výstupem Espeak, Kromě rozhraní Sapy 4 a Sapy 5 NVDA spolupracuje i s hlasovými výstupy Audiologic a newfon.
-</p>
-<h3 id="1.4">1.4. Podpora braillských řádků</h3>
-<p>
-Pro uživatele, kteří vlastní braillský řádek, umožňuje NVDA hmatový výstup v braillském písmu. NVDA podporuje braillské řádky od Freedom Scientific (Pacmate a Focus), řádky Handy Tech, ALVA (BC640/680) a mnoho jiných s využitím programu BRLTTY .
-</p>
-<p>
-NVDA podporuje různé kódové tabulky, které tak umožňují číst hmatový výstup ve více jazycích. V mnoha případech existují tabulky pro plnopis i zkratkopis pro kterýkoli národ, který čte a píše braillským písmem. Pro české uživatele NVDA je k dispozici jedna tabulka.
-</p>
-<h3 id="1.5">1.5. Licence a autorská práva</h3>
-<p>
-Copyright (C) 2006-2009 Tým NVDA <http://www.nvda-project.org/>
-            NVDA je chráněn licencí GNU General Public License verze 2.0. Program můžete libovolně šířit a upravovat za předpokladu, že k němu přiložíte tuto licenci a zpřístupníte jeho zdrojový kód všem zájemcům. Toto se vztahuje jak na původní, tak upravené kopie tohoto programu a také na software užívající kód převzatý z tohoto programu. Podrobnosti najdete na následující webové stránce: <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</a>
- &quot;Viz též soubor Copying.txt  přiložený k tomuto programu.&quot
-</p>
-<h2 id="2">2. Systémové požadavky</h2>
-<ul>
-<li>NVDA je možno spustit na všech 32 i 64 bitových verzích systémů Windows XP, Vista i Windows 7. Stejně tak  může NVDA pracovat i na systému Windows 2000, nicméně tuto možnost mnoho uživatelů ještě nezkoušelo. NVDA nepracuje na systémech Windows 95/98/me.</li>
-<li>Měli byste mít nejméně 256 MB operační paměti.</li>
-<li>Výkonnost procesoru se odhaduje na 1 GHZ nebo rychlejší. NVDA lze spustit i na pomalejších počítačích, ale start programu bude pomalý a přinejmenším se to projeví např. na načítání internetových stránek.</li>
-<li>Měli byste mít aspoň 50 MB volného místa na disku.</li>
-</ul>
-<h2 id="3">3. jak získat  NVDA</h2>
-<p>
-Pokud dosud nevlastníte kopii programu NVDA, můžete si ji stáhnout ze stránek: <a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a>.
-</p>
-<p>
-Vejděte do sekce download, kde naleznete přímý odkaz ke stažení nejnovější verze NVDA.
-</p>
-<p>
-NVDA je k dispozici ve dvou verzích. Jednou z nich je instalační balíček obsahující ozvučený instalátor, po jehož dokončení bude možné NVDA spustit např. z nabídky Start. Druhou verzí je samorozbalovací archiv obsahující plně přenosnou verzi NVDA spustitelnou odkudkoli včetně USB klíče nebo disku CD.
-</p>
-<h2 id="4">4. Instalace NVDA</h2>
-<h3 id="4.1">4.1. Instalátor</h3>
-<p>
-Pokud  už máte stažen instalátor NVDA, jednoduše soubor spusťte a tím zahájíte instalaci.
-</p>
-<p>
-Při přípravě spouštění instalátoru uslyšíte uvítací znělku a samotnou instalací vás provede automaticky spuštěná dočasná kopie programu NVDA. Pokud je na počítači právě spuštěna starší verze NVDA, zobrazí se zpráva, ve které vás na to instalátor upozorní. Pokud stisknete klávesu enter, běžící verze NVDA bude ukončena a spustí se dočasná kopie NVDA, která vás provede instalací. Před kopírováním souborů vás instalátor NVDA vyzve k odinstalování předchozí verze NVDA. Kromě  těchto upozornění je instalace bez problémů, sledujte jen pokyny na obrazovce a NVDA se korektně nainstaluje.
-</p>
-<p>
-Po úspěšné instalaci vás NVDA na tuto skutečnost upozorní a jedná-li se o reinstalaci NVDA, instalátor podle potřeby nabídne restart systému. Doporučuje se restart systému opravdu vykonat, protože jeho odmítnutí může mít vážné následky. V případě, že instalátor nenabídne restart, po potvrzení tlačítka Dokončit se spustí nově nainstalovaná verze NVDA.
-</p>
-<h3 id="4.2">4.2. Přenosná verze NVDA</h3>
-<p>
-Jestliže jste si stáhli přenosnou verzi NVDA, jediné, co musíte udělat, je rozbalit ji na libovolné místo na disku. Můžete ji také rozbalit na přenosné médium jako například USB disk, nebo vypálit na CD.
-</p>
-<h2 id="5">5. Začínáme s NVDA</h2>
-<h3 id="5.1">5.1. Spuštění NVDA</h3>
-<p>
-Když už máte nainstalovaný NVDA podle pokynů instalátoru, spustit NVDA je velmi jednoduché. Stačí stisknout klávesovou zkratku ctrl+alt+N, nebo zvolit položku NVDA z nabídky start/programy/NVDA.
-</p>
-<p>
-Pokud chcete spustit přenosnou verzi nvda, vejděte do adresáře, kam jste si ji rozbalili, a na souboru NVDA.exe stiskněte enter, nebo na něm klikněte myší.
-</p>
-<p>
-Jakmile se NVDA spustí, ozve se úvodní znělka signalizující načítání NVDA. V závislosti na tom, jak rychlý je váš počítač, nebo médium z kterého NVDA spouštíte, může chvíli trvat, než se program načte. Pokud spouštění trvá příliš dlouho, NVDA by měl ohlásit &quot;Načítání, prosím čekejte&quot;.
-</p>
-<p>
-Pokud se objeví chyba ohlášená zvukem Windows, nebo ozve-li se znělka signalizující ukončení NVDA, znamená to, že NVDA má problém při spouštění. Tuto chybu prosím ohlaste tvůrcům programu. Informace o tom, jak chybu ohlásit, najdete na stránkách NVDA.
-</p>
-<p>
-Při prvním spuštění NVDA  se objeví uvítací dialog se základními informacemi o NVDA nabídce a o použití tzv. klávesy NVDA. Více podrobností si můžete přečíst v následující kapitole. Dále toto okno obsahuje dvě zaškrtávací políčka. První políčko umožní zvolit, zda chcete používat capslock jako klávesu NVDA. Jestliže toto políčko není zaškrtnuté, pak jako klávesa NVDA bude použit insert. Druhé zaškrtávací políčko umožňuje nastavit, zda se uvítací dialog má zobrazit po každém startu NVDA.
-</p>
-<h3 id="5.2">5.2. Klávesové zkratky</h3>
-<p>
-Většina klávesových zkratek NVDA je tvořena kombinací klávesy NVDA plus jedné či několika dalších kláves. Výjimkou jsou příkazy pro pohyb čtecím kurzorem, pro které se používají klávesy numerického bloku.
-</p>
-<p>
-Implicitně jsou oba inserty alfanumerický i numerický nastaveny jako klávesa NVDA. Jak už bylo řečeno, jako klávesu NVDA lze použít i klávesu capslock. Pozor! Mějte na paměti, že dvojitý stisk kterékoli z přednastavených kláves NVDA vyvolá původní funkci dané klávesy (např. přepnutí velkých písmen v případě klávesy capslock).
-</p>
-<p>
-Většina klávesových zkratek je popsána v této příručce, nicméně pro více informací o každé z nich můžete kdykoli při práci použít klávesovou nápovědu. Spustíte ji stiskem kombinace kláves NVDA+1. V tomto režimu NVDA oznámí název jakékoli stisknuté klávesy. V případě stisku kombinace kláves, která představuje jakýkoli příkaz programu NVDA, budou postupně přečteny názvy jednotlivých kláves a potom NVDA oznámí, o jaký příkaz se jedná.
-Pro vypnutí klávesové nápovědy použijte opět kombinaci kláves NVDA+1.
-</p>
-<h2 id="6">6. Nabídka nvda</h2>
-<p>
-Z nabídky programu NVDA můžete upravovat nastavení, přistupovat k nápovědě, znovu načítat či ukládat nastavení, upravovat řečové slovníky a samozřejmě NVDA ukončit.
-</p>
-<h3 id="6.1">6.1. Zobrazení nabídky NVDA</h3>
-<p>
-Pro vyvolání nabídky NVDA lze kdekoli v systému Windows použít klávesovou zkratku NVDA +N. Tutéž nabídku je možné vyvolat též přes ikonu NVDA na systémové liště buď pravým tlačítkem myši,  nebo přechodem na systémovou lištu stiskem tlačítka Windows+b a zde šipkou dojet na ikonu NVDA a stisknout klávesu pro kontextové menu, která bývá na většině klávesnic umístěna vedle pravého altu. V případě, že klávesa pro vyvolání kontextové nabídky na klávesnici chybí, lze ji nahradit kombinací kláves shift+f10. Po zobrazení nabídky programu NVDA můžete použít horní a dolní šipku pro pohyb po položkách. Klávesou enter danou volbu aktivujete. Podnabídka možnosti vám umožní NVDA nastavit podle vašich představ.V další podnabídce nástroje najdeme dvě užitečné položky, a to zobrazit Log a Pithon konzole, pro vývojáře. Podnabídka  nápověda vám nabízí přístup např. do této uživatelské příručky, do seznamu klávesových zkratek, přístup na webovou stránku programu NVDA atd. Hlavní nabídka obsahuje i položky znovunačtení a uložení aktuálního nastavení, a také položku pro ukončení NVDA. To je dostupné i po stisku klávesové zkratky NVDA+Q odkudkoli ze systému.
-</p>
-<p>
-Dialogy nastavení stejně jako položky pro uložení a načtení nastavení programu NVDA je možno přímo vyvolat i použitím klávesových zkratek. Jejich kompletní seznam můžete zobrazit aktivováním položky &quot;klávesové zkratky&quot; z nabídky &quot;Nápověda&quot;.
-</p>
-<h3 id="6.2">6.2. Nastavení NVDA</h3>
-<h4 id="6.2.1">6.2.1 Nabídka možnosti</h4>
-<p>
-Nabídka NVDA obsahuje podnabídku možnosti, ve které naleznete veškerá nastavení programu.
-</p>
-<p>
-Najdete zde obecná nastavení, volbu hlasového výstupu, nastavení hlasu, odezvu klávesnice, nastavení myši, prezentaci objektů, nastavení virtuálního prohlížeče, nastavení ohlašování formátování dokumentu a můžete zde upravovat řečové slovníky NVDA.
-</p>
-<h5 id="6.2.1.1">6.2.1.1. Obecné nastavení</h5>
-<p>
-Tento dialog najdete v nabídce možnosti. Můžete ho také vyvolat stiskem ctrl+NVDA+g.
-</p>
-<p>
-Obsahuje tyto funkce:
-</p>
+
+<p>Vejděte do sekce <span class=SpellE>Download</span>, kde naleznete přímý
+odkaz ke stažení nejnovější verze NVDA. </p>
+
+<p>NVDA je k dispozici ve dvou verzích. Jednou z&nbsp;nich je instalační
+balíček obsahující ozvučený instalátor, po jehož dokončení bude možné NVDA
+spustit např. z nabídky Start. Druhou verzí je <span class=SpellE>samorozbalovací</span>
+archiv obsahující plně přenosnou verzi NVDA spustitelnou odkudkoli včetně USB
+klíče nebo disku CD. <o:p></o:p></p>
+
+<h2 id=4>4. Instalace NVDA<o:p></o:p></h2>
+
+<h3 id=4.1>4.1. Instalátor</h3>
+
+<p>Pokud&nbsp; už máte stažen instalátor NVDA, jednoduše soubor spusťte a tím
+zahájíte instalaci. </p>
+
+<p>Při přípravě spouštění instalátoru uslyšíte uvítací znělku a samotnou
+instalací vás provede automaticky spuštěná dočasná kopie programu NVDA. Pokud
+je na počítači právě spuštěna starší verze NVDA, zobrazí se zpráva, ve které
+vás na to instalátor upozorní. Pokud stisknete klávesu <span class=SpellE>Enter</span>,
+běžící verze NVDA bude ukončena a spustí se dočasná kopie NVDA, která vás
+provede instalací. Před kopírováním souborů vás instalátor NVDA vyzve k
+odinstalování předchozí verze NVDA. Kromě&nbsp; těchto upozornění je instalace
+bez problémů, sledujte jen pokyny na obrazovce a NVDA se korektně nainstaluje. </p>
+
+<p>Po úspěšné instalaci vás NVDA na tuto skutečnost upozorní a jedná-li se o
+reinstalaci NVDA, instalátor podle potřeby nabídne restart systému. Doporučuje
+se restart systému opravdu vykonat, protože jeho odmítnutí může mít vážné
+následky. V případě, že instalátor nenabídne restart, po potvrzení tlačítka
+Dokončit se spustí nově nainstalovaná verze NVDA. <o:p></o:p></p>
+
+<h3 id=4.2>4.2. Přenosná verze NVDA</h3>
+
+<p>Jestliže jste si stáhli přenosnou verzi NVDA, jediné, co musíte udělat, je
+rozbalit ji na libovolné místo na disku. Můžete ji také rozbalit na přenosné
+médium jako například USB disk, nebo vypálit na CD. <o:p></o:p></p>
+
+<h2 id=5>5. Začínáme s NVDA<o:p></o:p></h2>
+
+<h3 id=5.1>5.1. Spuštění NVDA</h3>
+
+<p>Když už máte nainstalovaný NVDA podle pokynů instalátoru, spustit NVDA je
+velmi jednoduché. Stačí stisknout klávesovou zkratku Ctrl+Alt+N, nebo zvolit
+položku NVDA z&nbsp;nabídky Start/Programy/NVDA. </p>
+
+<p>Pokud chcete spustit přenosnou verzi NVDA, vejděte do adresáře, kam jste si
+ji rozbalili, a na souboru NVDA.<span class=SpellE>exe</span> stiskněte <span
+class=SpellE>Enter</span> nebo na něj klikněte myší. </p>
+
+<p>Jakmile se NVDA spustí, ozve se úvodní znělka signalizující načítání NVDA. V
+závislosti na tom, jak rychlý je váš počítač, nebo médium z kterého NVDA
+spouštíte. Může chvíli trvat, než se program načte. Pokud spouštění trvá příliš
+dlouho, NVDA by měl ohlásit &quot;Načítání, prosím čekejte&quot;. </p>
+
+<p>Pokud se objeví chyba ohlášená zvukem Windows, nebo ozve-li se znělka
+signalizující ukončení NVDA, znamená to, že NVDA má problém při spouštění. Tuto
+chybu prosím, ohlaste tvůrcům programu. Informace o tom, jak chybu ohlásit,
+najdete na stránkách NVDA. </p>
+
+<p>Při prvním spuštění NVDA&nbsp; se objeví uvítací dialog se základními
+informacemi o NVDA nabídce a o použití tzv. klávesy NVDA. Více podrobností si
+můžete přečíst v následující kapitole. Dále toto okno obsahuje dvě <span
+class=SpellE>zaškrtávací</span> políčka. První políčko umožní zvolit, zda
+chcete používat Caps <span class=SpellE>Lock</span> jako klávesu NVDA. Jestliže
+toto políčko není zaškrtnuté, pak jako klávesa NVDA bude použit Insert. Druhé <span
+class=SpellE>zaškrtávací</span> políčko umožňuje nastavit, zda se uvítací
+dialog má zobrazit po každém startu NVDA. <o:p></o:p></p>
+
+<h3 id=5.2>5.2. Klávesové zkratky</h3>
+
+<p>Většina klávesových zkratek NVDA je tvořena kombinací klávesy NVDA plus
+jedné či několika dalších kláves. Výjimkou jsou příkazy pro pohyb čtecím
+kurzorem, pro které se používají klávesy numerického bloku. </p>
+
+<p>Implicitně jsou oba Inserty alfanumericky i numericky nastaveny jako klávesa
+NVDA. Jak už bylo řečeno, jako klávesu NVDA lze použít i klávesu Caps <span
+class=SpellE>Lock</span>. Pozor! Mějte na paměti, že dvojitý stisk kterékoli z
+přednastavených kláves NVDA vyvolá původní funkci dané klávesy (např. přepnutí
+velkých písmen v případě klávesy Caps <span class=SpellE>Lock</span>). </p>
+
+<p>Většina klávesových zkratek je popsána v této příručce, nicméně pro více
+informací o každé z&nbsp;nich můžete kdykoli při práci použít klávesovou
+nápovědu. Spustíte ji stiskem kombinace kláves NVDA+1. V tomto režimu NVDA
+oznámí název jakékoli stisknuté klávesy. V případě stisku kombinace kláves,
+která představuje jakýkoli příkaz programu NVDA, budou postupně přečteny názvy
+jednotlivých kláves a potom NVDA oznámí, o jaký příkaz se jedná. Pro vypnutí
+klávesové nápovědy použijte opět kombinaci kláves NVDA+1. <o:p></o:p></p>
+
+<h2 id=6>6. Nabídka NVDA</h2>
+
+<p>Z&nbsp;nabídky programu NVDA můžete upravovat nastavení, přistupovat k
+nápovědě, znovu načítat či ukládat nastavení, upravovat řečové slovníky a
+samozřejmě NVDA ukončit. <o:p></o:p></p>
+
+<h3 id=6.1>6.1. Zobrazení nabídky NVDA</h3>
+
+<p>Pro vyvolání nabídky NVDA lze kdekoli v systému Windows použít klávesovou
+zkratku NVDA+N. Tutéž nabídku je možné vyvolat též přes ikonu NVDA na systémové
+liště buď pravým tlačítkem myši,&nbsp; nebo přechodem na systémovou lištu
+stiskem tlačítka Windows+B a zde šipkou dojet na ikonu NVDA a stisknout klávesu
+pro kontextové menu, která bývá na většině klávesnic umístěna vedle pravého
+Altu. V&nbsp;případě, že klávesa pro vyvolání kontextové nabídky na klávesnici
+chybí, lze ji nahradit kombinací kláves Shift+F10. Po zobrazení nabídky
+programu NVDA můžete použít horní a dolní šipku pro pohyb po položkách.
+Klávesou <span class=SpellE>Enter</span> danou volbu aktivujete. Podnabídka
+možnosti vám umožní NVDA nastavit podle vašich představ.V další podnabídce
+Nástroje najdeme tři užitečné položky, a to zobrazit Log, zobrazení řeči a <span
+class=SpellE>Pithon</span> konzole pro vývojáře. Podnabídka&nbsp; Nápověda vám
+nabízí přístup např. do této uživatelské příručky, do seznamu klávesových
+zkratek, přístup na webovou stránku programu NVDA atd. Hlavní nabídka obsahuje
+i položky znovunačtení a uložení aktuálního nastavení, a také položku pro
+ukončení NVDA. To je dostupné i po stisku klávesové zkratky NVDA+Q odkudkoli ze
+systému. </p>
+
+<p>Dialogy nastavení stejně jako položky pro uložení a načtení nastavení
+programu NVDA je možno přímo vyvolat i použitím klávesových zkratek. Jejich
+kompletní seznam můžete zobrazit aktivováním položky &quot;Klávesové
+zkratky&quot; z&nbsp;nabídky &quot;Nápověda&quot;. <o:p></o:p></p>
+
+<h3 id=6.2>6.2. Nastavení NVDA<o:p></o:p></h3>
+
+<h4 id=6.2.1>6.2.1 Nabídka možností</h4>
+
+<p>Nabídka NVDA obsahuje podnabídku možnosti, ve které naleznete veškerá
+nastavení programu. </p>
+
+<p>Najdete zde obecná nastavení, volbu hlasového výstupu, nastavení hlasu,
+odezvu klávesnice, nastavení myši, prezentaci objektů, nastavení virtuálního
+prohlížeče, nastavení ohlašování formátování dokumentu a můžete zde upravovat
+řečové slovníky NVDA. <o:p></o:p></p>
+
+<h5 id=6.2.1.1>6.2.1.1. Obecné nastavení</h5>
+
+<p>Tento dialog najdete v&nbsp;nabídce možnosti. Můžete ho také vyvolat stiskem
+Ctrl+NVDA+G. </p>
+
+<p>Obsahuje tyto funkce: </p>
+
 <h6>Jazyk</h6>
-<p>
-Jedná se o seznam umožňující výběr jazyku rozhraní a zpráv programu. Jsou zde obsaženy veškeré jazyky, do kterých byl doposud program NVDA přeložen. Implicitně je NVDA přednastaven tak, aby si zvolil jazyk podle nastavení vašeho operačního systému. K tomu slouží poslední položka v seznamu jazyků nazvaná windows.
-Při změně jazyku si NVDA vyžádá restart programu. Po potvrzení se NVDA ukončí a spustí se ve vámi zvoleném jazyce.
-</p>
+
+<p>Jedná se o seznam umožňující výběr jazyku rozhraní a zpráv programu. Jsou
+zde obsaženy veškeré jazyky, do kterých byl doposud program NVDA přeložen.
+Implicitně je NVDA přednastaven tak, aby si zvolil jazyk podle nastavení vašeho
+operačního systému. K&nbsp;tomu slouží poslední položka v&nbsp;seznamu jazyků
+nazvaná Windows. Při změně jazyku si NVDA vyžádá restart programu. Po potvrzení
+se NVDA ukončí a spustí se ve vámi zvoleném jazyce. </p>
+
 <h6>Uložit nastavení při ukončení</h6>
-<p>
-Zaškrtnete-li tuto volbu, NVDA vždy při ukončení automaticky uloží aktuální nastavení.
-</p>
+
+<p>Zaškrtnete-li tuto volbu, NVDA vždy při ukončení automaticky uloží aktuální
+nastavení. </p>
+
 <h6>Upozornit před ukončením NVDA</h6>
-<p>
-Je-li tato volba zaškrtnuta, NVDA se vás před každým ukončením programu dotáže, zda jej chcete opravdu ukončit.
-</p>
-<h6>Úroveň logování</h6>
-<p>
-Rozbalovací seznam, který uživateli umožňuje zvolit, jaké množství informací má NVDA zaznamenat v době, kdy je spuštěn. Jedná se  o informace obsahující např. případná chybová hlášení NVDA, informace o korektním běhu programu atd. Většinou se uživatel tímto nastavením nemusí zabývat, nicméně chcete-li např. poskytnout informace vývojářům programu o chybových hlášeních, je nastavení této volby na vyšší úroveň jednoznačně lepší.
-</p>
+
+<p>Je-li tato volba zaškrtnuta, NVDA se vás před každým ukončením programu
+dotáže, zda jej chcete opravdu ukončit. </p>
+
+<h6>Úroveň <span class=SpellE>logování</span></h6>
+
+<p>Rozbalovací seznam, který uživateli umožňuje zvolit, jaké množství informací
+má NVDA zaznamenat v&nbsp;době, kdy je spuštěn. Jedná se&nbsp; o informace
+obsahující např. případná chybová hlášení NVDA, informace o korektním běhu
+programu atd. Většinou se uživatel tímto nastavením nemusí zabývat, nicméně
+chcete-li např. poskytnout informace vývojářům programu o chybových hlášeních,
+je nastavení této volby na vyšší úroveň jednoznačně lepší. </p>
+
 <h6>Automaticky spustit NVDA po přihlášení do systému</h6>
-<p>
-Pokud je tato voľba zaškrtnutá, NVDA se automaticky spustí, jakmile se přihlásíte do Windows.
+
+<p>Pokud je tato volba zaškrtnutá, NVDA se automaticky spustí, jakmile se
+přihlásíte do Windows. </p>
+
+<h6>Spouštět NVDA při zobrazení přihlašovací obrazovky (vyžaduje
+administrátorská oprávnění)</h6>
+
+<p>Jestliže se do Windows přihlašujete zadáním vašeho uživatelského jména a
+hesla, zaškrtnutím této volby zajistíte, aby se NVDA spustil již při zobrazení
+přihlašovací obrazovky do systému. <o:p></o:p></p>
+
+<h5 id=6.2.1.2>6.2.1.2. Výběr hlasového výstupu</h5>
+
+<p>Položku hlasové výstupy najdete v&nbsp;nabídce Možnosti nebo je také dostupná
+po stisku klávesové zkratky Ctrl+NVDA+S. Po aktivování je možné vybrat, který
+hlasový výstup bude NVDA používat. </p>
+
+<p>Dialogové okno obsahuje jednoduchý seznam, ve kterém se nachází dostupné
+hlasové výstupy. Vyberte si šipkami výstup a stiskněte tlačítko Ok. Pokud se
+při spuštění hlasového výstupu vyskytne chyba, program vás upozorní a zůstane
+zachováno původní nastavení. </p>
+
+<p>Aktuální verze NVDA podporuje hlasový výstup <span class=SpellE>eSpeak</span>,
+hlasové výstupy SAPI4, SAPI5,&nbsp; <span class=SpellE>Audiologic</span> TTS3,
+Tichý režim a virtuální výstup, který zobrazuje veškerý mluvený projev NVDA na monitoru
+počítače. </p>
+
+<p><span class=SpellE>ESpeak</span> je přímo vestavěný do NVDA a není závislý
+na jiných ovladačích, které by se musely doinstalovat. NVDA se implicitně
+spouští s hlasovým výstupem <span class=SpellE>eSpeak</span>. Tento hlas by měl
+pracovat na každém systému, kde běží NVDA, což znamená, že NVDA můžete spouštět
+na libovolném počítači, dokonce i z USB klíčenky nebo CD. </p>
+
+<p>Možnost SAPI4 zpřístupní různé hlasy, které máte už nainstalované v systému.
 </p>
-<h6>Spouštět NVDA při zobrazení přihlašovací obrazovky (vyžaduje administrátorská oprávnění)</h6>
-<p>
-Jestliže se do Windows přihlašujete zadáním vašeho uživatelského jména a hesla, zaškrtnutím této volby zajistíte, aby se NVDA spustil již při zobrazení přihlašovací obrazovky do systému.
-</p>
-<h5 id="6.2.1.2">6.2.1.2. Výber hlasového výstupu</h5>
-<p>
-Položku hlasové výstupy najdete v nabídce možnosti nebo je také dostupná po stisku klávesové zkratky ctrl+NVDA+s. Po aktivování je možné vybrat, který hlasový výstup bude NVDA používat.
-</p>
-<p>
-Dialogové okno obsahuje jednoduchý seznam, ve kterém se nachází dostupné hlasové výstupy. Vyberte si šipkami výstup a stiskněte tlačítko ok. Pokud se při spuštění hlasového výstupu vyskytne chyba, program vás upozorní a zůstane zachováno původní nastavení.
-</p>
-<p>
-Aktuální verze NVDA podporuje hlasový výstup eSpeak, hlasové výstupy SAPI4, SAPI5,  Audiologic TTS3, tichý režim a virtuální výstup display.
-</p>
-<p>
-ESpeak je přímo vestavěný do NVDA a není závislý na jiných ovladačích, které by se musely doinstalovat. NVDA se implicitně spouští s hlasovým výstupem eSpeak. Tento hlas by měl pracovat na každém systému, kde běží NVDA, což znamená, že NVDA můžete spouštět na libovolném počítači, dokonce i z USB klíčenky nebo CD.
-</p>
-<p>
-Možnost Sapi4 zpřístupní různé hlasy, které máte už nainstalované v systému.
-</p>
-<p>
-Sapi5 může také zpřístupnit další v systému nainstalované hlasy, které toto rozhraní podporují.
-</p>
-<p>
-Výstup tichý režim/bez mluvení není příliš v praxi použitelný, jen pokud byste si přáli, aby se NVDA spouštěl bez zvuku. Téhož efektu je možno dosáhnout i vypnutím režimu řeči (stiskem NVDA+s). Tento hlasový výstup má za úkol sloužit potenciálním vývojářům, kteří by chtěli přidat podporu pro další hlasový výstup.
-</p>
-<p>
-Display je virtuální hlasový výstup, který namísto obsluhy skutečného hlasového výstupu zobrazuje všechen text na monitoru počítače. To je užitečné pro vidící vývojáře, kteří nejsou zvyklí na zvuk hlasového výstupu a chtěli by sledovat výstup programu NVDA.
-</p>
-<p>
-Nezáleží na tom, kolik SAPI4 nebo SAPI5 hlasů máte nainstalovaných v systému. V dialogu hlasových výstupů se vám zobrazí jen položky SAPI4 a 5. Vyberte si buď SAPI4, nebo SAPI5 a pak v dialogu nastavení hlasu vyberte konkrétní hlas, který budete používat.
-</p>
-<h5 id="6.2.1.3">6.2.1.3. Nastavení hlasu</h5>
-<p>
-Dialog s nastaveními hlasu najdete v nabídce možnosti nebo jej zobrazíte stiskem ctrl+NVDA+v.
-</p>
-<p>
-Obsahuje volby, které vám umožní nastavit parametry hlasu. Po stisku některé z kombinací ctrl+NVDA+kurzorové šipky, NVDA z jakéhokoli místa na počítači vyvolá posuvníky pro nastavení těchto voleb. Stiskem pravé a levé kurzorové šipky v dané kombinaci se pohybujeme po nabízených volbách nastavení a horní a dolní šipkou v uvedené kombinaci opět měníme hodnotu aktuální volby.
-</p>
-<p>
-Toto dialogové okno obsahuje následující prvky:
-</p>
+
+<p>SAPI5 může také zpřístupnit další v&nbsp;systému nainstalované hlasy, které
+toto rozhraní podporují. </p>
+
+<p>Výstup Tichý režim/bez mluvení není příliš v praxi použitelný, jen pokud
+byste si přáli, aby se NVDA spouštěl bez zvuku. Téhož efektu je možno dosáhnout
+i vypnutím režimu řeči (stiskem NVDA+S). Tento hlasový výstup má za úkol
+sloužit potenciálním vývojářům, kteří by chtěli přidat podporu pro další
+hlasový výstup. </p>
+
+<p>Virtuální hlasový výstup umožňuje zobrazit veškeré řečové projevy NVDA na monitoru
+počítače. Lze jej aktivovat zaškrtnutím položky zobrazení řeči v&nbsp;nabídce nástroje.
+Můžete jej použít v&nbsp;kombinaci s&nbsp;libovolným hlasovým výstupem a mít tak
+i vizuální přehled o tom, co NVDA právě říká. V&nbsp;kombinaci virtuální výstup
+a Tichý režim lze dosáhnout toho, že NVDA bude veškerý text jen zobrazovat na monitoru
+počítače. To je užitečné pro vidící vývojáře, kteří nejsou zvyklí na zvuk
+hlasového výstupu a chtěli by sledovat výstup programu NVDA. </p>
+
+<p>Nezáleží na tom, kolik SAPI4 nebo SAPI5 hlasů máte nainstalovaných v
+systému. V dialogu hlasových výstupů se vám zobrazí jen položky SAPI4 a 5.
+Vyberte si buď SAPI4 nebo SAPI5 a pak v dialogu nastavení hlasu vyberte
+konkrétní hlas, který budete používat. <o:p></o:p></p>
+
+<h5 id=6.2.1.3>6.2.1.3. Nastavení hlasu</h5>
+
+<p>Dialog s nastaveními hlasu najdete v&nbsp;nabídce Možnosti nebo jej
+zobrazíte stiskem Ctrl+NVDA+V. </p>
+
+<p>Obsahuje volby, které vám umožní nastavit parametry hlasu. Po stisku některé
+z kombinací <span class=SpellE>ctrl</span>+NVDA+kurzorové šipky, NVDA z
+jakéhokoli místa na počítači vyvolá <span class=SpellE>posuvníky</span> pro
+nastavení těchto voleb. Stiskem pravé a levé kurzorové šipky v dané kombinaci
+se pohybujeme po nabízených volbách nastavení a horní i dolní šipkou v uvedené
+kombinaci opět měníme hodnotu aktuální volby. </p>
+
+<p>Toto dialogové okno obsahuje následující prvky: </p>
+
 <h6>Hlas</h6>
-<p>
-V tomto seznamu najdete všechny nainstalované hlasy kompatibilní se zvoleným hlasovým výstupem. Pomocí šipek můžete tento seznam prohlížet a poslechnout si všechny hlasy.
-Je-li zvoleným hlasovým výstupem Espeak, pak v tomto seznamu najdete všechny Espeakem podporované jazyky.
-Chcete-li např. pracovat s jiným než českým textem, přepnete si espeak na vámi požadovaný jazyk a espeak bude vše interpretovat dle výslovnostních zákonitostí daného jazyka.
-</p>
+
+<p>V&nbsp;tomto seznamu najdete všechny nainstalované hlasy kompatibilní se
+zvoleným hlasovým výstupem. Pomocí šipek můžete tento seznam prohlížet a
+poslechnout si všechny hlasy. Je-li zvoleným hlasovým výstupem <span
+class=SpellE>espeak</span>, pak v&nbsp;tomto seznamu najdete všechny <span
+class=SpellE>eSpeakem</span> podporované jazyky. Chcete-li např. pracovat
+s&nbsp;jiným než českým textem, přepnete si <span class=SpellE>eSpeak</span> na
+vámi požadovaný jazyk a <span class=SpellE>eSpeak</span> bude vše interpretovat
+dle výslovnostních zákonitostí daného jazyka. </p>
+
 <h6>Osoba</h6>
-<p>
-Tato položka je přístupná jen v případě, že používáte hlasový výstup Espeak.
-Espeak obsahuje množství rozličných typů hlasu.
-Jsou zde zastoupeny jak mužské, tak ženské hlasy a každý z nich má jiné hlasové vlastnosti jako např. výšku, barvu, tempo, intonaci atd.
-V tomto rozbalovacím políčku si tedy můžete kurzorovými šipkami vybrat ze všech aktuálně nabízených variant hlasového výstupu Espeak.
-</p>
+
+<p>Tato položka je přístupná jen v&nbsp;případě, že používáte hlasový výstup <span
+class=SpellE>eSpeak</span>. <span class=SpellE>Espeak</span> obsahuje množství
+rozličných typů hlasu. Jsou zde zastoupeny jak mužské, tak ženské hlasy a každý
+z&nbsp;nich má jiné hlasové vlastnosti jako např. výšku, barvu, tempo, intonaci
+atd. V&nbsp;tomto rozbalovacím políčku si tedy můžete kurzorovými šipkami
+vybrat ze všech aktuálně nabízených variant hlasového výstupu <span
+class=SpellE>eSpeak</span>. </p>
+
 <h6>Tempo</h6>
-<p>
-Posuvník s rozsahem nula až sto, kterým nastavíte rychlost řeči. Nula je nejpomalejší rychlost řeči a sto nejrychlejší.
+
+<p><span class=SpellE>Posuvník</span> s&nbsp;rozsahem nula až sto, kterým
+nastavíte rychlost řeči. Nula je nejpomalejší rychlost řeči a sto nejrychlejší.
 </p>
+
 <h6>Výška</h6>
-<p>
-Posuvník s rozsahem nula až sto, kterým nastavíte výšku hlasu. Nula je nejhlubší a sto nejvyšší hlas. Pozor! Některé hlasy změnu výšky nepodporují. Z českých hlasů se jedná např. o Elišku či Zuzanu.
-</p>
+
+<p><span class=SpellE>Posuvník</span> s&nbsp;rozsahem nula až sto, kterým
+nastavíte výšku hlasu. Nula je nejhlubší a sto nejvyšší hlas. Pozor! Některé
+hlasy změnu výšky nepodporují. Z&nbsp;českých hlasů se jedná např. o Elišku či
+Zuzanu. </p>
+
 <h6>Intonace</h6>
-<p>
-Posuvník s rozsahem nula až sto, kterým nastavíte intonaci hlasu. Tato možnost je dostupná pouze s hlasovým výstupem Espeak.
-</p>
+
+<p><span class=SpellE>Posuvník</span> s&nbsp;rozsahem nula až sto, kterým
+nastavíte intonaci hlasu. Tato možnost je dostupná pouze s&nbsp;hlasovým
+výstupem <span class=SpellE>eSpeak</span>. </p>
+
 <h6>Hlasitost</h6>
-<p>
-Posuvník s rozsahem nula až sto, kterým nastavíte hlasitost řeči. Nula je nejnižší a sto nejvyšší hlasitost.
-</p>
+
+<p><span class=SpellE>Posuvník</span> s&nbsp;rozsahem nula až sto, kterým
+nastavíte hlasitost řeči. Nula je nejnižší a sto nejvyšší hlasitost. </p>
+
 <h6>Číst interpunkci</h6>
-<p>
-Zaškrtnutí tohoto políčka zajistí, že se NVDA postará o čtení všech interpunkčních znamének, což může být užitečné zejména při opravách v textu. Je-li políčko nezaškrtnuto, budou interpunkční znaménka řídit jen intonaci řeči a jejich čtení bude řízeno použitým hlasem, ale interpunkce již čtena nebude.
-</p>
+
+<p>Zaškrtnutí tohoto políčka zajistí, že se NVDA postará o čtení všech
+interpunkčních znamének, což může být užitečné zejména při opravách v textu.
+Je-li políčko nezaškrtnuto, budou interpunkční znaménka řídit jen intonaci řeči
+a jejich čtení bude řízeno použitým hlasem, ale interpunkce již čtena nebude. </p>
+
 <h6>Zvýšit hlas při čtení velkých písmen</h6>
-<p>
-Zaškrtnutím této volby zajistíte, aby NVDA u každého velkého písmene při psaní či při pohybu po znacích stoupl v intonaci. Jedná se o alternativu v kontrastu se standardním ohlašováním velkých písmen např. velké A, velké B, velké C apod. viz následující.
-</p>
+
+<p>Zaškrtnutím této volby zajistíte, aby NVDA u každého velkého písmene při
+psaní či při pohybu po znacích stoupl v intonaci. Jedná se o alternativu v
+kontrastu se standardním ohlašováním velkých písmen např. velké A, velké B,
+velké C apod. viz následující. </p>
+
 <h6>Ohlásit velké písmeno slovem &quot;velké&quot;</h6>
-<p>
-Chcete-li nechat ohlásit velké písmeno slovem Velké, jenž bude předcházet vlastní písmeno, zaškrtněte toto políčko. Toto chování se uplatní při pohybu po znacích nebo při psaní. NVDA obvykle při velkém písmenu poněkud zvedne výšku hlasu, ale některé hlasové výstupy nemusejí na tento povel reagovat a pak může být tato možnost užitečná.
-</p>
+
+<p>Chcete-li nechat ohlásit velké písmeno slovem Velké, jenž bude předcházet
+vlastní písmeno, zaškrtněte toto políčko. Toto chování se uplatní při pohybu po
+znacích nebo při psaní. NVDA obvykle při velkém písmenu poněkud zvedne výšku
+hlasu, ale některé hlasové výstupy nemusejí na tento povel reagovat a pak může
+být tato možnost užitečná. </p>
+
 <h6>Pípat před hláskováním velkých písmen</h6>
-<p>
-Je-li tato volba zaškrtnuta, NVDA před každým velkým písmenem v textu či při psaní krátce pípne. Tak jako možnost ohlašování velkého písmena slovem velké je tato volba důležitá u hlasových výstupů, které mají potíže se změnou výšky intonace u velkých písmen.
-</p>
-<h5 id="6.2.1.4">6.2.1.4. Braillské nastavení</h5>
-<p>
-Dialog s braillskými nastaveními je dostupný z nabídky Možnosti.
-</p>
-<p>
-Najdete zde následující prvky:
-</p>
-<h6>Braillský řádek</h6>
-<p>
-Mezi jednotlivými typy braillských řádků je možno se pohybovat použitím kurzorových kláves.
-</p>
-<p>
-Žádný řádek znamená, že nepoužíváte žádný braillský řádek.
-</p>
-<p>
-Freedom Scientific je ovladač pro řádky Focus/Pacmate od společnosti <a href="http://www.freedomscientific.com">Freedom Scientific</a>. Tato možnost se objeví jen tehdy, pokud máte nainstalovaný ovladač pro váš řádek. Více informací jako i samotný ovladač získáte na <a href="http://www.freedomscientific.com/PACMATE-HQ/FS_Braille_Display_Driver.asp">stránce oficiálního ovladače braillských řádků společnosti Freedom scientific</a>.
-</p>
-<p>
-Handy Tech je ovladač pro řádky od společnosti <a href="http://www.handytech.de">Handy Tech</a>. Tato možnost bude zobrazena jen v případě, že máte nainstalovaný <a href="ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1111a.exe">Univerzální ovladač pro braillské řádky od společnosti Handy Tech</a>.
-</p>
-<p>
-BRLTTY umožňuje použití velkého množství braillských řádků. Tuto aplikaci je třeba doinstalovat samostatně. Dostupná je verze v podobě <a href="http://brl.thefreecat.org/brltty/">instalátoru pro systém windows</a>.
-</p>
+
+<p>Je-li tato volba zaškrtnuta, NVDA před každým velkým písmenem v textu či při
+psaní krátce pípne. Tak jako možnost ohlašování velkého písmena slovem velké je
+tato volba důležitá u hlasových výstupů, které mají potíže se změnou výšky
+intonace u velkých písmen. <o:p></o:p></p>
+
+<h5 id=6.2.1.4>6.2.1.4. <span class=SpellE>Braillské</span> nastavení</h5>
+
+<p>Dialog s&nbsp;<span class=SpellE>braillskými</span> nastaveními je dostupný
+z&nbsp;nabídky Možnosti. </p>
+
+<p>Najdete zde následující prvky: </p>
+
+<h6><span class=SpellE>Braillský</span> řádek</h6>
+
+<p>Mezi jednotlivými typy <span class=SpellE>braillských</span> řádků je možno
+se pohybovat použitím kurzorových kláves. </p>
+
+<p>Žádný řádek znamená, že nepoužíváte žádný <span class=SpellE>braillský</span>
+řádek. </p>
+
+<p><span class=SpellE>Freedom</span> <span class=SpellE>Scientific</span> je
+ovladač pro řádky <span class=SpellE>Focus</span>/PAC Mate od společnosti <a
+href="http://www.freedomscientific.com"><span class=SpellE>Freedom</span> <span
+class=SpellE>Scientific</span></a>. Tato možnost se objeví jen tehdy, pokud
+máte nainstalovaný ovladač pro váš řádek. Více informací jako i samotný ovladač
+získáte na <a
+href="http://www.freedomscientific.com/PACMATE-HQ/FS_Braille_Display_Driver.asp">stránce
+oficiálního ovladače <span class=SpellE>braillských</span> řádků společnosti <span
+class=SpellE>Freedom</span> <span class=SpellE>Scientific</span></a>. </p>
+
+<p><span class=SpellE>Handy</span> <span class=SpellE>Tech</span> je ovladač
+pro řádky od společnosti <a href="http://www.handytech.de"><span class=SpellE>Handy</span>
+<span class=SpellE>Tech</span></a>. Tato možnost bude zobrazena jen
+v&nbsp;případě, že máte nainstalovaný <a
+href="ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1111a.exe">Univerzální
+ovladač pro <span class=SpellE>braillské</span> řádky od společnosti <span
+class=SpellE>Handy</span> <span class=SpellE>Tech</span></a>. </p>
+
+<p>BRLTTY umožňuje použití velkého množství <span class=SpellE>braillských</span>
+řádků. Tuto aplikaci je třeba doinstalovat samostatně. Dostupná je verze v
+podobě <a href="http://brl.thefreecat.org/brltty/">instalátoru pro systém <span
+class=SpellE>windows</span></a>. </p>
+
 <h6>Překladová tabulka</h6>
-<p>
-Další volbou je překladová tabulka. Je zde dostupné množství tabulek pro různé jazyky. Tu správnou si vyberete listováním kurzorovými šipkami.
-</p>
-<h6>Slovo, na kterém je kurzor zobrazit počítačovým braillem</h6>
-<p>
-Toto zaškrtávací políčko umožní zobrazovat aktuální slovo pod kurzorem v počítačovém braillském písmu, což v mnohých jazycích odpovídá plnopisu. Je to užitečné, pokud nechceme aplikovat pravidla zkratkopisu tabulky vybrané v poli Překladová tabulka.
-</p>
+
+<p>Další volbou je překladová tabulka. Je zde dostupné množství tabulek pro
+různé jazyky. Tu správnou si vyberete listováním kurzorovými šipkami. </p>
+
+<h6>Slovo, na kterém je kurzor, zobrazit počítačovým <span class=SpellE>braillem</span></h6>
+
+<p>Toto <span class=SpellE>zaškrtávací</span> políčko umožní zobrazovat aktuální
+slovo pod kurzorem v počítačovém <span class=SpellE>braillském</span> písmu,
+což v mnohých jazycích odpovídá <span class=SpellE>plnopisu</span>. Je to
+užitečné, pokud nechceme aplikovat pravidla zkratkopisu tabulky vybrané v poli
+Překladová tabulka. </p>
+
 <h6>Rychlost blikání kurzoru v milisekundách</h6>
-<p>
-Jedná se o numerickou hodnotu, která určuje frekvenci blikání kurzoru braillského řádku v milisekundách.
-</p>
+
+<p>Jedná se o numerickou hodnotu, která určuje frekvenci blikání kurzoru <span
+class=SpellE>braillského</span> řádku v milisekundách. </p>
+
 <h6>Čas pro zobrazení systémových zpráv (v sekundách)</h6>
-<p>
-Tato numerická hodnota určuje jak dlouho mají být na řádku zobrazované systémové zprávy.
-</p>
-<h6>Další nastavení</h6>
-<p>
-Stiskem kombinace kláves ctrl+NVDA+t je možné kdekoli v systému získat kontrolu nad tím, co se na řádku bude zobrazovat. K dispozici jsou dvě možnosti.
-Braillský kurzor může být propojen buď se systémovým, nebo se čtecím kurzorem. Systémový kurzor reprezentuje navigaci v operačním systému, zatímco čtecí kurzor umožňuje prohlížet text objektu zaměřeného objektovou navigací.
-</p>
-<h5 id="6.2.1.5">6.2.1.5. Nastavení klávesnice</h5>
-<p>
-Toto dialogové okno naleznete pod stejnojmennou položkou v nabídce Možnosti. Lze jej rovněž vyvolat stiskem kombinace kláves ctrl+NVDA+k.
-</p>
-<p>
-Obsahuje následující volby:
-</p>
+
+<p>Tato numerická hodnota určuje jak dlouho mají být na řádku zobrazované
+systémové zprávy. </p>
+
+<h6>Propojit <span class=SpellE>braillský</span> kurzor s</h6>
+
+<p>Zde je možné nastavit, zda se má zobrazování na <span class=SpellE>braillském</span>
+řádku řídit systémovým či čtecím kurzorem.</p>
+
+<p>Systémový kurzor reprezentuje navigaci v operačním systému, zatímco čtecí
+kurzor umožňuje prohlížet text objektu zaměřeného objektovou navigací.</p>
+
+<p>Toto nastavení lze měnit i odkudkoli ze systému stiskem kombinace kláves
+Ctrl+NVDA+T. Díky tomu je možné kdykoli získat kontrolu nad tím, co se na řádku
+bude zobrazovat. </p>
+
+<h5>6.2.1.5. Nastavení klávesnice</h5>
+
+<p>Toto dialogové okno naleznete pod stejnojmennou položkou v nabídce Možnosti.
+Lze jej rovněž vyvolat stiskem kombinace kláves Ctrl+NVDA+K. </p>
+
+<p>Obsahuje následující volby: </p>
+
 <h6>Rozložení klávesnice</h6>
-<p>
-Tento rozbalovací seznam nám umožňuje vybrat typ klávesnice, kterou chceme používat, tedy desktop/stolní PC, nebo laptop/přenosné PC/notebooky.
-</p>
-<h6>Použít capslock jako NVDA klávesu</h6>
-<p>
-Pokud je toto políčko zaškrtnuté, můžete capslock použít jako NVDA klávesu.
-</p>
-<h6>Použít numerický insert jako NVDA klávesu</h6>
-<p>
-Pokud je toto políčko zaškrtnuté, můžete numerický insert použít jako NVDA klávesu.
-</p>
-<h6>Použít insert jako NVDA klávesu</h6>
-<p>
-Pokud je toto políčko zaškrtnuté, můžete klávesu insert použít jako NVDA klávesu.
-</p>
+
+<p>Tento rozbalovací seznam nám umožňuje vybrat typ klávesnice, kterou chceme
+používat, tedy desktop/stolní PC, nebo laptop/přenosné PC/notebooky. </p>
+
+<h6>Použít Caps <span class=SpellE>Lock</span> jako NVDA klávesu</h6>
+
+<p>Pokud je toto políčko zaškrtnuté, můžete Caps <span class=SpellE>Lock</span>
+použít jako NVDA klávesu. </p>
+
+<h6>Použít numerický Insert jako NVDA klávesu</h6>
+
+<p>Pokud je toto políčko zaškrtnuté, můžete numerický Insert použít jako NVDA
+klávesu. </p>
+
+<h6>Použít Insert jako NVDA klávesu</h6>
+
+<p>Pokud je toto políčko zaškrtnuté, můžete klávesu Insert použít jako NVDA
+klávesu. </p>
+
 <h6>Hlásit psané znaky</h6>
-<p>
-Zaškrtávací políčko zapínající ohlašování všech psaných znaků. Tuto volbu lze též nastavit odkudkoli ze systému klávesovou zkratkou NVDA+2.
-</p>
+
+<p><span class=SpellE>Zaškrtávací</span> políčko zapínající ohlašování všech
+psaných znaků. Tuto volbu lze též nastavit odkudkoli ze systému klávesovou
+zkratkou NVDA+2. </p>
+
 <h6>Hlásit psaná slova</h6>
-<p>
-Zaškrtávací políčko zapínající ohlašování všech psaných slov. Tuto volbu lze též nastavit odkudkoli ze systému klávesovou zkratkou NVDA+3.
-</p>
+
+<p><span class=SpellE>Zaškrtávací</span> políčko zapínající ohlašování všech
+psaných slov. Tuto volbu lze též nastavit odkudkoli ze systému klávesovou
+zkratkou NVDA+3. </p>
+
 <h6>Hlásit příkazové klávesy</h6>
-<p>
-Zaškrtávací políčko zapínající ohlašování všech kláves, jež nevkládají znaky. Týká se to i všech vámi stisknutých kombinací kláves jako např. ctrl+c, Ctrl+v, alt+tab, atd.
-</p>
-<h5 id="6.2.1.6">6.2.1.6. Nastavení myši</h5>
-<p>
-Toto dialogové okno naleznete pod stejnojmennou položkou v nabídce Možnosti. Lze jej rovněž vyvolat stiskem kombinace kláves ctrl+NVDA+m.
-</p>
-<p>
-Dialog obsahuje následující prvky:
-</p>
+
+<p><span class=SpellE>Zaškrtávací</span> políčko zapínající ohlašování všech
+kláves, jež nevkládají znaky. Týká se to i všech vámi stisknutých kombinací
+kláves jako např. Ctrl+C, Ctrl+V, Alt+<span class=SpellE>Tab</span>, atd. <o:p></o:p></p>
+
+<h5 id=6.2.1.6>6.2.1.6. Nastavení myši</h5>
+
+<p>Toto dialogové okno naleznete pod stejnojmennou položkou v nabídce Možnosti.
+Lze jej rovněž vyvolat stiskem kombinace kláves Ctrl+NVDA+M. </p>
+
+<p>Dialog obsahuje následující prvky: </p>
+
 <h6>Hlásit změny tvaru kurzoru myši</h6>
-<p>
-Zaškrtnutí tohoto políčka zajistí, že NVDA bude oznamovat tvar kurzoru myši vždy, když se změní. Změnou tvaru myši informuje systém mimo jiné o tom, že text je upravitelný, že se něco načítá atd.
-</p>
+
+<p>Zaškrtnutí tohoto políčka zajistí, že NVDA bude oznamovat tvar kurzoru myši
+vždy, když se změní. Změnou tvaru myši informuje systém mimo jiné o tom, že
+text je upravitelný, že se něco načítá atd. </p>
+
 <h6>Oznamovat text pod kurzorem myši</h6>
-<p>
-Zaškrtnutí tohoto políčka zajistí, že NVDA bude oznamovat text, který se aktuálně nachází pod kurzorem myši. Takto můžete najít položky na obrazovce za pomoci myši a nemusíte použít objektovou navigaci. Tato možnost se dá vypnout i zapnout  odkudkoli ze systému klávesovou zkratkou NVDA+m.
-</p>
+
+<p>Zaškrtnutí tohoto políčka zajistí, že NVDA bude oznamovat text, který se
+aktuálně nachází pod kurzorem myši. Takto můžete najít položky na obrazovce za
+pomoci myši a nemusíte použít objektovou navigaci. Tato možnost se dá vypnout i
+zapnout&nbsp; odkudkoli ze systému klávesovou zkratkou NVDA+M. </p>
+
 <h6>Jednotka ohlašování u zaměřeného textu</h6>
-<p>
-Pokud je zaškrtnutá volba Oznamovat text pod kurzorem myši, toto nastavení určuje, jaké množství textu bude přečteno. Lze vybrat buď: znak, slovo, řádek nebo odstavec.
-</p>
+
+<p>Pokud je zaškrtnutá volba Oznamovat text pod kurzorem myši, toto nastavení
+určuje, jaké množství textu bude přečteno. Lze vybrat buď: znak, slovo, řádek
+nebo odstavec. </p>
+
 <h6>Hlásit typ prvku, na který ukazuje kurzor myši</h6>
-<p>
-Je-li tato volba zaškrtnutá, NVDA bude ohlašovat typ objektu při přechodu myší přes něj.
-</p>
+
+<p>Je-li tato volba zaškrtnutá, NVDA bude ohlašovat typ objektu při přechodu
+myší přes něj. </p>
+
 <h6>Pohyb myši indikovat zvukovým signálem</h6>
-<p>
-Při zaškrtnutí této volby bude NVDA signalizovat pohyb myši krátkým pípáním. Uživatel tedy bude mít celkové povědomí o aktuální pozici myši.
-</p>
+
+<p>Při zaškrtnutí této volby bude NVDA signalizovat pohyb myši krátkým pípáním.
+Uživatel tedy bude mít celkové povědomí o aktuální pozici myši. </p>
+
 <h6>Úroveň jasu ovlivňuje hlasitost zvukové signalizace</h6>
-<p>
-Pokud máte zaškrtnuté políčko pohyb myši indikovat zvukovým signálem, potom po zaškrtnutí tohoto políčka bude hlasitost signalizace řízena úrovní jasu na místě obrazovky, kde se právě nachází ukazatel myši. To může negativně ovlivnit výkonnost v systému Windows Vista, proto je tato volba implicitně vypnuta.
-</p>
-<h5 id="6.2.1.7">6.2.1.7. prezentace objektů</h5>
-<p>
-Tuto položku najdete v nabídce možnosti nebo ji lze vyvolat stiskem kombinací kláves ctrl+NVDA+o.
-</p>
-<p>
-Toto dialogové okno obsahuje následující prvky:
-</p> 
+
+<p>Pokud máte zaškrtnuté políčko pohyb myši indikovat zvukovým signálem, potom
+po zaškrtnutí tohoto políčka bude hlasitost signalizace řízena úrovní jasu na
+místě obrazovky, kde se právě nachází ukazatel myši. To může negativně ovlivnit
+výkonnost v&nbsp;systému Windows Vista, proto je tato volba implicitně vypnuta.
+<o:p></o:p></p>
+
+<h5 id=6.2.1.7>6.2.1.7. Prezentace objektů</h5>
+
+<p>Tuto položku najdete v&nbsp;nabídce možnosti nebo ji lze vyvolat stiskem
+kombinací kláves Ctrl+NVDA+O. </p>
+
+<p>Toto dialogové okno obsahuje následující prvky: </p>
+
 <h6>Hlásit kontextovou nápovědu</h6>
-<p>
-Zaškrtnutí tohoto políčka zajistí, že  NVDA bude číst obsah kontextové nápovědy, je-li k dispozici. Řada oken a ovládacích prvků vyvolá malou textovou nápovědu, jestliže se nad ně přesune kurzor myši, nebo též když se na ně přesune fokus.
-</p>
+
+<p>Zaškrtnutí tohoto políčka zajistí, že&nbsp; NVDA bude číst obsah kontextové
+nápovědy, je-li k dispozici. Řada oken a ovládacích prvků vyvolá malou textovou
+nápovědu, jestliže se nad ně přesune kurzor myši, nebo též když se na ně
+přesune fokus. </p>
+
 <h6>Hlásit obsah bublinové nápovědy</h6>
-<p>
-Při zaškrtnutí tohoto políčka bude NVDA ohlašovat obsah bublinové nápovědy, která se objeví na obrazovce. Bublinová nápověda je podobná kontextovým popiskům, ale plocha bubliny je obvykle větší a tato nápověda se používá vesměs pro sdělování systémových událostí, jako je např. odpojení síťového kabelu, nalezení nového hardwaru, objevení se problémů se zabezpečením systému atd.
-</p>
+
+<p>Při zaškrtnutí tohoto políčka bude NVDA ohlašovat obsah bublinové nápovědy,
+která se objeví na obrazovce. Bublinová nápověda je podobná kontextovým
+popiskům, ale plocha bubliny je obvykle větší a tato nápověda se používá vesměs
+pro sdělování systémových událostí, jako je např. odpojení síťového kabelu,
+nalezení nového hardwaru, objevení se problémů se zabezpečením systému atd. </p>
+
 <h6>Hlásit přístupové klávesy k objektům</h6>
-<p>
-Pokud je toto zaškrtávací políčko zaškrtnuto, NVDA bude ohlašovat klávesové zkratky, které jsou vázány k různým příkazům a objektům. Například: nabídka soubor má přístupovou klávesu Alt +S, takže součástí informace při ohlášení nabídky bude i tato klávesová zkratka.
-</p>
+
+<p>Pokud je toto <span class=SpellE>zaškrtávací</span> políčko zaškrtnuto, NVDA
+bude ohlašovat klávesové zkratky, které jsou vázány k různým příkazům a
+objektům. Například: nabídka Soubor má přístupovou klávesu Alt+S, takže
+součástí informace při ohlášení nabídky bude i tato klávesová zkratka. </p>
+
 <h6>Hlásit pozici objektu</h6>
-<p>
-Tato volba zapíná či vypíná ohlašování informací o pozici objektu, na kterém se nachází kurzor. Je to např. informace o položce seznamu (1 z 10) apod.
-</p> 
+
+<p>Tato volba zapíná či vypíná ohlašování informací o pozici objektu, na kterém
+se nachází kurzor. Je to např. informace o položce seznamu (1 z 10) apod. </p>
+
 <h6>Hlásit popisky objektů</h6>
-<p>
-Odškrtněte toto políčko, pokud si myslíte, že vás popisky objektů obtěžují.
-</p>
+
+<p>Odškrtněte toto políčko, pokud si myslíte, že vás popisky objektů obtěžují. </p>
+
 <h6>Indikátor průběhu:</h6>
-<p>
-Indikátor průběhu je ovládací prvek, který vzhledem poněkud připomíná pravítko. Při průběhu déle trvajících akcí se postupně lišta zvýrazňuje nebo se též zobrazují procenta dané akce. Platí to např. pro načítání webových stránek, kontrolu pošty, kopírování souborů atd.
-</p>
-<p>
-V tomto rozbalovacím seznamu je tedy možné přizpůsobit ohlašování indikátoru průběhu. Aktuálně jsou dostupné tyto možnosti:
-</p>
-<ul>
-<li>Vypnuto: aktualizace indikátoru průběhu bude bez odezvy.</li>
-<li>Ohlašovat: Tato volba zajistí ohlašování hodnoty indikátoru průběhu v procentech. Vždy když se hodnota změní, NVDA tuto změnu ohlásí.</li>
-<li>Pípat: Tato volba zajistí, že při každé změně indikátoru průběhu NVDA krátce pípne. Čím je tón pípání vyšší, tím vyšší je počet procent na indikátoru průběhu a  právě probíhající akce se blíží ke konci.</li>
-<li>Ohlašovat a pípat: Tato volba je kombinací obou předchozích možností. Změny indikátoru průběhu jsou oznamovány hlasem a zároveň jsou signalizovány krátkým pípáním.</li>
+
+<p>Indikátor průběhu je ovládací prvek, který vzhledem poněkud připomíná
+pravítko. Při průběhu déle trvajících akcí se postupně lišta zvýrazňuje nebo se
+též zobrazují procenta dané akce. Platí to např. pro načítání webových stránek,
+kontrolu pošty, kopírování souborů atd. </p>
+
+<p>V&nbsp;tomto rozbalovacím seznamu je tedy možné přizpůsobit ohlašování
+indikátoru průběhu. Aktuálně jsou dostupné tyto možnosti: </p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l5 level1 lfo4;tab-stops:list 36.0pt'>Vypnuto: Aktualizace
+     indikátoru průběhu bude bez odezvy.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l5 level1 lfo4;tab-stops:list 36.0pt'>Ohlašovat: Tato volba
+     zajistí ohlašování hodnoty indikátoru průběhu v procentech. Vždy když se
+     hodnota změní, NVDA tuto změnu ohlásí.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l5 level1 lfo4;tab-stops:list 36.0pt'>Pípat: Tato volba zajistí,
+     že při každé změně indikátoru průběhu NVDA krátce pípne. Čím je tón pípání
+     vyšší, tím vyšší je počet procent na indikátoru průběhu a&nbsp; právě
+     probíhající akce se blíží ke konci.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l5 level1 lfo4;tab-stops:list 36.0pt'>Ohlašovat a pípat: Tato volba
+     je kombinací obou předchozích možností. Změny indikátoru průběhu jsou
+     oznamovány hlasem a zároveň jsou signalizovány krátkým pípáním.</li>
 </ul>
+
 <h6>Ohlašovat indikátor průběhu na pozadí</h6>
-<p>
-Pokud je tato volba zaškrtnuta, NVDA bude sledovat i průběh indikátorů, které nejsou zobrazeny v okně v popředí. Znamená to, že když minimalizujete okno, v němž je zobrazen indikátor průběhu, můžete dělat cokoli dalšího a NVDA bude i nadále sledovat aktualizaci tohoto průběhu a dle vámi zvoleného nastavení ji bude ohlašovat.
-</p>
-<p>
-Pozn. Pokud máte způsob ohlašování indikátoru průběhu nastaven na ohlašovat, NVDA bude u indikátorů průběhu na pozadí ohlašovat každých 10 procent, nikoli každé další procento.
-</p>
-<h5 id="6.2.1.8">6.2.1.8. Nastavení virtuálního prohlížeče</h5>
-<p>
-Tento dialog najdeme v nabídce možnosti pod názvem virtuální prohlížeč. Je také možno jej vyvolat stiskem kombinace kláves ctrl+NVDA+b.
-</p>
-<p>
-Toto dialogové okno Obsahuje následující nastavení:
-</p>
+
+<p>Pokud je tato volba zaškrtnuta, NVDA bude sledovat i průběh indikátorů,
+které nejsou zobrazeny v okně v popředí. Znamená to, že když minimalizujete
+okno, v&nbsp;němž je zobrazen indikátor průběhu, můžete dělat cokoli dalšího a
+NVDA bude i nadále sledovat aktualizaci tohoto průběhu a dle vámi zvoleného
+nastavení ji bude ohlašovat. </p>
+
+<p>Pozn. Pokud máte způsob ohlašování indikátoru průběhu nastaven na ohlašovat,
+NVDA bude u indikátorů průběhu na pozadí ohlašovat každých 10 procent, nikoli
+každé další procento. <o:p></o:p></p>
+
+<h5 id=6.2.1.8>6.2.1.8. Nastavení virtuálního prohlížeče</h5>
+
+<p>Tento dialog najdeme v&nbsp;nabídce Možnosti pod názvem Virtuální prohlížeč.
+Je také možno jej vyvolat stiskem kombinace kláves Ctrl+NVDA+B. </p>
+
+<p>Toto dialogové okno obsahuje následující nastavení: </p>
+
 <h6>Maximální počet znaků na řádku</h6>
-<p>
-V tomto editačním poli nastavíte maximální počet znaků na jeden řádek virtuálního prohlížeče.
-</p>
+
+<p>V tomto editačním poli nastavíte maximální počet znaků na jeden řádek
+virtuálního prohlížeče. </p>
+
 <h6>Počet řádků na stránce</h6>
-<p>
-I když virtuální prohlížeč ve skutečnosti stránky nemá, toto nastavení určuje počet řádků, o které se posunete, když ve virtuálním prohlížeči stisknete klávesu page up či page down.
-</p>
+
+<p>I když virtuální prohlížeč ve skutečnosti stránky nemá, toto nastavení
+určuje počet řádků, o které se posunete, když ve virtuálním prohlížeči
+stisknete klávesu <span class=SpellE>Page</span> <span class=SpellE>Up</span>
+či <span class=SpellE>Page</span> <span class=SpellE>Down</span>. </p>
+
 <h6>Zachovat stejný vzhled jako na obrazovce</h6>
-<p>
-Umožňuje nastavit zalamování obsahu ve virtuálním prohlížeči. Pokud tato volba není zaškrtnutá, odkazy a další prvky budou zobrazeny odděleně na samostatném řádku. Pokud tuto volbu zaškrtnete, všechny prvky budou zobrazeny tak, jak jsou rozmístěny na obrazovce.
-</p>
+
+<p>Umožňuje nastavit zalamování obsahu ve virtuálním prohlížeči. Pokud tato
+volba není zaškrtnutá, odkazy a další prvky budou zobrazeny odděleně na
+samostatném řádku. Pokud tuto volbu zaškrtnete, všechny prvky budou zobrazeny
+tak, jak jsou rozmístěny na obrazovce. </p>
+
 <h6>Hlásit vzhledové tabulky</h6>
-<p>
-Pokud je tato volba odškrtnuta, NVDA bude oznamovat jen klasické tabulky obsahující běžná tabulková data. Naopak když tuto volbu zaškrtnete, NVDA bude oznamovat i takové tabulky, které slouží čistě na dotvoření vizuální prezentace stránky.
-</p>
+
+<p>Pokud je tato volba odškrtnuta, NVDA bude oznamovat jen klasické tabulky
+obsahující běžná tabulková data. Naopak když tuto volbu zaškrtnete, NVDA bude
+oznamovat i takové tabulky, které slouží čistě na dotvoření vizuální prezentace
+stránky. </p>
+
 <h6>Nastavení oznamování prvků</h6>
-<p>
-V předchozích verzích NVDA bylo možné v tomto dialogu nastavovat oznamování prvků, které jsou standardní součástí webových stránek. Jedná se například o oznamování odkazů, tabulek, seznamů, editačních polí a dalších. Nastavování oznamování těchto prvků je nyní společné pro všechny typy dokumentů, ve kterých mohou být tyto prvky obsaženy, a samotná nastavení byla přesunuta do dialogu <a href="#6.2.1.9">Ohlašování formátování dokumentu</a>.
-</p>
+
+<p>V&nbsp;předchozích verzích NVDA bylo možné v tomto dialogu nastavovat
+oznamování prvků, které jsou standardní součástí webových stránek. Jedná se
+například o oznamování odkazů, tabulek, seznamů, editačních polí a dalších.
+Nastavování oznamování těchto prvků je nyní společné pro všechny typy
+dokumentů, ve kterých mohou být tyto prvky obsaženy, a samotná nastavení byla
+přesunuta do dialogu <a href="#6.2.1.9">Ohlašování formátování dokumentu</a>. </p>
+
 <h6>Automaticky přepínat formulářový režim při změně zaměření</h6>
-<p>
-Tato možnost umožňuje automatické zapínání formulářového režimu v případě, že se změní pozice fokusu. Například když při prohlížení webové  stránky použijete klávesu tab a pod kurzorem se ocitne editační pole, nebo jakýkoli jiný formulářový prvek, automaticky se zapne formulářový režim. Pokud se po dalším stisku klávesy tab objeví pod kurzorem odkaz, či jiný prvek, který už nemá s formulářovými prvky nic společného, automaticky se zapne režim prohlížení.
-</p>
+
+<p>Tato možnost umožňuje automatické zapínání formulářového režimu v případě,
+že se změní pozice fokusu. Například když při prohlížení webové&nbsp; stránky
+použijete klávesu <span class=SpellE>tab</span> a pod kurzorem se
+ocitne&nbsp;editační pole, nebo jakýkoli jiný formulářový prvek, automaticky se
+zapne formulářový režim. Pokud se po dalším stisku klávesy <span class=SpellE>tab</span>
+objeví pod kurzorem odkaz, či jiný prvek, který už nemá s&nbsp;formulářovými
+prvky nic společného, automaticky se zapne režim prohlížení. </p>
+
 <h6>Automaticky přepínat formulářový režim při pohybu šipkami</h6>
-<p>
-Jestliže je tato volba zaškrtnutá, NVDA bude přepínat mezi formulářovým režimem a režimem prohlížení při pohybu kurzorovými šipkami. Například jestliže se při prohlížení webové stránky pod kurzorem objeví editační políčko, NVDA automaticky aktivuje formulářový režim a je tedy možné do políčka psát či libovolně upravovat jeho obsah. Pokud budete šipkou pokračovat v prohlížení stránky a kurzor opustí dané políčko, aktivuje se opět režim prohlížení.
-</p>
+
+<p>Jestliže je tato volba zaškrtnutá, NVDA bude přepínat mezi formulářovým
+režimem a režimem prohlížení při pohybu kurzorovými šipkami. Například jestliže
+se při prohlížení webové stránky pod kurzorem objeví editační políčko, NVDA
+automaticky aktivuje formulářový režim a je tedy možné do políčka psát či
+libovolně upravovat jeho obsah. Pokud budete šipkou pokračovat
+v&nbsp;prohlížení stránky a kurzor opustí dané políčko, aktivuje se opět režim
+prohlížení. </p>
+
 <h6>Zvuková indikace formulářového režimu a režimu prohlížení</h6>
-<p>
-Pokud je tato volba zaškrtnuta, NVDA bude přepínání mezi formulářovým režimem a režimem prohlížení signalizovat krátkými zvukovými návěstími.
-</p>
-<h5 id="6.2.1.9">6.2.1.9. Ohlašování formátování dokumentu</h5>
-<p>
-Toto dialogové okno najdete v možnostech programu NVDA pod stejnojmenným názvem. Vyvolat jej můžete také stiskem kombinací kláves ctrl+NVDA+d.
-</p>
-<p>
-Všechny zaškrtávací políčka slouží k nastavení ohlašování formátování, jehož změny mají být oznamovány při pohybu kurzorem v dokumentech či na webových stránkách. Jestliže např.  zaškrtnete ohlašování názvu písma, tak jakmile se při prohlížení jakéhokoli textu zobrazí jiný typ písma, NVDA danou změnu ohlásí. 
-Takto můžete nastavit názvy typu písma, velikost písma, vlastnosti písma, zarovnání textu, styl textu, datové tabulky, číslování stran, číslování řádků, pravopisné chyby, odkazy, nadpisy, seznamy a citace.
-</p>
-<h5 id="6.2.1.10">6.2.1.10. Řečové slovníky</h5>
-<p>
-Podnabídka Řečové slovníky, která se nachází v nabídce možnosti, obsahuje Tři různé typy uživatelských slovníků, v kterých lze nastavit, jak má NVDA vyslovovat konkrétní slova, či fráze.
-<ul>
-<li>Výchozí slovník: Výrazy uložené v tomto slovníku ovlivní veškeré řečové projevy NVDA.</li>
-<li>Slovník pro aktuální hlas: Výrazy uložené v tomto slovníku ovlivní veškeré řečové projevy aktuálně používaného hlasu.</li>
-<li>Dočasný slovník: Výrazy uložené v tomto slovníku ovlivní veškeré řečové projevy NVDA, ale jen dočasně. Po ukončení NVDA bude obsah slovníku vymazán.</li>
+
+<p>Pokud je tato volba zaškrtnuta, NVDA bude přepínání mezi formulářovým
+režimem a režimem prohlížení signalizovat krátkými zvukovými návěstími. <o:p></o:p></p>
+
+<h5 id=6.2.1.9>6.2.1.9. Ohlašování formátování dokumentu</h5>
+
+<p>Toto dialogové okno najdete v možnostech programu NVDA pod stejnojmenným
+názvem. Vyvolat jej můžete také stiskem kombinací kláves Ctrl+NVDA+D. </p>
+
+<p>Všechny <span class=SpellE>zaškrtávací</span> políčka slouží k nastavení
+ohlašování formátování, jehož změny mají být oznamovány při pohybu kurzorem
+v&nbsp;dokumentech či na webových stránkách. Jestliže např.&nbsp; zaškrtnete
+ohlašování názvu písma, tak jakmile se při prohlížení jakéhokoli textu zobrazí
+jiný typ písma, NVDA danou změnu ohlásí. Takto můžete nastavit názvy typu
+písma, velikost písma, vlastnosti písma, zarovnání textu, styl textu, datové
+tabulky, číslování stran, číslování řádků, pravopisné chyby, odkazy, nadpisy,
+seznamy a citace. <o:p></o:p></p>
+
+<h5 id=6.2.1.10>6.2.1.10. Řečové slovníky</h5>
+
+<p>Podnabídka Řečové slovníky, která se nachází v&nbsp;nabídce Možnosti,
+obsahuje tři různé typy uživatelských slovníků, ve kterých lze nastavit, jak má
+NVDA vyslovovat konkrétní slova, či fráze. </p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l2 level1 lfo5;tab-stops:list 36.0pt'>Výchozí slovník: Výrazy
+     uložené v&nbsp;tomto slovníku ovlivní veškeré řečové projevy NVDA.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l2 level1 lfo5;tab-stops:list 36.0pt'>Slovník pro aktuální hlas:
+     Výrazy uložené v&nbsp;tomto slovníku ovlivní veškeré řečové projevy
+     aktuálně používaného hlasu.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l2 level1 lfo5;tab-stops:list 36.0pt'>Dočasný slovník: Výrazy
+     uložené v&nbsp;tomto slovníku ovlivní veškeré řečové projevy NVDA, ale jen
+     dočasně. Po ukončení NVDA bude obsah slovníku vymazán.</li>
 </ul>
-<p>
-V každém z těchto slovníků najdete seznam vámi uložených výrazů a tlačítka pro přidání, úpravu a odstranění položky ze slovníku.
+
+<p>V&nbsp;každém z&nbsp;těchto slovníků najdete seznam vámi uložených výrazů a
+tlačítka pro přidání, úpravu a odstranění položky ze slovníku. </p>
+
+<p>Pro přidání výrazu stiskněte tlačítko Přidat. V&nbsp;dialogu, který se
+objeví vyplňte příslušná políčka a stiskněte tlačítko Ok. Přidaný výraz se
+objeví v&nbsp;seznamu s&nbsp;uloženými položkami. Aby veškeré provedené úpravy
+slovníku byly korektně uloženy, stiskněte tlačítko Ok. Tím vstoupí
+v&nbsp;platnost veškeré provedené změny a zároveň se ukončí dialogové okno
+editovaného slovníku. <o:p></o:p></p>
+
+<h4 id=6.2.2>6.2.2. Uložení a znovunačtení nastavení</h4>
+
+<p>NVDA svá nastavení ukládá do souboru NVDA.<span class=SpellE>ini</span>.
+Jeho umístění závisí na tom, jakou verzi NVDA používáte. Jestliže používáte
+přenosnou verzi NVDA, najdete tento soubor v adresáři &quot;<span class=SpellE>userConfig</span>&quot;
+v instalačním adresáři programu. Pokud používáte instalační verzi NVDA, program
+si vytvoří složku s&nbsp;uživatelským nastavením, v&nbsp;které je <span
+class=SpellE>mimojiné</span> též umístěn soubor s&nbsp;konfigurací NVDA. Do
+této složky se můžete dostat např. z&nbsp;nabídky start, kde se
+v&nbsp;podnabídce NVDA, nachází zástupce pro tuto složku. Do tohoto souboru
+nebudete muset pravděpodobně nikdy zasahovat, ale pokročilí uživatelé v něm
+najdou některá nastavení, která ještě nejsou zapracována přímo v dialogových
+oknech s&nbsp;nastaveními programu. </p>
+
+<p>NVDA automaticky vaše nastavení neukládá, takže pokud ukončíte program a pak
+ho znovu spustíte, nastavení se vrátí do původních hodnot. Pokud chcete, aby
+NVDA nastavení automaticky ukládal, zaškrtněte příslušnou položku
+v&nbsp;dialogu Obecné nastavení viz kapitola 6.2.1.1, nebo použijte kdekoli
+v&nbsp;systému klávesovou zkratku <span class=SpellE>ctrl</span>+NVDA+<span
+class=SpellE>c</span>. </p>
+
+<p>Když&nbsp; je NVDA spuštěn z média, které má atribut &quot;jen pro
+čtení&quot;, jako například CD, nebude možno vaše nastavení uložit a o této
+skutečnosti vás program bude informovat. </p>
+
+<p>Pokud jste při nastavování programu udělali chybu a potřebujete se vrátit k
+uložené konfiguraci, můžete využít možnost znovu načíst nastavení, kterou
+najdete buď přímo v&nbsp;nabídce NVDA, nebo ji můžete vyvolat odkudkoli ze
+systému klávesovou zkratkou Ctrl+NVDA+R. </p>
+
+<p>Pozor! Při aktualizaci přenosné verze NVDA je vždy vhodné soubor NVDA.<span
+class=SpellE>ini</span> <span class=SpellE>zazálohovat</span>. Po rozbalení
+novější verze NVDA následně stačí daný soubor překopírovat do složky NVDA. Tím
+zabezpečíte, že se vaše nastavení projeví i v&nbsp;novější verzi a nemusíte jej
+znovu konfigurovat. Tato důležitá poznámka platí jen pro přenosné verze
+programu. Pokud používáte instalační verzi NVDA, instalátor uložená nastavení
+automaticky zálohuje a po nainstalování nové verze programu bude opět použit
+soubor s&nbsp;vaším nastavením. <o:p></o:p></p>
+
+<h2 id=7>7. Pohyb s NVDA<o:p></o:p></h2>
+
+<h3 id=7.1>7.1. Pohyb pomocí zaměření fokusu</h3>
+
+<p>Nejjednodušším způsobem pohybu v systému Windows s NVDA je použití obvyklých
+klávesových příkazů pro pohyb po ovládacích prvcích jako např. <span
+class=SpellE>Tab</span> a Shift+<span class=SpellE>Tab</span> pro pohyb po
+položkách, vyvolání panelu nabídek pomocí klávesy Alt, pohyby v&nbsp;nabídkách
+prostřednictvím kurzorových šipek, či přepínání se mezi spuštěnými aplikacemi
+klávesami alt+tab. Při každém takovémto pohybu vám NVDA ohlásí, kde se nachází
+fokus, <span class=SpellE>resp</span> aktuálně zaměřený objekt. </p>
+
+<p>Když NVDA ohlašuje zaměřený objekt, je obvykle oznámeno jeho jméno, typ, stav,
+hodnota, popis, klávesová zkratka, či informace o pozici objektu. Toto chování
+se od ostatních <span class=SpellE>odečítačů</span> příliš neliší, nicméně
+jména objektů se mírně lišit mohou. </p>
+
+<p>Při pohybu po zaměřených objektech můžete použít několik užitečných příkazů:
 </p>
-<p>
-Pro přidání výrazu stiskněte tlačítko přidat. V dialogu, který se objeví vyplňte příslušná políčka a stiskněte tlačítko ok. Přidaný výraz se objeví v seznamu s uloženými položkami. Aby veškeré provedené úpravy slovníku byly korektně uloženy, stiskněte tlačítko ok. Tím vstoupí v platnost veškeré provedené změny a zároveň se ukončí dialogové okno editovaného slovníku.
-</p>
-<h4 id="6.2.2">6.2.2. Uložení a znovunačtení nastavení</h4>
-<p>
-NVDA svá nastavení ukládá do souboru NVDA.ini. Jeho umístění závisí na tom, jakou verzi NVDA používáte. Jestliže používáte přenosnou verzi NVDA, najdete tento soubor v adresáři &quot;userConfig&quot; v instalačním adresáři programu. Pokud používáte instalační verzi NVDA, program si vytvoří složku s uživatelským nastavením, v které je mimojiné též umístěn soubor s konfigurací NVDA. Do této složky se můžete dostat např. z nabídky start, kde se v podnabídce NVDA, nachází zástupce pro tuto složku.
-Do tohoto souboru nebudete muset pravděpodobně nikdy zasahovat, ale pokročilí uživatelé v něm najdou některá nastavení, která ještě nejsou zapracována přímo v dialogových oknech s nastaveními programu.
-</p>
-<p>
-NVDA automaticky vaše nastavení neukládá, takže pokud ukončíte program a pak ho znovu spustíte, nastavení se vrátí do původních hodnot. Pokud chcete, aby NVDA nastavení automaticky ukládal, zaškrtněte příslušnou položku v dialogu Obecné nastavení viz kapitola 6.2.1.1, nebo použijte kdekoli v systému klávesovou zkratku ctrl+NVDA+c.
-</p>
-<p>
-Když  je NVDA spuštěn z média, které má atribut &quot;jen pro čtení&quot;, jako například CD, nebude možno vaše nastavení uložit a o této skutečnosti vás program bude informovat.
-</p>
-<p>
-Pokud jste při nastavování programu udělali chybu a potřebujete se vrátit k uložené konfiguraci, můžete využít možnost znovu načíst nastavení, kterou najdete buď přímo v nabídce NVDA, nebo ji můžete vyvolat odkudkoli ze systému klávesovou zkratkou ctrl+NVDA+r.
-</p>
-<p>
-Pozor! Při aktualizaci přenosné verze NVDA je vždy vhodné soubor NVDA.INI zazálohovat. Po rozbalení novější verze NVDA následně stačí daný soubor překopírovat do složky NVDA. Tím zabezpečíte, že se vaše nastavení projeví i v novější verzi a nemusíte jej znovu konfigurovat. Tato důležitá poznámka platí jen pro přenosné verze programu. Pokud používáte instalační verzi NVDA, instalátor uložená nastavení automaticky zálohuje a po nainstalování nové verze programu bude opět použit soubor s vaším nastavením.
-</p>
-<h2 id="7">7. Pohyb s NVDA</h2>
-<h3 id="7.1">7.1. Pohyb pomocí zaměření fokusu</h3>
-<p>
-Nejjednodušším způsobem pohybu v systému Windows s NVDA je použití obvyklých klávesových příkazů pro pohyb po ovládacích prvcích jako např. tab a shift+tab pro pohyb po položkách, vyvolání panelu nabídek pomocí klávesy alt, pohyby v nabídkách prostřednictvím kurzorových šipek, či přepínání se mezi spuštěnými aplikacemi klávesami alt+tab. Při každém takovémto pohybu vám NVDA ohlásí, kde se nachází fokus, resp aktuálně zaměřený objekt.
-</p>
-<p>
-Když NVDA ohlašuje zaměřený objekt, je obvykle oznámeno jeho jméno, typ, stav, hodnota, popis, klávesová zkratka, či informace o pozici objektu. Toto chování se od ostatních odečítačů příliš neliší, nicméně jména objektů se mírně lišit mohou.
-</p>
-<p>
-Při pohybu po zaměřených objektech můžete použít několik užitečných příkazů:
-</p>
-<ul>
-<li>NVDA+tab: ohlášení aktuálně zaměřeného objektu, resp objektu, na kterém se nachází fokus.</li>
-<li>NVDA+b: Přečte obsah aktuálního okna v popředí
-To může být užitečné např. při opětovném čtení informací v dialogových oknech.</li>
-<li>NVDA+t - ohlášení názvu aktuálního okna v popředí</li>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l8 level1 lfo6;tab-stops:list 36.0pt'>NVDA+<span class=SpellE>Tab</span>:
+     ohlášení aktuálně zaměřeného objektu, <span class=SpellE>resp</span>
+     objektu, na kterém se nachází fokus.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l8 level1 lfo6;tab-stops:list 36.0pt'>NVDA+B: Přečte obsah
+     aktuálního okna v popředí To může být užitečné např. při opětovném čtení
+     informací v&nbsp;dialogových oknech.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l8 level1 lfo6;tab-stops:list 36.0pt'>NVDA+T: Ohlášení názvu
+     aktuálního okna v popředí<o:p></o:p></li>
 </ul>
-<h3 id="7.2">7.2. Pohyb pomocí textového kurzoru</h3>
-<p>
-Jestliže se fokus nachází v poli, které má textový kurzor, což je prakticky jakékoli editační pole, můžete využít všechny běžně používané příkazy pro pohyb v textu. NVDA bude hlásit pohyb po znacích, slovech, řádcích, včetně označování, odoznačení, či kopírování textu.
-</p>
-<p>
-Při pohybu textovým kurzorem bude pozice čtecího kurzoru měněna tak, aby odpovídala pozici textového kurzoru.
-</p>
-<p>
-Je též možné nechat přečíst veškerý text příkazem pro plynulé čtení (NVDA+šipka dolů). Na rozdíl od příkazu Přečíst celý text (Numerické +), který pohybuje jen čtecím kurzorem, příkaz pro plynulé čtení pohybuje přímo textovým kurzorem.
-</p>
-<h3 id="7.3">7.3. Objektová navigace</h3>
-<p>
-Chcete-li se trochu porozhlédnout po aktuálně spuštěné aplikaci, či po operačním systému, ale nechcete při tom měnit pozici fokusu, můžete využít tzv. objektovou navigaci NVDA. Umožní vám pohyb po všech objektech operačního systému, které jsou uspořádány ve stromovém zobrazení.
-</p>
-<p>
-Základem stromového uspořádání objektů je pracovní plocha co by kořen stromu. První větve vycházející z tohoto kořene představují spuštěné aplikace a každá tato aplikace se větví do další struktury objektů, představující různé součásti aplikace. Tato stromová struktura se může zdát poměrně rozsáhlá, ale umožňuje vám pohyb po objektech v logickém pořadí, a tak můžete celkem snadno najít potřebnou informaci. Tato struktura přímo neodpovídá rozmístění objektů na obrazovce, ale vyjadřuje jejich logické uspořádání. Zvyknout si na tuto skutečnost může chvíli trvat, výsledkem však může být poměrně jednoduchý pohyb po systému.
-</p>
-<p>
-Při pohybu po objektech zatím NVDA nezohledňuje jejich uspořádání na obrazovce,protože neobsahuje žádný ovladač pro zachytávání obrazu ze systému. cílem je nabídnout uživateli strukturální pohled na prostředí aplikací a operačního systému, než vykreslovat rozmístění prvků na obrazovce.
-</p>
-<p>
-Ne všechny aplikace mají dokonalou stromovou strukturu, ale to závisí na vývojáři dané aplikace.
-Většina dialogových oken a vysoce strukturovaných aplikací je ale korektně ovladatelná.
-</p>
-<p>
-Pro pohyb po objektech použijte následující klávesové zkratky:
-</p>
-<ul>
-<li>NVDA+numerická 5: Ohlásí aktuální prohlížený objekt</li>
-<li>NVDA+numerická 8: Přejde o úroveň výš na nadřazený objekt právě prohlíženého objektu, čili směrem ke kořeni stromu</li>
-<li>NVDA+numerická 4: Přejde na předchozí objekt ve stejné úrovni stromové struktury</li>
-<li>NVDA+numerická 6: Přejde na následující objekt ve stejné úrovni stromové struktury</li>
-<li>NVDA+numerická 2: Přejde o úroveň níž na podřazený objekt právě prohlíženého objektu, čili směrem od kořene stromu</li>
-<li>NVDA+shift+numerická 4: Přejde na předchozí objekt v návaznosti (NVDA automaticky přechází do nadřazené větve stromové struktury, jestliže na aktuální úrovni už není žádný předchozí objekt)</li>
-<li>NVDA+shift+numerická 6: Přejde na následující objekt v návaznosti (NVDA automaticky přechází do podřazené větve stromové struktury, jestliže na aktuální úrovni už není žádný další objekt)</li>
-<li>NVDA+Numerické Mínus: Prohlížený objekt na zaměřený objekt, neboli na objekt, který má fokus</li>
-<li>NVDA+numerický Enter: předvolená akce právě prohlíženého objektu (např. je-li prohlíženým objektem tlačítko, tento příkaz simuluje stisk klávesy enter, či dvojklik)</li>
-<li>NVDA+numerické Lomeno: Přemístí kurzor myši na prohlížený objekt</li>
-<li>NVDA+numerická Hvězdička: Prohlíženým objektem se stane objekt pod kurzorem myši</li>
-<li>NVDA+numerická desetinná čárka: Ohlásí velikost a pozici prohlíženého objektu</li>
-<li>NVDA+numerické Plus: Přečte hierarchii objektů od právě prohlíženého objektu (začne čtením aktuálního objektu a pokračuje dál po objektech v návaznosti)</li>
+
+<h3 id=7.2>7.2. Pohyb pomocí textového kurzoru</h3>
+
+<p>Jestliže se fokus nachází v poli, které má textový kurzor, což je prakticky
+jakékoli editační pole, můžete využít všechny běžně používané příkazy pro pohyb
+v textu. NVDA bude hlásit pohyb po znacích, slovech, řádcích, včetně
+označování, <span class=SpellE>odoznačení</span>, či kopírování textu. </p>
+
+<p>Při pohybu textovým kurzorem bude pozice čtecího kurzoru měněna tak, aby
+odpovídala pozici textového kurzoru. </p>
+
+<p>Je též možné nechat přečíst veškerý text příkazem pro plynulé čtení
+(NVDA+šipka dolů). Na rozdíl od příkazu Přečíst celý text (Numerické +), který
+pohybuje jen čtecím kurzorem, příkaz pro plynulé čtení pohybuje přímo textovým
+kurzorem. <o:p></o:p></p>
+
+<h3 id=7.3>7.3. Objektová navigace</h3>
+
+<p>Chcete-li se trochu porozhlédnout po aktuálně spuštěné aplikaci, či po
+operačním systému, ale nechcete při tom měnit pozici fokusu, můžete využít tzv.
+objektovou navigaci NVDA. Umožní vám pohyb po všech objektech operačního
+systému, které jsou uspořádány ve stromovém zobrazení. </p>
+
+<p>Základem stromového uspořádání objektů je pracovní plocha co by kořen
+stromu. První větve vycházející z tohoto kořene představují spuštěné aplikace a
+každá tato aplikace se větví do další struktury objektů, představující různé
+součásti aplikace. Tato stromová struktura se může zdát poměrně rozsáhlá, ale
+umožňuje vám pohyb po objektech v logickém pořadí, a tak můžete celkem snadno
+najít potřebnou informaci. Tato struktura přímo neodpovídá rozmístění objektů
+na obrazovce, ale vyjadřuje jejich logické uspořádání. Zvyknout si na tuto
+skutečnost může chvíli trvat, výsledkem však může být poměrně jednoduchý pohyb
+po systému. </p>
+
+<p>Při pohybu po objektech zatím NVDA nezohledňuje jejich uspořádání na
+obrazovce,protože neobsahuje žádný ovladač pro zachytávání obrazu ze systému.
+Cílem je nabídnout uživateli strukturální pohled na prostředí aplikací a
+operačního systému, než vykreslovat rozmístění prvků na obrazovce. </p>
+
+<p>Ne všechny aplikace mají dokonalou stromovou strukturu, ale to závisí na
+vývojáři dané aplikace. Většina dialogových oken a vysoce strukturovaných
+aplikací je ale korektně ovladatelná. </p>
+
+<p>Pro pohyb po objektech použijte následující klávesové zkratky: </p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo7;tab-stops:list 36.0pt'>NVDA+numerická 5: Ohlásí
+     aktuální prohlížený objekt</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo7;tab-stops:list 36.0pt'>NVDA+numerická 8: Přejde o
+     úroveň výš na nadřazený objekt právě prohlíženého objektu, čili směrem ke
+     kořeni stromu</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo7;tab-stops:list 36.0pt'>NVDA+numerická 4: Přejde na
+     předchozí objekt ve stejné úrovni stromové struktury</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo7;tab-stops:list 36.0pt'>NVDA+numerická 6: Přejde na
+     následující objekt ve stejné úrovni stromové struktury</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo7;tab-stops:list 36.0pt'>NVDA+numerická 2: Přejde o
+     úroveň níž na podřazený objekt právě prohlíženého objektu, čili směrem od
+     kořene stromu</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo7;tab-stops:list 36.0pt'>NVDA+<span class=SpellE>shift</span>+numerická
+     4: Přejde na předchozí objekt v návaznosti (NVDA automaticky přechází do
+     nadřazené větve stromové struktury, jestliže na aktuální úrovni už není
+     žádný předchozí objekt)</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo7;tab-stops:list 36.0pt'>NVDA+<span class=SpellE>shift</span>+numerická
+     6: Přejde na následující objekt v návaznosti (NVDA automaticky přechází do
+     podřazené větve stromové struktury, jestliže na aktuální úrovni už není
+     žádný další objekt)</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo7;tab-stops:list 36.0pt'>NVDA+numerické mínus:
+     Prohlížený objekt na zaměřený objekt, neboli na objekt, který má fokus</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo7;tab-stops:list 36.0pt'>NVDA+numerický <span
+     class=SpellE>Enter</span>: Předvolená akce právě prohlíženého objektu
+     (např. je-li prohlíženým objektem tlačítko, tento příkaz simuluje stisk
+     klávesy <span class=SpellE>enter</span>, či <span class=SpellE>dvojklik</span>)</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo7;tab-stops:list 36.0pt'>NVDA+numerické lomeno:
+     Přemístí kurzor myši na prohlížený objekt</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo7;tab-stops:list 36.0pt'>NVDA+numerická Hvězdička:
+     Prohlíženým objektem se stane objekt pod kurzorem myši</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo7;tab-stops:list 36.0pt'>NVDA+numerická Desetinná
+     čárka: Ohlásí velikost a pozici prohlíženého objektu</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo7;tab-stops:list 36.0pt'>NVDA+numerické Plus: Přečte
+     hierarchii objektů od právě prohlíženého objektu (začne čtením aktuálního
+     objektu a pokračuje dál po objektech v&nbsp;návaznosti)</li>
 </ul>
-<p>
-Poznámka: Aby byla zajištěna správná funkčnost příkazů objektové navigace, musí být vypnuta klávesa numlock.
-</p>
-<p>
-Jestliže se změní zaměřený objekt, resp. objekt, na kterém se nachází fokus, spolu s ním se změní i prohlížený objekt. Jestliže ale chcete, aby se prohlížený objekt nepřesouval a nenásledoval fokus, můžete sledování fokusu vypnout klávesovou zkratkou NVDA+7.
-</p>
-<h3 id="7.4">7.4. Prohlížení textu v aktuálním objektu</h3>
-<p>
-NVDA umožňuje číst obsah prvku zrovna zaměřeného objektovou navigací po slovech, řádcích nebo i po znacích. To může být užitečné v příkazovém řádku windows, nebo na jiných místech, kde není plně funkční nebo dostupný systémový kurzor.
-</p>
-<ul>
-<li>shift+numerická 7: Přesune čtecí kurzor na horní řádek právě prohlíženého objektu</li>
-<li>numerická 7: Přesune čtecí kurzor na předchozí řádek právě prohlíženého objektu</li>
-<li>numerická 8: Přečte aktuální řádek, na němž se v rámci prohlíženého objektu nachází čtecí kurzor</li>
-<li>numerická 9: Přesune čtecí kurzor na následující řádek právě prohlíženého objektu</li>
-<li>shift+numerická 9: Přesune čtecí kurzor na spodní řádek právě prohlíženého objektu</li>
-<li>numerická 4: Přesune čtecí kurzor na předchozí slovo právě prohlíženého objektu</li>
-<li>numerická 5: Přečte slovo, na němž se v rámci prohlíženého objektu nachází čtecí kurzor</li>
-<li>numerická 6: Přesune čtecí kurzor na následující slovo právě prohlíženého objektu</li>
-<li>shift+numerická 1: Přesune čtecí kurzor na začátek aktuálního řádku v rámci prohlíženého objektu</li>
-<li>numerická 1: Přesune čtecí kurzor na předchozí znak právě prohlíženého objektu</li>
-<li>numerická 2: Přečte znak, na němž se v rámci prohlíženého objektu nachází čtecí kurzor</li>
-<li>numerická 3: Přesune čtecí kurzor na následující znak právě prohlíženého objektu</li>
-<li>shift+numerická 3: Přesune čtecí kurzor na konec aktuálního řádku v rámci prohlíženého objektu</li>
-<li>numerické Plus: Přečte celý text v rámci prohlíženého objektu</li>
+
+<p>Poznámka: Aby byla zajištěna správná funkčnost příkazů objektové navigace,
+musí být vypnuta klávesa <span class=SpellE>Numlock</span>. </p>
+
+<p>Jestliže se změní zaměřený objekt, resp. objekt, na kterém se nachází fokus,
+spolu s&nbsp;ním se změní i prohlížený objekt. Jestliže ale chcete, aby se
+prohlížený objekt nepřesouval a nenásledoval fokus, můžete sledování fokusu
+vypnout klávesovou zkratkou NVDA+7. <o:p></o:p></p>
+
+<h3 id=7.4>7.4. Prohlížení textu v aktuálním objektu</h3>
+
+<p>NVDA umožňuje číst obsah prvku zrovna zaměřeného objektovou navigací po
+slovech, řádcích nebo i po znacích. To může být užitečné v příkazovém řádku
+Windows, nebo na jiných místech, kde není plně funkční nebo dostupný systémový
+kurzor. </p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo8;tab-stops:list 36.0pt'>Shift+numerická 7: Přesune
+     čtecí kurzor na horní řádek právě prohlíženého objektu</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo8;tab-stops:list 36.0pt'>numerická 7: Přesune čtecí
+     kurzor na předchozí řádek právě prohlíženého objektu</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo8;tab-stops:list 36.0pt'>numerická 8: Přečte
+     aktuální řádek, na němž se v rámci prohlíženého objektu nachází čtecí
+     kurzor</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo8;tab-stops:list 36.0pt'>numerická 9: Přesune čtecí
+     kurzor na následující řádek právě prohlíženého objektu</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo8;tab-stops:list 36.0pt'>Shift+numerická 9: Přesune
+     čtecí kurzor na spodní řádek právě prohlíženého objektu</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo8;tab-stops:list 36.0pt'>numerická 4: Přesune čtecí
+     kurzor na předchozí slovo právě prohlíženého objektu</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo8;tab-stops:list 36.0pt'>numerická 5: Přečte slovo,
+     na němž se v rámci prohlíženého objektu nachází čtecí kurzor</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo8;tab-stops:list 36.0pt'>numerická 6: Přesune čtecí
+     kurzor na následující slovo právě prohlíženého objektu</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo8;tab-stops:list 36.0pt'>Shift+numerická 1: Přesune
+     čtecí kurzor na začátek aktuálního řádku v rámci prohlíženého objektu</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo8;tab-stops:list 36.0pt'>numerická 1: Přesune čtecí
+     kurzor na předchozí znak právě prohlíženého objektu</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo8;tab-stops:list 36.0pt'>numerická 2: Přečte znak,
+     na němž se v rámci prohlíženého objektu nachází čtecí kurzor</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo8;tab-stops:list 36.0pt'>numerická 3: Přesune čtecí
+     kurzor na následující znak právě prohlíženého objektu</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo8;tab-stops:list 36.0pt'>Shift+numerická 3: Přesune
+     čtecí kurzor na konec aktuálního řádku v rámci prohlíženého objektu</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo8;tab-stops:list 36.0pt'>numerické Plus: Přečte celý
+     text v&nbsp;rámci prohlíženého objektu</li>
 </ul>
-<p>
-Príkazy, ktoré nevykonávajú pohyb prehliadacím kurzorom je možné stlačiť 2 krát rýchlo za sebou a príslušná informácia bude vyhláskovaná.
-</p>
-<p>
-Poznámka: Aby byla zajištěna správná funkčnost těchto příkazů, musí být vypnuta klávesa numlock.
-</p>
-<p>
-Jestliže  zaměřeným objektem je editační pole, které má textový kurzor, tak při pohybu s ním mění svou pozici i čtecí kurzor. Pokud ale chcete, aby čtecí kurzor zůstal na konkrétním místě v textu a nepohyboval se spolu s textovým kurzorem, můžete použít klávesovou zkratku NVDA+6 pro vypnutí sledování textového kurzoru..
-</p> 
-<p>
-Použitím čtecího kurzoru je též možné kopírovat části textu . Například můžete skopírovat adresu, kterou vám někdo poslal v online konverzaci. Přesuňte čtecí kurzor na první znak textu, který chcete skopírovat a stiskněte kombinaci kláves NVDA+F9. Dále přejděte na konec textu a stiskněte klávesovou zkratku NVDA+F10. Takto označený text bude skopírován do schránky windows a vy jej můžete standardním způsobem vložit do libovoľného editačního pole. Můžete si také nechat obsah schránky přečíst stiskem zkratky NVDA+c. Pochopitelně když prvek, ze kterého chcete kopírovat má textový kurzor a umožňuje standardní způsob kopírování, je na vás, kterou možnost použijete.
-</p>
-<h3 id="7.5">7.5. Navigace pomocí myši</h3>
-<p>
-NVDA je standardně nastaven tak, aby při pohybu myší ohlašoval objekty, na kterých se právě nachází ukazatel myši. NVDA může číst jen ty objekty, na které aktuálně ukazuje kurzor myši. Nedokáže přečíst textové objekty, které jsou mimo kurzor.
-</p>
-<p>
-NVDA uživateli nabízí i možnost akustické signalizace v průběhu pohybu myši na obrazovce. Čím výše se myš na obrazovce nachází, tím vyšší je pípání. Pro pravou a levou stranu se pípání přesouvá z jednoho kanálu do druhého, předpokládá se, že uživateľ má stereo reproduktory. Tyto funkce NVDA nejsou standardně zapnuty, ale v dialogu nastavení myši se dají dodatečně aktivovat.
-</p>
-<h2 id="8">8. Virtuální prohlížeč</h2>
-<p>
-Souhrnnější dokumenty, jako jsou např. vebové stránky zobrazuje NVDA pomocí TZV. virtuálního prohlížeče.
-</p>
-<p>
-Virtuální prohlížeč je prosté textové znázornění webového dokumentu.
-Pro pohyb po obsahu dokumentu můžete stejně jako při práci s běžnými textovými dokumenty použít kurzorové šipky. Při  čtení obsahu virtuálního prohlížeče jsou ohlašovány veškeré prvky dokumentu jako např. odkazy, nadpisy, atd.
-</p>
-<p>
-v tomto režimu můžete např. upravovat obsah editačních polí, což v režimu prohlížení není možné z toho důvodu, že některé klávesy, které běžně vkládají znaky, jsou použity pro pohyb po různých prvcích dokumentu (viz následující kapitola).
-</p>
-<p>
-Jestliže v  režimu prohlížení kliknutím nebo stiskem klávesy tab přejdete na jakýkoli formulářový prvek, NVDA automaticky aktivuje formulářový režim. Naopak jestliže ve formulářovém režimu kliknutím nebo stiskem klávesy tab přejdete na prvek, který formulářový režim nevyžaduje, NVDA se automaticky přepne do režimu prohlížení.
-</p>
-<p>
-mezi těmito dvěma režimi se můžete přepínat též ručně stiskem kombinace kláves NVDA+mezerník.
-</p>
-<p>
-Pozor: Jestliže formulářový režim zapnete ručně, NVDA se zpět do režimu prohlížení už automaticky nepřepne. Je tedy nutné se opět přepnout ručně. Formulářový režim můžete deaktivovat též klávesou escape. Automatické přepínání těchto dvou režimů je možné zakázat v dialogu virtuální prohlížeč.
-</p>
-<p>
-V této verzi NVDA je virtuální prohlížeč použit pro čtení dokumentů v programech Mozilla Firefox, Microsoft Internet Explorer, a Adobe Reader.
-</p>
-<h3 id="8.1">8.1. Příkazy rychlé navigace</h3>
-<p>
-V  režimu prohlížení NVDA podporuje jednoznakové příkazy pro rychlejší pohyb po prvcích ve virtuálním prohlížeči.
-</p>
-<p>
-Pomocí nich se můžete posunovat na následující prvek, v opačném směru se můžete pohybovat kombinací příkazů s klávesou shift.
-</p>
-<p>
-Příkazy rychlé navigace jsou:
-</p>
-<ul>
-<li>h: nadpis</li>
-<li>klávesy + až ž čili 1 až 6: nadpis v příslušné úrovni.</li>
-<li>l: seznam</li>
-<li>i: položka seznamu</li>
-<li>t: tabulka</li>
-<li>k: odkaz</li>
-<li>f: prvek formuláře</li>
-<li>u: nenavštívený odkaz</li>
-<li>v: navštívený odkaz</li>
-<li>e: editační pole</li>
-<li>b: tlačítko</li>
-<li>x: zaškrtávací políčko</li>
-<li>c: c: rozbalovací políčko</li>
-<li>r: přepínač</li>
-<li>q: citace</li>
-<li>s: oddělovač</li>
-<li>m: rámec</li>
-<li>g: grafika</li>
-<li>D: oblast stránky</li>
-<li>n: text jenž není odkaz</li>
-<li>o: vnořený objekt</li>
+
+<p><span class=SpellE>Príkazy</span>, <span class=SpellE>ktoré</span> <span
+class=SpellE>nevykonávajú</span> pohyb <span class=SpellE>prehliadacím</span> <span
+class=SpellE>kurzorom</span> je možné <span class=SpellE>stlačiť</span> 2 <span
+class=SpellE>krát</span> <span class=SpellE>rýchlo</span> za sebou a <span
+class=SpellE>príslušná</span> <span class=SpellE>informácia</span> bude <span
+class=SpellE>vyhláskovaná</span>. </p>
+
+<p>Poznámka: Aby byla zajištěna správná funkčnost těchto příkazů, musí být
+vypnuta klávesa <span class=SpellE>Numlock</span>. </p>
+
+<p>Jestliže&nbsp; zaměřeným objektem je editační pole, které má textový kurzor,
+tak při pohybu s&nbsp;ním mění svou pozici i čtecí kurzor. Pokud ale chcete,
+aby čtecí kurzor zůstal na konkrétním místě v&nbsp;textu a nepohyboval se spolu
+s textovým kurzorem, můžete použít klávesovou zkratku NVDA+6 pro vypnutí
+sledování textového kurzoru.. </p>
+
+<p>Použitím čtecího kurzoru je též možné kopírovat části textu . Například
+můžete kopírovat adresu, kterou vám někdo poslal v online konverzaci. Přesuňte
+čtecí kurzor na první znak textu, který chcete <span class=SpellE>skopírovat</span>
+a stiskněte kombinaci kláves NVDA+F9. Dále přejděte na konec textu a stiskněte
+klávesovou zkratku NVDA+F10. Takto označený text bude <span class=SpellE>skopírován</span>
+do schránky <span class=SpellE>windows</span> a vy jej můžete standardním
+způsobem vložit do <span class=SpellE>libovoľného</span> editačního pole.
+Můžete si také nechat obsah schránky přečíst stiskem zkratky NVDA+C.
+Pochopitelně když prvek, ze kterého chcete kopírovat má textový kurzor a
+umožňuje standardní způsob kopírování, je na vás, kterou možnost použijete. <o:p></o:p></p>
+
+<h3 id=7.5>7.5. Navigace pomocí myši</h3>
+
+<p>NVDA je standardně nastaven tak, aby při pohybu myší ohlašoval objekty, na
+kterých se právě nachází ukazatel myši. NVDA může číst jen ty objekty, na které
+aktuálně ukazuje kurzor myši. Nedokáže přečíst textové objekty, které jsou mimo
+kurzor. </p>
+
+<p>NVDA uživateli nabízí i možnost akustické signalizace v&nbsp;průběhu pohybu
+myši na obrazovce. Čím výše se myš na obrazovce nachází, tím vyšší je pípání.
+Pro pravou a levou stranu se pípání přesouvá z jednoho kanálu do druhého.
+Předpokládá se, že <span class=SpellE>uživateľ</span> má stereo reproduktory.
+Tyto funkce NVDA nejsou standardně zapnuty, ale v&nbsp;dialogu nastavení myši
+se dají dodatečně aktivovat. <o:p></o:p></p>
+
+<h2 id=8>8. Virtuální prohlížeč</h2>
+
+<p>Souhrnnější dokumenty, jako jsou např. <span class=SpellE>vebové</span>
+stránky zobrazuje NVDA pomocí TZV. Virtuálního prohlížeče. </p>
+
+<p>Virtuální prohlížeč je prosté textové znázornění webového dokumentu. Pro
+pohyb po obsahu dokumentu můžete stejně jako při práci s&nbsp;běžnými textovými
+dokumenty použít kurzorové šipky. Při&nbsp; čtení obsahu virtuálního prohlížeče
+jsou ohlašovány veškeré prvky dokumentu jako např. odkazy, nadpisy, atd. </p>
+
+<p>v&nbsp;tomto režimu můžete např. upravovat obsah editačních polí, což
+v&nbsp;režimu prohlížení není možné z&nbsp;toho důvodu, že některé klávesy,
+které běžně vkládají znaky, jsou použity pro pohyb po různých prvcích dokumentu
+(viz následující kapitola). </p>
+
+<p>Jestliže v&nbsp; režimu prohlížení kliknutím nebo stiskem klávesy <span
+class=SpellE>Tab</span> přejdete na jakýkoli formulářový prvek, NVDA
+automaticky aktivuje formulářový režim. Naopak jestliže ve formulářovém režimu
+kliknutím nebo stiskem klávesy <span class=SpellE>Tab</span> přejdete na prvek,
+který formulářový režim nevyžaduje, NVDA se automaticky přepne do režimu
+prohlížení. </p>
+
+<p>Mezi těmito dvěma <span class=SpellE>režimi</span> se můžete přepínat též
+ručně stiskem kombinace kláves NVDA+Mezerník. </p>
+
+<p>Pozor: Jestliže formulářový režim zapnete ručně, NVDA se zpět do režimu
+prohlížení už automaticky nepřepne. Je tedy nutné se opět přepnout ručně.
+Formulářový režim můžete deaktivovat též klávesou <span class=SpellE>Escape</span>.
+Automatické přepínání těchto dvou režimů je možné zakázat v dialogu virtuální
+prohlížeč. </p>
+
+<p>V&nbsp;této verzi NVDA je virtuální prohlížeč použit pro čtení dokumentů
+v&nbsp;programech <span class=SpellE>Mozilla</span> <span class=SpellE>Firefox</span>,
+Microsoft Internet Explorer a Adobe <span class=SpellE>Reader</span>. <o:p></o:p></p>
+
+<h3 id=8.1>8.1. Příkazy rychlé navigace</h3>
+
+<p>V&nbsp; režimu prohlížení NVDA podporuje jednoznakové příkazy pro rychlejší
+pohyb po prvcích ve virtuálním prohlížeči. </p>
+
+<p>Pomocí nich se můžete posunovat na následující prvek, v opačném směru se
+můžete pohybovat kombinací příkazů s klávesou Shift. </p>
+
+<p>Příkazy rychlé navigace jsou: </p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>H: Nadpis</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>Klávesy + až ž, čili 1 až
+     6: Nadpis v příslušné úrovni.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>L: Seznam</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>I: Položka seznamu</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>T: Tabulka</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>K: Odkaz</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>F: Prvek formuláře</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>U: Nenavštívený odkaz</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>V: Navštívený odkaz</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>E: Editační pole</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>B: Tlačítko</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>X: <span class=SpellE>Zaškrtávací</span>
+     políčko</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>C: Rozbalovací políčko</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>R: Přepínač</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>Q: Citace</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>S: Oddělovač</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>M: Rámec</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>G: Grafika</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>D: Oblast stránky</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>N: Text jenž není odkaz</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list 36.0pt'>O: Vnořený objekt<o:p></o:p></li>
 </ul>
-<h3 id="8.2">8.2 Seznam prvků</h3>
-<p>
-Dialog seznam prvků, který můžete kdykoli ve virtuálním prohlížeči vyvolat stiskem klávesové zkratky NVDA+F7, zobrazuje seznam odkazů, nadpisů, či oblastí stránky, které jsou k dispozici v aktuálnímdokumentu. Nadpisy a oblasti stránky jsou zobrazeny ve stromovém seznamu. Je zde přepínač, pomocí něhož můžete vybírat typ prvků, které mají být zobrazeny. Standardně se po vyvolání tohoto dialogu zobrazí v seznamu odkazy. Dialog obsahuje i editační pole, díky kterému je možné filtrovat aktuálně zobrazený seznam prvků. To může usnadnit hledání konkrétní položky v seznamu, resp. v aktuálním zobrazeném dokumentu. Jestliže je editační pole prázdné, v seznamu budou zobrazeny veškeré  zvolené prvky, které se vyskytují v aktuálním dokumentu. . Pokud do políčka napíšete jeden či více znaků, v seznamu budou zobrazeny jen ty prvky, které obsahují vámi definovaný řetězec. V samotném seznamu je samozřejmě možné se pohybovat kurzorovými šipkami a nebo zadat první písmeno hledané položky a NVDA umístí kurzor na její první výskyt v seznamu. Na konkrétní vyhledanou položku Můžete přemístit kurzor virtuálního prohlížeče, nebo ji aktivovat použitím příslušných tlačítek v dialogu.
-</p>
-<h3 id="8.3">8.3. Vnořené objekty</h3>
-<p>
-Moderní webové stránky mohou obsahovat prvky Adobe flash nebo Sun java. Pokud se ve virtuálním prohlížeči takový prvek objeví, NVDA ohlásí vnořený objekt. Jestliže na tomto objektu stisknete klávesu enter, přemístíte do něj fokus a je-li objekt přístupný, můžete se v něm pohybovat klávesami tab či shift+tab. Pro přepnutí zpět do virtuálního prohlížeče použijte klávesovou zkratku NVDA+mezerník.
-</p>
-<h3 id="9">9. Jak získat více informací</h3>
-<p>
-Protože se NVDA neustále vyvíjí, není možné zajistit funkčnost všech klávesových příkazů a postupů tak, jak jsou popsány v této příručce. Jestliže  se vyskytnou problémy s některými zde popsanými příkazy, navštivte prosím webovou stránku: <a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a> a zkuste vyhledat aktuální informace.
-</p>
+
+<h3 id=8.2>8.2 Seznam prvků</h3>
+
+<p>Dialog seznam prvků, který můžete kdykoli ve virtuálním prohlížeči vyvolat
+stiskem klávesové zkratky NVDA+F7, zobrazuje seznam odkazů, nadpisů, či oblastí
+stránky, které jsou k&nbsp;dispozici v&nbsp;aktuálním dokumentu. Nadpisy a
+oblasti stránky jsou zobrazeny ve stromovém seznamu. Je zde přepínač, pomocí
+něhož můžete vybírat typ prvků, které mají být zobrazeny. Standardně se po
+vyvolání tohoto dialogu zobrazí v&nbsp;seznamu odkazy. Dialog obsahuje i
+editační pole, díky kterému je možné filtrovat aktuálně zobrazený seznam prvků.
+To může usnadnit hledání konkrétní položky v&nbsp;seznamu, resp. v aktuálním
+zobrazeném dokumentu. Jestliže je editační pole prázdné, v&nbsp;seznamu budou
+zobrazeny veškeré&nbsp; zvolené prvky, které se vyskytují v&nbsp;aktuálním
+dokumentu. . Pokud do políčka napíšete jeden či více znaků, v&nbsp;seznamu
+budou zobrazeny jen ty prvky, které obsahují vámi definovaný řetězec.
+V&nbsp;samotném seznamu je samozřejmě možné se pohybovat kurzorovými šipkami a
+nebo zadat první písmeno hledané položky a NVDA umístí kurzor na její první
+výskyt v&nbsp;seznamu. Na konkrétní vyhledanou položku můžete přemístit kurzor
+virtuálního prohlížeče, nebo ji aktivovat použitím příslušných tlačítek v
+dialogu. <o:p></o:p></p>
+
+<h3 id=8.3>8.3. Vnořené objekty</h3>
+
+<p>Moderní webové stránky mohou obsahovat prvky Adobe <span class=SpellE>Flash</span>
+nebo Sun Java. Pokud se ve virtuálním prohlížeči takový prvek objeví, NVDA
+ohlásí vnořený objekt. Jestliže na tomto objektu stisknete klávesu <span
+class=SpellE>enter</span>, přemístíte do něj fokus a je-li objekt přístupný,
+můžete se v&nbsp;něm pohybovat klávesami <span class=SpellE>tab</span> či <span
+class=SpellE>shift</span>+tab. Pro přepnutí zpět do virtuálního prohlížeče
+použijte klávesovou zkratku NVDA+mezerník. <o:p></o:p></p>
+
+<h3 id=9>9. Jak získat více informací</h3>
+
+<p>Protože se NVDA neustále vyvíjí, není možné zajistit funkčnost všech
+klávesových příkazů a postupů tak, jak jsou popsány v této příručce.
+Jestliže&nbsp; se vyskytnou problémy s některými zde popsanými příkazy,
+navštivte prosím webovou stránku: <a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a>
+a zkuste vyhledat aktuální informace. </p>
+
+</div>
+
 </body>
+
 </html>

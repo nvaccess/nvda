@@ -45,8 +45,8 @@ Anuncia a carga atual da bateria e se o equipamento está ligado na tomada.
 NVDA+5 - alterna o anúncio de mudanças em conteúdo dinâmico:
 Liga e desliga o anúncio de novo conteúdo, como por exemplo quando um texto novo aparece num prompt de comando.
 
-NVDA+6 - cursor da aplicação move o cursor de revisão:
-Liga e desliga o movimento automático do cursor de revisão conforme o cursor da aplicação se move.
+NVDA+6 - cursor da aplicação move o cursor de exploração:
+Liga e desliga o movimento automático do cursor de exploração conforme o cursor da aplicação se move.
 
 NVDA+7 - foco move objeto de navegação:
 Liga e desliga a colocação do objeto de navegação como sendo aquele para onde o foco foi.
@@ -171,11 +171,11 @@ Move o ponteiro do mouse para o objeto de navegação atual.
 NVDA+num asterisco - move objeto de navegação para mouse:
 Coloca como objeto de navegação aquele sob o ponteiro do mouse.
 
-num menos - move cursor de revisão para cursor da aplicação:
-Move o cursor de revisão para a posição atual do cursor da aplicação.
+num menos - move cursor de exploração para cursor da aplicação:
+Move o cursor de exploração para a posição atual do cursor da aplicação.
 
-Control+num menos - move cursor da aplicação para cursor de revisão:
-Move o cursor da aplicação para a posição atual do cursor de revisão.
+Control+num menos - move cursor da aplicação para cursor de exploração:
+Move o cursor da aplicação para a posição atual do cursor de exploração.
 
 NVDA+num menos - objeto de navegação para o foco:
 Coloca como objeto de navegação atual aquele que está com foco.
@@ -183,11 +183,17 @@ Coloca como objeto de navegação atual aquele que está com foco.
 num barra - clique esquerdo:
 Clica uma vez com o botão esquerdo do mouse onde ele esteja.
 
+Shift+num barra - alterna botão esquerdo:
+Pressiona ou solta o botão esquerdo do mouse.
+
 num asterisco - clique direito:
 Clica uma vez com o botão direito do mouse onde ele esteja.
 
-num mais - diz tudo com cursor de revisão:
-Usa o cursor de revisão para ler da posição atual até o final do texto atualmente revisável.
+Shift+num asterisco - alterna botão direito:
+Pressiona ou solta o botão direito do mouse.
+
+num mais - diz tudo com cursor de exploração:
+Usa o cursor de exploração para ler da posição atual até o final do texto atualmente revisável.
 
 NVDA+num mais - diz tudo em objetos de navegação:
 Começa a ler todos os objetos a partir do próximo, no fluxo total dos objetos.
@@ -195,56 +201,56 @@ Começa a ler todos os objetos a partir do próximo, no fluxo total dos objetos.
 LER OBJETOS
 
 num 1 - caractere anterior:
-Move o cursor de revisão para o caractere anterior.
+Move o cursor de exploração para o caractere anterior.
 
 Shift+num 1 - início da linha:
-Move o cursor de revisão para o início da linha.
+Move o cursor de exploração para o início da linha.
 
 num 2 - caractere atual:
-Fala o caractere onde está o cursor de revisão.
+Fala o caractere onde está o cursor de exploração.
 
 num 3 - próximo caractere:
-Move o cursor de revisão para o próximo caractere.
+Move o cursor de exploração para o próximo caractere.
 
 Shift+num 3 - fim da linha:
-Move o cursor de revisão para o fim da linha.
+Move o cursor de exploração para o fim da linha.
 
 num 4 - palavra anterior:
-Move o cursor de revisão para a palavra anterior.
+Move o cursor de exploração para a palavra anterior.
 
 num 5 - palavra atual:
-Fala a palavra onde está o cursor de revisão.
+Fala a palavra onde está o cursor de exploração.
 
 num 6 - próxima palavra:
-Move o cursor de revisão para a próxima palavra.
+Move o cursor de exploração para a próxima palavra.
 
 num 7 - linha anterior:
-Move o cursor de revisão para a linha anterior.
+Move o cursor de exploração para a linha anterior.
 
 Shift+num 7 - topo:
-Move o cursor de revisão para a primeira linha.
+Move o cursor de exploração para a primeira linha.
 
 num 8 - linha atual:
-Fala a linha onde está o cursor de revisão.
+Fala a linha onde está o cursor de exploração.
 
 num 9 - próxima linha:
-Move o cursor de revisão para a próxima linha.
+Move o cursor de exploração para a próxima linha.
 
 Shift+num 9 - fundo:
-Move o cursor de revisão para a última linha.
+Move o cursor de exploração para a última linha.
 
-NVDA+f9 - marcador de revisão inicial para cópia:
-Marca a posilção atual do cursor de revisão como o início do texto a ser copiado.
+NVDA+f9 - marcador inicial de exploração para cópia:
+Marca a posilção atual do cursor de exploração como o início do texto a ser copiado.
 
-NVDA+f10 - copia revisão:
-Pega o texto desde o marcador anteriormente colocado até a posição atual do cursor de revisão, inclusive o texto aí contido, e copia-o para a área de transferência.
+NVDA+f10 - copia exploração:
+Pega o texto desde o marcador anteriormente colocado até a posição atual do cursor de exploração, inclusive o texto aí contido, e copia-o para a área de transferência.
 
 COMANDOS DE EXIBIDOR VIRTUAL
 
 NVDA+Espaço - alterna o passe:
 Liga e desliga o passe de teclas pelo exibidor virtual.
 
-Control+NVDA+f: localizar (Control+f no Firefox 2 e no Internet Explorer);
+Control+NVDA+f: localizar;
 NVDA+f3: localizar próxima;
 NVDA+f7: lista de elementos;
 NVDA+f5: atualiza o exibidor;
