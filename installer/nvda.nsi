@@ -219,8 +219,6 @@ CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(docFolder)\$(shortcut_keycom).lnk
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(docFolder)\$(shortcut_userguide).lnk" "$INSTDIR\documentation\$(path_userguide)" "" "$INSTDIR\documentation\$(path_userguide)" 0 SW_SHOWMAXIMIZED
 WriteIniStr "$INSTDIR\${PRODUCT}.url" "InternetShortcut" "URL" "${WEBSITE}"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_website).lnk" "$INSTDIR\${PRODUCT}.url" "" "$INSTDIR\${PRODUCT}.url" 0
-CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
- CONTROL|ALT|N "Shortcut Ctrl+Alt+N"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_uninstall).lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
 !insertmacro MUI_STARTMENU_WRITE_END
 ;Items for uninstaller
@@ -237,6 +235,11 @@ WriteRegStr ${INSTDIR_REG_ROOT} "Software\Microsoft\Windows\CurrentVersion\App P
 
 section "$(section_service)"
 ExecWait "$INSTDIR\nvda_slave.exe installer_installService"
+SectionEnd
+
+section "$(section_desktopShortcut)"
+CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
+ CONTROL|ALT|N "Shortcut Ctrl+Alt+N"
 SectionEnd
 
 ;The uninstall section
