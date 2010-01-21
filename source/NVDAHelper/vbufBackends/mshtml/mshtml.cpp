@@ -673,7 +673,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			tempIter=attribsMap.find(L"HTMLAttrib::title");
 			if(tempIter!=attribsMap.end()) {
 				contentString=tempIter->second;
-			} else if(isInteractive&&!IAValue.empty()) {
+			} else if(isInteractive&&!parentHasContent&&!IAValue.empty()) {
 				contentString=getNameForURL(IAValue);
 			} 
 		}
