@@ -1,0 +1,18 @@
+Import([
+	'env',
+	'nvdaControllerRPCStubs',
+])
+
+clientLib=env.SharedLibrary(
+	target="nvdaControllerClient",
+	source=[
+		"client.c",
+		nvdaControllerRPCStubs[1],
+	],
+	LIBS=[
+		"rpcrt4",
+	],
+	LINKFLAGS="${LINKFLAGS} /def:${TARGET}.def",
+)
+
+Return('clientLib')

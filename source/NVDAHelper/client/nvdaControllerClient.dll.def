@@ -1,0 +1,7 @@
+;nvdaControllerClient.def
+LIBRARY              nvdaControllerClient.dll
+EXPORTS
+	nvdaController_getNVDAVersionString
+	nvdaController_speakText
+	nvdaController_cancelSpeech
+	nvdaController_brailleMessage
