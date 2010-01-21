@@ -51,6 +51,10 @@ if TARGET_ARCH=='x86':
 	Export('localLib')
 	neededTargets.append(localLib)
 
+clientLib=env.SConscript('client/sconscript')
+Export('clientLib')
+neededTargets.append(clientLib)
+
 remoteLib=env.SConscript('remote/sconscript')
 Export('remoteLib')
 neededTargets.append(remoteLib)
