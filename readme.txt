@@ -19,11 +19,12 @@ General dependencies:
 		* Copy espeak.dll and espeak-data into the source\synthDrivers directory.
 	* Additional variants for eSpeak: http://www.nvda-project.org/espeak-variants/
 		* Extract the archive into the source\synthDrivers directory.
-	* IAccessible2, version 1.0.2.0 or later:
+	* IAccessible2, version 1.1.0.0 or later:
 		* The proxy dll and typelib are required.
 		* Pre-built versions have been provided for convenience at http://www.nvda-project.org/3rdParty/
 		* Copy ia2.tlb into the source\typelibs directory.
-		* Copy IAccessible2Proxy.dll into the source\lib directory.
+		* Copy the 32 bit version of the proxy dll into the source\lib directory, naming it IAccessible2Proxy.dll.
+		* Copy the 64 bit version of the proxy dll into the source\lib64 directory, naming it IAccessible2Proxy.dll.
 	* ConfigObj, version 4.6.0 or later:
 		* Web site: http://www.voidspace.org.uk/python/configobj.html
 		* Copy configobj.py and validate.py into the source directory.
