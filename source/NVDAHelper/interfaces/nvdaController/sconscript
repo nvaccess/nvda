@@ -2,7 +2,7 @@ Import('env')
 
 headerFile,clientSourceFile,serverSourceFile=env.MSRPCStubs(
 	source=['nvdaController.idl'],
-	MIDLFLAGS=['/prefix','all','nvdaController_','/acf',File('nvdaController.acf')],
+	MIDLFLAGS=env['MIDLFLAGS']+['/prefix','all','nvdaController_','/acf',File('nvdaController.acf')],
 )
 clientObjFile=env.Object(clientSourceFile)
 serverObjFile=Object(serverSourceFile)
