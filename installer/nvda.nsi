@@ -80,6 +80,7 @@ Var StartMenuFolder
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKLM"
 !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\${PRODUCT}"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
+!define MUI_STARTMENUPAGE_NODISABLE
 !insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
 
 ;Installation page
