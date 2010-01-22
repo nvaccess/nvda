@@ -20,3 +20,7 @@ __declspec(dllexport) error_status_t(*_nvdaController_brailleMessage)(const wcha
 error_status_t nvdaController_brailleMessage(const wchar_t* text) {
 	return _nvdaController_brailleMessage(text);
 }
+
+error_status_t nvdaController_testIfRunning() {
+	return 0;
+}

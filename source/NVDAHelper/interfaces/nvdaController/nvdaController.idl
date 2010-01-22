@@ -32,4 +32,9 @@ interface NvdaController {
  */
 	error_status_t brailleMessage([in,string] const wchar_t* message);
 
+/**
+ * Tests if NVDA is running or not.
+ */
+	error_status_t testIfRunning();
+
 };
