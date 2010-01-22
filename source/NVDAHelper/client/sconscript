@@ -3,8 +3,12 @@ Import([
 	'nvdaControllerRPCStubs',
 ])
 
+clientLibName="nvdaControllerClient%s"%('64' if env['TARGET_ARCH']=='x86_64' else '32')
+
+clientLibDefFile=env.File('nvdaControllerClient.def')
+
 clientLib=env.SharedLibrary(
-	target="nvdaControllerClient",
+	target=clientLibName,
 	source=[
 		"client.c",
 		nvdaControllerRPCStubs[1],
@@ -12,7 +16,8 @@ clientLib=env.SharedLibrary(
 	LIBS=[
 		"rpcrt4",
 	],
-	LINKFLAGS="${LINKFLAGS} /def:${TARGET}.def",
+	LINKFLAGS=env['LINKFLAGS']+['/def:%s'%clientLibDefFile.path],
 )
+env.Depends(clientLib,clientLibDefFile)
 
 Return('clientLib')
