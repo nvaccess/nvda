@@ -32,7 +32,14 @@ else:
 
 Export('env')
 
-neededTargets=[]
+clientInstallDir=Dir('../../extras/controllerClient')
+if TARGET_ARCH=='x86_64':
+	libInstallDir=Dir('../lib64')
+else:
+	libInstallDir=Dir('../lib')
+
+buildList=[]
+
 
 acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
 Export('acrobatAccessRPCStubs')
@@ -45,43 +52,45 @@ Export('vbufRPCStubs')
 
 nvdaControllerRPCStubs=env.SConscript('interfaces/nvdaController/sconscript')
 Export('nvdaControllerRPCStubs')
+env.Install(clientInstallDir,nvdaControllerRPCStubs[0])
 
 if TARGET_ARCH=='x86':
 	localLib=env.SConscript('local/sconscript')
 	Export('localLib')
-	neededTargets.append(localLib)
+	env.Install(libInstallDir,localLib)
+	buildList.append(localLib)
 
 clientLib=env.SConscript('client/sconscript')
 Export('clientLib')
-neededTargets.append(clientLib)
+env.Install(clientInstallDir,clientLib)
+buildList.append(clientLib)
 
 remoteLib=env.SConscript('remote/sconscript')
 Export('remoteLib')
-neededTargets.append(remoteLib)
+env.Install(libInstallDir,remoteLib)
+buildList.append(remoteLib)
 
 if TARGET_ARCH=='x86_64':
 	remoteLoaderProgram=env.SConscript('remoteLoader/sconscript')
-	neededTargets.append(remoteLoaderProgram)
+	env.Install(libInstallDir,remoteLoaderProgram)
+	buildList.append(remoteLoaderProgram)
 
 vbufBaseStaticLib=env.SConscript('vbufBase/sconscript')
 Export('vbufBaseStaticLib')
 
 adobeAcrobatVBufBackend=env.SConscript('vbufBackends/adobeAcrobat/sconscript')
-neededTargets.append(adobeAcrobatVBufBackend)
+env.Install(libInstallDir,adobeAcrobatVBufBackend)
+buildList.append(adobeAcrobatVBufBackend)
 
 geckoVBufBackend=env.SConscript('vbufBackends/gecko_ia2/sconscript')
-neededTargets.append(geckoVBufBackend)
+env.Install(libInstallDir,geckoVBufBackend)
+buildList.append(geckoVBufBackend)
 
 mshtmlVBufBackend=env.SConscript('vbufBackends/mshtml/sconscript')
-neededTargets.append(mshtmlVBufBackend)
+env.Install(libInstallDir,mshtmlVBufBackend)
+buildList.append(mshtmlVBufBackend)
 
-if TARGET_ARCH=='x86_64':
-	installDir=Dir('../lib64')
-else:
-	installDir=Dir('../lib')
-installedFiles=env.Install(installDir,[x[0] for x in neededTargets] if env['release'] else [x[0:2] for x in neededTargets])
-env.Requires(installedFiles,neededTargets)
-env.Alias('install',installedFiles)
-
-#By default we will build particular targets:
-env.Default(neededTargets)
+buildTarget=env.Alias('build',buildList)
+installTarget=env.Alias('install',[clientInstallDir,libInstallDir])
+env.Requires(installTarget,buildTarget)
+env.Default(buildTarget)

@@ -20,4 +20,10 @@ clientLib=env.SharedLibrary(
 )
 env.Depends(clientLib,clientLibDefFile)
 
+#if 'install' in COMMAND_LINE_TARGETS:
+#	installDir=env.Install('#../../extras/controllerClient/',clientLib)
+#	env.Default(installDir)
+
+#env.Default(clientLib)
+
 Return('clientLib')
