@@ -2,7 +2,7 @@ import time
 import ctypes
 
 #Load the NVDA client library
-clientLib=ctypes.cdll.LoadLibrary('./nvdaControllerClient.dll')
+clientLib=ctypes.cdll.LoadLibrary('./nvdaControllerClient32.dll')
 
 #Test if NVDA is running, and if its not show a message
 res=clientLib.nvdaController_testIfRunning()
