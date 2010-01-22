@@ -793,6 +793,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	# Determine the order of speech.
 	# speakContentFirst: Speak the content before the control field info.
 	speakContentFirst=reason==REASON_FOCUS
+	speakStatesFirst=role==controlTypes.ROLE_LINK
 
 	# Determine what text to speak.
 	# Special cases
@@ -811,7 +812,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 
 	# General cases
 	elif ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))) and speakEntry:
-		return " ".join([x for x in nameText,roleText,stateText,levelText,keyboardShortcutText if x])
+		return " ".join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),levelText,keyboardShortcutText if x])
 	elif not extraDetail and fieldType=="start_inControlFieldStack" and speakWithinForLine:
 		return " ".join([x for x in nameText,roleText,stateText,levelText,keyboardShortcutText if x])
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
