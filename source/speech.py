@@ -792,7 +792,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 
 	# Determine the order of speech.
 	# speakContentFirst: Speak the content before the control field info.
-	speakContentFirst=reason==REASON_FOCUS
+	speakContentFirst=reason==REASON_FOCUS and role not in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_COMBOBOX)
 	# speakStatesFirst: Speak the states before the role.
 	speakStatesFirst=role==controlTypes.ROLE_LINK
 
@@ -807,9 +807,6 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	elif fieldType=="start_addedToControlFieldStack" and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER,controlTypes.ROLE_TABLEROWHEADER) and tableID:
 		# Table cell.
 		return getSpeechTextForProperties(_tableID=tableID, rowNumber=attrs.get("table-rownumber"), columnNumber=attrs.get("table-columnnumber"))
-	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
-		# Clickable.
-		return getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
 
 	# General cases
 	elif (
@@ -819,6 +816,11 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		return " ".join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),levelText,keyboardShortcutText if x])
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
 		return _("out of %s")%roleText
+
+	# Special cases
+	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
+		# Clickable.
+		return getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
 
 	else:
 		return ""
