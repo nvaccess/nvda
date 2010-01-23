@@ -793,6 +793,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	# Determine the order of speech.
 	# speakContentFirst: Speak the content before the control field info.
 	speakContentFirst=reason==REASON_FOCUS
+	# speakStatesFirst: Speak the states before the role.
 	speakStatesFirst=role==controlTypes.ROLE_LINK
 
 	# Determine what text to speak.
