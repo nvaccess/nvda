@@ -410,6 +410,7 @@ silentRolesOnFocus=set([
 	controlTypes.ROLE_TABLECELL,
 	controlTypes.ROLE_LISTITEM,
 	controlTypes.ROLE_MENUITEM,
+	controlTypes.ROLE_CHECKMENUITEM,
 	controlTypes.ROLE_TREEVIEWITEM,
 ])
 
@@ -457,7 +458,7 @@ def processNegativeStates(role, states, reason, negativeStates):
 	if role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_TREEVIEWITEM) and controlTypes.STATE_SELECTABLE in states and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
 		speakNegatives.add(controlTypes.STATE_SELECTED)
 	# Restrict "not checked" in a similar way to "not selected".
-	if (role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON) or controlTypes.STATE_CHECKABLE in states)  and (controlTypes.STATE_HALFCHECKED not in states) and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
+	if (role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKMENUITEM) or controlTypes.STATE_CHECKABLE in states)  and (controlTypes.STATE_HALFCHECKED not in states) and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
 		speakNegatives.add(controlTypes.STATE_CHECKED)
 	if reason == REASON_CHANGE:
 		# We want to speak this state only if it is changing to negative.
