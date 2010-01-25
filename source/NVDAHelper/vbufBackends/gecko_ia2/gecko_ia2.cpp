@@ -270,7 +270,10 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 		//Check IA2Attributes, and or the role etc to work out if this object is a block element
 		DEBUG_MSG(L"Is this object a block element?");
 		map<wstring,wstring>::const_iterator it;
-		if((it=IA2AttribsMap.find(L"display"))!=IA2AttribsMap.end()) {
+		if(IA2States&IA2_STATE_MULTI_LINE) {
+			// Multiline nodes should always be block.
+			isBlockElement=TRUE;
+		} else if((it=IA2AttribsMap.find(L"display"))!=IA2AttribsMap.end()) {
 			// If there is a display attribute, we can rely solely on this to determine whether this is a block element or not.
 			DEBUG_MSG(L"IA2Attributes contains display, value "<<it->second);
 			isBlockElement=(it->second!=L"inline");

@@ -24,6 +24,7 @@
 	* Setting whether braille should be tethered to the focus or the review cursor (NVDA+control+t) can now be also set from the braille settings dialog, and is also now saved in the user's configuration.
 	* Updated eSpeak speech synthesiser to 1.42.04.
 	* Updated liblouis braille translator to 1.8.0.
+	* In virtual buffers, the reporting of elements when moving by character or word has been greatly improved. Previously, a lot of irrelevant information was reported and the reporting was very different to that when moving by line. (#490)
 
 === Bug Fixes ===
 	* NVDA no longer fails to start if UI Automation support appears to be available but fails to initialise for some reason. (#483)
