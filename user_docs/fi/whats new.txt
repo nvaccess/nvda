@@ -35,8 +35,9 @@
 * Word-asiakirjojen ja  HTML-muokkaussäädinten tyhjät rivit näytetään nyt asianmukaisesti pistenäytöllä. NVDA näytti aiemmin vain nykyisen virkkeen.
 * Useita tietoturvakorjauksia käytettäessä NVDA:ta Windowsiin kirjauduttaessa ja muilla suojatuilla työpöydillä.
 * Järjestelmäkohdistimen sijainti päivitetään nyt oikein standardeissa Windowsin muokkauskentissä ja Word-asiakirjoissa käytettäessä Lue kaikki -komentoa, joka siirtää ruudun alareunan ulkopuolelle.
-* Näennäispuskureissa ei enää virheellisesti sisällytetä tekstiä kuville, jotka ovat sellaisten linkki- ja napsautettava-tagien sisässä, joilla ei ole merkitystä ruudunlukijoille.
+* Näennäispuskureissa ei enää lueta linkki- ja napsautettava-tagien sisässä olevia kuvia, joilla ei ole merkitystä ruudunlukijoille.
 * Tehty korjauksia kannettaville tarkoitettuun näppäimistöasetteluun.
+* Kun pistenäyttö on asetettu seuraamaan tarkastelukohdistinta, ja kun kohdistus siirretään DOS-konsoli-ikkunaan, sen tekstissä voidaan nyt  liikkua kunnolla tarkastelukohdistimella.
 
 == 2009.1 ==
 Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioille, huomattavasti paranneltu tuki Internet Explorerille ja Adobe Readerille, tuki Windows 7:lle, Windowsin kirjautumis- ja Ctrl+Alt+Delete-ruutujen sekä Käyttäjätilien valvonnan (UAC) kehotteiden lukeminen sekä mahdollisuus olla vuorovaikutuksessa web-sivujen Flash- ja Java-sisällön kanssa. Lisäksi on useita merkittäviä korjauksia NVDA:n vakauteen ja parannuksia yleiseen käyttäjäkokemukseen.
