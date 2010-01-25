@@ -29,27 +29,27 @@ def _setDllFuncPointer(dll,name,cfunc):
 	cast(getattr(dll,name),POINTER(c_void_p)).contents.value=cast(cfunc,c_void_p).value
 
 #Implementation of nvdaController methods
-@CFUNCTYPE(c_long,POINTER(c_wchar_p))
+@WINFUNCTYPE(c_long,POINTER(c_wchar_p))
 def nvdaController_getNVDAVersionString(version):
 	import versionInfo
 	version.contents.value=versionInfo.version
 	return 0
 
-@CFUNCTYPE(c_long,c_wchar_p)
+@WINFUNCTYPE(c_long,c_wchar_p)
 def nvdaController_speakText(text):
 	import queueHandler
 	import speech
 	queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,text)
 	return 0
 
-@CFUNCTYPE(c_long)
+@WINFUNCTYPE(c_long)
 def nvdaController_cancelSpeech():
 	import queueHandler
 	import speech
 	queueHandler.queueFunction(queueHandler.eventQueue,speech.cancelSpeech)
 	return 0
 
-@CFUNCTYPE(c_long,c_wchar_p)
+@WINFUNCTYPE(c_long,c_wchar_p)
 def nvdaController_brailleMessage(text):
 	import queueHandler
 	import braille
