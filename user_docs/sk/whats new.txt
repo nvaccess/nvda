@@ -13,6 +13,7 @@
 	* Nové skripty na uzamknutie a odomknutie ľavého a pravého tlačidla myši; určené na vykonávanie operácie drag'n'drop. shift+numpad lomeno uzamknutie/odomknutie ľavého, shift+numpad krát na uzamknutie a odomknutie pravého tlačidla.
 	* Počas inštalácii je možné neinštalovať odkaz na pracovnú plochu, čo tiež zamedzí vytváranie klávesovej skratky.  (#518)
 	* NVDA dokáže ozvučiť aj 64 bitové IAccessible2 aplikácie.  (#479)
+	* Existuje rozhranie na ovládanie NVDA pre vývojárov ďalších aplikácií. Je možné napr. prečítať text, zastaviť reč, zobraziť správu v braily a pod.
 
 === Zmeny ===
 	* Veľmi dlhý popis v ponuke štart Windows 7 nie je viacej oznamovaný.
@@ -21,7 +22,7 @@
 	* Nastavovanie previazania braillovského kurzoru so systémovým fokusom alebo s prehliadacím kurzorom je možné urobiť aj z dialógu nastavenia brailu. Nastavenie sa tiež ukladá do používateľskej konfigurácii.
 	* Hlasový výstup eSpeak aktualizovaný na verziu 1.42.04.
 	* Prekladač do brailového písma liblouis aktualizovaný na verziu 1.8.0.
-	* V programoch TeamTalk3 a TeamTalk4 Classic nie je viac oznamovaná aktualizácia indikátora priebehu znázorňujúca VU Meter a tiež v prichádzajúcom chate sú správne čitateľné národné znaky.
+	* Oznamovanie prvkov Počas posúvania po znakoch vo virtuálnom prehliadači bolo značne prepracované. Doteraz bolo oznamovaných množstvo nepotrebných informácií a výstup pri pohybe po znakoch bol úplne odlišný od výstupu počas pohybu po riadkoch. (#490)
 
 === Opravy ===
 	* NVDA sa viac neodmieta spustiť, ak dôjde k chybe pri pokuse o inicializáciu podpori UI Automation. (#483)
@@ -37,6 +38,7 @@
 	* Vo virtuálnom prehliadači NVDA viac nezobrazuje text pre obrázky alebo klikateľné objekty, ak sú tieto označené ako nerelevantné pre odčítače. (#423)
 	* Opravy pre rozloženie klávesnice laptop. (#517)
 	* Ak je brailovský kurzor zviazaný s prehliadacím kurzorom a fokus získa okno príkazového riadku, je možné korektne sa pohybovať po texte príkazového riadku.
+	* V programoch TeamTalk3 a TeamTalk4 Classic nie je viac oznamovaná aktualizácia indikátora priebehu znázorňujúca VU Meter a tiež v prichádzajúcom chate sú správne čitateľné národné znaky.
 
 
 == 2009.1 ==
