@@ -78,9 +78,12 @@ class UIATextInfo(textInfos.TextInfo):
 		if endPoint=="start":
 			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_Start,UIAUnit,direction)
 		elif endPoint=="end":
-			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_Start,UIAUnit,direction)
+			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_End,UIAUnit,direction)
 		else:
 			res=self._rangeObj.Move(UIAUnit,direction)
+		#Some Implementations of Move and moveEndpointByUnit return a positive number even if the direction is negative
+		if direction<0 and res>0:
+			res=0-res
 		return res
 
 	def copy(self):
