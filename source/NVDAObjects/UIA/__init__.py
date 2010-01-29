@@ -176,13 +176,17 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			runtimeId=UIAElement.getRuntimeId()
 		except COMError:
 			log.debugWarning("Could not get UIA element runtime Id",exc_info=True)
-			return None
-		obj=cls.liveNVDAObjectTable.get(runtimeId,None)
+			runtimeId=None
+		if not runtimeId:
+			obj=cls.liveNVDAObjectTable.get(runtimeId,None)
+		else:
+			obj=None
 		if not obj:
 			obj=super(UIA,cls).__new__(cls)
 			if not obj:
 				return None
-			cls.liveNVDAObjectTable[runtimeId]=obj
+			if runtimeId:
+				cls.liveNVDAObjectTable[runtimeId]=obj
 		else:
 			obj.UIAElement=UIAElement
 		return obj
