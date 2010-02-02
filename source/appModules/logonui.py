@@ -1,7 +1,18 @@
 import keyUtils
+import speech
+import api
+import braille
 import controlTypes
-from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects.IAccessible import IAccessible, Dialog
 import _default
+
+class LogonDialog(Dialog):
+
+	def _get_role(self):
+		return controlTypes.ROLE_DIALOG
+
+	def _get_description(self):
+		return self.getDialogText(self.parent.firstChild)
 
 class XPPasswordField(IAccessible):
 
@@ -38,6 +49,8 @@ class AppModule(_default.AppModule):
 		if obj.windowClassName in ("NativeHWNDHost", "AUTHUI.DLL: LogonUI Logon Window") and obj.parent and not obj.parent.parent:
 			# Make sure the top level pane is always presented.
 			obj.isPresentableFocusAncestor = True
+			if obj.windowClassName=="AUTHUI.DLL: LogonUI Logon Window":
+				obj.__class__=LogonDialog
 			return
 
 		if obj.windowClassName == "Edit" and not obj.name:
@@ -46,3 +59,12 @@ class AppModule(_default.AppModule):
 				self.overlayCustomNVDAObjectClass(obj, XPPasswordField, outerMost=True)
 				obj.bindKeys()
 				return
+
+	def event_gainFocus(self,obj,nextHandler):
+		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_BUTTON:
+			prev=obj.previous
+			if prev and prev.role==controlTypes.ROLE_STATICTEXT:
+				speech.speakObjectProperties(api.getForegroundObject(),name=True,role=True,description=True)
+				braille.invalidateCachedFocusAncestors(1)
+		nextHandler()
+
