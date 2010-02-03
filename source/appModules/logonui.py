@@ -8,11 +8,7 @@ import _default
 
 class LogonDialog(Dialog):
 
-	def _get_role(self):
-		return controlTypes.ROLE_DIALOG
-
-	def _get_description(self):
-		return self.getDialogText(self.parent.firstChild)
+	role = controlTypes.ROLE_DIALOG
 
 class XPPasswordField(IAccessible):
 
@@ -64,7 +60,8 @@ class AppModule(_default.AppModule):
 		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_BUTTON:
 			prev=obj.previous
 			if prev and prev.role==controlTypes.ROLE_STATICTEXT:
+				# This is for a popup message in the logon dialog.
+				# Present the dialog again so the message will be reported.
 				speech.speakObjectProperties(api.getForegroundObject(),name=True,role=True,description=True)
 				braille.invalidateCachedFocusAncestors(1)
 		nextHandler()
-
