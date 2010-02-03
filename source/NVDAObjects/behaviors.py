@@ -1,8 +1,11 @@
-#NVDAObjects/progressBar.py
+#NVDAObjects/behaviors.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+
+"""Mix-in classes which provide common behaviour for particular types of controls across different APIs.
+"""
 
 import tones
 import api

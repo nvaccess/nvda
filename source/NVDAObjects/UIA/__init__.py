@@ -11,7 +11,7 @@ import textInfos
 from logHandler import log
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, AutoSelectDetectionNVDAObject
-from NVDAObjects.progressBar import ProgressBar
+from NVDAObjects.behaviors import ProgressBar
 
 class UIATextInfo(textInfos.TextInfo):
 

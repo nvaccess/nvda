@@ -25,7 +25,7 @@ import NVDAObjects.JAB
 import eventHandler
 import mouseHandler
 import queueHandler
-from NVDAObjects.progressBar import ProgressBar
+from NVDAObjects.behaviors import ProgressBar
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
