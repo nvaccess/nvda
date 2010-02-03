@@ -6,10 +6,22 @@ import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.behaviors import Dialog
 import _default
+import eventHandler
 
 class LogonDialog(Dialog):
 
 	role = controlTypes.ROLE_DIALOG
+
+	def event_gainFocus(self):
+		child = self.firstChild
+		if child and controlTypes.STATE_FOCUSED in child.states and not eventHandler.isPendingEvents("gainFocus"):
+			# UIA reports that focus is on the top level pane, even when it's actually on the frame below.
+			# This causes us to incorrectly use UIA for the top level pane, which causes this pane to be spoken again when the focus moves.
+			# Therefore, bounce the focus to the correct object.
+			eventHandler.queueEvent("gainFocus", child)
+			return
+
+		return super(LogonDialog, self).event_gainFocus()
 
 class XPPasswordField(IAccessible):
 
