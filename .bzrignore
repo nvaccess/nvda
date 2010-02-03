@@ -6,7 +6,7 @@ source/userConfig
 build
 build_debug
 dist
-source/**/*.dll
+*.dll
 source/**/*.manifest
 source/synthDrivers/espeak-data
 source/lib
@@ -37,3 +37,4 @@ source/NVDAHelper/vbuf/remoteApi/remoteApi_?.c
 source/include/*
 source/NVDAHelper/interfaces/*/*.h
 .sconsign.dblite
+extras/controllerClient/nvdaController.h
