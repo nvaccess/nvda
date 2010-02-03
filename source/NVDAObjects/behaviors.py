@@ -14,7 +14,7 @@ import controlTypes
 import globalVars
 import speech
 import config
-from . import NVDAObject
+from . import NVDAObject, NVDAObjectTextInfo
 import textInfos
 
 class ProgressBar(NVDAObject):
