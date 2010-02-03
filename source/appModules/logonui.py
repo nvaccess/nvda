@@ -3,7 +3,8 @@ import speech
 import api
 import braille
 import controlTypes
-from NVDAObjects.IAccessible import IAccessible, Dialog
+from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects.behaviors import Dialog
 import _default
 
 class LogonDialog(Dialog):
@@ -46,7 +47,7 @@ class AppModule(_default.AppModule):
 			# Make sure the top level pane is always presented.
 			obj.isPresentableFocusAncestor = True
 			if obj.windowClassName=="AUTHUI.DLL: LogonUI Logon Window":
-				obj.__class__=LogonDialog
+				self.overlayCustomNVDAObjectClass(obj, LogonDialog, outerMost=True)
 			return
 
 		if obj.windowClassName == "Edit" and not obj.name:
@@ -57,7 +58,7 @@ class AppModule(_default.AppModule):
 				return
 
 	def event_gainFocus(self,obj,nextHandler):
-		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_BUTTON:
+		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_BUTTON and not obj.next:
 			prev=obj.previous
 			if prev and prev.role==controlTypes.ROLE_STATICTEXT:
 				# This is for a popup message in the logon dialog.
