@@ -17,6 +17,7 @@
 ;defines for product info and paths
 !define VERSION "unknown"
 !define PRODUCT "NVDA"	; Don't change this for no reason, other instructions depend on this constant
+!define PUBLISHER "unknown"
 !define WEBSITE "www.nvda-project.org"
 !define NVDAWindowClass "wxWindowClassNR"
 !define NVDAWindowTitle "NVDA"
@@ -228,7 +229,7 @@ WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "DisplayName" "${PRODUCT} ${V
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "DisplayVersion" "${VERSION}"
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "DisplayIcon" "$INSTDIR\images\nvda.ico"
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "URLInfoAbout" "http://www.nvda-project.org/"
-WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "Publisher" "nvda-project.org"
+WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "Publisher" "${PUBLISHER}"
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString" "$INSTDIR\Uninstall.exe"
 WriteRegStr ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "" $INSTDIR
 WriteRegStr ${INSTDIR_REG_ROOT} "Software\Microsoft\Windows\CurrentVersion\App Paths\${NVDAApp}" "" "$INSTDIR\${NVDAApp}" 
