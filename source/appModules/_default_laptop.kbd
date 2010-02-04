@@ -1,4 +1,5 @@
-# Idea for a laptop keyboard layout
+#Default laptop keyboard layout for NVDA
+#A part of NonVisual Desktop Access (NVDA)
 # Set Capslock key as modifier for best results.
 
 #Format is key=script
@@ -36,6 +37,7 @@ Control+NVDA+ExtendedLeft=previousSynthSetting
 Control+NVDA+ExtendedRight=nextSynthSetting
 Control+NVDA+ExtendedUp=increaseSynthSetting
 Control+NVDA+ExtendedDown=decreaseSynthSetting
+NVDA+control+t=braille_toggleTether
 
 # focused object review keys
 NVDA+m=review_previousCharacter

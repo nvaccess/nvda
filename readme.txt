@@ -9,25 +9,26 @@ The NVDA source depends on several other packages to run correctly, as described
 If you are running a 64 bit version of Windows, you should install the 32 bit versions of any dependencies that provide both 32 bit and 64 bit versions.
 
 General dependencies:
-	* Python, version 2.6.2: http://www.python.org/
+	* Python 2.6, version 2.6.2 or later: http://www.python.org/
 	* comtypes, version 0.6.1 or later: http://www.sourceforge.net/projects/comtypes/
 	* wxPython unicode (for Python 2.6), version 2.8.9.1 or later: http://www.wxpython.org/
 	* Python Windows Extensions (for Python 2.6), build 212 or later: http://www.sourceforge.net/projects/pywin32/ 
-	* eSpeak, version 1.41.01 or later, Windows dll:
+	* eSpeak, version 1.42.04 or later, Windows dll:
 		* Official web site: http://espeak.sourceforge.net/
 		* The Windows dll is tricky to build, so a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
 		* Copy espeak.dll and espeak-data into the source\synthDrivers directory.
 	* Additional variants for eSpeak: http://www.nvda-project.org/espeak-variants/
 		* Extract the archive into the source\synthDrivers directory.
-	* IAccessible2, version 1.0.2.0 or later:
+	* IAccessible2, version 1.1.0.0 or later:
 		* The proxy dll and typelib are required.
 		* Pre-built versions have been provided for convenience at http://www.nvda-project.org/3rdParty/
 		* Copy ia2.tlb into the source\typelibs directory.
-		* Copy IAccessible2Proxy.dll into the source\lib directory.
+		* Copy the 32 bit version of the proxy dll into the source\lib directory, naming it IAccessible2Proxy.dll.
+		* Copy the 64 bit version of the proxy dll into the source\lib64 directory, naming it IAccessible2Proxy.dll.
 	* ConfigObj, version 4.6.0 or later:
 		* Web site: http://www.voidspace.org.uk/python/configobj.html
 		* Copy configobj.py and validate.py into the source directory.
-	* liblouis, version 1.7.0, Windows dll and Python bindings:
+	* liblouis, version 1.8.0 or later, Windows dll and Python bindings:
 		* Official web site: http://code.google.com/p/liblouis/
 		* A pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
 		* Copy the louis Python package directory into the source directory.
@@ -62,7 +63,8 @@ To build a binary version of NVDA:
 
 To build an installer:
 	* Nulsoft Install System, version 2.42 or later: http://nsis.sourceforge.net/
-	* NSIS UAC plug-in, version 0.0.11c or later: http://nsis.sourceforge.net/UAC_plug-in
+	* NSIS UAC plug-in, version 0.0.11d or later: http://nsis.sourceforge.net/UAC_plug-in
+		* Copy the ANSI build of UAC.dll (found in release\a in the archive) into the installer directory.
 
 == Preparing the Source Tree ==
 Before you can run the NVDA source code, you must run generate.py located in the source directory.

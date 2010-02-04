@@ -11,6 +11,7 @@ import api
 import globalVars
 from logHandler import log
 import time
+import globalVars
 
 EVENT_TYPEDCHARACTER=0X1000
 EVENT_INPUTLANGCHANGE=0X1001
@@ -22,6 +23,38 @@ generateBeep=None
 lastKeyboardLayoutChangeEventTime=None
 
 winEventHookID=None
+
+#utility function to point an exported function pointer in a dll  to a ctypes wrapped python function
+def _setDllFuncPointer(dll,name,cfunc):
+	cast(getattr(dll,name),POINTER(c_void_p)).contents.value=cast(cfunc,c_void_p).value
+
+#Implementation of nvdaController methods
+@WINFUNCTYPE(c_long,POINTER(c_wchar_p))
+def nvdaController_getNVDAVersionString(version):
+	import versionInfo
+	version.contents.value=versionInfo.version
+	return 0
+
+@WINFUNCTYPE(c_long,c_wchar_p)
+def nvdaController_speakText(text):
+	import queueHandler
+	import speech
+	queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,text)
+	return 0
+
+@WINFUNCTYPE(c_long)
+def nvdaController_cancelSpeech():
+	import queueHandler
+	import speech
+	queueHandler.queueFunction(queueHandler.eventQueue,speech.cancelSpeech)
+	return 0
+
+@WINFUNCTYPE(c_long,c_wchar_p)
+def nvdaController_brailleMessage(text):
+	import queueHandler
+	import braille
+	queueHandler.queueFunction(queueHandler.eventQueue,braille.handler.message,text)
+	return 0
 
 def handleTypedCharacter(window,wParam,lParam):
 	focus=api.getFocusObject()
@@ -83,6 +116,17 @@ class RemoteLoader64(object):
 def initialize():
 	global _remoteLib, _remoteLoader64, localLib, winEventHookID,generateBeep
 	localLib=cdll.LoadLibrary('lib/nvdaHelperLocal.dll')
+	for name,func in [
+		("getNVDAVersionString",nvdaController_getNVDAVersionString),
+		("speakText",nvdaController_speakText),
+		("cancelSpeech",nvdaController_cancelSpeech),
+		("brailleMessage",nvdaController_brailleMessage),
+	]:
+		try:
+			_setDllFuncPointer(localLib,"_nvdaController_%s"%name,func)
+		except AttributeError:
+			log.error("nvdaHelperLocal function pointer for %s could not be found, possibly old nvdaHelperLocal dll"%name)
+	localLib.startServer()
 	generateBeep=localLib.generateBeep
 	generateBeep.argtypes=[c_char_p,c_float,c_uint,c_ubyte,c_ubyte]
 	generateBeep.restype=c_uint

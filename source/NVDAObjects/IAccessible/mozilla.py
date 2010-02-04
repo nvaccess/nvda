@@ -6,6 +6,7 @@
 
 import IAccessibleHandler
 import oleacc
+import eventHandler
 import controlTypes
 from . import IAccessible
 import textInfos
@@ -35,6 +36,12 @@ class Mozilla(IAccessible):
 				return newObj
 		return super(Mozilla,self).parent
 
+	def event_scrollingStart(self):
+		#Firefox 3.6 fires scrollingStart on leaf nodes which is not useful to us.
+		#Bounce the event up to the node's parent so that any possible virtualBuffers will detect it.
+		if self.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in self.states:
+			eventHandler.queueEvent("scrollingStart",self.parent)
+
 class Application(Mozilla):
 
 	def _get_value(self):
@@ -47,6 +54,13 @@ class Application(Mozilla):
 class Document(Mozilla):
 
 	shouldAllowIAccessibleFocusEvent=True
+
+	def _get_virtualBufferClass(self):
+		states=self.states
+		if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2) and controlTypes.STATE_READONLY in states and controlTypes.STATE_BUSY not in states and self.windowClassName=="MozillaContentWindowClass":
+			import virtualBuffers.gecko_ia2
+			return virtualBuffers.gecko_ia2.Gecko_ia2
+		return super(Document,self).virtualBufferClass
 
 	def _get_value(self):
 		return 
@@ -68,14 +82,6 @@ class ListItem(Mozilla):
 		if self.IAccessibleStates&oleacc.STATE_SYSTEM_READONLY and len(children)>0 and (children[0].IAccessibleRole in ("bullet",oleacc.ROLE_SYSTEM_STATICTEXT)):
 			del children[0]
 		return children
-
-class Label(Mozilla):
-
-	def _get_name(self):
-		name=super(Label,self)._get_name()
-		if not name or name=="":
-			name=self.makeTextInfo(textInfos.POSITION_ALL).text
-		return name
 
 class ComboBox(Mozilla):
 

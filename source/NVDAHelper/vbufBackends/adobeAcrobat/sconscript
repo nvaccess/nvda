@@ -1,9 +1,22 @@
-Import(['env','vbufBaseStaticLib','acrobatAccessRPCStubs'])
+Import([
+	'env',
+	'vbufBaseStaticLib',
+	'acrobatAccessRPCStubs',
+])
 
 adobeAcrobatBackendLib=env.SharedLibrary(
 	target="VBufBackend_adobeAcrobat",
-	source=["adobeAcrobat.cpp",acrobatAccessRPCStubs[2]],
-	LIBS=[vbufBaseStaticLib,"user32","kernel32","oleacc","oleaut32"],
+	source=[
+		"adobeAcrobat.cpp",
+		acrobatAccessRPCStubs[2],
+	],
+	LIBS=[
+		vbufBaseStaticLib,
+		"user32",
+		"kernel32",
+		"oleacc",
+		"oleaut32",
+	],
 )
 
 Return('adobeAcrobatBackendLib')

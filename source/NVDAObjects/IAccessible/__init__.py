@@ -25,7 +25,7 @@ import NVDAObjects.JAB
 import eventHandler
 import mouseHandler
 import queueHandler
-from NVDAObjects.progressBar import ProgressBar
+from NVDAObjects.behaviors import ProgressBar, Dialog
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -456,7 +456,8 @@ the NVDAObject for IAccessible
 					("control+extendedHome","moveByLine"),
 					("control+extendedEnd","moveByLine"),
 					("ExtendedDelete","delete"),
-					("Back","backspace"),
+					("Back","backspaceCharacter"),
+					("Control+Back","backspaceWord"),
 				]]
 		except:
 			pass
@@ -551,6 +552,16 @@ the NVDAObject for IAccessible
 			res=self.IAccessibleObject.accName(self.IAccessibleChildID)
 		except:
 			res=None
+		if not res and hasattr(self,'IAccessibleTextObject'):
+			try:
+				res=self.makeTextInfo(textInfos.POSITION_CARET).text
+				if res:
+					return
+			except (NotImplementedError, RuntimeError):
+				try:
+					res=self.makeTextInfo(textInfos.POSITION_ALL).text
+				except (NotImplementedError, RuntimeError):
+					res=None
 		return res if isinstance(res,basestring) and not res.isspace() else None
 
 	def _get_value(self):
@@ -1045,20 +1056,6 @@ the NVDAObject for IAccessible
 				child.speakDescendantObjects(hashList=hashList)
 			child=child.next
 
-	def event_show(self):
-		if not winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle) or not winUser.isWindowVisible(self.windowHandle) or controlTypes.STATE_INVISIBLE in self.states: 
-			return
-		try:
-			attribs=self.IAccessibleObject.attributes
-		except:
-			return
-		if attribs and ('live:polite' in attribs or 'live:assertive' in attribs): 
-			text=IAccessibleHandler.getRecursiveTextFromIAccessibleTextObject(self.IAccessibleObject)
-			if text and not text.isspace():
-				if 'live:rude' in attribs:
-					speech.cancelSpeech()
-				speech.speakMessage(text)
-
 	def event_gainFocus(self):
 		if hasattr(self,'IAccessibleTextObject'):
 			self.initAutoSelectDetection()
@@ -1083,6 +1080,21 @@ the NVDAObject for IAccessible
 		if IARole == oleacc.ROLE_SYSTEM_WINDOW:
 			return False
 		return super(IAccessible, self).isPresentableFocusAncestor
+
+class ShellDocObjectView(IAccessible):
+
+	def event_gainFocus(self):
+		#Sometimes Shell DocObject View gets focus, when really the document inside it should
+		#Adobe Reader 9 licence agreement
+		if eventHandler.isPendingEvents("gainFocus") or self.childCount!=1:
+			return super(ShellDocObjectView,self).event_gainFocus()
+		child=self.firstChild
+		if not child or child.windowClassName!="Internet Explorer_Server" or child.role!=controlTypes.ROLE_PANE:
+			return super(ShellDocObjectView,self).event_gainFocus()
+		child=child.firstChild
+		if not child or child.windowClassName!="Internet Explorer_Server" or child.role!=controlTypes.ROLE_DOCUMENT:
+			return super(ShellDocObjectView,self).event_gainFocus()
+		eventHandler.queueEvent("gainFocus",child)
 
 class JavaVMRoot(IAccessible):
 
@@ -1113,66 +1125,6 @@ class Groupbox(IAccessible):
 			if nextNext and nextNext.name!=next.name:
 				return next.name
 		return super(Groupbox,self)._get_description()
-
-class Dialog(IAccessible):
-	"""Overrides the description property to obtain dialog text.
-	"""
-
-	@classmethod
-	def getDialogText(cls,obj):
-		"""This classmethod walks through the children of the given object, and collects up and returns any text that seems to be  part of a dialog's message text.
-		@param obj: the object who's children you want to collect the text from
-		@type obj: L{IAccessible}
-		"""
-		children=obj.children
-		textList=[]
-		childCount=len(children)
-		for index in xrange(childCount):
-			child=children[index]
-			childStates=child.states
-			childRole=child.role
-			#We don't want to handle invisible or unavailable objects
-			if controlTypes.STATE_INVISIBLE in childStates or controlTypes.STATE_UNAVAILABLE in childStates: 
-				continue
-			#For particular objects, we want to descend in to them and get their children's message text
-			if childRole in (controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW):
-				textList.append(cls.getDialogText(child))
-				continue
-			# We only want text from certain controls.
-			if not (
-				 # Static text, labels and links
-				 childRole in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_LABEL,controlTypes.ROLE_LINK)
-				# Read-only, non-multiline edit fields
-				or (childRole==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in childStates and controlTypes.STATE_MULTILINE not in childStates)
-			):
-				continue
-			#We should ignore a text object directly after a grouping object, as it's probably the grouping's description
-			if index>0 and children[index-1].role==controlTypes.ROLE_GROUPING:
-				continue
-			#Like the last one, but a graphic might be before the grouping's description
-			if index>1 and children[index-1].role==controlTypes.ROLE_GRAPHIC and children[index-2].role==controlTypes.ROLE_GROUPING:
-				continue
-			childName=child.name
-			#Ignore objects that have another object directly after them with the same name, as this object is probably just a label for that object.
-			#However, graphics, static text, separators and Windows are ok.
-			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW) and children[index+1].name==childName:
-				continue
-			childText=child.makeTextInfo(textInfos.POSITION_ALL).text
-			if not childText or childText.isspace() and child.TextInfo!=NVDAObjectTextInfo:
-				childText=child.basicText
-			textList.append(childText)
-		return " ".join(textList)
-
-	def _get_description(self):
-		return self.getDialogText(self)
-
-	def _get_value(self):
-		return None
-
-class PropertyPage(Dialog):
-
-	def _get_role(self):
-		return controlTypes.ROLE_PROPERTYPAGE
 
 class TrayClockWClass(IAccessible):
 	"""
@@ -1330,9 +1282,8 @@ _staticMap={
 	("tooltips_class32",oleacc.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
 	(None,oleacc.ROLE_SYSTEM_DIALOG):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_ALERT):"Dialog",
-	(None,oleacc.ROLE_SYSTEM_PROPERTYPAGE):"PropertyPage",
+	(None,oleacc.ROLE_SYSTEM_PROPERTYPAGE):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_GROUPING):"Groupbox",
-	(None,oleacc.ROLE_SYSTEM_ALERT):"Dialog",
 	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
 	("TRxRichEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,oleacc.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
@@ -1344,7 +1295,6 @@ _staticMap={
 	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_LISTITEM):"mozilla.ListItem",
 	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
 	("MozillaWindowClass",oleacc.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
-	("MozillaUIWindowClass",IAccessibleHandler.IA2_ROLE_LABEL):"mozilla.Label",
 	("ConsoleWindowClass",oleacc.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
 	(None,oleacc.ROLE_SYSTEM_LIST):"List",
 	(None,oleacc.ROLE_SYSTEM_COMBOBOX):"ComboBox",
@@ -1394,4 +1344,5 @@ _staticMap={
 	("QWidget",oleacc.ROLE_SYSTEM_APPLICATION):"qt.Application",
 	("Shell_TrayWnd",oleacc.ROLE_SYSTEM_CLIENT):"Taskbar",
 	("Internet Explorer_TridentCmboBx",oleacc.ROLE_SYSTEM_COMBOBOX):"MSHTML.V6ComboBox",
+	("Shell DocObject View",oleacc.ROLE_SYSTEM_CLIENT):"ShellDocObjectView",
 }

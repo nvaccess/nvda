@@ -42,6 +42,12 @@ def normalizeStdName(stdName):
 
 class AcrobatNode(IAccessible):
 
+	def _get_virtualBufferClass(self):
+		if self.role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE):
+			import virtualBuffers.adobeAcrobat
+			return virtualBuffers.adobeAcrobat.AdobeAcrobat
+		return super(AcrobatNode,self).virtualBufferClass
+
 	def __init__(self, **kwargs):
 		super(AcrobatNode, self).__init__(**kwargs)
 
@@ -139,7 +145,7 @@ class AcrobatTextNode(AcrobatNode):
 	("control+extendedHome","moveByLine"),
 	("control+extendedEnd","moveByLine"),
 	("ExtendedDelete","delete"),
-	("Back","backspace"),
+	("Back","backspaceCharacter"),
 ]]
 
 class AcrobatSDIWindowClient(IAccessible):

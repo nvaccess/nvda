@@ -10,6 +10,23 @@ import api
 import speech
 import eventHandler
 from NVDAObjects.window import Window
+from NVDAObjects.IAccessible import sysListView32
+
+#Class for menu items  for Windows Places and Frequently used Programs (in start menu)
+class SysListView32MenuItem(sysListView32.ListItem):
+
+	#When focus moves to these items, an extra focus is fired on the parent
+	#However NVDA redirects it to the real focus.
+	#But this means double focus events on the item, so filter the second one out
+	#Ticket #474
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		res=super(SysListView32MenuItem,self).shouldAllowIAccessibleFocusEvent
+		if not res:
+			return False
+		focus=eventHandler.lastQueuedFocusObject
+		if type(focus)!=type(self) or (self.event_windowHandle,self.event_objectID,self.event_childID)!=(focus.event_windowHandle,focus.event_objectID,focus.event_childID):
+			return True
+		return False
 
 class ClassicStartMenu(Window):
 	# Override the name, as Windows names this the "Application" menu contrary to all documentation.
@@ -33,6 +50,9 @@ class AppModule(_default.AppModule):
 					obj.name = None
 			return
 
+		if obj.windowClassName=="SysListView32" and obj.role==controlTypes.ROLE_MENUITEM:
+			self.overlayCustomNVDAObjectClass(obj,SysListView32MenuItem,outerMost=True)
+
 		if obj.windowClassName == "#32768":
 			# Standard menu.
 			parent = obj.parent
@@ -44,6 +64,8 @@ class AppModule(_default.AppModule):
 		if obj.windowClassName == "DV2ControlHost" and obj.role == controlTypes.ROLE_PANE:
 			# Windows Vista/7 start menu.
 			obj.isPresentableFocusAncestor = True
+			# In Windows 7, the description of this pane is extremely verbose help text, so nuke it.
+			obj.description = None
 
 	def event_gainFocus(self, obj, nextHandler):
 		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_MENUITEM and obj.parent.role == controlTypes.ROLE_MENUBAR and eventHandler.isPendingEvents("gainFocus"):

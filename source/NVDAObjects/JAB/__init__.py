@@ -208,7 +208,8 @@ class JAB(Window):
 					("control+shift+extendedHome","changeSelection"),
 					("control+shift+extendedEnd","changeSelection"),
 					("ExtendedDelete","delete"),
-					("Back","backspace"),
+					("Back","backspaceCharacter"),
+					("Control+Back","backspaceWord"),
 			  	]]
 
 	def _get_TextInfo(self):

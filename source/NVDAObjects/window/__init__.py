@@ -322,6 +322,7 @@ windowClassMap={
 	"TAltEdit":"Edit",
 	"TDefEdit":"Edit",
 	"TRichEditViewer":"RichEdit",
+	"WFMAINRE":"RichEdit20",
 	"RichEdit20A":"RichEdit20",
 	"RichEdit20W":"RichEdit20",
 	"TskRichEdit.UnicodeClass":"RichEdit20",

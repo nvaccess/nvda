@@ -1,4 +1,4 @@
-
+﻿
 
 ---------------------------------------------------------------------------
 Wykaz skrótów klawiszowych NVDA
@@ -267,12 +267,25 @@ Numpad PageUp (klawisz 9): Następny wiersz
 Shift+Numpad PageUp (klawisz 9): Ostatni wiersz
    Przenosi punkt przeglądu do ostatniego wiersza w bieżącym obiekcie.
 
+NVDA+f9: początek punktu zaznaczenia
+   Ustawia w bieżącym punkcie przeglądu początek zaznaczenia kopiowanego tekstu
+
+NVDA+f10: Kopiuje zaznaczony tekst do schowka
+   Kopiuje do schowka tekst od początku zaznaczenia do bieżącego punktu przeglądu.
+
+
 
 ---------------------------------------------------------------------------
 Wirtualne bufory
 ---------------------------------------------------------------------------
 
    Wymienione niżej polecenia są wszystkie obsługiwane poprawnie przez przeglądarkę Firefox 3. Część z nich działa poprawnie także w starszych wersjach Firefox oraz w przeglądarce Internet Explorer.
+
+control+NVDA+f: znajdź
+NVDA+f3: znajdź następny
+NVDA+f7: lista elementów
+NVDA+f5: odświeżanie bufora
+NVDA+v: przełącza Układ ekranu
 
 NVDA+Spacja: Tryb formularza
    Przełącza między trybem formularza i trybem przeglądania. W trybie formularza naciskane klawisze trafiają wprost do pola formularza, pozwalając na przykład na wpisywanie tekstu w polu edycyjnym. Natomiast w trybie przeglądania naciskane klawisze sterują przeglądaniem dokumentu, pozwalając na przykład na szybką nawigację po nagłówkach i innych elementach.
@@ -301,6 +314,9 @@ Q: cytat
 S: separator
 M: ramka
 G: grafika
+d: ARIA punkt orientacyjny
+n: tekst nie powiązany
+o: obiekt wbudowany
 Cyfry 1 do 6: nagłówki poziomu 1 do 6
 
 Litery rozpoznawane w starszych wersjach wirtualnych buforów:

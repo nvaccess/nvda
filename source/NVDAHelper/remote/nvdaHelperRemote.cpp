@@ -14,6 +14,7 @@
 #include "inputLangChange.h"
 #include "typedCharacter.h"
 #include "IA2Support.h"
+#include "ia2LiveRegions.h"
 #include "nvdaHelperRemote.h"
 
 using namespace std;
@@ -46,6 +47,7 @@ void inProcess_initialize() {
 	assert(!inProcess_wasInitializedOnce);
 	rpcSrv_inProcess_initialize();
 	IA2Support_inProcess_initialize();
+	ia2LiveRegions_inProcess_initialize();
 	typedCharacter_inProcess_initialize();
 	inputLangChange_inProcess_initialize();
 	inProcess_isRunning=inProcess_wasInitializedOnce=true;
@@ -56,6 +58,7 @@ void inProcess_terminate() {
 	assert(inProcess_wasInitializedOnce);
 	inputLangChange_inProcess_terminate();
 	typedCharacter_inProcess_terminate();
+	ia2LiveRegions_inProcess_terminate();
 	IA2Support_inProcess_terminate();
 	rpcSrv_inProcess_terminate();
 	inProcess_isRunning=false;

@@ -21,6 +21,7 @@ from settingsDialogs import *
 import speechDictHandler
 import languageHandler
 import logViewer
+import speechViewer
 import winUser
 import api
 
@@ -228,6 +229,14 @@ class MainFrame(wx.Frame):
 	def onViewLogCommand(self, evt):
 		logViewer.activate()
 
+	def onToggleSpeechViewerCommand(self, evt):
+		if not speechViewer.isActive:
+			speechViewer.activate()
+			self.sysTrayIcon.menu_tools_toggleSpeechViewer.Check(True)
+		else:
+			speechViewer.deactivate()
+			self.sysTrayIcon.menu_tools_toggleSpeechViewer.Check(False)
+
 	def onPythonConsoleCommand(self, evt):
 		import pythonConsole
 		if not pythonConsole.consoleUI:
@@ -272,28 +281,32 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.menu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
 
 		menu_tools = wx.Menu()
-		item = menu_tools.Append(wx.ID_ANY, _("View log"))
-		self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
+		if not globalVars.appArgs.secure:
+			item = menu_tools.Append(wx.ID_ANY, _("View log"))
+			self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
+		item=self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
+		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
 		if not globalVars.appArgs.secure:
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
 
 		menu_help = wx.Menu()
-		item = menu_help.Append(wx.ID_ANY, _("User guide"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("user guide.html")), item)
-		item = menu_help.Append(wx.ID_ANY, _("Key Command Quick Reference"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("key commands.txt")), item)
-		item = menu_help.Append(wx.ID_ANY, _("What's &new"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("whats new.txt")), item)
-		item = menu_help.Append(wx.ID_ANY, _("Web site"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvda-project.org/"), item)
-		item = menu_help.Append(wx.ID_ANY, _("Readme"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("readme.txt")), item)
-		item = menu_help.Append(wx.ID_ANY, _("License"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("copying.txt", False)), item)
-		item = menu_help.Append(wx.ID_ANY, _("Contributors"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("contributors.txt", False)), item)
+		if not globalVars.appArgs.secure:
+			item = menu_help.Append(wx.ID_ANY, _("User guide"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("user guide.html")), item)
+			item = menu_help.Append(wx.ID_ANY, _("Key Command Quick Reference"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("key commands.txt")), item)
+			item = menu_help.Append(wx.ID_ANY, _("What's &new"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("whats new.txt")), item)
+			item = menu_help.Append(wx.ID_ANY, _("Web site"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvda-project.org/"), item)
+			item = menu_help.Append(wx.ID_ANY, _("Readme"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("readme.txt")), item)
+			item = menu_help.Append(wx.ID_ANY, _("License"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("copying.txt", False)), item)
+			item = menu_help.Append(wx.ID_ANY, _("Contributors"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("contributors.txt", False)), item)
 		item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog"))
 		self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
 		menu_help.AppendSeparator()

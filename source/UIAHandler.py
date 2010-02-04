@@ -227,8 +227,9 @@ handler=None
 
 def initialize():
 	global handler
-	if isUIAAvailable:
-		handler=UIAHandler()
+	if not isUIAAvailable:
+		raise NotImplementedError
+	handler=UIAHandler()
 
 def terminate():
 	global handler

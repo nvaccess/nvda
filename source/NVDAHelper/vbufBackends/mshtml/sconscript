@@ -1,9 +1,21 @@
-Import(['env','vbufBaseStaticLib'])
+Import([
+	'env',
+	'vbufBaseStaticLib',
+])
 
 mshtmlBackendLib=env.SharedLibrary(
 	target="VBufBackend_mshtml",
-	source=["mshtml.cpp","node.cpp"],
-	LIBS=[vbufBaseStaticLib,"user32","kernel32","oleacc","oleaut32"],
+	source=[
+		"mshtml.cpp",
+		"node.cpp",
+	],
+	LIBS=[
+		vbufBaseStaticLib,
+		"user32",
+		"kernel32",
+		"oleacc",
+		"oleaut32",
+	],
 )
 
 Return('mshtmlBackendLib')

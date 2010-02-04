@@ -262,6 +262,12 @@ class MSHTML(IAccessible):
 			clsList.insert(0,MSHTML)
 		return clsList,kwargs
 
+	def _get_virtualBufferClass(self):
+		if self.HTMLNode and self.role==controlTypes.ROLE_DOCUMENT and not self.isContentEditable:
+			import virtualBuffers.MSHTML
+			return virtualBuffers.MSHTML.MSHTML
+		return super(MSHTML,self).virtualBufferClass
+
 	def __init__(self,HTMLNode=None,HTMLNodeHasAncestorIAccessible=False,IAccessibleObject=None,IAccessibleChildID=None,**kwargs):
 		self.HTMLNodeHasAncestorIAccessible=HTMLNodeHasAncestorIAccessible
 		if not HTMLNode and IAccessibleChildID==0:
@@ -304,7 +310,8 @@ class MSHTML(IAccessible):
 				("control+shift+extendedHome","changeSelection"),
 				("control+shift+extendedEnd","changeSelection"),
 				("ExtendedDelete","moveByCharacter"),
-				("Back","backspace"),
+				("Back","backspaceCharacter"),
+				("Control+Back","backspaceWord"),
 			]]
 
 	def isDuplicateIAccessibleEvent(self,obj):
@@ -418,6 +425,7 @@ class MSHTML(IAccessible):
 				isContentEditable=False
 			if isContentEditable:
 				states.add(controlTypes.STATE_EDITABLE)
+				states.discard(controlTypes.STATE_READONLY)
 			nodeName=self.HTMLNodeName
 			if nodeName=="TEXTAREA":
 				states.add(controlTypes.STATE_MULTILINE)

@@ -11,7 +11,7 @@
 #include <windows.h>
 #include <oleidl.h>
 #include <mshtml.h>
-#include <vbufBase/debug.h>
+#include <common/debug.h>
 #include "mshtml.h"
 #include "node.h"
 
