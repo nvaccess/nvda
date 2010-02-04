@@ -188,9 +188,9 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 	return previousNode;
 }
 
-VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
+VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
 	VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
-	int indexInParent=0, long tableID=0, int rowNumber=0
+	int indexInParent, long tableID, int rowNumber
 ) {
 	int res;
 	DEBUG_MSG(L"Entered fillVBuf, with pacc at "<<pacc<<L", parentNode at "<<parentNode<<L", previousNode "<<previousNode);
@@ -363,8 +363,13 @@ VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_
 					childPacc=NULL;
 				}
 				if(childPacc) {
+					if (this->isXFA) {
+						// HACK: If this is an XFA document, we must call WindowFromAccessibleObject() so that AccessibleObjectFromEvent() will work for this node.
+						HWND tempHwnd;
+						WindowFromAccessibleObject(childPacc, &tempHwnd);
+					}
 					DEBUG_MSG(L"calling filVBuf with child object ");
-					if((tempNode=fillVBuf(docHandle,childPacc,buffer,parentNode,previousNode,i,tableID,rowNumber))!=NULL) {
+					if((tempNode=this->fillVBuf(docHandle,childPacc,buffer,parentNode,previousNode,i,tableID,rowNumber))!=NULL) {
 						previousNode=tempNode;
 					} else {
 						DEBUG_MSG(L"Error in calling fillVBuf");
@@ -489,11 +494,30 @@ void AdobeAcrobatVBufBackend_t::renderThread_terminate() {
 	VBufBackend_t::renderThread_terminate();
 }
 
+bool checkIsXFA(IAccessible* rootPacc) {
+	VARIANT varChild, varState;
+	varChild.vt = VT_I4;
+	varChild.lVal = 0;
+	VariantInit(&varState);
+	if (rootPacc->get_accState(varChild, &varState) != S_OK) {
+		return false;
+	}
+	int states = varState.lVal;
+	VariantClear(&varState);
+
+	// If the root accessible is read-only, this is not an XFA document.
+	return !(states & STATE_SYSTEM_READONLY);
+}
+
 void AdobeAcrobatVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	DEBUG_MSG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
 	IAccessible* pacc=IAccessibleFromIdentifier(docHandle,ID);
 	assert(pacc); //must get a valid IAccessible object
-	fillVBuf(docHandle,pacc,buffer,NULL,NULL);
+	if (!oldNode) {
+		// This is the root node.
+		this->isXFA = checkIsXFA(pacc);
+	}
+	this->fillVBuf(docHandle,pacc,buffer,NULL,NULL);
 	pacc->Release();
 	DEBUG_MSG(L"Rendering done");
 }
