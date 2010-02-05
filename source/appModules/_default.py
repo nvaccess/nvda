@@ -297,7 +297,7 @@ class AppModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("no navigator object"))
 			return
 		skipUselessObjects=config.conf["reviewCursor"]["skipUselessObjects"]
-		curObject=curObject.parentPresentable if skipUselessObjects else curObject.parent
+		curObject=curObject.simpleParent if skipUselessObjects else curObject.parent
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -311,7 +311,7 @@ class AppModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("no navigator object"))
 			return
 		skipUselessObjects=config.conf["reviewCursor"]["skipUselessObjects"]
-		curObject=curObject.nextPresentable if skipUselessObjects else curObject.next
+		curObject=curObject.simpleNext if skipUselessObjects else curObject.next
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -325,7 +325,7 @@ class AppModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("no navigator object"))
 			return
 		skipUselessObjects=config.conf["reviewCursor"]["skipUselessObjects"]
-		curObject=curObject.previousPresentable if skipUselessObjects else curObject.previous
+		curObject=curObject.simplePrevious if skipUselessObjects else curObject.previous
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -339,7 +339,7 @@ class AppModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("no navigator object"))
 			return
 		skipUselessObjects=config.conf["reviewCursor"]["skipUselessObjects"]
-		curObject=curObject.firstChildPresentable if skipUselessObjects else curObject.firstChild
+		curObject=curObject.simpleFirstChild if skipUselessObjects else curObject.firstChild
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)

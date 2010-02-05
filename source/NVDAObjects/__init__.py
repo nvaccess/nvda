@@ -375,86 +375,84 @@ class NVDAObject(baseObject.ScriptableObject):
 			for recursiveChild in child.recursiveDescendants:
 				yield recursiveChild
 
-	def _get_isPresentable(self):
-		states=self.states
-		role=self.role
-		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states or controlTypes.STATE_OFFSCREEN in states:
-			return False
-		if controlTypes.STATE_FOCUSED in states:
-			return True
-		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION,controlTypes.ROLE_FORM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_TITLEBAR,controlTypes.ROLE_TEXTFRAME):
-			return False
-		return True
+	presType_unavailable="unavailable"
+	presType_layout="layout"
+	presType_content="content"
 
-	def _get_parentPresentable(self):
+	def _get_presentationType(self):
+		states=self.states
+		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
+			return self.presType_unavailable
+		role=self.role
+		if False: #role==controlTypes.ROLE_TREEVIEW:
+			return self.presType_unavailable
+		if controlTypes.STATE_FOCUSED in states:
+			return self.presType_content
+		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION,controlTypes.ROLE_FORM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_TITLEBAR,controlTypes.ROLE_TEXTFRAME):
+			return self.presType_layout
+		return self.presType_content
+
+	def _get_simpleParent(self):
 		obj=self.parent
-		while obj and not obj.isPresentable:
+		while obj and obj.presentationType!=self.presType_content:
 			obj=obj.parent
 		return obj
 
-	def _findNextPresentable(self,useChild=False,useParent=True):
+	def _findSimpleNext(self,useChild=False,useParent=True,goPrevious=False):
+		nextPrevAttrib="next" if not goPrevious else "previous"
+		firstLastChildAttrib="firstChild" if not goPrevious else "lastChild"
 		found=None
 		if useChild:
-			child=self.firstChild
-			if child and child.isPresentable:
+			child=getattr(self,firstLastChildAttrib)
+			childPresType=child.presentationType if child else None
+			if childPresType==self.presType_content:
 				found=child
-			elif child:
-				found=child._findNextPresentable(useChild=True,useParent=False)
+			elif childPresType==self.presType_layout:
+				found=child._findSimpleNext(useChild=True,useParent=False,goPrevious=goPrevious)
 			if found:
 				return found
-		next=self.next
-		if next and next.isPresentable:
+		next=getattr(self,nextPrevAttrib)
+		nextPresType=next.presentationType if next else None
+		if nextPresType==self.presType_content:
 			found=next
+		elif nextPresType==self.presType_layout:
+			found=next._findSimpleNext(useChild=True,useParent=False,goPrevious=goPrevious)
 		elif next:
-			found=next._findNextPresentable(useChild=True,useParent=False)
+			found=next._findSimpleNext(useChild=False,useParent=False,goPrevious=goPrevious)
 		if found:
 			return found
 		parent=self.parent if useParent else None
-		while parent and not parent.isPresentable:
-			next=parent._findNextPresentable(useChild=False,useParent=False)
+		while parent and parent.presentationType!=self.presType_content:
+			next=parent._findSimpleNext(useChild=False,useParent=False,goPrevious=goPrevious)
 			if next:
 				return next
 			parent=parent.parent
 
-	def _findPreviousPresentable(self,useChild=False,useParent=True):
-		found=None
-		if useChild:
-			child=self.lastChild
-			if child and child.isPresentable:
-				found=child
-			elif child:
-				found=child._findPreviousPresentable(useChild=True,useParent=False)
-			if found:
-				return found
-		previous=self.previous
-		if previous and previous.isPresentable:
-			found=previous
-		elif previous:
-			found=previous._findPreviousPresentable(useChild=True,useParent=False)
-		if found:
-			return found
-		parent=self.parent if useParent else None
-		while parent and not parent.isPresentable:
-			previous=parent._findPreviousPresentable(useChild=False,useParent=False)
-			if previous:
-				return previous
-			parent=parent.parent
+	def _get_simpleNext(self):
+		return self._findSimpleNext()
 
-	def _get_nextPresentable(self):
-		return self._findNextPresentable()
+	def _get_simplePrevious(self):
+		return self._findSimpleNext(goPrevious=True)
 
-	def _get_previousPresentable(self):
-		return self._findPreviousPresentable()
-
-	def _get_firstChildPresentable(self):
+	def _get_simpleFirstChild(self):
 		child=self.firstChild
-		if child and child.isPresentable: return child
-		if child: return child._findNextPresentable(useChild=True,useParent=False)
+		if not child:
+			return None
+		presType=child.presentationType
+		if presType==self.presType_unavailable:
+			return None
+		if presType==self.presType_layout: return child._findSimpleNext(useChild=True,useParent=False)
+		return child
 
-	def _get_lastChildPresentable(self):
+	def _get_simpleLastChild(self):
 		child=self.lastChild
-		if child and child.isPresentable: return child
-		if child: return child._findPreviousPresentable(useChild=True,useParent=False)
+		if not child:
+			return None
+		presType=child.presentationType
+		if presType==self.presType_unavailable:
+			return None
+		if presType==self.presType_layout: return child._findSimpleNext(useChild=True,useParent=False,goPrevious=True)
+		return child
 
 	def getNextInFlow(self,down=None,up=None):
 		"""Retreaves the next object in depth first tree traversal order

@@ -64,7 +64,7 @@ class AppModule(_default.AppModule):
 
 		if obj.windowClassName == "DV2ControlHost" and obj.role == controlTypes.ROLE_PANE:
 			# Windows Vista/7 start menu.
-			obj.isPresentable=True
+			obj.presentationType=obj.presType_content
 			obj.isPresentableFocusAncestor = True
 			# In Windows 7, the description of this pane is extremely verbose help text, so nuke it.
 			obj.description = None
@@ -72,7 +72,7 @@ class AppModule(_default.AppModule):
 		#The Address bar is embedded inside a progressbar, how strange.
 		#Lets hide that
 		if obj.windowClassName=="msctls_progress32" and winUser.getClassName(winUser.getAncestor(obj.windowHandle,winUser.GA_PARENT))=="Address Band Root":
-			obj.isPresentable=False
+			obj.presentationType=obj.presType_layout
 
 	def event_gainFocus(self, obj, nextHandler):
 		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_MENUITEM and obj.parent.role == controlTypes.ROLE_MENUBAR and eventHandler.isPendingEvents("gainFocus"):

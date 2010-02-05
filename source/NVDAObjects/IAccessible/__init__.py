@@ -1044,11 +1044,10 @@ the NVDAObject for IAccessible
 	def event_selectionWithIn(self):
 		return self.event_stateChange()
 
-	def _get_isPresentable(self):
+	def _get_presentationType(self):
 		if not self.windowHasExtraIAccessibles(self.windowHandle) and self.role==controlTypes.ROLE_WINDOW:
-			return False
-		return super(IAccessible,self).isPresentable
-
+			return self.presType_layout
+		return super(IAccessible,self).presentationType
 
 	def _get_isPresentableFocusAncestor(self):
 		IARole = self.IAccessibleRole
