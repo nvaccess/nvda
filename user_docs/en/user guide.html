@@ -331,10 +331,14 @@ This option is a numerical field that allows you to change the blink rate of the
 <p>
 This option is a numerical field that controls how long system messages are displayed on the braille display.
 </p>
-<h6>Miscellaneous</h6>
+<h6>Braille Tethered to</h6>
+
 <p>
-When pressing NVDA+Control+T, you can control what is being displayed on the braille display. The two options are focus and review. Focus displays what is being accessed via the arrow keys, the tab key, in short, focus navigation. Review allows you to review what is on the screen, I.E object navigation. You can cycle between these options by pressing control+NVDA+T.
+This option allows you to choose whether the braille display will follow the system focus, or whether it follows the navigator object / review cursor.
 </p>
+<p>
+This option can also be toggled by the key command NVDA+control+t.
+</p> 
 <h5 id="6.2.1.5">6.2.1.5. Keyboard settings</h5>
 <p>
 This dialog box is found in the Preferences menu, under &quot;Keyboard settings...&quot;. Alternatively, it can be accessed by pressing NVDA+Control+K. It contains the following options:
@@ -535,11 +539,17 @@ There are some key commands that are useful when moving with focus:
 When the focus is on an object that has an edit cursor (system caret), you can arrow around and edit like you normally would. NVDA will announce as you move by character, word, line, and will also announce selecting and unselecting text.
 </p>
 <p>
-When you move with the system caret, the position of the review cursor will also be updated to match the system caret.
+When you move with the system caret, the position of the review cursor will also be updated to match the system caret. Though this setting can be toggled by the key command NVDA+6. 
 </p>
 <p>
-You can also read the entire text (say all) with NVDA+down Arrow. Note though that this is different to numpad Plus which only moves the review cursor, this moves the system caret as it goes.
+NVDA provides the following key commands  in relation to the system caret:
 </p>
+<ul>
+<li>NVDA+downArrow: start reading from the position of the system caret, moving it as it goes</li>
+<li>NVDA+upArrow: read the current line at the system caret</li>
+<li>NVDA+Shift+upArrow: read the currently selected text if any</li>
+<li>NVDA+f: report the format of the text under the system caret</li>
+</ul> 
 <h3 id="7.3">7.3. Object Navigation</h3>
 <p>
 If you wish to navigate around the current application or the Operating System a bit, but with out moving the focus, you can use NVDA's object navigation. This allows you to move from object to object in a tree like structure.
@@ -572,6 +582,7 @@ To navigate by object, use the following keys:
 <li>NVDA+shift+numpad6: Move to next object in flow (crosses parent child object boundaries automatically until it can go next)</li>
 <li>NVDA+numpadMinus: Move to focus</li>
 <li>NVDA+numpadEnter: Activate current object (e.g. press enter / click / double click)</li>
+<li>NVDA+Shift+NumpadMinus: Move focus to the current object</li>
 <li>NVDA+numpadDivide: Move the mouse to the current object</li>
 <li>NVDA+numpadMultiply: Move to the mouse</li>
 <li>NVDA+numpadDelete: announce current object's dimentions in regards to the screen</li>
@@ -625,6 +636,15 @@ NVDA provides a way for users to understand where the mouse is in regards to the
 <p>
 These extra mouse features are not turned on by default in NVDA, but if you wish to take advantage of them, you can configure them from the Mouse settings dialog, found in the Preferences menu on the NVDA menu.
 </p>
+<p>
+Although a physical mouse or trackpad should be used to navigate with the mouse, NVDA has a few key commands related to the mouse:
+</p>
+<ul>
+<li>numpadDivide: Left mouse button click</li>
+<li>numpadMultiply: Right mouse button click</li>
+<li>Shift+numpadDivide: Lock/Unlock left mouse button down</li>
+<li>Shift+numpadMultiply: Lock/Unlock right mouse button down</li>
+</ul>
 <h2 id="8">8. Virtual Buffers</h2>
 <p>
 Complex read-only documents, such as web pages, are represented in NVDA with in a Virtual Buffer.
