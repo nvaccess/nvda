@@ -547,6 +547,15 @@ NVDA provides the following key commands  in relation to the system caret:
 <li>NVDA+Shift+upArrow: read the currently selected text if any</li>
 <li>NVDA+f: report the format of the text under the system caret</li>
 </ul> 
+<p>
+When with in a table, the following key commands are also available:
+</p>
+<ul>
+<li>control+alt+leftArrow: Move to the previous column (staying in this row)</li>
+<li>control+alt+rightArrow: move to the next column (staying in this row)</li>
+ <li>control+alt+upArrow: move to the previous row (staying in this column)</li>
+<li>control+alt+downArrow: move to the next row (staying in this column)</li>
+</ul>
 <h3 id="7.3">7.3. Object Navigation</h3>
 <p>
 If you wish to navigate around the current application or the Operating System a bit, but with out moving the focus, you can use NVDA's object navigation. This allows you to move from object to object in a tree like structure.
@@ -650,11 +659,13 @@ Complex read-only documents, such as web pages, are represented in NVDA with in 
 A virtual buffer is a flat representation of content such as a web page, that can be moved around in with the arrow keys. Information such as whether text is a link, heading etc is announced along with the text as you move.
 </p>
 <p>
-While in a virtual buffer, there are two modes of interaction. Browse mode is where you can move around all the text using a virtual cursor. Focus mode is where you can directly interact with the control (edit field, combo box, radio buttons) using what ever keys you would normally use. When in Browse mode, NVDA will automatically switch to focus mode if you tab to or click on a particular control that requires it. Note that pressing enter or space on controls that require it will also switch to focus mode. You can also manually change to focus mode with NVDA+space. If NVDA automatically changed to focus mode because of a tab, click or enter/space key press, it will change back to browse mode once you tab or click on to something that doesn't require it, or if you press escape. However, if you changed to focus mode with NVDA+space, it will stay in focus mode until you manually go back to browse mode. At any time when you are in focus mode, you can manually switch back to browse mode by pressing escape, or NVDA+space. The virtual buffer settings dialog in the preferences menu in the NVDA menu allows you to disable automatic switching of browse mode and focus mode.
+While in a virtual buffer, there are two modes of interaction. Browse mode is where you can move around all the text using a virtual cursor, rather like the system caret. In fact all of NVDA's system caret key commands will work in this mode (e.g. say all, report formatting, all table navigation commands etc).  Focus mode is where you can directly interact with the control (edit field, combo box, radio buttons) using what ever keys you would normally use. When in Browse mode, NVDA will automatically switch to focus mode if you tab to or click on a particular control that requires it. Note that pressing enter or space on controls that require it will also switch to focus mode. You can also manually change to focus mode with NVDA+space. If NVDA automatically changed to focus mode because of a tab, click or enter/space key press, it will change back to browse mode once you tab or click on to something that doesn't require it, or if you press escape. However, if you changed to focus mode with NVDA+space, it will stay in focus mode until you manually go back to browse mode. At any time when you are in focus mode, you can manually switch back to browse mode by pressing escape, or NVDA+space. The virtual buffer settings dialog in the preferences menu in the NVDA menu allows you to disable automatic switching of browse mode and focus mode.
 </p>
 <p>
 Currently NVDA uses Virtual Buffers for reading documents in Mozilla Firefox, Microsoft Internet Explorer, and Adobe Reader.
 </p>
+<p>
+Wen in browse mode, 
 <h3 id="8.1">8.1. Single Letter Navigation</h3>
 <p>
 While in browse mode, For quicker navigation NVDA also provides single character keys to jump to certain fields in a virtual buffer.
