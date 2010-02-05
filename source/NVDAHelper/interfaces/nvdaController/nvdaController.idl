@@ -11,16 +11,30 @@ interface NvdaController {
 
 /**
  * Retreaves the version of NVDA.
- * @param bindinghandle_t the binding handle_t to NVDA
  * @param version  a pointer to the version string, must be freed when finnished with
  */
-	boolean getNVDAVersionString([in] handle_t bindingHandle, [out,string] wchar_t** version);
+	error_status_t __stdcall getNVDAVersionString([out,string] wchar_t** version);
 
 /**
  * Instructs NVDA to speak the given text.
  * @param text the text to speak.
  */
-	boolean speakText([in] handle_t bindingHandle, [in,string] const wchar_t* text);
+	error_status_t __stdcall speakText([in,string] const wchar_t* text);
+
+/**
+ * Instructs NVDA to silence current speech.
+ */
+	error_status_t __stdcall cancelSpeech();
+
+/**
+ * Shows a given message on the braille display.
+ * @param message the message that will be temporarily shown on the display
+ */
+	error_status_t __stdcall brailleMessage([in,string] const wchar_t* message);
+
+/**
+ * Tests if NVDA is running or not.
+ */
+	error_status_t __stdcall testIfRunning();
 
 };
-

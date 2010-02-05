@@ -309,9 +309,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return textInfos.offsets.Offsets(self._rangeObj.Start,self._rangeObj.End)
 
 	def updateCaret(self):
+		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.Start)
 
 	def updateSelection(self):
+		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.End)
 
 class WordDocument(Window):

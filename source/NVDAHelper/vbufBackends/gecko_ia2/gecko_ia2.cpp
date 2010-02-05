@@ -270,7 +270,10 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 		//Check IA2Attributes, and or the role etc to work out if this object is a block element
 		DEBUG_MSG(L"Is this object a block element?");
 		map<wstring,wstring>::const_iterator it;
-		if((it=IA2AttribsMap.find(L"display"))!=IA2AttribsMap.end()) {
+		if(IA2States&IA2_STATE_MULTI_LINE) {
+			// Multiline nodes should always be block.
+			isBlockElement=TRUE;
+		} else if((it=IA2AttribsMap.find(L"display"))!=IA2AttribsMap.end()) {
 			// If there is a display attribute, we can rely solely on this to determine whether this is a block element or not.
 			DEBUG_MSG(L"IA2Attributes contains display, value "<<it->second);
 			isBlockElement=(it->second!=L"inline");
@@ -290,10 +293,6 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	BSTR name=NULL;
 	if((res=pacc->get_accName(varChild,&name))!=S_OK) {
 		DEBUG_MSG(L"IAccessible::get_accName returned "<<res);
-		name=NULL;
-	}
-	if(name!=NULL&&SysStringLen(name)==0) {
-		SysFreeString(name);
 		name=NULL;
 	}
 	// Handle table cell information.
@@ -514,8 +513,8 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 					BSTR childName=NULL;
 					BSTR childDefaction=NULL;
 						//role must be link, must have name, 
-					//childRole must be graphic, must have no childName, childDefaction can't be click.
-					if(role==ROLE_SYSTEM_LINK&&name!=NULL&&!isWhitespace(name)&&childPacc->role(&childRole)==S_OK&&childRole==ROLE_SYSTEM_GRAPHIC&&(childPacc->get_accName(varChild,&childName)!=S_OK||childName==NULL)&&(childPacc->get_accDefaultAction(varChild,&childDefaction)==S_OK||wcscmp(childDefaction?childDefaction:L"",L"click")!=0)) {
+					//childRole must be graphic, must have no or empty childName, childDefaction can't be click.
+					if(role==ROLE_SYSTEM_LINK&&name!=NULL&&!isWhitespace(name)&&childPacc->role(&childRole)==S_OK&&childRole==ROLE_SYSTEM_GRAPHIC&&(childPacc->get_accName(varChild,&childName)!=S_OK||childName==NULL||SysStringLen(childName)==0)&&(childPacc->get_accDefaultAction(varChild,&childDefaction)==S_OK||wcscmp(childDefaction?childDefaction:L"",L"click")!=0)) {
 						DEBUG_MSG(L"Ignoring unneeded graphic in link");
 						if(childName) SysFreeString(childName);
 						if(childDefaction) SysFreeString(childDefaction);
@@ -614,7 +613,9 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 					DEBUG_MSG(L"For graphics we use the name as the text");
 					int isClickable=(wcscmp(defaction?defaction:L"",L"click")==0);
 					int inLink=(states&STATE_SYSTEM_LINKED);
-					if(name!=NULL) {
+					// Unneeded graphics in links are handled elsewhere, so if we see alt="" here, we should ignore alt and fall back.
+					// However, if we see alt="" for a clickable, use the alt and don't fall back.
+					if(name!=NULL&&(SysStringLen(name)>0||isClickable)) {
 						DEBUG_MSG(L"adding name to buffer");
 						previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
 					} else if((value!=NULL)&&(!IGNORE_NONINTERACTIVE_UNLABELED_GRAPHICS||(!isClickable&&inLink))) {

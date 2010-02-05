@@ -12,6 +12,15 @@
 #include <vbufBase/backend.h>
 
 class AdobeAcrobatVBufBackend_t: public VBufBackend_t {
+	private:
+
+	VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
+		VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
+		int indexInParent=0, long tableID=0, int rowNumber=0
+	);
+
+	bool isXFA;
+
 	protected:
 
 	static void CALLBACK renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time);

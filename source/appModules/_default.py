@@ -76,6 +76,24 @@ class AppModule(appModuleHandler.AppModule):
 		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
 	script_rightMouseClick.__doc__=_("Clicks the right mouse button once at the current mouse position")
 
+	def script_toggleLeftMouseButton(self,keyPress):
+		if winUser.getKeyState(winUser.VK_LBUTTON)&32768:
+			ui.message(_("left mouse button unlock"))
+			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		else:
+			ui.message(_("left mouse button lock"))
+			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
+	script_toggleLeftMouseButton.__doc__=_("Locks or unlocks the left mouse button")
+
+	def script_toggleRightMouseButton(self,keyPress):
+		if winUser.getKeyState(winUser.VK_RBUTTON)&32768:
+			ui.message(_("right mouse button unlock"))
+			winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
+		else:
+			ui.message(_("right mouse button lock"))
+			winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTDOWN,0,0,None,None)
+	script_toggleRightMouseButton.__doc__=_("Locks or unlocks the right mouse button")
+
 	def script_reportCurrentSelection(self,keyPress):
 		obj=api.getFocusObject()
 		virtualBuffer=obj.virtualBuffer

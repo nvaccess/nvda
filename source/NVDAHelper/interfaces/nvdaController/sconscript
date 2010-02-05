@@ -1,10 +1,9 @@
 Import('env')
 
-#We need to hack in server and client prefixes in MIDLFLAGS
-env=env.Clone()
-env.Append(MIDLFLAGS=['/prefix','all','nvdaController_'])
-
-headerFile,clientSourceFile,serverSourceFile=env.MSRPCStubs(source=['nvdaController.idl'])
+headerFile,clientSourceFile,serverSourceFile=env.MSRPCStubs(
+	source=['nvdaController.idl'],
+	MIDLFLAGS=env['MIDLFLAGS']+['/prefix','all','nvdaController_','/acf',File('nvdaController.acf')],
+)
 clientObjFile=env.Object(clientSourceFile)
 serverObjFile=Object(serverSourceFile)
 

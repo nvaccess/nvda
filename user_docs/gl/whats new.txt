@@ -10,10 +10,21 @@
 	* NVDA agora anuncia a palabra que estea sendo eliminada cando se prema control+retroceso en controis que o soporten. (#491)
 	* As flechas de cursor agora poden ser utilizadas na ventá do formateador Web para navegar e ler o texto. (#452)
 	* Mellor soporte de documentos empotrados editables do NVDA (modo de deseño) en Internet Explorer. (#402)
+	* Un novo script (nvda+shift+menos do teclado numérico) permíteche mover o foco do sistema ó navegador de obxectos actual.
+	* Novos scripts para bloquear e desbloquear os botóns esquerdo e dereito do rato. Útil para levar a cabo operacións de arrastrar e soltar. shift+dividir do teclado numérico para bloquear/desbloquear o esquerdo, shift+multiplicar do teclado numérico para bloquear/desbloquear o dereito.
+	* Novas táboas de transcripción braille: braille computerizado Alemán de 8 pontos, Alemán grao 2, braille computerizado Finés de 8 pontos, Chinés (Hong Kong, Cantonés), Chinés (Taiwan, Mandarín). (#344, #369, #415, #450)
+	* Agora é posible desactivar a creación do atallo do escritorio (e así a tecla de atallo) cando se instala o NVDA. (#518)
+	* NVDA agora pode utilizar IAccessible2 cando estean presentes en aplicacións de 64 bit. (#479)
+	* A API NVDA Controller Client proporciónase agora para permitir ás aplicacións controlar ó NVDA; ej.: para falar texto, silenciar a voz, amosar unha mensaxe en Braille, etc.
 
 === Cambios ===
 	* A mensaxe de axuda de teclado extremadamente verboso no menú de Inicio de Windows 7 Xa non se anuncia.
 	* O sintetizador Display agora foi reemplazado cun novo Visualizador de Fala. Para activalo, escolle Visualizador da Fala dende o menú Ferramentas. O Visualizador da Fala pode ser utilizado independientemente de con que outro sintetizador de voz estés a traballar.
+	* As mensaxes na liña braille serán rexeitados automáticamente se o usuario preme unha tecla que signifique un cambio como o movemento do foco. Anteriormente a mensaxe sempre permanecería segundo o seu tempo configurado.
+	* A Opción para axustar o braille ó foco ou ó cursor de revisión (NVDA+control+t) agora pode ser tamén configurada dende o diálogo de opcións braille, e agora tamén se garda na configuración do usuario.
+	* Actualizado o sintetizador de voz eSpeak a 1.42.04.
+	* Actualizado o transcriptor braille liblouis a 1.8.0.
+	* Nos modos virtuais, o anunciado de elementos cando se move por caracteres ou palabras foi moi mellorado. Anteriormente, era anunciada unha grande cantidade de información irrelevante e o anunciado era moi diferente a eso cando se move por liñas. (#490)
 
 
 === Corrección de Fallos ===
@@ -25,6 +36,12 @@
 	* Nos modos virtuais, as coordenadas de fila/columna xa non se len incorrectamente por cabeceiras de fila e columna cando o anunciado de táboas está desactivado.
 	* Nos modos virtuais, as coordenadas de fila/columna agora son correctamente lidas cando abandoas unha táboa e logo voltas a entrar na mesma celda da táboa sen visitar outra celda primeiro; ex.: premendo flecha arriba e logo flecha abaixo sobre a primeira celda dunha táboa. (#378)
 	* As liñas en branco nos documentos do Microsoft Word e dos controis de edición de Microsoft HTML agora amósanse apropriadamente en liñas braille. Anteriormente NVDA amosaba a frase actual na liña, non a liña actual para estas situacións. (#420)
+	* Múltiples correccións de seguridade cando se executa ó NVDA no Logon de Windows e en outros Escritorios Seguros.
+	* A posición do cursor (cursor do sistema) agora actualízase correctamente cando se leva a cabo unha Lectura Compreta que se pase do final da pantalla, en campos de edición estándar de Windows e documentos de Microsoft Word. (#418)
+	* Nos modos virtuais, o texto xa non é incluído incorrectamente por imaxes dentro de ligas e cliqueables que son marcados como irrelevantes para os lectores de pantalla. (#423)
+	* Correccións para a distribución de teclado laptop. (#517)
+	* Cando o braille está seguindo á revisión cando enfocas nunha ventá de consola do dos, o cursor de revisión agora pode navegar apropriadamente polo texto na consola.
+	* Mentres se traballa con TeamTalk3 ou TeamTalk4 Classic VU a barra de progreso contador na ventá principal xa non se anuncia segundo se actualiza. Tamén os caracteres especiales poden lerse apropriadamente na ventá de entrada do chat.
 
 
 == 2009.1 ==

@@ -8,7 +8,8 @@ from ctypes import *
 from ctypes.wintypes import *
 import winKernel
 import winUser
-from NVDAObjects.IAccessible import IAccessible, PropertyPage
+from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects.behaviors import Dialog
 import _default
 import speech
 import controlTypes
@@ -148,7 +149,7 @@ class mirandaIMHyperlink(mirandaIMButton):
 	def _get_role(self):
 		return controlTypes.ROLE_LINK
 
-class MPropertyPage(PropertyPage):
+class MPropertyPage(Dialog,IAccessible):
 
 	def _get_name(self):
 		name=super(MPropertyPage,self)._get_name()
