@@ -14,6 +14,7 @@ import globalVars
 RPC_S_SERVER_UNAVAILABLE = 1722
 RPC_S_CALL_FAILED_DNE = 1727
 E_ACCESSDENIED = -2147024891
+EVENT_E_ALL_SUBSCRIBERS_FAILED = -2147220991
 RPC_E_CALL_REJECTED = -2147418111
 RPC_E_CALL_CANCELED = -2147418110
 
@@ -122,7 +123,7 @@ class Logger(logging.Logger):
 		exc = exc_info[1]
 		if (
 			(isinstance(exc, WindowsError) and exc.winerror in (RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE))
-			or (isinstance(exc, comtypes.COMError) and exc.hresult in (E_ACCESSDENIED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED))
+			or (isinstance(exc, comtypes.COMError) and exc.hresult in (E_ACCESSDENIED, EVENT_E_ALL_SUBSCRIBERS_FAILED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED))
 		):
 			level = self.DEBUGWARNING
 		else:
