@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2010-01-20 09:38+Közép-európai téli idõ\n"
-"PO-Revision-Date: 2010-01-20 12:56+0100\n"
+"POT-Creation-Date: 2010-01-27 10:06+Közép-európai téli idõ\n"
+"PO-Revision-Date: 2010-01-27 10:07+0100\n"
 "Last-Translator: oaron <oaron1@gmail.com>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "MIME-Version: 1.0\n"
@@ -1128,18 +1128,18 @@ msgid "( )"
 msgstr "( )"
 
 #: braille.py:222
-#: speech.py:669
+#: speech.py:670
 msgid "not %s"
 msgstr "nincs %s"
 
 #: braille.py:234
-#: speech.py:675
+#: speech.py:676
 msgid "%s of %s"
 msgstr "%s per %s"
 
 #: braille.py:236
-#: speech.py:680
-#: speech.py:683
+#: speech.py:681
+#: speech.py:684
 msgid "level %s"
 msgstr "%s. szint"
 
@@ -1159,7 +1159,7 @@ msgstr "Nincs braille kijelző"
 #: characterSymbols.py:18
 #: characterSymbols.py:19
 #: speech.py:82
-#: speech.py:619
+#: speech.py:620
 msgid "blank"
 msgstr "üres"
 
@@ -1421,7 +1421,7 @@ msgid "tool tip"
 msgstr "eszköztipp"
 
 #: controlTypes.py:198
-#: speech.py:895
+#: speech.py:930
 msgid "link"
 msgstr "hivatkozás"
 
@@ -1838,7 +1838,7 @@ msgid "font size"
 msgstr "méret"
 
 #: controlTypes.py:305
-#: speech.py:847
+#: speech.py:882
 msgid "bold"
 msgstr "félkövér"
 
@@ -1855,12 +1855,12 @@ msgid "background color"
 msgstr "háttérszín"
 
 #: controlTypes.py:310
-#: speech.py:869
+#: speech.py:904
 msgid "superscript"
 msgstr "felső index"
 
 #: controlTypes.py:311
-#: speech.py:871
+#: speech.py:906
 msgid "subscript"
 msgstr "alsó index"
 
@@ -3084,130 +3084,122 @@ msgstr "%s. Nincs kijelölve"
 msgid "selection removed"
 msgstr "a kijelölés törölve"
 
-#: speech.py:667
+#: speech.py:668
 msgid "done dragging"
 msgstr "A mozgatás befejezve"
 
-#: speech.py:692
-#: speech.py:936
+#: speech.py:693
+#: speech.py:971
 msgid "row %s"
 msgstr "%s. sor"
 
-#: speech.py:695
-#: speech.py:932
+#: speech.py:696
+#: speech.py:967
 msgid "column %s"
 msgstr "%s. oszlop"
 
-#: speech.py:700
+#: speech.py:701
 msgid "with %s rows and %s columns"
 msgstr "%s sorral és %s oszloppal"
 
-#: speech.py:702
+#: speech.py:703
 msgid "with %s columns"
 msgstr "%s oszloppal"
 
-#: speech.py:704
+#: speech.py:705
 msgid "with %s rows"
 msgstr "%s sorral"
 
-#: speech.py:767
-#: speech.py:771
-#: speech.py:775
-#: speech.py:783
-#: speech.py:794
-#: speech.py:895
-msgid "out of %s"
-msgstr "%s vége"
-
-#: speech.py:769
+#: speech.py:808
 msgid "with %s items"
 msgstr "%s elemmel"
 
-#: speech.py:792
-msgid "in %s"
-msgstr "%s eleje"
+#: speech.py:823
+#: speech.py:930
+msgid "out of %s"
+msgstr "%s vége"
 
-#: speech.py:812
+#: speech.py:847
 msgid "page %s"
 msgstr "%s. oldal"
 
-#: speech.py:819
+#: speech.py:854
 msgid "style %s"
 msgstr "%s stílus"
 
-#: speech.py:821
+#: speech.py:856
 msgid "default style"
 msgstr "alapértelmezett stílus"
 
-#: speech.py:841
+#: speech.py:876
 msgid "line %s"
 msgstr "%s. sor"
 
-#: speech.py:847
+#: speech.py:882
 msgid "no bold"
 msgstr "nem félkövér"
 
-#: speech.py:852
+#: speech.py:887
 msgid "italic"
 msgstr "dőlt"
 
-#: speech.py:852
+#: speech.py:887
 msgid "no italic"
 msgstr "nem dőlt"
 
-#: speech.py:857
+#: speech.py:892
 msgid "no strikethrough"
 msgstr "nem sorkizárt"
 
-#: speech.py:857
+#: speech.py:892
 msgid "strikethrough"
 msgstr "sorkizárt"
 
-#: speech.py:862
+#: speech.py:897
 msgid "not underlined"
 msgstr "nincs aláhúzva"
 
-#: speech.py:862
+#: speech.py:897
 msgid "underlined"
 msgstr "aláhúzott"
 
-#: speech.py:873
+#: speech.py:908
 msgid "baseline"
 msgstr "alap"
 
-#: speech.py:881
+#: speech.py:916
 msgid "align left"
 msgstr "balra igazítás"
 
-#: speech.py:883
+#: speech.py:918
 msgid "align center"
 msgstr "középre igazítás"
 
-#: speech.py:885
+#: speech.py:920
 msgid "align right"
 msgstr "jobbra igazítás"
 
-#: speech.py:887
+#: speech.py:922
 msgid "align justify"
 msgstr "sorkizárt igazítás"
 
-#: speech.py:889
+#: speech.py:924
 msgid "align default"
 msgstr "alapértelmezett igazítás"
 
-#: speech.py:902
+#: speech.py:937
 msgid "spelling error"
 msgstr "Hibás szó"
 
-#: speech.py:904
+#: speech.py:939
 msgid "out of spelling error"
 msgstr "A hibás szón kívül"
 
-#: speech.py:918
+#: speech.py:953
 msgid "out of table"
 msgstr "a táblázat vége"
 
-#: speech.py:927
+#: speech.py:962
 msgid "table with %s columns and %s rows"
 msgstr "%s oszlopból és %s sorból álló táblázat"
 
@@ -3818,4 +3810,3 @@ msgstr "Az előző beágyazott objektumhoz lép."
 #: virtualBuffers\__init__.py:1260
 msgid "no previous embedded object"
 msgstr "Nincs előző beágyazott objektum"
-
