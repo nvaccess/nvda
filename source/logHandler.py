@@ -205,8 +205,7 @@ def initialize():
 	logging.addLevelName(Logger.IO, "IO")
 	if not globalVars.appArgs.logFileName:
 		globalVars.appArgs.logFileName = _getDefaultLogFilePath()
-	# HACK: Don't specify an encoding, as a bug in Python 2.6's logging module causes problems if we do.
-	logHandler = FileHandler(globalVars.appArgs.logFileName, "w")
+	logHandler = FileHandler(globalVars.appArgs.logFileName, "w", encoding="UTF-8")
 	logFormatter=logging.Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
