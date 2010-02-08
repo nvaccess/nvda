@@ -797,7 +797,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	# speakStatesFirst: Speak the states before the role.
 	speakStatesFirst=role==controlTypes.ROLE_LINK
 
-	if speakContentFirst and not speakWithinForLine and role!=controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_EDITABLE not in states:
+	if speakContentFirst and speakExitForOther and not speakWithinForLine and role!=controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_EDITABLE not in states:
 		# If content is to be spoken first, don't speak containers at all.
 		speakEntry=False
 
