@@ -4,8 +4,6 @@
 ([a-z])([A-Z])	\1 \2	1	1
 #Break away a word starting with a capital from a fully uppercase word
 ([A-Z])([A-Z][a-z])	\1 \2	1	1
-#telephone numbers
-\b(\d{3})\-(\d{2})(\d{2})\W	\1 \2 \3	1	1
 #numbers beginning on the zero
 \b(0+)([^\D0]+)	\1 \2	1	1
 #Break words that have numbers at the end
