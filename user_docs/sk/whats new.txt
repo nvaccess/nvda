@@ -16,6 +16,8 @@
 	* Existuje rozhranie na ovládanie NVDA pre vývojárov ďalších aplikácií. Je možné napr. prečítať text, zastaviť reč, zobraziť správu v braily a pod.
 	* Informačné a chybové správy sú prečítané na prihlasovacej obrazovke Windows vista / Windows 7. (#506)
 	* V programe Adobe Reader sú prečítané interaktívne formuláre, na vývoj ktorých bol použitý program Adobe LiveCycle. (#475)
+	* Ak je zapnutá voľba čítať dynamicky menený obsah (NVDA+5), NVDA dokáže automaticky čítať nové správy v konverzačnom okne programu Miranda-IM. Pridané boli tiež skripty na zopakovanie troch naposledy doručených správ (NVDA+Control+number). (#546)
+	* Podpora pre editačné polia Adobe Flash. (#461)
 
 === Zmeny ===
 	* Veľmi dlhý popis v ponuke štart Windows 7 nie je viacej oznamovaný.
@@ -42,7 +44,8 @@
 	* Ak je brailovský kurzor zviazaný s prehliadacím kurzorom a fokus získa okno príkazového riadku, je možné korektne sa pohybovať po texte príkazového riadku.
 	* V programoch TeamTalk3 a TeamTalk4 Classic nie je viac oznamovaná aktualizácia indikátora priebehu znázorňujúca VU Meter a tiež v prichádzajúcom chate sú správne čitateľné národné znaky.
 	* Aktivovaním odkazov odkazujúcich na záložku v rovnakej stránke správne umiestni kurzor virtuálneho prehliadača na požadované miesto (s Firefox 3.6).
-	* Opravená chyba, kde v niektorých prípadoch nebol správne čitateľný všetkok text v špecifických PDF dokumentoch.
+	* Opravená chyba, kde v niektorých prípadoch nebol správne čitateľný všetok text v špecifických PDF dokumentoch.
+	* NVDA viac nečíta nesprávne čísla oddelené pomlčkou - napr. 500-1000.  (#547)
 
 
 == 2009.1 ==
