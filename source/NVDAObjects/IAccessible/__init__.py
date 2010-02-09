@@ -357,6 +357,10 @@ the NVDAObject for IAccessible
 				clsList.append(newCls)
 
 		# Some special cases.
+		if (windowClassName == "MozillaWindowClass" and not isinstance(IAccessibleObject, IAccessibleHandler.IAccessible2) and role == oleacc.ROLE_SYSTEM_TEXT) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary"):
+			# This is possibly a Flash object.
+			from . import adobeFlash
+			clsList, kwargs = adobeFlash.findBestClass(clsList, kwargs)
 		if windowClassName=="Internet Explorer_Server" and (event_objectID is None or event_objectID==winUser.OBJID_CLIENT or event_objectID>0):
 			MSHTML=__import__("MSHTML",globals(),locals(),[]).MSHTML
 			clsList.append(MSHTML)

@@ -48,6 +48,7 @@ General dependencies:
 		* You can build this yourself using midl from the idl located at http://www.adobe.com/devnet/acrobat/downloads/ClientFiles.zip
 		* Alternatively, a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/AcrobatAccess.tlb
 		* Copy AcrobatAccess.tlb into the source\typelibs directory.
+	* Adobe FlashAccessibility interface typelib: http://www.nvda-project.org/3rdParty/FlashAccessibility.tlb
 
 To use the brltty braille display driver:
 	* brlapi Python bindings, version 0.5.3 or later, distributed with BRLTTY for Windows, version 4.0-2 or later:
