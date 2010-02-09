@@ -211,6 +211,7 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 			for(;i!=beginningAncestors.end()&&j!=endAncestors.end();i++,j++) {
 				if(*i==*j) {
 					invalidNode=*i;
+				} else {
 					break;
 				}
 			}
