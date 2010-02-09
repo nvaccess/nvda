@@ -1,10 +1,10 @@
 <html>
 <head>
-<title>NVDA 2009.1 User Guide</title>
+<title>NVDA 2010.1 User Guide</title>
 </head>
 <body>
-<h1>NVDA 2009.1 User Guide</h1>
-<span>Last updated September 13, 2009</span>
+<h1>NVDA 2010.1 User Guide</h1>
+<span>Last updated February 5, 2010</span>
 
 <h2>Table of Contents</h2>
 <ul>
@@ -110,7 +110,7 @@ NVDA supports many braille codes covering a large set of languages. In many case
 </p>
 <h3 id="1.5">1.5. Licence and Copyright</h3>
 <p>
-NVDA is copyright 2006-2009 NVDA contributors.
+NVDA is copyright 2006-2010 NVDA contributors.
 </p>
 <p>
 NVDA is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it. This applies to both original and modified copies of the software, plus any software that uses code taken from this software.
@@ -228,7 +228,7 @@ The dialog contains a simple combo box, which lists all the available synthesize
 </p>
 <p>
 The current list of synthesizers NVDA supports is:
-eSpeak, SAPI4, SAPI5, Audiologic, Display, and Silence.
+eSpeak, SAPI4, SAPI5, Audiologic, and Silence.
 </p>
 <p>
 The eSpeak synthesizer is built directly in to NVDA, and does not depend on any other special drivers or SAPI runtime to be installed. NVDA starts using eSpeak by default. This synthesizer should work on any system that NVDA works on, so it will definitely work when running NVDA off a USB thumb drive or CD, on anyone else's system.
@@ -238,9 +238,6 @@ The Sapi4 option allows you to use the Sapi synthesizer. Voices that are include
 </p>
 <p>
 The Sapi5 synthesizer allows you to use the microsoft voices that are iincluded on your machine. In XP, the default Ssapi5 voice is Microsoft Sam. In Vista, the default voice is Microsoft Anna. Depending on what voices you have installed, others may show up under Ssapi5.
-</p>
-<p>
-The Display synthesizer is useful for sighted developers who wish to read what NVDA is speaking, as they test NVDA with their applications.
 </p>
 <p>
 The Silence synthesizer driver is not that useful, unless you want to not have any speech at all while running NVDA.
@@ -331,10 +328,14 @@ This option is a numerical field that allows you to change the blink rate of the
 <p>
 This option is a numerical field that controls how long system messages are displayed on the braille display.
 </p>
-<h6>Miscellaneous</h6>
+<h6>Braille Tethered to</h6>
+
 <p>
-When pressing NVDA+Control+T, you can control what is being displayed on the braille display. The two options are focus and review. Focus displays what is being accessed via the arrow keys, the tab key, in short, focus navigation. Review allows you to review what is on the screen, I.E object navigation. You can cycle between these options by pressing control+NVDA+T.
+This option allows you to choose whether the braille display will follow the system focus, or whether it follows the navigator object / review cursor.
 </p>
+<p>
+This option can also be toggled by the key command NVDA+control+t.
+</p> 
 <h5 id="6.2.1.5">6.2.1.5. Keyboard settings</h5>
 <p>
 This dialog box is found in the Preferences menu, under &quot;Keyboard settings...&quot;. Alternatively, it can be accessed by pressing NVDA+Control+K. It contains the following options:
@@ -535,11 +536,26 @@ There are some key commands that are useful when moving with focus:
 When the focus is on an object that has an edit cursor (system caret), you can arrow around and edit like you normally would. NVDA will announce as you move by character, word, line, and will also announce selecting and unselecting text.
 </p>
 <p>
-When you move with the system caret, the position of the review cursor will also be updated to match the system caret.
+When you move with the system caret, the position of the review cursor will also be updated to match the system caret. Though this setting can be toggled by the key command NVDA+6. 
 </p>
 <p>
-You can also read the entire text (say all) with NVDA+down Arrow. Note though that this is different to numpad Plus which only moves the review cursor, this moves the system caret as it goes.
+NVDA provides the following key commands  in relation to the system caret:
 </p>
+<ul>
+<li>NVDA+downArrow: start reading from the position of the system caret, moving it as it goes</li>
+<li>NVDA+upArrow: read the current line at the system caret</li>
+<li>NVDA+Shift+upArrow: read the currently selected text if any</li>
+<li>NVDA+f: report the format of the text under the system caret</li>
+</ul> 
+<p>
+When with in a table, the following key commands are also available:
+</p>
+<ul>
+<li>control+alt+leftArrow: Move to the previous column (staying in this row)</li>
+<li>control+alt+rightArrow: move to the next column (staying in this row)</li>
+ <li>control+alt+upArrow: move to the previous row (staying in this column)</li>
+<li>control+alt+downArrow: move to the next row (staying in this column)</li>
+</ul>
 <h3 id="7.3">7.3. Object Navigation</h3>
 <p>
 If you wish to navigate around the current application or the Operating System a bit, but with out moving the focus, you can use NVDA's object navigation. This allows you to move from object to object in a tree like structure.
@@ -572,6 +588,7 @@ To navigate by object, use the following keys:
 <li>NVDA+shift+numpad6: Move to next object in flow (crosses parent child object boundaries automatically until it can go next)</li>
 <li>NVDA+numpadMinus: Move to focus</li>
 <li>NVDA+numpadEnter: Activate current object (e.g. press enter / click / double click)</li>
+<li>NVDA+Shift+NumpadMinus: Move focus to the current object</li>
 <li>NVDA+numpadDivide: Move the mouse to the current object</li>
 <li>NVDA+numpadMultiply: Move to the mouse</li>
 <li>NVDA+numpadDelete: announce current object's dimentions in regards to the screen</li>
@@ -625,6 +642,15 @@ NVDA provides a way for users to understand where the mouse is in regards to the
 <p>
 These extra mouse features are not turned on by default in NVDA, but if you wish to take advantage of them, you can configure them from the Mouse settings dialog, found in the Preferences menu on the NVDA menu.
 </p>
+<p>
+Although a physical mouse or trackpad should be used to navigate with the mouse, NVDA has a few key commands related to the mouse:
+</p>
+<ul>
+<li>numpadDivide: Left mouse button click</li>
+<li>numpadMultiply: Right mouse button click</li>
+<li>Shift+numpadDivide: Lock/Unlock left mouse button down</li>
+<li>Shift+numpadMultiply: Lock/Unlock right mouse button down</li>
+</ul>
 <h2 id="8">8. Virtual Buffers</h2>
 <p>
 Complex read-only documents, such as web pages, are represented in NVDA with in a Virtual Buffer.
@@ -633,7 +659,7 @@ Complex read-only documents, such as web pages, are represented in NVDA with in 
 A virtual buffer is a flat representation of content such as a web page, that can be moved around in with the arrow keys. Information such as whether text is a link, heading etc is announced along with the text as you move.
 </p>
 <p>
-While in a virtual buffer, there are two modes of interaction. Browse mode is where you can move around all the text using a virtual cursor. Focus mode is where you can directly interact with the control (edit field, combo box, radio buttons) using what ever keys you would normally use. When in Browse mode, NVDA will automatically switch to focus mode if you tab to or click on a particular control that requires it. Note that pressing enter or space on controls that require it will also switch to focus mode. You can also manually change to focus mode with NVDA+space. If NVDA automatically changed to focus mode because of a tab, click or enter/space key press, it will change back to browse mode once you tab or click on to something that doesn't require it, or if you press escape. However, if you changed to focus mode with NVDA+space, it will stay in focus mode until you manually go back to browse mode. At any time when you are in focus mode, you can manually switch back to browse mode by pressing escape, or NVDA+space. The virtual buffer settings dialog in the preferences menu in the NVDA menu allows you to disable automatic switching of browse mode and focus mode.
+While in a virtual buffer, there are two modes of interaction. Browse mode is where you can move around all the text using a virtual cursor, rather like the system caret. In fact all of NVDA's system caret key commands will work in this mode (e.g. say all, report formatting, all table navigation commands etc).  Focus mode is where you can directly interact with the control (edit field, combo box, radio buttons) using what ever keys you would normally use. When in Browse mode, NVDA will automatically switch to focus mode if you tab to or click on a particular control that requires it. Note that pressing enter or space on controls that require it will also switch to focus mode. You can also manually change to focus mode with NVDA+space. If NVDA automatically changed to focus mode because of a tab, click or enter/space key press, it will change back to browse mode once you tab or click on to something that doesn't require it, or if you press escape. However, if you changed to focus mode with NVDA+space, it will stay in focus mode until you manually go back to browse mode. At any time when you are in focus mode, you can manually switch back to browse mode by pressing escape, or NVDA+space. The virtual buffer settings dialog in the preferences menu in the NVDA menu allows you to disable automatic switching of browse mode and focus mode.
 </p>
 <p>
 Currently NVDA uses Virtual Buffers for reading documents in Mozilla Firefox, Microsoft Internet Explorer, and Adobe Reader.
@@ -683,7 +709,7 @@ The elements list (available by pressing NVDA+f7 while in a virtual buffer) prov
 <p>
 Pages can include rich content using technologies such as Adobe Flash and Sun Java. Where these are encountered in a virtual buffer, NVDA will announce &quot;embedded object&quot;. You can press enter on these objects to interact with them. If it is accessible, you can then tab around it and interact with it like any other application. To return to the page, press NVDA+space.
 </p>
-<h2 id="9">9. Troubleshooting NVDA</h3>
+<h2 id="9">9. Troubleshooting NVDA</h2>
 <p>
 As NVDA is constantly being updated, there is no guarantee that all commands provided here in this user guide will still apply. If you have any problems with any of the commands presented in this user guide, please visit:
 <a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a>

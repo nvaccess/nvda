@@ -13,9 +13,9 @@ The adobeAcrobat virtual buffer backend requires the Adobe Acrobat accessibility
 http://www.adobe.com/devnet/acrobat/downloads/ClientFiles.zip
 Extract the files into ..\include\AcrobatAccess.
 
-The NVDAHelper build is managed by the SCons build system:
-For now you need to fetch a development version from:
-http://scons.tigris.org/svn/scons/trunk
+The NVDAHelper build is managed by the SCons build system: http://www.scons.org/
+Unfortunately, there are problems regarding the Windows SDK in all current versions of SCons, so you will need to use the build available at:
+http://www.nvda-project.org/3rdParty/scons-trunk-r4327.win32.exe
 
 Building the library:
 

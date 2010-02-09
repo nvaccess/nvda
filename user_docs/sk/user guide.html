@@ -2,11 +2,11 @@
 <head>
 <META http-equiv=Content-Type content="text/html; charset=utf-8">
 <meta http-equiv="Content-Language" content="sk">
-<title>NVDA 2009.1 Používateľská príručka</title>
+<title>NVDA 2010.1 Používateľská príručka</title>
 </head>
 <body>
-<h1>NVDA 2009.1 Používateľská príručka</h1>
-<span>Posledná aktualizácia 13 September 2009</span>
+<h1>NVDA 2010.1 Používateľská príručka</h1>
+<span>Posledná aktualizácia 5 Február 2010</span>
 
 <h2>Obsah</h2>
 <ul>
@@ -239,7 +239,7 @@ Položka hlasový výstup sa nachádza v možnostiach programu alebo je tiež do
 Dialógové okno obsahuje jednoduchý zoznam, v ktorom sa nachádzajú dostupné hlasové výstupy. Vyberte si šípkami výstup a stlačte tlačítko OK. Ak sa pri spustení hlasového výstupu vyskytne chyba program vás upozorní a zostane zachované pôvodné nastavenie.
 </p>
 <p>
-Aktuálne NVDA podporuje hlasový výstup eSpeak, hlasové výstupy SAPI4, SAPI5 a Audiologic TTS3,  prácu bez výstupu a virtuálny výstup display.
+Aktuálne NVDA podporuje hlasový výstup eSpeak, hlasové výstupy SAPI4, SAPI5, Audiologic TTS3 a prácu bez výstupu.
 </p>
 <p>
 ESpeak je priamo zabudovaný do NVDA a nie je závislý na iných ovládačoch, alebo SAPI, ktoré by sa muselo doinštalovať. NVDA sa predvolene spúšťa s hlasovým výstupom eSpeak. Tento hlas by mal pracovať na každom systéme, kde beží NVDA, čo znamená, že NVDA môžete spúšťať na ľubovoľnom počítači dokonca aj z USB kľúčenky alebo CD.
@@ -252,9 +252,6 @@ Ovládač SAPI5 umožní použitie predvolených hlasov zabudovaných do operač
 </p>
 <p>
 Výstup silence, ktorý nastaví NVDA na tichý režim/bez hlasu nie je príliš v praxi použiteľný, iba ak by ste si priali, aby vám NVDA štartoval bez zvuku. Tohoto istého efektu je možné docieliť aj vypnutím režimu reči (stláčaním NVDA+s). Tento hlasový výstup má za úlohu slúžiť potenciálnym vývojárom, ktorý by chceli pridať podporu pre ďalší hlasový výstup.
-</p>
-<p>
-Display je virtuálny hlasový výstup, ktorý namiesto obsluhy skutočného hlasového výstupu zobrazuje všetok text v plávajúcom okne. Toto je užitočné pre vidiacich vývojárov, ktorí nie sú zvyknutí na zvuk hlasového výstupu a chceli by sledovať výstup programu NVDA.
 </p>
 <p>
 Všimnite si: Je jedno koľko SAPI4 alebo SAPI5 hlasových výstupov máte nainštalovaných v systéme. V dialógu hlasového výstupu sa vám zobrazia len položky SAPI4 a 5. Vyberte si buď SAPI4 alebo SAPI5, a potom v dialógu nastavenia hlasu vyberte konkrétny hlas, ktorý budete používať.
@@ -340,11 +337,14 @@ Jedná sa o numerickú hodnotu, ktorá určuje frekvenciu blikania kurzora brail
 </p>
 <h6>Zobrazovať správy (sek)</h6>
 <p>
-Táto numerická hodnota určuje ako dlho majú na riadku majú byť zobrazované systémové správy..
+Táto numerická hodnota určuje ako dlho majú na riadku byť zobrazované systémové správy..
 </p>
-<h6>Ďalšie</h6>
+<h6>Braillovský kurzor zviazaný s</h6>
 <p>
-Stláčaním ctrl+NVDA+t je možné získať kontrolu nad tým, čo sa v skutočnosti bude zobrazovať na riadku. K dispozícii sú dve možnosti, braillovský kurzor môže byť zviazaný buď so systémovým alebo s prehliadacím kurzorom. Systémový kurzor reprezentuje navigáciu v operačnom systéme, zatiaľ čo prehliadací kurzor umožňuje prezerať text objektu zameraného objektovou navigáciou.
+Táto voľba umožňuje nastaviť či bude braillovský kurzor sledovať systémový kurzor, alebo či bude braillovský kurzor sledovať prehliadací kurzor navigačného objektu.
+</p>
+<p>
+Toto môžete tiež prepínať klávesovou skratkou NVDA+control+t.
 </p>
 <h5 id="6.2.1.5">6.2.1.5. Nastavenia klávesnice</h5>
 <p>
@@ -557,11 +557,17 @@ Pri zameraní fokusu možno použiť niekoľko užitočných skratiek:
 Ak je fokus v poli, ktoré má textový kurzor, môžete text editovať tak ako ste zvyknutí. NVDA bude hlásiť pohyb po znakoch, slovách, riadkoch, a tiež ohlási vybratý a nevybratý text.
 </p>
 <p>
-Ak sa pohnete textovým kurzorom, svoju pozíciu zmení aj prehliadací kurzor na rovnakú pozíciu, akú má textový kurzor.
+Ak sa pohnete textovým kurzorom, svoju pozíciu zmení aj prehliadací kurzor na rovnakú pozíciu, akú má textový kurzor. Toto je možné prepínať stlačením NVDA+6.
 </p>
 <p>
-Taktiež text môžete nechať plynulo prečítať cez klávesovú skratku NVDA+šípka dolu. Pozor, je rozdiel, ak stlačíte plus na numerickom bloku, vtedy môžete čítať text, na ktorom stojí prehliadací kurzor, ale cez príkaz NVDA+šípka dolu sa pohybujete textovým kurzorom.
+NVDA obsahuje nasledujúce klávesové skratky súvisiace so systémovým kurzorom:
 </p>
+<ul>
+<li>NVDA+šípka dolu: Prečíta text od pozície systémového kurzora do konca textu aktuálneho navigačného objektu pri čom sa systémový	 kurzor posúva</li>
+<li>NVDA+šípka hore: Prečíta alebo vyhláskuje aktuálny riadok systémového kurzora</li>
+<li>NVDA+Shift+šípka hore: prečíta práve vybratý text</li>
+<li>NVDA+f: Prečíta vlastnosti formátovania na aktuálnej pozícii systémového kurzora</li>
+</ul> 
 <h3 id="7.3">7.3. Objektová navigácia</h3>
 <p>
 Ak si chcete trochu prehliadnuť položky operačného systému a nechcete, aby na ne bol zameraný fokus, môžete využiť pohyb po objektoch, ktorý ponúka NVDA. Umožní vám pohyb v stromovej štruktúre všetkých objektov operačného systému.
@@ -588,6 +594,7 @@ Pre pohyb po objektoch použite nasledujúce klávesové skratky:
 <li>NVDA+shift+numpad6: Pohyb na nasledujúci objekt v náväznosti (automaticky prechádza do nadradenej vetvy stromovej štruktúry ak na aktuálnej úrovni už nie je ďalší nasledujúci objekt)</li> 
 <li>NVDA+NumpadMínus: navigačný objekt na fokus</li>
 <li>NVDA+numpad Enter: predvolená akcia aktuálneho objektu - rovnaké ako stlačenie klávesu enter alebo dvojité kliknutie.</li>
+<li>NVDA+Shift+NumpadMínus: Nastaviť systémový fokus na objekt zameraný objektovou navigáciou</li>
 <li>NVDA+numpad Lomeno: Premiestniť myš na aktuálny objekt</li>
 <li>NVDA+numpad Krát: zamerať objekt pod ukazovateľom myši</li>
 <li>NVDA+numpadDelete: oznamuje súradnice objektu vzhľadom na vlastnosti obrazovky</li>
@@ -644,6 +651,15 @@ Ak sa pohybujete myšou, NVDA môže ohlasovať objekty, na ktorých sa myš pr�
 <p>
 NVDA používateľovi ponúka aj možnosť akustickej signalizácie počas pohybu myši na obrazovke. Čím vyššie sa myš na obrazovke nachádza, tým vyššie je pípanie. Pre pravú a ľavú stranu sa pípanie presúva z jedného kanála do druhého, predpokladá sa, že používateľ má stereo reproduktory,. Tieto funkcie v NVDA nie sú štandardne nastavené, ale v možnostiach sa dajú dodatočne aktivovať.
 </p>
+<p>
+Aj napriek tomu, že sa na tento druh navigácie bežne používa myš alebo trackpad, NVDA má zabudovaných niekoľko klávesových skratiek, ktoré simulujú niektoré funkcie ukazovacieho zariadenia:
+</p>
+<ul>
+<li>numpadLomeno: Klik ľavým tlačidlom myši</li>
+<li>numpadHviezdička: Klik pravým tlačidlom myši</li>
+<li>Shift+numpadLomeno: Uzamknúť alebo odomknúť ľavé tlačidlo myši</li>
+<li>Shift+numpadHviezdička: Uzamknúť alebo odomknúť pravé tlačidlo myši</li>
+</ul>
 <h2 id="8">8. Virtuálny prehliadač</h2>
 <p>
 Súhrnnejšie dokumenty, ako napríklad vebové stránky, nám NVDA dokáže zobraziť v TZV. virtuálnom prehliadači.
@@ -705,7 +721,7 @@ Dialóg zoznam prvkov, ktorý je dostupný po stlačení kombinácie NVDA+F7 vo 
 <p>
 Moderné webové stránky môžu byť obohatené o prvky Adobe flash alebo Sun java. Ak sa tieto nachádzajú vo virtuálnom prehliadači, NVDA oznámi &quot;vnorený objekt&quot; Stlačením klávesu enter môžete premiestniť fokus do takéhoto vnoreného objektu. Ak je objekt prístupný, môžete sa v objekte pohybovať stláčaním klávesov tab alebo shift+tab. Stlačením NVDA+medzerník sa môžete prepnúť späť do virtuálneho prehliadača.
 </p>
-<h3 id="9">9. Ako získať viac informácií</h3>
+<h2 id="9">9. Ako získať viac informácií</h2>
 <p>
 Keďže NVDA je neustále vo vývoji, nie je možné garantovať funkčnosť všetkých klávesových príkazov a postupov popísaných v tejto príručke. Ak máte problémy s niektorými príkazmi z tejto príručky, prosím navštívte web stránku: <a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a> a skúste vyhľadať aktualizované informácie.
 </p>

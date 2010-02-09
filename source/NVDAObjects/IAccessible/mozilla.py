@@ -6,6 +6,7 @@
 
 import IAccessibleHandler
 import oleacc
+import eventHandler
 import controlTypes
 from . import IAccessible
 import textInfos
@@ -34,6 +35,12 @@ class Mozilla(IAccessible):
 			if newObj:
 				return newObj
 		return super(Mozilla,self).parent
+
+	def event_scrollingStart(self):
+		#Firefox 3.6 fires scrollingStart on leaf nodes which is not useful to us.
+		#Bounce the event up to the node's parent so that any possible virtualBuffers will detect it.
+		if self.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in self.states:
+			eventHandler.queueEvent("scrollingStart",self.parent)
 
 class Application(Mozilla):
 

@@ -11,7 +11,7 @@ import textInfos
 from logHandler import log
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, AutoSelectDetectionNVDAObject
-from NVDAObjects.progressBar import ProgressBar
+from NVDAObjects.behaviors import ProgressBar
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -78,9 +78,12 @@ class UIATextInfo(textInfos.TextInfo):
 		if endPoint=="start":
 			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_Start,UIAUnit,direction)
 		elif endPoint=="end":
-			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_Start,UIAUnit,direction)
+			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_End,UIAUnit,direction)
 		else:
 			res=self._rangeObj.Move(UIAUnit,direction)
+		#Some Implementations of Move and moveEndpointByUnit return a positive number even if the direction is negative
+		if direction<0 and res>0:
+			res=0-res
 		return res
 
 	def copy(self):
@@ -173,13 +176,17 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			runtimeId=UIAElement.getRuntimeId()
 		except COMError:
 			log.debugWarning("Could not get UIA element runtime Id",exc_info=True)
-			return None
-		obj=cls.liveNVDAObjectTable.get(runtimeId,None)
+			runtimeId=None
+		if not runtimeId:
+			obj=cls.liveNVDAObjectTable.get(runtimeId,None)
+		else:
+			obj=None
 		if not obj:
 			obj=super(UIA,cls).__new__(cls)
 			if not obj:
 				return None
-			cls.liveNVDAObjectTable[runtimeId]=obj
+			if runtimeId:
+				cls.liveNVDAObjectTable[runtimeId]=obj
 		else:
 			obj.UIAElement=UIAElement
 		return obj

@@ -17,6 +17,7 @@
 ;defines for product info and paths
 !define VERSION "unknown"
 !define PRODUCT "NVDA"	; Don't change this for no reason, other instructions depend on this constant
+!define PUBLISHER "unknown"
 !define WEBSITE "www.nvda-project.org"
 !define NVDAWindowClass "wxWindowClassNR"
 !define NVDAWindowTitle "NVDA"
@@ -80,6 +81,7 @@ Var StartMenuFolder
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKLM"
 !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\${PRODUCT}"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
+!define MUI_STARTMENUPAGE_NODISABLE
 !insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
 
 ;Installation page
@@ -219,8 +221,6 @@ CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(docFolder)\$(shortcut_keycom).lnk
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(docFolder)\$(shortcut_userguide).lnk" "$INSTDIR\documentation\$(path_userguide)" "" "$INSTDIR\documentation\$(path_userguide)" 0 SW_SHOWMAXIMIZED
 WriteIniStr "$INSTDIR\${PRODUCT}.url" "InternetShortcut" "URL" "${WEBSITE}"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_website).lnk" "$INSTDIR\${PRODUCT}.url" "" "$INSTDIR\${PRODUCT}.url" 0
-CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
- CONTROL|ALT|N "Shortcut Ctrl+Alt+N"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_uninstall).lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
 !insertmacro MUI_STARTMENU_WRITE_END
 ;Items for uninstaller
@@ -229,7 +229,7 @@ WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "DisplayName" "${PRODUCT} ${V
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "DisplayVersion" "${VERSION}"
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "DisplayIcon" "$INSTDIR\images\nvda.ico"
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "URLInfoAbout" "http://www.nvda-project.org/"
-WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "Publisher" "nvda-project.org"
+WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "Publisher" "${PUBLISHER}"
 WriteRegStr ${INSTDIR_REG_ROOT} ${INSTDIR_REG_KEY} "UninstallString" "$INSTDIR\Uninstall.exe"
 WriteRegStr ${INSTDIR_REG_ROOT} "Software\${PRODUCT}" "" $INSTDIR
 WriteRegStr ${INSTDIR_REG_ROOT} "Software\Microsoft\Windows\CurrentVersion\App Paths\${NVDAApp}" "" "$INSTDIR\${NVDAApp}" 
@@ -237,6 +237,11 @@ WriteRegStr ${INSTDIR_REG_ROOT} "Software\Microsoft\Windows\CurrentVersion\App P
 
 section "$(section_service)"
 ExecWait "$INSTDIR\nvda_slave.exe installer_installService"
+SectionEnd
+
+section "$(section_desktopShortcut)"
+CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
+ CONTROL|ALT|N "Shortcut Ctrl+Alt+N"
 SectionEnd
 
 ;The uninstall section

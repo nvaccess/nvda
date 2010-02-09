@@ -8,15 +8,26 @@
 	* If speak command keys is enabled, NVDA will now announce the names of multimedia keys (e.g. play, stop, home page, etc.) on many keyboards when they are pressed. (#472)
 	* NVDA now announces the word being deleted when pressing control+backspace in controls that support it. (#491)
 	* Arrow keys can now be used in the Web formator window to navigate and read the text. (#452)
+	* The entry list in the Microsoft Office Outlook address book is now supported.
 	* NVDA better supports embedded editable (design mode) documents in Internet Explorer. (#402)
 	* a new script (nvda+shift+numpadMinus) allows you to move the system focus to the current navigator object.
 	* New scripts to lock and unlock the left and right mouse buttons. Useful for performing drag and drop operations. shift+numpadDivide to lock/unlock the left, shift+numpadMultiply to lock/unlock the right.
+	* New braille translation tables: German 8 dot computer braille, German grade 2, Finnish 8 dot computer braille, Chinese (Hong Kong, Cantonese), Chinese (Taiwan, Manderin). (#344, #369, #415, #450)
+	* It is now possible to disable the creation of the desktop shortcut (and thus the shortcut key) when installing NVDA. (#518)
+	* NVDA can now use IAccessible2 when present in 64 bit applications. (#479)
+	* The NVDA Controller Client API is now provided to allow applications to control NVDA; e.g. to speak text, silence speech, display a message in Braille, etc.
+	* Information and error messages are now read in the logon screen in Windows Vista and Windows 7. (#506)
+	* In Adobe Reader, PDF interactive forms developed with Adobe LiveCycle are now supported. (#475)
+	* NVDA now can read incoming messages in the miranda IM chat windows automatically, if report dynamic content changes option is turned on. Also scripts are added to report three recent messages (NVDA+Control+number). (#546)
 
 === Changes ===
 	* The extremely verbose keyboard help message in the Windows 7 Start menu is no longer reported.
-	* The Display synth has now been replaced with a new Speech Viewer. To activate it, choose Speech Viewer from the Tools menu. The speech viewer can be used independently of what ever speech synthesizer you are using.
+	* The Display synth has now been replaced with a new Speech Viewer. To activate it, choose Speech Viewer from the Tools menu. The speech viewer can be used independently of what ever speech synthesizer you are using. (#44)
 	* Messages on the braille display will automatically be dismissed if the user presses a key that results in a change such as the focus moving. Previously the message would always stay around for its configured time.
 	* Setting whether braille should be tethered to the focus or the review cursor (NVDA+control+t) can now be also set from the braille settings dialog, and is also now saved in the user's configuration.
+	* Updated eSpeak speech synthesiser to 1.42.04.
+	* Updated liblouis braille translator to 1.8.0.
+	* In virtual buffers, the reporting of elements when moving by character or word has been greatly improved. Previously, a lot of irrelevant information was reported and the reporting was very different to that when moving by line. (#490)
 
 === Bug Fixes ===
 	* NVDA no longer fails to start if UI Automation support appears to be available but fails to initialise for some reason. (#483)
@@ -26,9 +37,16 @@
 	* Virtual buffers now honour the report object shortcut keys setting found in the Object Presentation dialog. (#486)
 	* In virtual buffers, row/column coordinates are no longer incorrectly read for row and column headers when reporting of tables is disabled.
 	* In virtual buffers, row/column coordinates are now correctly read when you leave a table and then re-enter the same table cell without visiting another cell first; e.g. pressing upArrow then downArrow on the first cell of a table. (#378)
-	* Blank lines in Microsoft Word documents and  Microsoft HTML edit controls are now shown appropriatly on braille displays. Previously NVDA was displaying the current sentence on the display, not the current line for these situations. (#420)
-	* Multiple security fixes when running NVDA at Windows logon and on other secure desktops.
+	* Blank lines in Microsoft Word documents and  Microsoft HTML edit controls are now shown appropriately on braille displays. Previously NVDA was displaying the current sentence on the display, not the current line for these situations. (#420)
+	* Multiple security fixes when running NVDA at Windows logon and on other secure desktops. (#515)
 	* The cursor position (caret) is now correctly updated when performing a Say All that goes off the bottom of the screen, in standard Windows edit fields and Microsoft Word documents. (#418)
+	* In virtual buffers, text is no longer incorrectly included for images inside links and clickables that are marked as being irrelevant to screen readers. (#423)
+	* Fixes to the laptop keyboard layout. (#517)
+	* When Braille is tethered to review when you focus on a Dos console window, the review cursor can now properly navigate the text in the console.
+	* While working with TeamTalk3 or TeamTalk4 Classic VU meter progress bar in the main window is no longer anounced as it updates. Also special characters can be read properly in the incoming chat window.
+	* Activating same-page links in Firefox 3.6 appropriately moves the cursor in the virtualBuffer to the correct place on the page.
+	* Fixed the issue where some text was not rendered in Adobe Reader in certain PDF documents.
+	* NVDA no longer incorrectly speaks certain numbers separated by a dash; e.g. 500-1000. (#547)
 
 == 2009.1 ==
 Major highlights of this release include support for 64 bit editions of Windows; greatly improved support for Microsoft Internet Explorer and Adobe Reader documents; support for Windows 7; reading of the Windows logon, control+alt+delete and User Account Control (UAC) screens; and the ability to interact with Adobe Flash and Sun Java content on web pages. There have also been several significant stability fixes and improvements to the general user experience.

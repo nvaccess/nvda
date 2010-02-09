@@ -410,6 +410,7 @@ silentRolesOnFocus=set([
 	controlTypes.ROLE_TABLECELL,
 	controlTypes.ROLE_LISTITEM,
 	controlTypes.ROLE_MENUITEM,
+	controlTypes.ROLE_CHECKMENUITEM,
 	controlTypes.ROLE_TREEVIEWITEM,
 ])
 
@@ -457,7 +458,7 @@ def processNegativeStates(role, states, reason, negativeStates):
 	if role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_TREEVIEWITEM) and controlTypes.STATE_SELECTABLE in states and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
 		speakNegatives.add(controlTypes.STATE_SELECTED)
 	# Restrict "not checked" in a similar way to "not selected".
-	if (role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON) or controlTypes.STATE_CHECKABLE in states)  and (controlTypes.STATE_HALFCHECKED not in states) and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
+	if (role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKMENUITEM) or controlTypes.STATE_CHECKABLE in states)  and (controlTypes.STATE_HALFCHECKED not in states) and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
 		speakNegatives.add(controlTypes.STATE_CHECKED)
 	if reason == REASON_CHANGE:
 		# We want to speak this state only if it is changing to negative.
@@ -710,6 +711,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
+
 	childCount=int(attrs['_childcount'])
 	indexInParent=int(attrs['_indexInParent'])
 	parentChildCount=int(attrs['_parentChildCount'])
@@ -721,6 +723,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	level=attrs.get('level',None)
+
 	if formatConfig["includeLayoutTables"]:
 		tableLayout=None
 	else:
@@ -741,6 +744,8 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		tableID=attrs.get('table-id')
 	else:
 		tableID=None
+
+	# Honour verbosity configuration.
 	if reason in (REASON_CARET,REASON_SAYALL,REASON_FOCUS) and (
 		(role==controlTypes.ROLE_LINK and not formatConfig["reportLinks"]) or 
 		(role==controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"]) or
@@ -748,50 +753,80 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		(role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROWHEADER,controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"]) or
 		(role in (controlTypes.ROLE_LIST,controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
 	):
-			return ""
+		return ""
+
 	roleText=getSpeechTextForProperties(reason=reason,role=role)
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
 	levelText=getSpeechTextForProperties(reason=reason,positionInfo_level=level)
-	if not extraDetail and ((reason==REASON_FOCUS and fieldType in ("end_relative","end_inControlFieldStack")) or (reason in (REASON_CARET,REASON_SAYALL) and fieldType in ("start_inControlFieldStack","start_addedToControlFieldStack","start_relative"))) and role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_EMBEDDEDOBJECT):
-		if role==controlTypes.ROLE_LINK:
-			return " ".join([x for x in stateText,roleText,keyboardShortcutText])
-		else:
-			return " ".join([x for x in nameText,roleText,stateText,levelText,keyboardShortcutText if x])
-	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative","start_inControlFieldStack") and ((role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and controlTypes.STATE_READONLY not in states) or role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_SLIDER,controlTypes.ROLE_SPINBUTTON)):
-		return " ".join([x for x in nameText,roleText,stateText,keyboardShortcutText if x])
-	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states: 
-		return " ".join([x for x in nameText,roleText,stateText,keyboardShortcutText if x])
-	elif not extraDetail and fieldType in ("end_removedFromControlFieldStack") and role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states: 
-		return _("out of %s")%roleText
-	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and reason in (REASON_CARET,REASON_SAYALL,REASON_FOCUS) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+
+	# Determine under what circumstances this node should be spoken.
+	# speakEntry: Speak when the user enters the control.
+	# speakWithinForLine: When moving by line, speak when the user is already within the control.
+	# speakExitForLine: When moving by line, speak when the user exits the control.
+	# speakExitForOther: When moving by word or character, speak when the user exits the control.
+	speakEntry=speakWithinForLine=speakExitForLine=speakExitForOther=False
+	if (
+		role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_SLIDER,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_COMBOBOX)
+		or (role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and controlTypes.STATE_READONLY not in states)
+		or (role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
+	):
+		# This node is usually a single line.
+		speakEntry=True
+		speakWithinForLine=True
+		speakExitForOther=True
+	elif role in (controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_EMBEDDEDOBJECT):
+		# This node is only ever a marker; i.e. single character.
+		speakEntry=True
+	elif (
+		role in (controlTypes.ROLE_BLOCKQUOTE,controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU)
+		or (role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states)
+		or (role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states)
+		or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
+		or (role==controlTypes.ROLE_TABLE and tableID)
+	):
+		# This node is usually a multiline container.
+		speakEntry=True
+		speakExitForLine=True
+		speakExitForOther=True
+
+	# Determine the order of speech.
+	# speakContentFirst: Speak the content before the control field info.
+	speakContentFirst=reason==REASON_FOCUS and role not in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_COMBOBOX) and controlTypes.STATE_EDITABLE not in states
+	# speakStatesFirst: Speak the states before the role.
+	speakStatesFirst=role==controlTypes.ROLE_LINK
+
+	if speakContentFirst and speakExitForOther and not speakWithinForLine and role!=controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_EDITABLE not in states:
+		# If content is to be spoken first, don't speak containers at all.
+		speakEntry=False
+
+	# Determine what text to speak.
+	# Special cases
+	if fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+		# List.
 		return roleText+_("with %s items")%childCount
-	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and reason in (REASON_CARET,REASON_SAYALL,REASON_FOCUS) and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
-		return _("out of %s")%roleText
-	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_BLOCKQUOTE:
-		return roleText
-	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and role==controlTypes.ROLE_BLOCKQUOTE:
-		return _("out of %s")%roleText
-	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative") and ((role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states) or  role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_COMBOBOX)):
-		return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
-	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)):
-		return " ".join([x for x in roleText,stateText,keyboardShortcutText if x])
-	elif not extraDetail and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
+	elif fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
+		# Table.
 		return " ".join((roleText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount"))))
-	elif not extraDetail and fieldType=="end_removedFromControlFieldStack" and (role in (controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU) or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states) or (role==controlTypes.ROLE_TABLE and not tableLayout and "table-id" in attrs)):
-		return _("out of %s")%roleText
 	elif fieldType=="start_addedToControlFieldStack" and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER,controlTypes.ROLE_TABLEROWHEADER) and tableID:
+		# Table cell.
 		return getSpeechTextForProperties(_tableID=tableID, rowNumber=attrs.get("table-rownumber"), columnNumber=attrs.get("table-columnnumber"))
-	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
-		return getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
-	elif role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in states:
-		# Don't bother speaking control field info for text nodes.
-		return ""
-	elif extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative") and roleText:
-		return _("in %s")%roleText
-	elif extraDetail and fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText:
+
+	# General cases
+	elif (
+		(speakEntry and ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))))
+		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
+	):
+		return " ".join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),levelText,keyboardShortcutText if x])
+	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
 		return _("out of %s")%roleText
+
+	# Special cases
+	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
+		# Clickable.
+		return getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
+
 	else:
 		return ""
 

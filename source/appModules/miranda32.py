@@ -4,11 +4,14 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import ui
+import globalVars
 from ctypes import *
 from ctypes.wintypes import *
 import winKernel
 import winUser
-from NVDAObjects.IAccessible import IAccessible, PropertyPage
+from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects.behaviors import Dialog
 import _default
 import speech
 import controlTypes
@@ -70,9 +73,12 @@ CLM_GETSTATUSMSG=CLM_FIRST+105
 
 #other constants
 ANSILOGS=(1001,1006)
+MESSAGEVIEWERS=(1001,1005,5005)
 
 class AppModule(_default.AppModule):
-
+	lastTextLengths={}
+	lastMessages=[]
+	MessageHistoryLength=3
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="CListControl":
 			obj.__class__=mirandaIMContactList
@@ -86,6 +92,16 @@ class AppModule(_default.AppModule):
 			obj.role=controlTypes.ROLE_COLORCHOOSER
 		elif obj.IAccessibleRole==oleacc.ROLE_SYSTEM_PROPERTYPAGE:
 			obj.__class__=MPropertyPage
+		elif obj.windowControlID in MESSAGEVIEWERS and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_SCROLLBAR:
+			self.overlayCustomNVDAObjectClass(obj,MirandaMessageViewerScrollbar,outerMost=True)
+
+	def script_readMessage(self,keyPress):
+		num=int(keyPress[-1][-1])
+		if len(self.lastMessages)>num-1:
+			ui.message(self.lastMessages[num-1])
+		else:
+			ui.message(_("No message yet"))
+	script_readMessage.__doc__=_("Displays one of the recent messages")
 
 class mirandaIMContactList(IAccessible):
 
@@ -148,7 +164,7 @@ class mirandaIMHyperlink(mirandaIMButton):
 	def _get_role(self):
 		return controlTypes.ROLE_LINK
 
-class MPropertyPage(PropertyPage):
+class MPropertyPage(Dialog,IAccessible):
 
 	def _get_name(self):
 		name=super(MPropertyPage,self)._get_name()
@@ -161,6 +177,21 @@ class MPropertyPage(PropertyPage):
 						name=children[index].name
 						break
 		return name
+
+
+class MirandaMessageViewerScrollbar(IAccessible):
+	def event_valueChange(self):
+		curTextLength=len(self.windowText)
+		if self.windowHandle not in self.appModule.lastTextLengths:
+			self.appModule.lastTextLengths[self.windowHandle]=curTextLength
+		elif self.appModule.lastTextLengths[self.windowHandle]<curTextLength:
+			message=self.windowText[self.appModule.lastTextLengths[self.windowHandle]:]
+			self.appModule.lastMessages.insert(0,message)
+			self.appModule.lastMessages=self.appModule.lastMessages[:self.appModule.MessageHistoryLength]
+			if globalVars.reportDynamicContentChanges:
+				ui.message(message)
+			self.appModule.lastTextLengths[self.windowHandle]=curTextLength
+		super(MirandaMessageViewerScrollbar,self).event_valueChange()
 
 [mirandaIMContactList.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("extendedDown","changeItem"),

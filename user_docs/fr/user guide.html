@@ -1,10 +1,10 @@
 <html>
 <head>
-<title>Guide de l'utilisateur de NVDA 2009.1</title>
+<title>Guide de l'utilisateur de NVDA 2010.1</title>
 </head>
 <body>
-<h1>Guide de l'utilisateur de NVDA 2009.1</h1>
-<span>Dernière mise à jour le 13 Octobre 2009</span>
+<h1>Guide de l'utilisateur de NVDA 2010.1</h1>
+<span>Dernière mise à jour le 5 Février 2010</span>
 
 <h2>Sommaire</h2>
 <ul>
@@ -61,8 +61,9 @@
 <li><a href="#8.1">8.1. Les touches de navigation rapide</a></li>
 <li><a href="#8.2">8.2. Les formulaires et le mode formulaire</a></li>
 <li><a href="#8.3">8.3. La liste d'éléments</a></li>
+<li><a href="#8.4">8.4. Objets inclus</a></li>
 </ul>
-<li><a href="#9">9. Informations additionnelles</a></li>
+<li><a href="#9">9. Résoudre les problèmes d'utilisation de NVDA</a></li>
 </ul>
 </ul>
 <h2 id="1">1. Introduction.</h2>
@@ -236,16 +237,16 @@ Le dialogue contient une simple liste déroulante, qui liste toutes les synthèses
 </p>
 <p>
 Voici la liste des synthèses que NVDA prend en charge :
-eSpeak, SAPI4, SAPI5, Audiologic, Display et Silence.
+eSpeak, SAPI4, SAPI5, Audiologic et Silence.
 </p>
 <p>
-La synthèse eSpeak est directement intégrée à NVDA, et son installation ne requiert aucun autrepilote particulier  ou SAPI runtime. Par défaut, NVDA démarre avec eSpeak. Cette synthèse doit fonctionner sur tout système où NVDA fonctionne, de sorte  qu'elle fonctionnera assurément pour un NVDA lancé à partir d'une clé USB ou d'un CD, sur le système de n'importe qui d'autre.
+La synthèse eSpeak est directement intégrée à NVDA, et son installation ne requiert aucun autrepilote particulier  ou SAPI runtime. Par défaut, NVDA démarre avec eSpeak. Cette synthèse doit fonctionner sur tout système où NVDA fonctionne, de sorte  qu'elle fonctionnera assurément pour un NVDA lancé à partir d'une clé USB ou d'un CD, sur n'importe quel système.
 </p>
 <p>
-NVDA dispose actuellement de deux pilotes SAPI4. On rapporte des résultats différents avec les deux pilotes, alors, essayez les deux et voyez lequel fonctionne le mieux pour vous.
+L'option Sapi4 vous permet d'utiliser le synthétiseur Sapi4. Parmi les voix Sapi4, on trouve Eloquence ainsi que tout synthétiseur Sapi4 installé sur votre système.
 </p>
 <p>
-Le synthétiseur Display est utile pour des développeurs voyants désirant lire ce que NVDA dit pendant qu'il testent NVDA avec leur application.
+Le synthétiseur Sapi5 vous permet d'utiliser les voix Microsoft incluses sur votre machine. Sous XP, la voix par défaut est Microsoft Sam. Sous Vista, le défaut est Microsoft Anna. Selon les voix que vous avez installé, d'autres peuvent apparaître dans la liste.
 </p>
 <p>
 Le pilote de la synthèse silence n'est pas d'une grande utilité, à moins que vous ne désiriez aucun retour vocal  lors de l'utilisation de NVDA.
@@ -335,15 +336,16 @@ Cette option est un champ numérique qui vous permet de modifier la vitesse de cl
 <p>
 Cette option est un champ numérique qui contrôle la durée d'affichage des messages système sur l'afficheur braille.
 </p>
-<h6>Information additionnelle</h6>
+<h6>Braille Attaché à</h6>
 <p>
-En appuyant sur NVDA+Control+T, vous pouvez choisir ce qui est affiché en braille. Les deux options sont focus et Revue.
-Focus affiche ce qui est accédé à l'aide des flèches, de la tabulation, en résumé la navigation par Focus.
-Revue permet de voir ce qui est à l'écran, (navigation par objets). Vous basculer entre ces deux modes par la combinaison CTRL+NVDA+T.
+Cette option vous permet de choisir si le braille suivra le focus système ou le curseur de l'objet de navigation.
 </p>
+<p>
+Cette option peut aussi être modifiée par la commande clavier NVDA+control+t.
+</p> 
 <h5 id="6.2.1.5">6.2.1.5. Paramètres du clavier.</h5>
 <p>
-Cette boîte de dialogue se trouve dans le menu Préférences,  sous "Paramètres du clavier...". Elle comprend les options suivantes :
+Cette boîte de dialogue se trouve dans le menu Préférences,  sous &quot;Paramètres du clavier...&quot;. Par ailleurs, on peut également y accéder par NVDA+Control+K. Elle comprend les options suivantes :
 </p>
 <h6>Disposition du clavier.</h6>
 <p>
@@ -353,9 +355,9 @@ Cette liste déroulante vous permet de choisir la disposition de clavier utilisé 
 <p>
 Si cette case à cocher est cochée, NVDA peut utiliser la touche de verrouillage majuscule comme touche NVDA.
 </p>
-<h6>Utiliser Insert du clavier principal comme touche NVDA.</h6>
+<h6>Utiliser Insert du clavier étendu comme touche NVDA.</h6>
 <p>
-Si cette case à cocher est cochée, Insert du clavier principal, généralement situé au-dessus des flèches, près des touches Début et Fin, pourra être utilisé comme touche NVDA.
+Si cette case à cocher est cochée, Insert du clavier étendu, généralement situé au-dessus des flèches, près des touches Début et Fin, pourra être utilisé comme touche NVDA.
 </p>
 <h6>Utiliser Insert du pavé numérique comme touche NVDA.</h6>
 <p>
@@ -373,9 +375,9 @@ Une case à cocher qui, cochée, fera que NVDA prononce chaque mot  frappé au clav
 <p>
 Une case à cocher qui, cochée,  fera que NVDA annonce, lors de leur frappe, toutes les touches ne correspondant pas à des caractères. Ceci inclut les combinaisons de touches telles que control plus une autre lettre. On peut aussi configurer ceci où qu'on soit par insert+2.
 </p>
-<h5 id="6.2.1.6">5.2.1.9. Les paramètres de la souris.</h5>
+<h5 id="6.2.1.6">5.2.1.6. Les paramètres de la souris.</h5>
 <p>
-Le dialogue paramètres de la souris se trouve dans le menu Préférences, sous "Paramètres de la souris...". Il comprend les options suivantes :
+Le dialogue paramètres de la souris se trouve dans le menu Préférences, sous &quot;Paramètres de la souris...&quot;. Par ailleurs, on peut y accéder par la commande clavier NVDA+Control+M. Il comprend les options suivantes :
 </p>
 <h6>Annoncer les changements de forme de la souris.</h6>
 <p>
@@ -393,13 +395,13 @@ Si NVDA est configuré pour annoncer le texte sous la souris quand vous la déplac
 <p>
 Si cette case à cocher est cochée, NVDA annoncera le type de l'objet quand la souris y entre.
 </p>
-<h6>Jouer les coordonnées audio quand la souris se déplace.</h6>
+<h6>Sonoriser les coordonnées quand la souris se déplace.</h6>
 <p>
 Cocher cette case fait que NVDA émet des bips quand la souris se déplace, pour que l'utilisateur puisse se figurer la position de la souris sur l'écran.
 </p>
-<h6>La brillance contrôle le volume des coordonnées audio.</h6>
+<h6>La brillance modifie le volume des coordonnées audio.</h6>
 <p>
-Si la case "jouer les coordonnées audio quand la souris se déplace" est cochée, Cocher cette case fera que le volume des bips variera en fonction de la brillance de la zone sous le pointeur de la souris.
+Si la case "Sonoriser les coordonnées quand la souris se déplace" est cochée, Cocher cette case fera que le volume des bips variera en fonction de la brillance de la zone sous le pointeur de la souris.
 Ceci peut entraîner des problèmes de performances sous Windows Vista, aussi cette case est-elle décochée par défaut.
 </p>
 <h5 id="6.2.1.7">6.2.1.7. Paramètres de Présentation des Objets.</h5>
@@ -535,11 +537,26 @@ Il y a quelques touches de commande utiles quand on navigue avec le focus :
 Lorsque le focus est sur un objet qui contient un curseur d'édition (curseur systèm), on peut se déplacer avec les flèches et éditer normalement. NVDA fait l'annonce de chaque mouvement quand on se déplace par caractère, mot, ligne, et annonce aussi la sélection et la désélection de texte.
 </p>
 <p>
-Lorsqu'on déplace le curseur système, la position du pointeur de revue d'écran est aussi réactualisée et suit le curseur système.
+Lorsqu'on déplace le curseur système, la position du pointeur de revue d'écran est aussi réactualisée et suit le curseur système. Ce comportement peut être modifié par la commande NVDA+6.
 </p>
 <p>
-On peut aussi lire l'intégralité du texte (lire tout) par insert+flèche bas. Noter toutefois que ceci est différent de pavnumPlus qui ne déplace que le pointeur de revue d'écran, en ceci que le curseur système est déplacé tout au long de la progression de la lecture.
+NVDA fournit les commandes clavier suivantes par rapport au curseur système :
 </p>
+<ul>
+<li>NVDA+flèchebas : démarre la lecture depuis le curseur système en le faisant suivre la lecture</li>
+<li>NVDA+flèchehaut : lit la ligne courante à partir du curseur système</li>
+<li>NVDA+maj+flèchehaut : lit le texte sélectionné s'il y en a</li>
+<li>NVDA+f : indique le format du texte sous le curseur système</li>
+</ul> 
+<p>
+Dans un tableau, vous disposez également des commandes clavier suivantes :
+</p>
+<ul>
+<li>control+alt+flèchegauche : aller à la colonne précédente en restant sur la même ligne</li>
+<li>control+alt+flèchedroite : aller à la colonne suivante en restant sur la même ligne)</li>
+ <li>control+alt+flèchehaut : aller à la ligne précédente en restant sur la même colonne</li>
+<li>control+alt+flèchebas : aller à la ligne suivante en restant sur la même colonne</li>
+</ul>
 <h3 id="7.3">7.3. La Navigation par Objet.</h3>
 <p>
 Si vous voulez explorer un peu le système d'exploitation sans déplacer le focus, vous pouvez utiliser la navigation par objet. Cela vous permet de vous déplacer d'objet en objet dans une arborescence.
@@ -574,7 +591,7 @@ Pour naviguer par objet, utilisez les touches suivantes :
 <li>NVDA+pavnum Entrée : Active l'objet courant (ex. Appuyer sur entrée / cliquer / double cliquer).</li>
 <li>NVDA+pavnum Diviser : Amène la souris à l'objet courant.</li>
 <li>NVDA+pavnum Multiplier : Va à la souris.</li>
-<li>NVDA+maj+pavnum5 : annonce les dimentions de l'objet courant par rapport à l'écran.</li>
+<li>NVDA+pavnumDelete : annonce les dimentions de l'objet courant par rapport à l'écran.</li>
 <li>NVDA+pavnumPlus :  Dit tous les objets - Démarre la lecture à l'objet courant, puis continue dans le flot.</li>
 </ul>
 <p>
@@ -618,7 +635,7 @@ Quand un objet contient un curseur d'édition système et que celui-ci bouge, le c
 <p>
 Il est possible de copier des morceaux du texte que vous êtes en train de lire. Par exemple vous pouvez souhaiter copier une adresse internent qu'on vous a envoyé dans un programme de chat.
 Pour copier le texte, commencer par amener le curseur de revue au début du texte que vous voulez copier, puis pressez NVDA+f9. Puis allez à la fin du texte et pressez NVDA+f10. Le texte est maintenant copié dans le presse-papier et vous pouvez le coller ailleurs.
-Notez que si le programme que vous utilisez permet déjà de se déplacer dans le texte avec le curseur système et de copier en utilsant la commande standard CTRL+C, vous obtiendrez toujours de meileurs résultats par cette méthode.
+Notez que si le programme que vous utilisez permet déjà de se déplacer dans le texte avec le curseur système et de copier en utilisant la commande standard CTRL+C, vous obtiendrez toujours de meileurs résultats par cette méthode.
 </p> 
 <h3 id="7.5">7.5. La navigation avec la souris.</h3>
 <p>
@@ -633,6 +650,15 @@ NVDA offre à l'utilisateur un moyen d'évaluer la position de la souris sur l'écr
 <p>
 Par défaut, ces fonctions additionnelles de la souris ne sont pas activées dans NVDA. Si vous voulez en tirer profit, vous pouvez les configurer par le dialogue Paramètres de la souris que l'on trouve dans le menu Préférences du menu NVDA.
 </p>
+<p>
+Bien qu'une souris physique devrait être utilisée pour naviguer à la souris, NVDA possède quelques commandes clavier liées à la souris :
+</p>
+<ul>
+<li>pavnumDivisé : click gauche</li>
+<li>PavnumMultiplié : click droit</li>
+<li>Maj+pavnumDivisé : verrouillage/déverrouillage du bouton gauche enfoncé</li>
+<li>Maj+pavnumMultiplié : verrouillage/déverrouillage du bouton droit enfoncé</li>
+</ul>
 <h2 id="8">8. Les tampons virtuels.</h2>
 <p>
 Les documents complexes, tels que les pages web, sont représentés dans NVDA à l'intérieur d'un Tampon Virtuel.
@@ -676,6 +702,7 @@ Touches disponibles :
 <li>m: cadre</li>
 <li>g: graphique</li>
 <li>d: repère</li>
+<li>o : objet inclus</li>
 <li>1 ... 6 : Titres 1 ... 6.</li>
 </ul>
 <h3 id="8.2">8.2. Les Formulaires et le Mode Formulaire.</h3>
@@ -686,7 +713,14 @@ Parfois, vous voulez interagir avec des champs de formulaire sans que les touche
 <p>
 La liste d'éléments (accessible en appuyant sur NVDA+F7 dans un tampon virtuel) fournit une liste de liens, titres, ou repères dans la page. Des boutons radio vous permettent de choisir entre ces trois types d'informations. Une zone d'édition est également présente dans le dialogue, elle vous permet de filtrer la liste pour faciliter la recherche d'un élément particulier dans la page. Quand vous avez choisi un élément, des boutons vous permettent de vous y rendre ou de l'activer.
 </p>
-<h3 id="9">9. Informations additionnelles</h3>
+<h3 id="8.4">8.4. Objets Inclus</h3>
+<p>
+Les pages peuvent  inclure du contenu riche utilisant des technologies comme Adobe Flash ou Sun Java.
+Quand il en rencontre dans un tampon virtuel, NVDA annonce &quot;objet inclus&quot;.
+Vous pouvez presser "entrer" sur ces objets pour interagir avec eux. Si l'objet est accessible, vous pourrez interagir avec lui comme n'importe quelle autre application. Pour retourner à la page, pressez NVDA+espace.
+</p>
+
+<h3 id="9">9. Résoudre les problèmes d'utilisation de NVDA</h3>
 <p>
 Comme NVDA est constamment mis à jour, il n'est pas garanti que toutes les commandes décrites dans ce manuel seront toujours fonctionnelles. Si vous avez un problème avec l'une de ces commandes, veuillez visiter : <a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a> pour plus d'aide.
 </p>

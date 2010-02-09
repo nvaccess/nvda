@@ -30,8 +30,10 @@ TABLES = (
 	("cy-cy-g2.ctb", _("Welsh grade 2")),
 	("cz-cz-g1.utb", _("Czech grade 1")),
 	("da-dk-g1.utb", _("Danish grade 1")),
+	("de-de-comp8.ctb", _("German 8 dot computer braille")),
 	("de-de-g0.utb", _("German grade 0")),
 	("de-de-g1.ctb", _("German grade 1")),
+	("de-de-g2.ctb", _("German grade 2")),
 	("en-gb-g1.utb", _("English (U.K.) grade 1")),
 	("en-GB-g2.ctb", _("English (U.K.) grade 2")),
 	("en-us-comp6.ctb", _("English (U.S.) 6 dot computer braille")),
@@ -65,6 +67,7 @@ TABLES = (
 	("UEBC-g1.utb", _("Unified English Braille Code grade 1")),
 	("UEBC-g2.ctb", _("Unified English Braille Code grade 2")),
 	("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)")),
+	("zh-tw.ctb", _("Chinese (Taiwan, Mandarin)")),
 )
 
 roleLabels = {

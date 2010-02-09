@@ -11,12 +11,20 @@
 	* Lepšia podpora pre vnorené editovateľné dokumenty v programe internet explorer. (#402)
 	* Nový skript (nvda+shift+numpadMinus) umožňuje premiestnenie systémového fokusu na prvok zameraný objektovou navigáciou.
 	* Nové skripty na uzamknutie a odomknutie ľavého a pravého tlačidla myši; určené na vykonávanie operácie drag'n'drop. shift+numpad lomeno uzamknutie/odomknutie ľavého, shift+numpad krát na uzamknutie a odomknutie pravého tlačidla.
+	* Počas inštalácii je možné neinštalovať odkaz na pracovnú plochu, čo tiež zamedzí vytváranie klávesovej skratky.  (#518)
+	* NVDA dokáže ozvučiť aj 64 bitové IAccessible2 aplikácie.  (#479)
+	* Existuje rozhranie na ovládanie NVDA pre vývojárov ďalších aplikácií. Je možné napr. prečítať text, zastaviť reč, zobraziť správu v braily a pod.
+	* Informačné a chybové správy sú prečítané na prihlasovacej obrazovke Windows vista / Windows 7. (#506)
+	* V programe Adobe Reader sú prečítané interaktívne formuláre, na vývoj ktorých bol použitý program Adobe LiveCycle. (#475)
 
 === Zmeny ===
 	* Veľmi dlhý popis v ponuke štart Windows 7 nie je viacej oznamovaný.
 	* Ovládač hlasového výstupu display bol nahradený zobrazovačom reči. Môže byť použitý nezávisle na aktuálne použitom hlasovom výstupe a je prístupný z menu nástroje. (#44)
 	* Správy na braillovskom zobrazovači automaticky zmiznú po stlačení klávesu, ktorý spôsobí zmenu fokusu. Doteraz boli správy vždy zobrazené po celú nastavenú dobu.
 	* Nastavovanie previazania braillovského kurzoru so systémovým fokusom alebo s prehliadacím kurzorom je možné urobiť aj z dialógu nastavenia brailu. Nastavenie sa tiež ukladá do používateľskej konfigurácii.
+	* Hlasový výstup eSpeak aktualizovaný na verziu 1.42.04.
+	* Prekladač do brailového písma liblouis aktualizovaný na verziu 1.8.0.
+	* Oznamovanie prvkov Počas posúvania po znakoch vo virtuálnom prehliadači bolo značne prepracované. Doteraz bolo oznamovaných množstvo nepotrebných informácií a výstup pri pohybe po znakoch bol úplne odlišný od výstupu počas pohybu po riadkoch. (#490)
 
 === Opravy ===
 	* NVDA sa viac neodmieta spustiť, ak dôjde k chybe pri pokuse o inicializáciu podpori UI Automation. (#483)
@@ -29,6 +37,12 @@
 	* Prázdne riadky v okne programu MS Word a v editačných prvkoch programu Internet explorer sú správne zobrazované v brailly. Doteraz sa v týchto situáciách zobrazovali aktuálne vety. (#420)
 	* Viacnásobné bezpečnostné opravy pri používaní NVDA na prihlasovacej obrazovke.
 	* Pozícia kurzora je správne aktualizovaná pri plynulom čítaní, ak v štandardných editačných poliach a programe ms word dôjde k prečítaniu väčšieho množstva textu ako sa vojde na obrazovku. (#418)
+	* Vo virtuálnom prehliadači NVDA viac nezobrazuje text pre obrázky alebo klikateľné objekty, ak sú tieto označené ako nerelevantné pre odčítače. (#423)
+	* Opravy pre rozloženie klávesnice laptop. (#517)
+	* Ak je brailovský kurzor zviazaný s prehliadacím kurzorom a fokus získa okno príkazového riadku, je možné korektne sa pohybovať po texte príkazového riadku.
+	* V programoch TeamTalk3 a TeamTalk4 Classic nie je viac oznamovaná aktualizácia indikátora priebehu znázorňujúca VU Meter a tiež v prichádzajúcom chate sú správne čitateľné národné znaky.
+	* Aktivovaním odkazov odkazujúcich na záložku v rovnakej stránke správne umiestni kurzor virtuálneho prehliadača na požadované miesto (s Firefox 3.6).
+	* Opravená chyba, kde v niektorých prípadoch nebol správne čitateľný všetkok text v špecifických PDF dokumentoch.
 
 
 == 2009.1 ==

@@ -8,15 +8,7 @@
 
 using namespace std;
 
-handle_t bindingHandle;
-
-void speakText(const wchar_t* text) {
-	RpcTryExcept {
-		nvdaController_speakText(bindingHandle,text);
-	} RpcExcept(1) {
-		return;
-	} RpcEndExcept; 
-}
+handle_t nvdaControllerBindingHandle;
 
 void getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewText=false, bool recurse=true) {
 	IAccessibleText* paccText=NULL;
@@ -179,15 +171,15 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	} else if(allowText&&eventID==IA2_EVENT_TEXT_INSERTED) {
  		getTextFromIAccessible(textBuf,pacc2,true,allowAdditions);
 	}
-	if(!textBuf.empty()) speakText(textBuf.c_str());
+	if(!textBuf.empty()) nvdaController_speakText(textBuf.c_str());
 }
 
 void ia2LiveRegions_inProcess_initialize() {
-	RpcBindingFromStringBinding((RPC_WSTR)L"ncalrpc:[nvdaController]",&bindingHandle);
+	RpcBindingFromStringBinding((RPC_WSTR)L"ncalrpc:[nvdaController]",&nvdaControllerBindingHandle);
 	registerWinEventHook(winEventProcHook);
 }
 
 void ia2LiveRegions_inProcess_terminate() {
 	unregisterWinEventHook(winEventProcHook);
-	RpcBindingFree(&bindingHandle);
+	RpcBindingFree(&nvdaControllerBindingHandle);
 }

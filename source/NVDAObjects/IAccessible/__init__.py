@@ -25,7 +25,7 @@ import NVDAObjects.JAB
 import eventHandler
 import mouseHandler
 import queueHandler
-from NVDAObjects.progressBar import ProgressBar
+from NVDAObjects.behaviors import ProgressBar, Dialog
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -1130,66 +1130,6 @@ class Groupbox(IAccessible):
 				return next.name
 		return super(Groupbox,self)._get_description()
 
-class Dialog(IAccessible):
-	"""Overrides the description property to obtain dialog text.
-	"""
-
-	@classmethod
-	def getDialogText(cls,obj):
-		"""This classmethod walks through the children of the given object, and collects up and returns any text that seems to be  part of a dialog's message text.
-		@param obj: the object who's children you want to collect the text from
-		@type obj: L{IAccessible}
-		"""
-		children=obj.children
-		textList=[]
-		childCount=len(children)
-		for index in xrange(childCount):
-			child=children[index]
-			childStates=child.states
-			childRole=child.role
-			#We don't want to handle invisible or unavailable objects
-			if controlTypes.STATE_INVISIBLE in childStates or controlTypes.STATE_UNAVAILABLE in childStates: 
-				continue
-			#For particular objects, we want to descend in to them and get their children's message text
-			if childRole in (controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW):
-				textList.append(cls.getDialogText(child))
-				continue
-			# We only want text from certain controls.
-			if not (
-				 # Static text, labels and links
-				 childRole in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_LABEL,controlTypes.ROLE_LINK)
-				# Read-only, non-multiline edit fields
-				or (childRole==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in childStates and controlTypes.STATE_MULTILINE not in childStates)
-			):
-				continue
-			#We should ignore a text object directly after a grouping object, as it's probably the grouping's description
-			if index>0 and children[index-1].role==controlTypes.ROLE_GROUPING:
-				continue
-			#Like the last one, but a graphic might be before the grouping's description
-			if index>1 and children[index-1].role==controlTypes.ROLE_GRAPHIC and children[index-2].role==controlTypes.ROLE_GROUPING:
-				continue
-			childName=child.name
-			#Ignore objects that have another object directly after them with the same name, as this object is probably just a label for that object.
-			#However, graphics, static text, separators and Windows are ok.
-			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW) and children[index+1].name==childName:
-				continue
-			childText=child.makeTextInfo(textInfos.POSITION_ALL).text
-			if not childText or childText.isspace() and child.TextInfo!=NVDAObjectTextInfo:
-				childText=child.basicText
-			textList.append(childText)
-		return " ".join(textList)
-
-	def _get_description(self):
-		return self.getDialogText(self)
-
-	def _get_value(self):
-		return None
-
-class PropertyPage(Dialog):
-
-	def _get_role(self):
-		return controlTypes.ROLE_PROPERTYPAGE
-
 class TrayClockWClass(IAccessible):
 	"""
 	Based on NVDAObject but the role is changed to clock.
@@ -1346,9 +1286,8 @@ _staticMap={
 	("tooltips_class32",oleacc.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
 	(None,oleacc.ROLE_SYSTEM_DIALOG):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_ALERT):"Dialog",
-	(None,oleacc.ROLE_SYSTEM_PROPERTYPAGE):"PropertyPage",
+	(None,oleacc.ROLE_SYSTEM_PROPERTYPAGE):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_GROUPING):"Groupbox",
-	(None,oleacc.ROLE_SYSTEM_ALERT):"Dialog",
 	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
 	("TRxRichEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,oleacc.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",

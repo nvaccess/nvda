@@ -1,9 +1,29 @@
 import keyUtils
+import speech
+import api
+import braille
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects.behaviors import Dialog
 import _default
+import eventHandler
 
-class PasswordField(IAccessible):
+class LogonDialog(Dialog):
+
+	role = controlTypes.ROLE_DIALOG
+
+	def event_gainFocus(self):
+		child = self.firstChild
+		if child and controlTypes.STATE_FOCUSED in child.states and not eventHandler.isPendingEvents("gainFocus"):
+			# UIA reports that focus is on the top level pane, even when it's actually on the frame below.
+			# This causes us to incorrectly use UIA for the top level pane, which causes this pane to be spoken again when the focus moves.
+			# Therefore, bounce the focus to the correct object.
+			eventHandler.queueEvent("gainFocus", child)
+			return
+
+		return super(LogonDialog, self).event_gainFocus()
+
+class XPPasswordField(IAccessible):
 
 	def bindKeys(self):
 		for key, script in (
@@ -22,7 +42,7 @@ class PasswordField(IAccessible):
 		try:
 			return self.parent.name
 		except:
-			return super(PasswordField, self).name
+			return super(XPPasswordField, self).name
 
 	def script_changeUser(self, key):
 		# The up and down arrow keys change the selected user, but there's no reliable NVDA event for detecting this.
@@ -38,11 +58,23 @@ class AppModule(_default.AppModule):
 		if obj.windowClassName in ("NativeHWNDHost", "AUTHUI.DLL: LogonUI Logon Window") and obj.parent and not obj.parent.parent:
 			# Make sure the top level pane is always presented.
 			obj.isPresentableFocusAncestor = True
+			if obj.windowClassName=="AUTHUI.DLL: LogonUI Logon Window":
+				self.overlayCustomNVDAObjectClass(obj, LogonDialog, outerMost=True)
 			return
 
 		if obj.windowClassName == "Edit" and not obj.name:
 			parent = obj.parent
 			if parent.role == controlTypes.ROLE_LISTITEM:
-				self.overlayCustomNVDAObjectClass(obj, PasswordField, outerMost=True)
+				self.overlayCustomNVDAObjectClass(obj, XPPasswordField, outerMost=True)
 				obj.bindKeys()
 				return
+
+	def event_gainFocus(self,obj,nextHandler):
+		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_BUTTON and not obj.next:
+			prev=obj.previous
+			if prev and prev.role==controlTypes.ROLE_STATICTEXT:
+				# This is for a popup message in the logon dialog.
+				# Present the dialog again so the message will be reported.
+				speech.speakObjectProperties(api.getForegroundObject(),name=True,role=True,description=True)
+				braille.invalidateCachedFocusAncestors(1)
+		nextHandler()
