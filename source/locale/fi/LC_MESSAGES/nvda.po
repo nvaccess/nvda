@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3494\n"
+"Project-Id-Version: r3544\n"
 "POT-Creation-Date: 2007-03-04 15:37+Normaaliaika\n"
-"PO-Revision-Date: 2010-01-26 13:54+0200\n"
+"PO-Revision-Date: 2010-02-09 17:53+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 msgid "Secure Desktop"
 msgstr "Suojattu työpöytä"
 
-#: NVDAObjects\IAccessible\__init__.py:1336
+#: NVDAObjects\IAccessible\__init__.py:1280
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
 
@@ -25,11 +25,11 @@ msgstr "Tehtäväpalkki"
 msgid "%s items"
 msgstr "%s kohtaa"
 
-#: NVDAObjects\UIA\__init__.py:427
+#: NVDAObjects\UIA\__init__.py:434
 msgid "invoke"
 msgstr "käynnistä"
 
-#: NVDAObjects\progressBar.py:45 appModules\_default.py:826
+#: NVDAObjects\behaviors.py:49 appModules\_default.py:826
 msgid "%d percent"
 msgstr "%d prosenttia"
 
@@ -800,15 +800,15 @@ msgstr ""
 
 #: appModules\_default.py:835
 msgid "Pass next key through"
-msgstr "Päästä läpi seuraava näppäinpainallus"
+msgstr "Välitä seuraava näppäinpainallus"
 
 #: appModules\_default.py:836
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
 msgstr ""
-"NVDA ei käsittele seuraavaksi painettua näppäintä, vaan se annetaan "
-"suoraan Windowsin käsiteltäväksi."
+"NVDA ei käsittele tämän komennon jälkeen painettua näppäintä, vaan se "
+"välitetään suoraan Windowsin käsiteltäväksi."
 
 #: appModules\_default.py:841
 msgid "Currently running application is %s"
@@ -949,7 +949,7 @@ msgstr ""
 msgid "Display"
 msgstr "Näyttö"
 
-#: appModules\explorer.py:16
+#: appModules\explorer.py:33
 msgid "Start"
 msgstr "Käynnistä"
 
@@ -961,6 +961,14 @@ msgstr "Ei toistettavaa kappaletta"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr ""
 "Ilmoittaa tällä hetkellä toistettavan kappaleen jäljellä olevan ajan"
+
+#: appModules\miranda32.py:103
+msgid "No message yet"
+msgstr "Ei viestejä"
+
+#: appModules\miranda32.py:104
+msgid "Displays one of the recent messages"
+msgstr "Näyttää yhden viimeisimmistä viesteistä"
 
 #: appModules\msimn.py:18
 msgid "Attachments"
