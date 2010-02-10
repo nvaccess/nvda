@@ -7,7 +7,6 @@
 """Provides a simple Python interface to playing audio using the Windows multimedia waveOut functions, as well as other useful utilities.
 """
 
-from __future__ import with_statement
 import threading
 from ctypes import *
 from ctypes.wintypes import *
@@ -94,6 +93,8 @@ class WavePlayer(object):
 	"""Synchronously play a stream of audio.
 	To use, construct an instance and feed it waveform audio using L{feed}.
 	"""
+	#: A lock to prevent WaveOut* functions from being called simultaneously, as this can cause problems even if they are for different HWAVEOUTs.
+	_global_waveout_lock = threading.RLock()
 
 	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDevice=WAVE_MAPPER, closeWhenIdle=True):
 		"""Constructor.
@@ -141,7 +142,7 @@ class WavePlayer(object):
 			wfx.nBlockAlign = self.bitsPerSample / 8 * self.channels
 			wfx.nAvgBytesPerSec = self.samplesPerSec * wfx.nBlockAlign
 			waveout = HWAVEOUT(0)
-			winmm.waveOutOpen(byref(waveout), self.outputDeviceID, LPWAVEFORMATEX(wfx), self._waveout_event, 0, CALLBACK_EVENT)
+			with self._global_waveout_lock: winmm.waveOutOpen(byref(waveout), self.outputDeviceID, LPWAVEFORMATEX(wfx), self._waveout_event, 0, CALLBACK_EVENT)
 			self._waveout = waveout.value
 			self._prev_whdr = None
 
@@ -160,9 +161,9 @@ class WavePlayer(object):
 		with self._lock:
 			with self._waveout_lock:
 				self.open()
-				winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
+				with self._global_waveout_lock: winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
 				try:
-					winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
+					with self._global_waveout_lock: winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
 				except WindowsError, e:
 					self.close()
 					raise e
@@ -182,7 +183,7 @@ class WavePlayer(object):
 				winKernel.waitForSingleObject(self._waveout_event, winKernel.INFINITE)
 			with self._waveout_lock:
 				assert self._waveout, "waveOut None after wait"
-				winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
+				with self._global_waveout_lock: winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
 			self._prev_whdr = None
 
 	def pause(self, switch):
@@ -194,9 +195,9 @@ class WavePlayer(object):
 			if not self._waveout:
 				return
 			if switch:
-				winmm.waveOutPause(self._waveout)
+				with self._global_waveout_lock: winmm.waveOutPause(self._waveout)
 			else:
-				winmm.waveOutRestart(self._waveout)
+				with self._global_waveout_lock: winmm.waveOutRestart(self._waveout)
 
 	def idle(self):
 		"""Indicate that this player is now idle; i.e. the current continuous segment  of audio is complete.
@@ -219,9 +220,10 @@ class WavePlayer(object):
 			if not self._waveout:
 				return
 			try:
-				# Pausing first seems to make waveOutReset respond faster on some systems.
-				winmm.waveOutPause(self._waveout)
-				winmm.waveOutReset(self._waveout)
+				with self._global_waveout_lock:
+					# Pausing first seems to make waveOutReset respond faster on some systems.
+					winmm.waveOutPause(self._waveout)
+					winmm.waveOutReset(self._waveout)
 			except WindowsError:
 				# waveOutReset seems to fail randomly on some systems.
 				pass
@@ -239,7 +241,7 @@ class WavePlayer(object):
 				self._close()
 
 	def _close(self):
-		winmm.waveOutClose(self._waveout)
+		with self._global_waveout_lock: winmm.waveOutClose(self._waveout)
 		self._waveout = None
 
 	def __del__(self):
