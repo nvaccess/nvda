@@ -1,6 +1,7 @@
 = Mitä uutta NVDA:ssa =
 
 == 2010.1 ==
+Tämä julkaisu keskittyy pääasiassa vikojen korjauksiin ja käyttäjäkokemuksen parantamiseen, mukaan lukien muutamia huomattavia vakauteen liittyviä korjauksia.
 
 === Uudet ominaisuudet ===
 * NVDA käynnistyy nyt järjestelmissä, joissa ei ole äänilaitteita. Tietojen tulostamiseen on tällöin käytettävä pistenäyttöä tai Display-syntetisaattoria yhdessä Puheen tarkastelu -toiminnon kanssa.
@@ -49,6 +50,7 @@
 * Korjattu ongelma, joka aiheutti sen, että osaa tiettyjen PDF-asiakirjojen tekstistä ei voitu lukea.
 * NVDA ei enää lue väärin tiettyjä viivalla erotettuja numeroita, esim. 500-1000.
 * NVDA ei enää aiheuta Windows XP:ssä Internet Explorerin hyytymistä muutettaessa valintaruutujen tilaa Windows Updatessa.
+* Samanaikainen puhe ja äänimerkit eivät  enää aiheuta ajoittaisia hyytymisiä joissakin järjestelmissä. Tätä sattui eniten esim. kopioitaessa suurta määrää dataa Resurssienhallinnassa.
 
 == 2009.1 ==
 Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioille, huomattavasti paranneltu tuki Internet Explorerille ja Adobe Readerille, tuki Windows 7:lle, Windowsin kirjautumis- ja Ctrl+Alt+Delete-ruutujen sekä Käyttäjätilien valvonnan (UAC) kehotteiden lukeminen sekä mahdollisuus olla vuorovaikutuksessa web-sivujen Flash- ja Java-sisällön kanssa. Lisäksi on useita merkittäviä korjauksia NVDA:n vakauteen ja parannuksia yleiseen käyttäjäkokemukseen.
