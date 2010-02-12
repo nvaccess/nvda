@@ -6,9 +6,9 @@ A NonVisual Desktop Access (NVDA) egy ingyenes, nyílt forráskódú képernyõolvasó 
 További információkért tekintse meg a mellékelt felhasználói kézikönyvet, vagy látogassa meg az NVDA weboldalát.
 
 Copyright:
-Copyright (C) 2006-2009 NVDA Közremûködõk <http://www.nvda-project.org/>
+Copyright (C) 2006-2010 NVDA Közremûködõk <http://www.nvda-project.org/>
 Az NVDA magyar nyelvû változatát az NVDA honosítócsapat készítette.
-Copyright (C) NVDA honosítási project 2008-2009 <http://www.nvda.hu>
+Copyright (C) NVDA honosítási project 2008-2010 <http://www.nvda.hu>
 Az NVDA a GNU Általános Nyilvános Licensz (2-es verziója) alatt áll. A szoftver szabadon közzétehetõ vagy módosítható a licensz és a forráskód bárki számára elérhetõvé tételével. Ez az eredeti és módosított szoftverre, valamint bármilyen a szoftver forráskódjából származó kódrészletre vonatkozik.
 Ha többet szeretne megtudni, látogassa meg a következõ (angol nyelvû) honlapot:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
