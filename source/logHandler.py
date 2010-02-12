@@ -206,7 +206,9 @@ def initialize():
 	logging.addLevelName(Logger.IO, "IO")
 	if not globalVars.appArgs.logFileName:
 		globalVars.appArgs.logFileName = _getDefaultLogFilePath()
-	logHandler = FileHandler(globalVars.appArgs.logFileName, "w", encoding="UTF-8")
+	# HACK: codecs.open() always forces binary mode by appending "b" to mode, but we want text mode ("t") so we get crlf line endings.
+	# Fortunately, Python ignores the "b" if "t" is specified first (e.g. "wtb").
+	logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt", encoding="UTF-8")
 	logFormatter=logging.Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
