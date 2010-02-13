@@ -6,6 +6,6 @@ env.Append(MIDLFLAGS=['/prefix','server','VBufRemote_','/prefix','client','VBuf_
 
 headerFile,clientSourceFile,serverSourceFile=env.MSRPCStubs(source=['vbuf.idl'])
 clientObjFile=env.Object(clientSourceFile)
-serverObjFile=Object(serverSourceFile)
+serverObjFile=env.Object(serverSourceFile)
 
 Return(['headerFile','clientObjFile','serverObjFile'])

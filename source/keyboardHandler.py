@@ -18,7 +18,6 @@ import globalVars
 from logHandler import log
 import queueHandler
 import config
-import _winreg
 import api
 import winInputHook
 import watchdog
@@ -56,26 +55,6 @@ def speakToggleKey(vkCode):
 			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("num lock %s")%(_("on") if toggleState else _("off")))
 	elif vkCode==winUser.VK_SCROLL:
 			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("scroll lock %s")%(_("on") if toggleState else _("off")))
-
-def speakKeyboardLayout(layout):
-	try:
-		s = hex(winUser.LOWORD(layout))[2:].rjust(8, "0")
-		key = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ s)
-	except:
-		s = hex(winUser.HIWORD(layout))[2:].rjust(8, "0")
-		key = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ s)
-	try:
-		s = _winreg.QueryValueEx(key, "Layout Display Name")[0]
-	except:
-		s=None
-	if s is not None and isinstance(s,basestring):
-		buf=ctypes.create_unicode_buffer(256)
-		ctypes.windll.shlwapi.SHLoadIndirectString(s,buf,256,None)
-		s=buf.value
-	else:
-		s = _winreg.QueryValueEx(key, "Layout Text")[0]
-	key.Close()
-	queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("%s keyboard layout")%s)
 
 def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by keyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
