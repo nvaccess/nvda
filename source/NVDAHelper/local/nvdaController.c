@@ -25,7 +25,7 @@ error_status_t __stdcall nvdaController_testIfRunning() {
 	return 0;
 }
 
-__declspec(dllexport) error_status_t(__stdcall *_nvdaController_inputLangChangeNotify)(const long, const wchar_t*);
-error_status_t __stdcall nvdaController_inputLangChangeNotify(const long hkl, const wchar_t* layoutString) {
-	return _nvdaController_inputLangChangeNotify(hkl,layoutString);
+__declspec(dllexport) error_status_t(__stdcall *_nvdaController_inputLangChangeNotify)(const long, const long, const wchar_t*);
+error_status_t __stdcall nvdaController_inputLangChangeNotify(const long threadID, const long hkl, const wchar_t* layoutString) {
+	return _nvdaController_inputLangChangeNotify(threadID,hkl,layoutString);
 }

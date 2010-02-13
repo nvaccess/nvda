@@ -56,8 +56,10 @@ def nvdaController_brailleMessage(text):
 	queueHandler.queueFunction(queueHandler.eventQueue,braille.handler.message,text)
 	return 0
 
-@WINFUNCTYPE(c_long,c_long,c_wchar_p)
-def nvdaController_inputLangChangeNotify(hkl,layoutString):
+@WINFUNCTYPE(c_long,c_long,c_long,c_wchar_p)
+def nvdaController_inputLangChangeNotify(threadID,hkl,layoutString):
+	if threadID!=winUser.getWindowThreadProcessID(winUser.getForegroundWindow())[1]:
+		return
 	import queueHandler
 	import ui
 	import languageHandler

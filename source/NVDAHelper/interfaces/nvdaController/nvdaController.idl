@@ -39,9 +39,10 @@ interface NvdaController {
 
 /**
  * Notifies NVDA that the keyboard layout / input locale for this thread has changed.
+ * @param threadID the thread the layout change occured in
  * @param hkl the current layout retreaved either by GetKeyboardLayout or the lParam of wm_inputLangChange.
  * @param layoutString the current identifier string returned from GetKeyboardLayoutName.
  */
-	error_status_t __stdcall inputLangChangeNotify([in] long hkl, [in,string] wchar_t* layoutString);
+	error_status_t __stdcall inputLangChangeNotify([in] long threadID, [in] long hkl, [in,string] wchar_t* layoutString);
 
 };
