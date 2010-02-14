@@ -59,12 +59,10 @@ def nvdaController_brailleMessage(text):
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
 def nvdaController_inputLangChangeNotify(threadID,hkl,layoutString):
 	if threadID!=winUser.getWindowThreadProcessID(winUser.getForegroundWindow())[1]:
-		return
+		return 0
 	import queueHandler
 	import ui
-	import languageHandler
 	layoutName=None
-	languageName=None
 	try:
 		key = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString)
 	except WindowsError:
@@ -78,13 +76,8 @@ def nvdaController_inputLangChangeNotify(threadID,hkl,layoutString):
 			buf=create_unicode_buffer(256)
 			windll.shlwapi.SHLoadIndirectString(s,buf,256,None)
 			layoutName=buf.value
-	buf=create_unicode_buffer(1024)
-	windll.kernel32.GetLocaleInfoW(hkl&0xffff,languageHandler.LOCALE_SLANGUAGE,buf,1024)
-	if buf:
-		languageName=buf.value
-	if not layoutName: layoutName=_("unknown layout")
-	if not languageName: languageName=_("unknown language")
-	queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Layout %s, language %s")%(layoutName,languageName))
+	if layoutName:
+		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("layout %s")%layoutName)
 	return 0
 
 def handleTypedCharacter(window,wParam,lParam):
