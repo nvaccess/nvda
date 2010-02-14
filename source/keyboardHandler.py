@@ -86,7 +86,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				vkName=unichr(vkCode).lower()
 			elif 32<vkChar<128:
 				vkName=unichr(vkChar).lower()
-		if vkCode in (winUser.VK_CONTROL,winUser.VK_LCONTROL,winUser.VK_RCONTROL,winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT):
+		if vkCode in (winUser.VK_SHIFT,winUser.VK_LSHIFT,winUser.VK_RSHIFT):
 			if speech.isPaused:
 				unpauseByShiftUp=True
 			else:
