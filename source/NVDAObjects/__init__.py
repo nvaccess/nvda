@@ -568,7 +568,7 @@ Tries to force this object to take the focus.
 			speech.cancelSpeech()
 			return
 		if self.isPresentableFocusAncestor:
-			speech.speakObjectProperties(self,name=True,role=True,description=True,positionInfo_indexInGroup=True,positionInfo_similarItemsInGroup=True,rowNumber=True,columnNumber=True,rowCount=True,columnCount=True,reason=speech.REASON_FOCUS)
+			speech.speakObject(self,reason=speech.REASON_FOCUSENTERED)
 
 	def event_gainFocus(self):
 		"""

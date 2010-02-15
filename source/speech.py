@@ -32,6 +32,7 @@ speechMode_beeps_ms=15
 beenCanceled=True
 isPaused=False
 curWordChars=[]
+
 REASON_FOCUS=1
 REASON_MOUSE=2
 REASON_QUERY=3
@@ -41,6 +42,7 @@ REASON_SAYALL=6
 REASON_CARET=7
 REASON_DEBUG=8
 REASON_ONLYCACHE=9
+REASON_FOCUSENTERED=10
 
 oldTreeLevel=None
 oldTableID=None
@@ -252,8 +254,15 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 
 def speakObject(obj,reason=REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
-	isEditable=(obj.TextInfo!=NVDAObjectTextInfo and (obj.role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
+	isEditable=(reason!=REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (obj.role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
 	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"rowNumber":True,"columnNumber":True,"columnCount":True,"rowCount":True}
+	if reason==REASON_FOCUSENTERED:
+		allowProperties["states"]=False
+		allowProperties["value"]=False
+		allowProperties["keyboardShortcut"]=False
+		allowProperties["positionInfo_level"]=False
+		# Aside from excluding some properties, focus entered should be spoken like focus.
+		reason=REASON_FOCUS
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"]=False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
