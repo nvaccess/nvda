@@ -30,7 +30,7 @@ void getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 			}
 			VariantClear(varChildren+i);
 		}
-		delete varChildren;
+		delete [] varChildren;
 		return;
 	}
 	//We can use IAccessibleText because it exists
