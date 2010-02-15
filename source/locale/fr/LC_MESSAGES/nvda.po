@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3466\n"
+"Project-Id-Version: r3553\n"
 "POT-Creation-Date: 2007-03-10 23:05+0200\n"
-"PO-Revision-Date: 2010-01-20 10:00+0200\n"
+"PO-Revision-Date: 2010-02-11 08:30+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,19 +21,19 @@ msgstr ""
 msgid "Secure Desktop"
 msgstr "bureau sécurisé"
 
-#: NVDAObjects\IAccessible\__init__.py:1336
+#: NVDAObjects\IAccessible\__init__.py:1280
 msgid "Taskbar"
 msgstr "Barre de tâches"
 
-#: NVDAObjects\IAccessible\sysTreeView32.py:179
+#: NVDAObjects\IAccessible\sysTreeView32.py:186
 msgid "%s items"
 msgstr "%s éléments"
 
-#: NVDAObjects\UIA\__init__.py:427
+#: NVDAObjects\UIA\__init__.py:434
 msgid "invoke"
 msgstr "invoquer"
 
-#: NVDAObjects\progressBar.py:45 appModules\_default.py:826
+#: NVDAObjects\behaviors.py:49 appModules\_default.py:826
 msgid "%d percent"
 msgstr "%d pourcent"
 
@@ -939,7 +939,7 @@ msgstr ""
 msgid "Display"
 msgstr "Affichage"
 
-#: appModules\explorer.py:16
+#: appModules\explorer.py:33
 msgid "Start"
 msgstr "début"
 
@@ -950,6 +950,14 @@ msgstr "Pas de piste en cours"
 #: appModules\foobar2000.py:50
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Annonce le temps restant dans la piste en cours"
+
+#: appModules\miranda32.py:103
+msgid "No message yet"
+msgstr "pas encore de message"
+
+#: appModules\miranda32.py:104
+msgid "Displays one of the recent messages"
+msgstr ""
 
 #: appModules\msimn.py:18
 msgid "Attachments"
@@ -1291,15 +1299,15 @@ msgstr "smnu"
 msgid "( )"
 msgstr "( )"
 
-#: braille.py:222 speech.py:669
+#: braille.py:222 speech.py:670
 msgid "not %s"
 msgstr "non %s"
 
-#: braille.py:234 speech.py:675
+#: braille.py:234 speech.py:676
 msgid "%s of %s"
 msgstr "%s sur %s"
 
-#: braille.py:236 speech.py:680 speech.py:683
+#: braille.py:236 speech.py:681 speech.py:684
 msgid "level %s"
 msgstr "niveau %s"
 
@@ -1316,7 +1324,7 @@ msgid "No braille"
 msgstr "pas de braille"
 
 #: characterSymbols.py:17 characterSymbols.py:18 characterSymbols.py:19
-#: speech.py:82 speech.py:619
+#: speech.py:82 speech.py:620
 msgid "blank"
 msgstr "vide"
 
@@ -1572,7 +1580,7 @@ msgstr "bulle d'aide"
 msgid "tool tip"
 msgstr "suggestion"
 
-#: controlTypes.py:198 speech.py:895
+#: controlTypes.py:198 speech.py:930
 msgid "link"
 msgstr "lien"
 
@@ -1984,7 +1992,7 @@ msgstr "nom de la police"
 msgid "font size"
 msgstr "taille de la police"
 
-#: controlTypes.py:305 speech.py:847
+#: controlTypes.py:305 speech.py:882
 msgid "bold"
 msgstr "gras"
 
@@ -2000,11 +2008,11 @@ msgstr "couleur d'avant-plan"
 msgid "background color"
 msgstr "couleur d'arrière-plan"
 
-#: controlTypes.py:310 speech.py:869
+#: controlTypes.py:310 speech.py:904
 msgid "superscript"
 msgstr "exposant"
 
-#: controlTypes.py:311 speech.py:871
+#: controlTypes.py:311 speech.py:906
 msgid "subscript"
 msgstr "indice"
 
@@ -2160,11 +2168,11 @@ msgstr "glissage en cours"
 msgid "drop target"
 msgstr "déposer"
 
-#: core.py:144
+#: core.py:137
 msgid "Loading subsystems, please wait..."
 msgstr "Chargement des sous-systèmes: veuillez patienter..."
 
-#: core.py:223
+#: core.py:216
 msgid "NVDA started"
 msgstr "NVDA démarré"
 
@@ -2465,8 +2473,8 @@ msgstr ""
 "Bienvenue dans NVDA!\n"
 "La plupart des commandes de NVDA nécessitent de maintenir la touche NVDA "
 "enfoncée, en pressant d'autres touches.\n"
-"Par défaut, les touches insertion du pavé numérique et du clavier "
-"principal peuvent être utilisées comme touche NVDA.\n"
+"Par défaut, les touches insertion du pavé numérique et du clavier étendu "
+"peuvent être utilisées comme touche NVDA.\n"
 "Vous pouvez aussi configurer  la touche de verrouillage majuscule comme "
 "touche NVDA.\n"
 "Appuyez sur NVDA+n à tout moment pour activer le menu NVDA.\n"
@@ -2710,7 +2718,7 @@ msgstr "quand la souris entre dans un objet, annoncer son &type"
 
 #: gui\settingsDialogs.py:461
 msgid "play audio coordinates when mouse moves"
-msgstr "Jouer des sons indiquant les coordonnées quand la souris se déplace"
+msgstr "Sonoriser les coordonnées quand la souris se déplace"
 
 #: gui\settingsDialogs.py:464
 msgid "brightness controls audio coordinates volume"
@@ -3266,124 +3274,119 @@ msgstr "%s  dessélectionné"
 msgid "selection removed"
 msgstr "sélection supprimée"
 
-#: speech.py:667
+#: speech.py:668
 msgid "done dragging"
 msgstr "glissage terminé"
 
-#: speech.py:692 speech.py:936
+#: speech.py:693 speech.py:971
 msgid "row %s"
 msgstr "ligne %s"
 
-#: speech.py:695 speech.py:932
+#: speech.py:696 speech.py:967
 msgid "column %s"
 msgstr "colonne %s"
 
-#: speech.py:700
+#: speech.py:701
 msgid "with %s rows and %s columns"
 msgstr "avec %s lignes et %s colonnes"
 
-#: speech.py:702
+#: speech.py:703
 msgid "with %s columns"
 msgstr "avec %s colonnes"
 
-#: speech.py:704
+#: speech.py:705
 msgid "with %s rows"
 msgstr "avec %s lignes"
 
-#: speech.py:767 speech.py:771 speech.py:775 speech.py:783 speech.py:794
-#: speech.py:895
-msgid "out of %s"
-msgstr "hors de %s"
-
-#: speech.py:769
+#: speech.py:808
 msgid "with %s items"
 msgstr " de %s éléments"
 
-#: speech.py:792
-msgid "in %s"
-msgstr "dans %s"
+#: speech.py:823 speech.py:930
+msgid "out of %s"
+msgstr "hors de %s"
 
-#: speech.py:812
+#: speech.py:847
 msgid "page %s"
 msgstr "page %s"
 
-#: speech.py:819
+#: speech.py:854
 msgid "style %s"
 msgstr "style %s"
 
-#: speech.py:821
+#: speech.py:856
 msgid "default style"
 msgstr "style par défaut"
 
-#: speech.py:841
+#: speech.py:876
 msgid "line %s"
 msgstr "ligne %s"
 
-#: speech.py:847
+#: speech.py:882
 msgid "no bold"
 msgstr "pas de caractère gras"
 
-#: speech.py:852
+#: speech.py:887
 msgid "italic"
 msgstr "italique"
 
-#: speech.py:852
+#: speech.py:887
 msgid "no italic"
 msgstr "pas d'italique"
 
-#: speech.py:857
+#: speech.py:892
 msgid "no strikethrough"
 msgstr "pas de biffure"
 
-#: speech.py:857
+#: speech.py:892
 msgid "strikethrough"
 msgstr "biffure"
 
-#: speech.py:862
+#: speech.py:897
 msgid "not underlined"
 msgstr "non souligné"
 
-#: speech.py:862
+#: speech.py:897
 msgid "underlined"
 msgstr "souligné"
 
-#: speech.py:873
+#: speech.py:908
 msgid "baseline"
 msgstr "ligne de base"
 
-#: speech.py:881
+#: speech.py:916
 msgid "align left"
 msgstr "alignement à gauche"
 
-#: speech.py:883
+#: speech.py:918
 msgid "align center"
 msgstr "alignement centré"
 
-#: speech.py:885
+#: speech.py:920
 msgid "align right"
 msgstr "alignement à droite"
 
-#: speech.py:887
+#: speech.py:922
 msgid "align justify"
 msgstr "alignement justifié"
 
-#: speech.py:889
+#: speech.py:924
 msgid "align default"
 msgstr "alignement par défaut"
 
-#: speech.py:902
+#: speech.py:937
 msgid "spelling error"
 msgstr "faute d'orthographe"
 
-#: speech.py:904
+#: speech.py:939
 msgid "out of spelling error"
 msgstr "hors de la faute d'orthographe"
 
-#: speech.py:918
+#: speech.py:953
 msgid "out of table"
 msgstr "hors du tableau"
 
-#: speech.py:927
+#: speech.py:962
 msgid "table with %s columns and %s rows"
 msgstr "tableau de %s colonnes et %s lignes"
 
@@ -3464,10 +3467,8 @@ msgid "A free and open-source screen reader for MS Windows"
 msgstr "Une revue d'écran gratuite et open-source pour MS Windows"
 
 #: versionInfo.py:44
-msgid ""
-"Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>"
+msgid "Copyright (C) 2006-2010 NVDA Contributors"
 msgstr ""
-"Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>"
 
 #: versionInfo.py:45
 msgid ""

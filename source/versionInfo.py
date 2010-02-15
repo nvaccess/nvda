@@ -1,6 +1,6 @@
 #versionInfo.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2010 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -41,7 +41,7 @@ longName=_("NonVisual Desktop Access")
 version="unknown"
 description=_("A free and open-source screen reader for MS Windows")
 url="http://www.nvda-project.org/"
-copyright=_("Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>")
+copyright=_("Copyright (C) 2006-2010 NVDA Contributors")
 copyrightInfo=_("""%(copyright)s
 %(name)s is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it. This applies to both origional and modified copies of the software, plus any software that uses code taken from this software.
 For further details, you can view the licence online at:

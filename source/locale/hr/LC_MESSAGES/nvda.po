@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R3413\n"
-"POT-Creation-Date: 2010-01-12 13:41+Central European Standard Time\n"
-"PO-Revision-Date: 2010-01-12 13:47+0100\n"
+"POT-Creation-Date: 2010-02-09 09:57+Central European Standard Time\n"
+"PO-Revision-Date: 2010-02-09 09:59+0100\n"
 "Last-Translator: Hrvoje Katić <hrvojekatic@gmail.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje Katic<hrvojekatic@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 msgid "Secure Desktop"
 msgstr "Sigurnosna Radna površina"
 
-#: NVDAObjects\IAccessible\__init__.py:1336
+#: NVDAObjects\IAccessible\__init__.py:1280
 msgid "Taskbar"
 msgstr "Traka zadataka"
 
@@ -26,11 +26,11 @@ msgstr "Traka zadataka"
 msgid "%s items"
 msgstr "%s elemenata"
 
-#: NVDAObjects\UIA\__init__.py:427
+#: NVDAObjects\UIA\__init__.py:434
 msgid "invoke"
 msgstr "pozovi"
 
-#: NVDAObjects\progressBar.py:45
+#: NVDAObjects\behaviors.py:49
 #: appModules\_default.py:826
 msgid "%d percent"
 msgstr "%d posto"
@@ -773,7 +773,7 @@ msgstr "Preuzima tekst od prethodno postavljene početne oznake sve do i uključ
 msgid "Display"
 msgstr "Prikaz"
 
-#: appModules\explorer.py:16
+#: appModules\explorer.py:33
 msgid "Start"
 msgstr "Početak"
 
@@ -784,6 +784,14 @@ msgstr "Nema trake koja se reproducira"
 #: appModules\foobar2000.py:50
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Izvještava o preostalom vremenu trake koja se trenutno reproducira, ukoliko postoji"
+
+#: appModules\miranda32.py:103
+msgid "No message yet"
+msgstr "Još nema poruke"
+
+#: appModules\miranda32.py:104
+msgid "Displays one of the recent messages"
+msgstr "Prikazuje jednu od nedavnih poruka"
 
 #: appModules\msimn.py:18
 msgid "Attachments"
@@ -908,226 +916,238 @@ msgid "Danish grade 1"
 msgstr "Danski stupanj 1"
 
 #: braille.py:33
+msgid "German 8 dot computer braille"
+msgstr "Njemački 8 točkasta kompjutorska brajica"
+
+#: braille.py:34
 msgid "German grade 0"
 msgstr "Njemački stupanj 0"
 
-#: braille.py:34
+#: braille.py:35
 msgid "German grade 1"
 msgstr "Njemački stupanj 1"
 
-#: braille.py:35
+#: braille.py:36
+msgid "German grade 2"
+msgstr "Njemački stupanj 2"
+
+#: braille.py:37
 msgid "English (U.K.) grade 1"
 msgstr "Engleski (Velika Britanija) stupanj 1"
 
-#: braille.py:36
+#: braille.py:38
 msgid "English (U.K.) grade 2"
 msgstr "Engleski (Velika Britanija) stupanj 2"
 
-#: braille.py:37
+#: braille.py:39
 msgid "English (U.S.) 6 dot computer braille"
 msgstr "Engleski (Sjedinjene Američke Države) 6-točkasta kompjutorska brajica"
 
-#: braille.py:38
+#: braille.py:40
 msgid "English (U.S.) 8 dot computer braille"
 msgstr "Engleski (Sjedinjene Američke Države) 8-točkasta kompjutorska brajica"
 
-#: braille.py:39
+#: braille.py:41
 msgid "English (U.S.) grade 1"
 msgstr "Engleski (Sjedinjene Američke Države) stupanj 1"
 
-#: braille.py:40
+#: braille.py:42
 msgid "English (U.S.) grade 2"
 msgstr "Engleski (Sjedinjene Američke Države) stupanj 2"
 
-#: braille.py:41
+#: braille.py:43
 msgid "Spanish grade 1"
 msgstr "Španjolski stupanj 1"
 
-#: braille.py:42
+#: braille.py:44
 msgid "Finnish 8 dot computer braille"
 msgstr "Finski 8-točkasta kompjutorska brajica"
 
-#: braille.py:43
+#: braille.py:45
 msgid "French (Canada) grade 1"
 msgstr "Francuski (Kanada) stupanj 1"
 
-#: braille.py:44
+#: braille.py:46
 msgid "French (Canada) grade 2"
 msgstr "Francuski (Kanada) stupanj 2"
 
-#: braille.py:45
+#: braille.py:47
 msgid "French (unified) 6 dot computer braille"
 msgstr "Francuski (jedinstven) 6-točkasta kompjutorska brajica"
 
-#: braille.py:46
+#: braille.py:48
 msgid "French (unified) 8 dot computer braille"
 msgstr "Francuski (jedinstven) 8-točkasta kompjutorska brajica"
 
-#: braille.py:47
+#: braille.py:49
 msgid "French (unified) Grade 2"
 msgstr "Francuski (jedinstven) stupanj 2"
 
-#: braille.py:47
+#: braille.py:49
 msgid "Greek (Greece) grade 1"
 msgstr "Grčki (Grčka) stupanj 1"
 
-#: braille.py:48
+#: braille.py:50
 msgid "Hebrew 8 dot computer braille"
 msgstr "Hebrejski 8-točkasta kompjutorska brajica"
 
-#: braille.py:49
+#: braille.py:51
 msgid "Hindi grade 1"
 msgstr "Hindi stupanj 1"
 
-#: braille.py:50
+#: braille.py:52
 msgid "Croatian 8 dot computer braille"
 msgstr "Hrvatski 8-točkasta kompjutorska brajica"
 
-#: braille.py:51
+#: braille.py:53
 msgid "Hungarian 8 dot computer braille"
 msgstr "Mađarski 8-točkasta kompjutorska brajica"
 
-#: braille.py:52
+#: braille.py:54
 msgid "Italian grade 1"
 msgstr "Talijanski stupanj 1"
 
-#: braille.py:53
+#: braille.py:55
 msgid "Latvian grade 1"
 msgstr "Latvijski stupanj 1"
 
-#: braille.py:54
+#: braille.py:56
 msgid "Dutch (Belgium) grade 1"
 msgstr "Nizozemski (Belgija) stupanj 1"
 
-#: braille.py:55
+#: braille.py:57
 msgid "Dutch (netherlands) grade 1"
 msgstr "Nizozemski (Nizozemska) stupanj 1"
 
-#: braille.py:56
+#: braille.py:58
 msgid "Norwegian grade 0"
 msgstr "Norveški stupanj 0"
 
-#: braille.py:57
+#: braille.py:59
 msgid "Norwegian grade 1"
 msgstr "Norveški stupanj 1"
 
-#: braille.py:58
+#: braille.py:60
 msgid "Norwegian grade 2"
 msgstr "Norveški stupanj 2"
 
-#: braille.py:59
+#: braille.py:61
 msgid "Norwegian grade 3"
 msgstr "Norveški stupanj 3"
 
-#: braille.py:60
+#: braille.py:62
 msgid "Polish grade 1"
 msgstr "Poljski stupanj 1"
 
-#: braille.py:61
+#: braille.py:63
 msgid "Portuguese grade 1"
 msgstr "Portugalski stupanj 1"
 
-#: braille.py:62
+#: braille.py:64
 msgid "Russian grade 1"
 msgstr "Ruski stupanj 1"
 
-#: braille.py:63
+#: braille.py:65
 msgid "Swedish grade 1"
 msgstr "Švedski stupanj 1"
 
-#: braille.py:64
+#: braille.py:66
 msgid "Slovak"
 msgstr "Slovački"
 
-#: braille.py:65
+#: braille.py:67
 msgid "Unified English Braille Code grade 1"
 msgstr "Jedinstveni Engleski brajični kod stupanj 1"
 
-#: braille.py:66
+#: braille.py:68
 msgid "Unified English Braille Code grade 2"
 msgstr "Jedinstveni Engleski brajični kod stupanj 2"
 
-#: braille.py:67
+#: braille.py:69
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "Kineski (Hong Kong, Cantonese)"
 
-#: braille.py:71
+#: braille.py:70
+msgid "Chinese (Taiwan, Mandarin)"
+msgstr "Kineski (Taiwan, Mandarin)"
+
+#: braille.py:74
 msgid "edt"
 msgstr "ur."
 
-#: braille.py:72
+#: braille.py:75
 msgid "lst"
 msgstr "pop."
 
-#: braille.py:73
+#: braille.py:76
 msgid "mnubar"
 msgstr "t.izb."
 
-#: braille.py:74
+#: braille.py:77
 msgid "mnu"
 msgstr "izb."
 
-#: braille.py:75
+#: braille.py:78
 msgid "btn"
 msgstr "g."
 
-#: braille.py:76
+#: braille.py:79
 msgid "chk"
 msgstr "okv.pr."
 
-#: braille.py:77
+#: braille.py:80
 msgid "rbtn"
 msgstr "r.g."
 
-#: braille.py:78
+#: braille.py:81
 msgid "cbo"
 msgstr "od.okv."
 
-#: braille.py:79
+#: braille.py:82
 msgid "lnk"
 msgstr "l."
 
-#: braille.py:80
+#: braille.py:83
 msgid "dlg"
 msgstr "d."
 
-#: braille.py:81
+#: braille.py:84
 msgid "tv"
 msgstr "tv"
 
-#: braille.py:82
+#: braille.py:85
 msgid "tb"
 msgstr "tab."
 
-#: braille.py:86
+#: braille.py:89
 msgid "(x)"
 msgstr "(x)"
 
-#: braille.py:87
+#: braille.py:90
 msgid "sel"
 msgstr "od."
 
-#: braille.py:88
+#: braille.py:91
 msgid "submnu"
 msgstr "podizb."
 
-#: braille.py:91
+#: braille.py:94
 msgid "( )"
 msgstr "( )"
 
-#: braille.py:219
-#: speech.py:669
+#: braille.py:222
+#: speech.py:670
 msgid "not %s"
 msgstr "nije %s"
 
-#: braille.py:231
-#: speech.py:675
+#: braille.py:234
+#: speech.py:676
 msgid "%s of %s"
 msgstr "%s od %s"
 
-#: braille.py:233
-#: speech.py:680
-#: speech.py:683
+#: braille.py:236
+#: speech.py:681
+#: speech.py:684
 msgid "level %s"
 msgstr "razina %s"
 
@@ -1147,7 +1167,7 @@ msgstr "Bez brajice"
 #: characterSymbols.py:18
 #: characterSymbols.py:19
 #: speech.py:82
-#: speech.py:619
+#: speech.py:620
 msgid "blank"
 msgstr "prazno"
 
@@ -1409,7 +1429,7 @@ msgid "tool tip"
 msgstr "alatni savjetnik"
 
 #: controlTypes.py:198
-#: speech.py:895
+#: speech.py:930
 msgid "link"
 msgstr "link"
 
@@ -1826,7 +1846,7 @@ msgid "font size"
 msgstr "veličina fonta"
 
 #: controlTypes.py:305
-#: speech.py:847
+#: speech.py:882
 msgid "bold"
 msgstr "podebljavanje"
 
@@ -1843,12 +1863,12 @@ msgid "background color"
 msgstr "boja podloge"
 
 #: controlTypes.py:310
-#: speech.py:869
+#: speech.py:904
 msgid "superscript"
 msgstr "nadpis"
 
 #: controlTypes.py:311
-#: speech.py:871
+#: speech.py:906
 msgid "subscript"
 msgstr "podpis"
 
@@ -3072,130 +3092,122 @@ msgstr "nema odabira %s"
 msgid "selection removed"
 msgstr "odabir uklonjen"
 
-#: speech.py:667
+#: speech.py:668
 msgid "done dragging"
 msgstr "povlačenje gotovo"
 
-#: speech.py:692
-#: speech.py:936
+#: speech.py:693
+#: speech.py:971
 msgid "row %s"
 msgstr "red %s"
 
-#: speech.py:695
-#: speech.py:932
+#: speech.py:696
+#: speech.py:967
 msgid "column %s"
 msgstr "stupac %s"
 
-#: speech.py:700
+#: speech.py:701
 msgid "with %s rows and %s columns"
 msgstr "od %s redova i %s stupaca"
 
-#: speech.py:702
+#: speech.py:703
 msgid "with %s columns"
 msgstr "s %s stupaca"
 
-#: speech.py:704
+#: speech.py:705
 msgid "with %s rows"
 msgstr "s %s redaka"
 
-#: speech.py:767
-#: speech.py:771
-#: speech.py:775
-#: speech.py:783
-#: speech.py:794
-#: speech.py:895
-msgid "out of %s"
-msgstr "izvan %s"
-
-#: speech.py:769
+#: speech.py:808
 msgid "with %s items"
 msgstr "s %s elementima"
 
-#: speech.py:792
-msgid "in %s"
-msgstr "u %s"
+#: speech.py:823
+#: speech.py:930
+msgid "out of %s"
+msgstr "izvan %s"
 
-#: speech.py:812
+#: speech.py:847
 msgid "page %s"
 msgstr "stranica %s"
 
-#: speech.py:819
+#: speech.py:854
 msgid "style %s"
 msgstr "stil %s"
 
-#: speech.py:821
+#: speech.py:856
 msgid "default style"
 msgstr "početni stil"
 
-#: speech.py:841
+#: speech.py:876
 msgid "line %s"
 msgstr "redak %s"
 
-#: speech.py:847
+#: speech.py:882
 msgid "no bold"
 msgstr "nije podebljano"
 
-#: speech.py:852
+#: speech.py:887
 msgid "italic"
 msgstr "kurziv"
 
-#: speech.py:852
+#: speech.py:887
 msgid "no italic"
 msgstr "nije kurziv"
 
-#: speech.py:857
+#: speech.py:892
 msgid "no strikethrough"
 msgstr "nema dvostrukog podcrtavanja"
 
-#: speech.py:857
+#: speech.py:892
 msgid "strikethrough"
 msgstr "dvostruko podcrtavanje"
 
-#: speech.py:862
+#: speech.py:897
 msgid "not underlined"
 msgstr "nije podcrtano"
 
-#: speech.py:862
+#: speech.py:897
 msgid "underlined"
 msgstr "potcrtano"
 
-#: speech.py:873
+#: speech.py:908
 msgid "baseline"
 msgstr "bazna linija"
 
-#: speech.py:881
+#: speech.py:916
 msgid "align left"
 msgstr "lijevo poravnanje"
 
-#: speech.py:883
+#: speech.py:918
 msgid "align center"
 msgstr "centrirano poravnanje"
 
-#: speech.py:885
+#: speech.py:920
 msgid "align right"
 msgstr "desno poravnanje"
 
-#: speech.py:887
+#: speech.py:922
 msgid "align justify"
 msgstr "omogućeno poravnanje"
 
-#: speech.py:889
+#: speech.py:924
 msgid "align default"
 msgstr "početno poravnanje"
 
-#: speech.py:902
+#: speech.py:937
 msgid "spelling error"
 msgstr "pravopisna pogreška"
 
-#: speech.py:904
+#: speech.py:939
 msgid "out of spelling error"
 msgstr "izvan pravopisne pogreške"
 
-#: speech.py:918
+#: speech.py:953
 msgid "out of table"
 msgstr "izvan tablice"
 
-#: speech.py:927
+#: speech.py:962
 msgid "table with %s columns and %s rows"
 msgstr "tablica od %d stupaca i %d redaka"
 

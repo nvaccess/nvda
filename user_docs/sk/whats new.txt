@@ -2,6 +2,8 @@
 
 == 2010.1 ==
 
+V tejto verzii sme sa zamerali hlavne na opravy a používateľský konfort v čítane niektorých vážnych stabilizačných opráv.
+
 === Nové vlastnosti ===
 	* NVDA sa neodmieta spustiť ak v systéme nie sú nainštalované žiadne zvukové zariadenia. Samozrejme, v takomto prípade musí byť použitý brailovský riadok alebo hlasový výstup display. (#425)
 	* Do dialógu Nastavenia čítania textu bolo pridané začiarkavacie políčko oznamovať oblasti stránky, ktoré určuje, či sa vo virtuálnom prehliadači budú oznamovať oblasti stránky. Kvôli kompatibilite s predchádzajúcou verziou je toto predvolene zapnuté.
@@ -15,6 +17,9 @@
 	* NVDA dokáže ozvučiť aj 64 bitové IAccessible2 aplikácie.  (#479)
 	* Existuje rozhranie na ovládanie NVDA pre vývojárov ďalších aplikácií. Je možné napr. prečítať text, zastaviť reč, zobraziť správu v braily a pod.
 	* Informačné a chybové správy sú prečítané na prihlasovacej obrazovke Windows vista / Windows 7. (#506)
+	* V programe Adobe Reader sú prečítané interaktívne formuláre, na vývoj ktorých bol použitý program Adobe LiveCycle. (#475)
+	* Ak je zapnutá voľba čítať dynamicky menený obsah (NVDA+5), NVDA dokáže automaticky čítať nové správy v konverzačnom okne programu Miranda-IM. Pridané boli tiež skripty na zopakovanie troch naposledy doručených správ (NVDA+Control+number). (#546)
+	* Podpora pre editačné polia Adobe Flash. (#461)
 
 === Zmeny ===
 	* Veľmi dlhý popis v ponuke štart Windows 7 nie je viacej oznamovaný.
@@ -40,7 +45,12 @@
 	* Opravy pre rozloženie klávesnice laptop. (#517)
 	* Ak je brailovský kurzor zviazaný s prehliadacím kurzorom a fokus získa okno príkazového riadku, je možné korektne sa pohybovať po texte príkazového riadku.
 	* V programoch TeamTalk3 a TeamTalk4 Classic nie je viac oznamovaná aktualizácia indikátora priebehu znázorňujúca VU Meter a tiež v prichádzajúcom chate sú správne čitateľné národné znaky.
+	* Položky štart menu Windows 7 nie sú čítané 2 krát. (#474)
 	* Aktivovaním odkazov odkazujúcich na záložku v rovnakej stránke správne umiestni kurzor virtuálneho prehliadača na požadované miesto (s Firefox 3.6).
+	* Opravená chyba, kde v niektorých prípadoch nebol správne čitateľný všetok text v špecifických PDF dokumentoch.
+	* NVDA viac nečíta nesprávne čísla oddelené pomlčkou - napr. 500-1000.  (#547)
+	* NVDA viac nespôsobuje pád programu Internet explorer v systéme Windows XP pri zmene stavu začiarkavacích políčok na stránke Windows update. (#477)
+	* Ak je nastavený vstavaný eSpeak, súčasná reč a pípanie viac nespôsobujú bezdôvodné mrznutie na niektorých systémoch. Najčastejšie sa toto vyskytovalo napr. pri kopírovaní väčšieho množstva súborov v programe prieskumník.
 
 
 == 2009.1 ==

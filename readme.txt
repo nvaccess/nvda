@@ -9,8 +9,8 @@ The NVDA source depends on several other packages to run correctly, as described
 If you are running a 64 bit version of Windows, you should install the 32 bit versions of any dependencies that provide both 32 bit and 64 bit versions.
 
 General dependencies:
-	* Python 2.6, version 2.6.2 or later: http://www.python.org/
-	* comtypes, version 0.6.1 or later: http://www.sourceforge.net/projects/comtypes/
+	* Python 2.6, version 2.6.4 or later: http://www.python.org/
+	* comtypes, version 0.6.2 or later: http://www.sourceforge.net/projects/comtypes/
 	* wxPython unicode (for Python 2.6), version 2.8.9.1 or later: http://www.wxpython.org/
 	* Python Windows Extensions (for Python 2.6), build 212 or later: http://www.sourceforge.net/projects/pywin32/ 
 	* eSpeak, version 1.42.04 or later, Windows dll:
@@ -48,6 +48,7 @@ General dependencies:
 		* You can build this yourself using midl from the idl located at http://www.adobe.com/devnet/acrobat/downloads/ClientFiles.zip
 		* Alternatively, a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/AcrobatAccess.tlb
 		* Copy AcrobatAccess.tlb into the source\typelibs directory.
+	* Adobe FlashAccessibility interface typelib: http://www.nvda-project.org/3rdParty/FlashAccessibility.tlb
 
 To use the brltty braille display driver:
 	* brlapi Python bindings, version 0.5.3 or later, distributed with BRLTTY for Windows, version 4.0-2 or later:

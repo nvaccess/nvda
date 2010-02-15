@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA R3494\n"
-"POT-Creation-Date: 2010-01-26 16:40+China Standard Time\n"
-"PO-Revision-Date: 2010-01-26 16:42+0800\n"
+"Project-Id-Version: NVDA R3552\n"
+"POT-Creation-Date: 2010-02-11 07:31+China Standard Time\n"
+"PO-Revision-Date: 2010-02-11 12:55+0800\n"
 "Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
 "Language-Team: Chinese (Hong Kong)\n"
 "MIME-Version: 1.0\n"
@@ -18,22 +18,22 @@ msgid "Secure Desktop"
 msgstr "安全桌面"
 
 # characterSymbols.py:53
-#: NVDAObjects\IAccessible\__init__.py:1336
+#: NVDAObjects\IAccessible\__init__.py:1280
 msgid "Taskbar"
 msgstr "工作列"
 
 # NVDAObjects\IAccessible\__init__.py:71
-#: NVDAObjects\IAccessible\sysTreeView32.py:179
+#: NVDAObjects\IAccessible\sysTreeView32.py:186
 msgid "%s items"
 msgstr "%s 項目"
 
 # controlTypes.py:152
-#: NVDAObjects\UIA\__init__.py:427
+#: NVDAObjects\UIA\__init__.py:434
 msgid "invoke"
 msgstr "啟用"
 
 # appModules\_default.py:491
-#: NVDAObjects\progressBar.py:45
+#: NVDAObjects\behaviors.py:49
 #: appModules\_default.py:826
 msgid "%d percent"
 msgstr "百分之 %d"
@@ -51,13 +51,13 @@ msgstr "不明"
 # controlTypes.py:195
 #: NVDAObjects\window\edit.py:535
 msgid "%s embedded object"
-msgstr "%s 個陷入式項目"
+msgstr "%s 個嵌入式項目"
 
 # controlTypes.py:195
 #: NVDAObjects\window\edit.py:537
 #: controlTypes.py:243
 msgid "embedded object"
-msgstr "陷入式項目"
+msgstr "嵌入式項目"
 
 #: NVDAObjects\window\excel.py:48
 msgid "NVDA Excel Cell Editor"
@@ -203,29 +203,29 @@ msgstr "在目前鼠標位置點擊滑鼠右鍵一次"
 
 #: appModules\_default.py:81
 msgid "left mouse button unlock"
-msgstr "滑鼠左鍵解鎖"
+msgstr "滑鼠左鍵放開"
 
 #: appModules\_default.py:84
 msgid "left mouse button lock"
-msgstr "滑鼠左鍵鎖"
+msgstr "滑鼠左鍵按下"
 
 # virtualBuffers\__init__.py:394
 #: appModules\_default.py:86
 msgid "Locks or unlocks the left mouse button"
-msgstr "把滑鼠左鍵鎖著或解鎖"
+msgstr "把滑鼠左鍵按著或放開"
 
 #: appModules\_default.py:90
 msgid "right mouse button unlock"
-msgstr "滑鼠右鍵解鎖"
+msgstr "滑鼠右鍵放開"
 
 #: appModules\_default.py:93
 msgid "right mouse button lock"
-msgstr "滑鼠右鍵鎖"
+msgstr "滑鼠右鍵按下"
 
 # virtualBuffers\__init__.py:394
 #: appModules\_default.py:95
 msgid "Locks or unlocks the right mouse button"
-msgstr "把滑鼠右鍵鎖著或解鎖"
+msgstr "把滑鼠右鍵按著或放開"
 
 # textBuffer.py:534
 #: appModules\_default.py:107
@@ -1055,7 +1055,7 @@ msgid "Display"
 msgstr "顯示"
 
 # characterSymbols.py:33
-#: appModules\explorer.py:16
+#: appModules\explorer.py:33
 msgid "Start"
 msgstr "開始"
 
@@ -1067,6 +1067,14 @@ msgstr "目前沒有播放音軌"
 #: appModules\foobar2000.py:50
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "報告目前播放音軌的剩餘時間"
+
+#: appModules\miranda32.py:103
+msgid "No message yet"
+msgstr "沒有新訊息"
+
+#: appModules\miranda32.py:104
+msgid "Displays one of the recent messages"
+msgstr "讀出最近的訊息"
 
 # appModules\msimn.py:14
 #: appModules\msimn.py:18
@@ -1882,12 +1890,12 @@ msgstr "儲存格"
 # controlTypes.py:109
 #: controlTypes.py:209
 msgid "column"
-msgstr "列"
+msgstr "欄"
 
 # controlTypes.py:110
 #: controlTypes.py:210
 msgid "row"
-msgstr "行"
+msgstr "列"
 
 # controlTypes.py:111
 #: controlTypes.py:211
@@ -1902,12 +1910,12 @@ msgstr "工具列"
 # controlTypes.py:113
 #: controlTypes.py:213
 msgid "column header"
-msgstr "列標題"
+msgstr "欄標題"
 
 # controlTypes.py:114
 #: controlTypes.py:214
 msgid "row header"
-msgstr "行標題"
+msgstr "列標題"
 
 # controlTypes.py:115
 #: controlTypes.py:215
@@ -3946,23 +3954,23 @@ msgstr "拖動完成"
 #: speech.py:693
 #: speech.py:971
 msgid "row %s"
-msgstr "第 %s 行"
+msgstr "第 %s 列"
 
 # textBuffer.py:236
 #: speech.py:696
 #: speech.py:967
 msgid "column %s"
-msgstr "第 %s 列"
+msgstr "第 %s 欄"
 
 # textBuffer.py:225
 #: speech.py:701
 msgid "with %s rows and %s columns"
-msgstr "有 %s 行和 %s 列"
+msgstr "有 %s 列和 %s 欄"
 
 # textBuffer.py:225
 #: speech.py:703
 msgid "with %s columns"
-msgstr "有 %s 列"
+msgstr "有 %s 欄"
 
 # virtualBuffers\IAccessible\MSHTML.py:239
 # virtualBuffers\IAccessible\MSHTML.py:242
@@ -3970,7 +3978,7 @@ msgstr "有 %s 列"
 # virtualBuffers\IAccessible\gecko.py:250
 #: speech.py:705
 msgid "with %s rows"
-msgstr "有 %s 行"
+msgstr "有 %s 列"
 
 # virtualBuffers\IAccessible\MSHTML.py:239
 # virtualBuffers\IAccessible\MSHTML.py:242
@@ -4094,7 +4102,7 @@ msgstr "離開表格"
 # textBuffer.py:225
 #: speech.py:962
 msgid "table with %s columns and %s rows"
-msgstr "表格有 %s 列和 %s 行"
+msgstr "表格有 %s 欄和 %s 列"
 
 # gui\logViewer.py:14
 #: speechViewer.py:13
@@ -4188,7 +4196,7 @@ msgstr "一套免費且開放原碼的微軟視窗螢幕報讀軟體"
 
 #: versionInfo.py:44
 msgid "Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>"
-msgstr "版權 (C) 2006-2009 NVDA 的貢獻者 <http://www.nvda-project.org/>"
+msgstr "版權 (C) 2006-2010 NVDA 的貢獻者 <http://www.nvda-project.org/>"
 
 # versionInfo.py:14
 #: versionInfo.py:45
@@ -4276,7 +4284,7 @@ msgstr "更新虛擬緩衝區的內容"
 # virtualBuffers_new\__init__.py:277
 #: virtualBuffers\__init__.py:693
 msgid "use screen layout %s"
-msgstr "套用畫面檢視方式 %s"
+msgstr "呈現畫面佈局 %s"
 
 #: virtualBuffers\__init__.py:694
 msgid "Toggles on and off if the screen layout is preserved while rendering the virtual buffer content"
@@ -4299,22 +4307,22 @@ msgstr "表格的邊緣了"
 # virtualBuffers\__init__.py:361
 #: virtualBuffers\__init__.py:1137
 msgid "moves to the next table row"
-msgstr "在表格內移到下一行"
+msgstr "在表格內移到下一列"
 
 # virtualBuffers\__init__.py:372
 #: virtualBuffers\__init__.py:1141
 msgid "moves to the previous table row"
-msgstr "在表格內移到上一行"
+msgstr "在表格內移到上一列"
 
 # virtualBuffers\__init__.py:361
 #: virtualBuffers\__init__.py:1145
 msgid "moves to the next table column"
-msgstr "在表格內移到下一列"
+msgstr "在表格內移到下一欄"
 
 # virtualBuffers\__init__.py:372
 #: virtualBuffers\__init__.py:1149
 msgid "moves to the previous table column"
-msgstr "在表格內移到上一列"
+msgstr "在表格內移到上一欄"
 
 # virtualBuffers\__init__.py:317
 #: virtualBuffers\__init__.py:1209
@@ -4836,20 +4844,19 @@ msgstr "沒有上一個地標項目了"
 # virtualBuffers\__init__.py:361
 #: virtualBuffers\__init__.py:1259
 msgid "moves to the next embedded object"
-msgstr "移到下一個陷入式項目"
+msgstr "移到下一個嵌入式項目"
 
 # controlTypes.py:195
 #: virtualBuffers\__init__.py:1259
 msgid "no next embedded object"
-msgstr "沒有下一個陷入式項目了"
+msgstr "沒有下一個嵌入式項目了"
 
 # virtualBuffers\__init__.py:372
 #: virtualBuffers\__init__.py:1260
 msgid "moves to the previous embedded object"
-msgstr "移到上一個陷入式項目"
+msgstr "移到上一個嵌入式項目"
 
 # controlTypes.py:195
 #: virtualBuffers\__init__.py:1260
 msgid "no previous embedded object"
-msgstr "沒有上一個陷入式項目了"
-
+msgstr "沒有上一個嵌入式項目了"

@@ -8,4 +8,5 @@ interface NVDAController {
 	[fault_status,comm_status] cancelSpeech();
 	[fault_status,comm_status] brailleMessage();
 	[fault_status,comm_status] testIfRunning();
+	[fault_status,comm_status] inputLangChangeNotify();
 }

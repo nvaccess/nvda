@@ -1,4 +1,5 @@
 import os
+import _winreg
 import winKernel
 
 from ctypes import *
@@ -14,7 +15,6 @@ import time
 import globalVars
 
 EVENT_TYPEDCHARACTER=0X1000
-EVENT_INPUTLANGCHANGE=0X1001
 
 _remoteLib=None
 _remoteLoader64=None
@@ -56,6 +56,28 @@ def nvdaController_brailleMessage(text):
 	queueHandler.queueFunction(queueHandler.eventQueue,braille.handler.message,text)
 	return 0
 
+@WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
+def nvdaController_inputLangChangeNotify(threadID,hkl,layoutString):
+	import queueHandler
+	import ui
+	layoutName=None
+	try:
+		key = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString)
+	except WindowsError:
+		key=None
+	if key:
+		try:
+			s = _winreg.QueryValueEx(key, "Layout Display Name")[0]
+		except:
+			s=None
+		if s:
+			buf=create_unicode_buffer(256)
+			windll.shlwapi.SHLoadIndirectString(s,buf,256,None)
+			layoutName=buf.value
+	if layoutName:
+		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("layout %s")%layoutName)
+	return 0
+
 def handleTypedCharacter(window,wParam,lParam):
 	focus=api.getFocusObject()
 	if focus.windowClassName!="ConsoleWindowClass":
@@ -67,9 +89,6 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
 		if eventID==EVENT_TYPEDCHARACTER:
 			handleTypedCharacter(window,objectID,childID)
-		elif eventID==EVENT_INPUTLANGCHANGE and (not lastKeyboardLayoutChangeEventTime or (time.time()-lastKeyboardLayoutChangeEventTime)>0.2):
-			lastKeyboardLayoutChangeEventTime=time.time()
-			keyboardHandler.speakKeyboardLayout(childID)
 	except:
 		log.error("helper.winEventCallback", exc_info=True)
 
@@ -121,6 +140,7 @@ def initialize():
 		("speakText",nvdaController_speakText),
 		("cancelSpeech",nvdaController_cancelSpeech),
 		("brailleMessage",nvdaController_brailleMessage),
+		("inputLangChangeNotify",nvdaController_inputLangChangeNotify),
 	]:
 		try:
 			_setDllFuncPointer(localLib,"_nvdaController_%s"%name,func)
@@ -135,7 +155,7 @@ def initialize():
 		raise RuntimeError("Error initializing NVDAHelper")
 	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':
 		_remoteLoader64=RemoteLoader64()
-	winEventHookID=winUser.setWinEventHook(EVENT_TYPEDCHARACTER,EVENT_INPUTLANGCHANGE,0,winEventCallback,0,0,0)
+	winEventHookID=winUser.setWinEventHook(EVENT_TYPEDCHARACTER,EVENT_TYPEDCHARACTER,0,winEventCallback,0,0,0)
 
 def terminate():
 	global _remoteLib, _remoteLoader64, localLib

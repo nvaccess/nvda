@@ -85,7 +85,11 @@ void CALLBACK VBufBackend_t::renderThread_timerProc(HWND hwnd, UINT msg, UINT_PT
 			break;
 		}
 	}
-	assert(backend); //Timer must be associated with a backend
+	if(!backend) {
+		// This timer is not associated with any backend.
+		// This probably means the timer message was queued before we killed the timer, so just ignore it.
+		return;
+	}
 	DEBUG_MSG(L"Calling update on backend at "<<backend);
 	backend->update();
 	backend->renderThreadTimerID=0;

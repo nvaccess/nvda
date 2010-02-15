@@ -48,7 +48,7 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 Name "NVDA"
 VIProductVersion "0.0.0.0" ;Needs to be here so other version info shows up
 VIAddVersionKey "ProductName" "${PRODUCT}"
-VIAddVersionKey "LegalCopyright" "Copyright 2006 - 2009 NVDA Contributors <http://www.nvda-project.org/>"
+VIAddVersionKey "LegalCopyright" "Copyright 2006 - 2010 NVDA Contributors"
 VIAddVersionKey "FileDescription" "NVDA installer file"
 VIAddVersionKey "ProductVersion" "${VERSION}"
 

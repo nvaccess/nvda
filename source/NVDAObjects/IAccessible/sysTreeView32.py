@@ -49,6 +49,9 @@ class TreeViewItem(IAccessible):
 	def _get_treeview_hItem(self):
 		if not hasattr(self,'_treeview_hItem'):
 			self._treeview_hItem=winUser.sendMessage(self.windowHandle,TVM_MAPACCIDTOHTREEITEM,self.IAccessibleChildID,0)
+			if not self._treeview_hItem:
+				# Tree views from comctl < 6.0 use the hItem as the child ID.
+				self._treeview_hItem=self.IAccessibleChildID
 		return self._treeview_hItem
 
 	def _get_treeview_level(self):
@@ -80,8 +83,9 @@ class TreeViewItem(IAccessible):
 		if parentItem<=0:
 			return super(TreeViewItem,self)._get_parent()
 		newID=winUser.sendMessage(self.windowHandle,TVM_MAPHTREEITEMTOACCID,parentItem,0)
-		if newID<=0:
-			return super(TreeViewItem,self)._get_parent()
+		if not newID:
+			# Tree views from comctl < 6.0 use the hItem as the child ID.
+			newID=parentItem
 		return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newID)
 
 	def _get_firstChild(self):
@@ -94,8 +98,9 @@ class TreeViewItem(IAccessible):
 		if childItem<=0:
 			return super(TreeViewItem,self)._get_firstChild()
 		newID=winUser.sendMessage(self.windowHandle,TVM_MAPHTREEITEMTOACCID,childItem,0)
-		if newID<=0:
-			return super(TreeViewItem,self)._get_firstChild()
+		if not newID:
+			# Tree views from comctl < 6.0 use the hItem as the child ID.
+			newID=childItem
 		return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newID)
 
 	def _get_next(self):
@@ -108,8 +113,9 @@ class TreeViewItem(IAccessible):
 		if nextItem<=0:
 			return None
 		newID=winUser.sendMessage(self.windowHandle,TVM_MAPHTREEITEMTOACCID,nextItem,0)
-		if newID<=0:
-			return None
+		if not newID:
+			# Tree views from comctl < 6.0 use the hItem as the child ID.
+			newID=nextItem
 		return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newID)
 
 	def _get_previous(self):
@@ -122,8 +128,9 @@ class TreeViewItem(IAccessible):
 		if prevItem<=0:
 			return None
 		newID=winUser.sendMessage(self.windowHandle,TVM_MAPHTREEITEMTOACCID,prevItem,0)
-		if newID<=0:
-			return None
+		if not newID:
+			# Tree views from comctl < 6.0 use the hItem as the child ID.
+			newID=prevItem
 		return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newID)
 
 	def _get_children(self):

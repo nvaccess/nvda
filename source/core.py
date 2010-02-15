@@ -39,13 +39,6 @@ import logHandler
 import globalVars
 from logHandler import log
 
-# Work around a bug in comtypes.
-# CoTaskMemFree returns void, but oledll (which assumes HRESULT) is used to access it in comtypes.GUID.
-# We have to use sys.modules because GUID is overridden in comtypes to refer to the class.
-GUID = sys.modules["comtypes.GUID"]
-GUID._CoTaskMemFree = GUID.windll.ole32.CoTaskMemFree
-del GUID
-
 # Work around an issue with comtypes where __del__ seems to be called twice on COM pointers.
 # This causes Release() to be called more than it should, which is very nasty and will eventually cause us to access pointers which have been freed.
 from comtypes import _compointer_base

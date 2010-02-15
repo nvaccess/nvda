@@ -5,6 +5,6 @@ headerFile,clientSourceFile,serverSourceFile=env.MSRPCStubs(
 	MIDLFLAGS=env['MIDLFLAGS']+['/prefix','all','nvdaController_','/acf',File('nvdaController.acf')],
 )
 clientObjFile=env.Object(clientSourceFile)
-serverObjFile=Object(serverSourceFile)
+serverObjFile=env.Object(serverSourceFile)
 
 Return(['headerFile','clientObjFile','serverObjFile'])

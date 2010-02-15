@@ -55,7 +55,7 @@ class SynthDriver(SynthDriver):
 
 	def __init__(self):
 		self.lastIndex=None
-		self._bufSink=SynthDriverBufSink(self)
+		self._bufSink=SynthDriverBufSink(self).QueryInterface(ITTSBufNotifySink)
 		self._ttsEngines=CoCreateInstance(CLSID_TTSEnumerator, ITTSEnumW)
 		self._enginesList=self._fetchEnginesList()
 		if len(self._enginesList)==0:
@@ -70,7 +70,7 @@ class SynthDriver(SynthDriver):
 			text="\mrk=%d\\%s"%(index,text)
 		if isCharacter:
 			text = "\\RmS=1\\%s\\RmS=0\\"%text
-		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSink._com_pointers_[ITTSBufNotifySink._iid_],ITTSBufNotifySink._iid_)
+		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSink,ITTSBufNotifySink._iid_)
 
 	def speakText(self,text,index=None):
 		self.performSpeak(text,index)
