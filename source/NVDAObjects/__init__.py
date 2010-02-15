@@ -439,9 +439,7 @@ class NVDAObject(baseObject.ScriptableObject):
 		if not child:
 			return None
 		presType=child.presentationType
-		if presType==self.presType_unavailable:
-			return None
-		if presType==self.presType_layout: return child._findSimpleNext(useChild=True,useParent=False)
+		if presType!=self.presType_content: return child._findSimpleNext(useChild=True,useParent=False)
 		return child
 
 	def _get_simpleLastChild(self):
@@ -449,9 +447,7 @@ class NVDAObject(baseObject.ScriptableObject):
 		if not child:
 			return None
 		presType=child.presentationType
-		if presType==self.presType_unavailable:
-			return None
-		if presType==self.presType_layout: return child._findSimpleNext(useChild=True,useParent=False,goPrevious=True)
+		if presType!=self.presType_content: return child._findSimpleNext(useChild=True,useParent=False,goPrevious=True)
 		return child
 
 	def getNextInFlow(self,down=None,up=None):
