@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3477\n"
+"Project-Id-Version: r3566\n"
 "POT-Creation-Date: 2007-03-07 08:26+Central Europe Standard Time\n"
-"PO-Revision-Date: 2010-01-21 14:50+Central Europe Standard Time\n"
+"PO-Revision-Date: 2010-02-14 6:30+Central Europe Standard Time\n"
 "Last-Translator: Peter Vágner <peter.v@datagate.sk>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,21 +18,21 @@ msgstr ""
 msgid "Secure Desktop"
 msgstr "Zabezpečená pracovná plocha"
 
-#: NVDAObjects\IAccessible\sysTreeView32.py:179
+#: NVDAObjects\IAccessible\sysTreeView32.py:186
 msgid "%s items"
 msgstr "%s položiek"
 
-#: NVDAObjects\UIA\__init__.py:427
+#: NVDAObjects\UIA\__init__.py:434
 #, fuzzy
 msgid "invoke"
 msgstr "prepojené"
 
 #: appModules\_default.py:826
-#: NVDAObjects\progressBar.py:45
+#: NVDAObjects\behaviors.py:49
 msgid "%d percent"
 msgstr "%d percent"
 
-#: NVDAObjects\window\__init__.py:295
+#: NVDAObjects\window\__init__.py:294
 msgid "Desktop"
 msgstr "Pracovná plocha"
 
@@ -85,9 +85,9 @@ msgstr "nie v tabuľke"
 msgid "Error in appModule %s"
 msgstr "Chyba v aplikačnom module \"%s\"."
 
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: keyboardHandler.py:58
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 #: appModules\winamp.py:75
 #: appModules\winamp.py:85
 #: appModules\_default.py:43
@@ -103,9 +103,9 @@ msgstr "Chyba v aplikačnom module \"%s\"."
 msgid "on"
 msgstr "zapnuté"
 
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: keyboardHandler.py:58
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 #: appModules\winamp.py:77
 #: appModules\winamp.py:87
 #: appModules\_default.py:46
@@ -721,7 +721,7 @@ msgstr "Nie je vybraný žiadny text na skopírovanie"
 msgid "Display"
 msgstr "displej"
 
-#: appModules\explorer.py:16
+#: appModules\explorer.py:33
 msgid "Start"
 msgstr "Štart"
 
@@ -1048,16 +1048,16 @@ msgstr "pmnu"
 msgid "( )"
 msgstr "( )"
 
-#: braille.py:222 speech.py:669
+#: braille.py:222 speech.py:670
 msgid "not %s"
 msgstr "ne %s"
 
-#: braille.py:234 speech.py:675
+#: braille.py:234 speech.py:676
 msgid "%s of %s"
 msgstr "%s z %s"
 
-#: braille.py:236 speech.py:680
-#: speech.py:683
+#: braille.py:236 speech.py:681
+#: speech.py:684
 msgid "level %s"
 msgstr "úroveň %s"
 
@@ -1076,7 +1076,7 @@ msgstr "Žiadny zobrazovač"
 #: characterSymbols.py:17
 #: characterSymbols.py:18
 #: characterSymbols.py:19 speech.py:82
-#: speech.py:619
+#: speech.py:620
 msgid "blank"
 msgstr "prázdny"
 
@@ -1337,7 +1337,7 @@ msgstr "bublinková nápoveda"
 msgid "tool tip"
 msgstr "kontextová nápoveda"
 
-#: controlTypes.py:198 speech.py:895
+#: controlTypes.py:198 speech.py:930
 msgid "link"
 msgstr "odkaz"
 
@@ -1754,7 +1754,7 @@ msgstr "názov písma"
 msgid "font size"
 msgstr "veľkosť písma"
 
-#: controlTypes.py:305 speech.py:847
+#: controlTypes.py:305 speech.py:882
 msgid "bold"
 msgstr "tučné"
 
@@ -1770,11 +1770,11 @@ msgstr "farba popredia"
 msgid "background color"
 msgstr "farba pozadia"
 
-#: controlTypes.py:310 speech.py:869
+#: controlTypes.py:310 speech.py:904
 msgid "superscript"
 msgstr "horný index"
 
-#: controlTypes.py:311 speech.py:871
+#: controlTypes.py:311 speech.py:906
 msgid "subscript"
 msgstr "dolný index"
 
@@ -1930,11 +1930,11 @@ msgstr "označené pre operáciu ťahať a pustiť"
 msgid "drop target"
 msgstr "cieľ akcie ťahať a pustiť"
 
-#: core.py:144
+#: core.py:137
 msgid "Loading subsystems, please wait..."
 msgstr "Nahrávam podporné systémy, prosím čakajte."
 
-#: core.py:223
+#: core.py:216
 msgid "NVDA started"
 msgstr "NVDA spustený."
 
@@ -2846,35 +2846,31 @@ msgstr "pravý alt"
 msgid "right windows"
 msgstr "pravý windows"
 
-#: keyboardHandler.py:54
+#: keyboardHandler.py:53
 msgid "caps lock %s"
 msgstr "caps lock %s"
 
-#: keyboardHandler.py:56
+#: keyboardHandler.py:55
 msgid "num lock %s"
 msgstr "num lock %s"
 
-#: keyboardHandler.py:58
+#: keyboardHandler.py:57
 msgid "scroll lock %s"
 msgstr "scroll lock %s"
 
-#: keyboardHandler.py:78
-msgid "%s keyboard layout"
-msgstr "Rozloženie klávesnice %s"
-
-#: keyboardHandler.py:191
+#: keyboardHandler.py:170
 msgid "Description: %s"
 msgstr "Popis: %s"
 
-#: keyboardHandler.py:194
+#: keyboardHandler.py:173
 msgid "Location: %s"
 msgstr "Umiestnenie: %s"
 
-#: keyboardHandler.py:209
+#: keyboardHandler.py:188
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Chyba v keyboardHandler.internal_keyDownEvent."
 
-#: keyboardHandler.py:247
+#: keyboardHandler.py:226
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Chyba v keyboardHandler.internal_keyUpEvent."
 
@@ -2914,125 +2910,119 @@ msgstr "Nevybrané %s"
 msgid "selection removed"
 msgstr "Výber vymazaný."
 
-#: speech.py:667
+#: speech.py:668
 msgid "done dragging"
 msgstr "akcia ťahať a pustiť ukončená"
 
-#: speech.py:692 speech.py:936
+#: speech.py:693 speech.py:971
 msgid "row %s"
 msgstr "Riadok %s"
 
-#: speech.py:695 speech.py:932
+#: speech.py:696 speech.py:967
 msgid "column %s"
 msgstr "Stĺpec %s"
 
-#: speech.py:700
+#: speech.py:701
 msgid "with %s rows and %s columns"
 msgstr "s %s riadkami a %s stĺpcami"
 
-#: speech.py:702
+#: speech.py:703
 msgid "with %s columns"
 msgstr "má %s riadkov"
 
-#: speech.py:704
+#: speech.py:705
 msgid "with %s rows"
 msgstr "má %s stĺpcov"
 
-#: speech.py:767 speech.py:771
-#: speech.py:775 speech.py:783
-#: speech.py:794 speech.py:895
+#: speech.py:823 speech.py:930
 msgid "out of %s"
 msgstr "mimo %s"
 
-#: speech.py:769
+#: speech.py:808
 msgid "with %s items"
 msgstr "má %s položiek"
 
-#: speech.py:792
-msgid "in %s"
-msgstr "%s"
-
-#: speech.py:812
+#: speech.py:847
 msgid "page %s"
 msgstr "Strana %s"
 
-#: speech.py:819
+#: speech.py:854
 msgid "style %s"
 msgstr "Štýl %s"
 
-#: speech.py:821
+#: speech.py:856
 msgid "default style"
 msgstr "Predvolený štýl"
 
-#: speech.py:841
+#: speech.py:876
 msgid "line %s"
 msgstr "Riadok %s"
 
-#: speech.py:847
+#: speech.py:882
 msgid "no bold"
 msgstr "Nie tučné"
 
-#: speech.py:852
+#: speech.py:887
 msgid "italic"
 msgstr "kurzíva"
 
-#: speech.py:852
+#: speech.py:887
 msgid "no italic"
 msgstr "Nie kurzíva"
 
-#: speech.py:857
+#: speech.py:892
 msgid "no strikethrough"
 msgstr "Neprečiarknuté"
 
-#: speech.py:857
+#: speech.py:892
 msgid "strikethrough"
 msgstr "Prečiarknuté"
 
-#: speech.py:862
+#: speech.py:897
 msgid "not underlined"
 msgstr "Nepodčiarknuté"
 
-#: speech.py:862
+#: speech.py:897
 msgid "underlined"
 msgstr "Podčiarknuté"
 
-#: speech.py:873
+#: speech.py:908
 msgid "baseline"
 msgstr "Bez indexov"
 
-#: speech.py:881
+#: speech.py:916
 msgid "align left"
 msgstr "Zarovnané vľavo"
 
-#: speech.py:883
+#: speech.py:918
 msgid "align center"
 msgstr "Zarovnané na stred"
 
-#: speech.py:885
+#: speech.py:920
 msgid "align right"
 msgstr "Zarovnané vpravo"
 
-#: speech.py:887
+#: speech.py:922
 msgid "align justify"
 msgstr "Zarovnané do bloku"
 
-#: speech.py:889
+#: speech.py:924
 msgid "align default"
 msgstr "Predvolené zarovnanie"
 
-#: speech.py:902
+#: speech.py:937
 msgid "spelling error"
 msgstr "Pravopisná chyba"
 
-#: speech.py:904
+#: speech.py:939
 msgid "out of spelling error"
 msgstr "Mimo pravopisnej chyby"
 
-#: speech.py:918
+#: speech.py:953
 msgid "out of table"
 msgstr "Mimo tabuľky"
 
-#: speech.py:927
+#: speech.py:962
 msgid "table with %s columns and %s rows"
 msgstr "Tabuľka s %s stĺpcami a %s riadkami"
 
@@ -3600,7 +3590,7 @@ msgstr "Maďarský počítačový 8 bodový brail"
 msgid "thumb control"
 msgstr ""
 
-#: NVDAObjects\IAccessible\__init__.py:1336
+#: NVDAObjects\IAccessible\__init__.py:1280
 msgid "Taskbar"
 msgstr "panel úloh"
 
@@ -3811,3 +3801,15 @@ msgstr "Nemčina skratkopis"
 #: braille.py:70
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Mandarínska čínština (Taiwan)"
+
+#: appModules\miranda32.py:103
+msgid "No message yet"
+msgstr "Zatiaľ nebola doručená žiadna správa"
+
+#: appModules\miranda32.py:104
+msgid "Displays one of the recent messages"
+msgstr "Prečíta jeden z naposledy prijatých správ"
+
+#: NVDAHelper.py:80
+msgid "layout %s"
+msgstr "rozloženie %s"

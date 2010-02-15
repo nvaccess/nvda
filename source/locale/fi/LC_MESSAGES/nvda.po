@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3554\n"
+"Project-Id-Version: r3567\n"
 "POT-Creation-Date: 2007-03-04 15:37+Normaaliaika\n"
-"PO-Revision-Date: 2010-02-11 12:58+0200\n"
+"PO-Revision-Date: 2010-02-14 16:43+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,10 @@ msgstr ""
 #: IAccessibleHandler.py:671
 msgid "Secure Desktop"
 msgstr "Suojattu työpöytä"
+
+#: NVDAHelper.py:78
+msgid "layout %s"
+msgstr "näppäimistöasettelu %s"
 
 #: NVDAObjects\IAccessible\__init__.py:1280
 msgid "Taskbar"
@@ -87,7 +91,7 @@ msgstr "Virhe sovellusmoduulissa %s"
 #: appModules\_default.py:191 appModules\_default.py:713
 #: appModules\_default.py:789 appModules\_default.py:799
 #: appModules\_default.py:809 appModules\winamp.py:75 appModules\winamp.py:85
-#: keyboardHandler.py:54 keyboardHandler.py:56 keyboardHandler.py:58
+#: keyboardHandler.py:53 keyboardHandler.py:55 keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "on"
 msgstr "päällä"
@@ -98,7 +102,7 @@ msgstr "päällä"
 #: appModules\_default.py:710 appModules\_default.py:786
 #: appModules\_default.py:796 appModules\_default.py:806
 #: appModules\winamp.py:77 appModules\winamp.py:87 gui\settingsDialogs.py:484
-#: keyboardHandler.py:54 keyboardHandler.py:56 keyboardHandler.py:58
+#: keyboardHandler.py:53 keyboardHandler.py:55 keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "off"
 msgstr "pois"
@@ -3217,35 +3221,31 @@ msgstr "oikea alt"
 msgid "right windows"
 msgstr "oikea windows"
 
-#: keyboardHandler.py:54
+#: keyboardHandler.py:53
 msgid "caps lock %s"
 msgstr "caps lock %s"
 
-#: keyboardHandler.py:56
+#: keyboardHandler.py:55
 msgid "num lock %s"
 msgstr "num lock %s"
 
-#: keyboardHandler.py:58
+#: keyboardHandler.py:57
 msgid "scroll lock %s"
 msgstr "scroll lock %s"
 
-#: keyboardHandler.py:78
-msgid "%s keyboard layout"
-msgstr "näppäimistöasettelu %s"
-
-#: keyboardHandler.py:191
+#: keyboardHandler.py:170
 msgid "Description: %s"
 msgstr "Kuvaus: %s"
 
-#: keyboardHandler.py:194
+#: keyboardHandler.py:173
 msgid "Location: %s"
 msgstr "Sijainti: %s"
 
-#: keyboardHandler.py:209
+#: keyboardHandler.py:188
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Virhe kohteessa keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:247
+#: keyboardHandler.py:226
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Virhe kohteessa keyboardHandler.internal_keyUpEvent"
 

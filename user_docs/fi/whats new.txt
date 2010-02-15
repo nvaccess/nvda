@@ -13,14 +13,14 @@ Tämä julkaisu keskittyy pääasiassa vikojen korjauksiin ja käyttäjäkokemuksen par
 * Paranneltu tuki upotetuille  muokattaville dokumenteille Internet Explorerissa.
 * Lisätty komento NVDA+Shift+laskinnäppäimistön miinus, joka siirtää kohdistuksen nykyiseen navigointiobjektiin.
 * Lisätty komennot vasemman ja oikean hiirinäppäimen lukitsemiseksi ja lukituksen vapauttamiseksi. Näistä  on hyötyä esim. vedä ja pudota -toiminnoissa. Shift+laskinnäppäimistön / lukitsee tai vapauttaa vasemman hiirinäppäimen ja Shift+laskinnäppäimistön * oikean.
-* Lisätty uusia pistetaulukkoja: saksalainen 8 pisteen tietokonemerkistö ja taso 2, suomalainen 8 pisteen tietokonemerkistö, kiinalaiset (kantoni, Hong Kong ja mandariini, Taiwan).
+* Lisätty uusia pistetaulukkoja: saksalainen 8 pisteen tietokonemerkistö, saksalainen taso 2, suomalainen 8 pisteen tietokonemerkistö, kiinalaiset (kantoni, Hong Kong ja mandariini, Taiwan).
 * NVDA:ta asennettaessa on nyt mahdollista valita, luodaanko työpöydälle kuvake vai ei. Jos kuvaketta ei luoda, NVDA:n käynnistävä pikanäppäinkään ei tällöin ole käytettävissä.
 * NVDA voi nyt käyttää IAccessible2-rajapintaa 64-bittisissä sovelluksissa.
 * Lisätty liitäntäkirjasto, jolla sovellukset voivat ohjata NVDA:ta, esim. puhua tekstiä, mykistää puheen, näyttää ilmoituksia pistenäytöllä jne.
 * Virheilmoitukset ja muut viestit luetaan nyt Windows Vistan ja Windows 7:n kirjautumisruudussa.
 * Adobe LiveCyclellä tehtyjä vuorovaikutteisia PDF-lomakkeita tuetaan nyt Adobe Readerissa.
 * NVDA voi nyt lukea saapuvat viestit automaattisesti Miranda IM:n -chatti-ikkunoissa, jos dynaamisen sisällön muutosten ilmoittaminen on käytössä. Lisätty myös komennot kolmen viimeisimmän viestin lukemiseksi (NVDA+Ctrl+numero).
-* Tekstinsyöttökenttiä tuetaan nyt Flash-sisällössä.
+* Lisätty tuki Adobe Flashin tekstinsyöttökentille.
 
 === Muutokset ===
 * Hyvin pitkää näppäimistökäytöstä kertovaa ohjeviestiä ei enää lueta Windows 7:n Käynnistä-valikossa.
@@ -30,6 +30,7 @@ Tämä julkaisu keskittyy pääasiassa vikojen korjauksiin ja käyttäjäkokemuksen par
 * eSpeak päivitetty versioon 1.42.04.
 * Liblouis-pistekirjoituskääntäjä päivitetty versioon 1.8.0.
 * Elementtien ilmoittamista näennäispuskureissa merkeittäin tai sanoittain siirryttäessä on paranneltu huomattavasti. Aiemmin luettiin paljon epäolennaisia tietoja, ja ilmoitustapa oli hyvin erilainen kuin riveittäin siirryttäessä.
+* Ctrl-näppäin ei enää tauota puhetta, vaan keskeyttää sen. Puheen tauottamiseen ja jatkamiseen käytetään nyt Shift-näppäintä.
 
 === Vikojen korjaukset ===
 * NVDA käynnistyy nyt sellaisessa tilanteessa, jossa UI Automation -tuki on käytettävissä, mutta sen alustus ei jostakin syystä onnistu.
@@ -50,7 +51,9 @@ Tämä julkaisu keskittyy pääasiassa vikojen korjauksiin ja käyttäjäkokemuksen par
 * Korjattu ongelma, joka aiheutti sen, että osaa tiettyjen PDF-asiakirjojen tekstistä ei voitu lukea.
 * NVDA ei enää lue väärin tiettyjä viivalla erotettuja numeroita, esim. 500-1000.
 * NVDA ei enää aiheuta Windows XP:ssä Internet Explorerin hyytymistä muutettaessa valintaruutujen tilaa Windows Updatessa.
-* Samanaikainen puhe ja äänimerkit eivät  enää aiheuta ajoittaisia hyytymisiä joissakin järjestelmissä käytettäessä sisäänrakennettua eSpeak-puhesyntetisaattoria. Tätä sattui eniten esim. kopioitaessa suurta määrää dataa Resurssienhallinnassa.
+* Samanaikainen puhe ja äänimerkit eivät  enää aiheuta ajoittaisia hyytymisiä käytettäessä sisäänrakennettua eSpeak-puhesyntetisaattoria. Useimmin tätä sattui esim. kopioitaessa suurta määrää tiedostoja Resurssienhallinnassa.
+* NVDA ei enää ilmoita, että taustalla Firefoxissa avoinna oleva sivu on varattu esim. sisällön päivittymisen vuoksi. Tämä aiheutti myös aktiivisen sovelluksen tilarivin asiaankuulumatonta ilmoittamista.
+* Kun Windowsin näppäimistöasettelua vaihdetaan Ctrl+Shift- tai Alt+Shift-näppäimillä, sen koko nimi ilmoitetaan puheena ja näytetään pistenäytöllä. Aiemmin näppäimistöasettelu ilmoitettiin vain puheena, ja vaihtoehtoisia asetteluja, kuten esim. Dvorak, ei ilmoitettu lainkaan.
 
 == 2009.1 ==
 Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioille, huomattavasti paranneltu tuki Internet Explorerille ja Adobe Readerille, tuki Windows 7:lle, Windowsin kirjautumis- ja Ctrl+Alt+Delete-ruutujen sekä Käyttäjätilien valvonnan (UAC) kehotteiden lukeminen sekä mahdollisuus olla vuorovaikutuksessa web-sivujen Flash- ja Java-sisällön kanssa. Lisäksi on useita merkittäviä korjauksia NVDA:n vakauteen ja parannuksia yleiseen käyttäjäkokemukseen.

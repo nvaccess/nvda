@@ -1,12 +1,12 @@
 # Traduction française de NVDA
-# Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+# Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
 # Michael Curran <mick@kulgan.net> 2006
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3553\n"
+"Project-Id-Version: r3562\n"
 "POT-Creation-Date: 2007-03-10 23:05+0200\n"
-"PO-Revision-Date: 2010-02-11 08:30+0200\n"
+"PO-Revision-Date: 2010-02-13 09:40+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,6 +20,18 @@ msgstr ""
 #: IAccessibleHandler.py:671
 msgid "Secure Desktop"
 msgstr "bureau sécurisé"
+
+#: NVDAHelper.py:85
+msgid "unknown layout"
+msgstr "disposition inconnue"
+
+#: NVDAHelper.py:86
+msgid "unknown language"
+msgstr "langue inconnu"
+
+#: NVDAHelper.py:87
+msgid "Layout %s, language %s"
+msgstr "Disposition %s, langue %s"
 
 #: NVDAObjects\IAccessible\__init__.py:1280
 msgid "Taskbar"
@@ -91,7 +103,7 @@ msgstr "Erreur dans appmodule %s"
 #: appModules\_default.py:191 appModules\_default.py:713
 #: appModules\_default.py:789 appModules\_default.py:799
 #: appModules\_default.py:809 appModules\winamp.py:75 appModules\winamp.py:85
-#: keyboardHandler.py:54 keyboardHandler.py:56 keyboardHandler.py:58
+#: keyboardHandler.py:53 keyboardHandler.py:55 keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "on"
 msgstr "activé"
@@ -102,7 +114,7 @@ msgstr "activé"
 #: appModules\_default.py:710 appModules\_default.py:786
 #: appModules\_default.py:796 appModules\_default.py:806
 #: appModules\winamp.py:77 appModules\winamp.py:87 gui\settingsDialogs.py:484
-#: keyboardHandler.py:54 keyboardHandler.py:56 keyboardHandler.py:58
+#: keyboardHandler.py:53 keyboardHandler.py:55 keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "off"
 msgstr "désactivé"
@@ -957,7 +969,7 @@ msgstr "pas encore de message"
 
 #: appModules\miranda32.py:104
 msgid "Displays one of the recent messages"
-msgstr ""
+msgstr "Affiche l'un des messages récents"
 
 #: appModules\msimn.py:18
 msgid "Attachments"
@@ -3206,35 +3218,31 @@ msgstr "alt de droite"
 msgid "right windows"
 msgstr "touche windows de droite"
 
-#: keyboardHandler.py:54
+#: keyboardHandler.py:53
 msgid "caps lock %s"
 msgstr "verrouillage majuscule %s"
 
-#: keyboardHandler.py:56
+#: keyboardHandler.py:55
 msgid "num lock %s"
 msgstr "verrouillage numérique %s"
 
-#: keyboardHandler.py:58
+#: keyboardHandler.py:57
 msgid "scroll lock %s"
 msgstr "arrêt défilement %s"
 
-#: keyboardHandler.py:78
-msgid "%s keyboard layout"
-msgstr "Configuration de clavier %s"
-
-#: keyboardHandler.py:191
+#: keyboardHandler.py:170
 msgid "Description: %s"
 msgstr "description: %s"
 
-#: keyboardHandler.py:194
+#: keyboardHandler.py:173
 msgid "Location: %s"
 msgstr "position: %s"
 
-#: keyboardHandler.py:209
+#: keyboardHandler.py:188
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Erreur dans keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:247
+#: keyboardHandler.py:226
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Erreur dans keyboardHandler.internal_keyUpEvent"
 
@@ -3468,7 +3476,7 @@ msgstr "Une revue d'écran gratuite et open-source pour MS Windows"
 
 #: versionInfo.py:44
 msgid "Copyright (C) 2006-2010 NVDA Contributors"
-msgstr ""
+msgstr "Copyright (C) 2006-2010 NVDA Contributors"
 
 #: versionInfo.py:45
 msgid ""

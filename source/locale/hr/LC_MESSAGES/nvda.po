@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R3413\n"
-"POT-Creation-Date: 2010-02-09 09:57+Central European Standard Time\n"
-"PO-Revision-Date: 2010-02-09 09:59+0100\n"
+"POT-Creation-Date: 2010-02-14 10:11+Central European Standard Time\n"
+"PO-Revision-Date: 2010-02-14 10:15+0100\n"
 "Last-Translator: Hrvoje Katić <hrvojekatic@gmail.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje Katic<hrvojekatic@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -18,11 +18,15 @@ msgstr ""
 msgid "Secure Desktop"
 msgstr "Sigurnosna Radna površina"
 
+#: NVDAHelper.py:78
+msgid "layout %s"
+msgstr "raspored %s"
+
 #: NVDAObjects\IAccessible\__init__.py:1280
 msgid "Taskbar"
 msgstr "Traka zadataka"
 
-#: NVDAObjects\IAccessible\sysTreeView32.py:179
+#: NVDAObjects\IAccessible\sysTreeView32.py:186
 msgid "%s items"
 msgstr "%s elemenata"
 
@@ -99,9 +103,9 @@ msgstr "Greška u aplikacijskom modulu %s"
 #: appModules\_default.py:809
 #: appModules\winamp.py:75
 #: appModules\winamp.py:85
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: keyboardHandler.py:58
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "on"
 msgstr "uključeno"
@@ -119,9 +123,9 @@ msgstr "uključeno"
 #: appModules\winamp.py:77
 #: appModules\winamp.py:87
 #: gui\settingsDialogs.py:484
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: keyboardHandler.py:58
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "off"
 msgstr "isključeno"
@@ -2024,11 +2028,11 @@ msgstr "povlačenje"
 msgid "drop target"
 msgstr "spuštanje odredišta"
 
-#: core.py:144
+#: core.py:137
 msgid "Loading subsystems, please wait..."
 msgstr "Učitavanje podsustava, molim pričekajte..."
 
-#: core.py:223
+#: core.py:216
 msgid "NVDA started"
 msgstr "NVDA pokrenut"
 
@@ -3024,35 +3028,31 @@ msgstr "desni alt"
 msgid "right windows"
 msgstr "desni windows"
 
-#: keyboardHandler.py:54
+#: keyboardHandler.py:53
 msgid "caps lock %s"
 msgstr "velika slova %s"
 
-#: keyboardHandler.py:56
+#: keyboardHandler.py:55
 msgid "num lock %s"
 msgstr "numerički blok %s"
 
-#: keyboardHandler.py:58
+#: keyboardHandler.py:57
 msgid "scroll lock %s"
 msgstr "klizni blok %s"
 
-#: keyboardHandler.py:78
-msgid "%s keyboard layout"
-msgstr "%s Profil tipkovnice"
-
-#: keyboardHandler.py:191
+#: keyboardHandler.py:170
 msgid "Description: %s"
 msgstr "Opis: %s"
 
-#: keyboardHandler.py:194
+#: keyboardHandler.py:173
 msgid "Location: %s"
 msgstr "Lokacija: %s"
 
-#: keyboardHandler.py:209
+#: keyboardHandler.py:188
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Greška u TipkovničnomRukovoditelju.InterniDonjiDogađaj"
 
-#: keyboardHandler.py:247
+#: keyboardHandler.py:226
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Greška u TipkovničnomRukovoditelju.InterniGornjiDogađaj"
 
@@ -3288,8 +3288,8 @@ msgid "A free and open-source screen reader for MS Windows"
 msgstr "Besplatan open-source čitač ekrana za sustav MS Windows "
 
 #: versionInfo.py:44
-msgid "Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>"
-msgstr "Autorska prava (C) 2006-2009 NVDA Doprinositelji <http://www.nvda-project.org/>"
+msgid "Copyright (C) 2006-2010 NVDA Contributors"
+msgstr "Autorska prava (C) 2006-2010 NVDA Doprinositelji"
 
 #: versionInfo.py:45
 msgid ""
