@@ -31,6 +31,7 @@ This release focuses primarily on bug fixes and improvements to the user experie
 	* Updated liblouis braille translator to 1.8.0.
 	* In virtual buffers, the reporting of elements when moving by character or word has been greatly improved. Previously, a lot of irrelevant information was reported and the reporting was very different to that when moving by line. (#490)
 	* The Control key now simply stops speech like other keys, rather than pausing speech. To pause/resume speech, use the shift key.
+	* Table row and column counts are no longer announced when reporting focus changes, as this announcement is rather verbose and usually not useful.
 
 === Bug Fixes ===
 	* NVDA no longer fails to start if UI Automation support appears to be available but fails to initialise for some reason. (#483)
@@ -55,6 +56,7 @@ This release focuses primarily on bug fixes and improvements to the user experie
 	* When using the in-built eSpeak synthesiser, simultaneous speech and beeps no longer intermittently cause freezes on some systems. This was most noticeable, for example, when copying large amounts of data in Windows Explorer.
 	* NVDA no longer announces that a Firefox document has become busy (e.g. due to an update or refresh) when that document is in the background. This also caused the status bar of the foreground application to be spuriously announced.
 	* When switching Windows keyboard layouts (with control+shift or alt+shift), the full name of the layout is reported in both speech and braille. Previously it was only reported in speech, and alternative layouts (e.g. Dvorak) were not reported at all.
+	* If reporting of tables is disabled, table information is no longer announced when the focus changes.
 
 == 2009.1 ==
 Major highlights of this release include support for 64 bit editions of Windows; greatly improved support for Microsoft Internet Explorer and Adobe Reader documents; support for Windows 7; reading of the Windows logon, control+alt+delete and User Account Control (UAC) screens; and the ability to interact with Adobe Flash and Sun Java content on web pages. There have also been several significant stability fixes and improvements to the general user experience.

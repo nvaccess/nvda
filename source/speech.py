@@ -256,6 +256,7 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	isEditable=(reason!=REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (obj.role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
 	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"rowNumber":True,"columnNumber":True,"columnCount":True,"rowCount":True}
+
 	if reason==REASON_FOCUSENTERED:
 		allowProperties["states"]=False
 		allowProperties["value"]=False
@@ -263,6 +264,7 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 		allowProperties["positionInfo_level"]=False
 		# Aside from excluding some properties, focus entered should be spoken like focus.
 		reason=REASON_FOCUS
+
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"]=False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
@@ -271,8 +273,15 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 		allowProperties["positionInfo_level"]=False
 		allowProperties["positionInfo_indexInGroup"]=False
 		allowProperties["positionInfo_similarItemsInGroup"]=False
+	if reason!=REASON_QUERY:
+		allowProperties["rowCount"]=False
+		allowProperties["columnCount"]=False
+		if not config.conf["documentFormatting"]["reportTables"]:
+			allowProperties["rowNumber"]=False
+			allowProperties["columnNumber"]=False
 	if isEditable:
 		allowProperties['value']=False
+
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
 	if reason!=REASON_ONLYCACHE and isEditable and not globalVars.inCaretMovement:
 		try:
@@ -285,7 +294,6 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
 			speakTextInfo(newInfo,reason=reason)
-
 
 def speakText(text,index=None,reason=REASON_MESSAGE):
 	"""Speaks some given text.
