@@ -30,6 +30,7 @@ V tejto verzii sme sa zamerali hlavne na opravy a používateľský konfort v č
 	* Prekladač do brailového písma liblouis aktualizovaný na verziu 1.8.0.
 	* Oznamovanie prvkov Počas posúvania po znakoch vo virtuálnom prehliadači bolo značne prepracované. Doteraz bolo oznamovaných množstvo nepotrebných informácií a výstup pri pohybe po znakoch bol úplne odlišný od výstupu počas pohybu po riadkoch. (#490)
 	* Kláves ctrl tiež zastavý reč ako stlačenie ostatných klávesov. Na pozastavenie a znovu pokračovanie stlačte shift.
+	* Počty riadkov a stlpcov v tabuľke nie sú viacej oznamované počas oznamovania zmien fokusu. Nie je to veľmi užitočné a v takýchto prípadoch NVDA veľa čítal.
 
 === Opravy ===
 	* NVDA sa viac neodmieta spustiť, ak dôjde k chybe pri pokuse o inicializáciu podpori UI Automation. (#483)
