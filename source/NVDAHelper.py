@@ -56,26 +56,50 @@ def nvdaController_brailleMessage(text):
 	queueHandler.queueFunction(queueHandler.eventQueue,braille.handler.message,text)
 	return 0
 
+def _lookupKeyboardLayoutNameWithHexString(layoutString):
+	try:
+		key = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString)
+	except WindowsError:
+		log.debugWarning("Could not find reg key %s"%layoutString)
+		return None
+	try:
+		s = _winreg.QueryValueEx(key, "Layout Display Name")[0]
+	except:
+		log.debugWarning("Could not find reg value 'Layout Display Name' for reg key %s"%layoutString)
+		s=None
+	if s:
+		buf=create_unicode_buffer(256)
+		windll.shlwapi.SHLoadIndirectString(s,buf,256,None)
+		return buf.value
+	try:
+		return _winreg.QueryValueEx(key, "Layout Text")[0]
+	except:
+		log.debugWarning("Could not find reg value 'Layout Text' for reg key %s"%layoutString)
+		return None
+
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
 def nvdaController_inputLangChangeNotify(threadID,hkl,layoutString):
 	import queueHandler
 	import ui
-	layoutName=None
-	try:
-		key = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString)
-	except WindowsError:
-		key=None
-	if key:
-		try:
-			s = _winreg.QueryValueEx(key, "Layout Display Name")[0]
-		except:
-			s=None
-		if s:
-			buf=create_unicode_buffer(256)
-			windll.shlwapi.SHLoadIndirectString(s,buf,256,None)
-			layoutName=buf.value
-	if layoutName:
-		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("layout %s")%layoutName)
+	#layoutString can sometimes be None, yet a registry entry still exists for a string representation of hkl
+	if not layoutString:
+		layoutString=hex(hkl)[2:].rstrip('L').upper().rjust(8,'0')
+		log.debugWarning("layoutString was None, generated new one from hkl as %s"%layoutString)
+	layoutName=_lookupKeyboardLayoutNameWithHexString(layoutString)
+	if not layoutName and hkl<0xd0000000:
+		#Try using the high word of hkl as the lang ID for a default layout for that language
+		simpleLayoutString=layoutString[0:4].rjust(8,'0')
+		log.debugWarning("trying simple version: %s"%simpleLayoutString)
+		layoutName=_lookupKeyboardLayoutNameWithHexString(simpleLayoutString)
+	if not layoutName:
+		#Try using the low word of hkl as the lang ID for a default layout for that language
+		simpleLayoutString=layoutString[4:].rjust(8,'0')
+		log.debugWarning("trying simple version: %s"%simpleLayoutString)
+		layoutName=_lookupKeyboardLayoutNameWithHexString(simpleLayoutString)
+	if not layoutName:
+		log.debugWarning("Could not find layout name for keyboard layout, reporting as unknown") 
+		layoutName=_("unknown layout")
+	queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("layout %s")%layoutName)
 	return 0
 
 def handleTypedCharacter(window,wParam,lParam):
