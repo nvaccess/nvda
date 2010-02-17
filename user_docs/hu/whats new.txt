@@ -31,10 +31,12 @@ A  kiadás elkészítésekor elsõdleges szempont volt a hibák kijavítása, ezáltal me
 *Az Espeak beszédszintetizátor frissítve lett az 1.42.04-es verzióra.
 *A Liblouis braille fordító frissítve lett az 1.8.0-s verzióra.
 * A virtuális kijelzõk elemeinek felolvasása az elõzõ karakterre/szóra lépéskor jelentõsen hatékonyabban mûködik. Elõzõleg rengeteg szükségtelen információ hangzott el, melyek különböztek a sorok közti mozgáskor hallhatóaktól. (#490)
-
+*A kontrol gomb csak leállítja a beszédet, úgy mint az összes többi gomb, a beszéd megállításához és újraindításához a shift gomb használható.
+*A táblázat sor és oszlop száma nem hangzik el a fókusz változásakor, mivel ezek túl hosszuak, és legtöbbször zavaróak.
 
 	=hiba javítások=
-	* Az NVDA mostantól akkor is elindul, ha az UI Automation támogatás elérhetõ, de egyéb okok miatt nem lehet betölteni. (#483)
+	
+* Az NVDA mostantól akkor is elindul, ha az UI Automation támogatás elérhetõ, de egyéb okok miatt nem lehet betölteni. (#483)
 	* Egy táblázat néha elhangzó teljes sora már nem hangzik el a Mozilla alkalmazásokban. (#482)
 	* Az NVDA már nem fagy le hosszú idõre ha megnyit egy faszerkezetben egy sok elemet tartalmazó ágat.
 	* A SAPI 5 hangok kilistázásakor az NVDA megpróbálja kiszûrni a hibás hangokat. Elõzõleg, ha egy problémás hang szerepelt a listában, az NVDA Sapi drivere néha nem töltõdött be.
@@ -55,6 +57,8 @@ A  kiadás elkészítésekor elsõdleges szempont volt a hibák kijavítása, ezáltal me
 * A Windows XP operációs rendszer használatakor az NVDA már nem okozza az Internet Explorer lefagyását a Windows Update jelölõnégyzeteinek használatakor. (#477)
 * A beépített eSpeak szintetizátor és az NVDA hangjelzések együttes használata mostantól már nem eredményezik néhány rendszer lefagyását. Ez legfõképp nagyméretû adat másolásakor volt észrevehetõ a Windows Explorer alkalmazásban.
 * Az NVDA már nem jelzi ha egy háttérben lévõ Firefox dokumentum épp betöltés alatt áll (pl. az oldal frissülésekor). Ez az elõtérben lévõ alkalmazás állapotsorának felolvasását is eredményezte.
+*Amikor megváltozik a billentyûzet kiosztás (alt+shift, vagy ctrl+shift), az NVDA az új kiosztás teljes nevét a braille kijelzõn is megjeleníti, ez eddig csak a beszédben történt meg. Ezen kívül néhány nyelvnek nem jelent meg a neve a billentyûzet kiosztás megváltozásakor.
+*Ha a táblázatok jelzése ki van kapcsolva, a táblázat információi nem hangoznak el a fókusz változásakor.
 
 		=2009.1=
 

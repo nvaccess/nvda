@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA r3362\n"
-"POT-Creation-Date: 2010-01-18 16:20+Hora estándar romance\n"
-"PO-Revision-Date: 2010-01-18 17:39+0100\n"
+"POT-Creation-Date: 2010-02-16 16:54+Hora estándar romance\n"
+"PO-Revision-Date: 2010-02-16 16:57+0100\n"
 "Last-Translator: Juan Carlos Buño Suárez <quetzatl@eresmas.net>\n"
 "Language-Team: equipo de traducción al español de NVDA <Quetzatl@eresmas.net>\n"
 "MIME-Version: 1.0\n"
@@ -20,18 +20,27 @@ msgstr ""
 msgid "Secure Desktop"
 msgstr "Secure Desktop"
 
-#: NVDAObjects\IAccessible\__init__.py:1336
+#: NVDAHelper.py:101
+msgid "unknown layout"
+msgstr "distribución desconocida"
+
+#: NVDAHelper.py:102
+msgid "layout %s"
+msgstr "distribución %s"
+
+#: NVDAObjects\IAccessible\__init__.py:1280
 msgid "Taskbar"
 msgstr "Barra de tareas"
 
-#: NVDAObjects\IAccessible\sysTreeView32.py:179
+#: NVDAObjects\IAccessible\sysTreeView32.py:186
 msgid "%s items"
 msgstr "%s elementos"
 
-#: NVDAObjects\UIA\__init__.py:427
+#: NVDAObjects\UIA\__init__.py:434
 msgid "invoke"
 msgstr "invocar"
 
+#: NVDAObjects\behaviors.py:49
 #: NVDAObjects\progressBar.py:45
 #: appModules\_default.py:826
 msgid "%d percent"
@@ -101,9 +110,9 @@ msgstr "Error en módulo app %s"
 #: appModules\_default.py:809
 #: appModules\winamp.py:75
 #: appModules\winamp.py:85
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: keyboardHandler.py:58
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "on"
 msgstr "activado"
@@ -121,9 +130,9 @@ msgstr "activado"
 #: appModules\winamp.py:77
 #: appModules\winamp.py:87
 #: gui\settingsDialogs.py:484
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: keyboardHandler.py:58
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "off"
 msgstr "desactivado"
@@ -186,9 +195,9 @@ msgid "no selection"
 msgstr "Sin selección"
 
 #: appModules\_default.py:109
-#: speech.py:272
-#: speech.py:369
-#: speech.py:382
+#: speech.py:290
+#: speech.py:386
+#: speech.py:399
 #: virtualBuffers\__init__.py:598
 msgid "selected %s"
 msgstr "seleccionado %s"
@@ -775,7 +784,7 @@ msgstr "Captura el texto desde la marca previamente fijada en la posición actua
 msgid "Display"
 msgstr "Display"
 
-#: appModules\explorer.py:16
+#: appModules\explorer.py:33
 msgid "Start"
 msgstr "Inicio"
 
@@ -786,6 +795,14 @@ msgstr "No hay pista en reproducción"
 #: appModules\foobar2000.py:50
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Anuncia el tiempo restante de la pista actualmente en reproducción, si hay alguna"
+
+#: appModules\miranda32.py:103
+msgid "No message yet"
+msgstr "No hay mensaje aún"
+
+#: appModules\miranda32.py:104
+msgid "Displays one of the recent messages"
+msgstr "Mostrar uno de los mensajes recientes"
 
 #: appModules\msimn.py:18
 msgid "Attachments"
@@ -910,226 +927,238 @@ msgid "Danish grade 1"
 msgstr "Danés grado 1"
 
 #: braille.py:33
+msgid "German 8 dot computer braille"
+msgstr "Braille Alemán computerizado de 8 puntos"
+
+#: braille.py:34
 msgid "German grade 0"
 msgstr "Alemán grado 0"
 
-#: braille.py:34
+#: braille.py:35
 msgid "German grade 1"
 msgstr "Alemán grado 1"
 
-#: braille.py:35
+#: braille.py:36
+msgid "German grade 2"
+msgstr "Alemán grado 2"
+
+#: braille.py:37
 msgid "English (U.K.) grade 1"
 msgstr "Inglés (U.K.) grado 1"
 
-#: braille.py:36
+#: braille.py:38
 msgid "English (U.K.) grade 2"
 msgstr "Inglés (U.K.) grado 2"
 
-#: braille.py:37
+#: braille.py:39
 msgid "English (U.S.) 6 dot computer braille"
 msgstr "Braille de Ordenador de 6 puntos Inglés (U.S.)"
 
-#: braille.py:38
+#: braille.py:40
 msgid "English (U.S.) 8 dot computer braille"
 msgstr "Braille de Ordenador de 8 puntos Inglés (U.S.)"
 
-#: braille.py:39
+#: braille.py:41
 msgid "English (U.S.) grade 1"
 msgstr "Inglés (U.S.) grado 1"
 
-#: braille.py:40
+#: braille.py:42
 msgid "English (U.S.) grade 2"
 msgstr "Inglés (U.S.) grado 2"
 
-#: braille.py:41
+#: braille.py:43
 msgid "Spanish grade 1"
 msgstr "Español grado 1"
 
-#: braille.py:42
+#: braille.py:44
 msgid "Finnish 8 dot computer braille"
 msgstr "Braille computerizado croata de 8 puntos"
 
-#: braille.py:43
+#: braille.py:45
 msgid "French (Canada) grade 1"
 msgstr "Francés (Canadá) grado 1"
 
-#: braille.py:44
+#: braille.py:46
 msgid "French (Canada) grade 2"
 msgstr "Francés (Canadá) grado 2"
 
-#: braille.py:45
+#: braille.py:47
 msgid "French (unified) 6 dot computer braille"
 msgstr "Braille de ordenador de 6 puntos francés (unificado)"
 
-#: braille.py:46
+#: braille.py:48
 msgid "French (unified) 8 dot computer braille"
 msgstr "Braille de ordenador de 8 puntos francés (unificado)"
 
-#: braille.py:47
+#: braille.py:49
 msgid "French (unified) Grade 2"
 msgstr "Grado 2 Francés (unificado)"
 
-#: braille.py:47
+#: braille.py:49
 msgid "Greek (Greece) grade 1"
 msgstr "Griego (Grecia) grado 1"
 
-#: braille.py:48
+#: braille.py:50
 msgid "Hebrew 8 dot computer braille"
 msgstr "Braille computerizado Hebreo de ocho puntos"
 
-#: braille.py:49
+#: braille.py:51
 msgid "Hindi grade 1"
 msgstr "Hindi grado 1"
 
-#: braille.py:50
+#: braille.py:52
 msgid "Croatian 8 dot computer braille"
 msgstr "Croata braille computerizado de 8 puntos"
 
-#: braille.py:51
+#: braille.py:53
 msgid "Hungarian 8 dot computer braille"
 msgstr "Braille computerizado húngaro de ocho puntos"
 
-#: braille.py:52
+#: braille.py:54
 msgid "Italian grade 1"
 msgstr "Italiano grado 1"
 
-#: braille.py:53
+#: braille.py:55
 msgid "Latvian grade 1"
 msgstr "Letón grado 1"
 
-#: braille.py:54
+#: braille.py:56
 msgid "Dutch (Belgium) grade 1"
 msgstr "Holandés (Bélgica) grado 1"
 
-#: braille.py:55
+#: braille.py:57
 msgid "Dutch (netherlands) grade 1"
 msgstr "Holandés (Holanda) grado 1"
 
-#: braille.py:56
+#: braille.py:58
 msgid "Norwegian grade 0"
 msgstr "Noruego grado 0"
 
-#: braille.py:57
+#: braille.py:59
 msgid "Norwegian grade 1"
 msgstr "Noruego grado 1"
 
-#: braille.py:58
+#: braille.py:60
 msgid "Norwegian grade 2"
 msgstr "Noruego grado 2"
 
-#: braille.py:59
+#: braille.py:61
 msgid "Norwegian grade 3"
 msgstr "Noruego grado 3"
 
-#: braille.py:60
+#: braille.py:62
 msgid "Polish grade 1"
 msgstr "Polaco grado 1"
 
-#: braille.py:61
+#: braille.py:63
 msgid "Portuguese grade 1"
 msgstr "Portugués grado 1"
 
-#: braille.py:62
+#: braille.py:64
 msgid "Russian grade 1"
 msgstr "Ruso grado 1"
 
-#: braille.py:63
+#: braille.py:65
 msgid "Swedish grade 1"
 msgstr "Sueco grado 1"
 
-#: braille.py:64
+#: braille.py:66
 msgid "Slovak"
 msgstr "Eslovaco"
 
-#: braille.py:65
+#: braille.py:67
 msgid "Unified English Braille Code grade 1"
 msgstr "Código Braille Grado 1 Inglés Unificado"
 
-#: braille.py:66
+#: braille.py:68
 msgid "Unified English Braille Code grade 2"
 msgstr "Código Braille Grado 2 Inglés Unificado"
 
-#: braille.py:67
+#: braille.py:69
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "Chino (Hong Kong, Cantonés)"
 
-#: braille.py:71
+#: braille.py:70
+msgid "Chinese (Taiwan, Mandarin)"
+msgstr "Chino (Taiwan, Mandarín)"
+
+#: braille.py:74
 msgid "edt"
 msgstr "ced"
 
-#: braille.py:72
+#: braille.py:75
 msgid "lst"
 msgstr "lst"
 
-#: braille.py:73
+#: braille.py:76
 msgid "mnubar"
 msgstr "bmn"
 
-#: braille.py:74
+#: braille.py:77
 msgid "mnu"
 msgstr "mn"
 
-#: braille.py:75
+#: braille.py:78
 msgid "btn"
 msgstr "bt"
 
-#: braille.py:76
+#: braille.py:79
 msgid "chk"
 msgstr "cv"
 
-#: braille.py:77
+#: braille.py:80
 msgid "rbtn"
 msgstr "bto"
 
-#: braille.py:78
+#: braille.py:81
 msgid "cbo"
 msgstr "cco"
 
-#: braille.py:79
+#: braille.py:82
 msgid "lnk"
 msgstr "enl"
 
-#: braille.py:80
+#: braille.py:83
 msgid "dlg"
 msgstr "dlg"
 
-#: braille.py:81
+#: braille.py:84
 msgid "tv"
 msgstr "árb"
 
-#: braille.py:82
+#: braille.py:85
 msgid "tb"
 msgstr "pes"
 
-#: braille.py:86
+#: braille.py:89
 msgid "(x)"
 msgstr "(x)"
 
-#: braille.py:87
+#: braille.py:90
 msgid "sel"
 msgstr "sel"
 
-#: braille.py:88
+#: braille.py:91
 msgid "submnu"
 msgstr "smn"
 
-#: braille.py:91
+#: braille.py:94
 msgid "( )"
 msgstr "( )"
 
-#: braille.py:219
-#: speech.py:669
+#: braille.py:222
+#: speech.py:687
 msgid "not %s"
 msgstr "no %s"
 
-#: braille.py:231
-#: speech.py:675
+#: braille.py:234
+#: speech.py:693
 msgid "%s of %s"
 msgstr "%s de %s"
 
-#: braille.py:233
-#: speech.py:680
-#: speech.py:683
+#: braille.py:236
+#: speech.py:698
+#: speech.py:701
 msgid "level %s"
 msgstr "nivel %s"
 
@@ -1148,8 +1177,8 @@ msgstr "Sin braille"
 #: characterSymbols.py:17
 #: characterSymbols.py:18
 #: characterSymbols.py:19
-#: speech.py:82
-#: speech.py:619
+#: speech.py:84
+#: speech.py:637
 msgid "blank"
 msgstr "en blanco"
 
@@ -1411,7 +1440,7 @@ msgid "tool tip"
 msgstr "consejo"
 
 #: controlTypes.py:198
-#: speech.py:895
+#: speech.py:947
 msgid "link"
 msgstr "enlace"
 
@@ -1831,7 +1860,7 @@ msgid "font size"
 msgstr "tamaño de la fuente"
 
 #: controlTypes.py:305
-#: speech.py:847
+#: speech.py:899
 msgid "bold"
 msgstr "negrita"
 
@@ -1848,12 +1877,12 @@ msgid "background color"
 msgstr "color de fondo"
 
 #: controlTypes.py:310
-#: speech.py:869
+#: speech.py:921
 msgid "superscript"
 msgstr "superíndice"
 
 #: controlTypes.py:311
-#: speech.py:871
+#: speech.py:923
 msgid "subscript"
 msgstr "subíndice"
 
@@ -2009,11 +2038,11 @@ msgstr "arrastrando"
 msgid "drop target"
 msgstr "soltar en destino"
 
-#: core.py:144
+#: core.py:137
 msgid "Loading subsystems, please wait..."
 msgstr "cargando subsistema; por favor aguarda..."
 
-#: core.py:223
+#: core.py:216
 msgid "NVDA started"
 msgstr "NVDA activado"
 
@@ -3009,35 +3038,31 @@ msgstr "alt derecha"
 msgid "right windows"
 msgstr "windows derecha"
 
-#: keyboardHandler.py:54
+#: keyboardHandler.py:53
 msgid "caps lock %s"
 msgstr "bloqueo mayúsculas %s"
 
-#: keyboardHandler.py:56
+#: keyboardHandler.py:55
 msgid "num lock %s"
 msgstr "bloqueo numérico %s"
 
-#: keyboardHandler.py:58
+#: keyboardHandler.py:57
 msgid "scroll lock %s"
 msgstr "pausa"
 
-#: keyboardHandler.py:78
-msgid "%s keyboard layout"
-msgstr "%s disposición de teclado"
-
-#: keyboardHandler.py:191
+#: keyboardHandler.py:170
 msgid "Description: %s"
 msgstr "Descripción: %s"
 
-#: keyboardHandler.py:194
+#: keyboardHandler.py:173
 msgid "Location: %s"
 msgstr "Situación: %s"
 
-#: keyboardHandler.py:209
+#: keyboardHandler.py:188
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Error en keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:247
+#: keyboardHandler.py:226
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Error en keyboardHandler.internal_keyUpEvent"
 
@@ -3057,150 +3082,142 @@ msgstr "Teclea exit() para salir de la consola"
 msgid "NVDA Python Console"
 msgstr "Consola Python para NVDA"
 
-#: speech.py:177
+#: speech.py:179
 msgid "cap %s"
 msgstr "mayus %s"
 
-#: speech.py:313
+#: speech.py:330
 msgid "%d characters"
 msgstr "%d caracteres"
 
-#: speech.py:364
+#: speech.py:381
 msgid "selecting %s"
 msgstr "seleccionando %s"
 
-#: speech.py:375
+#: speech.py:392
 msgid "unselecting %s"
 msgstr "Deseleccionando %s"
 
-#: speech.py:377
+#: speech.py:394
 msgid "selection removed"
 msgstr "selección eliminada"
 
-#: speech.py:667
+#: speech.py:685
 msgid "done dragging"
 msgstr "arrastrado hecho"
 
-#: speech.py:692
-#: speech.py:936
+#: speech.py:710
+#: speech.py:988
 msgid "row %s"
 msgstr "fila %s"
 
-#: speech.py:695
-#: speech.py:932
+#: speech.py:713
+#: speech.py:984
 msgid "column %s"
 msgstr "columna %s"
 
-#: speech.py:700
+#: speech.py:718
 msgid "with %s rows and %s columns"
 msgstr "con %s filas y %s columnas"
 
-#: speech.py:702
+#: speech.py:720
 msgid "with %s columns"
 msgstr "con %s columnas"
 
-#: speech.py:704
+#: speech.py:722
 msgid "with %s rows"
 msgstr "con %s filas"
 
-#: speech.py:767
-#: speech.py:771
-#: speech.py:775
-#: speech.py:783
-#: speech.py:794
-#: speech.py:895
-msgid "out of %s"
-msgstr "fuera de %s"
-
-#: speech.py:769
+#: speech.py:825
 msgid "with %s items"
 msgstr " con %s elementos"
 
-#: speech.py:792
-msgid "in %s"
-msgstr " en %s"
+#: speech.py:840
+#: speech.py:947
+msgid "out of %s"
+msgstr "fuera de %s"
 
-#: speech.py:812
+#: speech.py:864
 msgid "page %s"
 msgstr "página %s"
 
-#: speech.py:819
+#: speech.py:871
 msgid "style %s"
 msgstr "estilo %s"
 
-#: speech.py:821
+#: speech.py:873
 msgid "default style"
 msgstr "estilo predeterminado"
 
-#: speech.py:841
+#: speech.py:893
 msgid "line %s"
 msgstr "línea %s"
 
-#: speech.py:847
+#: speech.py:899
 msgid "no bold"
 msgstr "no hay negritas"
 
-#: speech.py:852
+#: speech.py:904
 msgid "italic"
 msgstr "cursiva"
 
-#: speech.py:852
+#: speech.py:904
 msgid "no italic"
 msgstr "no hay cursivas"
 
-#: speech.py:857
+#: speech.py:909
 msgid "no strikethrough"
 msgstr "no hay tachado"
 
-#: speech.py:857
+#: speech.py:909
 msgid "strikethrough"
 msgstr "tachado"
 
-#: speech.py:862
+#: speech.py:914
 msgid "not underlined"
 msgstr "no hay subrayado"
 
-#: speech.py:862
+#: speech.py:914
 msgid "underlined"
 msgstr "subrayado"
 
-#: speech.py:873
+#: speech.py:925
 msgid "baseline"
 msgstr "línea de base"
 
-#: speech.py:881
+#: speech.py:933
 msgid "align left"
 msgstr "alineación a la izquierda"
 
-#: speech.py:883
+#: speech.py:935
 msgid "align center"
 msgstr "alineación al centro"
 
-#: speech.py:885
+#: speech.py:937
 msgid "align right"
 msgstr "alineación a la derecha"
 
-#: speech.py:887
+#: speech.py:939
 msgid "align justify"
 msgstr "alineación justificar"
 
-#: speech.py:889
+#: speech.py:941
 msgid "align default"
 msgstr "alineación predeterminada"
 
-#: speech.py:902
+#: speech.py:954
 msgid "spelling error"
 msgstr "error de ortografía"
 
-#: speech.py:904
+#: speech.py:956
 msgid "out of spelling error"
 msgstr "fuera de error de ortografía"
 
-#: speech.py:918
+#: speech.py:970
 msgid "out of table"
 msgstr "fuera de tabla"
 
-#: speech.py:927
+#: speech.py:979
 msgid "table with %s columns and %s rows"
 msgstr "tabla con %s columnas y %s filas"
 
@@ -3286,8 +3303,8 @@ msgid "A free and open-source screen reader for MS Windows"
 msgstr "Un lector de pantalla libre y de código abierto para Windows"
 
 #: versionInfo.py:44
-msgid "Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>"
-msgstr "Derechos reservados (C) 2006-2009 Colaboradores de NVDA <http://www.nvda-project.org/>"
+msgid "Copyright (C) 2006-2010 NVDA Contributors"
+msgstr "Copyright (C) 2006-2010 Colaboradores de NVDA"
 
 #: versionInfo.py:45
 msgid ""
