@@ -2,13 +2,14 @@ Import([
 	'env',
 ])
 
-controllerRPCHeader,controllerRPCClientSource,controllerRPCServerSource=env.MSRPCStubs(
+controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
 	target="./nvdaController",
 	source=[
 		"#interfaces/nvdaController/nvdaController.idl",
 		"#interfaces/nvdaController/nvdaController.acf",
 	],
-	MIDLFLAGS=env['MIDLFLAGS']+['/prefix','all','nvdaController_'],
+	MSRPCStubs_noServer=True,
+	MSRPCStubs_prefix="nvdaController_",
 )
 
 clientLibName="nvdaControllerClient%s"%('64' if env['TARGET_ARCH']=='x86_64' else '32')

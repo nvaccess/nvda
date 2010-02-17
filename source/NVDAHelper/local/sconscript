@@ -1,15 +1,24 @@
 Import([
 	'env',
-	'vbufRPCStubs',
 ])
 
-controllerRPCHeader,controllerRPCClientSource,controllerRPCServerSource=env.MSRPCStubs(
+controllerRPCHeader,controllerRPCServerSource=env.MSRPCStubs(
 	target="./nvdaController",
 	source=[
 		"#interfaces/nvdaController/nvdaController.idl",
 		"#interfaces/nvdaController/nvdaController.acf",
 	],
-	MIDLFLAGS=env['MIDLFLAGS']+['/prefix','all','nvdaController_'],
+	MSRPCStubs_noClient=True,
+	MSRPCStubs_prefix="nvdaController_",
+)
+
+vbufRPCHeader,vbufRPCClientSource=env.MSRPCStubs(
+	target="./vbuf",
+	source=[
+		"#interfaces/vbuf/vbuf.idl",
+	],
+	MSRPCStubs_noServer=True,
+	MSRPCStubs_prefix="VBuf_",
 )
 
 localLib=env.SharedLibrary(
@@ -17,7 +26,7 @@ localLib=env.SharedLibrary(
 	source=[
 		"nvdaHelperLocal.cpp",
 		"beeps.cpp",
-		vbufRPCStubs[1],
+		vbufRPCClientSource,
 		'rpcSrv.cpp',
 		'nvdaController.c',
 		controllerRPCServerSource,

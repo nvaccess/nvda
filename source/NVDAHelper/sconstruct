@@ -42,9 +42,6 @@ Export('acrobatAccessRPCStubs')
 ia2RPCStubs=env.SConscript('ia2_sconscript')
 Export('ia2RPCStubs')
 
-vbufRPCStubs=env.SConscript('interfaces/vbuf/sconscript')
-Export('vbufRPCStubs')
-
 if TARGET_ARCH=='x86':
 	localLib=env.SConscript('local/sconscript')
 	Export('localLib')
