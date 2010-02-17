@@ -1,5 +1,3 @@
-import customBuilders
-
 #User build variables
 vars=Variables()
 vars.Add(BoolVariable('release','Set to true to build a release version',False))
@@ -7,10 +5,7 @@ vars.Add('TARGET_ARCH','Target architecture')
 vars.Add('HOST_ARCH','Host architecture')
 
 #Create a new environment for our project
-env=DefaultEnvironment(tools=['default','msvc','midl','mssdk'],variables=vars)
-
-#Make our MSRPCStubs custom builder accessible to the environment
-env['BUILDERS']['MSRPCStubs']=customBuilders.MSRPCStubs
+env=DefaultEnvironment(tools=['default','msvc','midl','mssdk','msrpc'],variables=vars)
 
 #Some defines and includes for the environment
 env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE'])
