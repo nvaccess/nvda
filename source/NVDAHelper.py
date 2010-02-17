@@ -29,12 +29,6 @@ def _setDllFuncPointer(dll,name,cfunc):
 	cast(getattr(dll,name),POINTER(c_void_p)).contents.value=cast(cfunc,c_void_p).value
 
 #Implementation of nvdaController methods
-@WINFUNCTYPE(c_long,POINTER(c_wchar_p))
-def nvdaController_getNVDAVersionString(version):
-	import versionInfo
-	version.contents.value=versionInfo.version
-	return 0
-
 @WINFUNCTYPE(c_long,c_wchar_p)
 def nvdaController_speakText(text):
 	import queueHandler
@@ -160,7 +154,6 @@ def initialize():
 	global _remoteLib, _remoteLoader64, localLib, winEventHookID,generateBeep
 	localLib=cdll.LoadLibrary('lib/nvdaHelperLocal.dll')
 	for name,func in [
-		("getNVDAVersionString",nvdaController_getNVDAVersionString),
 		("speakText",nvdaController_speakText),
 		("cancelSpeech",nvdaController_cancelSpeech),
 		("brailleMessage",nvdaController_brailleMessage),

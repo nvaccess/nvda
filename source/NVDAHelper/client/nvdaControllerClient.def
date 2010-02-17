@@ -1,7 +1,6 @@
 ;nvdaControllerClient.def
 EXPORTS
-	nvdaController_getNVDAVersionString
+	nvdaController_testIfRunning
 	nvdaController_speakText
 	nvdaController_cancelSpeech
 	nvdaController_brailleMessage
-	nvdaController_testIfRunning
