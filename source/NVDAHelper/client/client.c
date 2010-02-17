@@ -1,5 +1,5 @@
 #include <windows.h>
-#include <interfaces/nvdaController/nvdaController.h>
+#include "nvdaController.h"
 
 void* __RPC_USER midl_user_allocate(size_t size) {
 	return malloc(size);

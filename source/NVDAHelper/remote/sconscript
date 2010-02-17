@@ -2,8 +2,16 @@ Import([
 	'env',
 	'ia2RPCStubs',
 	'vbufRPCStubs',
-	'nvdaControllerRPCStubs',
 ])
+
+controllerRPCHeader,controllerRPCClientSource,controllerRPCServerSource=env.MSRPCStubs(
+	target="./nvdaController",
+	source=[
+		"#interfaces/nvdaController/nvdaController.idl",
+		"#interfaces/nvdaController/nvdaController.acf",
+	],
+	MIDLFLAGS=env['MIDLFLAGS']+['/prefix','all','nvdaController_'],
+)
 
 ia2utilsObj=env.Object("./ia2utils","#common/ia2utils.cpp")
 
@@ -20,7 +28,7 @@ remoteLib=env.SharedLibrary(
 		"rpcSrv.cpp",
 		"vbufRemote.cpp",
 		vbufRPCStubs[2],
-		nvdaControllerRPCStubs[1],
+		controllerRPCClientSource,
 	],
 	LIBS=[
 		"user32",

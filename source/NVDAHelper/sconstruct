@@ -45,10 +45,6 @@ Export('ia2RPCStubs')
 vbufRPCStubs=env.SConscript('interfaces/vbuf/sconscript')
 Export('vbufRPCStubs')
 
-nvdaControllerRPCStubs=env.SConscript('interfaces/nvdaController/sconscript')
-Export('nvdaControllerRPCStubs')
-env.Install(clientInstallDir,nvdaControllerRPCStubs[0])
-
 if TARGET_ARCH=='x86':
 	localLib=env.SConscript('local/sconscript')
 	Export('localLib')

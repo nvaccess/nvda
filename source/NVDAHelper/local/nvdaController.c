@@ -1,5 +1,5 @@
 #include <windows.h>
-#include <interfaces/nvdaController/nvdaController.h>
+#include "nvdaController.h"
 
 __declspec(dllexport) error_status_t(__stdcall *_nvdaController_speakText)(const wchar_t*);
 error_status_t __stdcall nvdaController_speakText(const wchar_t* text) {

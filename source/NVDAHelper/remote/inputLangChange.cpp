@@ -5,7 +5,7 @@
 
 #include <windows.h>
 #include "nvdaHelperRemote.h"
-#include <interfaces/nvdaController/nvdaController.h>
+#include "nvdaController.h"
 #include "inputLangChange.h"
 
 LRESULT CALLBACK inputLangChange_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {

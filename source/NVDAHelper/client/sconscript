@@ -1,7 +1,15 @@
 Import([
 	'env',
-	'nvdaControllerRPCStubs',
 ])
+
+controllerRPCHeader,controllerRPCClientSource,controllerRPCServerSource=env.MSRPCStubs(
+	target="./nvdaController",
+	source=[
+		"#interfaces/nvdaController/nvdaController.idl",
+		"#interfaces/nvdaController/nvdaController.acf",
+	],
+	MIDLFLAGS=env['MIDLFLAGS']+['/prefix','all','nvdaController_'],
+)
 
 clientLibName="nvdaControllerClient%s"%('64' if env['TARGET_ARCH']=='x86_64' else '32')
 
@@ -9,7 +17,7 @@ clientLib=env.SharedLibrary(
 	target=clientLibName,
 	source=[
 		"client.c",
-		nvdaControllerRPCStubs[1],
+		controllerRPCClientSource,
 		'nvdaControllerClient.def',
 	],
 	LIBS=[
@@ -23,4 +31,4 @@ clientLib=env.SharedLibrary(
 
 #env.Default(clientLib)
 
-Return('clientLib')
+Return(['clientLib','controllerRPCHeader'])

@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <sstream>
 #include <windows.h>
-#include <interfaces/nvdaController/nvdaController.h>
+#include "nvdaController.h"
 #include "rpcSrv.h"
 
 //memory allocation functions

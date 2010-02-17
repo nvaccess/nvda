@@ -2,7 +2,7 @@
 #include <sstream>
 #include <windows.h>
 #include <ia2/ia2.h>
-#include <interfaces/nvdaController/nvdaController.h>
+#include "nvdaController.h"
 #include <common/ia2utils.h>
 #include "nvdaHelperRemote.h"
 

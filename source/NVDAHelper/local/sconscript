@@ -1,8 +1,16 @@
 Import([
 	'env',
 	'vbufRPCStubs',
-	'nvdaControllerRPCStubs',
 ])
+
+controllerRPCHeader,controllerRPCClientSource,controllerRPCServerSource=env.MSRPCStubs(
+	target="./nvdaController",
+	source=[
+		"#interfaces/nvdaController/nvdaController.idl",
+		"#interfaces/nvdaController/nvdaController.acf",
+	],
+	MIDLFLAGS=env['MIDLFLAGS']+['/prefix','all','nvdaController_'],
+)
 
 localLib=env.SharedLibrary(
 	target="nvdaHelperLocal",
@@ -12,7 +20,7 @@ localLib=env.SharedLibrary(
 		vbufRPCStubs[1],
 		'rpcSrv.cpp',
 		'nvdaController.c',
-		nvdaControllerRPCStubs[2],
+		controllerRPCServerSource,
 	],
 	LIBS=[
 		"rpcrt4",
