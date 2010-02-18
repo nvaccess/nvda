@@ -1,6 +1,6 @@
 #include <map>
 #include <windows.h>
-#include <interfaces/vbuf/vbuf.h>
+#include "vbufRemote.h"
 #include <vbufBase/backend.h>
 #include "nvdaHelperRemote.h"
 
