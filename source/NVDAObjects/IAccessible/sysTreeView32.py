@@ -44,6 +44,15 @@ class TVItemStruct(Structure):
 		('lParam',LPARAM),
 	]
 
+class TreeView(IAccessible):
+
+	def _get_firstChild(self):
+		try:
+			return super(TreeView, self).firstChild
+		except:
+			# Broken commctrl 5 tree view.
+			return BrokenCommctrl5Item.getFirstItem(self)
+
 class TreeViewItem(IAccessible):
 
 	def _get_role(self):
@@ -256,3 +265,17 @@ class BrokenCommctrl5Item(IAccessible):
 	def _get_children(self):
 		# Use the base algorithm, which uses firstChild and next.
 		return NVDAObject._get_children(self)
+
+	@classmethod
+	def getFirstItem(cls, treeObj):
+		"""Get an instance for the first item in a given tree view.
+		"""
+		if not UIAHandler.handler:
+			return None
+		uiaObj = UIA(windowHandle=treeObj.windowHandle)
+		if not uiaObj:
+			return None
+		uiaObj = uiaObj.firstChild
+		if not uiaObj:
+			return None
+		return cls(IAccessibleObject=treeObj.IAccessibleObject, IAccessibleChildID=1, windowHandle=treeObj.windowHandle, _uiaObj=uiaObj)
