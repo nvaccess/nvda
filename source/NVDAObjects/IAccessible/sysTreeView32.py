@@ -272,10 +272,14 @@ class BrokenCommctrl5Item(IAccessible):
 		"""
 		if not UIAHandler.handler:
 			return None
+		# Get a UIA object for the tree view by getting the root object for the window.
 		uiaObj = UIA(windowHandle=treeObj.windowHandle)
 		if not uiaObj:
 			return None
+		# Get the first tree item.
 		uiaObj = uiaObj.firstChild
 		if not uiaObj:
 			return None
+		# The IAccessibleChildID for this object isn't really used.
+		# However, it must not be 0, as 0 is the tree view itself.
 		return cls(IAccessibleObject=treeObj.IAccessibleObject, IAccessibleChildID=1, windowHandle=treeObj.windowHandle, _uiaObj=uiaObj)
