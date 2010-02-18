@@ -20,7 +20,7 @@ _remoteLib=None
 _remoteLoader64=None
 localLib=None
 generateBeep=None
-lastKeyboardLayoutChangeEventTime=None
+lastInputLangChangeTime=0
 
 winEventHookID=None
 
@@ -73,8 +73,13 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
 def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
+	global lastInputLangChangeTime
 	import queueHandler
 	import ui
+	curTime=time.time()
+	if (curTime-lastInputLangChangeTime)<0.2:
+		return 0
+	lastInputLangChangeTime=curTime
 	#layoutString can sometimes be None, yet a registry entry still exists for a string representation of hkl
 	if not layoutString:
 		layoutString=hex(hkl)[2:].rstrip('L').upper().rjust(8,'0')
