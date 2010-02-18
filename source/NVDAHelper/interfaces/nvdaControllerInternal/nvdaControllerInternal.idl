@@ -1,0 +1,20 @@
+//nvdaControllerInternal.idl
+
+/**
+ * Methods  to control NVDA via NVDA in-process code.
+ */
+[
+	uuid(B8934CDF-D229-40f0-A082-0F60D39F44D7),
+	version(1.0),
+]
+interface NvdaControllerInternal {
+
+/**
+ * Notifies NVDA that the keyboard layout has changed for this thread. 
+ * @param threadID the thread the layout change occured in
+ * @param hkl the current layout retreaved either by GetKeyboardLayout or the lParam of wm_inputLangChange.
+ * @param layoutString the current identifier string returned from GetKeyboardLayoutName.
+ */
+	error_status_t __stdcall inputLangChangeNotify([in] const long threadID, [in] const unsigned long hkl, [in,string] const wchar_t* layoutString);
+
+};

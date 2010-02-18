@@ -2,7 +2,14 @@
 #include <sstream>
 #include <windows.h>
 #include "nvdaController.h"
+#include "nvdaControllerInternal.h"
 #include "rpcSrv.h"
+
+RPC_IF_HANDLE availableInterfaces[]={
+	nvdaController_NvdaController_v1_0_s_ifspec,
+	nvdaControllerInternal_NvdaControllerInternal_v1_0_s_ifspec
+};
+
 
 //memory allocation functions
 
@@ -23,8 +30,10 @@ RPC_STATUS startServer() {
 		return status;
 	}
 	//Register the interfaces
-	if((status=RpcServerRegisterIf(nvdaController_NvdaController_v1_0_s_ifspec,NULL,NULL))!=RPC_S_OK) {
-		return status;
+	for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
+		if((status=RpcServerRegisterIf(availableInterfaces[i],NULL,NULL))!=RPC_S_OK) {
+			return status;
+		}
 	}
 	//Start listening
 	if((status=RpcServerListen(1,RPC_C_LISTEN_MAX_CALLS_DEFAULT,TRUE))!=RPC_S_OK) {
@@ -36,8 +45,10 @@ RPC_STATUS startServer() {
 
 RPC_STATUS stopServer() {
 	RPC_STATUS status;
-	if((status=RpcServerUnregisterIf(nvdaController_NvdaController_v1_0_s_ifspec,NULL,1))!=RPC_S_OK) {
-		return status;
+	for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
+		if((status=RpcServerUnregisterIf(availableInterfaces[i],NULL,1))!=RPC_S_OK) {
+			return status;
+		}
 	}
 	return RpcMgmtStopServerListening(NULL); 
 }

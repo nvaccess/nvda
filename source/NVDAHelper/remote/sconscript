@@ -13,6 +13,16 @@ controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="nvdaController_",
 )
 
+controllerInternalRPCHeader,controllerInternalRPCClientSource=env.MSRPCStubs(
+	target="./nvdaControllerInternal",
+	source=[
+		"#interfaces/nvdaControllerInternal/nvdaControllerInternal.idl",
+		"#interfaces/nvdaControllerInternal/nvdaControllerInternal.acf",
+	],
+	MSRPCStubs_noServer=True,
+	MSRPCStubs_prefix="nvdaControllerInternal_",
+)
+
 vbufRPCHeader,vbufRPCServerSource=env.MSRPCStubs(
 	target="./vbufRemote",
 	source=[
@@ -38,6 +48,7 @@ remoteLib=env.SharedLibrary(
 		"vbufRemote.cpp",
 		vbufRPCServerSource,
 		controllerRPCClientSource,
+		controllerInternalRPCClientSource,
 	],
 	LIBS=[
 		"user32",

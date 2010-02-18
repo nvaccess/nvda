@@ -72,7 +72,7 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 		return None
 
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
-def nvdaController_inputLangChangeNotify(threadID,hkl,layoutString):
+def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	import queueHandler
 	import ui
 	#layoutString can sometimes be None, yet a registry entry still exists for a string representation of hkl
@@ -154,13 +154,13 @@ def initialize():
 	global _remoteLib, _remoteLoader64, localLib, winEventHookID,generateBeep
 	localLib=cdll.LoadLibrary('lib/nvdaHelperLocal.dll')
 	for name,func in [
-		("speakText",nvdaController_speakText),
-		("cancelSpeech",nvdaController_cancelSpeech),
-		("brailleMessage",nvdaController_brailleMessage),
-		("inputLangChangeNotify",nvdaController_inputLangChangeNotify),
+		("nvdaController_speakText",nvdaController_speakText),
+		("nvdaController_cancelSpeech",nvdaController_cancelSpeech),
+		("nvdaController_brailleMessage",nvdaController_brailleMessage),
+		("nvdaControllerInternal_inputLangChangeNotify",nvdaControllerInternal_inputLangChangeNotify),
 	]:
 		try:
-			_setDllFuncPointer(localLib,"_nvdaController_%s"%name,func)
+			_setDllFuncPointer(localLib,"_%s"%name,func)
 		except AttributeError:
 			log.error("nvdaHelperLocal function pointer for %s could not be found, possibly old nvdaHelperLocal dll"%name)
 	localLib.startServer()
