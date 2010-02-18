@@ -3,6 +3,8 @@ Import([
 	'ia2RPCStubs',
 ])
 
+winIPCUtilsObj=env.Object("./winIPCUtils","#common/winIPCUtils.cpp")
+
 controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
 	target="./nvdaController",
 	source=[
@@ -47,6 +49,7 @@ remoteLib=env.SharedLibrary(
 		"rpcSrv.cpp",
 		"vbufRemote.cpp",
 		vbufRPCServerSource,
+		winIPCUtilsObj,
 		controllerRPCClientSource,
 		controllerInternalRPCClientSource,
 	],

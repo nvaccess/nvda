@@ -175,11 +175,9 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 }
 
 void ia2LiveRegions_inProcess_initialize() {
-	RpcBindingFromStringBinding((RPC_WSTR)L"ncalrpc:[nvdaController]",&nvdaControllerBindingHandle);
 	registerWinEventHook(winEventProcHook);
 }
 
 void ia2LiveRegions_inProcess_terminate() {
 	unregisterWinEventHook(winEventProcHook);
-	RpcBindingFree(&nvdaControllerBindingHandle);
 }

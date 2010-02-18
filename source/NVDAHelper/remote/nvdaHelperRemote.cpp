@@ -15,6 +15,9 @@
 #include "typedCharacter.h"
 #include "IA2Support.h"
 #include "ia2LiveRegions.h"
+#include "nvdaController.h"
+#include "nvdaControllerInternal.h"
+#include <common/winIPCUtils.h>
 #include "nvdaHelperRemote.h"
 
 using namespace std;
@@ -119,8 +122,15 @@ BOOL DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if((reason==DLL_PROCESS_ATTACH)&&(moduleHandle==NULL)) {
 		moduleHandle=hModule;
 		GetWindowThreadProcessId(GetDesktopWindow(),&desktopProcessID);
+		wchar_t* endpointString=(wchar_t*)malloc(sizeof(wchar_t)*64);
+		getNVDAControllerNcalrpcEndpointString(endpointString,64,TRUE);
+		RpcBindingFromStringBinding((RPC_WSTR)endpointString,&nvdaControllerBindingHandle);
+		RpcBindingFromStringBinding((RPC_WSTR)endpointString,&nvdaControllerInternalBindingHandle);
+		free(endpointString);
 	} else if(reason==DLL_PROCESS_DETACH) {
 	if(inProcess_isRunning) inProcess_terminate();
+	RpcBindingFree(&nvdaControllerBindingHandle);
+	RpcBindingFree(&nvdaControllerInternalBindingHandle);
 	}
 	return TRUE;
 }

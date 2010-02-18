@@ -2,6 +2,8 @@ Import([
 	'env',
 ])
 
+winIPCUtilsObj=env.Object("./winIPCUtils","#common/winIPCUtils.cpp")
+
 controllerRPCHeader,controllerRPCServerSource=env.MSRPCStubs(
 	target="./nvdaController",
 	source=[
@@ -39,11 +41,13 @@ localLib=env.SharedLibrary(
 		vbufRPCClientSource,
 		'rpcSrv.cpp',
 		'nvdaController.c',
+		winIPCUtilsObj,
 		controllerRPCServerSource,
 		'nvdaControllerInternal.c',
 		controllerInternalRPCServerSource,
 	],
 	LIBS=[
+		"user32",
 		"rpcrt4",
 	],
 )
