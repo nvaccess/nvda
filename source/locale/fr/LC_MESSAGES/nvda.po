@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3562\n"
+"Project-Id-Version: r3577\n"
 "POT-Creation-Date: 2007-03-10 23:05+0200\n"
-"PO-Revision-Date: 2010-02-13 09:40+0200\n"
+"PO-Revision-Date: 2010-02-17 09:40+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,17 +21,13 @@ msgstr ""
 msgid "Secure Desktop"
 msgstr "bureau sécurisé"
 
-#: NVDAHelper.py:85
+#: NVDAHelper.py:101
 msgid "unknown layout"
 msgstr "disposition inconnue"
 
-#: NVDAHelper.py:86
-msgid "unknown language"
-msgstr "langue inconnu"
-
-#: NVDAHelper.py:87
-msgid "Layout %s, language %s"
-msgstr "Disposition %s, langue %s"
+#: NVDAHelper.py:102
+msgid "layout %s"
+msgstr "disposition %s"
 
 #: NVDAObjects\IAccessible\__init__.py:1280
 msgid "Taskbar"
@@ -183,7 +179,7 @@ msgstr "Verrouillage ou déverrouillage du bouton droit de la souris"
 msgid "no selection"
 msgstr "Aucune sélection"
 
-#: appModules\_default.py:109 speech.py:272 speech.py:369 speech.py:382
+#: appModules\_default.py:109 speech.py:290 speech.py:386 speech.py:399
 #: virtualBuffers\__init__.py:598
 msgid "selected %s"
 msgstr "sélectionné %s"
@@ -1311,15 +1307,15 @@ msgstr "smnu"
 msgid "( )"
 msgstr "( )"
 
-#: braille.py:222 speech.py:670
+#: braille.py:222 speech.py:687
 msgid "not %s"
 msgstr "non %s"
 
-#: braille.py:234 speech.py:676
+#: braille.py:234 speech.py:693
 msgid "%s of %s"
 msgstr "%s sur %s"
 
-#: braille.py:236 speech.py:681 speech.py:684
+#: braille.py:236 speech.py:698 speech.py:701
 msgid "level %s"
 msgstr "niveau %s"
 
@@ -1336,7 +1332,7 @@ msgid "No braille"
 msgstr "pas de braille"
 
 #: characterSymbols.py:17 characterSymbols.py:18 characterSymbols.py:19
-#: speech.py:82 speech.py:620
+#: speech.py:84 speech.py:637
 msgid "blank"
 msgstr "vide"
 
@@ -1592,7 +1588,7 @@ msgstr "bulle d'aide"
 msgid "tool tip"
 msgstr "suggestion"
 
-#: controlTypes.py:198 speech.py:930
+#: controlTypes.py:198 speech.py:947
 msgid "link"
 msgstr "lien"
 
@@ -2004,7 +2000,7 @@ msgstr "nom de la police"
 msgid "font size"
 msgstr "taille de la police"
 
-#: controlTypes.py:305 speech.py:882
+#: controlTypes.py:305 speech.py:899
 msgid "bold"
 msgstr "gras"
 
@@ -2020,11 +2016,11 @@ msgstr "couleur d'avant-plan"
 msgid "background color"
 msgstr "couleur d'arrière-plan"
 
-#: controlTypes.py:310 speech.py:904
+#: controlTypes.py:310 speech.py:921
 msgid "superscript"
 msgstr "exposant"
 
-#: controlTypes.py:311 speech.py:906
+#: controlTypes.py:311 speech.py:923
 msgid "subscript"
 msgstr "indice"
 
@@ -3262,139 +3258,139 @@ msgstr "Tapez exit() pour quitter la console"
 msgid "NVDA Python Console"
 msgstr "Console Python"
 
-#: speech.py:177
+#: speech.py:179
 msgid "cap %s"
 msgstr "mage %s"
 
-#: speech.py:313
+#: speech.py:330
 msgid "%d characters"
 msgstr "%d caractères"
 
-#: speech.py:364
+#: speech.py:381
 msgid "selecting %s"
 msgstr "%s sélectionné"
 
-#: speech.py:375
+#: speech.py:392
 msgid "unselecting %s"
 msgstr "%s  dessélectionné"
 
-#: speech.py:377
+#: speech.py:394
 msgid "selection removed"
 msgstr "sélection supprimée"
 
-#: speech.py:668
+#: speech.py:685
 msgid "done dragging"
 msgstr "glissage terminé"
 
-#: speech.py:693 speech.py:971
+#: speech.py:710 speech.py:988
 msgid "row %s"
 msgstr "ligne %s"
 
-#: speech.py:696 speech.py:967
+#: speech.py:713 speech.py:984
 msgid "column %s"
 msgstr "colonne %s"
 
-#: speech.py:701
+#: speech.py:718
 msgid "with %s rows and %s columns"
 msgstr "avec %s lignes et %s colonnes"
 
-#: speech.py:703
+#: speech.py:720
 msgid "with %s columns"
 msgstr "avec %s colonnes"
 
-#: speech.py:705
+#: speech.py:722
 msgid "with %s rows"
 msgstr "avec %s lignes"
 
-#: speech.py:808
+#: speech.py:825
 msgid "with %s items"
 msgstr " de %s éléments"
 
-#: speech.py:823 speech.py:930
+#: speech.py:840 speech.py:947
 msgid "out of %s"
 msgstr "hors de %s"
 
-#: speech.py:847
+#: speech.py:864
 msgid "page %s"
 msgstr "page %s"
 
-#: speech.py:854
+#: speech.py:871
 msgid "style %s"
 msgstr "style %s"
 
-#: speech.py:856
+#: speech.py:873
 msgid "default style"
 msgstr "style par défaut"
 
-#: speech.py:876
+#: speech.py:893
 msgid "line %s"
 msgstr "ligne %s"
 
-#: speech.py:882
+#: speech.py:899
 msgid "no bold"
 msgstr "pas de caractère gras"
 
-#: speech.py:887
+#: speech.py:904
 msgid "italic"
 msgstr "italique"
 
-#: speech.py:887
+#: speech.py:904
 msgid "no italic"
 msgstr "pas d'italique"
 
-#: speech.py:892
+#: speech.py:909
 msgid "no strikethrough"
 msgstr "pas de biffure"
 
-#: speech.py:892
+#: speech.py:909
 msgid "strikethrough"
 msgstr "biffure"
 
-#: speech.py:897
+#: speech.py:914
 msgid "not underlined"
 msgstr "non souligné"
 
-#: speech.py:897
+#: speech.py:914
 msgid "underlined"
 msgstr "souligné"
 
-#: speech.py:908
+#: speech.py:925
 msgid "baseline"
 msgstr "ligne de base"
 
-#: speech.py:916
+#: speech.py:933
 msgid "align left"
 msgstr "alignement à gauche"
 
-#: speech.py:918
+#: speech.py:935
 msgid "align center"
 msgstr "alignement centré"
 
-#: speech.py:920
+#: speech.py:937
 msgid "align right"
 msgstr "alignement à droite"
 
-#: speech.py:922
+#: speech.py:939
 msgid "align justify"
 msgstr "alignement justifié"
 
-#: speech.py:924
+#: speech.py:941
 msgid "align default"
 msgstr "alignement par défaut"
 
-#: speech.py:937
+#: speech.py:954
 msgid "spelling error"
 msgstr "faute d'orthographe"
 
-#: speech.py:939
+#: speech.py:956
 msgid "out of spelling error"
 msgstr "hors de la faute d'orthographe"
 
-#: speech.py:953
+#: speech.py:970
 msgid "out of table"
 msgstr "hors du tableau"
 
-#: speech.py:962
+#: speech.py:979
 msgid "table with %s columns and %s rows"
 msgstr "tableau de %s colonnes et %s lignes"
 
