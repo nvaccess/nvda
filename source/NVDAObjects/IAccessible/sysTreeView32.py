@@ -224,6 +224,9 @@ class BrokenCommctrl5Item(IAccessible):
 	def _get_name(self):
 		return self._uiaObj.name if self._uiaObj else None
 
+	def _get_description(self):
+		return self._uiaObj.description if self._uiaObj else None
+
 	def _get_value(self):
 		return self._uiaObj.value if self._uiaObj else None
 
@@ -245,8 +248,8 @@ class BrokenCommctrl5Item(IAccessible):
 	def _get_parent(self):
 		if self._uiaObj:
 			uiaParent = self._uiaObj.parent
-			# If the parent is the tree view itself, just use super's parent. IAccessible isn't broken on the container itself.
-			if uiaParent.role != controlTypes.ROLE_TREEVIEW:
+			# If the parent is the tree view itself (root window object), just use super's parent. IAccessible isn't broken on the container itself.
+			if not uiaParent.UIAElement.cachedNativeWindowHandle:
 				return self._makeRelatedObj(uiaParent)
 		return super(BrokenCommctrl5Item, self).parent
 
