@@ -10,7 +10,7 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		self.setting=setting
 		self.min=min
 		self.max=max
-		self.step = setting.minStep if isinstance(setting,synthDriverHandler.NumericSynthSetting) else 1
+		self.step = setting.normalStep if isinstance(setting,synthDriverHandler.NumericSynthSetting) else 1
 
 	def increase(self):
 		val = min(self.max,self.value+self.step)

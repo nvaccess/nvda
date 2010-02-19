@@ -245,9 +245,9 @@ class VoiceSettingsDialog(SettingsDialog):
 	title = _("Voice settings")
 
 	@classmethod
-	def _setSliderStepSizes(cls, slider, minStep):
-		slider.SetLineSize(minStep)
-		slider.SetPageSize(max(minStep, 10))
+	def _setSliderStepSizes(cls, slider, setting):
+		slider.SetLineSize(setting.minStep)
+		slider.SetPageSize(setting.largeStep)
 
 	def makeSettingControl(self,setting):
 		"""Constructs appropriate GUI controls for given L{SynthSetting} such as label and slider.
@@ -261,7 +261,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		slider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100,name="%s:"%setting.i18nName)
 		setattr(self,"%sSlider"%setting.name,slider)
 		slider.Bind(wx.EVT_SLIDER,SynthSettingChanger(setting))
-		self._setSliderStepSizes(slider,setting.minStep)
+		self._setSliderStepSizes(slider,setting)
 		slider.SetValue(getattr(getSynth(),setting.name))
 		sizer.Add(label)
 		sizer.Add(slider)
