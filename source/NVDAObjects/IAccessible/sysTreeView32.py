@@ -7,7 +7,7 @@ import controlTypes
 import speech
 import UIAHandler
 from . import IAccessible
-from ..UIA import UIA
+if UIAHandler.isUIAAvailable: from ..UIA import UIA
 from .. import NVDAObject
 
 TV_FIRST=0x1100
