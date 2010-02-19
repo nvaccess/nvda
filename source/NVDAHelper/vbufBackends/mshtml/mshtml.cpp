@@ -379,7 +379,13 @@ inline void fillTextFormatting_helper(IHTMLElement2* pHTMLElement2, VBufStorage_
 	if(tempBSTR) {
 		DEBUG_MSG(L"Got textDecoration");
 		if (wcsicmp(tempBSTR,L"none")!=0) {
-			node->addAttribute((wcsicmp(tempBSTR,L"line-through")!=0) ? tempBSTR : L"strikethrough", L"1");
+			// textDecoration may contain multiple values separated by spaces.
+			wchar_t *token, *tokenContext;
+			token = wcstok_s(tempBSTR, L" ", &tokenContext);
+			while (token) {
+				node->addAttribute((wcsicmp(token,L"line-through")!=0) ? token : L"strikethrough", L"1");
+				token = wcstok_s(NULL, L" ", &tokenContext);
+			}
 		}
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
