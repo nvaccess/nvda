@@ -5,7 +5,10 @@ import winKernel
 import winUser
 import controlTypes
 import speech
+import UIAHandler
 from . import IAccessible
+from ..UIA import UIA
+from .. import NVDAObject
 
 TV_FIRST=0x1100
 TVIS_STATEIMAGEMASK=0xf000
@@ -40,6 +43,15 @@ class TVItemStruct(Structure):
 		('cChildren',c_int),
 		('lParam',LPARAM),
 	]
+
+class TreeView(IAccessible):
+
+	def _get_firstChild(self):
+		try:
+			return super(TreeView, self).firstChild
+		except:
+			# Broken commctrl 5 tree view.
+			return BrokenCommctrl5Item.getFirstItem(self)
 
 class TreeViewItem(IAccessible):
 
@@ -185,3 +197,92 @@ class TreeViewItem(IAccessible):
 		if announceContains:
 			speech.speakMessage(_("%s items")%self.childCount)
 
+class BrokenCommctrl5Item(IAccessible):
+	"""Handle broken CommCtrl v5 SysTreeView32 items in 64 bit applications.
+	In these controls, IAccessible fails to retrieve any info, so we must retrieve it using UIA.
+	We do this by obtaining a UIA NVDAObject and redirecting properties to it.
+	We can't simply use UIA objects alone for these controls because UIA events are also broken.
+	"""
+
+	@classmethod
+	def findBestClass(cls, clsList, kwargs):
+		# This class can be directly instantiated.
+		return (cls,), kwargs
+
+	def __init__(self, _uiaObj=None, **kwargs):
+		super(BrokenCommctrl5Item, self).__init__(**kwargs)
+		if _uiaObj:
+			self._uiaObj = _uiaObj
+		elif UIAHandler.handler and super(BrokenCommctrl5Item, self).parent.hasFocus:
+			self._uiaObj = UIA.objectWithFocus()
+		else:
+			self._uiaObj = None
+
+	def _get_role(self):
+		return self._uiaObj.role if self._uiaObj else controlTypes.ROLE_UNKNOWN
+
+	def _get_name(self):
+		return self._uiaObj.name if self._uiaObj else None
+
+	def _get_description(self):
+		return self._uiaObj.description if self._uiaObj else None
+
+	def _get_value(self):
+		return self._uiaObj.value if self._uiaObj else None
+
+	def _get_states(self):
+		return self._uiaObj.states if self._uiaObj else set()
+
+	def _get_positionInfo(self):
+		return self._uiaObj.positionInfo if self._uiaObj else {}
+
+	def _get_location(self):
+		return self._uiaObj.location if self._uiaObj else None
+
+	def _makeRelatedObj(self, uiaObj):
+		# We need to wrap related UIA objects so that the ancestry will return to IAccessible for the tree view itself.
+		if not uiaObj:
+			return None
+		return BrokenCommctrl5Item(IAccessibleObject=self.IAccessibleObject, IAccessibleChildID=self.IAccessibleChildID, windowHandle=self.windowHandle, _uiaObj=uiaObj)
+
+	def _get_parent(self):
+		if self._uiaObj:
+			uiaParent = self._uiaObj.parent
+			# If the parent is the tree view itself (root window object), just use super's parent. IAccessible isn't broken on the container itself.
+			if not uiaParent.UIAElement.cachedNativeWindowHandle:
+				return self._makeRelatedObj(uiaParent)
+		return super(BrokenCommctrl5Item, self).parent
+
+	def _get_next(self):
+		return self._makeRelatedObj(self._uiaObj.next) if self._uiaObj else None
+
+	def _get_previous(self):
+		return self._makeRelatedObj(self._uiaObj.previous) if self._uiaObj else None
+
+	def _get_firstChild(self):
+		return self._makeRelatedObj(self._uiaObj.firstChild) if self._uiaObj else None
+
+	def _get_lastChild(self):
+		return self._makeRelatedObj(self._uiaObj.lastChild) if self._uiaObj else None
+
+	def _get_children(self):
+		# Use the base algorithm, which uses firstChild and next.
+		return NVDAObject._get_children(self)
+
+	@classmethod
+	def getFirstItem(cls, treeObj):
+		"""Get an instance for the first item in a given tree view.
+		"""
+		if not UIAHandler.handler:
+			return None
+		# Get a UIA object for the tree view by getting the root object for the window.
+		uiaObj = UIA(windowHandle=treeObj.windowHandle)
+		if not uiaObj:
+			return None
+		# Get the first tree item.
+		uiaObj = uiaObj.firstChild
+		if not uiaObj:
+			return None
+		# The IAccessibleChildID for this object isn't really used.
+		# However, it must not be 0, as 0 is the tree view itself.
+		return cls(IAccessibleObject=treeObj.IAccessibleObject, IAccessibleChildID=1, windowHandle=treeObj.windowHandle, _uiaObj=uiaObj)
