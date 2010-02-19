@@ -1,0 +1,7 @@
+
+[
+	implicit_handle(handle_t nvdaControllerInternalBindingHandle)
+]
+interface NvdaControllerInternal {
+	[fault_status,comm_status] inputLangChangeNotify();
+}

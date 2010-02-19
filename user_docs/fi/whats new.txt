@@ -31,10 +31,11 @@ Tämä julkaisu keskittyy pääasiassa vikojen korjauksiin ja käyttäjäkokemuksen par
 * Liblouis-pistekirjoituskääntäjä päivitetty versioon 1.8.0.
 * Elementtien ilmoittamista näennäispuskureissa merkeittäin tai sanoittain siirryttäessä on paranneltu huomattavasti. Aiemmin luettiin paljon epäolennaisia tietoja, ja ilmoitustapa oli hyvin erilainen kuin riveittäin siirryttäessä.
 * Ctrl-näppäin ei enää tauota puhetta, vaan keskeyttää sen. Puheen tauottamiseen ja jatkamiseen käytetään nyt Shift-näppäintä.
+* Taulukon rivien ja sarakkeiden määrää ei enää lueta kohdistusmuutoksia ilmoitettaessa, koska kyseinen ilmoitus oli melko pitkä ja siitä ei useimmiten ollut hyötyä.
 
 === Vikojen korjaukset ===
 * NVDA käynnistyy nyt sellaisessa tilanteessa, jossa UI Automation -tuki on käytettävissä, mutta sen alustus ei jostakin syystä onnistu.
-* Taulukon rivin koko sisältöä ei enää toisinaan lueta Mozilla-sovelluksissa siirrettäessä kohdistusta solussa.
+* Taulukon rivin koko sisältöä ei enää lueta Mozilla-sovelluksissa siirrettäessä kohdistusta taulukon solussa.
 * Paljon alakohtia sisältävien puunäkymien laajentaminen ei enää aiheuta pitkää viivettä.
 * Virheen palauttavia puheääniä ei huomioida käytettävissä olevien SAPI 5 -puheäänten listaa ladattaessa. Aiemmin yksi viallinen puheääni saattoi joissakin tapauksissa aiheuttaa sen, ettei mitään SAPI 5 -puheääniä voitu käyttää.
 * Objektien lukuasetukset -valintaikkunan "Lue objektien pikanäppäimet" -asetus vaikuttaa nyt näennäispuskureihin.
@@ -47,6 +48,7 @@ Tämä julkaisu keskittyy pääasiassa vikojen korjauksiin ja käyttäjäkokemuksen par
 * Tehty korjauksia kannettaville tarkoitettuun näppäimistöasetteluun.
 * Kun pistenäyttö on asetettu seuraamaan tarkastelukohdistinta, ja kun kohdistus siirretään DOS-konsoli-ikkunaan, sen tekstissä voidaan nyt  liikkua kunnolla tarkastelukohdistimella.
 * VU meter -edistymispalkkia ei enää lueta sen päivittyessä TeamTalk 3 ja TeamTalk 4 Classicin pääikkunassa. Lisäksi erikoismerkkejä voidaan nyt lukea kunnolla saapuvien keskustelujen ikkunassa.
+* Windows 7:n Käynnistä-valikon kohteita ei enää lueta kahteen kertaan.
 * Sivun sisäisten linkkien aktivoiminen Firefox 3.6:ssa siirtää nyt kohdistimen oikeaan kohtaan sivua.
 * Korjattu ongelma, joka aiheutti sen, että osaa tiettyjen PDF-asiakirjojen tekstistä ei voitu lukea.
 * NVDA ei enää lue väärin tiettyjä viivalla erotettuja numeroita, esim. 500-1000.
@@ -54,6 +56,7 @@ Tämä julkaisu keskittyy pääasiassa vikojen korjauksiin ja käyttäjäkokemuksen par
 * Samanaikainen puhe ja äänimerkit eivät  enää aiheuta ajoittaisia hyytymisiä käytettäessä sisäänrakennettua eSpeak-puhesyntetisaattoria. Useimmin tätä sattui esim. kopioitaessa suurta määrää tiedostoja Resurssienhallinnassa.
 * NVDA ei enää ilmoita, että taustalla Firefoxissa avoinna oleva sivu on varattu esim. sisällön päivittymisen vuoksi. Tämä aiheutti myös aktiivisen sovelluksen tilarivin asiaankuulumatonta ilmoittamista.
 * Kun Windowsin näppäimistöasettelua vaihdetaan Ctrl+Shift- tai Alt+Shift-näppäimillä, sen koko nimi ilmoitetaan puheena ja näytetään pistenäytöllä. Aiemmin näppäimistöasettelu ilmoitettiin vain puheena, ja vaihtoehtoisia asetteluja, kuten esim. Dvorak, ei ilmoitettu lainkaan.
+* Taulukoiden tietoja ei enää lueta kohdistuksen muuttuessa, jos taulukoiden ilmoittaminen on poistettu käytöstä.
 
 == 2009.1 ==
 Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioille, huomattavasti paranneltu tuki Internet Explorerille ja Adobe Readerille, tuki Windows 7:lle, Windowsin kirjautumis- ja Ctrl+Alt+Delete-ruutujen sekä Käyttäjätilien valvonnan (UAC) kehotteiden lukeminen sekä mahdollisuus olla vuorovaikutuksessa web-sivujen Flash- ja Java-sisällön kanssa. Lisäksi on useita merkittäviä korjauksia NVDA:n vakauteen ja parannuksia yleiseen käyttäjäkokemukseen.

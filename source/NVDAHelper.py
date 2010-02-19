@@ -20,7 +20,7 @@ _remoteLib=None
 _remoteLoader64=None
 localLib=None
 generateBeep=None
-lastKeyboardLayoutChangeEventTime=None
+lastInputLangChangeTime=0
 
 winEventHookID=None
 
@@ -29,12 +29,6 @@ def _setDllFuncPointer(dll,name,cfunc):
 	cast(getattr(dll,name),POINTER(c_void_p)).contents.value=cast(cfunc,c_void_p).value
 
 #Implementation of nvdaController methods
-@WINFUNCTYPE(c_long,POINTER(c_wchar_p))
-def nvdaController_getNVDAVersionString(version):
-	import versionInfo
-	version.contents.value=versionInfo.version
-	return 0
-
 @WINFUNCTYPE(c_long,c_wchar_p)
 def nvdaController_speakText(text):
 	import queueHandler
@@ -78,9 +72,14 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 		return None
 
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
-def nvdaController_inputLangChangeNotify(threadID,hkl,layoutString):
+def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
+	global lastInputLangChangeTime
 	import queueHandler
 	import ui
+	curTime=time.time()
+	if (curTime-lastInputLangChangeTime)<0.2:
+		return 0
+	lastInputLangChangeTime=curTime
 	#layoutString can sometimes be None, yet a registry entry still exists for a string representation of hkl
 	if not layoutString:
 		layoutString=hex(hkl)[2:].rstrip('L').upper().rjust(8,'0')
@@ -160,14 +159,13 @@ def initialize():
 	global _remoteLib, _remoteLoader64, localLib, winEventHookID,generateBeep
 	localLib=cdll.LoadLibrary('lib/nvdaHelperLocal.dll')
 	for name,func in [
-		("getNVDAVersionString",nvdaController_getNVDAVersionString),
-		("speakText",nvdaController_speakText),
-		("cancelSpeech",nvdaController_cancelSpeech),
-		("brailleMessage",nvdaController_brailleMessage),
-		("inputLangChangeNotify",nvdaController_inputLangChangeNotify),
+		("nvdaController_speakText",nvdaController_speakText),
+		("nvdaController_cancelSpeech",nvdaController_cancelSpeech),
+		("nvdaController_brailleMessage",nvdaController_brailleMessage),
+		("nvdaControllerInternal_inputLangChangeNotify",nvdaControllerInternal_inputLangChangeNotify),
 	]:
 		try:
-			_setDllFuncPointer(localLib,"_nvdaController_%s"%name,func)
+			_setDllFuncPointer(localLib,"_%s"%name,func)
 		except AttributeError:
 			log.error("nvdaHelperLocal function pointer for %s could not be found, possibly old nvdaHelperLocal dll"%name)
 	localLib.startServer()

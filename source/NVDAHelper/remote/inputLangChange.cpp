@@ -5,7 +5,7 @@
 
 #include <windows.h>
 #include "nvdaHelperRemote.h"
-#include <interfaces/nvdaController/nvdaController.h>
+#include "nvdaControllerInternal.h"
 #include "inputLangChange.h"
 
 LRESULT CALLBACK inputLangChange_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {
@@ -14,7 +14,7 @@ LRESULT CALLBACK inputLangChange_callWndProcHook(int code, WPARAM wParam, LPARAM
 	if((pcwp->message==WM_INPUTLANGCHANGE)&&(pcwp->lParam!=lastInputLangChange)) {
 		wchar_t* buf=(wchar_t*)malloc(sizeof(wchar_t)*1024);
 		GetKeyboardLayoutName(buf);
-		nvdaController_inputLangChangeNotify(GetCurrentThreadId(),pcwp->lParam,buf);
+		nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),pcwp->lParam,buf);
 		free(buf);
 		lastInputLangChange=pcwp->lParam;
 	}
