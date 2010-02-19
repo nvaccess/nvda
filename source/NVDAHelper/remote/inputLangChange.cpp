@@ -12,10 +12,9 @@ LRESULT CALLBACK inputLangChange_callWndProcHook(int code, WPARAM wParam, LPARAM
 	static int lastInputLangChange=0;
 	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
 	if((pcwp->message==WM_INPUTLANGCHANGE)&&(pcwp->lParam!=lastInputLangChange)) {
-		wchar_t* buf=(wchar_t*)malloc(sizeof(wchar_t)*KL_NAMELENGTH);
+		wchar_t buf[KL_NAMELENGTH];
 		GetKeyboardLayoutName(buf);
 		nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),pcwp->lParam,buf);
-		free(buf);
 		lastInputLangChange=pcwp->lParam;
 	}
 	return 0;

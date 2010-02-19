@@ -25,10 +25,9 @@ void __RPC_USER midl_user_free(void* p) {
 RPC_STATUS startServer() {
 	RPC_STATUS status;
 	//Set the protocol
-	wchar_t* endpointString=(wchar_t*)malloc(sizeof(wchar_t)*64);
+	wchar_t endpointString[64];
 	getNVDAControllerNcalrpcEndpointString(endpointString,64,FALSE);
 	status=RpcServerUseProtseqEp((RPC_WSTR)L"ncalrpc",RPC_C_PROTSEQ_MAX_REQS_DEFAULT,(RPC_WSTR)endpointString,NULL);
-	free(endpointString);
 	//We can ignore the error where the endpoint is already set
 	if(status!=RPC_S_OK&&status!=RPC_S_DUPLICATE_ENDPOINT) {
 		return status;
