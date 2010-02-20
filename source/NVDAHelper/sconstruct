@@ -1,6 +1,7 @@
 #User build variables
 vars=Variables()
 vars.Add(BoolVariable('release','Set to true to build a release version',False))
+vars.Add(BoolVariable('logging','Set to true to build a version that has logging enabled',False))
 vars.Add('TARGET_ARCH','Target architecture')
 vars.Add('HOST_ARCH','Host architecture')
 
@@ -24,6 +25,8 @@ if env['release']:
 else:
 	print "Building %s debug version"%TARGET_ARCH
 	env.Append(PDB='${TARGET}.pdb')
+if env['logging']:
+	env.Append(CPPDEFINES=['LOGGING'])
 
 Export('env')
 
