@@ -17,4 +17,16 @@ interface NvdaControllerInternal {
  */
 	error_status_t __stdcall inputLangChangeNotify([in] const long threadID, [in] const unsigned long hkl, [in,string] const wchar_t* layoutString);
 
+/**
+ * Logs a message at the given level to NVDA
+ * @param process Id of the process where the message is sent from
+ * @param threadID the thread ID of the thread where the message is coming from
+ * @param level the level of the message
+ * @param fileName the name of the file where the message was sent
+ * @param funcName the full name of the function where the message is coming from 
+ * @param lineNo the line number where the message was sent
+ * @param message the log message
+ */
+	error_status_t __stdcall logMessage([in] const long processID, [in] const long threadID, [in,string] const wchar_t* level, [in,string] const wchar_t* fileName, [in,string] const wchar_t* funcName, [in] const long lineNo, [in,string] const wchar_t* message);
+
 };
