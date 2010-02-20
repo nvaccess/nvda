@@ -1,7 +1,7 @@
 #User build variables
 vars=Variables()
 vars.Add(BoolVariable('release','Set to true to build a release version',False))
-vars.Add(BoolVariable('logging','Set to true to build a version that has logging enabled',False))
+vars.Add(EnumVariable('logLevel','The level of logging you wish to see, higher is more','0',allowed_values=[str(x) for x in xrange(50)]))
 vars.Add('TARGET_ARCH','Target architecture')
 vars.Add('HOST_ARCH','Host architecture')
 
@@ -9,7 +9,7 @@ vars.Add('HOST_ARCH','Host architecture')
 env=DefaultEnvironment(tools=['default','msvc','midl','mssdk','msrpc'],variables=vars)
 
 #Some defines and includes for the environment
-env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE'])
+env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${logLevel}')])
 env.Append(CXXFLAGS=['/EHsc'])
 env.Append(CPPPATH=['#.','#../include'])
 env.Append(LINKFLAGS='/incremental:no')
@@ -25,8 +25,6 @@ if env['release']:
 else:
 	print "Building %s debug version"%TARGET_ARCH
 	env.Append(PDB='${TARGET}.pdb')
-if env['logging']:
-	env.Append(CPPDEFINES=['LOGGING'])
 
 Export('env')
 

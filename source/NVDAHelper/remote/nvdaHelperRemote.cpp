@@ -127,7 +127,7 @@ BOOL DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 		getNVDAControllerNcalrpcEndpointString(endpointString,64,TRUE);
 		RpcBindingFromStringBinding((RPC_WSTR)endpointString,&nvdaControllerBindingHandle);
 		RpcBindingFromStringBinding((RPC_WSTR)endpointString,&nvdaControllerInternalBindingHandle);
-		if(isInitialized) LOG_DEBUG(L"process attach");
+		if(isInitialized) LOG_INFO(L"process attach");
 	} else if(reason==DLL_PROCESS_DETACH) {
 	if(inProcess_isRunning) inProcess_terminate();
 	RpcBindingFree(&nvdaControllerBindingHandle);
