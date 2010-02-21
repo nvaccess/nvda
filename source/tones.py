@@ -11,14 +11,55 @@ import config
 import globalVars
 from logHandler import log
 from ctypes import create_string_buffer, byref
+import threading
 
 SAMPLE_RATE = 44100
+CHUNK_SIZE = 45
 
-try:
-	player = nvwave.WavePlayer(channels=2, samplesPerSec=int(SAMPLE_RATE), bitsPerSample=16, outputDevice=config.conf["speech"]["outputDevice"])
-except:
-	log.warning("Failed to initialize audio for tones")
-	player = None
+_tonesThread = None
+
+def _generateBeep(hz, length, left, right):
+	from NVDAHelper import generateBeep
+	bufSize=generateBeep(None,hz,length,left,right)
+	buf=create_string_buffer(bufSize)
+	generateBeep(buf,hz,length,left,right)
+	return buf.raw
+
+class TonesThread(threading.Thread):
+
+	def __init__(self, *args, **kwargs):
+		super(TonesThread, self).__init__(*args, **kwargs)
+		self._player = nvwave.WavePlayer(channels=2, samplesPerSec=int(SAMPLE_RATE), bitsPerSample=16, outputDevice=config.conf["speech"]["outputDevice"], closeWhenIdle=False)
+		self._hz = None
+		self._length = 0
+		self._left = None
+		self._right = None
+		self._requestEvent = threading.Event()
+		self._keepRunning = True
+
+	def request(self, hz, length, left, right):
+		self._requestEvent.set()
+		self._hz = hz
+		self._length = length
+		self._left = left
+		self._right = right
+
+	def run(self):
+		while True:
+			self._requestEvent.wait()
+			if not self._keepRunning:
+				break
+
+			# We're now handling the most recent request.
+			self._requestEvent.clear()
+			self._player.feed(_generateBeep(self._hz, CHUNK_SIZE, self._left, self._right))
+			if not self._requestEvent.isSet():
+				# There hasn't been a new request, so keep playing the current one in the next iteration if it hasn't finished.
+				self._length -= CHUNK_SIZE
+
+	def terminate(self):
+		self._keepRunning = False
+		self._requestEvent.set()
 
 def beep(hz,length,left=50,right=50):
 	"""Plays a tone at the given hz, length, and stereo balance.
@@ -32,11 +73,14 @@ def beep(hz,length,left=50,right=50):
 	@type right: float
 	""" 
 	log.io("Beep at pitch %s, for %s ms, left volume %s, right volume %s"%(hz,length,left,right))
-	if not player:
+	if not _tonesThread:
 		return
-	from NVDAHelper import generateBeep
-	bufSize=generateBeep(None,hz,length,left,right)
-	buf=create_string_buffer(bufSize)
-	generateBeep(buf,hz,length,left,right)
-	player.stop()
-	player.feed(buf.raw)
+	_tonesThread.request(hz, length, left, right)
+
+def initialize():
+	global _tonesThread
+	_tonesThread = TonesThread()
+	_tonesThread.start()
+
+def terminate():
+	_tonesThread.terminate()

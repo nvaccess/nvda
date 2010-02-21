@@ -158,6 +158,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import braille
 	log.debug("Initializing braille")
 	braille.initialize()
+	import tones
+	log.debug("Initializing tones")
+	tones.initialize()
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
@@ -305,6 +308,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		mouseHandler.terminate()
 	except:
 		log.error("error terminating mouse handler",exc_info=True)
+	log.debug("Terminating tones")
+	tones.terminate()
 	log.debug("Terminating braille")
 	try:
 		braille.terminate()
