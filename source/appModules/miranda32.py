@@ -14,6 +14,7 @@ from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.behaviors import Dialog
 import _default
 import speech
+import braille
 import controlTypes
 from keyUtils import sendKey
 from scriptHandler import isScriptWaiting
@@ -143,6 +144,8 @@ class mirandaIMContactList(IAccessible):
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			speech.speakObject(self,reason=speech.REASON_FOCUS)
+			braille.handler.handleGainFocus(self)
+
 
 class mirandaIMButton(IAccessible):
 
