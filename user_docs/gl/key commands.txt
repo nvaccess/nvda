@@ -66,17 +66,16 @@ Anuncia a liña actual nos controles de edición e documentos.
 NVDA+flecha Abaixo: LerTodo
 Comeza a letura dende a posición actual nun documento ou control de edición.
 
-NVDA+f1: InfoTest_ventáNavegador
-Le Informacións acerca do navegador de obxectos actual que son principalmente utis para desenrroladores..
-
 Control+NVDA+c: gardarConfiguración
 Garda a configuración..
 
 Control+NVDA+r: voltarÁConfiguraciónGardada
 Restaura a configuración..
 
+NVDA+c: anunciarTextoPortapapeis
+Anuncia o texto no portapapeis de Windows.
 
-Opcións de Troco (atopadas nos diálogos de opcións)
+Opcións de cambio (atopadas nos diálogos de opcións)
 
 NVDA+2: conmutarVerbalizaciónDeCaracteresOEscribir
 Activa ou desactiva a verbalización de caracteres cando os escrebes.
@@ -140,7 +139,7 @@ Amosa o diálogo da consola de python.
 
 
 
-Navegación do Navegador de Obxectos
+Navegación no Navegador de Obxectos
 
 NVDA+5 teclado numérico: actualNavegadorDeObxectos
 Anuncia o navegador de obxectos actual. Se se premeu dúas veces rápidamente deletréao e se se premeu tres veces rápidamente copia o seu nome e valor ó portapapeis.
@@ -151,8 +150,9 @@ Anuncia o tamaño e localización do actual navegador de obxectos.
 Control+Shift+NVDA+5 Teclado Numérico: ondeNavegadorDeobxectos
 Anuncia os ancestros do navegador de obxectos actual.
 
-NVDA+Menos: navegadorDeobxectosÓFoco
-Pon o navegador de obxectos no actual obxecto co foco.
+
+NVDA+supr do teclado numérico: dimensións actuais navegador de obxectos
+Anuncia el tamaño y localización del actual navegador de objetos.
 
 NVDA+8 Teclado Numérico: paiNavegadorDeobxectos
 Pon o navegador de obxectos no navegador de obxectos pai do actual (é dicir, no obxecto que o contén).
@@ -180,24 +180,34 @@ Move o punteiro do rato ó actual obxecto do navegador
 
 NVDA+Multiplicar teclado Numérico: moverNavegadorDeobxectosÓRato
 Pon o navegador de obxectos no actual obxecto baixo o punteiro do rato
+Menos Teclado numérico: revisiónMueveACursor
+Mueve el cursor de revisión a la localización del cursor del sistema.
+
+Control+Menos Teclado Numérico: revisiónMoveCursorSistemaAquí
+Move o cursor do sistema á localización do cursor de revisión
+
+NVDA+Menos Teclado Numérico: navegadorDeObxectosÓFoco
+Pon o navegador de obxectos no actual obxecto co foco.
 
 Dividir Teclado Numérico: clicIzquierdoDoRato
 Fai clic co botón esquerdo do rato unha vez onde quera que estea.
 
+shift+dividir teclado numérico: conmutaBotónEsquerdoDoRato
+Bloquea ou desbloquea o botón esquerdo do rato
+
 Multiplicar teclado numérico: clicDereitoDoRato
 Fai clic co botón dereito do rato unha vez onde queira que estea.
+
+shift+multiplicar teclado numérico: conmutarBotónDereitoDoRato
+Bloquea ou desbloquea o botón dereito do rato
+
+Máis Teclado Numérico: revisiónLerTodo
+Utiliza o cursor de revisión para ler dende a súa posición ó remate do actual texto revisable
 
 NVDA+Máis Teclado Numérico: LeerTodoNavegadorDeobxectos
 Comeza a letura de todos os obxectos despois do navegador de obxectos, en orde ó fluxo.
 
-Menos Teclado numérico: revisiónMoveACursor
-Move o cursor de revisión cara a localización do cursor do sistema.
 
-Control+Menos Teclado Numérico: revisiónMoveCursorSistemaAquí
-Move o cursor do sistema cara a localización do cursor de revisión
-
-Máis Teclado Numérico: revisiónLerTodo
-Utiliza o cursor de revisión para ler dende a súa posición ó final do actual texto revisable
 
 Lendo obxectos
 
@@ -240,41 +250,54 @@ Move o cursor de revisión á liña anterior
 shift+9 Teclado Numérico: revisiónInferior
 Move o cursor de revisión á derradeira liña
 
+NVDA+f9: revisión_marcaComezoParaCopiar
+Marca a posición actual do cursor de revisión como o comezo do texto para copiar.
 
-Ordes do Modo Virtual para Firefox3 (Algunhas destas poderán funcionar en Internet Explorer ou Firefox2):
+NVDA+f10: revisión_copiar
+Recolle o texto dende a posición previamente marcada e inclúe a posición actual do cursor de revisión e cópiao ó portapapeis.
+
+
+Ordes do Modo Virtual 
 
 NVDA+espazo: conmutarPasoATraversoModoVirtual
 Activa ou desactiva o paso a traverso do modo virtual.
 
 control+NVDA+f: atopar (control+f en firefox2 / internet explorer)
 NVDA+f3: atopar seguinte
-NVDA+f7: lista de ligas (non en firefox2 ou internet explorer)
+NVDA+f7: lista de elementos
 NVDA+f5: refresca a memoria intermedia (non en Firefox2 o Internet Explorer)
+NVDA+v: activa e desactiva a Disposición de Pantalla
 
 Teclas rápidas do modo virtual para saltar ós seguintes elementos de un tipo en particular (utiliza tamén shift ca tecla para retroceder):
 
-
-Teclas soportadas tanto polo vello como polo novo modo virtual: 
 h: cabeceira
 i: elemento da lista
 l: lista
 k: liga
-p: Parágrafo (só utilizado no modo virtual antigo, utiliza Control+Flecha arriba/abajo no modo virtual novo)
 t: táboa
 f: campo de formulario
-
-Teclas non soportadas polo modo virtual antigo: 
-1 a 6: cabeceiras de nivel 1 ó 6
-b: botón
-c: cadro combinado
-e: campo de edición
-g: gráfico
-m: marco
-q: cita
-r: botón de opción
-s: separador
 u: liga non visitada
 v: liga visitada
+e: campo de edición
+b: botón
 x: casiña de verificación
+c: cadro combinado
+r: botón de opción
+q: cita
+s: separador
+m: marco
+g: gráfico
+d: Zoa de ARIA
+n: texto non ligado
+o: obxecto empotrado
+1 a 6: cabeceiras de nivel 1 ó 6
+
+
+
+
+
+
+
+
 
 

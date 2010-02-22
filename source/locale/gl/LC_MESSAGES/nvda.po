@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA r3493\n"
-"POT-Creation-Date: 2010-01-25 17:14+Hora estándar romance\n"
-"PO-Revision-Date: 2010-01-25 18:01+0100\n"
+"POT-Creation-Date: 2010-02-21 20:21+Hora estándar romance\n"
+"PO-Revision-Date: 2010-02-21 20:23+0100\n"
 "Last-Translator: Juan Carlos Buño Suárez <quetzatl@eresmas.net>\n"
 "Language-Team: Equipo de tradución ó Galego <quetzatl@eresmas.net>\n"
 "MIME-Version: 1.0\n"
@@ -20,18 +20,27 @@ msgstr ""
 msgid "Secure Desktop"
 msgstr "Escritorio Seguro"
 
-#: NVDAObjects\IAccessible\__init__.py:1336
+#: NVDAHelper.py:100
+msgid "unknown layout"
+msgstr "distribución descoñecida"
+
+#: NVDAHelper.py:101
+msgid "layout %s"
+msgstr "distribución %s"
+
+#: NVDAObjects\IAccessible\__init__.py:1286
 msgid "Taskbar"
 msgstr "Barra de tarefas"
 
-#: NVDAObjects\IAccessible\sysTreeView32.py:179
+#: NVDAObjects\IAccessible\sysTreeView32.py:198
 msgid "%s items"
 msgstr "%s elementos"
 
-#: NVDAObjects\UIA\__init__.py:427
+#: NVDAObjects\UIA\__init__.py:434
 msgid "invoke"
 msgstr "invocar"
 
+#: NVDAObjects\behaviors.py:49
 #: NVDAObjects\progressBar.py:45
 #: appModules\_default.py:826
 msgid "%d percent"
@@ -101,9 +110,9 @@ msgstr "Erro no módulo app %s"
 #: appModules\_default.py:809
 #: appModules\winamp.py:75
 #: appModules\winamp.py:85
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: keyboardHandler.py:58
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "on"
 msgstr "activado"
@@ -121,9 +130,9 @@ msgstr "activado"
 #: appModules\winamp.py:77
 #: appModules\winamp.py:87
 #: gui\settingsDialogs.py:484
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: keyboardHandler.py:58
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "off"
 msgstr "desactivado"
@@ -186,9 +195,9 @@ msgid "no selection"
 msgstr "sen selección"
 
 #: appModules\_default.py:109
-#: speech.py:272
-#: speech.py:369
-#: speech.py:382
+#: speech.py:290
+#: speech.py:386
+#: speech.py:399
 #: virtualBuffers\__init__.py:598
 msgid "selected %s"
 msgstr "seleccionado %s"
@@ -775,7 +784,7 @@ msgstr "Recolle o texto dende o axuxte anterior ó inicio do marcador e incluín
 msgid "Display"
 msgstr "Display"
 
-#: appModules\explorer.py:16
+#: appModules\explorer.py:33
 msgid "Start"
 msgstr "Comezo"
 
@@ -786,6 +795,14 @@ msgstr "Non hai pista en reprodución"
 #: appModules\foobar2000.py:50
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Anuncia o tempo restante da pista actualmente en reprodución, se hai algunha"
+
+#: appModules\miranda32.py:104
+msgid "No message yet"
+msgstr "Non hai mensaxe aínda"
+
+#: appModules\miranda32.py:105
+msgid "Displays one of the recent messages"
+msgstr "Amosa unha das mensaxes recentes"
 
 #: appModules\msimn.py:18
 msgid "Attachments"
@@ -1130,18 +1147,18 @@ msgid "( )"
 msgstr "( )"
 
 #: braille.py:222
-#: speech.py:670
+#: speech.py:687
 msgid "not %s"
 msgstr "non %s"
 
 #: braille.py:234
-#: speech.py:676
+#: speech.py:693
 msgid "%s of %s"
 msgstr "%s de %s"
 
 #: braille.py:236
-#: speech.py:681
-#: speech.py:684
+#: speech.py:698
+#: speech.py:701
 msgid "level %s"
 msgstr "nivel %s"
 
@@ -1160,8 +1177,8 @@ msgstr "Sen braille"
 #: characterSymbols.py:17
 #: characterSymbols.py:18
 #: characterSymbols.py:19
-#: speech.py:82
-#: speech.py:620
+#: speech.py:84
+#: speech.py:637
 msgid "blank"
 msgstr "en branco"
 
@@ -1423,7 +1440,7 @@ msgid "tool tip"
 msgstr "consello"
 
 #: controlTypes.py:198
-#: speech.py:930
+#: speech.py:947
 msgid "link"
 msgstr "liga"
 
@@ -1843,7 +1860,7 @@ msgid "font size"
 msgstr "tamaño da fonte"
 
 #: controlTypes.py:305
-#: speech.py:882
+#: speech.py:899
 msgid "bold"
 msgstr "negriña"
 
@@ -1860,12 +1877,12 @@ msgid "background color"
 msgstr "color do fondo"
 
 #: controlTypes.py:310
-#: speech.py:904
+#: speech.py:921
 msgid "superscript"
 msgstr "superíndice"
 
 #: controlTypes.py:311
-#: speech.py:906
+#: speech.py:923
 msgid "subscript"
 msgstr "subíndice"
 
@@ -2021,11 +2038,11 @@ msgstr "arrastrando"
 msgid "drop target"
 msgstr "soltar no destino"
 
-#: core.py:144
+#: core.py:137
 msgid "Loading subsystems, please wait..."
 msgstr "carregando subsistema; un intre por favor..."
 
-#: core.py:223
+#: core.py:216
 msgid "NVDA started"
 msgstr "NVDA activado"
 
@@ -3021,35 +3038,31 @@ msgstr "alt dereita"
 msgid "right windows"
 msgstr "windows dereita"
 
-#: keyboardHandler.py:54
+#: keyboardHandler.py:53
 msgid "caps lock %s"
 msgstr "bloqueo maiúsculas %s"
 
-#: keyboardHandler.py:56
+#: keyboardHandler.py:55
 msgid "num lock %s"
 msgstr "bloqueo numérico %s"
 
-#: keyboardHandler.py:58
+#: keyboardHandler.py:57
 msgid "scroll lock %s"
 msgstr "pausa"
 
-#: keyboardHandler.py:78
-msgid "%s keyboard layout"
-msgstr "%s composición do teclado"
-
-#: keyboardHandler.py:191
+#: keyboardHandler.py:170
 msgid "Description: %s"
 msgstr "Descripción: %s"
 
-#: keyboardHandler.py:194
+#: keyboardHandler.py:173
 msgid "Location: %s"
 msgstr "Situación: %s"
 
-#: keyboardHandler.py:209
+#: keyboardHandler.py:188
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Erro no keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:247
+#: keyboardHandler.py:226
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Erro no keyboardHandler.internal_keyUpEvent"
 
@@ -3069,142 +3082,142 @@ msgstr "Teclea exit() para saír da consola"
 msgid "NVDA Python Console"
 msgstr "Consola de python para NVDA"
 
-#: speech.py:177
+#: speech.py:179
 msgid "cap %s"
 msgstr "maius %s"
 
-#: speech.py:313
+#: speech.py:330
 msgid "%d characters"
 msgstr "%d caracteres"
 
-#: speech.py:364
+#: speech.py:381
 msgid "selecting %s"
 msgstr "seleccionando %s"
 
-#: speech.py:375
+#: speech.py:392
 msgid "unselecting %s"
 msgstr "Deseleccionando %s"
 
-#: speech.py:377
+#: speech.py:394
 msgid "selection removed"
 msgstr "selección eliminada"
 
-#: speech.py:668
+#: speech.py:685
 msgid "done dragging"
 msgstr "Arrastrado feito"
 
-#: speech.py:693
-#: speech.py:971
+#: speech.py:710
+#: speech.py:988
 msgid "row %s"
 msgstr "fila %s"
 
-#: speech.py:696
-#: speech.py:967
+#: speech.py:713
+#: speech.py:984
 msgid "column %s"
 msgstr "columna %s"
 
-#: speech.py:701
+#: speech.py:718
 msgid "with %s rows and %s columns"
 msgstr "con %s filas e %s columnas"
 
-#: speech.py:703
+#: speech.py:720
 msgid "with %s columns"
 msgstr "con %s columnas"
 
-#: speech.py:705
+#: speech.py:722
 msgid "with %s rows"
 msgstr "con %s filas"
 
-#: speech.py:808
+#: speech.py:825
 msgid "with %s items"
 msgstr "con %s elementos"
 
-#: speech.py:823
-#: speech.py:930
+#: speech.py:840
+#: speech.py:947
 msgid "out of %s"
 msgstr "fora de %s"
 
-#: speech.py:847
+#: speech.py:864
 msgid "page %s"
 msgstr "páxina %s"
 
-#: speech.py:854
+#: speech.py:871
 msgid "style %s"
 msgstr "estilo %s"
 
-#: speech.py:856
+#: speech.py:873
 msgid "default style"
 msgstr "estilo predeterminado"
 
-#: speech.py:876
+#: speech.py:893
 msgid "line %s"
 msgstr "líña %s"
 
-#: speech.py:882
+#: speech.py:899
 msgid "no bold"
 msgstr "non hai negriñas"
 
-#: speech.py:887
+#: speech.py:904
 msgid "italic"
 msgstr "cursiva"
 
-#: speech.py:887
+#: speech.py:904
 msgid "no italic"
 msgstr "non hai cursivas"
 
-#: speech.py:892
+#: speech.py:909
 msgid "no strikethrough"
 msgstr "non hai tachado"
 
-#: speech.py:892
+#: speech.py:909
 msgid "strikethrough"
 msgstr "Tachado"
 
-#: speech.py:897
+#: speech.py:914
 msgid "not underlined"
 msgstr "non hai subliñado"
 
-#: speech.py:897
+#: speech.py:914
 msgid "underlined"
 msgstr "subliñado"
 
-#: speech.py:908
+#: speech.py:925
 msgid "baseline"
 msgstr "liña de base"
 
-#: speech.py:916
+#: speech.py:933
 msgid "align left"
 msgstr "aliñamento á esquerda"
 
-#: speech.py:918
+#: speech.py:935
 msgid "align center"
 msgstr "aliñamento ó centro"
 
-#: speech.py:920
+#: speech.py:937
 msgid "align right"
 msgstr "aliñamento á dereita"
 
-#: speech.py:922
+#: speech.py:939
 msgid "align justify"
 msgstr "aliñamento xustificar"
 
-#: speech.py:924
+#: speech.py:941
 msgid "align default"
 msgstr "aliñamento predeterminado"
 
-#: speech.py:937
+#: speech.py:954
 msgid "spelling error"
 msgstr "erro de ortografía"
 
-#: speech.py:939
+#: speech.py:956
 msgid "out of spelling error"
 msgstr "Fóra do erro de ortografía"
 
-#: speech.py:953
+#: speech.py:970
 msgid "out of table"
 msgstr "fora da táboa"
 
-#: speech.py:962
+#: speech.py:979
 msgid "table with %s columns and %s rows"
 msgstr "táboa con %s columnas e %s filas"
 
@@ -3212,27 +3225,27 @@ msgstr "táboa con %s columnas e %s filas"
 msgid "NVDA Speech Viewer"
 msgstr "Visualizador da Fala do NVDA"
 
-#: synthDriverHandler.py:175
+#: synthDriverHandler.py:187
 msgid "&Voice"
 msgstr "&Voz"
 
-#: synthDriverHandler.py:179
+#: synthDriverHandler.py:191
 msgid "V&ariant"
 msgstr "V&ariante"
 
-#: synthDriverHandler.py:184
+#: synthDriverHandler.py:196
 msgid "&Rate"
 msgstr "Ve&locidade"
 
-#: synthDriverHandler.py:188
+#: synthDriverHandler.py:200
 msgid "V&olume"
 msgstr "V&olume"
 
-#: synthDriverHandler.py:192
+#: synthDriverHandler.py:204
 msgid "&Pitch"
 msgstr "&Ton"
 
-#: synthDriverHandler.py:197
+#: synthDriverHandler.py:209
 msgid "&Inflection"
 msgstr "&Entoación"
 
@@ -3290,8 +3303,8 @@ msgid "A free and open-source screen reader for MS Windows"
 msgstr "Un lector de pantalla libre e de código aberto para Windows"
 
 #: versionInfo.py:44
-msgid "Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>"
-msgstr "Dereitos reservados (C) 2006-2009 Colaboradores do NVDA <http://www.nvda-project.org/>"
+msgid "Copyright (C) 2006-2010 NVDA Contributors"
+msgstr "Copyright (C) 2006-2010 colaboradores do NVDA"
 
 #: versionInfo.py:45
 msgid ""
