@@ -14,7 +14,7 @@ from ctypes import create_string_buffer, byref
 import threading
 
 SAMPLE_RATE = 44100
-CHUNK_SIZE = 45
+CHUNK_LENGTH = 45
 
 _tonesThread = None
 
@@ -52,10 +52,10 @@ class TonesThread(threading.Thread):
 
 			# We're now handling the most recent request.
 			self._requestEvent.clear()
-			self._player.feed(_generateBeep(self._hz, CHUNK_SIZE, self._left, self._right))
+			self._player.feed(_generateBeep(self._hz, CHUNK_LENGTH, self._left, self._right))
 			if not self._requestEvent.isSet():
 				# There hasn't been a new request, so keep playing the current one in the next iteration if it hasn't finished.
-				self._length -= CHUNK_SIZE
+				self._length -= CHUNK_LENGTH
 
 	def terminate(self):
 		self._keepRunning = False
