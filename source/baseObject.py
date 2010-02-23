@@ -144,12 +144,10 @@ class AutoPropertyCacheObject(AutoPropertyObject):
 		if not name:
 			raise ValueError("name is None")
 		try:
-			val,count=self._propertyCache[name]
+			val=self._propertyCache[name]
 		except KeyError:
 			val=getterMethod(self)
-			count=0
-		count+=1
-		self._propertyCache[name]=(val,count)
+			self._propertyCache[name]=val
 		return val
 
 	def invalidateCache(self):
