@@ -8,6 +8,7 @@
 """
 
 import functools
+import weakref
 from new import instancemethod
 from keyUtils import key
 
@@ -131,9 +132,15 @@ Returns a script (instance method) if one is assigned to the keyPress given.
 				return instancemethod(func,self,self.__class__)
 
 class AutoPropertyCacheObject(AutoPropertyObject):
+	#: Tracks the instances of this class; used by L{invalidateCaches}.
+	#: @type: weakref.WeakKeyDictionary
+	__instances=weakref.WeakKeyDictionary()
 
 	def __init__(self):
+		#: Maps properties to cached values.
+		#: @type: dict
 		self._propertyCache={}
+		self.__instances[self]=None
 
 	def _getPropertyViaCache(self,getterMethod=None,name=None):
 		if not getterMethod:
@@ -149,3 +156,10 @@ class AutoPropertyCacheObject(AutoPropertyObject):
 
 	def invalidateCache(self):
 		self._propertyCache.clear()
+
+	@classmethod
+	def invalidateCaches(cls):
+		"""Invalidate the caches for all current instances.
+		"""
+		for instance in cls.__instances:
+			instance.invalidateCache()
