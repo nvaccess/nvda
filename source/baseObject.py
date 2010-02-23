@@ -29,14 +29,11 @@ class AutoPropertyType(type):
 
 	def __init__(self,name,bases,dict):
 		super(AutoPropertyType,self).__init__(name,bases,dict)
-		useCache=False
-		for base in bases:
-			try:
-				useCache=issubclass(base,AutoPropertyCacheObject)
-			except NameError:
-				pass
-			if useCache:
-				break
+		try:
+			useCache=any(issubclass(base,AutoPropertyCacheObject) for base in bases)
+		except NameError:
+			# AutoPropertyCacheObject hasn't been defined yet. This will occur when this metaclass is applied to AutoPropertyObject.
+			useCache=False
 		propSet=(x[5:] for x in dict.keys() if x[0:5] in ('_get_','_set_','_del_'))
 		for x in propSet:
 			g=dict.get('_get_%s'%x,None)
