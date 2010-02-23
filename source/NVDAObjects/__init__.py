@@ -71,7 +71,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			obj.__init__(*args,**kwargs)
 		return obj
 
-class NVDAObject(baseObject.ScriptableObject):
+class NVDAObject(baseObject.AutoPropertyCacheObject, baseObject.ScriptableObject):
 	"""
 	NVDA's representation of a control or widget in the Operating System. Provides information such as a name, role, value, description etc.
 	"""
@@ -136,6 +136,7 @@ class NVDAObject(baseObject.ScriptableObject):
 		raise NotImplementedError
 
 	def __init__(self):
+		super(NVDAObject,self).__init__()
 		self._mouseEntered=False #:True if the mouse has entered this object (for use in L{event_mouseMoved})
 		self.textRepresentationLineLength=None #:If an integer greater than 0 then lines of text in this object are always this long.
 		if hasattr(self.appModule,'event_NVDAObject_init'):

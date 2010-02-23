@@ -161,5 +161,7 @@ class AutoPropertyCacheObject(AutoPropertyObject):
 	def invalidateCaches(cls):
 		"""Invalidate the caches for all current instances.
 		"""
-		for instance in cls.__instances:
+		# We use keys() here instead of iterkeys(), as invalidating the cache on an object may cause instances to disappear,
+		# which would in turn cause an exception due to the dictionary changing size during iteration.
+		for instance in cls.__instances.keys():
 			instance.invalidateCache()
