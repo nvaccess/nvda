@@ -7,6 +7,7 @@
 """Contains the base classes that many of NVDA's classes such as NVDAObjects, virtualBuffers, appModules, synthDrivers inherit from. These base classes provide such things as auto properties, and methods and properties for scripting and key binding.
 """
 
+import functools
 from new import instancemethod
 from keyUtils import key
 
@@ -28,6 +29,14 @@ class AutoPropertyType(type):
 
 	def __init__(self,name,bases,dict):
 		super(AutoPropertyType,self).__init__(name,bases,dict)
+		useCache=False
+		for base in bases:
+			try:
+				useCache=issubclass(base,AutoPropertyCacheObject)
+			except NameError:
+				pass
+			if useCache:
+				break
 		propSet=(x[5:] for x in dict.keys() if x[0:5] in ('_get_','_set_','_del_'))
 		for x in propSet:
 			g=dict.get('_get_%s'%x,None)
@@ -44,6 +53,8 @@ class AutoPropertyType(type):
 					if g:
 						break
 			if g and not s and not d:
+				if useCache:
+					g=functools.partial(AutoPropertyCacheObject._getPropertyViaCache,getterMethod=g,name=x)
 				setattr(self,x,getter(g))
 			else:
 				setattr(self,x,property(fget=g,fset=s,fdel=d))
@@ -121,3 +132,25 @@ Returns a script (instance method) if one is assigned to the keyPress given.
             				return func
       			else:
 				return instancemethod(func,self,self.__class__)
+
+class AutoPropertyCacheObject(AutoPropertyObject):
+
+	def __init__(self):
+		self._propertyCache={}
+
+	def _getPropertyViaCache(self,getterMethod=None,name=None):
+		if not getterMethod:
+			raise ValueError("getterMethod is None")
+		if not name:
+			raise ValueError("name is None")
+		try:
+			val,count=self._propertyCache[name]
+		except KeyError:
+			val=getterMethod(self)
+			count=0
+		count+=1
+		self._propertyCache[name]=(val,count)
+		return val
+
+	def invalidateCache(self):
+		self._propertyCache.clear()
