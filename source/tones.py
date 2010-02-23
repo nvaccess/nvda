@@ -57,6 +57,12 @@ class TonesThread(threading.Thread):
 				# There hasn't been a new request, so keep playing the current one in the next iteration if it hasn't finished.
 				self._length -= CHUNK_LENGTH
 
+			# Wait until the chunk finishes or until a new request arrives.
+			self._requestEvent.wait(CHUNK_LENGTH / 1000.0)
+			if self._length <= 0:
+				# There has been no new request, so we're idle.
+				self._player.idle()
+
 	def terminate(self):
 		self._keepRunning = False
 		self._requestEvent.set()
