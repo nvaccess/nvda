@@ -71,11 +71,13 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 		log.debugWarning("Could not find reg value 'Layout Text' for reg key %s"%layoutString)
 		return None
 
-@WINFUNCTYPE(c_long,c_long,c_long,c_wchar_p,c_wchar_p,c_wchar_p,c_long,c_wchar_p)
+@WINFUNCTYPE(c_long,c_long,c_long,c_long,c_wchar_p,c_wchar_p,c_long,c_wchar_p)
 def nvdaControllerInternal_logMessage(pid,tid,level,fileName,funcName,lineNo,message):
+	if not log.isEnabledFor(level):
+		return 0
 	from appModuleHandler import getAppNameFromProcessID
 	codepath="RPC: %s, %s, %s, line %d"%(getAppNameFromProcessID(pid,includeExt=True),fileName,funcName, lineNo)
-	getattr(log,level)(message,codepath=codepath)
+	log._log(level,message,[],codepath=codepath)
 	return 0
 
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)

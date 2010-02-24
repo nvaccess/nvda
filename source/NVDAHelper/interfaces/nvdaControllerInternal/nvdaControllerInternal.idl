@@ -27,6 +27,6 @@ interface NvdaControllerInternal {
  * @param lineNo the line number where the message was sent
  * @param message the log message
  */
-	error_status_t __stdcall logMessage([in] const long processID, [in] const long threadID, [in,string] const wchar_t* level, [in,string] const wchar_t* fileName, [in,string] const wchar_t* funcName, [in] const long lineNo, [in,string] const wchar_t* message);
+	error_status_t __stdcall logMessage([in] const long processID, [in] const long threadID, [in] const long level, [in,string] const wchar_t* fileName, [in,string] const wchar_t* funcName, [in] const long lineNo, [in,string] const wchar_t* message);
 
 };
