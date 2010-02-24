@@ -46,22 +46,27 @@ class TonesThread(threading.Thread):
 
 	def run(self):
 		while True:
-			self._requestEvent.wait()
-			if not self._keepRunning:
-				break
+			if self._length <= 0:
+				# There is no request currently playing, so wait for another one.
+				self._requestEvent.wait()
+				if not self._keepRunning:
+					break
 
-			# We're now handling the most recent request.
+			# Signal that we're now playing the last request.
 			self._requestEvent.clear()
+
 			self._player.feed(_generateBeep(self._hz, CHUNK_LENGTH, self._left, self._right))
 			if not self._requestEvent.isSet():
 				# There hasn't been a new request, so keep playing the current one in the next iteration if it hasn't finished.
 				self._length -= CHUNK_LENGTH
 
-			# Wait until the chunk finishes or until a new request arrives.
-			self._requestEvent.wait(CHUNK_LENGTH / 1000.0)
 			if self._length <= 0:
-				# There has been no new request, so we're idle.
-				self._player.idle()
+				# We've fed the last chunk of the current request.
+				# Wait until the chunk finishes actually playing or until a new request arrives.
+				self._requestEvent.wait(CHUNK_LENGTH / 1000.0)
+				if self._length <= 0:
+					# There has been no new request, so we're idle.
+					self._player.idle()
 
 	def terminate(self):
 		self._keepRunning = False
