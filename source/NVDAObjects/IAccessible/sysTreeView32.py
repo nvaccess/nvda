@@ -210,13 +210,10 @@ class BrokenCommctrl5Item(IAccessible):
 		return (cls,), kwargs
 
 	def __init__(self, _uiaObj=None, **kwargs):
+		self._uiaObj = _uiaObj
 		super(BrokenCommctrl5Item, self).__init__(**kwargs)
-		if _uiaObj:
-			self._uiaObj = _uiaObj
-		elif UIAHandler.handler and super(BrokenCommctrl5Item, self).parent.hasFocus:
+		if not _uiaObj and UIAHandler.handler and super(BrokenCommctrl5Item, self).parent.hasFocus:
 			self._uiaObj = UIA.objectWithFocus()
-		else:
-			self._uiaObj = None
 
 	def _get_role(self):
 		return self._uiaObj.role if self._uiaObj else controlTypes.ROLE_UNKNOWN
