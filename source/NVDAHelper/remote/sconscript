@@ -40,6 +40,7 @@ remoteLib=env.SharedLibrary(
 	target="nvdaHelperRemote",
 	source=[
 		"nvdaHelperRemote.cpp",
+		"apiHook.cpp",
 		"inputLangChange.cpp",
 		"typedCharacter.cpp",
 		"ia2Support.cpp",
@@ -58,6 +59,7 @@ remoteLib=env.SharedLibrary(
 		"ole32",
 		"rpcrt4",
 		"shlwapi",
+		"psapi",
 		"oleaut32",
 		"oleacc",
 	],
