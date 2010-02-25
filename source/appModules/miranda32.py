@@ -83,8 +83,6 @@ class AppModule(_default.AppModule):
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="CListControl":
 			obj.__class__=mirandaIMContactList
-		elif (obj.windowControlID in ANSILOGS) and (obj.windowClassName=="RichEdit20A"):
-			obj._isWindowUnicode=False
 		elif obj.windowClassName=="MButtonClass" or obj.windowClassName=="TSButtonClass" or obj.windowClassName=="CLCButtonClass":
 			obj.__class__=mirandaIMButton
 		elif obj.windowClassName=="Hyperlink":
@@ -93,8 +91,10 @@ class AppModule(_default.AppModule):
 			obj.role=controlTypes.ROLE_COLORCHOOSER
 		elif obj.IAccessibleRole==oleacc.ROLE_SYSTEM_PROPERTYPAGE:
 			obj.__class__=MPropertyPage
-		elif obj.windowControlID in MESSAGEVIEWERS and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_SCROLLBAR:
+		elif obj.IAccessibleRole == oleacc.ROLE_SYSTEM_SCROLLBAR and obj.windowControlID in MESSAGEVIEWERS:
 			self.overlayCustomNVDAObjectClass(obj,MirandaMessageViewerScrollbar,outerMost=True)
+		elif (obj.windowControlID in ANSILOGS) and (obj.windowClassName=="RichEdit20A"):
+			obj._isWindowUnicode=False
 
 	def script_readMessage(self,keyPress):
 		num=int(keyPress[-1][-1])
