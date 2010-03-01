@@ -89,9 +89,9 @@ class AppModule(_default.AppModule):
 			obj.__class__=mirandaIMHyperlink
 		elif obj.windowClassName=="ColourPicker":
 			obj.role=controlTypes.ROLE_COLORCHOOSER
-		elif obj.IAccessibleRole==oleacc.ROLE_SYSTEM_PROPERTYPAGE:
+		elif isinstance(obj,IAccessible) and obj.IAccessibleRole==oleacc.ROLE_SYSTEM_PROPERTYPAGE:
 			obj.__class__=MPropertyPage
-		elif obj.IAccessibleRole == oleacc.ROLE_SYSTEM_SCROLLBAR and obj.windowControlID in MESSAGEVIEWERS:
+		elif isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_SCROLLBAR and obj.windowControlID in MESSAGEVIEWERS:
 			self.overlayCustomNVDAObjectClass(obj,MirandaMessageViewerScrollbar,outerMost=True)
 		elif (obj.windowControlID in ANSILOGS) and (obj.windowClassName=="RichEdit20A"):
 			obj._isWindowUnicode=False
