@@ -7,12 +7,11 @@
 """Contains the base classes that many of NVDA's classes such as NVDAObjects, virtualBuffers, appModules, synthDrivers inherit from. These base classes provide such things as auto properties, and methods and properties for scripting and key binding.
 """
 
-import functools
 import weakref
 from new import instancemethod
 from keyUtils import key
 
-class getter(object):
+class Getter(object):
 
 	def __init__(self,fget):
 		self.fget=fget
@@ -25,6 +24,11 @@ class getter(object):
 
 	def deleter(self,func):
 		return property(fget=self._func,fdel=func)
+
+class CachingGetter(Getter):
+
+	def __get__(self, instance, owner):
+		return instance._getPropertyViaCache(self.fget)
 
 class AutoPropertyType(type):
 
@@ -51,9 +55,7 @@ class AutoPropertyType(type):
 					if g:
 						break
 			if g and not s and not d:
-				if useCache:
-					g=functools.partial(AutoPropertyCacheObject._getPropertyViaCache,getterMethod=g,name=x)
-				setattr(self,x,getter(g))
+				setattr(self,x,(CachingGetter if useCache else Getter)(g))
 			else:
 				setattr(self,x,property(fget=g,fset=s,fdel=d))
 
@@ -142,16 +144,14 @@ class AutoPropertyCacheObject(AutoPropertyObject):
 		self._propertyCache={}
 		self.__instances[self]=None
 
-	def _getPropertyViaCache(self,getterMethod=None,name=None):
+	def _getPropertyViaCache(self,getterMethod=None):
 		if not getterMethod:
 			raise ValueError("getterMethod is None")
-		if not name:
-			raise ValueError("name is None")
 		try:
-			val=self._propertyCache[name]
+			val=self._propertyCache[getterMethod]
 		except KeyError:
 			val=getterMethod(self)
-			self._propertyCache[name]=val
+			self._propertyCache[getterMethod]=val
 		return val
 
 	def invalidateCache(self):
