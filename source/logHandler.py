@@ -91,6 +91,14 @@ class Logger(logging.Logger):
 			# This means that the user will be positioned at the start of the new log text.
 			# This is why we activate the log viewer before writing to the log.
 			logViewer.logViewer.outputCtrl.SetInsertionPointEnd()
+		if isinstance(msg, str):
+			# Messages should be unicode.
+			try:
+				msg = unicode(msg)
+			except UnicodeError, e:
+				# Something logged a non-unicode string containing non-ascii characters.
+				self.debugWarning("Non-unicode string containing non-ascii characters: %r\n%s" % (msg, e))
+				msg = unicode(msg, "ascii", "replace")
 		res = logging.Logger._log(self,level, msg, args, exc_info, extra)
 		if activateLogViewer:
 			# Make the log text we just wrote appear in the log viewer.
