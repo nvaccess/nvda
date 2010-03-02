@@ -1305,6 +1305,8 @@ _staticMap={
 	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_LISTITEM):"mozilla.ListItem",
 	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
 	("MozillaWindowClass",oleacc.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
+	("MozillaUIWindowClass",oleacc.ROLE_SYSTEM_TABLE):"mozilla.Table",
+	("MozillaUIWindowClass",oleacc.ROLE_SYSTEM_OUTLINE):"mozilla.Tree",
 	("ConsoleWindowClass",oleacc.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
 	(None,oleacc.ROLE_SYSTEM_LIST):"List",
 	(None,oleacc.ROLE_SYSTEM_COMBOBOX):"ComboBox",
