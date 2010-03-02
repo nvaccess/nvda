@@ -741,6 +741,12 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_test_navigatorWindowInfo(self,keyPress):
 		obj=api.getNavigatorObject()
+		import NVDAHelper
+		import ctypes
+		text=ctypes.c_wchar_p()
+		NVDAHelper.localLib.displayModel_getTextInWindow(self.helperLocalBindingHandle,obj.windowHandle,ctypes.byref(text))
+		speech.speakMessage(text.value)
+		log.info(text.value)
 		import ctypes
 		import winUser
 		w=ctypes.windll.user32.GetAncestor(obj.windowHandle,3)

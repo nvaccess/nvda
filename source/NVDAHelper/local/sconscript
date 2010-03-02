@@ -33,12 +33,23 @@ vbufRPCHeader,vbufRPCClientSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="VBuf_",
 )
 
+displayModelRPCHeader,displayModelRPCClientSource=env.MSRPCStubs(
+	target="./displayModel",
+	source=[
+		"#interfaces/displayModel/displayModel.idl",
+		"#interfaces/displayModel/displayModel.acf",
+	],
+	MSRPCStubs_noServer=True,
+	MSRPCStubs_prefix="displayModel_",
+)
+
 localLib=env.SharedLibrary(
 	target="nvdaHelperLocal",
 	source=[
 		"nvdaHelperLocal.cpp",
 		"beeps.cpp",
 		vbufRPCClientSource,
+		displayModelRPCClientSource,
 		'rpcSrv.cpp',
 		'nvdaController.c',
 		winIPCUtilsObj,

@@ -1,0 +1,10 @@
+
+[
+	uuid(F624BAF9-2020-453a-B781-05ECF6E4EF54),
+	version(1.0),
+]
+interface DisplayModel {
+
+	__declspec(dllexport) error_status_t getTextInWindow([in] handle_t bindingHandle, [in] const long windowHandle, [out,string] wchar_t** text);
+
+}

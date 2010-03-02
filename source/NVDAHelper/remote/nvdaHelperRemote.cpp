@@ -20,6 +20,7 @@
 #include <common/winIPCUtils.h>
 #include <common/log.h>
 #include "apiHook.h"
+#include "gdiHooks.h"
 #include "nvdaHelperRemote.h"
 
 using namespace std;
@@ -55,6 +56,7 @@ void inProcess_initialize() {
 	ia2LiveRegions_inProcess_initialize();
 	typedCharacter_inProcess_initialize();
 	inputLangChange_inProcess_initialize();
+	gdiHooks_inProcess_initialize();
 	inProcess_isRunning=inProcess_wasInitializedOnce=true;
 }
 
@@ -62,6 +64,7 @@ void inProcess_terminate() {
 	assert(inProcess_isRunning);
 	assert(inProcess_wasInitializedOnce);
 	apiHook_unhookFunctions();
+	gdiHooks_inProcess_terminate();
 	inputLangChange_inProcess_terminate();
 	typedCharacter_inProcess_terminate();
 	ia2LiveRegions_inProcess_terminate();

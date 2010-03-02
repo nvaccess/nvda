@@ -34,6 +34,16 @@ vbufRPCHeader,vbufRPCServerSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="VBufRemote_",
 )
 
+displayModelRPCHeader,displayModelRPCServerSource=env.MSRPCStubs(
+	target="./displayModelRemote",
+	source=[
+		"#interfaces/displayModel/displayModel.idl",
+		"#interfaces/displayModel/displayModel.acf",
+	],
+	MSRPCStubs_noClient=True,
+	MSRPCStubs_prefix="displayModelRemote_",
+)
+
 ia2utilsObj=env.Object("./ia2utils","#common/ia2utils.cpp")
 
 remoteLib=env.SharedLibrary(
@@ -53,9 +63,14 @@ remoteLib=env.SharedLibrary(
 		winIPCUtilsObj,
 		controllerRPCClientSource,
 		controllerInternalRPCClientSource,
+		"gdiHooks.cpp",
+		"displayModel.cpp",
+		"displayModelRemote.cpp",
+		displayModelRPCServerSource,
 	],
 	LIBS=[
 		"user32",
+		"gdi32",
 		"ole32",
 		"rpcrt4",
 		"shlwapi",
