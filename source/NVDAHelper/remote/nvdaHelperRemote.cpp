@@ -18,6 +18,7 @@
 #include "nvdaController.h"
 #include "nvdaControllerInternal.h"
 #include <common/winIPCUtils.h>
+#include <common/log.h>
 #include "nvdaHelperRemote.h"
 
 using namespace std;
@@ -27,11 +28,11 @@ typedef map<HOOKPROC,size_t> windowsHookRegistry_t;
 
 #pragma data_seg(".remoteShared")
 	wchar_t dllDirectory[MAX_PATH]={0};
+	BOOL isInitialized=FALSE;
 #pragma data_seg()
 #pragma comment(linker, "/section:.remoteShared,rws")
 
 HINSTANCE moduleHandle;
-BOOL isInitialized=false;
 BOOL inProcess_wasInitializedOnce=false;
 BOOL inProcess_isRunning=false;
 winEventHookRegistry_t inProcess_registeredWinEventHooks;
@@ -126,6 +127,7 @@ BOOL DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 		getNVDAControllerNcalrpcEndpointString(endpointString,64,TRUE);
 		RpcBindingFromStringBinding((RPC_WSTR)endpointString,&nvdaControllerBindingHandle);
 		RpcBindingFromStringBinding((RPC_WSTR)endpointString,&nvdaControllerInternalBindingHandle);
+		if(isInitialized) LOG_INFO(L"process attach");
 	} else if(reason==DLL_PROCESS_DETACH) {
 	if(inProcess_isRunning) inProcess_terminate();
 	RpcBindingFree(&nvdaControllerBindingHandle);
