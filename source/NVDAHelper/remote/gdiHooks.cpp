@@ -16,11 +16,18 @@ inline displayModel_t* acquireDisplayModel(HDC hdc) {
 	HWND hwnd=WindowFromDC(hdc);
 	if(hwnd==NULL) return NULL;
 	LOG_DEBUG(L"window from DC is "<<hwnd);
-	displayModel_t* model=NULL;
 	EnterCriticalSection(&criticalSection_displayModelsByWindow);
 	if(!allowDisplayModelsByWindow) {
 		LeaveCriticalSection(&criticalSection_displayModelsByWindow);
 		return NULL;
+	}
+	map<HWND,displayModel_t*>::iterator i=displayModelsByWindow.find(hwnd);
+	displayModel_t* model=NULL;
+	if(i!=displayModelsByWindow.end()) {
+		model=i->second;
+	} else {
+		model=new displayModel_t();
+		displayModelsByWindow.insert(make_pair(hwnd,model));
 	}
 	return model;
 }
