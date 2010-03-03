@@ -104,6 +104,48 @@ BOOL __stdcall fake_ExtTextOutW(HDC hdc, int x, int y, UINT fuOptions, const REC
 	return real_ExtTextOutW(hdc,x,y,fuOptions,lprc,lpString,cbCount,lpDx);
 }
 
+void DrawTextExWHelper(displayModel_t* model, HDC hdc, wchar_t* lpString, int cbCount, const RECT* lprc, UINT dwDTFormat, LPDRAWTEXTPARAMS lpDTParams) {
+	RECT textRect=*lprc;
+	LPtoDP(hdc,(LPPOINT)&textRect,2);
+	model->clearRectangle(textRect);
+	wchar_t* newText=(cbCount==-1)?lpString:NULL;
+	if(!newText) {
+		newText=(wchar_t*)malloc(sizeof(wchar_t)*(cbCount+1));
+		for(int i=0;i<cbCount;i++) {
+			newText[i]=lpString[i];
+		}
+		newText[cbCount]=L'\0';
+   	}
+	model->insertChunk(textRect,newText);
+	if(newText!=lpString) free(newText);
+}
+
+typedef int(WINAPI *DrawTextW_funcType)(HDC,wchar_t*,int,const RECT*,UINT);
+DrawTextW_funcType real_DrawTextW=NULL;
+int WINAPI fake_DrawTextW(HDC hdc, wchar_t* lpString, int cbCount, const RECT* lprc, UINT dwDTFormat) {
+	if(lpString&&(cbCount!=0)&&!(dwDTFormat&DT_CALCRECT)&&!(dwDTFormat&DT_PREFIXONLY)) {
+		displayModel_t* model=acquireDisplayModel(hdc);
+		if(model) {
+			DrawTextExWHelper(model,hdc,lpString,cbCount,lprc,dwDTFormat,NULL);
+			releaseDisplayModel(model);
+		}
+	}
+	return real_DrawTextW(hdc,lpString,cbCount,lprc,dwDTFormat);
+}
+
+typedef int(WINAPI *DrawTextExW_funcType)(HDC,wchar_t*,int,const RECT*,UINT,LPDRAWTEXTPARAMS);
+DrawTextExW_funcType real_DrawTextExW=NULL;
+int WINAPI fake_DrawTextExW(HDC hdc, wchar_t* lpString, int cbCount, const RECT* lprc, UINT dwDTFormat, LPDRAWTEXTPARAMS lpDTParams) {
+	if(lpString&&(cbCount!=0)&&!(dwDTFormat&DT_CALCRECT)&&!(dwDTFormat&DT_PREFIXONLY)) {
+		displayModel_t* model=acquireDisplayModel(hdc);
+		if(model) {
+			DrawTextExWHelper(model,hdc,lpString,cbCount,lprc,dwDTFormat,lpDTParams);
+			releaseDisplayModel(model);
+		}
+	}
+	return real_DrawTextExW(hdc,lpString,cbCount,lprc,dwDTFormat,lpDTParams);
+}
+
 typedef BOOL(WINAPI *DestroyWindow_funcType)(HWND);
 DestroyWindow_funcType real_DestroyWindow=NULL;
 BOOL WINAPI fake_DestroyWindow(HWND hwnd) {
@@ -130,11 +172,15 @@ void gdiHooks_inProcess_initialize() {
 	real_DestroyWindow=(DestroyWindow_funcType)apiHook_hookFunction("USER32.dll","DestroyWindow",fake_DestroyWindow);
 	real_TextOutW=(TextOutW_funcType)apiHook_hookFunction("GDI32.dll","TextOutW",fake_TextOutW);
 	real_ExtTextOutW=(ExtTextOutW_funcType)apiHook_hookFunction("GDI32.dll","ExtTextOutW",fake_ExtTextOutW);
+	real_DrawTextW=(DrawTextW_funcType)apiHook_hookFunction("USER32.dll","DrawTextW",fake_DrawTextW);
+	real_DrawTextExW=(DrawTextExW_funcType)apiHook_hookFunction("USER32.dll","DrawTextExW",fake_DrawTextExW);
 }
 
 void gdiHooks_inProcess_terminate() {
 	apiHook_unhookFunction("GDI32.dll","TextOutW");
 	apiHook_unhookFunction("GDI32.dll","ExtTextOutW");
+	apiHook_unhookFunction("USER32.dll","DrawTextW");
+	apiHook_unhookFunction("USER32.dll","DrawTextExW");
 	apiHook_unhookFunction("USER32.dll","DestroyWindow");
 	EnterCriticalSection(&criticalSection_displayModelsByWindow);
 	allowDisplayModelsByWindow=FALSE;
