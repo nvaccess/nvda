@@ -5,7 +5,7 @@
 #include <windows.h>
 #include "displayModel.h"
 
-extern std::map<HWND,displayModel_t> displayModelsByWindow;
+extern std::map<HWND,displayModel_t*> displayModelsByWindow;
 
 void gdiHooks_inProcess_initialize();
 void gdiHooks_inProcess_terminate();
