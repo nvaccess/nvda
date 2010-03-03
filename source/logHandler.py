@@ -91,14 +91,6 @@ class Logger(logging.Logger):
 			# This means that the user will be positioned at the start of the new log text.
 			# This is why we activate the log viewer before writing to the log.
 			logViewer.logViewer.outputCtrl.SetInsertionPointEnd()
-		if isinstance(msg, str):
-			# Messages should be unicode.
-			try:
-				msg = unicode(msg)
-			except UnicodeError, e:
-				# Something logged a non-unicode string containing non-ascii characters.
-				self.debugWarning("Non-unicode string containing non-ascii characters: %r\n%s" % (msg, e))
-				msg = unicode(msg, "ascii", "replace")
 		res = logging.Logger._log(self,level, msg, args, exc_info, extra)
 		if activateLogViewer:
 			# Make the log text we just wrote appear in the log viewer.
@@ -153,6 +145,17 @@ class FileHandler(logging.FileHandler):
 			except:
 				pass
 		return logging.FileHandler.handle(self,record)
+
+class Formatter(logging.Formatter):
+
+	def format(self, record):
+		s = logging.Formatter.format(self, record)
+		if isinstance(s, str):
+			# Log text must be unicode.
+			# The string is probably encoded according to our thread locale, so use mbcs.
+			# If there are any errors, just replace the character, as there's nothing else we can do.
+			s = unicode(s, "mbcs", "replace")
+		return s
 
 class StreamRedirector(object):
 	"""Redirects an output stream to a logger.
@@ -217,7 +220,7 @@ def initialize():
 	# HACK: codecs.open() always forces binary mode by appending "b" to mode, but we want text mode ("t") so we get crlf line endings.
 	# Fortunately, Python ignores the "b" if "t" is specified first (e.g. "wtb").
 	logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt", encoding="UTF-8")
-	logFormatter=logging.Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
+	logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
 	redirectStdout(log)
