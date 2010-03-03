@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA svn rev 3490\n"
-"POT-Creation-Date: 2010-01-04 18:26+GMT\n"
-"PO-Revision-Date: 2010-01-28 21:49+0200\n"
+"Project-Id-Version: NVDA svn rev 3608\n"
+"POT-Creation-Date: 2010-03-03 19:00+AUSEDT\n"
+"PO-Revision-Date: 2010-03-03 13:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -11,79 +11,110 @@ msgstr ""
 
 #
 # File: IAccessibleHandler.py, line: 671
+#: IAccessibleHandler.py:671
 msgid "Secure Desktop"
 msgstr "سطح مكتب آمن"
 
 #
+# File: controlTypes.py, line: 179
+#: NVDAHelper.py:100
+msgid "unknown layout"
+msgstr "نمط غير معروف"
+
+#
+# File: braille.py, line: 222
+# File: speech.py, line: 670
+#: NVDAHelper.py:101
+msgid "layout %s"
+msgstr "نمط %s"
+
+#
 # File: NVDAObjects/IAccessible/__init__.py, line: 1336
+#: NVDAObjects/IAccessible/__init__.py:1286
 msgid "Taskbar"
 msgstr "شريط المهام"
 
 #
 # File: NVDAObjects/IAccessible/sysTreeView32.py, line: 179
+#: NVDAObjects/IAccessible/sysTreeView32.py:198
 msgid "%s items"
 msgstr "%s عناصر"
 
 #
 # File: NVDAObjects/UIA/__init__.py, line: 427
+#: NVDAObjects/UIA/__init__.py:434
 msgid "invoke"
 msgstr "رابط"
 
 #
 # File: NVDAObjects/progressBar.py, line: 45
 # File: appModules/_default.py, line: 826
+#: NVDAObjects/behaviors.py:49
+#: appModules/_default.py:826
 msgid "%d percent"
 msgstr "%d بالمئة"
 
 #
 # File: NVDAObjects/window/__init__.py, line: 295
+#: NVDAObjects/window/__init__.py:295
 msgid "Desktop"
 msgstr "سطح المكتب"
 
 #
 # File: NVDAObjects/window/edit.py, line: 533
+#: NVDAObjects/window/edit.py:533
 msgid "unknown"
 msgstr "مجهول"
 
 #
 # File: NVDAObjects/window/edit.py, line: 535
+#: NVDAObjects/window/edit.py:535
 msgid "%s embedded object"
 msgstr "%s كائن مدرج"
 
 #
 # File: NVDAObjects/window/edit.py, line: 537
 # File: controlTypes.py, line: 243
+#: NVDAObjects/window/edit.py:537
+#: controlTypes.py:243
 msgid "embedded object"
 msgstr "كائن مدرج"
 
 #
 # File: NVDAObjects/window/excel.py, line: 48
+#: NVDAObjects/window/excel.py:48
 msgid "NVDA Excel Cell Editor"
 msgstr "محرر خلايا إكسيل لبرنامج إنفيديإيه"
 
 #
 # File: NVDAObjects/window/excel.py, line: 50
+#: NVDAObjects/window/excel.py:50
 msgid "Enter cell contents"
 msgstr "أدخل محتوى الخلية"
 
 #
 # File: NVDAObjects/window/excel.py, line: 105
+#: NVDAObjects/window/excel.py:105
 msgid "Moves to a cell and speaks its coordinates and content"
 msgstr "الانتقال للخلية وقراءة محتواها ومرجعها"
 
 #
 # File: NVDAObjects/window/excel.py, line: 193
 # File: controlTypes.py, line: 326
+#: NVDAObjects/window/excel.py:193
+#: controlTypes.py:326
 msgid "selected"
 msgstr "محدد"
 
 #
 # File: NVDAObjects/window/excel.py, line: 205
+#: NVDAObjects/window/excel.py:205
 msgid "through"
 msgstr "خلال"
 
 #
 # File: NVDAObjects/window/excel.py, line: 209
+#: NVDAObjects/window/excel.py:209
 msgid "has formula"
 msgstr "تحتوي على معادلة"
 
@@ -92,11 +123,16 @@ msgstr "تحتوي على معادلة"
 # File: NVDAObjects/window/winword.py, line: 367
 # File: NVDAObjects/window/winword.py, line: 378
 # File: NVDAObjects/window/winword.py, line: 389
+#: NVDAObjects/window/winword.py:356
+#: NVDAObjects/window/winword.py:367
+#: NVDAObjects/window/winword.py:378
+#: NVDAObjects/window/winword.py:389
 msgid "not in table"
 msgstr "لست في جدول"
 
 #
 # File: appModuleHandler.py, line: 172
+#: appModuleHandler.py:172
 msgid "Error in appModule %s"
 msgstr "خلل في الوحدة البرمجية %s"
 
@@ -116,6 +152,21 @@ msgstr "خلل في الوحدة البرمجية %s"
 # File: keyboardHandler.py, line: 56
 # File: keyboardHandler.py, line: 58
 # File: virtualBuffers/__init__.py, line: 692
+#: appModules/_default.py:43
+#: appModules/_default.py:161
+#: appModules/_default.py:171
+#: appModules/_default.py:181
+#: appModules/_default.py:191
+#: appModules/_default.py:713
+#: appModules/_default.py:789
+#: appModules/_default.py:799
+#: appModules/_default.py:809
+#: appModules/winamp.py:75
+#: appModules/winamp.py:85
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
+#: virtualBuffers/__init__.py:692
 msgid "on"
 msgstr "تشغيل"
 
@@ -137,77 +188,109 @@ msgstr "تشغيل"
 # File: keyboardHandler.py, line: 56
 # File: keyboardHandler.py, line: 58
 # File: virtualBuffers/__init__.py, line: 692
+#: appModules/_default.py:46
+#: appModules/_default.py:158
+#: appModules/_default.py:168
+#: appModules/_default.py:178
+#: appModules/_default.py:188
+#: appModules/_default.py:591
+#: appModules/_default.py:710
+#: appModules/_default.py:786
+#: appModules/_default.py:796
+#: appModules/_default.py:806
+#: appModules/winamp.py:77
+#: appModules/winamp.py:87
+#: gui/settingsDialogs.py:484
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
+#: virtualBuffers/__init__.py:692
 msgid "off"
 msgstr "تعطيل"
 
 #
 # File: appModules/_default.py, line: 48
+#: appModules/_default.py:48
 msgid "keyboard help %s"
 msgstr "%s إرشادات لوحة المفاتيح"
 
 #
 # File: appModules/_default.py, line: 49
+#: appModules/_default.py:49
 msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any."
 msgstr "تشغيل وتعطيل مساعد لوحة المفاتيح. بالضغط على أي مفتاح يخبرك بالوظيفة المنوط بتنفيذها"
 
 #
 # File: appModules/_default.py, line: 65
+#: appModules/_default.py:65
 msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
 msgstr "قراءة السطر الواقع تحت مؤشر التطبيق. بالضغط على هذا المفتاح مرتين يقوم بتهجئته"
 
 #
 # File: appModules/_default.py, line: 68
+#: appModules/_default.py:68
 msgid "left click"
 msgstr "نقرة يسرَى"
 
 #
 # File: appModules/_default.py, line: 71
+#: appModules/_default.py:71
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "النقر الأيسر على موضع المؤشر مرة واحدة"
 
 #
 # File: appModules/_default.py, line: 74
+#: appModules/_default.py:74
 msgid "right click"
 msgstr "نقرة يمنَى"
 
 #
 # File: appModules/_default.py, line: 77
+#: appModules/_default.py:77
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "النقر الأيمن مرة واحدة على موضع المؤشر"
 
 #
 # File: appModules/_default.py, line: 81
+#: appModules/_default.py:81
 msgid "left mouse button unlock"
 msgstr "تحرير زر الفأرة الأيسر"
 
 #
 # File: appModules/_default.py, line: 84
+#: appModules/_default.py:84
 msgid "left mouse button lock"
 msgstr "تثبيت زر الفأرة الأيسر"
 
 #
 # File: appModules/_default.py, line: 86
+#: appModules/_default.py:86
 msgid "Locks or unlocks the left mouse button"
 msgstr "تثبيت أو تحرير زر الفأرة الأيسر"
 
 #
 # File: appModules/_default.py, line: 90
+#: appModules/_default.py:90
 msgid "right mouse button unlock"
 msgstr "تحرير زر الفأرة الأيمن"
 
 #
 # File: appModules/_default.py, line: 93
+#: appModules/_default.py:93
 msgid "right mouse button lock"
 msgstr "تثبيت زر الفأرة الأيمن"
 
 #
 # File: appModules/_default.py, line: 95
+#: appModules/_default.py:95
 msgid "Locks or unlocks the right mouse button"
 msgstr "تثبيت أو تحرير زر الفأرة الأيمن"
 
 #
 # File: appModules/_default.py, line: 107
 # File: cursorManager.py, line: 225
+#: appModules/_default.py:107
+#: cursorManager.py:225
 msgid "no selection"
 msgstr "لا يوجد تحديد"
 
@@ -217,16 +300,23 @@ msgstr "لا يوجد تحديد"
 # File: speech.py, line: 369
 # File: speech.py, line: 382
 # File: virtualBuffers/__init__.py, line: 598
+#: appModules/_default.py:109
+#: speech.py:290
+#: speech.py:386
+#: speech.py:399
+#: virtualBuffers/__init__.py:598
 msgid "selected %s"
 msgstr "%s محدد"
 
 #
 # File: appModules/_default.py, line: 110
+#: appModules/_default.py:110
 msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
 msgstr "قراءة النص المحدد بكائنات التحرير والمستندات."
 
 #
 # File: appModules/_default.py, line: 118
+#: appModules/_default.py:118
 msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
 msgstr "بالنقر عليه مرة واحدة, يُعْلِمُك بالوقت. ومرتين, يُعْلِمُك بالتاريخ"
 
@@ -235,86 +325,106 @@ msgstr "بالنقر عليه مرة واحدة, يُعْلِمُك بالوقت
 # File: appModules/_default.py, line: 132
 # File: appModules/_default.py, line: 141
 # File: appModules/_default.py, line: 150
+#: appModules/_default.py:123
+#: appModules/_default.py:132
+#: appModules/_default.py:141
+#: appModules/_default.py:150
 msgid "No settings"
 msgstr "لا توجد إعدادات"
 
 #
 # File: appModules/_default.py, line: 127
+#: appModules/_default.py:127
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr "زيادة الإعداد الحالي لآلة النطق العاملة"
 
 #
 # File: appModules/_default.py, line: 136
+#: appModules/_default.py:136
 msgid "Decreases the currently active setting in the synth settings ring"
 msgstr "تقليل إعداد آلة النطق العاملة"
 
 #
 # File: appModules/_default.py, line: 145
+#: appModules/_default.py:145
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr "الانتقال للإعداد التالي لآلة النطق"
 
 #
 # File: appModules/_default.py, line: 154
+#: appModules/_default.py:154
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "الانتقال للإعداد السابق لآلة النطق"
 
 #
 # File: appModules/_default.py, line: 163
+#: appModules/_default.py:163
 msgid "speak typed characters"
 msgstr "نُطْق الأحرُف"
 
 #
 # File: appModules/_default.py, line: 164
+#: appModules/_default.py:164
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "تشغيل وتعطيل نُطْق الأحرُف المكتوبة على لوحة المفاتيح"
 
 #
 # File: appModules/_default.py, line: 173
+#: appModules/_default.py:173
 msgid "speak typed words"
 msgstr "نُطْق الكلمات"
 
 #
 # File: appModules/_default.py, line: 174
+#: appModules/_default.py:174
 msgid "Toggles on and off the speaking of typed words"
 msgstr "تشغيل وتعطيل نُطْق الكلمات المكتوبة على لوحة المفاتيح"
 
 #
 # File: appModules/_default.py, line: 183
+#: appModules/_default.py:183
 msgid "speak command keys"
 msgstr "نُطْق مفاتيح التحكم"
 
 #
 # File: appModules/_default.py, line: 184
+#: appModules/_default.py:184
 msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
 msgstr "تشغيل وتعطيل نُطْق كافة مفاتيح التحكم باستثناء الحروف"
 
 #
 # File: appModules/_default.py, line: 193
+#: appModules/_default.py:193
 msgid "speak punctuation"
 msgstr "نُطق علامات الترقيم"
 
 #
 # File: appModules/_default.py, line: 194
+#: appModules/_default.py:194
 msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"
 msgstr "تشغيل وتعطيل نُطْق علامات الترقيم. بتعطيل هذه الخاصية يترَك الأمر لآلة النطق "
 
 #
 # File: appModules/_default.py, line: 209
+#: appModules/_default.py:209
 msgid "object has no location"
 msgstr "لا يوجد موضع للكائن"
 
 #
 # File: appModules/_default.py, line: 215
+#: appModules/_default.py:215
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "تحريك مؤشر الفأرة إلى الكائن الحالي"
 
 #
 # File: appModules/_default.py, line: 218
+#: appModules/_default.py:218
 msgid "Move navigator object to mouse"
 msgstr "تحريك الكائن الحالي إلى  مؤشر الفأرة"
 
 #
 # File: appModules/_default.py, line: 222
+#: appModules/_default.py:222
 msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
 msgstr "قراءة الكائن الواقع تحت مؤشر الفأرة"
 
@@ -329,37 +439,54 @@ msgstr "قراءة الكائن الواقع تحت مؤشر الفأرة"
 # File: appModules/_default.py, line: 372
 # File: appModules/_default.py, line: 395
 # File: appModules/_default.py, line: 751
+#: appModules/_default.py:227
+#: appModules/_default.py:261
+#: appModules/_default.py:297
+#: appModules/_default.py:310
+#: appModules/_default.py:323
+#: appModules/_default.py:336
+#: appModules/_default.py:349
+#: appModules/_default.py:372
+#: appModules/_default.py:395
+#: appModules/_default.py:751
 msgid "no navigator object"
 msgstr "لا يوجد كائن حالي"
 
 #
 # File: appModules/_default.py, line: 253
 # File: appModules/_default.py, line: 732
+#: appModules/_default.py:253
+#: appModules/_default.py:732
 msgid "%s copied to clipboard"
 msgstr "نَسخ %s إلى الحافظة"
 
 #
 # File: appModules/_default.py, line: 256
+#: appModules/_default.py:256
 msgid "Reports the current navigator object or, if pressed three times, Copies name and value of current navigator object to the clipboard"
 msgstr "قراءة الكائن الحالي, بالضغط عليه ثلاث مرات متعاقبة, ينسخ اسم وقيمة الكائن إلى الحافظة"
 
 #
 # File: appModules/_default.py, line: 264
+#: appModules/_default.py:264
 msgid "No location information for navigator object"
 msgstr "لا توجد بيانات متوفرة عن موضع الكائن الحالي"
 
 #
 # File: appModules/_default.py, line: 268
+#: appModules/_default.py:268
 msgid "No location information for screen"
 msgstr "لا توجد بيانات عن الموضع من الشاشة"
 
 #
 # File: appModules/_default.py, line: 274
+#: appModules/_default.py:274
 msgid "Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen"
 msgstr "موقع الكائن على الشاشة %.1f بالمائة عن حد الشاشة الأيسر, %.1f بالمائة عن حد الشاشة العلوي, وعرض الكائن %.1f بالمائة, وارتفاعه %.1f بالمائة"
 
 #
 # File: appModules/_default.py, line: 275
+#: appModules/_default.py:275
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "قراءة عرض, وارتفاع, وموضع الكائن"
 
@@ -367,101 +494,123 @@ msgstr "قراءة عرض, وارتفاع, وموضع الكائن"
 # File: appModules/_default.py, line: 280
 # File: appModules/_default.py, line: 289
 # File: appModules/_default.py, line: 691
+#: appModules/_default.py:280
+#: appModules/_default.py:289
+#: appModules/_default.py:691
 msgid "no focus"
 msgstr "لا يوجد تحديد حالي"
 
 #
 # File: appModules/_default.py, line: 282
+#: appModules/_default.py:282
 msgid "move to focus"
 msgstr "الانتقال للتحديد الحالي"
 
 #
 # File: appModules/_default.py, line: 284
+#: appModules/_default.py:284
 msgid "Sets the navigator object to the current focus"
 msgstr "تحريك الكائن  إلى التحديد الحالي"
 
 #
 # File: appModules/_default.py, line: 291
+#: appModules/_default.py:291
 msgid "move focus"
 msgstr "الانتقال إلى التحديد الحالي"
 
 #
 # File: appModules/_default.py, line: 292
+#: appModules/_default.py:292
 msgid "Sets the keyboard focus to the navigator object"
 msgstr "تحريك مؤشر لوحة المفاتيح إلى الكائن الحالي"
 
 #
 # File: appModules/_default.py, line: 304
+#: appModules/_default.py:304
 msgid "No parents"
 msgstr "لا توجد كائنات رئيسية"
 
 #
 # File: appModules/_default.py, line: 305
+#: appModules/_default.py:305
 msgid "Sets the navigator object to the parent of the object it is currently on and speaks it"
 msgstr "تحريك الكائن الحالي إلى الكائن الرئيسي له وقراءته"
 
 #
 # File: appModules/_default.py, line: 317
+#: appModules/_default.py:317
 msgid "No next"
 msgstr "لا يوجد المزيد من الكائنات"
 
 #
 # File: appModules/_default.py, line: 318
+#: appModules/_default.py:318
 msgid "Sets the navigator object to the object next to the one it is currently on and speaks it"
 msgstr "تحريك الكائن الحالي إلى الكائن الذي يليه وقراءته"
 
 #
 # File: appModules/_default.py, line: 330
+#: appModules/_default.py:330
 msgid "No previous"
 msgstr "لا توجد كائنات سابقة"
 
 #
 # File: appModules/_default.py, line: 331
+#: appModules/_default.py:331
 msgid "Sets the navigator object to the object previous to the one it is currently on and speaks it"
 msgstr "تحريك الكائن الحالي إلى الكائن السابق له وقراته"
 
 #
 # File: appModules/_default.py, line: 343
+#: appModules/_default.py:343
 msgid "No children"
 msgstr "لا توجد كائنات فرعية"
 
 #
 # File: appModules/_default.py, line: 344
+#: appModules/_default.py:344
 msgid "Sets the navigator object to the first child object of the one it is currently on and speaks it"
 msgstr "تحريك الكائن الحالي ألى الكائن الفرعي له  وقراءته"
 
 #
 # File: appModules/_default.py, line: 366
+#: appModules/_default.py:366
 msgid "end of flow"
 msgstr "نهاية العرض الشجري"
 
 #
 # File: appModules/_default.py, line: 367
+#: appModules/_default.py:367
 msgid "Sets the navigator object to the object this object flows to and speaks it"
 msgstr "تحريك الكائن الحالي إلى الكائن الذي يتبعه وقراءتهما"
 
 #
 # File: appModules/_default.py, line: 389
+#: appModules/_default.py:389
 msgid "Beginning of flow"
 msgstr "بداية العرض الشجري"
 
 #
 # File: appModules/_default.py, line: 390
+#: appModules/_default.py:390
 msgid "Sets the navigator object to the object this object flows from and speaks it"
 msgstr "تحريك الكائنالحالي للكائن المتفرع منه وقراءته "
 
 #
 # File: appModules/_default.py, line: 400
+#: appModules/_default.py:400
 msgid "No default action"
 msgstr "لا يوجد فعل تلقائي"
 
 #
 # File: appModules/_default.py, line: 405
+#: appModules/_default.py:405
 msgid "default action failed"
 msgstr "فشل الفعل التلقائي"
 
 #
 # File: appModules/_default.py, line: 408
+#: appModules/_default.py:408
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
 msgstr "تنفيذ الفعل الخاص بالكائن الحالي "
 
@@ -469,21 +618,27 @@ msgstr "تنفيذ الفعل الخاص بالكائن الحالي "
 # File: appModules/_default.py, line: 414
 # File: appModules/_default.py, line: 426
 # File: appModules/_default.py, line: 467
+#: appModules/_default.py:414
+#: appModules/_default.py:426
+#: appModules/_default.py:467
 msgid "top"
 msgstr "بداية"
 
 #
 # File: appModules/_default.py, line: 416
+#: appModules/_default.py:416
 msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
 msgstr "استعراض السطر الأول من الكائن الحالي"
 
 #
 # File: appModules/_default.py, line: 428
+#: appModules/_default.py:428
 msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
 msgstr "استعراض السطر السابق للكائن الحالي"
 
 #
 # File: appModules/_default.py, line: 437
+#: appModules/_default.py:437
 msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled"
 msgstr "استعراض السطر الحالي. بالضغط على هذا المفتاح مرتين متعاقبتين يقوم بتهجئته"
 
@@ -491,31 +646,39 @@ msgstr "استعراض السطر الحالي. بالضغط على هذا ال�
 # File: appModules/_default.py, line: 447
 # File: appModules/_default.py, line: 455
 # File: appModules/_default.py, line: 488
+#: appModules/_default.py:447
+#: appModules/_default.py:455
+#: appModules/_default.py:488
 msgid "bottom"
 msgstr "نهاية"
 
 #
 # File: appModules/_default.py, line: 449
+#: appModules/_default.py:449
 msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
 msgstr "استعراض السطر التالي"
 
 #
 # File: appModules/_default.py, line: 457
+#: appModules/_default.py:457
 msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
 msgstr "استعراض السطر الأخير"
 
 #
 # File: appModules/_default.py, line: 469
+#: appModules/_default.py:469
 msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
 msgstr "استعراض الكلمة السابقة"
 
 #
 # File: appModules/_default.py, line: 478
+#: appModules/_default.py:478
 msgid "Speaks the word of the current navigator object where the review cursor is situated. If this key is pressed twice, the word will be spelled"
 msgstr "استعراض الكلمة الحالية. بالضغط على هذا المفتاح مرتين يقوم بتهجئتها"
 
 #
 # File: appModules/_default.py, line: 490
+#: appModules/_default.py:490
 msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
 msgstr "استعراض الكلمة التالية"
 
@@ -523,21 +686,27 @@ msgstr "استعراض الكلمة التالية"
 # File: appModules/_default.py, line: 498
 # File: appModules/_default.py, line: 510
 # File: appModules/totalcmd.py, line: 35
+#: appModules/_default.py:498
+#: appModules/_default.py:510
+#: appModules/totalcmd.py:35
 msgid "left"
 msgstr "يسار"
 
 #
 # File: appModules/_default.py, line: 500
+#: appModules/_default.py:500
 msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
 msgstr "استعراض أول حرف من السطر الحالي"
 
 #
 # File: appModules/_default.py, line: 518
+#: appModules/_default.py:518
 msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
 msgstr "استعراض الحرف السابق"
 
 #
 # File: appModules/_default.py, line: 532
+#: appModules/_default.py:532
 msgid "Reports the character of the current navigator object where the review cursor is situated. If this key is pressed twice, ascii and hexadecimal values are spoken for the character"
 msgstr "استعراض الحرف الحالي. بالضغط على هذا المفتاح مرتين ينطق كل من القيمة الرقمية والنظام السداسي عشر له"
 
@@ -545,853 +714,1039 @@ msgstr "استعراض الحرف الحالي. بالضغط على هذا ال�
 # File: appModules/_default.py, line: 542
 # File: appModules/_default.py, line: 559
 # File: appModules/totalcmd.py, line: 37
+#: appModules/_default.py:542
+#: appModules/_default.py:559
+#: appModules/totalcmd.py:37
 msgid "right"
 msgstr "يمين"
 
 #
 # File: appModules/_default.py, line: 550
+#: appModules/_default.py:550
 msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
 msgstr "استعراض الحرف التالي"
 
 #
 # File: appModules/_default.py, line: 561
+#: appModules/_default.py:561
 msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
 msgstr "استعراض آخر حرف بالسطر"
 
 #
 # File: appModules/_default.py, line: 567
+#: appModules/_default.py:567
 msgid "No caret"
 msgstr "لا يوجد مؤشر تحرير"
 
 #
 # File: appModules/_default.py, line: 572
+#: appModules/_default.py:572
 msgid "Moves the review cursor to the position of the system caret, in the current navigator object"
 msgstr "نقل مؤشر الاستعراض إلى مؤشر التحرير"
 
 #
 # File: appModules/_default.py, line: 579
+#: appModules/_default.py:579
 msgid "no caret"
 msgstr "لا يوجد مؤشر تحرير"
 
 #
 # File: appModules/_default.py, line: 584
+#: appModules/_default.py:584
 msgid "Moves the system caret to the position of the review cursor , in the current navigator object"
 msgstr "نقل مؤشر التحرير إلى مؤشر الاستعراض"
 
 #
 # File: appModules/_default.py, line: 593
+#: appModules/_default.py:593
 msgid "beeps"
 msgstr "صفير"
 
 #
 # File: appModules/_default.py, line: 595
+#: appModules/_default.py:595
 msgid "talk"
 msgstr "كلام"
 
 #
 # File: appModules/_default.py, line: 597
+#: appModules/_default.py:597
 msgid "speech mode %s"
 msgstr "نمط النطق %s"
 
 #
 # File: appModules/_default.py, line: 599
+#: appModules/_default.py:599
 msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr "الانتقال بين أنظمة النطق من صفير, وكلام, وصَمْت"
 
 #
 # File: appModules/_default.py, line: 622
+#: appModules/_default.py:622
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
 msgstr "الانتقال بين بيئة الاستمارات وبيئة التصفح"
 
 #
 # File: appModules/_default.py, line: 626
+#: appModules/_default.py:626
 msgid "Quits NVDA!"
 msgstr "الخروج من البرنامج!"
 
 #
 # File: appModules/_default.py, line: 630
+#: appModules/_default.py:630
 msgid "Shows the NVDA menu"
 msgstr "تفعيل واجهة البرنامج"
 
 #
 # File: appModules/_default.py, line: 635
+#: appModules/_default.py:635
 msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
 msgstr "بدأ القراءة من عند مؤشر الاستعراض, حتى نهاية النص"
 
 #
 # File: appModules/_default.py, line: 640
+#: appModules/_default.py:640
 msgid "reads from the navigator object "
 msgstr "بدأ القراءة من الكائن الحالي"
 
 #
 # File: appModules/_default.py, line: 652
+#: appModules/_default.py:652
 msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
 msgstr "بدأ القراءة من عند مؤشر التحرير, حتى نهاية النص"
 
 #
 # File: appModules/_default.py, line: 678
+#: appModules/_default.py:678
 msgid "No formatting information"
 msgstr "لا توجد تنسيقات"
 
 #
 # File: appModules/_default.py, line: 681
+#: appModules/_default.py:681
 msgid "Reports formatting info for the current cursor position within a document"
 msgstr "الإعلام عن التنسيق الخاص بمكان المؤشر داخل المستند"
 
 #
 # File: appModules/_default.py, line: 692
+#: appModules/_default.py:692
 msgid "reports the object with focus"
 msgstr "الإعلام عن الكائن مع التحديد الحالي"
 
 #
 # File: appModules/_default.py, line: 697
+#: appModules/_default.py:697
 msgid "no status bar found"
 msgstr "لا يوجد شريط حالة"
 
 #
 # File: appModules/_default.py, line: 706
+#: appModules/_default.py:706
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr "قراءة شريط العنوان للتطبيق الحالي"
 
 #
 # File: appModules/_default.py, line: 715
+#: appModules/_default.py:715
 msgid "Mouse tracking"
 msgstr "مسار الفأرة"
 
 #
 # File: appModules/_default.py, line: 716
+#: appModules/_default.py:716
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "تشغيل وتعطيل الإعلام عن الكائنات أثناء حركة الفأرة"
 
 #
 # File: appModules/_default.py, line: 724
+#: appModules/_default.py:724
 msgid "no title"
 msgstr "لا يوجد عنوان"
 
 #
 # File: appModules/_default.py, line: 733
+#: appModules/_default.py:733
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
 msgstr "الإعلام عن عنوان التطبيق الحالي أو النافذة المرئية. بالضغط عليه مرتين, يقوم بتهجئته, وبالضغط عليه ثلاث مرات ينسخ العنوان إلى حافظة الوندوز"
 
 #
 # File: appModules/_default.py, line: 740
+#: appModules/_default.py:740
 msgid "speaks the current foreground object"
 msgstr "قراءة الكائن الحالي"
 
 #
 # File: appModules/_default.py, line: 755
 # File: cursorManager.py, line: 228
+#: appModules/_default.py:755
+#: cursorManager.py:228
 msgid "copied to clipboard"
 msgstr "نسخ إلى الحافظة"
 
 #
 # File: appModules/_default.py, line: 759
+#: appModules/_default.py:759
 msgid "Control ID: %s"
 msgstr "رقم الكائن: %s"
 
 #
 # File: appModules/_default.py, line: 760
+#: appModules/_default.py:760
 msgid "Class: %s"
 msgstr "تصنيف: %s"
 
 #
 # File: appModules/_default.py, line: 762
+#: appModules/_default.py:762
 msgid "internal text: %s"
 msgstr "النص الداخلي لل %s"
 
 #
 # File: appModules/_default.py, line: 763
+#: appModules/_default.py:763
 msgid "text: %s"
 msgstr "نص: %s"
 
 #
 # File: appModules/_default.py, line: 765
+#: appModules/_default.py:765
 msgid "reports some information about the current navigator object, mainly useful for developers. When pressed 2 times it copies control id, class and internal text to the windows clipboard"
 msgstr "الإعلام عن بعض المعلومات الخاصة بالكائن الحالي, مما يفيد المطورين. فبالضغط عليه مرتين ينسخ رقم الكائن وتصنيفه والنص الداخلي له إلى الحافظة"
 
 #
 # File: appModules/_default.py, line: 771
+#: appModules/_default.py:771
 msgid "no progress bar updates"
 msgstr "تجاهل التغيير في الشريط التقدمي"
 
 #
 # File: appModules/_default.py, line: 774
+#: appModules/_default.py:774
 msgid "speak progress bar updates"
 msgstr "نُطْق التغيير في الشريط التقدمي"
 
 #
 # File: appModules/_default.py, line: 777
+#: appModules/_default.py:777
 msgid "beep for progress bar updates"
 msgstr "إصدار صوت الصفير عند تغيير الشريط التقدمي "
 
 #
 # File: appModules/_default.py, line: 780
+#: appModules/_default.py:780
 msgid "beep and speak progress bar updates"
 msgstr "إصدار صوت الصفير بالإضافة إلى نُطْق النسبة المئوية للشريط التقدمي "
 
 #
 # File: appModules/_default.py, line: 782
+#: appModules/_default.py:782
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
 msgstr "يَتَنَقَّل بالإعلام عن التغييرات في الشريط التقدمي بين صوت الصفير فقط, أو نطق النسبة المئوية فقط, أو عن طريق الاثنين معا, أو عن طريق التعطيل "
 
 #
 # File: appModules/_default.py, line: 791
+#: appModules/_default.py:791
 msgid "report dynamic content changes"
 msgstr "الإعلام عن التغييرات التلقائية"
 
 #
 # File: appModules/_default.py, line: 792
+#: appModules/_default.py:792
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
 msgstr "تشغيل وتعطيل الإعلام عن تغيير المحتوى التلقائي للسطر الإلكتروني"
 
 #
 # File: appModules/_default.py, line: 801
+#: appModules/_default.py:801
 msgid "caret moves review cursor"
 msgstr "تغيير مؤشر التحرير بتغيير مؤشر الاستعراض"
 
 #
 # File: appModules/_default.py, line: 802
+#: appModules/_default.py:802
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "تشغيل وتعطيل تحريك مؤشر الاستعراض وفقا لمؤشر التحرير."
 
 #
 # File: appModules/_default.py, line: 811
+#: appModules/_default.py:811
 msgid "focus moves navigator object"
 msgstr "تغيير الكائن بتغيير التحديد الحالي"
 
 #
 # File: appModules/_default.py, line: 812
+#: appModules/_default.py:812
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "تشغيل وتعطيل حركة الكائن تبعا لحركة التحديد الحالي"
 
 #
 # File: appModules/_default.py, line: 824
+#: appModules/_default.py:824
 msgid "no system battery"
 msgstr "لا توجد بطارية للنظام"
 
 #
 # File: appModules/_default.py, line: 827
+#: appModules/_default.py:827
 msgid "AC power on"
 msgstr "مصدر الطاقة الكهربائية موصول"
 
 #
 # File: appModules/_default.py, line: 829
+#: appModules/_default.py:829
 msgid "%d hours and %d minutes remaining"
 msgstr "%d ساعات و %d دقائق "
 
 #
 # File: appModules/_default.py, line: 831
+#: appModules/_default.py:831
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr "الإعلام عن حالة البطارية والزمن المتبقي في حالة فصل مصدر  الطاقة الكهرابائية"
 
 #
 # File: appModules/_default.py, line: 835
+#: appModules/_default.py:835
 msgid "Pass next key through"
 msgstr "تمرير المفتاح التالي عبر"
 
 #
 # File: appModules/_default.py, line: 836
+#: appModules/_default.py:836
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "تنفيذ مفتاح الاختصار التالي في النوندوز"
 
 #
 # File: appModules/_default.py, line: 841
+#: appModules/_default.py:841
 msgid "Currently running application is %s"
 msgstr "البرنامج المستخدم حاليا هو %s"
 
 #
 # File: appModules/_default.py, line: 844
+#: appModules/_default.py:844
 msgid " and currently loaded module is %s"
 msgstr " والوحدة البرمجية العاملة الحالية هي %s"
 
 #
 # File: appModules/_default.py, line: 846
+#: appModules/_default.py:846
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
 msgstr "قراءة اسم الملف في التطبيق الحالي بالتزامن مع الوحدة البرمجية العاملة"
 
 #
 # File: appModules/_default.py, line: 850
+#: appModules/_default.py:850
 msgid "Shows the NVDA general settings dialog"
 msgstr "إظهار محاورة الإعدادات العامة الخاصة بالبرنامج"
 
 #
 # File: appModules/_default.py, line: 854
+#: appModules/_default.py:854
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "إظهار محاورة آلات النُطْق الخاصة بالبرنامج"
 
 #
 # File: appModules/_default.py, line: 858
+#: appModules/_default.py:858
 msgid "Shows the NVDA voice settings dialog"
 msgstr "إظهار محاورة اعدادات الصوت الخاصة بالبرنامج"
 
 #
 # File: appModules/_default.py, line: 862
+#: appModules/_default.py:862
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "إظهار محاورة  اعدادات لوحة المفاتيح الخاصة بالبرنامج"
 
 #
 # File: appModules/_default.py, line: 866
+#: appModules/_default.py:866
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "إظهار محاورة إعدادات الفأرة الخاصة بالبرنامج"
 
 #
 # File: appModules/_default.py, line: 870
+#: appModules/_default.py:870
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "إظهار محاورة إعدادات كائنات التقديم الخاصة بالبرنامج"
 
 #
 # File: appModules/_default.py, line: 874
+#: appModules/_default.py:874
 msgid "Shows the NVDA virtual buffers settings dialog"
 msgstr "إظهار محاورة إعدادات الذاكرة التخيلية الخاصة بالبرنامج"
 
 #
 # File: appModules/_default.py, line: 878
+#: appModules/_default.py:878
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "إظهار محاورة إعدادات تنسيق المستندات الخاصة بالبرنامج"
 
 #
 # File: appModules/_default.py, line: 882
+#: appModules/_default.py:882
 msgid "Saves the current NVDA configuration"
 msgstr "حفظ الإعدادات الحالية للبرنامج"
 
 #
 # File: appModules/_default.py, line: 886
+#: appModules/_default.py:886
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr "حفظ التعديلات عند الخروج من البرنامج"
 
 #
 # File: appModules/_default.py, line: 896
+#: appModules/_default.py:896
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "تفعيل شاشة السطر الإلكتروني للبرنامج, مما يفيد في تطويره "
 
 #
 # File: appModules/_default.py, line: 901
 # File: gui/settingsDialogs.py, line: 839
+#: appModules/_default.py:901
+#: gui/settingsDialogs.py:839
 msgid "review"
 msgstr "استعراض"
 
 #
 # File: appModules/_default.py, line: 904
 # File: gui/settingsDialogs.py, line: 839
+#: appModules/_default.py:904
+#: gui/settingsDialogs.py:839
 msgid "focus"
 msgstr "التحديد الحالي"
 
 #
 # File: appModules/_default.py, line: 905
+#: appModules/_default.py:905
 msgid "Braille tethered to %s"
 msgstr "إرفاق مؤشر الخط البارز %s"
 
 #
 # File: appModules/_default.py, line: 906
+#: appModules/_default.py:906
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "التحول بين مؤشر الاستعراض للبرايل ومؤشر الاستمارات"
 
 #
 # File: appModules/_default.py, line: 914
+#: appModules/_default.py:914
 msgid "There is no text on the clipboard"
 msgstr "لا يوجد نص بالحافظة"
 
 #
 # File: appModules/_default.py, line: 919
+#: appModules/_default.py:919
 msgid "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "الحافظة تحتوي على جزء كبير من نص. يبلغ طوله %sحرف"
 
 #
 # File: appModules/_default.py, line: 920
+#: appModules/_default.py:920
 msgid "Reports the text on the Windows clipboard"
 msgstr "الإعلام عن النص الموجود بالحافظة"
 
 #
 # File: appModules/_default.py, line: 924
+#: appModules/_default.py:924
 msgid "Start marked"
 msgstr "بداية التحديد"
 
 #
 # File: appModules/_default.py, line: 925
+#: appModules/_default.py:925
 msgid "Marks the current position of the review cursor as the start of text to be copied"
 msgstr "بدأ التحديد من نقطة وجود المؤشر للنسخ"
 
 #
 # File: appModules/_default.py, line: 929
+#: appModules/_default.py:929
 msgid "No start marker set"
 msgstr "لا توجد علامة تحديد"
 
 #
 # File: appModules/_default.py, line: 933
+#: appModules/_default.py:933
 msgid "The start marker must reside within the same object"
 msgstr "لا بد من وجود علامة بداية التحديد في نفس الكائن"
 
 #
 # File: appModules/_default.py, line: 938
+#: appModules/_default.py:938
 msgid "Review selection copied to clipboard"
 msgstr "عرض النص المختار الذي تم نسخه"
 
 #
 # File: appModules/_default.py, line: 940
+#: appModules/_default.py:940
 msgid "No text to copy"
 msgstr "لا يوجد نص للنسخ"
 
 #
 # File: appModules/_default.py, line: 943
+#: appModules/_default.py:943
 msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
 msgstr "استرجاع النص بداية من علامة التحديد السابقة حتى موضع المؤشر ونسخه إلى الحافظة"
 
 #
 # File: appModules/calc.py, line: 32
+#: appModules/calc.py:32
 msgid "Display"
 msgstr "عرض النتائج"
 
 #
 # File: appModules/explorer.py, line: 16
+#: appModules/explorer.py:33
 msgid "Start"
 msgstr "ابدأ"
 
 #
 # File: appModules/foobar2000.py, line: 44
+#: appModules/foobar2000.py:44
 msgid "No track playing"
 msgstr "لا يوجد ملف صوتي "
 
 #
 # File: appModules/foobar2000.py, line: 50
+#: appModules/foobar2000.py:50
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "الإعلام عن الوقت المتبقى من الملف الصوتي الحالي, إن وجد "
 
+#: appModules/miranda32.py:104
+msgid "No message yet"
+msgstr "لا توجد رسائل بعد"
+
+#: appModules/miranda32.py:105
+msgid "Displays one of the recent messages"
+msgstr "عرض أحدث الرسائل"
+
 #
 # File: appModules/msimn.py, line: 18
+#: appModules/msimn.py:18
 msgid "Attachments"
 msgstr "مرفقات"
 
 #
 # File: appModules/msimn.py, line: 19
+#: appModules/msimn.py:19
 msgid "To:"
 msgstr "إلى:"
 
 #
 # File: appModules/msimn.py, line: 20
+#: appModules/msimn.py:20
 msgid "Newsgroup:"
 msgstr "مجموعة الأخبار:"
 
 #
 # File: appModules/msimn.py, line: 21
+#: appModules/msimn.py:21
 msgid "CC:"
 msgstr "نسخة إلى:"
 
 #
 # File: appModules/msimn.py, line: 22
+#: appModules/msimn.py:22
 msgid "Subject:"
 msgstr "الموضوع:"
 
 #
 # File: appModules/msimn.py, line: 23
 # File: appModules/msimn.py, line: 31
+#: appModules/msimn.py:23
+#: appModules/msimn.py:31
 msgid "From:"
 msgstr "من:"
 
 #
 # File: appModules/msimn.py, line: 24
+#: appModules/msimn.py:24
 msgid "Date:"
 msgstr "التاريخ:"
 
 #
 # File: appModules/msimn.py, line: 25
+#: appModules/msimn.py:25
 msgid "Forward to:"
 msgstr "إعادة توجيه إلى:"
 
 #
 # File: appModules/msimn.py, line: 26
+#: appModules/msimn.py:26
 msgid "Answer to:"
 msgstr "رد على:"
 
 #
 # File: appModules/msimn.py, line: 27
+#: appModules/msimn.py:27
 msgid "Organisation:"
 msgstr "منظمة:"
 
 #
 # File: appModules/msimn.py, line: 28
+#: appModules/msimn.py:28
 msgid "Distribution:"
 msgstr "توزيع:"
 
 #
 # File: appModules/msimn.py, line: 29
+#: appModules/msimn.py:29
 msgid "Key words:"
 msgstr "الكلمات المفتاحية:"
 
 #
 # File: appModules/msimn.py, line: 30
+#: appModules/msimn.py:30
 msgid "BCC:"
 msgstr "نسخة مخفية الوجهة:"
 
 #
 # File: appModules/outlook.py, line: 25
 # File: appModules/outlook.py, line: 38
+#: appModules/outlook.py:25
+#: appModules/outlook.py:38
 msgid "subject: %s"
 msgstr "الموضوع: %s"
 
 #
 # File: appModules/outlook.py, line: 26
+#: appModules/outlook.py:26
 msgid "received: %s"
 msgstr "تم استلام: %s"
 
 #
 # File: appModules/outlook.py, line: 30
+#: appModules/outlook.py:30
 msgid "unread"
 msgstr "غير مقروء"
 
 #
 # File: appModules/outlook.py, line: 32
+#: appModules/outlook.py:32
 msgid "attachment"
 msgstr "مرفق"
 
 #
 # File: appModules/outlook.py, line: 39
+#: appModules/outlook.py:39
 msgid "sent: %s"
 msgstr "تم إرسال: %s"
 
 #
 # File: aria.py, line: 63
+#: aria.py:63
 msgid "banner"
 msgstr "خط رسومي"
 
 #
 # File: aria.py, line: 64
+#: aria.py:64
 msgid "complementary"
 msgstr "تكميلية"
 
 #
 # File: aria.py, line: 65
+#: aria.py:65
 msgid "content info"
 msgstr "بيانات المحتوى"
 
 #
 # File: aria.py, line: 66
+#: aria.py:66
 msgid "main"
 msgstr "رئيسية"
 
 #
 # File: aria.py, line: 67
+#: aria.py:67
 msgid "navigation"
 msgstr "حركة"
 
 #
 # File: aria.py, line: 68
+#: aria.py:68
 msgid "search"
 msgstr "بحث"
 
 #
 # File: braille.py, line: 27
+#: braille.py:27
 msgid "Arabic grade 1"
 msgstr "عربي بدون اختصارات"
 
 #
 # File: braille.py, line: 28
+#: braille.py:28
 msgid "Bulgarian 8 dot computer braille"
 msgstr "بلغاري برايل الحاسوب 8 نقاط"
 
 #
 # File: braille.py, line: 29
+#: braille.py:29
 msgid "Welsh grade 1"
 msgstr "ويلشي بدون اختصارات"
 
 #
 # File: braille.py, line: 30
+#: braille.py:30
 msgid "Welsh grade 2"
 msgstr "ويلشي باختصارات"
 
 #
 # File: braille.py, line: 31
+#: braille.py:31
 msgid "Czech grade 1"
 msgstr "تشيكي بدون اختصارات"
 
 #
 # File: braille.py, line: 32
+#: braille.py:32
 msgid "Danish grade 1"
 msgstr "دنيماركي بدون اختصارات"
 
 #
 # File: braille.py, line: 33
+#: braille.py:33
 msgid "German 8 dot computer braille"
 msgstr "ألماني برايل حاسوب 8 نقاط"
 
 #
 # File: braille.py, line: 34
+#: braille.py:34
 msgid "German grade 0"
 msgstr "ألماني بدون اختصارات"
 
 #
 # File: braille.py, line: 35
+#: braille.py:35
 msgid "German grade 1"
 msgstr "ألماني باختصارات"
 
 #
 # File: braille.py, line: 36
+#: braille.py:36
 msgid "German grade 2"
 msgstr "ألماني بدون اختصارات"
 
 #
 # File: braille.py, line: 37
+#: braille.py:37
 msgid "English (U.K.) grade 1"
 msgstr "إنجليزي بريطاني  بدون اختصارات"
 
 #
 # File: braille.py, line: 38
+#: braille.py:38
 msgid "English (U.K.) grade 2"
 msgstr "إنجليزي بريطاني باختصارات"
 
 #
 # File: braille.py, line: 39
+#: braille.py:39
 msgid "English (U.S.) 6 dot computer braille"
 msgstr "إنجليزي أمريكي برايل الحاسوب 6 نقاط"
 
 #
 # File: braille.py, line: 40
+#: braille.py:40
 msgid "English (U.S.) 8 dot computer braille"
 msgstr "إنجليزي أمريكي برايل الحاسوب 8 نقاط"
 
 #
 # File: braille.py, line: 41
+#: braille.py:41
 msgid "English (U.S.) grade 1"
 msgstr "إنجليزي أمريكي بدون اختصارات"
 
 #
 # File: braille.py, line: 42
+#: braille.py:42
 msgid "English (U.S.) grade 2"
 msgstr "إنجليزي أمريكي بدون اختصارات"
 
 #
 # File: braille.py, line: 43
+#: braille.py:43
 msgid "Spanish grade 1"
 msgstr "إسباني بدون اختصارات"
 
 #
 # File: braille.py, line: 44
+#: braille.py:44
 msgid "Finnish 8 dot computer braille"
 msgstr "فنلندي برايل حاسوب 8 نقاط"
 
 #
 # File: braille.py, line: 45
+#: braille.py:45
 msgid "French (Canada) grade 1"
 msgstr "فرنسي كندي بدون اختصارات"
 
 #
 # File: braille.py, line: 46
+#: braille.py:46
 msgid "French (Canada) grade 2"
 msgstr "فرنسي كندي بدون اختصارات"
 
 #
 # File: braille.py, line: 47
+#: braille.py:47
 msgid "French (unified) 6 dot computer braille"
 msgstr "فرنسي موحد برايل حاسوب 6 نقاط"
 
 #
 # File: braille.py, line: 48
+#: braille.py:48
 msgid "French (unified) 8 dot computer braille"
 msgstr "فرنسي موحد برايل حاسوب 8 نقاط"
 
 #
 # File: braille.py, line: 49
+#: braille.py:49
 msgid "French (unified) Grade 2"
 msgstr "فرنسي موحد باختصارات"
 
 #
 # File: braille.py, line: 49
+#: braille.py:49
 msgid "Greek (Greece) grade 1"
 msgstr "يوناني بدون اختصارات"
 
 #
 # File: braille.py, line: 50
+#: braille.py:50
 msgid "Hebrew 8 dot computer braille"
 msgstr "عبري برايل حاسوب 8 نقاط"
 
 #
 # File: braille.py, line: 51
+#: braille.py:51
 msgid "Hindi grade 1"
 msgstr "هندي بدون اختصارات"
 
 #
 # File: braille.py, line: 52
+#: braille.py:52
 msgid "Croatian 8 dot computer braille"
 msgstr "كرواتي برايل حاسوب 8 نقاط"
 
 #
 # File: braille.py, line: 53
+#: braille.py:53
 msgid "Hungarian 8 dot computer braille"
 msgstr "مجري برايل حاسوب 8 نقاط"
 
 #
 # File: braille.py, line: 54
+#: braille.py:54
 msgid "Italian grade 1"
 msgstr "إيطالي بدون اختصارات"
 
 #
 # File: braille.py, line: 55
+#: braille.py:55
 msgid "Latvian grade 1"
 msgstr "لاتفي بدون اختصارات"
 
 #
 # File: braille.py, line: 56
+#: braille.py:56
 msgid "Dutch (Belgium) grade 1"
 msgstr "هولاندي بلجيكي بدون اختصارات"
 
 #
 # File: braille.py, line: 57
+#: braille.py:57
 msgid "Dutch (netherlands) grade 1"
 msgstr "هولاندي بدون اختصارات"
 
 #
 # File: braille.py, line: 58
+#: braille.py:58
 msgid "Norwegian grade 0"
 msgstr "نرويجي بدون اختصارات"
 
 #
 # File: braille.py, line: 59
+#: braille.py:59
 msgid "Norwegian grade 1"
 msgstr "نرويجي المستوى الأول"
 
 #
 # File: braille.py, line: 60
+#: braille.py:60
 msgid "Norwegian grade 2"
 msgstr "نرويجي المستوى الثاني"
 
 #
 # File: braille.py, line: 61
+#: braille.py:61
 msgid "Norwegian grade 3"
 msgstr "نرويجي المستوى الثالث"
 
 #
 # File: braille.py, line: 62
+#: braille.py:62
 msgid "Polish grade 1"
 msgstr "بولاندي بدون اختصارات"
 
 #
 # File: braille.py, line: 63
+#: braille.py:63
 msgid "Portuguese grade 1"
 msgstr "برتغالي بدون اختصارات"
 
 #
 # File: braille.py, line: 64
+#: braille.py:64
 msgid "Russian grade 1"
 msgstr "روسي بدون اختصارات"
 
 #
 # File: braille.py, line: 65
+#: braille.py:65
 msgid "Swedish grade 1"
 msgstr "سويدي بدون اختصارات"
 
 #
 # File: braille.py, line: 66
+#: braille.py:66
 msgid "Slovak"
 msgstr "سلوفاكي"
 
 #
 # File: braille.py, line: 67
+#: braille.py:67
 msgid "Unified English Braille Code grade 1"
 msgstr "الشفرة الإنجليزية الموحدة للبرايل بدون اختصارات"
 
 #
 # File: braille.py, line: 68
+#: braille.py:68
 msgid "Unified English Braille Code grade 2"
 msgstr "الشفرة الإنجليزية الموحدة للبرايل باختصارات"
 
 #
 # File: braille.py, line: 69
+#: braille.py:69
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "صيني (Hong Kong, Cantonese)"
 
 #
 # File: braille.py, line: 70
+#: braille.py:70
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "صيني (تيوان, مندرين)"
 
 #
 # File: braille.py, line: 74
+#: braille.py:74
 msgid "edt"
 msgstr "edt"
 
 #
 # File: braille.py, line: 75
+#: braille.py:75
 msgid "lst"
 msgstr "lst"
 
 #
 # File: braille.py, line: 76
+#: braille.py:76
 msgid "mnubar"
 msgstr "mnubar"
 
 #
 # File: braille.py, line: 77
+#: braille.py:77
 msgid "mnu"
 msgstr "mnu"
 
 #
 # File: braille.py, line: 78
+#: braille.py:78
 msgid "btn"
 msgstr "btn"
 
 #
 # File: braille.py, line: 79
+#: braille.py:79
 msgid "chk"
 msgstr "chk"
 
 #
 # File: braille.py, line: 80
+#: braille.py:80
 msgid "rbtn"
 msgstr "rbtn"
 
 #
 # File: braille.py, line: 81
+#: braille.py:81
 msgid "cbo"
 msgstr "cbo"
 
 #
 # File: braille.py, line: 82
+#: braille.py:82
 msgid "lnk"
 msgstr "lnk"
 
 #
 # File: braille.py, line: 83
+#: braille.py:83
 msgid "dlg"
 msgstr "dlg"
 
 #
 # File: braille.py, line: 84
+#: braille.py:84
 msgid "tv"
 msgstr "tv"
 
 #
 # File: braille.py, line: 85
+#: braille.py:85
 msgid "tb"
 msgstr "tb"
 
 #
 # File: braille.py, line: 89
+#: braille.py:89
 msgid "(x)"
 msgstr "(x)"
 
 #
 # File: braille.py, line: 90
+#: braille.py:90
 msgid "sel"
 msgstr "sel"
 
 #
 # File: braille.py, line: 91
+#: braille.py:91
 msgid "submnu"
 msgstr "submnu"
 
 #
 # File: braille.py, line: 94
+#: braille.py:94
 msgid "( )"
 msgstr "( )"
 
 #
 # File: braille.py, line: 222
 # File: speech.py, line: 670
+#: braille.py:222
+#: speech.py:687
 msgid "not %s"
 msgstr "غير %s"
 
 #
 # File: braille.py, line: 234
 # File: speech.py, line: 676
+#: braille.py:234
+#: speech.py:693
 msgid "%s of %s"
 msgstr "%s مِن %s"
 
@@ -1399,21 +1754,27 @@ msgstr "%s مِن %s"
 # File: braille.py, line: 236
 # File: speech.py, line: 681
 # File: speech.py, line: 684
+#: braille.py:236
+#: speech.py:698
+#: speech.py:701
 msgid "level %s"
 msgstr "المستوى %s"
 
 #
 # File: brailleDisplayDrivers/alvaBC6.py, line: 74
+#: brailleDisplayDrivers/alvaBC6.py:74
 msgid "ALVA BC640/680 series"
 msgstr "عائلة آلفا بيسي640/680"
 
 #
 # File: brailleDisplayDrivers/handyTech.py, line: 40
+#: brailleDisplayDrivers/handyTech.py:40
 msgid "Handy Tech braille displays"
 msgstr "الأسطر الإلكترونية هانديتيك"
 
 #
 # File: brailleDisplayDrivers/noBraille.py, line: 13
+#: brailleDisplayDrivers/noBraille.py:13
 msgid "No braille"
 msgstr "لا يوجد برايل"
 
@@ -1423,225 +1784,277 @@ msgstr "لا يوجد برايل"
 # File: characterSymbols.py, line: 19
 # File: speech.py, line: 82
 # File: speech.py, line: 620
+#: characterSymbols.py:17
+#: characterSymbols.py:18
+#: characterSymbols.py:19
+#: speech.py:84
+#: speech.py:637
 msgid "blank"
 msgstr "خالي"
 
 #
 # File: characterSymbols.py, line: 20
 # File: controlTypes.py, line: 201
+#: characterSymbols.py:20
+#: controlTypes.py:201
 msgid "tab"
 msgstr "انتقال"
 
 #
 # File: characterSymbols.py, line: 21
+#: characterSymbols.py:21
 msgid "line feed"
 msgstr "السطر السابق"
 
 #
 # File: characterSymbols.py, line: 22
+#: characterSymbols.py:22
 msgid "page break"
 msgstr "فاصل الصفحة "
 
 #
 # File: characterSymbols.py, line: 23
+#: characterSymbols.py:23
 msgid "carriage return"
 msgstr "حد السطر"
 
 #
 # File: characterSymbols.py, line: 24
 # File: keyUtils.py, line: 138
+#: characterSymbols.py:24
+#: keyUtils.py:138
 msgid "space"
 msgstr "مسافة"
 
 #
 # File: characterSymbols.py, line: 25
+#: characterSymbols.py:25
 msgid "bang"
 msgstr "خالي"
 
 #
 # File: characterSymbols.py, line: 26
+#: characterSymbols.py:26
 msgid "quote"
 msgstr "تنصيص"
 
 #
 # File: characterSymbols.py, line: 27
+#: characterSymbols.py:27
 msgid "number"
 msgstr "رقم"
 
 #
 # File: characterSymbols.py, line: 28
+#: characterSymbols.py:28
 msgid "dollar"
 msgstr "دولار"
 
 #
 # File: characterSymbols.py, line: 29
+#: characterSymbols.py:29
 msgid "percent"
 msgstr "بالمائة"
 
 #
 # File: characterSymbols.py, line: 30
+#: characterSymbols.py:30
 msgid "and"
 msgstr "وا"
 
 #
 # File: characterSymbols.py, line: 31
+#: characterSymbols.py:31
 msgid "tick"
 msgstr "Apostrophe"
 
 #
 # File: characterSymbols.py, line: 32
+#: characterSymbols.py:32
 msgid "left paren"
 msgstr "قوس أيسر"
 
 #
 # File: characterSymbols.py, line: 33
+#: characterSymbols.py:33
 msgid "right paren"
 msgstr "قوس أيمن"
 
 #
 # File: characterSymbols.py, line: 34
+#: characterSymbols.py:34
 msgid "star"
 msgstr "نجمة"
 
 #
 # File: characterSymbols.py, line: 35
+#: characterSymbols.py:35
 msgid "plus"
 msgstr "زائد"
 
 #
 # File: characterSymbols.py, line: 36
+#: characterSymbols.py:36
 msgid "comma"
 msgstr "فاصلة"
 
 #
 # File: characterSymbols.py, line: 37
+#: characterSymbols.py:37
 msgid "dash"
 msgstr "شَرطة"
 
 #
 # File: characterSymbols.py, line: 38
+#: characterSymbols.py:38
 msgid "dot"
 msgstr "نقطة"
 
 #
 # File: characterSymbols.py, line: 39
+#: characterSymbols.py:39
 msgid "slash"
 msgstr "قاطعة"
 
 #
 # File: characterSymbols.py, line: 40
+#: characterSymbols.py:40
 msgid "colon"
 msgstr "نقطتين فوقيتين"
 
 #
 # File: characterSymbols.py, line: 41
+#: characterSymbols.py:41
 msgid "semi"
 msgstr "فاصلة منقوطة"
 
 #
 # File: characterSymbols.py, line: 42
+#: characterSymbols.py:42
 msgid "less"
 msgstr "أصغر من"
 
 #
 # File: characterSymbols.py, line: 43
+#: characterSymbols.py:43
 msgid "equals"
 msgstr "يساوي"
 
 #
 # File: characterSymbols.py, line: 44
+#: characterSymbols.py:44
 msgid "greater"
 msgstr "أكبر من"
 
 #
 # File: characterSymbols.py, line: 45
+#: characterSymbols.py:45
 msgid "question"
 msgstr "استفهام"
 
 #
 # File: characterSymbols.py, line: 46
+#: characterSymbols.py:46
 msgid "at"
 msgstr "على"
 
 #
 # File: characterSymbols.py, line: 47
+#: characterSymbols.py:47
 msgid "left bracket"
 msgstr "قوس مربع أيسر"
 
 #
 # File: characterSymbols.py, line: 48
+#: characterSymbols.py:48
 msgid "back slash"
 msgstr "قاطعة خلفية"
 
 #
 # File: characterSymbols.py, line: 49
+#: characterSymbols.py:49
 msgid "right bracket"
 msgstr "قوس مربع أيمن"
 
 #
 # File: characterSymbols.py, line: 50
 # File: controlTypes.py, line: 271
+#: characterSymbols.py:50
+#: controlTypes.py:271
 msgid "caret"
 msgstr "أس"
 
 #
 # File: characterSymbols.py, line: 51
 # File: controlTypes.py, line: 307
+#: characterSymbols.py:51
+#: controlTypes.py:307
 msgid "underline"
 msgstr "خط سُفْلِي"
 
 #
 # File: characterSymbols.py, line: 52
+#: characterSymbols.py:52
 msgid "graav"
 msgstr "grauv"
 
 #
 # File: characterSymbols.py, line: 53
+#: characterSymbols.py:53
 msgid "left brace"
 msgstr "قوس مجعد أيسر"
 
 #
 # File: characterSymbols.py, line: 54
+#: characterSymbols.py:54
 msgid "bar"
 msgstr "شريط"
 
 #
 # File: characterSymbols.py, line: 55
+#: characterSymbols.py:55
 msgid "right brace"
 msgstr "قوس مجعد أيمن"
 
 #
 # File: characterSymbols.py, line: 56
+#: characterSymbols.py:56
 msgid "tilda"
 msgstr "تقريبا"
 
 #
 # File: characterSymbols.py, line: 57
+#: characterSymbols.py:57
 msgid "bullet"
 msgstr "تنقيط"
 
 #
 # File: characterSymbols.py, line: 58
+#: characterSymbols.py:58
 msgid "dot dot dot"
 msgstr "نقطة نقطة نقطة"
 
 #
 # File: config/__init__.py, line: 21
+#: config/__init__.py:21
 msgid "Badly formed configuration file"
 msgstr "تكوين خاطئ لملف الإعدادات"
 
 #
 # File: config/__init__.py, line: 36
+#: config/__init__.py:36
 msgid "%s: %s, defaulting to %s"
 msgstr "%s: %s, تلقائيا إلى %s"
 
 #
 # File: config/__init__.py, line: 169
+#: config/__init__.py:169
 msgid "Error parsing configuration file: %s"
 msgstr "خلل في تحليل ملف الإعدادات: %s"
 
 #
 # File: config/__init__.py, line: 176
+#: config/__init__.py:176
 msgid ""
 "Errors in configuration file '%s':\n"
 "%s"
@@ -1651,1180 +2064,1427 @@ msgstr ""
 
 #
 # File: controlTypes.py, line: 179
+#: controlTypes.py:179
 msgid "unknown object"
 msgstr "كائن مجهول"
 
 #
 # File: controlTypes.py, line: 180
+#: controlTypes.py:180
 msgid "window"
 msgstr "نافذة"
 
 #
 # File: controlTypes.py, line: 181
+#: controlTypes.py:181
 msgid "title bar"
 msgstr "شريط العنوان"
 
 #
 # File: controlTypes.py, line: 182
+#: controlTypes.py:182
 msgid "pane"
 msgstr "لائحة"
 
 #
 # File: controlTypes.py, line: 183
+#: controlTypes.py:183
 msgid "dialog"
 msgstr "مُحاوَرة"
 
 #
 # File: controlTypes.py, line: 184
+#: controlTypes.py:184
 msgid "check box"
 msgstr "مربع تصويب"
 
 #
 # File: controlTypes.py, line: 185
+#: controlTypes.py:185
 msgid "radio button"
 msgstr "زر اختيار"
 
 #
 # File: controlTypes.py, line: 186
+#: controlTypes.py:186
 msgid "text"
 msgstr "نص"
 
 #
 # File: controlTypes.py, line: 187
+#: controlTypes.py:187
 msgid "edit"
 msgstr "تحرير"
 
 #
 # File: controlTypes.py, line: 188
+#: controlTypes.py:188
 msgid "button"
 msgstr "زر"
 
 #
 # File: controlTypes.py, line: 189
+#: controlTypes.py:189
 msgid "menu bar"
 msgstr "شريط القوائم"
 
 #
 # File: controlTypes.py, line: 190
+#: controlTypes.py:190
 msgid "menu item"
 msgstr "عنصر قائمة"
 
 #
 # File: controlTypes.py, line: 191
 # File: controlTypes.py, line: 298
+#: controlTypes.py:191
+#: controlTypes.py:298
 msgid "menu"
 msgstr "قائمة"
 
 #
 # File: controlTypes.py, line: 192
+#: controlTypes.py:192
 msgid "combo box"
 msgstr "صندوق خيارات"
 
 #
 # File: controlTypes.py, line: 193
+#: controlTypes.py:193
 msgid "list"
 msgstr "قائمة سردية "
 
 #
 # File: controlTypes.py, line: 194
+#: controlTypes.py:194
 msgid "list item"
 msgstr "عنصر قائمة سردية"
 
 #
 # File: controlTypes.py, line: 195
+#: controlTypes.py:195
 msgid "graphic"
 msgstr "رسم بياني"
 
 #
 # File: controlTypes.py, line: 196
+#: controlTypes.py:196
 msgid "help balloon"
 msgstr "رسالة تعليمات"
 
 #
 # File: controlTypes.py, line: 197
+#: controlTypes.py:197
 msgid "tool tip"
 msgstr "تنبيه خاطف"
 
 #
 # File: controlTypes.py, line: 198
 # File: speech.py, line: 896
+#: controlTypes.py:198
+#: speech.py:947
 msgid "link"
 msgstr "رابط"
 
 #
 # File: controlTypes.py, line: 199
+#: controlTypes.py:199
 msgid "tree view"
 msgstr "شكل شجري"
 
 #
 # File: controlTypes.py, line: 200
+#: controlTypes.py:200
 msgid "tree view item"
 msgstr "عنصر شكل شجري "
 
 #
 # File: controlTypes.py, line: 202
+#: controlTypes.py:202
 msgid "tab control"
 msgstr "صحيفة"
 
 #
 # File: controlTypes.py, line: 203
+#: controlTypes.py:203
 msgid "slider"
 msgstr "شريط سَحْب"
 
 #
 # File: controlTypes.py, line: 204
+#: controlTypes.py:204
 msgid "progress bar"
 msgstr "الشريط التقدمي"
 
 #
 # File: controlTypes.py, line: 205
+#: controlTypes.py:205
 msgid "scroll bar"
 msgstr "شريط التمرير"
 
 #
 # File: controlTypes.py, line: 206
+#: controlTypes.py:206
 msgid "status bar"
 msgstr "شريط الحالة"
 
 #
 # File: controlTypes.py, line: 207
+#: controlTypes.py:207
 msgid "table"
 msgstr "جدول"
 
 #
 # File: controlTypes.py, line: 208
+#: controlTypes.py:208
 msgid "cell"
 msgstr "خلية"
 
 #
 # File: controlTypes.py, line: 209
+#: controlTypes.py:209
 msgid "column"
 msgstr "عمود "
 
 #
 # File: controlTypes.py, line: 210
+#: controlTypes.py:210
 msgid "row"
 msgstr "صَف"
 
 #
 # File: controlTypes.py, line: 211
+#: controlTypes.py:211
 msgid "frame"
 msgstr "إطار"
 
 #
 # File: controlTypes.py, line: 212
+#: controlTypes.py:212
 msgid "tool bar"
 msgstr "شريط الأدوات "
 
 #
 # File: controlTypes.py, line: 213
+#: controlTypes.py:213
 msgid "column header"
 msgstr "رأس العمود"
 
 #
 # File: controlTypes.py, line: 214
+#: controlTypes.py:214
 msgid "row header"
 msgstr "رأس الصف"
 
 #
 # File: controlTypes.py, line: 215
+#: controlTypes.py:215
 msgid "drop down button"
 msgstr "زر منسدل"
 
 #
 # File: controlTypes.py, line: 216
+#: controlTypes.py:216
 msgid "clock"
 msgstr "الساعة"
 
 #
 # File: controlTypes.py, line: 217
+#: controlTypes.py:217
 msgid "separator"
 msgstr "فاصل "
 
 #
 # File: controlTypes.py, line: 218
+#: controlTypes.py:218
 msgid "form"
 msgstr "استمارة"
 
 #
 # File: controlTypes.py, line: 219
+#: controlTypes.py:219
 msgid "heading"
 msgstr "رأس موضوع"
 
 #
 # File: controlTypes.py, line: 220
+#: controlTypes.py:220
 msgid "heading 1"
 msgstr "رأس موضوع المستوى الأول"
 
 #
 # File: controlTypes.py, line: 221
+#: controlTypes.py:221
 msgid "heading 2"
 msgstr "رأس موضوع المستوى الثاني"
 
 #
 # File: controlTypes.py, line: 222
+#: controlTypes.py:222
 msgid "heading 3"
 msgstr "رأس موضوع المستوى الثالث"
 
 #
 # File: controlTypes.py, line: 223
+#: controlTypes.py:223
 msgid "heading 4"
 msgstr "رأس موضوع المستوى الرابع"
 
 #
 # File: controlTypes.py, line: 224
+#: controlTypes.py:224
 msgid "heading 5"
 msgstr "رأس موضوع المستوى الخامس"
 
 #
 # File: controlTypes.py, line: 225
+#: controlTypes.py:225
 msgid "heading 6"
 msgstr "رأس موضوع المستوى السادس"
 
 #
 # File: controlTypes.py, line: 226
 # File: textInfos/__init__.py, line: 116
+#: controlTypes.py:226
+#: textInfos/__init__.py:116
 msgid "paragraph"
 msgstr "فقرة"
 
 #
 # File: controlTypes.py, line: 227
+#: controlTypes.py:227
 msgid "block quote"
 msgstr "اقتباس"
 
 #
 # File: controlTypes.py, line: 228
+#: controlTypes.py:228
 msgid "table header"
 msgstr "رأس الجدول"
 
 #
 # File: controlTypes.py, line: 229
+#: controlTypes.py:229
 msgid "table body"
 msgstr "محتوى الجدول:"
 
 #
 # File: controlTypes.py, line: 230
+#: controlTypes.py:230
 msgid "table footer"
 msgstr "هامش الجدول"
 
 #
 # File: controlTypes.py, line: 231
+#: controlTypes.py:231
 msgid "document"
 msgstr "مستند"
 
 #
 # File: controlTypes.py, line: 232
+#: controlTypes.py:232
 msgid "animation"
 msgstr "رسوم متحركة"
 
 #
 # File: controlTypes.py, line: 233
+#: controlTypes.py:233
 msgid "application"
 msgstr "تطبيق"
 
 #
 # File: controlTypes.py, line: 234
+#: controlTypes.py:234
 msgid "box"
 msgstr "صندوق"
 
 #
 # File: controlTypes.py, line: 235
+#: controlTypes.py:235
 msgid "grouping"
 msgstr "تجميع"
 
 #
 # File: controlTypes.py, line: 236
+#: controlTypes.py:236
 msgid "property page"
 msgstr "صفحة الخصائص"
 
 #
 # File: controlTypes.py, line: 237
+#: controlTypes.py:237
 msgid "canvas"
 msgstr "عنصر تفسير صور bitmap على الإنترنت "
 
 #
 # File: controlTypes.py, line: 238
+#: controlTypes.py:238
 msgid "caption"
 msgstr "تسمية"
 
 #
 # File: controlTypes.py, line: 239
+#: controlTypes.py:239
 msgid "check menu item"
 msgstr "تصويب عنصر قائمة"
 
 #
 # File: controlTypes.py, line: 240
+#: controlTypes.py:240
 msgid "date edit"
 msgstr "مربع تحرير التاريخ"
 
 #
 # File: controlTypes.py, line: 241
+#: controlTypes.py:241
 msgid "icon"
 msgstr "أيقونة"
 
 #
 # File: controlTypes.py, line: 242
+#: controlTypes.py:242
 msgid "directory pane"
 msgstr "لائحة الفهرِس"
 
 #
 # File: controlTypes.py, line: 244
+#: controlTypes.py:244
 msgid "end note"
 msgstr "هامش نهائي"
 
 #
 # File: controlTypes.py, line: 245
+#: controlTypes.py:245
 msgid "footer"
 msgstr "تذييل"
 
 #
 # File: controlTypes.py, line: 246
+#: controlTypes.py:246
 msgid "foot note"
 msgstr "هامش الصفحة"
 
 #
 # File: controlTypes.py, line: 247
+#: controlTypes.py:247
 msgid "glass pane"
 msgstr "لائحة المنظار "
 
 #
 # File: controlTypes.py, line: 248
+#: controlTypes.py:248
 msgid "header"
 msgstr "رأس موضوع"
 
 #
 # File: controlTypes.py, line: 249
+#: controlTypes.py:249
 msgid "image map"
 msgstr "خريطة صورية"
 
 #
 # File: controlTypes.py, line: 250
+#: controlTypes.py:250
 msgid "input window"
 msgstr "نافذة إدخال"
 
 #
 # File: controlTypes.py, line: 251
+#: controlTypes.py:251
 msgid "label"
 msgstr "تسمية"
 
 #
 # File: controlTypes.py, line: 252
+#: controlTypes.py:252
 msgid "note"
 msgstr "ملحوظة"
 
 #
 # File: controlTypes.py, line: 253
+#: controlTypes.py:253
 msgid "page"
 msgstr "صفحة"
 
 #
 # File: controlTypes.py, line: 254
+#: controlTypes.py:254
 msgid "radio menu item"
 msgstr "زر اختيار عنصر قائمة"
 
 #
 # File: controlTypes.py, line: 255
+#: controlTypes.py:255
 msgid "layered pane"
 msgstr "لائحة طبقية"
 
 #
 # File: controlTypes.py, line: 256
+#: controlTypes.py:256
 msgid "redundant object"
 msgstr "كائن متكرر"
 
 #
 # File: controlTypes.py, line: 257
+#: controlTypes.py:257
 msgid "root pane"
 msgstr "اللائحة الرئيسية"
 
 #
 # File: controlTypes.py, line: 258
+#: controlTypes.py:258
 msgid "edit bar"
 msgstr "شريط التحرير"
 
 #
 # File: controlTypes.py, line: 259
+#: controlTypes.py:259
 msgid "terminal"
 msgstr "فرعي"
 
 #
 # File: controlTypes.py, line: 260
+#: controlTypes.py:260
 msgid "rich edit"
 msgstr "مربع تحرير كبير"
 
 #
 # File: controlTypes.py, line: 261
+#: controlTypes.py:261
 msgid "ruler"
 msgstr "مسطرة"
 
 #
 # File: controlTypes.py, line: 262
+#: controlTypes.py:262
 msgid "scroll pane"
 msgstr "لائحة التمرير"
 
 #
 # File: controlTypes.py, line: 263
+#: controlTypes.py:263
 msgid "section"
 msgstr "قسم"
 
 #
 # File: controlTypes.py, line: 264
+#: controlTypes.py:264
 msgid "shape"
 msgstr "شكل"
 
 #
 # File: controlTypes.py, line: 265
+#: controlTypes.py:265
 msgid "split pane"
 msgstr "لائحة التقسيم"
 
 #
 # File: controlTypes.py, line: 266
+#: controlTypes.py:266
 msgid "view port"
 msgstr "عرض المَخرج"
 
 #
 # File: controlTypes.py, line: 267
+#: controlTypes.py:267
 msgid "tear off menu"
 msgstr "قائمة مختصرة "
 
 #
 # File: controlTypes.py, line: 268
+#: controlTypes.py:268
 msgid "text frame"
 msgstr "إطار نصي"
 
 #
 # File: controlTypes.py, line: 269
+#: controlTypes.py:269
 msgid "toggle button"
 msgstr "زر تحويل"
 
 #
 # File: controlTypes.py, line: 270
+#: controlTypes.py:270
 msgid "border"
 msgstr "برواز"
 
 #
 # File: controlTypes.py, line: 272
 # File: textInfos/__init__.py, line: 113
+#: controlTypes.py:272
+#: textInfos/__init__.py:113
 msgid "character"
 msgstr "حرف"
 
 #
 # File: controlTypes.py, line: 273
+#: controlTypes.py:273
 msgid "chart"
 msgstr "رسم خرائطي"
 
 #
 # File: controlTypes.py, line: 274
+#: controlTypes.py:274
 msgid "cursor"
 msgstr "مؤشر"
 
 #
 # File: controlTypes.py, line: 275
+#: controlTypes.py:275
 msgid "diagram"
 msgstr "رسم تخطيطي"
 
 #
 # File: controlTypes.py, line: 276
+#: controlTypes.py:276
 msgid "dial"
 msgstr "اتصال"
 
 #
 # File: controlTypes.py, line: 277
+#: controlTypes.py:277
 msgid "drop list"
 msgstr "قائمة سردية منسدلة "
 
 #
 # File: controlTypes.py, line: 278
+#: controlTypes.py:278
 msgid "split button"
 msgstr "زر تقسيم"
 
 #
 # File: controlTypes.py, line: 279
+#: controlTypes.py:279
 msgid "menu button"
 msgstr "زر قائمة "
 
 #
 # File: controlTypes.py, line: 280
+#: controlTypes.py:280
 msgid "drop down button grid"
 msgstr "زر خطي منسدل"
 
 #
 # File: controlTypes.py, line: 281
+#: controlTypes.py:281
 msgid "equation"
 msgstr "معادلة"
 
 #
 # File: controlTypes.py, line: 282
+#: controlTypes.py:282
 msgid "grip"
 msgstr "جريب"
 
 #
 # File: controlTypes.py, line: 283
+#: controlTypes.py:283
 msgid "hot key field"
 msgstr "حقل مفتاح الاختصار "
 
 #
 # File: controlTypes.py, line: 284
+#: controlTypes.py:284
 msgid "indicator"
 msgstr "مؤشر"
 
 #
 # File: controlTypes.py, line: 285
+#: controlTypes.py:285
 msgid "spin button"
 msgstr "زر سردِي"
 
 #
 # File: controlTypes.py, line: 286
+#: controlTypes.py:286
 msgid "sound"
 msgstr "صوت"
 
 #
 # File: controlTypes.py, line: 287
+#: controlTypes.py:287
 msgid "white space"
 msgstr "مساحة خالية"
 
 #
 # File: controlTypes.py, line: 288
+#: controlTypes.py:288
 msgid "tree view button"
 msgstr "زر العرض الشجري "
 
 #
 # File: controlTypes.py, line: 289
+#: controlTypes.py:289
 msgid "IP address"
 msgstr "دليل IP"
 
 #
 # File: controlTypes.py, line: 290
+#: controlTypes.py:290
 msgid "desktop icon"
 msgstr "أيقونة سطح المكتب"
 
 #
 # File: controlTypes.py, line: 291
 # File: controlTypes.py, line: 315
+#: controlTypes.py:291
+#: controlTypes.py:315
 msgid "alert"
 msgstr "تنبيه"
 
 #
 # File: controlTypes.py, line: 292
+#: controlTypes.py:292
 msgid "IFrame"
 msgstr "لافتة بينية"
 
 #
 # File: controlTypes.py, line: 293
+#: controlTypes.py:293
 msgid "desktop pane"
 msgstr "لائحة سطح المكتب"
 
 #
 # File: controlTypes.py, line: 294
+#: controlTypes.py:294
 msgid "option pane"
 msgstr "لائحة الاختيار"
 
 #
 # File: controlTypes.py, line: 295
+#: controlTypes.py:295
 msgid "color chooser"
 msgstr "اختيار اللون"
 
 #
 # File: controlTypes.py, line: 296
+#: controlTypes.py:296
 msgid "file chooser"
 msgstr "اختيار الملف"
 
 #
 # File: controlTypes.py, line: 297
+#: controlTypes.py:297
 msgid "filler"
 msgstr "تعبئة الاستمارات"
 
 #
 # File: controlTypes.py, line: 299
+#: controlTypes.py:299
 msgid "panel"
 msgstr "لوحة "
 
 #
 # File: controlTypes.py, line: 300
+#: controlTypes.py:300
 msgid "password edit"
 msgstr "مربع تحرير كلمة المرور"
 
 #
 # File: controlTypes.py, line: 301
+#: controlTypes.py:301
 msgid "font chooser"
 msgstr "معالج اختيار الخطوط"
 
 #
 # File: controlTypes.py, line: 302
 # File: textInfos/__init__.py, line: 115
+#: controlTypes.py:302
+#: textInfos/__init__.py:115
 msgid "line"
 msgstr "سَطْرْ"
 
 #
 # File: controlTypes.py, line: 303
+#: controlTypes.py:303
 msgid "font name"
 msgstr "نوع الخط"
 
 #
 # File: controlTypes.py, line: 304
+#: controlTypes.py:304
 msgid "font size"
 msgstr "حجم الخط"
 
 #
 # File: controlTypes.py, line: 305
 # File: speech.py, line: 848
+#: controlTypes.py:305
+#: speech.py:899
 msgid "bold"
 msgstr "عريض"
 
 #
 # File: controlTypes.py, line: 306
+#: controlTypes.py:306
 msgid "ITALIC"
 msgstr "مائل"
 
 #
 # File: controlTypes.py, line: 308
+#: controlTypes.py:308
 msgid "foreground color"
 msgstr "لون الواجهة"
 
 #
 # File: controlTypes.py, line: 309
+#: controlTypes.py:309
 msgid "background color"
 msgstr "لون الخلفية"
 
 #
 # File: controlTypes.py, line: 310
 # File: speech.py, line: 870
+#: controlTypes.py:310
+#: speech.py:921
 msgid "superscript"
 msgstr "الكتابة الفوقية "
 
 #
 # File: controlTypes.py, line: 311
 # File: speech.py, line: 872
+#: controlTypes.py:311
+#: speech.py:923
 msgid "subscript"
 msgstr "الكتابة التحتية "
 
 #
 # File: controlTypes.py, line: 312
+#: controlTypes.py:312
 msgid "style"
 msgstr "إسلوب"
 
 #
 # File: controlTypes.py, line: 313
+#: controlTypes.py:313
 msgid "indent"
 msgstr "تسوية"
 
 #
 # File: controlTypes.py, line: 314
+#: controlTypes.py:314
 msgid "alignment"
 msgstr "محاذاة"
 
 #
 # File: controlTypes.py, line: 316
+#: controlTypes.py:316
 msgid "data grid"
 msgstr "شريط بياني"
 
 #
 # File: controlTypes.py, line: 317
+#: controlTypes.py:317
 msgid "data item"
 msgstr "عنصر بياني"
 
 #
 # File: controlTypes.py, line: 318
+#: controlTypes.py:318
 msgid "header item"
 msgstr "رأس موضوع"
 
 #
 # File: controlTypes.py, line: 319
+#: controlTypes.py:319
 msgid "thumb control"
 msgstr "كائن إبهامي"
 
 #
 # File: controlTypes.py, line: 320
+#: controlTypes.py:320
 msgid "calendar"
 msgstr "تقويم"
 
 #
 # File: controlTypes.py, line: 324
+#: controlTypes.py:324
 msgid "unavailable"
 msgstr "غير متاح"
 
 #
 # File: controlTypes.py, line: 325
+#: controlTypes.py:325
 msgid "focused"
 msgstr "مستعرض"
 
 #
 # File: controlTypes.py, line: 327
+#: controlTypes.py:327
 msgid "busy"
 msgstr "مشغول"
 
 #
 # File: controlTypes.py, line: 328
+#: controlTypes.py:328
 msgid "pressed"
 msgstr "تم ضغطه"
 
 #
 # File: controlTypes.py, line: 329
+#: controlTypes.py:329
 msgid "checked"
 msgstr "مصوب"
 
 #
 # File: controlTypes.py, line: 330
+#: controlTypes.py:330
 msgid "half checked"
 msgstr "تصويب جزءي"
 
 #
 # File: controlTypes.py, line: 331
+#: controlTypes.py:331
 msgid "read only"
 msgstr "للقراءة فقط"
 
 #
 # File: controlTypes.py, line: 332
+#: controlTypes.py:332
 msgid "expanded"
 msgstr "مفتوحة"
 
 #
 # File: controlTypes.py, line: 333
+#: controlTypes.py:333
 msgid "collapsed"
 msgstr "مغلقة"
 
 #
 # File: controlTypes.py, line: 334
+#: controlTypes.py:334
 msgid "invisible"
 msgstr "خفيِّ"
 
 #
 # File: controlTypes.py, line: 335
+#: controlTypes.py:335
 msgid "visited"
 msgstr "مطروق"
 
 #
 # File: controlTypes.py, line: 336
+#: controlTypes.py:336
 msgid "linked"
 msgstr "مرتبط"
 
 #
 # File: controlTypes.py, line: 337
+#: controlTypes.py:337
 msgid "subMenu"
 msgstr "قائمة فرعية"
 
 #
 # File: controlTypes.py, line: 338
+#: controlTypes.py:338
 msgid "protected"
 msgstr "محمِي"
 
 #
 # File: controlTypes.py, line: 339
+#: controlTypes.py:339
 msgid "required"
 msgstr "مطلوب"
 
 #
 # File: controlTypes.py, line: 340
+#: controlTypes.py:340
 msgid "defunct"
 msgstr "غير موظف"
 
 #
 # File: controlTypes.py, line: 341
+#: controlTypes.py:341
 msgid "invalid entry"
 msgstr "إدخال خاطئ"
 
 #
 # File: controlTypes.py, line: 342
+#: controlTypes.py:342
 msgid "modal"
 msgstr "نمط"
 
 #
 # File: controlTypes.py, line: 343
+#: controlTypes.py:343
 msgid "has auto complete"
 msgstr "يحتوي على خاصية الإكمال التلقائي"
 
 #
 # File: controlTypes.py, line: 344
+#: controlTypes.py:344
 msgid "multi line"
 msgstr "متعدد الأسطُر"
 
 #
 # File: controlTypes.py, line: 345
+#: controlTypes.py:345
 msgid "iconified"
 msgstr "مُؤيْقَن"
 
 #
 # File: controlTypes.py, line: 346
+#: controlTypes.py:346
 msgid "off screen"
 msgstr "خارج الشاشة"
 
 #
 # File: controlTypes.py, line: 347
+#: controlTypes.py:347
 msgid "selectable"
 msgstr "يمكن تحديده"
 
 #
 # File: controlTypes.py, line: 348
+#: controlTypes.py:348
 msgid "focusable"
 msgstr "يمكن استعراضه"
 
 #
 # File: controlTypes.py, line: 349
+#: controlTypes.py:349
 msgid "clickable"
 msgstr "يمكن نقره"
 
 #
 # File: controlTypes.py, line: 350
+#: controlTypes.py:350
 msgid "editable"
 msgstr "يمكن تحريره"
 
 #
 # File: controlTypes.py, line: 351
+#: controlTypes.py:351
 msgid "checkable"
 msgstr "يمكن تصويبه"
 
 #
 # File: controlTypes.py, line: 352
+#: controlTypes.py:352
 msgid "draggable"
 msgstr "يمكن سحْبه"
 
 #
 # File: controlTypes.py, line: 353
+#: controlTypes.py:353
 msgid "dragging"
 msgstr "سحْب "
 
 #
 # File: controlTypes.py, line: 354
+#: controlTypes.py:354
 msgid "drop target"
 msgstr "إسقاط الهدف"
 
 #
 # File: core.py, line: 144
+#: core.py:137
 msgid "Loading subsystems, please wait..."
 msgstr "تحميل الأنظمة الفرعية ... يرجَى الانتظار "
 
 #
 # File: core.py, line: 223
+#: core.py:216
 msgid "NVDA started"
 msgstr "بدء تشغيل برنامج إنفيديإيه "
 
 #
 # File: cursorManager.py, line: 76
+#: cursorManager.py:76
 msgid "Find"
 msgstr "بحث"
 
 #
 # File: cursorManager.py, line: 76
+#: cursorManager.py:76
 msgid "Type the text you wish to find"
 msgstr "أدخل النص الذي تريد البحث عنه: "
 
 #
 # File: cursorManager.py, line: 90
+#: cursorManager.py:90
 msgid "Find Error"
 msgstr "خلل في البحث"
 
 #
 # File: cursorManager.py, line: 90
+#: cursorManager.py:90
 msgid "text \"%s\" not found"
 msgstr "النص \"%s\" غير موجود"
 
 #
 # File: cursorManager.py, line: 96
+#: cursorManager.py:96
 msgid "find a text string from the current cursor position"
 msgstr "البحث عن نص بدأً من الموضع الحالي للمؤشر"
 
 #
 # File: cursorManager.py, line: 103
+#: cursorManager.py:103
 msgid "find the next occurrence of the previously entered text string from the current cursor's position"
 msgstr "البحث عن الموضع التالي للنص المُدخل سلفا بدأً من الموضع الراهن للمؤشر"
 
 #
 # File: cursorManager.py, line: 110
+#: cursorManager.py:110
 msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
 msgstr "البحث عن الموضع السابق للنص المُدخل سلفا بدأً من الموضع الراهن للمؤشر"
 
 #
 # File: gui/__init__.py, line: 148
+#: gui/__init__.py:148
 msgid "configuration applied"
 msgstr "تم تطبيق التعديلات "
 
 #
 # File: gui/__init__.py, line: 153
+#: gui/__init__.py:153
 msgid "configuration saved"
 msgstr "تم حفظ التعديلات "
 
 #
 # File: gui/__init__.py, line: 156
+#: gui/__init__.py:156
 msgid "Could not save configuration - probably read only file system"
 msgstr "لا يمكن حفظ التعديلات- أغلب الظن أن ملف النظام معد للقراءة فقط"
 
 #
 # File: gui/__init__.py, line: 156
 # File: gui/logViewer.py, line: 73
+#: gui/__init__.py:156
+#: gui/logViewer.py:73
 msgid "Error"
 msgstr "خلل"
 
 #
 # File: gui/__init__.py, line: 165
+#: gui/__init__.py:165
 msgid "Default dictionary"
 msgstr "المعجم التلقائي"
 
 #
 # File: gui/__init__.py, line: 168
+#: gui/__init__.py:168
 msgid "Voice dictionary (%s)"
 msgstr "معجم صوت (%s)"
 
 #
 # File: gui/__init__.py, line: 171
+#: gui/__init__.py:171
 msgid "Temporary dictionary"
 msgstr "معجم مؤقت"
 
 #
 # File: gui/__init__.py, line: 179
+#: gui/__init__.py:179
 msgid "Are you sure you want to quit NVDA?"
 msgstr "هل أنت متأكد من رغبتك بالخروج من برنامج إنفيديإيه؟"
 
 #
 # File: gui/__init__.py, line: 179
 # File: gui/__init__.py, line: 322
+#: gui/__init__.py:179
+#: gui/__init__.py:322
 msgid "Exit NVDA"
 msgstr "الخروج من البرنامج"
 
 #
 # File: gui/__init__.py, line: 221
+#: gui/__init__.py:221
 msgid "copyright"
 msgstr "حقوق النشر"
 
 #
 # File: gui/__init__.py, line: 221
+#: gui/__init__.py:221
 msgid "url"
 msgstr "الموقع على الإنترنت "
 
 #
 # File: gui/__init__.py, line: 221
+#: gui/__init__.py:221
 msgid "version"
 msgstr "الإصدار رقم "
 
 #
 # File: gui/__init__.py, line: 223
 # File: gui/__init__.py, line: 313
+#: gui/__init__.py:223
+#: gui/__init__.py:313
 msgid "About NVDA"
 msgstr "نبذة عن البرنامج "
 
 #
 # File: gui/__init__.py, line: 255
+#: gui/__init__.py:255
 msgid "&General settings..."
 msgstr "&إعدادات عامة"
 
 #
 # File: gui/__init__.py, line: 255
 # File: gui/settingsDialogs.py, line: 89
+#: gui/__init__.py:255
+#: gui/settingsDialogs.py:89
 msgid "General settings"
 msgstr "إعدادات عامة"
 
 #
 # File: gui/__init__.py, line: 257
+#: gui/__init__.py:257
 msgid " the synthesizer to use"
 msgstr " آلة النطق المستخدمة"
 
 #
 # File: gui/__init__.py, line: 257
+#: gui/__init__.py:257
 msgid "&Synthesizer..."
 msgstr "&آلات النطق..."
 
 #
 # File: gui/__init__.py, line: 259
+#: gui/__init__.py:259
 msgid "&Voice settings..."
 msgstr "إعدادات ال&صوت..."
 
 #
 # File: gui/__init__.py, line: 259
+#: gui/__init__.py:259
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "اختيار الصوت، وسرعة القراءة، ومستوى ارتفاع الصوت وحِدَتُهُ"
 
 #
 # File: gui/__init__.py, line: 261
+#: gui/__init__.py:261
 msgid "B&raille settings..."
 msgstr "إعدادات ال&برايل..."
 
 #
 # File: gui/__init__.py, line: 263
+#: gui/__init__.py:263
 msgid "&Keyboard Settings..."
 msgstr "إعدادات &لوحة المفاتيح..."
 
 #
 # File: gui/__init__.py, line: 263
+#: gui/__init__.py:263
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
 msgstr "تعديل نمط لوحة المفاتيح، بنطق الأحرف, أو الكلمات أو مفاتيح الاختصار"
 
 #
 # File: gui/__init__.py, line: 265
+#: gui/__init__.py:265
 msgid "&Mouse settings..."
 msgstr "إعدادات ال&فأرة..."
 
 #
 # File: gui/__init__.py, line: 265
+#: gui/__init__.py:265
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "تغيير الإعلام عن شكل مؤشر الفأرة والكائن قيد المؤشر"
 
 #
 # File: gui/__init__.py, line: 267
+#: gui/__init__.py:267
 msgid "&Object presentation..."
 msgstr "&عرض الكائن..."
 
 #
 # File: gui/__init__.py, line: 267
+#: gui/__init__.py:267
 msgid "Change reporting of objects"
 msgstr "تغيير الإعلام عن الكائنات"
 
 #
 # File: gui/__init__.py, line: 269
+#: gui/__init__.py:269
 msgid "Change virtual buffers specific settings"
 msgstr "تغيير إعدادات الذاكرة التخيلية"
 
 #
 # File: gui/__init__.py, line: 269
+#: gui/__init__.py:269
 msgid "Virtual &buffers..."
 msgstr "ال&ذاكرة التخيلية..."
 
 #
 # File: gui/__init__.py, line: 271
+#: gui/__init__.py:271
 msgid "Change Settings of document properties"
 msgstr "تغيير إعدادات خصائص المستند"
 
 #
 # File: gui/__init__.py, line: 271
+#: gui/__init__.py:271
 msgid "Document &formatting..."
 msgstr "&تنسيق المستندات..."
 
 #
 # File: gui/__init__.py, line: 274
+#: gui/__init__.py:274
 msgid "&Default dictionary..."
 msgstr "ال&معجم التلقائي..."
 
 #
 # File: gui/__init__.py, line: 274
+#: gui/__init__.py:274
 msgid "dialog where you can set default dictionary by adding dictionary entries to the list"
 msgstr "مُحاوَرَة تُمَكّنك من وضع معجم صوتي تلقائي عن طريق إضافة قواعد نطقية للقائمة السردية "
 
 #
 # File: gui/__init__.py, line: 276
+#: gui/__init__.py:276
 msgid "&Voice dictionary..."
 msgstr "معجم الصوت ال&حالي..."
 
 #
 # File: gui/__init__.py, line: 276
+#: gui/__init__.py:276
 msgid "dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
 msgstr "مُحاوَرَة تُمَكّنك من وضع معجم صوتي خاص بالصوت الحالي عن طريق إضافة قواعد نطقية للقائمة السردية "
 
 #
 # File: gui/__init__.py, line: 278
+#: gui/__init__.py:278
 msgid "&Temporary dictionary..."
 msgstr "معجم صوتي &مؤقت..."
 
 #
 # File: gui/__init__.py, line: 278
+#: gui/__init__.py:278
 msgid "dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
 msgstr "مُحاوَرَة تُمَكّنك من وضع معجم صوتي مؤقت عن طريق إضافة قواعد نطقية لمربع تحرير "
 
 #
 # File: gui/__init__.py, line: 280
+#: gui/__init__.py:280
 msgid "Speech &dictionaries"
 msgstr "المعاجم ال&صوتية"
 
 #
 # File: gui/__init__.py, line: 281
+#: gui/__init__.py:281
 msgid "&Preferences"
 msgstr "&تفضيلات"
 
 #
 # File: gui/__init__.py, line: 285
+#: gui/__init__.py:285
 msgid "View log"
 msgstr "عرض التقرير"
 
 #
 # File: gui/__init__.py, line: 287
+#: gui/__init__.py:287
 msgid "Speech viewer"
 msgstr "عارض النطق"
 
 #
 # File: gui/__init__.py, line: 290
+#: gui/__init__.py:290
 msgid "Python console"
 msgstr "بوابة لغة بايثون"
 
 #
 # File: gui/__init__.py, line: 292
+#: gui/__init__.py:292
 msgid "Tools"
 msgstr "أدوات"
 
 #
 # File: gui/__init__.py, line: 296
+#: gui/__init__.py:296
 msgid "User guide"
 msgstr "دليل الاستخدام"
 
 #
 # File: gui/__init__.py, line: 298
+#: gui/__init__.py:298
 msgid "Key Command Quick Reference"
 msgstr "المرجع السريع لاختصارات لوحة المفاتيح"
 
 #
 # File: gui/__init__.py, line: 300
+#: gui/__init__.py:300
 msgid "What's &new"
 msgstr "&مستجدات البرنامج"
 
 #
 # File: gui/__init__.py, line: 302
+#: gui/__init__.py:302
 msgid "Web site"
 msgstr "الموقع الإلكتروني"
 
 #
 # File: gui/__init__.py, line: 304
+#: gui/__init__.py:304
 msgid "Readme"
 msgstr "قراءة سريعة "
 
 #
 # File: gui/__init__.py, line: 306
+#: gui/__init__.py:306
 msgid "License"
 msgstr "نص اتفاقية الترخيص"
 
 #
 # File: gui/__init__.py, line: 308
+#: gui/__init__.py:308
 msgid "Contributors"
 msgstr "قائمة بأسماء فريق العمل"
 
 #
 # File: gui/__init__.py, line: 310
+#: gui/__init__.py:310
 msgid "We&lcome dialog"
 msgstr "رسالة استهلالية"
 
 #
 # File: gui/__init__.py, line: 313
+#: gui/__init__.py:313
 msgid "About..."
 msgstr "نبذة مختصرة"
 
 #
 # File: gui/__init__.py, line: 315
+#: gui/__init__.py:315
 msgid "&Help"
 msgstr "تع&ليمات"
 
 #
 # File: gui/__init__.py, line: 317
+#: gui/__init__.py:317
 msgid "&Revert to saved configuration"
 msgstr "&استعادة الإعدادات المحفوظة مسبقا"
 
 #
 # File: gui/__init__.py, line: 317
+#: gui/__init__.py:317
 msgid "Reset all settings to saved state"
 msgstr "استرجاع كافة الإعدادات لوضعيتها السابقة"
 
 #
 # File: gui/__init__.py, line: 319
+#: gui/__init__.py:319
 msgid "&Save configuration"
 msgstr "&حفظ التعديلات"
 
 #
 # File: gui/__init__.py, line: 319
+#: gui/__init__.py:319
 msgid "Write the current configuration to nvda.ini"
 msgstr "حفظ التعديلات الحالية في ملف NVDA.ini"
 
 #
 # File: gui/__init__.py, line: 322
 # File: gui/logViewer.py, line: 33
+#: gui/__init__.py:322
+#: gui/logViewer.py:33
 msgid "E&xit"
 msgstr "ال&خروج من البرنامج"
 
 #
 # File: gui/__init__.py, line: 373
+#: gui/__init__.py:373
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
@@ -2841,27 +3501,33 @@ msgstr ""
 
 #
 # File: gui/__init__.py, line: 383
+#: gui/__init__.py:383
 msgid "Welcome to NVDA"
 msgstr "أهلا بكم في برنامج إنفيديإيه "
 
 #
 # File: gui/__init__.py, line: 387
+#: gui/__init__.py:387
 msgid "Options"
 msgstr "خيارات"
 
 #
 # File: gui/__init__.py, line: 388
 # File: gui/settingsDialogs.py, line: 398
+#: gui/__init__.py:388
+#: gui/settingsDialogs.py:398
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "استخدام مفتاح تكبير الحروف كمفتاح مصاحب للبرنامج"
 
 #
 # File: gui/__init__.py, line: 391
+#: gui/__init__.py:391
 msgid "Show this dialog when NVDA starts"
 msgstr "عرض هذه المُحاوَرَة عند بدأ تشغيل إنفيديإيه."
 
 #
 # File: gui/__init__.py, line: 425
+#: gui/__init__.py:425
 msgid ""
 "Your configuration file contains errors. \r\n"
 "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\r\n"
@@ -2871,31 +3537,37 @@ msgstr ""
 
 #
 # File: gui/__init__.py, line: 430
+#: gui/__init__.py:430
 msgid "Configuration File Error"
 msgstr "خلل في ملف إعدادات البرنامج"
 
 #
 # File: gui/logViewer.py, line: 17
+#: gui/logViewer.py:17
 msgid "NVDA Log Viewer"
 msgstr "عارض تقارير برنامج إنفيديإيه"
 
 #
 # File: gui/logViewer.py, line: 28
+#: gui/logViewer.py:28
 msgid "Refresh\tF5"
 msgstr "للتنشيط اضغط على (F5)"
 
 #
 # File: gui/logViewer.py, line: 35
+#: gui/logViewer.py:35
 msgid "Log"
 msgstr "تقرير"
 
 #
 # File: gui/logViewer.py, line: 65
+#: gui/logViewer.py:65
 msgid "Save As"
 msgstr "حفظ باسم"
 
 #
 # File: gui/logViewer.py, line: 73
+#: gui/logViewer.py:73
 msgid "Error saving log: %s"
 msgstr "خلل في حفظ التقرير: %s"
 
@@ -2903,950 +3575,1143 @@ msgstr "خلل في حفظ التقرير: %s"
 # File: gui/scriptUI.py, line: 53
 # File: gui/scriptUI.py, line: 62
 # File: gui/scriptUI.py, line: 74
+#: gui/scriptUI.py:53
+#: gui/scriptUI.py:62
+#: gui/scriptUI.py:74
 msgid "NVDA"
 msgstr "إنفيديإيه"
 
 #
 # File: gui/settingsDialogs.py, line: 91
+#: gui/settingsDialogs.py:91
 msgid "info"
 msgstr "بيانات"
 
 #
 # File: gui/settingsDialogs.py, line: 92
+#: gui/settingsDialogs.py:92
 msgid "debug warning"
 msgstr "تحذير لوجود خطأ برمجي"
 
 #
 # File: gui/settingsDialogs.py, line: 93
+#: gui/settingsDialogs.py:93
 msgid "input/output"
 msgstr "مدخل ومخرج "
 
 #
 # File: gui/settingsDialogs.py, line: 94
+#: gui/settingsDialogs.py:94
 msgid "debug"
 msgstr "فحص الخطأ البرمجي "
 
 #
 # File: gui/settingsDialogs.py, line: 99
+#: gui/settingsDialogs.py:99
 msgid "&Language (requires restart to fully take affect):"
 msgstr "الل&غة (تحتاج لإعادة التشغيل لتعمل بصورة مناسبة)"
 
 #
 # File: gui/settingsDialogs.py, line: 103
+#: gui/settingsDialogs.py:103
 msgid "Language"
 msgstr "اللغة"
 
 #
 # File: gui/settingsDialogs.py, line: 113
+#: gui/settingsDialogs.py:113
 msgid "&Save configuration on exit"
 msgstr "&حفظ الإعدادات عند الخروج من البرنامج"
 
 #
 # File: gui/settingsDialogs.py, line: 116
+#: gui/settingsDialogs.py:116
 msgid "&Warn before exiting NVDA"
 msgstr "ال&تنبيه عند الخروج من البرنامج"
 
 #
 # File: gui/settingsDialogs.py, line: 120
+#: gui/settingsDialogs.py:120
 msgid "L&ogging level:"
 msgstr "&مستوى إعداد التقرير:"
 
 #
 # File: gui/settingsDialogs.py, line: 123
+#: gui/settingsDialogs.py:123
 msgid "Log level"
 msgstr "مستوى التقرير"
 
 #
 # File: gui/settingsDialogs.py, line: 133
+#: gui/settingsDialogs.py:133
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "التشغيل التل&قائي بعد تشغيل ويندوز"
 
 #
 # File: gui/settingsDialogs.py, line: 138
+#: gui/settingsDialogs.py:138
 msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr "تشغيل البرنامج عند شاشة استقبال الولوج لويندوز (يحتاج لصلاحيات إدارية)"
 
 #
 # File: gui/settingsDialogs.py, line: 154
+#: gui/settingsDialogs.py:154
 msgid "Error in %s language file"
 msgstr "خلل في ملف اللغة %s"
 
 #
 # File: gui/settingsDialogs.py, line: 154
+#: gui/settingsDialogs.py:154
 msgid "Language Error"
 msgstr "خلل في اللغة "
 
 #
 # File: gui/settingsDialogs.py, line: 168
+#: gui/settingsDialogs.py:168
 msgid "Insufficient Privileges"
 msgstr "صلاحيات غير كافية "
 
 #
 # File: gui/settingsDialogs.py, line: 168
+#: gui/settingsDialogs.py:168
 msgid "This change requires administrator privileges."
 msgstr "يتطلب هذا التعديل صلاحيات إدارية."
 
 #
 # File: gui/settingsDialogs.py, line: 170
+#: gui/settingsDialogs.py:170
 msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
 msgstr "لتفعيل اللغة الجديدة, يجب حفظ الإعدادات وإعادة تشغيل البرنامج. قم بالضغط على مفتاح الإدخال لحفظ الإعدادات وإعادة تشغيل البرنامج، أو مفتاح الهروب لإلغاء الأمر وحفظ التعديلات, وإعادة تشغيل البرنامج في وقت لاحق."
 
 #
 # File: gui/settingsDialogs.py, line: 170
+#: gui/settingsDialogs.py:170
 msgid "Language Configuration Change"
 msgstr "تغيير إعدادات اللغة"
 
 #
 # File: gui/settingsDialogs.py, line: 176
+#: gui/settingsDialogs.py:176
 msgid "Synthesizer"
 msgstr "آلات النطق"
 
 #
 # File: gui/settingsDialogs.py, line: 180
+#: gui/settingsDialogs.py:180
 msgid "&Synthesizer:"
 msgstr "&آلات النطق"
 
 #
 # File: gui/settingsDialogs.py, line: 195
+#: gui/settingsDialogs.py:195
 msgid "Output &device:"
 msgstr "&مَخرج الصوت"
 
 #
 # File: gui/settingsDialogs.py, line: 215
+#: gui/settingsDialogs.py:215
 msgid "Could not load the %s synthesizer."
 msgstr "لا يمكن تشغيل آلة النطق %s"
 
 #
 # File: gui/settingsDialogs.py, line: 215
+#: gui/settingsDialogs.py:215
 msgid "Synthesizer Error"
 msgstr "خلل في آلة النطق"
 
 #
 # File: gui/settingsDialogs.py, line: 245
+#: gui/settingsDialogs.py:245
 msgid "Voice settings"
 msgstr "إعدادات الصوت"
 
 #
 # File: gui/settingsDialogs.py, line: 301
+#: gui/settingsDialogs.py:301
 msgid "&Speak all punctuation"
 msgstr "نطق &كافة علامات الترقيم"
 
 #
 # File: gui/settingsDialogs.py, line: 304
+#: gui/settingsDialogs.py:304
 msgid "Raise pitch for capitals"
 msgstr "رفع حدة الصوت عند الحروف الكبيرة"
 
 #
 # File: gui/settingsDialogs.py, line: 307
+#: gui/settingsDialogs.py:307
 msgid "Say &cap before capitals"
 msgstr "ترديد كلمة (Cap) عند الحروف الكبيرة"
 
 #
 # File: gui/settingsDialogs.py, line: 310
+#: gui/settingsDialogs.py:310
 msgid "&Beep for capitals"
 msgstr "صفير عند الحروف الكبيرة"
 
 #
 # File: gui/settingsDialogs.py, line: 313
+#: gui/settingsDialogs.py:313
 msgid "Use &spelling functionality if supported"
 msgstr "استخدام خاصية &تصحيح الهجاء إن كانت مدعمة"
 
 #
 # File: gui/settingsDialogs.py, line: 381
+#: gui/settingsDialogs.py:381
 msgid "Keyboard Settings"
 msgstr "إعدادات لوحة المفاتيح"
 
 #
 # File: gui/settingsDialogs.py, line: 385
+#: gui/settingsDialogs.py:385
 msgid "&Keyboard layout:"
 msgstr "نمط &لوحة المفاتيح:"
 
 #
 # File: gui/settingsDialogs.py, line: 390
+#: gui/settingsDialogs.py:390
 msgid "Keyboard layout"
 msgstr "نمط لوحة المفاتيح"
 
 #
 # File: gui/settingsDialogs.py, line: 401
+#: gui/settingsDialogs.py:401
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "استخدام مفتاح الإدراج في لوحة الأرقام كمفتاح مصاحب للبرنامج"
 
 #
 # File: gui/settingsDialogs.py, line: 404
+#: gui/settingsDialogs.py:404
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "استخدام مفتاح الإدراج الممتد كمفتاح مصاحب للبرنامج"
 
 #
 # File: gui/settingsDialogs.py, line: 407
+#: gui/settingsDialogs.py:407
 msgid "Speak typed &characters"
 msgstr "نطق الأح&رف المكتوبة"
 
 #
 # File: gui/settingsDialogs.py, line: 410
+#: gui/settingsDialogs.py:410
 msgid "Speak typed &words"
 msgstr "نطق ال&كلمات المكتوبة"
 
 #
 # File: gui/settingsDialogs.py, line: 413
+#: gui/settingsDialogs.py:413
 msgid "Speak command &keys"
 msgstr "نطق مفا&تيح الاختصارات"
 
 #
 # File: gui/settingsDialogs.py, line: 436
+#: gui/settingsDialogs.py:436
 msgid "Mouse settings"
 msgstr "إعدادات الفأرة"
 
 #
 # File: gui/settingsDialogs.py, line: 439
+#: gui/settingsDialogs.py:439
 msgid "Report mouse &shape changes"
 msgstr "الإعلام عن تغيير &شكل مؤشر الفأرة"
 
 #
 # File: gui/settingsDialogs.py, line: 442
+#: gui/settingsDialogs.py:442
 msgid "Report &text under the mouse"
 msgstr "الإعلام عن النص &قيد مؤشر الفأرة"
 
 #
 # File: gui/settingsDialogs.py, line: 446
+#: gui/settingsDialogs.py:446
 msgid "Text &unit resolution:"
 msgstr "مستوى ال&كتلة النصية:"
 
 #
 # File: gui/settingsDialogs.py, line: 450
+#: gui/settingsDialogs.py:450
 msgid "text reporting unit"
 msgstr "الإعلام عن الكُتلة النصية "
 
 #
 # File: gui/settingsDialogs.py, line: 458
+#: gui/settingsDialogs.py:458
 msgid "Report &role when mouse enters object"
 msgstr "الإعلام عن &نوع الكائن عند وقوع مؤشر الفأرة عليه"
 
 #
 # File: gui/settingsDialogs.py, line: 461
+#: gui/settingsDialogs.py:461
 msgid "play audio coordinates when mouse moves"
 msgstr "إصدار صوت تبعا لأبعاد مؤشر الفأرة كلما تحرك"
 
 #
 # File: gui/settingsDialogs.py, line: 464
+#: gui/settingsDialogs.py:464
 msgid "brightness controls audio coordinates volume"
 msgstr "التحكم في مستوى صوت صفارة أبعاد الشاشة حسب نقائها"
 
 #
 # File: gui/settingsDialogs.py, line: 482
+#: gui/settingsDialogs.py:482
 msgid "Object presentation"
 msgstr "عرض الكائن"
 
 #
 # File: gui/settingsDialogs.py, line: 485
+#: gui/settingsDialogs.py:485
 msgid "Speak"
 msgstr "نطق"
 
 #
 # File: gui/settingsDialogs.py, line: 486
+#: gui/settingsDialogs.py:486
 msgid "Beep"
 msgstr "صفير"
 
 #
 # File: gui/settingsDialogs.py, line: 487
+#: gui/settingsDialogs.py:487
 msgid "Speak and beep"
 msgstr "النطق والصفير"
 
 #
 # File: gui/settingsDialogs.py, line: 491
+#: gui/settingsDialogs.py:491
 msgid "Report &tooltips"
 msgstr "الإعلام عن التلميحات ال&خاطفة"
 
 #
 # File: gui/settingsDialogs.py, line: 494
+#: gui/settingsDialogs.py:494
 msgid "Report &help balloons"
 msgstr "الإعلام عن رسائل ال&تعليمات"
 
 #
 # File: gui/settingsDialogs.py, line: 497
+#: gui/settingsDialogs.py:497
 msgid "Report object shortcut &keys"
 msgstr "الإعلام عن مفاتيح اختصار ال&كائن"
 
 #
 # File: gui/settingsDialogs.py, line: 500
+#: gui/settingsDialogs.py:500
 msgid "Report object &position information"
 msgstr "الإعلام عن بيانات &موضع الكائن"
 
 #
 # File: gui/settingsDialogs.py, line: 503
+#: gui/settingsDialogs.py:503
 msgid "Report object &descriptions"
 msgstr "الإعلام عن &وصف الكائن"
 
 #
 # File: gui/settingsDialogs.py, line: 507
+#: gui/settingsDialogs.py:507
 msgid "Progress &bar output:"
 msgstr "طريقة الإعلام عن ال&شريط التقدمي"
 
 #
 # File: gui/settingsDialogs.py, line: 510
+#: gui/settingsDialogs.py:510
 msgid "Progress bar output"
 msgstr "الإعلام عن الشريط التقدمي"
 
 #
 # File: gui/settingsDialogs.py, line: 519
+#: gui/settingsDialogs.py:519
 msgid "Report background progress bars"
 msgstr "الإعلام عن الأشرطة التقدمية الخلفية"
 
 #
 # File: gui/settingsDialogs.py, line: 537
+#: gui/settingsDialogs.py:537
 msgid "virtual buffers"
 msgstr "الذاكرة التخيلية"
 
 #
 # File: gui/settingsDialogs.py, line: 540
+#: gui/settingsDialogs.py:540
 msgid "&Maximum number of characters on one line"
 msgstr "أقصى عدد أح&رف ممكن في السطر"
 
 #
 # File: gui/settingsDialogs.py, line: 545
+#: gui/settingsDialogs.py:545
 msgid "&Number of lines per page"
 msgstr "&عدد الأسطر في الصفحة"
 
 #
 # File: gui/settingsDialogs.py, line: 550
+#: gui/settingsDialogs.py:550
 msgid "Use &screen layout (when supported)"
 msgstr "استخدام &تنسيق الشاشة (عند دعمه)"
 
 #
 # File: gui/settingsDialogs.py, line: 553
+#: gui/settingsDialogs.py:553
 msgid "Report l&ayout tables"
 msgstr "الإعلام عن ال&جداول التنسيقية"
 
 #
 # File: gui/settingsDialogs.py, line: 557
+#: gui/settingsDialogs.py:557
 msgid "Automatic focus mode for focus changes"
 msgstr "التشغيل التلقائي لبيئة الاستمارات مع تغيير مؤشر الاستمارات"
 
 #
 # File: gui/settingsDialogs.py, line: 560
+#: gui/settingsDialogs.py:560
 msgid "Automatic focus mode for caret movement"
 msgstr "التشغيل التلقائي لبيئة الاستمارات مع حركة مؤشر الحاسوب"
 
 #
 # File: gui/settingsDialogs.py, line: 563
+#: gui/settingsDialogs.py:563
 msgid "Audio indication of focus and browse modes"
 msgstr "الإعلان الصوتي عند التبديل ما بين بيئة التصفح والاستمارات"
 
 #
 # File: gui/settingsDialogs.py, line: 591
+#: gui/settingsDialogs.py:591
 msgid "Document formatting"
 msgstr "تنسيق المستند"
 
 #
 # File: gui/settingsDialogs.py, line: 594
+#: gui/settingsDialogs.py:594
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "الإعلام عن التغييرات التنسيقية بعد موضع المؤشر (مما قد يسبب بطء في الاستجابة)"
 
 #
 # File: gui/settingsDialogs.py, line: 597
+#: gui/settingsDialogs.py:597
 msgid "Report font &name"
 msgstr "الإعلام عن &نوع الخط"
 
 #
 # File: gui/settingsDialogs.py, line: 600
+#: gui/settingsDialogs.py:600
 msgid "Report font &size"
 msgstr "الإعلام عن &حجم الخط"
 
 #
 # File: gui/settingsDialogs.py, line: 603
+#: gui/settingsDialogs.py:603
 msgid "Report font attri&butes"
 msgstr "الإعلام عن &خصائص الخط"
 
 #
 # File: gui/settingsDialogs.py, line: 606
+#: gui/settingsDialogs.py:606
 msgid "Report &alignment"
 msgstr "الإعلام عن حالة ال&محاذاة"
 
 #
 # File: gui/settingsDialogs.py, line: 609
+#: gui/settingsDialogs.py:609
 msgid "Report st&yle"
 msgstr "الإعلام عن الأس&لوب"
 
 #
 # File: gui/settingsDialogs.py, line: 612
+#: gui/settingsDialogs.py:612
 msgid "Report spelling errors"
 msgstr "الإعلام عن الأخ&طاء الهجائِية"
 
 #
 # File: gui/settingsDialogs.py, line: 615
+#: gui/settingsDialogs.py:615
 msgid "Report &pages"
 msgstr "الإعلام عن ال&صفحات"
 
 #
 # File: gui/settingsDialogs.py, line: 618
+#: gui/settingsDialogs.py:618
 msgid "Report &line numbers"
 msgstr "الإعلام عن ر&قم السطر"
 
 #
 # File: gui/settingsDialogs.py, line: 621
+#: gui/settingsDialogs.py:621
 msgid "Report &tables"
 msgstr "الإعلام عن ال&جداول"
 
 #
 # File: gui/settingsDialogs.py, line: 624
+#: gui/settingsDialogs.py:624
 msgid "Report &links"
 msgstr "الإعلام عن ال&روابط"
 
 #
 # File: gui/settingsDialogs.py, line: 627
+#: gui/settingsDialogs.py:627
 msgid "Report &headings"
 msgstr "الإعلام عن رؤوس الموضو&عات"
 
 #
 # File: gui/settingsDialogs.py, line: 630
+#: gui/settingsDialogs.py:630
 msgid "Report l&ists"
 msgstr "الإعلام عن القوائم ال&سردية"
 
 #
 # File: gui/settingsDialogs.py, line: 633
+#: gui/settingsDialogs.py:633
 msgid "Report block &quotes"
 msgstr "الإعلام عن الاق&تباس"
 
 #
 # File: gui/settingsDialogs.py, line: 636
+#: gui/settingsDialogs.py:636
 msgid "Report lan&dmarks"
 msgstr "الإعلام عن علا&مات آريا"
 
 #
 # File: gui/settingsDialogs.py, line: 664
+#: gui/settingsDialogs.py:664
 msgid "Edit dictionary entry"
 msgstr "تعديل مدخلات المعجم"
 
 #
 # File: gui/settingsDialogs.py, line: 667
+#: gui/settingsDialogs.py:667
 msgid "&Pattern"
 msgstr "ال&كلمة الأصلية"
 
 #
 # File: gui/settingsDialogs.py, line: 670
+#: gui/settingsDialogs.py:670
 msgid "&Replacement"
 msgstr "&استبدال بِ"
 
 #
 # File: gui/settingsDialogs.py, line: 673
+#: gui/settingsDialogs.py:673
 msgid "&Comment"
 msgstr "&ملحوظة"
 
 #
 # File: gui/settingsDialogs.py, line: 676
+#: gui/settingsDialogs.py:676
 msgid "Case &sensitive"
 msgstr "&حساس لحالة الأحرف"
 
 #
 # File: gui/settingsDialogs.py, line: 678
+#: gui/settingsDialogs.py:678
 msgid "Regular &expression"
 msgstr "تعبير &قياسي"
 
 #
 # File: gui/settingsDialogs.py, line: 700
+#: gui/settingsDialogs.py:700
 msgid "&Dictionary entries"
 msgstr "مد&خلات المعجم"
 
 #
 # File: gui/settingsDialogs.py, line: 703
+#: gui/settingsDialogs.py:703
 msgid "Comment"
 msgstr "ملحوظة"
 
 #
 # File: gui/settingsDialogs.py, line: 704
+#: gui/settingsDialogs.py:704
 msgid "Pattern"
 msgstr "الكلمة الأصلية"
 
 #
 # File: gui/settingsDialogs.py, line: 705
+#: gui/settingsDialogs.py:705
 msgid "Replacement"
 msgstr "استبدال بِ"
 
 #
 # File: gui/settingsDialogs.py, line: 706
+#: gui/settingsDialogs.py:706
 msgid "case sensitive"
 msgstr "حساس لحالة الأحرف"
 
 #
 # File: gui/settingsDialogs.py, line: 707
+#: gui/settingsDialogs.py:707
 msgid "Regular expression"
 msgstr "تعبير قياسي"
 
 #
 # File: gui/settingsDialogs.py, line: 714
+#: gui/settingsDialogs.py:714
 msgid "&Add"
 msgstr "إ&ضافة"
 
 #
 # File: gui/settingsDialogs.py, line: 717
+#: gui/settingsDialogs.py:717
 msgid "&edit"
 msgstr "ت&حرير"
 
 #
 # File: gui/settingsDialogs.py, line: 720
+#: gui/settingsDialogs.py:720
 msgid "&Remove"
 msgstr "إ&زالة"
 
 #
 # File: gui/settingsDialogs.py, line: 787
+#: gui/settingsDialogs.py:787
 msgid "Braille Settings"
 msgstr "إعدادات برايل"
 
 #
 # File: gui/settingsDialogs.py, line: 791
+#: gui/settingsDialogs.py:791
 msgid "Braille &display:"
 msgstr "السطر الإلكت&روني:"
 
 #
 # File: gui/settingsDialogs.py, line: 805
+#: gui/settingsDialogs.py:805
 msgid "Translation &table:"
 msgstr "&جدول التحويل:"
 
 #
 # File: gui/settingsDialogs.py, line: 817
+#: gui/settingsDialogs.py:817
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "مد الكلمة الحالية ب&شفرة برايل الحاسوبية"
 
 #
 # File: gui/settingsDialogs.py, line: 822
+#: gui/settingsDialogs.py:822
 msgid "Cursor blink rate (ms)"
 msgstr "معدل ظهور المؤشر (ms) "
 
 #
 # File: gui/settingsDialogs.py, line: 830
+#: gui/settingsDialogs.py:830
 msgid "Message timeout (sec)"
 msgstr "زمن الرسالة (sec)"
 
 #
 # File: gui/settingsDialogs.py, line: 838
+#: gui/settingsDialogs.py:838
 msgid "Braille tethered to:"
 msgstr "إرفاق مؤشر الخط البارز بْ"
 
 #
 # File: gui/settingsDialogs.py, line: 857
+#: gui/settingsDialogs.py:857
 msgid "Braille Display Error"
 msgstr "خلل في تشغيل السطر الإلكتروني"
 
 #
 # File: gui/settingsDialogs.py, line: 857
+#: gui/settingsDialogs.py:857
 msgid "Could not load the %s display."
 msgstr "لا يمكن تحميل السطر الإلكتروني %s."
 
 #
 # File: keyUtils.py, line: 111
+#: keyUtils.py:111
 msgid "back"
 msgstr "رجوع"
 
 #
 # File: keyUtils.py, line: 112
+#: keyUtils.py:112
 msgid "forward"
 msgstr "تقديم"
 
 #
 # File: keyUtils.py, line: 113
+#: keyUtils.py:113
 msgid "refresh"
 msgstr "تنشيط"
 
 #
 # File: keyUtils.py, line: 114
+#: keyUtils.py:114
 msgid "browser stop"
 msgstr "إيقاف المتصفح"
 
 #
 # File: keyUtils.py, line: 115
+#: keyUtils.py:115
 msgid "search page"
 msgstr "صفحة البحث"
 
 #
 # File: keyUtils.py, line: 116
+#: keyUtils.py:116
 msgid "favorites"
 msgstr "المفضلات"
 
 #
 # File: keyUtils.py, line: 117
+#: keyUtils.py:117
 msgid "home page"
 msgstr "الصفحة الرئيسية"
 
 #
 # File: keyUtils.py, line: 118
+#: keyUtils.py:118
 msgid "mute"
 msgstr "كتم الصوت"
 
 #
 # File: keyUtils.py, line: 119
+#: keyUtils.py:119
 msgid "volume down"
 msgstr "خفض الصوت"
 
 #
 # File: keyUtils.py, line: 120
+#: keyUtils.py:120
 msgid "volume up"
 msgstr "رفع الصوت"
 
 #
 # File: keyUtils.py, line: 121
+#: keyUtils.py:121
 msgid "next track"
 msgstr "الملف الصوتي التالي"
 
 #
 # File: keyUtils.py, line: 122
+#: keyUtils.py:122
 msgid "previous track"
 msgstr "الملف الصوتي السابق"
 
 #
 # File: keyUtils.py, line: 123
+#: keyUtils.py:123
 msgid "stop"
 msgstr "إيقاف"
 
 #
 # File: keyUtils.py, line: 124
+#: keyUtils.py:124
 msgid "play pause"
 msgstr "تشغيل إيقاف مؤقت"
 
 #
 # File: keyUtils.py, line: 125
+#: keyUtils.py:125
 msgid "email"
 msgstr "بريد إلكتروني"
 
 #
 # File: keyUtils.py, line: 126
+#: keyUtils.py:126
 msgid "media player"
 msgstr "مشغل الميديا"
 
 #
 # File: keyUtils.py, line: 127
+#: keyUtils.py:127
 msgid "custom applications key one"
 msgstr "مفتاح تخصيص التطبيقات 1"
 
 #
 # File: keyUtils.py, line: 128
+#: keyUtils.py:128
 msgid "custom applications key two"
 msgstr "مفتاح تخصيص التطبيقات2"
 
 #
 # File: keyUtils.py, line: 129
+#: keyUtils.py:129
 msgid "backspace"
 msgstr "تراجع"
 
 #
 # File: keyUtils.py, line: 130
+#: keyUtils.py:130
 msgid "caps lock"
 msgstr "تكبير الحروف"
 
 #
 # File: keyUtils.py, line: 131
+#: keyUtils.py:131
 msgid "ctrl"
 msgstr "تَحَكُّم"
 
 #
 # File: keyUtils.py, line: 132
+#: keyUtils.py:132
 msgid "alt"
 msgstr "قوائم"
 
 #
 # File: keyUtils.py, line: 133
+#: keyUtils.py:133
 msgid "shift"
 msgstr "تبديل "
 
 #
 # File: keyUtils.py, line: 134
+#: keyUtils.py:134
 msgid "windows"
 msgstr "نوافذ "
 
 #
 # File: keyUtils.py, line: 135
+#: keyUtils.py:135
 msgid "enter"
 msgstr "إدخال"
 
 #
 # File: keyUtils.py, line: 136
+#: keyUtils.py:136
 msgid "numpad enter"
 msgstr "إدخال في اللوحة الرقمية "
 
 #
 # File: keyUtils.py, line: 137
+#: keyUtils.py:137
 msgid "escape"
 msgstr "هروب"
 
 #
 # File: keyUtils.py, line: 139
+#: keyUtils.py:139
 msgid "page up"
 msgstr "صفحة لأعلى"
 
 #
 # File: keyUtils.py, line: 140
+#: keyUtils.py:140
 msgid "page down"
 msgstr "صفحة لأسفل"
 
 #
 # File: keyUtils.py, line: 141
+#: keyUtils.py:141
 msgid "end"
 msgstr "نهاية "
 
 #
 # File: keyUtils.py, line: 142
+#: keyUtils.py:142
 msgid "home"
 msgstr "بداية "
 
 #
 # File: keyUtils.py, line: 143
+#: keyUtils.py:143
 msgid "delete"
 msgstr "حَذْف"
 
 #
 # File: keyUtils.py, line: 144
+#: keyUtils.py:144
 msgid "left arrow"
 msgstr "سهم أيسر"
 
 #
 # File: keyUtils.py, line: 145
+#: keyUtils.py:145
 msgid "right arrow"
 msgstr "سهم أيمن"
 
 #
 # File: keyUtils.py, line: 146
+#: keyUtils.py:146
 msgid "up arrow"
 msgstr "سهم لأعلى"
 
 #
 # File: keyUtils.py, line: 147
+#: keyUtils.py:147
 msgid "down arrow"
 msgstr "سهم لأسفل"
 
 #
 # File: keyUtils.py, line: 148
+#: keyUtils.py:148
 msgid "applications"
 msgstr "التطبيقات"
 
 #
 # File: keyUtils.py, line: 149
+#: keyUtils.py:149
 msgid "num lock"
 msgstr "مفتاح تشغيل اللوحة الرقمية "
 
 #
 # File: keyUtils.py, line: 150
+#: keyUtils.py:150
 msgid "snapshot"
 msgstr "نسخ الشاشة"
 
 #
 # File: keyUtils.py, line: 151
+#: keyUtils.py:151
 msgid "scroll lock"
 msgstr "تمرير"
 
 #
 # File: keyUtils.py, line: 152
+#: keyUtils.py:152
 msgid "numpad left"
 msgstr "سهم أيسر في اللوحة الرقمية "
 
 #
 # File: keyUtils.py, line: 153
+#: keyUtils.py:153
 msgid "numpad right"
 msgstr "سهم أيمن في اللوحة الرقمية "
 
 #
 # File: keyUtils.py, line: 154
+#: keyUtils.py:154
 msgid "numpad up"
 msgstr "سهم لأعلى في اللوحة الرقمية "
 
 #
 # File: keyUtils.py, line: 155
+#: keyUtils.py:155
 msgid "numpad down"
 msgstr "سهم لأسفل في اللوحة الرقمية "
 
 #
 # File: keyUtils.py, line: 156
+#: keyUtils.py:156
 msgid "numpad page up"
 msgstr "صفحة لأعلى في اللوحة الرقمية "
 
 #
 # File: keyUtils.py, line: 157
+#: keyUtils.py:157
 msgid "numpad page down"
 msgstr "صفحة لأسفل في اللوحة الرقمية "
 
 #
 # File: keyUtils.py, line: 158
+#: keyUtils.py:158
 msgid "numpad end"
 msgstr "مفتاح النهاية في اللوحة الرقمية "
 
 #
 # File: keyUtils.py, line: 159
+#: keyUtils.py:159
 msgid "numpad home"
 msgstr "مفتاح البداية في اللوحة الرقمية "
 
 #
 # File: keyUtils.py, line: 160
+#: keyUtils.py:160
 msgid "numpad slash"
 msgstr "القسمة في اللوحة الرقمية "
 
 #
 # File: keyUtils.py, line: 161
+#: keyUtils.py:161
 msgid "numpad star"
 msgstr "الضرب في اللوحة الرقمية "
 
 #
 # File: keyUtils.py, line: 162
+#: keyUtils.py:162
 msgid "numpad minus"
 msgstr "ناقص في اللوحة الرقمية "
 
 #
 # File: keyUtils.py, line: 163
+#: keyUtils.py:163
 msgid "numpad plus"
 msgstr "زائد في اللوحة الرقمية "
 
 #
 # File: keyUtils.py, line: 164
+#: keyUtils.py:164
 msgid "left control"
 msgstr "تحكم أيسر"
 
 #
 # File: keyUtils.py, line: 165
+#: keyUtils.py:165
 msgid "right control"
 msgstr "تحكم أيمن"
 
 #
 # File: keyUtils.py, line: 166
+#: keyUtils.py:166
 msgid "left windows"
 msgstr "ويندوز أيسر"
 
 #
 # File: keyUtils.py, line: 167
+#: keyUtils.py:167
 msgid "left shift"
 msgstr "تبديل أيسر"
 
 #
 # File: keyUtils.py, line: 168
+#: keyUtils.py:168
 msgid "right shift"
 msgstr "تبديل أيمن"
 
 #
 # File: keyUtils.py, line: 169
+#: keyUtils.py:169
 msgid "left alt"
 msgstr "قوائم أيسر"
 
 #
 # File: keyUtils.py, line: 170
+#: keyUtils.py:170
 msgid "right alt"
 msgstr "قوائم أيمن"
 
 #
 # File: keyUtils.py, line: 171
+#: keyUtils.py:171
 msgid "right windows"
 msgstr "ويندوز أيمن"
 
 #
 # File: keyboardHandler.py, line: 54
+#: keyboardHandler.py:53
 msgid "caps lock %s"
 msgstr " %s تكبير الحروف"
 
 #
 # File: keyboardHandler.py, line: 56
+#: keyboardHandler.py:55
 msgid "num lock %s"
 msgstr "%s اللوحة الرقمية"
 
 #
 # File: keyboardHandler.py, line: 58
+#: keyboardHandler.py:57
 msgid "scroll lock %s"
 msgstr "%s التمرير"
 
 #
-# File: keyboardHandler.py, line: 78
-msgid "%s keyboard layout"
-msgstr "نمط لوحة المفاتيح %s"
-
-#
 # File: keyboardHandler.py, line: 191
+#: keyboardHandler.py:170
 msgid "Description: %s"
 msgstr "الوصف: %s"
 
 #
 # File: keyboardHandler.py, line: 194
+#: keyboardHandler.py:173
 msgid "Location: %s"
 msgstr "الموضع: %s "
 
 #
 # File: keyboardHandler.py, line: 209
+#: keyboardHandler.py:188
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "خطأ في مشغل لوحة المفاتيح. حدث داخلي _مفتاح لأسفل"
 
 #
 # File: keyboardHandler.py, line: 247
+#: keyboardHandler.py:226
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "خطأ في مشغل لوحة المفاتيح. حدث داخلي _مفتاح لأعلى"
 
 #
 # File: mouseHandler.py, line: 132
+#: mouseHandler.py:132
 msgid "%s cursor"
 msgstr "المؤشر %s"
 
 #
 # File: pythonConsole.py, line: 24
+#: pythonConsole.py:24
 msgid "Type help(object) to get help about object."
 msgstr "اكتب help(واسم الكائن) للحصول على معلومات عنه"
 
 #
 # File: pythonConsole.py, line: 43
+#: pythonConsole.py:43
 msgid "Type exit() to exit the console"
 msgstr "اكتب كلمة exit() للخروج من شاشة القونصول"
 
 #
 # File: pythonConsole.py, line: 96
+#: pythonConsole.py:96
 msgid "NVDA Python Console"
 msgstr "بوابة لغة البرمجة بايثون"
 
 #
 # File: speech.py, line: 177
+#: speech.py:179
 msgid "cap %s"
 msgstr "cap %s"
 
 #
 # File: speech.py, line: 313
+#: speech.py:330
 msgid "%d characters"
 msgstr "%d أحرف"
 
 #
 # File: speech.py, line: 364
+#: speech.py:381
 msgid "selecting %s"
 msgstr "%s محدد"
 
 #
 # File: speech.py, line: 375
+#: speech.py:392
 msgid "unselecting %s"
 msgstr "إزالة تحديد %s"
 
 #
 # File: speech.py, line: 377
+#: speech.py:394
 msgid "selection removed"
 msgstr "تم إزالة التحديد"
 
 #
 # File: speech.py, line: 668
+#: speech.py:685
 msgid "done dragging"
 msgstr "تم السحْب"
 
 #
 # File: speech.py, line: 693
 # File: speech.py, line: 937
+#: speech.py:710
+#: speech.py:988
 msgid "row %s"
 msgstr "صف %s"
 
 #
 # File: speech.py, line: 696
 # File: speech.py, line: 933
+#: speech.py:713
+#: speech.py:984
 msgid "column %s"
 msgstr "عمود %s"
 
 #
 # File: speech.py, line: 701
+#: speech.py:718
 msgid "with %s rows and %s columns"
 msgstr "بِ%s أسطر و%s أعمدة"
 
 #
 # File: speech.py, line: 703
+#: speech.py:720
 msgid "with %s columns"
 msgstr "بِ%s أعمدة"
 
 #
 # File: speech.py, line: 705
+#: speech.py:722
 msgid "with %s rows"
 msgstr "بِ%s أسطر"
+
+#
+# File: speech.py, line: 770
+#: speech.py:825
+msgid "with %s items"
+msgstr "بِ%s عناصر"
 
 #
 # File: speech.py, line: 768
@@ -3855,226 +4720,260 @@ msgstr "بِ%s أسطر"
 # File: speech.py, line: 784
 # File: speech.py, line: 795
 # File: speech.py, line: 896
+#: speech.py:840
+#: speech.py:947
 msgid "out of %s"
 msgstr "خارج ال%s"
 
 #
-# File: speech.py, line: 770
-msgid "with %s items"
-msgstr "بِ%s عناصر"
-
-#
-# File: speech.py, line: 793
-msgid "in %s"
-msgstr " في %s"
-
-#
 # File: speech.py, line: 813
+#: speech.py:864
 msgid "page %s"
 msgstr "صفحة %s"
 
 #
 # File: speech.py, line: 820
+#: speech.py:871
 msgid "style %s"
 msgstr "أسلوب %s"
 
 #
 # File: speech.py, line: 822
+#: speech.py:873
 msgid "default style"
 msgstr "أسلوب تلقائي"
 
 #
 # File: speech.py, line: 842
+#: speech.py:893
 msgid "line %s"
 msgstr " سَطْر %s"
 
 #
 # File: speech.py, line: 848
+#: speech.py:899
 msgid "no bold"
 msgstr "ليس عريضا"
 
 #
 # File: speech.py, line: 853
+#: speech.py:904
 msgid "italic"
 msgstr "مائل"
 
 #
 # File: speech.py, line: 853
+#: speech.py:904
 msgid "no italic"
 msgstr "ليس مائلا"
 
 #
 # File: speech.py, line: 858
+#: speech.py:909
 msgid "no strikethrough"
 msgstr "لا يتوسط"
 
 #
 # File: speech.py, line: 858
+#: speech.py:909
 msgid "strikethrough"
 msgstr "يتوسط"
 
 #
 # File: speech.py, line: 863
+#: speech.py:914
 msgid "not underlined"
 msgstr "ليس تحته خط"
 
 #
 # File: speech.py, line: 863
+#: speech.py:914
 msgid "underlined"
 msgstr "تحته خط"
 
 #
 # File: speech.py, line: 874
+#: speech.py:925
 msgid "baseline"
 msgstr "سطر الأساس"
 
 #
 # File: speech.py, line: 882
+#: speech.py:933
 msgid "align left"
 msgstr "محاذاة لليسار"
 
 #
 # File: speech.py, line: 884
+#: speech.py:935
 msgid "align center"
 msgstr "محاذاة في الوسط"
 
 #
 # File: speech.py, line: 886
+#: speech.py:937
 msgid "align right"
 msgstr "محاذاة لليمين"
 
 #
 # File: speech.py, line: 888
+#: speech.py:939
 msgid "align justify"
 msgstr "محاذاة منضبطة"
 
 #
 # File: speech.py, line: 890
+#: speech.py:941
 msgid "align default"
 msgstr "محاذاة افتراضية"
 
 #
 # File: speech.py, line: 903
+#: speech.py:954
 msgid "spelling error"
 msgstr "خطأ هجائِي"
 
 #
 # File: speech.py, line: 905
+#: speech.py:956
 msgid "out of spelling error"
 msgstr "خارج الخطأ الهجائِي"
 
 #
 # File: speech.py, line: 919
+#: speech.py:970
 msgid "out of table"
 msgstr "خارج الجدول"
 
 #
 # File: speech.py, line: 928
+#: speech.py:979
 msgid "table with %s columns and %s rows"
 msgstr "جدول مكون من %s إعمدة و %s أسطر "
 
 #
 # File: speechViewer.py, line: 13
+#: speechViewer.py:13
 msgid "NVDA Speech Viewer"
 msgstr "عارض ال&نطق لبرنامج إنفيديإيه"
 
 #
 # File: synthDriverHandler.py, line: 175
+#: synthDriverHandler.py:187
 msgid "&Voice"
 msgstr "ال&صوت:"
 
 #
 # File: synthDriverHandler.py, line: 179
+#: synthDriverHandler.py:191
 msgid "V&ariant"
 msgstr "تع&دد أصوات آلة النطق:"
 
 #
 # File: synthDriverHandler.py, line: 184
+#: synthDriverHandler.py:196
 msgid "&Rate"
 msgstr "&سرعة القراءة:"
 
 #
 # File: synthDriverHandler.py, line: 188
+#: synthDriverHandler.py:200
 msgid "V&olume"
 msgstr "&مستوى الصوت:"
 
 #
 # File: synthDriverHandler.py, line: 192
+#: synthDriverHandler.py:204
 msgid "&Pitch"
 msgstr "&حدة الصوت::"
 
 #
 # File: synthDriverHandler.py, line: 197
+#: synthDriverHandler.py:209
 msgid "&Inflection"
 msgstr "التن&غيم:"
 
 #
 # File: synthDrivers/_espeak.py, line: 308
+#: synthDrivers/_espeak.py:308
 msgid "none"
 msgstr "لا شيء "
 
 #
 # File: synthDrivers/newfon.py, line: 172
+#: synthDrivers/newfon.py:172
 msgid "russian newfon synthesizer by Sergey Shishmintzev"
 msgstr "آلة نطق نيوفون روسية بواسطة Sergey Shishmintzev "
 
 #
 # File: synthDrivers/newfon.py, line: 175
+#: synthDrivers/newfon.py:175
 msgid "&Language"
 msgstr "اللغة"
 
 #
 # File: synthDrivers/newfon.py, line: 177
+#: synthDrivers/newfon.py:177
 msgid "&Acceleration"
 msgstr "ت&سريع"
 
 #
 # File: synthDrivers/newfon.py, line: 188
+#: synthDrivers/newfon.py:188
 msgid "female 1"
 msgstr "مؤنث 1 "
 
 #
 # File: synthDrivers/newfon.py, line: 188
+#: synthDrivers/newfon.py:188
 msgid "female 2"
 msgstr "مؤنث 2 "
 
 #
 # File: synthDrivers/newfon.py, line: 188
+#: synthDrivers/newfon.py:188
 msgid "male 1"
 msgstr "مذكر 1 "
 
 #
 # File: synthDrivers/newfon.py, line: 188
+#: synthDrivers/newfon.py:188
 msgid "male 2"
 msgstr "مذكر 2 "
 
 #
 # File: synthDrivers/silence.py, line: 13
+#: synthDrivers/silence.py:13
 msgid "No speech"
 msgstr "إيقاف النطق"
 
 #
 # File: textInfos/__init__.py, line: 114
+#: textInfos/__init__.py:114
 msgid "word"
 msgstr "كلمة"
 
 #
 # File: versionInfo.py, line: 40
+#: versionInfo.py:40
 msgid "NonVisual Desktop Access"
 msgstr "التواصل غير المرئي مع الحاسوب"
 
 #
 # File: versionInfo.py, line: 42
+#: versionInfo.py:42
 msgid "A free and open-source screen reader for MS Windows"
 msgstr "قارئ شاشة مجاني ومفتوح المصدر يعمل في ظل نظام التشغيل وندوز "
 
 #
 # File: versionInfo.py, line: 44
-msgid "Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>"
+#: versionInfo.py:44
+msgid "Copyright (C) 2006-2010 NVDA Contributors"
 msgstr "جميع حقوق النشر محفوظة للمساهمين في تطوير برنامج إنفيديإيه من 2006 إلى 2009 <http://www.nvda-project.org/> "
 
 #
 # File: versionInfo.py, line: 45
+#: versionInfo.py:45
 msgid ""
 "%(copyright)s\n"
 "%(name)s is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it. This applies to both origional and modified copies of the software, plus any software that uses code taken from this software.\n"
@@ -4089,640 +4988,769 @@ msgstr ""
 
 #
 # File: virtualBufferHandler.py, line: 81
+#: virtualBufferHandler.py:81
 msgid "browse mode"
 msgstr "بيئة التصفح"
 
 #
 # File: virtualBufferHandler.py, line: 81
+#: virtualBufferHandler.py:81
 msgid "focus mode"
 msgstr "بيئة الاستمارات"
 
 #
 # File: virtualBuffers/__init__.py, line: 190
+#: virtualBuffers/__init__.py:190
 msgid "%s landmark"
 msgstr "ساحة آريا %s "
 
 #
 # File: virtualBuffers/__init__.py, line: 196
+#: virtualBuffers/__init__.py:196
 msgid "Lin&ks"
 msgstr "الر&وابط"
 
 #
 # File: virtualBuffers/__init__.py, line: 197
+#: virtualBuffers/__init__.py:197
 msgid "&Headings"
 msgstr "رؤوس ال&موضوعات"
 
 #
 # File: virtualBuffers/__init__.py, line: 198
+#: virtualBuffers/__init__.py:198
 msgid "Lan&dmarks"
 msgstr "سا&حات آريا"
 
 #
 # File: virtualBuffers/__init__.py, line: 204
+#: virtualBuffers/__init__.py:204
 msgid "Elements List"
 msgstr "قائمة العناصر"
 
 #
 # File: virtualBuffers/__init__.py, line: 207
+#: virtualBuffers/__init__.py:207
 msgid "Type:"
 msgstr "اكتب: "
 
 #
 # File: virtualBuffers/__init__.py, line: 218
+#: virtualBuffers/__init__.py:218
 msgid "&Filter by:"
 msgstr "التص&فية حسب"
 
 #
 # File: virtualBuffers/__init__.py, line: 226
+#: virtualBuffers/__init__.py:226
 msgid "&Activate"
 msgstr "تن&شيط "
 
 #
 # File: virtualBuffers/__init__.py, line: 229
+#: virtualBuffers/__init__.py:229
 msgid "&Move to"
 msgstr "الانت&قال ألى "
 
 #
 # File: virtualBuffers/__init__.py, line: 527
+#: virtualBuffers/__init__.py:527
 msgid "Refreshed"
 msgstr "تنشيط"
 
 #
 # File: virtualBuffers/__init__.py, line: 532
+#: virtualBuffers/__init__.py:532
 msgid "Loading document..."
 msgstr "تحميل المستند ... "
 
 #
 # File: virtualBuffers/__init__.py, line: 676
+#: virtualBuffers/__init__.py:676
 msgid "activates the current object in the virtual buffer"
 msgstr "تشغيل الكائن الحالي في الذاكرة التخيلية "
 
 #
 # File: virtualBuffers/__init__.py, line: 688
+#: virtualBuffers/__init__.py:688
 msgid "Refreshes the virtual buffer content"
 msgstr "تنشيط محتوى الذاكرة التخيلية "
 
 #
 # File: virtualBuffers/__init__.py, line: 693
+#: virtualBuffers/__init__.py:693
 msgid "use screen layout %s"
 msgstr "استخدام عرض نمط الشاشة %s "
 
 #
 # File: virtualBuffers/__init__.py, line: 694
+#: virtualBuffers/__init__.py:694
 msgid "Toggles on and off if the screen layout is preserved while rendering the virtual buffer content"
 msgstr "تشغيل الاحتفاظ بعرض نمط الشاشة أثناء تعاطِي محتوى الذاكرة التخيلية وتعطيله"
 
 #
 # File: virtualBuffers/__init__.py, line: 779
+#: virtualBuffers/__init__.py:779
 msgid "Presents a list of links, headings or landmarks"
 msgstr "عرض قائمة سردية بالروابط, ورؤوس الموضوعات أو الساحات الآريا"
 
 #
 # File: virtualBuffers/__init__.py, line: 1121
+#: virtualBuffers/__init__.py:1121
 msgid "Not in a table cell"
 msgstr "ليس في خلية جدولية"
 
 #
 # File: virtualBuffers/__init__.py, line: 1127
+#: virtualBuffers/__init__.py:1127
 msgid "edge of table"
 msgstr "حافة الجدول"
 
 #
 # File: virtualBuffers/__init__.py, line: 1137
+#: virtualBuffers/__init__.py:1137
 msgid "moves to the next table row"
 msgstr "الانتقال للصف التالي بالجدول"
 
 #
 # File: virtualBuffers/__init__.py, line: 1141
+#: virtualBuffers/__init__.py:1141
 msgid "moves to the previous table row"
 msgstr "الانتقال للصف السابق بالجدول"
 
 #
 # File: virtualBuffers/__init__.py, line: 1145
+#: virtualBuffers/__init__.py:1145
 msgid "moves to the next table column"
 msgstr "الانتقال للعمود التالي بالجدول"
 
 #
 # File: virtualBuffers/__init__.py, line: 1149
+#: virtualBuffers/__init__.py:1149
 msgid "moves to the previous table column"
 msgstr "الانتقال للعمود السابق بالجدول"
 
 #
 # File: virtualBuffers/__init__.py, line: 1209
+#: virtualBuffers/__init__.py:1209
 msgid "moves to the next heading"
 msgstr "الانتقال لرأس الموضوع التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1209
+#: virtualBuffers/__init__.py:1209
 msgid "no next heading"
 msgstr "لا يوجد رأس موضوع تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1210
+#: virtualBuffers/__init__.py:1210
 msgid "moves to the previous heading"
 msgstr "الانتقال لرأس الموضوع السابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1210
+#: virtualBuffers/__init__.py:1210
 msgid "no previous heading"
 msgstr "لا يوجد رأس موضوع سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1211
+#: virtualBuffers/__init__.py:1211
 msgid "moves to the next heading at level 1"
 msgstr "الانتقال لرأس الموضوع التالي في المستوى الأول"
 
 #
 # File: virtualBuffers/__init__.py, line: 1211
+#: virtualBuffers/__init__.py:1211
 msgid "no next heading at level 1"
 msgstr "لا يوجد رأس موضوع تالي في المستوى الأول"
 
 #
 # File: virtualBuffers/__init__.py, line: 1212
+#: virtualBuffers/__init__.py:1212
 msgid "moves to the previous heading at level 1"
 msgstr "الانتقال لرأس الموضوع السابق في المستوى الأول"
 
 #
 # File: virtualBuffers/__init__.py, line: 1212
+#: virtualBuffers/__init__.py:1212
 msgid "no previous heading at level 1"
 msgstr "لا يوجد رأس موضوع سابق في المستوى الأول"
 
 #
 # File: virtualBuffers/__init__.py, line: 1213
+#: virtualBuffers/__init__.py:1213
 msgid "moves to the next heading at level 2"
 msgstr "الانتقال لرأس الموضوع التالي في المستوى الثاني"
 
 #
 # File: virtualBuffers/__init__.py, line: 1213
+#: virtualBuffers/__init__.py:1213
 msgid "no next heading at level 2"
 msgstr "لا يوجد رأس موضوع تالي في المستوى الثاني"
 
 #
 # File: virtualBuffers/__init__.py, line: 1214
+#: virtualBuffers/__init__.py:1214
 msgid "moves to the previous heading at level 2"
 msgstr "الانتقال لرأس الموضوع السابق في المستوى الثاني"
 
 #
 # File: virtualBuffers/__init__.py, line: 1214
+#: virtualBuffers/__init__.py:1214
 msgid "no previous heading at level 2"
 msgstr "لا يوجد رأس موضوع سابق في المستوى الثاني"
 
 #
 # File: virtualBuffers/__init__.py, line: 1215
+#: virtualBuffers/__init__.py:1215
 msgid "moves to the next heading at level 3"
 msgstr "الانتقال لرأس الموضوع التالي في المستوى الثالث"
 
 #
 # File: virtualBuffers/__init__.py, line: 1215
+#: virtualBuffers/__init__.py:1215
 msgid "no next heading at level 3"
 msgstr "لا يوجد رأس موضوع تالي في المستوى الثالث"
 
 #
 # File: virtualBuffers/__init__.py, line: 1216
+#: virtualBuffers/__init__.py:1216
 msgid "moves to the previous heading at level 3"
 msgstr "الانتقال لرأس الموضوع السابق في المستوى الثالث"
 
 #
 # File: virtualBuffers/__init__.py, line: 1216
+#: virtualBuffers/__init__.py:1216
 msgid "no previous heading at level 3"
 msgstr "لا يوجد رأس موضوع سابق في المستوى الثالث"
 
 #
 # File: virtualBuffers/__init__.py, line: 1217
+#: virtualBuffers/__init__.py:1217
 msgid "moves to the next heading at level 4"
 msgstr "الانتقال لرأس الموضوع التالي في المستوى الرابع"
 
 #
 # File: virtualBuffers/__init__.py, line: 1217
+#: virtualBuffers/__init__.py:1217
 msgid "no next heading at level 4"
 msgstr "لا يوجد رأس موضوع تالي في المستوى الرابع"
 
 #
 # File: virtualBuffers/__init__.py, line: 1218
+#: virtualBuffers/__init__.py:1218
 msgid "moves to the previous heading at level 4"
 msgstr "الانتقال لرأس الموضوع السابق في المستوى الرابع"
 
 #
 # File: virtualBuffers/__init__.py, line: 1218
+#: virtualBuffers/__init__.py:1218
 msgid "no previous heading at level 4"
 msgstr "لا يوجد رأس موضوع سابق في المستوى الرابع"
 
 #
 # File: virtualBuffers/__init__.py, line: 1219
+#: virtualBuffers/__init__.py:1219
 msgid "moves to the next heading at level 5"
 msgstr "الانتقال لرأس الموضوع التالي في المستوى الخامس"
 
 #
 # File: virtualBuffers/__init__.py, line: 1219
+#: virtualBuffers/__init__.py:1219
 msgid "no next heading at level 5"
 msgstr "لا يوجد رأس موضوع تالي في المستوى الخامس"
 
 #
 # File: virtualBuffers/__init__.py, line: 1220
+#: virtualBuffers/__init__.py:1220
 msgid "moves to the previous heading at level 5"
 msgstr "الانتقال لرأس الموضوع السابق في المستوى الخامس"
 
 #
 # File: virtualBuffers/__init__.py, line: 1220
+#: virtualBuffers/__init__.py:1220
 msgid "no previous heading at level 5"
 msgstr "لا يوجد رأس موضوع سابق في المستوى الخامس"
 
 #
 # File: virtualBuffers/__init__.py, line: 1221
+#: virtualBuffers/__init__.py:1221
 msgid "moves to the next heading at level 6"
 msgstr "الانتقال لرأس الموضوع التالي في المستوى السادس"
 
 #
 # File: virtualBuffers/__init__.py, line: 1221
+#: virtualBuffers/__init__.py:1221
 msgid "no next heading at level 6"
 msgstr "لا يوجد رأس موضوع تالي في المستوى السادس"
 
 #
 # File: virtualBuffers/__init__.py, line: 1222
+#: virtualBuffers/__init__.py:1222
 msgid "moves to the previous heading at level 6"
 msgstr "الانتقال لرأس الموضوع السابق في المستوى السادس"
 
 #
 # File: virtualBuffers/__init__.py, line: 1222
+#: virtualBuffers/__init__.py:1222
 msgid "no previous heading at level 6"
 msgstr "لا يوجد رأس موضوع سابق في المستوى السادس"
 
 #
 # File: virtualBuffers/__init__.py, line: 1223
+#: virtualBuffers/__init__.py:1223
 msgid "moves to the next table"
 msgstr "الانتقال للجدول التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1223
+#: virtualBuffers/__init__.py:1223
 msgid "no next table"
 msgstr "لا يوجد جدول تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1224
+#: virtualBuffers/__init__.py:1224
 msgid "moves to the previous table"
 msgstr "الانتقال للجدول السابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1224
+#: virtualBuffers/__init__.py:1224
 msgid "no previous table"
 msgstr "لا يوجد جدول سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1225
+#: virtualBuffers/__init__.py:1225
 msgid "moves to the next link"
 msgstr "الانتقال للرابط التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1225
+#: virtualBuffers/__init__.py:1225
 msgid "no next link"
 msgstr "لا يوجد رابط تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1226
+#: virtualBuffers/__init__.py:1226
 msgid "moves to the previous link"
 msgstr "الانتقال للرابط السابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1226
+#: virtualBuffers/__init__.py:1226
 msgid "no previous link"
 msgstr "لا يوجد رابط سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1227
+#: virtualBuffers/__init__.py:1227
 msgid "moves to the next visited link"
 msgstr "الانتقال للرابط المطروق التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1227
+#: virtualBuffers/__init__.py:1227
 msgid "no next visited link"
 msgstr "لا يوجد رابط مطروق تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1228
+#: virtualBuffers/__init__.py:1228
 msgid "moves to the previous visited link"
 msgstr "الانتقال للرابط المطروق السابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1228
+#: virtualBuffers/__init__.py:1228
 msgid "no previous visited link"
 msgstr "لا يوجد رابط مطروق سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1229
+#: virtualBuffers/__init__.py:1229
 msgid "moves to the next unvisited link"
 msgstr "الانتقال للرابط غير المطروق التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1229
+#: virtualBuffers/__init__.py:1229
 msgid "no next unvisited link"
 msgstr "لا يوجد رابط غير مطروق تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1230
+#: virtualBuffers/__init__.py:1230
 msgid "moves to the previous unvisited link"
 msgstr "الانتقال للرابط غير المطروق السابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1230
+#: virtualBuffers/__init__.py:1230
 msgid "no previous unvisited link"
 msgstr "لا يوجد رابط غير مطروق سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1231
+#: virtualBuffers/__init__.py:1231
 msgid "moves to the next form field"
 msgstr "الانتقال للحقل الاستماري التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1231
+#: virtualBuffers/__init__.py:1231
 msgid "no next form field"
 msgstr "لا يوجد حقل استماري تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1232
+#: virtualBuffers/__init__.py:1232
 msgid "moves to the previous form field"
 msgstr "الانتقال للحقل الاستماري السابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1232
+#: virtualBuffers/__init__.py:1232
 msgid "no previous form field"
 msgstr "لا يوجد حقل استماري سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1233
+#: virtualBuffers/__init__.py:1233
 msgid "moves to the next list"
 msgstr "الانتقال للقائمة السردية التالية"
 
 #
 # File: virtualBuffers/__init__.py, line: 1233
+#: virtualBuffers/__init__.py:1233
 msgid "no next list"
 msgstr "لا توجد قائمة سردية تالية"
 
 #
 # File: virtualBuffers/__init__.py, line: 1234
+#: virtualBuffers/__init__.py:1234
 msgid "moves to the previous list"
 msgstr "الانتقال للقائمة السردية السابقة"
 
 #
 # File: virtualBuffers/__init__.py, line: 1234
+#: virtualBuffers/__init__.py:1234
 msgid "no previous list"
 msgstr "لا توجد قائمة سردية سابقة"
 
 #
 # File: virtualBuffers/__init__.py, line: 1235
+#: virtualBuffers/__init__.py:1235
 msgid "moves to the next list item"
 msgstr "الانتقال للعنصر السردي التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1235
+#: virtualBuffers/__init__.py:1235
 msgid "no next list item"
 msgstr "لا يوجد عنصر سردي تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1236
+#: virtualBuffers/__init__.py:1236
 msgid "moves to the previous list item"
 msgstr "الانتقال لعنصر سردي سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1236
+#: virtualBuffers/__init__.py:1236
 msgid "no previous list item"
 msgstr "لا يوجد عنصر سردي سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1237
+#: virtualBuffers/__init__.py:1237
 msgid "moves to the next button"
 msgstr "الانتقال للزر التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1237
+#: virtualBuffers/__init__.py:1237
 msgid "no next button"
 msgstr "لا يوجد زر تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1238
+#: virtualBuffers/__init__.py:1238
 msgid "moves to the previous button"
 msgstr "الانتقال للزر السابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1238
+#: virtualBuffers/__init__.py:1238
 msgid "no previous button"
 msgstr "لا يوجد زر سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1239
+#: virtualBuffers/__init__.py:1239
 msgid "moves to the next edit field"
 msgstr "الانتقال لمربع التحرير التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1239
+#: virtualBuffers/__init__.py:1239
 msgid "no next edit field"
 msgstr "لا يوجد مربع تحرير تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1240
+#: virtualBuffers/__init__.py:1240
 msgid "moves to the previous edit field"
 msgstr "الانتقال لمربع التحرير السابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1240
+#: virtualBuffers/__init__.py:1240
 msgid "no previous edit field"
 msgstr "لا يوجد مربع تحرير سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1241
+#: virtualBuffers/__init__.py:1241
 msgid "moves to the next frame"
 msgstr "الانتقال للإطار التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1241
+#: virtualBuffers/__init__.py:1241
 msgid "no next frame"
 msgstr "لا يوجد إطار تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1242
+#: virtualBuffers/__init__.py:1242
 msgid "moves to the previous frame"
 msgstr "الانتقال للإطار السابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1242
+#: virtualBuffers/__init__.py:1242
 msgid "no previous frame"
 msgstr "لا يوجد إطار سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1243
+#: virtualBuffers/__init__.py:1243
 msgid "moves to the next separator"
 msgstr "الانتقال للفاصل التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1243
+#: virtualBuffers/__init__.py:1243
 msgid "no next separator"
 msgstr "لا يوجد فاصل تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1244
+#: virtualBuffers/__init__.py:1244
 msgid "moves to the previous separator"
 msgstr "الانتقال للفاصل السابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1244
+#: virtualBuffers/__init__.py:1244
 msgid "no previous separator"
 msgstr "لا يوجد فاصل سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1245
+#: virtualBuffers/__init__.py:1245
 msgid "moves to the next radio button"
 msgstr "الانتقال لزر الاختيار التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1245
+#: virtualBuffers/__init__.py:1245
 msgid "no next radio button"
 msgstr "لا يوجد زر اختيار تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1246
+#: virtualBuffers/__init__.py:1246
 msgid "moves to the previous radio button"
 msgstr "الانتقال لزر الاختيار السابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1246
+#: virtualBuffers/__init__.py:1246
 msgid "no previous radio button"
 msgstr "لا يوجد زر اختيار سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1247
+#: virtualBuffers/__init__.py:1247
 msgid "moves to the next combo box"
 msgstr "الانتقال لصندوق الخيارات التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1247
+#: virtualBuffers/__init__.py:1247
 msgid "no next combo box"
 msgstr "لا يوجد صندوق خيارات تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1248
+#: virtualBuffers/__init__.py:1248
 msgid "moves to the previous combo box"
 msgstr "الانتقال لصندوق الخيارات التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1248
+#: virtualBuffers/__init__.py:1248
 msgid "no previous combo box"
 msgstr "لا يوجد صندوق خيارات سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1249
+#: virtualBuffers/__init__.py:1249
 msgid "moves to the next check box"
 msgstr "الانتقال لمربع التصويب التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1249
+#: virtualBuffers/__init__.py:1249
 msgid "no next check box"
 msgstr "لا يوجد مربع تصويب تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1250
+#: virtualBuffers/__init__.py:1250
 msgid "moves to the previous check box"
 msgstr "الانتقال لمربع التصويب السابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1250
+#: virtualBuffers/__init__.py:1250
 msgid "no previous check box"
 msgstr "لا يوجد مربع تصويب سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1251
+#: virtualBuffers/__init__.py:1251
 msgid "moves to the next graphic"
 msgstr "الانتقال للرسم البياني التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1251
+#: virtualBuffers/__init__.py:1251
 msgid "no next graphic"
 msgstr "لا يوجد رسم بياني تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1252
+#: virtualBuffers/__init__.py:1252
 msgid "moves to the previous graphic"
 msgstr "الانتقال للرسم البياني السابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1252
+#: virtualBuffers/__init__.py:1252
 msgid "no previous graphic"
 msgstr "لا يوجد رسم بياني سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1253
+#: virtualBuffers/__init__.py:1253
 msgid "moves to the next block quote"
 msgstr "الانتقال للاقتباس التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1253
+#: virtualBuffers/__init__.py:1253
 msgid "no next block quote"
 msgstr "لا يوجد اقتباس تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1254
+#: virtualBuffers/__init__.py:1254
 msgid "moves to the previous block quote"
 msgstr "الانتقال للاقتباس السابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1254
+#: virtualBuffers/__init__.py:1254
 msgid "no previous block quote"
 msgstr "لا يوجد اقتباس سابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1255
+#: virtualBuffers/__init__.py:1255
 msgid "no more text after a block of links"
 msgstr "لا يوجد نص بعد كُتلة الروابط الحالية"
 
 #
 # File: virtualBuffers/__init__.py, line: 1255
+#: virtualBuffers/__init__.py:1255
 msgid "skips forward past a block of links"
 msgstr "الوثب لنصوص غير رابطية تالية"
 
 #
 # File: virtualBuffers/__init__.py, line: 1256
+#: virtualBuffers/__init__.py:1256
 msgid "no more text before a block of links"
 msgstr "لا يوجد نص قبل كُتلة الروابط الحالية"
 
 #
 # File: virtualBuffers/__init__.py, line: 1256
+#: virtualBuffers/__init__.py:1256
 msgid "skips backward past a block of links"
 msgstr "الوثب لنصوص غير رابطية سابقة"
 
 #
 # File: virtualBuffers/__init__.py, line: 1257
+#: virtualBuffers/__init__.py:1257
 msgid "moves to the next landmark"
 msgstr "الانتقال لساحة آريا التالية"
 
 #
 # File: virtualBuffers/__init__.py, line: 1257
+#: virtualBuffers/__init__.py:1257
 msgid "no next landmark"
 msgstr "لا توجد ساحة آريا تالية "
 
 #
 # File: virtualBuffers/__init__.py, line: 1258
+#: virtualBuffers/__init__.py:1258
 msgid "moves to the previous landmark"
 msgstr "الانتقال لساحة آريا السابقة"
 
 #
 # File: virtualBuffers/__init__.py, line: 1258
+#: virtualBuffers/__init__.py:1258
 msgid "no previous landmark"
 msgstr "لا توجد ساحة آريا سابقة"
 
 #
 # File: virtualBuffers/__init__.py, line: 1259
+#: virtualBuffers/__init__.py:1259
 msgid "moves to the next embedded object"
 msgstr "الانتقال للكائن المدرج التالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1259
+#: virtualBuffers/__init__.py:1259
 msgid "no next embedded object"
 msgstr "لا يوجد كائن مدرج تالي"
 
 #
 # File: virtualBuffers/__init__.py, line: 1260
+#: virtualBuffers/__init__.py:1260
 msgid "moves to the previous embedded object"
 msgstr "الانتقال للكائن المدرج السابق"
 
 #
 # File: virtualBuffers/__init__.py, line: 1260
+#: virtualBuffers/__init__.py:1260
 msgid "no previous embedded object"
 msgstr "لا يوجد كائن مدرج سابق"
+
