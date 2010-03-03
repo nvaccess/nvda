@@ -12,29 +12,30 @@ CRITICAL_SECTION criticalSection_displayModelsByWindow;
 BOOL allowDisplayModelsByWindow=FALSE;
 map<HWND,displayModel_t*> displayModelsByWindow;
 
-void ExtTextOutWHelper(HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,wchar_t* lpString, int cbCount) {
-	if(!lpString||cbCount==0) return;
+inline displayModel_t* acquireDisplayModel(HDC hdc) {
 	HWND hwnd=WindowFromDC(hdc);
-	if(hwnd==NULL) return;
+	if(hwnd==NULL) return NULL;
 	LOG_DEBUG(L"window from DC is "<<hwnd);
 	displayModel_t* model=NULL;
 	EnterCriticalSection(&criticalSection_displayModelsByWindow);
 	if(!allowDisplayModelsByWindow) {
 		LeaveCriticalSection(&criticalSection_displayModelsByWindow);
-		return;
+		return NULL;
 	}
-	map<HWND,displayModel_t*>::iterator i=displayModelsByWindow.find(hwnd);
-	if(i!=displayModelsByWindow.end()) {
-		model=i->second;
-	} else {
-		model=new displayModel_t();
-		displayModelsByWindow.insert(make_pair(hwnd,model));
-	}
+	return model;
+}
+
+inline void releaseDisplayModel(displayModel_t* model) {
+	LeaveCriticalSection(&criticalSection_displayModelsByWindow);
+}
+
+void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,wchar_t* lpString, int cbCount) {
+	if(!lpString||cbCount==0) return;
 	SIZE textSize;
 	GetTextExtentPoint32(hdc,lpString,cbCount,&textSize);
-	int textAlign=GetTextAlign(hdc);
 	int xOffset=x;
 	int yOffset=y;
+	int textAlign=GetTextAlign(hdc);
 	if(textAlign&TA_UPDATECP) {
 		POINT curPos;
 		GetCurrentPositionEx(hdc,&curPos);
@@ -72,20 +73,27 @@ void ExtTextOutWHelper(HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,wc
 	newText[cbCount]=L'\0';
 	model->insertChunk(textRect,newText);
 	free(newText);
-	LeaveCriticalSection(&criticalSection_displayModelsByWindow);
 }
 
 typedef BOOL(__stdcall *TextOutW_funcType)(HDC,int,int,wchar_t*,int);
 TextOutW_funcType real_TextOutW;
 BOOL __stdcall fake_TextOutW(HDC hdc, int x, int y, wchar_t* lpString, int cbCount) {
-	ExtTextOutWHelper(hdc,x,y,NULL,0,lpString,cbCount);
+	displayModel_t* model=acquireDisplayModel(hdc);
+	if(model) {
+		ExtTextOutWHelper(model,hdc,x,y,NULL,0,lpString,cbCount);
+		releaseDisplayModel(model);
+	}
 	return real_TextOutW(hdc,x,y,lpString,cbCount);
 }
 
 typedef BOOL(__stdcall *ExtTextOutW_funcType)(HDC,int,int,UINT,const RECT*,wchar_t*,int,const int*);
 ExtTextOutW_funcType real_ExtTextOutW;
 BOOL __stdcall fake_ExtTextOutW(HDC hdc, int x, int y, UINT fuOptions, const RECT* lprc, wchar_t* lpString, int cbCount, const int* lpDx) {
-	ExtTextOutWHelper(hdc,x,y,lprc,fuOptions,lpString,cbCount);
+	displayModel_t* model=acquireDisplayModel(hdc);
+	if(model) {
+		ExtTextOutWHelper(model,hdc,x,y,lprc,fuOptions,lpString,cbCount);
+		releaseDisplayModel(model);
+	}
 	return real_ExtTextOutW(hdc,x,y,fuOptions,lprc,lpString,cbCount,lpDx);
 }
 
