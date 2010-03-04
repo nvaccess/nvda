@@ -86,17 +86,6 @@ void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT*
 	model->insertChunk(textRect,newText);
 }
 
-typedef BOOL(__stdcall *TextOutW_funcType)(HDC,int,int,wchar_t*,int);
-TextOutW_funcType real_TextOutW;
-BOOL __stdcall fake_TextOutW(HDC hdc, int x, int y, wchar_t* lpString, int cbCount) {
-	displayModel_t* model=acquireDisplayModel(hdc);
-	if(model) {
-		ExtTextOutWHelper(model,hdc,x,y,NULL,0,lpString,cbCount);
-		releaseDisplayModel(model);
-	}
-	return real_TextOutW(hdc,x,y,lpString,cbCount);
-}
-
 typedef BOOL(__stdcall *ExtTextOutW_funcType)(HDC,int,int,UINT,const RECT*,wchar_t*,int,const int*);
 ExtTextOutW_funcType real_ExtTextOutW;
 BOOL __stdcall fake_ExtTextOutW(HDC hdc, int x, int y, UINT fuOptions, const RECT* lprc, wchar_t* lpString, int cbCount, const int* lpDx) {
@@ -192,7 +181,6 @@ void gdiHooks_inProcess_initialize() {
 	InitializeCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allowScriptStringAnalyseArgsByAnalysis=TRUE;
 	real_DestroyWindow=(DestroyWindow_funcType)apiHook_hookFunction("USER32.dll","DestroyWindow",fake_DestroyWindow);
-	real_TextOutW=(TextOutW_funcType)apiHook_hookFunction("GDI32.dll","TextOutW",fake_TextOutW);
 	real_ExtTextOutW=(ExtTextOutW_funcType)apiHook_hookFunction("GDI32.dll","ExtTextOutW",fake_ExtTextOutW);
 	real_ScriptStringAnalyse=(ScriptStringAnalyse_funcType)apiHook_hookFunction("USP10.dll","ScriptStringAnalyse",fake_ScriptStringAnalyse);
 	real_ScriptStringFree=(ScriptStringFree_funcType)apiHook_hookFunction("USP10.dll","ScriptStringFree",fake_ScriptStringFree);
@@ -201,7 +189,6 @@ void gdiHooks_inProcess_initialize() {
 
 void gdiHooks_inProcess_terminate() {
 	apiHook_unhookFunction("USER32.dll","DestroyWindow");
-	apiHook_unhookFunction("GDI32.dll","TextOutW");
 	apiHook_unhookFunction("GDI32.dll","ExtTextOutW");
 	apiHook_unhookFunction("USP10.dll","ScriptStringAnalyse");
 	apiHook_unhookFunction("USP10.dll","ScriptStringFree");
