@@ -6,13 +6,20 @@
 #include "displayModel.h"
 #include <common/log.h>
 #include "nvdaControllerInternal.h"
+#include "gdiHooks.h"
 
 using namespace std;
 
+displayModelsByWindow_t displayModelsByWindow;
 CRITICAL_SECTION criticalSection_displayModelsByWindow;
 BOOL allowDisplayModelsByWindow=FALSE;
-map<HWND,displayModel_t*> displayModelsByWindow;
 
+/**
+ * Fetches and or creates a new displayModel for the window of the given device context.
+ * If this function returns a displayModel, you must call releaseDisplayModel when finished with it.
+ * @param hdc a handle of the device context who's window the displayModel is for.
+ * @return a pointer to the  new/existing displayModel, NULL if gdiHooks is not initialized or has been terminated. 
+ */
 inline displayModel_t* acquireDisplayModel(HDC hdc) {
 	HWND hwnd=WindowFromDC(hdc);
 	if(hwnd==NULL) return NULL;
@@ -22,7 +29,7 @@ inline displayModel_t* acquireDisplayModel(HDC hdc) {
 		LeaveCriticalSection(&criticalSection_displayModelsByWindow);
 		return NULL;
 	}
-	map<HWND,displayModel_t*>::iterator i=displayModelsByWindow.find(hwnd);
+	displayModelsByWindow_t::iterator i=displayModelsByWindow.find(hwnd);
 	displayModel_t* model=NULL;
 	if(i!=displayModelsByWindow.end()) {
 		model=i->second;
@@ -33,6 +40,10 @@ inline displayModel_t* acquireDisplayModel(HDC hdc) {
 	return model;
 }
 
+/**
+ * Tells gdiHooks that you are finished with the given displayModel. It is very important that you call releaseDisplayModel for every call to acquireDisplayModel.
+ * @param a pointer to the displayModel to release.
+ */
 inline void releaseDisplayModel(displayModel_t* model) {
 	LeaveCriticalSection(&criticalSection_displayModelsByWindow);
 }
@@ -165,7 +176,7 @@ BOOL WINAPI fake_DestroyWindow(HWND hwnd) {
 			LeaveCriticalSection(&criticalSection_displayModelsByWindow);
 			return res;
 		}
-		map<HWND,displayModel_t*>::iterator i=displayModelsByWindow.find(hwnd);
+		displayModelsByWindow_t::iterator i=displayModelsByWindow.find(hwnd);
 		if(i!=displayModelsByWindow.end()) {
 			delete i->second;
 			displayModelsByWindow.erase(i);
@@ -195,7 +206,7 @@ void gdiHooks_inProcess_terminate() {
 	apiHook_unhookFunction("USP10.dll","ScriptStringOut");
 	EnterCriticalSection(&criticalSection_displayModelsByWindow);
 	allowDisplayModelsByWindow=FALSE;
-	map<HWND,displayModel_t*>::iterator i=displayModelsByWindow.begin();
+	displayModelsByWindow_t::iterator i=displayModelsByWindow.begin();
 	while(i!=displayModelsByWindow.end()) {
 		delete i->second;
 		displayModelsByWindow.erase(i++);
