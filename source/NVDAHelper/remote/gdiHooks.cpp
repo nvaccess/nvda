@@ -49,7 +49,6 @@ inline void releaseDisplayModel(displayModel_t* model) {
 }
 
 void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,wchar_t* lpString, int cbCount) {
-	if(!lpString||cbCount==0) return;
 	wstring newText(lpString,cbCount);
 	//are we writing a transparent background?
 	if(!(fuOptions&ETO_OPAQUE)&&(GetBkMode(hdc)==TRANSPARENT)) {
@@ -100,7 +99,7 @@ void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT*
 typedef BOOL(__stdcall *ExtTextOutW_funcType)(HDC,int,int,UINT,const RECT*,wchar_t*,int,const int*);
 ExtTextOutW_funcType real_ExtTextOutW;
 BOOL __stdcall fake_ExtTextOutW(HDC hdc, int x, int y, UINT fuOptions, const RECT* lprc, wchar_t* lpString, int cbCount, const int* lpDx) {
-	if(!(fuOptions&ETO_GLYPH_INDEX)) {
+	if(lpString&&cbCount>0&&!(fuOptions&ETO_GLYPH_INDEX)) {
 		displayModel_t* model=acquireDisplayModel(hdc);
 		if(model) {
 			ExtTextOutWHelper(model,hdc,x,y,lprc,fuOptions,lpString,cbCount);
@@ -126,7 +125,7 @@ typedef HRESULT(WINAPI *ScriptStringAnalyse_funcType)(HDC,const void*,int,int,in
 ScriptStringAnalyse_funcType real_ScriptStringAnalyse=NULL;
 HRESULT WINAPI fake_ScriptStringAnalyse(HDC hdc,const void* pString, int cString, int cGlyphs, int iCharset, DWORD dwFlags, int iRectWidth, SCRIPT_CONTROL* psControl, SCRIPT_STATE* psState, const int* piDx, SCRIPT_TABDEF* pTabdef, const BYTE* pbInClass, SCRIPT_STRING_ANALYSIS* pssa) {
 	HRESULT res=real_ScriptStringAnalyse(hdc,pString,cString,cGlyphs,iCharset,dwFlags,iRectWidth,psControl,psState,piDx,pTabdef,pbInClass,pssa);
-	if(res==S_OK&&pssa&&allowScriptStringAnalyseArgsByAnalysis) {
+	if(res==S_OK&&pString&&cString>0&&pssa&&allowScriptStringAnalyseArgsByAnalysis) {
 		EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 		ScriptStringAnalyseArgs_t args={hdc,pString,cString,iCharset};
 		ScriptStringAnalyseArgsByAnalysis[*pssa]=args;
