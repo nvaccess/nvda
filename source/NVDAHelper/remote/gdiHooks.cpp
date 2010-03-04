@@ -1,6 +1,7 @@
 #include <cassert>
 #include <map>
 #include <windows.h>
+#include <usp10.h>
 #include "apiHook.h"
 #include "displayModel.h"
 #include <common/log.h>
@@ -109,47 +110,60 @@ BOOL __stdcall fake_ExtTextOutW(HDC hdc, int x, int y, UINT fuOptions, const REC
 	return real_ExtTextOutW(hdc,x,y,fuOptions,lprc,lpString,cbCount,lpDx);
 }
 
-void DrawTextExWHelper(displayModel_t* model, HDC hdc, wchar_t* lpString, int cbCount, const RECT* lprc, UINT dwDTFormat, LPDRAWTEXTPARAMS lpDTParams) {
-	if(cbCount==-1) cbCount=wcslen(lpString);
-	wstring newText(lpString,cbCount);
-	//are we writing a transparent background?
-	if(GetBkMode(hdc)==TRANSPARENT) {
-		//Find out if the text we're writing is just whitespace
-		BOOL whitespace=TRUE;
-		for(wstring::iterator i=newText.begin();i!=newText.end()&&(whitespace=iswspace(*i));i++);
-		//Because the bacground is transparent, if the text is only whitespace, then return -- don't bother to record anything at all
-		if(whitespace) return;
+typedef struct {
+	HDC hdc;
+	const void* pString;
+	int cString;
+	int iCharset;
+} ScriptStringAnalyseArgs_t;
+
+typedef map<SCRIPT_STRING_ANALYSIS,ScriptStringAnalyseArgs_t> ScriptStringAnalyseArgsByAnalysis_t;
+ScriptStringAnalyseArgsByAnalysis_t ScriptStringAnalyseArgsByAnalysis;
+CRITICAL_SECTION criticalSection_ScriptStringAnalyseArgsByAnalysis;
+BOOL allowScriptStringAnalyseArgsByAnalysis=FALSE;
+
+typedef HRESULT(WINAPI *ScriptStringAnalyse_funcType)(HDC,const void*,int,int,int,DWORD,int,SCRIPT_CONTROL*,SCRIPT_STATE*,const int*,SCRIPT_TABDEF*,const BYTE*,SCRIPT_STRING_ANALYSIS*);
+ScriptStringAnalyse_funcType real_ScriptStringAnalyse=NULL;
+HRESULT WINAPI fake_ScriptStringAnalyse(HDC hdc,const void* pString, int cString, int cGlyphs, int iCharset, DWORD dwFlags, int iRectWidth, SCRIPT_CONTROL* psControl, SCRIPT_STATE* psState, const int* piDx, SCRIPT_TABDEF* pTabdef, const BYTE* pbInClass, SCRIPT_STRING_ANALYSIS* pssa) {
+	HRESULT res=real_ScriptStringAnalyse(hdc,pString,cString,cGlyphs,iCharset,dwFlags,iRectWidth,psControl,psState,piDx,pTabdef,pbInClass,pssa);
+	if(res==S_OK&&pssa&&allowScriptStringAnalyseArgsByAnalysis) {
+		EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+		ScriptStringAnalyseArgs_t args={hdc,pString,cString,iCharset};
+		ScriptStringAnalyseArgsByAnalysis[*pssa]=args;
+		LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	}
-	RECT textRect=*lprc;
-	LPtoDP(hdc,(LPPOINT)&textRect,2);
-	model->clearRectangle(textRect);
-	model->insertChunk(textRect,newText);
+	return res;
 }
 
-typedef int(WINAPI *DrawTextW_funcType)(HDC,wchar_t*,int,const RECT*,UINT);
-DrawTextW_funcType real_DrawTextW=NULL;
-int WINAPI fake_DrawTextW(HDC hdc, wchar_t* lpString, int cbCount, const RECT* lprc, UINT dwDTFormat) {
-	if(lpString&&(cbCount!=0)&&!(dwDTFormat&DT_CALCRECT)&&!(dwDTFormat&DT_PREFIXONLY)) {
-		displayModel_t* model=acquireDisplayModel(hdc);
-		if(model) {
-			DrawTextExWHelper(model,hdc,lpString,cbCount,lprc,dwDTFormat,NULL);
-			releaseDisplayModel(model);
-		}
+typedef HRESULT(WINAPI *ScriptStringFree_funcType)(SCRIPT_STRING_ANALYSIS*);
+ScriptStringFree_funcType real_ScriptStringFree=NULL;
+HRESULT WINAPI fake_ScriptStringFree(SCRIPT_STRING_ANALYSIS* pssa) {
+	HRESULT res=real_ScriptStringFree(pssa);
+	if(res==S_OK&&pssa&&allowScriptStringAnalyseArgsByAnalysis) {
+		EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+		ScriptStringAnalyseArgsByAnalysis.erase(*pssa);
+		LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	}
-	return real_DrawTextW(hdc,lpString,cbCount,lprc,dwDTFormat);
+	return res; 
 }
 
-typedef int(WINAPI *DrawTextExW_funcType)(HDC,wchar_t*,int,const RECT*,UINT,LPDRAWTEXTPARAMS);
-DrawTextExW_funcType real_DrawTextExW=NULL;
-int WINAPI fake_DrawTextExW(HDC hdc, wchar_t* lpString, int cbCount, const RECT* lprc, UINT dwDTFormat, LPDRAWTEXTPARAMS lpDTParams) {
-	if(lpString&&(cbCount!=0)&&!(dwDTFormat&DT_CALCRECT)&&!(dwDTFormat&DT_PREFIXONLY)) {
-		displayModel_t* model=acquireDisplayModel(hdc);
-		if(model) {
-			DrawTextExWHelper(model,hdc,lpString,cbCount,lprc,dwDTFormat,lpDTParams);
-			releaseDisplayModel(model);
+typedef HRESULT(WINAPI *ScriptStringOut_funcType)(SCRIPT_STRING_ANALYSIS,int,int,UINT,const RECT*,int,int,BOOL);
+ScriptStringOut_funcType real_ScriptStringOut=NULL;
+HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UINT uOptions,const RECT *prc,int iMinSel,int iMaxSel,BOOL fDisabled) {
+	HRESULT res=real_ScriptStringOut(ssa,iX,iY,uOptions,prc,iMinSel,iMaxSel,fDisabled);
+	if(res==S_OK&&allowScriptStringAnalyseArgsByAnalysis) {
+		EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+		ScriptStringAnalyseArgsByAnalysis_t::iterator i=ScriptStringAnalyseArgsByAnalysis.find(ssa);
+		if(i!=ScriptStringAnalyseArgsByAnalysis.end()&&i->second.iCharset==-1) {
+			displayModel_t* model=acquireDisplayModel(i->second.hdc);
+			if(model) {
+				ExtTextOutWHelper(model,i->second.hdc,iX,iY,prc,uOptions,(wchar_t*)(i->second.pString),i->second.cString);
+				releaseDisplayModel(model);
+			}
 		}
+		LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	}
-	return real_DrawTextExW(hdc,lpString,cbCount,lprc,dwDTFormat,lpDTParams);
+	return res;
 }
 
 typedef BOOL(WINAPI *DestroyWindow_funcType)(HWND);
@@ -175,19 +189,23 @@ BOOL WINAPI fake_DestroyWindow(HWND hwnd) {
 void gdiHooks_inProcess_initialize() {
 	InitializeCriticalSection(&criticalSection_displayModelsByWindow);
 	allowDisplayModelsByWindow=TRUE;
+	InitializeCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+	allowScriptStringAnalyseArgsByAnalysis=TRUE;
 	real_DestroyWindow=(DestroyWindow_funcType)apiHook_hookFunction("USER32.dll","DestroyWindow",fake_DestroyWindow);
-	//real_TextOutW=(TextOutW_funcType)apiHook_hookFunction("GDI32.dll","TextOutW",fake_TextOutW);
+	real_TextOutW=(TextOutW_funcType)apiHook_hookFunction("GDI32.dll","TextOutW",fake_TextOutW);
 	real_ExtTextOutW=(ExtTextOutW_funcType)apiHook_hookFunction("GDI32.dll","ExtTextOutW",fake_ExtTextOutW);
-	//real_DrawTextW=(DrawTextW_funcType)apiHook_hookFunction("USER32.dll","DrawTextW",fake_DrawTextW);
-	real_DrawTextExW=(DrawTextExW_funcType)apiHook_hookFunction("USER32.dll","DrawTextExW",fake_DrawTextExW);
+	real_ScriptStringAnalyse=(ScriptStringAnalyse_funcType)apiHook_hookFunction("USP10.dll","ScriptStringAnalyse",fake_ScriptStringAnalyse);
+	real_ScriptStringFree=(ScriptStringFree_funcType)apiHook_hookFunction("USP10.dll","ScriptStringFree",fake_ScriptStringFree);
+	real_ScriptStringOut=(ScriptStringOut_funcType)apiHook_hookFunction("USP10.dll","ScriptStringOut",fake_ScriptStringOut);
 }
 
 void gdiHooks_inProcess_terminate() {
+	apiHook_unhookFunction("USER32.dll","DestroyWindow");
 	apiHook_unhookFunction("GDI32.dll","TextOutW");
 	apiHook_unhookFunction("GDI32.dll","ExtTextOutW");
-	apiHook_unhookFunction("USER32.dll","DrawTextW");
-	apiHook_unhookFunction("USER32.dll","DrawTextExW");
-	apiHook_unhookFunction("USER32.dll","DestroyWindow");
+	apiHook_unhookFunction("USP10.dll","ScriptStringAnalyse");
+	apiHook_unhookFunction("USP10.dll","ScriptStringFree");
+	apiHook_unhookFunction("USP10.dll","ScriptStringOut");
 	EnterCriticalSection(&criticalSection_displayModelsByWindow);
 	allowDisplayModelsByWindow=FALSE;
 	map<HWND,displayModel_t*>::iterator i=displayModelsByWindow.begin();
@@ -196,4 +214,8 @@ void gdiHooks_inProcess_terminate() {
 		displayModelsByWindow.erase(i++);
 	}  
 	DeleteCriticalSection(&criticalSection_displayModelsByWindow);
+	EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+	allowScriptStringAnalyseArgsByAnalysis=FALSE;
+	ScriptStringAnalyseArgsByAnalysis.clear();
+	DeleteCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 }
