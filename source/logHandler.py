@@ -134,12 +134,14 @@ class Logger(logging.Logger):
 class FileHandler(logging.FileHandler):
 
 	def handle(self,record):
-		# Late import because versionInfo requires gettext, which isn't yet initialised when logHandler is first imported.
-		import versionInfo
+		# versionInfo must be imported after the language is set. Otherwise, strings won't be in the correct language.
+		# Therefore, don't import versionInfo if it hasn't already been imported.
+		versionInfo = sys.modules.get("versionInfo")
+		# Only play the error sound if this is a test version.
+		shouldPlayErrorSound = versionInfo and versionInfo.isTestVersion
 		if record.levelno>=logging.CRITICAL:
 			winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
-		elif record.levelno>=logging.ERROR and versionInfo.isTestVersion:
-			# Only play the error sound if this is a test version.
+		elif record.levelno>=logging.ERROR and shouldPlayErrorSound:
 			try:
 				nvwave.playWaveFile("waves\\error.wav")
 			except:
