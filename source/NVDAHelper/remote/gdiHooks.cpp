@@ -38,6 +38,15 @@ inline void releaseDisplayModel(displayModel_t* model) {
 
 void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,wchar_t* lpString, int cbCount) {
 	if(!lpString||cbCount==0) return;
+	wstring newText(lpString,cbCount);
+	//are we writing a transparent background?
+	if(!(fuOptions&ETO_OPAQUE)&&(GetBkMode(hdc)==TRANSPARENT)) {
+		//Find out if the text we're writing is just whitespace
+		BOOL whitespace=TRUE;
+		for(wstring::iterator i=newText.begin();i!=newText.end()&&(whitespace=iswspace(*i));i++);
+		//Because the bacground is transparent, if the text is only whitespace, then return -- don't bother to record anything at all
+		if(whitespace) return;
+	}
 	SIZE textSize;
 	GetTextExtentPoint32(hdc,lpString,cbCount,&textSize);
 	int xOffset=x;
@@ -73,13 +82,7 @@ void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT*
 		clearRect=textRect;
 	}
 	model->clearRectangle(clearRect);
-	wchar_t* newText=(wchar_t*)malloc(sizeof(wchar_t)*(cbCount+1));
-	for(int i=0;i<cbCount;i++) {
-		newText[i]=lpString[i];
-	}
-	newText[cbCount]=L'\0';
 	model->insertChunk(textRect,newText);
-	free(newText);
 }
 
 typedef BOOL(__stdcall *TextOutW_funcType)(HDC,int,int,wchar_t*,int);
@@ -96,28 +99,31 @@ BOOL __stdcall fake_TextOutW(HDC hdc, int x, int y, wchar_t* lpString, int cbCou
 typedef BOOL(__stdcall *ExtTextOutW_funcType)(HDC,int,int,UINT,const RECT*,wchar_t*,int,const int*);
 ExtTextOutW_funcType real_ExtTextOutW;
 BOOL __stdcall fake_ExtTextOutW(HDC hdc, int x, int y, UINT fuOptions, const RECT* lprc, wchar_t* lpString, int cbCount, const int* lpDx) {
-	displayModel_t* model=acquireDisplayModel(hdc);
-	if(model) {
-		ExtTextOutWHelper(model,hdc,x,y,lprc,fuOptions,lpString,cbCount);
-		releaseDisplayModel(model);
+	if(!(fuOptions&ETO_GLYPH_INDEX)) {
+		displayModel_t* model=acquireDisplayModel(hdc);
+		if(model) {
+			ExtTextOutWHelper(model,hdc,x,y,lprc,fuOptions,lpString,cbCount);
+			releaseDisplayModel(model);
+		}
 	}
 	return real_ExtTextOutW(hdc,x,y,fuOptions,lprc,lpString,cbCount,lpDx);
 }
 
 void DrawTextExWHelper(displayModel_t* model, HDC hdc, wchar_t* lpString, int cbCount, const RECT* lprc, UINT dwDTFormat, LPDRAWTEXTPARAMS lpDTParams) {
+	if(cbCount==-1) cbCount=wcslen(lpString);
+	wstring newText(lpString,cbCount);
+	//are we writing a transparent background?
+	if(GetBkMode(hdc)==TRANSPARENT) {
+		//Find out if the text we're writing is just whitespace
+		BOOL whitespace=TRUE;
+		for(wstring::iterator i=newText.begin();i!=newText.end()&&(whitespace=iswspace(*i));i++);
+		//Because the bacground is transparent, if the text is only whitespace, then return -- don't bother to record anything at all
+		if(whitespace) return;
+	}
 	RECT textRect=*lprc;
 	LPtoDP(hdc,(LPPOINT)&textRect,2);
 	model->clearRectangle(textRect);
-	wchar_t* newText=(cbCount==-1)?lpString:NULL;
-	if(!newText) {
-		newText=(wchar_t*)malloc(sizeof(wchar_t)*(cbCount+1));
-		for(int i=0;i<cbCount;i++) {
-			newText[i]=lpString[i];
-		}
-		newText[cbCount]=L'\0';
-   	}
 	model->insertChunk(textRect,newText);
-	if(newText!=lpString) free(newText);
 }
 
 typedef int(WINAPI *DrawTextW_funcType)(HDC,wchar_t*,int,const RECT*,UINT);
@@ -170,9 +176,9 @@ void gdiHooks_inProcess_initialize() {
 	InitializeCriticalSection(&criticalSection_displayModelsByWindow);
 	allowDisplayModelsByWindow=TRUE;
 	real_DestroyWindow=(DestroyWindow_funcType)apiHook_hookFunction("USER32.dll","DestroyWindow",fake_DestroyWindow);
-	real_TextOutW=(TextOutW_funcType)apiHook_hookFunction("GDI32.dll","TextOutW",fake_TextOutW);
+	//real_TextOutW=(TextOutW_funcType)apiHook_hookFunction("GDI32.dll","TextOutW",fake_TextOutW);
 	real_ExtTextOutW=(ExtTextOutW_funcType)apiHook_hookFunction("GDI32.dll","ExtTextOutW",fake_ExtTextOutW);
-	real_DrawTextW=(DrawTextW_funcType)apiHook_hookFunction("USER32.dll","DrawTextW",fake_DrawTextW);
+	//real_DrawTextW=(DrawTextW_funcType)apiHook_hookFunction("USER32.dll","DrawTextW",fake_DrawTextW);
 	real_DrawTextExW=(DrawTextExW_funcType)apiHook_hookFunction("USER32.dll","DrawTextExW",fake_DrawTextExW);
 }
 
