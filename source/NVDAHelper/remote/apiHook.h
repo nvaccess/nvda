@@ -15,10 +15,9 @@ extern "C" {
 void* apiHook_hookFunction(const char* moduleName, const char* functionName, void* newHookProc);
 
 /**
- * unhooks a function previously hooked with apiHook_hookFunction.
- * @param the hooked function, as returned from apiHook_hookFunction. 
+ * unhooks all functions previously hooked with apiHook_hookFunction.
  */
-BOOL apiHook_unhookFunction(const char* moduleName, const char* functionName);
+BOOL apiHook_unhookFunctions();
 
 #ifdef __CPLUSCPLUS
 extern "C" {

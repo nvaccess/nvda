@@ -19,6 +19,7 @@
 #include "nvdaControllerInternal.h"
 #include <common/winIPCUtils.h>
 #include <common/log.h>
+#include "apiHook.h"
 #include "nvdaHelperRemote.h"
 
 using namespace std;
@@ -60,6 +61,7 @@ void inProcess_initialize() {
 void inProcess_terminate() {
 	assert(inProcess_isRunning);
 	assert(inProcess_wasInitializedOnce);
+	apiHook_unhookFunctions();
 	inputLangChange_inProcess_terminate();
 	typedCharacter_inProcess_terminate();
 	ia2LiveRegions_inProcess_terminate();
