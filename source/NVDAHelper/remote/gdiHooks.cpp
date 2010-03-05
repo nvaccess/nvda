@@ -202,11 +202,6 @@ void gdiHooks_inProcess_initialize() {
 }
 
 void gdiHooks_inProcess_terminate() {
-	apiHook_unhookFunction("USER32.dll","DestroyWindow");
-	apiHook_unhookFunction("GDI32.dll","ExtTextOutW");
-	apiHook_unhookFunction("USP10.dll","ScriptStringAnalyse");
-	apiHook_unhookFunction("USP10.dll","ScriptStringFree");
-	apiHook_unhookFunction("USP10.dll","ScriptStringOut");
 	EnterCriticalSection(&criticalSection_displayModelsByWindow);
 	allowDisplayModelsByWindow=FALSE;
 	displayModelsByWindow_t::iterator i=displayModelsByWindow.begin();
