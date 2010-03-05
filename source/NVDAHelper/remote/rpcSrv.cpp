@@ -37,10 +37,6 @@ RPC_STATUS startServer() {
 			return status;
 		}
 	}
-	if((status=RpcServerRegisterIf(VBufRemote_VBuf_v2_0_s_ifspec,NULL,NULL))!=RPC_S_OK) {
-		fprintf(stderr,"Error registering interface, code 0X%X\n",status);
-		return status;
-	}
 	printf("done\n");
 	//Start listening
 	printf("starting server\n");
