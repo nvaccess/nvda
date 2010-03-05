@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
-"POT-Creation-Date: 2010-02-06 19:00+AUSEDT\n"
-"PO-Revision-Date: 2010-02-06 10:55+0200\n"
+"POT-Creation-Date: 2010-03-04 14:17+AUSEDT\n"
+"PO-Revision-Date: 2010-03-04 11:34+0200\n"
 "Last-Translator: Aleksey Sadovoy <lex@progger.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,11 +17,19 @@ msgstr ""
 msgid "Secure Desktop"
 msgstr "Защищённый рабочий Стол"
 
-#: NVDAObjects/IAccessible/__init__.py:1276
+#: NVDAHelper.py:100
+msgid "unknown layout"
+msgstr "Неизвестная раскладка"
+
+#: NVDAHelper.py:101
+msgid "layout %s"
+msgstr "%s раскладка"
+
+#: NVDAObjects/IAccessible/__init__.py:1286
 msgid "Taskbar"
 msgstr "Панель Задач"
 
-#: NVDAObjects/IAccessible/sysTreeView32.py:179
+#: NVDAObjects/IAccessible/sysTreeView32.py:198
 msgid "%s items"
 msgstr "%s элементов"
 
@@ -98,9 +106,9 @@ msgstr "Ошибка в модуле %s"
 #: appModules/_default.py:809
 #: appModules/winamp.py:75
 #: appModules/winamp.py:85
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: keyboardHandler.py:58
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 #: virtualBuffers/__init__.py:692
 msgid "on"
 msgstr "Включено"
@@ -118,9 +126,9 @@ msgstr "Включено"
 #: appModules/winamp.py:77
 #: appModules/winamp.py:87
 #: gui/settingsDialogs.py:484
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: keyboardHandler.py:58
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 #: virtualBuffers/__init__.py:692
 msgid "off"
 msgstr "Выключено"
@@ -183,9 +191,9 @@ msgid "no selection"
 msgstr "Нет выделения"
 
 #: appModules/_default.py:109
-#: speech.py:272
-#: speech.py:369
-#: speech.py:382
+#: speech.py:290
+#: speech.py:386
+#: speech.py:399
 #: virtualBuffers/__init__.py:598
 msgid "selected %s"
 msgstr "Выделено %s"
@@ -784,6 +792,14 @@ msgstr "Трек не воспроизводится"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Сообщает время, оставшееся до конца воспроизводимого трека"
 
+#: appModules/miranda32.py:104
+msgid "No message yet"
+msgstr "Нет сообщения"
+
+#: appModules/miranda32.py:105
+msgid "Displays one of the recent messages"
+msgstr "Отображает одно из последних сообщений"
+
 #: appModules/msimn.py:18
 msgid "Attachments"
 msgstr "Вложения"
@@ -1127,18 +1143,18 @@ msgid "( )"
 msgstr "< >"
 
 #: braille.py:222
-#: speech.py:670
+#: speech.py:687
 msgid "not %s"
 msgstr "Не %s"
 
 #: braille.py:234
-#: speech.py:676
+#: speech.py:693
 msgid "%s of %s"
 msgstr "%s из %s"
 
 #: braille.py:236
-#: speech.py:681
-#: speech.py:684
+#: speech.py:698
+#: speech.py:701
 msgid "level %s"
 msgstr "Уровень %s"
 
@@ -1157,8 +1173,8 @@ msgstr "Нет Брайля"
 #: characterSymbols.py:17
 #: characterSymbols.py:18
 #: characterSymbols.py:19
-#: speech.py:82
-#: speech.py:620
+#: speech.py:84
+#: speech.py:637
 msgid "blank"
 msgstr "Чисто"
 
@@ -1423,7 +1439,7 @@ msgid "tool tip"
 msgstr "Подсказка"
 
 #: controlTypes.py:198
-#: speech.py:930
+#: speech.py:947
 msgid "link"
 msgstr "Ссылка"
 
@@ -1840,7 +1856,7 @@ msgid "font size"
 msgstr "Размер шрифта"
 
 #: controlTypes.py:305
-#: speech.py:882
+#: speech.py:899
 msgid "bold"
 msgstr "Полужирный"
 
@@ -1857,12 +1873,12 @@ msgid "background color"
 msgstr "Цвет фона"
 
 #: controlTypes.py:310
-#: speech.py:904
+#: speech.py:921
 msgid "superscript"
 msgstr "Надстрочный"
 
 #: controlTypes.py:311
-#: speech.py:906
+#: speech.py:923
 msgid "subscript"
 msgstr "Подстрочный"
 
@@ -2018,11 +2034,11 @@ msgstr "Перетаскивание"
 msgid "drop target"
 msgstr "Целевой пункт перетаскивания"
 
-#: core.py:144
+#: core.py:137
 msgid "Loading subsystems, please wait..."
 msgstr "Загрузка подсистем, пожалуйста, подождите..."
 
-#: core.py:223
+#: core.py:216
 msgid "NVDA started"
 msgstr "NVDA готов"
 
@@ -3028,35 +3044,31 @@ msgstr "right alt"
 msgid "right windows"
 msgstr "right windows"
 
-#: keyboardHandler.py:54
+#: keyboardHandler.py:53
 msgid "caps lock %s"
 msgstr "caps lock %s"
 
-#: keyboardHandler.py:56
+#: keyboardHandler.py:55
 msgid "num lock %s"
 msgstr "num lock %s"
 
-#: keyboardHandler.py:58
+#: keyboardHandler.py:57
 msgid "scroll lock %s"
 msgstr "scroll lock %s"
 
-#: keyboardHandler.py:78
-msgid "%s keyboard layout"
-msgstr "Раскладка %s"
-
-#: keyboardHandler.py:191
+#: keyboardHandler.py:170
 msgid "Description: %s"
 msgstr "Описание: %s"
 
-#: keyboardHandler.py:194
+#: keyboardHandler.py:173
 msgid "Location: %s"
 msgstr "Размещение: %s"
 
-#: keyboardHandler.py:209
+#: keyboardHandler.py:188
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Ошибка в keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:247
+#: keyboardHandler.py:226
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Ошибка в keyboardHandler.internal_keyUpEvent"
 
@@ -3076,142 +3088,142 @@ msgstr "Введите exit() для выхода из консоли"
 msgid "NVDA Python Console"
 msgstr "NVDA Консоль Python"
 
-#: speech.py:177
+#: speech.py:179
 msgid "cap %s"
 msgstr "большая %s"
 
-#: speech.py:313
+#: speech.py:330
 msgid "%d characters"
 msgstr "%d символов"
 
-#: speech.py:364
+#: speech.py:381
 msgid "selecting %s"
 msgstr "Выделено %s"
 
-#: speech.py:375
+#: speech.py:392
 msgid "unselecting %s"
 msgstr "Не выделено %s"
 
-#: speech.py:377
+#: speech.py:394
 msgid "selection removed"
 msgstr "Выделение удалено"
 
-#: speech.py:668
+#: speech.py:685
 msgid "done dragging"
 msgstr "Перетаскивание завершено"
 
-#: speech.py:693
-#: speech.py:971
+#: speech.py:710
+#: speech.py:988
 msgid "row %s"
 msgstr "Строка %s"
 
-#: speech.py:696
-#: speech.py:967
+#: speech.py:713
+#: speech.py:984
 msgid "column %s"
 msgstr "Столбец %s"
 
-#: speech.py:701
+#: speech.py:718
 msgid "with %s rows and %s columns"
 msgstr "Из %s строк и %s столбцов"
 
-#: speech.py:703
+#: speech.py:720
 msgid "with %s columns"
 msgstr "из %s столбцов"
 
-#: speech.py:705
+#: speech.py:722
 msgid "with %s rows"
 msgstr "из %s строк"
 
-#: speech.py:808
+#: speech.py:825
 msgid "with %s items"
 msgstr "из %s элементов"
 
-#: speech.py:823
-#: speech.py:930
+#: speech.py:840
+#: speech.py:947
 msgid "out of %s"
 msgstr "вне %s"
 
-#: speech.py:847
+#: speech.py:864
 msgid "page %s"
 msgstr "Страница %s"
 
-#: speech.py:854
+#: speech.py:871
 msgid "style %s"
 msgstr "Стиль %s"
 
-#: speech.py:856
+#: speech.py:873
 msgid "default style"
 msgstr "стиль по умолчанию"
 
-#: speech.py:876
+#: speech.py:893
 msgid "line %s"
 msgstr "Строка %s"
 
-#: speech.py:882
+#: speech.py:899
 msgid "no bold"
 msgstr "Нет полужирного"
 
-#: speech.py:887
+#: speech.py:904
 msgid "italic"
 msgstr "Курсив"
 
-#: speech.py:887
+#: speech.py:904
 msgid "no italic"
 msgstr "Нет курсива"
 
-#: speech.py:892
+#: speech.py:909
 msgid "no strikethrough"
 msgstr "Нет зачёркнутого"
 
-#: speech.py:892
+#: speech.py:909
 msgid "strikethrough"
 msgstr "Зачёркнутый"
 
-#: speech.py:897
+#: speech.py:914
 msgid "not underlined"
 msgstr "Не подчёркнутый"
 
-#: speech.py:897
+#: speech.py:914
 msgid "underlined"
 msgstr "Подчёркнутый"
 
-#: speech.py:908
+#: speech.py:925
 msgid "baseline"
 msgstr "Базовая линия"
 
-#: speech.py:916
+#: speech.py:933
 msgid "align left"
 msgstr "выравнивание по левому краю"
 
-#: speech.py:918
+#: speech.py:935
 msgid "align center"
 msgstr "выравнивание по центру"
 
-#: speech.py:920
+#: speech.py:937
 msgid "align right"
 msgstr "выравнивание по правому краю"
 
-#: speech.py:922
+#: speech.py:939
 msgid "align justify"
 msgstr "выравнивание по ширине"
 
-#: speech.py:924
+#: speech.py:941
 msgid "align default"
 msgstr "Выравнивание поумолчанию"
 
-#: speech.py:937
+#: speech.py:954
 msgid "spelling error"
 msgstr "Граматическая ошибка"
 
-#: speech.py:939
+#: speech.py:956
 msgid "out of spelling error"
 msgstr "Вне граматической ошибки"
 
-#: speech.py:953
+#: speech.py:970
 msgid "out of table"
 msgstr "Вне таблицы"
 
-#: speech.py:962
+#: speech.py:979
 msgid "table with %s columns and %s rows"
 msgstr "Таблица из %s столбцов и %s строк"
 
@@ -3219,27 +3231,27 @@ msgstr "Таблица из %s столбцов и %s строк"
 msgid "NVDA Speech Viewer"
 msgstr "NVDA просмотрщик речи"
 
-#: synthDriverHandler.py:175
+#: synthDriverHandler.py:187
 msgid "&Voice"
 msgstr "&Голос"
 
-#: synthDriverHandler.py:179
+#: synthDriverHandler.py:191
 msgid "V&ariant"
 msgstr "В&ариант"
 
-#: synthDriverHandler.py:184
+#: synthDriverHandler.py:196
 msgid "&Rate"
 msgstr "&Скорость"
 
-#: synthDriverHandler.py:188
+#: synthDriverHandler.py:200
 msgid "V&olume"
 msgstr "Гр&омкость"
 
-#: synthDriverHandler.py:192
+#: synthDriverHandler.py:204
 msgid "&Pitch"
 msgstr "&Высота"
 
-#: synthDriverHandler.py:197
+#: synthDriverHandler.py:209
 msgid "&Inflection"
 msgstr "&Интонация"
 
@@ -3292,8 +3304,8 @@ msgid "A free and open-source screen reader for MS Windows"
 msgstr "Свободная программа речевого доступа к экрану под Windows с открытым исходным кодом"
 
 #: versionInfo.py:44
-msgid "Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>"
-msgstr "Авторское право Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>"
+msgid "Copyright (C) 2006-2010 NVDA Contributors"
+msgstr "Авторское право (C) 2006-2010 NVDA contributors"
 
 #: versionInfo.py:45
 msgid ""
@@ -3821,6 +3833,8 @@ msgstr "Перейти на предыдущий встроеный объект
 msgid "no previous embedded object"
 msgstr "Нет предыдущего встроеного объекта"
 
+#~ msgid "%s keyboard layout"
+#~ msgstr "Раскладка %s"
 #~ msgid "in %s"
 #~ msgstr "в %s"
 #~ msgid "Russian capitan synthesizer by Gennady Nefedov"
