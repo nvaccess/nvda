@@ -24,11 +24,9 @@ inline displayModel_t* acquireDisplayModel(HDC hdc) {
 	HWND hwnd=WindowFromDC(hdc);
 	if(hwnd==NULL) return NULL;
 	LOG_DEBUG(L"window from DC is "<<hwnd);
+	if(!allowDisplayModelsByWindow) return NULL;
 	EnterCriticalSection(&criticalSection_displayModelsByWindow);
-	if(!allowDisplayModelsByWindow) {
-		LeaveCriticalSection(&criticalSection_displayModelsByWindow);
-		return NULL;
-	}
+	if(!allowDisplayModelsByWindow) return NULL;
 	displayModelsByWindow_t::iterator i=displayModelsByWindow.find(hwnd);
 	displayModel_t* model=NULL;
 	if(i!=displayModelsByWindow.end()) {
@@ -50,6 +48,9 @@ inline void releaseDisplayModel(displayModel_t* model) {
 
 void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,wchar_t* lpString, int cbCount) {
 	wstring newText(lpString,cbCount);
+	if(fuOptions&ETO_GLYPH_INDEX) {
+		newText=L"glyphs";
+	}
 	//are we writing a transparent background?
 	if(!(fuOptions&ETO_OPAQUE)&&(GetBkMode(hdc)==TRANSPARENT)) {
 		//Find out if the text we're writing is just whitespace
@@ -99,7 +100,7 @@ void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT*
 typedef BOOL(__stdcall *ExtTextOutW_funcType)(HDC,int,int,UINT,const RECT*,wchar_t*,int,const int*);
 ExtTextOutW_funcType real_ExtTextOutW;
 BOOL __stdcall fake_ExtTextOutW(HDC hdc, int x, int y, UINT fuOptions, const RECT* lprc, wchar_t* lpString, int cbCount, const int* lpDx) {
-	if(lpString&&cbCount>0&&!(fuOptions&ETO_GLYPH_INDEX)) {
+	if(lpString&&cbCount>0) { //&&!(fuOptions&ETO_GLYPH_INDEX)) {
 		displayModel_t* model=acquireDisplayModel(hdc);
 		if(model) {
 			ExtTextOutWHelper(model,hdc,x,y,lprc,fuOptions,lpString,cbCount);
@@ -127,6 +128,7 @@ HRESULT WINAPI fake_ScriptStringAnalyse(HDC hdc,const void* pString, int cString
 	HRESULT res=real_ScriptStringAnalyse(hdc,pString,cString,cGlyphs,iCharset,dwFlags,iRectWidth,psControl,psState,piDx,pTabdef,pbInClass,pssa);
 	if(res==S_OK&&pString&&cString>0&&pssa&&allowScriptStringAnalyseArgsByAnalysis) {
 		EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+		if(!allowScriptStringAnalyseArgsByAnalysis) return res;
 		ScriptStringAnalyseArgs_t args={hdc,pString,cString,iCharset};
 		ScriptStringAnalyseArgsByAnalysis[*pssa]=args;
 		LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
@@ -140,6 +142,7 @@ HRESULT WINAPI fake_ScriptStringFree(SCRIPT_STRING_ANALYSIS* pssa) {
 	HRESULT res=real_ScriptStringFree(pssa);
 	if(res==S_OK&&pssa&&allowScriptStringAnalyseArgsByAnalysis) {
 		EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+		if(!allowScriptStringAnalyseArgsByAnalysis) return res;
 		ScriptStringAnalyseArgsByAnalysis.erase(*pssa);
 		LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	}
@@ -152,6 +155,7 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 	HRESULT res=real_ScriptStringOut(ssa,iX,iY,uOptions,prc,iMinSel,iMaxSel,fDisabled);
 	if(res==S_OK&&allowScriptStringAnalyseArgsByAnalysis) {
 		EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+		if(!allowScriptStringAnalyseArgsByAnalysis) return res;
 		ScriptStringAnalyseArgsByAnalysis_t::iterator i=ScriptStringAnalyseArgsByAnalysis.find(ssa);
 		if(i!=ScriptStringAnalyseArgsByAnalysis.end()&&i->second.iCharset==-1) {
 			displayModel_t* model=acquireDisplayModel(i->second.hdc);
