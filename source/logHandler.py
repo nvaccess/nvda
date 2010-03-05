@@ -7,6 +7,7 @@ import logging
 from logging import _levelNames as levelNames
 import inspect
 import winsound
+import traceback
 import nvwave
 from types import MethodType
 import globalVars
@@ -76,13 +77,17 @@ class Logger(logging.Logger):
 	IO = 12
 	DEBUGWARNING = 15
 
-	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False):
+	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False, stack_info=None):
 		if not extra:
 			extra={}
-		if not codepath:
+
+		if not codepath or stack_info is True:
 			f=inspect.currentframe().f_back.f_back
+
+		if not codepath:
 			codepath=getCodePath(f)
 		extra["codepath"] = codepath
+
 		if activateLogViewer:
 			# Import logViewer here, as we don't want to import GUI code when this module is imported.
 			from gui import logViewer
@@ -91,10 +96,27 @@ class Logger(logging.Logger):
 			# This means that the user will be positioned at the start of the new log text.
 			# This is why we activate the log viewer before writing to the log.
 			logViewer.logViewer.outputCtrl.SetInsertionPointEnd()
+
+		if isinstance(msg, str):
+			# Messages should be unicode.
+			try:
+				msg = unicode(msg)
+			except UnicodeError, e:
+				# Something logged a non-unicode string containing non-ascii characters.
+				self.debugWarning("Non-unicode string containing non-ascii characters: %r\n%s" % (msg, e))
+				msg = unicode(msg, "ascii", "replace")
+
+		if stack_info:
+			if stack_info is True:
+				stack_info = traceback.extract_stack(f)
+			msg += "\nStack trace:\n" + "".join(traceback.format_list(stack_info)).rstrip()
+
 		res = logging.Logger._log(self,level, msg, args, exc_info, extra)
+
 		if activateLogViewer:
 			# Make the log text we just wrote appear in the log viewer.
 			logViewer.logViewer.refresh()
+
 		return res
 
 	def debugWarning(self, msg, *args, **kwargs):

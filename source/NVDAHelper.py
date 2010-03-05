@@ -71,6 +71,15 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 		log.debugWarning("Could not find reg value 'Layout Text' for reg key %s"%layoutString)
 		return None
 
+@WINFUNCTYPE(c_long,c_long,c_long,c_long,c_wchar_p,c_wchar_p,c_long,c_wchar_p)
+def nvdaControllerInternal_logMessage(pid,tid,level,fileName,funcName,lineNo,message):
+	if not log.isEnabledFor(level):
+		return 0
+	from appModuleHandler import getAppNameFromProcessID
+	codepath="RPC: %s, %s, %s, line %d"%(getAppNameFromProcessID(pid,includeExt=True),fileName,funcName, lineNo)
+	log._log(level,message,[],codepath=codepath)
+	return 0
+
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
 def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	global lastInputLangChangeTime
@@ -163,6 +172,7 @@ def initialize():
 		("nvdaController_cancelSpeech",nvdaController_cancelSpeech),
 		("nvdaController_brailleMessage",nvdaController_brailleMessage),
 		("nvdaControllerInternal_inputLangChangeNotify",nvdaControllerInternal_inputLangChangeNotify),
+		("nvdaControllerInternal_logMessage",nvdaControllerInternal_logMessage),
 	]:
 		try:
 			_setDllFuncPointer(localLib,"_%s"%name,func)
