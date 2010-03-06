@@ -46,7 +46,7 @@ inline void releaseDisplayModel(displayModel_t* model) {
 	LeaveCriticalSection(&criticalSection_displayModelsByWindow);
 }
 
-void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,wchar_t* lpString, int cbCount) {
+void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE* textSize, const RECT* lprc,UINT fuOptions,UINT textAlign, wchar_t* lpString, int cbCount) {
 	wstring newText(lpString,cbCount);
 	if(fuOptions&ETO_GLYPH_INDEX) {
 		newText=L"glyphs";
@@ -59,31 +59,21 @@ void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT*
 		//Because the bacground is transparent, if the text is only whitespace, then return -- don't bother to record anything at all
 		if(whitespace) return;
 	}
-	SIZE textSize;
-	GetTextExtentPoint32(hdc,lpString,cbCount,&textSize);
 	int xOffset=x;
 	int yOffset=y;
-	int textAlign=GetTextAlign(hdc);
-	if(textAlign&TA_UPDATECP) {
-		POINT curPos;
-		GetCurrentPositionEx(hdc,&curPos);
-		xOffset=curPos.x;
-		yOffset=curPos.y;
-		LOG_DEBUG(L"TA_UPDATECP set");
-	}
 	if(textAlign&TA_CENTER) {
 		LOG_DEBUG(L"TA_CENTER set");
-		xOffset-=(textSize.cx/2);
+		xOffset-=(textSize->cx/2);
 	} else if(textAlign&TA_RIGHT) {
 		LOG_DEBUG(L"TA_RIGHT set");
-		xOffset-=textSize.cx;
+		xOffset-=textSize->cx;
 	}
 	if(textAlign&TA_BOTTOM) {
 		LOG_DEBUG(L"TA_BOTTOM set");
-		yOffset-=textSize.cy;
+		yOffset-=textSize->cy;
 	}
 	LOG_DEBUG(L"using offset of "<<xOffset<<L","<<yOffset);
-	RECT textRect={xOffset,yOffset,xOffset+textSize.cx,yOffset+textSize.cy};
+	RECT textRect={xOffset,yOffset,xOffset+textSize->cx,yOffset+textSize->cy};
 	LPtoDP(hdc,(LPPOINT)&textRect,2);
 	RECT clearRect;
 	if(lprc&&(fuOptions&ETO_OPAQUE)) {
@@ -103,7 +93,12 @@ BOOL __stdcall fake_ExtTextOutW(HDC hdc, int x, int y, UINT fuOptions, const REC
 	if(lpString&&cbCount>0) { //&&!(fuOptions&ETO_GLYPH_INDEX)) {
 		displayModel_t* model=acquireDisplayModel(hdc);
 		if(model) {
-			ExtTextOutWHelper(model,hdc,x,y,lprc,fuOptions,lpString,cbCount);
+			SIZE textSize;
+			GetTextExtentPoint32(hdc,lpString,cbCount,&textSize);
+			POINT pos={x,y};
+			UINT textAlign=GetTextAlign(hdc);
+			if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
+			ExtTextOutWHelper(model,hdc,pos.x,pos.y,&textSize,lprc,fuOptions,textAlign,lpString,cbCount);
 			releaseDisplayModel(model);
 		}
 	}
@@ -160,12 +155,7 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 		if(i!=ScriptStringAnalyseArgsByAnalysis.end()) {
 			displayModel_t* model=acquireDisplayModel(i->second.hdc);
 			if(model) {
-
-				if(i->second.iCharset==-1) {
-					ExtTextOutWHelper(model,i->second.hdc,iX,iY,prc,uOptions,(wchar_t*)(i->second.pString),i->second.cString);
-				} else {
-					ExtTextOutWHelper(model,i->second.hdc,iX,iY,prc,uOptions,L"ansi string",11);
-				}
+				ExtTextOutWHelper(model,i->second.hdc,iX,iY,ScriptString_pSize(i->first),prc,uOptions,GetTextAlign(i->second.hdc),(wchar_t*)(i->second.pString),i->second.cString);
 				releaseDisplayModel(model);
 			}
 		}
