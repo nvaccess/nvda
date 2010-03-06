@@ -22,7 +22,7 @@ class displayModel_t {
 	~displayModel_t();
 	void insertChunk(const RECT& rect, const std::wstring& text);
 	void clearRectangle(const RECT& rect);
-	void renderText(std::wstring& text);
+	void renderText(const RECT* rect, std::wstring& text);
 
 };
 

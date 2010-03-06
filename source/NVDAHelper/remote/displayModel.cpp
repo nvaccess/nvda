@@ -63,11 +63,13 @@ void displayModel_t::clearRectangle(const RECT& rect) {
 	LOG_DEBUG(L"complete");
 }
 
-void displayModel_t::renderText(wstring& text) {
+void displayModel_t::renderText(const RECT* rect, wstring& text) {
 	wostringstream s;
+	RECT tempRect;
 	for(displayModelChunksByPointMap_t::iterator i=_chunksByYX.begin();i!=_chunksByYX.end();i++) {
-		//s<<L"Chunk from "<<i->second->rect.left<<L","<<i->second->rect.top<<L" to "<<i->second->rect.right<<L","<<i->second->rect.bottom<<L":"<<endl;
-		s<<i->second->text<<endl;
+		if(!rect||IntersectRect(&tempRect,rect,&(i->second->rect))) {
+			s<<i->second->text<<endl;
+		}
 	}
 	text.append(s.str());
 }

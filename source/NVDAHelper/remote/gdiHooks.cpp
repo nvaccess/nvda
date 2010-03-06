@@ -157,10 +157,15 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 		EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 		if(!allowScriptStringAnalyseArgsByAnalysis) return res;
 		ScriptStringAnalyseArgsByAnalysis_t::iterator i=ScriptStringAnalyseArgsByAnalysis.find(ssa);
-		if(i!=ScriptStringAnalyseArgsByAnalysis.end()&&i->second.iCharset==-1) {
+		if(i!=ScriptStringAnalyseArgsByAnalysis.end()) {
 			displayModel_t* model=acquireDisplayModel(i->second.hdc);
 			if(model) {
-				ExtTextOutWHelper(model,i->second.hdc,iX,iY,prc,uOptions,(wchar_t*)(i->second.pString),i->second.cString);
+
+				if(i->second.iCharset==-1) {
+					ExtTextOutWHelper(model,i->second.hdc,iX,iY,prc,uOptions,(wchar_t*)(i->second.pString),i->second.cString);
+				} else {
+					ExtTextOutWHelper(model,i->second.hdc,iX,iY,prc,uOptions,L"ansi string",11);
+				}
 				releaseDisplayModel(model);
 			}
 		}

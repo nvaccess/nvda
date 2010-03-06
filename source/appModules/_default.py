@@ -744,7 +744,10 @@ class AppModule(appModuleHandler.AppModule):
 		import NVDAHelper
 		import ctypes
 		text=ctypes.c_wchar_p()
-		NVDAHelper.localLib.displayModel_getTextInWindow(self.helperLocalBindingHandle,obj.windowHandle,ctypes.byref(text))
+		left,top,width,height=obj.location
+		p=ctypes.wintypes.POINT(left,top)
+		ctypes.windll.user32.ScreenToClient(obj.windowHandle,ctypes.byref(p))
+		NVDAHelper.localLib.displayModel_getWindowTextInRect(self.helperLocalBindingHandle,obj.windowHandle,p.x,p.y,p.x+width,p.y+height,ctypes.byref(text))
 		speech.speakMessage(text.value)
 		log.info(text.value)
 		import ctypes

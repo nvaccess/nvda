@@ -5,6 +5,9 @@
 ]
 interface DisplayModel {
 
-	__declspec(dllexport) error_status_t getTextInWindow([in] handle_t bindingHandle, [in] const long windowHandle, [out,string] wchar_t** text);
+/**
+ * Retreaves the text within the given rectangle (in client coordinates), within the given window.
+  */
+	__declspec(dllexport) error_status_t getWindowTextInRect([in] handle_t bindingHandle, [in] const long windowHandle, [in] const int left, [in] const int top, [in] const int right, [in] const int bottom, [out,string] wchar_t** text);
 
 }

@@ -5,11 +5,12 @@
 
 using namespace std;
 
-error_status_t displayModelRemote_getTextInWindow(handle_t bindingHandle, const long windowHandle, wchar_t** textBuf) {
-	map<HWND,displayModel_t*>::iterator i=displayModelsByWindow.find((HWND)windowHandle);
+error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, const long windowHandle, const int left, const int top, const int right, const int bottom, wchar_t** textBuf) {
+	displayModelsByWindow_t::iterator i=displayModelsByWindow.find((HWND)windowHandle);
 	if(i!=displayModelsByWindow.end()) {
 		wstring text;
-		i->second->renderText(text);
+		RECT rect={left,top,right,bottom};
+		i->second->renderText(&rect,text);
 		*textBuf=_wcsdup(text.c_str());
 	}
 	return 0;
