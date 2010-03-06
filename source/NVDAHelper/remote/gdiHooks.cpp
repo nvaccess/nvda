@@ -209,9 +209,9 @@ void gdiHooks_inProcess_terminate() {
 		delete i->second;
 		displayModelsByWindow.erase(i++);
 	}  
-	DeleteCriticalSection(&criticalSection_displayModelsByWindow);
+	LeaveCriticalSection(&criticalSection_displayModelsByWindow);
 	EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allowScriptStringAnalyseArgsByAnalysis=FALSE;
 	ScriptStringAnalyseArgsByAnalysis.clear();
-	DeleteCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+	LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 }
