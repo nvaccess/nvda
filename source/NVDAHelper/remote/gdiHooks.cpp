@@ -10,9 +10,11 @@
 
 using namespace std;
 
+typedef map<HDC,displayModel_t*> displayModelsByDC_t;
+displayModelsByDC_t displayModelsByMemoryDC;
 displayModelsByWindow_t displayModelsByWindow;
-CRITICAL_SECTION criticalSection_displayModelsByWindow;
-BOOL allowDisplayModelsByWindow=FALSE;
+CRITICAL_SECTION criticalSection_displayModelMaps;
+BOOL allow_displayModelMaps=FALSE;
 
 /**
  * Fetches and or creates a new displayModel for the window of the given device context.
@@ -22,24 +24,30 @@ BOOL allowDisplayModelsByWindow=FALSE;
  */
 inline displayModel_t* acquireDisplayModel(HDC hdc) {
 	HWND hwnd=WindowFromDC(hdc);
-	if(hwnd==NULL) return NULL;
 	LOG_DEBUG(L"window from DC is "<<hwnd);
-	if(!allowDisplayModelsByWindow) return NULL;
-	EnterCriticalSection(&criticalSection_displayModelsByWindow);
-	if(!allowDisplayModelsByWindow) {
-		LeaveCriticalSection(&criticalSection_displayModelsByWindow);
+	if(!allow_displayModelMaps) return NULL;
+	EnterCriticalSection(&criticalSection_displayModelMaps);
+	if(!allow_displayModelMaps) {
+		LeaveCriticalSection(&criticalSection_displayModelMaps);
 		return NULL;
 	}
-	displayModelsByWindow_t::iterator i=displayModelsByWindow.find(hwnd);
 	displayModel_t* model=NULL;
-	if(i!=displayModelsByWindow.end()) {
-		model=i->second;
+	if(hwnd) {
+		displayModelsByWindow_t::iterator i=displayModelsByWindow.find(hwnd);
+		if(i!=displayModelsByWindow.end()) {
+			model=i->second;
+		} else {
+			model=new displayModel_t();
+			displayModelsByWindow.insert(make_pair(hwnd,model));
+		}
 	} else {
-		model=new displayModel_t();
-		displayModelsByWindow.insert(make_pair(hwnd,model));
+		displayModelsByDC_t::iterator i=displayModelsByMemoryDC.find(hdc);
+		if(i!=displayModelsByMemoryDC.end()) {
+			model=i->second;
+		}
 	}
 	if(model) model->AddRef();
-	LeaveCriticalSection(&criticalSection_displayModelsByWindow);
+	LeaveCriticalSection(&criticalSection_displayModelMaps);
 	return model;
 }
 
@@ -110,6 +118,64 @@ BOOL __stdcall fake_ExtTextOutW(HDC hdc, int x, int y, UINT fuOptions, const REC
 	return real_ExtTextOutW(hdc,x,y,fuOptions,lprc,lpString,cbCount,lpDx);
 }
 
+typedef HDC(WINAPI *CreateCompatibleDC_funcType)(HDC);
+CreateCompatibleDC_funcType real_CreateCompatibleDC=NULL;
+HDC WINAPI fake_CreateCompatibleDC(HDC hdc) {
+	HDC newHdc=real_CreateCompatibleDC(hdc);
+	if(newHdc&&hdc&&WindowFromDC(hdc)) {
+		EnterCriticalSection(&criticalSection_displayModelMaps);
+		if(!allow_displayModelMaps) {
+			LeaveCriticalSection(&criticalSection_displayModelMaps);
+			return newHdc;
+		}
+		displayModel_t* model=new displayModel_t();
+		displayModelsByMemoryDC.insert(make_pair(newHdc,model));
+		LeaveCriticalSection(&criticalSection_displayModelMaps);
+	}
+	return newHdc;
+}
+
+typedef BOOL(WINAPI *DeleteDC_funcType)(HDC);
+DeleteDC_funcType real_DeleteDC=NULL;
+BOOL WINAPI fake_DeleteDC(HDC hdc) {
+	BOOL res=real_DeleteDC(hdc);
+	if(res) {
+		EnterCriticalSection(&criticalSection_displayModelMaps);
+		if(!allow_displayModelMaps) {
+			LeaveCriticalSection(&criticalSection_displayModelMaps);
+			return res;
+		}
+		displayModelsByDC_t::iterator i=displayModelsByMemoryDC.find(hdc);
+		if(i!=displayModelsByMemoryDC.end()) {
+			i->second->Release();
+			displayModelsByMemoryDC.erase(i);
+		}
+		LeaveCriticalSection(&criticalSection_displayModelMaps);
+	}
+	return res;
+}
+
+typedef BOOL(WINAPI *BitBlt_funcType)(HDC,int,int,int,int,HDC,int,int,DWORD);
+BitBlt_funcType real_BitBlt=NULL;
+BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, HDC hdcSrc, int nXSrc, int nYSrc, DWORD dwRop) {
+	BOOL res=real_BitBlt(hdcDest,nXDest,nYDest,nWidth,nHeight,hdcSrc,nXSrc,nYSrc,dwRop);
+	if(!res) return res;
+displayModel_t* srcModel=hdcSrc?acquireDisplayModel(hdcSrc):NULL;
+	if(hdcSrc&&!srcModel) return res;
+	displayModel_t* destModel=acquireDisplayModel(hdcDest);
+	if(destModel) {
+		if(!srcModel) srcModel=destModel;
+		RECT srcRect={nXSrc,nYSrc,nXSrc+nWidth,nYSrc+nHeight};
+		LPtoDP(hdcSrc,(LPPOINT)&srcRect,2);
+		POINT destPos={nXDest,nYDest};
+		LPtoDP(hdcDest,&destPos,1);
+		srcModel->copyRectangleToOtherModel(srcRect,destModel,destPos.x,destPos.y);
+		destModel->Release();
+	}
+	if(srcModel!=destModel) srcModel->Release();
+	return res;
+}
+
 typedef struct {
 	HDC hdc;
 	const void* pString;
@@ -174,9 +240,9 @@ DestroyWindow_funcType real_DestroyWindow=NULL;
 BOOL WINAPI fake_DestroyWindow(HWND hwnd) {
 	BOOL res=real_DestroyWindow(hwnd);
 	if(res) {
-		EnterCriticalSection(&criticalSection_displayModelsByWindow);
-		if(!allowDisplayModelsByWindow) {
-			LeaveCriticalSection(&criticalSection_displayModelsByWindow);
+		EnterCriticalSection(&criticalSection_displayModelMaps);
+		if(!allow_displayModelMaps) {
+			LeaveCriticalSection(&criticalSection_displayModelMaps);
 			return res;
 		}
 		displayModelsByWindow_t::iterator i=displayModelsByWindow.find(hwnd);
@@ -184,16 +250,19 @@ BOOL WINAPI fake_DestroyWindow(HWND hwnd) {
 			i->second->Release();
 			displayModelsByWindow.erase(i);
 		}
-		LeaveCriticalSection(&criticalSection_displayModelsByWindow);
+		LeaveCriticalSection(&criticalSection_displayModelMaps);
 	}
 	return res;
 }
 
 void gdiHooks_inProcess_initialize() {
-	InitializeCriticalSection(&criticalSection_displayModelsByWindow);
-	allowDisplayModelsByWindow=TRUE;
+	InitializeCriticalSection(&criticalSection_displayModelMaps);
+	allow_displayModelMaps=TRUE;
 	InitializeCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allowScriptStringAnalyseArgsByAnalysis=TRUE;
+	real_CreateCompatibleDC=(CreateCompatibleDC_funcType)apiHook_hookFunction("GDI32.dll","CreateCompatibleDC",fake_CreateCompatibleDC);
+	real_DeleteDC=(DeleteDC_funcType)apiHook_hookFunction("GDI32.dll","DeleteDC",fake_DeleteDC);
+	real_BitBlt=(BitBlt_funcType)apiHook_hookFunction("GDI32.dll","BitBlt",fake_BitBlt);
 	real_DestroyWindow=(DestroyWindow_funcType)apiHook_hookFunction("USER32.dll","DestroyWindow",fake_DestroyWindow);
 	real_ExtTextOutW=(ExtTextOutW_funcType)apiHook_hookFunction("GDI32.dll","ExtTextOutW",fake_ExtTextOutW);
 	real_ScriptStringAnalyse=(ScriptStringAnalyse_funcType)apiHook_hookFunction("USP10.dll","ScriptStringAnalyse",fake_ScriptStringAnalyse);
@@ -202,14 +271,19 @@ void gdiHooks_inProcess_initialize() {
 }
 
 void gdiHooks_inProcess_terminate() {
-	EnterCriticalSection(&criticalSection_displayModelsByWindow);
-	allowDisplayModelsByWindow=FALSE;
+	EnterCriticalSection(&criticalSection_displayModelMaps);
+	allow_displayModelMaps=FALSE;
 	displayModelsByWindow_t::iterator i=displayModelsByWindow.begin();
 	while(i!=displayModelsByWindow.end()) {
 		i->second->Release();
 		displayModelsByWindow.erase(i++);
 	}  
-	LeaveCriticalSection(&criticalSection_displayModelsByWindow);
+	displayModelsByDC_t::iterator j=displayModelsByMemoryDC.begin();
+	while(j!=displayModelsByMemoryDC.end()) {
+		j->second->Release();
+		displayModelsByMemoryDC.erase(j++);
+	}  
+	LeaveCriticalSection(&criticalSection_displayModelMaps);
 	EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allowScriptStringAnalyseArgsByAnalysis=FALSE;
 	ScriptStringAnalyseArgsByAnalysis.clear();

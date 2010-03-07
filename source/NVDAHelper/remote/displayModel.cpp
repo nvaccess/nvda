@@ -1,5 +1,6 @@
 #include <string>
 #include <sstream>
+#include <set>
 #include "nvdaControllerInternal.h"
 #include <common/log.h>
 #include "displayModel.h"
@@ -71,6 +72,35 @@ void displayModel_t::clearRectangle(const RECT& rect) {
 		}
 	}
 	LOG_DEBUG(L"complete");
+}
+
+void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* otherModel, int otherX, int otherY) {
+	if(!otherModel) otherModel=this;
+	set<displayModelChunk_t*> chunks;
+	RECT tempRect;
+	RECT clearRect=rect;
+	int deltaX=otherX-rect.left;
+	int deltaY=otherY-rect.top;
+	for(displayModelChunksByPointMap_t::iterator i=_chunksByYX.begin();i!=_chunksByYX.end();i++) {
+		if(IntersectRect(&tempRect,&rect,&(i->second->rect))) {
+			chunks.insert(i->second);
+			if(i->second->rect.left<clearRect.left) clearRect.left=i->second->rect.left;
+			if(i->second->rect.top<clearRect.top) clearRect.top=i->second->rect.top;
+			if(i->second->rect.right>clearRect.right) clearRect.right=i->second->rect.right;
+			if(i->second->rect.bottom>clearRect.bottom) clearRect.bottom=i->second->rect.bottom;
+		}
+	}
+	if(chunks.size()>0) {
+		clearRect.left+=deltaX;
+		clearRect.top+=deltaY;
+		clearRect.right+=deltaX;
+		clearRect.bottom+=deltaY;
+		otherModel->clearRectangle(clearRect);
+		for(set<displayModelChunk_t*>::iterator i=chunks.begin();i!=chunks.end();i++) {
+			RECT newChunkRect={((*i)->rect.left)+=deltaX,((*i)->rect.top)+deltaY,((*i)->rect.right)+deltaX,((*i)->rect.bottom)+deltaY};
+			otherModel->insertChunk(newChunkRect,(*i)->text);
+		}
+	}
 }
 
 void displayModel_t::renderText(const RECT* rect, wstring& text) {

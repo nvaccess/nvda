@@ -25,6 +25,7 @@ class displayModel_t {
 	ULONG Release();
 	void insertChunk(const RECT& rect, const std::wstring& text);
 	void clearRectangle(const RECT& rect);
+	void copyRectangleToOtherModel(RECT& rect,displayModel_t* otherModel, int otherX, int otherY);
 	void renderText(const RECT* rect, std::wstring& text);
 
 };
