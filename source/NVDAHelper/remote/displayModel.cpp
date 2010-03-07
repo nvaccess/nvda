@@ -6,7 +6,7 @@
 
 using namespace std;
 
-displayModel_t::displayModel_t(): _chunksByXY(), _chunksByYX() {
+displayModel_t::displayModel_t(): _refCount(1), _chunksByXY(), _chunksByYX() {
 	LOG_DEBUG(L"created instance at "<<this);
 }
 
@@ -18,6 +18,16 @@ displayModel_t::~displayModel_t() {
 		delete i->second;
 		_chunksByXY.erase(i);
 	}
+}
+
+ULONG displayModel_t::AddRef() {
+		return InterlockedIncrement(&_refCount);
+}
+
+ULONG displayModel_t::Release() {
+	ULONG refCount=InterlockedDecrement(&_refCount);
+	if(refCount==0) delete this;
+	return refCount; 
 }
 
 void displayModel_t::insertChunk(const RECT& rect, const wstring& text) {

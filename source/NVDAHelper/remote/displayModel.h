@@ -14,12 +14,15 @@ typedef std::map<std::pair<int,int>,displayModelChunk_t*> displayModelChunksByPo
 
 class displayModel_t {
 	private:
+	ULONG _refCount;
 	displayModelChunksByPointMap_t _chunksByXY;
 	displayModelChunksByPointMap_t _chunksByYX;
 
 	public:
 	displayModel_t();
 	~displayModel_t();
+	ULONG AddRef();
+	ULONG Release();
 	void insertChunk(const RECT& rect, const std::wstring& text);
 	void clearRectangle(const RECT& rect);
 	void renderText(const RECT* rect, std::wstring& text);

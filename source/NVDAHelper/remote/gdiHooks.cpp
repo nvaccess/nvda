@@ -26,7 +26,10 @@ inline displayModel_t* acquireDisplayModel(HDC hdc) {
 	LOG_DEBUG(L"window from DC is "<<hwnd);
 	if(!allowDisplayModelsByWindow) return NULL;
 	EnterCriticalSection(&criticalSection_displayModelsByWindow);
-	if(!allowDisplayModelsByWindow) return NULL;
+	if(!allowDisplayModelsByWindow) {
+		LeaveCriticalSection(&criticalSection_displayModelsByWindow);
+		return NULL;
+	}
 	displayModelsByWindow_t::iterator i=displayModelsByWindow.find(hwnd);
 	displayModel_t* model=NULL;
 	if(i!=displayModelsByWindow.end()) {
@@ -35,6 +38,8 @@ inline displayModel_t* acquireDisplayModel(HDC hdc) {
 		model=new displayModel_t();
 		displayModelsByWindow.insert(make_pair(hwnd,model));
 	}
+	if(model) model->AddRef();
+	LeaveCriticalSection(&criticalSection_displayModelsByWindow);
 	return model;
 }
 
@@ -43,7 +48,7 @@ inline displayModel_t* acquireDisplayModel(HDC hdc) {
  * @param a pointer to the displayModel to release.
  */
 inline void releaseDisplayModel(displayModel_t* model) {
-	LeaveCriticalSection(&criticalSection_displayModelsByWindow);
+	if(model) model->Release();
 }
 
 void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE* textSize, const RECT* lprc,UINT fuOptions,UINT textAlign, wchar_t* lpString, int cbCount) {
@@ -176,7 +181,7 @@ BOOL WINAPI fake_DestroyWindow(HWND hwnd) {
 		}
 		displayModelsByWindow_t::iterator i=displayModelsByWindow.find(hwnd);
 		if(i!=displayModelsByWindow.end()) {
-			delete i->second;
+			i->second->Release();
 			displayModelsByWindow.erase(i);
 		}
 		LeaveCriticalSection(&criticalSection_displayModelsByWindow);
@@ -201,7 +206,7 @@ void gdiHooks_inProcess_terminate() {
 	allowDisplayModelsByWindow=FALSE;
 	displayModelsByWindow_t::iterator i=displayModelsByWindow.begin();
 	while(i!=displayModelsByWindow.end()) {
-		delete i->second;
+		i->second->Release();
 		displayModelsByWindow.erase(i++);
 	}  
 	LeaveCriticalSection(&criticalSection_displayModelsByWindow);
