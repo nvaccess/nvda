@@ -739,7 +739,7 @@ class AppModule(appModuleHandler.AppModule):
 			obj.speakDescendantObjects()
 	script_speakForeground.__doc__ = _("speaks the current foreground object")
 
-	def script_test_navigatorWindowInfo(self,keyPress):
+	def script_test_navigatorDisplayModelText(self,keyPress):
 		obj=api.getNavigatorObject()
 		import NVDAHelper
 		import ctypes
@@ -750,6 +750,8 @@ class AppModule(appModuleHandler.AppModule):
 		NVDAHelper.localLib.displayModel_getWindowTextInRect(self.helperLocalBindingHandle,obj.windowHandle,p.x,p.y,p.x+width,p.y+height,ctypes.byref(text))
 		speech.speakMessage(text.value)
 		log.info(text.value)
+
+	def script_test_navigatorWindowInfo(self,keyPress):
 		import ctypes
 		import winUser
 		w=ctypes.windll.user32.GetAncestor(obj.windowHandle,3)
