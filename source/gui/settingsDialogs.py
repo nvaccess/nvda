@@ -151,7 +151,9 @@ class GeneralSettingsDialog(SettingsDialog):
 				languageHandler.setLanguage(newLanguage)
 			except:
 				log.error("languageHandler.setLanguage", exc_info=True)
-				wx.MessageDialog(self,_("Error in %s language file")%newLanguage,_("Language Error"),wx.OK|wx.ICON_WARNING).ShowModal()
+				d = wx.MessageDialog(self,_("Error in %s language file")%newLanguage,_("Language Error"),wx.OK|wx.ICON_WARNING)
+				d.ShowModal()
+				d.Destroy()
 				return
 		config.conf["general"]["language"]=newLanguage
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
@@ -167,9 +169,11 @@ class GeneralSettingsDialog(SettingsDialog):
 			except (WindowsError, RuntimeError):
 				wx.MessageBox(_("This change requires administrator privileges."), _("Insufficient Privileges"), style=wx.OK | wx.ICON_ERROR)
 		if self.oldLanguage!=newLanguage:
-			if wx.MessageDialog(self,_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING).ShowModal()==wx.ID_OK:
+			d = wx.MessageDialog(self,_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING)
+			if d.ShowModal()==wx.ID_OK:
 				config.save()
 				queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
+			d.Destroy()
 		super(GeneralSettingsDialog, self).onOk(evt)
 
 class SynthesizerDialog(SettingsDialog):
@@ -212,7 +216,9 @@ class SynthesizerDialog(SettingsDialog):
 		config.conf["speech"]["outputDevice"]=self.deviceList.GetStringSelection()
 		newSynth=self.synthNames[self.synthList.GetSelection()]
 		if not setSynth(newSynth):
-			wx.MessageDialog(self,_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING).ShowModal()
+			d = wx.MessageDialog(self,_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING)
+			d.ShowModal()
+			d.Destroy()
 			return 
 		super(SynthesizerDialog, self).onOk(evt)
 
@@ -854,7 +860,9 @@ class BrailleSettingsDialog(SettingsDialog):
 	def onOk(self, evt):
 		display = self.displayNames[self.displayList.GetSelection()]
 		if not braille.handler.setDisplayByName(display):
-			wx.MessageDialog(self, _("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING).ShowModal()
+			d = wx.MessageDialog(self, _("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING)
+			d.ShowModal()
+			d.Destroy()
 			return 
 		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()

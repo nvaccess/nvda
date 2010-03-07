@@ -463,8 +463,6 @@ class ElementsListDialog(wx.Dialog):
 		else:
 			wx.CallLater(100, self._reportElement, element)
 
-		self.Destroy()
-
 	def _reportElement(self, element):
 		speech.cancelSpeech()
 		speech.speakTextInfo(element,reason=speech.REASON_FOCUS)
@@ -773,7 +771,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 		# We need this to be a modal dialog, but it mustn't block this script.
 		def run():
 			gui.mainFrame.prePopup()
-			ElementsListDialog(self).ShowModal()
+			d = ElementsListDialog(self)
+			d.ShowModal()
+			d.Destroy()
 			gui.mainFrame.postPopup()
 		wx.CallAfter(run)
 	script_elementsList.__doc__ = _("Presents a list of links, headings or landmarks")
