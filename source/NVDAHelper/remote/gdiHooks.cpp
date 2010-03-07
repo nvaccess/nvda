@@ -206,8 +206,8 @@ BitBlt_funcType real_BitBlt=NULL;
 BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, HDC hdcSrc, int nXSrc, int nYSrc, DWORD dwRop) {
 	//Call the real BitBlt
 	BOOL res=real_BitBlt(hdcDest,nXDest,nYDest,nWidth,nHeight,hdcSrc,nXSrc,nYSrc,dwRop);
-	//If bit blit didn't work, we don't want to know about it
-	if(!res) return res;
+	//If bit blit didn't work, or its not a simple copy, we don't want to know about it
+	if(!res||(dwRop!=SRCCOPY)) return res;
 	//Try to get or create a displayModel for the destination DC. If we can't get one we can't go further.
 	displayModel_t* destModel=acquireDisplayModel(hdcDest);
 	if(!destModel) return res;
