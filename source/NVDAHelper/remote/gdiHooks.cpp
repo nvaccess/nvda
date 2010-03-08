@@ -128,6 +128,26 @@ void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE*
 	model->insertChunk(textRect,newText);
 }
 
+//TextOutW hook function
+typedef bool(WINAPI *TextOutW_funcType)(HDC,int,int, wchar_t*,int);
+TextOutW_funcType real_TextOutW=NULL;
+BOOL  WINAPI fake_TextOutW(HDC hdc, int x, int y, wchar_t* lpString, int cbCount) {
+	displayModel_t* model=acquireDisplayModel(hdc);
+	if(model) {
+		//Calculate the size of the text
+		SIZE textSize;
+		GetTextExtentPoint32(hdc,lpString,cbCount,&textSize);
+		//TextOut can either provide  specific coordinates, or it can be instructed to use the DC's current position and also update it.
+		//if  text alignment does state that the current position must be used, we need to get it before the real ExtTextOut is called, and we need to also update our x,y that we will use for recording the text.
+		POINT pos={x,y};
+		UINT textAlign=GetTextAlign(hdc);
+		if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
+		ExtTextOutWHelper(model,hdc,pos.x,pos.y,&textSize,NULL,0,textAlign,FALSE,lpString,cbCount);
+		releaseDisplayModel(model);
+	}
+	return real_TextOutW(hdc,x,y,lpString,cbCount);
+}
+
 inline UINT textAlignFlagsFromDrawTextExFormat(UINT dwFlags) {
 	UINT textAlign=0;
 	if(dwFlags&DT_LEFT) textAlign|=TA_LEFT;
@@ -406,6 +426,7 @@ void gdiHooks_inProcess_initialize() {
 	real_BitBlt=(BitBlt_funcType)apiHook_hookFunction("GDI32.dll","BitBlt",fake_BitBlt);
 	real_DestroyWindow=(DestroyWindow_funcType)apiHook_hookFunction("USER32.dll","DestroyWindow",fake_DestroyWindow);
 	real_ExtTextOutW=(ExtTextOutW_funcType)apiHook_hookFunction("GDI32.dll","ExtTextOutW",fake_ExtTextOutW);
+	real_TextOutW=(TextOutW_funcType)apiHook_hookFunction("GDI32.dll","TextOutW",fake_TextOutW);
 	real_ScriptStringAnalyse=(ScriptStringAnalyse_funcType)apiHook_hookFunction("USP10.dll","ScriptStringAnalyse",fake_ScriptStringAnalyse);
 	real_ScriptStringFree=(ScriptStringFree_funcType)apiHook_hookFunction("USP10.dll","ScriptStringFree",fake_ScriptStringFree);
 	real_ScriptStringOut=(ScriptStringOut_funcType)apiHook_hookFunction("USP10.dll","ScriptStringOut",fake_ScriptStringOut);
