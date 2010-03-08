@@ -106,20 +106,28 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getTextRange(self,start,end):
 		if start==end:
 			return ""
-		text=ctypes.c_wchar_p()
-		NVDAHelper.localLib.VBuf_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),False)
-		return text.value or ""
+		from comtypes import BSTR
+		textBuf=BSTR()
+		NVDAHelper.localLib.VBuf_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(textBuf),False)
+		text=textBuf.value
+		ctypes.windll.oleaut32.SysFreeString(textBuf)
+		return text
+
+
 
 	def getTextWithFields(self,formatConfig=None):
 		start=self._startOffset
 		end=self._endOffset
 		if start==end:
 			return ""
-		text=ctypes.c_wchar_p()
-		NVDAHelper.localLib.VBuf_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),True)
-		if not text.value:
+		from comtypes import BSTR
+		textBuf=BSTR()
+		NVDAHelper.localLib.VBuf_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(textBuf),True)
+		text=textBuf.value
+		ctypes.windll.oleaut32.SysFreeString(textBuf)
+		if not text:
 			return ""
-		commandList=XMLFormatting.XMLTextParser().parse(text.value)
+		commandList=XMLFormatting.XMLTextParser().parse(text)
 		for index in xrange(len(commandList)):
 			if isinstance(commandList[index],textInfos.FieldCommand):
 				field=commandList[index].field

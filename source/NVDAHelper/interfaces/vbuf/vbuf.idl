@@ -1,5 +1,7 @@
 //vbuf.idl
 
+import "wtypes.idl";
+
 #define DLLEXPORT __declspec(dllexport)
 
 /**
@@ -126,7 +128,7 @@ interface VBuf {
  * @param useMarkup if true then markup is included in the text denoting field starts and ends.
  * @return the text.
  */
-	DLLEXPORT int getTextInRange([in] VBufRemote_bufferHandle_t buffer, [in] int startOffset, [in] int endOffset, [out,string] wchar_t** text, [in] int useMarkup);
+	DLLEXPORT int getTextInRange([in] VBufRemote_bufferHandle_t buffer, [in] int startOffset, [in] int endOffset, [out,string] BSTR* text, [in] int useMarkup);
 
 /**
  * Expands the given offset to the start and end offsets of the containing line.
