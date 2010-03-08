@@ -76,7 +76,7 @@ inline void releaseDisplayModel(displayModel_t* model) {
  * @param lpString the string of unicode text you wish to record.
  * @param cbCount the length of the string in characters.
   */
-void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE* textSize, const RECT* lprc,UINT fuOptions,UINT textAlign, wchar_t* lpString, int cbCount) {
+void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE* textSize, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, wchar_t* lpString, int cbCount) {
 	wstring newText(lpString,cbCount);
 	if(fuOptions&ETO_GLYPH_INDEX) { //The string only contained glyphs, not characters, rather useless to us.
 		newText=L"glyphs";
@@ -88,6 +88,11 @@ void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE*
 		for(wstring::iterator i=newText.begin();i!=newText.end()&&(whitespace=iswspace(*i));i++);
 		//Because the bacground is transparent, if the text is only whitespace, then return -- don't bother to record anything at all
 		if(whitespace) return;
+	}
+	//Search for and remove the first & symbol if we have been requested to stip hotkey indicator.
+	if(stripHotkeyIndicator) {
+		unsigned int pos=newText.find(L'&');
+		if(pos!=wstring::npos) newText.erase(pos,1);
 	}
 	int xOffset=x;
 	int yOffset=y;
@@ -169,7 +174,7 @@ int WINAPI fake_DrawTextExW(HDC hdc, wchar_t* lpString, int cbCount, const RECT*
 		int y=lprc->top;
 		SIZE textSize={(lprc->right-lprc->left),(lprc->bottom-lprc->top)};
 		//Record the text
-		ExtTextOutWHelper(model,hdc,x,y,&textSize,NULL,0,0,newString,newCount);
+		ExtTextOutWHelper(model,hdc,x,y,&textSize,NULL,0,0,!(newFormat&DT_NOPREFIX),newString,newCount);
 		//Release the model, cleanup and return
 		releaseDisplayModel(model);
 	}
@@ -196,7 +201,7 @@ BOOL __stdcall fake_ExtTextOutW(HDC hdc, int x, int y, UINT fuOptions, const REC
 			UINT textAlign=GetTextAlign(hdc);
 			if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
 			//Record the text in the displayModel
-			ExtTextOutWHelper(model,hdc,pos.x,pos.y,&textSize,lprc,fuOptions,textAlign,lpString,cbCount);
+			ExtTextOutWHelper(model,hdc,pos.x,pos.y,&textSize,lprc,fuOptions,textAlign,FALSE,lpString,cbCount);
 			//Release the displayModel we got
 			releaseDisplayModel(model);
 		}
@@ -288,6 +293,7 @@ typedef struct {
 	const void* pString;
 	int cString;
 	int iCharset;
+	DWORD dwFlags;
 } ScriptStringAnalyseArgs_t;
 
 typedef map<SCRIPT_STRING_ANALYSIS,ScriptStringAnalyseArgs_t> ScriptStringAnalyseArgsByAnalysis_t;
@@ -309,7 +315,7 @@ HRESULT WINAPI fake_ScriptStringAnalyse(HDC hdc,const void* pString, int cString
 		EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 		if(!allow_ScriptStringAnalyseArgsByAnalysis) return res;
 		//Record information such as the origianl string and a way we can identify it later.
-		ScriptStringAnalyseArgs_t args={hdc,pString,cString,iCharset};
+		ScriptStringAnalyseArgs_t args={hdc,pString,cString,iCharset,dwFlags};
 		ScriptStringAnalyseArgsByAnalysis[*pssa]=args;
 		LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	}
@@ -353,7 +359,8 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 			//Try and get/create a displayModel for this DC, and if we can, then record the origianl text for these glyphs
 			displayModel_t* model=acquireDisplayModel(i->second.hdc);
 			if(model) {
-				ExtTextOutWHelper(model,i->second.hdc,iX,iY,ScriptString_pSize(i->first),prc,uOptions,GetTextAlign(i->second.hdc),(wchar_t*)(i->second.pString),i->second.cString);
+				BOOL stripHotkeyIndicator=(i->second.dwFlags&SSA_HIDEHOTKEY||i->second.dwFlags&SSA_HOTKEY);
+				ExtTextOutWHelper(model,i->second.hdc,iX,iY,ScriptString_pSize(i->first),prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),i->second.cString);
 				releaseDisplayModel(model);
 			}
 		}
