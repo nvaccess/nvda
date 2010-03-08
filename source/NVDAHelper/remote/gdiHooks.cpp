@@ -123,6 +123,60 @@ void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE*
 	model->insertChunk(textRect,newText);
 }
 
+inline UINT textAlignFlagsFromDrawTextExFormat(UINT dwFlags) {
+	UINT textAlign=0;
+	if(dwFlags&DT_LEFT) textAlign|=TA_LEFT;
+	if(dwFlags&DT_CENTER) textAlign|=TA_CENTER;
+	if(dwFlags&DT_RIGHT) textAlign|=TA_RIGHT;
+	if(dwFlags&DT_TOP) textAlign|=TA_TOP;
+	if(dwFlags&DT_BOTTOM) textAlign|=TA_BOTTOM;
+	return textAlign;
+}
+
+//DrawTextExW hook function
+typedef int(WINAPI *DrawTextExW_funcType)(HDC,wchar_t*,int,const RECT*,UINT,LPDRAWTEXTPARAMS);
+DrawTextExW_funcType real_DrawTextExW=NULL;
+int WINAPI fake_DrawTextExW(HDC hdc, wchar_t* lpString, int cbCount, const RECT* lprc, UINT dwDTFormat, LPDRAWTEXTPARAMS lpDTParams) {
+	wchar_t* newString=lpString;
+	int newCount=cbCount;
+	UINT newFormat=dwDTFormat;
+	//DrawTextEx sometimes will trunkate text and places "..." after it. 
+	//However its up to the caller whether DrawTextEx should actually modify the given string buffer.
+	//Because of this, if the caller did not request this, allocate a new copy of the string, large enough for the extra characters
+	//And instruct DrawTextEx to modify the string.
+	if(lpString&&cbCount!=0&&!(dwDTFormat&DT_CALCRECT)&&!(dwDTFormat&DT_PREFIXONLY)&&!(dwDTFormat&DT_MODIFYSTRING)) {
+		if(cbCount==-1) newCount=wcslen(lpString);
+		newString=(wchar_t*)calloc(newCount+6,sizeof(wchar_t));
+		wcsncpy(newString,lpString,newCount);
+		newFormat|=DT_MODIFYSTRING;
+	}
+	//Call the real DrawTextExW
+	int res=real_DrawTextExW(hdc,newString,newCount,lprc,newFormat,lpDTParams);
+	//If the draw did not work, or the caller did not wish to actually draw the text, then stop here.
+	if(res==0||newCount==0||(newFormat&DT_CALCRECT)||(newFormat&DT_PREFIXONLY)) {
+		if(newString!=lpString) free(newString);
+		return res;
+	}
+	//Get or create a display model for this DC
+	displayModel_t* model=acquireDisplayModel(hdc);
+	if(model) {
+		//Not only does DrawTextEx trunkate the text, it can support tabs of different widths.
+		//This makes calculating an accurate text size very hard.
+		//For now, just assume the text size takes up the entire rectangle given by the caller, and say that the text starts from the top left.
+		//This may not be the case -- depending on the text alignment, and if the text doesn't take up the whole rectangle.
+		//But this will do for now.
+		int x=lprc->left;
+		int y=lprc->top;
+		SIZE textSize={(lprc->right-lprc->left),(lprc->bottom-lprc->top)};
+		//Record the text
+		ExtTextOutWHelper(model,hdc,x,y,&textSize,NULL,0,0,newString,newCount);
+		//Release the model, cleanup and return
+		releaseDisplayModel(model);
+	}
+	if(newString!=lpString) free(newString);
+	return res; 
+}
+
 //ExtTextOutW hook function
 //This is the lowest level text writing function, though as it can be given pre-calculated glyphs, this is not the only needed function.
 typedef BOOL(__stdcall *ExtTextOutW_funcType)(HDC,int,int,UINT,const RECT*,wchar_t*,int,const int*);
@@ -339,6 +393,7 @@ void gdiHooks_inProcess_initialize() {
 	InitializeCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allow_ScriptStringAnalyseArgsByAnalysis=TRUE;
 	//Hook needed functions
+	real_DrawTextExW=(DrawTextExW_funcType)apiHook_hookFunction("USER32.dll","DrawTextExW",fake_DrawTextExW);
 	real_CreateCompatibleDC=(CreateCompatibleDC_funcType)apiHook_hookFunction("GDI32.dll","CreateCompatibleDC",fake_CreateCompatibleDC);
 	real_DeleteDC=(DeleteDC_funcType)apiHook_hookFunction("GDI32.dll","DeleteDC",fake_DeleteDC);
 	real_BitBlt=(BitBlt_funcType)apiHook_hookFunction("GDI32.dll","BitBlt",fake_BitBlt);
