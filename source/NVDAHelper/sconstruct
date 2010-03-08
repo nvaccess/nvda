@@ -20,11 +20,12 @@ if TARGET_ARCH=='x86_64':
 if env['release']:
 	print "Building %s release version"%TARGET_ARCH
 	env.Append(CPPDEFINES=['NDEBUG'])
-	env.Append(CCFLAGS='/O2')
+	env.Append(CCFLAGS=['/O2','/MT'])
 	env.Append(LINKFLAGS='/release')
 else:
 	print "Building %s debug version"%TARGET_ARCH
 	env.Append(PDB='${TARGET}.pdb')
+	env.Append(CCFLAGS=['/O2','/MTd'])
 
 Export('env')
 
