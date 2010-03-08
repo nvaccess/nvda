@@ -21,12 +21,12 @@ displayModel_t::~displayModel_t() {
 	}
 }
 
-ULONG displayModel_t::AddRef() {
+long displayModel_t::AddRef() {
 		return InterlockedIncrement(&_refCount);
 }
 
-ULONG displayModel_t::Release() {
-	ULONG refCount=InterlockedDecrement(&_refCount);
+long displayModel_t::Release() {
+	long refCount=InterlockedDecrement(&_refCount);
 	if(refCount==0) delete this;
 	return refCount; 
 }

@@ -18,7 +18,7 @@ typedef std::map<std::pair<int,int>,displayModelChunk_t*> displayModelChunksByPo
  */
 class displayModel_t {
 	private:
-	ULONG _refCount; //Internal ref count
+	volatile long _refCount; //Internal ref count
 	displayModelChunksByPointMap_t _chunksByXY; //indexes the chunks by x,y
 	displayModelChunksByPointMap_t _chunksByYX; //indexes the chunks by y,y
 
@@ -38,13 +38,13 @@ class displayModel_t {
  * Increments the reference count by 1.
  * @return the new reference count.
  */
-	ULONG AddRef();
+	long AddRef();
 
 /**
  * Decrements the reference count by 1, and if it hits 0, deletes itself.
  * @return the new ref count.
  */
-	ULONG Release();
+	long Release();
 
 /**
  * Inserts a text chunk in to the model.
