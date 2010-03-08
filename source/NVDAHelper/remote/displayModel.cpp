@@ -14,10 +14,10 @@ displayModel_t::displayModel_t(): _refCount(1), _chunksByXY(), _chunksByYX() {
 displayModel_t::~displayModel_t() {
 	LOG_DEBUG(L"destroying instance at "<<this);
 	_chunksByYX.clear();
-	for(displayModelChunksByPointMap_t::iterator i=_chunksByXY.begin();i!=_chunksByXY.end();i++) {
+	for(displayModelChunksByPointMap_t::iterator i=_chunksByXY.begin();i!=_chunksByXY.end();) {
 		LOG_DEBUG(L"deleting chunk at "<<i->second);
 		delete i->second;
-		_chunksByXY.erase(i);
+		_chunksByXY.erase(i++);
 	}
 }
 
