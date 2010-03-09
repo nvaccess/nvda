@@ -4,10 +4,10 @@
 #include <map>
 #include <windows.h>
 
-typedef struct {
+struct displayModelChunk_t{
 	RECT rect;
 	std::wstring text;
-} displayModelChunk_t;
+};
 
 typedef std::pair<int,int> coord_t;
 typedef std::map<std::pair<int,int>,displayModelChunk_t*> displayModelChunksByPointMap_t;
