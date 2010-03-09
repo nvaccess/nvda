@@ -20,9 +20,10 @@ BOOL allow_displayModelMaps=FALSE;
  * Fetches and or creates a new displayModel for the window of the given device context.
  * If this function returns a displayModel, you must call releaseDisplayModel when finished with it.
  * @param hdc a handle of the device context who's window the displayModel is for.
+ * @param noCreate If true a display model will not be created if it does not exist. 
  * @return a pointer to the  new/existing displayModel, NULL if gdiHooks is not initialized or has been terminated. 
  */
-inline displayModel_t* acquireDisplayModel(HDC hdc) {
+inline displayModel_t* acquireDisplayModel(HDC hdc, BOOL noCreate=FALSE) {
 	//If we are allowed, acquire use of the displayModel maps
 	if(!allow_displayModelMaps) return NULL;
 	EnterCriticalSection(&criticalSection_displayModelMaps);
@@ -39,7 +40,7 @@ inline displayModel_t* acquireDisplayModel(HDC hdc) {
 		displayModelsByWindow_t::iterator i=displayModelsByWindow.find(hwnd);
 		if(i!=displayModelsByWindow.end()) {
 			model=i->second;
-		} else {
+		} else if(!noCreate) {
 			model=new displayModel_t();
 			displayModelsByWindow.insert(make_pair(hwnd,model));
 		}
@@ -287,13 +288,23 @@ BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHe
 	BOOL res=real_BitBlt(hdcDest,nXDest,nYDest,nWidth,nHeight,hdcSrc,nXSrc,nYSrc,dwRop);
 	//If bit blit didn't work, or its not a simple copy, we don't want to know about it
 	if(!res||(dwRop!=SRCCOPY)) return res;
-	//Try to get or create a displayModel for the destination DC. If we can't get one we can't go further.
+	//If there is a source DC, then try getting a display model for it.
+	displayModel_t* srcModel=NULL;
+	if(hdcSrc) {
+		srcModel=acquireDisplayModel(hdcSrc,TRUE);
+		//If we got a model but it doesn't actually contain any chunks, its no use in bit blitting.
+		if(srcModel&&srcModel->getChunkCount()==0) {
+			srcModel->Release();
+			srcModel=NULL;
+		}
+		if(!srcModel) return res;
+	}
+	//Get or create a display model from the destination DC
 	displayModel_t* destModel=acquireDisplayModel(hdcDest);
-	if(!destModel) return res;
-	//If the source and destination DCs are the same then we already have our source displayModel.
-	//If they are different, then try and get a display model for the source DC, and if we can't we can't go on.
-	displayModel_t* srcModel=(hdcSrc==hdcDest)?destModel:acquireDisplayModel(hdcSrc);
-	if(srcModel) {
+	if(destModel) {
+		//If we still have no source model, its because a source DC was not given.
+		//This tells us we should use the destination model as both the source and destination.
+		if(!srcModel) srcModel=destModel;
 		RECT srcRect={nXSrc,nYSrc,nXSrc+nWidth,nYSrc+nHeight};
 		//we record chunks using device coordinates -- DCs can move/resize
 		LPtoDP(hdcSrc,(LPPOINT)&srcRect,2);
@@ -302,9 +313,9 @@ BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHe
 		//Copy the requested rectangle from the source model in to the destination model, at the given coordinates.
 		srcModel->copyRectangleToOtherModel(srcRect,destModel,destPos.x,destPos.y);
 		//release models and return
-		if(srcModel!=destModel) releaseDisplayModel(srcModel);
+		destModel->Release();
 	}
-	releaseDisplayModel(destModel);
+	if(srcModel!=destModel) releaseDisplayModel(srcModel);
 	return res;
 }
 

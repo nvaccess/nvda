@@ -47,6 +47,11 @@ class displayModel_t {
 	long Release();
 
 /**
+ * Finds out how many chunks this model contains.
+ */
+	int getChunkCount();
+
+/**
  * Inserts a text chunk in to the model.
  * @param rect the rectangle bounding the text.
  * @param text the string of unicode text in the chunk.

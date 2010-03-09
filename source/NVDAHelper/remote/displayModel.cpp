@@ -31,6 +31,10 @@ long displayModel_t::Release() {
 	return refCount; 
 }
 
+int displayModel_t::getChunkCount() {
+	return _chunksByXY.size();
+}
+
 void displayModel_t::insertChunk(const RECT& rect, const wstring& text) {
 	displayModelChunk_t* chunk=new displayModelChunk_t;
 	LOG_DEBUG(L"created new chunk at "<<chunk);
