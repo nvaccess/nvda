@@ -186,7 +186,7 @@ def initialize():
 	winEventHookID=winUser.setWinEventHook(EVENT_TYPEDCHARACTER,EVENT_TYPEDCHARACTER,0,winEventCallback,0,0,0)
 
 def terminate():
-	global _remoteLib, _remoteLoader64, localLib
+	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange
 	winUser.unhookWinEvent(winEventHookID)
 	if _remoteLib.nvdaHelper_terminate() < 0:
 		raise RuntimeError("Error terminating NVDAHelper")
@@ -194,4 +194,6 @@ def terminate():
 	if _remoteLoader64:
 		_remoteLoader64.terminate()
 		_remoteLoader64=None
+	generateBeep=None
+	VBuf_getTextInRange=None
 	localLib=None
