@@ -10,6 +10,30 @@
 
 using namespace std;
 
+size_t WA_strlen(const char* str) {
+	return strlen(str);
+}
+
+size_t WA_strlen(const wchar_t* str) {
+	return wcslen(str);
+}
+
+char* WA_strncpy(char* dest, const char* source, size_t size) {
+	return strncpy(dest,source,size);
+}
+
+wchar_t* WA_strncpy(wchar_t* dest, const wchar_t* source, size_t size) {
+	return wcsncpy(dest,source,size);
+}
+
+BOOL WINAPI WA_GetTextExtentPoint32(HDC hdc, char* lpString, int cbCount, LPSIZE size) {
+	return GetTextExtentPoint32A(hdc,lpString,cbCount,size);
+}
+
+BOOL WINAPI WA_GetTextExtentPoint32(HDC hdc, wchar_t* lpString, int cbCount, LPSIZE size) {
+	return GetTextExtentPoint32W(hdc,lpString,cbCount,size);
+}
+
 typedef map<HDC,displayModel_t*> displayModelsByDC_t;
 displayModelsByDC_t displayModelsByMemoryDC;
 displayModelsByWindow_t displayModelsByWindow;
@@ -77,7 +101,7 @@ inline void releaseDisplayModel(displayModel_t* model) {
  * @param lpString the string of unicode text you wish to record.
  * @param cbCount the length of the string in characters.
   */
-void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE* textSize, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, wchar_t* lpString, int cbCount) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE* textSize, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, wchar_t* lpString, int cbCount) {
 	wstring newText(lpString,cbCount);
 	if(fuOptions&ETO_GLYPH_INDEX) { //The string only contained glyphs, not characters, rather useless to us.
 		newText=L"glyphs";
@@ -129,41 +153,63 @@ void ExtTextOutWHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE*
 	model->insertChunk(textRect,newText);
 }
 
-//TextOutW hook function
-typedef bool(WINAPI *TextOutW_funcType)(HDC,int,int, wchar_t*,int);
-TextOutW_funcType real_TextOutW=NULL;
-BOOL  WINAPI fake_TextOutW(HDC hdc, int x, int y, wchar_t* lpString, int cbCount) {
+/**
+ * an overload of ExtTextOutHelper to work with ansi strings.
+ * @param lpString the string of ansi text you wish to record.
+  */
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE* textSize, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, char* lpString, int cbCount) {
+	if(lpString&&cbCount) {
+		int newCount=MultiByteToWideChar(CP_THREAD_ACP,0,lpString,cbCount,NULL,0);
+		if(newCount>0) {
+			wchar_t* newString=(wchar_t*)calloc(newCount+1,sizeof(wchar_t));
+			MultiByteToWideChar(CP_THREAD_ACP,0,lpString,cbCount,newString,newCount);
+			ExtTextOutHelper(model,hdc,x,y,textSize,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,newCount);
+			free(newString);
+		}
+	}
+}
+
+//TextOut hook class template
+//Handles char or wchar_t
+template<typename charType> class hookClass_TextOut {
+	public:
+	typedef bool(WINAPI *funcType)(HDC,int,int, charType*,int);
+	static funcType realFunction;
+	static BOOL  WINAPI fakeFunction(HDC hdc, int x, int y, charType* lpString, int cbCount);
+};
+
+template<typename charType> typename hookClass_TextOut<charType>::funcType hookClass_TextOut<charType>::realFunction=NULL;
+
+template<typename charType> BOOL  WINAPI hookClass_TextOut<charType>::fakeFunction(HDC hdc, int x, int y, charType* lpString, int cbCount) {
 	displayModel_t* model=acquireDisplayModel(hdc);
 	if(model) {
 		//Calculate the size of the text
 		SIZE textSize;
-		GetTextExtentPoint32(hdc,lpString,cbCount,&textSize);
+		WA_GetTextExtentPoint32(hdc,lpString,cbCount,&textSize);
 		//TextOut can either provide  specific coordinates, or it can be instructed to use the DC's current position and also update it.
 		//if  text alignment does state that the current position must be used, we need to get it before the real ExtTextOut is called, and we need to also update our x,y that we will use for recording the text.
 		POINT pos={x,y};
 		UINT textAlign=GetTextAlign(hdc);
 		if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
-		ExtTextOutWHelper(model,hdc,pos.x,pos.y,&textSize,NULL,0,textAlign,FALSE,lpString,cbCount);
+		ExtTextOutHelper(model,hdc,pos.x,pos.y,&textSize,NULL,0,textAlign,FALSE,lpString,cbCount);
 		releaseDisplayModel(model);
 	}
-	return real_TextOutW(hdc,x,y,lpString,cbCount);
+	return realFunction(hdc,x,y,lpString,cbCount);
 }
 
-inline UINT textAlignFlagsFromDrawTextExFormat(UINT dwFlags) {
-	UINT textAlign=0;
-	if(dwFlags&DT_LEFT) textAlign|=TA_LEFT;
-	if(dwFlags&DT_CENTER) textAlign|=TA_CENTER;
-	if(dwFlags&DT_RIGHT) textAlign|=TA_RIGHT;
-	if(dwFlags&DT_TOP) textAlign|=TA_TOP;
-	if(dwFlags&DT_BOTTOM) textAlign|=TA_BOTTOM;
-	return textAlign;
-}
+//DrawTextEx hook class template
+//handles char or wchar_t
+template <typename charType> class hookClass_DrawTextEx {
+	public:
+	typedef int(WINAPI *funcType)(HDC,charType*,int,const RECT*,UINT,LPDRAWTEXTPARAMS);
+	static funcType realFunction;
+	static int WINAPI fakeFunction(HDC hdc, charType* lpString, int cbCount, const RECT* lprc, UINT dwDTFormat, LPDRAWTEXTPARAMS lpDTParams);
+};
 
-//DrawTextExW hook function
-typedef int(WINAPI *DrawTextExW_funcType)(HDC,wchar_t*,int,const RECT*,UINT,LPDRAWTEXTPARAMS);
-DrawTextExW_funcType real_DrawTextExW=NULL;
-int WINAPI fake_DrawTextExW(HDC hdc, wchar_t* lpString, int cbCount, const RECT* lprc, UINT dwDTFormat, LPDRAWTEXTPARAMS lpDTParams) {
-	wchar_t* newString=lpString;
+template<typename charType> typename hookClass_DrawTextEx<charType>::funcType hookClass_DrawTextEx<charType>::realFunction=NULL;
+
+template<typename charType> int WINAPI hookClass_DrawTextEx<charType>::fakeFunction(HDC hdc, charType* lpString, int cbCount, const RECT* lprc, UINT dwDTFormat, LPDRAWTEXTPARAMS lpDTParams) {
+	charType* newString=lpString;
 	int newCount=cbCount;
 	UINT newFormat=dwDTFormat;
 	//DrawTextEx sometimes will trunkate text and places "..." after it. 
@@ -171,13 +217,13 @@ int WINAPI fake_DrawTextExW(HDC hdc, wchar_t* lpString, int cbCount, const RECT*
 	//Because of this, if the caller did not request this, allocate a new copy of the string, large enough for the extra characters
 	//And instruct DrawTextEx to modify the string.
 	if(lpString&&cbCount!=0&&!(dwDTFormat&DT_CALCRECT)&&!(dwDTFormat&DT_PREFIXONLY)&&!(dwDTFormat&DT_MODIFYSTRING)) {
-		if(cbCount==-1) newCount=wcslen(lpString);
-		newString=(wchar_t*)calloc(newCount+6,sizeof(wchar_t));
-		wcsncpy(newString,lpString,newCount);
+		if(cbCount==-1) newCount=WA_strlen(lpString);
+		newString=(charType*)calloc(newCount+6,sizeof(charType));
+		WA_strncpy(newString,lpString,newCount);
 		newFormat|=DT_MODIFYSTRING;
 	}
 	//Call the real DrawTextExW
-	int res=real_DrawTextExW(hdc,newString,newCount,lprc,newFormat,lpDTParams);
+	int res=((funcType)realFunction)(hdc,newString,newCount,lprc,newFormat,lpDTParams);
 	//If the draw did not work, or the caller did not wish to actually draw the text, then stop here.
 	if(res==0||newCount==0||(newFormat&DT_CALCRECT)||(newFormat&DT_PREFIXONLY)) {
 		if(newString!=lpString) free(newString);
@@ -195,7 +241,7 @@ int WINAPI fake_DrawTextExW(HDC hdc, wchar_t* lpString, int cbCount, const RECT*
 		int y=lprc->top;
 		SIZE textSize={(lprc->right-lprc->left),(lprc->bottom-lprc->top)};
 		//Record the text
-		ExtTextOutWHelper(model,hdc,x,y,&textSize,NULL,0,0,!(newFormat&DT_NOPREFIX),newString,newCount);
+		ExtTextOutHelper(model,hdc,x,y,&textSize,NULL,0,0,!(newFormat&DT_NOPREFIX),newString,newCount);
 		//Release the model, cleanup and return
 		releaseDisplayModel(model);
 	}
@@ -203,11 +249,18 @@ int WINAPI fake_DrawTextExW(HDC hdc, wchar_t* lpString, int cbCount, const RECT*
 	return res; 
 }
 
-//ExtTextOutW hook function
-//This is the lowest level text writing function, though as it can be given pre-calculated glyphs, this is not the only needed function.
-typedef BOOL(__stdcall *ExtTextOutW_funcType)(HDC,int,int,UINT,const RECT*,wchar_t*,int,const int*);
-ExtTextOutW_funcType real_ExtTextOutW;
-BOOL __stdcall fake_ExtTextOutW(HDC hdc, int x, int y, UINT fuOptions, const RECT* lprc, wchar_t* lpString, int cbCount, const int* lpDx) {
+//ExtTextOut hook class template
+//Handles char or wchar_t
+template<typename charType> class hookClass_ExtTextOut {
+	public:
+	typedef BOOL(__stdcall *funcType)(HDC,int,int,UINT,const RECT*,charType*,int,const int*);
+	static funcType realFunction;
+	static BOOL __stdcall fakeFunction(HDC hdc, int x, int y, UINT fuOptions, const RECT* lprc, charType* lpString, int cbCount, const int* lpDx);
+};
+
+template<typename charType> typename hookClass_ExtTextOut<charType>::funcType hookClass_ExtTextOut<charType>::realFunction=NULL;
+
+template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeFunction(HDC hdc, int x, int y, UINT fuOptions, const RECT* lprc, charType* lpString, int cbCount, const int* lpDx) {
 	//We can only record stuff if a proper string is provided (I.e. its not NULL and its not glyphs)
 	if(lpString&&cbCount>0&&!(fuOptions&ETO_GLYPH_INDEX)) {
 		//try to get or create a displayModel for this device context
@@ -215,20 +268,20 @@ BOOL __stdcall fake_ExtTextOutW(HDC hdc, int x, int y, UINT fuOptions, const REC
 		if(model) {
 			//Calculate the size of the text
 			SIZE textSize;
-			GetTextExtentPoint32(hdc,lpString,cbCount,&textSize);
+			WA_GetTextExtentPoint32(hdc,lpString,cbCount,&textSize);
 			//ExtTextOut can either provide  specific coordinates, or it can be instructed to use the DC's current position and also update it.
 			//if  text alignment does state that the current position must be used, we need to get it before the real ExtTextOut is called, and we need to also update our x,y that we will use for recording the text.
 			POINT pos={x,y};
 			UINT textAlign=GetTextAlign(hdc);
 			if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
 			//Record the text in the displayModel
-			ExtTextOutWHelper(model,hdc,pos.x,pos.y,&textSize,lprc,fuOptions,textAlign,FALSE,lpString,cbCount);
+			ExtTextOutHelper(model,hdc,pos.x,pos.y,&textSize,lprc,fuOptions,textAlign,FALSE,lpString,cbCount);
 			//Release the displayModel we got
 			releaseDisplayModel(model);
 		}
 	}
 	//Call the real ExtTextOutW
-	return real_ExtTextOutW(hdc,x,y,fuOptions,lprc,lpString,cbCount,lpDx);
+	return realFunction(hdc,x,y,fuOptions,lprc,lpString,cbCount,lpDx);
 }
 
 //CreateCompatibleDC hook function
@@ -391,7 +444,7 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 			displayModel_t* model=acquireDisplayModel(i->second.hdc);
 			if(model) {
 				BOOL stripHotkeyIndicator=(i->second.dwFlags&SSA_HIDEHOTKEY||i->second.dwFlags&SSA_HOTKEY);
-				ExtTextOutWHelper(model,i->second.hdc,iX,iY,ScriptString_pSize(i->first),prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),i->second.cString);
+				ExtTextOutHelper(model,i->second.hdc,iX,iY,ScriptString_pSize(i->first),prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),i->second.cString);
 				releaseDisplayModel(model);
 			}
 		}
@@ -431,13 +484,16 @@ void gdiHooks_inProcess_initialize() {
 	InitializeCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allow_ScriptStringAnalyseArgsByAnalysis=TRUE;
 	//Hook needed functions
-	real_DrawTextExW=(DrawTextExW_funcType)apiHook_hookFunction("USER32.dll","DrawTextExW",fake_DrawTextExW);
+	hookClass_DrawTextEx<char>::realFunction=(hookClass_DrawTextEx<char>::funcType)apiHook_hookFunction("USER32.dll","DrawTextExA",hookClass_DrawTextEx<char>::fakeFunction);
+	hookClass_DrawTextEx<wchar_t>::realFunction=(hookClass_DrawTextEx<wchar_t>::funcType)apiHook_hookFunction("USER32.dll","DrawTextExW",hookClass_DrawTextEx<wchar_t>::fakeFunction);
+	hookClass_TextOut<char>::realFunction=(hookClass_TextOut<char>::funcType)apiHook_hookFunction("GDI32.dll","TextOutA",hookClass_TextOut<char>::fakeFunction);
+	hookClass_TextOut<wchar_t>::realFunction=(hookClass_TextOut<wchar_t>::funcType)apiHook_hookFunction("GDI32.dll","TextOutW",hookClass_TextOut<wchar_t>::fakeFunction);
+	hookClass_ExtTextOut<char>::realFunction=(hookClass_ExtTextOut<char>::funcType)apiHook_hookFunction("GDI32.dll","ExtTextOutA",hookClass_ExtTextOut<char>::fakeFunction);
+	hookClass_ExtTextOut<wchar_t>::realFunction=(hookClass_ExtTextOut<wchar_t>::funcType)apiHook_hookFunction("GDI32.dll","ExtTextOutW",hookClass_ExtTextOut<wchar_t>::fakeFunction);
 	real_CreateCompatibleDC=(CreateCompatibleDC_funcType)apiHook_hookFunction("GDI32.dll","CreateCompatibleDC",fake_CreateCompatibleDC);
 	real_DeleteDC=(DeleteDC_funcType)apiHook_hookFunction("GDI32.dll","DeleteDC",fake_DeleteDC);
 	real_BitBlt=(BitBlt_funcType)apiHook_hookFunction("GDI32.dll","BitBlt",fake_BitBlt);
 	real_DestroyWindow=(DestroyWindow_funcType)apiHook_hookFunction("USER32.dll","DestroyWindow",fake_DestroyWindow);
-	real_ExtTextOutW=(ExtTextOutW_funcType)apiHook_hookFunction("GDI32.dll","ExtTextOutW",fake_ExtTextOutW);
-	real_TextOutW=(TextOutW_funcType)apiHook_hookFunction("GDI32.dll","TextOutW",fake_TextOutW);
 	real_ScriptStringAnalyse=(ScriptStringAnalyse_funcType)apiHook_hookFunction("USP10.dll","ScriptStringAnalyse",fake_ScriptStringAnalyse);
 	real_ScriptStringFree=(ScriptStringFree_funcType)apiHook_hookFunction("USP10.dll","ScriptStringFree",fake_ScriptStringFree);
 	real_ScriptStringOut=(ScriptStringOut_funcType)apiHook_hookFunction("USP10.dll","ScriptStringOut",fake_ScriptStringOut);
