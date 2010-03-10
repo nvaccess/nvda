@@ -41,8 +41,8 @@ General dependencies:
 		* IF you don't have them already, all of these files have been bundled for convenience at http://www.nvda-project.org/3rdParty/system-dlls.7z
 		* Copy them either into the source directory or into your Windows system32 directory.
 	* nvdaHelper:
-		* You can build this yourself, although you need to have the Windows SDK installed, which is quite large. See source\nvdaHelper\building.txt for instructions.
-		* Alternatively, a pre-built version has been provided for convenience at http://www.nvda-project.org/nvdaHelper/
+		* You can build this yourself. You need to have the Windows SDK installed, which is quite large. See source\nvdaHelper\building.txt for instructions.
+		* Alternatively, pre-built versions are provided alongside NVDA snapshots for convenience. See http://www.nvda-project.org/snapshots/
 			* Extract this archive into the root of your NVDA source distribution.
 	* Adobe AcrobatAccess interface typelib:
 		* You can build this yourself using midl from the idl located at http://www.adobe.com/devnet/acrobat/downloads/ClientFiles.zip

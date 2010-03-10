@@ -14,6 +14,6 @@ class AppModule(_default.AppModule):
 		if controlTypes.STATE_FOCUSED in obj.states:
 			obj.windowHandle=winUser.getGUIThreadInfo(None).hwndFocus
 			obj.windowClassName=winUser.getClassName(obj.windowHandle)
-		if obj.value and obj.windowClassName in ["TMainUserList", "TConversationList", "TInboxList", "TActiveConversationList"] and not obj.role in [controlTypes.ROLE_MENUBAR, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_POPUPMENU]:
+		if obj.value and obj.windowClassName in ["TMainUserList", "TConversationList", "TInboxList", "TActiveConversationList", "TConversationsControl"] and not obj.role in [controlTypes.ROLE_MENUBAR, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_POPUPMENU]:
 			obj.name=obj.value
 			obj.value=None

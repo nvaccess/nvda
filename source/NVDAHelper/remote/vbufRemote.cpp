@@ -125,7 +125,7 @@ int VBufRemote_getTextInRange(VBufRemote_bufferHandle_t buffer, int startOffset,
 	if(textContainer==NULL) {
 		return false;
 	}
-	*text=_wcsdup(textContainer->getString().c_str());
+	*text=SysAllocString(textContainer->getString().c_str());
 	textContainer->destroy();
 	return true;
 }

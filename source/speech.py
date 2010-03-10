@@ -172,28 +172,30 @@ def speakSpelling(text):
 def _speakSpellingGen(text):
 	lastKeyCount=globalVars.keyCounter
 	textLength=len(text)
+	synth=getSynth()
+	synthConfig=config.conf["speech"][synth.name]
 	for count,char in enumerate(text): 
 		uppercase=char.isupper()
 		char=processSymbol(char)
-		if uppercase and config.conf["speech"][getSynth().name]["sayCapForCapitals"]:
+		if uppercase and synthConfig["sayCapForCapitals"]:
 			char=_("cap %s")%char
-		if uppercase and config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
-			oldPitch=config.conf["speech"][getSynth().name]["pitch"]
-			getSynth().pitch=max(0,min(oldPitch+config.conf["speech"][getSynth().name]["capPitchChange"],100))
+		if uppercase and synth.isSupported("pitch") and synthConfig["raisePitchForCapitals"]:
+			oldPitch=synthConfig["pitch"]
+			synth.pitch=max(0,min(oldPitch+synthConfig["capPitchChange"],100))
 		index=count+1
 		if log.isEnabledFor(log.IO): log.io("Speaking \"%s\""%char)
-		if len(char) == 1 and config.conf["speech"][getSynth().name]["useSpellingFunctionality"]:
-			getSynth().speakCharacter(char,index=index)
+		if len(char) == 1 and synthConfig["useSpellingFunctionality"]:
+			synth.speakCharacter(char,index=index)
 		else:
-			getSynth().speakText(char,index=index)
-		if uppercase and config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
-			getSynth().pitch=oldPitch
+			synth.speakText(char,index=index)
+		if uppercase and synth.isSupported("pitch") and synthConfig["raisePitchForCapitals"]:
+			synth.pitch=oldPitch
 		while textLength>1 and globalVars.keyCounter==lastKeyCount and (isPaused or getLastSpeechIndex()!=index): 
 			yield
 			yield
 		if globalVars.keyCounter!=lastKeyCount:
 			break
-		if uppercase and  config.conf["speech"][getSynth().name]["beepForCapitals"]:
+		if uppercase and  synthConfig["beepForCapitals"]:
 			tones.beep(2000,50)
 
 def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties):
