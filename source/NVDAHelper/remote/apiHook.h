@@ -6,6 +6,12 @@ extern "C" {
 #endif
 
 /**
+ * Initializes hooking subsystem.
+ * @return success flag
+ */ 
+bool apiHook_init();
+
+/**
  * Requests that the given function from the given module should be hooked with the given hook procedure. 
  * @param moduleName the name of the module the function you wish to hook is located in.
  * @param functionName the name of the function you wish to hook.

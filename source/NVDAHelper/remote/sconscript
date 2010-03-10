@@ -77,7 +77,7 @@ remoteLib=env.SharedLibrary(
 		"oleaut32",
 		"oleacc",
 		"usp10",
-		"MinHook." + ("x86" if env['TARGET_ARCH']=='x86' else 'x64'),
+		"libMinHook." + ("x86" if env['TARGET_ARCH']=='x86' else 'x64'),
 	],
 )
 
