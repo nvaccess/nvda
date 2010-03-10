@@ -1,19 +1,15 @@
-import customBuilders
-
 #User build variables
 vars=Variables()
 vars.Add(BoolVariable('release','Set to true to build a release version',False))
+vars.Add(EnumVariable('logLevel','The level of logging you wish to see, higher is more','30',allowed_values=[str(x) for x in xrange(60)]))
 vars.Add('TARGET_ARCH','Target architecture')
 vars.Add('HOST_ARCH','Host architecture')
 
 #Create a new environment for our project
-env=DefaultEnvironment(tools=['default','msvc','midl','mssdk'],variables=vars)
-
-#Make our MSRPCStubs custom builder accessible to the environment
-env['BUILDERS']['MSRPCStubs']=customBuilders.MSRPCStubs
+env=DefaultEnvironment(tools=['default','msvc','midl','mssdk','msrpc'],variables=vars)
 
 #Some defines and includes for the environment
-env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE'])
+env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${logLevel}')])
 env.Append(CXXFLAGS=['/EHsc'])
 env.Append(CPPPATH=['#.','#../include'])
 env.Append(LINKFLAGS='/incremental:no')
@@ -24,11 +20,12 @@ if TARGET_ARCH=='x86_64':
 if env['release']:
 	print "Building %s release version"%TARGET_ARCH
 	env.Append(CPPDEFINES=['NDEBUG'])
-	env.Append(CCFLAGS='/O2')
+	env.Append(CCFLAGS=['/O2','/MT'])
 	env.Append(LINKFLAGS='/release')
 else:
 	print "Building %s debug version"%TARGET_ARCH
 	env.Append(PDB='${TARGET}.pdb')
+	env.Append(CCFLAGS=['/O2','/MTd'])
 
 Export('env')
 
@@ -46,13 +43,6 @@ Export('acrobatAccessRPCStubs')
 
 ia2RPCStubs=env.SConscript('ia2_sconscript')
 Export('ia2RPCStubs')
-
-vbufRPCStubs=env.SConscript('interfaces/vbuf/sconscript')
-Export('vbufRPCStubs')
-
-nvdaControllerRPCStubs=env.SConscript('interfaces/nvdaController/sconscript')
-Export('nvdaControllerRPCStubs')
-env.Install(clientInstallDir,nvdaControllerRPCStubs[0])
 
 if TARGET_ARCH=='x86':
 	localLib=env.SConscript('local/sconscript')

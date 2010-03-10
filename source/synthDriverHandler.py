@@ -103,18 +103,19 @@ def setSynth(name):
 
 class SynthSetting(object):
 	"""Represents a synthesizer setting such as voice or variant.
-	@ivar configSpec: Configuration specification of this particular setting for config file validator.
-	@type configSpec: L{str}
 	"""
+	#: Configuration specification of this particular setting for config file validator.
+	#: @type: str
 	configSpec="string(default=None)"
 
 	def __init__(self,name,i18nName,availableInSynthSettingsRing=True):
-		"""@param name: internal name of the setting
-		@type name: L{str}
+		"""
+		@param name: internal name of the setting
+		@type name: str
 		@param i18nName: the localized string
-		@type i18nName: L{str}
+		@type i18nName: str
 		@param availableInSynthSettingsRing: Will this option be available in synthesizer settings ring?
-		@type availableInSynthSettingsRing: L{bool}
+		@type availableInSynthSettingsRing: bool
 		"""
 		self.name=name
 		self.i18nName=i18nName
@@ -124,24 +125,34 @@ class NumericSynthSetting(SynthSetting):
 	"""Represents a numeric synthesizer setting such as rate, volume or pitch."""
 	configSpec="integer(default=50,min=0,max=100)"
 
-	def __init__(self,name,i18nName,availableInSynthSettingsRing=True,minStep=5):
-		"""@param minStep: specifies the minimum step between valid values for each numeric setting. For example, if L{minStep} is set to 10, setting values can only be multiples of 10; 10, 20, 30, etc.
-		@type minStep: L{int}
+	def __init__(self,name,i18nName,availableInSynthSettingsRing=True,minStep=1,normalStep=5,largeStep=10):
+		"""
+		@param minStep: Specifies the minimum step between valid values for each numeric setting. For example, if L{minStep} is set to 10, setting values can only be multiples of 10; 10, 20, 30, etc.
+		@type minStep: int
+		@param normalStep: Specifies the step between values that a user will normally prefer. This is used in the settings ring.
+		@type normalStep: int
+		@param largeStep: Specifies the step between values if a large adjustment is desired. This is used for pageUp/pageDown on sliders in the Voice Settings dialog.
+		@type largeStep: int
+		@note: If necessary, the step values will be normalised so that L{minStep} <= L{normalStep} <= L{largeStep}.
 		"""
 		super(NumericSynthSetting,self).__init__(name,i18nName,availableInSynthSettingsRing)
 		self.minStep=minStep
+		self.normalStep=max(normalStep,minStep)
+		self.largeStep=max(largeStep,self.normalStep)
 
 class SynthDriver(baseObject.AutoPropertyObject):
 	"""Abstract base synthesizer driver.
 	Each synthesizer driver should be a separate Python module in the root synthDrivers directory containing a SynthDriver class which inherits from this base class.
 	
 	At a minimum, synth drivers must set L{name} and L{description} and override the L{check} method.
-	The bool variables L{hasVoice}, L{hasPitch}, etc. should be set where appropriate. These indicate which voice settings are supported.
-	The MinStep values (L{pitchMinStep}, L{rateMinStep}, etc.) specify the minimum step between valid values for each numeric setting.
-	For example, if L{pitchMinStep} is set to 10, L{pitch} can only be multiples of 10; 10, 20, 30, etc.
+	L{supportedSettings} should be set as appropriate for the settings supported by the synthesiser.
+	There are factory functions to create L{SynthSetting} instances for common settings; e.g. L{VoiceSetting} and L{RateSetting}.
 	The properties for each setting (e.g. L{voice} and L{pitch}) are created by overriding getters and setters;
 	for example, L{_get_pitch} and L{_set_pitch} for L{pitch}.
-	The methods L{speakText}, L{speakCharacter}, L{cancel} and L{pause} should be overridden as appropriate. If L{speakCharacter} is not redefined in the synthDriver, speakText method will be called within a proxy function from base SynthDriver by default.
+	The methods L{speakText}, L{speakCharacter}, L{cancel} and L{pause} should be overridden as appropriate.
+	If L{speakCharacter} is not overridden, L{speakText} will be used by default.
+	@ivar supportedSettings: The settings supported by the synthesiser.
+	@type supportedSettings: list or tuple of L{SynthSetting}
 	@ivar voice: Unique string identifying the current voice.
 	@type voice: str
 	@ivar availableVoices: The available voices.
@@ -160,6 +171,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@type inflection: int
 	@ivar lastIndex: The index of the chunk of text which was last spoken or C{None} if no index.
 	@type lastIndex: int
+	@warning: The has* and *MinStep attributes (e.g. hasPitch and pitchMinStep) are deprecated and should not be used in new drivers.
 	"""
 
 	#: The name of the synth; must be the original module file name.
@@ -179,20 +191,20 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		return SynthSetting("variant",_("V&ariant"))
 
 	@classmethod
-	def RateSetting(cls,minStep=5):
+	def RateSetting(cls,minStep=1):
 		"""Factory function for creating rate setting."""
 		return NumericSynthSetting("rate",_("&Rate"),minStep)
 	@classmethod
-	def VolumeSetting(cls,minStep=5):
+	def VolumeSetting(cls,minStep=1):
 		"""Factory function for creating volume setting."""
-		return NumericSynthSetting("volume",_("V&olume"),minStep)
+		return NumericSynthSetting("volume",_("V&olume"),minStep=minStep,normalStep=10)
 	@classmethod
-	def PitchSetting(cls,minStep=5):
+	def PitchSetting(cls,minStep=1):
 		"""Factory function for creating pitch setting."""
 		return NumericSynthSetting("pitch",_("&Pitch"),minStep)
 
 	@classmethod
-	def InflectionSetting(cls,minStep=5):
+	def InflectionSetting(cls,minStep=1):
 		"""Factory function for creating inflection setting."""
 		return NumericSynthSetting("inflection",_("&Inflection"),minStep)
 
@@ -305,7 +317,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		return self._availableVariants
 
 	def _get_supportedSettings(self):
-		"""By default, this checks old-styled 'has_xxx' and constructs the list of settings.
+		"""This base implementation checks old-style 'has_xxx' and constructs the list of settings.
 		@returns: list of supported settings
 		@rtype: l{tuple}
 		"""

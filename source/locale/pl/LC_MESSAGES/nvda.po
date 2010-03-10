@@ -1,43 +1,43 @@
-# NVDA POLISH LOCALIZATION FILE
-# Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
-# This file is distributed under the same license as the NVDA package.
-# Translation Contributors: Michał Bałamut, Dorota Czajka, Olga Madejska, Łukasz Malicki, Jan Michalik, Dariusz Mikułowski, Paweł Wołoszyn\n"
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA r3466\n"
-"Report-Msgid-Bugs-To: Jan Michalik <hansa2662@gmail.com>\n"
-"POT-Creation-Date: 2009-11-30 13:04+0100\n"
-"PO-Revision-Date: 2010-01-28 09:07+0100\n"
+"Project-Id-Version: NVDA r3553\n"
+"POT-Creation-Date: 2010-02-11 14:56+rodkowoeuropejski czas stand.\n"
+"PO-Revision-Date: 2010-02-14 12:28+0100\n"
 "Last-Translator: Jan Michalik <hansa2662@gmail.com>\n"
-"Language-Team: pl NVDA Polska <www.nvda.pl>\n"
+"Language-Team:  <hansa2662@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
 "X-Poedit-Language: Polish\n"
 "X-Poedit-Country: POLAND\n"
-"X-Poedit-Basepath: c:\\source\\\n"
 
 #: IAccessibleHandler.py:671
 msgid "Secure Desktop"
 msgstr "Pulpit zabezpieczony"
 
-#: NVDAObjects\IAccessible\__init__.py:1336
+#: NVDAHelper.py:78
+msgid "layout %s"
+msgstr "układ %s"
+
+#: NVDAObjects\IAccessible\__init__.py:1280
 msgid "Taskbar"
 msgstr "Pasek zadań"
 
-#: NVDAObjects\IAccessible\sysTreeView32.py:179
-#, python-format
+#: NVDAObjects\IAccessible\sysTreeView32.py:186
 msgid "%s items"
 msgstr "%s elementów"
 
-#: NVDAObjects\UIA\__init__.py:427
+#: NVDAObjects\UIA\__init__.py:434
 msgid "invoke"
 msgstr "połączone"
 
-#: NVDAObjects\progressBar.py:45
+#: NVDAObjects\behaviors.py:49
 #: appModules\_default.py:826
-#, python-format
 msgid "%d percent"
 msgstr "%d procent"
 
@@ -50,7 +50,6 @@ msgid "unknown"
 msgstr "nieznane"
 
 #: NVDAObjects\window\edit.py:535
-#, python-format
 msgid "%s embedded object"
 msgstr "%s pole rozwijalne"
 
@@ -92,7 +91,6 @@ msgid "not in table"
 msgstr "poza tabelą"
 
 #: appModuleHandler.py:172
-#, python-format
 msgid "Error in appModule %s"
 msgstr "Błąd w module aplikacji %s"
 
@@ -107,9 +105,9 @@ msgstr "Błąd w module aplikacji %s"
 #: appModules\_default.py:809
 #: appModules\winamp.py:75
 #: appModules\winamp.py:85
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: keyboardHandler.py:58
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "on"
 msgstr "włączone"
@@ -127,15 +125,14 @@ msgstr "włączone"
 #: appModules\winamp.py:77
 #: appModules\winamp.py:87
 #: gui\settingsDialogs.py:484
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: keyboardHandler.py:58
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "off"
 msgstr "wyłączone"
 
 #: appModules\_default.py:48
-#, python-format
 msgid "keyboard help %s"
 msgstr "Pomoc klawiatury %s"
 
@@ -197,7 +194,6 @@ msgstr "nie zaznaczone"
 #: speech.py:369
 #: speech.py:382
 #: virtualBuffers\__init__.py:598
-#, python-format
 msgid "selected %s"
 msgstr "zaznaczone %s"
 
@@ -295,7 +291,6 @@ msgstr "Brak hierarchii nawigacji"
 
 #: appModules\_default.py:253
 #: appModules\_default.py:732
-#, python-format
 msgid "%s copied to clipboard"
 msgstr "%s skopiowano do schowka"
 
@@ -502,7 +497,6 @@ msgid "talk"
 msgstr "mowa"
 
 #: appModules\_default.py:597
-#, python-format
 msgid "speech mode %s"
 msgstr "tryb komunikacji: %s"
 
@@ -580,22 +574,18 @@ msgid "copied to clipboard"
 msgstr "skopiowano do schowka"
 
 #: appModules\_default.py:759
-#, python-format
 msgid "Control ID: %s"
 msgstr "Kontrol ID: %s"
 
 #: appModules\_default.py:760
-#, python-format
 msgid "Class: %s"
 msgstr "Klasa: %s"
 
 #: appModules\_default.py:762
-#, python-format
 msgid "internal text: %s"
 msgstr "wewnętrzny tekst: %s"
 
 #: appModules\_default.py:763
-#, python-format
 msgid "text: %s"
 msgstr "Tekst: %s"
 
@@ -656,7 +646,6 @@ msgid "AC power on"
 msgstr "Zasilanie sieciowe włączone"
 
 #: appModules\_default.py:829
-#, python-format
 msgid "%d hours and %d minutes remaining"
 msgstr "Pozostały czas: %d godzin i %d minut"
 
@@ -673,12 +662,10 @@ msgid "The next key that is pressed will not be handled at all by NVDA, it will 
 msgstr "Przepuszcza następny klawisz wprost do systemu bez przetwarzania go w NVDA."
 
 #: appModules\_default.py:841
-#, python-format
 msgid "Currently running application is %s"
 msgstr "Bieżąca aplikacja to %s"
 
 #: appModules\_default.py:844
-#, python-format
 msgid " and currently loaded module is %s"
 msgstr " załadowany moduł NVDA to %s"
 
@@ -741,7 +728,6 @@ msgid "focus"
 msgstr "fokus"
 
 #: appModules\_default.py:905
-#, python-format
 msgid "Braille tethered to %s"
 msgstr "Brajl związany z %s"
 
@@ -754,7 +740,6 @@ msgid "There is no text on the clipboard"
 msgstr "Brak tekstu w schowku"
 
 #: appModules\_default.py:919
-#, python-format
 msgid "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "W schowku jest %s znaków tekstu"
 
@@ -794,7 +779,7 @@ msgstr "Kopiuje do schowka tekst od początku zaznaczenia do bieżącego punktu 
 msgid "Display"
 msgstr "Wyświetl"
 
-#: appModules\explorer.py:16
+#: appModules\explorer.py:33
 msgid "Start"
 msgstr "Start"
 
@@ -805,6 +790,14 @@ msgstr "Śledzenie myszy"
 #: appModules\foobar2000.py:50
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Odczytuje pozostały czas aktualnie odtwarzanego utworu"
+
+#: appModules\miranda32.py:103
+msgid "No message yet"
+msgstr "Brak, wiadomości"
+
+#: appModules\miranda32.py:104
+msgid "Displays one of the recent messages"
+msgstr "Wyświetlaj ostatnie wiadomości"
 
 #: appModules\msimn.py:18
 msgid "Attachments"
@@ -861,12 +854,10 @@ msgstr "Ukryta kopia do:"
 
 #: appModules\outlook.py:25
 #: appModules\outlook.py:38
-#, python-format
 msgid "subject: %s"
 msgstr "temat: %s"
 
 #: appModules\outlook.py:26
-#, python-format
 msgid "received: %s"
 msgstr "odebrano: %s"
 
@@ -879,7 +870,6 @@ msgid "attachment"
 msgstr "załącznik"
 
 #: appModules\outlook.py:39
-#, python-format
 msgid "sent: %s"
 msgstr "wysłano: %s"
 
@@ -1153,20 +1143,17 @@ msgstr "( )"
 
 #: braille.py:222
 #: speech.py:670
-#, python-format
 msgid "not %s"
 msgstr "nie %s"
 
 #: braille.py:234
 #: speech.py:676
-#, python-format
 msgid "%s of %s"
 msgstr "%s na %s"
 
 #: braille.py:236
 #: speech.py:681
 #: speech.py:684
-#, python-format
 msgid "level %s"
 msgstr "poziom %s"
 
@@ -2043,11 +2030,11 @@ msgstr "nagłówek"
 msgid "drop target"
 msgstr "Brak kursora klawiatury"
 
-#: core.py:144
+#: core.py:137
 msgid "Loading subsystems, please wait..."
 msgstr "Ładowanie podsystemów, proszę czekać..."
 
-#: core.py:223
+#: core.py:216
 msgid "NVDA started"
 msgstr "Uruchomiono NVDA"
 
@@ -2064,7 +2051,6 @@ msgid "Find Error"
 msgstr "Błąd wyszukiwania"
 
 #: cursorManager.py:90
-#, python-format
 msgid "text \"%s\" not found"
 msgstr "nie znaleziono tekstu \"%s\""
 
@@ -2102,7 +2088,6 @@ msgid "Default dictionary"
 msgstr "Słownik domyślny"
 
 #: gui\__init__.py:168
-#, python-format
 msgid "Voice dictionary (%s)"
 msgstr "Słownik dla głosu (%s)"
 
@@ -2379,7 +2364,6 @@ msgid "Save As"
 msgstr "Zapisz jako"
 
 #: gui\logViewer.py:73
-#, python-format
 msgid "Error saving log: %s"
 msgstr "Błąd przy zapisie logu: %s"
 
@@ -2438,7 +2422,6 @@ msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr "Użyj NVDA na ekranie logowania systemu Windows (wymaga uprawnień administratora)"
 
 #: gui\settingsDialogs.py:154
-#, python-format
 msgid "Error in %s language file"
 msgstr "Błąd w pliku języka %s"
 
@@ -2475,7 +2458,6 @@ msgid "Output &device:"
 msgstr "Urządzenie audio"
 
 #: gui\settingsDialogs.py:215
-#, python-format
 msgid "Could not load the %s synthesizer."
 msgstr "Nie udało się załadować syntezatora %s."
 
@@ -2808,7 +2790,6 @@ msgid "Braille Display Error"
 msgstr "Błąd monitora brajlowskiego"
 
 #: gui\settingsDialogs.py:857
-#, python-format
 msgid "Could not load the %s display."
 msgstr "Błąd przy użyciu urządzenia %s."
 
@@ -3052,46 +3033,35 @@ msgstr "prawy alt"
 msgid "right windows"
 msgstr "prawy windows"
 
-#: keyboardHandler.py:54
-#, python-format
+#: keyboardHandler.py:53
 msgid "caps lock %s"
 msgstr "caps lock %s"
 
-#: keyboardHandler.py:56
-#, python-format
+#: keyboardHandler.py:55
 msgid "num lock %s"
 msgstr "num lock %s"
 
-#: keyboardHandler.py:58
-#, python-format
+#: keyboardHandler.py:57
 msgid "scroll lock %s"
 msgstr "scroll lock %s"
 
-#: keyboardHandler.py:78
-#, python-format
-msgid "%s keyboard layout"
-msgstr "Układ klawiatury %s"
-
-#: keyboardHandler.py:191
-#, python-format
+#: keyboardHandler.py:170
 msgid "Description: %s"
 msgstr "Opis: %s"
 
-#: keyboardHandler.py:194
-#, python-format
+#: keyboardHandler.py:173
 msgid "Location: %s"
 msgstr "Położenie: %s"
 
-#: keyboardHandler.py:209
+#: keyboardHandler.py:188
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Błąd obsługi zdarzenia klawiatury"
 
-#: keyboardHandler.py:247
+#: keyboardHandler.py:226
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Błąd obsługi zdarzenia klawiatury"
 
 #: mouseHandler.py:132
-#, python-format
 msgid "%s cursor"
 msgstr "wskaźnik %s"
 
@@ -3108,22 +3078,18 @@ msgid "NVDA Python Console"
 msgstr "Konsola Pythona NVDA"
 
 #: speech.py:177
-#, python-format
 msgid "cap %s"
 msgstr "wielkie %s"
 
 #: speech.py:313
-#, python-format
 msgid "%d characters"
 msgstr "%d znaków"
 
 #: speech.py:364
-#, python-format
 msgid "selecting %s"
 msgstr "zaznaczanie %s"
 
 #: speech.py:375
-#, python-format
 msgid "unselecting %s"
 msgstr "odznaczanie %s"
 
@@ -3137,13 +3103,11 @@ msgstr "przeciąganie gotowe"
 
 #: speech.py:693
 #: speech.py:971
-#, python-format
 msgid "row %s"
 msgstr "wiersz %s"
 
 #: speech.py:696
 #: speech.py:967
-#, python-format
 msgid "column %s"
 msgstr "kolumna %s"
 
@@ -3160,23 +3124,19 @@ msgid "with %s rows"
 msgstr "z %s wierszy"
 
 #: speech.py:808
-#, python-format
 msgid "with %s items"
 msgstr "z %s elementów"
 
 #: speech.py:823
 #: speech.py:930
-#, python-format
 msgid "out of %s"
 msgstr "Kończy się %s"
 
 #: speech.py:847
-#, python-format
 msgid "page %s"
 msgstr "strona %s"
 
 #: speech.py:854
-#, python-format
 msgid "style %s"
 msgstr "styl %s"
 
@@ -3185,7 +3145,6 @@ msgid "default style"
 msgstr "styl domyślny"
 
 #: speech.py:876
-#, python-format
 msgid "line %s"
 msgstr "wiersz %s"
 
@@ -3254,7 +3213,6 @@ msgid "out of table"
 msgstr "Kończy się tabela"
 
 #: speech.py:962
-#, python-format
 msgid "table with %s columns and %s rows"
 msgstr "tabela - kolumny %s, wiersze %s"
 
@@ -3335,8 +3293,8 @@ msgid "A free and open-source screen reader for MS Windows"
 msgstr "Darmowy i wolny screen reader dla Windows"
 
 #: versionInfo.py:44
-msgid "Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>"
-msgstr "Copyright (C) 2006-2009 Autorzy NVDA <http://www.nvda-project.org/>"
+msgid "Copyright (C) 2006-2010 NVDA Contributors"
+msgstr "Copyright (C) 2006-2010 Współautorzy NVDA"
 
 #: versionInfo.py:45
 msgid ""
@@ -3413,7 +3371,6 @@ msgid "Refreshes the virtual buffer content"
 msgstr "Odświeża zawartość wirtualnego bufora"
 
 #: virtualBuffers\__init__.py:693
-#, python-format
 msgid "use screen layout %s"
 msgstr "Użyj układu ekranu %s"
 

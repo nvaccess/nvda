@@ -1,6 +1,6 @@
 #include <map>
 #include <windows.h>
-#include <interfaces/vbuf/vbuf.h>
+#include "vbufRemote.h"
 #include <vbufBase/backend.h>
 #include "nvdaHelperRemote.h"
 
@@ -11,11 +11,9 @@ map<VBufBackend_t*,HINSTANCE> backendLibHandles;
 extern "C" {
 
 VBufRemote_bufferHandle_t VBufRemote_createBuffer(handle_t bindingHandle, int docHandle, int ID, const wchar_t* backendName) {
-	wchar_t* backendPath=(wchar_t*)malloc(sizeof(wchar_t)*MAX_PATH);
+	wchar_t backendPath[MAX_PATH];
 	wsprintf(backendPath,L"%s\\VBufBackend_%s.dll",dllDirectory,backendName);
 	HINSTANCE backendLibHandle=LoadLibrary(backendPath);
-	free(backendPath);
-	backendPath=NULL;
 	if(backendLibHandle==NULL) return NULL;
 	VBufBackend_create_proc createBackend=(VBufBackend_create_proc)GetProcAddress((HMODULE)(backendLibHandle),"VBufBackend_create");
 	if(createBackend==NULL) {
@@ -127,7 +125,7 @@ int VBufRemote_getTextInRange(VBufRemote_bufferHandle_t buffer, int startOffset,
 	if(textContainer==NULL) {
 		return false;
 	}
-	*text=_wcsdup(textContainer->getString().c_str());
+	*text=SysAllocString(textContainer->getString().c_str());
 	textContainer->destroy();
 	return true;
 }

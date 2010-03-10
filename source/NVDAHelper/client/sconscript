@@ -1,24 +1,34 @@
 Import([
 	'env',
-	'nvdaControllerRPCStubs',
 ])
 
-clientLibName="nvdaControllerClient%s"%('64' if env['TARGET_ARCH']=='x86_64' else '32')
+winIPCUtilsObj=env.Object("./winIPCUtils","#common/winIPCUtils.cpp")
 
-clientLibDefFile=env.File('nvdaControllerClient.def')
+controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
+	target="./nvdaController",
+	source=[
+		"#interfaces/nvdaController/nvdaController.idl",
+		"#interfaces/nvdaController/nvdaController.acf",
+	],
+	MSRPCStubs_noServer=True,
+	MSRPCStubs_prefix="nvdaController_",
+)
+
+clientLibName="nvdaControllerClient%s"%('64' if env['TARGET_ARCH']=='x86_64' else '32')
 
 clientLib=env.SharedLibrary(
 	target=clientLibName,
 	source=[
 		"client.c",
-		nvdaControllerRPCStubs[1],
+		winIPCUtilsObj,
+		controllerRPCClientSource,
+		'nvdaControllerClient.def',
 	],
 	LIBS=[
+		"user32",
 		"rpcrt4",
 	],
-	LINKFLAGS=env['LINKFLAGS']+['/def:%s'%clientLibDefFile.path],
 )
-env.Depends(clientLib,clientLibDefFile)
 
 #if 'install' in COMMAND_LINE_TARGETS:
 #	installDir=env.Install('#../../extras/controllerClient/',clientLib)
@@ -26,4 +36,4 @@ env.Depends(clientLib,clientLibDefFile)
 
 #env.Default(clientLib)
 
-Return('clientLib')
+Return(['clientLib','controllerRPCHeader'])

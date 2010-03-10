@@ -192,8 +192,15 @@ Pone el navegador de objetos en el actual objeto con el foco.
 Dividir Teclado Numérico: clicIzquierdoDelRatón
 Hace clic con el botón izquierdo del ratón una vez donde quiera que esté.
 
+
+shift+dividir teclado numérico: conmutaBotónIzquierdoDelRatón
+Bloquea o desbloquea el botón izquierdo del ratón
+
 Multiplicar teclado numérico: clicDerechoDelRatón
 Hace clic con el botón derecho del ratón una vez donde quiera que esté.
+
+shift+multiplicar teclado numérico: conmutarBotónDerechoDelRatón
+Bloquea o desbloquea el botón derecho del ratón
 
 Más Teclado Numérico: revisiónLeerTodo
 Utiliza el cursor de revisión para leer desde su posición al final del actual texto revisable
@@ -243,8 +250,14 @@ Mueve el cursor de revisión a la línea anterior
 shift+9 Teclado Numérico: revisiónInferior
 Mueve el cursor de revisión a la última línea
 
+NVDA+f9: revisión_marcaInicioParaCopiar
+Marca la posición actual del cursor de revisión como el inicio de texto para copiar.
 
-Ordenes del Modo Virtual para Firefox3 (Algunas de estas podrán funcionar en Internet Explorer o Firefox2):
+NVDA+f10: revisión_copiar
+Recoge el texto desde la posición previamente marcada e incluye la posición actual del cursor de revisión y lo copia al portapapeles.
+
+
+Ordenes del Modo Virtual 
 
 NVDA+espacio: conmutarPasoATravésModoVirtual
 Activa o desactiva el paso a través del modo virtual.

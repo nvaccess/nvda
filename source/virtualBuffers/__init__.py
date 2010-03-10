@@ -106,20 +106,17 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getTextRange(self,start,end):
 		if start==end:
 			return ""
-		text=ctypes.c_wchar_p()
-		NVDAHelper.localLib.VBuf_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),False)
-		return text.value or ""
+		return NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,False)
 
 	def getTextWithFields(self,formatConfig=None):
 		start=self._startOffset
 		end=self._endOffset
 		if start==end:
 			return ""
-		text=ctypes.c_wchar_p()
-		NVDAHelper.localLib.VBuf_getTextInRange(self.obj.VBufHandle,start,end,ctypes.byref(text),True)
-		if not text.value:
+		text=NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,True)
+		if not text:
 			return ""
-		commandList=XMLFormatting.XMLTextParser().parse(text.value)
+		commandList=XMLFormatting.XMLTextParser().parse(text)
 		for index in xrange(len(commandList)):
 			if isinstance(commandList[index],textInfos.FieldCommand):
 				field=commandList[index].field
@@ -463,8 +460,6 @@ class ElementsListDialog(wx.Dialog):
 		else:
 			wx.CallLater(100, self._reportElement, element)
 
-		self.Destroy()
-
 	def _reportElement(self, element):
 		speech.cancelSpeech()
 		speech.speakTextInfo(element,reason=speech.REASON_FOCUS)
@@ -773,7 +768,9 @@ class VirtualBuffer(cursorManager.CursorManager):
 		# We need this to be a modal dialog, but it mustn't block this script.
 		def run():
 			gui.mainFrame.prePopup()
-			ElementsListDialog(self).ShowModal()
+			d = ElementsListDialog(self)
+			d.ShowModal()
+			d.Destroy()
 			gui.mainFrame.postPopup()
 		wx.CallAfter(run)
 	script_elementsList.__doc__ = _("Presents a list of links, headings or landmarks")

@@ -6,8 +6,7 @@ NonVisual Desktop Access (NVDA) è uno screen reader open-source e completamente 
 Per ulteriori informazioni consultate la guida dell'utente o visitate il sito di Nvda. 
 
 --- Informazioni sul Copyright ---
-Copyright (C) 2006-2008 Collaboratori di Nvda
-<http://www.nvda-project.org>
+Copyright (C) 2006-2010 Collaboratori di Nvda
 NVDA e' coperto dalla licenzapubblica GNU (versione 2). Siete liberi di condividere e modificare questo programma come volete, a patto che voi distribuiate la licenza assieme al software e rendiate disponibile il sorgente a chiunque ne faccia richiesta. Questo si applica a copie originali e modificate del software ed a qualsiasi programma che utilizzi codice proveniente da questo software.
 Per maggiori informazioni consultate la licenza online all'indirizzo: 
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html

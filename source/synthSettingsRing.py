@@ -10,7 +10,7 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		self.setting=setting
 		self.min=min
 		self.max=max
-		self.step = setting.minStep if isinstance(setting,synthDriverHandler.NumericSynthSetting) else 1
+		self.step = setting.normalStep if isinstance(setting,synthDriverHandler.NumericSynthSetting) else 1
 
 	def increase(self):
 		val = min(self.max,self.value+self.step)
@@ -127,7 +127,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			self.settings = None
 		else:
 			self.settings = list
-		if not prevName or not self.settings or prevName!=self.settings[self._current].setting.name:
+		if not prevName or not self.settings or len(self.settings)<=self._current or prevName!=self.settings[self._current].setting.name:
 			#Previous chosen setting doesn't exists. Set position to default
 			self._current = synth.initialSettingsRingSetting
 			if _isScriptRunning:

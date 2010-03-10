@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3554\n"
+"Project-Id-Version: r3574\n"
 "POT-Creation-Date: 2007-03-04 15:37+Normaaliaika\n"
-"PO-Revision-Date: 2010-02-11 12:58+0200\n"
+"PO-Revision-Date: 2010-02-16 12:17+0200\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,14 @@ msgstr ""
 #: IAccessibleHandler.py:671
 msgid "Secure Desktop"
 msgstr "Suojattu työpöytä"
+
+#: NVDAHelper.py:101
+msgid "unknown layout"
+msgstr "tuntematon näppäimistöasettelu"
+
+#: NVDAHelper.py:102
+msgid "layout %s"
+msgstr "näppäimistöasettelu %s"
 
 #: NVDAObjects\IAccessible\__init__.py:1280
 msgid "Taskbar"
@@ -87,7 +95,7 @@ msgstr "Virhe sovellusmoduulissa %s"
 #: appModules\_default.py:191 appModules\_default.py:713
 #: appModules\_default.py:789 appModules\_default.py:799
 #: appModules\_default.py:809 appModules\winamp.py:75 appModules\winamp.py:85
-#: keyboardHandler.py:54 keyboardHandler.py:56 keyboardHandler.py:58
+#: keyboardHandler.py:53 keyboardHandler.py:55 keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "on"
 msgstr "päällä"
@@ -98,7 +106,7 @@ msgstr "päällä"
 #: appModules\_default.py:710 appModules\_default.py:786
 #: appModules\_default.py:796 appModules\_default.py:806
 #: appModules\winamp.py:77 appModules\winamp.py:87 gui\settingsDialogs.py:484
-#: keyboardHandler.py:54 keyboardHandler.py:56 keyboardHandler.py:58
+#: keyboardHandler.py:53 keyboardHandler.py:55 keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "off"
 msgstr "pois"
@@ -170,7 +178,7 @@ msgstr "Lukitsee tai vapauttaa oikean hiirinäppäimen"
 msgid "no selection"
 msgstr "ei valintaa"
 
-#: appModules\_default.py:109 speech.py:272 speech.py:369 speech.py:382
+#: appModules\_default.py:109 speech.py:290 speech.py:386 speech.py:399
 #: virtualBuffers\__init__.py:598
 msgid "selected %s"
 msgstr "valittu %s"
@@ -1310,15 +1318,15 @@ msgstr "alavko"
 msgid "( )"
 msgstr "< >"
 
-#: braille.py:222 speech.py:670
+#: braille.py:222 speech.py:687
 msgid "not %s"
 msgstr "ei %s"
 
-#: braille.py:234 speech.py:676
+#: braille.py:234 speech.py:693
 msgid "%s of %s"
 msgstr "%s / %s"
 
-#: braille.py:236 speech.py:681 speech.py:684
+#: braille.py:236 speech.py:698 speech.py:701
 msgid "level %s"
 msgstr "taso %s"
 
@@ -1335,7 +1343,7 @@ msgid "No braille"
 msgstr "Ei pistenäyttöä"
 
 #: characterSymbols.py:17 characterSymbols.py:18 characterSymbols.py:19
-#: speech.py:82 speech.py:620
+#: speech.py:84 speech.py:637
 msgid "blank"
 msgstr "tyhjä"
 
@@ -1591,7 +1599,7 @@ msgstr "kuplailmoitus"
 msgid "tool tip"
 msgstr "työkaluvihje"
 
-#: controlTypes.py:198 speech.py:930
+#: controlTypes.py:198 speech.py:947
 msgid "link"
 msgstr "linkki"
 
@@ -2003,7 +2011,7 @@ msgstr "fontti"
 msgid "font size"
 msgstr "fonttikoko"
 
-#: controlTypes.py:305 speech.py:882
+#: controlTypes.py:305 speech.py:899
 msgid "bold"
 msgstr "lihavointi"
 
@@ -2019,11 +2027,11 @@ msgstr "edustan väri"
 msgid "background color"
 msgstr "taustaväri"
 
-#: controlTypes.py:310 speech.py:904
+#: controlTypes.py:310 speech.py:921
 msgid "superscript"
 msgstr "yläindeksi"
 
-#: controlTypes.py:311 speech.py:906
+#: controlTypes.py:311 speech.py:923
 msgid "subscript"
 msgstr "alaindeksi"
 
@@ -3217,35 +3225,31 @@ msgstr "oikea alt"
 msgid "right windows"
 msgstr "oikea windows"
 
-#: keyboardHandler.py:54
+#: keyboardHandler.py:53
 msgid "caps lock %s"
 msgstr "caps lock %s"
 
-#: keyboardHandler.py:56
+#: keyboardHandler.py:55
 msgid "num lock %s"
 msgstr "num lock %s"
 
-#: keyboardHandler.py:58
+#: keyboardHandler.py:57
 msgid "scroll lock %s"
 msgstr "scroll lock %s"
 
-#: keyboardHandler.py:78
-msgid "%s keyboard layout"
-msgstr "näppäimistöasettelu %s"
-
-#: keyboardHandler.py:191
+#: keyboardHandler.py:170
 msgid "Description: %s"
 msgstr "Kuvaus: %s"
 
-#: keyboardHandler.py:194
+#: keyboardHandler.py:173
 msgid "Location: %s"
 msgstr "Sijainti: %s"
 
-#: keyboardHandler.py:209
+#: keyboardHandler.py:188
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Virhe kohteessa keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:247
+#: keyboardHandler.py:226
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Virhe kohteessa keyboardHandler.internal_keyUpEvent"
 
@@ -3265,139 +3269,139 @@ msgstr "Kirjoita exit() poistuaksesi konsolista."
 msgid "NVDA Python Console"
 msgstr "NVDA Python-konsoli"
 
-#: speech.py:177
+#: speech.py:179
 msgid "cap %s"
 msgstr "iso %s"
 
-#: speech.py:313
+#: speech.py:330
 msgid "%d characters"
 msgstr "%d merkkiä"
 
-#: speech.py:364
+#: speech.py:381
 msgid "selecting %s"
 msgstr "valitaan %s"
 
-#: speech.py:375
+#: speech.py:392
 msgid "unselecting %s"
 msgstr "ei valita %s"
 
-#: speech.py:377
+#: speech.py:394
 msgid "selection removed"
 msgstr "valinta peruttu"
 
-#: speech.py:668
+#: speech.py:685
 msgid "done dragging"
 msgstr "vedetty"
 
-#: speech.py:693 speech.py:971
+#: speech.py:710 speech.py:988
 msgid "row %s"
 msgstr "rivi %s"
 
-#: speech.py:696 speech.py:967
+#: speech.py:713 speech.py:984
 msgid "column %s"
 msgstr "sarake %s"
 
-#: speech.py:701
+#: speech.py:718
 msgid "with %s rows and %s columns"
 msgstr "jossa %s riviä ja %s saraketta"
 
-#: speech.py:703
+#: speech.py:720
 msgid "with %s columns"
 msgstr "jossa %s saraketta"
 
-#: speech.py:705
+#: speech.py:722
 msgid "with %s rows"
 msgstr "jossa %s riviä"
 
-#: speech.py:808
+#: speech.py:825
 msgid "with %s items"
 msgstr "jossa %s kohdetta"
 
-#: speech.py:823 speech.py:930
+#: speech.py:840 speech.py:947
 msgid "out of %s"
 msgstr "%s loppuu"
 
-#: speech.py:847
+#: speech.py:864
 msgid "page %s"
 msgstr "sivu %s"
 
-#: speech.py:854
+#: speech.py:871
 msgid "style %s"
 msgstr "tyyli %s"
 
-#: speech.py:856
+#: speech.py:873
 msgid "default style"
 msgstr "oletustyyli"
 
-#: speech.py:876
+#: speech.py:893
 msgid "line %s"
 msgstr "rivi %s"
 
-#: speech.py:882
+#: speech.py:899
 msgid "no bold"
 msgstr "ei lihavointia"
 
-#: speech.py:887
+#: speech.py:904
 msgid "italic"
 msgstr "kursiivi"
 
-#: speech.py:887
+#: speech.py:904
 msgid "no italic"
 msgstr "ei kursivointia"
 
-#: speech.py:892
+#: speech.py:909
 msgid "no strikethrough"
 msgstr "ei yliviivausta"
 
-#: speech.py:892
+#: speech.py:909
 msgid "strikethrough"
 msgstr "yliviivaus"
 
-#: speech.py:897
+#: speech.py:914
 msgid "not underlined"
 msgstr "ei alleviivausta"
 
-#: speech.py:897
+#: speech.py:914
 msgid "underlined"
 msgstr "alleviivattu"
 
-#: speech.py:908
+#: speech.py:925
 msgid "baseline"
 msgstr "perusviiva"
 
-#: speech.py:916
+#: speech.py:933
 msgid "align left"
 msgstr "tasaus vasemmalla"
 
-#: speech.py:918
+#: speech.py:935
 msgid "align center"
 msgstr "tasaus keskellä"
 
-#: speech.py:920
+#: speech.py:937
 msgid "align right"
 msgstr "tasaus oikealla"
 
-#: speech.py:922
+#: speech.py:939
 msgid "align justify"
 msgstr "tasaus molemmissa reunoissa"
 
-#: speech.py:924
+#: speech.py:941
 msgid "align default"
 msgstr "oletustasaus"
 
-#: speech.py:937
+#: speech.py:954
 msgid "spelling error"
 msgstr "kirjoitusvirhe"
 
-#: speech.py:939
+#: speech.py:956
 msgid "out of spelling error"
 msgstr "kirjoitusvirheen loppu"
 
-#: speech.py:953
+#: speech.py:970
 msgid "out of table"
 msgstr "taulukon loppu"
 
-#: speech.py:962
+#: speech.py:979
 msgid "table with %s columns and %s rows"
 msgstr "taulukko, jossa %s saraketta ja %s riviä"
 

@@ -90,3 +90,9 @@ class ComboBox(Mozilla):
 class List(Mozilla):
 
 	shouldAllowIAccessibleFocusEvent=True
+
+class Table(Mozilla):
+	shouldAllowIAccessibleFocusEvent=True
+
+class Tree(Mozilla):
+	shouldAllowIAccessibleFocusEvent=True

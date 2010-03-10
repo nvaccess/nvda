@@ -32,6 +32,7 @@ speechMode_beeps_ms=15
 beenCanceled=True
 isPaused=False
 curWordChars=[]
+
 REASON_FOCUS=1
 REASON_MOUSE=2
 REASON_QUERY=3
@@ -41,6 +42,7 @@ REASON_SAYALL=6
 REASON_CARET=7
 REASON_DEBUG=8
 REASON_ONLYCACHE=9
+REASON_FOCUSENTERED=10
 
 oldTreeLevel=None
 oldTableID=None
@@ -170,28 +172,30 @@ def speakSpelling(text):
 def _speakSpellingGen(text):
 	lastKeyCount=globalVars.keyCounter
 	textLength=len(text)
+	synth=getSynth()
+	synthConfig=config.conf["speech"][synth.name]
 	for count,char in enumerate(text): 
 		uppercase=char.isupper()
 		char=processSymbol(char)
-		if uppercase and config.conf["speech"][getSynth().name]["sayCapForCapitals"]:
+		if uppercase and synthConfig["sayCapForCapitals"]:
 			char=_("cap %s")%char
-		if uppercase and config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
-			oldPitch=config.conf["speech"][getSynth().name]["pitch"]
-			getSynth().pitch=max(0,min(oldPitch+config.conf["speech"][getSynth().name]["capPitchChange"],100))
+		if uppercase and synth.isSupported("pitch") and synthConfig["raisePitchForCapitals"]:
+			oldPitch=synthConfig["pitch"]
+			synth.pitch=max(0,min(oldPitch+synthConfig["capPitchChange"],100))
 		index=count+1
 		if log.isEnabledFor(log.IO): log.io("Speaking \"%s\""%char)
-		if len(char) == 1 and config.conf["speech"][getSynth().name]["useSpellingFunctionality"]:
-			getSynth().speakCharacter(char,index=index)
+		if len(char) == 1 and synthConfig["useSpellingFunctionality"]:
+			synth.speakCharacter(char,index=index)
 		else:
-			getSynth().speakText(char,index=index)
-		if uppercase and config.conf["speech"][getSynth().name]["raisePitchForCapitals"]:
-			getSynth().pitch=oldPitch
+			synth.speakText(char,index=index)
+		if uppercase and synth.isSupported("pitch") and synthConfig["raisePitchForCapitals"]:
+			synth.pitch=oldPitch
 		while textLength>1 and globalVars.keyCounter==lastKeyCount and (isPaused or getLastSpeechIndex()!=index): 
 			yield
 			yield
 		if globalVars.keyCounter!=lastKeyCount:
 			break
-		if uppercase and  config.conf["speech"][getSynth().name]["beepForCapitals"]:
+		if uppercase and  synthConfig["beepForCapitals"]:
 			tones.beep(2000,50)
 
 def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties):
@@ -252,8 +256,17 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 
 def speakObject(obj,reason=REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
-	isEditable=(obj.TextInfo!=NVDAObjectTextInfo and (obj.role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
+	isEditable=(reason!=REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (obj.role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
 	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"rowNumber":True,"columnNumber":True,"columnCount":True,"rowCount":True}
+
+	if reason==REASON_FOCUSENTERED:
+		allowProperties["states"]=False
+		allowProperties["value"]=False
+		allowProperties["keyboardShortcut"]=False
+		allowProperties["positionInfo_level"]=False
+		# Aside from excluding some properties, focus entered should be spoken like focus.
+		reason=REASON_FOCUS
+
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"]=False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
@@ -262,8 +275,15 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 		allowProperties["positionInfo_level"]=False
 		allowProperties["positionInfo_indexInGroup"]=False
 		allowProperties["positionInfo_similarItemsInGroup"]=False
+	if reason!=REASON_QUERY:
+		allowProperties["rowCount"]=False
+		allowProperties["columnCount"]=False
+		if not config.conf["documentFormatting"]["reportTables"]:
+			allowProperties["rowNumber"]=False
+			allowProperties["columnNumber"]=False
 	if isEditable:
 		allowProperties['value']=False
+
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
 	if reason!=REASON_ONLYCACHE and isEditable and not globalVars.inCaretMovement:
 		try:
@@ -276,7 +296,6 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
 			speakTextInfo(newInfo,reason=reason)
-
 
 def speakText(text,index=None,reason=REASON_MESSAGE):
 	"""Speaks some given text.

@@ -2,7 +2,7 @@
 #include <sstream>
 #include <windows.h>
 #include <ia2/ia2.h>
-#include <interfaces/nvdaController/nvdaController.h>
+#include "nvdaController.h"
 #include <common/ia2utils.h>
 #include "nvdaHelperRemote.h"
 
@@ -30,7 +30,7 @@ void getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 			}
 			VariantClear(varChildren+i);
 		}
-		delete varChildren;
+		delete [] varChildren;
 		return;
 	}
 	//We can use IAccessibleText because it exists
@@ -175,11 +175,9 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 }
 
 void ia2LiveRegions_inProcess_initialize() {
-	RpcBindingFromStringBinding((RPC_WSTR)L"ncalrpc:[nvdaController]",&nvdaControllerBindingHandle);
 	registerWinEventHook(winEventProcHook);
 }
 
 void ia2LiveRegions_inProcess_terminate() {
 	unregisterWinEventHook(winEventProcHook);
-	RpcBindingFree(&nvdaControllerBindingHandle);
 }

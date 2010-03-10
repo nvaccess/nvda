@@ -327,6 +327,8 @@ the NVDAObject for IAccessible
 		if event_objectID==winUser.OBJID_CLIENT and JABHandler.isJavaWindow(windowHandle): 
 			clsList.append(JavaVMRoot)
 
+		windowClassName=winUser.getClassName(windowHandle)
+
 		role=0
 		if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
 			try:
@@ -334,8 +336,12 @@ the NVDAObject for IAccessible
 			except COMError:
 				role=0
 		if not role:
-			role=IAccessibleObject.accRole(IAccessibleChildID)
-		windowClassName=winUser.getClassName(windowHandle)
+			try:
+				role=IAccessibleObject.accRole(IAccessibleChildID)
+			except COMError, e:
+				# We need objects for broken SysTreeView32 controls.
+				if windowClassName!="SysTreeView32":
+					raise RuntimeError("IAccessible::accRole failed: %s" % e)
 
 		# Use window class name and role to search for a class match in our static map.
 		keys=[(windowClassName,role),(None,role),(windowClassName,None)]
@@ -1275,6 +1281,8 @@ _staticMap={
 	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_LISTITEM):"mozilla.ListItem",
 	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
 	("MozillaWindowClass",oleacc.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
+	("MozillaUIWindowClass",oleacc.ROLE_SYSTEM_TABLE):"mozilla.Table",
+	("MozillaUIWindowClass",oleacc.ROLE_SYSTEM_OUTLINE):"mozilla.Tree",
 	("ConsoleWindowClass",oleacc.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
 	(None,oleacc.ROLE_SYSTEM_LIST):"List",
 	(None,oleacc.ROLE_SYSTEM_COMBOBOX):"ComboBox",
@@ -1286,8 +1294,10 @@ _staticMap={
 	("SysListView32",oleacc.ROLE_SYSTEM_LIST):"sysListView32.List",
 	("SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("SysListView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysListView32.ListItem",
+	("SysTreeView32",oleacc.ROLE_SYSTEM_OUTLINE):"sysTreeView32.TreeView",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_OUTLINEITEM):"sysTreeView32.TreeViewItem",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysTreeView32.TreeViewItem",
+	("SysTreeView32",0):"sysTreeView32.BrokenCommctrl5Item",
 	("ATL:SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TWizardForm",oleacc.ROLE_SYSTEM_CLIENT):"Dialog",
 	("SysLink",oleacc.ROLE_SYSTEM_CLIENT):"SysLinkClient",

@@ -16,6 +16,11 @@
 	* Ahora es posible desactivar la creación del atajo del escritorio (y así la tecla de atajo) cuando se instala NVDA. (#518)
 	* NVDA ahora puede utilizar IAccessible2 cuando se presenta en aplicaciones de 64 bit. (#479)
 	* La API NVDA Controller Client ahora se proporciona para permitir a las aplicaciones controlar a NVDA; ej.: para verbalizar texto, silenciar la voz, mostrar un mensaje en Braille, etc.
+	* Los mensajes de información y error ahora se leen en la pantalla del logon en Windows Vista y Windows 7. (#506)
+	* En Adobe Reader, los formularios PDF interactivos desarrollados con Adobe LiveCycle ahora son soportados. (#475)
+	* En Miranda IM, NVDA ahora lee automáticamente los mensajes de entrada en ventanas de chat si el anunciado de cambios de contenido dinámico se activó. También, han sido añadidas las órdenes para anunciar los tres mensajes más recientes (NVDA+control+número). (#546)
+	* Ahora se soportan campos de entrada de texto en contenido de Adobe Flash. (#461)
+
 
 === Cambios ===
 	* El mensaje de ayuda de teclado extremadamente verboso en el menú de Inicio de Windows 7 ya no se anuncia.
@@ -25,6 +30,9 @@
 	* Actualizado el sintetizador de voz eSpeak a 1.42.04.
 	* Actualizado el transcriptor braille liblouis a 1.8.0.
 	* En los modos virtuales, el anunciado de elementos cuando se mueve por caracteres o palabras ha sido muy mejorado. Anteriormente, era anunciada una gran cantidad de información irrelevante y el anunciado era muy diferente a eso cuando se mueve por líneas. (#490)
+	* La tecla Control ahora simplemente detiene la voz como otras teclas, en lugar de pausar la voz. Para pausar/reanudar la voz, utiliza la tecla shift.
+	* Ya no se anuncia la cuenta de filas y columnas de tabla cuando se anuncian los cambios del foco, puesto que este anunciado es demasiado verboso y normalmente no es útil.
+
 
 === Corrección de Fallos ===
 	* NVDA ya no falla al arrancar si el soporte UI Automation parece estár disponible pero falla al inicializarse por alguna razón. (#483)
@@ -41,7 +49,15 @@
 	* Correcciones para la distribución de teclado laptop. (#517)
 	* Cuando el braille está siguiendo a la revisión cuando enfocas en una ventana de consola del dos, el cursor de revisión ahora puede navegar apropiadamente por el texto en la consola.
 	* Mientras se trabaja con TeamTalk3 o TeamTalk4 Classic VU la barra de progreso contador en la ventana principal ya no se anuncia según se actualiza. También los caracteres especiales pueden leerse apropiadamente en la ventana de entrada de chat.
-
+	* Los elementos ya no son verbalizados dos veces en el menú de inicio de Windows 7. (#474)
+	* Activando enlaces a la misma página en Firefox 3.6 appropriately se mueve el cursor apropiadamente en el modo virtual al lugar correcto en la página.
+	* Corregido el problema donde algún texto no era proporcionado en Adobe Reader en ciertos documentos PDF.
+	* NVDA ya no verbaliza incorrectamente ciertos números separados por un guión; ej.: 500-1000. (#547)
+	* En Windows XP, NVDA ya no causa que Internet Explorer se cuelgue cuando se conmutan casillas de verificación en Windows Update. (#477)
+	* Cuando se utiliza en el sintetizador eSpeak incorporado, simultáneamente voz y pitidos ya no causa cuelgues intermitentes en algunos sistemas. Esto era más evidente, por ejemplo, cuando se copian cantidades grandes de datos en Windows Explorer.
+	* NVDA ya no anuncia que un documento de Firefox se ha llenado (ej.: debido a una actualización o refresco) cuando ese documento está en segundo plano. Esto también causaba que la barra de estado de la aplicación en primer plano sea anunciada falsamente.
+	* Cuando se cambian distribuciones de teclado de Windows (con control+shift o alt+shift), el nombre completo de la distribución se anuncia en voz y braille. Anteriormente sólo se anunciaba en voz, y distribuciones alternativas (ej.: Dvorak) no se anunciaban.
+	* Si el anunciado de tablas se desactivó, la información de tabla ya no se anuncia cuando el foco ccambie.
 
 
 == 2009.1 ==

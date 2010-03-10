@@ -1,0 +1,122 @@
+= Co nowego w NVDA =
+
+== 2010.1 ==
+
+To wydanie koncentruje siê przede wszystkim na usuwaniu b³êdów i usprawnieñ dla u¿ytkowników, w tym kilka istotnych poprawek stabilnoœci.
+
+=== Nowe funkcje ===
+
+*  Zosta³o dodane pole wyboru punktów orientacyjnych w oknie ustawieñ formatowania dokumentu, które pozwala skonfigurowaæ NVDA do og³aszania punktów orientacyjnych w dokumentach i stronach internetowych. W celu zapewnienia zgodnoœci z poprzednimi wersjami, opcja ta jest w³¹czona domyœlnie.
+*  Jeœli bêdzie aktywne odczytywanie klawiszy poleceñ, NVDA bêdzie og³aszaæ na wielu klawiaturach nazwy klawiszy multimedialnych, gdy zostan¹ naciœniête (np. Play, Stop, strona domowa, itp.). (#472)
+*  Po naciœniêciu kombinacji klawiszy kontrol+Backspace NVDA wypowiada usuwane s³owa, ale tylko tam gdzie jest to obs³ugiwane. (# 491)
+*  Klawisze strza³ek mog¹ byæ teraz u¿ywane w oknie Web formatora do nawigacji i czytania tekstu. (# 452)
+*  Lista pozycji w ksi¹¿ce adresowej programu Microsoft Office Outlook jest ju¿ obs³ugiwana.
+*  NVDA lepiej obs³uguje pole edytowalne (tryb projektu) dokumentów w programie Internet Explorer. (# 402)
+*  Nowy skrypt (NVDA+Shift+numpad Minus) pozwala przenieœæ fokus do bie¿¹cego obiektu systemu.
+*  Nowe skrypty do blokowania i odblokowywania lewego i prawego przycisku myszki. Przydatne do wykonywania operacji przeci¹gnij i upuœæ. shift+numpad slash, aby zablokowaæ / odblokowaæ lewy przycisk. Shift+numpad gwiazdka, aby zablokowaæ / odblokowaæ prawy przycisk.
+*  Nowe t³umaczenia tabel Braille'a: niemiecki 8 punktowy Braille komputerowy, niemiecki klasa 2, fiñski 8 punktowy Braille komputerowy. chiñski (Hong Kong, kantoñski), chiñski (Tajwan, Manderin). (# 344, # 369, # 415, # 450)
+*  Obecnie mo¿liwe jest wy³¹czenie tworzenia skrótu na pulpicie (a tak¿e klawisza skrótu) podczas instalacji NVDA. (# 518)
+*  NVDA mo¿e teraz u¿ywaæ iAccessible2 wystêpuj¹cych w 64-bitowych aplikacjach. (# 479)
+*  Kontroler, klienta API NVDA jest obecnie dostêpny, aby umo¿liwiæ kontrolê aplikacji przez NVDA, np. mówienie tekstu,  podgl¹d mowy, wyœwietlanie komunikatów w Braille'u, itp.
+*  Informacje i komunikaty o b³êdach zostan¹ teraz odczytane z ekranu logowania w systemie Windows Vista i Windows 7. (# 506)
+*  W programie Adobe Reader, PDF interaktywne formy opracowane z Adobe LiveCycle s¹ obecnie obs³ugiwane. (# 475)
+*  W Mirandzie, NVDA automatycznie odczytuje przychodz¹ce wiadomoœci w oknie czatu, jeœli og³aszanie dynamicznych zmian treœci jest w³¹czone. Polecenia og³aszania równie¿ zosta³y dodane do trzech ostatnich wiadomoœci (NVDA+kontrol+cyfra). (# 546)
+*  Wprowadzone pola tekstowe s¹ obecnie obs³ugiwane w treœci Adobe Flash. (# 461)
+
+=== Zmiany ===
+
+*  Nie s¹ ju¿ og³aszane niezwykle gadatliwe komunikaty pomocy klawiatury w meni Start Windows 7.
+*  Wyœwietlacz synth obecnie zosta³ zast¹piony nowym podgl¹dem mowy. Aby go uaktywniæ, wybierz z meni Narzêdzia, Podgl¹d Mowy. Podgl¹d mowy mo¿e byæ wykorzystywany niezale¿nie od tego, jakiego syntezatora mowy u¿ywasz. (# 44)
+*  Jeœli u¿ytkownik wciœnie klawisz, który spowoduje zmianê fokusu komunikaty na monitorze brajlowskim zostan¹ automatycznie odrzucone. Wczeœniej zawsze komunikat pojawia³ siê w obrêbie konfiguracji.
+*  Ustalanie czy Braille powinien byæ powi¹zany z fokusem lub kursorem przegl¹du skrót (NVDA+Ctrl+T), mo¿na to równie¿ ustawiæ w oknie ustawieñ Braille'a, a tak¿e zapisaæ w konfiguracji u¿ytkownika.
+*  Aktualizacja syntezatora eSpeak do 1.42.04.
+*  Zaktualizowano liblouis Braille'a t³umacz 1.8.0.
+*  Og³aszanie elementów w wirtualnych buforach, podczas przemieszczania siê przez znak lub s³owo zosta³o znacznie ulepszone. Wczeœniej raportowanie  bardzo siê ró¿ni³o od istotnych informacji, które zosta³y og³aszane podczas przemieszczania siê po wierszu. (# 490)
+*  Teraz mo¿na u¿yæ klawisza "Kontrol" do zatrzymania mowy. mo¿na równie¿ przy pomocy Klawisza "Shift" wznawiaæ lub zatrzymywaæ mowê.
+
+=== Poprawione B³êdy ===
+
+*  Ca³a zawartoœæ wiersza tabeli nie jest ju¿ zg³aszana podczas przemieszczania siê fokusa wewn¹trz komórki w aplikacji Mozilla. (# 482)
+*  Wirtualne bufory honoruj¹ teraz skróty klawiszowe og³aszania obiektu, te ustawienia znajduj¹ siê w oknie dialogowym Prezentacji obiektu. (# 486)
+*  W wirtualnym buforze, wspó³rzêdne wiersz / kolumna przy og³aszaniu tabel s¹ wy³¹czone, nag³ówki wierszy i kolumn nie s¹ ju¿ czytane nieprawid³owo.
+*  W wirtualnym buforze, wspó³rzêdne wiersz / kolumna s¹ teraz czytane poprawnie po opuszczeniu tabeli, a nastêpnie ponownie wprowadza t¹ sam¹ komórkê w innej tabeli bez koniecznoœci odwiedzania pierwszej komórki, np. naciskaj¹c strza³kê w górê nastêpnie strza³kê w dó³ w pierwszej komórce tabeli. (# 378)
+*  Edycja pustych wierszy bêdzie teraz pokazywana odpowiednio w dokumentach programu Microsoft Word i Microsoft HTML na monitorze brajlowskim. Wczeœniej NVDA wyœwietla³ bie¿¹ce zdanie na monitorze, zamiast bie¿¹cego wiersza w tej sytuacji. (# 420)
+*  Poprawiono wiele zabezpieczeñ w czasie uruchamiania NVDA podczas logowania do Windows i innych zabezpieczonych komputerów. (# 515)
+*  Poprawiono uk³ad klawiatury dla laptopa. (# 517)
+*  Jeœli fokus znajduje siê w konsoli Dos, kursor przegl¹du mo¿e teraz prawid³owo poruszaæ siê po tekœcie w konsoli, gdy Braille jest powi¹zany z przegl¹dem.
+*  Pozycje Meni Start w Windows 7, nie bêd¹ ju¿ wypowiadane dwukrotnie. (# 474)
+*  Aktywne linki na tej samej stronie w Firefoksie v3.6 odpowiednio przesuwaj¹ kursor w wirtualny buforze w odpowiednie miejsce na stronie.
+*  NVDA nie wymawia ju¿ b³êdnie niektórych liczb oddzielonych myœlnikiem, np. 500-1000. (# 547)
+*  W systemie Windows XP, NVDA nie powoduje ju¿ zawieszania Internet Explorera, gdy nastêpuje prze³¹czenie pola wyboru w witrynie Windows Update. (# 477)
+*  NVDA ju¿ nie og³asza w dokumencie Firefox ¿e jest zajêty (np. z powodu aktualizacji lub odœwie¿ania), w przypadku gdy dokument jest w tle. Dotyczy to równie¿ paska statusu aplikacji na pierwszym planie.
+*  Podczas prze³¹czania uk³adów klawiatury Windows (z kontrol+Shift lub Alt+Shift), pe³na nazwa uk³adu jest podawana zarówno w mowie jak i Braille'u. Wczeœniej by³o to og³aszane tylko mow¹. Alternatywne uk³ady (np. Dvorak) nie by³y og³aszane w ogóle.
+
+
+
+
+
+
+
+== 2009.1 ==
+
+Najwa¿niejsze aspekty tym wydaniu to: wsparcie dla 64-bitowych wydañ systemu Windows, znacz¹co ulepszone wsparcie dla Microsoft Internet Explorer i dokumentów Adobe Reader, wsparcie dla systemu Windows 7, Czytanie logowania systemu Windows czytanie okna Menad¿era zadañ Windows oraz ekranu kontroli konta u¿ytkownika (U.A.C.) a tak¿e mo¿liwoœæ interakcji treœci Adobe Flash i Sun Java na stronach internetowych. Wykonano tak¿e kilka istotnych poprawek dla stabilnoœci i poprawy ogólnego komfortu u¿ytkownika.
+
+== Nowe funkcje ==
+
+*  Oficjalne wsparcie dla 64-bitowych wydañ systemu Windows! (# 309)
+*  Dodano sterownik dla syntezatora NewFon. Nale¿y pamiêtaæ, ¿e wymaga on specjalnej wersji NewFon. (# 206)
+*  Tryb fokusa i przegl¹dania w wirtualnych buforach mo¿e byæ teraz zg³aszany za pomoc¹ dŸwiêków, a nie mowy. Jest to domyœlnie w³¹czone. Mo¿na to skonfigurowaæ w oknie wirtualne bufory. (# 244)
+*  Kiedy klawisze regulacji g³oœnoœci s¹ naciskane na klawiaturze, NVDA nie przerywa mowy, pozwalaj¹c u¿ytkownikowi na natychmiastow¹ zmianê rzeczywistej g³oœnoœci. (# 287)
+*  Ca³kowicie przerobione wsparcie dla Microsoft Internet Explorer i dokumentów Adobe Reader. Wsparcie to zosta³o ujednolicone z rdzeniem wsparcia stosowanego dla Mozilli Gecko, wiêc funkcje takie jak szybkie renderowanie stron, rozleg³e szybkiej nawigacji, lista linków, zaznaczanie tekstu, w trybie auto fokusu i wsparcie Braille'a jest teraz dostêpne w tych dokumentach.
+*  Poprawiono obs³ugê wyœwietlania daty i godziny w oknie w³aœciwoœci daty i czasu systemu Windows Vista.
+*  Poprawiono obs³ugê nowoczesnych menu Start w systemie Windows XP / Vista  (w szczególnoœci wszystkie programy, teraz stosowne informacje z innych poziomów zagnie¿d¿onych podmenu s¹ przekazywane).
+*  W oknie ustawieñ myszy mo¿na teraz wybraæ zakres odczytu tekstu, który zostanie wypowiedziany po dotarciu do okreœlonego obiektu za pomoc¹ myszki. Do wyboru jest: znak, s³owo, wiersz lub akapit.
+*  W oknie dialogowym formatowania dokumentu dodano opcjê informuj¹c¹ o b³êdach ortograficznych pod kursorem, dotyczy to w szczególnoœci programu Microsoft Word.
+*   Wsparcie dla sprawdzania pisowni w programie Microsoft Word 2007. W starszych wersjach programu Word sprawdzanie pisowni jest obs³ugiwane tylko czêœciowo.
+*  Poprawiono obs³ugê Windows Live Mail. Mo¿esz odczytywaæ wiadomoœci jako zwyk³y tekst, jak równie¿ tworzyæ raporty w postaci zwyk³ego tekstu oraz HTML.
+*  Powiadamianie o tekscie pod kursorem myszy w oknie wiersza poleceñ.
+*  W oknie ustawieñ ogólnych NVDA dodano wpis automatycznego uruchamiania NVDA po zalogowaniu siê do systemu. Uwaga! nie dotyczy to przenoœnych wersji NVDA.
+*  NVDA mo¿e czytaæ ekrany zabezpieczeñ Windows, takie jak ekran logowania systemu Windows, Control + ALT + DEL i ekran kontroli konta u¿ytkownika (UAC) w Windows XP i wy¿ej. Czytanie ekranu logowania systemu Windows mo¿na skonfigurowaæ w oknie G³ówne Ustawienia. (# 97)
+*  Dodano sterownik monitora Braillowskiego Optelec ALVA BC6.
+*  Teraz podczas szybkiej nawigacji w wirtualnej przegl¹darce, mo¿esz poruszaæ siê naciskaj¹c klawisz N lub Shift+N przechodz¹c do nastêpnej lub poprzedniej grupy linków.
+*  Teraz podczas szybkiej nawigacji w wirtualnej przegl¹darce, punkty orientacyjne ARIA bêd¹ og³aszane poruszaj¹c siê odpowiednio w przód lub w ty³ naciskaj¹c klawisz D albo shift + d. (# 192)
+*  Okno dialogowe listy linków dostêpne podczas przegl¹dania dokumentów internetowych sta³a siê obecnie list¹ Elementów, które mo¿e zawieraæ listê linków, nag³ówków i punktów orientacyjnych. Nag³ówki i punkty orientacyjne prezentowane s¹ hierarchicznie. (# 363)
+*  Nowe okno dialogowe z list¹ elementów zawiera tak¿e pole filtrowania, które pozwala na filtrowanie zawartoœci tylko tej listy elementów, w tym tekst, który zosta³ wpisany. (# 173)
+*  Przenoœne wersje NVDA zawieraj¹ teraz katalog z konfiguracj¹ "UserConfig" wewn¹trz katalogu u¿ytkownika NVDA. Podobnie jak w przypadku wersji instalatora sprawia to, ¿e konfiguracje u¿ytkownika NVDA s¹ oddzielone od siebie.
+*  Modu³y niestandardowych aplikacji, takich jak sterowniki monitorów Braillowskich i sterowniki syntezatorów mog¹ byæ teraz przechowywane w katalogu konfiguracji u¿ytkownika. (# 337)
+*  Wirtualne bufory s¹ obecnie wykonywane w tle, pozwalaj¹c u¿ytkownikowi na interakcjê z systemem w pewnym stopniu podczas procesu przetwarzania. U¿ytkownik zostanie poinformowany, ¿e dokument jest wykonywany, jeœli trwa to d³u¿ej ni¿ sekundê.
+*  Jeœli NVDA wykryje zawieszenie z jakiegoœ powodu automatycznie zostan¹ przepuszczone wszystkie naciœniêcia klawiszy, dlatego u¿ytkownik ma wiêksz¹ szansê na odzyskanie systemu.
+*  Wsparcie dla ARIA metoda przeci¹gnij i upuœæ "w Mozilli Gecko. (# 239)
+*  Tytu³ dokumentu i bie¿¹cy wiersz lub zaznaczanie jest wypowiadane podczas przenoszenia fokusu wewn¹trz wirtualnego bufora. To sprawia, ¿e zachowanie podczas przemieszczania siê fokusa w wirtualnym buforze jest zgodne dla normalnych obiektów dokumentu. (# 210)
+*  W wirtualnym buforze, mo¿na wchodziæ w interakcje z polami rozwijanymi (takimi jak treœci Adobe Flash i Sun Java) przez naciœniêcie klawisza ENTER na tym obiekcie. Jeœli jest on dostêpny, mo¿na nastêpnie tabulatorem poruszaæ siê wokó³ niego, jak ka¿dy innej aplikacji. Aby powróciæ fokusem do dokumentu, naciœnij kombinacjê klawiszy NVDA+spacja. (# 431)
+*  Aby przejœæ do nastêpnego lub poprzedniego pola rozwjalnego w wirtualnym buforze naciœnij klawisze, O lub Shift+O.
+*  NVDA teraz ma pe³ny dostêp do uruchamiania aplikacji jako administrator w systemie Windows Vista i nowszych. Pod warunkiem, ¿e masz zainstalowane  oficjalne wydanie NVDA, ale nie bêdzie to dzia³aæ na przenoœnej wersji. (# 397)
+
+=== Zmiany ===
+
+*  NVDA nie og³asza przy uruchamianiu, ¿e "NVDA zosta³ uruchomiony".
+*  DŸwiêki startu i wyjœcia s¹ obecnie odtwarzane przy u¿yciu konfiguracji audio NVDA na urz¹dzeniu wyjœciowym zamiast na domyœlnym urz¹dzeniu audio systemu Windows. (# 164)
+*   Sygnalizacja paska postêpu uleg³a poprawie. W szczególnoœci mo¿na teraz skonfigurowaæ NVDA tak aby sygnalizowa³ postêp zarówno mow¹ jak i dŸwiêkiem w tym samym czasie.
+*  Niektóre funkcje ogólne, takie jak okienka, aplikacji i ramki, nie s¹ og³aszane przez fokus o ile nie jest anonimowy.
+*  Polecenia kopiuj przegl¹d (NVDA+F10) kopie tekstu od znacznika pocz¹tku do aktualnej pozycji przegl¹du, zamiast aktualnej pozycji, Pozwala to ¿e ostatni znak w wierszu mo¿e byæ kopiowany, co wczeœniej nie by³o mo¿liwe. (# 430)
+*  Zwiêkszona wydajnoœæ (szczególnie w netbookach), gdy wiele dŸwiêków wystêpuje w krótkich odstêpach czasu, np. szybki ruch myszy z aktywn¹ koordynacj¹ dŸwiêku. (# 396)
+
+=== Poprawione B³êdy ===
+
+*  Skrót NVDA+T czyta tytu³ bie¿¹cego okno na pierwszym planie, teraz dzia³a prawid³owo,
+*  Raportuje prawid³owe numery stron w programie Microsoft Word.
+*  Lepsze wsparcie dla edycji pól dialogowych znajduj¹cych siê w Microsoft Word (np. okno dialogowe Czcionki). Teraz mo¿na przemieszczaæ siê tam za pomoc¹ klawiszy strza³ek.
+*  lepsze wsparcie w szczególnoœci dla konsoli Dos: NVDA mo¿e teraz odczytaæ szczegó³y zawartoœci konsoli u¿ywanej od zawsze. Naciœniêcie klawisza Kontrol+break nie zakoñczy NVDA.
+*  W systemie Windows Vista i nowszym, Instalator NVDA zostanie uruchomiony z normalnymi uprawnieniami u¿ytkownika, 
+*  Backspace, teraz obs³ugiwane jest poprawnie  wymawianie wpisanych s³ów. (# 306) 
+*  Nieprawid³owe raportowanie dla "menu Start" i niektórych menu kontekstowych w Eksploratorze Windows / Windows Shell. (# 257)
+*  NVDA teraz poprawnie, etykietuje ARIA w Mozilli Gecko, gdy nie ma innych przydatnych treœci. (# 156)
+*  Gdy jêzyk NVDA jest ustawiony na "domyœlny u¿ytkownika", nale¿y u¿yæ ustawieñ jêzyka wyœwietlanego dla systemu Windows zamiast Ustawieñ regionalnych systemu Windows. (# 353) 
+*  NVDA teraz uznaje istnienie kontrolek w AIM 7
+*  Pasek zadañ teraz nie jest ignorowany, gdy otrzyma fokus, co czêsto wystêpuje podczas zamykania aplikacji. Wczeœniej NVDA zachowywa³ siê tak, jeœli fokus siê nie zmienia³.
+*  Podczas czytania pól tekstowych w aplikacjach, które u¿ywaj¹ Java Access Bridge (w tym OpenOffice.org), NVDA dzia³a obecnie poprawnie w przypadku  og³aszania numerów wierszy jest aktywne.
+*  Polecenia kopiuj przegl¹d (NVDA+F10), bardzo dobrze sobie radzi w przypadku, gdy jest u¿ywany w pozycji przed znakiem pocz¹tku. Wczeœniej, mog³o to powodowaæ problemy, takie jak awaria w Notepad + +.
+*  Niektóre znaki kontrolne (0x1), nie powoduje ju¿ dziwnego zachowania eSpeaka (np. zmiany w g³oœnoœci i wysokoœci), gdy wystêpuj¹ w tekœcie. (# 437)
+*  Poprawiono problem polegaj¹cy na naciœniêciu klawisza Enter na niektórych przyciskach lub linkach Mirandy IM, które by³o przyczyn¹ zawieszania NVDA. (# 440)
+*  Bie¿¹cy wiersz lub zaznaczenie jest teraz w³aœciwie przestrzegane w pisowni lub kopiowaniu bie¿¹cego obiektu.
+*  Naprawiono problem z oznajmianiem daty i godziny, polecenie (NVDA+F12). Poprzednio oznajmianie daty by³o obcinane na niektórych systemach. (# 471).

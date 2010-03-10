@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <sstream>
 #include <windows.h>
-#include <interfaces/vbuf/vbuf.h>
+#include "vbufRemote.h"
 #include "rpcSrv.h"
 
 //memory allocation functions

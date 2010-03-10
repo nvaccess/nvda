@@ -1,12 +1,12 @@
 # Traduction française de NVDA
-# Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+# Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
 # Michael Curran <mick@kulgan.net> 2006
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3553\n"
+"Project-Id-Version: r3599\n"
 "POT-Creation-Date: 2007-03-10 23:05+0200\n"
-"PO-Revision-Date: 2010-02-11 08:30+0200\n"
+"PO-Revision-Date: 2010-02-23 09:40+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,6 +20,14 @@ msgstr ""
 #: IAccessibleHandler.py:671
 msgid "Secure Desktop"
 msgstr "bureau sécurisé"
+
+#: NVDAHelper.py:101
+msgid "unknown layout"
+msgstr "disposition inconnue"
+
+#: NVDAHelper.py:102
+msgid "layout %s"
+msgstr "disposition %s"
 
 #: NVDAObjects\IAccessible\__init__.py:1280
 msgid "Taskbar"
@@ -91,7 +99,7 @@ msgstr "Erreur dans appmodule %s"
 #: appModules\_default.py:191 appModules\_default.py:713
 #: appModules\_default.py:789 appModules\_default.py:799
 #: appModules\_default.py:809 appModules\winamp.py:75 appModules\winamp.py:85
-#: keyboardHandler.py:54 keyboardHandler.py:56 keyboardHandler.py:58
+#: keyboardHandler.py:53 keyboardHandler.py:55 keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "on"
 msgstr "activé"
@@ -102,7 +110,7 @@ msgstr "activé"
 #: appModules\_default.py:710 appModules\_default.py:786
 #: appModules\_default.py:796 appModules\_default.py:806
 #: appModules\winamp.py:77 appModules\winamp.py:87 gui\settingsDialogs.py:484
-#: keyboardHandler.py:54 keyboardHandler.py:56 keyboardHandler.py:58
+#: keyboardHandler.py:53 keyboardHandler.py:55 keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "off"
 msgstr "désactivé"
@@ -171,7 +179,7 @@ msgstr "Verrouillage ou déverrouillage du bouton droit de la souris"
 msgid "no selection"
 msgstr "Aucune sélection"
 
-#: appModules\_default.py:109 speech.py:272 speech.py:369 speech.py:382
+#: appModules\_default.py:109 speech.py:290 speech.py:386 speech.py:399
 #: virtualBuffers\__init__.py:598
 msgid "selected %s"
 msgstr "sélectionné %s"
@@ -638,13 +646,13 @@ msgstr ""
 
 #: appModules\_default.py:678
 msgid "No formatting information"
-msgstr "Pas d'information de formatage"
+msgstr "Pas d'information de mise en forme"
 
 #: appModules\_default.py:681
 msgid ""
 "Reports formatting info for the current cursor position within a document"
 msgstr ""
-"Annonce les informations de formatage à la position actuelle du curseur "
+"Annonce les informations de mise en forme à la position actuelle du curseur "
 "dans un document"
 
 #: appModules\_default.py:692
@@ -849,7 +857,7 @@ msgstr "Affiche le dialogue tampon virtuel de NVDA"
 
 #: appModules\_default.py:878
 msgid "Shows the NVDA document formatting settings dialog"
-msgstr "Affiche le dialogue format des documents de NVDA"
+msgstr "Affiche le dialogue mise en forme des documents de NVDA"
 
 #: appModules\_default.py:882
 msgid "Saves the current NVDA configuration"
@@ -957,7 +965,7 @@ msgstr "pas encore de message"
 
 #: appModules\miranda32.py:104
 msgid "Displays one of the recent messages"
-msgstr ""
+msgstr "Affiche l'un des messages récents"
 
 #: appModules\msimn.py:18
 msgid "Attachments"
@@ -1299,15 +1307,15 @@ msgstr "smnu"
 msgid "( )"
 msgstr "( )"
 
-#: braille.py:222 speech.py:670
+#: braille.py:222 speech.py:687
 msgid "not %s"
 msgstr "non %s"
 
-#: braille.py:234 speech.py:676
+#: braille.py:234 speech.py:693
 msgid "%s of %s"
 msgstr "%s sur %s"
 
-#: braille.py:236 speech.py:681 speech.py:684
+#: braille.py:236 speech.py:698 speech.py:701
 msgid "level %s"
 msgstr "niveau %s"
 
@@ -1324,7 +1332,7 @@ msgid "No braille"
 msgstr "pas de braille"
 
 #: characterSymbols.py:17 characterSymbols.py:18 characterSymbols.py:19
-#: speech.py:82 speech.py:620
+#: speech.py:84 speech.py:637
 msgid "blank"
 msgstr "vide"
 
@@ -1580,7 +1588,7 @@ msgstr "bulle d'aide"
 msgid "tool tip"
 msgstr "suggestion"
 
-#: controlTypes.py:198 speech.py:930
+#: controlTypes.py:198 speech.py:947
 msgid "link"
 msgstr "lien"
 
@@ -1992,7 +2000,7 @@ msgstr "nom de la police"
 msgid "font size"
 msgstr "taille de la police"
 
-#: controlTypes.py:305 speech.py:882
+#: controlTypes.py:305 speech.py:899
 msgid "bold"
 msgstr "gras"
 
@@ -2008,11 +2016,11 @@ msgstr "couleur d'avant-plan"
 msgid "background color"
 msgstr "couleur d'arrière-plan"
 
-#: controlTypes.py:310 speech.py:904
+#: controlTypes.py:310 speech.py:921
 msgid "superscript"
 msgstr "exposant"
 
-#: controlTypes.py:311 speech.py:906
+#: controlTypes.py:311 speech.py:923
 msgid "subscript"
 msgstr "indice"
 
@@ -2336,7 +2344,7 @@ msgstr "modifier l'annonce des propriétés d'un document"
 
 #: gui\__init__.py:271
 msgid "Document &formatting..."
-msgstr "&format du document..."
+msgstr "Mise en &forme des documents..."
 
 #: gui\__init__.py:274
 msgid "&Default dictionary..."
@@ -2754,7 +2762,7 @@ msgstr "Annoncer les touches de &raccourci des objets"
 
 #: gui\settingsDialogs.py:500
 msgid "Report object &position information"
-msgstr "Annoncer l'information de &position de l'objet"
+msgstr "Annoncer la &position de l'objet dans une liste"
 
 #: gui\settingsDialogs.py:503
 msgid "Report object &descriptions"
@@ -2806,12 +2814,12 @@ msgstr "Indication audio du mode formulaire ou navigation"
 
 #: gui\settingsDialogs.py:591
 msgid "Document formatting"
-msgstr "format du document"
+msgstr "Mise en forme des documents"
 
 #: gui\settingsDialogs.py:594
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
-"Annonce les changements de format après le curseur (peut dégrader les "
+"Annonce les changements de mise en forme après le curseur (peut dégrader les "
 "performances)"
 
 #: gui\settingsDialogs.py:597
@@ -3206,35 +3214,31 @@ msgstr "alt de droite"
 msgid "right windows"
 msgstr "touche windows de droite"
 
-#: keyboardHandler.py:54
+#: keyboardHandler.py:53
 msgid "caps lock %s"
 msgstr "verrouillage majuscule %s"
 
-#: keyboardHandler.py:56
+#: keyboardHandler.py:55
 msgid "num lock %s"
 msgstr "verrouillage numérique %s"
 
-#: keyboardHandler.py:58
+#: keyboardHandler.py:57
 msgid "scroll lock %s"
 msgstr "arrêt défilement %s"
 
-#: keyboardHandler.py:78
-msgid "%s keyboard layout"
-msgstr "Configuration de clavier %s"
-
-#: keyboardHandler.py:191
+#: keyboardHandler.py:170
 msgid "Description: %s"
 msgstr "description: %s"
 
-#: keyboardHandler.py:194
+#: keyboardHandler.py:173
 msgid "Location: %s"
 msgstr "position: %s"
 
-#: keyboardHandler.py:209
+#: keyboardHandler.py:188
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Erreur dans keyboardHandler.internal_keyDownEvent"
 
-#: keyboardHandler.py:247
+#: keyboardHandler.py:226
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Erreur dans keyboardHandler.internal_keyUpEvent"
 
@@ -3254,139 +3258,139 @@ msgstr "Tapez exit() pour quitter la console"
 msgid "NVDA Python Console"
 msgstr "Console Python"
 
-#: speech.py:177
+#: speech.py:179
 msgid "cap %s"
 msgstr "mage %s"
 
-#: speech.py:313
+#: speech.py:330
 msgid "%d characters"
 msgstr "%d caractères"
 
-#: speech.py:364
+#: speech.py:381
 msgid "selecting %s"
 msgstr "%s sélectionné"
 
-#: speech.py:375
+#: speech.py:392
 msgid "unselecting %s"
 msgstr "%s  dessélectionné"
 
-#: speech.py:377
+#: speech.py:394
 msgid "selection removed"
 msgstr "sélection supprimée"
 
-#: speech.py:668
+#: speech.py:685
 msgid "done dragging"
 msgstr "glissage terminé"
 
-#: speech.py:693 speech.py:971
+#: speech.py:710 speech.py:988
 msgid "row %s"
 msgstr "ligne %s"
 
-#: speech.py:696 speech.py:967
+#: speech.py:713 speech.py:984
 msgid "column %s"
 msgstr "colonne %s"
 
-#: speech.py:701
+#: speech.py:718
 msgid "with %s rows and %s columns"
 msgstr "avec %s lignes et %s colonnes"
 
-#: speech.py:703
+#: speech.py:720
 msgid "with %s columns"
 msgstr "avec %s colonnes"
 
-#: speech.py:705
+#: speech.py:722
 msgid "with %s rows"
 msgstr "avec %s lignes"
 
-#: speech.py:808
+#: speech.py:825
 msgid "with %s items"
 msgstr " de %s éléments"
 
-#: speech.py:823 speech.py:930
+#: speech.py:840 speech.py:947
 msgid "out of %s"
 msgstr "hors de %s"
 
-#: speech.py:847
+#: speech.py:864
 msgid "page %s"
 msgstr "page %s"
 
-#: speech.py:854
+#: speech.py:871
 msgid "style %s"
 msgstr "style %s"
 
-#: speech.py:856
+#: speech.py:873
 msgid "default style"
 msgstr "style par défaut"
 
-#: speech.py:876
+#: speech.py:893
 msgid "line %s"
 msgstr "ligne %s"
 
-#: speech.py:882
+#: speech.py:899
 msgid "no bold"
 msgstr "pas de caractère gras"
 
-#: speech.py:887
+#: speech.py:904
 msgid "italic"
 msgstr "italique"
 
-#: speech.py:887
+#: speech.py:904
 msgid "no italic"
 msgstr "pas d'italique"
 
-#: speech.py:892
+#: speech.py:909
 msgid "no strikethrough"
 msgstr "pas de biffure"
 
-#: speech.py:892
+#: speech.py:909
 msgid "strikethrough"
 msgstr "biffure"
 
-#: speech.py:897
+#: speech.py:914
 msgid "not underlined"
 msgstr "non souligné"
 
-#: speech.py:897
+#: speech.py:914
 msgid "underlined"
 msgstr "souligné"
 
-#: speech.py:908
+#: speech.py:925
 msgid "baseline"
 msgstr "ligne de base"
 
-#: speech.py:916
+#: speech.py:933
 msgid "align left"
 msgstr "alignement à gauche"
 
-#: speech.py:918
+#: speech.py:935
 msgid "align center"
 msgstr "alignement centré"
 
-#: speech.py:920
+#: speech.py:937
 msgid "align right"
 msgstr "alignement à droite"
 
-#: speech.py:922
+#: speech.py:939
 msgid "align justify"
 msgstr "alignement justifié"
 
-#: speech.py:924
+#: speech.py:941
 msgid "align default"
 msgstr "alignement par défaut"
 
-#: speech.py:937
+#: speech.py:954
 msgid "spelling error"
 msgstr "faute d'orthographe"
 
-#: speech.py:939
+#: speech.py:956
 msgid "out of spelling error"
 msgstr "hors de la faute d'orthographe"
 
-#: speech.py:953
+#: speech.py:970
 msgid "out of table"
 msgstr "hors du tableau"
 
-#: speech.py:962
+#: speech.py:979
 msgid "table with %s columns and %s rows"
 msgstr "tableau de %s colonnes et %s lignes"
 
@@ -3468,7 +3472,7 @@ msgstr "Une revue d'écran gratuite et open-source pour MS Windows"
 
 #: versionInfo.py:44
 msgid "Copyright (C) 2006-2010 NVDA Contributors"
-msgstr ""
+msgstr "Copyright (C) 2006-2010 NVDA Contributors"
 
 #: versionInfo.py:45
 msgid ""

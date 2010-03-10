@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA R3552\n"
-"POT-Creation-Date: 2010-02-11 07:31+China Standard Time\n"
-"PO-Revision-Date: 2010-02-11 12:55+0800\n"
+"Project-Id-Version: NVDA R3568\n"
+"POT-Creation-Date: 2010-02-15 09:44+China Standard Time\n"
+"PO-Revision-Date: 2010-02-15 14:19+0800\n"
 "Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
 "Language-Team: Chinese (Hong Kong)\n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,17 @@ msgstr ""
 #: IAccessibleHandler.py:671
 msgid "Secure Desktop"
 msgstr "安全桌面"
+
+# IAccessibleHandler.py:190
+# speech.py:213
+# virtualBuffers\IAccessible\MSHTML.py:115
+# virtualBuffers\IAccessible\MSHTML.py:294
+# virtualBuffers\IAccessible\MSHTML.py:298
+# virtualBuffers\IAccessible\gecko.py:282
+# virtualBuffers\IAccessible\gecko.py:286
+#: NVDAHelper.py:78
+msgid "layout %s"
+msgstr "設置為 %s"
 
 # characterSymbols.py:53
 #: NVDAObjects\IAccessible\__init__.py:1280
@@ -126,9 +137,9 @@ msgstr "錯誤的模組 %s"
 #: appModules\_default.py:809
 #: appModules\winamp.py:75
 #: appModules\winamp.py:85
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: keyboardHandler.py:58
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "on"
 msgstr "開"
@@ -160,9 +171,9 @@ msgstr "開"
 #: appModules\winamp.py:77
 #: appModules\winamp.py:87
 #: gui\settingsDialogs.py:484
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: keyboardHandler.py:58
+#: keyboardHandler.py:53
+#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 #: virtualBuffers\__init__.py:692
 msgid "off"
 msgstr "關"
@@ -2616,12 +2627,12 @@ msgid "drop target"
 msgstr "放置目標"
 
 # core.py:74
-#: core.py:144
+#: core.py:137
 msgid "Loading subsystems, please wait..."
 msgstr "載入程式中, 請稍後..."
 
 # core.py:87
-#: core.py:223
+#: core.py:216
 msgid "NVDA started"
 msgstr "N V D A 已經啟動"
 
@@ -3854,42 +3865,37 @@ msgid "right windows"
 msgstr "右邊 windows"
 
 # keyboardHandler.py:80
-#: keyboardHandler.py:54
+#: keyboardHandler.py:53
 msgid "caps lock %s"
 msgstr "大寫鎖 %s"
 
 # keyboardHandler.py:83
-#: keyboardHandler.py:56
+#: keyboardHandler.py:55
 msgid "num lock %s"
 msgstr "數字鍵盤 %s"
 
 # keyboardHandler.py:80
-#: keyboardHandler.py:58
+#: keyboardHandler.py:57
 msgid "scroll lock %s"
 msgstr "捲動鎖定 %s"
 
-# keyboardHandler.py:77
-#: keyboardHandler.py:78
-msgid "%s keyboard layout"
-msgstr "設置鍵盤為 %s"
-
 # keyboardHandler.py:91
-#: keyboardHandler.py:191
+#: keyboardHandler.py:170
 msgid "Description: %s"
 msgstr "描述 %s"
 
 # keyboardHandler.py:92
-#: keyboardHandler.py:194
+#: keyboardHandler.py:173
 msgid "Location: %s"
 msgstr "位置在 %s"
 
 # keyboardHandler.py:153
-#: keyboardHandler.py:209
+#: keyboardHandler.py:188
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "在按鍵按下時發生錯誤"
 
 # keyboardHandler.py:189
-#: keyboardHandler.py:247
+#: keyboardHandler.py:226
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "在按鍵放開時發生錯誤"
 
@@ -4195,8 +4201,8 @@ msgid "A free and open-source screen reader for MS Windows"
 msgstr "一套免費且開放原碼的微軟視窗螢幕報讀軟體"
 
 #: versionInfo.py:44
-msgid "Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>"
-msgstr "版權 (C) 2006-2010 NVDA 的貢獻者 <http://www.nvda-project.org/>"
+msgid "Copyright (C) 2006-2010 NVDA Contributors"
+msgstr "版權 (C) 2006-2010 NVDA 的貢獻者"
 
 # versionInfo.py:14
 #: versionInfo.py:45
