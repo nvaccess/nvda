@@ -384,12 +384,25 @@ class NVDAObject(baseObject.ScriptableObject):
 		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
 			return self.presType_unavailable
 		role=self.role
-		if False: #role==controlTypes.ROLE_TREEVIEW:
-			return self.presType_unavailable
 		if controlTypes.STATE_FOCUSED in states:
 			return self.presType_content
-		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION,controlTypes.ROLE_FORM,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_TITLEBAR,controlTypes.ROLE_TEXTFRAME):
+		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_TITLEBAR):
 			return self.presType_layout
+		name = self.name
+		description = self.description
+		if not name and not description and role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_FORM):
+			return self.presType_layout
+		if not name and not description and role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and not config.conf["documentFormatting"]["reportTables"]:
+			return self.presType_layout
+		if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN):
+			try:
+				table=self.table
+			except NotImplementedError:
+				table=None
+			if table:
+				# This is part of a real table, so the cells will report row/column information.
+				# Therefore, this object is just for layout.
+				return self.presType_layout
 		return self.presType_content
 
 	def _get_simpleParent(self):
@@ -558,24 +571,10 @@ Tries to force this object to take the focus.
 		@return: C{True} if it should be presented in the focus ancestry, C{False} if not.
 		@rtype: bool
 		"""
-		role = self.role
-		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_EDITABLETEXT):
+		if self.presentationType == self.presType_layout:
 			return False
-		name = self.name
-		description = self.description
-		if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_FORM) and not name and not description:
+		if self.role in (controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_EDITABLETEXT):
 			return False
-		if not name and not description and role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and not config.conf["documentFormatting"]["reportTables"]:
-			return False
-		if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN):
-			try:
-				table=self.table
-			except NotImplementedError:
-				table=None
-			if table:
-				# This is part of a real table, so the cells will report row/column information.
-				# Therefore, we don't want to present this in the ancestry.
-				return False
 		return True
 
 	def _get_statusBar(self):
