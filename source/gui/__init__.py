@@ -153,7 +153,9 @@ class MainFrame(wx.Frame):
 			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("configuration saved"))
 		except:
 			self.prePopup()
-			wx.MessageDialog(self,_("Could not save configuration - probably read only file system"),_("Error"),style=wx.OK | wx.ICON_ERROR).ShowModal()
+			d = wx.MessageDialog(self,_("Could not save configuration - probably read only file system"),_("Error"),style=wx.OK | wx.ICON_ERROR)
+			d.ShowModal()
+			d.Destroy()
 			self.postPopup()
 
 	def _popupSettingsDialog(self, dialog, *args, **kwargs):
@@ -180,6 +182,7 @@ class MainFrame(wx.Frame):
 			if d.ShowModal() == wx.ID_YES:
 				canExit=True
 			isExitDialog=False
+			d.Destroy()
 			self.postPopup()
 		else:
 			canExit=True
@@ -222,6 +225,7 @@ class MainFrame(wx.Frame):
 			self.prePopup()
 			d = wx.MessageDialog(self, aboutInfo, _("About NVDA"), wx.OK)
 			d.ShowModal()
+			d.Destroy()
 			self.postPopup()
 		except:
 			log.error("gui.mainFrame.onAbout", exc_info=True)
@@ -406,7 +410,7 @@ class WelcomeDialog(wx.Dialog):
 			config.save()
 		except:
 			pass
-		self.Destroy()
+		self.Close()
 
 	@classmethod
 	def run(cls):
@@ -414,7 +418,9 @@ class WelcomeDialog(wx.Dialog):
 		This does not require the dialog to be instantiated.
 		"""
 		mainFrame.prePopup()
-		cls(mainFrame).ShowModal()
+		d = cls(mainFrame)
+		d.ShowModal()
+		d.Destroy()
 		mainFrame.postPopup()
 
 class ConfigFileErrorDialog(wx.Dialog):
@@ -439,7 +445,7 @@ Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit y
 	def onOk(self, evt):
 		globalVars.configFileError=None
 		config.save()
-		self.Destroy()
+		self.Close()
 
 	@classmethod
 	def run(cls):
@@ -447,5 +453,7 @@ Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit y
 		This does not require the dialog to be instantiated.
 		"""
 		mainFrame.prePopup()
-		cls(mainFrame).ShowModal()
+		d = cls(mainFrame)
+		d.ShowModal()
+		d.Destroy()
 		mainFrame.postPopup()

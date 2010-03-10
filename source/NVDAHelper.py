@@ -3,6 +3,7 @@ import _winreg
 import winKernel
 
 from ctypes import *
+from comtypes import BSTR
 import keyboardHandler
 import winUser
 import speech
@@ -20,6 +21,7 @@ _remoteLib=None
 _remoteLoader64=None
 localLib=None
 generateBeep=None
+VBuf_getTextInRange=None
 lastInputLangChangeTime=0
 
 winEventHookID=None
@@ -165,7 +167,7 @@ class RemoteLoader64(object):
 		winKernel.closeHandle(self._process)
 
 def initialize():
-	global _remoteLib, _remoteLoader64, localLib, winEventHookID,generateBeep
+	global _remoteLib, _remoteLoader64, localLib, winEventHookID,generateBeep,VBuf_getTextInRange
 	localLib=cdll.LoadLibrary('lib/nvdaHelperLocal.dll')
 	for name,func in [
 		("nvdaController_speakText",nvdaController_speakText),
@@ -182,6 +184,10 @@ def initialize():
 	generateBeep=localLib.generateBeep
 	generateBeep.argtypes=[c_char_p,c_float,c_uint,c_ubyte,c_ubyte]
 	generateBeep.restype=c_uint
+	# Handle VBuf_getTextInRange's BSTR out parameter so that the BSTR will be freed automatically.
+	VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(
+		("VBuf_getTextInRange", localLib),
+		((1,), (1,), (1,), (2,), (1,)))
 	_remoteLib=cdll.LoadLibrary('lib/NVDAHelperRemote.dll')
 	if _remoteLib.nvdaHelper_initialize() < 0:
 		raise RuntimeError("Error initializing NVDAHelper")
@@ -190,7 +196,7 @@ def initialize():
 	winEventHookID=winUser.setWinEventHook(EVENT_TYPEDCHARACTER,EVENT_TYPEDCHARACTER,0,winEventCallback,0,0,0)
 
 def terminate():
-	global _remoteLib, _remoteLoader64, localLib
+	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange
 	winUser.unhookWinEvent(winEventHookID)
 	if _remoteLib.nvdaHelper_terminate() < 0:
 		raise RuntimeError("Error terminating NVDAHelper")
@@ -198,4 +204,6 @@ def terminate():
 	if _remoteLoader64:
 		_remoteLoader64.terminate()
 		_remoteLoader64=None
+	generateBeep=None
+	VBuf_getTextInRange=None
 	localLib=None

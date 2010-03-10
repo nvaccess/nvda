@@ -59,6 +59,7 @@ localLib=env.SharedLibrary(
 	],
 	LIBS=[
 		"user32",
+		"oleaut32",
 		"rpcrt4",
 	],
 )
