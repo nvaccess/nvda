@@ -14,6 +14,7 @@ env.Append(CXXFLAGS=['/EHsc'])
 env.Append(CPPPATH=['#.','#../include'])
 env.Append(LINKFLAGS='/incremental:no')
 TARGET_ARCH=env['TARGET_ARCH']
+env.Append(LIBPATH=['#../' + ('lib' if TARGET_ARCH=='x86' else 'lib64')])
 if TARGET_ARCH=='x86_64':
 	env.Append(MIDLFLAGS='/x64')
 

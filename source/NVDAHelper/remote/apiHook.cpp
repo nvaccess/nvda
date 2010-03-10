@@ -1,24 +1,10 @@
 #include <set>
 #include <windows.h>
+#include <MinHook.h>
 #include "apiHook.h"
 
 using namespace std;
 
-#pragma pack(push)
-#pragma pack(1)
-typedef struct {
-	byte longJumpCode;
-	long longJumpAddress;
-	byte shortJumpCode;
-	byte shortJumpAddress;
-} hotPatchProlog_t; 
-#pragma pack(pop)
-
-#define OPCODE_MOVE 0X8B
-#define REGISTERCODE_EDI 0XFF
-#define OPCODE_JUMP8 0XEB
-#define OPCODE_JUMP32 0XE9
- 
 typedef multiset<HMODULE> moduleSet_t;
 typedef set<void*> funcSet_t;
 
@@ -37,43 +23,36 @@ void* apiHook_hookFunction(const char* moduleName, const char* functionName, voi
 		FreeLibrary(moduleHandle);
 		return NULL;
 	}
-	byte* byteAddr=(byte*)realFunc;
-	if(g_hookedFunctions.count(realFunc)>0) {
+	if(g_hookedFunctions.empty()) {
+		printf("apiHook_hookFunction: calling MH_Initialize\n");
+		MH_Initialize();
+	} else if(g_hookedFunctions.count(realFunc)>0) {
 		fprintf(stderr,"apiHook_hookFunction: function %s in module %s is already hooked, returnning false\n",functionName,moduleName);
 		FreeLibrary(moduleHandle);
 		return FALSE;
 	}
 	printf("apiHook_hookFunction: requesting to hook function %s at address 0X%X in module %s at address 0X%X with  new function at address 0X%X\n",functionName,realFunc,moduleName,moduleHandle,newHookProc);
-	if(byteAddr[0]!=OPCODE_MOVE||byteAddr[1]!=REGISTERCODE_EDI) {
-		fprintf(stderr,"apiHook_hookFunction: unable to patch function at address 0X%X, function not compiled for hot patching. Returnning NULL\n",realFunc);
-		FreeLibrary(moduleHandle);
+	void* origFunc;
+	int res;
+	if((res=MH_CreateHook(realFunc,newHookProc,&origFunc))!=MH_OK) {
+		fprintf(stderr,"apiHook_hookFunction: MH_CreateHook failed with %d\n", res);
 		return NULL;
 	}
-	hotPatchProlog_t prolog={OPCODE_JUMP32,(byte*)newHookProc-byteAddr,OPCODE_JUMP8,-7};
-	byteAddr-=5;
-	DWORD oldProtect;
-	VirtualProtect(byteAddr,7,PAGE_EXECUTE_READWRITE,&oldProtect);
-	memcpy(byteAddr,&prolog,7);
-	VirtualProtect(byteAddr,7,oldProtect,&oldProtect);
+	if((res=MH_EnableHook(realFunc))!=MH_OK) {
+		fprintf(stderr,"apiHook_hookFunction: MH_EnableHook failed with %d\n", res);
+		return NULL;
+	}
 	g_hookedModules.insert(moduleHandle);
 	g_hookedFunctions.insert(realFunc);
 	printf("apiHook_hookFunction: successfully hooked function %s in module %s with hook procedure at address 0X%X, returning true\n",functionName,moduleName,newHookProc);
-	return byteAddr+7;
+	return origFunc;
 }
 
 BOOL apiHook_unhookFunctions() {
 	for(funcSet_t::iterator i=g_hookedFunctions.begin();i!=g_hookedFunctions.end();i++) {
-		void* realFunc=*i;
-		byte* byteAddr=(byte*)realFunc;
-		if(byteAddr[0]!=OPCODE_JUMP8||byteAddr[1]!=(byte)-7) {
-			continue;
-		}
-		byte defaultBytes[2]={OPCODE_MOVE,REGISTERCODE_EDI};
-		DWORD oldProtect;
-		VirtualProtect(realFunc,2,PAGE_EXECUTE_READWRITE,&oldProtect);
-		memcpy(realFunc,defaultBytes,2);
-		VirtualProtect(realFunc,2,oldProtect,&oldProtect);
+		MH_DisableHook(*i);
 	}
+	MH_Uninitialize();
 	g_hookedFunctions.clear();
 	for(moduleSet_t::iterator i=g_hookedModules.begin();i!=g_hookedModules.end();i++) {
 		FreeLibrary(*i);
