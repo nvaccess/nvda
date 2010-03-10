@@ -197,6 +197,39 @@ template<typename charType> BOOL  WINAPI hookClass_TextOut<charType>::fakeFuncti
 	return realFunction(hdc,x,y,lpString,cbCount);
 }
 
+//TabbedTextOut hook class template
+template<typename charType> class hookClass_TabbedTextOut {
+	public:
+	typedef LONG (WINAPI *funcType)(HDC,int,int,charType*,int,int,const LPINT,int);
+	static funcType realFunction;
+	static LONG WINAPI fakeFunction(HDC hdc, int x, int y, charType* lpString, int nCount, int nTabPositions, const LPINT lpnTabStopPositions, int nTabOrigin);
+};
+
+template<typename charType> typename hookClass_TabbedTextOut<charType>::funcType hookClass_TabbedTextOut<charType>::realFunction=NULL;
+
+template<typename charType> LONG WINAPI hookClass_TabbedTextOut<charType>::fakeFunction(HDC hdc, int x, int y, charType* lpString, int nCount, int nTabPositions, const LPINT lpnTabStopPositions, int nTabOrigin) {
+	//Collect text alignment and possibly current position
+	UINT textAlign=GetTextAlign(hdc);
+	POINT pos={x,y};
+	if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
+	//Call the real function
+	LONG res=realFunction(hdc,x,y,lpString,nCount,nTabPositions,lpnTabStopPositions,nTabOrigin);
+	//If text could not be drawn, or  some arguments are not sane, then stop here.
+	if(res==0||!lpString||nCount==0) return res;
+	//Get or create a display model for this DC.
+	//If we can't then stop here.
+	displayModel_t* model=acquireDisplayModel(hdc);
+	if(!model) return res;
+	//TabbedTextOut returns the size of the text it wrote in its result
+	SIZE textSize={HIWORD(res),LOWORD(res)};
+	//X and Y need to be in device units
+	LPtoDP(hdc,&pos,1);
+	//Record the text
+	ExtTextOutHelper(model,hdc,pos.x,pos.y,&textSize,NULL,0,textAlign,FALSE,lpString,nCount);
+	model->Release();
+	return res;
+}
+ 
 //DrawTextEx hook class template
 //handles char or wchar_t
 template <typename charType> class hookClass_DrawTextEx {
@@ -486,6 +519,8 @@ void gdiHooks_inProcess_initialize() {
 	//Hook needed functions
 	hookClass_DrawTextEx<char>::realFunction=(hookClass_DrawTextEx<char>::funcType)apiHook_hookFunction("USER32.dll","DrawTextExA",hookClass_DrawTextEx<char>::fakeFunction);
 	hookClass_DrawTextEx<wchar_t>::realFunction=(hookClass_DrawTextEx<wchar_t>::funcType)apiHook_hookFunction("USER32.dll","DrawTextExW",hookClass_DrawTextEx<wchar_t>::fakeFunction);
+	//hookClass_TabbedTextOut<char>::realFunction=(hookClass_TabbedTextOut<char>::funcType)apiHook_hookFunction("USER32.dll","TabbedTextOutA",hookClass_TabbedTextOut<char>::fakeFunction);
+	//hookClass_TabbedTextOut<wchar_t>::realFunction=(hookClass_TabbedTextOut<wchar_t>::funcType)apiHook_hookFunction("USER32.dll","TabbedTextOutW",hookClass_TabbedTextOut<wchar_t>::fakeFunction);
 	hookClass_TextOut<char>::realFunction=(hookClass_TextOut<char>::funcType)apiHook_hookFunction("GDI32.dll","TextOutA",hookClass_TextOut<char>::fakeFunction);
 	hookClass_TextOut<wchar_t>::realFunction=(hookClass_TextOut<wchar_t>::funcType)apiHook_hookFunction("GDI32.dll","TextOutW",hookClass_TextOut<wchar_t>::fakeFunction);
 	hookClass_ExtTextOut<char>::realFunction=(hookClass_ExtTextOut<char>::funcType)apiHook_hookFunction("GDI32.dll","ExtTextOutA",hookClass_ExtTextOut<char>::fakeFunction);
