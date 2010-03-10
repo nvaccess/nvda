@@ -422,6 +422,8 @@ class NVDAObject(baseObject.ScriptableObject):
 				found=child
 			elif childPresType==self.presType_layout:
 				found=child._findSimpleNext(useChild=True,useParent=False,goPrevious=goPrevious)
+			elif child:
+				found=child._findSimpleNext(useChild=False,useParent=False,goPrevious=goPrevious)
 			if found:
 				return found
 		next=getattr(self,nextPrevAttrib)
