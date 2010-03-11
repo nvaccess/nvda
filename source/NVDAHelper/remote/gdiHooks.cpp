@@ -222,8 +222,6 @@ template<typename charType> LONG WINAPI hookClass_TabbedTextOut<charType>::fakeF
 	if(!model) return res;
 	//TabbedTextOut returns the size of the text it wrote in its result
 	SIZE textSize={HIWORD(res),LOWORD(res)};
-	//X and Y need to be in device units
-	LPtoDP(hdc,&pos,1);
 	//Record the text
 	ExtTextOutHelper(model,hdc,pos.x,pos.y,&textSize,NULL,0,textAlign,FALSE,lpString,nCount);
 	model->Release();
