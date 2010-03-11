@@ -17,6 +17,8 @@ class Getter(object):
 		self.fget=fget
 
 	def __get__(self,instance,owner):
+		if not instance:
+			return self
 		return self.fget(instance)
 
 	def setter(self,func):
@@ -28,6 +30,8 @@ class Getter(object):
 class CachingGetter(Getter):
 
 	def __get__(self, instance, owner):
+		if not instance:
+			return self
 		return instance._getPropertyViaCache(self.fget)
 
 class AutoPropertyType(type):
