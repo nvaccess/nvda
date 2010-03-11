@@ -11,7 +11,7 @@ typedef multiset<HMODULE> moduleSet_t;
 
 moduleSet_t g_hookedModules;
 
-bool apiHook_init() {
+bool apiHook_inProcess_initialize() {
 	LOG_DEBUG("calling MH_Initialize");
 	int res;
 	if ((res=MH_Initialize())!=MH_OK) {
@@ -49,7 +49,7 @@ void* apiHook_hookFunction(const char* moduleName, const char* functionName, voi
 	return origFunc;
 }
 
-BOOL apiHook_unhookFunctions() {
+BOOL apiHook_inProcess_terminate() {
 	int res;
 	if ((res=MH_Uninitialize())!=MH_OK) 
 		LOG_ERROR("MH_Uninitialize failed with " << res);

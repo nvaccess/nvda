@@ -56,14 +56,16 @@ void inProcess_initialize() {
 	ia2LiveRegions_inProcess_initialize();
 	typedCharacter_inProcess_initialize();
 	inputLangChange_inProcess_initialize();
-	gdiHooks_inProcess_initialize();
+	if (apiHook_inProcess_initialize()) {
+		gdiHooks_inProcess_initialize();
+	}
 	inProcess_isRunning=inProcess_wasInitializedOnce=true;
 }
 
 void inProcess_terminate() {
 	assert(inProcess_isRunning);
 	assert(inProcess_wasInitializedOnce);
-	apiHook_unhookFunctions();
+	apiHook_inProcess_terminate();
 	gdiHooks_inProcess_terminate();
 	inputLangChange_inProcess_terminate();
 	typedCharacter_inProcess_terminate();
