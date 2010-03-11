@@ -741,15 +741,14 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_test_navigatorDisplayModelText(self,keyPress):
 		obj=api.getNavigatorObject()
-		import NVDAHelper
 		import ctypes
-		text=ctypes.c_wchar_p()
 		left,top,width,height=obj.location
 		p=ctypes.wintypes.POINT(left,top)
 		ctypes.windll.user32.ScreenToClient(obj.windowHandle,ctypes.byref(p))
-		NVDAHelper.localLib.displayModel_getWindowTextInRect(self.helperLocalBindingHandle,obj.windowHandle,p.x,p.y,p.x+width,p.y+height,ctypes.byref(text))
-		speech.speakMessage(text.value)
-		log.info(text.value)
+		import displayModel
+		text=displayModel.getWindowTextInRect(self.helperLocalBindingHandle,obj.windowHandle,p.x,p.y,p.x+width,p.y+height)
+		speech.speakMessage(text)
+		log.info(text)
 
 	def script_test_navigatorWindowInfo(self,keyPress):
 		import ctypes

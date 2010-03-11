@@ -1,4 +1,6 @@
 
+import "wtypes.idl";
+
 [
 	uuid(F624BAF9-2020-453a-B781-05ECF6E4EF54),
 	version(1.0),
@@ -8,6 +10,6 @@ interface DisplayModel {
 /**
  * Retreaves the text within the given rectangle (in client coordinates), within the given window.
   */
-	__declspec(dllexport) error_status_t getWindowTextInRect([in] handle_t bindingHandle, [in] const long windowHandle, [in] const int left, [in] const int top, [in] const int right, [in] const int bottom, [out,string] wchar_t** text);
+	__declspec(dllexport) error_status_t getWindowTextInRect([in] handle_t bindingHandle, [in] const long windowHandle, [in] const int left, [in] const int top, [in] const int right, [in] const int bottom, [out,string] BSTR* text);
 
 }
