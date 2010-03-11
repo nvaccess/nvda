@@ -1,13 +1,11 @@
 <html>
 <head>
-<title>Guia do Utilizador do NVDA 2009.1</title>
+<title>Guia do Utilizador do NVDA 2010.1</title>
 </head>
-
 <body>
-<h1>Guia do Utilizador do NVDA 2009.1</h1>
-<span>Última actualização a 13 de Setembro de 2009</span>
-
-<h1>Sumário</h1>
+<h1>Guia do Utilizador do NVDA 2010.1</h1>
+<span>Última actualização a 5 de Fevereiro de 2010</span>
+<h2>Sumário</h2>
 <ul>
 <li><a href="#1">1. Introdução</a></li>
 <ul>
@@ -63,9 +61,9 @@
 <li><a href="#8.1">8.1. Navegação Por Carácter</a></li>
 <li><a href="#8.2">8.2. Formulários E Os Modos de Foco E Navegação</a></li>
 <li><a href="#8.3">8.3. A Lista de Elementos</a></li>
-<li><a href="#8.4">8.4. Objectos Embebidos</a></li>
+<li><a href="#8.4">8.4. Objectos Embutidos</a></li>
 </ul>
-<li><a href="#9">9. Informação Adicional</a></li>
+<li><a href="#9">9. Resolução de Problemas Com o NVDA</a></li>
 </ul>
 <h2 id="1">1. Introdução</h2>
 <h3 id="1.1">1.1. Características Gerais</h3>
@@ -110,9 +108,8 @@ Este software suporta muitos códigos Braille que abrangem um vasto leque de idio
 </p>
 <h3 id="1.5">1.5. Licença e Copyright</h3>
 <p>
-NVDA copyright © 2006-2009 Contribuidores do NVDA.
+NVDA copyright © 2006-2010 Contribuidores do NVDA.
 </p>
-<p>
 O NVDA está coberto pela GNU General Public License (Versão 2). É livre para partilhar ou alterar este programa da forma que pretender desde que distribua sempre a licença, software e todo o respectivo código disponível. Para quem pretender este programa, as regras anteriormente mencionadas aplicam-se ao software original e a todas as cópias modificadas, incluindo todos os programas que contenham código descendente deste. Para mais detalhes, pode <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">ver a licença completa.</a>
 </p>
 <h2 id="2">2. Requerimentos Do Sistema</h2>
@@ -226,7 +223,7 @@ O diálogo do Sintetizador, pode ser encontrado no item "Sintetizadores..." no me
 Esta caixa de diálogo tem uma caixa de combinação simples que lista todos os sintetizadores disponíveis. Seleccione um dos mesmos com as setas que pretende utilizar e por fim pressione ok. Se existir um erro ao carregar o sintetizador, uma caixa de mensagem aparecerá a alertá-lo para este facto e o sintetizador anteriormente carregado será mantido.
 </p>
 <p>
-A lista actual de sintetizadores que o NVDA suporta é: eSpeak, SAPI4, SAPI5, Audiologic, Display, e Silence.
+A lista actual de sintetizadores que o NVDA suporta é: eSpeak, SAPI4, SAPI5, Audiologic e Silence.
 </p>
 <p>
 O sintetizador eSpeak está compilado directamente com o NVDA e não depende de quaisquer outros drivers especiais ou bibliotecas SAPI para ser instalado. Este leitor de ecrã inicia com o eSpeak por predefinição. O sintetizador em questão trabalhará em qualquer sistema em que o NVDA corra e funcionará definitivamente quando executar este leitor de ecrã através de uma unidade de memória USB ou CD, ou em qualquer outro sistema.
@@ -236,9 +233,6 @@ A opção SAPI4 permite-lhe usar sintetizadores SAPI. As vozes que estão disponíve
 </p>
 <p>
 O sintetizador SAPI5 permite-lhe usar vozes da Microsoft que estão incluídas na sua máquina. No XP, a voz Sapi5 predefinida é o Microsoft Sam. Já no Vista, a voz por defeito é a Microsoft Anna. Dependendo das vozes que estiverem instaladas, outras poderão aparecer no item SAPI5. 
-</p>
-<p>
-O sintetizador Display é útil para programadores com visão que pretendam ler o que é que o NVDA está a anunciar. Desta forma, podem testar o NVDA com as suas aplicações. 
 </p>
 <p>
 O driver do sintetizador Silence não é útil, a não ser que não pretenda ter qualquer voz todas as vezes que execute o NVDA. 
@@ -329,9 +323,9 @@ Esta opção é um campo numérico que lhe permite alterar a velocidade de intermitê
 <p>
 Esta definição é um campo numérico que controla durante quanto tempo são apresentadas as mensagens do sistema na linha Braille.
 </p>
-<h6>Miscelânea</h6>
+<h6>Fixar Braille Para</h6>
 <p>
-Quando pressionar NVDA+Control+T, pode controlar o que vai ser apresentado na linha Braille. As duas opções são foco e revisão. O foco mostra o que vai ser acedido através das setas e da tecla Tab, em suma, navegação com o foco. A revisão permite-lhe rever o que está no ecrã, ou seja, navegação de objectos. Pode mover-se rapidamente entre estas opções ao premir Control+NVDA+T.
+Quando pressionar NVDA+Control+T, pode controlar o que vai ser apresentado na linha Braille. As duas opções são foco e revisão. O foco mostra o que vai ser acedido através das setas e da tecla Tab, em suma, navegação com o foco. A revisão permite-lhe rever o que está no ecrã, ou seja, navegação de objectos. Pode alternar entre estas opções ao premir Control+NVDA+T.
 </p>
 <h5 id="6.2.1.5">6.2.1.5. Definições do Teclado</h5>
 <p>
@@ -359,7 +353,6 @@ Uma caixa de verificação que quando marcada informa que o NVDA anunciará todos o
 </p>
 <h6>Falar Palavras Introduzidas</h6>
 <p>
-Uma caixa de verificação que quando está seleccionada informa que o NVDA anunciará todas as palavras que escrever no teclado. Pode também configurar esta opção a partir de qualquer local se premir NVDA+3.
 </p>
 <h6>Anunciar Teclas de Comando</h6>
 <p>
@@ -535,10 +528,23 @@ Existem alguns comandos de teclado úteis quando se move com o foco:
 Quando o foco está sobre um objecto que tem um cursor de edição (cursor do sistema), pode andar com as setas e editar normalmente como pretender. O NVDA anunciará como se mover por Carácter, palavra, linha e também informará a selecção ou não selecção de texto.
 </p>
 <p>
-Quando se mover com o cursor do sistema, a posição do cursor de revisão também será actualizada para se juntar ao mesmo.
-</p>
+O NVDA fornece os seguintes comandos relativamente ao cursor do sistema:
+ </p>
+<ul>
+<li>NVDA+Seta Abaixo: Começa a ler desde a posição do cursor do sistema, movendo-o;</li>
+<li>NVDA+Seta Acima: Lê a linha actual em que está o cursor do sistema;</li>
+<li>NVDA+Shift+Seta Acima: Lê o texto seleccionado actualmente caso exista;</li>
+<li>NVDA+F: informa a formatação do texto sob o cursor do sistema.</li>
+</ul> 
 <p>
-Pode também ler todo o texto (leitura contínua) com NVDA+Seta Abaixo. Note que isto é diferente do Mais do Bloco Numérico o qual move somente o cursor de revisão, enquanto o primeiro move o cursor do sistema conforme se vai movimentando.
+Quando estiver numa tabela, as seguintes teclas de atalho também estãodisponíveis:
+</p>
+<ul>
+<li>Control+Alt+Seta esquerda: Move para a coluna anterior (permanecendo na linha);</li>
+<li>Control+Alt+Seta direita: move para a coluna seguinte (permanecendo na linha);</li>
+ <li>Control+Alt+Seta acima: Move para a linha anterior (permanecendo na coluna);</li>
+<li>Control+Alt+Seta Abaixo: Move para a linha seguinte (permanecendo na coluna);</li>
+</ul>
 </p>
 <h3 id="7.3">7.3. Navegação De Objectos</h3>
 <p>
@@ -549,7 +555,6 @@ A árvore estruturada dos objectos inicia-se na janela do ambiente de trabalho, o
 </p>
 <p>
 A estrutura em árvore pode ser muito grande, mas permite-lhe navegar numa ordem lógica, de forma a conseguir encontrar a informação que necessita. 
-</p>
 <p>
 Esta estrutura não tem nada a ver com a forma em que os objectos estão dispostos no ecrã, mas sim como estão relacionados logicamente. Isto poderá demorar algum tempo até que comece a utilizar, mas uma vez que compreenda isto, deverá conseguir mover-se com muita facilidade.
 </p>
@@ -572,6 +577,7 @@ Para navegar através de objectos utilize as seguintes teclas:
 <li>NVDA+Shift+6 do bloco numérico: Move para o próximo objecto no fluxo (Atravessa automaticamente fronteiras de ascendentes e descendentes até encontrar o próximo);</li>
 <li>NVDA+Menos do bloco numérico: Move para o foco;</li>
 <li>NVDA+Enter do bloco numérico: Activa o objecto actual (ex. pressionar Enter / clique / duplo clique);</li>
+<li>NVDA+Shift+Menos do bloco numérico: Move o foco para o objecto actual</li>
 <li>NVDA+Barra do bloco numérico: Move o rato para o objecto actual;</li>
 <li>NVDA+Asterisco do bloco numérico: Move para o rato;</li>
 <li>NVDA+Shift+5 do bloco numérico: anunciar as dimensões actuais dos objectos referentes ao ecrã;</li>
@@ -614,10 +620,7 @@ Quando um objecto tem um cursor de edição (cursor do sistema) e move-se, o curso
 </p>
 <h3 id="7.5">7.5. Navegar Com O Rato</h3>
 <p>
-Quando mover o rato, o NVDA informará por predefinição o texto que se encontra directamente sobre o ponteiro deste periférico, assim que este se mova pelo texto. Quando suportado, este leitor de ecrã ler-lhe-á o conteúdo de parágrafos de texto, contudo em alguns controlos só poderá ler por linha.
-</p>
-<p>
-O NVDA também pode ser configurado para anunciar o tipo de controlo ou o objecto onde está actualmente o rato conforme se movimente (ex. lista, botão etc.), o que é muito útil para utilizadores totalmente cegos quando algumas vezes o texto não for suficiente. 
+O NVDA também pode ser configurado para anunciar o tipo de controlo ou o objecto onde está actualmente o rato conforme se movimente (ex. lista, botão etc.), o que é muito útil para utilizadores totalmente cegos quando algumas vezes o texto não for suficiente.
 </p>
 <p>
 Este programa fornece um modo para que os utilizadores compreendam onde está o rato no que tange às dimensões do ecrã através da reprodução das coordenadas actuais do rato com beeps audíveis. Quanto mais alto estiver o rato no ecrã, mais agudo será a entoação dos beeps. Quanto mais à esquerda ou à direita estiver o rato no ecrã, mais parecerá que o som anda à esquerda ou à direita (assumindo-se que o utilizador tem umas colunas stereo). 
@@ -625,6 +628,15 @@ Este programa fornece um modo para que os utilizadores compreendam onde está o r
 <p>
 Estas características adicionais do rato não se encontram activadas por defeito no NVDA, mas se pretender tirar partido das mesmas, pode configurá-las a partir do diálogo das definições do rato, que se encontram no menu Preferências do menu deste software.
 </p>
+<p>
+Apesar de um rato físico ou de um trackpad terem de ser utilizados para navegar com o rato, o NVDA tem alguns comandos fundamentais relacionados com este periférico:
+</p>
+<ul>
+<li>Barra do bloco numérico: clique do botão esquerdo do rato;</li>
+<li>Asterisco do bloco numérico: clique do botão direito do rato;</li>
+<li>Shift+Barra do bloco numérico: Bloqueia/Desbloqueia o botão esquerdo em baixo;</li>
+<li>Shift+Asterisco do bloco numérico: Bloqueia/Desbloqueia o botão direito em baixo.</li>
+</ul>
 <h2 id="8">8. Buffers Virtuais</h2>
 <p>
 Os documentos complexos só de leitura, tais como páginas Web, são representados no NVDA num Buffer Virtual. 
@@ -633,17 +645,17 @@ Os documentos complexos só de leitura, tais como páginas Web, são representados 
 Um Buffer Virtual é uma representação plana textual do documento, que permite ao utilizador andar para ler o texto e em campos que estão no documento. Para além de conseguir mover-se, também pode pressionar Enter ou espaço em links e botões para os activar, premir Enter ou espaço em áreas de edição para editar o conteúdo respectivo, carregar no Enter ou no espaço em caixas de verificação ou em botões de opção para os seleccionar e pressione Enter ou espaço em caixas de combinação para modificar imediatamente a sua selecção.
 </p>
 <p>
-Quando está num Buffer Virtual, existem dois modos de interacção. O modo de navegação é onde se pode mover pelo texto utilizando um cursor virtual. Já o modo de foco é onde pode interagir directamente com um controlo (área de edição, caixa de combinação, botões de opção) utilizando adequadamente as teclas que usaria normalmente. Quando estiver no modo de navegação, o NVDA activará automaticamente o modo de foco se andar com o Tab ou clicar num controlo em particular que solicite isso. Também pode evocar manualmente o modo de foco com NVDA+Espaço. Se o NVDA alternou para o modo de foco automaticamente por causa de algum Tab ou clique, poderá voltar ao ponto anterior para o modo de navegação uma vez que pressionou Tab ou clique algumas vezes em algo que não precisava disto. Contudo, se evocou o modo de foco com NVDA+Espaço, ele permanecerá assim até que volte manualmente ao modo de navegação. Quando estiver no modo de foco, pode voltar para o modo de navegação em qualquer altura pressionando Escape ou NVDA+Espaço. O diálogo das definições do Buffer Virtual no menu Preferências do menu do NVDA permite-lhe desactivar automaticamente o alternar entre os modos de navegação e foco.
+Quando está num Buffer Virtual, existem dois modos de interacção. O modo de navegação é onde se pode mover por todo o texto utilizando um cursor virtual um pouco parecido com o cursor do sistema. De facto, todas as teclas de atalho do cursor de sistema do NVDA funcionam neste modo (Ex: leitura contínua, informar formatação, todos os comandos de navegação para tabelas, etc). Já o modo de foco é onde pode interagir directamente com um controlo (campo de edição, caixa de combinação, botões de opção) utilizando adequadamente as teclas que usaria normalmente. Quando estiver no modo de navegação, o NVDA passará automaticamente para o modo de foco se andar com o Tab ou clicar num controlo em particular que requira isto. Atente que ao premir Enter ou Espaço nos controlos que necessitem disto, também passará automaticamente para o modo de foco. Pode chamar manualmente o modo de foco com NVDA+Espaço. Se o NVDA alternou para o modo de foco automaticamente por causa de algum Tab ou clique, poderá voltar ao ponto anterior para o modo de navegação uma vez que pressionou Tab ou clique algumas vezes em algo que não precisava disto. Contudo, se evocou o modo de foco com NVDA+Espaço, ele permanecerá assim até que volte manualmente ao modo de navegação. Quando estiver no modo de foco, pode voltar para o modo de navegação em qualquer altura pressionando Escape ou NVDA+Espaço. O diálogo das definições do Buffer Virtual no menu Preferências do menu do NVDA permite-lhe desactivar automaticamente o alternar entre os modos de navegação e foco.
 </p>
 <p>
 Actualmente o NVDA utiliza os Buffers Virtuais para ler documentos no Mozilla Firefox, Microsoft Internet Explorer e Adobe Reader.
 </p>
 <h3 id="8.1">8.1. Navegação Por Carácter</h3>
 <p>
-Para uma navegação rápida, o NVDA também fornece teclas de carácter simples para saltar para determinados campos no Buffer Virtual. 
+Quando estiver no modo de navegação, o NVDA também fornece teclas de carácter simples que permitem saltar para determinados campos no Buffer Virtual, sendo esta uma navegação rápida. 
 </p>
 <p>
-Somente a letra salta para o próximo campo, acompanhada com a tecla Shift salta para o campo anterior. 
+Somente a letra salta para o próximo campo. Quando acompanhada com a tecla Shift, salta para o campo anterior. 
 </p>
 <p>
 Teclas disponíveis:
@@ -668,7 +680,7 @@ Teclas disponíveis:
 <li>M: Frame;</li>
 <li>G: Gráfico;</li>
 <li>D: marca ARIA;</li>
-<li>O: Objecto embebido;</li>
+<li>O: Objecto embutido;</li>
 <li>1 até 6: Títulos de nível 1 até 6 respectivamente.</li>
 </ul>
 <h3 id="8.2">8.2. Formulários E OS Modos de Foco e Navegação</h3>
@@ -679,11 +691,11 @@ Algumas vezes pretenderá interagir com campos de formulário com as teclas do Buf
 <p>
 A lista de elementos (que está disponível se pressionar NVDA+F7 quando se está no Buffer Virtual) proporciona o acesso a uma lista ou de links, cabeçalhos ou marcas de ARIA na página. Os botões de opção permitem alternar entre estes três tipos de informação. Este diálogo tem também um campo de edição, o qual permite filtrar a lista para ajudar a procurar um elemento em particular na página. Uma vez que tenha escolhido o elemento, pode utilizar os botões presentes no diálogo para se mover ou activar, esse elemento.
 </p>
-<h3 id="8.4">8.4. Objectos Embebidos</h3>
+<h3 id="8.4">8.4. Objectos Embutidos</h3>
 <p>
-As páginas podem incluir conteúdo avançado através de tecnologias tais como o Flash da Adobe e o JAVA da Sun. Quando estas são encontradas no Buffer Virtual, o NVDA anuncia "objecto embebido". Pode pressionar Enter em cima desses objectos para interagir com os mesmos. Se forem acessíveis, pode pressionar Tab para navegar por eles e interagir como com qualquer outra aplicação. Para voltar à página, pressione NVDA+espaço.
+As páginas podem incluir conteúdo avançado através de tecnologias tais como o Flash da Adobe e o JAVA da Sun. Quando estas são encontradas no Buffer Virtual, o NVDA anuncia "objecto embutido". Pode pressionar Enter em cima desses objectos para interagir com os mesmos. Se forem acessíveis, pode pressionar Tab para navegar por eles e interagir como com qualquer outra aplicação. Para voltar à página, pressione NVDA+espaço.
 </p>
-<h2 id="9">9. Informação Adicional</h2>
+<h2 id="9">9. Resolução de Problemas Com o NVDA</h2>
 <p>
 Tendo em  conta que o NVDA está em constante actualização, não há garantia de que todos os conteúdos aqui presentes estejam correctos. Se tiver algum problema com os pontos referidos neste guia do utilizador, visite por favor: <a href="http://www.nvda-project.org/">http://www.nvda-project.org/</a> para obter mais assistência.
 </p>
