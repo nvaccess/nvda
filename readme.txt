@@ -49,6 +49,11 @@ General dependencies:
 		* Alternatively, a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/AcrobatAccess.tlb
 		* Copy AcrobatAccess.tlb into the source\typelibs directory.
 	* Adobe FlashAccessibility interface typelib: http://www.nvda-project.org/3rdParty/FlashAccessibility.tlb
+	* MinHook 1.1.0 or later: http://www.codeproject.com/KB/winsdk/LibMinHook.aspx
+		* Download the binary archive.
+			* You will need an account on CodeProject to download from there. For convenience, a mirror has been provided at http://www.nvda-project.org/3rdParty/
+		* Copy MinHook.x86.dll into the source\lib directory.
+		* Copy MinHook.x64.dll into the source\lib64 directory.
 
 To use the brltty braille display driver:
 	* brlapi Python bindings, version 0.5.3 or later, distributed with BRLTTY for Windows, version 4.0-2 or later:
