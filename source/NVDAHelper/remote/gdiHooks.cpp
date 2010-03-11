@@ -116,7 +116,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE* 
 	}
 	//Search for and remove the first & symbol if we have been requested to stip hotkey indicator.
 	if(stripHotkeyIndicator) {
-		unsigned int pos=newText.find(L'&');
+		size_t pos=newText.find(L'&');
 		if(pos!=wstring::npos) newText.erase(pos,1);
 	}
 	int xOffset=x;
