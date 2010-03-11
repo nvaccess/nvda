@@ -114,9 +114,18 @@ void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* other
 void displayModel_t::renderText(const RECT* rect, wstring& text) {
 	wostringstream s;
 	RECT tempRect;
+	int lastRight; 
+	int lastTop;
+	BOOL hasAddedText=FALSE;
+	//Walk through all the chunks looking for one that intersects the rectangle
 	for(displayModelChunksByPointMap_t::iterator i=_chunksByYX.begin();i!=_chunksByYX.end();i++) {
 		if(!rect||IntersectRect(&tempRect,rect,&(i->second->rect))) {
-			s<<i->second->text<<endl;
+			if(hasAddedText&&i->second->rect.top>lastTop) s<<endl;
+			else if(hasAddedText&&i->second->rect.left>lastRight) s<<" ";
+			s<<i->second->text;
+			lastRight=i->second->rect.right;
+			lastTop=i->second->rect.top;
+			hasAddedText=TRUE;
 		}
 	}
 	text.append(s.str());
