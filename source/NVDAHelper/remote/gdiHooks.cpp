@@ -116,7 +116,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE* 
 	}
 	//Search for and remove the first & symbol if we have been requested to stip hotkey indicator.
 	if(stripHotkeyIndicator) {
-		unsigned int pos=newText.find(L'&');
+		size_t pos=newText.find(L'&');
 		if(pos!=wstring::npos) newText.erase(pos,1);
 	}
 	int xOffset=x;
@@ -222,8 +222,6 @@ template<typename charType> LONG WINAPI hookClass_TabbedTextOut<charType>::fakeF
 	if(!model) return res;
 	//TabbedTextOut returns the size of the text it wrote in its result
 	SIZE textSize={HIWORD(res),LOWORD(res)};
-	//X and Y need to be in device units
-	LPtoDP(hdc,&pos,1);
 	//Record the text
 	ExtTextOutHelper(model,hdc,pos.x,pos.y,&textSize,NULL,0,textAlign,FALSE,lpString,nCount);
 	model->Release();
