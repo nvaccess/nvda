@@ -45,8 +45,8 @@ class AutoPropertyType(type):
 		except KeyError:
 			cacheByDefault=any(getattr(base, "cachePropertiesByDefault", False) for base in bases)
 
-		propSet=(x[5:] for x in dict.keys() if x[0:5] in ('_get_','_set_','_del_'))
-		for x in propSet:
+		props=(x[5:] for x in dict.keys() if x[0:5] in ('_get_','_set_','_del_'))
+		for x in props:
 			g=dict.get('_get_%s'%x,None)
 			s=dict.get('_set_%s'%x,None)
 			d=dict.get('_del_%s'%x,None)
@@ -78,13 +78,13 @@ class AutoPropertyType(type):
 
 class AutoPropertyObject(object):
 	"""A class that dynamicly supports properties, by looking up _get_* and _set_* methods at runtime.
- _get_x will make property x with a getter (you can get its value).
-_set_x will make a property x with a setter (you can set its value).
-If there is a _get_x but no _set_x then setting x will override the property completely.
-Properties can also be cached.
-Setting _cache_x to C{True} specifies that x should be cached. Setting it to C{False} specifies that it should not be cached.
-If _cache_x is not set, L{cachePropertiesByDefault} is used.
-"""
+	_get_x will make property x with a getter (you can get its value).
+	_set_x will make a property x with a setter (you can set its value).
+	If there is a _get_x but no _set_x then setting x will override the property completely.
+	Properties can also be cached.
+	Setting _cache_x to C{True} specifies that x should be cached. Setting it to C{False} specifies that it should not be cached.
+	If _cache_x is not set, L{cachePropertiesByDefault} is used.
+	"""
 	__metaclass__=AutoPropertyType
 
 	#: Tracks the instances of this class; used by L{invalidateCaches}.
