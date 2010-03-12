@@ -181,20 +181,22 @@ template<typename charType> class hookClass_TextOut {
 template<typename charType> typename hookClass_TextOut<charType>::funcType hookClass_TextOut<charType>::realFunction=NULL;
 
 template<typename charType> BOOL  WINAPI hookClass_TextOut<charType>::fakeFunction(HDC hdc, int x, int y, charType* lpString, int cbCount) {
+	UINT textAlign=GetTextAlign(hdc);
+	POINT pos={x,y};
+	if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
+	//Call the real function
+	BOOL res=realFunction(hdc,x,y,lpString,cbCount);
+	//If the real function did not work, or the arguments are not sane, then stop here
+	if(res==0||!lpString||cbCount<=0) return res;
 	displayModel_t* model=acquireDisplayModel(hdc);
-	if(model) {
-		//Calculate the size of the text
-		SIZE textSize;
-		WA_GetTextExtentPoint32(hdc,lpString,cbCount,&textSize);
-		//TextOut can either provide  specific coordinates, or it can be instructed to use the DC's current position and also update it.
-		//if  text alignment does state that the current position must be used, we need to get it before the real ExtTextOut is called, and we need to also update our x,y that we will use for recording the text.
-		POINT pos={x,y};
-		UINT textAlign=GetTextAlign(hdc);
-		if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
-		ExtTextOutHelper(model,hdc,pos.x,pos.y,&textSize,NULL,0,textAlign,FALSE,lpString,cbCount);
-		releaseDisplayModel(model);
-	}
-	return realFunction(hdc,x,y,lpString,cbCount);
+	//If we can't get a display model then stop here.
+	if(!model) return res;
+	//Calculate the size of the text
+	SIZE textSize;
+	WA_GetTextExtentPoint32(hdc,lpString,cbCount,&textSize);
+	ExtTextOutHelper(model,hdc,pos.x,pos.y,&textSize,NULL,0,textAlign,FALSE,lpString,cbCount);
+	releaseDisplayModel(model);
+	return res;
 }
 
 //TabbedTextOut hook class template
@@ -351,27 +353,25 @@ template<typename charType> class hookClass_ExtTextOut {
 template<typename charType> typename hookClass_ExtTextOut<charType>::funcType hookClass_ExtTextOut<charType>::realFunction=NULL;
 
 template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeFunction(HDC hdc, int x, int y, UINT fuOptions, const RECT* lprc, charType* lpString, int cbCount, const int* lpDx) {
-	//We can only record stuff if a proper string is provided (I.e. its not NULL and its not glyphs)
-	if(lpString&&cbCount>0&&!(fuOptions&ETO_GLYPH_INDEX)) {
-		//try to get or create a displayModel for this device context
-		displayModel_t* model=acquireDisplayModel(hdc);
-		if(model) {
-			//Calculate the size of the text
-			SIZE textSize;
-			WA_GetTextExtentPoint32(hdc,lpString,cbCount,&textSize);
-			//ExtTextOut can either provide  specific coordinates, or it can be instructed to use the DC's current position and also update it.
-			//if  text alignment does state that the current position must be used, we need to get it before the real ExtTextOut is called, and we need to also update our x,y that we will use for recording the text.
-			POINT pos={x,y};
-			UINT textAlign=GetTextAlign(hdc);
-			if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
-			//Record the text in the displayModel
-			ExtTextOutHelper(model,hdc,pos.x,pos.y,&textSize,lprc,fuOptions,textAlign,FALSE,lpString,cbCount);
-			//Release the displayModel we got
-			releaseDisplayModel(model);
-		}
-	}
-	//Call the real ExtTextOutW
-	return realFunction(hdc,x,y,fuOptions,lprc,lpString,cbCount,lpDx);
+	UINT textAlign=GetTextAlign(hdc);
+	POINT pos={x,y};
+	if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
+	//Call the real function
+	BOOL res=realFunction(hdc,x,y,fuOptions,lprc,lpString,cbCount,lpDx);
+	//If the real function did not work, or the arguments are not sane, or only glyphs were provided, then stop here. 
+	if(res==0||!lpString||cbCount<=0||fuOptions&ETO_GLYPH_INDEX) return res;
+	//try to get or create a displayModel for this device context
+	displayModel_t* model=acquireDisplayModel(hdc);
+	//If we can't get a display model then stop here
+	if(!model) return res;
+	//Calculate the size of the text
+	SIZE textSize;
+	WA_GetTextExtentPoint32(hdc,lpString,cbCount,&textSize);
+	//Record the text in the displayModel
+	ExtTextOutHelper(model,hdc,pos.x,pos.y,&textSize,lprc,fuOptions,textAlign,FALSE,lpString,cbCount);
+	//Release the displayModel and return
+	releaseDisplayModel(model);
+	return res;
 }
 
 //CreateCompatibleDC hook function
