@@ -71,12 +71,13 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			obj.__init__(*args,**kwargs)
 		return obj
 
-class NVDAObject(baseObject.AutoPropertyCacheObject, baseObject.ScriptableObject):
+class NVDAObject(baseObject.ScriptableObject):
 	"""
 	NVDA's representation of a control or widget in the Operating System. Provides information such as a name, role, value, description etc.
 	"""
 
 	__metaclass__=DynamicNVDAObjectType
+	cachePropertiesByDefault = True
 
 	TextInfo=NVDAObjectTextInfo #:The TextInfo class this object should use
 

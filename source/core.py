@@ -238,7 +238,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				mouseHandler.pumpAll()
 			except:
 				log.exception("errors in this core pump cycle")
-			baseObject.AutoPropertyCacheObject.invalidateCaches()
+			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.alive()
 	log.debug("starting core pump")
 	pump = CorePump()

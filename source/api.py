@@ -256,7 +256,7 @@ def processPendingEvents(processEventQueue=True):
 	JABHandler.pumpAll()
 	IAccessibleHandler.pumpAll()
 	import baseObject
-	baseObject.AutoPropertyCacheObject.invalidateCaches()
+	baseObject.AutoPropertyObject.invalidateCaches()
 	if processEventQueue:
 		queueHandler.flushQueue(queueHandler.eventQueue)
 
