@@ -255,6 +255,8 @@ def processPendingEvents(processEventQueue=True):
 	wx.Yield()
 	JABHandler.pumpAll()
 	IAccessibleHandler.pumpAll()
+	import baseObject
+	baseObject.AutoPropertyObject.invalidateCaches()
 	if processEventQueue:
 		queueHandler.flushQueue(queueHandler.eventQueue)
 
