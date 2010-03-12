@@ -98,16 +98,17 @@ inline void releaseDisplayModel(displayModel_t* model) {
  * @param lprc a pointer to the rectangle that should be cleared. If lprc is NULL, or ETO_OPAQUE is not in fuOptions, then only the rectangle bounding the text will be cleared.
  * @param fuOptions flags accepted by GDI32's ExtTextOut.
  * @param textAlign possible flags returned by GDI32's GetTextAlign.
+ * @param tm a pointer to a TEXTMETRIC structure with information about the current font
  * @param lpString the string of unicode text you wish to record.
  * @param cbCount the length of the string in characters.
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE* textSize, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, wchar_t* lpString, int cbCount) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE* textSize, const RECT* lprc,UINT fuOptions,UINT textAlign, TEXTMETRIC* tm, BOOL stripHotkeyIndicator, wchar_t* lpString, int cbCount) {
 	wstring newText(lpString,cbCount);
 	if(fuOptions&ETO_GLYPH_INDEX) { //The string only contained glyphs, not characters, rather useless to us.
 		newText=L"glyphs";
 	}
 	//are we writing a transparent background?
-	if(!(fuOptions&ETO_OPAQUE)&&(GetBkMode(hdc)==TRANSPARENT)) {
+	if((!tm||tm->tmCharSet!=SYMBOL_CHARSET)&&!(fuOptions&ETO_OPAQUE)&&(GetBkMode(hdc)==TRANSPARENT)) {
 		//Find out if the text we're writing is just whitespace
 		BOOL whitespace=TRUE;
 		for(wstring::iterator i=newText.begin();i!=newText.end()&&(whitespace=iswspace(*i));i++);
@@ -150,20 +151,23 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE* 
 	}
 	//Update the displayModel.
 	model->clearRectangle(clearRect);
-	model->insertChunk(textRect,newText);
+	//Only record the text if its not using the symbol charSet (e.g. checbox ticks etc)
+	if(tm&&tm->tmCharSet!=SYMBOL_CHARSET) {
+		model->insertChunk(textRect,newText);
+	}
 }
 
 /**
  * an overload of ExtTextOutHelper to work with ansi strings.
  * @param lpString the string of ansi text you wish to record.
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE* textSize, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, char* lpString, int cbCount) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const SIZE* textSize, const RECT* lprc,UINT fuOptions,UINT textAlign, TEXTMETRIC* tm, BOOL stripHotkeyIndicator, char* lpString, int cbCount) {
 	if(lpString&&cbCount) {
 		int newCount=MultiByteToWideChar(CP_THREAD_ACP,0,lpString,cbCount,NULL,0);
 		if(newCount>0) {
 			wchar_t* newString=(wchar_t*)calloc(newCount+1,sizeof(wchar_t));
 			MultiByteToWideChar(CP_THREAD_ACP,0,lpString,cbCount,newString,newCount);
-			ExtTextOutHelper(model,hdc,x,y,textSize,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,newCount);
+			ExtTextOutHelper(model,hdc,x,y,textSize,lprc,fuOptions,textAlign,tm,stripHotkeyIndicator,newString,newCount);
 			free(newString);
 		}
 	}
@@ -194,7 +198,9 @@ template<typename charType> BOOL  WINAPI hookClass_TextOut<charType>::fakeFuncti
 	//Calculate the size of the text
 	SIZE textSize;
 	WA_GetTextExtentPoint32(hdc,lpString,cbCount,&textSize);
-	ExtTextOutHelper(model,hdc,pos.x,pos.y,&textSize,NULL,0,textAlign,FALSE,lpString,cbCount);
+	TEXTMETRIC tm;
+	GetTextMetrics(hdc,&tm);
+	ExtTextOutHelper(model,hdc,pos.x,pos.y,&textSize,NULL,0,textAlign,&tm,FALSE,lpString,cbCount);
 	releaseDisplayModel(model);
 	return res;
 }
@@ -224,8 +230,10 @@ template<typename charType> LONG WINAPI hookClass_TabbedTextOut<charType>::fakeF
 	if(!model) return res;
 	//TabbedTextOut returns the size of the text it wrote in its result
 	SIZE textSize={HIWORD(res),LOWORD(res)};
+	TEXTMETRIC tm;
+	GetTextMetrics(hdc,&tm);
 	//Record the text
-	ExtTextOutHelper(model,hdc,pos.x,pos.y,&textSize,NULL,0,textAlign,FALSE,lpString,nCount);
+	ExtTextOutHelper(model,hdc,pos.x,pos.y,&textSize,NULL,0,textAlign,&tm,FALSE,lpString,nCount);
 	model->Release();
 	return res;
 }
@@ -266,6 +274,8 @@ template<typename charType> BOOL WINAPI hookClass_PolyTextOut<charType>::fakeFun
 	displayModel_t* model=acquireDisplayModel(hdc);
 	if(!model) return res;
 	SIZE curTextSize;
+	TEXTMETRIC tm;
+	GetTextMetrics(hdc,&tm);
 	//For each of the strings, record the text
 	for(int i=0;i<cStrings;i++) {
 		const WA_POLYTEXT<charType>* curPptxt=&pptxt[i];
@@ -277,7 +287,7 @@ template<typename charType> BOOL WINAPI hookClass_PolyTextOut<charType>::fakeFun
 			curPos.y=curPptxt->y;
 		}
 		//record the text
-		ExtTextOutHelper(model,hdc,curPos.x,curPos.y,&curTextSize,&curClearRect,curPptxt->uiFlags,textAlign,FALSE,curPptxt->lpString,curPptxt->nCount);
+		ExtTextOutHelper(model,hdc,curPos.x,curPos.y,&curTextSize,&curClearRect,curPptxt->uiFlags,textAlign,&tm,FALSE,curPptxt->lpString,curPptxt->nCount);
 		//If the DC's current position should be used,  move our idea of it by the size of the text just recorded
 		if(textAlign&TA_UPDATECP) {
 			curPos.x+=curTextSize.cx;
@@ -332,8 +342,10 @@ template<typename charType> int WINAPI hookClass_DrawTextEx<charType>::fakeFunct
 		int x=lprc->left;
 		int y=lprc->top;
 		SIZE textSize={(lprc->right-lprc->left),(lprc->bottom-lprc->top)};
+		TEXTMETRIC tm;
+		GetTextMetrics(hdc,&tm);
 		//Record the text
-		ExtTextOutHelper(model,hdc,x,y,&textSize,NULL,0,0,!(newFormat&DT_NOPREFIX),newString,newCount);
+		ExtTextOutHelper(model,hdc,x,y,&textSize,NULL,0,0,&tm,!(newFormat&DT_NOPREFIX),newString,newCount);
 		//Release the model, cleanup and return
 		releaseDisplayModel(model);
 	}
@@ -367,8 +379,10 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 	//Calculate the size of the text
 	SIZE textSize;
 	WA_GetTextExtentPoint32(hdc,lpString,cbCount,&textSize);
+	TEXTMETRIC tm;
+	GetTextMetrics(hdc,&tm);
 	//Record the text in the displayModel
-	ExtTextOutHelper(model,hdc,pos.x,pos.y,&textSize,lprc,fuOptions,textAlign,FALSE,lpString,cbCount);
+	ExtTextOutHelper(model,hdc,pos.x,pos.y,&textSize,lprc,fuOptions,textAlign,&tm,FALSE,lpString,cbCount);
 	//Release the displayModel and return
 	releaseDisplayModel(model);
 	return res;
@@ -547,7 +561,9 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 		return res;
 	}
 	BOOL stripHotkeyIndicator=(i->second.dwFlags&SSA_HIDEHOTKEY||i->second.dwFlags&SSA_HOTKEY);
-	ExtTextOutHelper(model,i->second.hdc,iX,iY,ScriptString_pSize(i->first),prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),i->second.cString);
+	TEXTMETRIC tm;
+	GetTextMetrics(i->second.hdc,&tm);
+	ExtTextOutHelper(model,i->second.hdc,iX,iY,ScriptString_pSize(i->first),prc,uOptions,GetTextAlign(i->second.hdc),&tm,stripHotkeyIndicator,(wchar_t*)(i->second.pString),i->second.cString);
 	releaseDisplayModel(model);
 	LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	return res;
