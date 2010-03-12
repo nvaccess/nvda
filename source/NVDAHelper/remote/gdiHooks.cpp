@@ -485,14 +485,16 @@ HRESULT WINAPI fake_ScriptStringAnalyse(HDC hdc,const void* pString, int cString
 	HRESULT res=real_ScriptStringAnalyse(hdc,pString,cString,cGlyphs,iCharset,dwFlags,iRectWidth,psControl,psState,piDx,pTabdef,pbInClass,pssa);
 	//We only want to go on if  there's safe arguments
 	//We also need to acquire access to our scriptString analysis map
-	if(res==S_OK&&pString&&cString>0&&pssa&&allow_ScriptStringAnalyseArgsByAnalysis) {
-		EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
-		if(!allow_ScriptStringAnalyseArgsByAnalysis) return res;
-		//Record information such as the origianl string and a way we can identify it later.
-		ScriptStringAnalyseArgs_t args={hdc,pString,cString,iCharset,dwFlags};
-		ScriptStringAnalyseArgsByAnalysis[*pssa]=args;
+	if(res!=S_OK||!pString||cString<=0||!pssa||!allow_ScriptStringAnalyseArgsByAnalysis) return res;
+	EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+	if(!allow_ScriptStringAnalyseArgsByAnalysis) {
 		LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+		return res;
 	}
+	//Record information such as the origianl string and a way we can identify it later.
+	ScriptStringAnalyseArgs_t args={hdc,pString,cString,iCharset,dwFlags};
+	ScriptStringAnalyseArgsByAnalysis[*pssa]=args;
+	LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	return res;
 }
 
@@ -505,13 +507,15 @@ HRESULT WINAPI fake_ScriptStringFree(SCRIPT_STRING_ANALYSIS* pssa) {
 	HRESULT res=real_ScriptStringFree(pssa);
 	//If it worked, and arguments seem sane, we go on.
 	//We also need to acquire access to our scriptString analysis map
-	if(res==S_OK&&pssa&&allow_ScriptStringAnalyseArgsByAnalysis) {
-		EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
-		if(!allow_ScriptStringAnalyseArgsByAnalysis) return res;
-		//Get rid of unneeded info
-		ScriptStringAnalyseArgsByAnalysis.erase(*pssa);
+	if(res!=S_OK||!pssa||!allow_ScriptStringAnalyseArgsByAnalysis) return res;
+	EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+	if(!allow_ScriptStringAnalyseArgsByAnalysis) {
 		LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+		return res;
 	}
+	//Get rid of unneeded info
+	ScriptStringAnalyseArgsByAnalysis.erase(*pssa);
+	LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	return res; 
 }
 
@@ -524,22 +528,28 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 	HRESULT res=real_ScriptStringOut(ssa,iX,iY,uOptions,prc,iMinSel,iMaxSel,fDisabled);
 	//If ScriptStringOut was successful we can go on
 	//We also need to acquire access to our Script analysis map
-	if(res==S_OK&&allow_ScriptStringAnalyseArgsByAnalysis) {
-		EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
-		if(!allow_ScriptStringAnalyseArgsByAnalysis) return res;
-		//Find out if we know about these glyphs
-		ScriptStringAnalyseArgsByAnalysis_t::iterator i=ScriptStringAnalyseArgsByAnalysis.find(ssa);
-		if(i!=ScriptStringAnalyseArgsByAnalysis.end()) {
-			//Try and get/create a displayModel for this DC, and if we can, then record the origianl text for these glyphs
-			displayModel_t* model=acquireDisplayModel(i->second.hdc);
-			if(model) {
-				BOOL stripHotkeyIndicator=(i->second.dwFlags&SSA_HIDEHOTKEY||i->second.dwFlags&SSA_HOTKEY);
-				ExtTextOutHelper(model,i->second.hdc,iX,iY,ScriptString_pSize(i->first),prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),i->second.cString);
-				releaseDisplayModel(model);
-			}
-		}
+	if(res!=S_OK||!ssa||!allow_ScriptStringAnalyseArgsByAnalysis) return res;
+	EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+	if(!allow_ScriptStringAnalyseArgsByAnalysis) {
 		LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+		return res;
 	}
+	//Find out if we know about these glyphs
+	ScriptStringAnalyseArgsByAnalysis_t::iterator i=ScriptStringAnalyseArgsByAnalysis.find(ssa);
+	if(i==ScriptStringAnalyseArgsByAnalysis.end()) {
+		LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+		return res;
+	} 
+	//Try and get/create a displayModel for this DC, and if we can, then record the origianl text for these glyphs
+		displayModel_t* model=acquireDisplayModel(i->second.hdc);
+	if(!model) {
+		LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+		return res;
+	}
+	BOOL stripHotkeyIndicator=(i->second.dwFlags&SSA_HIDEHOTKEY||i->second.dwFlags&SSA_HOTKEY);
+	ExtTextOutHelper(model,i->second.hdc,iX,iY,ScriptString_pSize(i->first),prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),i->second.cString);
+	releaseDisplayModel(model);
+	LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	return res;
 }
 
