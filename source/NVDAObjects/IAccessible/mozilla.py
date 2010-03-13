@@ -42,6 +42,12 @@ class Mozilla(IAccessible):
 		if self.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in self.states:
 			eventHandler.queueEvent("scrollingStart",self.parent)
 
+	def _get_states(self):
+		states = super(Mozilla, self).states
+		if self.IAccessibleStates & oleacc.STATE_SYSTEM_MARQUEED:
+			states.add(controlTypes.STATE_CHECKABLE)
+		return states
+
 class Application(Mozilla):
 
 	def _get_value(self):

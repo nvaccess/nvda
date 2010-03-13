@@ -77,6 +77,7 @@ class NVDAObject(baseObject.ScriptableObject):
 	"""
 
 	__metaclass__=DynamicNVDAObjectType
+	cachePropertiesByDefault = True
 
 	TextInfo=NVDAObjectTextInfo #:The TextInfo class this object should use
 
@@ -136,6 +137,7 @@ class NVDAObject(baseObject.ScriptableObject):
 		raise NotImplementedError
 
 	def __init__(self):
+		super(NVDAObject,self).__init__()
 		self._mouseEntered=False #:True if the mouse has entered this object (for use in L{event_mouseMoved})
 		self.textRepresentationLineLength=None #:If an integer greater than 0 then lines of text in this object are always this long.
 		if hasattr(self.appModule,'event_NVDAObject_init'):

@@ -1,18 +1,13 @@
 #appModules/_default.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import gc
-import comtypes.client
-import datetime
 import time
 import tones
-from keyUtils import key
 import keyboardHandler
 import mouseHandler
-import IAccessibleHandler
 import controlTypes
 import api
 import textInfos
@@ -24,12 +19,10 @@ from logHandler import log
 from synthDriverHandler import *
 import gui
 import wx
-import core
 import config
 import winUser
 import appModuleHandler
 import winKernel
-import ctypes
 from gui import mainFrame
 import virtualBufferHandler
 import scriptHandler
@@ -746,7 +739,6 @@ class AppModule(appModuleHandler.AppModule):
 	def script_test_navigatorWindowInfo(self,keyPress):
 		obj=api.getNavigatorObject()
 		import ctypes
-		import winUser
 		w=ctypes.windll.user32.GetAncestor(obj.windowHandle,3)
 		w=ctypes.windll.user32.GetAncestor(w,3)
 		className=winUser.getClassName(w)

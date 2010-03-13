@@ -1,8 +1,7 @@
 import _default
-from keyUtils import key, sendKey, keyName
+from keyUtils import key, sendKey
 import NVDAObjects.IAccessible
 import speech
-import config
 
 class AppModule(_default.AppModule):
 
