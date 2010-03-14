@@ -553,11 +553,17 @@ the NVDAObject for IAccessible
 	def _get_name(self):
 		#The edit field in a combo box should not have a label
 		if self.role==controlTypes.ROLE_EDITABLETEXT:
-			#Make sure to cache the parent
+			# The parent of the edit field is its window object, so the combo box is its grandparent.
+			# Make sure to cache the parents.
 			parent=self.parent=self.parent
+			if parent:
+				parent=self.parent.parent=self.parent.parent
+			else:
+				parent=None
 			# Only scrap the label on the edit field if the parent combo box has a label.
 			if parent and parent.role==controlTypes.ROLE_COMBOBOX and parent.name:
 				return ""
+
 		try:
 			res=self.IAccessibleObject.accName(self.IAccessibleChildID)
 		except:
