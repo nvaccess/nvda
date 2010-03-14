@@ -188,10 +188,6 @@ def initialize():
 	VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(
 		("VBuf_getTextInRange", localLib),
 		((1,), (1,), (1,), (2,), (1,)))
-	# Explicitly load MinHook so that nvdaHelperRemote can find it.
-	# We need to do this because the lib directory is not in the dll search path.
-	# We could also use LoadLibraryEx with LOAD_WITH_ALTERED_SEARCH_PATH, but this is tedious and has the same effect anyway.
-	cdll.LoadLibrary('lib/MinHook.x86.dll')
 	_remoteLib=cdll.LoadLibrary('lib/NVDAHelperRemote.dll')
 	if _remoteLib.nvdaHelper_initialize() < 0:
 		raise RuntimeError("Error initializing NVDAHelper")

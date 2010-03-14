@@ -6,7 +6,7 @@ vars.Add('TARGET_ARCH','Target architecture')
 vars.Add('HOST_ARCH','Host architecture')
 
 #Create a new environment for our project
-env=DefaultEnvironment(tools=['default','msvc','midl','mssdk','msrpc'],variables=vars)
+env=DefaultEnvironment(tools=['default','msvc','midl','mssdk','msrpc','boost'],variables=vars)
 
 #Some defines and includes for the environment
 env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${logLevel}')])
@@ -14,7 +14,6 @@ env.Append(CXXFLAGS=['/EHsc'])
 env.Append(CPPPATH=['#.','#../include'])
 env.Append(LINKFLAGS='/incremental:no')
 TARGET_ARCH=env['TARGET_ARCH']
-env.Append(LIBPATH=['#../' + ('lib' if TARGET_ARCH=='x86' else 'lib64')])
 if TARGET_ARCH=='x86_64':
 	env.Append(MIDLFLAGS='/x64')
 

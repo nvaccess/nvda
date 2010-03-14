@@ -1,7 +1,7 @@
 #include <iostream>
 #include <set>
 #include <windows.h>
-#include <MinHook.h>
+#include <libMinHook/MinHook.h>
 #include "common/log.h"
 #include "apiHook.h"
 

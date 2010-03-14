@@ -3,6 +3,9 @@ Import([
 	'ia2RPCStubs',
 ])
 
+minHookObjFiles=env.SConscript('minHook_sconscript')
+
+
 winIPCUtilsObj=env.Object("./winIPCUtils","#common/winIPCUtils.cpp")
 
 controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
@@ -67,7 +70,7 @@ remoteLib=env.SharedLibrary(
 		"displayModel.cpp",
 		"displayModelRemote.cpp",
 		displayModelRPCServerSource,
-	],
+	]+minHookObjFiles,
 	LIBS=[
 		"user32",
 		"gdi32",
@@ -77,7 +80,6 @@ remoteLib=env.SharedLibrary(
 		"oleaut32",
 		"oleacc",
 		"usp10",
-		"MinHook." + ("x86" if env['TARGET_ARCH']=='x86' else 'x64'),
 	],
 )
 

@@ -13,8 +13,15 @@ The adobeAcrobat virtual buffer backend requires the Adobe Acrobat accessibility
 http://www.adobe.com/devnet/acrobat/downloads/ClientFiles.zip
 Extract the files into ..\include\AcrobatAccess.
 
-The apiHook module requires MinHook. See the source readme.txt file for more details.
-From the binary archive, copy MinHook.h to ..\include, MinHook.x86.lib to ..\lib and MinHook.x64.lib to ..\lib64.
+The apiHook module requires MinHook 1.1.0 or later: http://www.codeproject.com/KB/winsdk/LibMinHook.aspx
+	* Download the source archive. The file name is something like MinHook_110_src.zip depending on exact version.
+	* You will need an account on CodeProject to download from there.
+	* extract the source archive, and from it copy the libMinHook directory to NVDA's source/include directory.
+
+minHook (and possibly in future nvdaHelper) depends on the Boost c++ library 1.42 or later:
+	* you can download the latest Windows installer from http://www.boostpro.com/download
+	* On the components page of the installer, make sure to install all the defaults (what ever is already checked), along with anything else you may wish to have for other projects.
+	* So far only boost headers are used, none of the pre-compiled libraries are necessary for nvda/minHook.
 
 The NVDAHelper build is managed by the SCons build system: http://www.scons.org/
 For now, you will need to use a build from svn trunk.
