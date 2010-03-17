@@ -1,20 +1,3 @@
-%!Target: html
-%!Encoding: UTF-8
+%!includeconf: global.conf.t2t
+
 %!Options: --toc
-
-% Remove the Table of Contents heading from the toc.
-%!PostProc(html): '^.*\<LI\>\<A HREF="#toc"\>.*\</A\>.*$' ''
-
-% h1 in html should really be the document title only.
-% Therefore, change h1 through h5 in the output to h2 through h6.
-%!PostProc(html): ^<H5>(.*)</H5>$ <H6>\1</H6>
-%!PostProc(html): ^<H4>(.*)</H4>$ <H5>\1</H5>
-%!PostProc(html): ^<H3>(.*)</H3>$ <H4>\1</H4>
-%!PostProc(html): ^<H2>(.*)</H2>$ <H3>\1</H3>
-%!PostProc(html): ^<H1>(.*)</H1>$ <H2>\1</H2>
-
-% Language neutral defines
-% We need to do this one as PostProc so it gets converted for the title.
-%!PostProc: NVDA_VERSION 2010.2
-%!PreProc: NVDA_URL http://www.nvda-project.org/
-%!PreProc: NVDA_COPYRIGHT_YEARS 2006-2010
