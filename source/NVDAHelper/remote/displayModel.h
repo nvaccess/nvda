@@ -2,11 +2,13 @@
 #define NVDAHELPER_REMOTE_DISPLAYMODEL_H
 
 #include <map>
+#include <deque>
 #include <windows.h>
 
 struct displayModelChunk_t{
 	RECT rect;
 	std::wstring text;
+	std::deque<int> characterXArray;
 };
 
 typedef std::pair<int,int> coord_t;
@@ -21,6 +23,14 @@ class displayModel_t {
 	volatile long _refCount; //Internal ref count
 	displayModelChunksByPointMap_t _chunksByXY; //indexes the chunks by x,y
 	displayModelChunksByPointMap_t _chunksByYX; //indexes the chunks by y,y
+
+	protected:
+
+/**
+ * Overloaded insertChunk to take an already made chunk
+ * @param chunk an already made chunk
+ */
+	void insertChunk(displayModelChunk_t* chunk);
 
 	public:
 
@@ -55,8 +65,9 @@ class displayModel_t {
  * Inserts a text chunk in to the model.
  * @param rect the rectangle bounding the text.
  * @param text the string of unicode text in the chunk.
+ * @param characterEndXArray an array of x positions for the end of each character.
  */
-	void insertChunk(const RECT& rect, const std::wstring& text);
+	void insertChunk(const RECT& rect, const std::wstring& text, int* characterEndXArray);
 
 /**
  * Removes all chunks intersecting the given rectangle. Currently this must be called before inserting chunks as chunks should never overlap.

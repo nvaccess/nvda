@@ -1,5 +1,6 @@
 #include <string>
 #include <sstream>
+#include <deque>
 #include <set>
 #include "nvdaControllerInternal.h"
 #include <common/log.h>
@@ -35,14 +36,21 @@ int displayModel_t::getChunkCount() {
 	return _chunksByXY.size();
 }
 
-void displayModel_t::insertChunk(const RECT& rect, const wstring& text) {
+void displayModel_t::insertChunk(const RECT& rect, const wstring& text, int* characterEndXArray) {
 	displayModelChunk_t* chunk=new displayModelChunk_t;
 	LOG_DEBUG(L"created new chunk at "<<chunk);
 	chunk->rect=rect;
 	chunk->text=text;
+	chunk->characterXArray=deque<int>();
+	chunk->characterXArray.push_back(0);
+	for(int i=0;i<text.length();i++) chunk->characterXArray.push_back(characterEndXArray[i]); 
 	LOG_DEBUG(L"filled in chunk with rectangle from "<<rect.left<<L","<<rect.top<<L" to "<<rect.right<<L","<<rect.bottom<<L" with text of "<<text);
-	_chunksByXY[make_pair(rect.left,rect.top)]=chunk;
-	_chunksByYX[make_pair(rect.top,rect.left)]=chunk;
+	this->insertChunk(chunk);
+}
+
+void displayModel_t::insertChunk(displayModelChunk_t* chunk) {
+	_chunksByXY[make_pair(chunk->rect.left,chunk->rect.top)]=chunk;
+	_chunksByYX[make_pair(chunk->rect.top,chunk->rect.left)]=chunk;
 }
 
 void displayModel_t::clearRectangle(const RECT& rect) {
@@ -105,8 +113,14 @@ void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* other
 		otherModel->clearRectangle(clearRect);
 		//Insert each chunk previously selected, in to the destination model shifting the chunk's rectangle to where it should be in the destination model
 		for(set<displayModelChunk_t*>::iterator i=chunks.begin();i!=chunks.end();i++) {
-			RECT newChunkRect={((*i)->rect.left)+=deltaX,((*i)->rect.top)+deltaY,((*i)->rect.right)+deltaX,((*i)->rect.bottom)+deltaY};
-			otherModel->insertChunk(newChunkRect,(*i)->text);
+			displayModelChunk_t* chunk=new displayModelChunk_t();
+			chunk->rect.left=((*i)->rect.left)+deltaX;
+			chunk->rect.top=((*i)->rect.top)+deltaY;
+			chunk->rect.right=((*i)->rect.right)+deltaX;
+			chunk->rect.bottom=((*i)->rect.bottom)+deltaY;
+			chunk->text=(*i)->text;
+			chunk->characterXArray=(*i)->characterXArray;
+			otherModel->insertChunk(chunk);
 		}
 	}
 }
