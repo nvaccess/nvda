@@ -44,17 +44,29 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			APIClass=self
 		else:
 			APIClass=self.findBestAPIClass(**kwargs)
-		if 'findBestClass' not in self.__dict__:
-			raise TypeError("Cannot instantiate class %s as it does not implement findBestClass"%self.__name__)
+
+		if 'findOverlayClasses' not in self.__dict__:
+			raise TypeError("Cannot instantiate class %s as it does not implement findOverlayClasses"%self.__name__)
+
+		# Instantiate the requested class.
+		obj=self.__new__(self,*args,**kwargs)
+		obj.APIClass=APIClass
+		if isinstance(obj,self):
+			obj.__init__(*args,**kwargs)
+
 		try:
-			clsList,kwargs=APIClass.findBestClass([],kwargs)
+			clsList=obj.findOverlayClasses([])
 		except:
-			log.debugWarning("findBestClass failed",exc_info=True)
+			log.debugWarning("findOverlayClasses failed",exc_info=True)
 			return None
+		# Determine the bases for the new class.
 		bases=[]
 		for index in xrange(len(clsList)):
+			# A class doesn't need to be a base if it is already a subclass of a previous base.
 			if index==0 or not issubclass(clsList[index-1],clsList[index]):
 				bases.append(clsList[index])
+
+		# Construct the new class.
 		if len(bases) == 1:
 			# We only have one base, so there's no point in creating a dynamic type.
 			newCls=bases[0]
@@ -65,10 +77,25 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 				name="Dynamic_%s"%"".join([x.__name__ for x in clsList])
 				newCls=type(name,bases,{})
 				self._dynamicClassCache[bases]=newCls
-		obj=self.__new__(newCls,*args,**kwargs)
-		obj.APIClass=APIClass
-		if isinstance(obj,self):
-			obj.__init__(*args,**kwargs)
+
+		oldMro=frozenset(obj.__class__.__mro__)
+		# Mutate obj into the new class.
+		obj.__class__=newCls
+
+		# Initialise the overlay classes.
+		for cls in newCls.__mro__:
+			if cls in oldMro:
+				# This class was part of the initially constructed object, so its constructor would have been called.
+				continue
+			initFunc=cls.__dict__.get("initOverlayClass")
+			if initFunc:
+				initFunc(obj)
+
+		# Allow app modules to mutate NVDAObjects during creation.
+		appModule=obj.appModule
+		if appModule and hasattr(appModule,"event_NVDAObject_init"):
+			appModule.event_NVDAObject_init(obj)
+
 		return obj
 
 class NVDAObject(baseObject.ScriptableObject):
@@ -90,23 +117,24 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""  
 		return cls
 
-	@classmethod
-	def findBestClass(cls,clsList,kwargs):
-		"""Chooses a most appropriate inheritence list of classes with subclasses first.
-		The list of classes can be used to dynamically create an NVDAObject class using the most appropriate NVDAObject subclass at each API level.
+	def findOverlayClasses(self, clsList):
+		"""Chooses overlay classes which should be added to this object's class structure after the object has been initially instantiated.
+		After an NVDAObject class (normally an API-level class) is instantiated, this method is called on the instance to choose appropriate overlay classes.
+		This method may use properties, etc. on the instance to make this choice.
+		The object's class structure is then mutated to contain these classes.
+		L{initOverlayClass} is then called for each class which was not part of the initially instantiated object.
+		This process allows an NVDAObject to be dynamically created using the most appropriate NVDAObject subclass at each API level.
+		Classes should be listed with subclasses first. That is, subclasses should generally call super and then append their own classes to the list.
 		For example: Called on an IAccessible NVDAObjectThe list might contain DialogIaccessible (a subclass of IAccessible), Edit (a subclass of Window).
-		Since the method may need to fetch extra info to calculate the suitable classes, a kwargs dictionary is returned containing the original arguments plus any new ones.
-		@param kwargs: a dictionary of keyword arguments which would normally be passed to the class for instanciation.
-		@return: the list of classes and the updated kwargs dictionary
-		@rtype: tuple of list of L{NVDAObject} classes, and dictionary
+		@param clsList: The list of classes from the caller.
+		@type clsList: list of L{NVDAObject}
+		@@return: the new list of classes.
+		@rtype: list of L{NVDAObject}
 		"""
 		clsList.append(NVDAObject)
-		return clsList,kwargs
+		return clsList
 
 	beTransparentToMouse=False #:If true then NVDA will never consider the mouse to be on this object, rather it will be on an ancestor.
-
-
-
 
 	@classmethod
 	def objectFromPoint(x,y):
@@ -140,8 +168,6 @@ class NVDAObject(baseObject.ScriptableObject):
 		super(NVDAObject,self).__init__()
 		self._mouseEntered=False #:True if the mouse has entered this object (for use in L{event_mouseMoved})
 		self.textRepresentationLineLength=None #:If an integer greater than 0 then lines of text in this object are always this long.
-		if hasattr(self.appModule,'event_NVDAObject_init'):
-			self.appModule.event_NVDAObject_init(self)
 
 	def _isEqual(self,other):
 		"""Calculates if this object is equal to another object. Used by L{NVDAObject.__eq__}.
