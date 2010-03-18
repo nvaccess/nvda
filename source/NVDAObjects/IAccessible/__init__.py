@@ -347,7 +347,7 @@ the NVDAObject for IAccessible
 """
 		# If we have a window but no IAccessible, get the window from the IAccessible.
 		if windowHandle and not IAccessibleObject:
-			if relation!="parent" and cls.windowHasExtraIAccessibles(windowHandle): 
+			if relation!="parent" and self.windowHasExtraIAccessibles(windowHandle): 
 				IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_WINDOW,0)
 			else:
 				IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
