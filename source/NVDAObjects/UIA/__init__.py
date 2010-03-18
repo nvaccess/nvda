@@ -157,37 +157,37 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		return UIA(UIAElement=UIAElement)
 
 	def __new__(cls,relation=None,windowHandle=None,UIAElement=None):
+		if windowHandle and not UIAElement:
+			UIAElement=UIAHandler.handler.clientObject.ElementFromHandleBuildCache(windowHandle,UIAHandler.handler.baseCacheRequest)
+
 		try:
 			runtimeId=UIAElement.getRuntimeId()
 		except COMError:
 			log.debugWarning("Could not get UIA element runtime Id",exc_info=True)
 			runtimeId=None
-		if not runtimeId:
-			obj=cls.liveNVDAObjectTable.get(runtimeId,None)
-		else:
-			obj=None
+
+		obj=cls.liveNVDAObjectTable.get(runtimeId,None) if runtimeId else None
 		if not obj:
 			obj=super(UIA,cls).__new__(cls)
 			if not obj:
 				return None
 			if runtimeId:
 				cls.liveNVDAObjectTable[runtimeId]=obj
-		else:
-			obj.UIAElement=UIAElement
+		obj.UIAElement=UIAElement
 		return obj
 
 	def __init__(self,relation=None,windowHandle=None,UIAElement=None):
+		# __new__() sets self.UIAElement.
+		UIAElement=self.UIAElement
+		if not UIAElement:
+			raise ValueError("needs either a UIA element or window handle")
+
 		self.UIAIsWindowElement=True
-		if windowHandle and not UIAElement:
-			UIAElement=UIAHandler.handler.clientObject.ElementFromHandleBuildCache(windowHandle,UIAHandler.handler.baseCacheRequest)
-		elif UIAElement and not windowHandle:
+		if not windowHandle:
 			windowHandle=UIAElement.cachedNativeWindowHandle
 			if not windowHandle:
 				self.UIAIsWindowElement=False
 				windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
-		else:
-			raise ValueError("needs either a UIA element or window handle")
-		self.UIAElement=UIAElement
 		super(UIA,self).__init__(windowHandle=windowHandle)
 
 		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
