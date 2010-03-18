@@ -662,10 +662,9 @@ def processFocusNVDAEvent(obj,force=False):
 
 class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
 
-	@classmethod
-	def findBestClass(cls,clsList,kwargs):
-		clsList.append(cls)
-		return (clsList,kwargs)
+	def findOverlayClasses(self,clsList):
+		clsList.append(SecureDesktopNVDAObject)
+		return clsList
 
 	def _get_name(self):
 		return _("Secure Desktop")

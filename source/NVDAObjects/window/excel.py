@@ -157,10 +157,9 @@ class ExcelCell(Window):
 
 	TextInfo=ExcelCellTextInfo
 
-	@classmethod
-	def findBestClass(cls, clsList, kwargs):
+	def findOverlayClasses(self, clsList):
 		# This class can be directly instantiated.
-		return (cls,), kwargs
+		return (ExcelCell,)
 
 	def __init__(self,parentNVDAObject,cellRange):
 		self.parent=parentNVDAObject

@@ -204,16 +204,22 @@ class BrokenCommctrl5Item(IAccessible):
 	We can't simply use UIA objects alone for these controls because UIA events are also broken.
 	"""
 
-	@classmethod
-	def findBestClass(cls, clsList, kwargs):
+	def findOverlayClasses(self, clsList):
 		# This class can be directly instantiated.
-		return (cls,), kwargs
+		return (BrokenCommctrl5Item,)
 
 	def __init__(self, _uiaObj=None, **kwargs):
+		# This class is being directly instantiated.
+		if not _uiaObj:
+			raise ValueError("Cannot instantiate directly without supplying _uiaObj")
 		self._uiaObj = _uiaObj
 		super(BrokenCommctrl5Item, self).__init__(**kwargs)
-		if not _uiaObj and UIAHandler.handler and super(BrokenCommctrl5Item, self).parent.hasFocus:
+
+	def initOverlayClass(self):
+		if UIAHandler.handler and super(BrokenCommctrl5Item, self).parent.hasFocus:
 			self._uiaObj = UIA.objectWithFocus()
+		else:
+			self._uiaObj = None
 
 	def _get_role(self):
 		return self._uiaObj.role if self._uiaObj else controlTypes.ROLE_UNKNOWN
