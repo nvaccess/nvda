@@ -71,10 +71,8 @@ An NVDAObject for a window
 		import NVDAObjects.IAccessible
 		return NVDAObjects.IAccessible.IAccessible
 
-	@classmethod
-	def findBestClass(cls,clsList,kwargs):
-		windowClassName=winUser.getClassName(kwargs['windowHandle']) if 'windowHandle' in kwargs else None
-		windowClassName=cls.normalizeWindowClassName(windowClassName)
+	def findOverlayClasses(self,clsList):
+		windowClassName=self.normalizeWindowClassName(self.windowClassName)
 		newCls=Window
 		if windowClassName=="#32769":
 			newCls=Desktop
@@ -101,7 +99,7 @@ An NVDAObject for a window
 		clsList.append(newCls)
 		if newCls!=Window:
 			clsList.append(Window)
-		return super(Window,cls).findBestClass(clsList,kwargs)
+		return super(Window,self).findOverlayClasses(clsList)
 
 	@classmethod
 	def objectFromPoint(cls,x,y):
@@ -142,11 +140,9 @@ An NVDAObject for a window
 
 	def __init__(self,relation=None,windowHandle=None,windowClassName=None):
 		if not windowHandle:
-			pass #raise ValueError("invalid or not specified window handle")
-		if windowClassName:
-			self.windowClassName=windowClassName
+			raise ValueError("invalid or not specified window handle")
 		self.windowHandle=windowHandle
-		NVDAObject.__init__(self)
+		super(Window,self).__init__()
 
 	def _isEqual(self,other):
 		return super(Window,self)._isEqual(other) and other.windowHandle==self.windowHandle
