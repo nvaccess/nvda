@@ -263,10 +263,6 @@ the NVDAObject for IAccessible
 
 		windowClassName=self.windowClassName
 		role=self.IAccessibleRole
-		if not role:
-			# We need objects for broken SysTreeView32 controls.
-			if windowClassName!="SysTreeView32":
-				raise RuntimeError("IAccessible::accRole failed: %s" % e)
 
 		# Use window class name and role to search for a class match in our static map.
 		keys=[(windowClassName,role),(None,role),(windowClassName,None)]
@@ -292,7 +288,7 @@ the NVDAObject for IAccessible
 			# This is possibly a Flash object.
 			from . import adobeFlash
 			clsList, kwargs = adobeFlash.findBestClass(clsList, kwargs)
-		if windowClassName=="Internet Explorer_Server" and (event_objectID is None or event_objectID==winUser.OBJID_CLIENT or event_objectID>0):
+		if windowClassName=="Internet Explorer_Server" and (self.event_objectID is None or self.event_objectID==winUser.OBJID_CLIENT or self.event_objectID>0):
 			MSHTML=__import__("MSHTML",globals(),locals(),[]).MSHTML
 			clsList.append(MSHTML)
 		elif windowClassName.startswith('Mozilla'):
