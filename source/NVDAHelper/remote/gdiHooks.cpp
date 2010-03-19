@@ -169,8 +169,9 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	}
 	//Update the displayModel.
 	model->clearRectangle(clearRect);
-	//Only record the text if its not using the symbol charSet (e.g. checbox ticks etc)
-	if(tm.tmCharSet!=SYMBOL_CHARSET) {
+	//Make sure this is text, and that its not using the symbol charset (e.g. the tick for a checkbox)
+	//Before recording the text.
+	if(newText.length()>0&&tm.tmCharSet!=SYMBOL_CHARSET) {
 		model->insertChunk(textRect,newText,characterEndXArray);
 	}
 	free(characterEndXArray);
