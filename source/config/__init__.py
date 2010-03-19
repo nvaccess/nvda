@@ -146,7 +146,7 @@ outputDevice = string(default=default)
 	reportLandmarks = boolean(default=true)
 
 [reviewCursor]
-	skipUselessObjects = boolean(default=True)
+	simpleReviewMode = boolean(default=True)
 	followFocus = boolean(default=True)
 	followCaret = boolean(default=True)
 	followMouse = boolean(default=False)

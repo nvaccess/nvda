@@ -497,9 +497,9 @@ class ReviewCursorDialog(SettingsDialog):
 		self.followMouseCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Follow &mouse cursor"))
 		self.followMouseCheckBox.SetValue(config.conf["reviewCursor"]["followMouse"])
 		settingsSizer.Add(self.followMouseCheckBox,border=10,flag=wx.BOTTOM)
-		self.skipUselessObjectsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Skip over &unuseful controls"))
-		self.skipUselessObjectsCheckBox.SetValue(config.conf["reviewCursor"]["skipUselessObjects"])
-		settingsSizer.Add(self.skipUselessObjectsCheckBox,border=10,flag=wx.BOTTOM)
+		self.simpleReviewModeCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Simple review mode"))
+		self.simpleReviewModeCheckBox.SetValue(config.conf["reviewCursor"]["simpleReviewMode"])
+		settingsSizer.Add(self.simpleReviewModeCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.followFocusCheckBox.SetFocus()
@@ -508,7 +508,7 @@ class ReviewCursorDialog(SettingsDialog):
 		config.conf["reviewCursor"]["followFocus"]=self.followFocusCheckBox.IsChecked()
 		config.conf["reviewCursor"]["followCaret"]=self.followCaretCheckBox.IsChecked()
 		config.conf["reviewCursor"]["followMouse"]=self.followMouseCheckBox.IsChecked()
-		config.conf["reviewCursor"]["skipUselessObjects"]=self.skipUselessObjectsCheckBox.IsChecked()
+		config.conf["reviewCursor"]["simpleReviewMode"]=self.simpleReviewModeCheckBox.IsChecked()
 		super(ReviewCursorDialog, self).onOk(evt)
 
 class ObjectPresentationDialog(SettingsDialog):

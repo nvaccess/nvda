@@ -474,21 +474,21 @@ class NVDAObject(baseObject.ScriptableObject):
 @param down: a list which all objects we moved down in to will be placed
 @type down: list
 """
-		skipUselessObjects=config.conf["reviewCursor"]["skipUselessObjects"]
-		child=self.firstChildPresentable if skipUselessObjects else self.firstChild
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		child=self.firstChildPresentable if simpleReviewMode else self.firstChild
 		if child:
 			if isinstance(down,list):
 				down.append(self)
 			return child
-		next=self.nextPresentable if skipUselessObjects else self.next
+		next=self.nextPresentable if simpleReviewMode else self.next
 		if next:
 			return next
 		parent=self.parent
 		while not next and parent:
-			next=parent.nextPresentable if skipUselessObjects else parent.next
+			next=parent.nextPresentable if simpleReviewMode else parent.next
 			if isinstance(up,list):
 				up.append(parent)
-			parent=parent.parentPresentable if skipUselessObjects else parent.parent
+			parent=parent.parentPresentable if simpleReviewMode else parent.parent
 		return next
 
 	_get_nextInFlow=getNextInFlow
@@ -500,18 +500,18 @@ class NVDAObject(baseObject.ScriptableObject):
 @param down: a list which all objects we moved down in to will be placed
 @type down: list
 """
-		skipUselessObjects=config.conf["reviewCursor"]["skipUselessObjects"]
-		prev=self.previousPresentable if skipUselessObjects else self.previous
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		prev=self.previousPresentable if simpleReviewMode else self.previous
 		if prev:
 			lastLastChild=prev
-			lastChild=prev.lastChildPresentable if skipUselessObjects else prev.lastChild
+			lastChild=prev.lastChildPresentable if simpleReviewMode else prev.lastChild
 			while lastChild:
 				if isinstance(down,list):
 					down.append(lastLastChild)
 				lastLastChild=lastChild
-				lastChild=lastChild.lastChildPresentable if skipUselessObjects else lastChild.lastChild
+				lastChild=lastChild.lastChildPresentable if simpleReviewMode else lastChild.lastChild
 			return lastLastChild
-		parent=self.parentPresentable if skipUselessObjects else self.parent
+		parent=self.parentPresentable if simpleReviewMode else self.parent
 		if parent:
 			if isinstance(up,list):
 				up.append(self)

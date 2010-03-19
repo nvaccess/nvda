@@ -289,8 +289,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		skipUselessObjects=config.conf["reviewCursor"]["skipUselessObjects"]
-		curObject=curObject.simpleParent if skipUselessObjects else curObject.parent
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		curObject=curObject.simpleParent if simpleReviewMode else curObject.parent
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -303,8 +303,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		skipUselessObjects=config.conf["reviewCursor"]["skipUselessObjects"]
-		curObject=curObject.simpleNext if skipUselessObjects else curObject.next
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		curObject=curObject.simpleNext if simpleReviewMode else curObject.next
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -317,8 +317,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		skipUselessObjects=config.conf["reviewCursor"]["skipUselessObjects"]
-		curObject=curObject.simplePrevious if skipUselessObjects else curObject.previous
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		curObject=curObject.simplePrevious if simpleReviewMode else curObject.previous
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -331,8 +331,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		skipUselessObjects=config.conf["reviewCursor"]["skipUselessObjects"]
-		curObject=curObject.simpleFirstChild if skipUselessObjects else curObject.firstChild
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		curObject=curObject.simpleFirstChild if simpleReviewMode else curObject.firstChild
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
