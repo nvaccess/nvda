@@ -1,3 +1,4 @@
+#include <cassert>
 #include <string>
 #include <sstream>
 #include <deque>
@@ -7,6 +8,26 @@
 #include "displayModel.h"
 
 using namespace std;
+
+void displayModelChunk_t::truncate(int truncatePointX, BOOL truncateBefore) {
+	assert(text.length()!=0);
+	assert(characterXArray.size()!=0);
+	deque<int>::iterator c=characterXArray.begin();
+	wstring::iterator t=text.begin();
+	if(truncateBefore) {
+		for(;t!=text.end()&&(*c)<truncatePointX;c++,t++);
+		rect.left=*c;
+		characterXArray.erase(characterXArray.begin(),c);
+		text.erase(text.begin(),t);
+	} else {
+		for(;t!=text.end()&&(*c)<=truncatePointX;c++,t++);
+		--c;
+		--t;
+		rect.right=*c;
+		characterXArray.erase(c,characterXArray.end());
+		text.erase(t,text.end());
+	}
+}
 
 displayModel_t::displayModel_t(): _refCount(1), _chunksByXY(), _chunksByYX() {
 	LOG_DEBUG(L"created instance at "<<this);
@@ -41,11 +62,10 @@ void displayModel_t::insertChunk(const RECT& rect, const wstring& text, int* cha
 	LOG_DEBUG(L"created new chunk at "<<chunk);
 	chunk->rect=rect;
 	chunk->text=text;
-	chunk->characterXArray=deque<int>();
-	chunk->characterXArray.push_back(0);
-	for(int i=0;i<text.length();i++) chunk->characterXArray.push_back(characterEndXArray[i]); 
+	chunk->characterXArray.push_back(rect.left);
+	for(int i=0;i<text.length();i++) chunk->characterXArray.push_back(characterEndXArray[i]+rect.left); 
 	LOG_DEBUG(L"filled in chunk with rectangle from "<<rect.left<<L","<<rect.top<<L" to "<<rect.right<<L","<<rect.bottom<<L" with text of "<<text);
-	this->insertChunk(chunk);
+	insertChunk(chunk);
 }
 
 void displayModel_t::insertChunk(displayModelChunk_t* chunk) {
@@ -55,33 +75,54 @@ void displayModel_t::insertChunk(displayModelChunk_t* chunk) {
 
 void displayModel_t::clearRectangle(const RECT& rect) {
 	LOG_DEBUG(L"Clearing rectangle from "<<rect.left<<L","<<rect.top<<L" to "<<rect.right<<L","<<rect.bottom);
+	set<displayModelChunk_t*> chunksForInsertion;
 	displayModelChunksByPointMap_t::iterator i=_chunksByXY.begin();
+	RECT tempRect;
 	while(i!=_chunksByXY.end()) {
-		displayModelChunksByPointMap_t::iterator curI=i++;
-		displayModelChunk_t* chunk=curI->second;
-		//Ignore any chunks not overlapping vertically
-		if(rect.bottom<=chunk->rect.top||rect.top>=chunk->rect.bottom) {
-			continue;
+		displayModelChunksByPointMap_t::iterator nextI=i;
+		nextI++; 
+		displayModelChunk_t* chunk=i->second;
+		if(IntersectRect(&tempRect,&rect,&(chunk->rect))) {
+			if(tempRect.left==chunk->rect.left&&tempRect.right==chunk->rect.right) {
+				_chunksByXY.erase(i);
+				_chunksByYX.erase(make_pair(chunk->rect.top,chunk->rect.left));
+				delete chunk;
+			} else if(tempRect.left>chunk->rect.left&&tempRect.right==chunk->rect.right) {
+				chunk->truncate(tempRect.left,FALSE);
+				if(chunk->text.length()==0) {
+					_chunksByXY.erase(i);
+					_chunksByYX.erase(make_pair(chunk->rect.top,chunk->rect.left));
+					delete chunk;
+				}
+			} else if(tempRect.right<chunk->rect.right&&tempRect.left==chunk->rect.left) {
+				_chunksByXY.erase(i);
+				_chunksByYX.erase(make_pair(chunk->rect.top,chunk->rect.left));
+				chunk->truncate(tempRect.right,TRUE);
+				if(chunk->text.length()==0) {
+					delete chunk;
+				} else {
+					chunksForInsertion.insert(chunk);
+				}
+			} else {
+				displayModelChunk_t* newChunk=new displayModelChunk_t(*chunk);
+				chunk->truncate(tempRect.left,FALSE);
+				if(chunk->text.length()==0) {
+					_chunksByXY.erase(i);
+					_chunksByYX.erase(make_pair(chunk->rect.top,chunk->rect.left));
+					delete chunk;
+				}
+				newChunk->truncate(tempRect.right,TRUE);
+				if(newChunk->text.length()==0) {
+					delete newChunk;
+				} else {
+					chunksForInsertion.insert(newChunk);
+				}
+			}
 		}
-		//Ignore any chunks not overlapping horizontally
-		if(rect.right<=chunk->rect.left||rect.left>=chunk->rect.right) {
-			continue;
-		}
-		//This chunk is definitely overlapping vertically.
-		//Remove any chunk completely covered horizontally
-		if((rect.left<=chunk->rect.left)&&(rect.right>=chunk->rect.right)) {
-			LOG_DEBUG(L"removing chunk that horizontally overlaps completely, with rectangle from "<<chunk->rect.left<<L","<<chunk->rect.top<<L" to "<<chunk->rect.right<<L","<<chunk->rect.bottom);
-			_chunksByXY.erase(curI);
-			_chunksByYX.erase(make_pair(chunk->rect.top,chunk->rect.left));
-			delete chunk;
-		} else {
-			//The chunk is partly overlapped horizontally.
-			//For now just remove the chunk
-			LOG_DEBUG(L"removing chunk that horizontally overlaps partially, with rectangle from "<<chunk->rect.left<<L","<<chunk->rect.top<<L" to "<<chunk->rect.right<<L","<<chunk->rect.bottom);
-			_chunksByXY.erase(curI);
-			_chunksByYX.erase(make_pair(chunk->rect.top,chunk->rect.left));
-			delete chunk;
-		}
+		i=nextI;
+	}
+	for(set<displayModelChunk_t*>::iterator i=chunksForInsertion.begin();i!=chunksForInsertion.end();i++) {
+		insertChunk(*i);
 	}
 	LOG_DEBUG(L"complete");
 }
@@ -97,10 +138,6 @@ void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* other
 	for(displayModelChunksByPointMap_t::iterator i=_chunksByYX.begin();i!=_chunksByYX.end();i++) {
 		if(IntersectRect(&tempRect,&rect,&(i->second->rect))) {
 			chunks.insert(i->second);
-			if(i->second->rect.left<clearRect.left) clearRect.left=i->second->rect.left;
-			if(i->second->rect.top<clearRect.top) clearRect.top=i->second->rect.top;
-			if(i->second->rect.right>clearRect.right) clearRect.right=i->second->rect.right;
-			if(i->second->rect.bottom>clearRect.bottom) clearRect.bottom=i->second->rect.bottom;
 		}
 	}
 	if(chunks.size()>0) {
@@ -113,14 +150,23 @@ void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* other
 		otherModel->clearRectangle(clearRect);
 		//Insert each chunk previously selected, in to the destination model shifting the chunk's rectangle to where it should be in the destination model
 		for(set<displayModelChunk_t*>::iterator i=chunks.begin();i!=chunks.end();i++) {
-			displayModelChunk_t* chunk=new displayModelChunk_t();
-			chunk->rect.left=((*i)->rect.left)+deltaX;
-			chunk->rect.top=((*i)->rect.top)+deltaY;
-			chunk->rect.right=((*i)->rect.right)+deltaX;
-			chunk->rect.bottom=((*i)->rect.bottom)+deltaY;
-			chunk->text=(*i)->text;
-			chunk->characterXArray=(*i)->characterXArray;
-			otherModel->insertChunk(chunk);
+			displayModelChunk_t* chunk=new displayModelChunk_t(**i);
+			chunk->rect.left=(chunk->rect.left)+deltaX;
+			chunk->rect.top=(chunk->rect.top)+deltaY;
+			chunk->rect.right=(chunk->rect.right)+deltaX;
+			chunk->rect.bottom=(chunk->rect.bottom)+deltaY;
+			for(deque<int>::iterator x=chunk->characterXArray.begin();x!=chunk->characterXArray.end();x++) (*x)+=deltaX;
+			if(chunk->rect.left<clearRect.left) {
+				chunk->truncate(clearRect.left,TRUE);
+			}
+			if(chunk->rect.right>clearRect.right) {
+				chunk->truncate(clearRect.right,FALSE);
+			}
+			if(chunk->text.length()==0) {
+				delete chunk;
+			} else {
+				otherModel->insertChunk(chunk);
+			}
 		}
 	}
 }

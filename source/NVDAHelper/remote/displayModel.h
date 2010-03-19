@@ -9,11 +9,15 @@ struct displayModelChunk_t{
 	RECT rect;
 	std::wstring text;
 	std::deque<int> characterXArray;
+/**
+ * Truncates the chunk's text so that only the text that fits in the resulting rectangle is left.  
+ * @param truncatePointX the x position at which to truncate
+ * @param truncateBefore if true then the chunk is truncated from the left all the way up to  truncation point, if false then its truncated from the point to the end.
+ */
+	void truncate(int truncatePointX, BOOL truncateBefore);
 };
 
-typedef std::pair<int,int> coord_t;
 typedef std::map<std::pair<int,int>,displayModelChunk_t*> displayModelChunksByPointMap_t;
-
 
 /**
  * Holds rectanglular chunks of text, and allows inserting chunks, clearing rectangles, and rendering text in a given rectangle.
