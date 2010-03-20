@@ -7,6 +7,7 @@
 
 struct displayModelChunk_t{
 	RECT rect;
+	int baselineFromTop;
 	std::wstring text;
 	std::deque<int> characterXArray;
 /**
@@ -70,7 +71,7 @@ class displayModel_t {
  * @param text the string of unicode text in the chunk.
  * @param characterEndXArray an array of x positions for the end of each character.
  */
-	void insertChunk(const RECT& rect, const std::wstring& text, int* characterEndXArray);
+	void insertChunk(const RECT& rect, int baselineFromTop, const std::wstring& text, int* characterEndXArray);
 
 /**
  * Removes all chunks intersecting the given rectangle. Currently this must be called before inserting chunks as chunks should never overlap.

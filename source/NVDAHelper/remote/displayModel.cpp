@@ -56,10 +56,11 @@ int displayModel_t::getChunkCount() {
 	return chunksByYX.size();
 }
 
-void displayModel_t::insertChunk(const RECT& rect, const wstring& text, int* characterEndXArray) {
+void displayModel_t::insertChunk(const RECT& rect, int baselineFromTop, const wstring& text, int* characterEndXArray) {
 	displayModelChunk_t* chunk=new displayModelChunk_t;
 	LOG_DEBUG(L"created new chunk at "<<chunk);
 	chunk->rect=rect;
+	chunk->baselineFromTop=baselineFromTop;
 	chunk->text=text;
 	chunk->characterXArray.push_back(rect.left);
 	for(int i=0;i<text.length();i++) chunk->characterXArray.push_back(characterEndXArray[i]+rect.left); 
@@ -68,7 +69,7 @@ void displayModel_t::insertChunk(const RECT& rect, const wstring& text, int* cha
 }
 
 void displayModel_t::insertChunk(displayModelChunk_t* chunk) {
-	chunksByYX[make_pair(chunk->rect.top,chunk->rect.left)]=chunk;
+	chunksByYX[make_pair(chunk->rect.top+chunk->baselineFromTop,chunk->rect.left)]=chunk;
 }
 
 void displayModel_t::clearRectangle(const RECT& rect) {

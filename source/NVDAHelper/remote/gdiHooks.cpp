@@ -172,7 +172,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//Make sure this is text, and that its not using the symbol charset (e.g. the tick for a checkbox)
 	//Before recording the text.
 	if(newText.length()>0&&tm.tmCharSet!=SYMBOL_CHARSET) {
-		model->insertChunk(textRect,newText,characterEndXArray);
+		model->insertChunk(textRect,tm.tmAscent,newText,characterEndXArray);
 	}
 	free(characterEndXArray);
 }
