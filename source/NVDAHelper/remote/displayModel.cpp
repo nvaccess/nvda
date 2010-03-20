@@ -29,17 +29,16 @@ void displayModelChunk_t::truncate(int truncatePointX, BOOL truncateBefore) {
 	}
 }
 
-displayModel_t::displayModel_t(): _refCount(1), _chunksByXY(), _chunksByYX() {
+displayModel_t::displayModel_t(): _refCount(1), chunksByYX() {
 	LOG_DEBUG(L"created instance at "<<this);
 }
 
 displayModel_t::~displayModel_t() {
 	LOG_DEBUG(L"destroying instance at "<<this);
-	_chunksByYX.clear();
-	for(displayModelChunksByPointMap_t::iterator i=_chunksByXY.begin();i!=_chunksByXY.end();) {
+	for(displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();i!=chunksByYX.end();) {
 		LOG_DEBUG(L"deleting chunk at "<<i->second);
 		delete i->second;
-		_chunksByXY.erase(i++);
+		chunksByYX.erase(i++);
 	}
 }
 
@@ -54,7 +53,7 @@ long displayModel_t::Release() {
 }
 
 int displayModel_t::getChunkCount() {
-	return _chunksByXY.size();
+	return chunksByYX.size();
 }
 
 void displayModel_t::insertChunk(const RECT& rect, const wstring& text, int* characterEndXArray) {
@@ -69,34 +68,30 @@ void displayModel_t::insertChunk(const RECT& rect, const wstring& text, int* cha
 }
 
 void displayModel_t::insertChunk(displayModelChunk_t* chunk) {
-	_chunksByXY[make_pair(chunk->rect.left,chunk->rect.top)]=chunk;
-	_chunksByYX[make_pair(chunk->rect.top,chunk->rect.left)]=chunk;
+	chunksByYX[make_pair(chunk->rect.top,chunk->rect.left)]=chunk;
 }
 
 void displayModel_t::clearRectangle(const RECT& rect) {
 	LOG_DEBUG(L"Clearing rectangle from "<<rect.left<<L","<<rect.top<<L" to "<<rect.right<<L","<<rect.bottom);
 	set<displayModelChunk_t*> chunksForInsertion;
-	displayModelChunksByPointMap_t::iterator i=_chunksByXY.begin();
+	displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();
 	RECT tempRect;
-	while(i!=_chunksByXY.end()) {
+	while(i!=chunksByYX.end()) {
 		displayModelChunksByPointMap_t::iterator nextI=i;
 		nextI++; 
 		displayModelChunk_t* chunk=i->second;
 		if(IntersectRect(&tempRect,&rect,&(chunk->rect))) {
 			if(tempRect.left==chunk->rect.left&&tempRect.right==chunk->rect.right) {
-				_chunksByXY.erase(i);
-				_chunksByYX.erase(make_pair(chunk->rect.top,chunk->rect.left));
+				chunksByYX.erase(i);
 				delete chunk;
 			} else if(tempRect.left>chunk->rect.left&&tempRect.right==chunk->rect.right) {
 				chunk->truncate(tempRect.left,FALSE);
 				if(chunk->text.length()==0) {
-					_chunksByXY.erase(i);
-					_chunksByYX.erase(make_pair(chunk->rect.top,chunk->rect.left));
+					chunksByYX.erase(i);
 					delete chunk;
 				}
 			} else if(tempRect.right<chunk->rect.right&&tempRect.left==chunk->rect.left) {
-				_chunksByXY.erase(i);
-				_chunksByYX.erase(make_pair(chunk->rect.top,chunk->rect.left));
+				chunksByYX.erase(i);
 				chunk->truncate(tempRect.right,TRUE);
 				if(chunk->text.length()==0) {
 					delete chunk;
@@ -107,8 +102,7 @@ void displayModel_t::clearRectangle(const RECT& rect) {
 				displayModelChunk_t* newChunk=new displayModelChunk_t(*chunk);
 				chunk->truncate(tempRect.left,FALSE);
 				if(chunk->text.length()==0) {
-					_chunksByXY.erase(i);
-					_chunksByYX.erase(make_pair(chunk->rect.top,chunk->rect.left));
+					chunksByYX.erase(i);
 					delete chunk;
 				}
 				newChunk->truncate(tempRect.right,TRUE);
@@ -135,7 +129,7 @@ void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* other
 	int deltaX=otherX-rect.left;
 	int deltaY=otherY-rect.top;
 	//Collect all the chunks that should be copied in to a temporary set, and expand the clearing rectangle to bound them all completely.
-	for(displayModelChunksByPointMap_t::iterator i=_chunksByYX.begin();i!=_chunksByYX.end();i++) {
+	for(displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();i!=chunksByYX.end();i++) {
 		if(IntersectRect(&tempRect,&rect,&(i->second->rect))) {
 			chunks.insert(i->second);
 		}
@@ -178,7 +172,7 @@ void displayModel_t::renderText(const RECT* rect, wstring& text) {
 	int lastTop;
 	BOOL hasAddedText=FALSE;
 	//Walk through all the chunks looking for one that intersects the rectangle
-	for(displayModelChunksByPointMap_t::iterator i=_chunksByYX.begin();i!=_chunksByYX.end();i++) {
+	for(displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();i!=chunksByYX.end();i++) {
 		if(!rect||IntersectRect(&tempRect,rect,&(i->second->rect))) {
 			if(hasAddedText&&i->second->rect.top>lastTop) s<<endl;
 			else if(hasAddedText&&i->second->rect.left>lastRight) s<<" ";

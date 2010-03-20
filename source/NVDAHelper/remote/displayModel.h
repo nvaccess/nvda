@@ -25,8 +25,7 @@ typedef std::map<std::pair<int,int>,displayModelChunk_t*> displayModelChunksByPo
 class displayModel_t {
 	private:
 	volatile long _refCount; //Internal ref count
-	displayModelChunksByPointMap_t _chunksByXY; //indexes the chunks by x,y
-	displayModelChunksByPointMap_t _chunksByYX; //indexes the chunks by y,y
+	displayModelChunksByPointMap_t chunksByYX; //indexes the chunks by y,x
 
 	protected:
 
