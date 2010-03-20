@@ -358,6 +358,8 @@ template<typename charType> int WINAPI hookClass_DrawTextEx<charType>::fakeFunct
 		if(newString!=lpString) free(newString);
 		return res;
 	}
+	//Update newCount as  anywhere from 0 to 4 characters could have been added, we can't assume it was just 4.
+	newCount=WA_strlen(newString);
 	//Get or create a display model for this DC
 	displayModel_t* model=acquireDisplayModel(hdc);
 	if(model) {
