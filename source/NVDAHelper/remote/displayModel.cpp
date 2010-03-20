@@ -10,7 +10,7 @@
 using namespace std;
 
 void displayModelChunk_t::truncate(int truncatePointX, BOOL truncateBefore) {
-	assert(text.length()!=0);
+	if(text.length()==0) return;
 	assert(characterXArray.size()!=0);
 	deque<int>::iterator c=characterXArray.begin();
 	wstring::iterator t=text.begin();
@@ -167,21 +167,38 @@ void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* other
 }
 
 void displayModel_t::renderText(const RECT* rect, wstring& text) {
-	wostringstream s;
 	RECT tempRect;
-	int lastRight; 
-	int lastTop;
-	BOOL hasAddedText=FALSE;
-	//Walk through all the chunks looking for one that intersects the rectangle
+	int lastTextEndX; 
+	int lastTextBaseline;
+	//Walk through all the chunks looking for any that intersect the rectangle
 	for(displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();i!=chunksByYX.end();i++) {
 		if(!rect||IntersectRect(&tempRect,rect,&(i->second->rect))) {
-			if(hasAddedText&&i->second->rect.top>lastTop) s<<endl;
-			else if(hasAddedText&&i->second->rect.left>lastRight) s<<" ";
-			s<<i->second->text;
-			lastRight=i->second->rect.right;
-			lastTop=i->second->rect.top;
-			hasAddedText=TRUE;
+			displayModelChunk_t* chunk=i->second;
+			//If this chunk is not fully covered by the rectangle
+			//Copy it and truncate it so that it is fully covered
+			if(chunk->rect.left<tempRect.left||chunk->rect.right>tempRect.right) {
+				chunk=new displayModelChunk_t(*chunk);
+				if(chunk->rect.left<tempRect.left) chunk->truncate(tempRect.left,TRUE);
+				if(chunk->rect.right>tempRect.right) chunk->truncate(tempRect.right,FALSE);
+				//Its possible that the chunk now contains no text
+				//If so then delete it and skip to the next one
+				if(chunk->text.length()==0) {
+					if(chunk!=i->second) delete chunk;
+					continue;
+				}
+			}
+			int textBaseline=chunk->rect.top+chunk->baselineFromTop;
+			//If we've already rendered some text,
+			//Add a newline if the baseline has changed, or add a space if there's a horizontal gap.
+			if(text.length()>0) {
+				if(textBaseline>lastTextBaseline) text+=L'\n';
+				else if(chunk->rect.left>lastTextEndX) text+=L' ';
+			}
+			text+=chunk->text;
+			lastTextEndX=chunk->rect.right;
+			lastTextBaseline=textBaseline;
+			//Get rid of the temporary chunk if we created one
+			if(chunk!=i->second) delete chunk;
 		}
 	}
-	text.append(s.str());
 }
