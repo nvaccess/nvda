@@ -130,25 +130,26 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 			return;
 		}
 	}
-	int xOffset=x;
-	int yOffset=y;
-	//Correct x and y depending on the text alignment
+	int textLeft=x;
+	int textTop=y;
+	//X and Y are not always the left and top of the text.
+	//So correct them by taking textAlignment in to account
 	if(textAlign&TA_CENTER) {
 		LOG_DEBUG(L"TA_CENTER set");
-		xOffset-=(resultTextSize->cx/2);
+		textLeft-=(resultTextSize->cx/2);
 	} else if(textAlign&TA_RIGHT) {
 		LOG_DEBUG(L"TA_RIGHT set");
-		xOffset-=resultTextSize->cx;
+		textLeft-=resultTextSize->cx;
 	}
 	if(textAlign&TA_BOTTOM) {
 		LOG_DEBUG(L"TA_BOTTOM set");
-		yOffset-=resultTextSize->cy;
+		textTop-=resultTextSize->cy;
 	} else if(textAlign&TA_BASELINE) {
 		LOG_DEBUG(L"TA_BASELINE set");
-		yOffset-=tm.tmAscent;
+		textTop-=tm.tmAscent;
 	}
-	LOG_DEBUG(L"using offset of "<<xOffset<<L","<<yOffset);
-	RECT textRect={xOffset,yOffset,xOffset+resultTextSize->cx,yOffset+resultTextSize->cy};
+	LOG_DEBUG(L"using offset of "<<textLeft<<L","<<textTop);
+	RECT textRect={textLeft,textTop,textLeft+resultTextSize->cx,textTop+resultTextSize->cy};
 	//We must store chunks using device coordinates, not logical coordinates, as its possible for the DC's viewport to move or resize.
 	//For example, in Windows 7, menu items are always drawn at the same DC coordinates, but the DC is moved downward each time.
 	//Device coordinates for a window DC are screen pixels  with 0,0 being the top left of the window's client area.
