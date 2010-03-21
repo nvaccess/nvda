@@ -59,7 +59,11 @@ This release focuses primarily on bug fixes and improvements to the user experie
 	* When switching Windows keyboard layouts (with control+shift or alt+shift), the full name of the layout is reported in both speech and braille. Previously it was only reported in speech, and alternative layouts (e.g. Dvorak) were not reported at all.
 	* If reporting of tables is disabled, table information is no longer announced when the focus changes.
 	* Certain standard tree view controls in 64 bit applications (e.g. the Contents tree view in Microsoft HTML Help) are now accessible. (#473)
+	* Fixed some problems with logging of messages containing non-ASCII characters. This could cause spurious errors in some cases on non-English systems. (#581)
 	* The information in the About NVDA dialog now appears in the user's configured language instead of always appearing in English. (#586)
+	* Problems are no longer encountered when using the synthesiser settings ring after the voice is changed to one which has less settings than the previous voice.
+	* In Skype 4.2, contact names are no longer spoken twice in the contact list.
+	* Fixed some potentially major memory leaks in the GUI and in virtual buffers. (#590, #591)
 
 == 2009.1 ==
 Major highlights of this release include support for 64 bit editions of Windows; greatly improved support for Microsoft Internet Explorer and Adobe Reader documents; support for Windows 7; reading of the Windows logon, control+alt+delete and User Account Control (UAC) screens; and the ability to interact with Adobe Flash and Sun Java content on web pages. There have also been several significant stability fixes and improvements to the general user experience.
