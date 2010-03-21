@@ -56,7 +56,7 @@ int displayModel_t::getChunkCount() {
 	return chunksByYX.size();
 }
 
-void displayModel_t::insertChunk(const RECT& rect, int baselineFromTop, const wstring& text, int* characterEndXArray) {
+void displayModel_t::insertChunk(const RECT& rect, int baselineFromTop, const wstring& text, int* characterEndXArray, const RECT* clippingRect) {
 	displayModelChunk_t* chunk=new displayModelChunk_t;
 	LOG_DEBUG(L"created new chunk at "<<chunk);
 	chunk->rect=rect;
@@ -65,7 +65,19 @@ void displayModel_t::insertChunk(const RECT& rect, int baselineFromTop, const ws
 	chunk->characterXArray.push_back(rect.left);
 	for(int i=0;i<text.length();i++) chunk->characterXArray.push_back(characterEndXArray[i]+rect.left); 
 	LOG_DEBUG(L"filled in chunk with rectangle from "<<rect.left<<L","<<rect.top<<L" to "<<rect.right<<L","<<rect.bottom<<L" with text of "<<text);
-	insertChunk(chunk);
+	//If a clipping rect is specified, and the chunk falls outside the clipping rect
+	//Truncate the chunk so that it stays inside the clipping rect.
+	if(clippingRect) {
+		if(clippingRect->left>chunk->rect.left) chunk->truncate(clippingRect->left,TRUE);
+		if(clippingRect->right<chunk->rect.right) chunk->truncate(clippingRect->right,FALSE);
+	}
+	//Its possible there is now no text in the chunk
+	//Only insert it if there is text.
+	if(chunk->text.length()>0) {
+		insertChunk(chunk);
+	} else {
+		delete chunk;
+	}
 }
 
 void displayModel_t::insertChunk(displayModelChunk_t* chunk) {

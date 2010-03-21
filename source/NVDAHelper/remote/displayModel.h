@@ -70,8 +70,9 @@ class displayModel_t {
  * @param rect the rectangle bounding the text.
  * @param text the string of unicode text in the chunk.
  * @param characterEndXArray an array of x positions for the end of each character.
+ * @param clippingRect a optional pointer to a rectangle which if specified will be used to clip the text so that none falls outside this rectangle. 
  */
-	void insertChunk(const RECT& rect, int baselineFromTop, const std::wstring& text, int* characterEndXArray);
+	void insertChunk(const RECT& rect, int baselineFromTop, const std::wstring& text, int* characterEndXArray, const RECT* clippingRect);
 
 /**
  * Removes all chunks intersecting the given rectangle. Currently this must be called before inserting chunks as chunks should never overlap.
