@@ -45,11 +45,11 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		else:
 			APIClass=self.findBestAPIClass(**kwargs)
 
-		if 'findOverlayClasses' not in self.__dict__:
-			raise TypeError("Cannot instantiate class %s as it does not implement findOverlayClasses"%self.__name__)
+		if 'findOverlayClasses' not in APIClass.__dict__:
+			raise TypeError("Cannot instantiate class %s as it does not implement findOverlayClasses"%APIClass.__name__)
 
 		# Instantiate the requested class.
-		obj=self.__new__(self,*args,**kwargs)
+		obj=APIClass.__new__(APIClass,*args,**kwargs)
 		obj.APIClass=APIClass
 		if isinstance(obj,self):
 			obj.__init__(*args,**kwargs)
