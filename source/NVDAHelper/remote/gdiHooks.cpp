@@ -26,14 +26,6 @@ wchar_t* WA_strncpy(wchar_t* dest, const wchar_t* source, size_t size) {
 	return wcsncpy(dest,source,size);
 }
 
-BOOL WINAPI WA_GetTextExtentPoint32(HDC hdc, char* lpString, int cbCount, LPSIZE size) {
-	return GetTextExtentPoint32A(hdc,lpString,cbCount,size);
-}
-
-BOOL WINAPI WA_GetTextExtentPoint32(HDC hdc, wchar_t* lpString, int cbCount, LPSIZE size) {
-	return GetTextExtentPoint32W(hdc,lpString,cbCount,size);
-}
-
 typedef map<HDC,displayModel_t*> displayModelsByDC_t;
 displayModelsByDC_t displayModelsByMemoryDC;
 displayModelsByWindow_t displayModelsByWindow;
