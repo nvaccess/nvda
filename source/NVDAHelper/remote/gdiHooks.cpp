@@ -143,6 +143,9 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	if(textAlign&TA_BOTTOM) {
 		LOG_DEBUG(L"TA_BOTTOM set");
 		yOffset-=resultTextSize->cy;
+	} else if(textAlign&TA_BASELINE) {
+		LOG_DEBUG(L"TA_BASELINE set");
+		yOffset-=tm.tmAscent;
 	}
 	LOG_DEBUG(L"using offset of "<<xOffset<<L","<<yOffset);
 	RECT textRect={xOffset,yOffset,xOffset+resultTextSize->cx,yOffset+resultTextSize->cy};
