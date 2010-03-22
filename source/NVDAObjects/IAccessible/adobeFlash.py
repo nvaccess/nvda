@@ -83,9 +83,9 @@ class InputTextField(IAccessible):
 	("control+a","changeSelection"),
 ]]
 
-def findOverlayClasses(obj, clsList):
+def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Flash object.
-	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findBestClass method.
+	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
 	# Check whether this is a Flash input text field.
 	try:

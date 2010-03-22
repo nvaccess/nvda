@@ -287,7 +287,7 @@ the NVDAObject for IAccessible
 		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2) and role == oleacc.ROLE_SYSTEM_TEXT) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary"):
 			# This is possibly a Flash object.
 			from . import adobeFlash
-			clsList = adobeFlash.findOverlayClasses(self, clsList)
+			clsList = adobeFlash.findExtraOverlayClasses(self, clsList)
 		if windowClassName=="Internet Explorer_Server" and (self.event_objectID is None or self.event_objectID==winUser.OBJID_CLIENT or self.event_objectID>0):
 			MSHTML=__import__("MSHTML",globals(),locals(),[]).MSHTML
 			clsList.append(MSHTML)
