@@ -1,4 +1,5 @@
 import _default
+import api
 import controlTypes
 import gui
 
@@ -9,7 +10,7 @@ class AppModule(_default.AppModule):
 		# Fudge the name of the NVDA system tray menu to make it more friendly.
 		if obj.role == controlTypes.ROLE_POPUPMENU:
 			parent = obj.parent
-			if parent and not parent.parent:
+			if parent and parent.parent==api.getDesktopObject():
 				obj.name=gui.appTitle
 
 	def event_gainFocus(self, obj, nextHandler):

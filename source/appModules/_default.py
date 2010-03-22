@@ -289,7 +289,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject=curObject.parent
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		curObject=curObject.simpleParent if simpleReviewMode else curObject.parent
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -302,7 +303,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject=curObject.next
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		curObject=curObject.simpleNext if simpleReviewMode else curObject.next
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -315,7 +317,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject=curObject.previous
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		curObject=curObject.simplePrevious if simpleReviewMode else curObject.previous
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -328,7 +331,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject=curObject.firstChild
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		curObject=curObject.simpleFirstChild if simpleReviewMode else curObject.firstChild
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -784,22 +788,22 @@ class AppModule(appModuleHandler.AppModule):
 	script_toggleReportDynamicContentChanges.__doc__=_("Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows")
 
 	def script_toggleCaretMovesReviewCursor(self,keyPress):
-		if globalVars.caretMovesReviewCursor:
+		if config.conf["reviewCursor"]["followCaret"]:
 			onOff=_("off")
-			globalVars.caretMovesReviewCursor=False
+			config.conf["reviewCursor"]["followCaret"]=False
 		else:
 			onOff=_("on")
-			globalVars.caretMovesReviewCursor=True
+			config.conf["reviewCursor"]["followCaret"]=True
 		ui.message(_("caret moves review cursor")+" "+onOff)
 	script_toggleCaretMovesReviewCursor.__doc__=_("Toggles on and off the movement of the review cursor due to the caret moving.")
 
 	def script_toggleFocusMovesNavigatorObject(self,keyPress):
-		if globalVars.focusMovesNavigatorObject:
+		if config.conf["reviewCursor"]["followFocus"]:
 			onOff=_("off")
-			globalVars.focusMovesNavigatorObject=False
+			config.conf["reviewCursor"]["followFocus"]=False
 		else:
 			onOff=_("on")
-			globalVars.focusMovesNavigatorObject=True
+			config.conf["reviewCursor"]["followFocus"]=True
 		ui.message(_("focus moves navigator object")+" "+onOff)
 	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
 
