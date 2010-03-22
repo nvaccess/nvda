@@ -83,7 +83,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		obj.__class__=newCls
 
 		# Initialise the overlay classes.
-		for cls in newCls.__mro__:
+		for cls in reversed(newCls.__mro__):
 			if cls in oldMro:
 				# This class was part of the initially constructed object, so its constructor would have been called.
 				continue
