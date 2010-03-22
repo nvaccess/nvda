@@ -64,6 +64,7 @@ This release focuses primarily on bug fixes and improvements to the user experie
 	* Problems are no longer encountered when using the synthesiser settings ring after the voice is changed to one which has less settings than the previous voice.
 	* In Skype 4.2, contact names are no longer spoken twice in the contact list.
 	* Fixed some potentially major memory leaks in the GUI and in virtual buffers. (#590, #591)
+	* Work around a nasty bug in some SAPI 4 synthesisers which was causing frequent errors and crashes in NVDA. (#597)
 
 == 2009.1 ==
 Major highlights of this release include support for 64 bit editions of Windows; greatly improved support for Microsoft Internet Explorer and Adobe Reader documents; support for Windows 7; reading of the Windows logon, control+alt+delete and User Account Control (UAC) screens; and the ability to interact with Adobe Flash and Sun Java content on web pages. There have also been several significant stability fixes and improvements to the general user experience.
