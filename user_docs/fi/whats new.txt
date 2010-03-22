@@ -28,7 +28,7 @@ Tämä julkaisu keskittyy pääasiassa vikojen korjauksiin ja käyttäjäkokemuksen par
 * Display-syntetisaattori on korvattu uudella Puheen tarkastelu -toiminnolla. Sitä voidaan käyttää itsenäisesti minkä tahansa puhesyntetisaattorin kanssa, ja se aktivoidaan valitsemalla Työkalut-valikosta Puheen tarkastelu.
 * Pistenäytöllä näkyvät ilmoitukset hylätään automaattisesti jos painetaan näppäintä, joka aiheuttaa muutoksen, kuten esimerkiksi kohdistuksen siirtymisen. Aiemmin ilmoitukset pysyivät näkyvillä koko niille määritetyn ajan.
 * Asetusta, joka määrittää, seuraako pistenäyttö kohdistusta vai tarkastelukohdistinta (NVDA+Ctrl+T), voidaan nyt muuttaa Pistenäytön asetukset -valintaikkunasta. Asetus tallennetaan myös käyttäjän asetustiedostoon.
-* eSpeak päivitetty versioon 1.42.04.
+* eSpeak päivitetty versioon 1.43.03.
 * Liblouis-pistekirjoituskääntäjä päivitetty versioon 1.8.0.
 * Elementtien ilmoittamista näennäispuskureissa merkeittäin tai sanoittain siirryttäessä on paranneltu huomattavasti. Aiemmin luettiin paljon epäolennaisia tietoja, ja ilmoitustapa oli hyvin erilainen kuin riveittäin siirryttäessä.
 * Ctrl-näppäin ei enää tauota puhetta, vaan keskeyttää sen. Puheen tauottamiseen ja jatkamiseen käytetään nyt Shift-näppäintä.
@@ -59,7 +59,12 @@ Tämä julkaisu keskittyy pääasiassa vikojen korjauksiin ja käyttäjäkokemuksen par
 * Kun Windowsin näppäimistöasettelua vaihdetaan Ctrl+Shift- tai Alt+Shift-näppäimillä, sen koko nimi ilmoitetaan puheena ja näytetään pistenäytöllä. Aiemmin näppäimistöasettelu ilmoitettiin vain puheena, ja vaihtoehtoisia asetteluja, kuten esim. Dvorak, ei ilmoitettu lainkaan.
 * Taulukoiden tietoja ei enää lueta kohdistuksen muuttuessa, jos taulukoiden ilmoittaminen on poistettu käytöstä.
 * Tietyt standardit 64-bittisten sovellusten puunäkymäsäätimet, esim. Microsoft HTML-ohjeen Sisällys-puunäkymä, ovat nyt saavutettavia.
+* Korjattu joitakin ongelmia muita kuin ASCII-merkkejä sisältävien ilmoitusten lokiin kirjaamisessa. Tämä saattoi joissakin tapauksissa aiheuttaa satunnaisia virheitä muissa kuin englanninkielisissä järjestelmissä.
 * Tietoja NVDA:sta -valintaikkunan tiedot näkyvät nyt valitulla kielellä. Aiemmin ne näytettiin englanniksi.
+* Puhesyntetisaattorin asetusrenkaan käyttäminen ei enää aiheuta ongelmia, kun puheääntä vaihdetaan johonkin sellaiseen, jolla on vähemmän asetuksia kuin edellisellä.
+* Yhteyshenkilöiden nimiä ei enää lueta kahteen kertaan Skype 4.2:n yhteystietoluettelossa.
+* Korjattu joitakin mahdollisesti merkittäviä käyttöliittymän ja näennäispuskureiden muistivuotoja.
+* Kierretty paha ongelma joissakin SAPI 4 -syntetisaattoreissa, joka  aiheutti usein virheitä ja NVDA:n kaatumisia.
 
 == 2009.1 ==
 Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin versioille, huomattavasti paranneltu tuki Internet Explorerille ja Adobe Readerille, tuki Windows 7:lle, Windowsin kirjautumis- ja Ctrl+Alt+Delete-ruutujen sekä Käyttäjätilien valvonnan (UAC) kehotteiden lukeminen sekä mahdollisuus olla vuorovaikutuksessa web-sivujen Flash- ja Java-sisällön kanssa. Lisäksi on useita merkittäviä korjauksia NVDA:n vakauteen ja parannuksia yleiseen käyttäjäkokemukseen.
