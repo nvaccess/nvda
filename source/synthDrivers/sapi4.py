@@ -18,10 +18,17 @@ class SynthDriverBufSink(COMObject):
 
 	def __init__(self,synthDriver):
 		self._synthDriver=synthDriver
+		self._allowDelete = True
 		super(SynthDriverBufSink,self).__init__()
 
 	def ITTSBufNotifySink_BookMark(self, this, qTimeStamp, dwMarkNum):
 		self._synthDriver.lastIndex=dwMarkNum
+
+	def IUnknown_Release(self, this, *args, **kwargs):
+		if not self._allowDelete and self._refcnt.value == 1:
+			log.debugWarning("ITTSBufNotifySink::Release called too many times by engine")
+			return 1
+		return super(SynthDriverBufSink, self).IUnknown_Release(this, *args, **kwargs)
 
 class SynthDriver(SynthDriver):
 
@@ -55,12 +62,20 @@ class SynthDriver(SynthDriver):
 
 	def __init__(self):
 		self.lastIndex=None
-		self._bufSink=SynthDriverBufSink(self).QueryInterface(ITTSBufNotifySink)
+		self._bufSink=SynthDriverBufSink(self)
+		self._bufSinkPtr=self._bufSink.QueryInterface(ITTSBufNotifySink)
+		# HACK: Some buggy engines call Release() too many times on our buf sink.
+		# Therefore, don't let the buf sink be deleted before we release it ourselves.
+		self._bufSink._allowDelete=False
 		self._ttsEngines=CoCreateInstance(CLSID_TTSEnumerator, ITTSEnumW)
 		self._enginesList=self._fetchEnginesList()
 		if len(self._enginesList)==0:
 			raise RuntimeError("No Sapi4 engines available")
 		self.voice=str(self._enginesList[0].gModeID)
+
+	def terminate(self):
+		self._bufSink._allowDelete = True
+
 	def performSpeak(self,text,index=None,isCharacter=False):
 		flags=0
 		if index is not None or isCharacter:
@@ -70,7 +85,7 @@ class SynthDriver(SynthDriver):
 			text="\mrk=%d\\%s"%(index,text)
 		if isCharacter:
 			text = "\\RmS=1\\%s\\RmS=0\\"%text
-		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSink,ITTSBufNotifySink._iid_)
+		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSinkPtr,ITTSBufNotifySink._iid_)
 
 	def speakText(self,text,index=None):
 		self.performSpeak(text,index)

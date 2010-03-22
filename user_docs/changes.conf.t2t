@@ -1,0 +1,4 @@
+%!includeconf: global.conf.t2t
+
+% Make ticket references into links.
+%!PreProc: "#([0-9]+)" "[#\1 http://www.nvda-project.org/ticket/\1]"
