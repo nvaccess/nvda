@@ -144,6 +144,12 @@ outputDevice = string(default=default)
 	reportHeadings = boolean(default=true)
 	reportBlockQuotes = boolean(default=true)
 	reportLandmarks = boolean(default=true)
+
+[reviewCursor]
+	simpleReviewMode = boolean(default=True)
+	followFocus = boolean(default=True)
+	followCaret = boolean(default=True)
+	followMouse = boolean(default=False)
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"

@@ -6,6 +6,7 @@
 
 """General functions for NVDA"""
 
+import config
 import textInfos
 import globalVars
 from logHandler import log
@@ -133,7 +134,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	globalVars.focusObject=obj
 	globalVars.focusAncestors=ancestors
 	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
-	if globalVars.focusMovesNavigatorObject:
+	if config.conf["reviewCursor"]["followFocus"]:
 		setNavigatorObject(obj)
 	if log.isEnabledFor(log.DEBUG):
 		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))

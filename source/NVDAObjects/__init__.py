@@ -377,6 +377,96 @@ class NVDAObject(baseObject.ScriptableObject):
 			for recursiveChild in child.recursiveDescendants:
 				yield recursiveChild
 
+	presType_unavailable="unavailable"
+	presType_layout="layout"
+	presType_content="content"
+
+	def _get_presentationType(self):
+		states=self.states
+		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
+			return self.presType_unavailable
+		role=self.role
+		if controlTypes.STATE_FOCUSED in states:
+			return self.presType_content
+		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_TITLEBAR):
+			return self.presType_layout
+		name = self.name
+		description = self.description
+		if not name and not description and role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_FORM):
+			return self.presType_layout
+		if not name and not description and role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and not config.conf["documentFormatting"]["reportTables"]:
+			return self.presType_layout
+		if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN):
+			try:
+				table=self.table
+			except NotImplementedError:
+				table=None
+			if table:
+				# This is part of a real table, so the cells will report row/column information.
+				# Therefore, this object is just for layout.
+				return self.presType_layout
+		return self.presType_content
+
+	def _get_simpleParent(self):
+		obj=self.parent
+		while obj and obj.presentationType!=self.presType_content:
+			obj=obj.parent
+		return obj
+
+	def _findSimpleNext(self,useChild=False,useParent=True,goPrevious=False):
+		nextPrevAttrib="next" if not goPrevious else "previous"
+		firstLastChildAttrib="firstChild" if not goPrevious else "lastChild"
+		found=None
+		if useChild:
+			child=getattr(self,firstLastChildAttrib)
+			childPresType=child.presentationType if child else None
+			if childPresType==self.presType_content:
+				found=child
+			elif childPresType==self.presType_layout:
+				found=child._findSimpleNext(useChild=True,useParent=False,goPrevious=goPrevious)
+			elif child:
+				found=child._findSimpleNext(useChild=False,useParent=False,goPrevious=goPrevious)
+			if found:
+				return found
+		next=getattr(self,nextPrevAttrib)
+		nextPresType=next.presentationType if next else None
+		if nextPresType==self.presType_content:
+			found=next
+		elif nextPresType==self.presType_layout:
+			found=next._findSimpleNext(useChild=True,useParent=False,goPrevious=goPrevious)
+		elif next:
+			found=next._findSimpleNext(useChild=False,useParent=False,goPrevious=goPrevious)
+		if found:
+			return found
+		parent=self.parent if useParent else None
+		while parent and parent.presentationType!=self.presType_content:
+			next=parent._findSimpleNext(useChild=False,useParent=False,goPrevious=goPrevious)
+			if next:
+				return next
+			parent=parent.parent
+
+	def _get_simpleNext(self):
+		return self._findSimpleNext()
+
+	def _get_simplePrevious(self):
+		return self._findSimpleNext(goPrevious=True)
+
+	def _get_simpleFirstChild(self):
+		child=self.firstChild
+		if not child:
+			return None
+		presType=child.presentationType
+		if presType!=self.presType_content: return child._findSimpleNext(useChild=(presType!=self.presType_unavailable),useParent=False)
+		return child
+
+	def _get_simpleLastChild(self):
+		child=self.lastChild
+		if not child:
+			return None
+		presType=child.presentationType
+		if presType!=self.presType_content: return child._findSimpleNext(useChild=(presType!=self.presType_unavailable),useParent=False,goPrevious=True)
+		return child
+
 	def getNextInFlow(self,down=None,up=None):
 		"""Retreaves the next object in depth first tree traversal order
 @param up: a list that all objects that we moved up out of will be placed in
@@ -384,20 +474,21 @@ class NVDAObject(baseObject.ScriptableObject):
 @param down: a list which all objects we moved down in to will be placed
 @type down: list
 """
-		child=self.firstChild
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		child=self.firstChildPresentable if simpleReviewMode else self.firstChild
 		if child:
 			if isinstance(down,list):
 				down.append(self)
 			return child
-		next=self.next
+		next=self.nextPresentable if simpleReviewMode else self.next
 		if next:
 			return next
 		parent=self.parent
 		while not next and parent:
-			next=parent.next
+			next=parent.nextPresentable if simpleReviewMode else parent.next
 			if isinstance(up,list):
 				up.append(parent)
-			parent=parent.parent
+			parent=parent.parentPresentable if simpleReviewMode else parent.parent
 		return next
 
 	_get_nextInFlow=getNextInFlow
@@ -409,17 +500,18 @@ class NVDAObject(baseObject.ScriptableObject):
 @param down: a list which all objects we moved down in to will be placed
 @type down: list
 """
-		prev=self.previous
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		prev=self.previousPresentable if simpleReviewMode else self.previous
 		if prev:
 			lastLastChild=prev
-			lastChild=prev.lastChild
+			lastChild=prev.lastChildPresentable if simpleReviewMode else prev.lastChild
 			while lastChild:
 				if isinstance(down,list):
 					down.append(lastLastChild)
 				lastLastChild=lastChild
-				lastChild=lastChild.lastChild
+				lastChild=lastChild.lastChildPresentable if simpleReviewMode else lastChild.lastChild
 			return lastLastChild
-		parent=self.parent
+		parent=self.parentPresentable if simpleReviewMode else self.parent
 		if parent:
 			if isinstance(up,list):
 				up.append(self)
@@ -483,24 +575,10 @@ Tries to force this object to take the focus.
 		@return: C{True} if it should be presented in the focus ancestry, C{False} if not.
 		@rtype: bool
 		"""
-		role = self.role
-		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_EDITABLETEXT):
+		if self.presentationType == self.presType_layout:
 			return False
-		name = self.name
-		description = self.description
-		if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_FORM) and not name and not description:
+		if self.role in (controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_EDITABLETEXT):
 			return False
-		if not name and not description and role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and not config.conf["documentFormatting"]["reportTables"]:
-			return False
-		if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN):
-			try:
-				table=self.table
-			except NotImplementedError:
-				table=None
-			if table:
-				# This is part of a real table, so the cells will report row/column information.
-				# Therefore, we don't want to present this in the ancestry.
-				return False
 		return True
 
 	def _get_statusBar(self):
@@ -539,13 +617,15 @@ Tries to force this object to take the focus.
 		else:
 			speechWasCanceled=False
 		self._mouseEntered=True
-		if not config.conf['mouse']['reportTextUnderMouse']:
-			return
 		try:
 			info=self.makeTextInfo(textInfos.Point(x,y))
 			info.expand(info.unit_mouseChunk)
 		except:
 			info=NVDAObjectTextInfo(self,textInfos.POSITION_ALL)
+		if config.conf["reviewCursor"]["followMouse"]:
+			api.setReviewPosition(info)
+		if not config.conf["mouse"]["reportTextUnderMouse"]:
+			return
 		oldInfo=getattr(self,'_lastMouseTextInfoObject',None)
 		self._lastMouseTextInfoObject=info
 		if not oldInfo or info.__class__!=oldInfo.__class__ or info.compareEndPoints(oldInfo,"startToStart")!=0 or info.compareEndPoints(oldInfo,"endToEnd")!=0:
@@ -609,7 +689,7 @@ This code is executed if a gain focus event is received by this object.
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				try:
 					api.setReviewPosition(self.makeTextInfo(textInfos.POSITION_CARET))
 				except (NotImplementedError, RuntimeError):
@@ -670,7 +750,7 @@ This code is executed if a gain focus event is received by this object.
 				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				api.setReviewPosition(info.copy())
 			info.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(info)
@@ -691,7 +771,7 @@ This code is executed if a gain focus event is received by this object.
 				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				api.setReviewPosition(info.copy())
 			info.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER)
@@ -712,7 +792,7 @@ This code is executed if a gain focus event is received by this object.
 				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				api.setReviewPosition(info.copy())
 			info.expand(textInfos.UNIT_WORD)
 			speech.speakTextInfo(info,unit=textInfos.UNIT_WORD)
@@ -733,7 +813,7 @@ This code is executed if a gain focus event is received by this object.
 				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				api.setReviewPosition(info.copy())
 			info.expand(textInfos.UNIT_PARAGRAPH)
 			speech.speakTextInfo(info)
@@ -763,7 +843,7 @@ This code is executed if a gain focus event is received by this object.
 				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				api.setReviewPosition(info)
 
 	def script_backspaceCharacter(self,keyPress):
@@ -788,7 +868,7 @@ This code is executed if a gain focus event is received by this object.
 				info=focus.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				api.setReviewPosition(info.copy())
 			info.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER)
