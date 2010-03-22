@@ -24,10 +24,10 @@ class TCList(IAccessible):
 		if oldActivePannel !=self.windowControlID:
 			oldActivePannel=self.windowControlID
 			obj=self
-			while obj and obj.parent.windowClassName!="TTOTAL_CMD":
+			while obj and obj.parent and obj.parent.windowClassName!="TTOTAL_CMD":
 				obj=obj.parent
 			counter=0
-			while obj and obj.windowClassName!="TPanel":
+			while obj and obj.previous and obj.windowClassName!="TPanel":
 				obj=obj.previous
 				if obj.windowClassName!="TDrivePanel":
 					counter+=1

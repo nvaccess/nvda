@@ -64,7 +64,7 @@ class AppModule(_default.AppModule):
 
 		if obj.windowClassName == "Edit" and not obj.name:
 			parent = obj.parent
-			if parent.role == controlTypes.ROLE_LISTITEM:
+			if parent and parent.role == controlTypes.ROLE_LISTITEM:
 				self.overlayCustomNVDAObjectClass(obj, XPPasswordField, outerMost=True)
 				obj.bindKeys()
 				return

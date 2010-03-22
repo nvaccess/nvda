@@ -298,11 +298,11 @@ class SysTrayIcon(wx.TaskBarIcon):
 		menu_help = wx.Menu()
 		if not globalVars.appArgs.secure:
 			item = menu_help.Append(wx.ID_ANY, _("User guide"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("user guide.html")), item)
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("userGuide.html")), item)
 			item = menu_help.Append(wx.ID_ANY, _("Key Command Quick Reference"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("key commands.txt")), item)
 			item = menu_help.Append(wx.ID_ANY, _("What's &new"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("whats new.txt")), item)
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("changes.html")), item)
 			item = menu_help.Append(wx.ID_ANY, _("Web site"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvda-project.org/"), item)
 			item = menu_help.Append(wx.ID_ANY, _("Readme"))

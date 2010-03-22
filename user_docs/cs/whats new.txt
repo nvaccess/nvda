@@ -1,34 +1,65 @@
 = Co je nového v programu NVDA =
 
 == verze 2010.1 ==
+Toto vydání se zamìøuje pøedevším na opravy chyb a vylepšování uivatelského dojmu pøi práci s programem, vèetnì nìkolika vıraznıch zlepšení stability.
 
 === Novinky ===
 	* Spuštìní NVDA u nebude selhávat na systémech, které nemají ádná vıstupní zvuková zaøízení. Aby mohl v takovém pøípadì NVDA pøedávat uivateli informace, bude pochopitelnì tøeba pouít braillskı øádek nebo vıstup bez mluvení v kombinaci s novım nástrojem prozobrazení øeèi, kterı nahrazuje pøedchozí virtuální hlasovı vıstup Display. (#425)
 	* Do dialogu ohlašování formátování dokumentu byla pøidána volba hlásit oblasti stránky, která urèuje, zda má NVDA pøi pohybu po webovıch stránkách ohlašovat tzv. oblasti stránky. Z dùvodù zajištìní kompatibility s pøedchozí verzí je tato funkce standardnì zapnutá.
 	* Pøi zapnutém ohlašování pøíkazovıch kláves bude NVDA hlásit i názvy tzv. multimediálních kláves (napø. pøehrát, zastavit pøehrávání, domovská stránka atd) na mnoha klávesnicích. (#472)
-	* NVDA od této verze ohlašuje pøi stisku control+backspace právì smazané slovo u tìch prvkù, které toto podporují. (#491)
+	* NVDA od této verze ohlašuje pøi stisku control+backspace právì smazané slovo u tìch prvkù, které to umoòují. (#491)
 	* V oknì Web formatoru lze nyní pouívat pro ètení a pohyb po textu i kurzorové šipky. (#452)
+	* Od nynìjška je podporován seznam poloek v adresáøi Microsoft Office Outlooku.
 	* NVDA lépe podporuje vnoøené editovatelné dokumenty (reim navrhování) v Internet Exploreru. (#402)
-	* Novı pøíkaz (NVDA+shift+numerické minus) umoòuje pøesunout systémovı fokus na právì prohlíenı objekt.
-	* Byly pøidány nové pøíkazy pro uzamknutí a opìtovné odemknutí levého èi pravého tlaèítka myši. Jde v podstatì o simulované pøidrení daného tlaèítka, uiteèné zejména pøi pøetahování objektù myší atd. Shift+numerické lomeno pro levé, shift+numerická hvìzdièka pro pravé tlaèítko.
+	* Novı pøíkaz (NVDA+shift+numerické mínus) umoòuje pøesunout systémovı fokus na právì prohlíenı objekt.
+	* Byly pøidány nové pøíkazy pro uzamèení a odemèení levého èi pravého tlaèítka myši. Jde v podstatì o simulované pøidrení daného tlaèítka, uiteèné zejména pøi pøetahování objektù myší atd. Shift+numerické lomeno pro levé, shift+numerická hvìzdièka pro pravé tlaèítko.
+	* Nové braillské pøekladové tabulky: nìmecké - 8-bodové poèítaèové písmo, nìmeckı zkratkopis, finské - 8-bodové poèítaèové písmo, èínština (hong kongská, kantonská), èínština (taiwanská, mandarínská). (#344, #369, #415, #450)
+	* Nyní lze pøi instalaci NVDA zakázat vytvoøení zástupce na ploše, a tedy i zkratkové klávesy. (#518)
+	* NVDA dovede pracovat s rozhraním Iaccessible2 i v 64 bitovıch aplikacích. (#479)
+	* Vylepšená podpora live regionù v aplikacích Mozilla. (#246)
+	* Bylo vyvinuto rozhraní, které umoòuje externím aplikacím pracovat s NVDA; napø. pøeèíst text, pøerušit øeè, zobrazit zprávu na braillském øádku atd.
+	* Informativní a chybová hlášení budou nyní ètena i na pøihlašovacích obrazovkách systémù Windows Vista nebo Windows 7. (#506)
+	* V Adobe Readeru jsou nyní podporovány i PDF interaktivní formuláøe vytvoøené v programu Adobe LiveCycle. (#475)
+	* V programu Miranda IM nyní NVDA dokáe automaticky èíst pøíchozí zprávy v oknech konverzace, pokud je zapnuto ohlašování dynamicky zmìnìného obsahu. Také byly pøidány pøíkazy pro pøeètení tøí nejnovìjších zpráv (NVDA+control+èíslo 1, 2, nebo 3).
+	* V obsahu Adobe Flash jsou nyní podporována textová vstupní pole. (#461)
 
 === Zmìny ===
 	* V nabídce start systému Windows 7 u není oznamována extrémnì obsáhlá zpráva klávesové nápovìdy.
-	* Syntezátor Display, virtuální hlasovı vıstup, byl nyní nahrazen nástrojem nazvanım zobrazení øeèi. Lze jej zapnout zvolením poloky zobrazení øeèi z nabídky NVDA, menu nástroje. Mùe bıt aktivní nezávisle na tom, kterı hlasovı syntezátor právì pouíváte.
+	* Syntezátor Display, virtuální hlasovı vıstup, byl nyní nahrazen nástrojem nazvanım zobrazení øeèi. Lze jej zapnout zvolením poloky zobrazení øeèi z nabídky NVDA, menu nástroje. Mùe bıt aktivní nezávisle na tom, kterı hlasovı syntezátor právì pouíváte. (#44)
 	* Aktuální text viditelnı na braillském øádku bude nyní automaticky odstranìn pøi stisku klávesy, která vyvolá událost takového druhu, jako je tøeba pohyb fokusu. Døíve by poslední vypsanı úsek textu vdy zùstával zobrazenı po nastavenou dobu.
 	* Nastavení, zda se má zobrazování na braillském øádku øídit systémovım èi ètecím kurzorem (NVDA+control+t), je nyní moné mìnit také v dialogu braillské nastavení, a rovnì se ukládá do konfiguraèního souboru.
+	* Hlasovı syntezátor Espeak byl aktualizován na verzi 1.43.
+	* Pøekladaè do braillova písma Liblouis byl aktualizován na verzi 1.8.0.
+	* Ve virtuálním prohlíeèi bylo podstatnì vylepšeno ohlašování prvkù pøi pohybu po znacích èi slovech. Døíve bylo v takovém pøípadì oznamováno pøíliš mnoho nedùleitıch informací a ohlašování bylo celkovì velice odlišné od toho pøi pohybu po øádcích. (#490)
+	* Klávesa control nyní prostì pøerušuje øeè jako ostatní klávesy, místo aby ji pozastavovala. Pro pozastavení èi pokraèování v øeèi pouívejte klávesu shift.
+	* Pøi ohlašování zmìn fokusu u nebude oznamován poèet øádkù a sloupcù tabulky, protoe tato informace je velice obsáhlá a obvykle nebıvá pøíliš uiteèná.
 
 === Opravy ===
 	* Spuštìní NVDA u nebude selhávat v pøípadì, kdy je zdánlivì dostupná podpora UI Automation, ale z nìjakého dùvodu se neinicializuje. (#483)
 	* Pøi pøesunu fokusu na buòku tabulky v dokumentech Mozilla u NVDA nebude obèas èíst celı øádek tabulky. (#482)
 	* Odstranìna dlouhá prodleva odezvy NVDA pøi rozbalování vìtví stromového seznamu, které obsahují velmi mnoho vnoøenıch poloek.
-* Pøi vypisování SAPI 5 hlasù se NVDA nyní pokouší rozpoznat problémové hlasy a ty pak nezpøístupní v dialogu nastavení hlasu ani v kruhu nastavení hlasového vıstupu. Pokud se v systému døíve vyskytoval by jen jedinı problémovı hlas, NVDA nìkdy nedokázal naèíst svùj SAPI 5 ovladaè.
+* Pøi vypisování SAPI 5 hlasù se NVDA nyní pokouší rozpoznat problémové hlasy a ty pak nezpøístupní v dialogu hlasové vıstupy ani v kruhu nastavení hlasového vıstupu. Pokud se v systému døíve vyskytoval by jen jedinı problémovı hlas, NVDA nìkdy nedokázal naèíst svùj SAPI 5 ovladaè.
 	* Virtuální prohlíeè nyní skuteènì respektuje volbu hlásit pøístupové klávesy k objektùm, která se nachází v dialogu prezentace objektù. (#486)
 	* Ve virtuálním prohlíeèi u nebudou èteny souøadnice øádku èi sloupce tabulky, pokud je ohlašování tabulek vypnuto a fokus se nachází v záhlaví tabulky. 
 	* Ve virtuálním prohlíeèi budou nyní správnì èteny souøadnice øádku a sloupce tabulky, pokud tabulku opustíte a poté se vrátíte na stejnou buòku, ani byste pøedtím prohlíeli nìjakou jinou buòku; napø. pøi stisku horní a vzápìtí dolní šipky na první buòce tabulky. (#378)
 	* Prázdné øádky v dokumentech Microsoft Wordu a v editovatelnıch prvcích Microsoft HTML jsou nyní náleitì reflektovány i na braillském øádku. NVDA v takovıch pøípadech døíve zobrazoval aktuální vìtu, nikoli aktuální øádek. (#420)
-	* Nìkolik bezpeènostních oprav v situaci, kdy NVDA bìí pøi pøihlašování do systému nebo na jinıch zabezpeèenıch obrazovkách.
-	* Pøi provádìní pøíkazu "pøeèíst vše" ve standardních editaèních prvcích Windows a v dokumentech Microsoft Wordu je nyní správnì obnovována pozice systémového kurzoru . (#418)
+	* Nìkolik bezpeènostních oprav v situaci, kdy NVDA bìí pøi pøihlašování do systému nebo na jinıch zabezpeèenıch obrazovkách. (#515)
+	* Pøi pouití pøíkazu pro plynulé ètení je nyní ve standardních editaèních prvcích Windows a v dokumentech Microsoft Wordu správnì aktualizována pozice kurzoru. (#418)
+	* Ve virtuálním prohlíeèi u NVDA nezobrazuje text obrázkù uvnitø odkazù a ostatních kliknutelnıch objektù, které jsou oznaèeny jako irelevantní pro odeèítaèe obrazovky. (#423)
+	* Úpravy v rozloení klávesnice pro laptopy. (#517)
+	* Je-li braillskı øádek propojen s ètecím kurzorem a fokus se nachází v oknì dosovské konzole, ètecí kurzor se nyní dokáe po textu konzole správnì pohybovat.
+	* Pøi práci s TeamTalkem 3 nebo TeamTalkem 4 Classic u NVDA neohlašuje zmìny indikátoru prùbìhu tıkající se VU meteru v hlavním oknì. Rovnì národní znaky jsou nyní správnì èteny v oknì pøíchozího chatu.
+	* Poloky v nabídce start systému Windows 7 u nebudou èteny dvakrát. (#474)
+	* Aktivování odkazù v rámci stejné stránky ve Firefoxu 3.6 nyní správnì pøesune kurzor na pøíslušné místo na stránce.
+	* Opravena chyba, kdy v nìkterıch dokumentech PDF v Adobe Readeru nebyl vdy naèítán všechen text.
+	* NVDA u nebude chybnì èíst urèitá èísla oddìlená pomlèkou, napø. 500-1000. (#547)
+	* Ve Windows XP u NVDA nebude zpùsobovat zamrzání Internet Exploreru pøi pøepínání zaškrtávacích políèek na stránce Windows Update. (#477)
+	* Pøi pouívání vestavìného syntezátoru Espeak u nebude docházet k pøerušovanému zamrzání pøi souèasném pøehrávání pípání a øeèi. Tento jev byl nejvíce patrnı napø. pøi kopírování velkého mnoství dat v Prùzkumníku Windows.
+	* NVDA u neoznamuje, e dokument Firefoxu se stal zaneprázdnìnım (napø. díky aktualizaci nebo obnovení), u dokumentù na pozadí. To také vedlo k mylnému ohlašování stavového øádku aplikace v popøedí.
+	* Pøi pøepínání rozloení klávesnice Windows (pomocí control+shift nebo alt+shift) bude nyní ohlášeno plné jméno nového rozloení, a to jak hlasem, tak Braillem. Døíve bylo ohlašováno pouze hlasem a alternativní rozloení (napø. Dvorak) nebyla oznamována vùbec.
+	* Pokud je vypnuto ohlašování tabulek, nebudou u oznamovány informace o tabulce pøi zmìnì fokusu.
+	* Urèité standardní prvky stromového zobrazení v 64 bitovıch aplikacích (napø. stromovı seznam obsahu v Microsoft HTML nápovìdì) jsou nyní pøístupné. (#473)
+	* Informace v dialogu O programu se nyní objevují v nastaveném jazyce uivatele, místo aby byly vdy zobrazovány v angliètinì. (#586
 
 == verze 2009.1 ==
 
