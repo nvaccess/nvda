@@ -1,16 +1,9 @@
 import ctypes
 import re
-import appModuleHandler
-import speech
-import api
-import winUser
 import JABHandler
 import controlTypes
 from ..window import Window
 import textInfos.offsets
-from .. import NVDAObjectTextInfo
-import NVDAObjects.IAccessible
-import globalVars
 from logHandler import log
 
 JABRolesToNVDARoles={
@@ -140,7 +133,7 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return [start,end]
 
 	def _getParagraphOffsets(self,offset):
-		return super(EditTextInfo,self)._getLineOffsets(offset)
+		return self._getLineOffsets(offset)
 
 class JAB(Window):
 
