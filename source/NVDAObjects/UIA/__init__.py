@@ -12,7 +12,7 @@ import textInfos
 from logHandler import log
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, AutoSelectDetectionNVDAObject
-from NVDAObjects.behaviors import ProgressBar
+from NVDAObjects.behaviors import ProgressBar, EditableText
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -123,6 +123,9 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 	liveNVDAObjectTable=weakref.WeakValueDictionary()
 
 	def findOverlayClasses(self,clsList):
+		if self.TextInfo==UIATextInfo:
+			clsList.append(EditableText)
+
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
@@ -195,23 +198,6 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			self.TextInfo=UIATextInfo
 			self.initAutoSelectDetection()
 			self.value=""
-			[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
-				("ExtendedUp","moveByLine"),
-				("ExtendedDown","moveByLine"),
-				("control+ExtendedUp","moveByLine"),
-				("control+ExtendedDown","moveByLine"),
-				("ExtendedLeft","moveByCharacter"),
-				("ExtendedRight","moveByCharacter"),
-				("Control+ExtendedLeft","moveByWord"),
-				("Control+ExtendedRight","moveByWord"),
-				("ExtendedHome","moveByCharacter"),
-				("ExtendedEnd","moveByCharacter"),
-				("control+extendedHome","moveByLine"),
-				("control+extendedEnd","moveByLine"),
-				("ExtendedDelete","delete"),
-				("Back","backspaceCharacter"),
-				("Control+Back","backspaceWord"),
-			]]
 
 	def _isEqual(self,other):
 		if not isinstance(other,UIA):
