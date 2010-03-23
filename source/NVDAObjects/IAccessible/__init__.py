@@ -1277,6 +1277,9 @@ class MenuItem(IAccessible):
 		else:
 			return None
 
+	def _get_name(self):
+		return super(MenuItem,self).name or self.displayText
+
 	def event_gainFocus(self):
 		if eventHandler.isPendingEvents("gainFocus"):
 			return
