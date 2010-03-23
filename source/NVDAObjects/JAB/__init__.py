@@ -182,7 +182,7 @@ class JAB(Window):
 		self.windowHandle=windowHandle
 		self.jabContext=jabContext
 		self._JABAccContextInfo=jabContext.getAccessibleContextInfo()
-		Window.__init__(self,windowHandle=windowHandle)
+		super(JAB,self).__init__(windowHandle=windowHandle)
 		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU,controlTypes.ROLE_LISTITEM]:
 			if self.JABRole in ["text","password text","edit bar","view port","paragraph"]:
 				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
