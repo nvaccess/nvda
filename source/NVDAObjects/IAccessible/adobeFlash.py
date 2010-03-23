@@ -83,15 +83,15 @@ class InputTextField(IAccessible):
 	("control+a","changeSelection"),
 ]]
 
-def findBestClass(clsList, kwargs):
-	"""Determine the most appropriate class if this is a Flash object and provide appropriate kwargs.
-	This works similarly to L{NVDAObjects.NVDAObject.findBestClass} except that it never calls any other findBestClass method.
+def findExtraOverlayClasses(obj, clsList):
+	"""Determine the most appropriate class if this is a Flash object.
+	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
-	IAccessibleObject = kwargs["IAccessibleObject"]
 	# Check whether this is a Flash input text field.
 	try:
-		kwargs["ISimpleTextSelectionObject"] = IAccessibleObject.QueryInterface(IServiceProvider).QueryService(ISimpleTextSelection._iid_, ISimpleTextSelection)
+		# We have to fetch ISimpleTextSelectionObject in order to check whether this is an input text field, so store it on the instance.
+		obj.ISimpleTextSelectionObject = obj.IAccessibleObject.QueryInterface(IServiceProvider).QueryService(ISimpleTextSelection._iid_, ISimpleTextSelection)
 		clsList.append(InputTextField)
 	except COMError:
 		pass
-	return clsList, kwargs
+	return clsList

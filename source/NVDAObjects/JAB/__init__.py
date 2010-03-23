@@ -144,10 +144,9 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 class JAB(Window):
 
-	@classmethod
-	def findBestClass(cls,clsList,kwargs):
+	def findOverlayClasses(self,clsList):
 		clsList.append(JAB)
-		return clsList,kwargs
+		return clsList
 
 	@classmethod
 	def objectFromPoint(cls,x,y,windowHandle=None):

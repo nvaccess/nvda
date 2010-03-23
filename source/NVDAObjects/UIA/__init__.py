@@ -122,24 +122,9 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 
 	liveNVDAObjectTable=weakref.WeakValueDictionary()
 
-	@classmethod
-	def findBestClass(cls,clsList,kwargs):
-		windowHandle=kwargs.get('windowHandle',None)
-		UIAElement=kwargs.get('UIAElement',None)
-		isWindowElement=True
-		if windowHandle and not UIAElement:
-			UIAElement=UIAHandler.handler.clientObject.ElementFromHandleBuildCache(windowHandle,UIAHandler.handler.baseCacheRequest)
-		elif UIAElement and not windowHandle:
-			windowHandle=UIAElement.cachedNativeWindowHandle
-			if not windowHandle:
-				isWindowElement=False
-				windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
-		else:
-			raise ValueError("needs either a UIA element or window handle")
-		kwargs['windowHandle']=windowHandle
-		kwargs['UIAElement']=UIAElement
-		UIAControlType=UIAElement.cachedControlType
-		UIAClassName=UIAElement.cachedClassName
+	def findOverlayClasses(self,clsList):
+		UIAControlType=self.UIAElement.cachedControlType
+		UIAClassName=self.UIAElement.cachedClassName
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
 		if UIAClassName=="ControlPanelLink":
@@ -153,10 +138,10 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
 			clsList.append(TreeviewItem)
 		clsList.append(UIA)
-		if isWindowElement:
-			return super(UIA,cls).findBestClass(clsList,kwargs)
+		if self.UIAIsWindowElement:
+			return super(UIA,self).findOverlayClasses(clsList)
 		else:
-			return clsList,kwargs
+			return clsList
 
 	@classmethod
 	def objectFromPoint(cls,x,y,oldNVDAObject=None,windowHandle=None):
@@ -173,31 +158,39 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		return UIA(UIAElement=UIAElement)
 
 	def __new__(cls,relation=None,windowHandle=None,UIAElement=None):
+		if windowHandle and not UIAElement:
+			UIAElement=UIAHandler.handler.clientObject.ElementFromHandleBuildCache(windowHandle,UIAHandler.handler.baseCacheRequest)
+
 		try:
 			runtimeId=UIAElement.getRuntimeId()
 		except COMError:
 			log.debugWarning("Could not get UIA element runtime Id",exc_info=True)
 			runtimeId=None
-		if not runtimeId:
-			obj=cls.liveNVDAObjectTable.get(runtimeId,None)
-		else:
-			obj=None
+
+		obj=cls.liveNVDAObjectTable.get(runtimeId,None) if runtimeId else None
 		if not obj:
 			obj=super(UIA,cls).__new__(cls)
 			if not obj:
 				return None
 			if runtimeId:
 				cls.liveNVDAObjectTable[runtimeId]=obj
-		else:
-			obj.UIAElement=UIAElement
+		obj.UIAElement=UIAElement
 		return obj
 
 	def __init__(self,relation=None,windowHandle=None,UIAElement=None):
-		if getattr(self,'_doneInit',False):
-			return
-		self._doneInit=True
-		self.UIAElement=UIAElement
+		# __new__() sets self.UIAElement.
+		UIAElement=self.UIAElement
+		if not UIAElement:
+			raise ValueError("needs either a UIA element or window handle")
+
+		self.UIAIsWindowElement=True
+		if not windowHandle:
+			windowHandle=UIAElement.cachedNativeWindowHandle
+			if not windowHandle:
+				self.UIAIsWindowElement=False
+				windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		super(UIA,self).__init__(windowHandle=windowHandle)
+
 		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
 			self.TextInfo=UIATextInfo
 			self.initAutoSelectDetection()

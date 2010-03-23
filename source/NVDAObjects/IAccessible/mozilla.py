@@ -10,6 +10,7 @@ import eventHandler
 import controlTypes
 from . import IAccessible
 import textInfos
+from logHandler import log
 
 class Mozilla(IAccessible):
 
@@ -31,7 +32,11 @@ class Mozilla(IAccessible):
 		#Special code to support Mozilla node_child_of relation (for comboboxes)
 		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVRELATION_NODE_CHILD_OF)
 		if res and res!=(self.IAccessibleObject,self.IAccessibleChildID):
-			newObj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+			try:
+				newObj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+			except:
+				log.debugWarning("NODE_CHILD_OF returned a bad object")
+				newObj=None
 			if newObj:
 				return newObj
 		return super(Mozilla,self).parent

@@ -257,16 +257,94 @@ the NVDAObject for IAccessible
 		style=winUser.getWindowStyle(windowHandle)
 		return bool(style&winUser.WS_SYSMENU)
 
-	@classmethod
-	def findBestClass(cls,clsList,kwargs):
-		relation=kwargs.get('relation',None)
-		windowHandle=kwargs.get('windowHandle',None)
-		IAccessibleObject=kwargs.get('IAccessibleObject',None)
-		IAccessibleChildID=kwargs.get('IAccessibleChildID',None)
-		event_windowHandle=kwargs.get('event_windowHandle',None)
-		event_objectID=kwargs.get('event_objectID',None)
-		event_childID=kwargs.get('event_childID',None)
+	def findOverlayClasses(self,clsList):
+		if self.event_objectID==winUser.OBJID_CLIENT and JABHandler.isJavaWindow(self.windowHandle): 
+			clsList.append(JavaVMRoot)
 
+		windowClassName=self.windowClassName
+		role=self.IAccessibleRole
+
+		# Use window class name and role to search for a class match in our static map.
+		keys=[(windowClassName,role),(None,role),(windowClassName,None)]
+		normalizedWindowClassName=Window.normalizeWindowClassName(windowClassName)
+		if normalizedWindowClassName!=windowClassName:
+			keys.insert(1,(normalizedWindowClassName,role))
+			keys.append((normalizedWindowClassName,None))
+		for key in keys: 
+			newCls=None
+			classString=_staticMap.get(key,None)
+			if classString and classString.find('.')>0:
+				modString,classString=os.path.splitext(classString)
+				classString=classString[1:]
+				mod=__import__(modString,globals(),locals(),[])
+				newCls=getattr(mod,classString)
+			elif classString:
+				newCls=globals()[classString]
+			if newCls:
+				clsList.append(newCls)
+
+		# Some special cases.
+		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2) and role == oleacc.ROLE_SYSTEM_TEXT) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary"):
+			# This is possibly a Flash object.
+			from . import adobeFlash
+			clsList = adobeFlash.findExtraOverlayClasses(self, clsList)
+		if windowClassName=="Internet Explorer_Server" and (self.event_objectID is None or self.event_objectID==winUser.OBJID_CLIENT or self.event_objectID>0):
+			MSHTML=__import__("MSHTML",globals(),locals(),[]).MSHTML
+			clsList.append(MSHTML)
+		elif windowClassName.startswith('Mozilla'):
+			mozCls=__import__("mozilla",globals(),locals(),[]).Mozilla
+			clsList.append( mozCls)
+		elif windowClassName.startswith('bosa_sdm'):
+			sdmCls=__import__("msOffice",globals(),locals(),[]).SDM
+			clsList.append(sdmCls)
+		if windowClassName.startswith('RichEdit') and winUser.getClassName(winUser.getAncestor(windowHandle,winUser.GA_PARENT)).startswith('bosa_sdm'):
+			sdmCls=__import__("msOffice",globals(),locals(),[]).RichEditSDMChild
+			clsList.append(sdmCls)
+
+		clsList.append(IAccessible)
+
+		if self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0:
+			# This is the main (client) area of the window, so we can use other classes at the window level.
+			return super(IAccessible,self).findOverlayClasses(clsList)
+		else:
+			# This IAccessible does not represent the main part of the window, so we can only use IAccessible classes.
+			return clsList
+
+	@classmethod
+	def objectFromPoint(cls,x,y,windowHandle=None):
+		res=IAccessibleHandler.accessibleObjectFromPoint(x,y)
+		if not res:
+			return None
+		return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+
+	@classmethod
+	def objectWithFocus(cls,windowHandle=None):
+		if not windowHandle:
+			return None
+		obj=getNVDAObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
+		prevObj=None
+		while obj and obj!=prevObj:
+			prevObj=obj
+			obj=obj.activeChild
+		return prevObj
+
+	@classmethod
+	def objectInForeground(cls,windowHandle=None):
+		if not windowHandle:
+			return None
+		return getNVDAObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
+
+	def __init__(self,relation=None,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
+		"""
+@param pacc: a pointer to an IAccessible object
+@type pacc: ctypes.POINTER(IAccessible)
+@param child: A child ID that will be used on all methods of the IAccessible pointer
+@type child: int
+@param hwnd: the window handle, if known
+@type hwnd: int
+@param objectID: the objectID for the IAccessible Object, if known
+@type objectID: int
+"""
 		# If we have a window but no IAccessible, get the window from the IAccessible.
 		if windowHandle and not IAccessibleObject:
 			if relation!="parent":
@@ -317,123 +395,13 @@ the NVDAObject for IAccessible
 		if event_childID is None:
 			event_childID=IAccessibleChildID
 
-		kwargs['windowHandle']=windowHandle
-		kwargs['IAccessibleObject']=IAccessibleObject
-		kwargs['IAccessibleChildID']=IAccessibleChildID
-		kwargs['event_windowHandle']=event_windowHandle
-		kwargs['event_objectID']=event_objectID
-		kwargs['event_childID']=event_childID
-
-		if event_objectID==winUser.OBJID_CLIENT and JABHandler.isJavaWindow(windowHandle): 
-			clsList.append(JavaVMRoot)
-
-		windowClassName=winUser.getClassName(windowHandle)
-
-		role=0
-		if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
-			try:
-				role=IAccessibleObject.role()
-			except COMError:
-				role=0
-		if not role:
-			try:
-				role=IAccessibleObject.accRole(IAccessibleChildID)
-			except COMError, e:
-				# We need objects for broken SysTreeView32 controls.
-				if windowClassName!="SysTreeView32":
-					raise RuntimeError("IAccessible::accRole failed: %s" % e)
-
-		# Use window class name and role to search for a class match in our static map.
-		keys=[(windowClassName,role),(None,role),(windowClassName,None)]
-		normalizedWindowClassName=Window.normalizeWindowClassName(windowClassName)
-		if normalizedWindowClassName!=windowClassName:
-			keys.insert(1,(normalizedWindowClassName,role))
-			keys.append((normalizedWindowClassName,None))
-		for key in keys: 
-			newCls=None
-			classString=_staticMap.get(key,None)
-			if classString and classString.find('.')>0:
-				modString,classString=os.path.splitext(classString)
-				classString=classString[1:]
-				mod=__import__(modString,globals(),locals(),[])
-				newCls=getattr(mod,classString)
-			elif classString:
-				newCls=globals()[classString]
-			if newCls:
-				clsList.append(newCls)
-
-		# Some special cases.
-		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(IAccessibleObject, IAccessibleHandler.IAccessible2) and role == oleacc.ROLE_SYSTEM_TEXT) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary"):
-			# This is possibly a Flash object.
-			from . import adobeFlash
-			clsList, kwargs = adobeFlash.findBestClass(clsList, kwargs)
-		if windowClassName=="Internet Explorer_Server" and (event_objectID is None or event_objectID==winUser.OBJID_CLIENT or event_objectID>0):
-			MSHTML=__import__("MSHTML",globals(),locals(),[]).MSHTML
-			clsList.append(MSHTML)
-		elif windowClassName.startswith('Mozilla'):
-			mozCls=__import__("mozilla",globals(),locals(),[]).Mozilla
-			clsList.append( mozCls)
-		elif windowClassName.startswith('bosa_sdm'):
-			sdmCls=__import__("msOffice",globals(),locals(),[]).SDM
-			clsList.append(sdmCls)
-		if windowClassName.startswith('RichEdit') and winUser.getClassName(winUser.getAncestor(windowHandle,winUser.GA_PARENT)).startswith('bosa_sdm'):
-			sdmCls=__import__("msOffice",globals(),locals(),[]).RichEditSDMChild
-			clsList.append(sdmCls)
-
-		clsList.append(IAccessible)
-
-		if event_objectID==winUser.OBJID_CLIENT and event_childID==0:
-			# This is the main (client) area of the window, so we can use other classes at the window level.
-			return super(IAccessible,cls).findBestClass(clsList,kwargs)
-		else:
-			# This IAccessible does not represent the main part of the window, so we can only use IAccessible classes.
-			return clsList,kwargs
-
-	@classmethod
-	def objectFromPoint(cls,x,y,windowHandle=None):
-		res=IAccessibleHandler.accessibleObjectFromPoint(x,y)
-		if not res:
-			return None
-		return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-
-	@classmethod
-	def objectWithFocus(cls,windowHandle=None):
-		if not windowHandle:
-			return None
-		obj=getNVDAObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
-		prevObj=None
-		while obj and obj!=prevObj:
-			prevObj=obj
-			obj=obj.activeChild
-		return prevObj
-
-	@classmethod
-	def objectInForeground(cls,windowHandle=None):
-		if not windowHandle:
-			return None
-		return getNVDAObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
-
-	def __init__(self,relation=None,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
-		"""
-@param pacc: a pointer to an IAccessible object
-@type pacc: ctypes.POINTER(IAccessible)
-@param child: A child ID that will be used on all methods of the IAccessible pointer
-@type child: int
-@param hwnd: the window handle, if known
-@type hwnd: int
-@param objectID: the objectID for the IAccessible Object, if known
-@type objectID: int
-"""
-		if hasattr(self,"_doneInit"):
-			return
 		self.IAccessibleObject=IAccessibleObject
 		self.IAccessibleChildID=IAccessibleChildID
 		self.event_windowHandle=event_windowHandle
 		self.event_objectID=event_objectID
 		self.event_childID=event_childID
-		if not windowHandle:
-			raise RuntimeError("windowHandle is None")
 		super(IAccessible,self).__init__(windowHandle=windowHandle)
+
 		try:
 			self.IAccessibleActionObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleAction)
 		except:
@@ -473,7 +441,6 @@ the NVDAObject for IAccessible
 			pass
 		if None not in (event_windowHandle,event_objectID,event_childID):
 			IAccessibleHandler.liveNVDAObjectTable[(event_windowHandle,event_objectID,event_childID)]=self
-		self._doneInit=True
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		"""Compaires the object of an event to self to see if the event should be treeted as duplicate."""
