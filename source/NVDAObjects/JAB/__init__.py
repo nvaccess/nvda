@@ -1,16 +1,9 @@
 import ctypes
 import re
-import appModuleHandler
-import speech
-import api
-import winUser
 import JABHandler
 import controlTypes
 from ..window import Window
 import textInfos.offsets
-from .. import NVDAObjectTextInfo
-import NVDAObjects.IAccessible
-import globalVars
 from logHandler import log
 
 JABRolesToNVDARoles={
@@ -140,7 +133,7 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return [start,end]
 
 	def _getParagraphOffsets(self,offset):
-		return super(EditTextInfo,self)._getLineOffsets(offset)
+		return self._getLineOffsets(offset)
 
 class JAB(Window):
 
@@ -182,7 +175,7 @@ class JAB(Window):
 		self.windowHandle=windowHandle
 		self.jabContext=jabContext
 		self._JABAccContextInfo=jabContext.getAccessibleContextInfo()
-		Window.__init__(self,windowHandle=windowHandle)
+		super(JAB,self).__init__(windowHandle=windowHandle)
 		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU,controlTypes.ROLE_LISTITEM]:
 			if self.JABRole in ["text","password text","edit bar","view port","paragraph"]:
 				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [

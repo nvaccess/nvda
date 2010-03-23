@@ -77,25 +77,23 @@ An NVDAObject for a window
 		if windowClassName=="#32769":
 			newCls=Desktop
 		elif windowClassName=="Edit":
-			newCls=__import__("edit",globals(),locals(),[]).Edit
+			from .edit import Edit as newCls
 		elif windowClassName=="RichEdit":
-			newCls=__import__("edit",globals(),locals(),[]).RichEdit
+			from .edit import RichEdit as newCls
 		elif windowClassName=="RichEdit20":
-			newCls=__import__("edit",globals(),locals(),[]).RichEdit20
+			from .edit import RichEdit20 as newCls
 		elif windowClassName=="RICHEDIT50W":
-			newCls=__import__("edit",globals(),locals(),[]).RichEdit50
+			from .edit import RichEdit50 as newCls
 		elif windowClassName=="Scintilla":
-			newCls=__import__("scintilla",globals(),locals(),[]).Scintilla
-		elif windowClassName=="AkelEditW":
-			newCls=__import__("akelEdit",globals(),locals(),[]).AkelEdit
-		elif windowClassName=="AkelEditA":
-			newCls=__import__("akelEdit",globals(),locals(),[]).AkelEdit
+			from .scintilla import Scintilla as newCls
+		elif windowClassName in ("AkelEditW", "AkelEditA"):
+			from .akelEdit import AkelEdit as newCls
 		elif windowClassName=="ConsoleWindowClass":
-			newCls=__import__("winConsole",globals(),locals(),[]).WinConsole
+			from .winConsole import WinConsole as newCls
 		elif windowClassName=="_WwG":
-			newCls=__import__("winword",globals(),locals(),[]).WordDocument
+			from .winword import WordDocument as newCls
 		elif windowClassName=="EXCEL7":
-			newCls=__import__("excel",globals(),locals(),[]).ExcelGrid
+			from .excel import ExcelGrid as newCls
 		clsList.append(newCls)
 		if newCls!=Window:
 			clsList.append(Window)

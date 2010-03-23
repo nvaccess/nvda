@@ -300,17 +300,17 @@ the NVDAObject for IAccessible
 			from . import adobeFlash
 			clsList = adobeFlash.findExtraOverlayClasses(self, clsList)
 		if windowClassName=="Internet Explorer_Server" and (self.event_objectID is None or self.event_objectID==winUser.OBJID_CLIENT or self.event_objectID>0):
-			MSHTML=__import__("MSHTML",globals(),locals(),[]).MSHTML
+			from .mshtml import MSHTML
 			clsList.append(MSHTML)
 		elif windowClassName.startswith('Mozilla'):
-			mozCls=__import__("mozilla",globals(),locals(),[]).Mozilla
-			clsList.append( mozCls)
+			from .mozilla import Mozilla
+			clsList.append( Mozilla)
 		elif windowClassName.startswith('bosa_sdm'):
-			sdmCls=__import__("msOffice",globals(),locals(),[]).SDM
-			clsList.append(sdmCls)
+			from .msOffice import SDM
+			clsList.append(SDM)
 		if windowClassName.startswith('RichEdit') and winUser.getClassName(winUser.getAncestor(windowHandle,winUser.GA_PARENT)).startswith('bosa_sdm'):
-			sdmCls=__import__("msOffice",globals(),locals(),[]).RichEditSDMChild
-			clsList.append(sdmCls)
+			from .msOffice import RichEditSDMChild
+			clsList.append(RichEditSDMChild)
 
 		clsList.append(IAccessible)
 
