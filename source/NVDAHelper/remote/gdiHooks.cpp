@@ -80,6 +80,22 @@ inline void releaseDisplayModel(displayModel_t* model) {
 }
 
 /**
+ * converts given points from dc coordinates to screen coordinates. 
+ * @param hdc a handle to a device context
+ * @param points a pointer to the points you wish to convert.
+ * @param count the number of points you want to convert.
+ */
+void dcPointsToScreenPoints(HDC hdc, POINT* points, int count) {
+	LPtoDP(hdc,points,count);
+	POINT dcOrgPoint;
+	GetDCOrgEx(hdc,&dcOrgPoint);
+	for(int i=0;i<count;i++) {
+		points[i].x+=dcOrgPoint.x;
+		points[i].y+=dcOrgPoint.y;
+	}
+}
+
+/**
  * Given a displayModel, this function clears a rectangle, and inserts a chunk, for the given text, using the given offsets and rectangle etc.
  * This function is used by many of the hook functions.
  * @param model a pointer to a displayModel
@@ -152,13 +168,12 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	RECT textRect={textLeft,textTop,textLeft+resultTextSize->cx,textTop+resultTextSize->cy};
 	//We must store chunks using device coordinates, not logical coordinates, as its possible for the DC's viewport to move or resize.
 	//For example, in Windows 7, menu items are always drawn at the same DC coordinates, but the DC is moved downward each time.
-	//Device coordinates for a window DC are screen pixels  with 0,0 being the top left of the window's client area.
-	LPtoDP(hdc,(LPPOINT)&textRect,2);
+	dcPointsToScreenPoints(hdc,(LPPOINT)&textRect,2);
 	RECT clearRect;
 	//If a clearing rectangle was provided we'll use it, otherwise we'll use the text's bounding rectangle.
 	if(lprc&&(fuOptions&ETO_OPAQUE)) {
 		clearRect=*lprc;
-		LPtoDP(hdc,(LPPOINT)&clearRect,2);
+		dcPointsToScreenPoints(hdc,(LPPOINT)&clearRect,2);
 	} else {
 		LOG_DEBUG(L"Clearing with text's rectangle");
 		clearRect=textRect;
@@ -316,7 +331,7 @@ int WINAPI fake_FillRect(HDC hdc, const RECT* lprc, HBRUSH hBrush) {
 	displayModel_t* model=acquireDisplayModel(hdc,TRUE);
 	if(!model) return res;
 	RECT rect=*lprc;
-	LPtoDP(hdc,(LPPOINT)&rect,2);
+	dcPointsToScreenPoints(hdc,(LPPOINT)&rect,2);
 	model->clearRectangle(rect);
 	releaseDisplayModel(model);
 	return res;
@@ -481,9 +496,9 @@ BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHe
 		if(!srcModel) srcModel=destModel;
 		RECT srcRect={nXSrc,nYSrc,nXSrc+nWidth,nYSrc+nHeight};
 		//we record chunks using device coordinates -- DCs can move/resize
-		LPtoDP(hdcSrc,(LPPOINT)&srcRect,2);
+		dcPointsToScreenPoints(hdcSrc,(LPPOINT)&srcRect,2);
 		POINT destPos={nXDest,nYDest};
-		LPtoDP(hdcDest,&destPos,1);
+		dcPointsToScreenPoints(hdcDest,&destPos,1);
 		//Copy the requested rectangle from the source model in to the destination model, at the given coordinates.
 		srcModel->copyRectangleToOtherModel(srcRect,destModel,destPos.x,destPos.y);
 		//release models and return

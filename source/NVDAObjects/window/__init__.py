@@ -177,10 +177,8 @@ An NVDAObject for a window
 	def _get_displayText(self):
 		"""The text at this object's location according to the display model for this object's window."""
 		left,top,width,height=self.location
-		p=ctypes.wintypes.POINT(left,top)
-		ctypes.windll.user32.ScreenToClient(self.windowHandle,ctypes.byref(p))
 		import displayModel
-		return displayModel.getWindowTextInRect(self.appModule.helperLocalBindingHandle,self.windowHandle,p.x,p.y,p.x+width,p.y+height)
+		return displayModel.getWindowTextInRect(self.appModule.helperLocalBindingHandle,self.windowHandle,left,top,left+width,top+height)
 
 	def _get_windowText(self):
 		textLength=winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
