@@ -741,12 +741,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_test_navigatorDisplayModelText(self,keyPress):
 		obj=api.getNavigatorObject()
-		import ctypes
-		left,top,width,height=obj.location
-		p=ctypes.wintypes.POINT(left,top)
-		ctypes.windll.user32.ScreenToClient(obj.windowHandle,ctypes.byref(p))
-		import displayModel
-		text=displayModel.getWindowTextInRect(self.helperLocalBindingHandle,obj.windowHandle,p.x,p.y,p.x+width,p.y+height)
+		text=obj.displayText
 		speech.speakMessage(text)
 		log.info(text)
 
