@@ -3,6 +3,7 @@ import re
 import JABHandler
 import controlTypes
 from ..window import Window
+from ..behaviors import EditableTextWithoutAutoSelectDetection
 import textInfos.offsets
 from logHandler import log
 
@@ -138,6 +139,8 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 class JAB(Window):
 
 	def findOverlayClasses(self,clsList):
+		if self._JABAccContextInfo.accessibleText and self.JABRole in ("text","password text","edit bar","view port","paragraph"):
+			clsList.append(EditableTextWithoutAutoSelectDetection)
 		clsList.append(JAB)
 		return clsList
 
@@ -176,33 +179,6 @@ class JAB(Window):
 		self.jabContext=jabContext
 		self._JABAccContextInfo=jabContext.getAccessibleContextInfo()
 		super(JAB,self).__init__(windowHandle=windowHandle)
-		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU,controlTypes.ROLE_LISTITEM]:
-			if self.JABRole in ["text","password text","edit bar","view port","paragraph"]:
-				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
-					("ExtendedUp","moveByLine"),
-					("ExtendedDown","moveByLine"),
-					("ExtendedLeft","moveByCharacter"),
-					("ExtendedRight","moveByCharacter"),
-					("Control+ExtendedLeft","moveByWord"),
-					("Control+ExtendedRight","moveByWord"),
-					("Shift+ExtendedRight","changeSelection"),
-					("Shift+ExtendedLeft","changeSelection"),
-					("Shift+ExtendedHome","changeSelection"),
-					("Shift+ExtendedEnd","changeSelection"),
-					("Shift+ExtendedUp","changeSelection"),
-					("Shift+ExtendedDown","changeSelection"),
-					("Control+Shift+ExtendedLeft","changeSelection"),
-					("Control+Shift+ExtendedRight","changeSelection"),
-					("ExtendedHome","moveByCharacter"),
-					("ExtendedEnd","moveByCharacter"),
-					("control+extendedHome","moveByLine"),
-					("control+extendedEnd","moveByLine"),
-					("control+shift+extendedHome","changeSelection"),
-					("control+shift+extendedEnd","changeSelection"),
-					("ExtendedDelete","delete"),
-					("Back","backspaceCharacter"),
-					("Control+Back","backspaceWord"),
-			  	]]
 
 	def _get_TextInfo(self):
 		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU,controlTypes.ROLE_LISTITEM]:
