@@ -25,7 +25,7 @@ import NVDAObjects.JAB
 import eventHandler
 import mouseHandler
 import queueHandler
-from NVDAObjects.behaviors import ProgressBar, Dialog
+from NVDAObjects.behaviors import ProgressBar, Dialog, EditableText
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -264,6 +264,17 @@ the NVDAObject for IAccessible
 		windowClassName=self.windowClassName
 		role=self.IAccessibleRole
 
+		if hasattr(self, "IAccessibleTextObject"):
+			if role==oleacc.ROLE_SYSTEM_TEXT:
+				isEditable=True
+			else:
+				try:
+					isEditable=bool(self.IAccessibleObject.states&IAccessibleHandler.IA2_STATE_EDITABLE)
+				except:
+					isEditable=False
+			if isEditable:
+				clsList.append(EditableText)
+
 		# Use window class name and role to search for a class match in our static map.
 		keys=[(windowClassName,role),(None,role),(windowClassName,None)]
 		normalizedWindowClassName=Window.normalizeWindowClassName(windowClassName)
@@ -412,31 +423,6 @@ the NVDAObject for IAccessible
 			pass
 		try:
 			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleText)
-			if self.IAccessibleRole==oleacc.ROLE_SYSTEM_TEXT:
-				hasEditableState=True
-			else:
-				try:
-					hasEditableState=bool(self.IAccessibleObject.states&IAccessibleHandler.IA2_STATE_EDITABLE)
-				except:
-					hasEditableState=False
-			if  hasEditableState:
-				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
-					("ExtendedUp","moveByLine"),
-					("ExtendedDown","moveByLine"),
-					("control+ExtendedUp","moveByLine"),
-					("control+ExtendedDown","moveByLine"),
-					("ExtendedLeft","moveByCharacter"),
-					("ExtendedRight","moveByCharacter"),
-					("Control+ExtendedLeft","moveByWord"),
-					("Control+ExtendedRight","moveByWord"),
-					("ExtendedHome","moveByCharacter"),
-					("ExtendedEnd","moveByCharacter"),
-					("control+extendedHome","moveByLine"),
-					("control+extendedEnd","moveByLine"),
-					("ExtendedDelete","delete"),
-					("Back","backspaceCharacter"),
-					("Control+Back","backspaceWord"),
-				]]
 		except:
 			pass
 		if None not in (event_windowHandle,event_objectID,event_childID):
