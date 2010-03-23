@@ -19,6 +19,7 @@ import textInfos
 import textInfos.offsets
 import controlTypes
 from . import Window
+ from ..behaviors import EditableTextWithoutAutoSelectDetection
  
 #Word constants
 
@@ -316,7 +317,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.End)
 
-class WordDocument(Window):
+class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
 	TextInfo=WordDocumentTextInfo
 
@@ -395,38 +396,11 @@ class WordDocument(Window):
 			speech.speakMessage("edge of table")
 
 [WordDocument.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedUp","moveByLine"),
-	("ExtendedDown","moveByLine"),
-	("ExtendedLeft","moveByCharacter"),
-	("ExtendedRight","moveByCharacter"),
-	("Control+ExtendedLeft","moveByWord"),
-	("Control+ExtendedRight","moveByWord"),
-	("Shift+ExtendedRight","changeSelection"),
-	("control+extendedDown","moveByParagraph"),
-	("control+extendedUp","moveByParagraph"),
-	("Shift+ExtendedLeft","changeSelection"),
-	("Shift+ExtendedHome","changeSelection"),
-	("Shift+ExtendedEnd","changeSelection"),
-	("Shift+ExtendedUp","changeSelection"),
-	("Shift+ExtendedDown","changeSelection"),
-	("Control+Shift+ExtendedLeft","changeSelection"),
-	("Control+Shift+ExtendedRight","changeSelection"),
-	("ExtendedHome","moveByCharacter"),
-	("ExtendedEnd","moveByCharacter"),
-	("control+extendedHome","moveByLine"),
-	("control+extendedEnd","moveByLine"),
-	("control+shift+extendedHome","changeSelection"),
-	("control+shift+extendedEnd","changeSelection"),
-	("ExtendedDelete","delete"),
-	("Back","backspaceCharacter"),
-	("Control+Back","backspaceWord"),
 	("control+alt+extendedUp","previousRow"),
 	("control+alt+extendedDown","nextRow"),
 	("control+alt+extendedLeft","previousColumn"),
 	("control+alt+extendedRight","nextColumn"),
-	("ExtendedPrior","moveByLine"),
-	("ExtendedNext","moveByLine"),
-	("Control+ExtendedPrior","moveByLine"),
-	("Control+ExtendedNext","moveByLine"),
+	("Control+ExtendedPrior","caret_moveByLine"),
+	("Control+ExtendedNext","caret_moveByLine"),
 ]]
 
