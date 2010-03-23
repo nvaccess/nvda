@@ -14,12 +14,12 @@ void displayModelChunk_t::truncate(int truncatePointX, BOOL truncateBefore) {
 	assert(characterXArray.size()!=0);
 	deque<int>::iterator c=characterXArray.begin();
 	wstring::iterator t=text.begin();
-	if(truncateBefore) {
+	if(truncateBefore&&rect.left<truncatePointX) {
 		for(;t!=text.end()&&(*c)<truncatePointX;c++,t++);
-		rect.left=*c;
+		if(c!=characterXArray.end()) rect.left=*c; else rect.left=rect.right; 
 		characterXArray.erase(characterXArray.begin(),c);
 		text.erase(text.begin(),t);
-	} else {
+	} else if(!truncateBefore&&truncatePointX<rect.right) {
 		for(;t!=text.end()&&(*c)<=truncatePointX;c++,t++);
 		--c;
 		--t;
@@ -63,7 +63,7 @@ void displayModel_t::insertChunk(const RECT& rect, int baselineFromTop, const ws
 	chunk->baselineFromTop=baselineFromTop;
 	chunk->text=text;
 	chunk->characterXArray.push_back(rect.left);
-	for(int i=0;i<text.length();i++) chunk->characterXArray.push_back(characterEndXArray[i]+rect.left); 
+	for(int i=0;i<(text.length()-1);i++) chunk->characterXArray.push_back(characterEndXArray[i]+rect.left); 
 	LOG_DEBUG(L"filled in chunk with rectangle from "<<rect.left<<L","<<rect.top<<L" to "<<rect.right<<L","<<rect.bottom<<L" with text of "<<text);
 	//If a clipping rect is specified, and the chunk falls outside the clipping rect
 	//Truncate the chunk so that it stays inside the clipping rect.
