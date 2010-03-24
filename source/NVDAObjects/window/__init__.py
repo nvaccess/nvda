@@ -233,7 +233,7 @@ An NVDAObject for a window
 			newAPIClass,kwargs=Window.findBestAPIClass(relation=relation,windowHandle=newWindowHandle)
 			oldAPIClass=self.APIClass
 			if newAPIClass!=oldAPIClass:
-				return newAPIClass(**kwargs)
+				return newAPIClass(chooseBestAPI=False,**kwargs)
 		return obj
 
  

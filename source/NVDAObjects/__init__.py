@@ -39,8 +39,11 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 	_dynamicClassCache={}
 
-	def __call__(self,**kwargs):
-		APIClass,kwargs=self.findBestAPIClass(**kwargs)
+	def __call__(self,chooseBestAPI=True,**kwargs):
+		if chooseBestAPI:
+			APIClass,kwargs=self.findBestAPIClass(**kwargs)
+		else:
+			APIClass=self
 
 		if 'findOverlayClasses' not in APIClass.__dict__:
 			raise TypeError("Cannot instantiate class %s as it does not implement findOverlayClasses"%APIClass.__name__)
@@ -174,7 +177,7 @@ class NVDAObject(baseObject.ScriptableObject):
 		@rtype: L{NVDAObject}
 		"""
 		APIClass,kwargs=NVDAObject.findBestAPIClass(relation=(x,y))
-		return APIClass(**kwargs)
+		return APIClass(chooseBestAPI=False,**kwargs)
 
 	@staticmethod
 	def objectWithFocus():
@@ -183,7 +186,7 @@ class NVDAObject(baseObject.ScriptableObject):
 		@rtype: L{NVDAObject}
 		"""
 		APIClass,kwargs=NVDAObject.findBestAPIClass(relation="focus")
-		return APIClass(**kwargs)
+		return APIClass(chooseBestAPI=False,**kwargs)
 
 	@staticmethod
 	def objectInForeground():
@@ -192,7 +195,7 @@ class NVDAObject(baseObject.ScriptableObject):
 		@rtype: L{NVDAObject}
 		"""
 		APIClass,kwargs=NVDAObject.findBestAPIClass(relation="foreground")
-		return APIClass(**kwargs)
+		return APIClass(chooseBestAPI=False,**kwargs)
 
 	def __init__(self):
 		super(NVDAObject,self).__init__()
