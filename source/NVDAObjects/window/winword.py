@@ -19,7 +19,7 @@ import textInfos
 import textInfos.offsets
 import controlTypes
 from . import Window
- from ..behaviors import EditableTextWithoutAutoSelectDetection
+from ..behaviors import EditableTextWithoutAutoSelectDetection
  
 #Word constants
 
