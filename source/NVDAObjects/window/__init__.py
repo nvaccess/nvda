@@ -56,20 +56,21 @@ An NVDAObject for a window
 """
 
 	@classmethod
-	def findBestAPIClass(cls,relation=None,windowHandle=None):
+	def getPossibleAPIClasses(cls,relation=None,windowHandle=None):
 		windowClassName=winUser.getClassName(windowHandle)
+		#The desktop window should stay as a window
 		if windowClassName=="#32769":
-			return Window
+			return
 		import JABHandler
 		if JABHandler.isJavaWindow(windowHandle):
 			import NVDAObjects.JAB
-			return NVDAObjects.JAB.JAB
+			yield NVDAObjects.JAB.JAB 
 		import UIAHandler
 		if UIAHandler.handler and UIAHandler.handler.isUIAWindow(windowHandle):
 			import NVDAObjects.UIA
-			return NVDAObjects.UIA.UIA
+			yield NVDAObjects.UIA.UIA
 		import NVDAObjects.IAccessible
-		return NVDAObjects.IAccessible.IAccessible
+		yield NVDAObjects.IAccessible.IAccessible
 
 	def findOverlayClasses(self,clsList):
 		windowClassName=self.normalizeWindowClassName(self.windowClassName)
@@ -100,43 +101,21 @@ An NVDAObject for a window
 		return super(Window,self).findOverlayClasses(clsList)
 
 	@classmethod
-	def objectFromPoint(cls,x,y):
-		windowHandle=ctypes.windll.user32.WindowFromPoint(ctypes.wintypes.POINT(x,y))
+	def kwargsFromSuper(cls,relation=None): 
+		windowHandle=None
+		if relation in ('focus','foreground'):
+			windowHandle=winUser.getForegroundWindow()
+			if windowHandle and relation=="focus":
+				threadID=winUser.getWindowThreadProcessID(windowHandle)[1]
+				threadInfo=winUser.getGUIThreadInfo(threadID)
+				if threadInfo.hwndFocus: windowHandle=threadInfo.hwndFocus
+		elif isinstance(relation,tuple):
+			windowHandle=ctypes.windll.user32.WindowFromPoint(ctypes.wintypes.POINT(relation[0],relation[1]))
 		if not windowHandle:
-			windowHandle=ctypes.windll.user32.GetDesktopWindow()
-		APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
-		if APIClass!=Window and issubclass(APIClass,Window) and APIClass.objectFromPoint.im_func!=Window.objectFromPoint.im_func:
-			return APIClass.objectFromPoint(x,y)
-		newNVDAObject=APIClass(windowHandle=windowHandle)
-		return newNVDAObject
+			raise RuntimeError
+		return dict(windowHandle=windowHandle)
 
-	@classmethod
-	def objectWithFocus(cls):
-		fg=winUser.getForegroundWindow()
-		if not fg:
-			return api.getDesktopObject()
-		threadID=winUser.getWindowThreadProcessID(fg)[1]
-		threadInfo=winUser.getGUIThreadInfo(threadID)
-		windowHandle=threadInfo.hwndFocus
-		if not windowHandle:
-			windowHandle=fg
-		APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
-		if APIClass!=Window and issubclass(APIClass,Window) and APIClass.objectWithFocus.im_func!=Window.objectWithFocus.im_func:
-			return APIClass.objectWithFocus(windowHandle=windowHandle)
-		return APIClass(windowHandle=windowHandle)
-
-	@classmethod
-	def objectInForeground(cls):
-		windowHandle=winUser.getForegroundWindow()
-		if not windowHandle:
-			log.debugWarning("no foreground window")
-			return None
-		APIClass=Window.findBestAPIClass(windowHandle=windowHandle)
-		if APIClass!=Window and issubclass(APIClass,Window) and APIClass.objectInForeground.im_func!=Window.objectInForeground.im_func:
-			return APIClass.objectInForeground(windowHandle=windowHandle)
-		return APIClass(windowHandle=windowHandle)
-
-	def __init__(self,relation=None,windowHandle=None,windowClassName=None):
+	def __init__(self,windowHandle=None):
 		if not windowHandle:
 			raise ValueError("invalid or not specified window handle")
 		self.windowHandle=windowHandle
@@ -251,10 +230,10 @@ An NVDAObject for a window
 		newWindowHandle=obj.windowHandle
 		oldWindowHandle=self.windowHandle
 		if newWindowHandle and oldWindowHandle and newWindowHandle!=oldWindowHandle:
-			newAPIClass=Window.findBestAPIClass(windowHandle=newWindowHandle)
-			oldAPIClass=Window.findBestAPIClass(windowHandle=oldWindowHandle)
+			newAPIClass,kwargs=Window.findBestAPIClass(relation=relation,windowHandle=newWindowHandle)
+			oldAPIClass=self.APIClass
 			if newAPIClass!=oldAPIClass:
-				return newAPIClass(windowHandle=windowHandle,relation=relation)
+				return newAPIClass(**kwargs)
 		return obj
 
  

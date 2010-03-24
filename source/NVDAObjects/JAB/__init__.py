@@ -142,36 +142,24 @@ class JAB(Window):
 		return clsList
 
 	@classmethod
-	def objectFromPoint(cls,x,y,windowHandle=None):
-		jabContext=JABHandler.JABContext(hwnd=windowHandle)
+	def kwargsFromSuper(cls,relation=None,windowHandle=None):
+		jabContext=None
+		if relation=="focus":
+			vmID=ctypes.c_int()
+			accContext=ctypes.c_int()
+			JABHandler.bridgeDll.getAccessibleContextWithFocus(windowHandle,ctypes.byref(vmID),ctypes.byref(accContext))
+			jabContext=JABHandler.JABContext(hwnd=windowHandle,vmID=vmID.value,accContext=accContext.value)
+		elif isinstance(relation,tuple):
+			jabContext=JABHandler.JABContext(hwnd=windowHandle)
+			if jabContext:
+				jabContext=jabContext.getAccessibleContextAt(x,y)
 		if not jabContext:
-			return
-		newJabContext=jabContext.getAccessibleContextAt(x,y)
-		if not newJabContext:
-			return
-		return JAB(jabContext=newJabContext)
-
-	@classmethod
-	def objectWithFocus(cls,windowHandle=None):
-		vmID=ctypes.c_int()
-		accContext=ctypes.c_int()
-		JABHandler.bridgeDll.getAccessibleContextWithFocus(windowHandle,ctypes.byref(vmID),ctypes.byref(accContext))
-		jabContext=JABHandler.JABContext(hwnd=windowHandle,vmID=vmID.value,accContext=accContext.value)
-		focusObject=JAB(jabContext=jabContext)
-		activeChild=focusObject.activeChild
-		if activeChild and activeChild.role!=controlTypes.ROLE_UNKNOWN:
-			focusObject=activeChild
-		if focusObject.role==controlTypes.ROLE_UNKNOWN:
-			return
-		return focusObject
+			raise RuntimeError
+		return dict(windowHandle=windowHandle,jabContext=jabContext)
 
 	def __init__(self,relation=None,windowHandle=None,jabContext=None):
-		if windowHandle and not jabContext:
-			jabContext=JABHandler.JABContext(hwnd=windowHandle)
-		elif jabContext and not windowHandle:
+		if not windowHandle:
 			windowHandle=jabContext.hwnd
-		elif not windowHandle and not jabContext:
-			raise TypeError("Give either a valid window handle or jab context")
 		self.windowHandle=windowHandle
 		self.jabContext=jabContext
 		self._JABAccContextInfo=jabContext.getAccessibleContextInfo()

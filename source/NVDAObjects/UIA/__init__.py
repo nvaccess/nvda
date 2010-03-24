@@ -144,23 +144,22 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			return clsList
 
 	@classmethod
-	def objectFromPoint(cls,x,y,oldNVDAObject=None,windowHandle=None):
-		UIAElement=UIAHandler.handler.clientObject.ElementFromPointBuildCache(POINT(x,y),UIAHandler.handler.baseCacheRequest)
-		return UIA(UIAElement=UIAElement)
-
-	@classmethod
-	def objectWithFocus(cls,windowHandle=None):
-		try:
-			UIAElement=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
-		except COMError:
-			log.debugWarning("getFocusedElement failed", exc_info=True)
-			return None
-		return UIA(UIAElement=UIAElement)
+	def kwargsFromSuper(cls,relation=None,windowHandle=None):
+		UIAElement=None
+		if isinstance(relation,tuple):
+			UIAElement=UIAHandler.handler.clientObject.ElementFromPointBuildCache(POINT(relation[0],relation[1]),UIAHandler.handler.baseCacheRequest)
+		elif relation=="focus":
+			try:
+				UIAElement=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
+			except COMError:
+				log.debugWarning("getFocusedElement failed", exc_info=True)
+		else:
+			UIAElement=UIAHandler.handler.clientObject.ElementFromHandleBuildCache(windowHandle,UIAHandler.handler.baseCacheRequest)
+		if not UIAElement:
+			raise RuntimeError
+		return dict(windowHandle=windowHandle,UIAElement=UIAElement)
 
 	def __new__(cls,relation=None,windowHandle=None,UIAElement=None):
-		if windowHandle and not UIAElement:
-			UIAElement=UIAHandler.handler.clientObject.ElementFromHandleBuildCache(windowHandle,UIAHandler.handler.baseCacheRequest)
-
 		try:
 			runtimeId=UIAElement.getRuntimeId()
 		except COMError:
@@ -177,9 +176,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		obj.UIAElement=UIAElement
 		return obj
 
-	def __init__(self,relation=None,windowHandle=None,UIAElement=None):
-		# __new__() sets self.UIAElement.
-		UIAElement=self.UIAElement
+	def __init__(self,windowHandle=None,UIAElement=None):
 		if not UIAElement:
 			raise ValueError("needs either a UIA element or window handle")
 
