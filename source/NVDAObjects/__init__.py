@@ -116,25 +116,19 @@ class NVDAObject(baseObject.ScriptableObject):
 		@returns: the new APIClass and the new kwargs
 		@rtype: tuple(DynamicNVDAObjectType,dict)
 		"""
-		tempAPIClass=endAPIClass=cls
-		tempKwargs=endKwargs=kwargs
-		while tempAPIClass:
-			if 'getPossibleAPIClasses' not in tempAPIClass.__dict__:
-				break
-			for possibleAPIClass in tempAPIClass.getPossibleAPIClasses(**tempKwargs):
+		newAPIClass=cls
+		newKwargs=kwargs
+		if 'getPossibleAPIClasses' in newAPIClass.__dict__:
+			for possibleAPIClass in newAPIClass.getPossibleAPIClasses(**newKwargs):
 				if 'kwargsFromSuper' not in possibleAPIClass.__dict__:  
 					log.error("possible API class %s does not implement kwargsFromSuper"%possibleAPIClass)
 					continue
 				try:
-					tempKwargs=possibleAPIClass.kwargsFromSuper(relation=relation,**tempKwargs)
+					newKwargs=possibleAPIClass.kwargsFromSuper(relation=relation,**newKwargs)
 				except RuntimeError:
 					continue
-				endAPIClass=tempAPIClass=possibleAPIClass
-				endKwargs=tempKwargs
-				break
-			if tempAPIClass==endAPIClass:
-				tempAPIClass=None
-		return endAPIClass,endKwargs
+				return possibleAPIClass.findBestAPIClass(relation=relation,**newKwargs)
+		return newAPIClass,newKwargs
 
 	@classmethod
 	def getPossibleAPIClasses(cls,relation=None,**kwargs):
