@@ -255,7 +255,7 @@ the NVDAObject for IAccessible
 	def kwargsFromSuper(cls,relation=None,windowHandle=None):
 		acc=None
 		if isinstance(relation,tuple):
-			acc=IAccessibleHandler.accessibleObjectFromPoint(x,y)
+			acc=IAccessibleHandler.accessibleObjectFromPoint(relation[0],relation[1])
 		elif relation=="focus":
 			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
 		elif relation!="parent":
