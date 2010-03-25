@@ -237,6 +237,19 @@ class MSHTML(IAccessible):
 	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD','HTML','PARAM']
 	HTMLNodeNameEmbedList=['OBJECT','EMBED','APPLET','FRAME','IFRAME']
 
+	@classmethod
+	def kwargsFromSuper(cls,kwargs,relation=None):
+		IAccessibleObject=kwargs['IAccessibleObject']
+		HTMLNode=None
+		try:
+			HTMLNode=HTMLNodeFromIAccessible(IAccessibleObject)
+		except NotImplementedError:
+			pass
+		if not HTMLNode:
+			return False
+		kwargs['HTMLNode']=HTMLNode
+		return True
+
 	def findOverlayClasses(self,clsList):
 		clsList=super(MSHTML,self).findOverlayClasses(clsList)
 		#IAccessible may have already chosen MSHTML as a best class
@@ -272,11 +285,6 @@ class MSHTML(IAccessible):
 				tempNode=None
 
 		super(MSHTML,self).__init__(IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,**kwargs)
-		if not HTMLNode:
-			try:
-				HTMLNode=HTMLNodeFromIAccessible(IAccessibleObject)
-			except NotImplementedError:
-				pass
 		self.HTMLNode=HTMLNode
 		self._initMshtml()
 

@@ -252,6 +252,12 @@ the NVDAObject for IAccessible
 	IAccessibleTableUsesTableCellIndexAttrib=False #: Should the table-cell-index IAccessible2 object attribute be used rather than indexInParent?
 
 	@classmethod
+	def getPossibleAPIClasses(cls,kwargs,relation=None):
+		if not kwargs.get('IAccessibleChildID'):
+			import MSHTML
+			yield MSHTML.MSHTML
+
+	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
 		acc=None
 		windowHandle=kwargs['windowHandle']
@@ -269,7 +275,6 @@ the NVDAObject for IAccessible
 		kwargs['IAccessibleChildID']=acc[1]
 		return True
 
- 
 	@classmethod
 	def windowHasExtraIAccessibles(cls,windowHandle):
 		"""Finds out whether this window has things such as a system menu / titleBar / scroll bars, which would be represented as extra IAccessibles"""
@@ -307,9 +312,6 @@ the NVDAObject for IAccessible
 			# This is possibly a Flash object.
 			from . import adobeFlash
 			clsList = adobeFlash.findExtraOverlayClasses(self, clsList)
-		if windowClassName=="Internet Explorer_Server" and (self.event_objectID is None or self.event_objectID==winUser.OBJID_CLIENT or self.event_objectID>0):
-			from .mshtml import MSHTML
-			clsList.append(MSHTML)
 		elif windowClassName.startswith('Mozilla'):
 			from .mozilla import Mozilla
 			clsList.append( Mozilla)
