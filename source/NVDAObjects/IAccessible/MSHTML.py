@@ -251,12 +251,8 @@ class MSHTML(IAccessible):
 		return True
 
 	def findOverlayClasses(self,clsList):
-		clsList=super(MSHTML,self).findOverlayClasses(clsList)
-		#IAccessible may have already chosen MSHTML as a best class
-		#So only add it if it doesn't already exist
-		if MSHTML not in clsList:
-			clsList.insert(0,MSHTML)
-		return clsList
+		clsList.append(MSHTML)
+		return super(MSHTML,self).findOverlayClasses(clsList)
 
 	def _get_virtualBufferClass(self):
 		if self.HTMLNode and self.role==controlTypes.ROLE_DOCUMENT and not self.isContentEditable:
@@ -266,7 +262,7 @@ class MSHTML(IAccessible):
 
 	def __init__(self,HTMLNode=None,IAccessibleObject=None,IAccessibleChildID=None,**kwargs):
 		self.HTMLNodeHasAncestorIAccessible=False
-		# If HTMLNode was specified, determine whether its IAccessible is for an ancestor.
+		# Determine whether HTMLNode's IAccessible is for an ancestor.
 		tempNode=HTMLNode
 		while tempNode:
 			try:
@@ -274,7 +270,6 @@ class MSHTML(IAccessible):
 			except NotImplementedError:
 				IAccessibleObject=None
 			if IAccessibleObject:
-				IAccessibleObject=IAccessibleObject
 				IAccessibleChildID=0
 				if tempNode is not HTMLNode:
 					self.HTMLNodeHasAncestorIAccessible=True
@@ -286,17 +281,7 @@ class MSHTML(IAccessible):
 
 		super(MSHTML,self).__init__(IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,**kwargs)
 		self.HTMLNode=HTMLNode
-		self._initMshtml()
 
-	def initOverlayClass(self):
-		try:
-			self.HTMLNode=HTMLNodeFromIAccessible(self.IAccessibleObject)
-		except NotImplementedError:
-			self.HTMLNode=None
-		self.HTMLNodeHasAncestorIAccessible=False
-		self._initMshtml()
-
-	def _initMshtml(self):
 		#object and embed nodes give back an incorrect IAccessible via queryService, so we must treet it as an ancestor IAccessible
 		if self.HTMLNodeName in ("OBJECT","EMBED"):
 			self.HTMLNodeHasAncestorIAccessible=True
