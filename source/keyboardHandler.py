@@ -301,3 +301,33 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			time.sleep(0.01)
 			import wx
 			wx.Yield()
+
+	@classmethod
+	def fromName(cls, name):
+		"""Create an instance given a key name.
+		@param name: The key name.
+		@type name: str
+		@return: A gesture for the specified key.
+		@rtype: L{KeyboardInputGesture}
+		"""
+		keyNames = name.split("+")
+		keys = []
+		for keyName in keyNames:
+			if keyName.startswith("extended"):
+				ext = True
+				keyName = keyName[8:]
+			else:
+				ext = False
+			if keyName == VK_WIN:
+				vk = winUser.VK_LWIN
+			elif len(keyName) == 1:
+				# FIXME: Breaks for characters like [ and ].
+				vk = ord(keyName.upper())
+			else:
+				vk = vkCodes.byName[keyName.upper()]
+			keys.append((vk, ext))
+
+		if not keys:
+			raise ValueError
+
+		return cls(keys[:-1], vk, 0, ext)
