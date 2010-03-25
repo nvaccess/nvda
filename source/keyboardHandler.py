@@ -273,3 +273,31 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		ui.message("{key} {state}".format(
 			key=localizedKeyLabels.get(key, key),
 			state=_("on") if toggleState else _("off")))
+
+	def send(self):
+		keys = []
+		for vk, ext in self.generalizedModifiers:
+			if vk == VK_WIN and (winUser.getKeyState(winUser.VK_LWIN) & 32768 or winUser.getKeyState(winUser.VK_RWIN) & 32768):
+				# Already down.
+				continue
+			elif winUser.getKeyState(vk) & 32768:
+				# Already down.
+				continue
+			keys.append((vk, ext))
+		keys.append((self.vkCode, self.isExtended))
+
+		if winUser.getKeyState(self.vkCode) & 32768:
+			# This key is already down, so send a key up for it first.
+			winUser.keybd_event(self.vkCode, 0, self.isExtended + 2, 0)
+
+		# Send key down events for these keys.
+		for vk, ext in keys:
+			winUser.keybd_event(vk, 0, ext, 0)
+		# Send key up events for the keys in reverse order.
+		for vk, ext in reversed(keys):
+			winUser.keybd_event(vk, 0, ext + 2, 0)
+
+		if not queueHandler.isPendingItems(queueHandler.eventQueue):
+			time.sleep(0.01)
+			import wx
+			wx.Yield()
