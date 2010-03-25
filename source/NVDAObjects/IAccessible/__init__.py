@@ -252,8 +252,9 @@ the NVDAObject for IAccessible
 	IAccessibleTableUsesTableCellIndexAttrib=False #: Should the table-cell-index IAccessible2 object attribute be used rather than indexInParent?
 
 	@classmethod
-	def kwargsFromSuper(cls,relation=None,windowHandle=None):
+	def kwargsFromSuper(cls,kwargs,relation=None):
 		acc=None
+		windowHandle=kwargs['windowHandle']
 		if isinstance(relation,tuple):
 			acc=IAccessibleHandler.accessibleObjectFromPoint(relation[0],relation[1])
 		elif relation=="focus":
@@ -263,8 +264,11 @@ the NVDAObject for IAccessible
 		else:
 			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
 		if not acc:
-			raise RuntimeError
-		return dict(windowHandle=windowHandle,IAccessibleObject=acc[0],IAccessibleChildID=acc[1])
+			return False
+		kwargs['IAccessibleObject']=acc[0]
+		kwargs['IAccessibleChildID']=acc[1]
+		return True
+
  
 	@classmethod
 	def windowHasExtraIAccessibles(cls,windowHandle):

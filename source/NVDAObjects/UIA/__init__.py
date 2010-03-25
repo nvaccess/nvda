@@ -144,8 +144,9 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			return clsList
 
 	@classmethod
-	def kwargsFromSuper(cls,relation=None,windowHandle=None):
+	def kwargsFromSuper(cls,kwargs,relation=None):
 		UIAElement=None
+		windowHandle=kwargs.get('windowHandle')
 		if isinstance(relation,tuple):
 			UIAElement=UIAHandler.handler.clientObject.ElementFromPointBuildCache(POINT(relation[0],relation[1]),UIAHandler.handler.baseCacheRequest)
 		elif relation=="focus":
@@ -156,8 +157,9 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		else:
 			UIAElement=UIAHandler.handler.clientObject.ElementFromHandleBuildCache(windowHandle,UIAHandler.handler.baseCacheRequest)
 		if not UIAElement:
-			raise RuntimeError
-		return dict(windowHandle=windowHandle,UIAElement=UIAElement)
+			return False
+		kwargs['UIAElement']=UIAElement
+		return True
 
 	def __new__(cls,relation=None,windowHandle=None,UIAElement=None):
 		try:

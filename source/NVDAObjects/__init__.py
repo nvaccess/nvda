@@ -41,7 +41,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 
 	def __call__(self,chooseBestAPI=True,**kwargs):
 		if chooseBestAPI:
-			APIClass,kwargs=self.findBestAPIClass(**kwargs)
+			APIClass=self.findBestAPIClass(kwargs)
 		else:
 			APIClass=self
 
@@ -109,32 +109,28 @@ class NVDAObject(baseObject.ScriptableObject):
 	TextInfo=NVDAObjectTextInfo #:The TextInfo class this object should use
 
 	@classmethod
-	def findBestAPIClass(cls,relation=None,**kwargs):
+	def findBestAPIClass(cls,kwargs,relation=None):
 		"""
-		Finds out the highest-level APIClass this object can get to given these kwargs, and returns the APIClass and the new kwargs necessary to construct it.
+		Finds out the highest-level APIClass this object can get to given these kwargs, and updates the kwargs and returns the APIClass.
 		@param relation: the relationship of a possible new object of this type to  another object creating it (e.g. parent).
 		@param type: string
 		@param kwargs: the arguments necessary to construct an object of the class this method was called on.
 		@type kwargs: dictionary
-		@returns: the new APIClass and the new kwargs
-		@rtype: tuple(DynamicNVDAObjectType,dict)
+		@returns: the new APIClass
+		@rtype: DynamicNVDAObjectType
 		"""
 		newAPIClass=cls
-		newKwargs=kwargs
 		if 'getPossibleAPIClasses' in newAPIClass.__dict__:
-			for possibleAPIClass in newAPIClass.getPossibleAPIClasses(**newKwargs):
+			for possibleAPIClass in newAPIClass.getPossibleAPIClasses(kwargs,relation=relation):
 				if 'kwargsFromSuper' not in possibleAPIClass.__dict__:  
 					log.error("possible API class %s does not implement kwargsFromSuper"%possibleAPIClass)
 					continue
-				try:
-					newKwargs=possibleAPIClass.kwargsFromSuper(relation=relation,**newKwargs)
-				except RuntimeError:
-					continue
-				return possibleAPIClass.findBestAPIClass(relation=relation,**newKwargs)
-		return newAPIClass,newKwargs
+				if possibleAPIClass.kwargsFromSuper(kwargs,relation=relation):
+					return possibleAPIClass.findBestAPIClass(kwargs,relation=relation)
+		return newAPIClass
 
 	@classmethod
-	def getPossibleAPIClasses(cls,relation=None,**kwargs):
+	def getPossibleAPIClasses(cls,kwargs,relation=None):
 		"""
 		Provides a generator which can generate all the possible API classes (in priority order) that inherit directly from the class it was called on.
 		@param relation: the relationship of a possible new object of this type to  another object creating it (e.g. parent).
@@ -146,6 +142,21 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		import NVDAObjects.window
 		yield NVDAObjects.window.Window
+
+	@classmethod
+	def kwargsFromSuper(cls,kwargs,relation=None):
+		"""
+		Finds out if this class can be instanciated from the given super kwargs.
+		If so it updates the kwargs to contain everything it will need to instanciate this class, and returns True.
+		If this class can not be instanciated, it returns False and kwargs is not touched.
+		@param relation: why is this class being instanciated? parent, focus, foreground etc...
+		@type relation: string
+		@param kwargs: the kwargs for constructing this class's super class.
+		@type kwargs: dict
+		@rtype: boolean
+		"""
+		raise NotImplementedError
+ 
 
 	def findOverlayClasses(self, clsList):
 		"""Chooses overlay classes which should be added to this object's class structure after the object has been initially instantiated.
@@ -176,7 +187,8 @@ class NVDAObject(baseObject.ScriptableObject):
 		@return: The object at the given x and y coordinates.
 		@rtype: L{NVDAObject}
 		"""
-		APIClass,kwargs=NVDAObject.findBestAPIClass(relation=(x,y))
+		kwargs={}
+		APIClass=NVDAObject.findBestAPIClass(kwargs,relation=(x,y))
 		return APIClass(chooseBestAPI=False,**kwargs)
 
 	@staticmethod
@@ -185,7 +197,8 @@ class NVDAObject(baseObject.ScriptableObject):
 		@return: the object with focus.
 		@rtype: L{NVDAObject}
 		"""
-		APIClass,kwargs=NVDAObject.findBestAPIClass(relation="focus")
+		kwargs={}
+		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="focus")
 		return APIClass(chooseBestAPI=False,**kwargs)
 
 	@staticmethod
@@ -194,7 +207,8 @@ class NVDAObject(baseObject.ScriptableObject):
 		@return: the foreground object
 		@rtype: L{NVDAObject}
 		"""
-		APIClass,kwargs=NVDAObject.findBestAPIClass(relation="foreground")
+		kwargs={}
+		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="foreground")
 		return APIClass(chooseBestAPI=False,**kwargs)
 
 	def __init__(self):

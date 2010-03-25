@@ -142,8 +142,9 @@ class JAB(Window):
 		return clsList
 
 	@classmethod
-	def kwargsFromSuper(cls,relation=None,windowHandle=None):
+	def kwargsFromSuper(cls,kwargs,relation=None):
 		jabContext=None
+		windowHandle=kwargs['windowHandle']
 		if relation=="focus":
 			vmID=ctypes.c_int()
 			accContext=ctypes.c_int()
@@ -154,8 +155,9 @@ class JAB(Window):
 			if jabContext:
 				jabContext=jabContext.getAccessibleContextAt(x,y)
 		if not jabContext:
-			raise RuntimeError
-		return dict(windowHandle=windowHandle,jabContext=jabContext)
+			return False
+		kwargs['jabContext']=jabContext
+		return True
 
 	def __init__(self,relation=None,windowHandle=None,jabContext=None):
 		if not windowHandle:

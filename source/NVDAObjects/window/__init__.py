@@ -56,7 +56,8 @@ An NVDAObject for a window
 """
 
 	@classmethod
-	def getPossibleAPIClasses(cls,relation=None,windowHandle=None):
+	def getPossibleAPIClasses(cls,kwargs,relation=None):
+		windowHandle=kwargs['windowHandle']
 		windowClassName=winUser.getClassName(windowHandle)
 		#The desktop window should stay as a window
 		if windowClassName=="#32769":
@@ -101,7 +102,7 @@ An NVDAObject for a window
 		return super(Window,self).findOverlayClasses(clsList)
 
 	@classmethod
-	def kwargsFromSuper(cls,relation=None): 
+	def kwargsFromSuper(cls,kwargs,relation=None):
 		windowHandle=None
 		if relation in ('focus','foreground'):
 			windowHandle=winUser.getForegroundWindow()
@@ -112,8 +113,9 @@ An NVDAObject for a window
 		elif isinstance(relation,tuple):
 			windowHandle=ctypes.windll.user32.WindowFromPoint(ctypes.wintypes.POINT(relation[0],relation[1]))
 		if not windowHandle:
-			raise RuntimeError
-		return dict(windowHandle=windowHandle)
+			return False
+		kwargs['windowHandle']=windowHandle
+		return True
 
 	def __init__(self,windowHandle=None):
 		if not windowHandle:
@@ -200,7 +202,10 @@ An NVDAObject for a window
 	def _get_parent(self):
 		parentHandle=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 		if parentHandle:
-			return Window(relation="parent",windowHandle=parentHandle)
+			#Because we, we need to get the APIclass manually need to  set the relation as parent
+			kwargs=dict(windowHandle=parentHandle)
+			APIClass=Window.findBestAPIClass(kwargs,relation="parent")
+			return APIClass(**kwargs)
 
 	def _get_isInForeground(self):
 		fg=winUser.getForegroundWindow()
@@ -230,7 +235,8 @@ An NVDAObject for a window
 		newWindowHandle=obj.windowHandle
 		oldWindowHandle=self.windowHandle
 		if newWindowHandle and oldWindowHandle and newWindowHandle!=oldWindowHandle:
-			newAPIClass,kwargs=Window.findBestAPIClass(relation=relation,windowHandle=newWindowHandle)
+			kwargs=dict(windowHandle=newWindowHandle)
+			newAPIClass=Window.findBestAPIClass(kwargs,relation=relation)
 			oldAPIClass=self.APIClass
 			if newAPIClass!=oldAPIClass:
 				return newAPIClass(chooseBestAPI=False,**kwargs)
