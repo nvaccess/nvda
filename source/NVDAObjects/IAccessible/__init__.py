@@ -254,7 +254,7 @@ the NVDAObject for IAccessible
 	@classmethod
 	def getPossibleAPIClasses(cls,kwargs,relation=None):
 		if not kwargs.get('IAccessibleChildID'):
-			import MSHTML
+			from . import MSHTML
 			yield MSHTML.MSHTML
 
 	@classmethod
