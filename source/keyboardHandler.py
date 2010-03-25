@@ -321,8 +321,10 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			if keyName == VK_WIN:
 				vk = winUser.VK_LWIN
 			elif len(keyName) == 1:
-				# FIXME: Breaks for characters like [ and ].
 				vk = ord(keyName.upper())
+				if vk in vkCodes.byCode:
+					# TODO: Find a way to fix this.
+					raise LookupError("Don't know how to get vk code for %s" % keyName)
 			else:
 				vk = vkCodes.byName[keyName.upper()]
 			keys.append((vk, ext))
