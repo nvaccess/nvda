@@ -9,6 +9,7 @@ import scriptHandler
 import queueHandler
 import api
 import speech
+import braille
 import config
 from logHandler import log
 
@@ -110,7 +111,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			log.io("Input: %s" % gesture.mapKeys[0])
 
 		if self.isInputHelpActive and not gesture.bypassInputHelp:
-			scriptHandler.queueScript("inputHelp", gesture)
+			queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture)
 			return
 
 		if gesture.isModifier:
@@ -129,6 +130,30 @@ class InputManager(baseObject.AutoPropertyObject):
 			return
 
 		raise NoInputGestureAction
+
+
+	def _handleInputHelp(self, gesture):
+		textList = [gesture.displayName]
+		script = gesture.script
+		runScript = False
+		if script:
+			scriptName = scriptHandler.getScriptName(script)
+			if scriptName == "keyboardHelp":
+				runScript = True
+			else:
+				desc = scriptHandler.getScriptDescription(script)
+				if desc:
+					textList.append(desc)
+				location = scriptHandler.getScriptLocation(script)
+				if location:
+					textList.append(_("Location: %s") % location)
+
+		braille.handler.message("\t\t".join(textList))
+		for text in textList:
+			speech.speakMessage(text)
+
+		if runScript:
+			script(gesture)
 
 #: The singleton input manager instance.
 #: @type: L{InputManager}

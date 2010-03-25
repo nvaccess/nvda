@@ -28,16 +28,13 @@ import virtualBufferHandler
 import scriptHandler
 import ui
 import braille
+import inputCore
 
 class AppModule(appModuleHandler.AppModule):
 
 	def script_keyboardHelp(self,keyPress):
-		if not globalVars.keyboardHelp:
- 			state=_("on")
-			globalVars.keyboardHelp=True
-		else:
-			state=_("off")
-			globalVars.keyboardHelp=False
+		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
+ 		state = _("on") if inputCore.manager.isInputHelpActive else _("off")
 		ui.message(_("keyboard help %s")%state)
 	script_keyboardHelp.__doc__=_("Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any.")
 
