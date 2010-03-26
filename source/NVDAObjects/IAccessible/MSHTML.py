@@ -262,22 +262,23 @@ class MSHTML(IAccessible):
 
 	def __init__(self,HTMLNode=None,IAccessibleObject=None,IAccessibleChildID=None,**kwargs):
 		self.HTMLNodeHasAncestorIAccessible=False
-		# Determine whether HTMLNode's IAccessible is for an ancestor.
-		tempNode=HTMLNode
-		while tempNode:
-			try:
-				IAccessibleObject=IAccessibleFromHTMLNode(tempNode)
-			except NotImplementedError:
-				IAccessibleObject=None
-			if IAccessibleObject:
-				IAccessibleChildID=0
-				if tempNode is not HTMLNode:
-					self.HTMLNodeHasAncestorIAccessible=True
-				break
-			try:
-				tempNode=tempNode.parentNode
-			except COMError:
-				tempNode=None
+		if not IAccessibleObject:
+			# Find an IAccessible for HTMLNode and determine whether it is for an ancestor.
+			tempNode=HTMLNode
+			while tempNode:
+				try:
+					IAccessibleObject=IAccessibleFromHTMLNode(tempNode)
+				except NotImplementedError:
+					IAccessibleObject=None
+				if IAccessibleObject:
+					IAccessibleChildID=0
+					if tempNode is not HTMLNode:
+						self.HTMLNodeHasAncestorIAccessible=True
+					break
+				try:
+					tempNode=tempNode.parentNode
+				except COMError:
+					tempNode=None
 
 		super(MSHTML,self).__init__(IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,**kwargs)
 		self.HTMLNode=HTMLNode
