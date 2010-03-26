@@ -318,9 +318,6 @@ the NVDAObject for IAccessible
 		elif windowClassName.startswith('bosa_sdm'):
 			from .msOffice import SDM
 			clsList.append(SDM)
-		if windowClassName.startswith('RichEdit') and winUser.getClassName(winUser.getAncestor(windowHandle,winUser.GA_PARENT)).startswith('bosa_sdm'):
-			from .msOffice import RichEditSDMChild
-			clsList.append(RichEditSDMChild)
 
 		clsList.append(IAccessible)
 
