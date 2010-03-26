@@ -21,6 +21,7 @@ from logHandler import log
 import speech
 import controlTypes
 from . import IAccessible
+from ..behaviors import EditableTextWithoutAutoSelectDetection
 import NVDAObjects
 import virtualBufferHandler
 
@@ -251,6 +252,8 @@ class MSHTML(IAccessible):
 		return True
 
 	def findOverlayClasses(self,clsList):
+		if self.TextInfo == MSHTMLTextInfo:
+			clsList.append(EditableTextWithoutAutoSelectDetection)
 		clsList.append(MSHTML)
 		return super(MSHTML,self).findOverlayClasses(clsList)
 
@@ -288,36 +291,8 @@ class MSHTML(IAccessible):
 		try:
 			self.HTMLNode.createTextRange()
 			self.TextInfo=MSHTMLTextInfo
-		except:
+		except (NameError, COMError):
 			pass
-		if self.TextInfo==MSHTMLTextInfo:
-			[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
-				("ExtendedUp","moveByLine"),
-				("ExtendedDown","moveByLine"),
-				("ExtendedLeft","moveByCharacter"),
-				("ExtendedRight","moveByCharacter"),
-				("Control+ExtendedUp","moveByParagraph"),
-				("Control+ExtendedDown","moveByParagraph"),
-				("Control+ExtendedLeft","moveByWord"),
-				("Control+ExtendedRight","moveByWord"),
-				("Shift+ExtendedRight","changeSelection"),
-				("Shift+ExtendedLeft","changeSelection"),
-				("Shift+ExtendedHome","changeSelection"),
-				("Shift+ExtendedEnd","changeSelection"),
-				("Shift+ExtendedUp","changeSelection"),
-				("Shift+ExtendedDown","changeSelection"),
-				("Control+Shift+ExtendedLeft","changeSelection"),
-				("Control+Shift+ExtendedRight","changeSelection"),
-				("ExtendedHome","moveByCharacter"),
-				("ExtendedEnd","moveByCharacter"),
-				("control+extendedHome","moveByLine"),
-				("control+extendedEnd","moveByLine"),
-				("control+shift+extendedHome","changeSelection"),
-				("control+shift+extendedEnd","changeSelection"),
-				("ExtendedDelete","moveByCharacter"),
-				("Back","backspaceCharacter"),
-				("Control+Back","backspaceWord"),
-			]]
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		if not super(MSHTML,self).isDuplicateIAccessibleEvent(obj):
