@@ -135,6 +135,22 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getParagraphOffsets(self,offset):
 		return self._getLineOffsets(offset)
 
+	def _getFormatFieldAndOffsets(self, offset, formatConfig, calculateOffsets=True):
+		attribs, length = self.obj.jabContext.getTextAttributesInRange(offset, self._endOffset - 1)
+		field = textInfos.FormatField()
+		field["font-family"] = attribs.fontFamily
+		field["font-size"] = "%dpt" % attribs.fontSize
+		field["bold"] = bool(attribs.bold)
+		field["italic"] = bool(attribs.italic)
+		field["strikethrough"] = bool(attribs.strikethrough)
+		field["underline"] = bool(attribs.underline)
+		if attribs.superscript:
+			field["text-position"] = "super"
+		elif attribs.subscript:
+			field["text-position"] = "sub"
+		# TODO: Not sure how to interpret Java's alignment numbers.
+		return field, (offset, offset + length)
+
 class JAB(Window):
 
 	def findOverlayClasses(self,clsList):
