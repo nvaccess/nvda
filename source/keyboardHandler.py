@@ -31,6 +31,7 @@ currentNVDAModifierKey=None
 usedNVDAModifierKey=False
 lastNVDAModifierKey=None
 lastNVDAModifierKeyTime=None
+currentModifiers=set()
 
 def passNextKeyThrough():
 	global passKeyThroughCount, lastPassThroughKeyDown
@@ -52,7 +53,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyDown.
 	"""
 	try:
-		global currentNVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, lastPassThroughKeyDown
+		global currentNVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers
 		#Injected keys should be ignored
 		if injected:
 			return True
@@ -66,10 +67,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			# The core is dead, so let keys pass through unhindered.
 			return True
 
-		modifiers = [(mod, False) for mod in KeyboardInputGesture.NORMAL_MODIFIER_KEYS if winUser.getKeyState(mod)&32768]
-		if currentNVDAModifierKey:
-			modifiers.append(currentNVDAModifierKey)
-		gesture = KeyboardInputGesture(modifiers, vkCode, scanCode, extended)
+		gesture = KeyboardInputGesture(currentModifiers, vkCode, scanCode, extended)
 		if (vkCode, extended) == lastNVDAModifierKey:
 			lastNVDAModifierKey = None
 			if time.time() - lastNVDAModifierKeyTime < 0.5:
@@ -80,6 +78,8 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		elif currentNVDAModifierKey:
 			# A key was pressed after the NVDA modifier key, so consider it used.
 			usedNVDAModifierKey = True
+		if gesture.isModifier:
+			currentModifiers.add((vkCode, extended))
 
 		try:
 			inputCore.manager.executeGesture(gesture)
@@ -97,10 +97,9 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 
 def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyUp.
-	"
 	"""
 	try:
-		global currentNVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount
+		global currentNVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, currentModifiers
 		if injected:
 			return True
 		if passKeyThroughCount>=1:
@@ -124,8 +123,10 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 				lastNVDAModifierKeyTime=time.time()
 			currentNVDAModifierKey=None
 			usedNVDAModifierKey=False
-			return False
-		elif (vkCode,extended) in keyUpIgnoreSet:
+
+		currentModifiers.discard((vkCode, extended))
+
+		if (vkCode,extended) in keyUpIgnoreSet:
 			keyUpIgnoreSet.remove((vkCode,extended))
 			return False
 	except:
