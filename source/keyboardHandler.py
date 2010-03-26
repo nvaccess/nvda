@@ -9,10 +9,8 @@
 import winUser
 import time
 import vkCodes
-import speech
 import ui
-from keyUtils import key, localizedKeyLabels
-import scriptHandler
+from keyUtils import localizedKeyLabels
 from logHandler import log
 import queueHandler
 import config
@@ -24,13 +22,23 @@ import inputCore
 # Fake vk codes.
 VK_WIN = "win"
 
+#: Keys which should not be passed to the OS on key up.
 keyUpIgnoreSet=set()
-passKeyThroughCount=-1 #If 0 or higher then key downs and key ups will be passed straight through
+#: Tracks the number of keys passed through by request of the user.
+#: If -1, pass through is disabled.
+#: If 0 or higher then key downs and key ups will be passed straight through.
+passKeyThroughCount=-1
+#: The last key passed through by request of the user.
 lastPassThroughKeyDown=None
+#: The current NVDA modifier key being pressed.
 currentNVDAModifierKey=None
+#: Whether another key has been pressed since the NVDA modifier key was pressed.
 usedNVDAModifierKey=False
+#: The last NVDA modifier key that was released.
 lastNVDAModifierKey=None
+#: When the last NVDA modifier key was released.
 lastNVDAModifierKeyTime=None
+#: The modifiers currently being pressed.
 currentModifiers=set()
 
 def passNextKeyThrough():
@@ -109,10 +117,6 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 			return True
 		if watchdog.isAttemptingRecovery:
 			# The core is dead, so let keys pass through unhindered.
-			return True
-		focusObject=api.getFocusObject()
-		focusAppModule=focusObject.appModule
-		if focusAppModule and focusAppModule.selfVoicing:
 			return True
 
 		if currentNVDAModifierKey and (vkCode,extended)==currentNVDAModifierKey:
