@@ -106,6 +106,7 @@ An NVDAObject for a window
 		windowHandle=None
 		if relation in ('focus','foreground'):
 			windowHandle=winUser.getForegroundWindow()
+			if not windowHandle: windowHandle=winUser.getDesktopWindow()
 			if windowHandle and relation=="focus":
 				threadID=winUser.getWindowThreadProcessID(windowHandle)[1]
 				threadInfo=winUser.getGUIThreadInfo(threadID)
