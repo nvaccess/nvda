@@ -593,6 +593,15 @@ class MSHTML(IAccessible):
 			return
 		super(MSHTML,self).setFocus()
 
+	def _get_table(self):
+		if self.role not in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROW) or not self.HTMLNode:
+			raise NotImplementedError
+		HTMLNode=self.HTMLNode
+		while HTMLNode:
+			if HTMLNode.nodeName=="TABLE": return MSHTML(HTMLNode=HTMLNode)
+			HTMLNode=HTMLNode.parentNode
+		raise NotImplementedError
+
 	def _get_HTMLNodeName(self):
 		if not self.HTMLNode:
 			return ""
