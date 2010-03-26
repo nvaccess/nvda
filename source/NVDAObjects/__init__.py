@@ -36,20 +36,20 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 	_dynamicClassCache={}
 
-	def __call__(self,*args,**kwargs):
-		if 'findBestAPIClass' not in self.__dict__:
-			APIClass=self
+	def __call__(self,chooseBestAPI=True,**kwargs):
+		if chooseBestAPI:
+			APIClass=self.findBestAPIClass(kwargs)
 		else:
-			APIClass=self.findBestAPIClass(**kwargs)
+			APIClass=self
 
 		if 'findOverlayClasses' not in APIClass.__dict__:
 			raise TypeError("Cannot instantiate class %s as it does not implement findOverlayClasses"%APIClass.__name__)
 
 		# Instantiate the requested class.
-		obj=APIClass.__new__(APIClass,*args,**kwargs)
+		obj=APIClass.__new__(APIClass,**kwargs)
 		obj.APIClass=APIClass
 		if isinstance(obj,self):
-			obj.__init__(*args,**kwargs)
+			obj.__init__(**kwargs)
 
 		try:
 			clsList=obj.findOverlayClasses([])
@@ -106,13 +106,54 @@ class NVDAObject(baseObject.ScriptableObject):
 	TextInfo=NVDAObjectTextInfo #:The TextInfo class this object should use
 
 	@classmethod
-	def findBestAPIClass(cls):
-		"""Chooses the most appropriate API-level NVDAObject class that should be used instead of this class.
-		An API-level NVDAObject is an NVDAObject that takes a specific set of arguments for instanciation.
-		@return: the suitable API-level subclass.
-		@rtype: L{NVDAObject} class
-		"""  
-		return cls
+	def findBestAPIClass(cls,kwargs,relation=None):
+		"""
+		Finds out the highest-level APIClass this object can get to given these kwargs, and updates the kwargs and returns the APIClass.
+		@param relation: the relationship of a possible new object of this type to  another object creating it (e.g. parent).
+		@param type: string
+		@param kwargs: the arguments necessary to construct an object of the class this method was called on.
+		@type kwargs: dictionary
+		@returns: the new APIClass
+		@rtype: DynamicNVDAObjectType
+		"""
+		newAPIClass=cls
+		if 'getPossibleAPIClasses' in newAPIClass.__dict__:
+			for possibleAPIClass in newAPIClass.getPossibleAPIClasses(kwargs,relation=relation):
+				if 'kwargsFromSuper' not in possibleAPIClass.__dict__:  
+					log.error("possible API class %s does not implement kwargsFromSuper"%possibleAPIClass)
+					continue
+				if possibleAPIClass.kwargsFromSuper(kwargs,relation=relation):
+					return possibleAPIClass.findBestAPIClass(kwargs,relation=relation)
+		return newAPIClass
+
+	@classmethod
+	def getPossibleAPIClasses(cls,kwargs,relation=None):
+		"""
+		Provides a generator which can generate all the possible API classes (in priority order) that inherit directly from the class it was called on.
+		@param relation: the relationship of a possible new object of this type to  another object creating it (e.g. parent).
+		@param type: string
+		@param kwargs: the arguments necessary to construct an object of the class this method was called on.
+		@type kwargs: dictionary
+		@returns: a generator
+		@rtype: generator
+		"""
+		import NVDAObjects.window
+		yield NVDAObjects.window.Window
+
+	@classmethod
+	def kwargsFromSuper(cls,kwargs,relation=None):
+		"""
+		Finds out if this class can be instanciated from the given super kwargs.
+		If so it updates the kwargs to contain everything it will need to instanciate this class, and returns True.
+		If this class can not be instanciated, it returns False and kwargs is not touched.
+		@param relation: why is this class being instanciated? parent, focus, foreground etc...
+		@type relation: string
+		@param kwargs: the kwargs for constructing this class's super class.
+		@type kwargs: dict
+		@rtype: boolean
+		"""
+		raise NotImplementedError
+ 
 
 	def findOverlayClasses(self, clsList):
 		"""Chooses overlay classes which should be added to this object's class structure after the object has been initially instantiated.
@@ -133,7 +174,7 @@ class NVDAObject(baseObject.ScriptableObject):
 
 	beTransparentToMouse=False #:If true then NVDA will never consider the mouse to be on this object, rather it will be on an ancestor.
 
-	@classmethod
+	@staticmethod
 	def objectFromPoint(x,y):
 		"""Retreaves an NVDAObject instance representing a control in the Operating System at the given x and y coordinates.
 		@param x: the x coordinate.
@@ -143,23 +184,29 @@ class NVDAObject(baseObject.ScriptableObject):
 		@return: The object at the given x and y coordinates.
 		@rtype: L{NVDAObject}
 		"""
-		raise NotImplementedError
+		kwargs={}
+		APIClass=NVDAObject.findBestAPIClass(kwargs,relation=(x,y))
+		return APIClass(chooseBestAPI=False,**kwargs)
 
-	@classmethod
-	def objectWithFocus(cls):
+	@staticmethod
+	def objectWithFocus():
 		"""Retreaves the object representing the control currently with focus in the Operating System. This differens from NVDA's focus object as this focus object is the real focus object according to the Operating System, not according to NVDA.
 		@return: the object with focus.
 		@rtype: L{NVDAObject}
 		"""
-		raise NotImplementedError
+		kwargs={}
+		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="focus")
+		return APIClass(chooseBestAPI=False,**kwargs)
 
-	@classmethod
-	def objectInForeground(cls):
+	@staticmethod
+	def objectInForeground():
 		"""Retreaves the object representing the current foreground control according to the Operating System. This differes from NVDA's foreground object as this object is the real foreground object according to the Operating System, not according to NVDA.
 		@return: the foreground object
 		@rtype: L{NVDAObject}
 		"""
-		raise NotImplementedError
+		kwargs={}
+		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="foreground")
+		return APIClass(chooseBestAPI=False,**kwargs)
 
 	def __init__(self):
 		super(NVDAObject,self).__init__()
