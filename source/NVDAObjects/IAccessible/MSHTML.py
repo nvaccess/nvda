@@ -252,7 +252,11 @@ class MSHTML(IAccessible):
 
 	def findOverlayClasses(self,clsList):
 		clsList.append(MSHTML)
-		return super(MSHTML,self).findOverlayClasses(clsList)
+		if self.HTMLNodeHasAncestorIAccessible:
+			# The IAccessibleObject is actually for an ancestor of this object, so IAccessible overlay classes aren't relevant.
+			return clsList
+		else:
+			return super(MSHTML,self).findOverlayClasses(clsList)
 
 	def _get_virtualBufferClass(self):
 		if self.HTMLNode and self.role==controlTypes.ROLE_DOCUMENT and not self.isContentEditable:
