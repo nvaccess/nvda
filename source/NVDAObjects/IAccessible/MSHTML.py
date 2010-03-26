@@ -473,6 +473,8 @@ class MSHTML(IAccessible):
 			try:
 				previousNode=self.HTMLNode.previousSibling
 			except COMError:
+				previousNode=None
+			if not previousNode:
 				return None
 			obj=MSHTML(HTMLNode=previousNode)
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
@@ -485,6 +487,8 @@ class MSHTML(IAccessible):
 			try:
 				nextNode=self.HTMLNode.nextSibling
 			except COMError:
+				nextNode=None
+			if not nextNode:
 				return None
 			obj=MSHTML(HTMLNode=nextNode)
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
@@ -499,6 +503,8 @@ class MSHTML(IAccessible):
 			try:
 				childNode=self.HTMLNode.firstChild
 			except COMError:
+				childNode=None
+			if not childNode:
 				return None
 			obj=MSHTML(HTMLNode=childNode)
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
@@ -515,6 +521,8 @@ class MSHTML(IAccessible):
 			try:
 				childNode=self.HTMLNode.lastChild
 			except COMError:
+				childNode=None
+			if not childNode:
 				return None
 			obj=MSHTML(HTMLNode=childNode)
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
