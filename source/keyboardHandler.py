@@ -23,8 +23,8 @@ import inputCore
 # Fake vk codes.
 VK_WIN = "win"
 
-#: Keys which should not be passed to the OS on key up.
-keyUpIgnoreSet=set()
+#: Keys which have been trapped by NVDA and should not be passed to the OS.
+trappedKeys=set()
 #: Tracks the number of keys passed through by request of the user.
 #: If -1, pass through is disabled.
 #: If 0 or higher then key downs and key ups will be passed straight through.
@@ -92,12 +92,12 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 
 		try:
 			inputCore.manager.executeGesture(gesture)
-			keyUpIgnoreSet.add((vkCode,extended))
+			trappedKeys.add((vkCode,extended))
 			return False
 		except inputCore.NoInputGestureAction:
 			if gesture.isNVDAModifierKey:
 				# Never pass the NVDA modifier key to the OS.
-				keyUpIgnoreSet.add((vkCode,extended))
+				trappedKeys.add((vkCode,extended))
 				return False
 			return True
 	except:
@@ -131,8 +131,8 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 
 		currentModifiers.discard((vkCode, extended))
 
-		if (vkCode,extended) in keyUpIgnoreSet:
-			keyUpIgnoreSet.remove((vkCode,extended))
+		if (vkCode,extended) in trappedKeys:
+			trappedKeys.remove((vkCode,extended))
 			return False
 	except:
 		log.error("", exc_info=True)
