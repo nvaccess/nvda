@@ -13,9 +13,6 @@ from logHandler import log
 import eventHandler
 import baseObject
 import speech
-from keyUtils import key, sendKey
-from scriptHandler import isScriptWaiting
-import globalVars
 import api
 import textInfos.offsets
 import config
@@ -39,20 +36,20 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 	_dynamicClassCache={}
 
-	def __call__(self,*args,**kwargs):
-		if 'findBestAPIClass' not in self.__dict__:
-			APIClass=self
+	def __call__(self,chooseBestAPI=True,**kwargs):
+		if chooseBestAPI:
+			APIClass=self.findBestAPIClass(kwargs)
 		else:
-			APIClass=self.findBestAPIClass(**kwargs)
+			APIClass=self
 
 		if 'findOverlayClasses' not in APIClass.__dict__:
 			raise TypeError("Cannot instantiate class %s as it does not implement findOverlayClasses"%APIClass.__name__)
 
 		# Instantiate the requested class.
-		obj=APIClass.__new__(APIClass,*args,**kwargs)
+		obj=APIClass.__new__(APIClass,**kwargs)
 		obj.APIClass=APIClass
 		if isinstance(obj,self):
-			obj.__init__(*args,**kwargs)
+			obj.__init__(**kwargs)
 
 		try:
 			clsList=obj.findOverlayClasses([])
@@ -109,13 +106,54 @@ class NVDAObject(baseObject.ScriptableObject):
 	TextInfo=NVDAObjectTextInfo #:The TextInfo class this object should use
 
 	@classmethod
-	def findBestAPIClass(cls):
-		"""Chooses the most appropriate API-level NVDAObject class that should be used instead of this class.
-		An API-level NVDAObject is an NVDAObject that takes a specific set of arguments for instanciation.
-		@return: the suitable API-level subclass.
-		@rtype: L{NVDAObject} class
-		"""  
-		return cls
+	def findBestAPIClass(cls,kwargs,relation=None):
+		"""
+		Finds out the highest-level APIClass this object can get to given these kwargs, and updates the kwargs and returns the APIClass.
+		@param relation: the relationship of a possible new object of this type to  another object creating it (e.g. parent).
+		@param type: string
+		@param kwargs: the arguments necessary to construct an object of the class this method was called on.
+		@type kwargs: dictionary
+		@returns: the new APIClass
+		@rtype: DynamicNVDAObjectType
+		"""
+		newAPIClass=cls
+		if 'getPossibleAPIClasses' in newAPIClass.__dict__:
+			for possibleAPIClass in newAPIClass.getPossibleAPIClasses(kwargs,relation=relation):
+				if 'kwargsFromSuper' not in possibleAPIClass.__dict__:  
+					log.error("possible API class %s does not implement kwargsFromSuper"%possibleAPIClass)
+					continue
+				if possibleAPIClass.kwargsFromSuper(kwargs,relation=relation):
+					return possibleAPIClass.findBestAPIClass(kwargs,relation=relation)
+		return newAPIClass
+
+	@classmethod
+	def getPossibleAPIClasses(cls,kwargs,relation=None):
+		"""
+		Provides a generator which can generate all the possible API classes (in priority order) that inherit directly from the class it was called on.
+		@param relation: the relationship of a possible new object of this type to  another object creating it (e.g. parent).
+		@param type: string
+		@param kwargs: the arguments necessary to construct an object of the class this method was called on.
+		@type kwargs: dictionary
+		@returns: a generator
+		@rtype: generator
+		"""
+		import NVDAObjects.window
+		yield NVDAObjects.window.Window
+
+	@classmethod
+	def kwargsFromSuper(cls,kwargs,relation=None):
+		"""
+		Finds out if this class can be instanciated from the given super kwargs.
+		If so it updates the kwargs to contain everything it will need to instanciate this class, and returns True.
+		If this class can not be instanciated, it returns False and kwargs is not touched.
+		@param relation: why is this class being instanciated? parent, focus, foreground etc...
+		@type relation: string
+		@param kwargs: the kwargs for constructing this class's super class.
+		@type kwargs: dict
+		@rtype: boolean
+		"""
+		raise NotImplementedError
+ 
 
 	def findOverlayClasses(self, clsList):
 		"""Chooses overlay classes which should be added to this object's class structure after the object has been initially instantiated.
@@ -136,7 +174,7 @@ class NVDAObject(baseObject.ScriptableObject):
 
 	beTransparentToMouse=False #:If true then NVDA will never consider the mouse to be on this object, rather it will be on an ancestor.
 
-	@classmethod
+	@staticmethod
 	def objectFromPoint(x,y):
 		"""Retreaves an NVDAObject instance representing a control in the Operating System at the given x and y coordinates.
 		@param x: the x coordinate.
@@ -146,23 +184,29 @@ class NVDAObject(baseObject.ScriptableObject):
 		@return: The object at the given x and y coordinates.
 		@rtype: L{NVDAObject}
 		"""
-		raise NotImplementedError
+		kwargs={}
+		APIClass=NVDAObject.findBestAPIClass(kwargs,relation=(x,y))
+		return APIClass(chooseBestAPI=False,**kwargs)
 
-	@classmethod
-	def objectWithFocus(cls):
+	@staticmethod
+	def objectWithFocus():
 		"""Retreaves the object representing the control currently with focus in the Operating System. This differens from NVDA's focus object as this focus object is the real focus object according to the Operating System, not according to NVDA.
 		@return: the object with focus.
 		@rtype: L{NVDAObject}
 		"""
-		raise NotImplementedError
+		kwargs={}
+		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="focus")
+		return APIClass(chooseBestAPI=False,**kwargs)
 
-	@classmethod
-	def objectInForeground(cls):
+	@staticmethod
+	def objectInForeground():
 		"""Retreaves the object representing the current foreground control according to the Operating System. This differes from NVDA's foreground object as this object is the real foreground object according to the Operating System, not according to NVDA.
 		@return: the foreground object
 		@rtype: L{NVDAObject}
 		"""
-		raise NotImplementedError
+		kwargs={}
+		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="foreground")
+		return APIClass(chooseBestAPI=False,**kwargs)
 
 	def __init__(self):
 		super(NVDAObject,self).__init__()
@@ -414,11 +458,17 @@ class NVDAObject(baseObject.ScriptableObject):
 		role=self.role
 		if controlTypes.STATE_FOCUSED in states:
 			return self.presType_content
+
+		#Static text should be content only if it really use usable text
+		if role==controlTypes.ROLE_STATICTEXT:
+			text=self.makeTextInfo(textInfos.POSITION_ALL).text
+			return self.presType_content if text and not text.isspace() else self.presType_layout
+
 		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_TITLEBAR):
 			return self.presType_layout
 		name = self.name
 		description = self.description
-		if not name and not description and role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_FORM):
+		if not name and not description and role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_FORM,controlTypes.ROLE_TABLEBODY):
 			return self.presType_layout
 		if not name and not description and role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and not config.conf["documentFormatting"]["reportTables"]:
 			return self.presType_layout
@@ -734,186 +784,6 @@ This code is executed if a gain focus event is received by this object.
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
-
-	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=0.03):
-		elapsed = 0
-		while elapsed < timeout:
-			if isScriptWaiting():
-				return False
-			api.processPendingEvents(processEventQueue=False)
-			if eventHandler.isPendingEvents("gainFocus"):
-				oldInCaretMovement=globalVars.inCaretMovement
-				globalVars.inCaretMovement=True
-				try:
-					api.processPendingEvents()
-				finally:
-					globalVars.inCaretMovement=oldInCaretMovement
-				return True
-			#The caret may stop working as the focus jumps, we want to stay in the while loop though
-			try:
-				newBookmark = self.makeTextInfo(textInfos.POSITION_CARET).bookmark
-				if newBookmark!=bookmark:
-					return True
-			except:
-				pass
-			time.sleep(retryInterval)
-			elapsed += retryInterval
-		return False
-
-	def script_moveByLine(self,keyPress):
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		bookmark=info.bookmark
-		sendKey(keyPress)
-		if not self._hasCaretMoved(bookmark):
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
-		if not isScriptWaiting():
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if config.conf["reviewCursor"]["followCaret"]:
-				api.setReviewPosition(info.copy())
-			info.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(info)
-
-	def script_moveByCharacter(self,keyPress):
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		bookmark=info.bookmark
-		sendKey(keyPress)
-		if not self._hasCaretMoved(bookmark):
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
-		if not isScriptWaiting():
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if config.conf["reviewCursor"]["followCaret"]:
-				api.setReviewPosition(info.copy())
-			info.expand(textInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER)
-
-	def script_moveByWord(self,keyPress):
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		bookmark=info.bookmark
-		sendKey(keyPress)
-		if not self._hasCaretMoved(bookmark):
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
-		if not isScriptWaiting():
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if config.conf["reviewCursor"]["followCaret"]:
-				api.setReviewPosition(info.copy())
-			info.expand(textInfos.UNIT_WORD)
-			speech.speakTextInfo(info,unit=textInfos.UNIT_WORD)
-
-	def script_moveByParagraph(self,keyPress):
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		bookmark=info.bookmark
-		sendKey(keyPress)
-		if not self._hasCaretMoved(bookmark):
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
-		if not isScriptWaiting():
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if config.conf["reviewCursor"]["followCaret"]:
-				api.setReviewPosition(info.copy())
-			info.expand(textInfos.UNIT_PARAGRAPH)
-			speech.speakTextInfo(info)
-
-	def _backspaceScriptHelper(self,unit,keyPress):
-		try:
-			oldInfo=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		oldBookmark=oldInfo.bookmark
-		testInfo=oldInfo.copy()
-		res=testInfo.move(textInfos.UNIT_CHARACTER,-1)
-		if res<0:
-			testInfo.expand(unit)
-			delChunk=testInfo.text
-		else:
-			delChunk=""
-		sendKey(keyPress)
-		if self._hasCaretMoved(oldBookmark):
-			if len(delChunk)>1:
-				speech.speakMessage(delChunk)
-			else:
-				speech.speakSpelling(delChunk)
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if config.conf["reviewCursor"]["followCaret"]:
-				api.setReviewPosition(info)
-
-	def script_backspaceCharacter(self,keyPress):
-		self._backspaceScriptHelper(textInfos.UNIT_CHARACTER,keyPress)
-
-	def script_backspaceWord(self,keyPress):
-		self._backspaceScriptHelper(textInfos.UNIT_WORD,keyPress)
-
-	def script_delete(self,keyPress):
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		bookmark=info.bookmark
-		sendKey(keyPress)
-		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		self._hasCaretMoved(bookmark)
-		if not isScriptWaiting():
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if config.conf["reviewCursor"]["followCaret"]:
-				api.setReviewPosition(info.copy())
-			info.expand(textInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER)
-
-	def script_changeSelection(self,keyPress):
-		try:
-			oldInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		except:
-			sendKey(keyPress)
-			return
-		sendKey(keyPress)
-		if not isScriptWaiting():
-			api.processPendingEvents()
-			focus=api.getFocusObject()
-			try:
-				newInfo=focus.makeTextInfo(textInfos.POSITION_SELECTION)
-			except:
-				return
-			speech.speakSelectionChange(oldInfo,newInfo)
 
 class AutoSelectDetectionNVDAObject(NVDAObject):
 

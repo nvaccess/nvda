@@ -25,7 +25,7 @@ import NVDAObjects.JAB
 import eventHandler
 import mouseHandler
 import queueHandler
-from NVDAObjects.behaviors import ProgressBar, Dialog
+from NVDAObjects.behaviors import ProgressBar, Dialog, EditableText
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -252,6 +252,30 @@ the NVDAObject for IAccessible
 	IAccessibleTableUsesTableCellIndexAttrib=False #: Should the table-cell-index IAccessible2 object attribute be used rather than indexInParent?
 
 	@classmethod
+	def getPossibleAPIClasses(cls,kwargs,relation=None):
+		if not kwargs.get('IAccessibleChildID'):
+			from . import MSHTML
+			yield MSHTML.MSHTML
+
+	@classmethod
+	def kwargsFromSuper(cls,kwargs,relation=None):
+		acc=None
+		windowHandle=kwargs['windowHandle']
+		if isinstance(relation,tuple):
+			acc=IAccessibleHandler.accessibleObjectFromPoint(relation[0],relation[1])
+		elif relation=="focus":
+			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
+		elif relation in ("parent","foreground"):
+			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
+		else:
+			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_WINDOW,0)
+		if not acc:
+			return False
+		kwargs['IAccessibleObject']=acc[0]
+		kwargs['IAccessibleChildID']=acc[1]
+		return True
+
+	@classmethod
 	def windowHasExtraIAccessibles(cls,windowHandle):
 		"""Finds out whether this window has things such as a system menu / titleBar / scroll bars, which would be represented as extra IAccessibles"""
 		style=winUser.getWindowStyle(windowHandle)
@@ -263,6 +287,17 @@ the NVDAObject for IAccessible
 
 		windowClassName=self.windowClassName
 		role=self.IAccessibleRole
+
+		if hasattr(self, "IAccessibleTextObject"):
+			if role==oleacc.ROLE_SYSTEM_TEXT:
+				isEditable=True
+			else:
+				try:
+					isEditable=bool(self.IAccessibleObject.states&IAccessibleHandler.IA2_STATE_EDITABLE)
+				except:
+					isEditable=False
+			if isEditable:
+				clsList.append(EditableText)
 
 		# Use window class name and role to search for a class match in our static map.
 		keys=[(windowClassName,role),(None,role),(windowClassName,None)]
@@ -288,18 +323,12 @@ the NVDAObject for IAccessible
 			# This is possibly a Flash object.
 			from . import adobeFlash
 			clsList = adobeFlash.findExtraOverlayClasses(self, clsList)
-		if windowClassName=="Internet Explorer_Server" and (self.event_objectID is None or self.event_objectID==winUser.OBJID_CLIENT or self.event_objectID>0):
-			from .mshtml import MSHTML
-			clsList.append(MSHTML)
 		elif windowClassName.startswith('Mozilla'):
 			from .mozilla import Mozilla
 			clsList.append( Mozilla)
 		elif windowClassName.startswith('bosa_sdm'):
 			from .msOffice import SDM
 			clsList.append(SDM)
-		if windowClassName.startswith('RichEdit') and winUser.getClassName(winUser.getAncestor(windowHandle,winUser.GA_PARENT)).startswith('bosa_sdm'):
-			from .msOffice import RichEditSDMChild
-			clsList.append(RichEditSDMChild)
 
 		clsList.append(IAccessible)
 
@@ -310,31 +339,7 @@ the NVDAObject for IAccessible
 			# This IAccessible does not represent the main part of the window, so we can only use IAccessible classes.
 			return clsList
 
-	@classmethod
-	def objectFromPoint(cls,x,y,windowHandle=None):
-		res=IAccessibleHandler.accessibleObjectFromPoint(x,y)
-		if not res:
-			return None
-		return IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-
-	@classmethod
-	def objectWithFocus(cls,windowHandle=None):
-		if not windowHandle:
-			return None
-		obj=getNVDAObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
-		prevObj=None
-		while obj and obj!=prevObj:
-			prevObj=obj
-			obj=obj.activeChild
-		return prevObj
-
-	@classmethod
-	def objectInForeground(cls,windowHandle=None):
-		if not windowHandle:
-			return None
-		return getNVDAObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
-
-	def __init__(self,relation=None,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
+	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
 @param pacc: a pointer to an IAccessible object
 @type pacc: ctypes.POINTER(IAccessible)
@@ -345,13 +350,6 @@ the NVDAObject for IAccessible
 @param objectID: the objectID for the IAccessible Object, if known
 @type objectID: int
 """
-		# If we have a window but no IAccessible, get the window from the IAccessible.
-		if windowHandle and not IAccessibleObject:
-			if relation!="parent":
-				IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_WINDOW,0)
-			else:
-				IAccessibleObject,IAccessibleChildID=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
-
 		# Try every trick in the book to get the window handle if we don't have it.
 		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
 			try:
@@ -412,31 +410,6 @@ the NVDAObject for IAccessible
 			pass
 		try:
 			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleText)
-			if self.IAccessibleRole==oleacc.ROLE_SYSTEM_TEXT:
-				hasEditableState=True
-			else:
-				try:
-					hasEditableState=bool(self.IAccessibleObject.states&IAccessibleHandler.IA2_STATE_EDITABLE)
-				except:
-					hasEditableState=False
-			if  hasEditableState:
-				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
-					("ExtendedUp","moveByLine"),
-					("ExtendedDown","moveByLine"),
-					("control+ExtendedUp","moveByLine"),
-					("control+ExtendedDown","moveByLine"),
-					("ExtendedLeft","moveByCharacter"),
-					("ExtendedRight","moveByCharacter"),
-					("Control+ExtendedLeft","moveByWord"),
-					("Control+ExtendedRight","moveByWord"),
-					("ExtendedHome","moveByCharacter"),
-					("ExtendedEnd","moveByCharacter"),
-					("control+extendedHome","moveByLine"),
-					("control+extendedEnd","moveByLine"),
-					("ExtendedDelete","delete"),
-					("Back","backspaceCharacter"),
-					("Control+Back","backspaceWord"),
-				]]
 		except:
 			pass
 		if None not in (event_windowHandle,event_objectID,event_childID):

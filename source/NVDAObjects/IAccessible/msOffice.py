@@ -6,8 +6,9 @@
 
 import IAccessibleHandler
 import controlTypes
+import winUser
 import api
-from . import IAccessible
+from . import IAccessible, getNVDAObjectFromEvent
 
 class SDM(IAccessible):
 
@@ -22,17 +23,15 @@ class SDM(IAccessible):
 			parent=parent.parent
 		return parent
 
-class RichEditSDMChild(IAccessible):
-
-	def _get_parent(self):
-		parent=super(RichEditSDMChild,self).parent
-		return parent.parent
-
-	def _get_name(self):
-		left,top,width,height=self.location
-		obj=api.getDesktopObject().objectFromPoint(left+(width/2),top+(height/2))
-		if obj:
-			return obj.name
+	def _get_SDMChild(self):
+		if controlTypes.STATE_FOCUSED in self.states:
+			hwndFocus=winUser.getGUIThreadInfo(0).hwndFocus
+			if hwndFocus and hwndFocus!=self.windowHandle and not winUser.getClassName(hwndFocus).startswith('bosa_sdm'):
+				obj=getNVDAObjectFromEvent(hwndFocus,winUser.OBJID_CLIENT,0)
+				obj.parent=self.parent
+				obj.name=self.name
+				return obj
+		return None
 
 class MSOUNISTAT(IAccessible):
 

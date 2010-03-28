@@ -3,6 +3,7 @@ import eventHandler
 import winUser
 from . import IAccessible, getNVDAObjectFromEvent
 from NVDAObjects import NVDAObjectTextInfo
+from NVDAObjects.behaviors import EditableText
 from comtypes import GUID, COMError, IServiceProvider
 from comtypes.gen.AcrobatAccessLib import IAccID, IGetPDDomNode, IPDDomElement
 from logHandler import log
@@ -126,27 +127,8 @@ class AcrobatTextInfo(NVDAObjectTextInfo):
 		except (ValueError, TypeError):
 			raise RuntimeError("Bad caret index")
 
-class AcrobatTextNode(AcrobatNode):
+class AcrobatTextNode(EditableText, AcrobatNode):
 	TextInfo = AcrobatTextInfo
-
-[AcrobatTextNode.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedUp","moveByLine"),
-	("ExtendedDown","moveByLine"),
-	("ExtendedLeft","moveByCharacter"),
-	("ExtendedRight","moveByCharacter"),
-	("ExtendedPrior","moveByLine"),
-	("ExtendedNext","moveByLine"),
-	("Control+ExtendedLeft","moveByWord"),
-	("Control+ExtendedRight","moveByWord"),
-	("control+extendedDown","moveByParagraph"),
-	("control+extendedUp","moveByParagraph"),
-	("ExtendedHome","moveByCharacter"),
-	("ExtendedEnd","moveByCharacter"),
-	("control+extendedHome","moveByLine"),
-	("control+extendedEnd","moveByLine"),
-	("ExtendedDelete","delete"),
-	("Back","backspaceCharacter"),
-]]
 
 class AcrobatSDIWindowClient(IAccessible):
 

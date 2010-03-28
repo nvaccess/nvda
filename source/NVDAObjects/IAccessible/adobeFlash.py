@@ -6,6 +6,7 @@
 
 from . import IAccessible
 from NVDAObjects import NVDAObjectTextInfo
+from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
 from comtypes import COMError, IServiceProvider, hresult
 from comtypes.gen.FlashAccessibility import ISimpleTextSelection
 from logHandler import log
@@ -36,7 +37,7 @@ class InputTextFieldTextInfo(NVDAObjectTextInfo):
 		# This might be a backwards selection, but for now, we should always return the values in ascending order.
 		return sorted(self._getRawSelectionOffsets())
 
-class InputTextField(IAccessible):
+class InputTextField(EditableTextWithoutAutoSelectDetection, IAccessible):
 	TextInfo = InputTextFieldTextInfo
 
 	def __init__(self, ISimpleTextSelectionObject=None, **kwargs):
@@ -48,40 +49,6 @@ class InputTextField(IAccessible):
 				self.ISimpleTextSelectionObject = self.IAccessibleObject.QueryInterface(IServiceProvider).QueryService(ISimpleTextSelection._iid_, ISimpleTextSelection)
 			except COMError:
 				self.ISimpleTextSelectionObject = None
-
-[InputTextField.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedUp","moveByLine"),
-	("shift+ExtendedUp","changeSelection"),
-	("ExtendedDown","moveByLine"),
-	("shift+ExtendedDown","changeSelection"),
-	("ExtendedLeft","moveByCharacter"),
-	("shift+ExtendedLeft","changeSelection"),
-	("ExtendedRight","moveByCharacter"),
-	("shift+ExtendedRight","changeSelection"),
-	("ExtendedPrior","moveByLine"),
-	("shift+ExtendedPrior","changeSelection"),
-	("ExtendedNext","moveByLine"),
-	("shift+ExtendedNext","changeSelection"),
-	("Control+ExtendedLeft","moveByWord"),
-	("shift+Control+ExtendedLeft","changeSelection"),
-	("Control+ExtendedRight","moveByWord"),
-	("shift+Control+ExtendedRight","changeSelection"),
-	("control+extendedDown","moveByParagraph"),
-	("shift+control+extendedDown","changeSelection"),
-	("control+extendedUp","moveByParagraph"),
-	("shift+control+extendedUp","changeSelection"),
-	("ExtendedHome","moveByCharacter"),
-	("shift+ExtendedHome","changeSelection"),
-	("ExtendedEnd","moveByCharacter"),
-	("shift+ExtendedEnd","changeSelection"),
-	("control+extendedHome","moveByLine"),
-	("shift+control+extendedHome","changeSelection"),
-	("control+extendedEnd","moveByLine"),
-	("shift+control+extendedEnd","changeSelection"),
-	("ExtendedDelete","delete"),
-	("Back","backspaceCharacter"),
-	("control+a","changeSelection"),
-]]
 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Flash object.
