@@ -327,10 +327,14 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			if keyName == VK_WIN:
 				vk = winUser.VK_LWIN
 			elif len(keyName) == 1:
-				vk = ord(keyName.upper())
-				if vk in vkCodes.byCode:
-					# TODO: Find a way to fix this.
-					raise LookupError("Don't know how to get vk code for %s" % keyName)
+				requiredMods, vk = winUser.VkKeyScan(keyName)
+				if requiredMods & 1:
+					keys.append((winUser.VK_SHIFT, False))
+				elif requiredMods & 2:
+					keys.append((winUser.VK_CONTROL, False))
+				elif requiredMods & 4:
+					keys.append((winUser.VK_MENU, False))
+				# Not sure whether we need to support the Hankaku modifier (& 8).
 			else:
 				vk = vkCodes.byName[keyName.upper()]
 			keys.append((vk, ext))
