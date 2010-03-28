@@ -521,6 +521,11 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 	#At this point if we don't have an object then we can't do any more
 	if not obj:
 		return None
+	#SDM MSAA objects sometimes don't contain enough information to be useful
+	#Sometimes there is a real window that does, so try to get the SDMChild property on the NVDAObject, and if successull use that as obj instead.
+	if obj.windowClassName=='bosa_sdm':
+		SDMChild=getattr(obj,'SDMChild',None)
+		if SDMChild: obj=SDMChild
 	return (NVDAEventName,obj)
 
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
@@ -606,18 +611,14 @@ def processFocusWinEvent(window,objectID,childID,force=False):
 	@rtype: boolean
 	"""
 	windowClassName=winUser.getClassName(window)
+	#We must ignore focus on child windows of SDM windows as we only want the SDM MSAA events
+	if not windowClassName.startswith('bosa_sdm') and winUser.getClassName(winUser.getAncestor(window,winUser.GA_PARENT)).startswith('bosa_sdm'):
+		return True
 	rootWindow=winUser.getAncestor(window,winUser.GA_ROOT)
 	# If this window's root window is not the foreground window and this window or its root window is not a popup window:
 	if rootWindow!=winUser.getForegroundWindow() and not (winUser.getWindowStyle(window) & winUser.WS_POPUP or winUser.getWindowStyle(rootWindow)&winUser.WS_POPUP):
 		# This is a focus event from a background window, so ignore it.
 		return False
-	#Some SDM controls in MS Word and such have a real non-sdm window with the focus which should be used instead.
-	if windowClassName.startswith('bosa_sdm'):
-		hwndFocus=winUser.getGUIThreadInfo(winUser.getWindowThreadProcessID(window)[1]).hwndFocus
-		if hwndFocus and hwndFocus!=window and not winUser.getClassName(hwndFocus).startswith('bosa_sdm'):
-			window=hwndFocus
-			objectID=winUser.OBJID_CLIENT
-			childID=0
 	#Notify appModuleHandler of this new foreground window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#If Java access bridge is running, and this is a java window, then pass it to java and forget about it

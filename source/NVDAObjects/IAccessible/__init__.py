@@ -265,10 +265,10 @@ the NVDAObject for IAccessible
 			acc=IAccessibleHandler.accessibleObjectFromPoint(relation[0],relation[1])
 		elif relation=="focus":
 			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
-		elif relation!="parent":
-			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_WINDOW,0)
-		else:
+		elif relation in ("parent","foreground"):
 			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
+		else:
+			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_WINDOW,0)
 		if not acc:
 			return False
 		kwargs['IAccessibleObject']=acc[0]
@@ -329,9 +329,6 @@ the NVDAObject for IAccessible
 		elif windowClassName.startswith('bosa_sdm'):
 			from .msOffice import SDM
 			clsList.append(SDM)
-		if windowClassName.startswith('RichEdit') and winUser.getClassName(winUser.getAncestor(windowHandle,winUser.GA_PARENT)).startswith('bosa_sdm'):
-			from .msOffice import RichEditSDMChild
-			clsList.append(RichEditSDMChild)
 
 		clsList.append(IAccessible)
 
