@@ -9,6 +9,7 @@
 import winUser
 import time
 import vkCodes
+import speech
 import ui
 from keyUtils import localizedKeyLabels
 from logHandler import log
