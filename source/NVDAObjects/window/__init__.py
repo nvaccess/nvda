@@ -62,6 +62,9 @@ An NVDAObject for a window
 		#The desktop window should stay as a window
 		if windowClassName=="#32769":
 			return
+		if windowClassName=="EXCEL7" and (relation=='focus' or isinstance(relation,tuple)): 
+			from . import excel
+			yield excel.ExcelCell 
 		import JABHandler
 		if JABHandler.isJavaWindow(windowHandle):
 			import NVDAObjects.JAB
@@ -95,7 +98,7 @@ An NVDAObject for a window
 		elif windowClassName=="_WwG":
 			from .winword import WordDocument as newCls
 		elif windowClassName=="EXCEL7":
-			from .excel import ExcelGrid as newCls
+			from .excel import Excel7Window as newCls
 		clsList.append(newCls)
 		if newCls!=Window:
 			clsList.append(Window)
