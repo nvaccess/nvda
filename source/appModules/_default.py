@@ -340,52 +340,6 @@ class AppModule(appModuleHandler.AppModule):
 			speech.speakMessage(_("No children"))
 	script_navigatorObject_firstChild.__doc__=_("Sets the navigator object to the first child object of the one it is currently on and speaks it")
 
-	def script_navigatorObject_nextInFlow(self,keyPress):
-		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObject):
-			speech.speakMessage(_("no navigator object"))
-			return
-		up=[]
-		down=[]
-		curObject=curObject.getNextInFlow(up=up,down=down)
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
-			if len(up)>0:
-				for count in range(len(up)+1):
-					tones.beep(880*(1.25**count),50)
-					time.sleep(0.025)
-			if len(down)>0:
-				for count in range(len(down)+1):
-					tones.beep(880/(1.25**count),50)
-					time.sleep(0.025)
-			speech.speakObject(curObject,reason=speech.REASON_QUERY)
-		else:
-			speech.speakMessage(_("end of flow"))
-	script_navigatorObject_nextInFlow.__doc__=_("Sets the navigator object to the object this object flows to and speaks it")
-
-	def script_navigatorObject_previousInFlow(self,keyPress):
-		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObject):
-			speech.speakMessage(_("no navigator object"))
-			return
-		up=[]
-		down=[]
-		curObject=curObject.getPreviousInFlow(up=up,down=down)
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
-			if len(up)>0:
-				for count in range(len(up)+1):
-					tones.beep(880*(1.25**count),50)
-					time.sleep(0.025)
-			if len(down)>0:
-				for count in range(len(down)+1):
-					tones.beep(880/(1.25**count),50)
-					time.sleep(0.025)
-			speech.speakObject(curObject,reason=speech.REASON_QUERY)
-		else:
-			speech.speakMessage(_("Beginning of flow"))
-	script_navigatorObject_previousInFlow.__doc__=_("Sets the navigator object to the object this object flows from and speaks it")
-
 	def script_navigatorObject_doDefaultAction(self,keyPress):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
@@ -630,11 +584,6 @@ class AppModule(appModuleHandler.AppModule):
 		info=api.getReviewPosition().copy()
 		sayAllHandler.readText(info,sayAllHandler.CURSOR_REVIEW)
 	script_review_sayAll.__doc__ = _("reads from the review cursor  up to end of current text, moving the review cursor as it goes")
-
-	def script_navigatorObject_sayAll(self,keyPress):
-		obj=api.getNavigatorObject()
-		sayAllHandler.readObjects(obj)
-	script_navigatorObject_sayAll.__doc__ = _("reads from the navigator object ")
 
 	def script_sayAll(self,keyPress):
 		o=api.getFocusObject()
