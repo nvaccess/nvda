@@ -32,11 +32,11 @@ import inputCore
 
 class AppModule(appModuleHandler.AppModule):
 
-	def script_keyboardHelp(self,gesture):
+	def script_toggleInputHelp(self,gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
  		state = _("on") if inputCore.manager.isInputHelpActive else _("off")
-		ui.message(_("keyboard help %s")%state)
-	script_keyboardHelp.__doc__=_("Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any.")
+		ui.message(_("input help %s")%state)
+	script_toggleInputHelp.__doc__=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any.")
 
 	def script_reportCurrentLine(self,gesture):
 		obj=api.getFocusObject()

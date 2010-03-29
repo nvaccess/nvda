@@ -129,14 +129,13 @@ class InputManager(baseObject.AutoPropertyObject):
 
 		raise NoInputGestureAction
 
-
 	def _handleInputHelp(self, gesture):
 		textList = [gesture.displayName]
 		script = gesture.script
 		runScript = False
 		if script:
 			scriptName = scriptHandler.getScriptName(script)
-			if scriptName == "keyboardHelp":
+			if scriptName == "toggleInputHelp":
 				runScript = True
 			else:
 				desc = scriptHandler.getScriptDescription(script)
