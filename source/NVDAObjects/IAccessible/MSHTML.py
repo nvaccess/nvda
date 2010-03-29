@@ -488,7 +488,7 @@ class MSHTML(IAccessible):
 				return None
 			obj=MSHTML(HTMLNode=childNode)
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
-				return None
+				return obj.next
 			return obj
 		if self.HTMLNodeHasAncestorIAccessible:
 			return None
@@ -506,11 +506,11 @@ class MSHTML(IAccessible):
 				return None
 			obj=MSHTML(HTMLNode=childNode)
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
-				return None
+				return obj.previous
 			return obj
 		if self.HTMLNodeHasAncestorIAccessible:
 			return None
-		return super(MSHTML,self).firstChild
+		return super(MSHTML,self).lastChild
 
 	def _get_columnNumber(self):
 		if not self.role==controlTypes.ROLE_TABLECELL or not self.HTMLNode:
