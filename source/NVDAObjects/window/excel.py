@@ -101,6 +101,11 @@ class ExcelWorksheet(ExcelWindow):
 	def _get_name(self):
 		return self.excelWorksheetObject.name
 
+	def _get_firstChild(self):
+		cell=self.excelWorksheetObject.cells(1,1)
+		return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=cell)
+
+
 	def script_extendSelection(self,keyPress):
 		sendKey(keyPress)
 		selection=self.excelWindowObject.Selection
