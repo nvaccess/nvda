@@ -543,58 +543,6 @@ class NVDAObject(baseObject.ScriptableObject):
 		if presType!=self.presType_content: return child._findSimpleNext(useChild=(presType!=self.presType_unavailable),useParent=False,goPrevious=True)
 		return child
 
-	def getNextInFlow(self,down=None,up=None):
-		"""Retreaves the next object in depth first tree traversal order
-@param up: a list that all objects that we moved up out of will be placed in
-@type up: list
-@param down: a list which all objects we moved down in to will be placed
-@type down: list
-"""
-		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
-		child=self.firstChildPresentable if simpleReviewMode else self.firstChild
-		if child:
-			if isinstance(down,list):
-				down.append(self)
-			return child
-		next=self.nextPresentable if simpleReviewMode else self.next
-		if next:
-			return next
-		parent=self.parent
-		while not next and parent:
-			next=parent.nextPresentable if simpleReviewMode else parent.next
-			if isinstance(up,list):
-				up.append(parent)
-			parent=parent.parentPresentable if simpleReviewMode else parent.parent
-		return next
-
-	_get_nextInFlow=getNextInFlow
-
-	def getPreviousInFlow(self,down=None,up=None):
-		"""Retreaves the previous object in depth first tree traversal order
-@param up: a list that all objects that we moved up out of will be placed in
-@type up: list
-@param down: a list which all objects we moved down in to will be placed
-@type down: list
-"""
-		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
-		prev=self.previousPresentable if simpleReviewMode else self.previous
-		if prev:
-			lastLastChild=prev
-			lastChild=prev.lastChildPresentable if simpleReviewMode else prev.lastChild
-			while lastChild:
-				if isinstance(down,list):
-					down.append(lastLastChild)
-				lastLastChild=lastChild
-				lastChild=lastChild.lastChildPresentable if simpleReviewMode else lastChild.lastChild
-			return lastLastChild
-		parent=self.parentPresentable if simpleReviewMode else self.parent
-		if parent:
-			if isinstance(up,list):
-				up.append(self)
-			return parent
-
-	_get_previousInFlow=getPreviousInFlow
-
 	def _get_childCount(self):
 		"""Retreaves the number of children this object contains.
 		@rtype: int
