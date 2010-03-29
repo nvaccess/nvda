@@ -24,11 +24,11 @@ A  kiadás elkészítésekor elsõdleges szempont volt a hibák kijavítása, ezáltal me
 
 	=Változások=
 
-* A NVDA már nem mondja be a kimondottan hosszú start menü billentyûzetsúgó üzenetet Windows 7 alatt.
+* Az NVDA már nem mondja be a kimondottan hosszú start menü billentyûzetsúgó üzenetet Windows 7 alatt.
 * A virtuális szintetizátort egy új, beszédnézõ váltotta fel. Aktiválásához használja a beszédnézõ menüelemet az NVDA eszközök menüjében. A beszédnézõ használható, független attól, milyen beszédszintetizátor van használatban.
 * A braille kijelzõn lévõ üzenetek automatikusan eltûnnek, ha a felhasználó egy változást eredményezõ billentyût üt le (pl. fókuszváltozáskor). Elõzõleg az üzenetek láthatóak voltak a beállított ideig.
 * A fókusz vagy az áttekintõ kurzor követése a braille kurzorral (NVDA+control+t) lehetõség most már a braille beállítások párbeszédpanelen is megadható, valamint a beállítások elmentésekor a beállítás is elmentésre kerül.
-*Az Espeak beszédszintetizátor frissítve lett az 1.43-as verzióra.
+*Az Espeak beszédszintetizátor frissítve lett az 1.43.03-as verzióra.
 *A Liblouis braille fordító frissítve lett az 1.8.0-s verzióra.
 * A virtuális kijelzõk elemeinek felolvasása az elõzõ karakterre/szóra lépéskor jelentõsen hatékonyabban mûködik. Elõzõleg rengeteg szükségtelen információ hangzott el, melyek különböztek a sorok közti mozgáskor hallhatóaktól. (#490)
 *A kontrol gomb csak leállítja a beszédet, úgy mint az összes többi gomb, a beszéd megállításához és újraindításához a shift gomb használható.
@@ -60,6 +60,12 @@ A  kiadás elkészítésekor elsõdleges szempont volt a hibák kijavítása, ezáltal me
 *Amikor megváltozik a billentyûzet kiosztás (alt+shift, vagy ctrl+shift), az NVDA az új kiosztás teljes nevét a braille kijelzõn is megjeleníti, ez eddig csak a beszédben történt meg. Ezen kívül néhány nyelvnek nem jelent meg a neve a billentyûzet kiosztás megváltozásakor.
 *Ha a táblázatok jelzése ki van kapcsolva, a táblázat információi nem hangoznak el a fókusz változásakor.
 *Néhány szokásos fanézet vezérlõelem a 64 bites alkalmazásokban (pl. A tartalom fanézet a Microsoft HTML súgóban) most már támogatott. (#473)
+* Néhány a nem ASCII karaktereket tartalmazó üzenetek naplózásakor bekövetkezõ hiba javítva. Ezek a hibák esetenként téves információt naplózhatnak nem angol rendszereken. (#581)
+* Az NVDA névjegye a felhasználó alapértelmezett nyelvi beállításai szerint jelenik meg, egy idõben a nem angol rendszereken is angolul jelent meg.(#586)
+* A hangkarakter megváltoztatása esetén az NVDA már nem jelez hibát, ha az aktuális hangkarakter kevesebb beállítási lehetõséggel rendelkezik, mint az elõzõ.
+* A Skype 4.2-es verziójában a partnerek nevei már nem hangoznak el többször a partnerlistában.
+* Fontos javítások a virtuális kijelzõk és a felhasználói felület memória kezelésében. (#590, #591)
+*Hibajavítás Néhány sapi 4 szintetizátorhoz, melyek az NVDA instabilitását, esetenként lefagyását okozták. (#597)
 
 		=2009.1=
 
