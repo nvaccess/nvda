@@ -13,7 +13,6 @@ import winUser
 import oleacc
 import globalVars
 import speech
-from keyUtils import sendKey, key
 import config
 import textInfos
 import textInfos.offsets
@@ -351,7 +350,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			self._WinwordSelectionObject=windowObject.selection
 		return self._WinwordSelectionObject
 
-	def script_nextRow(self,keyPress):
+	def script_nextRow(self,gesture):
 		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
@@ -362,7 +361,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		else:
 			speech.speakMessage("edge of table")
 
-	def script_previousRow(self,keyPress):
+	def script_previousRow(self,gesture):
 		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
@@ -373,7 +372,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		else:
 			speech.speakMessage("edge of table")
 
-	def script_nextColumn(self,keyPress):
+	def script_nextColumn(self,gesture):
 		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
@@ -384,7 +383,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		else:
 			speech.speakMessage("edge of table")
 
-	def script_previousColumn(self,keyPress):
+	def script_previousColumn(self,gesture):
 		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))

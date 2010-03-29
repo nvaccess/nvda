@@ -124,9 +124,7 @@ class InputManager(baseObject.AutoPropertyObject):
 
 		script = gesture.script
 		if script:
-			# FIXME: Support other gesture types.
-			import keyUtils
-			scriptHandler.queueScript(script, keyUtils.key(gesture.keyName))
+			scriptHandler.queueScript(script, gesture)
 			return
 
 		raise NoInputGestureAction

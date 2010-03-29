@@ -9,7 +9,6 @@ import comtypes.client
 import _default
 import eventHandler
 import controlTypes
-from keyUtils import key, sendKey
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
 
@@ -110,12 +109,12 @@ class MessageList_pre2003(IAccessible):
 		if msg:
 			eventHandler.executeEvent("gainFocus",self.curMessageItem)
 
-	def script_moveByMessage(self,keyPress):
+	def script_moveByMessage(self,gesture):
 		if hasattr(self,'curMessageItem'):
 			oldEntryID=self.curMessageItem.msg.entryID
 		else:
 			oldEntryID=None
-		sendKey(keyPress)
+		gesture.send()
 		try:
 			msg=self.nativeOm.ActiveExplorer().selection[0]
 		except:
@@ -162,8 +161,8 @@ class MessageItem(Window):
 
 class AddressBookEntry(IAccessible):
 
-	def script_moveByEntry(self,keyPress):
-		sendKey(keyPress)
+	def script_moveByEntry(self,gesture):
+		gesture.send()
 		eventHandler.queueEvent("nameChange",self)
 
 [AddressBookEntry.bindKey(keyName,scriptName) for keyName,scriptName in [

@@ -1,4 +1,3 @@
-import keyUtils
 import speech
 import api
 import braille
@@ -44,10 +43,10 @@ class XPPasswordField(IAccessible):
 		except:
 			return super(XPPasswordField, self).name
 
-	def script_changeUser(self, key):
+	def script_changeUser(self, gesture):
 		# The up and down arrow keys change the selected user, but there's no reliable NVDA event for detecting this.
 		oldName = self.name
-		keyUtils.sendKey(key)
+		gesture.send()
 		if oldName == self.name or controlTypes.STATE_FOCUSED not in self.states:
 			return
 		self.event_gainFocus()

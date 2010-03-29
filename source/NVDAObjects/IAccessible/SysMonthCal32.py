@@ -4,7 +4,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from keyUtils import sendKey
 import controlTypes
 from . import IAccessible
 
@@ -19,8 +18,8 @@ class SysMonthCal32(IAccessible):
 	def _get_value(self):
 		return super(SysMonthCal32,self).name
 
-	def script_valueChange(self,keyPress):
-		sendKey(keyPress)
+	def script_valueChange(self,gesture):
+		gesture.send()
 		self.event_valueChange()
 
 [SysMonthCal32.bindKey(keyName,scriptName) for keyName,scriptName in [

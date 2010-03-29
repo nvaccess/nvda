@@ -11,7 +11,7 @@ from ctypes import *
 import time
 import wx
 import config
-from keyUtils import key, sendKey
+from keyboardHandler import KeyboardInputGesture
 
 ALVA_KEY_CHECK_INTERVAL = 50
 ALVA_NO_KEY = 0xFFFF
@@ -154,44 +154,44 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 		self._alva_KeyMask = 0
 
 		if _KeyMask == ALVA_SP1 or _KeyMask == ALVA_SPR1: # Shift-TAB
-			sendKey(key('shift+tab'))
+			KeyboardInputGesture.fromName('shift+tab').send()
 
 		elif _KeyMask == ALVA_SP2 or _KeyMask == ALVA_SPR2: # Alt
-			sendKey(key('F10'))
+			KeyboardInputGesture.fromName('F10').send()
 
 		elif _KeyMask == ALVA_SP3 or _KeyMask == ALVA_SPR3:    # ESC
-			sendKey(key('escape'))
+			KeyboardInputGesture.fromName('escape').send()
 
 		elif _KeyMask == ALVA_SP4 or _KeyMask == ALVA_SPR4: # Tab
-			sendKey(key('Tab'))
+			KeyboardInputGesture.fromName('Tab').send()
 
 		elif _KeyMask == ALVA_SP_UP or _KeyMask == ALVA_SPR_UP: # Arrow up
-			sendKey(key('extendedup'))
+			KeyboardInputGesture.fromName('extendedup').send()
 
 		elif _KeyMask == ALVA_SP_DOWN or _KeyMask == ALVA_SPR_DOWN: # Arrow down
-			sendKey(key('extendeddown'))
+			KeyboardInputGesture.fromName('extendeddown').send()
 
 		elif _KeyMask == ALVA_SP_LEFT or _KeyMask == ALVA_SPR_LEFT: #Arrow left
-			sendKey(key('extendedleft'))
+			KeyboardInputGesture.fromName('extendedleft').send()
 
 		elif _KeyMask == ALVA_SP_RIGHT or _KeyMask == ALVA_SPR_RIGHT: #Arrow right
-			sendKey(key('extendedright'))
+			KeyboardInputGesture.fromName('extendedright').send()
 
 		elif _KeyMask == ALVA_SP_ENTER or _KeyMask == ALVA_SPR_ENTER: # enter key
-			sendKey(key('return'))
+			KeyboardInputGesture.fromName('return').send()
 
 		elif _KeyMask == (ALVA_SP1 | ALVA_SP3) or _KeyMask == (ALVA_SPR1 | ALVA_SPR3): # control panel
 			import gui
 			gui.showGui()
 
 		elif _KeyMask == (ALVA_SP1 | ALVA_SP4) or _KeyMask == (ALVA_SPR1 | ALVA_SPR4): #Minimiza all apps
-			sendKey(key('win+d'))
+			KeyboardInputGesture.fromName('win+d').send()
 
 		elif _KeyMask == (ALVA_SP2 | ALVA_SP3) or _KeyMask == (ALVA_SPR2 | ALVA_SPR3): # Start menu
-			sendKey(key('extendedlwin'))
+			KeyboardInputGesture.fromName('extendedlwin').send()
 
 		elif _KeyMask == (ALVA_SP2 | ALVA_SP4) or _KeyMask == (ALVA_SPR2 | ALVA_SPR4): #Alt Tab
-			sendKey(key('alt+tab'))
+			KeyboardInputGesture.fromName('alt+tab').send()
 
 		elif _KeyMask == ALVA_T1 or _KeyMask == ALVA_R_T1: # Scroll backwards
 			braille.handler.scrollBack()

@@ -38,7 +38,7 @@ class AppModule(_default.AppModule):
 		totalTime = calendar.timegm(time.strptime(ltime[1].strip(),getFormat(ltime[1])))
 		return elapsedTime,totalTime
 
-	def script_reportRemainingTime(self,keyPress):
+	def script_reportRemainingTime(self,gesture):
 		times=self.getElapsedAndTotal()
 		if times is None:
 			ui.message(_("No track playing"))

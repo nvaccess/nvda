@@ -6,7 +6,6 @@
 
 import time
 import weakref
-from keyUtils import sendKey
 import inspect
 import appModuleHandler
 import api
@@ -63,30 +62,30 @@ def getScriptLocation(script):
 def getScriptDescription(script):
 	return script.__doc__
 
-def _queueScriptCallback(script,keyPress):
+def _queueScriptCallback(script,gesture):
 	global _numScriptsQueued
 	_numScriptsQueued-=1
-	executeScript(script,keyPress)
+	executeScript(script,gesture)
 
-def queueScript(script,keyPress):
+def queueScript(script,gesture):
 	global _numScriptsQueued
 	_numScriptsQueued+=1
-	queueHandler.queueFunction(queueHandler.eventQueue,_queueScriptCallback,script,keyPress)
+	queueHandler.queueFunction(queueHandler.eventQueue,_queueScriptCallback,script,gesture)
 
-def executeScript(script,keyPress):
-	"""Executes a given script (function) passing it the given keyPress.
+def executeScript(script,gesture):
+	"""Executes a given script (function) passing it the given gesture.
 	It also keeps track of the execution of duplicate scripts with in a certain amount of time, and counts how many times this happens.
 	Use L{getLastScriptRepeatCount} to find out this count value.
 	@param script: the function or method that should be executed. The function or method must take an argument of 'keyPress'.
 	@type script: callable.
-	@param keyPress: the key press that activated this script
-	@type keyPress: an NVDA keyPress
+	@param gesture: the input gesture that activated this script
+	@type gesture: L{inputCore.InputGesture}
 	"""
 	global _lastScriptTime, _lastScriptCount, _lastScriptRef, _isScriptRunning 
 	lastScriptRef=_lastScriptRef() if _lastScriptRef else None
 	#We don't allow the same script to be executed from with in itself, but we still should pass the key through
 	if _isScriptRunning and lastScriptRef==script.im_func:
-		return sendKey(keyPress)
+		return gesture.send()
 	_isScriptRunning=True
 	try:
 		scriptTime=time.time()
@@ -97,7 +96,7 @@ def executeScript(script,keyPress):
 			_lastScriptCount=0
 		_lastScriptRef=scriptRef
 		_lastScriptTime=scriptTime
-		script(keyPress)
+		script(gesture)
 	except:
 		log.exception("error executing script: %s with key %s"%(script,keyPress))
 	finally:

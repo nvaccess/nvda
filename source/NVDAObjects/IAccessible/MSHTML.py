@@ -14,7 +14,6 @@ import winUser
 import globalVars
 import oleacc
 import aria
-from keyUtils import key, sendKey
 import api
 import textInfos
 from logHandler import log

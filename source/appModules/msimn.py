@@ -10,7 +10,7 @@ import textInfos
 import api
 import _default
 import speech
-from keyUtils import key, sendKey
+from keyboardHandler import KeyboardInputGesture
 
 #Labels for the header fields of an email, by control ID
 envelopeNames={
@@ -50,5 +50,5 @@ class AppModule(_default.AppModule):
 		if obj.windowClassName=="ATH_Note" and obj.event_objectID==winUser.OBJID_CLIENT and obj.IAccessibleChildID==0:
 			api.processPendingEvents()
 			if obj==api.getFocusObject() and controlTypes.STATE_FOCUSED in obj.states:
-				return sendKey(key("SHIFT+TAB"))
+				return KeyboardInputGesture.fromName("shift+tab").send()
 

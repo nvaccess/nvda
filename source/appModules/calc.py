@@ -1,5 +1,4 @@
 import _default
-from keyUtils import key, sendKey
 import NVDAObjects.IAccessible
 import speech
 
@@ -36,8 +35,8 @@ class Display(NVDAObjects.IAccessible.IAccessible):
 		if ch in self.calcCommandChars:
 			speech.speakObjectProperties(self,value=True)
 
-	def script_executeAndRead(self,keyPress):
-		sendKey(keyPress)
+	def script_executeAndRead(self,gesture):
+		gesture.send()
 		speech.speakObjectProperties(self,value=True)
 
 for k in Display.calcCommandKeys:

@@ -4,7 +4,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from keyUtils import sendKey, key
 import winConsoleHandler
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection

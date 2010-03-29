@@ -8,7 +8,6 @@ from ctypes import *
 from ctypes.wintypes import *
 import winKernel
 import winUser
-from keyUtils import sendKey
 from scriptHandler import isScriptWaiting
 from NVDAObjects.IAccessible import IAccessible 
 import _default
@@ -66,8 +65,8 @@ class winampMainWindow(IAccessible):
 	def event_nameChange(self):
 		pass
 
-	def script_shuffleToggle(self,keyPress):
-		sendKey(keyPress)
+	def script_shuffleToggle(self,gesture):
+		gesture.send()
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			if getShuffle():
@@ -76,8 +75,8 @@ class winampMainWindow(IAccessible):
 				onOff=_("off")
 			speech.speakMessage(onOff)
 
-	def script_repeatToggle(self,keyPress):
-		sendKey(keyPress)
+	def script_repeatToggle(self,gesture):
+		gesture.send()
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			if getRepeat():
@@ -104,8 +103,8 @@ class winampPlaylistEditor(winampMainWindow):
 	def _get_role(self):
 		return controlTypes.ROLE_LISTITEM
 
-	def script_changeItem(self,keyPress):
-		sendKey(keyPress)
+	def script_changeItem(self,gesture):
+		gesture.send()
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			speech.speakObject(self,reason=speech.REASON_FOCUS)

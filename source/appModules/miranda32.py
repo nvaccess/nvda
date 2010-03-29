@@ -16,11 +16,11 @@ import _default
 import speech
 import braille
 import controlTypes
-from keyUtils import sendKey
 from scriptHandler import isScriptWaiting
 import api
 import mouseHandler
 import oleacc
+from keyboardHandler import KeyboardInputGesture
 
 #contact list window messages
 CLM_FIRST=0x1000    #this is the same as LVM_FIRST
@@ -96,8 +96,8 @@ class AppModule(_default.AppModule):
 		elif (obj.windowControlID in ANSILOGS) and (obj.windowClassName=="RichEdit20A"):
 			obj._isWindowUnicode=False
 
-	def script_readMessage(self,keyPress):
-		num=int(keyPress[-1][-1])
+	def script_readMessage(self,gesture):
+		num=int(gesture.keyName[-1])
 		if len(self.lastMessages)>num-1:
 			ui.message(self.lastMessages[num-1])
 		else:
@@ -139,8 +139,8 @@ class mirandaIMContactList(IAccessible):
 			newStates.add(controlTypes.STATE_COLLAPSED)
 		return newStates
 
-	def script_changeItem(self,keyPress):
-		sendKey(keyPress)
+	def script_changeItem(self,gesture):
+		gesture.send()
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			speech.speakObject(self,reason=speech.REASON_FOCUS)
@@ -157,9 +157,9 @@ class mirandaIMButton(IAccessible):
 		return controlTypes.ROLE_BUTTON
 
 	def doDefaultAction(self):
-		sendKey(((),"SPACE"))
+		KeyboardInputGesture.fromName("space").send()
 
-	def script_doDefaultAction(self,keyPress):
+	def script_doDefaultAction(self,gesture):
 		self.doDefaultAction()
 
 class mirandaIMHyperlink(mirandaIMButton):

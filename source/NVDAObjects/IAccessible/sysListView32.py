@@ -11,7 +11,6 @@ import oleacc
 import controlTypes
 import speech
 import api
-from keyUtils import sendKey
 import eventHandler
 import winKernel
 import winUser
@@ -187,8 +186,8 @@ class GroupingItem(Window):
 			states.add(controlTypes.STATE_EXPANDED)
 		return states
 
-	def script_collapseOrExpand(self,keyPress):
-		sendKey(keyPress)
+	def script_collapseOrExpand(self,gesture):
+		gesture.send()
 		self.event_stateChange()
 
 [GroupingItem.bindKey(keyName,scriptName) for keyName,scriptName in [

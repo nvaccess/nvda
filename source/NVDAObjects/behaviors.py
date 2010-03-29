@@ -17,7 +17,6 @@ import speech
 import config
 import eventHandler
 from scriptHandler import isScriptWaiting
-from keyUtils import key, sendKey
 from . import NVDAObject, NVDAObjectTextInfo
 import textInfos
 
@@ -138,16 +137,16 @@ class EditableText(NVDAObject):
 			elapsed += retryInterval
 		return False
 
-	def script_caret_moveByLine(self,keyPress):
+	def script_caret_moveByLine(self,gesture):
 		try:
 			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
-			sendKey(keyPress)
+			gesture.send()
 			return
 		bookmark=info.bookmark
-		sendKey(keyPress)
+		gesture.send()
 		if not self._hasCaretMoved(bookmark):
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
+			eventHandler.executeEvent("caretMovementFailed", self, gesture=gesture)
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			try:
@@ -159,16 +158,16 @@ class EditableText(NVDAObject):
 			info.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(info)
 
-	def script_caret_moveByCharacter(self,keyPress):
+	def script_caret_moveByCharacter(self,gesture):
 		try:
 			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
-			sendKey(keyPress)
+			gesture.send()
 			return
 		bookmark=info.bookmark
-		sendKey(keyPress)
+		gesture.send()
 		if not self._hasCaretMoved(bookmark):
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
+			eventHandler.executeEvent("caretMovementFailed", self, gesture=gesture)
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			try:
@@ -180,16 +179,16 @@ class EditableText(NVDAObject):
 			info.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER)
 
-	def script_caret_moveByWord(self,keyPress):
+	def script_caret_moveByWord(self,gesture):
 		try:
 			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
-			sendKey(keyPress)
+			gesture.send()
 			return
 		bookmark=info.bookmark
-		sendKey(keyPress)
+		gesture.send()
 		if not self._hasCaretMoved(bookmark):
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
+			eventHandler.executeEvent("caretMovementFailed", self, gesture=gesture)
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			try:
@@ -201,16 +200,16 @@ class EditableText(NVDAObject):
 			info.expand(textInfos.UNIT_WORD)
 			speech.speakTextInfo(info,unit=textInfos.UNIT_WORD)
 
-	def script_caret_moveByParagraph(self,keyPress):
+	def script_caret_moveByParagraph(self,gesture):
 		try:
 			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
-			sendKey(keyPress)
+			gesture.send()
 			return
 		bookmark=info.bookmark
-		sendKey(keyPress)
+		gesture.send()
 		if not self._hasCaretMoved(bookmark):
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
+			eventHandler.executeEvent("caretMovementFailed", self, gesture=gesture)
 		if not isScriptWaiting():
 			focus=api.getFocusObject()
 			try:
@@ -222,11 +221,11 @@ class EditableText(NVDAObject):
 			info.expand(textInfos.UNIT_PARAGRAPH)
 			speech.speakTextInfo(info)
 
-	def _backspaceScriptHelper(self,unit,keyPress):
+	def _backspaceScriptHelper(self,unit,gesture):
 		try:
 			oldInfo=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
-			sendKey(keyPress)
+			gesture.send()
 			return
 		oldBookmark=oldInfo.bookmark
 		testInfo=oldInfo.copy()
@@ -236,7 +235,7 @@ class EditableText(NVDAObject):
 			delChunk=testInfo.text
 		else:
 			delChunk=""
-		sendKey(keyPress)
+		gesture.send()
 		if self._hasCaretMoved(oldBookmark):
 			if len(delChunk)>1:
 				speech.speakMessage(delChunk)
@@ -250,20 +249,20 @@ class EditableText(NVDAObject):
 			if config.conf["reviewCursor"]["followCaret"]:
 				api.setReviewPosition(info)
 
-	def script_caret_backspaceCharacter(self,keyPress):
-		self._backspaceScriptHelper(textInfos.UNIT_CHARACTER,keyPress)
+	def script_caret_backspaceCharacter(self,gesture):
+		self._backspaceScriptHelper(textInfos.UNIT_CHARACTER,gesture)
 
-	def script_caret_backspaceWord(self,keyPress):
-		self._backspaceScriptHelper(textInfos.UNIT_WORD,keyPress)
+	def script_caret_backspaceWord(self,gesture):
+		self._backspaceScriptHelper(textInfos.UNIT_WORD,gesture)
 
-	def script_caret_delete(self,keyPress):
+	def script_caret_delete(self,gesture):
 		try:
 			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
-			sendKey(keyPress)
+			gesture.send()
 			return
 		bookmark=info.bookmark
-		sendKey(keyPress)
+		gesture.send()
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		self._hasCaretMoved(bookmark)
 		if not isScriptWaiting():
@@ -304,13 +303,13 @@ class EditableTextWithoutAutoSelectDetection(EditableText):
 	This should be used when an object cannot automatically detect when the selection changes.
 	"""
 
-	def script_caret_changeSelection(self,keyPress):
+	def script_caret_changeSelection(self,gesture):
 		try:
 			oldInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except:
-			sendKey(keyPress)
+			gesture.send()
 			return
-		sendKey(keyPress)
+		gesture.send()
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			focus=api.getFocusObject()

@@ -8,7 +8,7 @@ import _default
 import controlTypes
 import api
 import winUser
-from keyUtils import key, sendKey
+from keyboardHandler import KeyboardInputGesture
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 
 class AboutBlankDocument(MSHTML):
@@ -37,4 +37,4 @@ class AppModule(_default.AppModule):
 		if obj.windowClassName=="ATH_Note" and obj.event_objectID==winUser.OBJID_CLIENT and obj.IAccessibleChildID==0:
 			api.processPendingEvents()
 			if obj==api.getFocusObject() and controlTypes.STATE_FOCUSED in obj.states:
-				return sendKey(key("SHIFT+TAB"))
+				return KeyboardInputGesture.fromName("shift+tab").send()

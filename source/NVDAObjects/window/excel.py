@@ -18,7 +18,6 @@ import gui.scriptUI
 import winUser
 import controlTypes
 import speech
-from keyUtils import sendKey, key
 from . import Window
 from .. import NVDAObjectTextInfo
 import appModuleHandler
@@ -106,8 +105,8 @@ class ExcelWorksheet(ExcelWindow):
 		return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=cell)
 
 
-	def script_extendSelection(self,keyPress):
-		sendKey(keyPress)
+	def script_extendSelection(self,gesture):
+		gesture.send()
 		selection=self.excelWindowObject.Selection
 		if selection.Count>1:
 			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
@@ -117,9 +116,9 @@ class ExcelWorksheet(ExcelWindow):
 	script_extendSelection.__doc__=_("Extends the selection and speaks the last selected cell")
 	script_extendSelection.canPropagate=True
 
-	def script_moveByCell(self,keyPress):
+	def script_moveByCell(self,gesture):
 		"""Moves to a cell and speaks its coordinates and content"""
-		sendKey(keyPress)
+		gesture.send()
 		activeCell=self.excelWindowObject.ActiveCell
 		obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=activeCell)
 		eventHandler.executeEvent("gainFocus",obj)
@@ -241,7 +240,7 @@ class ExcelCell(ExcelWindow):
 		if previous:
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
 
-	def script_editCell(self,keyPress):
+	def script_editCell(self,gesture):
 		cellEditDialog=CellEditDialog(self.excelWindowObject.ActiveCell)
 		cellEditDialog.run()
 
