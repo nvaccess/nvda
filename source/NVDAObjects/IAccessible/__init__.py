@@ -1279,4 +1279,5 @@ _staticMap={
 	("Shell_TrayWnd",oleacc.ROLE_SYSTEM_CLIENT):"Taskbar",
 	("Internet Explorer_TridentCmboBx",oleacc.ROLE_SYSTEM_COMBOBOX):"MSHTML.V6ComboBox",
 	("Shell DocObject View",oleacc.ROLE_SYSTEM_CLIENT):"ShellDocObjectView",
+	("Chrome_RenderWidgetHostHWND",oleacc.ROLE_SYSTEM_DOCUMENT):"msaaTestVBuf.Document",
 }

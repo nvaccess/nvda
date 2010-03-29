@@ -80,6 +80,10 @@ mshtmlVBufBackend=env.SConscript('vbufBackends/mshtml/sconscript')
 env.Install(libInstallDir,mshtmlVBufBackend)
 buildList.append(mshtmlVBufBackend)
 
+msaaTestVBufBackend=env.SConscript('vbufBackends/msaaTest/sconscript')
+env.Install(libInstallDir,msaaTestVBufBackend)
+buildList.append(msaaTestVBufBackend)
+
 buildTarget=env.Alias('build',buildList)
 installTarget=env.Alias('install',[clientInstallDir,libInstallDir])
 env.Requires(installTarget,buildTarget)

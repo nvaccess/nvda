@@ -1,0 +1,20 @@
+Import([
+	'env',
+	'vbufBaseStaticLib',
+])
+
+msaaTestBackendLib=env.SharedLibrary(
+	target="VBufBackend_msaaTest",
+	source=[
+		"msaaTest.cpp",
+	],
+	LIBS=[
+		vbufBaseStaticLib,
+		"user32",
+		"kernel32",
+		"oleacc",
+		"oleaut32",
+	],
+)
+
+Return('msaaTestBackendLib')
