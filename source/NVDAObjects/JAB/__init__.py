@@ -3,6 +3,7 @@ import re
 import JABHandler
 import controlTypes
 from ..window import Window
+from ..behaviors import EditableTextWithoutAutoSelectDetection
 import textInfos.offsets
 from logHandler import log
 
@@ -135,74 +136,55 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getParagraphOffsets(self,offset):
 		return self._getLineOffsets(offset)
 
+	def _getFormatFieldAndOffsets(self, offset, formatConfig, calculateOffsets=True):
+		attribs, length = self.obj.jabContext.getTextAttributesInRange(offset, self._endOffset - 1)
+		field = textInfos.FormatField()
+		field["font-family"] = attribs.fontFamily
+		field["font-size"] = "%dpt" % attribs.fontSize
+		field["bold"] = bool(attribs.bold)
+		field["italic"] = bool(attribs.italic)
+		field["strikethrough"] = bool(attribs.strikethrough)
+		field["underline"] = bool(attribs.underline)
+		if attribs.superscript:
+			field["text-position"] = "super"
+		elif attribs.subscript:
+			field["text-position"] = "sub"
+		# TODO: Not sure how to interpret Java's alignment numbers.
+		return field, (offset, offset + length)
+
 class JAB(Window):
 
 	def findOverlayClasses(self,clsList):
+		if self._JABAccContextInfo.accessibleText and self.JABRole in ("text","password text","edit bar","view port","paragraph"):
+			clsList.append(EditableTextWithoutAutoSelectDetection)
 		clsList.append(JAB)
 		return clsList
 
 	@classmethod
-	def objectFromPoint(cls,x,y,windowHandle=None):
-		jabContext=JABHandler.JABContext(hwnd=windowHandle)
+	def kwargsFromSuper(cls,kwargs,relation=None):
+		jabContext=None
+		windowHandle=kwargs['windowHandle']
+		if relation=="focus":
+			vmID=ctypes.c_int()
+			accContext=ctypes.c_int()
+			JABHandler.bridgeDll.getAccessibleContextWithFocus(windowHandle,ctypes.byref(vmID),ctypes.byref(accContext))
+			jabContext=JABHandler.JABContext(hwnd=windowHandle,vmID=vmID.value,accContext=accContext.value)
+		elif isinstance(relation,tuple):
+			jabContext=JABHandler.JABContext(hwnd=windowHandle)
+			if jabContext:
+				jabContext=jabContext.getAccessibleContextAt(x,y)
 		if not jabContext:
-			return
-		newJabContext=jabContext.getAccessibleContextAt(x,y)
-		if not newJabContext:
-			return
-		return JAB(jabContext=newJabContext)
-
-	@classmethod
-	def objectWithFocus(cls,windowHandle=None):
-		vmID=ctypes.c_int()
-		accContext=ctypes.c_int()
-		JABHandler.bridgeDll.getAccessibleContextWithFocus(windowHandle,ctypes.byref(vmID),ctypes.byref(accContext))
-		jabContext=JABHandler.JABContext(hwnd=windowHandle,vmID=vmID.value,accContext=accContext.value)
-		focusObject=JAB(jabContext=jabContext)
-		activeChild=focusObject.activeChild
-		if activeChild and activeChild.role!=controlTypes.ROLE_UNKNOWN:
-			focusObject=activeChild
-		if focusObject.role==controlTypes.ROLE_UNKNOWN:
-			return
-		return focusObject
+			return False
+		kwargs['jabContext']=jabContext
+		return True
 
 	def __init__(self,relation=None,windowHandle=None,jabContext=None):
-		if windowHandle and not jabContext:
-			jabContext=JABHandler.JABContext(hwnd=windowHandle)
-		elif jabContext and not windowHandle:
+		if not windowHandle:
 			windowHandle=jabContext.hwnd
-		elif not windowHandle and not jabContext:
-			raise TypeError("Give either a valid window handle or jab context")
 		self.windowHandle=windowHandle
 		self.jabContext=jabContext
 		self._JABAccContextInfo=jabContext.getAccessibleContextInfo()
 		super(JAB,self).__init__(windowHandle=windowHandle)
-		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU,controlTypes.ROLE_LISTITEM]:
-			if self.JABRole in ["text","password text","edit bar","view port","paragraph"]:
-				[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
-					("ExtendedUp","moveByLine"),
-					("ExtendedDown","moveByLine"),
-					("ExtendedLeft","moveByCharacter"),
-					("ExtendedRight","moveByCharacter"),
-					("Control+ExtendedLeft","moveByWord"),
-					("Control+ExtendedRight","moveByWord"),
-					("Shift+ExtendedRight","changeSelection"),
-					("Shift+ExtendedLeft","changeSelection"),
-					("Shift+ExtendedHome","changeSelection"),
-					("Shift+ExtendedEnd","changeSelection"),
-					("Shift+ExtendedUp","changeSelection"),
-					("Shift+ExtendedDown","changeSelection"),
-					("Control+Shift+ExtendedLeft","changeSelection"),
-					("Control+Shift+ExtendedRight","changeSelection"),
-					("ExtendedHome","moveByCharacter"),
-					("ExtendedEnd","moveByCharacter"),
-					("control+extendedHome","moveByLine"),
-					("control+extendedEnd","moveByLine"),
-					("control+shift+extendedHome","changeSelection"),
-					("control+shift+extendedEnd","changeSelection"),
-					("ExtendedDelete","delete"),
-					("Back","backspaceCharacter"),
-					("Control+Back","backspaceWord"),
-			  	]]
 
 	def _get_TextInfo(self):
 		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU,controlTypes.ROLE_LISTITEM]:

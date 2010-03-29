@@ -95,257 +95,10 @@ Many key commands are mentioned through out the rest of this user guide, but an 
 
 To turn on keyboard help, press NVDA+1. To turn it off again, press NVDA+1 again. While in keyboard help, pressing any key will announce what it does (if in deed it does do something). The keys will not actually perform their function while in keyboard help mode, so you can press what ever keys you like.
 
-+ The NVDA menu +
+++ The NVDA menu ++
 The NVDA menu allows you to control NVDA's settings, access help, save/revert your configuration, Modify speech dictionaries, read the log file, and exit NVDA.
 
-++ Accessing the NVDA menu ++
 To get to the NVDA menu from anywhere in Windows while NVDA is running, press NVDA+n. You can also get to the NVDA menu via the windows system tray. Either right-click on the nvda icon located in the system tray, or access the system tray by pressing the windows logo key+B, DownArrow to the NVDA icon and press the applications key located next to the right control key on most keyboards. When the menu comes up, You can use the arrow keys to navigate the menu, and the enter key to activate an item. The Preferences menu allows you to configure NVDA how you like, the tools menu contains useful tools such as the NVDA log viewer and the NVDA Python console for developers, the help menu allows you to access the user guide, a quick key reference, and much more. The NVDA menu also contains items that allow you to save or revert your current configuration. There is also an option that allows you to exit NVDA, although this can be accomplished more efficiently by pressing NVDA+Q.
-
-The options under the preferences menu can also be accessed via keyboard shortcut commands, as well as the NVDA Python Console, save and revert configuration options discussed in this section. For more information about this, please visit the quick reference guide for a list of shortcut commands.
-
-++ Configuring NVDA ++
-
-+++ Preferences +++
-
-++++ General Settings ++++
-The General settings dialog box is found in the Preferences menu. It is also accessed by pressing NVDA+Control+G. To save the options after modifying settings, press the OK button. To cancel, press the cancel button or the escape key. It contains the following options:
-
-===== Language =====
-A combo box which allows you to select the language that NVDA's user interface and messages should be shown in. There are many languages, however the default option is "User Default, Windows". This option tells NVDA to use the language that Windows is currently set to.
-
-Please note that NVDA must be restarted when changing the language. NVDA will ask you if you wish to restart if you do change the selection. Press OK, and NVDA will restart.
-
-===== Save Configuration on Exit =====
-This option is a checkbox that, when checked, tells NVDA to automatically save the current configuration when you exit NVDA.
-
-===== Warn before exiting NVDA =====
-This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks whether or not you would like to exit. When checked, a dialog will appear when you attempt to exit NVDA asking whether or not you want to exit.
-
-===== Logging level =====
-This is a combo box that permits you to choose how much NVDA wil log as it's running. Generally users should not need to touch this as not too much is logged. However if you are wanting to provide information in a bug report, then it may be a useful option.
-
-===== Automatically start nvda after I log on to windows =====
-If this option is enabled, NVDA will start automatically as soon as you log on to Windows.
-
-===== Use nvda on the windows log on screen (requires administrative privileges) =====
-If you log on to Windows by providing a user name and password, then enabling this option will make NVDA start automatically at the logon screen when Windows starts.
-
-++++ Synthesizer Selection ++++
-The Synthesizer dialog, which is found under "Synthesizer..." in the Preferences menu or by pressing NVDA+Control+S, allows you to select which Synthesizer NVDA should use to speak with.
-
-The dialog contains a simple combo box, which lists all the available synthesizers. Choose the synthesizer you want using the arrow keys, and then press ok. If there is an error loading the synthesizer, a message box will alert you, and NVDA will keep the old synthesizer loaded.
-
-The current list of synthesizers NVDA supports is: eSpeak, SAPI4, SAPI5, Audiologic, and Silence.
-
-The eSpeak synthesizer is built directly in to NVDA, and does not depend on any other special drivers or SAPI runtime to be installed. NVDA starts using eSpeak by default. This synthesizer should work on any system that NVDA works on, so it will definitely work when running NVDA off a USB thumb drive or CD, on anyone else's system.
-
-The Sapi4 option allows you to use the Sapi synthesizer. Voices that are included under Ssapi4 include eloquence voices, as well as other Ssapi4 voices that you may have installed on your system.
-
-The Sapi5 synthesizer allows you to use the microsoft voices that are iincluded on your machine. In XP, the default Ssapi5 voice is Microsoft Sam. In Vista, the default voice is Microsoft Anna. Depending on what voices you have installed, others may show up under Ssapi5.
-
-The Silence synthesizer driver is not that useful, unless you want to not have any speech at all while running NVDA.
-
-Please note that no matter how many different SAPI4 or SAPI5 voices (or engines) you have installed on your system, only the actual SAPI4 and SAPI5 synthesizers will show up in the Synthesizers dialog. To actually select one of the engines (voices), select either SAPI4 or SAPI5, and then in the Voice settings dialog, you can choose the voice you want.
-
-++++ Voice Settings ++++
-The Voice Settings dialog, found in the Preferences menu or accessed by pressing NVDA+Control+V, contains options that let you change the sound of the speech. You can also configure many of the options from anywhere by pressing NVDA+Control along with one of the arrow keys. The left and right arrow keys move through the various settings, the up and down arrows increase or decrease that setting respectively.
-
-The Voice Settings dialog box contains the following options:
-
-===== Voice =====
-The first option that you land on in this dialog is a combo box listing all the voices of the current synthesizer that you have installed. You can use the arrow keys to listen to all the various choices. Left and Up arrow take you up in the list, while right and down arrow moves you down in the list.
-
-===== Variant =====
-If you are using the Espeak synthesizer that is packaged with NVDA, this is a combo box that lets you select the Variant the synthesizer should speak with. ESpeak's Variants are rather like voices, as they provide slightly different attributes to the eSpeak voice. Some variants will sound like a male, some like a female, and some even like a frog.
-
-===== Rate =====
-This option allows you to change the rate of your voice. This is a slider that goes from 0 to 100, (0 being the slowest, 100 being the fastest).
-
-===== Pitch =====
-This option allows you to change the pitch of the current voice. It is a slider which goes from 0 to 100, (0 being the lowest pitch and 100 being the highest).
-
-===== Volume =====
-This option is a slider which goes from 0 to 100, (0 being the lowest volume and 100 being the highest).
-
-===== Inflection =====
-This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with. (The only synthesizer that provides this option at the present time is eSpeak).
-
-===== Speak All Punctuation =====
-This setting is a checkbox, that when checked, tells NVDA to speak all punctuation symbols as words (very useful for proof reading). When unchecked, NVDA leaves the punctuation unchanged, so the synthesizer will still read sentences with the right inflection, however the symbols won't be spoken aloud.
-
-===== Raise pitch for capitals =====
-This setting, if checked, will raise the pitch for capitals.
-
-===== Say "CAP" before capitals =====
-This setting is a checkbox, that when checked, tells NVDA to say the word "cap;" before any capital letter, when arrowing over it or speaking it when its being typed. Usually, NVDA raises the pitch slightly for any capital letter, but some synthesizers may not support this well, so perhaps this option may be of use.
-
-===== Beep for capitals =====
-If this checkbox is checked, NVDA will make a small beep each time it encounters a capitalized character by itself. Like the 'say cap for capitals' checkbox, this is useful for Synthesizers that can't change their pitch for capital letters.
-
-++++ Braille Settings ++++
-The braille settings dialog box can be invoked by going to the preferences menu and then to the braille settings option.
-
-===== Braille Display =====
-The first option you will come upon in the braille settings dialog is a combo box that says "braille display". You will be presented with three options. Move between these options with the arrow keys.
-
-No braille means that you are not using braille.
-
-Freedom Scientific is for Freedom Scientific Focus/Pacmate displays. Note that this option only appears if you have the braille driver from Freedom Scientific installed, see [Official Freedom Scientific braille drivers page http://www.freedomscientific.com/PACMATE-HQ/FS_Braille_Display_Driver.asp] for more info on how to obtain and install the drivers.
-
-Handy Tech is for the Handy Tech displays. Note that this option will only exist if you have installed the [Handy Tech Universal Driver ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1111a.exe]
-
-BRLTTY allows you to use a wide list of braille displays. Please install the [BRLTTY Windows installer http://brl.thefreecat.org/brltty/] in order to get support for these displays.
-
-===== Translation Table =====
-The next option you will come to in this dialog is the braille table combo box. In this combo box, you will find braille tables for different languages. You can move from braille table to braille table in the list by using the arrow keys.
-
-===== Expand to computer braille for the word at the cursor =====
-This option allows the word that is under the cursor to be displayed in non-contracted computer braille.
-
-===== Cursor Blink Rate =====
-This option is a numerical field that allows you to change the blink rate of the cursor in milliseconds.
-
-===== Message Timeout (sec) =====
-This option is a numerical field that controls how long system messages are displayed on the braille display.
-
-===== Braille Tethered to =====
-This option allows you to choose whether the braille display will follow the system focus, or whether it follows the navigator object / review cursor.
-
-This option can also be toggled by the key command NVDA+control+t.
-
-++++ Keyboard settings ++++
-This dialog box is found in the Preferences menu, under "Keyboard settings...". Alternatively, it can be accessed by pressing NVDA+Control+K. It contains the following options:
-
-===== Keyboard layout =====
-This combo box lets you choose what type of keyboard layout NVDA should use. Currently the two that come with NVDA are Desktop and Laptop.
-
-===== Use capslock as an NVDA modifier key =====
-If this checkbox is checked, capslock can be used as an NVDA modifier key.
-
-===== Use extended insert as an NVDA modifier key =====
-If this checkbox is checked, the extended insert key (usually found above the arrow keys, near home and end) can be used as an NVDA modifier key.
-
-===== Use numpad insert as an NVDA modifier key =====
-If this checkbox is checked, the insert key on the number pad can be used as an NVDA modifier key.
-
-===== Speak Typed Characters =====
-A checkbox that when checked means that NVDA will announce all characters you type on the keyboard. You can also configure this option from anywhere by pressing NVDA+2.
-
-===== Speak Typed Words =====
-A checkbox that when checked means that NVDA will announce all words you type on the keyboard. You can also configure this option from anywhere by pressing NVDA+3.
-
-===== Speak Command Keys =====
-A checkbox that when checked means that NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter. You can also configure this option from anywhere by pressing NVDA+4.
-
-++++ Mouse Settings ++++
-The Mouse Settings dialog is found in the Preferences Menu, under "Mouse settings...". Alternatively, it can be accessed by pressing NVDA+Control+M. It contains the following options:
-
-===== Report Mouse Shape Changes =====
-A checkbox, that when checked means that NVDA will announce the shape of the mouse pointer each time it changes. The mouse pointer in Windows changes shape to convey certain information such as when something is editable, or when something is loading etc.
-
-===== Report text Under Mouse =====
-A checkbox that when checked means that NVDA will announce the text currently under the mouse pointer, as you move it around the screen. This allows you to find things on the screen, by physically moving the mouse, rather than trying to find them through object navigation.
-
-===== Text unit resolution =====
-If NVDA is set to announce the text under the mouse as you move it, this option allows you to choose exactly how much text will be spoken. The options are character, word, line and paragraph.
-
-===== Report role when mouse enters object =====
-If this checkbox is checked, NVDA will announce the role (type) of object as the mouse moves in side it.
-
-===== Play audio coordinates when mouse moves =====
-Checking this checkbox makes NVDA play beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimentions of the screen.
-
-===== Brightness controls audio coordinates volume =====
-If the 'play audio coordinates when mouse moves' checkbox is checked, then checking this checkbox means that the volume of the audio coordinates beeps is controled by how bright the screen is under the mouse. This may cause some performence issues on Windows Vista, so it is unchecked by default.
-
-++++ Object Presentation Settings ++++
-Found in the Preferences menu under "Object Presentation..." or by pressing NVDA+Control+O. This dialog box contains the following options:
-
-===== Report Tool Tips =====
-A checkbox that when checked tells NVDA to announce tool tips as they appear. Many Windows and controls show a small message (or tool tip) when you move the mouse pointer over them, or sometimes when you move the focus to them.
-
-===== Report Help Balloons =====
-This checkbox when checked tells NVDA to announce help balloons as they appear. Help Balloons are like tool tips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
-
-===== Report Object Shortcut Keys =====
-When this checkbox is checked, NVDA will include the shortcut key that is associated with a certain object or control when it is announced. For example the File menu on a menu bar may have a shortcut key of alt+f.
-
-===== Report object position information =====
-This option lets you choose whether you wish to have an object's position (e.g. 1 of 4) reported when moving to the object with the focus or object navigation.
-
-===== Report Object descriptions =====
-Uncheck this checkbox if you feel you don't need to hear the description announced along with objects.
-
-===== Progress bar output =====
-A progress bar is a control which looks a bit like a ruler. As a task is slowly being completed, more of the bar gets highlighted. It also shows a percentage value, to numerically tell you how far along it is. Progress bars are shown for things like loading a web page, checking your email, or processing a sound file etc.
-
-This option presents you with a combo box which controls how nvda reports progress bar updates to you. It has the following options:
-- Off: Progress bars will not be reported as they change.
-- Speak: This option tells nvda to speak the progress bar in percentages. Each time the progress bar changes, nvda will speak the new value.
-- Beep: This tells nvda to beep each time the progress bar changes. The higher the beep, the closer the progress bar is to completion.
-- Beep and speak: This option tells nvda to both beep and speak when a progress bar updates.
--
-
-===== Report background progress bars =====
-This is an option that, when checked, tells nvda to keep reporting a progress bar, even if it is not physically in the foreground. If you minimize or switch away from a window that contains a progress bar, nvda will keep track of it, allowing you to do other things while nvda tracks the progress bar.
-
-++++ Virtual Buffer Settings ++++
-The Virtual Buffer settings dialog can be found in the Preferences menu, under "Virtual Buffers...". Alternatively, it can be accessed by pressing NVDA+Control+B.
-
-The dialog contains the following options:
-
-===== Maximum Number of Characters on One Line =====
-This field sets the maximum length of a line of a virtual buffer (in characters).
-
-===== Maximum Lines Per Page =====
-Although virtual buffers don't really have pages, this field sets the amount of lines you will move by when pressing page up or page down while in a virtual buffer.
-
-===== Use screen layout =====
-This option allows you to specify whether content in the virtual Buffer should place content such as links and other fields on their own line, or if it should keep them in the flow of text as it is visually shown. If the option is enabled then things will stay as they are visually shown, but if it is disabled then fields will be placed on their own line.
-
-===== Report layout tables =====
-When disabled this option makes NVDA only report tables that contain tabular data (where it makes sense to know that this is a table). But if enabled, NVDA will also report tables used purely for visual presentation.
-
-===== Configuring announcement of fields such as links and headings =====
-Previous versions of NVDA allowed you to use the Virtual Buffer settings dialog to configure whether NVDA should announce the type of field that you entered while reading through web content. Examples of field types are links, headings, tables, and lists. To configure these, please find new options in the [Document Formatting Settings dialog #DocumentFormattingSettings]. These options now not only affect virtual Buffers, but any documents that may cause these types of fields to be announced.
-
-===== Automatic focus mode for focus changes =====
-This option allows focus mode to be invoked if focus changes. For example, when on a web page, if you press tab and you land on a form, if this option is checked, focus mode will automatically be invoked.
-
-===== Automatic focus mode for carret movement =====
-This option, when checked, allows NVDA to enter and leave focus mode when using arrow keys. For example, if arrowing down a webpage and you land on an edit box, NVDA will automatically bring you into focus mode. If you arrow out of the edit box, NVDA will put you back in browse mode.
-
-===== Audio indication of Focus and Browse modes =====
-If this option is enabled, NVDA will play special sounds when it switches between browse mode and focus mode in a virtual Buffer, rather than speaking the change.
-
-++++ Document Formatting Settings ++++[DocumentFormattingSettings]
-This dialog box is found in the Preferences menu, under "Document Formatting...". Alternatively, this dialog box can be invoked by pressing NVDA+Control+D. All the checkboxes in this dialog are for configuring what type of formatting you wish to hear automatically as you move the cursor around microsoft word or wordpad documents. For example, if you check the report font name checkbox, each time you arrow onto text with a different font, the name of the font will be announced.
-
-You can configure announcement of font name, font size, font attributes, style, text alignment, text style, tables, page numbers, line numbers, spelling errors, links, headings, lists and blockquotes.
-
-++++ Speech dictionaries ++++
-The speech dictionaries menu (found in the Preferences menu) contains dialogs that allow you to manage the way NVDA pronounces particular words or phrases. There are currently three different types of speech dictionaries. They are:
-- Default: rules in this dictionary affect all speech in NVDA.
-- Voice: rules in this dictionary affect speech for the synthesizer voice currently being used.
-- Temporary: rules in this dictionary affect all speech in NVDA, but only for the current session. These rules are temporary and will be lost if NVDA is restarted.
--
-
-All dictionary dialogs contain a list of rules which will be used for processing the speech. The dialog also contains Add, Edit and remove buttons.
-
-To add a new rule to the dictionary, press the Add button, and fill in the fields in the dialog box that appears and then press Ok. You will then see your new rule in the list of rules. However to make sure your rule is actually saved, make sure to press Ok to exit the dictionary dialog all together once you have finished adding/editing rules.
-
-The rules for NVDA's speech dictionaries allow you to change one string of characters in to another. A simple example would be that you want to have NVDA say the word frog each time it is supposed to say the word bird. In the Add rule dialog, the easiest way to do this is to type the word bird in the Pattern field, and the word frog in the Replacement field. You may also want to type a description of the rule in the Comment field (something like: changes bird to frog).
-
-NVDA's speech dictionaries however are much more powerful than simple word replacement. The Add rule dialog also contains a checkbox to say whether or not you want the rule to be case sensitive (meaning that NVDA should care whether the characters are uppercase or lowercase. NVDA ignores case by default). Another chekbox allows you to state whether your pattern is a "Regular expression". A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples. Regular expressions are not covered in this user guide, but there are many tutorials on the web which can provide you with more information.
-
-+++ Saving and Reloading the configuration +++
-NVDA stores its settings in a file called nvda.ini in its directory. You will probably never have to touch this file, but for advanced users, this file does allow you to change some extra settings which don't yet have dialog boxes to do so.
-
-NVDA does not automatically save your settings, so if you exit NVDA, and then restart it, the settings will go back to the original values. Note, however, that this default option can be changed under the general options in the preferences menu. To save the settings, you can either choose the Save configuration item in the NVDA menu, or press NVDA+Control+c from anywhere.
-
-If NVDA is on a read-only file system, such as a CD, it will not be able to save your settings, and it will tell you so.
-
-If you ever make a mistake with your settings and need to revert back to the saved settings, you can either choose the "revert to saved configuration" item in the NVDA menu, or you can press NVDA+Control+r from anywhere.
 
 + Navigating with NVDA +
 
@@ -499,6 +252,250 @@ The elements list (available by pressing NVDA+f7 while in a virtual buffer) prov
 
 ++ Embedded Objects ++
 Pages can include rich content using technologies such as Adobe Flash and Sun Java. Where these are encountered in a virtual buffer, NVDA will announce "embedded object". You can press enter on these objects to interact with them. If it is accessible, you can then tab around it and interact with it like any other application. To return to the page, press NVDA+space.
+
++ Configuring NVDA +
+
+++ Preferences ++
+
++++ General Settings +++
+The General settings dialog box is found in the Preferences menu. It is also accessed by pressing NVDA+Control+G. To save the options after modifying settings, press the OK button. To cancel, press the cancel button or the escape key. It contains the following options:
+
+==== Language ====
+A combo box which allows you to select the language that NVDA's user interface and messages should be shown in. There are many languages, however the default option is "User Default, Windows". This option tells NVDA to use the language that Windows is currently set to.
+
+Please note that NVDA must be restarted when changing the language. NVDA will ask you if you wish to restart if you do change the selection. Press OK, and NVDA will restart.
+
+==== Save Configuration on Exit ====
+This option is a checkbox that, when checked, tells NVDA to automatically save the current configuration when you exit NVDA.
+
+==== Warn before exiting NVDA ====
+This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks whether or not you would like to exit. When checked, a dialog will appear when you attempt to exit NVDA asking whether or not you want to exit.
+
+==== Logging level ====
+This is a combo box that permits you to choose how much NVDA wil log as it's running. Generally users should not need to touch this as not too much is logged. However if you are wanting to provide information in a bug report, then it may be a useful option.
+
+==== Automatically start nvda after I log on to windows ====
+If this option is enabled, NVDA will start automatically as soon as you log on to Windows.
+
+==== Use nvda on the windows log on screen (requires administrative privileges) ====
+If you log on to Windows by providing a user name and password, then enabling this option will make NVDA start automatically at the logon screen when Windows starts.
+
++++ Synthesizer Selection +++
+The Synthesizer dialog, which is found under "Synthesizer..." in the Preferences menu or by pressing NVDA+Control+S, allows you to select which Synthesizer NVDA should use to speak with.
+
+The dialog contains a simple combo box, which lists all the available synthesizers. Choose the synthesizer you want using the arrow keys, and then press ok. If there is an error loading the synthesizer, a message box will alert you, and NVDA will keep the old synthesizer loaded.
+
+The current list of synthesizers NVDA supports is: eSpeak, SAPI4, SAPI5, Audiologic, and Silence.
+
+The eSpeak synthesizer is built directly in to NVDA, and does not depend on any other special drivers or SAPI runtime to be installed. NVDA starts using eSpeak by default. This synthesizer should work on any system that NVDA works on, so it will definitely work when running NVDA off a USB thumb drive or CD, on anyone else's system.
+
+The Sapi4 option allows you to use the Sapi synthesizer. Voices that are included under Ssapi4 include eloquence voices, as well as other Ssapi4 voices that you may have installed on your system.
+
+The Sapi5 synthesizer allows you to use the microsoft voices that are iincluded on your machine. In XP, the default Ssapi5 voice is Microsoft Sam. In Vista, the default voice is Microsoft Anna. Depending on what voices you have installed, others may show up under Ssapi5.
+
+The Silence synthesizer driver is not that useful, unless you want to not have any speech at all while running NVDA.
+
+Please note that no matter how many different SAPI4 or SAPI5 voices (or engines) you have installed on your system, only the actual SAPI4 and SAPI5 synthesizers will show up in the Synthesizers dialog. To actually select one of the engines (voices), select either SAPI4 or SAPI5, and then in the Voice settings dialog, you can choose the voice you want.
+
++++ Voice Settings +++
+The Voice Settings dialog, found in the Preferences menu or accessed by pressing NVDA+Control+V, contains options that let you change the sound of the speech. You can also configure many of the options from anywhere by pressing NVDA+Control along with one of the arrow keys. The left and right arrow keys move through the various settings, the up and down arrows increase or decrease that setting respectively.
+
+The Voice Settings dialog box contains the following options:
+
+==== Voice ====
+The first option that you land on in this dialog is a combo box listing all the voices of the current synthesizer that you have installed. You can use the arrow keys to listen to all the various choices. Left and Up arrow take you up in the list, while right and down arrow moves you down in the list.
+
+==== Variant ====
+If you are using the Espeak synthesizer that is packaged with NVDA, this is a combo box that lets you select the Variant the synthesizer should speak with. ESpeak's Variants are rather like voices, as they provide slightly different attributes to the eSpeak voice. Some variants will sound like a male, some like a female, and some even like a frog.
+
+==== Rate ====
+This option allows you to change the rate of your voice. This is a slider that goes from 0 to 100, (0 being the slowest, 100 being the fastest).
+
+==== Pitch ====
+This option allows you to change the pitch of the current voice. It is a slider which goes from 0 to 100, (0 being the lowest pitch and 100 being the highest).
+
+==== Volume ====
+This option is a slider which goes from 0 to 100, (0 being the lowest volume and 100 being the highest).
+
+==== Inflection ====
+This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with. (The only synthesizer that provides this option at the present time is eSpeak).
+
+==== Speak All Punctuation ====
+This setting is a checkbox, that when checked, tells NVDA to speak all punctuation symbols as words (very useful for proof reading). When unchecked, NVDA leaves the punctuation unchanged, so the synthesizer will still read sentences with the right inflection, however the symbols won't be spoken aloud.
+
+==== Raise pitch for capitals ====
+This setting, if checked, will raise the pitch for capitals.
+
+==== Say "CAP" before capitals ====
+This setting is a checkbox, that when checked, tells NVDA to say the word "cap;" before any capital letter, when arrowing over it or speaking it when its being typed. Usually, NVDA raises the pitch slightly for any capital letter, but some synthesizers may not support this well, so perhaps this option may be of use.
+
+==== Beep for capitals ====
+If this checkbox is checked, NVDA will make a small beep each time it encounters a capitalized character by itself. Like the 'say cap for capitals' checkbox, this is useful for Synthesizers that can't change their pitch for capital letters.
+
++++ Braille Settings +++
+The braille settings dialog box can be invoked by going to the preferences menu and then to the braille settings option.
+
+==== Braille Display ====
+The first option you will come upon in the braille settings dialog is a combo box that says "braille display". You will be presented with three options. Move between these options with the arrow keys.
+
+No braille means that you are not using braille.
+
+Freedom Scientific is for Freedom Scientific Focus/Pacmate displays. Note that this option only appears if you have the braille driver from Freedom Scientific installed, see [Official Freedom Scientific braille drivers page http://www.freedomscientific.com/PACMATE-HQ/FS_Braille_Display_Driver.asp] for more info on how to obtain and install the drivers.
+
+Handy Tech is for the Handy Tech displays. Note that this option will only exist if you have installed the [Handy Tech Universal Driver ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1111a.exe]
+
+BRLTTY allows you to use a wide list of braille displays. Please install the [BRLTTY Windows installer http://brl.thefreecat.org/brltty/] in order to get support for these displays.
+
+==== Translation Table ====
+The next option you will come to in this dialog is the braille table combo box. In this combo box, you will find braille tables for different languages. You can move from braille table to braille table in the list by using the arrow keys.
+
+==== Expand to computer braille for the word at the cursor ====
+This option allows the word that is under the cursor to be displayed in non-contracted computer braille.
+
+==== Cursor Blink Rate ====
+This option is a numerical field that allows you to change the blink rate of the cursor in milliseconds.
+
+==== Message Timeout (sec) ====
+This option is a numerical field that controls how long system messages are displayed on the braille display.
+
+==== Braille Tethered to ====
+This option allows you to choose whether the braille display will follow the system focus, or whether it follows the navigator object / review cursor.
+
+This option can also be toggled by the key command NVDA+control+t.
+
++++ Keyboard settings +++
+This dialog box is found in the Preferences menu, under "Keyboard settings...". Alternatively, it can be accessed by pressing NVDA+Control+K. It contains the following options:
+
+==== Keyboard layout ====
+This combo box lets you choose what type of keyboard layout NVDA should use. Currently the two that come with NVDA are Desktop and Laptop.
+
+==== Use capslock as an NVDA modifier key ====
+If this checkbox is checked, capslock can be used as an NVDA modifier key.
+
+==== Use extended insert as an NVDA modifier key ====
+If this checkbox is checked, the extended insert key (usually found above the arrow keys, near home and end) can be used as an NVDA modifier key.
+
+==== Use numpad insert as an NVDA modifier key ====
+If this checkbox is checked, the insert key on the number pad can be used as an NVDA modifier key.
+
+==== Speak Typed Characters ====
+A checkbox that when checked means that NVDA will announce all characters you type on the keyboard. You can also configure this option from anywhere by pressing NVDA+2.
+
+==== Speak Typed Words ====
+A checkbox that when checked means that NVDA will announce all words you type on the keyboard. You can also configure this option from anywhere by pressing NVDA+3.
+
+==== Speak Command Keys ====
+A checkbox that when checked means that NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter. You can also configure this option from anywhere by pressing NVDA+4.
+
++++ Mouse Settings +++
+The Mouse Settings dialog is found in the Preferences Menu, under "Mouse settings...". Alternatively, it can be accessed by pressing NVDA+Control+M. It contains the following options:
+
+==== Report Mouse Shape Changes ====
+A checkbox, that when checked means that NVDA will announce the shape of the mouse pointer each time it changes. The mouse pointer in Windows changes shape to convey certain information such as when something is editable, or when something is loading etc.
+
+==== Report text Under Mouse ====
+A checkbox that when checked means that NVDA will announce the text currently under the mouse pointer, as you move it around the screen. This allows you to find things on the screen, by physically moving the mouse, rather than trying to find them through object navigation.
+
+==== Text unit resolution ====
+If NVDA is set to announce the text under the mouse as you move it, this option allows you to choose exactly how much text will be spoken. The options are character, word, line and paragraph.
+
+==== Report role when mouse enters object ====
+If this checkbox is checked, NVDA will announce the role (type) of object as the mouse moves in side it.
+
+==== Play audio coordinates when mouse moves ====
+Checking this checkbox makes NVDA play beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimentions of the screen.
+
+==== Brightness controls audio coordinates volume ====
+If the 'play audio coordinates when mouse moves' checkbox is checked, then checking this checkbox means that the volume of the audio coordinates beeps is controled by how bright the screen is under the mouse. This may cause some performence issues on Windows Vista, so it is unchecked by default.
+
++++ Object Presentation Settings +++
+Found in the Preferences menu under "Object Presentation..." or by pressing NVDA+Control+O. This dialog box contains the following options:
+
+==== Report Tool Tips ====
+A checkbox that when checked tells NVDA to announce tool tips as they appear. Many Windows and controls show a small message (or tool tip) when you move the mouse pointer over them, or sometimes when you move the focus to them.
+
+==== Report Help Balloons ====
+This checkbox when checked tells NVDA to announce help balloons as they appear. Help Balloons are like tool tips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
+
+==== Report Object Shortcut Keys ====
+When this checkbox is checked, NVDA will include the shortcut key that is associated with a certain object or control when it is announced. For example the File menu on a menu bar may have a shortcut key of alt+f.
+
+==== Report object position information ====
+This option lets you choose whether you wish to have an object's position (e.g. 1 of 4) reported when moving to the object with the focus or object navigation.
+
+==== Report Object descriptions ====
+Uncheck this checkbox if you feel you don't need to hear the description announced along with objects.
+
+==== Progress bar output ====
+A progress bar is a control which looks a bit like a ruler. As a task is slowly being completed, more of the bar gets highlighted. It also shows a percentage value, to numerically tell you how far along it is. Progress bars are shown for things like loading a web page, checking your email, or processing a sound file etc.
+
+This option presents you with a combo box which controls how nvda reports progress bar updates to you. It has the following options:
+- Off: Progress bars will not be reported as they change.
+- Speak: This option tells nvda to speak the progress bar in percentages. Each time the progress bar changes, nvda will speak the new value.
+- Beep: This tells nvda to beep each time the progress bar changes. The higher the beep, the closer the progress bar is to completion.
+- Beep and speak: This option tells nvda to both beep and speak when a progress bar updates.
+-
+
+==== Report background progress bars ====
+This is an option that, when checked, tells nvda to keep reporting a progress bar, even if it is not physically in the foreground. If you minimize or switch away from a window that contains a progress bar, nvda will keep track of it, allowing you to do other things while nvda tracks the progress bar.
+
++++ Virtual Buffer Settings +++
+The Virtual Buffer settings dialog can be found in the Preferences menu, under "Virtual Buffers...". Alternatively, it can be accessed by pressing NVDA+Control+B.
+
+The dialog contains the following options:
+
+==== Maximum Number of Characters on One Line ====
+This field sets the maximum length of a line of a virtual buffer (in characters).
+
+==== Maximum Lines Per Page ====
+Although virtual buffers don't really have pages, this field sets the amount of lines you will move by when pressing page up or page down while in a virtual buffer.
+
+==== Use screen layout ====
+This option allows you to specify whether content in the virtual Buffer should place content such as links and other fields on their own line, or if it should keep them in the flow of text as it is visually shown. If the option is enabled then things will stay as they are visually shown, but if it is disabled then fields will be placed on their own line.
+
+==== Report layout tables ====
+When disabled this option makes NVDA only report tables that contain tabular data (where it makes sense to know that this is a table). But if enabled, NVDA will also report tables used purely for visual presentation.
+
+==== Configuring announcement of fields such as links and headings ====
+Previous versions of NVDA allowed you to use the Virtual Buffer settings dialog to configure whether NVDA should announce the type of field that you entered while reading through web content. Examples of field types are links, headings, tables, and lists. To configure these, please find new options in the [Document Formatting Settings dialog #DocumentFormattingSettings]. These options now not only affect virtual Buffers, but any documents that may cause these types of fields to be announced.
+
+==== Automatic focus mode for focus changes ====
+This option allows focus mode to be invoked if focus changes. For example, when on a web page, if you press tab and you land on a form, if this option is checked, focus mode will automatically be invoked.
+
+==== Automatic focus mode for carret movement ====
+This option, when checked, allows NVDA to enter and leave focus mode when using arrow keys. For example, if arrowing down a webpage and you land on an edit box, NVDA will automatically bring you into focus mode. If you arrow out of the edit box, NVDA will put you back in browse mode.
+
+==== Audio indication of Focus and Browse modes ====
+If this option is enabled, NVDA will play special sounds when it switches between browse mode and focus mode in a virtual Buffer, rather than speaking the change.
+
++++ Document Formatting Settings +++[DocumentFormattingSettings]
+This dialog box is found in the Preferences menu, under "Document Formatting...". Alternatively, this dialog box can be invoked by pressing NVDA+Control+D. All the checkboxes in this dialog are for configuring what type of formatting you wish to hear automatically as you move the cursor around microsoft word or wordpad documents. For example, if you check the report font name checkbox, each time you arrow onto text with a different font, the name of the font will be announced.
+
+You can configure announcement of font name, font size, font attributes, style, text alignment, text style, tables, page numbers, line numbers, spelling errors, links, headings, lists and blockquotes.
+
++++ Speech dictionaries +++
+The speech dictionaries menu (found in the Preferences menu) contains dialogs that allow you to manage the way NVDA pronounces particular words or phrases. There are currently three different types of speech dictionaries. They are:
+- Default: rules in this dictionary affect all speech in NVDA.
+- Voice: rules in this dictionary affect speech for the synthesizer voice currently being used.
+- Temporary: rules in this dictionary affect all speech in NVDA, but only for the current session. These rules are temporary and will be lost if NVDA is restarted.
+-
+
+All dictionary dialogs contain a list of rules which will be used for processing the speech. The dialog also contains Add, Edit and remove buttons.
+
+To add a new rule to the dictionary, press the Add button, and fill in the fields in the dialog box that appears and then press Ok. You will then see your new rule in the list of rules. However to make sure your rule is actually saved, make sure to press Ok to exit the dictionary dialog all together once you have finished adding/editing rules.
+
+The rules for NVDA's speech dictionaries allow you to change one string of characters in to another. A simple example would be that you want to have NVDA say the word frog each time it is supposed to say the word bird. In the Add rule dialog, the easiest way to do this is to type the word bird in the Pattern field, and the word frog in the Replacement field. You may also want to type a description of the rule in the Comment field (something like: changes bird to frog).
+
+NVDA's speech dictionaries however are much more powerful than simple word replacement. The Add rule dialog also contains a checkbox to say whether or not you want the rule to be case sensitive (meaning that NVDA should care whether the characters are uppercase or lowercase. NVDA ignores case by default). Another chekbox allows you to state whether your pattern is a "Regular expression". A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples. Regular expressions are not covered in this user guide, but there are many tutorials on the web which can provide you with more information.
+
++++ Saving and Reloading the configuration +++
+NVDA stores its settings in a file called nvda.ini in its directory. You will probably never have to touch this file, but for advanced users, this file does allow you to change some extra settings which don't yet have dialog boxes to do so.
+
+NVDA does not automatically save your settings, so if you exit NVDA, and then restart it, the settings will go back to the original values. Note, however, that this default option can be changed under the general options in the preferences menu. To save the settings, you can either choose the Save configuration item in the NVDA menu, or press NVDA+Control+c from anywhere.
+
+If NVDA is on a read-only file system, such as a CD, it will not be able to save your settings, and it will tell you so.
+
+If you ever make a mistake with your settings and need to revert back to the saved settings, you can either choose the "revert to saved configuration" item in the NVDA menu, or you can press NVDA+Control+r from anywhere.
 
 + Troubleshooting NVDA +
 As NVDA is constantly being updated, there is no guarantee that all commands provided here in this user guide will still apply. If you have any problems with any of the commands presented in this user guide, please visit: NVDA_URL for more assistance.

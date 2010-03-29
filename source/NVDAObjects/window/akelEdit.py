@@ -75,7 +75,9 @@ class AkelEdit(edit.RichEdit20):
 
 	TextInfo=AkelEditTextInfo
 
-[AkelEdit.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("Control+ExtendedUp","moveByLine"),
-	("Control+ExtendedDown","moveByLine"),
-]]
+	def initOverlayClass(self):
+		for keyName,scriptName in (
+			("Control+ExtendedUp","moveByLine"),
+			("Control+ExtendedDown","moveByLine"),
+		):
+			self.bindKey_runtime(keyName,scriptName)

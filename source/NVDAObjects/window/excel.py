@@ -7,6 +7,7 @@
 import time
 import re
 import ctypes
+from comtypes import COMError
 import comtypes.automation
 import wx
 import oleacc
@@ -58,54 +59,74 @@ class CellEditDialog(gui.scriptUI.ModalDialog):
 		self._cellText.SetFocus()
 		return d
 
-class ExcelGrid(Window):
+class ExcelWindow(Window):
+	"""A base that all Excel NVDAObjects inherit from, which contains some useful static methods."""
 
-	def __init__(self,*args,**vars):
-		super(ExcelGrid,self).__init__(*args,**vars)
+	@staticmethod
+	def excelWindowObjectFromWindow(windowHandle):
+		try:
+			pDispatch=oleacc.AccessibleObjectFromWindow(windowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
+		except (COMError,WindowsError):
+			return None
+		return comtypes.client.dynamic.Dispatch(pDispatch)
 
-	def _get_excelObject(self):
-		if not getattr(self,'_excelObject',None):
-			try:
-				pDispatch=oleacc.AccessibleObjectFromWindow(self.windowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
-			except (COMError,WindowsError):
-				log.debugWarning("Could not get Excel object model",exc_info=True)
-				return None
-			self._excelObject=comtypes.client.dynamic.Dispatch(pDispatch)
-		return self._excelObject
-
-	def _get_role(self):
-		return controlTypes.ROLE_TABLE
-
-	def getSelectedRange(self):
-		return self.excelObject.Selection
-	selectedRange=property(fget=getSelectedRange)
-
-	def getActiveCell(self):
-		time.sleep(0.01)
-		return self.excelObject.ActiveCell
-	activeCell=property(fget=getActiveCell)
-
-	def getCellAddress(self,cell):
+	@staticmethod
+	def getCellAddress(cell):
 		return re_dollaredAddress.sub(r"\1\2",cell.Address())
 
-	def getCellText(self,cell):
-		return cell.Text
+class Excel7Window(ExcelWindow):
+	"""An overlay class for Window for the EXCEL7 window class, which simply bounces focus to the active excel cell."""
 
-	def cellHasFormula(self,cell):
-		return cell.HasFormula
+	def _get_excelWindowObject(self):
+		return self.excelWindowObjectFromWindow(self.windowHandle)
 
 	def event_gainFocus(self):
-		eventHandler.executeEvent("gainFocus",ExcelCell(self,self.getSelectedRange()))
+		activeCell=self.excelWindowObject.ActiveCell
+		obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=activeCell)
+		eventHandler.executeEvent("gainFocus",obj)
+
+class ExcelWorksheet(ExcelWindow):
+
+	role=controlTypes.ROLE_TABLE
+
+	def findOverlayClasses(self,clsList):
+		clsList.append(ExcelWorksheet)
+		return clsList
+
+	def __init__(self,windowHandle=None,excelWindowObject=None,excelWorksheetObject=None):
+		self.excelWindowObject=excelWindowObject
+		self.excelWorksheetObject=excelWorksheetObject
+		super(ExcelWorksheet,self).__init__(windowHandle=windowHandle)
+
+	def _get_name(self):
+		return self.excelWorksheetObject.name
+
+	def _get_firstChild(self):
+		cell=self.excelWorksheetObject.cells(1,1)
+		return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=cell)
+
+
+	def script_extendSelection(self,keyPress):
+		sendKey(keyPress)
+		selection=self.excelWindowObject.Selection
+		if selection.Count>1:
+			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
+		else:
+			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
+		eventHandler.executeEvent("gainFocus",obj)
+	script_extendSelection.__doc__=_("Extends the selection and speaks the last selected cell")
+	script_extendSelection.canPropagate=True
 
 	def script_moveByCell(self,keyPress):
 		"""Moves to a cell and speaks its coordinates and content"""
 		sendKey(keyPress)
-		obj=ExcelCell(self,self.getSelectedRange())
-		eventHandler.executeEvent('gainFocus',obj)
+		activeCell=self.excelWindowObject.ActiveCell
+		obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=activeCell)
+		eventHandler.executeEvent("gainFocus",obj)
 	script_moveByCell.__doc__=_("Moves to a cell and speaks its coordinates and content")
 	script_moveByCell.canPropagate=True
 
-[ExcelGrid.bindKey(keyName,scriptName) for keyName,scriptName in [
+[ExcelWorksheet.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("Tab","moveByCell"),
 	("Shift+Tab","moveByCell"),
 	("ExtendedUp","moveByCell"),
@@ -120,25 +141,25 @@ class ExcelGrid(Window):
 	("ExtendedEnd","moveByCell"),
 	("Control+ExtendedHome","moveByCell"),
 	("Control+ExtendedEnd","moveByCell"),
-	("Shift+ExtendedUp","moveByCell"),
-	("Shift+ExtendedDown","moveByCell"),
-	("Shift+ExtendedLeft","moveByCell"),
-	("Shift+ExtendedRight","moveByCell"),
-	("Shift+Control+ExtendedUp","moveByCell"),
-	("Shift+Control+ExtendedDown","moveByCell"),
-	("Shift+Control+ExtendedLeft","moveByCell"),
-	("Shift+Control+ExtendedRight","moveByCell"),
-	("Shift+ExtendedHome","moveByCell"),
-	("Shift+ExtendedEnd","moveByCell"),
-	("Shift+Control+ExtendedHome","moveByCell"),
-	("Shift+Control+ExtendedEnd","moveByCell"),
+	("Shift+ExtendedUp","extendSelection"),
+	("Shift+ExtendedDown","extendSelection"),
+	("Shift+ExtendedLeft","extendSelection"),
+	("Shift+ExtendedRight","extendSelection"),
+	("Shift+Control+ExtendedUp","extendSelection"),
+	("Shift+Control+ExtendedDown","extendSelection"),
+	("Shift+Control+ExtendedLeft","extendSelection"),
+	("Shift+Control+ExtendedRight","extendSelection"),
+	("Shift+ExtendedHome","extendSelection"),
+	("Shift+ExtendedEnd","extendSelection"),
+	("Shift+Control+ExtendedHome","extendSelection"),
+	("Shift+Control+ExtendedEnd","extendSelection"),
 ]]
 
 class ExcelCellTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		formatField=textInfos.FormatField()
-		fontObj=self.obj.firstCell.font
+		fontObj=self.obj.excelCellObject.font
 		if formatConfig['reportFontName']:
 			formatField['font-name']=fontObj.name
 		if formatConfig['reportFontSize']:
@@ -150,65 +171,104 @@ class ExcelCellTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return formatField,(self._startOffset,self._endOffset)
 
 	def _getTextRange(self,start,end):
-		text=self.obj.parent.getCellText(self.obj.firstCell)
+		text=self.obj.excelCellObject.Text
 		return text[start:end]
 
-class ExcelCell(Window):
+class ExcelCell(ExcelWindow):
+
+	@classmethod
+	def kwargsFromSuper(cls,kwargs,relation=None):
+		windowHandle=kwargs['windowHandle']
+		excelWindowObject=cls.excelWindowObjectFromWindow(windowHandle)
+		if not excelWindowObject:
+			return False
+		if isinstance(relation,tuple):
+			excelCellObject=excelWindowObject.rangeFromPoint(relation[0],relation[1])
+		else:
+			excelCellObject=excelWindowObject.ActiveCell
+		if not excelCellObject:
+			return False
+		kwargs['excelWindowObject']=excelWindowObject
+		kwargs['excelCellObject']=excelCellObject
+		return True
+
+	def findOverlayClasses(self,clsList):
+		clsList.append(ExcelCell)
+		return clsList
+
+	def __init__(self,windowHandle=None,excelWindowObject=None,excelCellObject=None):
+		self.excelWindowObject=excelWindowObject
+		self.excelCellObject=excelCellObject
+		super(ExcelCell,self).__init__(windowHandle=windowHandle)
+
+	role=controlTypes.ROLE_TABLECELL
 
 	TextInfo=ExcelCellTextInfo
-
-	def findOverlayClasses(self, clsList):
-		# This class can be directly instantiated.
-		return (ExcelCell,)
-
-	def __init__(self,parentNVDAObject,cellRange):
-		self.parent=parentNVDAObject
-		self.firstCell=cellRange.Item(1)
-		count=cellRange.count
-		if count>1:
-			self.lastCell=cellRange.Item(count)
-		else:
-			self.lastCell=None
-		super(ExcelCell,self).__init__(windowHandle=parentNVDAObject.windowHandle)
 
 	def _isEqual(self,other):
 		if not super(ExcelCell,self)._isEqual(other):
 			return False
-		thisFirstAddr=self.parent.getCellAddress(self.firstCell)
-		otherFirstAddr=other.parent.getCellAddress(other.firstCell)
-		if thisFirstAddr!=otherFirstAddr:
-			return False
-		thisLastAddr=self.parent.getCellAddress(self.lastCell) if self.lastCell else ""
-		otherLastAddr=other.parent.getCellAddress(other.lastCell) if other.lastCell else ""
-		if thisLastAddr==otherLastAddr:
-			return False
-		return True
+		thisAddr=self.getCellAddress(self.excelCellObject)
+		otherAddr=self.getCellAddress(other.excelCellObject)
+		return thisAddr==otherAddr
 
 	def _get_name(self):
-		firstAddr=self.parent.getCellAddress(self.firstCell)
-		if not self.lastCell:
-			return firstAddr
-		lastAddr=self.parent.getCellAddress(self.lastCell)
-		return _("selected")
-
-	def _get_role(self):
-		if self.lastCell:
-			return controlTypes.ROLE_GROUPING
-		else:
-			return controlTypes.ROLE_TABLECELL
+		return self.getCellAddress(self.excelCellObject)
 
 	def _get_value(self):
-		if not self.lastCell: 
-			return self.parent.getCellText(self.firstCell)
-		else:
-			return ("%s %s "+_("through")+" %s %s")%(self.parent.getCellAddress(self.firstCell),self.parent.getCellText(self.firstCell),self.parent.getCellAddress(self.lastCell),self.parent.getCellText(self.lastCell))
+		return self.excelCellObject.Text
 
 	def _get_description(self):
-		if not self.lastCell and self.parent.cellHasFormula(self.firstCell):
-			return _("has formula")
+		return _("has formula") if self.excelCellObject.HasFormula else ""
+
+	def _get_parent(self):
+		worksheet=self.excelCellObject.Worksheet
+		return ExcelWorksheet(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelWorksheetObject=worksheet)
+
+	def _get_next(self):
+		try:
+			next=self.excelCellObject.next
+		except COMError:
+			next=None
+		if next:
+			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=next)
+
+	def _get_previous(self):
+		try:
+			previous=self.excelCellObject.previous
+		except COMError:
+			previous=None
+		if previous:
+			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
 
 	def script_editCell(self,keyPress):
-		cellEditDialog=CellEditDialog(self.parent.getActiveCell())
+		cellEditDialog=CellEditDialog(self.excelWindowObject.ActiveCell)
 		cellEditDialog.run()
 
 ExcelCell.bindKey("f2","editCell")
+
+class ExcelSelection(ExcelWindow):
+
+	def findOverlayClasses(self,clsList):
+		clsList.append(ExcelSelection)
+		return clsList
+
+	role=controlTypes.ROLE_GROUPING
+
+	def __init__(self,windowHandle=None,excelWindowObject=None,excelRangeObject=None):
+		self.excelWindowObject=excelWindowObject
+		self.excelRangeObject=excelRangeObject
+		super(ExcelSelection,self).__init__(windowHandle=windowHandle)
+
+	def _get_name(self):
+		return _("selection")
+
+	def _get_value(self):
+		firstCell=self.excelRangeObject.Item(1)
+		lastCell=self.excelRangeObject.Item(self.excelRangeObject.Count)
+		return _("%s %s through %s %s")%(self.getCellAddress(firstCell),firstCell.Text,self.getCellAddress(lastCell),lastCell.Text)
+
+	def _get_parent(self):
+		worksheet=self.excelRangeObject.Worksheet
+		return ExcelWorksheet(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelWorksheetObject=worksheet)
+
