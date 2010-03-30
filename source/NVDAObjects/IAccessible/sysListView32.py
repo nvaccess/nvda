@@ -147,10 +147,9 @@ class List(List):
 
 class GroupingItem(Window):
 
-	@classmethod
-	def findBestClass(cls, clsList, kwargs):
+	def findOverlayClasses(self, clsList):
 		# This class can be directly instantiated.
-		return (cls,), kwargs
+		return (GroupingItem,)
 
 	def __init__(self,parent,groupInfo):
 		super(GroupingItem,self).__init__(windowHandle=parent.windowHandle)

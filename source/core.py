@@ -224,6 +224,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			eventHandler.queueEvent('gainFocus',focus)
 	import queueHandler
 	import watchdog
+	import baseObject
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
 		def __init__(self,*args,**kwargs):
@@ -237,6 +238,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				mouseHandler.pumpAll()
 			except:
 				log.exception("errors in this core pump cycle")
+			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.alive()
 	log.debug("starting core pump")
 	pump = CorePump()

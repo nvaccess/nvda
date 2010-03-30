@@ -50,15 +50,12 @@ class AECHARINDEX(ctypes.Structure):
 class AkelEditTextInfo(edit.EditTextInfo):
 
 	def _getLineNumFromOffset(self,offset):
-		global ignoreCaretEvents
-		ignoreCaretEvents=True
 		ciChar=AECHARINDEX()
 		processHandle=self.obj.processHandle
 		internalCiChar=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(ciChar),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		winUser.sendMessage(self.obj.windowHandle,AEM_RICHOFFSETTOINDEX,offset,internalCiChar)
 		winKernel.readProcessMemory(processHandle,internalCiChar,ctypes.byref(ciChar),ctypes.sizeof(ciChar),None)
 		winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
-		ignoreCaretEvents=False
 		return ciChar.nLine
 
 	def _getStoryLength(self):
@@ -75,7 +72,9 @@ class AkelEdit(edit.RichEdit20):
 
 	TextInfo=AkelEditTextInfo
 
-[AkelEdit.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("Control+ExtendedUp","moveByLine"),
-	("Control+ExtendedDown","moveByLine"),
-]]
+	def initOverlayClass(self):
+		for keyName,scriptName in (
+			("Control+ExtendedUp","caret_moveByLine"),
+			("Control+ExtendedDown","caret_moveByLine"),
+		):
+			self.bindKey_runtime(keyName,scriptName)
