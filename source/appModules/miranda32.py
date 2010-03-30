@@ -167,12 +167,15 @@ class mirandaIMHyperlink(mirandaIMButton):
 	def _get_role(self):
 		return controlTypes.ROLE_LINK
 
-class MPropertyPage(Dialog,IAccessible):
+class MPropertyPage(IAccessible,Dialog):
 
 	def _get_name(self):
 		name=super(MPropertyPage,self)._get_name()
 		if not name:
-			tc=self.next
+			try:
+				tc=self.parent.next.firstChild
+			except AttributeError:
+				tc=None
 			if tc and tc.role==controlTypes.ROLE_TABCONTROL:
 				children=tc.children
 				for index in range(len(children)):
