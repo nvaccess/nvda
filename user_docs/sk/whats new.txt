@@ -1,4 +1,4 @@
-= Čo je nové v NVDA =
+﻿= Čo je nové v NVDA =
 
 == 2010.1 ==
 
@@ -60,7 +60,12 @@ V tejto verzii sme sa zamerali hlavne na opravy a používateľský konfort v č
 	* Počas prepínania rozložení klávesnice Windows je oznamovaný celý názov aktuálneho rozloženia rečou aj v braily. V minulosti boli tieto zmeny oznamované len rečov, naviac niektoré alternatívne rozloženia napr. Dvorak neboli vôbec oznamované.
 	* Ak je vypnuté oznamovanie tabuliek, informácie o tabuľkách nie sú viac čítané pri zmene fokusu.
 	* Niektoré štandardné stromové zoznamy v 64 bitových aplikáciách ako napr. stromový zoznam zobrazujúci obsah v okne HTML Help sú od teraz prístupné. (#473)
+	* Opravené problémy s logovaním iných ako ascii znakov. Mohlo to spôsobovať zbytočné chyby na neanglických systémoch. (#581)
 	* Informácie v dialógu O programe sú zobrazované v nastavenom jazyku. Doteraz boli vždy zobrazované v angličtine. (#586)
+	* Prepnutie na hlas ktorý podporuje menej volieb ako predchádzajúce nastavený hlas pomocou skupiny nastavení hlasového výstupu nespôsobuje viac problémy.
+	* V skype 4.2 nie sú viac kontakty v zozname čítané viacnásobne.
+	* Opravené masívne memory leaky v kóde používateľského rozhrania a virtuálneho prehliadača. (#590, #591)
+	* Obídený škaredý bug v niektorých Sapi 4 hlasových výstupoch, ktorý spôsoboval pády NVDA. (#597)
 
 == 2009.1 ==
 Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windows, úplne prepracovaná podpora pre čítanie dokumentov v programoch Microsoft Internet explorer a Adobe Reader, podpora pre Windows 7, možnosť čítať prihlasovaciu obrazovku Windows a schopnosť interakcie s prvkami flash a java na webových stránkach. Táto verzia obsahuje tiež množstvo všeobecných opráv, čo prispieva k celkovej stabilite programu.

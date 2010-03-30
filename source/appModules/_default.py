@@ -1,18 +1,13 @@
 #appModules/_default.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import gc
-import comtypes.client
-import datetime
 import time
 import tones
-from keyUtils import key
 import keyboardHandler
 import mouseHandler
-import IAccessibleHandler
 import controlTypes
 import api
 import textInfos
@@ -24,12 +19,10 @@ from logHandler import log
 from synthDriverHandler import *
 import gui
 import wx
-import core
 import config
 import winUser
 import appModuleHandler
 import winKernel
-import ctypes
 from gui import mainFrame
 import virtualBufferHandler
 import scriptHandler
@@ -296,7 +289,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject=curObject.parent
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		curObject=curObject.simpleParent if simpleReviewMode else curObject.parent
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -309,7 +303,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject=curObject.next
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		curObject=curObject.simpleNext if simpleReviewMode else curObject.next
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -322,7 +317,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject=curObject.previous
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		curObject=curObject.simplePrevious if simpleReviewMode else curObject.previous
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -335,59 +331,14 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject=curObject.firstChild
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		curObject=curObject.simpleFirstChild if simpleReviewMode else curObject.firstChild
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No children"))
 	script_navigatorObject_firstChild.__doc__=_("Sets the navigator object to the first child object of the one it is currently on and speaks it")
-
-	def script_navigatorObject_nextInFlow(self,keyPress):
-		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObject):
-			speech.speakMessage(_("no navigator object"))
-			return
-		up=[]
-		down=[]
-		curObject=curObject.getNextInFlow(up=up,down=down)
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
-			if len(up)>0:
-				for count in range(len(up)+1):
-					tones.beep(880*(1.25**count),50)
-					time.sleep(0.025)
-			if len(down)>0:
-				for count in range(len(down)+1):
-					tones.beep(880/(1.25**count),50)
-					time.sleep(0.025)
-			speech.speakObject(curObject,reason=speech.REASON_QUERY)
-		else:
-			speech.speakMessage(_("end of flow"))
-	script_navigatorObject_nextInFlow.__doc__=_("Sets the navigator object to the object this object flows to and speaks it")
-
-	def script_navigatorObject_previousInFlow(self,keyPress):
-		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObject):
-			speech.speakMessage(_("no navigator object"))
-			return
-		up=[]
-		down=[]
-		curObject=curObject.getPreviousInFlow(up=up,down=down)
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
-			if len(up)>0:
-				for count in range(len(up)+1):
-					tones.beep(880*(1.25**count),50)
-					time.sleep(0.025)
-			if len(down)>0:
-				for count in range(len(down)+1):
-					tones.beep(880/(1.25**count),50)
-					time.sleep(0.025)
-			speech.speakObject(curObject,reason=speech.REASON_QUERY)
-		else:
-			speech.speakMessage(_("Beginning of flow"))
-	script_navigatorObject_previousInFlow.__doc__=_("Sets the navigator object to the object this object flows from and speaks it")
 
 	def script_navigatorObject_doDefaultAction(self,keyPress):
 		curObject=api.getNavigatorObject()
@@ -634,11 +585,6 @@ class AppModule(appModuleHandler.AppModule):
 		sayAllHandler.readText(info,sayAllHandler.CURSOR_REVIEW)
 	script_review_sayAll.__doc__ = _("reads from the review cursor  up to end of current text, moving the review cursor as it goes")
 
-	def script_navigatorObject_sayAll(self,keyPress):
-		obj=api.getNavigatorObject()
-		sayAllHandler.readObjects(obj)
-	script_navigatorObject_sayAll.__doc__ = _("reads from the navigator object ")
-
 	def script_sayAll(self,keyPress):
 		o=api.getFocusObject()
 		v=o.virtualBuffer
@@ -747,7 +693,6 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_test_navigatorWindowInfo(self,keyPress):
 		import ctypes
-		import winUser
 		w=ctypes.windll.user32.GetAncestor(obj.windowHandle,3)
 		w=ctypes.windll.user32.GetAncestor(w,3)
 		className=winUser.getClassName(w)
@@ -797,22 +742,22 @@ class AppModule(appModuleHandler.AppModule):
 	script_toggleReportDynamicContentChanges.__doc__=_("Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows")
 
 	def script_toggleCaretMovesReviewCursor(self,keyPress):
-		if globalVars.caretMovesReviewCursor:
+		if config.conf["reviewCursor"]["followCaret"]:
 			onOff=_("off")
-			globalVars.caretMovesReviewCursor=False
+			config.conf["reviewCursor"]["followCaret"]=False
 		else:
 			onOff=_("on")
-			globalVars.caretMovesReviewCursor=True
+			config.conf["reviewCursor"]["followCaret"]=True
 		ui.message(_("caret moves review cursor")+" "+onOff)
 	script_toggleCaretMovesReviewCursor.__doc__=_("Toggles on and off the movement of the review cursor due to the caret moving.")
 
 	def script_toggleFocusMovesNavigatorObject(self,keyPress):
-		if globalVars.focusMovesNavigatorObject:
+		if config.conf["reviewCursor"]["followFocus"]:
 			onOff=_("off")
-			globalVars.focusMovesNavigatorObject=False
+			config.conf["reviewCursor"]["followFocus"]=False
 		else:
 			onOff=_("on")
-			globalVars.focusMovesNavigatorObject=True
+			config.conf["reviewCursor"]["followFocus"]=True
 		ui.message(_("focus moves navigator object")+" "+onOff)
 	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
 

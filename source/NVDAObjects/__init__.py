@@ -13,9 +13,6 @@ from logHandler import log
 import eventHandler
 import baseObject
 import speech
-from keyUtils import key, sendKey
-from scriptHandler import isScriptWaiting
-import globalVars
 import api
 import textInfos.offsets
 import config
@@ -39,22 +36,34 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 	_dynamicClassCache={}
 
-	def __call__(self,*args,**kwargs):
-		if 'findBestAPIClass' not in self.__dict__:
-			APIClass=self
+	def __call__(self,chooseBestAPI=True,**kwargs):
+		if chooseBestAPI:
+			APIClass=self.findBestAPIClass(kwargs)
 		else:
-			APIClass=self.findBestAPIClass(**kwargs)
-		if 'findBestClass' not in self.__dict__:
-			raise TypeError("Cannot instantiate class %s as it does not implement findBestClass"%self.__name__)
+			APIClass=self
+
+		if 'findOverlayClasses' not in APIClass.__dict__:
+			raise TypeError("Cannot instantiate class %s as it does not implement findOverlayClasses"%APIClass.__name__)
+
+		# Instantiate the requested class.
+		obj=APIClass.__new__(APIClass,**kwargs)
+		obj.APIClass=APIClass
+		if isinstance(obj,self):
+			obj.__init__(**kwargs)
+
 		try:
-			clsList,kwargs=APIClass.findBestClass([],kwargs)
+			clsList=obj.findOverlayClasses([])
 		except:
-			log.debugWarning("findBestClass failed",exc_info=True)
+			log.debugWarning("findOverlayClasses failed",exc_info=True)
 			return None
+		# Determine the bases for the new class.
 		bases=[]
 		for index in xrange(len(clsList)):
+			# A class doesn't need to be a base if it is already a subclass of a previous base.
 			if index==0 or not issubclass(clsList[index-1],clsList[index]):
 				bases.append(clsList[index])
+
+		# Construct the new class.
 		if len(bases) == 1:
 			# We only have one base, so there's no point in creating a dynamic type.
 			newCls=bases[0]
@@ -65,10 +74,25 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 				name="Dynamic_%s"%"".join([x.__name__ for x in clsList])
 				newCls=type(name,bases,{})
 				self._dynamicClassCache[bases]=newCls
-		obj=self.__new__(newCls,*args,**kwargs)
-		obj.APIClass=APIClass
-		if isinstance(obj,self):
-			obj.__init__(*args,**kwargs)
+
+		oldMro=frozenset(obj.__class__.__mro__)
+		# Mutate obj into the new class.
+		obj.__class__=newCls
+
+		# Initialise the overlay classes.
+		for cls in reversed(newCls.__mro__):
+			if cls in oldMro:
+				# This class was part of the initially constructed object, so its constructor would have been called.
+				continue
+			initFunc=cls.__dict__.get("initOverlayClass")
+			if initFunc:
+				initFunc(obj)
+
+		# Allow app modules to mutate NVDAObjects during creation.
+		appModule=obj.appModule
+		if appModule and hasattr(appModule,"event_NVDAObject_init"):
+			appModule.event_NVDAObject_init(obj)
+
 		return obj
 
 class NVDAObject(baseObject.ScriptableObject):
@@ -77,37 +101,80 @@ class NVDAObject(baseObject.ScriptableObject):
 	"""
 
 	__metaclass__=DynamicNVDAObjectType
+	cachePropertiesByDefault = True
 
 	TextInfo=NVDAObjectTextInfo #:The TextInfo class this object should use
 
 	@classmethod
-	def findBestAPIClass(cls):
-		"""Chooses the most appropriate API-level NVDAObject class that should be used instead of this class.
-		An API-level NVDAObject is an NVDAObject that takes a specific set of arguments for instanciation.
-		@return: the suitable API-level subclass.
-		@rtype: L{NVDAObject} class
-		"""  
-		return cls
+	def findBestAPIClass(cls,kwargs,relation=None):
+		"""
+		Finds out the highest-level APIClass this object can get to given these kwargs, and updates the kwargs and returns the APIClass.
+		@param relation: the relationship of a possible new object of this type to  another object creating it (e.g. parent).
+		@param type: string
+		@param kwargs: the arguments necessary to construct an object of the class this method was called on.
+		@type kwargs: dictionary
+		@returns: the new APIClass
+		@rtype: DynamicNVDAObjectType
+		"""
+		newAPIClass=cls
+		if 'getPossibleAPIClasses' in newAPIClass.__dict__:
+			for possibleAPIClass in newAPIClass.getPossibleAPIClasses(kwargs,relation=relation):
+				if 'kwargsFromSuper' not in possibleAPIClass.__dict__:  
+					log.error("possible API class %s does not implement kwargsFromSuper"%possibleAPIClass)
+					continue
+				if possibleAPIClass.kwargsFromSuper(kwargs,relation=relation):
+					return possibleAPIClass.findBestAPIClass(kwargs,relation=relation)
+		return newAPIClass
 
 	@classmethod
-	def findBestClass(cls,clsList,kwargs):
-		"""Chooses a most appropriate inheritence list of classes with subclasses first.
-		The list of classes can be used to dynamically create an NVDAObject class using the most appropriate NVDAObject subclass at each API level.
+	def getPossibleAPIClasses(cls,kwargs,relation=None):
+		"""
+		Provides a generator which can generate all the possible API classes (in priority order) that inherit directly from the class it was called on.
+		@param relation: the relationship of a possible new object of this type to  another object creating it (e.g. parent).
+		@param type: string
+		@param kwargs: the arguments necessary to construct an object of the class this method was called on.
+		@type kwargs: dictionary
+		@returns: a generator
+		@rtype: generator
+		"""
+		import NVDAObjects.window
+		yield NVDAObjects.window.Window
+
+	@classmethod
+	def kwargsFromSuper(cls,kwargs,relation=None):
+		"""
+		Finds out if this class can be instanciated from the given super kwargs.
+		If so it updates the kwargs to contain everything it will need to instanciate this class, and returns True.
+		If this class can not be instanciated, it returns False and kwargs is not touched.
+		@param relation: why is this class being instanciated? parent, focus, foreground etc...
+		@type relation: string
+		@param kwargs: the kwargs for constructing this class's super class.
+		@type kwargs: dict
+		@rtype: boolean
+		"""
+		raise NotImplementedError
+ 
+
+	def findOverlayClasses(self, clsList):
+		"""Chooses overlay classes which should be added to this object's class structure after the object has been initially instantiated.
+		After an NVDAObject class (normally an API-level class) is instantiated, this method is called on the instance to choose appropriate overlay classes.
+		This method may use properties, etc. on the instance to make this choice.
+		The object's class structure is then mutated to contain these classes.
+		L{initOverlayClass} is then called for each class which was not part of the initially instantiated object.
+		This process allows an NVDAObject to be dynamically created using the most appropriate NVDAObject subclass at each API level.
+		Classes should be listed with subclasses first. That is, subclasses should generally call super and then append their own classes to the list.
 		For example: Called on an IAccessible NVDAObjectThe list might contain DialogIaccessible (a subclass of IAccessible), Edit (a subclass of Window).
-		Since the method may need to fetch extra info to calculate the suitable classes, a kwargs dictionary is returned containing the original arguments plus any new ones.
-		@param kwargs: a dictionary of keyword arguments which would normally be passed to the class for instanciation.
-		@return: the list of classes and the updated kwargs dictionary
-		@rtype: tuple of list of L{NVDAObject} classes, and dictionary
+		@param clsList: The list of classes from the caller.
+		@type clsList: list of L{NVDAObject}
+		@@return: the new list of classes.
+		@rtype: list of L{NVDAObject}
 		"""
 		clsList.append(NVDAObject)
-		return clsList,kwargs
+		return clsList
 
 	beTransparentToMouse=False #:If true then NVDA will never consider the mouse to be on this object, rather it will be on an ancestor.
 
-
-
-
-	@classmethod
+	@staticmethod
 	def objectFromPoint(x,y):
 		"""Retreaves an NVDAObject instance representing a control in the Operating System at the given x and y coordinates.
 		@param x: the x coordinate.
@@ -117,29 +184,34 @@ class NVDAObject(baseObject.ScriptableObject):
 		@return: The object at the given x and y coordinates.
 		@rtype: L{NVDAObject}
 		"""
-		raise NotImplementedError
+		kwargs={}
+		APIClass=NVDAObject.findBestAPIClass(kwargs,relation=(x,y))
+		return APIClass(chooseBestAPI=False,**kwargs)
 
-	@classmethod
-	def objectWithFocus(cls):
+	@staticmethod
+	def objectWithFocus():
 		"""Retreaves the object representing the control currently with focus in the Operating System. This differens from NVDA's focus object as this focus object is the real focus object according to the Operating System, not according to NVDA.
 		@return: the object with focus.
 		@rtype: L{NVDAObject}
 		"""
-		raise NotImplementedError
+		kwargs={}
+		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="focus")
+		return APIClass(chooseBestAPI=False,**kwargs)
 
-	@classmethod
-	def objectInForeground(cls):
+	@staticmethod
+	def objectInForeground():
 		"""Retreaves the object representing the current foreground control according to the Operating System. This differes from NVDA's foreground object as this object is the real foreground object according to the Operating System, not according to NVDA.
 		@return: the foreground object
 		@rtype: L{NVDAObject}
 		"""
-		raise NotImplementedError
+		kwargs={}
+		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="foreground")
+		return APIClass(chooseBestAPI=False,**kwargs)
 
 	def __init__(self):
+		super(NVDAObject,self).__init__()
 		self._mouseEntered=False #:True if the mouse has entered this object (for use in L{event_mouseMoved})
 		self.textRepresentationLineLength=None #:If an integer greater than 0 then lines of text in this object are always this long.
-		if hasattr(self.appModule,'event_NVDAObject_init'):
-			self.appModule.event_NVDAObject_init(self)
 
 	def _isEqual(self,other):
 		"""Calculates if this object is equal to another object. Used by L{NVDAObject.__eq__}.
@@ -375,55 +447,101 @@ class NVDAObject(baseObject.ScriptableObject):
 			for recursiveChild in child.recursiveDescendants:
 				yield recursiveChild
 
-	def getNextInFlow(self,down=None,up=None):
-		"""Retreaves the next object in depth first tree traversal order
-@param up: a list that all objects that we moved up out of will be placed in
-@type up: list
-@param down: a list which all objects we moved down in to will be placed
-@type down: list
-"""
-		child=self.firstChild
-		if child:
-			if isinstance(down,list):
-				down.append(self)
-			return child
-		next=self.next
-		if next:
-			return next
-		parent=self.parent
-		while not next and parent:
-			next=parent.next
-			if isinstance(up,list):
-				up.append(parent)
+	presType_unavailable="unavailable"
+	presType_layout="layout"
+	presType_content="content"
+
+	def _get_presentationType(self):
+		states=self.states
+		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
+			return self.presType_unavailable
+		role=self.role
+		if controlTypes.STATE_FOCUSED in states:
+			return self.presType_content
+
+		#Static text should be content only if it really use usable text
+		if role==controlTypes.ROLE_STATICTEXT:
+			text=self.makeTextInfo(textInfos.POSITION_ALL).text
+			return self.presType_content if text and not text.isspace() else self.presType_layout
+
+		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_TITLEBAR):
+			return self.presType_layout
+		name = self.name
+		description = self.description
+		if not name and not description and role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_FORM,controlTypes.ROLE_TABLEBODY):
+			return self.presType_layout
+		if not name and not description and role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and not config.conf["documentFormatting"]["reportTables"]:
+			return self.presType_layout
+		if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN):
+			try:
+				table=self.table
+			except NotImplementedError:
+				table=None
+			if table:
+				# This is part of a real table, so the cells will report row/column information.
+				# Therefore, this object is just for layout.
+				return self.presType_layout
+		return self.presType_content
+
+	def _get_simpleParent(self):
+		obj=self.parent
+		while obj and obj.presentationType!=self.presType_content:
+			obj=obj.parent
+		return obj
+
+	def _findSimpleNext(self,useChild=False,useParent=True,goPrevious=False):
+		nextPrevAttrib="next" if not goPrevious else "previous"
+		firstLastChildAttrib="firstChild" if not goPrevious else "lastChild"
+		found=None
+		if useChild:
+			child=getattr(self,firstLastChildAttrib)
+			childPresType=child.presentationType if child else None
+			if childPresType==self.presType_content:
+				found=child
+			elif childPresType==self.presType_layout:
+				found=child._findSimpleNext(useChild=True,useParent=False,goPrevious=goPrevious)
+			elif child:
+				found=child._findSimpleNext(useChild=False,useParent=False,goPrevious=goPrevious)
+			if found:
+				return found
+		next=getattr(self,nextPrevAttrib)
+		nextPresType=next.presentationType if next else None
+		if nextPresType==self.presType_content:
+			found=next
+		elif nextPresType==self.presType_layout:
+			found=next._findSimpleNext(useChild=True,useParent=False,goPrevious=goPrevious)
+		elif next:
+			found=next._findSimpleNext(useChild=False,useParent=False,goPrevious=goPrevious)
+		if found:
+			return found
+		parent=self.parent if useParent else None
+		while parent and parent.presentationType!=self.presType_content:
+			next=parent._findSimpleNext(useChild=False,useParent=False,goPrevious=goPrevious)
+			if next:
+				return next
 			parent=parent.parent
-		return next
 
-	_get_nextInFlow=getNextInFlow
+	def _get_simpleNext(self):
+		return self._findSimpleNext()
 
-	def getPreviousInFlow(self,down=None,up=None):
-		"""Retreaves the previous object in depth first tree traversal order
-@param up: a list that all objects that we moved up out of will be placed in
-@type up: list
-@param down: a list which all objects we moved down in to will be placed
-@type down: list
-"""
-		prev=self.previous
-		if prev:
-			lastLastChild=prev
-			lastChild=prev.lastChild
-			while lastChild:
-				if isinstance(down,list):
-					down.append(lastLastChild)
-				lastLastChild=lastChild
-				lastChild=lastChild.lastChild
-			return lastLastChild
-		parent=self.parent
-		if parent:
-			if isinstance(up,list):
-				up.append(self)
-			return parent
+	def _get_simplePrevious(self):
+		return self._findSimpleNext(goPrevious=True)
 
-	_get_previousInFlow=getPreviousInFlow
+	def _get_simpleFirstChild(self):
+		child=self.firstChild
+		if not child:
+			return None
+		presType=child.presentationType
+		if presType!=self.presType_content: return child._findSimpleNext(useChild=(presType!=self.presType_unavailable),useParent=False)
+		return child
+
+	def _get_simpleLastChild(self):
+		child=self.lastChild
+		if not child:
+			return None
+		presType=child.presentationType
+		if presType!=self.presType_content: return child._findSimpleNext(useChild=(presType!=self.presType_unavailable),useParent=False,goPrevious=True)
+		return child
 
 	def _get_childCount(self):
 		"""Retreaves the number of children this object contains.
@@ -481,24 +599,10 @@ Tries to force this object to take the focus.
 		@return: C{True} if it should be presented in the focus ancestry, C{False} if not.
 		@rtype: bool
 		"""
-		role = self.role
-		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_EDITABLETEXT):
+		if self.presentationType == self.presType_layout:
 			return False
-		name = self.name
-		description = self.description
-		if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_FORM) and not name and not description:
+		if self.role in (controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_EDITABLETEXT):
 			return False
-		if not name and not description and role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and not config.conf["documentFormatting"]["reportTables"]:
-			return False
-		if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN):
-			try:
-				table=self.table
-			except NotImplementedError:
-				table=None
-			if table:
-				# This is part of a real table, so the cells will report row/column information.
-				# Therefore, we don't want to present this in the ancestry.
-				return False
 		return True
 
 	def _get_statusBar(self):
@@ -537,13 +641,15 @@ Tries to force this object to take the focus.
 		else:
 			speechWasCanceled=False
 		self._mouseEntered=True
-		if not config.conf['mouse']['reportTextUnderMouse']:
-			return
 		try:
 			info=self.makeTextInfo(textInfos.Point(x,y))
 			info.expand(info.unit_mouseChunk)
 		except:
 			info=NVDAObjectTextInfo(self,textInfos.POSITION_ALL)
+		if config.conf["reviewCursor"]["followMouse"]:
+			api.setReviewPosition(info)
+		if not config.conf["mouse"]["reportTextUnderMouse"]:
+			return
 		oldInfo=getattr(self,'_lastMouseTextInfoObject',None)
 		self._lastMouseTextInfoObject=info
 		if not oldInfo or info.__class__!=oldInfo.__class__ or info.compareEndPoints(oldInfo,"startToStart")!=0 or info.compareEndPoints(oldInfo,"endToEnd")!=0:
@@ -607,7 +713,7 @@ This code is executed if a gain focus event is received by this object.
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				try:
 					api.setReviewPosition(self.makeTextInfo(textInfos.POSITION_CARET))
 				except (NotImplementedError, RuntimeError):
@@ -626,186 +732,6 @@ This code is executed if a gain focus event is received by this object.
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
-
-	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=0.03):
-		elapsed = 0
-		while elapsed < timeout:
-			if isScriptWaiting():
-				return False
-			api.processPendingEvents(processEventQueue=False)
-			if eventHandler.isPendingEvents("gainFocus"):
-				oldInCaretMovement=globalVars.inCaretMovement
-				globalVars.inCaretMovement=True
-				try:
-					api.processPendingEvents()
-				finally:
-					globalVars.inCaretMovement=oldInCaretMovement
-				return True
-			#The caret may stop working as the focus jumps, we want to stay in the while loop though
-			try:
-				newBookmark = self.makeTextInfo(textInfos.POSITION_CARET).bookmark
-				if newBookmark!=bookmark:
-					return True
-			except:
-				pass
-			time.sleep(retryInterval)
-			elapsed += retryInterval
-		return False
-
-	def script_moveByLine(self,keyPress):
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		bookmark=info.bookmark
-		sendKey(keyPress)
-		if not self._hasCaretMoved(bookmark):
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
-		if not isScriptWaiting():
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if globalVars.caretMovesReviewCursor:
-				api.setReviewPosition(info.copy())
-			info.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(info)
-
-	def script_moveByCharacter(self,keyPress):
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		bookmark=info.bookmark
-		sendKey(keyPress)
-		if not self._hasCaretMoved(bookmark):
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
-		if not isScriptWaiting():
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if globalVars.caretMovesReviewCursor:
-				api.setReviewPosition(info.copy())
-			info.expand(textInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER)
-
-	def script_moveByWord(self,keyPress):
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		bookmark=info.bookmark
-		sendKey(keyPress)
-		if not self._hasCaretMoved(bookmark):
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
-		if not isScriptWaiting():
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if globalVars.caretMovesReviewCursor:
-				api.setReviewPosition(info.copy())
-			info.expand(textInfos.UNIT_WORD)
-			speech.speakTextInfo(info,unit=textInfos.UNIT_WORD)
-
-	def script_moveByParagraph(self,keyPress):
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		bookmark=info.bookmark
-		sendKey(keyPress)
-		if not self._hasCaretMoved(bookmark):
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
-		if not isScriptWaiting():
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if globalVars.caretMovesReviewCursor:
-				api.setReviewPosition(info.copy())
-			info.expand(textInfos.UNIT_PARAGRAPH)
-			speech.speakTextInfo(info)
-
-	def _backspaceScriptHelper(self,unit,keyPress):
-		try:
-			oldInfo=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		oldBookmark=oldInfo.bookmark
-		testInfo=oldInfo.copy()
-		res=testInfo.move(textInfos.UNIT_CHARACTER,-1)
-		if res<0:
-			testInfo.expand(unit)
-			delChunk=testInfo.text
-		else:
-			delChunk=""
-		sendKey(keyPress)
-		if self._hasCaretMoved(oldBookmark):
-			if len(delChunk)>1:
-				speech.speakMessage(delChunk)
-			else:
-				speech.speakSpelling(delChunk)
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if globalVars.caretMovesReviewCursor:
-				api.setReviewPosition(info)
-
-	def script_backspaceCharacter(self,keyPress):
-		self._backspaceScriptHelper(textInfos.UNIT_CHARACTER,keyPress)
-
-	def script_backspaceWord(self,keyPress):
-		self._backspaceScriptHelper(textInfos.UNIT_WORD,keyPress)
-
-	def script_delete(self,keyPress):
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		bookmark=info.bookmark
-		sendKey(keyPress)
-		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		self._hasCaretMoved(bookmark)
-		if not isScriptWaiting():
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if globalVars.caretMovesReviewCursor:
-				api.setReviewPosition(info.copy())
-			info.expand(textInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER)
-
-	def script_changeSelection(self,keyPress):
-		try:
-			oldInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		except:
-			sendKey(keyPress)
-			return
-		sendKey(keyPress)
-		if not isScriptWaiting():
-			api.processPendingEvents()
-			focus=api.getFocusObject()
-			try:
-				newInfo=focus.makeTextInfo(textInfos.POSITION_SELECTION)
-			except:
-				return
-			speech.speakSelectionChange(oldInfo,newInfo)
 
 class AutoSelectDetectionNVDAObject(NVDAObject):
 

@@ -185,6 +185,12 @@ class JABContext(object):
 	def setCaretPosition(self,offset):
 		bridgeDll.setCaretPosition(self.vmID,self.accContext,offset)
 
+	def getTextAttributesInRange(self, startIndex, endIndex):
+		attributes = AccessibleTextAttributesInfo()
+		length = c_short()
+		bridgeDll.getTextAttributesInRange(self.vmID, self.accContext, startIndex, endIndex, byref(attributes), byref(length))
+		return attributes, length.value
+
 class AccessBridgeVersionInfo(Structure):
 	_fields_=[
 		('VMVersion',WCHAR*SHORT_STRING_SIZE),

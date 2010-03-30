@@ -126,7 +126,7 @@ bool unregisterWindowsHook(int hookType, HOOKPROC hookProc) {
 	return true;
 }
 
-BOOL DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
+BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if((reason==DLL_PROCESS_ATTACH)&&(moduleHandle==NULL)) {
 		moduleHandle=hModule;
 		GetWindowThreadProcessId(GetDesktopWindow(),&desktopProcessID);
@@ -134,7 +134,9 @@ BOOL DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 		getNVDAControllerNcalrpcEndpointString(endpointString,64,TRUE);
 		RpcBindingFromStringBinding((RPC_WSTR)endpointString,&nvdaControllerBindingHandle);
 		RpcBindingFromStringBinding((RPC_WSTR)endpointString,&nvdaControllerInternalBindingHandle);
+		#if LOGLEVEL<=LOGLEVEL_INFO
 		if(isInitialized) LOG_INFO(L"process attach");
+		#endif
 	} else if(reason==DLL_PROCESS_DETACH) {
 	if(inProcess_isRunning) inProcess_terminate();
 	RpcBindingFree(&nvdaControllerBindingHandle);

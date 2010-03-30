@@ -21,6 +21,7 @@ from logHandler import log
 import speech
 import controlTypes
 from . import IAccessible
+from ..behaviors import EditableTextWithoutAutoSelectDetection
 import NVDAObjects
 import virtualBufferHandler
 
@@ -238,29 +239,27 @@ class MSHTML(IAccessible):
 	HTMLNodeNameEmbedList=['OBJECT','EMBED','APPLET','FRAME','IFRAME']
 
 	@classmethod
-	def findBestClass(cls,clsList,kwargs):
-		tempNode=HTMLNode=kwargs.get('HTMLNode')
-		while tempNode:
-			try:
-				IAccessibleObject=IAccessibleFromHTMLNode(tempNode)
-			except NotImplementedError:
-				IAccessibleObject=None
-			if IAccessibleObject:
-				kwargs['IAccessibleObject']=IAccessibleObject
-				kwargs['IAccessibleChildID']=0
-				if tempNode is not HTMLNode:
-					kwargs['HTMLNodeHasAncestorIAccessible']=True
-				break
-			try:
-				tempNode=tempNode.parentNode
-			except COMError:
-				tempNode=None
-		clsList,kwargs=super(MSHTML,cls).findBestClass(clsList,kwargs)
-		#IAccessible may have already chosen MSHTML as a best class
-		#So only add it if it doesn't already exist
-		if MSHTML not in clsList:
-			clsList.insert(0,MSHTML)
-		return clsList,kwargs
+	def kwargsFromSuper(cls,kwargs,relation=None):
+		IAccessibleObject=kwargs['IAccessibleObject']
+		HTMLNode=None
+		try:
+			HTMLNode=HTMLNodeFromIAccessible(IAccessibleObject)
+		except NotImplementedError:
+			pass
+		if not HTMLNode:
+			return False
+		kwargs['HTMLNode']=HTMLNode
+		return True
+
+	def findOverlayClasses(self,clsList):
+		if self.TextInfo == MSHTMLTextInfo:
+			clsList.append(EditableTextWithoutAutoSelectDetection)
+		clsList.append(MSHTML)
+		if self.HTMLNodeHasAncestorIAccessible:
+			# The IAccessibleObject is actually for an ancestor of this object, so IAccessible overlay classes aren't relevant.
+			return clsList
+		else:
+			return super(MSHTML,self).findOverlayClasses(clsList)
 
 	def _get_virtualBufferClass(self):
 		if self.HTMLNode and self.role==controlTypes.ROLE_DOCUMENT and not self.isContentEditable:
@@ -268,51 +267,37 @@ class MSHTML(IAccessible):
 			return virtualBuffers.MSHTML.MSHTML
 		return super(MSHTML,self).virtualBufferClass
 
-	def __init__(self,HTMLNode=None,HTMLNodeHasAncestorIAccessible=False,IAccessibleObject=None,IAccessibleChildID=None,**kwargs):
-		self.HTMLNodeHasAncestorIAccessible=HTMLNodeHasAncestorIAccessible
-		if not HTMLNode and IAccessibleChildID==0:
-			try:
-				HTMLNode=HTMLNodeFromIAccessible(IAccessibleObject)
-			except NotImplementedError:
-				pass
-		self.HTMLNode=HTMLNode
+	def __init__(self,HTMLNode=None,IAccessibleObject=None,IAccessibleChildID=None,**kwargs):
+		self.HTMLNodeHasAncestorIAccessible=False
+		if not IAccessibleObject:
+			# Find an IAccessible for HTMLNode and determine whether it is for an ancestor.
+			tempNode=HTMLNode
+			while tempNode:
+				try:
+					IAccessibleObject=IAccessibleFromHTMLNode(tempNode)
+				except NotImplementedError:
+					IAccessibleObject=None
+				if IAccessibleObject:
+					IAccessibleChildID=0
+					if tempNode is not HTMLNode:
+						self.HTMLNodeHasAncestorIAccessible=True
+					break
+				try:
+					tempNode=tempNode.parentNode
+				except COMError:
+					tempNode=None
+
 		super(MSHTML,self).__init__(IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,**kwargs)
+		self.HTMLNode=HTMLNode
+
 		#object and embed nodes give back an incorrect IAccessible via queryService, so we must treet it as an ancestor IAccessible
 		if self.HTMLNodeName in ("OBJECT","EMBED"):
 			self.HTMLNodeHasAncestorIAccessible=True
 		try:
 			self.HTMLNode.createTextRange()
 			self.TextInfo=MSHTMLTextInfo
-		except:
+		except (NameError, COMError):
 			pass
-		if self.TextInfo==MSHTMLTextInfo:
-			[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
-				("ExtendedUp","moveByLine"),
-				("ExtendedDown","moveByLine"),
-				("ExtendedLeft","moveByCharacter"),
-				("ExtendedRight","moveByCharacter"),
-				("Control+ExtendedUp","moveByParagraph"),
-				("Control+ExtendedDown","moveByParagraph"),
-				("Control+ExtendedLeft","moveByWord"),
-				("Control+ExtendedRight","moveByWord"),
-				("Shift+ExtendedRight","changeSelection"),
-				("Shift+ExtendedLeft","changeSelection"),
-				("Shift+ExtendedHome","changeSelection"),
-				("Shift+ExtendedEnd","changeSelection"),
-				("Shift+ExtendedUp","changeSelection"),
-				("Shift+ExtendedDown","changeSelection"),
-				("Control+Shift+ExtendedLeft","changeSelection"),
-				("Control+Shift+ExtendedRight","changeSelection"),
-				("ExtendedHome","moveByCharacter"),
-				("ExtendedEnd","moveByCharacter"),
-				("control+extendedHome","moveByLine"),
-				("control+extendedEnd","moveByLine"),
-				("control+shift+extendedHome","changeSelection"),
-				("control+shift+extendedEnd","changeSelection"),
-				("ExtendedDelete","moveByCharacter"),
-				("Back","backspaceCharacter"),
-				("Control+Back","backspaceWord"),
-			]]
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		if not super(MSHTML,self).isDuplicateIAccessibleEvent(obj):
@@ -468,6 +453,8 @@ class MSHTML(IAccessible):
 			try:
 				previousNode=self.HTMLNode.previousSibling
 			except COMError:
+				previousNode=None
+			if not previousNode:
 				return None
 			obj=MSHTML(HTMLNode=previousNode)
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
@@ -480,6 +467,8 @@ class MSHTML(IAccessible):
 			try:
 				nextNode=self.HTMLNode.nextSibling
 			except COMError:
+				nextNode=None
+			if not nextNode:
 				return None
 			obj=MSHTML(HTMLNode=nextNode)
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
@@ -494,10 +483,12 @@ class MSHTML(IAccessible):
 			try:
 				childNode=self.HTMLNode.firstChild
 			except COMError:
+				childNode=None
+			if not childNode:
 				return None
 			obj=MSHTML(HTMLNode=childNode)
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
-				return None
+				return obj.next
 			return obj
 		if self.HTMLNodeHasAncestorIAccessible:
 			return None
@@ -510,14 +501,16 @@ class MSHTML(IAccessible):
 			try:
 				childNode=self.HTMLNode.lastChild
 			except COMError:
+				childNode=None
+			if not childNode:
 				return None
 			obj=MSHTML(HTMLNode=childNode)
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
-				return None
+				return obj.previous
 			return obj
 		if self.HTMLNodeHasAncestorIAccessible:
 			return None
-		return super(MSHTML,self).firstChild
+		return super(MSHTML,self).lastChild
 
 	def _get_columnNumber(self):
 		if not self.role==controlTypes.ROLE_TABLECELL or not self.HTMLNode:
@@ -574,6 +567,15 @@ class MSHTML(IAccessible):
 				pass
 			return
 		super(MSHTML,self).setFocus()
+
+	def _get_table(self):
+		if self.role not in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROW) or not self.HTMLNode:
+			raise NotImplementedError
+		HTMLNode=self.HTMLNode
+		while HTMLNode:
+			if HTMLNode.nodeName=="TABLE": return MSHTML(HTMLNode=HTMLNode)
+			HTMLNode=HTMLNode.parentNode
+		raise NotImplementedError
 
 	def _get_HTMLNodeName(self):
 		if not self.HTMLNode:
