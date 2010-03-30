@@ -20,23 +20,26 @@ class NoInputGestureAction(LookupError):
 class InputGesture(baseObject.AutoPropertyObject):
 	"""A single gesture of input from the user.
 	For example, this could be a key press on a keyboard or Braille display or a click of the mouse.
+	At the very least, subclasses must implement L{_get_identifiers} and L{_get_displayName}.
 	"""
 	cachePropertiesByDefault = True
 
-	def _get_mapKeys(self):
-		"""The key(s) which will be used in input gesture maps to represent this gesture.
-		These keys will be looked up in order until a match is found.
-		A single key should take the form: C{source:identifier}
+	def _get_identifiers(self):
+		"""The identifier(s) which will be used in input gesture maps to represent this gesture.
+		These identifiers will be looked up in order until a match is found.
+		A single identifier should take the form: C{source:id}
 		where C{source} is a few characters representing the source of this gesture
-		and C{identifier} identifies the specific gesture.
-		An example key is: C{kb(desktop):NVDA+1}
-		@return: One or more keys which uniquely identify this gesture.
+		and C{id} is the specific gesture.
+		An example identifier is: C{kb(desktop):NVDA+1}
+		Subclasses must implement this method.
+		@return: One or more identifiers which uniquely identify this gesture.
 		@rtype: list or tuple of str
 		"""
 		raise NotImplementedError
 
 	def _get_displayName(self):
 		"""The name of this gesture as presented to the user.
+		Subclasses must implement this method.
 		@return: The display name.
 		@rtype: str
 		"""

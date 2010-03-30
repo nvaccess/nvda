@@ -241,7 +241,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	def _get_displayName(self):
 		return "+".join(localizedKeyLabels.get(key, key) for key in self._keyNames)
 
-	def _get_mapKeys(self):
+	def _get_identifiers(self):
 		return (
 			"kb({layout}):{key}".format(layout=self.currentLayout, key=self.keyName),
 			"kb:{key}".format(key=self.keyName)
