@@ -84,10 +84,11 @@ class displayModel_t {
  * Copies the chunks intersecting the given rectangle, in to the given display model, starting from the given coordinates.
  * @param rect the rectangle intersecting all the chunks in this model that will be copied.
  * @param otherModel a pointer to the displayModel the chunks should be copied to (if NULL then this model is used) 
+ * @param clearEntireRectangle if true then the given rectangle will be cleared before inserting any chunks, but if false then only the rectangle  for each chunk will be cleared.
  * @param otherX the x coordinate in the destination model where the rectangle's left edge  starts
  * @param otherY the y coordinate in the destnation model where the rectangle's top edge starts
  */
-	void copyRectangleToOtherModel(RECT& rect,displayModel_t* otherModel, int otherX, int otherY);
+	void copyRectangleToOtherModel(RECT& rect,displayModel_t* otherModel, BOOL clearEntireRectangle, int otherX, int otherY);
 
 /**
  * Fetches the text contained in all chunks intersecting the given rectangle if provided, otherwize the text from all chunks in the model.

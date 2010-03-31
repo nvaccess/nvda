@@ -134,7 +134,7 @@ void displayModel_t::clearRectangle(const RECT& rect) {
 	LOG_DEBUG(L"complete");
 }
 
-void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* otherModel, int otherX, int otherY) {
+void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* otherModel, BOOL clearEntireRectangle, int otherX, int otherY) {
 	if(!otherModel) otherModel=this;
 	set<displayModelChunk_t*> chunks;
 	RECT tempRect;
@@ -154,7 +154,7 @@ void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* other
 		clearRect.right+=deltaX;
 		clearRect.bottom+=deltaY;
 		//Clear the rectangle in the destination model to make space for the chunks
-		otherModel->clearRectangle(clearRect);
+		if(clearEntireRectangle) otherModel->clearRectangle(clearRect);
 		//Insert each chunk previously selected, in to the destination model shifting the chunk's rectangle to where it should be in the destination model
 		for(set<displayModelChunk_t*>::iterator i=chunks.begin();i!=chunks.end();i++) {
 			displayModelChunk_t* chunk=new displayModelChunk_t(**i);
@@ -172,6 +172,7 @@ void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* other
 			if(chunk->text.length()==0) {
 				delete chunk;
 			} else {
+				if(!clearEntireRectangle) otherModel->clearRectangle(chunk->rect);
 				otherModel->insertChunk(chunk);
 			}
 		}

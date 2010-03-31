@@ -500,7 +500,7 @@ BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHe
 		POINT destPos={nXDest,nYDest};
 		dcPointsToScreenPoints(hdcDest,&destPos,1);
 		//Copy the requested rectangle from the source model in to the destination model, at the given coordinates.
-		srcModel->copyRectangleToOtherModel(srcRect,destModel,destPos.x,destPos.y);
+		srcModel->copyRectangleToOtherModel(srcRect,destModel,TRUE,destPos.x,destPos.y);
 		//release models and return
 		destModel->Release();
 	}
