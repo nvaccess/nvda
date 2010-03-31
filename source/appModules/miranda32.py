@@ -167,7 +167,7 @@ class mirandaIMHyperlink(mirandaIMButton):
 	def _get_role(self):
 		return controlTypes.ROLE_LINK
 
-class MPropertyPage(IAccessible,Dialog):
+class MPropertyPage(Dialog,IAccessible):
 
 	def _get_name(self):
 		name=super(MPropertyPage,self)._get_name()
