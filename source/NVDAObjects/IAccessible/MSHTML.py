@@ -73,7 +73,11 @@ def IAccessibleFromHTMLNode(HTMLNode):
 def HTMLNodeFromIAccessible(IAccessibleObject):
 	try:
 		s=IAccessibleObject.QueryInterface(IServiceProvider)
-		return comtypes.client.dynamic.Dispatch(s.QueryService(IID_IHTMLElement,comtypes.automation.IDispatch))
+		i=s.QueryService(IID_IHTMLElement,comtypes.automation.IDispatch)
+		if not i:
+			# QueryService should fail if IHTMLElement is not supported, but some applications misbehave and return a null COM pointer.
+			raise NotImplementedError
+		return comtypes.client.dynamic.Dispatch(i)
 	except COMError:
 		raise NotImplementedError
 
