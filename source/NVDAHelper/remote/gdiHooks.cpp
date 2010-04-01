@@ -373,19 +373,21 @@ template<typename charType> int WINAPI hookClass_DrawTextEx<charType>::fakeFunct
 	newCount=WA_strlen(newString);
 	//Get or create a display model for this DC
 	displayModel_t* model=acquireDisplayModel(hdc);
-	if(model) {
-		//Not only does DrawTextEx trunkate the text, it can support tabs of different widths.
-		//This makes calculating an accurate text size very hard.
-		//For now, just assume the text size takes up the entire rectangle given by the caller, and say that the text starts from the top left.
-		//This may not be the case -- depending on the text alignment, and if the text doesn't take up the whole rectangle.
-		//But this will do for now.
-		int x=lprc->left;
-		int y=lprc->top;
-		//Record the text
-		ExtTextOutHelper(model,hdc,x,y,NULL,0,0,!(newFormat&DT_NOPREFIX),newString,NULL,newCount,NULL);
-		//Release the model, cleanup and return
-		releaseDisplayModel(model);
+	if(!model) {
+		if(newString!=lpString) free(newString);
+		return res;
 	}
+	//Not only does DrawTextEx trunkate the text, it can support tabs of different widths.
+	//This makes calculating an accurate text size very hard.
+	//For now, just assume the text size takes up the entire rectangle given by the caller, and say that the text starts from the top left.
+	//This may not be the case -- depending on the text alignment, and if the text doesn't take up the whole rectangle.
+	//But this will do for now.
+	int x=lprc->left;
+	int y=lprc->top;
+	//Record the text
+	ExtTextOutHelper(model,hdc,x,y,NULL,0,0,!(newFormat&DT_NOPREFIX),newString,NULL,newCount,NULL);
+	//Release the model, cleanup and return
+	releaseDisplayModel(model);
 	if(newString!=lpString) free(newString);
 	return res; 
 }
