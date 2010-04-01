@@ -56,6 +56,11 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		except:
 			log.debugWarning("findOverlayClasses failed",exc_info=True)
 			return None
+		# Allow app modules to add overlay classes.
+		appModule=obj.appModule
+		if appModule and "findExtraNVDAObjectOverlayClasses" in appModule.__class__.__dict__:
+			clsList = appModule.findExtraNVDAObjectOverlayClasses(obj, clsList)
+
 		# Determine the bases for the new class.
 		bases=[]
 		for index in xrange(len(clsList)):
@@ -88,8 +93,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			if initFunc:
 				initFunc(obj)
 
-		# Allow app modules to mutate NVDAObjects during creation.
-		appModule=obj.appModule
+		# Allow app modules to make minor tweaks to the instance.
 		if appModule and hasattr(appModule,"event_NVDAObject_init"):
 			appModule.event_NVDAObject_init(obj)
 
