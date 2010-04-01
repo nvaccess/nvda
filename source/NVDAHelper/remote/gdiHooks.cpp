@@ -377,15 +377,25 @@ template<typename charType> int WINAPI hookClass_DrawTextEx<charType>::fakeFunct
 		if(newString!=lpString) free(newString);
 		return res;
 	}
-	//Not only does DrawTextEx trunkate the text, it can support tabs of different widths.
-	//This makes calculating an accurate text size very hard.
-	//For now, just assume the text size takes up the entire rectangle given by the caller, and say that the text starts from the top left.
-	//This may not be the case -- depending on the text alignment, and if the text doesn't take up the whole rectangle.
-	//But this will do for now.
+	//DrawTextEx does not give us an X and Y to say where the text starts
+	//But we can work it out from its rectangle, and also taking  the DT alignment flags in to account.
 	int x=lprc->left;
 	int y=lprc->top;
+	int textAlign=0;
+	if(newFormat&DT_RIGHT) {
+		x=lprc->right;
+		textAlign|=TA_RIGHT;
+	} else if(newFormat&DT_CENTER) {
+		x+=(lprc->right-lprc->left)/2;
+		textAlign|=TA_CENTER;
+	}
+	UINT fuOptions=0;
+	//If the caller did not explicitly ask for no clipping, make sure the text is clipped.
+	if(!(newFormat&DT_NOCLIP)) {
+		fuOptions|=ETO_CLIPPED;
+	}
 	//Record the text
-	ExtTextOutHelper(model,hdc,x,y,NULL,0,0,!(newFormat&DT_NOPREFIX),newString,NULL,newCount,NULL);
+	ExtTextOutHelper(model,hdc,x,y,NULL,fuOptions,textAlign,!(newFormat&DT_NOPREFIX),newString,NULL,newCount,NULL);
 	//Release the model, cleanup and return
 	releaseDisplayModel(model);
 	if(newString!=lpString) free(newString);
