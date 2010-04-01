@@ -141,10 +141,9 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
 			clsList.append(TreeviewItem)
 		clsList.append(UIA)
+
 		if self.UIAIsWindowElement:
-			return super(UIA,self).findOverlayClasses(clsList)
-		else:
-			return clsList
+			super(UIA,self).findOverlayClasses(clsList)
 
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):

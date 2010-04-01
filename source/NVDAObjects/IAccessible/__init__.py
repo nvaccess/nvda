@@ -322,7 +322,7 @@ the NVDAObject for IAccessible
 		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2) and role == oleacc.ROLE_SYSTEM_TEXT) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary"):
 			# This is possibly a Flash object.
 			from . import adobeFlash
-			clsList = adobeFlash.findExtraOverlayClasses(self, clsList)
+			adobeFlash.findExtraOverlayClasses(self, clsList)
 		elif windowClassName.startswith('Mozilla'):
 			from .mozilla import Mozilla
 			clsList.append( Mozilla)
@@ -334,10 +334,7 @@ the NVDAObject for IAccessible
 
 		if self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0:
 			# This is the main (client) area of the window, so we can use other classes at the window level.
-			return super(IAccessible,self).findOverlayClasses(clsList)
-		else:
-			# This IAccessible does not represent the main part of the window, so we can only use IAccessible classes.
-			return clsList
+			super(IAccessible,self).findOverlayClasses(clsList)
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""

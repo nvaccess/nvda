@@ -158,7 +158,6 @@ class JAB(Window):
 		if self._JABAccContextInfo.accessibleText and self.JABRole in ("text","password text","edit bar","view port","paragraph"):
 			clsList.append(EditableTextWithoutAutoSelectDetection)
 		clsList.append(JAB)
-		return clsList
 
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
