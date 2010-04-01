@@ -10,13 +10,16 @@
 - V aplikáciách sprístupnených cez java access bridge vrátane openoffice.org je pre editačné polia možné získať informácie o formátovaní. (#358, #463)
 - Počas posúvania myši v programe Microsoft Excel dokáže NVDA čítať text bunky, ktorá je práve pod kurzorom..
 
+
 == Zmeny ==
 - Plynulé čítanie navigačného objektu (NVDA+numpad plus), prejsť na ďalší a predchádzajúci objekt v náväznosti boli odstránené, pretože nefungovali spoľahlivo. Uvolnia sa takto aspoň klávesy.
+
  
 == Opravy ==
 - V programe µTorrent aktívna položka zoznamu torrentov nie je oznamovaná do nekonečna a tiež nekradne systémový fokus ak je otvorené menu.
 - V Mozilla aplikáciách je správne detekovaná zmena fokusu v prípade, že fokus získa prázdny zoznam alebo tabuľka.
 - V aplikáciách Mozilla je správne oznamovaný stav nezačiarknuté pre neštandardné začiarkavacie políčka ako napr. začiarkavacie bunky v tabuľke. (#571)
+
 
 
 = 2010.1 =
@@ -43,6 +46,7 @@ V tejto verzii sme sa zamerali hlavne na opravy a používateľský konfort v č
 - Ak je zapnutá voľba čítať dynamicky menený obsah (NVDA+5), NVDA dokáže automaticky čítať nové správy v konverzačnom okne programu Miranda-IM. Pridané boli tiež skripty na zopakovanie troch naposledy doručených správ (NVDA+Control+number). (#546)
 - Podpora pre editačné polia Adobe Flash. (#461)
 
+
 == Zmeny ==
 - Veľmi dlhý popis v ponuke štart Windows 7 nie je viacej oznamovaný.
 - Ovládač hlasového výstupu display bol nahradený zobrazovačom reči. Môže byť použitý nezávisle na aktuálne použitom hlasovom výstupe a je prístupný z menu nástroje. (#44)
@@ -53,6 +57,7 @@ V tejto verzii sme sa zamerali hlavne na opravy a používateľský konfort v č
 - Oznamovanie prvkov Počas posúvania po znakoch vo virtuálnom prehliadači bolo značne prepracované. Doteraz bolo oznamovaných množstvo nepotrebných informácií a výstup pri pohybe po znakoch bol úplne odlišný od výstupu počas pohybu po riadkoch. (#490)
 - Kláves ctrl tiež zastavý reč ako stlačenie ostatných klávesov. Na pozastavenie a znovu pokračovanie stlačte shift.
 - Počty riadkov a stlpcov v tabuľke nie sú viacej oznamované počas oznamovania zmien fokusu. Nie je to veľmi užitočné a v takýchto prípadoch NVDA veľa čítal.
+
 
 == Opravy ==
 - NVDA sa viac neodmieta spustiť, ak dôjde k chybe pri pokuse o inicializáciu podpori UI Automation. (#483)
@@ -85,6 +90,8 @@ V tejto verzii sme sa zamerali hlavne na opravy a používateľský konfort v č
 - V skype 4.2 nie sú viac kontakty v zozname čítané viacnásobne.
 - Opravené masívne memory leaky v kóde používateľského rozhrania a virtuálneho prehliadača. (#590, #591)
 - Obídený škaredý bug v niektorých Sapi 4 hlasových výstupoch, ktorý spôsoboval pády NVDA. (#597)
+
+
 
 = 2009.1 =
 Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windows, úplne prepracovaná podpora pre čítanie dokumentov v programoch Microsoft Internet explorer a Adobe Reader, podpora pre Windows 7, možnosť čítať prihlasovaciu obrazovku Windows a schopnosť interakcie s prvkami flash a java na webových stránkach. Táto verzia obsahuje tiež množstvo všeobecných opráv, čo prispieva k celkovej stabilite programu.
@@ -122,6 +129,7 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 - NVDA konečne dokáže sprístupniť aplikácie bežiace s administrátorskými oprávneniami v systémoch Windows Vista a novších. Táto funkcionalita je dostupná len v oficiálnych verziách. Nebude to fungovať v prenositeľných verziách a snapshotoch.  (#397)
 - V oficiálnych verziách nebude viac prehrávaný chybový zvuk. Chyby budú stále zaznamenané v logu.
 
+
 == Zmeny ==
 - Pri štarte programu NVDA nepovie "NVDA spustený".
 - Zvuky signalizujúce spustenie a ukončenie programu sú prehrávané cez výstupné zvukové zariadenie nastavené v dialógu hlasový výstup. Doteraz boli tieto zvuky prehrávané cez predvolené výstupné zvukové zariadenie systému Windows. (#164)
@@ -131,6 +139,7 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 - Skript navigačného objektu - kde som (ctrl+NVDA+numpad5) bol odstránený, pretože túto kombináciu nebolo možné stlačiť na mnohých klávesniciach a skript sa neukázal ako užitočný.
 - Klávesová skratka skriptu poloha aktuálneho objektu bola zmenená na NVDA+numpadDelete. Kombinácia nebola dostupná na niektorých klávesniciach. Skript tiež teraz oznamuje výšku a šírku objektu namiesto súradníc pravého dolného rohu. 
 - Lepší výkon hlavne na netbookoch, keď NVDA generuje množstvo po sebe nasledujúcich tónov napr. pri zapnutej akustickej signalizácii pohybu kurzora myši. (#396)
+
 
 === Opravy ===
 - Keď je NVDA spustený zadaním cesty v 8.3 formáte napr. "c:\progra~1\nvda\nvda", dokáže identifikovať skutočnú cestu a načítať konfiguráciu.
@@ -162,6 +171,8 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 - Opravená chyba, keď po zobrazení prihlasovacej obrazovky bola zmazaná systémová značka identifikácie prítomnosti odčítača. Spôsobovalo to problémy s aplikáciami, ktoré týmto spôsobom overujú beh odčítača (napr. Adobe reader alebo skype). (#462)
 - V zoznamových rámikoch Internet explorer 6 je po zmene výberu správne oznamovaná aktuálna položka. (#342)
 
+
+
 = 0.6p3 =
 
 == Nové vlastnosti ==
@@ -189,6 +200,7 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 - Podpora pre niektoré editačné polia v obslužnom programe pinnacle tv.
 - Pri oznamovaní výberu NVDA pre dlhší text oznamuje počet znakov namiesto čítania celého dlhého textu.  (#249)
 
+
 == Zmeny ==
 - Ak je výstupné zariadenie NVDA nastavené na predvolené zariadenie Windows (mapovač zvuku), NVDA sa automaticky prispôsobí ak sa počas behu predvolené zariadenie zmení. Platí to pre tóny NVDA a vstavaný eSpeak. Napríklad, ak sa externé USB zariadenie po pripojení stane predvoleným, NVDA ho automaticky použije.
 - Vylepšená výkonnosť vstavaného eSpeaku s niektorými ovládačmi zvukových kariet pre Windows Vista.
@@ -197,6 +209,7 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 - Vylepšená práca s aplikačnými modulmi.
 - Namiesto termínu "režim prepúšťania" NVDA vo virtuálnom prehliadači teraz používa "prehliadací režim" a "režim fokusu".
 - Úroveň vnorenia je oznamovaná pre položky stromového zoznamu ak sa zmenila. Doteraz toto fungovalo len pre natívne stromové zoznamy SysTreeView32) Windows.
+
 
 == Opravy ==
 - Konce čítaných textov nie sú viac odseknuté v prípade, že sa NVDA so vstavaným eSpeakom používa cez vzdialenú plochu.
@@ -232,6 +245,8 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 - NVDA konečne dokáže čítať dlhší text ako je 65535 znakov v štandardných editačných poliach, Napr. veľký súbor v programe poznámkový blok.
 - Vylepšené čítanie po riadkoch v editačných poliach MSHTML (okno novej správy v programe Outlook Express a vstupné editačné polia v programe Internet explorer).
 - NVDA nezamrzne úplne pri čítaní textu v OpenOffice.org.  (#148, #180)
+
+
 
 = 0.6p2 =
 - Pridaním nových variantov vylepšená predvolená konfigurácia eSpeaku.
@@ -305,6 +320,8 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 - NVDA viac nemrzne po spustení odinštalácie z dialógu Pridať alebo odstrániť programy. (#30)
 - NVDA nezamrzne hneď po otvorení programu Spybot Search & Destroy.
 
+
+
 = 0.6p1 =
 
 == Prístup k webovému obsahu prostredníctvom nového virtuálneho prehliadača (Zatiaľ len pre Gecko 1.9 aplikácie Mozilla vrátane firefox 3 a thunderbird3) ==
@@ -332,6 +349,7 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 - Galícijský preklad od Juan C. buno
 - Ukrajinský preklad od Aleksey Sadovoy 
 
+
 == Reč ==
 - NVDA obsahuje eSpeak 1.35 ktorého prednosti sú napr. vylepšená podpora pre viaceré jazyky, pomenované varianty, možnosť hovoriť rýchlejšie.
 - V dialógu nastavenia hlasu je možné zmeniť variant ak to aktuálny hlasový výstup podporuje. Varianty sú jemné zmeny pre aktuálny hlas. (Varianty podporuje eSpeak).
@@ -345,6 +363,7 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 - Pridané sú používateľské slovníky, ktoré umožňujú získať kontrolu nad tým, ako budú niektoré frázy čítané hlasovým výstupom. Máme 3 typy slovníkov: predvolený, pre aktuálny hlas a dočasný slovník. Položky obsiahnuté v predvolenom slovníku ovplyvnia všetky frázy čítané NVDA. Slovník pre aktuálny hlas ovplyvní len čítanie pomocou aktuálneho hlasového výstupu s nastaveným aktuálnym hlasom. Dočasný slovník je určený pre situácie, keď chcete pridať pravidlo do slovníka len počas vykonávania určitej úlohy a nechcete, aby zmena bola zachovaná (po ukončení NVDA sa dočasný slovník vymaže). V aktuálnej verzii sú pravidlá slovníka regulárne výrazy.
 - Hlasové výstupy sú schopné využiť nastavenie výstupného zariadenia v dialógu Hlasový výstup..
 
+
 == Výkonnosť ==
 - NVDA nemá vysoké nároky na operačnú pamäť počas editácie obsahu v editačných poliach MSHTML.
 - Vylepšená navigácia v prvkoch, ktoré nemajú skutočný systémový kurzor (napr. okno histórie programov MSN messenger a windows live messenger, položky zoznamov a stromových zoznamov).
@@ -352,12 +371,14 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 - Počas jedného spustenia NVDA viacej nezaberá čím ďalej tým viacej pamäte
 - Opravené problémy pri opakovanom fokuse v okne príkazového riadku. NVDA zvyklo v takýchto situáciách úplne zamrznúť.
 
+
 == Klávesové príkazy ==
 - NVDA+shift+numpad6 a NVDA+shift+numpad4 Umožňujú navigáciu vpred a späť v rámci celej hierarchii. Znamená to, že na prezretie všetkých prvkov v okne aktuálnej aplikácii môžete použiť tieto príkazy bez toho, aby ste sa starali o vzťahy podradenosti či nadradenosti prehliadaných objektov. V prípade, že takýto posun prejde na inú úroveň v hierarchii, bude táto zmena indikovaná pípaním.
 - Mnohé nastavenia hlasového výstupu je možné vykonávať bez nutnosti otvorenia dialógu Nastavenia hlasu použitím tzv. skupiny nastavení hlasového výstupu. Ctrl+NVDA+šípky vľavo a vpravo menia aktuálnu voľbu v skupine a kombinácie Ctrl+NVDA+šípky hore a dolu menia hodnotu práve aktívnej voľby.
 - Možnosť prečítať vybratý text v editačných poliach (NVDA+shift+šípka hore).
 - Niektoré príkazy NVDA, ktoré čítajú text dokážu text aj vyhláskovať (napr. oznámenie aktuálneho riadku, slova, znaku, objektu).
 - Capslock, insert ako aj numerický insert môžu byť použité ako kláves NVDA. Dvojité stlačenie niektorej z týchto klávesy pošle klávesu operačnému systému, čím napodobníte chovanie ako keby NVDA ani nebol spustený. Na nastavenie NVDA klávesov môžete použiť dialóg Nastavenia klávesnice.
+
 
 == Podpora pre rôzne aplikácie ==
 - V histórii programov MSN messenger a windows live messenger je možné vyberať a kopírovať text.
@@ -369,15 +390,18 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 - NVDA dokáže čítať adresy v programe Outlook Express (komu, kópia...)
 - Oznamovanie fokusu v zozname správ v programe Outlook Express by malo byť po vymazaní správy presnejšie.
 
+
 == Aplikačné rozhrania ==
 - Zmeny v objektovej navigácii pre MSAA objekty. Ak okno má posúvač, systém menu, je možné ich zamerať navigačným objektom.
 - Podpora pre IAccessible2. Okrem toho, že toto umožní oznamovanie viacerých rolí a stavov, umožňuje to tiež čítať a vyberať text v editačných poliach programov ako firefox 3 a thunderbird 3.
 - Podpora pre editačné polia scintilla (notepad++ alebo tortoyse SVN).
 - Podpora pre java access bridge. Umožňuje čiastočný prístup k OpenOffice a iným samostatným java aplikáciám..
 
+
 == Myš ==
 - Lepšia podpora čítania textu počas posúvania kurzorom myšy. Je to teraz o mnoho rýchlejšie a tiež v niektorých prvkoch (editačných poliach, oknách java a IAccessible2) číta slovo pod kurzorom myši. Toto môže byť užitočné pre slabozrakých, ktorí by chceli prečítať špecifické časti textu pod kurzorom myši.
 - Do dialógu nastavenia myši bola pridaná nová voľba Pohyb myši Indikovať zvukom. Keď je to zaškrtnuté, pri každom pohybe NVDA krátko zapípa. Výška tónu reprezentuje ypsilónovú os, a vyváženie kanálov reprezentuje x-ovú os. Toto umožní nevidiacemu získať čiastočnú predstavu, kde približne sa kurzor myši práve nachádza. Toto tiež závisí na voľbe oznamovať objekty pod kurzorom myši. Znamená to, že ak sa rýchlo potrebujete zbaviť pípania aj oznamovania, môžete stlačiť NVDA+m. Hlasitosť pípania sa tiež mení podľa množstva jasu na aktuálne prechádzanom mieste.
+
 
 == Prezentácia objektov ==
 - Vylepšená podpora pre štandardné stromové zoznamy. NVDA dokáže oznamovať počet položiek vo vetve pri jej rozbalení. Oznamovaná je tiež úroveň vnorenia a pozícia aktuálnej položky v rámci otvorenej vetvy.
@@ -387,10 +411,14 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 - V editačných poliach NVDA automaticky oznamuje vybratý text pri získaní fokusu. Ak nie je vybratý žiadny text, NVDA prečíta aktuálny riadok.
 - NVDA je teraz viacej ohľaduplný keď pípa pri aktualizácii priebehu. Najpozoruhodnejšie to ovplivňuje prácu v aplikáciách ako napr. lotus symphony alebo accessibility probe.
 
+
 == Používateľské rozhranie ==
 - Bolo odstránené hlavné okno. Nahradené je kontextovým menu..
 - Dialóg nastavenia užívateľského rozhrania bol premenovaný na Všeobecné nastavenia. Tiež obsahuje zoznamový rámik, ktorý nastavuje úroveň logovania správ, ktoré sa budú zapisovať do log súboru NVDA. Pozor! súbor bol tiež premenovaný z debug.log na nvda.log.
 - Z dialógu prezentácia objektov bolo odstránené začiarkavacie políčko oznamovať názvy zoskupení, pretože oznamovanie zoskupení je už vyriešené inak.
+
+
+
 = 0.5 =
 - pridaný český preklad a dokumentácia (vďaka Tomáš Valúšek).
 - pridaný švédsky preklad (vďaka Daniel Innala).
@@ -445,3 +473,5 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 - Ak pri výbere jazyka v okne nastavenia používateľského rozhrania nastane chyba, používateľ je na to upozornený oknom so správou.
 - NVDA sa po zmene jazyka v okne nastavenia používateľského rozhrania opýta, či chcete vykonať reštart a uložiť konfiguráciu.
 - Pridané okno s chybovou správou ak nie je možné aktivovať hlasový výstup zvolený v okne nastavenia hlasového výstupu.
+
+
