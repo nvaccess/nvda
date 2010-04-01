@@ -1153,9 +1153,14 @@ class TaskListIcon(IAccessible):
 class ToolbarWindow32(IAccessible):
 
 	def event_gainFocus(self):
-		toolbarParent = self.parent
-		if toolbarParent and self.IAccessibleRole != oleacc.ROLE_SYSTEM_TOOLBAR:
-			toolbarParent = toolbarParent.parent
+		try:
+			# The toolbar's immediate parent is its window object, so we need to go one further.
+			toolbarParent = self.parent.parent
+			if self.IAccessibleRole != oleacc.ROLE_SYSTEM_TOOLBAR:
+				# Toolbar item.
+				toolbarParent = toolbarParent.parent
+		except AttributeError:
+			toolbarParent = None
 		if toolbarParent and toolbarParent.windowClassName == "SysPager":
 			# This is the system tray.
 			if not self.sysTrayGainFocus():
