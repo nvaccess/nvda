@@ -13,9 +13,9 @@ oldActivePannel=0
 
 class AppModule(_default.AppModule):
 
-	def event_NVDAObject_init(self,obj):
-		if obj.windowClassName=="TMyListBox" or obj.windowClassName=="TMyListBox.UnicodeClass":
-			obj.__class__=TCList
+	def findExtraNVDAObjectOverlayClasses(self, obj, clsList):
+		if obj.windowClassName in ("TMyListBox", "TMyListBox.UnicodeClass"):
+			clsList.insert(0, TCList)
 
 class TCList(IAccessible):
 

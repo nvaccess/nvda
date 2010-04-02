@@ -8,12 +8,14 @@ class AppModule(_default.AppModule):
 	def event_NVDAObject_init(self,obj):
 		if isinstance(obj,NVDAObjects.IAccessible.IAccessible):
 			obj.shouldAllowIAccessibleFocusEvent=True
+
+	def findExtraNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClassName=obj.windowClassName
 		role=obj.role
-		if windowClassName=="iTunesSources" and role==controlTypes.ROLE_TREEVIEWITEM:
-			self.overlayCustomNVDAObjectClass(obj,ITunesItem,outerMost=True)
-		elif windowClassName=="iTunesTrackList" and role==controlTypes.ROLE_LISTITEM:
-			self.overlayCustomNVDAObjectClass(obj,ITunesItem,outerMost=True)
+		if ((windowClassName=="iTunesSources" and role==controlTypes.ROLE_TREEVIEWITEM)
+			or (windowClassName=="iTunesTrackList" and role==controlTypes.ROLE_LISTITEM)
+		):
+			clsList.insert(0, ITunesItem)
 
 class ITunesItem(NVDAObjects.IAccessible.IAccessible):
 	"""Retreaves position information encoded in the accDescription"""

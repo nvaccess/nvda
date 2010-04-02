@@ -34,11 +34,9 @@ u'Előzmények',
 
 class AppModule(_default.AppModule):
 
-	def event_NVDAObject_init(self,obj):
+	def findExtraNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name in possibleHistoryWindowNames:
-			obj.__class__=MSNHistory
-			# This is necessary because we're reassigning __class__ and the __init__ for the new class doesn't get called.
-			obj.initCursorManager()
+			clsList.insert(0, MSNHistory)
 
 class MSNHistory(cursorManager.ReviewCursorManager,IAccessible):
 
