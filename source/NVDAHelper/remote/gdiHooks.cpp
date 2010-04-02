@@ -150,17 +150,19 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	int textTop=y;
 	//X and Y are not always the left and top of the text.
 	//So correct them by taking textAlignment in to account
-	if(textAlign&TA_CENTER) {
+	UINT hTextAlign=textAlign&(TA_LEFT|TA_RIGHT|TA_CENTER);
+	if(hTextAlign==TA_CENTER) {
 		LOG_DEBUG(L"TA_CENTER set");
 		textLeft-=(resultTextSize->cx/2);
-	} else if(textAlign&TA_RIGHT) {
+	} else if(hTextAlign==TA_RIGHT) {
 		LOG_DEBUG(L"TA_RIGHT set");
 		textLeft-=resultTextSize->cx;
 	}
-	if(textAlign&TA_BOTTOM) {
+	UINT vTextAlign=textAlign&(TA_TOP|TA_BOTTOM|TA_BASELINE);
+	if(vTextAlign==TA_BOTTOM) {
 		LOG_DEBUG(L"TA_BOTTOM set");
 		textTop-=resultTextSize->cy;
-	} else if(textAlign&TA_BASELINE) {
+	} else if(vTextAlign==TA_BASELINE) {
 		LOG_DEBUG(L"TA_BASELINE set");
 		textTop-=tm.tmAscent;
 	}
