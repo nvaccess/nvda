@@ -397,7 +397,7 @@ template<typename charType> int WINAPI hookClass_DrawTextEx<charType>::fakeFunct
 		fuOptions|=ETO_CLIPPED;
 	}
 	//Record the text
-	ExtTextOutHelper(model,hdc,x,y,NULL,fuOptions,textAlign,!(newFormat&DT_NOPREFIX),newString,NULL,newCount,NULL);
+	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,!(newFormat&DT_NOPREFIX),newString,NULL,newCount,NULL);
 	//Release the model, cleanup and return
 	releaseDisplayModel(model);
 	if(newString!=lpString) free(newString);
