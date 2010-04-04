@@ -141,6 +141,13 @@ void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* other
 	RECT clearRect=rect;
 	int deltaX=otherX-rect.left;
 	int deltaY=otherY-rect.top;
+	//Shift the clearing rectangle so its where it is requested to be in the destination model
+	clearRect.left+=deltaX;
+	clearRect.top+=deltaY;
+	clearRect.right+=deltaX;
+	clearRect.bottom+=deltaY;
+	//Clear the rectangle in the destination model to make space for the chunks
+	if(clearEntireRectangle) otherModel->clearRectangle(clearRect);
 	//Collect all the chunks that should be copied in to a temporary set, and expand the clearing rectangle to bound them all completely.
 	for(displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();i!=chunksByYX.end();i++) {
 		if(IntersectRect(&tempRect,&rect,&(i->second->rect))) {
@@ -148,13 +155,6 @@ void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* other
 		}
 	}
 	if(chunks.size()>0) {
-		//Shift the clearing rectangle so its where it is requested to be in the destination model
-		clearRect.left+=deltaX;
-		clearRect.top+=deltaY;
-		clearRect.right+=deltaX;
-		clearRect.bottom+=deltaY;
-		//Clear the rectangle in the destination model to make space for the chunks
-		if(clearEntireRectangle) otherModel->clearRectangle(clearRect);
 		//Insert each chunk previously selected, in to the destination model shifting the chunk's rectangle to where it should be in the destination model
 		for(set<displayModelChunk_t*>::iterator i=chunks.begin();i!=chunks.end();i++) {
 			displayModelChunk_t* chunk=new displayModelChunk_t(**i);
