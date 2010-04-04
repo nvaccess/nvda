@@ -339,6 +339,25 @@ int WINAPI fake_FillRect(HDC hdc, const RECT* lprc, HBRUSH hBrush) {
 	return res;
 }
 
+//BeginPaint hook function
+typedef HDC(WINAPI *BeginPaint_funcType)(HWND,LPPAINTSTRUCT);
+BeginPaint_funcType real_BeginPaint=NULL;
+HDC WINAPI fake_BeginPaint(HWND hwnd, LPPAINTSTRUCT lpPaint) {
+	//Call the real BeginPaint
+	HDC res=real_BeginPaint(hwnd,lpPaint);
+	//If beginPaint was successfull we can go on
+	if(res==0||!hwnd) return res;
+	//Try and get a displayModel for this DC, and if we can, then record the original text for these glyphs
+	displayModel_t* model=acquireDisplayModel(lpPaint->hdc,TRUE);
+	if(!model) return res;
+	RECT rect=lpPaint->rcPaint;
+	ClientToScreen(hwnd,(LPPOINT)&rect);
+	ClientToScreen(hwnd,((LPPOINT)&rect)+1);
+	model->clearRectangle(rect);
+	releaseDisplayModel(model);
+	return res;
+}
+
 //DrawTextEx hook class template
 //handles char or wchar_t
 template <typename charType> class hookClass_DrawTextEx {
@@ -657,6 +676,7 @@ void gdiHooks_inProcess_initialize() {
 	real_CreateCompatibleDC=(CreateCompatibleDC_funcType)apiHook_hookFunction("GDI32.dll","CreateCompatibleDC",fake_CreateCompatibleDC);
 	real_DeleteDC=(DeleteDC_funcType)apiHook_hookFunction("GDI32.dll","DeleteDC",fake_DeleteDC);
 	real_FillRect=(FillRect_funcType)apiHook_hookFunction("USER32.dll","FillRect",fake_FillRect);
+	real_BeginPaint=(BeginPaint_funcType)apiHook_hookFunction("USER32.dll","BeginPaint",fake_BeginPaint);
 	real_BitBlt=(BitBlt_funcType)apiHook_hookFunction("GDI32.dll","BitBlt",fake_BitBlt);
 	real_DestroyWindow=(DestroyWindow_funcType)apiHook_hookFunction("USER32.dll","DestroyWindow",fake_DestroyWindow);
 	real_ScriptStringAnalyse=(ScriptStringAnalyse_funcType)apiHook_hookFunction("USP10.dll","ScriptStringAnalyse",fake_ScriptStringAnalyse);
