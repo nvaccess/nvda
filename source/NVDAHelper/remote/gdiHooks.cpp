@@ -522,22 +522,25 @@ BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHe
 		if(!srcModel) return res;
 	}
 	//Get or create a display model from the destination DC
-	displayModel_t* destModel=acquireDisplayModel(hdcDest);
-	if(destModel) {
-		//If we still have no source model, its because a source DC was not given.
-		//This tells us we should use the destination model as both the source and destination.
-		if(!srcModel) srcModel=destModel;
-		RECT srcRect={nXSrc,nYSrc,nXSrc+nWidth,nYSrc+nHeight};
-		//we record chunks using device coordinates -- DCs can move/resize
-		dcPointsToScreenPoints(hdcSrc,(LPPOINT)&srcRect,2);
-		POINT destPos={nXDest,nYDest};
-		dcPointsToScreenPoints(hdcDest,&destPos,1);
-		//Copy the requested rectangle from the source model in to the destination model, at the given coordinates.
-		srcModel->copyRectangleToOtherModel(srcRect,destModel,TRUE,destPos.x,destPos.y);
-		//release models and return
-		destModel->Release();
+	//Don't create one if there is no source model (i.e. dest model will be used as source model)
+	displayModel_t* destModel=acquireDisplayModel(hdcDest,srcModel==NULL);
+	if(!destModel) {
+		if(srcModel) releaseDisplayModel(srcModel);
+		return res;
 	}
+	//If we still have no source model, its because a source DC was not given.
+	//This tells us we should use the destination model as both the source and destination.
+	if(!srcModel) srcModel=destModel;
+	RECT srcRect={nXSrc,nYSrc,nXSrc+nWidth,nYSrc+nHeight};
+	//we record chunks using device coordinates -- DCs can move/resize
+	dcPointsToScreenPoints(hdcSrc,(LPPOINT)&srcRect,2);
+	POINT destPos={nXDest,nYDest};
+	dcPointsToScreenPoints(hdcDest,&destPos,1);
+	//Copy the requested rectangle from the source model in to the destination model, at the given coordinates.
+	srcModel->copyRectangleToOtherModel(srcRect,destModel,TRUE,destPos.x,destPos.y);
+	//release models and return
 	if(srcModel!=destModel) releaseDisplayModel(srcModel);
+	destModel->Release();
 	return res;
 }
 
