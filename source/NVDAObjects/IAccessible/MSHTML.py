@@ -4,28 +4,19 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import time
-import ctypes
 from comtypes import COMError
 import comtypes.client
 import comtypes.automation
 from comtypes import IServiceProvider
-import winUser
-import globalVars
 import oleacc
 import aria
 from keyUtils import key, sendKey
 import api
 import textInfos
 from logHandler import log
-import speech
 import controlTypes
 from . import IAccessible
 from ..behaviors import EditableTextWithoutAutoSelectDetection
-import NVDAObjects
-import virtualBufferHandler
-
-lastMSHTMLEditGainFocusTimeStamp=0
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
