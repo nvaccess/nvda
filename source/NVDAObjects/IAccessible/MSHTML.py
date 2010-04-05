@@ -258,6 +258,9 @@ class MSHTML(IAccessible):
 	def findOverlayClasses(self,clsList):
 		if self.TextInfo == MSHTMLTextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
+		if nodeNamesToNVDARoles.get(self.HTMLNode.nodeName) == controlTypes.ROLE_DOCUMENT:
+			clsList.append(Body)
+
 		clsList.append(MSHTML)
 		if self.HTMLNodeHasAncestorIAccessible:
 			# The IAccessibleObject is actually for an ancestor of this object, so IAccessible overlay classes aren't relevant.
@@ -604,3 +607,11 @@ class V6ComboBox(IAccessible):
 		# This combo box is focused. However, the value change is not fired on the real focus object.
 		# Therefore, redirect this event to the real focus object.
 		focus.event_valueChange()
+
+class Body(MSHTML):
+
+	def _get_parent(self):
+		# The parent of the body accessible is an irrelevant client object (description: MSAAHTML Registered Handler).
+		# This object isn't returned when requesting OBJID_CLIENT, nor is it returned as a child of its parent.
+		# Therefore, eliminate it from the ancestry completely.
+		return super(Body, self).parent.parent
