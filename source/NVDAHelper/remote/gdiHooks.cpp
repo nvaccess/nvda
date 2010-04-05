@@ -510,16 +510,25 @@ BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHe
 	BOOL res=real_BitBlt(hdcDest,nXDest,nYDest,nWidth,nHeight,hdcSrc,nXSrc,nYSrc,dwRop);
 	//If bit blit didn't work, or its not a simple copy, we don't want to know about it
 	if(!res) return res;
-	//If there is a source DC, then try getting a display model for it.
+	BOOL useSource=FALSE;
+	switch(dwRop) {
+		case MERGECOPY:
+		case MERGEPAINT:
+		case NOTSRCCOPY:
+		case NOTSRCERASE:
+		case SRCAND:
+		case SRCCOPY:
+		case SRCERASE:
+		case SRCINVERT:
+		case SRCPAINT:
+		useSource=TRUE;
+}
+	//If there is no source dc given, the destination dc should be used as the source
+	if(hdcSrc==NULL) hdcSrc=hdcDest;
+	//Try getting a display model for the source DC if one is needed.
 	displayModel_t* srcModel=NULL;
-	if(hdcSrc) {
+	if(useSource) {
 		srcModel=acquireDisplayModel(hdcSrc,TRUE);
-		//If we got a model but it doesn't actually contain any chunks, its no use in bit blitting.
-		if(srcModel&&srcModel->getChunkCount()==0) {
-			srcModel->Release();
-			srcModel=NULL;
-		}
-		if(!srcModel) return res;
 	}
 	//Get or create a display model from the destination DC
 	//Don't create one if there is no source model (i.e. dest model will be used as source model)
@@ -528,18 +537,20 @@ BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHe
 		if(srcModel) releaseDisplayModel(srcModel);
 		return res;
 	}
-	//If we still have no source model, its because a source DC was not given.
-	//This tells us we should use the destination model as both the source and destination.
-	if(!srcModel) srcModel=destModel;
 	RECT srcRect={nXSrc,nYSrc,nXSrc+nWidth,nYSrc+nHeight};
 	//we record chunks using device coordinates -- DCs can move/resize
 	dcPointsToScreenPoints(hdcSrc,(LPPOINT)&srcRect,2);
 	POINT destPos={nXDest,nYDest};
 	dcPointsToScreenPoints(hdcDest,&destPos,1);
-	//Copy the requested rectangle from the source model in to the destination model, at the given coordinates.
-	srcModel->copyRectangleToOtherModel(srcRect,destModel,TRUE,destPos.x,destPos.y);
+	if(srcModel) {
+		//Copy the requested rectangle from the source model in to the destination model, at the given coordinates.
+		srcModel->copyRectangleToOtherModel(srcRect,destModel,TRUE,destPos.x,destPos.y);
+	} else {
+		//As there is no source model, still at least clear the rectangle
+		destModel->clearRectangle(srcRect);
+	}
 	//release models and return
-	if(srcModel!=destModel) releaseDisplayModel(srcModel);
+	if(srcModel) releaseDisplayModel(srcModel);
 	destModel->Release();
 	return res;
 }
