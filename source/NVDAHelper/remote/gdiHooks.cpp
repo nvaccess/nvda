@@ -111,6 +111,16 @@ void dcPointsToScreenPoints(HDC hdc, POINT* points, int count) {
  * @param resultTextSize an optional pointer to a SIZE structure that will contain the size of the text.
   */
 void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, wchar_t* lpString, const int* characterWidths, int cbCount, LPSIZE resultTextSize) {
+	RECT clearRect={0,0,0,0};
+	//If a rectangle was provided, convert it to screen coordinates
+	if(lprc) {
+		clearRect=*lprc;
+		dcPointsToScreenPoints(hdc,(LPPOINT)&clearRect,2);
+		//Also if opaquing is requested, clear this rectangle in the given display model
+		if(fuOptions&ETO_OPAQUE) model->clearRectangle(clearRect);
+	}
+	//If there is no string given, or its only glyphs, then we don't need to go further
+	if(!lpString||cbCount<=0||fuOptions&ETO_GLYPH_INDEX) return;
 	SIZE _textSize;
 	if(!resultTextSize) resultTextSize=&_textSize;
 	if(resultTextSize) {
@@ -171,17 +181,14 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//We must store chunks using device coordinates, not logical coordinates, as its possible for the DC's viewport to move or resize.
 	//For example, in Windows 7, menu items are always drawn at the same DC coordinates, but the DC is moved downward each time.
 	dcPointsToScreenPoints(hdc,(LPPOINT)&textRect,2);
-	RECT clearRect;
-	//If a clearing rectangle was provided we'll use it, otherwise we'll use the text's bounding rectangle.
-	if(lprc&&(fuOptions&ETO_OPAQUE)) {
-		clearRect=*lprc;
-		dcPointsToScreenPoints(hdc,(LPPOINT)&clearRect,2);
+
+	//Clear a space for the text in the model, though take clipping in to account
+	RECT tempRect;
+	if(lprc&&(fuOptions&ETO_CLIPPED)&&IntersectRect(&tempRect,&textRect,&clearRect)) {
+		model->clearRectangle(tempRect);
 	} else {
-		LOG_DEBUG(L"Clearing with text's rectangle");
-		clearRect=textRect;
+		model->clearRectangle(textRect);
 	}
-	//Update the displayModel.
-	model->clearRectangle(clearRect);
 	//Make sure this is text, and that its not using the symbol charset (e.g. the tick for a checkbox)
 	//Before recording the text.
 	if(newText.length()>0&&tm.tmCharSet!=SYMBOL_CHARSET) {
@@ -441,7 +448,7 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 	//Call the real function
 	BOOL res=realFunction(hdc,x,y,fuOptions,lprc,lpString,cbCount,lpDx);
 	//If the real function did not work, or the arguments are not sane, or only glyphs were provided, then stop here. 
-	if(res==0||!lpString||cbCount<=0||fuOptions&ETO_GLYPH_INDEX) return res;
+	if(res==0) return res;
 	//try to get or create a displayModel for this device context
 	displayModel_t* model=acquireDisplayModel(hdc);
 	//If we can't get a display model then stop here
