@@ -12,7 +12,9 @@ import api
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 
-class TorrentList(IAccessible):
+class DuplicateFocusListView(IAccessible):
+	"""A list view which annoyingly fires focus events every second, even when a menu is open.
+	"""
 
 	def _get_shouldAllowIAccessibleFocusEvent(self):
 		# Stop annoying duplicate focus events, which are fired even if a menu is open.
@@ -24,10 +26,10 @@ class TorrentList(IAccessible):
 			(focusRole == controlTypes.ROLE_POPUPMENU and controlTypes.STATE_INVISIBLE not in focusStates)
 		):
 			return False
-		return super(TorrentList, self).shouldAllowIAccessibleFocusEvent
+		return super(DuplicateFocusListView, self).shouldAllowIAccessibleFocusEvent
 
 class AppModule(_default.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName == "SysListView32" and obj.windowControlID == 27:
-			clsList.insert(0, TorrentList)
+		if obj.windowClassName == "SysListView32":
+			clsList.insert(0, DuplicateFocusListView)
