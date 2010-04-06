@@ -49,9 +49,7 @@ class AcrobatNode(IAccessible):
 			return virtualBuffers.adobeAcrobat.AdobeAcrobat
 		return super(AcrobatNode,self).virtualBufferClass
 
-	def __init__(self, **kwargs):
-		super(AcrobatNode, self).__init__(**kwargs)
-
+	def initOverlayClass(self):
 		try:
 			serv = self.IAccessibleObject.QueryInterface(IServiceProvider)
 		except COMError:
