@@ -81,6 +81,11 @@ class displayModel_t {
 	void clearRectangle(const RECT& rect);
 
 /**
+ * Removes all content from this display model.
+ */
+	void clearAll();
+
+/**
  * Copies the chunks intersecting the given rectangle, in to the given display model, starting from the given coordinates.
  * @param rect the rectangle intersecting all the chunks in this model that will be copied.
  * @param otherModel a pointer to the displayModel the chunks should be copied to (if NULL then this model is used) 
