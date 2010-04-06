@@ -84,6 +84,13 @@ void displayModel_t::insertChunk(displayModelChunk_t* chunk) {
 	chunksByYX[make_pair(chunk->rect.top+chunk->baselineFromTop,chunk->rect.left)]=chunk;
 }
 
+void displayModel_t::clearAll() {
+	for(displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();i!=chunksByYX.end();) {
+		delete i->second;
+		chunksByYX.erase(i++);
+	}
+}
+
 void displayModel_t::clearRectangle(const RECT& rect) {
 	LOG_DEBUG(L"Clearing rectangle from "<<rect.left<<L","<<rect.top<<L" to "<<rect.right<<L","<<rect.bottom);
 	set<displayModelChunk_t*> chunksForInsertion;

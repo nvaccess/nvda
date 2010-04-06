@@ -501,6 +501,23 @@ HDC WINAPI fake_CreateCompatibleDC(HDC hdc) {
 	return newHdc;
 }
 
+//SelectObject hook function
+//If a bitmap is being selected, then  we fully clear the display model for this DC if it exists.
+typedef HGDIOBJ(WINAPI *SelectObject_funcType)(HDC,HGDIOBJ);
+SelectObject_funcType real_SelectObject=NULL;
+HGDIOBJ WINAPI fake_SelectObject(HDC hdc, HGDIOBJ hGdiObj) {
+	//Call the real SelectObject
+	HGDIOBJ res=real_SelectObject(hdc,hGdiObj);
+	//If The select was successfull, and the object is a bitmap,  we can go on.
+	if(res==0||hGdiObj==NULL||GetObjectType(hGdiObj)!=OBJ_BITMAP) return res;
+	//Try and get a displayModel for this DC
+	displayModel_t* model=acquireDisplayModel(hdc,TRUE);
+	if(!model) return res;
+	model->clearAll();
+	releaseDisplayModel(model);
+	return res;
+}
+
 //DeleteDC hook function
 //Hooked so we can get rid of any memory DC no longer needed by the application.
 typedef BOOL(WINAPI *DeleteDC_funcType)(HDC);
@@ -713,6 +730,7 @@ void gdiHooks_inProcess_initialize() {
 	hookClass_ExtTextOut<char>::realFunction=(hookClass_ExtTextOut<char>::funcType)apiHook_hookFunction("GDI32.dll","ExtTextOutA",hookClass_ExtTextOut<char>::fakeFunction);
 	hookClass_ExtTextOut<wchar_t>::realFunction=(hookClass_ExtTextOut<wchar_t>::funcType)apiHook_hookFunction("GDI32.dll","ExtTextOutW",hookClass_ExtTextOut<wchar_t>::fakeFunction);
 	real_CreateCompatibleDC=(CreateCompatibleDC_funcType)apiHook_hookFunction("GDI32.dll","CreateCompatibleDC",fake_CreateCompatibleDC);
+	real_SelectObject=(SelectObject_funcType)apiHook_hookFunction("GDI32.dll","SelectObject",fake_SelectObject);
 	real_DeleteDC=(DeleteDC_funcType)apiHook_hookFunction("GDI32.dll","DeleteDC",fake_DeleteDC);
 	real_FillRect=(FillRect_funcType)apiHook_hookFunction("USER32.dll","FillRect",fake_FillRect);
 	real_BeginPaint=(BeginPaint_funcType)apiHook_hookFunction("USER32.dll","BeginPaint",fake_BeginPaint);
