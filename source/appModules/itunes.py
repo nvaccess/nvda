@@ -9,7 +9,7 @@ class AppModule(_default.AppModule):
 		if isinstance(obj,NVDAObjects.IAccessible.IAccessible):
 			obj.shouldAllowIAccessibleFocusEvent=True
 
-	def findExtraNVDAObjectOverlayClasses(self, obj, clsList):
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClassName=obj.windowClassName
 		role=obj.role
 		if ((windowClassName=="iTunesSources" and role==controlTypes.ROLE_TREEVIEWITEM)

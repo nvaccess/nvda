@@ -23,6 +23,6 @@ class TorrentList(IAccessible):
 
 class AppModule(_default.AppModule):
 
-	def findExtraNVDAObjectOverlayClasses(self, obj, clsList):
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "SysListView32" and obj.windowControlID == 27:
 			clsList.insert(0, TorrentList)

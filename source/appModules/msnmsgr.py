@@ -34,7 +34,7 @@ u'Előzmények',
 
 class AppModule(_default.AppModule):
 
-	def findExtraNVDAObjectOverlayClasses(self, obj, clsList):
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name in possibleHistoryWindowNames:
 			clsList.insert(0, MSNHistory)
 

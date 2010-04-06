@@ -27,7 +27,7 @@ class AboutBlankDocument(MSHTML):
 
 class AppModule(_default.AppModule):
 
-	def findExtraNVDAObjectOverlayClasses(self, obj, clsList):
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "Internet Explorer_Server" and obj.role == controlTypes.ROLE_DOCUMENT and obj.HTMLNode and obj.HTMLNode.document.url=="about:blank": 
 			clsList.insert(0, AboutBlankDocument)
 

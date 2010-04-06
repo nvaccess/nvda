@@ -15,7 +15,7 @@ from NVDAObjects.window.winword import WordDocument
 
 class AppModule(_default.AppModule):
 
-	def findExtraNVDAObjectOverlayClasses(self, obj, clsList):
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName=="_WwN" and obj.role==controlTypes.ROLE_EDITABLETEXT:
 			clsList.insert(0, SpellCheckErrorField)
 

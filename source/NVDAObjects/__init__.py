@@ -55,8 +55,8 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			clsList.append(APIClass)
 		# Allow app modules to add overlay classes.
 		appModule=obj.appModule
-		if appModule and "findExtraNVDAObjectOverlayClasses" in appModule.__class__.__dict__:
-			appModule.findExtraNVDAObjectOverlayClasses(obj, clsList)
+		if appModule and "chooseNVDAObjectOverlayClasses" in appModule.__class__.__dict__:
+			appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
 
 		# Determine the bases for the new class.
 		bases=[]

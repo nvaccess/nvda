@@ -61,7 +61,7 @@ class AppModule(_default.AppModule):
 			# Make sure it is always presented.
 			obj.isPresentableFocusAncestor = True
 
-	def findExtraNVDAObjectOverlayClasses(self, obj, clsList):
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
 
 		if windowClass == "AUTHUI.DLL: LogonUI Logon Window" and obj.parent and not obj.parent.parent:

@@ -57,7 +57,7 @@ class AppModule(_default.AppModule):
 		global hwndWinamp
 		hwndWinamp=windll.user32.FindWindowA("Winamp v1.x",None)
 
-	def findExtraNVDAObjectOverlayClasses(self, obj, clsList):
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
 		if windowClass == "Winamp PE":
 			clsList.insert(0, winampPlaylistEditor)

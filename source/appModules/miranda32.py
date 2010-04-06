@@ -81,7 +81,7 @@ class AppModule(_default.AppModule):
 	lastMessages=[]
 	MessageHistoryLength=3
 
-	def findExtraNVDAObjectOverlayClasses(self, obj, clsList):
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
 		if windowClass == "CListControl":
 			clsList.insert(0, mirandaIMContactList)

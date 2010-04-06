@@ -5,7 +5,7 @@ import speech
 
 class AppModule(_default.AppModule):
 
-	def findExtraNVDAObjectOverlayClasses(self, obj, clsList):
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClassName=obj.windowClassName
 		windowControlID=obj.windowControlID
 		if ((windowClassName=="Edit" and windowControlID==403)

@@ -73,7 +73,7 @@ class AppModule(_default.AppModule):
 		if ((windowClassName=="SUPERGRID" and controlID==4704) or (windowClassName=="rctrl_renwnd32" and controlID==109)) and role==controlTypes.ROLE_UNKNOWN:
 			obj.role=controlTypes.ROLE_ICON
 
-	def findExtraNVDAObjectOverlayClasses(self, obj, clsList):
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		role=obj.role
 		windowClassName=obj.windowClassName
 		controlID=obj.windowControlID

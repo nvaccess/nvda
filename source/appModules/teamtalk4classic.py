@@ -14,7 +14,7 @@ class AppModule(_default.AppModule):
 		if obj.windowClassName=="RichEdit20A":
 			obj._isWindowUnicode=False
 
-	def findExtraNVDAObjectOverlayClasses(self, obj, clsList):
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		# There is a VU meter progress bar in the main window which we don't want to get anounced as all the other progress bars.
 		if obj.windowClassName=="msctls_progress32" and obj.name==u'VU':
 			try:
