@@ -1219,7 +1219,6 @@ _staticMap={
 	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
 	("TRxRichEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,oleacc.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
-	("MozillaUIWindowClass",oleacc.ROLE_SYSTEM_APPLICATION):"mozilla.application",
 	("MozillaDialogClass",oleacc.ROLE_SYSTEM_ALERT):"Dialog",
 	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_COMBOBOX):"mozilla.ComboBox",
 	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_LIST):"mozilla.List",
