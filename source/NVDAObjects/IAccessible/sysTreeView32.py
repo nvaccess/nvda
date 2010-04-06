@@ -290,8 +290,12 @@ class BrokenCommctrl5Item(IAccessible):
 		if not UIAHandler.handler:
 			return None
 		# Get a UIA object for the tree view by getting the root object for the window.
-		uiaObj = UIA(windowHandle=treeObj.windowHandle)
-		if not uiaObj:
+		try:
+			kwargs = {"windowHandle": treeObj.windowHandle}
+			UIA.kwargsFromSuper(kwargs)
+			uiaObj = UIA(**kwargs)
+		except:
+			log.debugWarning("Error retrieving UIA object for tree view", exc_info=True)
 			return None
 		# Get the first tree item.
 		uiaObj = uiaObj.firstChild
