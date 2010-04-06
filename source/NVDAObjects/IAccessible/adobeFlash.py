@@ -40,16 +40,6 @@ class InputTextFieldTextInfo(NVDAObjectTextInfo):
 class InputTextField(EditableTextWithoutAutoSelectDetection, IAccessible):
 	TextInfo = InputTextFieldTextInfo
 
-	def __init__(self, ISimpleTextSelectionObject=None, **kwargs):
-		super(InputTextField, self).__init__(**kwargs)
-		if ISimpleTextSelectionObject:
-			self.ISimpleTextSelectionObject = ISimpleTextSelectionObject
-		else:
-			try:
-				self.ISimpleTextSelectionObject = self.IAccessibleObject.QueryInterface(IServiceProvider).QueryService(ISimpleTextSelection._iid_, ISimpleTextSelection)
-			except COMError:
-				self.ISimpleTextSelectionObject = None
-
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Flash object.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
