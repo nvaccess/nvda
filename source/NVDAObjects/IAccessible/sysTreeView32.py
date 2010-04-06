@@ -211,10 +211,6 @@ class BrokenCommctrl5Item(IAccessible):
 	We can't simply use UIA objects alone for these controls because UIA events are also broken.
 	"""
 
-	def findOverlayClasses(self, clsList):
-		# This class can be directly instantiated.
-		return (BrokenCommctrl5Item,)
-
 	def __init__(self, _uiaObj=None, **kwargs):
 		# This class is being directly instantiated.
 		if not _uiaObj:

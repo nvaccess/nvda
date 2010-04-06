@@ -217,25 +217,16 @@ class AppModule(baseObject.ScriptableObject):
 		winKernel.closeHandle(self.processHandle)
 		NVDAHelper.localLib.destroyConnection(self.helperLocalBindingHandle)
 
-	def overlayCustomNVDAObjectClass(self,obj,customClass,outerMost=False):
-		"""Overlays the given custom class on to the class structure of the given NVDAObject.
-		@param obj: the NVDAObject that should be overlayed.
-		@type obj: NVDAObject
-		@param customClass: the class to overlay
-		@type customClass: NVDAObject class
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		"""Choose NVDAObject overlay classes for a given NVDAObject.
+		This is called when an NVDAObject is being instantiated after L{NVDAObjects.NVDAObject.findOverlayClasses} has been called on the API-level class.
+		This allows an AppModule to add or remove overlay classes.
+		See L{NVDAObjects.NVDAObject.findOverlayClasses} for details about overlay classes.
+		@param obj: The object being created.
+		@type obj: L{NVDAObjects.NVDAObject}
+		@param clsList: The list of classes, which will be modified by this method if appropriate.
+		@type clsList: list of L{NVDAObjects.NVDAObject}
 		"""
-		oldClass=obj.__class__
-		cacheKey=(self.__class__,customClass,oldClass)
-		newClass=self._overlayClassCache.get(cacheKey,None)
-		if not newClass:
-			newName="%s_%sAppModule_%s"%(customClass.__name__,self.appModuleName,oldClass.__name__)
-			if outerMost:
-				bases=(customClass,oldClass)
-			else:
-				bases=(oldClass,customClass)
-			newClass=type(newName,bases,{})
-			self._overlayClassCache[cacheKey]=newClass
-		obj.__class__=newClass
 
 	def loadKeyMap(self):
 		"""Loads a key map in to this appModule . if the key map exists. It takes in to account what layout NVDA is currently set to.

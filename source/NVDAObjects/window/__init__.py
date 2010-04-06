@@ -102,7 +102,7 @@ An NVDAObject for a window
 		clsList.append(newCls)
 		if newCls!=Window:
 			clsList.append(Window)
-		return super(Window,self).findOverlayClasses(clsList)
+		super(Window,self).findOverlayClasses(clsList)
 
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):

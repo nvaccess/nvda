@@ -42,20 +42,22 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		else:
 			APIClass=self
 
-		if 'findOverlayClasses' not in APIClass.__dict__:
-			raise TypeError("Cannot instantiate class %s as it does not implement findOverlayClasses"%APIClass.__name__)
-
 		# Instantiate the requested class.
 		obj=APIClass.__new__(APIClass,**kwargs)
 		obj.APIClass=APIClass
 		if isinstance(obj,self):
 			obj.__init__(**kwargs)
 
-		try:
-			clsList=obj.findOverlayClasses([])
-		except:
-			log.debugWarning("findOverlayClasses failed",exc_info=True)
-			return None
+		clsList = []
+		if "findOverlayClasses" in APIClass.__dict__:
+			obj.findOverlayClasses(clsList)
+		else:
+			clsList.append(APIClass)
+		# Allow app modules to add overlay classes.
+		appModule=obj.appModule
+		if appModule and "chooseNVDAObjectOverlayClasses" in appModule.__class__.__dict__:
+			appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
+
 		# Determine the bases for the new class.
 		bases=[]
 		for index in xrange(len(clsList)):
@@ -88,8 +90,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			if initFunc:
 				initFunc(obj)
 
-		# Allow app modules to mutate NVDAObjects during creation.
-		appModule=obj.appModule
+		# Allow app modules to make minor tweaks to the instance.
 		if appModule and hasattr(appModule,"event_NVDAObject_init"):
 			appModule.event_NVDAObject_init(obj)
 
@@ -164,13 +165,10 @@ class NVDAObject(baseObject.ScriptableObject):
 		This process allows an NVDAObject to be dynamically created using the most appropriate NVDAObject subclass at each API level.
 		Classes should be listed with subclasses first. That is, subclasses should generally call super and then append their own classes to the list.
 		For example: Called on an IAccessible NVDAObjectThe list might contain DialogIaccessible (a subclass of IAccessible), Edit (a subclass of Window).
-		@param clsList: The list of classes from the caller.
+		@param clsList: The list of classes, which will be modified by this method if appropriate.
 		@type clsList: list of L{NVDAObject}
-		@@return: the new list of classes.
-		@rtype: list of L{NVDAObject}
 		"""
 		clsList.append(NVDAObject)
-		return clsList
 
 	beTransparentToMouse=False #:If true then NVDA will never consider the mouse to be on this object, rather it will be on an ancestor.
 

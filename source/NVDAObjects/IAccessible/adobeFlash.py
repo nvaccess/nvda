@@ -51,4 +51,3 @@ def findExtraOverlayClasses(obj, clsList):
 		clsList.append(InputTextField)
 	except COMError:
 		pass
-	return clsList
