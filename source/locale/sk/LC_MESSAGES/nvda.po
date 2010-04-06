@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: main,3414\n"
+"Project-Id-Version: main,3434\n"
 "POT-Creation-Date: 2007-03-07 08:26+Central Europe Standard Time\n"
-"PO-Revision-Date: 2010-03-31 10:35+Central Europe Standard Time\n"
+"PO-Revision-Date: 2010-04-06 22:000+Central Europe Standard Time\n"
 "Last-Translator: Peter Vágner <peter.v@datagate.sk>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr "neznáme rozloženie"
 msgid "layout %s"
 msgstr "rozloženie %s"
 
-#: NVDAObjects\IAccessible\__init__.py:1206
+#: NVDAObjects\IAccessible\__init__.py:1208
 msgid "Taskbar"
 msgstr "panel úloh"
 
@@ -34,7 +34,7 @@ msgstr "panel úloh"
 msgid "%s items"
 msgstr "%s položiek"
 
-#: NVDAObjects\UIA\__init__.py:413
+#: NVDAObjects\UIA\__init__.py:412
 #, fuzzy
 msgid "invoke"
 msgstr "prepojené"
@@ -69,23 +69,23 @@ msgstr "NVDA - upraviť bunku programu Excel"
 msgid "Enter cell contents"
 msgstr "Vložte obsah bunky"
 
-#: NVDAObjects\window\excel.py:117
+#: NVDAObjects\window\excel.py:113
 msgid "Extends the selection and speaks the last selected cell"
 msgstr "Rozšíri výber a oznámy poslednú vybratú bunku"
 
-#: NVDAObjects\window\excel.py:126
+#: NVDAObjects\window\excel.py:122
 msgid "Moves to a cell and speaks its coordinates and content"
 msgstr "prejde do bunky a prečíta jej obsah a súradnice"
 
-#: NVDAObjects\window\excel.py:222
+#: NVDAObjects\window\excel.py:214
 msgid "has formula"
 msgstr "má vzorec"
 
-#: NVDAObjects\window\excel.py:264
+#: NVDAObjects\window\excel.py:252
 msgid "selection"
 msgstr "výber"
 
-#: NVDAObjects\window\excel.py:269
+#: NVDAObjects\window\excel.py:257
 msgid "%s %s through %s %s"
 msgstr "%s %s do %s %s"
 
@@ -109,8 +109,8 @@ msgstr "Chyba v aplikačnom module \"%s\"."
 #: appModules\_default.py:734
 #: appModules\_default.py:744
 #: appModules\_default.py:754
-#: appModules\winamp.py:74
-#: appModules\winamp.py:84
+#: appModules\winamp.py:77
+#: appModules\winamp.py:87
 #: keyboardHandler.py:53
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
@@ -128,8 +128,8 @@ msgstr "zapnuté"
 #: appModules\_default.py:731
 #: appModules\_default.py:741
 #: appModules\_default.py:751
-#: appModules\winamp.py:76
-#: appModules\winamp.py:86
+#: appModules\winamp.py:79
+#: appModules\winamp.py:89
 #: gui\settingsDialogs.py:517
 #: keyboardHandler.py:53
 #: keyboardHandler.py:55
@@ -201,7 +201,7 @@ msgid "Locks or unlocks the right mouse button"
 msgstr "Uzamkne alebo odomkne pravé tlačidlo myši"
 
 #: appModules\_default.py:100
-#: cursorManager.py:225
+#: cursorManager.py:229
 msgid "no selection"
 msgstr "nič nie je vybraté"
 
@@ -352,7 +352,9 @@ msgid ""
 "cent from top edge of screen, width is %.1f per cent of screen, height is %."
 "1f per cent of screen"
 msgstr ""
-"Rohy objektu umiestnené %.1f percent od ľavého kraja, %.1f percent od horného kraja obrazovky, šírka je %.1f percent šírky obrazovky a víška je %.1f percent výšky obrazovky."
+"Rohy objektu umiestnené %.1f percent od ľavého kraja, %.1f percent od "
+"horného kraja obrazovky, šírka je %.1f percent šírky obrazovky a víš"
+"ka je %.1f percent výšky obrazovky."
 
 #: appModules\_default.py:268
 msgid "Reports the hight, width and position of the current navigator object"
@@ -711,7 +713,7 @@ msgid "speaks the current foreground object"
 msgstr "Prečíta obsah aktuálneho okna v popredí."
 
 #: appModules\_default.py:700
-#: cursorManager.py:228
+#: cursorManager.py:232
 msgid "copied to clipboard"
 msgstr "okopírované do schránky."
 
@@ -973,11 +975,11 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr ""
 "V prípade, že je práve prehrávaná skladba, oznámi zostávajúci čas"
 
-#: appModules\miranda32.py:104
+#: appModules\miranda32.py:108
 msgid "No message yet"
 msgstr "Zatiaľ nebola doručená žiadna správa"
 
-#: appModules\miranda32.py:105
+#: appModules\miranda32.py:109
 msgid "Displays one of the recent messages"
 msgstr "Prečíta jeden z naposledy prijatých správ"
 
@@ -2222,27 +2224,27 @@ msgstr "Nahrávam podporné systémy, prosím čakajte."
 msgid "NVDA started"
 msgstr "NVDA spustený."
 
-#: cursorManager.py:76
+#: cursorManager.py:80
 msgid "Find"
 msgstr "Hľadať"
 
-#: cursorManager.py:76
+#: cursorManager.py:80
 msgid "Type the text you wish to find"
 msgstr "Napíšte text, ktorý chcete vyhľadať."
 
-#: cursorManager.py:90
+#: cursorManager.py:94
 msgid "Find Error"
 msgstr "Chyba vyhľadávania"
 
-#: cursorManager.py:90
+#: cursorManager.py:94
 msgid "text \"%s\" not found"
 msgstr "Text \"%s\" nebol nájdený."
 
-#: cursorManager.py:96
+#: cursorManager.py:100
 msgid "find a text string from the current cursor position"
 msgstr "Vyhľadávanie zadaného textu od aktuálnej pozície kurzora."
 
-#: cursorManager.py:103
+#: cursorManager.py:107
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
@@ -2250,7 +2252,7 @@ msgstr ""
 "Hľadá ďalší výskyt pred tým zadaného textu od aktuálnej pozície "
 "kurzora."
 
-#: cursorManager.py:110
+#: cursorManager.py:114
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
@@ -2371,7 +2373,9 @@ msgstr "P&rehliadací kurzor a objektová navigácia..."
 
 #: gui\__init__.py:274
 msgid "Configure how and when the review cursor moves"
-msgstr "Nastavenia kedy a ako sa aktualizuje prehliadací kurzor navigačného objektu"
+msgstr ""
+"Nastavenia kedy a ako sa aktualizuje prehliadací kurzor navigačného "
+"objektu"
 
 #: gui\__init__.py:276
 msgid "&Object presentation..."
@@ -3502,10 +3506,6 @@ msgstr "&Intonácia"
 #: synthDrivers\_espeak.py:308
 msgid "none"
 msgstr "Žiadny"
-
-#: synthDrivers\newfon.py:172
-msgid "russian newfon synthesizer by Sergey Shishmintzev"
-msgstr "Ruský hlasový výstup newfon od Sergey Shishmintzev"
 
 #: synthDrivers\newfon.py:175
 msgid "&Language"

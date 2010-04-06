@@ -9,10 +9,12 @@
 - Objektová navigácia bola výrazne zjednodušená. Prehliadací kurzor vynecháva objekty, ktoré nie sú pre používateľa užitočné napr. nedostupné objekty a objekty, ktoré formujú len vzhľad.
 - V aplikáciách sprístupnených cez java access bridge vrátane openoffice.org je pre editačné polia možné získať informácie o formátovaní. (#358, #463)
 - Počas posúvania myši v programe Microsoft Excel dokáže NVDA čítať text bunky, ktorá je práve pod kurzorom..
+- V aplikáciách používajúcich Java access bridge je text dialógu automaticky oznamovaný, keď dialóg získa fokus. (#554)
 
 
 == Zmeny ==
 - Plynulé čítanie navigačného objektu (NVDA+numpad plus), prejsť na ďalší a predchádzajúci objekt v náväznosti boli odstránené, pretože nefungovali spoľahlivo. Uvolnia sa takto aspoň klávesy.
+- V dialógu Hlasový výstup je v zozname uvedený len názov hlasových výstupov. Doteraz bol zobrazovaný aj názov modulu, ktorý je relevantný len interne.
 
  
 == Opravy ==
