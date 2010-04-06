@@ -17,7 +17,12 @@ class TorrentList(IAccessible):
 	def _get_shouldAllowIAccessibleFocusEvent(self):
 		# Stop annoying duplicate focus events, which are fired even if a menu is open.
 		focus = api.getFocusObject()
-		if self == focus or focus.role in (controlTypes.ROLE_MENUITEM, controlTypes.ROLE_MENU, controlTypes.ROLE_POPUPMENU):
+		focusRole = focus.role
+		focusStates = focus.states
+		if (self == focus or
+			(focusRole == controlTypes.ROLE_MENUITEM and controlTypes.STATE_FOCUSED in focusStates) or
+			(focusRole == controlTypes.ROLE_POPUPMENU and controlTypes.STATE_INVISIBLE not in focusStates)
+		):
 			return False
 		return super(TorrentList, self).shouldAllowIAccessibleFocusEvent
 
