@@ -243,6 +243,15 @@ class MSHTML(IAccessible):
 			pass
 		if not HTMLNode:
 			return False
+
+		if relation=="focus":
+			try:
+				HTMLNode=HTMLNode.document.activeElement
+				# The IAccessibleObject may be incorrect now, so let the constructor recalculate it.
+				del kwargs['IAccessibleObject']
+			except:
+				log.exception("Error getting activeElement")
+
 		kwargs['HTMLNode']=HTMLNode
 		return True
 
