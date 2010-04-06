@@ -3,7 +3,7 @@ import re
 import JABHandler
 import controlTypes
 from ..window import Window
-from ..behaviors import EditableTextWithoutAutoSelectDetection
+from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 import textInfos.offsets
 from logHandler import log
 
@@ -155,8 +155,11 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 class JAB(Window):
 
 	def findOverlayClasses(self,clsList):
-		if self._JABAccContextInfo.accessibleText and self.JABRole in ("text","password text","edit bar","view port","paragraph"):
+		role = self.JABRole
+		if self._JABAccContextInfo.accessibleText and role in ("text","password text","edit bar","view port","paragraph"):
 			clsList.append(EditableTextWithoutAutoSelectDetection)
+		elif role in ("dialog", "alert"):
+			clsList.append(Dialog)
 		clsList.append(JAB)
 
 	@classmethod
