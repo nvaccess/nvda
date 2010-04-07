@@ -87,7 +87,7 @@ def getRecursiveDataFiles(dest,source,excludes=()):
 	rulesList=[]
 	rulesList.append((dest,
 		[f for f in glob("%s/*"%source) if not any(fnmatch.fnmatch(f,exclude) for exclude in excludes) and os.path.isfile(f)]))
-	[rulesList.extend(getRecursiveDataFiles(os.path.join(dest,dirName),os.path.join(source,dirName))) for dirName in os.listdir(source) if os.path.isdir(os.path.join(source,dirName)) and not dirName.startswith('.')]
+	[rulesList.extend(getRecursiveDataFiles(os.path.join(dest,dirName),os.path.join(source,dirName),excludes=excludes)) for dirName in os.listdir(source) if os.path.isdir(os.path.join(source,dirName)) and not dirName.startswith('.')]
 	return rulesList
 
 setup(
@@ -150,5 +150,5 @@ setup(
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("louis/tables",glob("louis/tables/*"))
-	] + getRecursiveDataFiles('documentation', '../user_docs'),
+	] + getRecursiveDataFiles('documentation', '../user_docs', excludes=('*.t2t',)),
 )
