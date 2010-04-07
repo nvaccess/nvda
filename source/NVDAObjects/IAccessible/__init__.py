@@ -278,6 +278,7 @@ the NVDAObject for IAccessible
 		kwargs['IAccessibleChildID']=acc[1]
 		if objID:
 			# We know the event parameters, so pass them to the NVDAObject.
+			kwargs['event_windowHandle']=windowHandle
 			kwargs['event_objectID']=objID
 			kwargs['event_childID']=0
 		return True
