@@ -270,7 +270,7 @@ the NVDAObject for IAccessible
 			objID=winUser.OBJID_CLIENT
 		else:
 			objID=winUser.OBJID_WINDOW
-		if objID:
+		if objID is not None:
 			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,objID,0)
 		if not acc:
 			return False
