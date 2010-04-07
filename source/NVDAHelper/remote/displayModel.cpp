@@ -21,8 +21,10 @@ void displayModelChunk_t::truncate(int truncatePointX, BOOL truncateBefore) {
 		text.erase(text.begin(),t);
 	} else if(!truncateBefore&&truncatePointX<rect.right) {
 		for(;t!=text.end()&&(*c)<=truncatePointX;c++,t++);
-		--c;
-		--t;
+		if(t!=text.begin()) {
+			--c;
+			--t;
+		}
 		rect.right=*c;
 		characterXArray.erase(c,characterXArray.end());
 		text.erase(t,text.end());
