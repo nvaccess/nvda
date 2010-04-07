@@ -10,6 +10,7 @@ import eventHandler
 class LogonDialog(Dialog):
 
 	role = controlTypes.ROLE_DIALOG
+	isPresentableFocusAncestor = True
 
 	def event_gainFocus(self):
 		child = self.firstChild
@@ -24,7 +25,7 @@ class LogonDialog(Dialog):
 
 class XPPasswordField(IAccessible):
 
-	def bindKeys(self):
+	def initOverlayClass(self):
 		for key, script in (
 			("extendedUp", "changeUser"),
 			("extendedDown", "changeUser"),
@@ -54,18 +55,22 @@ class XPPasswordField(IAccessible):
 class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self, obj):
-		if obj.windowClassName in ("NativeHWNDHost", "AUTHUI.DLL: LogonUI Logon Window") and obj.parent and not obj.parent.parent:
-			# Make sure the top level pane is always presented.
+		if obj.windowClassName == "NativeHWNDHost" and obj.parent and not obj.parent.parent:
+			# This is the top level pane of the XP logon screen.
+			# Make sure it is always presented.
 			obj.isPresentableFocusAncestor = True
-			if obj.windowClassName=="AUTHUI.DLL: LogonUI Logon Window":
-				self.overlayCustomNVDAObjectClass(obj, LogonDialog, outerMost=True)
+
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		windowClass = obj.windowClassName
+
+		if windowClass == "AUTHUI.DLL: LogonUI Logon Window" and obj.parent and not obj.parent.parent:
+			clsList.insert(0, LogonDialog)
 			return
 
-		if obj.windowClassName == "Edit" and not obj.name:
+		if windowClass == "Edit" and not obj.name:
 			parent = obj.parent
 			if parent and parent.role == controlTypes.ROLE_LISTITEM:
-				self.overlayCustomNVDAObjectClass(obj, XPPasswordField, outerMost=True)
-				obj.bindKeys()
+				clsList.insert(0, XPPasswordField)
 				return
 
 	def event_gainFocus(self,obj,nextHandler):

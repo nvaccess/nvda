@@ -88,10 +88,6 @@ class ExcelWorksheet(ExcelWindow):
 
 	role=controlTypes.ROLE_TABLE
 
-	def findOverlayClasses(self,clsList):
-		clsList.append(ExcelWorksheet)
-		return clsList
-
 	def __init__(self,windowHandle=None,excelWindowObject=None,excelWorksheetObject=None):
 		self.excelWindowObject=excelWindowObject
 		self.excelWorksheetObject=excelWorksheetObject
@@ -191,10 +187,6 @@ class ExcelCell(ExcelWindow):
 		kwargs['excelCellObject']=excelCellObject
 		return True
 
-	def findOverlayClasses(self,clsList):
-		clsList.append(ExcelCell)
-		return clsList
-
 	def __init__(self,windowHandle=None,excelWindowObject=None,excelCellObject=None):
 		self.excelWindowObject=excelWindowObject
 		self.excelCellObject=excelCellObject
@@ -247,10 +239,6 @@ class ExcelCell(ExcelWindow):
 ExcelCell.bindKey("f2","editCell")
 
 class ExcelSelection(ExcelWindow):
-
-	def findOverlayClasses(self,clsList):
-		clsList.append(ExcelSelection)
-		return clsList
 
 	role=controlTypes.ROLE_GROUPING
 

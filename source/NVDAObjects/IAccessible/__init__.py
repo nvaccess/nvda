@@ -322,7 +322,7 @@ the NVDAObject for IAccessible
 		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2) and role == oleacc.ROLE_SYSTEM_TEXT) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary"):
 			# This is possibly a Flash object.
 			from . import adobeFlash
-			clsList = adobeFlash.findExtraOverlayClasses(self, clsList)
+			adobeFlash.findExtraOverlayClasses(self, clsList)
 		elif windowClassName.startswith('Mozilla'):
 			from .mozilla import Mozilla
 			clsList.append( Mozilla)
@@ -334,10 +334,7 @@ the NVDAObject for IAccessible
 
 		if self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0:
 			# This is the main (client) area of the window, so we can use other classes at the window level.
-			return super(IAccessible,self).findOverlayClasses(clsList)
-		else:
-			# This IAccessible does not represent the main part of the window, so we can only use IAccessible classes.
-			return clsList
+			super(IAccessible,self).findOverlayClasses(clsList)
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
@@ -1153,9 +1150,14 @@ class TaskListIcon(IAccessible):
 class ToolbarWindow32(IAccessible):
 
 	def event_gainFocus(self):
-		toolbarParent = self.parent
-		if toolbarParent and self.IAccessibleRole != oleacc.ROLE_SYSTEM_TOOLBAR:
-			toolbarParent = toolbarParent.parent
+		try:
+			# The toolbar's immediate parent is its window object, so we need to go one further.
+			toolbarParent = self.parent.parent
+			if self.IAccessibleRole != oleacc.ROLE_SYSTEM_TOOLBAR:
+				# Toolbar item.
+				toolbarParent = toolbarParent.parent
+		except AttributeError:
+			toolbarParent = None
 		if toolbarParent and toolbarParent.windowClassName == "SysPager":
 			# This is the system tray.
 			if not self.sysTrayGainFocus():
@@ -1217,7 +1219,6 @@ _staticMap={
 	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
 	("TRxRichEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,oleacc.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
-	("MozillaUIWindowClass",oleacc.ROLE_SYSTEM_APPLICATION):"mozilla.application",
 	("MozillaDialogClass",oleacc.ROLE_SYSTEM_ALERT):"Dialog",
 	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_COMBOBOX):"mozilla.ComboBox",
 	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_LIST):"mozilla.List",
@@ -1260,9 +1261,9 @@ _staticMap={
 	("ToolbarWindow32",oleacc.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("TPTShellList",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TProgressBar",oleacc.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
-	("AVL_AVView",None):"adobe.AcrobatNode",
-	("AVL_AVView",oleacc.ROLE_SYSTEM_TEXT):"adobe.AcrobatTextNode",
-	("AcrobatSDIWindow",oleacc.ROLE_SYSTEM_CLIENT):"adobe.AcrobatSDIWindowClient",
+	("AVL_AVView",None):"adobeAcrobat.AcrobatNode",
+	("AVL_AVView",oleacc.ROLE_SYSTEM_TEXT):"adobeAcrobat.AcrobatTextNode",
+	("AcrobatSDIWindow",oleacc.ROLE_SYSTEM_CLIENT):"adobeAcrobat.AcrobatSDIWindowClient",
 	("mscandui21.candidate",oleacc.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
 	("SysMonthCal32",oleacc.ROLE_SYSTEM_CLIENT):"SysMonthCal32.SysMonthCal32",
 	("hh_kwd_vlist",oleacc.ROLE_SYSTEM_LIST):"hh.KeywordList",

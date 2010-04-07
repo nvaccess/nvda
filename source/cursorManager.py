@@ -36,10 +36,14 @@ class CursorManager(baseObject.ScriptableObject):
 		super(CursorManager, self).__init__(*args, **kwargs)
 		self.initCursorManager()
 
+	def initOverlayClass(self):
+		"""Performs automatic initialisation if this is being used as an overlay class."""
+		self.initCursorManager()
+
 	def initCursorManager(self):
 		"""Initialise this cursor manager.
 		This must be called before the cursor manager functionality can be used.
-		It is normally called by L{__init__}, but may not be if __class__ is reassigned.
+		It is normally called by L{__init__} or L{initOverlayClass}.
 		"""
 		self._lastSelectionMovedStart=False
 		self.bindToStandardKeys()

@@ -146,10 +146,6 @@ class List(List):
 
 class GroupingItem(Window):
 
-	def findOverlayClasses(self, clsList):
-		# This class can be directly instantiated.
-		return (GroupingItem,)
-
 	def __init__(self,parent,groupInfo):
 		super(GroupingItem,self).__init__(windowHandle=parent.windowHandle)
 		self.parent=parent

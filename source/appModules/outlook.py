@@ -65,18 +65,25 @@ class AppModule(_default.AppModule):
 		#The control that shows HTML messages has stuffed parents. Use the control's parent window as its parent
 		if windowClassName=="Internet Explorer_Server" and role==controlTypes.ROLE_PANE and not getattr(obj,'HTMLNode'):
 			obj.parent=Window._get_parent(Window._get_parent(obj))
-		if role==controlTypes.ROLE_LISTITEM and windowClassName=="OUTEXVLB":
-			self.overlayCustomNVDAObjectClass(obj,AddressBookEntry,outerMost=True)
 		if role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_MENUITEM):
 			obj.description=None
 		if role in (controlTypes.ROLE_TREEVIEW,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LIST,controlTypes.ROLE_LISTITEM):
 			obj.shouldAllowIAccessibleFocusEvent=True
+		if ((windowClassName=="SUPERGRID" and controlID==4704) or (windowClassName=="rctrl_renwnd32" and controlID==109)) and role==controlTypes.ROLE_UNKNOWN:
+			obj.role=controlTypes.ROLE_ICON
+
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		role=obj.role
+		windowClassName=obj.windowClassName
+		controlID=obj.windowControlID
+		if role==controlTypes.ROLE_LISTITEM and windowClassName=="OUTEXVLB":
+			clsList.insert(0, AddressBookEntry)
+			return
 		if (windowClassName=="SUPERGRID" and controlID==4704) or (windowClassName=="rctrl_renwnd32" and controlID==109):
 			outlookVersion=self.outlookVersion
-			if outlookVersion and outlookVersion<=9 and isinstance(obj,IAccessible):
-				obj.__class__=MessageList_pre2003
-			elif obj.role==controlTypes.ROLE_UNKNOWN:
-				obj.role=controlTypes.ROLE_ICON
+			if outlookVersion and outlookVersion<=9:
+				clsList.insert(0, MessageList_pre2003)
+			return
 
 class MessageList_pre2003(IAccessible):
 

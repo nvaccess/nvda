@@ -355,7 +355,7 @@ def normalizeIAccessible(pacc):
 def accessibleObjectFromEvent(window,objectID,childID):
 	wmResult=c_long()
 	if windll.user32.SendMessageTimeoutW(window,winUser.WM_NULL,0,0,winUser.SMTO_ABORTIFHUNG,2000,byref(wmResult))==0:
-		raise OSError("Window is not responding")
+		raise ctypes.WinError()
 	try:
 		pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
 	except Exception as e:
