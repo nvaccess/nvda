@@ -260,19 +260,26 @@ the NVDAObject for IAccessible
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
 		acc=None
+		objID=None
 		windowHandle=kwargs['windowHandle']
 		if isinstance(relation,tuple):
 			acc=IAccessibleHandler.accessibleObjectFromPoint(relation[0],relation[1])
 		elif relation=="focus":
-			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
+			objID=winUser.OBJID_CLIENT
 		elif relation in ("parent","foreground"):
-			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
+			objID=winUser.OBJID_CLIENT
 		else:
-			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_WINDOW,0)
+			objID=winUser.OBJID_WINDOW
+		if objID:
+			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,objID,0)
 		if not acc:
 			return False
 		kwargs['IAccessibleObject']=acc[0]
 		kwargs['IAccessibleChildID']=acc[1]
+		if objID:
+			# We know the event parameters, so pass them to the NVDAObject.
+			kwargs['event_objectID']=objID
+			kwargs['event_childID']=0
 		return True
 
 	@classmethod
