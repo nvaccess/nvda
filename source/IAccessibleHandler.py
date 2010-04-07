@@ -774,8 +774,10 @@ def _fakeFocus(oldFocus):
 	if oldFocus is not api.getFocusObject():
 		# The focus has changed - no need to fake it.
 		return
-	focus = api.getDesktopObject().objectWithFocus()
-	if not focus:
+	try:
+		focus = api.getDesktopObject().objectWithFocus()
+	except:
+		log.exception("Error retrieving focus")
 		return
 	processFocusNVDAEvent(focus)
 
