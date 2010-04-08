@@ -612,4 +612,8 @@ class Body(MSHTML):
 		# The parent of the body accessible is an irrelevant client object (description: MSAAHTML Registered Handler).
 		# This object isn't returned when requesting OBJID_CLIENT, nor is it returned as a child of its parent.
 		# Therefore, eliminate it from the ancestry completely.
-		return super(Body, self).parent.parent
+		parent = super(Body, self).parent
+		if parent:
+			return parent.parent
+		else:
+			return parent
