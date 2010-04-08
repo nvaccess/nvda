@@ -188,7 +188,7 @@ void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* other
 	}
 }
 
-void displayModel_t::renderText(const RECT* rect, wstring& text) {
+void displayModel_t::renderText(const RECT* rect, wstring& text, deque<POINT>& characterPoints) {
 	RECT tempRect;
 	int lastTextEndX; 
 	int lastTextBaseline;
@@ -212,11 +212,26 @@ void displayModel_t::renderText(const RECT* rect, wstring& text) {
 			int textBaseline=chunk->rect.top+chunk->baselineFromTop;
 			//If we've already rendered some text,
 			//Add a newline if the baseline has changed, or add a space if there's a horizontal gap.
+			POINT charPoint;
 			if(text.length()>0) {
-				if(textBaseline>lastTextBaseline) text+=L'\n';
-				else if(chunk->rect.left>lastTextEndX) text+=L' ';
+				if(textBaseline>lastTextBaseline) {
+					text+=L'\n';
+					charPoint.x=lastTextEndX;
+					charPoint.y=lastTextBaseline;
+					characterPoints.push_back(charPoint);
+				} else if(chunk->rect.left>lastTextEndX) {
+					text+=L' ';
+					charPoint.x=lastTextEndX;
+					charPoint.y=lastTextBaseline;
+					characterPoints.push_back(charPoint);
+				}
 			}
 			text+=chunk->text;
+			for(deque<int>::const_iterator cxaIt=chunk->characterXArray.begin();cxaIt!=chunk->characterXArray.end();cxaIt++) {
+				charPoint.x=*cxaIt;
+				charPoint.y=textBaseline;
+				characterPoints.push_back(charPoint);
+			}
 			lastTextEndX=chunk->rect.right;
 			lastTextBaseline=textBaseline;
 			//Get rid of the temporary chunk if we created one

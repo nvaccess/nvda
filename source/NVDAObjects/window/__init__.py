@@ -157,7 +157,7 @@ An NVDAObject for a window
 		"""The text at this object's location according to the display model for this object's window."""
 		left,top,width,height=self.location
 		import displayModel
-		return displayModel.getWindowTextInRect(self.appModule.helperLocalBindingHandle,self.windowHandle,left,top,left+width,top+height)
+		return displayModel.getWindowTextInRect(self.appModule.helperLocalBindingHandle,self.windowHandle,left,top,left+width,top+height)[0]
 
 	def _get_windowText(self):
 		textLength=winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)

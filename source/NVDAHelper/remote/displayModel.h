@@ -100,8 +100,9 @@ class displayModel_t {
  * The chunks are ordered by Y and then by x.
  * @param rect the retangle which intersects the wanted chunks.
  * @param text a string in which all the rendered text will be placed.
+ * @param characterPoints a deque in which the points for each character in text will be placed.
  */
-	void renderText(const RECT* rect, std::wstring& text);
+	void renderText(const RECT* rect, std::wstring& text, std::deque<POINT>& characterPoints);
 
 };
 

@@ -10,7 +10,7 @@ BOOL CALLBACK EnumChildWindowsProc(HWND hwnd, LPARAM lParam) {
 	return TRUE;
 }
 
-error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, const long windowHandle, const int left, const int top, const int right, const int bottom, BSTR* textBuf) {
+error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, const long windowHandle, const int left, const int top, const int right, const int bottom, BSTR* textBuf, BSTR* characterPointsBuf) {
 	const HWND hwnd=(HWND)windowHandle;
 	deque<HWND> windowDeque;
 	EnumChildWindows(hwnd,EnumChildWindowsProc,(LPARAM)&windowDeque);
@@ -27,7 +27,18 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 		}
 	}
 	wstring text;
-	tempModel.renderText(&textRect,text);
+	deque<POINT> characterPoints;
+	tempModel.renderText(&textRect,text,characterPoints);
 	*textBuf=SysAllocString(text.c_str());
+	size_t cpBufSize=characterPoints.size()*2;
+	// Hackishly use a BSTR to contain points.
+	wchar_t* cpTempBuf=(wchar_t*)malloc(cpBufSize*sizeof(wchar_t));
+	wchar_t* cpTempBufIt=cpTempBuf;
+	for(deque<POINT>::const_iterator cpIt=characterPoints.begin();cpIt!=characterPoints.end();cpIt++) {
+		*(cpTempBufIt++)=(wchar_t)cpIt->x;
+		*(cpTempBufIt++)=(wchar_t)cpIt->y;
+	}
+	*characterPointsBuf=SysAllocStringLen(cpTempBuf,cpBufSize);
+	free(cpTempBuf);
 	return 0;
 }
