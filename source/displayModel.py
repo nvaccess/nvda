@@ -48,4 +48,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	def _getCaretOffset(self):
 		clientLeft, clientTop, clientWidth, clientHeight = self.obj.location
 		caretRect = winUser.getGUIThreadInfo(self.obj.windowThreadID).rcCaret
-		return self._getOffsetFromPoint(clientLeft + caretRect.right , clientTop + caretRect.bottom)
+		try:
+			return self._getOffsetFromPoint(clientLeft + caretRect.right , clientTop + caretRect.bottom)
+		except LookupError:
+			raise RuntimeError
