@@ -14,6 +14,7 @@ import controlTypes
 import api
 import eventHandler
 from NVDAObjects import NVDAObject
+from NVDAObjects.behaviors import EditableText
 
 re_WindowsForms=re.compile(r'^WindowsForms[0-9]*\.(.*)\.app\..*$')
 re_ATL=re.compile(r'^ATL:(.*)$')
@@ -99,6 +100,8 @@ An NVDAObject for a window
 			from .winword import WordDocument as newCls
 		elif windowClassName=="EXCEL7":
 			from .excel import Excel7Window as newCls
+		elif self.role==controlTypes.ROLE_EDITABLETEXT and not isinstance(self, EditableText):
+			newCls=DisplayModelEditableText
 		clsList.append(newCls)
 		if newCls!=Window:
 			clsList.append(Window)
@@ -293,6 +296,16 @@ class Desktop(Window):
 
 	def _get_name(self):
 		return _("Desktop")
+
+class DisplayModelEditableText(EditableText, Window):
+
+	def initOverlayClass(self):
+		import displayModel
+		self.TextInfo = displayModel.DisplayModelTextInfo
+
+	def event_valueChange(self):
+		# Don't report value changes for editable text fields.
+		pass
 
 windowClassMap={
 	"EDIT":"Edit",
