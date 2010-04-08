@@ -137,6 +137,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 @param obj: The NVDA object this object is representing text from
 @type: L{NVDAObject}
 """
+		super(TextInfo,self).__init__()
 		self._obj=weakref.ref(obj) if type(obj)!=weakref.ProxyType else obj
 		self.basePosition=position
 
