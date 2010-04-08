@@ -202,15 +202,17 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
  * @param lpString the string of ansi text you wish to record.
   */
 void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, char* lpString, const int* characterWidths, int cbCount, LPSIZE resultTextSize) {
+	int newCount=0;
+	wchar_t* newString=NULL;
 	if(lpString&&cbCount) {
-		int newCount=MultiByteToWideChar(CP_THREAD_ACP,0,lpString,cbCount,NULL,0);
+		newCount=MultiByteToWideChar(CP_THREAD_ACP,0,lpString,cbCount,NULL,0);
 		if(newCount>0) {
-			wchar_t* newString=(wchar_t*)calloc(newCount+1,sizeof(wchar_t));
+			newString=(wchar_t*)calloc(newCount+1,sizeof(wchar_t));
 			MultiByteToWideChar(CP_THREAD_ACP,0,lpString,cbCount,newString,newCount);
-			ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,characterWidths,newCount,resultTextSize);
-			free(newString);
 		}
 	}
+	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,characterWidths,newCount,resultTextSize);
+	if(newString) free(newString);
 }
 
 //TextOut hook class template
