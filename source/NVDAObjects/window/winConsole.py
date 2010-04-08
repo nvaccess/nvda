@@ -7,9 +7,10 @@
 from keyUtils import sendKey, key
 import winConsoleHandler
 from . import Window
+from ..behaviors import EditableTextWithoutAutoSelectDetection
 import controlTypes
 
-class WinConsole(Window):
+class WinConsole(EditableTextWithoutAutoSelectDetection, Window):
 
 	def _get_TextInfo(self):
 		consoleObject=winConsoleHandler.consoleObject
@@ -20,37 +21,23 @@ class WinConsole(Window):
 	def _get_role(self):
 		return controlTypes.ROLE_TERMINAL
 
+	def event_becomeNavigatorObject(self):
+		if winConsoleHandler.consoleObject is not self:
+			if winConsoleHandler.consoleObject:
+				winConsoleHandler.disconnectConsole()
+			winConsoleHandler.connectConsole(self)
+		super(WinConsole,self).event_becomeNavigatorObject()
+
 	def event_gainFocus(self):
-		winConsoleHandler.connectConsole(self)
+		if winConsoleHandler.consoleObject is not self:
+			if winConsoleHandler.consoleObject:
+				winConsoleHandler.disconnectConsole()
+			winConsoleHandler.connectConsole(self)
 		super(WinConsole, self).event_gainFocus()
 
 	def event_loseFocus(self):
-		winConsoleHandler.disconnectConsole()
+		if winConsoleHandler.consoleObject is self:
+			winConsoleHandler.disconnectConsole()
 
 	def event_nameChange(self):
 		pass
-
-[WinConsole.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedUp","moveByLine"),
-	("ExtendedDown","moveByLine"),
-	("ExtendedLeft","moveByCharacter"),
-	("ExtendedRight","moveByCharacter"),
-	("Control+ExtendedLeft","moveByWord"),
-	("Control+ExtendedRight","moveByWord"),
-	("Shift+ExtendedRight","changeSelection"),
-	("Shift+ExtendedLeft","changeSelection"),
-	("Shift+ExtendedHome","changeSelection"),
-	("Shift+ExtendedEnd","changeSelection"),
-	("Shift+ExtendedUp","changeSelection"),
-	("Shift+ExtendedDown","changeSelection"),
-	("Control+Shift+ExtendedLeft","changeSelection"),
-	("Control+Shift+ExtendedRight","changeSelection"),
-	("ExtendedHome","moveByCharacter"),
-	("ExtendedEnd","moveByCharacter"),
-	("control+extendedHome","moveByLine"),
-	("control+extendedEnd","moveByLine"),
-	("control+shift+extendedHome","changeSelection"),
-	("control+shift+extendedEnd","changeSelection"),
-	("ExtendedDelete","delete"),
-	("Back","backspace"),
-]]

@@ -253,7 +253,7 @@ def normalizeIAccessible(pacc):
 def accessibleObjectFromEvent(window,objectID,childID):
 	wmResult=c_long()
 	if windll.user32.SendMessageTimeoutW(window,winUser.WM_NULL,0,0,winUser.SMTO_ABORTIFHUNG,2000,byref(wmResult))==0:
-		raise OSError("Window is not responding")
+		raise ctypes.WinError()
 	try:
 		pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
 	except Exception as e:
@@ -369,7 +369,6 @@ winUser.EVENT_SYSTEM_SWITCHEND:"switchEnd",
 winUser.EVENT_OBJECT_FOCUS:"gainFocus",
 winUser.EVENT_OBJECT_SHOW:"show",
 winUser.EVENT_OBJECT_DESTROY:"destroy",
-winUser.EVENT_OBJECT_HIDE:"hide",
 winUser.EVENT_OBJECT_DESCRIPTIONCHANGE:"descriptionChange",
 winUser.EVENT_OBJECT_LOCATIONCHANGE:"locationChange",
 winUser.EVENT_OBJECT_NAMECHANGE:"nameChange",
@@ -420,6 +419,11 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 	#At this point if we don't have an object then we can't do any more
 	if not obj:
 		return None
+	#SDM MSAA objects sometimes don't contain enough information to be useful
+	#Sometimes there is a real window that does, so try to get the SDMChild property on the NVDAObject, and if successull use that as obj instead.
+	if obj.windowClassName=='bosa_sdm':
+		SDMChild=getattr(obj,'SDMChild',None)
+		if SDMChild: obj=SDMChild
 	return (NVDAEventName,obj)
 
 def processGenericWinEvent(eventID,window,objectID,childID):
@@ -469,18 +473,14 @@ def processFocusWinEvent(window,objectID,childID,force=False):
 	@rtype: boolean
 	"""
 	windowClassName=winUser.getClassName(window)
+	#We must ignore focus on child windows of SDM windows as we only want the SDM MSAA events
+	if not windowClassName.startswith('bosa_sdm') and winUser.getClassName(winUser.getAncestor(window,winUser.GA_PARENT)).startswith('bosa_sdm'):
+		return True
 	rootWindow=winUser.getAncestor(window,winUser.GA_ROOT)
 	# If this window's root window is not the foreground window and this window or its root window is not a popup window:
 	if rootWindow!=winUser.getForegroundWindow() and not (winUser.getWindowStyle(window) & winUser.WS_POPUP or winUser.getWindowStyle(rootWindow)&winUser.WS_POPUP):
 		# This is a focus event from a background window, so ignore it.
 		return False
-	#Some SDM controls in MS Word and such have a real non-sdm window with the focus which should be used instead.
-	if windowClassName.startswith('bosa_sdm'):
-		hwndFocus=winUser.getGUIThreadInfo(winUser.getWindowThreadProcessID(window)[1]).hwndFocus
-		if hwndFocus and hwndFocus!=window and not winUser.getClassName(hwndFocus).startswith('bosa_sdm'):
-			window=hwndFocus
-			objectID=winUser.OBJID_CLIENT
-			childID=0
 	#Notify appModuleHandler of this new foreground window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#If Java access bridge is running, and this is a java window, then pass it to java and forget about it
@@ -525,10 +525,9 @@ def processFocusNVDAEvent(obj,force=False):
 
 class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
 
-	@classmethod
-	def findBestClass(cls,clsList,kwargs):
-		clsList.append(cls)
-		return (clsList,kwargs)
+	def findOverlayClasses(self,clsList):
+		clsList.append(SecureDesktopNVDAObject)
+		return clsList
 
 	def _get_name(self):
 		return _("Secure Desktop")
@@ -589,6 +588,14 @@ def processForegroundWinEvent(window,objectID,childID):
 	eventHandler.queueEvent(*NVDAEvent)
 	return True
 
+def processShowWinEvent(window,objectID,childID):
+	className=winUser.getClassName(window)
+	#For now we only support 'show' event for tooltips as otherwize we get flooded
+	if className=="tooltips_class32" and objectID==winUser.OBJID_CLIENT:
+		NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_SHOW,window,objectID,childID)
+		if NVDAEvent:
+			eventHandler.queueEvent(*NVDAEvent)
+
 def processDestroyWinEvent(window,objectID,childID):
 	"""Process a destroy win event.
 	This removes the object associated with the event parameters from L{liveNVDAObjectTable} if such an object exists.
@@ -629,8 +636,10 @@ def _fakeFocus(oldFocus):
 	if oldFocus is not api.getFocusObject():
 		# The focus has changed - no need to fake it.
 		return
-	focus = api.getDesktopObject().objectWithFocus()
-	if not focus:
+	try:
+		focus = api.getDesktopObject().objectWithFocus()
+	except:
+		log.exception("Error retrieving focus")
 		return
 	processFocusNVDAEvent(focus)
 
@@ -677,6 +686,8 @@ def pumpAll():
 				processDesktopSwitchWinEvent(*winEvent[1:])
 			elif winEvent[0]==winUser.EVENT_OBJECT_DESTROY:
 				processDestroyWinEvent(*winEvent[1:])
+			elif winEvent[0]==winUser.EVENT_OBJECT_SHOW:
+				processShowWinEvent(*winEvent[1:])
 			elif winEvent[0] in MENU_EVENTIDS+(winUser.EVENT_SYSTEM_SWITCHEND,):
 				# If there is no valid focus event, we may need to use this to fake the focus later.
 				fakeFocusEvent=winEvent

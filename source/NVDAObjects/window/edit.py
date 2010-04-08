@@ -26,6 +26,7 @@ import IAccessibleHandler
 import controlTypes
 from . import Window
 from .. import NVDAObjectTextInfo
+from ..behaviors import EditableText
 import braille
 
 selOffsetsAtLastCaretEvent=None
@@ -33,6 +34,7 @@ selOffsetsAtLastCaretEvent=None
 #Edit control window messages
 EM_GETSEL=176
 EM_SETSEL=177
+EM_SCROLLCARET=0xb7
 EM_GETLINE=196
 EM_GETLINECOUNT=186
 EM_LINEFROMCHAR=201
@@ -276,6 +278,8 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			winKernel.virtualFreeEx(processHandle,internalCharRange,0,winKernel.MEM_RELEASE)
 		else:
 			winUser.sendMessage(self.obj.windowHandle,EM_SETSEL,start,end)
+		#Make sure the Window is always scrolled to the caret
+		winUser.sendMessage(self.obj.windowHandle,EM_SCROLLCARET,0,0)
 
 	def _getCaretOffset(self):
 		return self._getSelectionOffsets()[0]
@@ -676,7 +680,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		self.obj.ITextSelectionObject.start=self._rangeObj.start
 		self.obj.ITextSelectionObject.end=self._rangeObj.end
 
-class Edit(Window):
+class Edit(EditableText, Window):
 
 	editAPIVersion=0
 	editAPIUnicode=True
@@ -742,25 +746,6 @@ class Edit(Window):
 		if self.windowStyle & winUser.ES_MULTILINE:
 			states.add(controlTypes.STATE_MULTILINE)
 		return states
-
-[Edit.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedUp","moveByLine"),
-	("ExtendedDown","moveByLine"),
-	("ExtendedLeft","moveByCharacter"),
-	("ExtendedRight","moveByCharacter"),
-	("ExtendedPrior","moveByLine"),
-	("ExtendedNext","moveByLine"),
-	("Control+ExtendedLeft","moveByWord"),
-	("Control+ExtendedRight","moveByWord"),
-	("control+extendedDown","moveByParagraph"),
-	("control+extendedUp","moveByParagraph"),
-	("ExtendedHome","moveByCharacter"),
-	("ExtendedEnd","moveByCharacter"),
-	("control+extendedHome","moveByLine"),
-	("control+extendedEnd","moveByLine"),
-	("ExtendedDelete","delete"),
-	("Back","backspace"),
-]]
 
 class RichEdit(Edit):
 	editAPIVersion=1

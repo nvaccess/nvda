@@ -14,6 +14,11 @@ MIN_CORE_ALIVE_TIMEOUT=0.3
 #: How long to wait between recovery attempts
 RECOVER_ATTEMPT_INTERVAL = 0.05
 
+safeWindowClassSet=set([
+	'Internet Explorer_Server',
+	'_WwG',
+])
+
 isRunning=False
 isAttemptingRecovery = False
 
@@ -62,6 +67,8 @@ def _watcher():
 
 def _shouldRecoverAfterMinTimeout():
 	info=winUser.getGUIThreadInfo(0)
+	if winUser.getClassName(info.hwndFocus) in safeWindowClassSet:
+		return False
 	if not winUser.isDescendantWindow(info.hwndActive, api.getFocusObject().windowHandle):
 		# The foreground window has changed.
 		return True

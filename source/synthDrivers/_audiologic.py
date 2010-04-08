@@ -1,8 +1,8 @@
 #synthDrivers/_audiologic.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+#Copyright (C) 2008-2010 Gianluca Casalino <gianluca.casalino@poste.it>
 
 from ctypes import *
 import os

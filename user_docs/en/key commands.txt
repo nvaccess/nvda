@@ -178,11 +178,19 @@ Moves the caret to the location of the review cursor
 NVDA+numPadSubtract: navigatorObject_toFocus
 Sets the navigator object to the current object with focus.
 
+NVDA+shift+numPadSubtract: navigatorObject_moveFocus
+Sets the keyboard focus to the navigator object
+
 numPadDivide: leftMouseClick
 Clicks the left mouse button once where ever it may be at the time.
+shift+numpadDivide: toggleLeftMouseButton
+Locks or unlocks the left mouse button
 
 numPadMultiply: rightMouseClick
 Clicks the right mouse button once where ever it may be at the time.
+
+shift+numpadMultiply: toggleRightMouseButton
+Locks or unlocks the right mouse button
 
 numpadAdd: review_sayAll
 Uses the review cursor to read from its position to the end of the currently reviewable text.

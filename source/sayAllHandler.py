@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 
 import queueHandler
+import config
 import speech
 import textInfos
 import characterSymbols
@@ -126,7 +127,7 @@ def readTextHelper_generator(info,cursor):
 				updater=reader.obj.makeTextInfo(bookmark)
 				if cursor==CURSOR_CARET:
 					updater.updateCaret()
-				if cursor!=CURSOR_CARET or globalVars.caretMovesReviewCursor:
+				if cursor!=CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
 					api.setReviewPosition(updater)
 		while speech.isPaused:
 			yield

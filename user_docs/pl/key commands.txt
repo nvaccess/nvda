@@ -1,4 +1,4 @@
-
+﻿
 
 ---------------------------------------------------------------------------
 Wykaz skrótów klawiszowych NVDA
@@ -21,7 +21,7 @@ Wykaz skrótów klawiszowych NVDA
 Polecenia ogólne
 ---------------------------------------------------------------------------
 
-Control: Wstrzymuje czytanie
+Kontrol: Wstrzymuje czytanie
 Shift: Wznawia czytanie
 
 NVDA+1: Pomoc klawiatury
@@ -51,7 +51,7 @@ NVDA+End: Pasek statusu
 NVDA+F: Formatowanie tekstu
    Podaje informacje o formatowaniu tekstu w bieżącej pozycji kursora w dokumencie tekstowym.
 
-Control+NVDA+F1: Nazwa aplikacji
+Kontrol+NVDA+F1: Nazwa aplikacji
    Podaje nazwę pliku bieżącej aplikacji oraz ewentualną nazwę załadowanego modułu NVDA do jej obsługi.
 
 Shift+NVDA+B: Stan baterii
@@ -84,10 +84,10 @@ NVDA+Strzałka w dół: Czytaj do końca
 NVDA+F1: Bieżący obiekt
    Podaje informacje programistyczne o bieżącym obiekcie w hierarchii nawigacji, na przykład nazwę klasy oraz identyfikator. Dwukrotne naciśnięcie kopiuje te informacje do schowka. Funkcja przydatna głównie dla programistów.
 
-Control+NVDA+C: Zapisz ustawienia
+Kontrol+NVDA+C: Zapisz ustawienia
    Zapisuje bieżące ustawienia na dysk (do pliku nvda.ini).
 
-Control+NVDA+R: Przywróć ustawienia
+Kontrol+NVDA+R: Przywróć ustawienia
    Wczytuje z dysku zapisane ustawienia NVDA porzucając i zastępując bieżące.
 
 
@@ -113,16 +113,16 @@ NVDA+M: Śledzenie myszy
 NVDA+U: Paski postępu
    Przełącza sposób sygnalizowania zmian na paskach postępu. NVDA może czytać postęp co 10 procent, sygnalizować dźwiękiem wszystkie paski, sygnalizować dźwiękiem tylko widoczny pasek lub w ogóle nie sygnalizować pasków postępu.
 
-Control+NVDA+Strzałka w lewo: Poprzedni parametr głosu
+Kontrol+NVDA+Strzałka w lewo: Poprzedni parametr głosu
    Przechodzi do poprzedniego parametru w cyklu ustawień syntezatora.
 
-Control+NVDA+Strzałka w prawo: Następny parametr głosu
+Kontrol+NVDA+Strzałka w prawo: Następny parametr głosu
    Przechodzi do następnego parametru w cyklu ustawień syntezatora.
 
-Control+NVDA+Strzałka w górę: Zwiększ parametr głosu
+Kontrol+NVDA+Strzałka w górę: Zwiększ parametr głosu
    Zwiększa aktualnie wybrany parametr w cyklu ustawień syntezatora.
 
-Control+NVDA+Strzałka w dół: Zmniejsz parametr głosu
+Kontrol+NVDA+Strzałka w dół: Zmniejsz parametr głosu
    Zmniejsza aktualnie wybrany parametr w cyklu ustawień syntezatora.
 
 
@@ -130,31 +130,31 @@ Control+NVDA+Strzałka w dół: Zmniejsz parametr głosu
 Okna dialogowe ustawień (dostępne także z menu NVDA)
 ---------------------------------------------------------------------------
 
-Control+NVDA+G: Główne ustawienia
+Kontrol+NVDA+G: Główne ustawienia
    Otwiera okno dialogowe głównych ustawień programu.
 
-Control+NVDA+S: Syntezator
+Kontrol+NVDA+S: Syntezator
    Otwiera okno dialogowe wyboru syntezatora.
 
-Control+NVDA+V: Ustawienia głosu
+Kontrol+NVDA+V: Ustawienia głosu
    Otwiera okno dialogowe ustawień bieżącego głosu.
 
-Control+NVDA+K: Ustawienia klawiatury
+Kontrol+NVDA+K: Ustawienia klawiatury
    Otwiera okno dialogowe ustawień klawiatury.
 
-Control+NVDA+M: Ustawienia myszy
+Kontrol+NVDA+M: Ustawienia myszy
    Otwiera okno dialogowe ustawień myszy.
 
-Control+NVDA+O: Prezentacja obiektów
+Kontrol+NVDA+O: Prezentacja obiektów
    Otwiera okno dialogowe opcji informowania o obiektach na ekranie.
 
-Control+NVDA+B: Wirtualne bufory
+Kontrol+NVDA+B: Wirtualne bufory
    Otwiera okno dialogowe ustawień pracy z wirtualnymi buforami.
 
-Control+NVDA+D: Formatowanie dokumentów
+Kontrol+NVDA+D: Formatowanie dokumentów
    Otwiera okno dialogowe opcji informowania o formatowaniu tekstu.
 
-Control+NVDA+Z: Konsola Pythona
+Kontrol+NVDA+Z: Konsola Pythona
    Otwiera okno konsoli języka Python.
 
 
@@ -170,7 +170,7 @@ NVDA+Numpad 5: Bieżący obiekt
 Shift+NVDA+Numpad 5: Położenie obiektu
    Podaje położenie na ekranie bieżącego obiektu w hierarchii nawigacji.
 
-Control+Shift+NVDA+Numpad 5: Przodkowie obiektu
+Kontrol+Shift+NVDA+Numpad 5: Przodkowie obiektu
    Podaje położenie bieżącego obiektu w hierarchii nawigacji czytając kolejno jego przodków.
 
 NVDA+Numpad w górę (klawisz 8): Rodzic
@@ -216,17 +216,26 @@ Przegląd tekstu w obiekcie
 Numpad minus: Idź do kursora
    Przenosi punkt przeglądu do kursora klawiatury.
 
-Control+Numpad minus: Przenieś kursor
+Kontrol+Numpad minus: Przenieś kursor
    Przenosi kursor klawiatury do punktu przeglądu.
 
 Numpad slash: Lewe kliknięcie
    Klika lewym przyciskiem myszy tam, gdzie znajduje się wskaźnik myszy.
 
+Shift+Numpad slash: Zablokuj/Odblokuj lewy przycisk myszy
+   Blokuje lub zwalnia lewy przycisk myszy (metoda przeciągnij i upuść)
+
 Numpad gwiazdka: Prawe kliknięcie
    Klika prawym przyciskiem myszy tam, gdzie znajduje się wskaźnik myszy.
 
+Shift+Numpad gwiazdka: Zablokuj/Odblokuj prawy przycisk myszy
+   Blokuje lub zwalnia prawy przycisk myszy (metoda przeciągnij i upuść)
+
 Numpad plus: Czytaj resztę tekstu
    Czyta od punktu przeglądu do końca tekstu.
+
+NVDA+Numpad plus: Wymienia wszystkie obiekty zaczynając od bieżącego obiektu 
+   Czyta od bieżącego obiektu do końca w kolejności układu
 
 Numpad End (klawisz 1): Poprzedni znak
    Przenosi punkt przeglądu do poprzedniego znaku.
@@ -267,6 +276,13 @@ Numpad PageUp (klawisz 9): Następny wiersz
 Shift+Numpad PageUp (klawisz 9): Ostatni wiersz
    Przenosi punkt przeglądu do ostatniego wiersza w bieżącym obiekcie.
 
+NVDA+f9: początek punktu zaznaczenia
+   Ustawia w bieżącym punkcie przeglądu początek zaznaczenia kopiowanego tekstu
+
+NVDA+f10: Kopiuje zaznaczony tekst do schowka
+   Kopiuje do schowka tekst od początku zaznaczenia do bieżącego punktu przeglądu.
+
+
 
 ---------------------------------------------------------------------------
 Wirtualne bufory
@@ -274,10 +290,16 @@ Wirtualne bufory
 
    Wymienione niżej polecenia są wszystkie obsługiwane poprawnie przez przeglądarkę Firefox 3. Część z nich działa poprawnie także w starszych wersjach Firefox oraz w przeglądarce Internet Explorer.
 
+Kontrol+NVDA+f: znajdź
+NVDA+f3: znajdź następny
+NVDA+f7: lista elementów
+NVDA+f5: odświeżanie bufora
+NVDA+v: przełącza Układ ekranu
+
 NVDA+Spacja: Tryb formularza
    Przełącza między trybem formularza i trybem przeglądania. W trybie formularza naciskane klawisze trafiają wprost do pola formularza, pozwalając na przykład na wpisywanie tekstu w polu edycyjnym. Natomiast w trybie przeglądania naciskane klawisze sterują przeglądaniem dokumentu, pozwalając na przykład na szybką nawigację po nagłówkach i innych elementach.
 
-Control+Strzałka w górę, Control+Strzałka w dół:
+Kontrol+Strzałka w górę, Kontrol+Strzałka w dół:
    Przechodzi w wirtualnym buforze do następnego lub poprzedniego bloku tekstu. Te polecenia działają tylko w nowych wirtualnych buforach (Firefox 3) i pozwalają wygodnie przemieszczać się porcjami w dół lub w górę dokumentu nie pomijając żadnego tekstu. Elementami uznawanymi za blok są między innymi nagłówki, akapity czy elementy listy.
 
 Litery szybkiej nawigacji
@@ -301,6 +323,9 @@ Q: cytat
 S: separator
 M: ramka
 G: grafika
+D: następny punkt orientacyjny
+N: następna grupa linków 
+O: następne pole rozwijalne
 Cyfry 1 do 6: nagłówki poziomu 1 do 6
 
 Litery rozpoznawane w starszych wersjach wirtualnych buforów:

@@ -5,8 +5,10 @@
 #See the file COPYING for more details.
 
 import ctypes
+from comtypes import COMError, GUID
 import comtypes.client
 import comtypes.automation
+from logHandler import log
 import winUser
 import oleacc
 import globalVars
@@ -17,6 +19,7 @@ import textInfos
 import textInfos.offsets
 import controlTypes
 from . import Window
+from ..behaviors import EditableTextWithoutAutoSelectDetection
  
 #Word constants
 
@@ -57,6 +60,8 @@ wdGoToNext=2
 wdGoToPage=1
 wdGoToLine=3
 
+winwordWindowIid=GUID('{00020962-0000-0000-C000-000000000046}')
+
 NVDAUnitsToWordUnits={
 	textInfos.UNIT_CHARACTER:wdCharacter,
 	textInfos.UNIT_WORD:wdWord,
@@ -93,17 +98,18 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			return False
 		return True
 
-
-
-
-
-	def _expandToLine(self,rangeObj):
-		sel=self.obj.WinwordSelectionObject
-		oldSel=sel.range
-		sel.SetRange(rangeObj.start,rangeObj.end)
-		sel.Expand(wdLine)
-		rangeObj.SetRange(sel.Start,sel.End)
-		sel.SetRange(oldSel.Start,oldSel.End)
+	def _expandToLineAtCaret(self):
+		from ctypes import c_long, pointer
+		rangeLeft=c_long()
+		rangeTop=c_long()
+		rangeWidth=c_long()
+		rangeHeight=c_long()
+		self.obj.WinwordWindowObject.getPoint(pointer(rangeLeft),pointer(rangeTop),pointer(rangeWidth),pointer(rangeHeight),self._rangeObj)
+		clientLeft,clientTop,clientWidth,clientHeight=self.obj.location
+		tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft,rangeTop)
+		self._rangeObj.Start=tempRange.Start
+		tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft+clientWidth,rangeTop)
+		self._rangeObj.End=tempRange.Start
 
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textInfos.FormatField()
@@ -171,7 +177,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			self._rangeObj=_rangeObj.Duplicate
 			return
 		if isinstance(position,textInfos.Point):
-			self._rangeObj=self.obj.WinwordDocumentObject.application.activeWindow.RangeFromPoint(position.x,position.y)
+			self._rangeObj=self.obj.WinwordDocumentObject.activeWindow.RangeFromPoint(position.x,position.y)
 		elif position==textInfos.POSITION_SELECTION:
 			self._rangeObj=self.obj.WinwordSelectionObject.range
 		elif position==textInfos.POSITION_CARET:
@@ -221,7 +227,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if unit==textInfos.UNIT_LINE and self.basePosition not in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			unit=textInfos.UNIT_SENTENCE
 		if unit==textInfos.UNIT_LINE:
-			self._expandToLine(self._rangeObj)
+			self._expandToLineAtCaret()
 		elif unit==textInfos.UNIT_CHARACTER:
 			self._rangeObj.moveEnd(wdCharacter,1)
 		elif unit in NVDAUnitsToWordUnits:
@@ -304,12 +310,14 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return textInfos.offsets.Offsets(self._rangeObj.Start,self._rangeObj.End)
 
 	def updateCaret(self):
+		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.Start)
 
 	def updateSelection(self):
+		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.End)
 
-class WordDocument(Window):
+class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
 	TextInfo=WordDocumentTextInfo
 
@@ -319,22 +327,28 @@ class WordDocument(Window):
 	def _get_role(self):
 		return controlTypes.ROLE_EDITABLETEXT
 
-	def _get_WinwordDocumentObject(self):
-		if not getattr(self,'_WinwordDocumentObject',None): 
+	def _get_WinwordWindowObject(self):
+		if not getattr(self,'_WinwordWindowObject',None): 
 			try:
 				pDispatch=oleacc.AccessibleObjectFromWindow(self.windowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
 			except (COMError, WindowsError):
 				log.debugWarning("Could not get MS Word object model",exc_info=True)
 				return None
-			self._WinwordDocumentObject=comtypes.client.dynamic.Dispatch(pDispatch)
+			self._WinwordWindowObject=comtypes.client.dynamic.Dispatch(pDispatch)
+ 		return self._WinwordWindowObject
+
+	def _get_WinwordDocumentObject(self):
+		if not getattr(self,'_WinwordDocumentObject',None): 
+			windowObject=self.WinwordWindowObject
+			if not windowObject: return None
+			self._WinwordDocumentObject=windowObject.document
  		return self._WinwordDocumentObject
 
 	def _get_WinwordSelectionObject(self):
 		if not getattr(self,'_WinwordSelectionObject',None):
-			doc=self.WinwordDocumentObject
-			if not doc:
-				return None
-			self._WinwordSelectionObject=self.WinwordDocumentObject.selection
+			windowObject=self.WinwordWindowObject
+			if not windowObject: return None
+			self._WinwordSelectionObject=windowObject.selection
 		return self._WinwordSelectionObject
 
 	def script_nextRow(self,keyPress):
@@ -382,37 +396,11 @@ class WordDocument(Window):
 			speech.speakMessage("edge of table")
 
 [WordDocument.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedUp","moveByLine"),
-	("ExtendedDown","moveByLine"),
-	("ExtendedLeft","moveByCharacter"),
-	("ExtendedRight","moveByCharacter"),
-	("Control+ExtendedLeft","moveByWord"),
-	("Control+ExtendedRight","moveByWord"),
-	("Shift+ExtendedRight","changeSelection"),
-	("control+extendedDown","moveByParagraph"),
-	("control+extendedUp","moveByParagraph"),
-	("Shift+ExtendedLeft","changeSelection"),
-	("Shift+ExtendedHome","changeSelection"),
-	("Shift+ExtendedEnd","changeSelection"),
-	("Shift+ExtendedUp","changeSelection"),
-	("Shift+ExtendedDown","changeSelection"),
-	("Control+Shift+ExtendedLeft","changeSelection"),
-	("Control+Shift+ExtendedRight","changeSelection"),
-	("ExtendedHome","moveByCharacter"),
-	("ExtendedEnd","moveByCharacter"),
-	("control+extendedHome","moveByLine"),
-	("control+extendedEnd","moveByLine"),
-	("control+shift+extendedHome","changeSelection"),
-	("control+shift+extendedEnd","changeSelection"),
-	("ExtendedDelete","delete"),
-	("Back","backspace"),
 	("control+alt+extendedUp","previousRow"),
 	("control+alt+extendedDown","nextRow"),
 	("control+alt+extendedLeft","previousColumn"),
 	("control+alt+extendedRight","nextColumn"),
-	("ExtendedPrior","moveByLine"),
-	("ExtendedNext","moveByLine"),
-	("Control+ExtendedPrior","moveByLine"),
-	("Control+ExtendedNext","moveByLine"),
+	("Control+ExtendedPrior","caret_moveByLine"),
+	("Control+ExtendedNext","caret_moveByLine"),
 ]]
 

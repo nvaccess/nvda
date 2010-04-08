@@ -1,0 +1,10 @@
+
+[
+	implicit_handle(handle_t nvdaControllerBindingHandle)
+]
+interface NvdaController {
+	[fault_status,comm_status] testIfRunning();
+	[fault_status,comm_status] speakText();
+	[fault_status,comm_status] cancelSpeech();
+	[fault_status,comm_status] brailleMessage();
+}

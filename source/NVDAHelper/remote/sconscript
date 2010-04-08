@@ -1,9 +1,67 @@
-Import(['env','ia2RPCStubs','vbufRPCStubs'])
+Import([
+	'env',
+	'ia2RPCStubs',
+])
+
+winIPCUtilsObj=env.Object("./winIPCUtils","#common/winIPCUtils.cpp")
+
+controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
+	target="./nvdaController",
+	source=[
+		"#interfaces/nvdaController/nvdaController.idl",
+		"#interfaces/nvdaController/nvdaController.acf",
+	],
+	MSRPCStubs_noServer=True,
+	MSRPCStubs_prefix="nvdaController_",
+)
+
+controllerInternalRPCHeader,controllerInternalRPCClientSource=env.MSRPCStubs(
+	target="./nvdaControllerInternal",
+	source=[
+		"#interfaces/nvdaControllerInternal/nvdaControllerInternal.idl",
+		"#interfaces/nvdaControllerInternal/nvdaControllerInternal.acf",
+	],
+	MSRPCStubs_noServer=True,
+	MSRPCStubs_prefix="nvdaControllerInternal_",
+)
+
+vbufRPCHeader,vbufRPCServerSource=env.MSRPCStubs(
+	target="./vbufRemote",
+	source=[
+		"#interfaces/vbuf/vbuf.idl",
+	],
+	MSRPCStubs_noClient=True,
+	MSRPCStubs_prefix="VBufRemote_",
+)
+
+ia2utilsObj=env.Object("./ia2utils","#common/ia2utils.cpp")
 
 remoteLib=env.SharedLibrary(
 	target="nvdaHelperRemote",
-	source=["nvdaHelperRemote.cpp","inputLangChange.cpp","typedCharacter.cpp","ia2Support.cpp","winEventFilter.cpp",ia2RPCStubs[2],"rpcSrv.cpp","vbufRemote.cpp",vbufRPCStubs[2]],
-	LIBS=["user32","ole32","rpcrt4","shlwapi"],
+	source=[
+		"nvdaHelperRemote.cpp",
+		"inputLangChange.cpp",
+		"typedCharacter.cpp",
+		"ia2Support.cpp",
+		"ia2LiveRegions.cpp",
+		"winEventFilter.cpp",
+		ia2utilsObj,
+		ia2RPCStubs[2],
+		"rpcSrv.cpp",
+		"vbufRemote.cpp",
+		vbufRPCServerSource,
+		winIPCUtilsObj,
+		controllerRPCClientSource,
+		controllerInternalRPCClientSource,
+	],
+	LIBS=[
+		"user32",
+		"ole32",
+		"rpcrt4",
+		"shlwapi",
+		"oleaut32",
+		"oleacc",
+	],
 )
 
 Return('remoteLib')

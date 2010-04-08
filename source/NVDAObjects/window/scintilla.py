@@ -9,6 +9,7 @@ import controlTypes
 import config
 from . import Window
 from .. import NVDAObjectTextInfo
+from ..behaviors import EditableTextWithoutAutoSelectDetection
 import locale
 
 #Window messages
@@ -189,7 +190,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return [offset,winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,offset,0)]
 
 #The Scintilla NVDA object, inherists the generic MSAA NVDA object
-class Scintilla(Window):
+class Scintilla(EditableTextWithoutAutoSelectDetection, Window):
 
 	TextInfo=ScintillaTextInfo
 
@@ -206,29 +207,3 @@ class Scintilla(Window):
 		# Scintilla controls are always multiline.
 		states.add(controlTypes.STATE_MULTILINE)
 		return states
-
-#We want all the standard text editing key commands to be handled by NVDA
-[Scintilla.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedUp","moveByLine"),
-	("ExtendedDown","moveByLine"),
-	("ExtendedLeft","moveByCharacter"),
-	("ExtendedRight","moveByCharacter"),
-	("Control+ExtendedLeft","moveByWord"),
-	("Control+ExtendedRight","moveByWord"),
-	("Shift+ExtendedRight","changeSelection"),
-	("Shift+ExtendedLeft","changeSelection"),
-	("Shift+ExtendedHome","changeSelection"),
-	("Shift+ExtendedEnd","changeSelection"),
-	("Shift+ExtendedUp","changeSelection"),
-	("Shift+ExtendedDown","changeSelection"),
-	("Control+Shift+ExtendedLeft","changeSelection"),
-	("Control+Shift+ExtendedRight","changeSelection"),
-	("ExtendedHome","moveByCharacter"),
-	("ExtendedEnd","moveByCharacter"),
-	("control+extendedHome","moveByLine"),
-	("control+extendedEnd","moveByLine"),
-	("control+shift+extendedHome","changeSelection"),
-	("control+shift+extendedEnd","changeSelection"),
-	("ExtendedDelete","delete"),
-	("Back","backspace"),
-]]

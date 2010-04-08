@@ -1,6 +1,6 @@
 Résumé des touches de commande de NVDA
 
-Beaucoup de ces commandes utilisent la touche NVDA. La touche NVDA est la touche Insertion qu'on trouve soit sur le pavé numérique, soit sur le clavier principal près de début, fin, page précédente et page suivante. NVDA peut aussi être configuré de manière à utiliser la touche de verrouillage majuscule comme touche NVDA.
+Beaucoup de ces commandes utilisent la touche NVDA. La touche NVDA est la touche Insertion qu'on trouve soit sur le pavé numérique, soit sur le clavier étendu près de début, fin, page précédente et page suivante. NVDA peut aussi être configuré de manière à utiliser la touche de verrouillage majuscule comme touche NVDA.
 
 Commandes générales 
 
@@ -13,6 +13,7 @@ Pour désactiver le mode aide clavier, pressez à nouveau NVDA+1.
 
 NVDA+t: title
 Annonce le titre de l'application en cours.
+Deux pressions épellent le titre, trois pressions le copient dans le presse-papier.
 
 NVDA+b: speakForeground
 Lit le contenu de l'application courante.
@@ -30,12 +31,11 @@ Bascule entre les trois modes de parole (parole, bips et silence).
 NVDA+F12: dateTime
 Annonce l'heure. Une double pression annonce la date.
 
-
 NVDA+End: reportStatusLine
 Annonce la barre d'état de l'application courante si NVDA en trouve une.
 
 NVDA+f: reportFormatting
-annonce les informations de formatage à la position courante dans un document.
+annonce les informations de mise en forme à la position courante dans un document.
 
 Control+NVDA+f1: speakApplicationName
 annonce le nom de l'application courante puis l'épelle. Annonce également le nom du module NVDA en cours.
@@ -139,7 +139,7 @@ Control+NVDA+b: activateVirtualBuffersDialog
 Affiche le dialogue des tampons virtuels.
 
 Control+NVDA+d: activateDocumentFormattingDialog
-Affiche le dialogue de formatage des documents.
+Affiche le dialogue de mise en forme des documents.
 
 Control+NVDA+z: activatePythonConsole
 Affiche la console Python.
@@ -193,8 +193,14 @@ Déplace l'objet de navigation à l'objet actuellement en focus.
 pavNumDivisé: leftMouseClick
 Clique le bouton gauche de la souris quelle que soit la position de celle-ci à ce moment.
 
+Maj+PavnumDivisé: toggleLeftMouseButton
+Verrouille ou déverrouille le bouton gauche de la souris
+
 pavNumMultiplié: rightMouseClick
 Clique le bouton droit de la souris quelle que soit la position de celle-ci à ce moment.
+
+Maj+PavnumMultiplié: toggleRightMouseButton
+Verrouille ou déverrouille le bouton droit de la souris
 
 pavNumPlus: review_sayAll
 utilise le pointeur de revue d'écran pour lire depuis sa position jusqu'à la fin du texte disponible.
@@ -244,7 +250,14 @@ déplace le pointeur de revue d'écran à la ligne précédente.
 maj+pavNum9: review_bottom
 déplace le pointeur de revue d'écran à la dernière ligne.
 
-Commandes du tampon virtuel pour Firefox3. Certaines marchent éventuellement pour Internet Explorer et Firefox2.
+NVDA+f9: review_markStartForCopy
+Marque la position actuelle du pointeur de revue d'écran comme début du texte à copier
+
+NVDA+f10: review_copy
+Prend le texte depuis la marque posée précédemment jusqu'à la position actuelle du pointeur de revue d'écran puis le copie dans le presse-papier
+
+
+Commandes du tampon virtuel.
 
 NVDA+espace: toggleVirtualBufferPassThrough
 active ou désactive le mode formulaire.
@@ -258,21 +271,26 @@ NVDA+v: Bascule du mode d'affichage
 Raccourcis spécifiques du tampon virtuel pour passer à l'élément suivant. La même touche en majuscule permet de passer à l'élément précédent.
 
 h: titre
-1 à 6: titre de niveau 1 à 6
 l: liste
 i: élément de liste
-k: lien
 t: tableau
+k: lien
 f: formulaire
+u: Lien non visité
+v: Lien visité
 e: zone d'édition
 b: bouton
-r: btuton radio
+x: Case à cocher
 c: liste déroulante
-x: case à cocher
+r: bouton radio
 m: cadre
 s: séparateur
 g: graphique
 q: balise de citation
+d: Point de repère
+n: Texte sans lien
+o: Objet inclus
+1 à 6: titre de niveau 1 à 6
 
 
 

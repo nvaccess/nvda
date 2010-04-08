@@ -5,13 +5,14 @@ import UIAHandler
 import globalVars
 import eventHandler
 import controlTypes
+import config
 import speech
 import api
 import textInfos
 from logHandler import log
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, AutoSelectDetectionNVDAObject
-from NVDAObjects.progressBar import ProgressBar
+from NVDAObjects.behaviors import ProgressBar, EditableText
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -78,9 +79,12 @@ class UIATextInfo(textInfos.TextInfo):
 		if endPoint=="start":
 			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_Start,UIAUnit,direction)
 		elif endPoint=="end":
-			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_Start,UIAUnit,direction)
+			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_End,UIAUnit,direction)
 		else:
 			res=self._rangeObj.Move(UIAUnit,direction)
+		#Some Implementations of Move and moveEndpointByUnit return a positive number even if the direction is negative
+		if direction<0 and res>0:
+			res=0-res
 		return res
 
 	def copy(self):
@@ -118,24 +122,12 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 
 	liveNVDAObjectTable=weakref.WeakValueDictionary()
 
-	@classmethod
-	def findBestClass(cls,clsList,kwargs):
-		windowHandle=kwargs.get('windowHandle',None)
-		UIAElement=kwargs.get('UIAElement',None)
-		isWindowElement=True
-		if windowHandle and not UIAElement:
-			UIAElement=UIAHandler.handler.clientObject.ElementFromHandleBuildCache(windowHandle,UIAHandler.handler.baseCacheRequest)
-		elif UIAElement and not windowHandle:
-			windowHandle=UIAElement.cachedNativeWindowHandle
-			if not windowHandle:
-				isWindowElement=False
-				windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
-		else:
-			raise ValueError("needs either a UIA element or window handle")
-		kwargs['windowHandle']=windowHandle
-		kwargs['UIAElement']=UIAElement
-		UIAControlType=UIAElement.cachedControlType
-		UIAClassName=UIAElement.cachedClassName
+	def findOverlayClasses(self,clsList):
+		if self.TextInfo==UIATextInfo:
+			clsList.append(EditableText)
+
+		UIAControlType=self.UIAElement.cachedControlType
+		UIAClassName=self.UIAElement.cachedClassName
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
 		if UIAClassName=="ControlPanelLink":
@@ -149,67 +141,61 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
 			clsList.append(TreeviewItem)
 		clsList.append(UIA)
-		if isWindowElement:
-			return super(UIA,cls).findBestClass(clsList,kwargs)
+
+		if self.UIAIsWindowElement:
+			super(UIA,self).findOverlayClasses(clsList)
+
+	@classmethod
+	def kwargsFromSuper(cls,kwargs,relation=None):
+		UIAElement=None
+		windowHandle=kwargs.get('windowHandle')
+		if isinstance(relation,tuple):
+			UIAElement=UIAHandler.handler.clientObject.ElementFromPointBuildCache(POINT(relation[0],relation[1]),UIAHandler.handler.baseCacheRequest)
+		elif relation=="focus":
+			try:
+				UIAElement=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
+			except COMError:
+				log.debugWarning("getFocusedElement failed", exc_info=True)
 		else:
-			return clsList,kwargs
-
-	@classmethod
-	def objectFromPoint(cls,x,y,oldNVDAObject=None,windowHandle=None):
-		UIAElement=UIAHandler.handler.clientObject.ElementFromPointBuildCache(POINT(x,y),UIAHandler.handler.baseCacheRequest)
-		return UIA(UIAElement=UIAElement)
-
-	@classmethod
-	def objectWithFocus(cls,windowHandle=None):
-		try:
-			UIAElement=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
-		except COMError:
-			log.debugWarning("getFocusedElement failed", exc_info=True)
-			return None
-		return UIA(UIAElement=UIAElement)
+			UIAElement=UIAHandler.handler.clientObject.ElementFromHandleBuildCache(windowHandle,UIAHandler.handler.baseCacheRequest)
+		if not UIAElement:
+			return False
+		kwargs['UIAElement']=UIAElement
+		return True
 
 	def __new__(cls,relation=None,windowHandle=None,UIAElement=None):
 		try:
 			runtimeId=UIAElement.getRuntimeId()
 		except COMError:
 			log.debugWarning("Could not get UIA element runtime Id",exc_info=True)
-			return None
-		obj=cls.liveNVDAObjectTable.get(runtimeId,None)
+			runtimeId=None
+
+		obj=cls.liveNVDAObjectTable.get(runtimeId,None) if runtimeId else None
 		if not obj:
 			obj=super(UIA,cls).__new__(cls)
 			if not obj:
 				return None
-			cls.liveNVDAObjectTable[runtimeId]=obj
-		else:
-			obj.UIAElement=UIAElement
+			if runtimeId:
+				cls.liveNVDAObjectTable[runtimeId]=obj
+		obj.UIAElement=UIAElement
 		return obj
 
-	def __init__(self,relation=None,windowHandle=None,UIAElement=None):
-		if getattr(self,'_doneInit',False):
-			return
-		self._doneInit=True
-		self.UIAElement=UIAElement
+	def __init__(self,windowHandle=None,UIAElement=None):
+		if not UIAElement:
+			raise ValueError("needs either a UIA element or window handle")
+
+		self.UIAIsWindowElement=True
+		if not windowHandle:
+			windowHandle=UIAElement.cachedNativeWindowHandle
+			if not windowHandle:
+				self.UIAIsWindowElement=False
+				windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		super(UIA,self).__init__(windowHandle=windowHandle)
+
 		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
 			self.TextInfo=UIATextInfo
 			self.initAutoSelectDetection()
 			self.value=""
-			[self.bindKey_runtime(keyName,scriptName) for keyName,scriptName in [
-				("ExtendedUp","moveByLine"),
-				("ExtendedDown","moveByLine"),
-				("control+ExtendedUp","moveByLine"),
-				("control+ExtendedDown","moveByLine"),
-				("ExtendedLeft","moveByCharacter"),
-				("ExtendedRight","moveByCharacter"),
-				("Control+ExtendedLeft","moveByWord"),
-				("Control+ExtendedRight","moveByWord"),
-				("ExtendedHome","moveByCharacter"),
-				("ExtendedEnd","moveByCharacter"),
-				("control+extendedHome","moveByLine"),
-				("control+extendedEnd","moveByLine"),
-				("ExtendedDelete","delete"),
-				("Back","backspace"),
-			]]
 
 	def _isEqual(self,other):
 		if not isinstance(other,UIA):
@@ -236,6 +222,9 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			else:
 				self._UIATextPattern=None
 		return self._UIATextPattern
+
+	def setFocus(self):
+		self.UIAElement.setFocus()
 
 	def _get_name(self):
 		try:
@@ -434,7 +423,7 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 	def event_caret(self):
 		super(UIA, self).event_caret()
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
-			if globalVars.caretMovesReviewCursor:
+			if config.conf["reviewCursor"]["followCaret"]:
 				try:
 					api.setReviewPosition(self.makeTextInfo(textInfos.POSITION_CARET))
 				except (NotImplementedError, RuntimeError):

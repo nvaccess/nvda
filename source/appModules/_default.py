@@ -1,18 +1,13 @@
 #appModules/_default.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import gc
-import comtypes.client
-import datetime
 import time
 import tones
-from keyUtils import key
 import keyboardHandler
 import mouseHandler
-import IAccessibleHandler
 import controlTypes
 import api
 import textInfos
@@ -24,12 +19,10 @@ from logHandler import log
 from synthDriverHandler import *
 import gui
 import wx
-import core
 import config
 import winUser
 import appModuleHandler
 import winKernel
-import ctypes
 from gui import mainFrame
 import virtualBufferHandler
 import scriptHandler
@@ -55,7 +48,7 @@ class AppModule(appModuleHandler.AppModule):
 			obj=virtualBuffer
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_CARET)
-		except NotImplementedError:
+		except (NotImplementedError, RuntimeError):
 			info=obj.makeTextInfo(textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_LINE)
 		if scriptHandler.getLastScriptRepeatCount()==0:
@@ -76,6 +69,24 @@ class AppModule(appModuleHandler.AppModule):
 		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
 	script_rightMouseClick.__doc__=_("Clicks the right mouse button once at the current mouse position")
 
+	def script_toggleLeftMouseButton(self,keyPress):
+		if winUser.getKeyState(winUser.VK_LBUTTON)&32768:
+			ui.message(_("left mouse button unlock"))
+			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		else:
+			ui.message(_("left mouse button lock"))
+			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
+	script_toggleLeftMouseButton.__doc__=_("Locks or unlocks the left mouse button")
+
+	def script_toggleRightMouseButton(self,keyPress):
+		if winUser.getKeyState(winUser.VK_RBUTTON)&32768:
+			ui.message(_("right mouse button unlock"))
+			winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
+		else:
+			ui.message(_("right mouse button lock"))
+			winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTDOWN,0,0,None,None)
+	script_toggleRightMouseButton.__doc__=_("Locks or unlocks the right mouse button")
+
 	def script_reportCurrentSelection(self,keyPress):
 		obj=api.getFocusObject()
 		virtualBuffer=obj.virtualBuffer
@@ -93,9 +104,9 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_dateTime(self,keyPress):
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			text=winKernel.GetTimeFormat(winKernel.getThreadLocale(), winKernel.TIME_NOSECONDS, None, None)
+			text=winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, None, None)
 		else:
-			text=winKernel.GetDateFormat(winKernel.getThreadLocale(), winKernel.DATE_LONGDATE, None, None)
+			text=winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, None, None)
 		ui.message(text)
 	script_dateTime.__doc__=_("If pressed once, reports the current time. If pressed twice, reports the current date")
 
@@ -265,12 +276,21 @@ class AppModule(appModuleHandler.AppModule):
 		speech.speakObject(obj,reason=speech.REASON_QUERY)
 	script_navigatorObject_toFocus.__doc__=_("Sets the navigator object to the current focus")
 
+	def script_navigatorObject_moveFocus(self,keyPress):
+		obj=api.getNavigatorObject()
+		if not isinstance(obj,NVDAObject):
+			speech.speakMessage(_("no focus"))
+		obj.setFocus()
+		speech.speakMessage(_("move focus"))
+	script_navigatorObject_moveFocus.__doc__=_("Sets the keyboard focus to the navigator object")
+
 	def script_navigatorObject_parent(self,keyPress):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject=curObject.parent
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		curObject=curObject.simpleParent if simpleReviewMode else curObject.parent
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -283,7 +303,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject=curObject.next
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		curObject=curObject.simpleNext if simpleReviewMode else curObject.next
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -296,7 +317,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject=curObject.previous
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		curObject=curObject.simplePrevious if simpleReviewMode else curObject.previous
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
@@ -309,59 +331,14 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(curObject,NVDAObject):
 			speech.speakMessage(_("no navigator object"))
 			return
-		curObject=curObject.firstChild
+		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
+		curObject=curObject.simpleFirstChild if simpleReviewMode else curObject.firstChild
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No children"))
 	script_navigatorObject_firstChild.__doc__=_("Sets the navigator object to the first child object of the one it is currently on and speaks it")
-
-	def script_navigatorObject_nextInFlow(self,keyPress):
-		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObject):
-			speech.speakMessage(_("no navigator object"))
-			return
-		up=[]
-		down=[]
-		curObject=curObject.getNextInFlow(up=up,down=down)
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
-			if len(up)>0:
-				for count in range(len(up)+1):
-					tones.beep(880*(1.25**count),50)
-					time.sleep(0.025)
-			if len(down)>0:
-				for count in range(len(down)+1):
-					tones.beep(880/(1.25**count),50)
-					time.sleep(0.025)
-			speech.speakObject(curObject,reason=speech.REASON_QUERY)
-		else:
-			speech.speakMessage(_("end of flow"))
-	script_navigatorObject_nextInFlow.__doc__=_("Sets the navigator object to the object this object flows to and speaks it")
-
-	def script_navigatorObject_previousInFlow(self,keyPress):
-		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObject):
-			speech.speakMessage(_("no navigator object"))
-			return
-		up=[]
-		down=[]
-		curObject=curObject.getPreviousInFlow(up=up,down=down)
-		if curObject is not None:
-			api.setNavigatorObject(curObject)
-			if len(up)>0:
-				for count in range(len(up)+1):
-					tones.beep(880*(1.25**count),50)
-					time.sleep(0.025)
-			if len(down)>0:
-				for count in range(len(down)+1):
-					tones.beep(880/(1.25**count),50)
-					time.sleep(0.025)
-			speech.speakObject(curObject,reason=speech.REASON_QUERY)
-		else:
-			speech.speakMessage(_("Beginning of flow"))
-	script_navigatorObject_previousInFlow.__doc__=_("Sets the navigator object to the object this object flows from and speaks it")
 
 	def script_navigatorObject_doDefaultAction(self,keyPress):
 		curObject=api.getNavigatorObject()
@@ -608,11 +585,6 @@ class AppModule(appModuleHandler.AppModule):
 		sayAllHandler.readText(info,sayAllHandler.CURSOR_REVIEW)
 	script_review_sayAll.__doc__ = _("reads from the review cursor  up to end of current text, moving the review cursor as it goes")
 
-	def script_navigatorObject_sayAll(self,keyPress):
-		obj=api.getNavigatorObject()
-		sayAllHandler.readObjects(obj)
-	script_navigatorObject_sayAll.__doc__ = _("reads from the navigator object ")
-
 	def script_sayAll(self,keyPress):
 		o=api.getFocusObject()
 		v=o.virtualBuffer
@@ -716,7 +688,6 @@ class AppModule(appModuleHandler.AppModule):
 	def script_test_navigatorWindowInfo(self,keyPress):
 		obj=api.getNavigatorObject()
 		import ctypes
-		import winUser
 		w=ctypes.windll.user32.GetAncestor(obj.windowHandle,3)
 		w=ctypes.windll.user32.GetAncestor(w,3)
 		className=winUser.getClassName(w)
@@ -766,22 +737,22 @@ class AppModule(appModuleHandler.AppModule):
 	script_toggleReportDynamicContentChanges.__doc__=_("Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows")
 
 	def script_toggleCaretMovesReviewCursor(self,keyPress):
-		if globalVars.caretMovesReviewCursor:
+		if config.conf["reviewCursor"]["followCaret"]:
 			onOff=_("off")
-			globalVars.caretMovesReviewCursor=False
+			config.conf["reviewCursor"]["followCaret"]=False
 		else:
 			onOff=_("on")
-			globalVars.caretMovesReviewCursor=True
+			config.conf["reviewCursor"]["followCaret"]=True
 		ui.message(_("caret moves review cursor")+" "+onOff)
 	script_toggleCaretMovesReviewCursor.__doc__=_("Toggles on and off the movement of the review cursor due to the caret moving.")
 
 	def script_toggleFocusMovesNavigatorObject(self,keyPress):
-		if globalVars.focusMovesNavigatorObject:
+		if config.conf["reviewCursor"]["followFocus"]:
 			onOff=_("off")
-			globalVars.focusMovesNavigatorObject=False
+			config.conf["reviewCursor"]["followFocus"]=False
 		else:
 			onOff=_("on")
-			globalVars.focusMovesNavigatorObject=True
+			config.conf["reviewCursor"]["followFocus"]=True
 		ui.message(_("focus moves navigator object")+" "+onOff)
 	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
 

@@ -1,12 +1,11 @@
 #appModules/winamp.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 from ctypes import *
 from ctypes.wintypes import *
-import IAccessibleHandler
 import winKernel
 import winUser
 from keyUtils import sendKey
@@ -57,10 +56,13 @@ class AppModule(_default.AppModule):
 	def event_NVDAObject_init(self,obj):
 		global hwndWinamp
 		hwndWinamp=windll.user32.FindWindowA("Winamp v1.x",None)
-		if obj.windowClassName=="Winamp PE":
-			obj.__class__=winampPlaylistEditor
-		elif obj.windowClassName=="Winamp v1.x":
-			obj.__class__=winampMainWindow
+
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		windowClass = obj.windowClassName
+		if windowClass == "Winamp PE":
+			clsList.insert(0, winampPlaylistEditor)
+		elif windowClass == "Winamp v1.x":
+			clsList.insert(0, winampMainWindow)
 
 class winampMainWindow(IAccessible):
 

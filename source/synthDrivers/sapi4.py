@@ -1,13 +1,13 @@
 #synthDrivers/sapi4.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import _winreg
 from comtypes import COMObject, COMError
 from ctypes import *
-import synthDriverHandler
+from synthDriverHandler import SynthDriver,VoiceInfo
 from logHandler import log
 from _sapi4 import *
 import config
@@ -18,19 +18,23 @@ class SynthDriverBufSink(COMObject):
 
 	def __init__(self,synthDriver):
 		self._synthDriver=synthDriver
+		self._allowDelete = True
 		super(SynthDriverBufSink,self).__init__()
 
 	def ITTSBufNotifySink_BookMark(self, this, qTimeStamp, dwMarkNum):
 		self._synthDriver.lastIndex=dwMarkNum
 
-class SynthDriver(synthDriverHandler.SynthDriver):
+	def IUnknown_Release(self, this, *args, **kwargs):
+		if not self._allowDelete and self._refcnt.value == 1:
+			log.debugWarning("ITTSBufNotifySink::Release called too many times by engine")
+			return 1
+		return super(SynthDriverBufSink, self).IUnknown_Release(this, *args, **kwargs)
+
+class SynthDriver(SynthDriver):
 
 	name="sapi4"
 	description="Microsoft Speech API version 4"
-	hasVoice=True
-	hasRate=True
-	hasPitch=True
-	hasVolume=True
+	supportedSettings=[SynthDriver.VoiceSetting()]
 
 	@classmethod
 	def check(cls):
@@ -59,11 +63,19 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	def __init__(self):
 		self.lastIndex=None
 		self._bufSink=SynthDriverBufSink(self)
+		self._bufSinkPtr=self._bufSink.QueryInterface(ITTSBufNotifySink)
+		# HACK: Some buggy engines call Release() too many times on our buf sink.
+		# Therefore, don't let the buf sink be deleted before we release it ourselves.
+		self._bufSink._allowDelete=False
 		self._ttsEngines=CoCreateInstance(CLSID_TTSEnumerator, ITTSEnumW)
 		self._enginesList=self._fetchEnginesList()
 		if len(self._enginesList)==0:
 			raise RuntimeError("No Sapi4 engines available")
 		self.voice=str(self._enginesList[0].gModeID)
+
+	def terminate(self):
+		self._bufSink._allowDelete = True
+
 	def performSpeak(self,text,index=None,isCharacter=False):
 		flags=0
 		if index is not None or isCharacter:
@@ -73,7 +85,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 			text="\mrk=%d\\%s"%(index,text)
 		if isCharacter:
 			text = "\\RmS=1\\%s\\RmS=0\\"%text
-		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSink._com_pointers_[ITTSBufNotifySink._iid_],ITTSBufNotifySink._iid_)
+		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSinkPtr,ITTSBufNotifySink._iid_)
 
 	def speakText(self,text,index=None):
 		self.performSpeak(text,index)
@@ -93,6 +105,13 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		else:
 			self._ttsCentral.AudioResume()
 
+	def removeSetting(self,name):
+		#Putting it here because currently no other synths make use of it. OrderedDict, where you are?
+		for i,s in enumerate(self.supportedSettings):
+			if s.name==name:
+				del self.supportedSettings[i]
+				return
+
 	def _set_voice(self,val):
 		try:
 			val=GUID(val)
@@ -111,8 +130,8 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		self._ttsEngines.Select(self._currentMode.gModeID,byref(self._ttsCentral),self._ttsAudio)
 		self._ttsAttrs=self._ttsCentral.QueryInterface(ITTSAttributes)
 		#Find out rate limits
-		self.hasRate=bool(mode.dwFeatures&TTSFEATURE_SPEED)
-		if self.hasRate:
+		hasRate=bool(mode.dwFeatures&TTSFEATURE_SPEED)
+		if hasRate:
 			try:
 				oldVal=DWORD()
 				self._ttsAttrs.SpeedGet(byref(oldVal))
@@ -126,12 +145,17 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 				self._maxRate=newVal.value-1
 				self._ttsAttrs.SpeedSet(oldVal.value)
 				if self._maxRate<=self._minRate:
-					self.hasRate=False
+					hasRate=False
 			except COMError:
-				self.hasRate=False
+				hasRate=False
+		if hasRate:
+			if not self.isSupported('rate'):
+				self.supportedSettings.insert(1,SynthDriver.RateSetting())
+		else:
+			if self.isSupported("rate"): self.removeSetting("rate")
 		#Find out pitch limits
-		self.hasPitch=bool(mode.dwFeatures&TTSFEATURE_PITCH)
-		if self.hasPitch:
+		hasPitch=bool(mode.dwFeatures&TTSFEATURE_PITCH)
+		if hasPitch:
 			try:
 				oldVal=WORD()
 				self._ttsAttrs.PitchGet(byref(oldVal))
@@ -144,12 +168,17 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 				self._maxPitch=newVal.value
 				self._ttsAttrs.PitchSet(oldVal.value)
 				if self._maxPitch<=self._minPitch:
-					self.hasPitch=False
+					hasPitch=False
 			except COMError:
-				self.hasPitch=False
+				hasPitch=False
+		if hasPitch:
+			if not self.isSupported('pitch'):
+				self.supportedSettings.insert(2,SynthDriver.PitchSetting())
+		else:
+			if self.isSupported('pitch'): self.removeSetting('pitch')
 		#Find volume limits
-		self.hasVolume=bool(mode.dwFeatures&TTSFEATURE_VOLUME)
-		if self.hasVolume:
+		hasVolume=bool(mode.dwFeatures&TTSFEATURE_VOLUME)
+		if hasVolume:
 			try:
 				oldVal=DWORD()
 				self._ttsAttrs.VolumeGet(byref(oldVal))
@@ -162,9 +191,14 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 				self._maxVolume=newVal.value
 				self._ttsAttrs.VolumeSet(oldVal.value)
 				if self._maxVolume<=self._minVolume:
-					self.hasVolume=False
+					hasVolume=False
 			except COMError:
-				self.hasVolume=False
+				hasVolume=False
+		if hasVolume:
+			if not self.isSupported('volume'):
+				self.supportedSettings.insert(3,SynthDriver.VolumeSetting())
+		else:
+			if self.isSupported('volume'): self.removeSetting('volume')
 
 	def _get_voice(self):
 		return str(self._currentMode.gModeID)
@@ -174,7 +208,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		for mode in self._enginesList:
 			ID=str(mode.gModeID)
 			name="%s - %s"%(mode.szModeName,mode.szProductName)
-			voices.append(synthDriverHandler.VoiceInfo(ID,name))
+			voices.append(VoiceInfo(ID,name))
 		return voices
 
 	def _get_rate(self):

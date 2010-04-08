@@ -7,15 +7,18 @@
 """Contains the base classes that many of NVDA's classes such as NVDAObjects, virtualBuffers, appModules, synthDrivers inherit from. These base classes provide such things as auto properties, and methods and properties for scripting and key binding.
 """
 
+import weakref
 from new import instancemethod
 from keyUtils import key
 
-class getter(object):
+class Getter(object):
 
 	def __init__(self,fget):
 		self.fget=fget
 
 	def __get__(self,instance,owner):
+		if not instance:
+			return self
 		return self.fget(instance)
 
 	def setter(self,func):
@@ -24,12 +27,26 @@ class getter(object):
 	def deleter(self,func):
 		return property(fget=self._func,fdel=func)
 
+class CachingGetter(Getter):
+
+	def __get__(self, instance, owner):
+		if not instance:
+			return self
+		return instance._getPropertyViaCache(self.fget)
+
 class AutoPropertyType(type):
 
 	def __init__(self,name,bases,dict):
 		super(AutoPropertyType,self).__init__(name,bases,dict)
-		propSet=(x[5:] for x in dict.keys() if x[0:5] in ('_get_','_set_','_del_'))
-		for x in propSet:
+
+		cacheByDefault=False
+		try:
+			cacheByDefault=dict["cachePropertiesByDefault"]
+		except KeyError:
+			cacheByDefault=any(getattr(base, "cachePropertiesByDefault", False) for base in bases)
+
+		props=(x[5:] for x in dict.keys() if x[0:5] in ('_get_','_set_','_del_'))
+		for x in props:
 			g=dict.get('_get_%s'%x,None)
 			s=dict.get('_set_%s'%x,None)
 			d=dict.get('_del_%s'%x,None)
@@ -43,19 +60,68 @@ class AutoPropertyType(type):
 					g = getattr(base,'_get_%s'%x,None)
 					if g:
 						break
+
+			cache=dict.get('_cache_%s'%x,None)
+			if cache is None:
+				# The cache setting hasn't been specified in this class, but it could be in one of the bases.
+				for base in bases:
+					cache = getattr(base,'_cache_%s'%x,None)
+					if cache is not None:
+						break
+				else:
+					cache=cacheByDefault
+
 			if g and not s and not d:
-				setattr(self,x,getter(g))
+				setattr(self,x,(CachingGetter if cache else Getter)(g))
 			else:
 				setattr(self,x,property(fget=g,fset=s,fdel=d))
 
 class AutoPropertyObject(object):
-
 	"""A class that dynamicly supports properties, by looking up _get_* and _set_* methods at runtime.
- _get_x will make property x with a getter (you can get its value).
-_set_x will make a property x with a setter (you can set its value).
-If there is a _get_x but no _set_x then setting x will override the property completely.
-"""
+	_get_x will make property x with a getter (you can get its value).
+	_set_x will make a property x with a setter (you can set its value).
+	If there is a _get_x but no _set_x then setting x will override the property completely.
+	Properties can also be cached.
+	Setting _cache_x to C{True} specifies that x should be cached. Setting it to C{False} specifies that it should not be cached.
+	If _cache_x is not set, L{cachePropertiesByDefault} is used.
+	"""
 	__metaclass__=AutoPropertyType
+
+	#: Tracks the instances of this class; used by L{invalidateCaches}.
+	#: @type: weakref.WeakKeyDictionary
+	__instances=weakref.WeakKeyDictionary()
+	#: Specifies whether properties are cached by default;
+	#: can be overridden for individual properties by setting _cache_propertyName.
+	#: @type: bool
+	cachePropertiesByDefault = False
+
+	def __init__(self):
+		#: Maps properties to cached values.
+		#: @type: dict
+		self._propertyCache={}
+		self.__instances[self]=None
+
+	def _getPropertyViaCache(self,getterMethod=None):
+		if not getterMethod:
+			raise ValueError("getterMethod is None")
+		try:
+			val=self._propertyCache[getterMethod]
+		except KeyError:
+			val=getterMethod(self)
+			self._propertyCache[getterMethod]=val
+		return val
+
+	def invalidateCache(self):
+		self._propertyCache.clear()
+
+	@classmethod
+	def invalidateCaches(cls):
+		"""Invalidate the caches for all current instances.
+		"""
+		# We use keys() here instead of iterkeys(), as invalidating the cache on an object may cause instances to disappear,
+		# which would in turn cause an exception due to the dictionary changing size during iteration.
+		for instance in cls.__instances.keys():
+			instance.invalidateCache()
 
 class ScriptableObject(AutoPropertyObject):
 

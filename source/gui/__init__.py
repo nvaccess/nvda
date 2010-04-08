@@ -21,6 +21,7 @@ from settingsDialogs import *
 import speechDictHandler
 import languageHandler
 import logViewer
+import speechViewer
 import winUser
 import api
 
@@ -152,7 +153,9 @@ class MainFrame(wx.Frame):
 			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("configuration saved"))
 		except:
 			self.prePopup()
-			wx.MessageDialog(self,_("Could not save configuration - probably read only file system"),_("Error"),style=wx.OK | wx.ICON_ERROR).ShowModal()
+			d = wx.MessageDialog(self,_("Could not save configuration - probably read only file system"),_("Error"),style=wx.OK | wx.ICON_ERROR)
+			d.ShowModal()
+			d.Destroy()
 			self.postPopup()
 
 	def _popupSettingsDialog(self, dialog, *args, **kwargs):
@@ -179,6 +182,7 @@ class MainFrame(wx.Frame):
 			if d.ShowModal() == wx.ID_YES:
 				canExit=True
 			isExitDialog=False
+			d.Destroy()
 			self.postPopup()
 		else:
 			canExit=True
@@ -203,6 +207,9 @@ class MainFrame(wx.Frame):
 	def onMouseSettingsCommand(self,evt):
 		self._popupSettingsDialog(MouseSettingsDialog)
 
+	def onReviewCursorCommand(self,evt):
+		self._popupSettingsDialog(ReviewCursorDialog)
+
 	def onObjectPresentationCommand(self,evt):
 		self._popupSettingsDialog(ObjectPresentationDialog)
 
@@ -221,12 +228,21 @@ class MainFrame(wx.Frame):
 			self.prePopup()
 			d = wx.MessageDialog(self, aboutInfo, _("About NVDA"), wx.OK)
 			d.ShowModal()
+			d.Destroy()
 			self.postPopup()
 		except:
 			log.error("gui.mainFrame.onAbout", exc_info=True)
 
 	def onViewLogCommand(self, evt):
 		logViewer.activate()
+
+	def onToggleSpeechViewerCommand(self, evt):
+		if not speechViewer.isActive:
+			speechViewer.activate()
+			self.sysTrayIcon.menu_tools_toggleSpeechViewer.Check(True)
+		else:
+			speechViewer.deactivate()
+			self.sysTrayIcon.menu_tools_toggleSpeechViewer.Check(False)
 
 	def onPythonConsoleCommand(self, evt):
 		import pythonConsole
@@ -255,6 +271,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onKeyboardSettingsCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse shape and object under mouse"))
 		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("&Review cursor..."),_("Configure how and when the review cursor moves")) 
+		self.Bind(wx.EVT_MENU, frame.onReviewCursorCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Object presentation..."),_("Change reporting of objects")) 
 		self.Bind(wx.EVT_MENU, frame.onObjectPresentationCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("Virtual &buffers..."),_("Change virtual buffers specific settings")) 
@@ -272,28 +290,32 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.menu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
 
 		menu_tools = wx.Menu()
-		item = menu_tools.Append(wx.ID_ANY, _("View log"))
-		self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
+		if not globalVars.appArgs.secure:
+			item = menu_tools.Append(wx.ID_ANY, _("View log"))
+			self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
+		item=self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
+		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
 		if not globalVars.appArgs.secure:
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
 
 		menu_help = wx.Menu()
-		item = menu_help.Append(wx.ID_ANY, _("User guide"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("user guide.html")), item)
-		item = menu_help.Append(wx.ID_ANY, _("Key Command Quick Reference"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("key commands.txt")), item)
-		item = menu_help.Append(wx.ID_ANY, _("What's &new"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("whats new.txt")), item)
-		item = menu_help.Append(wx.ID_ANY, _("Web site"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvda-project.org/"), item)
-		item = menu_help.Append(wx.ID_ANY, _("Readme"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("readme.txt")), item)
-		item = menu_help.Append(wx.ID_ANY, _("License"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("copying.txt", False)), item)
-		item = menu_help.Append(wx.ID_ANY, _("Contributors"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("contributors.txt", False)), item)
+		if not globalVars.appArgs.secure:
+			item = menu_help.Append(wx.ID_ANY, _("User guide"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("userGuide.html")), item)
+			item = menu_help.Append(wx.ID_ANY, _("Key Command Quick Reference"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("key commands.txt")), item)
+			item = menu_help.Append(wx.ID_ANY, _("What's &new"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("changes.html")), item)
+			item = menu_help.Append(wx.ID_ANY, _("Web site"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvda-project.org/"), item)
+			item = menu_help.Append(wx.ID_ANY, _("Readme"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("readme.txt")), item)
+			item = menu_help.Append(wx.ID_ANY, _("License"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("copying.txt", False)), item)
+			item = menu_help.Append(wx.ID_ANY, _("Contributors"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("contributors.txt", False)), item)
 		item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog"))
 		self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
 		menu_help.AppendSeparator()
@@ -393,7 +415,7 @@ class WelcomeDialog(wx.Dialog):
 			config.save()
 		except:
 			pass
-		self.Destroy()
+		self.Close()
 
 	@classmethod
 	def run(cls):
@@ -401,7 +423,9 @@ class WelcomeDialog(wx.Dialog):
 		This does not require the dialog to be instantiated.
 		"""
 		mainFrame.prePopup()
-		cls(mainFrame).ShowModal()
+		d = cls(mainFrame)
+		d.ShowModal()
+		d.Destroy()
 		mainFrame.postPopup()
 
 class ConfigFileErrorDialog(wx.Dialog):
@@ -426,7 +450,7 @@ Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit y
 	def onOk(self, evt):
 		globalVars.configFileError=None
 		config.save()
-		self.Destroy()
+		self.Close()
 
 	@classmethod
 	def run(cls):
@@ -434,5 +458,7 @@ Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit y
 		This does not require the dialog to be instantiated.
 		"""
 		mainFrame.prePopup()
-		cls(mainFrame).ShowModal()
+		d = cls(mainFrame)
+		d.ShowModal()
+		d.Destroy()
 		mainFrame.postPopup()

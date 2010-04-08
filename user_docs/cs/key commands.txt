@@ -65,13 +65,13 @@ Další stisknutá klávesa nebude interpretována programem NVDA, ale bude pøedána k
 Vysvìtlující pøíklad této funkce.
 Pøedstavme si, že budeme potøebovat použít nìjaký klávesový pøíkaz v jiném programu, ale NVDA v tom bude bránit, protože je to i jeho klávesový pøíkaz. Tato klávesová zkratka slouží právì k tomu, abychom mohli klávesový pøíkaz použít v jiném programu, aby by nekolidoval s NVDA.
 
-Shift+NVDA+horní šipka: pøeèti aktuální výbìr
+Shift+NVDA+šipka nahoru: pøeèti aktuální výbìr
 V editaèních polích a dokumentech pøeète oznaèený text. Jestliže není oznaèeno nic, NVDA to oznámí.
 
-NVDA+horní šipka: pøeèti aktuální øádek
+NVDA+šipka nahoru: pøeèti aktuální øádek
 V editaèních polích a dokumentech pøeète aktuální øádek.
 
-NVDA+dolní šipka: plynulé ètení
+NVDA+šipka dolù: plynulé ètení
 V editaèních polích a dokumentech pøeète text od polohy textového kurzoru do konce, pøièemž se textový kurzor plynule posouvá po øádcích.
 
 Control+NVDA+c: ulož nastavení
@@ -105,20 +105,20 @@ Zapíná a vypíná ohlašování objektù pod kurzorem myši.
 NVDA+u: režim ohlašování indikátoru prùbìhu
 Pøepíná režim ohlašování indikátoru prùbìhu mezi pípat, ohlašovat, pípat a ohlašovat nebo neohlašovat aktualizaci indikátoru prùbìhu.
 
-	Control+NVDA+levá šipka: pøedchozí hlasový parametr
+Control+NVDA+šípka vlevo: pøedchozí hlasový parametr
 Pøesune se na parametr a oznámí pøedchozí parametr v kruhu nastavení hlasového výstupu.
  
-Control+NVDA+pravá šipka: další hlasový parametr
+Control+NVDA+šipka vrpavo: další hlasový parametr
 Pøesune se na pøíslušný parametr a oznámí následující parametr v kruhu nastavení hlasového výstupu.
 
-Control+NVDA+horní šipka: zvýšit hodnotu hlasového parametru
+Control+NVDA+šipka nahoru: zvýšit hodnotu hlasového parametru
 Zvyšuje hodnotu aktuálnì zvoleného parametru v kruhu nastavení hlasového výstupu.
 
-Control+NVDA+dolní šipka: snížit hodnotu hlasového parametru
+Control+NVDA+šipka dolù: snížit hodnotu hlasového parametru
 Snižuje hodnotu aktuálnì zvoleného parametru v kruhu nastavení hlasového výstupu.
 
 
-pøíkazy pro vyvolání dialogù s nastavením NVDA
+Pøíkazy pro vyvolání dialogù s nastavením NVDA
 
 Control+NVDA+g: obecné nastavení
 Control+NVDA+s: hlasové výstupy
@@ -230,11 +230,17 @@ Pøesune ètecí kurzor na následující øádek právì prohlíženého objektu.
 Shift+numerická9: spodní øádek
 Pøesune ètecí kurzor na spodní øádek právì prohlíženého objektu.
 
+NVDA+f9: nastav znaèku na pozici ètecího kurzoru
+Umístí znaèku na aktuální pozici ètecího kurzoru oznaèující zaèátek úseku textu ke zkopírování.
+
+NVDA+f10: kopírování ètecím kurzorem
+Pøevezme text nacházející se mezi døíve umístìnou znaèkou a aktuální pozicí ètecího kurzoru vèetnì znaku na aktuální pozici a takto získaný úsek textu zkopíruje do schránky.
+
 
 Pøíkazy pro virtuální prohlížeè
 
-NVDA+Mezera: Režim propouštìní pøes virtuální prohlížeè
-Zapíná a vypíná režim propouštìní virtuálního prohlížeèe. Pøi jeho aktivaci nebudou stisknuté klávesy považovány za pøíkazy pro virtuální prohlížeè, ale budou pøedány dále k internetovému prohlížeèi, který si je sám zpracuje.
+NVDA+Mezera: Formuláøový režim
+Pøepíná mezi formuláøovým režimem a režimem prohlížení. Ve formuláøovém režimu nebudou stisknuté klávesy považovány za pøíkazy pro virtuální prohlížeè, ale budou pøedány dále k internetovému prohlížeèi, který si je sám zpracuje.
 
 control+NVDA+f: hledat 
 Vyhledávání zadaného textu od aktuální pozice kurzoru
@@ -258,19 +264,19 @@ h: nadpis
 klávesy + až ž èili 1 až 6:nadpis v pøíslušné úrovni.
 l: seznam
 i: položka seznamu
-k: odkaz
-v: navštívený odkaz
-u: nenavštívený odkaz
 t: tabulka
+k: odkaz
 f: prvek formuláøe
+u: nenavštívený odkaz
+v: navštívený odkaz
 e: editaèní pole
 b: tlaèítko
-r: pøepínaè
-c: rozbalovací políèko
 x: zaškrtávací políèko
-m: rámec
+c: rozbalovací políèko
+r: pøepínaè
 q: citace
 s: oddìlovaè
+m: rámec
 g: grafika
 D: oblast stránky
 n: text jenž není odkaz

@@ -13,9 +13,9 @@ oldActivePannel=0
 
 class AppModule(_default.AppModule):
 
-	def event_NVDAObject_init(self,obj):
-		if obj.windowClassName=="TMyListBox" or obj.windowClassName=="TMyListBox.UnicodeClass":
-			obj.__class__=TCList
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if obj.windowClassName in ("TMyListBox", "TMyListBox.UnicodeClass"):
+			clsList.insert(0, TCList)
 
 class TCList(IAccessible):
 
@@ -24,10 +24,10 @@ class TCList(IAccessible):
 		if oldActivePannel !=self.windowControlID:
 			oldActivePannel=self.windowControlID
 			obj=self
-			while obj and obj.parent.windowClassName!="TTOTAL_CMD":
+			while obj and obj.parent and obj.parent.windowClassName!="TTOTAL_CMD":
 				obj=obj.parent
 			counter=0
-			while obj and obj.windowClassName!="TPanel":
+			while obj and obj.previous and obj.windowClassName!="TPanel":
 				obj=obj.previous
 				if obj.windowClassName!="TDrivePanel":
 					counter+=1

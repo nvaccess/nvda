@@ -7,13 +7,16 @@ import logging
 from logging import _levelNames as levelNames
 import inspect
 import winsound
+import traceback
 import nvwave
 from types import MethodType
 import globalVars
 
+ERROR_TIMEOUT = 1460
 RPC_S_SERVER_UNAVAILABLE = 1722
 RPC_S_CALL_FAILED_DNE = 1727
 E_ACCESSDENIED = -2147024891
+EVENT_E_ALL_SUBSCRIBERS_FAILED = -2147220991
 RPC_E_CALL_REJECTED = -2147418111
 RPC_E_CALL_CANCELED = -2147418110
 
@@ -75,13 +78,17 @@ class Logger(logging.Logger):
 	IO = 12
 	DEBUGWARNING = 15
 
-	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False):
+	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False, stack_info=None):
 		if not extra:
 			extra={}
-		if not codepath:
+
+		if not codepath or stack_info is True:
 			f=inspect.currentframe().f_back.f_back
+
+		if not codepath:
 			codepath=getCodePath(f)
 		extra["codepath"] = codepath
+
 		if activateLogViewer:
 			# Import logViewer here, as we don't want to import GUI code when this module is imported.
 			from gui import logViewer
@@ -90,10 +97,18 @@ class Logger(logging.Logger):
 			# This means that the user will be positioned at the start of the new log text.
 			# This is why we activate the log viewer before writing to the log.
 			logViewer.logViewer.outputCtrl.SetInsertionPointEnd()
+
+		if stack_info:
+			if stack_info is True:
+				stack_info = traceback.extract_stack(f)
+			msg += "\nStack trace:\n" + "".join(traceback.format_list(stack_info)).rstrip()
+
 		res = logging.Logger._log(self,level, msg, args, exc_info, extra)
+
 		if activateLogViewer:
 			# Make the log text we just wrote appear in the log viewer.
 			logViewer.logViewer.refresh()
+
 		return res
 
 	def debugWarning(self, msg, *args, **kwargs):
@@ -121,8 +136,8 @@ class Logger(logging.Logger):
 
 		exc = exc_info[1]
 		if (
-			(isinstance(exc, WindowsError) and exc.winerror in (RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE))
-			or (isinstance(exc, comtypes.COMError) and exc.hresult in (E_ACCESSDENIED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED))
+			(isinstance(exc, WindowsError) and exc.winerror in (ERROR_TIMEOUT, RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE))
+			or (isinstance(exc, comtypes.COMError) and exc.hresult in (E_ACCESSDENIED, EVENT_E_ALL_SUBSCRIBERS_FAILED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED))
 		):
 			level = self.DEBUGWARNING
 		else:
@@ -133,17 +148,30 @@ class Logger(logging.Logger):
 class FileHandler(logging.FileHandler):
 
 	def handle(self,record):
-		# Late import because versionInfo requires gettext, which isn't yet initialised when logHandler is first imported.
-		import versionInfo
+		# versionInfo must be imported after the language is set. Otherwise, strings won't be in the correct language.
+		# Therefore, don't import versionInfo if it hasn't already been imported.
+		versionInfo = sys.modules.get("versionInfo")
+		# Only play the error sound if this is a test version.
+		shouldPlayErrorSound = versionInfo and versionInfo.isTestVersion
 		if record.levelno>=logging.CRITICAL:
 			winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
-		elif record.levelno>=logging.ERROR and versionInfo.isTestVersion:
-			# Only play the error sound if this is a test version.
+		elif record.levelno>=logging.ERROR and shouldPlayErrorSound:
 			try:
 				nvwave.playWaveFile("waves\\error.wav")
 			except:
 				pass
 		return logging.FileHandler.handle(self,record)
+
+class Formatter(logging.Formatter):
+
+	def format(self, record):
+		s = logging.Formatter.format(self, record)
+		if isinstance(s, str):
+			# Log text must be unicode.
+			# The string is probably encoded according to our thread locale, so use mbcs.
+			# If there are any errors, just replace the character, as there's nothing else we can do.
+			s = unicode(s, "mbcs", "replace")
+		return s
 
 class StreamRedirector(object):
 	"""Redirects an output stream to a logger.
@@ -205,9 +233,10 @@ def initialize():
 	logging.addLevelName(Logger.IO, "IO")
 	if not globalVars.appArgs.logFileName:
 		globalVars.appArgs.logFileName = _getDefaultLogFilePath()
-	# HACK: Don't specify an encoding, as a bug in Python 2.6's logging module causes problems if we do.
-	logHandler = FileHandler(globalVars.appArgs.logFileName, "w")
-	logFormatter=logging.Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
+	# HACK: codecs.open() always forces binary mode by appending "b" to mode, but we want text mode ("t") so we get crlf line endings.
+	# Fortunately, Python ignores the "b" if "t" is specified first (e.g. "wtb").
+	logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt", encoding="UTF-8")
+	logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
 	redirectStdout(log)

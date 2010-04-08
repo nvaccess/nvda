@@ -6,26 +6,29 @@ http://www.nvda-project.org/
 == Dependencies ==
 The NVDA source depends on several other packages to run correctly, as described below. All directories mentioned are relative to the root of the NVDA source distribution/checkout. Please create any directories mentioned that don't already exist.
 
+If you are running a 64 bit version of Windows, you should install the 32 bit versions of any dependencies that provide both 32 bit and 64 bit versions.
+
 General dependencies:
-	* Python, version 2.6.2: http://www.python.org/
-	* comtypes, version 0.6.1 or later: http://www.sourceforge.net/projects/comtypes/
+	* Python 2.6, version 2.6.4 or later: http://www.python.org/
+	* comtypes, version 0.6.2 or later: http://www.sourceforge.net/projects/comtypes/
 	* wxPython unicode (for Python 2.6), version 2.8.9.1 or later: http://www.wxpython.org/
 	* Python Windows Extensions (for Python 2.6), build 212 or later: http://www.sourceforge.net/projects/pywin32/ 
-	* eSpeak, version 1.41.01 or later, Windows dll:
+	* eSpeak, version 1.43.03 or later, Windows dll:
 		* Official web site: http://espeak.sourceforge.net/
 		* The Windows dll is tricky to build, so a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
 		* Copy espeak.dll and espeak-data into the source\synthDrivers directory.
 	* Additional variants for eSpeak: http://www.nvda-project.org/espeak-variants/
 		* Extract the archive into the source\synthDrivers directory.
-	* IAccessible2, version 1.0.2.0 or later:
+	* IAccessible2, version 1.1.0.0 or later:
 		* The proxy dll and typelib are required.
 		* Pre-built versions have been provided for convenience at http://www.nvda-project.org/3rdParty/
 		* Copy ia2.tlb into the source\typelibs directory.
-		* Copy IAccessible2Proxy.dll into the source\lib directory.
+		* Copy the 32 bit version of the proxy dll into the source\lib directory, naming it IAccessible2Proxy.dll.
+		* Copy the 64 bit version of the proxy dll into the source\lib64 directory, naming it IAccessible2Proxy.dll.
 	* ConfigObj, version 4.6.0 or later:
 		* Web site: http://www.voidspace.org.uk/python/configobj.html
 		* Copy configobj.py and validate.py into the source directory.
-	* liblouis, version 1.7.0, Windows dll and Python bindings:
+	* liblouis, version 1.8.0 or later, Windows dll and Python bindings:
 		* Official web site: http://code.google.com/p/liblouis/
 		* A pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
 		* Copy the louis Python package directory into the source directory.
@@ -38,13 +41,16 @@ General dependencies:
 		* IF you don't have them already, all of these files have been bundled for convenience at http://www.nvda-project.org/3rdParty/system-dlls.7z
 		* Copy them either into the source directory or into your Windows system32 directory.
 	* nvdaHelper:
-		* You can build this yourself, although you need to have the Windows SDK installed, which is quite large. See source\nvdaHelper\building.txt for instructions.
-		* Alternatively, a pre-built version has been provided for convenience at http://www.nvda-project.org/nvdaHelper/
+		* You can build this yourself. You need to have the Windows SDK installed, which is quite large. See source\nvdaHelper\building.txt for instructions.
+		* Alternatively, pre-built versions are provided alongside NVDA snapshots for convenience. See http://www.nvda-project.org/snapshots/
 			* Extract this archive into the root of your NVDA source distribution.
 	* Adobe AcrobatAccess interface typelib:
 		* You can build this yourself using midl from the idl located at http://www.adobe.com/devnet/acrobat/downloads/ClientFiles.zip
 		* Alternatively, a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/AcrobatAccess.tlb
 		* Copy AcrobatAccess.tlb into the source\typelibs directory.
+	* Adobe FlashAccessibility interface typelib: http://www.nvda-project.org/3rdParty/FlashAccessibility.tlb
+	* txt2tags, version 2.5 or later: http://txt2tags.sourceforge.net/
+		* Copy the txt2tags Python script to the source directory or the global Python site-packages directory, naming it txt2tags.py.
 
 To use the brltty braille display driver:
 	* brlapi Python bindings, version 0.5.3 or later, distributed with BRLTTY for Windows, version 4.0-2 or later:
@@ -60,7 +66,8 @@ To build a binary version of NVDA:
 
 To build an installer:
 	* Nulsoft Install System, version 2.42 or later: http://nsis.sourceforge.net/
-	* NSIS UAC plug-in, version 0.0.11c or later: http://nsis.sourceforge.net/UAC_plug-in
+	* NSIS UAC plug-in, version 0.0.11d or later: http://nsis.sourceforge.net/UAC_plug-in
+		* Copy the ANSI build of UAC.dll (found in release\a in the archive) into the installer directory.
 
 == Preparing the Source Tree ==
 Before you can run the NVDA source code, you must run generate.py located in the source directory.

@@ -1,0 +1,34 @@
+//NVDAController_appModuleHelper.idl
+
+/**
+ * Allows the controling of NVDA from a remote process
+ */
+[
+	uuid(DFF50B99-F7FD-4ca7-A82C-DAEB3E025295),
+	version(1.0),
+]
+interface NvdaController {
+
+/**
+ * Tests if NVDA is running or not.
+ */
+	error_status_t __stdcall testIfRunning();
+
+/**
+ * Instructs NVDA to speak the given text.
+ * @param text the text to speak.
+ */
+	error_status_t __stdcall speakText([in,string] const wchar_t* text);
+
+/**
+ * Instructs NVDA to silence current speech.
+ */
+	error_status_t __stdcall cancelSpeech();
+
+/**
+ * Shows a given message on the braille display.
+ * @param message the message that will be temporarily shown on the display
+ */
+	error_status_t __stdcall brailleMessage([in,string] const wchar_t* message);
+
+};

@@ -6,6 +6,7 @@
 
 """General functions for NVDA"""
 
+import config
 import textInfos
 import globalVars
 from logHandler import log
@@ -74,7 +75,16 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	focusDifferenceLevel=0
 	oldFocusLineLength=len(oldFocusLine)
 	# Starting from the focus, move up the ancestor chain.
+	safetyCount=0
 	while tempObj:
+		if safetyCount<100:
+			safetyCount+=1
+		else:
+			try:
+				log.error("Never ending focus ancestry: last object: %s, %s, window class %s, application name %s"%(tempObj.name,controlTypes.speechRoleLabels[tempObj.role],tempObj.windowClassName,tempObj.appModule.appName))
+			except:
+				pass
+			tempObj=getDesktopObject()
 		# Scan backwards through the old ancestors looking for a match.
 		for index in xrange(oldFocusLineLength-1,-1,-1):
 			if tempObj==oldFocusLine[index]:
@@ -124,7 +134,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	globalVars.focusObject=obj
 	globalVars.focusAncestors=ancestors
 	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
-	if globalVars.focusMovesNavigatorObject:
+	if config.conf["reviewCursor"]["followFocus"]:
 		setNavigatorObject(obj)
 	if log.isEnabledFor(log.DEBUG):
 		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
@@ -246,6 +256,8 @@ def processPendingEvents(processEventQueue=True):
 	wx.Yield()
 	JABHandler.pumpAll()
 	IAccessibleHandler.pumpAll()
+	import baseObject
+	baseObject.AutoPropertyObject.invalidateCaches()
 	if processEventQueue:
 		queueHandler.flushQueue(queueHandler.eventQueue)
 

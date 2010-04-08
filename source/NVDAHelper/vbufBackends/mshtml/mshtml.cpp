@@ -18,7 +18,7 @@
 #include <sstream>
 #include <vbufBase/backend.h>
 #include <vbufBase/utils.h>
-#include <vbufBase/debug.h>
+#include <common/debug.h>
 #include "node.h"
 #include "mshtml.h"
 
@@ -284,12 +284,12 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 	if (pHTMLCurrentStyle) pHTMLCurrentStyle->Release();
 }
 
-#define macro_addHTMLAttributeToMap(attribName,attribsObj,attribsMap,tempVar,tempAttrObj) {\
+#define macro_addHTMLAttributeToMap(attribName,allowEmpty,attribsObj,attribsMap,tempVar,tempAttrObj) {\
 	attribsObj->getNamedItem(attribName,&tempAttrObj);\
 	if(tempAttrObj) {\
 		VariantInit(&tempVar);\
-	tempAttrObj->get_nodeValue(&tempVar);\
-		if(tempVar.vt==VT_BSTR&&tempVar.bstrVal&&SysStringLen(tempVar.bstrVal)>0) {\
+		tempAttrObj->get_nodeValue(&tempVar);\
+		if(tempVar.vt==VT_BSTR&&tempVar.bstrVal&&(allowEmpty||SysStringLen(tempVar.bstrVal)>0)) {\
 			attribsMap[L"HTMLAttrib::"##attribName]=tempVar.bstrVal;\
 		}\
 		VariantClear(&tempVar);\
@@ -316,27 +316,27 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	IHTMLDOMAttribute* tempAttribNode=NULL;
 	VARIANT tempVar;
 	if(nodeName.compare(L"TABLE")==0) {
-		macro_addHTMLAttributeToMap(L"summary",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+		macro_addHTMLAttributeToMap(L"summary",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	} else if(nodeName.compare(L"INPUT")==0) {
-		macro_addHTMLAttributeToMap(L"type",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
-		macro_addHTMLAttributeToMap(L"value",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+		macro_addHTMLAttributeToMap(L"type",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+		macro_addHTMLAttributeToMap(L"value",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	} else if(nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0) {
-		macro_addHTMLAttributeToMap(L"headers",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+		macro_addHTMLAttributeToMap(L"headers",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	}
-	macro_addHTMLAttributeToMap(L"alt",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
-	macro_addHTMLAttributeToMap(L"title",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
-	macro_addHTMLAttributeToMap(L"src",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
-	macro_addHTMLAttributeToMap(L"onclick",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
-	macro_addHTMLAttributeToMap(L"onmousedown",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
-	macro_addHTMLAttributeToMap(L"onmouseup",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"alt",true,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"title",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"src",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"onclick",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"onmousedown",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"onmouseup",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	//ARIA properties:
-	macro_addHTMLAttributeToMap(L"role",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
-	macro_addHTMLAttributeToMap(L"aria-required",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
-	macro_addHTMLAttributeToMap(L"aria-dropeffect",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
-	macro_addHTMLAttributeToMap(L"aria-grabbed",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
-	macro_addHTMLAttributeToMap(L"aria-invalid",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
-	macro_addHTMLAttributeToMap(L"aria-multiline",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
-	macro_addHTMLAttributeToMap(L"aria-label",pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"role",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-required",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-dropeffect",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-grabbed",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-invalid",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-multiline",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-label",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	pHTMLAttributeCollection2->Release();
 }
 
@@ -379,7 +379,13 @@ inline void fillTextFormatting_helper(IHTMLElement2* pHTMLElement2, VBufStorage_
 	if(tempBSTR) {
 		DEBUG_MSG(L"Got textDecoration");
 		if (wcsicmp(tempBSTR,L"none")!=0) {
-			node->addAttribute((wcsicmp(tempBSTR,L"line-through")!=0) ? tempBSTR : L"strikethrough", L"1");
+			// textDecoration may contain multiple values separated by spaces.
+			wchar_t *token, *tokenContext;
+			token = wcstok_s(tempBSTR, L" ", &tokenContext);
+			while (token) {
+				node->addAttribute((wcsicmp(token,L"line-through")!=0) ? token : L"strikethrough", L"1");
+				token = wcstok_s(NULL, L" ", &tokenContext);
+			}
 		}
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
@@ -507,7 +513,7 @@ if(nodeName.compare(L"TABLE")==0) {
 	return tableInfoPtr;
 }
 
-VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr) {
+VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr, bool parentHasContent) {
 	BSTR tempBSTR=NULL;
 	wostringstream tempStringStream;
 
@@ -562,6 +568,16 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	//Collect needed HTML attributes
 	getAttributesFromHTMLDOMNode(pHTMLDOMNode,nodeName,attribsMap);
 
+	//Find out if this node is editable
+	BOOL isEditable=false;
+	IHTMLElement3* pHTMLElement3=NULL;
+	if(pHTMLDOMNode->QueryInterface(IID_IHTMLElement3,(void**)&pHTMLElement3)==S_OK) {
+		VARIANT_BOOL varEditable=VARIANT_FALSE;
+		pHTMLElement3->get_isContentEditable(&varEditable);
+		isEditable=(varEditable==VARIANT_TRUE);
+		if(isEditable) attribsMap[L"IHTMLElement::isContentEditable"]=L"1";
+	}
+
 	//input nodes of type hidden must be treeted as being invisible.
 	if(!invisible&&nodeName.compare(L"INPUT")==0) {
 		tempIter=attribsMap.find(L"HTMLAttrib::type");
@@ -593,6 +609,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		getIAccessibleInfo(pacc,&IAName,&IARole,&IAValue,&IAStates,&IADescription,&IAKeyboardShortcut);
 	}
 
+	//IE sometimes sets the readonly state on editable nodes, this does not make sence
+	if(isEditable&&IAStates&STATE_SYSTEM_READONLY) {
+		IAStates-=STATE_SYSTEM_READONLY;
+	}
+
 	//IE doesn't seem to support aria-label yet so we want to override IAName with it
 	tempIter=attribsMap.find(L"HTMLAttrib::aria-label");
 	if(tempIter!=attribsMap.end()) {
@@ -600,7 +621,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 
 	//Is this node interactive?
-	bool isInteractive=(IAStates&STATE_SYSTEM_FOCUSABLE)||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end());
+	bool isInteractive=isEditable||(IAStates&STATE_SYSTEM_FOCUSABLE)||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end());
 	//Set up numbering for lists
 	int LIIndex=0;
 	if(nodeName.compare(L"OL")==0) {
@@ -645,13 +666,20 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		}
 	} else if(nodeName.compare(L"IMG")==0) {
 		tempIter=attribsMap.find(L"HTMLAttrib::alt");
-		if(tempIter!=attribsMap.end()) {
+		// If the alt attrib contains text, always use it.
+		// If the parent has content, rely on the alt attrib, even if it is "".
+		// If the parent has no content and the alt attrib is "", don't use it; fall back.
+		if(tempIter!=attribsMap.end()&&(parentHasContent||!tempIter->second.empty())) {
 			contentString=tempIter->second;
+			if(tempIter->second.empty()) {
+				// alt="", so this isn't really interactive and we don't want it to be rendered at all.
+				isInteractive=false;
+			}
 		} else {
 			tempIter=attribsMap.find(L"HTMLAttrib::title");
 			if(tempIter!=attribsMap.end()) {
 				contentString=tempIter->second;
-			} else if(isInteractive&&!IAValue.empty()) {
+			} else if(isInteractive&&!parentHasContent&&!IAValue.empty()) {
 				contentString=getNameForURL(IAValue);
 			} 
 		}
@@ -741,13 +769,14 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 
 	//Render content of children if we are allowed to
 	if(renderChildren) {
+		bool hasContent=!IAName.empty();
 		//For children of frames we must get the child document via IAccessible
 		if(nodeName.compare(L"FRAME")==0||nodeName.compare(L"IFRAME")==0) {
 			DEBUG_MSG(L"using getRoodDOMNodeOfHTMLFrame to get the frame's child");
 			if(pacc) {
 				IHTMLDOMNode* childPHTMLDOMNode=getRootDOMNodeFromIAccessibleFrame(pacc);
 				if(childPHTMLDOMNode) {
-					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr);
+					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,hasContent);
 					childPHTMLDOMNode->Release();
 				}
 			}
@@ -771,7 +800,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 						}
 						IHTMLDOMNode* childPHTMLDOMNode=NULL;
 						if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
-							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr);
+							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,hasContent);
 							if(tempNode) {
 								previousNode=tempNode;
 							}
@@ -834,6 +863,12 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		}
 	}
 
+	//If a node is interactive, and still has no content, add a space
+	if(isInteractive&&parentNode->getLength()==0) {
+		buffer->addTextFieldNode(parentNode,previousNode,L" ");
+	}
+
+
 	//Update block setting on node
 	parentNode->setIsBlock(isBlock);
 
@@ -883,7 +918,7 @@ IHTMLDOMNode* pHTMLDOMNode=NULL;
 		pHTMLElement->Release();
 	}
 	assert(pHTMLDOMNode);
-	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,NULL,NULL);
+	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,NULL,NULL,true);
 	pHTMLDOMNode->Release();
 }
 

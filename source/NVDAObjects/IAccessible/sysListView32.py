@@ -147,11 +147,6 @@ class List(List):
 
 class GroupingItem(Window):
 
-	@classmethod
-	def findBestClass(cls, clsList, kwargs):
-		# This class can be directly instantiated.
-		return (cls,), kwargs
-
 	def __init__(self,parent,groupInfo):
 		super(GroupingItem,self).__init__(windowHandle=parent.windowHandle)
 		self.parent=parent

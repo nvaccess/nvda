@@ -13,6 +13,24 @@ import comtypes.gen
 import comInterfaces
 comtypes.gen.__path__.append(comInterfaces.__path__[0])
 
+#Monkey patch comtypes to support byref in variants
+from comtypes.automation import VARIANT, VT_BYREF
+from ctypes import cast, c_void_p
+from _ctypes import _Pointer
+oldVARIANT_value_fset=VARIANT.value.fset
+def newVARIANT_value_fset(self,value):
+	realValue=value
+	if isinstance(value,_Pointer):
+		try:
+			value=value.contents
+		except (NameError,AttributeError):
+			pass
+	oldVARIANT_value_fset(self,value)
+	if realValue is not value:
+		self.vt|=VT_BYREF
+		self._.c_void_p=cast(realValue,c_void_p)
+VARIANT.value=property(VARIANT.value.fget,newVARIANT_value_fset,VARIANT.value.fdel)
+
 import sys
 import nvwave
 import os
@@ -20,13 +38,6 @@ import time
 import logHandler
 import globalVars
 from logHandler import log
-
-# Work around a bug in comtypes.
-# CoTaskMemFree returns void, but oledll (which assumes HRESULT) is used to access it in comtypes.GUID.
-# We have to use sys.modules because GUID is overridden in comtypes to refer to the class.
-GUID = sys.modules["comtypes.GUID"]
-GUID._CoTaskMemFree = GUID.windll.ole32.CoTaskMemFree
-del GUID
 
 # Work around an issue with comtypes where __del__ seems to be called twice on COM pointers.
 # This causes Release() to be called more than it should, which is very nasty and will eventually cause us to access pointers which have been freed.
@@ -92,7 +103,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import config
 	config.load()
 	if not globalVars.appArgs.minimal:
-		nvwave.playWaveFile("waves\\start.wav")
+		try:
+			nvwave.playWaveFile("waves\\start.wav")
+		except:
+			pass
 	log.debug("Trying to save config")
 	try:
 		config.save()
@@ -135,7 +149,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		config.saveOnExit()
 		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal:
-			nvwave.playWaveFile("waves\\exit.wav",async=False)
+			try:
+				nvwave.playWaveFile("waves\\exit.wav",async=False)
+			except:
+				pass
 		log.info("Windows session ending")
 	app.Bind(wx.EVT_END_SESSION, onEndSession)
 	import braille
@@ -182,7 +199,12 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	IAccessibleHandler.initialize()
 	import UIAHandler
 	log.debug("Initializing UIA support")
-	UIAHandler.initialize()
+	try:
+		UIAHandler.initialize()
+	except NotImplementedError:
+		log.warning("UIA not available")
+	except:
+		log.error("Error initializing UIA support", exc_info=True)
 	import keyboardHandler
 	log.debug("Initializing keyboard handler")
 	keyboardHandler.initialize()
@@ -197,11 +219,14 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		wx.CallAfter(doStartupDialogs)
 	if api.getFocusObject()==api.getDesktopObject():
 		import eventHandler
-		focus=api.getDesktopObject().objectWithFocus()
-		if focus:
+		try:
+			focus=api.getDesktopObject().objectWithFocus()
 			eventHandler.queueEvent('gainFocus',focus)
+		except:
+			log.exception("Error retrieving initial focus")
 	import queueHandler
 	import watchdog
+	import baseObject
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
 		def __init__(self,*args,**kwargs):
@@ -215,6 +240,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				mouseHandler.pumpAll()
 			except:
 				log.exception("errors in this core pump cycle")
+			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.alive()
 	log.debug("starting core pump")
 	pump = CorePump()
@@ -294,5 +320,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	except:
 		log.error("Error terminating speech",exc_info=True)
 	if not globalVars.appArgs.minimal:
-		nvwave.playWaveFile("waves\\exit.wav",async=False)
+		try:
+			nvwave.playWaveFile("waves\\exit.wav",async=False)
+		except:
+			pass
 	log.debug("core done")

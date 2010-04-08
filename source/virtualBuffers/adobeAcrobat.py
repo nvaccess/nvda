@@ -1,7 +1,7 @@
 from . import VirtualBuffer, VirtualBufferTextInfo
 import controlTypes
 import NVDAObjects.IAccessible
-from NVDAObjects.IAccessible.adobe import normalizeStdName
+from NVDAObjects.IAccessible.adobeAcrobat import normalizeStdName
 import winUser
 import IAccessibleHandler
 import oleacc
@@ -55,7 +55,7 @@ class AdobeAcrobat(VirtualBuffer):
 		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
 
 	def getIdentifierFromNVDAObject(self,obj):
-		return obj.windowHandle, obj.event_childID
+		return obj.windowHandle, obj.event_objectID if obj.event_objectID > 0 else obj.event_childID
 
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType in ("link", "unvisitedLink"):

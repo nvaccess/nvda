@@ -4,13 +4,17 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import ui
+import globalVars
 from ctypes import *
 from ctypes.wintypes import *
 import winKernel
 import winUser
-from NVDAObjects.IAccessible import IAccessible, PropertyPage
+from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects.behaviors import Dialog
 import _default
 import speech
+import braille
 import controlTypes
 from keyUtils import sendKey
 from scriptHandler import isScriptWaiting
@@ -70,22 +74,39 @@ CLM_GETSTATUSMSG=CLM_FIRST+105
 
 #other constants
 ANSILOGS=(1001,1006)
+MESSAGEVIEWERS=(1001,1005,5005)
 
 class AppModule(_default.AppModule):
+	lastTextLengths={}
+	lastMessages=[]
+	MessageHistoryLength=3
+
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		windowClass = obj.windowClassName
+		if windowClass == "CListControl":
+			clsList.insert(0, mirandaIMContactList)
+		elif windowClass in ("MButtonClass", "TSButtonClass", "CLCButtonClass"):
+			clsList.insert(0, mirandaIMButton)
+		elif windowClass == "Hyperlink":
+			clsList.insert(0, mirandaIMHyperlink)
+		elif isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_PROPERTYPAGE:
+			clsList.insert(0, MPropertyPage)
+		elif isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_SCROLLBAR and obj.windowControlID in MESSAGEVIEWERS:
+			clsList.insert(0, MirandaMessageViewerScrollbar)
 
 	def event_NVDAObject_init(self,obj):
-		if obj.windowClassName=="CListControl":
-			obj.__class__=mirandaIMContactList
+		if obj.windowClassName=="ColourPicker":
+			obj.role=controlTypes.ROLE_COLORCHOOSER
 		elif (obj.windowControlID in ANSILOGS) and (obj.windowClassName=="RichEdit20A"):
 			obj._isWindowUnicode=False
-		elif obj.windowClassName=="MButtonClass" or obj.windowClassName=="TSButtonClass" or obj.windowClassName=="CLCButtonClass":
-			obj.__class__=mirandaIMButton
-		elif obj.windowClassName=="Hyperlink":
-			obj.__class__=mirandaIMHyperlink
-		elif obj.windowClassName=="ColourPicker":
-			obj.role=controlTypes.ROLE_COLORCHOOSER
-		elif obj.IAccessibleRole==oleacc.ROLE_SYSTEM_PROPERTYPAGE:
-			obj.__class__=MPropertyPage
+
+	def script_readMessage(self,keyPress):
+		num=int(keyPress[-1][-1])
+		if len(self.lastMessages)>num-1:
+			ui.message(self.lastMessages[num-1])
+		else:
+			ui.message(_("No message yet"))
+	script_readMessage.__doc__=_("Displays one of the recent messages")
 
 class mirandaIMContactList(IAccessible):
 
@@ -127,6 +148,8 @@ class mirandaIMContactList(IAccessible):
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			speech.speakObject(self,reason=speech.REASON_FOCUS)
+			braille.handler.handleGainFocus(self)
+
 
 class mirandaIMButton(IAccessible):
 
@@ -148,12 +171,15 @@ class mirandaIMHyperlink(mirandaIMButton):
 	def _get_role(self):
 		return controlTypes.ROLE_LINK
 
-class MPropertyPage(PropertyPage):
+class MPropertyPage(Dialog,IAccessible):
 
 	def _get_name(self):
 		name=super(MPropertyPage,self)._get_name()
 		if not name:
-			tc=self.next
+			try:
+				tc=self.parent.next.firstChild
+			except AttributeError:
+				tc=None
 			if tc and tc.role==controlTypes.ROLE_TABCONTROL:
 				children=tc.children
 				for index in range(len(children)):
@@ -161,6 +187,21 @@ class MPropertyPage(PropertyPage):
 						name=children[index].name
 						break
 		return name
+
+
+class MirandaMessageViewerScrollbar(IAccessible):
+	def event_valueChange(self):
+		curTextLength=len(self.windowText)
+		if self.windowHandle not in self.appModule.lastTextLengths:
+			self.appModule.lastTextLengths[self.windowHandle]=curTextLength
+		elif self.appModule.lastTextLengths[self.windowHandle]<curTextLength:
+			message=self.windowText[self.appModule.lastTextLengths[self.windowHandle]:]
+			self.appModule.lastMessages.insert(0,message)
+			self.appModule.lastMessages=self.appModule.lastMessages[:self.appModule.MessageHistoryLength]
+			if globalVars.reportDynamicContentChanges:
+				ui.message(message)
+			self.appModule.lastTextLengths[self.windowHandle]=curTextLength
+		super(MirandaMessageViewerScrollbar,self).event_valueChange()
 
 [mirandaIMContactList.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("extendedDown","changeItem"),

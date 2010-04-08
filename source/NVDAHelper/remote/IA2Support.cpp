@@ -77,7 +77,6 @@ BOOL installIA2Support() {
 
 BOOL uninstallIA2Support() {
 	int i;
-	int res;
 	LPFNDLLCANUNLOADNOW IA2Dll_DllCanUnloadNow;
 	if(isIA2Installed) {
 	for(i=0;i<ARRAYSIZE(ia2Iids);i++) {

@@ -15,6 +15,11 @@
 #include "typedCharacter.h"
 #include "IA2Support.h"
 #include "winEventFilter.h"
+#include "ia2LiveRegions.h"
+#include "nvdaController.h"
+#include "nvdaControllerInternal.h"
+#include <common/winIPCUtils.h>
+#include <common/log.h>
 #include "nvdaHelperRemote.h"
 
 using namespace std;
@@ -24,11 +29,11 @@ typedef map<HOOKPROC,size_t> windowsHookRegistry_t;
 
 #pragma data_seg(".remoteShared")
 	wchar_t dllDirectory[MAX_PATH]={0};
+	BOOL isInitialized=FALSE;
 #pragma data_seg()
 #pragma comment(linker, "/section:.remoteShared,rws")
 
 HINSTANCE moduleHandle;
-BOOL isInitialized=false;
 BOOL inProcess_wasInitializedOnce=false;
 BOOL inProcess_isRunning=false;
 winEventHookRegistry_t inProcess_registeredWinEventHooks;
@@ -48,6 +53,7 @@ void inProcess_initialize() {
 	rpcSrv_inProcess_initialize();
 	winEventFilter_inProcess_initialize();
 	IA2Support_inProcess_initialize();
+	ia2LiveRegions_inProcess_initialize();
 	typedCharacter_inProcess_initialize();
 	inputLangChange_inProcess_initialize();
 	inProcess_isRunning=inProcess_wasInitializedOnce=true;
@@ -58,6 +64,7 @@ void inProcess_terminate() {
 	assert(inProcess_wasInitializedOnce);
 	inputLangChange_inProcess_terminate();
 	typedCharacter_inProcess_terminate();
+	ia2LiveRegions_inProcess_terminate();
 	IA2Support_inProcess_terminate();
 	winEventFilter_inProcess_terminate();
 	rpcSrv_inProcess_terminate();
@@ -115,12 +122,21 @@ bool unregisterWindowsHook(int hookType, HOOKPROC hookProc) {
 	return true;
 }
 
-BOOL DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
+BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if((reason==DLL_PROCESS_ATTACH)&&(moduleHandle==NULL)) {
 		moduleHandle=hModule;
 		GetWindowThreadProcessId(GetDesktopWindow(),&desktopProcessID);
+		wchar_t endpointString[64];
+		getNVDAControllerNcalrpcEndpointString(endpointString,64,TRUE);
+		RpcBindingFromStringBinding((RPC_WSTR)endpointString,&nvdaControllerBindingHandle);
+		RpcBindingFromStringBinding((RPC_WSTR)endpointString,&nvdaControllerInternalBindingHandle);
+		#if LOGLEVEL<=LOGLEVEL_INFO
+		if(isInitialized) LOG_INFO(L"process attach");
+		#endif
 	} else if(reason==DLL_PROCESS_DETACH) {
 	if(inProcess_isRunning) inProcess_terminate();
+	RpcBindingFree(&nvdaControllerBindingHandle);
+	RpcBindingFree(&nvdaControllerInternalBindingHandle);
 	}
 	return TRUE;
 }

@@ -9,6 +9,7 @@ import os
 import pkgutil
 import wx
 import louis
+import globalVars
 import baseObject
 import config
 from logHandler import log
@@ -29,8 +30,10 @@ TABLES = (
 	("cy-cy-g2.ctb", _("Welsh grade 2")),
 	("cz-cz-g1.utb", _("Czech grade 1")),
 	("da-dk-g1.utb", _("Danish grade 1")),
+	("de-de-comp8.ctb", _("German 8 dot computer braille")),
 	("de-de-g0.utb", _("German grade 0")),
 	("de-de-g1.ctb", _("German grade 1")),
+	("de-de-g2.ctb", _("German grade 2")),
 	("en-gb-g1.utb", _("English (U.K.) grade 1")),
 	("en-GB-g2.ctb", _("English (U.K.) grade 2")),
 	("en-us-comp6.ctb", _("English (U.S.) 6 dot computer braille")),
@@ -38,6 +41,7 @@ TABLES = (
 	("en-us-g1.ctb", _("English (U.S.) grade 1")),
 	("en-us-g2.ctb", _("English (U.S.) grade 2")),
 	("Es-Es-g1.utb", _("Spanish grade 1")),
+	("fi-fi-8dot.ctb", _("Finnish 8 dot computer braille")),
 	("fr-ca-g1.utb", _("French (Canada) grade 1")),
 	("Fr-Ca-g2.ctb", _("French (Canada) grade 2")),
 	("fr-bfu-comp6.utb", _("French (unified) 6 dot computer braille")),
@@ -62,6 +66,8 @@ TABLES = (
 	("sk-sk-g1.utb", _("Slovak")),
 	("UEBC-g1.utb", _("Unified English Braille Code grade 1")),
 	("UEBC-g2.ctb", _("Unified English Braille Code grade 2")),
+	("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)")),
+	("zh-tw.ctb", _("Chinese (Taiwan, Mandarin)")),
 )
 
 roleLabels = {
@@ -271,6 +277,11 @@ class TextInfoRegion(Region):
 		self.obj = obj
 
 	def _isMultiline(self):
+		#A regions object can either be an NVDAObject or a virtualBuffer
+		#virtualBuffers should always be multiline
+		import virtualBuffers
+		if isinstance(self.obj,virtualBuffers.VirtualBuffer):
+			return True
 		# Terminals are inherently multiline, so they don't have the multiline state.
 		return (self.obj.role == controlTypes.ROLE_TERMINAL or controlTypes.STATE_MULTILINE in self.obj.states)
 
@@ -295,10 +306,12 @@ class TextInfoRegion(Region):
 			log.debugWarning("", exc_info=True)
 
 	def update(self):
-		caret = self._getSelection()
-		caret.collapse()
+		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
+		# so use the original caret TextInfo for line and copy for caret.
+		self._line = line = self._getSelection()
+		line.collapse()
+		caret = line.copy()
 		# Get the line at the caret.
-		self._line = line = caret.copy()
 		line.expand(textInfos.UNIT_LINE)
 		# Not all text APIs support offsets, so we can't always get the offset of the caret relative to the start of the line.
 		# Therefore, grab the line in two parts.
@@ -363,13 +376,10 @@ class CursorManagerRegion(TextInfoRegion):
 class ReviewTextInfoRegion(TextInfoRegion):
 
 	def _getSelection(self):
-		return api.getReviewPosition()
+		return api.getReviewPosition().copy()
 
 	def _setSelection(self, info):
 		api.setReviewPosition(info)
-
-	def _isMultiline(self):
-		return True
 
 class BrailleBuffer(baseObject.AutoPropertyObject):
 
@@ -652,18 +662,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
 		self.buffer = self.mainBuffer
-		self._tether = self.TETHER_FOCUS
+		#config.conf["braille"]["tetherTo"] = self.TETHER_FOCUS
 		#: Whether braille is enabled.
 		#: @type: bool
 		self.enabled = False
+		self._keyCounterForLastMessage=0
 
 	def _get_tether(self):
-		return self._tether
+		return config.conf["braille"]["tetherTo"]
 
 	def _set_tether(self, tether):
-		if tether == self._tether:
+		if tether == config.conf["braille"]["tetherTo"]:
 			return
-		self._tether = tether
+		config.conf["braille"]["tetherTo"] = tether
 		self.mainBuffer.clear()
 		if tether == self.TETHER_REVIEW:
 			self.handleReviewMove()
@@ -728,6 +739,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""Display a message to the user which times out after a configured interval.
 		The timeout will be reset if the user scrolls the display.
 		The message will be dismissed immediately if the user presses a cursor routing key.
+		If a key is pressed the message will be dismissed by the next text being written to the display
 		@postcondition: The message is displayed.
 		"""
 		if not self.enabled:
@@ -742,6 +754,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.buffer.update()
 		self.update()
 		self._resetMessageTimer()
+		self._keyCountForLastMessage=globalVars.keyCounter
 
 	def _resetMessageTimer(self):
 		"""Reset the message timeout.
@@ -783,6 +796,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
 		if self.buffer is self.mainBuffer:
 			self.update()
+		elif self.buffer is self.messageBuffer and globalVars.keyCounter>self._keyCountForLastMessage:
+			self._dismissMessage()
 
 	def handleCaretMove(self, obj):
 		if not self.enabled:
@@ -805,6 +820,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
 		if self.buffer is self.mainBuffer:
 			self.update()
+		elif self.buffer is self.messageBuffer and globalVars.keyCounter>self._keyCountForLastMessage:
+			self._dismissMessage()
 
 	def handleUpdate(self, obj):
 		if not self.enabled:
@@ -823,6 +840,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.restoreWindow(ignoreErrors=True)
 		if self.buffer is self.mainBuffer:
 			self.update()
+		elif self.buffer is self.messageBuffer and globalVars.keyCounter>self._keyCountForLastMessage:
+			self._dismissMessage()
 
 	def handleReviewMove(self):
 		if not self.enabled:

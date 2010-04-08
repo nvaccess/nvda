@@ -1,18 +1,17 @@
 import _default
-from keyUtils import key, sendKey, keyName
+from keyUtils import key, sendKey
 import NVDAObjects.IAccessible
 import speech
-import config
 
 class AppModule(_default.AppModule):
 
-	def event_NVDAObject_init(self,obj):
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClassName=obj.windowClassName
 		windowControlID=obj.windowControlID
-		if windowClassName=="Edit" and windowControlID==403:
-			self.overlayCustomNVDAObjectClass(obj,Display,outerMost=True)
-		elif windowClassName=="Static" and windowControlID==150:
-			self.overlayCustomNVDAObjectClass(obj,Display,outerMost=True)
+		if ((windowClassName=="Edit" and windowControlID==403)
+			or (windowClassName=="Static" and windowControlID==150)
+		):
+			clsList.insert(0, Display)
 
 class Display(NVDAObjects.IAccessible.IAccessible):
 

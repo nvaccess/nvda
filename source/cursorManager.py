@@ -36,10 +36,14 @@ class CursorManager(baseObject.ScriptableObject):
 		super(CursorManager, self).__init__(*args, **kwargs)
 		self.initCursorManager()
 
+	def initOverlayClass(self):
+		"""Performs automatic initialisation if this is being used as an overlay class."""
+		self.initCursorManager()
+
 	def initCursorManager(self):
 		"""Initialise this cursor manager.
 		This must be called before the cursor manager functionality can be used.
-		It is normally called by L{__init__}, but may not be if __class__ is reassigned.
+		It is normally called by L{__init__} or L{initOverlayClass}.
 		"""
 		self._lastSelectionMovedStart=False
 		self.bindToStandardKeys()
@@ -84,7 +88,7 @@ class CursorManager(baseObject.ScriptableObject):
 		if res:
 			self.selection=info
 			speech.cancelSpeech()
-			info.expand(textInfos.UNIT_LINE)
+			info.move(textInfos.UNIT_LINE,1,endPoint="end")
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
 			errorDialog=gui.scriptUI.MessageDialog(_("text \"%s\" not found")%text,title=_("Find Error"),style=gui.scriptUI.wx.OK|gui.scriptUI.wx.ICON_ERROR)

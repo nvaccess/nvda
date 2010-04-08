@@ -71,6 +71,9 @@ Guarda la configuración.
 Control+NVDA+r: volverAConfiguraciónGuardada
 Restaura la configuración.
 
+NVDA+c: anunciarTextoPortapapeles
+Anuncia el texto en el portapapeles de Windows.
+
 
 Opciones de Cambio (encontradas en los diálogos de opciones)
 
@@ -189,8 +192,15 @@ Pone el navegador de objetos en el actual objeto con el foco.
 Dividir Teclado Numérico: clicIzquierdoDelRatón
 Hace clic con el botón izquierdo del ratón una vez donde quiera que esté.
 
+
+shift+dividir teclado numérico: conmutaBotónIzquierdoDelRatón
+Bloquea o desbloquea el botón izquierdo del ratón
+
 Multiplicar teclado numérico: clicDerechoDelRatón
 Hace clic con el botón derecho del ratón una vez donde quiera que esté.
+
+shift+multiplicar teclado numérico: conmutarBotónDerechoDelRatón
+Bloquea o desbloquea el botón derecho del ratón
 
 Más Teclado Numérico: revisiónLeerTodo
 Utiliza el cursor de revisión para leer desde su posición al final del actual texto revisable
@@ -240,8 +250,14 @@ Mueve el cursor de revisión a la línea anterior
 shift+9 Teclado Numérico: revisiónInferior
 Mueve el cursor de revisión a la última línea
 
+NVDA+f9: revisión_marcaInicioParaCopiar
+Marca la posición actual del cursor de revisión como el inicio de texto para copiar.
 
-Ordenes del Modo Virtual para Firefox3 (Algunas de estas podrán funcionar en Internet Explorer o Firefox2):
+NVDA+f10: revisión_copiar
+Recoge el texto desde la posición previamente marcada e incluye la posición actual del cursor de revisión y lo copia al portapapeles.
+
+
+Ordenes del Modo Virtual 
 
 NVDA+espacio: conmutarPasoATravésModoVirtual
 Activa o desactiva el paso a través del modo virtual.
@@ -250,6 +266,8 @@ control+NVDA+f: encontrar (control+f en firefox2 / internet explorer)
 NVDA+f3: encontrar siguiente
 NVDA+f7: lista de elementos
 NVDA+f5: refresca la memoria intermedia (no en Firefox2 o Internet Explorer)
+NVDA+v: activa y desactiva Disposición de Pantalla
+
 
 Teclas rápidas del modo virtual para saltar a siguientes elementos de un tipo en particular (también utiliza shift con la tecla para retroceder):
 
@@ -270,18 +288,8 @@ q: cita
 s: separador
 m: marco
 g: gráfico
-d: Marcador ARIA
+d: Zona de ARIA
 n: texto no enlazado
 o: objeto empotrado
 1 a 6: encabezados de nivel 1 a 6
-
-
-
-
-
-
-
-
-
-
 

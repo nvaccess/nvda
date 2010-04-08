@@ -265,6 +265,11 @@ SW_SHOWNORMAL = 1
 def setSystemScreenReaderFlag(val):
 	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_SENDCHANGE)
 
+def getSystemScreenReaderFlag():
+	val = BOOL()
+	user32.SystemParametersInfoW(SPI_GETSCREENREADER, 0, byref(val), 0)
+	return bool(val.value)
+
 def LOBYTE(word):
 	return word&0xFF
  

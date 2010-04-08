@@ -1,9 +1,56 @@
-Import(['env','vbufRPCStubs'])
+Import([
+	'env',
+])
+
+winIPCUtilsObj=env.Object("./winIPCUtils","#common/winIPCUtils.cpp")
+
+controllerRPCHeader,controllerRPCServerSource=env.MSRPCStubs(
+	target="./nvdaController",
+	source=[
+		"#interfaces/nvdaController/nvdaController.idl",
+		"#interfaces/nvdaController/nvdaController.acf",
+	],
+	MSRPCStubs_noClient=True,
+	MSRPCStubs_prefix="nvdaController_",
+)
+
+controllerInternalRPCHeader,controllerInternalRPCServerSource=env.MSRPCStubs(
+	target="./nvdaControllerInternal",
+	source=[
+		"#interfaces/nvdaControllerInternal/nvdaControllerInternal.idl",
+		"#interfaces/nvdaControllerInternal/nvdaControllerInternal.acf",
+	],
+	MSRPCStubs_noClient=True,
+	MSRPCStubs_prefix="nvdaControllerInternal_",
+)
+
+vbufRPCHeader,vbufRPCClientSource=env.MSRPCStubs(
+	target="./vbuf",
+	source=[
+		"#interfaces/vbuf/vbuf.idl",
+	],
+	MSRPCStubs_noServer=True,
+	MSRPCStubs_prefix="VBuf_",
+)
 
 localLib=env.SharedLibrary(
 	target="nvdaHelperLocal",
-	source=["nvdaHelperLocal.cpp","beeps.cpp",vbufRPCStubs[1]],
-	LIBS=["rpcrt4"],
+	source=[
+		"nvdaHelperLocal.cpp",
+		"beeps.cpp",
+		vbufRPCClientSource,
+		'rpcSrv.cpp',
+		'nvdaController.c',
+		winIPCUtilsObj,
+		controllerRPCServerSource,
+		'nvdaControllerInternal.c',
+		controllerInternalRPCServerSource,
+	],
+	LIBS=[
+		"user32",
+		"oleaut32",
+		"rpcrt4",
+	],
 )
 
 Return('localLib')
