@@ -39,38 +39,51 @@ class ClassicStartMenu(Window):
 
 class AppModule(_default.AppModule):
 
-	def event_NVDAObject_init(self, obj):
-		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_POPUPMENU:
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		windowClass = obj.windowClassName
+		role = obj.role
+
+		if windowClass == "ToolbarWindow32" and role == controlTypes.ROLE_POPUPMENU:
 			parent = obj.parent
-			if parent and parent.windowClassName == "SysPager":
-				if obj.windowStyle & 0x80:
-					self.overlayCustomNVDAObjectClass(obj,ClassicStartMenu,outerMost=True)
-				else:
-					# This is the menu for a group of icons on the task bar, which Windows stupidly names "Application".
-					obj.name = None
+			if parent and parent.windowClassName == "SysPager" and obj.windowStyle & 0x80:
+				clsList.insert(0, ClassicStartMenu)
 			return
 
-		if obj.windowClassName=="SysListView32" and obj.role==controlTypes.ROLE_MENUITEM:
-			self.overlayCustomNVDAObjectClass(obj,SysListView32MenuItem,outerMost=True)
+		if windowClass == "SysListView32" and role == controlTypes.ROLE_MENUITEM:
+			clsList.insert(0, SysListView32MenuItem)
+			return
 
-		if obj.windowClassName == "#32768":
+	def event_NVDAObject_init(self, obj):
+		windowClass = obj.windowClassName
+		role = obj.role
+
+		if windowClass == "ToolbarWindow32" and role == controlTypes.ROLE_POPUPMENU:
+			parent = obj.parent
+			if parent and parent.windowClassName == "SysPager" and not (obj.windowStyle & 0x80):
+				# This is the menu for a group of icons on the task bar, which Windows stupidly names "Application".
+				obj.name = None
+			return
+
+		if windowClass == "#32768":
 			# Standard menu.
 			parent = obj.parent
 			if parent and not parent.parent:
 				# Context menu.
 				# We don't trust the names that Explorer gives to context menus, so better to have no name at all.
 				obj.name = None
+			return
 
-		if obj.windowClassName == "DV2ControlHost" and obj.role == controlTypes.ROLE_PANE:
+		if windowClass == "DV2ControlHost" and role == controlTypes.ROLE_PANE:
 			# Windows Vista/7 start menu.
 			obj.presentationType=obj.presType_content
 			obj.isPresentableFocusAncestor = True
 			# In Windows 7, the description of this pane is extremely verbose help text, so nuke it.
 			obj.description = None
+			return
 
 		#The Address bar is embedded inside a progressbar, how strange.
 		#Lets hide that
-		if obj.windowClassName=="msctls_progress32" and winUser.getClassName(winUser.getAncestor(obj.windowHandle,winUser.GA_PARENT))=="Address Band Root":
+		if windowClass=="msctls_progress32" and winUser.getClassName(winUser.getAncestor(obj.windowHandle,winUser.GA_PARENT))=="Address Band Root":
 			obj.presentationType=obj.presType_layout
 
 	def event_gainFocus(self, obj, nextHandler):

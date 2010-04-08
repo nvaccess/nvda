@@ -53,15 +53,6 @@ class Mozilla(IAccessible):
 			states.add(controlTypes.STATE_CHECKABLE)
 		return states
 
-class Application(Mozilla):
-
-	def _get_value(self):
-		return None
-
-	def event_nameChange(self):
-		if self.windowHandle==api.getForegroundObject().windowHandle:
-			speech.speakObjectProperties(self,name=True,reason=speech.REASON_QUERY)
-
 class Document(Mozilla):
 
 	shouldAllowIAccessibleFocusEvent=True

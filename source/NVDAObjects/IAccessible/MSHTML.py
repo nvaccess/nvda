@@ -4,28 +4,19 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import time
-import ctypes
 from comtypes import COMError
 import comtypes.client
 import comtypes.automation
 from comtypes import IServiceProvider
-import winUser
-import globalVars
 import oleacc
 import aria
 from keyUtils import key, sendKey
 import api
 import textInfos
 from logHandler import log
-import speech
 import controlTypes
 from . import IAccessible
 from ..behaviors import EditableTextWithoutAutoSelectDetection
-import NVDAObjects
-import virtualBufferHandler
-
-lastMSHTMLEditGainFocusTimeStamp=0
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
@@ -73,7 +64,11 @@ def IAccessibleFromHTMLNode(HTMLNode):
 def HTMLNodeFromIAccessible(IAccessibleObject):
 	try:
 		s=IAccessibleObject.QueryInterface(IServiceProvider)
-		return comtypes.client.dynamic.Dispatch(s.QueryService(IID_IHTMLElement,comtypes.automation.IDispatch))
+		i=s.QueryService(IID_IHTMLElement,comtypes.automation.IDispatch)
+		if not i:
+			# QueryService should fail if IHTMLElement is not supported, but some applications misbehave and return a null COM pointer.
+			raise NotImplementedError
+		return comtypes.client.dynamic.Dispatch(i)
 	except COMError:
 		raise NotImplementedError
 
@@ -248,18 +243,28 @@ class MSHTML(IAccessible):
 			pass
 		if not HTMLNode:
 			return False
+
+		if relation=="focus":
+			try:
+				HTMLNode=HTMLNode.document.activeElement
+				# The IAccessibleObject may be incorrect now, so let the constructor recalculate it.
+				del kwargs['IAccessibleObject']
+			except:
+				log.exception("Error getting activeElement")
+
 		kwargs['HTMLNode']=HTMLNode
 		return True
 
 	def findOverlayClasses(self,clsList):
 		if self.TextInfo == MSHTMLTextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
+		if nodeNamesToNVDARoles.get(self.HTMLNode.nodeName) == controlTypes.ROLE_DOCUMENT:
+			clsList.append(Body)
+
 		clsList.append(MSHTML)
-		if self.HTMLNodeHasAncestorIAccessible:
-			# The IAccessibleObject is actually for an ancestor of this object, so IAccessible overlay classes aren't relevant.
-			return clsList
-		else:
-			return super(MSHTML,self).findOverlayClasses(clsList)
+		if not self.HTMLNodeHasAncestorIAccessible:
+			# The IAccessibleObject is for this node (not an ancestor), so IAccessible overlay classes are relevant.
+			super(MSHTML,self).findOverlayClasses(clsList)
 
 	def _get_virtualBufferClass(self):
 		if self.HTMLNode and self.role==controlTypes.ROLE_DOCUMENT and not self.isContentEditable:
@@ -600,3 +605,11 @@ class V6ComboBox(IAccessible):
 		# This combo box is focused. However, the value change is not fired on the real focus object.
 		# Therefore, redirect this event to the real focus object.
 		focus.event_valueChange()
+
+class Body(MSHTML):
+
+	def _get_parent(self):
+		# The parent of the body accessible is an irrelevant client object (description: MSAAHTML Registered Handler).
+		# This object isn't returned when requesting OBJID_CLIENT, nor is it returned as a child of its parent.
+		# Therefore, eliminate it from the ancestry completely.
+		return super(Body, self).parent.parent

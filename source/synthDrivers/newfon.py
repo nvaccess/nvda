@@ -169,7 +169,7 @@ def processText(text,language):
 
 class SynthDriver(SynthDriver):
 	name="newfon"
-	description = _("russian newfon synthesizer by Sergey Shishmintzev")
+	description = "Newfon"
 	supportedSettings=(
 		SynthDriver.VoiceSetting(),
 		SynthSetting("language",_("&Language")),

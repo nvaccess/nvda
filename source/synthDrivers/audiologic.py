@@ -1,8 +1,8 @@
 #synthDrivers/audiologic.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+#Copyright (C) 2008-2010 Gianluca Casalino <gianluca.casalino@poste.it>, James Teh <jamie@jantrid.net>
 
 import _audiologic
 from synthDriverHandler import SynthDriver
@@ -11,7 +11,7 @@ import _winreg
 class SynthDriver(SynthDriver):
 	supportedSettings=(SynthDriver.RateSetting(),SynthDriver.PitchSetting(minStep=5),SynthDriver.InflectionSetting(minStep=10),SynthDriver.VolumeSetting(minStep=2))
 
-	description="Tts3"
+	description="Audiologic Tts3"
 	name="audiologic"
 
 

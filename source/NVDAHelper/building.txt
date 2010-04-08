@@ -23,8 +23,7 @@ minHook (and possibly in future nvdaHelper) depends on the Boost c++ library 1.4
 	* On the components page of the installer, make sure to install all the defaults (what ever is already checked), along with anything else you may wish to have for other projects.
 	* So far only boost headers are used, none of the pre-compiled libraries are necessary for nvda/minHook.
 
-The NVDAHelper build is managed by the SCons build system: http://www.scons.org/
-For now, you will need to use a build from svn trunk.
+The NVDAHelper build is managed by the SCons build system, version 1.3.0 or later: http://www.scons.org/
 
 Building the library:
 

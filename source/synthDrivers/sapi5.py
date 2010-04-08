@@ -25,7 +25,7 @@ class SynthDriver(SynthDriver):
 	supportedSettings=(SynthDriver.VoiceSetting(),SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.VolumeSetting())
 
 	name="sapi5"
-	description="Microsoft Speech API version 5 (sapi.SPVoice)"
+	description="Microsoft Speech API version 5"
 
 	@classmethod
 	def check(cls):

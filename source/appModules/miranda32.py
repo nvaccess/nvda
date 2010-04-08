@@ -80,19 +80,23 @@ class AppModule(_default.AppModule):
 	lastTextLengths={}
 	lastMessages=[]
 	MessageHistoryLength=3
-	def event_NVDAObject_init(self,obj):
-		if obj.windowClassName=="CListControl":
-			obj.__class__=mirandaIMContactList
-		elif obj.windowClassName=="MButtonClass" or obj.windowClassName=="TSButtonClass" or obj.windowClassName=="CLCButtonClass":
-			obj.__class__=mirandaIMButton
-		elif obj.windowClassName=="Hyperlink":
-			obj.__class__=mirandaIMHyperlink
-		elif obj.windowClassName=="ColourPicker":
-			obj.role=controlTypes.ROLE_COLORCHOOSER
-		elif isinstance(obj,IAccessible) and obj.IAccessibleRole==oleacc.ROLE_SYSTEM_PROPERTYPAGE:
-			obj.__class__=MPropertyPage
+
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		windowClass = obj.windowClassName
+		if windowClass == "CListControl":
+			clsList.insert(0, mirandaIMContactList)
+		elif windowClass in ("MButtonClass", "TSButtonClass", "CLCButtonClass"):
+			clsList.insert(0, mirandaIMButton)
+		elif windowClass == "Hyperlink":
+			clsList.insert(0, mirandaIMHyperlink)
+		elif isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_PROPERTYPAGE:
+			clsList.insert(0, MPropertyPage)
 		elif isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_SCROLLBAR and obj.windowControlID in MESSAGEVIEWERS:
-			self.overlayCustomNVDAObjectClass(obj,MirandaMessageViewerScrollbar,outerMost=True)
+			clsList.insert(0, MirandaMessageViewerScrollbar)
+
+	def event_NVDAObject_init(self,obj):
+		if obj.windowClassName=="ColourPicker":
+			obj.role=controlTypes.ROLE_COLORCHOOSER
 		elif (obj.windowControlID in ANSILOGS) and (obj.windowClassName=="RichEdit20A"):
 			obj._isWindowUnicode=False
 
@@ -172,7 +176,10 @@ class MPropertyPage(Dialog,IAccessible):
 	def _get_name(self):
 		name=super(MPropertyPage,self)._get_name()
 		if not name:
-			tc=self.next
+			try:
+				tc=self.parent.next.firstChild
+			except AttributeError:
+				tc=None
 			if tc and tc.role==controlTypes.ROLE_TABCONTROL:
 				children=tc.children
 				for index in range(len(children)):

@@ -185,7 +185,7 @@ class SynthesizerDialog(SettingsDialog):
 		synthListID=wx.NewId()
 		driverList=getSynthList()
 		self.synthNames=[x[0] for x in driverList]
-		options=['%s, %s'%x for x in driverList]
+		options=[x[1] for x in driverList]
 		self.synthList=wx.Choice(self,synthListID,choices=options)
 		try:
 			index=self.synthNames.index(getSynth().name)

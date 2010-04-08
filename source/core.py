@@ -219,9 +219,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		wx.CallAfter(doStartupDialogs)
 	if api.getFocusObject()==api.getDesktopObject():
 		import eventHandler
-		focus=api.getDesktopObject().objectWithFocus()
-		if focus:
+		try:
+			focus=api.getDesktopObject().objectWithFocus()
 			eventHandler.queueEvent('gainFocus',focus)
+		except:
+			log.exception("Error retrieving initial focus")
 	import queueHandler
 	import watchdog
 	import baseObject
