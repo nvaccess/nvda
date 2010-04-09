@@ -1,5 +1,5 @@
 //winEventFilter.cpp
-//Copyright (C) 2009 Aleksey Sadovoy <lex@progger.ru>
+//Copyright (C) 2009-2010 Aleksey Sadovoy <lex@progger.ru>
 //This file is covered by the GNU General Public Licence
 //See the file Copying for details.
 
@@ -111,7 +111,7 @@ void CALLBACK winEventFilterHook(HWINEVENTHOOK hookID, DWORD eventID, HWND windo
 		//Get a reference to our struct
 		winEventRecord_t& r=pBuf->events[offset];
 		r.event=eventID;
-		r.window=window;
+		r.window=(DWORD)window;
 		r.objectID=objectID;
 		r.childID = childID;
 		r.thread=threadID;
@@ -126,7 +126,7 @@ void CALLBACK winEventFilterHook(HWINEVENTHOOK hookID, DWORD eventID, HWND windo
 LONG eventReadCount=0; //how many events we've processed
 	struct orderedWinEvent_t: public winEvent_t {
 		long int count;
-		orderedWinEvent_t(DWORD _event=0, HWND _window=0, LONG _objectID=0, LONG _childID=0, DWORD _thread=0,long int _count=-1):
+		orderedWinEvent_t(DWORD _event=0, DWORD _window=0, LONG _objectID=0, LONG _childID=0, DWORD _thread=0,long int _count=-1):
 		winEvent_t(_event,_window,_objectID,_childID,_thread),count(_count) { }
 		bool operator<(const orderedWinEvent_t& other) const { return count<other.count; }
 	};
