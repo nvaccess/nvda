@@ -29,7 +29,7 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 	wstring text;
 	deque<POINT> characterPoints;
 	tempModel.renderText(&textRect,text,characterPoints);
-	*textBuf=SysAllocString(text.c_str());
+	*textBuf=SysAllocStringLen(text.c_str(),text.size());
 	size_t cpBufSize=characterPoints.size()*2;
 	// Hackishly use a BSTR to contain points.
 	wchar_t* cpTempBuf=(wchar_t*)malloc(cpBufSize*sizeof(wchar_t));

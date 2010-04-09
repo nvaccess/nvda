@@ -190,8 +190,9 @@ void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* other
 
 void displayModel_t::renderText(const RECT* rect, wstring& text, deque<POINT>& characterPoints) {
 	RECT tempRect;
-	int lastTextEndX; 
-	int lastTextBaseline;
+	POINT charPoint;
+	int lastTextEndX;
+	int lastTextBaseline=-1;
 	//Walk through all the chunks looking for any that intersect the rectangle
 	for(displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();i!=chunksByYX.end();i++) {
 		if(!rect||IntersectRect(&tempRect,rect,&(i->second->rect))) {
@@ -212,7 +213,6 @@ void displayModel_t::renderText(const RECT* rect, wstring& text, deque<POINT>& c
 			int textBaseline=chunk->rect.top+chunk->baselineFromTop;
 			//If we've already rendered some text,
 			//Add a newline if the baseline has changed, or add a space if there's a horizontal gap.
-			POINT charPoint;
 			if(text.length()>0) {
 				if(textBaseline>lastTextBaseline) {
 					text+=L'\n';
@@ -237,5 +237,13 @@ void displayModel_t::renderText(const RECT* rect, wstring& text, deque<POINT>& c
 			//Get rid of the temporary chunk if we created one
 			if(chunk!=i->second) delete chunk;
 		}
+	}
+	if(lastTextBaseline!=-1) {
+		//Provide the end point of the last character.
+		//Add an additional NULL character for this purpose.
+		text+=L'\0';
+		charPoint.x=lastTextEndX;
+		charPoint.y=lastTextBaseline;
+		characterPoints.push_back(charPoint);
 	}
 }
