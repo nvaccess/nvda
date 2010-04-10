@@ -785,7 +785,6 @@ def _fakeFocus(oldFocus):
 cWinEventCallback=WINFUNCTYPE(None,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
 def initialize():
-	focusObject=api.getDesktopObject().objectWithFocus()
 	for eventType in winEventIDsToNVDAEventNames.keys():
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:
