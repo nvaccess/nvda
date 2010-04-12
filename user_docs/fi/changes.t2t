@@ -9,10 +9,12 @@
 - Tarkastelukohdistimella liikkumista objekteissa on yksinkertaistettu huomattavasti. Tarkastelukohdistin sulkee nyt pois objektit, joista ei ole hyötyä käyttäjälle, esim. vain asettelutarkoituksiin käytettävät ja sellaiset, jotka eivät ole käytettävissä.
 - Tekstisäädinten muotoilutiedot voidaan nyt lukea Java Access Bridgeä käyttävissä sovelluksissa, openOffice mukaan lukien. (#358, #463)
 - NVDA lukee Solut asianmukaisesti Microsoft Excelissä, kun hiiri siirretään niiden päälle.
+- Java Access Bridgeä käyttävien sovellusten valintaikkunoiden teksti luetaan nyt automaattisesti valintaikkunoiden tullessa näkyviin. (#554)
 
 
 == Muutokset ==
 - Navigointiobjektia käyttävä Lue kaikki -komento (NVDA+laskinnäppäimistön plus) sekä seuraavaan ja edelliseen objektipuun objektiin siirtävät komennot (NVDA+laskinnäppäimistön 6, NVDA+laskinnäppäimistön 4) on poistettu toistaiseksi virheiden vuoksi ja näppäinten vapauttamiseksi muita ominaisuuksia varten.
+- NVDA:n Syntetisaattori-valintaikkunassa näytetään nyt vain syntetisaattorin näyttönimi. Previously, it was prefixed by the driver's name, which is only relevant internally.
 
 
 == Vikojen korjaukset ==

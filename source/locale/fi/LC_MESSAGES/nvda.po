@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3415\n"
+"Project-Id-Version: r3440\n"
 "POT-Creation-Date: 2007-03-04 15:37+Normaaliaika\n"
-"PO-Revision-Date: 2010-03-31 19:40+0300\n"
+"PO-Revision-Date: 2010-04-07 09:32+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr "tuntematon näppäimistöasettelu"
 msgid "layout %s"
 msgstr "näppäimistöasettelu %s"
 
-#: NVDAObjects\IAccessible\__init__.py:1206
+#: NVDAObjects\IAccessible\__init__.py:1216
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
 
@@ -33,7 +33,7 @@ msgstr "Tehtäväpalkki"
 msgid "%s items"
 msgstr "%s kohtaa"
 
-#: NVDAObjects\UIA\__init__.py:413
+#: NVDAObjects\UIA\__init__.py:412
 msgid "invoke"
 msgstr "käynnistä"
 
@@ -65,23 +65,23 @@ msgstr "Solueditori"
 msgid "Enter cell contents"
 msgstr "Syötä solun sisältö"
 
-#: NVDAObjects\window\excel.py:117
+#: NVDAObjects\window\excel.py:113
 msgid "Extends the selection and speaks the last selected cell"
 msgstr "Laajentaa valintaa ja lukee viimeksi valitun solun"
 
-#: NVDAObjects\window\excel.py:126
+#: NVDAObjects\window\excel.py:122
 msgid "Moves to a cell and speaks its coordinates and content"
 msgstr "Siirtyy soluun ja lukee sen koordinaatit ja sisällön"
 
-#: NVDAObjects\window\excel.py:222
+#: NVDAObjects\window\excel.py:214
 msgid "has formula"
 msgstr "sisältää kaavan"
 
-#: NVDAObjects\window\excel.py:264
+#: NVDAObjects\window\excel.py:252
 msgid "selection"
 msgstr "valinta"
 
-#: NVDAObjects\window\excel.py:269
+#: NVDAObjects\window\excel.py:257
 msgid "%s %s through %s %s"
 msgstr "%s %s kautta %s %s"
 
@@ -98,7 +98,7 @@ msgstr "Virhe sovellusmoduulissa %s"
 #: appModules\_default.py:164 appModules\_default.py:174
 #: appModules\_default.py:184 appModules\_default.py:659
 #: appModules\_default.py:734 appModules\_default.py:744
-#: appModules\_default.py:754 appModules\winamp.py:74 appModules\winamp.py:84
+#: appModules\_default.py:754 appModules\winamp.py:77 appModules\winamp.py:87
 #: keyboardHandler.py:53 keyboardHandler.py:55 keyboardHandler.py:57
 #: virtualBuffers\__init__.py:687
 msgid "on"
@@ -109,7 +109,7 @@ msgstr "päällä"
 #: appModules\_default.py:181 appModules\_default.py:542
 #: appModules\_default.py:656 appModules\_default.py:731
 #: appModules\_default.py:741 appModules\_default.py:751
-#: appModules\winamp.py:76 appModules\winamp.py:86 gui\settingsDialogs.py:517
+#: appModules\winamp.py:79 appModules\winamp.py:89 gui\settingsDialogs.py:517
 #: keyboardHandler.py:53 keyboardHandler.py:55 keyboardHandler.py:57
 #: virtualBuffers\__init__.py:687
 msgid "off"
@@ -178,7 +178,7 @@ msgstr "oikea hiirinäppäin lukittu"
 msgid "Locks or unlocks the right mouse button"
 msgstr "Lukitsee tai vapauttaa oikean hiirinäppäimen"
 
-#: appModules\_default.py:100 cursorManager.py:225
+#: appModules\_default.py:100 cursorManager.py:229
 msgid "no selection"
 msgstr "ei valintaa"
 
@@ -675,7 +675,7 @@ msgstr ""
 msgid "speaks the current foreground object"
 msgstr "ilmoittaa nykyisen objektin"
 
-#: appModules\_default.py:700 cursorManager.py:228
+#: appModules\_default.py:700 cursorManager.py:232
 msgid "copied to clipboard"
 msgstr "kopioitu leikepöydälle"
 
@@ -945,11 +945,11 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr ""
 "Ilmoittaa tällä hetkellä toistettavan kappaleen jäljellä olevan ajan"
 
-#: appModules\miranda32.py:104
+#: appModules\miranda32.py:108
 msgid "No message yet"
 msgstr "Ei viestejä"
 
-#: appModules\miranda32.py:105
+#: appModules\miranda32.py:109
 msgid "Displays one of the recent messages"
 msgstr "Näyttää yhden viimeisimmistä viesteistä"
 
@@ -2174,27 +2174,27 @@ msgstr "Ladataan alijärjestelmiä, odota..."
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
 
-#: cursorManager.py:76
+#: cursorManager.py:80
 msgid "Find"
 msgstr "Etsi"
 
-#: cursorManager.py:76
+#: cursorManager.py:80
 msgid "Type the text you wish to find"
 msgstr "Kirjoita etsittävä teksti"
 
-#: cursorManager.py:90
+#: cursorManager.py:94
 msgid "Find Error"
 msgstr "Virhe"
 
-#: cursorManager.py:90
+#: cursorManager.py:94
 msgid "text \"%s\" not found"
 msgstr "tekstiä \"%s\" ei löydy"
 
-#: cursorManager.py:96
+#: cursorManager.py:100
 msgid "find a text string from the current cursor position"
 msgstr "etsi tekstiä kohdistimen nykyisestä paikasta lähtien"
 
-#: cursorManager.py:103
+#: cursorManager.py:107
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
@@ -2202,7 +2202,7 @@ msgstr ""
 "etsi aiemmin annetun merkkijonon seuraava esiintymä kohdistimen nykyisestä "
 "paikasta lähtien"
 
-#: cursorManager.py:110
+#: cursorManager.py:114
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
@@ -3444,10 +3444,6 @@ msgstr "&Sävy:"
 #: synthDrivers\_espeak.py:308
 msgid "none"
 msgstr "ei mitään"
-
-#: synthDrivers\newfon.py:172
-msgid "russian newfon synthesizer by Sergey Shishmintzev"
-msgstr "Venäläinen Newfon-puhesyntetisaattori"
 
 #: synthDrivers\newfon.py:175
 msgid "&Language"
