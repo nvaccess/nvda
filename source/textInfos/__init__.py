@@ -227,9 +227,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 """
 		raise NotImplementedError
 
-	def collapse(self):
-		"""Sets the end of this text info object so its equal to the start (collapsing it to a point)
-"""
+	def collapse(self, end=False):
+		"""Collapses this text info object so that both endpoints are the same.
+		@param end: Whether to collapse to the end; C{True} to collapse to the end, C{False} to collapse to the start.
+		@type end: bool
+		"""
 		raise NotImplementedError
 
 	def copy(self):
