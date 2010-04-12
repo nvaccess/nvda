@@ -12,6 +12,7 @@ import nvwave
 from types import MethodType
 import globalVars
 
+ERROR_INVALID_WINDOW_HANDLE = 1400
 ERROR_TIMEOUT = 1460
 RPC_S_SERVER_UNAVAILABLE = 1722
 RPC_S_CALL_FAILED_DNE = 1727
@@ -136,7 +137,7 @@ class Logger(logging.Logger):
 
 		exc = exc_info[1]
 		if (
-			(isinstance(exc, WindowsError) and exc.winerror in (ERROR_TIMEOUT, RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE))
+			(isinstance(exc, WindowsError) and exc.winerror in (ERROR_INVALID_WINDOW_HANDLE, ERROR_TIMEOUT, RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE))
 			or (isinstance(exc, comtypes.COMError) and exc.hresult in (E_ACCESSDENIED, EVENT_E_ALL_SUBSCRIBERS_FAILED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED))
 		):
 			level = self.DEBUGWARNING
