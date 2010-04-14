@@ -51,23 +51,45 @@ def terminate():
 		killTreeInterceptor(ti)
 
 class TreeInterceptor(baseObject.ScriptableObject):
+	"""Intercepts events and scripts for a tree of NVDAObjects.
+	When an NVDAObject is encompassed by this interceptor (i.e. it is beneath the root object or it is the root object itself),
+	events will first be executed on this interceptor if implemented.
+	Similarly, scripts on this interceptor take precedence over those of encompassed objects.
+	"""
 
 	def __init__(self, rootNVDAObject):
 		super(TreeInterceptor, self).__init__()
 		self._passThrough = False
+		#: The root object of the tree wherein events and scripts are intercepted.
+		#: @type: L{NVDAObjects.NVDAObject}
 		self.rootNVDAObject = rootNVDAObject
+		#: Indicates that this interceptor is in a state of transition and should not be killed even if L{isAlive} is C{False}.
+		#: @type: bool
 		self.isTransitioning = False
 
 	def terminate(self):
-		pass
+		"""Terminate this interceptor.
+		This is called to perform any clean up when this interceptor is being destroyed.
+		"""
 
 	def _get_isAlive(self):
-		return False
+		"""Whether this interceptor is alive.
+		If it is not alive, it will be removed.
+		"""
+		raise NotImplementedError
 
 	def __contains__(self, obj):
-		return False
+		"""Determine whether an object is encompassed by this interceptor.
+		@param obj: The object in question.
+		@type obj: L{NVDAObjects.NVDAObject}
+		@return: C{True} if the object is encompassed by this interceptor.
+		@rtype: bool
+		"""
+		raise NotImplementedError
 
 	def _get_passThrough(self):
+		"""Whether most scripts should temporarily pass through this interceptor without being intercepted.
+		"""
 		return self._passThrough
 
 	def _set_passThrough(self, state):
