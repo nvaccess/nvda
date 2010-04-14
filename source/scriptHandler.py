@@ -32,13 +32,13 @@ def findScript_appModuleLevel(keyPress):
 	func=appModule.getScript(keyPress) if appModule else None
 	if func:
 		return func
-	return findScript_virtualBufferLevel(keyPress)
+	return findScript_treeInterceptorLevel(keyPress)
 
-def findScript_virtualBufferLevel(keyPress):
-	virtualBuffer=api.getFocusObject().virtualBuffer
-	if virtualBuffer:
-		func=virtualBuffer.getScript(keyPress)
-		if func and (not virtualBuffer.passThrough or getattr(func,"ignoreVirtualBufferPassThrough",False)):
+def findScript_treeInterceptorLevel(keyPress):
+	treeInterceptor=api.getFocusObject().treeInterceptor
+	if treeInterceptor:
+		func=treeInterceptor.getScript(keyPress)
+		if func and (not treeInterceptor.passThrough or getattr(func,"ignoreTreeInterceptorPassThrough",False)):
 			return func
 	return findScript_NVDAObjectLevel(keyPress)
 

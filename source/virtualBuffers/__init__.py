@@ -1,7 +1,6 @@
 import time
 import threading
 import ctypes
-import os
 import collections
 import itertools
 import wx
@@ -19,13 +18,14 @@ import textInfos.offsets
 import config
 import cursorManager
 import gui
-import virtualBufferHandler
 import eventHandler
 import braille
 import queueHandler
 from logHandler import log
 import ui
 import aria
+import nvwave
+import treeInterceptorHandler
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
@@ -464,7 +464,7 @@ class ElementsListDialog(wx.Dialog):
 		speech.cancelSpeech()
 		speech.speakTextInfo(element,reason=speech.REASON_FOCUS)
 
-class VirtualBuffer(cursorManager.CursorManager):
+class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInterceptor):
 
 	REASON_QUICKNAV = "quickNav"
 
@@ -472,31 +472,21 @@ class VirtualBuffer(cursorManager.CursorManager):
 	programmaticScrollMayFireEvent = False
 
 	def __init__(self,rootNVDAObject,backendName=None):
+		super(VirtualBuffer,self).__init__(rootNVDAObject)
 		self.backendName=backendName
-		self.rootNVDAObject=rootNVDAObject
-		super(VirtualBuffer,self).__init__()
 		self.VBufHandle=None
-		self._passThrough=False
 		self.disableAutoPassThrough = False
 		self.rootDocHandle,self.rootID=self.getIdentifierFromNVDAObject(self.rootNVDAObject)
 		self._lastFocusObj = None
 		self._hadFirstGainFocus = False
 		self._lastProgrammaticScrollTime = None
+		self.loadBuffer()
 
-	def _get_passThrough(self):
-		return self._passThrough
-
-	def _set_passThrough(self, state):
-		if self._passThrough == state:
-			return
-		self._passThrough = state
-		if state:
-			braille.handler.handleGainFocus(api.getFocusObject())
-		else:
-			braille.handler.handleGainFocus(self)
+	def terminate(self):
+		self.unloadBuffer()
 
 	def loadBuffer(self):
-		self.isLoading = True
+		self.isTransitioning = True
 		self._loadProgressCallLater = wx.CallLater(1000, self._loadProgress)
 		threading.Thread(target=self._loadBuffer).start()
 
@@ -514,14 +504,14 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _loadBufferDone(self, success=True):
 		self._loadProgressCallLater.Stop()
 		del self._loadProgressCallLater
-		self.isLoading = False
+		self.isTransitioning = False
 		if not success:
 			return
 		if self._hadFirstGainFocus:
 			# If this buffer has already had focus once while loaded, this is a refresh.
 			speech.speakMessage(_("Refreshed"))
-		if api.getFocusObject().virtualBuffer == self:
-			self.event_virtualBuffer_gainFocus()
+		if api.getFocusObject().treeInterceptor == self:
+			self.event_treeInterceptor_gainFocus()
 
 	def _loadProgress(self):
 		ui.message(_("Loading document..."))
@@ -536,12 +526,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
-
-	def isNVDAObjectInVirtualBuffer(self,obj):
-		pass
-
-	def isAlive(self):
-		pass
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		"""Retrieve an NVDAObject for a given node identifier.
@@ -564,7 +548,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		"""
 		raise NotImplementedError
 
-	def event_virtualBuffer_gainFocus(self):
+	def event_treeInterceptor_gainFocus(self):
 		"""Triggered when this virtual buffer gains focus.
 		This event is only fired upon entering this buffer when it was not the current buffer before.
 		This is different to L{event_gainFocus}, which is fired when an object inside this buffer gains focus, even if that object is in the same buffer.
@@ -577,7 +561,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			self.event_gainFocus(focus, lambda: focus.event_gainFocus())
 			if not self.passThrough:
 				speech.cancelSpeech()
-				virtualBufferHandler.reportPassThrough(self)
+				reportPassThrough(self)
 				speech.speakObjectProperties(self.rootNVDAObject,name=True)
 				info=self.makeTextInfo(textInfos.POSITION_CARET)
 				sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
@@ -595,10 +579,10 @@ class VirtualBuffer(cursorManager.CursorManager):
 					info.expand(textInfos.UNIT_LINE)
 					speech.speakTextInfo(info, reason=speech.REASON_CARET)
 
-		virtualBufferHandler.reportPassThrough(self)
+		reportPassThrough(self)
 		braille.handler.handleGainFocus(self)
 
-	def event_virtualBuffer_loseFocus(self):
+	def event_treeInterceptor_loseFocus(self):
 		"""Triggered when this virtual buffer loses focus.
 		This event is only fired when the focus moves to a new object which is not within this virtual buffer; i.e. upon leaving this virtual buffer.
 		"""
@@ -624,7 +608,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if self.shouldPassThrough(obj):
 			obj.setFocus()
 			self.passThrough = True
-			virtualBufferHandler.reportPassThrough(self)
+			reportPassThrough(self)
 		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT:
 			obj.setFocus()
 			speech.speakObject(obj, reason=speech.REASON_FOCUS)
@@ -653,7 +637,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 				obj.setFocus()
 		self.passThrough=self.shouldPassThrough(obj,reason=reason)
 		# Queue the reporting of pass through mode so that it will be spoken after the actual content.
-		queueHandler.queueFunction(queueHandler.eventQueue, virtualBufferHandler.reportPassThrough, self)
+		queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
 
 	def _shouldSetFocusToObj(self, obj):
 		"""Determine whether an object should receive focus.
@@ -831,16 +815,16 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return sendKey(keyPress)
 		self.passThrough = False
 		self.disableAutoPassThrough = False
-		virtualBufferHandler.reportPassThrough(self)
-	script_disablePassThrough.ignoreVirtualBufferPassThrough = True
+		reportPassThrough(self)
+	script_disablePassThrough.ignoreTreeInterceptorPassThrough = True
 
 	def script_collapseOrExpandControl(self, keyPress):
 		sendKey(keyPress)
 		if not self.passThrough:
 			return
 		self.passThrough = False
-		virtualBufferHandler.reportPassThrough(self)
-	script_collapseOrExpandControl.ignoreVirtualBufferPassThrough = True
+		reportPassThrough(self)
+	script_collapseOrExpandControl.ignoreTreeInterceptorPassThrough = True
 
 	def _tabOverride(self, direction):
 		"""Override the tab order if the virtual buffer caret is not within the currently focused node.
@@ -944,7 +928,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			# Automatic pass through should be enabled in certain circumstances where this occurs.
 			if not self.passThrough and self.shouldPassThrough(obj,reason=speech.REASON_FOCUS):
 				self.passThrough=True
-				virtualBufferHandler.reportPassThrough(self)
+				reportPassThrough(self)
 			return nextHandler()
 
 		#We only want to update the caret and speak the field if we're not in the same one as before
@@ -1256,3 +1240,17 @@ qn("landmark", key="d", nextDoc=_("moves to the next landmark"), nextError=_("no
 qn("embeddedObject", key="o", nextDoc=_("moves to the next embedded object"), nextError=_("no next embedded object"),
 	prevDoc=_("moves to the previous embedded object"), prevError=_("no previous embedded object"))
 del qn
+
+def reportPassThrough(virtualBuffer):
+	"""Reports the virtual buffer pass through mode if it has changed.
+	@param virtualBuffer: The current virtual buffer.
+	@type virtualBuffer: L{virtualBuffers.VirtualBuffer}
+	"""
+	if virtualBuffer.passThrough != reportPassThrough.last:
+		if config.conf["virtualBuffers"]["passThroughAudioIndication"]:
+			sound = r"waves\focusMode.wav" if virtualBuffer.passThrough else r"waves\browseMode.wav"
+			nvwave.playWaveFile(sound)
+		else:
+			speech.speakMessage(_("focus mode") if virtualBuffer.passThrough else _("browse mode"))
+		reportPassThrough.last = virtualBuffer.passThrough
+reportPassThrough.last = False

@@ -18,7 +18,7 @@ import textInfos.offsets
 import config
 import controlTypes
 import appModuleHandler
-import virtualBufferHandler
+import treeInterceptorHandler
 import braille
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
@@ -234,41 +234,41 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		return not self.__eq__(other)
 
-	def _get_virtualBufferClass(self):
+	def _get_treeInterceptorClass(self):
 		"""
-		If this NVDAObject should use a virtualBuffer, then this property provides the L{virtualBuffers.VirtualBuffer} class it should use. 
+		If this NVDAObject should use a treeInterceptor, then this property provides the L{treeInterceptorHandler.TreeInterceptor} class it should use. 
 		If not then it should be not implemented.
 		"""
 		raise NotImplementedError
 
-	def _get_virtualBuffer(self):
-		"""Retreaves the virtualBuffer associated with this object.
-		If a virtualBuffer has not been specifically set, the L{virtualBufferHandler} is asked if it can find a virtualBuffer containing this object.
-		@return: the virtualBuffer
-		@rtype: L{virtualBuffers.VirtualBuffer}
+	def _get_treeInterceptor(self):
+		"""Retreaves the treeInterceptor associated with this object.
+		If a treeInterceptor has not been specifically set, the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
+		@return: the treeInterceptor
+		@rtype: L{treeInterceptorHandler.TreeInterceptor}
 		""" 
-		if hasattr(self,'_virtualBuffer'):
-			v=self._virtualBuffer
-			if isinstance(v,weakref.ref):
-				v=v()
-			if v and v in virtualBufferHandler.runningTable:
-				return v
+		if hasattr(self,'_treeInterceptor'):
+			ti=self._treeInterceptor
+			if isinstance(ti,weakref.ref):
+				ti=ti()
+			if ti and ti in treeInterceptorHandler.runningTable:
+				return ti
 			else:
-				self._virtualBuffer=None
+				self._treeInterceptor=None
 				return None
 		else:
-			v=virtualBufferHandler.getVirtualBuffer(self)
-			if v:
-				self._virtualBuffer=weakref.ref(v)
-			return v
+			ti=treeInterceptorHandler.getTreeInterceptor(self)
+			if ti:
+				self._treeInterceptor=weakref.ref(ti)
+			return ti
 
-	def _set_virtualBuffer(self,obj):
-		"""Specifically sets a virtualBuffer to be associated with this object.
+	def _set_treeInterceptor(self,obj):
+		"""Specifically sets a treeInterceptor to be associated with this object.
 		"""
 		if obj:
-			self._virtualBuffer=weakref.ref(obj)
+			self._treeInterceptor=weakref.ref(obj)
 		else: #We can't point a weakref to None, so just set the private variable to None, it can handle that
-			self._virtualBuffer=None
+			self._treeInterceptor=None
 
 	def _get_appModule(self):
 		"""Retreaves the appModule representing the application this object is a part of by asking L{appModuleHandler}.

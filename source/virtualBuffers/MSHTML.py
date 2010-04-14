@@ -1,6 +1,5 @@
 import eventHandler
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
-import virtualBufferHandler
 import controlTypes
 import NVDAObjects.IAccessible.MSHTML
 import winUser
@@ -104,7 +103,7 @@ class MSHTML(VirtualBuffer):
 		return False
 
 
-	def isAlive(self):
+	def _get_isAlive(self):
 		root=self.rootNVDAObject
 		if not root:
 			return False

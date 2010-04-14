@@ -266,11 +266,11 @@ class MSHTML(IAccessible):
 			# The IAccessibleObject is for this node (not an ancestor), so IAccessible overlay classes are relevant.
 			super(MSHTML,self).findOverlayClasses(clsList)
 
-	def _get_virtualBufferClass(self):
+	def _get_treeInterceptorClass(self):
 		if self.HTMLNode and self.role==controlTypes.ROLE_DOCUMENT and not self.isContentEditable:
 			import virtualBuffers.MSHTML
 			return virtualBuffers.MSHTML.MSHTML
-		return super(MSHTML,self).virtualBufferClass
+		return super(MSHTML,self).treeInterceptorClass
 
 	def __init__(self,HTMLNode=None,IAccessibleObject=None,IAccessibleChildID=None,**kwargs):
 		self.HTMLNodeHasAncestorIAccessible=False

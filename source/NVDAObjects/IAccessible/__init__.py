@@ -938,7 +938,7 @@ the NVDAObject for IAccessible
 		if hasattr(self,'IAccessibleTextObject') and self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			self.detectPossibleSelectionChange()
 		focusObject=api.getFocusObject()
-		if self!=focusObject and not self.virtualBuffer and hasattr(self,'IAccessibleTextObject'):
+		if self!=focusObject and not self.treeInterceptor and hasattr(self,'IAccessibleTextObject'):
 			inDocument=None
 			for ancestor in reversed(api.getFocusAncestors()+[focusObject]):
 				if ancestor.role==controlTypes.ROLE_DOCUMENT:

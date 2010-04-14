@@ -12,7 +12,7 @@ import globalVars
 from logHandler import log
 import speech
 import sayAllHandler
-import virtualBufferHandler
+import treeInterceptorHandler
 import NVDAObjects
 import NVDAObjects.IAccessible
 import winUser
@@ -116,19 +116,19 @@ Before overriding the last object, this function calls event_loseFocus on the ob
   	for addedMod in newAppModuleSet-oldAppModuleSet:
 		if hasattr(addedMod,'event_appGainFocus'):
 			addedMod.event_appGainFocus()
-	virtualBufferHandler.cleanup()
-	virtualBufferObject=None
+	treeInterceptorHandler.cleanup()
+	treeInterceptorObject=None
 	o=None
 	for o in ancestors[focusDifferenceLevel:]+[obj]:
-		virtualBufferObject=virtualBufferHandler.update(o)
-		if virtualBufferObject:
+		treeInterceptorObject=treeInterceptorHandler.update(o)
+		if treeInterceptorObject:
 			break
-	#Always make sure that the focus object's virtualBuffer is forced to either the found virtualBuffer (if its in it) or to None
-	#This is to make sure that the virtualBuffer does not have to be looked up, which can cause problems for winInputHook
-	if obj is o or virtualBufferObject.isNVDAObjectInVirtualBuffer(obj):
-		obj.virtualBuffer=virtualBufferObject
+	#Always make sure that the focus object's treeInterceptor is forced to either the found treeInterceptor (if its in it) or to None
+	#This is to make sure that the treeInterceptor does not have to be looked up, which can cause problems for winInputHook
+	if obj is o or obj in treeInterceptorObject:
+		obj.treeInterceptor=treeInterceptorObject
 	else:
-		obj.virtualBuffer=None
+		obj.treeInterceptor=None
 	# Set global focus variables.
 	globalVars.focusDifferenceLevel=focusDifferenceLevel
 	globalVars.focusObject=obj
@@ -173,7 +173,7 @@ def getReviewPosition():
 		return globalVars.reviewPosition
 	else:
 		try:
-			obj=globalVars.navigatorObject.virtualBuffer
+			obj=globalVars.navigatorObject.treeInterceptor
 			globalVars.reviewPosition=obj.makeTextInfo(globalVars.navigatorObject)
 			globalVars.reviewPositionObj=obj
 			return globalVars.reviewPosition
