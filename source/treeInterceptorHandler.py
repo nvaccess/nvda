@@ -6,6 +6,8 @@
 
 from logHandler import log
 import baseObject
+import api
+import braille
 
 runningTable=set()
 
@@ -72,7 +74,6 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		if self._passThrough == state:
 			return
 		self._passThrough = state
-		import braille
 		if state:
 			braille.handler.handleGainFocus(api.getFocusObject())
 		else:
