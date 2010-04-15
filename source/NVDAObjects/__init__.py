@@ -33,6 +33,12 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 		text=self._getStoryText()
 		return text[start:end]
 
+class InvalidNVDAObject(RuntimeError):
+	"""Raised by NVDAObjects during construction to inform that this object is invalid.
+	In this case, for the purposes of NVDA, the object should be considered non-existent.
+	Therefore, L{DynamicNVDAObjectType} will return C{None} if this exception is raised.
+	"""
+
 class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 	_dynamicClassCache={}
 
@@ -43,10 +49,14 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			APIClass=self
 
 		# Instantiate the requested class.
-		obj=APIClass.__new__(APIClass,**kwargs)
-		obj.APIClass=APIClass
-		if isinstance(obj,self):
-			obj.__init__(**kwargs)
+		try:
+			obj=APIClass.__new__(APIClass,**kwargs)
+			obj.APIClass=APIClass
+			if isinstance(obj,self):
+				obj.__init__(**kwargs)
+		except InvalidNVDAObject, e:
+			log.debugWarning("Invalid NVDAObject: %s" % e, stack_info=True)
+			return None
 
 		clsList = []
 		if "findOverlayClasses" in APIClass.__dict__:
