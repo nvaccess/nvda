@@ -17,6 +17,7 @@ from logHandler import log
 import controlTypes
 from . import IAccessible
 from ..behaviors import EditableTextWithoutAutoSelectDetection
+from .. import InvalidNVDAObject
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
@@ -291,6 +292,9 @@ class MSHTML(IAccessible):
 					tempNode=tempNode.parentNode
 				except COMError:
 					tempNode=None
+
+		if not IAccessibleObject:
+			raise InvalidNVDAObject("Couldn't get IAccessible, probably dead object")
 
 		super(MSHTML,self).__init__(IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,**kwargs)
 		self.HTMLNode=HTMLNode
