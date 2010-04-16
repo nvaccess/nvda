@@ -72,6 +72,10 @@ adobeAcrobatVBufBackend=env.SConscript('vbufBackends/adobeAcrobat/sconscript')
 env.Install(libInstallDir,adobeAcrobatVBufBackend)
 buildList.append(adobeAcrobatVBufBackend)
 
+adobeFlashVBufBackend=env.SConscript('vbufBackends/adobeFlash/sconscript')
+env.Install(libInstallDir,adobeFlashVBufBackend)
+buildList.append(adobeFlashVBufBackend)
+
 geckoVBufBackend=env.SConscript('vbufBackends/gecko_ia2/sconscript')
 env.Install(libInstallDir,geckoVBufBackend)
 buildList.append(geckoVBufBackend)
