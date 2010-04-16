@@ -118,7 +118,7 @@ VBufStorage_fieldNode_t* AdobeFlashVBufBackend_t::fillVBuf(int docHandle, IAcces
 		BSTR tempBstr = NULL;
 		wstring content;
 
-		if (states & STATE_SYSTEM_FOCUSABLE && (res = pacc->get_accName(varChild, &tempBstr)) == S_OK) {
+		if ((res = pacc->get_accName(varChild, &tempBstr)) == S_OK) {
 			content = tempBstr;
 			SysFreeString(tempBstr);
 		} else if ((res = pacc->get_accValue(varChild, &tempBstr)) == S_OK) {
