@@ -327,7 +327,7 @@ the NVDAObject for IAccessible
 				clsList.append(newCls)
 
 		# Some special cases.
-		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2) and role == oleacc.ROLE_SYSTEM_TEXT) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary"):
+		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2)) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary"):
 			# This is possibly a Flash object.
 			from . import adobeFlash
 			adobeFlash.findExtraOverlayClasses(self, clsList)

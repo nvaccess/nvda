@@ -4,11 +4,13 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import winUser
+import oleacc
 from . import IAccessible
 from NVDAObjects import NVDAObjectTextInfo
 from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
 from comtypes import COMError, IServiceProvider, hresult
-from comtypes.gen.FlashAccessibility import ISimpleTextSelection
+from comtypes.gen.FlashAccessibility import ISimpleTextSelection, IFlashAccessibility
 from logHandler import log
 
 class InputTextFieldTextInfo(NVDAObjectTextInfo):
@@ -40,14 +42,32 @@ class InputTextFieldTextInfo(NVDAObjectTextInfo):
 class InputTextField(EditableTextWithoutAutoSelectDetection, IAccessible):
 	TextInfo = InputTextFieldTextInfo
 
+class Root(IAccessible):
+	pass
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Flash object.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
+	try:
+		servProv = obj.IAccessibleObject.QueryInterface(IServiceProvider)
+	except COMError:
+		return
+
+	# Check whether this is the Flash root accessible.
+	if obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:
+		try:
+			servProv.QueryService(IFlashAccessibility._iid_, IFlashAccessibility)
+			clsList.append(Root)
+		except COMError:
+			pass
+		# If this is a client and IFlashAccessibility wasn't present, this is not a Flash object.
+		return
+
 	# Check whether this is a Flash input text field.
 	try:
 		# We have to fetch ISimpleTextSelectionObject in order to check whether this is an input text field, so store it on the instance.
-		obj.ISimpleTextSelectionObject = obj.IAccessibleObject.QueryInterface(IServiceProvider).QueryService(ISimpleTextSelection._iid_, ISimpleTextSelection)
+		obj.ISimpleTextSelectionObject = servProv.QueryService(ISimpleTextSelection._iid_, ISimpleTextSelection)
 		clsList.append(InputTextField)
 	except COMError:
 		pass
