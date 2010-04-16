@@ -18,6 +18,7 @@ import controlTypes
 from . import IAccessible
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 from .. import InvalidNVDAObject
+from ..window import Window
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
@@ -259,8 +260,11 @@ class MSHTML(IAccessible):
 	def findOverlayClasses(self,clsList):
 		if self.TextInfo == MSHTMLTextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
-		if nodeNamesToNVDARoles.get(self.HTMLNode.nodeName) == controlTypes.ROLE_DOCUMENT:
+		nodeName = self.HTMLNode.nodeName
+		if nodeNamesToNVDARoles.get(nodeName) == controlTypes.ROLE_DOCUMENT:
 			clsList.append(Body)
+		elif nodeName == "OBJECT":
+			clsList.append(Object)
 
 		clsList.append(MSHTML)
 		if not self.HTMLNodeHasAncestorIAccessible:
@@ -621,3 +625,17 @@ class Body(MSHTML):
 			return parent.parent
 		else:
 			return parent
+
+class Object(MSHTML):
+
+	def _get_firstChild(self):
+		# We want firstChild to return the accessible for the embedded object.
+		from objidl import IOleWindow
+		# Try to get the window for the embedded object.
+		try:
+			window = self.HTMLNode.object.QueryInterface(IOleWindow).GetWindow()
+		except COMError:
+			window = None
+		if not window or window == self.windowHandle:
+			return super(Object, self).firstChild
+		return Window(windowHandle=window)
