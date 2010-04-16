@@ -43,7 +43,13 @@ class InputTextField(EditableTextWithoutAutoSelectDetection, IAccessible):
 	TextInfo = InputTextFieldTextInfo
 
 class Root(IAccessible):
-	pass
+	def _get_presentationType(self):
+		return self.presType_content
+
+
+	def _get_virtualBufferClass(self):
+		import virtualBuffers.adobeFlash
+		return virtualBuffers.adobeFlash.AdobeFlash
 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Flash object.
