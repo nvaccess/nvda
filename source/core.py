@@ -221,7 +221,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		import eventHandler
 		try:
 			focus=api.getDesktopObject().objectWithFocus()
-			eventHandler.queueEvent('gainFocus',focus)
+			if focus:
+				eventHandler.queueEvent('gainFocus',focus)
 		except:
 			log.exception("Error retrieving initial focus")
 	import queueHandler

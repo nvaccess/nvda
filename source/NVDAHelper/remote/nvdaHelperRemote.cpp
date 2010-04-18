@@ -30,10 +30,10 @@ typedef map<HOOKPROC,size_t> windowsHookRegistry_t;
 
 #pragma data_seg(".remoteShared")
 	wchar_t dllDirectory[MAX_PATH]={0};
-	BOOL isInitialized=FALSE;
 #pragma data_seg()
 #pragma comment(linker, "/section:.remoteShared,rws")
 
+BOOL isInitialized=FALSE;
 HINSTANCE moduleHandle;
 BOOL inProcess_wasInitializedOnce=false;
 BOOL inProcess_isRunning=false;
@@ -134,9 +134,6 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 		getNVDAControllerNcalrpcEndpointString(endpointString,64,TRUE);
 		RpcBindingFromStringBinding((RPC_WSTR)endpointString,&nvdaControllerBindingHandle);
 		RpcBindingFromStringBinding((RPC_WSTR)endpointString,&nvdaControllerInternalBindingHandle);
-		#if LOGLEVEL<=LOGLEVEL_INFO
-		if(isInitialized) LOG_INFO(L"process attach");
-		#endif
 	} else if(reason==DLL_PROCESS_DETACH) {
 	if(inProcess_isRunning) inProcess_terminate();
 	RpcBindingFree(&nvdaControllerBindingHandle);
