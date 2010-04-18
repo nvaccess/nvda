@@ -243,35 +243,6 @@ template<typename charType> BOOL  WINAPI hookClass_TextOut<charType>::fakeFuncti
 	return res;
 }
 
-//TabbedTextOut hook class template
-template<typename charType> class hookClass_TabbedTextOut {
-	public:
-	typedef LONG (WINAPI *funcType)(HDC,int,int,charType*,int,int,const LPINT,int);
-	static funcType realFunction;
-	static LONG WINAPI fakeFunction(HDC hdc, int x, int y, charType* lpString, int nCount, int nTabPositions, const LPINT lpnTabStopPositions, int nTabOrigin);
-};
-
-template<typename charType> typename hookClass_TabbedTextOut<charType>::funcType hookClass_TabbedTextOut<charType>::realFunction=NULL;
-
-template<typename charType> LONG WINAPI hookClass_TabbedTextOut<charType>::fakeFunction(HDC hdc, int x, int y, charType* lpString, int nCount, int nTabPositions, const LPINT lpnTabStopPositions, int nTabOrigin) {
-	//Collect text alignment and possibly current position
-	UINT textAlign=GetTextAlign(hdc);
-	POINT pos={x,y};
-	if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
-	//Call the real function
-	LONG res=realFunction(hdc,x,y,lpString,nCount,nTabPositions,lpnTabStopPositions,nTabOrigin);
-	//If text could not be drawn, or  some arguments are not sane, then stop here.
-	if(res==0||!lpString||nCount==0) return res;
-	//Get or create a display model for this DC.
-	//If we can't then stop here.
-	displayModel_t* model=acquireDisplayModel(hdc);
-	if(!model) return res;
-	//Record the text
-	ExtTextOutHelper(model,hdc,pos.x,pos.y,NULL,0,textAlign,FALSE,lpString,NULL,nCount,NULL);
-	model->Release();
-	return res;
-}
- 
 //PolyTextOut hook class template
 
 template<typename charType> struct WA_POLYTEXT {
@@ -383,71 +354,6 @@ HDC WINAPI fake_BeginPaint(HWND hwnd, LPPAINTSTRUCT lpPaint) {
 	model->clearRectangle(rect);
 	releaseDisplayModel(model);
 	return res;
-}
-
-//DrawTextEx hook class template
-//handles char or wchar_t
-template <typename charType> class hookClass_DrawTextEx {
-	public:
-	typedef int(WINAPI *funcType)(HDC,charType*,int,const RECT*,UINT,LPDRAWTEXTPARAMS);
-	static funcType realFunction;
-	static int WINAPI fakeFunction(HDC hdc, charType* lpString, int cbCount, const RECT* lprc, UINT dwDTFormat, LPDRAWTEXTPARAMS lpDTParams);
-};
-
-template<typename charType> typename hookClass_DrawTextEx<charType>::funcType hookClass_DrawTextEx<charType>::realFunction=NULL;
-
-template<typename charType> int WINAPI hookClass_DrawTextEx<charType>::fakeFunction(HDC hdc, charType* lpString, int cbCount, const RECT* lprc, UINT dwDTFormat, LPDRAWTEXTPARAMS lpDTParams) {
-	charType* newString=lpString;
-	int newCount=cbCount;
-	UINT newFormat=dwDTFormat;
-	//DrawTextEx sometimes will trunkate text and places "..." after it. 
-	//However its up to the caller whether DrawTextEx should actually modify the given string buffer.
-	//Because of this, if the caller did not request this, allocate a new copy of the string, large enough for the extra characters
-	//And instruct DrawTextEx to modify the string.
-	if(lpString&&cbCount!=0&&!(dwDTFormat&DT_CALCRECT)&&!(dwDTFormat&DT_PREFIXONLY)&&!(dwDTFormat&DT_MODIFYSTRING)) {
-		if(cbCount==-1) newCount=WA_strlen(lpString);
-		newString=(charType*)calloc(newCount+6,sizeof(charType));
-		WA_strncpy(newString,lpString,newCount);
-		newFormat|=DT_MODIFYSTRING;
-	}
-	//Call the real DrawTextExW
-	int res=((funcType)realFunction)(hdc,newString,newCount,lprc,newFormat,lpDTParams);
-	//If the draw did not work, or the caller did not wish to actually draw the text, then stop here.
-	if(res==0||newCount==0||(newFormat&DT_CALCRECT)||(newFormat&DT_PREFIXONLY)) {
-		if(newString!=lpString) free(newString);
-		return res;
-	}
-	//Update newCount as  anywhere from 0 to 4 characters could have been added, we can't assume it was just 4.
-	newCount=WA_strlen(newString);
-	//Get or create a display model for this DC
-	displayModel_t* model=acquireDisplayModel(hdc);
-	if(!model) {
-		if(newString!=lpString) free(newString);
-		return res;
-	}
-	//DrawTextEx does not give us an X and Y to say where the text starts
-	//But we can work it out from its rectangle, and also taking  the DT alignment flags in to account.
-	int x=lprc->left;
-	int y=lprc->top;
-	int textAlign=0;
-	if(newFormat&DT_RIGHT) {
-		x=lprc->right;
-		textAlign|=TA_RIGHT;
-	} else if(newFormat&DT_CENTER) {
-		x+=(lprc->right-lprc->left)/2;
-		textAlign|=TA_CENTER;
-	}
-	UINT fuOptions=0;
-	//If the caller did not explicitly ask for no clipping, make sure the text is clipped.
-	if(!(newFormat&DT_NOCLIP)) {
-		fuOptions|=ETO_CLIPPED;
-	}
-	//Record the text
-	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,!(newFormat&DT_NOPREFIX),newString,NULL,newCount,NULL);
-	//Release the model, cleanup and return
-	releaseDisplayModel(model);
-	if(newString!=lpString) free(newString);
-	return res; 
 }
 
 //ExtTextOut hook class template
@@ -721,10 +627,6 @@ void gdiHooks_inProcess_initialize() {
 	InitializeCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allow_ScriptStringAnalyseArgsByAnalysis=TRUE;
 	//Hook needed functions
-	//hookClass_DrawTextEx<char>::realFunction=(hookClass_DrawTextEx<char>::funcType)apiHook_hookFunction("USER32.dll","DrawTextExA",hookClass_DrawTextEx<char>::fakeFunction);
-	//hookClass_DrawTextEx<wchar_t>::realFunction=(hookClass_DrawTextEx<wchar_t>::funcType)apiHook_hookFunction("USER32.dll","DrawTextExW",hookClass_DrawTextEx<wchar_t>::fakeFunction);
-	//hookClass_TabbedTextOut<char>::realFunction=(hookClass_TabbedTextOut<char>::funcType)apiHook_hookFunction("USER32.dll","TabbedTextOutA",hookClass_TabbedTextOut<char>::fakeFunction);
-	//hookClass_TabbedTextOut<wchar_t>::realFunction=(hookClass_TabbedTextOut<wchar_t>::funcType)apiHook_hookFunction("USER32.dll","TabbedTextOutW",hookClass_TabbedTextOut<wchar_t>::fakeFunction);
 	hookClass_TextOut<char>::realFunction=(hookClass_TextOut<char>::funcType)apiHook_hookFunction("GDI32.dll","TextOutA",hookClass_TextOut<char>::fakeFunction);
 	hookClass_TextOut<wchar_t>::realFunction=(hookClass_TextOut<wchar_t>::funcType)apiHook_hookFunction("GDI32.dll","TextOutW",hookClass_TextOut<wchar_t>::fakeFunction);
 	hookClass_PolyTextOut<char>::realFunction=(hookClass_PolyTextOut<char>::funcType)apiHook_hookFunction("GDI32.dll","PolyTextOutA",hookClass_PolyTextOut<char>::fakeFunction);
