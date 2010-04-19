@@ -82,7 +82,7 @@ class MSHTML(VirtualBuffer):
 		obj=self._getNVDAObjectByAnchorName(anchorName)
 		self._handleScrollTo(obj)
 
-	def isNVDAObjectInVirtualBuffer(self,obj):
+	def __contains__(self,obj):
 		if not obj.windowClassName.startswith("Internet Explorer_"):
 			return False
 		#Combo box lists etc are popup windows, so rely on accessibility hierarchi instead of window hierarchi for those.
