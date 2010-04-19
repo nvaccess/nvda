@@ -185,9 +185,9 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//Clear a space for the text in the model, though take clipping in to account
 	RECT tempRect;
 	if(lprc&&(fuOptions&ETO_CLIPPED)&&IntersectRect(&tempRect,&textRect,&clearRect)) {
-		model->clearRectangle(tempRect);
+		model->clearRectangle(tempRect,TRUE);
 	} else {
-		model->clearRectangle(textRect);
+		model->clearRectangle(textRect,TRUE);
 	}
 	//Make sure this is text, and that its not using the symbol charset (e.g. the tick for a checkbox)
 	//Before recording the text.

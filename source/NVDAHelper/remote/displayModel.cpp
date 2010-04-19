@@ -93,7 +93,7 @@ void displayModel_t::clearAll() {
 	}
 }
 
-void displayModel_t::clearRectangle(const RECT& rect) {
+void displayModel_t::clearRectangle(const RECT& rect, BOOL clearForText) {
 	LOG_DEBUG(L"Clearing rectangle from "<<rect.left<<L","<<rect.top<<L" to "<<rect.right<<L","<<rect.bottom);
 	set<displayModelChunk_t*> chunksForInsertion;
 	displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();
@@ -102,36 +102,57 @@ void displayModel_t::clearRectangle(const RECT& rect) {
 		displayModelChunksByPointMap_t::iterator nextI=i;
 		nextI++; 
 		displayModelChunk_t* chunk=i->second;
+		int baseline=i->first.first;
 		if(IntersectRect(&tempRect,&rect,&(chunk->rect))) {
-			if(tempRect.left==chunk->rect.left&&tempRect.right==chunk->rect.right) {
-				chunksByYX.erase(i);
-				delete chunk;
-			} else if(tempRect.left>chunk->rect.left&&tempRect.right==chunk->rect.right) {
-				chunk->truncate(tempRect.left,FALSE);
-				if(chunk->text.length()==0) {
-					chunksByYX.erase(i);
-					delete chunk;
+			//The clearing rectangle intercects the chunk's rectangle in some way.
+			if(tempRect.bottom<=baseline) {
+				//The clearing rectangle some how covers the chunk below its baseline.
+				//If we're clearing to make room for text, or the clearing rectangle starts from the very top of the chunk
+				//Then we should shrink the chunk down so it stays below the clearing rectangle.
+				//If not, then we pretend the clearRectangle did not happen (the chunk was only parcially cleared vertically so we don't care).
+				if(clearForText||tempRect.top==chunk->rect.top) {
+					chunk->rect.top=tempRect.bottom;
 				}
-			} else if(tempRect.right<chunk->rect.right&&tempRect.left==chunk->rect.left) {
-				chunksByYX.erase(i);
-				chunk->truncate(tempRect.right,TRUE);
-				if(chunk->text.length()==0) {
-					delete chunk;
-				} else {
-					chunksForInsertion.insert(chunk);
+			} else if(tempRect.top>baseline) {
+				//The clearing rectangle some how covers the chunk above its baseline.
+				//If we're clearing to make room for text, or the clearing rectangle starts from the very bottom of the chunk
+				//Then we should shrink the chunk up so it stays above the clearing rectangle.
+				//If not, then we pretend the clearRectangle did not happen (the chunk was only parcially cleared vertically so we don't care).
+				if(clearForText||tempRect.bottom==chunk->rect.bottom) {
+					chunk->rect.bottom=tempRect.top;
 				}
 			} else {
-				displayModelChunk_t* newChunk=new displayModelChunk_t(*chunk);
-				chunk->truncate(tempRect.left,FALSE);
-				if(chunk->text.length()==0) {
+				//The clearing rectangle covers the chunk's baseline, so remove the part of the chunk covered horozontally by the clearing rectangle.
+				if(tempRect.left==chunk->rect.left&&tempRect.right==chunk->rect.right) {
 					chunksByYX.erase(i);
 					delete chunk;
-				}
-				newChunk->truncate(tempRect.right,TRUE);
-				if(newChunk->text.length()==0) {
-					delete newChunk;
+				} else if(tempRect.left>chunk->rect.left&&tempRect.right==chunk->rect.right) {
+					chunk->truncate(tempRect.left,FALSE);
+					if(chunk->text.length()==0) {
+						chunksByYX.erase(i);
+						delete chunk;
+					}
+				} else if(tempRect.right<chunk->rect.right&&tempRect.left==chunk->rect.left) {
+					chunksByYX.erase(i);
+					chunk->truncate(tempRect.right,TRUE);
+					if(chunk->text.length()==0) {
+						delete chunk;
+					} else {
+						chunksForInsertion.insert(chunk);
+					}
 				} else {
-					chunksForInsertion.insert(newChunk);
+					displayModelChunk_t* newChunk=new displayModelChunk_t(*chunk);
+					chunk->truncate(tempRect.left,FALSE);
+					if(chunk->text.length()==0) {
+						chunksByYX.erase(i);
+						delete chunk;
+					}
+					newChunk->truncate(tempRect.right,TRUE);
+					if(newChunk->text.length()==0) {
+						delete newChunk;
+					} else {
+						chunksForInsertion.insert(newChunk);
+					}
 				}
 			}
 		}
