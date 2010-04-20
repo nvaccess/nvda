@@ -337,6 +337,9 @@ the NVDAObject for IAccessible
 		elif windowClassName.startswith('bosa_sdm'):
 			from .msOffice import SDM
 			clsList.append(SDM)
+		elif windowClassName == "DirectUIHWND" and role == oleacc.ROLE_SYSTEM_TEXT:
+			from NVDAObjects.window import DisplayModelEditableText
+			clsList.append(DisplayModelEditableText)
 
 		clsList.append(IAccessible)
 
