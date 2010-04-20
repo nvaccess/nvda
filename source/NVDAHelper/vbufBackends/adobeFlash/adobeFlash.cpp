@@ -177,7 +177,7 @@ void AdobeFlashVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle
 				if(pacc->accLocation(&left,&top,&width,&height,varChild)!=S_OK) {
 					left=top=width=height=0;
 				}
-				childIDsByLocation[make_pair(make_pair(top,left),i)]=i;
+				childIDsByLocation[make_pair(make_pair(top+(height/2),left+(width/2)),i)]=i;
 			}
 		} 
 		for(map<pair<pair<long,long>,long>,long>::iterator i=childIDsByLocation.begin();i!=childIDsByLocation.end();++i) {
