@@ -45,3 +45,28 @@ class AdobeFlash(VirtualBuffer):
 
 	def getIdentifierFromNVDAObject(self,obj):
 		return obj.windowHandle, obj.event_childID
+
+	def _searchableAttribsForNodeType(self,nodeType):
+		if nodeType=="formField":
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TEXT]}
+		elif nodeType=="list":
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LIST]}
+		elif nodeType=="listItem":
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LISTITEM]}
+		elif nodeType=="button":
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON]}
+		elif nodeType=="edit":
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT]}
+		elif nodeType=="radioButton":
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_RADIOBUTTON]}
+		elif nodeType=="comboBox":
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX]}
+		elif nodeType=="checkBox":
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_CHECKBUTTON]}
+		elif nodeType=="graphic":
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_GRAPHIC]}
+		elif nodeType=="focusable":
+			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
+		else:
+			return None
+		return attrs
