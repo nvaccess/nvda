@@ -549,11 +549,6 @@ class AppModule(appModuleHandler.AppModule):
 		speech.speechMode=newMode
 	script_speechMode.__doc__=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally.")
 
-	def _getDocumentForFocusedEmbeddedObject(self):
-		for ancestor in reversed(api.getFocusAncestors()):
-			if ancestor.role == controlTypes.ROLE_DOCUMENT:
-				return ancestor
-
 	def script_moveToParentVirtualBuffer(self,keyPress):
 		obj=api.getFocusObject()
 		parent=obj.parent
@@ -572,14 +567,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_toggleVirtualBufferPassThrough(self,keyPress):
 		vbuf = api.getFocusObject().virtualBuffer
-		if not vbuf:
-			# We might be in an embedded object or application, so try searching the ancestry for an object which can return focus to the document.
-			docObj = self._getDocumentForFocusedEmbeddedObject()
-			if not docObj:
-				return
-			docObj.setFocus()
-			return
-
+		if not vbuf: return
 		# Toggle virtual buffer pass-through.
 		vbuf.passThrough = not vbuf.passThrough
 		# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
