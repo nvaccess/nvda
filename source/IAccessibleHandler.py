@@ -355,7 +355,8 @@ def normalizeIAccessible(pacc):
 def accessibleObjectFromEvent(window,objectID,childID):
 	wmResult=c_long()
 	if windll.user32.SendMessageTimeoutW(window,winUser.WM_NULL,0,0,winUser.SMTO_ABORTIFHUNG,2000,byref(wmResult))==0:
-		raise ctypes.WinError()
+		log.debugWarning("Window %d dead or not responding: %s" % (window, ctypes.WinError()))
+		return None
 	try:
 		pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
 	except Exception as e:
@@ -774,10 +775,8 @@ def _fakeFocus(oldFocus):
 	if oldFocus is not api.getFocusObject():
 		# The focus has changed - no need to fake it.
 		return
-	try:
-		focus = api.getDesktopObject().objectWithFocus()
-	except:
-		log.exception("Error retrieving focus")
+	focus = api.getDesktopObject().objectWithFocus()
+	if not focus:
 		return
 	processFocusNVDAEvent(focus)
 
@@ -785,7 +784,6 @@ def _fakeFocus(oldFocus):
 cWinEventCallback=WINFUNCTYPE(None,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
 def initialize():
-	focusObject=api.getDesktopObject().objectWithFocus()
 	for eventType in winEventIDsToNVDAEventNames.keys():
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:

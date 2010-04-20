@@ -20,7 +20,7 @@ import api
 import config
 import controlTypes
 from NVDAObjects.window import Window
-from NVDAObjects import NVDAObject, NVDAObjectTextInfo, AutoSelectDetectionNVDAObject
+from NVDAObjects import NVDAObject, NVDAObjectTextInfo, AutoSelectDetectionNVDAObject, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
 import mouseHandler
@@ -380,10 +380,13 @@ the NVDAObject for IAccessible
 			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
 		if not windowHandle:
 			log.debugWarning("Resorting to WindowFromPoint on accLocation")
-			left,top,width,height = IAccessibleObject.accLocation(0)
-			windowHandle=winUser.user32.WindowFromPoint(winUser.POINT(left,top))
+			try:
+				left,top,width,height = IAccessibleObject.accLocation(0)
+				windowHandle=winUser.user32.WindowFromPoint(winUser.POINT(left,top))
+			except COMError, e:
+				log.debugWarning("accLocation failed: %s" % e)
 		if not windowHandle:
-			raise RuntimeError("Can't get a window handle from IAccessible")
+			raise InvalidNVDAObject("Can't get a window handle from IAccessible")
 
 		# Set the event params based on our calculated/construction info if we must.
 		if event_windowHandle is None:

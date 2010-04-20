@@ -77,8 +77,9 @@ class displayModel_t {
 /**
  * Removes all chunks intersecting the given rectangle. Currently this must be called before inserting chunks as chunks should never overlap.
  * @param rect the rectangle to clear.
+ * @param clearForText if true then  the part of any chunk  covered by the rectangle will definitly be removed to make way for text. If False  chunks will only be removed/mutated if the rectangle starts at or outside of, the chunk and overlaps it, or covers the chunk's baseline. 
  */
-	void clearRectangle(const RECT& rect);
+	void clearRectangle(const RECT& rect, BOOL clearForText=FALSE);
 
 /**
  * Removes all content from this display model.
