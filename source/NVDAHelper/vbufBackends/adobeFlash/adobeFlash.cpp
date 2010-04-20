@@ -1,5 +1,6 @@
 #include <sstream>
 #include <cassert>
+#include <map>
 #include <windows.h>
 #include <oleacc.h>
 #include <remote/nvdaHelperRemote.h>
@@ -7,8 +8,6 @@
 #include "adobeFlash.h"
 
 using namespace std;
-
-int idCounter = 10000;
 
 IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
 	int res;
@@ -21,19 +20,59 @@ IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
 	return pacc;
 }
 
-VBufStorage_fieldNode_t* AdobeFlashVBufBackend_t::fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
-	VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode
-) {
+void AdobeFlashVBufBackend_t::renderThread_initialize() {
+	registerWinEventHook(renderThread_winEventProcHook);
+	VBufBackend_t::renderThread_initialize();
+}
+
+void AdobeFlashVBufBackend_t::renderThread_terminate() {
+	unregisterWinEventHook(renderThread_winEventProcHook);
+	VBufBackend_t::renderThread_terminate();
+}
+
+void CALLBACK AdobeFlashVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
+	switch(eventID) {
+		case EVENT_OBJECT_REORDER:
+		case EVENT_OBJECT_NAMECHANGE:
+		case EVENT_OBJECT_VALUECHANGE:
+		case EVENT_OBJECT_STATECHANGE:
+		break;
+		default:
+		return;
+	}
+
+	int docHandle=(int)hwnd;
+	int ID=childID;
+	VBufBackend_t* backend=NULL;
+	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
+		HWND rootWindow=(HWND)((*i)->rootDocHandle);
+		if(rootWindow==hwnd) {
+			backend=(*i);
+		}
+	}
+	if(!backend) {
+		return;
+	}
+	VBufStorage_controlFieldNode_t* node=backend->getControlFieldNodeWithIdentifier(docHandle,ID);
+	if(!node) {
+		return;
+	}
+	backend->invalidateSubtree(node);
+}
+
+VBufStorage_fieldNode_t* AdobeFlashVBufBackend_t::renderControlContent(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, int docHandle, IAccessible* pacc, long accChildID) {
 	assert(buffer);
 
 	int res;
-	VBufStorage_fieldNode_t* tempNode;
 	//all IAccessible methods take a variant for childID, get one ready
 	VARIANT varChild;
 	varChild.vt=VT_I4;
-	varChild.lVal=0;
+	varChild.lVal=accChildID;
 
-	int id = idCounter++;
+VBufStorage_fieldNode_t* tempNode=NULL;
+
+int id=accChildID;
+
 	//Make sure that we don't already know about this object -- protect from loops
 	if(buffer->getControlFieldNodeWithIdentifier(docHandle,id)!=NULL) {
 		return NULL;
@@ -62,7 +101,6 @@ VBufStorage_fieldNode_t* AdobeFlashVBufBackend_t::fillVBuf(int docHandle, IAcces
 	VariantClear(&varRole);
 
 	// Get states with accState
-	varChild.lVal=0;
 	VARIANT varState;
 	VariantInit(&varState);
 	if((res=pacc->get_accState(varChild,&varState))!=S_OK) {
@@ -81,58 +119,32 @@ VBufStorage_fieldNode_t* AdobeFlashVBufBackend_t::fillVBuf(int docHandle, IAcces
 		}
 	}
 
-	//Get the child count
-	int childCount=0;
-	if((res=pacc->get_accChildCount((long*)(&childCount)))!=S_OK) {
-		childCount=0;
+	BSTR tempBstr=NULL;
+	wstring name;
+	wstring value;
+	wstring content;
+
+	if ((res = pacc->get_accName(varChild, &tempBstr)) == S_OK) {
+		name = tempBstr;
+		SysFreeString(tempBstr);
+	}
+	if ((res = pacc->get_accValue(varChild, &tempBstr)) == S_OK) {
+		value = tempBstr;
+		SysFreeString(tempBstr);
+	}
+	if(!value.empty()) {
+		content=value;
+	} else if(role!=ROLE_SYSTEM_TEXT&&!name.empty()) {
+		content=name;
+	} else if (states & STATE_SYSTEM_FOCUSABLE) {
+		// This node is focusable, but contains no text.
+		// Therefore, add it with a space so that the user can get to it.
+		content = L" ";
 	}
 
-	// Iterate through the children.
-	if (childCount > 0) {
-		VARIANT* varChildren;
-		if((varChildren=(VARIANT*)malloc(sizeof(VARIANT)*childCount))==NULL) {
-			return NULL;
-		}
-		if((res=AccessibleChildren(pacc,0,childCount,varChildren,(long*)(&childCount)))!=S_OK) {
-			childCount=0;
-		}
-		for(int i=0;i<childCount;i++) {
-			if(varChildren[i].vt==VT_DISPATCH) {
-				IAccessible* childPacc=NULL;
-				if((res=varChildren[i].pdispVal->QueryInterface(IID_IAccessible,(void**)(&childPacc)))!=S_OK) {
-					childPacc=NULL;
-				}
-				if(childPacc) {
-					if((tempNode=this->fillVBuf(docHandle,childPacc,buffer,parentNode,previousNode))!=NULL) {
-						previousNode=tempNode;
-					}
-					childPacc->Release();
-				}
-			}
-			VariantClear(&(varChildren[i]));
-		}
-		free(varChildren);
-	} else {
-
-		// No children, so this is a text leaf node.
-		BSTR tempBstr = NULL;
-		wstring content;
-
-		if ((res = pacc->get_accName(varChild, &tempBstr)) == S_OK) {
-			content = tempBstr;
-			SysFreeString(tempBstr);
-		} else if ((res = pacc->get_accValue(varChild, &tempBstr)) == S_OK) {
-			content = tempBstr;
-			SysFreeString(tempBstr);
-		} else if (states & STATE_SYSTEM_FOCUSABLE) {
-			// This node is focusable, but contains no text.
-			// Therefore, add it with a space so that the user can get to it.
-			content = L" ";
-		}
-
-		if (!content.empty()) {
-			if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, content))
-				previousNode=tempNode;
+	if (!content.empty()) {
+		if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, content)) {
+			previousNode=tempNode;
 		}
 	}
 
@@ -140,13 +152,44 @@ VBufStorage_fieldNode_t* AdobeFlashVBufBackend_t::fillVBuf(int docHandle, IAcces
 }
 
 void AdobeFlashVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
-	IAccessible* pacc=IAccessibleFromIdentifier(docHandle,ID);
+	IAccessible* pacc=IAccessibleFromIdentifier(docHandle,0);
 	assert(pacc); //must get a valid IAccessible object
-	this->fillVBuf(docHandle,pacc,buffer,NULL,NULL);
+	if(ID==0) {
+		VBufStorage_controlFieldNode_t* parentNode=buffer->addControlFieldNode(NULL,NULL,docHandle,ID,TRUE);
+		parentNode->addAttribute(L"IAccessible::role",L"10");
+		VBufStorage_fieldNode_t* previousNode=NULL;
+		long childCount=0;
+		pacc->get_accChildCount(&childCount);
+		map<pair<pair<long,long>,long>,long> childIDsByLocation;
+		VARIANT varChild;
+		varChild.vt=VT_I4;
+		HRESULT hRes;
+		for(int i=1;i<1000&&childIDsByLocation.size()<childCount;++i) {
+			if(invalidIAccessibleChildIDs.count(i)==1) continue;
+			IDispatch* childDisp=NULL;
+			varChild.lVal=i;
+			hRes=pacc->get_accChild(varChild,&childDisp);
+			if(hRes!=S_OK) {
+				invalidIAccessibleChildIDs.insert(i);
+			} else {
+				childDisp->Release();
+				long left=0, top=0, width=0, height=0;
+				if(pacc->accLocation(&left,&top,&width,&height,varChild)!=S_OK) {
+					left=top=width=height=0;
+				}
+				childIDsByLocation[make_pair(make_pair(top,left),i)]=i;
+			}
+		} 
+		for(map<pair<pair<long,long>,long>,long>::iterator i=childIDsByLocation.begin();i!=childIDsByLocation.end();++i) {
+			previousNode=this->renderControlContent(buffer,parentNode,previousNode,docHandle,pacc,i->second);
+		}
+	} else {
+		this->renderControlContent(buffer,NULL,NULL,docHandle,pacc,ID);
+	}
 	pacc->Release();
 }
 
-AdobeFlashVBufBackend_t::AdobeFlashVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID) {
+AdobeFlashVBufBackend_t::AdobeFlashVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID), invalidIAccessibleChildIDs() {
 }
 
 extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
