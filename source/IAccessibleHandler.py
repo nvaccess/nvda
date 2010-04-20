@@ -26,6 +26,10 @@ NAVRELATION_LABELLED_BY=0x1002
 NAVRELATION_LABELLED_BY=0x1003
 NAVRELATION_NODE_CHILD_OF=0x1005
 
+# IAccessible2 relations (not included in the typelib)
+IA2_RELATION_FLOWS_FROM = "flowsFrom"
+IA2_RELATION_FLOWS_TO = "flowsTo"
+
 import UIAHandler
 import heapq
 import itertools

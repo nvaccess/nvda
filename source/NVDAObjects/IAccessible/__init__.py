@@ -909,6 +909,48 @@ the NVDAObject for IAccessible
 			info['indexInGroup']=indexInGroup
 		return info
 
+	def _get_indexInParent(self):
+		if isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
+			try:
+				return self.IAccessibleObject.indexInParent
+			except COMError:
+				pass
+		raise NotImplementedError
+
+	def _get__IA2Relations(self):
+		if not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
+			raise NotImplementedError
+		import ctypes
+		import comtypes.hresult
+		try:
+			size = self.IAccessibleObject.nRelations
+		except COMError:
+			raise NotImplementedError
+		if size <= 0:
+			return ()
+		relations = (ctypes.POINTER(IAccessibleHandler.IAccessibleRelation) * size)()
+		count = ctypes.c_int()
+		# The client allocated relations array is an [out] parameter instead of [in, out], so we need to use the raw COM method.
+		res = self.IAccessibleObject._IAccessible2__com__get_relations(size, relations, ctypes.byref(count))
+		if res != comtypes.hresult.S_OK:
+			raise NotImplementedError
+		return list(relations)
+
+	def _getIA2RelationFirstTarget(self, relationType):
+		for relation in self._IA2Relations:
+			try:
+				if relation.relationType == relationType:
+					return IAccessible(IAccessibleObject=IAccessibleHandler.normalizeIAccessible(relation.target(0)), IAccessibleChildID=0)
+			except COMError:
+				pass
+		return None
+
+	def _get_flowsTo(self):
+		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_FLOWS_TO)
+
+	def _get_flowsFrom(self):
+		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_FLOWS_FROM)
+
 	def event_valueChange(self):
 		if hasattr(self,'IAccessibleTextObject'):
 			self._hasContentChangedSinceLastSelection=True

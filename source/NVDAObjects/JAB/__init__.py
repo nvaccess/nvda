@@ -330,6 +330,28 @@ class JAB(Window):
 				children.append(JAB(jabContext=jabContext))
 		return children
 
+	def _get_indexInParent(self):
+		index = self._JABAccContextInfo.indexInParent
+		if index == -1:
+			return None
+		return index
+
+	def _get__JABRelations(self):
+		rs = self.jabContext.getAccessibleRelationSet()
+		return rs.relations[:rs.relationCount]
+
+	def _getJABRelationFirstTarget(self, key):
+		for relation in self._JABRelations:
+			if relation.key == key:
+				return JAB(jabContext=JABHandler.JABContext(self.jabContext.hwnd, self.jabContext.vmID, relation.targets[0]))
+		return None
+
+	def _get_flowsTo(self):
+		return self._getJABRelationFirstTarget("flowsTo")
+
+	def _get_flowsFrom(self):
+		return self._getJABRelationFirstTarget("flowsFrom")
+
 	def event_stateChange(self):
 		self._JABAccContextInfo=self.jabContext.getAccessibleContextInfo()
 		super(JAB,self).event_stateChange()

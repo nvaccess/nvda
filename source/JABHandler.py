@@ -191,6 +191,11 @@ class JABContext(object):
 		bridgeDll.getTextAttributesInRange(self.vmID, self.accContext, startIndex, endIndex, byref(attributes), byref(length))
 		return attributes, length.value
 
+	def getAccessibleRelationSet(self):
+		relations = AccessibleRelationSetInfo()
+		bridgeDll.getAccessibleRelationSet(self.vmID, self.accContext, byref(relations))
+		return relations
+
 class AccessBridgeVersionInfo(Structure):
 	_fields_=[
 		('VMVersion',WCHAR*SHORT_STRING_SIZE),
@@ -272,6 +277,21 @@ class AccessibleTextAttributesInfo(Structure):
 		('fullAttributesString',WCHAR*MAX_STRING_SIZE),
 	]
 
+MAX_RELATION_TARGETS = 25
+MAX_RELATIONS = 5
+
+class AccessibleRelationInfo(Structure):
+	_fields_ = [
+		("key", WCHAR * SHORT_STRING_SIZE),
+		("targetCount", c_int),
+		("targets", c_int * MAX_RELATION_TARGETS),
+	]
+
+class AccessibleRelationSetInfo(Structure):
+	_fields_ = [
+		("relationCount", c_int),
+		("relations", AccessibleRelationInfo * MAX_RELATIONS),
+	]
 
 @CFUNCTYPE(None,c_int,c_int,c_int)
 def internal_event_focusGained(vmID, event,source):

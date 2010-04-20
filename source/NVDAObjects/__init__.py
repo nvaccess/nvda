@@ -592,6 +592,30 @@ Tries to force this object to take the focus.
 		"""
 		return False
 
+	def _get_indexInParent(self):
+		"""The index of this object in its parent object.
+		@return: The 0 based index, C{None} if there is no parent.
+		@rtype: int
+		@raise NotImplementedError: If not supported by the underlying object.
+		"""
+		raise NotImplementedError
+
+	def _get_flowsTo(self):
+		"""The object to which content flows from this object.
+		@return: The object to which this object flows, C{None} if none.
+		@rtype: L{NVDAObject}
+		@raise NotImplementedError: If not supported by the underlying object.
+		"""
+		raise NotImplementedError
+
+	def _get_flowsFrom(self):
+		"""The object from which content flows to this object.
+		@return: The object from which this object flows, C{None} if none.
+		@rtype: L{NVDAObject}
+		@raise NotImplementedError: If not supported by the underlying object.
+		"""
+		raise NotImplementedError
+
 	def _get_isPresentableFocusAncestor(self):
 		"""Determine if this object should be presented to the user in the focus ancestry.
 		@return: C{True} if it should be presented in the focus ancestry, C{False} if not.
