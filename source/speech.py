@@ -285,7 +285,7 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 		allowProperties['value']=False
 
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
-	if reason!=REASON_ONLYCACHE and isEditable and not globalVars.inCaretMovement:
+	if reason!=REASON_ONLYCACHE and isEditable:
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
