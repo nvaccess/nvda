@@ -86,8 +86,11 @@ class CompoundTextInfo(textInfos.TextInfo):
 		return self._start.pointAtStart
 
 	def _getControlFieldForObject(self, obj):
-		field = textInfos.ControlField()
 		role = obj.role
+		if role in (controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_EDITABLETEXT):
+			# This is basically just a text node.
+			return None
+		field = textInfos.ControlField()
 		field["role"] = obj.role
 		field["states"] = obj.states
 		field["name"] = obj.name
@@ -157,7 +160,8 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		obj = self._startObj
 		while obj and obj != rootObj:
 			field = self._getControlFieldForObject(obj)
-			fields.insert(0, textInfos.FieldCommand("controlStart", field))
+			if field:
+				fields.insert(0, textInfos.FieldCommand("controlStart", field))
 			obj = obj.parent
 		fields.extend(f for ti in self._getTextInfos() for f in ti.getTextWithFields(formatConfig=formatConfig))
 		return fields
