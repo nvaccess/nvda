@@ -732,8 +732,6 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		formatConfig=config.conf["documentFormatting"]
 
 	childCount=int(attrs['_childcount'])
-	indexInParent=int(attrs['_indexInParent'])
-	parentChildCount=int(attrs['_parentChildCount'])
 	if reason==REASON_FOCUS:
 		name=attrs.get('name',"")
 	else:
