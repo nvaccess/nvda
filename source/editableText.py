@@ -23,6 +23,9 @@ class EditableText(ScriptableObject):
 	Use L{EditableTextWithoutAutoSelectDetection} if your object does not automatically detect selection changes.
 	"""
 
+	#: Whether to fire caretMovementFailed events when the caret doesn't move in response to a caret movement key.
+	shouldFireCaretMovementFailedEvents = False
+
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=0.03):
 		elapsed = 0
 		while elapsed < timeout:
@@ -63,7 +66,7 @@ class EditableText(ScriptableObject):
 			return
 		bookmark=info.bookmark
 		sendKey(keyPress)
-		if not self._hasCaretMoved(bookmark):
+		if not self._hasCaretMoved(bookmark) and self.shouldFireCaretMovementFailedEvents:
 			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
 		self._caretScriptPostMovedHelper(unit)
 

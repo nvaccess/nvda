@@ -109,6 +109,7 @@ class EditableText(editableText.EditableText, NVDAObject):
 	"""
 
 	initOverlayClass = editableText.EditableText.initClass
+	shouldFireCaretMovementFailedEvents = True
 
 class EditableTextWithoutAutoSelectDetection(editableText.EditableTextWithoutAutoSelectDetection, EditableText):
 	"""In addition to L{EditableText}, provides scripts to report appropriately when the selection changes.
