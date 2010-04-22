@@ -124,14 +124,14 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 				self._end = position._end.copy()
 			self._endObj = position._endObj
 		elif position == textInfos.POSITION_FIRST:
-			self._startObj = self._endObj = rootObj.firstChild
+			self._startObj = self._endObj = self._findContentDescendant(rootObj.firstChild)
 			self._start = self._end = self._startObj.makeTextInfo(position)
 		elif position == textInfos.POSITION_LAST:
-			self._startObj = self._endObj = rootObj.lastChild
+			self._startObj = self._endObj = self._findContentDescendant(rootObj.lastChild)
 			self._start = self._end = self._startObj.makeTextInfo(position)
 		elif position == textInfos.POSITION_ALL:
-			self._startObj = rootObj.firstChild
-			self._endObj = rootObj.lastChild
+			self._startObj = self._findContentDescendant(rootObj.firstChild)
+			self._endObj = self._findContentDescendant(rootObj.lastChild)
 			self._start = self._startObj.makeTextInfo(position)
 			self._end = self._endObj.makeTextInfo(position)
 		elif position == textInfos.POSITION_CARET:
@@ -139,6 +139,11 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 			self._start = self._end = self._startObj.makeTextInfo(position)
 		else:
 			raise NotImplementedError
+
+	def _findContentDescendant(self, obj):
+		while obj and controlTypes.STATE_FOCUSABLE not in obj.states:
+			obj = obj.firstChild
+		return obj
 
 	def _getTextInfos(self):
 		yield self._start
