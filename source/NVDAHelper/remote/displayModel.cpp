@@ -209,62 +209,106 @@ void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* other
 	}
 }
 
-void displayModel_t::renderText(const RECT* rect, wstring& text, deque<POINT>& characterPoints) {
+void displayModel_t::renderText(const RECT& rect, int minHorizontalWhitespace, int minVerticalWhitespace, wstring& text, deque<RECT>& characterRects) {
 	RECT tempRect;
-	POINT charPoint;
-	int lastTextEndX;
-	int lastTextBaseline=-1;
+	wstring curLineText;
+	deque<RECT> curLineCharacterRects;
+	int curLineMinTop=-1;
+	int curLineMaxBottom=-1;
+	int curLineBaseline=-1;
+	int lastChunkRight=rect.left;
+	int lastLineBottom=rect.top;
 	//Walk through all the chunks looking for any that intersect the rectangle
-	for(displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();i!=chunksByYX.end();i++) {
-		if(!rect||IntersectRect(&tempRect,rect,&(i->second->rect))) {
-			displayModelChunk_t* chunk=i->second;
+	displayModelChunksByPointMap_t::iterator chunkIt=chunksByYX.begin();
+	while(chunkIt!=chunksByYX.end()) {
+		displayModelChunk_t* chunk=NULL;
+		BOOL isTempChunk=FALSE;
+		if(IntersectRect(&tempRect,&rect,&(chunkIt->second->rect))) {
+			chunk=chunkIt->second;
 			//If this chunk is not fully covered by the rectangle
 			//Copy it and truncate it so that it is fully covered
 			if(chunk->rect.left<tempRect.left||chunk->rect.right>tempRect.right) {
 				chunk=new displayModelChunk_t(*chunk);
+				isTempChunk=TRUE;
 				if(chunk->rect.left<tempRect.left) chunk->truncate(tempRect.left,TRUE);
 				if(chunk->rect.right>tempRect.right) chunk->truncate(tempRect.right,FALSE);
-				//Its possible that the chunk now contains no text
-				//If so then delete it and skip to the next one
-				if(chunk->text.length()==0) {
-					if(chunk!=i->second) delete chunk;
-					continue;
-				}
 			}
-			int textBaseline=chunk->rect.top+chunk->baselineFromTop;
-			//If we've already rendered some text,
-			//Add a newline if the baseline has changed, or add a space if there's a horizontal gap.
-			if(text.length()>0) {
-				if(textBaseline>lastTextBaseline) {
-					text+=L'\n';
-					charPoint.x=lastTextEndX;
-					charPoint.y=lastTextBaseline;
-					characterPoints.push_back(charPoint);
-				} else if(chunk->rect.left>lastTextEndX) {
-					text+=L' ';
-					charPoint.x=lastTextEndX;
-					charPoint.y=lastTextBaseline;
-					characterPoints.push_back(charPoint);
-				}
+		}
+		//Find out the current line's baseline
+		curLineBaseline=chunkIt->first.first;
+		//Iterate to the next possible chunk
+		++chunkIt;
+		//If we have a valid chunk then add it to the current line
+		if(chunk&&chunk->text.length()>0) {
+			//Update the maximum height of the line
+			if(curLineText.length()==0) {
+				curLineMinTop=chunk->rect.top;
+				curLineMaxBottom=chunk->rect.bottom;
+			} else {
+				if(chunk->rect.top<curLineMinTop) curLineMinTop=chunk->rect.top;
+				if(chunk->rect.bottom>curLineMaxBottom) curLineMaxBottom=chunk->rect.bottom;
 			}
-			text+=chunk->text;
-			for(deque<int>::const_iterator cxaIt=chunk->characterXArray.begin();cxaIt!=chunk->characterXArray.end();cxaIt++) {
-				charPoint.x=*cxaIt;
-				charPoint.y=textBaseline;
-				characterPoints.push_back(charPoint);
+			//Add space before this chunk if necessary
+			if((chunk->rect.left-lastChunkRight)>=minHorizontalWhitespace) {
+				curLineText+=L" ";
+				tempRect.left=lastChunkRight;
+				tempRect.top=curLineBaseline-1;
+				tempRect.right=chunk->rect.left;
+				tempRect.bottom=curLineBaseline+1;
+				curLineCharacterRects.push_back(tempRect);
 			}
-			lastTextEndX=chunk->rect.right;
-			lastTextBaseline=textBaseline;
-			//Get rid of the temporary chunk if we created one
-			if(chunk!=i->second) delete chunk;
+			//Add text from this chunk to the current line
+			curLineText.append(chunk->text);
+			//Copy the character X positions from this chunk  in to the current line
+			deque<int>::const_iterator cxaIt=chunk->characterXArray.begin();
+			while(cxaIt!=chunk->characterXArray.end()) {
+				tempRect.left=*cxaIt;
+				tempRect.top=chunk->rect.top;
+				++cxaIt;
+				tempRect.right=(cxaIt!=chunk->characterXArray.end())?*cxaIt:chunk->rect.right;
+				tempRect.bottom=chunk->rect.bottom;
+				curLineCharacterRects.push_back(tempRect);
+			}
+		lastChunkRight=chunk->rect.right;
+		}
+		if((chunkIt==chunksByYX.end()||chunkIt->first.first>curLineBaseline)&&curLineText.length()>0) {
+			//This is the end of the line
+			if((curLineMinTop-lastLineBottom)>=minVerticalWhitespace) {
+				//There is space between this line and the last,
+				//Insert a blank line in between.
+				text+=L"\n";
+				tempRect.left=rect.left;
+				tempRect.top=lastLineBottom;
+				tempRect.right=rect.right;
+				tempRect.bottom=curLineMinTop;
+				characterRects.push_back(tempRect);
+			}
+			//Insert this line in to the output.
+			text.append(curLineText);
+			characterRects.insert(characterRects.end(),curLineCharacterRects.begin(),curLineCharacterRects.end());
+			//Add a linefeed to complete the line
+			text+=L"\n";
+			tempRect.left=lastChunkRight;
+			tempRect.top=curLineBaseline-1;
+			tempRect.right=rect.right;
+			tempRect.bottom=curLineBaseline+1;
+			characterRects.push_back(tempRect);
+			//Reset the current line values
+			curLineText.clear();
+			curLineCharacterRects.clear();
+			lastChunkRight=rect.left;
+			lastLineBottom=curLineMaxBottom;
+			if(chunk&&isTempChunk) delete chunk;
 		}
 	}
-	if(lastTextBaseline!=-1) {
-		//Provide the end point of the last character.
-		//Add an additional NULL character for this purpose.
-		text+=L'\0';
-		charPoint.x=lastTextEndX;
-		charPoint.y=lastTextBaseline;
-		characterPoints.push_back(charPoint);
+	if((rect.bottom-lastLineBottom)>=minVerticalWhitespace) {
+		//There is a gap between the bottom of the final line and the bottom of the requested rectangle,
+		//So add a blank line.
+		text+=L"\n";
+		tempRect.left=rect.left;
+		tempRect.top=lastLineBottom;
+		tempRect.right=rect.right;
+		tempRect.bottom=rect.bottom;
+		characterRects.push_back(tempRect);
 	}
 }
