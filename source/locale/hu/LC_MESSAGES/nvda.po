@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2010-04-08 13:46+Central Europe Daylight Time\n"
-"PO-Revision-Date: 2010-04-09 09:54+0100\n"
+"POT-Creation-Date: 2010-04-25 10:21+Közép-európai nyári idõ\n"
+"PO-Revision-Date: 2010-04-25 10:36+0100\n"
 "Last-Translator: oaron <oaron1@gmail.com>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "X-Poedit-Language: Hungarian\n"
 "X-Poedit-Country: HUNGARY\n"
 
-#: IAccessibleHandler.py:671
+#: IAccessibleHandler.py:672
 msgid "Secure Desktop"
 msgstr "Biztonsági képernyő"
 
@@ -23,10 +23,74 @@ msgstr "ismeretlen billentyűzetkiosztás"
 msgid "layout %s"
 msgstr "%s billentyűzetkiosztás"
 
+#: NVDAObjects\IAccessible\__init__.py:1219
+msgid "Taskbar"
+msgstr "tálca"
+
+#: NVDAObjects\IAccessible\sysTreeView32.py:205
+msgid "%s items"
+msgstr "%s elem"
+
+#: NVDAObjects\UIA\__init__.py:412
+msgid "invoke"
+msgstr "hívás"
+
 #: NVDAObjects\behaviors.py:53
 #: appModules\_default.py:771
 msgid "%d percent"
 msgstr "%d százalék"
+
+#: NVDAObjects\window\__init__.py:289
+msgid "Desktop"
+msgstr "Asztal"
+
+#: NVDAObjects\window\edit.py:534
+msgid "unknown"
+msgstr "ismeretlen"
+
+#: NVDAObjects\window\edit.py:536
+msgid "%s embedded object"
+msgstr "%s beágyazott objektum"
+
+#: NVDAObjects\window\edit.py:538
+#: controlTypes.py:243
+msgid "embedded object"
+msgstr "beágyazott objektum"
+
+#: NVDAObjects\window\excel.py:49
+msgid "NVDA Excel Cell Editor"
+msgstr "NVDA Excel Cella Szerkesztő"
+
+#: NVDAObjects\window\excel.py:51
+msgid "Enter cell contents"
+msgstr "Írja be a cella tartalmát"
+
+#: NVDAObjects\window\excel.py:113
+msgid "Extends the selection and speaks the last selected cell"
+msgstr "kijelölés kiterjesztése, és a legutolsó cella felolvasása"
+
+#: NVDAObjects\window\excel.py:122
+msgid "Moves to a cell and speaks its coordinates and content"
+msgstr "a kurzort egy adott cellára helyezi, majd bemondja annak pozícióját és tartalmát"
+
+#: NVDAObjects\window\excel.py:214
+msgid "has formula"
+msgstr "képletet tartalmaz"
+
+#: NVDAObjects\window\excel.py:252
+msgid "selection"
+msgstr "kijelölve"
+
+#: NVDAObjects\window\excel.py:257
+msgid "%s %s through %s %s"
+msgstr "%s %s keresztül %s %s"
+
+#: NVDAObjects\window\winword.py:357
+#: NVDAObjects\window\winword.py:368
+#: NVDAObjects\window\winword.py:379
+#: NVDAObjects\window\winword.py:390
+msgid "not in table"
+msgstr "csak táblázatban használható"
 
 #: appModuleHandler.py:172
 msgid "Error in appModule %s"
@@ -1530,10 +1594,6 @@ msgstr "ikon"
 #: controlTypes.py:242
 msgid "directory pane"
 msgstr "könyvtár terület"
-
-#: controlTypes.py:243
-msgid "embedded object"
-msgstr "beágyazott objektum"
 
 #: controlTypes.py:244
 msgid "end note"
@@ -3769,3 +3829,4 @@ msgstr "Az előző beágyazott objektumhoz lép."
 #: virtualBuffers\__init__.py:1257
 msgid "no previous embedded object"
 msgstr "Nincs előző beágyazott objektum"
+
