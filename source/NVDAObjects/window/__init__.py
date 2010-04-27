@@ -100,9 +100,16 @@ An NVDAObject for a window
 			from .winword import WordDocument as newCls
 		elif windowClassName=="EXCEL7":
 			from .excel import Excel7Window as newCls
-		elif self.role==controlTypes.ROLE_EDITABLETEXT and not isinstance(self, EditableText):
-			newCls=DisplayModelEditableText
 		clsList.append(newCls)
+
+		#If the chosen class does not seem to support text editing by itself
+		#But there is a caret currently in the window
+		#Then use the displayModelEditableText class to emulate text editing capabilities
+		if not issubclass(newCls,EditableText):
+			gi=winUser.getGUIThreadInfo(self.windowThreadID)
+			if gi.hwndCaret==self.windowHandle and gi.flags&winUser.GUI_CARETBLINKING:
+				clsList.append(DisplayModelEditableText)
+
 		if newCls!=Window:
 			clsList.append(Window)
 		super(Window,self).findOverlayClasses(clsList)
@@ -298,6 +305,8 @@ class Desktop(Window):
 		return _("Desktop")
 
 class DisplayModelEditableText(EditableText, Window):
+
+	role=controlTypes.ROLE_EDITABLETEXT
 
 	def initOverlayClass(self):
 		import displayModel
