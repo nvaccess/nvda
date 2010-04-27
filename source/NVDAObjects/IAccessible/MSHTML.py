@@ -9,6 +9,7 @@ import comtypes.client
 import comtypes.automation
 from comtypes import IServiceProvider
 import oleacc
+import IAccessibleHandler
 import aria
 from keyUtils import key, sendKey
 import api
@@ -64,6 +65,14 @@ def IAccessibleFromHTMLNode(HTMLNode):
 		raise NotImplementedError
 
 def HTMLNodeFromIAccessible(IAccessibleObject):
+	#Internet Explorer 8 can crash if you try asking for an IHTMLElement from the root MSHTML Registered Handler IAccessible
+	#So only do it if we can get the role, and its not the MSAA client role.
+	try:
+		accRole=IAccessibleObject.accRole(0)
+	except COMError:
+		accRole=0
+	if not accRole or accRole==oleacc.ROLE_SYSTEM_CLIENT:
+		return None
 	try:
 		s=IAccessibleObject.QueryInterface(IServiceProvider)
 		i=s.QueryService(IID_IHTMLElement,comtypes.automation.IDispatch)
@@ -86,11 +95,13 @@ def locateHTMLElementByID(document,ID):
 	frames=document.getElementsByTagName(tag)
 	for frame in frames:
 		pacc=IAccessibleFromHTMLNode(frame)
-		childPacc=pacc.accChild(1)
-		childElement=HTMLNodeFromIAccessible(childPacc)
+		res=IAccessibleHandler.accChild(pacc,1)
+		if not res: continue
+		childElement=HTMLNodeFromIAccessible(res[0])
+		if not childElement: continue
 		childElement=locateHTMLElementByID(childElement.document,ID)
-		if childElement:
-			return childElement
+		if not childElement: continue
+		return childElement
 
 class MSHTMLTextInfo(textInfos.TextInfo):
 
