@@ -291,6 +291,11 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 		tempAttrObj->get_nodeValue(&tempVar);\
 		if(tempVar.vt==VT_BSTR&&tempVar.bstrVal&&(allowEmpty||SysStringLen(tempVar.bstrVal)>0)) {\
 			attribsMap[L"HTMLAttrib::"##attribName]=tempVar.bstrVal;\
+		} else if(tempVar.vt==VT_I2||tempVar.vt==VT_I4) {\
+			wostringstream* s=new wostringstream;\
+			(*s)<<((tempVar.vt==VT_I2)?tempVar.iVal:tempVar.lVal);\
+			attribsMap[L"HTMLAttrib::"##attribName]=s->str();\
+			delete s;\
 		}\
 		VariantClear(&tempVar);\
 		tempAttrObj->Release();\
@@ -331,6 +336,7 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	macro_addHTMLAttributeToMap(L"onmouseup",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	//ARIA properties:
 	macro_addHTMLAttributeToMap(L"role",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-level",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-required",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-dropeffect",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-grabbed",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
