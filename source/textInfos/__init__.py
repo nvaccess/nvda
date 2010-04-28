@@ -149,15 +149,6 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _get_text(self):
 		raise NotImplementedError
 
-	def getInitialFields(self,formatConfig=None):
-		"""Retreaves the control fields, and the format field, that the start of this text range is currently positioned.
-		@param formatConfig: a documentFormatting config key, useful if you wish to force a particular configuration for a particular task.
-		@type formatConfig: dictionary
-		@returns: a list of control fields and a format field
-		@rtype: list
-		""" 
-		return []
-
 	def getTextWithFields(self,formatConfig=None):
 		"""Retreaves the text in this range, also including fields to indicate when controls start and end, and when format changes occure.
 		@param formatConfig: a documentFormatting config key, useful if you wish to force a particular configuration for a particular task.
@@ -227,9 +218,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 """
 		raise NotImplementedError
 
-	def collapse(self):
-		"""Sets the end of this text info object so its equal to the start (collapsing it to a point)
-"""
+	def collapse(self, end=False):
+		"""Collapses this text info object so that both endpoints are the same.
+		@param end: Whether to collapse to the end; C{True} to collapse to the end, C{False} to collapse to the start.
+		@type end: bool
+		"""
 		raise NotImplementedError
 
 	def copy(self):

@@ -20,7 +20,7 @@ import api
 import config
 import controlTypes
 from NVDAObjects.window import Window
-from NVDAObjects import NVDAObject, NVDAObjectTextInfo, AutoSelectDetectionNVDAObject
+from NVDAObjects import NVDAObject, NVDAObjectTextInfo, AutoSelectDetectionNVDAObject, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
 import mouseHandler
@@ -260,19 +260,27 @@ the NVDAObject for IAccessible
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
 		acc=None
+		objID=None
 		windowHandle=kwargs['windowHandle']
 		if isinstance(relation,tuple):
 			acc=IAccessibleHandler.accessibleObjectFromPoint(relation[0],relation[1])
 		elif relation=="focus":
-			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
+			objID=winUser.OBJID_CLIENT
 		elif relation in ("parent","foreground"):
-			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_CLIENT,0)
+			objID=winUser.OBJID_CLIENT
 		else:
-			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,winUser.OBJID_WINDOW,0)
+			objID=winUser.OBJID_WINDOW
+		if objID is not None:
+			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,objID,0)
 		if not acc:
 			return False
 		kwargs['IAccessibleObject']=acc[0]
 		kwargs['IAccessibleChildID']=acc[1]
+		if objID:
+			# We know the event parameters, so pass them to the NVDAObject.
+			kwargs['event_windowHandle']=windowHandle
+			kwargs['event_objectID']=objID
+			kwargs['event_childID']=0
 		return True
 
 	@classmethod
@@ -372,10 +380,13 @@ the NVDAObject for IAccessible
 			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
 		if not windowHandle:
 			log.debugWarning("Resorting to WindowFromPoint on accLocation")
-			left,top,width,height = IAccessibleObject.accLocation(0)
-			windowHandle=winUser.user32.WindowFromPoint(winUser.POINT(left,top))
+			try:
+				left,top,width,height = IAccessibleObject.accLocation(0)
+				windowHandle=winUser.user32.WindowFromPoint(winUser.POINT(left,top))
+			except COMError, e:
+				log.debugWarning("accLocation failed: %s" % e)
 		if not windowHandle:
-			raise RuntimeError("Can't get a window handle from IAccessible")
+			raise InvalidNVDAObject("Can't get a window handle from IAccessible")
 
 		# Set the event params based on our calculated/construction info if we must.
 		if event_windowHandle is None:

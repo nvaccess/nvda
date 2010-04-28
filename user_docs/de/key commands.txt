@@ -1,0 +1,135 @@
+Kurztasten und Befehlsreferenz
+
+Zuletzt aktualisiert: 21. März 2010
+
+Viele der nachfolgenden Befehle verwenden die so genannte NVDA-Taste. Dies ist standardmäßig die Einfüge-Taste über den Pfeiltastenblock oben links im Sechs-Tasten-Block oder auch auf dem Nummernblock die Ziffer Null. Wenn sich eine Taste auf den Nummernblock bezieht, ist (zur besseren Erkennung) die Zeichenkette "NUM" vorangestellt. Diese funktionieren nur bei ausgeschaltetem Nummernblock.
+
+Beispiel: NUM 1 ist gleichbedeutend mit der Taste 1 des Nummernblocks.
+
+In den Tastatureinstellungen kann auch die Dauergroßschreibtaste als so genannte NVDA-Taste eingestellt werden.
+
+Allgemeine Tastenkombinationen
+
+Steuerung = Unterbricht den laufenden Sprechvorgang.
+Umschalt = Setzt das Sprechen an der Stelle fort, wo zuvor abgebrochen wurde.
+NVDA+1 = Dieser Befehl schaltet den Modus der Tastaturhilfe ein bzw. aus (Lernmodus). Bei aktivierter Tastaturhilfe können Sie beliebige Tastenkombinationen ausprobieren. Wenn diese Tastenkombination von NVDA verwendet wird, sagt es deren Namen und Funktion an, ansonsten wird die Funktion direkt ausgeführt.
+NVDA+T = Ansagen der Titelleiste des aktuellen Fensters. Zwei Mal drücken wird der Name buchstabiert und drei Mal gedrückt, wird der Name in die Zwischenablage kopiert.
+NVDA+B = Vorlesen des aktiven Fensters.
+NVDA+N = Drücken Sie diese Tastenkombination, um das NVDA-Menü zu öffnen. Dort können Sie beispielsweise die Einstellungen von NVDA anpassen.
+NVDA+Q = Standardmäßig werden Sie gefragt, ob Sie NVDA beenden möchten. Wenn Sie mit "Ja" antworten, wird NVDA beendet und wenn Sie auf "Nein" klicken, dann läuft NVDA weiter.
+NVDA+S = Schaltet zwischen den Modi "Sprache, Signaltöne und aus" um.
+NVDA+F12 = Uhrzeit- und Datumsansage: Bei einmaligem Drücken wird die Uhrzeit angesagt. Wenn Sie die Tastenkombination zwei Mal drücken, wird das Datum angesagt.
+NVDA+Ende = Liest die aktuelle Statuszeile vor, sofern eine gefunden wird.
+NVDA+F = Liest in Dokumenten an der aktuellen Cursorposition die Informationen zur Formatierung vor.
+Steuerung+NVDA+F1 = Spricht den Namen der aktuellen Anwendung und buchstabiert ihn. Ebenso wird das momentan geladene Anwendungsmodul angesagt.
+Umschalt+NVDA+B = Liest die verbleibende Akkumulationslaufzeit vor und ob bei mobilen Geräten das Netzteil eingesteckt ist.
+NVDA+5 = Schaltet das automatische Ansagen von Inhaltsänderungen (wie beispielsweise in der Eingabeaufforderung) ein oder aus.
+NVDA+6 = Schaltet den Navigator zur Verfolgung des Cursors ein oder aus.
+NVDA+7 = Legt fest, ob der Navigator auf das fokusierte Objekt gesetzt wird oder nicht.
+NVDA+Tab = Liest das fokussierte Objekt vor.
+NVDA+F2 = Nach dem Drücken dieses Befehls können Sie den folgenden Befehl ohne Wirkung in NVDA direkt an die Anwendung weiterreichen.
+Umschalt+NVDA+Pfeil nach oben = Liest den aktuell markierten Text in Dokumenten und Eingabefeldern vor. Wenn nichts makiert ist, wird dies angesagt.
+NVDA+Pfeil nach oben = Liest die aktuelle Zeile in Dokumenten und Eingabefeldern vor.
+NVDA+Pfeil nach unten = Liest den Text ab der aktuellen Cursorposition vor.
+Steuerung+NVDA+C = Speichert die geänderten Einstellungen.
+Steuerung+NVDA+R = Dieser Befehl lät die Konfiguration neu.
+NVDA+C = Liest den Inhalt der Zwischenablage vor.
+
+Einstellungen ändern (Einstellungsdialoge)
+
+NVDA+2 = Schaltet das Ansagen von geschriebenen Zeichen ein oder aus.
+NVDA+3 = Schaltet das Ansagen von geschriebenen Wörtern ein oder aus.
+NVDA+4 = Schaltet die Ansage von Kommandotasten ein oder aus. Das betrifft die Cursor- und Funktionstasten sowie der Alt-, Umschalt- und Steurungstasten; und alle weiteren Tasten, die nicht mit einem Zeichen belegt sind.
+NVDA+P = Schaltet die Ansage von Satzzeichen beim Vorlesen ein oder aus.
+NVDA+M = Schaltet die Verfolgung des Mauszeigers ein oder aus.
+NVDA+U = Dieser Befehl legt fest, ob Signaltöne nur für die aktive oder für alle Fortschrittsbalken ausgegeben werden sollen. Desweiteren kann die Option entweder komplett ausgeschaltet werden oder alle zehn Prozent eine Ansage des aktuellen Wertes erfolgen.
+Steuerung+NVDA+Pfeil links = Wechselt zur vorherigen Stimmeinstellung.
+Steuerung+NVDA+Pfeil rechts = Wechselt zur nächsten Stimmeinstellung.
+Steuerung+NVDA+Pfeil nach oben = Erhöht die aktuell gewählte Stimmeinstellung.
+Steuerung+NVDA+Pfeil nach unten = Verringert die aktuell gewählte Stimmeinstellung.
+
+Dialoge öffnen
+
+Steuerung+NVDA+G = Öffnet die allgemeinen Einstellungen.
+Steuerung+NVDA+S = Öffnet die Einstellungen für die Sprachausgaben.
+Steuerung+NVDA+V = Öffnet die Stimmeneinstellungen.
+Steuerung+NVDA+K = Öffnet die Tastatureinstellungen.
+Steuerung+NVDA+M = Öffnet die Mauseinstellungen.
+Steuerung+NVDA+O = Öffnet die Einstellungen für die Objektpräsentation.
+Steuerung+NVDA+B = Öffnet die Einstellungen für die virtuelle Ansicht.
+Steuerung+NVDA+D = Zeigt die Einstellungen zur dokumentformatierung an.
+Steuerung+NVDA+Z = Zeigt die Python-Konsole an.
+
+Objektweise navigieren
+
+NVDA+NUM 5 = Liest das Objekt vor, auf dem sich der Navigator befindet. . Bei zweimaligem drücken wird es buchstabiert und bei dreimaligem drücken wird der Inhalt in die Zwischenablage kopiert.
+NVDA+NUM-Entfernen = Liest mit dem Navigator die Größe und Dimension des fokussierten Objekts vor.
+NVDA+NUM 8 = Setzt den Navigator auf das übergeordnete Objekt.
+NVDA+NUM 2 = Setzt den Navigator auf das erste untergeordnete Objekt.
+NVDA+NUM 4 = Zieht den Navigator zum vorherigen Objekt.
+Umschalt+NVDA+NUM 4 = Zieht den Navigator rekursiv zum vorherigen Objekt.
+NVDA+NUM 6 = Zieht den Navigator zum nächsten Objekt.
+Umschalt+NVDA+NUM 6 = Zieht den Navigator rekursiv zum nächsten Objekt.
+NVDA+NUM-Eingabe = Löst die Standardaktion auf dem Objekt aus, auf dem der Navigator steht..
+NVDA+NUM-Schrägstrich = Bewegt den Mauszeiger zum Objekt, auf welchem sich der Navigator befindet.
+NVDA+NUM-Stern = Setzt den Navigator auf das Objekt, das sich unter dem Mauszeiger befindet.
+NUM-Minus = Zieht den Navigator zum System-Cursor.
+Steuerung+NUM-Minus = Zieht den System-Cursor zumNavigator.
+NVDA+NUM-Minus = Setzt den Navigator auf das fokussierte Objekt.
+NUM-Schrägstrich = Löst einen Linksklick an der aktue;llen Position der Maus aus.
+NUM-Stern = Löst einen Rechtsklick an der aktuellen Position der Maus aus.
+NUM-PLUS = Liest mit dem Navigator ab der Textposition bis zum Ende vor.
+NVDA+NUM-Plus = Liest rekursiv alle Objekte nach dem aktuellen Objekt des Navigators vor.
+
+Das aktuelle Objekt vorlesen
+
+NUM 1 = Zieht den Navigator zum vorherigen Zeichen und liest es vor.
+Umschalt+NUM 1 = Zieht den Navigator zum Zeilenanfang und liest das erste Zeichen vor.
+NUM 2 = Liest das Zeichen unter dem Navigator vor.
+NUM 3 = Zieht den Navigator auf das nächste Zeichen und liest es vor.
+Umschalt+NUM 3 = Zieht den Navigator zum Zeilenende und liest das letzte Zeichen vor.
+NUM 4 = Zieht den Navigator zum vorherigen Wort und liest es vor.
+NUM 5 = Liest das  aktuelle Wort unter dem Navigator vor.
+NUM 6 = Zieht den Navigator zum nächsten Wort und liest es vor.
+NUM 7 = Zieht den Navigator auf die vorherige Zeile und liest sie vor.
+Umschalt+NUM 7 = Zieht den Navigator auf die erste Zeile und liest sie vor.
+NUM 8 = Liest die aktuelle Zeile unter dem Navigator vor.
+NUM 9 = Zieht den Navigator auf die nächste Zeile und liest sie vor.
+Umschalt+NUM 9 = Zieht den Navigator auf die letzte Zeile und liest sie vor.
+NVDA+F9 = Setzt eine Startmarke an die Position des Navigators.
+NVDA+F10 = Gibt den Text von der zuvor gesetzten Startmarke bis einschließlich der aktuellen Position des Navigators zurück und kopiert ihn in die Zwischenablage.
+
+Befehle in den virtuellen Ansichten
+
+NVDA+Leertaste = Schaltet den Modus "Tasten durch virtuelle Ansicht durchlassen" ein oder aus.
+Steuerung+NVDA+F = Suchen.
+NVDA+F3 = Weitersuchen.
+NVDA+F5 = Aktualisiert die virtuelle Ansicht.
+NVDA+F7 = Zeigt die Elementliste an.
+NVDA+V = Schaltet das Bildschirm-Layout um.
+
+Schnelltasten in den virtuellen Ansichten
+
+Verwenden Sie die folgenden Tasten, um zum nächsten Objekt zu springen. In Kombination mit der Umschalttaste, springen Sie zum vorherigen Objekt zurück.
+
+H = Überschrift
+L = Liste
+I = Listeneintrag
+T = Tabelle
+K = Link
+F = Formularfeld
+U = Nichtbesuchter Link
+V = Besuchter Link
+E = Eingabefeld
+B = Schalter
+X = Kontrollfeld
+C = Kombinationsfeld
+R = Auswahlschalter
+Q = Zitatblock
+S = Trennlinie
+M = Rahmen
+G = Grafik
+D = ARIA-Sprungmarke
+N = Nichtverlinkter Text
+O = Eingebettetes Objekt
+1 bis 6 = Überschriftsebene 1 bis 6

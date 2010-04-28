@@ -102,6 +102,10 @@ class Dialog(NVDAObject):
 		return " ".join(textList)
 
 	def _get_description(self):
+		superDesc = super(Dialog, self).description
+		if superDesc and not superDesc.isspace():
+			# The object already provides a useful description, so don't override it.
+			return superDesc
 		return self.getDialogText(self)
 
 	value = None

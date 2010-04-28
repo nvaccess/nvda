@@ -174,7 +174,9 @@ class JAB(Window):
 		elif isinstance(relation,tuple):
 			jabContext=JABHandler.JABContext(hwnd=windowHandle)
 			if jabContext:
-				jabContext=jabContext.getAccessibleContextAt(x,y)
+				jabContext=jabContext.getAccessibleContextAt(*relation)
+		else:
+			jabContext=JABHandler.JABContext(hwnd=windowHandle)
 		if not jabContext:
 			return False
 		kwargs['jabContext']=jabContext

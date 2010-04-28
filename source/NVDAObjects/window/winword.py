@@ -98,17 +98,15 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return True
 
 	def _expandToLineAtCaret(self):
-		from ctypes import c_long, pointer
-		rangeLeft=c_long()
-		rangeTop=c_long()
-		rangeWidth=c_long()
-		rangeHeight=c_long()
-		self.obj.WinwordWindowObject.getPoint(pointer(rangeLeft),pointer(rangeTop),pointer(rangeWidth),pointer(rangeHeight),self._rangeObj)
-		clientLeft,clientTop,clientWidth,clientHeight=self.obj.location
-		tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft,rangeTop)
-		self._rangeObj.Start=tempRange.Start
-		tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft+clientWidth,rangeTop)
-		self._rangeObj.End=tempRange.Start
+		sel=self.obj.WinwordSelectionObject
+		oldSel=sel.range
+		app=sel.application
+		app.ScreenUpdating=False
+		self._rangeObj.select()
+		sel.Expand(wdLine)
+		self._rangeObj=sel.range
+		oldSel.Select()
+		app.ScreenUpdating=True
 
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textInfos.FormatField()

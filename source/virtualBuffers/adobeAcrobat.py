@@ -1,7 +1,7 @@
 from . import VirtualBuffer, VirtualBufferTextInfo
 import controlTypes
 import NVDAObjects.IAccessible
-from NVDAObjects.IAccessible.adobe import normalizeStdName
+from NVDAObjects.IAccessible.adobeAcrobat import normalizeStdName
 import winUser
 import IAccessibleHandler
 import oleacc

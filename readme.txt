@@ -49,6 +49,8 @@ General dependencies:
 		* Alternatively, a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/AcrobatAccess.tlb
 		* Copy AcrobatAccess.tlb into the source\typelibs directory.
 	* Adobe FlashAccessibility interface typelib: http://www.nvda-project.org/3rdParty/FlashAccessibility.tlb
+	* txt2tags, version 2.5 or later: http://txt2tags.sourceforge.net/
+		* Copy the txt2tags Python script to the source directory or the global Python site-packages directory, naming it txt2tags.py.
 
 To use the brltty braille display driver:
 	* brlapi Python bindings, version 0.5.3 or later, distributed with BRLTTY for Windows, version 4.0-2 or later:

@@ -1,0 +1,241 @@
+﻿Újdonságok az NVDA-ban
+
+
+%!includeconf: ../changes.conf.t2t
+
+= 2010.2 =
+
+== Újdonságok ==
+- A navigátor kurzorral való mozgás egyszerűsítve lett, mert nem lehet már nem elérhető, vagy  csak a látványt segítő objektumokra ugrani.
+- Azok az alkalmazások, melyek a Java Access bridge-t használják (ide tartozik az OpenOffice.org is), már ki tudják küldeni a szöveg formázási beállításait.  (#358, #463)
+- Amikor az egér egy cella fölött van a Microsoft Excelben, az NVDA bemondja annak tartalmát.
+- Azokban az alkalmazásokban, amik a Java Access Bridge-t használják, a párbeszédpanelek szövegei már a megjelenés pillanatában elhangoznak.  (#554)
+
+
+== Változások ==
+- A folyamatos felolvasás a navigátor kurzorban (NVDA+ numerikus +), az előző térbeli elemre ugrás (NVDA +sift+ numerikus 4) és a következő térbeli elemre való ugrás (NVDA+shift+numerikus 6) el lett távolítva a programból.
+- Az NVDA szintetizátor választó ablakában már csak a szintetizátor neve jelenik meg a listában. Eddig a név elött a driver neve is megjelent.
+
+
+== Hiba javítások ==
+- A µTorrent alkalmazásban a torrentek listája nem ismétlődik folyamatosan, valamint nem változtatja meg a fókuszt.
+- A Mozilla alkalmazásokban a kurzor pozíciója mostantól helyesen van felismerve ha az egy üres táblázathoz vagy fanézethez kerül.
+- A Mozilla alkalmazásokban a "nincs bejelölve" már helyesen hangzik el bejelölhető vezérlőelemek, pl. Táblázatcellák használatakor. (#571)
+
+
+= 2010.1 =
+A  kiadás elkészítésekor elsődleges szempont volt a hibák kijavítása, ezáltal megnövekedett a program stabilitása is.
+
+== Újdonságok ==
+- Az NVDA mostantól elindul hangeszközzel nem rendelkező számítógépeken is. Természetesen ilyenkor csak egy braille kijelzőt vagy a virtuális szintetizátort lehet használni. (#425)
+- A jelzőpontok jelzése jelölőnégyzet bekerült a dokumentum formázási beállítások közé. Így a felhasználó ki és be tudja kapcsolni a jelzőpontok bemondását. Az előző stabil verzióban ez alapértelmezetten be volt kapcsolva.
+- Az NVDA mostantól bemondja a multimédiás gombokat (pl. play, stop, home page stb) ha a parancsbillentyűk bemondása be van kapcsolva.
+- Az NVDA bemondja a kitörölt szót a control+backspace billentyű használatakor a vezérlőelemekben, ha azok támogatják azt. (#491)
+- A nyíl billentyűk működnek a Web formator ablakában a weboldalon való navigáláskor. (#452)
+- Az NVDA most már képes felolvasni a Microsoft Office Outlook program címjegyzékében található elemek listáját.
+- Az NVDA jobban kezeli a beágyazott szerkeszthető (tervező módú) dokumentumokat az Internet Explorer programban. (#402)
+- Egy szkript segítségével a kurzor áthelyezhető a navigátor kurzorhoz (nvda+shift+numerikus minusz).
+- Lehetőség van az egér jobb és bal gombjának zárolására és feloldására. A shift+numerikus per a bal, a shift+numerikus csillag pedig a jobb egérgombot zárolja és oldja fel.
+- Új braille táblák: Német 8 pontos számítógépes braille, német rövidítési fokozat 2, finn 8 pontos számítógépes braille, kínai (Hong Kong, Cantonese), kínai (Taiwan, Mandarin).
+- Mostantól lehetőség van az nvda parancsikon létrehozásának letiltására (így a billentyűparancs letiltására is) az NVDA telepítésekor. (#518)
+- Az NVDA most már használja az Iaccessible2-t (ha létezik) 64 bites alkalmazásokban. (#479)
+- Lehetőség van az NVDA API használatára, aminek segítségével az alkalmazások komunikálhatnak a képernyőolvasóval (pl. szöveg felolvasása és leállítása, a szöveg megjelenítése egy braille kijelzőn, stb)
+- Mostantól az információkat és a hibaüzeneteket olvassa az NVDA a windows bejelentkező képernyő használatakor Windows Vista és Windows 7 operációs rendszerek alatt. (#506)
+- Az NVDA már támogatja az Adobe Reader alkalmazásban az Adobe LiveCycle-lel fejlesztett interaktív PDF űrlapokat. (#475)
+- A Miranda IM alkalmazásban az NVDA automatikusan fel tudja olvasni a chat üzeneteket ha a frissülő tartalom jelzése be van kapcsolva. Három új parancsbillentyű a három legfrissebb üzenetek felolvasására (NVDA+control+számok). (#546)
+- Az NVDA már támogatja az Adobe Flash használatával készített szerkesztőmezőket. (#461)
+
+
+== Változások ==
+- Az NVDA már nem mondja be a kimondottan hosszú start menü billentyűzetsúgó üzenetet Windows 7 alatt.
+- A virtuális szintetizátort egy új, beszédnéző váltotta fel. Aktiválásához használja a beszédnéző menüelemet az NVDA eszközök menüjében. A beszédnéző használható, független attól, milyen beszédszintetizátor van használatban.
+- A braille kijelzőn lévő üzenetek automatikusan eltűnnek, ha a felhasználó egy változást eredményező billentyűt üt le (pl. fókuszváltozáskor). Előzőleg az üzenetek láthatóak voltak a beállított ideig.
+- A fókusz vagy az áttekintő kurzor követése a braille kurzorral (NVDA+control+t) lehetőség most már a braille beállítások párbeszédpanelen is megadható, valamint a beállítások elmentésekor a beállítás is elmentésre kerül.
+- Az Espeak beszédszintetizátor frissítve lett az 1.43.03-as verzióra.
+- A Liblouis braille fordító frissítve lett az 1.8.0-s verzióra.
+- A virtuális kijelzők elemeinek felolvasása az előző karakterre/szóra lépéskor jelentősen hatékonyabban működik. Előzőleg rengeteg szükségtelen információ hangzott el, melyek különböztek a sorok közti mozgáskor hallhatóaktól. (#490)
+- A kontrol gomb csak leállítja a beszédet, úgy mint az összes többi gomb, a beszéd megállításához és újraindításához a shift gomb használható.
+- A táblázat sor és oszlop száma nem hangzik el a fókusz változásakor, mivel ezek túl hosszuak, és legtöbbször zavaróak.
+
+
+== Hiba javítások ==
+- Az NVDA mostantól akkor is elindul, ha az UI Automation támogatás elérhető, de egyéb okok miatt nem lehet betölteni. (#483)
+- Egy táblázat néha elhangzó teljes sora már nem hangzik el a Mozilla alkalmazásokban. (#482)
+- Az NVDA már nem fagy le hosszú időre ha megnyit egy faszerkezetben egy sok elemet tartalmazó ágat.
+- A SAPI 5 hangok kilistázásakor az NVDA megpróbálja kiszűrni a hibás hangokat. Előzőleg, ha egy problémás hang szerepelt a listában, az NVDA Sapi drivere néha nem töltődött be.
+- A Virtuális kijelzők már figyelembe veszik az objektum billentyűparancsának bemondása lehetőséget (#486)
+- A virtuális kijelzőkben egy táblázat fejléceinél a sor és oszlopkoordinátákat az NVDA már helyesen olvassa fel.
+- A virtuális kijelzőkben a program most már helyesen mondja be a sor és oszlopkoordinátákat ha egy táblázatból kilépünk, majd ugyanabba a cellába lépünk vissza egy másik táblázatba lépés nélkül. (pl. a fel és le nyíl használatakor egy táblázat első celláján. (#378)
+- Az üres sorok a Microsoft Word dokumentumokban és a Microsoft HTML vezérlőelemeken már helyesen jelennek meg egy braille kijelző használatakor. Előzőleg az NVDA az aktuális mondatot, nem pedig az aktuális sort jelenítette meg. (#420)
+- Összetett hibajavítás történt a windows bejelentkező és a többi biztonsági képernyő kezelésében
+- A kurzor követi a folyamatos felolvasáskor a szöveget a Windows szövegmezőiben, és a Microsoft Word dokumentumokban. (#418)
+- A virtuális kijelzőkben a kattintható elemek és képhivatkozások szövegei már nem kerülnek felolvasásra ha azok a képernyőolvasók számára nem fontosként vannak megjelölve. (#423)
+- Javítások a laptop billentyűzetkiosztáshoz. (#517)
+- Ha a braille kurzor az áttekintőkurzort követi egy konzol ablakban, az áttekintő kurzor most már helyesen olvassa fel a szöveget.
+- A teamtalk 3 és Teamtalk 4 Classic alkalmazásokban a főablakban található VU meter folyamatjelző változásait az NVDA most már nem olvassa fel, ahogy az változik. A program bejövő chatüzenetek ablakában a speciális karakterek most már helyesen felolvashatóak.
+- A Firefox 3.6 alkalmazásban az ugyanarra az oldalra mutató hivatkozások aktiválásakor a kurzor a megfelelő pozícióhoz kerül.
+- Az NVDA már nem olvassa fel kétszer a Windows 7 Start Menü elemeit. (#474)
+- Néhány PDF dokumentum tartalma hibásan töltődött be az Adobe Reader alkalmazásban, a hiba javítva.
+- Az NVDA mostantól nem mondja be hibásan a kötőjellel elválasztott számokat, pl. 500-1000. (#547)
+- A Windows XP operációs rendszer használatakor az NVDA már nem okozza az Internet Explorer lefagyását a Windows Update jelölőnégyzeteinek használatakor. (#477)
+- A beépített eSpeak szintetizátor és az NVDA hangjelzések együttes használata mostantól már nem eredményezik néhány rendszer lefagyását. Ez legfőképp nagyméretű adat másolásakor volt észrevehető a Windows Explorer alkalmazásban.
+- Az NVDA már nem jelzi ha egy háttérben lévő Firefox dokumentum épp betöltés alatt áll (pl. az oldal frissülésekor). Ez az előtérben lévő alkalmazás állapotsorának felolvasását is eredményezte.
+- Amikor megváltozik a billentyűzet kiosztás (alt+shift, vagy ctrl+shift), az NVDA az új kiosztás teljes nevét a braille kijelzőn is megjeleníti, ez eddig csak a beszédben történt meg. Ezen kívül néhány nyelvnek nem jelent meg a neve a billentyűzet kiosztás megváltozásakor.
+- Ha a táblázatok jelzése ki van kapcsolva, a táblázat információi nem hangoznak el a fókusz változásakor.
+- Néhány szokásos fanézet vezérlőelem a 64 bites alkalmazásokban (pl. A tartalom fanézet a Microsoft HTML súgóban) most már támogatott. (#473)
+- Néhány a nem ASCII karaktereket tartalmazó üzenetek naplózásakor bekövetkező hiba javítva. Ezek a hibák esetenként téves információt naplózhatnak nem angol rendszereken. (#581)
+- Az NVDA névjegye a felhasználó alapértelmezett nyelvi beállításai szerint jelenik meg, egy időben a nem angol rendszereken is angolul jelent meg.(#586)
+- A hangkarakter megváltoztatása esetén az NVDA már nem jelez hibát, ha az aktuális hangkarakter kevesebb beállítási lehetőséggel rendelkezik, mint az előző.
+- A Skype 4.2-es verziójában a partnerek nevei már nem hangoznak el többször a partnerlistában.
+- Fontos javítások a virtuális kijelzők és a felhasználói felület memória kezelésében. (#590, #591)
+- Hibajavítás Néhány sapi 4 szintetizátorhoz, melyek az NVDA instabilitását, esetenként lefagyását okozták. (#597)
+
+
+= 2009.1 =
+
+A legfontosabb fejlesztések közé tartozik a 64 bites  Windows támogatása; nagy mértékben fejlődött a Microsoft Internet Explorer és Adobe Reader dokumentumok használata; a Windows 7 támogatása; A Windows bejelentkező képernyő olvasása, control+alt+delete és az User Account Control (UAC) képernyők használata; az Adobe Flash és Sun Java tartalmak elérése a weboldalakon.   Stabilitási és egyéb javítások történtek a felhasználói élmény fokozása érdekében.
+
+== Újdonságok ==
+- A 64 bites operációs rendszerek támogatása (#309)
+- A Newfon beszédszintetizátor drivere is hozzálett addva a programhoz. Megjegyzés: ez egy speciális változata a szintetizátornak(#206)
+- A virtuális kijelzőknél a fókusz és az interaktív mód változását képes hangjelzéssel jelezni az NVDA. Ez egy alapértelmezett beállítás, de átállítható a Virtuális kijelző beállításánál.
+- Az NVDA nem fejezi be a hosszabb szövegeket, amikor a felhasználó megváltoztatja a számítógépének hangerejét a billentyűzetről. Így mindig hallja az aktuális hangerőt. (#287)
+- Teljesen újraíródott a Microsoft Internet explorer, és az Adobe Acrobat dokumentumok kezelése. Egységesítették a Mozilla Gecko motorjával, így gyorsabb lett az oldalak betöltése,  elérhetőek lettek az átfogó billentyű parancsok, a linkek listája, és a braille támogatás is.
+- A vezérlőpulltban a dátum-idő beállításai párbeszédpanelen található dátumváltoztató vezérlőt a program jobban kezeli.
+- A Vista és az XP modern startmenüjét a program jobban kezeli (különösen a "minden program" és a "helyek" menüt). Immár a megfelelő menüszint-információt is bemondja.
+- Az egér beálításai párbeszédpanelen beállítható, hogy az egér mozgatásakor egyszerre mennyi szöveget mondjon a program: egy karaktert, szót, sort vagy egy egész bekezdést. 
+- Már a kurzor alatti szövegben is jelzi az NVDA a helyesírási hibákat a Wordben.
+- Már támogatja a program a Word 2007 helyesírás-ellenőrzőjét is. A későbbiekben részleges támogatás a korábbi Word-verziókhoz is készülhet.
+- A Windows Live Mail támogatása: az egyszerű, és a html szöveges üzenetek is olvashatóak.
+- Az NVDA jelzi, ha a felhasználó a Vistában az ún. "biztonságos asztal"-ra lép, mert például egy felhasználói fiók felügyeleti ablak felbukkan, vagy mert megnyomták a kontrol-alt-del kombinációt. Az NVDA még ezt a "biztonsági asztalt" nem tudja ugyan kezelni, de legalább tájékoztatja a felhasználót.
+- AZ NVDA a parancssorablakban is képes felolvasni az egérmutató alatti szövegeket.
+- Az UI Automation támogatása az elérhető UI Automation client API segítségével, valamint megnövelt hatékonyság Windows 7 alatt.
+- Az NVDA beállítható úgy, hogy elinduljon a windows bejelentkezése után. A beállítás az általános beállítások párbeszédablakban található.
+- Az NVDA képes felolvasni biztonsági képernyőket, pl. a Windows bejelentkezési képernyőjét, a control+alt+delete és UAC képernyőket a Windows XP-től kezdve. A windows bejelentkező képernyő felolvasása beállítható az általános beállítások párbeszédablakban. (#97)
+- Driver az Optelec ALVA BC6 sorozatú braille kijelzőkhöz.
+- Weboldalak böngészésekor az n és a shift+n billentyűkombinációk használhatóak hivatkozásblokkok átugrásához.
+- A hivatkozáslista párbeszédpanel egy elemlista párbeszédablakká vált, amely szintén kilistázza a címsorokat és jelzőpontokat. Az elemek hierarchikusan vannak ábrázolva. (#363)
+- Weboldalak böngészése közben az NVDA felismeri az ARIA jelzőpontokat, valamint a d és shift+d billentyűparancsok használhatóak a közöttük való mozgáshoz. (#192)
+- Az új elemlista párbeszédablak gépeléskor szűri az elemeket. A backspace billentyűvel törölhető a szűrő tartalma. (#173)
+- Az NVDA hordozható verziója az 'userConfig' könyvtárban tárolja a felhasználók beállításait. Csakúgy mint a telepíthető verzió, ezen túl a hordozható verzió is külön mappában tárolja a beállításokat.  
+- Az egyéni szkriptek, braille kijelző driverek és a szintetizátor driverek a felhasználó beállításainak mappájában tárolódnak.
+- A virtuális kijelzők a háttérben kerülnek feldolgozásra, hatékonyabb kommunikálást lehetővé téve a rendszerrel. Ha a kijelző feldolgozása több mint egy másodpercet vesz igénybe, az NVDA erről tájékoztat.
+- Ha az NVDA valamilyen oknál fogva lefagy, a billentyűk automatikusan a rendszernek lesznek továbbítva, megnövelve a hatékonyabb helyreállást.
+- Az ARIA fogd és vidd támogatása a Mozilla Gecko-ban. (#239)
+- A dokumentum címe és a jelenlegi sor vagy a kijelölés felolvasásra kerül amikor a fókusz megváltozik egy virtuális kijelzőben. Ez a viselkedés megegyezik a normál dokumentum objektumokéival. (#210)
+- Magyar 8 pontos braille támogatás
+- A Java Access Bridge támogatással rendelkező alkalmazásokban (többek között az OpenOffice.org) az NVDA jól működik a sorszámok használatakor.
+- A virtuális kijelzőkben az o és a shift+o billentyűkkel a beágyazott objektumok között lehet mozogni.
+- Az NVDA együttműködik az adminisztrátori joggal futó alkalmazásokkal (Windows Vista és későbbi operációs rendszerek). Ez csak az NVDA hivatalos verziójában működik, hordozható és snapshot verziókban nem. (#397)
+
+
+== Változások ==
+- Az indító és a kilépő hangjelzések mostantól a kiválasztott hangeszközön hallhatók, az eddigi windows alapértelmezett hangeszköz helyett. (#164)
+- Az NVDA nem mondja be a "Az NVDA elindult" szöveget induláskor.
+- A folyamatjelzők felolvasását továbbfejlesztették. A legfontosabb, hogy most már be lehet állítani az NVDA-t úgy, hogy a folyamatjelzők változását egyszerre beszéddel és hanggal is jelezze.
+- Néhány általános elem, pl. Ablak, alkalmazás és keret mostantól nem hangzik el, hacsak a vezérlőelem nincs feliratozva.
+- Az áttekintő szöveg másolás parancs (NVDA+f10) mostantól nem okoz hibát ha a kijelölés vége a kijelölés kezdete előtt található. Előzőleg ez problémákat okozott egyes alkalmazásokban, mint pl. A Notepad++.
+- A navigatorObject_currentDimentions szkript új billentyűparancsa a NVDA+numerikus Delete. A régi kombináció nem működött minden billentyűzeten. A szkript mostantól bemondja az objektum szélességi és magassági adatait, az alsó és a jobb oldali koordináták helyett.
+- Hatékonyabb működés (különösen netbookokon) ha több hangjelzés hallható egyszerre, pl. Gyors egérmozgáskor ha a hangjelzés engedélyezve van. (#396).
+
+
+== Hiba javítások ==
+- Amikor az NVDA a 8.3-as Dos alól fut, aminek egy összefüggő hosszú címe van (pl progra~1 program files helyett), az NVDA felismeri ezt, és betölti helyesen a felhasználói beállításokat.
+- A háttérben lévő ablak címének bemondása (NVDA+T) nem működött jól a menükben.
+- Brailleben nem mutatja a használhatatlan információkat az összefüggő címkétlen mezőkben.
+- A felesleges információk bemondásának leállítása, amikor a fókusz változik, ilyenek a root, a layered, és a scroll mezők a Java vagy a Lotus alkalmazásokban.
+- A Windows súgó megjelenítőjében (Chm) a kulcsszókereső sokkal jobban használható. Már nem olvassa fel a program a kulcsszót gépelés közben, mintha az álandóan változó szöveg lenne.
+- Helyesen olvassa az NVDA a Wordben az oldalszámozást, ha az az alapbeállítástól eltérően van megadva.
+- A program jobban kezeli a Word párbeszédpanelein lévő szerkesztőmezőket, pl. a betűtípus-választót. Így már a nyilakkal is lehet vezérelni ezeket.
+- Jobb támogatás a DOS parancssoros ablakokhoz. Az NVDA már képes felolvasni különleges ablakokat, melyeket üresnek vélt. A control+break megnyomásakor az NVDA már nem zárul be.
+- Windows Vista alatt , az NVDA telepítő az nvda-t normál felhasználói jogokkal indítja el a befejező képernyőn lévő jelölőnégyzet bejelölésével.
+- A Backspace megfelelően működik szavak bemondása esetén. (#306)
+- Hibás "Start menü" bemondása egyes helyi menük esetén a Windows Explorer és a Windows shell használatakor. (#257)
+- Az NVDA helyesen kezeli az ARIA címkéket a Mozilla Gecko-ban amikor nincs más hasznos tartalom. (#156)
+- Az NVDA már nem engedélyezi automatikusan az interaktív módot olyan szerkesztőmezőknél, melyek dinamikusan frissítik tartalmukat amikor a fókusz megváltozik; pl. http://tigerdirect.com/. (#220)
+- Az NVDA megpróbál helyreállni néhány esetben, amelyek ezelőtt a program teljes lefagyását eredményezték. Ez tíz másodpercet vehet igénybe.
+- Az "User default" beállítása esetén az NVDA mostantól a Windows megjelenítési nyelvét veszi figyelembe, a területi beállítások helyett. (#353)
+- Az NVDA mostantól felismeri a vezérlőelemeket az AIM 7 programban.
+- A billentyűparancs átadása parancs nem aktiválódik végérvényesen egy billentyű nyomva tartásakor. Előzőleg, ha ez bekövetkezett, az NVDA nem vett figyelembe billentyűleütéseket és a hibát csak a program újraindításával lehetett orvosolni. (#413)
+- A tálca mostantól nincs figyelmen kívül hagyva ha a fókusz rákerül, amely gyakran megtörténik egy alkalmazásból való kilépés esetén. Az NVDA előzőleg úgy viselkedett, mintha a fókusz nem változott volna meg.
+- Egy adott vezérlőkarakter (0x1) többé nem okoz furcsa viselkedést (mint pl. A magasság és a hangerő megváltozása) ha előfordul egy szövegben. (#437).
+- A kijelölt szöveg bemondása parancs (NVDA+shift+fel nyíl) közli ha egy objektumban a szövegkijelölés nem támogatott.
+- Egy hiba kijavítva a Miranda-IM szkriptben. Miranda-IM specifikus gombokon vagy hivatkozásokon az enter megnyomása az NVDA lefagyását eredményezte. (#440)
+- Az aktuális objektum betűzése vagy másolásakor a navigátor kurzor használata esetén az aktuális sor vagy kijelölés nem volt figyelembe véve.
+- Egy hiba kijavítva ahol az NVDA értelmetlen szöveget olvasott fel hivatkozás vezérlőelemeknél a windows és az Internet explorerben. (#451)
+- Egy hiba kijavítva a dátum bemondásakor (NVDA+F12), egyes rendszereken eddig csonkítva hangzott el (#471)
+
+
+= 0.6 P3 =
+== Újdonságok==
+- A Microsoft Excel képlet sáv nem használható az NVDA-val, ennek érdekében be lett építve egy párbeszédpanel, mely megjelenik, ha a felhasználó F2-t nyom egy cellában.
+- Formázás támogatása IAccessibble2 szöveges vezérlők esetében, például Mozilla alkalmazások.
+- Ahol lehetséges, jeleztethetők a gépelési hibák. A beállítás a dokumentum formázási beállításoknál érhető el.
+- Beállítható, hogy mindegyik, vagy csak bizonyos folyamatjelzőket jelezze az NVDA hangokkal. Például megadható, hogy csak 10%os változásnál legyen hangjelzés.
+- A hivatkozások felismerhetők richedit vezérlőkben.
+- Az egérkurzor elmozdítható az áttekintő kurzor alatt lévő karakterhez a legtöbb szerkeszthető  szöveges vezérlő esetében. Korábban csupán a vezérlő közepére lehetett navigálni.
+- A virtuális kijelzőkben az áttekintő kurzor mostantól képes felolvasni a kijelzőben lévő szöveget, az egy adott elemen lévő navigátor kurzor belső szövege helyett (amely gyakran nem túl hasznos a felhasználó számára). Ez azt jelenti, hogy mostantól lehetőség van hierarchikusan bejárni a kijelzőt a navigátor kurzorral, az áttekintő kurzor követni fogja azt.
+- A Java vezérlőelemek további állapotainak támogatása.
+- NVDA+t kétszeri gyors leütésre az NVDA lebetűzi az aktuális ablak címsorát, gyors háromszori leütésnél a vágólapra másolja azt.
+- A billentyűzetsúgó felolvassa a módosító billentyűk nevét, amennyiben egyedüliként vannak lenyomva.
+- A billentyűzetsúgó által használt billentyűnevek lefordíthatóak.
+- SiRecognizer-ben a felismert szövegmező elérhető az NVDA-val. (#198)
+- Braille kijelzők támogatása.
+- NVDA+c felolvassa a vágólap szöveges tartalmát. (#193)
+- Ha az nvda automatikusan interaktív módba vált, az escape billentyű használható a böngésző módba váltáshoz. Az NVDA+szóköz változatlanul használható. 
+- A virtuális kijelzőben a fókusz megváltozásakor és kurzor mozgásakor az NVDA automatikusan vált a böngésző- és az interaktív módok között, a kurzor alatti vezérlőelemnek megfelelően. Ez beállítható a virtuális kijelző párbeszédablakban. (#157)
+- Újraírt SAPI4 szintetizátor driver, amely a sapi4serotek és a sapi4activeVoice drivereket hivatott felváltani, valamint kijavítja az ezek használatából adódó hibákat.
+- Az NVDA alkalmazás mostantól tartalmaz egy manifest-et, amely hatására a program már nem kell hogy kompatibilis módban fusson Windows Vista alatt.
+- Néhány szerkesztőmező támogatása a pinacle tv szoftverben.
+- Az NVDA a beállításfájlt és a kivételszótárak fájljait a felhasználó application data könyvtárába menti, ha az NVDA a telepítő verzióval lett feltelepítve. Ez Windows Vista alatt szükséges, valamint lehetővé teszi a többfelhasználós módot (külön beállítás minden NVDA felhasználónak).
+- Pozícióinformáció az IAccessible2 vezérlőelemekhez.
+- Mostantól lehetőség van az áttekintő kurzorral szöveget másolni a vágólapra. Az NVDA+f9 beállítja a kezdőpontot az áttekintő kurzor aktuális pozíciójához. Az NVDA+f10 kinyeri a szöveget a kezdőponttól az áttekintő kurzor aktuális pozíciójáig. (#240)
+- A hosszabb kijelölések felolvasásakor (512 karakter vagy több), az NVDA a kijelölés szövege helyett a kijelölt karakterek számát olvassa fel. (#249)
+
+
+== Változások ==
+- Espeak támogatásának javítása néhány Windows Vista meghajtóprogrammal.
+- Ha a beállított hangeszköz a beállítás szerint a Windows alapértelmezett hangeszközét használja (Microsoft hangleképző), az NVDA az alapértelmezett hangeszközre irányítja a beszédet és a hangokat, ha módosul a beállítás. Pl: az NVDA egy USB hangeszközt fog kimeneti eszközként használni, ha ez lesz az alapbeállítás, és csatlakoztatva van.
+- A címsorok, hivatkozások, listák, táblázatok, idézet blokkok jelzésének beállítása a dokumentum formázási beállításoknál érhető el. Korábban a virtuális kijelzőkhöz ezen beállítások a virtuális kijelző beállításainál volt elérhető. Mostantól minden dokumentum ugyanazokat a beállításokat használja.
+- A beszédsebesség mostantól az alapértelmezett beállítás a beszédszintetizátor beállításai körön.
+- Szkriptek betöltésének és leállításának javítása.
+- A virtuális kijelző megkerülése be- és kikapcsolva helyett az NVDA mostantól interaktív módot (megkerülés bekapcsolva) és böngésző módot (megkerülés kikapcsolva) mond.
+- A beállításfájlban a hangok mostantól azonosítójuk alapján és nem az indexük alapján kapnak helyet. Ennek hatására a beállítás több számítógép használata esetén is megbízható. A változtatás hatására bekerülhet egy hiba a naplóba az első használatkor. (#19)
+- A fanézet elemeinek szintje mostantól elsőként kerül felolvasásra minden fanézetben. Előzőleg ez csak windows (SysTreeView32) fanézeteknél működött.
+
+
+== Hiba javítások ==
+- Távoli asztali szerveren Espeakkal használva az NVDA-t, a hangok utolsó részei nem tűnnek el.
+- Hibák javítása a kivétel szótárak mentésénél bizonyos hangokhoz.
+- Mozilla Gecko virtuális kijelzőkben jobb navigálhatóság amennyiben nem soronként, szavanként, stb. navigál egy hosszú szöveges dokumentumban. (155)
+- Ha a begépelt szavak kimondása engedélyezve van, a szó felismerése "ENTER" leütésekor.
+- Néhány karakterbeállítási hiba  javítva richedit dokumentumokban.
+- Az NVDA naplómegjelenítő richedit vezérlőt használ a napló megjelenítéséhez. Ezáltal lehetőség van szavankénti léptetésre az NVDA-val.
+- Hibák javítása beágyazott objektumoknál richedit vezérlők  esetében. 
+- Oldalszámok jelzése Microsoft Word dokumentumokban. (120)
+- Mozilla Gecko virtuális kijelzőben tabbal navigálva egy bejelölt jelölőnégyzetre, azon szóközt ütve, az NVDA közli, hogy a jelölőnégyzet nincs bejelölve.
+- Részlegesen jelölt jelölőnégyzetek jelzése Mozilla alkalmazásokban.
+- Ha a kijelölt szöveg mérete lecsökken vagy megnövekedik, a kijelölést mostantól egy darabban olvassa fel, kettő helyett.
+- Egérrel történő felolvasásnál a Mozilla Gecko szerkesztőmezők tartalma is felolvasásra kerül.
+- Say all használatakor bizonyos Sapi5 beszédszintetizátorok korábban lefagytak.
+- a szabványos windows vezérlőelemekben mostantól az NVDA felolvassa a kijelölést, ha a fókusz nem változott meg az nvda elindítása után.
+- Egér görgetésének javítása Java objektumokban. (185)
+- Az NVDA már nem jelzi a Java fanézetekben, hogy egy objektumnak nincsenek gyermekelemei, ha az be van zárva.
+- Az NVDA+t hatására csak az aktív alkalmazás címe lesz felolvasva, nem a teljes objektum. Amennyiben az előtérben lévő alkalmazásnak nincs látható címsora, annak folyamatneve kerül felolvasásra.
+- Objektum jelzése ha egy Java alkalmazás kerül előtérbe. Korábban csak a felsőszintű Java objektum lett jelezve. 
+- Az eSpeak szintetizátor nem némul el hiba esetén.
+- A hangprobléma kijavítva, amely során a hangkarakter tulajdonságai (sebesség, magasság, stb.) nem lettek elmentve a szintetizátor gyorsbeállításának használatakor.
+- A szavak és betűk megnövelt hatékonyságú felolvasása.
+- néhány szöveg nem hangzott el néhány parancssoros alkalmazás használatakor (pl. kalandjátékok), kijavítva.
+- Az NVDA mostantól figyelmen kívül hagyja a fókuszváltozást a háttérben lévő ablakokban. Előzőleg egy ilyen változás az igazi fókusz változását is eredményezhette.
+- A kurzor hatékonyabb észlelése helyi menük bezárásakor. Előzőleg az NVDA gyakran nem reagált ilyen menük elhagyásakor.
+- Az NVDA mostantól felolvassa ha a helyi menü aktiválódik a start menüben.
+- A klasszikus start menü használatakor a start menü start menüként lesz felolvasva, alkalmazás menü helyett.
+- A figyelmeztetések felolvasásának hatékonysága megnövekedett egyes alkalmazásokban, pl. Mozilla Firefox. A figyelmeztetés tartalma már nem fog többször elhangzani, valamint egyéb, felesleges információ is mellőzve lesz. (#248)
+- A csak olvasható, fókuszálható szerkesztőmezők tartalma már nem lesz automatikusan felolvasva a párbeszédablakok szövegével. Ez kijavítja a licensz szerződés automatikus felolvasását telepítőprogramokban.
+- Az NVDA már nem mondja be a kijelölés megszűnését néhány szerkesztőmezőben (pl. Internet Explorer címsor, Thunderbird 3 email címmezők).
+- Szöveges emailek megnyitásakor az Outlook Express és Windows Mail programokban a fókusz már helyesen rákerül a szerkesztőmezőre. Előzőleg a felhasználó a tab billentyűvel, vagy egérkattintással a mezőn tudta használni a nyíl billentyűket.
+- Több nagymértékű hiba kijavítva a "parancsbillentyűk bemondása" funkcióban.
+- Az NVDA már képes 65535 karakternél több szöveg felolvasására szabványos szerkesztőmezőkben (pl. egy nagy fájl jegyzettömben).
+- Megnövelt hatékonyságú sorfelolvasás az MSHTML szerkesztőmezőkben (Outlook Express szerkeszthető üzenetek és Internet Explorer beviteli mezők).
+- Az NVDA már nem fagy le néha szövegszerkesztéskor az OpenOffice alkalmazásban. (#148, #180)
