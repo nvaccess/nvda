@@ -14,6 +14,7 @@ import controlTypes
 import api
 import eventHandler
 from NVDAObjects import NVDAObject
+from NVDAObjects.behaviors import EditableText
 
 re_WindowsForms=re.compile(r'^WindowsForms[0-9]*\.(.*)\.app\..*$')
 re_ATL=re.compile(r'^ATL:(.*)$')
@@ -100,6 +101,15 @@ An NVDAObject for a window
 		elif windowClassName=="EXCEL7":
 			from .excel import Excel7Window as newCls
 		clsList.append(newCls)
+
+		#If the chosen class does not seem to support text editing by itself
+		#But there is a caret currently in the window
+		#Then use the displayModelEditableText class to emulate text editing capabilities
+		if not issubclass(newCls,EditableText):
+			gi=winUser.getGUIThreadInfo(self.windowThreadID)
+			if gi.hwndCaret==self.windowHandle and gi.flags&winUser.GUI_CARETBLINKING:
+				clsList.append(DisplayModelEditableText)
+
 		if newCls!=Window:
 			clsList.append(Window)
 		super(Window,self).findOverlayClasses(clsList)
@@ -157,7 +167,7 @@ An NVDAObject for a window
 		"""The text at this object's location according to the display model for this object's window."""
 		left,top,width,height=self.location
 		import displayModel
-		return displayModel.getWindowTextInRect(self.appModule.helperLocalBindingHandle,self.windowHandle,left,top,left+width,top+height)
+		return displayModel.getWindowTextInRect(self.appModule.helperLocalBindingHandle,self.windowHandle,left,top,left+width,top+height,8,32)[0]
 
 	def _get_windowText(self):
 		textLength=winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
@@ -293,6 +303,18 @@ class Desktop(Window):
 
 	def _get_name(self):
 		return _("Desktop")
+
+class DisplayModelEditableText(EditableText, Window):
+
+	role=controlTypes.ROLE_EDITABLETEXT
+
+	def initOverlayClass(self):
+		import displayModel
+		self.TextInfo = displayModel.DisplayModelTextInfo
+
+	def event_valueChange(self):
+		# Don't report value changes for editable text fields.
+		pass
 
 windowClassMap={
 	"EDIT":"Edit",
