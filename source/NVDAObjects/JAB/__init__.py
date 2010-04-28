@@ -175,6 +175,8 @@ class JAB(Window):
 			jabContext=JABHandler.JABContext(hwnd=windowHandle)
 			if jabContext:
 				jabContext=jabContext.getAccessibleContextAt(*relation)
+		else:
+			jabContext=JABHandler.JABContext(hwnd=windowHandle)
 		if not jabContext:
 			return False
 		kwargs['jabContext']=jabContext

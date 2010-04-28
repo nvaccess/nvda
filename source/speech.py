@@ -741,6 +741,11 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	level=attrs.get('level',None)
 
+	#Remove the clickable state from controls that are clearly clickable according to their role
+	if role in (controlTypes.ROLE_LINK,controlTypes.ROLE_BUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_RADIOBUTTON):
+		states=states.copy()
+		states.discard(controlTypes.STATE_CLICKABLE)
+
 	if formatConfig["includeLayoutTables"]:
 		tableLayout=None
 	else:

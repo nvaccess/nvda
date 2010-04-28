@@ -1,625 +1,625 @@
-NVDA NVDA_VERSION felhasználói útmutató
-Utolsó frissítés dátuma: 2010 február 6.
+ï»¿NVDA NVDA_VERSION felhasznÃ¡lÃ³i ÃºtmutatÃ³
+UtolsÃ³ frissÃ­tÃ©s dÃ¡tuma: 2010 Ã¡prilis 25.
 
 %!includeconf: ../userGuide.conf.t2t
 
-A fordításban részt vettek:
-Németh Dávid, Osztolykán Róbert, Ócsvári Áron, Dr. Simon Gergely
+A fordÃ­tÃ¡sban rÃ©szt vettek:
+NÃ©meth DÃ¡vid, OsztolykÃ¡n RÃ³bert, Ã“csvÃ¡ri Ãron, Dr. Simon Gergely
 
-= Tartalomjegyzék =[toc]
+= TartalomjegyzÃ©k =[toc]
 %%toc
 
-+ A kézikönyv használata +
++ A kÃ©zikÃ¶nyv hasznÃ¡lata +
 
-Tisztelt Felhasználó!
-Ön most a Non Visual Desktop Access (azaz NVDA) képernyõolvasó program felhasználói kézikönyvét olvassa.
+Tisztelt FelhasznÃ¡lÃ³!
+Ã–n most a Non Visual Desktop Access (azaz NVDA) kÃ©pernyÅ‘olvasÃ³ program felhasznÃ¡lÃ³i kÃ©zikÃ¶nyvÃ©t olvassa.
 
-ez egy html dokumentum, amelyet webböngészõ programja (Internet explorer vagy Firefox) nyitott meg.
-Ezt a kézikönyvet háromféleképpen érheti el:
+ez egy html dokumentum, amelyet webbÃ¶ngÃ©szÅ‘ programja (Internet explorer vagy Firefox) nyitott meg.
+Ezt a kÃ©zikÃ¶nyvet hÃ¡romfÃ©lekÃ©ppen Ã©rheti el:
 
 - az interneten 
-- az NVDA menüjében, 
-- a fájlrendszerben az NVDA dokumentációs mappájában.
-NVDA képernyõolvasó használata esetén nyomja meg az insert-N billentyûparancsot, a menübõl válassza a súgó almenüt, abban a felhasználói útmutató parancsot.
-Ha ezt a kézikönyvet más képernyõolvasó programmal olvassa, kérjük, forduljon segítségért az adott képernyõolvasó súgójához, dokumentációjához vagy technikai támogató szolgálatához. Az NVDA honosító csapatnak nem áll módjában más képernyõolvasók használatához segítséget nyújtani.
-Ha az NVDA képernyõolvasó programot futtatja, az NVDA billentyûparancsai nagy segítségére lesznek a dokumentumban való tájékozódáskor.
- Ez egy html dokumentum, amely az NVDA virtuális kijelzõjében jelenik meg, és az NVDA billentyûparancsaival tájékozódhat benne.
-Néhány billentyûparancs a teljesség igénye nélkül:
-- A tartalomjegyzékben válasszon egy hivatkozást és nyomja meg az entert, a program a kívánt dokumentumrészhez (fejezethez, alfejezethez) ugrik.
-- A hivatkozások listáját az NVDA+f7 billentyûvel (insert + f7) kérheti le 
-- a tab billentyûvel hivatkozásról hivatkozásra léphet.
-- A H (Hedvig) és shift+H billentyûkkel címsorról címsorra ugrálhat elõre vagy hátra 
-- Az L billentyûvel listát, 
-- az I billentyûvel listaelemet kereshet, így könnyedén megtalálja az Önt érdeklõ felsorolásokat. 
-- Az NVDA billentyû valamelyik Insert vagy a capslock lehet, ld. késõbb részletesen. 
-- Tetszõleges kifejezésre kereshet az NVDA-gomb+kontroll+F billentyûparanccsal 
-- A folyamatos felolvasást az NVDA+lenyíllal indíthatja el, a felolvasást bármikor megállíthatja a kontroll billentyûvel. Ha ilyenkor megnyomja a shiftet, a felolvasás onnan folytatódik, ahol megállította, ha más billentyût nyom meg, a felolvasást újra kell indítani. 
-Az alt-f4 a böngészõprogramot, a kontroll-f4 a megnyitott böngészõlapot zárjabe anélkül, hogy a többi megnyitott oldal bezáródna. 
+- az NVDA menÃ¼jÃ©ben, 
+- a fÃ¡jlrendszerben az NVDA dokumentÃ¡ciÃ³s mappÃ¡jÃ¡ban.
+NVDA kÃ©pernyÅ‘olvasÃ³ hasznÃ¡lata esetÃ©n nyomja meg az insert-N billentyÅ±parancsot, a menÃ¼bÅ‘l vÃ¡lassza a sÃºgÃ³ almenÃ¼t, abban a felhasznÃ¡lÃ³i ÃºtmutatÃ³ parancsot.
+Ha ezt a kÃ©zikÃ¶nyvet mÃ¡s kÃ©pernyÅ‘olvasÃ³ programmal olvassa, kÃ©rjÃ¼k, forduljon segÃ­tsÃ©gÃ©rt az adott kÃ©pernyÅ‘olvasÃ³ sÃºgÃ³jÃ¡hoz, dokumentÃ¡ciÃ³jÃ¡hoz vagy technikai tÃ¡mogatÃ³ szolgÃ¡latÃ¡hoz. Az NVDA honosÃ­tÃ³ csapatnak nem Ã¡ll mÃ³djÃ¡ban mÃ¡s kÃ©pernyÅ‘olvasÃ³k hasznÃ¡latÃ¡hoz segÃ­tsÃ©get nyÃºjtani.
+Ha az NVDA kÃ©pernyÅ‘olvasÃ³ programot futtatja, az NVDA billentyÅ±parancsai nagy segÃ­tsÃ©gÃ©re lesznek a dokumentumban valÃ³ tÃ¡jÃ©kozÃ³dÃ¡skor.
+ Ez egy html dokumentum, amely az NVDA virtuÃ¡lis kijelzÅ‘jÃ©ben jelenik meg, Ã©s az NVDA billentyÅ±parancsaival tÃ¡jÃ©kozÃ³dhat benne.
+NÃ©hÃ¡ny billentyÅ±parancs a teljessÃ©g igÃ©nye nÃ©lkÃ¼l:
+- A tartalomjegyzÃ©kben vÃ¡lasszon egy hivatkozÃ¡st Ã©s nyomja meg az entert, a program a kÃ­vÃ¡nt dokumentumrÃ©szhez (fejezethez, alfejezethez) ugrik.
+- A hivatkozÃ¡sok listÃ¡jÃ¡t az NVDA+f7 billentyÅ±vel (insert + f7) kÃ©rheti le 
+- a tab billentyÅ±vel hivatkozÃ¡srÃ³l hivatkozÃ¡sra lÃ©phet.
+- A H (Hedvig) Ã©s shift+H billentyÅ±kkel cÃ­msorrÃ³l cÃ­msorra ugrÃ¡lhat elÅ‘re vagy hÃ¡tra 
+- Az L billentyÅ±vel listÃ¡t, 
+- az I billentyÅ±vel listaelemet kereshet, Ã­gy kÃ¶nnyedÃ©n megtalÃ¡lja az Ã–nt Ã©rdeklÅ‘ felsorolÃ¡sokat. 
+- Az NVDA billentyÅ± valamelyik Insert vagy a capslock lehet, ld. kÃ©sÅ‘bb rÃ©szletesen. 
+- TetszÅ‘leges kifejezÃ©sre kereshet az NVDA-gomb+kontroll+F billentyÅ±paranccsal 
+- A folyamatos felolvasÃ¡st az NVDA+lenyÃ­llal indÃ­thatja el, a felolvasÃ¡st bÃ¡rmikor megÃ¡llÃ­thatja a kontroll billentyÅ±vel. Ha ilyenkor megnyomja a shiftet, a felolvasÃ¡s onnan folytatÃ³dik, ahol megÃ¡llÃ­totta, ha mÃ¡s billentyÅ±t nyom meg, a felolvasÃ¡st Ãºjra kell indÃ­tani. 
+Az alt-f4 a bÃ¶ngÃ©szÅ‘programot, a kontroll-f4 a megnyitott bÃ¶ngÃ©szÅ‘lapot zÃ¡rjabe anÃ©lkÃ¼l, hogy a tÃ¶bbi megnyitott oldal bezÃ¡rÃ³dna. 
 -
 
-+ Bevezetés +
-++ Általános Jellemzõk ++
++ BevezetÃ©s +
+++ ÃltalÃ¡nos JellemzÅ‘k ++
 
-Az NVDA beszédszintetizátor segítségével hozzáférést bisztosít a Windows operációs rendszerhez, valamint számos egyéb alkalmazáshoz vakok és gyengénlátók számára.
-Fõbb jellemzõi:
-- Telepítés nélküli futtatás egy USB vagy hordozható eszköz használatával
-- Webböngészés a [Mozilla Firefox 3 http://www.getfirefox.com/] használatával
-- Könnyen használható, beszédtámogatást nyújtó telepítõ
-- Email-ek használata a [Mozilla Thunderbird 3 http://www.mozillamessaging.com/en-US/thunderbird/early_releases/] program segítségével
-- A Microsoft Internet Explorer program támogatása
-- Alapvetõ támogatás a Microsoft Outlook Express / Windows Mail programok használatakor
-- A Microsoft Word és Excel támogatása
-- A vakbarát Java alkalmazások támogatása
-- Az Adobe Reader program támogatása
-- Alapvetõ támogatás az IBM Lotus Symphony program használatakor
-- A Windows Parancssor és konzolos alkalmazások támogatása
-- Az egérmutatónál lévõ szöveg automatikus bemondása és választható hangjelzés az egér pozíciójának megállapításához
-- A frissíthetõ braille kijelzõk támogatása
+Az NVDA beszÃ©dszintetizÃ¡tor segÃ­tsÃ©gÃ©vel hozzÃ¡fÃ©rÃ©st bisztosÃ­t a Windows operÃ¡ciÃ³s rendszerhez, valamint szÃ¡mos egyÃ©b alkalmazÃ¡shoz vakok Ã©s gyengÃ©nlÃ¡tÃ³k szÃ¡mÃ¡ra.
+FÅ‘bb jellemzÅ‘i:
+- TelepÃ­tÃ©s nÃ©lkÃ¼li futtatÃ¡s egy USB vagy hordozhatÃ³ eszkÃ¶z hasznÃ¡latÃ¡val
+- WebbÃ¶ngÃ©szÃ©s a [Mozilla Firefox 3 http://www.getfirefox.com/] hasznÃ¡latÃ¡val
+- KÃ¶nnyen hasznÃ¡lhatÃ³, beszÃ©dtÃ¡mogatÃ¡st nyÃºjtÃ³ telepÃ­tÅ‘
+- Email-ek hasznÃ¡lata a [Mozilla Thunderbird 3 http://www.mozillamessaging.com/en-US/thunderbird/early_releases/] program segÃ­tsÃ©gÃ©vel
+- A Microsoft Internet Explorer program tÃ¡mogatÃ¡sa
+- AlapvetÅ‘ tÃ¡mogatÃ¡s a Microsoft Outlook Express / Windows Mail programok hasznÃ¡latakor
+- A Microsoft Word Ã©s Excel tÃ¡mogatÃ¡sa
+- A vakbarÃ¡t Java alkalmazÃ¡sok tÃ¡mogatÃ¡sa
+- Az Adobe Reader program tÃ¡mogatÃ¡sa
+- AlapvetÅ‘ tÃ¡mogatÃ¡s az IBM Lotus Symphony program hasznÃ¡latakor
+- A Windows Parancssor Ã©s konzolos alkalmazÃ¡sok tÃ¡mogatÃ¡sa
+- Az egÃ©rmutatÃ³nÃ¡l lÃ©vÅ‘ szÃ¶veg automatikus bemondÃ¡sa Ã©s vÃ¡laszthatÃ³ hangjelzÃ©s az egÃ©r pozÃ­ciÃ³jÃ¡nak megÃ¡llapÃ­tÃ¡sÃ¡hoz
+- A frissÃ­thetÅ‘ braille kijelzÅ‘k tÃ¡mogatÃ¡sa
 -
 
-++ Honosítás ++
+++ HonosÃ­tÃ¡s ++
 
-Fontos, hogy az emberek a világ bármely részén, nyelvi korlátok nélkül, egyenlõen hozzáférhessenek a különbözõ, a technológia nyújtotta lehetõségekhez. Az NVDA jelenleg több mint húsz nyelvre lett lefordítva, többek között: Brazil Portugál, Horvát, Cseh, Finn, Francia, Galíciai, Német, Magyar, Olasz, Japán, Portugál, Orosz, Szlovák, Spanyol, Hagyományos Kínai, Afrikai, Lengyel, Tájföldi, Ukrán és Vietnám.
+Fontos, hogy az emberek a vilÃ¡g bÃ¡rmely rÃ©szÃ©n, nyelvi korlÃ¡tok nÃ©lkÃ¼l, egyenlÅ‘en hozzÃ¡fÃ©rhessenek a kÃ¼lÃ¶nbÃ¶zÅ‘, a technolÃ³gia nyÃºjtotta lehetÅ‘sÃ©gekhez. Az NVDA jelenleg tÃ¶bb mint hÃºsz nyelvre lett lefordÃ­tva, tÃ¶bbek kÃ¶zÃ¶tt: Brazil PortugÃ¡l, HorvÃ¡t, Cseh, Finn, Francia, GalÃ­ciai, NÃ©met, Magyar, Olasz, JapÃ¡n, PortugÃ¡l, Orosz, SzlovÃ¡k, Spanyol, HagyomÃ¡nyos KÃ­nai, Afrikai, Lengyel, TÃ¡jfÃ¶ldi, UkrÃ¡n Ã©s VietnÃ¡m.
 
-++ Beszédszintetizátor Támogatás ++
+++ BeszÃ©dszintetizÃ¡tor TÃ¡mogatÃ¡s ++
 
-Az üzenetek és a felhasználói felület többnyelvûsége mellett az NVDA lehetõséget bisztosít a tartalom megfelelõ nyelvû felolvasásához, amennyiben a használni kívánt beszédszintetizátor képes az adott nyelven megszólalni.
-Az NVDA tartalmazza az [Espeak http://espeak.sourceforge.net/], egy ingyenes, nyílt forráskódú és többnyelvû beszédszintetizátor programot. Ezen kívül az NVDA használni tudja a SAPI4 és SAPI5 beszédmotorokat a beszéd elõállításához, valamint az Audiologic beszédszintetizátort.
+Az Ã¼zenetek Ã©s a felhasznÃ¡lÃ³i felÃ¼let tÃ¶bbnyelvÅ±sÃ©ge mellett az NVDA lehetÅ‘sÃ©get bisztosÃ­t a tartalom megfelelÅ‘ nyelvÅ± felolvasÃ¡sÃ¡hoz, amennyiben a hasznÃ¡lni kÃ­vÃ¡nt beszÃ©dszintetizÃ¡tor kÃ©pes az adott nyelven megszÃ³lalni.
+Az NVDA tartalmazza az [Espeak http://espeak.sourceforge.net/], egy ingyenes, nyÃ­lt forrÃ¡skÃ³dÃº Ã©s tÃ¶bbnyelvÅ± beszÃ©dszintetizÃ¡tor programot. Ezen kÃ­vÃ¼l az NVDA hasznÃ¡lni tudja a SAPI4 Ã©s SAPI5 beszÃ©dmotorokat a beszÃ©d elÅ‘Ã¡llÃ­tÃ¡sÃ¡hoz, valamint az Audiologic beszÃ©dszintetizÃ¡tort.
 
-++ Braille támogatás ++
+++ Braille tÃ¡mogatÃ¡s ++
 
-A Braille kijelzõvel rendelkezõ felhasználók számára az NVDA lehetõséget biztosít az információ megjelenítésére a kijelzõn. Az NVDA a Freedom Scientific Pacmate és Focus kijelzõket, a Handy Tech kijelzõt, valamint a BRLTTY programcsomagban található kijelzõket támogatja, ha ezek fel vannak telepítve a számítógépre.
-Az NVDA sok nyelv braille tábláját támogatja. A legtöbb esetben a rövidítési fokozat 1 és 2 is elérhetõ belõlük. Az angol felhasználóknak az egységes és az US braille kódok is használhatóak.
+A Braille kijelzÅ‘vel rendelkezÅ‘ felhasznÃ¡lÃ³k szÃ¡mÃ¡ra az NVDA lehetÅ‘sÃ©get biztosÃ­t az informÃ¡ciÃ³ megjelenÃ­tÃ©sÃ©re a kijelzÅ‘n. Az NVDA a Freedom Scientific Pacmate Ã©s Focus kijelzÅ‘ket, a Handy Tech kijelzÅ‘t, valamint a BRLTTY programcsomagban talÃ¡lhatÃ³ kijelzÅ‘ket tÃ¡mogatja, ha ezek fel vannak telepÃ­tve a szÃ¡mÃ­tÃ³gÃ©pre.
+Az NVDA sok nyelv braille tÃ¡blÃ¡jÃ¡t tÃ¡mogatja. A legtÃ¶bb esetben a rÃ¶vidÃ­tÃ©si fokozat 1 Ã©s 2 is elÃ©rhetÅ‘ belÅ‘lÃ¼k. Az angol felhasznÃ¡lÃ³knak az egysÃ©ges Ã©s az US braille kÃ³dok is hasznÃ¡lhatÃ³ak.
 
-++ Licensz és Copyright ++
+++ Licensz Ã©s Copyright ++
 
-Copyright (C) 2006-2010 [NVDA Közremûködõk http://www.nvda-project.org/]
+Copyright (C) 2006-2010 [NVDA KÃ¶zremÅ±kÃ¶dÅ‘k http://www.nvda-project.org/]
 
-Copyright (C) 2008-2010 [NVDA honosítási project http://www.nvda.hu]
+Copyright (C) 2008-2010 [NVDA honosÃ­tÃ¡si project http://www.nvda.hu]
 
-Az NVDA GNU Általános Nyilvános Licensz (2-es verzió) alatt áll. A szoftver szabadon közzétehetõ vagy módosítható a licensz és a forráskód bárki számára elérhetõvé tételével. Ez az eredeti és módosított szoftverre, valamint bármilyen a szoftver forráskódjából származó kódrészletre vonatkozik.
-Ha többet szeretne megtudni, látogassa meg a következõ (angol nyelvû) [honlapot http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
-vagy nézze meg a szoftverhez mellékelt Copying.txt fájlt.
+Az NVDA GNU ÃltalÃ¡nos NyilvÃ¡nos Licensz (2-es verziÃ³) alatt Ã¡ll. A szoftver szabadon kÃ¶zzÃ©tehetÅ‘ vagy mÃ³dosÃ­thatÃ³ a licensz Ã©s a forrÃ¡skÃ³d bÃ¡rki szÃ¡mÃ¡ra elÃ©rhetÅ‘vÃ© tÃ©telÃ©vel. Ez az eredeti Ã©s mÃ³dosÃ­tott szoftverre, valamint bÃ¡rmilyen a szoftver forrÃ¡skÃ³djÃ¡bÃ³l szÃ¡rmazÃ³ kÃ³drÃ©szletre vonatkozik.
+Ha tÃ¶bbet szeretne megtudni, lÃ¡togassa meg a kÃ¶vetkezÅ‘ (angol nyelvÅ±) [honlapot http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+vagy nÃ©zze meg a szoftverhez mellÃ©kelt Copying.txt fÃ¡jlt.
 
-+ Rendszerkövetelmények +
++ RendszerkÃ¶vetelmÃ©nyek +
 
-- Operációs rendszerek: a Windows XP, Windows Vista, és Windows 7 bármely verziója (beleértve a szerver operációs rendszereket is), valamint részlegesen mûködhet Windows 2000 operációs rendszer alatt is
-- Memória: 256 mb vagy több
-- Processzor sebesség: 1.0 ghz vagy gyorsabb
+- OperÃ¡ciÃ³s rendszerek: a Windows XP, Windows Vista, Ã©s Windows 7 bÃ¡rmely verziÃ³ja (beleÃ©rtve a szerver operÃ¡ciÃ³s rendszereket is), valamint rÃ©szlegesen mÅ±kÃ¶dhet Windows 2000 operÃ¡ciÃ³s rendszer alatt is
+- MemÃ³ria: 256 mb vagy tÃ¶bb
+- Processzor sebessÃ©g: 1.0 ghz vagy gyorsabb
 -
 
-+ Az NVDA letöltése +
++ Az NVDA letÃ¶ltÃ©se +
 
-Ha még  nincs NVDA képernyõolvasója, az [NVDA hivatalos oldaláról http://www.nvda-project.org], vagy a [honosítócsapat weboldaláról http://www.nvda.hu] letöltheti a letöltés oldalon az NVDA legfrissebb verziójára mutató hivatkozásra kattintva.
+Ha mÃ©g  nincs NVDA kÃ©pernyÅ‘olvasÃ³ja, az [NVDA hivatalos oldalÃ¡rÃ³l http://www.nvda-project.org], vagy a [honosÃ­tÃ³csapat weboldalÃ¡rÃ³l http://www.nvda.hu] letÃ¶ltheti a letÃ¶ltÃ©s oldalon az NVDA legfrissebb verziÃ³jÃ¡ra mutatÃ³ hivatkozÃ¡sra kattintva.
 
-Az NVDA jelenleg két formátumban érhetõ el. Az egyik egy telepítõ, mely telepítés közben beszédtámogatást nyújt. A másik egy önkibontó (.exe) fájl, az NVDA hordozható verzió, amelyet bárhonnan futtathat, akár thumb drive/pen drive-rõl, vagy CD-rõl is.
+Az NVDA jelenleg kÃ©t formÃ¡tumban Ã©rhetÅ‘ el. Az egyik egy telepÃ­tÅ‘, mely telepÃ­tÃ©s kÃ¶zben beszÃ©dtÃ¡mogatÃ¡st nyÃºjt. A mÃ¡sik egy Ã¶nkibontÃ³ (.exe) fÃ¡jl, az NVDA hordozhatÃ³ verziÃ³, amelyet bÃ¡rhonnan futtathat, akÃ¡r thumb drive/pen drive-rÅ‘l, vagy CD-rÅ‘l is.
 
-+ Az NVDA Telepítése +
-++ Az NVDA Telepítõ ++
++ Az NVDA TelepÃ­tÃ©se +
+++ Az NVDA TelepÃ­tÅ‘ ++
 
-Ha már rendelkezik az NVDA telepítõjével, keresse meg és jelölje ki, majd nyomja meg az enter billentyût, vagy kattintson duplán a fájlon. Ekkor a telepítõ elindul.
-A telepítõ betöltésekor az NVDA telepítési zenéje hallható. Betöltés után, az NVDA egy átmeneti példánya lehetõvé teszi a telepítõ utasításainak végrehajtását, ezzel az NVDA telepítését. Ha a telepítés elindítása elõtt ön már futtatott egy NVDA verziót, a telepítõ egy üzenetben tájékoztat a korábbi NVDA verzió bezárása elõtt. Az enter billentyû megnyomása után a futó NVDA program bezárul. Ez azért szükséges, hogy a telepítõ hibátlanul frissíteni tudja a szükséges fájlokat. A fájlok frissítése elött a telepítõ eltávolítja a régebbi verziót a számítógéprõl, csak a felhasználói beállításokat hagyja meg.
-A telepítés befejezése után a telepítõ elindítja az újonnan telepített NVDA programot az elõzõ verzió beállításaival.
+Ha mÃ¡r rendelkezik az NVDA telepÃ­tÅ‘jÃ©vel, keresse meg Ã©s jelÃ¶lje ki, majd nyomja meg az enter billentyÅ±t, vagy kattintson duplÃ¡n a fÃ¡jlon. Ekkor a telepÃ­tÅ‘ elindul.
+A telepÃ­tÅ‘ betÃ¶ltÃ©sekor az NVDA telepÃ­tÃ©si zenÃ©je hallhatÃ³. BetÃ¶ltÃ©s utÃ¡n, az NVDA egy Ã¡tmeneti pÃ©ldÃ¡nya lehetÅ‘vÃ© teszi a telepÃ­tÅ‘ utasÃ­tÃ¡sainak vÃ©grehajtÃ¡sÃ¡t, ezzel az NVDA telepÃ­tÃ©sÃ©t. Ha a telepÃ­tÃ©s elindÃ­tÃ¡sa elÅ‘tt Ã¶n mÃ¡r futtatott egy NVDA verziÃ³t, a telepÃ­tÅ‘ egy Ã¼zenetben tÃ¡jÃ©koztat a korÃ¡bbi NVDA verziÃ³ bezÃ¡rÃ¡sa elÅ‘tt. Az enter billentyÅ± megnyomÃ¡sa utÃ¡n a futÃ³ NVDA program bezÃ¡rul. Ez azÃ©rt szÃ¼ksÃ©ges, hogy a telepÃ­tÅ‘ hibÃ¡tlanul frissÃ­teni tudja a szÃ¼ksÃ©ges fÃ¡jlokat. A fÃ¡jlok frissÃ­tÃ©se elÃ¶tt a telepÃ­tÅ‘ eltÃ¡volÃ­tja a rÃ©gebbi verziÃ³t a szÃ¡mÃ­tÃ³gÃ©prÅ‘l, csak a felhasznÃ¡lÃ³i beÃ¡llÃ­tÃ¡sokat hagyja meg.
+A telepÃ­tÃ©s befejezÃ©se utÃ¡n a telepÃ­tÅ‘ elindÃ­tja az Ãºjonnan telepÃ­tett NVDA programot az elÅ‘zÅ‘ verziÃ³ beÃ¡llÃ­tÃ¡saival.
 
-++ Az NVDA Hordozható exe Fájl ++
+++ Az NVDA HordozhatÃ³ exe FÃ¡jl ++
 
-a az NVDA hordozható exe fájlt töltötte le, használat elõtt ki kell csomagolnia a merevlemezre, vagy bármilyen más háttértárolóra.
-Indítsa el a .exe fájlt és kövesse a képernyõn megjelenõ utasításokat a fájlnak egy tetszõleges mappába történõ kicsomagolásához.
-Amennyiben szeretne az NVDA-hoz parancsikont készíteni, keresse meg az nvda.exe fájlt, majd Windows Xp esetén válassza a "küldés asztalra (parancsikon)" menüt a fájlhoz tartozó helyi menübõl. Ezt követõen a parancsikont tetszõlegesen átnevezheti, tulajdonságlapján, amelyet az alt-enterrel hívhat elõ, billentyûparancsot is adhat a programnak, például a 0 meghatározásával a magyar NVDA az alt-kontroll-0 billentyûparanccsal is indítható.
+a az NVDA hordozhatÃ³ exe fÃ¡jlt tÃ¶ltÃ¶tte le, hasznÃ¡lat elÅ‘tt ki kell csomagolnia a merevlemezre, vagy bÃ¡rmilyen mÃ¡s hÃ¡ttÃ©rtÃ¡rolÃ³ra.
+IndÃ­tsa el a .exe fÃ¡jlt Ã©s kÃ¶vesse a kÃ©pernyÅ‘n megjelenÅ‘ utasÃ­tÃ¡sokat a fÃ¡jlnak egy tetszÅ‘leges mappÃ¡ba tÃ¶rtÃ©nÅ‘ kicsomagolÃ¡sÃ¡hoz.
+Amennyiben szeretne az NVDA-hoz parancsikont kÃ©szÃ­teni, keresse meg az nvda.exe fÃ¡jlt, majd Windows Xp esetÃ©n vÃ¡lassza a "kÃ¼ldÃ©s asztalra (parancsikon)" menÃ¼t a fÃ¡jlhoz tartozÃ³ helyi menÃ¼bÅ‘l. Ezt kÃ¶vetÅ‘en a parancsikont tetszÅ‘legesen Ã¡tnevezheti, tulajdonsÃ¡glapjÃ¡n, amelyet az alt-enterrel hÃ­vhat elÅ‘, billentyÅ±parancsot is adhat a programnak, pÃ©ldÃ¡ul a 0 meghatÃ¡rozÃ¡sÃ¡val a magyar NVDA az alt-kontroll-0 billentyÅ±paranccsal is indÃ­thatÃ³.
 
-+ Az Elsõ Lépések Az NVDA-val +
-++ Az NVDA Elindítása ++
++ Az ElsÅ‘ LÃ©pÃ©sek Az NVDA-val +
+++ Az NVDA ElindÃ­tÃ¡sa ++
 
-Ha ön az NVDA telepítõs változatát használja,  az NVDA elindítható a control+alt+n billentyûparanccsal, vagy az enter billentyû megnyomásával a start menü NVDA almenüjébõl. A futtatás menübõl is elindíthatja a programot (start gomb +r), írja be a megjelenõ mezõbe, hogy NVDA, majd nyomja meg az enter billentyût.
+Ha Ã¶n az NVDA telepÃ­tÅ‘s vÃ¡ltozatÃ¡t hasznÃ¡lja,  az NVDA elindÃ­thatÃ³ a control+alt+n billentyÅ±paranccsal, vagy az enter billentyÅ± megnyomÃ¡sÃ¡val a start menÃ¼ NVDA almenÃ¼jÃ©bÅ‘l. A futtatÃ¡s menÃ¼bÅ‘l is elindÃ­thatja a programot (start gomb +r), Ã­rja be a megjelenÅ‘ mezÅ‘be, hogy NVDA, majd nyomja meg az enter billentyÅ±t.
 
-Ha a hordozható exe fájl verziót szeretné elindítani, nyissa meg a kicsomagolt fájlok mappáját, jelölje ki az nvda.exe fájlt, nyomja meg az enter billentyût, vagy kattintson kétszer az nvda.exe fájlra.
-Az NVDA elindulását egy emelkedõ hang jelzi. A program betöltõdése a számítógép, vagy egy lassabb hordozható eszköz sebességétõl függõen akár pár percig is eltarthat. Ha ez eltér a megszokottól , az NVDA az "Az NVDA betöltése folyamatban, kérem várjon..." üzenettel tájékoztat.
-Ha a program betöltõdése nem így történik, hanem a Windows hibahang, vagy csökkenõ hangjelzés hallható, akkor hiba történt. Ekkor kérjük, jelezze a problémát az NVDA fejlesztõknek. Az NVDA hivatalos weboldalán errõl részletes információ olvasható.
-Az NVDA elsõ indításakor egy üdvözlõablak tájékoztat az NVDA módosítóbillentyûrõl (a továbbiakban: NVDA vagy NVDA billentyû), valamint az NVDA menüjérõl. (A késõbbiekben ezekrõl még lesz szó). A párbeszédablakban van két jelölõnégyzet. Az elsõvel beállítható a capslock billentyû használata NVDA billentyûként, a másodikkal pedig beállítható a párbeszédablak megjelenítése az NVDA minden elindulásakor. A capslock billentyû egyrészt a notebook-használóknak lehet hasznos, másrészt a jobbkézzel leüthetõ billentyûk esetén kényelmesebb használni, mint valamelyik insertet. Ha a capslockot eredeti funkciójában szeretné használni, nyomja meg gyorsan kétszer, ezzel lehet bekapcsolni, és ugyanígy kell kikapcsolni is.
+Ha a hordozhatÃ³ exe fÃ¡jl verziÃ³t szeretnÃ© elindÃ­tani, nyissa meg a kicsomagolt fÃ¡jlok mappÃ¡jÃ¡t, jelÃ¶lje ki az nvda.exe fÃ¡jlt, nyomja meg az enter billentyÅ±t, vagy kattintson kÃ©tszer az nvda.exe fÃ¡jlra.
+Az NVDA elindulÃ¡sÃ¡t egy emelkedÅ‘ hang jelzi. A program betÃ¶ltÅ‘dÃ©se a szÃ¡mÃ­tÃ³gÃ©p, vagy egy lassabb hordozhatÃ³ eszkÃ¶z sebessÃ©gÃ©tÅ‘l fÃ¼ggÅ‘en akÃ¡r pÃ¡r percig is eltarthat. Ha ez eltÃ©r a megszokottÃ³l , az NVDA az "Az NVDA betÃ¶ltÃ©se folyamatban, kÃ©rem vÃ¡rjon..." Ã¼zenettel tÃ¡jÃ©koztat.
+Ha a program betÃ¶ltÅ‘dÃ©se nem Ã­gy tÃ¶rtÃ©nik, hanem a Windows hibahang, vagy csÃ¶kkenÅ‘ hangjelzÃ©s hallhatÃ³, akkor hiba tÃ¶rtÃ©nt. Ekkor kÃ©rjÃ¼k, jelezze a problÃ©mÃ¡t az NVDA fejlesztÅ‘knek. Az NVDA hivatalos weboldalÃ¡n errÅ‘l rÃ©szletes informÃ¡ciÃ³ olvashatÃ³.
+Az NVDA elsÅ‘ indÃ­tÃ¡sakor egy Ã¼dvÃ¶zlÅ‘ablak tÃ¡jÃ©koztat az NVDA mÃ³dosÃ­tÃ³billentyÅ±rÅ‘l (a tovÃ¡bbiakban: NVDA vagy NVDA billentyÅ±), valamint az NVDA menÃ¼jÃ©rÅ‘l. (A kÃ©sÅ‘bbiekben ezekrÅ‘l mÃ©g lesz szÃ³). A pÃ¡rbeszÃ©dablakban van kÃ©t jelÃ¶lÅ‘nÃ©gyzet. Az elsÅ‘vel beÃ¡llÃ­thatÃ³ a capslock billentyÅ± hasznÃ¡lata NVDA billentyÅ±kÃ©nt, a mÃ¡sodikkal pedig beÃ¡llÃ­thatÃ³ a pÃ¡rbeszÃ©dablak megjelenÃ­tÃ©se az NVDA minden elindulÃ¡sakor. A capslock billentyÅ± egyrÃ©szt a notebook-hasznÃ¡lÃ³knak lehet hasznos, mÃ¡srÃ©szt a jobbkÃ©zzel leÃ¼thetÅ‘ billentyÅ±k esetÃ©n kÃ©nyelmesebb hasznÃ¡lni, mint valamelyik insertet. Ha a capslockot eredeti funkciÃ³jÃ¡ban szeretnÃ© hasznÃ¡lni, nyomja meg gyorsan kÃ©tszer, ezzel lehet bekapcsolni, Ã©s ugyanÃ­gy kell kikapcsolni is.
 
-++ Az NVDA Billentyûparancsai ++
+++ Az NVDA BillentyÅ±parancsai ++
 
-A legtöbb NVDA specifikus billentyûparancshoz szükség van az NVDA billentyûre, és egy vagy több billentyû megnyomására. Ezek közül kivételt képeznek a szövegáttekintõ billentyûparancsok, melyek a numerikus billentyûzet segítségével érhetõek el, valamint a navigációs gyorsbillentyûk, melyeket a virtuális kijelzõkben használunk. 
-Alapértelmezettként mind a numerikus Insert, mind pedig a normál Insert billentyû használható NVDA billentyûként. Van lehetõség azonban a capslock billentyû beállítására is NVDA billentyûként (LD feljebb).
-Rengeteg billentyûparancsról említést teszünk ebben a felhasználói útmutatóban, de a billentyûparancsok legegyszerûbb megismerése a billentyûzet súgó bekapcsolásával érhetõ el. 
-A billentyûzet súgó bekapcsolásához nyomja meg az NVDA+1 billentyûket. Kikapcsolásához használja ugyanezt a billentyûkombinációt. A billentyûzet súgóban - ha funkcióval van ellátva  bármely billentyû, akkor megnyomása esetén arról rövid tájékoztatást kapunk. A billentyûk nem fognak a megszokott módon mûködni, lehetõvé téve a billentyûk minnél jobb megismerését.
-Ha rendszerezett billentyûparancs-listát szeretne, nyissa meg az NVDA menüjét az insert+N billentyûkombinációval, válassza a súgó almenüt, abban a billentyûparancsok listája parancsot. Erre a keycommands.txt magyar változata fog megnyílni. Természetesen lehetõsége van a fájlt kézzel is megnyitni, amit az NVDA mappáján belül a documentation\hu almappában ér el.
+A legtÃ¶bb NVDA specifikus billentyÅ±parancshoz szÃ¼ksÃ©g van az NVDA billentyÅ±re, Ã©s egy vagy tÃ¶bb billentyÅ± megnyomÃ¡sÃ¡ra. Ezek kÃ¶zÃ¼l kivÃ©telt kÃ©peznek a szÃ¶vegÃ¡ttekintÅ‘ billentyÅ±parancsok, melyek a numerikus billentyÅ±zet segÃ­tsÃ©gÃ©vel Ã©rhetÅ‘ek el, valamint a navigÃ¡ciÃ³s gyorsbillentyÅ±k, melyeket a virtuÃ¡lis kijelzÅ‘kben hasznÃ¡lunk. 
+AlapÃ©rtelmezettkÃ©nt mind a numerikus Insert, mind pedig a normÃ¡l Insert billentyÅ± hasznÃ¡lhatÃ³ NVDA billentyÅ±kÃ©nt. Van lehetÅ‘sÃ©g azonban a capslock billentyÅ± beÃ¡llÃ­tÃ¡sÃ¡ra is NVDA billentyÅ±kÃ©nt (LD feljebb).
+Rengeteg billentyÅ±parancsrÃ³l emlÃ­tÃ©st teszÃ¼nk ebben a felhasznÃ¡lÃ³i ÃºtmutatÃ³ban, de a billentyÅ±parancsok legegyszerÅ±bb megismerÃ©se a billentyÅ±zet sÃºgÃ³ bekapcsolÃ¡sÃ¡val Ã©rhetÅ‘ el. 
+A billentyÅ±zet sÃºgÃ³ bekapcsolÃ¡sÃ¡hoz nyomja meg az NVDA+1 billentyÅ±ket. KikapcsolÃ¡sÃ¡hoz hasznÃ¡lja ugyanezt a billentyÅ±kombinÃ¡ciÃ³t. A billentyÅ±zet sÃºgÃ³ban - ha funkciÃ³val van ellÃ¡tva  bÃ¡rmely billentyÅ±, akkor megnyomÃ¡sa esetÃ©n arrÃ³l rÃ¶vid tÃ¡jÃ©koztatÃ¡st kapunk. A billentyÅ±k nem fognak a megszokott mÃ³don mÅ±kÃ¶dni, lehetÅ‘vÃ© tÃ©ve a billentyÅ±k minnÃ©l jobb megismerÃ©sÃ©t.
+Ha rendszerezett billentyÅ±parancs-listÃ¡t szeretne, nyissa meg az NVDA menÃ¼jÃ©t az insert+N billentyÅ±kombinÃ¡ciÃ³val, vÃ¡lassza a sÃºgÃ³ almenÃ¼t, abban a billentyÅ±parancsok listÃ¡ja parancsot. Erre a keycommands.txt magyar vÃ¡ltozata fog megnyÃ­lni. TermÃ©szetesen lehetÅ‘sÃ©ge van a fÃ¡jlt kÃ©zzel is megnyitni, amit az NVDA mappÃ¡jÃ¡n belÃ¼l a documentation\hu almappÃ¡ban Ã©r el.
 
-+ Az NVDA Menüje +
++ Az NVDA MenÃ¼je +
 
-Az NVDA menüje elérhetõvé teszi az NVDA beállításait, ugyanitt megtekintheti a súgót, elmentheti és betöltheti a beállításokat, módosíthatja a kivétel szótárat, elolvashatja a  napló fájlt, valamint kiléphet az NVDA programból. 
+Az NVDA menÃ¼je elÃ©rhetÅ‘vÃ© teszi az NVDA beÃ¡llÃ­tÃ¡sait, ugyanitt megtekintheti a sÃºgÃ³t, elmentheti Ã©s betÃ¶ltheti a beÃ¡llÃ­tÃ¡sokat, mÃ³dosÃ­thatja a kivÃ©tel szÃ³tÃ¡rat, elolvashatja a  naplÃ³ fÃ¡jlt, valamint kilÃ©phet az NVDA programbÃ³l. 
 
-++ Az NVDA Menü Elérése ++
+++ Az NVDA MenÃ¼ ElÃ©rÃ©se ++
 
-A Windows bármely területén, az NVDA futása közben az NVDA menü az NVDA+n billentyûparanccsal aktiválható. A menü aktiválása után használja a nyíl billentyûket a navigáláshoz, és az enter billentyût egy menüelem aktiválásához. A beállítások almenü az NVDA beállításainak megváltoztatását teszi lehetõvé. Az eszközök almenü egy pár hasznos alkalmazást tartalmaz, mint például az NVDA napló megtekintõjét és a NVDA Python konzolt fejlesztõk részére. A súgó almenüben többek között megtekintheti a felhasználói útmutatót és a billentyûparancsok listáját. Szintén az NVDA menübõl mentheti el, illetve töltheti be a beállításokat. Ugyancsak ebben a menüben léphet ki az NVDA programból.   
-Az NVDA menü a rendszertálcáról is elérhetõ. Kattintson a jobb egérgombbal az NVDA rendszertálcaikonjára, vagy a windowsgomb+b billentyûparanccsal ugorjon a rendszertálcára, majd a nyíl billentyûkkel keresse meg az NVDA ikonját és nyomja meg az alkalmazás billentyût.
+A Windows bÃ¡rmely terÃ¼letÃ©n, az NVDA futÃ¡sa kÃ¶zben az NVDA menÃ¼ az NVDA+n billentyÅ±paranccsal aktivÃ¡lhatÃ³. A menÃ¼ aktivÃ¡lÃ¡sa utÃ¡n hasznÃ¡lja a nyÃ­l billentyÅ±ket a navigÃ¡lÃ¡shoz, Ã©s az enter billentyÅ±t egy menÃ¼elem aktivÃ¡lÃ¡sÃ¡hoz. A beÃ¡llÃ­tÃ¡sok almenÃ¼ az NVDA beÃ¡llÃ­tÃ¡sainak megvÃ¡ltoztatÃ¡sÃ¡t teszi lehetÅ‘vÃ©. Az eszkÃ¶zÃ¶k almenÃ¼ egy pÃ¡r hasznos alkalmazÃ¡st tartalmaz, mint pÃ©ldÃ¡ul az NVDA naplÃ³ megtekintÅ‘jÃ©t Ã©s a NVDA Python konzolt fejlesztÅ‘k rÃ©szÃ©re. A sÃºgÃ³ almenÃ¼ben tÃ¶bbek kÃ¶zÃ¶tt megtekintheti a felhasznÃ¡lÃ³i ÃºtmutatÃ³t Ã©s a billentyÅ±parancsok listÃ¡jÃ¡t. SzintÃ©n az NVDA menÃ¼bÅ‘l mentheti el, illetve tÃ¶ltheti be a beÃ¡llÃ­tÃ¡sokat. Ugyancsak ebben a menÃ¼ben lÃ©phet ki az NVDA programbÃ³l.   
+Az NVDA menÃ¼ a rendszertÃ¡lcÃ¡rÃ³l is elÃ©rhetÅ‘. Kattintson a jobb egÃ©rgombbal az NVDA rendszertÃ¡lcaikonjÃ¡ra, vagy a windowsgomb+b billentyÅ±paranccsal ugorjon a rendszertÃ¡lcÃ¡ra, majd a nyÃ­l billentyÅ±kkel keresse meg az NVDA ikonjÃ¡t Ã©s nyomja meg az alkalmazÃ¡s billentyÅ±t.
 
-++ Az NVDA konfigurálása ++
-+++ beállítások +++
-++++ Általános beállítások ++++
+++ Az NVDA konfigurÃ¡lÃ¡sa ++
++++ beÃ¡llÃ­tÃ¡sok +++
+++++ ÃltalÃ¡nos beÃ¡llÃ­tÃ¡sok ++++
 
-Az Általános beállítások párbeszédpanel a beállítások menüben található. Ezt elérheti az NVDA+Control+G billentyûparancs segítségével. A beállítások módosítása után, nyomja meg az igen gombot a beállítások elmentéséhez. A kilépéshez nyomja meg a mégse gombot, vagy az escape billentyût. A párbeszédpanel a következõ beállításokat tartalmazza:
+Az ÃltalÃ¡nos beÃ¡llÃ­tÃ¡sok pÃ¡rbeszÃ©dpanel a beÃ¡llÃ­tÃ¡sok menÃ¼ben talÃ¡lhatÃ³. Ezt elÃ©rheti az NVDA+Control+G billentyÅ±parancs segÃ­tsÃ©gÃ©vel. A beÃ¡llÃ­tÃ¡sok mÃ³dosÃ­tÃ¡sa utÃ¡n, nyomja meg az igen gombot a beÃ¡llÃ­tÃ¡sok elmentÃ©sÃ©hez. A kilÃ©pÃ©shez nyomja meg a mÃ©gse gombot, vagy az escape billentyÅ±t. A pÃ¡rbeszÃ©dpanel a kÃ¶vetkezÅ‘ beÃ¡llÃ­tÃ¡sokat tartalmazza:
 
 ===== Nyelv =====
 
-Ebben a kombinált listamezõben kiválaszthatja az NVDA felhasználói felület és az üzenetek nyelvét. A lista sok nyelvet tartalmaz, ám az alap beállítás a "User default, Windows". E beállítás esetén az NVDA a windows területi és nyelvi beállításaihoz igazítja saját beállításait (Ld. vezérlõpult, területi és nyelvi beállítások).
-Fontos: a nyelv megváltoztatása csak az NVDA újbóli elindításával következik be.
- AzNVDA rákérdez, hogy szeretné-e ezt a mûveletet. Nyomja meg az igen gombot, és az NVDA újraindul.
+Ebben a kombinÃ¡lt listamezÅ‘ben kivÃ¡laszthatja az NVDA felhasznÃ¡lÃ³i felÃ¼let Ã©s az Ã¼zenetek nyelvÃ©t. A lista sok nyelvet tartalmaz, Ã¡m az alap beÃ¡llÃ­tÃ¡s a "User default, Windows". E beÃ¡llÃ­tÃ¡s esetÃ©n az NVDA a windows terÃ¼leti Ã©s nyelvi beÃ¡llÃ­tÃ¡saihoz igazÃ­tja sajÃ¡t beÃ¡llÃ­tÃ¡sait (Ld. vezÃ©rlÅ‘pult, terÃ¼leti Ã©s nyelvi beÃ¡llÃ­tÃ¡sok).
+Fontos: a nyelv megvÃ¡ltoztatÃ¡sa csak az NVDA ÃºjbÃ³li elindÃ­tÃ¡sÃ¡val kÃ¶vetkezik be.
+ AzNVDA rÃ¡kÃ©rdez, hogy szeretnÃ©-e ezt a mÅ±veletet. Nyomja meg az igen gombot, Ã©s az NVDA Ãºjraindul.
 
-===== A beállítások elmentése kilépéskor =====
+===== A beÃ¡llÃ­tÃ¡sok elmentÃ©se kilÃ©pÃ©skor =====
 
-Ez a beállítás egy jelölõnégyzet, amelyet ha bejelöl, akkor az NVDA bezárásakor elmenti az aktuális beállításokat.
+Ez a beÃ¡llÃ­tÃ¡s egy jelÃ¶lÅ‘nÃ©gyzet, amelyet ha bejelÃ¶l, akkor az NVDA bezÃ¡rÃ¡sakor elmenti az aktuÃ¡lis beÃ¡llÃ­tÃ¡sokat.
 
-===== Figyelmesztetés megjelenítése az NVDA bezárásakor =====
+===== FigyelmesztetÃ©s megjelenÃ­tÃ©se az NVDA bezÃ¡rÃ¡sakor =====
 
-Ennek a jelölõnégyzetnek a bejelölése esetén az NVDA kilépéskor egy figyelmeztetõ párbeszédpanelt jelenít meg. A nem gombbal tovább használhatja az NVDA-t, az igen gomb hatására a program kilép. Ha ez a jelölõnégyzet nincs bejelölve, az NVDA+Q vagy a menüparancsok hatására az NVDA ereszkedõ hangjelzést ad és kérdés nélkül bezárul.
+Ennek a jelÃ¶lÅ‘nÃ©gyzetnek a bejelÃ¶lÃ©se esetÃ©n az NVDA kilÃ©pÃ©skor egy figyelmeztetÅ‘ pÃ¡rbeszÃ©dpanelt jelenÃ­t meg. A nem gombbal tovÃ¡bb hasznÃ¡lhatja az NVDA-t, az igen gomb hatÃ¡sÃ¡ra a program kilÃ©p. Ha ez a jelÃ¶lÅ‘nÃ©gyzet nincs bejelÃ¶lve, az NVDA+Q vagy a menÃ¼parancsok hatÃ¡sÃ¡ra az NVDA ereszkedÅ‘ hangjelzÃ©st ad Ã©s kÃ©rdÃ©s nÃ©lkÃ¼l bezÃ¡rul.
 
-===== Naplózási színt =====
+===== NaplÃ³zÃ¡si szÃ­nt =====
 
-Ez egy kombinált listamezõ, ahol kiválaszthatja, hogy milyen szinten engedélyezze a futás közbeni naplózást. Általában a felhasználóknak nem szükséges ezt beállítani, de ha egy hibáról szóló állapotjelentést szeretne elküldeni a fejlesztõknek, netán az NVDA fejlesztõje vagy tesztelõje, akkor ezzel nagy mértékben segítheti a fejlesztési, tesztelési munkát.
+Ez egy kombinÃ¡lt listamezÅ‘, ahol kivÃ¡laszthatja, hogy milyen szinten engedÃ©lyezze a futÃ¡s kÃ¶zbeni naplÃ³zÃ¡st. ÃltalÃ¡ban a felhasznÃ¡lÃ³knak nem szÃ¼ksÃ©ges ezt beÃ¡llÃ­tani, de ha egy hibÃ¡rÃ³l szÃ³lÃ³ Ã¡llapotjelentÃ©st szeretne elkÃ¼ldeni a fejlesztÅ‘knek, netÃ¡n az NVDA fejlesztÅ‘je vagy tesztelÅ‘je, akkor ezzel nagy mÃ©rtÃ©kben segÃ­theti a fejlesztÃ©si, tesztelÃ©si munkÃ¡t.
   
-===== Az NVDA automatikus elindítása a Windows bejelentkezése után =====
+===== Az NVDA automatikus elindÃ­tÃ¡sa a Windows bejelentkezÃ©se utÃ¡n =====
 
-Ez a beállítás csak az NVDA telepíthetõ verziójában érhetõ el. Ha bejelöli ezt a jelölõnégyzetet, az NVDA a Windows betöltése után magától elindul.
+Ez a beÃ¡llÃ­tÃ¡s csak az NVDA telepÃ­thetÅ‘ verziÃ³jÃ¡ban Ã©rhetÅ‘ el. Ha bejelÃ¶li ezt a jelÃ¶lÅ‘nÃ©gyzetet, az NVDA a Windows betÃ¶ltÃ©se utÃ¡n magÃ¡tÃ³l elindul.
 
-===== Az NVDA elindítása a Windows bejelentkezõ képernyõ használatakor =====
+===== Az NVDA elindÃ­tÃ¡sa a Windows bejelentkezÅ‘ kÃ©pernyÅ‘ hasznÃ¡latakor =====
 
-A jelölõnégyzet bejelölése után az NVDA minden rendszer indításkor a bejelentkezõ ablakban beszédtámogatást nyújt (a beállításhoz rendszergazdai jog szükséges)
+A jelÃ¶lÅ‘nÃ©gyzet bejelÃ¶lÃ©se utÃ¡n az NVDA minden rendszer indÃ­tÃ¡skor a bejelentkezÅ‘ ablakban beszÃ©dtÃ¡mogatÃ¡st nyÃºjt (a beÃ¡llÃ­tÃ¡shoz rendszergazdai jog szÃ¼ksÃ©ges)
 
-++++ Szintetizátor választás ++++
+++++ SzintetizÃ¡tor vÃ¡lasztÃ¡s ++++
 
-A beszédszintetizátor párbeszédpanelen, amely megtalálható a Beszédszintetizátor néven a beállítások almenüben, vagy megnyitható az NVDA+Control+S billentyûparancs leütésével, ki lehet választani, hogy melyik szintetizátorral beszéljen az NVDA. 
-A Beszédszintetizátor kombinált listamezõ tartalmazza a választható beszédszintetizátorokat. Használja a fel-le nyilakat a kívánt beszédszintetizátor kiválasztásához.
-Ha valami hiba történt a szintetizátor betöltésekor, a program egy felugró üzenetben értesíti önt, és visszatölti a régi beállításokat.
-Az NVDA a következõ beszédszintetizátorokat támogatja:
-eSpeak, SAPI4, SAPI5, Audiologic, és csendes üzemmód.
-Az Espeak szintetizátor közvetlenül van beépítve az NVDA-ba, így nem függ semmilyen speciális drivertõl, vagy a Sapi telepítésétõl. Az NVDA indításkor az Espeak-ot használja alapértelmezetten. Ennek a szintetizátornak minden olyan rendszeren mûködnie kell, amin az NVDA fut, így különbözõ rendszereken futtathatja, akár Pendrive-ról, vagy cd-rõl is.
-A Sapi4 a Sapi szintetizátort tudja használni. Ezek a sapi4 alá integrált hangok, mint pl az Elokvence hangok, valamint a többi sapi4 hang, amelyeket telepített a számítógépére.
-A Sapi5 szintetizátor a Microsoft hangokat használja, amelyek be vannak építve az ön rendszerébe. Az XP-ben az alapértelmezett hang a Microsoft Sam, A Vistában pedig a Microsoft Anna. Természetesen feltelepíthet más sapi 5-ös szintetizátorokat is.
-A csendes üzemmódban (silence) az NVDA nem nyújt beszéd támogatást futás közben.
-Kérjük, vegye figyelembe, hogy a többi sapi 4 és sapi 5-ös hang csak a számítógépre való telepítés után jelenik meg a szintetizátor listában.
-A kimeneti hangeszköz kombinált listamezõben meghatározhatja, hogy a kiválasztott beszédszintetizátor melyik hangkártyán vagy hangeszközön szólaljon meg. Windows Xp-ben a Microsoft hangleképzõ az alapértelmezettként beállított eszközt használja, de a listában a telepített hangeszközök bármelyikét kiválaszthatja. Így például a gépbe épített hangkártyát, usb-s hangszórót vagy fejhallgatót, illetõleg minden olyan hangeszközt, amelyet a Windows felismer és kezel és képes legalább arra, hogy hangkimenetként viselkedjen. 
-Az NVDA képes arra is, hogy átváltson az idõ közben csatlakoztatott hangeszközre. Ha például egy usb-s fejhallgatót használ alapértelmezett hangeszközként, de ezt csak menet közben csatlakoztatja, az NVDA képes átváltani rá, a fejhallgató kihúzásakor pedig képes visszaváltani egy másik használható hangeszközre.
-A párbeszédpanelen végzett változásokat az Igen gombbal elmentheti, a mégsem gombbal pedig elvetheti.
+A beszÃ©dszintetizÃ¡tor pÃ¡rbeszÃ©dpanelen, amely megtalÃ¡lhatÃ³ a BeszÃ©dszintetizÃ¡tor nÃ©ven a beÃ¡llÃ­tÃ¡sok almenÃ¼ben, vagy megnyithatÃ³ az NVDA+Control+S billentyÅ±parancs leÃ¼tÃ©sÃ©vel, ki lehet vÃ¡lasztani, hogy melyik szintetizÃ¡torral beszÃ©ljen az NVDA. 
+A BeszÃ©dszintetizÃ¡tor kombinÃ¡lt listamezÅ‘ tartalmazza a vÃ¡laszthatÃ³ beszÃ©dszintetizÃ¡torokat. HasznÃ¡lja a fel-le nyilakat a kÃ­vÃ¡nt beszÃ©dszintetizÃ¡tor kivÃ¡lasztÃ¡sÃ¡hoz.
+Ha valami hiba tÃ¶rtÃ©nt a szintetizÃ¡tor betÃ¶ltÃ©sekor, a program egy felugrÃ³ Ã¼zenetben Ã©rtesÃ­ti Ã¶nt, Ã©s visszatÃ¶lti a rÃ©gi beÃ¡llÃ­tÃ¡sokat.
+Az NVDA a kÃ¶vetkezÅ‘ beszÃ©dszintetizÃ¡torokat tÃ¡mogatja:
+eSpeak, SAPI4, SAPI5, Audiologic, Ã©s csendes Ã¼zemmÃ³d.
+Az Espeak szintetizÃ¡tor kÃ¶zvetlenÃ¼l van beÃ©pÃ­tve az NVDA-ba, Ã­gy nem fÃ¼gg semmilyen speciÃ¡lis drivertÅ‘l, vagy a Sapi telepÃ­tÃ©sÃ©tÅ‘l. Az NVDA indÃ­tÃ¡skor az Espeak-ot hasznÃ¡lja alapÃ©rtelmezetten. Ennek a szintetizÃ¡tornak minden olyan rendszeren mÅ±kÃ¶dnie kell, amin az NVDA fut, Ã­gy kÃ¼lÃ¶nbÃ¶zÅ‘ rendszereken futtathatja, akÃ¡r Pendrive-rÃ³l, vagy cd-rÅ‘l is.
+A Sapi4 a Sapi szintetizÃ¡tort tudja hasznÃ¡lni. Ezek a sapi4 alÃ¡ integrÃ¡lt hangok, mint pl az Elokvence hangok, valamint a tÃ¶bbi sapi4 hang, amelyeket telepÃ­tett a szÃ¡mÃ­tÃ³gÃ©pÃ©re.
+A Sapi5 szintetizÃ¡tor a Microsoft hangokat hasznÃ¡lja, amelyek be vannak Ã©pÃ­tve az Ã¶n rendszerÃ©be. Az XP-ben az alapÃ©rtelmezett hang a Microsoft Sam, A VistÃ¡ban pedig a Microsoft Anna. TermÃ©szetesen feltelepÃ­thet mÃ¡s sapi 5-Ã¶s szintetizÃ¡torokat is.
+A csendes Ã¼zemmÃ³dban (silence) az NVDA nem nyÃºjt beszÃ©d tÃ¡mogatÃ¡st futÃ¡s kÃ¶zben.
+KÃ©rjÃ¼k, vegye figyelembe, hogy a tÃ¶bbi sapi 4 Ã©s sapi 5-Ã¶s hang csak a szÃ¡mÃ­tÃ³gÃ©pre valÃ³ telepÃ­tÃ©s utÃ¡n jelenik meg a szintetizÃ¡tor listÃ¡ban.
+A kimeneti hangeszkÃ¶z kombinÃ¡lt listamezÅ‘ben meghatÃ¡rozhatja, hogy a kivÃ¡lasztott beszÃ©dszintetizÃ¡tor melyik hangkÃ¡rtyÃ¡n vagy hangeszkÃ¶zÃ¶n szÃ³laljon meg. Windows Xp-ben a Microsoft hanglekÃ©pzÅ‘ az alapÃ©rtelmezettkÃ©nt beÃ¡llÃ­tott eszkÃ¶zt hasznÃ¡lja, de a listÃ¡ban a telepÃ­tett hangeszkÃ¶zÃ¶k bÃ¡rmelyikÃ©t kivÃ¡laszthatja. Ãgy pÃ©ldÃ¡ul a gÃ©pbe Ã©pÃ­tett hangkÃ¡rtyÃ¡t, usb-s hangszÃ³rÃ³t vagy fejhallgatÃ³t, illetÅ‘leg minden olyan hangeszkÃ¶zt, amelyet a Windows felismer Ã©s kezel Ã©s kÃ©pes legalÃ¡bb arra, hogy hangkimenetkÃ©nt viselkedjen. 
+Az NVDA kÃ©pes arra is, hogy Ã¡tvÃ¡ltson az idÅ‘ kÃ¶zben csatlakoztatott hangeszkÃ¶zre. Ha pÃ©ldÃ¡ul egy usb-s fejhallgatÃ³t hasznÃ¡l alapÃ©rtelmezett hangeszkÃ¶zkÃ©nt, de ezt csak menet kÃ¶zben csatlakoztatja, az NVDA kÃ©pes Ã¡tvÃ¡ltani rÃ¡, a fejhallgatÃ³ kihÃºzÃ¡sakor pedig kÃ©pes visszavÃ¡ltani egy mÃ¡sik hasznÃ¡lhatÃ³ hangeszkÃ¶zre.
+A pÃ¡rbeszÃ©dpanelen vÃ©gzett vÃ¡ltozÃ¡sokat az Igen gombbal elmentheti, a mÃ©gsem gombbal pedig elvetheti.
 
-++++ Beszéd beállítások ++++
+++++ BeszÃ©d beÃ¡llÃ­tÃ¡sok ++++
 
-A Beszéd beállításai, amely a beállítások menüben található, vagy elérhetõ a NVDA+Control+V konbinációval, azokat a lehetõségeket tartalmazza, amelyekkel megváltoztathatja a beszéd hangját. A beszédparamétereket bárhol módosíthatja az NVDA+CONTROL+nyilak leütésével. A balra és jobbra nyilak az opciók közt váltanak, a le ill. fel nyílbillentyûk az aktuális beállítás értékét csökkentik vagy növelik.
-A hangbeállítások párbeszédpanel a következõ elemeket tartalmazza:
+A BeszÃ©d beÃ¡llÃ­tÃ¡sai, amely a beÃ¡llÃ­tÃ¡sok menÃ¼ben talÃ¡lhatÃ³, vagy elÃ©rhetÅ‘ a NVDA+Control+V konbinÃ¡ciÃ³val, azokat a lehetÅ‘sÃ©geket tartalmazza, amelyekkel megvÃ¡ltoztathatja a beszÃ©d hangjÃ¡t. A beszÃ©dparamÃ©tereket bÃ¡rhol mÃ³dosÃ­thatja az NVDA+CONTROL+nyilak leÃ¼tÃ©sÃ©vel. A balra Ã©s jobbra nyilak az opciÃ³k kÃ¶zt vÃ¡ltanak, a le ill. fel nyÃ­lbillentyÅ±k az aktuÃ¡lis beÃ¡llÃ­tÃ¡s Ã©rtÃ©kÃ©t csÃ¶kkentik vagy nÃ¶velik.
+A hangbeÃ¡llÃ­tÃ¡sok pÃ¡rbeszÃ©dpanel a kÃ¶vetkezÅ‘ elemeket tartalmazza:
 
 ===== Hangkarakter =====
 
-A párbeszédpanel elsõ eleme egy kombinált listamezõ, mely felsorolja az aktuálisan telepített beszédszintetizátor hangkaraktereit. A nyílbillentyûkkel meghallgathatja az egyes lehetõségeket. A fel és bal nyíl billentyûkkel felfelé, a jobbra és le nyilakkal lefelé mozoghat a listában.
+A pÃ¡rbeszÃ©dpanel elsÅ‘ eleme egy kombinÃ¡lt listamezÅ‘, mely felsorolja az aktuÃ¡lisan telepÃ­tett beszÃ©dszintetizÃ¡tor hangkaraktereit. A nyÃ­lbillentyÅ±kkel meghallgathatja az egyes lehetÅ‘sÃ©geket. A fel Ã©s bal nyÃ­l billentyÅ±kkel felfelÃ©, a jobbra Ã©s le nyilakkal lefelÃ© mozoghat a listÃ¡ban.
 
-===== Változat =====
+===== VÃ¡ltozat =====
 
-Ha az Espeak beszédszintetizátort használja, mely alapértelmezésként megtalálható az NVDA-ban, ebben a kombinált listamezõben lehetõsége van kiválasztani, milyen változatot kíván használni. Az egyes variációk eltérõ beszédparamétereket jelentenek, pl férfi vagy nõi hang. 
+Ha az Espeak beszÃ©dszintetizÃ¡tort hasznÃ¡lja, mely alapÃ©rtelmezÃ©skÃ©nt megtalÃ¡lhatÃ³ az NVDA-ban, ebben a kombinÃ¡lt listamezÅ‘ben lehetÅ‘sÃ©ge van kivÃ¡lasztani, milyen vÃ¡ltozatot kÃ­vÃ¡n hasznÃ¡lni. Az egyes variÃ¡ciÃ³k eltÃ©rÅ‘ beszÃ©dparamÃ©tereket jelentenek, pl fÃ©rfi vagy nÅ‘i hang. 
 
-===== Tempó =====
+===== TempÃ³ =====
 
-A felolvasás sebességének beállítását lehet itt elvégezni. A csúszka értéke 0-tól 100-ig állítható, 0 a leglassabb, 100 a leggyorsabb.
+A felolvasÃ¡s sebessÃ©gÃ©nek beÃ¡llÃ­tÃ¡sÃ¡t lehet itt elvÃ©gezni. A csÃºszka Ã©rtÃ©ke 0-tÃ³l 100-ig Ã¡llÃ­thatÃ³, 0 a leglassabb, 100 a leggyorsabb.
 
-===== Magasság =====
+===== MagassÃ¡g =====
 
-Ez a beállítás lehetõvé teszi a beszédhang hangmagasságának állítását. A csúszkát 0-tól 100-ig lehet állítani, 0 a legmélyebb, 100 a legmagasabb hang.
+Ez a beÃ¡llÃ­tÃ¡s lehetÅ‘vÃ© teszi a beszÃ©dhang hangmagassÃ¡gÃ¡nak Ã¡llÃ­tÃ¡sÃ¡t. A csÃºszkÃ¡t 0-tÃ³l 100-ig lehet Ã¡llÃ­tani, 0 a legmÃ©lyebb, 100 a legmagasabb hang.
 
-===== Hangerõ =====
+===== HangerÅ‘ =====
 
-A csúszkával a hangerõ állítható 0 és 100 között. 0 a leghalkabb, 100 a leghangosabb hangerõt jelenti.
+A csÃºszkÃ¡val a hangerÅ‘ Ã¡llÃ­thatÃ³ 0 Ã©s 100 kÃ¶zÃ¶tt. 0 a leghalkabb, 100 a leghangosabb hangerÅ‘t jelenti.
 
-===== Intonáció =====
+===== IntonÃ¡ciÃ³ =====
 
-Ezzel a csúszkával beállítható a beszédszintetizátor hangsúlyozása (a hangmagasság növelése és csökkentése). (Az egyetlen beszédszintetizátor amely használja ezt a beállítást jelenleg az eSpeak). 0 esetén teljesen monoton, 100 esetén a legnagyobb mértékben hangsúlyoz.
+Ezzel a csÃºszkÃ¡val beÃ¡llÃ­thatÃ³ a beszÃ©dszintetizÃ¡tor hangsÃºlyozÃ¡sa (a hangmagassÃ¡g nÃ¶velÃ©se Ã©s csÃ¶kkentÃ©se). (Az egyetlen beszÃ©dszintetizÃ¡tor amely hasznÃ¡lja ezt a beÃ¡llÃ­tÃ¡st jelenleg az eSpeak). 0 esetÃ©n teljesen monoton, 100 esetÃ©n a legnagyobb mÃ©rtÃ©kben hangsÃºlyoz.
 
-===== Minden írásjel kimondása =====
+===== Minden Ã­rÃ¡sjel kimondÃ¡sa =====
 
-Ha ez a jelölõnégyzet be van jelölve, az NVDA az írásjeleket különálló szavanként fogja kezelni. Ha nincs kiválasztva, az NVDA  a helyes intonálási módot használja, és az írásjeleket nem olvassa fel. Jelölje be a jelölõnégyzetet, ha szöveget szeretne szerkeszteni és fontos, hogy hol milyen írásjel található a szövegben. Szintén hasznos ez a beállítás programok forráskódjainak vagy más hasonló tartalmaknak írásakor, illetõleg tanulmányozásakor. Ha csak egy rövid idõre szeretné be vagy kikapcsolni ezt a funkciót, használja az NVDA+p billentyûkombinációt.
+Ha ez a jelÃ¶lÅ‘nÃ©gyzet be van jelÃ¶lve, az NVDA az Ã­rÃ¡sjeleket kÃ¼lÃ¶nÃ¡llÃ³ szavankÃ©nt fogja kezelni. Ha nincs kivÃ¡lasztva, az NVDA  a helyes intonÃ¡lÃ¡si mÃ³dot hasznÃ¡lja, Ã©s az Ã­rÃ¡sjeleket nem olvassa fel. JelÃ¶lje be a jelÃ¶lÅ‘nÃ©gyzetet, ha szÃ¶veget szeretne szerkeszteni Ã©s fontos, hogy hol milyen Ã­rÃ¡sjel talÃ¡lhatÃ³ a szÃ¶vegben. SzintÃ©n hasznos ez a beÃ¡llÃ­tÃ¡s programok forrÃ¡skÃ³djainak vagy mÃ¡s hasonlÃ³ tartalmaknak Ã­rÃ¡sakor, illetÅ‘leg tanulmÃ¡nyozÃ¡sakor. Ha csak egy rÃ¶vid idÅ‘re szeretnÃ© be vagy kikapcsolni ezt a funkciÃ³t, hasznÃ¡lja az NVDA+p billentyÅ±kombinÃ¡ciÃ³t.
 
-===== A hangmagasság megemelése nagybetûknél =====
+===== A hangmagassÃ¡g megemelÃ©se nagybetÅ±knÃ©l =====
 
-Ha ez a jelölõnégyzet be van jelölve, az NVDA megemeli a hangmagasságot a nagybetûknél.
+Ha ez a jelÃ¶lÅ‘nÃ©gyzet be van jelÃ¶lve, az NVDA megemeli a hangmagassÃ¡got a nagybetÅ±knÃ©l.
 
-===== Nagybetûk szóbeli jelzése =====
+===== NagybetÅ±k szÃ³beli jelzÃ©se =====
 
-Ha a jelölõnégyzet be van jelölve, az NVDA a "nagy" szót kimondja minden nagybetû elõtt, nyilakkal történõ kiválasztás, kimondás vagy begépelés esetén. Általában az NVDA megemeli a hangmagasságot nagybetûhöz érve, de néhány beszédszintetizátor nem támogatja ezt a funkciót, ebben az esetben hasznos lehet ez a beállítás.
+Ha a jelÃ¶lÅ‘nÃ©gyzet be van jelÃ¶lve, az NVDA a "nagy" szÃ³t kimondja minden nagybetÅ± elÅ‘tt, nyilakkal tÃ¶rtÃ©nÅ‘ kivÃ¡lasztÃ¡s, kimondÃ¡s vagy begÃ©pelÃ©s esetÃ©n. ÃltalÃ¡ban az NVDA megemeli a hangmagassÃ¡got nagybetÅ±hÃ¶z Ã©rve, de nÃ©hÃ¡ny beszÃ©dszintetizÃ¡tor nem tÃ¡mogatja ezt a funkciÃ³t, ebben az esetben hasznos lehet ez a beÃ¡llÃ­tÃ¡s.
 
-===== Nagybetûk jelzése hangjelzéssel =====
+===== NagybetÅ±k jelzÃ©se hangjelzÃ©ssel =====
 
-Ha a jelölõnégyzet be van jelölve, egy rövid csipogó hang hallható a nagybetûk elõtt. A "Nagybetûk szóbeli jelzése" jelölõnégyzethez hasonlóan ez a beállítás hasznos olyan beszédszintetizátorok használata esetén, melyek nem képesek a hangmagasságot megemelni a nagybetûknél.
+Ha a jelÃ¶lÅ‘nÃ©gyzet be van jelÃ¶lve, egy rÃ¶vid csipogÃ³ hang hallhatÃ³ a nagybetÅ±k elÅ‘tt. A "NagybetÅ±k szÃ³beli jelzÃ©se" jelÃ¶lÅ‘nÃ©gyzethez hasonlÃ³an ez a beÃ¡llÃ­tÃ¡s hasznos olyan beszÃ©dszintetizÃ¡torok hasznÃ¡lata esetÃ©n, melyek nem kÃ©pesek a hangmagassÃ¡got megemelni a nagybetÅ±knÃ©l.
 
-++++ Braille beállítások ++++
+++++ Braille beÃ¡llÃ­tÃ¡sok ++++
 
-A braille beállítások párbeszédpanel a beállítások menüben található meg.
+A braille beÃ¡llÃ­tÃ¡sok pÃ¡rbeszÃ©dpanel a beÃ¡llÃ­tÃ¡sok menÃ¼ben talÃ¡lhatÃ³ meg.
 
-===== Braille kijelzõ =====
+===== Braille kijelzÅ‘ =====
 
-A braille kijelzõ kombinált listamezõben a kijelzõ típusát állíthatja be. Ez három elemet tartalmaz, amelyek között a le és a fel nyilakkal mozoghat:
-A Nincs Braille kijelzõ azt jelenti, hogy nem használ braille kijelzõt.
-A Freedom Scientific A Focus/Pacmate kijelzõket tudja használni. Csak akkor jelenik meg, ha fel van telepítve a Freedom Scientific braille driver. Ezeket a [Freedom Scientific hivatalos braille driverek angol nyelvû oldalán http://www.freedomscientific.com/PACMATE-HQ/FS_Braille_Display_Driver.asp] érheti el, a driverek telepítési információival együtt.
-A Handy Tech a Handy Tech kijelzõket kezeli. Megjegyzés: Ez a beállítás csak akkor található meg a listában, ha telepítve van a [Handy Tech Universal Driver ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1111a.exe] 
-A BRLTTY többfajta kijelzõt támogat. A használat elött kérjük, hogy telepítse fel ehez a [BRLTTY Windows telepítõt http://brl.thefreecat.org/brltty/]
+A braille kijelzÅ‘ kombinÃ¡lt listamezÅ‘ben a kijelzÅ‘ tÃ­pusÃ¡t Ã¡llÃ­thatja be. Ez hÃ¡rom elemet tartalmaz, amelyek kÃ¶zÃ¶tt a le Ã©s a fel nyilakkal mozoghat:
+A Nincs Braille kijelzÅ‘ azt jelenti, hogy nem hasznÃ¡l braille kijelzÅ‘t.
+A Freedom Scientific A Focus/Pacmate kijelzÅ‘ket tudja hasznÃ¡lni. Csak akkor jelenik meg, ha fel van telepÃ­tve a Freedom Scientific braille driver. Ezeket a [Freedom Scientific hivatalos braille driverek angol nyelvÅ± oldalÃ¡n http://www.freedomscientific.com/PACMATE-HQ/FS_Braille_Display_Driver.asp] Ã©rheti el, a driverek telepÃ­tÃ©si informÃ¡ciÃ³ival egyÃ¼tt.
+A Handy Tech a Handy Tech kijelzÅ‘ket kezeli. MegjegyzÃ©s: Ez a beÃ¡llÃ­tÃ¡s csak akkor talÃ¡lhatÃ³ meg a listÃ¡ban, ha telepÃ­tve van a [Handy Tech Universal Driver ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1111a.exe] 
+A BRLTTY tÃ¶bbfajta kijelzÅ‘t tÃ¡mogat. A hasznÃ¡lat elÃ¶tt kÃ©rjÃ¼k, hogy telepÃ­tse fel ehez a [BRLTTY Windows telepÃ­tÅ‘t http://brl.thefreecat.org/brltty/]
 
-===== Fordítási tábla =====
+===== FordÃ­tÃ¡si tÃ¡bla =====
 
-A következõ beállítás a braille táblák listája. Itt a különbözõ nyelvû braille táblákat választhatja ki, a fel és a le nyilak segítségével.
+A kÃ¶vetkezÅ‘ beÃ¡llÃ­tÃ¡s a braille tÃ¡blÃ¡k listÃ¡ja. Itt a kÃ¼lÃ¶nbÃ¶zÅ‘ nyelvÅ± braille tÃ¡blÃ¡kat vÃ¡laszthatja ki, a fel Ã©s a le nyilak segÃ­tsÃ©gÃ©vel.
 
-===== A kurzornál lévõ szó átalakítása számítógépes braille kóddá =====
+===== A kurzornÃ¡l lÃ©vÅ‘ szÃ³ Ã¡talakÃ­tÃ¡sa szÃ¡mÃ­tÃ³gÃ©pes braille kÃ³ddÃ¡ =====
 
-Ez a beállítás azt jelenti, hogy a kurzor alatt lévõ karaktert mindenképp megjeleníti a kijelzõn, még akkoris, ha nincs a táblában hozzárendelve a braille kódja. (ilyenkor az ascii kódot írja ki).
+Ez a beÃ¡llÃ­tÃ¡s azt jelenti, hogy a kurzor alatt lÃ©vÅ‘ karaktert mindenkÃ©pp megjelenÃ­ti a kijelzÅ‘n, mÃ©g akkoris, ha nincs a tÃ¡blÃ¡ban hozzÃ¡rendelve a braille kÃ³dja. (ilyenkor az ascii kÃ³dot Ã­rja ki).
 
-===== A kurzor villogási sebessége =====
+===== A kurzor villogÃ¡si sebessÃ©ge =====
 
-Ebben a mezõben megadhatja, hogy a kurzor hány ezred másodpercenként villogjon
+Ebben a mezÅ‘ben megadhatja, hogy a kurzor hÃ¡ny ezred mÃ¡sodpercenkÃ©nt villogjon
 
-===== Üzenet megjelenésének idõtartama(másodperc) =====
+===== Ãœzenet megjelenÃ©sÃ©nek idÅ‘tartama(mÃ¡sodperc) =====
 
-Itt beállíthatja, hogy a felugró üzenetek hány másodpercig jelenjenek meg a kijelzõn.
+Itt beÃ¡llÃ­thatja, hogy a felugrÃ³ Ã¼zenetek hÃ¡ny mÃ¡sodpercig jelenjenek meg a kijelzÅ‘n.
 
-===== A kurzor követése =====
+===== A kurzor kÃ¶vetÃ©se =====
 
-Az NVDA+Control+T billentyûparancs megnyomása esetén beállítható, mi jelenjen meg a braille kijelzõn. A két beállítási lehetõség: KURZOR, és az áttekintõ kurzor követése. A kurzor megjeleníti a kurzornál lévõ elemeket, míg az áttekintõ kurzor megjeleníti a képernyõ tartalmát. A különbözõ beállítások között a Control+NVDA+T billentyûparancsal váltogathat.
+Az NVDA+Control+T billentyÅ±parancs megnyomÃ¡sa esetÃ©n beÃ¡llÃ­thatÃ³, mi jelenjen meg a braille kijelzÅ‘n. A kÃ©t beÃ¡llÃ­tÃ¡si lehetÅ‘sÃ©g: KURZOR, Ã©s az Ã¡ttekintÅ‘ kurzor kÃ¶vetÃ©se. A kurzor megjelenÃ­ti a kurzornÃ¡l lÃ©vÅ‘ elemeket, mÃ­g az Ã¡ttekintÅ‘ kurzor megjelenÃ­ti a kÃ©pernyÅ‘ tartalmÃ¡t. A kÃ¼lÃ¶nbÃ¶zÅ‘ beÃ¡llÃ­tÃ¡sok kÃ¶zÃ¶tt a Control+NVDA+T billentyÅ±parancsal vÃ¡ltogathat.
 
-++++ Billentyûzet beállítások ++++
+++++ BillentyÅ±zet beÃ¡llÃ­tÃ¡sok ++++
 
-Ez a párbeszédpanel a beállítások menüben a "billentyûzet beállítások..." parancs alatt található, egyébként elérhetõ az NVDA+kontroll+K billentyûkombinációval is. A következõ beállításokat tartalmazza:
+Ez a pÃ¡rbeszÃ©dpanel a beÃ¡llÃ­tÃ¡sok menÃ¼ben a "billentyÅ±zet beÃ¡llÃ­tÃ¡sok..." parancs alatt talÃ¡lhatÃ³, egyÃ©bkÃ©nt elÃ©rhetÅ‘ az NVDA+kontroll+K billentyÅ±kombinÃ¡ciÃ³val is. A kÃ¶vetkezÅ‘ beÃ¡llÃ­tÃ¡sokat tartalmazza:
 
-=====  Billentyûzetkiosztás  =====
+=====  BillentyÅ±zetkiosztÃ¡s  =====
 
-Ez a kombinált listamezõ lehetõvé teszi, hogy kiválasszuk, az NVDA milyen billentyûzetkiosztást használjon. Jelenleg két kiosztás: az asztali számítógép és a laptop közül lehet választani.
+Ez a kombinÃ¡lt listamezÅ‘ lehetÅ‘vÃ© teszi, hogy kivÃ¡lasszuk, az NVDA milyen billentyÅ±zetkiosztÃ¡st hasznÃ¡ljon. Jelenleg kÃ©t kiosztÃ¡s: az asztali szÃ¡mÃ­tÃ³gÃ©p Ã©s a laptop kÃ¶zÃ¼l lehet vÃ¡lasztani.
 
-=====  A capslock használata NVDA módosító billentyûként  =====
+=====  A capslock hasznÃ¡lata NVDA mÃ³dosÃ­tÃ³ billentyÅ±kÃ©nt  =====
 
-Ha ez a jelölõnégyzet be van jelölve, a capslock NVDA billentyûként használható.
+Ha ez a jelÃ¶lÅ‘nÃ©gyzet be van jelÃ¶lve, a capslock NVDA billentyÅ±kÃ©nt hasznÃ¡lhatÃ³.
 
-===== A normál insert használata Nvda billentyûként  =====
+===== A normÃ¡l insert hasznÃ¡lata Nvda billentyÅ±kÃ©nt  =====
 
-Ha ez a jelölõnégyzet be van jelölve, a normál insert billentyû használható NVDA billentyûként. Az insert általában a nyilak felett található a home és az end billentyûk mellett. 
+Ha ez a jelÃ¶lÅ‘nÃ©gyzet be van jelÃ¶lve, a normÃ¡l insert billentyÅ± hasznÃ¡lhatÃ³ NVDA billentyÅ±kÃ©nt. Az insert Ã¡ltalÃ¡ban a nyilak felett talÃ¡lhatÃ³ a home Ã©s az end billentyÅ±k mellett. 
 
-===== A numerikus insert használata NVDA billentyûként  =====
+===== A numerikus insert hasznÃ¡lata NVDA billentyÅ±kÃ©nt  =====
 
-Ha ez a jelölõnégyzet be van jelölve, a numerikus billentyûzeten lévõ insert használható Nvda billentyûként.
+Ha ez a jelÃ¶lÅ‘nÃ©gyzet be van jelÃ¶lve, a numerikus billentyÅ±zeten lÃ©vÅ‘ insert hasznÃ¡lhatÃ³ Nvda billentyÅ±kÃ©nt.
 
-=====  Betûk bemondása gépeléskor =====
+=====  BetÅ±k bemondÃ¡sa gÃ©pelÃ©skor =====
 
-E jelölõnégyzet bejelölése esetén az NVDA minden begépelt karaktert visszamond. Ez a funkció az NVDA+2 billentyûparanccsal bárhol és bármikor be/kikapcsolható.
+E jelÃ¶lÅ‘nÃ©gyzet bejelÃ¶lÃ©se esetÃ©n az NVDA minden begÃ©pelt karaktert visszamond. Ez a funkciÃ³ az NVDA+2 billentyÅ±paranccsal bÃ¡rhol Ã©s bÃ¡rmikor be/kikapcsolhatÃ³.
 
-===== Begépelt szavak bemondása  =====
+===== BegÃ©pelt szavak bemondÃ¡sa  =====
 
-E jelölõnégyzet bejelölése esetén az Nvda elmondja a begépelt szavakat. A szavakat értelemszerûen a szóközök és az írásjelek határolják el egymástól. E funkció bárhol és bármikor be / kikapcsolható az NVDA+3 billentyûkombinációval.
+E jelÃ¶lÅ‘nÃ©gyzet bejelÃ¶lÃ©se esetÃ©n az Nvda elmondja a begÃ©pelt szavakat. A szavakat Ã©rtelemszerÅ±en a szÃ³kÃ¶zÃ¶k Ã©s az Ã­rÃ¡sjelek hatÃ¡roljÃ¡k el egymÃ¡stÃ³l. E funkciÃ³ bÃ¡rhol Ã©s bÃ¡rmikor be / kikapcsolhatÃ³ az NVDA+3 billentyÅ±kombinÃ¡ciÃ³val.
 
-===== Parancsbillentyûk bemondása  =====
+===== ParancsbillentyÅ±k bemondÃ¡sa  =====
 
-E jelölõnégyzet bejelölése esetén az NVDA bemond minden olyan billentyût, amely nem valamilyen karakter, hanem egy gyors billentyû. Pl. kontroll+valamilyen betû. E funkció ki / bekapcsolására bármikor és bárhol használható az NVDA+4 billentyûparancs is.
+E jelÃ¶lÅ‘nÃ©gyzet bejelÃ¶lÃ©se esetÃ©n az NVDA bemond minden olyan billentyÅ±t, amely nem valamilyen karakter, hanem egy gyors billentyÅ±. Pl. kontroll+valamilyen betÅ±. E funkciÃ³ ki / bekapcsolÃ¡sÃ¡ra bÃ¡rmikor Ã©s bÃ¡rhol hasznÃ¡lhatÃ³ az NVDA+4 billentyÅ±parancs is.
 
-++++ Az egér beállításai ++++
+++++ Az egÃ©r beÃ¡llÃ­tÃ¡sai ++++
 
-Az egér beállításai párbeszédpanel a beálítások menü "Egérbeállítások..." menüparanccsal vagy a Kontroll+NVDA+M billentyûparanccsal érhetõ el, és a következõ beállítási lehetõségeket tartalmazza:
+Az egÃ©r beÃ¡llÃ­tÃ¡sai pÃ¡rbeszÃ©dpanel a beÃ¡lÃ­tÃ¡sok menÃ¼ "EgÃ©rbeÃ¡llÃ­tÃ¡sok..." menÃ¼paranccsal vagy a Kontroll+NVDA+M billentyÅ±paranccsal Ã©rhetÅ‘ el, Ã©s a kÃ¶vetkezÅ‘ beÃ¡llÃ­tÃ¡si lehetÅ‘sÃ©geket tartalmazza:
 
-===== Az egérmutató alakváltozásának bemondása  =====
+===== Az egÃ©rmutatÃ³ alakvÃ¡ltozÃ¡sÃ¡nak bemondÃ¡sa  =====
 
-E jelölõnégyzet bejelölése esetén az NVDA mindig bemondja, ha az egérmutató alakja megváltozik. A Windowsban az egérmutató alakjának változása bizonyos információkat közöl a felhasználókkal. Ilyen pl. szerkeszthetõ szövegnek, vagy annak jelzése, hogy valami éppen betöltõdik, stb. 
+E jelÃ¶lÅ‘nÃ©gyzet bejelÃ¶lÃ©se esetÃ©n az NVDA mindig bemondja, ha az egÃ©rmutatÃ³ alakja megvÃ¡ltozik. A Windowsban az egÃ©rmutatÃ³ alakjÃ¡nak vÃ¡ltozÃ¡sa bizonyos informÃ¡ciÃ³kat kÃ¶zÃ¶l a felhasznÃ¡lÃ³kkal. Ilyen pl. szerkeszthetÅ‘ szÃ¶vegnek, vagy annak jelzÃ©se, hogy valami Ã©ppen betÃ¶ltÅ‘dik, stb. 
 
-===== Az egérmutató alatti szöveg felolvasása  =====
+===== Az egÃ©rmutatÃ³ alatti szÃ¶veg felolvasÃ¡sa  =====
 
-E jelölõnégyzet bejelölése esetén az NVDA bemondja azt a szöveget, amely az egérmutató alatt van, miközben mozgatjuk az egérmutatót a képernyõn. Ez lehetõvé teszi, hogy az egér valódi mozgatásával térképezzük fel a képernyõt, ne pedig az elemek közötti navigációval.
+E jelÃ¶lÅ‘nÃ©gyzet bejelÃ¶lÃ©se esetÃ©n az NVDA bemondja azt a szÃ¶veget, amely az egÃ©rmutatÃ³ alatt van, mikÃ¶zben mozgatjuk az egÃ©rmutatÃ³t a kÃ©pernyÅ‘n. Ez lehetÅ‘vÃ© teszi, hogy az egÃ©r valÃ³di mozgatÃ¡sÃ¡val tÃ©rkÃ©pezzÃ¼k fel a kÃ©pernyÅ‘t, ne pedig az elemek kÃ¶zÃ¶tti navigÃ¡ciÃ³val.
 
-===== Szöveg feldolgozási egység =====
+===== SzÃ¶veg feldolgozÃ¡si egysÃ©g =====
 
-Ha az NVDA úgy van beállítva, hogy bemondja a szöveget az egér mozgása közben, akkor ezzel a beállítással beállítható, hogy az NVDA mennyi szöveget olvasson  fel. A beállítás lehet karakter, szó, sor, és bekezdés.
+Ha az NVDA Ãºgy van beÃ¡llÃ­tva, hogy bemondja a szÃ¶veget az egÃ©r mozgÃ¡sa kÃ¶zben, akkor ezzel a beÃ¡llÃ­tÃ¡ssal beÃ¡llÃ­thatÃ³, hogy az NVDA mennyi szÃ¶veget olvasson  fel. A beÃ¡llÃ­tÃ¡s lehet karakter, szÃ³, sor, Ã©s bekezdÃ©s.
 
-===== Vezérlõelem típusának bemondása az egérmutató mozgásakor =====
+===== VezÃ©rlÅ‘elem tÃ­pusÃ¡nak bemondÃ¡sa az egÃ©rmutatÃ³ mozgÃ¡sakor =====
 
-Ha ez a jelölõnégyzet be van jelölve, az NVDA bemondja az egérmutató alatt lévõ vezérlõelem típusát.
+Ha ez a jelÃ¶lÅ‘nÃ©gyzet be van jelÃ¶lve, az NVDA bemondja az egÃ©rmutatÃ³ alatt lÃ©vÅ‘ vezÃ©rlÅ‘elem tÃ­pusÃ¡t.
 
-=====  Általános tudnivalók az Nvda hangjelzésérõl az egér mozgatásakor =====
+=====  ÃltalÃ¡nos tudnivalÃ³k az Nvda hangjelzÃ©sÃ©rÅ‘l az egÃ©r mozgatÃ¡sakor =====
 
-Az Nvda az egérmutató mozgását hangjelzéssel jelezheti. A hangjelzések három információt tartalmaznak:
+Az Nvda az egÃ©rmutatÃ³ mozgÃ¡sÃ¡t hangjelzÃ©ssel jelezheti. A hangjelzÃ©sek hÃ¡rom informÃ¡ciÃ³t tartalmaznak:
 
-- Az egér vízszintes pozícióját (a hang balról jobbra halad),
-- Függõleges pozícióját: (lefelé mélyül, felfelé emelkedik),
-- Az elem fényerejét (ha világosabb, hangosabb, ha sötétebb, halkabb).
+- Az egÃ©r vÃ­zszintes pozÃ­ciÃ³jÃ¡t (a hang balrÃ³l jobbra halad),
+- FÃ¼ggÅ‘leges pozÃ­ciÃ³jÃ¡t: (lefelÃ© mÃ©lyÃ¼l, felfelÃ© emelkedik),
+- Az elem fÃ©nyerejÃ©t (ha vilÃ¡gosabb, hangosabb, ha sÃ¶tÃ©tebb, halkabb).
 -
 
-===== Az egérmutató mozgásának jelzése hangjelzéssel =====
+===== Az egÃ©rmutatÃ³ mozgÃ¡sÃ¡nak jelzÃ©se hangjelzÃ©ssel =====
 
-E jelölõnégyzet bejelölése azt eredményezi, hogy az NVDA kis hangjelzéseket ad, ahogy az egérmutató mozog. Ezzel a felhasználó figyelemmel kísérheti, hogy az egérmutató a képernyõ mely részén van.
+E jelÃ¶lÅ‘nÃ©gyzet bejelÃ¶lÃ©se azt eredmÃ©nyezi, hogy az NVDA kis hangjelzÃ©seket ad, ahogy az egÃ©rmutatÃ³ mozog. Ezzel a felhasznÃ¡lÃ³ figyelemmel kÃ­sÃ©rheti, hogy az egÃ©rmutatÃ³ a kÃ©pernyÅ‘ mely rÃ©szÃ©n van.
 
-===== A képernyõn lévõ elemek fényerejének jelzése az egér mozgatása közben =====
+===== A kÃ©pernyÅ‘n lÃ©vÅ‘ elemek fÃ©nyerejÃ©nek jelzÃ©se az egÃ©r mozgatÃ¡sa kÃ¶zben =====
 
-Ha "Az egérmutató mozgásának jelzése hangjelzéssel" jelölõnégyzet be van jelölve, e jelölõnégyzet bejelölése esetén az NVDA hangjelzése attól függõen hangosabb vagy halkabb, hogy az egérmutató alatt a képernyõ világosabb vagy sötétebb. Mivel ez a funkció Windows Vista alatt teljesítménycsökkenést okozhat, alapértelmezés szerint nincs bejelölve.
+Ha "Az egÃ©rmutatÃ³ mozgÃ¡sÃ¡nak jelzÃ©se hangjelzÃ©ssel" jelÃ¶lÅ‘nÃ©gyzet be van jelÃ¶lve, e jelÃ¶lÅ‘nÃ©gyzet bejelÃ¶lÃ©se esetÃ©n az NVDA hangjelzÃ©se attÃ³l fÃ¼ggÅ‘en hangosabb vagy halkabb, hogy az egÃ©rmutatÃ³ alatt a kÃ©pernyÅ‘ vilÃ¡gosabb vagy sÃ¶tÃ©tebb. Mivel ez a funkciÃ³ Windows Vista alatt teljesÃ­tmÃ©nycsÃ¶kkenÃ©st okozhat, alapÃ©rtelmezÃ©s szerint nincs bejelÃ¶lve.
 
-++++ Objektummegjelenítési beállítások ++++
+++++ ObjektummegjelenÃ­tÃ©si beÃ¡llÃ­tÃ¡sok ++++
 
-Ez a párbeszédpanel a beállítások menü objektummegjelenítési beállítások parancsával, vagy az NVDA+kontroll+o billentyûparanccsal érhetõ el, és a következõ beállítási lehetõségeket tartalmazza:
+Ez a pÃ¡rbeszÃ©dpanel a beÃ¡llÃ­tÃ¡sok menÃ¼ objektummegjelenÃ­tÃ©si beÃ¡llÃ­tÃ¡sok parancsÃ¡val, vagy az NVDA+kontroll+o billentyÅ±paranccsal Ã©rhetÅ‘ el, Ã©s a kÃ¶vetkezÅ‘ beÃ¡llÃ­tÃ¡si lehetÅ‘sÃ©geket tartalmazza:
 
-=====  Eszköztippek bemondása  =====
+=====  EszkÃ¶ztippek bemondÃ¡sa  =====
 
-Ha ez a jelölõnégyzet be van jelölve, az NVDA bemondja az eszköztippeket, amint azok megjelennek. Egyes ablakok és vezérlõelemek rövid üzeneteket vagy eszköztippeket jelenítenek meg, ha az egérmutatót föléjük visszük, vagy ha a fókuszt rájuk helyezzük.
+Ha ez a jelÃ¶lÅ‘nÃ©gyzet be van jelÃ¶lve, az NVDA bemondja az eszkÃ¶ztippeket, amint azok megjelennek. Egyes ablakok Ã©s vezÃ©rlÅ‘elemek rÃ¶vid Ã¼zeneteket vagy eszkÃ¶ztippeket jelenÃ­tenek meg, ha az egÃ©rmutatÃ³t fÃ¶lÃ©jÃ¼k visszÃ¼k, vagy ha a fÃ³kuszt rÃ¡juk helyezzÃ¼k.
 
-=====  Súgóbuborékok felolvasása  =====
+=====  SÃºgÃ³buborÃ©kok felolvasÃ¡sa  =====
 
-Ha ez a jelölõnégyzet be van jelölve, az NVDA felolvassa a súgóbuborékokat, amint megjelennek. A súgóbuborékok olyanok, mint az eszköztippek, de általában nagyobbak, és rendszerint valamilyen rendszereseményrõl tájékoztatnak. Ilyen például hálózati kábel kihúzásakor felugró tájékoztatás vagy windows biztonsági figyelmeztetés.
+Ha ez a jelÃ¶lÅ‘nÃ©gyzet be van jelÃ¶lve, az NVDA felolvassa a sÃºgÃ³buborÃ©kokat, amint megjelennek. A sÃºgÃ³buborÃ©kok olyanok, mint az eszkÃ¶ztippek, de Ã¡ltalÃ¡ban nagyobbak, Ã©s rendszerint valamilyen rendszeresemÃ©nyrÅ‘l tÃ¡jÃ©koztatnak. Ilyen pÃ©ldÃ¡ul hÃ¡lÃ³zati kÃ¡bel kihÃºzÃ¡sakor felugrÃ³ tÃ¡jÃ©koztatÃ¡s vagy windows biztonsÃ¡gi figyelmeztetÃ©s.
 
-=====  Elem gyorsgombjának felolvasása  =====
+=====  Elem gyorsgombjÃ¡nak felolvasÃ¡sa  =====
 
-Ha e jelölõnégyzet be van jelölve, az NVDA felolvassa az elemhez vagy vezérlõelemhez társított billentyûparancsot. Például egy program menüsorában a fájl menü az alt+F billentyûparanccsal is elõhívható.
+Ha e jelÃ¶lÅ‘nÃ©gyzet be van jelÃ¶lve, az NVDA felolvassa az elemhez vagy vezÃ©rlÅ‘elemhez tÃ¡rsÃ­tott billentyÅ±parancsot. PÃ©ldÃ¡ul egy program menÃ¼sorÃ¡ban a fÃ¡jl menÃ¼ az alt+F billentyÅ±paranccsal is elÅ‘hÃ­vhatÃ³.
 
-=====  Elem pozíciójának felolvasása  =====
+=====  Elem pozÃ­ciÃ³jÃ¡nak felolvasÃ¡sa  =====
 
-Ezzel a beállítással kiválaszthatjuk, hogy az objektum pozicíója elhangozzon-e, amikor a fókusz vagy a navigátor kurzor rálép az objektumra.
+Ezzel a beÃ¡llÃ­tÃ¡ssal kivÃ¡laszthatjuk, hogy az objektum pozicÃ­Ã³ja elhangozzon-e, amikor a fÃ³kusz vagy a navigÃ¡tor kurzor rÃ¡lÃ©p az objektumra.
 
-===== Elem leírásának felolvasása  =====
+===== Elem leÃ­rÃ¡sÃ¡nak felolvasÃ¡sa  =====
 
-Kapcsolja ki ezt a jelölõnégyzetet, ha nem kívánja, hogy az NVDA felolvassa az elemhez tartozó leírást.
+Kapcsolja ki ezt a jelÃ¶lÅ‘nÃ©gyzetet, ha nem kÃ­vÃ¡nja, hogy az NVDA felolvassa az elemhez tartozÃ³ leÃ­rÃ¡st.
 
-===== Hangjelzés folyamatjelzõ változásakor  =====
+===== HangjelzÃ©s folyamatjelzÅ‘ vÃ¡ltozÃ¡sakor  =====
 
-A folyamatjelzõ egy olyan vezérlõelem, amely egy vonalzóra hasonlít. Egy lassú folyamat esetén a folyamatjelzõ a feladat elõrehaladtával folyamatosan kivilágosodik, továbbá százalékban mutatja, hogy a munka hol tart. Folyamatjelzõk pl. weboldal betölltõdésekor, e-mailek lehívásakor vagy hangfájlok feldolgozásakor jelennek meg. Az NVDA képes hanggal jelezni, hogy hol tart a folyamat, a hang egyre emelkedik. Ez néha jobb, mintha számokat hallanánk. Egy kombinált listamezõben választhatjuk ki, hogy az NVDA milyen tájékoztatást adjon a folyamatjelzõkrõl. 
+A folyamatjelzÅ‘ egy olyan vezÃ©rlÅ‘elem, amely egy vonalzÃ³ra hasonlÃ­t. Egy lassÃº folyamat esetÃ©n a folyamatjelzÅ‘ a feladat elÅ‘rehaladtÃ¡val folyamatosan kivilÃ¡gosodik, tovÃ¡bbÃ¡ szÃ¡zalÃ©kban mutatja, hogy a munka hol tart. FolyamatjelzÅ‘k pl. weboldal betÃ¶lltÅ‘dÃ©sekor, e-mailek lehÃ­vÃ¡sakor vagy hangfÃ¡jlok feldolgozÃ¡sakor jelennek meg. Az NVDA kÃ©pes hanggal jelezni, hogy hol tart a folyamat, a hang egyre emelkedik. Ez nÃ©ha jobb, mintha szÃ¡mokat hallanÃ¡nk. Egy kombinÃ¡lt listamezÅ‘ben vÃ¡laszthatjuk ki, hogy az NVDA milyen tÃ¡jÃ©koztatÃ¡st adjon a folyamatjelzÅ‘krÅ‘l. 
 
-Folyamatjelzõ állapotának jelzési módjai:
-- Kikapcsolva: Nem tájékoztat a folyamatjelzõk állapotáról.
-- Csak a látható folyamatjelzõk: Akkor ad hangjelzéses tájékoztatást, ha a folyamatjelzõt tartalmazó ablak aktív.
-- Minden látható folyamatjelzõ: Minden folyamatjelzõrõl hangjelzést ad függetlenül attól, hogy látható-e a képernyõn.
-- Minden tizedik százalék bemondása: Tíz százalékonként bemondja, hol tart a feladat.
+FolyamatjelzÅ‘ Ã¡llapotÃ¡nak jelzÃ©si mÃ³djai:
+- Kikapcsolva: Nem tÃ¡jÃ©koztat a folyamatjelzÅ‘k Ã¡llapotÃ¡rÃ³l.
+- Csak a lÃ¡thatÃ³ folyamatjelzÅ‘k: Akkor ad hangjelzÃ©ses tÃ¡jÃ©koztatÃ¡st, ha a folyamatjelzÅ‘t tartalmazÃ³ ablak aktÃ­v.
+- Minden lÃ¡thatÃ³ folyamatjelzÅ‘: Minden folyamatjelzÅ‘rÅ‘l hangjelzÃ©st ad fÃ¼ggetlenÃ¼l attÃ³l, hogy lÃ¡thatÃ³-e a kÃ©pernyÅ‘n.
+- Minden tizedik szÃ¡zalÃ©k bemondÃ¡sa: TÃ­z szÃ¡zalÃ©konkÃ©nt bemondja, hol tart a feladat.
 -
 
-===== A háttérben lévõ folyamatjelzõk változásának jelzése =====
+===== A hÃ¡ttÃ©rben lÃ©vÅ‘ folyamatjelzÅ‘k vÃ¡ltozÃ¡sÃ¡nak jelzÃ©se =====
 
-Ha ezt a jelölõnégyzetet bejelöli, és lerakja kis méretre az ablakot, az NVDA akkoris jelezni fogja a változást, így több folyamat elõrehaladását is figyelemmel kísérheti.
+Ha ezt a jelÃ¶lÅ‘nÃ©gyzetet bejelÃ¶li, Ã©s lerakja kis mÃ©retre az ablakot, az NVDA akkoris jelezni fogja a vÃ¡ltozÃ¡st, Ã­gy tÃ¶bb folyamat elÅ‘rehaladÃ¡sÃ¡t is figyelemmel kÃ­sÃ©rheti.
 
-++++ A virtuális kijelzõ beállításai ++++
+++++ A virtuÃ¡lis kijelzÅ‘ beÃ¡llÃ­tÃ¡sai ++++
 
-A virtuális kijelzõ beállításai párbeszédpanel a beállítások almenü "virtuális kijelzõ..." almenüjében, vagy az NVDA+Kontroll+B billentyûkombinációval nyitható meg.
-A párbeszédpanel a következõ beállítási lehetõségeket tartalmazza:
+A virtuÃ¡lis kijelzÅ‘ beÃ¡llÃ­tÃ¡sai pÃ¡rbeszÃ©dpanel a beÃ¡llÃ­tÃ¡sok almenÃ¼ "virtuÃ¡lis kijelzÅ‘..." almenÃ¼jÃ©ben, vagy az NVDA+Kontroll+B billentyÅ±kombinÃ¡ciÃ³val nyithatÃ³ meg.
+A pÃ¡rbeszÃ©dpanel a kÃ¶vetkezÅ‘ beÃ¡llÃ­tÃ¡si lehetÅ‘sÃ©geket tartalmazza:
 
-=====  Soronkénti karakterek maximális száma  =====
+=====  SoronkÃ©nti karakterek maximÃ¡lis szÃ¡ma  =====
 
-E mezõben állíthatjuk be, hogy a virtuális kijelzõ egy-egy sorában maximum hány karakter legyen. Nem biztos, hogy minden sor belefér, de a legtöbb igen.
+E mezÅ‘ben Ã¡llÃ­thatjuk be, hogy a virtuÃ¡lis kijelzÅ‘ egy-egy sorÃ¡ban maximum hÃ¡ny karakter legyen. Nem biztos, hogy minden sor belefÃ©r, de a legtÃ¶bb igen.
 
-=====  Sorok maximális száma egy oldalon  =====
+=====  Sorok maximÃ¡lis szÃ¡ma egy oldalon  =====
 
-Annak ellenére, hogy a virtuális kijelzõben valójában nincsenek lapok, ebben a mezõben lehet megadni, hogy a page up és page down billentyûk megnyomásakor hány sort lépjen az NVDA a virtuális kijelzõn.
+Annak ellenÃ©re, hogy a virtuÃ¡lis kijelzÅ‘ben valÃ³jÃ¡ban nincsenek lapok, ebben a mezÅ‘ben lehet megadni, hogy a page up Ã©s page down billentyÅ±k megnyomÃ¡sakor hÃ¡ny sort lÃ©pjen az NVDA a virtuÃ¡lis kijelzÅ‘n.
 
-===== Képernyõ elrendezés használata =====
+===== KÃ©pernyÅ‘ elrendezÃ©s hasznÃ¡lata =====
 
-Ezzel a beállítással megadható, hogy a virtuális kijelzõben az elemek és a mezõk külön sorban legyenek, vagy tartsák meg a képernyõn lévõ helyüket. Ha ez a beállítás engedéllyezve van, akkor minden a képernyõn látható módon jelenik meg, de ha le van tiltva, akkor az elemek külön sorban fognak megjelenni.
+Ezzel a beÃ¡llÃ­tÃ¡ssal megadhatÃ³, hogy a virtuÃ¡lis kijelzÅ‘ben az elemek Ã©s a mezÅ‘k kÃ¼lÃ¶n sorban legyenek, vagy tartsÃ¡k meg a kÃ©pernyÅ‘n lÃ©vÅ‘ helyÃ¼ket. Ha ez a beÃ¡llÃ­tÃ¡s engedÃ©llyezve van, akkor minden a kÃ©pernyÅ‘n lÃ¡thatÃ³ mÃ³don jelenik meg, de ha le van tiltva, akkor az elemek kÃ¼lÃ¶n sorban fognak megjelenni.
 
-===== rétegzõdõ táblázatok jelzése =====
+===== rÃ©tegzÅ‘dÅ‘ tÃ¡blÃ¡zatok jelzÃ©se =====
 
-Amikor ez a lehetõség le van tiltva, akkor az NVDA csak táblázatos adatokat jelez (ahol szükséges a táblázatos elrendezés). Ha a lehetõség engedéllyezve van, az NVDA ezek mellett azokat a táblázatokat is jelzi, amellyek csak látványi célt szolgálnak, (Pl egy weboldal navigációs menüje egy táblázatban).
+Amikor ez a lehetÅ‘sÃ©g le van tiltva, akkor az NVDA csak tÃ¡blÃ¡zatos adatokat jelez (ahol szÃ¼ksÃ©ges a tÃ¡blÃ¡zatos elrendezÃ©s). Ha a lehetÅ‘sÃ©g engedÃ©llyezve van, az NVDA ezek mellett azokat a tÃ¡blÃ¡zatokat is jelzi, amellyek csak lÃ¡tvÃ¡nyi cÃ©lt szolgÃ¡lnak, (Pl egy weboldal navigÃ¡ciÃ³s menÃ¼je egy tÃ¡blÃ¡zatban).
 
-=====  Automatikus váltás interaktív módba a fókusz változásakor =====
+=====  Automatikus vÃ¡ltÃ¡s interaktÃ­v mÃ³dba a fÃ³kusz vÃ¡ltozÃ¡sakor =====
 
-Ez az opció lehetõvé teszi, hogy a fókusz változásakor az NVDA automatikusan interaktív módba lépjen. Például, ha egy weboldalon egy ûrlapmezõre lépünk a tabbal, az NVDA automatikusan interaktív módba lép, ha ez a jelölõnégyzet be van jelölve.
+Ez az opciÃ³ lehetÅ‘vÃ© teszi, hogy a fÃ³kusz vÃ¡ltozÃ¡sakor az NVDA automatikusan interaktÃ­v mÃ³dba lÃ©pjen. PÃ©ldÃ¡ul, ha egy weboldalon egy Å±rlapmezÅ‘re lÃ©pÃ¼nk a tabbal, az NVDA automatikusan interaktÃ­v mÃ³dba lÃ©p, ha ez a jelÃ¶lÅ‘nÃ©gyzet be van jelÃ¶lve.
 
-=====  Automatikus interaktív módba lépés a kurzor mozgatásakor 
+=====  Automatikus interaktÃ­v mÃ³dba lÃ©pÃ©s a kurzor mozgatÃ¡sakor 
  =====
 
-Ha ez a jelölõnégyzet be van jelölve, az NVDA a nyíl billentyûk mozgatása közben automatikusan vált interaktív és böngészõ mód között. Ha például egy weboldalon haladunk lefelé a nyíllal és az NVDA talál egy szerkesztõmezõt, automatikusan interaktív módba lép, ha azonban a szerkesztõmezõt elhagyjuk, visszavált böngészõ módba.
+Ha ez a jelÃ¶lÅ‘nÃ©gyzet be van jelÃ¶lve, az NVDA a nyÃ­l billentyÅ±k mozgatÃ¡sa kÃ¶zben automatikusan vÃ¡lt interaktÃ­v Ã©s bÃ¶ngÃ©szÅ‘ mÃ³d kÃ¶zÃ¶tt. Ha pÃ©ldÃ¡ul egy weboldalon haladunk lefelÃ© a nyÃ­llal Ã©s az NVDA talÃ¡l egy szerkesztÅ‘mezÅ‘t, automatikusan interaktÃ­v mÃ³dba lÃ©p, ha azonban a szerkesztÅ‘mezÅ‘t elhagyjuk, visszavÃ¡lt bÃ¶ngÃ©szÅ‘ mÃ³dba.
 
-===== Az interaktív és a böngészõ mód jelzése hangjelzéssel =====
+===== Az interaktÃ­v Ã©s a bÃ¶ngÃ©szÅ‘ mÃ³d jelzÃ©se hangjelzÃ©ssel =====
 
-Ha bekapcsolja ezt a beállítást, akkor az interaktív és a böngészõ mód közötti váltást hangjelzéssel jelzi a program.
+Ha bekapcsolja ezt a beÃ¡llÃ­tÃ¡st, akkor az interaktÃ­v Ã©s a bÃ¶ngÃ©szÅ‘ mÃ³d kÃ¶zÃ¶tti vÃ¡ltÃ¡st hangjelzÃ©ssel jelzi a program.
 
-++++ Dokumentum Formázási beállítások ++++
+++++ Dokumentum FormÃ¡zÃ¡si beÃ¡llÃ­tÃ¡sok ++++
 
-E párbeszédpanel a beállítások almenü dokumentum formázási beállítások... parancsával, vagy az NVDA+Kontroll+D billentyûparanccsal nyitható meg. Az itt található jelölõnégyzetekkel lehet beállítani, hogy az NVDA milyen formázási információkat olvasson fel, ha egy Word vagy Wordpad dokumentumban mozgunk a kurzorral. Például: ha bejelöljük a betûtípus bemondása jelölõnégyzetet, az NVDA bemondja a betûtípus nevét, ha a kurzorral új betûtípusú szövegrészre lépünk.
-Be lehet állítani a: 
-- betûtípus,
-- betûméret,
-- betûtípus állapota,
-- stílus,
-- szövegigazítás,
-- táblázatok,
-- címsorok,
-- hivatkozások,
-- listák,
-- idézetblokkok,
-- jelzõ pontok,
-- oldalszámok,
-- sorok száma és
-- helyesírási hibák
+E pÃ¡rbeszÃ©dpanel a beÃ¡llÃ­tÃ¡sok almenÃ¼ dokumentum formÃ¡zÃ¡si beÃ¡llÃ­tÃ¡sok... parancsÃ¡val, vagy az NVDA+Kontroll+D billentyÅ±paranccsal nyithatÃ³ meg. Az itt talÃ¡lhatÃ³ jelÃ¶lÅ‘nÃ©gyzetekkel lehet beÃ¡llÃ­tani, hogy az NVDA milyen formÃ¡zÃ¡si informÃ¡ciÃ³kat olvasson fel, ha egy Word vagy Wordpad dokumentumban mozgunk a kurzorral. PÃ©ldÃ¡ul: ha bejelÃ¶ljÃ¼k a betÅ±tÃ­pus bemondÃ¡sa jelÃ¶lÅ‘nÃ©gyzetet, az NVDA bemondja a betÅ±tÃ­pus nevÃ©t, ha a kurzorral Ãºj betÅ±tÃ­pusÃº szÃ¶vegrÃ©szre lÃ©pÃ¼nk.
+Be lehet Ã¡llÃ­tani a: 
+- betÅ±tÃ­pus,
+- betÅ±mÃ©ret,
+- betÅ±tÃ­pus Ã¡llapota,
+- stÃ­lus,
+- szÃ¶vegigazÃ­tÃ¡s,
+- tÃ¡blÃ¡zatok,
+- cÃ­msorok,
+- hivatkozÃ¡sok,
+- listÃ¡k,
+- idÃ©zetblokkok,
+- jelzÅ‘ pontok,
+- oldalszÃ¡mok,
+- sorok szÃ¡ma Ã©s
+- helyesÃ­rÃ¡si hibÃ¡k
 -
-bemondását.
+bemondÃ¡sÃ¡t.
 
-++++ Kivételszótárak beállításai++++
+++++ KivÃ©telszÃ³tÃ¡rak beÃ¡llÃ­tÃ¡sai++++
 
-A beállítások menüben található kivételszótárak menü olyan lehetõségeket tartalmaz, melyekkel megadható, hogy az NVDA miként ejtsen ki egyes szavakat, kifejezéseket. Jelenleg háromféle szótártípus létezik:
+A beÃ¡llÃ­tÃ¡sok menÃ¼ben talÃ¡lhatÃ³ kivÃ©telszÃ³tÃ¡rak menÃ¼ olyan lehetÅ‘sÃ©geket tartalmaz, melyekkel megadhatÃ³, hogy az NVDA mikÃ©nt ejtsen ki egyes szavakat, kifejezÃ©seket. Jelenleg hÃ¡romfÃ©le szÃ³tÃ¡rtÃ­pus lÃ©tezik:
  
-- Alapértelmezett: az itt megadott szabályok az NVDA minden hangkarakterére érvényesek.
-- Hangkarakter: az itt megadott szabályok csak az éppen használt hangkarakterre érvényesek.
-- Ideiglenes: az itt megadott szabályok az NVDA minden hangkarakterére érvényesek, de csak a jelenlegi munkameneten belül. A szabályok csak átmeneti jellegûek, melyek az NVDA újraindításakor érvényüket vesztik.
+- AlapÃ©rtelmezett: az itt megadott szabÃ¡lyok az NVDA minden hangkarakterÃ©re Ã©rvÃ©nyesek.
+- Hangkarakter: az itt megadott szabÃ¡lyok csak az Ã©ppen hasznÃ¡lt hangkarakterre Ã©rvÃ©nyesek.
+- Ideiglenes: az itt megadott szabÃ¡lyok az NVDA minden hangkarakterÃ©re Ã©rvÃ©nyesek, de csak a jelenlegi munkameneten belÃ¼l. A szabÃ¡lyok csak Ã¡tmeneti jellegÅ±ek, melyek az NVDA ÃºjraindÃ­tÃ¡sakor Ã©rvÃ©nyÃ¼ket vesztik.
 -
-Minden párbeszédablak tartalmaz egy szabálylistát, mely a szöveg feldolgozása közben hajtódik végre. Itt szintén elérhetõ a hozzáadás, szerkesztés és az eltávolítás gomb is.
-Új szabály hozzáadásához használja a hozzáadás gombot. Töltse ki a mezõket a felbukkanó párbeszédablakban, majd nyomja meg az OK gombot. A szabály megjelenik a szabályok listájában. A szótár mentéséhez nyomja meg az OK gombot ha végzett a szabályok hozzáadásával/szerkesztésével.
-A szabályok az NVDA kivételszótáraiban lehetõvé teszik, hogy egy szövegrészt behelyettesítsen egy másik szövegrésszel. Egy egyszerû példa erre, ha az NVDA a madár szó helyett béka szót mond. A szabály hozzáadása párbeszédablakban a tényleges kifejezés mezõbe írjuk be: madár. A behelyettesített kifejezés mezõbe pedig a béka szó kerüljön. Megadhatja a szabály leírását a megjegyzés mezõben (pl.: a madár helyett békát mond).
-Az NVDA kivételszótárai azonban ennél jóval többre képesek. A párbeszédablak tartalmaz egy kis- és nagybetûk megkülönbözttetése jelölõnégyzetet, mely bejelölése esetén az NVDA különbséget tesz a kis- és nagybetûk között. Alapértelmezettként az NVDA figyelmen kívül hagyja a kis- és nagybetûket. Egy másik jelölõnégyzettel beállítható, hogy a kifejezés egy "szabályozott kifejezés" legyen-e. Egy szabályozott kifejezés egy speciális karaktereket tartalmazó kifejezés, mellyel egyszerre töb karakterre, számra, vagy csak betûkre is rákereshetünk. A szabályozott kifejezések nem képezik az útmutató részét, de rengeteg leírás létezik, melyekkel bõvebben megismerheti a használatukat.
-+++ A Beállítások Elmentése És Betöltése +++
+Minden pÃ¡rbeszÃ©dablak tartalmaz egy szabÃ¡lylistÃ¡t, mely a szÃ¶veg feldolgozÃ¡sa kÃ¶zben hajtÃ³dik vÃ©gre. Itt szintÃ©n elÃ©rhetÅ‘ a hozzÃ¡adÃ¡s, szerkesztÃ©s Ã©s az eltÃ¡volÃ­tÃ¡s gomb is.
+Ãšj szabÃ¡ly hozzÃ¡adÃ¡sÃ¡hoz hasznÃ¡lja a hozzÃ¡adÃ¡s gombot. TÃ¶ltse ki a mezÅ‘ket a felbukkanÃ³ pÃ¡rbeszÃ©dablakban, majd nyomja meg az OK gombot. A szabÃ¡ly megjelenik a szabÃ¡lyok listÃ¡jÃ¡ban. A szÃ³tÃ¡r mentÃ©sÃ©hez nyomja meg az OK gombot ha vÃ©gzett a szabÃ¡lyok hozzÃ¡adÃ¡sÃ¡val/szerkesztÃ©sÃ©vel.
+A szabÃ¡lyok az NVDA kivÃ©telszÃ³tÃ¡raiban lehetÅ‘vÃ© teszik, hogy egy szÃ¶vegrÃ©szt behelyettesÃ­tsen egy mÃ¡sik szÃ¶vegrÃ©sszel. Egy egyszerÅ± pÃ©lda erre, ha az NVDA a madÃ¡r szÃ³ helyett bÃ©ka szÃ³t mond. A szabÃ¡ly hozzÃ¡adÃ¡sa pÃ¡rbeszÃ©dablakban a tÃ©nyleges kifejezÃ©s mezÅ‘be Ã­rjuk be: madÃ¡r. A behelyettesÃ­tett kifejezÃ©s mezÅ‘be pedig a bÃ©ka szÃ³ kerÃ¼ljÃ¶n. Megadhatja a szabÃ¡ly leÃ­rÃ¡sÃ¡t a megjegyzÃ©s mezÅ‘ben (pl.: a madÃ¡r helyett bÃ©kÃ¡t mond).
+Az NVDA kivÃ©telszÃ³tÃ¡rai azonban ennÃ©l jÃ³val tÃ¶bbre kÃ©pesek. A pÃ¡rbeszÃ©dablak tartalmaz egy kis- Ã©s nagybetÅ±k megkÃ¼lÃ¶nbÃ¶zttetÃ©se jelÃ¶lÅ‘nÃ©gyzetet, mely bejelÃ¶lÃ©se esetÃ©n az NVDA kÃ¼lÃ¶nbsÃ©get tesz a kis- Ã©s nagybetÅ±k kÃ¶zÃ¶tt. AlapÃ©rtelmezettkÃ©nt az NVDA figyelmen kÃ­vÃ¼l hagyja a kis- Ã©s nagybetÅ±ket. Egy mÃ¡sik jelÃ¶lÅ‘nÃ©gyzettel beÃ¡llÃ­thatÃ³, hogy a kifejezÃ©s egy "szabÃ¡lyozott kifejezÃ©s" legyen-e. Egy szabÃ¡lyozott kifejezÃ©s egy speciÃ¡lis karaktereket tartalmazÃ³ kifejezÃ©s, mellyel egyszerre tÃ¶b karakterre, szÃ¡mra, vagy csak betÅ±kre is rÃ¡kereshetÃ¼nk. A szabÃ¡lyozott kifejezÃ©sek nem kÃ©pezik az ÃºtmutatÃ³ rÃ©szÃ©t, de rengeteg leÃ­rÃ¡s lÃ©tezik, melyekkel bÅ‘vebben megismerheti a hasznÃ¡latukat.
++++ A BeÃ¡llÃ­tÃ¡sok ElmentÃ©se Ã‰s BetÃ¶ltÃ©se +++
 
-Az NVDA különbözõ beállításait az nvda.ini fájlban tárolja a program mappájában. Ezt a fájlt valószínûleg soha nem kell kézzel szerkesztenie, de haladó felhasználók számára ez egy jó lehetõség a különbözõ, az NVDA beállítások párbeszédablakaiban még nem elérhetõ beállítások megváltoztatására.
-Az NVDA nem menti el automatikusan a beállításokat, az NVDA újraindításával a beállítások az eredeti értékeikre állnak vissza. A beállítások elmentéséhez aktiválhatja a "A beállítások elmentése" menüelemet az NVDA menüjében, vagy bárhol megnyomhatja az NVDA+Control+c billentyûparancsot.
-Ha az NVDA csak olvasható fájlrendszerbõl - például CD-rõl -  fut, a beállításokat nem lehet elmenteni.
-Ha a beállítások megváltoztatása után vissza szeretne térni az elmentett beállításokhoz, aktiválhatja az "Az elmentett beállítások visszaállítása" menüelemet az NVDA menüjében, vagy bárhol megnyomhatja az NVDA+Control+r billentyûparancsot.    
+Az NVDA kÃ¼lÃ¶nbÃ¶zÅ‘ beÃ¡llÃ­tÃ¡sait az nvda.ini fÃ¡jlban tÃ¡rolja a program mappÃ¡jÃ¡ban. Ezt a fÃ¡jlt valÃ³szÃ­nÅ±leg soha nem kell kÃ©zzel szerkesztenie, de haladÃ³ felhasznÃ¡lÃ³k szÃ¡mÃ¡ra ez egy jÃ³ lehetÅ‘sÃ©g a kÃ¼lÃ¶nbÃ¶zÅ‘, az NVDA beÃ¡llÃ­tÃ¡sok pÃ¡rbeszÃ©dablakaiban mÃ©g nem elÃ©rhetÅ‘ beÃ¡llÃ­tÃ¡sok megvÃ¡ltoztatÃ¡sÃ¡ra.
+Az NVDA nem menti el automatikusan a beÃ¡llÃ­tÃ¡sokat, az NVDA ÃºjraindÃ­tÃ¡sÃ¡val a beÃ¡llÃ­tÃ¡sok az eredeti Ã©rtÃ©keikre Ã¡llnak vissza. A beÃ¡llÃ­tÃ¡sok elmentÃ©sÃ©hez aktivÃ¡lhatja a "A beÃ¡llÃ­tÃ¡sok elmentÃ©se" menÃ¼elemet az NVDA menÃ¼jÃ©ben, vagy bÃ¡rhol megnyomhatja az NVDA+Control+c billentyÅ±parancsot.
+Ha az NVDA csak olvashatÃ³ fÃ¡jlrendszerbÅ‘l - pÃ©ldÃ¡ul CD-rÅ‘l -  fut, a beÃ¡llÃ­tÃ¡sokat nem lehet elmenteni.
+Ha a beÃ¡llÃ­tÃ¡sok megvÃ¡ltoztatÃ¡sa utÃ¡n vissza szeretne tÃ©rni az elmentett beÃ¡llÃ­tÃ¡sokhoz, aktivÃ¡lhatja az "Az elmentett beÃ¡llÃ­tÃ¡sok visszaÃ¡llÃ­tÃ¡sa" menÃ¼elemet az NVDA menÃ¼jÃ©ben, vagy bÃ¡rhol megnyomhatja az NVDA+Control+r billentyÅ±parancsot.    
 
-+ Navigáció az NVDA-val +
++ NavigÃ¡ciÃ³ az NVDA-val +
 
-++ Navigáció a fókusszal ++
+++ NavigÃ¡ciÃ³ a fÃ³kusszal ++
 
-Az NVDA-val való leggyakoribb navigációs mód a Windows fókuszának változtatásával valósul meg. Ez esetben a Windows szabványos billentyûparancsokat kell használni, pl. a tabbal és shift-tabbal lépkedhetünk elõre-hátra a vezérlõelemek között, az alttal hívhatjuk elõ a menüsort és a menükben a nyilakkal közlekedhetünk, a futó alkalmazások között az alt-tabbal válthatunk. Ez esetben az NVDA felolvassa, hogy mi kerül a fókuszba. 
-Ha az NVDA felolvas egy elemet (Pl. ha a fókuszt ráhelyezzük), akkor bemondja az elem nevét, típusát és állapotát, értékét, leírását, billentyûparancsát és az esetleg még rendelkezésre álló további információkat. Ebben nagy fokban hasonlít a többi képernyõolvasóra, de az elemtípusok megnevezése egy kicsit eltérõ lehet. 
-Néhány hasznos billentyûparancs a fókusszal történõ mozgás esetén:
-- NVDA+tab: felolvassa a fókuszban lévõ információt 
-- NVDA+B: felolvassa az elõtérben lévõ ablak tartalmát (hasznos lehet párbeszédpanel felolvastatásakor) 
-- NVDA+T: Felolvassa az aktív ablak címét 
--
-
-++ Navigáció a rendszerkurzorral ++
-
-Ha a fókusz olyan vezérlõelemen áll, amely szerkesztõkurzort (rendszerkurzort) tartalmaz, abban a nyilakkal közlekedhetünk és úgy végezhetünk benne szerkesztési mûveleteket, mint azt az NVDA nélkül is tennénk. Az NVDA felolvassa a karakterek, szavak, sorok közti mozgást, sõt azt is, ha egy szöveg ki van jelölve, vagy a kijelölését megszüntetjük. 
-Ha a rendszerkurzorral mozgunk, az áttekintõ kurzor követni fogja azt. 
-Természetesen az NVDA+lenyíl segítségével folyamatos felolvasásra is van módunk. Figyeljünk arra, hogy ez különbözik a numerikus pluszjeltõl. A numerikus plusz az áttekintõ kurzort mozgatva végez felolvasást, az NVDA+lenyíl viszont a rendszerkurzorral. 
-++ Közlekedés az elemek között ++
-
-Ha úgy szeretnénk közlekedni akár az aktív alkalmazás, akár az operációs rendszer összes megjelenített eleme között, hogy a fókusz közben ne változzék, akkor használjuk anavigátor kurzort. Ez lehetõvé teszi, hogy egy fanézetben lépkedjünk elemrõl elemre. 
-A fanézet gyökere az asztal, az elsõ ágai az éppen futó alkalmazások, és természetesen ezeknek az alkalmazásoknak is megvannak a saját ágai és elemei, amelyek az adott alkalmazás különbözõ részeit jelentik. (képzeljünk el egy legyezõ formát, vagy a falevelek erezetét). Hasonló szerkezettel találkozhatunk az intézõ mappa navigációs ablaktáblájában, a Windows Xp súgó megjelenítõjében, a Nero Burning Romban, stb. A különbség azonban az, hogy amíg ez utóbbi fanézeteket a kurzormozgató billentyûkkel vezéreljük, addig az NVDA elemnavigációs rendszerét képezõ fanézetet az alább található speciális billentyûparancsokkal használhatjuk.
-A fanézet egészen nagy is lehet, mivel azonban az elemek hierarchikus és logikus rendben vannak elhelyezve, gyorsan megtalálhatjuk azt az információt, amire szükségünk van.
-Ez a fanézet nem aszerint van elrendezve, ahogyan az elemek a képernyõn megtalálhatók, hanem úgy, ahogyan az elemek egymáshoz logikailag kapcsolódnak. Ennek megszokása egy kis idõbe telhet, de ha a rendszert átláttuk, valószínûleg többé nem fog gondot okozni a benne történõ mozgás. 
-Az NVDA-val nem lehet a képernyõ szerinti elrendezésben mozogni az elemeken, mert a programban nincsen videohurok-illesztõ. Az NVDA ugyanis nem a képernyõrõl és videokártyáról szerzi az információt, hanem egy ennél egyszerûbb és logikusabb módot használva, az adott alkalmazástól, valamint az operációs rendszertõl. Így nem tesz kísérletet adott képernyõelrendezés kimásolására és elemzésére. 
-Nem minden alkalmazásnak van ilyen tökéletes fanézete, de a megfelelõ rendszer kidolgozása az egyes alkalmazások fejlesztõi számára nyitva áll. A legtöbb alkalmazás megfelelõnek tûnik, valószínûleg a legtöbb párbeszédpanel és az összetett felépítésû alkalmazások szintén megfelelõnek bizonyulnak.
-Az elemek közötti közlekedéshez használjuk a következõ billentyûparancsokat:
-A navigátor kurzor billentyûparancsai:
-- NVDA+5 a numerikus billentyûzeten:  felolvassa az aktuális elemet
-- NVDA+8 a numerikus billentyûzeten: a szülõ elemre lép (egy szinttel visszalép a fanézet gyökere felé) 
-- NVDA+4 a numerikus billentyûzeten: az elõzõ, a jelenlegivel azonos szinten lévõ elemre lép 
-- NVDA+6 a numeriku sbillentyûzeten: a következõ, a jelenlegivel azonos szinten lévõ elemre lép 
-- NVDA+2 a numerikus billentyûzeten: az elsõ gyermekelemre lép (az elsõ alág kinyílik) 
-- NVDA+Shift+4 a numerikus billentyûzeten: az elõzõ elemre lép a térben (ahogy az elemek a képernyõn megjelennek) (automatikusan átlépi a szülõ- és gyermekelemek határait, amíg az elõzõ elemhez vissza nem tér) 
-- NVDA+shift+6 a numerikus billentyûzeten: a következõ elemhez lép a térben (az NVDA+SHIFT+4 a numerikus billentyûzeten parancs párja) (automatikusan átlépve a közbensõ szülõ- és gyermekelemek határait, amíg el nem éri azt) 
-- NVDA+mínusz a numerikus billentyûzeten: a kurzort a navigátor kurzorhoz helyezi<
-- NVDA+enter a numerikus billentyûzeten: aktiválja az aktuális elemet (pl. enter, szimpla vagy dupla kattintás)
-- NVDA+ / (perjel) a numerikus billentyûzeten: Az egérmutatót az aktuális elemhez helyezi át 
-- NVDA+ csillag a numerikus billentyûzeten: az egérmutatóhoz ugrik 
-- NVDA+SHIFT+5 a numerikus billentyûzeten: felolvassa az adott elem pozícióját a képernyõn 
-- NVDA++ (plusz) a numerikus billentyûzeten: folyamatosan felolvassa az összes elemet, kezdve a jelenlegitõl, haladva elõre. 
--
-Megjegyzés: A numlock billentyûnek kikapcsolva kel lennie a funkciók megfelelõ mûködéséhez.
-Ha a fókusszal mozgunk, a navigátor kurzor alatt lévõ elem a fókusszal együtt változik. Ha azt szeretnénk, hogy a navigátor kurzor egy adott helyen maradjon, kapcsoljuk ki a fókusz követését a navigátor kurzorral lehetõséget az NVDA+7 billentyûparanccsal.
-
-++ Az aktuális elem szövegének áttekintése ++
-
-Az NVDA lehetõvé teszi, hogy az adott elem tartalmát betûrõl betûre, szóról szóra, sorrol sorra átolvassuk. Ez hasznos pl. parancssorablakban, vagy olyan helyen, ahol csak korlátozott rendszerkurzor van, vagy ilyen nincs is.
-Az áttekintõ kurzor billentyûparancsai:
-- Shift+7 a numerikus billentyûzeten: elsõ sor felolvasása
-- 7 a numerikus billentyûzeten: elõzõ sor felolvasása
-- 8 a numerikus billentyûzeten: aktuális sor 
-- 9 a numerikus billentyûzeten: következõ sor felolvasása
-- Shift+9 a numerikus billentyûzeten: alsó sor felolvasása
-- 4 a numerikus billentyûzeten: elõzõ szó 
-- 5 a numerikus billentyûzeten: jelenlegi szó felolvasása
-- 6 a numerikus billentyûzeten: következõ szófelolvasása
-- Shift+1 a numerikus billentyûzeten: sor eleje 
-- 1 a numerikus billentyûzeten: elõzõ karakter 
-- 2 a numerikus billentyûzeten: jelenlegi karakter 
-- 3 a numerikus billentyûzeten: következõ karakter 
-- Shift+3 a numerikus billentyûzeten: sor vége 
-- + (plusz) a numerikus billentyûzeten: folyamatos olvasás az aktuális pozíciótól az elem tartalmának végéig </DL>
--
-Megjegyzés: a numerikus billentyûzet billentyûi akkor mûködnek megfelelõen, ha a numlock ki van kapcsolva. 
-Ha a fókusz szerkesztõmezõn áll és a rendszerkurzor mozog, az áttekintõ kurzor követi azt. Ha azt szeretnénk, hogy az áttekintõ kurzor egy adott helyen maradjon és ne kövesse a rendszerkurzort, kapcsoljuk ki az NVDA+6 billentyûparanccsal az áttekintõ kurzor követi a rendszerkurzort opciót.
-Lehetséges, hogy annak a szövegnek bizonyos részeit szeretnénk kimásolni, amelyet az áttekintõ kurzorral tanulmányozunk. Pl. egy internetcímet, amit mások egy üzenetküldõ programmal küldtek. A mûvelet megkezdéséhez vigyük az áttekintõ kurzort a másolandó szöveg elsõ karakteréhez, majd nyomjuk meg az NVDA+f9 billentyûkombinációt. Menjünk el a szöveg végére, itt nyomjuk meg az NVDA+f10 billentyûkombinációt. (Ezzel megadtuk a kezdõ és zárómarkert úgy, ahogyan a régi típusú, pl. Ms-dos alatt futó szövegszerkesztõkben (Pl. Norton Editor) jelöltünk ki szöveget). A szöveget az NVDA automatikusan a vágólapra másolja, ahonnan azt szabványos vindows mûvelettel beilleszthetjük bármelyik programba. Tartsuk azonban szem elõtt, hogy ha a program normál rendszerkurzort használ és lehetõvé teszi a szabványos kijelölési és másolási parancsokat (kontroll+C), akkor használjuk inkább a szabványos parancsokat, mert azokkal jobb eredményt érhetünk el.
-++ Navigáció az egérrel ++
-
-Ha mozgatjuk az egeret, az NVDA automatikusan felolvassa az egérmutató alatt lévõ szöveget, ahogy elhalad fölötte. 
-Ha ez támogatva van, az NVDA képes egész bekezdéseket is felolvasni annak ellenére, hogy más elemek szövegét sorról sorra olvassa.
-Az NVDA beálítható úgy is, hogy felolvassa annak a vezérlõelemnek a típusát, amelyen az egérmutató áthalad. Ez hasznos lehet a teljesen vak felhasználók számára, akiknek a szöveges információ nem elég. <NOTe> (A fordító megjegyzése: a teljesen vak felhasználó nem használja az egeret, mert azzal olyan biztonságos és finom mozgást nem lehet végezni, amely a képernyõn biztonságos navigációt tenne lehetõvé). </NOTE>
-Az NVDA képes kis hangokkal is tájékoztatni a felhasználót az egér pozíciójáról. Minél magasabb a hang, az egérmutató annál közelebb van a képernyõ felsõ, minél mélyebb, annál közelebb van az alsó széléhez. A képernyõ bal és jobb széléhez való közelítést a hang irányából lehet megállapítani, ha sztereó fejhallgatót használunk. 
-Kiegészítõ megjegyzés: A képernyõ sötétebb vagy világosabb részeirõl az NVDA a hangjelzés hangerejével tájékoztat. Minél hangosabb a hangjelzés, annál világosabb az adott képernyõterület.
-Ezek a funkciók alapértelmezés szerint ki vannak kapcsolva, de ha ki szeretnénk használni ezek elõnyeit, az egér beállításai párbeszédpanelen bekapcsolhatjuk õket. A párbeszédpanelt az NVDA menü beállítások almenüjében érhetjük el.
-Bár az egér használatához egy fizikai egér (vagy más mutatóeszköz, pl. Trackball) szükséges, az NVDA rendelkezik néhány billentyûparanccsal a könnyebb használat érdekében.
-- Numerikus /: bal egérgomb kattintás
-- Numerikus *: jobb egérgomb kattintás
-- Shift+numerikus /: bal egérgomb zárolása és feloldása
-- Shift +numerikus *: jobb egérgomb zárolása és feloldása
+Az NVDA-val valÃ³ leggyakoribb navigÃ¡ciÃ³s mÃ³d a Windows fÃ³kuszÃ¡nak vÃ¡ltoztatÃ¡sÃ¡val valÃ³sul meg. Ez esetben a Windows szabvÃ¡nyos billentyÅ±parancsokat kell hasznÃ¡lni, pl. a tabbal Ã©s shift-tabbal lÃ©pkedhetÃ¼nk elÅ‘re-hÃ¡tra a vezÃ©rlÅ‘elemek kÃ¶zÃ¶tt, az alttal hÃ­vhatjuk elÅ‘ a menÃ¼sort Ã©s a menÃ¼kben a nyilakkal kÃ¶zlekedhetÃ¼nk, a futÃ³ alkalmazÃ¡sok kÃ¶zÃ¶tt az alt-tabbal vÃ¡lthatunk. Ez esetben az NVDA felolvassa, hogy mi kerÃ¼l a fÃ³kuszba. 
+Ha az NVDA felolvas egy elemet (Pl. ha a fÃ³kuszt rÃ¡helyezzÃ¼k), akkor bemondja az elem nevÃ©t, tÃ­pusÃ¡t Ã©s Ã¡llapotÃ¡t, Ã©rtÃ©kÃ©t, leÃ­rÃ¡sÃ¡t, billentyÅ±parancsÃ¡t Ã©s az esetleg mÃ©g rendelkezÃ©sre Ã¡llÃ³ tovÃ¡bbi informÃ¡ciÃ³kat. Ebben nagy fokban hasonlÃ­t a tÃ¶bbi kÃ©pernyÅ‘olvasÃ³ra, de az elemtÃ­pusok megnevezÃ©se egy kicsit eltÃ©rÅ‘ lehet. 
+NÃ©hÃ¡ny hasznos billentyÅ±parancs a fÃ³kusszal tÃ¶rtÃ©nÅ‘ mozgÃ¡s esetÃ©n:
+- NVDA+tab: felolvassa a fÃ³kuszban lÃ©vÅ‘ informÃ¡ciÃ³t 
+- NVDA+B: felolvassa az elÅ‘tÃ©rben lÃ©vÅ‘ ablak tartalmÃ¡t (hasznos lehet pÃ¡rbeszÃ©dpanel felolvastatÃ¡sakor) 
+- NVDA+T: Felolvassa az aktÃ­v ablak cÃ­mÃ©t 
 -
 
-+ A virtuális kijelzõk +
-Az összetett csak olvasható dokumentumok, pl. a weblapok, az NVDA-ban a virtuális kijelzõben jelennek meg. 
-A virtuális kijelzõ egy egyszerûsített nézetét tartalmazza pl. a weboldalnak, amelyben a nyilakkal mozoghatunk. A különbözõ információkat, pl.  ha az adott szövegrész egy hivatkozás, a címsorokat, egyéb információkat az NVDA a szöveggel együtt olvassa.
-A virtuális kijelzõben kétféleképpen használhatjuk az NVDA-t. Böngészõ módban egy virtuális kurzor segítségével mozoghatunk a szövegben, interaktív módban viszont közvetlenül vihetünk információkat a böngészõbe, például írhatunk a szerkesztõmezõkbe, választhatunk a kombinált listákon, bejelölhetjük az egyik választógombot, tehát ugyanazokat a billentyûket használhatjuk, amelyeket egyébként is használnánk. Az NVDA böngészõ módból automatikusan interaktív módba kapcsol, ha olyan vezérlõelemre lépünk, amelynek használatához erre van szükség. Kézzel is átkapcsolhatunk interaktív módra az NVDA+szóköz billentyûparanccsal. Ha az NVDA automatikusan interaktív módra váltott egy tab vagy egy kattintás miatt, automatikusan visszavált böngészõ módba, ha olyan elemre lépünk, amely csak így tekinthetõ meg. Ha viszont kézzel kapcsoltuk be az NVDA+szóközzel az interaktív módot, az NVDA mind addig interaktív módban marad, amíg az escape-pel vagy az NVDA+szóköz billentyûparanccsal vissza nem kapcsolunk böngészõ módba. A virtuális kijelzõ beálításai párbeszédpanelen (NVDA menü beállítások almenüjében) tiltani lehet az interaktív és böngészõ mód automatikus váltását.
-Az NVDA jelenleg a Mozilla Firefoxban, a Microsoft Internet Explorerben és az Adobe Readerben használ virtuális kijelzõt a dokumentumok olvasásához. 
-++ Navigációs gyorsbillentyûk ++
+++ NavigÃ¡ciÃ³ a rendszerkurzorral ++
 
-Böngészõ módban az NVDA a gyorsabb navigáció érdekében egykarakteres navigációs gyorsbillentyûket tartalmaz a virtuális kijelzõ meghatározott területére történõ ugráshoz. 
-Egymagukban a következõ, a shifttel együtt használva az elõzõ területre ugranak.
-- H: címsor 
+Ha a fÃ³kusz olyan vezÃ©rlÅ‘elemen Ã¡ll, amely szerkesztÅ‘kurzort (rendszerkurzort) tartalmaz, abban a nyilakkal kÃ¶zlekedhetÃ¼nk Ã©s Ãºgy vÃ©gezhetÃ¼nk benne szerkesztÃ©si mÅ±veleteket, mint azt az NVDA nÃ©lkÃ¼l is tennÃ©nk. Az NVDA felolvassa a karakterek, szavak, sorok kÃ¶zti mozgÃ¡st, sÅ‘t azt is, ha egy szÃ¶veg ki van jelÃ¶lve, vagy a kijelÃ¶lÃ©sÃ©t megszÃ¼ntetjÃ¼k. 
+Ha a rendszerkurzorral mozgunk, az Ã¡ttekintÅ‘ kurzor kÃ¶vetni fogja azt. 
+TermÃ©szetesen az NVDA+lenyÃ­l segÃ­tsÃ©gÃ©vel folyamatos felolvasÃ¡sra is van mÃ³dunk. FigyeljÃ¼nk arra, hogy ez kÃ¼lÃ¶nbÃ¶zik a numerikus pluszjeltÅ‘l. A numerikus plusz az Ã¡ttekintÅ‘ kurzort mozgatva vÃ©gez felolvasÃ¡st, az NVDA+lenyÃ­l viszont a rendszerkurzorral. 
+++ KÃ¶zlekedÃ©s az elemek kÃ¶zÃ¶tt ++
+
+Ha Ãºgy szeretnÃ©nk kÃ¶zlekedni akÃ¡r az aktÃ­v alkalmazÃ¡s, akÃ¡r az operÃ¡ciÃ³s rendszer Ã¶sszes megjelenÃ­tett eleme kÃ¶zÃ¶tt, hogy a fÃ³kusz kÃ¶zben ne vÃ¡ltozzÃ©k, akkor hasznÃ¡ljuk anavigÃ¡tor kurzort. Ez lehetÅ‘vÃ© teszi, hogy egy fanÃ©zetben lÃ©pkedjÃ¼nk elemrÅ‘l elemre. 
+A fanÃ©zet gyÃ¶kere az asztal, az elsÅ‘ Ã¡gai az Ã©ppen futÃ³ alkalmazÃ¡sok, Ã©s termÃ©szetesen ezeknek az alkalmazÃ¡soknak is megvannak a sajÃ¡t Ã¡gai Ã©s elemei, amelyek az adott alkalmazÃ¡s kÃ¼lÃ¶nbÃ¶zÅ‘ rÃ©szeit jelentik. (kÃ©pzeljÃ¼nk el egy legyezÅ‘ formÃ¡t, vagy a falevelek erezetÃ©t). HasonlÃ³ szerkezettel talÃ¡lkozhatunk az intÃ©zÅ‘ mappa navigÃ¡ciÃ³s ablaktÃ¡blÃ¡jÃ¡ban, a Windows Xp sÃºgÃ³ megjelenÃ­tÅ‘jÃ©ben, a Nero Burning Romban, stb. A kÃ¼lÃ¶nbsÃ©g azonban az, hogy amÃ­g ez utÃ³bbi fanÃ©zeteket a kurzormozgatÃ³ billentyÅ±kkel vezÃ©reljÃ¼k, addig az NVDA elemnavigÃ¡ciÃ³s rendszerÃ©t kÃ©pezÅ‘ fanÃ©zetet az alÃ¡bb talÃ¡lhatÃ³ speciÃ¡lis billentyÅ±parancsokkal hasznÃ¡lhatjuk.
+A fanÃ©zet egÃ©szen nagy is lehet, mivel azonban az elemek hierarchikus Ã©s logikus rendben vannak elhelyezve, gyorsan megtalÃ¡lhatjuk azt az informÃ¡ciÃ³t, amire szÃ¼ksÃ©gÃ¼nk van.
+Ez a fanÃ©zet nem aszerint van elrendezve, ahogyan az elemek a kÃ©pernyÅ‘n megtalÃ¡lhatÃ³k, hanem Ãºgy, ahogyan az elemek egymÃ¡shoz logikailag kapcsolÃ³dnak. Ennek megszokÃ¡sa egy kis idÅ‘be telhet, de ha a rendszert Ã¡tlÃ¡ttuk, valÃ³szÃ­nÅ±leg tÃ¶bbÃ© nem fog gondot okozni a benne tÃ¶rtÃ©nÅ‘ mozgÃ¡s. 
+Az NVDA-val nem lehet a kÃ©pernyÅ‘ szerinti elrendezÃ©sben mozogni az elemeken, mert a programban nincsen videohurok-illesztÅ‘. Az NVDA ugyanis nem a kÃ©pernyÅ‘rÅ‘l Ã©s videokÃ¡rtyÃ¡rÃ³l szerzi az informÃ¡ciÃ³t, hanem egy ennÃ©l egyszerÅ±bb Ã©s logikusabb mÃ³dot hasznÃ¡lva, az adott alkalmazÃ¡stÃ³l, valamint az operÃ¡ciÃ³s rendszertÅ‘l. Ãgy nem tesz kÃ­sÃ©rletet adott kÃ©pernyÅ‘elrendezÃ©s kimÃ¡solÃ¡sÃ¡ra Ã©s elemzÃ©sÃ©re. 
+Nem minden alkalmazÃ¡snak van ilyen tÃ¶kÃ©letes fanÃ©zete, de a megfelelÅ‘ rendszer kidolgozÃ¡sa az egyes alkalmazÃ¡sok fejlesztÅ‘i szÃ¡mÃ¡ra nyitva Ã¡ll. A legtÃ¶bb alkalmazÃ¡s megfelelÅ‘nek tÅ±nik, valÃ³szÃ­nÅ±leg a legtÃ¶bb pÃ¡rbeszÃ©dpanel Ã©s az Ã¶sszetett felÃ©pÃ­tÃ©sÅ± alkalmazÃ¡sok szintÃ©n megfelelÅ‘nek bizonyulnak.
+Az elemek kÃ¶zÃ¶tti kÃ¶zlekedÃ©shez hasznÃ¡ljuk a kÃ¶vetkezÅ‘ billentyÅ±parancsokat:
+A navigÃ¡tor kurzor billentyÅ±parancsai:
+- NVDA+5 a numerikus billentyÅ±zeten:  felolvassa az aktuÃ¡lis elemet
+- NVDA+8 a numerikus billentyÅ±zeten: a szÃ¼lÅ‘ elemre lÃ©p (egy szinttel visszalÃ©p a fanÃ©zet gyÃ¶kere felÃ©) 
+- NVDA+4 a numerikus billentyÅ±zeten: az elÅ‘zÅ‘, a jelenlegivel azonos szinten lÃ©vÅ‘ elemre lÃ©p 
+- NVDA+6 a numeriku sbillentyÅ±zeten: a kÃ¶vetkezÅ‘, a jelenlegivel azonos szinten lÃ©vÅ‘ elemre lÃ©p 
+- NVDA+2 a numerikus billentyÅ±zeten: az elsÅ‘ gyermekelemre lÃ©p (az elsÅ‘ alÃ¡g kinyÃ­lik) 
+- NVDA+Shift+4 a numerikus billentyÅ±zeten: az elÅ‘zÅ‘ elemre lÃ©p a tÃ©rben (ahogy az elemek a kÃ©pernyÅ‘n megjelennek) (automatikusan Ã¡tlÃ©pi a szÃ¼lÅ‘- Ã©s gyermekelemek hatÃ¡rait, amÃ­g az elÅ‘zÅ‘ elemhez vissza nem tÃ©r) 
+- NVDA+shift+6 a numerikus billentyÅ±zeten: a kÃ¶vetkezÅ‘ elemhez lÃ©p a tÃ©rben (az NVDA+SHIFT+4 a numerikus billentyÅ±zeten parancs pÃ¡rja) (automatikusan Ã¡tlÃ©pve a kÃ¶zbensÅ‘ szÃ¼lÅ‘- Ã©s gyermekelemek hatÃ¡rait, amÃ­g el nem Ã©ri azt) 
+- NVDA+mÃ­nusz a numerikus billentyÅ±zeten: a kurzort a navigÃ¡tor kurzorhoz helyezi<
+- NVDA+enter a numerikus billentyÅ±zeten: aktivÃ¡lja az aktuÃ¡lis elemet (pl. enter, szimpla vagy dupla kattintÃ¡s)
+- NVDA+ / (perjel) a numerikus billentyÅ±zeten: Az egÃ©rmutatÃ³t az aktuÃ¡lis elemhez helyezi Ã¡t 
+- NVDA+ csillag a numerikus billentyÅ±zeten: az egÃ©rmutatÃ³hoz ugrik 
+- NVDA+SHIFT+5 a numerikus billentyÅ±zeten: felolvassa az adott elem pozÃ­ciÃ³jÃ¡t a kÃ©pernyÅ‘n 
+- NVDA++ (plusz) a numerikus billentyÅ±zeten: folyamatosan felolvassa az Ã¶sszes elemet, kezdve a jelenlegitÅ‘l, haladva elÅ‘re. 
+-
+MegjegyzÃ©s: A numlock billentyÅ±nek kikapcsolva kel lennie a funkciÃ³k megfelelÅ‘ mÅ±kÃ¶dÃ©sÃ©hez.
+Ha a fÃ³kusszal mozgunk, a navigÃ¡tor kurzor alatt lÃ©vÅ‘ elem a fÃ³kusszal egyÃ¼tt vÃ¡ltozik. Ha azt szeretnÃ©nk, hogy a navigÃ¡tor kurzor egy adott helyen maradjon, kapcsoljuk ki a fÃ³kusz kÃ¶vetÃ©sÃ©t a navigÃ¡tor kurzorral lehetÅ‘sÃ©get az NVDA+7 billentyÅ±paranccsal.
+
+++ Az aktuÃ¡lis elem szÃ¶vegÃ©nek Ã¡ttekintÃ©se ++
+
+Az NVDA lehetÅ‘vÃ© teszi, hogy az adott elem tartalmÃ¡t betÅ±rÅ‘l betÅ±re, szÃ³rÃ³l szÃ³ra, sorrol sorra Ã¡tolvassuk. Ez hasznos pl. parancssorablakban, vagy olyan helyen, ahol csak korlÃ¡tozott rendszerkurzor van, vagy ilyen nincs is.
+Az Ã¡ttekintÅ‘ kurzor billentyÅ±parancsai:
+- Shift+7 a numerikus billentyÅ±zeten: elsÅ‘ sor felolvasÃ¡sa
+- 7 a numerikus billentyÅ±zeten: elÅ‘zÅ‘ sor felolvasÃ¡sa
+- 8 a numerikus billentyÅ±zeten: aktuÃ¡lis sor 
+- 9 a numerikus billentyÅ±zeten: kÃ¶vetkezÅ‘ sor felolvasÃ¡sa
+- Shift+9 a numerikus billentyÅ±zeten: alsÃ³ sor felolvasÃ¡sa
+- 4 a numerikus billentyÅ±zeten: elÅ‘zÅ‘ szÃ³ 
+- 5 a numerikus billentyÅ±zeten: jelenlegi szÃ³ felolvasÃ¡sa
+- 6 a numerikus billentyÅ±zeten: kÃ¶vetkezÅ‘ szÃ³felolvasÃ¡sa
+- Shift+1 a numerikus billentyÅ±zeten: sor eleje 
+- 1 a numerikus billentyÅ±zeten: elÅ‘zÅ‘ karakter 
+- 2 a numerikus billentyÅ±zeten: jelenlegi karakter 
+- 3 a numerikus billentyÅ±zeten: kÃ¶vetkezÅ‘ karakter 
+- Shift+3 a numerikus billentyÅ±zeten: sor vÃ©ge 
+- + (plusz) a numerikus billentyÅ±zeten: folyamatos olvasÃ¡s az aktuÃ¡lis pozÃ­ciÃ³tÃ³l az elem tartalmÃ¡nak vÃ©gÃ©ig </DL>
+-
+MegjegyzÃ©s: a numerikus billentyÅ±zet billentyÅ±i akkor mÅ±kÃ¶dnek megfelelÅ‘en, ha a numlock ki van kapcsolva. 
+Ha a fÃ³kusz szerkesztÅ‘mezÅ‘n Ã¡ll Ã©s a rendszerkurzor mozog, az Ã¡ttekintÅ‘ kurzor kÃ¶veti azt. Ha azt szeretnÃ©nk, hogy az Ã¡ttekintÅ‘ kurzor egy adott helyen maradjon Ã©s ne kÃ¶vesse a rendszerkurzort, kapcsoljuk ki az NVDA+6 billentyÅ±paranccsal az Ã¡ttekintÅ‘ kurzor kÃ¶veti a rendszerkurzort opciÃ³t.
+LehetsÃ©ges, hogy annak a szÃ¶vegnek bizonyos rÃ©szeit szeretnÃ©nk kimÃ¡solni, amelyet az Ã¡ttekintÅ‘ kurzorral tanulmÃ¡nyozunk. Pl. egy internetcÃ­met, amit mÃ¡sok egy Ã¼zenetkÃ¼ldÅ‘ programmal kÃ¼ldtek. A mÅ±velet megkezdÃ©sÃ©hez vigyÃ¼k az Ã¡ttekintÅ‘ kurzort a mÃ¡solandÃ³ szÃ¶veg elsÅ‘ karakterÃ©hez, majd nyomjuk meg az NVDA+f9 billentyÅ±kombinÃ¡ciÃ³t. MenjÃ¼nk el a szÃ¶veg vÃ©gÃ©re, itt nyomjuk meg az NVDA+f10 billentyÅ±kombinÃ¡ciÃ³t. (Ezzel megadtuk a kezdÅ‘ Ã©s zÃ¡rÃ³markert Ãºgy, ahogyan a rÃ©gi tÃ­pusÃº, pl. Ms-dos alatt futÃ³ szÃ¶vegszerkesztÅ‘kben (Pl. Norton Editor) jelÃ¶ltÃ¼nk ki szÃ¶veget). A szÃ¶veget az NVDA automatikusan a vÃ¡gÃ³lapra mÃ¡solja, ahonnan azt szabvÃ¡nyos vindows mÅ±velettel beilleszthetjÃ¼k bÃ¡rmelyik programba. Tartsuk azonban szem elÅ‘tt, hogy ha a program normÃ¡l rendszerkurzort hasznÃ¡l Ã©s lehetÅ‘vÃ© teszi a szabvÃ¡nyos kijelÃ¶lÃ©si Ã©s mÃ¡solÃ¡si parancsokat (kontroll+C), akkor hasznÃ¡ljuk inkÃ¡bb a szabvÃ¡nyos parancsokat, mert azokkal jobb eredmÃ©nyt Ã©rhetÃ¼nk el.
+++ NavigÃ¡ciÃ³ az egÃ©rrel ++
+
+Ha mozgatjuk az egeret, az NVDA automatikusan felolvassa az egÃ©rmutatÃ³ alatt lÃ©vÅ‘ szÃ¶veget, ahogy elhalad fÃ¶lÃ¶tte. 
+Ha ez tÃ¡mogatva van, az NVDA kÃ©pes egÃ©sz bekezdÃ©seket is felolvasni annak ellenÃ©re, hogy mÃ¡s elemek szÃ¶vegÃ©t sorrÃ³l sorra olvassa.
+Az NVDA beÃ¡lÃ­thatÃ³ Ãºgy is, hogy felolvassa annak a vezÃ©rlÅ‘elemnek a tÃ­pusÃ¡t, amelyen az egÃ©rmutatÃ³ Ã¡thalad. Ez hasznos lehet a teljesen vak felhasznÃ¡lÃ³k szÃ¡mÃ¡ra, akiknek a szÃ¶veges informÃ¡ciÃ³ nem elÃ©g. <NOTe> (A fordÃ­tÃ³ megjegyzÃ©se: a teljesen vak felhasznÃ¡lÃ³ nem hasznÃ¡lja az egeret, mert azzal olyan biztonsÃ¡gos Ã©s finom mozgÃ¡st nem lehet vÃ©gezni, amely a kÃ©pernyÅ‘n biztonsÃ¡gos navigÃ¡ciÃ³t tenne lehetÅ‘vÃ©). </NOTE>
+Az NVDA kÃ©pes kis hangokkal is tÃ¡jÃ©koztatni a felhasznÃ¡lÃ³t az egÃ©r pozÃ­ciÃ³jÃ¡rÃ³l. MinÃ©l magasabb a hang, az egÃ©rmutatÃ³ annÃ¡l kÃ¶zelebb van a kÃ©pernyÅ‘ felsÅ‘, minÃ©l mÃ©lyebb, annÃ¡l kÃ¶zelebb van az alsÃ³ szÃ©lÃ©hez. A kÃ©pernyÅ‘ bal Ã©s jobb szÃ©lÃ©hez valÃ³ kÃ¶zelÃ­tÃ©st a hang irÃ¡nyÃ¡bÃ³l lehet megÃ¡llapÃ­tani, ha sztereÃ³ fejhallgatÃ³t hasznÃ¡lunk. 
+KiegÃ©szÃ­tÅ‘ megjegyzÃ©s: A kÃ©pernyÅ‘ sÃ¶tÃ©tebb vagy vilÃ¡gosabb rÃ©szeirÅ‘l az NVDA a hangjelzÃ©s hangerejÃ©vel tÃ¡jÃ©koztat. MinÃ©l hangosabb a hangjelzÃ©s, annÃ¡l vilÃ¡gosabb az adott kÃ©pernyÅ‘terÃ¼let.
+Ezek a funkciÃ³k alapÃ©rtelmezÃ©s szerint ki vannak kapcsolva, de ha ki szeretnÃ©nk hasznÃ¡lni ezek elÅ‘nyeit, az egÃ©r beÃ¡llÃ­tÃ¡sai pÃ¡rbeszÃ©dpanelen bekapcsolhatjuk Å‘ket. A pÃ¡rbeszÃ©dpanelt az NVDA menÃ¼ beÃ¡llÃ­tÃ¡sok almenÃ¼jÃ©ben Ã©rhetjÃ¼k el.
+BÃ¡r az egÃ©r hasznÃ¡latÃ¡hoz egy fizikai egÃ©r (vagy mÃ¡s mutatÃ³eszkÃ¶z, pl. Trackball) szÃ¼ksÃ©ges, az NVDA rendelkezik nÃ©hÃ¡ny billentyÅ±paranccsal a kÃ¶nnyebb hasznÃ¡lat Ã©rdekÃ©ben.
+- Numerikus /: bal egÃ©rgomb kattintÃ¡s
+- Numerikus *: jobb egÃ©rgomb kattintÃ¡s
+- Shift+numerikus /: bal egÃ©rgomb zÃ¡rolÃ¡sa Ã©s feloldÃ¡sa
+- Shift +numerikus *: jobb egÃ©rgomb zÃ¡rolÃ¡sa Ã©s feloldÃ¡sa
+-
+
++ A virtuÃ¡lis kijelzÅ‘k +
+Az Ã¶sszetett csak olvashatÃ³ dokumentumok, pl. a weblapok, az NVDA-ban a virtuÃ¡lis kijelzÅ‘ben jelennek meg. 
+A virtuÃ¡lis kijelzÅ‘ egy egyszerÅ±sÃ­tett nÃ©zetÃ©t tartalmazza pl. a weboldalnak, amelyben a nyilakkal mozoghatunk. A kÃ¼lÃ¶nbÃ¶zÅ‘ informÃ¡ciÃ³kat, pl.  ha az adott szÃ¶vegrÃ©sz egy hivatkozÃ¡s, a cÃ­msorokat, egyÃ©b informÃ¡ciÃ³kat az NVDA a szÃ¶veggel egyÃ¼tt olvassa.
+A virtuÃ¡lis kijelzÅ‘ben kÃ©tfÃ©lekÃ©ppen hasznÃ¡lhatjuk az NVDA-t. BÃ¶ngÃ©szÅ‘ mÃ³dban egy virtuÃ¡lis kurzor segÃ­tsÃ©gÃ©vel mozoghatunk a szÃ¶vegben, interaktÃ­v mÃ³dban viszont kÃ¶zvetlenÃ¼l vihetÃ¼nk informÃ¡ciÃ³kat a bÃ¶ngÃ©szÅ‘be, pÃ©ldÃ¡ul Ã­rhatunk a szerkesztÅ‘mezÅ‘kbe, vÃ¡laszthatunk a kombinÃ¡lt listÃ¡kon, bejelÃ¶lhetjÃ¼k az egyik vÃ¡lasztÃ³gombot, tehÃ¡t ugyanazokat a billentyÅ±ket hasznÃ¡lhatjuk, amelyeket egyÃ©bkÃ©nt is hasznÃ¡lnÃ¡nk. Az NVDA bÃ¶ngÃ©szÅ‘ mÃ³dbÃ³l automatikusan interaktÃ­v mÃ³dba kapcsol, ha olyan vezÃ©rlÅ‘elemre lÃ©pÃ¼nk, amelynek hasznÃ¡latÃ¡hoz erre van szÃ¼ksÃ©g. KÃ©zzel is Ã¡tkapcsolhatunk interaktÃ­v mÃ³dra az NVDA+szÃ³kÃ¶z billentyÅ±paranccsal. Ha az NVDA automatikusan interaktÃ­v mÃ³dra vÃ¡ltott egy tab vagy egy kattintÃ¡s miatt, automatikusan visszavÃ¡lt bÃ¶ngÃ©szÅ‘ mÃ³dba, ha olyan elemre lÃ©pÃ¼nk, amely csak Ã­gy tekinthetÅ‘ meg. Ha viszont kÃ©zzel kapcsoltuk be az NVDA+szÃ³kÃ¶zzel az interaktÃ­v mÃ³dot, az NVDA mind addig interaktÃ­v mÃ³dban marad, amÃ­g az escape-pel vagy az NVDA+szÃ³kÃ¶z billentyÅ±paranccsal vissza nem kapcsolunk bÃ¶ngÃ©szÅ‘ mÃ³dba. A virtuÃ¡lis kijelzÅ‘ beÃ¡lÃ­tÃ¡sai pÃ¡rbeszÃ©dpanelen (NVDA menÃ¼ beÃ¡llÃ­tÃ¡sok almenÃ¼jÃ©ben) tiltani lehet az interaktÃ­v Ã©s bÃ¶ngÃ©szÅ‘ mÃ³d automatikus vÃ¡ltÃ¡sÃ¡t.
+Az NVDA jelenleg a Mozilla Firefoxban, a Microsoft Internet Explorerben Ã©s az Adobe Readerben hasznÃ¡l virtuÃ¡lis kijelzÅ‘t a dokumentumok olvasÃ¡sÃ¡hoz. 
+++ NavigÃ¡ciÃ³s gyorsbillentyÅ±k ++
+
+BÃ¶ngÃ©szÅ‘ mÃ³dban az NVDA a gyorsabb navigÃ¡ciÃ³ Ã©rdekÃ©ben egykarakteres navigÃ¡ciÃ³s gyorsbillentyÅ±ket tartalmaz a virtuÃ¡lis kijelzÅ‘ meghatÃ¡rozott terÃ¼letÃ©re tÃ¶rtÃ©nÅ‘ ugrÃ¡shoz. 
+Egymagukban a kÃ¶vetkezÅ‘, a shifttel egyÃ¼tt hasznÃ¡lva az elÅ‘zÅ‘ terÃ¼letre ugranak.
+- H: cÃ­msor 
 - L: lista 
 - i: listaelem 
-- T: táblázat 
-- K: hivatkozás 
-- F: ûrlapmezõ 
-- U: meg nem látogatott hivatkozás 
-- V: meglátogatott hivatkozás 
-- E: szerkesztõmezõ 
+- T: tÃ¡blÃ¡zat 
+- K: hivatkozÃ¡s 
+- F: Å±rlapmezÅ‘ 
+- U: meg nem lÃ¡togatott hivatkozÃ¡s 
+- V: meglÃ¡togatott hivatkozÃ¡s 
+- E: szerkesztÅ‘mezÅ‘ 
 - B: gomb 
-- X: jelölõnégyzet 
-- C: kombinált listamezõ 
-- R: választógomb 
-- Q: idézetblokk 
-- S: elválasztó 
+- X: jelÃ¶lÅ‘nÃ©gyzet 
+- C: kombinÃ¡lt listamezÅ‘ 
+- R: vÃ¡lasztÃ³gomb 
+- Q: idÃ©zetblokk 
+- S: elvÃ¡lasztÃ³ 
 - M: keret 
-- G: ábra 
-- D: Jelzõpont
--N: hivatkozás nélküli szöveg
-- O: beágyazott objektum
-- 1-tõl 6-ig: elsõtõl hatodikig terjedõ szintû címsorokra történõ ugrás 
+- G: Ã¡bra 
+- D: JelzÅ‘pont
+-N: hivatkozÃ¡s nÃ©lkÃ¼li szÃ¶veg
+- O: beÃ¡gyazott objektum
+- 1-tÅ‘l 6-ig: elsÅ‘tÅ‘l hatodikig terjedÅ‘ szintÅ± cÃ­msorokra tÃ¶rtÃ©nÅ‘ ugrÃ¡s 
 -
-Kiegészítõ megjegyzés: a navigációs gyorsbillentyûket könnyebb megjegyezni, ha megjegyezzük azoknak a fogalmaknak az angol megfelelõjét, amire utalnak. Pl.: paragraph: bekezdés, edit box: szerkesztõmezõ, radio button: választógomb.
-++ Az ûrlapokról, a böngészõ- és interaktív módról ++
+KiegÃ©szÃ­tÅ‘ megjegyzÃ©s: a navigÃ¡ciÃ³s gyorsbillentyÅ±ket kÃ¶nnyebb megjegyezni, ha megjegyezzÃ¼k azoknak a fogalmaknak az angol megfelelÅ‘jÃ©t, amire utalnak. Pl.: paragraph: bekezdÃ©s, edit box: szerkesztÅ‘mezÅ‘, radio button: vÃ¡lasztÃ³gomb.
+++ Az Å±rlapokrÃ³l, a bÃ¶ngÃ©szÅ‘- Ã©s interaktÃ­v mÃ³drÃ³l ++
 
-Elõfordulhat, hogy ûrlapmezõk kitöltése közben a navigációs gyorsbillentyûk akadályozzák az ûrlapok kitöltését. Az interaktív módot erre találták ki, be, illetve kikapcsolható az NVDA+szóköz billentyûparanccsal. 
+ElÅ‘fordulhat, hogy Å±rlapmezÅ‘k kitÃ¶ltÃ©se kÃ¶zben a navigÃ¡ciÃ³s gyorsbillentyÅ±k akadÃ¡lyozzÃ¡k az Å±rlapok kitÃ¶ltÃ©sÃ©t. Az interaktÃ­v mÃ³dot erre talÃ¡ltÃ¡k ki, be, illetve kikapcsolhatÃ³ az NVDA+szÃ³kÃ¶z billentyÅ±paranccsal. 
 
-++ Az elemek listája ++
+++ Az elemek listÃ¡ja ++
 
-Az aktuális virtuális kijelzõben az elemek listájának megjelenítéséhez nyomjuk meg az NVDA+f7 billentyûparancsot. Ez a hivatkozások,  címsorok, és a jelzõpontok listáját tartalmazza. Egy választógombbal lehet kiválasztani, hogy melyik tipusú elemek listáját szeretnénk megjeleníteni. A "szûrés" mezõbe beírhatjuk a keresett elem elsõ pár karakterét, így a shift+tabbal visszalépve csak a feltételnek megfelelõ elemek listája jelenik meg. Egy elemet az enterrel, vagy az "aktiválás" gombbal aktiválhatunk. Az "Ugrás gomb" lenyomásakor a kurzor arra az elemre ugrik, de nem aktiválja azt.
+Az aktuÃ¡lis virtuÃ¡lis kijelzÅ‘ben az elemek listÃ¡jÃ¡nak megjelenÃ­tÃ©sÃ©hez nyomjuk meg az NVDA+f7 billentyÅ±parancsot. Ez a hivatkozÃ¡sok,  cÃ­msorok, Ã©s a jelzÅ‘pontok listÃ¡jÃ¡t tartalmazza. Egy vÃ¡lasztÃ³gombbal lehet kivÃ¡lasztani, hogy melyik tipusÃº elemek listÃ¡jÃ¡t szeretnÃ©nk megjelenÃ­teni. A "szÅ±rÃ©s" mezÅ‘be beÃ­rhatjuk a keresett elem elsÅ‘ pÃ¡r karakterÃ©t, Ã­gy a shift+tabbal visszalÃ©pve csak a feltÃ©telnek megfelelÅ‘ elemek listÃ¡ja jelenik meg. Egy elemet az enterrel, vagy az "aktivÃ¡lÃ¡s" gombbal aktivÃ¡lhatunk. Az "UgrÃ¡s gomb" lenyomÃ¡sakor a kurzor arra az elemre ugrik, de nem aktivÃ¡lja azt.
 
-++ A beágyazott objektumokról ++
+++ A beÃ¡gyazott objektumokrÃ³l ++
 
-Azokon a weblapokon, amelyeken találhatók szórakoztató tartalmak (Pl Youtube videók), és az Adobe Flash vagy a Sun Java technológiát használják, ott az NVDA a "beágyazott objektum" kifejezést mondja. Ha ekkor entert nyomunk, és ez az objektum akadálymentes, a tabok mozgatásával tudunk lépkedni az elemeken (legtöbbszõr gombokon), amit az enter, vagy a szóköz billentyûvel tudunk aktiválni. A weblapra visszatéréshez használjuk a kontroll+szóköz billentyû kombinációt.
+Azokon a weblapokon, amelyeken talÃ¡lhatÃ³k szÃ³rakoztatÃ³ tartalmak (Pl Youtube videÃ³k), Ã©s az Adobe Flash vagy a Sun Java technolÃ³giÃ¡t hasznÃ¡ljÃ¡k, ott az NVDA a "beÃ¡gyazott objektum" kifejezÃ©st mondja. Ha ekkor entert nyomunk, Ã©s ez az objektum akadÃ¡lymentes, a tabok mozgatÃ¡sÃ¡val tudunk lÃ©pkedni az elemeken (legtÃ¶bbszÅ‘r gombokon), amit az enter, vagy a szÃ³kÃ¶z billentyÅ±vel tudunk aktivÃ¡lni. A weblapra visszatÃ©rÃ©shez hasznÃ¡ljuk a kontroll+szÃ³kÃ¶z billentyÅ± kombinÃ¡ciÃ³t.
 
-+ További információk +
++ TovÃ¡bbi informÃ¡ciÃ³k +
 
-Mivel az NVDA-t folyamatosan frissítik, nem lehet szavatolni, hogy az e felhasználói kézikönyvben írott útmutatások mindegyike alkalmazható lesz. Ha bármilyen észrevétele van az e kézikönyvben írott útmutatásokkal kapcsolatban, kérjük, magyar nyelvû javaslata, kérése, kérdése esetén látogassa meg az: [NVDA Honosítási project http://www.nvda.hu] weboldalát, angol nyelvû kérés, kérdés, javaslat esetén pedig az [NVDA hivatalos weboldalát http://www.nvda-project.org/] további segítségért.
+Mivel az NVDA-t folyamatosan frissÃ­tik, nem lehet szavatolni, hogy az e felhasznÃ¡lÃ³i kÃ©zikÃ¶nyvben Ã­rott ÃºtmutatÃ¡sok mindegyike alkalmazhatÃ³ lesz. Ha bÃ¡rmilyen Ã©szrevÃ©tele van az e kÃ©zikÃ¶nyvben Ã­rott ÃºtmutatÃ¡sokkal kapcsolatban, kÃ©rjÃ¼k, magyar nyelvÅ± javaslata, kÃ©rÃ©se, kÃ©rdÃ©se esetÃ©n lÃ¡togassa meg az: [NVDA HonosÃ­tÃ¡si project http://www.nvda.hu] weboldalÃ¡t, angol nyelvÅ± kÃ©rÃ©s, kÃ©rdÃ©s, javaslat esetÃ©n pedig az [NVDA hivatalos weboldalÃ¡t http://www.nvda-project.org/] tovÃ¡bbi segÃ­tsÃ©gÃ©rt.
 
-+ Fogalom meghatározások +
++ Fogalom meghatÃ¡rozÃ¡sok +
 
-Ebben a dokumentumban a következõ fogalmakon az alábbi meghatározásokat értjük:
+Ebben a dokumentumban a kÃ¶vetkezÅ‘ fogalmakon az alÃ¡bbi meghatÃ¡rozÃ¡sokat Ã©rtjÃ¼k:
 
-Fogalom meghatározások
-- Numerikus billentyûzet: A billentyûzet elkülönülõ részén lévõ, számok bevitelére, mûveletek végzésére szolgáló billentyûzetrész, notebookokon a notebook billentyûzet jobb oldalán, általában az "M", "J", "U" betûktõl indulva, rendszerint az FN-numlock bekapcsolásával érhetõ el. ez esetben a numerikus billentyûzet kurzorvezérlõ vagy numerikus billentyûzetként viselkedik attól függõen, hogy a numlock be van-e kapcsolva. Ideiglenesen az FN nyomvatartásával is használhatjuk. Szükség esetén külön, erre a célra készített billentyûzetet is csatlakoztathatunk notebookunkhoz.
-- FN-billentyû: A notebook (hordozható számítógép) olyan speciális billentyûje, amellyel a notebookon nem lévõ billentyûket hívhatunk elõ más billentyûkkel együtt, illetve más billentyûkkel együtt használva a hordozható számítógép speciális funkcióit érhetjük el (pl. hibernálás, készenlét, monitor kikapcsolása).
-- NVDA gomb: Beállítástól függõen a capslock (nagybetûzár), a normál insert, valamint a numerikus billentyûzeten lévõ insert. Mind a három egyszerre is használható. Segítségükkel, más billentyûkkel együtt, az NVDA speciális billentyûparancsait érhetjük el.
-- NVDA menü: Az NVDA+N billentyûparancsra elõugró, az NVDA képernyõolvasó program speciális menüje.
-- alfanumerikus, vagy normál billentyûzet: Tartalmazza az összes betût, írás- és mûveleti jelet, számot, számítógépvezérlõ- és parancsbillentyûket, beleértve a funkcióbillentyûket, az enter és escape billentyûket, szövegszerkesztõ és más hasonló billentyûket is.
-- Kiterjesztett billentyûzet: A normál billentyûzetnek az a része, amely a szerkesztõ és kurzormozgató billentyûket tartalmazza, ide tartoznak például: a nyilak, a home és end, page up / down, a normál insert és normál del, a printscreen, pause / break és a scroll lock.
-- Beszédszintetizátor: Olyan szoftver, illetõleg hardver vagy szoftver együttese, amely az elektronikus szöveget az emberi beszédhez hasonló, a kiválasztott nyelv szabályai szerint képezett, hangzó beszéddé alakítja és valamilyen hangeszközön, leggyakrabban hangkártyán megjeleníti.
-- Braille kijelzõ: Olyan készülék, amely az elektronikus szöveget a pontírás szabályai szerint, kidomborodó, tapintható jelek sorozataként írja ki.
-- Képernyõolvasó: Olyan szoftver, amely a vakok (és gyengénlátók) számára - a beszédszintetizátorra vagy a braille kijelzõre küldve - közli a számítógépen zajló és a képernyõn látható lényeges eseményeket. 
-- Interfész: Az alkalmazásoknak és az operációs rendszernek azon, rendszerint a képernyõn látható része, amely lehetõvé teszi az alkalmazással, operációs rendszerrel való emberi kommunikációt.
-- Elem: Az alkalmazás vagy az operációs rendszer interfészének olyan logikailag elkülönült része, amely meghatározott információt közöl vagy meghatározott vezérlõelemet vagy vezérlõelemeket tartalmaz.
-- Vezérlõelem: Olyan elem, amelynek segítségével akaratunknak megfelelõen befolyásolhatjuk az alkalmazás mûködését.
-- Virtuális kijelzõ: Olyan speciális memóriaterület (puffer), amelyre a képernyõolvasó az összetett dokumentumok (pl. html, pdf) leegyszerûsített, átalakított  képét másolja abból a célból, hogy azt a látássérült felhasználó könnyebben áttekinthesse.
-- Böngészõ mód: A képernyõolvasó olyan módja, amely segítségével a dokumentumot a virtuális kijelzõben olvassuk.
-- Interaktív mód: A képernyõolvasónak az a módja, amely közvetlenül lehetõvé teszi a böngészõben vagy pdf-olvasóban megjelenõ vezérlõelemek kezelését. E mód segítségével lehet ûrlapokat (formokat) kitölteni, illetõleg egyéb vezérlõ mûveleteket végezni (pl. távoli szolgáltatások beállításai).
-- Navigációs gyorsbillentyû: A böngészõ módban használható olyan egybillentyûs parancsok, amelyek az összetett dokumentum meghatározott részére helyezik a képernyõolvasó virtuális (böngészõ) kurzorát.
-- parancsikon: olyan speciális fájl, amellyel anélkül indíthatunk el egy programot vagy végezhetünk el egy mûveletet, hogy a program indítófájlját meg kellene keresnünk vagy a mûvelet parancsait be kellene gépelnünk.
-- A futtatás ablak: A Windowsnak az a része, ahová begépelhetünk egy parancsot, iletve kitallózhatunk egy indítandó programot, ha ahhoz nem tartozik ikon.
-- Asztal: A Windows fõ képernyõje, rendszerint parancsikonokkal, a tálcával és a start gombbal.
-- Start menü: A Windows speciális menüje, amelyben az asztalon el nem férõ ikonokat találjuk mappákba (almenükbe) szervezve.
-- Menü: Az operációs rendszer, illetve az alkalmazások olyan része, amelyekben hierarchikus struktúrában szervezve találjuk meg az adott alkalmazással vagy a rendszer adott részével végezhetõ mûveleteket, parancsokat.
-- Almenü: A menünek az az elágazó része, amely további almenüket vagy parancsokat tartalmaz.
-- Menüparancs: A menünek az a része, amely közvetlenül valamilyen mûveletet végez vagy párbeszédpanelt nyit meg. A párbeszédpanelt megnyitó parancsot "..." jelzi.
-- Ablak: A képernyõnek egy meghatározott területe, amelyben adott alkalmazás, vagy annak része jelenik meg. Rendszerint saját címsort és saját menüt is tartalmaz.
-- Párbeszédpanel: Olyan speciális, rendszerint kis méretû ablak, amely az operációs rendszer adott része vagy egy program beállításainak megváltoztatását vagy információk bevitelét teszi lehetõvé.
-- Szerkesztõmezõ: Olyan terület, amely szövegek, információk bevitelére szolgál. Lehet 
+Fogalom meghatÃ¡rozÃ¡sok
+- Numerikus billentyÅ±zet: A billentyÅ±zet elkÃ¼lÃ¶nÃ¼lÅ‘ rÃ©szÃ©n lÃ©vÅ‘, szÃ¡mok bevitelÃ©re, mÅ±veletek vÃ©gzÃ©sÃ©re szolgÃ¡lÃ³ billentyÅ±zetrÃ©sz, notebookokon a notebook billentyÅ±zet jobb oldalÃ¡n, Ã¡ltalÃ¡ban az "M", "J", "U" betÅ±ktÅ‘l indulva, rendszerint az FN-numlock bekapcsolÃ¡sÃ¡val Ã©rhetÅ‘ el. ez esetben a numerikus billentyÅ±zet kurzorvezÃ©rlÅ‘ vagy numerikus billentyÅ±zetkÃ©nt viselkedik attÃ³l fÃ¼ggÅ‘en, hogy a numlock be van-e kapcsolva. Ideiglenesen az FN nyomvatartÃ¡sÃ¡val is hasznÃ¡lhatjuk. SzÃ¼ksÃ©g esetÃ©n kÃ¼lÃ¶n, erre a cÃ©lra kÃ©szÃ­tett billentyÅ±zetet is csatlakoztathatunk notebookunkhoz.
+- FN-billentyÅ±: A notebook (hordozhatÃ³ szÃ¡mÃ­tÃ³gÃ©p) olyan speciÃ¡lis billentyÅ±je, amellyel a notebookon nem lÃ©vÅ‘ billentyÅ±ket hÃ­vhatunk elÅ‘ mÃ¡s billentyÅ±kkel egyÃ¼tt, illetve mÃ¡s billentyÅ±kkel egyÃ¼tt hasznÃ¡lva a hordozhatÃ³ szÃ¡mÃ­tÃ³gÃ©p speciÃ¡lis funkciÃ³it Ã©rhetjÃ¼k el (pl. hibernÃ¡lÃ¡s, kÃ©szenlÃ©t, monitor kikapcsolÃ¡sa).
+- NVDA gomb: BeÃ¡llÃ­tÃ¡stÃ³l fÃ¼ggÅ‘en a capslock (nagybetÅ±zÃ¡r), a normÃ¡l insert, valamint a numerikus billentyÅ±zeten lÃ©vÅ‘ insert. Mind a hÃ¡rom egyszerre is hasznÃ¡lhatÃ³. SegÃ­tsÃ©gÃ¼kkel, mÃ¡s billentyÅ±kkel egyÃ¼tt, az NVDA speciÃ¡lis billentyÅ±parancsait Ã©rhetjÃ¼k el.
+- NVDA menÃ¼: Az NVDA+N billentyÅ±parancsra elÅ‘ugrÃ³, az NVDA kÃ©pernyÅ‘olvasÃ³ program speciÃ¡lis menÃ¼je.
+- alfanumerikus, vagy normÃ¡l billentyÅ±zet: Tartalmazza az Ã¶sszes betÅ±t, Ã­rÃ¡s- Ã©s mÅ±veleti jelet, szÃ¡mot, szÃ¡mÃ­tÃ³gÃ©pvezÃ©rlÅ‘- Ã©s parancsbillentyÅ±ket, beleÃ©rtve a funkciÃ³billentyÅ±ket, az enter Ã©s escape billentyÅ±ket, szÃ¶vegszerkesztÅ‘ Ã©s mÃ¡s hasonlÃ³ billentyÅ±ket is.
+- Kiterjesztett billentyÅ±zet: A normÃ¡l billentyÅ±zetnek az a rÃ©sze, amely a szerkesztÅ‘ Ã©s kurzormozgatÃ³ billentyÅ±ket tartalmazza, ide tartoznak pÃ©ldÃ¡ul: a nyilak, a home Ã©s end, page up / down, a normÃ¡l insert Ã©s normÃ¡l del, a printscreen, pause / break Ã©s a scroll lock.
+- BeszÃ©dszintetizÃ¡tor: Olyan szoftver, illetÅ‘leg hardver vagy szoftver egyÃ¼ttese, amely az elektronikus szÃ¶veget az emberi beszÃ©dhez hasonlÃ³, a kivÃ¡lasztott nyelv szabÃ¡lyai szerint kÃ©pezett, hangzÃ³ beszÃ©ddÃ© alakÃ­tja Ã©s valamilyen hangeszkÃ¶zÃ¶n, leggyakrabban hangkÃ¡rtyÃ¡n megjelenÃ­ti.
+- Braille kijelzÅ‘: Olyan kÃ©szÃ¼lÃ©k, amely az elektronikus szÃ¶veget a pontÃ­rÃ¡s szabÃ¡lyai szerint, kidomborodÃ³, tapinthatÃ³ jelek sorozatakÃ©nt Ã­rja ki.
+- KÃ©pernyÅ‘olvasÃ³: Olyan szoftver, amely a vakok (Ã©s gyengÃ©nlÃ¡tÃ³k) szÃ¡mÃ¡ra - a beszÃ©dszintetizÃ¡torra vagy a braille kijelzÅ‘re kÃ¼ldve - kÃ¶zli a szÃ¡mÃ­tÃ³gÃ©pen zajlÃ³ Ã©s a kÃ©pernyÅ‘n lÃ¡thatÃ³ lÃ©nyeges esemÃ©nyeket. 
+- InterfÃ©sz: Az alkalmazÃ¡soknak Ã©s az operÃ¡ciÃ³s rendszernek azon, rendszerint a kÃ©pernyÅ‘n lÃ¡thatÃ³ rÃ©sze, amely lehetÅ‘vÃ© teszi az alkalmazÃ¡ssal, operÃ¡ciÃ³s rendszerrel valÃ³ emberi kommunikÃ¡ciÃ³t.
+- Elem: Az alkalmazÃ¡s vagy az operÃ¡ciÃ³s rendszer interfÃ©szÃ©nek olyan logikailag elkÃ¼lÃ¶nÃ¼lt rÃ©sze, amely meghatÃ¡rozott informÃ¡ciÃ³t kÃ¶zÃ¶l vagy meghatÃ¡rozott vezÃ©rlÅ‘elemet vagy vezÃ©rlÅ‘elemeket tartalmaz.
+- VezÃ©rlÅ‘elem: Olyan elem, amelynek segÃ­tsÃ©gÃ©vel akaratunknak megfelelÅ‘en befolyÃ¡solhatjuk az alkalmazÃ¡s mÅ±kÃ¶dÃ©sÃ©t.
+- VirtuÃ¡lis kijelzÅ‘: Olyan speciÃ¡lis memÃ³riaterÃ¼let (puffer), amelyre a kÃ©pernyÅ‘olvasÃ³ az Ã¶sszetett dokumentumok (pl. html, pdf) leegyszerÅ±sÃ­tett, Ã¡talakÃ­tott  kÃ©pÃ©t mÃ¡solja abbÃ³l a cÃ©lbÃ³l, hogy azt a lÃ¡tÃ¡ssÃ©rÃ¼lt felhasznÃ¡lÃ³ kÃ¶nnyebben Ã¡ttekinthesse.
+- BÃ¶ngÃ©szÅ‘ mÃ³d: A kÃ©pernyÅ‘olvasÃ³ olyan mÃ³dja, amely segÃ­tsÃ©gÃ©vel a dokumentumot a virtuÃ¡lis kijelzÅ‘ben olvassuk.
+- InteraktÃ­v mÃ³d: A kÃ©pernyÅ‘olvasÃ³nak az a mÃ³dja, amely kÃ¶zvetlenÃ¼l lehetÅ‘vÃ© teszi a bÃ¶ngÃ©szÅ‘ben vagy pdf-olvasÃ³ban megjelenÅ‘ vezÃ©rlÅ‘elemek kezelÃ©sÃ©t. E mÃ³d segÃ­tsÃ©gÃ©vel lehet Å±rlapokat (formokat) kitÃ¶lteni, illetÅ‘leg egyÃ©b vezÃ©rlÅ‘ mÅ±veleteket vÃ©gezni (pl. tÃ¡voli szolgÃ¡ltatÃ¡sok beÃ¡llÃ­tÃ¡sai).
+- NavigÃ¡ciÃ³s gyorsbillentyÅ±: A bÃ¶ngÃ©szÅ‘ mÃ³dban hasznÃ¡lhatÃ³ olyan egybillentyÅ±s parancsok, amelyek az Ã¶sszetett dokumentum meghatÃ¡rozott rÃ©szÃ©re helyezik a kÃ©pernyÅ‘olvasÃ³ virtuÃ¡lis (bÃ¶ngÃ©szÅ‘) kurzorÃ¡t.
+- parancsikon: olyan speciÃ¡lis fÃ¡jl, amellyel anÃ©lkÃ¼l indÃ­thatunk el egy programot vagy vÃ©gezhetÃ¼nk el egy mÅ±veletet, hogy a program indÃ­tÃ³fÃ¡jljÃ¡t meg kellene keresnÃ¼nk vagy a mÅ±velet parancsait be kellene gÃ©pelnÃ¼nk.
+- A futtatÃ¡s ablak: A Windowsnak az a rÃ©sze, ahovÃ¡ begÃ©pelhetÃ¼nk egy parancsot, iletve kitallÃ³zhatunk egy indÃ­tandÃ³ programot, ha ahhoz nem tartozik ikon.
+- Asztal: A Windows fÅ‘ kÃ©pernyÅ‘je, rendszerint parancsikonokkal, a tÃ¡lcÃ¡val Ã©s a start gombbal.
+- Start menÃ¼: A Windows speciÃ¡lis menÃ¼je, amelyben az asztalon el nem fÃ©rÅ‘ ikonokat talÃ¡ljuk mappÃ¡kba (almenÃ¼kbe) szervezve.
+- MenÃ¼: Az operÃ¡ciÃ³s rendszer, illetve az alkalmazÃ¡sok olyan rÃ©sze, amelyekben hierarchikus struktÃºrÃ¡ban szervezve talÃ¡ljuk meg az adott alkalmazÃ¡ssal vagy a rendszer adott rÃ©szÃ©vel vÃ©gezhetÅ‘ mÅ±veleteket, parancsokat.
+- AlmenÃ¼: A menÃ¼nek az az elÃ¡gazÃ³ rÃ©sze, amely tovÃ¡bbi almenÃ¼ket vagy parancsokat tartalmaz.
+- MenÃ¼parancs: A menÃ¼nek az a rÃ©sze, amely kÃ¶zvetlenÃ¼l valamilyen mÅ±veletet vÃ©gez vagy pÃ¡rbeszÃ©dpanelt nyit meg. A pÃ¡rbeszÃ©dpanelt megnyitÃ³ parancsot "..." jelzi.
+- Ablak: A kÃ©pernyÅ‘nek egy meghatÃ¡rozott terÃ¼lete, amelyben adott alkalmazÃ¡s, vagy annak rÃ©sze jelenik meg. Rendszerint sajÃ¡t cÃ­msort Ã©s sajÃ¡t menÃ¼t is tartalmaz.
+- PÃ¡rbeszÃ©dpanel: Olyan speciÃ¡lis, rendszerint kis mÃ©retÅ± ablak, amely az operÃ¡ciÃ³s rendszer adott rÃ©sze vagy egy program beÃ¡llÃ­tÃ¡sainak megvÃ¡ltoztatÃ¡sÃ¡t vagy informÃ¡ciÃ³k bevitelÃ©t teszi lehetÅ‘vÃ©.
+- SzerkesztÅ‘mezÅ‘: Olyan terÃ¼let, amely szÃ¶vegek, informÃ¡ciÃ³k bevitelÃ©re szolgÃ¡l. Lehet 
  - egysoros
-- többsoros
-- "rich text" (összetet formázást lehetõvé tevõ)
-- csak olvasható: amelybe nem lehet írni, csak információt jelenít meg
-- jelszó bevitelére alkalmas: amely a begépelt karakterek helyett csillagokat jelenít meg a képernyõn, de a programnak a valódi karaktersort adja át).
-- Kombinált: írhatunk bele, de tetszés szerint a korábban beírt lehetõségeket is kiválaszthatjuk (az alt le nyíllal megnyitva, korábbi lehetõséget kiválasztva és az alt-felnyíllal bezárva).
-- Léptetõ: a nyilakkal fel-le lépkedve automatikusan csökkenti vagy növeli a bele írt értéket, de ezt tetszés szerint át is írhatjuk.
+- tÃ¶bbsoros
+- "rich text" (Ã¶sszetet formÃ¡zÃ¡st lehetÅ‘vÃ© tevÅ‘)
+- csak olvashatÃ³: amelybe nem lehet Ã­rni, csak informÃ¡ciÃ³t jelenÃ­t meg
+- jelszÃ³ bevitelÃ©re alkalmas: amely a begÃ©pelt karakterek helyett csillagokat jelenÃ­t meg a kÃ©pernyÅ‘n, de a programnak a valÃ³di karaktersort adja Ã¡t).
+- KombinÃ¡lt: Ã­rhatunk bele, de tetszÃ©s szerint a korÃ¡bban beÃ­rt lehetÅ‘sÃ©geket is kivÃ¡laszthatjuk (az alt le nyÃ­llal megnyitva, korÃ¡bbi lehetÅ‘sÃ©get kivÃ¡lasztva Ã©s az alt-felnyÃ­llal bezÃ¡rva).
+- LÃ©ptetÅ‘: a nyilakkal fel-le lÃ©pkedve automatikusan csÃ¶kkenti vagy nÃ¶veli a bele Ã­rt Ã©rtÃ©ket, de ezt tetszÃ©s szerint Ã¡t is Ã­rhatjuk.
 
--Jelzõpont: A weblap készítõje által a látássérültek számára elhelyezett pont, ezek elõsegítik a gyorsabb navigációt a weboldalakon.
--Beágyazott objektum: Adobe Flash vagy Sun Java alkalmazás
-- Csúszka: Olyan vezérlõelem, amelyet az egérrel tolva / húzva (vagy valamelyik nyílpáros, fel-le vagy jobbra-balra segítségével) egy adott értéket állíthatunk be.
-- Gomb: Olyan vezérlõelem, amelyre kattintva (vagy a szóközt használva) azt "megnyomva" valamilyen funkciót érvényesítünk, pl. mentjük a változtatásokat, vagy elvetjük azokat, újabb párbeszédpanelt nyitunk meg, stb).
-- Füles panel: A füles panel segítségével a képernyõn el nem férõ, de egymáshoz szorosan kapcsolódó párbeszédpaneleket jeleníthetünk meg a fülre kattintva, a fülsoron jobbra-balra lépkedve és a szóközt megnyomva vagy a kontrol-tabbal lapról lapra haladva.
-- Jelölõnégyzet: Olyan vezérlõelem, mely két állapot között enged választani, az egérrel vagy a szóközzel jelölhetjük be vagy vehetjük ki a jelölést.
-- választógomb (rádiógomb): Olyan gombsor, amely több választható lehetõség közül egyet enged kiválasztani, a nyilak segítségével válthatjuk.
-- Lista: Olyan vezérlõelem, amely meghatározott rend szerint rendezi csoportba az ugyanolyan jellemzõkkel rendelkezõ objektumokat (pl. fájllista). A nyilakkal mozoghatunk benne, de rendszerint az elem kezdõbetûinek begépelésével az adott elemre vagy a hozzá legközelebb esõre ugrik.
-- kombinált listamezõ: Olyan lista, amelybõl egyszerre csak egy elem választható. Használjuk a biztonságosab kijelöléshez az alt le parancsot, ezzel megnyitva a listamezõt, jelöljük ki a kívánt értéket, majd az alt felnyíllal zárjuk be. A változtatások ekkor lépnek hatályba.
--Többes kijelölésû lista: Olyan lista, amelyben egyszerre több elem is kijelölhetõ. A shift+nyilakkal a szomszédos, a kontrollt nyomva tartva és a kívánt elemen szóközt nyomva az egymástól távol esõ elemeket jelölhetjük ki. A kontrolt csak a kijelölések legvégén engedjük fel.
-- Fanézet: Olyan vezérlõelem, melyen sok elem közül lehet választani, ezért az elemek logikailag, hierarchikusan vannak elrendezve. A fanézet legyezõszerû, ágakra, alágakra és végpontokra bomlik, a végpontokon érhetõek el az egyes lehetõségek, pl. súgótémakörök. A fel-le nyíllal lépkedhetünk az ágakon, a jobbra nyíllal kinyithatjuk õket, a balra nyíl elõször a nyitott ág tetejére tér vissza, másodszor megnyomva a nyitott ágat bezárja.
-- Parancssor: A Windows olyan speciális alrendszere, mely karakteres üzemmódú mûködést tesz lehetõvé, és parancsok, kulcsszavak begépelésével teszi lehetõvé a számítógép használatát. Az MS-Dos, az OS/2 és más rendszerek parancsait tartalmazza.
-- Konzol (vagy parancssori) alkalmazás: Olyan karakteres üzemmódú alkalmazás, mely a parancssori alrendszerben (vagy konzolon) fut.
+-JelzÅ‘pont: A weblap kÃ©szÃ­tÅ‘je Ã¡ltal a lÃ¡tÃ¡ssÃ©rÃ¼ltek szÃ¡mÃ¡ra elhelyezett pont, ezek elÅ‘segÃ­tik a gyorsabb navigÃ¡ciÃ³t a weboldalakon.
+-BeÃ¡gyazott objektum: Adobe Flash vagy Sun Java alkalmazÃ¡s
+- CsÃºszka: Olyan vezÃ©rlÅ‘elem, amelyet az egÃ©rrel tolva / hÃºzva (vagy valamelyik nyÃ­lpÃ¡ros, fel-le vagy jobbra-balra segÃ­tsÃ©gÃ©vel) egy adott Ã©rtÃ©ket Ã¡llÃ­thatunk be.
+- Gomb: Olyan vezÃ©rlÅ‘elem, amelyre kattintva (vagy a szÃ³kÃ¶zt hasznÃ¡lva) azt "megnyomva" valamilyen funkciÃ³t Ã©rvÃ©nyesÃ­tÃ¼nk, pl. mentjÃ¼k a vÃ¡ltoztatÃ¡sokat, vagy elvetjÃ¼k azokat, Ãºjabb pÃ¡rbeszÃ©dpanelt nyitunk meg, stb).
+- FÃ¼les panel: A fÃ¼les panel segÃ­tsÃ©gÃ©vel a kÃ©pernyÅ‘n el nem fÃ©rÅ‘, de egymÃ¡shoz szorosan kapcsolÃ³dÃ³ pÃ¡rbeszÃ©dpaneleket jelenÃ­thetÃ¼nk meg a fÃ¼lre kattintva, a fÃ¼lsoron jobbra-balra lÃ©pkedve Ã©s a szÃ³kÃ¶zt megnyomva vagy a kontrol-tabbal laprÃ³l lapra haladva.
+- JelÃ¶lÅ‘nÃ©gyzet: Olyan vezÃ©rlÅ‘elem, mely kÃ©t Ã¡llapot kÃ¶zÃ¶tt enged vÃ¡lasztani, az egÃ©rrel vagy a szÃ³kÃ¶zzel jelÃ¶lhetjÃ¼k be vagy vehetjÃ¼k ki a jelÃ¶lÃ©st.
+- vÃ¡lasztÃ³gomb (rÃ¡diÃ³gomb): Olyan gombsor, amely tÃ¶bb vÃ¡laszthatÃ³ lehetÅ‘sÃ©g kÃ¶zÃ¼l egyet enged kivÃ¡lasztani, a nyilak segÃ­tsÃ©gÃ©vel vÃ¡lthatjuk.
+- Lista: Olyan vezÃ©rlÅ‘elem, amely meghatÃ¡rozott rend szerint rendezi csoportba az ugyanolyan jellemzÅ‘kkel rendelkezÅ‘ objektumokat (pl. fÃ¡jllista). A nyilakkal mozoghatunk benne, de rendszerint az elem kezdÅ‘betÅ±inek begÃ©pelÃ©sÃ©vel az adott elemre vagy a hozzÃ¡ legkÃ¶zelebb esÅ‘re ugrik.
+- kombinÃ¡lt listamezÅ‘: Olyan lista, amelybÅ‘l egyszerre csak egy elem vÃ¡laszthatÃ³. HasznÃ¡ljuk a biztonsÃ¡gosab kijelÃ¶lÃ©shez az alt le parancsot, ezzel megnyitva a listamezÅ‘t, jelÃ¶ljÃ¼k ki a kÃ­vÃ¡nt Ã©rtÃ©ket, majd az alt felnyÃ­llal zÃ¡rjuk be. A vÃ¡ltoztatÃ¡sok ekkor lÃ©pnek hatÃ¡lyba.
+-TÃ¶bbes kijelÃ¶lÃ©sÅ± lista: Olyan lista, amelyben egyszerre tÃ¶bb elem is kijelÃ¶lhetÅ‘. A shift+nyilakkal a szomszÃ©dos, a kontrollt nyomva tartva Ã©s a kÃ­vÃ¡nt elemen szÃ³kÃ¶zt nyomva az egymÃ¡stÃ³l tÃ¡vol esÅ‘ elemeket jelÃ¶lhetjÃ¼k ki. A kontrolt csak a kijelÃ¶lÃ©sek legvÃ©gÃ©n engedjÃ¼k fel.
+- FanÃ©zet: Olyan vezÃ©rlÅ‘elem, melyen sok elem kÃ¶zÃ¼l lehet vÃ¡lasztani, ezÃ©rt az elemek logikailag, hierarchikusan vannak elrendezve. A fanÃ©zet legyezÅ‘szerÅ±, Ã¡gakra, alÃ¡gakra Ã©s vÃ©gpontokra bomlik, a vÃ©gpontokon Ã©rhetÅ‘ek el az egyes lehetÅ‘sÃ©gek, pl. sÃºgÃ³tÃ©makÃ¶rÃ¶k. A fel-le nyÃ­llal lÃ©pkedhetÃ¼nk az Ã¡gakon, a jobbra nyÃ­llal kinyithatjuk Å‘ket, a balra nyÃ­l elÅ‘szÃ¶r a nyitott Ã¡g tetejÃ©re tÃ©r vissza, mÃ¡sodszor megnyomva a nyitott Ã¡gat bezÃ¡rja.
+- Parancssor: A Windows olyan speciÃ¡lis alrendszere, mely karakteres Ã¼zemmÃ³dÃº mÅ±kÃ¶dÃ©st tesz lehetÅ‘vÃ©, Ã©s parancsok, kulcsszavak begÃ©pelÃ©sÃ©vel teszi lehetÅ‘vÃ© a szÃ¡mÃ­tÃ³gÃ©p hasznÃ¡latÃ¡t. Az MS-Dos, az OS/2 Ã©s mÃ¡s rendszerek parancsait tartalmazza.
+- Konzol (vagy parancssori) alkalmazÃ¡s: Olyan karakteres Ã¼zemmÃ³dÃº alkalmazÃ¡s, mely a parancssori alrendszerben (vagy konzolon) fut.
 -

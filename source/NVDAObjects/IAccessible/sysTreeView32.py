@@ -220,13 +220,15 @@ class BrokenCommctrl5Item(IAccessible):
 
 	def initOverlayClass(self):
 		self._uiaObj = None
-		if UIAHandler.handler and super(BrokenCommctrl5Item, self).parent.hasFocus:
-			try:
-				kwargs = {}
-				UIA.kwargsFromSuper(kwargs, relation="focus")
-				self._uiaObj = UIA(**kwargs)
-			except:
-				log.debugWarning("Retrieving UIA focus failed", exc_info=True)
+		if UIAHandler.handler: 
+			parent=super(BrokenCommctrl5Item, self).parent
+			if parent and parent.hasFocus:
+				try:
+					kwargs = {}
+					UIA.kwargsFromSuper(kwargs, relation="focus")
+					self._uiaObj = UIA(**kwargs)
+				except:
+					log.debugWarning("Retrieving UIA focus failed", exc_info=True)
 
 	def _get_role(self):
 		return self._uiaObj.role if self._uiaObj else controlTypes.ROLE_UNKNOWN

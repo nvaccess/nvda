@@ -138,7 +138,7 @@ class Logger(logging.Logger):
 		exc = exc_info[1]
 		if (
 			(isinstance(exc, WindowsError) and exc.winerror in (ERROR_INVALID_WINDOW_HANDLE, ERROR_TIMEOUT, RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE))
-			or (isinstance(exc, comtypes.COMError) and exc.hresult in (E_ACCESSDENIED, EVENT_E_ALL_SUBSCRIBERS_FAILED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED))
+			or (isinstance(exc, comtypes.COMError) and (exc.hresult in (E_ACCESSDENIED, EVENT_E_ALL_SUBSCRIBERS_FAILED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED) or exc.hresult & 0xFFFF == RPC_S_SERVER_UNAVAILABLE))
 		):
 			level = self.DEBUGWARNING
 		else:
