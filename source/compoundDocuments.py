@@ -248,7 +248,7 @@ class CompoundDocument(EditableText, TreeInterceptor):
 
 	def _get_isAlive(self):
 		root = self.rootNVDAObject
-		return winUser.isWindow(root.windowHandle) and root.role != controlTypes.ROLE_UNKNOWN
+		return winUser.isWindow(root.windowHandle)
 
 	def __contains__(self, obj):
 		root = self.rootNVDAObject
