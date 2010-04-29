@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2010 James Teh <jamie@jantrid.net>
 
+import winUser
 import textInfos
 import controlTypes
 import eventHandler
@@ -246,10 +247,18 @@ class CompoundDocument(EditableText, TreeInterceptor):
 		EditableText.initClass(self)
 
 	def _get_isAlive(self):
-		return True
+		root = self.rootNVDAObject
+		return winUser.isWindow(root.windowHandle) and root.role != controlTypes.ROLE_UNKNOWN
 
 	def __contains__(self, obj):
-		return obj.windowHandle == self.rootNVDAObject.windowHandle
+		root = self.rootNVDAObject
+		while obj:
+			if obj.windowHandle != root.windowHandle:
+				return False
+			if obj == root:
+				return True
+			obj = obj.parent
+		return False
 
 	def makeTextInfo(self, position):
 		return self.TextInfo(self, position)
