@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
 
+from comtypes import COMError
 import IAccessibleHandler
 import _default
 import controlTypes
@@ -49,6 +50,13 @@ class SymphonyTextInfo(IA2TextTextInfo):
 		else:
 			formatField["underline"] = underline != "0"
 		formatField["bold"] = formatField["CharWeight"] != "100.000"
+
+		# optimisation: Assume a hyperlink occupies a full attribute run.
+		try:
+			self.obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext).hyperlinkIndex(offset)
+			formatField["link"] = True
+		except COMError:
+			pass
 
 		return formatField,(startOffset,endOffset)
 
