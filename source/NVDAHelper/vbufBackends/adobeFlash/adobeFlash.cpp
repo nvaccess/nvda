@@ -9,17 +9,6 @@
 
 using namespace std;
 
-IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
-	int res;
-	IAccessible* pacc=NULL;
-	VARIANT varChild;
-	if((res=AccessibleObjectFromEvent((HWND)docHandle,OBJID_CLIENT,ID,&pacc,&varChild))!=S_OK) {
-		return NULL;
-	}
-	VariantClear(&varChild);
-	return pacc;
-}
-
 void AdobeFlashVBufBackend_t::renderThread_initialize() {
 	registerWinEventHook(renderThread_winEventProcHook);
 	VBufBackend_t::renderThread_initialize();
@@ -152,7 +141,17 @@ int id=accChildID;
 }
 
 void AdobeFlashVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
-	IAccessible* pacc=IAccessibleFromIdentifier(docHandle,0);
+	DWORD res=0;
+	//Get an IAccessible by sending WM_GETOBJECT directly to bypass any proxying, to speed things up.
+	if(SendMessageTimeout((HWND)docHandle,WM_GETOBJECT,0,OBJID_CLIENT,SMTO_ABORTIFHUNG,2000,&res)==0||res==0) {
+		//Failed to send message or window does not support IAccessible
+		return;
+	}
+	IAccessible* pacc=NULL;
+	if(ObjectFromLresult(res,IID_IAccessible,0,(void**)&pacc)!=S_OK) {
+		//Could not get the IAccessible pointer from the WM_GETOBJECT result
+		return;
+	}
 	assert(pacc); //must get a valid IAccessible object
 	if(ID==0) {
 		VBufStorage_controlFieldNode_t* parentNode=buffer->addControlFieldNode(NULL,NULL,docHandle,ID,TRUE);
@@ -165,13 +164,10 @@ void AdobeFlashVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle
 		varChild.vt=VT_I4;
 		HRESULT hRes;
 		for(int i=1;i<1000&&childIDsByLocation.size()<childCount;++i) {
-			if(invalidIAccessibleChildIDs.count(i)==1) continue;
 			IDispatch* childDisp=NULL;
 			varChild.lVal=i;
 			hRes=pacc->get_accChild(varChild,&childDisp);
-			if(hRes!=S_OK) {
-				invalidIAccessibleChildIDs.insert(i);
-			} else {
+			if(hRes==S_OK) {
 				childDisp->Release();
 				long left=0, top=0, width=0, height=0;
 				if(pacc->accLocation(&left,&top,&width,&height,varChild)!=S_OK) {
@@ -189,7 +185,7 @@ void AdobeFlashVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle
 	pacc->Release();
 }
 
-AdobeFlashVBufBackend_t::AdobeFlashVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID), invalidIAccessibleChildIDs() {
+AdobeFlashVBufBackend_t::AdobeFlashVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID) {
 }
 
 extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {

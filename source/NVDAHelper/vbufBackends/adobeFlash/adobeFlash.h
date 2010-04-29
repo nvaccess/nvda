@@ -15,7 +15,6 @@
 class AdobeFlashVBufBackend_t: public VBufBackend_t {
 	private:
 
-	std::set<long> invalidIAccessibleChildIDs;
 	VBufStorage_fieldNode_t* renderControlContent(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, int docHandle, IAccessible* pacc, long accChildID);
 
 	protected:
