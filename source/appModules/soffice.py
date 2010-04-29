@@ -8,8 +8,26 @@ import _default
 import controlTypes
 from compoundDocuments import CompoundDocument
 from NVDAObjects.JAB import JAB
+from NVDAObjects.IAccessible import IAccessible, IA2TextTextInfo
+from NVDAObjects.behaviors import EditableText
+
+class SymphonyTextInfo(IA2TextTextInfo):
+	pass
+
+class SymphonyText(IAccessible, EditableText):
+	TextInfo = SymphonyTextInfo
+
+	def _get_positionInfo(self):
+		level = self.IA2Attributes.get("heading-level")
+		if level:
+			return {"level": int(level)}
+		return super(SymphonyText, self).positionInfo
 
 class AppModule(_default.AppModule):
+
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if isinstance(obj, IAccessible) and obj.windowClassName == "SALTMPSUBFRAME" and hasattr(obj, "IAccessibleTextObject"):
+			clsList.insert(0, SymphonyText)
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName

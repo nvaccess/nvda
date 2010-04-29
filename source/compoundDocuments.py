@@ -93,9 +93,15 @@ class CompoundTextInfo(textInfos.TextInfo):
 			return None
 		field = textInfos.ControlField()
 		field["role"] = obj.role
-		field["states"] = obj.states
+		states = obj.states
+		# The user doesn't care about certain states, as they are obvious.
+		states.discard(controlTypes.STATE_EDITABLE)
+		states.discard(controlTypes.STATE_MULTILINE)
+		states.discard(controlTypes.STATE_FOCUSED)
+		field["states"] = states
 		field["name"] = obj.name
 		field["_childcount"] = obj.childCount
+		field["level"] = obj.positionInfo.get("level")
 		if role == controlTypes.ROLE_TABLE:
 			field["table-id"] = 1 # FIXME
 			field["table-rowcount"] = obj.rowCount
