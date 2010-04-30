@@ -141,15 +141,15 @@ class List(List):
 					ancestors=api.getFocusAncestors()
 					if api.getFocusDifferenceLevel()==len(ancestors)-1:
 						self.event_focusEntered()
-					groupingObj=GroupingItem(self,info)
+					groupingObj=GroupingItem(windowHandle=self.windowHandle,parentNVDAObject=self,groupInfo=info)
 					return eventHandler.queueEvent("gainFocus",groupingObj)
 		return super(List,self).event_gainFocus()
 
 class GroupingItem(Window):
 
-	def __init__(self,parent,groupInfo):
-		super(GroupingItem,self).__init__(windowHandle=parent.windowHandle)
-		self.parent=parent
+	def __init__(self,windowHandle=None,parentNVDAObject=None,groupInfo=None):
+		super(GroupingItem,self).__init__(windowHandle=windowHandle)
+		self.parent=parentNVDAObject
 		self.groupInfo=groupInfo
 
 	def _isEqual(self,other):
