@@ -112,6 +112,21 @@ class CompoundTextInfo(textInfos.TextInfo):
 			field["table-columnnumber"] = obj.columnNumber
 		return field
 
+	def _iterTextWithEmbeddedObjects(self, text, ti, fieldStart, textLength=None):
+		if textLength is None:
+			textLength = len(text)
+		chunkStart = 0
+		while chunkStart < textLength:
+			try:
+				chunkEnd = text.index(u"\uFFFC", chunkStart)
+			except ValueError:
+				yield text[chunkStart:]
+				break
+			if chunkStart != chunkEnd:
+				yield text[chunkStart:chunkEnd]
+			yield ti.getEmbeddedObject(fieldStart + chunkEnd)
+			chunkStart = chunkEnd + 1
+
 class TreeCompoundTextInfo(CompoundTextInfo):
 	#: Units contained within a single TextInfo.
 	SINGLE_TEXTINFO_UNITS = (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD, textInfos.UNIT_LINE, textInfos.UNIT_SENTENCE, textInfos.UNIT_PARAGRAPH)
@@ -175,7 +190,23 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 			if field:
 				fields.insert(0, textInfos.FieldCommand("controlStart", field))
 			obj = obj.parent
-		fields.extend(f for ti in self._getTextInfos() for f in ti.getTextWithFields(formatConfig=formatConfig))
+
+		for ti in self._getTextInfos():
+			fieldStart = 0
+			for field in ti.getTextWithFields(formatConfig=formatConfig):
+				if isinstance(field, basestring):
+					textLength = len(field)
+					for chunk in self._iterTextWithEmbeddedObjects(field, ti, fieldStart, textLength=textLength):
+						if isinstance(chunk, basestring):
+							fields.append(chunk)
+						else:
+							fields.extend((textInfos.FieldCommand("controlStart", self._getControlFieldForObject(chunk)),
+								u"\uFFFC",
+								textInfos.FieldCommand("controlEnd", None)))
+					fieldStart += textLength
+
+				else:
+					fields.append(field)
 		return fields
 
 	def expand(self, unit):
