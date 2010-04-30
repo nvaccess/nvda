@@ -303,6 +303,17 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
 		return speech.getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason)
 
+	def getEmbeddedObject(self, offset=0):
+		"""Retrieve the embedded object associated with a particular embedded object character.
+		Where a text implementation allows other objects to be embedded in the text, embedded objects are represented by an embedded object character (\uFFFC).
+		When these characters are encountered, this method can be used to retrieve the associated embedded object.
+		@param offset: The offset of the embedded object character in question relative to the start of this instance.
+		@type offset: int
+		@return: The embedded object.
+		@rtype: L{NVDAObjects.NVDAObject}
+		"""
+		raise NotImplementedError
+
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):
 	"""Convert a string so that it contains only CRLF line endings.
