@@ -56,7 +56,7 @@ class EditableText(ScriptableObject):
 			api.setReviewPosition(info.copy())
 		if speakUnit:
 			info.expand(speakUnit)
-			speech.speakTextInfo(info, unit=speakUnit)
+			speech.speakTextInfo(info, unit=speakUnit, reason=speech.REASON_CARET)
 
 	def _caretMovementScriptHelper(self, keyPress, unit):
 		try:
