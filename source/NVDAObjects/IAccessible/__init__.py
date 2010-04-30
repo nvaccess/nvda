@@ -244,12 +244,25 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def getEmbeddedObject(self, offset=0):
 		offset += self._startOffset
+
+		# Mozilla uses IAccessibleHypertext to facilitate quick retrieval of embedded objects.
 		try:
 			ht = self.obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext)
 			hl = ht.hyperlink(ht.hyperlinkIndex(offset))
 			return IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
 		except COMError:
-			raise LookupError
+			pass
+
+		# Otherwise, we need to count the embedded objects to determine which child to use.
+		# This could possibly be optimised by caching.
+		text = self._getTextRange(0, offset + 1)
+		childIndex = text.count(u"\uFFFC")
+		try:
+			return IAccessible(IAccessibleObject=IAccessibleHandler.accChild(self.obj.IAccessibleObject, childIndex)[0], IAccessibleChildID=0)
+		except COMError:
+			pass
+
+		raise LookupError
 
 class IAccessible(Window,AutoSelectDetectionNVDAObject):
 	"""
