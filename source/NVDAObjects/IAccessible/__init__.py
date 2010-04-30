@@ -242,6 +242,15 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _lineNumFromOffset(self,offset):
 		return -1
 
+	def getEmbeddedObject(self, offset=0):
+		offset += self._startOffset
+		try:
+			ht = self.obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext)
+			hl = ht.hyperlink(ht.hyperlinkIndex(offset))
+			return IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
+		except COMError:
+			raise LookupError
+
 class IAccessible(Window,AutoSelectDetectionNVDAObject):
 	"""
 the NVDAObject for IAccessible
@@ -964,6 +973,17 @@ the NVDAObject for IAccessible
 
 	def _get_flowsFrom(self):
 		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_FLOWS_FROM)
+
+	def _get_embeddingTextInfo(self):
+		if not hasattr(self, "IAccessibleTextObject"):
+			raise NotImplementedError
+		try:
+			hl = self.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
+			hlOffset = hl.startIndex
+			return self.parent.makeTextInfo(textInfos.offsets.Offsets(hlOffset, hlOffset + 1))
+		except COMError:
+			pass
+		return None
 
 	def event_valueChange(self):
 		if hasattr(self,'IAccessibleTextObject'):
