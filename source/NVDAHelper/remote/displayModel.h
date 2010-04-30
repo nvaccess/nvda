@@ -4,6 +4,7 @@
 #include <map>
 #include <deque>
 #include <windows.h>
+#include <common/lock.h>
 
 struct displayModelChunk_t{
 	RECT rect;
@@ -23,9 +24,8 @@ typedef std::map<std::pair<int,int>,displayModelChunk_t*> displayModelChunksByPo
 /**
  * Holds rectanglular chunks of text, and allows inserting chunks, clearing rectangles, and rendering text in a given rectangle.
  */
-class displayModel_t {
+class displayModel_t: public LockableAutoFreeObject  {
 	private:
-	volatile long _refCount; //Internal ref count
 	displayModelChunksByPointMap_t chunksByYX; //indexes the chunks by y,x
 
 	protected:
@@ -36,29 +36,17 @@ class displayModel_t {
  */
 	void insertChunk(displayModelChunk_t* chunk);
 
+/**
+ * destructor
+ */
+	virtual ~displayModel_t();
+
 	public:
 
 /**
  * constructor
  */
 	displayModel_t();
-
-/**
- * destructor
- */
-	~displayModel_t();
-
-/**
- * Increments the reference count by 1.
- * @return the new reference count.
- */
-	long AddRef();
-
-/**
- * Decrements the reference count by 1, and if it hits 0, deletes itself.
- * @return the new ref count.
- */
-	long Release();
 
 /**
  * Finds out how many chunks this model contains.

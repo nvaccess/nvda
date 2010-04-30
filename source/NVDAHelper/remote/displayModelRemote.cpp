@@ -15,17 +15,22 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 	deque<HWND> windowDeque;
 	EnumChildWindows(hwnd,EnumChildWindowsProc,(LPARAM)&windowDeque);
 	windowDeque.push_back(hwnd);
-	displayModel_t tempModel;
+	displayModel_t* tempModel=new displayModel_t;
 	RECT textRect={left,top,right,bottom};
 	for(deque<HWND>::reverse_iterator i=windowDeque.rbegin();i!=windowDeque.rend();i++) {
-		displayModelsByWindow_t::iterator j=displayModelsByWindow.find(*i);
+		displayModelsByWindow.acquire();
+		displayModelsMap_t<HWND>::iterator j=displayModelsByWindow.find(*i);
 		if(j!=displayModelsByWindow.end()) {
-			j->second->copyRectangleToOtherModel(textRect,&tempModel,FALSE,textRect.left,textRect.top);
+			j->second->acquire();
+			j->second->copyRectangleToOtherModel(textRect,tempModel,FALSE,textRect.left,textRect.top);
+			j->second->release();
 		}
+		displayModelsByWindow.release();
 	}
 	wstring text;
 	deque<RECT> characterRects;
-	tempModel.renderText(textRect,minHorizontalWhitespace,minVerticalWhitespace,text,characterRects);
+	tempModel->renderText(textRect,minHorizontalWhitespace,minVerticalWhitespace,text,characterRects);
+	tempModel->requestDelete();
 	*textBuf=SysAllocStringLen(text.c_str(),text.size());
 	size_t cpBufSize=characterRects.size()*4;
 	// Hackishly use a BSTR to contain points.

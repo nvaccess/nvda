@@ -6,6 +6,7 @@
 #include "displayModel.h"
 #include <common/log.h>
 #include "nvdaControllerInternal.h"
+#include <common/lock.h>
 #include "gdiHooks.h"
 
 using namespace std;
@@ -26,57 +27,45 @@ wchar_t* WA_strncpy(wchar_t* dest, const wchar_t* source, size_t size) {
 	return wcsncpy(dest,source,size);
 }
 
-typedef map<HDC,displayModel_t*> displayModelsByDC_t;
-displayModelsByDC_t displayModelsByMemoryDC;
-displayModelsByWindow_t displayModelsByWindow;
-CRITICAL_SECTION criticalSection_displayModelMaps;
-BOOL allow_displayModelMaps=FALSE;
+
+displayModelsMap_t<HDC> displayModelsByMemoryDC;
+displayModelsMap_t<HWND> displayModelsByWindow;
 
 /**
  * Fetches and or creates a new displayModel for the window of the given device context.
- * If this function returns a displayModel, you must call releaseDisplayModel when finished with it.
+ * If this function returns a displayModel, you must call release on it when you no longer need it. 
  * @param hdc a handle of the device context who's window the displayModel is for.
  * @param noCreate If true a display model will not be created if it does not exist. 
  * @return a pointer to the  new/existing displayModel, NULL if gdiHooks is not initialized or has been terminated. 
  */
 inline displayModel_t* acquireDisplayModel(HDC hdc, BOOL noCreate=FALSE) {
 	//If we are allowed, acquire use of the displayModel maps
-	if(!allow_displayModelMaps) return NULL;
-	EnterCriticalSection(&criticalSection_displayModelMaps);
-	if(!allow_displayModelMaps) {
-		LeaveCriticalSection(&criticalSection_displayModelMaps);
-		return NULL;
-	}
 	displayModel_t* model=NULL;
 	//If the DC has a window, then either get an existing displayModel using the window, or create a new one and store it by its window.
 	//If  the DC does not have a window, try and get the displayModel from our existing Memory DC displayModels. 
 	HWND hwnd=WindowFromDC(hdc);
 	LOG_DEBUG(L"window from DC is "<<hwnd);
 	if(hwnd) {
-		displayModelsByWindow_t::iterator i=displayModelsByWindow.find(hwnd);
+		displayModelsByWindow.acquire();
+		displayModelsMap_t<HWND>::iterator i=displayModelsByWindow.find(hwnd);
 		if(i!=displayModelsByWindow.end()) {
 			model=i->second;
 		} else if(!noCreate) {
 			model=new displayModel_t();
 			displayModelsByWindow.insert(make_pair(hwnd,model));
 		}
+		if(model) model->acquire();
+		displayModelsByWindow.release();
 	} else {
-		displayModelsByDC_t::iterator i=displayModelsByMemoryDC.find(hdc);
+		displayModelsByMemoryDC.acquire();
+		displayModelsMap_t<HDC>::iterator i=displayModelsByMemoryDC.find(hdc);
 		if(i!=displayModelsByMemoryDC.end()) {
 			model=i->second;
 		}
+		if(model) model->acquire();
+		displayModelsByMemoryDC.release();
 	}
-	if(model) model->AddRef();
-	LeaveCriticalSection(&criticalSection_displayModelMaps);
 	return model;
-}
-
-/**
- * Tells gdiHooks that you are finished with the given displayModel. It is very important that you call releaseDisplayModel for every call to acquireDisplayModel.
- * @param a pointer to the displayModel to release.
- */
-inline void releaseDisplayModel(displayModel_t* model) {
-	if(model) model->Release();
 }
 
 /**
@@ -239,7 +228,7 @@ template<typename charType> BOOL  WINAPI hookClass_TextOut<charType>::fakeFuncti
 	if(!model) return res;
 	//Calculate the size of the text
 	ExtTextOutHelper(model,hdc,pos.x,pos.y,NULL,0,textAlign,FALSE,lpString,NULL,cbCount,NULL);
-	releaseDisplayModel(model);
+	model->release();
 	return res;
 }
 
@@ -297,7 +286,7 @@ template<typename charType> BOOL WINAPI hookClass_PolyTextOut<charType>::fakeFun
 		} 
 	}
 	//Release model and return
-	model->Release();
+	model->release();
 	return res;
 }
 
@@ -315,7 +304,7 @@ int WINAPI fake_FillRect(HDC hdc, const RECT* lprc, HBRUSH hBrush) {
 	RECT rect=*lprc;
 	dcPointsToScreenPoints(hdc,(LPPOINT)&rect,2);
 	model->clearRectangle(rect);
-	releaseDisplayModel(model);
+	model->release();
 	return res;
 }
 
@@ -333,7 +322,7 @@ BOOL WINAPI fake_PatBlt(HDC hdc, int nxLeft, int nxTop, int nWidth, int nHeight,
 	RECT rect={nxLeft,nxTop,nxLeft+nWidth,nxTop+nHeight};
 	dcPointsToScreenPoints(hdc,(LPPOINT)&rect,2);
 	model->clearRectangle(rect);
-	releaseDisplayModel(model);
+	model->release();
 	return res;
 }
 
@@ -352,7 +341,7 @@ HDC WINAPI fake_BeginPaint(HWND hwnd, LPPAINTSTRUCT lpPaint) {
 	ClientToScreen(hwnd,(LPPOINT)&rect);
 	ClientToScreen(hwnd,((LPPOINT)&rect)+1);
 	model->clearRectangle(rect);
-	releaseDisplayModel(model);
+	model->release();
 	return res;
 }
 
@@ -382,7 +371,7 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 	//Record the text in the displayModel
 	ExtTextOutHelper(model,hdc,pos.x,pos.y,lprc,fuOptions,textAlign,FALSE,lpString,lpDx,cbCount,NULL);
 	//Release the displayModel and return
-	releaseDisplayModel(model);
+	model->release();
 	return res;
 }
 
@@ -396,16 +385,10 @@ HDC WINAPI fake_CreateCompatibleDC(HDC hdc) {
 	//If the creation was successful, and the DC that was used in the creation process is a window DC, 
 	//we should create a displayModel for this DC so that text writes can be tracked in case  its ever bit blitted to a window DC. 
 	//We also need to acquire access to the model maps while we do this
-	if(allow_displayModelMaps&&newHdc&&hdc&&WindowFromDC(hdc)) {
-		EnterCriticalSection(&criticalSection_displayModelMaps);
-		if(!allow_displayModelMaps) {
-			LeaveCriticalSection(&criticalSection_displayModelMaps);
-			return newHdc;
-		}
-		displayModel_t* model=new displayModel_t();
-		displayModelsByMemoryDC.insert(make_pair(newHdc,model));
-		LeaveCriticalSection(&criticalSection_displayModelMaps);
-	}
+	displayModel_t* model=new displayModel_t();
+	displayModelsByMemoryDC.acquire();
+	displayModelsByMemoryDC.insert(make_pair(newHdc,model));
+	displayModelsByMemoryDC.release();
 	return newHdc;
 }
 
@@ -422,7 +405,7 @@ HGDIOBJ WINAPI fake_SelectObject(HDC hdc, HGDIOBJ hGdiObj) {
 	displayModel_t* model=acquireDisplayModel(hdc,TRUE);
 	if(!model) return res;
 	model->clearAll();
-	releaseDisplayModel(model);
+	model->release();
 	return res;
 }
 
@@ -433,21 +416,15 @@ DeleteDC_funcType real_DeleteDC=NULL;
 BOOL WINAPI fake_DeleteDC(HDC hdc) {
 	//Call the real DeleteDC
 	BOOL res=real_DeleteDC(hdc);
+	if(res==0) return res;
 	//If the DC was successfully deleted, we should remove  the displayModel we have for it, if it exists.
-	//Acquire access to the display model maps while we do this.
-	if(res&&allow_displayModelMaps) {
-		EnterCriticalSection(&criticalSection_displayModelMaps);
-		if(!allow_displayModelMaps) {
-			LeaveCriticalSection(&criticalSection_displayModelMaps);
-			return res;
-		}
-		displayModelsByDC_t::iterator i=displayModelsByMemoryDC.find(hdc);
-		if(i!=displayModelsByMemoryDC.end()) {
-			i->second->Release();
-			displayModelsByMemoryDC.erase(i);
-		}
-		LeaveCriticalSection(&criticalSection_displayModelMaps);
+	displayModelsByMemoryDC.acquire();
+	displayModelsMap_t<HDC>::iterator i=displayModelsByMemoryDC.find(hdc);
+	if(i!=displayModelsByMemoryDC.end()) {
+		i->second->requestDelete();
+		displayModelsByMemoryDC.erase(i);
 	}
+	displayModelsByMemoryDC.release();
 	return res;
 }
 
@@ -484,7 +461,7 @@ BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHe
 	//Don't create one if there is no source model (i.e. dest model will be used as source model)
 	displayModel_t* destModel=acquireDisplayModel(hdcDest,srcModel==NULL);
 	if(!destModel) {
-		if(srcModel) releaseDisplayModel(srcModel);
+		if(srcModel) srcModel->release();
 		return res;
 	}
 	RECT srcRect={nXSrc,nYSrc,nXSrc+nWidth,nYSrc+nHeight};
@@ -500,8 +477,8 @@ BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHe
 		destModel->clearRectangle(srcRect);
 	}
 	//release models and return
-	if(srcModel) releaseDisplayModel(srcModel);
-	destModel->Release();
+	if(srcModel) srcModel->release();
+	destModel->release();
 	return res;
 }
 
@@ -591,7 +568,7 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 	}
 	BOOL stripHotkeyIndicator=(i->second.dwFlags&SSA_HIDEHOTKEY||i->second.dwFlags&SSA_HOTKEY);
 	ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),NULL,i->second.cString,NULL);
-	releaseDisplayModel(model);
+	model->release();
 	LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	return res;
 }
@@ -603,27 +580,20 @@ DestroyWindow_funcType real_DestroyWindow=NULL;
 BOOL WINAPI fake_DestroyWindow(HWND hwnd) {
 	//Call the real DestroyWindow
 	BOOL res=real_DestroyWindow(hwnd);
+	if(res==0) return res;
 	//If successful, acquire access to the display model maps and remove the displayModel for this window if it exists.
-	if(res) {
-		EnterCriticalSection(&criticalSection_displayModelMaps);
-		if(!allow_displayModelMaps) {
-			LeaveCriticalSection(&criticalSection_displayModelMaps);
-			return res;
-		}
-		displayModelsByWindow_t::iterator i=displayModelsByWindow.find(hwnd);
-		if(i!=displayModelsByWindow.end()) {
-			i->second->Release();
-			displayModelsByWindow.erase(i);
-		}
-		LeaveCriticalSection(&criticalSection_displayModelMaps);
+	displayModelsByWindow.acquire();
+	displayModelsMap_t<HWND>::iterator i=displayModelsByWindow.find(hwnd);
+	if(i!=displayModelsByWindow.end()) {
+		i->second->requestDelete();
+		displayModelsByWindow.erase(i);
 	}
+	displayModelsByWindow.release();
 	return res;
 }
 
 void gdiHooks_inProcess_initialize() {
 	//Initialize critical sections and access variables for various maps
-	InitializeCriticalSection(&criticalSection_displayModelMaps);
-	allow_displayModelMaps=TRUE;
 	InitializeCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allow_ScriptStringAnalyseArgsByAnalysis=TRUE;
 	//Hook needed functions
@@ -648,19 +618,20 @@ void gdiHooks_inProcess_initialize() {
 
 void gdiHooks_inProcess_terminate() {
 	//Acquire access to the maps and clean them up
-	EnterCriticalSection(&criticalSection_displayModelMaps);
-	allow_displayModelMaps=FALSE;
-	displayModelsByWindow_t::iterator i=displayModelsByWindow.begin();
+	displayModelsByWindow.acquire();
+	displayModelsMap_t<HWND>::iterator i=displayModelsByWindow.begin();
 	while(i!=displayModelsByWindow.end()) {
-		i->second->Release();
+		i->second->requestDelete();
 		displayModelsByWindow.erase(i++);
 	}  
-	displayModelsByDC_t::iterator j=displayModelsByMemoryDC.begin();
+	displayModelsByWindow.release();
+	displayModelsByMemoryDC.acquire();
+	displayModelsMap_t<HDC>::iterator j=displayModelsByMemoryDC.begin();
 	while(j!=displayModelsByMemoryDC.end()) {
-		j->second->Release();
+		j->second->requestDelete();
 		displayModelsByMemoryDC.erase(j++);
 	}  
-	LeaveCriticalSection(&criticalSection_displayModelMaps);
+	displayModelsByMemoryDC.release();
 	EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allow_ScriptStringAnalyseArgsByAnalysis=FALSE;
 	ScriptStringAnalyseArgsByAnalysis.clear();

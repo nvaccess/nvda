@@ -31,7 +31,7 @@ void displayModelChunk_t::truncate(int truncatePointX, BOOL truncateBefore) {
 	}
 }
 
-displayModel_t::displayModel_t(): _refCount(1), chunksByYX() {
+displayModel_t::displayModel_t(): LockableAutoFreeObject(), chunksByYX() {
 	LOG_DEBUG(L"created instance at "<<this);
 }
 
@@ -42,16 +42,6 @@ displayModel_t::~displayModel_t() {
 		delete i->second;
 		chunksByYX.erase(i++);
 	}
-}
-
-long displayModel_t::AddRef() {
-		return InterlockedIncrement(&_refCount);
-}
-
-long displayModel_t::Release() {
-	long refCount=InterlockedDecrement(&_refCount);
-	if(refCount==0) delete this;
-	return refCount; 
 }
 
 int displayModel_t::getChunkCount() {

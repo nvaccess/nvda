@@ -4,9 +4,15 @@
 #include <map>
 #include <windows.h>
 #include "displayModel.h"
+#include <common/lock.h>
 
-typedef std::map<HWND,displayModel_t*> displayModelsByWindow_t;
-extern displayModelsByWindow_t displayModelsByWindow;
+template <typename t> class displayModelsMap_t: public std::map<t,displayModel_t*>, public LockableObject {
+	public:
+	displayModelsMap_t(): map<t,displayModel_t*>(), LockableObject() {
+	}
+};
+
+extern displayModelsMap_t<HWND> displayModelsByWindow;
 
 void gdiHooks_inProcess_initialize();
 void gdiHooks_inProcess_terminate();
