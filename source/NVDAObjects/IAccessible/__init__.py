@@ -708,6 +708,8 @@ the NVDAObject for IAccessible
 		except:
 			return None
 
+	parentUsesSuperOnWindowRootIAccessible=True #: on a window root IAccessible, super should be used instead of accParent
+
 	def _get_parent(self):
 		if self.IAccessibleChildID>0:
 			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=0) or super(IAccessible,self).parent
@@ -715,7 +717,7 @@ the NVDAObject for IAccessible
 		groupboxObj=IAccessibleHandler.findGroupboxObject(self)
 		if groupboxObj:
 			return groupboxObj
-		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
+		if self.parentUsesSuperOnWindowRootIAccessible and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
 			return super(IAccessible,self).parent
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
 		if res:
