@@ -841,9 +841,11 @@ def terminate():
 def getIAccIdentity(pacc,childID):
 	IAccIdentityObject=pacc.QueryInterface(IAccIdentity)
 	stringPtr,stringSize=IAccIdentityObject.getIdentityString(childID)
-	stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
-	identityString=stringPtr.contents.raw
-	fields=struct.unpack('IIiI',identityString)
+	try:
+		stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
+		fields=struct.unpack('IIiI',stringPtr.contents.raw)
+	finally:
+		windll.ole32.CoTaskMemFree(stringPtr)
 	d={}
 	d['childID']=fields[3]
 	if fields[0]&2:
