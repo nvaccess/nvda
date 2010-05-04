@@ -15,13 +15,19 @@
 == Changes ==
 - The sayAll by Navigator object (NVDA+numpadAdd), navigator object next in flow (NVDA+numpad6) and navigator object previous in flow (NVDA+numpad4) have been removed for the time being, due to buggyness and to free up the keys for other possible features.
 - In the NVDA Synthesizer dialog, only the display name of the synthesizer is now listed. Previously, it was prefixed by the driver's name, which is only relevant internally.
+- If the speech viewer (enabled under the tools menu) is given the focus (e.g. it was clicked in) new text will not appear in the control until focus is moved away. This allows for selecting the text with greater ease (e.g. for copying).
 
-
+ 
 == Bug Fixes ==
 - In µTorrent, the focused item in the torrents list no longer reports repeatedly or steals focus when a menu is open.
 - In Mozilla applications, focus is now correctly detected when it lands on an empty table or tree.
 - In Mozilla applications, "not checked" is now correctly reported for checkable controls such as checkable table cells. (#571)
 - In Mozilla applications, the text of correctly implemented ARIA dialolgs is no longer ignored and will now be reported when the dialog appears.
+- in Internet Explorer and other MSHTML controls, the ARIA level attribute is now  honoured correctly.
+- In Internet Explorer and other MSHTML controls, the ARIA role is now chosen over other type information to give a much more correct and predictable ARIA experience.
+- Stopped a rare crash in Internet Explorer when navigating through frames or iFrames.
+- In Microsoft Word documents, right-to-left lines (such as Arabic text) can be read again. (#627)
+
 
 
 = 2010.1 =
