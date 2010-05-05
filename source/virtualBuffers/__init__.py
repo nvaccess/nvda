@@ -659,7 +659,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		else:
 			focusObj=info.focusableNVDAObjectAtStart
 		if reason != speech.REASON_FOCUS:
-			if not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
+			if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
 				focusObj.setFocus()
 			obj.scrollIntoView()
 			if self.programmaticScrollMayFireEvent:
