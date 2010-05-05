@@ -141,7 +141,7 @@ int id=accChildID;
 }
 
 void AdobeFlashVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
-	DWORD res=0;
+	DWORD_PTR res=0;
 	//Get an IAccessible by sending WM_GETOBJECT directly to bypass any proxying, to speed things up.
 	if(SendMessageTimeout((HWND)docHandle,WM_GETOBJECT,0,OBJID_CLIENT,SMTO_ABORTIFHUNG,2000,&res)==0||res==0) {
 		//Failed to send message or window does not support IAccessible
