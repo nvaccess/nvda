@@ -10,14 +10,16 @@
 - In applications using the Java Access Bridge (including OpenOffice.org), formatting can now be reported in text controls. (#358, #463)
 - When moving the mouse over cells in Microsoft Excel, NVDA will appropriately announce them.
 - In applications using the Java Access Bridge, the text of a dialog is now reported when the dialog appears. (#554)
+- A virtualBuffer can now be used to navigate adobe Flash content, though  object navigation, and interacting with the controls directly (by turning on focus mode) is still supported.
 
 
 == Changes ==
 - The sayAll by Navigator object (NVDA+numpadAdd), navigator object next in flow (NVDA+numpad6) and navigator object previous in flow (NVDA+numpad4) have been removed for the time being, due to buggyness and to free up the keys for other possible features.
 - In the NVDA Synthesizer dialog, only the display name of the synthesizer is now listed. Previously, it was prefixed by the driver's name, which is only relevant internally.
+- When in embedded applications or virtual buffers inside another virtualBuffer (e.g. Flash), you can now  press nvda+control+space to move out of the embedded application or virtual buffer, in to the above document. Previously nvda+space  was used for this. Now nvda+space is specifically only for toggling brows/focus modes on virtualBuffers.
 - If the speech viewer (enabled under the tools menu) is given the focus (e.g. it was clicked in) new text will not appear in the control until focus is moved away. This allows for selecting the text with greater ease (e.g. for copying).
 
- 
+
 == Bug Fixes ==
 - In µTorrent, the focused item in the torrents list no longer reports repeatedly or steals focus when a menu is open.
 - In Mozilla applications, focus is now correctly detected when it lands on an empty table or tree.

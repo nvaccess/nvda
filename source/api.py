@@ -121,8 +121,6 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	o=None
 	for o in ancestors[focusDifferenceLevel:]+[obj]:
 		virtualBufferObject=virtualBufferHandler.update(o)
-		if virtualBufferObject:
-			break
 	#Always make sure that the focus object's virtualBuffer is forced to either the found virtualBuffer (if its in it) or to None
 	#This is to make sure that the virtualBuffer does not have to be looked up, which can cause problems for winInputHook
 	if obj is o or virtualBufferObject.isNVDAObjectInVirtualBuffer(obj):
