@@ -187,6 +187,18 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		textList.append(super(VirtualBufferTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
 		return " ".join(textList)
 
+	def _get_focusableNVDAObjectAtStart(self):
+		try:
+			newNode, newStart, newEnd = next(self.obj._iterNodesByType("focusable", "up", self._startOffset))
+		except StopIteration:
+			return None
+		if not newNode:
+			return None
+		docHandle=ctypes.c_int()
+		ID=ctypes.c_int()
+		NVDAHelper.localLib.VBuf_getIdentifierFromControlFieldNode(self.obj.VBufHandle, newNode, ctypes.byref(docHandle), ctypes.byref(ID))
+		return self.obj.getNVDAObjectFromIdentifier(docHandle.value,ID.value)
+
 class ElementsListDialog(wx.Dialog):
 	ELEMENT_TYPES = (
 		("link", _("Lin&ks")),
@@ -635,22 +647,23 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if isScriptWaiting() or not info.isCollapsed:
 			return
 		api.setReviewPosition(info)
-		if reason == speech.REASON_FOCUS:
-			obj = api.getFocusObject()
-		else:
-			obj = info.NVDAObjectAtStart
-			if not obj:
-				log.debugWarning("Invalid NVDAObjectAtStart")
-				return
-		if obj == self.rootNVDAObject:
+		obj=info.NVDAObjectAtStart
+		if not obj:
+			log.debugWarning("Invalid NVDAObjectAtStart")
 			return
+		if obj==self.rootNVDAObject:
+			return
+		if reason == speech.REASON_FOCUS:
+			focusObj = api.getFocusObject()
+		else:
+			focusObj=info.focusableNVDAObjectAtStart
 		if reason != speech.REASON_FOCUS:
+			if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
+				focusObj.setFocus()
 			obj.scrollIntoView()
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
-			if not eventHandler.isPendingEvents("gainFocus") and obj != api.getFocusObject() and self._shouldSetFocusToObj(obj):
-				obj.setFocus()
-		self.passThrough=self.shouldPassThrough(obj,reason=reason)
+		self.passThrough=self.shouldPassThrough(focusObj,reason=reason)
 		# Queue the reporting of pass through mode so that it will be spoken after the actual content.
 		queueHandler.queueFunction(queueHandler.eventQueue, virtualBufferHandler.reportPassThrough, self)
 
@@ -866,18 +879,17 @@ class VirtualBuffer(cursorManager.CursorManager):
 		caretInfo.expand(textInfos.UNIT_CHARACTER)
 		if focusInfo.isOverlapping(caretInfo):
 			return False
-
 		# If we reach here, we do want to override tab/shift+tab if possible.
 		# Find the next/previous focusable node.
 		try:
 			newNode, newStart, newEnd = next(self._iterNodesByType("focusable", direction, caretInfo._startOffset))
 		except StopIteration:
 			return False
-
-		# Finally, focus the node.
-		# TODO: Better way to get a field identifier from a node.
-		newInfo = self.makeTextInfo(textInfos.offsets.Offsets(newStart, newEnd))
-		obj = newInfo.NVDAObjectAtStart
+		docHandle=ctypes.c_int()
+		ID=ctypes.c_int()
+		NVDAHelper.localLib.VBuf_getIdentifierFromControlFieldNode(self.VBufHandle, newNode, ctypes.byref(docHandle), ctypes.byref(ID))
+		obj=self.getNVDAObjectFromIdentifier(docHandle.value,ID.value)
+		newInfo=self.makeTextInfo(textInfos.offsets.Offsets(newStart,newEnd))
 		if obj == api.getFocusObject():
 			# This node is already focused, so we need to move to and speak this node here.
 			newCaret = newInfo.copy()

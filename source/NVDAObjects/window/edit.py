@@ -566,30 +566,20 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError("position: %s"%position)
 
-	def getInitialFields(self,formatConfig=None):
-		if not formatConfig:
-			formatConfig=config.conf["documentFormatting"]
-		range=self._rangeObj.duplicate
-		range.collapse(True)
-		range.expand(comInterfaces.tom.tomCharacter)
-		return [self._getFormatFieldAtRange(range,formatConfig)]
-
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
-		if not formatConfig["detectFormatAfterCursor"]:
-			return [self._getTextAtRange(self._rangeObj)]
-		commandList=[]
-		endLimit=self._rangeObj.end
 		range=self._rangeObj.duplicate
 		range.collapse(True)
-		hasLoopedOnce=False
+		if not formatConfig["detectFormatAfterCursor"]:
+			range.expand(comInterfaces.tom.tomCharacter)
+			return [textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)),
+				self._getTextAtRange(self._rangeObj)]
+		commandList=[]
+		endLimit=self._rangeObj.end
 		while range.end<endLimit:
 			self._expandFormatRange(range,formatConfig)
-			if hasLoopedOnce:
-				commandList.append(textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
-			else:
-				hasLoopedOnce=True
+			commandList.append(textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
 			commandList.append(self._getTextAtRange(range))
 			end=range.end
 			range.start=end

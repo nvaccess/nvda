@@ -790,6 +790,15 @@ VBufStorage_controlFieldNode_t* VBufStorage_buffer_t::getControlFieldNodeWithIde
 	return node;
 }
 
+bool VBufStorage_buffer_t::getIdentifierFromControlFieldNode(VBufStorage_controlFieldNode_t* node, int* docHandle, int* ID) {
+	assert(node);
+	assert(isNodeInBuffer(node));
+	*docHandle=node->identifier.docHandle;
+	*ID=node->identifier.ID;
+	return true;
+}
+
+
 bool VBufStorage_buffer_t::getSelectionOffsets(int *startOffset, int *endOffset) const {
 	assert(this->selectionStart>=0&&this->selectionLength>=0); //Selection can't be negative
 	int minStartOffset=0;

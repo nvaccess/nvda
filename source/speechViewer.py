@@ -40,6 +40,10 @@ def appendText(text):
 		return
 	if not isinstance(text,basestring):
 		return
+	#If the speech viewer text control has the focus, we want to disable updates
+	#Otherwize it would be impossible to select text, or even just read it (as a blind person).
+	if _guiFrame.FindFocus()==_guiFrame.textCtrl:
+		return
 	_guiFrame.textCtrl.AppendText(text + "\n")
 
 def deactivate():
