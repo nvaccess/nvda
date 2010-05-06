@@ -205,7 +205,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 	def _get_mainKeyName(self):
 		if self.isNVDAModifierKey:
-			return "NVDA"
+			return "nvda"
 
 		prefix = "extended" if self.isExtended else ""
 		name = self.getVkName(self.vkCode)
@@ -229,7 +229,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		modTexts = set()
 		for modVk, modExt in self.generalizedModifiers:
 			if isNVDAModifierKey(modVk, modExt):
-				modTexts.add("NVDA")
+				modTexts.add("nvda")
 			else:
 				modTexts.add(self.getVkName(modVk))
 
