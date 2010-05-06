@@ -197,6 +197,7 @@ class AppModule(baseObject.ScriptableObject):
 	_overlayClassCache={}
 
 	def __init__(self,processID,appName=None):
+		super(AppModule,self).__init__()
 		self.processID=processID
 		self.helperLocalBindingHandle=NVDAHelper.localLib.createConnection(processID)
 		if appName is None:
@@ -246,7 +247,7 @@ class AppModule(baseObject.ScriptableObject):
 				m=re_keyScript.match(line)
 				if m:
 					try:
-						self.bindKey_runtime(m.group('key'),m.group('script'))
+						self.bindGesture("kb:%s"%m.group('key'),m.group('script'))
 						bindCount+=1
 					except:
 						log.error("error binding %s to %s in appModule %s"%(m.group('script'),m.group('key'),self))
