@@ -112,7 +112,11 @@ def initialize():
 	global curMousePos
 	(x,y)=winUser.getCursorPos()
 	desktopObject=api.getDesktopObject()
-	mouseObject=desktopObject.objectFromPoint(x,y)
+	try:
+		mouseObject=desktopObject.objectFromPoint(x,y)
+	except:
+		log.exception("Error retrieving initial mouse object")
+		mouseObject=None
 	if not mouseObject:
 		mouseObject=api.getDesktopObject()
 	api.setMouseObject(mouseObject)
