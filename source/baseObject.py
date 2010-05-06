@@ -8,8 +8,8 @@
 """
 
 import weakref
-from new import instancemethod
 from keyUtils import key
+from logHandler import log
 
 class Getter(object):
 
@@ -124,66 +124,54 @@ class AutoPropertyObject(object):
 			instance.invalidateCache()
 
 class ScriptableObject(AutoPropertyObject):
+	"""A class that implements NVDA's scripting interface.
+	Input gestures are bound to scripts such that the script will be executed when the appropriate input gesture is received.
+	Scripts are methods named with a prefix of C{script_}; e.g. C{script_foo}.
+	They accept an L{inputCore.InputGesture} as their single argument.
+	"""
 
-	"""A class that implements NVDA's scripting interface. This allows the binding of keys to scripts (specially named methods that take a keyPress and a possible next script).
-@ivar _keyMap: a dictionary of key strings to script name mappings
-@type _keyMap: dict
-"""
+	def __init__(self):
+		#: Maps input gestures to script functions.
+		#: @type: dict
+		self._gestureMap = {}
+		super(ScriptableObject, self).__init__()
 
-	@classmethod
-	def bindKey(cls,keyName,scriptName):
-		"""A class method that binds a key to a script (method starting with 'script_' in this class).
-Note that the binding is performed on the class so that all future instances will have the binding. For runtime binding  on one particular instance use L{bindKey_runtime}.
-@param keyName: the name of the key press you want to bind the script to (e.g. 'control+n')
-@type keyName: string
- @param scriptName: the name of the script you want to bind the key press to (the name of the method with out the 'script_')
-@type scriptName: string
-"""
- 		scriptName="script_%s"%scriptName
-		if not hasattr(cls,scriptName):
-			raise ValueError("no script \"%s\" in %s"%(scriptName,cls))
-		if not cls.__dict__.has_key('_keyMap'):
-			cls._keyMap=getattr(cls,'_keyMap',{}).copy()
-		cls._keyMap[key(keyName)]=getattr(cls,scriptName)
-
-	def bindKey_runtime(self,keyName,scriptName):
-		"""Binds  a key to a script (method starting with 'script_' in this instance).
-Note that the binding is performed on the instance, not the class. To bind on the class to affect all instances, use L{bindKey}.
- @param keyName: the name of the key press you want to bind the script to (e.g. 'control+n')
-@type keyName: string
- @param scriptName: the name of the script you want to bind the key press to (the name of the method with out the 'script_')
-@type scriptName: string
-"""
-		scriptName="script_%s"%scriptName
-    		func=getattr(self.__class__,scriptName,None)
-		if func:
-            			self.bindKeyToFunc_runtime(keyName,func)
-      		else:
-			raise ValueError("no script \"%s\" in %s"%(scriptName,self))
-
-	def bindKeyToFunc_runtime(self,keyName,func):
-		"""Binds a key press for this instance to any arbitrary function.
-Note that the binding is performed on this instance, not the instance's class.
-@param keyName: the name of the key press you want to bind the function to (e.g. 'Control+n')
-@type keyName: string
-@param func: the function you wish to bind the key press to
-@type func: function
-"""
-		if not self.__dict__.has_key('_keyMap'):
-			self._keyMap=getattr(self.__class__,'_keyMap',{}).copy()
-		self._keyMap[key(keyName)]=func
-
-	_keyMap={}
-
-	def getScript(self,keyPress):
+	def bindGesture(self, gestureIdentifier, scriptName):
+		"""Bind an input gesture to a script.
+		@param gestureIdentifier: The identifier of the input gesture.
+		@type gestureIdentifier: str
+		@param scriptName: The name of the script, which is the name of the method excluding the C{script_} prefix.
+		@type scriptName: str
+		@raise LookupError: If there is no script with the provided name.
 		"""
-Returns a script (instance method) if one is assigned to the keyPress given.
-@param keyPress: The key you wish to retreave the script for
-@type keyPress: key
-""" 
-		if keyPress in self._keyMap:
-			func=self._keyMap[keyPress]
-      			if func.im_self:
-            				return func
-      			else:
-				return instancemethod(func,self,self.__class__)
+		func = getattr(self, "script_%s" % scriptName, None)
+		if not func:
+			raise LookupError("No such script: %s" % func)
+		self._gestureMap[gestureIdentifier.lower()] = func
+
+	def bindGestures(self, gestureMap):
+		"""Bind multiple input gestures to scripts.
+		This is a convenience method which simply calls L{bindGesture} for each gesture and script pair, logging any errors.
+		@param gestureMap: A mapping of gesture identifiers to script names.
+		@type gestureMap: dict of str to str
+		"""
+		for gestureIdentifier, scriptName in gestureMap.iteritems():
+			try:
+				self.bindGesture(gestureIdentifier, scriptName)
+			except LookupError:
+				log.error("Error binding script %s in %r" % (scriptName, self))
+
+	def getScript(self,gesture):
+		"""Retrieve the script bound to a given gesture.
+		@param gesture: The input gesture in question.
+		@type gesture: L{inputCore.InputGesture}
+		@return: The script function or C{None} if none was found.
+		@rtype: script function
+		""" 
+		for identifier in gesture.identifiers:
+			try:
+				return self._gestureMap[identifier.lower()]
+			except KeyError:
+				continue
+		else:
+			return None

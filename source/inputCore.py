@@ -74,9 +74,7 @@ class InputGesture(baseObject.AutoPropertyObject):
 		@return: The script to be executed.
 		@rtype: script function
 		"""
-		# FIXME: Support other gesture types.
-		import keyUtils
-		return scriptHandler.findScript(keyUtils.key(self.keyName))
+		return scriptHandler.findScript(self)
 
 	def send(self):
 		"""Send this gesture to the operating system.
