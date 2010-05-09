@@ -524,7 +524,7 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 		return None
 	#SDM MSAA objects sometimes don't contain enough information to be useful
 	#Sometimes there is a real window that does, so try to get the SDMChild property on the NVDAObject, and if successull use that as obj instead.
-	if obj.windowClassName=='bosa_sdm':
+	if 'bosa_sdm' in obj.windowClassName:
 		SDMChild=getattr(obj,'SDMChild',None)
 		if SDMChild: obj=SDMChild
 	return (NVDAEventName,obj)
