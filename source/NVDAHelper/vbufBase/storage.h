@@ -525,6 +525,15 @@ class VBufStorage_buffer_t {
 	virtual VBufStorage_controlFieldNode_t* getControlFieldNodeWithIdentifier(int docHandle, int ID);
 
 /**
+ * Retreaves the identifier for the given controlFieldNode.
+ * @param node the controlFieldNode who's identifier should be retreaved.
+ * @param docHandle a memory address where the docHandle should be placed.
+ * @param ID a memory address where the ID should be placed.
+ * @return true if successfull
+ */
+	virtual bool getIdentifierFromControlFieldNode(VBufStorage_controlFieldNode_t*node, int* docHandle, int* ID);
+
+/**
  * Finds a field node that contains particular attributes.
  * @param offset offset in the buffer to start searching from, if -1 then starts at the root of the buffer.
  * @param direction which direction to search

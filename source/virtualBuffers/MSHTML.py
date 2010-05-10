@@ -60,7 +60,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		landmark=next((ar for ar in ariaRoles if ar in aria.landmarkRoles),None)
 		ariaLevel=attrs.get('HTMLAttrib::aria-level',None)
 		ariaLevel=int(ariaLevel) if ariaLevel is not None else None
-		if ariaLevel is not None:
+		if ariaLevel:
 			level=ariaLevel
 		if role:
 			attrs['role']=role

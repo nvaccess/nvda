@@ -83,6 +83,16 @@ interface VBuf {
 	DLLEXPORT VBufRemote_nodeHandle_t getControlFieldNodeWithIdentifier([in] VBufRemote_bufferHandle_t buffer, [in] int docHandle, [in] int ID);
 
 /**
+ * Retreaves the identifier for the given controlFieldNode.
+ * @param buffer the virtual buffer to use
+ * @param node the controlFieldNode who's identifier should be retreaved.
+ * @param docHandle a memory address where the docHandle should be placed.
+ * @param ID a memory address where the ID should be placed.
+ * @return non-0 if successfull.
+ */
+	DLLEXPORT int getIdentifierFromControlFieldNode([in] VBufRemote_bufferHandle_t buffer, [in] VBufRemote_nodeHandle_t node, [out] int* docHandle, [out] int* ID);
+
+/**
  * Finds a field node that contains particular attributes.
  * @param buffer the virtual buffer to use
  * @param offset offset in the buffer to start searching from
