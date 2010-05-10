@@ -41,7 +41,13 @@ class JABContext(object):
 			#Record  this vm ID and window handle for later use with other objects
 			vmIDsToWindowHandles[vmID]=hwnd
 		elif vmID and not hwnd:
-			hwnd=vmIDsToWindowHandles.get(vmID,0)
+			hwnd=vmIDsToWindowHandles.get(vmID)
+			if not hwnd:
+				topAC=bridgeDll.getTopLevelObject(vmID,accContext)
+				hwnd=bridgeDll.getHWNDFromAccessibleContext(vmID,topAC)
+				bridgeDll.releaseJavaObject(vmID,topAC)
+				#Record  this vm ID and window handle for later use with other objects
+				vmIDsToWindowHandles[vmID]=hwnd
 		self.hwnd=hwnd
 		self.vmID=vmID
 		self.accContext=accContext
