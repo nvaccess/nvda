@@ -1237,9 +1237,18 @@ class MenuItem(IAccessible):
 class Taskbar(IAccessible):
 	name = _("Taskbar")
 
+class Button(IAccessible):
+
+	def _get_name(self):
+		name=super(Button,self).name
+		if not name or name.isspace():
+			name=self.displayText
+		return name
+
 ###class mappings
 
 _staticMap={
+	(None,oleacc.ROLE_SYSTEM_PUSHBUTTON):"Button",
 	("tooltips_class32",oleacc.ROLE_SYSTEM_TOOLTIP):"Tooltip",
 	("tooltips_class32",oleacc.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
 	(None,oleacc.ROLE_SYSTEM_DIALOG):"Dialog",
