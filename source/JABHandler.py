@@ -323,6 +323,8 @@ def event_stateChange(vmID,accContext,oldState,newState):
 	stateList=newState.split(',')
 	if "focused" in stateList or "selected" in stateList:
 		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
+		if not obj:
+			return
 		if focus!=obj and eventHandler.lastQueuedFocusObject!=obj and obj.role in (controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_MENU):
 			eventHandler.queueEvent("gainFocus",obj)
 			return
@@ -330,6 +332,8 @@ def event_stateChange(vmID,accContext,oldState,newState):
 		obj=focus
 	else:
 		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
+		if not obj:
+			return
 	eventHandler.queueEvent("stateChange",obj)
 
 @CFUNCTYPE(None,c_int,c_int,c_int,c_int,c_int)
