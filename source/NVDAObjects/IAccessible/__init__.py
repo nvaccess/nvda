@@ -1245,9 +1245,19 @@ class Button(IAccessible):
 			name=self.displayText
 		return name
 
+class ListBoxItem(IAccessible):
+	"""
+	Used for list item IAccessibles within the ListBox window class.
+	Overrides name to use display model text as MSAA never seems to provide a suitable name (its usually either empty or contains garbage).
+	"""
+
+	def _get_name(self):
+		return self.displayText
+
 ###class mappings
 
 _staticMap={
+	("ListBox",oleacc.ROLE_SYSTEM_LISTITEM):"ListBoxItem",
 	(None,oleacc.ROLE_SYSTEM_PUSHBUTTON):"Button",
 	("tooltips_class32",oleacc.ROLE_SYSTEM_TOOLTIP):"Tooltip",
 	("tooltips_class32",oleacc.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
