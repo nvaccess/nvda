@@ -202,18 +202,21 @@ void CALLBACK winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long 
 void _nvdaHelper_localThreadFunc() {
 	HHOOK getMessageHookID=0;
 	HHOOK callWndProcHookID=0;
-	HWINEVENTHOOK winEventHookID=0; 
+	HWINEVENTHOOK winEventHookLowID=0; 
+	HWINEVENTHOOK winEventHookHighID=0; 
 	if((getMessageHookID=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)getMessageHook,moduleHandle,0))==0) {
 		MessageBox(NULL,L"Error registering getMessage Windows hook",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
-		return;
 	}
 	if((callWndProcHookID=SetWindowsHookEx(WH_CALLWNDPROC,(HOOKPROC)callWndProcHook,moduleHandle,0))==0) {
 		MessageBox(NULL,L"Error registering callWndProc Windows hook",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
-		return;
 	}
-	if((winEventHookID=SetWinEventHook(0,0xFFFFFFFF,moduleHandle,(WINEVENTPROC)winEventHook,0,0,WINEVENT_INCONTEXT))==0) {
-		MessageBox(NULL,L"Error registering winEvent hook",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
-		return;
+	//Register winEvent hooks in two separate calls,
+	//Skipping the Windows console winEvent range (0x4001-0x40ff) as these are always out-of-context.
+	if((winEventHookLowID=SetWinEventHook(0,0x4000,moduleHandle,(WINEVENTPROC)winEventHook,0,0,WINEVENT_INCONTEXT))==0) {
+		MessageBox(NULL,L"Error registering low winEvent hooks",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
+	}
+	if((winEventHookHighID=SetWinEventHook(0x4100,0xffffffff,moduleHandle,(WINEVENTPROC)winEventHook,0,0,WINEVENT_INCONTEXT))==0) {
+		MessageBox(NULL,L"Error registering high winEvent hooks",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
 	}
 	MSG msg;
 	while(GetMessage(&msg,NULL,0,0)) {
@@ -222,15 +225,15 @@ void _nvdaHelper_localThreadFunc() {
 	}
 	if(UnhookWindowsHookEx(getMessageHookID)==0) {
 		MessageBox(NULL,L"Error unregistering getMessage hook",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
-		return;
 	}
 	if(UnhookWindowsHookEx(callWndProcHookID)==0) {
 		MessageBox(NULL,L"Error unregistering callWndProc hook",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
-		return;
 	}
-	if(UnhookWinEvent(winEventHookID)==FALSE) {
-		MessageBox(NULL,L"Error unregistering winEvent hook",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
-		return;
+	if(UnhookWinEvent(winEventHookLowID)==FALSE) {
+		MessageBox(NULL,L"Error unregistering low winEvent hooks",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
+	}
+	if(UnhookWinEvent(winEventHookHighID)==FALSE) {
+		MessageBox(NULL,L"Error unregistering high winEvent hooks",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
 	}
 }
 
