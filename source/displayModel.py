@@ -1,14 +1,23 @@
 from ctypes import *
 from ctypes.wintypes import RECT
 from comtypes import BSTR
+import api
 import winUser
 import NVDAHelper
 import textInfos
 from textInfos.offsets import OffsetsTextInfo
 
-_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_int,c_int,c_int,c_int,c_int,c_int,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
+_getWindowTextInRect=None
+
+def initialize():
+	global _getWindowTextInRect
+	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_int,c_int,c_int,c_int,c_int,c_int,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
+
 def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace):
 	text, cpBuf = _getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace)
+	if not text or not cpBuf:
+		return "",[]
+
 	characterRects = []
 	cpBufIt = iter(cpBuf)
 	for cp in cpBufIt:
@@ -17,10 +26,22 @@ def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,mi
 
 class DisplayModelTextInfo(OffsetsTextInfo):
 
+	minHorizontalWhitespace=8
+	minVerticalWhitespace=32
+
 	_cache__textAndRects = True
 	def _get__textAndRects(self):
 		left, top, width, height = self.obj.location
-		return getWindowTextInRect(self.obj.appModule.helperLocalBindingHandle, self.obj.windowHandle, left, top, left + width, top + height,1,4)
+		return getWindowTextInRect(self.obj.appModule.helperLocalBindingHandle, self.obj.windowHandle, left, top, left + width, top + height,self.minHorizontalWhitespace,self.minVerticalWhitespace)
+
+	def _get_NVDAObjectAtStart(self):
+		p=self.pointAtStart
+		obj=api.getDesktopObject().objectFromPoint(p.x,p.y)
+		from NVDAObjects.window import Window
+		if not obj or not isinstance(obj,Window) or not winUser.isDescendantWindow(self.obj.windowHandle,obj.windowHandle):
+			obj=self.obj
+		return obj
+
 
 	def _getStoryText(self):
 		return self._textAndRects[0]
@@ -40,6 +61,11 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			if charLeft<=x<charRight and charTop<=y<charBottom:
 				return charOffset
 		raise LookupError
+
+class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
+
+	minHorizontalWhitespace=1
+	minVerticalWhitespace=4
 
 	def _getCaretOffset(self):
 		caretRect = winUser.getGUIThreadInfo(self.obj.windowThreadID).rcCaret
@@ -62,5 +88,3 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			if caretRect.left>=charLeft and caretRect.right<=charRight and ((caretRect.top<=charTop and caretRect.bottom>=charBottom) or (caretRect.top>=charTop and caretRect.bottom<=charBottom)):
 				return charOffset
 		raise RuntimeError
-
-

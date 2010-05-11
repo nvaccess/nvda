@@ -12,6 +12,7 @@ import winUser
 from logHandler import log
 import controlTypes
 import api
+import displayModel
 import eventHandler
 from NVDAObjects import NVDAObject
 from NVDAObjects.behaviors import EditableText
@@ -307,10 +308,7 @@ class Desktop(Window):
 class DisplayModelEditableText(EditableText, Window):
 
 	role=controlTypes.ROLE_EDITABLETEXT
-
-	def initOverlayClass(self):
-		import displayModel
-		self.TextInfo = displayModel.DisplayModelTextInfo
+	TextInfo = displayModel.DisplayModelTextInfo
 
 	def event_valueChange(self):
 		# Don't report value changes for editable text fields.

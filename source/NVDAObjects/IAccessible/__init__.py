@@ -9,6 +9,7 @@ import os
 import tones
 import textInfos.offsets
 import time
+import displayModel
 import IAccessibleHandler
 import oleacc
 import JABHandler
@@ -351,6 +352,10 @@ the NVDAObject for IAccessible
 		elif windowClassName == "DirectUIHWND" and role == oleacc.ROLE_SYSTEM_TEXT:
 			from NVDAObjects.window import DisplayModelEditableText
 			clsList.append(DisplayModelEditableText)
+
+		#Window root IAccessibles
+		if self.event_objectID in (None,winUser.OBJID_WINDOW) and self.event_childID==0 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
+			clsList.append(WindowRoot)
 
 		clsList.append(IAccessible)
 
@@ -1034,6 +1039,10 @@ the NVDAObject for IAccessible
 		if IARole == oleacc.ROLE_SYSTEM_WINDOW:
 			return False
 		return super(IAccessible, self).isPresentableFocusAncestor
+
+class WindowRoot(IAccessible):
+
+	TextInfo=displayModel.DisplayModelTextInfo
 
 class ShellDocObjectView(IAccessible):
 
