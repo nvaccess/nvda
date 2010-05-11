@@ -38,6 +38,7 @@ RPC_STATUS startServer() {
 			return status;
 		}
 	}
+	return status;
 }
 
 RPC_STATUS stopServer() {
