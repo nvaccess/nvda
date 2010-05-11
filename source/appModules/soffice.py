@@ -13,6 +13,7 @@ from compoundDocuments import CompoundDocument
 from NVDAObjects.JAB import JAB
 from NVDAObjects.IAccessible import IAccessible, IA2TextTextInfo
 from NVDAObjects.behaviors import EditableText
+from logHandler import log
 
 class SymphonyTextInfo(IA2TextTextInfo):
 
