@@ -33,30 +33,21 @@ RPC_STATUS startServer() {
 	}
 	//Register the interfaces
 	for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
-		if((status=RpcServerRegisterIf(availableInterfaces[i],NULL,NULL))!=RPC_S_OK) {
+		if((status=RpcServerRegisterIf2(availableInterfaces[i],NULL,NULL,RPC_IF_AUTOLISTEN,RPC_C_LISTEN_MAX_CALLS_DEFAULT,1,NULL))!=RPC_S_OK) {
+			fprintf(stderr,"Error registering rpc interface\n");
 			return status;
 		}
 	}
-	printf("done\n");
-	//Start listening
-	printf("starting server\n");
-	if((status=RpcServerListen(1,RPC_C_LISTEN_MAX_CALLS_DEFAULT,TRUE))!=RPC_S_OK) {
-		fprintf(stderr,"Error starting, code 0X%X\n",status);
-		return status;
-	}
-	CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)RpcMgmtWaitServerListen,NULL,0,NULL);
-	return status;
 }
 
 RPC_STATUS stopServer() {
 	RPC_STATUS status;
-	printf("unregistering interface...\n");
 	for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
 		if((status=RpcServerUnregisterIf(availableInterfaces[i],NULL,1))!=RPC_S_OK) {
 			return status;
 		}
 	}
-	return RpcMgmtStopServerListening(NULL); 
+	return status;
 }
 
 void rpcSrv_inProcess_initialize() {
