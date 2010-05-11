@@ -38,9 +38,6 @@ BOOL inProcess_isRunning=false;
 winEventHookRegistry_t inProcess_registeredWinEventHooks;
 windowsHookRegistry_t inProcess_registeredCallWndProcWindowsHooks;
 windowsHookRegistry_t inProcess_registeredGetMessageWindowsHooks;
-HHOOK getMessageHookID=0;
-HHOOK callWndProcHookID=0;
-HWINEVENTHOOK winEventHookID=0; 
 DWORD desktopProcessID=0;
 
 void inProcess_initialize() {
@@ -173,6 +170,8 @@ LRESULT CALLBACK callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
 
 //winEvent callback
 void CALLBACK winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
+	//We are not at all interested in out-of-context winEvents, even if they were accidental.
+	if(threadID!=GetCurrentThreadId()) return;
 	if(!inProcess_wasInitializedOnce) {
 		assert(!inProcess_isRunning);
 		DWORD curProcessID=0;
@@ -195,6 +194,51 @@ void CALLBACK winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long 
 	}
 }
 
+//This function is used to hook windows hooks and winEvents, pump messages, and then unhook windows hooks and winEvents.
+//This function is run in its own thread.
+//This thread is needed to icealate the hook callbacks from the rest of NVDA
+//As some incontext callbacks may be called out of context due to 32/64 bit boundaries, and or security issues.
+//We don't want them clogging up NVDA's main message queue.
+void _nvdaHelper_localThreadFunc() {
+	HHOOK getMessageHookID=0;
+	HHOOK callWndProcHookID=0;
+	HWINEVENTHOOK winEventHookID=0; 
+	if((getMessageHookID=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)getMessageHook,moduleHandle,0))==0) {
+		MessageBox(NULL,L"Error registering getMessage Windows hook",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
+		return;
+	}
+	if((callWndProcHookID=SetWindowsHookEx(WH_CALLWNDPROC,(HOOKPROC)callWndProcHook,moduleHandle,0))==0) {
+		MessageBox(NULL,L"Error registering callWndProc Windows hook",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
+		return;
+	}
+	if((winEventHookID=SetWinEventHook(0,0xFFFFFFFF,moduleHandle,(WINEVENTPROC)winEventHook,0,0,WINEVENT_INCONTEXT))==0) {
+		MessageBox(NULL,L"Error registering winEvent hook",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
+		return;
+	}
+	MSG msg;
+	Beep(2000,100);
+	while(GetMessage(&msg,NULL,0,0)) {
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+	Beep(3000,100);
+	if(UnhookWindowsHookEx(getMessageHookID)==0) {
+		MessageBox(NULL,L"Error unregistering getMessage hook",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
+		return;
+	}
+	if(UnhookWindowsHookEx(callWndProcHookID)==0) {
+		MessageBox(NULL,L"Error unregistering callWndProc hook",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
+		return;
+	}
+	if(UnhookWinEvent(winEventHookID)==FALSE) {
+		MessageBox(NULL,L"Error unregistering winEvent hook",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
+		return;
+	}
+}
+
+HANDLE _nvdaHelper_localThreadHandle=NULL;
+DWORD _nvdaHelper_localThreadID=0;
+
 int nvdaHelper_initialize() {
 	if(isInitialized) {
 		MessageBox(NULL,L"Already initialized",L"nvdaHelperRemote (nvdaHelper_initialize)",0);
@@ -208,41 +252,24 @@ int nvdaHelper_initialize() {
 		MessageBox(NULL,L"Error initializing IA2 support",L"nvdaHelperRemote (nvdaHelper_initialize)",0);
 		return -1;
 	}
-	if((getMessageHookID=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)getMessageHook,moduleHandle,0))==0) {
-		MessageBox(NULL,L"Error registering getMessage Windows hook",L"nvdaHelperRemote (nvdaHelper_initialize)",0);
-		return -1;
-	}
-	if((callWndProcHookID=SetWindowsHookEx(WH_CALLWNDPROC,(HOOKPROC)callWndProcHook,moduleHandle,0))==0) {
-		MessageBox(NULL,L"Error registering callWndProc Windows hook",L"nvdaHelperRemote (nvdaHelper_initialize)",0);
-		return -1;
-	}
-	if((winEventHookID=SetWinEventHook(0,0xFFFFFFFF,moduleHandle,(WINEVENTPROC)winEventHook,0,0,WINEVENT_INCONTEXT))==0) {
-		MessageBox(NULL,L"Error registering winEvent hook",L"nvdaHelperRemote (nvdaHelper_initialize)",0);
-		return -1;
-	}
+	_nvdaHelper_localThreadHandle=CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)_nvdaHelper_localThreadFunc,NULL,0,&_nvdaHelper_localThreadID);
 	isInitialized=TRUE;
 	return 0;
 }
 
 int nvdaHelper_terminate() {
 	if(!isInitialized) {
-		fprintf(stderr,"Error: not initialized yet\n");
+		MessageBox(NULL,L"Error not initialized yet",L"nvdaHelperRemote (nvdaHelper_terminate)",0);
 		return -1;
 	}
-	if(UnhookWindowsHookEx(getMessageHookID)==0) {
-		fprintf(stderr,"Error unhooking getMessage hook\n");
-		return -1;
+	PostThreadMessage(_nvdaHelper_localThreadID,WM_QUIT,0,0);
+	if(WaitForSingleObject(_nvdaHelper_localThreadHandle,1000)!=0) {
+		MessageBox(NULL,L"Error waiting for local thread to die, already dead or not responding.",L"nvdaHelperRemote (nvdaHelper_terminate)",0);
 	}
-	if(UnhookWindowsHookEx(callWndProcHookID)==0) {
-		fprintf(stderr,"Error unhooking callWndProc hook\n");
-		return -1;
-	}
-	if(UnhookWinEvent(winEventHookID)==FALSE) {
-		fprintf(stderr,"Error unregistering foreground winEvent\n");
-		return -1;
-	}
+	_nvdaHelper_localThreadHandle=NULL;
+	_nvdaHelper_localThreadID=0;
 	if(!IA2Support_terminate()) {
-		fprintf(stderr,"Error terminating IA2 support");
+		MessageBox(NULL,L"Error terminating IA2 support",L"nvdaHelperRemote (nvdaHelper_terminate)",0);
 		return -1;
 	}
 	isInitialized=FALSE;
