@@ -216,12 +216,10 @@ void _nvdaHelper_localThreadFunc() {
 		return;
 	}
 	MSG msg;
-	Beep(2000,100);
 	while(GetMessage(&msg,NULL,0,0)) {
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-	Beep(3000,100);
 	if(UnhookWindowsHookEx(getMessageHookID)==0) {
 		MessageBox(NULL,L"Error unregistering getMessage hook",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
 		return;
