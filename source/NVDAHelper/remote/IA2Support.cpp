@@ -1,5 +1,5 @@
 //IA2Support.cpp
-//Copyright (c) 2007 Michael Curran <mick@kulgan.net>
+//Copyright (C) 2007-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
 //This file is covered by the GNU General Public Licence
 //See the file Copying for details.
 
@@ -108,10 +108,25 @@ BOOL IA2Support_terminate() {
 	return TRUE;
 }
 
+void CALLBACK IA2Support_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) { 
+	if (eventID != EVENT_SYSTEM_FOREGROUND && eventID != EVENT_OBJECT_FOCUS)
+		return;
+	if (installIA2Support()) {
+		// IA2 support successfully installed, so this hook isn't needed anymore.
+		unregisterWinEventHook(IA2Support_winEventProcHook);
+	}
+}
+
 void IA2Support_inProcess_initialize() {
-	installIA2Support();
+	if (!installIA2Support()) {
+		// Couldn't install IA2 support,
+		// so keep trying on focus/foreground changes just in case COM gets initialised later.
+		registerWinEventHook(IA2Support_winEventProcHook);
+	}
 }
 
 void IA2Support_inProcess_terminate() {
+	// This will do nothing if the hook isn't registered.
+	unregisterWinEventHook(IA2Support_winEventProcHook);
 	uninstallIA2Support();
 }
