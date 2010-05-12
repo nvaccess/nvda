@@ -741,6 +741,76 @@ This code is executed if a gain focus event is received by this object.
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
 
+	def _get_devInfo(self):
+		"""Information about this object useful to developers.
+		Subclasses may extend this, calling the superclass property first.
+		@return: A list of text strings providing information about this object useful to developers.
+		@rtype: list of str
+		"""
+		info = []
+		try:
+			ret = repr(self.name)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("name: %s" % ret)
+		try:
+			ret = self.role
+			for name, const in controlTypes.__dict__.iteritems():
+				if name.startswith("ROLE_") and ret == const:
+					ret = name
+					break
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("role: %s" % ret)
+		try:
+			stateConsts = dict((const, name) for name, const in controlTypes.__dict__.iteritems() if name.startswith("STATE_"))
+			ret = ", ".join(
+				stateConsts.get(state) or str(state)
+				for state in self.states)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("states: %s" % ret)
+		try:
+			ret = repr(self)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("Python object: %s" % ret)
+		try:
+			ret = repr(self.__class__.__mro__)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("Python class mro: %s" % ret)
+		try:
+			ret = repr(self.description)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("description: %s" % ret)
+		try:
+			ret = repr(self.location)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("location: %s" % ret)
+		try:
+			ret = self.value
+			if isinstance(ret, basestring) and len(ret) > 100:
+				ret = "%r (truncated)" % ret[:100]
+			else:
+				ret = repr(ret)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("value: %s" % ret)
+		try:
+			ret = repr(self.appModule)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("appModule: %s" % ret)
+		try:
+			ret = repr(self.TextInfo)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("TextInfo: %s" % ret)
+		return info
+
 class AutoSelectDetectionNVDAObject(NVDAObject):
 
 	"""Provides an NVDAObject with the means to detect if the text selection has changed, and if so to announce the change
