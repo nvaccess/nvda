@@ -689,29 +689,10 @@ class AppModule(appModuleHandler.AppModule):
 			obj.speakDescendantObjects()
 	script_speakForeground.__doc__ = _("speaks the current foreground object")
 
-	def script_test_navigatorWindowInfo(self,keyPress):
+	def script_navigatorObject_devInfo(self,keyPress):
 		obj=api.getNavigatorObject()
-		import ctypes
-		w=ctypes.windll.user32.GetAncestor(obj.windowHandle,3)
-		w=ctypes.windll.user32.GetAncestor(w,3)
-		className=winUser.getClassName(w)
-		speech.speakMessage("%s, %s"%(w,className))
-		if not isinstance(obj,NVDAObject): 
-			speech.speakMessage(_("no navigator object"))
-			return
-		if scriptHandler.getLastScriptRepeatCount()>=1:
-			if api.copyToClip("Control ID: %s\r\nClass: %s\r\ninternal text: %s"%(winUser.getControlID(obj.windowHandle),obj.windowClassName,winUser.getWindowText(obj.windowHandle))):
-				speech.speakMessage(_("copied to clipboard"))
-		else:
-			log.info("%s %s"%(obj.role,obj.windowHandle))
-			speech.speakMessage("%s"%obj)
-			speech.speakMessage(_("Control ID: %s")%winUser.getControlID(obj.windowHandle))
-			speech.speakMessage(_("Class: %s")%obj.windowClassName)
-			speech.speakSpelling(obj.windowClassName)
-			speech.speakMessage(_("internal text: %s")%winUser.getWindowText(obj.windowHandle))
-			speech.speakMessage(_("text: %s")%obj.windowText)
-			speech.speakMessage("is unicode: %s"%ctypes.windll.user32.IsWindowUnicode(obj.windowHandle))
-	script_test_navigatorWindowInfo.__doc__ = _("reports some information about the current navigator object, mainly useful for developers. When pressed 2 times it copies control id, class and internal text to the windows clipboard")
+		log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo), activateLogViewer=True)
+	script_navigatorObject_devInfo.__doc__ = _("Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined.")
 
 	def script_toggleProgressBarOutput(self,keyPress):
 		outputMode=config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]
