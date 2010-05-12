@@ -308,7 +308,7 @@ class Desktop(Window):
 class DisplayModelEditableText(EditableText, Window):
 
 	role=controlTypes.ROLE_EDITABLETEXT
-	TextInfo = displayModel.DisplayModelTextInfo
+	TextInfo = displayModel.EditableTextDisplayModelTextInfo
 
 	def event_valueChange(self):
 		# Don't report value changes for editable text fields.
