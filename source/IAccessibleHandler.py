@@ -536,7 +536,7 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 		return None
 	#SDM MSAA objects sometimes don't contain enough information to be useful
 	#Sometimes there is a real window that does, so try to get the SDMChild property on the NVDAObject, and if successull use that as obj instead.
-	if obj.windowClassName=='bosa_sdm':
+	if 'bosa_sdm' in obj.windowClassName:
 		SDMChild=getattr(obj,'SDMChild',None)
 		if SDMChild: obj=SDMChild
 	return (NVDAEventName,obj)
@@ -853,9 +853,11 @@ def terminate():
 def getIAccIdentity(pacc,childID):
 	IAccIdentityObject=pacc.QueryInterface(IAccIdentity)
 	stringPtr,stringSize=IAccIdentityObject.getIdentityString(childID)
-	stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
-	identityString=stringPtr.contents.raw
-	fields=struct.unpack('IIiI',identityString)
+	try:
+		stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
+		fields=struct.unpack('IIiI',stringPtr.contents.raw)
+	finally:
+		windll.ole32.CoTaskMemFree(stringPtr)
 	d={}
 	d['childID']=fields[3]
 	if fields[0]&2:

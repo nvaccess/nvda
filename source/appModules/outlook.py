@@ -71,7 +71,7 @@ class AppModule(_default.AppModule):
 		if role in (controlTypes.ROLE_TREEVIEW,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LIST,controlTypes.ROLE_LISTITEM):
 			obj.shouldAllowIAccessibleFocusEvent=True
 		if ((windowClassName=="SUPERGRID" and controlID==4704) or (windowClassName=="rctrl_renwnd32" and controlID==109)) and role==controlTypes.ROLE_UNKNOWN:
-			obj.role=controlTypes.ROLE_ICON
+			obj.role=controlTypes.ROLE_LISTITEM
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		role=obj.role

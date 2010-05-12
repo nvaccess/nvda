@@ -84,15 +84,27 @@ def HTMLNodeFromIAccessible(IAccessibleObject):
 		raise NotImplementedError
 
 def locateHTMLElementByID(document,ID):
-	element=document.getElementById(ID)
+	try:
+		element=document.getElementById(ID)
+	except COMError as e:
+		log.debugWarning("document.getElementByID failed with COMError %s"%e)
+		element=None
 	if element:
 		return element
-	nodeName=document.body.nodeName
+	try:
+		nodeName=document.body.nodeName
+	except COMError as e:
+		log.debugWarning("document.body.nodeName failed with COMError %s"%e)
+		return None
 	if nodeName=="FRAMESET":
 		tag="frame"
 	else:
 		tag="iframe"
-	frames=document.getElementsByTagName(tag)
+	try:
+		frames=document.getElementsByTagName(tag)
+	except COMError as e:
+		log.debugWarning("document.getElementsByTagName failed with COMError %s"%e)
+		return None
 	for frame in frames:
 		pacc=IAccessibleFromHTMLNode(frame)
 		res=IAccessibleHandler.accChild(pacc,1)

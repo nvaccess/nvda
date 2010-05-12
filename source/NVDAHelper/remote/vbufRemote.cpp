@@ -85,6 +85,14 @@ VBufRemote_nodeHandle_t VBufRemote_getControlFieldNodeWithIdentifier(VBufRemote_
 	return res;
 }
 
+int VBufRemote_getIdentifierFromControlFieldNode(VBufRemote_bufferHandle_t buffer, VBufRemote_nodeHandle_t node, int* docHandle, int* ID) { 
+	VBufBackend_t* backend=(VBufBackend_t*)buffer;
+	backend->lock.acquire();
+	int res=backend->getIdentifierFromControlFieldNode((VBufStorage_controlFieldNode_t*)node,docHandle,ID);
+	backend->lock.release();
+	return res;
+}
+
 VBufRemote_nodeHandle_t VBufRemote_findNodeByAttributes(VBufRemote_bufferHandle_t buffer, int offset, int direction, const wchar_t* attribsString, int *startOffset, int *endOffset) { 
 	VBufBackend_t* backend=(VBufBackend_t*)buffer;
 	backend->lock.acquire();
