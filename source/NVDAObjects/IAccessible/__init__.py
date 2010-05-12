@@ -277,6 +277,8 @@ the NVDAObject for IAccessible
 				acc=accFocus
 				# We don't know the event parameters for this object.
 				objID=None
+				# This object may also be in a different window, so we need to recalculate the window handle.
+				kwargs['windowHandle']=None
 		elif relation in ("parent","foreground"):
 			objID=winUser.OBJID_CLIENT
 		else:
