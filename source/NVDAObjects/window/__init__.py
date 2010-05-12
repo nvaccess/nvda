@@ -281,6 +281,40 @@ An NVDAObject for a window
 
 	normalizedWindowClassNameCache={}
 
+	def _get_devInfo(self):
+		info = super(Window, self).devInfo
+		info.append("windowHandle: %r" % self.windowHandle)
+		try:
+			ret = repr(self.windowClassName)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("windowClassName: %s" % ret)
+		try:
+			ret = repr(self.windowControlID)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("windowControlID: %s" % ret)
+		try:
+			ret = repr(self.windowStyle)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("windowStyle: %s" % ret)
+		try:
+			ret = repr(self.windowThreadID)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("windowThreadID: %s" % ret)
+		try:
+			ret = self.windowText
+			if isinstance(ret, basestring) and len(ret) > 100:
+				ret = "%r (truncated)" % ret[:100]
+			else:
+				ret = repr(ret)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("windowText: %s" % ret)
+		return info
+
 class Desktop(Window):
 
 	isPresentableFocusAncestor = False
