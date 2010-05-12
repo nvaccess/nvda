@@ -6,6 +6,7 @@ from ..window import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 import textInfos.offsets
 from logHandler import log
+from .. import InvalidNVDAObject
 
 JABRolesToNVDARoles={
 	"alert":controlTypes.ROLE_DIALOG,
@@ -175,6 +176,8 @@ class JAB(Window):
 			jabContext=JABHandler.JABContext(hwnd=windowHandle)
 			if jabContext:
 				jabContext=jabContext.getAccessibleContextAt(*relation)
+		else:
+			jabContext=JABHandler.JABContext(hwnd=windowHandle)
 		if not jabContext:
 			return False
 		kwargs['jabContext']=jabContext
@@ -185,7 +188,10 @@ class JAB(Window):
 			windowHandle=jabContext.hwnd
 		self.windowHandle=windowHandle
 		self.jabContext=jabContext
-		self._JABAccContextInfo=jabContext.getAccessibleContextInfo()
+		try:
+			self._JABAccContextInfo=jabContext.getAccessibleContextInfo()
+		except RuntimeError:
+			raise InvalidNVDAObject("Could not get accessible context info")
 		super(JAB,self).__init__(windowHandle=windowHandle)
 
 	def _get_TextInfo(self):
@@ -331,7 +337,11 @@ class JAB(Window):
 		return children
 
 	def event_stateChange(self):
-		self._JABAccContextInfo=self.jabContext.getAccessibleContextInfo()
+		try:
+			self._JABAccContextInfo=self.jabContext.getAccessibleContextInfo()
+		except RuntimeError:
+			log.debugWarning("Error getting accessible context info, probably dead object")
+			return
 		super(JAB,self).event_stateChange()
 
 	def reportFocus(self):

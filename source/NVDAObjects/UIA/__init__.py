@@ -11,7 +11,7 @@ import api
 import textInfos
 from logHandler import log
 from NVDAObjects.window import Window
-from NVDAObjects import NVDAObjectTextInfo, AutoSelectDetectionNVDAObject
+from NVDAObjects import NVDAObjectTextInfo, AutoSelectDetectionNVDAObject, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableText
 
 class UIATextInfo(textInfos.TextInfo):
@@ -190,6 +190,8 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			if not windowHandle:
 				self.UIAIsWindowElement=False
 				windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
+		if not windowHandle:
+			raise InvalidNVDAObject("no windowHandle")
 		super(UIA,self).__init__(windowHandle=windowHandle)
 
 		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 

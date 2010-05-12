@@ -20,7 +20,7 @@ import api
 import config
 import controlTypes
 from NVDAObjects.window import Window
-from NVDAObjects import NVDAObject, NVDAObjectTextInfo, AutoSelectDetectionNVDAObject
+from NVDAObjects import NVDAObject, NVDAObjectTextInfo, AutoSelectDetectionNVDAObject, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
 import mouseHandler
@@ -266,11 +266,22 @@ the NVDAObject for IAccessible
 			acc=IAccessibleHandler.accessibleObjectFromPoint(relation[0],relation[1])
 		elif relation=="focus":
 			objID=winUser.OBJID_CLIENT
+			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,objID,0)
+			accFocus=None
+			testAccFocus=acc
+			# Keep doing accFocus until we can't anymore or until accFocus keeps returning the same object.
+			while testAccFocus and testAccFocus!=accFocus:
+				accFocus=testAccFocus
+				testAccFocus=IAccessibleHandler.accFocus(accFocus[0])
+			if accFocus:
+				acc=accFocus
+				# We don't know the event parameters for this object.
+				objID=None
 		elif relation in ("parent","foreground"):
 			objID=winUser.OBJID_CLIENT
 		else:
 			objID=winUser.OBJID_WINDOW
-		if objID is not None:
+		if not acc and objID is not None:
 			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,objID,0)
 		if not acc:
 			return False
@@ -327,7 +338,7 @@ the NVDAObject for IAccessible
 				clsList.append(newCls)
 
 		# Some special cases.
-		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2) and role == oleacc.ROLE_SYSTEM_TEXT) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary"):
+		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2)) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary"):
 			# This is possibly a Flash object.
 			from . import adobeFlash
 			adobeFlash.findExtraOverlayClasses(self, clsList)
@@ -380,10 +391,13 @@ the NVDAObject for IAccessible
 			windowHandle=IAccessibleHandler.windowFromAccessibleObject(IAccessibleObject)
 		if not windowHandle:
 			log.debugWarning("Resorting to WindowFromPoint on accLocation")
-			left,top,width,height = IAccessibleObject.accLocation(0)
-			windowHandle=winUser.user32.WindowFromPoint(winUser.POINT(left,top))
+			try:
+				left,top,width,height = IAccessibleObject.accLocation(0)
+				windowHandle=winUser.user32.WindowFromPoint(winUser.POINT(left,top))
+			except COMError, e:
+				log.debugWarning("accLocation failed: %s" % e)
 		if not windowHandle:
-			raise RuntimeError("Can't get a window handle from IAccessible")
+			raise InvalidNVDAObject("Can't get a window handle from IAccessible")
 
 		# Set the event params based on our calculated/construction info if we must.
 		if event_windowHandle is None:
@@ -694,6 +708,8 @@ the NVDAObject for IAccessible
 		except:
 			return None
 
+	parentUsesSuperOnWindowRootIAccessible=True #: on a window root IAccessible, super should be used instead of accParent
+
 	def _get_parent(self):
 		if self.IAccessibleChildID>0:
 			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=0) or super(IAccessible,self).parent
@@ -701,7 +717,7 @@ the NVDAObject for IAccessible
 		groupboxObj=IAccessibleHandler.findGroupboxObject(self)
 		if groupboxObj:
 			return groupboxObj
-		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
+		if self.parentUsesSuperOnWindowRootIAccessible and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
 			return super(IAccessible,self).parent
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
 		if res:

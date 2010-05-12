@@ -355,7 +355,8 @@ def normalizeIAccessible(pacc):
 def accessibleObjectFromEvent(window,objectID,childID):
 	wmResult=c_long()
 	if windll.user32.SendMessageTimeoutW(window,winUser.WM_NULL,0,0,winUser.SMTO_ABORTIFHUNG,2000,byref(wmResult))==0:
-		raise ctypes.WinError()
+		log.debugWarning("Window %d dead or not responding: %s" % (window, ctypes.WinError()))
+		return None
 	try:
 		pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
 	except Exception as e:
@@ -523,7 +524,7 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 		return None
 	#SDM MSAA objects sometimes don't contain enough information to be useful
 	#Sometimes there is a real window that does, so try to get the SDMChild property on the NVDAObject, and if successull use that as obj instead.
-	if obj.windowClassName=='bosa_sdm':
+	if 'bosa_sdm' in obj.windowClassName:
 		SDMChild=getattr(obj,'SDMChild',None)
 		if SDMChild: obj=SDMChild
 	return (NVDAEventName,obj)
@@ -774,10 +775,8 @@ def _fakeFocus(oldFocus):
 	if oldFocus is not api.getFocusObject():
 		# The focus has changed - no need to fake it.
 		return
-	try:
-		focus = api.getDesktopObject().objectWithFocus()
-	except:
-		log.exception("Error retrieving focus")
+	focus = api.getDesktopObject().objectWithFocus()
+	if not focus:
 		return
 	processFocusNVDAEvent(focus)
 
@@ -842,9 +841,11 @@ def terminate():
 def getIAccIdentity(pacc,childID):
 	IAccIdentityObject=pacc.QueryInterface(IAccIdentity)
 	stringPtr,stringSize=IAccIdentityObject.getIdentityString(childID)
-	stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
-	identityString=stringPtr.contents.raw
-	fields=struct.unpack('IIiI',identityString)
+	try:
+		stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
+		fields=struct.unpack('IIiI',stringPtr.contents.raw)
+	finally:
+		windll.ole32.CoTaskMemFree(stringPtr)
 	d={}
 	d['childID']=fields[3]
 	if fields[0]&2:

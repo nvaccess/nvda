@@ -121,8 +121,6 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	o=None
 	for o in ancestors[focusDifferenceLevel:]+[obj]:
 		treeInterceptorObject=treeInterceptorHandler.update(o)
-		if treeInterceptorObject:
-			break
 	#Always make sure that the focus object's treeInterceptor is forced to either the found treeInterceptor (if its in it) or to None
 	#This is to make sure that the treeInterceptor does not have to be looked up, which can cause problems for winInputHook
 	if obj is o or obj in treeInterceptorObject:

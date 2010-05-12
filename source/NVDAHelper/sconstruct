@@ -25,7 +25,7 @@ if env['release']:
 else:
 	print "Building %s debug version"%TARGET_ARCH
 	env.Append(PDB='${TARGET}.pdb')
-	env.Append(CCFLAGS=['/O2','/MTd'])
+	env.Append(CCFLAGS=['/Od','/MTd'])
 
 Export('env')
 
@@ -71,6 +71,10 @@ Export('vbufBaseStaticLib')
 adobeAcrobatVBufBackend=env.SConscript('vbufBackends/adobeAcrobat/sconscript')
 env.Install(libInstallDir,adobeAcrobatVBufBackend)
 buildList.append(adobeAcrobatVBufBackend)
+
+adobeFlashVBufBackend=env.SConscript('vbufBackends/adobeFlash/sconscript')
+env.Install(libInstallDir,adobeFlashVBufBackend)
+buildList.append(adobeFlashVBufBackend)
 
 geckoVBufBackend=env.SConscript('vbufBackends/gecko_ia2/sconscript')
 env.Install(libInstallDir,geckoVBufBackend)

@@ -9,6 +9,7 @@ import comtypes.client
 import comtypes.automation
 from comtypes import IServiceProvider
 import oleacc
+import IAccessibleHandler
 import aria
 from keyUtils import key, sendKey
 import api
@@ -17,6 +18,8 @@ from logHandler import log
 import controlTypes
 from . import IAccessible
 from ..behaviors import EditableTextWithoutAutoSelectDetection
+from .. import InvalidNVDAObject
+from ..window import Window
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
@@ -62,6 +65,14 @@ def IAccessibleFromHTMLNode(HTMLNode):
 		raise NotImplementedError
 
 def HTMLNodeFromIAccessible(IAccessibleObject):
+	#Internet Explorer 8 can crash if you try asking for an IHTMLElement from the root MSHTML Registered Handler IAccessible
+	#So only do it if we can get the role, and its not the MSAA client role.
+	try:
+		accRole=IAccessibleObject.accRole(0)
+	except COMError:
+		accRole=0
+	if not accRole or accRole==oleacc.ROLE_SYSTEM_CLIENT:
+		return None
 	try:
 		s=IAccessibleObject.QueryInterface(IServiceProvider)
 		i=s.QueryService(IID_IHTMLElement,comtypes.automation.IDispatch)
@@ -73,22 +84,36 @@ def HTMLNodeFromIAccessible(IAccessibleObject):
 		raise NotImplementedError
 
 def locateHTMLElementByID(document,ID):
-	element=document.getElementById(ID)
+	try:
+		element=document.getElementById(ID)
+	except COMError as e:
+		log.debugWarning("document.getElementByID failed with COMError %s"%e)
+		element=None
 	if element:
 		return element
-	nodeName=document.body.nodeName
+	try:
+		nodeName=document.body.nodeName
+	except COMError as e:
+		log.debugWarning("document.body.nodeName failed with COMError %s"%e)
+		return None
 	if nodeName=="FRAMESET":
 		tag="frame"
 	else:
 		tag="iframe"
-	frames=document.getElementsByTagName(tag)
+	try:
+		frames=document.getElementsByTagName(tag)
+	except COMError as e:
+		log.debugWarning("document.getElementsByTagName failed with COMError %s"%e)
+		return None
 	for frame in frames:
 		pacc=IAccessibleFromHTMLNode(frame)
-		childPacc=pacc.accChild(1)
-		childElement=HTMLNodeFromIAccessible(childPacc)
+		res=IAccessibleHandler.accChild(pacc,1)
+		if not res: continue
+		childElement=HTMLNodeFromIAccessible(res[0])
+		if not childElement: continue
 		childElement=locateHTMLElementByID(childElement.document,ID)
-		if childElement:
-			return childElement
+		if not childElement: continue
+		return childElement
 
 class MSHTMLTextInfo(textInfos.TextInfo):
 
@@ -258,8 +283,11 @@ class MSHTML(IAccessible):
 	def findOverlayClasses(self,clsList):
 		if self.TextInfo == MSHTMLTextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
-		if nodeNamesToNVDARoles.get(self.HTMLNode.nodeName) == controlTypes.ROLE_DOCUMENT:
+		nodeName = self.HTMLNode.nodeName
+		if nodeNamesToNVDARoles.get(nodeName) == controlTypes.ROLE_DOCUMENT:
 			clsList.append(Body)
+		elif nodeName == "OBJECT":
+			clsList.append(Object)
 
 		clsList.append(MSHTML)
 		if not self.HTMLNodeHasAncestorIAccessible:
@@ -291,6 +319,9 @@ class MSHTML(IAccessible):
 					tempNode=tempNode.parentNode
 				except COMError:
 					tempNode=None
+
+		if not IAccessibleObject:
+			raise InvalidNVDAObject("Couldn't get IAccessible, probably dead object")
 
 		super(MSHTML,self).__init__(IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,**kwargs)
 		self.HTMLNode=HTMLNode
@@ -617,3 +648,17 @@ class Body(MSHTML):
 			return parent.parent
 		else:
 			return parent
+
+class Object(MSHTML):
+
+	def _get_firstChild(self):
+		# We want firstChild to return the accessible for the embedded object.
+		from objidl import IOleWindow
+		# Try to get the window for the embedded object.
+		try:
+			window = self.HTMLNode.object.QueryInterface(IOleWindow).GetWindow()
+		except COMError:
+			window = None
+		if not window or window == self.windowHandle:
+			return super(Object, self).firstChild
+		return Window(windowHandle=window)

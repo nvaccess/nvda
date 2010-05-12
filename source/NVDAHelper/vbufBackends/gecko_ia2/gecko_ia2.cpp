@@ -783,6 +783,8 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		return;
 	}
 	DEBUG_MSG(L"found active backend for this window at "<<backend);
+	//Ignore state change events on the root node (document) as it can cause rerendering when the document goes busy
+	if(eventID==EVENT_OBJECT_STATECHANGE&&hwnd==(HWND)(backend->rootDocHandle)&&childID==backend->rootID) return;
 	VBufStorage_controlFieldNode_t* node=backend->getControlFieldNodeWithIdentifier(docHandle,ID);
 	if(node==NULL&&eventID==EVENT_OBJECT_STATECHANGE) {
 		// This event is possibly due to a new document loading in a subframe.
