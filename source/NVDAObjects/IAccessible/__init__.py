@@ -1034,6 +1034,35 @@ the NVDAObject for IAccessible
 			return False
 		return super(IAccessible, self).isPresentableFocusAncestor
 
+	def _get_devInfo(self):
+		info = super(IAccessible, self).devInfo
+		iaObj = self.IAccessibleObject
+		info.append("IAccessibleObject: %r" % iaObj)
+		childID = self.IAccessibleChildID
+		info.append("IAccessibleChildID: %r" % childID)
+		info.append("IAccessible event parameters: windowHandle=%r, objectID=%r, childID=%r" % (self.event_windowHandle, self.event_objectID, self.event_childID))
+		try:
+			ret = iaObj.accRole(childID)
+			for name, const in oleacc.__dict__.iteritems():
+				if ret == const:
+					ret = name
+					break
+			else:
+				ret = repr(ret)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("IAccessible accRole: %s" % ret)
+		try:
+			temp = iaObj.accState(childID)
+			ret = ", ".join(
+				name for name, const in oleacc.__dict__.iteritems()
+				if name.startswith("STATE_") and temp & const
+			) + " (%d)" % temp
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("IAccessible accState: %s" % ret)
+		return info
+
 class ShellDocObjectView(IAccessible):
 
 	def event_gainFocus(self):
