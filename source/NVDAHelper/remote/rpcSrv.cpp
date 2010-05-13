@@ -2,7 +2,13 @@
 #include <sstream>
 #include <windows.h>
 #include "vbufRemote.h"
+#include "displayModelRemote.h"
 #include "rpcSrv.h"
+
+RPC_IF_HANDLE availableInterfaces[]={
+	displayModelRemote_DisplayModel_v1_0_s_ifspec,
+	VBufRemote_VBuf_v2_0_s_ifspec,
+};
 
 //memory allocation functions
 
@@ -26,27 +32,23 @@ RPC_STATUS startServer() {
 		return status;
 	}
 	//Register the interfaces
-	printf("Registering interface...\n");
-	//if((status=RpcServerRegisterIfEx(VBufRemote_VBufRemote_v2_0_s_ifspec,NULL,NULL,RPC_IF_AUTOLISTEN,RPC_C_LISTEN_MAX_CALLS_DEFAULT,NULL))!=RPC_S_OK) {
-	if((status=RpcServerRegisterIf(VBufRemote_VBuf_v2_0_s_ifspec,NULL,NULL))!=RPC_S_OK) {
-		fprintf(stderr,"Error registering interface, code 0X%X\n",status);
-		return status;
+	for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
+		if((status=RpcServerRegisterIf2(availableInterfaces[i],NULL,NULL,RPC_IF_AUTOLISTEN,RPC_C_LISTEN_MAX_CALLS_DEFAULT,1,NULL))!=RPC_S_OK) {
+			fprintf(stderr,"Error registering rpc interface\n");
+			return status;
+		}
 	}
-	printf("done\n");
-	//Start listening
-	printf("starting server\n");
-	if((status=RpcServerListen(1,RPC_C_LISTEN_MAX_CALLS_DEFAULT,TRUE))!=RPC_S_OK) {
-		fprintf(stderr,"Error starting, code 0X%X\n",status);
-		return status;
-	}
-	CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)RpcMgmtWaitServerListen,NULL,0,NULL);
 	return status;
 }
 
-void stopServer() {
-	printf("unregistering interface...\n");
-	RpcServerUnregisterIf(VBufRemote_VBuf_v2_0_s_ifspec,NULL,1);
-	printf("Done\n");
+RPC_STATUS stopServer() {
+	RPC_STATUS status;
+	for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
+		if((status=RpcServerUnregisterIf(availableInterfaces[i],NULL,1))!=RPC_S_OK) {
+			return status;
+		}
+	}
+	return status;
 }
 
 void rpcSrv_inProcess_initialize() {

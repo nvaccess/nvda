@@ -11,10 +11,14 @@
 - When moving the mouse over cells in Microsoft Excel, NVDA will appropriately announce them.
 - In applications using the Java Access Bridge, the text of a dialog is now reported when the dialog appears. (#554)
 - A virtualBuffer can now be used to navigate adobe Flash content. Object navigation and interacting with the controls directly (by turning on focus mode) is still supported. (#453)
+- Editable text controls in the Eclipse IDE, including the code editor, are now accessible. You must be using Eclipse 3.6 or later. (#256, #641)
+- NVDA can now retrieve most text written to the screen. (#40, #643)
+	- This allows for reading of controls which do not expose information in more direct/reliable ways.
+	- Controls made accessible by this feature include: some menu items which display icons (e.g. the Open With menu on files in Windows XP) (#151), editable text fields in Windows Live applications (#200), the errors list in Outlook Express (#582), the editable text control in TextPad (#605), lists in Eudora, many controls in Australian E-tax and the formula bar in Microsoft Excel.
 
 
 == Changes ==
-- The sayAll by Navigator object (NVDA+numpadAdd), navigator object next in flow (NVDA+numpad6) and navigator object previous in flow (NVDA+numpad4) have been removed for the time being, due to buggyness and to free up the keys for other possible features.
+- The sayAll by Navigator object (NVDA+numpadAdd), navigator object next in flow (NVDA+shift+numpad6) and navigator object previous in flow (NVDA+shift+numpad4) have been removed for the time being, due to bugginess and to free up the keys for other possible features.
 - In the NVDA Synthesizer dialog, only the display name of the synthesizer is now listed. Previously, it was prefixed by the driver's name, which is only relevant internally.
 - When in embedded applications or virtual buffers inside another virtualBuffer (e.g. Flash), you can now  press nvda+control+space to move out of the embedded application or virtual buffer, in to the above document. Previously nvda+space  was used for this. Now nvda+space is specifically only for toggling brows/focus modes on virtualBuffers.
 - If the speech viewer (enabled under the tools menu) is given the focus (e.g. it was clicked in) new text will not appear in the control until focus is moved away. This allows for selecting the text with greater ease (e.g. for copying).

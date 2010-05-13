@@ -3,6 +3,7 @@
 
 #include <string>
 #include <sstream>
+#include "nvdaControllerInternal.h"
 
 #define __STR2WSTR(x) L##x
 #define _STR2WSTR(x) __STR2WSTR(x)

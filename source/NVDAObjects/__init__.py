@@ -45,6 +45,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 	def __call__(self,chooseBestAPI=True,**kwargs):
 		if chooseBestAPI:
 			APIClass=self.findBestAPIClass(kwargs)
+			if not APIClass: return None
 		else:
 			APIClass=self
 
@@ -135,7 +136,8 @@ class NVDAObject(baseObject.ScriptableObject):
 					continue
 				if possibleAPIClass.kwargsFromSuper(kwargs,relation=relation):
 					return possibleAPIClass.findBestAPIClass(kwargs,relation=relation)
-		return newAPIClass
+		return newAPIClass if newAPIClass is not NVDAObject else None
+
 
 	@classmethod
 	def getPossibleAPIClasses(cls,kwargs,relation=None):
@@ -194,7 +196,7 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		kwargs={}
 		APIClass=NVDAObject.findBestAPIClass(kwargs,relation=(x,y))
-		return APIClass(chooseBestAPI=False,**kwargs)
+		return APIClass(chooseBestAPI=False,**kwargs) if APIClass else None
 
 	@staticmethod
 	def objectWithFocus():
@@ -204,7 +206,7 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		kwargs={}
 		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="focus")
-		return APIClass(chooseBestAPI=False,**kwargs)
+		return APIClass(chooseBestAPI=False,**kwargs) if APIClass else None
 
 	@staticmethod
 	def objectInForeground():
@@ -214,7 +216,8 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		kwargs={}
 		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="foreground")
-		return APIClass(chooseBestAPI=False,**kwargs)
+		return APIClass(chooseBestAPI=False,**kwargs) if APIClass else None
+
 
 	def __init__(self):
 		super(NVDAObject,self).__init__()

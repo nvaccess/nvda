@@ -3,6 +3,9 @@ Import([
 	'ia2RPCStubs',
 ])
 
+minHookObjFiles=env.SConscript('minHook_sconscript')
+
+
 winIPCUtilsObj=env.Object("./winIPCUtils","#common/winIPCUtils.cpp")
 
 controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
@@ -34,12 +37,23 @@ vbufRPCHeader,vbufRPCServerSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="VBufRemote_",
 )
 
+displayModelRPCHeader,displayModelRPCServerSource=env.MSRPCStubs(
+	target="./displayModelRemote",
+	source=[
+		"#interfaces/displayModel/displayModel.idl",
+		"#interfaces/displayModel/displayModel.acf",
+	],
+	MSRPCStubs_noClient=True,
+	MSRPCStubs_prefix="displayModelRemote_",
+)
+
 ia2utilsObj=env.Object("./ia2utils","#common/ia2utils.cpp")
 
 remoteLib=env.SharedLibrary(
 	target="nvdaHelperRemote",
 	source=[
 		"nvdaHelperRemote.cpp",
+		"apiHook.cpp",
 		"inputLangChange.cpp",
 		"typedCharacter.cpp",
 		"ia2Support.cpp",
@@ -52,14 +66,20 @@ remoteLib=env.SharedLibrary(
 		winIPCUtilsObj,
 		controllerRPCClientSource,
 		controllerInternalRPCClientSource,
-	],
+		"gdiHooks.cpp",
+		"displayModel.cpp",
+		"displayModelRemote.cpp",
+		displayModelRPCServerSource,
+	]+minHookObjFiles,
 	LIBS=[
 		"user32",
+		"gdi32",
 		"ole32",
 		"rpcrt4",
 		"shlwapi",
 		"oleaut32",
 		"oleacc",
+		"usp10",
 	],
 )
 
