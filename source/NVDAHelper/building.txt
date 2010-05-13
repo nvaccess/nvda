@@ -27,15 +27,12 @@ The NVDAHelper build is managed by the SCons build system, version 1.3.0 or late
 
 Building the library:
 
-To build the library and all virtual buffer backends, open a command prompt, cd to the top-level directory of nvdaHelper and run the command scons.
-There is no need to use the MSVC environment command prompt, scons will locate what it needs automatically in any standard environment.
+There is no need to use the MSVC environment command prompt when building, as scons will locate what it needs automatically in any standard environment.
 
-By default a version with debugging symbols will be generated. To build a release version, provide release=1 on the command line when running scons:
-scons release=1
-
-To install the produced libraries in to your NVDA source directory, run the following command:
+To build and install the library and all virtual buffer backends, open a command prompt, cd to the top-level directory of nvdaHelper and run the command:
 scons install
-You will need to add release=1 to this command line as well if you want to install a release version.
+By default a version with debugging symbols will be generated. To build a release version, provide release=1 on the command line when running scons:
+scons install release=1
 
 To build the 64 bit version of the libraries, specify TARGET_ARCH=x86_64 on the command line; e.g.:
 scons install release=1 TARGET_ARCH=x86_64
