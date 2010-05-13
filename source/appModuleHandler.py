@@ -76,7 +76,6 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	winKernel.kernel32.CloseHandle(FSnapshotHandle)
 	if not includeExt:
 		appName=os.path.splitext(appName)[0].lower()
-	log.debug("appName: %s"%appName)
 	return appName
 
 def getKeyMapFileName(appName,layout):

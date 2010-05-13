@@ -12,8 +12,10 @@ import winUser
 from logHandler import log
 import controlTypes
 import api
+import displayModel
 import eventHandler
 from NVDAObjects import NVDAObject
+from NVDAObjects.behaviors import EditableText
 
 re_WindowsForms=re.compile(r'^WindowsForms[0-9]*\.(.*)\.app\..*$')
 re_ATL=re.compile(r'^ATL:(.*)$')
@@ -78,7 +80,7 @@ An NVDAObject for a window
 
 	def findOverlayClasses(self,clsList):
 		windowClassName=self.normalizeWindowClassName(self.windowClassName)
-		newCls=Window
+		newCls=None
 		if windowClassName=="#32769":
 			newCls=Desktop
 		elif windowClassName=="Edit":
@@ -99,9 +101,18 @@ An NVDAObject for a window
 			from .winword import WordDocument as newCls
 		elif windowClassName=="EXCEL7":
 			from .excel import Excel7Window as newCls
-		clsList.append(newCls)
-		if newCls!=Window:
-			clsList.append(Window)
+		if newCls:
+			clsList.append(newCls)
+
+		#If the chosen class does not seem to support text editing by itself
+		#But there is a caret currently in the window
+		#Then use the displayModelEditableText class to emulate text editing capabilities
+		if not newCls or not issubclass(newCls,EditableText):
+			gi=winUser.getGUIThreadInfo(self.windowThreadID)
+			if gi.hwndCaret==self.windowHandle and gi.flags&winUser.GUI_CARETBLINKING:
+				clsList.append(DisplayModelEditableText)
+
+		clsList.append(Window)
 		super(Window,self).findOverlayClasses(clsList)
 
 	@classmethod
@@ -152,6 +163,12 @@ An NVDAObject for a window
 		r=ctypes.wintypes.RECT()
 		ctypes.windll.user32.GetWindowRect(self.windowHandle,ctypes.byref(r))
 		return (r.left,r.top,r.right-r.left,r.bottom-r.top)
+
+	def _get_displayText(self):
+		"""The text at this object's location according to the display model for this object's window."""
+		left,top,width,height=self.location
+		import displayModel
+		return displayModel.getWindowTextInRect(self.appModule.helperLocalBindingHandle,self.windowHandle,left,top,left+width,top+height,8,32)[0]
 
 	def _get_windowText(self):
 		textLength=winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
@@ -209,7 +226,7 @@ An NVDAObject for a window
 			#Because we, we need to get the APIclass manually need to  set the relation as parent
 			kwargs=dict(windowHandle=parentHandle)
 			APIClass=Window.findBestAPIClass(kwargs,relation="parent")
-			return APIClass(**kwargs)
+			return APIClass(**kwargs) if APIClass else None
 
 	def _get_isInForeground(self):
 		fg=winUser.getForegroundWindow()
@@ -242,7 +259,7 @@ An NVDAObject for a window
 			kwargs=dict(windowHandle=newWindowHandle)
 			newAPIClass=Window.findBestAPIClass(kwargs,relation=relation)
 			oldAPIClass=self.APIClass
-			if newAPIClass!=oldAPIClass:
+			if newAPIClass and newAPIClass!=oldAPIClass:
 				return newAPIClass(chooseBestAPI=False,**kwargs)
 		return obj
 
@@ -287,6 +304,15 @@ class Desktop(Window):
 
 	def _get_name(self):
 		return _("Desktop")
+
+class DisplayModelEditableText(EditableText, Window):
+
+	role=controlTypes.ROLE_EDITABLETEXT
+	TextInfo = displayModel.EditableTextDisplayModelTextInfo
+
+	def event_valueChange(self):
+		# Don't report value changes for editable text fields.
+		pass
 
 windowClassMap={
 	"EDIT":"Edit",

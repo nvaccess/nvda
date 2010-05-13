@@ -6,7 +6,7 @@ vars.Add('TARGET_ARCH','Target architecture')
 vars.Add('HOST_ARCH','Host architecture')
 
 #Create a new environment for our project
-env=DefaultEnvironment(tools=['default','msvc','midl','mssdk','msrpc'],variables=vars)
+env=DefaultEnvironment(tools=['default','msvc','midl','mssdk','msrpc','boost'],variables=vars)
 
 #Some defines and includes for the environment
 env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${logLevel}')])

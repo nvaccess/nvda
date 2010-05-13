@@ -9,6 +9,7 @@ import os
 import tones
 import textInfos.offsets
 import time
+import displayModel
 import IAccessibleHandler
 import oleacc
 import JABHandler
@@ -299,6 +300,8 @@ the NVDAObject for IAccessible
 				acc=accFocus
 				# We don't know the event parameters for this object.
 				objID=None
+				# This object may also be in a different window, so we need to recalculate the window handle.
+				kwargs['windowHandle']=None
 		elif relation in ("parent","foreground"):
 			objID=winUser.OBJID_CLIENT
 		else:
@@ -370,13 +373,23 @@ the NVDAObject for IAccessible
 		elif windowClassName.startswith('bosa_sdm'):
 			from .msOffice import SDM
 			clsList.append(SDM)
+		elif windowClassName == "DirectUIHWND" and role == oleacc.ROLE_SYSTEM_TEXT:
+			from NVDAObjects.window import DisplayModelEditableText
+			clsList.append(DisplayModelEditableText)
+
+		#Window root IAccessibles
+		if self.event_objectID in (None,winUser.OBJID_WINDOW) and self.event_childID==0 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
+			clsList.append(WindowRoot)
 
 		clsList.append(IAccessible)
 
 		if self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0:
 			# This is the main (client) area of the window, so we can use other classes at the window level.
 			super(IAccessible,self).findOverlayClasses(clsList)
-
+			#Generic client IAccessibles with no children should be classed as content and should use displayModel 
+			if clsList[0]==IAccessible and len(clsList)==3 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT and self.childCount==0:
+				clsList.insert(0,ContentGenericClient)
+ 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
 @param pacc: a pointer to an IAccessible object
@@ -1107,6 +1120,23 @@ the NVDAObject for IAccessible
 			return False
 		return super(IAccessible, self).isPresentableFocusAncestor
 
+class ContentGenericClient(IAccessible):
+
+	TextInfo=displayModel.DisplayModelTextInfo
+	presentationType=IAccessible.presType_content
+	role=controlTypes.ROLE_UNKNOWN
+
+	def _get_value(self):
+		val=self.displayText
+		truncate=len(val)>200
+		if truncate:
+			return u"%s\u2026"%val[:200]
+		return val
+
+class WindowRoot(IAccessible):
+
+	TextInfo=displayModel.DisplayModelTextInfo
+
 class ShellDocObjectView(IAccessible):
 
 	def event_gainFocus(self):
@@ -1298,6 +1328,9 @@ class MenuItem(IAccessible):
 		else:
 			return None
 
+	def _get_name(self):
+		return super(MenuItem,self).name or self.displayText
+
 	def event_gainFocus(self):
 		if eventHandler.isPendingEvents("gainFocus"):
 			return
@@ -1306,9 +1339,38 @@ class MenuItem(IAccessible):
 class Taskbar(IAccessible):
 	name = _("Taskbar")
 
+class Button(IAccessible):
+
+	def _get_name(self):
+		name=super(Button,self).name
+		if not name or name.isspace():
+			name=self.displayText
+		return name
+
+class ListBoxItem(IAccessible):
+	"""
+	Used for list item IAccessibles within the ListBox window class.
+	Overrides name to use display model text as MSAA never seems to provide a suitable name (its usually either empty or contains garbage).
+	"""
+
+	def _get_name(self):
+		return self.displayText
+
+class StaticText(IAccessible):
+	"""Support for owner-drawn staticText controls where accName is empty."""
+
+	def _get_name(self):
+		name=super(StaticText,self).name
+		if not name or name.isspace():
+				name=self.displayText
+		return name
+
 ###class mappings
 
 _staticMap={
+	("Static",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
+	("ListBox",oleacc.ROLE_SYSTEM_LISTITEM):"ListBoxItem",
+	(None,oleacc.ROLE_SYSTEM_PUSHBUTTON):"Button",
 	("tooltips_class32",oleacc.ROLE_SYSTEM_TOOLTIP):"Tooltip",
 	("tooltips_class32",oleacc.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
 	(None,oleacc.ROLE_SYSTEM_DIALOG):"Dialog",
@@ -1356,8 +1418,7 @@ _staticMap={
 	("TFormOptions",oleacc.ROLE_SYSTEM_WINDOW):"delphi.TFormOptions",
 	("TTabSheet",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TTabSheet",
 	("MsiDialogCloseClass",oleacc.ROLE_SYSTEM_CLIENT):"Dialog",
-	("#32768",oleacc.ROLE_SYSTEM_MENUITEM):"MenuItem",
-	("ToolbarWindow32",oleacc.ROLE_SYSTEM_MENUITEM):"MenuItem",
+	(None,oleacc.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("TPTShellList",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TProgressBar",oleacc.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
 	("AVL_AVView",None):"adobeAcrobat.AcrobatNode",
