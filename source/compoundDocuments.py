@@ -12,6 +12,7 @@ from NVDAObjects import NVDAObject
 from editableText import EditableText
 from treeInterceptorHandler import TreeInterceptor
 import speech
+import braille
 
 class CompoundTextInfo(textInfos.TextInfo):
 
@@ -308,6 +309,7 @@ class CompoundDocument(EditableText, TreeInterceptor):
 		info = self.makeTextInfo(textInfos.POSITION_CARET)
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(info)
+		braille.handler.handleGainFocus(self)
 
 	def event_caret(self, obj, nextHandler):
 		pass
