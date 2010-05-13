@@ -1046,12 +1046,15 @@ the NVDAObject for IAccessible
 class ContentGenericClient(IAccessible):
 
 	TextInfo=displayModel.DisplayModelTextInfo
-
-	def _get_presentationType(self):
-		return self.presType_content
+	presentationType=IAccessible.presType_content
+	role=controlTypes.ROLE_UNKNOWN
 
 	def _get_value(self):
-		return self.displayText
+		val=self.displayText
+		truncate=True if len(val)>200 else False
+		if truncate:
+			return u"%s\u2026"%val[:200]
+		return val
 
 class WindowRoot(IAccessible):
 
