@@ -80,7 +80,7 @@ An NVDAObject for a window
 
 	def findOverlayClasses(self,clsList):
 		windowClassName=self.normalizeWindowClassName(self.windowClassName)
-		newCls=Window
+		newCls=None
 		if windowClassName=="#32769":
 			newCls=Desktop
 		elif windowClassName=="Edit":
@@ -101,18 +101,18 @@ An NVDAObject for a window
 			from .winword import WordDocument as newCls
 		elif windowClassName=="EXCEL7":
 			from .excel import Excel7Window as newCls
-		clsList.append(newCls)
+		if newCls:
+			clsList.append(newCls)
 
 		#If the chosen class does not seem to support text editing by itself
 		#But there is a caret currently in the window
 		#Then use the displayModelEditableText class to emulate text editing capabilities
-		if not issubclass(newCls,EditableText):
+		if not newCls or not issubclass(newCls,EditableText):
 			gi=winUser.getGUIThreadInfo(self.windowThreadID)
 			if gi.hwndCaret==self.windowHandle and gi.flags&winUser.GUI_CARETBLINKING:
 				clsList.append(DisplayModelEditableText)
 
-		if newCls!=Window:
-			clsList.append(Window)
+		clsList.append(Window)
 		super(Window,self).findOverlayClasses(clsList)
 
 	@classmethod
