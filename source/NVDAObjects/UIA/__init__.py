@@ -154,6 +154,8 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		elif relation=="focus":
 			try:
 				UIAElement=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
+				# This object may be in a different window, so we need to recalculate the window handle.
+				kwargs['windowHandle']=None
 			except COMError:
 				log.debugWarning("getFocusedElement failed", exc_info=True)
 		else:
