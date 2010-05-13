@@ -1281,9 +1281,19 @@ class ListBoxItem(IAccessible):
 	def _get_name(self):
 		return self.displayText
 
+class StaticText(IAccessible):
+	"""Support for owner-drawn staticText controls where accName is empty."""
+
+	def _get_name(self):
+		name=super(StaticText,self).name
+		if not name or name.isspace():
+				name=self.displayText
+		return name
+
 ###class mappings
 
 _staticMap={
+	("Static",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
 	("ListBox",oleacc.ROLE_SYSTEM_LISTITEM):"ListBoxItem",
 	(None,oleacc.ROLE_SYSTEM_PUSHBUTTON):"Button",
 	("tooltips_class32",oleacc.ROLE_SYSTEM_TOOLTIP):"Tooltip",
