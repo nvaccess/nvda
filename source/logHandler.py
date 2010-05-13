@@ -66,7 +66,10 @@ def getCodePath(f):
 	#Code borrowed from http://mail.python.org/pipermail/python-list/2000-January/020141.html
 	if f.f_code.co_argcount:
 		arg0=f.f_locals[f.f_code.co_varnames[0]]
-		attr=getattr(arg0,funcName,None)
+		try:
+			attr=getattr(arg0,funcName)
+		except:
+			attr=None
 		if attr and type(attr) is MethodType and attr.im_func.func_code is f.f_code:
 			className=arg0.__class__.__name__
 	return ".".join([x for x in path,className,funcName if x])
