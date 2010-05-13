@@ -64,7 +64,6 @@ def pumpAll():
 			# Generator was cancelled. This is fine.
 			continue
 		try:
-			log.debug("pumping generator %d"%ID)
 			next(gen)
 		except StopIteration:
 			log.debug("generator %s finished"%ID)
