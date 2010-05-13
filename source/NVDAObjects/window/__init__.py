@@ -226,7 +226,7 @@ An NVDAObject for a window
 			#Because we, we need to get the APIclass manually need to  set the relation as parent
 			kwargs=dict(windowHandle=parentHandle)
 			APIClass=Window.findBestAPIClass(kwargs,relation="parent")
-			return APIClass(**kwargs)
+			return APIClass(**kwargs) if APIClass else None
 
 	def _get_isInForeground(self):
 		fg=winUser.getForegroundWindow()
@@ -259,7 +259,7 @@ An NVDAObject for a window
 			kwargs=dict(windowHandle=newWindowHandle)
 			newAPIClass=Window.findBestAPIClass(kwargs,relation=relation)
 			oldAPIClass=self.APIClass
-			if newAPIClass!=oldAPIClass:
+			if newAPIClass and newAPIClass!=oldAPIClass:
 				return newAPIClass(chooseBestAPI=False,**kwargs)
 		return obj
 
