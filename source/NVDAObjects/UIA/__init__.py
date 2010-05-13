@@ -184,11 +184,11 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		if not UIAElement:
 			raise ValueError("needs either a UIA element or window handle")
 
-		self.UIAIsWindowElement=True
+		UIACachedWindowHandle=UIAElement.cachedNativeWindowHandle
+		self.UIAIsWindowElement=bool(UIACachedWindowHandle)
 		if not windowHandle:
-			windowHandle=UIAElement.cachedNativeWindowHandle
+			windowHandle=UIACachedWindowHandle
 			if not windowHandle:
-				self.UIAIsWindowElement=False
 				windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		if not windowHandle:
 			raise InvalidNVDAObject("no windowHandle")
