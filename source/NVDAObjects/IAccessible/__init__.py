@@ -1053,7 +1053,7 @@ class ContentGenericClient(IAccessible):
 
 	def _get_value(self):
 		val=self.displayText
-		truncate=True if len(val)>200 else False
+		truncate=len(val)>200
 		if truncate:
 			return u"%s\u2026"%val[:200]
 		return val
