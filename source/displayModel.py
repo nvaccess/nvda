@@ -35,13 +35,15 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		return getWindowTextInRect(self.obj.appModule.helperLocalBindingHandle, self.obj.windowHandle, left, top, left + width, top + height,self.minHorizontalWhitespace,self.minVerticalWhitespace)
 
 	def _get_NVDAObjectAtStart(self):
-		p=self.pointAtStart
+		try:
+			p=self.pointAtStart
+		except LookupError:
+			return self.obj
 		obj=api.getDesktopObject().objectFromPoint(p.x,p.y)
 		from NVDAObjects.window import Window
 		if not obj or not isinstance(obj,Window) or not winUser.isDescendantWindow(self.obj.windowHandle,obj.windowHandle):
-			obj=self.obj
+			return self.obj
 		return obj
-
 
 	def _getStoryText(self):
 		return self._textAndRects[0]
@@ -53,7 +55,10 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		return self._getStoryText()[start:end]
 
 	def _getPointFromOffset(self, offset):
-		x, y = self._textAndRects[1][offset][:2]
+		text,rects=self._textAndRects
+		if not text or not rects or offset>=len(rects):
+			raise LookupError
+		x,y=rects[offset][:2]
 		return textInfos.Point(x, y)
 
 	def _getOffsetFromPoint(self, x, y):
