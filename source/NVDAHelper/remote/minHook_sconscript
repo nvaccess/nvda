@@ -1,0 +1,18 @@
+Import([
+	'env',
+])
+
+HDESourceFile='HDE64/src/HDE64.c' if env['TARGET_ARCH']=='x86_64' else 'HDE32/HDE32.c'
+
+sourceFiles=[
+	HDESourceFile,
+	'buffer.cpp',
+	'export.cpp',
+	'hook.cpp',
+	'thread.cpp',
+	'trampoline.cpp',
+]
+
+objFiles=[env.Object('_minHook_%s.obj'%x.replace('/','_'),'#../include/libMinHook/src/%s'%x) for x in sourceFiles]
+
+Return(['objFiles'])

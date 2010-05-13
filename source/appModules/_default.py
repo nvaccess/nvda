@@ -689,8 +689,13 @@ class AppModule(appModuleHandler.AppModule):
 			obj.speakDescendantObjects()
 	script_speakForeground.__doc__ = _("speaks the current foreground object")
 
-	def script_test_navigatorWindowInfo(self,keyPress):
+	def script_test_navigatorDisplayModelText(self,keyPress):
 		obj=api.getNavigatorObject()
+		text=obj.displayText
+		speech.speakMessage(text)
+		log.info(text)
+
+	def script_test_navigatorWindowInfo(self,keyPress):
 		import ctypes
 		w=ctypes.windll.user32.GetAncestor(obj.windowHandle,3)
 		w=ctypes.windll.user32.GetAncestor(w,3)

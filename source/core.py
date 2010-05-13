@@ -161,6 +161,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
+	import displayModel
+	log.debug("Initializing displayModel")
+	displayModel.initialize()
 	log.debug("Initializing GUI")
 	import gui
 	gui.initialize()
