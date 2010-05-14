@@ -398,7 +398,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		else:
 			# Start searching one past the start to avoid finding the current match.
 			inText=self._getTextRange(self._startOffset+1,self._getStoryLength())
-		m=re.search(re.escape(text),inText,re.IGNORECASE)
+		m=re.search(re.escape(text),inText,(re.IGNORECASE if caseSensitive else 0)|re.UNICODE)
 		if not m:
 			return False
 		if reverse:
