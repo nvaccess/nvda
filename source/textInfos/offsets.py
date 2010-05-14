@@ -218,7 +218,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	def __init__(self,obj,position):
 		"""Constructor.
-		Subclasses may extend this to perform implementation specific initialisation, calling their superclass method first.
+		Subclasses may extend this to perform implementation specific initialisation, calling their superclass method afterwards.
 		"""
 		super(OffsetsTextInfo,self).__init__(obj,position)
 		if isinstance(position,textInfos.Point):
