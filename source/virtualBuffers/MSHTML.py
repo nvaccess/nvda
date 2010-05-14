@@ -81,7 +81,11 @@ class MSHTML(VirtualBuffer):
 	def _setInitialCaretPos(self):
 		if super(MSHTML,self)._setInitialCaretPos():
 			return
-		url=getattr(self.rootNVDAObject.HTMLNode.document,'url',"").split('#')
+		try:
+			url=getattr(self.rootNVDAObject.HTMLNode.document,'url',"").split('#')
+		except COMError as e:
+			log.debugWarning("Error getting URL from document: %s" % e)
+			return False
 		if not url or len(url)!=2:
 			return False
 		anchorName=url[-1]
