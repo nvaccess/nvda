@@ -354,6 +354,12 @@ the NVDAObject for IAccessible
 		elif windowClassName == "DirectUIHWND" and role == oleacc.ROLE_SYSTEM_TEXT:
 			from NVDAObjects.window import DisplayModelEditableText
 			clsList.append(DisplayModelEditableText)
+		elif windowClassName == "ListBox" and role == oleacc.ROLE_SYSTEM_LISTITEM:
+			windowStyle = self.windowStyle
+			if (windowStyle & winUser.LBS_OWNERDRAWFIXED or windowStyle & winUser.LBS_OWNERDRAWVARIABLE) and not windowStyle & winUser.LBS_HASSTRINGS:
+				# This is an owner drawn ListBox and text has not been set for the items.
+				# See http://msdn.microsoft.com/en-us/library/ms971352.aspx#msaa_sa_listbxcntrls
+				clsList.append(InaccessibleListBoxItem)
 
 		#Window root IAccessibles
 		if self.event_objectID in (None,winUser.OBJID_WINDOW) and self.event_childID==0 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
@@ -1272,10 +1278,10 @@ class Button(IAccessible):
 			name=self.displayText
 		return name
 
-class ListBoxItem(IAccessible):
+class InaccessibleListBoxItem(IAccessible):
 	"""
-	Used for list item IAccessibles within the ListBox window class.
-	Overrides name to use display model text as MSAA never seems to provide a suitable name (its usually either empty or contains garbage).
+	Used for list item IAccessibles in inaccessible owner drawn ListBox controls.
+	Overrides name to use display model text as MSAA doesn't provide a suitable name (it's usually either empty or contains garbage).
 	"""
 
 	def _get_name(self):
@@ -1294,7 +1300,6 @@ class StaticText(IAccessible):
 
 _staticMap={
 	("Static",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
-	("ListBox",oleacc.ROLE_SYSTEM_LISTITEM):"ListBoxItem",
 	(None,oleacc.ROLE_SYSTEM_PUSHBUTTON):"Button",
 	("tooltips_class32",oleacc.ROLE_SYSTEM_TOOLTIP):"Tooltip",
 	("tooltips_class32",oleacc.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
