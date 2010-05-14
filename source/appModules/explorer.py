@@ -10,7 +10,7 @@ import winUser
 import speech
 import eventHandler
 from NVDAObjects.window import Window
-from NVDAObjects.IAccessible import sysListView32
+from NVDAObjects.IAccessible import sysListView32, IAccessible
 
 #Class for menu items  for Windows Places and Frequently used Programs (in start menu)
 class SysListView32MenuItem(sysListView32.ListItem):
@@ -37,6 +37,33 @@ class ClassicStartMenu(Window):
 		speech.cancelSpeech()
 		super(ClassicStartMenu, self).event_gainFocus()
 
+class LanguageBar(IAccessible):
+	"""The language bar in the notification area.
+	This IAccessible has a very broken implementation of accNavigate which causes infinite traversal loops.
+	"""
+
+	def initOverlayClass(self):
+		childID = self.IAccessibleChildID
+		if childID == 0:
+			# On the root object, next and previous incorrectly return its first and last child.
+			self.next = None
+			self.previous = None
+		else:
+			# On its children, first and last child incorrectly return the first and last child of the root object.
+			self.firstChild = None
+			self.lastChild = None
+			if childID == 1:
+				# On the first child, previous returns the last child.
+				self.previous = None
+				return
+			try:
+				childCount = self.parent.childCount
+			except AttributeError:
+				return
+			if childID == childCount:
+				# On the last child, next returns the first child.
+				self.next = None
+
 class AppModule(_default.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -51,6 +78,10 @@ class AppModule(_default.AppModule):
 
 		if windowClass == "SysListView32" and role == controlTypes.ROLE_MENUITEM:
 			clsList.insert(0, SysListView32MenuItem)
+			return
+
+		if windowClass == "CiceroUIWndFrame" and role == controlTypes.ROLE_PANE and isinstance(obj, IAccessible):
+			clsList.insert(0, LanguageBar)
 			return
 
 	def event_NVDAObject_init(self, obj):
