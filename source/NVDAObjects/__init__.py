@@ -467,8 +467,6 @@ class NVDAObject(baseObject.ScriptableObject):
 		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
 			return self.presType_unavailable
 		role=self.role
-		if controlTypes.STATE_FOCUSED in states:
-			return self.presType_content
 
 		#Static text should be content only if it really use usable text
 		if role==controlTypes.ROLE_STATICTEXT:
