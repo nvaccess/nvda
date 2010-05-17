@@ -19,6 +19,9 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #define DLLEXPORT extern "C" __declspec(dllexport)
 
+//The handle of nvdaHelperRemote
+extern HINSTANCE moduleHandle;
+
 //The directory name where this dll is situated
 extern wchar_t dllDirectory[MAX_PATH];
 

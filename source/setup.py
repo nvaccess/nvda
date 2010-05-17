@@ -141,6 +141,8 @@ setup(
 		"bundle_files": 3,
 		"excludes": ["comInterfaces", "Tkinter"],
 		"packages": ["NVDAObjects","virtualBuffers","appModules","brailleDisplayDrivers","synthDrivers"],
+		# Can be removed once included by a bundled module.
+		"includes": ["objbase"],
 	}},
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),

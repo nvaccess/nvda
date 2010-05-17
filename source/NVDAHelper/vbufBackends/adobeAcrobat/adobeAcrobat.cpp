@@ -22,7 +22,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <vbufBase/backend.h>
 #include <common/debug.h>
 #include <AcrobatAccess/AcrobatAccess.h>
-#include <AcrobatAccess/IPDDom.h>
 #include "adobeAcrobat.h"
 
 using namespace std;
