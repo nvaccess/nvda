@@ -16,7 +16,6 @@
 #include <vbufBase/backend.h>
 #include <common/debug.h>
 #include <AcrobatAccess/AcrobatAccess.h>
-#include <AcrobatAccess/IPDDom.h>
 #include "adobeAcrobat.h"
 
 using namespace std;

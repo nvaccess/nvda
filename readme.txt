@@ -44,8 +44,8 @@ General dependencies:
 		* You can build this yourself. You need to have the Windows SDK installed, which is quite large. See source\nvdaHelper\building.txt for instructions.
 		* Alternatively, pre-built versions are provided alongside NVDA snapshots for convenience. See http://www.nvda-project.org/snapshots/
 			* Extract this archive into the root of your NVDA source distribution.
-	* Adobe AcrobatAccess interface typelib:
-		* You can build this yourself using midl from the idl located at http://www.adobe.com/devnet/acrobat/downloads/ClientFiles.zip
+	* Adobe AcrobatAccess interface typelib, version 9.1 or later:
+		* You can build this yourself using midl from the idl in the client files archive available from http://www.adobe.com/devnet/acrobat/interapplication_communication.html
 		* Alternatively, a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/AcrobatAccess.tlb
 		* Copy AcrobatAccess.tlb into the source\typelibs directory.
 	* Adobe FlashAccessibility interface typelib: http://www.nvda-project.org/3rdParty/FlashAccessibility.tlb
