@@ -365,7 +365,11 @@ the NVDAObject for IAccessible
 		if self.event_objectID in (None,winUser.OBJID_WINDOW) and self.event_childID==0 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
 			clsList.append(WindowRoot)
 
+		if self.event_objectID==winUser.OBJID_TITLEBAR and self.event_childID==0:
+			clsList.append(Titlebar)
+
 		clsList.append(IAccessible)
+
 
 		if self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0:
 			# This is the main (client) area of the window, so we can use other classes at the window level.
@@ -1295,6 +1299,15 @@ class StaticText(IAccessible):
 		if not name or name.isspace():
 				name=self.displayText
 		return name
+
+
+class Titlebar(IAccessible):
+	"""A class for the standard MSAA titlebar, which shortcuts presentationType to be layout (for performance) and  makes the description property empty, as the standard accDescription is rather annoying."""
+
+	presentationType=IAccessible.presType_layout
+
+	def _get_description(self):
+		return ""
 
 ###class mappings
 
