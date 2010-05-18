@@ -1,3 +1,4 @@
+from comtypes import COMError
 import eventHandler
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
 import virtualBufferHandler
