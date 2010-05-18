@@ -24,7 +24,6 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, AutoSelectDetectionNVDAObject, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
-import mouseHandler
 import queueHandler
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableText
 
@@ -1216,48 +1215,6 @@ class TaskListIcon(IAccessible):
 			return
 		super(TaskListIcon,self).reportFocus()
 
-class ToolbarWindow32(IAccessible):
-
-	def event_gainFocus(self):
-		try:
-			# The toolbar's immediate parent is its window object, so we need to go one further.
-			toolbarParent = self.parent.parent
-			if self.IAccessibleRole != oleacc.ROLE_SYSTEM_TOOLBAR:
-				# Toolbar item.
-				toolbarParent = toolbarParent.parent
-		except AttributeError:
-			toolbarParent = None
-		if toolbarParent and toolbarParent.windowClassName == "SysPager":
-			# This is the system tray.
-			if not self.sysTrayGainFocus():
-				return
-		super(ToolbarWindow32, self).event_gainFocus()
-
-	def sysTrayGainFocus(self):
-		if mouseHandler.lastMouseEventTime < time.time() - 0.2:
-			# This focus change was not caused by a mouse event.
-			# If the mouse is on another toolbar control, the system tray toolbar will rudely
-			# bounce the focus back to the object under the mouse after a brief pause.
-			# Moving the mouse to the focus object isn't a good solution because
-			# sometimes, the focus can't be moved away from the object under the mouse.
-			# Therefore, move the mouse out of the way.
-			winUser.setCursorPos(0, 0)
-
-		if self.IAccessibleRole == oleacc.ROLE_SYSTEM_TOOLBAR:
-			# Sometimes, the toolbar itself receives the focus instead of the focused child.
-			# However, the focused child still has the focused state.
-			for child in self.children:
-				if child.hasFocus:
-					# Redirect the focus to the focused child.
-					eventHandler.executeEvent("gainFocus", child)
-					return False
-			# We've really landed on the toolbar itself.
-			# This was probably caused by moving the mouse out of the way in a previous focus event.
-			# This previous focus event is no longer useful, so cancel speech.
-			speech.cancelSpeech()
-
-		return not eventHandler.isPendingEvents("gainFocus")
-
 class MenuItem(IAccessible):
 
 	def _get_description(self):
@@ -1373,7 +1330,6 @@ _staticMap={
 	("TaskSwitcherWnd",oleacc.ROLE_SYSTEM_LIST):"TaskList",
 	("#32771",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("TaskSwitcherWnd",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
-	("ToolbarWindow32",None):"ToolbarWindow32",
 	("TGroupBox",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TGroupBox",
 	("TFormOptions",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TFormOptions",
 	("TFormOptions",oleacc.ROLE_SYSTEM_WINDOW):"delphi.TFormOptions",
