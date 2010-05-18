@@ -166,7 +166,11 @@ An NVDAObject for a window
 
 	def _get_displayText(self):
 		"""The text at this object's location according to the display model for this object's window."""
-		left,top,width,height=self.location
+		try:
+			left,top,width,height=self.location
+		except TypeError:
+			log.debugWarning("No location, returning no text")
+			return ""
 		import displayModel
 		text,rects=displayModel.getWindowTextInRect(self.appModule.helperLocalBindingHandle,self.windowHandle,left,top,left+width,top+height,8,32)
 		return text or ""
