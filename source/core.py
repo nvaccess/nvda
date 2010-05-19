@@ -197,9 +197,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import winConsoleHandler
 	log.debug("Initializing winConsole support")
 	winConsoleHandler.initialize()
-	import IAccessibleHandler
-	log.debug("Initializing IAccessible support")
-	IAccessibleHandler.initialize()
 	import UIAHandler
 	log.debug("Initializing UIA support")
 	try:
@@ -208,6 +205,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		log.warning("UIA not available")
 	except:
 		log.error("Error initializing UIA support", exc_info=True)
+	import IAccessibleHandler
+	log.debug("Initializing IAccessible support")
+	IAccessibleHandler.initialize()
 	import keyboardHandler
 	log.debug("Initializing keyboard handler")
 	keyboardHandler.initialize()
