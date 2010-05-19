@@ -704,6 +704,8 @@ the NVDAObject for IAccessible
 		return res if isinstance(res,basestring) and not res.isspace() else None
 
 	def _get_childCount(self):
+		if self.IAccessibleChildID>0:
+			return 0
 		try:
 			return self.IAccessibleObject.accChildCount
 		except COMError:
