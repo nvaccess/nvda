@@ -1,3 +1,17 @@
+###
+#This file is a part of the NVDA project.
+#URL: http://www.nvda-project.org/
+#Copyright 2006-2010 NVDA contributers.
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License version 2.0, as published by
+#the Free Software Foundation.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#This license can be found at:
+#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
 #User build variables
 vars=Variables()
 vars.Add(BoolVariable('release','Set to true to build a release version',False))
@@ -6,7 +20,7 @@ vars.Add('TARGET_ARCH','Target architecture')
 vars.Add('HOST_ARCH','Host architecture')
 
 #Create a new environment for our project
-env=DefaultEnvironment(tools=['default','msvc','midl','mssdk','msrpc'],variables=vars)
+env=DefaultEnvironment(tools=['default','msvc','midl','mssdk','msrpc','boost'],variables=vars)
 
 #Some defines and includes for the environment
 env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${logLevel}')])

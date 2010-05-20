@@ -1,7 +1,16 @@
-//nvdaHelper.cpp
-//Copyright (c) 2007 Michael Curran <mick@kulgan.net>
-//This file is covered by the GNU General Public Licence
-//See the file Copying for details.
+/*
+This file is a part of the NVDA project.
+URL: http://www.nvda-project.org/
+Copyright 2006-2010 NVDA contributers.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2.0, as published by
+    the Free Software Foundation.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This license can be found at:
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+*/
  
 #include <cstdio>
 #include <cassert>
@@ -19,6 +28,8 @@
 #include "nvdaControllerInternal.h"
 #include <common/winIPCUtils.h>
 #include <common/log.h>
+#include "apiHook.h"
+#include "gdiHooks.h"
 #include "nvdaHelperRemote.h"
 
 using namespace std;
@@ -51,12 +62,17 @@ void inProcess_initialize() {
 	ia2LiveRegions_inProcess_initialize();
 	typedCharacter_inProcess_initialize();
 	inputLangChange_inProcess_initialize();
+	if (apiHook_inProcess_initialize()) {
+		gdiHooks_inProcess_initialize();
+	}
 	inProcess_isRunning=inProcess_wasInitializedOnce=true;
 }
 
 void inProcess_terminate() {
 	assert(inProcess_isRunning);
 	assert(inProcess_wasInitializedOnce);
+	apiHook_inProcess_terminate();
+	gdiHooks_inProcess_terminate();
 	inputLangChange_inProcess_terminate();
 	typedCharacter_inProcess_terminate();
 	ia2LiveRegions_inProcess_terminate();

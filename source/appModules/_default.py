@@ -689,6 +689,11 @@ class AppModule(appModuleHandler.AppModule):
 			obj.speakDescendantObjects()
 	script_speakForeground.__doc__ = _("speaks the current foreground object")
 
+	def script_test_navigatorDisplayModelText(self,keyPress):
+		text=obj.displayText
+		speech.speakMessage(text)
+		log.info(text)
+
 	def script_navigatorObject_devInfo(self,keyPress):
 		obj=api.getNavigatorObject()
 		log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo), activateLogViewer=True)

@@ -8,19 +8,25 @@
 == Uudet ominaisuudet ==
 - Tarkastelukohdistimella liikkumista objekteissa on yksinkertaistettu huomattavasti. Tarkastelukohdistin sulkee nyt pois objektit, joista ei ole hyötyä käyttäjälle, esim. vain asettelutarkoituksiin käytettävät ja sellaiset, jotka eivät ole käytettävissä.
 - Tekstisäädinten muotoilutiedot voidaan nyt lukea Java Access Bridgeä käyttävissä sovelluksissa, openOffice mukaan lukien. (#358, #463)
-- NVDA lukee Solut asianmukaisesti Microsoft Excelissä, kun hiiri siirretään niiden päälle.
+- NVDA lukee Solut oikein Microsoft Excelissä, kun hiiri siirretään niiden päälle.
 - Java Access Bridgeä käyttävien sovellusten valintaikkunoiden teksti luetaan nyt automaattisesti valintaikkunoiden tullessa näkyviin. (#554)
 
 
 == Muutokset ==
 - Navigointiobjektia käyttävä Lue kaikki -komento (NVDA+laskinnäppäimistön plus) sekä seuraavaan ja edelliseen objektipuun objektiin siirtävät komennot (NVDA+laskinnäppäimistön 6, NVDA+laskinnäppäimistön 4) on poistettu toistaiseksi virheiden vuoksi ja näppäinten vapauttamiseksi muita ominaisuuksia varten.
-- NVDA:n Syntetisaattori-valintaikkunassa näytetään nyt vain syntetisaattorin näyttönimi. Previously, it was prefixed by the driver's name, which is only relevant internally.
+- NVDA:n Syntetisaattori-valintaikkunassa näytetään nyt vain syntetisaattorin näyttönimi. Aiemmin etuliitteenä näytettiin käytettävän ajurin nimi, josta ei ole hyötyä normaalikäyttäjälle.
+- Jos kohdistus siirtyy puheen tarkastelu -säätimeen (otetaan käyttöön Työkalut-valikosta) esim. siksi, että sitä napsautettiin hiirellä, säätimeen ei ilmesty uutta tekstiä ennen kuin kohdistus siirtyy siitä pois. Tämä mahdollistaa helpomman tekstin valitsemisen esim. kopiointia varten.
 
 
 == Vikojen korjaukset ==
 - µTorrentin torrent-luettelon aktiivista kohtaa ei enää lueta toistuvasti eikä kohdistus enää siirry siihen valikon ollessa auki.
 - Kohdistus tunnistetaan nyt oikein Mozilla-sovelluksissa siirryttäessä tyhjään taulukkoon tai puunäkymään.
 - Valittavissa olevien säädinten, kuten valittavien taulukon solujen, ei valittu -tila ilmoitetaan nyt oikein Mozilla-sovelluksissa. (#571)
+- Asianmukaisesti toteutettujen ARIA-valintaikkunoiden tekstiä ei enää ohiteta Mozilla-sovelluksissa, vaan se luetaan kyseisten valintaikkunoiden tullessa näkyviin.
+- ARIA:n taso-attribuuttia noudatetaan nyt oikein Internet Explorerissa ja muissa MSHTML-säätimissä.
+- ARIA:n rooli valitaan nyt muiden tyyppitietojen sijasta virheettömämmän ja odotustenmukaisemman ARIA-kokemuksen antamiseksi Internet Explorerissa ja muissa MSHTML-säätimissä.
+- Korjattu harvinainen kaatuminen Internet Explorerissa liikuttaessa tavallisten tai sisäisten kehysten välillä.
+- Oikealta vasemmalle luettavia rivejä (kuten arabialaista tekstiä) voidaan jälleen lukea Microsoft Word -asiakirjoissa. (#627)
 
 
 == 2010.1 ==

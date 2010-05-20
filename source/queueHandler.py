@@ -44,7 +44,7 @@ def flushQueue(queue):
 			try:
 				func(*args,**kwargs)
 			except:
-				log.error("Error in func %s from %s"%(func.__name__,queue.__name__),exc_info=True)
+				log.exception("Error in func %s from %s"%(func.__name__,queue.__name__))
 
 def isPendingItems(queue):
 	if not queue.empty():
@@ -64,12 +64,11 @@ def pumpAll():
 			# Generator was cancelled. This is fine.
 			continue
 		try:
-			log.debug("pumping generator %d"%ID)
 			next(gen)
 		except StopIteration:
 			log.debug("generator %s finished"%ID)
 			del generators[ID]
 		except:
-			log.error("error in generator %d"%ID,exc_info=True)
+			log.exception("error in generator %d"%ID)
 			del generators[ID]
 	flushQueue(eventQueue)
