@@ -359,6 +359,10 @@ the NVDAObject for IAccessible
 				# This is an owner drawn ListBox and text has not been set for the items.
 				# See http://msdn.microsoft.com/en-us/library/ms971352.aspx#msaa_sa_listbxcntrls
 				clsList.append(InaccessibleListBoxItem)
+		elif windowClassName == "MsoCommandBar":
+			from .msOffice import BrokenMsoCommandBar
+			if BrokenMsoCommandBar.appliesTo(self):
+				clsList.append(BrokenMsoCommandBar)
 
 		#Window root IAccessibles
 		if self.event_objectID in (None,winUser.OBJID_WINDOW) and self.event_childID==0 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
