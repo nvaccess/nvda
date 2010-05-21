@@ -727,7 +727,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		formatConfig=config.conf["documentFormatting"]
 
 	childCount=int(attrs['_childcount'])
-	if reason==REASON_FOCUS:
+	if reason==REASON_FOCUS or attrs.get('alwaysReportName',False):
 		name=attrs.get('name',"")
 	else:
 		name=""

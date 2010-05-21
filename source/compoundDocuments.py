@@ -202,7 +202,9 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 						if isinstance(chunk, basestring):
 							fields.append(chunk)
 						else:
-							fields.extend((textInfos.FieldCommand("controlStart", self._getControlFieldForObject(chunk)),
+							controlField = self._getControlFieldForObject(chunk)
+							controlField["alwaysReportName"] = True
+							fields.extend((textInfos.FieldCommand("controlStart", controlField),
 								u"\uFFFC",
 								textInfos.FieldCommand("controlEnd", None)))
 					fieldStart += textLength
