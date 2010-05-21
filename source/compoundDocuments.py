@@ -13,6 +13,7 @@ from editableText import EditableText
 from treeInterceptorHandler import TreeInterceptor
 import speech
 import braille
+from NVDAObjects import behaviors
 
 class CompoundTextInfo(textInfos.TextInfo):
 
@@ -306,16 +307,23 @@ class CompoundDocument(EditableText, TreeInterceptor):
 
 	def event_treeInterceptor_gainFocus(self):
 		speech.speakObject(self.rootNVDAObject, reason=speech.REASON_FOCUS)
-		info = self.makeTextInfo(textInfos.POSITION_CARET)
-		info.expand(textInfos.UNIT_LINE)
-		speech.speakTextInfo(info)
-		braille.handler.handleGainFocus(self)
+		try:
+			info = self.makeTextInfo(textInfos.POSITION_CARET)
+		except RuntimeError:
+			pass
+		else:
+			info.expand(textInfos.UNIT_LINE)
+			speech.speakTextInfo(info)
+			braille.handler.handleGainFocus(self)
 
 	def event_caret(self, obj, nextHandler):
 		pass
 
 	def event_gainFocus(self, obj, nextHandler):
-		pass
+		if not isinstance(obj, behaviors.EditableText):
+			# This object isn't part of the editable text; e.g. a graphic.
+			# Report it normally.
+			nextHandler()
 
 	def event_focusEntered(self, obj, nextHandler):
 		pass
