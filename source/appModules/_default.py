@@ -690,6 +690,7 @@ class AppModule(appModuleHandler.AppModule):
 	script_speakForeground.__doc__ = _("speaks the current foreground object")
 
 	def script_test_navigatorDisplayModelText(self,keyPress):
+		obj=api.getNavigatorObject()
 		text=obj.displayText
 		speech.speakMessage(text)
 		log.info(text)
