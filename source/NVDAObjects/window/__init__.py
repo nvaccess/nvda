@@ -104,10 +104,10 @@ An NVDAObject for a window
 		if newCls:
 			clsList.append(newCls)
 
-		#If the chosen class does not seem to support text editing by itself
+		#If none of the chosen classes seem to support text editing
 		#But there is a caret currently in the window
 		#Then use the displayModelEditableText class to emulate text editing capabilities
-		if not newCls or not issubclass(newCls,EditableText):
+		if not any(issubclass(cls,EditableText) for cls in clsList):
 			gi=winUser.getGUIThreadInfo(self.windowThreadID)
 			if gi.hwndCaret==self.windowHandle and gi.flags&winUser.GUI_CARETBLINKING:
 				clsList.append(DisplayModelEditableText)
