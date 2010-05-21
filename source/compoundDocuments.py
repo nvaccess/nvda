@@ -161,6 +161,23 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		elif position == textInfos.POSITION_CARET:
 			self._startObj = self._endObj = obj.caretObject
 			self._start = self._end = self._startObj.makeTextInfo(position)
+		elif position == textInfos.POSITION_SELECTION:
+			# Start from the caret.
+			self._startObj = self._endObj = self.obj.caretObject
+			# Find the objects which start and end the selection.
+			tempObj = self._startObj
+			while tempObj and controlTypes.STATE_SELECTED in tempObj.states:
+				self._startObj = tempObj
+				tempObj = tempObj.flowsFrom
+			tempObj = self._endObj
+			while tempObj and controlTypes.STATE_SELECTED in tempObj.states:
+				self._endObj = tempObj
+				tempObj = tempObj.flowsTo
+			self._start = self._startObj.makeTextInfo(position)
+			if self._startObj is self._endObj:
+				self._end = self._start
+			else:
+				self._end = self._endObj.makeTextInfo(position)
 		else:
 			raise NotImplementedError
 
@@ -310,12 +327,15 @@ class CompoundDocument(EditableText, TreeInterceptor):
 	def event_treeInterceptor_gainFocus(self):
 		speech.speakObject(self.rootNVDAObject, reason=speech.REASON_FOCUS)
 		try:
-			info = self.makeTextInfo(textInfos.POSITION_CARET)
+			info = self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except RuntimeError:
 			pass
 		else:
-			info.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(info)
+			if info.isCollapsed:
+				info.expand(textInfos.UNIT_LINE)
+				speech.speakTextInfo(info)
+			else:
+				speech.speakSelectionMessage(_("selected %s"), info.text)
 			braille.handler.handleGainFocus(self)
 
 	def event_caret(self, obj, nextHandler):
