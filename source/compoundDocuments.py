@@ -333,3 +333,9 @@ class CompoundDocument(EditableText, TreeInterceptor):
 
 	def event_selection(self, obj, nextHandler):
 		pass
+
+	def event_selectionAdd(self, obj, nextHandler):
+		pass
+
+	def event_selectionRemove(self, obj, nextHandler):
+		pass
