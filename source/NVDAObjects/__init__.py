@@ -22,6 +22,9 @@ import treeInterceptorHandler
 import braille
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
+	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
+	The L{NVDAObject.basicText} attribute is used as the text to expose.
+	"""
 
 	def _getStoryText(self):
 		return self.obj.basicText
@@ -108,14 +111,35 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		return obj
 
 class NVDAObject(baseObject.ScriptableObject):
-	"""
-	NVDA's representation of a control or widget in the Operating System. Provides information such as a name, role, value, description etc.
+	"""NVDA's representation of a single control/widget.
+	Every widget, regardless of how it is exposed by an application or the operating system, is represented by a single NVDAObject instance.
+	This allows NVDA to work with all widgets in a uniform way.
+	An NVDAObject provides information about the widget (e.g. its name, role and value),
+	as well as functionality to manipulate it (e.g. perform an action or set focus).
+	Events for the widget are handled by special event methods on the object.
+	Commands triggered by input from the user can also be handled by special methods called scripts.
+	See L{ScriptableObject} for more details.
+	
+	The only attribute that absolutely must be provided is L{processID}.
+	However, subclasses should provide at least the L{name} and L{role} attributes in order for the object to be meaningful to the user.
+	Attributes such as L{parent}, L{firstChild}, L{next} and L{previous} link an instance to other NVDAObjects in the hierarchy.
+	In order to facilitate access to text exposed by a widget which supports text content (e.g. an editable text control),
+	a L{textInfos.TextInfo} should be implemented and the L{TextInfo} attribute should specify this class.
+	
+	There are two main types of NVDAObject classes:
+		* API classes, which provide the core functionality to work with objects exposed using a particular API (e.g. MSAA/IAccessible).
+		* Overlay classes, which supplement the core functionality provided by an API class to handle a specific widget or type of widget.
+	Most developers need only be concerned with overlay classes.
+	The overlay classes to be used for an instance are determined using the L{findOverlayClasses} method on the API class.
+	An L{AppModule} can also choose overlay classes for an instance using the L{AppModule.chooseNVDAObjectOverlayClasses} method.
 	"""
 
 	__metaclass__=DynamicNVDAObjectType
 	cachePropertiesByDefault = True
 
-	TextInfo=NVDAObjectTextInfo #:The TextInfo class this object should use
+	#: The TextInfo class this object should use to provide access to text.
+	#: @type: type; L{textInfos.TextInfo}
+	TextInfo=NVDAObjectTextInfo
 
 	@classmethod
 	def findBestAPIClass(cls,kwargs,relation=None):
@@ -467,8 +491,6 @@ class NVDAObject(baseObject.ScriptableObject):
 		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
 			return self.presType_unavailable
 		role=self.role
-		if controlTypes.STATE_FOCUSED in states:
-			return self.presType_content
 
 		#Static text should be content only if it really use usable text
 		if role==controlTypes.ROLE_STATICTEXT:
@@ -777,6 +799,76 @@ This code is executed if a gain focus event is received by this object.
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
+
+	def _get_devInfo(self):
+		"""Information about this object useful to developers.
+		Subclasses may extend this, calling the superclass property first.
+		@return: A list of text strings providing information about this object useful to developers.
+		@rtype: list of str
+		"""
+		info = []
+		try:
+			ret = repr(self.name)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("name: %s" % ret)
+		try:
+			ret = self.role
+			for name, const in controlTypes.__dict__.iteritems():
+				if name.startswith("ROLE_") and ret == const:
+					ret = name
+					break
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("role: %s" % ret)
+		try:
+			stateConsts = dict((const, name) for name, const in controlTypes.__dict__.iteritems() if name.startswith("STATE_"))
+			ret = ", ".join(
+				stateConsts.get(state) or str(state)
+				for state in self.states)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("states: %s" % ret)
+		try:
+			ret = repr(self)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("Python object: %s" % ret)
+		try:
+			ret = repr(self.__class__.__mro__)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("Python class mro: %s" % ret)
+		try:
+			ret = repr(self.description)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("description: %s" % ret)
+		try:
+			ret = repr(self.location)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("location: %s" % ret)
+		try:
+			ret = self.value
+			if isinstance(ret, basestring) and len(ret) > 100:
+				ret = "%r (truncated)" % ret[:100]
+			else:
+				ret = repr(ret)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("value: %s" % ret)
+		try:
+			ret = repr(self.appModule)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("appModule: %s" % ret)
+		try:
+			ret = repr(self.TextInfo)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("TextInfo: %s" % ret)
+		return info
 
 class AutoSelectDetectionNVDAObject(NVDAObject):
 

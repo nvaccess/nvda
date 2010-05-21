@@ -1,7 +1,23 @@
+/*
+This file is a part of the NVDA project.
+URL: http://www.nvda-project.org/
+Copyright 2006-2010 NVDA contributers.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2.0, as published by
+    the Free Software Foundation.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This license can be found at:
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+*/
+
 #include <cassert>
 #include <map>
 #include <windows.h>
 #include <usp10.h>
+#include "nvdaHelperRemote.h"
+#include <common/moduleEnsurer.h>
 #include "apiHook.h"
 #include "displayModel.h"
 #include <common/log.h>
@@ -216,6 +232,8 @@ template<typename charType> class hookClass_TextOut {
 template<typename charType> typename hookClass_TextOut<charType>::funcType hookClass_TextOut<charType>::realFunction=NULL;
 
 template<typename charType> BOOL  WINAPI hookClass_TextOut<charType>::fakeFunction(HDC hdc, int x, int y, charType* lpString, int cbCount) {
+	//Make sure nvdaHelperRemote does not get unloaded in this scope.
+	ModuleEnsurer moduleEnsurer(moduleHandle);
 	UINT textAlign=GetTextAlign(hdc);
 	POINT pos={x,y};
 	if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
@@ -254,6 +272,8 @@ template<typename charType> class hookClass_PolyTextOut {
 template<typename charType> typename hookClass_PolyTextOut<charType>::funcType hookClass_PolyTextOut<charType>::realFunction=NULL;
 
 template<typename charType> BOOL WINAPI hookClass_PolyTextOut<charType>::fakeFunction(HDC hdc,const WA_POLYTEXT<charType>* pptxt,int cStrings) {
+	//Make sure nvdaHelperRemote does not get unloaded in this scope.
+	ModuleEnsurer moduleEnsurer(moduleHandle);
 	//Collect text alignment and possibly current position
 	UINT textAlign=GetTextAlign(hdc);
 	POINT curPos;
@@ -294,6 +314,8 @@ template<typename charType> BOOL WINAPI hookClass_PolyTextOut<charType>::fakeFun
 typedef int(WINAPI *FillRect_funcType)(HDC,const RECT*,HBRUSH);
 FillRect_funcType real_FillRect=NULL;
 int WINAPI fake_FillRect(HDC hdc, const RECT* lprc, HBRUSH hBrush) {
+	//Make sure nvdaHelperRemote does not get unloaded in this scope.
+	ModuleEnsurer moduleEnsurer(moduleHandle);
 	//Call the real FillRectangle
 	int res=real_FillRect(hdc,lprc,hBrush);
 	//IfThe fill was successull we can go on.
@@ -312,6 +334,8 @@ int WINAPI fake_FillRect(HDC hdc, const RECT* lprc, HBRUSH hBrush) {
 typedef BOOL(WINAPI *PatBlt_funcType)(HDC,int,int,int,int,DWORD);
 PatBlt_funcType real_PatBlt=NULL;
 BOOL WINAPI fake_PatBlt(HDC hdc, int nxLeft, int nxTop, int nWidth, int nHeight, DWORD dwRop) {
+	//Make sure nvdaHelperRemote does not get unloaded in this scope.
+	ModuleEnsurer moduleEnsurer(moduleHandle);
 	//Call the real PatBlt
 	BOOL res=real_PatBlt(hdc,nxLeft,nxTop,nWidth,nHeight,dwRop);
 	//IfPatBlt was successfull we can go on
@@ -330,6 +354,8 @@ BOOL WINAPI fake_PatBlt(HDC hdc, int nxLeft, int nxTop, int nWidth, int nHeight,
 typedef HDC(WINAPI *BeginPaint_funcType)(HWND,LPPAINTSTRUCT);
 BeginPaint_funcType real_BeginPaint=NULL;
 HDC WINAPI fake_BeginPaint(HWND hwnd, LPPAINTSTRUCT lpPaint) {
+	//Make sure nvdaHelperRemote does not get unloaded in this scope.
+	ModuleEnsurer moduleEnsurer(moduleHandle);
 	//Call the real BeginPaint
 	HDC res=real_BeginPaint(hwnd,lpPaint);
 	//If beginPaint was successfull we can go on
@@ -357,6 +383,8 @@ template<typename charType> class hookClass_ExtTextOut {
 template<typename charType> typename hookClass_ExtTextOut<charType>::funcType hookClass_ExtTextOut<charType>::realFunction=NULL;
 
 template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeFunction(HDC hdc, int x, int y, UINT fuOptions, const RECT* lprc, charType* lpString, int cbCount, const int* lpDx) {
+	//Make sure nvdaHelperRemote does not get unloaded in this scope.
+	ModuleEnsurer moduleEnsurer(moduleHandle);
 	UINT textAlign=GetTextAlign(hdc);
 	POINT pos={x,y};
 	if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
@@ -380,6 +408,8 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 typedef HDC(WINAPI *CreateCompatibleDC_funcType)(HDC);
 CreateCompatibleDC_funcType real_CreateCompatibleDC=NULL;
 HDC WINAPI fake_CreateCompatibleDC(HDC hdc) {
+	//Make sure nvdaHelperRemote does not get unloaded in this scope.
+	ModuleEnsurer moduleEnsurer(moduleHandle);
 	//Call the real CreateCompatibleDC
 	HDC newHdc=real_CreateCompatibleDC(hdc);
 	//If the creation was successful, and the DC that was used in the creation process is a window DC, 
@@ -397,6 +427,8 @@ HDC WINAPI fake_CreateCompatibleDC(HDC hdc) {
 typedef HGDIOBJ(WINAPI *SelectObject_funcType)(HDC,HGDIOBJ);
 SelectObject_funcType real_SelectObject=NULL;
 HGDIOBJ WINAPI fake_SelectObject(HDC hdc, HGDIOBJ hGdiObj) {
+	//Make sure nvdaHelperRemote does not get unloaded in this scope.
+	ModuleEnsurer moduleEnsurer(moduleHandle);
 	//Call the real SelectObject
 	HGDIOBJ res=real_SelectObject(hdc,hGdiObj);
 	//If The select was successfull, and the object is a bitmap,  we can go on.
@@ -414,6 +446,8 @@ HGDIOBJ WINAPI fake_SelectObject(HDC hdc, HGDIOBJ hGdiObj) {
 typedef BOOL(WINAPI *DeleteDC_funcType)(HDC);
 DeleteDC_funcType real_DeleteDC=NULL;
 BOOL WINAPI fake_DeleteDC(HDC hdc) {
+	//Make sure nvdaHelperRemote does not get unloaded in this scope.
+	ModuleEnsurer moduleEnsurer(moduleHandle);
 	//Call the real DeleteDC
 	BOOL res=real_DeleteDC(hdc);
 	if(res==0) return res;
@@ -433,6 +467,8 @@ BOOL WINAPI fake_DeleteDC(HDC hdc) {
 typedef BOOL(WINAPI *BitBlt_funcType)(HDC,int,int,int,int,HDC,int,int,DWORD);
 BitBlt_funcType real_BitBlt=NULL;
 BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, HDC hdcSrc, int nXSrc, int nYSrc, DWORD dwRop) {
+	//Make sure nvdaHelperRemote does not get unloaded in this scope.
+	ModuleEnsurer moduleEnsurer(moduleHandle);
 	//Call the real BitBlt
 	BOOL res=real_BitBlt(hdcDest,nXDest,nYDest,nWidth,nHeight,hdcSrc,nXSrc,nYSrc,dwRop);
 	//If bit blit didn't work, or its not a simple copy, we don't want to know about it
@@ -449,7 +485,7 @@ BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHe
 		case SRCINVERT:
 		case SRCPAINT:
 		useSource=TRUE;
-}
+	}
 	//If there is no source dc given, the destination dc should be used as the source
 	if(hdcSrc==NULL) hdcSrc=hdcDest;
 	//Try getting a display model for the source DC if one is needed.
@@ -501,6 +537,8 @@ BOOL allow_ScriptStringAnalyseArgsByAnalysis=FALSE;
 typedef HRESULT(WINAPI *ScriptStringAnalyse_funcType)(HDC,const void*,int,int,int,DWORD,int,SCRIPT_CONTROL*,SCRIPT_STATE*,const int*,SCRIPT_TABDEF*,const BYTE*,SCRIPT_STRING_ANALYSIS*);
 ScriptStringAnalyse_funcType real_ScriptStringAnalyse=NULL;
 HRESULT WINAPI fake_ScriptStringAnalyse(HDC hdc,const void* pString, int cString, int cGlyphs, int iCharset, DWORD dwFlags, int iRectWidth, SCRIPT_CONTROL* psControl, SCRIPT_STATE* psState, const int* piDx, SCRIPT_TABDEF* pTabdef, const BYTE* pbInClass, SCRIPT_STRING_ANALYSIS* pssa) {
+	//Make sure nvdaHelperRemote does not get unloaded in this scope.
+	ModuleEnsurer moduleEnsurer(moduleHandle);
 	//Call the real ScriptStringAnalyse
 	HRESULT res=real_ScriptStringAnalyse(hdc,pString,cString,cGlyphs,iCharset,dwFlags,iRectWidth,psControl,psState,piDx,pTabdef,pbInClass,pssa);
 	//We only want to go on if  there's safe arguments
@@ -523,6 +561,8 @@ HRESULT WINAPI fake_ScriptStringAnalyse(HDC hdc,const void* pString, int cString
 typedef HRESULT(WINAPI *ScriptStringFree_funcType)(SCRIPT_STRING_ANALYSIS*);
 ScriptStringFree_funcType real_ScriptStringFree=NULL;
 HRESULT WINAPI fake_ScriptStringFree(SCRIPT_STRING_ANALYSIS* pssa) {
+	//Make sure nvdaHelperRemote does not get unloaded in this scope.
+	ModuleEnsurer moduleEnsurer(moduleHandle);
 	//Call the real ScriptStringFree
 	HRESULT res=real_ScriptStringFree(pssa);
 	//If it worked, and arguments seem sane, we go on.
@@ -544,6 +584,8 @@ HRESULT WINAPI fake_ScriptStringFree(SCRIPT_STRING_ANALYSIS* pssa) {
 typedef HRESULT(WINAPI *ScriptStringOut_funcType)(SCRIPT_STRING_ANALYSIS,int,int,UINT,const RECT*,int,int,BOOL);
 ScriptStringOut_funcType real_ScriptStringOut=NULL;
 HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UINT uOptions,const RECT *prc,int iMinSel,int iMaxSel,BOOL fDisabled) {
+	//Make sure nvdaHelperRemote does not get unloaded in this scope.
+	ModuleEnsurer moduleEnsurer(moduleHandle);
 	//Call the real ScriptStringOut
 	HRESULT res=real_ScriptStringOut(ssa,iX,iY,uOptions,prc,iMinSel,iMaxSel,fDisabled);
 	//If ScriptStringOut was successful we can go on
@@ -578,6 +620,8 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 typedef BOOL(WINAPI *DestroyWindow_funcType)(HWND);
 DestroyWindow_funcType real_DestroyWindow=NULL;
 BOOL WINAPI fake_DestroyWindow(HWND hwnd) {
+	//Make sure nvdaHelperRemote does not get unloaded in this scope.
+	ModuleEnsurer moduleEnsurer(moduleHandle);
 	//Call the real DestroyWindow
 	BOOL res=real_DestroyWindow(hwnd);
 	if(res==0) return res;

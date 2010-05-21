@@ -165,6 +165,13 @@ class IMoniker(IPersistStream):
 	_iid_ = GUID('{0000000F-0000-0000-C000-000000000046}')
 	_idlflags_ = []
 
+	def GetDisplayName(self, pbc, pmkToLeft):
+		displayName = WSTRING()
+		self.__com_GetDisplayName(pbc, pmkToLeft, displayName)
+		ret = displayName.value
+		windll.ole32.CoTaskMemFree(displayName)
+		return ret
+
 class IEnumMoniker(IUnknown):
 	_iid_ = GUID('{00000102-0000-0000-C000-000000000046}')
 	_idlflags_ = []
