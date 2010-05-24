@@ -46,21 +46,34 @@ class CompoundTextInfo(textInfos.TextInfo):
 		# Different objects, so we have to compare the hierarchical positions of the objects.
 		return cmp(self._getObjectPosition(selfObj), other._getObjectPosition(otherObj))
 
+	def _normalizeStartAndEnd(self):
+		if self._startObj == self._endObj:
+			# There should only be a single TextInfo and it should cover the entire range.
+			self._start.setEndPoint(self._end, "endToEnd")
+			self._end = self._start
+			self._endObj = self._startObj
+		else:
+			# start needs to cover the rest of the text to the end of its object.
+			self._start.setEndPoint(self._startObj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd")
+			# end needs to cover the rest of the text to the start of its object.
+			self._end.setEndPoint(self._endObj.makeTextInfo(textInfos.POSITION_ALL), "startToStart")
+
 	def setEndPoint(self, other, which):
 		if which == "startToStart":
-			self._start = other._start
+			self._start = other._start.copy()
 			self._startObj = other._startObj
 		elif which == "startToEnd":
-			self._start = other._end
+			self._start = other._end.copy()
 			self._startObj = other._endObj
 		elif which == "endToStart":
-			self._end = other._start
+			self._end = other._start.copy()
 			self._endObj = other._starttObj
 		elif which == "endToEnd":
-			self._end = other._end
+			self._end = other._end.copy()
 			self._endObj = other._endObj
 		else:
 			raise ValueError("which=%s" % which)
+		self._normalizeStartAndEnd()
 
 	def collapse(self, end=False):
 		if end:
