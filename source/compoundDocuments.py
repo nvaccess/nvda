@@ -252,11 +252,6 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 			self._start.expand(unit)
 			self._end = self._start
 			self._endObj = self._startObj
-		elif unit == textInfos.UNIT_STORY:
-			self._startObj = obj.firstChild
-			self._endObj = obj.lastChild
-			self._start = self._startObj.makeTextInfo(position)
-			self._end = self._endObj.makeTextInfo(position)
 		else:
 			raise NotImplementedError
 
