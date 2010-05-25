@@ -45,12 +45,14 @@ class UIATextInfo(textInfos.TextInfo):
 		super(UIATextInfo,self).__init__(obj,position)
 		if isinstance(position,UIAHandler.IUIAutomationTextRange):
 			self._rangeObj=position.Clone()
-		elif position==textInfos.POSITION_CARET or position==textInfos.POSITION_SELECTION:
+		elif position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			sel=self.obj.UIATextPattern.GetSelection()
 			if sel.length>0:
 				self._rangeObj=sel.getElement(0).clone()
 			else:
 				raise NotImplementedError("UIAutomationTextRangeArray is empty")
+			if position==textInfos.POSITION_CARET:
+				self.collapse()
 		else:
 			self._rangeObj=self.obj.UIATextPattern.DocumentRange
 
