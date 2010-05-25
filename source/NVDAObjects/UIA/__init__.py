@@ -185,6 +185,11 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		return obj
 
 	def __init__(self,windowHandle=None,UIAElement=None):
+		if getattr(self,"_doneInit",False):
+			# This instance was retrieved from the cache by __new__ and has already been constructed.
+			return
+		self._doneInit=True
+
 		if not UIAElement:
 			raise ValueError("needs either a UIA element or window handle")
 
