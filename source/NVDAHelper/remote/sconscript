@@ -84,6 +84,7 @@ remoteLib=env.SharedLibrary(
 		"displayModel.cpp",
 		"displayModelRemote.cpp",
 		displayModelRPCServerSource,
+		"nvdaHelperRemote.def",
 	]+minHookObjFiles,
 	LIBS=[
 		"user32",
