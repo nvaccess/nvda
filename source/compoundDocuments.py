@@ -345,9 +345,10 @@ class CompoundDocument(EditableText, TreeInterceptor):
 			else:
 				speech.speakSelectionMessage(_("selected %s"), info.text)
 			braille.handler.handleGainFocus(self)
+			self.initAutoSelectDetection()
 
 	def event_caret(self, obj, nextHandler):
-		pass
+		self.detectPossibleSelectionChange()
 
 	def event_gainFocus(self, obj, nextHandler):
 		if not isinstance(obj, behaviors.EditableText):
