@@ -36,6 +36,12 @@ cpp_quote("*/")
 interface NvdaControllerInternal {
 
 /**
+ * Gets the process ID of NVDA.
+ * @param pProcessID memory where the  retreaved process ID can be placed.
+ */
+	error_status_t __stdcall getNVDAProcessID([out] long* pProcessID); 
+
+/**
  * Notifies NVDA that the keyboard layout has changed for this thread. 
  * @param threadID the thread the layout change occured in
  * @param hkl the current layout retreaved either by GetKeyboardLayout or the lParam of wm_inputLangChange.
