@@ -67,7 +67,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 			self._startObj = other._endObj
 		elif which == "endToStart":
 			self._end = other._start.copy()
-			self._endObj = other._starttObj
+			self._endObj = other._startObj
 		elif which == "endToEnd":
 			self._end = other._end.copy()
 			self._endObj = other._endObj
