@@ -17,6 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <usp10.h>
 #include "nvdaHelperRemote.h"
+#include "dllmain.h"
 #include <common/moduleEnsurer.h>
 #include "apiHook.h"
 #include "displayModel.h"

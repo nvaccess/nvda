@@ -30,6 +30,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <common/log.h>
 #include "apiHook.h"
 #include "gdiHooks.h"
+#include "dllmain.h"
 #include "nvdaHelperRemote.h"
 
 using namespace std;

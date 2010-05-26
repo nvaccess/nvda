@@ -19,6 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <objbase.h>
 #include "ia2/ia2.h"
 #include "nvdaHelperRemote.h"
+#include "dllmain.h"
 #include "IA2Support.h"
 
 typedef ULONG(*LPFNDLLCANUNLOADNOW)();
