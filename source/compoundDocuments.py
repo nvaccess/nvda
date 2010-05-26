@@ -64,9 +64,11 @@ class CompoundTextInfo(textInfos.TextInfo):
 			self._startObj = other._startObj
 		elif which == "startToEnd":
 			self._start = other._end.copy()
+			self._start.setEndPoint(other._end, which)
 			self._startObj = other._endObj
 		elif which == "endToStart":
 			self._end = other._start.copy()
+			self._end.setEndPoint(other._start, which)
 			self._endObj = other._startObj
 		elif which == "endToEnd":
 			self._end = other._end.copy()
