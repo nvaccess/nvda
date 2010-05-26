@@ -205,7 +205,6 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 
 		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
 			self.TextInfo=UIATextInfo
-			self.initAutoSelectDetection()
 			self.value=""
 
 	def _isEqual(self,other):
@@ -430,6 +429,10 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			self.UIAInvokePattern.Invoke()
 			return
 		raise NotImplementedError
+
+	def event_gainFocus(self):
+		self.initAutoSelectDetection()
+		super(UIA, self).event_gainFocus()
 
 	def event_caret(self):
 		super(UIA, self).event_caret()
