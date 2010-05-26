@@ -44,7 +44,7 @@ typedef map<HOOKPROC,size_t> windowsHookRegistry_t;
 #pragma comment(linker, "/section:.remoteShared,rws")
 
 BOOL isInitialized=FALSE;
-HINSTANCE moduleHandle;
+HINSTANCE dllHandle;
 BOOL inProcess_wasInitializedOnce=false;
 BOOL inProcess_isRunning=false;
 winEventHookRegistry_t inProcess_registeredWinEventHooks;
@@ -134,8 +134,8 @@ bool unregisterWindowsHook(int hookType, HOOKPROC hookProc) {
 }
 
 BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
-	if((reason==DLL_PROCESS_ATTACH)&&(moduleHandle==NULL)) {
-		moduleHandle=hModule;
+	if((reason==DLL_PROCESS_ATTACH)&&(dllHandle==NULL)) {
+		dllHandle=hModule;
 		GetWindowThreadProcessId(GetDesktopWindow(),&desktopProcessID);
 		wchar_t endpointString[64];
 		getNVDAControllerNcalrpcEndpointString(endpointString,64,TRUE);
@@ -221,18 +221,18 @@ void _nvdaHelper_localThreadFunc() {
 	HHOOK callWndProcHookID=0;
 	HWINEVENTHOOK winEventHookLowID=0; 
 	HWINEVENTHOOK winEventHookHighID=0; 
-	if((getMessageHookID=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)getMessageHook,moduleHandle,0))==0) {
+	if((getMessageHookID=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)getMessageHook,dllHandle,0))==0) {
 		MessageBox(NULL,L"Error registering getMessage Windows hook",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
 	}
-	if((callWndProcHookID=SetWindowsHookEx(WH_CALLWNDPROC,(HOOKPROC)callWndProcHook,moduleHandle,0))==0) {
+	if((callWndProcHookID=SetWindowsHookEx(WH_CALLWNDPROC,(HOOKPROC)callWndProcHook,dllHandle,0))==0) {
 		MessageBox(NULL,L"Error registering callWndProc Windows hook",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
 	}
 	//Register winEvent hooks in two separate calls,
 	//Skipping the Windows console winEvent range (0x4001-0x40ff) as these are always out-of-context.
-	if((winEventHookLowID=SetWinEventHook(0,0x4000,moduleHandle,(WINEVENTPROC)winEventHook,0,0,WINEVENT_INCONTEXT))==0) {
+	if((winEventHookLowID=SetWinEventHook(0,0x4000,dllHandle,(WINEVENTPROC)winEventHook,0,0,WINEVENT_INCONTEXT))==0) {
 		MessageBox(NULL,L"Error registering low winEvent hooks",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
 	}
-	if((winEventHookHighID=SetWinEventHook(0x4100,0xffffffff,moduleHandle,(WINEVENTPROC)winEventHook,0,0,WINEVENT_INCONTEXT))==0) {
+	if((winEventHookHighID=SetWinEventHook(0x4100,0xffffffff,dllHandle,(WINEVENTPROC)winEventHook,0,0,WINEVENT_INCONTEXT))==0) {
 		MessageBox(NULL,L"Error registering high winEvent hooks",L"nvdaHelperRemote (_nvdaHelper_localThreadFunc)",0);
 	}
 	MSG msg;
@@ -263,8 +263,8 @@ int nvdaHelper_initialize() {
 		return -1;
 	}
 	//Find the directory name of this dll
-	assert(moduleHandle);
-	GetModuleFileName(moduleHandle,dllDirectory,MAX_PATH);
+	assert(dllHandle);
+	GetModuleFileName(dllHandle,dllDirectory,MAX_PATH);
 	PathRemoveFileSpec(dllDirectory);
 	if(!IA2Support_initialize()) {
 		MessageBox(NULL,L"Error initializing IA2 support",L"nvdaHelperRemote (nvdaHelper_initialize)",0);
