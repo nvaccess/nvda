@@ -15,4 +15,6 @@ sourceFiles=[
 
 objFiles=[env.Object('_minHook_%s.obj'%x.replace('/','_'),'#../include/libMinHook/src/%s'%x) for x in sourceFiles]
 
-Return(['objFiles'])
+minHookLib=env.SharedLibrary('minHook',objFiles+['minHook.def'])
+
+Return('minHookLib')

@@ -15,10 +15,8 @@
 Import([
 	'env',
 	'ia2RPCStubs',
+	'minHookLib',
 ])
-
-minHookObjFiles=env.SConscript('minHook_sconscript')
-
 
 winIPCUtilsObj=env.Object("./winIPCUtils","#common/winIPCUtils.cpp")
 
@@ -85,8 +83,9 @@ remoteLib=env.SharedLibrary(
 		"displayModelRemote.cpp",
 		displayModelRPCServerSource,
 		"nvdaHelperRemote.def",
-	]+minHookObjFiles,
+	],
 	LIBS=[
+		minHookLib[1 if env['release'] else 2],
 		"user32",
 		"gdi32",
 		"ole32",

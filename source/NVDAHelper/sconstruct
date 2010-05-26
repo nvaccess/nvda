@@ -69,6 +69,11 @@ Export('clientLib')
 env.Install(clientInstallDir,clientLib)
 buildList.append(clientLib)
 
+minHookLib=env.SConscript('minHook_sconscript')
+Export('minHookLib')
+env.Install(libInstallDir,minHookLib)
+buildList.append(minHookLib)
+
 remoteLib=env.SConscript('remote/sconscript')
 Export('remoteLib')
 env.Install(libInstallDir,remoteLib)
