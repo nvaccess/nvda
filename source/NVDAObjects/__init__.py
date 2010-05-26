@@ -869,37 +869,3 @@ This code is executed if a gain focus event is received by this object.
 			ret = "exception: %s" % e
 		info.append("TextInfo: %s" % ret)
 		return info
-
-class AutoSelectDetectionNVDAObject(NVDAObject):
-
-	"""Provides an NVDAObject with the means to detect if the text selection has changed, and if so to announce the change
-	@ivar hasContentChangedSinceLastSelection: if True then the content has changed.
-	@ivar hasContentChangedSinceLastSelection: boolean
-	"""
-
-	def initAutoSelectDetection(self):
-		"""Initializes the autoSelect detection code so that it knows about what is currently selected."""
-		try:
-			self._lastSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		except:
-			self._lastSelectionPos=None
-		self.hasContentChangedSinceLastSelection=False
-
-	def detectPossibleSelectionChange(self):
-		"""Detects if the selection has been changed, and if so it speaks the change."""
-		oldInfo=getattr(self,'_lastSelectionPos',None)
-		if not oldInfo:
-			return
-		try:
-			newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		except:
-			self._lastSelectionPos=None
-			return
-		self._lastSelectionPos=newInfo.copy()
-		hasContentChanged=self.hasContentChangedSinceLastSelection
-		self.hasContentChangedSinceLastSelection=False
-		if hasContentChanged:
-			generalize=True
-		else:
-			generalize=False
-		speech.speakSelectionChange(oldInfo,newInfo,generalize=generalize)

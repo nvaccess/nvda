@@ -19,8 +19,16 @@ import textInfos
 
 class EditableText(ScriptableObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.
-	This assumes the object can automatically detect selection changes and therefore does not handle the selection change keys.
-	Use L{EditableTextWithoutAutoSelectDetection} if your object does not automatically detect selection changes.
+	This does not handle the selection change keys.
+	To have selection changes reported, the object must notify of selection changes.
+	If the object supports selection but does not notify of selection changes, L{EditableTextWithoutAutoSelectDetection} should be used instead.
+	
+	If the object notifies of selection changes, the following should be done:
+		* When the object gains focus, L{initAutoSelectDetection} must be called.
+		* When the object notifies of a possible selection change, L{detectPossibleSelectionChange} must be called.
+		* Optionally, if the object notifies of changes to its content, L{hasContentChangedSinceLastSelection} should be set to C{True}.
+	@ivar hasContentChangedSinceLastSelection: Whether the content has changed since the last selection occurred.
+	@type hasContentChangedSinceLastSelection: bool
 	"""
 
 	#: Whether to fire caretMovementFailed events when the caret doesn't move in response to a caret movement key.
@@ -145,9 +153,35 @@ class EditableText(ScriptableObject):
 		):
 			self.bindKey_runtime(keyName, scriptName)
 
+	def initAutoSelectDetection(self):
+		"""Initialise automatic detection of selection changes.
+		This should be called when the object gains focus.
+		"""
+		try:
+			self._lastSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		except:
+			self._lastSelectionPos=None
+		self.hasContentChangedSinceLastSelection=False
+
+	def detectPossibleSelectionChange(self):
+		"""Detects if the selection has been changed, and if so it speaks the change.
+		"""
+		oldInfo=getattr(self,'_lastSelectionPos',None)
+		if not oldInfo:
+			return
+		try:
+			newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		except:
+			self._lastSelectionPos=None
+			return
+		self._lastSelectionPos=newInfo.copy()
+		hasContentChanged=self.hasContentChangedSinceLastSelection
+		self.hasContentChangedSinceLastSelection=False
+		speech.speakSelectionChange(oldInfo,newInfo,generalize=hasContentChanged)
+
 class EditableTextWithoutAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, provides scripts to report appropriately when the selection changes.
-	This should be used when an object cannot automatically detect when the selection changes.
+	This should be used when an object does not notify of selection changes.
 	"""
 
 	def script_caret_changeSelection(self,keyPress):

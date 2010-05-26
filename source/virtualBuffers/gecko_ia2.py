@@ -2,6 +2,7 @@ from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
 import treeInterceptorHandler
 import controlTypes
 import NVDAObjects.IAccessible
+import NVDAObjects.behaviors
 import winUser
 import IAccessibleHandler
 import oleacc
@@ -102,7 +103,7 @@ class Gecko_ia2(VirtualBuffer):
 		return super(Gecko_ia2, self)._shouldIgnoreFocus(obj)
 
 	def _postGainFocus(self, obj):
-		if hasattr(obj,'IAccessibleTextObject'):
+		if isinstance(obj, NVDAObjects.behaviors.EditableText):
 			# We aren't passing this event to the NVDAObject, so we need to do this ourselves.
 			obj.initAutoSelectDetection()
 		super(Gecko_ia2, self)._postGainFocus(obj)

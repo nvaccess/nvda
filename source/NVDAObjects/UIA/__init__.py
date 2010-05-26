@@ -11,7 +11,7 @@ import api
 import textInfos
 from logHandler import log
 from NVDAObjects.window import Window
-from NVDAObjects import NVDAObjectTextInfo, AutoSelectDetectionNVDAObject, InvalidNVDAObject
+from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableText
 
 class UIATextInfo(textInfos.TextInfo):
@@ -120,7 +120,7 @@ class UIATextInfo(textInfos.TextInfo):
 			target=UIAHandler.TextPatternRangeEndpoint_End
 		self._rangeObj.MoveEndpointByRange(src,other._rangeObj,target)
 
-class UIA(AutoSelectDetectionNVDAObject,Window):
+class UIA(Window):
 
 	liveNVDAObjectTable=weakref.WeakValueDictionary()
 
@@ -429,20 +429,6 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			self.UIAInvokePattern.Invoke()
 			return
 		raise NotImplementedError
-
-	def event_gainFocus(self):
-		self.initAutoSelectDetection()
-		super(UIA, self).event_gainFocus()
-
-	def event_caret(self):
-		super(UIA, self).event_caret()
-		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
-			if config.conf["reviewCursor"]["followCaret"]:
-				try:
-					api.setReviewPosition(self.makeTextInfo(textInfos.POSITION_CARET))
-				except (NotImplementedError, RuntimeError):
-					pass
-			self.detectPossibleSelectionChange()
 
 class TreeviewItem(UIA):
 

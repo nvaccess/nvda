@@ -21,7 +21,7 @@ import api
 import config
 import controlTypes
 from NVDAObjects.window import Window
-from NVDAObjects import NVDAObject, NVDAObjectTextInfo, AutoSelectDetectionNVDAObject, InvalidNVDAObject
+from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
 import queueHandler
@@ -264,7 +264,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 		raise LookupError
 
-class IAccessible(Window,AutoSelectDetectionNVDAObject):
+class IAccessible(Window):
 	"""
 the NVDAObject for IAccessible
 @ivar IAccessibleChildID: the IAccessible object's child ID
@@ -1057,8 +1057,6 @@ the NVDAObject for IAccessible
 		super(IAccessible, self).event_caret()
 		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_CARET:
 			return
-		if hasattr(self,'IAccessibleTextObject') and self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
-			self.detectPossibleSelectionChange()
 		focusObject=api.getFocusObject()
 		if self!=focusObject and not self.treeInterceptor and hasattr(self,'IAccessibleTextObject'):
 			inDocument=None
@@ -1107,11 +1105,6 @@ the NVDAObject for IAccessible
 				speech.speakObject(child,reason=speech.REASON_FOCUS)
 				child.speakDescendantObjects(hashList=hashList)
 			child=child.next
-
-	def event_gainFocus(self):
-		if hasattr(self,'IAccessibleTextObject'):
-			self.initAutoSelectDetection()
-		super(IAccessible,self).event_gainFocus()
 
 	def event_selection(self):
 		return self.event_stateChange()
