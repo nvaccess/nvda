@@ -64,7 +64,8 @@ ia2utilsObj=env.Object("./ia2utils","#common/ia2utils.cpp")
 remoteLib=env.SharedLibrary(
 	target="nvdaHelperRemote",
 	source=[
-		"nvdaHelperRemote.cpp",
+		"injection.cpp",
+		"inProcess.cpp",
 		"apiHook.cpp",
 		"inputLangChange.cpp",
 		"typedCharacter.cpp",

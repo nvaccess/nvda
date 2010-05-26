@@ -194,7 +194,7 @@ def initialize():
 		log.critical("nvdaHelperRemote.dll missing")
 		return
 	_remoteLib=CDLL("nvdaHelperRemote",handle=h)
-	if _remoteLib.nvdaHelper_initialize() != 0:
+	if _remoteLib.injection_initialize() == 0:
 		raise RuntimeError("Error initializing NVDAHelperRemote")
 	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':
 		_remoteLoader64=RemoteLoader64()
@@ -203,7 +203,7 @@ def initialize():
 def terminate():
 	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange
 	winUser.unhookWinEvent(winEventHookID)
-	if _remoteLib.nvdaHelper_terminate() != 0:
+	if _remoteLib.injection_terminate() == 0:
 		raise RuntimeError("Error terminating NVDAHelperRemote")
 	_remoteLib=None
 	if _remoteLoader64:

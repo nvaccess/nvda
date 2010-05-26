@@ -17,9 +17,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <windows.h>
 
-//Exported functions
-int nvdaHelper_initialize();
-int nvdaHelper_terminate();
 
 //Win event registration
 
