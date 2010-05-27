@@ -17,6 +17,17 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <windows.h>
 
+//Initialization and termination
+
+/**
+ * Initializes nvdaHelperRemote, and allows it to inject in to processes.
+ */
+BOOL injection_initialize();
+
+/**
+ * Terminates nvdaHelperRemote, allowing it to uninject from any processes.
+ */ 
+BOOL injection_terminate();
 
 //Win event registration
 
