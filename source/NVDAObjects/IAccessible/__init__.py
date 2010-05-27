@@ -710,7 +710,7 @@ the NVDAObject for IAccessible
 		if self.IAccessibleChildID>0:
 			return 0
 		try:
-			return self.IAccessibleObject.accChildCount
+			return max(self.IAccessibleObject.accChildCount,0)
 		except COMError:
 			return 0
 
@@ -810,7 +810,7 @@ the NVDAObject for IAccessible
 			childCount= self.IAccessibleObject.accChildCount
 		except COMError:
 			childCount=0
-		if childCount==0:
+		if childCount<=0:
 			return []
 		children=[]
 		for child in IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,childCount):
