@@ -759,7 +759,7 @@ the NVDAObject for IAccessible
 		if not res:
 			return None
 		if res[0]==self.IAccessibleObject:
-			return self.correctAPIForRelation(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1]))
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1])
 		return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]))
 
 	def _get_previous(self):
@@ -769,7 +769,7 @@ the NVDAObject for IAccessible
 		if not res:
 			return None
 		if res[0]==self.IAccessibleObject:
-			return self.correctAPIForRelation(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1]))
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1])
 		return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]))
 
 	def _get_firstChild(self):
