@@ -815,7 +815,7 @@ the NVDAObject for IAccessible
 		children=[]
 		for IAccessibleObject,IAccessibleChildID in IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,childCount):
 			if IAccessibleObject==self.IAccessibleObject:
-				children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=IAccessibleChildID,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1]))
+				children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=IAccessibleChildID,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=IAccesibleChildID))
 			else:
 				try:
 					accRole=IAccessibleObject.accRole(0)
