@@ -22,9 +22,11 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 using namespace std;
 
 typedef multiset<HMODULE> moduleSet_t;
+typedef set<void*> functionSet_t;
 
 moduleSet_t g_hookedModules;
-
+functionSet_t g_hookedFunctions;
+ 
 bool apiHook_inProcess_initialize() {
 	LOG_DEBUG("calling MH_Initialize");
 	int res;
@@ -52,20 +54,31 @@ void* apiHook_hookFunction(const char* moduleName, const char* functionName, voi
 	int res;
 	if((res=MH_CreateHook(realFunc,newHookProc,&origFunc))!=MH_OK) {
 		LOG_ERROR("MH_CreateHook failed with " << res);
+		FreeLibrary(moduleHandle);
 		return NULL;
 	}
 	if((res=MH_EnableHook(realFunc))!=MH_OK) {
 		LOG_ERROR("MH_EnableHook failed with " << res);
+		FreeLibrary(moduleHandle);
 		return NULL;
 	}
 	g_hookedModules.insert(moduleHandle);
+	g_hookedFunctions.insert(realFunc);
 	LOG_DEBUG("successfully hooked function " << functionName << " in module " << moduleName << " with hook procedure at address 0X" << std::hex << newHookProc << ", returning true");
 	return origFunc;
 }
 
 BOOL apiHook_inProcess_terminate() {
 	int res;
-	if ((res=MH_Uninitialize())!=MH_OK) 
+	for(functionSet_t::iterator i=g_hookedFunctions.begin();i!=g_hookedFunctions.end();++i) {
+		if((res=MH_DisableHook(*i))!=MH_OK) {
+			LOG_ERROR("MH_DisableHook for function at address "<<*i<<L" failed with " << res);
+		}
+	}
+	g_hookedFunctions.clear();
+	//Give enough time for all hook functions to complete.
+	Sleep(250);
+	if ((res=MH_Uninitialize())!=MH_OK)
 		LOG_ERROR("MH_Uninitialize failed with " << res);
 	for(moduleSet_t::iterator i=g_hookedModules.begin();i!=g_hookedModules.end();i++) {
 		FreeLibrary(*i);
