@@ -813,11 +813,23 @@ the NVDAObject for IAccessible
 		if childCount<=0:
 			return []
 		children=[]
-		for child in IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,childCount):
-			if child[0]==self.IAccessibleObject:
-				children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1]))
+		for IAccessibleObject,IAccessibleChildID in IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,childCount):
+			if IAccessibleObject==self.IAccessibleObject:
+				children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=IAccessibleChildID,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1]))
 			else:
-				children.append(self.correctAPIForRelation(IAccessible(IAccessibleObject=child[0],IAccessibleChildID=child[1])))
+				try:
+					accRole=IAccessibleObject.accRole(0)
+				except COMError:
+					accRole=0
+				#For Window root IAccessibles, we just want to use the new window handle, but use the best API for that window, rather than IAccessible
+				#If it does happen to be IAccessible though, we only want the client, not the window root IAccessible
+				if accRole==oleacc.ROLE_SYSTEM_WINDOW:
+					windowHandle=oleacc.WindowFromAccessibleObject(IAccessibleObject)
+					kwargs=dict(windowHandle=windowHandle)
+					APIClass=Window.findBestAPIClass(kwargs,relation="parent") #Need a better relation type for this, but parent works ok -- gives the client
+					children.append(APIClass(**kwargs))
+				else:
+					children.append(IAccessible(IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID))
 		children=[x for x in children if x and winUser.isDescendantWindow(self.windowHandle,x.windowHandle)]
 		return children
 
