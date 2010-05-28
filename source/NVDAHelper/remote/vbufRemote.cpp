@@ -46,6 +46,7 @@ VBufRemote_bufferHandle_t VBufRemote_createBuffer(handle_t bindingHandle, int do
 }
 
 void VBufRemote_destroyBuffer(VBufRemote_bufferHandle_t* buffer) {
+	Beep(4000,80);
 	VBufBackend_t* backend=(VBufBackend_t*)*buffer;
 	backend->terminate();
 	map<VBufBackend_t*,HINSTANCE>::iterator i=backendLibHandles.find(backend);
@@ -163,9 +164,7 @@ int VBufRemote_getLineOffsets(VBufRemote_bufferHandle_t buffer, int offset, int 
 
 //Special cleanup method for VBufRemote when client is lost
 void __RPC_USER VBufRemote_bufferHandle_t_rundown(VBufRemote_bufferHandle_t buffer) {
-	/* This causes a crash (ticket #399). Better to have memory leaks than to crash.
 	VBufRemote_destroyBuffer(&buffer);
-	*/
 }
 
 }

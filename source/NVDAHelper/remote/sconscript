@@ -44,6 +44,7 @@ vbufRPCHeader,vbufRPCServerSource=env.MSRPCStubs(
 	target="./vbufRemote",
 	source=[
 		"#interfaces/vbuf/vbuf.idl",
+		"#interfaces/vbuf/vbuf.acf",
 	],
 	MSRPCStubs_noClient=True,
 	MSRPCStubs_prefix="VBufRemote_",
