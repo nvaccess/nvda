@@ -45,12 +45,14 @@ class UIATextInfo(textInfos.TextInfo):
 		super(UIATextInfo,self).__init__(obj,position)
 		if isinstance(position,UIAHandler.IUIAutomationTextRange):
 			self._rangeObj=position.Clone()
-		elif position==textInfos.POSITION_CARET or position==textInfos.POSITION_SELECTION:
+		elif position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			sel=self.obj.UIATextPattern.GetSelection()
 			if sel.length>0:
 				self._rangeObj=sel.getElement(0).clone()
 			else:
 				raise NotImplementedError("UIAutomationTextRangeArray is empty")
+			if position==textInfos.POSITION_CARET:
+				self.collapse()
 		else:
 			self._rangeObj=self.obj.UIATextPattern.DocumentRange
 
@@ -183,6 +185,11 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		return obj
 
 	def __init__(self,windowHandle=None,UIAElement=None):
+		if getattr(self,"_doneInit",False):
+			# This instance was retrieved from the cache by __new__ and has already been constructed.
+			return
+		self._doneInit=True
+
 		if not UIAElement:
 			raise ValueError("needs either a UIA element or window handle")
 
@@ -198,7 +205,6 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 
 		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
 			self.TextInfo=UIATextInfo
-			self.initAutoSelectDetection()
 			self.value=""
 
 	def _isEqual(self,other):
@@ -423,6 +429,10 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			self.UIAInvokePattern.Invoke()
 			return
 		raise NotImplementedError
+
+	def event_gainFocus(self):
+		self.initAutoSelectDetection()
+		super(UIA, self).event_gainFocus()
 
 	def event_caret(self):
 		super(UIA, self).event_caret()

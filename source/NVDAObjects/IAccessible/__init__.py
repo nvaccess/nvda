@@ -24,7 +24,6 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, AutoSelectDetectionNVDAObject, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
-import mouseHandler
 import queueHandler
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableText
 
@@ -360,6 +359,10 @@ the NVDAObject for IAccessible
 				# This is an owner drawn ListBox and text has not been set for the items.
 				# See http://msdn.microsoft.com/en-us/library/ms971352.aspx#msaa_sa_listbxcntrls
 				clsList.append(InaccessibleListBoxItem)
+		elif windowClassName == "MsoCommandBar":
+			from .msOffice import BrokenMsoCommandBar
+			if BrokenMsoCommandBar.appliesTo(self):
+				clsList.append(BrokenMsoCommandBar)
 
 		#Window root IAccessibles
 		if self.event_objectID in (None,winUser.OBJID_WINDOW) and self.event_childID==0 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
@@ -707,7 +710,7 @@ the NVDAObject for IAccessible
 		if self.IAccessibleChildID>0:
 			return 0
 		try:
-			return self.IAccessibleObject.accChildCount
+			return max(self.IAccessibleObject.accChildCount,0)
 		except COMError:
 			return 0
 
@@ -756,7 +759,7 @@ the NVDAObject for IAccessible
 		if not res:
 			return None
 		if res[0]==self.IAccessibleObject:
-			return self.correctAPIForRelation(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1]))
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1])
 		return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]))
 
 	def _get_previous(self):
@@ -766,7 +769,7 @@ the NVDAObject for IAccessible
 		if not res:
 			return None
 		if res[0]==self.IAccessibleObject:
-			return self.correctAPIForRelation(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1]))
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1])
 		return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]))
 
 	def _get_firstChild(self):
@@ -807,14 +810,26 @@ the NVDAObject for IAccessible
 			childCount= self.IAccessibleObject.accChildCount
 		except COMError:
 			childCount=0
-		if childCount==0:
+		if childCount<=0:
 			return []
 		children=[]
-		for child in IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,childCount):
-			if child[0]==self.IAccessibleObject:
-				children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1]))
+		for IAccessibleObject,IAccessibleChildID in IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,childCount):
+			if IAccessibleObject==self.IAccessibleObject:
+				children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=IAccessibleChildID,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=IAccessibleChildID))
 			else:
-				children.append(self.correctAPIForRelation(IAccessible(IAccessibleObject=child[0],IAccessibleChildID=child[1])))
+				try:
+					accRole=IAccessibleObject.accRole(0)
+				except COMError:
+					accRole=0
+				#For Window root IAccessibles, we just want to use the new window handle, but use the best API for that window, rather than IAccessible
+				#If it does happen to be IAccessible though, we only want the client, not the window root IAccessible
+				if accRole==oleacc.ROLE_SYSTEM_WINDOW:
+					windowHandle=oleacc.WindowFromAccessibleObject(IAccessibleObject)
+					kwargs=dict(windowHandle=windowHandle)
+					APIClass=Window.findBestAPIClass(kwargs,relation="parent") #Need a better relation type for this, but parent works ok -- gives the client
+					children.append(APIClass(**kwargs))
+				else:
+					children.append(IAccessible(IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID))
 		children=[x for x in children if x and winUser.isDescendantWindow(self.windowHandle,x.windowHandle)]
 		return children
 
@@ -1060,6 +1075,35 @@ the NVDAObject for IAccessible
 			return False
 		return super(IAccessible, self).isPresentableFocusAncestor
 
+	def _get_devInfo(self):
+		info = super(IAccessible, self).devInfo
+		iaObj = self.IAccessibleObject
+		info.append("IAccessibleObject: %r" % iaObj)
+		childID = self.IAccessibleChildID
+		info.append("IAccessibleChildID: %r" % childID)
+		info.append("IAccessible event parameters: windowHandle=%r, objectID=%r, childID=%r" % (self.event_windowHandle, self.event_objectID, self.event_childID))
+		try:
+			ret = iaObj.accRole(childID)
+			for name, const in oleacc.__dict__.iteritems():
+				if ret == const:
+					ret = name
+					break
+			else:
+				ret = repr(ret)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("IAccessible accRole: %s" % ret)
+		try:
+			temp = iaObj.accState(childID)
+			ret = ", ".join(
+				name for name, const in oleacc.__dict__.iteritems()
+				if name.startswith("STATE_") and temp & const
+			) + " (%d)" % temp
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("IAccessible accState: %s" % ret)
+		return info
+
 class ContentGenericClient(IAccessible):
 
 	TextInfo=displayModel.DisplayModelTextInfo
@@ -1216,48 +1260,6 @@ class TaskListIcon(IAccessible):
 			return
 		super(TaskListIcon,self).reportFocus()
 
-class ToolbarWindow32(IAccessible):
-
-	def event_gainFocus(self):
-		try:
-			# The toolbar's immediate parent is its window object, so we need to go one further.
-			toolbarParent = self.parent.parent
-			if self.IAccessibleRole != oleacc.ROLE_SYSTEM_TOOLBAR:
-				# Toolbar item.
-				toolbarParent = toolbarParent.parent
-		except AttributeError:
-			toolbarParent = None
-		if toolbarParent and toolbarParent.windowClassName == "SysPager":
-			# This is the system tray.
-			if not self.sysTrayGainFocus():
-				return
-		super(ToolbarWindow32, self).event_gainFocus()
-
-	def sysTrayGainFocus(self):
-		if mouseHandler.lastMouseEventTime < time.time() - 0.2:
-			# This focus change was not caused by a mouse event.
-			# If the mouse is on another toolbar control, the system tray toolbar will rudely
-			# bounce the focus back to the object under the mouse after a brief pause.
-			# Moving the mouse to the focus object isn't a good solution because
-			# sometimes, the focus can't be moved away from the object under the mouse.
-			# Therefore, move the mouse out of the way.
-			winUser.setCursorPos(0, 0)
-
-		if self.IAccessibleRole == oleacc.ROLE_SYSTEM_TOOLBAR:
-			# Sometimes, the toolbar itself receives the focus instead of the focused child.
-			# However, the focused child still has the focused state.
-			for child in self.children:
-				if child.hasFocus:
-					# Redirect the focus to the focused child.
-					eventHandler.executeEvent("gainFocus", child)
-					return False
-			# We've really landed on the toolbar itself.
-			# This was probably caused by moving the mouse out of the way in a previous focus event.
-			# This previous focus event is no longer useful, so cancel speech.
-			speech.cancelSpeech()
-
-		return not eventHandler.isPendingEvents("gainFocus")
-
 class MenuItem(IAccessible):
 
 	def _get_description(self):
@@ -1373,7 +1375,6 @@ _staticMap={
 	("TaskSwitcherWnd",oleacc.ROLE_SYSTEM_LIST):"TaskList",
 	("#32771",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("TaskSwitcherWnd",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
-	("ToolbarWindow32",None):"ToolbarWindow32",
 	("TGroupBox",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TGroupBox",
 	("TFormOptions",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TFormOptions",
 	("TFormOptions",oleacc.ROLE_SYSTEM_WINDOW):"delphi.TFormOptions",

@@ -104,10 +104,10 @@ An NVDAObject for a window
 		if newCls:
 			clsList.append(newCls)
 
-		#If the chosen class does not seem to support text editing by itself
+		#If none of the chosen classes seem to support text editing
 		#But there is a caret currently in the window
 		#Then use the displayModelEditableText class to emulate text editing capabilities
-		if not newCls or not issubclass(newCls,EditableText):
+		if not any(issubclass(cls,EditableText) for cls in clsList):
 			gi=winUser.getGUIThreadInfo(self.windowThreadID)
 			if gi.hwndCaret==self.windowHandle and gi.flags&winUser.GUI_CARETBLINKING:
 				clsList.append(DisplayModelEditableText)
@@ -302,6 +302,40 @@ An NVDAObject for a window
 		return newName
 
 	normalizedWindowClassNameCache={}
+
+	def _get_devInfo(self):
+		info = super(Window, self).devInfo
+		info.append("windowHandle: %r" % self.windowHandle)
+		try:
+			ret = repr(self.windowClassName)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("windowClassName: %s" % ret)
+		try:
+			ret = repr(self.windowControlID)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("windowControlID: %s" % ret)
+		try:
+			ret = repr(self.windowStyle)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("windowStyle: %s" % ret)
+		try:
+			ret = repr(self.windowThreadID)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("windowThreadID: %s" % ret)
+		try:
+			ret = self.windowText
+			if isinstance(ret, basestring) and len(ret) > 100:
+				ret = "%r (truncated)" % ret[:100]
+			else:
+				ret = repr(ret)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("windowText: %s" % ret)
+		return info
 
 class Desktop(Window):
 
