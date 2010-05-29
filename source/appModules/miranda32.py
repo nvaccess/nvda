@@ -10,7 +10,7 @@ from ctypes import *
 from ctypes.wintypes import *
 import winKernel
 import winUser
-from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.behaviors import Dialog
 import _default
 import speech
@@ -84,6 +84,10 @@ class AppModule(_default.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
 		if windowClass == "CListControl":
+			try:
+				clsList.remove(ContentGenericClient)
+			except ValueError:
+				pass
 			clsList.insert(0, mirandaIMContactList)
 		elif windowClass in ("MButtonClass", "TSButtonClass", "CLCButtonClass"):
 			clsList.insert(0, mirandaIMButton)
@@ -151,12 +155,6 @@ class mirandaIMContactList(IAccessible):
 			api.processPendingEvents()
 			speech.speakObject(self,reason=speech.REASON_FOCUS)
 			braille.handler.handleGainFocus(self)
-
-	def _get_next(self):
-		return None
-
-	def _get_value(self):
-		return None
 
 
 class mirandaIMButton(IAccessible):
