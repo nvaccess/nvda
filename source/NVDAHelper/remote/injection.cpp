@@ -68,7 +68,7 @@ void CALLBACK inproc_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND 
 //A thread function that runs while  NVDA is injected in a process.
 //Note that a mutex is used to make sure that there is never more than one copy of this thread in a given process at any given time.
 //I.e. Another copy of NVDA is started  while the first is still running.
-void inprocMgrThreadFunc() {
+DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	//Create a label for the mutex with the processID encoded so that it only affects this process.
 	wostringstream mutexNameStream;
 	mutexNameStream<<L"NVDAHelperRemote_inprocMgrThread_"<<GetCurrentProcessId();
@@ -126,6 +126,7 @@ void inprocMgrThreadFunc() {
 	CloseHandle(threadMutex);
 	//Allow this dll to unload if necessary, and exit the thread.
 	FreeLibraryAndExitThread(dllHandle,0);
+	return 0;
 }
 
 //winEvent callback to inject in-process
@@ -138,7 +139,7 @@ void CALLBACK injection_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	inprocThreadsLock.acquire();
 	if(inprocInjectionID!=dllInjectionID) {
 		inprocInjectionID=dllInjectionID;
-		inprocMgrThreadHandle=CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)inprocMgrThreadFunc,NULL,0,NULL);
+		inprocMgrThreadHandle=CreateThread(NULL,0,inprocMgrThreadFunc,NULL,0,NULL);
 		assert(inprocMgrThreadHandle);
 		forwardWinEvent=TRUE;
 	}
@@ -153,18 +154,18 @@ void CALLBACK injection_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 //This thread is needed to icealate the hook callbacks from the rest of NVDA
 //As some incontext callbacks may be called out of context due to 32/64 bit boundaries, and or security issues.
 //We don't want them clogging up NVDA's main message queue.
-void outprocMgrThreadFunc() {
+DWORD WINAPI outprocMgrThreadFunc(LPVOID data) {
 	InterlockedIncrement(&dllInjectionID);
 	HWINEVENTHOOK winEventHookFocusID=0; 
 	HWINEVENTHOOK winEventHookForegroundID=0; 
 //Register focus/foreground winEvents
 	if((winEventHookFocusID=SetWinEventHook(EVENT_OBJECT_FOCUS,EVENT_OBJECT_FOCUS,dllHandle,(WINEVENTPROC)injection_winEventCallback,0,0,WINEVENT_INCONTEXT))==0) {
 		MessageBox(NULL,L"Error registering focus winEvent hook",L"nvdaHelperRemote (outprocMgrThreadFunc)",0);
-		return;
+		return 0;
 	}
 	if((winEventHookForegroundID=SetWinEventHook(EVENT_SYSTEM_FOREGROUND,EVENT_SYSTEM_FOREGROUND,dllHandle,(WINEVENTPROC)injection_winEventCallback,0,0,WINEVENT_INCONTEXT))==0) {
 		MessageBox(NULL,L"Error registering foreground winEvent hook",L"nvdaHelperRemote (outprocMgrThreadFunc)",0);
-		return;
+		return 0;
 	}
 	//Standard message loop
 	MSG msg;
@@ -178,6 +179,7 @@ void outprocMgrThreadFunc() {
 	if(UnhookWinEvent(winEventHookForegroundID)==FALSE) {
 		MessageBox(NULL,L"Error unregistering foreground winEvent hook",L"nvdaHelperRemote (outprocMgrThreadFunc)",0);
 	}
+	return 0;
 }
 
 HANDLE outprocMgrThreadHandle=NULL;
@@ -199,7 +201,7 @@ BOOL injection_initialize() {
 	injectionDoneEvent=CreateEvent(NULL,TRUE,FALSE,L"nvdaHelperRemote_injectionDoneEvent");
 	assert(injectionDoneEvent);
 	ResetEvent(injectionDoneEvent);
-	outprocMgrThreadHandle=CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)outprocMgrThreadFunc,NULL,0,&outprocMgrThreadID);
+	outprocMgrThreadHandle=CreateThread(NULL,0,outprocMgrThreadFunc,NULL,0,&outprocMgrThreadID);
 	outprocInitialized=TRUE;
 	return TRUE;
 }
