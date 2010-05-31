@@ -53,10 +53,10 @@ void CALLBACK inproc_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND 
 	if((long)TlsGetValue(tlsIndex_inThreadInjectionID)!=inprocInjectionID) {
 		TlsSetValue(tlsIndex_inThreadInjectionID,(LPVOID)inprocInjectionID);
 		HHOOK tempHook;
-		if((tempHook=SetWindowsHookEx(WH_GETMESSAGE,(HOOKPROC)inProcess_getMessageHook,dllHandle,threadID))==0) {
+		if((tempHook=SetWindowsHookEx(WH_GETMESSAGE,inProcess_getMessageHook,dllHandle,threadID))==0) {
 			MessageBox(NULL,L"Error registering getMessage Windows hook",L"nvdaHelperRemote (inproc_winEventCallback)",0);
 		} else inprocCurrentWindowsHooks.insert(tempHook);
-		if((tempHook=SetWindowsHookEx(WH_CALLWNDPROC,(HOOKPROC)inProcess_callWndProcHook,dllHandle,threadID))==0) {
+		if((tempHook=SetWindowsHookEx(WH_CALLWNDPROC,inProcess_callWndProcHook,dllHandle,threadID))==0) {
 			MessageBox(NULL,L"Error registering callWndProc Windows hook",L"nvdaHelperRemote (inproc_winEventCallback)",0);
 		} else inprocCurrentWindowsHooks.insert(tempHook);
 	}
@@ -95,7 +95,7 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	//As long as we have successfully retreaved handles for NVDA's process and the event, then go on and initialize, wait and terminate.
 	if(waitHandles[0]&&waitHandles[1]) {
 		//Register for all winEvents in this process.
-		HWINEVENTHOOK winEventHookID=SetWinEventHook(0,0XFFFFFFFF,dllHandle,(WINEVENTPROC)inproc_winEventCallback,GetCurrentProcessId(),0,WINEVENT_INCONTEXT);
+		HWINEVENTHOOK winEventHookID=SetWinEventHook(0,0XFFFFFFFF,dllHandle,inproc_winEventCallback,GetCurrentProcessId(),0,WINEVENT_INCONTEXT);
 		assert(winEventHookID);
 		//Initialize in-process subsystems
 		inProcess_initialize();
@@ -159,11 +159,11 @@ DWORD WINAPI outprocMgrThreadFunc(LPVOID data) {
 	HWINEVENTHOOK winEventHookFocusID=0; 
 	HWINEVENTHOOK winEventHookForegroundID=0; 
 //Register focus/foreground winEvents
-	if((winEventHookFocusID=SetWinEventHook(EVENT_OBJECT_FOCUS,EVENT_OBJECT_FOCUS,dllHandle,(WINEVENTPROC)injection_winEventCallback,0,0,WINEVENT_INCONTEXT))==0) {
+	if((winEventHookFocusID=SetWinEventHook(EVENT_OBJECT_FOCUS,EVENT_OBJECT_FOCUS,dllHandle,injection_winEventCallback,0,0,WINEVENT_INCONTEXT))==0) {
 		MessageBox(NULL,L"Error registering focus winEvent hook",L"nvdaHelperRemote (outprocMgrThreadFunc)",0);
 		return 0;
 	}
-	if((winEventHookForegroundID=SetWinEventHook(EVENT_SYSTEM_FOREGROUND,EVENT_SYSTEM_FOREGROUND,dllHandle,(WINEVENTPROC)injection_winEventCallback,0,0,WINEVENT_INCONTEXT))==0) {
+	if((winEventHookForegroundID=SetWinEventHook(EVENT_SYSTEM_FOREGROUND,EVENT_SYSTEM_FOREGROUND,dllHandle,injection_winEventCallback,0,0,WINEVENT_INCONTEXT))==0) {
 		MessageBox(NULL,L"Error registering foreground winEvent hook",L"nvdaHelperRemote (outprocMgrThreadFunc)",0);
 		return 0;
 	}
