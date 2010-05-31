@@ -101,9 +101,13 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 		//Notify injection_winEventCallback (who started our thread) that we're past initialization
 		SetEvent((HANDLE)data);
 		//Wait till either the injection done event is set, or NVDA's process dies
+		#ifndef NDEBUG
 		Beep(660,75);
+		#endif
 		WaitForMultipleObjects(2,waitHandles,FALSE,INFINITE);
+		#ifndef NDEBUG
 		Beep(1320,75);
+		#endif
 		//Terminate all in-process subsystems.
 		inProcess_terminate();
 		//Unregister winEvents for this process
@@ -246,13 +250,17 @@ BOOL injection_terminate() {
 
 BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if(reason==DLL_PROCESS_ATTACH) {
+		#ifndef NDEBUG
 		Beep(220,75);
+		#endif
 		tlsIndex_inThreadInjectionID=TlsAlloc();
 		dllHandle=hModule;
 		GetModuleFileName(dllHandle,dllDirectory,MAX_PATH);
 		PathRemoveFileSpec(dllDirectory);
 	} else if(reason==DLL_PROCESS_DETACH) {
+		#ifndef NDEBUG
 		Beep(1760,75);
+		#endif
 		TlsFree(tlsIndex_inThreadInjectionID);
 	}
 	return TRUE;

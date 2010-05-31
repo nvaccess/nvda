@@ -46,7 +46,9 @@ VBufRemote_bufferHandle_t VBufRemote_createBuffer(handle_t bindingHandle, int do
 }
 
 void VBufRemote_destroyBuffer(VBufRemote_bufferHandle_t* buffer) {
+	#ifndef NDEBUG
 	Beep(4000,80);
+	#endif
 	VBufBackend_t* backend=(VBufBackend_t*)*buffer;
 	backend->terminate();
 	map<VBufBackend_t*,HINSTANCE>::iterator i=backendLibHandles.find(backend);
