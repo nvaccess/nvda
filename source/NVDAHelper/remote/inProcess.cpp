@@ -116,12 +116,9 @@ LRESULT CALLBACK inProcess_getMessageHook(int code, WPARAM wParam, LPARAM lParam
 		return CallNextHookEx(0,code,wParam,lParam);
 	}
 	//Hookprocs may unregister or register hooks themselves, so we must copy the hookprocs before executing
-	list<windowsHookRegistry_t::key_type> hookProcList;
-	for(windowsHookRegistry_t::iterator i=inProcess_registeredGetMessageWindowsHooks.begin();i!=inProcess_registeredGetMessageWindowsHooks.end();i++) {
-		hookProcList.push_back(i->first);
-	}
-	for(list<windowsHookRegistry_t::key_type>::iterator j=hookProcList.begin();j!=hookProcList.end();j++) {
-		(*j)(code,wParam,lParam);
+	windowsHookRegistry_t hookProcs=inProcess_registeredGetMessageWindowsHooks;
+	for(windowsHookRegistry_t::iterator i=hookProcs.begin();i!=hookProcs.end();i++) {
+		i->first(code,wParam,lParam);
 	}
 	return CallNextHookEx(0,code,wParam,lParam);
 }
@@ -132,12 +129,9 @@ LRESULT CALLBACK inProcess_callWndProcHook(int code, WPARAM wParam,LPARAM lParam
 		return CallNextHookEx(0,code,wParam,lParam);
 	}
 	//Hookprocs may unregister or register hooks themselves, so we must copy the hookprocs before executing
-	list<windowsHookRegistry_t::key_type> hookProcList;
-	for(windowsHookRegistry_t::iterator i=inProcess_registeredCallWndProcWindowsHooks.begin();i!=inProcess_registeredCallWndProcWindowsHooks.end();i++) {
-		hookProcList.push_back(i->first);
-	}
-	for(list<windowsHookRegistry_t::key_type>::iterator j=hookProcList.begin();j!=hookProcList.end();j++) {
-		(*j)(code,wParam,lParam);
+	windowsHookRegistry_t hookProcs=inProcess_registeredCallWndProcWindowsHooks;
+	for(windowsHookRegistry_t::iterator i=hookProcs.begin();i!=hookProcs.end();i++) {
+		i->first(code,wParam,lParam);
 	}
 	return CallNextHookEx(0,code,wParam,lParam);
 }
@@ -147,11 +141,8 @@ void CALLBACK inProcess_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	//We are not at all interested in out-of-context winEvents, even if they were accidental.
 	if(threadID!=GetCurrentThreadId()) return;
 	//Hookprocs may unregister or register hooks themselves, so we must copy the hookprocs before executing
-	list<winEventHookRegistry_t::key_type> hookProcList;
-	for(winEventHookRegistry_t::iterator i=inProcess_registeredWinEventHooks.begin();i!=inProcess_registeredWinEventHooks.end();i++) {
-		hookProcList.push_back(i->first);
-	}
-	for(list<winEventHookRegistry_t::key_type>::iterator j=hookProcList.begin();j!=hookProcList.end();j++) {
-		(*j)(hookID, eventID, hwnd, objectID, childID, threadID, time);
+	winEventHookRegistry_t hookProcs=inProcess_registeredWinEventHooks;
+	for(winEventHookRegistry_t::iterator i=hookProcs.begin();i!=hookProcs.end();i++) {
+		i->first(hookID, eventID, hwnd, objectID, childID, threadID, time);
 	}
 }
