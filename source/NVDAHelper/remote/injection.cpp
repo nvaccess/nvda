@@ -37,7 +37,6 @@ HINSTANCE dllHandle=NULL;
 wchar_t dllDirectory[MAX_PATH];
 LockableObject inprocThreadsLock;
 long inprocInjectionID=0;
-HANDLE inprocMgrThreadHandle=NULL;
 set<HHOOK> inprocCurrentWindowsHooks;
 long tlsIndex_inThreadInjectionID=0;
 
@@ -99,6 +98,8 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 		assert(winEventHookID);
 		//Initialize in-process subsystems
 		inProcess_initialize();
+		//Notify injection_winEventCallback (who started our thread) that we're past initialization
+		SetEvent((HANDLE)data);
 		//Wait till either the injection done event is set, or NVDA's process dies
 		Beep(660,75);
 		WaitForMultipleObjects(2,waitHandles,FALSE,INFINITE);
@@ -134,18 +135,30 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 void CALLBACK injection_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	//We are not at all interested in out-of-context winEvents, even if they were accidental.
 	if(threadID!=GetCurrentThreadId()) return;
-	bool forwardWinEvent=FALSE;
+	HANDLE waitHandles[2]={0};
+	BOOL threadCreated=FALSE;
 	//Gain exclusive access to all the inproc thread variables for the rest of this function.
 	inprocThreadsLock.acquire();
 	if(inprocInjectionID!=dllInjectionID) {
 		inprocInjectionID=dllInjectionID;
-		inprocMgrThreadHandle=CreateThread(NULL,0,inprocMgrThreadFunc,NULL,0,NULL);
-		assert(inprocMgrThreadHandle);
-		forwardWinEvent=TRUE;
+		//Create an event which will be used for the inproc manager thread to notify us that its successfully past initialization.
+		waitHandles[0]=CreateEvent(NULL,TRUE,FALSE,NULL);
+		assert(waitHandles[0]);
+		//Create the inproc manager thread, passing the event as an argument.
+		waitHandles[1]=CreateThread(NULL,0,inprocMgrThreadFunc,(LPVOID)(waitHandles[0]),0,NULL);
+		assert(waitHandles[1]);
+		threadCreated=TRUE;
 	}
 	inprocThreadsLock.release();
-	//Forward this winEvent to the general in-process winEvent callback if necessary, so it sees this initial event.
-	if(forwardWinEvent) inproc_winEventCallback(hookID,eventID,hwnd,objectID,childID,threadID,time);
+	if(threadCreated) {
+		//Wait until the event is set (the thread is past initialization) or until the thread dies.
+		WaitForMultipleObjects(2,waitHandles,FALSE,1000);
+		//Cleanup the handles
+		CloseHandle(waitHandles[0]);
+		CloseHandle(waitHandles[1]);
+		//Forward this winEvent to the general in-process winEvent callback if necessary, so it sees this initial event.
+		inproc_winEventCallback(hookID,eventID,hwnd,objectID,childID,threadID,time);
+	}
 }
 
 //Code for launcher process
