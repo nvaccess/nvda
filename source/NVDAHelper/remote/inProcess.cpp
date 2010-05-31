@@ -47,6 +47,7 @@ void inProcess_initialize() {
 	inputLangChange_inProcess_initialize();
 	if (apiHook_inProcess_initialize()) {
 		gdiHooks_inProcess_initialize();
+		apiHook_enableHooks();
 	}
 	rpcSrv_inProcess_initialize();
 }

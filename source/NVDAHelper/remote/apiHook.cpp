@@ -58,15 +58,19 @@ void* apiHook_hookFunction(const char* moduleName, const char* functionName, voi
 		FreeLibrary(moduleHandle);
 		return NULL;
 	}
-	if((res=MH_EnableHook(realFunc))!=MH_OK) {
-		LOG_ERROR("MH_EnableHook failed with " << res);
-		FreeLibrary(moduleHandle);
-		return NULL;
-	}
 	g_hookedModules.insert(moduleHandle);
 	g_hookedFunctions.insert(realFunc);
 	LOG_DEBUG("successfully hooked function " << functionName << " in module " << moduleName << " with hook procedure at address 0X" << std::hex << newHookProc << ", returning true");
 	return origFunc;
+}
+
+BOOL apiHook_enableHooks() {
+	int res;
+	for(functionSet_t::iterator i=g_hookedFunctions.begin();i!=g_hookedFunctions.end();++i) {
+		res=MH_EnableHook(*i);
+		assert(res==MH_OK);
+	}
+	return TRUE;
 }
 
 BOOL apiHook_inProcess_terminate() {

@@ -35,6 +35,11 @@ bool apiHook_inProcess_initialize();
 void* apiHook_hookFunction(const char* moduleName, const char* functionName, void* newHookProc);
 
 /**
+ * Actually hooks all requested hook functions.
+ */
+	BOOL apiHook_enableHooks();
+
+/**
  * unhooks all functions previously hooked with apiHook_hookFunction and terminates API hooking subsystem.
  */
 BOOL apiHook_inProcess_terminate();
