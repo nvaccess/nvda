@@ -91,7 +91,7 @@ class AppModule(_default.AppModule):
 		if obj.windowClassName == VsTextEditPaneClassName:
 			try:
 				clsList.remove(DisplayModelEditableText)
-			except (ValueError,NameError):
+			except ValueError:
 				pass
 			clsList.insert(0, VsTextEditPane)
 			
