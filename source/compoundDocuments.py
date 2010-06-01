@@ -144,6 +144,12 @@ class CompoundTextInfo(textInfos.TextInfo):
 			yield ti.getEmbeddedObject(fieldStart + chunkEnd)
 			chunkStart = chunkEnd + 1
 
+	def __eq__(self, other):
+		return self._start == other._start and self._startObj == other._startObj and self._end == other._end and self._endObj == other._endObj
+
+	def __ne__(self, other):
+		return not self == other
+
 class TreeCompoundTextInfo(CompoundTextInfo):
 	#: Units contained within a single TextInfo.
 	SINGLE_TEXTINFO_UNITS = (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD, textInfos.UNIT_LINE, textInfos.UNIT_SENTENCE, textInfos.UNIT_PARAGRAPH)
