@@ -166,15 +166,16 @@ class EditableText(ScriptableObject):
 	def detectPossibleSelectionChange(self):
 		"""Detects if the selection has been changed, and if so it speaks the change.
 		"""
-		oldInfo=getattr(self,'_lastSelectionPos',None)
-		if not oldInfo:
-			return
 		try:
 			newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except:
-			self._lastSelectionPos=None
+			# Just leave the old selection, which is usually better than nothing.
 			return
+		oldInfo=getattr(self,'_lastSelectionPos',None)
 		self._lastSelectionPos=newInfo.copy()
+		if not oldInfo:
+			# There's nothing we can do, but at least the last selection will be right next time.
+			return
 		hasContentChanged=self.hasContentChangedSinceLastSelection
 		self.hasContentChangedSinceLastSelection=False
 		speech.speakSelectionChange(oldInfo,newInfo,generalize=hasContentChanged)
