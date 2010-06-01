@@ -45,10 +45,11 @@ class EditableText(ScriptableObject):
 			#The caret may stop working as the focus jumps, we want to stay in the while loop though
 			try:
 				newBookmark = self.makeTextInfo(textInfos.POSITION_CARET).bookmark
+			except (RuntimeError,NotImplementedError):
+				pass
+			else:
 				if newBookmark!=bookmark:
 					return True
-			except:
-				pass
 			time.sleep(retryInterval)
 			elapsed += retryInterval
 		return False
