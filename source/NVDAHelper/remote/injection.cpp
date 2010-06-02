@@ -92,7 +92,9 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	nvdaControllerInternal_getNVDAProcessID(&nvdaProcessID);
 	if(nvdaProcessID>0) {
 		waitHandles[0]=OpenProcess(SYNCHRONIZE,FALSE,nvdaProcessID);
-		waitHandles[1]=OpenEvent(SYNCHRONIZE,FALSE,L"nvdaHelperRemote_injectionDoneEvent");
+		wstringstream s;
+		s<<L"nvdaHelperRemote_injectionDoneEvent_"<<desktopSpecificNamespace;
+		waitHandles[1]=OpenEvent(SYNCHRONIZE,FALSE,s.str().c_str());
 	}
 	//As long as we have successfully retreaved handles for NVDA's process and the event, then go on and initialize, wait and terminate.
 	if(waitHandles[0]&&waitHandles[1]) {
@@ -213,12 +215,16 @@ BOOL injection_initialize() {
 		return FALSE;
 	}
 	assert(dllHandle);
-	assert(!injectionDoneEvent);
 	if(!IA2Support_initialize()) {
 		MessageBox(NULL,L"Error initializing IA2 support",L"nvdaHelperRemote (injection_initialize)",0);
 		return FALSE;
 	}
-	injectionDoneEvent=CreateEvent(NULL,TRUE,FALSE,L"nvdaHelperRemote_injectionDoneEvent");
+	assert(!injectionDoneEvent);
+	{
+		wstringstream s;
+		s<<L"nvdaHelperRemote_injectionDoneEvent_"<<desktopSpecificNamespace;
+		injectionDoneEvent=CreateEvent(NULL,TRUE,FALSE,s.str().c_str());
+	}
 	assert(injectionDoneEvent);
 	ResetEvent(injectionDoneEvent);
 	outprocMgrThreadHandle=CreateThread(NULL,0,outprocMgrThreadFunc,NULL,0,&outprocMgrThreadID);
