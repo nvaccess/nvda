@@ -149,8 +149,6 @@ def speakSpelling(text):
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendText(text)
-	if not isinstance(text,basestring) or len(text)==0:
-		return getSynth().speakText(processSymbol(""))
 	if speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
@@ -159,6 +157,8 @@ def speakSpelling(text):
 	if isPaused:
 		cancelSpeech()
 	beenCanceled=False
+	if not isinstance(text,basestring) or len(text)==0:
+		return getSynth().speakText(processSymbol(""))
 	if not text.isspace():
 		text=text.rstrip()
 	gen=_speakSpellingGen(text)
