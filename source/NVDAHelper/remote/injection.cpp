@@ -35,6 +35,7 @@ long dllInjectionID=0;
 
 HINSTANCE dllHandle=NULL;
 wchar_t dllDirectory[MAX_PATH];
+wchar_t desktopSpecificNamespace[64];
 LockableObject inprocThreadsLock;
 long inprocInjectionID=0;
 set<HHOOK> inprocCurrentWindowsHooks;
@@ -79,10 +80,12 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)dllHandle,&dllHandle);
 	assert(dllHandle);
 	//Initialize some needed RPC binding handles.
-	wchar_t endpointString[64];
-	getNVDAControllerNcalrpcEndpointString(endpointString,64,TRUE);
-	RpcBindingFromStringBinding((RPC_WSTR)endpointString,&nvdaControllerBindingHandle);
-	RpcBindingFromStringBinding((RPC_WSTR)endpointString,&nvdaControllerInternalBindingHandle);
+	{
+		wstringstream s;
+		s<<L"ncalrpc:[NvdaCtlr."<<desktopSpecificNamespace<<L"]";
+		RpcBindingFromStringBinding((RPC_WSTR)(s.str().c_str()),&nvdaControllerBindingHandle);
+		RpcBindingFromStringBinding((RPC_WSTR)(s.str().c_str()),&nvdaControllerInternalBindingHandle);
+	}
 	//Try to open handles to both the injectionDone event and NVDA's process handle
 		HANDLE waitHandles[2]={0};
 	long nvdaProcessID=0;
@@ -257,6 +260,7 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 		dllHandle=hModule;
 		GetModuleFileName(dllHandle,dllDirectory,MAX_PATH);
 		PathRemoveFileSpec(dllDirectory);
+		generateDesktopSpecificNamespace(desktopSpecificNamespace,ARRAYSIZE(desktopSpecificNamespace));
 	} else if(reason==DLL_PROCESS_DETACH) {
 		#ifndef NDEBUG
 		Beep(1760,75);

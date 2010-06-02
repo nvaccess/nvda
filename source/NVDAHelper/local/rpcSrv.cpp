@@ -20,6 +20,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <common/winIPCUtils.h>
 #include "rpcSrv.h"
 
+using namespace std;
+
 RPC_IF_HANDLE availableInterfaces[]={
 	nvdaController_NvdaController_v1_0_s_ifspec,
 	nvdaControllerInternal_NvdaControllerInternal_v1_0_s_ifspec
@@ -39,9 +41,11 @@ void __RPC_USER midl_user_free(void* p) {
 RPC_STATUS startServer() {
 	RPC_STATUS status;
 	//Set the protocol
-	wchar_t endpointString[64];
-	getNVDAControllerNcalrpcEndpointString(endpointString,64,FALSE);
-	status=RpcServerUseProtseqEp((RPC_WSTR)L"ncalrpc",RPC_C_PROTSEQ_MAX_REQS_DEFAULT,(RPC_WSTR)endpointString,NULL);
+	wchar_t desktopSpecificNamespace[64];
+	generateDesktopSpecificNamespace(desktopSpecificNamespace,ARRAYSIZE(desktopSpecificNamespace));
+	wstringstream endpointStringStream;
+	endpointStringStream<<L"NvdaCtlr."<<desktopSpecificNamespace;
+	status=RpcServerUseProtseqEp((RPC_WSTR)L"ncalrpc",RPC_C_PROTSEQ_MAX_REQS_DEFAULT,(RPC_WSTR)(endpointStringStream.str().c_str()),NULL);
 	//We can ignore the error where the endpoint is already set
 	if(status!=RPC_S_OK&&status!=RPC_S_DUPLICATE_ENDPOINT) {
 		return status;

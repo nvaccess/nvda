@@ -12,9 +12,13 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 */
 
+#include <string>
+#include <sstream>
 #include <windows.h>
 #include "nvdaController.h"
 #include <common/winIPCUtils.h>
+
+using namespace std;
 
 void* __RPC_USER midl_user_allocate(size_t size) {
 	return malloc(size);
@@ -26,10 +30,11 @@ void __RPC_USER midl_user_free(void* p) {
 
 BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if(reason==DLL_PROCESS_ATTACH) {
-		wchar_t* endpointString=(wchar_t*)malloc(sizeof(wchar_t)*64);
-		getNVDAControllerNcalrpcEndpointString(endpointString,64,TRUE);
-		RpcBindingFromStringBinding((RPC_WSTR)endpointString,&nvdaControllerBindingHandle);
-		free(endpointString);
+		wchar_t desktopSpecificNamespace[64];
+		generateDesktopSpecificNamespace(desktopSpecificNamespace,ARRAYSIZE(desktopSpecificNamespace));
+		wstringstream s;
+		s<<L"ncalrpc:[NvdaCtlr."<<desktopSpecificNamespace<<L"]";
+		RpcBindingFromStringBinding((RPC_WSTR)(s.str().c_str()),&nvdaControllerBindingHandle);
 	} else if(reason==DLL_PROCESS_DETACH) {
 		RpcBindingFree(&nvdaControllerBindingHandle);
 	}
