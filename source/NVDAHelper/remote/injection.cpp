@@ -17,6 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <set>
 #include <windows.h>
 #include <shlwapi.h>
+#include <common/log.h>
 #include "ia2Support.h"
 #include "nvdaController.h"
 #include "nvdaControllerInternal.h"
@@ -28,16 +29,12 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
-#pragma data_seg(".injectionShared")
-long dllInjectionID=0;
-#pragma data_seg()
-#pragma comment(linker, "/section:.injectionShared,rws")
-
 HINSTANCE dllHandle=NULL;
 wchar_t dllDirectory[MAX_PATH];
 wchar_t desktopSpecificNamespace[64];
 LockableObject inprocThreadsLock;
-long inprocInjectionID=0;
+HANDLE inprocMgrThreadHandle=NULL;
+HWINEVENTHOOK inprocWinEventHookID=0;
 set<HHOOK> inprocCurrentWindowsHooks;
 long tlsIndex_inThreadInjectionID=0;
 
@@ -46,12 +43,13 @@ long tlsIndex_inThreadInjectionID=0;
 //General in-process winEvent callback
 //Used for all possible winEvents in this process
 void CALLBACK inproc_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
+	if(hookID==0) return;
 	//We are not at all interested in out-of-context winEvents, even if they were accidental.
 	if(threadID!=GetCurrentThreadId()) return;
 	//Set windows hooks for this thread if we havn't done so already
 	inprocThreadsLock.acquire();
-	if((long)TlsGetValue(tlsIndex_inThreadInjectionID)!=inprocInjectionID) {
-		TlsSetValue(tlsIndex_inThreadInjectionID,(LPVOID)inprocInjectionID);
+	if((HWINEVENTHOOK)TlsGetValue(tlsIndex_inThreadInjectionID)!=hookID) {
+		TlsSetValue(tlsIndex_inThreadInjectionID,(LPVOID)hookID);
 		HHOOK tempHook;
 		if((tempHook=SetWindowsHookEx(WH_GETMESSAGE,inProcess_getMessageHook,dllHandle,threadID))==0) {
 			MessageBox(NULL,L"Error registering getMessage Windows hook",L"nvdaHelperRemote (inproc_winEventCallback)",0);
@@ -79,13 +77,6 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	//Stop this dll from unloading while this function is running
 	GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)dllHandle,&dllHandle);
 	assert(dllHandle);
-	//Initialize some needed RPC binding handles.
-	{
-		wstringstream s;
-		s<<L"ncalrpc:[NvdaCtlr."<<desktopSpecificNamespace<<L"]";
-		RpcBindingFromStringBinding((RPC_WSTR)(s.str().c_str()),&nvdaControllerBindingHandle);
-		RpcBindingFromStringBinding((RPC_WSTR)(s.str().c_str()),&nvdaControllerInternalBindingHandle);
-	}
 	//Try to open handles to both the injectionDone event and NVDA's process handle
 		HANDLE waitHandles[2]={0};
 	long nvdaProcessID=0;
@@ -99,8 +90,8 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	//As long as we have successfully retreaved handles for NVDA's process and the event, then go on and initialize, wait and terminate.
 	if(waitHandles[0]&&waitHandles[1]) {
 		//Register for all winEvents in this process.
-		HWINEVENTHOOK winEventHookID=SetWinEventHook(0,0XFFFFFFFF,dllHandle,inproc_winEventCallback,GetCurrentProcessId(),0,WINEVENT_INCONTEXT);
-		assert(winEventHookID);
+		inprocWinEventHookID=SetWinEventHook(0,0XFFFFFFFF,dllHandle,inproc_winEventCallback,GetCurrentProcessId(),0,WINEVENT_INCONTEXT);
+		assert(inprocWinEventHookID);
 		//Initialize in-process subsystems
 		inProcess_initialize();
 		//Notify injection_winEventCallback (who started our thread) that we're past initialization
@@ -110,13 +101,19 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 		Beep(660,75);
 		#endif
 		WaitForMultipleObjects(2,waitHandles,FALSE,INFINITE);
+		assert(inprocMgrThreadHandle);
+		inprocThreadsLock.acquire();
+		CloseHandle(inprocMgrThreadHandle);
+		inprocMgrThreadHandle=NULL;
+		inprocThreadsLock.release();
 		#ifndef NDEBUG
 		Beep(1320,75);
 		#endif
 		//Terminate all in-process subsystems.
 		inProcess_terminate();
 		//Unregister winEvents for this process
-		UnhookWinEvent(winEventHookID);
+		UnhookWinEvent(inprocWinEventHookID);
+		inprocWinEventHookID=0;
 		//Unregister any windows hooks registered so far
 		inprocThreadsLock.acquire();
 		//for(auto i=inprocCurrentWindowsHooks.cbegin();i!=inprocCurrentWindowsHooks.cend();++i) {
@@ -125,12 +122,15 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 		}
 		inprocCurrentWindowsHooks.clear();
 		inprocThreadsLock.release();
+	} else {
+		assert(inprocMgrThreadHandle);
+		inprocThreadsLock.acquire();
+		CloseHandle(inprocMgrThreadHandle);
+		inprocMgrThreadHandle=NULL;
+		inprocThreadsLock.release();
 	}
 	if(waitHandles[0]) CloseHandle(waitHandles[0]);
 	if(waitHandles[1]) CloseHandle(waitHandles[1]);
-	//cleanup some RPC binding handles
-	RpcBindingFree(&nvdaControllerBindingHandle);
-	RpcBindingFree(&nvdaControllerInternalBindingHandle);
 	//Release and close the thread mutex
 	ReleaseMutex(threadMutex);
 	CloseHandle(threadMutex);
@@ -144,30 +144,39 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 void CALLBACK injection_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	//We are not at all interested in out-of-context winEvents, even if they were accidental.
 	if(threadID!=GetCurrentThreadId()) return;
-	HANDLE waitHandles[2]={0};
 	BOOL threadCreated=FALSE;
+	HANDLE waitHandles[2]={0};
 	//Gain exclusive access to all the inproc thread variables for the rest of this function.
 	inprocThreadsLock.acquire();
-	if(inprocInjectionID!=dllInjectionID) {
-		inprocInjectionID=dllInjectionID;
+	if(inprocMgrThreadHandle&&WaitForSingleObject(inprocMgrThreadHandle,0)==0) {
+		LOG_ERROR(L"inproc manager thread died prematuraly");
+		CloseHandle(inprocMgrThreadHandle);
+		inprocMgrThreadHandle=NULL;
+	}
+	if(!inprocMgrThreadHandle) {
 		//Create an event which will be used for the inproc manager thread to notify us that its successfully past initialization.
 		waitHandles[0]=CreateEvent(NULL,TRUE,FALSE,NULL);
-		assert(waitHandles[0]);
-		//Create the inproc manager thread, passing the event as an argument.
-		waitHandles[1]=CreateThread(NULL,0,inprocMgrThreadFunc,(LPVOID)(waitHandles[0]),0,NULL);
-		assert(waitHandles[1]);
-		threadCreated=TRUE;
+		if(waitHandles[0]) {
+			//Create the inproc manager thread, passing the event as an argument.
+			inprocMgrThreadHandle=waitHandles[1]=CreateThread(NULL,0,inprocMgrThreadFunc,(LPVOID)(waitHandles[0]),0,NULL);
+			if(waitHandles[1]) {
+				threadCreated=TRUE;
+			} else { //CreateThread returned NULL
+				LOG_ERROR(L"Error creating inproc manager thread, GetLastError returned "<<GetLastError());
+			}
+		} else { //CreateEvent returned NULL
+			LOG_ERROR(L"Error creating inproc manager thread initialization done event, GetLastError returned "<<GetLastError());
+		}
 	}
 	inprocThreadsLock.release();
 	if(threadCreated) {
 		//Wait until the event is set (the thread is past initialization) or until the thread dies.
 		WaitForMultipleObjects(2,waitHandles,FALSE,1000);
-		//Cleanup the handles
-		CloseHandle(waitHandles[0]);
-		CloseHandle(waitHandles[1]);
 		//Forward this winEvent to the general in-process winEvent callback if necessary, so it sees this initial event.
-		inproc_winEventCallback(hookID,eventID,hwnd,objectID,childID,threadID,time);
+		inproc_winEventCallback(inprocWinEventHookID,eventID,hwnd,objectID,childID,threadID,time);
 	}
+	//Close the event handle, but not the thread handle as the thread itself will do that.
+	if(waitHandles[0]) CloseHandle(waitHandles[0]);
 }
 
 //Code for launcher process
@@ -177,7 +186,6 @@ void CALLBACK injection_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 //As some incontext callbacks may be called out of context due to 32/64 bit boundaries, and or security issues.
 //We don't want them clogging up NVDA's main message queue.
 DWORD WINAPI outprocMgrThreadFunc(LPVOID data) {
-	InterlockedIncrement(&dllInjectionID);
 	HWINEVENTHOOK winEventHookFocusID=0; 
 	HWINEVENTHOOK winEventHookForegroundID=0; 
 //Register focus/foreground winEvents
@@ -267,7 +275,15 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 		GetModuleFileName(dllHandle,dllDirectory,MAX_PATH);
 		PathRemoveFileSpec(dllDirectory);
 		generateDesktopSpecificNamespace(desktopSpecificNamespace,ARRAYSIZE(desktopSpecificNamespace));
+		//Initialize some needed RPC binding handles.
+		wstringstream s;
+		s<<L"ncalrpc:[NvdaCtlr."<<desktopSpecificNamespace<<L"]";
+		RpcBindingFromStringBinding((RPC_WSTR)(s.str().c_str()),&nvdaControllerBindingHandle);
+		RpcBindingFromStringBinding((RPC_WSTR)(s.str().c_str()),&nvdaControllerInternalBindingHandle);
 	} else if(reason==DLL_PROCESS_DETACH) {
+	//cleanup some RPC binding handles
+	RpcBindingFree(&nvdaControllerBindingHandle);
+	RpcBindingFree(&nvdaControllerInternalBindingHandle);
 		#ifndef NDEBUG
 		Beep(1760,75);
 		#endif
