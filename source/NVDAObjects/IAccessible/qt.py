@@ -12,16 +12,36 @@ import eventHandler
 
 class Client(IAccessible):
 
+	def _get__containedWidget(self):
+		widget = self.firstChild
+		if not widget:
+			return None
+
+		wnext = widget.next
+		if not wnext:
+			# There is only one child, so this is probably a widget container.
+			return widget
+
+		try:
+			if wnext.firstChild.role == controlTypes.ROLE_SCROLLBAR:
+				# There is only one child plus a scrollbar, so this is probably a widget container.
+				return widget
+		except AttributeError:
+			pass
+
+		# This is not a widget container.
+		return None
+
 	def event_gainFocus(self):
 		if eventHandler.isPendingEvents("gainFocus"):
 			return
 
-		# If there is only one child, this is probably a widget container.
-		child = self.firstChild
-		if child and not child.next:
-			# Redirect the focus, since QT doesn't do it properly.
+		widget = self._containedWidget
+		if widget:
+			# This is a widget container.
+			# Redirect the focus to the contained widget, since QT doesn't do it properly.
 			self.event_focusEntered()
-			eventHandler.executeEvent("gainFocus", child)
+			eventHandler.executeEvent("gainFocus", widget)
 			return
 
 		return super(Client, self).event_gainFocus()
