@@ -45,7 +45,7 @@ void rpcSrv_inProcess_initialize() {
 	//Register the interfaces
 	for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
 		status=RpcServerRegisterIfEx(availableInterfaces[i],NULL,NULL,RPC_IF_AUTOLISTEN,RPC_C_LISTEN_MAX_CALLS_DEFAULT,NULL);
-		assert(status==RPC_S_OK);
+		//assert(status==RPC_S_OK);
 	}
 }
 

@@ -26,7 +26,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "nvdaController.h"
 #include "nvdaControllerInternal.h"
 #include <common/log.h>
-#include "apiHook.h"
 #include "gdiHooks.h"
 #include "nvdaHelperRemote.h"
 #include "inProcess.h"
@@ -45,16 +44,12 @@ void inProcess_initialize() {
 	ia2LiveRegions_inProcess_initialize();
 	typedCharacter_inProcess_initialize();
 	inputLangChange_inProcess_initialize();
-	if (apiHook_inProcess_initialize()) {
-		gdiHooks_inProcess_initialize();
-		apiHook_enableHooks();
-	}
+	gdiHooks_inProcess_initialize();
 	rpcSrv_inProcess_initialize();
 }
 
 void inProcess_terminate() {
 	rpcSrv_inProcess_terminate();
-	apiHook_inProcess_terminate();
 	gdiHooks_inProcess_terminate();
 	inputLangChange_inProcess_terminate();
 	typedCharacter_inProcess_terminate();

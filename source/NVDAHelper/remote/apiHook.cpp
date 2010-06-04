@@ -28,7 +28,7 @@ typedef set<void*> functionSet_t;
 moduleSet_t g_hookedModules;
 functionSet_t g_hookedFunctions;
  
-bool apiHook_inProcess_initialize() {
+bool apiHook_initialize() {
 	LOG_DEBUG("calling MH_Initialize");
 	int res;
 	if ((res=MH_Initialize())!=MH_OK) {
@@ -73,7 +73,7 @@ BOOL apiHook_enableHooks() {
 	return TRUE;
 }
 
-BOOL apiHook_inProcess_terminate() {
+BOOL apiHook_terminate() {
 	int res;
 	for(functionSet_t::iterator i=g_hookedFunctions.begin();i!=g_hookedFunctions.end();++i) {
 		res=MH_DisableHook(*i);

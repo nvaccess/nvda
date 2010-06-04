@@ -19,6 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <shlwapi.h>
 #include <common/log.h>
 #include "ia2Support.h"
+#include "apiHook.h"
 #include "nvdaController.h"
 #include "nvdaControllerInternal.h"
 #include <common/lock.h>
@@ -63,6 +64,13 @@ void CALLBACK inproc_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND 
 	inProcess_winEventCallback(hookID,eventID,hwnd,objectID,childID,threadID,time);
 }
 
+//Unregisters any current windows hooks
+void killRunningWindowsHooks() {
+	for(set<HHOOK>::iterator i=inprocCurrentWindowsHooks.begin();i!=inprocCurrentWindowsHooks.end();++i) {
+		UnhookWindowsHookEx(*i);
+	}
+}
+
 //A thread function that runs while  NVDA is injected in a process.
 //Note that a mutex is used to make sure that there is never more than one copy of this thread in a given process at any given time.
 //I.e. Another copy of NVDA is started  while the first is still running.
@@ -92,8 +100,12 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 		//Register for all winEvents in this process.
 		inprocWinEventHookID=SetWinEventHook(0,0XFFFFFFFF,dllHandle,inproc_winEventCallback,GetCurrentProcessId(),0,WINEVENT_INCONTEXT);
 		assert(inprocWinEventHookID);
+		//Initialize API hooking
+		apiHook_initialize();
 		//Initialize in-process subsystems
 		inProcess_initialize();
+		//Enable all registered API hooks
+		apiHook_enableHooks();
 		//Notify injection_winEventCallback (who started our thread) that we're past initialization
 		SetEvent((HANDLE)data);
 		//Wait till either the injection done event is set, or NVDA's process dies
@@ -109,19 +121,15 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 		#ifndef NDEBUG
 		Beep(1320,75);
 		#endif
+		//Unregister and terminate API hooks
+		apiHook_terminate();
 		//Terminate all in-process subsystems.
 		inProcess_terminate();
 		//Unregister winEvents for this process
 		UnhookWinEvent(inprocWinEventHookID);
 		inprocWinEventHookID=0;
 		//Unregister any windows hooks registered so far
-		inprocThreadsLock.acquire();
-		//for(auto i=inprocCurrentWindowsHooks.cbegin();i!=inprocCurrentWindowsHooks.cend();++i) {
-		for(set<HHOOK>::iterator i=inprocCurrentWindowsHooks.begin();i!=inprocCurrentWindowsHooks.end();++i) {
-			UnhookWindowsHookEx(*i);
-		}
-		inprocCurrentWindowsHooks.clear();
-		inprocThreadsLock.release();
+		killRunningWindowsHooks();
 	} else {
 		assert(inprocMgrThreadHandle);
 		inprocThreadsLock.acquire();
@@ -281,13 +289,26 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 		RpcBindingFromStringBinding((RPC_WSTR)(s.str().c_str()),&nvdaControllerBindingHandle);
 		RpcBindingFromStringBinding((RPC_WSTR)(s.str().c_str()),&nvdaControllerInternalBindingHandle);
 	} else if(reason==DLL_PROCESS_DETACH) {
-	//cleanup some RPC binding handles
-	RpcBindingFree(&nvdaControllerBindingHandle);
-	RpcBindingFree(&nvdaControllerInternalBindingHandle);
 		#ifndef NDEBUG
 		Beep(1760,75);
 		#endif
-		TlsFree(tlsIndex_inThreadInjectionID);
+	//cleanup some RPC binding handles
+	RpcBindingFree(&nvdaControllerBindingHandle);
+	RpcBindingFree(&nvdaControllerInternalBindingHandle);
+		if(lpReserved) { // process is terminating
+			//If the inproc manager thread was killed off due to process termination then at least unregister hooks
+			if(inprocMgrThreadHandle) {
+				#ifndef NDEBUG
+				Beep(2500,75);
+				#endif
+				//Unregister and terminate API hooks
+				apiHook_terminate();
+				//Unregister any current windows hooks
+				killRunningWindowsHooks();
+			}
+		} else { //The dll is being unloaded from this process
+			TlsFree(tlsIndex_inThreadInjectionID);
+		}
 	}
 	return TRUE;
 }
