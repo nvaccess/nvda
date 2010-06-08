@@ -56,7 +56,7 @@ interface VBuf {
  * Destroies a virtual buffer
  * @param buffer a pointer to the virtual buffer you want to destroy
  */
-	DLLEXPORT void destroyBuffer(VBufRemote_bufferHandle_t* buffer);
+	DLLEXPORT void destroyBuffer([in,out] VBufRemote_bufferHandle_t* buffer);
 
 /**
  * Calculates the start and end character offsets of the given node in the buffer.

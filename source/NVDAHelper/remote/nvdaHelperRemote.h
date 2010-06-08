@@ -17,17 +17,17 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <windows.h>
 
-#define DLLEXPORT extern "C" __declspec(dllexport)
+//Initialization and termination
 
-//The handle of nvdaHelperRemote
-extern HINSTANCE moduleHandle;
+/**
+ * Initializes nvdaHelperRemote, and allows it to inject in to processes.
+ */
+BOOL injection_initialize();
 
-//The directory name where this dll is situated
-extern wchar_t dllDirectory[MAX_PATH];
-
-//Exported functions
-DLLEXPORT int nvdaHelper_initialize();
-DLLEXPORT int nvdaHelper_terminate();
+/**
+ * Terminates nvdaHelperRemote, allowing it to uninject from any processes.
+ */ 
+BOOL injection_terminate();
 
 //Win event registration
 
@@ -36,7 +36,7 @@ DLLEXPORT int nvdaHelper_terminate();
  * @param procHook the callback function which should be called
  * @return true if the hook was registered, false otherwise.
  */
-DLLEXPORT bool registerWinEventHook(WINEVENTPROC hookProc);
+bool registerWinEventHook(WINEVENTPROC hookProc);
 
 /**
  * Unregisters a previously registered callback function for a win event for this process.
@@ -44,7 +44,7 @@ DLLEXPORT bool registerWinEventHook(WINEVENTPROC hookProc);
  * @param hookProc the callback function to be unregistered
  * @return True if it was unregistered, false otherwize.
  */
-DLLEXPORT bool unregisterWinEventHook(WINEVENTPROC hookProc);
+bool unregisterWinEventHook(WINEVENTPROC hookProc);
 
 //Windows hook registration
 
@@ -54,7 +54,7 @@ DLLEXPORT bool unregisterWinEventHook(WINEVENTPROC hookProc);
  * @param procHook the callback function which should be called
  * @return true if the hook was registered, false otherwise.
  */
-DLLEXPORT bool registerWindowsHook(int hookType, HOOKPROC hookProc);
+bool registerWindowsHook(int hookType, HOOKPROC hookProc);
 
 /**
  * Unregisters a previously registered callback function for a windows hook for this process.
@@ -63,6 +63,6 @@ DLLEXPORT bool registerWindowsHook(int hookType, HOOKPROC hookProc);
  * @param hookProc the callback function to be unregistered
  * @return True if it was unregistered, false otherwize.
  */
-DLLEXPORT bool unregisterWindowsHook(int hookType, HOOKPROC hookProc);
+bool unregisterWindowsHook(int hookType, HOOKPROC hookProc);
 
 #endif

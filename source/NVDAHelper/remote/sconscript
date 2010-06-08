@@ -15,10 +15,8 @@
 Import([
 	'env',
 	'ia2RPCStubs',
+	'minHookLib',
 ])
-
-minHookObjFiles=env.SConscript('minHook_sconscript')
-
 
 winIPCUtilsObj=env.Object("./winIPCUtils","#common/winIPCUtils.cpp")
 
@@ -46,6 +44,7 @@ vbufRPCHeader,vbufRPCServerSource=env.MSRPCStubs(
 	target="./vbufRemote",
 	source=[
 		"#interfaces/vbuf/vbuf.idl",
+		"#interfaces/vbuf/vbuf.acf",
 	],
 	MSRPCStubs_noClient=True,
 	MSRPCStubs_prefix="VBufRemote_",
@@ -66,7 +65,8 @@ ia2utilsObj=env.Object("./ia2utils","#common/ia2utils.cpp")
 remoteLib=env.SharedLibrary(
 	target="nvdaHelperRemote",
 	source=[
-		"nvdaHelperRemote.cpp",
+		"injection.cpp",
+		"inProcess.cpp",
 		"apiHook.cpp",
 		"inputLangChange.cpp",
 		"typedCharacter.cpp",
@@ -84,8 +84,10 @@ remoteLib=env.SharedLibrary(
 		"displayModel.cpp",
 		"displayModelRemote.cpp",
 		displayModelRPCServerSource,
-	]+minHookObjFiles,
+		"nvdaHelperRemote.def",
+	],
 	LIBS=[
+		minHookLib[1 if env['release'] else 2],
 		"user32",
 		"gdi32",
 		"ole32",

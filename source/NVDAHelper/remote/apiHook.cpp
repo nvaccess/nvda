@@ -12,6 +12,7 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+#include <cassert>
 #include <iostream>
 #include <set>
 #include <windows.h>
@@ -22,10 +23,12 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 using namespace std;
 
 typedef multiset<HMODULE> moduleSet_t;
+typedef set<void*> functionSet_t;
 
 moduleSet_t g_hookedModules;
-
-bool apiHook_inProcess_initialize() {
+functionSet_t g_hookedFunctions;
+ 
+bool apiHook_initialize() {
 	LOG_DEBUG("calling MH_Initialize");
 	int res;
 	if ((res=MH_Initialize())!=MH_OK) {
@@ -52,21 +55,35 @@ void* apiHook_hookFunction(const char* moduleName, const char* functionName, voi
 	int res;
 	if((res=MH_CreateHook(realFunc,newHookProc,&origFunc))!=MH_OK) {
 		LOG_ERROR("MH_CreateHook failed with " << res);
-		return NULL;
-	}
-	if((res=MH_EnableHook(realFunc))!=MH_OK) {
-		LOG_ERROR("MH_EnableHook failed with " << res);
+		FreeLibrary(moduleHandle);
 		return NULL;
 	}
 	g_hookedModules.insert(moduleHandle);
+	g_hookedFunctions.insert(realFunc);
 	LOG_DEBUG("successfully hooked function " << functionName << " in module " << moduleName << " with hook procedure at address 0X" << std::hex << newHookProc << ", returning true");
 	return origFunc;
 }
 
-BOOL apiHook_inProcess_terminate() {
+BOOL apiHook_enableHooks() {
 	int res;
-	if ((res=MH_Uninitialize())!=MH_OK) 
-		LOG_ERROR("MH_Uninitialize failed with " << res);
+	for(functionSet_t::iterator i=g_hookedFunctions.begin();i!=g_hookedFunctions.end();++i) {
+		res=MH_EnableHook(*i);
+		assert(res==MH_OK);
+	}
+	return TRUE;
+}
+
+BOOL apiHook_terminate() {
+	int res;
+	for(functionSet_t::iterator i=g_hookedFunctions.begin();i!=g_hookedFunctions.end();++i) {
+		res=MH_DisableHook(*i);
+		assert(res==MH_OK);
+	}
+	g_hookedFunctions.clear();
+	//Give enough time for all hook functions to complete.
+	Sleep(250);
+	res=MH_Uninitialize();
+	assert(res==MH_OK);
 	for(moduleSet_t::iterator i=g_hookedModules.begin();i!=g_hookedModules.end();i++) {
 		FreeLibrary(*i);
 	}

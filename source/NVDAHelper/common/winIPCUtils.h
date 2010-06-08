@@ -22,12 +22,11 @@ extern "C" {
 #include <wchar.h>
 
 /**
- * Calculates the port string that NVDA's ncallrpc endpoint should use, so that it is local to the current Windows session and desktop.
+ * Generates a string that can be used as part of the name for events and rpc endpoints etc that will localize it to the current session/desktop.
  * @param buf address of allocated memory that could hold cch characters where the port string should be written to.
  * @param cch the size of buf in characters
- * @param fullAddress if True the full ncalrpc address will be fetched, false only the port is fetched.
  */
-int getNVDAControllerNcalrpcEndpointString(wchar_t* buf, int cch, BOOL fullAddress);
+int generateDesktopSpecificNamespace(wchar_t* buf, int cch);
 
 #ifdef __cplusplus
 }

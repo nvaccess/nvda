@@ -12,11 +12,13 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-[
-	implicit_handle(handle_t nvdaControllerInternalBindingHandle)
-]
-interface NvdaControllerInternal {
-	[fault_status,comm_status] getNVDAProcessID();
-	[fault_status,comm_status] inputLangChangeNotify();
-	[fault_status,comm_status] logMessage();
-}
+#ifndef NVDAHELPEREMOTE_DLLMAIN_H
+#define NVDAHELPEREMOTE_DLLMAIN_H
+
+#include <cwchar>
+#include <windows.h>
+
+extern HINSTANCE dllHandle;
+extern wchar_t dllDirectory[MAX_PATH];
+
+#endif

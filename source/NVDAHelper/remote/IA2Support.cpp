@@ -18,7 +18,10 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <objbase.h>
 #include "ia2/ia2.h"
+#include "nvdaControllerInternal.h"
+#include <common/log.h>
 #include "nvdaHelperRemote.h"
+#include "dllmain.h"
 #include "IA2Support.h"
 
 typedef ULONG(*LPFNDLLCANUNLOADNOW)();
@@ -56,20 +59,20 @@ BOOL installIA2Support() {
 	int res;
 	if(isIA2Installed) return TRUE;
 	if((IA2DllHandle=CoLoadLibrary(IA2DllPath,FALSE))==NULL) {
-		fprintf(stderr,"Error loading IAccessible2 proxy dll\n");
+		LOG_ERROR(L"CoLoadLibrary failed");
 		return FALSE;
 	}
 	IA2Dll_DllGetClassObject=(LPFNGETCLASSOBJECT)GetProcAddress(static_cast<HMODULE>(IA2DllHandle),"DllGetClassObject");
 	assert(IA2Dll_DllGetClassObject); //IAccessible2 proxy dll must have this function
 	IUnknown* ia2ClassObjPunk=NULL;
 	if((res=IA2Dll_DllGetClassObject(IAccessible2ProxyIID,IID_IUnknown,(LPVOID*)&ia2ClassObjPunk))!=S_OK) {
-		fprintf(stderr,"Error calling DllGetClassObject, code %d\n",res);
+		LOG_ERROR(L"Error calling DllGetClassObject, code "<<res);
 		CoFreeLibrary(IA2DllHandle);
 		IA2DllHandle=0;
 		return FALSE;
 	}
 	if((res=CoRegisterClassObject(IAccessible2ProxyIID,ia2ClassObjPunk,CLSCTX_INPROC_SERVER,REGCLS_MULTIPLEUSE,(LPDWORD)&IA2RegCooky))!=S_OK) {
-		fprintf(stderr,"Error registering class object, code %d\n",res);
+		LOG_DEBUGWARNING(L"Error registering class object, code "<<res);
 		ia2ClassObjPunk->Release();
 		CoFreeLibrary(IA2DllHandle);
 		IA2DllHandle=0;
