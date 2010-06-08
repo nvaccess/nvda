@@ -16,6 +16,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <cstdio>
 #include <sstream>
 #include <windows.h>
+#include "nvdaControllerInternal.h"
+#include <common/log.h>
 #include "vbufRemote.h"
 #include "displayModelRemote.h"
 #include "rpcSrv.h"
@@ -41,18 +43,22 @@ void rpcSrv_inProcess_initialize() {
 	std::wostringstream endPoint;
 	endPoint<<L"nvdaHelperRemote_"<<GetCurrentProcessId();
 	status=RpcServerUseProtseqEp((RPC_WSTR)L"ncalrpc",RPC_C_PROTSEQ_MAX_REQS_DEFAULT,(RPC_WSTR)(endPoint.str().c_str()),NULL);
-	assert(status==RPC_S_OK||status==RPC_S_DUPLICATE_ENDPOINT);
+	if(status!=RPC_S_OK&&status!=RPC_S_DUPLICATE_ENDPOINT) {
+		LOG_ERROR(L"RpcServerUseProtseqEp failed with status "<<status);
+	}
 	//Register the interfaces
 	for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
-		status=RpcServerRegisterIfEx(availableInterfaces[i],NULL,NULL,RPC_IF_AUTOLISTEN,RPC_C_LISTEN_MAX_CALLS_DEFAULT,NULL);
-		//assert(status==RPC_S_OK);
+		if((status=RpcServerRegisterIfEx(availableInterfaces[i],NULL,NULL,RPC_IF_AUTOLISTEN,RPC_C_LISTEN_MAX_CALLS_DEFAULT,NULL))!=RPC_S_OK) {
+			LOG_ERROR(L"RpcServerRegisterIfEx for interface at index "<<i<<L" failed with status "<<status);
+		}
 	}
 }
 
 void rpcSrv_inProcess_terminate() {
 	RPC_STATUS status;
 	for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
-		status=RpcServerUnregisterIfEx(availableInterfaces[i],NULL,1);
-		assert(status==RPC_S_OK);
+		if((status=RpcServerUnregisterIfEx(availableInterfaces[i],NULL,1))!=RPC_S_OK) {
+			LOG_ERROR(L"RpcServerUnregisterIfEx for interface at index "<<i<<L" failed with status "<<status);
+		}
 	}
 }

@@ -53,10 +53,10 @@ void CALLBACK inproc_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND 
 		TlsSetValue(tlsIndex_inThreadInjectionID,(LPVOID)hookID);
 		HHOOK tempHook;
 		if((tempHook=SetWindowsHookEx(WH_GETMESSAGE,inProcess_getMessageHook,dllHandle,threadID))==0) {
-			MessageBox(NULL,L"Error registering getMessage Windows hook",L"nvdaHelperRemote (inproc_winEventCallback)",0);
+			LOG_ERROR(L"SetWindowsHookEx with WH_GETMESSAGE failed, GetLastError returned "<<GetLastError());
 		} else inprocCurrentWindowsHooks.insert(tempHook);
 		if((tempHook=SetWindowsHookEx(WH_CALLWNDPROC,inProcess_callWndProcHook,dllHandle,threadID))==0) {
-			MessageBox(NULL,L"Error registering callWndProc Windows hook",L"nvdaHelperRemote (inproc_winEventCallback)",0);
+			LOG_ERROR(L"SetWindowsHookEx with WH_GETMESSAGE failed, GetLastError returned "<<GetLastError());
 		} else inprocCurrentWindowsHooks.insert(tempHook);
 	}
 	inprocThreadsLock.release();
@@ -80,11 +80,19 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	mutexNameStream<<L"NVDAHelperRemote_inprocMgrThread_"<<GetCurrentProcessId();
 	//Create/open the mutex and wait to gain access.
 	HANDLE threadMutex=CreateMutex(NULL,FALSE,mutexNameStream.str().c_str()); 
-	assert(threadMutex);
+	if(!threadMutex) {
+		LOG_ERROR(L"CreateMutex failed, GetLastError returned "<<GetLastError());
+		return 0;
+	}
 	WaitForSingleObject(threadMutex,INFINITE);
 	//Stop this dll from unloading while this function is running
-	GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)dllHandle,&dllHandle);
 	assert(dllHandle);
+	HINSTANCE tempHandle=NULL;
+	if(!GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)dllHandle,&tempHandle)) {
+		LOG_ERROR(L"GetModuleHandleEx failed, GetLastError returned "<<GetLastError());
+		return 0;
+	}
+	assert(dllHandle==tempHandle);
 	//Try to open handles to both the injectionDone event and NVDA's process handle
 		HANDLE waitHandles[2]={0};
 	long nvdaProcessID=0;
@@ -99,7 +107,9 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	if(waitHandles[0]&&waitHandles[1]) {
 		//Register for all winEvents in this process.
 		inprocWinEventHookID=SetWinEventHook(0,0XFFFFFFFF,dllHandle,inproc_winEventCallback,GetCurrentProcessId(),0,WINEVENT_INCONTEXT);
-		assert(inprocWinEventHookID);
+		if(inprocWinEventHookID==0) {
+			LOG_ERROR(L"SetWinEventHook failed");
+		}
 		//Initialize API hooking
 		apiHook_initialize();
 		//Initialize in-process subsystems
@@ -126,8 +136,10 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 		//Terminate all in-process subsystems.
 		inProcess_terminate();
 		//Unregister winEvents for this process
-		UnhookWinEvent(inprocWinEventHookID);
-		inprocWinEventHookID=0;
+		if(inprocWinEventHookID) { 
+			UnhookWinEvent(inprocWinEventHookID);
+			inprocWinEventHookID=0;
+		}
 		//Unregister any windows hooks registered so far
 		killRunningWindowsHooks();
 	} else {
