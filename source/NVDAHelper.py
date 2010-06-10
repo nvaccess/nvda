@@ -188,9 +188,14 @@ def initialize():
 	VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(
 		("VBuf_getTextInRange", localLib),
 		((1,), (1,), (1,), (2,), (1,)))
-	_remoteLib=cdll.LoadLibrary('lib/NVDAHelperRemote.dll')
-	if _remoteLib.nvdaHelper_initialize() < 0:
-		raise RuntimeError("Error initializing NVDAHelper")
+	#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
+	h=windll.kernel32.LoadLibraryExW(ur"lib\nvdaHelperRemote.dll",0,0x8)
+	if not h:
+		log.critical("nvdaHelperRemote.dll missing")
+		return
+	_remoteLib=CDLL("nvdaHelperRemote",handle=h)
+	if _remoteLib.injection_initialize() == 0:
+		raise RuntimeError("Error initializing NVDAHelperRemote")
 	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':
 		_remoteLoader64=RemoteLoader64()
 	winEventHookID=winUser.setWinEventHook(EVENT_TYPEDCHARACTER,EVENT_TYPEDCHARACTER,0,winEventCallback,0,0,0)
@@ -198,8 +203,8 @@ def initialize():
 def terminate():
 	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange
 	winUser.unhookWinEvent(winEventHookID)
-	if _remoteLib.nvdaHelper_terminate() < 0:
-		raise RuntimeError("Error terminating NVDAHelper")
+	if _remoteLib.injection_terminate() == 0:
+		raise RuntimeError("Error terminating NVDAHelperRemote")
 	_remoteLib=None
 	if _remoteLoader64:
 		_remoteLoader64.terminate()

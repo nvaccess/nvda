@@ -47,6 +47,8 @@ LVIS_FOCUSED=0x01
 LVIS_SELECTED=0x02
 LVIS_IMAGESTATEMASK=0xF000
 
+LVS_OWNERDRAWFIXED=0x0400
+
 class LVGROUP(Structure):
 	_fields_=[
 		('cbSize',c_uint),
@@ -219,6 +221,8 @@ class ListItem(IAccessible):
 
 	def _get_value(self):
 		value=super(ListItem,self)._get_description()
+		if (not value or value.isspace()) and self.windowStyle & LVS_OWNERDRAWFIXED:
+			value=self.displayText
 		if not value:
 			return None
 		#Some list view items in Vista can contain annoying left-to-right and right-to-left indicator characters which really should not be there.

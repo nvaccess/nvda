@@ -20,7 +20,7 @@ vars.Add('TARGET_ARCH','Target architecture')
 vars.Add('HOST_ARCH','Host architecture')
 
 #Create a new environment for our project
-env=DefaultEnvironment(tools=['default','msvc','midl','mssdk','msrpc','boost'],variables=vars)
+env=DefaultEnvironment(tools=['windowsSdk','midl','msrpc','boost','default'],variables=vars)
 
 #Some defines and includes for the environment
 env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${logLevel}')])
@@ -28,8 +28,7 @@ env.Append(CXXFLAGS=['/EHsc'])
 env.Append(CPPPATH=['#.','#../include'])
 env.Append(LINKFLAGS='/incremental:no')
 TARGET_ARCH=env['TARGET_ARCH']
-if TARGET_ARCH=='x86_64':
-	env.Append(MIDLFLAGS='/x64')
+env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
 
 if env['release']:
 	print "Building %s release version"%TARGET_ARCH
@@ -68,6 +67,11 @@ clientLib=env.SConscript('client/sconscript')
 Export('clientLib')
 env.Install(clientInstallDir,clientLib)
 buildList.append(clientLib)
+
+minHookLib=env.SConscript('minHook_sconscript')
+Export('minHookLib')
+env.Install(libInstallDir,minHookLib)
+buildList.append(minHookLib)
 
 remoteLib=env.SConscript('remote/sconscript')
 Export('remoteLib')

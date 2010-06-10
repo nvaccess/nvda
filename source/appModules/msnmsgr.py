@@ -36,6 +36,8 @@ class AppModule(_default.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name in possibleHistoryWindowNames:
+			from NVDAObjects.window import DisplayModelEditableText 
+			clsList.remove(DisplayModelEditableText)
 			clsList.insert(0, MSNHistory)
 
 class MSNHistory(cursorManager.ReviewCursorManager,IAccessible):

@@ -23,7 +23,7 @@ extern "C" {
  * Initializes API hooking subsystem.
  * @return success flag
  */ 
-bool apiHook_inProcess_initialize();
+bool apiHook_initialize();
 
 /**
  * Requests that the given function from the given module should be hooked with the given hook procedure. 
@@ -35,9 +35,14 @@ bool apiHook_inProcess_initialize();
 void* apiHook_hookFunction(const char* moduleName, const char* functionName, void* newHookProc);
 
 /**
+ * Actually hooks all requested hook functions.
+ */
+	BOOL apiHook_enableHooks();
+
+/**
  * unhooks all functions previously hooked with apiHook_hookFunction and terminates API hooking subsystem.
  */
-BOOL apiHook_inProcess_terminate();
+BOOL apiHook_terminate();
 
 #ifdef __CPLUSCPLUS
 extern "C" {
