@@ -31,7 +31,7 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 	windowDeque.push_back(hwnd);
 	displayModel_t* tempModel=new displayModel_t;
 	RECT textRect={left,top,right,bottom};
-	for(deque<HWND>::reverse_iterator i=windowDeque.rbegin();i!=windowDeque.rend();i++) {
+	for(deque<HWND>::reverse_iterator i=windowDeque.rbegin();i!=windowDeque.rend();++i) {
 		displayModelsByWindow.acquire();
 		displayModelsMap_t<HWND>::iterator j=displayModelsByWindow.find(*i);
 		if(j!=displayModelsByWindow.end()) {
@@ -50,7 +50,7 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 	// Hackishly use a BSTR to contain points.
 	wchar_t* cpTempBuf=(wchar_t*)malloc(cpBufSize*sizeof(wchar_t));
 	wchar_t* cpTempBufIt=cpTempBuf;
-	for(deque<RECT>::const_iterator cpIt=characterRects.begin();cpIt!=characterRects.end();cpIt++) {
+	for(deque<RECT>::const_iterator cpIt=characterRects.begin();cpIt!=characterRects.end();++cpIt) {
 		*(cpTempBufIt++)=(wchar_t)cpIt->left;
 		*(cpTempBufIt++)=(wchar_t)cpIt->top;
 		*(cpTempBufIt++)=(wchar_t)cpIt->right;

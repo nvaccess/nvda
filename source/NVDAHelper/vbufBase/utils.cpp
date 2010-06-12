@@ -71,7 +71,7 @@ wstring getNameForURL(const wstring &url) {
 			// url is a single path component.
 			pathStart = 0;
 		} else {
-			pathStart++;
+			++pathStart;
 			if (stripExten && pathStart == colonPos + 3) {
 				// This URL provides a hostname and the hostname is the last path component,
 				// so don't strip the extension.
@@ -98,7 +98,7 @@ wstring getNameForURL(const wstring &url) {
 }
 
 bool isWhitespace(const wchar_t *str) {
-	for (const wchar_t *c = str; *c; c++) {
+	for (const wchar_t *c = str; *c; ++c) {
 		if (*c == L'\n' || !iswspace(*c))
 			return false;
 	}
@@ -109,7 +109,7 @@ void multiValueAttribsStringToMap(const wstring &attribsString, multiValueAttrib
 	wstring str, key;
 	bool inEscape = false;
 
-	for (wstring::const_iterator it = attribsString.begin(); it != attribsString.end(); it++) {
+	for (wstring::const_iterator it = attribsString.begin(); it != attribsString.end(); ++it) {
 		if (inEscape) {
 			str.push_back(*it);
 			inEscape = false;

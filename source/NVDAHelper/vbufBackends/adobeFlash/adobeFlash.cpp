@@ -47,7 +47,7 @@ void CALLBACK AdobeFlashVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHO
 	int docHandle=(int)hwnd;
 	int ID=childID;
 	VBufBackend_t* backend=NULL;
-	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
+	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();++i) {
 		HWND rootWindow=(HWND)((*i)->rootDocHandle);
 		if(rootWindow==hwnd) {
 			backend=(*i);
@@ -113,7 +113,7 @@ int id=accChildID;
 	int states=varState.lVal;
 	VariantClear(&varState);
 	//Add each state that is on, as an attrib
-	for(int i=0;i<32;i++) {
+	for(int i=0;i<32;++i) {
 		int state=1<<i;
 		if(state&states) {
 			s.str(L"");

@@ -112,7 +112,7 @@ LRESULT CALLBACK inProcess_getMessageHook(int code, WPARAM wParam, LPARAM lParam
 	}
 	//Hookprocs may unregister or register hooks themselves, so we must copy the hookprocs before executing
 	windowsHookRegistry_t hookProcs=inProcess_registeredGetMessageWindowsHooks;
-	for(windowsHookRegistry_t::iterator i=hookProcs.begin();i!=hookProcs.end();i++) {
+	for(windowsHookRegistry_t::iterator i=hookProcs.begin();i!=hookProcs.end();++i) {
 		i->first(code,wParam,lParam);
 	}
 	return CallNextHookEx(0,code,wParam,lParam);
@@ -125,7 +125,7 @@ LRESULT CALLBACK inProcess_callWndProcHook(int code, WPARAM wParam,LPARAM lParam
 	}
 	//Hookprocs may unregister or register hooks themselves, so we must copy the hookprocs before executing
 	windowsHookRegistry_t hookProcs=inProcess_registeredCallWndProcWindowsHooks;
-	for(windowsHookRegistry_t::iterator i=hookProcs.begin();i!=hookProcs.end();i++) {
+	for(windowsHookRegistry_t::iterator i=hookProcs.begin();i!=hookProcs.end();++i) {
 		i->first(code,wParam,lParam);
 	}
 	return CallNextHookEx(0,code,wParam,lParam);
@@ -137,7 +137,7 @@ void CALLBACK inProcess_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	if(threadID!=GetCurrentThreadId()) return;
 	//Hookprocs may unregister or register hooks themselves, so we must copy the hookprocs before executing
 	winEventHookRegistry_t hookProcs=inProcess_registeredWinEventHooks;
-	for(winEventHookRegistry_t::iterator i=hookProcs.begin();i!=hookProcs.end();i++) {
+	for(winEventHookRegistry_t::iterator i=hookProcs.begin();i!=hookProcs.end();++i) {
 		i->first(hookID, eventID, hwnd, objectID, childID, threadID, time);
 	}
 }

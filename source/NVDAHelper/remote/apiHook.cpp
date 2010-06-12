@@ -84,7 +84,7 @@ BOOL apiHook_terminate() {
 	Sleep(250);
 	res=MH_Uninitialize();
 	assert(res==MH_OK);
-	for(moduleSet_t::iterator i=g_hookedModules.begin();i!=g_hookedModules.end();i++) {
+	for(moduleSet_t::iterator i=g_hookedModules.begin();i!=g_hookedModules.end();++i) {
 		FreeLibrary(*i);
 	}
 	g_hookedModules.clear();

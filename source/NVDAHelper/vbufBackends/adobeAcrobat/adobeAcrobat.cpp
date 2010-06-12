@@ -89,7 +89,7 @@ IPDDomNode* getPDDomNode(VARIANT& varChild, IServiceProvider* servprov) {
 }
 
 inline void processText(BSTR inText, wstring& outText) {
-	for (wchar_t* ch = inText; *ch; ch++) {
+	for (wchar_t* ch = inText; *ch; ++ch) {
 		switch (*ch) {
 			case L'\r':
 			case L'\n':
@@ -130,7 +130,7 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 		}
 
 		// Iterate through the children.
-		for (long childIndex = 0; childIndex < childCount; childIndex++) {
+		for (long childIndex = 0; childIndex < childCount; ++childIndex) {
 			IPDDomNode* domChild;
 			if ((res = domNode->GetChild(childIndex, &domChild)) != S_OK) {
 				DEBUG_MSG(L"IPDDomNode::GetChild returned " << res);
@@ -271,7 +271,7 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 	VariantClear(&varState);
 	DEBUG_MSG(L"states is "<<states);
 	//Add each state that is on, as an attrib
-	for(int i=0;i<32;i++) {
+	for(int i=0;i<32;++i) {
 		int state=1<<i;
 		if(state&states) {
 			wostringstream nameStream;
@@ -358,7 +358,7 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 			childCount=0;
 		}
 		DEBUG_MSG(L"got "<<childCount<<L" children");
-		for(int i=0;i<childCount;i++) {
+		for(int i=0;i<childCount;++i) {
 			DEBUG_MSG(L"child "<<i);
 			if(varChildren[i].vt==VT_DISPATCH) {
 				DEBUG_MSG(L"QueryInterface dispatch child to IID_IAccesible");
@@ -464,7 +464,7 @@ void CALLBACK AdobeAcrobatVBufBackend_t::renderThread_winEventProcHook(HWINEVENT
 	int ID=(objectID>0)?objectID:childID;
 	VBufBackend_t* backend=NULL;
 	DEBUG_MSG(L"Searching for backend in collection of "<<backends.size()<<L" running backends");
-	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
+	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();++i) {
 		HWND rootWindow=(HWND)((*i)->rootDocHandle);
 		DEBUG_MSG(L"Comparing backend's root window "<<rootWindow<<L" with window "<<hwnd);
 		if(rootWindow==hwnd) {

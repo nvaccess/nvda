@@ -55,7 +55,7 @@ void CALLBACK VBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID,
 		DEBUG_MSG(L"Detected destruction of window "<<hwnd);
 		// Copy the set, as it might be mutated by renderThread_terminate() during iteration.
 		VBufBackendSet_t backends=runningBackends;
-		for(VBufBackendSet_t::iterator i=backends.begin();i!=backends.end();i++) {
+		for(VBufBackendSet_t::iterator i=backends.begin();i!=backends.end();++i) {
 			if(hwnd==(HWND)((*i)->rootDocHandle)||IsChild(hwnd,(HWND)((*i)->rootDocHandle))) {
 				DEBUG_MSG(L"Calling renderThread_terminate for backend at "<<*i);
 				(*i)->renderThread_terminate();
@@ -85,7 +85,7 @@ void CALLBACK VBufBackend_t::renderThread_timerProc(HWND hwnd, UINT msg, UINT_PT
 	KillTimer(0,timerID);
 	int threadID=GetCurrentThreadId();
 	VBufBackend_t* backend=NULL;
-	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
+	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();++i) {
 		if((*i)->renderThreadID==threadID&&(*i)->renderThreadTimerID==timerID) {
 			backend=*i;
 			break;
@@ -133,7 +133,7 @@ void VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
 			DEBUG_MSG(L"removing a descendant node from the invalid nodes");
 			invalidSubtrees.erase(i++);
 		} else {
-			i++;
+			++i;
 		}
 	}
 	DEBUG_MSG(L"Adding node to invalid nodes");
@@ -145,7 +145,7 @@ void VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
 void VBufBackend_t::update() {
 	if(this->hasContent()) {
 		DEBUG_MSG(L"Updating "<<invalidSubtrees.size()<<L" subtrees");
-		for(VBufStorage_controlFieldNodeSet_t::iterator i=invalidSubtrees.begin();i!=invalidSubtrees.end();i++) {
+		for(VBufStorage_controlFieldNodeSet_t::iterator i=invalidSubtrees.begin();i!=invalidSubtrees.end();++i) {
 			VBufStorage_controlFieldNode_t* node=*i;
 			DEBUG_MSG(L"re-rendering subtree at "<<node);
 			VBufStorage_buffer_t* tempBuf=new VBufStorage_buffer_t();

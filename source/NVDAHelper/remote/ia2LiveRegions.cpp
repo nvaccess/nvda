@@ -34,7 +34,7 @@ void getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 		}
 		VARIANT* varChildren=new VARIANT[childCount];
 		AccessibleChildren(pacc2,0,childCount,varChildren,&childCount);
-		for(int i=0;i<childCount;i++) {
+		for(int i=0;i<childCount;++i) {
 			if(varChildren[i].vt==VT_DISPATCH) {
 				IAccessible2* pacc2Child=NULL;
 				if(varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&pacc2Child)==S_OK) {
@@ -68,7 +68,7 @@ void getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 		if(!paccHypertext) {
 			textBuf.append(bstrText);
 		} else {
-			for(long index=0;index<textLength;index++) {
+			for(long index=0;index<textLength;++index) {
 				wchar_t realChar=bstrText[index];
 				bool charAdded=false;
 				if(realChar==L'\xfffc') {

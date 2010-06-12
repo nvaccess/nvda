@@ -475,7 +475,7 @@ if(nodeName.compare(L"TABLE")==0) {
 		pHTMLDOMNode->QueryInterface(IID_IHTMLTableRow,(void**)&pHTMLTableRow);
 		if(pHTMLTableRow) {
 			pHTMLTableRow->get_rowIndex(&(tableInfoPtr->curRowIndex));
-			(tableInfoPtr->curRowIndex)++;
+			++(tableInfoPtr->curRowIndex);
 			pHTMLTableRow->Release();
 		}
 	}
@@ -499,7 +499,7 @@ if(nodeName.compare(L"TABLE")==0) {
 		if(pHTMLTableCell) {
 			long columnIndex=0;
 			pHTMLTableCell->get_cellIndex(&columnIndex);
-			columnIndex++;
+			++columnIndex;
 			if(columnIndex>0) {
 				tempStringStream.str(L"");
 				tempStringStream<<columnIndex;
@@ -664,7 +664,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			tempStringStream.str(L"");
 			tempStringStream<<*LIIndexPtr<<L". ";
 			contentString=tempStringStream.str();
-			(*LIIndexPtr)++;
+			++(*LIIndexPtr);
 		} else {
 			tempStringStream.str(L"");
 			tempStringStream<<L"\x2022 "; //Bullet
@@ -770,7 +770,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	tempStringStream.str(L"");
 	tempStringStream<<IARole;
 	attribsMap[L"IAccessible::role"]=tempStringStream.str();
-	for(int i=0;i<32;i++) {
+	for(int i=0;i<32;++i) {
 		int state=1<<i;
 		if(state&IAStates) {
 			tempStringStream.str(L"");
@@ -804,7 +804,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 					long length=0;
 					pHTMLDOMChildrenCollection->get_length(&length);
 					DEBUG_MSG(L"length "<<length);
-					for(int i=0;i<length;i++) {
+					for(int i=0;i<length;++i) {
 						DEBUG_MSG(L"Fetching child "<<i);
 						IDispatch* childPDispatch=NULL;
 						if(pHTMLDOMChildrenCollection->item(i,&childPDispatch)!=S_OK) {
@@ -885,7 +885,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	parentNode->setIsBlock(isBlock);
 
 	//Add all the collected attributes to the node
-	for(tempIter=attribsMap.begin();tempIter!=attribsMap.end();tempIter++) {
+	for(tempIter=attribsMap.begin();tempIter!=attribsMap.end();++tempIter) {
 		parentNode->addAttribute(tempIter->first,tempIter->second);
 	}
 

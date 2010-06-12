@@ -189,7 +189,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	VariantClear(&varState);
 	DEBUG_MSG(L"states is "<<states);
 	//Add each state that is on, as an attrib
-	for(int i=0;i<32;i++) {
+	for(int i=0;i<32;++i) {
 		int state=1<<i;
 		if(state&states) {
 			wostringstream nameStream;
@@ -206,7 +206,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	}
 	DEBUG_MSG(L"IA2States is "<<IA2States);
 	//Add each state that is on, as an attrib
-	for(int i=0;i<32;i++) {
+	for(int i=0;i<32;++i) {
 		int state=1<<i;
 		if(state&IA2States) {
 			wostringstream nameStream;
@@ -251,7 +251,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	}
 	if(IA2Attributes!=NULL) {
 		// Add each IA2 attribute as an attrib.
-		for(map<wstring,wstring>::const_iterator it=IA2AttribsMap.begin();it!=IA2AttribsMap.end();it++) {
+		for(map<wstring,wstring>::const_iterator it=IA2AttribsMap.begin();it!=IA2AttribsMap.end();++it) {
 			wostringstream nameStream;
 			nameStream<<L"IAccessible2::attribute_"<<it->first;
 			parentNode->addAttribute(nameStream.str().c_str(),it->second.c_str());
@@ -417,7 +417,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	DEBUG_MSG(L"IA2TextLength is "<<IA2TextLength);
 	int IA2TextIsUnneededSpace=1;
 	if(IA2TextLength>0&&(role!=ROLE_SYSTEM_TEXT||(states&STATE_SYSTEM_READONLY))&&!(IA2States&IA2_STATE_EDITABLE)) {
-		for(int i=0;i<IA2TextLength;i++) {
+		for(int i=0;i<IA2TextLength;++i) {
 			if(IA2Text[i]==L'\n'||IA2Text[i]==L'\xfffc'||!iswspace(IA2Text[i])) {
 				DEBUG_MSG(L"IA2Text is not whitespace");
 				IA2TextIsUnneededSpace=0;
@@ -466,7 +466,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 		DEBUG_MSG(L"scanning text for embedded object chars");
 			int textStart=-1;
 			wchar_t* tempText=NULL;
-			for(int i=0;i<IA2TextLength;i++) {
+			for(int i=0;i<IA2TextLength;++i) {
 				DEBUG_MSG(L"offset "<<i);
 				if(IA2Text[i]!=0xfffc) { //is not an embeded object char
 					DEBUG_MSG(L"normal char");
@@ -574,7 +574,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 					childCount=0;
 				}
 				DEBUG_MSG(L"got "<<childCount<<L" children");
-				for(int i=0;i<childCount;i++) {
+				for(int i=0;i<childCount;++i) {
 					DEBUG_MSG(L"child "<<i);
 					if(varChildren[i].vt==VT_DISPATCH) {
 						DEBUG_MSG(L"QueryInterface dispatch child to IID_IAccesible2");
@@ -778,7 +778,7 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 	int ID=childID;
 	VBufBackend_t* backend=NULL;
 	DEBUG_MSG(L"Searching for backend in collection of "<<runningBackends.size()<<L" running backends");
-	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
+	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();++i) {
 		HWND rootWindow=(HWND)((*i)->rootDocHandle);
 		DEBUG_MSG(L"Comparing backends root window "<<rootWindow<<L" with window "<<hwnd);
 		if(rootWindow==hwnd||IsChild(rootWindow,hwnd)) {

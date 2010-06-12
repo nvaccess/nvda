@@ -94,7 +94,7 @@ void dcPointsToScreenPoints(HDC hdc, POINT* points, int count) {
 	LPtoDP(hdc,points,count);
 	POINT dcOrgPoint;
 	GetDCOrgEx(hdc,&dcOrgPoint);
-	for(int i=0;i<count;i++) {
+	for(int i=0;i<count;++i) {
 		points[i].x+=dcOrgPoint.x;
 		points[i].y+=dcOrgPoint.y;
 	}
@@ -145,7 +145,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	int* characterEndXArray=(int*)calloc(newText.length(),sizeof(int));
 	if(characterWidths) {
 		int ac=0;
-		for(int i=0;i<newText.length();i++) characterEndXArray[i]=(ac+=characterWidths[(fuOptions&ETO_PDY)?(i*2):i]);
+		for(int i=0;i<newText.length();++i) characterEndXArray[i]=(ac+=characterWidths[(fuOptions&ETO_PDY)?(i*2):i]);
 		resultTextSize->cx=ac;
 		resultTextSize->cy=tm.tmHeight;
 	} else {
@@ -155,7 +155,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	if(tm.tmCharSet!=SYMBOL_CHARSET&&!(fuOptions&ETO_OPAQUE)&&(GetBkMode(hdc)==TRANSPARENT)) {
 		//Find out if the text we're writing is just whitespace
 		BOOL whitespace=TRUE;
-		for(wstring::iterator i=newText.begin();i!=newText.end()&&(whitespace=iswspace(*i));i++);
+		for(wstring::iterator i=newText.begin();i!=newText.end()&&(whitespace=iswspace(*i));++i);
 		if(whitespace) {
 			free(characterEndXArray);
 			return;
@@ -287,7 +287,7 @@ template<typename charType> BOOL WINAPI hookClass_PolyTextOut<charType>::fakeFun
 	if(!model) return res;
 	SIZE curTextSize;
 	//For each of the strings, record the text
-	for(int i=0;i<cStrings;i++) {
+	for(int i=0;i<cStrings;++i) {
 		const WA_POLYTEXT<charType>* curPptxt=&pptxt[i];
 		RECT curClearRect={curPptxt->rcl.left,curPptxt->rcl.top,curPptxt->rcl.right,curPptxt->rcl.bottom};
 		//Only use the given x and y if DC's current position should not be used

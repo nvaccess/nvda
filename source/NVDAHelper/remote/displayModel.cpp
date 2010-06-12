@@ -29,12 +29,12 @@ void displayModelChunk_t::truncate(int truncatePointX, BOOL truncateBefore) {
 	deque<int>::iterator c=characterXArray.begin();
 	wstring::iterator t=text.begin();
 	if(truncateBefore&&rect.left<truncatePointX) {
-		for(;t!=text.end()&&(*c)<truncatePointX;c++,t++);
+		for(;t!=text.end()&&(*c)<truncatePointX;++c,++t);
 		if(c!=characterXArray.end()) rect.left=*c; else rect.left=rect.right; 
 		characterXArray.erase(characterXArray.begin(),c);
 		text.erase(text.begin(),t);
 	} else if(!truncateBefore&&truncatePointX<rect.right) {
-		for(;t!=text.end()&&(*c)<=truncatePointX;c++,t++);
+		for(;t!=text.end()&&(*c)<=truncatePointX;++c,++t);
 		if(t!=text.begin()) {
 			--c;
 			--t;
@@ -69,7 +69,7 @@ void displayModel_t::insertChunk(const RECT& rect, int baselineFromTop, const ws
 	chunk->baselineFromTop=baselineFromTop;
 	chunk->text=text;
 	chunk->characterXArray.push_back(rect.left);
-	for(int i=0;i<(text.length()-1);i++) chunk->characterXArray.push_back(characterEndXArray[i]+rect.left); 
+	for(int i=0;i<(text.length()-1);++i) chunk->characterXArray.push_back(characterEndXArray[i]+rect.left); 
 	LOG_DEBUG(L"filled in chunk with rectangle from "<<rect.left<<L","<<rect.top<<L" to "<<rect.right<<L","<<rect.bottom<<L" with text of "<<text);
 	//If a clipping rect is specified, and the chunk falls outside the clipping rect
 	//Truncate the chunk so that it stays inside the clipping rect.
@@ -104,7 +104,7 @@ void displayModel_t::clearRectangle(const RECT& rect, BOOL clearForText) {
 	RECT tempRect;
 	while(i!=chunksByYX.end()) {
 		displayModelChunksByPointMap_t::iterator nextI=i;
-		nextI++; 
+		++nextI; 
 		displayModelChunk_t* chunk=i->second;
 		int baseline=i->first.first;
 		if(IntersectRect(&tempRect,&rect,&(chunk->rect))) {
@@ -162,7 +162,7 @@ void displayModel_t::clearRectangle(const RECT& rect, BOOL clearForText) {
 		}
 		i=nextI;
 	}
-	for(set<displayModelChunk_t*>::iterator i=chunksForInsertion.begin();i!=chunksForInsertion.end();i++) {
+	for(set<displayModelChunk_t*>::iterator i=chunksForInsertion.begin();i!=chunksForInsertion.end();++i) {
 		insertChunk(*i);
 	}
 	LOG_DEBUG(L"complete");
@@ -183,20 +183,20 @@ void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* other
 	//Clear the rectangle in the destination model to make space for the chunks
 	if(clearEntireRectangle) otherModel->clearRectangle(clearRect);
 	//Collect all the chunks that should be copied in to a temporary set, and expand the clearing rectangle to bound them all completely.
-	for(displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();i!=chunksByYX.end();i++) {
+	for(displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();i!=chunksByYX.end();++i) {
 		if(IntersectRect(&tempRect,&rect,&(i->second->rect))) {
 			chunks.insert(i->second);
 		}
 	}
 	if(chunks.size()>0) {
 		//Insert each chunk previously selected, in to the destination model shifting the chunk's rectangle to where it should be in the destination model
-		for(set<displayModelChunk_t*>::iterator i=chunks.begin();i!=chunks.end();i++) {
+		for(set<displayModelChunk_t*>::iterator i=chunks.begin();i!=chunks.end();++i) {
 			displayModelChunk_t* chunk=new displayModelChunk_t(**i);
 			chunk->rect.left=(chunk->rect.left)+deltaX;
 			chunk->rect.top=(chunk->rect.top)+deltaY;
 			chunk->rect.right=(chunk->rect.right)+deltaX;
 			chunk->rect.bottom=(chunk->rect.bottom)+deltaY;
-			for(deque<int>::iterator x=chunk->characterXArray.begin();x!=chunk->characterXArray.end();x++) (*x)+=deltaX;
+			for(deque<int>::iterator x=chunk->characterXArray.begin();x!=chunk->characterXArray.end();++x) (*x)+=deltaX;
 			if(chunk->rect.left<clearRect.left) {
 				chunk->truncate(clearRect.left,TRUE);
 			}

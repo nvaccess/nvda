@@ -79,7 +79,7 @@ BOOL installIA2Support() {
 		return FALSE;
 	}
 	ia2ClassObjPunk->Release();
-	for(i=0;i<ARRAYSIZE(ia2Iids);i++) {
+	for(i=0;i<ARRAYSIZE(ia2Iids);++i) {
 		CoGetPSClsid(ia2Iids[i],&(_ia2PSClsidBackups[i]));
 		CoRegisterPSClsid(ia2Iids[i],IAccessible2ProxyIID);
 	}
@@ -91,7 +91,7 @@ BOOL uninstallIA2Support() {
 	int i;
 	LPFNDLLCANUNLOADNOW IA2Dll_DllCanUnloadNow;
 	if(isIA2Installed) {
-	for(i=0;i<ARRAYSIZE(ia2Iids);i++) {
+	for(i=0;i<ARRAYSIZE(ia2Iids);++i) {
 			CoRegisterPSClsid(ia2Iids[i],_ia2PSClsidBackups[i]);
 		}
 		CoRevokeClassObject(IA2RegCooky);

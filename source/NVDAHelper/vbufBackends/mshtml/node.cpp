@@ -70,7 +70,7 @@ class CDispatchChangeSink : public IDispatch {
 	}
 
 	ULONG STDMETHODCALLTYPE IUnknown::AddRef() {
-		this->refCount++;
+		++(this->refCount);
 		return this->refCount;
 	}
 
@@ -168,7 +168,7 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 	}
 
 	ULONG STDMETHODCALLTYPE IUnknown::AddRef() {
-		this->refCount++;
+		++(this->refCount);
 		return this->refCount;
 	}
 
@@ -220,7 +220,7 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 			}
 			list<VBufStorage_controlFieldNode_t*>::iterator i=beginningAncestors.begin();
 			list<VBufStorage_controlFieldNode_t*>::iterator j=endAncestors.begin();
-			for(;i!=beginningAncestors.end()&&j!=endAncestors.end();i++,j++) {
+			for(;i!=beginningAncestors.end()&&j!=endAncestors.end();++i,++j) {
 				if(*i==*j) {
 					invalidNode=*i;
 				} else {

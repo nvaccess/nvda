@@ -47,7 +47,7 @@ void rpcSrv_inProcess_initialize() {
 		LOG_ERROR(L"RpcServerUseProtseqEp failed with status "<<status);
 	}
 	//Register the interfaces
-	for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
+	for(int i=0;i<ARRAYSIZE(availableInterfaces);++i) {
 		if((status=RpcServerRegisterIfEx(availableInterfaces[i],NULL,NULL,RPC_IF_AUTOLISTEN,RPC_C_LISTEN_MAX_CALLS_DEFAULT,NULL))!=RPC_S_OK) {
 			LOG_ERROR(L"RpcServerRegisterIfEx for interface at index "<<i<<L" failed with status "<<status);
 		}
@@ -56,7 +56,7 @@ void rpcSrv_inProcess_initialize() {
 
 void rpcSrv_inProcess_terminate() {
 	RPC_STATUS status;
-	for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
+	for(int i=0;i<ARRAYSIZE(availableInterfaces);++i) {
 		if((status=RpcServerUnregisterIfEx(availableInterfaces[i],NULL,1))!=RPC_S_OK) {
 			LOG_ERROR(L"RpcServerUnregisterIfEx for interface at index "<<i<<L" failed with status "<<status);
 		}
