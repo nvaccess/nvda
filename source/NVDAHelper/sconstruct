@@ -16,93 +16,13 @@
 vars=Variables()
 vars.Add(BoolVariable('release','Set to true to build a release version',False))
 vars.Add(EnumVariable('logLevel','The level of logging you wish to see, higher is more','30',allowed_values=[str(x) for x in xrange(60)]))
-vars.Add('TARGET_ARCH','Target architecture')
-vars.Add('HOST_ARCH','Host architecture')
 
-#Create a new environment for our project
-env=DefaultEnvironment(tools=['windowsSdk','midl','msrpc','boost','default'],variables=vars)
-
-#Some defines and includes for the environment
-env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${logLevel}')])
-env.Append(CXXFLAGS=['/EHsc'])
-env.Append(CPPPATH=['#.','#../include'])
-env.Append(LINKFLAGS='/incremental:no')
-TARGET_ARCH=env['TARGET_ARCH']
-env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
-
-if env['release']:
-	print "Building %s release version"%TARGET_ARCH
-	env.Append(CPPDEFINES=['NDEBUG'])
-	env.Append(CCFLAGS=['/O2','/MT'])
-	env.Append(LINKFLAGS='/release')
-else:
-	print "Building %s debug version"%TARGET_ARCH
-	env.Append(PDB='${TARGET}.pdb')
-	env.Append(CCFLAGS=['/Od','/MTd'])
-
-Export('env')
-
-clientInstallDir=Dir('../../extras/controllerClient')
-if TARGET_ARCH=='x86_64':
-	libInstallDir=Dir('../lib64')
-else:
-	libInstallDir=Dir('../lib')
-
-buildList=[]
-
-
-acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
-Export('acrobatAccessRPCStubs')
-
-ia2RPCStubs=env.SConscript('ia2_sconscript')
-Export('ia2RPCStubs')
-
-if TARGET_ARCH=='x86':
-	localLib=env.SConscript('local/sconscript')
-	Export('localLib')
-	env.Install(libInstallDir,localLib)
-	buildList.append(localLib)
-
-clientLib=env.SConscript('client/sconscript')
-Export('clientLib')
-env.Install(clientInstallDir,clientLib)
-buildList.append(clientLib)
-
-minHookLib=env.SConscript('minHook_sconscript')
-Export('minHookLib')
-env.Install(libInstallDir,minHookLib)
-buildList.append(minHookLib)
-
-remoteLib=env.SConscript('remote/sconscript')
-Export('remoteLib')
-env.Install(libInstallDir,remoteLib)
-buildList.append(remoteLib)
-
-if TARGET_ARCH=='x86_64':
-	remoteLoaderProgram=env.SConscript('remoteLoader/sconscript')
-	env.Install(libInstallDir,remoteLoaderProgram)
-	buildList.append(remoteLoaderProgram)
-
-vbufBaseStaticLib=env.SConscript('vbufBase/sconscript')
-Export('vbufBaseStaticLib')
-
-adobeAcrobatVBufBackend=env.SConscript('vbufBackends/adobeAcrobat/sconscript')
-env.Install(libInstallDir,adobeAcrobatVBufBackend)
-buildList.append(adobeAcrobatVBufBackend)
-
-adobeFlashVBufBackend=env.SConscript('vbufBackends/adobeFlash/sconscript')
-env.Install(libInstallDir,adobeFlashVBufBackend)
-buildList.append(adobeFlashVBufBackend)
-
-geckoVBufBackend=env.SConscript('vbufBackends/gecko_ia2/sconscript')
-env.Install(libInstallDir,geckoVBufBackend)
-buildList.append(geckoVBufBackend)
-
-mshtmlVBufBackend=env.SConscript('vbufBackends/mshtml/sconscript')
-env.Install(libInstallDir,mshtmlVBufBackend)
-buildList.append(mshtmlVBufBackend)
-
-buildTarget=env.Alias('build',buildList)
-installTarget=env.Alias('install',[clientInstallDir,libInstallDir])
-env.Requires(installTarget,buildTarget)
-env.Default(buildTarget)
+#Build nvdaHelper for needed architectures
+for arch in ('x86','x86_64'):
+	try:
+		env=Environment(TARGET_ARCH=arch,tools=['windowsSdk','midl','msrpc','boost','default'],variables=vars)
+		print "Building for %s"%arch 
+	except:
+		print "Error setting up %s build environment"%arch 
+		continue
+	env.SConscript('archBuild_sconscript',exports=['env'],build_dir='build/%s'%arch)

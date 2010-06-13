@@ -17,7 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <cwchar>
 #include <windows.h>
 #include <objbase.h>
-#include "ia2/ia2.h"
+#include <ia2.h>
 #include "nvdaControllerInternal.h"
 #include <common/log.h>
 #include "nvdaHelperRemote.h"
