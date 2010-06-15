@@ -18,7 +18,6 @@ Import(
 
 TARGET_ARCH=env['TARGET_ARCH']
 release=env['release']
-print dir(Dir('.'))
 
 #Some defines and includes for the environment
 env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${logLevel}')])
