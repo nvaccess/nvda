@@ -130,11 +130,9 @@ void CALLBACK IA2Support_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, H
 }
 
 void IA2Support_inProcess_initialize() {
-	if (!installIA2Support()) {
-		// Couldn't install IA2 support,
-		// so keep trying on focus/foreground changes just in case COM gets initialised later.
-		registerWinEventHook(IA2Support_winEventProcHook);
-	}
+	// Try to install IA2 support on focus/foreground changes.
+	// This hook will be unregistered by the callback once IA2 support is successfully installed.
+	registerWinEventHook(IA2Support_winEventProcHook);
 }
 
 void IA2Support_inProcess_terminate() {
