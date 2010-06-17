@@ -26,6 +26,10 @@ NAVRELATION_LABELLED_BY=0x1002
 NAVRELATION_LABELLED_BY=0x1003
 NAVRELATION_NODE_CHILD_OF=0x1005
 
+# IAccessible2 relations (not included in the typelib)
+IA2_RELATION_FLOWS_FROM = "flowsFrom"
+IA2_RELATION_FLOWS_TO = "flowsTo"
+
 import UIAHandler
 import heapq
 import itertools
@@ -393,8 +397,16 @@ def accFocus(ia):
 			new_ia=normalizeIAccessible(res)
 			new_child=0
 		elif isinstance(res,int):
-			new_ia=ia
-			new_child=res
+			try:
+				new_ia=ia.accChild(res)
+			except:
+				new_ia=None
+			if new_ia:
+				new_ia=normalizeIAccessible(new_ia)
+				new_child=0
+			else:
+				new_ia=ia
+				new_child=res
 		else:
 			return None
 		return (new_ia,new_child)

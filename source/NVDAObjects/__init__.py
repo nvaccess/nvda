@@ -18,7 +18,7 @@ import textInfos.offsets
 import config
 import controlTypes
 import appModuleHandler
-import virtualBufferHandler
+import treeInterceptorHandler
 import braille
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
@@ -271,41 +271,41 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		return not self.__eq__(other)
 
-	def _get_virtualBufferClass(self):
+	def _get_treeInterceptorClass(self):
 		"""
-		If this NVDAObject should use a virtualBuffer, then this property provides the L{virtualBuffers.VirtualBuffer} class it should use. 
+		If this NVDAObject should use a treeInterceptor, then this property provides the L{treeInterceptorHandler.TreeInterceptor} class it should use. 
 		If not then it should be not implemented.
 		"""
 		raise NotImplementedError
 
-	def _get_virtualBuffer(self):
-		"""Retreaves the virtualBuffer associated with this object.
-		If a virtualBuffer has not been specifically set, the L{virtualBufferHandler} is asked if it can find a virtualBuffer containing this object.
-		@return: the virtualBuffer
-		@rtype: L{virtualBuffers.VirtualBuffer}
+	def _get_treeInterceptor(self):
+		"""Retreaves the treeInterceptor associated with this object.
+		If a treeInterceptor has not been specifically set, the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
+		@return: the treeInterceptor
+		@rtype: L{treeInterceptorHandler.TreeInterceptor}
 		""" 
-		if hasattr(self,'_virtualBuffer'):
-			v=self._virtualBuffer
-			if isinstance(v,weakref.ref):
-				v=v()
-			if v and v in virtualBufferHandler.runningTable:
-				return v
+		if hasattr(self,'_treeInterceptor'):
+			ti=self._treeInterceptor
+			if isinstance(ti,weakref.ref):
+				ti=ti()
+			if ti and ti in treeInterceptorHandler.runningTable:
+				return ti
 			else:
-				self._virtualBuffer=None
+				self._treeInterceptor=None
 				return None
 		else:
-			v=virtualBufferHandler.getVirtualBuffer(self)
-			if v:
-				self._virtualBuffer=weakref.ref(v)
-			return v
+			ti=treeInterceptorHandler.getTreeInterceptor(self)
+			if ti:
+				self._treeInterceptor=weakref.ref(ti)
+			return ti
 
-	def _set_virtualBuffer(self,obj):
-		"""Specifically sets a virtualBuffer to be associated with this object.
+	def _set_treeInterceptor(self,obj):
+		"""Specifically sets a treeInterceptor to be associated with this object.
 		"""
 		if obj:
-			self._virtualBuffer=weakref.ref(obj)
+			self._treeInterceptor=weakref.ref(obj)
 		else: #We can't point a weakref to None, so just set the private variable to None, it can handle that
-			self._virtualBuffer=None
+			self._treeInterceptor=None
 
 	def _get_appModule(self):
 		"""Retreaves the appModule representing the application this object is a part of by asking L{appModuleHandler}.
@@ -627,6 +627,40 @@ Tries to force this object to take the focus.
 		"""
 		return False
 
+	def _get_indexInParent(self):
+		"""The index of this object in its parent object.
+		@return: The 0 based index, C{None} if there is no parent.
+		@rtype: int
+		@raise NotImplementedError: If not supported by the underlying object.
+		"""
+		raise NotImplementedError
+
+	def _get_flowsTo(self):
+		"""The object to which content flows from this object.
+		@return: The object to which this object flows, C{None} if none.
+		@rtype: L{NVDAObject}
+		@raise NotImplementedError: If not supported by the underlying object.
+		"""
+		raise NotImplementedError
+
+	def _get_flowsFrom(self):
+		"""The object from which content flows to this object.
+		@return: The object from which this object flows, C{None} if none.
+		@rtype: L{NVDAObject}
+		@raise NotImplementedError: If not supported by the underlying object.
+		"""
+		raise NotImplementedError
+
+	def _get_embeddingTextInfo(self):
+		"""Retrieve the parent text range which embeds this object.
+		The returned text range will have its start positioned on the embedded object character associated with this object.
+		That is, calling L{textInfos.TextInfo.getEmbeddedObject}() on the returned text range will return this object.
+		@return: The text range for the embedded object character associated with this object or C{None} if this is not an embedded object.
+		@rtype: L{textInfos.TextInfo}
+		@raise NotImplementedError: If not supported.
+		"""
+		raise NotImplementedError
+
 	def _get_isPresentableFocusAncestor(self):
 		"""Determine if this object should be presented to the user in the focus ancestry.
 		@return: C{True} if it should be presented in the focus ancestry, C{False} if not.
@@ -835,37 +869,3 @@ This code is executed if a gain focus event is received by this object.
 			ret = "exception: %s" % e
 		info.append("TextInfo: %s" % ret)
 		return info
-
-class AutoSelectDetectionNVDAObject(NVDAObject):
-
-	"""Provides an NVDAObject with the means to detect if the text selection has changed, and if so to announce the change
-	@ivar hasContentChangedSinceLastSelection: if True then the content has changed.
-	@ivar hasContentChangedSinceLastSelection: boolean
-	"""
-
-	def initAutoSelectDetection(self):
-		"""Initializes the autoSelect detection code so that it knows about what is currently selected."""
-		try:
-			self._lastSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		except:
-			self._lastSelectionPos=None
-		self.hasContentChangedSinceLastSelection=False
-
-	def detectPossibleSelectionChange(self):
-		"""Detects if the selection has been changed, and if so it speaks the change."""
-		oldInfo=getattr(self,'_lastSelectionPos',None)
-		if not oldInfo:
-			return
-		try:
-			newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		except:
-			self._lastSelectionPos=None
-			return
-		self._lastSelectionPos=newInfo.copy()
-		hasContentChanged=self.hasContentChangedSinceLastSelection
-		self.hasContentChangedSinceLastSelection=False
-		if hasContentChanged:
-			generalize=True
-		else:
-			generalize=False
-		speech.speakSelectionChange(oldInfo,newInfo,generalize=generalize)

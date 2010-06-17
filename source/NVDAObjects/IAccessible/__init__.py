@@ -21,7 +21,7 @@ import api
 import config
 import controlTypes
 from NVDAObjects.window import Window
-from NVDAObjects import NVDAObject, NVDAObjectTextInfo, AutoSelectDetectionNVDAObject, InvalidNVDAObject
+from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
 import queueHandler
@@ -242,7 +242,29 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _lineNumFromOffset(self,offset):
 		return -1
 
-class IAccessible(Window,AutoSelectDetectionNVDAObject):
+	def getEmbeddedObject(self, offset=0):
+		offset += self._startOffset
+
+		# Mozilla uses IAccessibleHypertext to facilitate quick retrieval of embedded objects.
+		try:
+			ht = self.obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext)
+			hl = ht.hyperlink(ht.hyperlinkIndex(offset))
+			return IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
+		except COMError:
+			pass
+
+		# Otherwise, we need to count the embedded objects to determine which child to use.
+		# This could possibly be optimised by caching.
+		text = self._getTextRange(0, offset + 1)
+		childIndex = text.count(u"\uFFFC")
+		try:
+			return IAccessible(IAccessibleObject=IAccessibleHandler.accChild(self.obj.IAccessibleObject, childIndex)[0], IAccessibleChildID=0)
+		except COMError:
+			pass
+
+		raise LookupError
+
+class IAccessible(Window):
 	"""
 the NVDAObject for IAccessible
 @ivar IAccessibleChildID: the IAccessible object's child ID
@@ -968,6 +990,59 @@ the NVDAObject for IAccessible
 			info['indexInGroup']=indexInGroup
 		return info
 
+	def _get_indexInParent(self):
+		if isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
+			try:
+				return self.IAccessibleObject.indexInParent
+			except COMError:
+				pass
+		raise NotImplementedError
+
+	def _get__IA2Relations(self):
+		if not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
+			raise NotImplementedError
+		import ctypes
+		import comtypes.hresult
+		try:
+			size = self.IAccessibleObject.nRelations
+		except COMError:
+			raise NotImplementedError
+		if size <= 0:
+			return ()
+		relations = (ctypes.POINTER(IAccessibleHandler.IAccessibleRelation) * size)()
+		count = ctypes.c_int()
+		# The client allocated relations array is an [out] parameter instead of [in, out], so we need to use the raw COM method.
+		res = self.IAccessibleObject._IAccessible2__com__get_relations(size, relations, ctypes.byref(count))
+		if res != comtypes.hresult.S_OK:
+			raise NotImplementedError
+		return list(relations)
+
+	def _getIA2RelationFirstTarget(self, relationType):
+		for relation in self._IA2Relations:
+			try:
+				if relation.relationType == relationType:
+					return IAccessible(IAccessibleObject=IAccessibleHandler.normalizeIAccessible(relation.target(0)), IAccessibleChildID=0)
+			except COMError:
+				pass
+		return None
+
+	def _get_flowsTo(self):
+		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_FLOWS_TO)
+
+	def _get_flowsFrom(self):
+		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_FLOWS_FROM)
+
+	def _get_embeddingTextInfo(self):
+		if not hasattr(self, "IAccessibleTextObject"):
+			raise NotImplementedError
+		try:
+			hl = self.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
+			hlOffset = hl.startIndex
+			return self.parent.makeTextInfo(textInfos.offsets.Offsets(hlOffset, hlOffset + 1))
+		except COMError:
+			pass
+		return None
+
 	def event_valueChange(self):
 		if hasattr(self,'IAccessibleTextObject'):
 			self._hasContentChangedSinceLastSelection=True
@@ -994,10 +1069,8 @@ the NVDAObject for IAccessible
 		super(IAccessible, self).event_caret()
 		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_CARET:
 			return
-		if hasattr(self,'IAccessibleTextObject') and self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
-			self.detectPossibleSelectionChange()
 		focusObject=api.getFocusObject()
-		if self!=focusObject and not self.virtualBuffer and hasattr(self,'IAccessibleTextObject'):
+		if self!=focusObject and not self.treeInterceptor and hasattr(self,'IAccessibleTextObject'):
 			inDocument=None
 			for ancestor in reversed(api.getFocusAncestors()+[focusObject]):
 				if ancestor.role==controlTypes.ROLE_DOCUMENT:
@@ -1044,11 +1117,6 @@ the NVDAObject for IAccessible
 				speech.speakObject(child,reason=speech.REASON_FOCUS)
 				child.speakDescendantObjects(hashList=hashList)
 			child=child.next
-
-	def event_gainFocus(self):
-		if hasattr(self,'IAccessibleTextObject'):
-			self.initAutoSelectDetection()
-		super(IAccessible,self).event_gainFocus()
 
 	def event_selection(self):
 		return self.event_stateChange()

@@ -285,7 +285,7 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 		allowProperties['value']=False
 
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
-	if reason!=REASON_ONLYCACHE and isEditable and not globalVars.inCaretMovement:
+	if reason!=REASON_ONLYCACHE and isEditable:
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
@@ -506,7 +506,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 	textWithFields=info.getTextWithFields(formatConfig)
 	initialFields=[]
 	for field in textWithFields:
-		if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
+		if isinstance(field,textInfos.FieldCommand) and field.command in ("controlStart","formatChange"):
 			initialFields.append(field.field)
 		else:
 			break
@@ -520,11 +520,6 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 			break
 	if endFieldCount>0:
 		del textWithFields[0-endFieldCount:]
-	if len(textWithFields)>0:
-		firstField=textWithFields[0]
-		if isinstance(firstField,textInfos.FieldCommand) and firstField.command=="formatChange":
-			initialFields.append(firstField.field)
-			del textWithFields[0]
 	for field in initialFields:
 		if isinstance(field,textInfos.ControlField):
 			newControlFieldStack.append(field)
@@ -732,9 +727,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		formatConfig=config.conf["documentFormatting"]
 
 	childCount=int(attrs['_childcount'])
-	indexInParent=int(attrs['_indexInParent'])
-	parentChildCount=int(attrs['_parentChildCount'])
-	if reason==REASON_FOCUS:
+	if reason==REASON_FOCUS or attrs.get('alwaysReportName',False):
 		name=attrs.get('name',"")
 	else:
 		name=""

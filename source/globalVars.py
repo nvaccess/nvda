@@ -45,5 +45,4 @@ reportDynamicContentChanges=True
 appArgs=None
 settingsRing = None
 speechDictionaryProcessing=True
-inCaretMovement=False
 configFileError=None

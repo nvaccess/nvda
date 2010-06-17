@@ -43,11 +43,11 @@ def normalizeStdName(stdName):
 
 class AcrobatNode(IAccessible):
 
-	def _get_virtualBufferClass(self):
+	def _get_treeInterceptorClass(self):
 		if self.role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE):
 			import virtualBuffers.adobeAcrobat
 			return virtualBuffers.adobeAcrobat.AdobeAcrobat
-		return super(AcrobatNode,self).virtualBufferClass
+		return super(AcrobatNode,self).treeInterceptorClass
 
 	def initOverlayClass(self):
 		try:

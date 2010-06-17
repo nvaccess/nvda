@@ -1,7 +1,8 @@
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
-import virtualBufferHandler
+import treeInterceptorHandler
 import controlTypes
 import NVDAObjects.IAccessible
+import NVDAObjects.behaviors
 import winUser
 import IAccessibleHandler
 import oleacc
@@ -55,7 +56,7 @@ class Gecko_ia2(VirtualBuffer):
 	def __init__(self,rootNVDAObject):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
 
-	def isNVDAObjectInVirtualBuffer(self,obj):
+	def __contains__(self,obj):
 		#Special code to handle Mozilla combobox lists
 		if obj.windowClassName.startswith('Mozilla') and winUser.getWindowStyle(obj.windowHandle)&winUser.WS_POPUP:
 			parent=obj.parent
@@ -74,7 +75,7 @@ class Gecko_ia2(VirtualBuffer):
 
 		return self._isNVDAObjectInApplication(obj)
 
-	def isAlive(self):
+	def _get_isAlive(self):
 		root=self.rootNVDAObject
 		if not root:
 			return False
@@ -102,7 +103,7 @@ class Gecko_ia2(VirtualBuffer):
 		return super(Gecko_ia2, self)._shouldIgnoreFocus(obj)
 
 	def _postGainFocus(self, obj):
-		if hasattr(obj,'IAccessibleTextObject'):
+		if isinstance(obj, NVDAObjects.behaviors.EditableText):
 			# We aren't passing this event to the NVDAObject, so we need to do this ourselves.
 			obj.initAutoSelectDetection()
 		super(Gecko_ia2, self)._postGainFocus(obj)
@@ -179,8 +180,8 @@ class Gecko_ia2(VirtualBuffer):
 		return attrs
 
 	def event_stateChange(self,obj,nextHandler):
-		if not self.isAlive():
-			return virtualBufferHandler.killVirtualBuffer(self)
+		if not self.isAlive:
+			return treeInterceptorHandler.killTreeInterceptor(self)
 		return nextHandler()
 
 	def event_scrollingStart(self, obj, nextHandler):

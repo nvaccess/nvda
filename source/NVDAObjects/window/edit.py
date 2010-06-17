@@ -725,11 +725,7 @@ class Edit(EditableText, Window):
 		self.detectPossibleSelectionChange()
 
 	def event_valueChange(self):
-		self.hasContentChangedSinceLastSelection=True
-
-	def event_gainFocus(self):
-		self.initAutoSelectDetection()
-		super(Edit,self).event_gainFocus()
+		self.event_textChange()
 
 	def _get_states(self):
 		states = super(Edit, self)._get_states()

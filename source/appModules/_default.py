@@ -24,10 +24,11 @@ import winUser
 import appModuleHandler
 import winKernel
 from gui import mainFrame
-import virtualBufferHandler
+import treeInterceptorHandler
 import scriptHandler
 import ui
 import braille
+import virtualBuffers
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -43,9 +44,9 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_reportCurrentLine(self,keyPress):
 		obj=api.getFocusObject()
-		virtualBuffer=obj.virtualBuffer
-		if hasattr(virtualBuffer,'TextInfo') and not virtualBuffer.passThrough:
-			obj=virtualBuffer
+		treeInterceptor=obj.treeInterceptor
+		if hasattr(treeInterceptor,'TextInfo') and not treeInterceptor.passThrough:
+			obj=treeInterceptor
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_CARET)
 		except (NotImplementedError, RuntimeError):
@@ -89,9 +90,9 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_reportCurrentSelection(self,keyPress):
 		obj=api.getFocusObject()
-		virtualBuffer=obj.virtualBuffer
-		if hasattr(virtualBuffer,'TextInfo') and not virtualBuffer.passThrough:
-			obj=virtualBuffer
+		treeInterceptor=obj.treeInterceptor
+		if hasattr(treeInterceptor,'TextInfo') and not treeInterceptor.passThrough:
+			obj=treeInterceptor
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 		except (RuntimeError, NotImplementedError):
@@ -566,14 +567,15 @@ class AppModule(appModuleHandler.AppModule):
 	script_moveToParentVirtualBuffer.__doc__=_("Moves the focus to the next closest virtualBuffer that contains the focus")
 
 	def script_toggleVirtualBufferPassThrough(self,keyPress):
-		vbuf = api.getFocusObject().virtualBuffer
-		if not vbuf: return
+		vbuf = api.getFocusObject().treeInterceptor
+		if not vbuf or not isinstance(vbuf, virtualBuffers.VirtualBuffer):
+			return
 		# Toggle virtual buffer pass-through.
 		vbuf.passThrough = not vbuf.passThrough
 		# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
 		# If we're disabling pass-through, re-enable auto-pass-through.
 		vbuf.disableAutoPassThrough = vbuf.passThrough
-		virtualBufferHandler.reportPassThrough(vbuf)
+		virtualBuffers.reportPassThrough(vbuf)
 	script_toggleVirtualBufferPassThrough.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
 
 	def script_quit(self,keyPress):
@@ -591,9 +593,9 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_sayAll(self,keyPress):
 		o=api.getFocusObject()
-		v=o.virtualBuffer
-		if v and not v.passThrough:
-			o=v
+		ti=o.treeInterceptor
+		if ti and not ti.passThrough:
+			o=ti
 		try:
 			info=o.makeTextInfo(textInfos.POSITION_CARET)
 		except (NotImplementedError, RuntimeError):
@@ -611,7 +613,7 @@ class AppModule(appModuleHandler.AppModule):
 			"reportBlockQuotes":False,
 		}
 		o=api.getFocusObject()
-		v=o.virtualBuffer
+		v=o.treeInterceptor
 		if v and not v.passThrough:
 			o=v
 		try:
@@ -806,7 +808,7 @@ class AppModule(appModuleHandler.AppModule):
 	script_activateObjectPresentationDialog.__doc__ = _("Shows the NVDA object presentation settings dialog")
 
 	def script_activateVirtualBuffersDialog(self,keyPress):
-		mainFrame.onVirtualBuffersCommand(None)
+		mainFrame.onTreeInterceptorsCommand(None)
 	script_activateVirtualBuffersDialog.__doc__ = _("Shows the NVDA virtual buffers settings dialog")
 
 	def script_activateDocumentFormattingDialog(self,keyPress):
