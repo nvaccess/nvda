@@ -649,6 +649,13 @@ class Body(MSHTML):
 		else:
 			return parent
 
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		# We must override this because we override parent to skip the MSAAHTML Registered Handler client,
+		# which might have the focused state.
+		if controlTypes.STATE_FOCUSED in self.states:
+			return True
+		return super(Body, self).parent.shouldAllowIAccessibleFocusEvent
+
 class Object(MSHTML):
 
 	def _get_firstChild(self):
