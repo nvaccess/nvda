@@ -10,12 +10,19 @@
 - Tekstisäädinten muotoilutiedot voidaan nyt lukea Java Access Bridgeä käyttävissä sovelluksissa, openOffice mukaan lukien. (#358, #463)
 - NVDA lukee Solut oikein Microsoft Excelissä, kun hiiri siirretään niiden päälle.
 - Java Access Bridgeä käyttävien sovellusten valintaikkunoiden teksti luetaan nyt automaattisesti valintaikkunoiden tullessa näkyviin. (#554)
+- Näennäispuskuria voidaan nyt käyttää Adobe Flash -sisällössä navigoimiseen. Objektinavigointia ja suoraa vuorovaikutusta säädinten kanssa kohdistustilaa käyttäen tuetaan edelleen. (#453)
+- Eclipse IDE:n muokattavat tekstisäätimet koodieditori mukaan lukien ovat nyt esteettömiä. Käytössä on oltava Eclipse 3.6 tai uudempi. (#256, #641)
+- NVDA voi nyt lukea suurimman osan näytöllä olevasta tekstistä. (#40, #643)
+ - Tämä mahdollistaa sellaisten säädinten lukemisen, jotka eivät välitä tietoja suoremmilla ja luotettavammilla tavoilla.
+ - Tämä ominaisuus tekee esteettömiksi mm. jotkin kuvakkeita näyttävät valikoiden kohdat (esim. Windows XP:n Avaa sovelluksessa -valikko) (#151), Windows Live -sovellusten muokattavat tekstikentät (#200), Outlook Expressin virheluettelo (#582), TextPadin muokattava tekstisäädin (#605), Eudoran luettelot, monet Australian E-tax:in säätimet ja Microsoft Excelin kaavapalkki.
 
 
 == Muutokset ==
-- Navigointiobjektia käyttävä Lue kaikki -komento (NVDA+laskinnäppäimistön plus) sekä seuraavaan ja edelliseen objektipuun objektiin siirtävät komennot (NVDA+laskinnäppäimistön 6, NVDA+laskinnäppäimistön 4) on poistettu toistaiseksi virheiden vuoksi ja näppäinten vapauttamiseksi muita ominaisuuksia varten.
+- Navigointiobjektia käyttävä Lue kaikki -komento (NVDA+laskinnäppäimistön plus) sekä seuraavaan ja edelliseen objektipuun objektiin siirtävät komennot (NVDA+Shift+laskinnäppäimistön 6, NVDA+Shift+laskinnäppäimistön 4) on poistettu toistaiseksi virheiden vuoksi ja näppäinten vapauttamiseksi muita ominaisuuksia varten.
 - NVDA:n Syntetisaattori-valintaikkunassa näytetään nyt vain syntetisaattorin näyttönimi. Aiemmin etuliitteenä näytettiin käytettävän ajurin nimi, josta ei ole hyötyä normaalikäyttäjälle.
+- Web-sivuille upotetuista sovelluksista ja sisäkkäisistä näennäispuskureista (esim. Flash) voidaan nyt siirtyä pois ja takaisin ylempään asiakirjaan (=web-sivulle) painamalla NVDA+Ctrl+välilyönti. Aiemmin tähän käytettiin näppäinyhdistelmää NVDA+välilyönti, jota käytetään nyt vain näennäispuskureiden selaus- ja kohdistustilojen välillä vaihtamiseen.
 - Jos kohdistus siirtyy puheen tarkastelu -säätimeen (otetaan käyttöön Työkalut-valikosta) esim. siksi, että sitä napsautettiin hiirellä, säätimeen ei ilmesty uutta tekstiä ennen kuin kohdistus siirtyy siitä pois. Tämä mahdollistaa helpomman tekstin valitsemisen esim. kopiointia varten.
+- Lokinkatselu- ja Python-konsoli-ikkunat suurennetaan avattaessa.
 
 
 == Vikojen korjaukset ==
@@ -27,6 +34,8 @@
 - ARIA:n rooli valitaan nyt muiden tyyppitietojen sijasta virheettömämmän ja odotustenmukaisemman ARIA-kokemuksen antamiseksi Internet Explorerissa ja muissa MSHTML-säätimissä.
 - Korjattu harvinainen kaatuminen Internet Explorerissa liikuttaessa tavallisten tai sisäisten kehysten välillä.
 - Oikealta vasemmalle luettavia rivejä (kuten arabialaista tekstiä) voidaan jälleen lukea Microsoft Word -asiakirjoissa. (#627)
+- Vähennetty merkittävästi hidastumista 64-bittisissä järjestelmissä, kun komentokehotteessa näytetään suurta määrää tekstiä.
+- NVDA ei enää kaadu Microsoft Office -sovelluksissa painettaessa NVDA+B (lue aktiivinen ikkuna) tai navigoitaessa joissakin työkalurivien objekteissa. (#616)
 
 
 == 2010.1 ==

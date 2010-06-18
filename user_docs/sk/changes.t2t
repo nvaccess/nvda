@@ -14,6 +14,8 @@
 - NVDA dokáže získať množstvo textu vypísaného na obrazovku. (#40, #643)
 	- Toto umožňuje sprístupniť prvky, ktoré neposkytujú informácie priamejšími a spoľahlivejšími spôsobmi.
 	- Prvky sprístupnené touto metódou zahŕňajú: niektoré položky menu, pri ktorých sú zobrazené ikony (napr. položky v ponuke otvoriť čím  v kontextovej ponuke zoznamu súborov v prieskumníku Windows XP) (#151), editačné polia v aplikáciách Windows live (#200), zoznam chýb v programe Outlook Express (#582), editačné pole populárneho textového editora TextPad (#605), zoznamy v programe Eudora, mnohé prvky v austrálskom E-tax a panel vzorca v programe Microsoft Excel.
+- Podpora pre editor zdrojového kódu v programoch Microsoft Visual Studio 2005 a 2008. Podporované sú edície od  Visual Studio Standard. Táto podpora nebude pracovať s Express edition. (#457)
+- Podpora pre dokumenty v programe IBM Lotus Symphony.
 
 
 == Zmeny ==
@@ -21,6 +23,7 @@
 - V dialógu Hlasový výstup je v zozname uvedený len názov hlasových výstupov. Doteraz bol zobrazovaný aj názov modulu, ktorý je relevantný len interne.
 - Vo vnorených aplikáciách alebo virtuálnych dokumentoch v ďalšom virtuálnom dokumente napr. vo virtuálnom dokumente Adobe Flash je možné použiť NVDA+Control+medzerník na prepínanie do nadradeného virtuálneho prehliadača. Doteraz sa na toto používal príkaz NVDA+medzerník, ktorý sa stále používa na prepínanie medzi prehliadacím režimom a režimom fokusu.
 - Ak má systémový fokus zobrazovač reči (je možné zapnúť z menu nástroje) nový text sa nebude zobrazovať až kým systémový fokus nenadobudne iný prvok mimo tohoto prehliadača. Umožňuje to jednoduchšie vyberanie textu napr. na kopírovanie.
+- Zobrazovač logu a konzola python sú automaticky maximalizované pri každom zobrazení.
 
  
 == Opravy ==
@@ -33,6 +36,7 @@
 - Opravený ojedinelý pád v programe Internet Explorer pri navigácii po rámikoch a vnorených rámikoch.
 - V dokumentoch programu Microsoft Word sú znovu čitateľné riadky s jazykom zapísaným z prava do ľava(ako napríklad arabčina). (#627)
 - Výrazne zredukované zaostávanie počas výpisu veľkého množstva textu do okna príkazového riadku na 64 bitových systémoch. (#622)
+- V aplikáciách Microsoft Office NVDA nepadá pri používaní skriptu okno v popredí (NVDA+b) a počas navigácie na panely nástrojov. (#616)
 
 
 
