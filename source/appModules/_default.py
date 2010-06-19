@@ -550,21 +550,21 @@ class AppModule(appModuleHandler.AppModule):
 		speech.speechMode=newMode
 	script_speechMode.__doc__=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally.")
 
-	def script_moveToParentVirtualBuffer(self,keyPress):
+	def script_moveToParentTreeInterceptor(self,keyPress):
 		obj=api.getFocusObject()
 		parent=obj.parent
-		#Move up parents untill  the virtualBuffer of the parent is different to the virtualBuffer of the object.
-		#Note that this could include the situation where the parent has no virtualBuffer but the object did.
-		while parent and parent.virtualBuffer==obj.virtualBuffer:
+		#Move up parents untill  the tree interceptor of the parent is different to the tree interceptor of the object.
+		#Note that this could include the situation where the parent has no tree interceptor but the object did.
+		while parent and parent.treeInterceptor==obj.treeInterceptor:
 			parent=parent.parent
-		#If the parent has no virtualBuffer, keep moving up the parents until we find a parent that does have one.
-		while parent and not parent.virtualBuffer:
+		#If the parent has no tree interceptor, keep moving up the parents until we find a parent that does have one.
+		while parent and not parent.treeInterceptor:
 			parent=parent.parent
 		if parent:
-			parent.virtualBuffer.rootNVDAObject.setFocus()
+			parent.treeInterceptor.rootNVDAObject.setFocus()
 			import eventHandler
-			eventHandler.executeEvent("gainFocus",parent.virtualBuffer.rootNVDAObject)
-	script_moveToParentVirtualBuffer.__doc__=_("Moves the focus to the next closest virtualBuffer that contains the focus")
+			eventHandler.executeEvent("gainFocus",parent.treeInterceptor.rootNVDAObject)
+	script_moveToParentTreeInterceptor.__doc__=_("Moves the focus to the next closest document that contains the focus")
 
 	def script_toggleVirtualBufferPassThrough(self,keyPress):
 		vbuf = api.getFocusObject().treeInterceptor

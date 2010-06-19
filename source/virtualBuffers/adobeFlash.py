@@ -29,10 +29,10 @@ class AdobeFlash(VirtualBuffer):
 	def __init__(self,rootNVDAObject):
 		super(AdobeFlash,self).__init__(rootNVDAObject,backendName="adobeFlash")
 
-	def isNVDAObjectInVirtualBuffer(self,obj):
+	def __contains__(self,obj):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)
 
-	def isAlive(self):
+	def _get_isAlive(self):
 		root=self.rootNVDAObject
 		if not root:
 			return False
