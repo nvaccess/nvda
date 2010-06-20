@@ -808,7 +808,7 @@ class AppModule(appModuleHandler.AppModule):
 	script_activateObjectPresentationDialog.__doc__ = _("Shows the NVDA object presentation settings dialog")
 
 	def script_activateVirtualBuffersDialog(self,keyPress):
-		mainFrame.onTreeInterceptorsCommand(None)
+		mainFrame.onVirtualBuffersCommand(None)
 	script_activateVirtualBuffersDialog.__doc__ = _("Shows the NVDA virtual buffers settings dialog")
 
 	def script_activateDocumentFormattingDialog(self,keyPress):
