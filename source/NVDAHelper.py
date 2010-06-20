@@ -191,7 +191,7 @@ def initialize():
 	#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
 	h=windll.kernel32.LoadLibraryExW(ur"lib\nvdaHelperRemote.dll",0,0x8)
 	if not h:
-		log.critical("nvdaHelperRemote.dll missing")
+		log.critical("Error loading nvdaHelperRemote.dll: %s" % WinError())
 		return
 	_remoteLib=CDLL("nvdaHelperRemote",handle=h)
 	if _remoteLib.injection_initialize() == 0:
