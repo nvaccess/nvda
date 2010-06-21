@@ -78,6 +78,9 @@ def activate():
 	Otherwise, it will be brought to the foreground if possible.
 	"""
 	global logViewer
+	if globalVars.appArgs.secure:
+		# The log might expose sensitive information and the Save As dialog in the Log Viewer is a security risk.
+		return
 	if not logViewer:
 		logViewer = LogViewer(gui.mainFrame)
 	logViewer.Raise()

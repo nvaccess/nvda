@@ -93,6 +93,10 @@ class Logger(logging.Logger):
 			codepath=getCodePath(f)
 		extra["codepath"] = codepath
 
+		if globalVars.appArgs.secure:
+			# The log might expose sensitive information and the Save As dialog in the Log Viewer is a security risk.
+			activateLogViewer = False
+
 		if activateLogViewer:
 			# Import logViewer here, as we don't want to import GUI code when this module is imported.
 			from gui import logViewer
