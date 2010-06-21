@@ -26,7 +26,7 @@ import IAccessibleHandler
 import controlTypes
 from . import Window
 from .. import NVDAObjectTextInfo
-from ..behaviors import EditableText
+from ..behaviors import EditableTextWithAutoSelectDetection
 import braille
 
 selOffsetsAtLastCaretEvent=None
@@ -670,7 +670,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		self.obj.ITextSelectionObject.start=self._rangeObj.start
 		self.obj.ITextSelectionObject.end=self._rangeObj.end
 
-class Edit(EditableText, Window):
+class Edit(EditableTextWithAutoSelectDetection, Window):
 
 	editAPIVersion=0
 	editAPIUnicode=True

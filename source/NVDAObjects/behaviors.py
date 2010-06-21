@@ -108,14 +108,19 @@ class Dialog(NVDAObject):
 
 class EditableText(editableText.EditableText, NVDAObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.
-	This does not handle the selection change keys.
-	To have selection changes reported, the object must notify of selection changes via the caret event.
-	Optionally, it may notify of changes to content via the textChange, textInsert and textRemove events.
-	If the object supports selection but does not notify of selection changes, L{EditableTextWithoutAutoSelectDetection} should be used instead.
+	This does not handle selection changes.
+	To handle selection changes, use either L{EditableTextWithAutoSelectDetection} or L{EditableTextWithoutAutoSelectDetection}.
 	"""
 
 	initOverlayClass = editableText.EditableText.initClass
 	shouldFireCaretMovementFailedEvents = True
+
+class EditableTextWithAutoSelectDetection(EditableText):
+	"""In addition to L{EditableText}, handles reporting of selection changes for objects which notify of them.
+	To have selection changes reported, the object must notify of selection changes via the caret event.
+	Optionally, it may notify of changes to content via the textChange, textInsert and textRemove events.
+	If the object supports selection but does not notify of selection changes, L{EditableTextWithoutAutoSelectDetection} should be used instead.
+	"""
 
 	def event_gainFocus(self):
 		super(EditableText, self).event_gainFocus()

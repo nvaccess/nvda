@@ -25,7 +25,7 @@ from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
 import queueHandler
-from NVDAObjects.behaviors import ProgressBar, Dialog, EditableText
+from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -340,7 +340,7 @@ the NVDAObject for IAccessible
 				except:
 					isEditable=False
 			if isEditable:
-				clsList.append(EditableText)
+				clsList.append(EditableTextWithAutoSelectDetection)
 
 		# Use window class name and role to search for a class match in our static map.
 		keys=[(windowClassName,role),(None,role),(windowClassName,None)]

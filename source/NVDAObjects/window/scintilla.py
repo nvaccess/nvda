@@ -9,7 +9,7 @@ import controlTypes
 import config
 from . import Window
 from .. import NVDAObjectTextInfo
-from ..behaviors import EditableText
+from ..behaviors import EditableTextWithAutoSelectDetection
 import locale
 
 #Window messages
@@ -190,7 +190,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return [offset,winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,offset,0)]
 
 #The Scintilla NVDA object, inherists the generic MSAA NVDA object
-class Scintilla(EditableText, Window):
+class Scintilla(EditableTextWithAutoSelectDetection, Window):
 
 	TextInfo=ScintillaTextInfo
 
