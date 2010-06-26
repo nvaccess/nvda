@@ -43,13 +43,13 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 
 void incBackendLibRefCount() {
 	HMODULE h=NULL;
-	bool res=GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)backendLibHandle,&h);
+	BOOL res=GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)backendLibHandle,&h);
 	assert(res); //Result of upping backend lib ref count
 	DEBUG_MSG(L"Increased backend lib ref count");
 }
 
 void decBackendLibRefCount() {
-	bool res=FreeLibrary(backendLibHandle);
+	BOOL res=FreeLibrary(backendLibHandle);
 	assert(res); //Result of freeing backend lib
 	DEBUG_MSG(L"Decreased backend lib ref count");
 }
