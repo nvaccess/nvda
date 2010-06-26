@@ -270,7 +270,7 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 	pHTMLCurrentStyle->get_visibility(&tempBSTR);
 	if(tempBSTR) {
 		DEBUG_MSG(L"Got visibility");
-		invisible=(wcsicmp(tempBSTR,L"hidden")==0);
+		invisible=(_wcsicmp(tempBSTR,L"hidden")==0);
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
 	} else {
@@ -280,8 +280,8 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 	pHTMLCurrentStyle->get_display(&tempBSTR);
 	if(tempBSTR) {
 		DEBUG_MSG(L"Got display");
-		if (wcsicmp(tempBSTR,L"none")==0) invisible=true;
-		if (wcsicmp(tempBSTR,L"inline")==0) isBlock=false;
+		if (_wcsicmp(tempBSTR,L"none")==0) invisible=true;
+		if (_wcsicmp(tempBSTR,L"inline")==0) isBlock=false;
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
 	} else {
@@ -368,8 +368,8 @@ inline void fillTextFormatting_helper(IHTMLElement2* pHTMLElement2, VBufStorage_
 	pHTMLCurrentStyle->get_fontStyle(&tempBSTR);
 	if(tempBSTR) {
 		DEBUG_MSG(L"Got fontStyle");
-		if (wcsicmp(tempBSTR,L"normal")!=0) {
-			node->addAttribute((wcsicmp(tempBSTR,L"oblique")!=0) ? tempBSTR : L"italic", L"1");
+		if (_wcsicmp(tempBSTR,L"normal")!=0) {
+			node->addAttribute((_wcsicmp(tempBSTR,L"oblique")!=0) ? tempBSTR : L"italic", L"1");
 		}
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
@@ -390,12 +390,12 @@ inline void fillTextFormatting_helper(IHTMLElement2* pHTMLElement2, VBufStorage_
 	pHTMLCurrentStyle->get_textDecoration(&tempBSTR);
 	if(tempBSTR) {
 		DEBUG_MSG(L"Got textDecoration");
-		if (wcsicmp(tempBSTR,L"none")!=0) {
+		if (_wcsicmp(tempBSTR,L"none")!=0) {
 			// textDecoration may contain multiple values separated by spaces.
 			wchar_t *token, *tokenContext;
 			token = wcstok_s(tempBSTR, L" ", &tokenContext);
 			while (token) {
-				node->addAttribute((wcsicmp(token,L"line-through")!=0) ? token : L"strikethrough", L"1");
+				node->addAttribute((_wcsicmp(token,L"line-through")!=0) ? token : L"strikethrough", L"1");
 				token = wcstok_s(NULL, L" ", &tokenContext);
 			}
 		}
