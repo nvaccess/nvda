@@ -25,4 +25,4 @@ for arch in ('x86','x86_64'):
 	except:
 		print "Error setting up %s build environment"%arch 
 		continue
-	env.SConscript('archBuild_sconscript',exports=['env'],build_dir='build/%s'%arch)
+	env.SConscript('archBuild_sconscript',exports=['env'],variant_dir='build/%s'%arch)
