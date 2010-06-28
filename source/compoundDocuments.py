@@ -103,9 +103,9 @@ class CompoundTextInfo(textInfos.TextInfo):
 	def _get_pointAtStart(self):
 		return self._start.pointAtStart
 
-	def _getControlFieldForObject(self, obj):
+	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
 		role = obj.role
-		if role in (controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_EDITABLETEXT):
+		if ignoreEditableText and role in (controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_EDITABLETEXT):
 			# This is basically just a text node.
 			return None
 		field = textInfos.ControlField()
@@ -240,7 +240,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 						if isinstance(chunk, basestring):
 							fields.append(chunk)
 						else:
-							controlField = self._getControlFieldForObject(chunk)
+							controlField = self._getControlFieldForObject(chunk, ignoreEditableText=False)
 							controlField["alwaysReportName"] = True
 							fields.extend((textInfos.FieldCommand("controlStart", controlField),
 								u"\uFFFC",
