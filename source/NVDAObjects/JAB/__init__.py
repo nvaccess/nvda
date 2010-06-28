@@ -153,6 +153,19 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# TODO: Not sure how to interpret Java's alignment numbers.
 		return field, (offset, offset + length)
 
+	def getEmbeddedObject(self, offset=0):
+		offset += self._startOffset
+
+		# We need to count the embedded objects to determine which child to use.
+		# This could possibly be optimised by caching.
+		text = self._getTextRange(0, offset + 1)
+		childIndex = text.count(u"\uFFFC") - 1
+		jabContext=self.obj.jabContext.getAccessibleChildFromContext(childIndex)
+		if jabContext:
+			return JAB(jabContext=jabContext)
+
+		raise LookupError
+
 class JAB(Window):
 
 	def findOverlayClasses(self,clsList):
