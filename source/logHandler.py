@@ -3,6 +3,7 @@
 import os
 import sys
 import warnings
+from encodings import utf_8
 import logging
 from logging import _levelNames as levelNames
 import inspect
@@ -153,7 +154,18 @@ class Logger(logging.Logger):
 
 		self._log(level, msg, (), exc_info=exc_info)
 
-class FileHandler(logging.FileHandler):
+class FileHandler(logging.StreamHandler):
+
+	def __init__(self, filename, mode):
+		# We need to open the file in text mode to get CRLF line endings.
+		# Therefore, we can't use codecs.open(), as it insists on binary mode. See PythonIssue:691291.
+		# We know that \r and \n are safe in UTF-8, so PythonIssue:691291 doesn't matter here.
+		logging.StreamHandler.__init__(self, utf_8.StreamWriter(file(filename, mode)))
+
+	def close(self):
+		self.flush()
+		self.stream.close()
+		logging.StreamHandler.close(self)
 
 	def handle(self,record):
 		# versionInfo must be imported after the language is set. Otherwise, strings won't be in the correct language.
@@ -168,7 +180,7 @@ class FileHandler(logging.FileHandler):
 				nvwave.playWaveFile("waves\\error.wav")
 			except:
 				pass
-		return logging.FileHandler.handle(self,record)
+		return logging.StreamHandler.handle(self,record)
 
 class Formatter(logging.Formatter):
 
@@ -241,9 +253,8 @@ def initialize():
 	logging.addLevelName(Logger.IO, "IO")
 	if not globalVars.appArgs.logFileName:
 		globalVars.appArgs.logFileName = _getDefaultLogFilePath()
-	# HACK: codecs.open() always forces binary mode by appending "b" to mode, but we want text mode ("t") so we get crlf line endings.
-	# Fortunately, Python ignores the "b" if "t" is specified first (e.g. "wtb").
-	logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt", encoding="UTF-8")
+	# Our FileHandler always outputs in UTF-8.
+	logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt")
 	logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
