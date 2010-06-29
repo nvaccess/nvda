@@ -268,7 +268,7 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int d
 	}
 	BSTR nodeName=NULL;
 	pHTMLDOMNode->get_nodeName(&nodeName);
-	if(nodeName!=NULL&&(wcsicmp(nodeName,L"frame")==0||wcsicmp(nodeName,L"iframe")==0||wcsicmp(nodeName,L"img")==0||wcsicmp(nodeName,L"input")==0)) {
+	if(nodeName!=NULL&&(_wcsicmp(nodeName,L"frame")==0||_wcsicmp(nodeName,L"iframe")==0||_wcsicmp(nodeName,L"img")==0||_wcsicmp(nodeName,L"input")==0)) {
 		if(this->pHTMLElement2) {
 			CDispatchChangeSink* loadSink=new CDispatchChangeSink(this);
 			// It seems that IE 6 sometimes calls Release() once too many times.
@@ -283,7 +283,7 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int d
 			}
 		}
 	}
-	if(nodeName!=NULL&&(wcsicmp(nodeName,L"body")==0||wcsicmp(nodeName,L"frameset")==0)) {
+	if(nodeName!=NULL&&(_wcsicmp(nodeName,L"body")==0||_wcsicmp(nodeName,L"frameset")==0)) {
 		IHTMLDOMNode2* pHTMLDOMNode2=NULL;
 		pHTMLDOMNode->QueryInterface(IID_IHTMLDOMNode2,(void**)&pHTMLDOMNode2);
 		if(pHTMLDOMNode2) {
