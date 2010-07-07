@@ -9,10 +9,10 @@ The NVDA source depends on several other packages to run correctly, as described
 If you are running a 64 bit version of Windows, you should install the 32 bit versions of any dependencies that provide both 32 bit and 64 bit versions.
 
 General dependencies:
-	* Python 2.6, version 2.6.4 or later: http://www.python.org/
+	* Python 2.7, version 2.7.0 or later: http://www.python.org/
 	* comtypes, version 0.6.2 or later: http://www.sourceforge.net/projects/comtypes/
-	* wxPython unicode (for Python 2.6), version 2.8.9.1 or later: http://www.wxpython.org/
-	* Python Windows Extensions (for Python 2.6), build 212 or later: http://www.sourceforge.net/projects/pywin32/ 
+	* wxPython unicode (for Python 2.7), version 2.8.11.0 or later: http://www.wxpython.org/
+	* Python Windows Extensions (for Python 2.7), build 214 or later: http://www.sourceforge.net/projects/pywin32/ 
 	* eSpeak, version 1.43.03 or later, Windows dll:
 		* Official web site: http://espeak.sourceforge.net/
 		* The Windows dll is tricky to build, so a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
@@ -62,7 +62,7 @@ To use the Alva BC640/680 braille display driver:
 		* Copy alvaw32.dll into the source\brailleDisplayDrivers directory.
 
 To build a binary version of NVDA:
-	* Py2Exe (for Python 2.6), version 0.6.9 or later: http://www.sourceforge.net/projects/py2exe/
+	* Py2Exe (for Python 2.7), version 0.6.9 or later: http://www.sourceforge.net/projects/py2exe/
 
 To build an installer:
 	* Nulsoft Install System, version 2.42 or later: http://nsis.sourceforge.net/
