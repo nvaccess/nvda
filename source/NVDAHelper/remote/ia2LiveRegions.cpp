@@ -106,7 +106,6 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	//Ignore all events but a few types
 	switch(eventID) {
 		case EVENT_OBJECT_SHOW:
-		case EVENT_OBJECT_HIDE:
 		case IA2_EVENT_TEXT_INSERTED:
 		break;
 		default:
