@@ -12,6 +12,8 @@ import ctypes
 import time
 import vkCodes
 import speech
+import braille
+import ui
 from keyUtils import key, keyName, sendKey, localizedKeyLabels
 import scriptHandler
 import globalVars
@@ -50,11 +52,11 @@ def isNVDAModifierKey(vkCode,extended):
 def speakToggleKey(vkCode):
 	toggleState=bool(not winUser.getKeyState(vkCode)&1)
 	if vkCode==winUser.VK_CAPITAL:
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("caps lock %s")%(_("on") if toggleState else _("off")))
+		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("caps lock %s")%(_("on") if toggleState else _("off")))
 	elif vkCode==winUser.VK_NUMLOCK:
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("num lock %s")%(_("on") if toggleState else _("off")))
+		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("num lock %s")%(_("on") if toggleState else _("off")))
 	elif vkCode==winUser.VK_SCROLL:
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("scroll lock %s")%(_("on") if toggleState else _("off")))
+		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("scroll lock %s")%(_("on") if toggleState else _("off")))
 
 def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by keyHook when it receives a keyDown. It sees if there is a script tied to this key and if so executes it. It also handles the speaking of characters, words and command keys.
@@ -171,7 +173,6 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				scriptLocation=scriptHandler.getScriptLocation(script)
 				brailleTextList.append(scriptLocation)
 				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("Location: %s")%scriptLocation)
-				import braille
 				braille.handler.message("\t\t".join(brailleTextList))
 			else:
 				scriptHandler.queueScript(script,keyPress)
