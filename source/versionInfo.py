@@ -4,30 +4,15 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from __future__ import with_statement
 import os
 
-SVN_ENTRIES_PATH = r".svn\entries"
 BZR_LASTREV_PATH = r"..\.bzr\branch\last-revision"
 
 def _updateVersionFromVCS():
 	"""Update the version from version control system metadata if possible.
 	"""
 	global version
-	if os.path.isfile(SVN_ENTRIES_PATH):
-		# Running from svn checkout.
-		try:
-			f = file(SVN_ENTRIES_PATH, "r")
-			# The revision number is on the fourth line.
-			for ln in xrange(4):
-				rev = f.readline()
-			rev = rev.strip()
-			# URL is on the next line.
-			branch = f.readline().split("/")[-2]
-			version = "%s-r%s" % (branch, rev)
-		except (IOError, IndexError):
-			pass
-	elif os.path.isfile(BZR_LASTREV_PATH):
+	if os.path.isfile(BZR_LASTREV_PATH):
 		# Running from bzr checkout.
 		try:
 			rev = file(BZR_LASTREV_PATH, "r").read().split(" ")[0]
