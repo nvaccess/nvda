@@ -22,11 +22,11 @@ SCI_GETTEXTLENGTH=2183
 SCI_GETLENGTH=2006
 SCI_GETCURRENTPOS=2008
 SCI_GETANCHOR=2009
+SCI_GOTOPOS=2025
 SCI_SETCURRENTPOS=2141
-SCI_SETSELECTIONSTART=2142
 SCI_GETSELECTIONSTART=2143
-SCI_SETSELECTIONEND=2144
 SCI_GETSELECTIONEND=2145
+SCI_SETSEL=2160
 SCI_GETLINEENDPOSITION=2136
 SCI_GETLINECOUNT=2154
 SCI_LINEFROMPOSITION=2166
@@ -117,7 +117,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return winUser.sendMessage(self.obj.windowHandle,SCI_GETCURRENTPOS,0,0)
 
 	def _setCaretOffset(self,offset):
-		winUser.sendMessage(self.obj.windowHandle,SCI_SETCURRENTPOS,offset,0)
+		winUser.sendMessage(self.obj.windowHandle,SCI_GOTOPOS,offset,0)
 
 	def _getSelectionOffsets(self):
 		start=winUser.sendMessage(self.obj.windowHandle,SCI_GETSELECTIONSTART,0,0)
@@ -125,8 +125,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return (start,end)
 
 	def _setSelectionOffsets(self,start,end):
-		winUser.sendMessage(self.obj.windowHandle,SCI_SETSELECTIONSTART,start,0)
-		winUser.sendMessage(self.obj.windowHandle,SCI_SETSELECTIONEND,end,0)
+		winUser.sendMessage(self.obj.windowHandle,SCI_SETSEL,start,end)
 
 	def _getStoryText(self):
 		if not hasattr(self,'_storyText'):

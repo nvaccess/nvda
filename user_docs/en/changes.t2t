@@ -45,6 +45,7 @@
 - Fixed incorrect speaking of numbers containing a 0 after a separator; e.g. 1,023. (#593)
 - Adobe Acrobat Pro and Reader 9 no longer crash when closing a file or performing certain other tasks. (#613)
 - The selection is now announced when control+a is pressed to select all text in some editable text controls such as in Microsoft Word. (#761)
+- In Scintilla controls (e.g. Notepad++), text is no longer incorrectly selected when NVDA moves the caret such as during say all. (#746)
 
 
 = 2010.1 =
