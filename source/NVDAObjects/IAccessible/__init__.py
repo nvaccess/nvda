@@ -17,6 +17,7 @@ import winUser
 import globalVars
 from logHandler import log
 import speech
+import braille
 import api
 import config
 import controlTypes
@@ -1254,8 +1255,11 @@ class OutlineItem(IAccessible):
 class Tooltip(IAccessible):
 
 	def event_show(self):
+		# TODO: Abstract this somehow.
 		if (config.conf["presentation"]["reportTooltips"] and (self.IAccessibleRole==oleacc.ROLE_SYSTEM_TOOLTIP)) or (config.conf["presentation"]["reportHelpBalloons"] and (self.IAccessibleRole==oleacc.ROLE_SYSTEM_HELPBALLOON)):
 			speech.speakObject(self,reason=speech.REASON_FOCUS)
+			# TODO: Don't use getBrailleTextForProperties directly.
+			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
 
 class ConsoleWindowClass(IAccessible):
 
