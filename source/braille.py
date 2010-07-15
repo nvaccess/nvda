@@ -228,7 +228,7 @@ def getBrailleTextForProperties(**propertyValues):
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
 		textList.append(keyboardShortcut)
-	positionInfo = propertyValues["positionInfo"]
+	positionInfo = propertyValues.get("positionInfo")
 	if positionInfo:
 		if 'indexInGroup' in positionInfo and 'similarItemsInGroup' in positionInfo:
 			textList.append(_("%s of %s")%(positionInfo['indexInGroup'],positionInfo['similarItemsInGroup']))
