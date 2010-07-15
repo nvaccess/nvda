@@ -218,5 +218,6 @@ class EditableTextWithoutAutoSelectDetection(EditableText):
 			"shift+ExtendedEnd",
 			"shift+control+extendedHome",
 			"shift+control+extendedEnd",
+			"control+a",
 		):
 			self.bindKey_runtime(keyName, "caret_changeSelection")
