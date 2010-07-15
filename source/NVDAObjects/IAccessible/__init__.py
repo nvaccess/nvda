@@ -293,9 +293,14 @@ the NVDAObject for IAccessible
 			accFocus=None
 			testAccFocus=acc
 			# Keep doing accFocus until we can't anymore or until accFocus keeps returning the same object.
-			while testAccFocus and testAccFocus!=accFocus:
-				accFocus=testAccFocus
-				testAccFocus=IAccessibleHandler.accFocus(accFocus[0])
+			while True:
+				testAccFocus=IAccessibleHandler.accFocus(testAccFocus[0])
+				# Only set the accFocus variable if we get something useful using accFocus.
+				if testAccFocus and testAccFocus!=(accFocus or acc):
+					accFocus = testAccFocus
+				else:
+					# We can't go any further.
+					break
 			if accFocus:
 				acc=accFocus
 				# We don't know the event parameters for this object.
