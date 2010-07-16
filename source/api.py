@@ -251,6 +251,8 @@ def processPendingEvents(processEventQueue=True):
 	import JABHandler
 	import wx
 	import queueHandler
+	import watchdog
+	watchdog.alive()
 	wx.Yield()
 	JABHandler.pumpAll()
 	IAccessibleHandler.pumpAll()
