@@ -61,6 +61,10 @@ To use the Alva BC640/680 braille display driver:
 	* ALVA BC6 generic dll, version 2.0.3.0 or later: http://www.nvda-project.org/3rdParty/alvaw32.dll
 		* Copy alvaw32.dll into the source\brailleDisplayDrivers directory.
 
+To use the MDV Lilli braille display driver:
+	* lilli.dll: http://www.nvda-project.org/3rdParty/lilli.dll
+		* Copy lilli.dll into the source\brailleDisplayDrivers directory.
+
 To build a binary version of NVDA:
 	* Py2Exe (for Python 2.7), version 0.6.9 or later: http://www.sourceforge.net/projects/py2exe/
 
