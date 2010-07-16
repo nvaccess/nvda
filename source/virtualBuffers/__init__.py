@@ -192,9 +192,9 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		try:
 			newNode, newStart, newEnd = next(self.obj._iterNodesByType("focusable", "up", self._startOffset))
 		except StopIteration:
-			return None
+			return self.obj.rootNVDAObject
 		if not newNode:
-			return None
+			return self.obj.rootNVDAObject
 		docHandle=ctypes.c_int()
 		ID=ctypes.c_int()
 		NVDAHelper.localLib.VBuf_getIdentifierFromControlFieldNode(self.obj.VBufHandle, newNode, ctypes.byref(docHandle), ctypes.byref(ID))
