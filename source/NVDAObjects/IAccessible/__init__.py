@@ -1051,7 +1051,7 @@ the NVDAObject for IAccessible
 
 	def event_valueChange(self):
 		if hasattr(self,'IAccessibleTextObject'):
-			self._hasContentChangedSinceLastSelection=True
+			self.hasContentChangedSinceLastSelection=True
 			return
 		return super(IAccessible,self).event_valueChange()
 
