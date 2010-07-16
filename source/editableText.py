@@ -177,7 +177,7 @@ class EditableText(ScriptableObject):
 		if not oldInfo:
 			# There's nothing we can do, but at least the last selection will be right next time.
 			return
-		hasContentChanged=self.hasContentChangedSinceLastSelection
+		hasContentChanged=getattr(self,'hasContentChangedSinceLastSelection',False)
 		self.hasContentChangedSinceLastSelection=False
 		speech.speakSelectionChange(oldInfo,newInfo,generalize=hasContentChanged)
 
