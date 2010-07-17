@@ -1,4 +1,4 @@
-ï»¿What's New in NVDA
+What's New in NVDA
 
 
 %!includeconf: ../changes.conf.t2t
@@ -21,6 +21,7 @@
 - The state of toggle keys (caps lock, num lock and scroll lock) is now displayed in braille when they are pressed. (#620)
 - Help balloons are now displayed in braille when they appear. (#652)
 - Added a driver for the MDV Lilli braille display. (#241)
+- When selecting an entire row or column in MS Excel with the shortcut keys shift+space and control+space, the new selection is now reported. (#759)
 
 
 == Changes ==
@@ -29,11 +30,12 @@
 - When in embedded applications or virtual buffers inside another virtualBuffer (e.g. Flash), you can now  press nvda+control+space to move out of the embedded application or virtual buffer, in to the above document. Previously nvda+space  was used for this. Now nvda+space is specifically only for toggling brows/focus modes on virtualBuffers.
 - If the speech viewer (enabled under the tools menu) is given the focus (e.g. it was clicked in) new text will not appear in the control until focus is moved away. This allows for selecting the text with greater ease (e.g. for copying).
 - The Log Viewer and Python Console are maximised when activated.
+- When focusing on a worksheet in MS Excel, and there is more than one cell selected, the selection range is announced, rather than just the active cell. (#763)
 
 
 == Bug Fixes ==
-- In ÂµTorrent, the focused item in the torrents list no longer reports repeatedly or steals focus when a menu is open.
-- In ÂµTorrent, the names of the files in the Torrent Contents list are now reported.
+- In µTorrent, the focused item in the torrents list no longer reports repeatedly or steals focus when a menu is open.
+- In µTorrent, the names of the files in the Torrent Contents list are now reported.
 - In Mozilla applications, focus is now correctly detected when it lands on an empty table or tree.
 - In Mozilla applications, "not checked" is now correctly reported for checkable controls such as checkable table cells. (#571)
 - In Mozilla applications, the text of correctly implemented ARIA dialogs is no longer ignored and will now be reported when the dialog appears. (#630)
@@ -47,6 +49,7 @@
 - Adobe Acrobat Pro and Reader 9 no longer crash when closing a file or performing certain other tasks. (#613)
 - The selection is now announced when control+a is pressed to select all text in some editable text controls such as in Microsoft Word. (#761)
 - In Scintilla controls (e.g. Notepad++), text is no longer incorrectly selected when NVDA moves the caret such as during say all. (#746)
+- It is again possible to review the contents of cells in MS Excel with the review cursor.
 
 
 = 2010.1 =
