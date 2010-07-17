@@ -102,7 +102,7 @@ class ExcelWorksheet(ExcelWindow):
 		return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=cell)
 
 
-	def script_extendSelection(self,keyPress):
+	def script_changeSelection(self,keyPress):
 		sendKey(keyPress)
 		selection=self.excelWindowObject.Selection
 		if selection.Count>1:
@@ -110,45 +110,36 @@ class ExcelWorksheet(ExcelWindow):
 		else:
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
 		eventHandler.executeEvent("gainFocus",obj)
-	script_extendSelection.__doc__=_("Extends the selection and speaks the last selected cell")
-	script_extendSelection.canPropagate=True
-
-	def script_moveByCell(self,keyPress):
-		"""Moves to a cell and speaks its coordinates and content"""
-		sendKey(keyPress)
-		activeCell=self.excelWindowObject.ActiveCell
-		obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=activeCell)
-		eventHandler.executeEvent("gainFocus",obj)
-	script_moveByCell.__doc__=_("Moves to a cell and speaks its coordinates and content")
-	script_moveByCell.canPropagate=True
+	script_changeSelection.__doc__=_("Extends the selection and speaks the last selected cell")
+	script_changeSelection.canPropagate=True
 
 [ExcelWorksheet.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("Tab","moveByCell"),
-	("Shift+Tab","moveByCell"),
-	("ExtendedUp","moveByCell"),
-	("ExtendedDown","moveByCell"),
-	("ExtendedLeft","moveByCell"),
-	("ExtendedRight","moveByCell"),
-	("Control+ExtendedUp","moveByCell"),
-	("Control+ExtendedDown","moveByCell"),
-	("Control+ExtendedLeft","moveByCell"),
-	("Control+ExtendedRight","moveByCell"),
-	("ExtendedHome","moveByCell"),
-	("ExtendedEnd","moveByCell"),
-	("Control+ExtendedHome","moveByCell"),
-	("Control+ExtendedEnd","moveByCell"),
-	("Shift+ExtendedUp","extendSelection"),
-	("Shift+ExtendedDown","extendSelection"),
-	("Shift+ExtendedLeft","extendSelection"),
-	("Shift+ExtendedRight","extendSelection"),
-	("Shift+Control+ExtendedUp","extendSelection"),
-	("Shift+Control+ExtendedDown","extendSelection"),
-	("Shift+Control+ExtendedLeft","extendSelection"),
-	("Shift+Control+ExtendedRight","extendSelection"),
-	("Shift+ExtendedHome","extendSelection"),
-	("Shift+ExtendedEnd","extendSelection"),
-	("Shift+Control+ExtendedHome","extendSelection"),
-	("Shift+Control+ExtendedEnd","extendSelection"),
+	("Tab","changeSelection"),
+	("Shift+Tab","changeSelection"),
+	("ExtendedUp","changeSelection"),
+	("ExtendedDown","changeSelection"),
+	("ExtendedLeft","changeSelection"),
+	("ExtendedRight","changeSelection"),
+	("Control+ExtendedUp","changeSelection"),
+	("Control+ExtendedDown","changeSelection"),
+	("Control+ExtendedLeft","changeSelection"),
+	("Control+ExtendedRight","changeSelection"),
+	("ExtendedHome","changeSelection"),
+	("ExtendedEnd","changeSelection"),
+	("Control+ExtendedHome","changeSelection"),
+	("Control+ExtendedEnd","changeSelection"),
+	("Shift+ExtendedUp","changeSelection"),
+	("Shift+ExtendedDown","changeSelection"),
+	("Shift+ExtendedLeft","changeSelection"),
+	("Shift+ExtendedRight","changeSelection"),
+	("Shift+Control+ExtendedUp","changeSelection"),
+	("Shift+Control+ExtendedDown","changeSelection"),
+	("Shift+Control+ExtendedLeft","changeSelection"),
+	("Shift+Control+ExtendedRight","changeSelection"),
+	("Shift+ExtendedHome","changeSelection"),
+	("Shift+ExtendedEnd","changeSelection"),
+	("Shift+Control+ExtendedHome","changeSelection"),
+	("Shift+Control+ExtendedEnd","changeSelection"),
 ]]
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
