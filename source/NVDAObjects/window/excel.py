@@ -151,7 +151,7 @@ class ExcelWorksheet(ExcelWindow):
 	("Shift+Control+ExtendedEnd","extendSelection"),
 ]]
 
-class ExcelCellTextInfo(textInfos.offsets.OffsetsTextInfo):
+class ExcelCellTextInfo(NVDAObjectTextInfo):
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		formatField=textInfos.FormatField()
@@ -165,10 +165,6 @@ class ExcelCellTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField['italic']=fontObj.italic
 			formatField['underline']=fontObj.underline
 		return formatField,(self._startOffset,self._endOffset)
-
-	def _getTextRange(self,start,end):
-		text=self.obj.excelCellObject.Text
-		return text[start:end]
 
 class ExcelCell(ExcelWindow):
 
