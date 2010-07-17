@@ -81,8 +81,11 @@ class Excel7Window(ExcelWindow):
 		return self.excelWindowObjectFromWindow(self.windowHandle)
 
 	def event_gainFocus(self):
-		activeCell=self.excelWindowObject.ActiveCell
-		obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=activeCell)
+		selection=self.excelWindowObject.Selection
+		if selection.Count>1:
+			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
+		else:
+			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
 		eventHandler.executeEvent("gainFocus",obj)
 
 class ExcelWorksheet(ExcelWindow):
