@@ -101,7 +101,6 @@ class ExcelWorksheet(ExcelWindow):
 		cell=self.excelWorksheetObject.cells(1,1)
 		return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=cell)
 
-
 	def script_changeSelection(self,keyPress):
 		sendKey(keyPress)
 		selection=self.excelWindowObject.Selection
@@ -140,6 +139,8 @@ class ExcelWorksheet(ExcelWindow):
 	("Shift+ExtendedEnd","changeSelection"),
 	("Shift+Control+ExtendedHome","changeSelection"),
 	("Shift+Control+ExtendedEnd","changeSelection"),
+	("shift+space","changeSelection"),
+	("control+space","changeSelection"),
 ]]
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
