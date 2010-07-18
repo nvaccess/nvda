@@ -290,19 +290,21 @@ the NVDAObject for IAccessible
 		elif relation=="focus":
 			objID=winUser.OBJID_CLIENT
 			acc=IAccessibleHandler.accessibleObjectFromEvent(windowHandle,objID,0)
-			accFocus=None
+			if not acc:
+				return False
 			testAccFocus=acc
+			usedAccFocus=False
 			# Keep doing accFocus until we can't anymore or until accFocus keeps returning the same object.
 			while True:
 				testAccFocus=IAccessibleHandler.accFocus(testAccFocus[0])
-				# Only set the accFocus variable if we get something useful using accFocus.
-				if testAccFocus and testAccFocus!=(accFocus or acc):
-					accFocus = testAccFocus
+				# Only set the acc variable if we get something useful using accFocus.
+				if testAccFocus and testAccFocus!=acc:
+					acc=testAccFocus
+					usedAccFocus=True
 				else:
 					# We can't go any further.
 					break
-			if accFocus:
-				acc=accFocus
+			if usedAccFocus:
 				# We don't know the event parameters for this object.
 				objID=None
 				# This object may also be in a different window, so we need to recalculate the window handle.
