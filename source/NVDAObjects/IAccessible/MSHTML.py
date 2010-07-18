@@ -654,7 +654,10 @@ class Body(MSHTML):
 		# which might have the focused state.
 		if controlTypes.STATE_FOCUSED in self.states:
 			return True
-		return super(Body, self).parent.shouldAllowIAccessibleFocusEvent
+		parent = super(Body, self).parent
+		if not parent:
+			return False
+		return parent.shouldAllowIAccessibleFocusEvent
 
 class Object(MSHTML):
 
