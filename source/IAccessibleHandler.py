@@ -624,8 +624,10 @@ def processFocusWinEvent(window,objectID,childID,force=False):
 	@rtype: boolean
 	"""
 	windowClassName=winUser.getClassName(window)
-	#We must ignore focus on child windows of SDM windows as we only want the SDM MSAA events
-	if not windowClassName.startswith('bosa_sdm') and winUser.getClassName(winUser.getAncestor(window,winUser.GA_PARENT)).startswith('bosa_sdm'):
+	# Generally, we must ignore focus on child windows of SDM windows as we only want the SDM MSAA events.
+	# However, we don't want to ignore focus if the child ID isn't 0,
+	# as this is a child control and the SDM MSAA events don't handle child controls.
+	if childID==0 and not windowClassName.startswith('bosa_sdm') and winUser.getClassName(winUser.getAncestor(window,winUser.GA_PARENT)).startswith('bosa_sdm'):
 		return True
 	rootWindow=winUser.getAncestor(window,winUser.GA_ROOT)
 	# If this window's root window is not the foreground window and this window or its root window is not a popup window:
