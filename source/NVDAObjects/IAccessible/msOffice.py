@@ -22,7 +22,7 @@ class SDM(IAccessible):
 		return super(SDM,self).positionInfo
 
 	def _get_parent(self):
-		if self.IAccessibleChildID == 0 and self.role not in (controlTypes.ROLE_DIALOG, controlTypes.ROLE_WINDOW):
+		if self.IAccessibleChildID == 0 and self.role not in (controlTypes.ROLE_DIALOG, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_WINDOW):
 			# SDM child IAccessible objects have a broken accParent.
 			# The parent should be the dialog.
 			return getNVDAObjectFromEvent(self.windowHandle, winUser.OBJID_CLIENT, 0)
