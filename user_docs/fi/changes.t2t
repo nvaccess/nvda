@@ -11,12 +11,17 @@
 - NVDA lukee Solut oikein Microsoft Excelissä, kun hiiri siirretään niiden päälle.
 - Java Access Bridgeä käyttävien sovellusten valintaikkunoiden teksti luetaan nyt automaattisesti valintaikkunoiden tullessa näkyviin. (#554)
 - Näennäispuskuria voidaan nyt käyttää Adobe Flash -sisällössä navigoimiseen. Objektinavigointia ja suoraa vuorovaikutusta säädinten kanssa kohdistustilaa käyttäen tuetaan edelleen. (#453)
-- Eclipse IDE:n muokattavat tekstisäätimet koodieditori mukaan lukien ovat nyt esteettömiä. Käytössä on oltava Eclipse 3.6 tai uudempi. (#256, #641)
+- Eclipse IDE:n muokattavat tekstisäätimet koodimuokkain mukaan lukien ovat nyt esteettömiä. Käytössä on oltava Eclipse 3.6 tai uudempi. (#256, #641)
 - NVDA voi nyt lukea suurimman osan näytöllä olevasta tekstistä. (#40, #643)
  - Tämä mahdollistaa sellaisten säädinten lukemisen, jotka eivät välitä tietoja suoremmilla ja luotettavammilla tavoilla.
  - Tämä ominaisuus tekee esteettömiksi mm. jotkin kuvakkeita näyttävät valikoiden kohdat (esim. Windows XP:n Avaa sovelluksessa -valikko) (#151), Windows Live -sovellusten muokattavat tekstikentät (#200), Outlook Expressin virheluettelo (#582), TextPadin muokattava tekstisäädin (#605), Eudoran luettelot, monet Australian E-tax:in säätimet ja Microsoft Excelin kaavapalkki.
 - Tuki Microsoft Visual Studio 2005:n ja 2008:n koodimuokkaimelle. Vaaditaan vähintään Visual Studio Standard, ei toimi Express-versioissa. (#457)
 - Tuki IBM Lotus Symphony -asiakirjoille.
+- Varhaisessa vaiheessa oleva kokeellinen tuki Google Chromelle. Huomaa, ettei Chromen ruudunlukuohjelmatuki ole läheskään valmis, ja että NVDA:ssakin saattavat lisätoimet olla tarpeen. Tämän tuen kokeilemiseksi tarvitaan Chromen uusin kehitysversio.
+- Caps lock-, num lock- ja scroll lock -näppäinten tila näytetään nyt pistenäytöllä niitä painettaessa. (#620)
+- Kuplailmoitukset näytetään nyt pistenäytöllä niiden tullessa näkyviin. (#652)
+- Lisätty ajuri MDV Lilli -pistenäytölle. (#241)
+- Uusi valinta luetaan nyt Microsoft Excelissä, kun koko rivi tai sarake valitaan pikanäppäimillä Shift+välilyönti ja Ctrl+välilyönti. (#759)
 
 
 == Muutokset ==
@@ -25,19 +30,26 @@
 - Web-sivuille upotetuista sovelluksista ja sisäkkäisistä näennäispuskureista (esim. Flash) voidaan nyt siirtyä pois ja takaisin ylempään asiakirjaan (=web-sivulle) painamalla NVDA+Ctrl+välilyönti. Aiemmin tähän käytettiin näppäinyhdistelmää NVDA+välilyönti, jota käytetään nyt vain näennäispuskureiden selaus- ja kohdistustilojen välillä vaihtamiseen.
 - Jos kohdistus siirtyy puheen tarkastelu -säätimeen (otetaan käyttöön Työkalut-valikosta) esim. siksi, että sitä napsautettiin hiirellä, säätimeen ei ilmesty uutta tekstiä ennen kuin kohdistus siirtyy siitä pois. Tämä mahdollistaa helpomman tekstin valitsemisen esim. kopiointia varten.
 - Lokinkatselu- ja Python-konsoli-ikkunat suurennetaan avattaessa.
+- Kun Microsoft Excelissä on työkirja aktiivisena ja kun useampi kuin yksi solu on valittu, valinnan alue luetaan, eikä vain aktiivista solua. (#763)
 
 
 == Vikojen korjaukset ==
 - µTorrentin torrent-luettelon aktiivista kohtaa ei enää lueta toistuvasti eikä kohdistus enää siirry siihen valikon ollessa auki.
+- Torrentin sisältölistan tiedostojen nimet luetaan nyt µTorrentissa.
 - Kohdistus tunnistetaan nyt oikein Mozilla-sovelluksissa siirryttäessä tyhjään taulukkoon tai puunäkymään.
 - Valittavissa olevien säädinten, kuten valittavien taulukon solujen, ei valittu -tila ilmoitetaan nyt oikein Mozilla-sovelluksissa. (#571)
-- Asianmukaisesti toteutettujen ARIA-valintaikkunoiden tekstiä ei enää ohiteta Mozilla-sovelluksissa, vaan se luetaan kyseisten valintaikkunoiden tullessa näkyviin.
+- Asianmukaisesti toteutettujen ARIA-valintaikkunoiden tekstiä ei enää ohiteta Mozilla-sovelluksissa, vaan se luetaan kyseisten valintaikkunoiden tullessa näkyviin. (#630)
 - ARIA:n taso-attribuuttia noudatetaan nyt oikein Internet Explorerissa ja muissa MSHTML-säätimissä.
 - ARIA:n rooli valitaan nyt muiden tyyppitietojen sijasta virheettömämmän ja odotustenmukaisemman ARIA-kokemuksen antamiseksi Internet Explorerissa ja muissa MSHTML-säätimissä.
 - Korjattu harvinainen kaatuminen Internet Explorerissa liikuttaessa tavallisten tai sisäisten kehysten välillä.
 - Oikealta vasemmalle luettavia rivejä (kuten arabialaista tekstiä) voidaan jälleen lukea Microsoft Word -asiakirjoissa. (#627)
 - Vähennetty merkittävästi hidastumista 64-bittisissä järjestelmissä, kun komentokehotteessa näytetään suurta määrää tekstiä.
 - NVDA ei enää kaadu Microsoft Office -sovelluksissa painettaessa NVDA+B (lue aktiivinen ikkuna) tai navigoitaessa joissakin työkalurivien objekteissa. (#616)
+- Korjattu sellaisten lukujen väärin lukeminen, joissa on erottimen jälkeen 0, esim. 1,023. (#593)
+- Adobe Acrobat Pro ja Reader 9 eivät enää kaadu tiedostoa suljettaessa tai tiettyjä muita tehtäviä suoritettaessa. (#613)
+- Kaiken tekstin valitseminen ilmoitetaan nyt painettaessa ctrl+A joissakin muokattavissa tekstisäätimissä, kuten Microsoft Wordissa. (#761)
+- Tekstiä ei enää virheellisesti valita Scintilla-säätimissä (esim. Notepad++:ssa) NVDA:n liikuttaessa järjestelmäkohdistinta esim. lue kaikki -toiminnon aikana tai siirrettäessä kohdistinta samaan paikkaan, jossa pistenäytöllä ollaan. (#746)
+- Microsoft Excelin solujen sisällön tarkasteleminen tarkastelukohdistimella on jälleen mahdollista.
 
 
 == 2010.1 ==
@@ -300,7 +312,7 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin vers
 - Tuki tekstin hiirellä lukemiseen Wordissa.
 - Korjattu vika, joka aiheutti sen, ettei valittua tekstiä enää luettu sovellusten valikkoriveiltä poistuttaessa (esim. WordPadissa)
 - Kappaleen nimeä ei enää lueta uudestaan ja uudestaan Winampissa kappaletta vaihdettaessa, toistoa pysäytettäessä, jatkettaessa tai keskeytettäessä.
-- Lisätty mahdollisuus satunnaissoitto- ja toistosäädinten tilan lukemiseen Winampissa. Toimii pääikkunassa ja soittolistaeditorissa.
+- Lisätty mahdollisuus satunnaissoitto- ja toistosäädinten tilan lukemiseen Winampissa. Toimii pääikkunassa ja soittolistamuokkaimessa.
 - Paranneltu tiettyjen kohteiden aktivoimista Mozilla Gecko -näennäispuskureissa. Näitä kohteita voivat olla napsautettavat kuvat, kappaleita sisältävät linkit sekä muut oudot rakenteet.
 - Korjattu viive avattaessa NVDA:n asetusvalintaikkunoita joissakin järjestelmissä. (#65)
 - Lisätty tuki Total Commander -tiedostojenhallintasovellukselle.
@@ -399,7 +411,7 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin vers
 === Sovellustuki ===
 - Firefox 3:n ja Thunderbird 3:n tukea paranneltu. Latausajat ovat lähes 30 kertaa nopeampia, ruutuasettelua käytetään oletusarvoisesti (asetusta voidaan vaihtaa painamalla NVDA+V), lisätty linkkilista (NVDA+F7), Etsi-valintaikkunassa (Ctrl+NVDA+F) kirjainkoolla ei ole väliä, paljon parempi dynaamisen sisällön tuki, tekstin valitseminen ja kopioiminen on nyt mahdollista.
 - Tekstin valitseminen ja kopioiminen on nyt mahdollista MSN Messengerin ja Windows Live Messengerin historialuetteloissa.
-- Audacity-äänieditorin tukea paranneltu.
+- Audacity-äänimuokkaimen tukea paranneltu.
 - Lisätty tuki muutamille Skypen muokkaus- ja tekstisäätimille.
 - Miranda-IM:n tukea paranneltu.
 - Korjattu joitakin kohdistusongelmia avattaessa HTML- ja pelkkää tekstiä sisältäviä viestejä Outlook Expressissä.
