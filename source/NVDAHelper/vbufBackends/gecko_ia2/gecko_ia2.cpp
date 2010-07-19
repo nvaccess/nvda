@@ -330,6 +330,54 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 				parentNode->addAttribute(L"table-rowsspanned", s.str());
 			}
 		}
+		IUnknown** headerCells;
+		long nHeaderCells;
+		if ((res = paccTableCell->get_columnHeaderCells(&headerCells, &nHeaderCells)) == S_OK) {
+			DEBUG_MSG(L"IAccessibleTableCell::get_columnHeaderCells succeeded, adding header IDs");
+			s.str(L"");
+			for (int hci = 0; hci < nHeaderCells; hci++) {
+				IAccessible2* headerCellPacc = NULL;
+				if ((res = headerCells[hci]->QueryInterface(IID_IAccessible2, (void**)(&headerCellPacc))) != S_OK) {
+					DEBUG_MSG(L"QueryInterface column header cell " << hci << " to IAccessible2 failed with " << res);
+					headerCells[hci]->Release();
+					continue;
+				}
+				headerCells[hci]->Release();
+				long headerCellID;
+				if ((res = headerCellPacc->get_uniqueID(&headerCellID)) != S_OK) {
+					DEBUG_MSG("IAccessible2::get_uniqueID on column header cell " << hci << " failed with " << res);
+					headerCellPacc->Release();
+					continue;
+				}
+				s << headerCellID << L",";
+				headerCellPacc->Release();
+			}
+			if (!s.str().empty())
+				parentNode->addAttribute(L"table-columnheadercells", s.str());
+		}
+		if ((res = paccTableCell->get_rowHeaderCells(&headerCells, &nHeaderCells)) == S_OK) {
+			DEBUG_MSG(L"IAccessibleTableCell::get_rowHeaderCells succeeded, adding header IDs");
+			s.str(L"");
+			for (int hci = 0; hci < nHeaderCells; hci++) {
+				IAccessible2* headerCellPacc = NULL;
+				if ((res = headerCells[hci]->QueryInterface(IID_IAccessible2, (void**)(&headerCellPacc))) != S_OK) {
+					DEBUG_MSG(L"QueryInterface row header cell " << hci << " to IAccessible2 failed with " << res);
+					headerCells[hci]->Release();
+					continue;
+				}
+				headerCells[hci]->Release();
+				long headerCellID;
+				if ((res = headerCellPacc->get_uniqueID(&headerCellID)) != S_OK) {
+					DEBUG_MSG("IAccessible2::get_uniqueID on row header cell " << hci << " failed with " << res);
+					headerCellPacc->Release();
+					continue;
+				}
+				s << headerCellID << L",";
+				headerCellPacc->Release();
+			}
+			if (!s.str().empty())
+				parentNode->addAttribute(L"table-rowheadercells", s.str());
+		}
 		paccTableCell->Release();
 		paccTableCell = NULL;
 		// We're now within a cell, so descendant nodes shouldn't refer to this table anymore.
