@@ -12,6 +12,7 @@ import controlTypes
 from keyUtils import key, sendKey
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
+from NVDAObjects.IAccessible.MSHTML import MSHTML
 
 def getContactString(obj):
 		return ", ".join([x for x in [obj.fullName,obj.companyName,obj.jobTitle,obj.email1address] if x and not x.isspace()])
@@ -64,7 +65,7 @@ class AppModule(_default.AppModule):
 		if role==controlTypes.ROLE_EDITABLETEXT and windowClassName=="RichEdit20W" and controlID==8224:
 			obj.parent=Window._get_parent(Window._get_parent(obj))
 		#The control that shows HTML messages has stuffed parents. Use the control's parent window as its parent
-		if windowClassName=="Internet Explorer_Server" and role==controlTypes.ROLE_PANE and not getattr(obj,'HTMLNode'):
+		if windowClassName=="Internet Explorer_Server" and role==controlTypes.ROLE_PANE and not isinstance(obj,MSHTML):
 			obj.parent=Window._get_parent(Window._get_parent(obj))
 		if role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_MENUITEM):
 			obj.description=None
