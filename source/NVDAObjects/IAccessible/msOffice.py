@@ -22,17 +22,17 @@ class SDM(IAccessible):
 		return super(SDM,self).positionInfo
 
 	def _get_parent(self):
-		parent=super(SDM,self).parent
-		if self.IAccessibleChildID>0 and self.role!=controlTypes.ROLE_LISTITEM:
-			parent=parent.parent
-		return parent
+		if self.IAccessibleChildID == 0 and self.role not in (controlTypes.ROLE_DIALOG, controlTypes.ROLE_WINDOW):
+			# SDM child IAccessible objects have a broken accParent.
+			# The parent should be the dialog.
+			return getNVDAObjectFromEvent(self.windowHandle, winUser.OBJID_CLIENT, 0)
+		return super(SDM, self).parent
 
 	def _get_SDMChild(self):
 		if controlTypes.STATE_FOCUSED in self.states:
 			hwndFocus=winUser.getGUIThreadInfo(0).hwndFocus
 			if hwndFocus and hwndFocus!=self.windowHandle and not winUser.getClassName(hwndFocus).startswith('bosa_sdm'):
 				obj=getNVDAObjectFromEvent(hwndFocus,winUser.OBJID_CLIENT,0)
-				obj.parent=self.parent
 				obj.name=self.name
 				return obj
 		return None
