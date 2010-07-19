@@ -17,6 +17,7 @@ RECOVER_ATTEMPT_INTERVAL = 0.05
 safeWindowClassSet=set([
 	'Internet Explorer_Server',
 	'_WwG',
+	'EXCEL7',
 ])
 
 isRunning=False
