@@ -1,4 +1,4 @@
-#NVDAObjects/IAccessible/sdm.py
+#NVDAObjects/IAccessible/msOffice.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -62,3 +62,11 @@ class BrokenMsoCommandBar(IAccessible):
 
 	# accNavigate incorrectly returns the first child for NAVDIR_NEXT.
 	next = None
+	# description is redundant.
+	description = None
+
+	def _get_name(self):
+		name = super(BrokenMsoCommandBar, self).name
+		if name == "MSO Generic Control Container":
+			return None
+		return name
