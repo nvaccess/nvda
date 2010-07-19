@@ -90,7 +90,7 @@ IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	return pacc2;
 }
 
-VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IAccessibleTable* paccTable=NULL, long tableID=0) {
+VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IAccessibleTable2* paccTable=NULL, long tableID=0) {
 	int res;
 	DEBUG_MSG(L"Entered fillVBuf, with pacc at "<<pacc<<L", parentNode at "<<parentNode<<L", previousNode "<<previousNode);
 	assert(buffer); //buffer can't be NULL
@@ -302,20 +302,18 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 		name=NULL;
 	}
 	// Handle table cell information.
-	map<wstring,wstring>::const_iterator IA2AttribsMapIt;
+	IAccessibleTableCell* paccTableCell = NULL;
 	// If paccTable is not NULL, it is the table interface for the table above this object.
-	if (paccTable && (IA2AttribsMapIt = IA2AttribsMap.find(L"table-cell-index")) != IA2AttribsMap.end()) {
-		DEBUG_MSG(L"table-cell-index object attribute is " << IA2AttribsMapIt->second << ", getting table cell information");
+	if (paccTable && (res = pacc->QueryInterface(IID_IAccessibleTableCell, (void**)(&paccTableCell))) == S_OK) {
 		wostringstream s;
 		// tableID is the IAccessible2::uniqueID for paccTable.
 		s << tableID;
 		parentNode->addAttribute(L"table-id", s.str());
 		s.str(L"");
-		long cellIndex = _wtoi(IA2AttribsMapIt->second.c_str());
 		long row, column, rowExtents, columnExtents;
 		boolean isSelected;
-		if ((res = paccTable->get_rowColumnExtentsAtIndex(cellIndex, &row, &column, &rowExtents, &columnExtents, &isSelected)) == S_OK) {
-			DEBUG_MSG(L"IAccessibleTable::get_rowColumnExtentsAtIndex succeeded, adding attributes");
+		if ((res = paccTableCell->get_rowColumnExtents(&row, &column, &rowExtents, &columnExtents, &isSelected)) == S_OK) {
+			DEBUG_MSG(L"IAccessibleTableCell::get_rowColumnExtents succeeded, adding attributes");
 			s << row + 1;
 			parentNode->addAttribute(L"table-rownumber", s.str());
 			s.str(L"");
@@ -332,6 +330,8 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 				parentNode->addAttribute(L"table-rowsspanned", s.str());
 			}
 		}
+		paccTableCell->Release();
+		paccTableCell = NULL;
 		// We're now within a cell, so descendant nodes shouldn't refer to this table anymore.
 		paccTable = NULL;
 		tableID = 0;
@@ -339,12 +339,13 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	// Handle table information.
 	// Don't release the table unless it was created in this call.
 	bool releaseTable = false;
+	map<wstring,wstring>::const_iterator IA2AttribsMapIt;
 	// If paccTable is not NULL, we're within a table but not yet within a cell, so don't bother to query for table info.
 	if (!paccTable) {
 		// Try to get table information.
 		DEBUG_MSG(L"paccTable is NULL, trying to get table information");
-		DEBUG_MSG(L"get paccTable with IAccessible2::QueryInterface and IID_IAccessibleTable");
-		if((res=pacc->QueryInterface(IID_IAccessibleTable,(void**)(&paccTable)))!=S_OK&&res!=E_NOINTERFACE) {
+		DEBUG_MSG(L"get paccTable with IAccessible2::QueryInterface and IID_IAccessibleTable2");
+		if((res=pacc->QueryInterface(IID_IAccessibleTable2,(void**)(&paccTable)))!=S_OK&&res!=E_NOINTERFACE) {
 			DEBUG_MSG(L"pacc->QueryInterface, with IID_IAccessibleTable, returned "<<res);
 			paccTable=NULL;
 		}
