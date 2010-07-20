@@ -64,7 +64,7 @@ class AppModule(_default.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
 
-		if windowClass == "AUTHUI.DLL: LogonUI Logon Window" and obj.parent and not obj.parent.parent:
+		if windowClass == "AUTHUI.DLL: LogonUI Logon Window" and obj.parent and obj.parent.parent and not obj.parent.parent.parent:
 			clsList.insert(0, LogonDialog)
 			return
 
