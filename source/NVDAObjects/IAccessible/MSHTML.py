@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import time
 from comtypes import COMError
 import comtypes.client
 import comtypes.automation
@@ -118,6 +119,7 @@ def locateHTMLElementByID(document,ID):
 class MSHTMLTextInfo(textInfos.TextInfo):
 
 	def _expandToLine(self,textRange):
+		#Try to calculate the line range by finding screen coordinates and using moveToPoint
 		parent=textRange.parentElement()
 		if not parent.isMultiline: #fastest solution for single line edits (<input type="text">)
 			textRange.expand("textEdit")
@@ -132,10 +134,33 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		else:
 			lineRight=parentRect.left+parent.clientWidth
 		tempRange=textRange.duplicate()
-		tempRange.moveToPoint(lineLeft,lineTop)
+		try:
+			tempRange.moveToPoint(lineLeft,lineTop)
+			textRange.setEndPoint("startToStart",tempRange)
+			tempRange.moveToPoint(lineRight,lineTop)
+			textRange.setEndPoint("endToStart",tempRange)
+			return
+		except COMError:
+			pass
+		#MoveToPoint fails on Some (possibly floated) textArea elements.
+		#Instead use the physical selection, by moving it with key presses, to work out the line.
+		#This approach is somewhat slower, and less accurate.
+		selObj=parent.document.selection
+		oldSelRange=selObj.createRange().duplicate()
+		textRange.select()
+		sendKey(key("extendedHome"))
+		api.processPendingEvents()
+		newSelStartMark=selObj.createRange().getBookmark()
+		sendKey(key("extendedEnd"))
+		api.processPendingEvents()
+		newSelEndMark=selObj.createRange().getBookmark()
+		tempRange.moveToBookmark(newSelStartMark)
 		textRange.setEndPoint("startToStart",tempRange)
-		tempRange.moveToPoint(lineRight,lineTop)
+		tempRange.moveToBookmark(newSelEndMark)
 		textRange.setEndPoint("endToStart",tempRange)
+		oldSelRange.select()
+
+
 
 	def __init__(self,obj,position,_rangeObj=None):
 		super(MSHTMLTextInfo,self).__init__(obj,position)
