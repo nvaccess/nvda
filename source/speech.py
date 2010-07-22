@@ -141,7 +141,6 @@ This function will not speak if L{speechMode} is false.
 @param index: the index to mark this current text with, its best to use the character position of the text if you know it 
 @type index: int
 """
-	global beenCanceled
 	speakText(text,index=index,reason=REASON_MESSAGE)
 
 def speakSpelling(text):
@@ -199,15 +198,8 @@ def _speakSpellingGen(text):
 			tones.beep(2000,50)
 
 def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties):
-	global beenCanceled
 	if speechMode==speechMode_off:
 		return
-	elif speechMode==speechMode_beeps:
-		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
-		return
-	if isPaused:
-		cancelSpeech()
-	beenCanceled=False
 	#Fetch the values for all wanted properties
 	newPropertyValues={}
 	positionInfo=None
