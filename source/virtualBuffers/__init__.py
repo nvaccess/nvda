@@ -61,12 +61,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID))
 		return docHandle.value, ID.value
 
-	def _getNVDAObjectFromOffset(self,offset):
-		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
-		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
-
-	def _getOffsetsFromNVDAObject(self,obj):
-		docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
+	def _getOffsetsFromFieldIdentifier(self, docHandle, ID):
 		node = NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(self.obj.VBufHandle, docHandle, ID)
 		if not node:
 			raise LookupError
@@ -74,6 +69,14 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		end = ctypes.c_int()
 		NVDAHelper.localLib.VBuf_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
 		return start.value, end.value
+
+	def _getNVDAObjectFromOffset(self,offset):
+		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
+		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
+
+	def _getOffsetsFromNVDAObject(self,obj):
+		docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
+		return self._getOffsetsFromFieldIdentifier(docHandle,ID)
 
 	def __init__(self,obj,position):
 		self.obj=obj
