@@ -332,18 +332,18 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 		}
 		IUnknown** headerCells;
 		long nHeaderCells;
+		IAccessible2* headerCellPacc = NULL;
+		int headerCellDocHandle, headerCellID;
 		if ((res = paccTableCell->get_columnHeaderCells(&headerCells, &nHeaderCells)) == S_OK) {
 			DEBUG_MSG(L"IAccessibleTableCell::get_columnHeaderCells succeeded, adding header IDs");
 			s.str(L"");
 			for (int hci = 0; hci < nHeaderCells; hci++) {
-				IAccessible2* headerCellPacc = NULL;
 				if ((res = headerCells[hci]->QueryInterface(IID_IAccessible2, (void**)(&headerCellPacc))) != S_OK) {
 					DEBUG_MSG(L"QueryInterface column header cell " << hci << " to IAccessible2 failed with " << res);
 					headerCells[hci]->Release();
 					continue;
 				}
 				headerCells[hci]->Release();
-				int headerCellDocHandle, headerCellID;
 				if ((res = headerCellPacc->get_windowHandle((HWND*)&headerCellDocHandle)) != S_OK) {
 					DEBUG_MSG("IAccessible2::get_windowHandle on column header cell " << hci << " failed with " << res);
 					headerCellPacc->Release();
@@ -364,20 +364,23 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 			DEBUG_MSG(L"IAccessibleTableCell::get_rowHeaderCells succeeded, adding header IDs");
 			s.str(L"");
 			for (int hci = 0; hci < nHeaderCells; hci++) {
-				IAccessible2* headerCellPacc = NULL;
 				if ((res = headerCells[hci]->QueryInterface(IID_IAccessible2, (void**)(&headerCellPacc))) != S_OK) {
 					DEBUG_MSG(L"QueryInterface row header cell " << hci << " to IAccessible2 failed with " << res);
 					headerCells[hci]->Release();
 					continue;
 				}
 				headerCells[hci]->Release();
-				long headerCellID;
-				if ((res = headerCellPacc->get_uniqueID(&headerCellID)) != S_OK) {
+				if ((res = headerCellPacc->get_windowHandle((HWND*)&headerCellDocHandle)) != S_OK) {
+					DEBUG_MSG("IAccessible2::get_windowHandle on row header cell " << hci << " failed with " << res);
+					headerCellPacc->Release();
+					continue;
+				}
+				if ((res = headerCellPacc->get_uniqueID((long*)&headerCellID)) != S_OK) {
 					DEBUG_MSG("IAccessible2::get_uniqueID on row header cell " << hci << " failed with " << res);
 					headerCellPacc->Release();
 					continue;
 				}
-				s << headerCellID << L",";
+				s << headerCellDocHandle << L"," << headerCellID << L";";
 				headerCellPacc->Release();
 			}
 			if (!s.str().empty())
