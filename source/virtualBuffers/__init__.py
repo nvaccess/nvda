@@ -153,6 +153,23 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		tableLayout=attrs.get('table-layout')
 		if tableLayout:
 			attrs['table-layout']=tableLayout=="1"
+
+		# Handle table row and column headers.
+		for axis in "row", "column":
+			attr = attrs.pop("table-%sheadercells" % axis, None)
+			if not attr:
+				continue
+			cellIdentifiers = [identifier.split(",") for identifier in attr.split(";") if identifier]
+			# Get the text for the header cells.
+			textList = []
+			for docHandle, ID in cellIdentifiers:
+				try:
+					start, end = self._getOffsetsFromFieldIdentifier(int(docHandle), int(ID))
+				except (LookupError, ValueError):
+					continue
+				textList.append(self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text)
+			attrs["table-%sheadertext" % axis] = "\n".join(textList)
+
 		return attrs
 
 	def _normalizeFormatField(self, attrs):
