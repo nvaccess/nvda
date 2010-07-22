@@ -349,6 +349,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 					headerCellPacc->Release();
 					continue;
 				}
+				headerCellDocHandle = (int)findRealMozillaWindow((HWND)headerCellDocHandle);
 				if ((res = headerCellPacc->get_uniqueID((long*)&headerCellID)) != S_OK) {
 					DEBUG_MSG("IAccessible2::get_uniqueID on column header cell " << hci << " failed with " << res);
 					headerCellPacc->Release();
@@ -375,6 +376,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 					headerCellPacc->Release();
 					continue;
 				}
+				headerCellDocHandle = (int)findRealMozillaWindow((HWND)headerCellDocHandle);
 				if ((res = headerCellPacc->get_uniqueID((long*)&headerCellID)) != S_OK) {
 					DEBUG_MSG("IAccessible2::get_uniqueID on row header cell " << hci << " failed with " << res);
 					headerCellPacc->Release();
