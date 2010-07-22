@@ -343,13 +343,18 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 					continue;
 				}
 				headerCells[hci]->Release();
-				long headerCellID;
-				if ((res = headerCellPacc->get_uniqueID(&headerCellID)) != S_OK) {
+				int headerCellDocHandle, headerCellID;
+				if ((res = headerCellPacc->get_windowHandle((HWND*)&headerCellDocHandle)) != S_OK) {
+					DEBUG_MSG("IAccessible2::get_windowHandle on column header cell " << hci << " failed with " << res);
+					headerCellPacc->Release();
+					continue;
+				}
+				if ((res = headerCellPacc->get_uniqueID((long*)&headerCellID)) != S_OK) {
 					DEBUG_MSG("IAccessible2::get_uniqueID on column header cell " << hci << " failed with " << res);
 					headerCellPacc->Release();
 					continue;
 				}
-				s << headerCellID << L",";
+				s << headerCellDocHandle << L"," << headerCellID << L";";
 				headerCellPacc->Release();
 			}
 			if (!s.str().empty())
