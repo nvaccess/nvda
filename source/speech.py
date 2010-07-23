@@ -697,9 +697,15 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		if tableID and not sameTable:
 			oldTableID = tableID
 		if rowNumber and (not sameTable or rowNumber != oldRowNumber):
+			rowHeaderText = propertyValues.get("rowHeaderText")
+			if rowHeaderText:
+				textList.append(rowHeaderText)
 			textList.append(_("row %s")%rowNumber)
 			oldRowNumber = rowNumber
 		if columnNumber and (not sameTable or columnNumber != oldColumnNumber):
+			columnHeaderText = propertyValues.get("columnHeaderText")
+			if columnHeaderText:
+				textList.append(columnHeaderText)
 			textList.append(_("column %s")%columnNumber)
 			oldColumnNumber = columnNumber
 	rowCount=propertyValues.get('rowCount',0)
@@ -821,7 +827,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		return " ".join((roleText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount"))))
 	elif fieldType=="start_addedToControlFieldStack" and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER,controlTypes.ROLE_TABLEROWHEADER) and tableID:
 		# Table cell.
-		return getSpeechTextForProperties(_tableID=tableID, rowNumber=attrs.get("table-rownumber"), columnNumber=attrs.get("table-columnnumber"))
+		return getSpeechTextForProperties(_tableID=tableID, rowNumber=attrs.get("table-rownumber"), columnNumber=attrs.get("table-columnnumber"), rowHeaderText=attrs.get("table-rowheadertext"), columnHeaderText=attrs.get("table-columnheadertext"))
 
 	# General cases
 	elif (
