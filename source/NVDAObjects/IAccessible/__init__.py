@@ -395,6 +395,9 @@ the NVDAObject for IAccessible
 			from .msOffice import BrokenMsoCommandBar
 			if BrokenMsoCommandBar.appliesTo(self):
 				clsList.append(BrokenMsoCommandBar)
+		elif windowClassName == "Internet Explorer_Server" and role == oleacc.ROLE_SYSTEM_WINDOW and self.event_objectID > 0:
+			from .MSHTML import PluginWindow
+			clsList.append(PluginWindow)
 
 		#Support for Windowless richEdit
 		pIidITextServices=ctypes.cast(ctypes.windll.msftedit.IID_ITextServices,ctypes.POINTER(GUID))
@@ -1446,6 +1449,8 @@ _staticMap={
 	("MozillaWindowClass",oleacc.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
 	("MozillaUIWindowClass",oleacc.ROLE_SYSTEM_TABLE):"mozilla.Table",
 	("MozillaUIWindowClass",oleacc.ROLE_SYSTEM_OUTLINE):"mozilla.Tree",
+	("MozillaContentWindowClass",IAccessibleHandler.IA2_ROLE_EMBEDDED_OBJECT):"mozilla.EmbeddedObject",
+	("MozillaContentWindowClass","embed"):"mozilla.EmbeddedObject",
 	("ConsoleWindowClass",oleacc.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
 	(None,oleacc.ROLE_SYSTEM_LIST):"List",
 	(None,oleacc.ROLE_SYSTEM_COMBOBOX):"ComboBox",

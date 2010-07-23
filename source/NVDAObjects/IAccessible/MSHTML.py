@@ -697,3 +697,11 @@ class Object(MSHTML):
 		if not window or window == self.windowHandle:
 			return super(Object, self).firstChild
 		return Window(windowHandle=window)
+
+class PluginWindow(IAccessible):
+	"""A window for a plugin.
+	"""
+
+	# MSHTML fires focus on this window after the plugin may already have fired a focus event.
+	# We don't want this to override the focus event fired by the plugin.
+	shouldAllowIAccessibleFocusEvent = False
