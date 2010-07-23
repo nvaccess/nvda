@@ -4,8 +4,10 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from comtypes import COMError
+from comtypes import COMError, IServiceProvider, GUID
+import ctypes
 import os
+from comInterfaces.tom import ITextDocument
 import tones
 import textInfos.offsets
 import time
@@ -393,6 +395,22 @@ the NVDAObject for IAccessible
 			from .msOffice import BrokenMsoCommandBar
 			if BrokenMsoCommandBar.appliesTo(self):
 				clsList.append(BrokenMsoCommandBar)
+		elif windowClassName == "Internet Explorer_Server" and role == oleacc.ROLE_SYSTEM_WINDOW and self.event_objectID > 0:
+			from .MSHTML import PluginWindow
+			clsList.append(PluginWindow)
+
+		#Support for Windowless richEdit
+		pIidITextServices=ctypes.cast(ctypes.windll.msftedit.IID_ITextServices,ctypes.POINTER(GUID))
+		try:
+			pDoc=self.IAccessibleObject.QueryInterface(IServiceProvider).QueryService(pIidITextServices.contents,ITextDocument)
+		except COMError:
+			pDoc=None
+		if pDoc:
+			self._ITextDocumentObject=pDoc
+			self.useITextDocumentSupport=True
+			self.editAPIVersion=2
+			from NVDAObjects.window.edit import Edit
+			clsList.append(Edit)
 
 		#Window root IAccessibles
 		if self.event_objectID in (None,winUser.OBJID_WINDOW) and self.event_childID==0 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
@@ -1431,6 +1449,8 @@ _staticMap={
 	("MozillaWindowClass",oleacc.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
 	("MozillaUIWindowClass",oleacc.ROLE_SYSTEM_TABLE):"mozilla.Table",
 	("MozillaUIWindowClass",oleacc.ROLE_SYSTEM_OUTLINE):"mozilla.Tree",
+	("MozillaContentWindowClass",IAccessibleHandler.IA2_ROLE_EMBEDDED_OBJECT):"mozilla.EmbeddedObject",
+	("MozillaContentWindowClass","embed"):"mozilla.EmbeddedObject",
 	("ConsoleWindowClass",oleacc.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
 	(None,oleacc.ROLE_SYSTEM_LIST):"List",
 	(None,oleacc.ROLE_SYSTEM_COMBOBOX):"ComboBox",

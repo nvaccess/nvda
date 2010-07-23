@@ -6,6 +6,7 @@
 
 import IAccessibleHandler
 import oleacc
+import winUser
 import eventHandler
 import controlTypes
 from . import IAccessible
@@ -94,3 +95,13 @@ class Table(Mozilla):
 
 class Tree(Mozilla):
 	shouldAllowIAccessibleFocusEvent=True
+
+class EmbeddedObject(Mozilla):
+
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		focusWindow = winUser.getGUIThreadInfo(self.windowThreadID).hwndFocus
+		if self.windowHandle != focusWindow:
+			# This window doesn't have the focus, which means the embedded object's window probably already has the focus.
+			# We don't want to override the focus event fired by the embedded object.
+			return False
+		return super(EmbeddedObject, self).shouldAllowIAccessibleFocusEvent

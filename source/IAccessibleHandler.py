@@ -358,7 +358,7 @@ def normalizeIAccessible(pacc):
 
 def accessibleObjectFromEvent(window,objectID,childID):
 	wmResult=c_long()
-	if windll.user32.SendMessageTimeoutW(window,winUser.WM_NULL,0,0,winUser.SMTO_ABORTIFHUNG,2000,byref(wmResult))==0:
+	if windll.user32.SendMessageTimeoutW(window,wmNVDAPing,0,0,winUser.SMTO_ABORTIFHUNG,2000,byref(wmResult))==0:
 		log.debugWarning("Window %d dead or not responding: %s" % (window, ctypes.WinError()))
 		return None
 	try:
@@ -797,7 +797,13 @@ def _fakeFocus(oldFocus):
 #Register internal object event with IAccessible
 cWinEventCallback=WINFUNCTYPE(None,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
+#: A window message used to determine whether a window is alive.
+#: We use this instead of WM_NULL because Windows Live Messenger 2009 (and maybe other applications) barf if we send WM_NULL.
+wmNVDAPing = None
 def initialize():
+	global wmNVDAPing
+	if not wmNVDAPing:
+		wmNVDAPing = windll.user32.RegisterWindowMessageW(u"NVDA ping")
 	for eventType in winEventIDsToNVDAEventNames.keys():
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:

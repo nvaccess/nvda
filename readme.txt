@@ -53,7 +53,7 @@ General dependencies:
 		* Copy the txt2tags Python script to the source directory or the global Python site-packages directory, naming it txt2tags.py.
 
 To use the brltty braille display driver:
-	* brlapi Python bindings, version 0.5.3 or later, distributed with BRLTTY for Windows, version 4.0-2 or later:
+	* brlapi Python bindings (for Python 2.7), version 0.5.5 or later, distributed with BRLTTY for Windows, version 4.2-2 or later:
 		* You can download BRLTTY for Windows at http://brl.thefreecat.org/brltty/
 		* The brlapi Python bindings can be found in the BRLTTY installation directory and are named brlapi-x.y.z.exe
 
