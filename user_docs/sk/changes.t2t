@@ -16,6 +16,11 @@
 	- Prvky sprístupnené touto metódou zahŕňajú: niektoré položky menu, pri ktorých sú zobrazené ikony (napr. položky v ponuke otvoriť čím  v kontextovej ponuke zoznamu súborov v prieskumníku Windows XP) (#151), editačné polia v aplikáciách Windows live (#200), zoznam chýb v programe Outlook Express (#582), editačné pole populárneho textového editora TextPad (#605), zoznamy v programe Eudora, mnohé prvky v austrálskom E-tax a panel vzorca v programe Microsoft Excel.
 - Podpora pre editor zdrojového kódu v programoch Microsoft Visual Studio 2005 a 2008. Podporované sú edície od  Visual Studio Standard. Táto podpora nebude pracovať s Express edition. (#457)
 - Podpora pre dokumenty v programe IBM Lotus Symphony.
+- Experimentálna podpora pre internetový prehliadač Google Chrome. Pozor: podpora pre odčítače nie je v Chrome ešte dokončená a je možné, že aj na strane NVDA bude ešte potrebné urobiť zmeny. Prístupné sú len aktuálne vývojové verzie Chrome 6.
+- Stav prepínačov ako sú capslock, numlock je oznamovaný aj v brailly. (#620)
+- Obsah bublinovej nápovedy je tiež zobrazovaný v brailly. (#652)
+- Pridaný ovládač pre braillovský riadok MDV Lilli. (#241)
+- Pri vyznačovaní celého riadku resp. stĺpca v ms excel použitím shift+medzera a ctrl+medzera NVDA oznamuje správne výber. (#759)
 
 
 == Zmeny ==
@@ -24,7 +29,7 @@
 - Vo vnorených aplikáciách alebo virtuálnych dokumentoch v ďalšom virtuálnom dokumente napr. vo virtuálnom dokumente Adobe Flash je možné použiť NVDA+Control+medzerník na prepínanie do nadradeného virtuálneho prehliadača. Doteraz sa na toto používal príkaz NVDA+medzerník, ktorý sa stále používa na prepínanie medzi prehliadacím režimom a režimom fokusu.
 - Ak má systémový fokus zobrazovač reči (je možné zapnúť z menu nástroje) nový text sa nebude zobrazovať až kým systémový fokus nenadobudne iný prvok mimo tohoto prehliadača. Umožňuje to jednoduchšie vyberanie textu napr. na kopírovanie.
 - Zobrazovač logu a konzola python sú automaticky maximalizované pri každom zobrazení.
-
+- Ak získa fokus hárok programu microsoft excel a vybratých je viac buniek, namiesto aktuálnej bunky je oznámený celý výber. (#763)
  
 == Opravy ==
 - V programe µTorrent aktívna položka zoznamu torrentov nie je oznamovaná do nekonečna a tiež nekradne systémový fokus ak je otvorené menu.
@@ -37,7 +42,14 @@
 - V dokumentoch programu Microsoft Word sú znovu čitateľné riadky s jazykom zapísaným z prava do ľava(ako napríklad arabčina). (#627)
 - Výrazne zredukované zaostávanie počas výpisu veľkého množstva textu do okna príkazového riadku na 64 bitových systémoch. (#622)
 - V aplikáciách Microsoft Office NVDA nepadá pri používaní skriptu okno v popredí (NVDA+b) a počas navigácie na panely nástrojov. (#616)
-
+- Opravené nesprávne vyslovovanie číslic s nulou po oddeľovači ako napr. 1,023. (#593)
+- Programy Adobe Acrobat Pro a Reader 9 nepadajú pri zatváraní súboru a niektorých ďalších akciách. (#613)
+- Výber je správne oznamovaný po stlačení ctrl+a v niektorých editačných poliach ako napr. Microsoft word. (#761)
+- V prvkoch scintilla napr. notepad++ text nie je nesprávne označovaný do bloku pri pohybe kurzorom a plynulom čítaní. (#746)
+- Opäť je možné bunky programu Microsoft excel čítať prehliadacím kurzorom.
+- NVDA dokáže čítať po riadkoch v niektorých problematických viacriadkových editačných poliach programu Internet explorer 8. (#467)
+- Windows Live Messenger 2009  sa viac automaticky neukončí hneď po štarte keď je spustený NVDA. (#677)
+- V prehliadačoch webových stránok nie je viac nutné po prechode do vnoreného objektu napr. flash stlačiť kláves tab na ďalšiu navigáciu. (#775)
 
 
 = 2010.1 =

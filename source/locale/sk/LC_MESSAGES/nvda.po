@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: main,3575\n"
+"Project-Id-Version: main,3646\n"
 "POT-Creation-Date: 2007-03-07 08:26+Central Europe Standard Time\n"
-"PO-Revision-Date: 2010-06-18 11:25+Central Europe Standard Time\n"
+"PO-Revision-Date: 2010-07-23 13:20+Central Europe Standard Time\n"
 "Last-Translator: Peter Vágner <peter.v@datagate.sk>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: IAccessibleHandler.py:684
+#: IAccessibleHandler.py:686
 msgid "Secure Desktop"
 msgstr "Zabezpečená pracovná plocha"
 
@@ -26,7 +26,7 @@ msgstr "neznáme rozloženie"
 msgid "layout %s"
 msgstr "rozloženie %s"
 
-#: NVDAObjects\IAccessible\__init__.py:1350
+#: NVDAObjects\IAccessible\__init__.py:1379
 msgid "Taskbar"
 msgstr "panel úloh"
 
@@ -70,23 +70,19 @@ msgstr "NVDA - upraviť bunku programu Excel"
 msgid "Enter cell contents"
 msgstr "Vložte obsah bunky"
 
-#: NVDAObjects\window\excel.py:113
+#: NVDAObjects\window\excel.py:115
 msgid "Extends the selection and speaks the last selected cell"
 msgstr "Rozšíri výber a oznámy poslednú vybratú bunku"
 
-#: NVDAObjects\window\excel.py:122
-msgid "Moves to a cell and speaks its coordinates and content"
-msgstr "prejde do bunky a prečíta jej obsah a súradnice"
-
-#: NVDAObjects\window\excel.py:214
+#: NVDAObjects\window\excel.py:205
 msgid "has formula"
 msgstr "má vzorec"
 
-#: NVDAObjects\window\excel.py:252
+#: NVDAObjects\window\excel.py:243
 msgid "selection"
 msgstr "výber"
 
-#: NVDAObjects\window\excel.py:257
+#: NVDAObjects\window\excel.py:248
 msgid "%s %s through %s %s"
 msgstr "%s %s do %s %s"
 
@@ -112,9 +108,9 @@ msgstr "Chyba v aplikačnom module \"%s\"."
 #: appModules\_default.py:747
 #: appModules\winamp.py:77
 #: appModules\winamp.py:87
-#: keyboardHandler.py:53
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
+#: keyboardHandler.py:59
 #: virtualBuffers\__init__.py:684
 msgid "on"
 msgstr "zapnuté"
@@ -132,9 +128,9 @@ msgstr "zapnuté"
 #: appModules\winamp.py:79
 #: appModules\winamp.py:89
 #: gui\settingsDialogs.py:517
-#: keyboardHandler.py:53
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
+#: keyboardHandler.py:59
 #: virtualBuffers\__init__.py:684
 msgid "off"
 msgstr "vypnuté"
@@ -208,8 +204,8 @@ msgstr "nič nie je vybraté"
 
 #: appModules\_default.py:103
 #: compoundDocuments.py:354
-#: speech.py:292 speech.py:388
-#: speech.py:401
+#: speech.py:284 speech.py:381
+#: speech.py:394
 #: virtualBuffers\__init__.py:589
 msgid "selected %s"
 msgstr "vybrané %s"
@@ -626,8 +622,7 @@ msgstr ""
 "niečo povedať. Hlas znamená reč hlasového výstupu."
 
 #: appModules\_default.py:567
-msgid ""
-"Moves the focus to the next closest virtualBuffer that contains the focus"
+msgid "Moves the focus to the next closest document that contains the focus"
 msgstr ""
 "Premiestni fokus do najbližšieho virtuálneho dokumentu, ktorý môže "
 "nadobudnúť systémový fokus"
@@ -724,7 +719,9 @@ msgstr "Prečíta obsah aktuálneho okna v popredí."
 msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
-msgstr "Zaznamená informácie o objekte zameranom objektovou navigáciou a otvorí zobrazovač logu na mieste, kde sú tieto informácie."
+msgstr ""
+"Zaznamená informácie o objekte zameranom objektovou navigáciou a otvorí "
+"zobrazovač logu na mieste, kde sú tieto informácie."
 
 #: appModules\_default.py:709
 msgid "no progress bar updates"
@@ -1020,24 +1017,24 @@ msgstr "Kľúčové slová:"
 msgid "BCC:"
 msgstr "Skrytá kópia:"
 
-#: appModules\outlook.py:22
-#: appModules\outlook.py:35
+#: appModules\outlook.py:23
+#: appModules\outlook.py:36
 msgid "subject: %s"
 msgstr "Predmet: %s"
 
-#: appModules\outlook.py:23
+#: appModules\outlook.py:24
 msgid "received: %s"
 msgstr "Prijaté %s"
 
-#: appModules\outlook.py:27
+#: appModules\outlook.py:28
 msgid "unread"
 msgstr "Neprečítané"
 
-#: appModules\outlook.py:29
+#: appModules\outlook.py:30
 msgid "attachment"
 msgstr "Príloha"
 
-#: appModules\outlook.py:36
+#: appModules\outlook.py:37
 msgid "sent: %s"
 msgstr "Odoslané: %s"
 
@@ -1309,16 +1306,16 @@ msgstr "pmnu"
 msgid "( )"
 msgstr "( )"
 
-#: braille.py:222 speech.py:684
+#: braille.py:222 speech.py:677
 msgid "not %s"
 msgstr "ne %s"
 
-#: braille.py:234 speech.py:690
+#: braille.py:234 speech.py:683
 msgid "%s of %s"
 msgstr "%s z %s"
 
-#: braille.py:236 speech.py:695
-#: speech.py:698
+#: braille.py:236 speech.py:688
+#: speech.py:691
 msgid "level %s"
 msgstr "úroveň %s"
 
@@ -1330,6 +1327,10 @@ msgstr "Série ALVA BC640/680"
 msgid "Handy Tech braille displays"
 msgstr "Zobrazovače Handy Tech"
 
+#: brailleDisplayDrivers\lilli.py:32
+msgid "MDV Lilli"
+msgstr "MDV Lilli"
+
 #: brailleDisplayDrivers\noBraille.py:13
 msgid "No braille"
 msgstr "Žiadny zobrazovač"
@@ -1337,7 +1338,7 @@ msgstr "Žiadny zobrazovač"
 #: characterSymbols.py:17
 #: characterSymbols.py:18
 #: characterSymbols.py:19 speech.py:84
-#: speech.py:634
+#: speech.py:627
 msgid "blank"
 msgstr "prázdny"
 
@@ -1594,7 +1595,7 @@ msgstr "bublinková nápoveda"
 msgid "tool tip"
 msgstr "kontextová nápoveda"
 
-#: controlTypes.py:198 speech.py:947
+#: controlTypes.py:198 speech.py:940
 msgid "link"
 msgstr "odkaz"
 
@@ -2011,7 +2012,7 @@ msgstr "názov písma"
 msgid "font size"
 msgstr "veľkosť písma"
 
-#: controlTypes.py:305 speech.py:899
+#: controlTypes.py:305 speech.py:892
 msgid "bold"
 msgstr "tučné"
 
@@ -2027,11 +2028,11 @@ msgstr "farba popredia"
 msgid "background color"
 msgstr "farba pozadia"
 
-#: controlTypes.py:310 speech.py:921
+#: controlTypes.py:310 speech.py:914
 msgid "superscript"
 msgstr "horný index"
 
-#: controlTypes.py:311 speech.py:923
+#: controlTypes.py:311 speech.py:916
 msgid "subscript"
 msgstr "dolný index"
 
@@ -3278,31 +3279,31 @@ msgstr "pravý alt"
 msgid "right windows"
 msgstr "pravý windows"
 
-#: keyboardHandler.py:53
+#: keyboardHandler.py:55
 msgid "caps lock %s"
 msgstr "caps lock %s"
 
-#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 msgid "num lock %s"
 msgstr "num lock %s"
 
-#: keyboardHandler.py:57
+#: keyboardHandler.py:59
 msgid "scroll lock %s"
 msgstr "scroll lock %s"
 
-#: keyboardHandler.py:170
+#: keyboardHandler.py:172
 msgid "Description: %s"
 msgstr "Popis: %s"
 
-#: keyboardHandler.py:173
+#: keyboardHandler.py:175
 msgid "Location: %s"
 msgstr "Umiestnenie: %s"
 
-#: keyboardHandler.py:188
+#: keyboardHandler.py:189
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Chyba v keyboardHandler.internal_keyDownEvent."
 
-#: keyboardHandler.py:226
+#: keyboardHandler.py:227
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Chyba v keyboardHandler.internal_keyUpEvent."
 
@@ -3322,139 +3323,139 @@ msgstr "Type exit() to exit the console"
 msgid "NVDA Python Console"
 msgstr "NVDA python konzola"
 
-#: speech.py:181
+#: speech.py:180
 msgid "cap %s"
 msgstr "Veľké %s"
 
-#: speech.py:332
+#: speech.py:325
 msgid "%d characters"
 msgstr "%d znakov"
 
-#: speech.py:383
+#: speech.py:376
 msgid "selecting %s"
 msgstr "Vybrané %s"
 
-#: speech.py:394
+#: speech.py:387
 msgid "unselecting %s"
 msgstr "Nevybrané %s"
 
-#: speech.py:396
+#: speech.py:389
 msgid "selection removed"
 msgstr "Výber vymazaný."
 
-#: speech.py:682
+#: speech.py:675
 msgid "done dragging"
 msgstr "akcia ťahať a pustiť ukončená"
 
-#: speech.py:707 speech.py:988
+#: speech.py:700 speech.py:981
 msgid "row %s"
 msgstr "Riadok %s"
 
-#: speech.py:710 speech.py:984
+#: speech.py:703 speech.py:977
 msgid "column %s"
 msgstr "Stĺpec %s"
 
-#: speech.py:715
+#: speech.py:708
 msgid "with %s rows and %s columns"
 msgstr "s %s riadkami a %s stĺpcami"
 
-#: speech.py:717
+#: speech.py:710
 msgid "with %s columns"
 msgstr "má %s riadkov"
 
-#: speech.py:719
+#: speech.py:712
 msgid "with %s rows"
 msgstr "má %s stĺpcov"
 
-#: speech.py:825
+#: speech.py:818
 msgid "with %s items"
 msgstr "má %s položiek"
 
-#: speech.py:840 speech.py:947
+#: speech.py:833 speech.py:940
 msgid "out of %s"
 msgstr "mimo %s"
 
-#: speech.py:864
+#: speech.py:857
 msgid "page %s"
 msgstr "Strana %s"
 
-#: speech.py:871
+#: speech.py:864
 msgid "style %s"
 msgstr "Štýl %s"
 
-#: speech.py:873
+#: speech.py:866
 msgid "default style"
 msgstr "Predvolený štýl"
 
-#: speech.py:893
+#: speech.py:886
 msgid "line %s"
 msgstr "Riadok %s"
 
-#: speech.py:899
+#: speech.py:892
 msgid "no bold"
 msgstr "Nie tučné"
 
-#: speech.py:904
+#: speech.py:897
 msgid "italic"
 msgstr "kurzíva"
 
-#: speech.py:904
+#: speech.py:897
 msgid "no italic"
 msgstr "Nie kurzíva"
 
-#: speech.py:909
+#: speech.py:902
 msgid "no strikethrough"
 msgstr "Neprečiarknuté"
 
-#: speech.py:909
+#: speech.py:902
 msgid "strikethrough"
 msgstr "Prečiarknuté"
 
-#: speech.py:914
+#: speech.py:907
 msgid "not underlined"
 msgstr "Nepodčiarknuté"
 
-#: speech.py:914
+#: speech.py:907
 msgid "underlined"
 msgstr "Podčiarknuté"
 
-#: speech.py:925
+#: speech.py:918
 msgid "baseline"
 msgstr "Bez indexov"
 
-#: speech.py:933
+#: speech.py:926
 msgid "align left"
 msgstr "Zarovnané vľavo"
 
-#: speech.py:935
+#: speech.py:928
 msgid "align center"
 msgstr "Zarovnané na stred"
 
-#: speech.py:937
+#: speech.py:930
 msgid "align right"
 msgstr "Zarovnané vpravo"
 
-#: speech.py:939
+#: speech.py:932
 msgid "align justify"
 msgstr "Zarovnané do bloku"
 
-#: speech.py:941
+#: speech.py:934
 msgid "align default"
 msgstr "Predvolené zarovnanie"
 
-#: speech.py:954
+#: speech.py:947
 msgid "spelling error"
 msgstr "Pravopisná chyba"
 
-#: speech.py:956
+#: speech.py:949
 msgid "out of spelling error"
 msgstr "Mimo pravopisnej chyby"
 
-#: speech.py:970
+#: speech.py:963
 msgid "out of table"
 msgstr "Mimo tabuľky"
 
-#: speech.py:979
+#: speech.py:972
 msgid "table with %s columns and %s rows"
 msgstr "Tabuľka s %s stĺpcami a %s riadkami"
 
@@ -3522,20 +3523,20 @@ msgstr "Bez reči"
 msgid "word"
 msgstr "slovo"
 
-#: versionInfo.py:40
+#: versionInfo.py:25
 msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
-#: versionInfo.py:42
+#: versionInfo.py:27
 msgid "A free and open-source screen reader for MS Windows"
 msgstr ""
 "Voľne šíriteľný otvorený čítač obrazovky pre Microsoft Windows"
 
-#: versionInfo.py:44
+#: versionInfo.py:29
 msgid "Copyright (C) 2006-2010 NVDA Contributors"
 msgstr "Copyright (C) 2006-2010 Tím NVDA"
 
-#: versionInfo.py:45
+#: versionInfo.py:30
 msgid ""
 "%(copyright)s\n"
 "%(name)s is covered by the GNU General Public License (Version 2). You are "
