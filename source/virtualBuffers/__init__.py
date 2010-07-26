@@ -632,17 +632,18 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if isScriptWaiting() or not info.isCollapsed:
 			return
 		api.setReviewPosition(info)
-		obj=info.NVDAObjectAtStart
-		if not obj:
-			log.debugWarning("Invalid NVDAObjectAtStart")
-			return
-		if obj==self.rootNVDAObject:
-			return
 		if reason == speech.REASON_FOCUS:
 			focusObj = api.getFocusObject()
+			if focusObj==self.rootNVDAObject:
+				return
 		else:
 			focusObj=info.focusableNVDAObjectAtStart
-		if reason != speech.REASON_FOCUS:
+			obj=info.NVDAObjectAtStart
+			if not obj:
+				log.debugWarning("Invalid NVDAObjectAtStart")
+				return
+			if obj==self.rootNVDAObject:
+				return
 			if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
 				focusObj.setFocus()
 			obj.scrollIntoView()
