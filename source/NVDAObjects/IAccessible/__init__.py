@@ -807,8 +807,11 @@ the NVDAObject for IAccessible
 		if not res:
 			return None
 		if res[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1])
-		return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]))
+			#A sanity check for childIDs.
+			if self.IAccessibleChildID>0 and res[1]>self.IAccessibleChildID:
+				return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1])
+		else:
+			return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]))
 
 	def _get_previous(self):
 		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
@@ -817,8 +820,11 @@ the NVDAObject for IAccessible
 		if not res:
 			return None
 		if res[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1])
-		return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]))
+			#A sanity check for childIDs.
+			if self.IAccessibleChildID>1 and res[1]<self.IAccessibleChildID:
+				return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1])
+		else:
+			return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]))
 
 	def _get_firstChild(self):
 		child=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_FIRSTCHILD)
@@ -827,8 +833,10 @@ the NVDAObject for IAccessible
 			if len(children)>0:
 				child=children[0]
 		if child and child[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1])
-		if child:
+			#A sanity check for childIDs.
+			if self.IAccessibleChildID==0 and child[1]>0: 
+				return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1])
+		elif child:
 			obj=IAccessible(IAccessibleObject=child[0],IAccessibleChildID=child[1])
 			if (obj and winUser.isDescendantWindow(self.windowHandle,obj.windowHandle)) or self.windowHandle==winUser.getDesktopWindow():
 				return self.correctAPIForRelation(obj)
@@ -845,8 +853,10 @@ the NVDAObject for IAccessible
 				if len(children)>0:
 					child=children[-1]
 		if child and child[0]==self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1])
-		if child:
+			#A sanity check for childIDs.
+			if self.IAccessibleChildID==0 and child[1]>0: 
+				return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1])
+		elif child:
 			obj=IAccessible(IAccessibleObject=child[0],IAccessibleChildID=child[1])
 			if (obj and winUser.isDescendantWindow(self.windowHandle,obj.windowHandle)) or self.windowHandle==winUser.getDesktopWindow():
 				return self.correctAPIForRelation(obj)
