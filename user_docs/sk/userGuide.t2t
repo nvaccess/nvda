@@ -138,8 +138,6 @@ Ak si chcete trochu prehliadnuť položky operačného systému a nechcete, aby 
 
 Hlavný koreň stromu začína na pracovnej ploche. Hneď prvá vetva sú spustené aplikácie a táto sa rozvetvuje na vetvy, ktoré prezentujú vlastné súčasti spustených aplikácií. Táto štruktúra sa môže zdať rozsiahla, no pohyb v nej má logické súvislosti a tak môžete rýchlo nájsť informácie, ktoré potrebujete. Toto zobrazenie je úplne iné ako ste zvyknutí pri usporiadaní na obrazovke, no usporiadanie vetiev je logické. Môže vám chvíľu trvať, kým si na túto zmenu zvyknete. Keď sa však naučíte ovládať pohyby po objektoch, práca už nebude zložitá.
 
-NVDA zatiaľ neumožňuje pohyb po objektoch priamo na obrazovke, pretože nespolupracuje s video ovládačom a zachytávaním grafiky zo systému. Používateľovi ponúka skôr pohľad na štruktúru aplikácií a operačného systému, než pohľad priamo na obrazovku, na ktorej by sa mali prvky zobrazovať.
-
 Nie všetky aplikácie majú dobre vyriešenú stromovú štruktúru, no to je už na konkrétnych vývojároch, ako si s problémom dokážu poradiť. Mnohé sú však použiteľné, Ide napríklad o množstvo dialógových okien, ktoré sú ovládateľné korektne, rôzne štruktúrované aplikácie, s ktorými sa dá rovnako dobre pracovať.
 
 Pre pohyb po objektoch použite nasledujúce klávesové skratky:
@@ -162,6 +160,10 @@ Ak presuniete fokus na iný objekt, zmení sa aj objekt ktorý prezeráte. Ak al
 
 ++ Zobrazenie textu v aktuálnom objekte ++
 NVDA umožňuje čítať obsah prvku práve zameraného objektovou navigáciou po slovách, riadkoch alebo aj po znakoch. Toto je užitočné v príkazovom riadku Windows, alebo na iných miestach, kde nie je plne funkčný alebo dostupný systémový kurzor.
+
+Najčastejšie je možné čítať len obsah aktuálne zameraného objektu napr. text editačného poľa alebo názov tlačídka. K tomuto pravidlu však existujú dve výnimky. Ak týmto spôsobom čítate obsah objektu vo virtuálnom dokumente napr. dokumente v prehliadači webu, môžete prečítať obsah celého virtuálneho dokumentu so začiatkom na aktuálne zameranom objekte. Ak čítate obsah prvku typu okno, nájdeného vždy na vrchu hierarchii väčšiny aplikácií, môžete prečítať obsah aktuálneho okna v popredí podobne, ako Ste zvyknutí čítať obsah celého okna z iných odčítačov.
+
+Na navigáciu v texte je možné použiť nasledovné klávesové príkazy:
 - shift+numpad7: Horný riadok
 - numpad7: Predchádzajúci riadok
 - numpad8: Aktuálny riadok
@@ -494,8 +496,6 @@ Pravidlá pre rečové slovníky NVDA umožňujú zmeniť sled znakov na úplne 
 Rečové slovníky NVDA toho dokážu ešte viac než len zamieňať slová. Dialóg Upraviť položku slovníka obsahuje začiarkavacie políčko Rozlišovať malé a veľké písmená, čím môžete NVDA prinútiť rozlišovať či text je písaný veľkými písmenami alebo nie. Predvolene NVDA ignoruje veľkosť písmen. Ďalšie začiarkavacie políčko Regulárny výraz hovorí o tom, či v poli Vzor sa nachádza jednoduchý text alebo tzv. regulárny výraz. Regulárny výraz je špeciálny druh vzoru, ktorý umožňuje filtrovať len znaky, len číslice alebo ľubovolný počet ľubovoľných znakov v rôznych kombináciách. Regulárne výrazy nie sú podrobne vysvetlené v tejto príručke, ale na internete je na túto tému možné nájsť množstvo zaujímavých článkov.
 
 ++ Uloženie a opätovné načítanie konfigurácie ++
-NVDA svoje nastavenia ukladá do súboru NVDA.ini, ktorý sa v prípade nainštalovanej verzii nachádza v systémovom priečinku pre nastavenia aktuálneho prihláseného používateľa Windows a v prípade prenositeľnej verzii sa nachádza v podpriečinku userConfig v priečinku programu. Nikdy nebudete musieť do tohoto súboru zasahovať, ale pokročilí používatelia v ňom nájdu niektoré nastavenia, ktoré ešte nie sú zapracované priamo v dialógových oknách s nastaveniami.
-
 NVDA automaticky vaše nastavenia neukladá, takže ak ukončíte program a potom ho znovu spustíte, nastavenia sa vrátia na pôvodné hodnoty. Ak nastavenia chcete uložiť, túto položku musíte vybrať z menu v programe NVDA, alebo stlačiť klávesovú skratku ctrl+NVDA+c nech ste kdekoľvek. Túto vlastnosť je možno zmeniť v dialógu Všeobecné nastavenia.
 
 Ak je NVDA spustený z média, ktoré má atribút "iba na čítanie", ako napríklad CD, nebude možné uložiť vaše nastavenia a o tejto skutočnosti vás program bude informovať.
@@ -504,5 +504,12 @@ Ak ste pri nastaveniach programu urobili chybu a potrebujete sa vrátiť k ulož
 
 Pozor! Pri aktualizáciách prenositeľných verzií NVDA je vždy žiadúce zazálohovať priečinok userConfig. Po rozbalení novšej verzie NVDA následne stačí daný priečinok prekopírovať do priečinka NVDA. Tým zabezpečíte, že sa vaše nastavenia prejavia i v novšej verzii a nemusíte ich znovu konfigurovať. Táto dôležitá poznámka platí len pre prenositeľné verzie programu, nakoľko pri verzii s inštalátorom sa nastavenia ukladajú do systémového priečinka s nastaveniami priečinka pre aktuálne prihláseného používateľa.
 
+++ Používateľské profily a súbory konfigurácii ++
+Prenositeľné verzie NVDA si ukladajú všetky nastavenia, vlastné aplikačné moduly, ovládače hlasových a brailovských výstupov v podpriečinku userConfig priečinka NVDA.
+
+Inštalačné verzie NVDA si ukladajú všetky nastavenia, vlastné aplikačné moduly, ovládače hlasových a brailovských výstupov v špecifickom priečinku NVDA v používateľskom profile Windows.
+Znamená to, že každý používateľ Windows môže mať svoje nastavenia NVDA. Vstúpiť do svojho priečinka s nastaveniami inštalačnej verzii NVDA môžete cez odkaz Otvoriť adresár s používateľskými nastaveniami v ponuke štart, priečinku Programy -> NVDA.
+
 + Ako získať viac informácií +
-Keďže NVDA je neustále vo vývoji, nie je možné garantovať funkčnosť všetkých klávesových príkazov a postupov popísaných v tejto príručke. Ak máte problémy s niektorými príkazmi z tejto príručky, prosím navštívte web stránku: http://www.nvda-project.org/ a skúste vyhľadať aktualizované informácie.
+Keďže NVDA je neustále vo vývoji, nie je možné garantovať funkčnosť všetkých klávesových príkazov a postupov popísaných v tejto príručke. Ak máte problémy s niektorými príkazmi z tejto príručky, prosím navštívte web stránku: NVDA_URL a skúste vyhľadať aktualizované informácie.
+Na tejto stránke môžete tiež nájsť prístup k emailovým konferenciám pojednávajúcich o NVDA a odkazy na ďalšie komunitné projekty a stránky o NVDA.

@@ -1,5 +1,5 @@
 Guide de l'utilisateur de NVDA NVDA_VERSION
-Last update: 31 March 2010
+Dernière mise à jour : 26 Juillet 2010
 
 %!includeconf: ../userGuide.conf.t2t
 
@@ -104,7 +104,7 @@ Pour accéder au menu NVDA depuis n'importe où dans Windows pendant que NVDA est 
 
 + La Navigation avec NVDA. +
 
-++ 7.1. La Navigation avec le Focus. ++
+++ La Navigation avec le Focus. ++
 La manière la plus commune de naviguer dans Windows avec NVDA, est de simplement se déplacer avec des commandes clavier normales, comme Tabulation et Majuscule+Tabulation pour se déplacer entre les contrôles, Alt pour aller au menu puis Flèches pour naviguer dans les menus, utiliser Alt+Tabulation pour passer d'une application à l'autre. Quand vous faites cela, NVDA annonce quel objet a le focus.
 
 Quand NVDA annonce un objet (par exemple quand un objet reçoit le focus), il dira généralement le nom de l'objet, son type, son état, sa valeur, sa description, son raccourci clavier et sa position. Ceci est tout à fait similaire aux autres revues d'écran, cependant le type d'objet peut être un peu différent.
@@ -146,8 +146,6 @@ L'arborescence peut être très importante, mais cela vous permet de naviguer dans
 
 Cette structure n'a pas de rapport avec la façon dont les objets sont disposés sur l'écran, mais reflète comment ils sont reliés logiquement. On peut avoir besoin d'un peu de temps pour s'y habituer, mais une fois l'organisation comprise, on s'y déplace tout à fait facilement.
 
-Dans son état actuel, NVDA ne permet pas une navigation entre objets en rapport avec leur disposition à l'écran parce qu'il n'a pas d'intercepteur video ou de boucles d'affichage. On a choisi que NVDA n'interagisse pas avec l'écran, parce que, finalement, ce choix doit permettre une perception d'une application et du système d'exploittation plus claire et plus logique, que celle qu'on aurait en donnant une représentation de l'image plate de l'écran.
-
 Toutes les applications n'ont pas une structure d'arbre parfaite, mais c'est le choix des développeurs de chaque application.
 
 Pour naviguer par objet, utilisez les touches suivantes :
@@ -156,14 +154,11 @@ Pour naviguer par objet, utilisez les touches suivantes :
 - NVDA+pavnum4 : Va à l'objet précédent (l'objet directement avant celui-ci au même niveau).
 - NVDA+pavnum6 : Va à l'objet suivant (l'objet directement après celui-ci au même niveau).
 - NVDA+pavnum2 : Va au premier fils (la première branche sortant de la branche actuelle).
-- NVDA+maj+pavnum4 : Va à l'objet précédent dans le flot (traverse les frontières parent, enfant, jusqu'à ce qu'il puisse remonter d'un niveau).
-- NVDA+maj+pavnum6 : Va à l'objet suivant dans le flot (traverse les frontières parent, enfant, jusqu'à ce qu'il puisse descendre d'un niveau).
 - NVDA+pavnum Moins : Va au focus.
 - NVDA+pavnum Entrée : Active l'objet courant (ex. Appuyer sur entrée / cliquer / double cliquer).
 - NVDA+pavnum Diviser : Amène la souris à l'objet courant.
 - NVDA+pavnum Multiplier : Va à la souris.
 - NVDA+pavnumDelete : annonce les dimentions de l'objet courant par rapport à l'écran.
-- NVDA+pavnumPlus :  Dit tous les objets - Démarre la lecture à l'objet courant, puis continue dans le flot
 -
 
 Note : Les touches du pavé numérique nécessitent de désactiver le verrouillage numérique pour fonctionner correctement.
@@ -173,6 +168,13 @@ Quand vous naviguez avec le focus, l'objet de navigation courant change en même 
 ++ Explorer le Texte dans l'ObjetCourant. ++
 NVDA vous permet de lire le contenu de l'objet de navigation courant par caractère, mot ou ligne. Ceci est particulièrement utile dans les fenêtres de console DOS et d'autres applications où le curseur système est réduit ou inexistant.
 
+La plupart du temps, vous ne pouvez explorer que ce qui se trouve dans l'objet en cours.
+Par exemple : Le texte dans une zone d''édition, ou l'étiquette d'un bouton.
+Cependant, il y a deux exceptions à cette règle.
+Si vous explorez un objet contenu dans un tampon virtuel (comme un document dans un navigateur Web), vous pouvez explorer tout le contenu du tampon virtuel en partant de l'objet en cours.
+Si vous explorez le contenu d'un objet fenêtre, se trouvant au niveau supérieur de la plupart des applications, vous pouvez explorer une représentation plate de l'ensemble de l'application assez similaire au mode revue des autres revues d'écran.
+ 
+Vous disposez des commandes suivantes pour explorer du texte :
 - Maj+pavnum7 : Première ligne.
 - pavnum7 : Ligne précédente.
 - pavnum8 : Ligne courante.
@@ -279,7 +281,7 @@ Une case à cocher qui une fois cochée, indique à NVDA de sauvegarder automatique
 ==== Avertir avant de quitter NVDA. ====
 Une case à cocher vous permettant d'indiquer si NVDA doit vous demander de confirmer quand vous voulez quitter NVDA.
 
-==== Niveau de log. ====
+==== Niveau de journalisation. ====
 Une liste déroulante qui vous permet de choisir la quantité d'information que NVDA consignera dans son journal durant son exécution. Généralement, l'utilisateur n'aura pas besoin de modifier ce paramètre dans la mesure où peu d'informations sont consignées. Cependant, si vous voulez fournir des informations lors d'un rapport d'erreur, il est peut-être bon d'augmenter cette valeur.
 
 ==== Démerrer NVDA automatiquement après ma connexion à Windows ====
@@ -497,8 +499,7 @@ Les règles des dictionnaires de NVDA vous permettent de remplacer une chaîne de 
 
 Cependant, les dictionnaires de NVDA font bien mieux que le simple remplacement de mot.
 
-+++ Sauvegarder et recharger la configuration. +++
-NVDA conserve ses paramètre dans un fichier nommé nvda.ini dans son répertoire. Vous n'aurez probablement jamais à toucher ce fichier mais, pour les utilisateurs avancés, ce fichier contient certains paramètres supplémentaires qui n'ont pas encore leur boîte de dialogue.
+++ Sauvegarder et recharger la configuration. ++
 
 NVDA ne sauvegarde pas automatiquement vos paramètres, donc si vous quittez NVDA puis le redémarrez, les paramètres reprendront leur valeur originelle. Pour sauvegarder les paramètres, vous pouvez soit choisir l'élément Sauvegarde de la configuration dans le menu NVDA, soit appuyer sur NVDA+Control+c depuis n'importe où.
 
@@ -506,6 +507,15 @@ Si NVDA est sur un média non inscriptible tel qu'un CD il ne pourra pas sauvegar
 
 Si jamais vous faites une erreur dans vos paramètres et avez besoin de revenir aux valeurs précédentes, vous pouvez soit choisir l'élément Retour à la configuration sauvegardée dans le menu NVDA, soit appuyer sur NVDA+Control+r depuis n'importe où.
 
+++ Configuration files and user profiles ++
+
+Portable versions of NVDA store all settings,  custom appModules and custom drivers in a directory called userConfig, found in the NVDA directory.
+
+Installed versions of NVDA store all settings, custom appModules and custom drivers in a special NVDA directory located in your Windows user profile.
+This means that each user on the system can have their own NVDA settings.
+To get to your settings directory for an installed version of NVDA, on the start menu you can go to programs -> NVDA -> explore user configuration directory.
+
 + Résoudre les problèmes d'utilisation de NVDA +
 Comme NVDA est constamment mis à jour, il n'est pas garanti que toutes les commandes décrites dans ce manuel seront toujours fonctionnelles. Si vous avez un problème avec l'une de ces commandes, veuillez visiter : NVDA_URL pour plus d'aide.
+Sur ce site, vous pourrez trouver des informations complémentaires telles que des listes de discussion spécialisées et d'autres ressources communautaires pour vous aider à utiliser NVDA.
 
