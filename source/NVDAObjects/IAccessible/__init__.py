@@ -377,8 +377,8 @@ the NVDAObject for IAccessible
 			from . import adobeFlash
 			adobeFlash.findExtraOverlayClasses(self, clsList)
 		elif windowClassName.startswith('Mozilla'):
-			from .mozilla import Mozilla
-			clsList.append( Mozilla)
+			from . import mozilla
+			mozilla.findExtraOverlayClasses(self, clsList)
 		elif windowClassName.startswith('bosa_sdm'):
 			from .msOffice import SDM
 			clsList.append(SDM)
@@ -1450,17 +1450,6 @@ _staticMap={
 	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
 	("TRxRichEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,oleacc.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
-	("MozillaDialogClass",oleacc.ROLE_SYSTEM_ALERT):"Dialog",
-	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_COMBOBOX):"mozilla.ComboBox",
-	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_LIST):"mozilla.List",
-	("MozillaWindowClass",oleacc.ROLE_SYSTEM_LISTITEM):"mozilla.ListItem",
-	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_LISTITEM):"mozilla.ListItem",
-	("MozillaContentWindowClass",oleacc.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
-	("MozillaWindowClass",oleacc.ROLE_SYSTEM_DOCUMENT):"mozilla.Document",
-	("MozillaUIWindowClass",oleacc.ROLE_SYSTEM_TABLE):"mozilla.Table",
-	("MozillaUIWindowClass",oleacc.ROLE_SYSTEM_OUTLINE):"mozilla.Tree",
-	("MozillaContentWindowClass",IAccessibleHandler.IA2_ROLE_EMBEDDED_OBJECT):"mozilla.EmbeddedObject",
-	("MozillaContentWindowClass","embed"):"mozilla.EmbeddedObject",
 	("ConsoleWindowClass",oleacc.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
 	(None,oleacc.ROLE_SYSTEM_LIST):"List",
 	(None,oleacc.ROLE_SYSTEM_COMBOBOX):"ComboBox",

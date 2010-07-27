@@ -9,7 +9,7 @@ import oleacc
 import winUser
 import eventHandler
 import controlTypes
-from . import IAccessible
+from . import IAccessible, Dialog
 import textInfos
 from logHandler import log
 
@@ -105,3 +105,26 @@ class EmbeddedObject(Mozilla):
 			# We don't want to override the focus event fired by the embedded object.
 			return False
 		return super(EmbeddedObject, self).shouldAllowIAccessibleFocusEvent
+
+def findExtraOverlayClasses(obj, clsList):
+	"""Determine the most appropriate class if this is a Mozilla object.
+	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
+	"""
+	iaRole = obj.IAccessibleRole
+	cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
+	if cls:
+		clsList.append(cls)
+	clsList.append(Mozilla)
+
+#: Maps IAccessible roles to NVDAObject overlay classes.
+_IAccessibleRolesToOverlayClasses = {
+	oleacc.ROLE_SYSTEM_ALERT: Dialog,
+	oleacc.ROLE_SYSTEM_COMBOBOX: ComboBox,
+	oleacc.ROLE_SYSTEM_LIST: List,
+	oleacc.ROLE_SYSTEM_LISTITEM: ListItem,
+	oleacc.ROLE_SYSTEM_DOCUMENT: Document,
+	oleacc.ROLE_SYSTEM_TABLE: Table,
+	oleacc.ROLE_SYSTEM_OUTLINE: Tree,
+	IAccessibleHandler.IA2_ROLE_EMBEDDED_OBJECT: EmbeddedObject,
+	"embed": EmbeddedObject,
+}
