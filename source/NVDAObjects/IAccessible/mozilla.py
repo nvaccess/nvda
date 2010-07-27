@@ -49,9 +49,11 @@ class Mozilla(IAccessible):
 			states.add(controlTypes.STATE_CHECKABLE)
 		return states
 
+class BrokenFocusedState(Mozilla):
+	shouldAllowIAccessibleFocusEvent=True
+
 class Document(Mozilla):
 
-	shouldAllowIAccessibleFocusEvent=True
 	value=None
 
 	def _get_treeInterceptorClass(self):
@@ -62,8 +64,6 @@ class Document(Mozilla):
 		return super(Document,self).treeInterceptorClass
 
 class ListItem(Mozilla):
-
-	shouldAllowIAccessibleFocusEvent=True
 
 	def _get_name(self):
 		name=super(ListItem,self)._get_name()
@@ -78,20 +78,6 @@ class ListItem(Mozilla):
 		if self.IAccessibleStates&oleacc.STATE_SYSTEM_READONLY and len(children)>0 and (children[0].IAccessibleRole in ("bullet",oleacc.ROLE_SYSTEM_STATICTEXT)):
 			del children[0]
 		return children
-
-class ComboBox(Mozilla):
-
-	shouldAllowIAccessibleFocusEvent=True
-
-class List(Mozilla):
-
-	shouldAllowIAccessibleFocusEvent=True
-
-class Table(Mozilla):
-	shouldAllowIAccessibleFocusEvent=True
-
-class Tree(Mozilla):
-	shouldAllowIAccessibleFocusEvent=True
 
 class EmbeddedObject(Mozilla):
 
@@ -111,17 +97,25 @@ def findExtraOverlayClasses(obj, clsList):
 	cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
 	if cls:
 		clsList.append(cls)
+	if iaRole in _IAccessibleRolesWithBrokenFocusedState:
+		clsList.append(BrokenFocusedState)
 	clsList.append(Mozilla)
 
 #: Maps IAccessible roles to NVDAObject overlay classes.
 _IAccessibleRolesToOverlayClasses = {
 	oleacc.ROLE_SYSTEM_ALERT: Dialog,
-	oleacc.ROLE_SYSTEM_COMBOBOX: ComboBox,
-	oleacc.ROLE_SYSTEM_LIST: List,
 	oleacc.ROLE_SYSTEM_LISTITEM: ListItem,
 	oleacc.ROLE_SYSTEM_DOCUMENT: Document,
-	oleacc.ROLE_SYSTEM_TABLE: Table,
-	oleacc.ROLE_SYSTEM_OUTLINE: Tree,
 	IAccessibleHandler.IA2_ROLE_EMBEDDED_OBJECT: EmbeddedObject,
 	"embed": EmbeddedObject,
 }
+
+#: Roles that mightn't set the focused state when they are focused.
+_IAccessibleRolesWithBrokenFocusedState = frozenset((
+	oleacc.ROLE_SYSTEM_COMBOBOX,
+	oleacc.ROLE_SYSTEM_LIST,
+	oleacc.ROLE_SYSTEM_LISTITEM,
+	oleacc.ROLE_SYSTEM_DOCUMENT,
+	oleacc.ROLE_SYSTEM_TABLE,
+	oleacc.ROLE_SYSTEM_OUTLINE,
+))
