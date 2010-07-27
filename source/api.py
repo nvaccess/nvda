@@ -162,14 +162,16 @@ def getReviewPosition():
 	if globalVars.reviewPosition: 
 		return globalVars.reviewPosition
 	else:
+		obj=globalVars.navigatorObject
+		ti=obj.treeInterceptor
+		if ti and ti.rootNVDAObject==obj:
+			obj=ti
 		try:
-			globalVars.reviewPosition=globalVars.navigatorObject.makeTextInfo(textInfos.POSITION_CARET)
-			globalVars.reviewPositionObj=globalVars.navigatorObject
-			return globalVars.reviewPosition
-		except:
-			globalVars.reviewPosition=globalVars.navigatorObject.makeTextInfo(textInfos.POSITION_FIRST)
-			globalVars.reviewPositionObj=globalVars.navigatorObject
-			return globalVars.reviewPosition
+			globalVars.reviewPosition=obj.makeTextInfo(textInfos.POSITION_CARET)
+		except (NotImplementedError, RuntimeError):
+			globalVars.reviewPosition=obj.makeTextInfo(textInfos.POSITION_FIRST)
+		globalVars.reviewPositionObj=globalVars.reviewPosition.obj
+		return globalVars.reviewPosition
 
 def setReviewPosition(reviewPosition):
 	"""Sets a TextInfo instance as the review position. It sets the current navigator object to None so that the next time the navigator object is asked for it fetches it from the review position.
