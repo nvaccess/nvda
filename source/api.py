@@ -163,13 +163,6 @@ def getReviewPosition():
 		return globalVars.reviewPosition
 	else:
 		try:
-			obj=globalVars.navigatorObject.treeInterceptor
-			globalVars.reviewPosition=obj.makeTextInfo(globalVars.navigatorObject)
-			globalVars.reviewPositionObj=obj
-			return globalVars.reviewPosition
-		except:
-			pass
-		try:
 			globalVars.reviewPosition=globalVars.navigatorObject.makeTextInfo(textInfos.POSITION_CARET)
 			globalVars.reviewPositionObj=globalVars.navigatorObject
 			return globalVars.reviewPosition
@@ -195,7 +188,8 @@ def getNavigatorObject():
 	if globalVars.navigatorObject:
 		return globalVars.navigatorObject
 	else:
-		globalVars.navigatorObject=globalVars.reviewPosition.NVDAObjectAtStart
+		obj=globalVars.reviewPosition.obj
+		globalVars.navigatorObject=getattr(obj,'rootNVDAObject',None) or obj
 		return globalVars.navigatorObject
 
 def setNavigatorObject(obj):

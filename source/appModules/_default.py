@@ -215,6 +215,29 @@ class AppModule(appModuleHandler.AppModule):
 		speech.speakObject(obj)
 	script_moveNavigatorObjectToMouse.__doc__=_("Sets the navigator object to the current object under the mouse pointer and speaks it")
 
+	def script_navigatorObject_moveToFlatReviewAtObjectPosition(self,keyPress):
+		obj=api.getNavigatorObject()
+		pos=obj.flatReviewPosition
+		if pos:
+			api.setReviewPosition(pos)
+			speech.speakMessage(_("located object in flat review"))
+			pos=pos.copy()
+			pos.expand(textInfos.UNIT_LINE)
+			speech.speakTextInfo(pos)
+		else:
+			speech.speakMessage(_("No flat review for this object"))
+
+	def script_navigatorObject_moveToObjectAtFlatReviewPosition(self,keyPress):
+		pos=api.getReviewPosition()
+		obj=pos.NVDAObjectAtStart
+		if obj and obj!=pos.obj:
+			api.setNavigatorObject(obj)
+			speech.speakMessage(_("Moved to object"))
+			speech.speakObject(obj)
+		else:
+			speech.speakMessage(_("No object at flat review position"))
+
+
 	def script_navigatorObject_current(self,keyPress):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
