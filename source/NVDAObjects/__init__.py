@@ -789,7 +789,7 @@ This code is executed if a gain focus event is received by this object.
 
 	def _get_flatReviewPosition(self):
 		"""Locates a TextInfo positioned at this object, in the closest flat review."""
-		parent=self.parent
+		parent=self.simpleParent
 		while parent:
 			ti=parent.treeInterceptor
 			if ti and self in ti and ti.rootNVDAObject==parent:
@@ -803,7 +803,7 @@ This code is executed if a gain focus event is received by this object.
 						return parent.makeTextInfo(textInfos.Point(x,y))
 					except LookupError:
 						return parent.makeTextInfo(textInfos.POSITION_FIRST)
-			parent=parent.parent
+			parent=parent.simpleParent
 
 	def _get_basicText(self):
 		newTime=time.time()
