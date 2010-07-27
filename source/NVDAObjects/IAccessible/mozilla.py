@@ -10,7 +10,6 @@ import winUser
 import eventHandler
 import controlTypes
 from . import IAccessible, Dialog
-import textInfos
 from logHandler import log
 
 class Mozilla(IAccessible):
@@ -53,6 +52,7 @@ class Mozilla(IAccessible):
 class Document(Mozilla):
 
 	shouldAllowIAccessibleFocusEvent=True
+	value=None
 
 	def _get_treeInterceptorClass(self):
 		states=self.states
@@ -60,9 +60,6 @@ class Document(Mozilla):
 			import virtualBuffers.gecko_ia2
 			return virtualBuffers.gecko_ia2.Gecko_ia2
 		return super(Document,self).treeInterceptorClass
-
-	def _get_value(self):
-		return 
 
 class ListItem(Mozilla):
 
