@@ -219,14 +219,21 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _getNVDAObjectFromOffset(self,offset):
 		raise NotImplementedError
 
+	def _getOffsetsFromNVDAObject(self,obj):
+		raise NotImplementedError
+
 	def __init__(self,obj,position):
 		"""Constructor.
 		Subclasses may extend this to perform implementation specific initialisation, calling their superclass method afterwards.
 		"""
 		super(OffsetsTextInfo,self).__init__(obj,position)
+		from NVDAObjects import NVDAObject
 		if isinstance(position,textInfos.Point):
 			offset=self._getOffsetFromPoint(position.x,position.y)
 			position=Offsets(offset,offset)
+		elif isinstance(position,NVDAObject):
+			start,end=self._getOffsetsFromNVDAObject(position)
+			position=textInfos.offsets.Offsets(start,end)
 		if position==textInfos.POSITION_FIRST:
 			self._startOffset=self._endOffset=0
 		elif position==textInfos.POSITION_LAST:
