@@ -216,6 +216,9 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _getOffsetFromPoint(self,x,y):
 		raise NotImplementedError
 
+	def _getNVDAObjectFromOffset(self,offset):
+		raise NotImplementedError
+
 	def __init__(self,obj,position):
 		"""Constructor.
 		Subclasses may extend this to perform implementation specific initialisation, calling their superclass method afterwards.
@@ -240,6 +243,9 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			self._endOffset=max(min(position.endOffset,self._getStoryLength()),0)
 		else:
 			raise NotImplementedError("position: %s not supported"%position)
+
+	def _get_NVDAObjectAtStart(self):
+		return self._getNVDAObjectFromOffset(self._startOffset)
 
 	def _getUnitOffsets(self,unit,offset):
 		if unit==textInfos.UNIT_CHARACTER:

@@ -82,9 +82,6 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			position=textInfos.offsets.Offsets(start,end)
 		super(VirtualBufferTextInfo,self).__init__(obj,position)
 
-	def _get_NVDAObjectAtStart(self):
-		return self._getNVDAObjectFromOffset(self._startOffset)
-
 	def _getSelectionOffsets(self):
 		start=ctypes.c_int()
 		end=ctypes.c_int()
