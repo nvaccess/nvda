@@ -46,6 +46,7 @@
 - Stopped a rare crash in Internet Explorer when navigating through frames or iFrames.
 - In Microsoft Word documents, right-to-left lines (such as Arabic text) can be read again. (#627)
 - Greatly reduced lag when large amounts of text are displayed in a Windows command console on 64-bit systems. (#622)
+- If Skype is already started when NVDA starts, it is no longer necessary to restart Skype to enable accessibility. This may also be true for other applications which check the system screen reader flag.
 - In Microsoft Office applications, NVDA no longer crashes when speak foreground (NVDA+b) is pressed or when navigating some objects on toolbars. (#616)
 - Fixed incorrect speaking of numbers containing a 0 after a separator; e.g. 1,023. (#593)
 - Adobe Acrobat Pro and Reader 9 no longer crash when closing a file or performing certain other tasks. (#613)
