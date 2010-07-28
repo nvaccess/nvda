@@ -21,7 +21,9 @@
 - Caps lock-, num lock- ja scroll lock -näppäinten tila näytetään nyt pistenäytöllä niitä painettaessa. (#620)
 - Kuplailmoitukset näytetään nyt pistenäytöllä niiden tullessa näkyviin. (#652)
 - Lisätty ajuri MDV Lilli -pistenäytölle. (#241)
-- Uusi valinta luetaan nyt Microsoft Excelissä, kun koko rivi tai sarake valitaan pikanäppäimillä Shift+välilyönti ja Ctrl+välilyönti. (#759)
+- Uusi valinta luetaan nyt Microsoft Excelissä, kun koko rivi tai sarake valitaan pikanäppäimillä Shift+välilyönti tai Ctrl+välilyönti. (#759)
+- Taulukon rivien ja sarakkeiden otsikot voidaan nyt lukea. Asetus on määritettävissä Asiakirjojen muotoiluasetukset -valintaikkunasta.
+ - Tätä tuetaan toistaiseksi vain Mozilla-sovelluksissa, kuten Firefox ja Thunderbird. (#361)
 
 
 == Muutokset ==
@@ -44,12 +46,16 @@
 - Korjattu harvinainen kaatuminen Internet Explorerissa liikuttaessa tavallisten tai sisäisten kehysten välillä.
 - Oikealta vasemmalle luettavia rivejä (kuten arabialaista tekstiä) voidaan jälleen lukea Microsoft Word -asiakirjoissa. (#627)
 - Vähennetty merkittävästi hidastumista 64-bittisissä järjestelmissä, kun komentokehotteessa näytetään suurta määrää tekstiä.
+- Jos Skype on jo käynnissä, sitä ei enää tarvitse käynnistää uudelleen esteettömyystuen käyttöönottamiseksi, kun NVDA käynnistyy. Tämä saattaa päteä myös muihin sovelluksiin, jotka tarkistavat järjestelmän ruudunlukijalipun.
 - NVDA ei enää kaadu Microsoft Office -sovelluksissa painettaessa NVDA+B (lue aktiivinen ikkuna) tai navigoitaessa joissakin työkalurivien objekteissa. (#616)
 - Korjattu sellaisten lukujen väärin lukeminen, joissa on erottimen jälkeen 0, esim. 1,023. (#593)
 - Adobe Acrobat Pro ja Reader 9 eivät enää kaadu tiedostoa suljettaessa tai tiettyjä muita tehtäviä suoritettaessa. (#613)
 - Kaiken tekstin valitseminen ilmoitetaan nyt painettaessa ctrl+A joissakin muokattavissa tekstisäätimissä, kuten Microsoft Wordissa. (#761)
 - Tekstiä ei enää virheellisesti valita Scintilla-säätimissä (esim. Notepad++:ssa) NVDA:n liikuttaessa järjestelmäkohdistinta esim. lue kaikki -toiminnon aikana tai siirrettäessä kohdistinta samaan paikkaan, jossa pistenäytöllä ollaan. (#746)
 - Microsoft Excelin solujen sisällön tarkasteleminen tarkastelukohdistimella on jälleen mahdollista.
+- NVDA voi jälleen lukea riveittäin tiettyjä ongelmallisia tekstikenttiä Internet Explorer 8:ssa. (#467)
+- Windows Live Messenger 2009 ei enää sulkeudu heti käynnistyttyään NVDA:n ollessa käynnissä. (#677)
+- Internet-selaimissa ei enää tarvitse painaa sarkainta ollakseen vuorovaikutuksessa upotetun objektin kanssa (esim. Flash-sisällössä), kun on painettu Enteriä kyseisen objektin kohdalla tai palattu toisesta sovelluksesta. (#775)
 
 
 == 2010.1 ==

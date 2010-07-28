@@ -21,6 +21,8 @@
 - Obsah bublinovej nápovedy je tiež zobrazovaný v brailly. (#652)
 - Pridaný ovládač pre braillovský riadok MDV Lilli. (#241)
 - Pri vyznačovaní celého riadku resp. stĺpca v ms excel použitím shift+medzera a ctrl+medzera NVDA oznamuje správne výber. (#759)
+- Pridané oznamovanie hlavičiek stĺpca a riadku tabuľky. Je to možné nastaviť v dialógu Nastavenie čítania textu.
+ - Zatiaľ je táto možnosť dostupná len v dokumentoch aplikácií Mozilla. (#361)
 
 
 == Zmeny ==
@@ -30,6 +32,7 @@
 - Ak má systémový fokus zobrazovač reči (je možné zapnúť z menu nástroje) nový text sa nebude zobrazovať až kým systémový fokus nenadobudne iný prvok mimo tohoto prehliadača. Umožňuje to jednoduchšie vyberanie textu napr. na kopírovanie.
 - Zobrazovač logu a konzola python sú automaticky maximalizované pri každom zobrazení.
 - Ak získa fokus hárok programu microsoft excel a vybratých je viac buniek, namiesto aktuálnej bunky je oznámený celý výber. (#763)
+
  
 == Opravy ==
 - V programe µTorrent aktívna položka zoznamu torrentov nie je oznamovaná do nekonečna a tiež nekradne systémový fokus ak je otvorené menu.
@@ -41,6 +44,7 @@
 - Opravený ojedinelý pád v programe Internet Explorer pri navigácii po rámikoch a vnorených rámikoch.
 - V dokumentoch programu Microsoft Word sú znovu čitateľné riadky s jazykom zapísaným z prava do ľava(ako napríklad arabčina). (#627)
 - Výrazne zredukované zaostávanie počas výpisu veľkého množstva textu do okna príkazového riadku na 64 bitových systémoch. (#622)
+- Ak je Skype už spustený pri štarte NVDA, nie je nutné Skype reštartovať, aby sa stal prístupným. Toto môže platiť aj o ostatných aplikáciách, ktorékontrolujú systémovú vlajku prítomnosti odčítača.
 - V aplikáciách Microsoft Office NVDA nepadá pri používaní skriptu okno v popredí (NVDA+b) a počas navigácie na panely nástrojov. (#616)
 - Opravené nesprávne vyslovovanie číslic s nulou po oddeľovači ako napr. 1,023. (#593)
 - Programy Adobe Acrobat Pro a Reader 9 nepadajú pri zatváraní súboru a niektorých ďalších akciách. (#613)
