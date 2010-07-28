@@ -431,6 +431,7 @@ silentValuesForRoles=set([
 	controlTypes.ROLE_RADIOBUTTON,
 	controlTypes.ROLE_LINK,
 	controlTypes.ROLE_MENUITEM,
+	controlTypes.ROLE_APPLICATION,
 ])
 
 def processPositiveStates(role, states, reason, positiveStates):
