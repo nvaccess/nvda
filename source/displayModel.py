@@ -1,6 +1,7 @@
 from ctypes import *
 from ctypes.wintypes import RECT
 from comtypes import BSTR
+import math
 import api
 import winUser
 import NVDAHelper
@@ -56,6 +57,20 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 				return charOffset
 		raise LookupError
 
+	def _getClosestOffsetFromPoint(self,x,y):
+		#Enumerate the character rectangles
+		a=enumerate(self._textAndRects[1])
+		#Convert calculate center points for all the rectangles
+		b=((charOffset,(charLeft+(charRight-charLeft)/2,charTop+(charBottom-charTop)/2)) for charOffset,(charLeft,charTop,charRight,charBottom) in a)
+		#Calculate distances from all center points to the given x and y
+		c=((charOffset,math.sqrt((x-cx)**2+(y-cy)**2)) for charOffset,(cx,cy) in b)
+		#Sort the distances 
+		d=sorted(c,key=lambda x: x[1])
+		#Return the closest offset
+		return d[0][0] if len(d)>0 else 0
+
+
+
 	def _getNVDAObjectFromOffset(self,offset):
 		try:
 			p=self._getPointFromOffset(offset)
@@ -73,7 +88,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			raise RuntimeError
 		x=l[0]+(l[2]/2)
 		y=l[1]+(l[3]/2)
-		offset=self._getOffsetFromPoint(x,y)
+		offset=self._getClosestOffsetFromPoint(x,y)
 		return offset,offset
 
 
