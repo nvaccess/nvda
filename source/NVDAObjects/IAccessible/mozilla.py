@@ -159,6 +159,7 @@ _IAccessibleRolesWithBrokenFocusedState = frozenset((
 	oleacc.ROLE_SYSTEM_LIST,
 	oleacc.ROLE_SYSTEM_LISTITEM,
 	oleacc.ROLE_SYSTEM_DOCUMENT,
+	oleacc.ROLE_SYSTEM_APPLICATION,
 	oleacc.ROLE_SYSTEM_TABLE,
 	oleacc.ROLE_SYSTEM_OUTLINE,
 ))
