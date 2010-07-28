@@ -61,12 +61,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID))
 		return docHandle.value, ID.value
 
-	def _getNVDAObjectFromOffset(self,offset):
-		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
-		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
-
-	def _getOffsetsFromNVDAObject(self,obj):
-		docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
+	def _getOffsetsFromFieldIdentifier(self, docHandle, ID):
 		node = NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(self.obj.VBufHandle, docHandle, ID)
 		if not node:
 			raise LookupError
@@ -74,6 +69,14 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		end = ctypes.c_int()
 		NVDAHelper.localLib.VBuf_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
 		return start.value, end.value
+
+	def _getNVDAObjectFromOffset(self,offset):
+		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
+		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
+
+	def _getOffsetsFromNVDAObject(self,obj):
+		docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
+		return self._getOffsetsFromFieldIdentifier(docHandle,ID)
 
 	def __init__(self,obj,position):
 		self.obj=obj
@@ -150,6 +153,23 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		tableLayout=attrs.get('table-layout')
 		if tableLayout:
 			attrs['table-layout']=tableLayout=="1"
+
+		# Handle table row and column headers.
+		for axis in "row", "column":
+			attr = attrs.pop("table-%sheadercells" % axis, None)
+			if not attr:
+				continue
+			cellIdentifiers = [identifier.split(",") for identifier in attr.split(";") if identifier]
+			# Get the text for the header cells.
+			textList = []
+			for docHandle, ID in cellIdentifiers:
+				try:
+					start, end = self._getOffsetsFromFieldIdentifier(int(docHandle), int(ID))
+				except (LookupError, ValueError):
+					continue
+				textList.append(self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text)
+			attrs["table-%sheadertext" % axis] = "\n".join(textList)
+
 		return attrs
 
 	def _normalizeFormatField(self, attrs):
