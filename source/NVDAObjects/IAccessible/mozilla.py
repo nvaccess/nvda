@@ -61,7 +61,7 @@ class Document(Mozilla):
 
 	def _get_treeInterceptorClass(self):
 		states=self.states
-		if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2) and controlTypes.STATE_READONLY in states and controlTypes.STATE_BUSY not in states and self.windowClassName=="MozillaContentWindowClass":
+		if controlTypes.STATE_READONLY in states and controlTypes.STATE_BUSY not in states and self.windowClassName=="MozillaContentWindowClass":
 			import virtualBuffers.gecko_ia2
 			return virtualBuffers.gecko_ia2.Gecko_ia2
 		return super(Document,self).treeInterceptorClass
@@ -109,6 +109,10 @@ def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
+	if not isinstance(obj.IAccessibleObject, IAccessibleHandler.IAccessible2):
+		# We require IAccessible2; i.e. Gecko >= 1.9.
+		return
+
 	iaRole = obj.IAccessibleRole
 	cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
 	if cls:
