@@ -63,11 +63,12 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		#Convert calculate center points for all the rectangles
 		b=((charOffset,(charLeft+(charRight-charLeft)/2,charTop+(charBottom-charTop)/2)) for charOffset,(charLeft,charTop,charRight,charBottom) in a)
 		#Calculate distances from all center points to the given x and y
-		c=((charOffset,math.sqrt((x-cx)**2+(y-cy)**2)) for charOffset,(cx,cy) in b)
-		#Sort the distances 
-		d=sorted(c,key=lambda x: x[1])
-		#Return the closest offset
-		return d[0][0] if len(d)>0 else 0
+		#But place the distance before the character offset, to make sorting by distance easier
+		c=((math.sqrt((x-cx)**2+(y-cy)**2),charOffset) for charOffset,(cx,cy) in b)
+		#produce a static list of distances and character offsets, sorted by distance 
+		d=sorted(c)
+		#Return the lowest offset with the shortest distance
+		return d[0][1] if len(d)>0 else 0
 
 
 
