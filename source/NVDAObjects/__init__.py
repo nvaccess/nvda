@@ -795,6 +795,10 @@ This code is executed if a gain focus event is received by this object.
 			if ti and self in ti and ti.rootNVDAObject==parent:
 				return ti.makeTextInfo(self)
 			if issubclass(parent.TextInfo,DisplayModelTextInfo):
+				try:
+					return parent.makeTextInfo(api.getReviewPosition().pointAtStart)
+				except (NotImplementedError,RuntimeError):
+					pass
 				l=parent.location
 				if l:
 					x=l[0]+(l[2]/2)
