@@ -797,7 +797,7 @@ This code is executed if a gain focus event is received by this object.
 			if issubclass(parent.TextInfo,DisplayModelTextInfo):
 				try:
 					return parent.makeTextInfo(api.getReviewPosition().pointAtStart)
-				except (NotImplementedError,RuntimeError):
+				except (NotImplementedError,LookupError):
 					pass
 				try:
 					return parent.makeTextInfo(self)
