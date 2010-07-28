@@ -55,6 +55,17 @@ class Gecko1_9(Mozilla):
 class BrokenFocusedState(Mozilla):
 	shouldAllowIAccessibleFocusEvent=True
 
+class RootApplication(Mozilla):
+	"""Mozilla exposes a root application accessible as the parent of all top level frames.
+	See MozillaBug:555861.
+	This is non-standard; the top level accessible should be the top level window.
+	NVDA expects the standard behaviour, so we never want to see this object.
+	"""
+
+	def __nonzero__(self):
+		# As far as NVDA is concerned, this is a useless object.
+		return False
+
 class Document(Mozilla):
 
 	value=None
@@ -114,7 +125,15 @@ def findExtraOverlayClasses(obj, clsList):
 		return
 
 	iaRole = obj.IAccessibleRole
-	cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
+	cls = None
+	if iaRole == oleacc.ROLE_SYSTEM_APPLICATION:
+		try:
+			if not obj.IAccessibleObject.windowHandle:
+				cls = RootApplication
+		except COMError:
+			pass
+	if not cls:
+		cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
 	if cls:
 		clsList.append(cls)
 	if iaRole in _IAccessibleRolesWithBrokenFocusedState:
