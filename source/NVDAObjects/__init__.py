@@ -799,14 +799,11 @@ This code is executed if a gain focus event is received by this object.
 					return parent.makeTextInfo(api.getReviewPosition().pointAtStart)
 				except (NotImplementedError,RuntimeError):
 					pass
-				l=parent.location
-				if l:
-					x=l[0]+(l[2]/2)
-					y=l[1]+(l[3]/2)
-					try:
-						return parent.makeTextInfo(textInfos.Point(x,y))
-					except LookupError:
-						return parent.makeTextInfo(textInfos.POSITION_FIRST)
+				try:
+					return parent.makeTextInfo(self)
+				except (NotImplementedError,RuntimeError):
+					pass
+				return parent.makeTextInfo(textInfos.POSITION_FIRST)
 			parent=parent.simpleParent
 
 	def _get_basicText(self):
