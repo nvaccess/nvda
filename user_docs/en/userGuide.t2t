@@ -164,12 +164,6 @@ When you move with the focus, the current navigator object changes along with it
 ++ Reviewing the Text in the Current Object ++
 NVDA allows you to read the contents of the current navigator object, by character, word or line. This is mostly useful in Dos console windows, and other places where there is a limited or non-existant system caret.
 
-Most of the time, you are able to review only what is contained in the current object. 
-For example: the text in an edit field, or the label of a button. 
-However, there are two exceptions to this rule. 
-If reviewing an object that exists inside a virtualBuffer (such as a document in a web browser), you are able to review all the content of the virtualBuffer, starting from the position of the current object. 
-When reviewing the content of a window object, found at the top level of most applications, you can review a flat layout of the entire application, rather similar to other screen readers' flat review modes.
- 
 The following key commands are available for reviewing text: 
 - Shift+numpad7: Top line
 - numpad7: Previous line
@@ -193,6 +187,13 @@ When an object contains an edit cursor (system caret), and it moves, the review 
 
 It is possible to copy parts of the text you are reviewing. For example, you may wish to copy an internet address someone has sent you in a text chat program. To copy text, Start by moving the review cursor to the first character of the text you wish to copy, and press NVDA+f9. Then move to the end of the text, and press NVDA+f10. The text will now be copied to the clipboard so that you can paste it somewhere else. Note that if the program you are using already allows you to move through the text using the system caret, and copy using the normal control+c command, then you will always get better results using this.
 
+++ Flat Review ++
+As well as reviewing the content of a single object, NVDA allows you to review the entire content of a document or the text of the screen.
+This is called flat review.
+
+The following two commands are used for flat review:
+- NVDA+numpad7: Switch to flat review at the current position of the review cursor. This will review the containing document or the screen if there is no document.
+- NVDA+numpad1: Switch to object review at the current position of the review cursor.
 
 ++ Navigating with the Mouse ++
 When you move the Mouse, NVDA by default reports the text that is directly under the mouse pointer, as it moves over it. Where supported, NVDA will read a paragraph's worth of text, though some controls may only read by line.
