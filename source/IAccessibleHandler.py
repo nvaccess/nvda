@@ -978,12 +978,13 @@ def splitIA2Attribs(attribsString):
 		elif char == ";":
 			# We're about to move on to a new attribute.
 			if subkey:
-				# This attribute had subattributes.
 				# Add the last subattribute key/value pair to the dict.
 				subattr[subkey] = tmp
+				subkey = ""
+			if subattr:
+				# This attribute had subattributes.
 				# Add the key/subattribute pair to the dict.
 				attribsDict[key] = subattr
-				subkey = ""
 				subattr = {}
 			elif key:
 				# Add this key/value pair to the dict.
@@ -994,9 +995,10 @@ def splitIA2Attribs(attribsString):
 			tmp += char
 	# If there was no trailing semi-colon, we need to handle the last attribute.
 	if subkey:
-		# This attribute had subattributes.
 		# Add the last subattribute key/value pair to the dict.
 		subattr[subkey] = tmp
+	if subattr:
+		# This attribute had subattributes.
 		# Add the key/subattribute pair to the dict.
 		attribsDict[key] = subattr
 	elif key:
