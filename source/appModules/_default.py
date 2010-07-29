@@ -220,7 +220,6 @@ class AppModule(appModuleHandler.AppModule):
 		pos=obj.flatReviewPosition
 		if pos:
 			api.setReviewPosition(pos)
-			speech.speakMessage(_("located object in flat review"))
 			pos=pos.copy()
 			pos.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(pos)
@@ -235,7 +234,6 @@ class AppModule(appModuleHandler.AppModule):
 			obj=None
 		if obj and obj!=pos.obj:
 			api.setNavigatorObject(obj)
-			speech.speakMessage(_("Moved to object"))
 			speech.speakObject(obj)
 		else:
 			speech.speakMessage(_("No object at flat review position"))
