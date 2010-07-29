@@ -64,7 +64,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		b=((charOffset,(charLeft+(charRight-charLeft)/2,charTop+(charBottom-charTop)/2)) for charOffset,(charLeft,charTop,charRight,charBottom) in a)
 		#Calculate distances from all center points to the given x and y
 		#But place the distance before the character offset, to make sorting by distance easier
-		c=((math.sqrt((x-cx)**2+(y-cy)**2),charOffset) for charOffset,(cx,cy) in b)
+		c=((math.sqrt(abs((x-cx)**2)+abs((y-cy)**2)),charOffset) for charOffset,(cx,cy) in b)
 		#produce a static list of distances and character offsets, sorted by distance 
 		d=sorted(c)
 		#Return the lowest offset with the shortest distance
