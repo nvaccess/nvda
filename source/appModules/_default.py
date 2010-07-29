@@ -229,7 +229,10 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_navigatorObject_moveToObjectAtFlatReviewPosition(self,keyPress):
 		pos=api.getReviewPosition()
-		obj=pos.NVDAObjectAtStart
+		try:
+			obj=pos.NVDAObjectAtStart
+		except NotImplementedError:
+			obj=None
 		if obj and obj!=pos.obj:
 			api.setNavigatorObject(obj)
 			speech.speakMessage(_("Moved to object"))
