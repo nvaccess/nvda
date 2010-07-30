@@ -416,6 +416,7 @@ def speakTypedCharacters(ch):
 
 silentRolesOnFocus=set([
 	controlTypes.ROLE_PANE,
+	controlTypes.ROLE_ROOTPANE,
 	controlTypes.ROLE_FRAME,
 	controlTypes.ROLE_UNKNOWN,
 	controlTypes.ROLE_APPLICATION,
