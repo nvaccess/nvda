@@ -221,6 +221,8 @@ class AppModule(appModuleHandler.AppModule):
 		if pos:
 			api.setReviewPosition(pos)
 			pos=pos.copy()
+			obj=api.getNavigatorObject()
+			speech.speakObjectProperties(obj,name=True,role=True)
 			pos.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(pos)
 		else:
@@ -237,7 +239,6 @@ class AppModule(appModuleHandler.AppModule):
 			speech.speakObject(obj)
 		else:
 			speech.speakMessage(_("No object at flat review position"))
-
 
 	def script_navigatorObject_current(self,keyPress):
 		curObject=api.getNavigatorObject()
