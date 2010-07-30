@@ -59,6 +59,12 @@ class SymphonyTextInfo(IA2TextTextInfo):
 		except COMError:
 			pass
 
+		if offset == 0:
+			# Only include the list item prefix on the first line of the paragraph.
+			numbering = formatField.get("Numbering")
+			if numbering:
+				formatField["line-prefix"] = numbering.get("NumberingPrefix") or numbering.get("BulletChar")
+
 		return formatField,(startOffset,endOffset)
 
 class SymphonyText(IAccessible, EditableText):

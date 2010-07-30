@@ -114,7 +114,7 @@ def readTextHelper_generator(info,cursor):
 				if delta<=0:
 					keepReading=False
 					continue
-				speech.speakTextInfo(reader,reason=speech.REASON_SAYALL,index=index)
+				speech.speakTextInfo(reader,unit=textInfos.UNIT_READINGCHUNK,reason=speech.REASON_SAYALL,index=index)
 				sendCount+=1
 				cursorIndexMap[index]=bookmark
 				reader.collapse(end=True)
