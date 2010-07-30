@@ -12,8 +12,8 @@
 - V aplikáciách používajúcich Java access bridge je text dialógu automaticky oznamovaný, keď dialóg získa fokus. (#554)
 - Na navigáciu  obsahom adobe Flash je možné použiť virtuálny dokument. Priame ovládanie prvkov flash a objektová navigácia sú tiež dostupné po zapnutí režimu fokusu. (#453)
 - NVDA dokáže získať množstvo textu vypísaného na obrazovku. (#40, #643)
-	- Toto umožňuje sprístupniť prvky, ktoré neposkytujú informácie priamejšími a spoľahlivejšími spôsobmi.
-	- Prvky sprístupnené touto metódou zahŕňajú: niektoré položky menu, pri ktorých sú zobrazené ikony (napr. položky v ponuke otvoriť čím  v kontextovej ponuke zoznamu súborov v prieskumníku Windows XP) (#151), editačné polia v aplikáciách Windows live (#200), zoznam chýb v programe Outlook Express (#582), editačné pole populárneho textového editora TextPad (#605), zoznamy v programe Eudora, mnohé prvky v austrálskom E-tax a panel vzorca v programe Microsoft Excel.
+ - Toto umožňuje sprístupniť prvky, ktoré neposkytujú informácie priamejšími a spoľahlivejšími spôsobmi.
+ - Prvky sprístupnené touto metódou zahŕňajú: niektoré položky menu, pri ktorých sú zobrazené ikony (napr. položky v ponuke otvoriť čím  v kontextovej ponuke zoznamu súborov v prieskumníku Windows XP) (#151), editačné polia v aplikáciách Windows live (#200), zoznam chýb v programe Outlook Express (#582), editačné pole populárneho textového editora TextPad (#605), zoznamy v programe Eudora, mnohé prvky v austrálskom E-tax a panel vzorca v programe Microsoft Excel.
 - Podpora pre editor zdrojového kódu v programoch Microsoft Visual Studio 2005 a 2008. Podporované sú edície od  Visual Studio Standard. Táto podpora nebude pracovať s Express edition. (#457)
 - Podpora pre dokumenty v programe IBM Lotus Symphony.
 - Experimentálna podpora pre internetový prehliadač Google Chrome. Pozor: podpora pre odčítače nie je v Chrome ešte dokončená a je možné, že aj na strane NVDA bude ešte potrebné urobiť zmeny. Prístupné sú len aktuálne vývojové verzie Chrome 6.
@@ -23,6 +23,9 @@
 - Pri vyznačovaní celého riadku resp. stĺpca v ms excel použitím shift+medzera a ctrl+medzera NVDA oznamuje správne výber. (#759)
 - Pridané oznamovanie hlavičiek stĺpca a riadku tabuľky. Je to možné nastaviť v dialógu Nastavenie čítania textu.
  - Zatiaľ je táto možnosť dostupná len v dokumentoch aplikácií Mozilla. (#361)
+- Pridané klávesové skratky na plošné prehliadanie: (#58)
+ - NVDA+numpad7prepína do plošného prehliadania, nastaví prehliadací kurzor na aktuálnu pozíciu práve zameraného objektu, čo umožní príkazmi určenými na čítanie textu plošne prezerať celý dokument alebo celú obrazovku.
+ - NVDA+numpad1 zameria objekt na pozícii prehliadacieho kurzora v režime plošného prezerania, čo umožní navigáciu po susedných prvkoch pomocov objektovej navigácie.
 
 
 == Zmeny ==
@@ -367,6 +370,7 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 - Je možné pohybovať sa po odstavcoch použitím Ctrl+šípka hore a Ctrl+šípka dolu.
 - Podpora pre dynamicky sa aktualizujúci obsah
 - Celkovo je pohyb po riadkoch oveľa presnejší.
+
 
 == Internacionalizácia ==
 - Počas behu NVDA je možné písať národné znaky, ktoré si vyžadujú použitie tzv. mŕtvych klávesov.

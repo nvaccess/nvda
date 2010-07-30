@@ -161,8 +161,6 @@ Ak presuniete fokus na iný objekt, zmení sa aj objekt ktorý prezeráte. Ak al
 ++ Zobrazenie textu v aktuálnom objekte ++
 NVDA umožňuje čítať obsah prvku práve zameraného objektovou navigáciou po slovách, riadkoch alebo aj po znakoch. Toto je užitočné v príkazovom riadku Windows, alebo na iných miestach, kde nie je plne funkčný alebo dostupný systémový kurzor.
 
-Najčastejšie je možné čítať len obsah aktuálne zameraného objektu napr. text editačného poľa alebo názov tlačídka. K tomuto pravidlu však existujú dve výnimky. Ak týmto spôsobom čítate obsah objektu vo virtuálnom dokumente napr. dokumente v prehliadači webu, môžete prečítať obsah celého virtuálneho dokumentu so začiatkom na aktuálne zameranom objekte. Ak čítate obsah prvku typu okno, nájdeného vždy na vrchu hierarchii väčšiny aplikácií, môžete prečítať obsah aktuálneho okna v popredí podobne, ako Ste zvyknutí čítať obsah celého okna z iných odčítačov.
-
 Na navigáciu v texte je možné použiť nasledovné klávesové príkazy:
 - shift+numpad7: Horný riadok
 - numpad7: Predchádzajúci riadok
@@ -191,6 +189,15 @@ Napríklad: Položka zoznamu uvedená v zozname bude mať svoje meno, hodnotu a 
 Ak objekt obsahuje textový kurzor a jeho poloha sa zmení, zmení sa tiež pozícia prehliadacieho kurzora na tú istú hodnotu/pozíciu. Ak chcete prehliadací kurzor ponechať na rovnakom mieste a textovým kurzorom ďalej čítať, stlačíte NVDA+6.
 
 Použitím prehliadacieho kurzora je tiež možné kopírovať časti textu . Napríklad môžete skopírovať adresu, ktorú vám niekto poslal v online konverzácii. Začnite tým, že prehliadací kurzor presuniete na prvý znak textu, ktorý chcete skopírovať a stlačte NVDA+f9. Potom prejdite na koniec textu a stlačte NVDA+f10. Takto vybratý text bude skopírovaný do schránky Windows a vy ho môžete štandardným spôsobom prilepiť do ľubovoľného editačného poľa. Môžete si tiež nechať obsah schránky prečítať stlačením NVDA+c. Pochopiteľne ak prvok, z ktorého chcete kopírovať má systémový kurzor a umožňuje štandardný spôsob kopírovania, odporúčame použiť túto cestu.
+
+++ Plošné prehliadanie ++
+Rovnako ako čítanie textu z jedného objektu, NVDA pomocou prehliadacieho kurzora umožňuje čítať obsah celých dokumentov alebo obsah celej obrazovky.
+Táto funkcionalita je nazvaná plošné prehliadanie.
+
+Dva nasledujúce príkazy sa používajú na zapínanie a vypínanie plošného prehliadania:
+
+- NVDA+numpad7: Prepnúť do plošného prehliadania na pozícii prehliadacieho kurzora. Toto Vám umožní pomocou príkazov na čítanie textu prečítať buď celý dokument alebo celú obrazovku.
+- NVDA+numpad1: Prepnúť do objektovej navigácie na pozícii prehliadacieho kurzora v režime plošného prehliadania. Toto nájde objekt, ktorého text práve čítate pomocou plošného prehliadania, zameria ho objektovou navigáciou a umožní pomocou prehliadacieho kurzora čítať obsah tohoto objektu alebo objektovú navigáciu po susediacich objektoch.
 
 ++ Pohyb myšou ++
 Ak sa pohybujete myšou, NVDA môže ohlasovať objekty, na ktorých sa myš práve nachádza. Nevidiaci používateľ si za pomoci myši môže taktiež vytvoriť predstavu o tom, ako to na obrazovke vyzerá. NVDA môže čítať len tie objekty, na ktoré aktuálne ukazuje kurzor myši. Nedokáže teda prečítať textové objekty, ktoré sú mimo kurzora.
