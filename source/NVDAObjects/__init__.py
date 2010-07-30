@@ -11,6 +11,7 @@ import re
 import weakref
 from logHandler import log
 import eventHandler
+from displayModel import DisplayModelTextInfo
 import baseObject
 import speech
 import api
@@ -785,6 +786,25 @@ This code is executed if a gain focus event is received by this object.
 					api.setReviewPosition(self.makeTextInfo(textInfos.POSITION_CARET))
 				except (NotImplementedError, RuntimeError):
 					pass
+
+	def _get_flatReviewPosition(self):
+		"""Locates a TextInfo positioned at this object, in the closest flat review."""
+		parent=self.simpleParent
+		while parent:
+			ti=parent.treeInterceptor
+			if ti and self in ti and ti.rootNVDAObject==parent:
+				return ti.makeTextInfo(self)
+			if issubclass(parent.TextInfo,DisplayModelTextInfo):
+				try:
+					return parent.makeTextInfo(api.getReviewPosition().pointAtStart)
+				except (NotImplementedError,LookupError):
+					pass
+				try:
+					return parent.makeTextInfo(self)
+				except (NotImplementedError,RuntimeError):
+					pass
+				return parent.makeTextInfo(textInfos.POSITION_FIRST)
+			parent=parent.simpleParent
 
 	def _get_basicText(self):
 		newTime=time.time()

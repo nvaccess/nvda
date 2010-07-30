@@ -1,6 +1,7 @@
 from ctypes import *
 from ctypes.wintypes import RECT
 from comtypes import BSTR
+import math
 import api
 import winUser
 import NVDAHelper
@@ -34,17 +35,6 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		left, top, width, height = self.obj.location
 		return getWindowTextInRect(self.obj.appModule.helperLocalBindingHandle, self.obj.windowHandle, left, top, left + width, top + height,self.minHorizontalWhitespace,self.minVerticalWhitespace)
 
-	def _get_NVDAObjectAtStart(self):
-		try:
-			p=self.pointAtStart
-		except LookupError:
-			return self.obj
-		obj=api.getDesktopObject().objectFromPoint(p.x,p.y)
-		from NVDAObjects.window import Window
-		if not obj or not isinstance(obj,Window) or not winUser.isDescendantWindow(self.obj.windowHandle,obj.windowHandle):
-			return self.obj
-		return obj
-
 	def _getStoryText(self):
 		return self._textAndRects[0]
 
@@ -66,6 +56,42 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			if charLeft<=x<charRight and charTop<=y<charBottom:
 				return charOffset
 		raise LookupError
+
+	def _getClosestOffsetFromPoint(self,x,y):
+		#Enumerate the character rectangles
+		a=enumerate(self._textAndRects[1])
+		#Convert calculate center points for all the rectangles
+		b=((charOffset,(charLeft+(charRight-charLeft)/2,charTop+(charBottom-charTop)/2)) for charOffset,(charLeft,charTop,charRight,charBottom) in a)
+		#Calculate distances from all center points to the given x and y
+		#But place the distance before the character offset, to make sorting by distance easier
+		c=((math.sqrt(abs(x-cx)**2+abs(y-cy)**2),charOffset) for charOffset,(cx,cy) in b)
+		#produce a static list of distances and character offsets, sorted by distance 
+		d=sorted(c)
+		#Return the lowest offset with the shortest distance
+		return d[0][1] if len(d)>0 else 0
+
+
+
+	def _getNVDAObjectFromOffset(self,offset):
+		try:
+			p=self._getPointFromOffset(offset)
+		except (NotImplementedError,LookupError):
+			return self.obj
+		obj=api.getDesktopObject().objectFromPoint(p.x,p.y)
+		from NVDAObjects.window import Window
+		if not obj or not isinstance(obj,Window) or not winUser.isDescendantWindow(self.obj.windowHandle,obj.windowHandle):
+			return self.obj
+		return obj
+
+	def _getOffsetsFromNVDAObject(self,obj):
+		l=obj.location
+		if not l:
+			raise RuntimeError
+		x=l[0]+(l[2]/2)
+		y=l[1]+(l[3]/2)
+		offset=self._getClosestOffsetFromPoint(x,y)
+		return offset,offset
+
 
 class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 
