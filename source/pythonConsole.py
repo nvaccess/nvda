@@ -195,6 +195,9 @@ class ConsoleUI(wx.Frame):
 		elif key == wx.WXK_F6:
 			self.outputCtrl.SetFocus()
 			return
+		elif key == wx.WXK_ESCAPE:
+			self.Close()
+			return
 		evt.Skip()
 
 	def onOutputChar(self, evt):
@@ -202,6 +205,8 @@ class ConsoleUI(wx.Frame):
 		if key == wx.WXK_F6:
 			self.inputCtrl.SetFocus()
 			return
+		elif key == wx.WXK_ESCAPE:
+			self.Close()
 		evt.Skip()
 
 	def updateNamespaceSnapshotVars(self):
