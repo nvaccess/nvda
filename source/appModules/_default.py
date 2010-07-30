@@ -53,7 +53,7 @@ class AppModule(appModuleHandler.AppModule):
 			info=obj.makeTextInfo(textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_LINE)
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			speech.speakTextInfo(info,reason=speech.REASON_CARET)
+			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
 		else:
 			speech.speakSpelling(info.text)
 	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line")
@@ -391,7 +391,7 @@ class AppModule(appModuleHandler.AppModule):
 		api.setReviewPosition(info.copy())
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakMessage(_("top"))
-		speech.speakTextInfo(info,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object and speaks it")
 
 	def script_review_previousLine(self,keyPress):
@@ -403,14 +403,14 @@ class AppModule(appModuleHandler.AppModule):
 		info.expand(textInfos.UNIT_LINE)
 		if res==0:
 			speech.speakMessage(_("top"))
-		speech.speakTextInfo(info,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
 	script_review_previousLine.__doc__=_("Moves the review cursor to the previous line of the current navigator object and speaks it")
 
 	def script_review_currentLine(self,keyPress):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_LINE)
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			speech.speakTextInfo(info,reason=speech.REASON_CARET)
+			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
 		else:
 			speech.speakSpelling(info._get_text())
 	script_review_currentLine.__doc__=_("Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled")
@@ -424,7 +424,7 @@ class AppModule(appModuleHandler.AppModule):
 		info.expand(textInfos.UNIT_LINE)
 		if res==0:
 			speech.speakMessage(_("bottom"))
-		speech.speakTextInfo(info,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
 	script_review_nextLine.__doc__=_("Moves the review cursor to the next line of the current navigator object and speaks it")
 
 	def script_review_bottom(self,keyPress):
@@ -432,7 +432,7 @@ class AppModule(appModuleHandler.AppModule):
 		api.setReviewPosition(info.copy())
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakMessage(_("bottom"))
-		speech.speakTextInfo(info,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
 	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object and speaks it")
 
 	def script_review_previousWord(self,keyPress):
