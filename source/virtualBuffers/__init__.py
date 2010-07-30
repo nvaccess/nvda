@@ -191,9 +191,6 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			return startOffset.value,endOffset.value
 		return super(VirtualBufferTextInfo, self)._getUnitOffsets(unit, offset)
 
-	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
-		return speech.getXMLFieldSpeech(self,attrs,fieldType,extraDetail=extraDetail,reason=reason)
-
 	def copyToClipboard(self):
 		# Blocks should start on a new line, but they don't necessarily have an end of line indicator.
 		# Therefore, get the text in block (paragraph) chunks and join the chunks with \r\n.
