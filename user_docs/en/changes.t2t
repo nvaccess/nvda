@@ -24,8 +24,9 @@
 - When selecting an entire row or column in MS Excel with the shortcut keys shift+space and control+space, the new selection is now reported. (#759)
 - Table row and column headers can now be reported. This is configurable from the Document Formatting preferences dialog.
  - Currently, this is supported in documents in Mozilla applications such as Firefox and Thunderbird. (#361)
-- Added key command NVDA+numpad7  to switch to flat review, placing the review cursor at the position of the current object, allowing you  to review the screen (or a document if within one) with the text review commands.
-- Added key command NVDA+numpad1 to  move the review cursor into the object represented by the text at  the position of the review cursor, allowing you to navigate by object from that point.
+- Introduced commands for flat review: (#58)
+ - NVDA+numpad7  switches to flat review, placing the review cursor at the position of the current object, allowing you  to review the screen (or a document if within one) with the text review commands.
+ - NVDA+numpad1 moves the review cursor into the object represented by the text at  the position of the review cursor, allowing you to navigate by object from that point.
 
 
 == Changes ==
