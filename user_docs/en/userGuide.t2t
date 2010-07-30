@@ -191,9 +191,9 @@ It is possible to copy parts of the text you are reviewing. For example, you may
 As well as reviewing the content of a single object, NVDA allows you to review the entire content of a document or the text of the screen.
 This is called flat review.
 
-The following two commands are used for flat review:
-- NVDA+numpad7: Switch to flat review at the current position of the review cursor. This will review the containing document or the screen if there is no document.
-- NVDA+numpad1: Switch to object review at the current position of the review cursor.
+The following two commands are used for switching to/from flat review:
+- NVDA+numpad7: Switch to flat review at the current position of the review cursor. This allows you to  review the screen (or document if you are currently inside one), with the text review commands.
+- NVDA+numpad1: Switch to object review at the current position of the review cursor. This locates the object that is represented by the text you are currently positioned on in flat review and moves the review cursor to it, so that you are then able to review within that object, or navigate by object away from it.  
 
 ++ Navigating with the Mouse ++
 When you move the Mouse, NVDA by default reports the text that is directly under the mouse pointer, as it moves over it. Where supported, NVDA will read a paragraph's worth of text, though some controls may only read by line.
