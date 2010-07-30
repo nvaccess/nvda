@@ -227,6 +227,7 @@ class AppModule(appModuleHandler.AppModule):
 			speech.speakTextInfo(pos)
 		else:
 			speech.speakMessage(_("No flat review for this object"))
+	script_navigatorObject_moveToFlatReviewAtObjectPosition.__doc__=_("Switches to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object")
 
 	def script_navigatorObject_moveToObjectAtFlatReviewPosition(self,keyPress):
 		pos=api.getReviewPosition()
@@ -239,6 +240,7 @@ class AppModule(appModuleHandler.AppModule):
 			speech.speakObject(obj)
 		else:
 			speech.speakMessage(_("No object at flat review position"))
+	script_navigatorObject_moveToObjectAtFlatReviewPosition.__doc__=_("Moves to the object represented by the text at the position of the review cursor within flat review")
 
 	def script_navigatorObject_current(self,keyPress):
 		curObject=api.getNavigatorObject()
