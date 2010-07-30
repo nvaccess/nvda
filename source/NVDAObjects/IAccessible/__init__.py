@@ -51,6 +51,8 @@ def getNVDAObjectFromPoint(x,y):
 
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
+	detectFormattingAfterCursorMaybeSlow=False
+
 	def _getOffsetFromPoint(self,x,y):
 		if self.obj.IAccessibleTextObject.nCharacters>0:
 			return self.obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)

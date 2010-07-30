@@ -142,6 +142,9 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	To support conversion from/to screen points (e.g. for mouse tracking), L{_getOffsetFromPoint}/L{_getPointFromOffset} should be implemented.
 	"""
 
+	detectFormattingAfterCursorMaybeSlow=True #: honours documentFormatting config option if true - set to false if this is not at all slow.
+ 
+
 	def __eq__(self,other):
 		if self is other or (isinstance(other,OffsetsTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
 			return True
@@ -326,7 +329,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
-		if not formatConfig['detectFormatAfterCursor']:
+		if self.detectFormattingAfterCursorMaybeSlow and not formatConfig['detectFormatAfterCursor']:
 			field,(boundStart,boundEnd)=self._getFormatFieldAndOffsets(self._startOffset,formatConfig,calculateOffsets=False)
 			text=self.text
 			return [textInfos.FieldCommand('formatChange',field),text]
