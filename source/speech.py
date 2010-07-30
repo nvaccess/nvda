@@ -284,10 +284,10 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 				speakSelectionMessage(_("selected %s"),info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
-				speakTextInfo(info,reason=reason)
+				speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=reason)
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
-			speakTextInfo(newInfo,reason=reason)
+			speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=reason)
 
 def speakText(text,index=None,reason=REASON_MESSAGE):
 	"""Speaks some given text.
