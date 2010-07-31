@@ -1,5 +1,5 @@
 Guide de l'utilisateur de NVDA NVDA_VERSION
-Dernière mise à jour : 26 Juillet 2010
+Dernière mise à jour : 29 Juillet 2010
 
 %!includeconf: ../userGuide.conf.t2t
 
@@ -158,7 +158,7 @@ Pour naviguer par objet, utilisez les touches suivantes :
 - NVDA+pavnum Entrée : Active l'objet courant (ex. Appuyer sur entrée / cliquer / double cliquer).
 - NVDA+pavnum Diviser : Amène la souris à l'objet courant.
 - NVDA+pavnum Multiplier : Va à la souris.
-- NVDA+pavnumDelete : annonce les dimentions de l'objet courant par rapport à l'écran.
+- NVDA+pavnum Effacer : annonce les dimentions de l'objet courant par rapport à l'écran.
 -
 
 Note : Les touches du pavé numérique nécessitent de désactiver le verrouillage numérique pour fonctionner correctement.
@@ -168,12 +168,6 @@ Quand vous naviguez avec le focus, l'objet de navigation courant change en même 
 ++ Explorer le Texte dans l'ObjetCourant. ++
 NVDA vous permet de lire le contenu de l'objet de navigation courant par caractère, mot ou ligne. Ceci est particulièrement utile dans les fenêtres de console DOS et d'autres applications où le curseur système est réduit ou inexistant.
 
-La plupart du temps, vous ne pouvez explorer que ce qui se trouve dans l'objet en cours.
-Par exemple : Le texte dans une zone d''édition, ou l'étiquette d'un bouton.
-Cependant, il y a deux exceptions à cette règle.
-Si vous explorez un objet contenu dans un tampon virtuel (comme un document dans un navigateur Web), vous pouvez explorer tout le contenu du tampon virtuel en partant de l'objet en cours.
-Si vous explorez le contenu d'un objet fenêtre, se trouvant au niveau supérieur de la plupart des applications, vous pouvez explorer une représentation plate de l'ensemble de l'application assez similaire au mode revue des autres revues d'écran.
- 
 Vous disposez des commandes suivantes pour explorer du texte :
 - Maj+pavnum7 : Première ligne.
 - pavnum7 : Ligne précédente.
@@ -199,7 +193,16 @@ Par exemple, un élément de liste dans une liste aura un texte comprenant son nom
 
 Quand un objet contient un curseur d'édition système et que celui-ci bouge, le curseur de revue le suit. Si vous voulez que le curseur de revue reste où il est et ne suive pas le curseur système, vous pouvez désactiver le lien entre le curseur système et le curseur de revue en pressant NVDA+6.
 
-Il est possible de copier des morceaux du texte que vous êtes en train de lire. Par exemple vous pouvez souhaiter copier une adresse internent qu'on vous a envoyé dans un programme de chat. Pour copier le texte, commencer par amener le curseur de revue au début du texte que vous voulez copier, puis pressez NVDA+f9. Puis allez à la fin du texte et pressez NVDA+f10. Le texte est maintenant copié dans le presse-papier et vous pouvez le coller ailleurs. Notez que si le programme que vous utilisez permet déjà de se déplacer dans le texte avec le curseur système et de copier en utilisant la commande standard CTRL+C, vous obtiendrez toujours de meileurs résultats par cette méthode.
+Il est possible de copier des morceaux du texte que vous êtes en train de lire. Par exemple vous pouvez souhaiter copier une adresse internent qu'on vous a envoyé dans un programme de chat. Pour copier le texte, commencer par amener le curseur de revue au début du texte que vous voulez copier, puis pressez NVDA+f9. Puis allez à la fin du texte et pressez NVDA+f10. Le texte est maintenant copié dans le presse-papier et vous pouvez le coller ailleurs. Notez que si le programme que vous utilisez permet déjà de se déplacer dans le texte avec le curseur système et de copier en utilisant la commande standard CTRL+C, vous obtiendrez toujours de meilleurs résultats par cette méthode.
+
+++ Navigation à Plat ++
+De la même manière qu'il vous permet d'explorer un objet particulier, NVDA vous permet d'explorer le contenu d'un document ou de l'écran entier.
+Cela s'appelle la navigation à plat.
+
+les deux commandes suivantes sont utilisées pour la navigation à plat :
+- NVDA+pavnum7: active la navigation à plat à la position actuelle du curseur de revue. Cela vous permettra d'explorer le document ou l'écran s'il n'y a pas de document.
+- NVDA+pavnum1: Active la navigation par objet à la position actuelle du curseur de revue.
+-
 
 ++ La navigation avec la souris. ++
 Lorsqu'on déplace la souris, NVDA annonce par défaut le texte se trouvant directement sous le pointeur de la souris. Quand c'est possible, NVDA lira un paragraphe, cependant il se peut que certains contrôles ne soient lus que par ligne.
@@ -212,10 +215,10 @@ Par défaut, ces fonctions additionnelles de la souris ne sont pas activées dans 
 
 Bien qu'une souris physique devrait être utilisée pour naviguer à la souris, NVDA possède quelques commandes clavier liées à la souris :
 
-- pavnumDivisé : click gauche
-- PavnumMultiplié : click droit
-- Maj+pavnumDivisé : verrouillage/déverrouillage du bouton gauche enfoncé
-- Maj+pavnumMultiplié : verrouillage/déverrouillage du bouton droit enfoncé
+- pavnum Diviser : click gauche
+- Pavnum Multiplier : click droit
+- Maj+pavnum Diviser : verrouillage/déverrouillage du bouton gauche enfoncé
+- Maj+pavnumMultiplier : verrouillage/déverrouillage du bouton droit enfoncé
 -
 
 + Les tampons virtuels. +
