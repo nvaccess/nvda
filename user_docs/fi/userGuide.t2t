@@ -143,7 +143,7 @@ Tällä rakenteella ei ole mitään tekemistä sen kanssa, miten objektit on sij
 
 Kaikilla sovelluksilla ei ole täydellistä puurakennetta, joka johtuu näiden sovellusten kehittäjistä. Useimmat valintaikkunat ja erittäin rakenteelliset sovellukset toimivat kuitenkin oikein.
 
-Käytä seuraavia näppäimiä navigoidaksesi objekteittain:
+Käytä seuraavia näppäimiä navigoidaksesi objekti kerrallaan:
 - NVDA+laskinnäppäimistön 5: Lue nykyinen objekti
 - NVDA+laskinnäppäimistön 8: Siirry ylemmän tason objektiin (siirtymällä kohti puun juurta)
 - NVDA+laskinnäppäimistön 4: Siirry edelliseen objektiin (suoraan nykyistä objektia ennen oleva saman tason objekti)
@@ -163,11 +163,6 @@ Kun navigoit kohdistuksella, nykyinen navigointiobjekti muuttuu sen mukana. Jos 
 
 ++ Tekstin tarkasteleminen nykyisessä objektissa ++
 Voit lukea NVDA:lla nykyisen navigointiobjektin sisällön merkeittäin, sanoittain ja riveittäin. Tämä on hyödyllistä lähinnä DOS-konsoli-ikkunoissa ja muissa paikoissa, joissa on rajoitettu järjestelmäkohdistin tai sitä ei ole lainkaan.
-
-Useimmiten voidaan tarkastella vain nykyisen objektin sisältöä, esim. muokkauskentän tekstiä tai painikkeen nimeä. 
-Tähän sääntöön on kuitenkin kaksi poikkeusta. 
-Jos tarkastellaan näennäispuskurissa olevaa objektia (kuten web-sivua internet-selaimessa), koko näennäispuskurin sisältöä voidaan tarkastella nykyisen objektin sijainnista alkaen. 
-Kun tarkastellaan ikkunaobjektin sisältöä, joka on useimpien sovellusten ylimmällä tasolla, voidaan tarkastella tasattua asettelua sovelluksesta, melko samaan tapaan kuin muidenkin ruudunlukijoiden tasatun tarkastelun tiloissa.
  
 Seuraavia näppäinkomentoja voidaan käyttää tekstin tarkastelemiseen: 
 - Shift+laskinnäppäimistön 7: Ylin rivi
@@ -191,6 +186,15 @@ Huomautus: Numlockin on oltava pois päältä, jotta laskinnäppäimistön näpp
 Kun objekti sisältää muokkauskohdistimen (järjestelmäkohdistimen) ja kun se liikkuu, tarkastelukohdistin siirtyy sen mukana. Jos haluat tarkastelukohdistimen pysyvän sen nykyisessä paikassa etkä halua sen siirtyvän järjestelmäkohdistimen mukana, voit poistaa käytöstä  "Järjestelmäkohdistin siirtää tarkastelukohdistinta" -toiminnon painamalla NVDA+6.
 
 On mahdollista kopioida osia tarkastelemastasi tekstistä. Voit esimerkiksi kopioida Internet-osoitteen, jonka joku on lähettänyt tekstipohjaisessa chattiohjelmassa. Aloita kopiointi siirtämällä tarkastelukohdistin kopioitavan tekstin ensimmäisen merkin kohdalle ja paina NVDA+f9. Siirry sitten kopioitavan tekstin loppuun ja paina NVDA+f10. Teksti kopioidaan nyt leikepöydälle, jotta voit liittää sen jonnekin muualle. Huomaa, että jos käyttämässäsi ohjelmassa voi liikkua tekstissä järjestelmäkohdistimen avulla ja kopioida normaalilla Control+c-komennolla, sinun kannattaa aina käyttää mieluummin sitä tapaa.
+
+++ Tasattu tarkastelu ++
+NVDA:lla voidaan yksittäisen objektin sisällön lisäksi tarkastella  koko asiakirjan sisältöä tai ruudun tekstiä.
+Tätä kutsutaan tasatuksi tarkasteluksi.
+
+Kahta seuraavaa komentoa käytetään tasatun tarkastelun tilaan siirtymiseksi tai siitä pois:
+- NVDA+laskinnäppäimistön 7: Siirtää tasatun tarkastelun tilaan tarkastelukohdistimen nykyisessä kohdassa. Tämä mahdollistaa koko ruudun tai asiakirjan tarkastelemisen tekstintarkastelukomennoilla.
+- NVDA+laskinnäppäimistön 1: Siirtää objektintarkastelutilaan tarkastelukohdistimen nykyisessä kohdassa. Tämä etsii objektin, joka sisältää tekstin, jonka kohdalla olet tasatun tarkastelun tilassa ja siirtää tarkastelukohdistimen siihen, jotta sen sisältämää tekstiä voidaan tarkastella tai siirtyä muualle objektinavigointia käyttäen.
+-
  
 ++ Hiirellä navigoiminen ++
 Kun liikutat hiirtä, NVDA lukee oletusarvoisesti suoraan hiirikohdistimen alla olevan tekstin. Jos toimintoa tuetaan, NVDA lukee myös kappaleen tekstin. Joissakin säätimissä lukeminen on mahdollista vain rivi kerrallaan.
