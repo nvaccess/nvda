@@ -44,8 +44,8 @@ from comtypes.automation import IDispatch
 from logHandler import log
 import textInfos.offsets
 
-from .NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
-from .NVDAObjects.window import Window
+from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
+from NVDAObjects.window import Window
 
 from NVDAObjects.window import DisplayModelEditableText
 
