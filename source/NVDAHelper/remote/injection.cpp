@@ -53,10 +53,10 @@ void CALLBACK inproc_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND 
 		TlsSetValue(tlsIndex_inThreadInjectionID,(LPVOID)hookID);
 		HHOOK tempHook;
 		if((tempHook=SetWindowsHookEx(WH_GETMESSAGE,inProcess_getMessageHook,dllHandle,threadID))==0) {
-			LOG_ERROR(L"SetWindowsHookEx with WH_GETMESSAGE failed, GetLastError returned "<<GetLastError());
+			LOG_DEBUGWARNING(L"SetWindowsHookEx with WH_GETMESSAGE failed, GetLastError returned "<<GetLastError());
 		} else inprocCurrentWindowsHooks.insert(tempHook);
 		if((tempHook=SetWindowsHookEx(WH_CALLWNDPROC,inProcess_callWndProcHook,dllHandle,threadID))==0) {
-			LOG_ERROR(L"SetWindowsHookEx with WH_GETMESSAGE failed, GetLastError returned "<<GetLastError());
+			LOG_DEBUGWARNING(L"SetWindowsHookEx with WH_CALLWNDPROC failed, GetLastError returned "<<GetLastError());
 		} else inprocCurrentWindowsHooks.insert(tempHook);
 	}
 	inprocThreadsLock.release();
