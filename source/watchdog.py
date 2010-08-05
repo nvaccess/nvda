@@ -1,8 +1,11 @@
+import sys
+import traceback
 import time
 import threading
 from ctypes import *
 import winUser
 import api
+from logHandler import log
 
 #settings
 #: How often to check whether the core is alive
@@ -53,8 +56,17 @@ def _watcher():
 			waited += timeout
 			if _coreAliveEvent.isSet() or _shouldRecoverAfterMinTimeout():
 				break
-
+		if log.isEnabledFor(log.DEBUGWARNING) and not _coreAliveEvent.isSet():
+			coreFrame=sys._current_frames()[_coreThreadID]
+			log.debugWarning("Trying to recover from freeze, core stack:\n%s"%"".join(traceback.format_stack(coreFrame)))
+		lastTime=time.time()
 		while not _coreAliveEvent.isSet():
+			curTime=time.time()
+			timePeriod=curTime-lastTime
+			if timePeriod>10:
+				lastTime=curTime
+				coreFrame=sys._current_frames()[_coreThreadID]
+				log.error("Core frozen in stack:\n%s"%"".join(traceback.format_stack(coreFrame)))
 			# The core is dead, so attempt recovery.
 			isAttemptingRecovery = True
 			_recoverAttempt()
