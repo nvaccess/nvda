@@ -31,6 +31,7 @@ SCI_GETLINEENDPOSITION=2136
 SCI_GETLINECOUNT=2154
 SCI_LINEFROMPOSITION=2166
 SCI_POSITIONFROMLINE=2167
+SCI_LINELENGTH=2350
 SCI_GETSTYLEAT=2010
 SCI_STYLEGETFONT=2486
 SCI_STYLEGETSIZE=2485
@@ -174,12 +175,9 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return winUser.sendMessage(self.obj.windowHandle,SCI_LINEFROMPOSITION,offset,0)
 
 	def _getLineOffsets(self,offset):
-		curY=winUser.sendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,0,offset)
-		start=winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,0,curY)
-		end=winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,0xffff,curY)
-		limit=self._getStoryLength()
-		while winUser.sendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,0,end)==curY and end<limit:
- 			end+=1
+		line=winUser.sendMessage(self.obj.windowHandle,SCI_LINEFROMPOSITION,offset,0)
+		start=winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMLINE,line,0)
+		end=start+winUser.sendMessage(self.obj.windowHandle,SCI_LINELENGTH,line,0)
 		return (start,end)
 
 	def _getParagraphOffsets(self,offset):
