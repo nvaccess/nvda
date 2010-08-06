@@ -86,11 +86,6 @@ def resetConfiguration():
 	#Speech
 	log.debug("initializing speech")
 	speech.initialize()
-	log.debug("Trying to save config...")
-	try:
-		config.save()
-	except:
-		pass
 	log.info("Reverted to saved configuration")
 
 def main():
@@ -107,11 +102,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			nvwave.playWaveFile("waves\\start.wav")
 		except:
 			pass
-	log.debug("Trying to save config")
-	try:
-		config.save()
-	except:
-		pass
 	logHandler.setLogLevelFromConfig()
 	try:
 		lang = config.conf["general"]["language"]
