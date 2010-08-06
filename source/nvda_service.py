@@ -12,6 +12,7 @@ import win32service
 import sys
 import os
 import time
+import subprocess
 import _winreg
 
 CREATE_UNICODE_ENVIRONMENT=1024
@@ -36,6 +37,10 @@ WTSUserName = 5
 
 nvdaExec = os.path.join(sys.prefix,"nvda.exe")
 slaveExec = os.path.join(sys.prefix,"nvda_slave.exe")
+nvdaSystemConfigDir=os.path.join(sys.prefix,'systemConfig')
+
+
+
 
 isDebug = False
 
@@ -110,7 +115,7 @@ def getSessionSystemToken(session):
 	return token
 
 def executeProcess(desktop, token, executable, *argStrings):
-	argsString=" ".join(list(argStrings))
+	argsString=subprocess.list2cmdline(list(argStrings))
 	startupInfo=STARTUPINFO(cb=sizeof(STARTUPINFO),lpDesktop=desktop)
 	processInformation=PROCESS_INFORMATION()
 	cmdBuf=create_unicode_buffer(u'"%s" %s'%(executable,argsString))
@@ -151,7 +156,7 @@ def nvdaLauncher():
 def startNVDA(desktop):
 	token=duplicateTokenPrimary(getOwnToken())
 	windll.advapi32.SetTokenInformation(token,TokenUIAccess,byref(c_ulong(1)),sizeof(c_ulong))
-	args = [desktop, token, nvdaExec, "-m", "--no-sr-flag"]
+	args = [desktop, token, nvdaExec, "-m", "-c", nvdaSystemConfigDir, "--no-sr-flag"]
 	if not isDebug:
 		args.append("--secure")
 	try:

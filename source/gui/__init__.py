@@ -148,6 +148,9 @@ class MainFrame(wx.Frame):
 		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("configuration applied"))
 
 	def onSaveConfigurationCommand(self,evt):
+		if globalVars.appArgs.secure:
+			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Cannot save configuration - NVDA in secure mode"))
+			return
 		try:
 			config.save()
 			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("configuration saved"))
@@ -280,10 +283,11 @@ class SysTrayIcon(wx.TaskBarIcon):
 		item = menu_preferences.Append(wx.ID_ANY,_("Document &formatting..."),_("Change Settings of document properties")) 
 		self.Bind(wx.EVT_MENU, frame.onDocumentFormattingCommand, item)
 		subMenu_speechDicts = wx.Menu()
-		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Default dictionary..."),_("dialog where you can set default dictionary by adding dictionary entries to the list"))
-		self.Bind(wx.EVT_MENU, frame.onDefaultDictionaryCommand, item)
-		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Voice dictionary..."),_("dialog where you can set voice-specific dictionary by adding dictionary entries to the list"))
-		self.Bind(wx.EVT_MENU, frame.onVoiceDictionaryCommand, item)
+		if not globalVars.appArgs.secure:
+			item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Default dictionary..."),_("dialog where you can set default dictionary by adding dictionary entries to the list"))
+			self.Bind(wx.EVT_MENU, frame.onDefaultDictionaryCommand, item)
+			item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Voice dictionary..."),_("dialog where you can set voice-specific dictionary by adding dictionary entries to the list"))
+			self.Bind(wx.EVT_MENU, frame.onVoiceDictionaryCommand, item)
 		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		menu_preferences.AppendMenu(wx.ID_ANY,_("Speech &dictionaries"),subMenu_speechDicts)
@@ -325,8 +329,9 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_ANY, _("&Revert to saved configuration"),_("Reset all settings to saved state"))
 		self.Bind(wx.EVT_MENU, frame.onRevertToSavedConfigurationCommand, item)
-		item = self.menu.Append(wx.ID_SAVE, _("&Save configuration"), _("Write the current configuration to nvda.ini"))
-		self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
+		if not globalVars.appArgs.secure:
+			item = self.menu.Append(wx.ID_SAVE, _("&Save configuration"), _("Write the current configuration to nvda.ini"))
+			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)

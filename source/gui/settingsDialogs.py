@@ -109,9 +109,13 @@ class GeneralSettingsDialog(SettingsDialog):
 		except:
 			pass
 		languageSizer.Add(self.languageList)
+		if globalVars.appArgs.secure:
+			self.languageList.Disable()
 		settingsSizer.Add(languageSizer,border=10,flag=wx.BOTTOM)
 		self.saveOnExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Save configuration on exit"))
 		self.saveOnExitCheckBox.SetValue(config.conf["general"]["saveConfigurationOnExit"])
+		if globalVars.appArgs.secure:
+			self.saveOnExitCheckBox.Disable()
 		settingsSizer.Add(self.saveOnExitCheckBox,border=10,flag=wx.BOTTOM)
 		self.askToExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Warn before exiting NVDA"))
 		self.askToExitCheckBox.SetValue(config.conf["general"]["askToExit"])
@@ -132,17 +136,26 @@ class GeneralSettingsDialog(SettingsDialog):
 		settingsSizer.Add(logLevelSizer,border=10,flag=wx.BOTTOM)
 		self.startAfterLogonCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("&Automatically start NVDA after I log on to Windows"))
 		self.startAfterLogonCheckBox.SetValue(config.getStartAfterLogon())
-		if not config.isInstalledCopy():
+		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		settingsSizer.Add(self.startAfterLogonCheckBox)
 		self.startOnLogonScreenCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("Use NVDA on the Windows logon screen (requires administrator privileges)"))
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
-		if not config.isServiceInstalled():
+		if globalVars.appArgs.secure or not config.isServiceInstalled():
 			self.startOnLogonScreenCheckBox.Disable()
 		settingsSizer.Add(self.startOnLogonScreenCheckBox)
+		self.copySettingsButton= wx.Button(self, wx.ID_ANY, label=_("Copy currently saved NVDA settings to the logon screen (requires administrator privileges)"))
+		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
+		if globalVars.appArgs.secure or not config.isServiceInstalled():
+			self.copySettingsButton.Disable()
+		settingsSizer.Add(self.copySettingsButton)
 
 	def postInit(self):
 		self.languageList.SetFocus()
+
+	def onCopySettings(self,evt):
+		if not config.setSystemConfigToCurrentConfig():
+			wx.MessageBox(_("Error copying user settings"))
 
 	def onOk(self,evt):
 		newLanguage=[x[0] for x in self.languageNames][self.languageList.GetSelection()]

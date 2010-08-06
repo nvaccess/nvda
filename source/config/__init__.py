@@ -342,6 +342,9 @@ def _setStartOnLogonScreen(enable):
 	k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY, 0, _winreg.KEY_WRITE)
 	_winreg.SetValueEx(k, u"startOnLogonScreen", None, _winreg.REG_DWORD, int(enable))
 
+def setSystemConfigToCurrentConfig():
+	return execElevated(SLAVE_FILENAME, "setNvdaSystemConfig %s" % os.path.abspath(globalVars.appArgs.configPath), wait=True)==0
+
 def setStartOnLogonScreen(enable):
 	if getStartOnLogonScreen() == enable:
 		return

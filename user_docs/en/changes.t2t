@@ -27,6 +27,8 @@
 - Introduced commands for flat review: (#58)
  - NVDA+numpad7  switches to flat review, placing the review cursor at the position of the current object, allowing you  to review the screen (or a document if within one) with the text review commands.
  - NVDA+numpad1 moves the review cursor into the object represented by the text at  the position of the review cursor, allowing you to navigate by object from that point.
+- Current NVDA user settings can be  copied to be used on the logon/UAC screens, by pressing a button in the General Settings dialog.
+
 
 
 == Changes ==
@@ -36,6 +38,7 @@
 - If the speech viewer (enabled under the tools menu) is given the focus (e.g. it was clicked in) new text will not appear in the control until focus is moved away. This allows for selecting the text with greater ease (e.g. for copying).
 - The Log Viewer and Python Console are maximised when activated.
 - When focusing on a worksheet in MS Excel, and there is more than one cell selected, the selection range is announced, rather than just the active cell. (#763)
+- Saving configuration, and changing of particular sensitive options, is now disabled when running in secure mode (on the logon/UAC screens).
 
 
 == Bug Fixes ==

@@ -286,6 +286,12 @@ If this option is enabled, NVDA will start automatically as soon as you log on t
 ==== Use nvda on the windows log on screen (requires administrative privileges) ====
 If you log on to Windows by providing a user name and password, then enabling this option will make NVDA start automatically at the logon screen when Windows starts.
 
+==== Copy currently saved NVDA settings to the logon screen ====
+Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it when running on the logon and User Account Control (UAC) screens.
+ To make sure that all your settings are transfered, make sure to firstly save your configuration with control+NVDA+s or save configuration in the NVDA menu.
+
+
+
 +++ Synthesizer Selection +++
 The Synthesizer dialog, which is found under "Synthesizer..." in the Preferences menu or by pressing NVDA+Control+S, allows you to select which Synthesizer NVDA should use to speak with.
 
@@ -509,6 +515,10 @@ Portable versions of NVDA store all settings,  custom appModules and custom driv
 Installed versions of NVDA store all settings, custom appModules and custom drivers in a special NVDA directory located in your Windows user profile. 
 This means that each user on the system can have their own NVDA settings.
 To get to your settings directory for an installed version of NVDA, on the start menu you can go to programs -> NVDA -> explore user configuration directory.
+
+Settings for NVDA when running on the logon or UAC screens is stored in the systemConfig directory in NVDA's installation directory.
+Usually this configuration should not be touched.
+To change how NVDA is configured on the logon/UAC screens, configure NVDA to how you wish  while logged in to Windows, and then instruct NVDA to copy the configuration to the logon screen by using the button in the General settings dialog.
    
 + Troubleshooting NVDA +
 As NVDA is constantly being updated, there is no guarantee that all commands provided here in this user guide will still apply. If you have any problems with any of the commands presented in this user guide, please visit: NVDA_URL for more assistance.
