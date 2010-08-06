@@ -202,6 +202,8 @@ def updateSynthConfig(synth):
 def save():
 	"""Saves the configuration to the config file.
 	"""
+	#We never want to save config if runing securely
+	if globalVars.appArgs.secure: return
 	global conf
 	if globalVars.configFileError:
 		raise RuntimeError("config file errors still exist")
