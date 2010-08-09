@@ -139,7 +139,8 @@ def findExtraOverlayClasses(obj, clsList):
 	if iaRole in _IAccessibleRolesWithBrokenFocusedState:
 		clsList.append(BrokenFocusedState)
 
-	if _getGeckoVersion(obj).startswith("1.9"):
+	ver = _getGeckoVersion(obj)
+	if ver and ver.startswith("1.9"):
 		clsList.append(Gecko1_9)
 
 	clsList.append(Mozilla)
