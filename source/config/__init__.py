@@ -343,7 +343,19 @@ def _setStartOnLogonScreen(enable):
 	_winreg.SetValueEx(k, u"startOnLogonScreen", None, _winreg.REG_DWORD, int(enable))
 
 def setSystemConfigToCurrentConfig():
-	return execElevated(SLAVE_FILENAME, "setNvdaSystemConfig %s" % os.path.abspath(globalVars.appArgs.configPath), wait=True)==0
+	fromPath=os.path.abspath(globalVars.appArgs.configPath)
+	try:
+		_setSystemConfig(fromPath)
+		return True
+	except (OSError,WindowsError):
+		return execElevated(SLAVE_FILENAME, "setNvdaSystemConfig %s" % fromPath, wait=True)==0
+
+def _setSystemConfig(fromPath):
+	toPath=os.path.join(sys.prefix,'systemConfig')
+	import shutil
+	if os.path.isdir(toPath):
+		shutil.rmtree(toPath)
+		shutil.copytree(fromPath,toPath)
 
 def setStartOnLogonScreen(enable):
 	if getStartOnLogonScreen() == enable:

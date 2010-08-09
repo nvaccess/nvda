@@ -20,12 +20,8 @@ def main():
 			import nvda_service
 			nvda_service.nvdaLauncher()
 		elif action=="setNvdaSystemConfig":
-			fromPath=args[0]
-			toPath=os.path.join(sys.prefix,'systemConfig')
-			import shutil
-			if os.path.isdir(toPath):
-				shutil.rmtree(toPath)
-			shutil.copytree(fromPath,toPath)
+			import config
+			config._setSystemConfig(args[0])
 		elif action == "config_setStartOnLogonScreen":
 			enable = bool(int(args[0]))
 			import config
