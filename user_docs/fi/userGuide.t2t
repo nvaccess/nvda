@@ -1,5 +1,5 @@
 ﻿NVDA NVDA_VERSION käyttöohje
-Viimeisin päivitys: 28. heinäkuuta 2010
+Viimeisin päivitys: 6. elokuuta 2010
 
 %!includeconf: ../userGuide.conf.t2t
 
@@ -286,6 +286,10 @@ Jos tämä asetus on käytössä, NVDA käynnistyy automaattisesti heti, kun ole
 ==== Käytä NVDA:ta Windowsin kirjautumisruudussa (vaatii järjestelmänvalvojan oikeuksia) ====
 Jos kirjaudut Windowsiin käyttäjänimellä ja salasanalla, tämä asetus saa NVDA:n käynnistymään automaattisesti kirjautumisruudussa aina Windowsin käynnistyessä.
 
+==== Kopioi NVDA:n nykyiset asetukset kirjautumisruudussa käytettäväksi ====
+Kun tätä painiketta painetaan, käyttäjän nykyiset asetukset kopioidaan NVDA:n järjestelmäasetusten hakemistoon, jotta niitä käytetään kirjautumis- ja käyttäjätilien valvonnan (UAC) ruuduissa.
+Varmistaaksesi, että kaikki asetuksesi siirretään, tallenna ne ensin painamalla Ctrl+NVDA+S tai valitsemalla NVDA-valikosta Tallenna asetukset.
+
 +++ Puhesyntetisaattorin valitseminen +++
 Syntetisaattori-valintaikkunassa, joka löytyy Asetukset-valikosta kohdasta "Syntetisaattori..." tai johon pääsee painamalla NVDA+Control+S, voidaan valita, mitä puhesyntetisaattoria NVDA käyttää.
 
@@ -510,6 +514,10 @@ Mukana kuljetettavat NVDA:n versiot tallentavat kaikki asetukset, mukautetut sov
 Asennetut NVDA:n versiot tallentavat kaikki asetukset, mukautetut sovellusmoduulit ja -ajurit erityiseen Windowsin käyttäjäprofiilissa olevaan NVDA-hakemistoon. 
 Tämä tarkoittaa, että jokaisella järjestelmän käyttäjällä voi olla omat NVDA-asetuksensa.
 Asennetun NVDA:n asetushakemistoon päästään valitsemalla Käynnistä-valikosta Ohjelmat -> NVDA -> Selaa käyttäjän asetushakemistoa.
+
+Kirjautumis- ja käyttäjätilien valvonnan ruuduissa käytettävät asetukset tallennetaan NVDA:n asennushakemistossa olevaan systemConfighakemistoon.
+Näihin ei tulisi yleensä koskea.
+Muuttaaksesi sitä, miten NVDA on määritelty kirjautumis- ja käyttäjätilien valvonnan ruuduissa, muuta ensin asetukset haluamiksesi kun olet kirjautuneena Windowsiin, ja kopioi ne sitten kirjautumisruudussa käytettäväksi painamalla painiketta Yleiset asetukset -valintaikkunassa.
 
 + Vianmääritys +
 Koska NVDA:ta päivitetään jatkuvasti, ei ole takeita, että kaikki tässä käyttöohjeessa mainitut komennot ovat käytettävissä. Jos sinulla on ongelmia komentojen kanssa, käy osoitteessa NVDA_URL saadaksesi lisää apua.

@@ -25,8 +25,9 @@
 - Taulukon rivien ja sarakkeiden otsikot voidaan nyt lukea. Asetus on määritettävissä Asiakirjojen muotoiluasetukset -valintaikkunasta.
  - Tätä tuetaan toistaiseksi vain Mozilla-sovelluksissa, kuten Firefoxissa ja Thunderbirdissä. (#361)
 - Otettu käyttöön tasatun tarkastelun komennot: (#58)
- - NVDA+laskinnäppäimistön 7: siirtää tasatun tarkastelun tilaan ja sijoittaa tarkastelukohdistimen nykyisen objektin kohdalle, mikä mahdollistaa ruudun tai asiakirjan tarkastelemisen tekstintarkastelukomennoilla.
+ - NVDA+laskinnäppäimistön 7: siirtää tasatun tarkastelun tilaan ja sijoittaa tarkastelukohdistimen nykyisen objektin kohdalle, mikä mahdollistaa koko ruudun tai asiakirjan tarkastelemisen tekstintarkastelukomennoilla.
  - NVDA+laskinnäppäimistön 1: siirtää tarkastelukohdistimen sen kohdalla olevan tekstin sisältävään objektiin, mikä mahdollistaa objekti kerrallaan liikkumisen siitä kohdasta lähtien.
+- NVDA:n nykyiset asetukset voidaan kopioida kirjautumis- ja käyttäjätilien valvonnan ruuduissa käytettäviksi painamalla painiketta Yleiset asetukset -valintaikkunassa.
 
 
 == Muutokset ==
@@ -36,6 +37,7 @@
 - Jos kohdistus siirtyy puheen tarkastelu -säätimeen (otetaan käyttöön Työkalut-valikosta) esim. siksi, että sitä napsautettiin hiirellä, säätimeen ei ilmesty uutta tekstiä ennen kuin kohdistus siirtyy siitä pois. Tämä mahdollistaa helpomman tekstin valitsemisen esim. kopiointia varten.
 - Lokinkatselu- ja Python-konsoli-ikkunat suurennetaan avattaessa.
 - Kun Microsoft Excelissä on työkirja aktiivisena ja kun useampi kuin yksi solu on valittu, valinnan alue luetaan, eikä vain aktiivista solua. (#763)
+- NVDA:n asetusten tallentaminen ja tiettyjen asetusten muuttaminen on nyt estetty suojatussa tilassa (kirjautumis ja käyttäjätilien valvonnan ruuduissa).
 
 
 == Vikojen korjaukset ==

@@ -286,7 +286,12 @@ Ak je táto voľba zaškrtnutá, NVDA spustí hneď ako sa prihlásite do Window
 ==== Spúšťať NVDA pri zobrazení prihlasovacej obrazovky (vyžaduje administrátorské práva) ====
 Ak sa do Windows prihlasujete zadaním vašeho prihlasovacieho mena a hesla, zaškrtnutím tejto voľby zaistíte, aby sa NVDA spustil už pri zobrazení práve spomínanej obrazovky..
 
-+++ Výber hlasového výstupu +++
+==== Skopírovať aktuálne nastavenia NVDA na prihlasovaciu obrazovku ====
+Po stlačení tohoto tlačidla NVDA skopíruje aktuálne nastavenia do systémového priečinka, aby mohli byť tieto nastavenia použité v prípade, ak je NVDA spustený na prihlasovacej obrazovke alebo iných zabespečených obrazovkách.
+Ak sa chcete uistiť, že budú správne prekopírované všetky nastavenia, môžete uložiť nastavenia stlačením Control+NVDA+c, alebo použitím voľby z ponuky NVDA.
+
+
+++++ Výber hlasového výstupu +++
 Položka hlasový výstup sa nachádza v možnostiach programu alebo je tiež dostupná po stlačení klávesovej skratky ctrl+NVDA+s. Po aktivovaní je možné vybrať, ktorý hlasový výstup bude NVDA používať.
 
 Dialógové okno obsahuje jednoduchý zoznam, v ktorom sa nachádzajú dostupné hlasové výstupy. Vyberte si šípkami výstup a stlačte tlačítko OK. Ak sa pri spustení hlasového výstupu vyskytne chyba program vás upozorní a zostane zachované pôvodné nastavenie.
@@ -512,6 +517,11 @@ Prenositeľné verzie NVDA si ukladajú všetky nastavenia, vlastné aplikačné
 
 Inštalačné verzie NVDA si ukladajú všetky nastavenia, vlastné aplikačné moduly, ovládače hlasových a brailovských výstupov v špecifickom priečinku NVDA v používateľskom profile Windows.
 Znamená to, že každý používateľ Windows môže mať svoje nastavenia NVDA. Vstúpiť do svojho priečinka s nastaveniami inštalačnej verzii NVDA môžete cez odkaz Otvoriť adresár s používateľskými nastaveniami v ponuke štart, priečinku Programy -> NVDA.
+
+Nastavenia, ktoré sa použijú v prípadoch, keď NVDA beží na prihlasovacej alebo inej zabespečenej obrazovke sú uložené v priečinku systemConfig, ktorý je podpriečinkom inštalačného adresára NVDA.
+Normálne nie je potrebné do tohoto priečinka zasahovať.
+Ak chcete zmeniť konfiguráciu NVDA pre prihlasovaciu obrazovku, nakonfigurujte NVDA podľa vašich predstav kým ste prihlásení do windows a potom pomocou tlačidla v dialógu Všeobecné nastavenia nastavenia skopírujte na prihlasovaciu obrazovku.
+
 
 + Ako získať viac informácií +
 Keďže NVDA je neustále vo vývoji, nie je možné garantovať funkčnosť všetkých klávesových príkazov a postupov popísaných v tejto príručke. Ak máte problémy s niektorými príkazmi z tejto príručky, prosím navštívte web stránku: NVDA_URL a skúste vyhľadať aktualizované informácie.

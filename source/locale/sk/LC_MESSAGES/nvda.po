@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: main,3670\n"
 "POT-Creation-Date: 2007-03-07 08:26+Central Europe Standard Time\n"
-"PO-Revision-Date: 2010-07-30 9:25+Central Europe Standard Time\n"
+"PO-Revision-Date: 2010-08-09 10:40+Central Europe Standard Time\n"
 "Last-Translator: Peter Vágner <peter.v@datagate.sk>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -127,7 +127,7 @@ msgstr "zapnuté"
 #: appModules\_default.py:771
 #: appModules\winamp.py:79
 #: appModules\winamp.py:89
-#: gui\settingsDialogs.py:517
+#: gui\settingsDialogs.py:532
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
 #: keyboardHandler.py:59
@@ -320,19 +320,24 @@ msgstr "Nie je dostupné plošné prezeranie pre tento objekt"
 msgid ""
 "Switches to flat review for the screen (or document if currently inside one) "
 "and positions the review cursor at the location of the current object"
-msgstr "Prepína do plošného prehliadania pre aktuálnu obrazovku alebo dokument a nastaví pozíciu prehliadacieho kurzora na mieste aktuálneho objektu zameraného objektovou navigáciou."
+msgstr ""
+"Prepína do plošného prehliadania pre aktuálnu obrazovku alebo dokument a "
+"nastaví pozíciu prehliadacieho kurzora na mieste aktuálneho objektu "
+"zameraného objektovou navigáciou."
 
 #: appModules\_default.py:242
 msgid "No object at flat review position"
-msgstr "Žiadny objekt na pozícii prehliadacieho kurzora plošného prehliadania"
+msgstr ""
+"Žiadny objekt na pozícii prehliadacieho kurzora plošného prehliadania"
 
 #: appModules\_default.py:243
 msgid ""
 "Moves to the object represented by the text at the position of the review "
 "cursor within flat review"
-msgstr "Prejde na objekt, na ktorého text ukazuje prehliadací kurzor v režime plošného prehliadania"
-"Premiestni systémový kurzor na pozíciu prehliadacieho kurzora aktuálneho "
-"navigačného objektu."
+msgstr ""
+"Prejde na objekt, na ktorého text ukazuje prehliadací kurzor v režime "
+"plošného prehliadaniaPremiestni systémový kurzor na pozíciu "
+"prehliadacieho kurzora aktuálneho navigačného objektu."
 
 #: appModules\_default.py:248
 #: appModules\_default.py:282
@@ -892,12 +897,12 @@ msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Aktivuje Python konzolu NVDA, primárne použiteľnú pri vývoji."
 
 #: appModules\_default.py:866
-#: gui\settingsDialogs.py:876
+#: gui\settingsDialogs.py:891
 msgid "review"
 msgstr "prehliadacím kurzorom"
 
 #: appModules\_default.py:869
-#: gui\settingsDialogs.py:876
+#: gui\settingsDialogs.py:891
 msgid "focus"
 msgstr "systémovým kurzorom"
 
@@ -1328,16 +1333,16 @@ msgstr "pmnu"
 msgid "( )"
 msgstr "( )"
 
-#: braille.py:222 speech.py:678
+#: braille.py:222 speech.py:679
 msgid "not %s"
 msgstr "ne %s"
 
-#: braille.py:234 speech.py:684
+#: braille.py:234 speech.py:685
 msgid "%s of %s"
 msgstr "%s z %s"
 
-#: braille.py:236 speech.py:689
-#: speech.py:692
+#: braille.py:236 speech.py:690
+#: speech.py:693
 msgid "level %s"
 msgstr "úroveň %s"
 
@@ -1360,7 +1365,7 @@ msgstr "Žiadny zobrazovač"
 #: characterSymbols.py:17
 #: characterSymbols.py:18
 #: characterSymbols.py:19 speech.py:84
-#: speech.py:628
+#: speech.py:629
 msgid "blank"
 msgstr "prázdny"
 
@@ -1617,7 +1622,7 @@ msgstr "bublinková nápoveda"
 msgid "tool tip"
 msgstr "kontextová nápoveda"
 
-#: controlTypes.py:198 speech.py:949
+#: controlTypes.py:198 speech.py:950
 msgid "link"
 msgstr "odkaz"
 
@@ -2034,7 +2039,7 @@ msgstr "názov písma"
 msgid "font size"
 msgstr "veľkosť písma"
 
-#: controlTypes.py:305 speech.py:901
+#: controlTypes.py:305 speech.py:902
 msgid "bold"
 msgstr "tučné"
 
@@ -2050,11 +2055,11 @@ msgstr "farba popredia"
 msgid "background color"
 msgstr "farba pozadia"
 
-#: controlTypes.py:310 speech.py:923
+#: controlTypes.py:310 speech.py:924
 msgid "superscript"
 msgstr "horný index"
 
-#: controlTypes.py:311 speech.py:925
+#: controlTypes.py:311 speech.py:926
 msgid "subscript"
 msgstr "dolný index"
 
@@ -2218,11 +2223,11 @@ msgstr "označené pre operáciu ťahať a pustiť"
 msgid "drop target"
 msgstr "cieľ akcie ťahať a pustiť"
 
-#: core.py:137
+#: core.py:127
 msgid "Loading subsystems, please wait..."
 msgstr "Nahrávam podporné systémy, prosím čakajte."
 
-#: core.py:219
+#: core.py:209
 msgid "NVDA started"
 msgstr "NVDA spustený."
 
@@ -2270,93 +2275,98 @@ msgstr "okopírované do schránky."
 msgid "configuration applied"
 msgstr "Konfigurácia načítaná."
 
-#: gui\__init__.py:153
+#: gui\__init__.py:152
+msgid "Cannot save configuration - NVDA in secure mode"
+msgstr "Nie je možné uložiť nastavenia. NVDA beží v zabespečenom režime."
+
+#: gui\__init__.py:156
 msgid "configuration saved"
 msgstr "Nastavenia uložené."
 
-#: gui\__init__.py:156
+#: gui\__init__.py:159
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
 "Nemôžem uložiť nastavenia. Pravdepodobne je NVDA spustený z systému "
 "len na čítanie."
 
-#: gui\__init__.py:156
-#: gui\logViewer.py:73
+#: gui\__init__.py:159
+#: gui\logViewer.py:74
+#: gui\settingsDialogs.py:158
 msgid "Error"
 msgstr "Chyba"
 
-#: gui\__init__.py:167
+#: gui\__init__.py:170
 msgid "Default dictionary"
 msgstr "Predvolený slovník"
 
-#: gui\__init__.py:170
+#: gui\__init__.py:173
 msgid "Voice dictionary (%s)"
 msgstr "Slovník pre aktuálny hlas (%s)"
 
-#: gui\__init__.py:173
+#: gui\__init__.py:176
 msgid "Temporary dictionary"
 msgstr "Dočasný slovník"
 
-#: gui\__init__.py:181
+#: gui\__init__.py:184
 msgid "Are you sure you want to quit NVDA?"
 msgstr "Ste si istý, že chcete ukončiť NVDA?"
 
-#: gui\__init__.py:181
-#: gui\__init__.py:331
+#: gui\__init__.py:184
+#: gui\__init__.py:336
 msgid "Exit NVDA"
 msgstr "Ukončiť nvda"
 
-#: gui\__init__.py:227
+#: gui\__init__.py:230
 msgid "copyright"
 msgstr "Copyright"
 
-#: gui\__init__.py:227
+#: gui\__init__.py:230
 msgid "url"
 msgstr "Url"
 
-#: gui\__init__.py:227
+#: gui\__init__.py:230
 msgid "version"
 msgstr "Verzia"
 
-#: gui\__init__.py:229
-#: gui\__init__.py:322
+#: gui\__init__.py:232
+#: gui\__init__.py:326
 msgid "About NVDA"
 msgstr "O NVDA"
 
-#: gui\__init__.py:262
+#: gui\__init__.py:265
 msgid "&General settings..."
 msgstr "Všeobecné &nastavenia..."
 
-#: gui\__init__.py:262
+#: gui\__init__.py:265
 #: gui\settingsDialogs.py:89
 msgid "General settings"
 msgstr "Všeobecné nastavenia"
 
-#: gui\__init__.py:264
+#: gui\__init__.py:267
 msgid " the synthesizer to use"
 msgstr "Používaný hlasový výstup"
 
-#: gui\__init__.py:264
+#: gui\__init__.py:267
 msgid "&Synthesizer..."
 msgstr "&Hlasový výstup..."
 
-#: gui\__init__.py:266
+#: gui\__init__.py:269
 msgid "&Voice settings..."
 msgstr "Nastavenia h&lasu..."
 
-#: gui\__init__.py:266
+#: gui\__init__.py:269
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "Nastaví hlas, jeho tempo výšku a hlasitosť."
 
-#: gui\__init__.py:268
+#: gui\__init__.py:271
 msgid "B&raille settings..."
 msgstr "Nastavenia b&raillu..."
 
-#: gui\__init__.py:270
+#: gui\__init__.py:273
 msgid "&Keyboard Settings..."
 msgstr "Nastavenia &klávesnice..."
 
-#: gui\__init__.py:270
+#: gui\__init__.py:273
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
@@ -2364,54 +2374,54 @@ msgstr ""
 "Nastavuje rozloženie klávesov, čítanie znakov, slov alebo klávesových "
 "príkazov."
 
-#: gui\__init__.py:272
+#: gui\__init__.py:275
 msgid "&Mouse settings..."
 msgstr "Nastavenia &myši..."
 
-#: gui\__init__.py:272
+#: gui\__init__.py:275
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr ""
 "Nastavuje oznamovanie zmeny tvaru kurzora myši a objektov pod kurzorom myši"
 
-#: gui\__init__.py:274
+#: gui\__init__.py:277
 msgid "&Review cursor..."
 msgstr "P&rehliadací kurzor a objektová navigácia..."
 
-#: gui\__init__.py:274
+#: gui\__init__.py:277
 msgid "Configure how and when the review cursor moves"
 msgstr ""
 "Nastavenia kedy a ako sa aktualizuje prehliadací kurzor navigačného "
 "objektu"
 
-#: gui\__init__.py:276
+#: gui\__init__.py:279
 msgid "&Object presentation..."
 msgstr "Prezentácia &objektov..."
 
-#: gui\__init__.py:276
+#: gui\__init__.py:279
 msgid "Change reporting of objects"
 msgstr "Mení oznamovanie objektov."
 
-#: gui\__init__.py:278
+#: gui\__init__.py:281
 msgid "Change virtual buffers specific settings"
 msgstr "Zmení nastavenia špecifické pre virtuálny prehliadač."
 
-#: gui\__init__.py:278
+#: gui\__init__.py:281
 msgid "Virtual &buffers..."
 msgstr "&Virtuálny prehliadač..."
 
-#: gui\__init__.py:280
+#: gui\__init__.py:283
 msgid "Change Settings of document properties"
 msgstr "Zmení oznamovanie vlastností dokumentu."
 
-#: gui\__init__.py:280
+#: gui\__init__.py:283
 msgid "Document &formatting..."
 msgstr "Nastavenia čítania &textu..."
 
-#: gui\__init__.py:283
+#: gui\__init__.py:287
 msgid "&Default dictionary..."
 msgstr "Pre&dvolený slovník..."
 
-#: gui\__init__.py:283
+#: gui\__init__.py:287
 msgid ""
 "dialog where you can set default dictionary by adding dictionary entries to "
 "the list"
@@ -2419,11 +2429,11 @@ msgstr ""
 "Dialóg, v ktorom je možné nastaviť predvolený slovník pridávaním "
 "položiek do zoznamu."
 
-#: gui\__init__.py:285
+#: gui\__init__.py:289
 msgid "&Voice dictionary..."
 msgstr "Slo&vník pre aktuálny hlas..."
 
-#: gui\__init__.py:285
+#: gui\__init__.py:289
 msgid ""
 "dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
@@ -2431,11 +2441,11 @@ msgstr ""
 "Dialóg, v ktorom je možné nastaviť slovník pre aktuálny hlas "
 "pridávaním položiek do zoznamu."
 
-#: gui\__init__.py:287
+#: gui\__init__.py:291
 msgid "&Temporary dictionary..."
 msgstr "D&očasný slovník..."
 
-#: gui\__init__.py:287
+#: gui\__init__.py:291
 msgid ""
 "dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
@@ -2443,92 +2453,92 @@ msgstr ""
 "Dialóg, v ktorom je možné nastaviť dočasný slovník pridávaním "
 "položiek do zoznamu."
 
-#: gui\__init__.py:289
+#: gui\__init__.py:293
 msgid "Speech &dictionaries"
 msgstr "Rečové &slovníky"
 
-#: gui\__init__.py:290
+#: gui\__init__.py:294
 msgid "&Preferences"
 msgstr "&Možnosti"
 
-#: gui\__init__.py:294
+#: gui\__init__.py:298
 msgid "View log"
 msgstr "Zobraziť log"
 
-#: gui\__init__.py:296
+#: gui\__init__.py:300
 msgid "Speech viewer"
 msgstr "Zobrazovač reči"
 
-#: gui\__init__.py:299
+#: gui\__init__.py:303
 msgid "Python console"
 msgstr "Python konzola"
 
-#: gui\__init__.py:301
+#: gui\__init__.py:305
 msgid "Tools"
 msgstr "Nástroje"
 
-#: gui\__init__.py:305
+#: gui\__init__.py:309
 msgid "User guide"
 msgstr "Používateľská príručka"
 
-#: gui\__init__.py:307
+#: gui\__init__.py:311
 msgid "Key Command Quick Reference"
 msgstr "Zoznam klávesových príkazov"
 
-#: gui\__init__.py:309
+#: gui\__init__.py:313
 msgid "What's &new"
 msgstr "Novinky"
 
-#: gui\__init__.py:311
+#: gui\__init__.py:315
 msgid "Web site"
 msgstr "Web stránka"
 
-#: gui\__init__.py:313
+#: gui\__init__.py:317
 msgid "Readme"
 msgstr "Súbor čítaj ma"
 
-#: gui\__init__.py:315
+#: gui\__init__.py:319
 msgid "License"
 msgstr "Licencia"
 
-#: gui\__init__.py:317
+#: gui\__init__.py:321
 msgid "Contributors"
 msgstr "Tím NVDA"
 
-#: gui\__init__.py:319
+#: gui\__init__.py:323
 msgid "We&lcome dialog"
 msgstr "Dia&lóg vitajte v NVDA"
 
-#: gui\__init__.py:322
+#: gui\__init__.py:326
 msgid "About..."
 msgstr "&O programe..."
 
-#: gui\__init__.py:324
+#: gui\__init__.py:328
 msgid "&Help"
 msgstr "&Pomocník"
 
-#: gui\__init__.py:326
+#: gui\__init__.py:330
 msgid "&Revert to saved configuration"
 msgstr "&Návrat k uloženým nastaveniam"
 
-#: gui\__init__.py:326
+#: gui\__init__.py:330
 msgid "Reset all settings to saved state"
 msgstr "Obnoviť uložené nastavenia"
 
-#: gui\__init__.py:328
+#: gui\__init__.py:333
 msgid "&Save configuration"
 msgstr "&Uložiť nastavenia"
 
-#: gui\__init__.py:328
+#: gui\__init__.py:333
 msgid "Write the current configuration to nvda.ini"
 msgstr "Zapíše nastavenia do súboru nvda.ini."
 
-#: gui\__init__.py:331
-#: gui\logViewer.py:33
+#: gui\__init__.py:336
+#: gui\logViewer.py:34
 msgid "E&xit"
 msgstr "U&končiť"
 
-#: gui\__init__.py:382
+#: gui\__init__.py:387
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -2551,24 +2561,24 @@ msgstr ""
 "Z tohoto menu môžete Nastavovať NVDA, získať pomoc a pristupovať k "
 "ostatným funkciám programu NVDA.\n"
 
-#: gui\__init__.py:392
+#: gui\__init__.py:397
 msgid "Welcome to NVDA"
 msgstr "Vitajte v NVDA"
 
-#: gui\__init__.py:396
+#: gui\__init__.py:401
 msgid "Options"
 msgstr "Možnosti"
 
-#: gui\__init__.py:397
-#: gui\settingsDialogs.py:404
+#: gui\__init__.py:402
+#: gui\settingsDialogs.py:419
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Používať &Capslock ako kláves NVDA"
 
-#: gui\__init__.py:400
+#: gui\__init__.py:405
 msgid "Show this dialog when NVDA starts"
 msgstr "Zobraziť tento dialóg pri každom spustení"
 
-#: gui\__init__.py:436
+#: gui\__init__.py:441
 msgid ""
 "Your configuration file contains errors. \n"
 "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
@@ -2580,7 +2590,7 @@ msgstr ""
 ", budete môcť konfiguračný súbor upraviť ručne. Podrobnosti o chybá"
 "ch zistíte v zobrazovači logu."
 
-#: gui\__init__.py:441
+#: gui\__init__.py:446
 msgid "Configuration File Error"
 msgstr "Chyba konfiguračného súboru"
 
@@ -2588,19 +2598,19 @@ msgstr "Chyba konfiguračného súboru"
 msgid "NVDA Log Viewer"
 msgstr "Zobrazovač Logu NVDA"
 
-#: gui\logViewer.py:28
+#: gui\logViewer.py:29
 msgid "Refresh\tF5"
 msgstr "Obnoviť\tF5"
 
-#: gui\logViewer.py:35
+#: gui\logViewer.py:36
 msgid "Log"
 msgstr "Log"
 
-#: gui\logViewer.py:65
+#: gui\logViewer.py:66
 msgid "Save As"
 msgstr "Uložiť ako"
 
-#: gui\logViewer.py:73
+#: gui\logViewer.py:74
 msgid "Error saving log: %s"
 msgstr "Chyba pri ukladaní logu: \"%s\"."
 
@@ -2634,50 +2644,70 @@ msgstr "&Jazyk (vyžaduje reštart):"
 msgid "Language"
 msgstr "Jazyk"
 
-#: gui\settingsDialogs.py:113
+#: gui\settingsDialogs.py:115
 msgid "&Save configuration on exit"
 msgstr "&Uložiť nastavenia pri ukončení"
 
-#: gui\settingsDialogs.py:116
+#: gui\settingsDialogs.py:120
 msgid "&Warn before exiting NVDA"
 msgstr "&Potvrdzovať ukončenie NVDA"
 
-#: gui\settingsDialogs.py:120
+#: gui\settingsDialogs.py:124
 msgid "L&ogging level:"
 msgstr "Úr&oveň záznamu:"
 
-#: gui\settingsDialogs.py:123
+#: gui\settingsDialogs.py:127
 msgid "Log level"
 msgstr "Úroveň záznamu"
 
-#: gui\settingsDialogs.py:133
+#: gui\settingsDialogs.py:137
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "&Automaticky spustiť NVDA po prihlásení do Windows"
 
-#: gui\settingsDialogs.py:138
+#: gui\settingsDialogs.py:142
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr ""
 "Spúšťať NVDA pri zobrazení prihlasovacej obrazovky (vyžaduje "
 "administrátorské práva)"
 
-#: gui\settingsDialogs.py:154
+#: gui\settingsDialogs.py:147
+msgid ""
+"Copy currently saved NVDA settings to the logon screen (requires "
+"administrator privileges)"
+msgstr ""
+"Skopírovať aktuálne nastavenia NVDA na prihlasovaciu obrazovku (vyžaduje "
+"administrátorské práva)"
+
+#: gui\settingsDialogs.py:158
+msgid "Error copying NVDA user settings"
+msgstr "Chyba pri kopírovaní používateľských nastavení NVDA"
+
+#: gui\settingsDialogs.py:160
+msgid "Success"
+msgstr "Hotovo"
+
+#: gui\settingsDialogs.py:160
+msgid "Successfully copied NVDA user settings"
+msgstr "Používateľské nastavenia NVDA boli úspešne skopírované."
+
+#: gui\settingsDialogs.py:169
 msgid "Error in %s language file"
 msgstr "Chybný jazykový súbor \"%s\"."
 
-#: gui\settingsDialogs.py:154
+#: gui\settingsDialogs.py:169
 msgid "Language Error"
 msgstr "Chyba jazyka"
 
-#: gui\settingsDialogs.py:170
+#: gui\settingsDialogs.py:185
 msgid "Insufficient Privileges"
 msgstr "Nedostatočné práva"
 
-#: gui\settingsDialogs.py:170
+#: gui\settingsDialogs.py:185
 msgid "This change requires administrator privileges."
 msgstr "Zmena tohoto nastavenia si vyžaduje práva administrátora."
 
-#: gui\settingsDialogs.py:172
+#: gui\settingsDialogs.py:187
 msgid ""
 "For the new language to take effect, the configuration must be saved and "
 "NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
@@ -2688,380 +2718,380 @@ msgstr ""
 "konfiguráciu a reštartovať NVDA alebo stlačte cancel a uložte konfigurá"
 "ciu a reštartujte NVDA ručne."
 
-#: gui\settingsDialogs.py:172
+#: gui\settingsDialogs.py:187
 msgid "Language Configuration Change"
 msgstr "Zmena nastavenia jazyka"
 
-#: gui\settingsDialogs.py:180
+#: gui\settingsDialogs.py:195
 msgid "Synthesizer"
 msgstr "Hlasový výstup"
 
-#: gui\settingsDialogs.py:184
+#: gui\settingsDialogs.py:199
 msgid "&Synthesizer:"
 msgstr "&Hlasový výstup:"
 
-#: gui\settingsDialogs.py:199
+#: gui\settingsDialogs.py:214
 msgid "Output &device:"
 msgstr "Výstupné zaria&denie:"
 
-#: gui\settingsDialogs.py:219
+#: gui\settingsDialogs.py:234
 msgid "Could not load the %s synthesizer."
 msgstr "Nemôžem spustiť hlasový výstup \"%s\"."
 
-#: gui\settingsDialogs.py:219
+#: gui\settingsDialogs.py:234
 msgid "Synthesizer Error"
 msgstr "Chyba hlasového výstupu"
 
-#: gui\settingsDialogs.py:251
+#: gui\settingsDialogs.py:266
 msgid "Voice settings"
 msgstr "Nastavenia hlasu"
 
-#: gui\settingsDialogs.py:307
+#: gui\settingsDialogs.py:322
 msgid "&Speak all punctuation"
 msgstr "Čítať všetku &interpunkciu"
 
-#: gui\settingsDialogs.py:310
+#: gui\settingsDialogs.py:325
 msgid "Raise pitch for capitals"
 msgstr "Veľké písmená čítať &zvýšeným hlasom"
 
-#: gui\settingsDialogs.py:313
+#: gui\settingsDialogs.py:328
 msgid "Say &cap before capitals"
 msgstr "Vysloviť \"veľké\" pred prečítaním veľkého písmena"
 
-#: gui\settingsDialogs.py:316
+#: gui\settingsDialogs.py:331
 msgid "&Beep for capitals"
 msgstr "&Pípať pred hláskovaním veľkých písmen"
 
-#: gui\settingsDialogs.py:319
+#: gui\settingsDialogs.py:334
 msgid "Use &spelling functionality if supported"
 msgstr "&Hláskovanie riadi hlasový výstup (ak je podporované)"
 
-#: gui\settingsDialogs.py:387
+#: gui\settingsDialogs.py:402
 msgid "Keyboard Settings"
 msgstr "Nastavenie klávesnice"
 
-#: gui\settingsDialogs.py:391
+#: gui\settingsDialogs.py:406
 msgid "&Keyboard layout:"
 msgstr "Rozloženie &klávesnice:"
 
-#: gui\settingsDialogs.py:396
+#: gui\settingsDialogs.py:411
 msgid "Keyboard layout"
 msgstr "Rozloženie klávesnice"
 
-#: gui\settingsDialogs.py:407
+#: gui\settingsDialogs.py:422
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Používať &numerický Insert ako kláves NVDA"
 
-#: gui\settingsDialogs.py:410
+#: gui\settingsDialogs.py:425
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Používať &Insert ako kláves NVDA"
 
-#: gui\settingsDialogs.py:413
+#: gui\settingsDialogs.py:428
 msgid "Speak typed &characters"
 msgstr "Čítať napísané &znaky"
 
-#: gui\settingsDialogs.py:416
+#: gui\settingsDialogs.py:431
 msgid "Speak typed &words"
 msgstr "Čítať po &slovách"
 
-#: gui\settingsDialogs.py:419
+#: gui\settingsDialogs.py:434
 msgid "Speak command &keys"
 msgstr "Čítať príkazové s&kratky"
 
-#: gui\settingsDialogs.py:442
+#: gui\settingsDialogs.py:457
 msgid "Mouse settings"
 msgstr "Nastavenia myši"
 
-#: gui\settingsDialogs.py:445
+#: gui\settingsDialogs.py:460
 msgid "Report mouse &shape changes"
 msgstr "Hlásiť zmeny &tvaru kurzora myši"
 
-#: gui\settingsDialogs.py:448
+#: gui\settingsDialogs.py:463
 msgid "Report &text under the mouse"
 msgstr "Oznamovať &text pod kurzorom myši"
 
-#: gui\settingsDialogs.py:452
+#: gui\settingsDialogs.py:467
 msgid "Text &unit resolution:"
 msgstr "&Jednotka oznamovania pri zameraní textu:"
 
-#: gui\settingsDialogs.py:456
+#: gui\settingsDialogs.py:471
 msgid "text reporting unit"
 msgstr "Jednotka oznamovania textu"
 
-#: gui\settingsDialogs.py:464
+#: gui\settingsDialogs.py:479
 msgid "Report &role when mouse enters object"
 msgstr "Oznamovať typ p&rvku pri zameraní kurzorom myši"
 
-#: gui\settingsDialogs.py:467
+#: gui\settingsDialogs.py:482
 msgid "play audio coordinates when mouse moves"
 msgstr "&Signalizovať polohu myši počas posúvania"
 
-#: gui\settingsDialogs.py:470
+#: gui\settingsDialogs.py:485
 msgid "brightness controls audio coordinates volume"
 msgstr "Úroveň jasu ovplyvňuje hlasitosť signalizácie"
 
-#: gui\settingsDialogs.py:488
+#: gui\settingsDialogs.py:503
 msgid "Review cursor settings"
 msgstr "Nastavenia prehliadacieho kurzora"
 
-#: gui\settingsDialogs.py:491
+#: gui\settingsDialogs.py:506
 msgid "Follow &keyboard focus"
 msgstr "Sledovať systémový &fokus"
 
-#: gui\settingsDialogs.py:494
+#: gui\settingsDialogs.py:509
 msgid "Follow &text insertion point"
 msgstr "Sledovať bod vkladania &textu"
 
-#: gui\settingsDialogs.py:497
+#: gui\settingsDialogs.py:512
 msgid "Follow &mouse cursor"
 msgstr "Sledovať kurzor &myši"
 
-#: gui\settingsDialogs.py:500
+#: gui\settingsDialogs.py:515
 msgid "Simple review mode"
 msgstr "Jednoduchý režim objektovej navigácie"
 
-#: gui\settingsDialogs.py:515
+#: gui\settingsDialogs.py:530
 msgid "Object presentation"
 msgstr "Prezentácia objektov"
 
-#: gui\settingsDialogs.py:518
+#: gui\settingsDialogs.py:533
 msgid "Speak"
 msgstr "Čítať"
 
-#: gui\settingsDialogs.py:519
+#: gui\settingsDialogs.py:534
 msgid "Beep"
 msgstr "Pípať"
 
-#: gui\settingsDialogs.py:520
+#: gui\settingsDialogs.py:535
 msgid "Speak and beep"
 msgstr "Čítať a pípať"
 
-#: gui\settingsDialogs.py:524
+#: gui\settingsDialogs.py:539
 msgid "Report &tooltips"
 msgstr "Čítať kon&textovú nápovedu"
 
-#: gui\settingsDialogs.py:527
+#: gui\settingsDialogs.py:542
 msgid "Report &help balloons"
 msgstr "Čítať &bublinkovú nápovedu"
 
-#: gui\settingsDialogs.py:530
+#: gui\settingsDialogs.py:545
 msgid "Report object shortcut &keys"
 msgstr "Čítať skratkové &klávesy objektov"
 
-#: gui\settingsDialogs.py:533
+#: gui\settingsDialogs.py:548
 msgid "Report object &position information"
 msgstr "Oznamovať &pozíciu objektu"
 
-#: gui\settingsDialogs.py:536
+#: gui\settingsDialogs.py:551
 msgid "Report object &descriptions"
 msgstr "Oznamovať pop&isky objektov"
 
-#: gui\settingsDialogs.py:540
+#: gui\settingsDialogs.py:555
 msgid "Progress &bar output:"
 msgstr "Oznamovanie aktualizácie prie&behu:"
 
-#: gui\settingsDialogs.py:543
+#: gui\settingsDialogs.py:558
 msgid "Progress bar output"
 msgstr "oznamovanie indikátora priebehu"
 
-#: gui\settingsDialogs.py:552
+#: gui\settingsDialogs.py:567
 msgid "Report background progress bars"
 msgstr "Oznamovať aktualizáciu indikátorov priebehu na pozadí"
 
-#: gui\settingsDialogs.py:570
+#: gui\settingsDialogs.py:585
 msgid "virtual buffers"
 msgstr "Virtuálny prehliadač"
 
-#: gui\settingsDialogs.py:573
+#: gui\settingsDialogs.py:588
 msgid "&Maximum number of characters on one line"
 msgstr "&Maximálny počet znakov na riadku"
 
-#: gui\settingsDialogs.py:578
+#: gui\settingsDialogs.py:593
 msgid "&Number of lines per page"
 msgstr "Maximálny &počet riadkov na jednej stránke"
 
-#: gui\settingsDialogs.py:583
+#: gui\settingsDialogs.py:598
 msgid "Use &screen layout (when supported)"
 msgstr "Zachovať vzhľad ako na obrazovke"
 
-#: gui\settingsDialogs.py:586
+#: gui\settingsDialogs.py:601
 msgid "Report l&ayout tables"
 msgstr "Oznamovať tabuľky formujúce vzhľad"
 
-#: gui\settingsDialogs.py:590
+#: gui\settingsDialogs.py:605
 msgid "Automatic focus mode for focus changes"
 msgstr "Automaticky aktivovať režim fokusu pri zmene fokusu"
 
-#: gui\settingsDialogs.py:593
+#: gui\settingsDialogs.py:608
 msgid "Automatic focus mode for caret movement"
 msgstr "Automaticky aktivovať režim fokusu pri pohybe kurzorom"
 
-#: gui\settingsDialogs.py:596
+#: gui\settingsDialogs.py:611
 msgid "Audio indication of focus and browse modes"
 msgstr "Prehliadací režim a režim fokusu oznamovať zvukom"
 
-#: gui\settingsDialogs.py:624
+#: gui\settingsDialogs.py:639
 msgid "Document formatting"
 msgstr "Nastavenia čítania textu"
 
-#: gui\settingsDialogs.py:627
+#: gui\settingsDialogs.py:642
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Oznamovať zmeny &formátovania pri pohybe kurzorom (môže zaostávať)"
 
-#: gui\settingsDialogs.py:630
+#: gui\settingsDialogs.py:645
 msgid "Report font &name"
 msgstr "Čítať &názov písma"
 
-#: gui\settingsDialogs.py:633
+#: gui\settingsDialogs.py:648
 msgid "Report font &size"
 msgstr "Oznamovať &veľkosť písma"
 
-#: gui\settingsDialogs.py:636
+#: gui\settingsDialogs.py:651
 msgid "Report font attri&butes"
 msgstr "Čítať v&lastnosti písma"
 
-#: gui\settingsDialogs.py:639
+#: gui\settingsDialogs.py:654
 msgid "Report &alignment"
 msgstr "Čítať &zarovnanie"
 
-#: gui\settingsDialogs.py:642
+#: gui\settingsDialogs.py:657
 msgid "Report st&yle"
 msgstr "Oznamovať š&týl"
 
-#: gui\settingsDialogs.py:645
+#: gui\settingsDialogs.py:660
 msgid "Report spelling errors"
 msgstr "Oznamovať pravopisné &chyby"
 
-#: gui\settingsDialogs.py:648
+#: gui\settingsDialogs.py:663
 msgid "Report &pages"
 msgstr "Oznamovať st&rany"
 
-#: gui\settingsDialogs.py:651
+#: gui\settingsDialogs.py:666
 msgid "Report &line numbers"
 msgstr "Oznamovať čísla ria&dkov"
 
-#: gui\settingsDialogs.py:654
+#: gui\settingsDialogs.py:669
 msgid "Report &tables"
 msgstr "Oznamovať tab&uľky"
 
-#: gui\settingsDialogs.py:657
+#: gui\settingsDialogs.py:672
 msgid "Report table row/column h&eaders"
 msgstr "Oznamovať &hlavičky riadkov / stĺpcov tabuľky"
 
-#: gui\settingsDialogs.py:660
+#: gui\settingsDialogs.py:675
 msgid "Report &links"
 msgstr "Oznamovať od&kazy"
 
-#: gui\settingsDialogs.py:663
+#: gui\settingsDialogs.py:678
 msgid "Report &headings"
 msgstr "Oznamovať n&adpisy"
 
-#: gui\settingsDialogs.py:666
+#: gui\settingsDialogs.py:681
 msgid "Report l&ists"
 msgstr "Oznamovať zoznam&y"
 
-#: gui\settingsDialogs.py:669
+#: gui\settingsDialogs.py:684
 msgid "Report block &quotes"
 msgstr "Oznamovať c&itácie"
 
-#: gui\settingsDialogs.py:672
+#: gui\settingsDialogs.py:687
 msgid "Report lan&dmarks"
 msgstr "Oznamovať o&blasti stránky"
 
-#: gui\settingsDialogs.py:701
+#: gui\settingsDialogs.py:716
 msgid "Edit dictionary entry"
 msgstr "Upraviť položku slovníka"
 
-#: gui\settingsDialogs.py:704
+#: gui\settingsDialogs.py:719
 msgid "&Pattern"
 msgstr "&Vzor"
 
-#: gui\settingsDialogs.py:707
+#: gui\settingsDialogs.py:722
 msgid "&Replacement"
 msgstr "&Nahradiť s"
 
-#: gui\settingsDialogs.py:710
+#: gui\settingsDialogs.py:725
 msgid "&Comment"
 msgstr "&Komentár"
 
-#: gui\settingsDialogs.py:713
+#: gui\settingsDialogs.py:728
 msgid "Case &sensitive"
 msgstr "Rozlišovať malé a veľké pí&smená"
 
-#: gui\settingsDialogs.py:715
+#: gui\settingsDialogs.py:730
 msgid "Regular &expression"
 msgstr "R&egulárny výraz"
 
-#: gui\settingsDialogs.py:737
+#: gui\settingsDialogs.py:752
 msgid "&Dictionary entries"
 msgstr "Položky slovníka"
 
-#: gui\settingsDialogs.py:740
+#: gui\settingsDialogs.py:755
 msgid "Comment"
 msgstr "Komentár"
 
-#: gui\settingsDialogs.py:741
+#: gui\settingsDialogs.py:756
 msgid "Pattern"
 msgstr "Vzor"
 
-#: gui\settingsDialogs.py:742
+#: gui\settingsDialogs.py:757
 msgid "Replacement"
 msgstr "Nahradiť s"
 
-#: gui\settingsDialogs.py:743
+#: gui\settingsDialogs.py:758
 msgid "case sensitive"
 msgstr "Rozlišovať veľké a malé písmená"
 
-#: gui\settingsDialogs.py:744
+#: gui\settingsDialogs.py:759
 msgid "Regular expression"
 msgstr "Regulárny výraz"
 
-#: gui\settingsDialogs.py:751
+#: gui\settingsDialogs.py:766
 msgid "&Add"
 msgstr "&Pridať"
 
-#: gui\settingsDialogs.py:754
+#: gui\settingsDialogs.py:769
 msgid "&edit"
 msgstr "&Upraviť"
 
-#: gui\settingsDialogs.py:757
+#: gui\settingsDialogs.py:772
 msgid "&Remove"
 msgstr "&Odstrániť"
 
-#: gui\settingsDialogs.py:824
+#: gui\settingsDialogs.py:839
 msgid "Braille Settings"
 msgstr "Nastavenia braillu"
 
-#: gui\settingsDialogs.py:828
+#: gui\settingsDialogs.py:843
 msgid "Braille &display:"
 msgstr "Braillovský ria&dok:"
 
-#: gui\settingsDialogs.py:842
+#: gui\settingsDialogs.py:857
 msgid "Translation &table:"
 msgstr "Prekladová &tabuľka:"
 
-#: gui\settingsDialogs.py:854
+#: gui\settingsDialogs.py:869
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "Slovo, kde sa nachádza kurzor zobraziť počítačovým braillom"
 
-#: gui\settingsDialogs.py:859
+#: gui\settingsDialogs.py:874
 msgid "Cursor blink rate (ms)"
 msgstr "Rýchlosť &blikania kurzora (ms)"
 
-#: gui\settingsDialogs.py:867
+#: gui\settingsDialogs.py:882
 msgid "Message timeout (sec)"
 msgstr "Zobrazovať &správy (sek)"
 
-#: gui\settingsDialogs.py:875
+#: gui\settingsDialogs.py:890
 msgid "Braille tethered to:"
 msgstr "Braillovský kurzor zviazaný s:"
 
-#: gui\settingsDialogs.py:894
+#: gui\settingsDialogs.py:909
 msgid "Braille Display Error"
 msgstr "Chyba braillovského riadku"
 
-#: gui\settingsDialogs.py:894
+#: gui\settingsDialogs.py:909
 msgid "Could not load the %s display."
 msgstr "Nemôžem načítať zobrazovač %s"
 
@@ -3369,119 +3399,119 @@ msgstr "Nevybrané %s"
 msgid "selection removed"
 msgstr "Výber vymazaný."
 
-#: speech.py:676
+#: speech.py:677
 msgid "done dragging"
 msgstr "akcia ťahať a pustiť ukončená"
 
-#: speech.py:704 speech.py:994
+#: speech.py:705 speech.py:995
 msgid "row %s"
 msgstr "Riadok %s"
 
-#: speech.py:710 speech.py:990
+#: speech.py:711 speech.py:991
 msgid "column %s"
 msgstr "Stĺpec %s"
 
-#: speech.py:715
+#: speech.py:716
 msgid "with %s rows and %s columns"
 msgstr "s %s riadkami a %s stĺpcami"
 
-#: speech.py:717
+#: speech.py:718
 msgid "with %s columns"
 msgstr "má %s riadkov"
 
-#: speech.py:719
+#: speech.py:720
 msgid "with %s rows"
 msgstr "má %s stĺpcov"
 
-#: speech.py:825
+#: speech.py:826
 msgid "with %s items"
 msgstr "má %s položiek"
 
-#: speech.py:842 speech.py:949
+#: speech.py:843 speech.py:950
 msgid "out of %s"
 msgstr "mimo %s"
 
-#: speech.py:866
+#: speech.py:867
 msgid "page %s"
 msgstr "Strana %s"
 
-#: speech.py:873
+#: speech.py:874
 msgid "style %s"
 msgstr "Štýl %s"
 
-#: speech.py:875
+#: speech.py:876
 msgid "default style"
 msgstr "Predvolený štýl"
 
-#: speech.py:895
+#: speech.py:896
 msgid "line %s"
 msgstr "Riadok %s"
 
-#: speech.py:901
+#: speech.py:902
 msgid "no bold"
 msgstr "Nie tučné"
 
-#: speech.py:906
+#: speech.py:907
 msgid "italic"
 msgstr "kurzíva"
 
-#: speech.py:906
+#: speech.py:907
 msgid "no italic"
 msgstr "Nie kurzíva"
 
-#: speech.py:911
+#: speech.py:912
 msgid "no strikethrough"
 msgstr "Neprečiarknuté"
 
-#: speech.py:911
+#: speech.py:912
 msgid "strikethrough"
 msgstr "Prečiarknuté"
 
-#: speech.py:916
+#: speech.py:917
 msgid "not underlined"
 msgstr "Nepodčiarknuté"
 
-#: speech.py:916
+#: speech.py:917
 msgid "underlined"
 msgstr "Podčiarknuté"
 
-#: speech.py:927
+#: speech.py:928
 msgid "baseline"
 msgstr "Bez indexov"
 
-#: speech.py:935
+#: speech.py:936
 msgid "align left"
 msgstr "Zarovnané vľavo"
 
-#: speech.py:937
+#: speech.py:938
 msgid "align center"
 msgstr "Zarovnané na stred"
 
-#: speech.py:939
+#: speech.py:940
 msgid "align right"
 msgstr "Zarovnané vpravo"
 
-#: speech.py:941
+#: speech.py:942
 msgid "align justify"
 msgstr "Zarovnané do bloku"
 
-#: speech.py:943
+#: speech.py:944
 msgid "align default"
 msgstr "Predvolené zarovnanie"
 
-#: speech.py:956
+#: speech.py:957
 msgid "spelling error"
 msgstr "Pravopisná chyba"
 
-#: speech.py:958
+#: speech.py:959
 msgid "out of spelling error"
 msgstr "Mimo pravopisnej chyby"
 
-#: speech.py:976
+#: speech.py:977
 msgid "out of table"
 msgstr "Mimo tabuľky"
 
-#: speech.py:985
+#: speech.py:986
 msgid "table with %s columns and %s rows"
 msgstr "Tabuľka s %s stĺpcami a %s riadkami"
 
