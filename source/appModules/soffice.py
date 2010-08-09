@@ -32,25 +32,46 @@ class SymphonyTextInfo(IA2TextTextInfo):
 		if attribsString:
 			formatField.update(IAccessibleHandler.splitIA2Attribs(attribsString))
 
-		escapement = int(formatField["CharEscapement"])
-		if escapement < 0:
-			textPos = "sub"
-		elif escapement > 0:
-			textPos = "super"
-		else:
-			textPos = "baseline"
-		formatField["text-position"] = textPos
-		formatField["font-name"] = formatField["CharFontName"]
-		formatField["font-size"] = "%spt" % formatField["CharHeight"]
-		formatField["italic"] = formatField["CharPosture"] == "2"
-		formatField["strikethrough"] = formatField["CharStrikeout"] == "1"
-		underline = formatField["CharUnderline"]
-		if underline == "10":
-			# Symphony doesn't provide for semantic communication of spelling errors, so we have to rely on the WAVE underline type.
-			formatField["invalid-spelling"] = True
-		else:
-			formatField["underline"] = underline != "0"
-		formatField["bold"] = formatField["CharWeight"] != "100.000"
+		try:
+			escapement = int(formatField["CharEscapement"])
+			if escapement < 0:
+				textPos = "sub"
+			elif escapement > 0:
+				textPos = "super"
+			else:
+				textPos = "baseline"
+			formatField["text-position"] = textPos
+		except KeyError:
+			pass
+		try:
+			formatField["font-name"] = formatField["CharFontName"]
+		except KeyError:
+			pass
+		try:
+			formatField["font-size"] = "%spt" % formatField["CharHeight"]
+		except KeyError:
+			pass
+		try:
+			formatField["italic"] = formatField["CharPosture"] == "2"
+		except KeyError:
+			pass
+		try:
+			formatField["strikethrough"] = formatField["CharStrikeout"] == "1"
+		except KeyError:
+			pass
+		try:
+			underline = formatField["CharUnderline"]
+			if underline == "10":
+				# Symphony doesn't provide for semantic communication of spelling errors, so we have to rely on the WAVE underline type.
+				formatField["invalid-spelling"] = True
+			else:
+				formatField["underline"] = underline != "0"
+		except KeyError:
+			pass
+		try:
+			formatField["bold"] = float(formatField["CharWeight"]) > 100
+		except KeyError:
+			pass
 
 		# optimisation: Assume a hyperlink occupies a full attribute run.
 		try:
@@ -79,7 +100,7 @@ class SymphonyText(IAccessible, EditableText):
 class AppModule(_default.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if isinstance(obj, IAccessible) and obj.windowClassName == "SALTMPSUBFRAME" and hasattr(obj, "IAccessibleTextObject"):
+		if isinstance(obj, IAccessible) and obj.windowClassName in ("SALTMPSUBFRAME", "SALSUBFRAME") and hasattr(obj, "IAccessibleTextObject"):
 			clsList.insert(0, SymphonyText)
 
 	def event_NVDAObject_init(self, obj):
