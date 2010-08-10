@@ -47,6 +47,15 @@ class CompoundTextInfo(textInfos.TextInfo):
 		return cmp(self._getObjectPosition(selfObj), other._getObjectPosition(otherObj))
 
 	def _normalizeStartAndEnd(self):
+		if self._start.isCollapsed and self._startObj != self._endObj:
+			# The only time start will be collapsed when start and end aren't the same is if it is at the end of the object.
+			# This is equivalent to the start of the next object.
+			# Aside from being pointless, we don't want a collapsed start object, as this will cause bogus control fields to be emitted.
+			obj = self._startObj.flowsTo
+			if obj:
+				self._startObj = obj
+				self._start = obj.makeTextInfo(textInfos.POSITION_FIRST)
+
 		if self._startObj == self._endObj:
 			# There should only be a single TextInfo and it should cover the entire range.
 			self._start.setEndPoint(self._end, "endToEnd")
@@ -298,6 +307,11 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 				moveTi = moveObj.makeTextInfo(textInfos.POSITION_LAST)
 			else:
 				moveTi = moveObj.makeTextInfo(textInfos.POSITION_FIRST)
+				if endPoint == "end":
+					# If we're moving the end, the last move would have moved to the end of the previous object,
+					# Which is equivalent to where we are now.
+					# Therefore, move one more to compensate.
+					moveTi.move(unit, 1, endPoint)
 				# We've moved to the start of the next unit.
 				remainingMovement -= 1
 				if remainingMovement == 0:
@@ -310,6 +324,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		if not endPoint or endPoint == "end":
 			self._end = moveTi
 			self._endObj = moveObj
+		self._normalizeStartAndEnd()
 
 		return direction - remainingMovement
 
