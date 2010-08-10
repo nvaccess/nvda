@@ -304,7 +304,8 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 			else:
 				break
 			if goPrevious:
-				moveTi = moveObj.makeTextInfo(textInfos.POSITION_LAST)
+				moveTi = moveObj.makeTextInfo(textInfos.POSITION_ALL)
+				moveTi.collapse(end=True)
 			else:
 				moveTi = moveObj.makeTextInfo(textInfos.POSITION_FIRST)
 				if endPoint == "end":
