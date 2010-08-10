@@ -18,11 +18,6 @@ class loudTalksLink(Window):
 	role = controlTypes.ROLE_LINK
 
 
-class loudTalksBrokenPropertyPage(IAccessible):
-
-	children =[]
-
-
 class loudTalksContactListItem(ListItem):
 
 	shouldAllowIAccessibleFocusEvent = True
@@ -37,9 +32,9 @@ class loudTalksContactListItem(ListItem):
 class AppModule(_default.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if obj.role == controlTypes.ROLE_WINDOW: 
+			return
 		if obj.windowClassName == "UrlStaticWndClass":
 			clsList.insert(0, loudTalksLink)
 		elif obj.windowControlID == 1009 and isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_LISTITEM:
 			clsList.insert(0, loudTalksContactListItem)
-		elif obj.windowControlID == 0 and isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_PROPERTYPAGE:
-			clsList.insert(0, loudTalksBrokenPropertyPage)
