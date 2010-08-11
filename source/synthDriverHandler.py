@@ -21,17 +21,14 @@ def initialize():
 	config.addConfigDirsToPythonPackagePath(synthDrivers)
 
 def changeVoice(synth, voice):
-	import api
-	voiceName = synth.getVoiceInfoByID(voice).name
 	synth.voice = voice
-	fileName=r"%s\%s-%s.dic"%(speechDictHandler.speechDictsPath,synth.name,api.filterFileName(voiceName))
-	speechDictHandler.dictionaries["voice"].load(fileName)
 	c=config.conf["speech"][synth.name]
 	c.configspec=synth.getConfigSpec()
 	config.conf.validate(config.val, copy = True,section = c)
 	#start or update the synthSettingsRing
 	if globalVars.settingsRing: globalVars.settingsRing.updateSupportedSettings(synth)
 	else:  globalVars.settingsRing = SynthSettingsRing(synth)
+	speechDictHandler.loadVoiceDict(synth)
 
 def _getSynthDriver(name):
 	return __import__("synthDrivers.%s" % name, globals(), locals(), ("synthDrivers",)).SynthDriver
@@ -88,6 +85,7 @@ def setSynth(name):
 		if not newSynth.isSupported('voice'):
 			if globalVars.settingsRing: globalVars.settingsRing.updateSupportedSettings(newSynth)
 			else:  globalVars.settingsRing = SynthSettingsRing(newSynth)
+			speechDictHandler.loadVoiceDict(newSynth)
 		config.conf["speech"]["synth"]=name
 		log.info("Loaded synthDriver %s"%name)
 		return True
