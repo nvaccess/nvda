@@ -291,8 +291,13 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 
 		goPrevious = direction < 0
 		remainingMovement = direction
+		count0MoveAs = 0
 		while True:
-			remainingMovement -= moveTi.move(unit, remainingMovement, endPoint=endPoint)
+			movement = moveTi.move(unit, remainingMovement, endPoint=endPoint)
+			if movement == 0 and count0MoveAs != 0:
+				movement = count0MoveAs
+			remainingMovement -= movement
+			count0MoveAs = 0
 			if remainingMovement == 0:
 				# The requested destination was within moveTi.
 				break
@@ -306,18 +311,20 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 			if goPrevious:
 				moveTi = moveObj.makeTextInfo(textInfos.POSITION_ALL)
 				moveTi.collapse(end=True)
+				# We haven't moved anywhere yet, as the end of this object (where we are now) is equivalent to the start of the one we just left.
+				# Blank objects should still count as 1 step.
+				# Therefore, the next move must count as 1 even if it is 0.
+				count0MoveAs = -1
 			else:
 				moveTi = moveObj.makeTextInfo(textInfos.POSITION_FIRST)
-				if endPoint == "end":
-					# If we're moving the end, the last move would have moved to the end of the previous object,
-					# Which is equivalent to where we are now.
-					# Therefore, move one more to compensate.
-					moveTi.move(unit, 1, endPoint)
-				# We've moved to the start of the next unit.
-				remainingMovement -= 1
-				if remainingMovement == 0:
-					# We just hit the requested destination.
-					break
+				# If we're moving the end, the previous move would have taken us to the end of the previous object,
+				# which is equivalent to the start of this object (where we are now).
+				if endPoint != "end":
+					# We've moved to the start of the next unit.
+					remainingMovement -= 1
+					if remainingMovement == 0:
+						# We just hit the requested destination.
+						break
 
 		if not endPoint or endPoint == "start":
 			self._start = moveTi
