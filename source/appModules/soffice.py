@@ -88,6 +88,14 @@ class SymphonyTextInfo(IA2TextTextInfo):
 
 		return formatField,(startOffset,endOffset)
 
+	def _getLineOffsets(self, offset):
+		start, end = super(SymphonyTextInfo, self)._getLineOffsets(offset)
+		if offset == 0 and start == 0 and end == 0:
+			# HACK: Symphony doesn't expose any characters at all on empty lines, but this means we don't ever fetch the list item prefix in this case.
+			# Fake a character so that the list item prefix will be spoken on empty lines.
+			return (0, 1)
+		return start, end
+
 class SymphonyText(IAccessible, EditableText):
 	TextInfo = SymphonyTextInfo
 
