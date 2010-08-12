@@ -1447,6 +1447,7 @@ class ReBarWindow32Client(IAccessible):
 _staticMap={
 	("ReBarWindow32",oleacc.ROLE_SYSTEM_CLIENT):"ReBarWindow32Client",
 	("Static",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
+	("msctls_statusbar32",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
 	(None,oleacc.ROLE_SYSTEM_PUSHBUTTON):"Button",
 	("tooltips_class32",oleacc.ROLE_SYSTEM_TOOLTIP):"Tooltip",
 	("tooltips_class32",oleacc.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
