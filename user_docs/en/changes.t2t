@@ -30,7 +30,6 @@
 - Current NVDA user settings can be  copied to be used on the logon/UAC screens, by pressing a button in the General Settings dialog.
 
 
-
 == Changes ==
 - The sayAll by Navigator object (NVDA+numpadAdd), navigator object next in flow (NVDA+shift+numpad6) and navigator object previous in flow (NVDA+shift+numpad4) have been removed for the time being, due to bugginess and to free up the keys for other possible features.
 - In the NVDA Synthesizer dialog, only the display name of the synthesizer is now listed. Previously, it was prefixed by the driver's name, which is only relevant internally.
@@ -39,6 +38,7 @@
 - The Log Viewer and Python Console are maximised when activated.
 - When focusing on a worksheet in MS Excel, and there is more than one cell selected, the selection range is announced, rather than just the active cell. (#763)
 - Saving configuration, and changing of particular sensitive options, is now disabled when running in secure mode (on the logon/UAC screens).
+- Updated eSpeak speech synthesiser to 1.44.01.
 
 
 == Bug Fixes ==

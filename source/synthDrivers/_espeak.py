@@ -24,7 +24,7 @@ espeakDLL=None
 
 #Parameter bounds
 minRate=80
-maxRate=390
+maxRate=450
 minPitch=0
 maxPitch=99
 
