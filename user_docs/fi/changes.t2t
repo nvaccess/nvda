@@ -38,6 +38,7 @@
 - Lokinkatselu- ja Python-konsoli-ikkunat suurennetaan avattaessa.
 - Kun Microsoft Excelissä on työkirja aktiivisena ja kun useampi kuin yksi solu on valittu, valinnan alue luetaan, eikä vain aktiivista solua. (#763)
 - NVDA:n asetusten tallentaminen ja tiettyjen asetusten muuttaminen on nyt estetty suojatussa tilassa (kirjautumis ja käyttäjätilien valvonnan ruuduissa).
+- eSpeak-puhesyntetisaattori päivitetty versioon 1.44.01.
 
 
 == Vikojen korjaukset ==
@@ -61,6 +62,7 @@
 - NVDA voi jälleen lukea riveittäin tiettyjä ongelmallisia tekstikenttiä Internet Explorer 8:ssa. (#467)
 - Windows Live Messenger 2009 ei enää sulkeudu heti käynnistyttyään NVDA:n ollessa käynnissä. (#677)
 - Internet-selaimissa ei enää tarvitse painaa sarkainta ollakseen vuorovaikutuksessa upotetun objektin kanssa (esim. Flash-sisällössä), kun on painettu Enteriä kyseisen objektin kohdalla tai palattu toisesta sovelluksesta. (#775)
+- Pitkien rivien alkua ei enää katkaista Scintilla-säätimissä (esim. Notepad++:ssa), kun se vierii pois ruudulta. Lisäksi tällaiset pitkät rivit näytetään nyt oikein pistenäytöllä, kun ne valitaan.
 
 
 == 2010.1 ==
