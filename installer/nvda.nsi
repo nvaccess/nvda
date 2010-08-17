@@ -240,7 +240,7 @@ ExecWait "$INSTDIR\nvda_slave.exe installer_installService"
 SectionEnd
 
 section "$(section_desktopShortcut)"
-CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
+CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "-r" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
  CONTROL|ALT|N "Shortcut Ctrl+Alt+N"
 SectionEnd
 
