@@ -87,50 +87,68 @@ If you don't hear any of this, or you hear the Windows error sound, or a descend
 When NVDA starts for the first time, you will be greeted by a dialog box which provides you with some basic information about the NVDA modifier key and the NVDA menu. (Please see further sections about these topics). The dialog box also contains two checkboxes. The first lets you control if NVDA should use the capslock as an NVDA modifier key, and the second lets you control if this Welcome dialog should appear each time NVDA starts.
 
 ++ About NVDA keyboard commands ++
++++ The NVDA Modifier Key +++ 
 Most NVDA-specific keyboard commands usually consist of pressing the NVDA modifier key, in conjunction with one or more other keys. An exception to this are the text review commands which just use the numpad keys by themselves.
 
 By default both numpad insert and extended insert can be used as the NVDA modifier key. However, you can also configure NVDA so that the capslock key also becomes an NVDA modifier key. When configured this way, pressing or holding down capslock acts as an NVDA modifier key, but pressing it twice in quick succession causes it to act as the normal capslock key.
 
++++ Keyboard Help Mode +++
 Many key commands are mentioned through out the rest of this user guide, but an easy way to explore all the different key commands is to turn on keyboard help.
 
 To turn on keyboard help, press NVDA+1. To turn it off again, press NVDA+1 again. While in keyboard help, pressing any key will announce what it does (if in deed it does do something). The keys will not actually perform their function while in keyboard help mode, so you can press what ever keys you like.
+
++++ Keyboard Layouts +++
+
+NVDA currently comes with two sets of key commands. There is a layout for Desktops and a layout for Laptops.
+NVDA by default is set to use the Desktop layout, though you can switch to the Laptop layout in the Keyboard Settings, found under Preferences in the NVDA menu.
+
+The Desktop layout makes heavy use of the numberpad (with numlock off).
+Although most laptops do not have a physical numberpad, some laptops can emulate one by holding down the FN key and pressing letters and numbers on the right-hand side of the keyboard (7 8 9 u i o j k l etc).
+If your laptop can not do this, or does not allow you to turn numlock off, you may want to switch to the Laptop layout instead.
 
 ++ The NVDA menu ++
 The NVDA menu allows you to control NVDA's settings, access help, save/revert your configuration, Modify speech dictionaries, read the log file, and exit NVDA.
 
 To get to the NVDA menu from anywhere in Windows while NVDA is running, press NVDA+n. You can also get to the NVDA menu via the windows system tray. Either right-click on the nvda icon located in the system tray, or access the system tray by pressing the windows logo key+B, DownArrow to the NVDA icon and press the applications key located next to the right control key on most keyboards. When the menu comes up, You can use the arrow keys to navigate the menu, and the enter key to activate an item. The Preferences menu allows you to configure NVDA how you like, the tools menu contains useful tools such as the NVDA log viewer and the NVDA Python console for developers, the help menu allows you to access the user guide, a quick key reference, and much more. The NVDA menu also contains items that allow you to save or revert your current configuration. There is also an option that allows you to exit NVDA, although this can be accomplished more efficiently by pressing NVDA+Q.
 
+++ Basic key commands ++
+|| Name | Key | Description |
+| Stop speech | Control | Instantly stops speaking |
+| Pause Speech | Shift | Instantly pauses speech, pressing it again will continue speaking where it left off |
+| NVDA Menu | NVDA+n | Pops up the NVDA menu to allow you to access preferences, tools and help etc |
+| Toggle Keyboard Help Mode | NVDA+1 | Pressing any key in this mode will report the key, and the description of any  NVDA command associated with it | 
+| Quit NVDA | NVDA+q | Exits NVDA |
+| Report date/time | NVDA+f12 | Pressing once reports the current time, pressing twice reports the date |
+
 + Navigating with NVDA +
 
-++ Navigating with the Focus ++
+++ Navigating with the System Focus ++
 The Most common way of navigating around Windows with NVDA, is to just move around with normal keyboard commands, such as tab and shift tab to move forward and back between controls, pressing alt to get to the menu bar and then using the arrows to navigate menus, using alt+tab to move between running applications. As you do this, NVDA will announce what has focus.
 
-When NVDA announces an object (e.g. when it receives focus), it will usually say the object's name, type, state, value, description, keyboard shortcut, and positional information. This is quite similar to other screen readers; however the types of objects may be a little different.
+When NVDA announces an object (e.g. when it receives the System focus), it will usually say the object's name, type, state, value, description, keyboard shortcut, and positional information. This is quite similar to other screen readers; however the types of objects may be a little different.
 
-There are some key commands that are useful when moving with focus:
-- NVDA+tab - reports the current focus
-- NVDA+b - reads the entire foreground window (useful for reading a dialog box)
-- NVDA+t - Announces the title of the current foreground window
--
+There are some key commands that are useful when moving with the System focus:
+|| Name | key | Description |
+| Report current focus | NVDA+tab | announces the current object or control that has the System focus. Pressing twice will spell the information  |
+| Report title | NVDA+t | Announces the title of the currently active window. Pressing twice will spell the information |
+| Read active window | NVDA+b | reads all the controls in the currently active window (useful for dialogs) |
 
 ++ Navigating with the System Caret ++
 When the focus is on an object that has an edit cursor (system caret), you can arrow around and edit like you normally would. NVDA will announce as you move by character, word, line, and will also announce selecting and unselecting text.
 
-When you move with the system caret, the position of the review cursor will also be updated to match the system caret. Though this setting can be toggled by the key command NVDA+6.
-
 NVDA provides the following key commands in relation to the system caret:
-- NVDA+downArrow: start reading from the position of the system caret, moving it as it goes
-- NVDA+upArrow: read the current line at the system caret
-- NVDA+Shift+upArrow: read the currently selected text if any
-- NVDA+f: report the format of the text under the system caret
--
+|| Name | Key | Description |
+| Say all | NVDA+downArrow | Starts reading from the current position of the system caret, moving it along as it goes | 
+| Read current line | NVDA+upArrow | Reads the line where the system caret is currently situated. Pressing twice spells the line. |
+| Read current text selection | NVDA+Shift+upArrow | Reads any  currently selected text |
+| Report text formatting | NVDA+f | Announces the formatting of the text where the system caret is currently situated |
 
-When with in a table, the following key commands are also available:
-- control+alt+leftArrow: Move to the previous column (staying in this row)
-- control+alt+rightArrow: move to the next column (staying in this row)
-- control+alt+upArrow: move to the previous row (staying in this column)
-- control+alt+downArrow: move to the next row (staying in this column)
--
+When within a table, the following key commands are also available:
+|| Name | Key | Description |
+| Move to previous column | control+alt+leftArrow | Moves the system caret to the previous column (staying in the same row) |
+ | Move to next column | control+alt+rightArrow | Moves the system caret to the next column (staying in the same row) | 
+| Move to previous row | control+alt+upArrow | Moves the system caret to the previous row (staying in the same column) |
+ | Move to next row | control+alt+downArrow | Moves the system caret to the next row (staying in the same column) | 
 
 ++ Object Navigation ++
 If you wish to navigate around the current application or the Operating System a bit, but with out moving the focus, you can use NVDA's object navigation. This allows you to move from object to object in a tree like structure.
@@ -143,59 +161,62 @@ This structure has nothing to do with how the objects are laid out on the screen
 
 Not all applications have a perfect tree structure, but this is up to the developer of that particular application. Most seem to be ok; certainly most Dialog boxes and highly structured applications seem to have gotten it right.
 
+By default, the navigator object moves along with the System focus, though this behaviour can be toggled on and off.
+
 To navigate by object, use the following keys:
-- NVDA+numpad5: Speak current object
-- NVDA+numpad8: Move to parent object (moving towards the root of the tree)
-- NVDA+numpad4: Move to previous object (the object directly before this one on the same level)
-- NVDA+numpad6: Move to Next object (the object directly after this one on the same level)
-- NVDA+numpad2: Move to first child object (The first branch coming out of this one)
-- NVDA+numpadMinus: Move to focus
-- NVDA+numpadEnter: Activate current object (e.g. press enter / click / double click)
-- NVDA+Shift+NumpadMinus: Move focus to the current object
-- NVDA+numpadDivide: Move the mouse to the current object
-- NVDA+numpadMultiply: Move to the mouse
-- NVDA+numpadDelete: announce current object's dimentions in regards to the screen
--
+
+|| Name | Desktop key | Laptop key | Description |
+| Report current object | NVDA+numpad5 | NVDA+control+i | Reports the current navigator object. Pressing twice spells the information. | 
+| Navigate to parent object | NVDA+numpad8 | NVDA+shift+i | Navigates to the parent (container) of the current navigator object |
+| Navigate to previous object | NVDA+numpad4 | NVDA+control+j | Navigates to the object directly before the current navigator object |
+ | Navigate to next object | NVDA+numpad6 | control+NVDA+l | Navigates to the object directly after the current navigator object |
+| Navigate to first child object | NVDA+numpad2 | NVDA+shift+comma | Navigates to the first child object contained by the current navigator object |
+|Navigate to focus object | NVDA+numpadMinus | NVDA+control+backspace | Navigates to the object that currently has the system focus | 
+| Activate current navigator object | NVDA+numpadEnter | NVDA+enter | Activates the current navigator object (similar to  clicking with the mouse or pressing space when it has the system focus) | 
+| Move System focus to current navigator object | NVDA+shift+numpadMinus | NVDA+shift+numpadMinus | Moves the System focus to the current navigator object if possible |
+| Report navigator object dimensions | NVDA+numpadDelete | NVDA+delete | Announces the current navigator object's dimentions on screen in per centages (including distance from left and top of screen, and its width and height) |   
 
 note: numpad keys require numlock key to be turned off to work properly
-
-When you move with the focus, the current navigator object changes along with it. However, if you wish to lock the object navigation to one specific object, so it doesn't change with the focus, you can turn off focus Moves Navigator Object with NVDA+7.
 
 ++ Reviewing the Text in the Current Object ++
 NVDA allows you to read the contents of the current navigator object, by character, word or line. This is mostly useful in Dos console windows, and other places where there is a limited or non-existant system caret.
+When moving the review cursor, the System caret does not follow along, therefore you can review text with out loosing your actual editing position.
+However by default when the System caret moves, the review cursor follows along. This can be toggled on and off.
 
 The following key commands are available for reviewing text: 
-- Shift+numpad7: Top line
-- numpad7: Previous line
-- numpad8: Current line
-- numpad9: Next line
-- shift+numpad9: Bottom line
-- numpad4: Previous word
-- numpad5: Current word
-- numpad6: Next word
-- shift+numpad1: Start of line
-- numpad1: Previous character
-- numpad2: Current character
-- numpad3: Next character
-- shift+numpad3: End of line
-- numpad Plus: Say all text
--
+|| Name | Desktop key | Laptop key | Description |
+| move to  top line in review | shift+numpad7 | NVDA+7 | Moves the review cursor to the top line of the text |
+| Move to previous line in review | numpad7 | NVDA+u | Moves the review cursor to the previous line of text | 
+| Report current line in review | numpad8 | NVDA+i | Announces the current line of text where the review cursor is positioned. Pressing twice spells the line. |
+| Move to next line in review | numpad9 | NVDA+o | Move the review cursor to the next line of text |
+| Move to bottom line in review | shift+numpad9 | NVDA+9 | Moves the review cursor to the bottom line of text |
+| Move to previous word in review | numpad4 | NVDA+j | Moves the review cursor to the previous word in the  text | 
+| Report current word in review | numpad5 | NVDA+k | Announces the current word  in the  text where the review cursor is positioned. Pressing twice spells the word. |
+| Move to next word in review | numpad6 | NVDA+l | Move the review cursor to the next word in the text |
+| move to  start of  line in review | shift+numpad1 | NVDA+shift+u | Moves the review cursor to the start of the  current line in the   text |
+| Move to previous character in review | numpad1 | NVDA+m | Moves the review cursor to the previous character on the current line in  the text | 
+| Report current character in review | numpad2 | NVDA+comma | Announces the current character on the  line of text where the review cursor is positioned. Pressing twice reports the numeric value of the character in decimal and hexadecimal. | 
+| Move to next character in review | numpad3 | NVDA+dot | Move the review cursor to the next character on the current line of text |
+| Move to end of line in review | shift+numpad3 | NVDA+shift+o | Moves the review cursor to the end  of the current line of text |
+| Say all with review | numpadPlus | NVDA+/ | Reads from the current position of the review cursor, moving it as it goes |
 
 note: numpad keys require numlock key to be turned off to work properly
 
-When an object contains an edit cursor (system caret), and it moves, the review cursor is also updated to that position. If you want the review cursor to stay where it is, and not move with the caret, you can turn off caret Moves Review Cursor by pressing NVDA+6.
-
-It is possible to copy parts of the text you are reviewing. For example, you may wish to copy an internet address someone has sent you in a text chat program. To copy text, Start by moving the review cursor to the first character of the text you wish to copy, and press NVDA+f9. Then move to the end of the text, and press NVDA+f10. The text will now be copied to the clipboard so that you can paste it somewhere else. Note that if the program you are using already allows you to move through the text using the system caret, and copy using the normal control+c command, then you will always get better results using this.
+It is possible to copy parts of the text you are reviewing. For example, you may wish to copy an internet address someone has sent you in a text chat program. 
+Review cursor colpying key commands are as follows:
+|| Name | Desktop key | Laptop key | Description |
+| copy from review cursor | NVDA+f9 | NVDA+f9 | starts copying text from the current position of the review cursor. The actual copy is not performed until you tell NVDA where to copy to |
+| Copy to review cursor | NVDA+f10 | NVDA+f10 | Copies from the position of the review cursor currently set with Copy from review cursor, to the review cursor's current position. After pressing this key, the text will  be copied to the Windows clipboard |
 
 ++ Flat Review ++
 As well as reviewing the content of a single object, NVDA allows you to review the entire content of a document or the text of the screen.
 This is called flat review.
 
 The following two commands are used for switching to/from flat review:
-- NVDA+numpad7: Switch to flat review at the current position of the review cursor. This allows you to  review the screen (or document if you are currently inside one), with the text review commands.
-- NVDA+numpad1: Switch to object review at the current position of the review cursor. This locates the object that is represented by the text you are currently positioned on in flat review and moves the review cursor to it, so that you are then able to review within that object, or navigate by object away from it.  
--
-
+|| Name | Desktop key | Laptop key | Description |
+| Switch to flat review | NVDA+numpad7 | NVDA+alt+7 | Moves to flat review, placing you at the position of the current navigator object, allowing you to  review the screen (or document if you are currently inside one), with the text review commands. 
+| Move to object from flat review | NVDA+numpad1 | NVDA+alt+j | navigates to the object represented by the text at the current position of the review cursor in flat review |
+ 
 ++ Navigating with the Mouse ++
 When you move the Mouse, NVDA by default reports the text that is directly under the mouse pointer, as it moves over it. Where supported, NVDA will read a paragraph's worth of text, though some controls may only read by line.
 
@@ -206,20 +227,30 @@ NVDA provides a way for users to understand where the mouse is in regards to the
 These extra mouse features are not turned on by default in NVDA, but if you wish to take advantage of them, you can configure them from the Mouse settings dialog, found in the Preferences menu on the NVDA menu.
 
 Although a physical mouse or trackpad should be used to navigate with the mouse, NVDA has a few key commands related to the mouse:
-- numpadDivide: Left mouse button click
-- numpadMultiply: Right mouse button click
-- Shift+numpadDivide: Lock/Unlock left mouse button down
-- Shift+numpadMultiply: Lock/Unlock right mouse button down
--
-
+|| Name | Desktop key | Laptop key | Description |
+| Left mouse button click | numpadDivide | NVDA+leftArrow | clicks the left mouse button once. The common double click can be performed by pressing this key twice in quick succession |
+| Left mouse button lock | shift+numpadDivide | shift+numpadDivide | Locks the left mouse button down. Press again to release it. To drag the mouse, press this key to lock the left button down and then move the mouse either physically or use one of the other mouse routing commands |
+| Right mouse click | numpadMultiply | NVDA+rightArrow | Clicks the right mouse button once. |
+| Right mouse button lock | shift+numpadMultiply | shift+numpadMultiply | Locks the right mouse button down. Press again to release it. To drag the mouse, press this key to lock the right button down and then move the mouse either physically or use one of the other mouse routing commands |
+| Move mouse to current navigator object | NVDA+numpadDivide | NVDA+shift+leftArrow | Moves the mouse to the location of the current navigator object and review cursor |
+| navigate to the object under the mouse | NVDA+numpadMultiply | NVDA+shift+rightArrow | Set the navigator object to the object located at the position of the mouse |
+ 
 + Virtual Buffers +
 Complex read-only documents, such as web pages, are represented in NVDA with in a Virtual Buffer.
 
 A virtual buffer is a flat representation of content such as a web page, that can be moved around in with the arrow keys. Information such as whether text is a link, heading etc is announced along with the text as you move.
 
-While in a virtual buffer, there are two modes of interaction. Browse mode is where you can move around all the text using a virtual cursor, rather like the system caret. In fact all of NVDA's system caret key commands will work in this mode (e.g. say all, report formatting, all table navigation commands etc). Focus mode is where you can directly interact with the control (edit field, combo box, radio buttons) using what ever keys you would normally use. When in Browse mode, NVDA will automatically switch to focus mode if you tab to or click on a particular control that requires it. Note that pressing enter or space on controls that require it will also switch to focus mode. You can also manually change to focus mode with NVDA+space. If NVDA automatically changed to focus mode because of a tab, click or enter/space key press, it will change back to browse mode once you tab or click on to something that doesn't require it, or if you press escape. However, if you changed to focus mode with NVDA+space, it will stay in focus mode until you manually go back to browse mode. At any time when you are in focus mode, you can manually switch back to browse mode by pressing escape, or NVDA+space. The virtual buffer settings dialog in the preferences menu in the NVDA menu allows you to disable automatic switching of browse mode and focus mode.
+While in a virtual buffer, there are two modes of interaction. 
+Browse mode is where you can move around all the text using a virtual cursor, rather like the system caret. In fact all of NVDA's system caret key commands will work in this mode (e.g. say all, report formatting, all table navigation commands etc). 
+Focus mode is where you can directly interact with the control (edit field, combo box, radio buttons) using what ever keys you would normally use. 
+When in Browse mode, NVDA will automatically switch to focus mode if you tab to or click on a particular control that requires it. Note that pressing enter or space on controls that require it will also switch to focus mode. 
+If NVDA has automatically switched to focus mode, tabbing to, or clicking on, an object that does not need focus mode (such as a link or peace of text) will switch back to browse mode. Pressing escape will also switch back to browse mode if it was switched to focus mode automatically.
+You can manually change between focus and browse modes as well. Though when changing to focus mode manually, NVDA will lock to that particular mode and no longer automatically switch, unless you manually change back to browse mode.
+|| Name | Key | Description |
+| Toggle virtual buffer modes | NVDA+space | Toggles between focus mode and browse mode |
+| Exit focus mode | escape | switches back to browse mode if focus mode was previously switched to automatically |
 
-Currently NVDA uses Virtual Buffers for reading documents in Mozilla Firefox, Microsoft Internet Explorer, and Adobe Reader.
+Currently NVDA uses Virtual Buffers for reading documents in Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader, and Adobe Flash.
 
 ++ Single Letter Navigation ++
 While in browse mode, For quicker navigation NVDA also provides single character keys to jump to certain fields in a virtual buffer.
@@ -227,44 +258,49 @@ While in browse mode, For quicker navigation NVDA also provides single character
 By themselves they jump to the next field, with the shift key they jump to the previous field.
 
 Available keys:
-- h: heading
-- l: list
-- i: list item
-- t: table
-- k: link
-- n: nonLinked text
-- f: form field
-- u: unvisited link
-- v: visited link
-- e: edit field
-- b: button
-- x: checkbox
-- c: combo box
-- r: radio button
-- q: block quote
-- s: separator
-- m: frame
-- g: graphic
-- d: ARIA landmark
-- o: embedded object
-- 1 to 6: headings 1 to 6 respectively
+- h: heading 
+- l: list 
+- i: list item 
+- t: table 
+- k: link 
+- n: nonLinked text 
+- f: form field 
+- u: unvisited link 
+- v: visited link 
+- e: edit field 
+- b: button 
+- x: checkbox 
+- c: combo box 
+- r: radio button 
+- q: block quote 
+- s: separator 
+- m: frame 
+- g: graphic 
+- d: ARIA landmark 
+- o: embedded object 
+- 1 to 6: headings 1 to 6 respectively 
 -
 
-++ Forms and Focus Mode ++
-Sometimes you may wish to interact with form fields with out the virtual buffer keys getting in the way. Focus mode is created for this purpose, and can be toggled on and off with NVDA+space.
-
 ++ The Elements List ++
-The elements list (available by pressing NVDA+f7 while in a virtual buffer) provides access to a list of either links, headings or ARIA landmarks on the page. Radio buttons allow you to switch between these three types of information. An edit field is also provided in the dialog which allows you to filter the list to help you search for a particular item on the page. Once you have chosen an item, you can use the provided buttons in the dialog to move to, or activate, that item.
+The elements list provides access to a list of either links, headings or ARIA landmarks on the page. Radio buttons allow you to switch between these three types of information. An edit field is also provided in the dialog which allows you to filter the list to help you search for a particular item on the page. Once you have chosen an item, you can use the provided buttons in the dialog to move to, or activate, that item.
+|| Name | Key | Description |
+| Virtual buffer elements list | NVDA+f7 | Brings up the Elements list which contains links, headings and landmarks  from  the current  virtual buffer |
 
 ++ Embedded Objects ++
-Pages can include rich content using technologies such as Adobe Flash and Sun Java. Where these are encountered in a virtual buffer, NVDA will announce "embedded object". You can press enter on these objects to interact with them. If it is accessible, you can then tab around it and interact with it like any other application. To return to the page, press NVDA+control+space.
+Pages can include rich content using technologies such as Adobe Flash and Sun Java. 
+Where these are encountered in a virtual buffer, NVDA will announce "embedded object". You can press enter on these objects to interact with them. 
+If it is accessible, you can then tab around it and interact with it like any other application. 
+A key command is provided to return to the original page containing the embedded object:
+|| Name | Key | Description |
+| Move to containing  virtual buffer | NVDA+control+space | Moves the focus out of the current embedded object and in to the virtual buffer  that contains it |
 
 + Configuring NVDA +
 
 ++ Preferences ++
 
-+++ General Settings +++
-The General settings dialog box is found in the Preferences menu. It is also accessed by pressing NVDA+Control+G. To save the options after modifying settings, press the OK button. To cancel, press the cancel button or the escape key. It contains the following options:
++++ General Settings (NVDA+control+g) +++
+The General settings dialog box is found in the Preferences menu.
+To save the options after modifying settings, press the OK button. To cancel, press the cancel button or the escape key. It contains the following options:
 
 ==== Language ====
 A combo box which allows you to select the language that NVDA's user interface and messages should be shown in. There are many languages, however the default option is "User Default, Windows". This option tells NVDA to use the language that Windows is currently set to.
@@ -291,9 +327,8 @@ Pressing this button copies your currently saved NVDA user configuration to NVDA
  To make sure that all your settings are transfered, make sure to firstly save your configuration with control+NVDA+s or save configuration in the NVDA menu.
 
 
-
-+++ Synthesizer Selection +++
-The Synthesizer dialog, which is found under "Synthesizer..." in the Preferences menu or by pressing NVDA+Control+S, allows you to select which Synthesizer NVDA should use to speak with.
++++ Synthesizer Selection (NVDA+control+s) +++
+The Synthesizer dialog, which is found under "Synthesizer..." in the Preferences menu, allows you to select which Synthesizer NVDA should use to speak with.
 
 The dialog contains a simple combo box, which lists all the available synthesizers. Choose the synthesizer you want using the arrow keys, and then press ok. If there is an error loading the synthesizer, a message box will alert you, and NVDA will keep the old synthesizer loaded.
 
@@ -309,8 +344,8 @@ The Silence synthesizer driver is not that useful, unless you want to not have a
 
 Please note that no matter how many different SAPI4 or SAPI5 voices (or engines) you have installed on your system, only the actual SAPI4 and SAPI5 synthesizers will show up in the Synthesizers dialog. To actually select one of the engines (voices), select either SAPI4 or SAPI5, and then in the Voice settings dialog, you can choose the voice you want.
 
-+++ Voice Settings +++
-The Voice Settings dialog, found in the Preferences menu or accessed by pressing NVDA+Control+V, contains options that let you change the sound of the speech. You can also configure many of the options from anywhere by pressing NVDA+Control along with one of the arrow keys. The left and right arrow keys move through the various settings, the up and down arrows increase or decrease that setting respectively.
++++ Voice Settings (NVDA+control+v) +++
+The Voice Settings dialog, found in the Preferences menu, contains options that let you change the sound of the speech. You can also configure many of the options from anywhere by pressing NVDA+Control along with one of the arrow keys. The left and right arrow keys move through the various settings, the up and down arrows increase or decrease that setting respectively.
 
 The Voice Settings dialog box contains the following options:
 
@@ -333,7 +368,9 @@ This option is a slider which goes from 0 to 100, (0 being the lowest volume and
 This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with. (The only synthesizer that provides this option at the present time is eSpeak).
 
 ==== Speak All Punctuation ====
-This setting is a checkbox, that when checked, tells NVDA to speak all punctuation symbols as words (very useful for proof reading). When unchecked, NVDA leaves the punctuation unchanged, so the synthesizer will still read sentences with the right inflection, however the symbols won't be spoken aloud.
+Key: NVDA+p 
+
+When enabled, NVDA will speak all punctuation as words (very useful for proof reading).
 
 ==== Raise pitch for capitals ====
 This setting, if checked, will raise the pitch for capitals.
@@ -344,6 +381,14 @@ This setting is a checkbox, that when checked, tells NVDA to say the word "cap;"
 ==== Beep for capitals ====
 If this checkbox is checked, NVDA will make a small beep each time it encounters a capitalized character by itself. Like the 'say cap for capitals' checkbox, this is useful for Synthesizers that can't change their pitch for capital letters.
 
++++ Synth settings ring +++
+If you wish to quickly change speech  settings  with out going to the Voice settings dialog, there are some NVDA key commands that allow you to move through the most common speech settings, from anywhere while running NVDA:
+|| Name | Desktop key | Laptop key | Description |
+| Move to next synth setting | NVDA+control+rightArrow | NVDA+control+rightArrow | Moves to the next available speech setting after the current, wrapping around to the first setting again after the last |
+| Move to previous synth setting | NVDA+control+leftArrow | NVDA+control+leftArrow | Moves to the next available speech setting before the current, wrapping around to the last setting after the first |
+ | Increment current synth setting | NVDA+control+upArrow | NVDA+control+upArrow | increases the current speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume |
+ | Decrement current synth setting | NVDA+control+downArrow | NVDA+control+downArrow | decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume |
+ 
 +++ Braille Settings +++
 The braille settings dialog box can be invoked by going to the preferences menu and then to the braille settings option.
 
@@ -371,12 +416,13 @@ This option is a numerical field that allows you to change the blink rate of the
 This option is a numerical field that controls how long system messages are displayed on the braille display.
 
 ==== Braille Tethered to ====
+Key: NVDA+control+t
+
 This option allows you to choose whether the braille display will follow the system focus, or whether it follows the navigator object / review cursor.
 
-This option can also be toggled by the key command NVDA+control+t.
-
-+++ Keyboard settings +++
-This dialog box is found in the Preferences menu, under "Keyboard settings...". Alternatively, it can be accessed by pressing NVDA+Control+K. It contains the following options:
++++ Keyboard settings (NVDA+control+k) +++
+This dialog box is found in the Preferences menu, under "Keyboard settings...". 
+It contains the following options:
 
 ==== Keyboard layout ====
 This combo box lets you choose what type of keyboard layout NVDA should use. Currently the two that come with NVDA are Desktop and Laptop.
@@ -391,22 +437,32 @@ If this checkbox is checked, the extended insert key (usually found above the ar
 If this checkbox is checked, the insert key on the number pad can be used as an NVDA modifier key.
 
 ==== Speak Typed Characters ====
-A checkbox that when checked means that NVDA will announce all characters you type on the keyboard. You can also configure this option from anywhere by pressing NVDA+2.
+Key: NVDA+2
+
+When enabled, NVDA will announce all characters you type on the keyboard.
 
 ==== Speak Typed Words ====
-A checkbox that when checked means that NVDA will announce all words you type on the keyboard. You can also configure this option from anywhere by pressing NVDA+3.
+Key: NVDA+3
+
+When enabled, NVDA will announce all words you type on the keyboard.
 
 ==== Speak Command Keys ====
-A checkbox that when checked means that NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter. You can also configure this option from anywhere by pressing NVDA+4.
+Key: NVDA+4
 
-+++ Mouse Settings +++
-The Mouse Settings dialog is found in the Preferences Menu, under "Mouse settings...". Alternatively, it can be accessed by pressing NVDA+Control+M. It contains the following options:
+When enabled, NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter.
+
++++ Mouse Settings (NVDA+control+m) +++
+The Mouse Settings dialog is found in the Preferences Menu, under "Mouse settings...".
+It contains the following options:
 
 ==== Report Mouse Shape Changes ====
 A checkbox, that when checked means that NVDA will announce the shape of the mouse pointer each time it changes. The mouse pointer in Windows changes shape to convey certain information such as when something is editable, or when something is loading etc.
 
-==== Report text Under Mouse ====
-A checkbox that when checked means that NVDA will announce the text currently under the mouse pointer, as you move it around the screen. This allows you to find things on the screen, by physically moving the mouse, rather than trying to find them through object navigation.
+==== Enable mouse tracking ====
+| Desktop key | NVDA+m |
+| Laptop key | NVDA+shift+m |
+
+When enabled, NVDA will announce the text currently under the mouse pointer, as you move it around the screen. This allows you to find things on the screen, by physically moving the mouse, rather than trying to find them through object navigation.
 
 ==== Text unit resolution ====
 If NVDA is set to announce the text under the mouse as you move it, this option allows you to choose exactly how much text will be spoken. The options are character, word, line and paragraph.
@@ -420,8 +476,30 @@ Checking this checkbox makes NVDA play beeps as the mouse moves, so that the use
 ==== Brightness controls audio coordinates volume ====
 If the 'play audio coordinates when mouse moves' checkbox is checked, then checking this checkbox means that the volume of the audio coordinates beeps is controled by how bright the screen is under the mouse. This may cause some performence issues on Windows Vista, so it is unchecked by default.
 
-+++ Object Presentation Settings +++
-Found in the Preferences menu under "Object Presentation..." or by pressing NVDA+Control+O. This dialog box contains the following options:
++++ Review Cursor settings +++
+Found in the Preferences menu under Review Cursor...
+This dialog contains the following options:
+
+==== Follow System Focus ====
+| Desktop key | NVDA+7 |
+| Laptop key | NVDA+control+7 |
+
+When enabled, The review cursor will always be placed in the same object as the current system focus as it changes.
+
+==== Follow text insertion point ====
+Key: NVDA+6
+
+When enabled, the review cursor will automatically be moved to the position of the System caret each time it moves.
+
+==== Follow mouse ====
+When enabled, the review cursor will follow the mouse as it moves.
+ 
+==== Simple Review mode ====
+When enabled, NVDA will filter the hierarchy of objects that can be navigated, to exclude any unusable objects.
+  
++++ Object Presentation Settings (NVDA+control+o) +++
+Found in the Preferences menu under "Object Presentation...". 
+This dialog box contains the following options:
 
 ==== Report Tool Tips ====
 A checkbox that when checked tells NVDA to announce tool tips as they appear. Many Windows and controls show a small message (or tool tip) when you move the mouse pointer over them, or sometimes when you move the focus to them.
@@ -439,9 +517,12 @@ This option lets you choose whether you wish to have an object's position (e.g. 
 Uncheck this checkbox if you feel you don't need to hear the description announced along with objects.
 
 ==== Progress bar output ====
-A progress bar is a control which looks a bit like a ruler. As a task is slowly being completed, more of the bar gets highlighted. It also shows a percentage value, to numerically tell you how far along it is. Progress bars are shown for things like loading a web page, checking your email, or processing a sound file etc.
+| Desktop key | NVDA+u |
+| Laptop key | NVDA+control+f2 |
 
-This option presents you with a combo box which controls how nvda reports progress bar updates to you. It has the following options:
+This option   controls how nvda reports progress bar updates to you.
+
+It has the following options:
 - Off: Progress bars will not be reported as they change.
 - Speak: This option tells nvda to speak the progress bar in percentages. Each time the progress bar changes, nvda will speak the new value.
 - Beep: This tells nvda to beep each time the progress bar changes. The higher the beep, the closer the progress bar is to completion.
@@ -451,8 +532,8 @@ This option presents you with a combo box which controls how nvda reports progre
 ==== Report background progress bars ====
 This is an option that, when checked, tells nvda to keep reporting a progress bar, even if it is not physically in the foreground. If you minimize or switch away from a window that contains a progress bar, nvda will keep track of it, allowing you to do other things while nvda tracks the progress bar.
 
-+++ Virtual Buffer Settings +++
-The Virtual Buffer settings dialog can be found in the Preferences menu, under "Virtual Buffers...". Alternatively, it can be accessed by pressing NVDA+Control+B.
++++ Virtual Buffer Settings (NVDA+control+b) +++
+The Virtual Buffer settings dialog can be found in the Preferences menu, under "Virtual Buffers...".
 
 The dialog contains the following options:
 
@@ -463,6 +544,8 @@ This field sets the maximum length of a line of a virtual buffer (in characters)
 Although virtual buffers don't really have pages, this field sets the amount of lines you will move by when pressing page up or page down while in a virtual buffer.
 
 ==== Use screen layout ====
+Key: NVDA+v
+
 This option allows you to specify whether content in the virtual Buffer should place content such as links and other fields on their own line, or if it should keep them in the flow of text as it is visually shown. If the option is enabled then things will stay as they are visually shown, but if it is disabled then fields will be placed on their own line.
 
 ==== Report layout tables ====
@@ -480,10 +563,28 @@ This option, when checked, allows NVDA to enter and leave focus mode when using 
 ==== Audio indication of Focus and Browse modes ====
 If this option is enabled, NVDA will play special sounds when it switches between browse mode and focus mode in a virtual Buffer, rather than speaking the change.
 
-+++ Document Formatting Settings +++[DocumentFormattingSettings]
-This dialog box is found in the Preferences menu, under "Document Formatting...". Alternatively, this dialog box can be invoked by pressing NVDA+Control+D. All the checkboxes in this dialog are for configuring what type of formatting you wish to hear automatically as you move the cursor around microsoft word or wordpad documents. For example, if you check the report font name checkbox, each time you arrow onto text with a different font, the name of the font will be announced.
++++ Document Formatting Settings (NVDA+control+d) +++[DocumentFormattingSettings]
+This dialog box is found in the Preferences menu, under "Document Formatting...". 
+All the checkboxes in this dialog are for configuring what type of formatting you wish to hear automatically as you move the cursor around microsoft word or wordpad documents. For example, if you check the report font name checkbox, each time you arrow onto text with a different font, the name of the font will be announced.
 
-You can configure announcement of font name, font size, font attributes, style, text alignment, text style, tables, table row/column headers, page numbers, line numbers, spelling errors, links, headings, lists and blockquotes.
+You can configure announcement of: 
+- font name
+- font size
+- font attributes
+- style
+- text alignment
+- text style
+- tables
+- table row/column headers
+- page numbers
+- line numbers
+- spelling errors
+- links
+- headings
+- lists
+- blockquotes
+- Landmarks
+-
 
 +++ Speech dictionaries +++
 The speech dictionaries menu (found in the Preferences menu) contains dialogs that allow you to manage the way NVDA pronounces particular words or phrases. There are currently three different types of speech dictionaries. They are:
@@ -502,12 +603,17 @@ NVDA's speech dictionaries however are much more powerful than simple word repla
 
 ++ Saving and Reloading the configuration ++
 
-By default NVDA does not automatically save your settings, so if you exit NVDA, and then restart it, the settings will go back to the original values. Note, however, that this  option can be changed under the general options in the preferences menu. To save the settings, you can either choose the Save configuration item in the NVDA menu, or press NVDA+Control+c from anywhere.
+By default NVDA does not automatically save your settings, so if you exit NVDA, and then restart it, the settings will go back to the original values. Note, however, that this  option can be changed under the general options in the preferences menu. To save the settings,  choose the Save configuration item in the NVDA menu.
 
 If NVDA is on a read-only file system, such as a CD, it will not be able to save your settings, and it will tell you so.
 
-If you ever make a mistake with your settings and need to revert back to the saved settings, you can either choose the "revert to saved configuration" item in the NVDA menu, or you can press NVDA+Control+r from anywhere.
+If you ever make a mistake with your settings and need to revert back to the saved settings,  choose the "revert to saved configuration" item in the NVDA menu.
 
+The following NVDA key commands are also useful:
+|| Name | Desktop key | Laptop key | Description |
+| Save configuration | NVDA+control+c | NVDA+control+c | Saves your current configuation so that it is not lost when you exit NVDA |
+| Revert to saved configuration | NVDA+control+r | NVDA+control+r | Restores NVDA to the settings that existed when you lasted saved NVDA's configuration |
+   
 ++ Configuration files and user profiles ++
 
 Portable versions of NVDA store all settings,  custom appModules and custom drivers in a directory called userConfig, found in the NVDA directory.
