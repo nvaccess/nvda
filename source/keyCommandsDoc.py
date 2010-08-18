@@ -115,11 +115,7 @@ class KeyCommandsMaker(object):
 
 		with self._ug, self._kc:
 			self._make()
-			wasKcGenerated = self._kc.tell() > 0
-
-		if not wasKcGenerated:
-			os.remove(self.kcFn)
-		return wasKcGenerated
+			return self._kc.tell() > 0
 
 	def _make(self):
 		for line in self._ug:
@@ -255,3 +251,11 @@ class KeyCommandsMaker(object):
 			name=name,
 			keys=" | ".join(keys),
 			desc=desc, lineEnd=LINE_END))
+
+	def remove(self):
+		"""Remove the generated Key Commands document.
+		"""
+		try:
+			os.remove(self.kcFn)
+		except OSError:
+			pass

@@ -24,6 +24,7 @@ import txt2tags
 __path__ = [os.path.join(sys.exec_prefix, "Tools", "i18n")]
 import msgfmt
 del __path__
+import keyCommandsDoc
 
 COM_INTERFACES = (
 	("UI Automation", comtypes.client.GetModule, "UIAutomationCore.dll"),
@@ -53,7 +54,7 @@ def main():
 		msgfmt.make(f, None)
 	print
 
-	print "HTML documentation:"
+	print "HTML documentation (except Key Commands):"
 	files = glob(r"..\user_docs\*\*.t2t")
 	# Using txt2tags as a module to handle files is a bit weird.
 	# It seems simplest to pretend we're running from the command line.
@@ -61,6 +62,19 @@ def main():
 		print f
 		txt2tags.exec_command_line([f])
 	print
+
+	print "Key Commands documentation:"
+	files = glob(r"..\user_docs\*\userGuide.t2t")
+	for f in files:
+		maker = keyCommandsDoc.KeyCommandsMaker(f)
+		print maker.kcFn
+		try:
+			if maker.make():
+				txt2tags.exec_command_line([maker.kcFn])
+			else:
+				print "WARNING: User Guide does not contain key commands markup, skipping"
+		finally:
+			maker.remove()
 
 if __name__ == "__main__":
 	main()
