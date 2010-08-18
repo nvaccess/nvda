@@ -182,10 +182,11 @@ class KeyCommandsMaker(object):
 		# Only write headings we haven't yet written.
 		for level, heading in enumerate(self._headings[level:], level):
 			# We don't want numbered headings in the output.
+			label=heading.group("label")
 			headingText = "{id}{txt}{id}{label}".format(
 				id="=" * len(heading.group("id")),
 				txt=heading.group("txt"),
-				label=heading.group("label") or "")
+				label="[%s]" % label if label else "")
 			# Write the heading and a blank line.
 			self._kc.write(headingText + LINE_END * 2)
 		self._kcLastHeadingLevel = level
