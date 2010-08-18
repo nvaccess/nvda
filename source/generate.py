@@ -55,7 +55,9 @@ def main():
 	files = glob(r"..\user_docs\*\*.t2t")
 	# Using txt2tags as a module to handle files is a bit weird.
 	# It seems simplest to pretend we're running from the command line.
-	txt2tags.exec_command_line(files)
+	for f in files:
+		print f
+		txt2tags.exec_command_line([f])
 	print
 
 if __name__ == "__main__":
