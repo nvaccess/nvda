@@ -96,6 +96,10 @@ class SymphonyTextInfo(IA2TextTextInfo):
 			return (0, 1)
 		return start, end
 
+	def _getStoryLength(self):
+		# HACK: Account for the character faked in _getLineOffsets() so that move() will work.
+		return max(super(SymphonyTextInfo, self)._getStoryLength(), 1)
+
 class SymphonyText(IAccessible, EditableText):
 	TextInfo = SymphonyTextInfo
 

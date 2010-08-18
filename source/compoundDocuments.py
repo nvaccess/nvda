@@ -88,7 +88,15 @@ class CompoundTextInfo(textInfos.TextInfo):
 
 	def collapse(self, end=False):
 		if end:
-			self._end.collapse(end=True)
+			# The end of this object is equivalent to the start of the next.
+			# As well as being silly, collapsing to the end of  this object causes say all to move the caret to the end of paragraphs.
+			# Therefore, collapse to the start of the next instead.
+			obj = self._endObj.flowsTo
+			if obj:
+				self._endObj = obj
+				self._end = obj.makeTextInfo(textInfos.POSITION_FIRST)
+			else:
+				self._end.collapse(end=True)
 			self._start = self._end
 			self._startObj = self._endObj
 		else:
@@ -317,9 +325,13 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 				count0MoveAs = -1
 			else:
 				moveTi = moveObj.makeTextInfo(textInfos.POSITION_FIRST)
-				# If we're moving the end, the previous move would have taken us to the end of the previous object,
-				# which is equivalent to the start of this object (where we are now).
-				if endPoint != "end":
+				if endPoint == "end":
+					# If we're moving the end, the previous move would have taken us to the end of the previous object,
+					# which is equivalent to the start of this object (where we are now).
+					# Therefore, moving to this new object shouldn't be counted as a move.
+					# However, ensure that blank objects will still be counted as 1 step.
+					count0MoveAs = 1
+				else:
 					# We've moved to the start of the next unit.
 					remainingMovement -= 1
 					if remainingMovement == 0:
