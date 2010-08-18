@@ -16,6 +16,8 @@ NORMAL_CORE_ALIVE_TIMEOUT=10
 MIN_CORE_ALIVE_TIMEOUT=0.3
 #: How long to wait between recovery attempts
 RECOVER_ATTEMPT_INTERVAL = 0.05
+#: The amount of time before the core should be considered severely frozen and a warning logged.
+FROZEN_WARNING_TIMEOUT = 15
 
 safeWindowClassSet=set([
 	'Internet Explorer_Server',
@@ -62,11 +64,10 @@ def _watcher():
 		lastTime=time.time()
 		while not _coreAliveEvent.isSet():
 			curTime=time.time()
-			timePeriod=curTime-lastTime
-			if timePeriod>10:
+			if curTime-lastTime>FROZEN_WARNING_TIMEOUT:
 				lastTime=curTime
 				coreFrame=sys._current_frames()[_coreThreadID]
-				log.error("Core frozen in stack:\n%s"%"".join(traceback.format_stack(coreFrame)))
+				log.warning("Core frozen in stack:\n%s"%"".join(traceback.format_stack(coreFrame)))
 			# The core is dead, so attempt recovery.
 			isAttemptingRecovery = True
 			_recoverAttempt()
