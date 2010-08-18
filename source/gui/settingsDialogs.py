@@ -460,9 +460,9 @@ class MouseSettingsDialog(SettingsDialog):
 		self.shapeCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report mouse &shape changes"))
 		self.shapeCheckBox.SetValue(config.conf["mouse"]["reportMouseShapeChanges"])
 		settingsSizer.Add(self.shapeCheckBox,border=10,flag=wx.BOTTOM)
-		self.reportTextCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &text under the mouse"))
-		self.reportTextCheckBox.SetValue(config.conf["mouse"]["reportTextUnderMouse"])
-		settingsSizer.Add(self.reportTextCheckBox,border=10,flag=wx.BOTTOM)
+		self.mouseTrackingCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Enable mouse &tracking"))
+		self.mouseTrackingCheckBox.SetValue(config.conf["mouse"]["enableMouseTracking"])
+		settingsSizer.Add(self.mouseTrackingCheckBox,border=10,flag=wx.BOTTOM)
 		textUnitSizer=wx.BoxSizer(wx.HORIZONTAL)
 		textUnitLabel=wx.StaticText(self,-1,label=_("Text &unit resolution:"))
 		textUnitSizer.Add(textUnitLabel)
@@ -491,7 +491,7 @@ class MouseSettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		config.conf["mouse"]["reportMouseShapeChanges"]=self.shapeCheckBox.IsChecked()
-		config.conf["mouse"]["reportTextUnderMouse"]=self.reportTextCheckBox.IsChecked()
+		config.conf["mouse"]["enableMouseTracking"]=self.mouseTrackingCheckBox.IsChecked()
 		config.conf["mouse"]["mouseTextUnit"]=self.textUnits[self.textUnitComboBox.GetSelection()]
 		config.conf["mouse"]["reportObjectRoleOnMouseEnter"]=self.reportObjectRoleCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinatesOnMouseMove"]=self.audioCheckBox.IsChecked()

@@ -95,7 +95,6 @@ outputDevice = string(default=default)
 
 [mouse]
 	enableMouseTracking = boolean(default=True) #must be true for any of the other settings to work
-	reportTextUnderMouse = boolean(default=True)
 	mouseTextUnit = string(default="paragraph")
 	reportObjectRoleOnMouseEnter = boolean(default=False)
 	audioCoordinatesOnMouseMove = boolean(default=False)

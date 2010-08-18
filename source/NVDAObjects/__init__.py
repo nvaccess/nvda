@@ -716,8 +716,6 @@ Tries to force this object to take the focus.
 			info=NVDAObjectTextInfo(self,textInfos.POSITION_ALL)
 		if config.conf["reviewCursor"]["followMouse"]:
 			api.setReviewPosition(info)
-		if not config.conf["mouse"]["reportTextUnderMouse"]:
-			return
 		oldInfo=getattr(self,'_lastMouseTextInfoObject',None)
 		self._lastMouseTextInfoObject=info
 		if not oldInfo or info.__class__!=oldInfo.__class__ or info.compareEndPoints(oldInfo,"startToStart")!=0 or info.compareEndPoints(oldInfo,"endToEnd")!=0:
