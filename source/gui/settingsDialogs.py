@@ -144,7 +144,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		if globalVars.appArgs.secure or not config.isServiceInstalled():
 			self.startOnLogonScreenCheckBox.Disable()
 		settingsSizer.Add(self.startOnLogonScreenCheckBox)
-		self.copySettingsButton= wx.Button(self, wx.ID_ANY, label=_("Copy currently saved NVDA settings to the logon screen (requires administrator privileges)"))
+		self.copySettingsButton= wx.Button(self, wx.ID_ANY, label=_("Use currently saved settings on the logon and other secure screens (requires administrator privileges)"))
 		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
 		if globalVars.appArgs.secure or not config.isServiceInstalled():
 			self.copySettingsButton.Disable()

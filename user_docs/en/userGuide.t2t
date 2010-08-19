@@ -337,15 +337,15 @@ This option is a checkbox that allows you to choose whether or not a dialog appe
 ==== Logging level ====
 This is a combo box that permits you to choose how much NVDA wil log as it's running. Generally users should not need to touch this as not too much is logged. However if you are wanting to provide information in a bug report, then it may be a useful option.
 
-==== Automatically start nvda after I log on to windows ====
+==== Automatically start NVDA after I log on to Windows ====
 If this option is enabled, NVDA will start automatically as soon as you log on to Windows.
 
-==== Use nvda on the windows log on screen (requires administrative privileges) ====
+==== Use NVDA on the windows Logon screen (requires administrative privileges) ====
 If you log on to Windows by providing a user name and password, then enabling this option will make NVDA start automatically at the logon screen when Windows starts.
 
-==== Copy currently saved NVDA settings to the logon screen ====
-Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it when running on the logon and User Account Control (UAC) screens.
- To make sure that all your settings are transfered, make sure to firstly save your configuration with control+NVDA+s or save configuration in the NVDA menu.
+==== Use currently saved settings on the logon and other secure screens ====
+Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it when running on the logon, User Account Control (UAC) and other secure Windows screens.
+ To make sure that all your settings are transfered, make sure to firstly save your configuration with control+NVDA+c or save configuration in the NVDA menu.
 
 
 +++ Synthesizer Selection (NVDA+control+s) +++
