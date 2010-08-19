@@ -21,26 +21,28 @@
 - The state of toggle keys (caps lock, num lock and scroll lock) is now displayed in braille when they are pressed. (#620)
 - Help balloons are now displayed in braille when they appear. (#652)
 - Added a driver for the MDV Lilli braille display. (#241)
-- When selecting an entire row or column in MS Excel with the shortcut keys shift+space and control+space, the new selection is now reported. (#759)
+- When selecting an entire row or column in Microsoft Excel with the shortcut keys shift+space and control+space, the new selection is now reported. (#759)
 - Table row and column headers can now be reported. This is configurable from the Document Formatting preferences dialog.
  - Currently, this is supported in documents in Mozilla applications such as Firefox and Thunderbird. (#361)
 - Introduced commands for flat review: (#58)
  - NVDA+numpad7  switches to flat review, placing the review cursor at the position of the current object, allowing you  to review the screen (or a document if within one) with the text review commands.
  - NVDA+numpad1 moves the review cursor into the object represented by the text at  the position of the review cursor, allowing you to navigate by object from that point.
-- Current NVDA user settings can be  copied to be used on the logon/UAC screens, by pressing a button in the General Settings dialog.
+- Current NVDA user settings can be  copied to be used on secure Windows screens such as the logon and UAC screens by pressing a button in the General Settings dialog. (#730)
 
 
 == Changes ==
-- The sayAll by Navigator object (NVDA+numpadAdd), navigator object next in flow (NVDA+shift+numpad6) and navigator object previous in flow (NVDA+shift+numpad4) have been removed for the time being, due to bugginess and to free up the keys for other possible features.
+- The sayAll by Navigator object (NVDA+numpadAdd), navigator object next in flow (NVDA+shift+numpad6) and navigator object previous in flow (NVDA+shift+numpad4) commands have been removed for the time being, due to bugginess and to free up the keys for other possible features.
 - In the NVDA Synthesizer dialog, only the display name of the synthesizer is now listed. Previously, it was prefixed by the driver's name, which is only relevant internally.
-- When in embedded applications or virtual buffers inside another virtualBuffer (e.g. Flash), you can now  press nvda+control+space to move out of the embedded application or virtual buffer, in to the above document. Previously nvda+space  was used for this. Now nvda+space is specifically only for toggling brows/focus modes on virtualBuffers.
+- When in embedded applications or virtual buffers inside another virtualBuffer (e.g. Flash), you can now  press nvda+control+space to move out of the embedded application or virtual buffer to the containing document. Previously nvda+space  was used for this. Now nvda+space is specifically only for toggling brows/focus modes on virtualBuffers.
 - If the speech viewer (enabled under the tools menu) is given the focus (e.g. it was clicked in) new text will not appear in the control until focus is moved away. This allows for selecting the text with greater ease (e.g. for copying).
 - The Log Viewer and Python Console are maximised when activated.
-- When focusing on a worksheet in MS Excel, and there is more than one cell selected, the selection range is announced, rather than just the active cell. (#763)
-- Saving configuration, and changing of particular sensitive options, is now disabled when running in secure mode (on the logon/UAC screens).
+- When focusing on a worksheet in Microsoft Excel and there is more than one cell selected, the selection range is announced, rather than just the active cell. (#763)
+- Saving configuration and changing of particular sensitive options is now disabled when running on the logon, UAC and other secure Windows screens.
 - Updated eSpeak speech synthesiser to 1.44.01.
 - If NVDA is already running, activating the NVDA shortcut on the desktop (which includes pressing control+alt+n) will restart NVDA.
 - Removed the report text under the mouse checkbox from the Mouse settings dialog and replaced it with an Enable mouse tracking checkbox, which better matches the toggle mouse tracking script (NVDA+m). 
+- Updates to the laptop keyboard layout so that it includes all commands available in the desktop layout and works correctly on non-English keyboards. (#798, #800)
+- Significant improvements and updates to the user documentation, including documentation of the laptop keyboard commands and synchronisation of the Keyboard Commands Quick Reference with the User Guide. (#455)
 
 
 == Bug Fixes ==
@@ -60,11 +62,12 @@
 - Adobe Acrobat Pro and Reader 9 no longer crash when closing a file or performing certain other tasks. (#613)
 - The selection is now announced when control+a is pressed to select all text in some editable text controls such as in Microsoft Word. (#761)
 - In Scintilla controls (e.g. Notepad++), text is no longer incorrectly selected when NVDA moves the caret such as during say all. (#746)
-- It is again possible to review the contents of cells in MS Excel with the review cursor.
+- It is again possible to review the contents of cells in Microsoft Excel with the review cursor.
 - NVDA can again read by line in certain problematic textArea fields in Internet Explorer 8. (#467)
 - Windows Live Messenger 2009 no longer exits immediately after it is started while NVDA is running. (#677)
 - In web browsers, It is no longer necessary to press tab to interact with an embedded object (such as Flash content) after pressing enter on the embedded object or returning from another application. (#775)
 - In Scintilla controls (e.g. Notepad++), the beginning of long lines is no longer truncated when it scrolls off the screen. Also, these long lines will be correctly displayed in braille when they are selected.
+- In Loudtalks, it is now possible to access the contact list.
 
 
 = 2010.1 =
