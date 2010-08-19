@@ -111,6 +111,12 @@ class CompoundTextInfo(textInfos.TextInfo):
 		self._startObj.setFocus()
 		self._start.updateCaret()
 
+	def updateSelection(self):
+		self._startObj.setFocus()
+		self._start.updateSelection()
+		if self._end is not self._start:
+			self._end.updateSelection()
+
 	def _get_bookmark(self):
 		return self.copy()
 
@@ -392,6 +398,7 @@ class CompoundDocument(EditableText, TreeInterceptor):
 
 	def event_caret(self, obj, nextHandler):
 		self.detectPossibleSelectionChange()
+		braille.handler.handleCaretMove(self)
 
 	def event_gainFocus(self, obj, nextHandler):
 		if not isinstance(obj, behaviors.EditableText):
