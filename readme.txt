@@ -13,7 +13,7 @@ General dependencies:
 	* comtypes, version 0.6.2 or later: http://www.sourceforge.net/projects/comtypes/
 	* wxPython unicode (for Python 2.7), version 2.8.11.0 or later: http://www.wxpython.org/
 	* Python Windows Extensions (for Python 2.7), build 214 or later: http://www.sourceforge.net/projects/pywin32/ 
-	* eSpeak, version 1.44.01 or later, Windows dll:
+	* eSpeak, version 1.44.03 or later, Windows dll:
 		* Official web site: http://espeak.sourceforge.net/
 		* The Windows dll is tricky to build, so a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
 		* Copy espeak.dll and espeak-data into the source\synthDrivers directory.
