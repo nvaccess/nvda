@@ -297,12 +297,14 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_navigatorObject_toFocus(self,keyPress):
 		obj=api.getFocusObject()
-		if not isinstance(obj,NVDAObject):
-			speech.speakMessage(_("no focus"))
-		api.setNavigatorObject(obj)
+		try:
+			pos=obj.makeTextInfo(textInfos.POSITION_CARET)
+		except (NotImplementedError,RuntimeError):
+			pos=obj.makeTextInfo(textInfos.POSITION_FIRST)
+		api.setReviewPosition(pos)
 		speech.speakMessage(_("move to focus"))
 		speech.speakObject(obj,reason=speech.REASON_QUERY)
-	script_navigatorObject_toFocus.__doc__=_("Sets the navigator object to the current focus")
+	script_navigatorObject_toFocus.__doc__=_("Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible.")
 
 	def script_navigatorObject_moveFocus(self,keyPress):
 		obj=api.getNavigatorObject()
@@ -538,17 +540,6 @@ class AppModule(appModuleHandler.AppModule):
 		speech.speakMessage(_("right"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
-
-	def script_review_moveToCaret(self,keyPress):
-		try:
-			info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_CARET)
-		except NotImplementedError:
-				ui.message(_("No caret"))
-				return
-		api.setReviewPosition(info.copy())
-		info.expand(textInfos.UNIT_LINE)
-		speech.speakTextInfo(info,reason=speech.REASON_CARET)
-	script_review_moveToCaret.__doc__=_("Moves the review cursor to the position of the system caret, in the current navigator object")
 
 	def script_review_moveCaretHere(self,keyPress):
 		review=api.getReviewPosition()

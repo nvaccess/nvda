@@ -179,9 +179,9 @@ To navigate by object, use the following keys:
 | Navigate to previous object | NVDA+numpad4 | NVDA+control+j | Navigates to the object directly before the current navigator object |
  | Navigate to next object | NVDA+numpad6 | control+NVDA+l | Navigates to the object directly after the current navigator object |
 | Navigate to first child object | NVDA+numpad2 | NVDA+shift+comma | Navigates to the first child object contained by the current navigator object |
-| Navigate to focus object | NVDA+numpadMinus | NVDA+control+backspace | Navigates to the object that currently has the system focus | 
+| Navigate to focus object | NVDA+numpadMinus | NVDA+backspace | Navigates to the object that currently has the system focus, and also places  the review cursor at the position of the System caret, if it is showing | 
 | Activate current navigator object | NVDA+numpadEnter | NVDA+enter | Activates the current navigator object (similar to  clicking with the mouse or pressing space when it has the system focus) | 
-| Move System focus to current navigator object | NVDA+shift+numpadMinus | NVDA+shift+numpadMinus | Moves the System focus to the current navigator object if possible |
+| Move System focus to current navigator object | NVDA+shift+numpadMinus | NVDA+shift+backspace | Moves the System focus to the current navigator object if possible |
 | Report navigator object dimensions | NVDA+numpadDelete | NVDA+delete | Announces the current navigator object's dimentions on screen in per centages (including distance from left and top of screen, and its width and height) |   
 %kc:endInclude
 
@@ -208,7 +208,8 @@ The following key commands are available for reviewing text:
 | Report current character in review | numpad2 | NVDA+comma | Announces the current character on the  line of text where the review cursor is positioned. Pressing twice reports the numeric value of the character in decimal and hexadecimal. | 
 | Move to next character in review | numpad3 | NVDA+dot | Move the review cursor to the next character on the current line of text |
 | Move to end of line in review | shift+numpad3 | NVDA+shift+o | Moves the review cursor to the end  of the current line of text |
-| Say all with review | numpadPlus | NVDA+/ | Reads from the current position of the review cursor, moving it as it goes |
+| Say all with review | numpadPlus | NVDA+shift+downArrow | Reads from the current position of the review cursor, moving it as it goes |
+| Move caret to review cursor | control+numpadMinus | NVDA+control+backspace | Moves the System caret to the position of the review cursor | 
 | copy from review cursor | NVDA+f9 | NVDA+f9 | starts copying text from the current position of the review cursor. The actual copy is not performed until you tell NVDA where to copy to |
 | Copy to review cursor | NVDA+f10 | NVDA+f10 | Copies from the position of the review cursor currently set with Copy from review cursor, to the review cursor's current position. After pressing this key, the text will  be copied to the Windows clipboard |
 %kc:endInclude
