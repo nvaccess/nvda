@@ -92,14 +92,18 @@ Control+NVDA+l=navigatorObject_next
 NVDA+Right=navigatorObject_next
 NVDA+Return=navigatorObject_doDefaultAction
 NVDA+ExtendedReturn=navigatorObject_doDefaultAction
-Shift+NVDA+extendedLeft=moveMouseToNavigatorObject
+Shift+NVDA+f9=moveMouseToNavigatorObject
 NVDA+extendedDivide=moveMouseToNavigatorObject
-Shift+NVDA+extendedRight=moveNavigatorObjectToMouse
+Shift+NVDA+f10=moveNavigatorObjectToMouse
 NVDA+Multiply=moveNavigatorObjectToMouse
 NVDA+extendedLeft=leftMouseClick
 extendedDivide=leftMouseClick
+Shift+NVDA+ExtendedLeft=toggleLeftMouseButton
+Shift+extendedDivide=toggleLeftMouseButton
 NVDA+extendedRight=rightMouseClick
 multiply=rightMouseClick
+Shift+NVDA+ExtendedRight=toggleRightMouseButton
+Shift+multiply=toggleRightMouseButton
 
 # Keys for activating settings dialogs
 Control+NVDA+g=activateGeneralSettingsDialog
