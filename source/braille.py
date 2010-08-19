@@ -696,7 +696,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			else:
 				newDisplay = newDisplay()
 				if self.display:
-					self.display.terminate()
+					try:
+						self.display.terminate()
+					except:
+						log.error("Error terminating previous display driver", exc_info=True)
 				self.display = newDisplay
 			self.displaySize = newDisplay.numCells
 			self.enabled = bool(self.displaySize)
@@ -900,9 +903,13 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		@postcondition: This instance can no longer be used unless it is constructed again.
 		"""
 		# Clear the display.
-		self.cursorPos = None
-		self.cursorBlinkRate = 0
-		self.display([])
+		try:
+			self.cursorPos = None
+			self.cursorBlinkRate = 0
+			self.display([])
+		except:
+			# The display driver seems to be failing, but we're terminating anyway, so just ignore it.
+			pass
 
 	def _get_numCells(self):
 		"""Obtain the number of braille cells on this  display.
