@@ -9,6 +9,7 @@ from comtypes import COMError
 import comtypes.client
 import comtypes.automation
 from comtypes import IServiceProvider
+import winUser
 import oleacc
 import IAccessibleHandler
 import aria
@@ -705,3 +706,30 @@ class PluginWindow(IAccessible):
 	# MSHTML fires focus on this window after the plugin may already have fired a focus event.
 	# We don't want this to override the focus event fired by the plugin.
 	shouldAllowIAccessibleFocusEvent = False
+
+class RootClient(IAccessible):
+	"""The top level client of an MSHTML control.
+	"""
+
+	# Get rid of the URL.
+	name = None
+	# Get rid of "MSAAHTML Registered Handler".
+	description = None
+
+def findExtraIAccessibleOverlayClasses(obj, clsList):
+	"""Determine the most appropriate class for MSHTML objects.
+	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
+	"""
+	windowClass = obj.windowClassName
+	iaRole = obj.IAccessibleRole
+	if windowClass == "Internet Explorer_TridentCmboBx" and iaRole == oleacc.ROLE_SYSTEM_COMBOBOX:
+		clsList.append(V6ComboBox)
+		return
+
+	if windowClass != "Internet Explorer_Server":
+		return
+
+	if iaRole == oleacc.ROLE_SYSTEM_WINDOW and obj.event_objectID > 0:
+		clsList.append(PluginWindow)
+	elif iaRole == oleacc.ROLE_SYSTEM_CLIENT and obj.event_objectID == winUser.OBJID_CLIENT:
+		clsList.append(RootClient)

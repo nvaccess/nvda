@@ -397,9 +397,9 @@ the NVDAObject for IAccessible
 			from .msOffice import BrokenMsoCommandBar
 			if BrokenMsoCommandBar.appliesTo(self):
 				clsList.append(BrokenMsoCommandBar)
-		elif windowClassName == "Internet Explorer_Server" and role == oleacc.ROLE_SYSTEM_WINDOW and self.event_objectID > 0:
-			from .MSHTML import PluginWindow
-			clsList.append(PluginWindow)
+		elif windowClassName.startswith("Internet Explorer_"):
+			from . import MSHTML
+			MSHTML.findExtraIAccessibleOverlayClasses(self, clsList)
 
 		#Support for Windowless richEdit
 		pIidITextServices=ctypes.cast(ctypes.windll.msftedit.IID_ITextServices,ctypes.POINTER(GUID))
@@ -1333,11 +1333,6 @@ class Outline(IAccessible):
 		if child:
 			speech.speakObject(child,reason=speech.REASON_FOCUS)
 
-class InternetExplorerClient(IAccessible):
-
-	def _get_description(self):
-		return None
-
 class SysLinkClient(IAccessible):
 
 	def reportFocus(self):
@@ -1508,6 +1503,5 @@ _staticMap={
 	("QWidget",oleacc.ROLE_SYSTEM_IPADDRESS):"qt.LayeredPane",
 	("QWidget",oleacc.ROLE_SYSTEM_APPLICATION):"qt.Application",
 	("Shell_TrayWnd",oleacc.ROLE_SYSTEM_CLIENT):"Taskbar",
-	("Internet Explorer_TridentCmboBx",oleacc.ROLE_SYSTEM_COMBOBOX):"MSHTML.V6ComboBox",
 	("Shell DocObject View",oleacc.ROLE_SYSTEM_CLIENT):"ShellDocObjectView",
 }
