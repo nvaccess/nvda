@@ -177,7 +177,8 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		else:
 			self._rangeObj=self.obj.HTMLNode.createTextRange()
 		if position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
-			if self.obj.HTMLNode.uniqueID!=self.obj.HTMLNode.document.activeElement.uniqueID:
+			activeElement=self.obj.HTMLNode.document.activeElement
+			if not activeElement or self.obj.HTMLNode.uniqueID!=activeElement.uniqueID:
 				raise RuntimeError("Only works with currently selected element")
 			if not editableBody:
 				mark=self.obj.HTMLNode.document.selection.createRange().GetBookmark()
