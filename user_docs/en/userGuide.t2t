@@ -265,6 +265,10 @@ You can manually change between focus and browse modes as well. Though when chan
 || Name | Key | Description |
 | Toggle virtual buffer modes | NVDA+space | Toggles between focus mode and browse mode |
 | Exit focus mode | escape | switches back to browse mode if focus mode was previously switched to automatically |
+| Refresh virtual buffer | NVDA+f5 | Reloads the current virtual buffer (useful if certain content seems to be missing from the page) | 
+| Find | NVDA+control+f | Pops up a dialog in which you can type some text to find in the current document |
+| Find next | NVDA+f3 | Finds the next occurence of the text in the document that you previously searched for |
+| Find previous | NVDA+shift+f3 | Finds the previous occurence of the text in the document you previously searched for | 
 %kc:endInclude
 
 Currently NVDA uses Virtual Buffers for reading documents in Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader, and Adobe Flash.
