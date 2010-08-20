@@ -112,7 +112,7 @@ If your laptop can not do this, or does not allow you to turn numlock off, you m
 ++ The NVDA menu ++
 The NVDA menu allows you to control NVDA's settings, access help, save/revert your configuration, Modify speech dictionaries, read the log file, and exit NVDA.
 
-To get to the NVDA menu from anywhere in Windows while NVDA is running, press NVDA+n. You can also get to the NVDA menu via the windows system tray. Either right-click on the nvda icon located in the system tray, or access the system tray by pressing the windows logo key+B, DownArrow to the NVDA icon and press the applications key located next to the right control key on most keyboards. When the menu comes up, You can use the arrow keys to navigate the menu, and the enter key to activate an item. The Preferences menu allows you to configure NVDA how you like, the tools menu contains useful tools such as the NVDA log viewer and the NVDA Python console for developers, the help menu allows you to access the user guide, a quick key reference, and much more. The NVDA menu also contains items that allow you to save or revert your current configuration. There is also an option that allows you to exit NVDA, although this can be accomplished more efficiently by pressing NVDA+Q.
+To get to the NVDA menu from anywhere in Windows while NVDA is running, press NVDA+n. You can also get to the NVDA menu via the windows system tray. Either right-click on the nvda icon located in the system tray, or access the system tray by pressing the windows logo key+B, DownArrow to the NVDA icon and press the applications key located next to the right control key on most keyboards. When the menu comes up, You can use the arrow keys to navigate the menu, and the enter key to activate an item. The Preferences menu allows you to configure NVDA how you like, the tools menu contains useful tools such as the NVDA log viewer, speech viewer and Python console, the help menu allows you to access the user guide, a quick key reference, and much more. The NVDA menu also contains items that allow you to save or revert your current configuration. There is also an option that allows you to exit NVDA, although this can be accomplished more efficiently by pressing NVDA+Q.
 
 ++ Basic key commands ++
 %kc:beginInclude
@@ -668,7 +668,8 @@ Settings for NVDA when running on the logon or UAC screens is stored in the syst
 Usually this configuration should not be touched.
 To change how NVDA is configured on the logon/UAC screens, configure NVDA to how you wish  while logged in to Windows, and then instruct NVDA to copy the configuration to the logon screen by using the button in the General settings dialog.
    
-+ Advanced Tools for developers +
++ Extra Tools +
+   
    ++ Log Viewer ++
 The log viewer, found under Tools in the NVDA menu, allows you to view all the logging output that has occured up until now from when you last started NVDA.
 
@@ -682,33 +683,8 @@ To enable the speech viewer, check  the "Speech Viewer" menu item under Tools in
 While the speech viewer is enabled, it constantly updates to show you the most current text being spoken. However, if you click or focus inside the viewer, NVDA will temporarily stop updating the text, so that you are able to easily select or copy the existing content.
 
 ++ Python Console ++
-The NVDA Python console emulates an  interactive Python interpreter from within NVDA. It is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application. 
-
-=== Usage ===
-The console can be activated in two ways: 
-- By pressing NVDA+control+z. If activated in this fashion, a snapshot of the current state of NVDA at the time the key was pressed will be taken and saved in certain variables available in the console. See Snapshot Variables for more details. 
-- By selecting Tools -> Python console from the NVDA system tray menu. 
--
-
-The console is similar to the standard interactive Python interpreter. Input is accepted one line at a time. The current line is processed when enter is pressed. You can navigate through the history of previously entered lines using the up and down arrow keys. 
-Output (responses from the interpreter) will be spoken when enter is pressed. The f6 key toggles between the input and output controls. 
-Closing the console window simply hides it. This allows the user to return to the session as it was left when it was closed, including history and variables. 
-
-=== Namespace ===
-==== Automatic Imports ====
-For convenience, the following modules and variables are automatically imported in the console: sys, os, wx, log (from logHandler), api, queueHandler, speech, braille 
-
-==== Snapshot Variables ====
-Whenever NVDA+control+z is pressed, certain variables available in the console will be assigned according to the current state of NVDA. These variables are: 
-- focus: The current focus object 
-- focusAnc: The ancestors of the current focus object 
-- fdl: Focus difference level; i.e. the level at which the ancestors for the current and previous focus differ 
-- fg: The current foreground object 
-- nav: The current navigator object 
-- review: The TextInfo instance representing the current position of the review cursor
-- mouse: The current mouse object 
-- brlRegions: The braille regions from the active braille buffer 
--
+The NVDA Python console, found under  Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
+For more information, please see [the Python Console article on the NVDA web site NVDA_URLwiki/PythonConsole].
 
 + Troubleshooting NVDA +
 As NVDA is constantly being updated, there is no guarantee that all commands provided here in this user guide will still apply. If you have any problems with any of the commands presented in this user guide, please visit: NVDA_URL for more assistance.
