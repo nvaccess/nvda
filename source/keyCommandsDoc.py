@@ -183,7 +183,7 @@ class KeyCommandsMaker(object):
 		for level, heading in enumerate(self._headings[level:], level):
 			# We don't want numbered headings in the output.
 			label=heading.group("label")
-			headingText = "{id}{txt}{id}{label}".format(
+			headingText = u"{id}{txt}{id}{label}".format(
 				id="=" * len(heading.group("id")),
 				txt=heading.group("txt"),
 				label="[%s]" % label if label else "")
@@ -248,9 +248,9 @@ class KeyCommandsMaker(object):
 		# Finally, the next line should be the description.
 		desc = next(self._ug).strip()
 
-		self._kc.write("| {name} | {keys} | {desc} |{lineEnd}".format(
+		self._kc.write(u"| {name} | {keys} | {desc} |{lineEnd}".format(
 			name=name,
-			keys=" | ".join(keys),
+			keys=u" | ".join(keys),
 			desc=desc, lineEnd=LINE_END))
 
 	def remove(self):
