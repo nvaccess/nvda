@@ -4,6 +4,7 @@
 %!includeconf: ../changes.conf.t2t
 
 = 2010.2 =
+Významné zmeny v tejto verzií sú výrazne zjednodušená objektová navigácia; virtuálny prehliadač pre obsah Adobe flash; prístup k mnohým doteraz neprístupným prvkom získavaním textu vykesleného na obrazovku; plošné zobrazenie textu na obrazovke; podpora pre dokumenty IBM Lotus Symphony; oznamovanie hlavičiek riadkov a stĺpcov tabuliek v programe Mozilla Firefox; a výrazne prepracovanú používateľskú dokumentáciu.
 
 == Nové vlastnosti ==
 - Objektová navigácia bola výrazne zjednodušená. Prehliadací kurzor vynecháva objekty, ktoré nie sú pre používateľa užitočné napr. nedostupné objekty a objekty, ktoré formujú len vzhľad.
@@ -11,6 +12,7 @@
 - Počas posúvania myši v programe Microsoft Excel dokáže NVDA čítať text bunky, ktorá je práve pod kurzorom..
 - V aplikáciách používajúcich Java access bridge je text dialógu automaticky oznamovaný, keď dialóg získa fokus. (#554)
 - Na navigáciu  obsahom adobe Flash je možné použiť virtuálny dokument. Priame ovládanie prvkov flash a objektová navigácia sú tiež dostupné po zapnutí režimu fokusu. (#453)
+- Sprístupnené editačné polia vo vývojovom prostredí Eclipse vrátane editora kódu. Požadovaná verzia Eclipse je 3.6 alebo novšia. (#256, #641)
 - NVDA dokáže získať množstvo textu vypísaného na obrazovku. (#40, #643)
  - Toto umožňuje sprístupniť prvky, ktoré neposkytujú informácie priamejšími a spoľahlivejšími spôsobmi.
  - Prvky sprístupnené touto metódou zahŕňajú: niektoré položky menu, pri ktorých sú zobrazené ikony (napr. položky v ponuke otvoriť čím  v kontextovej ponuke zoznamu súborov v prieskumníku Windows XP) (#151), editačné polia v aplikáciách Windows live (#200), zoznam chýb v programe Outlook Express (#582), editačné pole populárneho textového editora TextPad (#605), zoznamy v programe Eudora, mnohé prvky v austrálskom E-tax a panel vzorca v programe Microsoft Excel.
@@ -32,16 +34,22 @@
 == Zmeny ==
 - Plynulé čítanie navigačného objektu (NVDA+numpad plus), prejsť na ďalší a predchádzajúci objekt v náväznosti boli odstránené, pretože nefungovali spoľahlivo. Uvolnia sa takto aspoň klávesy.
 - V dialógu Hlasový výstup je v zozname uvedený len názov hlasových výstupov. Doteraz bol zobrazovaný aj názov modulu, ktorý je relevantný len interne.
-- Vo vnorených aplikáciách alebo virtuálnych dokumentoch v ďalšom virtuálnom dokumente napr. vo virtuálnom dokumente Adobe Flash je možné použiť NVDA+Control+medzerník na prepínanie do nadradeného virtuálneho prehliadača. Doteraz sa na toto používal príkaz NVDA+medzerník, ktorý sa stále používa na prepínanie medzi prehliadacím režimom a režimom fokusu.
+- Vo vnorených aplikáciách alebo virtuálnych prehliadačoch v ďalšom virtuálnom prehliadači napr. vo virtuálnom prehliadači Adobe Flash je možné použiť NVDA+Control+medzerník na prepínanie do nadradeného virtuálneho prehliadača. Doteraz sa na toto používal príkaz NVDA+medzerník, ktorý sa stále používa na prepínanie medzi prehliadacím režimom a režimom fokusu.
 - Ak má systémový fokus zobrazovač reči (je možné zapnúť z menu nástroje) nový text sa nebude zobrazovať až kým systémový fokus nenadobudne iný prvok mimo tohoto prehliadača. Umožňuje to jednoduchšie vyberanie textu napr. na kopírovanie.
 - Zobrazovač logu a konzola python sú automaticky maximalizované pri každom zobrazení.
 - Ak získa fokus hárok programu microsoft excel a vybratých je viac buniek, namiesto aktuálnej bunky je oznámený celý výber. (#763)
 - Ukladanie nastavení a zmena niektorých nastavení je zablokovaná ak NVDA beží na prihlasovacej obrazovke.
-- Aktualizovaný vstavaný hlasový výstup eSpeak na verziu 1.44.02.
+- Aktualizovaný vstavaný hlasový výstup eSpeak na verziu 1.44.03.
+- Ak je NVDA už spustený, Aktivácia odkazu na ploche alebo stlačenie jeho klávesovej skratky spôsobý reštart NVDA.
+- Z dialógu nastavenia myši bolo odstránené zaškrtávacie políčko Oznamovať text pod kurzorom myši, ktoré bolo nahradené políčkom povoliť sledovanie myši, čo lepšie vystihuje skript prepnínanie sledovania myši.
+- Aktualizované rozloženie klávesnice pre laptop tak, že obsahuje všetky klávesové príkazy a funguje aj na iných ako anglických systémoch. (#798, #800)
+- Výrazné zmeny a aktualizácia používateľskej dokumentácie. Zdokumentované je rozloženie klávesnice pre laptop a zoznam klávesových skratiek je synchronizovaný s používateľskou príručkou. (#455)
+- Aktualizovaná prekladová knižnica brailu liblouis na verziu 2.1.0. Opravuje to chyby v čínskom braily a zobrazovanie znakov, ktoré nie sú definované v aktuálnej prekladovej tabuľke. (#484, #499)
 
  
 == Opravy ==
 - V programe µTorrent aktívna položka zoznamu torrentov nie je oznamovaná do nekonečna a tiež nekradne systémový fokus ak je otvorené menu.
+- V programe µTorrent sú čítané názvy súborov v zozname obsah torrentu.
 - V Mozilla aplikáciách je správne detekovaná zmena fokusu v prípade, že fokus získa prázdny zoznam alebo tabuľka.
 - V aplikáciách Mozilla je správne oznamovaný stav nezačiarknuté pre neštandardné začiarkavacie políčka ako napr. začiarkavacie bunky v tabuľke. (#571)
 - V aplikáciách Mozilla text dialógov implementovaných pomocou technológie ARIA nie je viacej ignorovaný a bude oznámeny keď sa takýto dialóg zobrazí.
@@ -61,6 +69,8 @@
 - Windows Live Messenger 2009  sa viac automaticky neukončí hneď po štarte keď je spustený NVDA. (#677)
 - V prehliadačoch webových stránok nie je viac nutné po prechode do vnoreného objektu napr. flash stlačiť kláves tab na ďalšiu navigáciu. (#775)
 - V prvkoch scintilla (napr. Notepad ++) nie je viac ukrojené zo začiatku dlhého riadku ak sa celý riadok nezmestí na šírku obrazovky. Tiež je správne zobrazovaný výber takéhoto dlhého riadku v braily.
+- V programe Loudtalks je možné čítať zoznam kontaktov.
+- Adresa dokumentu a "MSAAHTML Registered Handler" nie sú viac zbytočne oznamované v programe internet explorer a iných dokumentoch MSHTML. (#811)
 
 
 = 2010.1 =

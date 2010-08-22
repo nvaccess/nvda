@@ -27,6 +27,7 @@
 - Introducidas órdenes para la revisión plana: (#58)
  - NVDA+7 teclado numérico cambia a revisión plana, colocando el cursor de revisión en la posición del objeto actual, permitiéndote revisar la pantalla (o un documento si se está dentro de uno) con las órdenes de revisión de texto.
  - NVDA+1 teclado numérico mueve el cursor de revisión al objeto representado por el texto en la posición del cursor de revisión, permitiéndote navegar por objetos desde ese punto.
+- Las opciones de usuario actuales de NVDA pueden copiarse para utilizarse en las pantallas de autentificación/UAC, presionando un botón en el diálogo Opciones Generales.
 
 
 == Ccambios ==
@@ -36,6 +37,9 @@
 - Si al visor de voz (activable en el menú Herramientas) se le dió el foco (ej.: it se hizo clic) el texto nuevo no aparecerá en el control hasta que el foco se mueva. Esto se permite para seleccionar el texto con mayor facilidad (ej.: para copiar).
 - El visualizador de Log y la consola de Python se maximizan cuando se activen.
 - Cuando se enfoca una hoja de cálculo en MS Excel, y hay más de una celda seleccionada, se anuncia el alcance de la selección, en lugar de sólo la celda activa. (#763)
+- El guardado de la configuración, y el cambio de opciones sensibles en particular, ahora se desactiva cuando se ejecute en modo seguro (en las pantallas de autentificación/UAC).
+- Actualizado el sintetizador de voz eSpeak a 1.44.01.
+- Si NVDA ya está ejecutándose, activando el atajo de teclado de NVDA en el escritorio (que es el presionado de control+alt+n) reiniciará a NVDA.
 
 
 == Corrección de Fallos ==
@@ -45,18 +49,19 @@
 - En aplicaciones de Mozilla, el texto de diálogos aria correctamente implementados ya no se ignora y ahora se informará cuando el diálogo aparezca.
 - En Internet Explorer y otros controles MSHTML, el atributo nivel de ARIA ahora se cumple correctamente.
 - En Internet Explorer y otros controles MSHTML, el rol ARIA ahora se elige sobre otro tipo de información para dar una experiencia de ARIA mucho más correcta y predecible.
-- Detenido un raro pete en Internet Explorer cuando se navega por marcos o iFrames.
+- Detenido un raro cuelgue en Internet Explorer cuando se navega por marcos o iFrames.
 - En documentos de Microsoft Word, las líneas de derecha a izquierda (tales como en el texto árabe) pueden leerse de nuevo. (#627)
 - Fuerte reducción de retraso cuando grandes cantidades de texto se mostraban en una consola de órdenes de Windows en sistemas de 64 bits. (#622)
-- En aplicaciones de Microsoft Office, NVDA ya no peta cuando se presionó verbalizar primer plano (NVDA+b) o cuando se navegan algunos objetos en barras de herramientas. (#616)
+- En aplicaciones de Microsoft Office, NVDA ya no se cuelga cuando se presionó verbalizar primer plano (NVDA+b) o cuando se navegan algunos objetos en barras de herramientas. (#616)
 - Corregida la verbalización incorrecta de números que contienen un 0 después de un separador; ej.: 1.023. (#593)
-- Adobe Acrobat Pro y Reader 9 ya no petan cuando se cierra un fichero o se llevan a cabo otras ciertas tareas. (#613)
+- Adobe Acrobat Pro y Reader 9 ya no se cuelgan cuando se cierra un fichero o se llevan a cabo otras ciertas tareas. (#613)
 - La selección se anuncia ahora cuando se presiona control+a para seleccionar todo el texto en algunos controles de texto editables tales como en Microsoft Word. (#761)
 - En los controles de Scintilla (ej.: Notepad++), el texto ya no se selecciona incorrectamente cuando NVDA mueve el cursor del sistema tal como durante leer todo. (#746)
 - Es posible de nuevo revisar el contenido de celdas en MS Excel con el cursor de revisión.
 - NVDA puede leer de nuevo por líneas en ciertos campos de área de texto problemáticos en Internet Explorer 8. (#467)
 - Windows Live Messenger 2009 ya no se cierra inmediatamente después de iniciarse mientras NVDA se ejecuta. (#677)
 - En los navegadores web, ya no es necesario presionar tab para interactuar con un objeto empotrado (tal como contenido Flash) después de presionar intro en el objeto empotrado o volviendo desde otra aplicación. (#775)
+- En controles de Scintilla (ej.: Notepad++), el comienzo de líneas largas ya no se corta cuando sobrepasan la pantalla. También, estas líneas largas se mostrarán correctamente en braille cuando se seleccionen.
 
 
 = 2010.1 =
@@ -276,8 +281,8 @@ Lo más resaltable de esta release incluye el soporte para ediciones de 64 bit d
 - Informar del estado verificado de elementos de vista en árbol en controles SysTreeview32.
 - Añadidas teclas de atajo para muchos de los diálogos de configuración de NVDA
 - Soporte para IAccessible2 habilitado para aplicaciones tales como Mozilla Firefox cuando se ejecuta a NVDA desde un medio portátil, sin tener que registrar ningún fichero Dll en especial
-- Corregido un pete con la lista de enlaces del modo virtual en aplicaciones Gecko. (#48)
-- NVDA no debería petar ya con aplicaciones Mozilla Gecko tales como Firefox y Thunderbird si NVDA está ejecutándose con privilegios más altos que los de la aplicación Mozilla Gecko. Ej. NVDA está ejecutándose como Administrador.
+- Corregido un cuelgue con la lista de enlaces del modo virtual en aplicaciones Gecko. (#48)
+- NVDA no debería colgarse ya con aplicaciones Mozilla Gecko tales como Firefox y Thunderbird si NVDA está ejecutándose con privilegios más altos que los de la aplicación Mozilla Gecko. Ej. NVDA está ejecutándose como Administrador.
 - Diccionarios del habla (anteriormente diccionarios de usuario) ahora pueden ser o sensibles a las mayúsculas o insensibles, y los patrones pueden ser opcionalmente expresiones regulares. (#39)
 - Si o no NVDA utiliza un 'modo de disposición de pantalla' para los documentos del modo virtual puede ahora ser configurado desde un diálogo de opciones 
 - No se informa más sobre anclaje de etiquetas sin href en documentos Gecko como enlaces. (#47)
@@ -320,11 +325,11 @@ Lo más resaltable de esta release incluye el soporte para ediciones de 64 bit d
 - Añadidos scripts para hacer clic en los botones izquierdo y derecho del ratón (barra y asterisco del teclado numérico respectivamente)
 - Mejorado el acceso a la Bandeja del Sistema de Windows. Con esperanza de que el foco ya no debería parecer quedarse atrás en un elemento en particular. Recordatorio: para ir a la Bandeja del sistema utiliza la orden de Windows Tecla Windows+b. (#10)
 - Se mejora el rendimiento y parada de anunciado de texto extra cuando se mantiene pulsado una tecla de cursor en un campo de edición y alcanza el final
-- Se detiene la capacidad de NVDA para hacer que el usuario aguarde mientras mensajes en particular son hablados. Arregla algunos petes/cuelgues con sintetizados de voz en particular. (#117)
+- Se detiene la capacidad de NVDA para hacer que el usuario aguarde mientras mensajes en particular son hablados. Arregla algunos cuelgues con sintetizados de voz en particular. (#117)
 - Añadido soporte para el sintetizador de voz Audiologic Tts3, contribución de Gianluca Casalino. (#105)
 - Posiblemente mejora de rendimiento cuando se navega por los documentos en Microsoft Word
 - Mejorada precisión cuando se lee texto de avisos en aplicaciones de Mozilla Gecko
-- Se detienen posibles petes cuando se trata de guardar la configuración en versiones no en inglés de Windows. (#114)
+- Se detienen posibles cuelgues cuando se trata de guardar la configuración en versiones no en inglés de Windows. (#114)
 - Se añade un diálogo de bienvenida de NVDA. Este diálogo está diseñado para proporcionar información esencial para nuevos usuarios y permite al BloqMayus ser configurado como una tecla modificadora de NVDA. Este diálogo será mostrado cuando NVDA sea iniciado predeterminadamente hasta que se deshabilite.
 - Corregido soporte básico para Adobe Reader tal que es posible leer documentos en  versiones 8 y 9
 - Corregidos algunos errores que podrían haber ocurrido cuando se mantienen pulsadas teclas antes de que NVDA sea apropiadamente inicializado
@@ -390,7 +395,7 @@ Lo más resaltable de esta release incluye el soporte para ediciones de 64 bit d
 - Mejorado el rendimiento cuando se revisa texto dentro de muchos controles que no tienen actualmente un cursor real. Ej.: ventana de históricos de MSN Messenger, elementos de vistas en árbol, elementos de vista de lista etc.
 - Mejorado el rendimiento en documentos enriquecidos.
 - NVDA ya no debería enlentecerse consumiendo tamaño de memoria del sistema sin razón
-- Corregidos fallos cuando se pone el foco en una ventana de consola del dos más de tres veces o así. NVDA tenía una tendencia a petar completamente.
+- Corregidos fallos cuando se pone el foco en una ventana de consola del dos más de tres veces o así. NVDA tenía una tendencia a colgarse completamente.
 
 
 == Teclas de órdenes ==
@@ -479,7 +484,7 @@ Lo más resaltable de esta release incluye el soporte para ediciones de 64 bit d
 - Añadido fichero de idioma Húmgaro de Tamas Gczy.
 - Añadido fichero de idioma portugués de Rui Batista.
 - El cambio de voz en el diálogo Opciones de voz ajusta ahora los deslizadores de velocidad, tono y volumen a los nuevos de acuerdo con el sintetizador, en lugar de forzar al sintetizador a ser ajustado a los valores anteriores. Esto arregla fallos cuando un sintetizador como eloquence o viavoice parecen hablar a una velocidad mucho más rápida que todos los otros sintetizadores.
-- Corregido un fallo donde el sintetizador de voz se detenía, o NVDA petaba completamente, cuando se estaba en una ventana de a consola del Dos.
+- Corregido un fallo donde el sintetizador de voz se detenía, o NVDA se colgaba completamente, cuando se estaba en una ventana de a consola del Dos.
 - Si existe soporte para un idioma en particular, NVDA ahora puede mostrar automáticamente su interface y verbalizar sus mensajes en el idioma en que Windows esté ajustado. Un idioma particular puede todavía ser elegido manualmente desde el diálogo Opciones de Interface de Usuario como también.
 - Añadido un script 'toggleReportDynamicContentChanges' (insert+5). Esto conmuta si el texto nuevo, u otros cambios dinámicos deberían ser anunciados automáticamente. Hasta aquí esto sólo funcionaba en ventanas de consola del Dos.
 - Añadido el script 'toggleCaretMovesReviewCursor' (insert+6). Esto conmuta si el cusros de revisión debería ser reposicionado automáticamente cuando el cursor del sistema se mueve. Esto es útil en Ventanas de Consola del Dos cuando se trata de leer información cuando la pantalla se está actualizando.
