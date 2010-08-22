@@ -1491,6 +1491,7 @@ _staticMap={
 	("SysMonthCal32",oleacc.ROLE_SYSTEM_CLIENT):"SysMonthCal32.SysMonthCal32",
 	("hh_kwd_vlist",oleacc.ROLE_SYSTEM_LIST):"hh.KeywordList",
 	("Scintilla",oleacc.ROLE_SYSTEM_CLIENT):"scintilla.Scintilla",
+	("TScintilla",oleacc.ROLE_SYSTEM_CLIENT):"scintilla.Scintilla",
 	("AkelEditW",oleacc.ROLE_SYSTEM_CLIENT):"akelEdit.AkelEdit",
 	("AkelEditA",oleacc.ROLE_SYSTEM_CLIENT):"akelEdit.AkelEdit",
 	("MSOUNISTAT",oleacc.ROLE_SYSTEM_CLIENT):"msOffice.MSOUNISTAT",
