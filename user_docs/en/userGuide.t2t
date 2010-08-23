@@ -35,9 +35,10 @@ Apart from providing its messages and interface in several languages, NVDA can a
 NVDA is bundled with [eSpeak http://espeak.sourceforge.net/], a free, open-source, multi-lingual speech synthesizer. Additionally, NVDA can use both SAPI4 and SAPI5 speech engines to provide speech output, as well as the Audiologic and NewFon speech synthesizers.
 
 ++ Braille support ++
-For users that own a refreshable braille display, NVDA can output its information in braille. NVDA supports Freedom Scientific Pacmate and Focus displays, Handy Tech displays, ALVA BC640/680 displays, plus many others supported by the BRLTTY package if it is available.
+For users that own a refreshable braille display, NVDA can output its information in Braille.
+Please see the [Supported Braille Displays #SupportedBrailleDisplays] appendix for information about the supported braille displays.
 
-NVDA supports many braille codes covering a large set of languages. In many cases grade 1 and 2 versions of the codes are available. For English readers both U.S. English braille and Unified English braille (UEB) codes are included.
+NVDA supports braille codes for many languages, including contracted, uncontracted and computer braille codes for some languages.
 
 ++ Licence and Copyright ++
 NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
@@ -435,15 +436,11 @@ If you wish to quickly change speech  settings  with out going to the Voice sett
 The braille settings dialog box can be invoked by going to the preferences menu and then to the braille settings option.
 
 ==== Braille Display ====
-The first option you will come upon in the braille settings dialog is a combo box that says "braille display". You will be presented with three options. Move between these options with the arrow keys.
+The first option you will come upon in the braille settings dialog is a combo box that says "braille display". You will be presented with several options depending on what braille display drivers are available on your system. Move between these options with the arrow keys.
 
 No braille means that you are not using braille.
 
-Freedom Scientific is for Freedom Scientific Focus/Pacmate displays. Note that this option only appears if you have the braille driver from Freedom Scientific installed, see [Official Freedom Scientific braille drivers page http://www.freedomscientific.com/PACMATE-HQ/FS_Braille_Display_Driver.asp] for more info on how to obtain and install the drivers.
-
-Handy Tech is for the Handy Tech displays. Note that this option will only exist if you have installed the [Handy Tech Universal Driver ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1111a.exe]
-
-BRLTTY allows you to use a wide list of braille displays. Please install the [BRLTTY Windows installer http://brl.thefreecat.org/brltty/] in order to get support for these displays.
+Please see the [Supported Braille Displays #SupportedBrailleDisplays] appendix for more information about supported braille displays.
 
 ==== Translation Table ====
 The next option you will come to in this dialog is the braille table combo box. In this combo box, you will find braille tables for different languages. You can move from braille table to braille table in the list by using the arrow keys.
@@ -701,3 +698,33 @@ For more information, please see [the Python Console article on the NVDA web sit
 If you require further information or assistance regarding NVDA, please visit the NVDA web site at NVDA_URL.
 Here, you can find additional documentation, as well as technical support and community resources.
 This site also provides information and resources concerning NVDA development.
+
+= Appendix A: Supported Braille Displays =[SupportedBrailleDisplays]
+This section contains information about the Braille displays supported by NVDA.
+
+== Freedom Scientific Focus/PAC Mate Series ==
+All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscientific.com/] are supported.
+You will need the Freedom Scientific braille display drivers installed on your system.
+If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
+Although this page only mentions the Focus 40 Blue display, the driver supports all Freedom Scientific displays.
+
+== Optelec ALVA BC640/680 ==
+Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] are supported.
+You do not need any specific drivers to be installed to use these displays.
+Just plug in the display and configure NVDA to use it.
+
+== Handy Tech Displays ==
+NVDA supports all displays from [Handy Tech http://www.handytech.de/].
+If you are using a USB display, you will need to install the USB drivers from Handy Tech on your system.
+In addition, you will need to install the Handy Tech universal driver, available at ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1111a.exe
+
+== MDV Lilli ==
+The Lilli braille display available from [MDV http://www.mdvbologna.it/] is supported.
+You do not need any specific drivers to be installed to use this display.
+Just plug in the display and configure NVDA to use it.
+
+== BRLTTY ==
+[BRLTTY http://mielke.cc/brltty/] is a separate program which can be used to support many more braille displays.
+In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
+You should download and install the latest installer package, which will be named, for example, brltty-win-4.2-2.exe.
+When configuring the display and port to use, be sure to pay close attention to the instructions, especially if you are using a USB display and already have the manufacturer's drivers installed.
