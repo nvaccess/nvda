@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008 Gianluca Casalino <gianluca.casalino@poste.it>
+#Copyright (C) 2008 Gianluca Casalino <gianluca@spazioausili.net>
 
 from ctypes import *
 import wx
