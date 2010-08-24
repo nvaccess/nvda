@@ -31,7 +31,7 @@ class KeyCommandsMaker(object):
 		%kc:title: NVDA Key Commands
 	
 	The kc:includeconf command allows you to insert a txt2tags includeconf command in the Key Commands document. For example::
-		%kc:includeconf: ../ar.conf.t2t
+		%kc:includeconf: ../ar.t2tconf
 	You may use multiple kc:includeconf commands, but they must appear before any of the other commands below.
 	
 	The rest of these commands are used to include key commands into the document.
@@ -141,7 +141,7 @@ class KeyCommandsMaker(object):
 			# Write the title and two blank lines to complete the txt2tags header section.
 			self._kc.write(arg + LINE_END * 3)
 			self._kcSect = self.KCSECT_CONFIG
-			self._kc.write("%%!includeconf: ../global.conf.t2t%s" % LINE_END)
+			self._kc.write("%%!includeconf: ../global.t2tconf%s" % LINE_END)
 			return
 		elif self._kcSect == self.KCSECT_HEADER:
 			raise KeyCommandsError("title must be the first command")
