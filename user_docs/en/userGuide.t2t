@@ -447,7 +447,8 @@ Please note that no matter how many different SAPI4 or SAPI5 voices (or engines)
 
 +++ Voice Settings (NVDA+control+v) +++
 The Voice Settings dialog, found in the Preferences menu, contains options that let you change the sound of the speech.
-You can also configure many of the options from anywhere by pressing NVDA+Control along with one of the arrow keys.
+For a quicker alternative way of controlling speech parameters from anywhere, please see the [Synth Settings Ring #SynthSettingsRing] section.
+ 
 The left and right arrow keys move through the various settings, the up and down arrows increase or decrease that setting respectively.
 
 The Voice Settings dialog box contains the following options:
@@ -493,7 +494,7 @@ Usually, NVDA raises the pitch slightly for any capital letter, but some synthes
 If this checkbox is checked, NVDA will make a small beep each time it encounters a capitalized character by itself.
 Like the 'say cap for capitals' checkbox, this is useful for Synthesizers that can't change their pitch for capital letters.
 
-+++ Synth settings ring +++
++++ Synth settings ring +++[SynthSettingsRing]
 If you wish to quickly change speech  settings  with out going to the Voice settings dialog, there are some NVDA key commands that allow you to move through the most common speech settings, from anywhere while running NVDA:
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Description |
