@@ -106,7 +106,7 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	//As long as we have successfully retreaved handles for NVDA's process and the event, then go on and initialize, wait and terminate.
 	if(waitHandles[0]&&waitHandles[1]) {
 		//Register for all winEvents in this process.
-		inprocWinEventHookID=SetWinEventHook(0,0XFFFFFFFF,dllHandle,inproc_winEventCallback,GetCurrentProcessId(),0,WINEVENT_INCONTEXT);
+		inprocWinEventHookID=SetWinEventHook(EVENT_MIN,EVENT_MAX,dllHandle,inproc_winEventCallback,GetCurrentProcessId(),0,WINEVENT_INCONTEXT);
 		if(inprocWinEventHookID==0) {
 			LOG_ERROR(L"SetWinEventHook failed");
 		}
@@ -122,7 +122,17 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 		#ifndef NDEBUG
 		Beep(660,75);
 		#endif
-		WaitForMultipleObjects(2,waitHandles,FALSE,INFINITE);
+		// Even though we only registered for in-context winEvents, we may still receive some out-of-context events; e.g. console events.
+		// Therefore, we must have a message loop.
+		// Otherwise, any out-of-context events will cause major lag which increases over time.
+		do {
+			// Consume and handle all pending messages.
+			MSG msg;
+			while(PeekMessage(&msg,NULL,0,0,PM_REMOVE)) {
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		} while(MsgWaitForMultipleObjects(2,waitHandles,FALSE,INFINITE,QS_ALLINPUT)==WAIT_OBJECT_0+2);
 		assert(inprocMgrThreadHandle);
 		inprocThreadsLock.acquire();
 		CloseHandle(inprocMgrThreadHandle);
