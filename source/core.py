@@ -124,7 +124,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	speech.initialize()
 	if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
 		log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
-		speech.speakMessage(_("Loading subsystems, please wait..."))
+		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
 	log.info("Using wx version %s"%wx.version())
 	app = wx.App(redirect=False)
