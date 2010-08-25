@@ -698,7 +698,8 @@ If this option is enabled, NVDA will play special sounds when it switches betwee
 
 +++ Document Formatting Settings (NVDA+control+d) +++[DocumentFormattingSettings]
 This dialog box is found in the Preferences menu, under "Document Formatting...".
-All the checkboxes in this dialog are for configuring what type of formatting you wish to hear automatically as you move the cursor around microsoft word or wordpad documents.
+
+Most of the checkboxes in this dialog are for configuring what type of formatting you wish to hear automatically as you move the cursor around documents.
 For example, if you check the report font name checkbox, each time you arrow onto text with a different font, the name of the font will be announced.
 
 You can configure announcement of:
@@ -719,6 +720,13 @@ You can configure announcement of:
 - blockquotes
 - Landmarks
 -
+
+==== Announce formatting changes after the cursor ====
+If enabled, this setting tells NVDA to try and detect all the formatting changes on a line as it speaks it.
+
+By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line if it is not going to slow down NVDA's performance.
+
+Enable this option while  proof reading documents in applications such as Microsoft Word, where formatting is important.
 
 +++ Speech dictionaries +++
 The speech dictionaries menu (found in the Preferences menu) contains dialogs that allow you to manage the way NVDA pronounces particular words or phrases.
