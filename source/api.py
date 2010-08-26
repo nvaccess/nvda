@@ -176,7 +176,7 @@ def getReviewPosition():
 def setReviewPosition(reviewPosition):
 	"""Sets a TextInfo instance as the review position. It sets the current navigator object to None so that the next time the navigator object is asked for it fetches it from the review position.
 	"""
-	globalVars.reviewPosition=reviewPosition
+	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
 	globalVars.navigatorObject=None
 	import braille
