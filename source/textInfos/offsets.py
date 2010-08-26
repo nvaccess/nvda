@@ -268,6 +268,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			offsetsFunc=self._getParagraphOffsets
 		elif unit==textInfos.UNIT_READINGCHUNK:
 			offsetsFunc=self._getReadingChunkOffsets
+		elif unit==textInfos.UNIT_STORY:
+			return 0,self._getStoryLength()
 		else:
 			raise ValueError("unknown unit: %s"%unit)
 		return offsetsFunc(offset)
