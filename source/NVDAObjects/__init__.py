@@ -27,6 +27,9 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	The L{NVDAObject.basicText} attribute is used as the text to expose.
 	"""
 
+	def _get_unit_mouseChunk(self):
+		return textInfos.UNIT_STORY
+
 	def _getStoryText(self):
 		return self.obj.basicText
 
@@ -711,11 +714,13 @@ Tries to force this object to take the focus.
 		self._mouseEntered=True
 		try:
 			info=self.makeTextInfo(textInfos.Point(x,y))
-			info.expand(info.unit_mouseChunk)
-		except:
-			info=NVDAObjectTextInfo(self,textInfos.POSITION_ALL)
+		except NotImplementedError:
+			info=NVDAObjectTextInfo(self,textInfos.POSITION_FIRST)
+		except LookupError:
+			return
 		if config.conf["reviewCursor"]["followMouse"]:
 			api.setReviewPosition(info)
+		info.expand(info.unit_mouseChunk)
 		oldInfo=getattr(self,'_lastMouseTextInfoObject',None)
 		self._lastMouseTextInfoObject=info
 		if not oldInfo or info.__class__!=oldInfo.__class__ or info.compareEndPoints(oldInfo,"startToStart")!=0 or info.compareEndPoints(oldInfo,"endToEnd")!=0:
