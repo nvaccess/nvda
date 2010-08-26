@@ -803,30 +803,35 @@ This site also provides information and resources concerning NVDA development.
 This section contains information about the speech synthesizers  supported by NVDA.
 
 ++ eSpeak ++
-The eSpeak synthesizer is built directly in to NVDA, and does not depend on any other special drivers or SAPI runtime to be installed.
+The [eSpeak http://espeak.sourceforge.net/] synthesizer is built directly in to NVDA and does not require any other special drivers or components installed to be installed.
 NVDA starts using eSpeak by default.
 As this synthesizer is built in to NVDA, this is a great choice for when running NVDA off a USB thumb drive or CD on other systems.
 
 Each voice that comes with eSpeak speaks a different language.
 There are over 20 different languages supported by eSpeak.
 
-There are also many variants which can be chosen, to make the sound of the voice quite different.
+There are also many variants which can be chosen to alter the sound of the voice.
 
-++ Microsoft Speech API version 4 (SAPI4) ++
-SAPI4 is an older Microsoft standard for software speech synthesizers.
-Many speech synthesizers that comply to this standard may be  purchased or downloaded for free from various companies and websites.
-When using this synthesizer with NVDA, the available voices (accessed from the [Voice Settings dialog #VoiceSettings], or by the [Synth Settins Ring #SynthSettingsRing]) will contain all the voices from all the installed SAPI4 engines found on your system.
+++ Microsoft Speech API version 4 (SAPI 4) ++
+SAPI 4 is an older Microsoft standard for software speech synthesizers.
+Many speech synthesizers that comply with this standard may be  purchased or downloaded for free from various companies and websites.
+When using this synthesizer with NVDA, the available voices (accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settins Ring #SynthSettingsRing]) will contain all the voices from all the installed SAPI 4 engines found on your system.
 
-++ Microsoft Speech API version 5 (SAPI5) ++
-SAPI5 is a Microsoft standard for software speech synthesizers.
-Many speech synthesizers that comply to this standard may be  purchased or downloaded for free from various companies and websites, though it is possible your system may already come with at least one SAPI5 voice preinstalled.
-When using this synthesizer with NVDA, the available voices (accessed from the [Voice Settings dialog #VoiceSettings], or by the [Synth Settins Ring #SynthSettingsRing]) will contain all the voices from all the installed SAPI5 engines found on your system.
+If you have SAPI 4 voices installed but the synthesizer does not appear in NVDA's list of synthesizers, please install the SAPI 4.0 runtime binaries, available at http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
 
-++ AudioLogic ++
+++ Microsoft Speech API version 5 (SAPI 5) ++
+SAPI 5 is a Microsoft standard for software speech synthesizers.
+Many speech synthesizers that comply with this standard may be  purchased or downloaded for free from various companies and websites, though your system will probably already come with at least one SAPI 5 voice preinstalled.
+When using this synthesizer with NVDA, the available voices (accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settins Ring #SynthSettingsRing]) will contain all the voices from all the installed SAPI 5 engines found on your system.
+
+++ Audiologic Tts3 ++
 This is a commercial speech synthesizer specifically for the Italian language.
-for more information please visit the Audiologic website at www.audiologic.it.
+You must have the synthesizer installed on your system in order for it to be used with NVDA.
+For more information, please visit the Audiologic website at www.audiologic.it.
 
 ++ Newfon ++
+Newfon is a free commercial synthesizer by Sergey Shishmintzev which supports the Russian and Ukrainian languages.
+To download this synthesizer, please visit the Russian NVDA community site at http://ru.nvda-community.org/.
 
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.
