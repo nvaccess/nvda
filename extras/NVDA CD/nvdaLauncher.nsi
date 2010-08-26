@@ -2,7 +2,7 @@
 
 !define SPI_GETSCREENREADER 70
 
-!define launcher_appDir "nvda_2009.1_portable"
+!define launcher_appDir "nvda_${NVDA_VERSION}_portable"
 !define launcher_appExe "nvdaLauncher.exe"
 
 setcompress off
@@ -31,5 +31,5 @@ CreateDirectory "$PLUGINSDIR\app"
 setOutPath "$PLUGINSDIR\app"
 file /R "${launcher_appDir}\"
 ${GetParameters} $0
-execWait "$PLUGINSDIR\app\${launcher_appExe} $0"
+execWait "$PLUGINSDIR\app\nvda.exe $0"
 SectionEnd
