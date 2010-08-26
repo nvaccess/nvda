@@ -194,7 +194,7 @@ def calculateNewText(newLines,oldLines):
 				outLines.append(text)
 	return outLines
 
-class WinConsoleTextInfo(NVDAObjectTextInfo):
+class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _offsetFromConsoleCoord(self,x,y):
 		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
