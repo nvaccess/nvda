@@ -90,7 +90,141 @@ IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	return pacc2;
 }
 
-VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IAccessibleTable2* paccTable=NULL, long tableID=0) {
+template<typename TableType> inline void fillTableCounts(VBufStorage_controlFieldNode_t* node, IAccessible2* pacc, TableType* paccTable) {
+	int res;
+	wostringstream s;
+	long count = 0;
+	DEBUG_MSG(L"Getting row count");
+	if ((res = paccTable->get_nRows(&count)) == S_OK) {
+		DEBUG_MSG(L"row count is " << count);
+		s << count;
+		node->addAttribute(L"table-rowcount", s.str());
+		s.str(L"");
+	} else
+		DEBUG_MSG(L"IAccessibleTable*::get_nRows failed, result " << res);
+	if ((res = paccTable->get_nColumns(&count)) == S_OK) {
+		DEBUG_MSG(L"column count is " << count);
+		s << count;
+		node->addAttribute(L"table-columncount", s.str());
+	} else
+		DEBUG_MSG(L"IAccessibleTable*::get_nColumns failed, result " << res);
+}
+
+inline void fillTableCellInfo_IATable(VBufStorage_controlFieldNode_t* node, IAccessibleTable* paccTable, const wstring& cellIndexStr) {
+	int res;
+	wostringstream s;
+	long cellIndex = _wtoi(cellIndexStr.c_str());
+	long row, column, rowExtents, columnExtents;
+	boolean isSelected;
+	if ((res = paccTable->get_rowColumnExtentsAtIndex(cellIndex, &row, &column, &rowExtents, &columnExtents, &isSelected)) == S_OK) {
+		DEBUG_MSG(L"IAccessibleTable::get_rowColumnExtentsAtIndex succeeded, adding attributes");
+		s << row + 1;
+		node->addAttribute(L"table-rownumber", s.str());
+		s.str(L"");
+		s << column + 1;
+		node->addAttribute(L"table-columnnumber", s.str());
+		if (columnExtents > 1) {
+			s.str(L"");
+			s << columnExtents;
+			node->addAttribute(L"table-columnsspanned", s.str());
+		}
+		if (rowExtents > 1) {
+			s.str(L"");
+			s << rowExtents;
+			node->addAttribute(L"table-rowsspanned", s.str());
+		}
+	} else
+		DEBUG_MSG(L"IAccessibleTable::get_rowColumnExtentsAtIndex failed, result " << res);
+}
+
+inline void fillTableCellInfo_IATable2(VBufStorage_controlFieldNode_t* node, IAccessibleTableCell* paccTableCell) {
+	int res;
+	wostringstream s;
+
+	long row, column, rowExtents, columnExtents;
+	boolean isSelected;
+	if ((res = paccTableCell->get_rowColumnExtents(&row, &column, &rowExtents, &columnExtents, &isSelected)) == S_OK) {
+		DEBUG_MSG(L"IAccessibleTableCell::get_rowColumnExtents succeeded, adding attributes");
+		s << row + 1;
+		node->addAttribute(L"table-rownumber", s.str());
+		s.str(L"");
+		s << column + 1;
+		node->addAttribute(L"table-columnnumber", s.str());
+		if (columnExtents > 1) {
+			s.str(L"");
+			s << columnExtents;
+			node->addAttribute(L"table-columnsspanned", s.str());
+		}
+		if (rowExtents > 1) {
+			s.str(L"");
+			s << rowExtents;
+			node->addAttribute(L"table-rowsspanned", s.str());
+		}
+	}
+
+	IUnknown** headerCells;
+	long nHeaderCells;
+	IAccessible2* headerCellPacc = NULL;
+	int headerCellDocHandle, headerCellID;
+
+	if ((res = paccTableCell->get_columnHeaderCells(&headerCells, &nHeaderCells)) == S_OK) {
+		DEBUG_MSG(L"IAccessibleTableCell::get_columnHeaderCells succeeded, adding header IDs");
+		s.str(L"");
+		for (int hci = 0; hci < nHeaderCells; hci++) {
+			if ((res = headerCells[hci]->QueryInterface(IID_IAccessible2, (void**)(&headerCellPacc))) != S_OK) {
+				DEBUG_MSG(L"QueryInterface column header cell " << hci << " to IAccessible2 failed with " << res);
+				headerCells[hci]->Release();
+				continue;
+			}
+			headerCells[hci]->Release();
+			if ((res = headerCellPacc->get_windowHandle((HWND*)&headerCellDocHandle)) != S_OK) {
+				DEBUG_MSG("IAccessible2::get_windowHandle on column header cell " << hci << " failed with " << res);
+				headerCellPacc->Release();
+				continue;
+			}
+			headerCellDocHandle = (int)findRealMozillaWindow((HWND)headerCellDocHandle);
+			if ((res = headerCellPacc->get_uniqueID((long*)&headerCellID)) != S_OK) {
+				DEBUG_MSG("IAccessible2::get_uniqueID on column header cell " << hci << " failed with " << res);
+				headerCellPacc->Release();
+				continue;
+			}
+			s << headerCellDocHandle << L"," << headerCellID << L";";
+			headerCellPacc->Release();
+		}
+		if (!s.str().empty())
+			node->addAttribute(L"table-columnheadercells", s.str());
+	}
+
+	if ((res = paccTableCell->get_rowHeaderCells(&headerCells, &nHeaderCells)) == S_OK) {
+		DEBUG_MSG(L"IAccessibleTableCell::get_rowHeaderCells succeeded, adding header IDs");
+		s.str(L"");
+		for (int hci = 0; hci < nHeaderCells; hci++) {
+			if ((res = headerCells[hci]->QueryInterface(IID_IAccessible2, (void**)(&headerCellPacc))) != S_OK) {
+				DEBUG_MSG(L"QueryInterface row header cell " << hci << " to IAccessible2 failed with " << res);
+				headerCells[hci]->Release();
+				continue;
+			}
+			headerCells[hci]->Release();
+			if ((res = headerCellPacc->get_windowHandle((HWND*)&headerCellDocHandle)) != S_OK) {
+				DEBUG_MSG("IAccessible2::get_windowHandle on row header cell " << hci << " failed with " << res);
+				headerCellPacc->Release();
+				continue;
+			}
+			headerCellDocHandle = (int)findRealMozillaWindow((HWND)headerCellDocHandle);
+			if ((res = headerCellPacc->get_uniqueID((long*)&headerCellID)) != S_OK) {
+				DEBUG_MSG("IAccessible2::get_uniqueID on row header cell " << hci << " failed with " << res);
+				headerCellPacc->Release();
+				continue;
+			}
+			s << headerCellDocHandle << L"," << headerCellID << L";";
+			headerCellPacc->Release();
+		}
+		if (!s.str().empty())
+			node->addAttribute(L"table-rowheadercells", s.str());
+	}
+}
+
+VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IAccessibleTable* paccTable=NULL, IAccessibleTable2* paccTable2=NULL, long tableID=0) {
 	int res;
 	DEBUG_MSG(L"Entered fillVBuf, with pacc at "<<pacc<<L", parentNode at "<<parentNode<<L", previousNode "<<previousNode);
 	assert(buffer); //buffer can't be NULL
@@ -303,112 +437,45 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	}
 	// Handle table cell information.
 	IAccessibleTableCell* paccTableCell = NULL;
+	map<wstring,wstring>::const_iterator IA2AttribsMapIt;
 	// If paccTable is not NULL, it is the table interface for the table above this object.
-	if (paccTable && (res = pacc->QueryInterface(IID_IAccessibleTableCell, (void**)(&paccTableCell))) == S_OK) {
+	if ((paccTable2 || paccTable) && (
+		(res = pacc->QueryInterface(IID_IAccessibleTableCell, (void**)(&paccTableCell))) == S_OK || // IAccessibleTable2
+		(IA2AttribsMapIt = IA2AttribsMap.find(L"table-cell-index")) != IA2AttribsMap.end() // IAccessibleTable
+	)) {
 		wostringstream s;
 		// tableID is the IAccessible2::uniqueID for paccTable.
 		s << tableID;
 		parentNode->addAttribute(L"table-id", s.str());
-		s.str(L"");
-		long row, column, rowExtents, columnExtents;
-		boolean isSelected;
-		if ((res = paccTableCell->get_rowColumnExtents(&row, &column, &rowExtents, &columnExtents, &isSelected)) == S_OK) {
-			DEBUG_MSG(L"IAccessibleTableCell::get_rowColumnExtents succeeded, adding attributes");
-			s << row + 1;
-			parentNode->addAttribute(L"table-rownumber", s.str());
-			s.str(L"");
-			s << column + 1;
-			parentNode->addAttribute(L"table-columnnumber", s.str());
-			if (columnExtents > 1) {
-				s.str(L"");
-				s << columnExtents;
-				parentNode->addAttribute(L"table-columnsspanned", s.str());
-			}
-			if (rowExtents > 1) {
-				s.str(L"");
-				s << rowExtents;
-				parentNode->addAttribute(L"table-rowsspanned", s.str());
-			}
-		}
-		IUnknown** headerCells;
-		long nHeaderCells;
-		IAccessible2* headerCellPacc = NULL;
-		int headerCellDocHandle, headerCellID;
-		if ((res = paccTableCell->get_columnHeaderCells(&headerCells, &nHeaderCells)) == S_OK) {
-			DEBUG_MSG(L"IAccessibleTableCell::get_columnHeaderCells succeeded, adding header IDs");
-			s.str(L"");
-			for (int hci = 0; hci < nHeaderCells; hci++) {
-				if ((res = headerCells[hci]->QueryInterface(IID_IAccessible2, (void**)(&headerCellPacc))) != S_OK) {
-					DEBUG_MSG(L"QueryInterface column header cell " << hci << " to IAccessible2 failed with " << res);
-					headerCells[hci]->Release();
-					continue;
-				}
-				headerCells[hci]->Release();
-				if ((res = headerCellPacc->get_windowHandle((HWND*)&headerCellDocHandle)) != S_OK) {
-					DEBUG_MSG("IAccessible2::get_windowHandle on column header cell " << hci << " failed with " << res);
-					headerCellPacc->Release();
-					continue;
-				}
-				headerCellDocHandle = (int)findRealMozillaWindow((HWND)headerCellDocHandle);
-				if ((res = headerCellPacc->get_uniqueID((long*)&headerCellID)) != S_OK) {
-					DEBUG_MSG("IAccessible2::get_uniqueID on column header cell " << hci << " failed with " << res);
-					headerCellPacc->Release();
-					continue;
-				}
-				s << headerCellDocHandle << L"," << headerCellID << L";";
-				headerCellPacc->Release();
-			}
-			if (!s.str().empty())
-				parentNode->addAttribute(L"table-columnheadercells", s.str());
-		}
-		if ((res = paccTableCell->get_rowHeaderCells(&headerCells, &nHeaderCells)) == S_OK) {
-			DEBUG_MSG(L"IAccessibleTableCell::get_rowHeaderCells succeeded, adding header IDs");
-			s.str(L"");
-			for (int hci = 0; hci < nHeaderCells; hci++) {
-				if ((res = headerCells[hci]->QueryInterface(IID_IAccessible2, (void**)(&headerCellPacc))) != S_OK) {
-					DEBUG_MSG(L"QueryInterface row header cell " << hci << " to IAccessible2 failed with " << res);
-					headerCells[hci]->Release();
-					continue;
-				}
-				headerCells[hci]->Release();
-				if ((res = headerCellPacc->get_windowHandle((HWND*)&headerCellDocHandle)) != S_OK) {
-					DEBUG_MSG("IAccessible2::get_windowHandle on row header cell " << hci << " failed with " << res);
-					headerCellPacc->Release();
-					continue;
-				}
-				headerCellDocHandle = (int)findRealMozillaWindow((HWND)headerCellDocHandle);
-				if ((res = headerCellPacc->get_uniqueID((long*)&headerCellID)) != S_OK) {
-					DEBUG_MSG("IAccessible2::get_uniqueID on row header cell " << hci << " failed with " << res);
-					headerCellPacc->Release();
-					continue;
-				}
-				s << headerCellDocHandle << L"," << headerCellID << L";";
-				headerCellPacc->Release();
-			}
-			if (!s.str().empty())
-				parentNode->addAttribute(L"table-rowheadercells", s.str());
-		}
-		paccTableCell->Release();
-		paccTableCell = NULL;
+		if (res == S_OK) {
+			// IAccessibleTable2
+			fillTableCellInfo_IATable2(parentNode, paccTableCell);
+			paccTableCell->Release();
+			paccTableCell = NULL;
+		} else // IAccessibleTable
+			fillTableCellInfo_IATable(parentNode, paccTable, IA2AttribsMapIt->second);
 		// We're now within a cell, so descendant nodes shouldn't refer to this table anymore.
 		paccTable = NULL;
+		paccTable2 = NULL;
 		tableID = 0;
 	}
 	// Handle table information.
 	// Don't release the table unless it was created in this call.
 	bool releaseTable = false;
-	map<wstring,wstring>::const_iterator IA2AttribsMapIt;
 	// If paccTable is not NULL, we're within a table but not yet within a cell, so don't bother to query for table info.
-	if (!paccTable) {
+	if (!paccTable2 && !paccTable) {
 		// Try to get table information.
 		DEBUG_MSG(L"paccTable is NULL, trying to get table information");
-		DEBUG_MSG(L"get paccTable with IAccessible2::QueryInterface and IID_IAccessibleTable2");
-		if((res=pacc->QueryInterface(IID_IAccessibleTable2,(void**)(&paccTable)))!=S_OK&&res!=E_NOINTERFACE) {
+		if((res=pacc->QueryInterface(IID_IAccessibleTable2,(void**)(&paccTable2)))!=S_OK&&res!=E_NOINTERFACE) {
+			DEBUG_MSG(L"pacc->QueryInterface, with IID_IAccessibleTable2, returned "<<res);
+			paccTable2=NULL;
+		}
+		if(!paccTable2&&(res=pacc->QueryInterface(IID_IAccessibleTable,(void**)(&paccTable)))!=S_OK&&res!=E_NOINTERFACE) {
 			DEBUG_MSG(L"pacc->QueryInterface, with IID_IAccessibleTable, returned "<<res);
 			paccTable=NULL;
 		}
-		DEBUG_MSG(L"paccTable is "<<paccTable);
-		if (paccTable) {
+		DEBUG_MSG(L"paccTable2 is "<<paccTable2<<", paccTable is "<<paccTable);
+		if (paccTable2||paccTable) {
 			// We did the QueryInterface for paccTable, so we must release it after all calls that use it are done.
 			releaseTable = true;
 			// This is a table, so add its information as attributes.
@@ -421,19 +488,10 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 			s << ID;
 			parentNode->addAttribute(L"table-id", s.str());
 			s.str(L"");
-			long count = 0;
-			DEBUG_MSG(L"Getting row count");
-			if ((res = paccTable->get_nRows(&count)) == S_OK) {
-				DEBUG_MSG(L"row count is " << count);
-				s << count;
-				parentNode->addAttribute(L"table-rowcount", s.str());
-				s.str(L"");
-			}
-			if ((res = paccTable->get_nColumns(&count)) == S_OK) {
-				DEBUG_MSG(L"column count is " << count);
-				s << count;
-				parentNode->addAttribute(L"table-columncount", s.str());
-			}
+			if(paccTable2)
+				fillTableCounts<IAccessibleTable2>(parentNode, pacc, paccTable2);
+			else
+				fillTableCounts<IAccessibleTable>(parentNode, pacc, paccTable);
 			// Add the table summary if one is present and the table is visible.
 			if (name && width > 0 && height > 0 && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
 				previousNode = tempNode;
@@ -590,7 +648,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 					if(childDefaction) SysFreeString(childDefaction);
 					#endif
 					DEBUG_MSG(L"calling fillVBuf with childPacc ");
-					if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,tableID))!=NULL) {
+					if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,paccTable2,tableID))!=NULL) {
 						previousNode=tempNode;
 					} else {
 						DEBUG_MSG(L"Error in fillVBuf");
@@ -644,7 +702,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 						}
 						if(childPacc) {
 							DEBUG_MSG(L"calling _filVBufHelper with child object ");
-							if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,tableID))!=NULL) {
+							if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,paccTable2,tableID))!=NULL) {
 								previousNode=tempNode;
 							} else {
 								DEBUG_MSG(L"Error in calling fillVBuf");
@@ -729,8 +787,11 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 		paccHypertext->Release();
 	}
 	if (releaseTable) {
-		DEBUG_MSG(L"Release paccTable");
-		paccTable->Release();
+		DEBUG_MSG(L"Release paccTable/paccTable2");
+		if(paccTable2)
+			paccTable2->Release();
+		else
+			paccTable->Release();
 	}
 	DEBUG_MSG(L"Returning node at "<<parentNode);
 	return parentNode;
