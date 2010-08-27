@@ -372,7 +372,7 @@ If it is accessible, you can then tab around it and interact with it like any ot
 A key command is provided to return to the original page containing the embedded object:
 %kc:beginInclude
 || Name | Key | Description |
-| Move to containing  virtual buffer | NVDA+control+space | Moves the focus out of the current embedded object and in to the virtual buffer  that contains it |
+| Move to containing  virtual buffer | NVDA+control+space | Moves the focus out of the current embedded object and into the virtual buffer  that contains it |
 %kc:endInclude
 
 + Configuring NVDA +
@@ -738,7 +738,7 @@ To add a new rule to the dictionary, press the Add button, and fill in the field
 You will then see your new rule in the list of rules.
 However to make sure your rule is actually saved, make sure to press Ok to exit the dictionary dialog all together once you have finished adding/editing rules.
 
-The rules for NVDA's speech dictionaries allow you to change one string of characters in to another.
+The rules for NVDA's speech dictionaries allow you to change one string of characters into another.
 A simple example would be that you want to have NVDA say the word frog each time it is supposed to say the word bird.
 In the Add rule dialog, the easiest way to do this is to type the word bird in the Pattern field, and the word frog in the Replacement field.
 You may also want to type a description of the rule in the Comment field (something like: changes bird to frog).
@@ -762,7 +762,7 @@ If you ever make a mistake with your settings and need to revert back to the sav
 The following NVDA key commands are also useful:
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Description |
-| Save configuration | NVDA+control+c | NVDA+control+c | Saves your current configuation so that it is not lost when you exit NVDA |
+| Save configuration | NVDA+control+c | NVDA+control+c | Saves your current configuration so that it is not lost when you exit NVDA |
 | Revert to saved configuration | NVDA+control+r | NVDA+control+r | Restores NVDA to the settings that existed when you last saved NVDA's configuration |
 %kc:endInclude
 
@@ -775,7 +775,7 @@ To get to your settings directory for an installed version of NVDA, on the start
 
 Settings for NVDA when running on the logon or UAC screens is stored in the systemConfig directory in NVDA's installation directory.
 Usually this configuration should not be touched.
-To change how NVDA is configured on the logon/UAC screens, configure NVDA to how you wish  while logged in to Windows, and then instruct NVDA to copy the configuration to the logon screen by using the button in the General settings dialog.
+To change how NVDA is configured on the logon/UAC screens, configure NVDA to how you wish  while logged into Windows, and then instruct NVDA to copy the configuration to the logon screen by using the button in the General settings dialog.
 
 + Extra Tools +
 
@@ -807,9 +807,9 @@ This site also provides information and resources concerning NVDA development.
 This section contains information about the speech synthesizers  supported by NVDA.
 
 ++ eSpeak ++
-The [eSpeak http://espeak.sourceforge.net/] synthesizer is built directly in to NVDA and does not require any other special drivers or components to be installed.
+The [eSpeak http://espeak.sourceforge.net/] synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
 NVDA starts using eSpeak by default.
-As this synthesizer is built in to NVDA, this is a great choice for when running NVDA off a USB thumb drive or CD on other systems.
+As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive or CD on other systems.
 
 Each voice that comes with eSpeak speaks a different language.
 There are over 20 different languages supported by eSpeak.
