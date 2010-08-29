@@ -1,11 +1,11 @@
 # Suomenkielinen lokalisointi NVDA:lle
-# Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
+# Copyright (C) 2006-2010 NVDA:n tekijät <http://www.nvda-project.org/>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3699\n"
+"Project-Id-Version: r3790\n"
 "POT-Creation-Date: 2007-03-04 15:37+Normaaliaika\n"
-"PO-Revision-Date: 2010-08-10 10:06+0300\n"
+"PO-Revision-Date: 2010-08-28 14:21+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr "tuntematon näppäimistöasettelu"
 msgid "layout %s"
 msgstr "näppäimistöasettelu %s"
 
-#: NVDAObjects\IAccessible\__init__.py:1396
+#: NVDAObjects\IAccessible\__init__.py:1391
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
 
@@ -35,9 +35,9 @@ msgstr "%s kohtaa"
 
 #: NVDAObjects\UIA\__init__.py:422
 msgid "invoke"
-msgstr "käynnistä"
+msgstr "avaa"
 
-#: NVDAObjects\behaviors.py:48 appModules\_default.py:791
+#: NVDAObjects\behaviors.py:48 appModules\_default.py:782
 msgid "%d percent"
 msgstr "%d prosenttia"
 
@@ -51,11 +51,11 @@ msgstr "tuntematon"
 
 #: NVDAObjects\window\edit.py:536
 msgid "%s embedded object"
-msgstr "%s upotettu objekti"
+msgstr "%s sulautettu objekti"
 
 #: NVDAObjects\window\edit.py:538 controlTypes.py:243
 msgid "embedded object"
-msgstr "upotettu objekti"
+msgstr "sulautettu objekti"
 
 #: NVDAObjects\window\excel.py:49
 msgid "NVDA Excel Cell Editor"
@@ -92,9 +92,9 @@ msgstr "Virhe sovellusmoduulissa %s"
 
 #: appModules\_default.py:37 appModules\_default.py:155
 #: appModules\_default.py:165 appModules\_default.py:175
-#: appModules\_default.py:185 appModules\_default.py:692
-#: appModules\_default.py:754 appModules\_default.py:764
-#: appModules\_default.py:774 appModules\winamp.py:77 appModules\winamp.py:87
+#: appModules\_default.py:185 appModules\_default.py:683
+#: appModules\_default.py:745 appModules\_default.py:755
+#: appModules\_default.py:765 appModules\winamp.py:77 appModules\winamp.py:87
 #: keyboardHandler.py:55 keyboardHandler.py:57 keyboardHandler.py:59
 #: virtualBuffers\__init__.py:696
 msgid "on"
@@ -102,9 +102,9 @@ msgstr "päällä"
 
 #: appModules\_default.py:40 appModules\_default.py:152
 #: appModules\_default.py:162 appModules\_default.py:172
-#: appModules\_default.py:182 appModules\_default.py:570
-#: appModules\_default.py:689 appModules\_default.py:751
-#: appModules\_default.py:761 appModules\_default.py:771
+#: appModules\_default.py:182 appModules\_default.py:561
+#: appModules\_default.py:680 appModules\_default.py:742
+#: appModules\_default.py:752 appModules\_default.py:762
 #: appModules\winamp.py:79 appModules\winamp.py:89 gui\settingsDialogs.py:532
 #: keyboardHandler.py:55 keyboardHandler.py:57 keyboardHandler.py:59
 #: virtualBuffers\__init__.py:696
@@ -139,7 +139,7 @@ msgstr "vasen napsautus"
 #: appModules\_default.py:65
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr ""
-"Napsauttaa kerran hiiren vasenta näppäintä hiiren nykyisessä sijainnissa"
+"Napsauttaa kerran hiiren vasenta painiketta hiiren nykyisessä sijainnissa"
 
 #: appModules\_default.py:68
 msgid "right click"
@@ -148,37 +148,37 @@ msgstr "oikea napsautus"
 #: appModules\_default.py:71
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr ""
-"Napsauttaa kerran hiiren oikeaa näppäintä hiiren nykyisessä sijainnissa"
+"Napsauttaa kerran hiiren oikeaa painiketta hiiren nykyisessä sijainnissa"
 
 #: appModules\_default.py:75
 msgid "left mouse button unlock"
-msgstr "vasen hiirinäppäin vapautettu"
+msgstr "vasen hiiripainike vapautettu"
 
 #: appModules\_default.py:78
 msgid "left mouse button lock"
-msgstr "vasen hiirinäppäin lukittu"
+msgstr "vasen hiiripainike lukittu"
 
 #: appModules\_default.py:80
 msgid "Locks or unlocks the left mouse button"
-msgstr "Lukitsee tai vapauttaa vasemman hiirinäppäimen"
+msgstr "Lukitsee tai vapauttaa vasemman hiiripainikkeen"
 
 #: appModules\_default.py:84
 msgid "right mouse button unlock"
-msgstr "oikea hiirinäppäin vapautettu"
+msgstr "oikea hiiripainike vapautettu"
 
 #: appModules\_default.py:87
 msgid "right mouse button lock"
-msgstr "oikea hiirinäppäin lukittu"
+msgstr "oikea hiiripainike lukittu"
 
 #: appModules\_default.py:89
 msgid "Locks or unlocks the right mouse button"
-msgstr "Lukitsee tai vapauttaa oikean hiirinäppäimen"
+msgstr "Lukitsee tai vapauttaa oikean hiiripainikkeen"
 
 #: appModules\_default.py:101 cursorManager.py:229
 msgid "no selection"
 msgstr "ei valintaa"
 
-#: appModules\_default.py:103 compoundDocuments.py:354 speech.py:284
+#: appModules\_default.py:103 compoundDocuments.py:395 speech.py:284
 #: speech.py:381 speech.py:394 virtualBuffers\__init__.py:600
 msgid "selected %s"
 msgstr "valittu %s"
@@ -283,7 +283,8 @@ msgstr "Siirrä navigointiobjekti hiiren kohdalle"
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
-msgstr "Asettaa navigointiobjektin hiiren alla olevaan objektiin ja lukee sen"
+msgstr ""
+"Siirtää navigointiobjektin hiiren alla olevaan objektiin ja lukee sen"
 
 #: appModules\_default.py:229
 msgid "No flat review for this object"
@@ -295,8 +296,8 @@ msgid ""
 "and positions the review cursor at the location of the current object"
 msgstr ""
 "Ottaa käyttöön tasatun tarkastelun tilan, jossa koko ruutua tai "
-"asiakirjaa on mahdollista tarkastella, ja sijoittaa tarkastelukohdistimen "
-"nykyisen objektin kohdalle"
+"asiakirjaa on mahdollista lukea, ja sijoittaa tarkastelukohdistimen nykyisen "
+"objektin kohdalle"
 
 #: appModules\_default.py:242
 msgid "No object at flat review position"
@@ -307,17 +308,17 @@ msgid ""
 "Moves to the object represented by the text at the position of the review "
 "cursor within flat review"
 msgstr ""
-"Siirtää siihen objektiin, joka sisältää tekstin, jota tarkastellaan "
-"tasatun tarkastelun tilassa"
+"Siirtää siihen objektiin, joka sisältää tekstin, jota luetaan tasatun "
+"tarkastelun tilassa"
 
 #: appModules\_default.py:248 appModules\_default.py:282
-#: appModules\_default.py:318 appModules\_default.py:332
-#: appModules\_default.py:346 appModules\_default.py:360
-#: appModules\_default.py:374
+#: appModules\_default.py:320 appModules\_default.py:334
+#: appModules\_default.py:348 appModules\_default.py:362
+#: appModules\_default.py:376
 msgid "no navigator object"
 msgstr "ei navigointiobjektia"
 
-#: appModules\_default.py:274 appModules\_default.py:711
+#: appModules\_default.py:274 appModules\_default.py:702
 msgid "%s copied to clipboard"
 msgstr "%s kopioitu leikepöydälle"
 
@@ -326,7 +327,7 @@ msgid ""
 "Reports the current navigator object or, if pressed three times, Copies name "
 "and value of current navigator object to the clipboard"
 msgstr ""
-"Ilmoittaa nykyisen navigointiobjektin, tai kolmesti painettaessa kopioi sen "
+"Ilmoittaa nykyisen navigointiobjektin, tai kolmasti painettaessa kopioi sen "
 "nimen ja arvon leikepöydälle"
 
 #: appModules\_default.py:285
@@ -351,32 +352,35 @@ msgstr ""
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "Ilmoittaa nykyisen navigointiobjektin korkeuden, leveyden ja sijainnin"
 
-#: appModules\_default.py:301 appModules\_default.py:310
-#: appModules\_default.py:670
-msgid "no focus"
-msgstr "ei kohdistusta"
-
-#: appModules\_default.py:303
+#: appModules\_default.py:305
 msgid "move to focus"
 msgstr "siirrä kohdistukseen"
 
-#: appModules\_default.py:305
-msgid "Sets the navigator object to the current focus"
-msgstr "Siirtää navigointiobjektin nykyisen kohdistuksen kohdalle"
+#: appModules\_default.py:307
+msgid ""
+"Sets the navigator object to the current focus, and the review cursor to the "
+"position of the caret inside it, if possible."
+msgstr ""
+"Siirtää navigointiobjektin nykyiseen kohdistukseen ja "
+"tarkastelukohdistimensiinä olevan kohdistimen kohdalle, mikäli mahdollista."
 
-#: appModules\_default.py:312
+#: appModules\_default.py:312 appModules\_default.py:661
+msgid "no focus"
+msgstr "ei kohdistusta"
+
+#: appModules\_default.py:314
 msgid "move focus"
 msgstr "siirrä kohdistus"
 
-#: appModules\_default.py:313
+#: appModules\_default.py:315
 msgid "Sets the keyboard focus to the navigator object"
 msgstr "Siirtää kohdistuksen navigointiobjektiin"
 
-#: appModules\_default.py:326
+#: appModules\_default.py:328
 msgid "No parents"
 msgstr "Ei ylemmän tason objekteja"
 
-#: appModules\_default.py:327
+#: appModules\_default.py:329
 msgid ""
 "Sets the navigator object to the parent of the object it is currently on and "
 "speaks it"
@@ -384,11 +388,11 @@ msgstr ""
 "Siirtää navigointiobjektin ylemmän tason objektiin siitä objektista, "
 "jossa se on tällä hetkellä ja lukee sen."
 
-#: appModules\_default.py:340
+#: appModules\_default.py:342
 msgid "No next"
 msgstr "Ei seuraavaa"
 
-#: appModules\_default.py:341
+#: appModules\_default.py:343
 msgid ""
 "Sets the navigator object to the object next to the one it is currently on "
 "and speaks it"
@@ -396,11 +400,11 @@ msgstr ""
 "Siirtää navigointiobjektin nykyisestä objektista seuraavana olevaan "
 "objektiin ja lukee sen"
 
-#: appModules\_default.py:354
+#: appModules\_default.py:356
 msgid "No previous"
 msgstr "Ei edellistä"
 
-#: appModules\_default.py:355
+#: appModules\_default.py:357
 msgid ""
 "Sets the navigator object to the object previous to the one it is currently "
 "on and speaks it"
@@ -408,11 +412,11 @@ msgstr ""
 "Siirtää navigointiobjektin nykyistä objektia edeltävään objektiin ja "
 "lukee sen"
 
-#: appModules\_default.py:368
+#: appModules\_default.py:370
 msgid "No children"
 msgstr "Ei alemman tason objekteja"
 
-#: appModules\_default.py:369
+#: appModules\_default.py:371
 msgid ""
 "Sets the navigator object to the first child object of the one it is "
 "currently on and speaks it"
@@ -420,28 +424,28 @@ msgstr ""
 "Siirtää navigointiobjektin ensimmäiseen alemman tason objektiin siitä "
 "objektista, jossa se on tällä hetkellä ja lukee sen"
 
-#: appModules\_default.py:379
+#: appModules\_default.py:381
 msgid "No default action"
 msgstr "Ei oletustoimintoa"
 
-#: appModules\_default.py:384
+#: appModules\_default.py:386
 msgid "default action failed"
 msgstr "Oletustoiminto epäonnistui"
 
-#: appModules\_default.py:387
+#: appModules\_default.py:389
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
 msgstr ""
-"Suorittaa oletustoiminnon nykyiselle navigointiobjektille (esimerkiksi: "
-"painaa, jos se on painike)"
+"Suorittaa oletustoiminnon nykyiselle navigointiobjektille (painaa "
+"esimerkiksi painiketta)"
 
-#: appModules\_default.py:393 appModules\_default.py:405
-#: appModules\_default.py:446
+#: appModules\_default.py:395 appModules\_default.py:407
+#: appModules\_default.py:448
 msgid "top"
 msgstr "yläreuna"
 
-#: appModules\_default.py:395
+#: appModules\_default.py:397
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
@@ -449,7 +453,7 @@ msgstr ""
 "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin ylimmälle "
 "riville ja lukee sen"
 
-#: appModules\_default.py:407
+#: appModules\_default.py:409
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
@@ -457,20 +461,20 @@ msgstr ""
 "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edelliselle "
 "riville ja lukee sen"
 
-#: appModules\_default.py:416
+#: appModules\_default.py:418
 msgid ""
 "Reports the line of the current navigator object where the review cursor is "
 "situated. If this key is pressed twice, the current line will be spelled"
 msgstr ""
 "Lukee nykyisen navigointiobjektin rivin, jolla tarkastelukohdistin on. Jos "
-"tätä näppäintä painetaan kahdesti, nykyinen rivi tavataan"
+"tätä näppäintä painetaan kahdesti, rivi tavataan"
 
-#: appModules\_default.py:426 appModules\_default.py:434
-#: appModules\_default.py:467
+#: appModules\_default.py:428 appModules\_default.py:436
+#: appModules\_default.py:469
 msgid "bottom"
 msgstr "alareuna"
 
-#: appModules\_default.py:428
+#: appModules\_default.py:430
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
@@ -478,7 +482,7 @@ msgstr ""
 "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavalle "
 "riville ja lukee sen"
 
-#: appModules\_default.py:436
+#: appModules\_default.py:438
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
@@ -486,7 +490,7 @@ msgstr ""
 "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin alimmalle "
 "riville ja lukee sen"
 
-#: appModules\_default.py:448
+#: appModules\_default.py:450
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
@@ -494,7 +498,7 @@ msgstr ""
 "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edellisen sanan "
 "kohdalle ja lukee sen"
 
-#: appModules\_default.py:457
+#: appModules\_default.py:459
 msgid ""
 "Speaks the word of the current navigator object where the review cursor is "
 "situated. If this key is pressed twice, the word will be spelled"
@@ -503,7 +507,7 @@ msgstr ""
 "navigointiobjektissa. Jos tätä näppäintä painetaan kahdesti, sana "
 "tavataan"
 
-#: appModules\_default.py:469
+#: appModules\_default.py:471
 msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
@@ -511,12 +515,12 @@ msgstr ""
 "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavan sanan "
 "kohdalle ja lukee sen"
 
-#: appModules\_default.py:477 appModules\_default.py:489
+#: appModules\_default.py:479 appModules\_default.py:491
 #: appModules\totalcmd.py:35
 msgid "left"
 msgstr "vasen"
 
-#: appModules\_default.py:479
+#: appModules\_default.py:481
 msgid ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
@@ -524,7 +528,7 @@ msgstr ""
 "Siirtää tarkastelukohdistimen sen kohdalla olevan rivin ensimmäiseen "
 "merkkiin nykyisessä navigointiobjektissa ja lukee sen"
 
-#: appModules\_default.py:497
+#: appModules\_default.py:499
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
@@ -532,7 +536,7 @@ msgstr ""
 "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edellisen merkin "
 "kohdalle ja lukee sen"
 
-#: appModules\_default.py:511
+#: appModules\_default.py:513
 msgid ""
 "Reports the character of the current navigator object where the review "
 "cursor is situated. If this key is pressed twice, ascii and hexadecimal "
@@ -542,12 +546,12 @@ msgstr ""
 "navigointiobjektissa. Jos tätä näppäintä painetaan kahdesti, merkin "
 "ASCII- ja heksadesimaaliarvot luetaan"
 
-#: appModules\_default.py:521 appModules\_default.py:538
+#: appModules\_default.py:523 appModules\_default.py:540
 #: appModules\totalcmd.py:37
 msgid "right"
 msgstr "oikea"
 
-#: appModules\_default.py:529
+#: appModules\_default.py:531
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
@@ -555,7 +559,7 @@ msgstr ""
 "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavan sanan "
 "kohdalle ja lukee sen"
 
-#: appModules\_default.py:540
+#: appModules\_default.py:542
 msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
@@ -563,23 +567,11 @@ msgstr ""
 "Siirtää tarkastelukohdistimen sen kohdalla olevan rivin viimeiseen "
 "merkkiin nykyisessä navigointiobjektissa ja lukee sen"
 
-#: appModules\_default.py:546
-msgid "No caret"
-msgstr "Ei järjestelmäkohdistinta"
-
-#: appModules\_default.py:551
-msgid ""
-"Moves the review cursor to the position of the system caret, in the current "
-"navigator object"
-msgstr ""
-"Siirtää tarkastelukohdistimen järjestelmäkohdistimen kohdalle nykyisessä"
-" navigointiobjektissa"
-
-#: appModules\_default.py:558
+#: appModules\_default.py:549
 msgid "no caret"
 msgstr "ei kohdistinta"
 
-#: appModules\_default.py:563
+#: appModules\_default.py:554
 msgid ""
 "Moves the system caret to the position of the review cursor , in the current "
 "navigator object"
@@ -587,34 +579,34 @@ msgstr ""
 "Siirtää järjestelmäkohdistimen tarkastelukohdistimen kohdalle nykyisessä"
 " navigointiobjektissa"
 
-#: appModules\_default.py:572
+#: appModules\_default.py:563
 msgid "beeps"
 msgstr "äänimerkit"
 
-#: appModules\_default.py:574
+#: appModules\_default.py:565
 msgid "talk"
 msgstr "puhe"
 
-#: appModules\_default.py:576
+#: appModules\_default.py:567
 msgid "speech mode %s"
 msgstr "puhetila on %s"
 
-#: appModules\_default.py:578
+#: appModules\_default.py:569
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
-"Vaihtaa puhetilojen puhe, äänimerkit ja pois käytöstä välillä. Kun "
-"puhetila on pois käytöstä, NVDA ei puhu mitään. Jos äänimerkit, NVDA "
-"antaa äänimerkin, kun sen otaksutaan puhuvan jotakin. Jos puhe, NVDA puhuu "
+"Vaihtaa kolmen eri puhetilan välillä, jotka ovat puhe, äänimerkit ja "
+"pois. Kun puhetila on pois, NVDA ei puhu mitään. Jos äänimerkit, NVDA "
+"antaa äänimerkin, kun sen pitäisi puhua jotakin. Jos puhe, NVDA puhuu "
 "normaalisti."
 
-#: appModules\_default.py:594
+#: appModules\_default.py:585
 msgid "Moves the focus to the next closest document that contains the focus"
-msgstr "Siirtyy lähimpään kohdistuksen sisältävään dokumenttiin"
+msgstr "Siirtyy lähimpään kohdistuksen sisältävään asiakirjaan"
 
-#: appModules\_default.py:606
+#: appModules\_default.py:597
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
 "pass straight through to the application, allowing you to interact directly "
@@ -622,110 +614,111 @@ msgid ""
 "cursor, quick navigation keys, etc."
 msgstr ""
 "Vaihtaa selaus- ja kohdistustilojen välillä. Kohdistustilassa näppäinten "
-"painallukset välitetään suoraan nykyiselle sovellukselle, joka "
+"painallukset välitetään suoraan nykyiselle sovellukselle, mikä "
 "mahdollistaa suoran vuorovaikutuksen säädinten kanssa. Selaustilassa voit "
-"liikkua dokumentissa kohdistimella, pikanavigointinäppäimillä jne."
+"liikkua asiakirjassa kohdistimella, pikanavigointinäppäimillä jne."
 
-#: appModules\_default.py:610
+#: appModules\_default.py:601
 msgid "Quits NVDA!"
 msgstr "Sulkee NVDA:n"
 
-#: appModules\_default.py:614
+#: appModules\_default.py:605
 msgid "Shows the NVDA menu"
 msgstr "Avaa NVDA-valikon"
 
-#: appModules\_default.py:619
+#: appModules\_default.py:610
 msgid ""
 "reads from the review cursor  up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
 "Lukee nykyisen tekstin loppuun saakka tarkastelukohdistimesta lähtien "
-"siirtäen samalla tarkastelukohdistinta"
+"siirtäen samalla sitä"
 
-#: appModules\_default.py:631
+#: appModules\_default.py:622
 msgid ""
 "reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
 "Lukee nykyisen tekstin loppuun saakka järjestelmäkohdistimesta lähtien "
-"siirtäen samalla kohdistinta"
+"siirtäen samalla sitä"
 
-#: appModules\_default.py:657
+#: appModules\_default.py:648
 msgid "No formatting information"
 msgstr "Ei muotoilutietoja"
 
-#: appModules\_default.py:660
+#: appModules\_default.py:651
 msgid ""
 "Reports formatting info for the current cursor position within a document"
-msgstr "Lukee dokumentin muotoilutiedot kohdistimen nykyisestä paikasta"
+msgstr "Lukee asiakirjan muotoilutiedot kohdistimen nykyisestä paikasta"
 
-#: appModules\_default.py:671
+#: appModules\_default.py:662
 msgid "reports the object with focus"
 msgstr "ilmoittaa objektin, jossa kohdistus on"
 
-#: appModules\_default.py:676
+#: appModules\_default.py:667
 msgid "no status bar found"
 msgstr "tilariviä ei löydy"
 
-#: appModules\_default.py:685
+#: appModules\_default.py:676
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr ""
 "Lukee nykyisen sovelluksen tilarivin ja siirtää navigointiobjektin sen "
 "kohdalle"
 
-#: appModules\_default.py:694
+#: appModules\_default.py:685
 msgid "Mouse tracking"
 msgstr "Hiiren seuranta"
 
-#: appModules\_default.py:695
+#: appModules\_default.py:686
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr ""
 "Ottaa käyttöön tai poistaa käytöstä tietojen lukemisen hiiren "
 "liikkuessa"
 
-#: appModules\_default.py:703
+#: appModules\_default.py:694
 msgid "no title"
 msgstr "ei nimeä"
 
-#: appModules\_default.py:712
+#: appModules\_default.py:703
 msgid ""
 "Reports the title of the current application or foreground window. If "
 "pressed twice, spells the title. If pressed thrice, copies the title to the "
 "clipboard"
 msgstr ""
-"Lukee nykyisen sovelluksen tai ikkunan nimen. Kahdesti painettaessa nimi "
-"tavataan, kolmesti painettaessa se kopioidaan leikepöydälle."
+"Lukee nykyisen sovelluksen taietualalla olevan ikkunan nimen. Kahdesti "
+"painettaessa nimi tavataan, kolmasti painettaessa se kopioidaan leikepöydä"
+"lle."
 
-#: appModules\_default.py:719
+#: appModules\_default.py:710
 msgid "speaks the current foreground object"
 msgstr "ilmoittaa nykyisen objektin"
 
-#: appModules\_default.py:730
+#: appModules\_default.py:721
 msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
 msgstr ""
 "Kirjaa lokiin kehittäjille hyödyllistä tietoa nykyisestä "
-"navigointiobjektista ja avaa lokinkatselutoiminnon, jossa näitä tietoja "
+"navigointiobjektista ja avaa Näytä loki -toiminnon, jossa näitä tietoja "
 "voidaan tutkia."
 
-#: appModules\_default.py:736
+#: appModules\_default.py:727
 msgid "no progress bar updates"
 msgstr "ei edistymispalkkien päivityksiä"
 
-#: appModules\_default.py:739
+#: appModules\_default.py:730
 msgid "speak progress bar updates"
 msgstr "lue edistymispalkkien päivitykset"
 
-#: appModules\_default.py:742
+#: appModules\_default.py:733
 msgid "beep for progress bar updates"
 msgstr "äänimerkki edistymispalkkien päivityksille"
 
-#: appModules\_default.py:745
+#: appModules\_default.py:736
 msgid "beep and speak progress bar updates"
 msgstr "anna äänimerkki ja lue edistymispalkkien päivitykset"
 
-#: appModules\_default.py:747
+#: appModules\_default.py:738
 msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
@@ -733,11 +726,11 @@ msgstr ""
 "Vaihtaa edistymispalkkien päivityksistä ilmoittamisen asetukseksi ää"
 "nimerkit, puhe, äänimerkit ja puhe tai pois käytöstä"
 
-#: appModules\_default.py:756
+#: appModules\_default.py:747
 msgid "report dynamic content changes"
 msgstr "ilmoita dynaamisen sisällön muutokset"
 
-#: appModules\_default.py:757
+#: appModules\_default.py:748
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
@@ -745,162 +738,162 @@ msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä dynaamisen sisällön, kuten uuden "
 "tekstin DOS-ikkunoissa, muutoksista ilmoittamisen"
 
-#: appModules\_default.py:766
+#: appModules\_default.py:757
 msgid "caret moves review cursor"
 msgstr "järjestelmäkohdistin siirtää tarkastelukohdistinta"
 
-#: appModules\_default.py:767
+#: appModules\_default.py:758
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä tarkastelukohdistimen siirtämisen "
 "järjestelmäkohdistimen mukaan."
 
-#: appModules\_default.py:776
+#: appModules\_default.py:767
 msgid "focus moves navigator object"
 msgstr "kohdistus siirtää navigointiobjektia"
 
-#: appModules\_default.py:777
+#: appModules\_default.py:768
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä navigointiobjektin siirtämisen "
 "kohdistusmuutosten mukaan"
 
-#: appModules\_default.py:789
+#: appModules\_default.py:780
 msgid "no system battery"
 msgstr "järjestelmässä ei akkua"
 
-#: appModules\_default.py:792
+#: appModules\_default.py:783
 msgid "AC power on"
 msgstr "verkkovirta käytössä"
 
-#: appModules\_default.py:794
+#: appModules\_default.py:785
 msgid "%d hours and %d minutes remaining"
 msgstr "%d tuntia ja %d minuuttia jäljellä"
 
-#: appModules\_default.py:796
+#: appModules\_default.py:787
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "Ilmoittaa akun varauksen ja jäljellä olevan ajan, jos verkkovirta ei ole "
 "käytössä"
 
-#: appModules\_default.py:800
+#: appModules\_default.py:791
 msgid "Pass next key through"
 msgstr "Välitä seuraava näppäinpainallus"
 
-#: appModules\_default.py:801
+#: appModules\_default.py:792
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
 msgstr ""
-"NVDA ei käsittele tämän komennon jälkeen painettua näppäintä, vaan se "
-"välitetään suoraan Windowsin käsiteltäväksi."
+"NVDA ei käsittele lainkaan seuraavaksi painettua näppäintä, vaan se "
+"välitetään suoraan Windowsille."
 
-#: appModules\_default.py:806
+#: appModules\_default.py:797
 msgid "Currently running application is %s"
 msgstr "Nykyinen sovellus on %s"
 
-#: appModules\_default.py:809
+#: appModules\_default.py:800
 msgid " and currently loaded module is %s"
 msgstr " ja ladattu moduuli on %s"
 
-#: appModules\_default.py:811
+#: appModules\_default.py:802
 msgid ""
 "Speaks the filename of the active application along with the name of the "
 "currently loaded appModule"
 msgstr "Lukee aktiivisen sovelluksen tiedostonimen ja ladatun sovellusmoduulin"
 
-#: appModules\_default.py:815
+#: appModules\_default.py:806
 msgid "Shows the NVDA general settings dialog"
 msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n yleisiä asetuksia"
 
-#: appModules\_default.py:819
+#: appModules\_default.py:810
 msgid "Shows the NVDA synthesizer dialog"
 msgstr ""
 "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n käyttämää "
 "puhesyntetisaattoria"
 
-#: appModules\_default.py:823
+#: appModules\_default.py:814
 msgid "Shows the NVDA voice settings dialog"
 msgstr ""
 "Avaa valintaikkunan, jossa voidaan muuttaa käytettävän syntetisaattorin "
 "puheääniasetuksia"
 
-#: appModules\_default.py:827
+#: appModules\_default.py:818
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr ""
 "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n näppäimistöasetuksia"
 
-#: appModules\_default.py:831
+#: appModules\_default.py:822
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n hiiriasetuksia"
 
-#: appModules\_default.py:835
+#: appModules\_default.py:826
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr ""
 "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n objektien lukuasetuksia"
 
-#: appModules\_default.py:839
+#: appModules\_default.py:830
 msgid "Shows the NVDA virtual buffers settings dialog"
 msgstr ""
 "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n näennäispuskureiden "
 "asetuksia"
 
-#: appModules\_default.py:843
+#: appModules\_default.py:834
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr ""
 "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n asiakirjojen "
 "muotoiluasetuksia"
 
-#: appModules\_default.py:847
+#: appModules\_default.py:838
 msgid "Saves the current NVDA configuration"
 msgstr "Tallentaa NVDA:n nykyiset asetukset"
 
-#: appModules\_default.py:851
+#: appModules\_default.py:842
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr "Lataa NVDA:n tallennetut asetukset kumoten nykyiset muutokset"
 
-#: appModules\_default.py:861
+#: appModules\_default.py:852
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Avaa NVDA:n Python-konsolin, hyödyllinen pääasiassa kehittäjille"
 
-#: appModules\_default.py:866 gui\settingsDialogs.py:891
+#: appModules\_default.py:857 gui\settingsDialogs.py:891
 msgid "review"
 msgstr "tarkastelukohdistinta"
 
-#: appModules\_default.py:869 gui\settingsDialogs.py:891
+#: appModules\_default.py:860 gui\settingsDialogs.py:891
 msgid "focus"
 msgstr "kohdistusta"
 
-#: appModules\_default.py:870
+#: appModules\_default.py:861
 msgid "Braille tethered to %s"
 msgstr "Pistenäyttö seuraa %s"
 
-#: appModules\_default.py:871
+#: appModules\_default.py:862
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Muuttaa asetusta, joka saa pistenäytön seuraamaan joko kohdistusta tai "
 "tarkastelukohdistinta"
 
-#: appModules\_default.py:879
+#: appModules\_default.py:870
 msgid "There is no text on the clipboard"
 msgstr "Leikepöydällä ei ole tekstiä"
 
-#: appModules\_default.py:884
+#: appModules\_default.py:875
 msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "Leikepöydällä on paljon tekstiä. Pituus %s merkkiä"
 
-#: appModules\_default.py:885
+#: appModules\_default.py:876
 msgid "Reports the text on the Windows clipboard"
 msgstr "Lukee leikepöydällä olevan tekstin"
 
-#: appModules\_default.py:889
+#: appModules\_default.py:880
 msgid "Start marked"
 msgstr "Tekstilohkon alku merkitty"
 
-#: appModules\_default.py:890
+#: appModules\_default.py:881
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "copied"
@@ -908,23 +901,23 @@ msgstr ""
 "Merkitsee tarkastelukohdistimen nykyisen sijainnin kopioitavan tekstin "
 "alkukohdaksi"
 
-#: appModules\_default.py:894
+#: appModules\_default.py:885
 msgid "No start marker set"
 msgstr "Tekstilohkon alkumerkkiä ei asetettu"
 
-#: appModules\_default.py:898
+#: appModules\_default.py:889
 msgid "The start marker must reside within the same object"
 msgstr "Tekstilohkon alkumerkin on oltava samassa objektissa"
 
-#: appModules\_default.py:903
+#: appModules\_default.py:894
 msgid "Review selection copied to clipboard"
 msgstr "Valittu teksti kopioitu leikepöydälle"
 
-#: appModules\_default.py:905
+#: appModules\_default.py:896
 msgid "No text to copy"
 msgstr "Ei kopioitavaa tekstiä"
 
-#: appModules\_default.py:908
+#: appModules\_default.py:899
 msgid ""
 "Retrieves the text from the previously set start marker up to and including "
 "the current position of the review cursor and copies it to the clipboard"
@@ -1283,7 +1276,7 @@ msgstr "tl"
 
 #: braille.py:89
 msgid "(x)"
-msgstr "<x>"
+msgstr "(x)"
 
 #: braille.py:90
 msgid "sel"
@@ -1295,7 +1288,7 @@ msgstr "alavko"
 
 #: braille.py:94
 msgid "( )"
-msgstr "< >"
+msgstr "( )"
 
 #: braille.py:222 speech.py:679
 msgid "not %s"
@@ -1494,11 +1487,11 @@ msgstr "Huonosti muotoiltu asetustiedosto"
 msgid "%s: %s, defaulting to %s"
 msgstr "%s: %s, käytetään oletusarvoa %s"
 
-#: config\__init__.py:176
+#: config\__init__.py:175
 msgid "Error parsing configuration file: %s"
 msgstr "Virhe jäsenneltäessä asetustiedostoa: %s"
 
-#: config\__init__.py:183
+#: config\__init__.py:182
 msgid ""
 "Errors in configuration file '%s':\n"
 "%s"
@@ -1548,7 +1541,7 @@ msgstr "valikkorivi"
 
 #: controlTypes.py:190
 msgid "menu item"
-msgstr "valikon osa"
+msgstr "valikon kohta"
 
 #: controlTypes.py:191 controlTypes.py:298
 msgid "menu"
@@ -1564,7 +1557,7 @@ msgstr "luettelo"
 
 #: controlTypes.py:194
 msgid "list item"
-msgstr "luettelon osa"
+msgstr "luettelon kohta"
 
 #: controlTypes.py:195
 msgid "graphic"
@@ -1588,7 +1581,7 @@ msgstr "puunäkymä"
 
 #: controlTypes.py:200
 msgid "tree view item"
-msgstr "puunäkymän osa"
+msgstr "puunäkymän kohta"
 
 #: controlTypes.py:202
 msgid "tab control"
@@ -1708,7 +1701,7 @@ msgstr "taulukon alatunniste"
 
 #: controlTypes.py:231
 msgid "document"
-msgstr "dokumentti"
+msgstr "asiakirja"
 
 #: controlTypes.py:232
 msgid "animation"
@@ -1740,7 +1733,7 @@ msgstr "otsikko"
 
 #: controlTypes.py:239
 msgid "check menu item"
-msgstr "valittava valikon osa"
+msgstr "valittava valikon kohta"
 
 #: controlTypes.py:240
 msgid "date edit"
@@ -1784,7 +1777,7 @@ msgstr "syöttöikkuna"
 
 #: controlTypes.py:251
 msgid "label"
-msgstr "luokka"
+msgstr "nimi"
 
 #: controlTypes.py:252
 msgid "note"
@@ -1796,7 +1789,7 @@ msgstr "sivu"
 
 #: controlTypes.py:254
 msgid "radio menu item"
-msgstr "valintapainike valikon osana"
+msgstr "valintapainike valikon kohtana"
 
 #: controlTypes.py:255
 msgid "layered pane"
@@ -1888,7 +1881,7 @@ msgstr "pudotusluettelo"
 
 #: controlTypes.py:278
 msgid "split button"
-msgstr "jakopainike"
+msgstr "jaettu painike"
 
 #: controlTypes.py:279
 msgid "menu button"
@@ -2080,11 +2073,11 @@ msgstr "ei muokattavissa"
 
 #: controlTypes.py:332
 msgid "expanded"
-msgstr "laajennettu"
+msgstr "avattu"
 
 #: controlTypes.py:333
 msgid "collapsed"
-msgstr "Kutistettu"
+msgstr "suljettu"
 
 #: controlTypes.py:334
 msgid "invisible"
@@ -2171,8 +2164,8 @@ msgid "drop target"
 msgstr "pudotuksen kohde"
 
 #: core.py:127
-msgid "Loading subsystems, please wait..."
-msgstr "Ladataan alijärjestelmiä, odota..."
+msgid "Loading NVDA. Please wait..."
+msgstr "Ladataan NVDA:ta, odota..."
 
 #: core.py:209
 msgid "NVDA started"
@@ -2405,7 +2398,7 @@ msgstr "Näytä loki"
 
 #: gui\__init__.py:300
 msgid "Speech viewer"
-msgstr "Puheen tarkastelu"
+msgstr "Näytä puhe"
 
 #: gui\__init__.py:303
 msgid "Python console"
@@ -2420,7 +2413,7 @@ msgid "User guide"
 msgstr "Käyttöohje"
 
 #: gui\__init__.py:311
-msgid "Key Command Quick Reference"
+msgid "Keyboard Command Quick Reference"
 msgstr "Näppäinkomentojen pikaopas"
 
 #: gui\__init__.py:313
@@ -2441,7 +2434,7 @@ msgstr "Lisenssi"
 
 #: gui\__init__.py:321
 msgid "Contributors"
-msgstr "Avustajat"
+msgstr "Tekijät"
 
 #: gui\__init__.py:323
 msgid "We&lcome dialog"
@@ -2487,20 +2480,20 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Tervetuloa NVDA:han!\n"
+"Tervetuloa käyttämään NVDA:ta!\n"
 "Useimmat NVDA:n säätämiseen tarkoitetuista näppäimistä edellyttävät "
 "NVDA-näppäimen painamista samaan aikaan muiden näppäinten kanssa.\n"
-"Oletusarvoisesti sekä normaalia että laskinnäppäimistön Insert-"
-"näppäintä voidaan käyttää NVDA-näppäimenä.\n"
+"Oletusarvoisesti sekä normaalia että numeroryhmän Insert-näppäintä "
+"voidaan käyttää NVDA-näppäimenä.\n"
 "NVDA voidaan myös määrittää käyttämään CapsLockia NVDA-näppäimenä"
 ".\n"
 "Paina NVDA+N avataksesi NVDA-valikon milloin tahansa.\n"
 "Tästä valikosta voidaan määrittää NVDA:n asetuksia, lukea ohjeita ja "
-"käyttää muita NVDA:n toimintoja.\n"
+"käyttää muita toimintoja.\n"
 
 #: gui\__init__.py:397
 msgid "Welcome to NVDA"
-msgstr "Tervetuloa NVDA:han"
+msgstr "Tervetuloa käyttämään NVDA:ta"
 
 #: gui\__init__.py:401
 msgid "Options"
@@ -2532,7 +2525,7 @@ msgstr "Asetustiedostovirhe"
 
 #: gui\logViewer.py:17
 msgid "NVDA Log Viewer"
-msgstr "NVDA-lokin tarkastelu"
+msgstr "Näytä NVDA:n loki"
 
 #: gui\logViewer.py:29
 msgid "Refresh\tF5"
@@ -2607,15 +2600,15 @@ msgstr ""
 
 #: gui\settingsDialogs.py:147
 msgid ""
-"Copy currently saved NVDA settings to the logon screen (requires "
+"Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"Kopioi &nykyiset tallennetut asetukset kirjautumisruudussa käytettäväksi "
-"(edellyttää järjestelmänvalvojan oikeuksia)"
+"Käytä &nykyisiä tallennettuja asetuksia kirjautumis- ja muissa "
+"suojatuissa ruuduissa (edellyttää järjestelmänvalvojan oikeuksia)"
 
 #: gui\settingsDialogs.py:158
 msgid "Error copying NVDA user settings"
-msgstr "Virhe kopioitaessa käyttäjän asetuksia"
+msgstr "Virhe kopioitaessa asetuksia"
 
 #: gui\settingsDialogs.py:160
 msgid "Success"
@@ -2623,7 +2616,7 @@ msgstr "Onnistui"
 
 #: gui\settingsDialogs.py:160
 msgid "Successfully copied NVDA user settings"
-msgstr "Käyttäjän asetukset kopioitu onnistuneesti"
+msgstr "Asetukset kopioitu onnistuneesti"
 
 #: gui\settingsDialogs.py:169
 msgid "Error in %s language file"
@@ -2648,7 +2641,7 @@ msgid ""
 "manually save and exit at a later time."
 msgstr ""
 "Jotta uusi kieli voidaan ottaa käyttöön, asetukset on tallennettava ja "
-"NVDA on käynnistettävä uudelleen. Tallenna asetukset ja käynnistä NVDA "
+"NVDA käynnistettävä uudelleen. Tallenna asetukset ja käynnistä NVDA "
 "uudelleen painamalla Enter, tai tallenna asetukset ja käynnistä NVDA myö"
 "hemmin uudelleen painamalla Peruuta."
 
@@ -2662,7 +2655,7 @@ msgstr "Puhesyntetisaattori"
 
 #: gui\settingsDialogs.py:199
 msgid "&Synthesizer:"
-msgstr "&Puhesyntetisaattori:"
+msgstr "&Syntetisaattori:"
 
 #: gui\settingsDialogs.py:214
 msgid "Output &device:"
@@ -2670,11 +2663,11 @@ msgstr "Käytettävä ääni&laite:"
 
 #: gui\settingsDialogs.py:234
 msgid "Could not load the %s synthesizer."
-msgstr "Puhesyntetisaattoria %s ei voitu ladata."
+msgstr "Syntetisaattoria %s ei voitu ladata."
 
 #: gui\settingsDialogs.py:234
 msgid "Synthesizer Error"
-msgstr "Puhesyntetisaattorivirhe"
+msgstr "Syntetisaattorivirhe"
 
 #: gui\settingsDialogs.py:266
 msgid "Voice settings"
@@ -2714,7 +2707,7 @@ msgstr "Näppäimistöasettelu"
 
 #: gui\settingsDialogs.py:422
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Käytä laskinnäppäimistön Insert-näppäintä NVDA-näppäimenä"
+msgstr "Käytä numeroryhmän Insert-näppäintä NVDA-näppäimenä"
 
 #: gui\settingsDialogs.py:425
 msgid "Use extended Insert as an NVDA modifier key"
@@ -2741,8 +2734,8 @@ msgid "Report mouse &shape changes"
 msgstr "Ilmoita &hiirikohdistimen muutokset"
 
 #: gui\settingsDialogs.py:463
-msgid "Report &text under the mouse"
-msgstr "Lue hiiren alla oleva &teksti"
+msgid "Enable mouse &tracking"
+msgstr "Käytä &hiiren seurantaa"
 
 #: gui\settingsDialogs.py:467
 msgid "Text &unit resolution:"
@@ -2773,8 +2766,8 @@ msgid "Follow &keyboard focus"
 msgstr "Seu&raa näppäimistökohdistusta"
 
 #: gui\settingsDialogs.py:509
-msgid "Follow &text insertion point"
-msgstr "Seuraa &tekstin lisäyskohtaa"
+msgid "Follow System &Caret"
+msgstr "Seuraa järjestelmä&kohdistinta"
 
 #: gui\settingsDialogs.py:512
 msgid "Follow &mouse cursor"
@@ -2782,7 +2775,7 @@ msgstr "Seuraa &hiirikohdistinta"
 
 #: gui\settingsDialogs.py:515
 msgid "Simple review mode"
-msgstr "Yksinkertainen tarkastelutila"
+msgstr "Helppo objektinavigointi"
 
 #: gui\settingsDialogs.py:530
 msgid "Object presentation"
@@ -3131,7 +3124,7 @@ msgstr "enter"
 
 #: keyUtils.py:136
 msgid "numpad enter"
-msgstr "laskimen enter"
+msgstr "numeroryhmän enter"
 
 #: keyUtils.py:137
 msgid "escape"
@@ -3191,51 +3184,51 @@ msgstr "scroll lock"
 
 #: keyUtils.py:152
 msgid "numpad left"
-msgstr "laskimen vasen"
+msgstr "numeroryhmän vasen"
 
 #: keyUtils.py:153
 msgid "numpad right"
-msgstr "laskimen oikea"
+msgstr "numeroryhmän oikea"
 
 #: keyUtils.py:154
 msgid "numpad up"
-msgstr "laskimen ylös"
+msgstr "numeroryhmän ylös"
 
 #: keyUtils.py:155
 msgid "numpad down"
-msgstr "laskimen alas"
+msgstr "numeroryhmän alas"
 
 #: keyUtils.py:156
 msgid "numpad page up"
-msgstr "laskimen sivu ylös"
+msgstr "numeroryhmän sivu ylös"
 
 #: keyUtils.py:157
 msgid "numpad page down"
-msgstr "laskimen sivu alas"
+msgstr "numeroryhmän sivu alas"
 
 #: keyUtils.py:158
 msgid "numpad end"
-msgstr "laskimen end"
+msgstr "numeroryhmän end"
 
 #: keyUtils.py:159
 msgid "numpad home"
-msgstr "laskimen home"
+msgstr "numeroryhmän home"
 
 #: keyUtils.py:160
 msgid "numpad slash"
-msgstr "laskimen kautta"
+msgstr "numeroryhmän kautta"
 
 #: keyUtils.py:161
 msgid "numpad star"
-msgstr "laskimen tähti"
+msgstr "numeroryhmän tähti"
 
 #: keyUtils.py:162
 msgid "numpad minus"
-msgstr "laskimen miinus"
+msgstr "numeroryhmän miinus"
 
 #: keyUtils.py:163
 msgid "numpad plus"
-msgstr "laskimen plus"
+msgstr "numeroryhmän plus"
 
 #: keyUtils.py:164
 msgid "left control"
@@ -3311,7 +3304,7 @@ msgstr "Kirjoita exit() poistuaksesi konsolista."
 
 #: pythonConsole.py:96
 msgid "NVDA Python Console"
-msgstr "NVDA Python-konsoli"
+msgstr "NVDA:n Python-konsoli"
 
 #: speech.py:180
 msgid "cap %s"
@@ -3359,7 +3352,7 @@ msgstr "jossa %s riviä"
 
 #: speech.py:826
 msgid "with %s items"
-msgstr "jossa %s kohdetta"
+msgstr "jossa %s kohtaa"
 
 #: speech.py:843 speech.py:950
 msgid "out of %s"
@@ -3451,29 +3444,29 @@ msgstr "taulukko, jossa %s saraketta ja %s riviä"
 
 #: speechViewer.py:13
 msgid "NVDA Speech Viewer"
-msgstr "NVDA:n puheen tarkastelu"
+msgstr "Näytä NVDA:n puhe"
 
-#: synthDriverHandler.py:187
+#: synthDriverHandler.py:185
 msgid "&Voice"
 msgstr "&Puheääni:"
 
-#: synthDriverHandler.py:191
+#: synthDriverHandler.py:189
 msgid "V&ariant"
 msgstr "&Muunnelma:"
 
-#: synthDriverHandler.py:196
+#: synthDriverHandler.py:194
 msgid "&Rate"
 msgstr "&Nopeus:"
 
-#: synthDriverHandler.py:200
+#: synthDriverHandler.py:198
 msgid "V&olume"
 msgstr "&Voimakkuus:"
 
-#: synthDriverHandler.py:204
+#: synthDriverHandler.py:202
 msgid "&Pitch"
 msgstr "&Korkeus:"
 
-#: synthDriverHandler.py:209
+#: synthDriverHandler.py:207
 msgid "&Inflection"
 msgstr "&Sävy:"
 
@@ -3523,7 +3516,7 @@ msgstr "Ilmainen, avoimen lähdekoodin ruudunlukuohjelma Windowsille"
 
 #: versionInfo.py:29
 msgid "Copyright (C) 2006-2010 NVDA Contributors"
-msgstr "Copyright (C) 2006-2010 NVDA-avustajat"
+msgstr "Copyright (C) 2006-2010 NVDA:n tekijät"
 
 #: versionInfo.py:30
 msgid ""
@@ -3849,19 +3842,19 @@ msgstr "ei edellisiä luetteloita"
 
 #: virtualBuffers\__init__.py:1240
 msgid "moves to the next list item"
-msgstr "siirtää seuraavan luettelon osan kohdalle"
+msgstr "siirtää seuraavaan luettelon kohtaan"
 
 #: virtualBuffers\__init__.py:1240
 msgid "no next list item"
-msgstr "ei enempää luettelon osia"
+msgstr "ei enempää luettelon kohtia"
 
 #: virtualBuffers\__init__.py:1241
 msgid "moves to the previous list item"
-msgstr "siirtää edellisen luettelon osan kohdalle"
+msgstr "siirtää edelliseen luettelon kohtaan"
 
 #: virtualBuffers\__init__.py:1241
 msgid "no previous list item"
-msgstr "ei edellisiä luettelon osia"
+msgstr "ei edellisiä luettelon kohtia"
 
 #: virtualBuffers\__init__.py:1242
 msgid "moves to the next button"
@@ -4041,19 +4034,19 @@ msgstr "ei edellisiä maamerkkejä"
 
 #: virtualBuffers\__init__.py:1264
 msgid "moves to the next embedded object"
-msgstr "siirtää seuraavan upotetun objektin kohdalle"
+msgstr "siirtää seuraavan sulautetun objektin kohdalle"
 
 #: virtualBuffers\__init__.py:1264
 msgid "no next embedded object"
-msgstr "ei enempää upotettuja objekteja"
+msgstr "ei enempää sulautettuja objekteja"
 
 #: virtualBuffers\__init__.py:1265
 msgid "moves to the previous embedded object"
-msgstr "siirtää edellisen upotetun objektin kohdalle"
+msgstr "siirtää edellisen sulautetun objektin kohdalle"
 
 #: virtualBuffers\__init__.py:1265
 msgid "no previous embedded object"
-msgstr "ei edellisiä upotettuja objekteja"
+msgstr "ei edellisiä sulautettuja objekteja"
 
 #: virtualBuffers\__init__.py:1278
 msgid "browse mode"

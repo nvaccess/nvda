@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA R3574\n"
-"POT-Creation-Date: 2010-08-23 19:02+AUSEST\n"
-"PO-Revision-Date: 2010-08-24 04:31+0800\n"
-"Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
+"Project-Id-Version: NVDA R3778\n"
+"POT-Creation-Date: 2010-08-26 19:02+AUSEST\n"
+"PO-Revision-Date: 2010-08-28 09:47+0800\n"
+"Last-Translator: \n"
 "Language-Team: Chinese (Hong Kong)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -11,8 +11,6 @@ msgstr ""
 "X-Poedit-Language: Traditional Chinese\n"
 "X-Poedit-Country: HONG KONG\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Basepath: D:\\nvda\\main\n"
-"X-Poedit-SearchPath-0: source\n"
 
 # controlTypes.py:256
 #: IAccessibleHandler.py:686
@@ -102,7 +100,7 @@ msgstr "選取"
 
 #: NVDAObjects/window/excel.py:248
 msgid "%s %s through %s %s"
-msgstr "%s %s 透過 %s %s"
+msgstr "%s %s 至 %s %s"
 
 # textBuffer.py:219
 #: NVDAObjects/window/winword.py:355
@@ -190,11 +188,11 @@ msgstr "鍵盤說明 %s"
 # appModules\_default.py:44
 #: appModules/_default.py:43
 msgid "Turns keyboard help on and off. When on, pressing a key on the keyboard will tell you what script is associated with it, if any."
-msgstr "切換鍵盤說明開關, 開的時候每按下按鍵會告訴你相關的功能"
+msgstr "切換鍵盤說明開關,開的時候每按下按鍵會告訴你相關的功能"
 
 #: appModules/_default.py:59
 msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
-msgstr "報出系統焦點所在的一行, 連按兩次則把這一行的字元都拼讀出來"
+msgstr "讀出系統焦點所在的一行,連按兩次則把這一行的字元都拼讀出來"
 
 # characterSymbols.py:46
 #: appModules/_default.py:62
@@ -227,7 +225,7 @@ msgstr "滑鼠左鍵按下"
 # virtualBuffers\__init__.py:394
 #: appModules/_default.py:80
 msgid "Locks or unlocks the left mouse button"
-msgstr "把滑鼠左鍵按著或放開"
+msgstr "將滑鼠左鍵按著或放開"
 
 #: appModules/_default.py:84
 msgid "right mouse button unlock"
@@ -240,7 +238,7 @@ msgstr "滑鼠右鍵按下"
 # virtualBuffers\__init__.py:394
 #: appModules/_default.py:89
 msgid "Locks or unlocks the right mouse button"
-msgstr "把滑鼠右鍵按著或放開"
+msgstr "將滑鼠右鍵按著或放開"
 
 # textBuffer.py:534
 #: appModules/_default.py:101
@@ -266,11 +264,11 @@ msgstr "選取了, %s"
 # appModules\_default.py:98
 #: appModules/_default.py:104
 msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
-msgstr "在目前文件之內報出已選取的文字, 如果沒有選取文字也把情況說出來"
+msgstr "在目前文件之內讀出已選取的文字,如果沒有選取文字也把情況說出來"
 
 #: appModules/_default.py:112
 msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
-msgstr "按一次報出現時時間, 連按兩次報出現時日期"
+msgstr "按一次讀出時間,連按兩次讀出日期"
 
 # gui\__init__.py:253
 #: appModules/_default.py:117
@@ -288,7 +286,7 @@ msgstr "增加目前語音選項的設定值"
 # appModules\_default.py:87
 #: appModules/_default.py:130
 msgid "Decreases the currently active setting in the synth settings ring"
-msgstr "減低目前語音選項的設定值"
+msgstr "減少目前語音選項的設定值"
 
 # appModules\_default.py:92
 #: appModules/_default.py:139
@@ -348,7 +346,7 @@ msgstr "找不到物件的所在位置"
 # appModules\_default.py:113
 #: appModules/_default.py:209
 msgid "Moves the mouse pointer to the current navigator object"
-msgstr "把鼠標移到目前的瀏覽物件"
+msgstr "將鼠標移到目前的瀏覽物件"
 
 # appModules\_default.py:127
 # appModules\_default.py:136
@@ -374,20 +372,20 @@ msgstr "把鼠標移到目前的瀏覽物件"
 # appModules\_default.py:335
 #: appModules/_default.py:212
 msgid "Move navigator object to mouse"
-msgstr "瀏覽目標移到鼠標"
+msgstr "瀏覽游標移到鼠標"
 
 # appModules\_default.py:151
 #: appModules/_default.py:216
 msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
-msgstr "把瀏覽目標移到並報出鼠標所指的物件"
+msgstr "將瀏覽游標移到並讀出鼠標所指的物件"
 
 #: appModules/_default.py:229
 msgid "No flat review for this object"
-msgstr "物件不可開啟平面檢視"
+msgstr "不能在此物件開啟平面檢視"
 
 #: appModules/_default.py:230
 msgid "Switches to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object"
-msgstr "在目前視窗或文件之內開啟平面檢視"
+msgstr "在目前畫面或文件開啟平面檢視"
 
 #: appModules/_default.py:242
 msgid "No object at flat review position"
@@ -396,7 +394,7 @@ msgstr "平面檢視位置沒有物件"
 # appModules\_default.py:336
 #: appModules/_default.py:243
 msgid "Moves to the object represented by the text at the position of the review cursor within flat review"
-msgstr "在平面模式之下移到瀏覽游標所在位置"
+msgstr "在平面檢視中把瀏覽游標移到目前物件"
 
 # appModules\_default.py:127
 # appModules\_default.py:136
@@ -439,7 +437,7 @@ msgstr "%s 已複製到剪貼簿"
 # appModules\_default.py:280
 #: appModules/_default.py:277
 msgid "Reports the current navigator object or, if pressed three times, Copies name and value of current navigator object to the clipboard"
-msgstr "報出目前瀏覽物件的資訊, 連按三次則把內容複製到剪貼簿"
+msgstr "讀出目前瀏覽物件的資訊,連按三次則把內容複製到剪貼簿"
 
 # appModules\_default.py:139
 #: appModules/_default.py:285
@@ -454,12 +452,12 @@ msgstr "沒有畫面的位置資訊"
 # appModules\_default.py:209
 #: appModules/_default.py:295
 msgid "Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen"
-msgstr "物件邊沿的位置, 從屏幕左邊向右算起為百分之 %.1f, 從屏幕上邊向下算起為百分之 %.1f, 闊度為畫面闊度的百分之 %.1f, 高度為畫面高度的百分之 %.1f"
+msgstr "物件邊沿的位置, 從螢幕左邊向右算起為百分之 %.1f, 從螢幕上邊向下算起為百分之 %.1f, 闊度為畫面闊度的百分之 %.1f, 高度為畫面高度的百分之 %.1f"
 
 # appModules\_default.py:142
 #: appModules/_default.py:296
 msgid "Reports the hight, width and position of the current navigator object"
-msgstr "讀出目前瀏覽物件的高度、寬度和位置"
+msgstr "讀出目前瀏覽物件的大小以及所在位置"
 
 # appModules\_default.py:149
 #: appModules/_default.py:305
@@ -507,7 +505,7 @@ msgstr "移動焦點"
 # appModules\_default.py:335
 #: appModules/_default.py:315
 msgid "Sets the keyboard focus to the navigator object"
-msgstr "把焦點移到目前瀏覽目標"
+msgstr "將系統焦點移到目前瀏覽游標"
 
 # appModules\_default.py:163
 #: appModules/_default.py:328
@@ -517,7 +515,7 @@ msgstr "沒有上一層級物件了"
 # appModules\_default.py:164
 #: appModules/_default.py:329
 msgid "Sets the navigator object to the parent of the object it is currently on and speaks it"
-msgstr "把瀏覽目標移到並報出目前項目上一層級的物件"
+msgstr "將瀏覽游標移到並讀出目前項目上一層級的物件"
 
 # appModules\_default.py:176
 #: appModules/_default.py:342
@@ -527,7 +525,7 @@ msgstr "沒有下一個物件了"
 # appModules\_default.py:177
 #: appModules/_default.py:343
 msgid "Sets the navigator object to the object next to the one it is currently on and speaks it"
-msgstr "把瀏覽目標移到並報出目前項目同一層級的下一個物件"
+msgstr "將瀏覽游標移到並讀出目前項目同一層級的下一個物件"
 
 # appModules\_default.py:189
 #: appModules/_default.py:356
@@ -537,7 +535,7 @@ msgstr "沒有上一個物件了"
 # appModules\_default.py:190
 #: appModules/_default.py:357
 msgid "Sets the navigator object to the object previous to the one it is currently on and speaks it"
-msgstr "把瀏覽目標移到並報出目前項目同一層級的上一個物件"
+msgstr "將瀏覽游標移到並讀出目前項目同一層級的上一個物件"
 
 # appModules\_default.py:202
 #: appModules/_default.py:370
@@ -547,7 +545,7 @@ msgstr "沒有下一層級物件了"
 # appModules\_default.py:203
 #: appModules/_default.py:371
 msgid "Sets the navigator object to the first child object of the one it is currently on and speaks it"
-msgstr "把瀏覽目標移到並報出目前項目下一層級的物件"
+msgstr "將瀏覽游標移到並讀出目前項目下一層級的物件"
 
 # gui\__init__.py:281
 #: appModules/_default.py:381
@@ -582,17 +580,17 @@ msgstr "到了頂端"
 # appModules\_default.py:232
 #: appModules/_default.py:397
 msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
-msgstr "在物件中把瀏覽游標移到並報出最先一行文字"
+msgstr "在物件中把瀏覽游標移到並讀出最先一行文字"
 
 # appModules\_default.py:248
 #: appModules/_default.py:409
 msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
-msgstr "在物件中把瀏覽游標移到並報出上一行文字"
+msgstr "在物件中把瀏覽游標移到並讀出上一行文字"
 
 # appModules\_default.py:256
 #: appModules/_default.py:418
 msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled"
-msgstr "在物件中報出瀏覽游標所在的一行文字, 連按兩次則把這一行的字元都拼讀出來"
+msgstr "在物件中讀出瀏覽游標所在的一行文字,連按兩次則把這一行的字元都拼讀出來"
 
 # NVDAObjects\__init__.py:297
 # NVDAObjects\__init__.py:330
@@ -612,27 +610,27 @@ msgstr "到了底部"
 # appModules\_default.py:264
 #: appModules/_default.py:430
 msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
-msgstr "在物件中把瀏覽游標移到並報出下一行文字"
+msgstr "在物件中把瀏覽游標移到並讀出下一行文字"
 
 # appModules\_default.py:240
 #: appModules/_default.py:438
 msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
-msgstr "在物件中把瀏覽游標移到並報出最後一行文字"
+msgstr "在物件中把瀏覽游標移到並讀出最後一行文字"
 
 # appModules\_default.py:272
 #: appModules/_default.py:450
 msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
-msgstr "在物件中把瀏覽游標移到並報出上一個字詞"
+msgstr "在物件中把瀏覽游標移到並讀出上一個字詞"
 
 # appModules\_default.py:280
 #: appModules/_default.py:459
 msgid "Speaks the word of the current navigator object where the review cursor is situated. If this key is pressed twice, the word will be spelled"
-msgstr "在物件中報出瀏覽游標所在的一個字詞, 連按兩次則把這一個字詞拼讀出來"
+msgstr "在物件中讀出瀏覽游標所在的一個字詞,連按兩次則把這一個字詞拼讀出來"
 
 # appModules\_default.py:288
 #: appModules/_default.py:471
 msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
-msgstr "在物件中把瀏覽游標移到並報出下一個字詞"
+msgstr "在物件中把瀏覽游標移到並讀出下一個字詞"
 
 # NVDAObjects\IAccessible\winword.py:274
 #: appModules/_default.py:479
@@ -644,17 +642,17 @@ msgstr "到了左端"
 # appModules\_default.py:320
 #: appModules/_default.py:481
 msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
-msgstr "在物件中把瀏覽游標移到並報出現時一行的第一個字元"
+msgstr "在物件中把瀏覽游標移到並讀出目前這一行的第一個字元"
 
 # appModules\_default.py:296
 #: appModules/_default.py:499
 msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
-msgstr "在物件中把瀏覽游標移到並報出上一個字元"
+msgstr "在物件中把瀏覽游標移到並讀出上一個字元"
 
 # appModules\_default.py:304
 #: appModules/_default.py:513
 msgid "Reports the character of the current navigator object where the review cursor is situated. If this key is pressed twice, ascii and hexadecimal values are spoken for the character"
-msgstr "在物件中報出瀏覽游標所在的一個字元, 連按兩次則報出字元的 ASCII 值和十六進制值"
+msgstr "在物件中讀出瀏覽游標所在的一個字元,連按兩次則讀出字元的ASCII值和十六進制值"
 
 # NVDAObjects\IAccessible\winword.py:278
 #: appModules/_default.py:523
@@ -666,12 +664,12 @@ msgstr "到了右端"
 # appModules\_default.py:312
 #: appModules/_default.py:531
 msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
-msgstr "在物件中把瀏覽游標移到並報出下一個字元"
+msgstr "在物件中把瀏覽游標移到並讀出下一個字元"
 
 # appModules\_default.py:320
 #: appModules/_default.py:542
 msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
-msgstr "在物件中把瀏覽游標移到並報出現時一行的最後一個字元"
+msgstr "在物件中把瀏覽游標移到並讀出目前這一行的最後一個字元"
 
 # appModules\_default.py:163
 #: appModules/_default.py:549
@@ -681,7 +679,7 @@ msgstr "沒有游標"
 # appModules\_default.py:336
 #: appModules/_default.py:554
 msgid "Moves the system caret to the position of the review cursor , in the current navigator object"
-msgstr "在物件中把打字游標移到瀏覽游標位置"
+msgstr "在物件中把編輯游標移到瀏覽游標位置"
 
 # appModules\_default.py:345
 #: appModules/_default.py:563
@@ -701,7 +699,7 @@ msgstr "語音模式 %s"
 # appModules\_default.py:350
 #: appModules/_default.py:569
 msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr "切換語音模式為關、逼逼聲或講話. 設成關的時候 NVDA 什麼都不說, 如果設成逼逼聲則每次該講話的時候就以逼逼聲代替, 設成講話則正常的朗讀"
+msgstr "切換語音模式為報讀、靜音及發出逼逼聲三個模式"
 
 #: appModules/_default.py:585
 msgid "Moves the focus to the next closest document that contains the focus"
@@ -710,7 +708,7 @@ msgstr "把焦點移到相鄰的文件"
 # appModules\_default.py:354
 #: appModules/_default.py:597
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr "在瀏覽模式和打字模式兩者之間切換, 在打字模式下按鍵指令可直接操作目前焦點的控制項, 在瀏覽模式下則可使用方向鍵控制游標在文件之內移動"
+msgstr "在網頁視窗上，切換瀏覽模式和編輯模式"
 
 # appModules\_default.py:358
 #: appModules/_default.py:601
@@ -720,17 +718,17 @@ msgstr "關閉 NVDA"
 # appModules\_default.py:362
 #: appModules/_default.py:605
 msgid "Shows the NVDA menu"
-msgstr "打開 NVDA 選單"
+msgstr "開啟 NVDA 選單"
 
 # appModules\_default.py:375
 #: appModules/_default.py:610
 msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
-msgstr "從目前瀏覽游標所在的一行文字開始報讀直至現時可見文字的結尾, 並且讓瀏覽游標跟著走"
+msgstr "從目前瀏覽游標所在的一行文字開始報讀,直至可見文字的結尾"
 
 # appModules\_default.py:375
 #: appModules/_default.py:622
 msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
-msgstr "從目前打字游標所在的一行文字開始報讀直至文字的結尾, 並且讓打字游標跟著走"
+msgstr "在可編輯方塊或文件中，從目前游標所在的位置往下讀出直到結尾"
 
 # gui\settingsDialogs.py:274
 #: appModules/_default.py:648
@@ -740,12 +738,12 @@ msgstr "沒有格式資訊"
 # virtualBuffers\__init__.py:479
 #: appModules/_default.py:651
 msgid "Reports formatting info for the current cursor position within a document"
-msgstr "在文件之內報出目前游標位置的格式資料"
+msgstr "在開啟的文件中，讀出目前游標所在位置字元的格式資訊"
 
 # appModules\_default.py:390
 #: appModules/_default.py:662
 msgid "reports the object with focus"
-msgstr "報出系統焦點所指的物件"
+msgstr "讀出目前的物件"
 
 # appModules\_default.py:399
 #: appModules/_default.py:667
@@ -755,7 +753,7 @@ msgstr "找不到狀態列"
 # appModules\_default.py:403
 #: appModules/_default.py:676
 msgid "reads the current application status bar and moves the navigator to it"
-msgstr "把瀏覽目標移到並報出目前應用軟件的狀態列"
+msgstr "讀出目前應用系統的狀態列"
 
 # gui\__init__.py:261
 #: appModules/_default.py:685
@@ -765,7 +763,7 @@ msgstr "鼠標移動通知"
 # appModules\_default.py:413
 #: appModules/_default.py:686
 msgid "Toggles the reporting of information as the mouse moves"
-msgstr "切換每當鼠標移動時, 是否播放聲音或語音"
+msgstr "切換每當鼠標移動時，是否讀出它所指的物件或字詞"
 
 # textBuffer.py:275
 #: appModules/_default.py:694
@@ -774,7 +772,7 @@ msgstr "沒有標題"
 
 #: appModules/_default.py:703
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
-msgstr "報出目前應用視窗的標題, 如果連按兩次則把標題拼讀出來, 連按三次則把標題複製到剪貼簿"
+msgstr "讀出目前應用視窗的標題,如果連按兩次則把標題拼讀出來,連按三次則把標題複製到剪貼簿"
 
 # appModules\_default.py:426
 #: appModules/_default.py:710
@@ -808,7 +806,7 @@ msgstr "進度列改變時發出逼逼聲以及說出來"
 
 #: appModules/_default.py:738
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
-msgstr "選擇表示進度列改變的方式, 選項包括發出逼逼聲, 說出來, 兩者皆是以及關閉"
+msgstr "切換每當進度列改變時的報讀方式，報讀方式有四個，依序是：每隔百分之十讀出、發出逼逼聲、兩者皆開啟以及沒有"
 
 # appModules\_default.py:456
 #: appModules/_default.py:747
@@ -828,17 +826,17 @@ msgstr "瀏覽游標跟隨打字游標走"
 # appModules\_default.py:467
 #: appModules/_default.py:758
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "切換是否讓瀏覽游標跟隨打字游標走"
+msgstr "切換是否讓瀏覽游標跟隨編輯游標走"
 
 # appModules\_default.py:476
 #: appModules/_default.py:767
 msgid "focus moves navigator object"
-msgstr "瀏覽目標跟隨系統焦點走"
+msgstr "瀏覽游標跟隨系統焦點走"
 
 # appModules\_default.py:477
 #: appModules/_default.py:768
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "切換是否讓瀏覽目標跟隨系統焦點走"
+msgstr "切換是否讓瀏覽游標跟隨系統焦點走"
 
 # appModules\_default.py:447
 #: appModules/_default.py:780
@@ -868,12 +866,12 @@ msgstr "下次按鍵指令直接操作系統"
 # appModules\_default.py:501
 #: appModules/_default.py:792
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
-msgstr "讓下一次按鍵指令直接操作系統,而不會操作 NVDA"
+msgstr "忽略下一個NVDA按鍵指令"
 
 # appModules\_default.py:597
 #: appModules/_default.py:797
 msgid "Currently running application is %s"
-msgstr "現在應用軟件所屬檔名是 %s"
+msgstr "現在應用軟體所屬檔名是 %s"
 
 # appModules\_default.py:611
 #: appModules/_default.py:800
@@ -883,61 +881,61 @@ msgstr "和載入模組是 %s"
 # appModules\_default.py:612
 #: appModules/_default.py:802
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
-msgstr "報出延時應用程式所屬檔名和載入模組名稱"
+msgstr "讀出目前啟動的應用系統檔案名稱，也會讀出載入的模組名稱"
 
 # appModules\_default.py:362
 #: appModules/_default.py:806
 msgid "Shows the NVDA general settings dialog"
-msgstr "打開 NVDA 一般設定對話方塊"
+msgstr "開啟NVDA一般設定對話方塊"
 
 # appModules\_default.py:724
 #: appModules/_default.py:810
 msgid "Shows the NVDA synthesizer dialog"
-msgstr "打開 NVDA 語音合成器對話方塊"
+msgstr "開啟NVDA語音合成器對話方塊"
 
 # gui\__init__.py:253
 #: appModules/_default.py:814
 msgid "Shows the NVDA voice settings dialog"
-msgstr "打開 NVDA 語音設定對話方塊"
+msgstr "開啟NVDA語音設定對話方塊"
 
 # appModules\_default.py:732
 #: appModules/_default.py:818
 msgid "Shows the NVDA keyboard settings dialog"
-msgstr "打開 NVDA 鍵盤設定對話方塊"
+msgstr "開啟NVDA鍵盤設定對話方塊"
 
 # appModules\_default.py:736
 #: appModules/_default.py:822
 msgid "Shows the NVDA mouse settings dialog"
-msgstr "打開 NVDA 滑鼠設定對話方塊"
+msgstr "開啟NVDA滑鼠設定對話方塊"
 
 # appModules\_default.py:740
 #: appModules/_default.py:826
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr "打開 NVDA 物件說明對話方塊"
+msgstr "開啟NVDA物件說明對話方塊"
 
 # gui\__init__.py:167
 #: appModules/_default.py:830
 msgid "Shows the NVDA virtual buffers settings dialog"
-msgstr "打開 NVDA 虛擬緩衝對話方塊"
+msgstr "開啟NVDA虛擬緩衝對話方塊"
 
 # appModules\_default.py:748
 #: appModules/_default.py:834
 msgid "Shows the NVDA document formatting settings dialog"
-msgstr "打開 NVDA 文件格式對話方塊"
+msgstr "開啟NVDA文件格式對話方塊"
 
 # gui\__init__.py:141
 #: appModules/_default.py:838
 msgid "Saves the current NVDA configuration"
-msgstr "寫入目前所有選項設定值到設定檔"
+msgstr "儲存 NVDA 所做設定的變更"
 
 # appModules\_default.py:757
 #: appModules/_default.py:842
 msgid "loads the saved NVDA configuration, overriding current changes"
-msgstr "從設定檔讀取並套用所有選項設定值"
+msgstr "還原至儲存的設定"
 
 #: appModules/_default.py:852
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "打開 NVDA Python 主控台, 它對程式編寫員較有用"
+msgstr "開啟NVDAPython主控台"
 
 # controlTypes.py:99
 #: appModules/_default.py:857
@@ -957,7 +955,7 @@ msgstr "點字游標移到 %s"
 
 #: appModules/_default.py:862
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr "把點字游標移到系統焦點或瀏覽焦點"
+msgstr "將點字游標移到系統焦點或瀏覽游標"
 
 #: appModules/_default.py:870
 msgid "There is no text on the clipboard"
@@ -969,16 +967,16 @@ msgstr "現有大量文字在剪貼簿之內, 共有 %s 個字元之多"
 
 #: appModules/_default.py:876
 msgid "Reports the text on the Windows clipboard"
-msgstr "報出剪貼簿內的文字"
+msgstr "讀出剪貼簿內的文字"
 
 #: appModules/_default.py:880
 msgid "Start marked"
-msgstr "開始位置"
+msgstr "開始標記位置"
 
 # appModules\_default.py:336
 #: appModules/_default.py:881
 msgid "Marks the current position of the review cursor as the start of text to be copied"
-msgstr "訂定要複製文字的開始位置"
+msgstr "標記要複製文字的開始位置"
 
 #: appModules/_default.py:885
 msgid "No start marker set"
@@ -999,7 +997,7 @@ msgstr "沒有文字可複製"
 
 #: appModules/_default.py:899
 msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
-msgstr "把剛設定過的開始位置和目前瀏覽游標位置之間的文字複製到剪貼簿"
+msgstr "將剛設定過的開始位置和目前瀏覽游標位置之間的文字複製到剪貼簿"
 
 #: appModules/calc.py:31
 msgid "Display"
@@ -1448,7 +1446,7 @@ msgstr "Handy tech 點字顯示器"
 
 #: brailleDisplayDrivers/lilli.py:32
 msgid "MDV Lilli"
-msgstr "MDV Lilli"
+msgstr "MDV Lilli 點字顯示器"
 
 #: brailleDisplayDrivers/noBraille.py:13
 msgid "No braille"
@@ -1480,7 +1478,7 @@ msgstr "行頭"
 
 #: characterSymbols.py:22
 msgid "page break"
-msgstr "分頁符"
+msgstr "分頁符號"
 
 # characterSymbols.py:22
 #: characterSymbols.py:23
@@ -1496,7 +1494,7 @@ msgstr "空格"
 # characterSymbols.py:24
 #: characterSymbols.py:25
 msgid "bang"
-msgstr "感嘆號"
+msgstr "驚嘆號"
 
 # characterSymbols.py:25
 #: characterSymbols.py:26
@@ -1531,12 +1529,12 @@ msgstr "tick"
 # characterSymbols.py:31
 #: characterSymbols.py:32
 msgid "left paren"
-msgstr "開括號"
+msgstr "左括號"
 
 # characterSymbols.py:32
 #: characterSymbols.py:33
 msgid "right paren"
-msgstr "關括號"
+msgstr "右括號"
 
 # characterSymbols.py:33
 #: characterSymbols.py:34
@@ -1566,7 +1564,7 @@ msgstr "點"
 # characterSymbols.py:38
 #: characterSymbols.py:39
 msgid "slash"
-msgstr "斜號"
+msgstr "斜線"
 
 # characterSymbols.py:39
 #: characterSymbols.py:40
@@ -1606,17 +1604,17 @@ msgstr "於"
 # characterSymbols.py:46
 #: characterSymbols.py:47
 msgid "left bracket"
-msgstr "開中括號"
+msgstr "左中括號"
 
 # characterSymbols.py:47
 #: characterSymbols.py:48
 msgid "back slash"
-msgstr "反斜號"
+msgstr "反斜線"
 
 # characterSymbols.py:48
 #: characterSymbols.py:49
 msgid "right bracket"
-msgstr "關中括號"
+msgstr "右中括號"
 
 # characterSymbols.py:49
 #: characterSymbols.py:50
@@ -1640,7 +1638,7 @@ msgstr "反引號"
 # characterSymbols.py:52
 #: characterSymbols.py:53
 msgid "left brace"
-msgstr "開大括號"
+msgstr "左大括號"
 
 # characterSymbols.py:53
 #: characterSymbols.py:54
@@ -1650,7 +1648,7 @@ msgstr "棟符號"
 # characterSymbols.py:54
 #: characterSymbols.py:55
 msgid "right brace"
-msgstr "關大括號"
+msgstr "右大括號"
 
 # characterSymbols.py:55
 #: characterSymbols.py:56
@@ -1779,7 +1777,7 @@ msgstr "圖片"
 # controlTypes.py:96
 #: controlTypes.py:196
 msgid "help balloon"
-msgstr "氣球說明"
+msgstr "氣泡說明"
 
 # controlTypes.py:97
 #: controlTypes.py:197
@@ -1880,7 +1878,7 @@ msgstr "時鐘"
 # controlTypes.py:117
 #: controlTypes.py:217
 msgid "separator"
-msgstr "隔位符"
+msgstr "分隔符號"
 
 # controlTypes.py:118
 #: controlTypes.py:218
@@ -2172,7 +2170,7 @@ msgstr "圖表"
 # controlTypes.py:226
 #: controlTypes.py:274
 msgid "cursor"
-msgstr "光標"
+msgstr "游標"
 
 # controlTypes.py:83
 #: controlTypes.py:275
@@ -2219,7 +2217,7 @@ msgstr "抓緊"
 # controlTypes.py:235
 #: controlTypes.py:283
 msgid "hot key field"
-msgstr "快捷鍵欄位"
+msgstr "快速鍵欄位"
 
 # controlTypes.py:236
 #: controlTypes.py:284
@@ -2372,7 +2370,7 @@ msgstr "樣式"
 # controlTypes.py:291
 #: controlTypes.py:313
 msgid "indent"
-msgstr "縮進"
+msgstr "縮排"
 
 # textBuffer.py:248
 # textBuffer.py:312
@@ -2560,11 +2558,11 @@ msgstr "可核取"
 
 #: controlTypes.py:352
 msgid "draggable"
-msgstr "可拖動的"
+msgstr "可拖曳的"
 
 #: controlTypes.py:353
 msgid "dragging"
-msgstr "拖動"
+msgstr "拖曳"
 
 # appModules\_default.py:163
 #: controlTypes.py:354
@@ -2573,8 +2571,8 @@ msgstr "放置目標"
 
 # core.py:74
 #: core.py:127
-msgid "Loading subsystems, please wait..."
-msgstr "載入程式中, 請稍後..."
+msgid "Loading NVDA. Please wait..."
+msgstr "載入 NVDA 中, 請稍後..."
 
 # core.py:87
 #: core.py:209
@@ -2589,7 +2587,7 @@ msgstr "尋找"
 # virtualBuffers\__init__.py:463
 #: cursorManager.py:80
 msgid "Type the text you wish to find"
-msgstr "請打入要找尋的關鍵字詞"
+msgstr "請打入要尋找的關鍵字詞"
 
 # virtualBuffers\__init__.py:473
 #: cursorManager.py:94
@@ -2628,7 +2626,7 @@ msgstr "設定套用了"
 
 #: gui/__init__.py:152
 msgid "Cannot save configuration - NVDA in secure mode"
-msgstr "在安全模式之下不能儲存 NVDA 程式設定"
+msgstr "NVDA 在安全模式下不能儲存設定"
 
 # gui\__init__.py:223
 #: gui/__init__.py:156
@@ -2758,7 +2756,7 @@ msgstr "瀏覽游標...(&R)"
 
 #: gui/__init__.py:277
 msgid "Configure how and when the review cursor moves"
-msgstr "設定瀏覽游標何時移動及移動方式"
+msgstr "設定瀏覽游標移動方式"
 
 # gui\__init__.py:265
 #: gui/__init__.py:279
@@ -2859,7 +2857,7 @@ msgstr "用戶指南(&U)"
 # gui\__init__.py:233
 #: gui/__init__.py:311
 msgid "Keyboard Command Quick Reference"
-msgstr "按鍵指令快速參考"
+msgstr "按鍵指令快速參考(&K)"
 
 # gui\__init__.py:235
 #: gui/__init__.py:313
@@ -2905,7 +2903,7 @@ msgstr "輔助說明(&H)"
 # gui\__init__.py:139
 #: gui/__init__.py:330
 msgid "&Revert to saved configuration"
-msgstr "恢復至貯存了的設定 (&R)"
+msgstr "恢復至原儲存設定 (&R)"
 
 # gui\__init__.py:139
 #: gui/__init__.py:330
@@ -2915,12 +2913,12 @@ msgstr "回復所有設定到已儲存的狀態"
 # gui\__init__.py:141
 #: gui/__init__.py:333
 msgid "&Save configuration"
-msgstr "貯存設定(&S)"
+msgstr "儲存設定(&S)"
 
 # gui\__init__.py:141
 #: gui/__init__.py:333
 msgid "Write the current configuration to nvda.ini"
-msgstr "將現時的設定寫入 nvda.ini"
+msgstr "將現在的設定寫入 nvda.ini"
 
 # gui\__init__.py:143
 #: gui/__init__.py:336
@@ -2968,11 +2966,11 @@ msgstr "每當 NVDA 啟動時顯示此對話方塊(&S)"
 
 #: gui/__init__.py:441
 msgid ""
-"Your configuration file contains errors. \n"
-"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
+"Your configuration file contains errors. \r\n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\r\n"
 msgstr ""
-"你的設定檔含有錯處, \n"
-"要修正錯處可按 'Ok', 如想稍後才手動修正錯處可按 'Cancel'關於錯處的詳細資料可參考記錄檔.\n"
+"發現程式的設定檔包含錯誤項目. \n"
+"現在可按 'OK' 修正這些錯誤又或按 'Cancel' 然後手動編輯設定檔來修正這些錯誤.要獲取更多有關資料可在程式的記錄檔 'log file' 找到.\n"
 
 # gui\__init__.py:223
 #: gui/__init__.py:446
@@ -3073,11 +3071,11 @@ msgstr "在 Windows 登入畫面中啟用 NVDA(需要系統管理員權限)(&U)"
 
 #: gui/settingsDialogs.py:147
 msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
-msgstr "在登入或其他安全畫面套用目前程式設定(需要系統管理員權限)"
+msgstr "把已儲存的設定套用到登入或其他安全畫面(需要系統管理員權限)(&U)"
 
 #: gui/settingsDialogs.py:158
 msgid "Error copying NVDA user settings"
-msgstr "複製 NVDA 用戶設定發生錯誤"
+msgstr "複製 NVDA 用戶設定失敗"
 
 #: gui/settingsDialogs.py:160
 msgid "Success"
@@ -3085,7 +3083,7 @@ msgstr "完成"
 
 #: gui/settingsDialogs.py:160
 msgid "Successfully copied NVDA user settings"
-msgstr "複製 NVDA 用戶設定已經完成"
+msgstr "複製 NVDA 用戶設定成功"
 
 # gui\settingsDialogs.py:59
 #: gui/settingsDialogs.py:169
@@ -3222,7 +3220,7 @@ msgstr "報告鼠標型態變更(&S)"
 # gui\__init__.py:261
 #: gui/settingsDialogs.py:463
 msgid "Enable mouse &tracking"
-msgstr "開啟鼠標移動通知"
+msgstr "開啟鼠標移動通知(&T)"
 
 #: gui/settingsDialogs.py:467
 msgid "Text &unit resolution:"
@@ -3240,7 +3238,7 @@ msgstr "報出鼠標所指物件資訊(&R)"
 # gui\settingsDialogs.py:359
 #: gui/settingsDialogs.py:482
 msgid "play audio coordinates when mouse moves"
-msgstr "用聲效表示鼠標所在位置(&P)"
+msgstr "用音效表示鼠標所在位置(&P)"
 
 # gui\settingsDialogs.py:423
 #: gui/settingsDialogs.py:485
@@ -3254,11 +3252,11 @@ msgstr "瀏覽游標設定"
 
 #: gui/settingsDialogs.py:506
 msgid "Follow &keyboard focus"
-msgstr "跟隨系統焦點走(&K)"
+msgstr "跟隨鍵盤焦點走(&K)"
 
 #: gui/settingsDialogs.py:509
-msgid "Follow &text insertion point"
-msgstr "跟隨文字插入點走(&T)"
+msgid "Follow System &Caret"
+msgstr "跟隨系統焦點走(&C)"
 
 #: gui/settingsDialogs.py:512
 msgid "Follow &mouse cursor"
@@ -3266,7 +3264,7 @@ msgstr "跟隨鼠標走(&M)"
 
 #: gui/settingsDialogs.py:515
 msgid "Simple review mode"
-msgstr "簡化瀏覽模式"
+msgstr "簡易瀏覽模式(&S)"
 
 # gui\__init__.py:265
 #: gui/settingsDialogs.py:530
@@ -3295,12 +3293,12 @@ msgstr "報出工具提示(&T)"
 # gui\settingsDialogs.py:268
 #: gui/settingsDialogs.py:542
 msgid "Report &help balloons"
-msgstr "報出輔助氣球說明(&H)"
+msgstr "報出輔助氣泡說明(&H)"
 
 # gui\settingsDialogs.py:271
 #: gui/settingsDialogs.py:545
 msgid "Report object shortcut &keys"
-msgstr "報出物件的快捷鍵(&K)"
+msgstr "報出物件的快速鍵(&K)"
 
 # gui\settingsDialogs.py:274
 #: gui/settingsDialogs.py:548
@@ -3423,7 +3421,7 @@ msgstr "報出表格(&T)"
 
 #: gui/settingsDialogs.py:672
 msgid "Report table row/column h&eaders"
-msgstr "報出表格行或列的首項目(&E)"
+msgstr "報出表格列/欄的首項目(&E)"
 
 # gui\settingsDialogs.py:322
 #: gui/settingsDialogs.py:675
@@ -3704,7 +3702,7 @@ msgstr "enter"
 # controlTypes.py:291
 #: keyUtils.py:136
 msgid "numpad enter"
-msgstr "小鍵盤 enter"
+msgstr "數字鍵盤 enter"
 
 # controlTypes.py:216
 #: keyUtils.py:137
@@ -3778,24 +3776,24 @@ msgstr "捲動鎖"
 
 #: keyUtils.py:152
 msgid "numpad left"
-msgstr "小鍵盤四"
+msgstr "數字鍵盤四"
 
 # NVDAObjects\IAccessible\winword.py:278
 #: keyUtils.py:153
 msgid "numpad right"
-msgstr "小鍵盤六"
+msgstr "數字鍵盤六"
 
 #: keyUtils.py:154
 msgid "numpad up"
-msgstr "小鍵盤八"
+msgstr "數字鍵盤八"
 
 #: keyUtils.py:155
 msgid "numpad down"
-msgstr "小鍵盤二"
+msgstr "數字鍵盤二"
 
 #: keyUtils.py:156
 msgid "numpad page up"
-msgstr "小鍵盤九"
+msgstr "數字鍵盤九"
 
 #: keyUtils.py:157
 msgid "numpad page down"
@@ -3812,19 +3810,19 @@ msgstr "小鍵盤七"
 # characterSymbols.py:47
 #: keyUtils.py:160
 msgid "numpad slash"
-msgstr "小鍵盤除號"
+msgstr "數字鍵盤除號"
 
 #: keyUtils.py:161
 msgid "numpad star"
-msgstr "小鍵盤乘號"
+msgstr "數字鍵盤乘號"
 
 #: keyUtils.py:162
 msgid "numpad minus"
-msgstr "小鍵盤減號"
+msgstr "數字鍵盤減號"
 
 #: keyUtils.py:163
 msgid "numpad plus"
-msgstr "小鍵盤加號"
+msgstr "數字鍵盤加號"
 
 # controlTypes.py:102
 #: keyUtils.py:164
@@ -3906,7 +3904,7 @@ msgstr "在按鍵放開時發生錯誤"
 # controlTypes.py:226
 #: mouseHandler.py:136
 msgid "%s cursor"
-msgstr "%s 光標"
+msgstr "%s 游標"
 
 #: pythonConsole.py:24
 msgid "Type help(object) to get help about object."
@@ -3958,7 +3956,7 @@ msgstr "已選取的都移除了"
 
 #: speech.py:677
 msgid "done dragging"
-msgstr "拖動完成"
+msgstr "拖曳完成"
 
 # textBuffer.py:231
 #: speech.py:705
@@ -4067,7 +4065,7 @@ msgstr "已加底線"
 # characterSymbols.py:50
 #: speech.py:928
 msgid "baseline"
-msgstr "基線"
+msgstr "基準線"
 
 # textBuffer.py:248
 # textBuffer.py:312
@@ -4680,22 +4678,22 @@ msgstr "沒有上一個頁框了"
 # virtualBuffers\__init__.py:339
 #: virtualBuffers/__init__.py:1248
 msgid "moves to the next separator"
-msgstr "移到下一個格位符"
+msgstr "移到下一個分隔符號"
 
 # controlTypes.py:117
 #: virtualBuffers/__init__.py:1248
 msgid "no next separator"
-msgstr "沒有下一個隔位符了"
+msgstr "沒有下一個分隔符號了"
 
 # virtualBuffers\__init__.py:350
 #: virtualBuffers/__init__.py:1249
 msgid "moves to the previous separator"
-msgstr "移到上一個格位符"
+msgstr "移到上一個分隔符號"
 
 # appModules\_default.py:189
 #: virtualBuffers/__init__.py:1249
 msgid "no previous separator"
-msgstr "沒有上一個格位符了"
+msgstr "沒有上一個分隔符號了"
 
 # virtualBuffers\__init__.py:383
 #: virtualBuffers/__init__.py:1250
