@@ -89,7 +89,7 @@ class Dialog(NVDAObject):
 			childName=child.name
 			#Ignore objects that have another object directly after them with the same name, as this object is probably just a label for that object.
 			#However, graphics, static text, separators and Windows are ok.
-			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW) and children[index+1].name==childName:
+			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANE) and children[index+1].name==childName:
 				continue
 			childText=child.makeTextInfo(textInfos.POSITION_ALL).text
 			if not childText or childText.isspace() and child.TextInfo!=NVDAObjectTextInfo:
