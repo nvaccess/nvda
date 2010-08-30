@@ -469,6 +469,13 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError
 
+	def _get_tableCellCoordsInName(self):
+		"""
+		True if the object's name contains the cell coordinates, such as 'A1'.
+		Speech and Braille can choose to in this case not present the actual row and column information as the name is already enough.
+		"""
+		return False
+
 	def _get_table(self):
 		"""Retreaves the object that represents the table that this object is contained in, if this object is a table cell.
 		@rtype: L{NVDAObject}
