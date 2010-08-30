@@ -109,11 +109,34 @@ class SymphonyText(IAccessible, EditableText):
 			return {"level": int(level)}
 		return super(SymphonyText, self).positionInfo
 
+class SymphonyTableCell(IAccessible):
+	"""Silences particular states, and redundant column/row numbers"""
+
+	def _get_states(self):
+		states=super(SymphonyTableCell,self).states
+		states.discard(controlTypes.STATE_MULTILINE)
+		states.discard(controlTypes.STATE_EDITABLE)
+		return states
+
+	def _get_tableCellCoordsInName(self):
+		return True
+
+class SymphonyParagraph(SymphonyText):
+	"""Removes redundant information that can be retreaved in other ways."""
+	value=None
+	description=None
+
 class AppModule(_default.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if isinstance(obj, IAccessible) and obj.windowClassName in ("SALTMPSUBFRAME", "SALSUBFRAME") and hasattr(obj, "IAccessibleTextObject"):
-			clsList.insert(0, SymphonyText)
+		role=obj.role
+		if isinstance(obj, IAccessible) and obj.windowClassName in ("SALTMPSUBFRAME", "SALSUBFRAME"):
+			if role==controlTypes.ROLE_TABLECELL:
+				clsList.insert(0, SymphonyTableCell)
+			elif hasattr(obj, "IAccessibleTextObject"):
+				clsList.insert(0, SymphonyText)
+			if role==controlTypes.ROLE_PARAGRAPH:
+				clsList.insert(0, SymphonyParagraph)
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName
