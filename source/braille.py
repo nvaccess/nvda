@@ -295,13 +295,13 @@ class TextInfoRegion(Region):
 		except:
 			return self.obj.makeTextInfo(textInfos.POSITION_FIRST)
 
-	def _setSelection(self, info):
-		"""Set the selection.
-		@param info: The range to which the selection should be moved.
+	def _setCursor(self, info):
+		"""Set the cursor.
+		@param info: The range to which the cursor should be moved.
 		@type info: L{textInfos.TextInfo}
 		"""
 		try:
-			info.updateSelection()
+			info.updateCaret()
 		except NotImplementedError:
 			log.debugWarning("", exc_info=True)
 
@@ -342,7 +342,7 @@ class TextInfoRegion(Region):
 		dest.collapse()
 		# and move pos characters from there.
 		dest.move(textInfos.UNIT_CHARACTER, pos)
-		self._setSelection(dest)
+		self._setCursor(dest)
 
 	def nextLine(self):
 		dest = self._line.copy()
@@ -350,7 +350,7 @@ class TextInfoRegion(Region):
 		if not moved:
 			return
 		dest.collapse()
-		self._setSelection(dest)
+		self._setCursor(dest)
 
 	def previousLine(self):
 		dest = self._line.copy()
@@ -360,7 +360,7 @@ class TextInfoRegion(Region):
 		if not moved:
 			return
 		dest.collapse()
-		self._setSelection(dest)
+		self._setCursor(dest)
 
 class CursorManagerRegion(TextInfoRegion):
 
@@ -370,7 +370,7 @@ class CursorManagerRegion(TextInfoRegion):
 	def _getSelection(self):
 		return self.obj.selection
 
-	def _setSelection(self, info):
+	def _setCursor(self, info):
 		self.obj.selection = info
 
 class ReviewTextInfoRegion(TextInfoRegion):
@@ -378,7 +378,7 @@ class ReviewTextInfoRegion(TextInfoRegion):
 	def _getSelection(self):
 		return api.getReviewPosition().copy()
 
-	def _setSelection(self, info):
+	def _setCursor(self, info):
 		api.setReviewPosition(info)
 
 class BrailleBuffer(baseObject.AutoPropertyObject):
