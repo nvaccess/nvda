@@ -114,14 +114,13 @@ class SymphonyTableCell(IAccessible):
 
 	TextInfo=SymphonyTextInfo
 
+	tableCellCoordsInName=True
+
 	def _get_states(self):
 		states=super(SymphonyTableCell,self).states
 		states.discard(controlTypes.STATE_MULTILINE)
 		states.discard(controlTypes.STATE_EDITABLE)
 		return states
-
-	def _get_tableCellCoordsInName(self):
-		return True
 
 class SymphonyParagraph(SymphonyText):
 	"""Removes redundant information that can be retreaved in other ways."""
