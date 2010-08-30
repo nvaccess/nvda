@@ -112,6 +112,8 @@ class SymphonyText(IAccessible, EditableText):
 class SymphonyTableCell(IAccessible):
 	"""Silences particular states, and redundant column/row numbers"""
 
+	TextInfo=SymphonyTextInfo
+
 	def _get_states(self):
 		states=super(SymphonyTableCell,self).states
 		states.discard(controlTypes.STATE_MULTILINE)
