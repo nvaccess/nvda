@@ -150,7 +150,7 @@ class AppModule(_default.AppModule):
 				if parent and parent.role == controlTypes.ROLE_TABLE:
 					obj.role = controlTypes.ROLE_TABLECELL
 
-		if windowClass in ("SALTMPSUBFRAME", "SALFRAME") and obj.role == controlTypes.ROLE_DOCUMENT and obj.description:
+		if windowClass in ("SALTMPSUBFRAME", "SALFRAME") and obj.role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_TEXTFRAME) and obj.description:
 			# This is a word processor document.
 			obj.description = None
 			obj.treeInterceptorClass = CompoundDocument
