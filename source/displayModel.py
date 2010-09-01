@@ -119,3 +119,16 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 			if caretRect.left>=charLeft and caretRect.right<=charRight and ((caretRect.top<=charTop and caretRect.bottom>=charBottom) or (caretRect.top>=charTop and caretRect.bottom<=charBottom)):
 				return charOffset
 		raise RuntimeError
+
+	def _setCaretOffset(self,offset):
+		rects=self._textAndRects[1]
+		if offset>=len(rects):
+			raise RuntimeError("offset %d out of range")
+		left,top,right,bottom=rects[offset]
+		x=left #+(right-left)/2
+		y=top+(bottom-top)/2
+		oldX,oldY=winUser.getCursorPos()
+		winUser.setCursorPos(x,y)
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		winUser.setCursorPos(oldX,oldY)
