@@ -132,3 +132,12 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
 		winUser.setCursorPos(oldX,oldY)
+
+	def _getSelectionOffsets(self):
+		offset=self._getCaretOffset()
+		return offset,offset
+
+	def _setSelectionOffsets(self,start,end):
+		if start!=end:
+			raise TypeError("Expanded selections not supported")
+		self._setCaretOffset(start)
