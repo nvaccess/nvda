@@ -506,7 +506,7 @@ Kun tämä valintaruutu on valittuna, NVDA ilmoittaa joka kerta, kun hiiriosoitt
 Windowsissa hiiriosoitin muuttaa muotoaan ilmaistakseen tiettyjä asioita, kuten että jokin on muokattava tai että jokin latautuu jne.
 
 %kc:setting
-==== Ota hiiren seuranta käyttöön ====
+==== Käytä hiiren seurantaa ====
 | Näppäinkomento pöytäkoneissa | NVDA+M |
 | Näppäinkomento kannettavissa | NVDA+Shift+M |
 
@@ -555,7 +555,6 @@ Se sisältää seuraavat asetukset:
 ==== Lue työkaluvihjeet ====
 Kun tämä valintaruutu on valittuna, NVDA lukee työkaluvihjeet niiden tullessa näkyviin.
 Monet ikkunat ja säätimet näyttävät pienen ilmoituksen (tai työkaluvihjeen), kun hiiri siirretään niiden päälle tai kun kohdistus siirretään niihin.
-
 
 ==== Lue kuplailmoitukset ====
 Kun tämä valintaruutu on valittuna, NVDA lukee kuplailmoitukset niiden tullessa näkyviin.
@@ -621,7 +620,7 @@ Kun esim. siirryt web-sivulla sarkaimella lomakkeen kohdalle tämän asetuksen o
 ==== Automaattinen kohdistustila kohdistimen liikuttamiseen ====
 Kun tämä asetus on käytössä, NVDA siirtyy automaattisesti kohdistustilaan ja pois nuolinäppäimillä liikuttaessa.
 Jos esim. web-sivua nuolinäppäimillä selatessasi tulet muokkauskentän kohdalle, NVDA ottaa kohdistustilan käyttöön automaattisesti.
-Jos siirryt nuolilla siitä pois, NVDA vaihtaa takaisin selaustilaan.
+Jos siirryt nuolilla pois muokkauskentästä, NVDA vaihtaa takaisin selaustilaan.
 
 ==== Ilmaise kohdistus- ja selaustilat äänimerkeillä ====
 Jos tämä asetus on käytössä, NVDA soittaa äänimerkin vaihtaessaan näennäispuskurissa selaus- ja kohdistustilojen välillä sen sijaan, että niistä ilmoitettaisiin puheena.
@@ -703,10 +702,10 @@ Muuttaaksesi sitä, miten NVDA on määritelty kirjautumis- ja käyttäjätilien
 + Lisätyökalut +
 
 ++ Näytä loki ++
-Näytä loki -toiminnolla, joka löytyy NVDA-valikon Työkalut-valikosta, voidaan tutkia kaikkia NVDA:n viime käynnistyksen jälkeen tulleita lokimerkintöjä.
+Näytä loki -toiminnolla, joka löytyy NVDA-valikon Työkalut-alavalikosta, voidaan tutkia kaikkia NVDA:n viime käynnistyksen jälkeen tulleita lokimerkintöjä.
 
 Lokin sisällön lukemisen lisäksi voit myös tallentaa sen tiedostoon tai päivittää sisällön, jotta uusimmat lokin avaamisen jälkeen tulleet merkinnät näytetään.
-Nämä toiminnot ovat käytettävissä lokinkatselutoiminnon Tiedosto-valikossa.
+Nämä toiminnot ovat käytettävissä Näytä loki -sovelluksen Tiedosto-valikossa.
 
 ++ Näytä puhe ++
 Näkeville ohjelmistokehittäjille tai NVDA:ta näkevälle yleisölle esitteleville on käytettävissä kelluva ikkuna, jonka avulla voidaan näyttää kaikki NVDA:n puhuma teksti.
@@ -718,13 +717,13 @@ Kun Näytä puhe -toiminto on käytössä, sen ikkuna päivittyy ajoittain näyt
 Jos ikkunaa kuitenkin napsautetaan hiirellä tai kohdistus siirretään siihen, NVDA keskeyttää  tilapäisesti tekstin päivittämisen, jotta olemassa olevaa sisältöä voidaan helposti valita ja kopioida.
 
 ++ Python-konsoli ++
-NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-valikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen esteettömyyshierarkian tutkimisessa.
+NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alavalikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen esteettömyyshierarkian tutkimisessa.
 Katso lisätietoja [Python-konsoli-artikkelista NVDA:n web-sivustolta NVDA_URLwiki/PythonConsole].
 
 + Lisätietoja +
 Mikäli tarvitset lisätietoja tai neuvoja NVDA:han liittyen, käy  sen web-sivustolla osoitteessa NVDA_URL.
 Täältä löydät lisäohjeita sekä teknistä tukea ja yhteisöresursseja.
-Sivusto tarjoaa myös NVDA:n kehitykseen liittyvää tietoa ja resursseja.
+Sivusto tarjoaa myös NVDA:n kehitykseen liittyvää tietoa.
 
 + Tuetut puhesyntetisaattorit +[Tuetutpuhesyntetisaattorit]
 Tässä kappaleessa on tietoja NVDA:n tukemista puhesyntetisaattoreista.
@@ -738,7 +737,7 @@ eSpeak tukee yli 20 eri kieltä.
 
 Valittavissa on myös useita muunnelmia, jotka saavat puheäänen kuulostamaan erilaiselta.
 
-++ Microsoft Speech API versio++ 4 (SAPI 4) ++
+++ Microsoft Speech API versio 4 (SAPI 4) ++
 SAPI4 on Microsoftin vanhempi standardi ohjelmistopuhesyntetisaattoreille.
 Monia tätä standardia noudattavia puhesyntetisaattoreita voidaan ostaa tai ladata ilmaiseksi eri yrityksiltä ja web-sivustoilta.
 Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten luettelo (valitaan [Ääniasetukset-valintaikkunasta #Ääniasetukset] tai [Syntetisaattorin asetusrenkaasta #Syntetisaattorinasetusrengas]) sisältää kaikkien asennettujen SAPI4-syntetisaattoreiden puheäänet.
