@@ -84,6 +84,8 @@ class AdobeAcrobat(VirtualBuffer):
 			attrs = {"acrobat::stdname": ["BlockQuote"]}
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
+		elif nodeType=="graphic":
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_GRAPHIC]}
 		else:
 			return None
 		return attrs
