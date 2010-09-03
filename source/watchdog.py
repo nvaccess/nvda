@@ -4,7 +4,6 @@ import time
 import threading
 from ctypes import *
 import winUser
-import api
 from logHandler import log
 
 #settings
@@ -85,6 +84,8 @@ def _shouldRecoverAfterMinTimeout():
 	if not info.hwndFocus: return False
 	if winUser.getClassName(info.hwndFocus) in safeWindowClassSet:
 		return False
+	# Import late to avoid circular import.
+	import api
 	if not winUser.isDescendantWindow(info.hwndActive, api.getFocusObject().windowHandle):
 		# The foreground window has changed.
 		return True

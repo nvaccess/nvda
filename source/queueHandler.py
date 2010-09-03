@@ -8,6 +8,7 @@ import types
 from Queue import Queue
 import globalVars
 from logHandler import log
+import watchdog
 
 eventQueue=Queue()
 eventQueue.__name__="eventQueue"
@@ -41,6 +42,7 @@ def flushQueue(queue):
 	for count in range(queue.qsize()+1):
 		if not queue.empty():
 			(func,args,kwargs)=queue.get_nowait()
+			watchdog.alive()
 			try:
 				func(*args,**kwargs)
 			except:
@@ -63,6 +65,7 @@ def pumpAll():
 		except KeyError:
 			# Generator was cancelled. This is fine.
 			continue
+		watchdog.alive()
 		try:
 			next(gen)
 		except StopIteration:
