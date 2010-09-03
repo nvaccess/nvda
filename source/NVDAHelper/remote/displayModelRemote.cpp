@@ -53,26 +53,28 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 		}
 		displayModelsByWindow.release();
 	}
-	wstring text;
-	deque<RECT> characterRects;
-	tempModel->renderText(textRect,minHorizontalWhitespace,minVerticalWhitespace,hasDescendantWindows,text,characterRects);
-	if(hasDescendantWindows) {
-		tempModel->requestDelete();
-	} else if(tempModel) {
-		tempModel->release();
+	if(tempModel) {
+		wstring text;
+		deque<RECT> characterRects;
+		tempModel->renderText(textRect,minHorizontalWhitespace,minVerticalWhitespace,hasDescendantWindows,text,characterRects);
+		if(hasDescendantWindows) {
+			tempModel->requestDelete();
+		} else {
+			tempModel->release();
+		}
+		*textBuf=SysAllocStringLen(text.c_str(),text.size());
+		size_t cpBufSize=characterRects.size()*4;
+		// Hackishly use a BSTR to contain points.
+		wchar_t* cpTempBuf=(wchar_t*)malloc(cpBufSize*sizeof(wchar_t));
+		wchar_t* cpTempBufIt=cpTempBuf;
+		for(deque<RECT>::const_iterator cpIt=characterRects.begin();cpIt!=characterRects.end();++cpIt) {
+			*(cpTempBufIt++)=(wchar_t)cpIt->left;
+			*(cpTempBufIt++)=(wchar_t)cpIt->top;
+			*(cpTempBufIt++)=(wchar_t)cpIt->right;
+			*(cpTempBufIt++)=(wchar_t)cpIt->bottom;
+		}
+		*characterRectsBuf=SysAllocStringLen(cpTempBuf,cpBufSize);
+		free(cpTempBuf);
 	}
-	*textBuf=SysAllocStringLen(text.c_str(),text.size());
-	size_t cpBufSize=characterRects.size()*4;
-	// Hackishly use a BSTR to contain points.
-	wchar_t* cpTempBuf=(wchar_t*)malloc(cpBufSize*sizeof(wchar_t));
-	wchar_t* cpTempBufIt=cpTempBuf;
-	for(deque<RECT>::const_iterator cpIt=characterRects.begin();cpIt!=characterRects.end();++cpIt) {
-		*(cpTempBufIt++)=(wchar_t)cpIt->left;
-		*(cpTempBufIt++)=(wchar_t)cpIt->top;
-		*(cpTempBufIt++)=(wchar_t)cpIt->right;
-		*(cpTempBufIt++)=(wchar_t)cpIt->bottom;
-	}
-	*characterRectsBuf=SysAllocStringLen(cpTempBuf,cpBufSize);
-	free(cpTempBuf);
 	return 0;
 }
