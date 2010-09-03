@@ -213,7 +213,7 @@ void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* other
 	}
 }
 
-void displayModel_t::renderText(const RECT& rect, int minHorizontalWhitespace, int minVerticalWhitespace, wstring& text, deque<RECT>& characterRects) {
+void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitespace, const int minVerticalWhitespace, const bool stripOuterWhitespace, wstring& text, deque<RECT>& characterRects) {
 	RECT tempRect;
 	wstring curLineText;
 	deque<RECT> curLineCharacterRects;
@@ -253,7 +253,7 @@ void displayModel_t::renderText(const RECT& rect, int minHorizontalWhitespace, i
 				if(chunk->rect.bottom>curLineMaxBottom) curLineMaxBottom=chunk->rect.bottom;
 			}
 			//Add space before this chunk if necessary
-			if((chunk->rect.left-lastChunkRight)>=minHorizontalWhitespace) {
+			if(((chunk->rect.left-lastChunkRight)>=minHorizontalWhitespace)&&(lastChunkRight>rect.left||!stripOuterWhitespace)) {
 				curLineText+=L" ";
 				tempRect.left=lastChunkRight;
 				tempRect.top=curLineBaseline-1;
@@ -277,7 +277,7 @@ void displayModel_t::renderText(const RECT& rect, int minHorizontalWhitespace, i
 		}
 		if((chunkIt==chunksByYX.end()||chunkIt->first.first>curLineBaseline)&&curLineText.length()>0) {
 			//This is the end of the line
-			if((curLineMinTop-lastLineBottom)>=minVerticalWhitespace) {
+			if(((curLineMinTop-lastLineBottom)>=minVerticalWhitespace)&&(lastLineBottom>rect.top||!stripOuterWhitespace)) {
 				//There is space between this line and the last,
 				//Insert a blank line in between.
 				text+=L"\n";
@@ -305,7 +305,7 @@ void displayModel_t::renderText(const RECT& rect, int minHorizontalWhitespace, i
 			if(chunk&&isTempChunk) delete chunk;
 		}
 	}
-	if((rect.bottom-lastLineBottom)>=minVerticalWhitespace) {
+	if(!stripOuterWhitespace&&(rect.bottom-lastLineBottom)>=minVerticalWhitespace) {
 		//There is a gap between the bottom of the final line and the bottom of the requested rectangle,
 		//So add a blank line.
 		text+=L"\n";

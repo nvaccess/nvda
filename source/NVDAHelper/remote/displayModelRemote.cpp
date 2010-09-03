@@ -25,26 +25,42 @@ BOOL CALLBACK EnumChildWindowsProc(HWND hwnd, LPARAM lParam) {
 }
 
 error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, const long windowHandle, const int left, const int top, const int right, const int bottom, const int minHorizontalWhitespace, const int minVerticalWhitespace, BSTR* textBuf, BSTR* characterRectsBuf) {
-	const HWND hwnd=(HWND)windowHandle;
+	HWND hwnd=(HWND)windowHandle;
 	deque<HWND> windowDeque;
 	EnumChildWindows(hwnd,EnumChildWindowsProc,(LPARAM)&windowDeque);
 	windowDeque.push_back(hwnd);
-	displayModel_t* tempModel=new displayModel_t;
+	const bool hasDescendantWindows=(windowDeque.size()>1);
 	RECT textRect={left,top,right,bottom};
-	for(deque<HWND>::reverse_iterator i=windowDeque.rbegin();i!=windowDeque.rend();++i) {
+	displayModel_t* tempModel=NULL;
+	if(hasDescendantWindows) {
+		tempModel=new displayModel_t;
+		for(deque<HWND>::reverse_iterator i=windowDeque.rbegin();i!=windowDeque.rend();++i) {
+			displayModelsByWindow.acquire();
+			displayModelsMap_t<HWND>::iterator j=displayModelsByWindow.find(*i);
+			if(j!=displayModelsByWindow.end()) {
+				j->second->acquire();
+				j->second->copyRectangleToOtherModel(textRect,tempModel,FALSE,textRect.left,textRect.top);
+				j->second->release();
+			}
+			displayModelsByWindow.release();
+		}
+	} else { //hasDescendantWindows is False
 		displayModelsByWindow.acquire();
-		displayModelsMap_t<HWND>::iterator j=displayModelsByWindow.find(*i);
-		if(j!=displayModelsByWindow.end()) {
-			j->second->acquire();
-			j->second->copyRectangleToOtherModel(textRect,tempModel,FALSE,textRect.left,textRect.top);
-			j->second->release();
+		displayModelsMap_t<HWND>::iterator i=displayModelsByWindow.find(hwnd);
+		if(i!=displayModelsByWindow.end()) {
+			i->second->acquire();
+			tempModel=i->second;
 		}
 		displayModelsByWindow.release();
 	}
 	wstring text;
 	deque<RECT> characterRects;
-	tempModel->renderText(textRect,minHorizontalWhitespace,minVerticalWhitespace,text,characterRects);
-	tempModel->requestDelete();
+	tempModel->renderText(textRect,minHorizontalWhitespace,minVerticalWhitespace,hasDescendantWindows,text,characterRects);
+	if(hasDescendantWindows) {
+		tempModel->requestDelete();
+	} else if(tempModel) {
+		tempModel->release();
+	}
 	*textBuf=SysAllocStringLen(text.c_str(),text.size());
 	size_t cpBufSize=characterRects.size()*4;
 	// Hackishly use a BSTR to contain points.

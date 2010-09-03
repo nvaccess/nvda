@@ -105,7 +105,7 @@ class displayModel_t: public LockableAutoFreeObject  {
  * @param text a string in which all the rendered text will be placed.
  * @param characterPoints a deque in which the points for each character in text will be placed.
  */
-	void renderText(const RECT& rect, int minHorizontalWhitespace, int minVerticalWhitespace, std::wstring& text, std::deque<RECT>& characterRects);
+	void renderText(const RECT& rect, const int minHorizontalWhitespace, const int minVerticalWhitespace, const bool stripOuterWhitespace, std::wstring& text, std::deque<RECT>& characterRects);
 
 };
 
