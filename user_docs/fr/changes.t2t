@@ -6,7 +6,6 @@
 = 2010.2 =
 
 == Nouvelles fonctionnalités ==
-
 - La navigation parmi les objets avec le curseur de revue a été grandement simplifiée. Le curseur de revue exclut maintenant les objets inutiles; par exemple, les objets ne servant qu'à des fins d'affichage ou les objets non disponibles.
 - Dans les applications utilisant le Java Access Bridge (parmi lesquelles OpenOffice.org), la mise en forme du texte peut maintenant être annoncée dans les zones éditables. ([[#358]], [[#463]])
 - Quand on déplace la souris parmi des cellules Microsoft Excel, NVDA les annonce correctement.
@@ -28,20 +27,27 @@
 - Introduction de commandes pour la navigation dans l'écran : (#58)
  - NVDA+pavnum7  active la navigation dans l'écran, place le curseur de revue à la position de l'objet en cours, vous permettant d'explorer l'écran (ou un document) avec les commandes de revue de texte.
  - NVDA+pavnum1 Amène le curseur de revue dans l'objet représenté par le texte à la position du curseur de revue, vous permettant de naviguer par objets à partir de ce point.
+- Les paramètres courants de NVDA peuvent maintenant être copiés sur
+les écrans sécurisés de Windows tels que l'écran de connexion ou l'écran UAC en pressant un bouton dans le dialogue Paramètres généraux. (#730)
 
 
 == Changements ==
-
 - Les commandes dire tout à partir de l'objet de navigation (NVDA+pavNumPlus), déplacer l'objet de navigation à l'objet suivant de même niveau (NVDA+pavNum6) et déplacer l'objet de navigation à l'objet précédent de même niveau (NVDA+pavNum4) ont été supprimées pour le moment. Elles sont boguées et cela libère des touches pour d'éventuelles nouvelles fonctionnalités.
 - Dans le dialogue Synthétiseurs, seul le nom du synthétiseur est maintenant affiché. Précédemment, il était préfixé par le nom du pilote, ce qui n'a d'intérêt qu'en interne.
 - Dans les applications embarquées ou les tampons virtuels à l'intérieur d'un autre tampon virtuel (ex. Flash), vous pouvez maintenant presser nvda+control+espace pour quitter l'application embarquée ou le tampon virtuel et retourner au document de niveau supérieur. Précédemment, on utilisait nvda+espace. Maintenant, nvda+espace est utilisé uniquement pour basculer entre le mode formulaire et le mode navigation dans les tampons virtuels.
 - Si la visionneuse de parole (activée dans le menu Outils) reçoit le focus (ex. on a cliqué dessus) son contenu ne sera pas raffraîchi jusqu'à ce qu'on la quitte. Cela permet de sélectionner plus facilement le texte (Ex. pour copie).
 - la visionneuse de journal et la console Python sont maximisées quand elles sontactivées.
 - Quand le focus est dans une feuille de travail sous MS Excel, et que plusieurscellules sont sélectionnées, l'ensemble des sélections est annoncée, plutôt  que juste la cellule active. (#763)
+- La sauvegarde de la configuration, et la modification de certaines options sensibles, sont maintenant désactivées quand NVDA s'exécute en mode sécurisé. (sur les écrans de connexion ou UAC).
+- Mise à jour du synthétiseur eSpeak  à la version 1.44.01.
+- Si NVDA est en cours d'exécution, L'activation du raccourci de NVDA sur le bureau (ou control+alt+n) arrêtera et relancera NVDA.
+- Suppression de la case à cocher Annoncer le texte souris du dialogue Paramètres de la souris, remplacé par une case à cocher "Activer le suivi de la souris qui convient mieux au script Bascule du sivi de la souris (NVDA+m).
+- Mise à jour de la configuration clavier Laptop pour qu'elle contienne toutes les commandes disponibles dans la configuration Desktop et qu'elle fonctionne sur les claviers non anglophones. (#798, #800)
+- Améliorations et mises à jour significatives de la documentation incluant la documentation de la configuration clavier Laptop et la synchronisation entre le manuel Référence rapide des touches de commande et le guide utilisateur. (#455)
+- Mise à jour du traducteur braille Liblouis à la version 2.10. Cela corrige en particulier des problèmes avec les tables de conversion chinoises et l'affichage des caractères non définis dans les tables. (#484, #499)
 
 
 == Corrections de bogues ==
-
 - Sous µTorrent, l'élément focalisé dans la liste de torrents n'est plus répété indéfiniment et ne vole plus le focus quand un menu s'ouvre.**
 - Sous µTorrent, les noms des fichiers dans la liste de contenu du torrent sont maintenant annoncés.
 - Dans les applications Mozilla, le focus est maintenant détecté correctement quand il arrive sur un tableau ou une arborescence vide.
@@ -62,6 +68,9 @@
 - NVDA peut de nouveau lire ligne par ligne dans certaines zones de texte problématiques sous Internet Explorer 8. (#467)
 - Windows Live Messenger 2009 ne s'arrête plus immédiatement après avoir démarré quand NVDA est actif. (#677)
 - Dans les navigateurs internet, il n'est plus nécessaire de presser tab pour interagir avec les contenus embarqués comme les contenus flash après avoir pressé entrée sur l'objet embarqué ou en revenant d'une autre application. (#775)
+- Dans les contrôles Scintilla (ex: Notepad++) le début des longues lignes n'est plus tronqué quand il sort de l'écran. Ces longues lignes sont également correctement affichées en Braille quand elles sont sélectionnées.
+- Sous Loudtalks, il est maintenant possible d'accéder à la liste des contacts.
+- L'url du document et "MSAAHTML Registered Handler" ne sont plus annoncés de manière incongrue sous Internet Explorer et les autres contrôles MSHTML. (#811)
 
 
 = 2010.1 =
