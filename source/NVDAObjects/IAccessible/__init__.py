@@ -1437,6 +1437,14 @@ class ReBarWindow32Client(IAccessible):
 	def _get_lastChild(self):
 		return super(IAccessible,self).lastChild
 
+#A class for the listview window class, found sof ar only in the Cygwin Setup program.
+#Makes sure its available in simple review mode, and uses display model
+class ListviewPane(IAccessible):
+	presentationType=IAccessible.presType_content
+	role=controlTypes.ROLE_LIST
+	TextInfo=displayModel.DisplayModelTextInfo
+	name=""
+
 ###class mappings
 
 _staticMap={
@@ -1505,4 +1513,5 @@ _staticMap={
 	("QWidget",oleacc.ROLE_SYSTEM_APPLICATION):"qt.Application",
 	("Shell_TrayWnd",oleacc.ROLE_SYSTEM_CLIENT):"Taskbar",
 	("Shell DocObject View",oleacc.ROLE_SYSTEM_CLIENT):"ShellDocObjectView",
+	("listview",oleacc.ROLE_SYSTEM_CLIENT):"ListviewPane",
 }
