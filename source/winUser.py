@@ -419,7 +419,10 @@ def getWindowStyle(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_STYLE)
 
 def getPreviousWindow(hwnd):
-		return user32.GetWindow(hwnd,GW_HWNDPREV)
+		try:
+			return user32.GetWindow(hwnd,GW_HWNDPREV)
+		except WindowsError:
+			return 0
 
 def getKeyboardLayout(idThread=0):
 	return user32.GetKeyboardLayout(idThread)
