@@ -52,6 +52,8 @@ def main():
 	for f in poFiles:
 		print f
 		msgfmt.make(f, None)
+		#Clear msgfmt.MESSAGES so that msgfmt.make can safely be called again in the next iteration
+		msgfmt.MESSAGES.clear()
 	print
 
 	print "HTML documentation (except Key Commands):"
