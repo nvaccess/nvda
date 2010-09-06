@@ -9,6 +9,7 @@ from comtypes import COMError
 import comtypes.client
 import comtypes.automation
 from comtypes import IServiceProvider
+import contextlib
 import winUser
 import oleacc
 import IAccessibleHandler
@@ -146,22 +147,21 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		#MoveToPoint fails on Some (possibly floated) textArea elements.
 		#Instead use the physical selection, by moving it with key presses, to work out the line.
 		#This approach is somewhat slower, and less accurate.
-		selObj=parent.document.selection
-		oldSelRange=selObj.createRange().duplicate()
-		textRange.select()
-		sendKey(key("extendedHome"))
-		api.processPendingEvents()
-		newSelStartMark=selObj.createRange().getBookmark()
-		sendKey(key("extendedEnd"))
-		api.processPendingEvents()
-		newSelEndMark=selObj.createRange().getBookmark()
-		tempRange.moveToBookmark(newSelStartMark)
-		textRange.setEndPoint("startToStart",tempRange)
-		tempRange.moveToBookmark(newSelEndMark)
-		textRange.setEndPoint("endToStart",tempRange)
-		oldSelRange.select()
-
-
+		with self.obj.suspendCaretEvents():
+			selObj=parent.document.selection
+			oldSelRange=selObj.createRange().duplicate()
+			textRange.select()
+			sendKey(key("extendedHome"))
+			api.processPendingEvents(False)
+			newSelStartMark=selObj.createRange().getBookmark()
+			sendKey(key("extendedEnd"))
+			api.processPendingEvents(False)
+			newSelEndMark=selObj.createRange().getBookmark()
+			tempRange.moveToBookmark(newSelStartMark)
+			textRange.setEndPoint("startToStart",tempRange)
+			tempRange.moveToBookmark(newSelEndMark)
+			textRange.setEndPoint("endToStart",tempRange)
+			oldSelRange.select()
 
 	def __init__(self,obj,position,_rangeObj=None):
 		super(MSHTMLTextInfo,self).__init__(obj,position)
@@ -284,6 +284,20 @@ class MSHTML(IAccessible):
 
 	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD','HTML','PARAM']
 	HTMLNodeNameEmbedList=['OBJECT','EMBED','APPLET','FRAME','IFRAME']
+
+	_ignoreCaretEvents=False #:Set to true when moving the caret to calculate lines, event_caret will be disabled.
+
+	@contextlib.contextmanager
+	def suspendCaretEvents(self):
+		"""Suspends caret events while you need to move the caret to calculate things."""
+		oldVal=self._ignoreCaretEvents
+		self._ignoreCaretEvents=True
+		yield oldVal
+		self._ignoreCaretEvents=oldVal
+
+	def event_caret(self):
+		if self._ignoreCaretEvents: return
+		return super(MSHTML,self).event_caret()
 
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
