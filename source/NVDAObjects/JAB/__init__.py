@@ -341,6 +341,9 @@ class JAB(Window):
 		else:
 			return None
 
+	def _get_childCount(self):
+		return self._JABAccContextInfo.childrenCount
+
 	def _get_children(self):
 		children=[]
 		for index in range(self._JABAccContextInfo.childrenCount):
