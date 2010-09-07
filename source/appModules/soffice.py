@@ -10,7 +10,7 @@ import _default
 import controlTypes
 import textInfos
 from compoundDocuments import CompoundDocument
-from NVDAObjects.JAB import JAB
+from NVDAObjects.JAB import JAB, JABTextInfo
 from NVDAObjects.IAccessible import IAccessible, IA2TextTextInfo
 from NVDAObjects.behaviors import EditableText
 from logHandler import log
@@ -42,6 +42,23 @@ class JAB_OOTableCell(JAB):
 
 	role=controlTypes.ROLE_TABLECELL
 	tableCellCoordsInName=True
+
+	def _get_name(self):
+		name=super(JAB_OOTableCell,self).name
+		if name and name.startswith('Cell') and name[-2].isdigit():
+			name=name[5:-1]
+		return name
+
+	def _get_value(self):
+		value=super(JAB_OOTableCell,self).value
+		if not value and issubclass(self.TextInfo,JABTextInfo):
+			value=self.makeTextInfo(textInfos.POSITION_ALL).text
+		return value
+
+	def _get_states(self):
+		states=super(JAB_OOTableCell,self).states
+		states.discard(controlTypes.STATE_EDITABLE)
+		return states
 
 	def _get_rowNumber(self):
 		try:
