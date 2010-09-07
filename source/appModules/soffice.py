@@ -15,6 +15,46 @@ from NVDAObjects.IAccessible import IAccessible, IA2TextTextInfo
 from NVDAObjects.behaviors import EditableText
 from logHandler import log
 
+def gridCoordStringToNumbers(coordString):
+	if len(coordString)<2 or ' ' in coordString or coordString[0].isdigit() or not coordString[-1].isdigit(): 
+		raise ValueError("bad coord string: %s"%coordString) 
+	rowNum=0
+	colNum=0
+	coordStringRowStartIndex=None
+	for index,ch in enumerate(reversed(coordString)):
+		if not ch.isdigit():
+			coordStringRowStartIndex=len(coordString)-index
+			break
+	rowNum=int(coordString[coordStringRowStartIndex:])
+	for index,ch in enumerate(reversed(coordString[0:coordStringRowStartIndex])):
+		colNum+=((ord(ch.upper())-ord('A')+1)*(26**index))
+	return rowNum,colNum
+
+class JAB_OOTable(JAB):
+
+	def _get_rowCount(self):
+		return 0
+
+	def _get_columnCount(self):
+		return 0
+
+class JAB_OOTableCell(JAB):
+
+	role=controlTypes.ROLE_TABLECELL
+	tableCellCoordsInName=True
+
+	def _get_rowNumber(self):
+		try:
+			return gridCoordStringToNumbers(self.name)[0]
+		except ValueError:
+			return 0
+
+	def _get_columnNumber(self):
+		try:
+			return gridCoordStringToNumbers(self.name)[1]
+		except ValueError:
+			return 0
+
 class SymphonyTextInfo(IA2TextTextInfo):
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
@@ -131,13 +171,21 @@ class AppModule(_default.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		role=obj.role
-		if isinstance(obj, IAccessible) and obj.windowClassName in ("SALTMPSUBFRAME", "SALSUBFRAME"):
+		windowClassName=obj.windowClassName
+		if isinstance(obj, IAccessible) and windowClassName in ("SALTMPSUBFRAME", "SALSUBFRAME"):
 			if role==controlTypes.ROLE_TABLECELL:
 				clsList.insert(0, SymphonyTableCell)
 			elif hasattr(obj, "IAccessibleTextObject"):
 				clsList.insert(0, SymphonyText)
 			if role==controlTypes.ROLE_PARAGRAPH:
 				clsList.insert(0, SymphonyParagraph)
+		if isinstance(obj, JAB) and windowClassName == "SALFRAME":
+			if role in (controlTypes.ROLE_PANEL,controlTypes.ROLE_LABEL):
+				parent=obj.parent
+				if parent and parent.role==controlTypes.ROLE_TABLE:
+					clsList.insert(0,JAB_OOTableCell)
+			elif role==controlTypes.ROLE_TABLE:
+				clsList.insert(0,JAB_OOTable)
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName
@@ -145,10 +193,6 @@ class AppModule(_default.AppModule):
 			# OpenOffice.org has some strange role mappings due to its use of JAB.
 			if obj.role == controlTypes.ROLE_CANVAS:
 				obj.role = controlTypes.ROLE_DOCUMENT
-			elif obj.role == controlTypes.ROLE_LABEL:
-				parent = obj.parent
-				if parent and parent.role == controlTypes.ROLE_TABLE:
-					obj.role = controlTypes.ROLE_TABLECELL
 
 		if windowClass in ("SALTMPSUBFRAME", "SALFRAME") and obj.role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_TEXTFRAME) and obj.description:
 			# This is a word processor document.
