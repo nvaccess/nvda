@@ -40,18 +40,22 @@ HWND findRealMozillaWindow(HWND hwnd) {
 	}
 	wchar_t className[256];
 	bool foundWindow=false;
+	HWND tempWindow=hwnd;
 	do {
-		if(GetClassName(hwnd,className,256)==0) {
+		if(GetClassName(tempWindow,className,256)==0) {
 			DEBUG_MSG(L"Could not get class name for window "<<hwnd);
 			return hwnd;
 		}
-		DEBUG_MSG(L"class name for window "<<hwnd<<L" is "<<className);
+		DEBUG_MSG(L"class name for window "<<tempWindow<<L" is "<<className);
 		if(wcscmp(L"MozillaWindowClass",className)!=0) {
 			foundWindow=true;
 		} else {
-			hwnd=GetAncestor(hwnd,GA_PARENT);
+			tempWindow=GetAncestor(tempWindow,GA_PARENT);
 		}
-	} while(hwnd&&!foundWindow);
+	} while(tempWindow&&!foundWindow);
+	if(GetClassName(tempWindow,className,256)!=0&&wcsstr(className,L"Mozilla")==className) { 
+		hwnd=tempWindow;
+	}
 	DEBUG_MSG(L"Found window "<<hwnd);
 	return hwnd;
 }

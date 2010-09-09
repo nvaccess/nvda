@@ -448,9 +448,12 @@ the NVDAObject for IAccessible
 				windowHandle=IAccessibleObject.windowHandle
 			except COMError, e:
 				log.debugWarning("IAccessible2::windowHandle failed: %s" % e)
-			#Mozilla Gecko: we can never use a MozillaWindowClass window
-			while windowHandle and winUser.getClassName(windowHandle)=="MozillaWindowClass":
-				windowHandle=winUser.getAncestor(windowHandle,winUser.GA_PARENT)
+			#Mozilla Gecko: we can never use a MozillaWindowClass window for Gecko 1.9
+			tempWindow=windowHandle
+			while tempWindow and winUser.getClassName(tempWindow)=="MozillaWindowClass":
+				tempWindow=winUser.getAncestor(tempWindow,winUser.GA_PARENT)
+			if tempWindow and winUser.getClassName(tempWindow).startswith('Mozilla'):
+				windowHandle=tempWindow
 		try:
 			Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
 		except:

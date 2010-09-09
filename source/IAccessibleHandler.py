@@ -560,8 +560,12 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			return
 
 		if childID<0:
-			while window and not winUser.getWindowStyle(window)&winUser.WS_POPUP and winUser.getClassName(window)=="MozillaWindowClass":
-				window=winUser.getAncestor(window,winUser.GA_PARENT)
+			tempWindow=window
+			while tempWindow and not winUser.getWindowStyle(tempWindow)&winUser.WS_POPUP and winUser.getClassName(tempWindow)=="MozillaWindowClass":
+				tempWindow=winUser.getAncestor(tempWindow,winUser.GA_PARENT)
+			if tempWindow and winUser.getClassName(tempWindow).startswith('Mozilla'):
+				window=tempWindow
+
 		windowClassName=winUser.getClassName(window)
 		#At the moment we can't handle show, hide or reorder events on Mozilla Firefox Location bar,as there are just too many of them
 		#Ignore show, hide and reorder on MozillaDropShadowWindowClass windows.
