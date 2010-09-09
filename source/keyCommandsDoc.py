@@ -243,7 +243,7 @@ class KeyCommandsMaker(object):
 		# There should now be a blank line.
 		line = next(self._ug).strip()
 		if line:
-			raise KeyCommandsError("setting command: The keyboard shortcuts must be followed by a blank line")
+			raise KeyCommandsError("setting command: The keyboard shortcuts must be followed by a blank line. Multiple keys must be included in a table. Erroneous key: %s"%key)
 
 		# Finally, the next line should be the description.
 		desc = next(self._ug).strip()
