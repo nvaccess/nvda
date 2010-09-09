@@ -5,6 +5,8 @@
 
 = 2010.2 =
 
+A jelenlegi kiadás főbb újdonságai közé tartozik az egyszerűbb és jóval hatékonyabb objektum navigálás, virtuális kijelző az Adobe Flash tartalmakhoz, megnövelt hatékonyságú működés és jobb vezérlőelem felismerés az új képernyőhurok technológiának köszönhetően, síkáttekintési mód a képernyő könnyebb áttekintéséhez, az IBM Lotus Symphony dokumentumok támogatása, táblázatfejlécek felismerése a Mozilla Firefox alkalmazásban, valamint hatékonyabb felhasználói útmutató.
+
 == Újdonságok ==
 - A navigátor kurzorral való mozgás egyszerűsítve lett, mert nem lehet már nem elérhető, vagy  csak a látványt segítő objektumokra ugrani.
 - Azok az alkalmazások, melyek a Java Access bridge-t használják (ide tartozik az OpenOffice.org is), már ki tudják küldeni a szöveg formázási beállításait.  (#358, #463)
@@ -27,6 +29,7 @@
 - Új parancsok a sík áttekintés használatához: (#58)
  - NVDA+7 a numerikus billentyűzeten átvált sík áttekintés módra, ezzel az áttekintő kurzor a jelenlegi objektum pozíciójához kerül. Ebben a módban, az áttekintő kurzor parancsainak használatával, áttekinthető a teljes képernyő (vagy egy dokumentum, ha épp abban tartózkodik).
  - Az NVDA+1 a numerikus számbillentyűzeten az áttekintő kurzornál található szöveg alapján annak objektumára lép, lehetővé téve az objektumok közötti ugrást.
+- Az NVDA aktuális beállításai használhatóak a Windows biztonsági képernyőin, pl. a bejelentkező és az UAC képernyőkön. (#730)
 
 
 == Változások ==
@@ -36,6 +39,12 @@
 - Ha a beszédnéző (elérhető az eszközök menüben) fókuszt kapott (pl. rákattintottak) új szöveg nem jelenik meg mindaddig, amíg a fókusz máshova nem kerül. Ez könnyebb kijelölést eredményez (pl. másoláskor).
 - A napló néző és a Python konzol teljes méretüvé válik az aktiválásukkor.
 - az MS Excel programban, ha a fókusz egy új munkalapra kerül ahol több cella is ki van jelölve, mostantól a kijelölés tartománya hangzik el, az aktív cella helyett. (#763)
+- Az eSpeak beszédszintetizátor 1.44.03 verziójának használata.
+- Ha az NVDA már fut, parancsikonjának aktiválása az NVDA újraindítását eredményezi.
+- A 'az egérkurzornál lévő szöveg bemondása' jelölőnégyzet helyett a jelölőnégyzet 'az egérkurzor követése' nevet kapta, amely jobban illik a 'toggle mouse tracking' szkripthez (NVDA+m). 
+- A laptop billentyűzetkiosztás frissítése, mely már tartalmazza az asztali billentyűzetkiosztásban megtalálható parancsokat, valamint jól működik nem angol billentyűzeteken is. (#798, #800)
+- A felhasználói útmutató frissítése, mely a laptop billentyűzetkiosztás dokumentálása mellett egy egységesített billentyűparancs lista is helyet kapott. (#455)
+- A liblouis braille translator 2.1.0 verziójának haszhnálata. Ez a kínai braille és a nem definiált karakterkódok hatékonyabb kezelését eredményezi. (#484, #499)
 
 
 == Hiba javítások ==
@@ -59,6 +68,9 @@
 - Az NVDA ismét képes soronkénti felolvasásra problémás vezérlőelemekben, pl. Internet Explorer 8 használatakor. (#467)
 - A Windows Live Messenger 2009 program mostantól nem lép ki azonnal, ha az NVDA már fut. (#677)
 - Webdokumentumok használatakor már nincs szükség a tab billentyű használatára beágyazott objektumokra lépéshez (pl. Flash tartalom), az enter billentyű megnyomása után, vagy ha visszatér egy webdokumentumhoz. (#775)
+- Scintilla vezérlőelemekben (pl. Notepad++) a hosszú sorok most már helyesen kerülnek felolvasásra, ha azok a képernyő szélén túlhaladnak. Ez már Braille kijelzőkön is helyesen jelenik meg.
+- A Loudtalks alkalmazásban a partnerlista most már hozzáférhető.
+- Egy dokumentum URL és "MSAAHTML Registered Handler" attribútumai most már helyesen kerülnek felolvasásra az Internet Explorer és egyéb MSHTML vezérlőelemekben. (#811)
 
 
 = 2010.1 =
