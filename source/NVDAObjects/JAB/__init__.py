@@ -358,15 +358,16 @@ class JAB(Window):
 			return None
 		return index
 
-	def _get__JABRelations(self):
-		rs = self.jabContext.getAccessibleRelationSet()
-		return rs.relations[:rs.relationCount]
-
 	def _getJABRelationFirstTarget(self, key):
-		for relation in self._JABRelations:
-			if relation.key == key:
-				return JAB(jabContext=JABHandler.JABContext(self.jabContext.hwnd, self.jabContext.vmID, relation.targets[0]))
-		return None
+		rs = self.jabContext.getAccessibleRelationSet()
+		targetObj=None
+		for relation in rs.relations[:rs.relationCount]:
+			for target in relation.targets[:relation.targetCount]:
+				if not targetObj and relation.key == key:
+					targetObj=JAB(jabContext=JABHandler.JABContext(self.jabContext.hwnd, self.jabContext.vmID, target))
+				else:
+					JABHandler.bridgeDll.releaseJavaObject(self.jabContext.vmID,target)
+		return targetObj
 
 	def _get_flowsTo(self):
 		return self._getJABRelationFirstTarget("flowsTo")
