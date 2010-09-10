@@ -19,6 +19,9 @@ def main():
 		if action == "service_NVDALauncher":
 			import nvda_service
 			nvda_service.nvdaLauncher()
+		elif action=="launchNVDA":
+			import subprocess
+			subprocess.Popen([r"%s\nvda.exe"%sys.exec_prefix]+args)
 		elif action=="setNvdaSystemConfig":
 			import config
 			config._setSystemConfig(args[0])
