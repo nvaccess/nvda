@@ -82,10 +82,13 @@ def _shouldRecoverAfterMinTimeout():
 	info=winUser.getGUIThreadInfo(0)
 	#If hwndFocus is 0, then the OS is clearly busy and we don't want to timeout prematurely.
 	if not info.hwndFocus: return False
-	if winUser.getClassName(info.hwndFocus) in safeWindowClassSet:
-		return False
 	# Import late to avoid circular import.
 	import api
+	#If a system menu has been activated but NVDA's focus is not yet in the menu then use min timeout
+	if info.flags&winUser.GUI_SYSTEMMENUMODE and info.hwndMenuOwner and api.getFocusObject().windowClassName!='#32768':
+		return True 
+	if winUser.getClassName(info.hwndFocus) in safeWindowClassSet:
+		return False
 	if not winUser.isDescendantWindow(info.hwndActive, api.getFocusObject().windowHandle):
 		# The foreground window has changed.
 		return True
