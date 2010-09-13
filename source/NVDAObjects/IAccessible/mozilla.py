@@ -155,6 +155,7 @@ _IAccessibleRolesToOverlayClasses = {
 	oleacc.ROLE_SYSTEM_DOCUMENT: Document,
 	IAccessibleHandler.IA2_ROLE_EMBEDDED_OBJECT: EmbeddedObject,
 	"embed": EmbeddedObject,
+	"object": EmbeddedObject,
 }
 
 #: Roles that mightn't set the focused state when they are focused.
