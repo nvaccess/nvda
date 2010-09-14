@@ -21,7 +21,12 @@ def main():
 			nvda_service.nvdaLauncher()
 		elif action=="launchNVDA":
 			import subprocess
-			subprocess.Popen([r"%s\nvda.exe"%sys.exec_prefix]+args)
+			import shellapi
+			import winUser
+			shellapi.ShellExecute(0,None,
+				ur"%s\nvda.exe"%sys.exec_prefix.decode("mbcs"),
+				subprocess.list2cmdline(args).decode("mbcs"),
+				None,winUser.SW_SHOWNORMAL)
 		elif action=="setNvdaSystemConfig":
 			import config
 			config._setSystemConfig(args[0])
