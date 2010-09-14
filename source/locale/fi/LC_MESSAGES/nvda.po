@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3790\n"
+"Project-Id-Version: r3827\n"
 "POT-Creation-Date: 2007-03-04 15:37+Normaaliaika\n"
-"PO-Revision-Date: 2010-08-28 14:21+0300\n"
+"PO-Revision-Date: 2010-09-12 18:41+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: IAccessibleHandler.py:686
+#: IAccessibleHandler.py:690
 msgid "Secure Desktop"
 msgstr "Suojattu työpöytä"
 
@@ -25,7 +25,7 @@ msgstr "tuntematon näppäimistöasettelu"
 msgid "layout %s"
 msgstr "näppäimistöasettelu %s"
 
-#: NVDAObjects\IAccessible\__init__.py:1391
+#: NVDAObjects\IAccessible\__init__.py:1394
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
 
@@ -288,28 +288,28 @@ msgstr ""
 
 #: appModules\_default.py:229
 msgid "No flat review for this object"
-msgstr "Ei tasattua tarkastelua tälle objektille"
+msgstr "Ei kokonaistarkastelua tälle objektille"
 
 #: appModules\_default.py:230
 msgid ""
 "Switches to flat review for the screen (or document if currently inside one) "
 "and positions the review cursor at the location of the current object"
 msgstr ""
-"Ottaa käyttöön tasatun tarkastelun tilan, jossa koko ruutua tai "
-"asiakirjaa on mahdollista lukea, ja sijoittaa tarkastelukohdistimen nykyisen "
-"objektin kohdalle"
+"Ottaa käyttöön kokonaistarkastelutilan, jossa koko ruutua tai asiakirjaa "
+"on mahdollista lukea, ja sijoittaa tarkastelukohdistimen nykyisen objektin "
+"kohdalle"
 
 #: appModules\_default.py:242
 msgid "No object at flat review position"
-msgstr "Ei objektia tasatun tarkastelun kohdassa"
+msgstr "Ei objektia kokonaistarkastelun kohdassa"
 
 #: appModules\_default.py:243
 msgid ""
 "Moves to the object represented by the text at the position of the review "
 "cursor within flat review"
 msgstr ""
-"Siirtää siihen objektiin, joka sisältää tekstin, jota luetaan tasatun "
-"tarkastelun tilassa"
+"Siirtää objektiin, jossa tarkastelukohdistimen kohdalla oleva teksti on "
+"kokonaistarkastelutilassa"
 
 #: appModules\_default.py:248 appModules\_default.py:282
 #: appModules\_default.py:320 appModules\_default.py:334
@@ -2165,7 +2165,7 @@ msgstr "pudotuksen kohde"
 
 #: core.py:127
 msgid "Loading NVDA. Please wait..."
-msgstr "Ladataan NVDA:ta, odota..."
+msgstr "Käynnistetään NVDA, odota..."
 
 #: core.py:209
 msgid "NVDA started"
@@ -2920,7 +2920,7 @@ msgstr "Ilmoita l&uettelot"
 
 #: gui\settingsDialogs.py:684
 msgid "Report block &quotes"
-msgstr "Ilmoita sisennykset, joissa kappaleen&vaihto"
+msgstr "Ilmoita kappaleen&vaihdolliset sisennykset"
 
 #: gui\settingsDialogs.py:687
 msgid "Report lan&dmarks"

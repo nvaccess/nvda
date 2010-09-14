@@ -1,5 +1,5 @@
 ﻿Guide de l'utilisateur de NVDA NVDA_VERSION
-Dernière mise à jour : 2 Septembre 2010
+Dernière mise à jour : 3 Septembre 2010
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Référence rapide des touches de commande
@@ -51,7 +51,7 @@ NVDA est couvert par la licence GNU General Public License (Version 2). Vous ave
 Pour plus de détails, vous pouvez [lire l'intégralité de la licence http://www.gnu.org/licenses/gpl.html]>
 
 + Configuration système requise +
-- Systèmes d'Exploitation : Toutes les variantes, 32 ou 64 bits, de Windows XP, Windows Vista et Windows 7 (y compris les versions Serveur). Il est possible que NVDA fonctionne partiellement sous Windows 2000.
+- Systèmes d'exploitation : Toutes les variantes, 32 ou 64 bits, de Windows XP, Windows Vista et Windows 7 (y compris les versions Serveur). Il est possible que NVDA fonctionne partiellement sous Windows 2000.
 - Mémoire : 256 mo de RAM ou plus.
 - Vitesse processeur : 1.0 ghz ou plus.
 - Environ 50 MO d'espace disque.
@@ -69,7 +69,7 @@ Ces écrans ne sont pas accessibles avec une version portable de NVDA.
 
 + Installer NVDA +
 
-++ L'installateur de NVDA. ++
+++ L'installateur de NVDA ++
 Si vous avez l'installateur NVDA, appuyez simplement sur entrée ou double-cliquez sur le fichier et l'installateur va démarrer.
 
 Pendant que l'installateur se charge, vous entendrez la musique d'installation de NVDA. Une fois chargé, une copie temporaire de NVDA vous permettra de suivre les dialogues d'installation et installera NVDA. Notez que si une autre copie de NVDA est active au moment de l'installation, un message apparaîtra vous indiquant que la copie en cours doit être fermée.  Si vous pressez la touche "entrée" sur ce message, l'installateur fermera votre copie actuelle de NVDA pour ouvrir la sienne. Cela est nécessaire pour que l'installateur puisse mettre à jour tous les fichiers modifiés. Si une version précédente de NVDA est déjà présente sur votre système, celle-ci sera désinstallée puis le programme démarrera l'installation de la nouvelle version.
@@ -103,7 +103,7 @@ NVDA peut être configuré pour que les touches Insert du pavé numérique, Inse
 
 Par défaut, les touches insert du pavé numérique et du clavier étendu sond définies comme touche NVDA.
  
-Si vous voulez utiliser l'une des touches NVDA dans sa fonction originale (par exemple si vous voulez utiliser verrouillage majuscules pour verrouiller les majuscule après l'avoir définie comme touche NVDA) vous devrez appuyer deux fois rapidement sur la touche.
+Si vous voulez utiliser l'une des touches NVDA dans sa fonction originale (par exemple si vous voulez utiliser verrouillage majuscules pour verrouiller les majuscules après l'avoir définie comme touche NVDA) vous devrez appuyer deux fois rapidement sur la touche.
 
 +++ L'Aide Clavier +++
 Beaucoup de touches de commande sont mentionnées dans la suite de ce guide, mais une manière simple d'explorer les différentes touches de commande est d'activer l'aide clavier.
@@ -224,7 +224,7 @@ Vous disposez des commandes suivantes pour explorer du texte :
 | Aller en fin de ligne en revue | maj+pavnum3 | NVDA+maj+o | Amène le curseur de revue à la fin de la ligne courante |
 | Dire tout en revue | pavnumPlus | NVDA+maj+flècheBas | Lit en partant de la position du curseur de revue, celui-ci suivant la lecture |
 | Amener le curseur système au curseur de revue | control+pavnumMoins | NVDA+control+retourArrière | Amène le curseur système à la position du curseur de revue |
-| copier à partir le curseur de revue | NVDA+f9 | NVDA+f9 | Commence à copier le texte depuis la position du curseur de revue. La copie ne s'effectue pas jusqu'à ce qu'on indique la fin du texte à copier |
+| copier à partir du curseur de revue | NVDA+f9 | NVDA+f9 | Commence à copier le texte depuis la position du curseur de revue. La copie ne s'effectue pas jusqu'à ce qu'on indique la fin du texte à copier |
 | Copier jusqu'au curseur de revue | NVDA+f10 | NVDA+f10 | Copie depuis la position du curseur de revue préalablement définie par "copier à partir du curseur de revue" jusqu'à la position actuelle du curseur de revue. après l'appui sur cette touche, le texte est copié dans le presse-papier de Windows. |
 %kc:endInclude
 
@@ -272,7 +272,7 @@ Les documents complexes, tels que les pages web, sont représentés dans NVDA à
 
 Un Tampon Virtuel est une représentation platement textuelle du document dans laquelle on peut se déplacer avec les flèches de navigation. Des informations indiquant si le texte est un lien, un titre etc sont annoncées avec le texte pendant que vous vous déplacez.
 
-Dans un tampon virtuel, il y a deux modes d'interaction. En mode navigation, vous pouvez vous déplacer dans le texte en utilisant un curseur virtuel. En mode formulaire, vous pouvez interagir directement avec les champs d'édition, les listed déroulantes, les boutons radio en utilisant les touches que vous utiliseriez habituellement. En mode navigation, NVDA passera automatiquement en mode formulaire si vous tabulez ou cliquez sur un champ qui le requiert. Notez que presser la barre d'espace ou la touche entrée passera également NVDA en mode formulaire si le champ le permet. Vous pouvez aussi passer manuellement NVDA en mode formulaire par la combinaison de touches NVDA+Espace. Si NVDA passe automatiquement en mode formulaire suite à un clic, une pression de la touche Tab, Espace, ou Entrée, Il repassera en mode navigation si vous tabulez ou cliquez sur un champ qui le requiert, ou si vous appuyez sur la touche Echap. Cependant, si vous passez manuellement en mode formulaire par la combinaison NVDA+Espace, NVDA restera en mode formulaire jusqu'à ce que vous retourniez manuellement en mode navigation.
+Dans un tampon virtuel, il y a deux modes d'interaction. En mode navigation, vous pouvez vous déplacer dans le texte en utilisant un curseur virtuel. En mode formulaire, vous pouvez interagir directement avec les champs d'édition, les listes déroulantes, les boutons radio en utilisant les touches que vous utiliseriez habituellement. En mode navigation, NVDA passera automatiquement en mode formulaire si vous tabulez ou cliquez sur un champ qui le requiert. Notez que presser la barre d'espace ou la touche entrée passera également NVDA en mode formulaire si le champ le permet. Vous pouvez aussi passer manuellement NVDA en mode formulaire par la combinaison de touches NVDA+Espace. Si NVDA passe automatiquement en mode formulaire suite à un clic, une pression de la touche Tab, Espace, ou Entrée, Il repassera en mode navigation si vous tabulez ou cliquez sur un champ qui le requiert, ou si vous appuyez sur la touche Echap. Cependant, si vous passez manuellement en mode formulaire par la combinaison NVDA+Espace, NVDA restera en mode formulaire jusqu'à ce que vous retourniez manuellement en mode navigation.
 %kc:beginInclude
 || Nom | Touche | Description |
 | Bascule entre les modes de tampon virtuel | NVDA+espace | Bascule entre le mode formulaire et le mode navigation |
@@ -322,8 +322,8 @@ La liste d'éléments vous donne accès à une liste de liens, titres, ou repèr
 %kc:endInclude
 
 ++ Les Objets Embarqués ++
-Certaines pages peuvent  inclure du contenu riche utilisant des technologies comme Adobe Flash ou Sun Java. Quand il en rencontre dans un tampon virtuel, NVDA annonce &quot;objet embarqué&quot;. Vous pouvez presser "entrer" sur ces objets pour interagir avec eux. Si l'objet est accessible, vous pourrez interagir avec lui comme n'importe quelle autre application. Une touche de commande permet de retourner à la page contenant l'objet embarqué.
- %kc:beginInclude
+Certaines pages peuvent  inclure du contenu riche utilisant des technologies comme Adobe Flash ou Sun Java. Quand il en rencontre dans un tampon virtuel, NVDA annonce "objet embarqué". Vous pouvez presser "entrer" sur ces objets pour interagir avec eux. Si l'objet est accessible, vous pourrez interagir avec lui comme n'importe quelle autre application. Une touche de commande permet de retourner à la page contenant l'objet embarqué.
+%kc:beginInclude
 || Nom | Touche | Description |
 | Aller au tampon virtuel contenant l'objet | NVDA+control+espace | Retire le focus à l'objet embarqué en cours et le rend au tampon virtuel contenant l'objet |
 %kc:endInclude
@@ -428,8 +428,8 @@ Une case à cocher qui, cochée, indique à NVDA de dire maj pour une lettre en 
 Si cette case à cocher est cochée, NVDA émettra un petit bip chaque fois qu'il rencontre un caractère majuscule. Comme l'option "Dire maj avant les majuscules" cette option est utile pour les synthétiseurs ne pouvant pas modifier la hauteur de leur voix pour les majuscules.
 
 +++ Boucle des paramètres synthétiseur +++[SynthSettingsRing]
-Si vous voulez changer rapidement les paramètres vocaux sans passer par le dialogue Paramètres vocaux, il y a quelques touches de commandes qui vous permettent de le faire d' n'importe où quand NVDA est en fonction.
- kc:beginInclude
+Si vous voulez changer rapidement les paramètres vocaux sans passer par le dialogue Paramètres vocaux, il y a quelques touches de commandes qui vous permettent de le faire de n'importe où quand NVDA est en fonction.
+%kc:beginInclude
 || Nom | Touche Desktop | Touche Laptop | Description |
 | Aller au paramètre synthétiseur suivant | NVDA+control+flèchDroite | NVDA+control+flècheDroite | Va au prochain paramètre synthétiseur applicable, retourne au premier après le dernier |
 | Aller au paramètre synthétiseur précédent | NVDA+control+flècheGauche | NVDA+control+flècheGauche | Va au précédent paramètre synthétiseur applicable, retourne au dernier après le premier |
@@ -466,7 +466,7 @@ Touche : NVDA+control+t
 Cette option vous permet de choisir si le braille suivra le focus système ou le curseur de l'objet de navigation.
 
 +++ Paramètres du clavier (NVDA+control+k) +++
-Cette boîte de dialogue se trouve dans le menu Préférences,  sous &quot;Paramètres du clavier...&quot;. Elle comprend les options suivantes :
+Cette boîte de dialogue se trouve dans le menu Préférences,  sous "Paramètres du clavier...". Elle comprend les options suivantes :
 
 ==== Configuration du clavier ====
 Cette liste déroulante vous permet de choisir la configuration de clavier utilisé par NVDA. Actuellement, les deux configuration fournies avec NVDA sont : Desktop (ordinateur de bureau) et Laptop (ordinateur portable).
@@ -499,7 +499,7 @@ Touche : NVDA+4
 Une case à cocher qui, cochée,  fera que NVDA annonce, lors de leur frappe, toutes les touches ne correspondant pas à des caractères. Ceci inclut les combinaisons de touches telles que control plus une autre lettre.
 
 +++ Paramètres de la souris (NVDA+control+m) +++
-Le dialogue paramètres de la souris se trouve dans le menu Préférences, sous &quot;Paramètres de la souris...&quot;.
+Le dialogue paramètres de la souris se trouve dans le menu Préférences, sous "Paramètres de la souris...".
  
 ==== Annoncer les changements de forme de la souris ====
 Une case à cocher qui, cochée, fera que NVDA annonce la forme du pointeur souris chaque fois qu'elle change.  Sous Windows, le pointeur de souris change de forme pour transmettre certaines informations telles que indiquer que quelque chose devient modifiable, ou que quelque chose est en train de se charger, etc.
@@ -606,7 +606,7 @@ Les versions précédentes de NVDA permettaient d'utiliser le dialogue des param
 Cette option permet au mode formulaire d'être invoqué au changement de focus. Par exemple, dans une page web, si vous tabulez et arrivez sur un formulaire : si cette option est cochée, le mode formulaire sera automatiquement activé.
 
 ==== Mode formulaire automatique au déplacement du curseur ====
-Cette option, quand elle est cochée, permet à NVDA d'activer ou désactiver le mode formulaire quand on se déplace avec les flèches. Par exemple, si vous naviguez dans une page web avec les flèches et que vous arrivez sur une zone d'édition, NVDA passera automatiquement en mode formulaire. Si vous sortez de la zone d'écition, le mode formulaire sera automatiquement désactiv"é.
+Cette option, quand elle est cochée, permet à NVDA d'activer ou désactiver le mode formulaire quand on se déplace avec les flèches. Par exemple, si vous naviguez dans une page web avec les flèches et que vous arrivez sur une zone d'édition, NVDA passera automatiquement en mode formulaire. Si vous sortez de la zone d'édition, le mode formulaire sera automatiquement désactivé.
 
 ==== Indication audio du mode formulaire ou navigation ====
 Si cette option est activée, NVDA émettra des sons particulier au passage du mode formulaire au mode navigation plutôt que d'anoncer le changement verbalement.
@@ -615,9 +615,9 @@ Si cette option est activée, NVDA émettra des sons particulier au passage du m
 Cette boîte de dialogue se trouve dans le menu des préférences, sous "Format du document...".
 
 La plupart des cases à cocher de ce dialogue servent à définir quelles informations de mise en forme on souhaite entendre automatiquement lorsqu'on parcourt un document.
-Par exemple, si on coche la case annoncer le nom de la police, à chaque fois que les flèches amènent sur un texte avec une police différente, le nom de la police est annoncé. .
+Par exemple, si on coche la case annoncer le nom de la police, à chaque fois que les flèches amènent sur un texte avec une police différente, le nom de la police est annoncé.
 
-On peut configurer les annonce suivantes :
+On peut configurer les annonces suivantes :
 - nom de la police
 - taille de la police
 - attributs de la police
@@ -656,8 +656,8 @@ Pour ajouter une règle au dictionnaire, pressez le bouton "Ajout" puis rempliss
 
 Les règles des dictionnaires de NVDA vous permettent de remplacer une chaîne de caractères par une autre.
 
-Cependant, les dictionnaires de NVDA font bien mieux que le simple remplacement de mot. Le dialogue Ajout de règles contient une case à cocher permettant de choisir si vous voulez que la règle respecte la casse pour que NVDA tienne compte des majuscules et minuscules. Par déaut, NVDA ne tient pas compte de la casse.
-Une autre case à cocher vous permet de définir si votre modèle est une expression régulière. Une expression régulière est un modèle contenant des smboles particuliers vous permettant de trouver une correspondance sur plus d'un caractère à la fois, ou seulement sur les lettres ou les chiffres etc. Les expressions régulières ne sont pas expliquées dans ce manuel, mais on trouve, sur le web, beaucoup de tutoriels qui vous donneront plus d'informations.
+Cependant, les dictionnaires de NVDA font bien mieux que le simple remplacement de mot. Le dialogue Ajout de règles contient une case à cocher permettant de choisir si vous voulez que la règle respecte la casse pour que NVDA tienne compte des majuscules et minuscules. Par défaut, NVDA ne tient pas compte de la casse.
+Une autre case à cocher vous permet de définir si votre modèle est une expression régulière. Une expression régulière est un modèle contenant des symboles particuliers vous permettant de trouver une correspondance sur plus d'un caractère à la fois, ou seulement sur les lettres ou les chiffres etc. Les expressions régulières ne sont pas expliquées dans ce manuel, mais on trouve, sur le web, beaucoup de tutoriels qui vous donneront plus d'informations.
 
 ++ Sauvegarder et recharger la configuration ++
 
@@ -671,7 +671,7 @@ Si vous faites une erreur dans vos paramètres et avez besoin de revenir aux val
 Les touches de commande suivantes sont également utiles :
 %kc:beginInclude
 || Nom | Touche Desktop | Touche Laptop | Description |
-| Sauvegarder la co ->nfiguration | NVDA+control+c | NVDA+control+c | Sauvegarde votre configuration pour qu'elle ne soit pas perdue en quittant NVDA |
+| Sauvegarder la configuration | NVDA+control+c | NVDA+control+c | Sauvegarde votre configuration pour qu'elle ne soit pas perdue en quittant NVDA |
 | Retourner à la configuration sauvegardée | NVDA+control+r | NVDA+control+r | Retour à la configuration qui existait lors de votre dernière sauvegarde |
 %kc:endInclude
  
@@ -684,8 +684,6 @@ Cela signifie que chaque utilisateur du système peut avoir ses propres paramèt
 Pour accéder à votre répertoire de paramètres pour une version installée de NVDA, depuis le menu Démarrer vous pouvez aller à Tous les programmes -> NVDA -> Explorer les paramètres utilisateur.
 
 Les paramètres qu'utilise NVDA quand il s'exécute sur l'écran de connexion ou l'écran UAC sont enregistrés dans le répertoire systemConfig situé dans le répertoire nVDA. En général, cette configuration n'a pas à être modifiée.
-Settings for NVDA when running on the logon or UAC screens is stored in the systemConfig directory in NVDA's installation directory.
-Usually this configuration should not be touched.
 Pour modifier cette configuration, configurez nVDA à votre convenance puis demandez à NVDA de copier la configuration sur l'écran de connexion en utilisant le bouton à cet effet dans le dialogue Paramètres généraux.
    
 + Outils Additionnels +
@@ -768,8 +766,8 @@ Le terminal Braille Lilli distribué par [MDV http://www.mdvbologna.it/] est sup
 Vous n'avez besoin d'aucun pilote particulier pour utiliser ce terminal.
 Il suffit de brancher le terminal et de configurer NVDA pour l'utiliser.
 
-++ Le pilote BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] est un programme séparé qui permet de supporter beaucoup plus de terminaux braille.
+++ Le programme BRLTTY ++
+[BRLTTY http://mielke.cc/brltty/] est un programme séparé qui permet de prendre en charge beaucoup plus de terminaux braille.
 Pour l'utiliser, il vous faut installer [BRLTTY pour Windows http://brl.thefreecat.org/brltty/].
 Vous devez télécharger et installer la version la plus récente avec installateur qui s'appellera, par exemple, brltty-win-4.2-2.exe.
 Quand vous configurerez le terminal et le port à utiliser, portez une attention particulière aux instructions, en particulier si vous utilisez un terminal USB et que le pilote du constructeur est déjà installé.

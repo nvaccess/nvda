@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2010-08-26 19:02+AUSEST\n"
-"PO-Revision-Date: 2010-09-07 20:39+0100\n"
+"PO-Revision-Date: 2010-09-11 22:46+0100\n"
 "Last-Translator: Aron Ocsvari <oaron1@gmail.com>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "MIME-Version: 1.0\n"
@@ -182,7 +182,7 @@ msgstr "jobb egérgomb zárolva"
 
 #: appModules/_default.py:89
 msgid "Locks or unlocks the right mouse button"
-msgstr "A jobbegérgomb zárolása, vagy feloldása"
+msgstr "A jobb egérgomb zárolása, vagy feloldása"
 
 #: appModules/_default.py:101
 #: cursorManager.py:229
@@ -492,7 +492,7 @@ msgstr "beszédmód: %s"
 #: appModules/_default.py:569
 msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
-"Váltogat a különböző beszédmódok között. Ha ki van kapcsolva, az NVDA néma.\n"
+"Váltogat a különböző beszédmódok között. Ha ki van kapcsolva, az NVDA nem beszél.\n"
 " Hangjelzés állapotban az NVDA csipogással jelzi az információt. \n"
 "Beszéd állapotban az NVDA a megszokott módon működik."
 
@@ -554,7 +554,7 @@ msgstr "Nincs cím"
 
 #: appModules/_default.py:703
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
-msgstr "Bemondja az aktív alkalmazás, vagy az előtérben lévő ablak címét. Kétszer gyorsan megnyomva betűzi, háromszor gyorsan lenyomva pedig a vágólapra másolja a címet."
+msgstr "Bemondja az aktív alkalmazás, vagy az előtérben lévő ablak címét. Kétszer gyorsan leütve betűzi, háromszor gyorsan lenyomva pedig a vágólapra másolja a címet."
 
 #: appModules/_default.py:710
 msgid "speaks the current foreground object"
@@ -724,7 +724,7 @@ msgstr "A kijelölési kezdőpont beállítva"
 
 #: appModules/_default.py:881
 msgid "Marks the current position of the review cursor as the start of text to be copied"
-msgstr "Megjelöli a másolandó szöveg elejét"
+msgstr "Megjelöli az áttekintő kurzor aktuális helyét, ami a másolandó szöveg eleje"
 
 #: appModules/_default.py:885
 msgid "No start marker set"
@@ -2136,7 +2136,7 @@ msgstr "B&raille kijelző beállítások"
 
 #: gui/__init__.py:273
 msgid "&Keyboard Settings..."
-msgstr "billen&tyűzet..."
+msgstr "b&illentyűzet..."
 
 #: gui/__init__.py:273
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
@@ -2152,7 +2152,7 @@ msgstr "az egérmutató alakjának és a mutatónál lévő elem bemondásának 
 
 #: gui/__init__.py:277
 msgid "&Review cursor..."
-msgstr "&Áttekintő kurzor"
+msgstr "Á&ttekintő kurzor"
 
 #: gui/__init__.py:277
 msgid "Configure how and when the review cursor moves"
@@ -2180,7 +2180,7 @@ msgstr "a dokumentumok formázási tulajdonságainak beállítása"
 
 #: gui/__init__.py:283
 msgid "Document &formatting..."
-msgstr "dokumentum &formázás..."
+msgstr "&dokumentum formázás..."
 
 #: gui/__init__.py:287
 msgid "&Default dictionary..."
@@ -2208,7 +2208,7 @@ msgstr "Az ideiglenes kivételszótár beállítására szolgáló párbeszédab
 
 #: gui/__init__.py:293
 msgid "Speech &dictionaries"
-msgstr "kivétel& szótárak"
+msgstr "&kivétel szótárak"
 
 #: gui/__init__.py:294
 msgid "&Preferences"
@@ -2240,7 +2240,7 @@ msgstr "billentyűparancsok listája"
 
 #: gui/__init__.py:313
 msgid "What's &new"
-msgstr "új&donságok"
+msgstr "&újdonságok"
 
 #: gui/__init__.py:315
 msgid "Web site"
@@ -2260,7 +2260,7 @@ msgstr "Közreműködők"
 
 #: gui/__init__.py:323
 msgid "We&lcome dialog"
-msgstr "Üdvözlőképernyő"
+msgstr "&üdvözlőképernyő"
 
 #: gui/__init__.py:326
 msgid "About..."
@@ -2388,7 +2388,7 @@ msgstr "nyelv"
 
 #: gui/settingsDialogs.py:115
 msgid "&Save configuration on exit"
-msgstr "A beállítások automatikus elmentése &kilépéskor"
+msgstr "A beállítások automatikus el&mentése kilépéskor"
 
 #: gui/settingsDialogs.py:120
 msgid "&Warn before exiting NVDA"
@@ -2396,11 +2396,11 @@ msgstr "&Figyelmeztető üzenet megjelenítése kilépés előtt"
 
 #: gui/settingsDialogs.py:124
 msgid "L&ogging level:"
-msgstr "nap&lózási szint"
+msgstr "&naplózási szint"
 
 #: gui/settingsDialogs.py:127
 msgid "Log level"
-msgstr "nap&lózási szint"
+msgstr "naplózási szint"
 
 #: gui/settingsDialogs.py:137
 msgid "&Automatically start NVDA after I log on to Windows"
@@ -2456,7 +2456,7 @@ msgstr "Beszédszintetizátor"
 
 #: gui/settingsDialogs.py:199
 msgid "&Synthesizer:"
-msgstr "&Beszédszintetizátor"
+msgstr "Beszéd&szintetizátor"
 
 #: gui/settingsDialogs.py:214
 msgid "Output &device:"
@@ -2476,7 +2476,7 @@ msgstr "Beszéd beállítások"
 
 #: gui/settingsDialogs.py:322
 msgid "&Speak all punctuation"
-msgstr "Az összes &írásjel bemondása"
+msgstr "az összes &írásjel bemondása"
 
 #: gui/settingsDialogs.py:325
 msgid "Raise pitch for capitals"
@@ -2484,15 +2484,15 @@ msgstr "a hangmagasság megemelése nagybetűknél"
 
 #: gui/settingsDialogs.py:328
 msgid "Say &cap before capitals"
-msgstr "nagybetűk szóbeli&jelzése"
+msgstr "nagybetűk &szóbeli jelzése"
 
 #: gui/settingsDialogs.py:331
 msgid "&Beep for capitals"
-msgstr "nagy&betűk jelzése hangjelzéssel"
+msgstr "nagybetűk jelzése &hangjelzéssel"
 
 #: gui/settingsDialogs.py:334
 msgid "Use &spelling functionality if supported"
-msgstr "&Betűzés használata, ha támogatott"
+msgstr "&betűzés használata, ha támogatott"
 
 #: gui/settingsDialogs.py:402
 msgid "Keyboard Settings"
@@ -2520,7 +2520,7 @@ msgstr "&Karakterek bemondása gépeléskor"
 
 #: gui/settingsDialogs.py:431
 msgid "Speak typed &words"
-msgstr "Sza&vak bemondása gépeléskor"
+msgstr "&szavak bemondása gépeléskor"
 
 #: gui/settingsDialogs.py:434
 msgid "Speak command &keys"
@@ -2596,7 +2596,7 @@ msgstr "Beszéd és hangjelzés"
 
 #: gui/settingsDialogs.py:539
 msgid "Report &tooltips"
-msgstr "Eszköz&tippek bemondása"
+msgstr "&eszköztippek bemondása"
 
 #: gui/settingsDialogs.py:542
 msgid "Report &help balloons"
@@ -2608,11 +2608,11 @@ msgstr "Az elemhez tartozó &gyorsbillentyűk bemondása"
 
 #: gui/settingsDialogs.py:548
 msgid "Report object &position information"
-msgstr "Az elemek pozíciójának bem&ondása"
+msgstr "Az elemek &pozíciójának bemondása"
 
 #: gui/settingsDialogs.py:551
 msgid "Report object &descriptions"
-msgstr "Az elem leírásának be&mondása"
+msgstr "Az elem &leírásának bemondása"
 
 #: gui/settingsDialogs.py:555
 msgid "Progress &bar output:"
@@ -2632,11 +2632,11 @@ msgstr "Virtuális kijelző"
 
 #: gui/settingsDialogs.py:588
 msgid "&Maximum number of characters on one line"
-msgstr "Az egy sorban lévő karakterek &maximális száma"
+msgstr "Az egy sorban lévő &karakterek maximális száma"
 
 #: gui/settingsDialogs.py:593
 msgid "&Number of lines per page"
-msgstr "Az egy &oldalon lévő sorok száma"
+msgstr "Az egy oldalon lévő &sorok száma"
 
 #: gui/settingsDialogs.py:598
 msgid "Use &screen layout (when supported)"
@@ -2672,11 +2672,11 @@ msgstr "A betűtípus &nevének bemondása"
 
 #: gui/settingsDialogs.py:648
 msgid "Report font &size"
-msgstr "Betű&méret bemondása"
+msgstr "betű &méret bemondása"
 
 #: gui/settingsDialogs.py:651
 msgid "Report font attri&butes"
-msgstr "&betűtípus paraméterek bemondása"
+msgstr "betűtípus &paraméterek bemondása"
 
 #: gui/settingsDialogs.py:654
 msgid "Report &alignment"
@@ -2684,7 +2684,7 @@ msgstr "&igazítás bemondása"
 
 #: gui/settingsDialogs.py:657
 msgid "Report st&yle"
-msgstr "s&tílus bemondása"
+msgstr "st&ílus bemondása"
 
 #: gui/settingsDialogs.py:660
 msgid "Report spelling errors"
@@ -2748,11 +2748,11 @@ msgstr "&kis- és nagybetűk megkülönböztetése"
 
 #: gui/settingsDialogs.py:730
 msgid "Regular &expression"
-msgstr "&Szabályzott kifejezés"
+msgstr "&szabályzott kifejezés"
 
 #: gui/settingsDialogs.py:752
 msgid "&Dictionary entries"
-msgstr "Kivételszótár Bejegyzések"
+msgstr "&kivételszótár Bejegyzések"
 
 #: gui/settingsDialogs.py:755
 msgid "Comment"
@@ -2796,11 +2796,11 @@ msgstr "braille & kijelző"
 
 #: gui/settingsDialogs.py:857
 msgid "Translation &table:"
-msgstr "Fordítási &Táblázat"
+msgstr "Fordítási &tábla"
 
 #: gui/settingsDialogs.py:869
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr "a kurzornál lévő szó átalakítása számítógépes braille kóddá"
+msgstr "a kurzornál lévő szó átalakítása &számítógépes braille kóddá"
 
 #: gui/settingsDialogs.py:874
 msgid "Cursor blink rate (ms)"
@@ -2960,11 +2960,11 @@ msgstr "jobbnyíl"
 
 #: keyUtils.py:146
 msgid "up arrow"
-msgstr "Fel nyíl"
+msgstr "Felnyíl"
 
 #: keyUtils.py:147
 msgid "down arrow"
-msgstr "Le nyíl"
+msgstr "lenyíl"
 
 #: keyUtils.py:148
 msgid "applications"
@@ -2996,7 +2996,7 @@ msgstr "numerikus Felnyíl"
 
 #: keyUtils.py:155
 msgid "numpad down"
-msgstr "numerikus Lenyíl"
+msgstr "numerikus lenyíl"
 
 #: keyUtils.py:156
 msgid "numpad page up"
@@ -3303,7 +3303,7 @@ msgstr "Férfi hang 2"
 
 #: synthDrivers/silence.py:13
 msgid "No speech"
-msgstr "néma üzemmód"
+msgstr "csendes üzemmód"
 
 #: textInfos/__init__.py:137
 msgid "word"

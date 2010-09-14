@@ -1,7 +1,8 @@
 ﻿Guía del Usuario de NVDA NVDA_VERSION
-Última actualización: 16 de Marzo de 2010
+Última actualización: 23 de Agosto de 2010
 
 %!includeconf: ../userGuide.t2tconf
+%kc:title: NVDA NVDA_VERSION Referencia Rápida de Órdenes de teclado
 
 = Tabla de Contenido =[toc]
 %%toc
@@ -14,36 +15,40 @@ Proporcionando un apoyo de voz sintética, NVDA permite a personas ciegas y defi
 Lo más reseñable incluye: 
 - Capacidad de ejecutarse enteramente desde una memoria USB u otros medios portátiles sin la necesidad de instalación
 - Instalador parlante fácil de utilizar
-- Navegación por la web con [Mozilla Firefox 3 http://www.getfirefox.com/]
-- Trabajar con el Correo electrónico utilizando [Mozilla Thunderbird 3 http://www.mozillamessaging.com/en-US/thunderbird/early_releases/]
-- Soporte para Microsoft Internet Explorer
-- Soporte básico para Microsoft Outlook Express / Windows Mail
+- Navegación por la web con Mozilla Firefox o con Windows Internet Explorer
+- Trabajar con el Correo electrónico utilizando [Mozilla Thunderbird, Outlook Express o Windows Mail
 - soporte para Microsoft Word y Excel
 - Soporte para aplicaciones accesibles Java
 - Soporte para Adobe Reader
-- Soporte primario para IBM Lotus Symphony
+- Soporte para IBM Lotus Symphony
 - soporte para Sistema de Órdenes de Windows y aplicaciones de consola 
 - Anunciado automático del texto bajo el ratón e indicación audible opcional de la posición del ratón
 - Soporte para muchas Líneas de Braille efímero
 -
 
 ++ Internacionalización ++
-Es importante que cualquier persona en el mundo, sin importar qué idioma hable, tengan igual acceso a la tecnología. Actualmente NVDA ha sido traducido a cerca de 20 idiomas además del idioma inglés incluyendo: Afrikaans, Alemán, Árabe, Checo, Chino Tradicional, Croata, eSlovaco, Español, Finlandés, Francés, Gallego, Húngaro, Italiano, Japonés, Polaco, Portugués, Portugués del Brasil, Ruso, Ucraniano, Vietnammita y Tailandés.
+Es importante que cualquier persona en el mundo, sin importar qué idioma hable, tenga igual acceso a la tecnología. 
+Actualmente NVDA ha sido traducido a cerca de 20 idiomas además del idioma inglés incluyendo: Afrikaans, Alemán, Árabe, Checo, Chino Tradicional, Croata, eSlovaco, Español, Finlandés, Francés, Gallego, Húngaro, Italiano, Japonés, Polaco, Portugués, Portugués del Brasil, Ruso, Ucraniano, Vietnammita y Tailandés.
 
 ++ Soporte de Síntesis de Voz ++
-Aparte de proporcionar sus mensajes e interface en varios idiomas, NVDA también puede capacitar al usuario para leer contenidos en cualquier idioma, tanto en cuanto tengan un sintetizador de voz que pueda verbalizar ese idioma en particular. 
+Además de proporcionar sus mensajes e interface en varios idiomas, NVDA también puede capacitar al usuario para leer contenidos en cualquier idioma, tanto en cuanto tengan un sintetizador de voz que pueda verbalizar ese idioma en particular. 
 
-NVDA está integrado con [eSpeak http://espeak.sourceforge.net/], un sintetizador de voz multilingüe, libre, de código abierto. Adicionalmente, NVDA puede utilizar motores de voz tanto SAPI4 como SAPI5 para proporcionar salida de voz, así como los sintetizadores de voz Audiologic y NewFon. 
+NVDA está integrado con [eSpeak http://espeak.sourceforge.net/], un sintetizador de voz multilingüe, libre, de código abierto.
+
+Se puede encontrar información acerca de otros sintetizadores de voz que soporta NVDA en la sección [Sintetizadores de Voz soportados #SupportedSpeechSynths].
 
 ++ Soporte Braille ++
-Para usuarios que posean una línea de braille efímero, NVDA puede mostrar su información en braille. NVDA soporta las líneas Pacmate y Focus de Freedom Scientific, líneas Handy Tech, líneas ALVA BC640/680, además de muchas otras soportadas por el paquete BRLTTY si está disponible. 
+Para usuarios que posean una línea de braille efímero, NVDA puede mostrar su información en braille. 
+Por favor mira la sección [Líneas Braille Soportadas #SupportedBrailleDisplays] para información acerca de las líneas braille soportadas.
 
 NVDA soporta muchos códigos braille cubriendo un gran conjunto de idiomas. En muchos casos las versiones grado 1 y 2 de los códigos están disponibles. Para los lectores en inglés están incluídos ambos códigos, braille inglés U.S. y braille unificado inglés (UEB). 
 
 ++ Licencia y Copyright ++
 NVDA es copyright NVDA_COPYRIGHT_YEARS por los colaboradores de NVDA.
 
-NVDA está cubierto por la GNU General Public License (Versión 2). Eres libre para compartir o modificar este programa de cualquier modo que quieras aunque debes distribuir la licencia junto con el programa, y hacer todo el código fuente disponible a quien lo quiera. Esto se aplica al original y a las copias modificadas del programa, más cualquier software que utilice código tomado desde este programa. Para más detalles, puedes 
+NVDA está cubierto por la GNU General Public License (Versión 2). 
+Eres libre para compartir o modificar este programa de cualquier modo que quieras aunque debes distribuir la licencia junto con el programa, y hacer todo el código fuente disponible a quien lo quiera. 
+Esto se aplica al original y a las copias modificadas del programa, más cualquier software que utilice código tomado desde este programa. 
 
 Para más detalles, puedes [ver la licencia completa.  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
@@ -55,180 +60,276 @@ Para más detalles, puedes [ver la licencia completa.  http://www.gnu.org/licens
 -
 
 + Obteniendo NVDA +
-Si todavía no tienes una copia de NVDA, puedes descargarla [de aquí NVDA_URL].
+Si todavía no tienes una copia de NVDA, puedes descargarla de [www.nvda-project.org NVDA_URL].
 
 Ve a la sección download y encontrarás un enlace para descargar la última versión de NVDA.
 
-Actualmente hay dos formas de NVDA empaquetado. Una es un Instalador que te hablará a través de la instalación de NVDA tal que puedas entonces ejecutarlo en cualquier momento desde el Menú Inicio. La otra es un fichero zip autoextraíble que contiene una versión completamente portátil de NVDA, la cual puedes ejecutar desde cualquier lugar, incluyendo una unidad de lápiz USB o un CD. 
+Actualmente hay dos formas de NVDA empaquetado. 
+Una es un Instalador que te hablará a través de la instalación de NVDA tal que puedas entonces ejecutarlo en cualquier momento desde el Menú Inicio. 
+La otra es un fichero zip autoextraíble que contiene una versión completamente portátil de NVDA, la cual puedes ejecutar desde cualquier lugar, incluyendo una unidad de lápiz USB o un CD. 
+
+Para acceder a las pantallas de autentificación de Windows, pantallas de Control de cuentas de Usuario (UAC) u otras pantallas seguras de Windows, así como a aplicaciones ejecutándose como administrador en Windows Vista y posteriores, debes instalar NVDA en tu sistema utilizando el instalador. 
+No se puede acceder a estas pantallas utilizando una copia portátil de NVDA.
 
 + Instalando NVDA +
 
 ++ El instalador de NVDA ++
 Si ya tienes el instalador de NVDA, simplemente presiona intro o haz doble clic sobre el fichero y el instalador arrancará.
 
-Cuando el instalador se cargue, escucharás la música de instalación de NVDA. Una vez cargado, una copia temporal de NVDA te permitirá seguir los indicativos del instalador e instalar NVDA. Ten en cuenta que si hubieras ejecutado otra copia de NVDA al mismo tiempo de iniciar el instalador, un mensaje aparecerá diciéndote que tu copia previa de NVDA se cerrará. Cuando presiones intro sobre este mensaje, el instalador cerrará la copia previa e iniciará su propia copia. Esto es necesario para que el instalador pueda actualizar apropiadamente cualquier fichero cambiado. En este punto, si tienes otra copia de NVDA ya instalada, el instalador de NVDA la desinstalará por ti, y entonces comenzará a instalar NVDA. 
+Cuando el instalador se cargue, escucharás la música de instalación de NVDA. 
+Una vez cargado, una copia temporal de NVDA te permitirá seguir los indicativos del instalador e instalar NVDA. 
+Ten en cuenta que si hubieras ejecutado otra copia de NVDA al mismo tiempo de iniciar el instalador, un mensaje aparecerá diciéndote que tu copia previa de NVDA se cerrará. 
+Cuando presiones intro sobre este mensaje, el instalador cerrará la copia previa e iniciará su propia copia. 
+Esto es necesario para que el instalador pueda actualizar apropiadamente cualquier fichero cambiado. 
+En este punto, si tienes otra copia de NVDA ya instalada, el instalador de NVDA la desinstalará por ti, y entonces comenzará a instalar NVDA. 
 
-Una vez que hayas completado la instalación con éxito, el instalador te avisará de que la instalación de NVDA ha finalizado. Si estás reinstalando NVDA, podrá preguntarte por el reinicio del sistema en ese punto. Es muy importante que reinicies el sistema sin falta o tendrás consecuencias indeseables. Si no te hizo la pregunta sobre el reinicio, presionando Finalizar cerrarás el instalador y arrancará la nueva versión de NVDA instalada. 
+Una vez que hayas completado la instalación con éxito, el instalador te avisará de que la instalación de NVDA ha finalizado. 
+Si estás reinstalando NVDA, podrá preguntarte por el reinicio del sistema en ese punto. 
+Es muy importante que reinicies el sistema sin falta o tendrás consecuencias indeseables. 
+Si no se te hizo la pregunta sobre el reinicio, presionando Finalizar cerrarás el instalador y arrancará la nueva versión de NVDA instalada. 
 
 ++ NVDA portátil ++
-Si tienes la versión portátil del fichero de NVDA, entonces todo lo que tienes que hacer es presionar intro o hacer doble clic sobre el fichero, y seguir las indicaciones. Te preguntará dónde deseas colocar en tu sistema los ficheros. 
+Si tienes la versión portátil del fichero de NVDA, entonces todo lo que tienes que hacer es presionar intro o hacer doble clic sobre el fichero, y seguir las indicaciones. 
+Se te preguntará dónde deseas colocar en tu sistema los ficheros. 
 
 + Comenzando con NVDA +
 
 ++ Lanzando NVDA ++
-Si has instalado NVDA con el instalador, entonces iniciar NVDA es tan fácil como o presionar control+alt+n, o elegir NVDA desde el menú NVDA en Menú Inicio, submenú Programas. Adicionalmente puedes teclear NVDA en el diálogo Ejecutar y presionar Intro. 
+Si has instalado NVDA con el instalador, entonces iniciar NVDA es tan fácil como o presionar control+alt+n, o elegir NVDA desde el menú NVDA en Menú Inicio, submenú Programas. 
+Adicionalmente puedes teclear NVDA en el diálogo Ejecutar y presionar Intro. 
 
 Para iniciar la versión portátil, ve al directorio donde descomprimiste NVDA, y presiona intro o haz doble clic sobre nvda.exe.
 
-Cuando NVDA arranca, primero escucharás un grupo ascendente de tonos (que te dicen que NVDA está cargándose). Dependiendo cuán sea tu ordenador, o si estás ejecutándo NVDA desde un lápiz USB u otro medio más lento, podrá demorar un poco mientras arranca. Si está demorando un tiempo extra largo, NVDA debería decir "Cargando subsistema. Aguarda por favor...”
+Cuando NVDA arranca, primero escucharás un grupo ascendente de tonos (que te dicen que NVDA está cargándose). 
+Dependiendo cuán rápido sea tu ordenador, o si estás ejecutándo NVDA desde un lápiz USB u otro medio más lento, podrá demorar un poco mientras arranca. 
+Si está tardando un tiempo extra largo, NVDA debería decir "Cargando NVDA. Aguarda por favor...”
 
-Si no escuchas nada de esto, o escuchas el sonido de error de Windows, o un grupo descendente de tonos, entonces esto significa que NVDA tiene un error, y posiblemente necesitarás informar de un fallo a los desarrolladores. Por favor investiga en el sitio web de NVDA para cómo hacer esto.
+Si no escuchas nada de esto, o escuchas el sonido de error de Windows, o un grupo descendente de tonos, entonces esto significa que NVDA tiene un error, y posiblemente necesitarás informar de un fallo a los desarrolladores. 
+Por favor investiga en el sitio web de NVDA para saber cómo hacer esto.
 
-Cuando NVDA arranque por primera vez, se te dará la bienvenida mediante un cuadro de diálogo que te proporciona alguna información básica acerca de la tecla modificadora de NVDA y del menú de NVDA. (Pmira por favor secciones subsiguientes acerca de estos temas). El cuadro de diálogo también contiene dos casillas de verificación. La primera te permite controlar si NVDA debería utilizar BloqMayus como una tecla modificadora de NVDA, y la segunda te permite controlar si este diálogo de bienvenida debería aparecer cada vez que NVDA arranque.
+Cuando NVDA arranque por primera vez, se te dará la bienvenida mediante un cuadro de diálogo que te proporciona alguna información básica acerca de la tecla modificadora de NVDA y del menú de NVDA. 
+(Pmira por favor secciones subsiguientes acerca de estos temas). 
+El cuadro de diálogo también contiene dos casillas de verificación. 
+La primera te permite controlar si NVDA debería utilizar BloqMayus como una tecla modificadora de NVDA, y la segunda te permite controlar si este diálogo de bienvenida debería aparecer cada vez que NVDA arranque.
 
 ++ Acerca de Órdenes de teclado de NVDA ++
-La mayoría de las órhdenes específicas de teclado de NVDA consisten normalmente en la pulsación de la tecla modificadora de NVDA, junto con una o más teclas. Una excepción de esto son las órdenes de revisión de texto que sólo utilizan las teclas del teclado numérico. 
 
-De forma predeterminada tanto el insert del teclado numérico como el del teclado extendido pueden utilizarse como la tecla modificadora de NVDA. Sin embargo, también puedes configurar NVDA tal que la tecla BloqMayus también sea una tecla modificadora de NVDA. Cuando se configure de este modo, presionando o manteniendo pulsada bloqMayus actúa como una tecla modificadora de NVDA, pero presionándola dos veces rápidamente haces que actúe como la tecla normal de BloqMayus.
++++ La Tecla Modificadora NVDA +++ 
+La mayoría de las órhdenes específicas de teclado de NVDA consisten normalmente en la pulsación de la tecla modificadora de NVDA, junto con una o más teclas. 
+Una excepción de esto son las órdenes de revisión de texto que sólo utilizan las teclas del teclado numérico. 
 
+NVDA puede configurarse tal que o la tecla Insert del teclado numérico, la Insert del extendido, o la BloqMayus puedan utilizarse como la tecla modificadora de NVDA.
+
+De forma predeterminada tanto el insert del teclado numérico como el del teclado extendido pueden utilizarse como teclas modificadoras.
+
+Si deseas hacer que una de las teclas modificadoras de NVDA actúe como la tecla original (por ejemplo deseas activar BloqMayus cuando tienes configurada BloqMayus para que sea una tecla modificadora de NVDA) puedes presionar la tecla dos veces en sucesión rápida.
+
++++ Modo Ayuda de Teclado +++
 Muchas de las teclas de órdenes se mencionan a lo largo del resto de esta guía del usuario, pero un modo fácil para explorar todas las diferentes teclas de órdenes es activar la ayuda de teclado.
 
-Para activar la ayuda de teclado, presiona NVDA+1. Para desactivarla de nuevo, presiona NVDA+1 otra vez. Mientras se está en la ayuda de teclado, presionando cualquier tecla anunciará qué hace (si hace algo). Las teclas no llevarán a cabo su función mientras se esté en el modo de ayuda de teclado, así que puedes presionar las teclas que quieras.
+Para activar la ayuda de teclado, presiona NVDA+1. 
+Para desactivarla de nuevo, presiona NVDA+1 otra vez. 
+Mientras se está en la ayuda de teclado, presionando cualquier tecla anunciará qué hace (si hace algo). 
+Las teclas no llevarán a cabo su función mientras se esté en el modo de ayuda de teclado, así que puedes presionar las teclas que quieras.
+
++++ Distribuciones de Teclado +++
+Actualmente NVDA viene con dos conjuntos de  teclas de órdenes. 
+Hay una distribución para sobremesa y una distribución para portátiles.
+De forma predeterminada NVDA se configura para utilizar la distribución de sobremesa (Desktop), aunque puedes cambiar a la distribución de portátiles (Laptop) en las Opciones de Teclado, que se encuentran en Preferencias en el menú NVDA.
+	
+La distribución sobremesa (Desktop) hace un uso amplio del teclado numérico (con el bloqueo numérico desactivado).
+Aunque la mayoría de los portátiles no tienen un teclado numérico físico, algunos portátiles pueden emular uno manteniendo pulsada la tecla FN y presionando letras y números en la mano derecha del teclado (7 8 9 u i o j k l etc).
+Si tu portátil no puede hacer esto, o no te permite desactivar el bloqueo numérico, podrás querer cambiar a la distribución Laptop en su lugar.
 
 ++ El Menú NVDA ++
 El menú NVDA te permite controlar las opciones de NVDA, acceder a la ayuda, guardar/volver a tu configuración, Modificar los diccionarios del habla, leer el fichero del log, y salir de NVDA.
 
-Para desplegar el menú NVDA desde cualquier lugar de Windows mientras NVDA se está ejecutando, presiona NVDA+n. También puedes desplegar el menú NVDA a través de la bandeja de sistema de windows. O haciendo clic con el botón derecho sobre el icono NVDA encontrado en la bandeja de sistema, o accediendo a la bandeja de sistema presionando la tecla con el logo de windows+B, flecha abajo hasta el icono de  NVDAy presionando la tecla aplicaciones encontrada seguidamente a la tecla de control de la derecha en la mayoría de los teclado. Cuando aparezca el menú, puedes utilizar las teclas de cursor para navegar por el menú, y la tecla intro para activar un elemento. El menú Preferencias te permite configurar a NVDA como quieras, el menú Herramientas contiene herramientas útiles tales como el visualizador de logs de NVDA y la consola Python de NVDA para desarrolladores, el menú Ayuda te permite acceder a la Guía de Usuario, una referencia rápida de teclas, y mucho más. El menú NVDA también contiene elementos que te permiten guardar o recuperar tu configuración actual. También hay una opción que te permite salir de NVDA, aunque esto puede llevarse a cabo más eficazmente presionando NVDA+Q.
+Para desplegar el menú NVDA desde cualquier lugar de Windows mientras NVDA se está ejecutando, presiona NVDA+n. 
+También puedes desplegar el menú NVDA a través de la bandeja de sistema de windows. 
+O haciendo clic con el botón derecho sobre el icono NVDA encontrado en la bandeja de sistema, o accediendo a la bandeja de sistema presionando la tecla con el logo de windows+B, flecha abajo hasta el icono de  NVDA y presionando la tecla aplicaciones encontrada seguidamente a la tecla de control de la derecha en la mayoría de los teclados. 
+Cuando aparezca el menú, puedes utilizar las teclas de cursor para navegar por el menú, y la tecla intro para activar un elemento. 
+
+++ Teclas de órdenes Básicas ++
+%kc:beginInclude
+|| Nombre | Tecla | Descripción |
+| Detener voz | Control | Detiene la voz instantáneamente |
+| Pausar Voz | Shift | Pausa la voz instantáneamente, presionándola nuevamente continuará hablando donde se detuvo (si el pausado se soporta por el sintetizador actual) |
+| Menú NVDA | NVDA+n | despliega el menú NVDA para permitirte acceder a preferencias, herramientas y ayuda etc |
+| Conmutar Modo Ayuda de Teclado | NVDA+1 | Presionando cualquier tecla  en este modo se anunciará la tecla, y la descripción de cualquier orden de NVDA asociadacon ella | 
+| Salir de NVDA | NVDA+q | Sale de NVDA |
+| Anunciar fecha/hora | NVDA+f12 | Presionando una vez anuncia la hora actual, presionando dos veces anuncia la fecha |
+| Dejar pasar siguiente tecla | NVDA+f2 | Dice a NVDA que deje pasar la siguiente tecla presionada directamente a la aplicación activa, si está normalmente tratada como una tecla de órdenes de NVDA |
+%kc:endInclude
 
 + Navegando con NVDA +
 
 ++ Navegando con el Foco ++
-El modo más común de navegar por Windows con NVDA, es sólo moverse con las órdenes de teclado normales, tales como tab y shift tab para moverse adelante y atrás entre controles, presionando alt para desplegar la barra de menú y luego utilizando las teclas de cursor para navegar por los menús, utilizando alt-tab para moverse entre aplicaciones en ejecución. Cuando hagas esto, NVDA anunciará qué tiene el foco.
+El modo más común de navegar por Windows con NVDA, es sólo moverse con las órdenes de teclado normales, tales como tab y shift tab para moverse adelante y atrás entre controles, presionando alt para desplegar la barra de menú y luego utilizando las teclas de cursor para navegar por los menús, utilizando alt-tab para moverse entre aplicaciones en ejecución. 
+Esto mueve el foco del sistema; es decir, el objeto que recive teclas escritas en el teclado.
+Cuando hagas esto, NVDA anunciará información sobre lo que tiene el foco, tal como su nombre, tipo, valor, estado, descripción, atajo de teclado e información posicional.
 
-Cuando NVDA anuncie un objeto (ej.: cuando reciba el foco), normalmente dirá el nombre del objeto, tipo, estado, valor, descripción, atajo de teclado, e información posicional. Esto es bastante similar a otros lectores de pantalla; no obstante los tipos de objetos podrían ser un poco diferentes.
-
-Hay algunas órdenes de teclado útiles cuando nos movemos con el foco:
-- NVDA+tab - informa sobre el foco actual
-- NVDA+b - lee toda la ventana en primer plano (útil para leer un cuadro de diálogo)
-- NVDA+t - anuncia el título de la ventana actual en primer plano
--
+Hay algunas órdenes de teclado útiles cuando nos movamos con el foco:
+%kc:beginInclude
+|| Nombre | tecla | Descripción |
+| Anunciar foco actual | NVDA+tab | anuncia el objeto actual o control que tenga el foco del sistema. Presionando dos veces deletreará la información  |
+| Anunciar título | NVDA+t | Anuncia el título de la ventana activa actualmente. Presionando dos veces deletreará la información. Presionándolo tres veces la copiará al portapapeles |
+| Leer la ventana activa | NVDA+b | lee todos los controles en la ventana actualmente activa (útil para diálogos) |
+%kc:endInclude
 
 ++ Navegando con el Cursor del Sistema ++
-Cuando el foco está sobre un objeto que tenga un cursor de edición (cursor del sistema), puedes moverte con las flechas y editar como lo harías normalmente. NVDA anunciará según te muevas por caracteres, palabras, líneas, y también anunciará la selección y no selección de texto.
-
-Cuando te muevas con el cursor del sistema, la posición del cursor de revisión también será actualizada para emparejarlo al cursor del sistema. Sin embargo esta opción puede conmutarse con la tecla de órdenes NVDA+6.
+Cuando el foco esté sobre un objeto que tenga un cursor de edición (también conocido como cursor del sistema), puedes moverte con las flechas y editar como lo harías normalmente. 
+NVDA anunciará según te muevas por caracteres, palabras, líneas, y también anunciará la selección y no selección de texto.
 
 NVDA proporciona las siguientes teclas de órdenes en relación al cursor del sistema:
-- NVDA+flecha abajo: comienza la lectura desde la posición del cursor del sistema, moviéndolo según baja
-- NVDA+flecha arriba: lee la línea actual en el cursor del sistema
-- NVDA+Shift+flecha arriba: lee el texto seleccionado actualmente si lo hay
-- NVDA+f: informa sobre el formato del texto bajo el cursor del sistema
--
+%kc:beginInclude
+|| Nombre | Tecla | Descripción |
+| Leer todo | NVDA+Flecha Abajo | Comienza la lectura desde la posición actual del cursor del sistema, moviéndolo según se desplaza |
+| Leer línea actual | NVDA+Flecha Arriba | Lee la línea donde esté situado actualmente el cursor del sistema. Presionando dos veces deletrea la línea. |
+| Leer la selección de texto actual | NVDA+Shift+Flecha Arriba | Lee cualquier texto seleccionado actualmente |
+| Anunciar formato del texto | NVDA+f | Anuncia el formato del texto donde esté situado actualmente el cursor del sistema |
 
-Cuando estás en una tabla, las siguientes teclas de órdenes también están disponibles:
-- control+alt+flecha izquierda: se mueve a la columna anterior (quedando en esta fila)
-- control+alt+flecha derecha: se mueve a la columna siguiente (quedando en esta fila)
-- control+alt+flecha arriba: se mueve a la fila anterior (quedando en esta columna)
-- control+alt+flecha abajo: se mueve a la fila siguiente (quedando en esta columna)
--
+Cuando estés en una tabla, las siguientes teclas de órdenes también están disponibles:
+|| Nombre | Tecla | Descripción |
+| Moverse a la columna anterior | control+alt+Flecha Izquierda | Mueve el cursor del sistema a la columna anterior (permaneciendo en la misma fila) |
+| Moverse a la columna siguiente | control+alt+Flecha Derecha | Mueve el cursor del sistema a la columna siguiente (permaneciendo en la misma fila) |
+| Moverse a la fila anterior | control+alt+Flecha Arriba| Mueve el cursor del sistema a la fila anterior (permaneciendo en la misma columna) |
+| Moverse a la fila siguiente | control+alt+Flecha Abajo | Mueve el cursor del sistema a la siguiente fila (permaneciendo en la misma columna) |
+%kc:endInclude
 
 ++ Navegación de Objetos ++
-Si deseas echar un pequeño vistazo navegando por la aplicación actual o por el Sistema Operativo, pero sin mover el foco, puedes utilizar el navegador de objetos de NVDA. Esto te permite moverte de un objeto a otro en un árbol estructurado.
+Si deseas echar un pequeño vistazo navegando por la aplicación actual o por el Sistema Operativo, pero sin mover el foco, puedes utilizar el navegador de objetos de NVDA. 
+Esto te permite mover y obtener información acerca de objetos individuales tales como texto, botones, casillas de verificación, barras de desplazamiento, listas y campos de texto editable.
+Cuando te mueves a un objeto, NVDA lo informará de modo similar a como informa el foco del sistema.
 
-La estructura en árbol de los objetos comienza en la ventana del escritorio, la raíz del árbol. Las primeras ramas del árbol son las aplicaciones actualmente en ejecución, y por supuesto estas aplicaciones tienen sus propias ramas (objetos), representando varias partes de la aplicación.
+Más que moverse atrás y adelante entre cada simple objeto en el sistema, los objetos se agrupan jerárquicamente.
+Esto significa que debes moverte dentro de algunos objetos para acceder a los objetos que contengan.
+Por ejemplo, en lugar de moverte a través de todos los elementos de lista cuando se encuentra una lista, debes moverte dentro de la lista (es decir, navegar a sus primeros objetos hijo)  para acceder a sus elementos.
+Puedes moverte fuera de la lista (navegar al objeto padre) para continuar pasando por la lista. 
+Similarmente, si encuentras una barra de herramientas, debes moverte dentro de la barra de herramientas (navegar a su primer hijo) para acceder a los controles en la barra de herramientas.
 
-La estructura en árbol puede alcanzar bastante longitud, pero te permite navegar en un orden lógico, tal que puedas encontrar rápidamente la información que necesites.
-
-Esta estructura no tiene nada que ver con cómo los objetos están dispuestos en la pantalla, pero sí cómo están relacionados lógicamente. Esto podrá tomarte un poco de tiempo llegar a utilizarlo, pero una vez que lo comprendas, deberías poder moverte bastante fácilmente.
-
-No todas las aplicaciones tienen una estructura perfecta en árbol, pero esto es cosa del desarrollador de esa aplicación en particular. La mayoría parecen estár correctas; ciertamente la mayoría de los cuadros de diálogo y aplicaciones altamente estructuradas parecen tenerlo bien.
+De forma predeterminada, el navegador de objetos se mueve junto con el foco  del Sistema, aunque este comportamiento puede activarse y desactivarse.
 
 Para navegar por objetos, utiliza las siguientes teclas:
-- NVDA+5 teclado numérico: verbalizar objeto actual
-- NVDA+8 teclado numérico: mover al objeto padre (moviéndose hacia la raíz del árbol)
-- NVDA+4 teclado numérico: mover al objeto anterior (el objeto directamente antes de éste en el mismo nivel)
-- NVDA+6 teclado numérico: mover al siguiente objeto (el objeto directamente después de éste en el mismo nivel)
-- NVDA+2 teclado numérico: mover al primer objeto hijo (la primera rama en la que aparece éste)
-- NVDA+menos teclado numérico: mover al foco
-- NVDA+intro teclado numérico: Activar el objeto actual (ej.: presiona intro / hace clic / hace doble clic)
-- NVDA+Shift+menos teclado numérico: Mover el foco al objeto actual
-- NVDA+dividir teclado numérico: mover el ratón al objeto actual
-- NVDA+multiplicar teclado numérico: Mover al ratón
-- NVDA+suprimir teclado numérico: anuncia las dimmensiones del objeto actual con respecto a la pantalla
--
+
+%kc:beginInclude
+|| Nombre | Tecla Desktop | Tecla Laptop | Descripción |
+| Anunciar objeto actual | NVDA+5 Teclado numérico | NVDA+control+i | Anuncia el navegador de objetos actual. Presionando dos veces deletrea la información. |
+| Navegar a objeto padre | NVDA+8 teclado numérico | NVDA+shift+i | Navega al padre (contenedor) del navegador de objetos actual |
+| Navegar al objeto anterior | NVDA+4 teclado numérico | NVDA+control+j | Navega al objeto directamente antes del actual navegador de objetos |
+| Navegar al siguiente objeto | NVDA+6 teclado numérico | control+NVDA+l | Navega al objeto directamente después del actual navegador de objetos |
+| Navegar al primer objeto hijo | NVDA+2 teclado numérico | NVDA+shift+comma | Navega al primer objeto hijo contenido por el actual navegador de objetos |
+| Navegar al objeto del foco | NVDA+Menos teclado numérico | NVDA+Retroceso | Navega al objeto que tiene actualmente el foco del sistema, y también coloca el cursor de revisión en la posición del cursor del Sistema, si es mostrado |
+| Activar actual navegador de objetos | NVDA+Intro teclado numérico | NVDA+Intro | Activa el actual navegador de objetos (similar a hacer clic con el ratón o presionar espacio cuando tiene el foco del sistema) |
+| Mover foco del Sistema a actual navegador de objetos | NVDA+shift+Menos teclado numérico | NVDA+shift+retroceso | Mueve el foco del Sistema al actual navegador de objetos si es posible |
+| Anunciar dimensiones del navegador de objetos | NVDA+Suprimir teclado numérico | NVDA+suprimir | Anuncia las dimensiones del actual navegador de objetos en la pantalla en porcentajes (incluyendo distancia desde la izquierda y arriba de la pantalla, y su anchura y altura)  |
+%kc:endInclude
 
 nota: las teclas del teclado numérico requieren que la tecla BloqNum esté desactivada para funcionar apropiadamente.
-
-Cuando te muevas con el foco, el actual navegador de objetos cambia junto con él. No obstante, si deseas bloquear el navegador de objetos en un objeto específico, para que no cambie con el foco, puedes desactivar El Foco Mueve al Navegador de Objetos con NVDA+7.
 
 ++ Revisando el Texto en el Objeto Actual ++
-NVDA te permite leer el contenido del navegador de objetos actual, por caracteres, palabras o líneas. Esto es principalmente útil en la consola del Dos de windows, y otros lugares donde haya un cursor del sistema limitado o no existente.
-
-En la mayoría de las ocasiones, podrás revisar sólo qué contiene el objeto actual. Por Ejemplo: el texto en un campo de edición, o la etiqueta de un botón. No obstante, hay dos excepciones a esta regla. Si revisando un objeto que exista dentro de un modo virtual (tal como un documento en un navegador web ), podrás revisar todo el contenido del modo virtual, comenzando desde la posición del objeto actual. Cuando se revisa el contenido de un objeto ventana, encontrada en el nivel superior de la mayoría de las aplicaciones, puedes revisar una distribución plana de toda la aplicación, bastante similar a los modos de revisión plana de otros lectores de pantalla.
+NVDA te permite leer el contenido del navegador de objetos actual, por caracteres, palabras o líneas. 
+Esto es principalmente útil en la consola del Dos de windows y otros lugares donde no haya la existencia de un cursor del sistema o sea limitado.
+Cuando se mueve el cursor de revisión, el cursor del Sistema no lo sigue, así puedes revisar texto sin perder la posición de edición.
+No obstante,, de forma predeterminada, cuando el curssor del Sistema se mueve, el cursor de revisión lo sigue.
+Esto puede activarse y desactivarse.
 
 Las siguientes teclas de órdenes están disponibles para revisión de texto: 
-- Shift+7 teclado numérico: primera línea
-- 7 teclado numérico: línea anterior
-- 8 teclado numérico: línea actual
-- 9 teclado numérico: línea siguiente
-- shift+9 teclado numérico: última línea
-- 4 teclado numérico: palabra anterior 
-- 5 teclado numérico: palabra actual
-- 6 teclado numérico: palabra siguiente
-- shift+1 teclado numérico: comienzo de línea
-- 1 teclado numérico: caracter anterior
-- 2 teclado numérico: caracter actual
-- 3 teclado numérico: caracter siguiente
-- shift+3 teclado numérico: fin de línea
-- Más teclado numérico: decir todo el texto
--
+%kc:beginInclude
+|| Nombre | Tecla Desktop | Tecla Laptop | Descripción |
+| mover a la línea superior en revisión | shift+7 teclado numérico | NVDA+7 | Mueve el cursor de revisión a la línea superior del texto |
+| Mover a la línea anterior en revisión | 7 teclado numérico | NVDA+u | Mueve el cursor de revisión a la línea anterior de texto |
+| Anunciar línea actual en revisión | 8 teclado numérico | NVDA+i | Anuncia la línea actual de texto donde esté colocado el cursor de revisión. Presionando dos veces deletrea la línea. |
+| Mover a la línea siguiente en revisión | 9 teclado numérico | NVDA+o | Mueve el cursor de revisión a la línea siguiente de texto |
+| Mover a la línea inferior en revisión | shift+9 teclado numérico | NVDA+9 | Mueve el cursor de revisión a la línea inferior de texto |
+| Mover a la palabra anterior en revisión | 4 teclado numérico | NVDA+j | Mueve el cursor de revisión a la palabra anterior en el texto |
+| Anunciar palabra actual en revisión | 5 teclado numérico | NVDA+k | Anuncia la palabra actual en el texto donde esté posicionado el cursor de revisión. Presionando dos veces deletrea la palabra.  |
+| Mover a la siguiente palabra en revisión | 6 teclado numérico | NVDA+l | Mueve el cursor de revisión a la siguiente palabra en el texto |
+| mover al inicio de la línea en revisión | shift+1 teclado numérico | NVDA+shift+u | Mueve el cursor de revisión al comienzo de la línea actual en el texto |
+| Mover al caracter anterior en revisión | 1 teclado numérico | NVDA+m | Mueve el cursor de revisión al caracter anterior en la línea actual en el texto |
+| Anunciar caracter actual en revisión | 2 teclado numérico | NVDA+comma | Anuncia el caracter actual en la línea de texto donde esté posicionado el cursor de revisión. Presionando dos veces anuncia el valor numérico del caracter en decimal y hexadecimal. |
+| Mover al siguiente caracter en revisión | 3 teclado numérico | NVDA+punto | Mueve el cursor de revisión al siguiente caracter en la línea actual de texto |
+| Mover al final de la línea en revisión | shift+3 teclado numérico | NVDA+shift+o | Mueve el cursor de revisión al final de la línea actual de texto |
+| Leer todo con revisión | Más teclado numérico | NVDA+shift+Flecha abajo | Lee desde la posición actual del cursor de revisión, moviéndolo según baja |
+| Mover cursor del sistema al cursor de revisión | control+menos teclado numérico | NVDA+control+retroceso | Mueve  el cursor del Sistema a la posición del cursor de revisión |
+| copiar desde cursor de revisión | NVDA+f9 | NVDA+f9 | Comienza el copiado de texto desde la posición actual del cursor de revisión. La copia actual no se lleva a cabo hasta que digas a NVDA dónde copiar |
+| Copiar a cursor de revisión | NVDA+f10 | NVDA+f10 | Copia desde la posición del cursor de revisión actualmente fijada con Copiar desde cursor de revisión, a la actual posición del cursor de revisión.  Después de presionar esta tecla, el texto se copiará al portapapeles de Windows |
+%kc:endInclude
 
-nota: las teclas del teclado numérico requieren que la tecla BloqNum esté desactivada para funcionar apropiadamente.
+nota: las teclas del teclado numérico requieren que la tecla BloqNum sea desactivada para funcionar apropiadamente.
 
-Cuando un objeto contiene un cursor de edición (cursor del sistema), y se mueve, el cursor de revisión también es actualizado a esa posición. Si quieres que el cursor de revisión permanezca donde está, y no moverlo con el cursor del sistema, puedes desactivar Cursor Mueve Cursor de Revisión presionando NVDA+6.
-
-Es posible copiar partes del texto que estés revisando. Por ejemplo, podrás desear copiar una dirección de internet que alguien te ha enviado en un texto en un programa de chat. Para copiar texto, comienza moviendo el cursor de revisión al primer caracter del texto que deseas copiar, y presiona NVDA+f9. Entonces muévete al final del texto, y presiona NVDA+f10. El texto será copiado ahora al portapapeles tal que puedas pegarlo donde quieras. Ten en cuenta que si el programa que estás utilizando ya te permite moverte a lo largo del texto utilizando el cursor del sistema, y copiar utilizando la orden normal control+c, entonces siempre obtendrás mejores resultados utilizando ésta.
+Para ayudarte a recordar estas órdenes, ten en cuenta que las órdenes de revisión básica de texto se organizan en una rejilla de tres por tres, yendo de superior a inferior con línea, palabra y caracter y yendo de izquierda a derecha   con anterior, actual y siguiente.
+La disposición está ilustrada como sigue:
+| Línea anterior | Línea actual | Línea siguiente |
+| Palabra anterior | Palabra actual | Palabra siguiente |
+| Caracter anterior | Caracter actual | Caracter siguiente |
 
 ++ Revisión Plana ++
-Al revisar el contenido de un solo objeto, NVDA te permite revisar todo el contenido de un documento o el texto de la pantalla. Esto se llama revisión plana.
+Al revisar el contenido de un solo objeto, NVDA te permite revisar todo el contenido de un documento o el texto de la pantalla. 
+Esto se llama revisión plana.
 
 Las siguientes dos órdenes se utilizan para cambiar para/desde la revisión plana:
-- NVDA+7 teclado numérico: cambia a revisión plana en la posición actual del cursor de revisión. Esto te permite revisar la pantalla (o documento si estás actualmente dentro de uno), con las órdenes de revisión de texto.
-- NVDA+1 teclado numérico: cambia a revisión de objetos en la posición actual del cursor de revisión. Esto te coloca en el objeto que se representa por el texto en el que estás actualmente colocado o en la revisión plana y mueve el cursor de revisión a él, así que entonces podrás revisar dentro de ese objeto, o navegar por el objeto.  
--
-
+%kc:beginInclude
+|| Nombre | Tecla Desktop | Tecla Laptop | Descripción |
+| Cambiar a revisión plana | NVDA+7 teclado numérico | NVDA+alt+7 | Se mueve a revisión plana, colocándote en la posición del navegador de objetos actual,  permitiéndote revisar la pantalla (o documento si estás actualmente dentro de uno), con las órdenes de revisión de texto.
+| Mover a objeto desde revisión plana | NVDA+1 teclado numérico | NVDA+alt+j | navega al objeto representado por el texto en la posición actual del cursor de revisión en revisión plana |
+%kc:endInclude
 
 ++ Navegando con el Ratón ++
-Cuando mueves el ratón, NVDA informa de forma predeterminada del texto que está directamente bajo el puntero del ratón, según se mueve sobre él. Donde esté soportado, NVDA leerá el valor de un párrafo de texto, aunque algunos controles sólo podrán leer por líneas.
+Cuando mueves el ratón, NVDA informa de forma predeterminada del texto que está directamente bajo el puntero del mismo, según se mueva sobre él. 
+Donde esté soportado, NVDA leerá el valor de un párrafo de texto, aunque algunos controles sólo podrán leerse por líneas.
 
-NVDA también puede ser configurado para anunciar el tipo de control u objeto sobre el que esté actualmente el ratón según se mueva (ej.: lista, botón etc), lo cual podrá ser útil para usuarios ciegos totales cuando algunas veces el texto no baste.
+NVDA también puede configurarse para anunciar el tipo de control u objeto sobre el que esté actualmente el ratón según se mueva (ej.: lista, botón etc), lo cual podrá ser útil para usuarios ciegos totales cuando algunas veces el texto no baste.
 
-NVDA proporciona un modo para que los usuarios comprendan dónde está el ratón con respecto a las dimensiones de la pantalla, haciendo sonar las coordenadas actuales del ratón según el audio pite. Cuanto más alto el ratón está más arriba en la pantalla, El tono será más alto en los pitidos. Cuanto más a la izquierda o a la derecha esté el ratón en la pantalla, más a la izquierda o a la derecha parecerá ir el sonido (asumiendo que el usuario tenga altavoces estereofónicos).
+NVDA proporciona un modo para que los usuarios comprendan dónde está el ratón con respecto a las dimensiones de la pantalla, haciendo sonar las coordenadas actuales del ratón según el audio pite. 
+Cuanto más alto el ratón esté más arriba en la pantalla, El tono será más alto en los pitidos. 
+Cuanto más a la izquierda o a la derecha esté el ratón en la pantalla, más a la izquierda o a la derecha parecerá ir el sonido (asumiendo que el usuario tenga altavoces estereofónicos).
 
 Estas características extra del ratón no están activadas de forma predeterminada en NVDA, pero si deseas sacar partido de ellas, puedes configurarlas desde el diálogo Opciones del Ratón, que se encuentra en el menú Preferencias en el menú NVDA.
 
 Si bien un ratón físico o un trackpad se podrían utilizar para navegar con el ratón, NVDA tiene unas pocas teclas de órdenes relacionadas con el ratón:
-- dividir del teclado numérico: clic con el botón izquierdo del ratón
-- multiplicar del teclado numérico: clic con el botón derecho del ratón
-- Shift+dividir del teclado numérico: bloquear/desbloquear el botón izquierdo del ratón
-- Shift+multiplicar del teclado numérico: bloquear/desbloquear el botón derecho del ratón
--
+%kc:beginInclude
+|| Nombre | Tecla Desktop | Tecla Laptop | Descripción |
+| Clic botón izquierdo del ratón | Dividir teclado numérico | NVDA+Flecha izquierda | Hace clic en el botón izquierdo del ratón una vez. El común doble clic puede llevarse a cabo presionando esta tecla dos veces en rápida sucesión |
+| Bloquear botón izquierdo del ratón | shift+Dividir teclado numérico | NVDA+shift+Flecha izquierda | Mantiene pulsado el botón izquierdo del ratón. Presiónalo de nuevo para liberarlo. Para arrastrar el ratón,  presiona esta tecla para bloquear el botón izquierdo y entonces mueve el ratón físicamente o utiliza una de las otras órdenes de enrutamiento del ratón |
+| Clic botón derecho del ratón | Multiplicar teclado numérico | NVDA+flecha derecha | Hace Clic en el botón derecho del ratón una vez. |
+| Bloquear botón derecho del ratón | shift+Multiplicar teclado numérico | NVDA+shift+flecha derecha | Mantiene pulsado el botón derecho del ratón. Presiona otra vez para liberarlo. Para arrastrar el ratón,  presiona esta tecla  para bloquear el botón derecho y entonces mueve el ratón físicamente o utiliza una de las otras órdenes de enrutamiento del ratón |
+| Mover ratón a navegador de objetos actual | NVDA+Dividir teclado numérico | NVDA+shift+f9 | Mueve el ratón a la posición del navegador de objetos actual y cursor de revisión |
+| navegar al objeto bajo el ratón | NVDA+Multiplicar teclado numérico | NVDA+shift+f10 | Pone el navegador de objetos en el objeto localizado en la posición del ratón |
+%kc:endInclude
 
 + Modos Virtuales +
 Los documentos complejos de sólo lectura, tales como páginas web, son representados en NVDA con un Modo Virtual. 
 
-Un modo virtual (en inglés Virtual Buffer) es una representación plana de contenido tal como una página web, por el que te puedes mover con las teclas de cursor. Información tal cómo si un texto es un enlace, encabezado etc se anuncia junto con el texto según te muevas.
+Un modo virtual (en inglés Virtual Buffer) es una representación plana de contenido tal como una página web, por el que te puedes mover con las teclas de cursor. 
+La información tal como si un texto es un enlace, encabezado etc se anuncia junto con el texto según te muevas.
 
-Mientras se está en un modo virtual, hay dos modos de interactuación. El Modo revisión es donde puedes moverte a lo largo de todo el texto utilizando un cursor virtual, similar al cursor del sistema. De hecho funcionarán todas las teclas de órdenes del cursor del sistema en este modo (ej.: leer todo, anunciar formato, todas las órdenes de navegación de tablas etc). . El modo Foco es donde puedes interactuar directamente con un control (campo de edición, cuadro combinado, botones de opción) utilizando en cada ocasión las teclas que utilizarías normalmente. Cuando se está en modo revisión, NVDA cambiará automáticamente a modo foco si tabulas o haces clic sobre un control en particular que lo requiera. Puedes también cambiar manhualmente a modo foco con NVDA+espacio. Si NVDA cambió automáticamente a modo foco porque se pulsó tab o se hizo clic, se cambiará a modo revisión una vez que tabules o hagas clic en algo que no lo requiera. No obstante, si cambiaste a modo foco con NVDA+espacio, permanecerá en modo foco hasta que vuelvas manualmente a modo revisión. En cualquier ocasión en que esté en modo foco, puedes cambiar manualmente a modo revisión presionando escape, o NVDA+espacio. El diálogo de opciones del modo virtual en el menú Preferencias en el menú de NVDA te permite deshabilitar el cambio automático del modo revisión y del modo foco.
+Mientras se está en un modo virtual, hay dos modos de interactuación. 
+El Modo revisión es donde puedes moverte a lo largo de todo el texto utilizando un cursor virtual, similar al cursor del sistema. 
+De hecho funcionarán todas las teclas de órdenes del cursor del sistema en este modo (ej.: leer todo, anunciar formato, todas las órdenes de navegación de tablas etc). 
+El modo Foco es donde puedes interactuar directamente con un control (campo de edición, cuadro combinado, botones de opción) utilizando en cada ocasión las teclas que utilizarías normalmente. 
+Cuando se está en modo revisión, NVDA cambiará automáticamente a modo foco si tabulas o haces clic sobre un control en particular que lo requiera. 
+Ten en cuenta que presionando intro o espacio sobre controles que lo requieran también cambiará a modo foco.
+Si NVDA cambió automáticamente a modo foco porque se pulsó tab o se hizo clic, un objeto que no necesita modo foco (tal como un enlace o trozo de texto) cambiará a modo revisión.
+Presionando escape también cambiará a modo revisión si se cambió a modo foco automáticamente.
+Puedes cambiar manualmente entre modos foco y revisión.
+Aunque cuando se cambia a modo foco manualmente, NVDA bloqueará en ese modo particular y ya no cambia automáticamente, al menos que cambies manualmente a modo revisión.
+%kc:beginInclude
+|| Naombre | Tecla | Descripción |
+| Conmutar modos virtuales | NVDA+espacio | Conmuta entre modo foco y modo revisión |
+| Salir de modo foco | escape | Cambia a modo revisión si el modo foco anteriormente estaba cambiado automáticamente |
+| Refrescar modo virtual | NVDA+f5 | Recarga el modo virtual actual (útil si ciertos contenidos parecen estar desaparecidos de la página) |
+| Buscar | NVDA+control+f | Despliega un diálogo en el que puedes teclear algún texto a encontrar en en el  documento actual |
+| Buscar siguiente | NVDA+f3 | Encuentra la siguiente  ocurrencia del texto en el documento que buscaste anteriormente |
+| Buscar anterior | NVDA+shift+f3 | Encuentra la ocurrencia anterior del texto en el documento buscado anteriormente |
+%kc:endInclude
 
-Actualmente NVDA utiliza el Modo Virtual para lectura de documentos de Mozilla Firefox, Microsoft Internet Explorer, y Adobe Reader. 
+Actualmente NVDA utiliza el Modo Virtual para lectura de documentos de Mozilla Firefox, Microsoft Internet Explorer, Google Chrome Adobe Reader y Adobe Flash. 
 
 ++ Navegación con una Sola Letra ++
 Mientras se está en modo revisión, para una navegación más rápida NVDA también proporciona teclas de un solo caracter para saltar a ciertos campos en un modo virtual.
 
-Ellas solas saltan al siguiente campo, con la tecla shift saltan al anterior campo.
-
-Teclas disponibles:
+%kc:beginInclude
+Las siguientes teclas ellas solas saltan al siguiente campo, con la tecla shift saltan al anterior campo.
 - h: Encabezado
 - l: lista
 - i: elemento de lista
@@ -251,77 +352,115 @@ Teclas disponibles:
 - o: objeto empotrado
 - 1 a 6: encabezados de 1 a 6 respectivamente
 -
-
-++ Formularios y modo Foco ++
-Algunas veces podrás desear interactuar con campos de formulario con las teclas del modo virtual fuera de este modo. El modo foco se crea para este propósito, y puede activarse y desactivarse con NVDA+espacio.
+%kc:endInclude
 
 ++ La Lista de Elementos ++
-La lista de elementos (disponible presionando NVDA+f7 mientras se está en un modo virtual) proporciona acceso a una lista o de enlaces, encabezados o zonas de ARIA en la página. Los botones de opción te permiten cambiar entre estos tres tipos de información. Un campo de edición también se proporciona en el diálogo el cual te permite filtrar la lista para ayudarte a buscar un elemento en particular en la página. Una vez hayas elegido un elemento, puedes utilizar los botones proporcionados en el diálogo para moverte a, o activar, ese elemento.
+La lista de elementos proporciona acceso a una lista o de enlaces, encabezados o zonas de ARIA en la página. 
+Los botones de opción te permiten cambiar entre estos tres tipos de información. 
+Se Proporciona también un campo de edición en el diálogo el cual te permite filtrar la lista para ayudarte a buscar un elemento en particular en la página. 
+Una vez hayas elegido un elemento, puedes utilizar los botones proporcionados en el diálogo para moverte a, o activar, ese elemento.
+%kc:beginInclude
+|| Naombre | Tecla | Descripción |
+| Lista de elementos del Modo Virtual | NVDA+f7 | Despliega la lista de elementos que contiene enlaces, encabezados y zonas del actual modo virtual |
+%kc:endInclude
 
 ++ Objetos Empotrados ++
-Las páginas pueden incluir contenido enriquecido utilizando tecnologías tales como Adobe Flash y Sun Java. Donde estas sean encontradas en un modo virtual, NVDA anunciará "objeto empotrado". puedes presionar intro sobre esos objetos para interactuar con ellos. Si es accesible, entonces puedes tabular por ellos e interactuar como con cualquier otra aplicación. Para regresar a la página, presiona NVDA+espacio.
+Las páginas pueden incluir contenido enriquecido utilizando tecnologías tales como Adobe Flash y Sun Java. 
+Donde estas se encuentren en un modo virtual, NVDA anunciará "objeto empotrado". 
+puedes presionar intro sobre esos objetos para interactuar con ellos. 
+Si es accesible, entonces puedes tabular por ellos e interactuar como con cualquier otra aplicación. 
+Se proporciona una orden de teclado para regresar a la página.
+%kc:beginInclude
+|| Nambre | Tecla | Descripción |
+| Mover al contenido del modo virtual | NVDA+control+espacio | Mueve el foco fuera del actual objeto empotrado y lo pone dentro del modo virtual que lo contiene |
+%kc:endInclude
 
 + Configurando NVDA +
 
 ++ Preferencias ++
+%kc:settingsSection: || Nombre | Tecla Desktop | tecla Laptop | Descripción |
+La mayoría de las opciones de NVDA pueden cambiarse utilizando cuadros de diálogo a los que se accede a través del submenú Preferencias del menú NVDA.
+En todos los cuadros de diálogo de opciones de NVDA, presiona el botón Aceptar para aceptar cualquier cambio que hayas hecho.
+Para cancelar cualquier cambio, presiona el botón Cancelar o la tecla escape.
+Algunas opciones también pueden cambiarse utilizando teclas de atajo,  que se listan donde sean relevantes en las secciones subsiguientes.
 
-+++ Opciones Generales +++
-El cuadro de diálogo Opciones Generales se encuentra en el menú Preferencias. También puede accederse a él presionando NVDA+Control+G. Para guardar las opciones después de modificarlas, presiona el botón Aceptar. Para cancelarlas, presiona el botón Cancelar o la tecla escape. Contiene las siguientes opciones:
++++ Opciones Generales (NVDA+control+g) +++
+El cuadro de diálogo Opciones Generales se encuentra en el menú Preferencias. 
+Contiene las siguientes opciones:
 
 ==== Idioma ====
-Un cuadro combinado que te permite seleccionar el idioma en que debería mostrarse la interface de usuario y los mensajes de NVDA. Hay muchos idiomas, no obstante la última elección en la lista es llamada "Windows". Esta elección dirá a NVDA que utilice el idioma en el que Windows esté actualmente ajustado (en Opciones Regionales y de Idioma en el Panel de Control). 
+Un cuadro combinado que te permite seleccionar el idioma en que debería mostrarse la interface de usuario y los mensajes de NVDA. 
+Hay muchos idiomas, no obstante la última elección en la lista es llamada "Windows". 
+Esta elección dirá a NVDA que utilice el idioma en el que Windows esté actualmente ajustado. 
 
-Por favor ten en cuenta que NVDA debe ser reiniciado cuando se cambie el idioma, NVDA te preguntará si deseas reiniciar si haces cambios en la selección y presiona Aceptar. 
-
+Por favor ten en cuenta que NVDA debe ser reiniciado cuando se cambie el idioma. 
+NVDA te preguntará si deseas reiniciar si haces cambios en la selección.
+Presiona Aceptar y NVDA se reiniciará. 
 
 ==== Guardar Configuración al Salir ====
 Esta opción es una casilla de verificación que, cuando se marca, dice a NVDA que guarde automáticamente la actual configuración cuando salgas de NVDA. 
 
 ==== Avisar antes de Salir de NVDA ====
-Esta opción es una casilla de verificación que te permite elegir si sí o si no apareze un diálogo cuando salgas de NVDA que te pregunte si te gustaría salir o no de NVDA. Cuando esté marcada, un diálogo aparecerá cuando intentes salir de NVDA preguntándote si quieres o no salir.
+Esta opción es una casilla de verificación que te permite elegir si sí o si no apareze un diálogo cuando salgas de NVDA que te pregunte si te gustaría salir o no de NVDA. 
+Cuando esté marcada, un diálogo aparecerá cuando intentes salir de NVDA preguntándote si quieres o no salir.
 
 ==== Nivel del Log ====
-Este es un cuadro combinado que te permite elegir cuánto NVDA pondrá en el log según se ejecuta. Generalmente los usuarios no deberían necesitar tocar esto ya que no es demasiado amigable. Sin embargo si estás queriendo proporcionar información en un informe sobre un fallo etc, entonces podrá ser una buena opción.
+Este es un cuadro combinado que te permite elegir cuánto NVDA pondrá en el log según se ejecuta. 
+Generalmente los usuarios no deberían necesitar tocar esto ya que no es demasiado amigable. 
+Sin embargo si estás queriendo proporcionar información en un informe sobre un fallo etc, entonces podrá ser una buena opción.
 
 ==== Iniciar automáticamente nvda después de autentificarme en windows ====
-Si esta opción está activada, NVDA arrancará automáticamente tan pronto como te autentifiques en Windows.
+Si esta opción está activada, NVDA arrancará automáticamente tan pronto como te autentifiques en Windows. 
+Esta opción sólo está disponible para copias instaladas de NVDA.
 
 ==== Utilizar nvda en la pantalla de autentificación de windows (requiere privilegios de administrador) ====
 Si te autentificas en Windows proporcionando un nombre de usuario y una contraseña, entonces activando esta opción hará que NVDA se inicie automáticamente en la pantalla de autentificación cuando Windows se inicie. 
+Esta opción sólo está disponible para copias instaladas de NVDA.
+
+==== Utilizar Opciones guardadas actualmente en la autentificación y otras pantallas seguras ====
+Presionando este botón copias tu configuración de usuario de NVDA actualmente guardada al directorio de sistema de configuración de NVDA, tal que NVDA lo utilizará cuando se ejecute en la autentificación, Control de Cuentas de Usuario (UAC) y otras pantallas seguras de Windows.
+Para asegurarte de que todas tus opciones se transfieren, asegúrate de guardar primeramente tu configuración con control+NVDA+c o guardar la configuración en el menú NVDA.
+Esta opción sólo está disponible para copias instaladas de NVDA.
 
 +++ Selección de sintetizador +++
 El diálogo Sintetizadores, que se encuentra en "Sintetizadores..." en el menú Preferencias, te permite seleccionar qué sintetizador debería utilizar NVDA para hablar.
+Una vez hayas seleccionado tu sintetizador de elección, puedes presionar Aceptar y NVDA cargará el sintetizador seleccionado.
+Si hay un error cargando el sintetizador, un cuadro de mensaje te alertará del hecho, y continuará utilizando el sintetizador anterior.
 
-El diálogo contiene un solo cuadro combinado, que lista todos los sintetizadores disponibles. Elige el sintetizador que quieras utilizar con las teclas de cursor, y luego presiona aceptar. Si hay un error cargando el sintetizador, un cuadro de mensaje te alertará del hecho, y conservará el sintetizador anterior cargado.
+==== Sintetizador ====
+Esta opción te permite elegir el sintetizador  que deseas que utilice NVDA para la salida de voz.
 
-La lista actual de sintetizadores soportados por NVDA es: eSpeak, SAPI4, SAPI5, Audiologic, y Silence.
+Para una lista de los sintetizadores que soporta NVDA, por favor mira la sección [Sintetizadores de Voz Soportados #SupportedSpeechSynths].
 
-El sintetizador eSpeak está compilado directamente en NVDA, y no depende de ningún otro controlador en especial o librería SAPI para ser instalado. NVDA arranca utilizando eSpeak de forma predeterminada. Este sintetizador debería funcionar en cualquier sistema en que funcione NVDA, así que definitivamente funcionará cuando se ejecute NVDA desde una unidad de memoria USB o un CD, o en cualquier otro sistema.
+Un elemento especial que aparecerá siempre en esta lista es "Sin Voz", que te permite utilizar NVDA sin salida de voz alguna.
+Esto podría ser útil para alguien que desee utilizar sólo NVDA con Braille, o  quizás a desarrolladores videntes que sólo deseen utilizar el Visualizador de Voz.
+ 
+==== Dispositivo de Salida ====
+Esta opción te permite elegir la tarjeta de sonido a través de la que NVDA debería mandar hablar al sintetizador seleccionado.
 
-La opción Sapi4 te permite utilizar el sintetizador Ssapi. Las voces que son incluidas bajo Ssapi4 incluyen las voces de eloquence, así como otras voces Ssapi4 que podrás tener instaladas en tu sistema.
-
-El sintetizador Sapi5 te permite utilizar las voces de microsoft que están incluidas en tu máquina. en XP, la voz Ssapi5 predeterminada es Microsoft Sam. En Vista, la voz predeterminada es Microsoft Anna. Dependiendo de cuáles voces tengas instaladas, otras podrán ser mostradas bajo Ssapi5.
-
-El controlador de sintetizador Silence no es que sea útil, al menos que quieras no tener ninguna voz mientras se ejecuta NVDA.
-
-Por favor ten en cuenta que no importa cuántas voces diferentes SAPI4 o SAPI5 (o motores) tengas instalados en tu sistema, sólo los actuales sintetizadores SAPI4 y SAPI5 se mostrarán en el diálogo sintetizadores. Para seleccionar uno de los motores (voces), selecciona o SAPI4 o SAPI5, y luego en el diálogo Opciones de Voz, puedes elegir la voz que quieras.
-
-+++ Opciones de Voz +++
-El diálogo Opciones de Voz, que se encuentra en el menú Preferencias o al que se accede mediante la presión de NVDA+Control+V, contiene opciones que te permiten modificar el sonido de la voz. También puedes configurar muchas de las opciones desde cualquier lugar presionando NVDA+Control junto con una de las teclas de cursor. Las flechas izquierda y derecha te mueven a través de varias opciones, las teclas de flechas arriba y abajo incrementan o decrementan esa opción respectivamente.
++++ Opciones de Voz (NVDA+control+v) +++
+El diálogo Opciones de Voz, que se encuentra en el menú Preferencias, contiene opciones que te permiten modificar el sonido de la voz. 
+Para una forma alternativa rápida de controlar los parámetros de voz desde cualquier lugar, por favor mira la sección [Grupo de Opciones de Sintetizador #SynthSettingsRing].
 
 El cuadro de diálogo de opciones de voz contiene las siguientes opciones:
 
 ==== Voz ====
-La primera opción que obtienes en este diálogo es un cuadro combinado, que lista todas las voces del sintetizador actual que tienes instalado. Puedes utilizar las teclas de cursor para escuchar todas las varias elecciones. Las flechas izquierda y arriba suben por la lista, mientras que las flechas derecha y abajo mueven hacia abajo por la lista.
+La primera opción que obtienes en este diálogo es un cuadro combinado, que lista todas las voces del sintetizador actual que tienes instalado. 
+Puedes utilizar las teclas de cursor para escuchar todas las varias elecciones. 
+Las flechas izquierda y arriba suben por la lista, mientras que las flechas derecha y abajo mueven hacia abajo por la lista.
 
 ==== Variante ====
-Si estás utilizando el sintetizador Espeak empaquetado junto con NVDA, este es un cuadro combinado que te permite seleccionar la variante con la que el sintetizador debería hablar. Las variantes de Espeak son bastante parecidas a las voces, pero proporcionan atributos ligeramente diferentes para la voz de ESpeak. Algunas variantes sonarán como un hombre, algunas como una mujer, y algunas como si tuvieran carraspera.
+Si estás utilizando el sintetizador Espeak empaquetado junto con NVDA, este es un cuadro combinado que te permite seleccionar la variante con la que el sintetizador debería hablar. 
+Las variantes de Espeak son bastante parecidas a las voces, pero proporcionan atributos ligeramente diferentes para la voz de ESpeak. 
+Algunas variantes sonarán como un hombre, algunas como una mujer, y algunas como si tuvieran carraspera.
 
 ==== Velocidad ====
-Esta opción te permite cambiar la velocidad de la voz. Esta es una barra de desplazamiento que va desde 0 hasta 100, (siendo 0 la velocidad más lenta y siendo 100 la más rápida).
+Esta opción te permite cambiar la velocidad de la voz. 
+Esta es una barra de desplazamiento que va desde 0 hasta 100, (siendo 0 la velocidad más lenta y siendo 100 la más rápida).
 
 ==== Tono ====
-Esta opción te permite cambiar el tono de la voz. Esta es una barra de desplazamiento que va desde 0 hasta 100, (siendo 0 el tono más bajo y siendo 100 el más alto). 
+Esta opción te permite cambiar el tono de la voz. 
+Esta es una barra de desplazamiento que va desde 0 hasta 100, (siendo 0 el tono más bajo y siendo 100 el más alto). 
 
 ==== Volumen ====
 Esta opción es una barra de desplazamiento que va desde 0 hasta 100, (siendo 0 el volumen más bajo y siendo 100 el más alto).
@@ -329,34 +468,48 @@ Esta opción es una barra de desplazamiento que va desde 0 hasta 100, (siendo 0 
 ==== Entonación ====
 Esta opción es una barra de desplazamiento que te permite elegir cuánta entonación (subida y caída en el tono) el sintetizador debería utilizar para hablar. (Solamente el sintetizador Espeak proporciona esta opción actualmente).
 
+%kc:setting
 ==== Verbalizar toda la Puntuación ====
+Tecla: NVDA+p
+
 Esta opción es una casilla de verificación, que cuando se marca dice a NVDA que verbalice todos los símbolos de puntuación como palabras (muy útil para pruebas de lectura). Cuando se desverifica, NVDA deja la puntuación sin alterar, así el sintetizador todavía leerá frases con la entonación correcta, sin embargo los símbolos no serían verbalizados en voz alta.
 
 ==== Aumentar Tono para Mayúsculas ====
 Esta opción, si está marcada, aumentará el tono para mayúsculas.
 
 ==== Decir" Mayus" antes de Mayúsculas ====
-Esta opción es una casilla de verificación, que cuando está marcada dice a NVDA que diga la palabra "mayus" antes de cualquier letra en mayúscula, cuando se navega sobre ella o vervalizándolo cuando está siendo escrita. Normalmente, NVDA eleva el tono ligeramente para cualquier letra mayúscula, pero algunos sintetizadores podrán no soportar esto bien, así quizás esta opción podrá ser de utilidad.
+Esta opción es una casilla de verificación, que cuando está marcada dice a NVDA que diga la palabra "mayus" antes de cualquier letra en mayúscula, cuando se navega sobre ella o vervalizándolo cuando está siendo escrita. 
+Normalmente, NVDA eleva el tono ligeramente para cualquier letra mayúscula, pero algunos sintetizadores podrán no soportar esto bien, así quizás esta opción podrá ser de utilidad.
 
 ==== Pitar para Mayúsculas ====
-Si esta casilla de verificación está marcada, NVDA emitirá un pequeño pitido cada vez que esté verbalizando un caracter en mayúscula. Como la casilla de verificación 'decir mayus para mayúsculas', esta es útil para sintetizadores que no puedan modificar su tono para las letras mayúsculas.
+Si esta casilla de verificación está marcada, NVDA emitirá un pequeño pitido cada vez que esté verbalizando un caracter en mayúscula. 
+Como la casilla de verificación 'decir mayus para mayúsculas', esta es útil para sintetizadores que no puedan modificar su tono para las letras mayúsculas.
+
++++ Grupo de Opciones de Sintetizador +++[SynthSettingsRing]
+Si deseas cambiar rápidamente opciones de voz  sin ir al diálogo de Opciones de Voz, hay algunas teclas de órdenes de NVDA que te permiten moverte a través de las opciones de voz más comunes, desde cualquier lugar mientras se ejecuta NVDA:
+%kc:beginInclude
+|| Nombre | Tecla Desktop | Tecla Laptop | Descripción |
+| Mover a la siguiente opción de sintetizador | NVDA+control+Flecha derecha | NVDA+control+Flecha derecha | Se mueve a la siguiente opción de voz disponible después de la actual, pasando por la primera opción de nuevo después de la última |
+| Mover a la opción de sintetizador anterior | NVDA+control+Flecha izquierda | NVDA+control+Flecha izquierda | Se mueve a la opción de voz anterior disponible después de la actual, pasando por la primera opción de nuevo después de la última |
+| Incrementar actual opción de sintetizador | NVDA+control+Flecha arriba | NVDA+control+Flecha arriba | incrementa la opción de voz actual sobre la que estés. Ej.: incrementa la velocidad, elige la siguiente voz, incrementa el volumen |
+| Decrementar actual opción de sintetizador | NVDA+control+Flecha abajo | NVDA+control+Flecha abajo | decrementa la opción de voz actual sobre la que estés. Ej.: decrementa la velocidad, elige  la voz anterior, decrementa el volumen |
+%kc:endInclude
 
 +++ Opciones de Braille +++
 El cuadro de diálogo de Opciones de braille puede ser invocado yendo al menú preferencias y entonces ir a la opción opciones de braille.
 
 ==== Línea Braille ====
-La primera opción con la que te encontrarás en el diálogo de opciones de braille es un cuadro combinado que dice "Línea braille". Se te presentará con tres opciones. Muévete entre estas opciones con las flechas.
+La primera opción con la que te encontrarás en el diálogo de opciones de braille es un cuadro combinado que dice "Línea braille". 
+Se te presentará con varias opciones dependiendo de cuántas líneas braille haya disponibles en tu sistema.
+Muévete entre estas opciones con las flechas.
 
 Sin braille significa que no estás utilizando braille.
 
-Freedom Scientific es para líneas braille Freedom Scientific Focus/Pacmate. Ten en cuenta que esta opción sólo aparece si tienes el controlador braille de Freedom Scientific instalado, mira la [Página Official de controladores Braille para Freedom Scientific http://www.freedomscientific.com/PACMATE-HQ/FS_Braille_Display_Driver.asp] para más información sobre cómo obtener e instalar los controladores.
-
-Handy Tech es para las líneas Handy Tech. Ten en cuenta que esta opción sólo existirá si tienes instalado el controlador universal [Handy Tech ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1111a.exe]
-
-BRLTTY te permite utilizar una vasta lista de líneas braille. Por favor instala el [instalador de Windows para BRLTTY http://brl.thefreecat.org/brltty/] para tener soporte para estas líneas.
+Por favor mira la sección [Líneas Braille Soportadas #SupportedBrailleDisplays] para más información acerca de las líneas braille soportadas.
 
 ==== Tabla de Transcripción ====
-La siguiente opción que vendrá en este diálogo es el cuadro combinado para las tablas braille. En este cuadro combinado, encontrarás tablas braille para diferentes idiomas. Puedes moverte de tabla braille a tabla braille en la lista utilizando las flechas.
+La siguiente opción que vendrá en este diálogo es el cuadro combinado para las tablas braille. 
+En este cuadro combinado, encontrarás tablas braille para diferentes idiomas. Puedes moverte de tabla braille a tabla braille en la lista utilizando las flechas.
 
 ==== Expandir a braille de ordenador para la palabra en el cursor ====
 Esta opción permite a la palabra que está bajo el cursor ser mostrada en braille de ordenador no contraído.
@@ -364,16 +517,18 @@ Esta opción permite a la palabra que está bajo el cursor ser mostrada en brail
 ==== Velocidad de Parpadeo del Cursor ====
 Esta opción es un campo numérico que te permite cambiar la velocidad de parpadeo del cursor en milésimas de segundo.
 
-==== nDuración del Mensaje (en seg) ====
+==== Duración del Mensaje (en seg) ====
 Esta opción es un campo numérico que controla durante cuánto tiempo se muestran los mensajes del sistema en la línea braille.
 
+%kc:setting
 ==== El Braille sigue a ====
+Tecla: NVDA+control+t
+
 Esta opción te permite elegir si la línea braille seguirá al foco del sistema, o si seguirá al navegador de objetos / cursor de revisión.
 
-Esta opción también puede conmutarse con la tecla de órdenes NVDA+control+t.
-
-+++ Opciones de Teclado +++
-Este cuadro de diálogo se encuentra en el menú Preferencias, bajo "Opciones de teclado...". Alternativamente, se puede acceder a él presionando NVDA+Control+K. Contiene las siguientes opciones:
++++ Opciones de Teclado (NVDA+control+k)+++
+Este cuadro de diálogo se encuentra en el menú Preferencias, bajo "Opciones de teclado...". 
+Contiene las siguientes opciones:
 
 ==== Disposición del Teclado ====
 Este cuadro combinado te permite elegir qué tipo de distribución de teclado debería utilizar NVDA. Actualmente los dos que vienen con NVDA son Desktop y Laptop.
@@ -387,58 +542,106 @@ Si esta casilla de verificación está marcada, la tecla insert (normalmente enc
 ==== Utilizar insert del teclado numérico como tecla modificadora de NVDA ====
 Si esta casilla de verificación está marcada, la tecla insert del teclado numérico puede utilizarse como una tecla modificadora de NVDA.
 
+%kc:setting
 ==== Verbalizar caracteres al escribir ====
-Una casilla de verificación que cuando está marcada significa que NVDA anunciará todos los caracteres según los escribes en el teclado. También puedes configurar esta opción desde cualquier lugar presionando NVDA+2.
+Tecla: NVDA+2
 
+Que cuando está marcada significa que NVDA anunciará todos los caracteres según los escribes en el teclado. 
+
+%kc:setting
 ==== Verbalizar palabras al escribir ====
-Una casilla de verificación que cuando está marcada significa que NVDA anunciará todas las palabras al escribirlas en el teclado. Puedes también configurar esta opción desde cualquier lugar presionando NVDA+3.
+Tecla: NVDA+3
 
+Que cuando está marcada significa que NVDA anunciará todas las palabras al escribirlas en el teclado. 
+
+%kc:setting
 ==== Verbalizar teclas de órdenes ====
-Una casilla de verificación que cuando está marcada significa que NVDA anunciará todas las teclas que no sean caracteres al escribirlas en el teclado. Esto incluye combinaciones de teclas tales como control más cualquier otra letra. También puedes configurar esta opción desde cualquier lugar presionando NVDA+4.
+Tecla: NVDA+4
 
-+++ Opciones del Ratón +++
-El diálogo de Opciones del Ratón se encuentra en el menú Preferencias, bajo "Opciones del Ratón...". Alternativamente, puede accederse a él presionando NVDA+Control+M. Contiene las siguientes opciones:
+Que cuando está marcada significa que NVDA anunciará todas las teclas que no sean caracteres al escribirlas en el teclado. Esto incluye combinaciones de teclas tales como control más cualquier otra letra. 
+
++++ Opciones del Ratón (NVDA+control+m) +++
+El diálogo de Opciones del Ratón se encuentra en el menú Preferencias, bajo "Opciones del Ratón...". 
+Contiene las siguientes opciones:
 
 ==== Anunciar Cambios en la Forma del Ratón ====
-Una casilla de verificación, que cuando se marca significa que NVDA anunciará la forma del puntero del ratón cada vez que cambie. El puntero del ratón en Windows cambia su forma para comunicar cierta información tal como cuando algo es editable, o cuando algo es cargable etc.
+Una casilla de verificación, que cuando se marca significa que NVDA anunciará la forma del puntero del ratón cada vez que cambie. 
+El puntero del ratón en Windows cambia su forma para comunicar cierta información tal como cuando algo es editable, o cuando algo es cargable etc.
 
+%kc:setting
 ==== Anunciar texto bajo el Ratón ====
-Una casilla de verificación que cuando está marcada significa que NVDA anunciará el texto actualmente bajo el puntero del ratón, según lo muevas por la pantalla. Esto te permite encontrar cosas en la pantalla, moviendo físicamente el ratón, en lugar de tratar de encontrarlas a través del navegador de objetos.
+| Tecla Desktop | NVDA+m |
+| Tecla Laptop | NVDA+shift+m |
+
+Que cuando está marcada significa que NVDA anunciará el texto actualmente bajo el puntero del ratón, según lo muevas por la pantalla. Esto te permite encontrar cosas en la pantalla, moviendo físicamente el ratón, en lugar de tratar de encontrarlas a través del navegador de objetos.
 
 ==== Resolución de Unidad de Texto ====
-Si NVDA está configurado para anunciar el texto bajo el ratón según lo muevas, esta opción te permite elegir exactamente cuánto texto será verbalizado. Las opciones son caracter, palabra, línea y párrafo.
+Si NVDA está configurado para anunciar el texto bajo el ratón según lo muevas, esta opción te permite elegir exactamente cuánto texto será verbalizado. 
+Las opciones son caracter, palabra, línea y párrafo.
 
 ==== Anunciar rol cuando el ratón entra en los Objetos ====
-Si esta casilla de verificación está marcada, NVDA anunciará el rol (tipo) de objeto cuando el ratón se mueva cerca de él.
+Si esta casilla de verificación está marcada, NVDA anunciará el rol (tipo) de objeto cuando el ratón se mueva dentro de él.
 
 ==== Reproducir audio cuando se mueva el ratón ====
 Marcando esta casilla de verificación haces que NVDA reproduzca pitidos cuando el ratón se mueva, así que el usuario pueda resolver dónde está el ratón con respecto a las dimensiones de la pantalla.
 
 ==== El Brillo controla el volumen del audio ====
-Si la casilla de verificación 'reproducir audio cuando el ratón se mueva' está marcada, entonces marcando esta casilla de verificación significa que el volumen de los pitidos de audio está controlado por cómo el brillo de la pantalla esté bajo el ratón. Esto podrá causar algunos problemas de rendimiento en Windows Vista, así que está desverificado de forma predeterminada.
+Si la casilla de verificación 'reproducir audio cuando el ratón se mueva' está marcada, entonces marcando esta casilla de verificación significa que el volumen de los pitidos de audio está controlado por cómo el brillo de la pantalla esté bajo el ratón. 
+Esto podrá causar algunos problemas de rendimiento en Windows Vista, así que está desverificado de forma predeterminada.
 
-+++ Opciones de Presentación de Objetos +++
-Se encuentra en el menú Preferencias bajo "Presentación de Objetos..." o presionando NVDA+Control+O, este cuadro de diálogo contiene las siguientes opciones:
++++ Opciones de Cursor de Revisión +++
+Se encuentra en el menú Preferencias bajo Cursor de Revisión...
+Este diálogo contiene las siguientes opciones:
+
+%kc:setting
+==== Seguir al Foco Del sistema ====
+| Tecla Desktop | NVDA+7 |
+| Tecla Laptop | NVDA+control+7 |
+
+Cuando se activa, el cursor de revisión siempre se colocará en el mismo objeto tan pronto como el actual foco del sistema cambie.
+
+%kc:setting
+==== Seguir al Cursor del Sistema ====
+Tecla: NVDA+6
+
+Cuando se activa, el cursor de revisión se moverá automáticamente a la posición del cursor del Sistema cada vez que se mueva.
+
+==== Seguir al Ratón ====
+Cuando se activa, el cursor de revisión seguirá al ratón según se mueva.
+
+==== Modo de Revisión Simple ====
+Cuando se activa, NVDA filtrará la jerarquía de objetos que puede navegarse, para excluir cualquier objeto inutilizable.
+
++++ Opciones de Presentación de Objetos (NVDA+control+o) +++
+Se encuentra en el menú Preferencias bajo "Presentación de Objetos..." 
+Este cuadro de diálogo contiene las siguientes opciones:
 
 ==== Anunciar Consejos ====
-Una casilla de verificación que cuando está marcada dice a NVDA que anuncie consejos según aparezcan. Muchas ventanas y controles muestran un pequeño mensaje (o consejo) cuando mueves el puntero del ratón sobre ellos, o algunas veces cuando te mueves con el foco por ellos.
+Una casilla de verificación que cuando está marcada dice a NVDA que anuncie consejos según aparezcan. 
+Muchas ventanas y controles muestran un pequeño mensaje (o consejo) cuando mueves el puntero del ratón sobre ellos, o algunas veces cuando te mueves con el foco por ellos.
 
 ==== Anunciar globos de ayuda ====
-Esta casilla de verificación cuando está marcada dice a NVDA que anuncie los globos de ayuda cuando aparezcan. Los globos de ayuda son como pequeños consejos, pero normalmente son más grandes, y están asociados con eventos del Sistema tales como un cable de red siendo desenchufado, o quizás alertarte acerca de problemas de seguridad de Windows.
+Esta casilla de verificación cuando está marcada dice a NVDA que anuncie los globos de ayuda cuando aparezcan. 
+Los globos de ayuda son como pequeños consejos, pero normalmente son más grandes, y están asociados con eventos del Sistema tales como un cable de red siendo desenchufado, o quizás alertarte acerca de problemas de seguridad de Windows.
 
 ==== Anunciar Teclas de Atajo de los Objetos ====
-Cuando esta casilla de verificación está verificada, NVDA incluirá la tecla de atajo que esté asociada con cierto objeto o control cuando sea anunciado. Por ejemplo el menú Archivo en una barra de menú podrá tener una tecla de atajo alt+a.
+Cuando esta casilla de verificación está verificada, NVDA incluirá la tecla de atajo que esté asociada con cierto objeto o control cuando sea anunciado. 
+Por ejemplo el menú Archivo en una barra de menú podrá tener una tecla de atajo alt+a.
 
 ==== Anunciar Información de la Posición del Objeto ====
-Esta opción te permite elegir dónde deseas tener una posición del objeto (ej.: 1 de 4) Anunciada cuando te mueves al objeto con el foco o el navegador de objetos.
+Esta opción te permite elegir dónde deseas tener una posición del objeto anunciada (ej.: 1 de 4) cuando te mueves al objeto con el foco o el navegador de objetos.
 
 ==== Anunciar Descripciones de Objetos ====
 Desmarca esta casilla de verificación si crees que no necesitas escuchar la descripción anunciada junto con los objetos.
 
+%kc:setting
 ==== Salida en las Barras de Progreso ====
-Una barra de progreso es un control que se parece un poco a una regla. Según una tarea está siendo lentamente completada, la barra va siendo más remarcada. También muestra un valor de porcentaje, para decirte numéricamente dónde está. Las barras de progreso son mostradas para cosas como la carga de una página web, la revisión del correo electrónico, o el procesado de un fichero de sonido etc.
+| Tecla Desktop | NVDA+u |
+| Tecla Laptop | NVDA+control+f2 |
 
-Esta opción se te presenta con un cuadro combinado que controla cómo nvda anuncia las actualizaciones de las barras de progreso. Tiene las siguientes opciones:
+Esta opción se te presenta con un cuadro combinado que controla cómo nvda anuncia las actualizaciones de las barras de progreso. 
+
+Tiene las siguientes opciones:
 - Desactivado: Las barras de progreso no serán anunciadas según cambien.
 - Verbalizar: Esta opción dice a nvda que verbalice las barras de progreso en porcentajes. Cada vez que la barra de progreso cambie, nvda verbalizará el valor nuevo. 
 - Pitar: Esto dice a nvda que pite cada vez que la barra de progreso cambie. Para un pitido más alto, el completado de la barra de progreso está más próximo
@@ -446,10 +649,11 @@ Esta opción se te presenta con un cuadro combinado que controla cómo nvda anun
 -
 
 ==== Anunciar Barras de Progreso en Segundo Plano ====
-Esta es una opción que, cuando está marcada, dice a nvda que mantenga el anunciado de una barra de progreso, aún si no está físicamente en el primer plano. Si minimizas o cambias a otra ventana que contiene una barra de progreso, nvda mantendrá la pista de ella, permitiéndote hacer otras cosas mientras nvda sigue a la barra progreso.
+Esta es una opción que, cuando está marcada, dice a nvda que mantenga el anunciado de una barra de progreso, aún si no está físicamente en el primer plano. 
+Si minimizas o cambias a otra ventana que contenga una barra de progreso, nvda mantendrá la pista de ella, permitiéndote hacer otras cosas mientras nvda sigue a la barra de progreso.
 
-+++ Opciones de los Modos Virtuales +++
-El diálogo de opciones de los Modos Virtuales puede encontrarse en el menú Preferencias, bajo "Modos Virtuales"...". Alternativamente, puede accederse a él presionando NVDA+Control+B.
++++ Opciones de los Modos Virtuales (NVDA+control+b) +++
+El diálogo de opciones de los Modos Virtuales puede encontrarse en el menú Preferencias, bajo "Modos Virtuales"...". 
 
 El diálogo contiene las siguientes opciones:
 
@@ -459,58 +663,206 @@ Este campo pone la anchura máxima de una línea del modo virtual (en caracteres
 ==== Máximo número de Líneas por Página ====
 Si bien en realidad los modos virtuales no tienen páginas, este campo ajusta la cantidad de líneas que moverás cuando presiones Avance de página o Retroceso de página mientras estés en un modo virtual.
 
+%kc:setting
 ==== Utilizar diseño de pantalla ====
+Tecla: NVDA+v
+
 Esta opción te permite especificar si el contenido en el modo virtual debería colocar cosas tales como enlaces y otros campos en su propia línea, o si debería conservarlos en el flujo de texto según sea mostrado visualmente. Si la opción está activada, entonces las cosas permanecerán según sean mostradas visualmente, pero si está desactivada, entonces los campos serán colocados en su propia línea.
 
 ==== Anunciar tablas de diseño ====
-Cuando se desactiva esta opción haces que NVDA sólo anuncie tablas que contienen datos tabulares (lo que te da a conocer que eso es una tabla). pero si la activas, NVDA también anunciará tablas utilizadas puramente para representación visual.
+Cuando se desactiva esta opción haces que NVDA sólo anuncie tablas que contienen datos tabulares (lo que te da a conocer que eso es una tabla). 
+pero si la activas, NVDA también anunciará tablas utilizadas puramente para representación visual.
 
 ==== Configurando el anunciado de campos tales como enlaces y encabezados ====
-Versiones anteriores de NVDA te permitían utilizar las opciones del diálogo del Modo Virtual para configurar si NVDA debería anunciar el tipo de campo al que entraste mientras lees el contenido de una web. Ejemplos de tipos de campo son enlaces, encabezados, tablas, y listas. Para configurar éstos , porfavor encuentra las nuevas opciones en el diálogo de [Opciones de Formato de Documentos. #DocumentFormattingSettings]. Estas opciones ahora no sólo afectan a los modos virtuales, sino a cualquier documento que pueda causar que estos tipos de campos sean anunciados.
+Versiones anteriores de NVDA te permitían utilizar las opciones del diálogo del Modo Virtual para configurar si NVDA debería anunciar el tipo de campo al que entraste mientras lees el contenido de una web. 
+Ejemplos de tipos de campo son enlaces, encabezados, tablas, y listas. 
+Para configurar éstos, porfavor encuentra las nuevas opciones en el [diálogo Opciones de Formato de documento #DocumentFormattingSettings]. 
+Estas opciones ahora no sólo afectan a los modos virtuales, sino a cualquier documento que pueda causar que estos tipos de campos sean anunciados.
 
 ==== Modo de foco automático para cambios del foco ====
-Esta opción permite al modo foco invocarse si el foco cambia. Por ejemplo, cuando estás en una página web, si presionas tab y caes sobre un formulario, si esta opción está verificada, el modo foco se invocará automáticamente.
+Esta opción permite al modo foco invocarse si el foco cambia. 
+Por ejemplo, cuando estás en una página web, si presionas tab y caes sobre un formulario, si esta opción está verificada, el modo foco se invocará automáticamente.
 
 ==== Modo foco automático para movimiento de flechas ====
-Esta opción, cuando está marcada, permite a NVDA entrar en y abandonar el modo foco cuando se utilizan las flechas. Por ejemplo, si se va pulsando flecha abajo por una página web y caes sobre un cuadro de edición, NVDA activará automáticamente el modo foco. Si pulsas las flechas para salir del cuadro de edición, NVDA te volverá a poner en modo revisión .
+Esta opción, cuando está marcada, permite a NVDA entrar en y abandonar el modo foco cuando se utilizan las flechas. 
+Por ejemplo, si se va pulsando flecha abajo por una página web y caes sobre un cuadro de edición, NVDA activará automáticamente el modo foco. Si pulsas las flechas para salir del cuadro de edición, NVDA te volverá a poner en modo revisión .
 
 ==== Indicación de Audio de los modos Foco y Revisión ====
 Si esta opción está activada, NVDA reproducirá sonidos especiales cuando cambie entre modo revisión y modo foco en un modo virtual, en lugar de verbalizar el cambio.
 
-+++ Document Formatting Settings +++
-Este cuadro de diálogo se encuentra en el menú Preferencias, bajo "Formato de Documento...". Alternativamente, este cuadro de diálogo puede invocarse presionando NVDA+Control+D. Todas las casillas de verificación en este diálogo son para configurar qué tipo de formato deseas escuchar automáticamente cuando muevas el cursor por los documentos tal como en Wordpad o Microsoft Word. Por Ejemplo, si verificas la casilla de verificación anunciar el nombre de la fuente, cada vez que navegues por el texto con una fuente diferente, el nombre de la fuente será anunciado.
++++ Opcionhes de Formato de Documento (NVDA+control+d) +++[DocumentFormattingSettings]
+Este cuadro de diálogo se encuentra en el menú Preferencias, bajo "Formato de Documento...". 
 
-Puedes configurar el anunciado de nombres de la fuente, tamaño de la fuente, atributos de la fuente, estilo, alineación del texto, estilo del texto, tablas, números de página, números de línea, errores de ortografía, enlaces, encabezados, listas y citas.
+La mayoría de las casillas de verificación en este diálogo son para configurar qué tipo de formato deseas escuchar automáticamente cuando muevas el cursor por los documentos. 
+Por Ejemplo, si verificas la casilla de verificación anunciar el nombre de la fuente, cada vez que navegues por el texto con una fuente diferente, el nombre de la fuente será anunciado.
 
-+++ Diccionarios del Habla +++
-El menú de Diccionarios del habla, (encontrado en el menú Preferencias) contiene diálogos que te permiten controlar el modo en que NVDA pronuncia palabras o frases particulares. Hay actualmente tres tipos diferentes de diccionarios del habla. son:
-- Predeterminado: las reglas en este diccionario afectan a todas las voces en NVDA.
-- Voz: un diccionario cuyas reglas afectan a la voz para el sintetizador que actualmente está siendo utilizado.
-- Temporal: las reglas en este diccionario afectan a todas las voces en NVDA, pero sólo para la sesión actual. Estas reglas son temporales y se perderán
+Puedes configurar el anunciado de:
+- nombre de fuente
+- tamaño de fuente
+- atributos de fuente
+- estilo
+- alineación del texto
+- estilo del texto
+- tablas
+- encabezados de fila/columna de tabla
+- números de página
+- números de línea
+- errores de ortografía
+- enlaces
+- encabezados
+- listas
+- citas
+- Zonas
 -
 
-Todos los diálogos de diccionario contienen una lista de reglas que serán utilizadas para procesar la voz. El diálogo también contiene los botones Añadir, Editar y Eliminar.
+==== Anunciar cambios de formato después del cursor ====
+Si está activada, esta opción dice a NVDA que pruebe y detecte todos los cambios de formato en una línea según la verbaliza, si se hace esto podría enlentecerse la respuesta de NVDA.
 
-Para añadir una nueva regla al diccionario, presiona el botón Añadir, y rellena los campos del cuadro de diálogo que aparece y entonces presiona Aceptar. Entonces berás tu nueva regla en la lista de reglas. Asimismo para asegurarte de que tu regla está actualmente guardada, asegúrate de presionar Aceptar para salir completamente del diálogo de diccionario Una vez hayas finalizado de añadir/editar reglas.
+De forma predeterminada, NVDA detectará el formato en la posición del cursor del Sistema / Revisión, y en algunos casos podría detectar el formato en el resto de la línea, sólo si no está causando un decremento de la respuesta.
+ 
+Activa esta opción mientras compruebas la lectura de documentos en aplicaciones tales como Microsoft Word, donde el formato sea importante.
 
-Las reglas para los diccionarios de voz de NVDA te permiten cambiar una cadena de caracteres por otra. Un ejemplo simple sería que quisieras tener a NVDA diciendo la palabra rana cada vez que tuviera que decir la palabra pájaro. En el diálogo de añadir regla, el modo más fácil de hacer esto es teclear la palabra pájaro en el campo Patrón, y la palabra rana en el campo de reemplazar. podrías también querer teclear una descripción de la regla en el campo Comentario (algo como: cambiar pájaro por rana).
++++ Diccionarios del Habla +++
+El menú de Diccionarios del habla, (encontrado en el menú Preferencias) contiene diálogos que te permiten controlar el modo en que NVDA pronuncia palabras o frases particulares. 
+Hay actualmente tres tipos diferentes de diccionarios del habla. 
+son:
+- Predeterminado: las reglas en este diccionario afectan a todas las voces en NVDA.
+- Voz: un diccionario cuyas reglas afectan a la voz para el sintetizador que actualmente está siendo utilizado.
+- Temporal: las reglas en este diccionario afectan a todas las voces en NVDA, pero sólo para la sesión actual. Estas reglas son temporales y se perderán si NVDA es reiniciado
+-
 
-Los diccionarios del habla de NVDA asimismo son mucho más poderosos que un simple reemplazo de palabras. El diálogo de Añadir reglas también contiene Una Casilla de verificación que dice si quieres que sí o que no la regla sea sensible a las mayúsculas (significando que NVDA debería tener en cuenta si los caracteres están en mayúsculas o en minúsculas. NVDA ignora los casos de forma predeterminada). Otra casilla de verificación te permite establecer si tu patrón es una "Expresión Regular". Una expresión regular es un patrón que contiene símbolos especiales que te permiten emparejar más de un caracter al mismo tiempo, o emparejar solo números, o solo letras, según unos pocos ejemplos. Las expresiones regulares no son cubiertas en esta Guía del Usuario, pero hay muchos tutoriales en la web que pueden proporcionarte más información.
+Todos los diálogos de diccionario contienen una lista de reglas que serán utilizadas para procesar la voz. 
+El diálogo también contiene los botones Añadir, Editar y Eliminar.
+
+Para añadir una nueva regla al diccionario, presiona el botón Añadir, y rellena los campos del cuadro de diálogo que aparece y entonces presiona Aceptar. 
+Entonces berás tu nueva regla en la lista de reglas. 
+Asimismo para asegurarte de que tu regla está actualmente guardada, asegúrate de presionar Aceptar para salir completamente del diálogo de diccionario Una vez hayas finalizado de añadir/editar reglas.
+
+Las reglas para los diccionarios de voz de NVDA te permiten cambiar una cadena de caracteres por otra. 
+Un ejemplo simple sería que quisieras tener a NVDA diciendo la palabra rana cada vez que tuviera que decir la palabra pájaro. 
+En el diálogo de añadir regla, el modo más fácil de hacer esto es teclear la palabra pájaro en el campo Patrón, y la palabra rana en el campo de reemplazar. 
+podrías también querer teclear una descripción de la regla en el campo Comentario (algo como: cambiar pájaro por rana).
+
+Los diccionarios del habla de NVDA asimismo son mucho más poderosos que un simple reemplazo de palabras. 
+El diálogo de Añadir reglas también contiene Una Casilla de verificación que dice si quieres que sí o que no la regla sea sensible a las mayúsculas (significando que NVDA debería tener en cuenta si los caracteres están en mayúsculas o en minúsculas. 
+NVDA ignora los casos de forma predeterminada). 
+Otra casilla de verificación te permite establecer si tu patrón es una "Expresión Regular". 
+Una expresión regular es un patrón que contiene símbolos especiales que te permiten emparejar más de un caracter al mismo tiempo, o emparejar solo números, o solo letras, según unos pocos ejemplos. 
+Las expresiones regulares no están cubiertas en esta Guía del Usuario, pero hay muchos tutoriales en la web que pueden proporcionarte más información.
 
 ++ Guardando y Recargando la configuración ++
-
-De forma predeterminada NVDA no guarda automáticamente tus opciones, así si sales de NVDA, y luego lo reinicias, las opciones volverán a los valores originales. Ten en cuenta, no obstante, que esta opción predeterminada puede ser cambiada bajo las opciones generales en el menú preferencias. Para guardar las opciones, puedes o elegir el elemento Guardar Configuración en el menú NVDA, o presionando NVDA+Control+c desde cualquier lugar.
+De forma predeterminada NVDA no guarda automáticamente tus opciones, así si sales de NVDA, y luego lo reinicias, las opciones volverán a los valores originales. 
+Ten en cuenta, no obstante, que esta opción predeterminada puede ser cambiada bajo las opciones generales en el menú preferencias. 
+Para guardar las opciones puedes elegir el elemento Guardar Configuración en el menú NVDA.
 
 Si NVDA está en un sistema de ficheros de sólo lectura, tal como un CD, no será posible guardar tus opciones, y te lo dirá.
 
-Si te equivocas con tus opciones y necesitas volver a las opciones guardadas, puedes o elegir el elemento "volver a la configuración guardada" en el menú NVDA, o puedes presionar NVDA+Control+r desde cualquier lugar.
+Si te equivocas con tus opciones y necesitas volver a las opciones guardadas, puedes elegir el elemento "volver a la configuración guardada" en el menú NVDA.
+
+Las siguientes teclas de órdenes de NVDA también son útiles:
+%kc:beginInclude
+|| Nombre | Tecla Desktop | Tecla Laptop | Descripción |
+| Guardar configuración | NVDA+control+c | NVDA+control+c | Guarda tu configuración actual tal que no se pierda cuando salgas de NVDA |
+| Regresar a configuración guardada | NVDA+control+r | NVDA+control+r | Restaura a NVDA a las opciones que existían en la última configuración guardada de NVDA |
+%kc:endInclude
 
 ++ Ficheros de Configuración y Perfiles de Usuario ++
-
 Las versiones portátiles de NVDA almacenan todas sus opciones,  appModules personales y controladores personales en un directorio llamado userConfig, que se encuentra en el directorio de NVDA.
 
-Las versiones instaladas de NVDA almacenan todas sus opciones, appModules personales y controladores personales en un directorio especial de NVDA localizado en tu perfil de usuario de Windows. Esto significa que cada usuario en el sistema puede tener sus propias opciones de NVDA. Para optener tu directorio de opciones para una versión instalada de NVDA, en el menú de Inicio puedes ir a programas -> NVDA -> explorar directorio de configuración de usuario.
+Las versiones instaladas de NVDA almacenan todas sus opciones, appModules personales y controladores personales en un directorio especial de NVDA localizado en tu perfil de usuario de Windows. 
+Esto significa que cada usuario en el sistema puede tener sus propias opciones de NVDA. 
+Para optener tu directorio de opciones para una versión instalada de NVDA, en el menú de Inicio puedes ir a programas -> NVDA -> explorar directorio de configuración de usuario.
    
-+ Problemas conocidos de NVDA +
-Puesto que NVDA está siendo actualizado constantemente, no hay garantía de que todas las órdenes proporcionadas aquí en esta Guía del Usuario se aplicarán aún. Si tienes cualquier problema con cualquiera de las órdenes presentadas en esta Guía del Usuario, por favor visita: NVDA_URL para más asistencia. En este sitio puedes encontrar más información tal como listas de correo en particular y otros recursos de la comunidad para ayudarte a utilizar NVDA.
+Las opciones para NVDA cuando se ejecuta en las pantallas de autentificación (logon) o de UAC se almacenan en el directorio SystemConfig en el directorio de instalación de NVDA.
+Normalmente esta configuración no debería ser tocada.
+Para cambiar cómo se configura NVDA en las pantallas de logon/UAC, configura a NVDA cómo desees mientras estás autentificado en Windows, y luego manda a NVDA copiar la configuración a la pantalla de autentificación (logon) utilizando el botón en el diálogo Opciones Generales.
 
++ Herramientas Extra +
+
+++ Visualizador del Log ++
+El visualizador del log, encontrado en Herramientas en el menú NVDA, te permiten ver toda la salida que haya ocurrido hasta ahora desde cuando iniciaste NVDA por última vez.
+
+Además de leer el contenido, también puedes guardar una copia del fichero de log, o refrescar el visualizador tal que se muestre la salida más reciente desde que el visualizador de Log fue abierto.
+Estas acciones están disponibles bajo el menú de visualizador de Log.
+
+++ Visualizador de Voz ++
+Para desarrolladores de Software videntes o gente demostrando NVDA a una audiencia vidente, está disponible una ventana flotante que te permite ver todo el texto que NVDA esté verbalizando actualmente.
+
+Para activar el visualizador de voz, marca el elemento de menú "Visualizador de Voz" bajo Herramientas en el menú NVDA.
+Desmarca el elemento de menú para desactivarlo.
+
+Mientras el visualizador de voz está activado, se actualiza constantemente para mostrarte el texto más reciente que está siendo hablado.
+No obstante, si haces clic o colocas el foco dentro del visualizador,  NVDA detendrá temporalmente la actualización del texto, tal que podrás seleccionar o copiar fácilmente el contenido existente.
+
+++ Consola de Python ++
+La consola de Python de NVDA, encontrada bajo Herramientas en el menú NVDA, es una herramienta de desarrollo que es útil para depuración, inspección general del interior  de NVDA o inspeción de la jerarquía de accesibilidad  de una aplicación.
+Para más información, por favor mira [el artículo The Python Console en el sitio Web de NVDA NVDA_URLwiki/PythonConsole].
+
++ Información Adicional +
+Si requieres información adicional o asistencia referente a NVDA, por favor visita el sitio Web de NVDA en NVDA_URL.
+Aquí, puedes encontrar documentación adicional,  así como soporte técnico y recursos para la comunidad. 
+Este sitio también proporciona información y recursos concernientes al desarrollo de NVDA.
+
++ Sintetizadores de Voz Soportados +[SupportedSpeechSynths]
+Esta sección contiene información acerca de los sintetizadores de voz soportados por NVDA.
+
+++ eSpeak ++
+El sintetizador [eSpeak http://espeak.sourceforge.net/] se compila directamente en NVDA y no requiere ningún otro controladores o componentes especiales para instalarse.
+NVDA se inicia utilizando eSpeak de forma predeterminada.
+Como este sintetizador se compiló en NVDA, es una gran elección para cuando se ejecuta NVDA en  una memoria USB o en un CD en otros sistemas.
+
+Cada voz que viene con eSpeak habla un idioma diferente.
+Hay sobre 20 idiomas diferentes soportados por eSpeak.
+
+También hay muchas variantes que pueden elegirse para alterar el sonido de la voz.
+
+++ Microsoft Speech API versión 4 (SAPI 4) ++
+SAPI 4 es un antíguo estándar de Microsoft para sintetizadores de voz software.
+Muchos sintetizadores de voz que cumplen con este estándar podrían ser comprados o descargados gratis en varias compañías y sitios Web.
+Cuando se utiliza este sintetizador con NVDA, las voces disponibles (a las que se acceden desde el [Diálogo Opciones de  Voz #VoiceSettings] o desde el [Grupo de Opciones de Sintetizador #SynthSettingsRing]) contendrán todas las voces de todos los motores SAPI 4 instalados que se encuentren en tu sistema.
+
+Si tienes voces SAPI 4 instaladas pero el sintetizador no aparece en la lista de sintetizadores de NVDA, por favor  instala los binarios del runtime de SAPI 4.0 , disponible en http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+
+++ Microsoft Speech API versión 5 (SAPI 5) ++
+SAPI 5 es un estándar de Microsoft para sintetizadores de voz software.
+Muchos sintetizadores de voz que cumplen con este estándar podrán comprarse o descargarse gratuitamente desde varias compañías y sitios web, aunque probablemente tu sistema ya vendrá con al menos una voz SAPI 5 preinstalada.
+Cuando se utiliza este sintetizador con NVDA, las voces disponibles (a las que se accede desde el [diálogo Opciones de Voz #VoiceSettings] o desde el [Grupo de opciones de sintetizador #SynthSettingsRing]) contendrán todas las voces de todos los motores SAPI 5 instalados encontrados en tu sistema.
+
+++ Audiologic Tts3 ++
+Este es un sintetizador de voz commercial específicamente para el idioma italiano.
+Debes tener este sintetizador instalado en tu sistema para poder utilizarlo con NVDA.
+Para más información, por favor visita el sitio web de Audiologic en www.audiologic.it.
+
+++ Newfon ++
+Newfon es un sintetizador commercial liberado por Sergey Shishmintzev que soporta los idiomas ruso y ucraniano.
+Para descargar este sintetizador, por favor visita  la sección de descargas del sitio web de la comunidad rusa de NVDA: http://ru.nvda-community.org/?page_id=10
+
++ Líneas Braille Soportadas +[SupportedBrailleDisplays]
+Esta sección contiene información acerca de las líneas braille soportadas por NVDA.
+
+++ Freedom Scientific Focus/PAC Mate Series ++
+Todas las líneas Focus y PAC Mate de [Freedom Scientific http://www.freedomscientific.com/] se soportan.
+Necesitarás los controladores de líneeas braille de Freedom Scientific instalados en tu sistema.
+Si no los tienes todavía, puedes obtenerlos desde http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
+Aunque esta página sólo menciona la línea Focus 40 Blue, el controlador soporta todas las líneas de Freedom Scientific.
+
+++ Optelec ALVA BC640/680 ++
+Ambas líneas ALVA BC640 y BC680 de [Optelec http://www.optelec.com/] se soportan.
+No necesitas instalar ningún controlador en especial para utilizar estas líneas.
+Solo enchufa la línea y configura NVDA para utilizarlas.
+
+++ Líneas Handy Tech ++
+NVDA soporta todas las líneas de [Handy Tech http://www.handytech.de/].
+Para algunas líneas USB, necesitarás instalar los controladores USB de Handy Tech en tu sistema.
+Además, necesitarás instalar el controlador universal Handy Tech,  disponible en ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
+
+++ MDV Lilli ++
+La línea braille Lilli disponible desde [MDV http://www.mdvbologna.it/] se soporta.
+No necesitas instalar ningún controlador específico para utilizar esta línea.
+Solo enchufa la línea y configura NVDA para utilizarla.
+
+++ BRLTTY ++
+[BRLTTY http://mielke.cc/brltty/] es un programa por separado que puede utilizarse para soportar muchas líneas braille.
+Para utilizar esto, necesitas instalar [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
+Deberías descargar e instalar el último paquete instalable, que se llamará, por ejemplo, brltty-win-4.2-2.exe.
+Cuando configures la línea y puerto a utilizar,  asegúrate de prestar gran atención a las instrucciones, especialmente si estás utilizando una línea USB y ya tienes los controladores del fabricante instalados.

@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2010.2 =
+Las características más notables de esta versión incluyen una gran simplificación de la navegación de objetos; modos virtuales para contenido de Adobe Flash; acceso a muchos controles anteriormente inaccesibles capturando texto escrito a la pantalla; revisión plana de texto en pantalla; soporte para documentos de IBM Lotus Symphony; anunciado de encabezados de fila y columna de tabla en Mozilla Firefox; una mejora significativa de la documentación del usuario.
 
 == Nuevas Características ==
 - La navegación por objetos con el cursor de revisión ha sido muy simplificada. El cursor de revisión ahora excluye objetos que no sean útiles para el usuario; es decir, objetos sólo utilizados para propósitos de diseño y objetos no disponibles.
@@ -40,6 +41,10 @@
 - El guardado de la configuración, y el cambio de opciones sensibles en particular, ahora se desactiva cuando se ejecute en modo seguro (en las pantallas de autentificación/UAC).
 - Actualizado el sintetizador de voz eSpeak a 1.44.01.
 - Si NVDA ya está ejecutándose, activando el atajo de teclado de NVDA en el escritorio (que es el presionado de control+alt+n) reiniciará a NVDA.
+- Se elimina la casilla de verificación anunciar texto bajo el ratón del diálogo Opciones de Ratón y se reenplaza con una casilla de verificación Activar seguimiento del Ratón, que mejora el emparejado del conmutado del script de seguimiento del ratón (NVDA+m). 
+- Se actualiza la distribución de teclado laptop tal que incluya todas las órdenes disponibles en la distribución desktop y funciona correctamente en teclados no ingleses. (#798, #800)
+- Mejoras significativas y actualizaciones a la documentación del usuario, incluyendo documentación de las órdenes de teclado laptop y sincronización de la Referencia Rápida de Órdenes de Teclado con la Guía del Usuario. (#455)
+- Actualizado el transcriptor braille liblouis a la versión 2.1.0. Notablemente, esto corrige algunos problemas relacionados con el Braille Chino 
 
 
 == Corrección de Fallos ==
@@ -62,6 +67,9 @@
 - Windows Live Messenger 2009 ya no se cierra inmediatamente después de iniciarse mientras NVDA se ejecuta. (#677)
 - En los navegadores web, ya no es necesario presionar tab para interactuar con un objeto empotrado (tal como contenido Flash) después de presionar intro en el objeto empotrado o volviendo desde otra aplicación. (#775)
 - En controles de Scintilla (ej.: Notepad++), el comienzo de líneas largas ya no se corta cuando sobrepasan la pantalla. También, estas líneas largas se mostrarán correctamente en braille cuando se seleccionen.
+- En Loudtalks, ahora es posible acceder a la lista de contactos.
+- La URL del documento y "MSAAHTML Registered Handler" ya no se anuncia a veces falso en Internet Explorer y otros controles MSHTML. (#811)
+- En árboles en en el IDE de Eclipse,  el elemento enfocado anteriormente ya no se anuncia incorrectamente cuando el foco se mueve a un nuevo elemento.
 
 
 = 2010.1 =

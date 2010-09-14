@@ -4,7 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2010.2 =
-Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkertaistettu objektinavigointi, näennäispuskurit Flash -sisällön käyttämiseksi, pääsy moniin aiemmin saavuttamattomiin säätimiin hakemalla ruudulla olevaa tekstiä, tasattu tarkastelu ruudulla olevalle tekstille, tuki IBM Lotus Symphony -asiakirjoille, taulukon rivien ja sarakkeiden otsikoiden ilmoittaminen Mozilla Firefoxissa, ja merkittävästi parannellut käyttöohjeet.
+Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkertaistettu objektinavigointi, näennäispuskurit Flash -sisällön käyttämiseksi, pääsy moniin aiemmin saavuttamattomiin säätimiin hakemalla ruudun tekstiä, kokonaistarkastelu ruudulla olevalle tekstille, tuki IBM Lotus Symphony -asiakirjoille, taulukon rivien ja sarakkeiden otsikoiden ilmoittaminen Mozilla Firefoxissa sekä merkittävästi parannellut käyttöohjeet.
 
 == Uudet ominaisuudet ==
 - Tarkastelukohdistimella liikkumista objekteissa on yksinkertaistettu huomattavasti. Tarkastelukohdistin sulkee nyt pois objektit, joista ei ole hyötyä käyttäjälle, esim. vain asettelutarkoituksiin käytettävät ja sellaiset, jotka eivät ole käytettävissä.
@@ -24,10 +24,10 @@ Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkerta
 - Lisätty ajuri MDV Lilli -pistenäytölle. (#241)
 - Uusi valinta luetaan nyt Microsoft Excelissä, kun koko rivi tai sarake valitaan pikanäppäimillä Shift+välilyönti tai Ctrl+välilyönti. (#759)
 - Taulukon rivien ja sarakkeiden otsikot voidaan nyt lukea. Asetus on määritettävissä Asiakirjojen muotoiluasetukset -valintaikkunasta.
- - Tätä tuetaan toistaiseksi vain Mozilla-sovelluksissa, kuten Firefoxissa ja Thunderbirdissä. (#361)
-- Otettu käyttöön tasatun tarkastelun komennot: (#58)
- - NVDA+numeroryhmän 7: siirtää tasatun tarkastelun tilaan ja sijoittaa tarkastelukohdistimen nykyisen objektin kohdalle, mikä mahdollistaa koko ruudun tai asiakirjan lukemisen tekstinlukukomennoilla.
- - NVDA+numeroryhmän 1: siirtää tarkastelukohdistimen sen kohdalla olevan tekstin sisältävään objektiin, mikä mahdollistaa objekti kerrallaan liikkumisen siitä kohdasta lähtien.
+ - Tätä tuetaan toistaiseksi vain Mozilla-sovelluksissa (Firefox 3.6.10 tai uudempi ja Thunderbird 3.1.5 tai uudempi). (#361)
+- Otettu käyttöön kokonaistarkastelun komennot: (#58)
+ - NVDA+numeroryhmän 7: siirtää kokonaistarkastelutilaan ja sijoittaa tarkastelukohdistimen nykyisen objektin kohdalle, mikä mahdollistaa koko ruudun tai asiakirjan lukemisen tekstinlukukomennoilla.
+ - NVDA+numeroryhmän 1: siirtää tarkastelukohdistimen sen kohdalla olevan tekstin sisältävään objektiin, mikä mahdollistaa objekti kerrallaan liikkumisen kyseisestä kohdasta lähtien.
 - NVDA:n nykyiset asetukset voidaan kopioida suojatuissa ruuduissa käytettäväksi (esim. kirjautumis- ja käyttäjätilien valvonnan ruudut) painamalla Yleiset asetukset -valintaikkunassa olevaa painiketta.
 
 
@@ -71,10 +71,11 @@ Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkerta
 - Pitkien rivien alkua ei enää katkaista Scintilla-säätimissä (esim. Notepad++:ssa), jos ne eivät sovi kokonaan ruudulle. Lisäksi tällaiset rivit näytetään nyt oikein pistenäytöllä, kun ne valitaan.
 - Yhteystietoluettelon käyttäminen on nyt mahdollista Loudtalksissa.
 - URL-osoitetta ja "MSAAHTML Rekisteröityä Käsittelijää" ei enää turhaan ilmoiteta Internet Explorerissa ja muissa MSHTML-säätimissä. (#811)
+- Eclipse IDE:n puunäkymäsäätimissä ei enää virheellisesti lueta aiempaa aktiivista kohtaa kohdistuksen siirtyessä uuteen.
 
 
 == 2010.1 ==
-Tämä julkaisu keskittyy pääasiassa vikojen korjauksiin ja käyttäjäkokemuksen parantamiseen, mukaan lukien muutamia huomattavia vakauteen liittyviä korjauksia.
+Tämä julkaisu keskittyy pääasiassa vikojen korjaamiseen ja käyttäjäkokemuksen parantamiseen, mukaan lukien muutamia huomattavia vakauteen liittyviä korjauksia.
 
 === Uudet ominaisuudet ===
 - NVDA käynnistyy nyt järjestelmissä, joissa ei ole äänilaitteita. Tietojen tulostamiseen on tällöin käytettävä pistenäyttöä tai Silence-syntetisaattoria yhdessä Näytä puhe -toiminnon kanssa. (#425)

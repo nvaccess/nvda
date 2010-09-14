@@ -1,5 +1,5 @@
 ﻿NVDA NVDA_VERSION käyttöohje
-Viimeisin päivitys: 28. elokuuta 2010
+
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION näppäinkomentojen pikaopas
@@ -50,7 +50,7 @@ NVDA on suojattu GNU General Public License (versio 2) -lisenssillä. Voit vapaa
 Voit [tarkastella koko lisenssiä verkossa saadaksesi lisätietoja. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Järjestelmävaatimukset +
-- Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows XP:n, Windows Vistan ja Windows 7:n versiot (palvelinversiot mukaan lukien), saattaa toimia osittain myös Windows 2000:ssa.
+- Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows XP:n, Windows Vistan ja Windows 7:n versiot (palvelinversiot mukaan lukien).
 - Muistia (RAM): 256 Mt tai enemmän
 - Prosessori: 1 GHz tai nopeampi
 - Noin 50 Mt levytilaa.
@@ -229,15 +229,15 @@ Asettelua kuvataan seuraavasti:
 | Edellinen sana | Nykyinen sana | Seuraava sana |
 | Edellinen merkki | Nykyinen merkki | Seuraava merkki |
 
-++ Tasattu tarkastelu ++
+++ Kokonaistarkastelu ++
 NVDA:lla voidaan yksittäisen objektin sisällön lisäksi lukea koko asiakirjan sisältöä tai ruudun tekstiä.
-Tätä kutsutaan tasatuksi tarkasteluksi.
+Tätä kutsutaan kokonaistarkasteluksi.
 
-Kahta seuraavaa komentoa käytetään tasatun tarkastelun tilaan tai siitä pois siirtymiseen:
+Kahta seuraavaa komentoa käytetään kokonaistarkastelutilaan tai siitä pois siirtymiseen:
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
-| Siirry tasatun tarkastelun tilaan | NVDA+numeroryhmän 7 | NVDA+Alt+7 | Siirtää tasatun tarkastelun tilaan tarkastelukohdistimen nykyisessä kohdassa. Tämä mahdollistaa koko ruudun tai asiakirjan sisällön lukemisen tekstinlukukomennoilla. |
-| Siirry objektiin | NVDA+numeroryhmän 1 | NVDA+Alt+J | Siirtää objektiin, jossa tarkastelukohdistimen kohdalla oleva teksti on tasatun tarkastelun tilassa |
+| Siirry kokonaistarkastelutilaan | NVDA+numeroryhmän 7 | NVDA+Page up | Siirtää kokonaistarkastelutilaan tarkastelukohdistimen nykyisessä kohdassa. Tämä mahdollistaa koko ruudun tai asiakirjan sisällön lukemisen tekstinlukukomennoilla. |
+| Siirry objektiin | NVDA+numeroryhmän 1 | NVDA+Page down | Siirtää objektiin, jossa tarkastelukohdistimen kohdalla oleva teksti on kokonaistarkastelutilassa |
 %kc:endInclude
 
 ++ Hiirellä liikkuminen ++
@@ -263,9 +263,9 @@ Vaikka hiiren avulla liikkumiseen tulisikin käyttää fyysistä hiirtä tai kos
 + Näennäispuskurit +
 Monimutkaiset, ei-muokattavat asiakirjat kuten web-sivut, esitetään NVDA:ssa näennäispuskurissa.
 
-Näennäispuskuri on tasattu esitys esim. web-sivusta, jossa voi liikkua nuolinäppäimillä. Liikkuessasi tekstin lisäksi luetaan tiedot, kuten onko kohdalla oleva teksti linkki, otsikko tms.
+Näennäispuskuri on kokonainen esitys esim. web-sivusta, jossa voi liikkua nuolinäppäimillä. Liikkuessasi tekstin lisäksi luetaan tiedot, kuten onko kohdalla oleva teksti linkki, otsikko tms.
 
-Näennäispuskurissa on kaksi toimintatilaa. Selaustilassa tekstissä voidaan liikkua näennäiskohdistinta käyttäen, ikään kuin järjestelmäkohdistimella. Kaikki NVDA:n järjestelmäkohdistimella liikuttaessa käytettävät näppäinkomennot toimivat tässä tilassa (esim. lue kaikki, muotoilutietojen ilmoittaminen, kaikki taulukoissa liikkumiseen käytettävät komennot jne). Kohdistustilassa voidaan olla suorassa vuorovaikutuksessa säädinten(muokkauskenttä, yhdistelmäruutu, valintapainike) kanssa millä tahansa normaalisti käytettävillä näppäimillä. Kun ollaan selaustilassa, NVDA siirtyy automaattisesti kohdistustilaan siirryttäessä sarkaimella tai napsautettaessa hiirellä sellaisen säätimen kohdalla, joka edellyttää sitä. Enterin tai välilyönnin painaminen tällaisten säädinten kohdalla siirtää myös kohdistustilaan, tai siihen voidaan siirtyä manuaalisesti.
+Näennäispuskurissa on kaksi toimintatilaa. Selaustilassa tekstissä voidaan liikkua näennäiskohdistinta käyttäen, ikään kuin järjestelmäkohdistimella. Kaikki NVDA:n järjestelmäkohdistimella liikuttaessa käytettävät näppäinkomennot toimivat tässä tilassa (esim. lue kaikki, muotoilutietojen ilmoittaminen, kaikki taulukoissa liikkumiseen käytettävät komennot jne). Kohdistustilassa voidaan olla suorassa vuorovaikutuksessa säädinten kanssa (esim. muokkauskenttä, yhdistelmäruutu, valintapainike) millä tahansa normaalisti käytettävillä näppäimillä. Kun ollaan selaustilassa, NVDA siirtyy automaattisesti kohdistustilaan liikuttaessa sarkaimella tai napsautettaessa hiirellä sellaisen säätimen kohdalla, joka edellyttää sitä. Enterin tai välilyönnin painaminen tällaisten säädinten kohdalla siirtää myös kohdistustilaan, tai siihen voidaan siirtyä manuaalisesti.
 Jos NVDA siirtyy automaattisesti kohdistustilaan, takaisin selaustilaan palataan sarkaimella liikuttaessa tai napsautettaessa hiirellä jotakin, joka ei edellytä kohdistustilaa, kuten esim. linkki tai sivun normaali tekstiosa. Esc-näppäimen painaminen siirtää myös takaisin selaustilaan.
 Kohdistus- ja selaustiloihin voidaan siirtyä myös manuaalisesti. Kun kohdistustilaan siirrytään itse, NVDA pysyy siinä tilassa eikä siirry enää automaattisesti selaustilaan, ellei sitä oteta käyttöön manuaalisesti.
 %kc:beginInclude
@@ -281,7 +281,7 @@ Kohdistus- ja selaustiloihin voidaan siirtyä myös manuaalisesti. Kun kohdistus
 NVDA käyttää tällä hetkellä näennäispuskureita asiakirjojen lukemiseen Mozilla Firefoxissa, Internet Explorerissa, Google Chromessa, Adobe Readerissa sekä Flashissa.
 
 ++ Pikanavigointinäppäimet ++
-NVDA:ssa on selaustilaa käytettäessä liikkumisen nopeuttamiseksi myös pikanavigointikomentoja, joilla voi siirtyä näennäispuskurin tiettyihin kenttiin.
+NVDA:ssa on selaustilaa käytettäessä liikkumisen nopeuttamiseksi myös pikanavigointikomentoja, joilla voidaan siirtyä näennäispuskurin eri kenttiin.
 
 %kc:beginInclude
 Sellaisinaan nämä komennot siirtävät seuraavan, ja Shift-näppäimen kanssa painettuna edellisen kentän kohdalle:
