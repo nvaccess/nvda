@@ -141,7 +141,7 @@ inline void fillTableCellInfo_IATable(VBufStorage_controlFieldNode_t* node, IAcc
 		DEBUG_MSG(L"IAccessibleTable::get_rowColumnExtentsAtIndex failed, result " << res);
 }
 
-inline void fillTableCellInfo_IATable2(VBufStorage_controlFieldNode_t* node, IAccessibleTableCell* paccTableCell) {
+inline void GeckoVBufBackend_t::fillTableCellInfo_IATable2(VBufStorage_controlFieldNode_t* node, IAccessibleTableCell* paccTableCell) {
 	int res;
 	wostringstream s;
 
@@ -165,6 +165,9 @@ inline void fillTableCellInfo_IATable2(VBufStorage_controlFieldNode_t* node, IAc
 			node->addAttribute(L"table-rowsspanned", s.str());
 		}
 	}
+
+	if (this->shouldDisableTableHeaders)
+		return;
 
 	IUnknown** headerCells;
 	long nHeaderCells;
@@ -228,7 +231,47 @@ inline void fillTableCellInfo_IATable2(VBufStorage_controlFieldNode_t* node, IAc
 	}
 }
 
-VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IAccessibleTable* paccTable=NULL, IAccessibleTable2* paccTable2=NULL, long tableID=0) {
+void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
+	IServiceProvider* serv = NULL;
+	if (pacc->QueryInterface(IID_IServiceProvider, (void**)&serv) != S_OK)
+		return;
+	IAccessibleApplication* iaApp = NULL;
+	if (serv->QueryService(IID_IAccessibleApplication, IID_IAccessibleApplication, (void**)&iaApp) != S_OK) {
+		serv->Release();
+		return;
+	}
+	serv->Release();
+	serv = NULL;
+
+	BSTR toolkitName = NULL;
+	if (iaApp->get_toolkitName(&toolkitName) != S_OK) {
+		iaApp->Release();
+		return;
+	}
+	BSTR toolkitVersion = NULL;
+	if (iaApp->get_toolkitVersion(&toolkitVersion) != S_OK) {
+		iaApp->Release();
+		SysFreeString(toolkitName);
+		return;
+	}
+	iaApp->Release();
+	iaApp = NULL;
+
+	if (wcscmp(toolkitName, L"Gecko") == 0) {
+		// Gecko <= 1.9.2.9 will crash if we try to retrieve headers on some table cells, so disable them.
+		UINT toolkitVersionLen = SysStringLen(toolkitVersion);
+		this->shouldDisableTableHeaders = (toolkitVersionLen >= 7 &&
+			wcsncmp(toolkitVersion, L"1.9.2.", 6) == 0 &&
+			// If there is another digit after 1.9.2.n, this is >= 1.9.2.10.
+			(toolkitVersionLen <= 7 || !iswdigit(toolkitVersion[7]))
+		);
+	}
+
+	SysFreeString(toolkitName);
+	SysFreeString(toolkitVersion);
+}
+
+VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IAccessibleTable* paccTable, IAccessibleTable2* paccTable2, long tableID) {
 	int res;
 	DEBUG_MSG(L"Entered fillVBuf, with pacc at "<<pacc<<L", parentNode at "<<parentNode<<L", previousNode "<<previousNode);
 	assert(buffer); //buffer can't be NULL
@@ -453,7 +496,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 		parentNode->addAttribute(L"table-id", s.str());
 		if (res == S_OK) {
 			// IAccessibleTable2
-			fillTableCellInfo_IATable2(parentNode, paccTableCell);
+			this->fillTableCellInfo_IATable2(parentNode, paccTableCell);
 			paccTableCell->Release();
 			paccTableCell = NULL;
 		} else // IAccessibleTable
@@ -652,7 +695,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 					if(childDefaction) SysFreeString(childDefaction);
 					#endif
 					DEBUG_MSG(L"calling fillVBuf with childPacc ");
-					if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,paccTable2,tableID))!=NULL) {
+					if((tempNode=this->fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,paccTable2,tableID))!=NULL) {
 						previousNode=tempNode;
 					} else {
 						DEBUG_MSG(L"Error in fillVBuf");
@@ -706,7 +749,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 						}
 						if(childPacc) {
 							DEBUG_MSG(L"calling _filVBufHelper with child object ");
-							if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,paccTable2,tableID))!=NULL) {
+							if((tempNode=this->fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,paccTable2,tableID))!=NULL) {
 								previousNode=tempNode;
 							} else {
 								DEBUG_MSG(L"Error in calling fillVBuf");
@@ -958,8 +1001,12 @@ void GeckoVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int
 		DEBUG_MSG(L"Could not get IAccessible2, returning");
 		return;
 	}
+	if (!oldNode) {
+		// This is the root node.
+		this->versionSpecificInit(pacc);
+	}
 	DEBUG_MSG(L"Calling fillVBuf");
-	fillVBuf(pacc, buffer, NULL, NULL);
+	this->fillVBuf(pacc, buffer, NULL, NULL);
 	pacc->Release();
 	DEBUG_MSG(L"Rendering done");
 }

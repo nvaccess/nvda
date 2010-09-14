@@ -18,6 +18,16 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <vbufBase/backend.h>
 
 class GeckoVBufBackend_t: public VBufBackend_t {
+	private:
+
+	VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IAccessibleTable* paccTable=NULL, IAccessibleTable2* paccTable2=NULL, long tableID=0);
+
+	void versionSpecificInit(IAccessible2* pacc);
+
+	void fillTableCellInfo_IATable2(VBufStorage_controlFieldNode_t* node, IAccessibleTableCell* paccTableCell);
+
+	bool shouldDisableTableHeaders;
+
 	protected:
 
 	static void CALLBACK renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time);
