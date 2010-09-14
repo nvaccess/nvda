@@ -141,13 +141,49 @@ inline void fillTableCellInfo_IATable(VBufStorage_controlFieldNode_t* node, IAcc
 		DEBUG_MSG(L"IAccessibleTable::get_rowColumnExtentsAtIndex failed, result " << res);
 }
 
-inline void GeckoVBufBackend_t::fillTableCellInfo_IATable2(VBufStorage_controlFieldNode_t* node, IAccessibleTableCell* paccTableCell) {
+typedef HRESULT(STDMETHODCALLTYPE IAccessibleTableCell::*IATableCellGetHeaderCellsFunc)(IUnknown***, long*);
+inline void fillTableHeaders(VBufStorage_controlFieldNode_t* node, IAccessibleTableCell* paccTableCell, const IATableCellGetHeaderCellsFunc getHeaderCells, const wstring& attribName) {
 	int res;
+	wostringstream s;
+	IUnknown** headerCells;
+	long nHeaderCells;
+	IAccessible2* headerCellPacc = NULL;
+	int headerCellDocHandle, headerCellID;
+
+	if ((paccTableCell->*getHeaderCells)(&headerCells, &nHeaderCells) == S_OK) {
+		DEBUG_MSG(L"Get header cells succeeded, adding header IDs");
+		for (int hci = 0; hci < nHeaderCells; hci++) {
+			if ((res = headerCells[hci]->QueryInterface(IID_IAccessible2, (void**)(&headerCellPacc))) != S_OK) {
+				DEBUG_MSG(L"QueryInterface header cell " << hci << " to IAccessible2 failed with " << res);
+				headerCells[hci]->Release();
+				continue;
+			}
+			headerCells[hci]->Release();
+			if ((res = headerCellPacc->get_windowHandle((HWND*)&headerCellDocHandle)) != S_OK) {
+				DEBUG_MSG("IAccessible2::get_windowHandle on header cell " << hci << " failed with " << res);
+				headerCellPacc->Release();
+				continue;
+			}
+			headerCellDocHandle = (int)findRealMozillaWindow((HWND)headerCellDocHandle);
+			if ((res = headerCellPacc->get_uniqueID((long*)&headerCellID)) != S_OK) {
+				DEBUG_MSG("IAccessible2::get_uniqueID on header cell " << hci << " failed with " << res);
+				headerCellPacc->Release();
+				continue;
+			}
+			s << headerCellDocHandle << L"," << headerCellID << L";";
+			headerCellPacc->Release();
+		}
+		if (!s.str().empty())
+			node->addAttribute(attribName, s.str());
+	}
+}
+
+inline void GeckoVBufBackend_t::fillTableCellInfo_IATable2(VBufStorage_controlFieldNode_t* node, IAccessibleTableCell* paccTableCell) {
 	wostringstream s;
 
 	long row, column, rowExtents, columnExtents;
 	boolean isSelected;
-	if ((res = paccTableCell->get_rowColumnExtents(&row, &column, &rowExtents, &columnExtents, &isSelected)) == S_OK) {
+	if (paccTableCell->get_rowColumnExtents(&row, &column, &rowExtents, &columnExtents, &isSelected) == S_OK) {
 		DEBUG_MSG(L"IAccessibleTableCell::get_rowColumnExtents succeeded, adding attributes");
 		s << row + 1;
 		node->addAttribute(L"table-rownumber", s.str());
@@ -169,66 +205,8 @@ inline void GeckoVBufBackend_t::fillTableCellInfo_IATable2(VBufStorage_controlFi
 	if (this->shouldDisableTableHeaders)
 		return;
 
-	IUnknown** headerCells;
-	long nHeaderCells;
-	IAccessible2* headerCellPacc = NULL;
-	int headerCellDocHandle, headerCellID;
-
-	if ((res = paccTableCell->get_columnHeaderCells(&headerCells, &nHeaderCells)) == S_OK) {
-		DEBUG_MSG(L"IAccessibleTableCell::get_columnHeaderCells succeeded, adding header IDs");
-		s.str(L"");
-		for (int hci = 0; hci < nHeaderCells; hci++) {
-			if ((res = headerCells[hci]->QueryInterface(IID_IAccessible2, (void**)(&headerCellPacc))) != S_OK) {
-				DEBUG_MSG(L"QueryInterface column header cell " << hci << " to IAccessible2 failed with " << res);
-				headerCells[hci]->Release();
-				continue;
-			}
-			headerCells[hci]->Release();
-			if ((res = headerCellPacc->get_windowHandle((HWND*)&headerCellDocHandle)) != S_OK) {
-				DEBUG_MSG("IAccessible2::get_windowHandle on column header cell " << hci << " failed with " << res);
-				headerCellPacc->Release();
-				continue;
-			}
-			headerCellDocHandle = (int)findRealMozillaWindow((HWND)headerCellDocHandle);
-			if ((res = headerCellPacc->get_uniqueID((long*)&headerCellID)) != S_OK) {
-				DEBUG_MSG("IAccessible2::get_uniqueID on column header cell " << hci << " failed with " << res);
-				headerCellPacc->Release();
-				continue;
-			}
-			s << headerCellDocHandle << L"," << headerCellID << L";";
-			headerCellPacc->Release();
-		}
-		if (!s.str().empty())
-			node->addAttribute(L"table-columnheadercells", s.str());
-	}
-
-	if ((res = paccTableCell->get_rowHeaderCells(&headerCells, &nHeaderCells)) == S_OK) {
-		DEBUG_MSG(L"IAccessibleTableCell::get_rowHeaderCells succeeded, adding header IDs");
-		s.str(L"");
-		for (int hci = 0; hci < nHeaderCells; hci++) {
-			if ((res = headerCells[hci]->QueryInterface(IID_IAccessible2, (void**)(&headerCellPacc))) != S_OK) {
-				DEBUG_MSG(L"QueryInterface row header cell " << hci << " to IAccessible2 failed with " << res);
-				headerCells[hci]->Release();
-				continue;
-			}
-			headerCells[hci]->Release();
-			if ((res = headerCellPacc->get_windowHandle((HWND*)&headerCellDocHandle)) != S_OK) {
-				DEBUG_MSG("IAccessible2::get_windowHandle on row header cell " << hci << " failed with " << res);
-				headerCellPacc->Release();
-				continue;
-			}
-			headerCellDocHandle = (int)findRealMozillaWindow((HWND)headerCellDocHandle);
-			if ((res = headerCellPacc->get_uniqueID((long*)&headerCellID)) != S_OK) {
-				DEBUG_MSG("IAccessible2::get_uniqueID on row header cell " << hci << " failed with " << res);
-				headerCellPacc->Release();
-				continue;
-			}
-			s << headerCellDocHandle << L"," << headerCellID << L";";
-			headerCellPacc->Release();
-		}
-		if (!s.str().empty())
-			node->addAttribute(L"table-rowheadercells", s.str());
-	}
+	fillTableHeaders(node, paccTableCell, &IAccessibleTableCell::get_columnHeaderCells, L"table-columnheadercells");
+	fillTableHeaders(node, paccTableCell, &IAccessibleTableCell::get_rowHeaderCells, L"table-rowheadercells");
 }
 
 void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
