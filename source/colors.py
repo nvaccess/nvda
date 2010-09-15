@@ -10,6 +10,7 @@ import math
 RGB=namedtuple('RGB',('red','green','blue'))
 
 RGBToNames={
+	#Standard 16 HTML 4 colors
 	RGB(0x00,0x00,0x00):_('black'),
 	RGB(0x00,0x80,0x00):_('green'),
 	RGB(0xc0,0xc0,0xc0):_('light grey'),
@@ -26,6 +27,8 @@ RGBToNames={
 	RGB(0x00,0x80,0x80):_('teal'),
 	RGB(0xff,0x00,0xff):_('fuchsia'),
 	RGB(0x00,0xff,0xff):_('aqua'),
+	#Extra CSS 2.1 color
+	RGB(0xff,0xa5,0x00):_('orange'),
 }
 
 def findColorName(rgb):
