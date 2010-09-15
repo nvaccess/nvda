@@ -9,6 +9,7 @@
 @type speechMode: boolean
 """ 
 
+import colors
 import XMLFormatting
 import globalVars
 from logHandler import log
@@ -889,6 +890,15 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		oldFontSize=attrsCache.get("font-size") if attrsCache is not None else None
 		if fontSize and fontSize!=oldFontSize:
 			textList.append(fontSize)
+	if  formatConfig["reportColor"]:
+		color=attrs.get("color")
+		oldColor=attrsCache.get("color") if attrsCache is not None else None
+		if color and color!=oldColor:
+			textList.append(colors.findColorName(color))
+		backgroundColor=attrs.get("background-color")
+		oldBackgroundColor=attrsCache.get("background-color") if attrsCache is not None else None
+		if backgroundColor and backgroundColor!=oldBackgroundColor:
+			textList.append(_("on {backgroundColor}").format(backgroundColor=colors.findColorName(backgroundColor)))
 	if  formatConfig["reportLineNumber"]:
 		lineNumber=attrs.get("line-number")
 		oldLineNumber=attrsCache.get("line-number") if attrsCache is not None else None

@@ -624,7 +624,7 @@ class AppModule(appModuleHandler.AppModule):
 	def script_reportFormatting(self,keyPress):
 		formatConfig={
 			"detectFormatAfterCursor":False,
-			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,
+			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,
 			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
 			"reportPage":False,"reportLineNumber":False,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,

@@ -14,6 +14,8 @@ import time
 import displayModel
 import IAccessibleHandler
 import oleacc
+import re
+import colors
 import JABHandler
 import winUser
 import globalVars
@@ -136,6 +138,8 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		except:
 			return ""
 
+	re_IA2RGB=re.compile(r'rgb\((\d+),\s(\d+),\s(\d+)\)')
+
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		try:
 			startOffset,endOffset,attribsString=self.obj.IAccessibleTextObject.attributes(offset)
@@ -184,6 +188,16 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			invalid=None
 		if invalid and invalid.lower()=="spelling":
 			formatField["invalid-spelling"]=True
+		color=formatField.get('color')
+		if color:
+			m=self.re_IA2RGB.match(color)
+			if m:
+				formatField['color']=colors.RGB(int(m.group(1)),int(m.group(2)),int(m.group(3)))
+		backgroundColor=formatField.get('background-color')
+		if backgroundColor:
+			m=self.re_IA2RGB.match(backgroundColor)
+			if m:
+				formatField['background-color']=colors.RGB(int(m.group(1)),int(m.group(2)),int(m.group(3)))
 		return formatField,(startOffset,endOffset)
 
 	def _getCharacterOffsets(self,offset):
