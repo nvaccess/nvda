@@ -9,6 +9,7 @@ import IAccessibleHandler
 import _default
 import controlTypes
 import textInfos
+import colors
 from compoundDocuments import CompoundDocument
 from NVDAObjects.JAB import JAB, JABTextInfo
 from NVDAObjects.IAccessible import IAccessible, IA2TextTextInfo
@@ -29,6 +30,10 @@ def gridCoordStringToNumbers(coordString):
 	for index,ch in enumerate(reversed(coordString[0:coordStringRowStartIndex])):
 		colNum+=((ord(ch.upper())-ord('A')+1)*(26**index))
 	return rowNum,colNum
+
+def symphonyColorToRGB(symphonyColor):
+	h=symphonyColor[-6:]
+	return colors.RGB(int(h[0:2],16),int(h[2:4],16),int(h[4:6],16))
 
 class JAB_OOTable(JAB):
 
@@ -129,6 +134,18 @@ class SymphonyTextInfo(IA2TextTextInfo):
 			formatField["bold"] = float(formatField["CharWeight"]) > 100
 		except KeyError:
 			pass
+		try:
+			color=formatField.pop('CharColor')
+		except KeyError:
+			color=None
+		if color:
+			formatField['color']=symphonyColorToRGB(color)
+		try:
+			backgroundColor=formatField.pop('CharBackColor')
+		except KeyError:
+			backgroundColor=None
+		if backgroundColor:
+			formatField['background-color']=symphonyColorToRGB(backgroundColor)
 
 		# optimisation: Assume a hyperlink occupies a full attribute run.
 		try:
