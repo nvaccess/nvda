@@ -210,6 +210,9 @@ inline void GeckoVBufBackend_t::fillTableCellInfo_IATable2(VBufStorage_controlFi
 }
 
 void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
+	// Defaults.
+	this->shouldDisableTableHeaders = false;
+
 	IServiceProvider* serv = NULL;
 	if (pacc->QueryInterface(IID_IServiceProvider, (void**)&serv) != S_OK)
 		return;
@@ -236,13 +239,17 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	iaApp = NULL;
 
 	if (wcscmp(toolkitName, L"Gecko") == 0) {
-		// Gecko <= 1.9.2.9 will crash if we try to retrieve headers on some table cells, so disable them.
-		UINT toolkitVersionLen = SysStringLen(toolkitVersion);
-		this->shouldDisableTableHeaders = (toolkitVersionLen >= 7 &&
-			wcsncmp(toolkitVersion, L"1.9.2.", 6) == 0 &&
-			// If there is another digit after 1.9.2.n, this is >= 1.9.2.10.
-			(toolkitVersionLen <= 7 || !iswdigit(toolkitVersion[7]))
-		);
+		if (wcsncmp(toolkitVersion, L"1.9.2.", 6) == 0) {
+			// Gecko 1.9.2.x.
+			// Retrieve the digits for the final part of the main version number.
+			wstring verPart;
+			for (wchar_t* c = &toolkitVersion[6]; iswdigit(*c); c++)
+				verPart += *c;
+			if (_wtoi(verPart.c_str()) <= 10) {
+				// Gecko <= 1.9.2.10 will crash if we try to retrieve headers on some table cells, so disable them.
+				this->shouldDisableTableHeaders = true;
+			}
+		}
 	}
 
 	SysFreeString(toolkitName);
