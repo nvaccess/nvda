@@ -31,10 +31,6 @@ def gridCoordStringToNumbers(coordString):
 		colNum+=((ord(ch.upper())-ord('A')+1)*(26**index))
 	return rowNum,colNum
 
-def symphonyColorToRGB(symphonyColor):
-	h=symphonyColor[-6:]
-	return colors.RGB(int(h[0:2],16),int(h[2:4],16),int(h[4:6],16))
-
 class JAB_OOTable(JAB):
 
 	def _get_rowCount(self):
@@ -139,13 +135,13 @@ class SymphonyTextInfo(IA2TextTextInfo):
 		except KeyError:
 			color=None
 		if color:
-			formatField['color']=symphonyColorToRGB(color)
+			formatField['color']=colors.RGB.fromString(color) 
 		try:
 			backgroundColor=formatField.pop('CharBackColor')
 		except KeyError:
 			backgroundColor=None
 		if backgroundColor:
-			formatField['background-color']=symphonyColorToRGB(backgroundColor)
+			formatField['background-color']=colors.RGB.fromString(backgroundColor)
 
 		# optimisation: Assume a hyperlink occupies a full attribute run.
 		try:
