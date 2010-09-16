@@ -15,8 +15,9 @@ class RGB(namedtuple('RGB',('red','green','blue'))):
 	@classmethod
 	def fromCOLORREF(cls,c):
 		"""factory method to create an RGB from a COLORREF ctypes instance"""
-		if not isinstance(c,COLORREF): raise ValueError("%s is not a COLORREF instance"%c)
-		return cls(c.value&0xff,(c.value<<8)&0xff,(c.value<<16)&0xff)
+		if isinstance(c,COLORREF):
+			c=c.value
+		return cls(c&0xff,(c>>8)&0xff,(c>>16)&0xff)
 
 	_re_RGBFunctionString=re.compile(r'rgb\(\s*(\d+%?)\s*,\s*(\d+%?)\s*,\s*(\d+%?)\s*\)',re.I)
 	_re_RGBAFunctionString=re.compile(r'rgba\(\s*(\d+%?)\s*,\s*(\d+%?)\s*,\s*(\d+%?)\s*,\s*\d+(\.\d+)?\s*\)',re.I)
