@@ -72,6 +72,7 @@ Notable features of this release include greatly simplified object navigation; v
 - In Loudtalks, it is now possible to access the contact list.
 - The URL of the document and "MSAAHTML Registered Handler" are no longer sometimes spuriously reported in Internet Explorer and other MSHTML controls. (#811)
 - In tree views in the Eclipse IDE, the previously focused item is no longer incorrectly announced when focus moves to a new item.
+- NVDA now functions correctly on a system where the current working directory has been removed from the DLL search path (by setting the CWDIllegalInDllSearch registry entry to 0xFFFFFFFF). Note that this is not relevant to most users. (#907)
 
 
 = 2010.1 =

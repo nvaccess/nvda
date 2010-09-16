@@ -189,7 +189,7 @@ def initialize():
 		("VBuf_getTextInRange", localLib),
 		((1,), (1,), (1,), (2,), (1,)))
 	#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-	h=windll.kernel32.LoadLibraryExW(ur"lib\nvdaHelperRemote.dll",0,0x8)
+	h=windll.kernel32.LoadLibraryExW(os.path.abspath(ur"lib\nvdaHelperRemote.dll"),0,0x8)
 	if not h:
 		log.critical("Error loading nvdaHelperRemote.dll: %s" % WinError())
 		return
