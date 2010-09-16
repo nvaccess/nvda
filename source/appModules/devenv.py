@@ -128,6 +128,7 @@ class AppModule(_default.AppModule):
 
 		else:
 			# None found.
+			log.debugWarning("No top level automation object found")
 			self._DTE = None
 			self._DTEVersion = VsVersion_None
 
