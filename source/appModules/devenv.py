@@ -88,7 +88,9 @@ SB_VERT = 1
 
 class AppModule(_default.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName == VsTextEditPaneClassName:
+		# Only use this overlay class if the top level automation object for the IDE can be retrieved,
+		# as it will not work otherwise.
+		if obj.windowClassName == VsTextEditPaneClassName and self._getDTE():
 			try:
 				clsList.remove(DisplayModelEditableText)
 			except ValueError:
@@ -119,11 +121,16 @@ class AppModule(_default.AppModule):
 			elif "!VisualStudio.DTE:%d"%self.processID==displayName:
 				DTEVersion = VsVersion_2002
 				
-			if DTEVersion > 0:
+			if DTEVersion != VsVersion_None:
 				self._DTEVersion = DTEVersion
 				self._DTE = comtypes.client.dynamic.Dispatch(ROT.GetObject(mon).QueryInterface(IDispatch))
 				break
-				
+
+		else:
+			# None found.
+			self._DTE = None
+			self._DTEVersion = VsVersion_None
+
 		# Loop has completed
 		return self._DTE
 		
