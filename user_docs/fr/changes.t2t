@@ -23,7 +23,7 @@
 - Ajout d'un pilote pour l'afficheur braille MDV Lilli. (#241)
 - Quand on sélectionne une ligne ou une colonne entière dans MS Excel par les raccourcis maj+espace ou ctrl+espace, la nouvelle sélection est maintenant annoncée. (#759)
 - Dans les tableaux, les en-têtes de lignes ou de colonnes peuvent maintenant être annoncés. Ceci est configurable depuis le dialogue Mise en forme des documents du menu Préférences.
- - Actuellement, ceci est supporté dans les documents sous les applications Mozilla comme Firefox et Thunderbird. (#361)
+ - Actuellement, ceci est supporté dans les documents sous les applications Mozilla comme Firefox (à partir de la version 3.6.11) et Thunderbird (à partir de la version 3.1.5). (#361)
 - Introduction de commandes pour la navigation dans l'écran : (#58)
  - NVDA+pavnum7  active la navigation dans l'écran, place le curseur de revue à la position de l'objet en cours, vous permettant d'explorer l'écran (ou un document) avec les commandes de revue de texte.
  - NVDA+pavnum1 Amène le curseur de revue dans l'objet représenté par le texte à la position du curseur de revue, vous permettant de naviguer par objets à partir de ce point.
@@ -44,7 +44,7 @@ les écrans sécurisés de Windows tels que l'écran de connexion ou l'écran UA
 - Suppression de la case à cocher Annoncer le texte souris du dialogue Paramètres de la souris, remplacé par une case à cocher "Activer le suivi de la souris qui convient mieux au script Bascule du sivi de la souris (NVDA+m).
 - Mise à jour de la configuration clavier Laptop pour qu'elle contienne toutes les commandes disponibles dans la configuration Desktop et qu'elle fonctionne sur les claviers non anglophones. (#798, #800)
 - Améliorations et mises à jour significatives de la documentation incluant la documentation de la configuration clavier Laptop et la synchronisation entre le manuel Référence rapide des touches de commande et le guide utilisateur. (#455)
-- Mise à jour du traducteur braille Liblouis à la version 2.10. Cela corrige en particulier des problèmes avec les tables de conversion chinoises et l'affichage des caractères non définis dans les tables. (#484, #499)
+- Mise à jour du traducteur braille Liblouis à la version 2.11. Cela corrige en particulier des problèmes avec les tables de conversion chinoises et l'affichage des caractères non définis dans les tables. (#484, #499)
 
 
 == Corrections de bogues ==
