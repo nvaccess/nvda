@@ -31,6 +31,19 @@ def newVARIANT_value_fset(self,value):
 		self._.c_void_p=cast(realValue,c_void_p)
 VARIANT.value=property(VARIANT.value.fget,newVARIANT_value_fset,VARIANT.value.fdel)
 
+#Monkeypatch comtypes lazybind dynamic IDispatch support to fallback to the more basic dynamic IDispatch support if the former does not work
+#Example: ITypeComp.bind gives back a vardesc, which comtypes does not yet support
+import comtypes.client.lazybind
+old__getattr__=comtypes.client.lazybind.Dispatch.__getattr__
+def new__getattr__(self,name):
+	try:
+		return old__getattr__(self,name)
+	except (NameError, AttributeError):
+		return getattr(comtypes.client.dynamic._Dispatch(self._comobj),name)
+comtypes.client.lazybind.Dispatch.__getattr__=new__getattr__
+
+
+
 import sys
 import nvwave
 import os
