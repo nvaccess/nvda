@@ -207,25 +207,40 @@ inline int getIDFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
 	return ID;
 }
 
-inline BSTR getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
+inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPreformattedText) {
 	int res=0;
 	IHTMLDOMTextNode* pHTMLDOMTextNode=NULL;
 	DEBUG_MSG(L"Trying to get an IHTMLDOMTextNode interface pointer");
 	if(pHTMLDOMNode->QueryInterface(IID_IHTMLDOMTextNode,(void**)&pHTMLDOMTextNode)!=S_OK) {
 		DEBUG_MSG(L"Not a text node");
-		return NULL;
+		return L"";
 	}
-	VBufStorage_textFieldNode_t* textNode=NULL;
 	DEBUG_MSG(L"Fetch data of DOMTextNode");
 	BSTR data=NULL;
 	res=pHTMLDOMTextNode->get_data(&data);
 	pHTMLDOMTextNode->Release();
 	if(res!=S_OK||!data) {
 		DEBUG_MSG(L"Failed to get IHTMLDOMTextNode::data");
-		return NULL;
+		return L"";
 	}
 	DEBUG_MSG(L"Got data from IHTMLDOMTextNode");
-	return data;
+	wstring s;
+	if(allowPreformattedText) {
+		s.append(data);
+	} else {
+		bool lastNotWhitespace=false;
+		for(wchar_t* c=data;*c;++c) {
+			if(!iswspace(*c)) {
+				s+=*c;
+				lastNotWhitespace=TRUE;
+			} else if(lastNotWhitespace) {
+				s+=L' ';
+				lastNotWhitespace=FALSE;
+			} 
+		}
+	}
+	SysFreeString(data);
+	return s;
 }
 
 #define macro_addHTMLCurrentStyleToNodeAttrs(styleName,attrName,node,currentStyleObj,tempBSTR) {\
@@ -525,18 +540,17 @@ if(nodeName.compare(L"TABLE")==0) {
 	return tableInfoPtr;
 }
 
-VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr, bool parentHasContent) {
+VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr, bool parentHasContent, bool allowPreformattedText) {
 	BSTR tempBSTR=NULL;
 	wostringstream tempStringStream;
 
 	//Handle text nodes
 	{ 
-		tempBSTR=getTextFromHTMLDOMNode(pHTMLDOMNode);
-		if(tempBSTR!=NULL) {
+		wstring s=getTextFromHTMLDOMNode(pHTMLDOMNode,allowPreformattedText);
+		if(!s.empty()) {
 			DEBUG_MSG(L"Got text from node");
-			VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,tempBSTR);
+			VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,s);
 			fillTextFormattingForTextNode(parentNode,textNode);
-			SysFreeString(tempBSTR);
 			return textNode;
 		}
 	}
@@ -573,6 +587,10 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		return NULL;
 	}
 
+	//We only allow linebreaks for 'PRE' tags
+	if(nodeName.compare(L"PRE")==0) {
+		allowPreformattedText=TRUE;
+	}
 	map<wstring,wstring> attribsMap;
 	map<wstring,wstring>::const_iterator tempIter;
 	attribsMap[L"IHTMLDOMNode::nodeName"]=nodeName;
@@ -788,7 +806,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			if(pacc) {
 				IHTMLDOMNode* childPHTMLDOMNode=getRootDOMNodeFromIAccessibleFrame(pacc);
 				if(childPHTMLDOMNode) {
-					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,hasContent);
+					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,hasContent,allowPreformattedText);
 					childPHTMLDOMNode->Release();
 				}
 			}
@@ -812,7 +830,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 						}
 						IHTMLDOMNode* childPHTMLDOMNode=NULL;
 						if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
-							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,hasContent);
+							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,hasContent,allowPreformattedText);
 							if(tempNode) {
 								previousNode=tempNode;
 							}
@@ -930,7 +948,7 @@ IHTMLDOMNode* pHTMLDOMNode=NULL;
 		pHTMLElement->Release();
 	}
 	assert(pHTMLDOMNode);
-	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,NULL,NULL,true);
+	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,NULL,NULL,true,false);
 	pHTMLDOMNode->Release();
 }
 
