@@ -716,8 +716,8 @@ class DocumentFormattingDialog(SettingsDialog):
 
 class DictionaryEntryDialog(wx.Dialog):
 
-	def __init__(self,parent):
-		super(DictionaryEntryDialog,self).__init__(parent,title=_("Edit dictionary entry"))
+	def __init__(self,parent,title=_("Edit dictionary entry")):
+		super(DictionaryEntryDialog,self).__init__(parent,title=title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer.Add(wx.StaticText(self,-1,label=_("&Pattern")))
@@ -761,8 +761,9 @@ class DictionaryDialog(SettingsDialog):
 		self.dictList.InsertColumn(2,_("Replacement"))
 		self.dictList.InsertColumn(3,_("case sensitive"))
 		self.dictList.InsertColumn(4,_("Regular expression"))
+		self.offOn = (_("off"),_("on"))
 		for entry in self.tempSpeechDict:
-			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,str(entry.caseSensitive),str(entry.regexp)))
+			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,self.offOn[int(entry.caseSensitive)],self.offOn[int(entry.regexp)]))
 		self.editingIndex=-1
 		entriesSizer.Add(self.dictList)
 		settingsSizer.Add(entriesSizer)
@@ -795,10 +796,10 @@ class DictionaryDialog(SettingsDialog):
 		super(DictionaryDialog, self).onOk(evt)
 
 	def OnAddClick(self,evt):
-		entryDialog=DictionaryEntryDialog(self)
+		entryDialog=DictionaryEntryDialog(self,title=_("Add Dictionary Entry"))
 		if entryDialog.ShowModal()==wx.ID_OK:
 			self.tempSpeechDict.append(speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),bool(entryDialog.regexpCheckBox.GetValue())))
-			self.dictList.Append((entryDialog.commentTextCtrl.GetValue(),entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),str(bool(entryDialog.caseSensitiveCheckBox.GetValue())),str(bool(entryDialog.regexpCheckBox.GetValue()))))
+			self.dictList.Append((entryDialog.commentTextCtrl.GetValue(),entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())],self.offOn[int(entryDialog.regexpCheckBox.GetValue())]))
 			index=self.dictList.GetFirstSelected()
 			while index>=0:
 				self.dictList.Select(index,on=0)
@@ -826,8 +827,8 @@ class DictionaryDialog(SettingsDialog):
 			self.dictList.SetStringItem(editIndex,0,entryDialog.commentTextCtrl.GetValue())
 			self.dictList.SetStringItem(editIndex,1,entryDialog.patternTextCtrl.GetValue())
 			self.dictList.SetStringItem(editIndex,2,entryDialog.replacementTextCtrl.GetValue())
-			self.dictList.SetStringItem(editIndex,3,str(bool(entryDialog.caseSensitiveCheckBox.GetValue())))
-			self.dictList.SetStringItem(editIndex,4,str(bool(entryDialog.regexpCheckBox.GetValue())))
+			self.dictList.SetStringItem(editIndex,3,self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())])
+			self.dictList.SetStringItem(editIndex,4,self.offOn[int(entryDialog.regexpCheckBox.GetValue())])
 			self.dictList.SetFocus()
 		entryDialog.Destroy()
 
