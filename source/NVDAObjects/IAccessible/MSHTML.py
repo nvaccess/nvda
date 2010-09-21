@@ -88,9 +88,9 @@ def HTMLNodeFromIAccessible(IAccessibleObject):
 
 def locateHTMLElementByID(document,ID):
 	try:
-		element=document.getElementById(ID)
+		element=document.getElementsByName(ID).item(0)
 	except COMError as e:
-		log.debugWarning("document.getElementByID failed with COMError %s"%e)
+		log.debugWarning("document.getElementsByName failed with COMError %s"%e)
 		element=None
 	if element:
 		return element
