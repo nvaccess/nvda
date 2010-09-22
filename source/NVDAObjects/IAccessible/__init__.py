@@ -815,7 +815,14 @@ the NVDAObject for IAccessible
 			return super(IAccessible,self).parent
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
 		if res:
-			return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]),relation="parent") or super(IAccessible,self).parent
+			parentObj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+			if parentObj:
+				#Hack around bad MSAA implementations that deliberately skip the window root IAccessible in the ancestry (Skype, iTunes)
+				if parentObj.windowHandle!=self.windowHandle and self.IAccessibleRole!=oleacc.ROLE_SYSTEM_WINDOW and winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)==parentObj.windowHandle:
+					windowObj=Window(windowHandle=self.windowHandle)
+					if windowObj and windowObj.parent==parentObj:
+						return windowObj
+			return self.correctAPIForRelation(parentObj,relation="parent") or super(IAccessible,self).parent
 		return super(IAccessible,self).parent
 
 	def _get_next(self):
