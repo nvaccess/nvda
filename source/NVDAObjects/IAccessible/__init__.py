@@ -1035,6 +1035,8 @@ the NVDAObject for IAccessible
 			except:
 				log.debugWarning("IAccessible2::scrollTo failed", exc_info=True)
 
+	allowIAccessibleChildIDAndChildCountForPositionInfo=False #: if true position info should fall back to using the childID and the parent's accChildCount for position information if there is nothing better available.
+
 	def _get_positionInfo(self):
 		info={}
 		level=similarItemsInGroup=indexInGroup=0
@@ -1044,11 +1046,12 @@ the NVDAObject for IAccessible
 				gotVars=True
 			except COMError:
 				pass
-		if indexInGroup==0:
+		if self.allowIAccessibleChildIDAndChildCountForPositionInfo and indexInGroup==0:
 			indexInGroup=self.IAccessibleChildID
-		if indexInGroup>0 and similarItemsInGroup<indexInGroup:
-			parent=self.parent=self.parent
-			similarItemsInGroup=parent.childCount
+		if self.allowIAccessibleChildIDAndChildCountForPositionInfo and indexInGroup>0 and similarItemsInGroup<indexInGroup:
+			parent=self.parent
+			if parent:
+				similarItemsInGroup=parent.childCount
 		if level>0:
 			info['level']=level
 		if indexInGroup<=similarItemsInGroup and indexInGroup>0:
@@ -1383,6 +1386,8 @@ class TaskList(IAccessible):
 			return super(TaskList, self).event_gainFocus()
 
 class TaskListIcon(IAccessible):
+
+	allowIAccessibleChildIDAndChildCountForPositionInfo=True
 
 	def _get_role(self):
 		return controlTypes.ROLE_ICON

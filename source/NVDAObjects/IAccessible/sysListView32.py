@@ -231,10 +231,9 @@ class ListItem(IAccessible):
 		return value
 
 	def _get_positionInfo(self):
-		info=super(ListItem,self)._get_positionInfo()
+		index=self.IAccessibleChildID
 		totalCount=winUser.sendMessage(self.windowHandle,LVM_GETITEMCOUNT,0,0)
-		info['similarItemsInGroup']=totalCount
-		return info
+		return dict(indexInGroup=index,similarItemsInGroup=totalCount) 
 
 	def event_stateChange(self):
 		if self.hasFocus:
