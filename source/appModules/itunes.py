@@ -1,5 +1,6 @@
 import _default
 import re
+from comtypes import COMError
 import controlTypes
 import oleacc
 import NVDAObjects.IAccessible
@@ -39,3 +40,19 @@ class ITunesItem(NVDAObjects.IAccessible.IAccessible):
 			m = self.RE_POSITION_INFO.match(desc)
 			if m:
 				return m.groupdict()
+
+	def _get_next(self):
+		next=super(ITunesItem,self).next
+		try:
+			parentChildCount=self.IAccessibleObject.accParent.accChildCount
+		except COMError:
+			parentChildCount=0
+		if not next and self.IAccessibleChildID>0 and self.IAccessibleChildID<parentChildCount:
+			next=NVDAObjects.IAccessible.IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=self.IAccessibleChildID+1)
+		return next
+
+	def _get_previous(self):
+		previous=super(ITunesItem,self).previous
+		if not previous and self.IAccessibleChildID>1:
+			previous=NVDAObjects.IAccessible.IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=self.IAccessibleChildID-1)
+		return previous
