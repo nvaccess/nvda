@@ -353,45 +353,49 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
+			return
 		if info._moveInTable(0,1):
 			info.updateCaret()
 			info.expand(textInfos.UNIT_CELL)
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
-			speech.speakMessage("edge of table")
+			speech.speakMessage(_("edge of table"))
 
 	def script_previousRow(self,keyPress):
 		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
+			return
 		if info._moveInTable(0,-1):
 			info.updateCaret()
 			info.expand(textInfos.UNIT_CELL)
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
-			speech.speakMessage("edge of table")
+			speech.speakMessage(_("edge of table"))
 
 	def script_nextColumn(self,keyPress):
 		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
+			return
 		if info._moveInTable(1,0):
 			info.updateCaret()
 			info.expand(textInfos.UNIT_CELL)
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
-			speech.speakMessage("edge of table")
+			speech.speakMessage(_("edge of table"))
 
 	def script_previousColumn(self,keyPress):
 		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
+			return
 		if info._moveInTable(-1,0):
 			info.updateCaret()
 			info.expand(textInfos.UNIT_CELL)
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
-			speech.speakMessage("edge of table")
+			speech.speakMessage(_("edge of table"))
 
 [WordDocument.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("control+alt+extendedUp","previousRow"),
