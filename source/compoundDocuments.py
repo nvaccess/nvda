@@ -88,17 +88,24 @@ class CompoundTextInfo(textInfos.TextInfo):
 
 	def collapse(self, end=False):
 		if end:
-			# The end of this object is equivalent to the start of the next.
-			# As well as being silly, collapsing to the end of  this object causes say all to move the caret to the end of paragraphs.
-			# Therefore, collapse to the start of the next instead.
-			obj = self._endObj.flowsTo
-			if obj:
-				self._endObj = obj
-				self._end = obj.makeTextInfo(textInfos.POSITION_FIRST)
+			if self._end.compareEndPoints(self._endObj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd") == 0:
+				# The end TextInfo is at the end of its object.
+				# The end of this object is equivalent to the start of the next.
+				# As well as being silly, collapsing to the end of  this object causes say all to move the caret to the end of paragraphs.
+				# Therefore, collapse to the start of the next instead.
+				obj = self._endObj.flowsTo
+				if obj:
+					self._endObj = obj
+					self._end = obj.makeTextInfo(textInfos.POSITION_FIRST)
+				else:
+					# There are no more objects, so just collapse to the end of this object.
+					self._end.collapse(end=True)
 			else:
+				# The end TextInfo is not at the end of its object, so just collapse to the end of the end TextInfo.
 				self._end.collapse(end=True)
 			self._start = self._end
 			self._startObj = self._endObj
+
 		else:
 			self._start.collapse()
 			self._end = self._start

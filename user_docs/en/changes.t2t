@@ -44,7 +44,7 @@ Notable features of this release include greatly simplified object navigation; v
 - Removed the report text under the mouse checkbox from the Mouse settings dialog and replaced it with an Enable mouse tracking checkbox, which better matches the toggle mouse tracking script (NVDA+m). 
 - Updates to the laptop keyboard layout so that it includes all commands available in the desktop layout and works correctly on non-English keyboards. (#798, #800)
 - Significant improvements and updates to the user documentation, including documentation of the laptop keyboard commands and synchronisation of the Keyboard Commands Quick Reference with the User Guide. (#455)
-- Updated liblouis braille translator to 2.1.0. Notably, this fixes some issues related to Chinese braille as well as characters which are undefined in the translation table. (#484, #499)
+- Updated liblouis braille translator to 2.1.1. Notably, this fixes some issues related to Chinese braille as well as characters which are undefined in the translation table. (#484, #499)
 
 
 == Bug Fixes ==
@@ -72,6 +72,7 @@ Notable features of this release include greatly simplified object navigation; v
 - In Loudtalks, it is now possible to access the contact list.
 - The URL of the document and "MSAAHTML Registered Handler" are no longer sometimes spuriously reported in Internet Explorer and other MSHTML controls. (#811)
 - In tree views in the Eclipse IDE, the previously focused item is no longer incorrectly announced when focus moves to a new item.
+- NVDA now functions correctly on a system where the current working directory has been removed from the DLL search path (by setting the CWDIllegalInDllSearch registry entry to 0xFFFFFFFF). Note that this is not relevant to most users. (#907)
 
 
 = 2010.1 =

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: main-3590\n"
-"POT-Creation-Date: 2010-07-20 19:02+AUSEST\n"
-"PO-Revision-Date: 2010-07-20 23:52+0100\n"
+"POT-Creation-Date: 2010-09-01 19:02+AUSEST\n"
+"PO-Revision-Date: 2010-09-18 12:56+0100\n"
 "Last-Translator: Daniel K. Gartmann <dg@danielgartmann.dk>\n"
 "Language-Team: Dansk <dg@danielgartmann.dk>\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "Ukendt layout"
 msgid "layout %s"
 msgstr "layout %s"
 
-#: NVDAObjects/IAccessible/__init__.py:1376
+#: NVDAObjects/IAccessible/__init__.py:1391
 msgid "Taskbar"
 msgstr "Proceslinje"
 
@@ -40,7 +40,7 @@ msgid "invoke"
 msgstr "Kald"
 
 #: NVDAObjects/behaviors.py:48
-#: appModules/_default.py:764
+#: appModules/_default.py:782
 msgid "%d percent"
 msgstr "%d procent"
 
@@ -102,16 +102,16 @@ msgstr "Fejl i appModule %s"
 #: appModules/_default.py:165
 #: appModules/_default.py:175
 #: appModules/_default.py:185
-#: appModules/_default.py:665
-#: appModules/_default.py:727
-#: appModules/_default.py:737
-#: appModules/_default.py:747
+#: appModules/_default.py:683
+#: appModules/_default.py:745
+#: appModules/_default.py:755
+#: appModules/_default.py:765
 #: appModules/winamp.py:77
 #: appModules/winamp.py:87
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
 #: keyboardHandler.py:59
-#: virtualBuffers/__init__.py:684
+#: virtualBuffers/__init__.py:696
 msgid "on"
 msgstr "til"
 
@@ -120,18 +120,18 @@ msgstr "til"
 #: appModules/_default.py:162
 #: appModules/_default.py:172
 #: appModules/_default.py:182
-#: appModules/_default.py:543
-#: appModules/_default.py:662
-#: appModules/_default.py:724
-#: appModules/_default.py:734
-#: appModules/_default.py:744
+#: appModules/_default.py:561
+#: appModules/_default.py:680
+#: appModules/_default.py:742
+#: appModules/_default.py:752
+#: appModules/_default.py:762
 #: appModules/winamp.py:79
 #: appModules/winamp.py:89
-#: gui/settingsDialogs.py:517
+#: gui/settingsDialogs.py:532
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
 #: keyboardHandler.py:59
-#: virtualBuffers/__init__.py:684
+#: virtualBuffers/__init__.py:696
 msgid "off"
 msgstr "fra"
 
@@ -193,11 +193,11 @@ msgid "no selection"
 msgstr "Intet valgt"
 
 #: appModules/_default.py:103
-#: compoundDocuments.py:354
-#: speech.py:292
-#: speech.py:388
-#: speech.py:401
-#: virtualBuffers/__init__.py:589
+#: compoundDocuments.py:395
+#: speech.py:284
+#: speech.py:381
+#: speech.py:394
+#: virtualBuffers/__init__.py:600
 msgid "selected %s"
 msgstr "valgt %s"
 
@@ -280,462 +280,469 @@ msgstr "Flyt navigatorobjekt til mus"
 msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
 msgstr "Flytter navigatorobjektet til det objekt, der aktuelt er under musemarkøren og oplæser det"
 
-#: appModules/_default.py:221
-#: appModules/_default.py:255
-#: appModules/_default.py:291
-#: appModules/_default.py:305
-#: appModules/_default.py:319
-#: appModules/_default.py:333
-#: appModules/_default.py:347
+#: appModules/_default.py:229
+msgid "No flat review for this object"
+msgstr "Для цього об'єкта немає режиму плоского перегляду"
+
+#: appModules/_default.py:230
+msgid "Switches to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object"
+msgstr "Перемикає на плоский режим перегляду на екрані (або в документі), і розташовує переглядовий курсор на поточну позицію об'єкта"
+
+#: appModules/_default.py:242
+msgid "No object at flat review position"
+msgstr "Немає об'єкта у позиції плоского перегляду"
+
+#: appModules/_default.py:243
+msgid "Moves to the object represented by the text at the position of the review cursor within flat review"
+msgstr "Flytter til det objekt, som repræsenteres af teksten på den ubegrænsede markørs position i flad visning "
+
+#: appModules/_default.py:248
+#: appModules/_default.py:282
+#: appModules/_default.py:320
+#: appModules/_default.py:334
+#: appModules/_default.py:348
+#: appModules/_default.py:362
+#: appModules/_default.py:376
 msgid "no navigator object"
 msgstr "Intet navigatorobjekt"
 
-#: appModules/_default.py:247
-#: appModules/_default.py:684
+#: appModules/_default.py:274
+#: appModules/_default.py:702
 msgid "%s copied to clipboard"
 msgstr "%s kopieret til udklipsholderen"
 
-#: appModules/_default.py:250
+#: appModules/_default.py:277
 msgid "Reports the current navigator object or, if pressed three times, Copies name and value of current navigator object to the clipboard"
 msgstr "Oplyser aktuelle navigatorobjekt. 3 tryk kopierer navn og værdi på aktuelle navigatorobjekt til udklipsholderen."
 
-#: appModules/_default.py:258
+#: appModules/_default.py:285
 msgid "No location information for navigator object"
 msgstr "Ingen information om placering for navigatorobjekt"
 
-#: appModules/_default.py:262
+#: appModules/_default.py:289
 msgid "No location information for screen"
 msgstr "Ingen information om placering for skærm"
 
-#: appModules/_default.py:268
+#: appModules/_default.py:295
 msgid "Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen"
 msgstr "Objekts kanter placeret %.1f procent fra venstre side af skærmen, %.1f procent fra toppen af skærmen, bredde er %.1f procent af skærmen, højde er %.1f procent af skærmen."
 
-#: appModules/_default.py:269
+#: appModules/_default.py:296
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "Oplyser højde, bedde og placering på de aktuelle navigatorobjekt"
 
-#: appModules/_default.py:274
-#: appModules/_default.py:283
-#: appModules/_default.py:643
-msgid "no focus"
-msgstr "Intet fokus"
-
-#: appModules/_default.py:276
+#: appModules/_default.py:305
 msgid "move to focus"
 msgstr "Flyt til fokus"
 
-#: appModules/_default.py:278
-msgid "Sets the navigator object to the current focus"
-msgstr "Sætter det aktuelle navigatorobjekt til aktuelt fokus"
+#: appModules/_default.py:307
+msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
+msgstr "Flytter navigatorobjektet til det aktuelle fokus og flytter den ubegrænsede markør til placeringen for systemmarkøren inden i det om muligt.  "
 
-#: appModules/_default.py:285
+#: appModules/_default.py:312
+#: appModules/_default.py:661
+msgid "no focus"
+msgstr "Intet fokus"
+
+#: appModules/_default.py:314
 msgid "move focus"
 msgstr "Flyt fokus"
 
-#: appModules/_default.py:286
+#: appModules/_default.py:315
 msgid "Sets the keyboard focus to the navigator object"
 msgstr "Sætter tastaturfokus til navigatorobjekt"
 
-#: appModules/_default.py:299
+#: appModules/_default.py:328
 msgid "No parents"
 msgstr "Ingen forældre"
 
-#: appModules/_default.py:300
+#: appModules/_default.py:329
 msgid "Sets the navigator object to the parent of the object it is currently on and speaks it"
 msgstr "Sætter navigatorobjektet til forælderen til det objekt, hvor det aktuelt befinder sig på og læser det op "
 
-#: appModules/_default.py:313
+#: appModules/_default.py:342
 msgid "No next"
 msgstr "Ingen næste"
 
-#: appModules/_default.py:314
+#: appModules/_default.py:343
 msgid "Sets the navigator object to the object next to the one it is currently on and speaks it"
 msgstr "Sætter navigatorobjektet til objektet umiddelbart efter navigatorens aktuelle objekt og læser det op"
 
-#: appModules/_default.py:327
+#: appModules/_default.py:356
 msgid "No previous"
 msgstr "Ingen forrige"
 
-#: appModules/_default.py:328
+#: appModules/_default.py:357
 msgid "Sets the navigator object to the object previous to the one it is currently on and speaks it"
 msgstr "Sætter navigatorobjektet til objektet umiddelbart før navigatorens aktuelle objekt og læser det op"
 
-#: appModules/_default.py:341
+#: appModules/_default.py:370
 msgid "No children"
 msgstr "Ingen børn"
 
-#: appModules/_default.py:342
+#: appModules/_default.py:371
 msgid "Sets the navigator object to the first child object of the one it is currently on and speaks it"
 msgstr "Sætter navigatorobjektet til det første barn tilhørende det objekt, hvor objektnavigatoren aktuelt er placeret, og læser det op."
 
-#: appModules/_default.py:352
+#: appModules/_default.py:381
 msgid "No default action"
 msgstr "Ingen standardhandling"
 
-#: appModules/_default.py:357
+#: appModules/_default.py:386
 msgid "default action failed"
 msgstr "Standardhandling mislykkedes"
 
-#: appModules/_default.py:360
+#: appModules/_default.py:389
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
 msgstr "Udfører standardhandlingen for det aktuelle navigatorobjekt (eksempel: tastetryk hvis det er en knap)."
 
-#: appModules/_default.py:366
-#: appModules/_default.py:378
-#: appModules/_default.py:419
+#: appModules/_default.py:395
+#: appModules/_default.py:407
+#: appModules/_default.py:448
 msgid "top"
 msgstr "top"
 
-#: appModules/_default.py:368
+#: appModules/_default.py:397
 msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
 msgstr "Flytter den ubegrænsede markør til den øverste linje i det aktuelle navigatorobjekt og læser den op"
 
-#: appModules/_default.py:380
+#: appModules/_default.py:409
 msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
 msgstr "Flytter den ubegrænsede markør til den forrige linje i det aktuelle navigatorobjekt og læser den op"
 
-#: appModules/_default.py:389
+#: appModules/_default.py:418
 msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled"
 msgstr "Oplyser linjen i det navigatorobjekt, hvor den ubegrænsede markør er placeret. hvis tasten trykkes 2 gange, bliver linjen stavet."
 
-#: appModules/_default.py:399
-#: appModules/_default.py:407
-#: appModules/_default.py:440
+#: appModules/_default.py:428
+#: appModules/_default.py:436
+#: appModules/_default.py:469
 msgid "bottom"
 msgstr "Bund"
 
-#: appModules/_default.py:401
+#: appModules/_default.py:430
 msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
 msgstr "Flytter den ubegrænsede markør til næste linje i det aktuelle navigatorobjekt og læser den op."
 
-#: appModules/_default.py:409
+#: appModules/_default.py:438
 msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
 msgstr "Flytter den ubegrænsede markør til den sidste linje i det aktuelle navigatorobjekt og læser den op."
 
-#: appModules/_default.py:421
+#: appModules/_default.py:450
 msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
 msgstr "Flytter den ubegrænsede markør til forrige ord i det aktuelle navigatorobjekt og læser det op."
 
-#: appModules/_default.py:430
+#: appModules/_default.py:459
 msgid "Speaks the word of the current navigator object where the review cursor is situated. If this key is pressed twice, the word will be spelled"
 msgstr "Oplæser ordet i det aktuelle navigatorobjekt, hvor den ubegrænsede markør er placeret. Hvis tasten trykkes 2 gange, staves ordet."
 
-#: appModules/_default.py:442
+#: appModules/_default.py:471
 msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
 msgstr "Flytter den ubegrænsede markør til næste ord i det aktuelle navigatorobjekt og læser det op."
 
-#: appModules/_default.py:450
-#: appModules/_default.py:462
+#: appModules/_default.py:479
+#: appModules/_default.py:491
 #: appModules/totalcmd.py:35
 msgid "left"
 msgstr "Venstre"
 
-#: appModules/_default.py:452
+#: appModules/_default.py:481
 msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
 msgstr "Flytter den ubegrænsede markør til første tegn i den linje i navigatorobjektet, hvor den aktuelt er placeret, og læser tegnet op."
 
-#: appModules/_default.py:470
+#: appModules/_default.py:499
 msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
 msgstr "Flytter den ubegrænsede markør til forrige tegn i det aktuelle navigatorobjekt og læser det op."
 
-#: appModules/_default.py:484
+#: appModules/_default.py:513
 msgid "Reports the character of the current navigator object where the review cursor is situated. If this key is pressed twice, ascii and hexadecimal values are spoken for the character"
 msgstr "Oplæser tegnet i det navigatorobjekt, hvor den ubegrænsede markør er placeret. Hvis tasten trykkes 2 gange, oplæses ASCII-værdien og den hexadecimale værdi for tegnet."
 
-#: appModules/_default.py:494
-#: appModules/_default.py:511
+#: appModules/_default.py:523
+#: appModules/_default.py:540
 #: appModules/totalcmd.py:37
 msgid "right"
 msgstr "Højre"
 
-#: appModules/_default.py:502
+#: appModules/_default.py:531
 msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
 msgstr "Flytter den ubegrænsede markør til næste tegn i det aktuelle navigatorobjekt og læser det op."
 
-#: appModules/_default.py:513
+#: appModules/_default.py:542
 msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
 msgstr "Flytter den ubegrænsede markør til sidste tegn på linjen, hvor den er placeret, i det aktuelle navigatorobjekt og læser det op.  "
 
-#: appModules/_default.py:519
-msgid "No caret"
-msgstr "Ingen markør"
-
-#: appModules/_default.py:524
-msgid "Moves the review cursor to the position of the system caret, in the current navigator object"
-msgstr "Flytter den ubegrænsede markør til systemmarkørens position i det aktuelle navigatorobjekt. "
-
-#: appModules/_default.py:531
+#: appModules/_default.py:549
 msgid "no caret"
 msgstr "ingen markør"
 
-#: appModules/_default.py:536
+#: appModules/_default.py:554
 msgid "Moves the system caret to the position of the review cursor , in the current navigator object"
 msgstr "Flytter systemmarkøren til den ubegrænsede markørs position i det aktuelle navigatorobjekt. "
 
-#: appModules/_default.py:545
+#: appModules/_default.py:563
 msgid "beeps"
 msgstr "bipper"
 
-#: appModules/_default.py:547
+#: appModules/_default.py:565
 msgid "talk"
 msgstr "tale"
 
-#: appModules/_default.py:549
+#: appModules/_default.py:567
 msgid "speech mode %s"
 msgstr "Tale tilstand %s"
 
-#: appModules/_default.py:551
+#: appModules/_default.py:569
 msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr "Skifter imellem tale tilstandene fra, bip og tale. Hvis indstillingen er sat til fra, siger NVDA ingenting. Hvis den er sat til bip, høres blot et bip for hver gang NVDA ellers ville have sagt noget."
 
-#: appModules/_default.py:567
+#: appModules/_default.py:585
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr "Flytter fokus til det nærmeste dokument, der indeholder fokus"
 
-#: appModules/_default.py:579
+#: appModules/_default.py:597
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
 msgstr "Skifter mellem fokus tilstand og browser tilstand. I fokus tilstand slippes tastetrykkene igennem til applikationen, hvorved man kan manipulere direkte med en kontrol. I browser tilstand kan der navigeres i dokumentet med markøren, med genvejstaster etc."
 
-#: appModules/_default.py:583
+#: appModules/_default.py:601
 msgid "Quits NVDA!"
 msgstr "Afslutter NVDA"
 
-#: appModules/_default.py:587
+#: appModules/_default.py:605
 msgid "Shows the NVDA menu"
 msgstr "Viser NVDAs hovedmenu"
 
-#: appModules/_default.py:592
+#: appModules/_default.py:610
 msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
 msgstr "Læser fra den ubegrænsede markør til slutningen af den aktuelle tekst og flytter den ubegrænsede markør på samme tid."
 
-#: appModules/_default.py:604
+#: appModules/_default.py:622
 msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
 msgstr "Læser fra systemmarkøren til slutningen af teksten og flytter markøren samtidig. "
 
-#: appModules/_default.py:630
+#: appModules/_default.py:648
 msgid "No formatting information"
 msgstr "Ingen oplysninger om formatering"
 
-#: appModules/_default.py:633
+#: appModules/_default.py:651
 msgid "Reports formatting info for the current cursor position within a document"
 msgstr "Oplyser formateringsinformation på cursorens aktuelle position i et dokument."
 
-#: appModules/_default.py:644
+#: appModules/_default.py:662
 msgid "reports the object with focus"
 msgstr "Oplæser objektet, der aktuelt har fokus."
 
-#: appModules/_default.py:649
+#: appModules/_default.py:667
 msgid "no status bar found"
 msgstr "Statuslinje ikke fundet"
 
-#: appModules/_default.py:658
+#: appModules/_default.py:676
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr "Oplæser statuslinjen i den aktuelle applikation og flytter navigatoren dertil."
 
-#: appModules/_default.py:667
+#: appModules/_default.py:685
 msgid "Mouse tracking"
 msgstr "Musefølgning"
 
-#: appModules/_default.py:668
+#: appModules/_default.py:686
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Skifter oplæsning af information under musebevægelse."
 
-#: appModules/_default.py:676
+#: appModules/_default.py:694
 msgid "no title"
 msgstr "ingen titel"
 
-#: appModules/_default.py:685
+#: appModules/_default.py:703
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
 msgstr "Oplæser titel på aktuel applikation eller forreste vindue. Hvis tasten trykkes 2 gange, staves titlen. hvis den trykkes 3 gange, kopieres titlen til udklipsholderen."
 
-#: appModules/_default.py:692
+#: appModules/_default.py:710
 msgid "speaks the current foreground object"
 msgstr "Oplæser det forreste objekt."
 
-#: appModules/_default.py:703
+#: appModules/_default.py:721
 msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
 msgstr "Logger information om det aktuelle navigatorobjekt, som er til nytte for udviklere, og aktiverer logfremviseren, så oplysningerne kan gennemses."
 
-#: appModules/_default.py:709
+#: appModules/_default.py:727
 msgid "no progress bar updates"
 msgstr "Ingen opdateringer af behandlingslinje."
 
-#: appModules/_default.py:712
+#: appModules/_default.py:730
 msgid "speak progress bar updates"
 msgstr "Oplæs ændringer i behandlingslinje."
 
-#: appModules/_default.py:715
+#: appModules/_default.py:733
 msgid "beep for progress bar updates"
 msgstr "Bip for at indikere ændringer i behandlingslinje."
 
-#: appModules/_default.py:718
+#: appModules/_default.py:736
 msgid "beep and speak progress bar updates"
 msgstr "Indikér med tale og lyd, når behandlingslinjen opdateres."
 
-#: appModules/_default.py:720
+#: appModules/_default.py:738
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
 msgstr "Skifter imellem  bip, tale bip og tale, og fra, til indikering af opdateringer af behandlingslinje."
 
-#: appModules/_default.py:729
+#: appModules/_default.py:747
 msgid "report dynamic content changes"
 msgstr "Oplæs ændringer i dynamisk indhold. "
 
-#: appModules/_default.py:730
+#: appModules/_default.py:748
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
 msgstr "Slår annoncering af dynamisk indhold som f.eks. ny tekst i DOS-konsol vinduer til og fra."
 
-#: appModules/_default.py:739
+#: appModules/_default.py:757
 msgid "caret moves review cursor"
 msgstr "systemmarkør flytter ubegrænset markør"
 
-#: appModules/_default.py:740
+#: appModules/_default.py:758
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "Slår flytning af den ubegrænsede markør som følge af flytning af systemmarkør til og fra."
 
-#: appModules/_default.py:749
+#: appModules/_default.py:767
 msgid "focus moves navigator object"
 msgstr "Fokus flytter navigatorobjektfokus flytter navigatorbjekt"
 
-#: appModules/_default.py:750
+#: appModules/_default.py:768
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "Slår flytning af navigatorobjekt som følge af fokusændring til og fra"
 
-#: appModules/_default.py:762
+#: appModules/_default.py:780
 msgid "no system battery"
 msgstr "intet systembatteri"
 
-#: appModules/_default.py:765
+#: appModules/_default.py:783
 msgid "AC power on"
 msgstr "AC-strømforsyning tilsluttet"
 
-#: appModules/_default.py:767
+#: appModules/_default.py:785
 msgid "%d hours and %d minutes remaining"
 msgstr "%d timer %d minutter tilbage  "
 
-#: appModules/_default.py:769
+#: appModules/_default.py:787
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr "oplæser batteristatus og resterende tid, hvis AC-strømforsyningen ikke er tilsluttet."
 
-#: appModules/_default.py:773
+#: appModules/_default.py:791
 msgid "Pass next key through"
 msgstr "Slip næste tastetryk igennem."
 
-#: appModules/_default.py:774
+#: appModules/_default.py:792
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "Den efterfølgende tast,der trykkes, bliver overhovedet ikke behandlet af NVDA men slippes igennem til Windows."
 
-#: appModules/_default.py:779
+#: appModules/_default.py:797
 msgid "Currently running application is %s"
 msgstr "Den aktuelle applikation er %s"
 
-#: appModules/_default.py:782
+#: appModules/_default.py:800
 msgid " and currently loaded module is %s"
 msgstr "og aktuelt indlæste modul er %s"
 
-#: appModules/_default.py:784
+#: appModules/_default.py:802
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
 msgstr "Oplæser filnavnet på den aktuelle applikation sammen med navnet på det aktuelt indlæste appModul"
 
-#: appModules/_default.py:788
+#: appModules/_default.py:806
 msgid "Shows the NVDA general settings dialog"
 msgstr "Åbner dialogboksen med NVDAs generelle indstillinger"
 
-#: appModules/_default.py:792
+#: appModules/_default.py:810
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "Åbner dialogboksen med NVDAs talesyntese indstillinger "
 
-#: appModules/_default.py:796
+#: appModules/_default.py:814
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Åbner dialogboksen med NVDAs stemmeindstillinger"
 
-#: appModules/_default.py:800
+#: appModules/_default.py:818
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "Åbner dialogboksen med NVDAs tastaturindstillinger"
 
-#: appModules/_default.py:804
+#: appModules/_default.py:822
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "Åbner dialogboksen med NVDAs museindstillinger"
 
-#: appModules/_default.py:808
+#: appModules/_default.py:826
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "Åbner dialogboksen med NVDAs objektpræsentations-indstillinger"
 
-#: appModules/_default.py:812
+#: appModules/_default.py:830
 msgid "Shows the NVDA virtual buffers settings dialog"
 msgstr "Åbner dialogboksen med NVDAs indstillinger for virtuelle buffer"
 
-#: appModules/_default.py:816
+#: appModules/_default.py:834
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "Åbner dialogboksen med NVDAs indstillinger for dokumentformatering"
 
-#: appModules/_default.py:820
+#: appModules/_default.py:838
 msgid "Saves the current NVDA configuration"
 msgstr "Gemmer den aktuelle NVDA-konfiguration"
 
-#: appModules/_default.py:824
+#: appModules/_default.py:842
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr "Indlæser den gemte NVDA-konfiguration og overskriver aktuelle ændringer."
 
-#: appModules/_default.py:834
+#: appModules/_default.py:852
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Aktiverer NVDAs PYTHON konsol, som primært bruges til udviklingsformål."
 
-#: appModules/_default.py:839
-#: gui/settingsDialogs.py:872
+#: appModules/_default.py:857
+#: gui/settingsDialogs.py:891
 msgid "review"
 msgstr "gennemsyn"
 
-#: appModules/_default.py:842
-#: gui/settingsDialogs.py:872
+#: appModules/_default.py:860
+#: gui/settingsDialogs.py:891
 msgid "focus"
 msgstr "fokus"
 
-#: appModules/_default.py:843
+#: appModules/_default.py:861
 msgid "Braille tethered to %s"
 msgstr "Braille følger %s"
 
-#: appModules/_default.py:844
+#: appModules/_default.py:862
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "Skifter imellem braille følger fokus position og position for ubegrænset markør"
 
-#: appModules/_default.py:852
+#: appModules/_default.py:870
 msgid "There is no text on the clipboard"
 msgstr "Ingen tekst i udklipsholderen"
 
-#: appModules/_default.py:857
+#: appModules/_default.py:875
 msgid "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "Udklipsholderen indeholder en stor mængde tekst. Den er på %s tegn."
 
-#: appModules/_default.py:858
+#: appModules/_default.py:876
 msgid "Reports the text on the Windows clipboard"
 msgstr "Oplæser teksten i Windows udklipsholder"
 
-#: appModules/_default.py:862
+#: appModules/_default.py:880
 msgid "Start marked"
 msgstr "markering begynder"
 
-#: appModules/_default.py:863
+#: appModules/_default.py:881
 msgid "Marks the current position of the review cursor as the start of text to be copied"
 msgstr "   Markerer den ubegrænsede markørs aktuelle position som begyndelsen af teksten til kopiering."
 
-#: appModules/_default.py:867
+#: appModules/_default.py:885
 msgid "No start marker set"
 msgstr "Ingen start markering sat"
 
-#: appModules/_default.py:871
+#: appModules/_default.py:889
 msgid "The start marker must reside within the same object"
 msgstr "Startmarkeringen skal befinde sig inden for samme objekt."
 
-#: appModules/_default.py:876
+#: appModules/_default.py:894
 msgid "Review selection copied to clipboard"
 msgstr "Valg med ubegrænset markør kopieret til udklipsholderen"
 
-#: appModules/_default.py:878
+#: appModules/_default.py:896
 msgid "No text to copy"
 msgstr "Ingen tekst at kopiere"
 
-#: appModules/_default.py:881
+#: appModules/_default.py:899
 msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
 msgstr "Henter teksten fra det indsatte startmærke til og med den ubegrænsede markørs aktuelle position og kopierer teksten til udklipsholderen."
 
@@ -1106,18 +1113,18 @@ msgid "( )"
 msgstr "( )"
 
 #: braille.py:222
-#: speech.py:684
+#: speech.py:679
 msgid "not %s"
 msgstr "ikke %s"
 
 #: braille.py:234
-#: speech.py:690
+#: speech.py:685
 msgid "%s of %s"
 msgstr "%s af %s"
 
 #: braille.py:236
-#: speech.py:695
-#: speech.py:698
+#: speech.py:690
+#: speech.py:693
 msgid "level %s"
 msgstr "niveau %s"
 
@@ -1141,7 +1148,7 @@ msgstr "Ingen punkt"
 #: characterSymbols.py:18
 #: characterSymbols.py:19
 #: speech.py:84
-#: speech.py:634
+#: speech.py:629
 msgid "blank"
 msgstr "blank"
 
@@ -1399,7 +1406,7 @@ msgid "tool tip"
 msgstr "værktøjstip"
 
 #: controlTypes.py:198
-#: speech.py:947
+#: speech.py:950
 msgid "link"
 msgstr "link"
 
@@ -1816,7 +1823,7 @@ msgid "font size"
 msgstr "skriftstørrelse"
 
 #: controlTypes.py:305
-#: speech.py:899
+#: speech.py:902
 msgid "bold"
 msgstr "fed"
 
@@ -1833,12 +1840,12 @@ msgid "background color"
 msgstr "baggrundsfarve"
 
 #: controlTypes.py:310
-#: speech.py:921
+#: speech.py:924
 msgid "superscript"
 msgstr "hævet skrift"
 
 #: controlTypes.py:311
-#: speech.py:923
+#: speech.py:926
 msgid "subscript"
 msgstr "sænket skrift"
 
@@ -1998,11 +2005,11 @@ msgstr "trækker"
 msgid "drop target"
 msgstr "mål for indsæt"
 
-#: core.py:137
-msgid "Loading subsystems, please wait..."
-msgstr "Indlæser delkomponenter, vent venligst"
+#: core.py:127
+msgid "Loading NVDA. Please wait..."
+msgstr "Indlæser NVDA, vent venligst"
 
-#: core.py:219
+#: core.py:209
 msgid "NVDA started"
 msgstr "NVDA startet"
 
@@ -2042,244 +2049,250 @@ msgstr "kopieret til udklipsholder"
 msgid "configuration applied"
 msgstr "konfiguration anvendes"
 
-#: gui/__init__.py:153
+#: gui/__init__.py:152
+msgid "Cannot save configuration - NVDA in secure mode"
+msgstr "Неможливо зберегти налаштування - NVDA запущено в захищеному режими"
+
+#: gui/__init__.py:156
 msgid "configuration saved"
 msgstr "konfiguration gemt"
 
-#: gui/__init__.py:156
+#: gui/__init__.py:159
 msgid "Could not save configuration - probably read only file system"
 msgstr "Kunne ikke gemme konfiguration - skyldes formodentlig, at filsystemet er skrivebeskyttet."
 
-#: gui/__init__.py:156
-#: gui/logViewer.py:73
+#: gui/__init__.py:159
+#: gui/logViewer.py:74
+#: gui/settingsDialogs.py:158
 msgid "Error"
 msgstr "fejl"
 
-#: gui/__init__.py:167
+#: gui/__init__.py:170
 msgid "Default dictionary"
 msgstr "Standardordbog"
 
-#: gui/__init__.py:170
+#: gui/__init__.py:173
 msgid "Voice dictionary (%s)"
 msgstr "stemmeordbog (%s)"
 
-#: gui/__init__.py:173
+#: gui/__init__.py:176
 msgid "Temporary dictionary"
 msgstr "Midlertidig ordbog"
 
-#: gui/__init__.py:181
+#: gui/__init__.py:184
 msgid "Are you sure you want to quit NVDA?"
 msgstr "Er du sikker på, at du vil afslutte NVDA?"
 
-#: gui/__init__.py:181
-#: gui/__init__.py:331
+#: gui/__init__.py:184
+#: gui/__init__.py:336
 msgid "Exit NVDA"
 msgstr "Afslut NVDA"
 
-#: gui/__init__.py:227
+#: gui/__init__.py:230
 msgid "copyright"
 msgstr "copyright"
 
-#: gui/__init__.py:227
+#: gui/__init__.py:230
 msgid "url"
 msgstr "url"
 
-#: gui/__init__.py:227
+#: gui/__init__.py:230
 msgid "version"
 msgstr "version"
 
-#: gui/__init__.py:229
-#: gui/__init__.py:322
+#: gui/__init__.py:232
+#: gui/__init__.py:326
 msgid "About NVDA"
 msgstr "Om NVDA"
 
-#: gui/__init__.py:262
+#: gui/__init__.py:265
 msgid "&General settings..."
 msgstr "&Generelle indstillinger..."
 
-#: gui/__init__.py:262
+#: gui/__init__.py:265
 #: gui/settingsDialogs.py:89
 msgid "General settings"
 msgstr "Generelle indstillinger"
 
-#: gui/__init__.py:264
+#: gui/__init__.py:267
 msgid " the synthesizer to use"
 msgstr " den talesyntese, der skal anvendes"
 
-#: gui/__init__.py:264
+#: gui/__init__.py:267
 msgid "&Synthesizer..."
 msgstr "&Talesyntese..."
 
-#: gui/__init__.py:266
+#: gui/__init__.py:269
 msgid "&Voice settings..."
 msgstr "&Stemmeindstillinger..."
 
-#: gui/__init__.py:266
+#: gui/__init__.py:269
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "Vælg den stemme, hastighed, pitch og lydstyrke, som skal bruges."
 
-#: gui/__init__.py:268
+#: gui/__init__.py:271
 msgid "B&raille settings..."
 msgstr "B&raille-indstillinger"
 
-#: gui/__init__.py:270
+#: gui/__init__.py:273
 msgid "&Keyboard Settings..."
 msgstr "&Tastatur-indstillinger"
 
-#: gui/__init__.py:270
+#: gui/__init__.py:273
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
 msgstr "Konfigurér tastaturlayout, oplæsning af indtastede tegn, ord eller funktionstaster."
 
-#: gui/__init__.py:272
+#: gui/__init__.py:275
 msgid "&Mouse settings..."
 msgstr "&Muse-indstillinger"
 
-#: gui/__init__.py:272
+#: gui/__init__.py:275
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Skift oplæsning af musens form samt objektet under musen."
 
-#: gui/__init__.py:274
+#: gui/__init__.py:277
 msgid "&Review cursor..."
 msgstr "&Ubegrænset markør"
 
-#: gui/__init__.py:274
+#: gui/__init__.py:277
 msgid "Configure how and when the review cursor moves"
 msgstr "Indstil hvordan og hvor den ubegrænsede markør skal bevæge sig."
 
-#: gui/__init__.py:276
+#: gui/__init__.py:279
 msgid "&Object presentation..."
 msgstr "&Objekt-præsentation"
 
-#: gui/__init__.py:276
+#: gui/__init__.py:279
 msgid "Change reporting of objects"
 msgstr "Skift oplæsning af objekter."
 
-#: gui/__init__.py:278
+#: gui/__init__.py:281
 msgid "Change virtual buffers specific settings"
 msgstr "Skift indstillinger, der har med virtuelle buffere at gøre."
 
-#: gui/__init__.py:278
+#: gui/__init__.py:281
 msgid "Virtual &buffers..."
 msgstr "Virtuelle &buffers..."
 
-#: gui/__init__.py:280
+#: gui/__init__.py:283
 msgid "Change Settings of document properties"
 msgstr "Skift indstillinger af dokumentegenskaber."
 
-#: gui/__init__.py:280
+#: gui/__init__.py:283
 msgid "Document &formatting..."
 msgstr "Dokument &formatering..."
 
-#: gui/__init__.py:283
+#: gui/__init__.py:287
 msgid "&Default dictionary..."
 msgstr "&Standard-ordbog..."
 
-#: gui/__init__.py:283
+#: gui/__init__.py:287
 msgid "dialog where you can set default dictionary by adding dictionary entries to the list"
 msgstr "Dialogboks, hvor der kan angives en standard-ordbog ved at tilføje ord til listen."
 
-#: gui/__init__.py:285
+#: gui/__init__.py:289
 msgid "&Voice dictionary..."
 msgstr "&Stemme-ordbog..."
 
-#: gui/__init__.py:285
+#: gui/__init__.py:289
 msgid "dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
 msgstr "Dialogboks, hvor der kan angives en stemmespecifik ordbog ved at tilføje ord til listen."
 
-#: gui/__init__.py:287
+#: gui/__init__.py:291
 msgid "&Temporary dictionary..."
 msgstr "&Midlertidig ordbog..."
 
-#: gui/__init__.py:287
+#: gui/__init__.py:291
 msgid "dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
 msgstr "Dialogboks, hvor der kan angives en midlertidig ordbog ved at tilføje ord til edit-boksen."
 
-#: gui/__init__.py:289
+#: gui/__init__.py:293
 msgid "Speech &dictionaries"
 msgstr "Tale & ordbøger"
 
-#: gui/__init__.py:290
+#: gui/__init__.py:294
 msgid "&Preferences"
 msgstr "&Indstillinger"
 
-#: gui/__init__.py:294
+#: gui/__init__.py:298
 msgid "View log"
 msgstr "Vis log"
 
-#: gui/__init__.py:296
+#: gui/__init__.py:300
 msgid "Speech viewer"
 msgstr "Tale-visning"
 
-#: gui/__init__.py:299
+#: gui/__init__.py:303
 msgid "Python console"
 msgstr "Python-konsol"
 
-#: gui/__init__.py:301
+#: gui/__init__.py:305
 msgid "Tools"
 msgstr "Værktøjer"
 
-#: gui/__init__.py:305
+#: gui/__init__.py:309
 msgid "User guide"
 msgstr "Brugervejledning"
 
-#: gui/__init__.py:307
-msgid "Key Command Quick Reference"
+#: gui/__init__.py:311
+#, fuzzy
+msgid "Keyboard Command Quick Reference"
 msgstr "Samlet liste over tastaturgenveje"
 
-#: gui/__init__.py:309
+#: gui/__init__.py:313
 msgid "What's &new"
 msgstr "Hvad &nyt"
 
-#: gui/__init__.py:311
+#: gui/__init__.py:315
 msgid "Web site"
 msgstr "Netsted"
 
-#: gui/__init__.py:313
+#: gui/__init__.py:317
 msgid "Readme"
 msgstr "Readme"
 
-#: gui/__init__.py:315
+#: gui/__init__.py:319
 msgid "License"
 msgstr "Licens"
 
-#: gui/__init__.py:317
+#: gui/__init__.py:321
 msgid "Contributors"
 msgstr "Bidragydere"
 
-#: gui/__init__.py:319
+#: gui/__init__.py:323
 msgid "We&lcome dialog"
 msgstr "Ve&lkommen dialog"
 
-#: gui/__init__.py:322
+#: gui/__init__.py:326
 msgid "About..."
 msgstr "Om..."
 
-#: gui/__init__.py:324
+#: gui/__init__.py:328
 msgid "&Help"
 msgstr "&Hjælp"
 
-#: gui/__init__.py:326
+#: gui/__init__.py:330
 msgid "&Revert to saved configuration"
 msgstr "&Vend tilbage til gemt konfiguration "
 
-#: gui/__init__.py:326
+#: gui/__init__.py:330
 msgid "Reset all settings to saved state"
 msgstr "Gendan alle indstillinger til gemt tilstand."
 
-#: gui/__init__.py:328
+#: gui/__init__.py:333
 msgid "&Save configuration"
 msgstr "&Gem konfiguration "
 
-#: gui/__init__.py:328
+#: gui/__init__.py:333
 msgid "Write the current configuration to nvda.ini"
 msgstr "Skriv den aktuelle konfiguration til nvda.ini"
 
-#: gui/__init__.py:331
-#: gui/logViewer.py:33
+#: gui/__init__.py:336
+#: gui/logViewer.py:34
 msgid "E&xit"
 msgstr "&Afslut"
 
-#: gui/__init__.py:382
+#: gui/__init__.py:387
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
@@ -2295,24 +2308,24 @@ msgstr ""
 "Tryk NVDA+n hvor som helst for at aktivere NVDA-menuen.\n"
 "Fra denne menu kan du konfigurere NVDA, få hjælp og få adgang til andre faciliteter i NVDA.\n"
 
-#: gui/__init__.py:392
+#: gui/__init__.py:397
 msgid "Welcome to NVDA"
 msgstr "Velkommen til NVDA"
 
-#: gui/__init__.py:396
+#: gui/__init__.py:401
 msgid "Options"
 msgstr "Indstillinger"
 
-#: gui/__init__.py:397
-#: gui/settingsDialogs.py:404
+#: gui/__init__.py:402
+#: gui/settingsDialogs.py:419
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Brug CapsLock som NVDA-tast"
 
-#: gui/__init__.py:400
+#: gui/__init__.py:405
 msgid "Show this dialog when NVDA starts"
 msgstr "Vis denne dialog, når NVDA startes"
 
-#: gui/__init__.py:436
+#: gui/__init__.py:441
 msgid ""
 "Your configuration file contains errors. \r\n"
 "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\r\n"
@@ -2320,7 +2333,7 @@ msgstr ""
 "Din konfigurationsfil indeholder fejl. \r\n"
 "Tryk 'Ok' for at rette fejlene, eller tryk 'Afslut', hvis du ønsker at redigere konfigurationsfilen og rette fejlene manuelt på et senere tidspunkt. yderligere detaljer om fejlene kan findes i log filen.\r\n"
 
-#: gui/__init__.py:441
+#: gui/__init__.py:446
 msgid "Configuration File Error"
 msgstr "Fejl i konfigurationsfil"
 
@@ -2328,19 +2341,19 @@ msgstr "Fejl i konfigurationsfil"
 msgid "NVDA Log Viewer"
 msgstr "NVDA log fremviser"
 
-#: gui/logViewer.py:28
+#: gui/logViewer.py:29
 msgid "Refresh\tF5"
 msgstr "Opdatér \tF5"
 
-#: gui/logViewer.py:35
+#: gui/logViewer.py:36
 msgid "Log"
 msgstr "Log"
 
-#: gui/logViewer.py:65
+#: gui/logViewer.py:66
 msgid "Save As"
 msgstr "Gem Som"
 
-#: gui/logViewer.py:73
+#: gui/logViewer.py:74
 msgid "Error saving log: %s"
 msgstr "Fejl under lagring af log: %s"
 
@@ -2374,419 +2387,439 @@ msgstr "&Sprog (kræver genstart for at få virkning):"
 msgid "Language"
 msgstr "Sprog"
 
-#: gui/settingsDialogs.py:113
+#: gui/settingsDialogs.py:115
 msgid "&Save configuration on exit"
 msgstr "&Gem konfiguration ved afslutning"
 
-#: gui/settingsDialogs.py:116
+#: gui/settingsDialogs.py:120
 msgid "&Warn before exiting NVDA"
 msgstr "&Advar før NVDA afsluttes"
 
-#: gui/settingsDialogs.py:120
+#: gui/settingsDialogs.py:124
 msgid "L&ogging level:"
 msgstr "L&ogningsniveau"
 
-#: gui/settingsDialogs.py:123
+#: gui/settingsDialogs.py:127
 msgid "Log level"
 msgstr "Logningsniveau"
 
-#: gui/settingsDialogs.py:133
+#: gui/settingsDialogs.py:137
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "&Automatisk start NVDA, når jeg er logget på Windows "
 
-#: gui/settingsDialogs.py:138
+#: gui/settingsDialogs.py:142
 msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr "Brug NVDA på Windows logon-skærmen (kræver administratorrettigheder)."
 
-#: gui/settingsDialogs.py:154
+#: gui/settingsDialogs.py:147
+msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
+msgstr "Benyt de aktuelt gemte indstillinger på logon-skærmen og på andre beskyttede skærmbilleder (kræver administratorrettigheder)"
+
+#: gui/settingsDialogs.py:158
+msgid "Error copying NVDA user settings"
+msgstr "Помилка при копіюванні користувацьких налаштувань NVDA"
+
+#: gui/settingsDialogs.py:160
+msgid "Success"
+msgstr "Вдача"
+
+#: gui/settingsDialogs.py:160
+msgid "Successfully copied NVDA user settings"
+msgstr "Користувацькі налаштування успішно скопійовано"
+
+#: gui/settingsDialogs.py:169
 msgid "Error in %s language file"
 msgstr "Fejl i   %s sprogfil"
 
-#: gui/settingsDialogs.py:154
+#: gui/settingsDialogs.py:169
 msgid "Language Error"
 msgstr "Sprogfejl"
 
-#: gui/settingsDialogs.py:170
+#: gui/settingsDialogs.py:185
 msgid "Insufficient Privileges"
 msgstr "Ikke tilstrækkelige rettigheder"
 
-#: gui/settingsDialogs.py:170
+#: gui/settingsDialogs.py:185
 msgid "This change requires administrator privileges."
 msgstr "Denne ændring kræver administratorrettigheder"
 
-#: gui/settingsDialogs.py:172
+#: gui/settingsDialogs.py:187
 msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
 msgstr "For at det nye sprog skal få virkning, skal konfigurationen gemmes og NVDA genstartes. Tryk Enter for at gemme og genstarte NVDA eller Annuller for at gemme manuelt og genstarte senere."
 
-#: gui/settingsDialogs.py:172
+#: gui/settingsDialogs.py:187
 msgid "Language Configuration Change"
 msgstr "Skift af sprogkonfiguration"
 
-#: gui/settingsDialogs.py:180
+#: gui/settingsDialogs.py:195
 msgid "Synthesizer"
 msgstr "Talesyntese"
 
-#: gui/settingsDialogs.py:184
+#: gui/settingsDialogs.py:199
 msgid "&Synthesizer:"
 msgstr "&Talesyntese:"
 
-#: gui/settingsDialogs.py:199
+#: gui/settingsDialogs.py:214
 msgid "Output &device:"
 msgstr "Output &enhed:"
 
-#: gui/settingsDialogs.py:219
+#: gui/settingsDialogs.py:234
 msgid "Could not load the %s synthesizer."
 msgstr "Kunne ikke indlæse talesyntesen %s."
 
-#: gui/settingsDialogs.py:219
+#: gui/settingsDialogs.py:234
 msgid "Synthesizer Error"
 msgstr "Talesyntesefejl"
 
-#: gui/settingsDialogs.py:251
+#: gui/settingsDialogs.py:266
 msgid "Voice settings"
 msgstr "Stemmeindstillinger"
 
-#: gui/settingsDialogs.py:307
+#: gui/settingsDialogs.py:322
 msgid "&Speak all punctuation"
 msgstr "&Oplæs al tegnsætning"
 
-#: gui/settingsDialogs.py:310
+#: gui/settingsDialogs.py:325
 msgid "Raise pitch for capitals"
 msgstr "Hæv tonehøjde ved store bogstaver"
 
-#: gui/settingsDialogs.py:313
+#: gui/settingsDialogs.py:328
 msgid "Say &cap before capitals"
 msgstr "Sig &stort før store bogstaver "
 
-#: gui/settingsDialogs.py:316
+#: gui/settingsDialogs.py:331
 msgid "&Beep for capitals"
 msgstr "&Bip ved store bogstaver "
 
-#: gui/settingsDialogs.py:319
+#: gui/settingsDialogs.py:334
 msgid "Use &spelling functionality if supported"
 msgstr "Brug &stavefunktion hvis understøttes"
 
-#: gui/settingsDialogs.py:387
+#: gui/settingsDialogs.py:402
 msgid "Keyboard Settings"
 msgstr "Tastaturindstillinger"
 
-#: gui/settingsDialogs.py:391
+#: gui/settingsDialogs.py:406
 msgid "&Keyboard layout:"
 msgstr "&Tastaturlayout"
 
-#: gui/settingsDialogs.py:396
+#: gui/settingsDialogs.py:411
 msgid "Keyboard layout"
 msgstr "Tastaturlayout"
 
-#: gui/settingsDialogs.py:407
+#: gui/settingsDialogs.py:422
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Brug numerisk Insert som NVDA-tast"
 
-#: gui/settingsDialogs.py:410
+#: gui/settingsDialogs.py:425
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Brug udvidet Insert som NVDA-tast"
 
-#: gui/settingsDialogs.py:413
+#: gui/settingsDialogs.py:428
 msgid "Speak typed &characters"
 msgstr "Oplæs indtastede &tegn"
 
-#: gui/settingsDialogs.py:416
+#: gui/settingsDialogs.py:431
 msgid "Speak typed &words"
 msgstr "Oplæs indtastede &ord"
 
-#: gui/settingsDialogs.py:419
+#: gui/settingsDialogs.py:434
 msgid "Speak command &keys"
 msgstr "Oplæs &funktionstaster"
 
-#: gui/settingsDialogs.py:442
+#: gui/settingsDialogs.py:457
 msgid "Mouse settings"
 msgstr "Museindstillinger"
 
-#: gui/settingsDialogs.py:445
+#: gui/settingsDialogs.py:460
 msgid "Report mouse &shape changes"
 msgstr "Oplæs ændringer i musemarkørens &form"
 
-#: gui/settingsDialogs.py:448
-msgid "Report &text under the mouse"
-msgstr "Oplæs &tekst under musen"
+#: gui/settingsDialogs.py:463
+msgid "Enable mouse &tracking"
+msgstr "Slå muse&følgning til"
 
-#: gui/settingsDialogs.py:452
+#: gui/settingsDialogs.py:467
 msgid "Text &unit resolution:"
 msgstr "Opløsning for tekst&enhed:"
 
-#: gui/settingsDialogs.py:456
+#: gui/settingsDialogs.py:471
 msgid "text reporting unit"
 msgstr "Enhed for tekstoplæsning"
 
-#: gui/settingsDialogs.py:464
+#: gui/settingsDialogs.py:479
 msgid "Report &role when mouse enters object"
 msgstr "Oplæs &rolle når musen flyttes ind over et objekt "
 
-#: gui/settingsDialogs.py:467
+#: gui/settingsDialogs.py:482
 msgid "play audio coordinates when mouse moves"
 msgstr "Afspil lydkoordinator under flytning af mus"
 
-#: gui/settingsDialogs.py:470
+#: gui/settingsDialogs.py:485
 msgid "brightness controls audio coordinates volume"
 msgstr "Lysstyrke kontrollerer lydstyrke for lydkoordinater"
 
-#: gui/settingsDialogs.py:488
+#: gui/settingsDialogs.py:503
 msgid "Review cursor settings"
 msgstr "Indstillinger for ubegrænset markør"
 
-#: gui/settingsDialogs.py:491
+#: gui/settingsDialogs.py:506
 msgid "Follow &keyboard focus"
 msgstr "Følg &tastaturfokus "
 
-#: gui/settingsDialogs.py:494
-msgid "Follow &text insertion point"
-msgstr "Følg &tekst indsætningsmærke"
+#: gui/settingsDialogs.py:509
+msgid "Follow System &Caret"
+msgstr "Переміщувати за &кареткою в тексті"
 
-#: gui/settingsDialogs.py:497
+#: gui/settingsDialogs.py:512
 msgid "Follow &mouse cursor"
 msgstr "Følg &musemarkør"
 
-#: gui/settingsDialogs.py:500
+#: gui/settingsDialogs.py:515
 msgid "Simple review mode"
 msgstr "Enkel gennemsynstilstand"
 
-#: gui/settingsDialogs.py:515
+#: gui/settingsDialogs.py:530
 msgid "Object presentation"
 msgstr "Objektpræsentation"
 
-#: gui/settingsDialogs.py:518
+#: gui/settingsDialogs.py:533
 msgid "Speak"
 msgstr "Tale"
 
-#: gui/settingsDialogs.py:519
+#: gui/settingsDialogs.py:534
 msgid "Beep"
 msgstr "Bip"
 
-#: gui/settingsDialogs.py:520
+#: gui/settingsDialogs.py:535
 msgid "Speak and beep"
 msgstr "Tal og bip"
 
-#: gui/settingsDialogs.py:524
+#: gui/settingsDialogs.py:539
 msgid "Report &tooltips"
 msgstr "Oplæs &værktøjstips"
 
-#: gui/settingsDialogs.py:527
+#: gui/settingsDialogs.py:542
 msgid "Report &help balloons"
 msgstr "Oplæs &hjælpeballoner"
 
-#: gui/settingsDialogs.py:530
+#: gui/settingsDialogs.py:545
 msgid "Report object shortcut &keys"
 msgstr "Oplæs objekt genvejs&taster"
 
-#: gui/settingsDialogs.py:533
+#: gui/settingsDialogs.py:548
 msgid "Report object &position information"
 msgstr "Oplæs information om objekts &placering"
 
-#: gui/settingsDialogs.py:536
+#: gui/settingsDialogs.py:551
 msgid "Report object &descriptions"
 msgstr "Oplæs objekts &beskrivelse"
 
-#: gui/settingsDialogs.py:540
+#: gui/settingsDialogs.py:555
 msgid "Progress &bar output:"
 msgstr "Output for behandlings&linje"
 
-#: gui/settingsDialogs.py:543
+#: gui/settingsDialogs.py:558
 msgid "Progress bar output"
 msgstr "Output for behandlingslinje"
 
-#: gui/settingsDialogs.py:552
+#: gui/settingsDialogs.py:567
 msgid "Report background progress bars"
 msgstr "Oplæs baggrunds behandlingslinjer"
 
-#: gui/settingsDialogs.py:570
+#: gui/settingsDialogs.py:585
 msgid "virtual buffers"
 msgstr "Virtuelle buffere"
 
-#: gui/settingsDialogs.py:573
+#: gui/settingsDialogs.py:588
 msgid "&Maximum number of characters on one line"
 msgstr "&Maksimum antal tegn på én linje"
 
-#: gui/settingsDialogs.py:578
+#: gui/settingsDialogs.py:593
 msgid "&Number of lines per page"
 msgstr "&Antal linjer pr. side"
 
-#: gui/settingsDialogs.py:583
+#: gui/settingsDialogs.py:598
 msgid "Use &screen layout (when supported)"
 msgstr "Brug &skærmlayout (når det understøttes)"
 
-#: gui/settingsDialogs.py:586
+#: gui/settingsDialogs.py:601
 msgid "Report l&ayout tables"
 msgstr "Oplæs l&ayouttabeller"
 
-#: gui/settingsDialogs.py:590
+#: gui/settingsDialogs.py:605
 msgid "Automatic focus mode for focus changes"
 msgstr "Automatisk fokustilstand ved fokusændring"
 
-#: gui/settingsDialogs.py:593
+#: gui/settingsDialogs.py:608
 msgid "Automatic focus mode for caret movement"
 msgstr "Automatisk fokustilstand ved flytning af systemmarkør"
 
-#: gui/settingsDialogs.py:596
+#: gui/settingsDialogs.py:611
 msgid "Audio indication of focus and browse modes"
 msgstr "Lydindikering af fokustilstand og gennemsynstilstand"
 
-#: gui/settingsDialogs.py:624
+#: gui/settingsDialogs.py:639
 msgid "Document formatting"
 msgstr "Dokumentformatering"
 
-#: gui/settingsDialogs.py:627
+#: gui/settingsDialogs.py:642
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "Oplæs ændringer i formatering efter cursor (kan give efterslæb)"
 
-#: gui/settingsDialogs.py:630
+#: gui/settingsDialogs.py:645
 msgid "Report font &name"
 msgstr "Oplæs skrifttype&navn"
 
-#: gui/settingsDialogs.py:633
+#: gui/settingsDialogs.py:648
 msgid "Report font &size"
 msgstr "Oplæs skrifttype&størrelse"
 
-#: gui/settingsDialogs.py:636
+#: gui/settingsDialogs.py:651
 msgid "Report font attri&butes"
 msgstr "Oplæs skrifttype&attributter"
 
-#: gui/settingsDialogs.py:639
+#: gui/settingsDialogs.py:654
 msgid "Report &alignment"
 msgstr "Oplæs &justering"
 
-#: gui/settingsDialogs.py:642
+#: gui/settingsDialogs.py:657
 msgid "Report st&yle"
 msgstr "Oplæs typo&grafi"
 
-#: gui/settingsDialogs.py:645
+#: gui/settingsDialogs.py:660
 msgid "Report spelling errors"
 msgstr "Annoncér stavefejl"
 
-#: gui/settingsDialogs.py:648
+#: gui/settingsDialogs.py:663
 msgid "Report &pages"
 msgstr "Annoncér &sider"
 
-#: gui/settingsDialogs.py:651
+#: gui/settingsDialogs.py:666
 msgid "Report &line numbers"
 msgstr "Oplæs &linjenumre"
 
-#: gui/settingsDialogs.py:654
+#: gui/settingsDialogs.py:669
 msgid "Report &tables"
 msgstr "Annoncér &tabeller"
 
-#: gui/settingsDialogs.py:657
+#: gui/settingsDialogs.py:672
+msgid "Report table row/column h&eaders"
+msgstr "Повідомляти рядки/стовпці таблиці та з&аголовки"
+
+#: gui/settingsDialogs.py:675
 msgid "Report &links"
 msgstr "Annoncér &links"
 
-#: gui/settingsDialogs.py:660
+#: gui/settingsDialogs.py:678
 msgid "Report &headings"
 msgstr "annoncér &overskrifter"
 
-#: gui/settingsDialogs.py:663
+#: gui/settingsDialogs.py:681
 msgid "Report l&ists"
 msgstr "Annoncér l&ister"
 
-#: gui/settingsDialogs.py:666
+#: gui/settingsDialogs.py:684
 msgid "Report block &quotes"
 msgstr "Annoncér blok&cicater"
 
-#: gui/settingsDialogs.py:669
+#: gui/settingsDialogs.py:687
 msgid "Report lan&dmarks"
 msgstr "Annoncér land&mærker"
 
-#: gui/settingsDialogs.py:697
+#: gui/settingsDialogs.py:716
 msgid "Edit dictionary entry"
 msgstr "Redigér ordbogsord"
 
-#: gui/settingsDialogs.py:700
+#: gui/settingsDialogs.py:719
 msgid "&Pattern"
 msgstr "&mønster"
 
-#: gui/settingsDialogs.py:703
+#: gui/settingsDialogs.py:722
 msgid "&Replacement"
 msgstr "&Erstatning"
 
-#: gui/settingsDialogs.py:706
+#: gui/settingsDialogs.py:725
 msgid "&Comment"
 msgstr "&Kommentar"
 
-#: gui/settingsDialogs.py:709
+#: gui/settingsDialogs.py:728
 msgid "Case &sensitive"
 msgstr "Forskel på &store og små bogstaver"
 
-#: gui/settingsDialogs.py:711
+#: gui/settingsDialogs.py:730
 msgid "Regular &expression"
 msgstr "Regulært &udtryk"
 
-#: gui/settingsDialogs.py:733
+#: gui/settingsDialogs.py:752
 msgid "&Dictionary entries"
 msgstr "&Ordbogsord"
 
-#: gui/settingsDialogs.py:736
+#: gui/settingsDialogs.py:755
 msgid "Comment"
 msgstr "Kommentar"
 
-#: gui/settingsDialogs.py:737
+#: gui/settingsDialogs.py:756
 msgid "Pattern"
 msgstr "Mønster"
 
-#: gui/settingsDialogs.py:738
+#: gui/settingsDialogs.py:757
 msgid "Replacement"
 msgstr "Erstatning"
 
-#: gui/settingsDialogs.py:739
+#: gui/settingsDialogs.py:758
 msgid "case sensitive"
 msgstr "forskel på store og små bogstaver"
 
-#: gui/settingsDialogs.py:740
+#: gui/settingsDialogs.py:759
 msgid "Regular expression"
 msgstr "Regulært udtryk"
 
-#: gui/settingsDialogs.py:747
+#: gui/settingsDialogs.py:766
 msgid "&Add"
 msgstr "&Tilføj"
 
-#: gui/settingsDialogs.py:750
+#: gui/settingsDialogs.py:769
 msgid "&edit"
 msgstr "&Redigér"
 
-#: gui/settingsDialogs.py:753
+#: gui/settingsDialogs.py:772
 msgid "&Remove"
 msgstr "&Fjern"
 
-#: gui/settingsDialogs.py:820
+#: gui/settingsDialogs.py:839
 msgid "Braille Settings"
 msgstr "Braille-indstillinger"
 
-#: gui/settingsDialogs.py:824
+#: gui/settingsDialogs.py:843
 msgid "Braille &display:"
 msgstr "Braille&display"
 
-#: gui/settingsDialogs.py:838
+#: gui/settingsDialogs.py:857
 msgid "Translation &table:"
 msgstr "Oversættelse & Tabel"
 
-#: gui/settingsDialogs.py:850
+#: gui/settingsDialogs.py:869
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "U&dvid ordet ved cursoren til computer-braille"
 
-#: gui/settingsDialogs.py:855
+#: gui/settingsDialogs.py:874
 msgid "Cursor blink rate (ms)"
 msgstr "Cursor blinkhastighed (ms)"
 
-#: gui/settingsDialogs.py:863
+#: gui/settingsDialogs.py:882
 msgid "Message timeout (sec)"
 msgstr "Besked vises i (sec)"
 
-#: gui/settingsDialogs.py:871
+#: gui/settingsDialogs.py:890
 msgid "Braille tethered to:"
 msgstr "Braille følger:"
 
-#: gui/settingsDialogs.py:890
+#: gui/settingsDialogs.py:909
 msgid "Braille Display Error"
 msgstr "Braille display fejl"
 
-#: gui/settingsDialogs.py:890
+#: gui/settingsDialogs.py:909
 msgid "Could not load the %s display."
 msgstr "Kunne ikke indlæse displayet %s."
 
@@ -3074,142 +3107,142 @@ msgstr "Skriv exit() for at aflutte konsolprogrammet"
 msgid "NVDA Python Console"
 msgstr "NVDA Python Console (Python-konsolprogram)"
 
-#: speech.py:181
+#: speech.py:180
 msgid "cap %s"
 msgstr "stort %s"
 
-#: speech.py:332
+#: speech.py:325
 msgid "%d characters"
 msgstr "%d tegn"
 
-#: speech.py:383
+#: speech.py:376
 msgid "selecting %s"
 msgstr "markerer %s"
 
-#: speech.py:394
+#: speech.py:387
 msgid "unselecting %s"
 msgstr "fjerner markeringen fra %s"
 
-#: speech.py:396
+#: speech.py:389
 msgid "selection removed"
 msgstr "markering fjernet"
 
-#: speech.py:682
+#: speech.py:677
 msgid "done dragging"
 msgstr "trækning gennemført"
 
-#: speech.py:707
-#: speech.py:988
+#: speech.py:705
+#: speech.py:995
 msgid "row %s"
 msgstr "række %s"
 
-#: speech.py:710
-#: speech.py:984
+#: speech.py:711
+#: speech.py:991
 msgid "column %s"
 msgstr "kolonne %s"
 
-#: speech.py:715
+#: speech.py:716
 msgid "with %s rows and %s columns"
 msgstr "med %s rækker og %s kolonner"
 
-#: speech.py:717
+#: speech.py:718
 msgid "with %s columns"
 msgstr "med %s kolonner"
 
-#: speech.py:719
+#: speech.py:720
 msgid "with %s rows"
 msgstr "med %s rækker"
 
-#: speech.py:825
+#: speech.py:826
 msgid "with %s items"
 msgstr "med %s elementer"
 
-#: speech.py:840
-#: speech.py:947
+#: speech.py:843
+#: speech.py:950
 msgid "out of %s"
 msgstr "forlader %s"
 
-#: speech.py:864
+#: speech.py:867
 msgid "page %s"
 msgstr "side %s"
 
-#: speech.py:871
+#: speech.py:874
 msgid "style %s"
 msgstr "typografi %s"
 
-#: speech.py:873
+#: speech.py:876
 msgid "default style"
 msgstr "standardtypografi"
 
-#: speech.py:893
+#: speech.py:896
 msgid "line %s"
 msgstr "linje %s"
 
-#: speech.py:899
+#: speech.py:902
 msgid "no bold"
 msgstr "intet med fed\v*"
 
-#: speech.py:904
+#: speech.py:907
 msgid "italic"
 msgstr "kursiv"
 
-#: speech.py:904
+#: speech.py:907
 msgid "no italic"
 msgstr "intet med kursiv"
 
-#: speech.py:909
+#: speech.py:912
 msgid "no strikethrough"
 msgstr "intet gennemstreget"
 
-#: speech.py:909
+#: speech.py:912
 msgid "strikethrough"
 msgstr "gennemstreget"
 
-#: speech.py:914
+#: speech.py:917
 msgid "not underlined"
 msgstr "ikke understreget"
 
-#: speech.py:914
+#: speech.py:917
 msgid "underlined"
 msgstr "understreget"
 
-#: speech.py:925
+#: speech.py:928
 msgid "baseline"
 msgstr "grundstreg"
 
-#: speech.py:933
+#: speech.py:936
 msgid "align left"
 msgstr "venstrestillet"
 
-#: speech.py:935
+#: speech.py:938
 msgid "align center"
 msgstr "centreret"
 
-#: speech.py:937
+#: speech.py:940
 msgid "align right"
 msgstr "højrestillet"
 
-#: speech.py:939
+#: speech.py:942
 msgid "align justify"
 msgstr "lige margener"
 
-#: speech.py:941
+#: speech.py:944
 msgid "align default"
 msgstr "standardjustering"
 
-#: speech.py:954
+#: speech.py:957
 msgid "spelling error"
 msgstr "stavefejl"
 
-#: speech.py:956
+#: speech.py:959
 msgid "out of spelling error"
 msgstr "forlader stavefejl"
 
-#: speech.py:970
+#: speech.py:977
 msgid "out of table"
 msgstr "forlader tabel"
 
-#: speech.py:979
+#: speech.py:986
 msgid "table with %s columns and %s rows"
 msgstr "tabel med %s kolonner og %s rækker"
 
@@ -3217,27 +3250,27 @@ msgstr "tabel med %s kolonner og %s rækker"
 msgid "NVDA Speech Viewer"
 msgstr "NVDA Speech Viewer"
 
-#: synthDriverHandler.py:187
+#: synthDriverHandler.py:185
 msgid "&Voice"
 msgstr "&Stemme"
 
-#: synthDriverHandler.py:191
+#: synthDriverHandler.py:189
 msgid "V&ariant"
 msgstr "&Variant"
 
-#: synthDriverHandler.py:196
+#: synthDriverHandler.py:194
 msgid "&Rate"
 msgstr "&Hastighed"
 
-#: synthDriverHandler.py:200
+#: synthDriverHandler.py:198
 msgid "V&olume"
 msgstr "&Lydstyrke"
 
-#: synthDriverHandler.py:204
+#: synthDriverHandler.py:202
 msgid "&Pitch"
 msgstr "&Tonehøjde"
 
-#: synthDriverHandler.py:209
+#: synthDriverHandler.py:207
 msgid "&Inflection"
 msgstr "&Inflection"
 
@@ -3303,514 +3336,514 @@ msgstr ""
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "eller ved at se i filen Copying.txt, der fulgte med denne software."
 
-#: virtualBuffers/__init__.py:187
+#: virtualBuffers/__init__.py:198
 msgid "%s landmark"
 msgstr "%s landmærke"
 
-#: virtualBuffers/__init__.py:205
+#: virtualBuffers/__init__.py:216
 msgid "Lin&ks"
 msgstr "Lin&ks"
 
-#: virtualBuffers/__init__.py:206
+#: virtualBuffers/__init__.py:217
 msgid "&Headings"
 msgstr "&Overskrifter"
 
-#: virtualBuffers/__init__.py:207
+#: virtualBuffers/__init__.py:218
 msgid "Lan&dmarks"
 msgstr "Lan&dmærker"
 
-#: virtualBuffers/__init__.py:213
+#: virtualBuffers/__init__.py:224
 msgid "Elements List"
 msgstr "Elementliste"
 
-#: virtualBuffers/__init__.py:216
+#: virtualBuffers/__init__.py:227
 msgid "Type:"
 msgstr "Type:"
 
-#: virtualBuffers/__init__.py:227
+#: virtualBuffers/__init__.py:238
 msgid "&Filter by:"
 msgstr "&Filtrér efter:"
 
-#: virtualBuffers/__init__.py:235
+#: virtualBuffers/__init__.py:246
 msgid "&Activate"
 msgstr "&Aktivér"
 
-#: virtualBuffers/__init__.py:238
+#: virtualBuffers/__init__.py:249
 msgid "&Move to"
 msgstr "&Flyt til"
 
-#: virtualBuffers/__init__.py:524
+#: virtualBuffers/__init__.py:535
 msgid "Refreshed"
 msgstr "Opdateret"
 
-#: virtualBuffers/__init__.py:529
+#: virtualBuffers/__init__.py:540
 msgid "Loading document..."
 msgstr "Indlæser dokument..."
 
-#: virtualBuffers/__init__.py:668
+#: virtualBuffers/__init__.py:680
 msgid "activates the current object in the virtual buffer"
 msgstr "Aktiverer det aktuelle objekt i den virtuelle buffer"
 
-#: virtualBuffers/__init__.py:680
+#: virtualBuffers/__init__.py:692
 msgid "Refreshes the virtual buffer content"
 msgstr "Opdaterer indholdet af den virtuelle buffer"
 
-#: virtualBuffers/__init__.py:685
+#: virtualBuffers/__init__.py:697
 msgid "use screen layout %s"
 msgstr "Brug skærmlayout %s"
 
-#: virtualBuffers/__init__.py:686
+#: virtualBuffers/__init__.py:698
 msgid "Toggles on and off if the screen layout is preserved while rendering the virtual buffer content"
 msgstr "Slår bevaring af skærmlayout under visning af indholdet af den virtuelle buffer til og fra"
 
-#: virtualBuffers/__init__.py:773
+#: virtualBuffers/__init__.py:785
 msgid "Presents a list of links, headings or landmarks"
 msgstr "Viser en liste over links overskrifter eller landmærker"
 
-#: virtualBuffers/__init__.py:1114
+#: virtualBuffers/__init__.py:1126
 msgid "Not in a table cell"
 msgstr "Ikke i en tabelcelle"
 
-#: virtualBuffers/__init__.py:1120
+#: virtualBuffers/__init__.py:1132
 msgid "edge of table"
 msgstr "Kant af tabel"
 
-#: virtualBuffers/__init__.py:1130
+#: virtualBuffers/__init__.py:1142
 msgid "moves to the next table row"
 msgstr "flytter til næste række i tabel"
 
-#: virtualBuffers/__init__.py:1134
+#: virtualBuffers/__init__.py:1146
 msgid "moves to the previous table row"
 msgstr "flytter til foregående række i tabel"
 
-#: virtualBuffers/__init__.py:1138
+#: virtualBuffers/__init__.py:1150
 msgid "moves to the next table column"
 msgstr "flytter til næste kolonne i tabel"
 
-#: virtualBuffers/__init__.py:1142
+#: virtualBuffers/__init__.py:1154
 msgid "moves to the previous table column"
 msgstr "flytter til foregående kolonne i tabel"
 
-#: virtualBuffers/__init__.py:1202
+#: virtualBuffers/__init__.py:1214
 msgid "moves to the next heading"
 msgstr "flytter til næste overskrift"
 
-#: virtualBuffers/__init__.py:1202
+#: virtualBuffers/__init__.py:1214
 msgid "no next heading"
 msgstr "ingen efterfølgende overskrift"
 
-#: virtualBuffers/__init__.py:1203
+#: virtualBuffers/__init__.py:1215
 msgid "moves to the previous heading"
 msgstr "flytter til foregående overskrift"
 
-#: virtualBuffers/__init__.py:1203
+#: virtualBuffers/__init__.py:1215
 msgid "no previous heading"
 msgstr "ingen foregående overskrift"
 
-#: virtualBuffers/__init__.py:1204
+#: virtualBuffers/__init__.py:1216
 msgid "moves to the next heading at level 1"
 msgstr "flytter til næste overskrift på niveau 1"
 
-#: virtualBuffers/__init__.py:1204
+#: virtualBuffers/__init__.py:1216
 msgid "no next heading at level 1"
 msgstr "ingen efterfølgende overskrift på niveau 1"
 
-#: virtualBuffers/__init__.py:1205
+#: virtualBuffers/__init__.py:1217
 msgid "moves to the previous heading at level 1"
 msgstr "flytter til den foregående overskrift på niveau 1"
 
-#: virtualBuffers/__init__.py:1205
+#: virtualBuffers/__init__.py:1217
 msgid "no previous heading at level 1"
 msgstr "ingen foregående overskrift på niveau 1"
 
-#: virtualBuffers/__init__.py:1206
+#: virtualBuffers/__init__.py:1218
 msgid "moves to the next heading at level 2"
 msgstr "flytter til næste overskrift på niveau 2"
 
-#: virtualBuffers/__init__.py:1206
+#: virtualBuffers/__init__.py:1218
 msgid "no next heading at level 2"
 msgstr "ingen efterfølgende overskrift på niveau 2"
 
-#: virtualBuffers/__init__.py:1207
+#: virtualBuffers/__init__.py:1219
 msgid "moves to the previous heading at level 2"
 msgstr "flytter til den foregående overskrift på niveau 2"
 
-#: virtualBuffers/__init__.py:1207
+#: virtualBuffers/__init__.py:1219
 msgid "no previous heading at level 2"
 msgstr "ingen foregående overskrift på niveau 2"
 
-#: virtualBuffers/__init__.py:1208
+#: virtualBuffers/__init__.py:1220
 msgid "moves to the next heading at level 3"
 msgstr "flytter til næste overskrift på niveau 3"
 
-#: virtualBuffers/__init__.py:1208
+#: virtualBuffers/__init__.py:1220
 msgid "no next heading at level 3"
 msgstr "ikke flere overskrifter på niveau 3"
 
-#: virtualBuffers/__init__.py:1209
+#: virtualBuffers/__init__.py:1221
 msgid "moves to the previous heading at level 3"
 msgstr "flytter til den foregående overskrift på niveau 3"
 
-#: virtualBuffers/__init__.py:1209
+#: virtualBuffers/__init__.py:1221
 msgid "no previous heading at level 3"
 msgstr "ingen foregående overskrift på niveau 3"
 
-#: virtualBuffers/__init__.py:1210
+#: virtualBuffers/__init__.py:1222
 msgid "moves to the next heading at level 4"
 msgstr "flytter til den næste overskrift på niveau 4"
 
-#: virtualBuffers/__init__.py:1210
+#: virtualBuffers/__init__.py:1222
 msgid "no next heading at level 4"
 msgstr "ikke flere overskrifter på niveau 4"
 
-#: virtualBuffers/__init__.py:1211
+#: virtualBuffers/__init__.py:1223
 msgid "moves to the previous heading at level 4"
 msgstr "flytter til den foregående overskrift på niveau 4"
 
-#: virtualBuffers/__init__.py:1211
+#: virtualBuffers/__init__.py:1223
 msgid "no previous heading at level 4"
 msgstr "ingen foregående overskrift på niveau 4"
 
-#: virtualBuffers/__init__.py:1212
+#: virtualBuffers/__init__.py:1224
 msgid "moves to the next heading at level 5"
 msgstr "flytter til næste overskrift på niveau 5"
 
-#: virtualBuffers/__init__.py:1212
+#: virtualBuffers/__init__.py:1224
 msgid "no next heading at level 5"
 msgstr "ikke flere overskrifter på niveau 5"
 
-#: virtualBuffers/__init__.py:1213
+#: virtualBuffers/__init__.py:1225
 msgid "moves to the previous heading at level 5"
 msgstr "flytter til den foregående overskrift på niveau 5"
 
-#: virtualBuffers/__init__.py:1213
+#: virtualBuffers/__init__.py:1225
 msgid "no previous heading at level 5"
 msgstr "ingen foregående overskrift på niveau 5"
 
-#: virtualBuffers/__init__.py:1214
+#: virtualBuffers/__init__.py:1226
 msgid "moves to the next heading at level 6"
 msgstr "flytter til næste overskrift på niveau 6"
 
-#: virtualBuffers/__init__.py:1214
+#: virtualBuffers/__init__.py:1226
 msgid "no next heading at level 6"
 msgstr "ikke flere overskrifter på niveau 6"
 
-#: virtualBuffers/__init__.py:1215
+#: virtualBuffers/__init__.py:1227
 msgid "moves to the previous heading at level 6"
 msgstr "flytter til den foregående overskrift på niveau 6"
 
-#: virtualBuffers/__init__.py:1215
+#: virtualBuffers/__init__.py:1227
 msgid "no previous heading at level 6"
 msgstr "ingen foregående overskrift på niveau 6"
 
-#: virtualBuffers/__init__.py:1216
+#: virtualBuffers/__init__.py:1228
 msgid "moves to the next table"
 msgstr "flytter til næste tabel"
 
-#: virtualBuffers/__init__.py:1216
+#: virtualBuffers/__init__.py:1228
 msgid "no next table"
 msgstr "ikke flere tabeller"
 
-#: virtualBuffers/__init__.py:1217
+#: virtualBuffers/__init__.py:1229
 msgid "moves to the previous table"
 msgstr "flytter til den foregående tabel"
 
-#: virtualBuffers/__init__.py:1217
+#: virtualBuffers/__init__.py:1229
 msgid "no previous table"
 msgstr "ingen foregående tabel"
 
-#: virtualBuffers/__init__.py:1218
+#: virtualBuffers/__init__.py:1230
 msgid "moves to the next link"
 msgstr "flytter til næste link"
 
-#: virtualBuffers/__init__.py:1218
+#: virtualBuffers/__init__.py:1230
 msgid "no next link"
 msgstr "ikke flere links"
 
-#: virtualBuffers/__init__.py:1219
+#: virtualBuffers/__init__.py:1231
 msgid "moves to the previous link"
 msgstr "flytter til det foregående link"
 
-#: virtualBuffers/__init__.py:1219
+#: virtualBuffers/__init__.py:1231
 msgid "no previous link"
 msgstr "ingen foregående link"
 
-#: virtualBuffers/__init__.py:1220
+#: virtualBuffers/__init__.py:1232
 msgid "moves to the next visited link"
 msgstr "flytter til det næste besøgte link"
 
-#: virtualBuffers/__init__.py:1220
+#: virtualBuffers/__init__.py:1232
 msgid "no next visited link"
 msgstr "ikke flere besøgte links"
 
-#: virtualBuffers/__init__.py:1221
+#: virtualBuffers/__init__.py:1233
 msgid "moves to the previous visited link"
 msgstr "flytter til det foregående besøgte link"
 
-#: virtualBuffers/__init__.py:1221
+#: virtualBuffers/__init__.py:1233
 msgid "no previous visited link"
 msgstr "ingen foregående besøgte links"
 
-#: virtualBuffers/__init__.py:1222
+#: virtualBuffers/__init__.py:1234
 msgid "moves to the next unvisited link"
 msgstr "flytter til næste ubesøgte link"
 
-#: virtualBuffers/__init__.py:1222
+#: virtualBuffers/__init__.py:1234
 msgid "no next unvisited link"
 msgstr "ikke flere ubesøgte links"
 
-#: virtualBuffers/__init__.py:1223
+#: virtualBuffers/__init__.py:1235
 msgid "moves to the previous unvisited link"
 msgstr "flytter til foregående ubesøgte link"
 
-#: virtualBuffers/__init__.py:1223
+#: virtualBuffers/__init__.py:1235
 msgid "no previous unvisited link"
 msgstr "ingen foregående ubesøgte links"
 
-#: virtualBuffers/__init__.py:1224
+#: virtualBuffers/__init__.py:1236
 msgid "moves to the next form field"
 msgstr "flytter til næste formularfelt"
 
-#: virtualBuffers/__init__.py:1224
+#: virtualBuffers/__init__.py:1236
 msgid "no next form field"
 msgstr "ikke flere formularfelter"
 
-#: virtualBuffers/__init__.py:1225
+#: virtualBuffers/__init__.py:1237
 msgid "moves to the previous form field"
 msgstr "flytter til det foregående formularfelt"
 
-#: virtualBuffers/__init__.py:1225
+#: virtualBuffers/__init__.py:1237
 msgid "no previous form field"
 msgstr "ingen foregående formularfelter"
 
-#: virtualBuffers/__init__.py:1226
+#: virtualBuffers/__init__.py:1238
 msgid "moves to the next list"
 msgstr "flytter til næste liste"
 
-#: virtualBuffers/__init__.py:1226
+#: virtualBuffers/__init__.py:1238
 msgid "no next list"
 msgstr "ikke flere lister"
 
-#: virtualBuffers/__init__.py:1227
+#: virtualBuffers/__init__.py:1239
 msgid "moves to the previous list"
 msgstr "flytter til den foregående liste"
 
-#: virtualBuffers/__init__.py:1227
+#: virtualBuffers/__init__.py:1239
 msgid "no previous list"
 msgstr "ingen foregående lister"
 
-#: virtualBuffers/__init__.py:1228
+#: virtualBuffers/__init__.py:1240
 msgid "moves to the next list item"
 msgstr "flytter til næste listeelement"
 
-#: virtualBuffers/__init__.py:1228
+#: virtualBuffers/__init__.py:1240
 msgid "no next list item"
 msgstr "ikke flere listeelementer"
 
-#: virtualBuffers/__init__.py:1229
+#: virtualBuffers/__init__.py:1241
 msgid "moves to the previous list item"
 msgstr "flytter til det foregående listeelement"
 
-#: virtualBuffers/__init__.py:1229
+#: virtualBuffers/__init__.py:1241
 msgid "no previous list item"
 msgstr "ingen foregående listeelementer"
 
-#: virtualBuffers/__init__.py:1230
+#: virtualBuffers/__init__.py:1242
 msgid "moves to the next button"
 msgstr "flytter til næste knap"
 
-#: virtualBuffers/__init__.py:1230
+#: virtualBuffers/__init__.py:1242
 msgid "no next button"
 msgstr "ikke flere knapper"
 
-#: virtualBuffers/__init__.py:1231
+#: virtualBuffers/__init__.py:1243
 msgid "moves to the previous button"
 msgstr "flytter til den foregående knap"
 
-#: virtualBuffers/__init__.py:1231
+#: virtualBuffers/__init__.py:1243
 msgid "no previous button"
 msgstr "ingen foregående knapper"
 
-#: virtualBuffers/__init__.py:1232
+#: virtualBuffers/__init__.py:1244
 msgid "moves to the next edit field"
 msgstr "flytter til næste editfelt"
 
-#: virtualBuffers/__init__.py:1232
+#: virtualBuffers/__init__.py:1244
 msgid "no next edit field"
 msgstr "ikke flere editfelter"
 
-#: virtualBuffers/__init__.py:1233
+#: virtualBuffers/__init__.py:1245
 msgid "moves to the previous edit field"
 msgstr "flytter til det foregående editfelt"
 
-#: virtualBuffers/__init__.py:1233
+#: virtualBuffers/__init__.py:1245
 msgid "no previous edit field"
 msgstr "ingen foregående editfelter"
 
-#: virtualBuffers/__init__.py:1234
+#: virtualBuffers/__init__.py:1246
 msgid "moves to the next frame"
 msgstr "flytter til næste ramme"
 
-#: virtualBuffers/__init__.py:1234
+#: virtualBuffers/__init__.py:1246
 msgid "no next frame"
 msgstr "ikke flere rammer"
 
-#: virtualBuffers/__init__.py:1235
+#: virtualBuffers/__init__.py:1247
 msgid "moves to the previous frame"
 msgstr "flytter til den foregående ramme"
 
-#: virtualBuffers/__init__.py:1235
+#: virtualBuffers/__init__.py:1247
 msgid "no previous frame"
 msgstr "ingen foregående blokcitater"
 
-#: virtualBuffers/__init__.py:1236
+#: virtualBuffers/__init__.py:1248
 msgid "moves to the next separator"
 msgstr "flytter til næste adskiller"
 
-#: virtualBuffers/__init__.py:1236
+#: virtualBuffers/__init__.py:1248
 msgid "no next separator"
 msgstr "ikke flere adskillere"
 
-#: virtualBuffers/__init__.py:1237
+#: virtualBuffers/__init__.py:1249
 msgid "moves to the previous separator"
 msgstr "flytter til den foregående adskiller"
 
-#: virtualBuffers/__init__.py:1237
+#: virtualBuffers/__init__.py:1249
 msgid "no previous separator"
 msgstr "ingen foregående adskiller"
 
-#: virtualBuffers/__init__.py:1238
+#: virtualBuffers/__init__.py:1250
 msgid "moves to the next radio button"
 msgstr "flytter til næste radioknap"
 
-#: virtualBuffers/__init__.py:1238
+#: virtualBuffers/__init__.py:1250
 msgid "no next radio button"
 msgstr "ikke flere radioknapper"
 
-#: virtualBuffers/__init__.py:1239
+#: virtualBuffers/__init__.py:1251
 msgid "moves to the previous radio button"
 msgstr "flytter til den foregående radioknap"
 
-#: virtualBuffers/__init__.py:1239
+#: virtualBuffers/__init__.py:1251
 msgid "no previous radio button"
 msgstr "ingen foregående radioknapper"
 
-#: virtualBuffers/__init__.py:1240
+#: virtualBuffers/__init__.py:1252
 msgid "moves to the next combo box"
 msgstr "flytter til næste kombobox"
 
-#: virtualBuffers/__init__.py:1240
+#: virtualBuffers/__init__.py:1252
 msgid "no next combo box"
 msgstr "ikke flere komboboxe"
 
-#: virtualBuffers/__init__.py:1241
+#: virtualBuffers/__init__.py:1253
 msgid "moves to the previous combo box"
 msgstr "flytter til den foregående kombobox"
 
-#: virtualBuffers/__init__.py:1241
+#: virtualBuffers/__init__.py:1253
 msgid "no previous combo box"
 msgstr "ingen foregående kombobox"
 
-#: virtualBuffers/__init__.py:1242
+#: virtualBuffers/__init__.py:1254
 msgid "moves to the next check box"
 msgstr "flytter til næste tjekbox"
 
-#: virtualBuffers/__init__.py:1242
+#: virtualBuffers/__init__.py:1254
 msgid "no next check box"
 msgstr "ikke flere tjekboxe"
 
-#: virtualBuffers/__init__.py:1243
+#: virtualBuffers/__init__.py:1255
 msgid "moves to the previous check box"
 msgstr "flytter til den foregående tjekbox"
 
-#: virtualBuffers/__init__.py:1243
+#: virtualBuffers/__init__.py:1255
 msgid "no previous check box"
 msgstr "ingen foregående tjekbox"
 
-#: virtualBuffers/__init__.py:1244
+#: virtualBuffers/__init__.py:1256
 msgid "moves to the next graphic"
 msgstr "flytter til næste grafikelement"
 
-#: virtualBuffers/__init__.py:1244
+#: virtualBuffers/__init__.py:1256
 msgid "no next graphic"
 msgstr "ikke flere grafikelementer"
 
-#: virtualBuffers/__init__.py:1245
+#: virtualBuffers/__init__.py:1257
 msgid "moves to the previous graphic"
 msgstr "flytter til det foregående grafikelement"
 
-#: virtualBuffers/__init__.py:1245
+#: virtualBuffers/__init__.py:1257
 msgid "no previous graphic"
 msgstr "ingen foregående grafikelement"
 
-#: virtualBuffers/__init__.py:1246
+#: virtualBuffers/__init__.py:1258
 msgid "moves to the next block quote"
 msgstr "flytter til næste blokcitat"
 
-#: virtualBuffers/__init__.py:1246
+#: virtualBuffers/__init__.py:1258
 msgid "no next block quote"
 msgstr "ikke flere blokcitater"
 
-#: virtualBuffers/__init__.py:1247
+#: virtualBuffers/__init__.py:1259
 msgid "moves to the previous block quote"
 msgstr "flytter til foregående blokcitat"
 
-#: virtualBuffers/__init__.py:1247
+#: virtualBuffers/__init__.py:1259
 msgid "no previous block quote"
 msgstr "ingen foregående blokcitater"
 
-#: virtualBuffers/__init__.py:1248
+#: virtualBuffers/__init__.py:1260
 msgid "no more text after a block of links"
 msgstr "ikke mere tekst efter en blok med links"
 
-#: virtualBuffers/__init__.py:1248
+#: virtualBuffers/__init__.py:1260
 msgid "skips forward past a block of links"
 msgstr "springer fremad forbi en blok med links"
 
-#: virtualBuffers/__init__.py:1249
+#: virtualBuffers/__init__.py:1261
 msgid "no more text before a block of links"
 msgstr "ikke mere tekst før en blok med links"
 
-#: virtualBuffers/__init__.py:1249
+#: virtualBuffers/__init__.py:1261
 msgid "skips backward past a block of links"
 msgstr "springer bagud forbi en blok med links"
 
-#: virtualBuffers/__init__.py:1250
+#: virtualBuffers/__init__.py:1262
 msgid "moves to the next landmark"
 msgstr "flytter til næste landmærke"
 
-#: virtualBuffers/__init__.py:1250
+#: virtualBuffers/__init__.py:1262
 msgid "no next landmark"
 msgstr "ikke flere landmærker"
 
-#: virtualBuffers/__init__.py:1251
+#: virtualBuffers/__init__.py:1263
 msgid "moves to the previous landmark"
 msgstr "flytter til det foregående landmærke"
 
-#: virtualBuffers/__init__.py:1251
+#: virtualBuffers/__init__.py:1263
 msgid "no previous landmark"
 msgstr "ingen foregående landmærker"
 
-#: virtualBuffers/__init__.py:1252
+#: virtualBuffers/__init__.py:1264
 msgid "moves to the next embedded object"
 msgstr "flytter til næste indlejrede objekt"
 
-#: virtualBuffers/__init__.py:1252
+#: virtualBuffers/__init__.py:1264
 msgid "no next embedded object"
 msgstr "ikke flere indlejrede objekter"
 
-#: virtualBuffers/__init__.py:1253
+#: virtualBuffers/__init__.py:1265
 msgid "moves to the previous embedded object"
 msgstr "flytter til det foregående indlejrede objekt"
 
-#: virtualBuffers/__init__.py:1253
+#: virtualBuffers/__init__.py:1265
 msgid "no previous embedded object"
 msgstr "ingen foregående indlejrede objekter"
 
-#: virtualBuffers/__init__.py:1266
+#: virtualBuffers/__init__.py:1278
 msgid "browse mode"
 msgstr "gennemsynstilstand"
 
-#: virtualBuffers/__init__.py:1266
+#: virtualBuffers/__init__.py:1278
 msgid "focus mode"
 msgstr "fokustilstand"
