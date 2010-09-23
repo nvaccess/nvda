@@ -682,8 +682,10 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 		textList.append(propertyValues['description'])
 	if 'keyboardShortcut' in propertyValues:
 		textList.append(propertyValues['keyboardShortcut'])
-	if 'positionInfo_indexInGroup' in propertyValues and 'positionInfo_similarItemsInGroup' in propertyValues:
-		textList.append(_("%s of %s")%(propertyValues['positionInfo_indexInGroup'],propertyValues['positionInfo_similarItemsInGroup']))
+	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
+	similarItemsInGroup=propertyValues.get('positionInfo_similarItemsInGroup',0)
+	if 0<indexInGroup<=similarItemsInGroup:
+		textList.append(_("%s of %s")%(indexInGroup,similarItemsInGroup))
 	if 'positionInfo_level' in propertyValues:
 		level=propertyValues.get('positionInfo_level',None)
 		role=propertyValues.get('role',None)

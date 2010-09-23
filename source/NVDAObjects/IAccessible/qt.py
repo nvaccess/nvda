@@ -4,7 +4,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import re
 from comtypes import COMError
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
@@ -72,24 +71,10 @@ class Container(IAccessible):
 		return super(Container, self).event_gainFocus()
 
 class TreeViewItem(IAccessible):
-	RE_POSITION_INFO = re.compile(r"L(?P<level>\d+), (?P<indexInGroup>\d+) of (?P<similarItemsInGroup>\d+) with \d+")
 
-	# The description and value should not be user visible.
-	description = None
 	value = None
 
-	def _get_positionInfo(self):
-		# QT encodes the position info in the accDescription.
-		try:
-			desc = self.IAccessibleObject.accDescription(self.IAccessibleChildID)
-		except COMError:
-			return super(TreeViewItem, self).positionInfo
-
-		m = self.RE_POSITION_INFO.match(desc)
-		if m:
-			return m.groupdict()
-
-		return super(TreeViewItem, self).positionInfo
+	hasEncodedAccDescription=True
 
 class Menu(IAccessible):
 	# QT incorrectly fires a focus event on the parent menu immediately after (correctly) firing focus on the menu item.

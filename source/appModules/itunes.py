@@ -1,5 +1,4 @@
 import _default
-import re
 from comtypes import COMError
 import controlTypes
 import oleacc
@@ -23,23 +22,8 @@ class AppModule(_default.AppModule):
 class ITunesItem(NVDAObjects.IAccessible.IAccessible):
 	"""Retreaves position information encoded in the accDescription"""
 
-	RE_POSITION_INFO = re.compile(r"L(?P<level>\d+), (?P<indexInGroup>\d+) of (?P<similarItemsInGroup>\d+)")
-
-	# The description and value should not be user visible.
-	description = None
+	hasEncodedAccDescription=True
 	value = None
-
-	def _get_positionInfo(self):
-		# iTunes encodes the position info in the accDescription.
-		try:
-			desc = self.IAccessibleObject.accDescription(self.IAccessibleChildID)
-		except COMError:
-			return super(ITunesItem, self).positionInfo
-
-		if desc:
-			m = self.RE_POSITION_INFO.match(desc)
-			if m:
-				return m.groupdict()
 
 	def _get_next(self):
 		next=super(ITunesItem,self).next

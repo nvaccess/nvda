@@ -7,6 +7,7 @@
 from comtypes import COMError, IServiceProvider, GUID
 import ctypes
 import os
+import re
 from comInterfaces.tom import ITextDocument
 import tones
 import textInfos.offsets
@@ -758,7 +759,29 @@ the NVDAObject for IAccessible
 			states.discard(controlTypes.STATE_CHECKED)
 		return states
 
+	re_positionInfoEncodedAccDescription=re.compile(r"L(?P<level>\d+), (?P<indexInGroup>\d+) of (?P<similarItemsInGroup>\d+)")
+
+	def _get_decodedAccDescription(self):
+		try:
+			description=self.IAccessibleObject.accDescription(self.IAccessibleChildID)
+		except COMError:
+			return None
+		if description.startswith('description:'):
+			return description[12:].strip()
+		m=self.re_positionInfoEncodedAccDescription.match(description)
+		if m:
+			return m
+		return description
+
+	hasEncodedAccDescription=False #:If true, accDescription contains info such as level, and number of items etc.
+
 	def _get_description(self):
+		if self.hasEncodedAccDescription:
+			d=self.decodedAccDescription
+			if isinstance(d,basestring):
+				return d
+			else:
+				return ""
 		try:
 			res=self.IAccessibleObject.accDescription(self.IAccessibleChildID)
 		except:
@@ -1038,26 +1061,24 @@ the NVDAObject for IAccessible
 	allowIAccessibleChildIDAndChildCountForPositionInfo=False #: if true position info should fall back to using the childID and the parent's accChildCount for position information if there is nothing better available.
 
 	def _get_positionInfo(self):
-		info={}
-		level=similarItemsInGroup=indexInGroup=0
 		if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
 			try:
 				level,similarItemsInGroup,indexInGroup=self.IAccessibleObject.groupPosition
-				gotVars=True
+				return dict(level=level,indexInGroup=indexInGroup,similarItemsInGroup=similarItemsInGroup)
 			except COMError:
 				pass
-		if self.allowIAccessibleChildIDAndChildCountForPositionInfo and indexInGroup==0:
+		if self.hasEncodedAccDescription:
+			d=self.decodedAccDescription
+			if d and not isinstance(d,basestring):
+				groupdict=d.groupdict()
+				return dict(level=int(groupdict.get('level','0')),indexInGroup=int(groupdict.get('indexInGroup','0')),similarItemsInGroup=int(groupdict.get('similarItemsInGroup','0')))
+		if self.allowIAccessibleChildIDAndChildCountForPositionInfo and self.IAccessibleChildID>0:
 			indexInGroup=self.IAccessibleChildID
-		if self.allowIAccessibleChildIDAndChildCountForPositionInfo and indexInGroup>0 and similarItemsInGroup<indexInGroup:
 			parent=self.parent
 			if parent:
 				similarItemsInGroup=parent.childCount
-		if level>0:
-			info['level']=level
-		if indexInGroup<=similarItemsInGroup and indexInGroup>0:
-			info['similarItemsInGroup']=similarItemsInGroup
-			info['indexInGroup']=indexInGroup
-		return info
+				return dict(indexInGroup=indexInGroup,similarItemsInGroup=similarItemsInGroup)
+		return {}
 
 	def _get_indexInParent(self):
 		if isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
