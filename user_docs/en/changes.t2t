@@ -3,6 +3,23 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2010.3 =
+
+== New Features ==
+- Colors can now be reported for some controls. Automatic announcement can be configured in the Document Formatting preferences dialog. It can also be reported on demand using the report text formatting command (NVDA+f).
+
+
+== Changes ==
+
+
+== Bug Fixes ==
+- When adding a new speech dictionary entry, the title of the dialog is now "Add dictionary entry" instead of "Edit dictionary entry". (#924)
+- In speech dictionary dialogs, the content of the Regular expression and Case sensitive columns of the Dictionary entries list is now presented in the configured NVDA language instead of always in English.
+- In AIM, position information is now announced in tree views.
+- Position information is no longer reported in some cases where it was usually incorrect; e.g. most menus, the Running Applications bar, the Notification Area, etc.
+- On sliders in the Voice Settings dialog, up arrow/page up/home now increase the setting and down arrow/page down/end decrease it. Previously, the opposite occurred, which is not logical and is inconsistent with the synth settings ring. (#221)
+
+
 = 2010.2 =
 Notable features of this release include greatly simplified object navigation; virtual buffers for Adobe Flash content; access to many previously inaccessible controls by retrieving text written to the screen; flat review of screen text; support for IBM Lotus Symphony documents; reporting of table row and column headers in Mozilla Firefox; and significantly improved user documentation.
 
