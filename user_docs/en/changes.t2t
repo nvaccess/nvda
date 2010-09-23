@@ -29,6 +29,8 @@ Notable features of this release include greatly simplified object navigation; v
  - NVDA+numpad7  switches to flat review, placing the review cursor at the position of the current object, allowing you  to review the screen (or a document if within one) with the text review commands.
  - NVDA+numpad1 moves the review cursor into the object represented by the text at  the position of the review cursor, allowing you to navigate by object from that point.
 - Current NVDA user settings can be  copied to be used on secure Windows screens such as the logon and UAC screens by pressing a button in the General Settings dialog. (#730)
+- Support for Mozilla Firefox 4.
+- Support for Microsoft Internet Explorer 9.
 
 
 == Changes ==
@@ -73,6 +75,8 @@ Notable features of this release include greatly simplified object navigation; v
 - The URL of the document and "MSAAHTML Registered Handler" are no longer sometimes spuriously reported in Internet Explorer and other MSHTML controls. (#811)
 - In tree views in the Eclipse IDE, the previously focused item is no longer incorrectly announced when focus moves to a new item.
 - NVDA now functions correctly on a system where the current working directory has been removed from the DLL search path (by setting the CWDIllegalInDllSearch registry entry to 0xFFFFFFFF). Note that this is not relevant to most users. (#907)
+- When the table navigation commands are used outside of a table in Microsoft Word, "edge of table" is no longer spoken after "not in table". (#921)
+- When the table navigation commands cannot move due to being at the edge of a table in Microsoft Word, "edge of table" is now spoken in the configured NVDA language rather than always in English. (#921)
 
 
 = 2010.1 =
