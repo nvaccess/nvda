@@ -29,6 +29,8 @@ Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkerta
  - NVDA+numeroryhmän 7: siirtää kokonaistarkastelutilaan ja sijoittaa tarkastelukohdistimen nykyisen objektin kohdalle, mikä mahdollistaa koko ruudun tai asiakirjan lukemisen tekstinlukukomennoilla.
  - NVDA+numeroryhmän 1: siirtää tarkastelukohdistimen sen kohdalla olevan tekstin sisältävään objektiin, mikä mahdollistaa objekti kerrallaan liikkumisen kyseisestä kohdasta lähtien.
 - NVDA:n nykyiset asetukset voidaan kopioida suojatuissa ruuduissa käytettäväksi (esim. kirjautumis- ja käyttäjätilien valvonnan ruudut) painamalla Yleiset asetukset -valintaikkunassa olevaa painiketta.
+- Tuki Mozilla Firefox 4:lle.
+- Tuki Internet Explorer 9:lle.
 
 
 == Muutokset ==
@@ -44,7 +46,7 @@ Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkerta
 - Hiiriasetukset-valintaikkunan Lue hiiren alla oleva teksti -valintaruutu korvattu Käytä hiiren seurantaa -valintaruudulla, joka sopii paremmin yhteen hiiren seurannan päälle ja pois kytkevän NVDA+M-komennon kanssa.
 - Päivitetty kannettavien tietokoneiden näppäimistöasettelua niin, että se sisältää kaikki pöytäkoneilla käytettävissä olevat komennot, ja että se toimii oikein muilla kuin englanninkielisillä näppäimistöillä. (#798, #800)
 - Merkittäviä parannuksia ja päivityksiä käyttöohjeisiin, mukaan lukien kannettavien tietokoneiden komentojen kuvailu ja näppäinkomentojen pikaoppaan päivittäminen niin, että se sisältää samat komennot kuin käyttöohjekin. (#455)
-- Liblouis-pistekirjoituskääntäjä päivitetty versioksi 2.1.0. Tämä päivitys korjaa joitakin kiinankieliseen pistekirjoitukseen sekä käännöstaulukossa määrittelemättömiin merkkeihin liittyviä ongelmia. (#484, #499)
+- Liblouis-pistekirjoituskääntäjä päivitetty versioksi 2.1.1. Tämä päivitys korjaa joitakin kiinalaiseen pistekirjoitukseen sekä käännöstaulukossa määrittelemättömiin merkkeihin liittyviä ongelmia. (#484, #499)
 
 
 == Vikojen korjaukset ==
@@ -72,6 +74,9 @@ Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkerta
 - Yhteystietoluettelon käyttäminen on nyt mahdollista Loudtalksissa.
 - URL-osoitetta ja "MSAAHTML Rekisteröityä Käsittelijää" ei enää turhaan ilmoiteta Internet Explorerissa ja muissa MSHTML-säätimissä. (#811)
 - Eclipse IDE:n puunäkymäsäätimissä ei enää virheellisesti lueta aiempaa aktiivista kohtaa kohdistuksen siirtyessä uuteen.
+- NVDA toimii nyt oikein järjestelmässä, jossa nykyinen työhakemisto on poistettu DLL-hakupolusta (asettamalla CWDIllegalInDllSearch-rekisterimerkinnän arvoksi 0xFFFFFFFF). Huomaa, että useimmille käyttäjille tällä ei ole merkitystä. (#907)
+- Kun taulukossa liikkumiseen tarkoitettuja komentoja käytetään Microsoft Wordissa muualla kuin taulukossa, "ei taulukossa" -ilmoituksen jälkeen ei enää sanota "taulukon reuna". (#921)
+- Kun Microsoft Wordissa ollaan taulukon reunassa, eivätkä taulukossa liikkumiseen tarkoitetut komennot voi siirtää mihinkään, "taulukon reuna" -ilmoitus sanotaan nyt NVDA:ssa määritetyllä kielellä sen sijaan, että se sanottaisiin aina englanniksi. (#921)
 
 
 == 2010.1 ==

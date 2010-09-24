@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3827\n"
+"Project-Id-Version: r3860\n"
 "POT-Creation-Date: 2007-03-04 15:37+Normaaliaika\n"
-"PO-Revision-Date: 2010-09-12 18:41+0300\n"
+"PO-Revision-Date: 2010-09-23 07:01+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -81,10 +81,16 @@ msgstr "valinta"
 msgid "%s %s through %s %s"
 msgstr "%s %s kautta %s %s"
 
-#: NVDAObjects\window\winword.py:355 NVDAObjects\window\winword.py:366
-#: NVDAObjects\window\winword.py:377 NVDAObjects\window\winword.py:388
+#: NVDAObjects\window\winword.py:355 NVDAObjects\window\winword.py:367
+#: NVDAObjects\window\winword.py:379 NVDAObjects\window\winword.py:391
 msgid "not in table"
 msgstr "ei taulukossa"
+
+#: NVDAObjects\window\winword.py:362 NVDAObjects\window\winword.py:374
+#: NVDAObjects\window\winword.py:386 NVDAObjects\window\winword.py:398
+#: virtualBuffers\__init__.py:1132
+msgid "edge of table"
+msgstr "taulukon reuna"
 
 #: appModuleHandler.py:171
 msgid "Error in appModule %s"
@@ -178,7 +184,7 @@ msgstr "Lukitsee tai vapauttaa oikean hiiripainikkeen"
 msgid "no selection"
 msgstr "ei valintaa"
 
-#: appModules\_default.py:103 compoundDocuments.py:395 speech.py:284
+#: appModules\_default.py:103 compoundDocuments.py:402 speech.py:284
 #: speech.py:381 speech.py:394 virtualBuffers\__init__.py:600
 msgid "selected %s"
 msgstr "valittu %s"
@@ -2163,11 +2169,11 @@ msgstr "vedetään"
 msgid "drop target"
 msgstr "pudotuksen kohde"
 
-#: core.py:127
+#: core.py:140
 msgid "Loading NVDA. Please wait..."
 msgstr "Käynnistetään NVDA, odota..."
 
-#: core.py:209
+#: core.py:222
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
 
@@ -3611,10 +3617,6 @@ msgstr "Näyttää luettelon linkeistä, otsikoista ja maamerkeistä"
 #: virtualBuffers\__init__.py:1126
 msgid "Not in a table cell"
 msgstr "Ei taulukon solussa"
-
-#: virtualBuffers\__init__.py:1132
-msgid "edge of table"
-msgstr "taulukon reuna"
 
 #: virtualBuffers\__init__.py:1142
 msgid "moves to the next table row"
