@@ -30,6 +30,9 @@ class AppModule(_default.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "Internet Explorer_Server" and obj.role == controlTypes.ROLE_DOCUMENT and obj.HTMLNode and obj.HTMLNode.document.url=="about:blank": 
 			clsList.insert(0, AboutBlankDocument)
+		elif obj.windowControlID in (129,130) and obj.role==controlTypes.ROLE_LISTITEM:
+			import msimn 
+			clsList.insert(0,msimn.MessageRuleListItem)
 
 	def event_gainFocus(self,obj,nextHandler):
 		nextHandler()
