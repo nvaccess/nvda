@@ -277,31 +277,21 @@ class VoiceSettingsSlider(wx.Slider):
 	def onSliderChar(self, evt):
 		key = evt.KeyCode
 		if key == wx.WXK_UP:
-			newValue=self.Value+self.LineSize
-			if newValue >self.Max:
-				newValue=self.Max
-			self.SetValue(newValue)
+			newValue = min(self.Value + self.LineSize, self.Max)
 		elif key == wx.WXK_DOWN:
-			newValue=self.Value-self.LineSize
-			if newValue <self.Min:
-				newValue=self.Min
-			self.SetValue(newValue)
+			newValue = max(self.Value - self.LineSize, self.Min)
 		elif key == wx.WXK_PRIOR:
-			newValue=self.Value+self.PageSize
-			if newValue >self.Max:
-				newValue=self.Max
-			self.SetValue(newValue)
+			newValue = min(self.Value + self.PageSize, self.Max)
 		elif key == wx.WXK_NEXT:
-			newValue=self.Value-self.PageSize
-			if newValue <self.Min:
-				newValue=self.Min
-			self.SetValue(newValue)
+			newValue = max(self.Value - self.PageSize, self.Min)
 		elif key == wx.WXK_HOME:
-			self.SetValue(self.Max)
+			newValue = self.Max
 		elif key == wx.WXK_END:
-			self.SetValue(self.Min)
+			newValue = self.Min
 		else:
 			evt.Skip()
+			return
+		self.SetValue(newValue)
 
 class VoiceSettingsDialog(SettingsDialog):
 	title = _("Voice settings")
@@ -438,14 +428,6 @@ class VoiceSettingsDialog(SettingsDialog):
 		config.conf["speech"][getSynth().name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
 		super(VoiceSettingsDialog, self).onOk(evt)
-
-	def sendEvent(self,window, eventBinder):
-		# Example of PyEventBinder: wx.EVT_BUTTON
-		# window is the window (control) that triggers the event
-		cmd = wx.CommandEvent(eventBinder.evtType[0])
-		cmd.SetEventObject(window)
-		cmd.SetId(window.GetId())
-		window.GetEventHandler().ProcessEvent(cmd)
 
 class KeyboardSettingsDialog(SettingsDialog):
 	title = _("Keyboard Settings")
