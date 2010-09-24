@@ -46,7 +46,7 @@ class AppModule(_default.AppModule):
 			obj.editValueUnit=textInfos.UNIT_STORY
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if obj.windowControlID in (129,130) and obj.role==controlTypes.ROLE_LISTITEM:
+		if obj.windowControlID in (128,129,130) and obj.role==controlTypes.ROLE_LISTITEM:
 			clsList.insert(0,MessageRuleListItem)
 
 	def event_gainFocus(self,obj,nextHandler):
@@ -60,8 +60,7 @@ class AppModule(_default.AppModule):
 class MessageRuleListItem(sysListView32.ListItem):
 	"""Used for the checkbox list items used to select message rule types in in message filters"""
 
-	def _get_role(self):
-		return controlTypes.ROLE_CHECKBOX
+	role=controlTypes.ROLE_CHECKBOX
 
 	def _get_states(self):
 		states=super(MessageRuleListItem,self).states
