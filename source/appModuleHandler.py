@@ -15,6 +15,7 @@ import itertools
 import re
 import ctypes
 import os
+import sys
 import pkgutil
 import baseObject
 import globalVars
@@ -173,6 +174,18 @@ def fetchAppModule(processID,appName,useDefault=False):
 
 	mod.loadKeyMap()
 	return mod
+
+def reloadAppModules():
+	"""Reloads running appModules.
+	especially, it clears the cache of running appModules and deletes them from sys.modules.
+	Each appModule will be reloaded imediately as a reaction on a first event coming from the process."""
+	global runningTable, appModules
+	runningTable={}
+	del appModules
+	mods=[k for k,v in sys.modules.iteritems() if k.startswith("appModules") and v is not None]
+	for mod in mods:
+		del sys.modules[mod]
+	import appModules
 
 def initialize():
 	"""Initializes the appModule subsystem. 
