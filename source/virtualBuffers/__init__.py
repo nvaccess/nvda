@@ -70,6 +70,10 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		NVDAHelper.localLib.VBuf_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
 		return start.value, end.value
 
+	def _getPointFromOffset(self,offset):
+		o=self._getNVDAObjectFromOffset(offset)
+		return textInfos.Point(o.location[0],o.location[1])
+
 	def _getNVDAObjectFromOffset(self,offset):
 		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
 		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
