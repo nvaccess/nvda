@@ -4,7 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2010.2 =
-Významné zmeny v tejto verzií sú výrazne zjednodušená objektová navigácia; virtuálny prehliadač pre obsah Adobe flash; prístup k mnohým doteraz neprístupným prvkom získavaním textu vykesleného na obrazovku; plošné zobrazenie textu na obrazovke; podpora pre dokumenty IBM Lotus Symphony; oznamovanie hlavičiek riadkov a stĺpcov tabuliek v programe Mozilla Firefox; a výrazne prepracovanú používateľskú dokumentáciu.
+Významné zmeny v tejto verzií sú výrazne zjednodušená objektová navigácia; virtuálny prehliadač pre obsah Adobe flash; prístup k mnohým doteraz neprístupným prvkom získavaním textu vykresleného na obrazovku; plošné zobrazenie textu na obrazovke; podpora pre dokumenty IBM Lotus Symphony; oznamovanie hlavičiek riadkov a stĺpcov tabuliek v programe Mozilla Firefox; a výrazne prepracovanú používateľskú dokumentáciu.
 
 == Nové vlastnosti ==
 - Objektová navigácia bola výrazne zjednodušená. Prehliadací kurzor vynecháva objekty, ktoré nie sú pre používateľa užitočné napr. nedostupné objekty a objekty, ktoré formujú len vzhľad.
@@ -29,6 +29,8 @@ Významné zmeny v tejto verzií sú výrazne zjednodušená objektová navigác
  - NVDA+numpad7prepína do plošného prehliadania, nastaví prehliadací kurzor na aktuálnu pozíciu práve zameraného objektu, čo umožní príkazmi určenými na čítanie textu plošne prezerať celý dokument alebo celú obrazovku.
  - NVDA+numpad1 zameria objekt na pozícii prehliadacieho kurzora v režime plošného prezerania, čo umožní navigáciu po susedných prvkoch pomocov objektovej navigácie.
 - Aktuálne používateľské nastavenia NVDA je možné stlačením tlačidla v dialógu Všeobecné nastavenia skopírovať pre použitie na prihlasovacej obrazovke.
+- Podpora pre Mozilla Firefox 4.
+- Podpora pre Microsoft Internet Explorer 9.
 
 
 == Zmeny ==
@@ -44,7 +46,7 @@ Významné zmeny v tejto verzií sú výrazne zjednodušená objektová navigác
 - Z dialógu nastavenia myši bolo odstránené zaškrtávacie políčko Oznamovať text pod kurzorom myši, ktoré bolo nahradené políčkom povoliť sledovanie myši, čo lepšie vystihuje skript prepnínanie sledovania myši.
 - Aktualizované rozloženie klávesnice pre laptop tak, že obsahuje všetky klávesové príkazy a funguje aj na iných ako anglických systémoch. (#798, #800)
 - Výrazné zmeny a aktualizácia používateľskej dokumentácie. Zdokumentované je rozloženie klávesnice pre laptop a zoznam klávesových skratiek je synchronizovaný s používateľskou príručkou. (#455)
-- Aktualizovaná prekladová knižnica brailu liblouis na verziu 2.1.0. Opravuje to chyby v čínskom braily a zobrazovanie znakov, ktoré nie sú definované v aktuálnej prekladovej tabuľke. (#484, #499)
+- Aktualizovaná prekladová knižnica brailu liblouis na verziu 2.1.1. Opravuje to chyby v čínskom braily a zobrazovanie znakov, ktoré nie sú definované v aktuálnej prekladovej tabuľke. (#484, #499)
 
  
 == Opravy ==
@@ -71,6 +73,13 @@ Významné zmeny v tejto verzií sú výrazne zjednodušená objektová navigác
 - V prvkoch scintilla (napr. Notepad ++) nie je viac ukrojené zo začiatku dlhého riadku ak sa celý riadok nezmestí na šírku obrazovky. Tiež je správne zobrazovaný výber takéhoto dlhého riadku v braily.
 - V programe Loudtalks je možné čítať zoznam kontaktov.
 - Adresa dokumentu a "MSAAHTML Registered Handler" nie sú viac zbytočne oznamované v programe internet explorer a iných dokumentoch MSHTML. (#811)
+- V stromových zoznamoch prostredia Eclipse nie je pri zmene fokusu viac nesprávne čítaný text predchádzajúcej položky.
+- NVDA dokáže správne fungovať v systéme, kde bol z cesty  DLL search path (pomocou nastavenia položky registry CWDIllegalInDllSearch na 0xFFFFFFFF) odstránený aktuálny adresár. Toto nie je pre väčšinu používateľov relevantné. (#907)
+- Pri používaní navigačných príkazov po tabuľke mimo tabuľku v programe Microsoft Word nie je text okraj tabuľky nadbytočne vyslovovaný po hláške mimo tabuľku.
+- Ak pomocou navigačných klávesov nie je možné prejsť do ďalšej bunky v tabuľke programu Microsoft word preto, lebo kurzor je na okraji tabuľky, text okraj tabuľky je preložený do aktuálneho jazyka. Doteraz NVDA vyslovoval túto informáciu stále v angličtine. 
+- Pri navigácii vo virtuálnom prehliadači prehliadací kurzor umožní navigáciu po celom dokumente ako to bolo pôvodne navrhnuté, namiesto navigácii v aktuálnom objekte.
+- V programoch Outlook Express, Windows Mail a Windows Live Mail je oznamovaný stav začiarkavacích políčok v zozname pravidiel pošty. (#576)
+- Popis pravidiel pošty je možné čítať v programe Windows Live Mail 2010.
 
 
 = 2010.1 =

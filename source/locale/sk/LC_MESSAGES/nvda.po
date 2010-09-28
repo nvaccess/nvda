@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: main,3746\n"
+"Project-Id-Version: 2010.2-3856\n"
 "POT-Creation-Date: 2007-03-07 08:26+Central Europe Standard Time\n"
-"PO-Revision-Date: 2010-08-21 20:40+Central Europe Standard Time\n"
+"PO-Revision-Date: 2010-09-26 16:50+Central Europe Standard Time\n"
 "Last-Translator: Peter Vágner <peter.v@datagate.sk>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: IAccessibleHandler.py:686
+#: IAccessibleHandler.py:690
 msgid "Secure Desktop"
 msgstr "Zabezpečená pracovná plocha"
 
@@ -26,7 +26,7 @@ msgstr "neznáme rozloženie"
 msgid "layout %s"
 msgstr "rozloženie %s"
 
-#: NVDAObjects\IAccessible\__init__.py:1391
+#: NVDAObjects\IAccessible\__init__.py:1394
 msgid "Taskbar"
 msgstr "panel úloh"
 
@@ -87,11 +87,19 @@ msgid "%s %s through %s %s"
 msgstr "%s %s do %s %s"
 
 #: NVDAObjects\window\winword.py:355
-#: NVDAObjects\window\winword.py:366
-#: NVDAObjects\window\winword.py:377
-#: NVDAObjects\window\winword.py:388
+#: NVDAObjects\window\winword.py:367
+#: NVDAObjects\window\winword.py:379
+#: NVDAObjects\window\winword.py:391
 msgid "not in table"
 msgstr "nie v tabuľke"
+
+#: NVDAObjects\window\winword.py:362
+#: NVDAObjects\window\winword.py:374
+#: NVDAObjects\window\winword.py:386
+#: NVDAObjects\window\winword.py:398
+#: virtualBuffers\__init__.py:1132
+msgid "edge of table"
+msgstr "okraj tabuľky"
 
 #: appModuleHandler.py:171
 msgid "Error in appModule %s"
@@ -203,7 +211,7 @@ msgid "no selection"
 msgstr "nič nie je vybraté"
 
 #: appModules\_default.py:103
-#: compoundDocuments.py:395
+#: compoundDocuments.py:402
 #: speech.py:284 speech.py:381
 #: speech.py:394
 #: virtualBuffers\__init__.py:600
@@ -393,8 +401,8 @@ msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
-"Premiestni navigačný objekt na objekt, ktorý má systémový fokus "
-"a pokúsi sa na pozíciu systémového kurzora nastaviť prehliadací kurzor."
+"Premiestni navigačný objekt na objekt, ktorý má systémový fokus a "
+"pokúsi sa na pozíciu systémového kurzora nastaviť prehliadací kurzor."
 
 #: appModules\_default.py:312
 #: appModules\_default.py:661
@@ -1355,8 +1363,8 @@ msgstr "Žiadny zobrazovač"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18
-#: characterSymbols.py:19 speech.py:84
-#: speech.py:629
+#: characterSymbols.py:19
+#: speech.py:84 speech.py:629
 msgid "blank"
 msgstr "prázdny"
 
@@ -1613,7 +1621,8 @@ msgstr "bublinková nápoveda"
 msgid "tool tip"
 msgstr "kontextová nápoveda"
 
-#: controlTypes.py:198 speech.py:950
+#: controlTypes.py:198
+#: speech.py:950
 msgid "link"
 msgstr "odkaz"
 
@@ -2030,7 +2039,8 @@ msgstr "názov písma"
 msgid "font size"
 msgstr "veľkosť písma"
 
-#: controlTypes.py:305 speech.py:902
+#: controlTypes.py:305
+#: speech.py:902
 msgid "bold"
 msgstr "tučné"
 
@@ -2046,11 +2056,13 @@ msgstr "farba popredia"
 msgid "background color"
 msgstr "farba pozadia"
 
-#: controlTypes.py:310 speech.py:924
+#: controlTypes.py:310
+#: speech.py:924
 msgid "superscript"
 msgstr "horný index"
 
-#: controlTypes.py:311 speech.py:926
+#: controlTypes.py:311
+#: speech.py:926
 msgid "subscript"
 msgstr "dolný index"
 
@@ -2214,11 +2226,11 @@ msgstr "označené pre operáciu ťahať a pustiť"
 msgid "drop target"
 msgstr "cieľ akcie ťahať a pustiť"
 
-#: core.py:127
-msgid "Loading subsystems, please wait..."
-msgstr "Nahrávam podporné systémy, prosím čakajte."
+#: core.py:140
+msgid "Loading NVDA. Please wait..."
+msgstr "Spúšťanie programu NVDA, prosím čakajte."
 
-#: core.py:209
+#: core.py:222
 msgid "NVDA started"
 msgstr "NVDA spustený."
 
@@ -2668,8 +2680,8 @@ msgid ""
 "Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"použiť aktuálne nastavenia NVDA na prihlasovacej a zabezpečených obrazovkách (vyžaduje "
-"administrátorské práva)"
+"použiť aktuálne nastavenia NVDA na prihlasovacej a zabezpečených "
+"obrazovkách (vyžaduje administrátorské práva)"
 
 #: gui\settingsDialogs.py:158
 msgid "Error copying NVDA user settings"
@@ -2831,8 +2843,8 @@ msgid "Follow &keyboard focus"
 msgstr "Sledovať systémový &fokus"
 
 #: gui\settingsDialogs.py:509
-msgid "Follow &text insertion point"
-msgstr "Sledovať bod vkladania &textu"
+msgid "Follow System &Caret"
+msgstr "Sledovať sys&témový kurzor"
 
 #: gui\settingsDialogs.py:512
 msgid "Follow &mouse cursor"
@@ -3679,10 +3691,6 @@ msgstr "Zobrazí zoznam odkazov, nadpisov alebo oblastí stránky"
 #: virtualBuffers\__init__.py:1126
 msgid "Not in a table cell"
 msgstr "nie v bunke tabuľky"
-
-#: virtualBuffers\__init__.py:1132
-msgid "edge of table"
-msgstr "okraj tabuľky"
 
 #: virtualBuffers\__init__.py:1142
 msgid "moves to the next table row"
