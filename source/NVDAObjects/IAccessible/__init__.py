@@ -402,17 +402,23 @@ the NVDAObject for IAccessible
 			MSHTML.findExtraIAccessibleOverlayClasses(self, clsList)
 
 		#Support for Windowless richEdit
-		pIidITextServices=ctypes.cast(ctypes.windll.msftedit.IID_ITextServices,ctypes.POINTER(GUID))
-		try:
-			pDoc=self.IAccessibleObject.QueryInterface(IServiceProvider).QueryService(pIidITextServices.contents,ITextDocument)
-		except COMError:
-			pDoc=None
-		if pDoc:
-			self._ITextDocumentObject=pDoc
-			self.useITextDocumentSupport=True
-			self.editAPIVersion=2
-			from NVDAObjects.window.edit import Edit
-			clsList.append(Edit)
+		if not hasattr(IAccessible,"IID_ITextServices"):
+			try:
+				IAccessible.IID_ITextServices=ctypes.cast(ctypes.windll.msftedit.IID_ITextServices,ctypes.POINTER(GUID)).contents
+			except WindowsError:
+				log.debugWarning("msftedit not available, couldn't retrieve IID_ITextServices")
+				IAccessible.IID_ITextServices=None
+		if IAccessible.IID_ITextServices:
+			try:
+				pDoc=self.IAccessibleObject.QueryInterface(IServiceProvider).QueryService(IAccessible.IID_ITextServices,ITextDocument)
+			except COMError:
+				pDoc=None
+			if pDoc:
+				self._ITextDocumentObject=pDoc
+				self.useITextDocumentSupport=True
+				self.editAPIVersion=2
+				from NVDAObjects.window.edit import Edit
+				clsList.append(Edit)
 
 		#Window root IAccessibles
 		if self.event_objectID in (None,winUser.OBJID_WINDOW) and self.event_childID==0 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
