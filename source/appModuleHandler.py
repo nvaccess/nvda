@@ -178,7 +178,8 @@ def fetchAppModule(processID,appName,useDefault=False):
 def reloadAppModules():
 	"""Reloads running appModules.
 	especially, it clears the cache of running appModules and deletes them from sys.modules.
-	Each appModule will be reloaded imediately as a reaction on a first event coming from the process."""
+	Each appModule will be reloaded immediately as a reaction on a first event coming from the process.
+	"""
 	global runningTable, appModules
 	runningTable={}
 	del appModules

@@ -899,9 +899,9 @@ class AppModule(appModuleHandler.AppModule):
 	script_review_copy.__doc__ = _("Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard")
 
 	def script_reloadAppModules(self,keyPress):
-		ui.message(_("Reloading appModules..."))
+		ui.message(_("Reloading appModules"))
 		appModuleHandler.reloadAppModules()
 		#We can't do something like ui.message("appModules reloaded"), 
 		#because after previous line it seems that this module isn't fully loaded anymore.
 		#AttributeError: 'NoneType' object has no attribute 'message'
-	script_reloadAppModules.__doc__=_("Reloads appModules from the disk without restarting NVDA, which can be Useful for developers")
+	script_reloadAppModules.__doc__=_("Reloads app modules without restarting NVDA, which can be Useful for developers")
