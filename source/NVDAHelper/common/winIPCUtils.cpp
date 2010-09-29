@@ -30,6 +30,6 @@ int generateDesktopSpecificNamespace(wchar_t* buf, int cch) {
 	s<<sessionId<<"."<<deskName;
 	int len=s.str().length();
 	if(!buf||(cch<=0)) return len;
-	wcscpy_s(buf,cch,s.str().c_str());
+	wcsncpy(buf,s.str().c_str(),cch);
 	return min(len,cch);
 }
