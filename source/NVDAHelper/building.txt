@@ -34,4 +34,12 @@ scons install
 By default a version with debugging symbols will be generated. To build a release version, provide release=1 on the command line when running scons:
 scons install release=1
 
-Note that now both x86 and x64 versions of the libraries are automatically built, there is no need to supply any target arch variables.
+Note that now both x86 and x64 versions of the libraries are automatically built, there is no need to supply any target arch variables by default.
+
+However, if you specifically only want to build certain architectures, you can provide a comma separated list of the required architectures to the targetArchitectures variable on the commandline, like so:
+scons targetArchitectures=x86
+or
+scons targetArchitectures=x86_64
+or
+scons targetArchitectures=x86,x86_64
+ 

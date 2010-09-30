@@ -12,15 +12,27 @@
 #http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
+defaultTargetArchitectures=['x86','x86_64']
+
 #User build variables
 vars=Variables()
 vars.Add(BoolVariable('release','Set to true to build a release version',False))
 vars.Add(EnumVariable('logLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in xrange(60)]))
+vars.Add(ListVariable('targetArchitectures','Which architectures  to build libraries for','all',defaultTargetArchitectures))
+
+#A very simple base environment only for processing variables
+baseEnv=Environment(tools=[],variables=vars)
+
+#Check for any unknown variables
+unknown=vars.UnknownVariables().keys()
+if len(unknown)>0:
+	print "Unknown commandline variables: %s"%unknown
+	Exit(1)
 
 #Build nvdaHelper for needed architectures
-for arch in ('x86','x86_64'):
+for arch in baseEnv['targetArchitectures']: 
 	try:
-		env=Environment(TARGET_ARCH=arch,tools=['windowsSdk','midl','msrpc','boost','default'],variables=vars)
+		env=baseEnv.Clone(TARGET_ARCH=arch,tools=['windowsSdk','midl','msrpc','boost','default'],variables=vars)
 		print "Building for %s"%arch 
 	except:
 		print "Error setting up %s build environment"%arch 
