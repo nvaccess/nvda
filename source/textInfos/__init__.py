@@ -315,13 +315,17 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point"""
 		raise NotImplementedError
 
+	def _get_clipboardText(self):
+		"""Text suitably formatted for copying to the clipboard. E.g. crlf characters inserted between lines."""
+		return convertToCrlf(self.text)
+
 	def copyToClipboard(self):
 		"""Copy the content of this instance to the clipboard.
 		@return: C{True} if successful, C{False} otherwise.
 		@rtype: bool
 		"""
 		import api
-		return api.copyToClip(convertToCrlf(self.text))
+		return api.copyToClip(self.clipboardText)
 
 	def getTextInChunks(self, unit):
 		"""Retrieve the text of this instance in chunks of a given unit.

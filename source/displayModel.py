@@ -92,6 +92,8 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		offset=self._getClosestOffsetFromPoint(x,y)
 		return offset,offset
 
+	def _get_clipboardText(self):
+		return super(DisplayModelTextInfo,self).clipboardText.replace('\0',' ')
 
 class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 
