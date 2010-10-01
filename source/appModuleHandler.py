@@ -231,8 +231,6 @@ class AppModule(baseObject.ScriptableObject):
 	def loadKeyMap(self):
 		"""Loads a key map in to this appModule . if the key map exists. It takes in to account what layout NVDA is currently set to.
 		"""  
-		if '_keyMap' in self.__dict__:
-			self._keyMap={}
 		layout=config.conf["keyboard"]["keyboardLayout"]
 		for modClass in reversed(list(itertools.takewhile(lambda x: issubclass(x,AppModule) and x is not AppModule,self.__class__.__mro__))):
 			name=modClass.__module__.split('.')[-1]
