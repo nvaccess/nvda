@@ -1,8 +1,10 @@
+import sys
+import traceback
 import time
 import threading
 from ctypes import *
 import winUser
-import api
+from logHandler import log
 
 #settings
 #: How often to check whether the core is alive
@@ -13,10 +15,13 @@ NORMAL_CORE_ALIVE_TIMEOUT=10
 MIN_CORE_ALIVE_TIMEOUT=0.3
 #: How long to wait between recovery attempts
 RECOVER_ATTEMPT_INTERVAL = 0.05
+#: The amount of time before the core should be considered severely frozen and a warning logged.
+FROZEN_WARNING_TIMEOUT = 15
 
 safeWindowClassSet=set([
 	'Internet Explorer_Server',
 	'_WwG',
+	'EXCEL7',
 ])
 
 isRunning=False
@@ -52,8 +57,16 @@ def _watcher():
 			waited += timeout
 			if _coreAliveEvent.isSet() or _shouldRecoverAfterMinTimeout():
 				break
-
+		if log.isEnabledFor(log.DEBUGWARNING) and not _coreAliveEvent.isSet():
+			coreFrame=sys._current_frames()[_coreThreadID]
+			log.debugWarning("Trying to recover from freeze, core stack:\n%s"%"".join(traceback.format_stack(coreFrame)))
+		lastTime=time.time()
 		while not _coreAliveEvent.isSet():
+			curTime=time.time()
+			if curTime-lastTime>FROZEN_WARNING_TIMEOUT:
+				lastTime=curTime
+				coreFrame=sys._current_frames()[_coreThreadID]
+				log.warning("Core frozen in stack:\n%s"%"".join(traceback.format_stack(coreFrame)))
 			# The core is dead, so attempt recovery.
 			isAttemptingRecovery = True
 			_recoverAttempt()
@@ -67,12 +80,19 @@ def _watcher():
 
 def _shouldRecoverAfterMinTimeout():
 	info=winUser.getGUIThreadInfo(0)
+	#If hwndFocus is 0, then the OS is clearly busy and we don't want to timeout prematurely.
+	if not info.hwndFocus: return False
+	# Import late to avoid circular import.
+	import api
+	#If a system menu has been activated but NVDA's focus is not yet in the menu then use min timeout
+	if info.flags&winUser.GUI_SYSTEMMENUMODE and info.hwndMenuOwner and api.getFocusObject().windowClassName!='#32768':
+		return True 
 	if winUser.getClassName(info.hwndFocus) in safeWindowClassSet:
 		return False
 	if not winUser.isDescendantWindow(info.hwndActive, api.getFocusObject().windowHandle):
 		# The foreground window has changed.
 		return True
-	newHwnd=info.hwndFocus if info.hwndFocus else info.hwndActive
+	newHwnd=info.hwndFocus
 	newThreadID=winUser.getWindowThreadProcessID(newHwnd)[1]
 	return newThreadID!=api.getFocusObject().windowThreadID
 

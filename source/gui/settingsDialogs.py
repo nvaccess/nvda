@@ -109,9 +109,13 @@ class GeneralSettingsDialog(SettingsDialog):
 		except:
 			pass
 		languageSizer.Add(self.languageList)
+		if globalVars.appArgs.secure:
+			self.languageList.Disable()
 		settingsSizer.Add(languageSizer,border=10,flag=wx.BOTTOM)
 		self.saveOnExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Save configuration on exit"))
 		self.saveOnExitCheckBox.SetValue(config.conf["general"]["saveConfigurationOnExit"])
+		if globalVars.appArgs.secure:
+			self.saveOnExitCheckBox.Disable()
 		settingsSizer.Add(self.saveOnExitCheckBox,border=10,flag=wx.BOTTOM)
 		self.askToExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Warn before exiting NVDA"))
 		self.askToExitCheckBox.SetValue(config.conf["general"]["askToExit"])
@@ -132,17 +136,28 @@ class GeneralSettingsDialog(SettingsDialog):
 		settingsSizer.Add(logLevelSizer,border=10,flag=wx.BOTTOM)
 		self.startAfterLogonCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("&Automatically start NVDA after I log on to Windows"))
 		self.startAfterLogonCheckBox.SetValue(config.getStartAfterLogon())
-		if not config.isInstalledCopy():
+		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		settingsSizer.Add(self.startAfterLogonCheckBox)
 		self.startOnLogonScreenCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("Use NVDA on the Windows logon screen (requires administrator privileges)"))
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
-		if not config.isServiceInstalled():
+		if globalVars.appArgs.secure or not config.isServiceInstalled():
 			self.startOnLogonScreenCheckBox.Disable()
 		settingsSizer.Add(self.startOnLogonScreenCheckBox)
+		self.copySettingsButton= wx.Button(self, wx.ID_ANY, label=_("Use currently saved settings on the logon and other secure screens (requires administrator privileges)"))
+		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
+		if globalVars.appArgs.secure or not config.isServiceInstalled():
+			self.copySettingsButton.Disable()
+		settingsSizer.Add(self.copySettingsButton)
 
 	def postInit(self):
 		self.languageList.SetFocus()
+
+	def onCopySettings(self,evt):
+		if not config.setSystemConfigToCurrentConfig():
+			wx.MessageDialog(self,_("Error copying NVDA user settings"),_("Error"),wx.OK|wx.ICON_ERROR).ShowModal()
+		else:
+			wx.MessageDialog(self,_("Successfully copied NVDA user settings"),_("Success"),wx.OK|wx.ICON_INFORMATION).ShowModal()
 
 	def onOk(self,evt):
 		newLanguage=[x[0] for x in self.languageNames][self.languageList.GetSelection()]
@@ -247,6 +262,37 @@ class StringSynthSettingChanger(SynthSettingChanger):
 		else:
 			setattr(getSynth(),self.setting.name,getattr(self.dialog,"_%ss"%self.setting.name)[evt.GetSelection()].ID)
 
+class VoiceSettingsSlider(wx.Slider):
+
+	def __init__(self,*args, **kwargs):
+		super(VoiceSettingsSlider,self).__init__(*args,**kwargs)
+		self.Bind(wx.EVT_CHAR, self.onSliderChar)
+
+	def SetValue(self,i):
+		super(VoiceSettingsSlider, self).SetValue(i)
+		evt = wx.CommandEvent(wx.wxEVT_COMMAND_SLIDER_UPDATED,self.GetId())
+		evt.SetInt(i)
+		wx.PostEvent(self,evt)
+
+	def onSliderChar(self, evt):
+		key = evt.KeyCode
+		if key == wx.WXK_UP:
+			newValue = min(self.Value + self.LineSize, self.Max)
+		elif key == wx.WXK_DOWN:
+			newValue = max(self.Value - self.LineSize, self.Min)
+		elif key == wx.WXK_PRIOR:
+			newValue = min(self.Value + self.PageSize, self.Max)
+		elif key == wx.WXK_NEXT:
+			newValue = max(self.Value - self.PageSize, self.Min)
+		elif key == wx.WXK_HOME:
+			newValue = self.Max
+		elif key == wx.WXK_END:
+			newValue = self.Min
+		else:
+			evt.Skip()
+			return
+		self.SetValue(newValue)
+
 class VoiceSettingsDialog(SettingsDialog):
 	title = _("Voice settings")
 
@@ -264,7 +310,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		"""
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
 		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.i18nName)
-		slider=wx.Slider(self,wx.ID_ANY,minValue=0,maxValue=100,name="%s:"%setting.i18nName)
+		slider=VoiceSettingsSlider(self,wx.ID_ANY,minValue=0,maxValue=100,name="%s:"%setting.i18nName)
 		setattr(self,"%sSlider"%setting.name,slider)
 		slider.Bind(wx.EVT_SLIDER,SynthSettingChanger(setting))
 		self._setSliderStepSizes(slider,setting)
@@ -445,9 +491,9 @@ class MouseSettingsDialog(SettingsDialog):
 		self.shapeCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report mouse &shape changes"))
 		self.shapeCheckBox.SetValue(config.conf["mouse"]["reportMouseShapeChanges"])
 		settingsSizer.Add(self.shapeCheckBox,border=10,flag=wx.BOTTOM)
-		self.reportTextCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &text under the mouse"))
-		self.reportTextCheckBox.SetValue(config.conf["mouse"]["reportTextUnderMouse"])
-		settingsSizer.Add(self.reportTextCheckBox,border=10,flag=wx.BOTTOM)
+		self.mouseTrackingCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Enable mouse &tracking"))
+		self.mouseTrackingCheckBox.SetValue(config.conf["mouse"]["enableMouseTracking"])
+		settingsSizer.Add(self.mouseTrackingCheckBox,border=10,flag=wx.BOTTOM)
 		textUnitSizer=wx.BoxSizer(wx.HORIZONTAL)
 		textUnitLabel=wx.StaticText(self,-1,label=_("Text &unit resolution:"))
 		textUnitSizer.Add(textUnitLabel)
@@ -476,7 +522,7 @@ class MouseSettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		config.conf["mouse"]["reportMouseShapeChanges"]=self.shapeCheckBox.IsChecked()
-		config.conf["mouse"]["reportTextUnderMouse"]=self.reportTextCheckBox.IsChecked()
+		config.conf["mouse"]["enableMouseTracking"]=self.mouseTrackingCheckBox.IsChecked()
 		config.conf["mouse"]["mouseTextUnit"]=self.textUnits[self.textUnitComboBox.GetSelection()]
 		config.conf["mouse"]["reportObjectRoleOnMouseEnter"]=self.reportObjectRoleCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinatesOnMouseMove"]=self.audioCheckBox.IsChecked()
@@ -491,7 +537,7 @@ class ReviewCursorDialog(SettingsDialog):
 		self.followFocusCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Follow &keyboard focus"))
 		self.followFocusCheckBox.SetValue(config.conf["reviewCursor"]["followFocus"])
 		settingsSizer.Add(self.followFocusCheckBox,border=10,flag=wx.BOTTOM)
-		self.followCaretCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Follow &text insertion point"))
+		self.followCaretCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Follow System &Caret"))
 		self.followCaretCheckBox.SetValue(config.conf["reviewCursor"]["followCaret"])
 		settingsSizer.Add(self.followCaretCheckBox,border=10,flag=wx.BOTTOM)
 		self.followMouseCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Follow &mouse cursor"))
@@ -639,6 +685,9 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.alignmentCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &alignment"))
 		self.alignmentCheckBox.SetValue(config.conf["documentFormatting"]["reportAlignment"])
 		settingsSizer.Add(self.alignmentCheckBox,border=10,flag=wx.BOTTOM)
+		self.colorCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &colors"))
+		self.colorCheckBox.SetValue(config.conf["documentFormatting"]["reportColor"])
+		settingsSizer.Add(self.colorCheckBox,border=10,flag=wx.BOTTOM)
 		self.styleCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report st&yle"))
 		self.styleCheckBox.SetValue(config.conf["documentFormatting"]["reportStyle"])
 		settingsSizer.Add(self.styleCheckBox,border=10,flag=wx.BOTTOM)
@@ -654,6 +703,9 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.tablesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &tables"))
 		self.tablesCheckBox.SetValue(config.conf["documentFormatting"]["reportTables"])
 		settingsSizer.Add(self.tablesCheckBox,border=10,flag=wx.BOTTOM)
+		self.tableHeadersCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report table row/column h&eaders"))
+		self.tableHeadersCheckBox.SetValue(config.conf["documentFormatting"]["reportTableHeaders"])
+		settingsSizer.Add(self.tableHeadersCheckBox,border=10,flag=wx.BOTTOM)
 		self.linksCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &links"))
 		self.linksCheckBox.SetValue(config.conf["documentFormatting"]["reportLinks"])
 		settingsSizer.Add(self.linksCheckBox,border=10,flag=wx.BOTTOM)
@@ -678,12 +730,14 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportFontName"]=self.fontNameCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontSize"]=self.fontSizeCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontAttributes"]=self.fontAttrsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportColor"]=self.colorCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportStyle"]=self.styleCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportSpellingErrors"]=self.spellingErrorsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportPage"]=self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLinks"]=self.linksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHeadings"]=self.headingsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLists"]=self.listsCheckBox.IsChecked()
@@ -693,8 +747,8 @@ class DocumentFormattingDialog(SettingsDialog):
 
 class DictionaryEntryDialog(wx.Dialog):
 
-	def __init__(self,parent):
-		super(DictionaryEntryDialog,self).__init__(parent,title=_("Edit dictionary entry"))
+	def __init__(self,parent,title=_("Edit dictionary entry")):
+		super(DictionaryEntryDialog,self).__init__(parent,title=title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer.Add(wx.StaticText(self,-1,label=_("&Pattern")))
@@ -738,8 +792,9 @@ class DictionaryDialog(SettingsDialog):
 		self.dictList.InsertColumn(2,_("Replacement"))
 		self.dictList.InsertColumn(3,_("case sensitive"))
 		self.dictList.InsertColumn(4,_("Regular expression"))
+		self.offOn = (_("off"),_("on"))
 		for entry in self.tempSpeechDict:
-			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,str(entry.caseSensitive),str(entry.regexp)))
+			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,self.offOn[int(entry.caseSensitive)],self.offOn[int(entry.regexp)]))
 		self.editingIndex=-1
 		entriesSizer.Add(self.dictList)
 		settingsSizer.Add(entriesSizer)
@@ -772,10 +827,10 @@ class DictionaryDialog(SettingsDialog):
 		super(DictionaryDialog, self).onOk(evt)
 
 	def OnAddClick(self,evt):
-		entryDialog=DictionaryEntryDialog(self)
+		entryDialog=DictionaryEntryDialog(self,title=_("Add Dictionary Entry"))
 		if entryDialog.ShowModal()==wx.ID_OK:
 			self.tempSpeechDict.append(speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),bool(entryDialog.regexpCheckBox.GetValue())))
-			self.dictList.Append((entryDialog.commentTextCtrl.GetValue(),entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),str(bool(entryDialog.caseSensitiveCheckBox.GetValue())),str(bool(entryDialog.regexpCheckBox.GetValue()))))
+			self.dictList.Append((entryDialog.commentTextCtrl.GetValue(),entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())],self.offOn[int(entryDialog.regexpCheckBox.GetValue())]))
 			index=self.dictList.GetFirstSelected()
 			while index>=0:
 				self.dictList.Select(index,on=0)
@@ -803,8 +858,8 @@ class DictionaryDialog(SettingsDialog):
 			self.dictList.SetStringItem(editIndex,0,entryDialog.commentTextCtrl.GetValue())
 			self.dictList.SetStringItem(editIndex,1,entryDialog.patternTextCtrl.GetValue())
 			self.dictList.SetStringItem(editIndex,2,entryDialog.replacementTextCtrl.GetValue())
-			self.dictList.SetStringItem(editIndex,3,str(bool(entryDialog.caseSensitiveCheckBox.GetValue())))
-			self.dictList.SetStringItem(editIndex,4,str(bool(entryDialog.regexpCheckBox.GetValue())))
+			self.dictList.SetStringItem(editIndex,3,self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())])
+			self.dictList.SetStringItem(editIndex,4,self.offOn[int(entryDialog.regexpCheckBox.GetValue())])
 			self.dictList.SetFocus()
 		entryDialog.Destroy()
 

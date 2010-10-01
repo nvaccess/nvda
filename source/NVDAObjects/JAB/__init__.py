@@ -6,6 +6,7 @@ from ..window import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 import textInfos.offsets
 from logHandler import log
+from .. import InvalidNVDAObject
 
 JABRolesToNVDARoles={
 	"alert":controlTypes.ROLE_DIALOG,
@@ -152,6 +153,19 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# TODO: Not sure how to interpret Java's alignment numbers.
 		return field, (offset, offset + length)
 
+	def getEmbeddedObject(self, offset=0):
+		offset += self._startOffset
+
+		# We need to count the embedded objects to determine which child to use.
+		# This could possibly be optimised by caching.
+		text = self._getTextRange(0, offset + 1)
+		childIndex = text.count(u"\uFFFC") - 1
+		jabContext=self.obj.jabContext.getAccessibleChildFromContext(childIndex)
+		if jabContext:
+			return JAB(jabContext=jabContext)
+
+		raise LookupError
+
 class JAB(Window):
 
 	def findOverlayClasses(self,clsList):
@@ -187,7 +201,10 @@ class JAB(Window):
 			windowHandle=jabContext.hwnd
 		self.windowHandle=windowHandle
 		self.jabContext=jabContext
-		self._JABAccContextInfo=jabContext.getAccessibleContextInfo()
+		try:
+			self._JABAccContextInfo=jabContext.getAccessibleContextInfo()
+		except RuntimeError:
+			raise InvalidNVDAObject("Could not get accessible context info")
 		super(JAB,self).__init__(windowHandle=windowHandle)
 
 	def _get_TextInfo(self):
@@ -324,6 +341,9 @@ class JAB(Window):
 		else:
 			return None
 
+	def _get_childCount(self):
+		return self._JABAccContextInfo.childrenCount
+
 	def _get_children(self):
 		children=[]
 		for index in range(self._JABAccContextInfo.childrenCount):
@@ -332,8 +352,35 @@ class JAB(Window):
 				children.append(JAB(jabContext=jabContext))
 		return children
 
+	def _get_indexInParent(self):
+		index = self._JABAccContextInfo.indexInParent
+		if index == -1:
+			return None
+		return index
+
+	def _getJABRelationFirstTarget(self, key):
+		rs = self.jabContext.getAccessibleRelationSet()
+		targetObj=None
+		for relation in rs.relations[:rs.relationCount]:
+			for target in relation.targets[:relation.targetCount]:
+				if not targetObj and relation.key == key:
+					targetObj=JAB(jabContext=JABHandler.JABContext(self.jabContext.hwnd, self.jabContext.vmID, target))
+				else:
+					JABHandler.bridgeDll.releaseJavaObject(self.jabContext.vmID,target)
+		return targetObj
+
+	def _get_flowsTo(self):
+		return self._getJABRelationFirstTarget("flowsTo")
+
+	def _get_flowsFrom(self):
+		return self._getJABRelationFirstTarget("flowsFrom")
+
 	def event_stateChange(self):
-		self._JABAccContextInfo=self.jabContext.getAccessibleContextInfo()
+		try:
+			self._JABAccContextInfo=self.jabContext.getAccessibleContextInfo()
+		except RuntimeError:
+			log.debugWarning("Error getting accessible context info, probably dead object")
+			return
 		super(JAB,self).event_stateChange()
 
 	def reportFocus(self):

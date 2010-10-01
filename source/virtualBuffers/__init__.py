@@ -1,7 +1,6 @@
 import time
 import threading
 import ctypes
-import os
 import collections
 import itertools
 import wx
@@ -18,13 +17,14 @@ import textInfos.offsets
 import config
 import cursorManager
 import gui
-import virtualBufferHandler
 import eventHandler
 import braille
 import queueHandler
 from logHandler import log
 import ui
 import aria
+import nvwave
+import treeInterceptorHandler
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
@@ -60,12 +60,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID))
 		return docHandle.value, ID.value
 
-	def _getNVDAObjectFromOffset(self,offset):
-		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
-		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
-
-	def _getOffsetsFromNVDAObject(self,obj):
-		docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
+	def _getOffsetsFromFieldIdentifier(self, docHandle, ID):
 		node = NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(self.obj.VBufHandle, docHandle, ID)
 		if not node:
 			raise LookupError
@@ -74,15 +69,21 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		NVDAHelper.localLib.VBuf_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
 		return start.value, end.value
 
+	def _getPointFromOffset(self,offset):
+		o=self._getNVDAObjectFromOffset(offset)
+		return textInfos.Point(o.location[0],o.location[1])
+
+	def _getNVDAObjectFromOffset(self,offset):
+		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
+		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
+
+	def _getOffsetsFromNVDAObject(self,obj):
+		docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
+		return self._getOffsetsFromFieldIdentifier(docHandle,ID)
+
 	def __init__(self,obj,position):
 		self.obj=obj
-		if isinstance(position,NVDAObjects.NVDAObject):
-			start,end=self._getOffsetsFromNVDAObject(position)
-			position=textInfos.offsets.Offsets(start,end)
 		super(VirtualBufferTextInfo,self).__init__(obj,position)
-
-	def _get_NVDAObjectAtStart(self):
-		return self._getNVDAObjectFromOffset(self._startOffset)
 
 	def _getSelectionOffsets(self):
 		start=ctypes.c_int()
@@ -149,6 +150,23 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		tableLayout=attrs.get('table-layout')
 		if tableLayout:
 			attrs['table-layout']=tableLayout=="1"
+
+		# Handle table row and column headers.
+		for axis in "row", "column":
+			attr = attrs.pop("table-%sheadercells" % axis, None)
+			if not attr:
+				continue
+			cellIdentifiers = [identifier.split(",") for identifier in attr.split(";") if identifier]
+			# Get the text for the header cells.
+			textList = []
+			for docHandle, ID in cellIdentifiers:
+				try:
+					start, end = self._getOffsetsFromFieldIdentifier(int(docHandle), int(ID))
+				except (LookupError, ValueError):
+					continue
+				textList.append(self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text)
+			attrs["table-%sheadertext" % axis] = "\n".join(textList)
+
 		return attrs
 
 	def _normalizeFormatField(self, attrs):
@@ -170,14 +188,11 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			return startOffset.value,endOffset.value
 		return super(VirtualBufferTextInfo, self)._getUnitOffsets(unit, offset)
 
-	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
-		return speech.getXMLFieldSpeech(self,attrs,fieldType,extraDetail=extraDetail,reason=reason)
-
-	def copyToClipboard(self):
+	def _get_clipboardText(self):
 		# Blocks should start on a new line, but they don't necessarily have an end of line indicator.
 		# Therefore, get the text in block (paragraph) chunks and join the chunks with \r\n.
 		blocks = (block.strip("\r\n") for block in self.getTextInChunks(textInfos.UNIT_PARAGRAPH))
-		return api.copyToClip("\r\n".join(blocks))
+		return "\r\n".join(blocks)
 
 	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
 		textList = []
@@ -191,9 +206,9 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		try:
 			newNode, newStart, newEnd = next(self.obj._iterNodesByType("focusable", "up", self._startOffset))
 		except StopIteration:
-			return None
+			return self.obj.rootNVDAObject
 		if not newNode:
-			return None
+			return self.obj.rootNVDAObject
 		docHandle=ctypes.c_int()
 		ID=ctypes.c_int()
 		NVDAHelper.localLib.VBuf_getIdentifierFromControlFieldNode(self.obj.VBufHandle, newNode, ctypes.byref(docHandle), ctypes.byref(ID))
@@ -475,7 +490,7 @@ class ElementsListDialog(wx.Dialog):
 		speech.cancelSpeech()
 		speech.speakTextInfo(element,reason=speech.REASON_FOCUS)
 
-class VirtualBuffer(cursorManager.CursorManager):
+class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInterceptor):
 
 	REASON_QUICKNAV = "quickNav"
 
@@ -483,31 +498,21 @@ class VirtualBuffer(cursorManager.CursorManager):
 	programmaticScrollMayFireEvent = False
 
 	def __init__(self,rootNVDAObject,backendName=None):
+		super(VirtualBuffer,self).__init__(rootNVDAObject)
 		self.backendName=backendName
-		self.rootNVDAObject=rootNVDAObject
-		super(VirtualBuffer,self).__init__()
 		self.VBufHandle=None
-		self._passThrough=False
 		self.disableAutoPassThrough = False
 		self.rootDocHandle,self.rootID=self.getIdentifierFromNVDAObject(self.rootNVDAObject)
 		self._lastFocusObj = None
 		self._hadFirstGainFocus = False
 		self._lastProgrammaticScrollTime = None
+		self.loadBuffer()
 
-	def _get_passThrough(self):
-		return self._passThrough
-
-	def _set_passThrough(self, state):
-		if self._passThrough == state:
-			return
-		self._passThrough = state
-		if state:
-			braille.handler.handleGainFocus(api.getFocusObject())
-		else:
-			braille.handler.handleGainFocus(self)
+	def terminate(self):
+		self.unloadBuffer()
 
 	def loadBuffer(self):
-		self.isLoading = True
+		self.isTransitioning = True
 		self._loadProgressCallLater = wx.CallLater(1000, self._loadProgress)
 		threading.Thread(target=self._loadBuffer).start()
 
@@ -525,14 +530,14 @@ class VirtualBuffer(cursorManager.CursorManager):
 	def _loadBufferDone(self, success=True):
 		self._loadProgressCallLater.Stop()
 		del self._loadProgressCallLater
-		self.isLoading = False
+		self.isTransitioning = False
 		if not success:
 			return
 		if self._hadFirstGainFocus:
 			# If this buffer has already had focus once while loaded, this is a refresh.
 			speech.speakMessage(_("Refreshed"))
-		if api.getFocusObject().virtualBuffer == self:
-			self.event_virtualBuffer_gainFocus()
+		if api.getFocusObject().treeInterceptor == self:
+			self.event_treeInterceptor_gainFocus()
 
 	def _loadProgress(self):
 		ui.message(_("Loading document..."))
@@ -547,12 +552,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
-
-	def isNVDAObjectInVirtualBuffer(self,obj):
-		pass
-
-	def isAlive(self):
-		pass
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		"""Retrieve an NVDAObject for a given node identifier.
@@ -575,7 +574,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		"""
 		raise NotImplementedError
 
-	def event_virtualBuffer_gainFocus(self):
+	def event_treeInterceptor_gainFocus(self):
 		"""Triggered when this virtual buffer gains focus.
 		This event is only fired upon entering this buffer when it was not the current buffer before.
 		This is different to L{event_gainFocus}, which is fired when an object inside this buffer gains focus, even if that object is in the same buffer.
@@ -588,7 +587,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			self.event_gainFocus(focus, lambda: focus.event_gainFocus())
 			if not self.passThrough:
 				speech.cancelSpeech()
-				virtualBufferHandler.reportPassThrough(self)
+				reportPassThrough(self)
 				speech.speakObjectProperties(self.rootNVDAObject,name=True)
 				info=self.makeTextInfo(textInfos.POSITION_CARET)
 				sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
@@ -606,10 +605,10 @@ class VirtualBuffer(cursorManager.CursorManager):
 					info.expand(textInfos.UNIT_LINE)
 					speech.speakTextInfo(info, reason=speech.REASON_CARET)
 
-		virtualBufferHandler.reportPassThrough(self)
+		reportPassThrough(self)
 		braille.handler.handleGainFocus(self)
 
-	def event_virtualBuffer_loseFocus(self):
+	def event_treeInterceptor_loseFocus(self):
 		"""Triggered when this virtual buffer loses focus.
 		This event is only fired when the focus moves to a new object which is not within this virtual buffer; i.e. upon leaving this virtual buffer.
 		"""
@@ -635,7 +634,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if self.shouldPassThrough(obj):
 			obj.setFocus()
 			self.passThrough = True
-			virtualBufferHandler.reportPassThrough(self)
+			reportPassThrough(self)
 		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT:
 			obj.setFocus()
 			speech.speakObject(obj, reason=speech.REASON_FOCUS)
@@ -647,17 +646,18 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if isScriptWaiting() or not info.isCollapsed:
 			return
 		api.setReviewPosition(info)
-		obj=info.NVDAObjectAtStart
-		if not obj:
-			log.debugWarning("Invalid NVDAObjectAtStart")
-			return
-		if obj==self.rootNVDAObject:
-			return
 		if reason == speech.REASON_FOCUS:
 			focusObj = api.getFocusObject()
+			if focusObj==self.rootNVDAObject:
+				return
 		else:
 			focusObj=info.focusableNVDAObjectAtStart
-		if reason != speech.REASON_FOCUS:
+			obj=info.NVDAObjectAtStart
+			if not obj:
+				log.debugWarning("Invalid NVDAObjectAtStart")
+				return
+			if obj==self.rootNVDAObject:
+				return
 			if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
 				focusObj.setFocus()
 			obj.scrollIntoView()
@@ -665,7 +665,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 				self._lastProgrammaticScrollTime = time.time()
 		self.passThrough=self.shouldPassThrough(focusObj,reason=reason)
 		# Queue the reporting of pass through mode so that it will be spoken after the actual content.
-		queueHandler.queueFunction(queueHandler.eventQueue, virtualBufferHandler.reportPassThrough, self)
+		queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
 
 	def _shouldSetFocusToObj(self, obj):
 		"""Determine whether an object should receive focus.
@@ -843,16 +843,16 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return gesture.send()
 		self.passThrough = False
 		self.disableAutoPassThrough = False
-		virtualBufferHandler.reportPassThrough(self)
-	script_disablePassThrough.ignoreVirtualBufferPassThrough = True
+		reportPassThrough(self)
+	script_disablePassThrough.ignoreTreeInterceptorPassThrough = True
 
 	def script_collapseOrExpandControl(self, gesture):
 		gesture.send()
 		if not self.passThrough:
 			return
 		self.passThrough = False
-		virtualBufferHandler.reportPassThrough(self)
-	script_collapseOrExpandControl.ignoreVirtualBufferPassThrough = True
+		reportPassThrough(self)
+	script_collapseOrExpandControl.ignoreTreeInterceptorPassThrough = True
 
 	def _tabOverride(self, direction):
 		"""Override the tab order if the virtual buffer caret is not within the currently focused node.
@@ -955,7 +955,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			# Automatic pass through should be enabled in certain circumstances where this occurs.
 			if not self.passThrough and self.shouldPassThrough(obj,reason=speech.REASON_FOCUS):
 				self.passThrough=True
-				virtualBufferHandler.reportPassThrough(self)
+				reportPassThrough(self)
 			return nextHandler()
 
 		#We only want to update the caret and speak the field if we're not in the same one as before
@@ -1267,3 +1267,17 @@ qn("landmark", key="d", nextDoc=_("moves to the next landmark"), nextError=_("no
 qn("embeddedObject", key="o", nextDoc=_("moves to the next embedded object"), nextError=_("no next embedded object"),
 	prevDoc=_("moves to the previous embedded object"), prevError=_("no previous embedded object"))
 del qn
+
+def reportPassThrough(virtualBuffer):
+	"""Reports the virtual buffer pass through mode if it has changed.
+	@param virtualBuffer: The current virtual buffer.
+	@type virtualBuffer: L{virtualBuffers.VirtualBuffer}
+	"""
+	if virtualBuffer.passThrough != reportPassThrough.last:
+		if config.conf["virtualBuffers"]["passThroughAudioIndication"]:
+			sound = r"waves\focusMode.wav" if virtualBuffer.passThrough else r"waves\browseMode.wav"
+			nvwave.playWaveFile(sound)
+		else:
+			speech.speakMessage(_("focus mode") if virtualBuffer.passThrough else _("browse mode"))
+		reportPassThrough.last = virtualBuffer.passThrough
+reportPassThrough.last = False

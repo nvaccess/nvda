@@ -1,17 +1,23 @@
-/**
- * backends/gecko_ia2/gecko_ia2.cpp
- * Part of the NV  Virtual Buffer Library
- * This library is copyright 2007, 2008 NV Virtual Buffer Library Contributors
- * This library is licensed under the GNU Lesser General Public Licence. See license.txt which is included with this library, or see
- * http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- */
+/*
+This file is a part of the NVDA project.
+URL: http://www.nvda-project.org/
+Copyright 2006-2010 NVDA contributers.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2.0, as published by
+    the Free Software Foundation.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This license can be found at:
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+*/
 
 #include <cassert>
 #include <windows.h>
 #include <set>
 #include <string>
 #include <sstream>
-#include <ia2/ia2.h>
+#include <ia2.h>
 #include <common/ia2utils.h>
 #include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
@@ -34,18 +40,22 @@ HWND findRealMozillaWindow(HWND hwnd) {
 	}
 	wchar_t className[256];
 	bool foundWindow=false;
+	HWND tempWindow=hwnd;
 	do {
-		if(GetClassName(hwnd,className,256)==0) {
+		if(GetClassName(tempWindow,className,256)==0) {
 			DEBUG_MSG(L"Could not get class name for window "<<hwnd);
 			return hwnd;
 		}
-		DEBUG_MSG(L"class name for window "<<hwnd<<L" is "<<className);
+		DEBUG_MSG(L"class name for window "<<tempWindow<<L" is "<<className);
 		if(wcscmp(L"MozillaWindowClass",className)!=0) {
 			foundWindow=true;
 		} else {
-			hwnd=GetAncestor(hwnd,GA_PARENT);
+			tempWindow=GetAncestor(tempWindow,GA_PARENT);
 		}
-	} while(hwnd&&!foundWindow);
+	} while(tempWindow&&!foundWindow);
+	if(GetClassName(tempWindow,className,256)!=0&&wcsstr(className,L"Mozilla")==className) { 
+		hwnd=tempWindow;
+	}
 	DEBUG_MSG(L"Found window "<<hwnd);
 	return hwnd;
 }
@@ -84,7 +94,169 @@ IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	return pacc2;
 }
 
-VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IAccessibleTable* paccTable=NULL, long tableID=0) {
+template<typename TableType> inline void fillTableCounts(VBufStorage_controlFieldNode_t* node, IAccessible2* pacc, TableType* paccTable) {
+	int res;
+	wostringstream s;
+	long count = 0;
+	DEBUG_MSG(L"Getting row count");
+	if ((res = paccTable->get_nRows(&count)) == S_OK) {
+		DEBUG_MSG(L"row count is " << count);
+		s << count;
+		node->addAttribute(L"table-rowcount", s.str());
+		s.str(L"");
+	} else
+		DEBUG_MSG(L"IAccessibleTable*::get_nRows failed, result " << res);
+	if ((res = paccTable->get_nColumns(&count)) == S_OK) {
+		DEBUG_MSG(L"column count is " << count);
+		s << count;
+		node->addAttribute(L"table-columncount", s.str());
+	} else
+		DEBUG_MSG(L"IAccessibleTable*::get_nColumns failed, result " << res);
+}
+
+inline void fillTableCellInfo_IATable(VBufStorage_controlFieldNode_t* node, IAccessibleTable* paccTable, const wstring& cellIndexStr) {
+	int res;
+	wostringstream s;
+	long cellIndex = _wtoi(cellIndexStr.c_str());
+	long row, column, rowExtents, columnExtents;
+	boolean isSelected;
+	if ((res = paccTable->get_rowColumnExtentsAtIndex(cellIndex, &row, &column, &rowExtents, &columnExtents, &isSelected)) == S_OK) {
+		DEBUG_MSG(L"IAccessibleTable::get_rowColumnExtentsAtIndex succeeded, adding attributes");
+		s << row + 1;
+		node->addAttribute(L"table-rownumber", s.str());
+		s.str(L"");
+		s << column + 1;
+		node->addAttribute(L"table-columnnumber", s.str());
+		if (columnExtents > 1) {
+			s.str(L"");
+			s << columnExtents;
+			node->addAttribute(L"table-columnsspanned", s.str());
+		}
+		if (rowExtents > 1) {
+			s.str(L"");
+			s << rowExtents;
+			node->addAttribute(L"table-rowsspanned", s.str());
+		}
+	} else
+		DEBUG_MSG(L"IAccessibleTable::get_rowColumnExtentsAtIndex failed, result " << res);
+}
+
+typedef HRESULT(STDMETHODCALLTYPE IAccessibleTableCell::*IATableCellGetHeaderCellsFunc)(IUnknown***, long*);
+inline void fillTableHeaders(VBufStorage_controlFieldNode_t* node, IAccessibleTableCell* paccTableCell, const IATableCellGetHeaderCellsFunc getHeaderCells, const wstring& attribName) {
+	int res;
+	wostringstream s;
+	IUnknown** headerCells;
+	long nHeaderCells;
+	IAccessible2* headerCellPacc = NULL;
+	int headerCellDocHandle, headerCellID;
+
+	if ((paccTableCell->*getHeaderCells)(&headerCells, &nHeaderCells) == S_OK) {
+		DEBUG_MSG(L"Get header cells succeeded, adding header IDs");
+		for (int hci = 0; hci < nHeaderCells; hci++) {
+			if ((res = headerCells[hci]->QueryInterface(IID_IAccessible2, (void**)(&headerCellPacc))) != S_OK) {
+				DEBUG_MSG(L"QueryInterface header cell " << hci << " to IAccessible2 failed with " << res);
+				headerCells[hci]->Release();
+				continue;
+			}
+			headerCells[hci]->Release();
+			if ((res = headerCellPacc->get_windowHandle((HWND*)&headerCellDocHandle)) != S_OK) {
+				DEBUG_MSG("IAccessible2::get_windowHandle on header cell " << hci << " failed with " << res);
+				headerCellPacc->Release();
+				continue;
+			}
+			headerCellDocHandle = (int)findRealMozillaWindow((HWND)headerCellDocHandle);
+			if ((res = headerCellPacc->get_uniqueID((long*)&headerCellID)) != S_OK) {
+				DEBUG_MSG("IAccessible2::get_uniqueID on header cell " << hci << " failed with " << res);
+				headerCellPacc->Release();
+				continue;
+			}
+			s << headerCellDocHandle << L"," << headerCellID << L";";
+			headerCellPacc->Release();
+		}
+		if (!s.str().empty())
+			node->addAttribute(attribName, s.str());
+	}
+}
+
+inline void GeckoVBufBackend_t::fillTableCellInfo_IATable2(VBufStorage_controlFieldNode_t* node, IAccessibleTableCell* paccTableCell) {
+	wostringstream s;
+
+	long row, column, rowExtents, columnExtents;
+	boolean isSelected;
+	if (paccTableCell->get_rowColumnExtents(&row, &column, &rowExtents, &columnExtents, &isSelected) == S_OK) {
+		DEBUG_MSG(L"IAccessibleTableCell::get_rowColumnExtents succeeded, adding attributes");
+		s << row + 1;
+		node->addAttribute(L"table-rownumber", s.str());
+		s.str(L"");
+		s << column + 1;
+		node->addAttribute(L"table-columnnumber", s.str());
+		if (columnExtents > 1) {
+			s.str(L"");
+			s << columnExtents;
+			node->addAttribute(L"table-columnsspanned", s.str());
+		}
+		if (rowExtents > 1) {
+			s.str(L"");
+			s << rowExtents;
+			node->addAttribute(L"table-rowsspanned", s.str());
+		}
+	}
+
+	if (this->shouldDisableTableHeaders)
+		return;
+
+	fillTableHeaders(node, paccTableCell, &IAccessibleTableCell::get_columnHeaderCells, L"table-columnheadercells");
+	fillTableHeaders(node, paccTableCell, &IAccessibleTableCell::get_rowHeaderCells, L"table-rowheadercells");
+}
+
+void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
+	// Defaults.
+	this->shouldDisableTableHeaders = false;
+
+	IServiceProvider* serv = NULL;
+	if (pacc->QueryInterface(IID_IServiceProvider, (void**)&serv) != S_OK)
+		return;
+	IAccessibleApplication* iaApp = NULL;
+	if (serv->QueryService(IID_IAccessibleApplication, IID_IAccessibleApplication, (void**)&iaApp) != S_OK) {
+		serv->Release();
+		return;
+	}
+	serv->Release();
+	serv = NULL;
+
+	BSTR toolkitName = NULL;
+	if (iaApp->get_toolkitName(&toolkitName) != S_OK) {
+		iaApp->Release();
+		return;
+	}
+	BSTR toolkitVersion = NULL;
+	if (iaApp->get_toolkitVersion(&toolkitVersion) != S_OK) {
+		iaApp->Release();
+		SysFreeString(toolkitName);
+		return;
+	}
+	iaApp->Release();
+	iaApp = NULL;
+
+	if (wcscmp(toolkitName, L"Gecko") == 0) {
+		if (wcsncmp(toolkitVersion, L"1.9.2.", 6) == 0) {
+			// Gecko 1.9.2.x.
+			// Retrieve the digits for the final part of the main version number.
+			wstring verPart;
+			for (wchar_t* c = &toolkitVersion[6]; iswdigit(*c); c++)
+				verPart += *c;
+			if (_wtoi(verPart.c_str()) <= 10) {
+				// Gecko <= 1.9.2.10 will crash if we try to retrieve headers on some table cells, so disable them.
+				this->shouldDisableTableHeaders = true;
+			}
+		}
+	}
+
+	SysFreeString(toolkitName);
+	SysFreeString(toolkitVersion);
+}
+
+VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IAccessibleTable* paccTable, IAccessibleTable2* paccTable2, long tableID) {
 	int res;
 	DEBUG_MSG(L"Entered fillVBuf, with pacc at "<<pacc<<L", parentNode at "<<parentNode<<L", previousNode "<<previousNode);
 	assert(buffer); //buffer can't be NULL
@@ -183,7 +355,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	VariantClear(&varState);
 	DEBUG_MSG(L"states is "<<states);
 	//Add each state that is on, as an attrib
-	for(int i=0;i<32;i++) {
+	for(int i=0;i<32;++i) {
 		int state=1<<i;
 		if(state&states) {
 			wostringstream nameStream;
@@ -200,7 +372,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	}
 	DEBUG_MSG(L"IA2States is "<<IA2States);
 	//Add each state that is on, as an attrib
-	for(int i=0;i<32;i++) {
+	for(int i=0;i<32;++i) {
 		int state=1<<i;
 		if(state&IA2States) {
 			wostringstream nameStream;
@@ -245,7 +417,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	}
 	if(IA2Attributes!=NULL) {
 		// Add each IA2 attribute as an attrib.
-		for(map<wstring,wstring>::const_iterator it=IA2AttribsMap.begin();it!=IA2AttribsMap.end();it++) {
+		for(map<wstring,wstring>::const_iterator it=IA2AttribsMap.begin();it!=IA2AttribsMap.end();++it) {
 			wostringstream nameStream;
 			nameStream<<L"IAccessible2::attribute_"<<it->first;
 			parentNode->addAttribute(nameStream.str().c_str(),it->second.c_str());
@@ -296,54 +468,46 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 		name=NULL;
 	}
 	// Handle table cell information.
+	IAccessibleTableCell* paccTableCell = NULL;
 	map<wstring,wstring>::const_iterator IA2AttribsMapIt;
 	// If paccTable is not NULL, it is the table interface for the table above this object.
-	if (paccTable && (IA2AttribsMapIt = IA2AttribsMap.find(L"table-cell-index")) != IA2AttribsMap.end()) {
-		DEBUG_MSG(L"table-cell-index object attribute is " << IA2AttribsMapIt->second << ", getting table cell information");
+	if ((paccTable2 || paccTable) && (
+		(res = pacc->QueryInterface(IID_IAccessibleTableCell, (void**)(&paccTableCell))) == S_OK || // IAccessibleTable2
+		(IA2AttribsMapIt = IA2AttribsMap.find(L"table-cell-index")) != IA2AttribsMap.end() // IAccessibleTable
+	)) {
 		wostringstream s;
 		// tableID is the IAccessible2::uniqueID for paccTable.
 		s << tableID;
 		parentNode->addAttribute(L"table-id", s.str());
-		s.str(L"");
-		long cellIndex = _wtoi(IA2AttribsMapIt->second.c_str());
-		long row, column, rowExtents, columnExtents;
-		boolean isSelected;
-		if ((res = paccTable->get_rowColumnExtentsAtIndex(cellIndex, &row, &column, &rowExtents, &columnExtents, &isSelected)) == S_OK) {
-			DEBUG_MSG(L"IAccessibleTable::get_rowColumnExtentsAtIndex succeeded, adding attributes");
-			s << row + 1;
-			parentNode->addAttribute(L"table-rownumber", s.str());
-			s.str(L"");
-			s << column + 1;
-			parentNode->addAttribute(L"table-columnnumber", s.str());
-			if (columnExtents > 1) {
-				s.str(L"");
-				s << columnExtents;
-				parentNode->addAttribute(L"table-columnsspanned", s.str());
-			}
-			if (rowExtents > 1) {
-				s.str(L"");
-				s << rowExtents;
-				parentNode->addAttribute(L"table-rowsspanned", s.str());
-			}
-		}
+		if (res == S_OK) {
+			// IAccessibleTable2
+			this->fillTableCellInfo_IATable2(parentNode, paccTableCell);
+			paccTableCell->Release();
+			paccTableCell = NULL;
+		} else // IAccessibleTable
+			fillTableCellInfo_IATable(parentNode, paccTable, IA2AttribsMapIt->second);
 		// We're now within a cell, so descendant nodes shouldn't refer to this table anymore.
 		paccTable = NULL;
+		paccTable2 = NULL;
 		tableID = 0;
 	}
 	// Handle table information.
 	// Don't release the table unless it was created in this call.
 	bool releaseTable = false;
 	// If paccTable is not NULL, we're within a table but not yet within a cell, so don't bother to query for table info.
-	if (!paccTable) {
+	if (!paccTable2 && !paccTable) {
 		// Try to get table information.
 		DEBUG_MSG(L"paccTable is NULL, trying to get table information");
-		DEBUG_MSG(L"get paccTable with IAccessible2::QueryInterface and IID_IAccessibleTable");
-		if((res=pacc->QueryInterface(IID_IAccessibleTable,(void**)(&paccTable)))!=S_OK&&res!=E_NOINTERFACE) {
+		if((res=pacc->QueryInterface(IID_IAccessibleTable2,(void**)(&paccTable2)))!=S_OK&&res!=E_NOINTERFACE) {
+			DEBUG_MSG(L"pacc->QueryInterface, with IID_IAccessibleTable2, returned "<<res);
+			paccTable2=NULL;
+		}
+		if(!paccTable2&&(res=pacc->QueryInterface(IID_IAccessibleTable,(void**)(&paccTable)))!=S_OK&&res!=E_NOINTERFACE) {
 			DEBUG_MSG(L"pacc->QueryInterface, with IID_IAccessibleTable, returned "<<res);
 			paccTable=NULL;
 		}
-		DEBUG_MSG(L"paccTable is "<<paccTable);
-		if (paccTable) {
+		DEBUG_MSG(L"paccTable2 is "<<paccTable2<<", paccTable is "<<paccTable);
+		if (paccTable2||paccTable) {
 			// We did the QueryInterface for paccTable, so we must release it after all calls that use it are done.
 			releaseTable = true;
 			// This is a table, so add its information as attributes.
@@ -356,19 +520,10 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 			s << ID;
 			parentNode->addAttribute(L"table-id", s.str());
 			s.str(L"");
-			long count = 0;
-			DEBUG_MSG(L"Getting row count");
-			if ((res = paccTable->get_nRows(&count)) == S_OK) {
-				DEBUG_MSG(L"row count is " << count);
-				s << count;
-				parentNode->addAttribute(L"table-rowcount", s.str());
-				s.str(L"");
-			}
-			if ((res = paccTable->get_nColumns(&count)) == S_OK) {
-				DEBUG_MSG(L"column count is " << count);
-				s << count;
-				parentNode->addAttribute(L"table-columncount", s.str());
-			}
+			if(paccTable2)
+				fillTableCounts<IAccessibleTable2>(parentNode, pacc, paccTable2);
+			else
+				fillTableCounts<IAccessibleTable>(parentNode, pacc, paccTable);
 			// Add the table summary if one is present and the table is visible.
 			if (name && width > 0 && height > 0 && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
 				previousNode = tempNode;
@@ -411,7 +566,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 	DEBUG_MSG(L"IA2TextLength is "<<IA2TextLength);
 	int IA2TextIsUnneededSpace=1;
 	if(IA2TextLength>0&&(role!=ROLE_SYSTEM_TEXT||(states&STATE_SYSTEM_READONLY))&&!(IA2States&IA2_STATE_EDITABLE)) {
-		for(int i=0;i<IA2TextLength;i++) {
+		for(int i=0;i<IA2TextLength;++i) {
 			if(IA2Text[i]==L'\n'||IA2Text[i]==L'\xfffc'||!iswspace(IA2Text[i])) {
 				DEBUG_MSG(L"IA2Text is not whitespace");
 				IA2TextIsUnneededSpace=0;
@@ -460,7 +615,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 		DEBUG_MSG(L"scanning text for embedded object chars");
 			int textStart=-1;
 			wchar_t* tempText=NULL;
-			for(int i=0;i<IA2TextLength;i++) {
+			for(int i=0;i<IA2TextLength;++i) {
 				DEBUG_MSG(L"offset "<<i);
 				if(IA2Text[i]!=0xfffc) { //is not an embeded object char
 					DEBUG_MSG(L"normal char");
@@ -525,7 +680,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 					if(childDefaction) SysFreeString(childDefaction);
 					#endif
 					DEBUG_MSG(L"calling fillVBuf with childPacc ");
-					if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,tableID))!=NULL) {
+					if((tempNode=this->fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,paccTable2,tableID))!=NULL) {
 						previousNode=tempNode;
 					} else {
 						DEBUG_MSG(L"Error in fillVBuf");
@@ -568,7 +723,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 					childCount=0;
 				}
 				DEBUG_MSG(L"got "<<childCount<<L" children");
-				for(int i=0;i<childCount;i++) {
+				for(int i=0;i<childCount;++i) {
 					DEBUG_MSG(L"child "<<i);
 					if(varChildren[i].vt==VT_DISPATCH) {
 						DEBUG_MSG(L"QueryInterface dispatch child to IID_IAccesible2");
@@ -579,7 +734,7 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 						}
 						if(childPacc) {
 							DEBUG_MSG(L"calling _filVBufHelper with child object ");
-							if((tempNode=fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,tableID))!=NULL) {
+							if((tempNode=this->fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,paccTable2,tableID))!=NULL) {
 								previousNode=tempNode;
 							} else {
 								DEBUG_MSG(L"Error in calling fillVBuf");
@@ -664,8 +819,11 @@ VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buff
 		paccHypertext->Release();
 	}
 	if (releaseTable) {
-		DEBUG_MSG(L"Release paccTable");
-		paccTable->Release();
+		DEBUG_MSG(L"Release paccTable/paccTable2");
+		if(paccTable2)
+			paccTable2->Release();
+		else
+			paccTable->Release();
 	}
 	DEBUG_MSG(L"Returning node at "<<parentNode);
 	return parentNode;
@@ -772,7 +930,7 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 	int ID=childID;
 	VBufBackend_t* backend=NULL;
 	DEBUG_MSG(L"Searching for backend in collection of "<<runningBackends.size()<<L" running backends");
-	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
+	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();++i) {
 		HWND rootWindow=(HWND)((*i)->rootDocHandle);
 		DEBUG_MSG(L"Comparing backends root window "<<rootWindow<<L" with window "<<hwnd);
 		if(rootWindow==hwnd||IsChild(rootWindow,hwnd)) {
@@ -828,8 +986,12 @@ void GeckoVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int
 		DEBUG_MSG(L"Could not get IAccessible2, returning");
 		return;
 	}
+	if (!oldNode) {
+		// This is the root node.
+		this->versionSpecificInit(pacc);
+	}
 	DEBUG_MSG(L"Calling fillVBuf");
-	fillVBuf(pacc, buffer, NULL, NULL);
+	this->fillVBuf(pacc, buffer, NULL, NULL);
 	pacc->Release();
 	DEBUG_MSG(L"Rendering done");
 }

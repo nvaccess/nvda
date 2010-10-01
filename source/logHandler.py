@@ -3,6 +3,7 @@
 import os
 import sys
 import warnings
+from encodings import utf_8
 import logging
 from logging import _levelNames as levelNames
 import inspect
@@ -66,7 +67,10 @@ def getCodePath(f):
 	#Code borrowed from http://mail.python.org/pipermail/python-list/2000-January/020141.html
 	if f.f_code.co_argcount:
 		arg0=f.f_locals[f.f_code.co_varnames[0]]
-		attr=getattr(arg0,funcName,None)
+		try:
+			attr=getattr(arg0,funcName)
+		except:
+			attr=None
 		if attr and type(attr) is MethodType and attr.im_func.func_code is f.f_code:
 			className=arg0.__class__.__name__
 	return ".".join([x for x in path,className,funcName if x])
@@ -89,6 +93,10 @@ class Logger(logging.Logger):
 		if not codepath:
 			codepath=getCodePath(f)
 		extra["codepath"] = codepath
+
+		if globalVars.appArgs.secure:
+			# The log might expose sensitive information and the Save As dialog in the Log Viewer is a security risk.
+			activateLogViewer = False
 
 		if activateLogViewer:
 			# Import logViewer here, as we don't want to import GUI code when this module is imported.
@@ -137,7 +145,7 @@ class Logger(logging.Logger):
 
 		exc = exc_info[1]
 		if (
-			(isinstance(exc, WindowsError) and exc.winerror in (ERROR_INVALID_WINDOW_HANDLE, ERROR_TIMEOUT, RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE))
+			(isinstance(exc, WindowsError) and exc.winerror in (ERROR_INVALID_WINDOW_HANDLE, ERROR_TIMEOUT, RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE, RPC_E_CALL_CANCELED))
 			or (isinstance(exc, comtypes.COMError) and (exc.hresult in (E_ACCESSDENIED, EVENT_E_ALL_SUBSCRIBERS_FAILED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED) or exc.hresult & 0xFFFF == RPC_S_SERVER_UNAVAILABLE))
 		):
 			level = self.DEBUGWARNING
@@ -146,7 +154,18 @@ class Logger(logging.Logger):
 
 		self._log(level, msg, (), exc_info=exc_info)
 
-class FileHandler(logging.FileHandler):
+class FileHandler(logging.StreamHandler):
+
+	def __init__(self, filename, mode):
+		# We need to open the file in text mode to get CRLF line endings.
+		# Therefore, we can't use codecs.open(), as it insists on binary mode. See PythonIssue:691291.
+		# We know that \r and \n are safe in UTF-8, so PythonIssue:691291 doesn't matter here.
+		logging.StreamHandler.__init__(self, utf_8.StreamWriter(file(filename, mode)))
+
+	def close(self):
+		self.flush()
+		self.stream.close()
+		logging.StreamHandler.close(self)
 
 	def handle(self,record):
 		# versionInfo must be imported after the language is set. Otherwise, strings won't be in the correct language.
@@ -161,7 +180,7 @@ class FileHandler(logging.FileHandler):
 				nvwave.playWaveFile("waves\\error.wav")
 			except:
 				pass
-		return logging.FileHandler.handle(self,record)
+		return logging.StreamHandler.handle(self,record)
 
 class Formatter(logging.Formatter):
 
@@ -234,9 +253,8 @@ def initialize():
 	logging.addLevelName(Logger.IO, "IO")
 	if not globalVars.appArgs.logFileName:
 		globalVars.appArgs.logFileName = _getDefaultLogFilePath()
-	# HACK: codecs.open() always forces binary mode by appending "b" to mode, but we want text mode ("t") so we get crlf line endings.
-	# Fortunately, Python ignores the "b" if "t" is specified first (e.g. "wtb").
-	logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt", encoding="UTF-8")
+	# Our FileHandler always outputs in UTF-8.
+	logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt")
 	logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)

@@ -40,10 +40,10 @@ class AdobeAcrobat(VirtualBuffer):
 	def __init__(self,rootNVDAObject):
 		super(AdobeAcrobat,self).__init__(rootNVDAObject,backendName="adobeAcrobat")
 
-	def isNVDAObjectInVirtualBuffer(self,obj):
+	def __contains__(self,obj):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)
 
-	def isAlive(self):
+	def _get_isAlive(self):
 		root=self.rootNVDAObject
 		if not root:
 			return False
@@ -84,6 +84,8 @@ class AdobeAcrobat(VirtualBuffer):
 			attrs = {"acrobat::stdname": ["BlockQuote"]}
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
+		elif nodeType=="graphic":
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_GRAPHIC]}
 		else:
 			return None
 		return attrs

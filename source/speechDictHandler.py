@@ -97,3 +97,14 @@ def initialize():
 		dictionaries[type]=SpeechDict()
 	dictionaries["default"].load(os.path.join(speechDictsPath, "default.dic"))
 	dictionaries["builtin"].load("builtin.dic")
+
+def loadVoiceDict(synth):
+	"""Loads appropriate dictionary for the given synthesizer.
+It handles case when the synthesizer doesn't support voice setting.
+"""
+	if synth.isSupported("voice"):
+		voiceName = synth.getVoiceInfoByID(synth.voice).name
+		fileName=r"%s\%s-%s.dic"%(speechDictsPath,synth.name,api.filterFileName(voiceName))
+	else:
+		fileName=r"%s\%s.dic"%(speechDictsPath,synth.name)
+	dictionaries["voice"].load(fileName)

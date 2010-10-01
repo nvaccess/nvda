@@ -104,6 +104,9 @@ def readTextHelper_generator(info,cursor):
 	keepUpdating=True
 	oldSpokenIndex=None
 	while keepUpdating:
+		if not reader.obj:
+			# The object died, so we should too.
+			return
 		# receiveCount might be None if other speech was interspersed with this say all.
 		# In this case, we want to send more text in case this was the last chunk spoken.
 		if receiveCount is None or (sendCount-receiveCount)<=10:
@@ -114,7 +117,7 @@ def readTextHelper_generator(info,cursor):
 				if delta<=0:
 					keepReading=False
 					continue
-				speech.speakTextInfo(reader,reason=speech.REASON_SAYALL,index=index)
+				speech.speakTextInfo(reader,unit=textInfos.UNIT_READINGCHUNK,reason=speech.REASON_SAYALL,index=index)
 				sendCount+=1
 				cursorIndexMap[index]=bookmark
 				reader.collapse(end=True)

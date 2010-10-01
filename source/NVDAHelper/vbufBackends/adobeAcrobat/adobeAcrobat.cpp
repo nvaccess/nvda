@@ -1,10 +1,16 @@
-/**
- * backends/adobeAcrobat/adobeAcrobat.cpp
- * Part of the NV  Virtual Buffer Library
- * This library is copyright 2007-2008 NV Virtual Buffer Library Contributors
- * This library is licensed under the GNU Lesser General Public Licence. See license.txt which is included with this library, or see
- * http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- */
+/*
+This file is a part of the NVDA project.
+URL: http://www.nvda-project.org/
+Copyright 2006-2010 NVDA contributers.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2.0, as published by
+    the Free Software Foundation.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This license can be found at:
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+*/
 
 #include <set>
  #include <sstream>
@@ -15,8 +21,7 @@
 #include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
 #include <common/debug.h>
-#include <AcrobatAccess/AcrobatAccess.h>
-#include <AcrobatAccess/IPDDom.h>
+#include <AcrobatAccess.h>
 #include "adobeAcrobat.h"
 
 using namespace std;
@@ -84,7 +89,7 @@ IPDDomNode* getPDDomNode(VARIANT& varChild, IServiceProvider* servprov) {
 }
 
 inline void processText(BSTR inText, wstring& outText) {
-	for (wchar_t* ch = inText; *ch; ch++) {
+	for (wchar_t* ch = inText; *ch; ++ch) {
 		switch (*ch) {
 			case L'\r':
 			case L'\n':
@@ -125,7 +130,7 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 		}
 
 		// Iterate through the children.
-		for (long childIndex = 0; childIndex < childCount; childIndex++) {
+		for (long childIndex = 0; childIndex < childCount; ++childIndex) {
 			IPDDomNode* domChild;
 			if ((res = domNode->GetChild(childIndex, &domChild)) != S_OK) {
 				DEBUG_MSG(L"IPDDomNode::GetChild returned " << res);
@@ -266,7 +271,7 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 	VariantClear(&varState);
 	DEBUG_MSG(L"states is "<<states);
 	//Add each state that is on, as an attrib
-	for(int i=0;i<32;i++) {
+	for(int i=0;i<32;++i) {
 		int state=1<<i;
 		if(state&states) {
 			wostringstream nameStream;
@@ -353,7 +358,7 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 			childCount=0;
 		}
 		DEBUG_MSG(L"got "<<childCount<<L" children");
-		for(int i=0;i<childCount;i++) {
+		for(int i=0;i<childCount;++i) {
 			DEBUG_MSG(L"child "<<i);
 			if(varChildren[i].vt==VT_DISPATCH) {
 				DEBUG_MSG(L"QueryInterface dispatch child to IID_IAccesible");
@@ -459,7 +464,7 @@ void CALLBACK AdobeAcrobatVBufBackend_t::renderThread_winEventProcHook(HWINEVENT
 	int ID=(objectID>0)?objectID:childID;
 	VBufBackend_t* backend=NULL;
 	DEBUG_MSG(L"Searching for backend in collection of "<<backends.size()<<L" running backends");
-	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
+	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();++i) {
 		HWND rootWindow=(HWND)((*i)->rootDocHandle);
 		DEBUG_MSG(L"Comparing backend's root window "<<rootWindow<<L" with window "<<hwnd);
 		if(rootWindow==hwnd) {

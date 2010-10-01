@@ -1,8 +1,23 @@
+/*
+This file is a part of the NVDA project.
+URL: http://www.nvda-project.org/
+Copyright 2006-2010 NVDA contributers.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2.0, as published by
+    the Free Software Foundation.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This license can be found at:
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+*/
+
 #include <map>
 #include <windows.h>
 #include "vbufRemote.h"
 #include <vbufBase/backend.h>
 #include "nvdaHelperRemote.h"
+#include "dllmain.h"
 
 using namespace std;
 
@@ -31,6 +46,9 @@ VBufRemote_bufferHandle_t VBufRemote_createBuffer(handle_t bindingHandle, int do
 }
 
 void VBufRemote_destroyBuffer(VBufRemote_bufferHandle_t* buffer) {
+	#ifndef NDEBUG
+	Beep(4000,80);
+	#endif
 	VBufBackend_t* backend=(VBufBackend_t*)*buffer;
 	backend->terminate();
 	map<VBufBackend_t*,HINSTANCE>::iterator i=backendLibHandles.find(backend);
@@ -148,9 +166,7 @@ int VBufRemote_getLineOffsets(VBufRemote_bufferHandle_t buffer, int offset, int 
 
 //Special cleanup method for VBufRemote when client is lost
 void __RPC_USER VBufRemote_bufferHandle_t_rundown(VBufRemote_bufferHandle_t buffer) {
-	/* This causes a crash (ticket #399). Better to have memory leaks than to crash.
 	VBufRemote_destroyBuffer(&buffer);
-	*/
 }
 
 }

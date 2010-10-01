@@ -4,13 +4,15 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import time
 import _default
 import controlTypes
 import winUser
 import speech
 import eventHandler
+import mouseHandler
 from NVDAObjects.window import Window
-from NVDAObjects.IAccessible import sysListView32
+from NVDAObjects.IAccessible import sysListView32, IAccessible
 
 #Class for menu items  for Windows Places and Frequently used Programs (in start menu)
 class SysListView32MenuItem(sysListView32.ListItem):
@@ -37,6 +39,37 @@ class ClassicStartMenu(Window):
 		speech.cancelSpeech()
 		super(ClassicStartMenu, self).event_gainFocus()
 
+class NotificationArea(IAccessible):
+	"""The Windows notification area, a.k.a. system tray.
+	"""
+
+	def event_gainFocus(self):
+		if mouseHandler.lastMouseEventTime < time.time() - 0.2:
+			# This focus change was not caused by a mouse event.
+			# If the mouse is on another toolbar control, the notification area toolbar will rudely
+			# bounce the focus back to the object under the mouse after a brief pause.
+			# Moving the mouse to the focus object isn't a good solution because
+			# sometimes, the focus can't be moved away from the object under the mouse.
+			# Therefore, move the mouse out of the way.
+			winUser.setCursorPos(0, 0)
+
+		if self.role == controlTypes.ROLE_TOOLBAR:
+			# Sometimes, the toolbar itself receives the focus instead of the focused child.
+			# However, the focused child still has the focused state.
+			for child in self.children:
+				if child.hasFocus:
+					# Redirect the focus to the focused child.
+					eventHandler.executeEvent("gainFocus", child)
+					return
+			# We've really landed on the toolbar itself.
+			# This was probably caused by moving the mouse out of the way in a previous focus event.
+			# This previous focus event is no longer useful, so cancel speech.
+			speech.cancelSpeech()
+
+		if eventHandler.isPendingEvents("gainFocus"):
+			return
+		super(NotificationArea, self).event_gainFocus()
+
 class AppModule(_default.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -52,6 +85,20 @@ class AppModule(_default.AppModule):
 		if windowClass == "SysListView32" and role == controlTypes.ROLE_MENUITEM:
 			clsList.insert(0, SysListView32MenuItem)
 			return
+
+		if windowClass == "ToolbarWindow32":
+			# Check whether this is the notification area, a.k.a. system tray.
+			try:
+				# The toolbar's immediate parent is its window object, so we need to go one further.
+				toolbarParent = obj.parent.parent
+				if role != controlTypes.ROLE_TOOLBAR:
+					# Toolbar item.
+					toolbarParent = toolbarParent.parent
+			except AttributeError:
+				toolbarParent = None
+			if toolbarParent and toolbarParent.windowClassName == "SysPager":
+				clsList.insert(0, NotificationArea)
+				return
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName

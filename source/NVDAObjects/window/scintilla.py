@@ -9,7 +9,7 @@ import controlTypes
 import config
 from . import Window
 from .. import NVDAObjectTextInfo
-from ..behaviors import EditableTextWithoutAutoSelectDetection
+from ..behaviors import EditableTextWithAutoSelectDetection
 import locale
 
 #Window messages
@@ -22,15 +22,16 @@ SCI_GETTEXTLENGTH=2183
 SCI_GETLENGTH=2006
 SCI_GETCURRENTPOS=2008
 SCI_GETANCHOR=2009
+SCI_GOTOPOS=2025
 SCI_SETCURRENTPOS=2141
-SCI_SETSELECTIONSTART=2142
 SCI_GETSELECTIONSTART=2143
-SCI_SETSELECTIONEND=2144
 SCI_GETSELECTIONEND=2145
+SCI_SETSEL=2160
 SCI_GETLINEENDPOSITION=2136
 SCI_GETLINECOUNT=2154
 SCI_LINEFROMPOSITION=2166
 SCI_POSITIONFROMLINE=2167
+SCI_LINELENGTH=2350
 SCI_GETSTYLEAT=2010
 SCI_STYLEGETFONT=2486
 SCI_STYLEGETSIZE=2485
@@ -117,7 +118,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return winUser.sendMessage(self.obj.windowHandle,SCI_GETCURRENTPOS,0,0)
 
 	def _setCaretOffset(self,offset):
-		winUser.sendMessage(self.obj.windowHandle,SCI_SETCURRENTPOS,offset,0)
+		winUser.sendMessage(self.obj.windowHandle,SCI_GOTOPOS,offset,0)
 
 	def _getSelectionOffsets(self):
 		start=winUser.sendMessage(self.obj.windowHandle,SCI_GETSELECTIONSTART,0,0)
@@ -125,8 +126,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return (start,end)
 
 	def _setSelectionOffsets(self,start,end):
-		winUser.sendMessage(self.obj.windowHandle,SCI_SETSELECTIONSTART,start,0)
-		winUser.sendMessage(self.obj.windowHandle,SCI_SETSELECTIONEND,end,0)
+		winUser.sendMessage(self.obj.windowHandle,SCI_SETSEL,start,end)
 
 	def _getStoryText(self):
 		if not hasattr(self,'_storyText'):
@@ -175,12 +175,9 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return winUser.sendMessage(self.obj.windowHandle,SCI_LINEFROMPOSITION,offset,0)
 
 	def _getLineOffsets(self,offset):
-		curY=winUser.sendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,0,offset)
-		start=winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,0,curY)
-		end=winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,0xffff,curY)
-		limit=self._getStoryLength()
-		while winUser.sendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,0,end)==curY and end<limit:
- 			end+=1
+		line=winUser.sendMessage(self.obj.windowHandle,SCI_LINEFROMPOSITION,offset,0)
+		start=winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMLINE,line,0)
+		end=start+winUser.sendMessage(self.obj.windowHandle,SCI_LINELENGTH,line,0)
 		return (start,end)
 
 	def _getParagraphOffsets(self,offset):
@@ -190,7 +187,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return [offset,winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,offset,0)]
 
 #The Scintilla NVDA object, inherists the generic MSAA NVDA object
-class Scintilla(EditableTextWithoutAutoSelectDetection, Window):
+class Scintilla(EditableTextWithAutoSelectDetection, Window):
 
 	TextInfo=ScintillaTextInfo
 

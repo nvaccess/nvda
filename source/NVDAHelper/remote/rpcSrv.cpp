@@ -1,8 +1,31 @@
+/*
+This file is a part of the NVDA project.
+URL: http://www.nvda-project.org/
+Copyright 2006-2010 NVDA contributers.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2.0, as published by
+    the Free Software Foundation.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This license can be found at:
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+*/
+
+#include <cassert>
 #include <cstdio>
 #include <sstream>
 #include <windows.h>
+#include "nvdaControllerInternal.h"
+#include <common/log.h>
 #include "vbufRemote.h"
+#include "displayModelRemote.h"
 #include "rpcSrv.h"
+
+RPC_IF_HANDLE availableInterfaces[]={
+	displayModelRemote_DisplayModel_v1_0_s_ifspec,
+	VBufRemote_VBuf_v2_0_s_ifspec,
+};
 
 //memory allocation functions
 
@@ -14,46 +37,28 @@ void __RPC_USER midl_user_free(void* p) {
 	free(p);
 }
 
-RPC_STATUS startServer() {
+void rpcSrv_inProcess_initialize() {
 	RPC_STATUS status;
 	//Set the protocol
 	std::wostringstream endPoint;
 	endPoint<<L"nvdaHelperRemote_"<<GetCurrentProcessId();
 	status=RpcServerUseProtseqEp((RPC_WSTR)L"ncalrpc",RPC_C_PROTSEQ_MAX_REQS_DEFAULT,(RPC_WSTR)(endPoint.str().c_str()),NULL);
-	//We can ignore the error where the endpoint is already set
 	if(status!=RPC_S_OK&&status!=RPC_S_DUPLICATE_ENDPOINT) {
-		fprintf(stderr,"Error setting protocol\n");
-		return status;
+		LOG_ERROR(L"RpcServerUseProtseqEp failed with status "<<status);
 	}
 	//Register the interfaces
-	printf("Registering interface...\n");
-	//if((status=RpcServerRegisterIfEx(VBufRemote_VBufRemote_v2_0_s_ifspec,NULL,NULL,RPC_IF_AUTOLISTEN,RPC_C_LISTEN_MAX_CALLS_DEFAULT,NULL))!=RPC_S_OK) {
-	if((status=RpcServerRegisterIf(VBufRemote_VBuf_v2_0_s_ifspec,NULL,NULL))!=RPC_S_OK) {
-		fprintf(stderr,"Error registering interface, code 0X%X\n",status);
-		return status;
+	for(int i=0;i<ARRAYSIZE(availableInterfaces);++i) {
+		if((status=RpcServerRegisterIfEx(availableInterfaces[i],NULL,NULL,RPC_IF_AUTOLISTEN,RPC_C_LISTEN_MAX_CALLS_DEFAULT,NULL))!=RPC_S_OK) {
+			LOG_ERROR(L"RpcServerRegisterIfEx for interface at index "<<i<<L" failed with status "<<status);
+		}
 	}
-	printf("done\n");
-	//Start listening
-	printf("starting server\n");
-	if((status=RpcServerListen(1,RPC_C_LISTEN_MAX_CALLS_DEFAULT,TRUE))!=RPC_S_OK) {
-		fprintf(stderr,"Error starting, code 0X%X\n",status);
-		return status;
-	}
-	CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)RpcMgmtWaitServerListen,NULL,0,NULL);
-	return status;
-}
-
-void stopServer() {
-	printf("unregistering interface...\n");
-	RpcServerUnregisterIf(VBufRemote_VBuf_v2_0_s_ifspec,NULL,1);
-	printf("Done\n");
-}
-
-void rpcSrv_inProcess_initialize() {
-	startServer();
 }
 
 void rpcSrv_inProcess_terminate() {
-	stopServer();
+	RPC_STATUS status;
+	for(int i=0;i<ARRAYSIZE(availableInterfaces);++i) {
+		if((status=RpcServerUnregisterIfEx(availableInterfaces[i],NULL,1))!=RPC_S_OK) {
+			LOG_ERROR(L"RpcServerUnregisterIfEx for interface at index "<<i<<L" failed with status "<<status);
+		}
+	}
 }
-

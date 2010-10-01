@@ -1,10 +1,16 @@
-/**
- * backends/mshtml/node.cpp
- * Part of the NV  Virtual Buffer Library
- * This library is copyright 2007, 2008 NV Virtual Buffer Library Contributors
- * This library is licensed under the GNU Lesser General Public Licence. See license.txt which is included with this library, or see
- * http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- */
+/*
+This file is a part of the NVDA project.
+URL: http://www.nvda-project.org/
+Copyright 2006-2010 NVDA contributers.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2.0, as published by
+    the Free Software Foundation.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This license can be found at:
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+*/
 
 #include <list>
  #include <cassert>
@@ -64,7 +70,7 @@ class CDispatchChangeSink : public IDispatch {
 	}
 
 	ULONG STDMETHODCALLTYPE IUnknown::AddRef() {
-		this->refCount++;
+		++(this->refCount);
 		return this->refCount;
 	}
 
@@ -162,7 +168,7 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 	}
 
 	ULONG STDMETHODCALLTYPE IUnknown::AddRef() {
-		this->refCount++;
+		++(this->refCount);
 		return this->refCount;
 	}
 
@@ -214,7 +220,7 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 			}
 			list<VBufStorage_controlFieldNode_t*>::iterator i=beginningAncestors.begin();
 			list<VBufStorage_controlFieldNode_t*>::iterator j=endAncestors.begin();
-			for(;i!=beginningAncestors.end()&&j!=endAncestors.end();i++,j++) {
+			for(;i!=beginningAncestors.end()&&j!=endAncestors.end();++i,++j) {
 				if(*i==*j) {
 					invalidNode=*i;
 				} else {
@@ -262,7 +268,7 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int d
 	}
 	BSTR nodeName=NULL;
 	pHTMLDOMNode->get_nodeName(&nodeName);
-	if(nodeName!=NULL&&(wcsicmp(nodeName,L"frame")==0||wcsicmp(nodeName,L"iframe")==0||wcsicmp(nodeName,L"img")==0||wcsicmp(nodeName,L"input")==0)) {
+	if(nodeName!=NULL&&(_wcsicmp(nodeName,L"frame")==0||_wcsicmp(nodeName,L"iframe")==0||_wcsicmp(nodeName,L"img")==0||_wcsicmp(nodeName,L"input")==0)) {
 		if(this->pHTMLElement2) {
 			CDispatchChangeSink* loadSink=new CDispatchChangeSink(this);
 			// It seems that IE 6 sometimes calls Release() once too many times.
@@ -277,7 +283,7 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int d
 			}
 		}
 	}
-	if(nodeName!=NULL&&(wcsicmp(nodeName,L"body")==0||wcsicmp(nodeName,L"frameset")==0)) {
+	if(nodeName!=NULL&&(_wcsicmp(nodeName,L"body")==0||_wcsicmp(nodeName,L"frameset")==0)) {
 		IHTMLDOMNode2* pHTMLDOMNode2=NULL;
 		pHTMLDOMNode->QueryInterface(IID_IHTMLDOMNode2,(void**)&pHTMLDOMNode2);
 		if(pHTMLDOMNode2) {

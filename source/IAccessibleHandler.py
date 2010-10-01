@@ -26,6 +26,10 @@ NAVRELATION_LABELLED_BY=0x1002
 NAVRELATION_LABELLED_BY=0x1003
 NAVRELATION_NODE_CHILD_OF=0x1005
 
+# IAccessible2 relations (not included in the typelib)
+IA2_RELATION_FLOWS_FROM = "flowsFrom"
+IA2_RELATION_FLOWS_TO = "flowsTo"
+
 import UIAHandler
 import heapq
 import itertools
@@ -354,7 +358,7 @@ def normalizeIAccessible(pacc):
 
 def accessibleObjectFromEvent(window,objectID,childID):
 	wmResult=c_long()
-	if windll.user32.SendMessageTimeoutW(window,winUser.WM_NULL,0,0,winUser.SMTO_ABORTIFHUNG,2000,byref(wmResult))==0:
+	if windll.user32.SendMessageTimeoutW(window,wmNVDAPing,0,0,winUser.SMTO_ABORTIFHUNG,2000,byref(wmResult))==0:
 		log.debugWarning("Window %d dead or not responding: %s" % (window, ctypes.WinError()))
 		return None
 	try:
@@ -393,8 +397,16 @@ def accFocus(ia):
 			new_ia=normalizeIAccessible(res)
 			new_child=0
 		elif isinstance(res,int):
-			new_ia=ia
-			new_child=res
+			try:
+				new_ia=ia.accChild(res)
+			except:
+				new_ia=None
+			if new_ia:
+				new_ia=normalizeIAccessible(new_ia)
+				new_child=0
+			else:
+				new_ia=ia
+				new_child=res
 		else:
 			return None
 		return (new_ia,new_child)
@@ -524,7 +536,7 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 		return None
 	#SDM MSAA objects sometimes don't contain enough information to be useful
 	#Sometimes there is a real window that does, so try to get the SDMChild property on the NVDAObject, and if successull use that as obj instead.
-	if obj.windowClassName=='bosa_sdm':
+	if 'bosa_sdm' in obj.windowClassName:
 		SDMChild=getattr(obj,'SDMChild',None)
 		if SDMChild: obj=SDMChild
 	return (NVDAEventName,obj)
@@ -548,8 +560,12 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			return
 
 		if childID<0:
-			while window and not winUser.getWindowStyle(window)&winUser.WS_POPUP and winUser.getClassName(window)=="MozillaWindowClass":
-				window=winUser.getAncestor(window,winUser.GA_PARENT)
+			tempWindow=window
+			while tempWindow and not winUser.getWindowStyle(tempWindow)&winUser.WS_POPUP and winUser.getClassName(tempWindow)=="MozillaWindowClass":
+				tempWindow=winUser.getAncestor(tempWindow,winUser.GA_PARENT)
+			if tempWindow and winUser.getClassName(tempWindow).startswith('Mozilla'):
+				window=tempWindow
+
 		windowClassName=winUser.getClassName(window)
 		#At the moment we can't handle show, hide or reorder events on Mozilla Firefox Location bar,as there are just too many of them
 		#Ignore show, hide and reorder on MozillaDropShadowWindowClass windows.
@@ -612,9 +628,11 @@ def processFocusWinEvent(window,objectID,childID,force=False):
 	@rtype: boolean
 	"""
 	windowClassName=winUser.getClassName(window)
-	#We must ignore focus on child windows of SDM windows as we only want the SDM MSAA events
-	if not windowClassName.startswith('bosa_sdm') and winUser.getClassName(winUser.getAncestor(window,winUser.GA_PARENT)).startswith('bosa_sdm'):
-		return True
+	# Generally, we must ignore focus on child windows of SDM windows as we only want the SDM MSAA events.
+	# However, we don't want to ignore focus if the child ID isn't 0,
+	# as this is a child control and the SDM MSAA events don't handle child controls.
+	if childID==0 and not windowClassName.startswith('bosa_sdm') and winUser.getClassName(winUser.getAncestor(window,winUser.GA_PARENT)).startswith('bosa_sdm'):
+		return False
 	rootWindow=winUser.getAncestor(window,winUser.GA_ROOT)
 	# If this window's root window is not the foreground window and this window or its root window is not a popup window:
 	if rootWindow!=winUser.getForegroundWindow() and not (winUser.getWindowStyle(window) & winUser.WS_POPUP or winUser.getWindowStyle(rootWindow)&winUser.WS_POPUP):
@@ -783,7 +801,13 @@ def _fakeFocus(oldFocus):
 #Register internal object event with IAccessible
 cWinEventCallback=WINFUNCTYPE(None,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
+#: A window message used to determine whether a window is alive.
+#: We use this instead of WM_NULL because Windows Live Messenger 2009 (and maybe other applications) barf if we send WM_NULL.
+wmNVDAPing = None
 def initialize():
+	global wmNVDAPing
+	if not wmNVDAPing:
+		wmNVDAPing = windll.user32.RegisterWindowMessageW(u"NVDA ping")
 	for eventType in winEventIDsToNVDAEventNames.keys():
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:
@@ -958,12 +982,13 @@ def splitIA2Attribs(attribsString):
 		elif char == ";":
 			# We're about to move on to a new attribute.
 			if subkey:
-				# This attribute had subattributes.
 				# Add the last subattribute key/value pair to the dict.
 				subattr[subkey] = tmp
+				subkey = ""
+			if subattr:
+				# This attribute had subattributes.
 				# Add the key/subattribute pair to the dict.
 				attribsDict[key] = subattr
-				subkey = ""
 				subattr = {}
 			elif key:
 				# Add this key/value pair to the dict.
@@ -974,9 +999,10 @@ def splitIA2Attribs(attribsString):
 			tmp += char
 	# If there was no trailing semi-colon, we need to handle the last attribute.
 	if subkey:
-		# This attribute had subattributes.
 		# Add the last subattribute key/value pair to the dict.
 		subattr[subkey] = tmp
+	if subattr:
+		# This attribute had subattributes.
 		# Add the key/subattribute pair to the dict.
 		attribsDict[key] = subattr
 	elif key:

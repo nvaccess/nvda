@@ -19,6 +19,7 @@ from ..window import Window
 
 #Window messages
 LVM_FIRST=0x1000
+LVM_GETITEMSTATE=LVM_FIRST+44
 LVM_GETFOCUSEDGROUP=LVM_FIRST+93
 LVM_GETGROUPINFOBYINDEX=LVM_FIRST+153
 LVM_GETITEMCOUNT=LVM_FIRST+4
@@ -44,7 +45,9 @@ LVGF_GROUPID=0x10
 #Item states
 LVIS_FOCUSED=0x01
 LVIS_SELECTED=0x02
-LVIS_IMAGESTATEMASK=0xF000
+LVIS_STATEIMAGEMASK=0xF000
+
+LVS_OWNERDRAWFIXED=0x0400
 
 class LVGROUP(Structure):
 	_fields_=[
@@ -218,6 +221,8 @@ class ListItem(IAccessible):
 
 	def _get_value(self):
 		value=super(ListItem,self)._get_description()
+		if (not value or value.isspace()) and self.windowStyle & LVS_OWNERDRAWFIXED:
+			value=self.displayText
 		if not value:
 			return None
 		#Some list view items in Vista can contain annoying left-to-right and right-to-left indicator characters which really should not be there.
@@ -226,10 +231,9 @@ class ListItem(IAccessible):
 		return value
 
 	def _get_positionInfo(self):
-		info=super(ListItem,self)._get_positionInfo()
+		index=self.IAccessibleChildID
 		totalCount=winUser.sendMessage(self.windowHandle,LVM_GETITEMCOUNT,0,0)
-		info['similarItemsInGroup']=totalCount
-		return info
+		return dict(indexInGroup=index,similarItemsInGroup=totalCount) 
 
 	def event_stateChange(self):
 		if self.hasFocus:

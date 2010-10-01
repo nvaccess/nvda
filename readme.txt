@@ -9,11 +9,11 @@ The NVDA source depends on several other packages to run correctly, as described
 If you are running a 64 bit version of Windows, you should install the 32 bit versions of any dependencies that provide both 32 bit and 64 bit versions.
 
 General dependencies:
-	* Python 2.6, version 2.6.4 or later: http://www.python.org/
+	* Python 2.7, version 2.7.0 or later: http://www.python.org/
 	* comtypes, version 0.6.2 or later: http://www.sourceforge.net/projects/comtypes/
-	* wxPython unicode (for Python 2.6), version 2.8.9.1 or later: http://www.wxpython.org/
-	* Python Windows Extensions (for Python 2.6), build 212 or later: http://www.sourceforge.net/projects/pywin32/ 
-	* eSpeak, version 1.43.03 or later, Windows dll:
+	* wxPython unicode (for Python 2.7), version 2.8.11.0 or later: http://www.wxpython.org/
+	* Python Windows Extensions (for Python 2.7), build 214 or later: http://www.sourceforge.net/projects/pywin32/ 
+	* eSpeak, version 1.44.03 or later, Windows dll:
 		* Official web site: http://espeak.sourceforge.net/
 		* The Windows dll is tricky to build, so a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
 		* Copy espeak.dll and espeak-data into the source\synthDrivers directory.
@@ -28,7 +28,7 @@ General dependencies:
 	* ConfigObj, version 4.6.0 or later:
 		* Web site: http://www.voidspace.org.uk/python/configobj.html
 		* Copy configobj.py and validate.py into the source directory.
-	* liblouis, version 1.8.0 or later, Windows dll and Python bindings:
+	* liblouis, version 2.1.1 or later, Windows dll and Python bindings:
 		* Official web site: http://code.google.com/p/liblouis/
 		* A pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
 		* Copy the louis Python package directory into the source directory.
@@ -44,8 +44,8 @@ General dependencies:
 		* You can build this yourself. You need to have the Windows SDK installed, which is quite large. See source\nvdaHelper\building.txt for instructions.
 		* Alternatively, pre-built versions are provided alongside NVDA snapshots for convenience. See http://www.nvda-project.org/snapshots/
 			* Extract this archive into the root of your NVDA source distribution.
-	* Adobe AcrobatAccess interface typelib:
-		* You can build this yourself using midl from the idl located at http://www.adobe.com/devnet/acrobat/downloads/ClientFiles.zip
+	* Adobe AcrobatAccess interface typelib, version 9.1 or later:
+		* You can build this yourself using midl from the idl in the client files archive available from http://www.adobe.com/devnet/acrobat/interapplication_communication.html
 		* Alternatively, a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/AcrobatAccess.tlb
 		* Copy AcrobatAccess.tlb into the source\typelibs directory.
 	* Adobe FlashAccessibility interface typelib: http://www.nvda-project.org/3rdParty/FlashAccessibility.tlb
@@ -53,7 +53,7 @@ General dependencies:
 		* Copy the txt2tags Python script to the source directory or the global Python site-packages directory, naming it txt2tags.py.
 
 To use the brltty braille display driver:
-	* brlapi Python bindings, version 0.5.3 or later, distributed with BRLTTY for Windows, version 4.0-2 or later:
+	* brlapi Python bindings (for Python 2.7), version 0.5.5 or later, distributed with BRLTTY for Windows, version 4.2-2 or later:
 		* You can download BRLTTY for Windows at http://brl.thefreecat.org/brltty/
 		* The brlapi Python bindings can be found in the BRLTTY installation directory and are named brlapi-x.y.z.exe
 
@@ -61,8 +61,12 @@ To use the Alva BC640/680 braille display driver:
 	* ALVA BC6 generic dll, version 2.0.3.0 or later: http://www.nvda-project.org/3rdParty/alvaw32.dll
 		* Copy alvaw32.dll into the source\brailleDisplayDrivers directory.
 
+To use the MDV Lilli braille display driver:
+	* lilli.dll: http://www.nvda-project.org/3rdParty/lilli.dll
+		* Copy lilli.dll into the source\brailleDisplayDrivers directory.
+
 To build a binary version of NVDA:
-	* Py2Exe (for Python 2.6), version 0.6.9 or later: http://www.sourceforge.net/projects/py2exe/
+	* Py2Exe (for Python 2.7), version 0.6.9 or later: http://www.sourceforge.net/projects/py2exe/
 
 To build an installer:
 	* Nulsoft Install System, version 2.42 or later: http://nsis.sourceforge.net/

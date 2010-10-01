@@ -1,8 +1,8 @@
 #braille.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+#Copyright (C) 2008-2010 James Teh <jamie@jantrid.net>, Michael Curran <mick@kulgan.net>
 
 import itertools
 import os
@@ -228,7 +228,7 @@ def getBrailleTextForProperties(**propertyValues):
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
 		textList.append(keyboardShortcut)
-	positionInfo = propertyValues["positionInfo"]
+	positionInfo = propertyValues.get("positionInfo")
 	if positionInfo:
 		if 'indexInGroup' in positionInfo and 'similarItemsInGroup' in positionInfo:
 			textList.append(_("%s of %s")%(positionInfo['indexInGroup'],positionInfo['similarItemsInGroup']))
@@ -277,10 +277,10 @@ class TextInfoRegion(Region):
 		self.obj = obj
 
 	def _isMultiline(self):
-		#A regions object can either be an NVDAObject or a virtualBuffer
-		#virtualBuffers should always be multiline
-		import virtualBuffers
-		if isinstance(self.obj,virtualBuffers.VirtualBuffer):
+		# A region's object can either be an NVDAObject or a tree interceptor.
+		# Tree interceptors should always be multiline.
+		from treeInterceptorHandler import TreeInterceptor
+		if isinstance(self.obj, TreeInterceptor):
 			return True
 		# Terminals are inherently multiline, so they don't have the multiline state.
 		return (self.obj.role == controlTypes.ROLE_TERMINAL or controlTypes.STATE_MULTILINE in self.obj.states)
@@ -295,13 +295,13 @@ class TextInfoRegion(Region):
 		except:
 			return self.obj.makeTextInfo(textInfos.POSITION_FIRST)
 
-	def _setSelection(self, info):
-		"""Set the selection.
-		@param info: The range to which the selection should be moved.
+	def _setCursor(self, info):
+		"""Set the cursor.
+		@param info: The range to which the cursor should be moved.
 		@type info: L{textInfos.TextInfo}
 		"""
 		try:
-			info.updateSelection()
+			info.updateCaret()
 		except NotImplementedError:
 			log.debugWarning("", exc_info=True)
 
@@ -342,7 +342,7 @@ class TextInfoRegion(Region):
 		dest.collapse()
 		# and move pos characters from there.
 		dest.move(textInfos.UNIT_CHARACTER, pos)
-		self._setSelection(dest)
+		self._setCursor(dest)
 
 	def nextLine(self):
 		dest = self._line.copy()
@@ -350,7 +350,7 @@ class TextInfoRegion(Region):
 		if not moved:
 			return
 		dest.collapse()
-		self._setSelection(dest)
+		self._setCursor(dest)
 
 	def previousLine(self):
 		dest = self._line.copy()
@@ -360,7 +360,7 @@ class TextInfoRegion(Region):
 		if not moved:
 			return
 		dest.collapse()
-		self._setSelection(dest)
+		self._setCursor(dest)
 
 class CursorManagerRegion(TextInfoRegion):
 
@@ -370,7 +370,7 @@ class CursorManagerRegion(TextInfoRegion):
 	def _getSelection(self):
 		return self.obj.selection
 
-	def _setSelection(self, info):
+	def _setCursor(self, info):
 		self.obj.selection = info
 
 class ReviewTextInfoRegion(TextInfoRegion):
@@ -378,7 +378,7 @@ class ReviewTextInfoRegion(TextInfoRegion):
 	def _getSelection(self):
 		return api.getReviewPosition().copy()
 
-	def _setSelection(self, info):
+	def _setCursor(self, info):
 		api.setReviewPosition(info)
 
 class BrailleBuffer(baseObject.AutoPropertyObject):
@@ -580,11 +580,11 @@ def invalidateCachedFocusAncestors(index):
 def getFocusContextRegions(obj, oldFocusRegions=None):
 	global _cachedFocusAncestorsEnd
 	# Late import to avoid circular import.
-	from virtualBuffers import VirtualBuffer
+	from treeInterceptorHandler import TreeInterceptor
 	ancestors = api.getFocusAncestors()
 
 	ancestorsEnd = len(ancestors)
-	if isinstance(obj, VirtualBuffer):
+	if isinstance(obj, TreeInterceptor):
 		obj = obj.rootNVDAObject
 		# We only want the ancestors of the buffer's root NVDAObject.
 		if obj != api.getFocusObject():
@@ -634,15 +634,15 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 
 def getFocusRegions(obj, review=False):
 	# Late import to avoid circular import.
-	from virtualBuffers import VirtualBuffer
+	from treeInterceptorHandler import TreeInterceptor
 	from cursorManager import CursorManager
 	if isinstance(obj, CursorManager):
 		region2 = (ReviewTextInfoRegion if review else CursorManagerRegion)(obj)
-	elif (obj.role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states):
+	elif isinstance(obj, TreeInterceptor) or obj.role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states:
 		region2 = (ReviewTextInfoRegion if review else TextInfoRegion)(obj)
 	else:
 		region2 = None
-	if isinstance(obj, VirtualBuffer):
+	if isinstance(obj, TreeInterceptor):
 		obj = obj.rootNVDAObject
 	region = (ReviewNVDAObjectRegion if review else NVDAObjectRegion)(obj, appendText=" " if region2 else "")
 	region.update()
@@ -696,7 +696,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			else:
 				newDisplay = newDisplay()
 				if self.display:
-					self.display.terminate()
+					try:
+						self.display.terminate()
+					except:
+						log.error("Error terminating previous display driver", exc_info=True)
 				self.display = newDisplay
 			self.displaySize = newDisplay.numCells
 			self.enabled = bool(self.displaySize)
@@ -900,9 +903,13 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		@postcondition: This instance can no longer be used unless it is constructed again.
 		"""
 		# Clear the display.
-		self.cursorPos = None
-		self.cursorBlinkRate = 0
-		self.display([])
+		try:
+			self.cursorPos = None
+			self.cursorBlinkRate = 0
+			self.display([])
+		except:
+			# The display driver seems to be failing, but we're terminating anyway, so just ignore it.
+			pass
 
 	def _get_numCells(self):
 		"""Obtain the number of braille cells on this  display.

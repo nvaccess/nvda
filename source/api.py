@@ -12,7 +12,7 @@ import globalVars
 from logHandler import log
 import speech
 import sayAllHandler
-import virtualBufferHandler
+import treeInterceptorHandler
 import NVDAObjects
 import NVDAObjects.IAccessible
 import winUser
@@ -47,8 +47,6 @@ def setForegroundObject(obj):
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
 	globalVars.foregroundObject=obj
-	if log.isEnabledFor(log.DEBUG):
-		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	return True
 
 def setFocusObject(obj):
@@ -116,26 +114,24 @@ Before overriding the last object, this function calls event_loseFocus on the ob
   	for addedMod in newAppModuleSet-oldAppModuleSet:
 		if hasattr(addedMod,'event_appGainFocus'):
 			addedMod.event_appGainFocus()
-	virtualBufferHandler.cleanup()
-	virtualBufferObject=None
+	treeInterceptorHandler.cleanup()
+	treeInterceptorObject=None
 	o=None
 	for o in ancestors[focusDifferenceLevel:]+[obj]:
-		virtualBufferObject=virtualBufferHandler.update(o)
-	#Always make sure that the focus object's virtualBuffer is forced to either the found virtualBuffer (if its in it) or to None
-	#This is to make sure that the virtualBuffer does not have to be looked up, which can cause problems for winInputHook
-	if obj is o or virtualBufferObject.isNVDAObjectInVirtualBuffer(obj):
-		obj.virtualBuffer=virtualBufferObject
+		treeInterceptorObject=treeInterceptorHandler.update(o)
+	#Always make sure that the focus object's treeInterceptor is forced to either the found treeInterceptor (if its in it) or to None
+	#This is to make sure that the treeInterceptor does not have to be looked up, which can cause problems for winInputHook
+	if obj is o or obj in treeInterceptorObject:
+		obj.treeInterceptor=treeInterceptorObject
 	else:
-		obj.virtualBuffer=None
+		obj.treeInterceptor=None
 	# Set global focus variables.
 	globalVars.focusDifferenceLevel=focusDifferenceLevel
 	globalVars.focusObject=obj
 	globalVars.focusAncestors=ancestors
 	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
 	if config.conf["reviewCursor"]["followFocus"]:
-		setNavigatorObject(obj)
-	if log.isEnabledFor(log.DEBUG):
-		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
+		setNavigatorObject(obj if not obj.treeInterceptor or not obj.treeInterceptor.passThrough or not obj.treeInterceptor.isTransitioning else obj.treeInterceptor.rootNVDAObject)
 	return True
 
 def getFocusDifferenceLevel():
@@ -150,8 +146,6 @@ def getMouseObject():
 
 def setMouseObject(obj):
 	"""Tells NVDA to remember the given object as the object that is directly under the mouse"""
-	if log.isEnabledFor(log.DEBUG):
-		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.mouseObject=obj
 
 def getDesktopObject():
@@ -160,8 +154,6 @@ def getDesktopObject():
 
 def setDesktopObject(obj):
 	"""Tells NVDA to remember the given object as the desktop object"""
-	if log.isEnabledFor(log.DEBUG):
-		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.desktopObject=obj
 
 def getReviewPosition():
@@ -170,26 +162,21 @@ def getReviewPosition():
 	if globalVars.reviewPosition: 
 		return globalVars.reviewPosition
 	else:
+		obj=globalVars.navigatorObject
+		ti=obj.treeInterceptor
+		if ti and ti.rootNVDAObject==obj:
+			obj=ti
 		try:
-			obj=globalVars.navigatorObject.virtualBuffer
-			globalVars.reviewPosition=obj.makeTextInfo(globalVars.navigatorObject)
-			globalVars.reviewPositionObj=obj
-			return globalVars.reviewPosition
-		except:
-			pass
-		try:
-			globalVars.reviewPosition=globalVars.navigatorObject.makeTextInfo(textInfos.POSITION_CARET)
-			globalVars.reviewPositionObj=globalVars.navigatorObject
-			return globalVars.reviewPosition
-		except:
-			globalVars.reviewPosition=globalVars.navigatorObject.makeTextInfo(textInfos.POSITION_FIRST)
-			globalVars.reviewPositionObj=globalVars.navigatorObject
-			return globalVars.reviewPosition
+			globalVars.reviewPosition=obj.makeTextInfo(textInfos.POSITION_CARET)
+		except (NotImplementedError, RuntimeError):
+			globalVars.reviewPosition=obj.makeTextInfo(textInfos.POSITION_FIRST)
+		globalVars.reviewPositionObj=globalVars.reviewPosition.obj
+		return globalVars.reviewPosition
 
 def setReviewPosition(reviewPosition):
 	"""Sets a TextInfo instance as the review position. It sets the current navigator object to None so that the next time the navigator object is asked for it fetches it from the review position.
 	"""
-	globalVars.reviewPosition=reviewPosition
+	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
 	globalVars.navigatorObject=None
 	import braille
@@ -203,7 +190,8 @@ def getNavigatorObject():
 	if globalVars.navigatorObject:
 		return globalVars.navigatorObject
 	else:
-		globalVars.navigatorObject=globalVars.reviewPosition.NVDAObjectAtStart
+		obj=globalVars.reviewPosition.obj
+		globalVars.navigatorObject=getattr(obj,'rootNVDAObject',None) or obj
 		return globalVars.navigatorObject
 
 def setNavigatorObject(obj):
@@ -213,8 +201,6 @@ def setNavigatorObject(obj):
 """
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
-	if log.isEnabledFor(log.DEBUG):
-		log.debug("%s %s %s %s"%(obj.name or "",controlTypes.speechRoleLabels[obj.role],obj.value or "",obj.description or ""))
 	globalVars.navigatorObject=obj
 	globalVars.reviewPosition=None
 	globalVars.reviewPositionObj=None
@@ -251,6 +237,8 @@ def processPendingEvents(processEventQueue=True):
 	import JABHandler
 	import wx
 	import queueHandler
+	import watchdog
+	watchdog.alive()
 	wx.Yield()
 	JABHandler.pumpAll()
 	IAccessibleHandler.pumpAll()

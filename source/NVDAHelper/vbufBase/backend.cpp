@@ -1,10 +1,16 @@
-/**
- * base/backend.cpp
- * Part of the NV  Virtual Buffer Library
- * This library is copyright 2007, 2008 NV Virtual Buffer Library Contributors
- * This library is licensed under the GNU Lesser General Public Licence. See license.txt which is included with this library, or see
- * http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- */
+/*
+This file is a part of the NVDA project.
+URL: http://www.nvda-project.org/
+Copyright 2006-2010 NVDA contributers.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2.0, as published by
+    the Free Software Foundation.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This license can be found at:
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+*/
 
 #include <cassert>
 #include <windows.h>
@@ -49,7 +55,7 @@ void CALLBACK VBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID,
 		DEBUG_MSG(L"Detected destruction of window "<<hwnd);
 		// Copy the set, as it might be mutated by renderThread_terminate() during iteration.
 		VBufBackendSet_t backends=runningBackends;
-		for(VBufBackendSet_t::iterator i=backends.begin();i!=backends.end();i++) {
+		for(VBufBackendSet_t::iterator i=backends.begin();i!=backends.end();++i) {
 			if(hwnd==(HWND)((*i)->rootDocHandle)||IsChild(hwnd,(HWND)((*i)->rootDocHandle))) {
 				DEBUG_MSG(L"Calling renderThread_terminate for backend at "<<*i);
 				(*i)->renderThread_terminate();
@@ -79,7 +85,7 @@ void CALLBACK VBufBackend_t::renderThread_timerProc(HWND hwnd, UINT msg, UINT_PT
 	KillTimer(0,timerID);
 	int threadID=GetCurrentThreadId();
 	VBufBackend_t* backend=NULL;
-	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
+	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();++i) {
 		if((*i)->renderThreadID==threadID&&(*i)->renderThreadTimerID==timerID) {
 			backend=*i;
 			break;
@@ -127,7 +133,7 @@ void VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
 			DEBUG_MSG(L"removing a descendant node from the invalid nodes");
 			invalidSubtrees.erase(i++);
 		} else {
-			i++;
+			++i;
 		}
 	}
 	DEBUG_MSG(L"Adding node to invalid nodes");
@@ -139,7 +145,7 @@ void VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
 void VBufBackend_t::update() {
 	if(this->hasContent()) {
 		DEBUG_MSG(L"Updating "<<invalidSubtrees.size()<<L" subtrees");
-		for(VBufStorage_controlFieldNodeSet_t::iterator i=invalidSubtrees.begin();i!=invalidSubtrees.end();i++) {
+		for(VBufStorage_controlFieldNodeSet_t::iterator i=invalidSubtrees.begin();i!=invalidSubtrees.end();++i) {
 			VBufStorage_controlFieldNode_t* node=*i;
 			DEBUG_MSG(L"re-rendering subtree at "<<node);
 			VBufStorage_buffer_t* tempBuf=new VBufStorage_buffer_t();

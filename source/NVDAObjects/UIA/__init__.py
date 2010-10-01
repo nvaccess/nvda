@@ -11,8 +11,8 @@ import api
 import textInfos
 from logHandler import log
 from NVDAObjects.window import Window
-from NVDAObjects import NVDAObjectTextInfo, AutoSelectDetectionNVDAObject, InvalidNVDAObject
-from NVDAObjects.behaviors import ProgressBar, EditableText
+from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
+from NVDAObjects.behaviors import ProgressBar, EditableTextWithAutoSelectDetection
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -45,12 +45,14 @@ class UIATextInfo(textInfos.TextInfo):
 		super(UIATextInfo,self).__init__(obj,position)
 		if isinstance(position,UIAHandler.IUIAutomationTextRange):
 			self._rangeObj=position.Clone()
-		elif position==textInfos.POSITION_CARET or position==textInfos.POSITION_SELECTION:
+		elif position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			sel=self.obj.UIATextPattern.GetSelection()
 			if sel.length>0:
 				self._rangeObj=sel.getElement(0).clone()
 			else:
 				raise NotImplementedError("UIAutomationTextRangeArray is empty")
+			if position==textInfos.POSITION_CARET:
+				self.collapse()
 		else:
 			self._rangeObj=self.obj.UIATextPattern.DocumentRange
 
@@ -118,13 +120,13 @@ class UIATextInfo(textInfos.TextInfo):
 			target=UIAHandler.TextPatternRangeEndpoint_End
 		self._rangeObj.MoveEndpointByRange(src,other._rangeObj,target)
 
-class UIA(AutoSelectDetectionNVDAObject,Window):
+class UIA(Window):
 
 	liveNVDAObjectTable=weakref.WeakValueDictionary()
 
 	def findOverlayClasses(self,clsList):
 		if self.TextInfo==UIATextInfo:
-			clsList.append(EditableText)
+			clsList.append(EditableTextWithAutoSelectDetection)
 
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
@@ -154,6 +156,8 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		elif relation=="focus":
 			try:
 				UIAElement=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
+				# This object may be in a different window, so we need to recalculate the window handle.
+				kwargs['windowHandle']=None
 			except COMError:
 				log.debugWarning("getFocusedElement failed", exc_info=True)
 		else:
@@ -181,14 +185,19 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 		return obj
 
 	def __init__(self,windowHandle=None,UIAElement=None):
+		if getattr(self,"_doneInit",False):
+			# This instance was retrieved from the cache by __new__ and has already been constructed.
+			return
+		self._doneInit=True
+
 		if not UIAElement:
 			raise ValueError("needs either a UIA element or window handle")
 
-		self.UIAIsWindowElement=True
+		UIACachedWindowHandle=UIAElement.cachedNativeWindowHandle
+		self.UIAIsWindowElement=bool(UIACachedWindowHandle)
 		if not windowHandle:
-			windowHandle=UIAElement.cachedNativeWindowHandle
+			windowHandle=UIACachedWindowHandle
 			if not windowHandle:
-				self.UIAIsWindowElement=False
 				windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		if not windowHandle:
 			raise InvalidNVDAObject("no windowHandle")
@@ -196,7 +205,6 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 
 		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
 			self.TextInfo=UIATextInfo
-			self.initAutoSelectDetection()
 			self.value=""
 
 	def _isEqual(self,other):
@@ -421,16 +429,6 @@ class UIA(AutoSelectDetectionNVDAObject,Window):
 			self.UIAInvokePattern.Invoke()
 			return
 		raise NotImplementedError
-
-	def event_caret(self):
-		super(UIA, self).event_caret()
-		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
-			if config.conf["reviewCursor"]["followCaret"]:
-				try:
-					api.setReviewPosition(self.makeTextInfo(textInfos.POSITION_CARET))
-				except (NotImplementedError, RuntimeError):
-					pass
-			self.detectPossibleSelectionChange()
 
 class TreeviewItem(UIA):
 

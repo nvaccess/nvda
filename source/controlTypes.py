@@ -176,7 +176,7 @@ STATE_DROPTARGET=0x40000000
 
 
 speechRoleLabels={
-	ROLE_UNKNOWN:_("unknown object"),
+	ROLE_UNKNOWN:_("unknown"),
 	ROLE_WINDOW:_("window"),
 	ROLE_TITLEBAR:_("title bar"),
 	ROLE_PANE:_("pane"),

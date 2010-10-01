@@ -1,10 +1,16 @@
-/**
- * base/storage.cpp
- * Part of the NV  Virtual Buffer Library
- * This library is copyright 2007, 2008 NV Virtual Buffer Library Contributors
- * This library is licensed under the GNU Lesser General Public Licence. See license.txt which is included with this library, or see
- * http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- */
+/*
+This file is a part of the NVDA project.
+URL: http://www.nvda-project.org/
+Copyright 2006-2010 NVDA contributers.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2.0, as published by
+    the Free Software Foundation.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This license can be found at:
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+*/
 
 #include <iostream>
 #include <fstream>
@@ -156,7 +162,7 @@ bool VBufStorage_fieldNode_t::matchAttributes(const std::wstring& attribsString)
 	multiValueAttribsMap attribsMap;
 	multiValueAttribsStringToMap(attribsString,attribsMap);
 	bool outerMatch=true;
-	for(multiValueAttribsMap::iterator i=attribsMap.begin();i!=attribsMap.end();i++) {
+	for(multiValueAttribsMap::iterator i=attribsMap.begin();i!=attribsMap.end();++i) {
 		DEBUG_MSG(L"Checking for attrib "<<i->first);
 		VBufStorage_attributeMap_t::iterator foundIterator=attributes.find(i->first);
 		const std::wstring& foundValue=(foundIterator!=attributes.end())?foundIterator->second:L"";
@@ -164,7 +170,7 @@ bool VBufStorage_fieldNode_t::matchAttributes(const std::wstring& attribsString)
 		DEBUG_MSG(L"node's value for this attribute is "<<foundValue);
 		multiValueAttribsMap::iterator upperBound=attribsMap.upper_bound(i->first);
 		bool innerMatch=false;
-		for(multiValueAttribsMap::iterator j=i;j!=upperBound;j++) { 
+		for(multiValueAttribsMap::iterator j=i;j!=upperBound;++j) { 
 			i=j;
 			if(innerMatch)
 				continue;
@@ -225,23 +231,23 @@ void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring
 	wostringstream s;
 	int childCount=0;
 	for(VBufStorage_fieldNode_t* child=this->firstChild;child!=NULL;child=child->next) {
-		childCount++;
+		++childCount;
 	}
 	int parentChildCount=1;
 	int indexInParent=0;
 	for(VBufStorage_fieldNode_t* prev=this->previous;prev!=NULL;prev=prev->previous) {
-		indexInParent++;
-		parentChildCount++;
+		++indexInParent;
+		++parentChildCount;
 	}
 	for(VBufStorage_fieldNode_t* next=this->next;next!=NULL;next=next->next) {
-		parentChildCount++;
+		++parentChildCount;
 	}
 	s<<L"_childcount=\""<<childCount<<L"\" _indexInParent=\""<<indexInParent<<L"\" _parentChildCount=\""<<parentChildCount<<L"\" ";
 	text+=s.str();
-	for(VBufStorage_attributeMap_t::iterator i=this->attributes.begin();i!=this->attributes.end();i++) {
+	for(VBufStorage_attributeMap_t::iterator i=this->attributes.begin();i!=this->attributes.end();++i) {
 		text+=i->first;
 		text+=L"=\"";
-		for(std::wstring::iterator j=i->second.begin();j!=i->second.end();j++) {
+		for(std::wstring::iterator j=i->second.begin();j!=i->second.end();++j) {
 			appendCharToXML(*j,text);
 		}
 		text+=L"\" ";
@@ -342,7 +348,7 @@ bool VBufStorage_fieldNode_t::addAttribute(const std::wstring& name, const std::
 
 std::wstring VBufStorage_fieldNode_t::getAttributesString() const {
 	std::wstring attributesString;
-	for(std::map<std::wstring,std::wstring>::const_iterator i=attributes.begin();i!=attributes.end();i++) {
+	for(std::map<std::wstring,std::wstring>::const_iterator i=attributes.begin();i!=attributes.end();++i) {
 		attributesString+=i->first;
 		attributesString+=L':';
 		attributesString+=i->second;
@@ -424,7 +430,7 @@ void VBufStorage_textFieldNode_t::getTextInRange(int startOffset, int endOffset,
 	assert(endOffset<=this->length); //endOffset can't be greater than node length
 	if(useMarkup) {
 		wchar_t c;
-		for(int offset=startOffset;offset<endOffset;offset++) {
+		for(int offset=startOffset;offset<endOffset;++offset) {
 			c=this->text[offset];
 			appendCharToXML(c,text);
 		}
@@ -648,7 +654,7 @@ bool VBufStorage_buffer_t::replaceSubtree(VBufStorage_fieldNode_t* node, VBufSto
 	if(!identifierList.empty()) {
 		VBufStorage_controlFieldNode_t* lastAncestorNode=NULL;
 		int lastRelativeSelectionStart=0;
-		for(list<pair<VBufStorage_controlFieldNodeIdentifier_t,int> >::iterator i=identifierList.begin();i!=identifierList.end();i++) {
+		for(list<pair<VBufStorage_controlFieldNodeIdentifier_t,int> >::iterator i=identifierList.begin();i!=identifierList.end();++i) {
 			VBufStorage_controlFieldNode_t* currentAncestorNode=this->getControlFieldNodeWithIdentifier(i->first.docHandle,i->first.ID);
 			if(currentAncestorNode==NULL) break;
 			if(currentAncestorNode->parent!=lastAncestorNode) break;
@@ -957,7 +963,7 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 			lineEnd = bufferEnd;
 			node->getTextInRange(0,node->length,text,false);
 			bool lastWasSpace = false;
-			for (int i = relative; i < node->length; i++) {
+			for (int i = relative; i < node->length; ++i) {
 				if ((text[i] == L'\r' && (i + 1 >= node->length || text[i + 1] != L'\n'))
 					|| text[i] == L'\n'
 				) {
@@ -1046,7 +1052,7 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 		set<int> realBreaks;
 		realBreaks.insert(lineStart);
 		realBreaks.insert(lineEnd);
-		for(int i=lineStart,lineCharCounter=0;i<lineEnd;i++,lineCharCounter++) {
+		for(int i=lineStart,lineCharCounter=0;i<lineEnd;++i,++lineCharCounter) {
 			if(lineCharCounter==maxLineLength) {
 				if(possibleBreaks.size()>0) {
 					set<int>::iterator possible=possibleBreaks.upper_bound(i);

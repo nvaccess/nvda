@@ -1,7 +1,21 @@
+/*
+This file is a part of the NVDA project.
+URL: http://www.nvda-project.org/
+Copyright 2006-2010 NVDA contributers.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2.0, as published by
+    the Free Software Foundation.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This license can be found at:
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+*/
+
 #include <string>
 #include <sstream>
 #include <windows.h>
-#include <ia2/ia2.h>
+#include <ia2.h>
 #include "nvdaController.h"
 #include <common/ia2utils.h>
 #include "nvdaHelperRemote.h"
@@ -20,7 +34,7 @@ void getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 		}
 		VARIANT* varChildren=new VARIANT[childCount];
 		AccessibleChildren(pacc2,0,childCount,varChildren,&childCount);
-		for(int i=0;i<childCount;i++) {
+		for(int i=0;i<childCount;++i) {
 			if(varChildren[i].vt==VT_DISPATCH) {
 				IAccessible2* pacc2Child=NULL;
 				if(varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&pacc2Child)==S_OK) {
@@ -54,7 +68,7 @@ void getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 		if(!paccHypertext) {
 			textBuf.append(bstrText);
 		} else {
-			for(long index=0;index<textLength;index++) {
+			for(long index=0;index<textLength;++index) {
 				wchar_t realChar=bstrText[index];
 				bool charAdded=false;
 				if(realChar==L'\xfffc') {
@@ -92,7 +106,6 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	//Ignore all events but a few types
 	switch(eventID) {
 		case EVENT_OBJECT_SHOW:
-		case EVENT_OBJECT_HIDE:
 		case IA2_EVENT_TEXT_INSERTED:
 		break;
 		default:

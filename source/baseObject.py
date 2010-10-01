@@ -81,7 +81,8 @@ class AutoPropertyObject(object):
 	_get_x will make property x with a getter (you can get its value).
 	_set_x will make a property x with a setter (you can set its value).
 	If there is a _get_x but no _set_x then setting x will override the property completely.
-	Properties can also be cached.
+	Properties can also be cached for the duration of one core pump cycle.
+	This is useful if the same property is likely to be fetched multiple times in one cycle. For example, several NVDAObject properties are fetched by both braille and speech.
 	Setting _cache_x to C{True} specifies that x should be cached. Setting it to C{False} specifies that it should not be cached.
 	If _cache_x is not set, L{cachePropertiesByDefault} is used.
 	"""

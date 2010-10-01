@@ -1,0 +1,34 @@
+;Danish
+LangString msg_WelcomePageTitle ${LANG_Danish} "Setup for ${PRODUCT}, Version ${VERSION}"
+LangString msg_WelcomePageText ${LANG_Danish} "Velkommen til installationen af ${PRODUCT} (Non-Visual Desktop Access), en fri, open source skærmlæser til Microsoft Windows.$\n\
+Copyright 2006-2010 NVDA Bidragydere.$\n\
+Denne assistent fører dig igennem installationen af ${PRODUCT}; Det anbefales,at du afslutter alle andre programmer, inden du fortsætter denne Setup.$\n"
+LangString msg_NVDAWebSite ${LANG_Danish} "Besøg det officielle NVDA netsted"
+LangString msg_NVDARunning ${LANG_Danish} "Der kører allerede en anden kopi af NVDA. Den vil blive lukket, inden installationen kan fortsætte."
+LangString msg_pagePrevInstallLabel ${LANG_Danish} "Der blev fundet en tidligere installation af NVDA på dit system. Det anbefales kraftigt at afinstallere denne udgave, inden du fortsætter med installationen."
+LangString msg_pagePrevInstallUninstallCheckBox ${LANG_Danish} "Afinstaller (anbefales)"
+LangString shortcut_uninstall $(LANG_Danish) "Afinstaller"
+LangString shortcut_website $(LANG_Danish) "Netsted"
+LangString shortcut_exploreUserConfigDir $(LANG_Danish) "Udforsk mappen med brugerindstillinger"
+LangString docFolder $(LANG_Danish) "Dokumentation"
+LangString shortcut_readme $(LANG_Danish) "Readme"
+LangString shortcut_keycom $(LANG_Danish) "Tastaturkommandoer"
+LangString shortcut_userguide $(LANG_Danish) "Brugervejledning"
+LangString path_userguide $(LANG_Danish) "en\userGuide.html"
+LangString path_readmefile $(LANG_Danish) "en\readme.txt"
+LangString path_keycomfile $(LANG_Danish) "en\keyCommands.html"
+LangString UNLOG_HEADER ${LANG_Danish} "=========== AfinstallationsLog \
+                                         lad venligst være med at rette i denne fil ==========="
+LangString UNLOG_DAT_NOT_FOUND ${LANG_Danish} "${UNINST_DAT} ikke fundet, \
+                                                kan ikke udføre afinstallation."
+LangString UNLOG_DEL_FILE ${LANG_Danish} 'Slet fil "$R9"?'
+LangString UNLOG_DEL_DIR ${LANG_Danish} 'Slet mappe "$R9"?'
+LangString UNLOG_EMPTY_DIR ${LANG_Danish} "Tidligere installation fundet i $0.$\n\
+                                            Nødvendig fil ${UNINSTALL_LOG}.dat mangler.$\n$\n\
+                                            Det anbefales kraftigt at vælge en \
+                                            tom mappe og køre en ny installation."
+LangString UNLOG_ERROR_LOG ${LANG_Danish} "Fejl i log ${UNINSTALL_LOG}."
+LangString UNLOG_ERROR_CREATE ${LANG_Danish} "Fejl under oprettelse af ${UNINSTALL_LOG}."
+LangString section_service ${LANG_Danish} "NVDA service (Windows logon / understøtter sikkerhedsdialog)"
+LangString section_desktopShortcut ${LANG_Danish} "Opret ikon på skrivebordet og en genvejstast (ctrl+alt+n)"
+

@@ -2,7 +2,7 @@ import queueHandler
 import api
 import speech
 import appModuleHandler
-import virtualBufferHandler
+import treeInterceptorHandler
 import globalVars
 import controlTypes
 from logHandler import log
@@ -85,7 +85,7 @@ def executeEvent(eventName,obj,**kwargs):
 def doPreGainFocus(obj):
 	oldForeground=api.getForegroundObject()
 	oldFocus=api.getFocusObject()
-	oldVirtualBuffer=oldFocus.virtualBuffer if oldFocus else None
+	oldTreeInterceptor=oldFocus.treeInterceptor if oldFocus else None
 	api.setFocusObject(obj)
 	if globalVars.focusDifferenceLevel<=1:
 		newForeground=api.getDesktopObject().objectInForeground()
@@ -101,21 +101,21 @@ def doPreGainFocus(obj):
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
 		executeEvent("focusEntered",parent)
-	if obj.virtualBuffer is not oldVirtualBuffer:
-		if hasattr(oldVirtualBuffer,"event_virtualBuffer_loseFocus"):
-			oldVirtualBuffer.event_virtualBuffer_loseFocus()
-		if obj.virtualBuffer and not obj.virtualBuffer.isLoading and hasattr(obj.virtualBuffer,"event_virtualBuffer_gainFocus"):
-			obj.virtualBuffer.event_virtualBuffer_gainFocus()
+	if obj.treeInterceptor is not oldTreeInterceptor:
+		if hasattr(oldTreeInterceptor,"event_treeInterceptor_loseFocus"):
+			oldTreeInterceptor.event_treeInterceptor_loseFocus()
+		if obj.treeInterceptor and not obj.treeInterceptor.isTransitioning and hasattr(obj.treeInterceptor,"event_treeInterceptor_gainFocus"):
+			obj.treeInterceptor.event_treeInterceptor_gainFocus()
 	return True
  
 def doPreDocumentLoadComplete(obj):
 	focusObject=api.getFocusObject()
-	if (not obj.virtualBuffer or not obj.virtualBuffer.isAlive()) and (obj==focusObject or obj in api.getFocusAncestors()):
-		v=virtualBufferHandler.update(obj)
-		if v:
-			obj.virtualBuffer=v
-			#Focus may be in this new virtualBuffer, so force focus to look up its virtualBuffer
-			focusObject.virtualBuffer=virtualBufferHandler.getVirtualBuffer(focusObject)
+	if (not obj.treeInterceptor or not obj.treeInterceptor.isAlive) and (obj==focusObject or obj in api.getFocusAncestors()):
+		ti=treeInterceptorHandler.update(obj)
+		if ti:
+			obj.treeInterceptor=ti
+			#Focus may be in this new treeInterceptor, so force focus to look up its treeInterceptor
+			focusObject.treeInterceptor=treeInterceptorHandler.getTreeInterceptor(focusObject)
 	return True
 
 def executeEvent_appModuleLevel(name,obj,**kwargs):
@@ -123,14 +123,14 @@ def executeEvent_appModuleLevel(name,obj,**kwargs):
 	if appModule and appModule.selfVoicing:
 		return
 	if hasattr(appModule,"event_%s"%name):
-		getattr(appModule,"event_%s"%name)(obj,lambda: executeEvent_virtualBufferLevel(name,obj,**kwargs),**kwargs)
+		getattr(appModule,"event_%s"%name)(obj,lambda: executeEvent_treeInterceptorLevel(name,obj,**kwargs),**kwargs)
 	else:
-		executeEvent_virtualBufferLevel(name,obj,**kwargs)
+		executeEvent_treeInterceptorLevel(name,obj,**kwargs)
 
-def executeEvent_virtualBufferLevel(name,obj,**kwargs):
-	virtualBuffer=obj.virtualBuffer
-	if hasattr(virtualBuffer,'event_%s'%name) and not virtualBuffer.isLoading and virtualBuffer.VBufHandle:
-		getattr(virtualBuffer,'event_%s'%name)(obj,lambda: executeEvent_NVDAObjectLevel(name,obj,**kwargs),**kwargs)
+def executeEvent_treeInterceptorLevel(name,obj,**kwargs):
+	treeInterceptor=obj.treeInterceptor
+	if hasattr(treeInterceptor,'event_%s'%name) and not treeInterceptor.isTransitioning:
+		getattr(treeInterceptor,'event_%s'%name)(obj,lambda: executeEvent_NVDAObjectLevel(name,obj,**kwargs),**kwargs)
 	else:
 		executeEvent_NVDAObjectLevel(name,obj,**kwargs)
 

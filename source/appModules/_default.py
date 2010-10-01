@@ -24,11 +24,12 @@ import winUser
 import appModuleHandler
 import winKernel
 from gui import mainFrame
-import virtualBufferHandler
+import treeInterceptorHandler
 import scriptHandler
 import ui
 import braille
 import inputCore
+import virtualBuffers
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -40,16 +41,16 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_reportCurrentLine(self,gesture):
 		obj=api.getFocusObject()
-		virtualBuffer=obj.virtualBuffer
-		if hasattr(virtualBuffer,'TextInfo') and not virtualBuffer.passThrough:
-			obj=virtualBuffer
+		treeInterceptor=obj.treeInterceptor
+		if hasattr(treeInterceptor,'TextInfo') and not treeInterceptor.passThrough:
+			obj=treeInterceptor
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_CARET)
 		except (NotImplementedError, RuntimeError):
 			info=obj.makeTextInfo(textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_LINE)
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			speech.speakTextInfo(info,reason=speech.REASON_CARET)
+			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
 		else:
 			speech.speakSpelling(info.text)
 	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line")
@@ -86,9 +87,9 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_reportCurrentSelection(self,gesture):
 		obj=api.getFocusObject()
-		virtualBuffer=obj.virtualBuffer
-		if hasattr(virtualBuffer,'TextInfo') and not virtualBuffer.passThrough:
-			obj=virtualBuffer
+		treeInterceptor=obj.treeInterceptor
+		if hasattr(treeInterceptor,'TextInfo') and not treeInterceptor.passThrough:
+			obj=treeInterceptor
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 		except (RuntimeError, NotImplementedError):
@@ -211,6 +212,33 @@ class AppModule(appModuleHandler.AppModule):
 		speech.speakObject(obj)
 	script_moveNavigatorObjectToMouse.__doc__=_("Sets the navigator object to the current object under the mouse pointer and speaks it")
 
+	def script_navigatorObject_moveToFlatReviewAtObjectPosition(self,gesture):
+		obj=api.getNavigatorObject()
+		pos=obj.flatReviewPosition
+		if pos:
+			api.setReviewPosition(pos)
+			pos=pos.copy()
+			obj=api.getNavigatorObject()
+			speech.speakObjectProperties(obj,name=True,role=True)
+			pos.expand(textInfos.UNIT_LINE)
+			speech.speakTextInfo(pos)
+		else:
+			speech.speakMessage(_("No flat review for this object"))
+	script_navigatorObject_moveToFlatReviewAtObjectPosition.__doc__=_("Switches to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object")
+
+	def script_navigatorObject_moveToObjectAtFlatReviewPosition(self,gesture):
+		pos=api.getReviewPosition()
+		try:
+			obj=pos.NVDAObjectAtStart
+		except NotImplementedError:
+			obj=None
+		if obj and obj!=pos.obj:
+			api.setNavigatorObject(obj)
+			speech.speakObject(obj)
+		else:
+			speech.speakMessage(_("No object at flat review position"))
+	script_navigatorObject_moveToObjectAtFlatReviewPosition.__doc__=_("Moves to the object represented by the text at the position of the review cursor within flat review")
+
 	def script_navigatorObject_current(self,gesture):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
@@ -266,12 +294,14 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_navigatorObject_toFocus(self,gesture):
 		obj=api.getFocusObject()
-		if not isinstance(obj,NVDAObject):
-			speech.speakMessage(_("no focus"))
-		api.setNavigatorObject(obj)
+		try:
+			pos=obj.makeTextInfo(textInfos.POSITION_CARET)
+		except (NotImplementedError,RuntimeError):
+			pos=obj.makeTextInfo(textInfos.POSITION_FIRST)
+		api.setReviewPosition(pos)
 		speech.speakMessage(_("move to focus"))
 		speech.speakObject(obj,reason=speech.REASON_QUERY)
-	script_navigatorObject_toFocus.__doc__=_("Sets the navigator object to the current focus")
+	script_navigatorObject_toFocus.__doc__=_("Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible.")
 
 	def script_navigatorObject_moveFocus(self,gesture):
 		obj=api.getNavigatorObject()
@@ -360,7 +390,7 @@ class AppModule(appModuleHandler.AppModule):
 		api.setReviewPosition(info.copy())
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakMessage(_("top"))
-		speech.speakTextInfo(info,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object and speaks it")
 
 	def script_review_previousLine(self,gesture):
@@ -372,14 +402,14 @@ class AppModule(appModuleHandler.AppModule):
 		info.expand(textInfos.UNIT_LINE)
 		if res==0:
 			speech.speakMessage(_("top"))
-		speech.speakTextInfo(info,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
 	script_review_previousLine.__doc__=_("Moves the review cursor to the previous line of the current navigator object and speaks it")
 
 	def script_review_currentLine(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_LINE)
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			speech.speakTextInfo(info,reason=speech.REASON_CARET)
+			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
 		else:
 			speech.speakSpelling(info._get_text())
 	script_review_currentLine.__doc__=_("Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled")
@@ -393,7 +423,7 @@ class AppModule(appModuleHandler.AppModule):
 		info.expand(textInfos.UNIT_LINE)
 		if res==0:
 			speech.speakMessage(_("bottom"))
-		speech.speakTextInfo(info,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
 	script_review_nextLine.__doc__=_("Moves the review cursor to the next line of the current navigator object and speaks it")
 
 	def script_review_bottom(self,gesture):
@@ -401,7 +431,7 @@ class AppModule(appModuleHandler.AppModule):
 		api.setReviewPosition(info.copy())
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakMessage(_("bottom"))
-		speech.speakTextInfo(info,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
 	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object and speaks it")
 
 	def script_review_previousWord(self,gesture):
@@ -508,17 +538,6 @@ class AppModule(appModuleHandler.AppModule):
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
 
-	def script_review_moveToCaret(self,gesture):
-		try:
-			info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_CARET)
-		except NotImplementedError:
-				ui.message(_("No caret"))
-				return
-		api.setReviewPosition(info.copy())
-		info.expand(textInfos.UNIT_LINE)
-		speech.speakTextInfo(info,reason=speech.REASON_CARET)
-	script_review_moveToCaret.__doc__=_("Moves the review cursor to the position of the system caret, in the current navigator object")
-
 	def script_review_moveCaretHere(self,gesture):
 		review=api.getReviewPosition()
 		try:
@@ -546,31 +565,32 @@ class AppModule(appModuleHandler.AppModule):
 		speech.speechMode=newMode
 	script_speechMode.__doc__=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally.")
 
-	def script_moveToParentVirtualBuffer(self,gesture):
+	def script_moveToParentTreeInterceptor(self,gesture):
 		obj=api.getFocusObject()
 		parent=obj.parent
-		#Move up parents untill  the virtualBuffer of the parent is different to the virtualBuffer of the object.
-		#Note that this could include the situation where the parent has no virtualBuffer but the object did.
-		while parent and parent.virtualBuffer==obj.virtualBuffer:
+		#Move up parents untill  the tree interceptor of the parent is different to the tree interceptor of the object.
+		#Note that this could include the situation where the parent has no tree interceptor but the object did.
+		while parent and parent.treeInterceptor==obj.treeInterceptor:
 			parent=parent.parent
-		#If the parent has no virtualBuffer, keep moving up the parents until we find a parent that does have one.
-		while parent and not parent.virtualBuffer:
+		#If the parent has no tree interceptor, keep moving up the parents until we find a parent that does have one.
+		while parent and not parent.treeInterceptor:
 			parent=parent.parent
 		if parent:
-			parent.virtualBuffer.rootNVDAObject.setFocus()
+			parent.treeInterceptor.rootNVDAObject.setFocus()
 			import eventHandler
-			eventHandler.executeEvent("gainFocus",parent.virtualBuffer.rootNVDAObject)
-	script_moveToParentVirtualBuffer.__doc__=_("Moves the focus to the next closest virtualBuffer that contains the focus")
+			eventHandler.executeEvent("gainFocus",parent.treeInterceptor.rootNVDAObject)
+	script_moveToParentTreeInterceptor.__doc__=_("Moves the focus to the next closest document that contains the focus")
 
 	def script_toggleVirtualBufferPassThrough(self,gesture):
-		vbuf = api.getFocusObject().virtualBuffer
-		if not vbuf: return
+		vbuf = api.getFocusObject().treeInterceptor
+		if not vbuf or not isinstance(vbuf, virtualBuffers.VirtualBuffer):
+			return
 		# Toggle virtual buffer pass-through.
 		vbuf.passThrough = not vbuf.passThrough
 		# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
 		# If we're disabling pass-through, re-enable auto-pass-through.
 		vbuf.disableAutoPassThrough = vbuf.passThrough
-		virtualBufferHandler.reportPassThrough(vbuf)
+		virtualBuffers.reportPassThrough(vbuf)
 	script_toggleVirtualBufferPassThrough.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
 
 	def script_quit(self,gesture):
@@ -588,9 +608,9 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_sayAll(self,gesture):
 		o=api.getFocusObject()
-		v=o.virtualBuffer
-		if v and not v.passThrough:
-			o=v
+		ti=o.treeInterceptor
+		if ti and not ti.passThrough:
+			o=ti
 		try:
 			info=o.makeTextInfo(textInfos.POSITION_CARET)
 		except (NotImplementedError, RuntimeError):
@@ -601,14 +621,14 @@ class AppModule(appModuleHandler.AppModule):
 	def script_reportFormatting(self,gesture):
 		formatConfig={
 			"detectFormatAfterCursor":False,
-			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,
+			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,
 			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
 			"reportPage":False,"reportLineNumber":False,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,
 		}
 		o=api.getFocusObject()
-		v=o.virtualBuffer
+		v=o.treeInterceptor
 		if v and not v.passThrough:
 			o=v
 		try:
@@ -686,29 +706,16 @@ class AppModule(appModuleHandler.AppModule):
 			obj.speakDescendantObjects()
 	script_speakForeground.__doc__ = _("speaks the current foreground object")
 
-	def script_test_navigatorWindowInfo(self,gesture):
+	def script_test_navigatorDisplayModelText(self,gesture):
 		obj=api.getNavigatorObject()
-		import ctypes
-		w=ctypes.windll.user32.GetAncestor(obj.windowHandle,3)
-		w=ctypes.windll.user32.GetAncestor(w,3)
-		className=winUser.getClassName(w)
-		speech.speakMessage("%s, %s"%(w,className))
-		if not isinstance(obj,NVDAObject): 
-			speech.speakMessage(_("no navigator object"))
-			return
-		if scriptHandler.getLastScriptRepeatCount()>=1:
-			if api.copyToClip("Control ID: %s\r\nClass: %s\r\ninternal text: %s"%(winUser.getControlID(obj.windowHandle),obj.windowClassName,winUser.getWindowText(obj.windowHandle))):
-				speech.speakMessage(_("copied to clipboard"))
-		else:
-			log.info("%s %s"%(obj.role,obj.windowHandle))
-			speech.speakMessage("%s"%obj)
-			speech.speakMessage(_("Control ID: %s")%winUser.getControlID(obj.windowHandle))
-			speech.speakMessage(_("Class: %s")%obj.windowClassName)
-			speech.speakSpelling(obj.windowClassName)
-			speech.speakMessage(_("internal text: %s")%winUser.getWindowText(obj.windowHandle))
-			speech.speakMessage(_("text: %s")%obj.windowText)
-			speech.speakMessage("is unicode: %s"%ctypes.windll.user32.IsWindowUnicode(obj.windowHandle))
-	script_test_navigatorWindowInfo.__doc__ = _("reports some information about the current navigator object, mainly useful for developers. When pressed 2 times it copies control id, class and internal text to the windows clipboard")
+		text=obj.displayText
+		speech.speakMessage(text)
+		log.info(text)
+
+	def script_navigatorObject_devInfo(self,gesture):
+		obj=api.getNavigatorObject()
+		log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo), activateLogViewer=True)
+	script_navigatorObject_devInfo.__doc__ = _("Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined.")
 
 	def script_toggleProgressBarOutput(self,gesture):
 		outputMode=config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]

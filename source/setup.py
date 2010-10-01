@@ -66,7 +66,7 @@ class py2exe(build_exe.py2exe):
 			+ getLocaleDataFiles()
 			+ getRecursiveDataFiles("synthDrivers", "synthDrivers", excludes=("*%s"%sourceModExtention,"*%s"%compiledModExtention))
 			+ getRecursiveDataFiles("brailleDisplayDrivers", "brailleDisplayDrivers", excludes=("*%s"%sourceModExtention,"*%s"%compiledModExtention))
-			+ getRecursiveDataFiles('documentation', '../user_docs', excludes=('*.t2t',))
+			+ getRecursiveDataFiles('documentation', '../user_docs', excludes=('*.t2t', '*.t2tconf'))
 		)
 
 		if self.enable_uiAccess:
@@ -141,6 +141,8 @@ setup(
 		"bundle_files": 3,
 		"excludes": ["comInterfaces", "Tkinter"],
 		"packages": ["NVDAObjects","virtualBuffers","appModules","brailleDisplayDrivers","synthDrivers"],
+		# Can be removed once included by a bundled module.
+		"includes": ["objbase"],
 	}},
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),

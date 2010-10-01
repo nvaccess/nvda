@@ -11,6 +11,7 @@ import re
 import weakref
 from logHandler import log
 import eventHandler
+from displayModel import DisplayModelTextInfo
 import baseObject
 import speech
 import api
@@ -18,10 +19,16 @@ import textInfos.offsets
 import config
 import controlTypes
 import appModuleHandler
-import virtualBufferHandler
+import treeInterceptorHandler
 import braille
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
+	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
+	The L{NVDAObject.basicText} attribute is used as the text to expose.
+	"""
+
+	def _get_unit_mouseChunk(self):
+		return textInfos.UNIT_STORY
 
 	def _getStoryText(self):
 		return self.obj.basicText
@@ -45,6 +52,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 	def __call__(self,chooseBestAPI=True,**kwargs):
 		if chooseBestAPI:
 			APIClass=self.findBestAPIClass(kwargs)
+			if not APIClass: return None
 		else:
 			APIClass=self
 
@@ -71,7 +79,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		# Determine the bases for the new class.
 		bases=[]
 		for index in xrange(len(clsList)):
-			# A class doesn't need to be a base if it is already a subclass of a previous base.
+			# A class doesn't need to be a base if it is already implicitly included by being a superclass of a previous base.
 			if index==0 or not issubclass(clsList[index-1],clsList[index]):
 				bases.append(clsList[index])
 
@@ -107,14 +115,35 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		return obj
 
 class NVDAObject(baseObject.ScriptableObject):
-	"""
-	NVDA's representation of a control or widget in the Operating System. Provides information such as a name, role, value, description etc.
+	"""NVDA's representation of a single control/widget.
+	Every widget, regardless of how it is exposed by an application or the operating system, is represented by a single NVDAObject instance.
+	This allows NVDA to work with all widgets in a uniform way.
+	An NVDAObject provides information about the widget (e.g. its name, role and value),
+	as well as functionality to manipulate it (e.g. perform an action or set focus).
+	Events for the widget are handled by special event methods on the object.
+	Commands triggered by input from the user can also be handled by special methods called scripts.
+	See L{ScriptableObject} for more details.
+	
+	The only attribute that absolutely must be provided is L{processID}.
+	However, subclasses should provide at least the L{name} and L{role} attributes in order for the object to be meaningful to the user.
+	Attributes such as L{parent}, L{firstChild}, L{next} and L{previous} link an instance to other NVDAObjects in the hierarchy.
+	In order to facilitate access to text exposed by a widget which supports text content (e.g. an editable text control),
+	a L{textInfos.TextInfo} should be implemented and the L{TextInfo} attribute should specify this class.
+	
+	There are two main types of NVDAObject classes:
+		* API classes, which provide the core functionality to work with objects exposed using a particular API (e.g. MSAA/IAccessible).
+		* Overlay classes, which supplement the core functionality provided by an API class to handle a specific widget or type of widget.
+	Most developers need only be concerned with overlay classes.
+	The overlay classes to be used for an instance are determined using the L{findOverlayClasses} method on the API class.
+	An L{AppModule} can also choose overlay classes for an instance using the L{AppModule.chooseNVDAObjectOverlayClasses} method.
 	"""
 
 	__metaclass__=DynamicNVDAObjectType
 	cachePropertiesByDefault = True
 
-	TextInfo=NVDAObjectTextInfo #:The TextInfo class this object should use
+	#: The TextInfo class this object should use to provide access to text.
+	#: @type: type; L{textInfos.TextInfo}
+	TextInfo=NVDAObjectTextInfo
 
 	@classmethod
 	def findBestAPIClass(cls,kwargs,relation=None):
@@ -135,7 +164,8 @@ class NVDAObject(baseObject.ScriptableObject):
 					continue
 				if possibleAPIClass.kwargsFromSuper(kwargs,relation=relation):
 					return possibleAPIClass.findBestAPIClass(kwargs,relation=relation)
-		return newAPIClass
+		return newAPIClass if newAPIClass is not NVDAObject else None
+
 
 	@classmethod
 	def getPossibleAPIClasses(cls,kwargs,relation=None):
@@ -194,7 +224,7 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		kwargs={}
 		APIClass=NVDAObject.findBestAPIClass(kwargs,relation=(x,y))
-		return APIClass(chooseBestAPI=False,**kwargs)
+		return APIClass(chooseBestAPI=False,**kwargs) if APIClass else None
 
 	@staticmethod
 	def objectWithFocus():
@@ -204,7 +234,7 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		kwargs={}
 		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="focus")
-		return APIClass(chooseBestAPI=False,**kwargs)
+		return APIClass(chooseBestAPI=False,**kwargs) if APIClass else None
 
 	@staticmethod
 	def objectInForeground():
@@ -214,7 +244,8 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		kwargs={}
 		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="foreground")
-		return APIClass(chooseBestAPI=False,**kwargs)
+		return APIClass(chooseBestAPI=False,**kwargs) if APIClass else None
+
 
 	def __init__(self):
 		super(NVDAObject,self).__init__()
@@ -244,41 +275,41 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		return not self.__eq__(other)
 
-	def _get_virtualBufferClass(self):
+	def _get_treeInterceptorClass(self):
 		"""
-		If this NVDAObject should use a virtualBuffer, then this property provides the L{virtualBuffers.VirtualBuffer} class it should use. 
+		If this NVDAObject should use a treeInterceptor, then this property provides the L{treeInterceptorHandler.TreeInterceptor} class it should use. 
 		If not then it should be not implemented.
 		"""
 		raise NotImplementedError
 
-	def _get_virtualBuffer(self):
-		"""Retreaves the virtualBuffer associated with this object.
-		If a virtualBuffer has not been specifically set, the L{virtualBufferHandler} is asked if it can find a virtualBuffer containing this object.
-		@return: the virtualBuffer
-		@rtype: L{virtualBuffers.VirtualBuffer}
+	def _get_treeInterceptor(self):
+		"""Retreaves the treeInterceptor associated with this object.
+		If a treeInterceptor has not been specifically set, the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
+		@return: the treeInterceptor
+		@rtype: L{treeInterceptorHandler.TreeInterceptor}
 		""" 
-		if hasattr(self,'_virtualBuffer'):
-			v=self._virtualBuffer
-			if isinstance(v,weakref.ref):
-				v=v()
-			if v and v in virtualBufferHandler.runningTable:
-				return v
+		if hasattr(self,'_treeInterceptor'):
+			ti=self._treeInterceptor
+			if isinstance(ti,weakref.ref):
+				ti=ti()
+			if ti and ti in treeInterceptorHandler.runningTable:
+				return ti
 			else:
-				self._virtualBuffer=None
+				self._treeInterceptor=None
 				return None
 		else:
-			v=virtualBufferHandler.getVirtualBuffer(self)
-			if v:
-				self._virtualBuffer=weakref.ref(v)
-			return v
+			ti=treeInterceptorHandler.getTreeInterceptor(self)
+			if ti:
+				self._treeInterceptor=weakref.ref(ti)
+			return ti
 
-	def _set_virtualBuffer(self,obj):
-		"""Specifically sets a virtualBuffer to be associated with this object.
+	def _set_treeInterceptor(self,obj):
+		"""Specifically sets a treeInterceptor to be associated with this object.
 		"""
 		if obj:
-			self._virtualBuffer=weakref.ref(obj)
+			self._treeInterceptor=weakref.ref(obj)
 		else: #We can't point a weakref to None, so just set the private variable to None, it can handle that
-			self._virtualBuffer=None
+			self._treeInterceptor=None
 
 	def _get_appModule(self):
 		"""Retreaves the appModule representing the application this object is a part of by asking L{appModuleHandler}.
@@ -438,6 +469,8 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError
 
+	tableCellCoordsInName=False #:True if the object's name contains the cell coordinates, such as 'A1'. Speech and Braille can choose to in this case not present the actual row and column information as the name is already enough.
+
 	def _get_table(self):
 		"""Retreaves the object that represents the table that this object is contained in, if this object is a table cell.
 		@rtype: L{NVDAObject}
@@ -464,15 +497,13 @@ class NVDAObject(baseObject.ScriptableObject):
 		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
 			return self.presType_unavailable
 		role=self.role
-		if controlTypes.STATE_FOCUSED in states:
-			return self.presType_content
 
 		#Static text should be content only if it really use usable text
 		if role==controlTypes.ROLE_STATICTEXT:
 			text=self.makeTextInfo(textInfos.POSITION_ALL).text
 			return self.presType_content if text and not text.isspace() else self.presType_layout
 
-		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_TITLEBAR):
+		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_TITLEBAR):
 			return self.presType_layout
 		name = self.name
 		description = self.description
@@ -602,6 +633,40 @@ Tries to force this object to take the focus.
 		"""
 		return False
 
+	def _get_indexInParent(self):
+		"""The index of this object in its parent object.
+		@return: The 0 based index, C{None} if there is no parent.
+		@rtype: int
+		@raise NotImplementedError: If not supported by the underlying object.
+		"""
+		raise NotImplementedError
+
+	def _get_flowsTo(self):
+		"""The object to which content flows from this object.
+		@return: The object to which this object flows, C{None} if none.
+		@rtype: L{NVDAObject}
+		@raise NotImplementedError: If not supported by the underlying object.
+		"""
+		raise NotImplementedError
+
+	def _get_flowsFrom(self):
+		"""The object from which content flows to this object.
+		@return: The object from which this object flows, C{None} if none.
+		@rtype: L{NVDAObject}
+		@raise NotImplementedError: If not supported by the underlying object.
+		"""
+		raise NotImplementedError
+
+	def _get_embeddingTextInfo(self):
+		"""Retrieve the parent text range which embeds this object.
+		The returned text range will have its start positioned on the embedded object character associated with this object.
+		That is, calling L{textInfos.TextInfo.getEmbeddedObject}() on the returned text range will return this object.
+		@return: The text range for the embedded object character associated with this object or C{None} if this is not an embedded object.
+		@rtype: L{textInfos.TextInfo}
+		@raise NotImplementedError: If not supported.
+		"""
+		raise NotImplementedError
+
 	def _get_isPresentableFocusAncestor(self):
 		"""Determine if this object should be presented to the user in the focus ancestry.
 		@return: C{True} if it should be presented in the focus ancestry, C{False} if not.
@@ -651,13 +716,13 @@ Tries to force this object to take the focus.
 		self._mouseEntered=True
 		try:
 			info=self.makeTextInfo(textInfos.Point(x,y))
-			info.expand(info.unit_mouseChunk)
-		except:
-			info=NVDAObjectTextInfo(self,textInfos.POSITION_ALL)
+		except NotImplementedError:
+			info=NVDAObjectTextInfo(self,textInfos.POSITION_FIRST)
+		except LookupError:
+			return
 		if config.conf["reviewCursor"]["followMouse"]:
 			api.setReviewPosition(info)
-		if not config.conf["mouse"]["reportTextUnderMouse"]:
-			return
+		info.expand(info.unit_mouseChunk)
 		oldInfo=getattr(self,'_lastMouseTextInfoObject',None)
 		self._lastMouseTextInfoObject=info
 		if not oldInfo or info.__class__!=oldInfo.__class__ or info.compareEndPoints(oldInfo,"startToStart")!=0 or info.compareEndPoints(oldInfo,"endToEnd")!=0:
@@ -727,6 +792,25 @@ This code is executed if a gain focus event is received by this object.
 				except (NotImplementedError, RuntimeError):
 					pass
 
+	def _get_flatReviewPosition(self):
+		"""Locates a TextInfo positioned at this object, in the closest flat review."""
+		parent=self.simpleParent
+		while parent:
+			ti=parent.treeInterceptor
+			if ti and self in ti and ti.rootNVDAObject==parent:
+				return ti.makeTextInfo(self)
+			if issubclass(parent.TextInfo,DisplayModelTextInfo):
+				try:
+					return parent.makeTextInfo(api.getReviewPosition().pointAtStart)
+				except (NotImplementedError,LookupError):
+					pass
+				try:
+					return parent.makeTextInfo(self)
+				except (NotImplementedError,RuntimeError):
+					pass
+				return parent.makeTextInfo(textInfos.POSITION_FIRST)
+			parent=parent.simpleParent
+
 	def _get_basicText(self):
 		newTime=time.time()
 		oldTime=getattr(self,'_basicTextTime',0)
@@ -741,36 +825,72 @@ This code is executed if a gain focus event is received by this object.
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
 
-class AutoSelectDetectionNVDAObject(NVDAObject):
-
-	"""Provides an NVDAObject with the means to detect if the text selection has changed, and if so to announce the change
-	@ivar hasContentChangedSinceLastSelection: if True then the content has changed.
-	@ivar hasContentChangedSinceLastSelection: boolean
-	"""
-
-	def initAutoSelectDetection(self):
-		"""Initializes the autoSelect detection code so that it knows about what is currently selected."""
+	def _get_devInfo(self):
+		"""Information about this object useful to developers.
+		Subclasses may extend this, calling the superclass property first.
+		@return: A list of text strings providing information about this object useful to developers.
+		@rtype: list of str
+		"""
+		info = []
 		try:
-			self._lastSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		except:
-			self._lastSelectionPos=None
-		self.hasContentChangedSinceLastSelection=False
-
-	def detectPossibleSelectionChange(self):
-		"""Detects if the selection has been changed, and if so it speaks the change."""
-		oldInfo=getattr(self,'_lastSelectionPos',None)
-		if not oldInfo:
-			return
+			ret = repr(self.name)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("name: %s" % ret)
 		try:
-			newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		except:
-			self._lastSelectionPos=None
-			return
-		self._lastSelectionPos=newInfo.copy()
-		hasContentChanged=self.hasContentChangedSinceLastSelection
-		self.hasContentChangedSinceLastSelection=False
-		if hasContentChanged:
-			generalize=True
-		else:
-			generalize=False
-		speech.speakSelectionChange(oldInfo,newInfo,generalize=generalize)
+			ret = self.role
+			for name, const in controlTypes.__dict__.iteritems():
+				if name.startswith("ROLE_") and ret == const:
+					ret = name
+					break
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("role: %s" % ret)
+		try:
+			stateConsts = dict((const, name) for name, const in controlTypes.__dict__.iteritems() if name.startswith("STATE_"))
+			ret = ", ".join(
+				stateConsts.get(state) or str(state)
+				for state in self.states)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("states: %s" % ret)
+		try:
+			ret = repr(self)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("Python object: %s" % ret)
+		try:
+			ret = repr(self.__class__.__mro__)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("Python class mro: %s" % ret)
+		try:
+			ret = repr(self.description)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("description: %s" % ret)
+		try:
+			ret = repr(self.location)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("location: %s" % ret)
+		try:
+			ret = self.value
+			if isinstance(ret, basestring) and len(ret) > 100:
+				ret = "%r (truncated)" % ret[:100]
+			else:
+				ret = repr(ret)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("value: %s" % ret)
+		try:
+			ret = repr(self.appModule)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("appModule: %s" % ret)
+		try:
+			ret = repr(self.TextInfo)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("TextInfo: %s" % ret)
+		return info

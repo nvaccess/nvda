@@ -19,6 +19,17 @@ def main():
 		if action == "service_NVDALauncher":
 			import nvda_service
 			nvda_service.nvdaLauncher()
+		elif action=="launchNVDA":
+			import subprocess
+			import shellapi
+			import winUser
+			shellapi.ShellExecute(0,None,
+				ur"%s\nvda.exe"%sys.exec_prefix.decode("mbcs"),
+				subprocess.list2cmdline(args).decode("mbcs"),
+				None,winUser.SW_SHOWNORMAL)
+		elif action=="setNvdaSystemConfig":
+			import config
+			config._setSystemConfig(args[0])
 		elif action == "config_setStartOnLogonScreen":
 			enable = bool(int(args[0]))
 			import config

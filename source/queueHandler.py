@@ -8,6 +8,7 @@ import types
 from Queue import Queue
 import globalVars
 from logHandler import log
+import watchdog
 
 eventQueue=Queue()
 eventQueue.__name__="eventQueue"
@@ -41,10 +42,11 @@ def flushQueue(queue):
 	for count in range(queue.qsize()+1):
 		if not queue.empty():
 			(func,args,kwargs)=queue.get_nowait()
+			watchdog.alive()
 			try:
 				func(*args,**kwargs)
 			except:
-				log.error("Error in func %s from %s"%(func.__name__,queue.__name__),exc_info=True)
+				log.exception("Error in func %s from %s"%(func.__name__,queue.__name__))
 
 def isPendingItems(queue):
 	if not queue.empty():
@@ -63,13 +65,13 @@ def pumpAll():
 		except KeyError:
 			# Generator was cancelled. This is fine.
 			continue
+		watchdog.alive()
 		try:
-			log.debug("pumping generator %d"%ID)
 			next(gen)
 		except StopIteration:
 			log.debug("generator %s finished"%ID)
 			del generators[ID]
 		except:
-			log.error("error in generator %d"%ID,exc_info=True)
+			log.exception("error in generator %d"%ID)
 			del generators[ID]
 	flushQueue(eventQueue)

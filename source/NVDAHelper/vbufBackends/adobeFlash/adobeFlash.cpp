@@ -1,3 +1,17 @@
+/*
+This file is a part of the NVDA project.
+URL: http://www.nvda-project.org/
+Copyright 2006-2010 NVDA contributers.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2.0, as published by
+    the Free Software Foundation.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This license can be found at:
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+*/
+
 #include <sstream>
 #include <cassert>
 #include <map>
@@ -33,7 +47,7 @@ void CALLBACK AdobeFlashVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHO
 	int docHandle=(int)hwnd;
 	int ID=childID;
 	VBufBackend_t* backend=NULL;
-	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();i++) {
+	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();++i) {
 		HWND rootWindow=(HWND)((*i)->rootDocHandle);
 		if(rootWindow==hwnd) {
 			backend=(*i);
@@ -99,7 +113,7 @@ int id=accChildID;
 	int states=varState.lVal;
 	VariantClear(&varState);
 	//Add each state that is on, as an attrib
-	for(int i=0;i<32;i++) {
+	for(int i=0;i<32;++i) {
 		int state=1<<i;
 		if(state&states) {
 			s.str(L"");

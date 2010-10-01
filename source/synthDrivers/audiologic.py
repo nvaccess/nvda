@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2010 Gianluca Casalino <gianluca.casalino@poste.it>, James Teh <jamie@jantrid.net>
+#Copyright (C) 2008-2010 Gianluca Casalino <gianluca@spazioausili.net>, James Teh <jamie@jantrid.net>
 
 import _audiologic
 from synthDriverHandler import SynthDriver

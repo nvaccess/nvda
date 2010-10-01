@@ -48,6 +48,7 @@ GUI_SYSTEMMENUMODE=0x00000008
 GUI_POPUPMENUMODE=0x00000010
 SPI_GETSCREENREADER=70
 SPI_SETSCREENREADER=71
+SPIF_UPDATEINIFILE=1
 SPIF_SENDCHANGE=2
 WS_DISABLED=0x8000000
 WS_VISIBLE=0x10000000
@@ -61,6 +62,9 @@ WS_VSCROLL=0x200000
 WS_CAPTION=0xC00000
 BS_GROUPBOX=7
 ES_MULTILINE=4
+LBS_OWNERDRAWFIXED=0x0010
+LBS_OWNERDRAWVARIABLE=0x0020
+LBS_HASSTRINGS=0x0040
 WM_NULL=0
 WM_COPYDATA=74
 WM_NOTIFY=78
@@ -263,7 +267,7 @@ SW_HIDE = 0
 SW_SHOWNORMAL = 1
 
 def setSystemScreenReaderFlag(val):
-	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_SENDCHANGE)
+	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_UPDATEINIFILE|SPIF_SENDCHANGE)
 
 def getSystemScreenReaderFlag():
 	val = BOOL()
@@ -415,7 +419,10 @@ def getWindowStyle(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_STYLE)
 
 def getPreviousWindow(hwnd):
-		return user32.GetWindow(hwnd,GW_HWNDPREV)
+		try:
+			return user32.GetWindow(hwnd,GW_HWNDPREV)
+		except WindowsError:
+			return 0
 
 def getKeyboardLayout(idThread=0):
 	return user32.GetKeyboardLayout(idThread)

@@ -1,8 +1,8 @@
 #textInfos/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
 
 import weakref
 import re
@@ -10,18 +10,39 @@ import baseObject
 import config
 import speech
 
+"""Framework for accessing text content in widgets.
+The core component of this framework is the L{TextInfo} class.
+In order to access text content for a widget, a L{TextInfo} implementation is required.
+A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable text review of information about a widget which does not have or support text content.
+"""
+
 class Field(dict):
-	"""The base type for fields in textInfo objects"""
+	"""Provides information about a piece of text."""
 
 class FormatField(Field):
-	pass
+	"""Provides information about the formatting of text; e.g. font information and hyperlinks."""
 
 class ControlField(Field):
-	pass
+	"""Provides information about a control which encompasses text.
+	For example, a piece of text might be contained within a table, button, form, etc.
+	This field contains information about such a control, such as its role, name and description.
+	"""
 
 class FieldCommand(object):
+	"""A command indicating a L{Field} in a sequence of text and fields.
+	When retrieving text with its associated fields, a L{TextInfo} provides a sequence of text strings and L{FieldCommand}s.
+	A command indicates the start or end of a control or that the formatting of the text has changed.
+	"""
 
 	def __init__(self,command,field):
+		"""Constructor.
+		@param command: The command; one of:
+			"controlStart", indicating the start of a L{ControlField};
+			"controlEnd", indicating the end of a L{ControlField}; or
+			"formatChange", indicating a L{FormatField} change.
+		@param field: The field associated with this command; may be C{None} for controlEnd.
+		@type field: L{Field}
+		"""
 		if command not in ("controlStart","controlEnd","formatChange"):
 			raise ValueError("Unknown command: %s"%command)
 		elif command=="controlStart" and not isinstance(field,ControlField):
@@ -39,31 +60,33 @@ POSITION_SELECTION="selection"
 POSITION_ALL="all"
 
 class Point(object):
-	"""Represents a set of X Y coordinates."""
+	"""Represents a point on the screen.
+	This is used when associating a point on the screen with a piece of text.
+	"""
 
 	def __init__(self,x,y):
 		"""
 		@param x: the x coordinate
-		@type x: integer
+		@type x: int
 		@param y: The y coordinate
-		@type y: integer
+		@type y: int
 		"""
 		self.x=x
 		self.y=y
 
 class Points(object):
-	"""Represents two sets of X Y coordinates."""
+	"""Represents two points on the screen."""
 
 	def __init__(self,startX,startY,endX,endY):
 		"""
 		@param startX: the x coordinate of the first point.
-		@type startX: integer
-		@param xstartY: The y coordinate of the first point.
-		@type startY: integer
+		@type startX: int
+		@param startY: The y coordinate of the first point.
+		@type startY: int
 		@param endX: the x coordinate of the second point.
-		@type endX: integer
+		@type endX: int
 		@param endY: the y coordinate of the second point.
-		@type endY: integer
+		@type endY: int
 		"""
 		self.startX=startX
 		self.startY=startY
@@ -71,19 +94,20 @@ class Points(object):
 		self.endY=endY
 
 class Bookmark(baseObject.AutoPropertyObject):
-	"""The type for representing a static absolute position from a L{TextInfo} object
-@ivar infoClass: the class of the TextInfo object
-@type infoClass: type
-@ivar data: data that can be used to reconstruct the position the textInfo object was in when it generated the bookmark
-"""
+	"""Represents a static absolute position in some text.
+	This is used to construct a L{TextInfo} at an exact previously obtained position.
+	"""
 
 	def __init__(self,infoClass,data):
 		"""
-@param infoClass: the class of the TextInfo object
-@type infoClass: type
-@param data: data that can be used to reconstruct the position the textInfo object was in when it generated the bookmark
-"""
+		@param infoClass: The class of the L{TextInfo} object.
+		@type infoClass: type; subclass of L{TextInfo}
+		@param data: Data that can be used to reconstruct the position the textInfo object was in when it generated the bookmark.
+		"""
+		#: The class of the L{TextInfo} object.
+		#: @type: type; subclass of L{TextInfo}
 		self.infoClass=infoClass
+		#: Data that can be used to reconstruct the position the textInfo object was in when it generated the bookmark.
 		self.data=data
 
 	def __eq__(self,other):
@@ -92,7 +116,6 @@ class Bookmark(baseObject.AutoPropertyObject):
 
 	def __ne__(self,other):
 		return not self==other
-
 
 #Unit constants
 UNIT_CHARACTER="character"
@@ -117,44 +140,58 @@ unitLabels={
 }
 
 class TextInfo(baseObject.AutoPropertyObject):
-	"""Contains information about the text at the given position or unit
-@ivar position: the position (offset or point) this object was based on. Can also be one of the position constants to be caret or selection etc
-@type position: int, tuple or string
-@ivar obj: The NVDA object this object is representing text from
-@type: L{NVDAObjects.NVDAObject}
-@ivar isCollapsed: True if this textInfo object represents a collapsed range, False if the range is expanded to cover one or more characters 
-@type isCollapsed: bool
-@ivar text: The text with in the set range. It is not garenteed to be the exact length of the range in offsets
-@type text: string
-@ivar bookmark: a unique identifier that can be used to make another textInfo object at this position
-@type bookmark: L{Bookmark}
-"""
+	"""Provides information about a range of text in an object and facilitates access to all text in the widget.
+	A TextInfo represents a specific range of text, providing access to the text itself, as well as information about the text such as its formatting and any associated controls.
+	This range can be moved within the object's text relative to the initial position.
+	
+	At a minimum, subclasses must:
+		* Extend the constructor so that it can set up the range at the specified position.
+		* Implement the L{move}, L{expand}, L{compareEndPoints}, L{setEndPoint} and L{copy} methods.
+		* Implement the L{text} and L{bookmark} attributes.
+		* Support at least the L{UNIT_CHARACTER}, L{UNIT_WORD} and L{UNIT_LINE} units.
+		* Support at least the L{POSITION_FIRST}, L{POSITION_LAST} and L{POSITION_ALL} positions.
+	If an implementation should support tracking with the mouse,
+	L{Points} must be supported as a position.
+	To support routing to a screen point from a given position, L{pointAtStart} must be implemented.
+	In order to support text formatting or control information, L{getTextWithFields} should be overridden.
+	
+	@ivar bookmark: A unique identifier that can be used to make another textInfo object at this position.
+	@type bookmark: L{Bookmark}
+	"""
  
 	def __init__(self,obj,position):
+		"""Constructor.
+		Subclasses must extend this, calling the superclass method first.
+		@param position: The initial position of this range; one of the POSITION_* constants or a position object supported by the implementation.
+		@type position: int, tuple or string
+		@param obj: The object containing the range of text being represented.
 		"""
-@param position: the position (offset or point) this object was based on. Can also be one of the position constants to be caret or selection etc
-@type position: int, tuple or string
-@param obj: The NVDA object this object is representing text from
-@type: L{NVDAObject}
-"""
+		super(TextInfo,self).__init__()
 		self._obj=weakref.ref(obj) if type(obj)!=weakref.ProxyType else obj
+		#: The position with which this instance was constructed.
 		self.basePosition=position
 
 	def _get_obj(self):
+		"""The object containing the range of text being represented."""
 		return self._obj()
 
 	def _get_unit_mouseChunk(self):
 		return config.conf["mouse"]["mouseTextUnit"]
 
 	def _get_text(self):
+		"""The text with in this range.
+		Subclasses must implement this.
+		@note: The text is not guaranteed to be the exact length of the range in offsets.
+		"""
 		raise NotImplementedError
 
 	def getTextWithFields(self,formatConfig=None):
-		"""Retreaves the text in this range, also including fields to indicate when controls start and end, and when format changes occure.
-		@param formatConfig: a documentFormatting config key, useful if you wish to force a particular configuration for a particular task.
-		@type formatConfig: dictionary
-		@returns: a list of text strings and field commands
-		@rtype: list
+		"""Retreaves the text in this range, as well as any control/format fields associated therewith.
+		Subclasses may override this. The base implementation just returns the text.
+		@param formatConfig: Document formatting configuration, useful if you wish to force a particular configuration for a particular task.
+		@type formatConfig: dict
+		@return: A sequence of text strings interspersed with associated field commands.
+		@rtype: list of str and L{FieldCommand}
 		""" 
 		return [self.text]
 
@@ -177,14 +214,14 @@ class TextInfo(baseObject.AutoPropertyObject):
 		raise NotImplementedError
 
 	def compareEndPoints(self,other,which):
-		""" compares an end of this object to an end of another object
-@param other: the text info object to compare with
-@type other: L{TextInfo}
-@param which: one of the strings startToStart startToEnd endToStart endToEnd
-@TYPE WHICH: STRING
-@returns: -1 if this end is before other end, or 1 if this end is after other end or 0 if this end and other end are the same. 
-@rtype: int
-"""
+		""" compares one end of this range to one end of another range.
+		Subclasses must implement this.
+		@param other: the text range to compare with.
+		@type other: L{TextInfo}
+		@param which: The ends to compare; one of "startToStart", "startToEnd", "endToStart", "endToEnd".
+		@return: -1 if this end is before other end, 1 if this end is after other end or 0 if this end and other end are the same. 
+		@rtype: int
+		"""
 		raise NotImplementedError
 
 	def isOverlapping(self, other):
@@ -200,15 +237,19 @@ class TextInfo(baseObject.AutoPropertyObject):
 		return self.compareEndPoints(other, "endToStart") > 0 and other.compareEndPoints(self, "endToStart") > 0
 
 	def setEndPoint(self,other,which):
-		"""Sets one end of this object to one end of the other object
-@param other: the text info object to get the end from 
-@type other: L{TextInfo}
-@param which: one of the strings startToStart startToEnd endToStart endToEnd
-@TYPE WHICH: STRING
-"""
+		"""Sets one end of this range to one end of another range.
+		Subclasses must implement this.
+		@param other: The range from which an end is being obtained.
+		@type other: L{TextInfo}
+		@param which: The ends to use; one of "startToStart", "startToEnd", "endToStart", "endToEnd".
+		"""
 		raise NotImplementedError
 
 	def _get_isCollapsed(self):
+		"""
+		@return: C{True} if representing a collapsed range, C{False} if the range is expanded to cover one or more characters.
+		@rtype: bool
+		"""
 		return self.compareEndPoints(self,"startToEnd")==0
 
 	def expand(self,unit):
@@ -274,13 +315,17 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point"""
 		raise NotImplementedError
 
+	def _get_clipboardText(self):
+		"""Text suitably formatted for copying to the clipboard. E.g. crlf characters inserted between lines."""
+		return convertToCrlf(self.text)
+
 	def copyToClipboard(self):
 		"""Copy the content of this instance to the clipboard.
 		@return: C{True} if successful, C{False} otherwise.
 		@rtype: bool
 		"""
 		import api
-		return api.copyToClip(convertToCrlf(self.text))
+		return api.copyToClip(self.clipboardText)
 
 	def getTextInChunks(self, unit):
 		"""Retrieve the text of this instance in chunks of a given unit.
@@ -302,6 +347,17 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
 		return speech.getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason)
+
+	def getEmbeddedObject(self, offset=0):
+		"""Retrieve the embedded object associated with a particular embedded object character.
+		Where a text implementation allows other objects to be embedded in the text, embedded objects are represented by an embedded object character (\uFFFC).
+		When these characters are encountered, this method can be used to retrieve the associated embedded object.
+		@param offset: The offset of the embedded object character in question relative to the start of this instance.
+		@type offset: int
+		@return: The embedded object.
+		@rtype: L{NVDAObjects.NVDAObject}
+		"""
+		raise NotImplementedError
 
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):

@@ -31,13 +31,13 @@ def findScript_appModuleLevel(gesture):
 	func=appModule.getScript(gesture) if appModule else None
 	if func:
 		return func
-	return findScript_virtualBufferLevel(gesture)
+	return findScript_treeInterceptorLevel(gesture)
 
-def findScript_virtualBufferLevel(gesture):
-	virtualBuffer=api.getFocusObject().virtualBuffer
-	if virtualBuffer:
-		func=virtualBuffer.getScript(gesture)
-		if func and (not virtualBuffer.passThrough or getattr(func,"ignoreVirtualBufferPassThrough",False)):
+def findScript_treeInterceptorLevel(gesture):
+	treeInterceptor=api.getFocusObject().treeInterceptor
+	if treeInterceptor:
+		func=treeInterceptor.getScript(gesture)
+		if func and (not treeInterceptor.passThrough or getattr(func,"ignoreTreeInterceptorPassThrough",False)):
 			return func
 	return findScript_NVDAObjectLevel(gesture)
 

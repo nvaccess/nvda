@@ -134,10 +134,12 @@ Var StartMenuFolder
 !insertmacro MUI_LANGUAGE "Galician"
 !insertmacro MUI_LANGUAGE "Dutch"
 !insertmacro MUI_LANGUAGE "Arabic"
+!insertmacro MUI_LANGUAGE "Danish"
 
 ;Include installer specific language strings
 !include "locale\ar\langstrings.txt"
 !include "locale\cs\langstrings.txt"
+!include "locale\da\langstrings.txt"
 !include "locale\de\langstrings.txt"
 !include "locale\en\langstrings.txt"
 !include "locale\es_es\langstrings.txt"
@@ -240,7 +242,7 @@ ExecWait "$INSTDIR\nvda_slave.exe installer_installService"
 SectionEnd
 
 section "$(section_desktopShortcut)"
-CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
+CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\nvda_slave.exe" "launchNVDA -r" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
  CONTROL|ALT|N "Shortcut Ctrl+Alt+N"
 SectionEnd
 

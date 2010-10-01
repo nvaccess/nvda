@@ -10,7 +10,7 @@ from ctypes import *
 from ctypes.wintypes import *
 import winKernel
 import winUser
-from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.behaviors import Dialog
 import _default
 import speech
@@ -84,6 +84,10 @@ class AppModule(_default.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
 		if windowClass == "CListControl":
+			try:
+				clsList.remove(ContentGenericClient)
+			except ValueError:
+				pass
 			clsList.insert(0, mirandaIMContactList)
 		elif windowClass in ("MButtonClass", "TSButtonClass", "CLCButtonClass"):
 			clsList.insert(0, mirandaIMButton)
@@ -93,6 +97,8 @@ class AppModule(_default.AppModule):
 			clsList.insert(0, MPropertyPage)
 		elif isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_SCROLLBAR and obj.windowControlID in MESSAGEVIEWERS:
 			clsList.insert(0, MirandaMessageViewerScrollbar)
+		elif windowClass == "ListBox" and obj.windowControlID == 0:
+			clsList.insert(0, DuplicateFocusListBox)
 
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="ColourPicker":
@@ -202,6 +208,22 @@ class MirandaMessageViewerScrollbar(IAccessible):
 				ui.message(message)
 			self.appModule.lastTextLengths[self.windowHandle]=curTextLength
 		super(MirandaMessageViewerScrollbar,self).event_valueChange()
+
+class DuplicateFocusListBox(IAccessible):
+	"""A list box which annoyingly fires focus events every second, even when a menu is open.
+	"""
+
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		# Stop annoying duplicate focus events, which are fired even if a menu is open.
+		focus = api.getFocusObject()
+		focusRole = focus.role
+		focusStates = focus.states
+		if (self == focus or
+			(focusRole == controlTypes.ROLE_MENUITEM and controlTypes.STATE_FOCUSED in focusStates) or
+			(focusRole == controlTypes.ROLE_POPUPMENU and controlTypes.STATE_INVISIBLE not in focusStates)
+		):
+			return False
+		return super(DuplicateFocusListBox, self).shouldAllowIAccessibleFocusEvent
 
 [mirandaIMContactList.bindKey(keyName,scriptName) for keyName,scriptName in [
 	("extendedDown","changeItem"),

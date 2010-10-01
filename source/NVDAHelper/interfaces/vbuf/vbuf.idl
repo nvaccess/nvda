@@ -1,4 +1,30 @@
-//vbuf.idl
+/*
+This file is a part of the NVDA project.
+URL: http://www.nvda-project.org/
+Copyright 2006-2010 NVDA contributers.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2.0, as published by
+    the Free Software Foundation.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This license can be found at:
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+*/
+
+cpp_quote("/*")
+cpp_quote("This file is a part of the NVDA project.")
+cpp_quote("URL: http://www.nvda-project.org/")
+cpp_quote("Copyright 2006-2010 NVDA contributers.")
+cpp_quote("This program is free software: you can redistribute it and/or modify")
+cpp_quote("it under the terms of the GNU General Public License version 2.0, as published by")
+cpp_quote("the Free Software Foundation.")
+cpp_quote("This program is distributed in the hope that it will be useful,")
+cpp_quote("but WITHOUT ANY WARRANTY; without even the implied warranty of")
+cpp_quote("MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.")
+cpp_quote("This license can be found at:")
+cpp_quote("http://www.gnu.org/licenses/old-licenses/gpl-2.0.html")
+cpp_quote("*/")
 
 import "wtypes.idl";
 
@@ -30,7 +56,7 @@ interface VBuf {
  * Destroies a virtual buffer
  * @param buffer a pointer to the virtual buffer you want to destroy
  */
-	DLLEXPORT void destroyBuffer(VBufRemote_bufferHandle_t* buffer);
+	DLLEXPORT void destroyBuffer([in,out] VBufRemote_bufferHandle_t* buffer);
 
 /**
  * Calculates the start and end character offsets of the given node in the buffer.

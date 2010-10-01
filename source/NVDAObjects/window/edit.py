@@ -10,6 +10,7 @@ import ctypes
 import pythoncom
 import win32clipboard
 import oleTypes
+import colors
 import globalVars
 import eventHandler
 import comInterfaces.tom
@@ -26,7 +27,7 @@ import IAccessibleHandler
 import controlTypes
 from . import Window
 from .. import NVDAObjectTextInfo
-from ..behaviors import EditableText
+from ..behaviors import EditableTextWithAutoSelectDetection
 import braille
 
 selOffsetsAtLastCaretEvent=None
@@ -86,6 +87,8 @@ class TextRangeAStruct(ctypes.Structure):
 	]
 
 CFM_LINK=0x20
+CFE_AUTOBACKCOLOR=0x4000000
+CFE_AUTOCOLOR=0x40000000
 CFE_BOLD=1
 CFE_ITALIC=2
 CFE_UNDERLINE=4
@@ -244,6 +247,10 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				formatField["text-position"]="sub"
 			elif charFormat.dwEffects&CFE_SUPERSCRIPT:
 				formatField["text-position"]="super"
+		if formatConfig["reportColor"]:
+			if charFormat is None: charFormat=self._getCharFormat(offset)
+			formatField["color"]=colors.RGB.fromCOLORREF(charFormat.crTextColor) if not charFormat.dwEffects&CFE_AUTOCOLOR else _("default color")
+			formatField["background-color"]=colors.RGB.fromCOLORREF(charFormat.crBackColor) if not charFormat.dwEffects&CFE_AUTOBACKCOLOR else _("default color")
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
 		if formatConfig["reportLinks"]:
@@ -670,7 +677,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		self.obj.ITextSelectionObject.start=self._rangeObj.start
 		self.obj.ITextSelectionObject.end=self._rangeObj.end
 
-class Edit(EditableText, Window):
+class Edit(EditableTextWithAutoSelectDetection, Window):
 
 	editAPIVersion=0
 	editAPIUnicode=True
@@ -725,11 +732,7 @@ class Edit(EditableText, Window):
 		self.detectPossibleSelectionChange()
 
 	def event_valueChange(self):
-		self.hasContentChangedSinceLastSelection=True
-
-	def event_gainFocus(self):
-		self.initAutoSelectDetection()
-		super(Edit,self).event_gainFocus()
+		self.event_textChange()
 
 	def _get_states(self):
 		states = super(Edit, self)._get_states()

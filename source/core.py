@@ -31,6 +31,19 @@ def newVARIANT_value_fset(self,value):
 		self._.c_void_p=cast(realValue,c_void_p)
 VARIANT.value=property(VARIANT.value.fget,newVARIANT_value_fset,VARIANT.value.fdel)
 
+#Monkeypatch comtypes lazybind dynamic IDispatch support to fallback to the more basic dynamic IDispatch support if the former does not work
+#Example: ITypeComp.bind gives back a vardesc, which comtypes does not yet support
+import comtypes.client.lazybind
+old__getattr__=comtypes.client.lazybind.Dispatch.__getattr__
+def new__getattr__(self,name):
+	try:
+		return old__getattr__(self,name)
+	except (NameError, AttributeError):
+		return getattr(comtypes.client.dynamic._Dispatch(self._comobj),name)
+comtypes.client.lazybind.Dispatch.__getattr__=new__getattr__
+
+
+
 import sys
 import nvwave
 import os
@@ -86,11 +99,6 @@ def resetConfiguration():
 	#Speech
 	log.debug("initializing speech")
 	speech.initialize()
-	log.debug("Trying to save config...")
-	try:
-		config.save()
-	except:
-		pass
 	log.info("Reverted to saved configuration")
 
 def main():
@@ -107,11 +115,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			nvwave.playWaveFile("waves\\start.wav")
 		except:
 			pass
-	log.debug("Trying to save config")
-	try:
-		config.save()
-	except:
-		pass
 	logHandler.setLogLevelFromConfig()
 	try:
 		lang = config.conf["general"]["language"]
@@ -134,7 +137,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	speech.initialize()
 	if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
 		log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
-		speech.speakMessage(_("Loading subsystems, please wait..."))
+		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
 	log.info("Using wx version %s"%wx.version())
 	app = wx.App(redirect=False)
@@ -161,6 +164,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
+	import displayModel
+	log.debug("Initializing displayModel")
+	displayModel.initialize()
 	log.debug("Initializing GUI")
 	import gui
 	gui.initialize()
@@ -194,9 +200,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import winConsoleHandler
 	log.debug("Initializing winConsole support")
 	winConsoleHandler.initialize()
-	import IAccessibleHandler
-	log.debug("Initializing IAccessible support")
-	IAccessibleHandler.initialize()
 	import UIAHandler
 	log.debug("Initializing UIA support")
 	try:
@@ -205,6 +208,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		log.warning("UIA not available")
 	except:
 		log.error("Error initializing UIA support", exc_info=True)
+	import IAccessibleHandler
+	log.debug("Initializing IAccessible support")
+	IAccessibleHandler.initialize()
 	import keyboardHandler
 	log.debug("Initializing keyboard handler")
 	keyboardHandler.initialize()
@@ -269,12 +275,12 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.cancelSpeech()
 	except:
 		pass
-	log.debug("Cleaning up running virtualBuffers")
+	log.debug("Cleaning up running treeInterceptors")
 	try:
-		import virtualBufferHandler
-		virtualBufferHandler.terminate()
+		import treeInterceptorHandler
+		treeInterceptorHandler.terminate()
 	except:
-		log.error("Error cleaning up virtualBuffers",exc_info=True)
+		log.error("Error cleaning up treeInterceptors",exc_info=True)
 	log.debug("Terminating IAccessible support")
 	try:
 		IAccessibleHandler.terminate()

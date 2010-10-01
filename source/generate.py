@@ -15,13 +15,16 @@ This should be run prior to executing NVDA from a clean source tree for the firs
 #Bit of a dance to force comtypes generated interfaces in to our directory
 import comtypes.client
 comtypes.client.gen_dir='.\\comInterfaces'
-import comtypes
 import sys
 sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),locals(),[])
 
 import os
 from glob import glob
 import txt2tags
+__path__ = [os.path.join(sys.exec_prefix, "Tools", "i18n")]
+import msgfmt
+del __path__
+import keyCommandsDoc
 
 COM_INTERFACES = (
 	("UI Automation", comtypes.client.GetModule, "UIAutomationCore.dll"),
@@ -48,15 +51,32 @@ def main():
 	poFiles=glob('locale/*/LC_MESSAGES/nvda.po')
 	for f in poFiles:
 		print f
-		os.spawnv(os.P_WAIT,r"%s\python.exe"%sys.exec_prefix,['python',r'"%s\Tools\i18n\msgfmt.py"'%sys.exec_prefix,f])
+		msgfmt.make(f, None)
+		#Clear msgfmt.MESSAGES so that msgfmt.make can safely be called again in the next iteration
+		msgfmt.MESSAGES.clear()
 	print
 
-	print "HTML documentation:"
+	print "HTML documentation (except Key Commands):"
 	files = glob(r"..\user_docs\*\*.t2t")
 	# Using txt2tags as a module to handle files is a bit weird.
 	# It seems simplest to pretend we're running from the command line.
-	txt2tags.exec_command_line(files)
+	for f in files:
+		print f
+		txt2tags.exec_command_line([f])
 	print
+
+	print "Key Commands documentation:"
+	files = glob(r"..\user_docs\*\userGuide.t2t")
+	for f in files:
+		maker = keyCommandsDoc.KeyCommandsMaker(f)
+		print maker.kcFn
+		try:
+			if maker.make():
+				txt2tags.exec_command_line([maker.kcFn])
+			else:
+				print "WARNING: User Guide does not contain key commands markup, skipping"
+		finally:
+			maker.remove()
 
 if __name__ == "__main__":
 	main()
