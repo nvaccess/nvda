@@ -9,7 +9,7 @@ import controlTypes
 
 mainWindowButtonNames={
 	205:_("Rewind"),
-	206:_("Forward"),
+	206:_("Fast forward"),
 	207:_("Play"),
 	208:_("Stop"),
 	209:_("Record")
@@ -17,9 +17,7 @@ mainWindowButtonNames={
 
 class AppModule(_default.AppModule):
 
-	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.role == controlTypes.ROLE_WINDOW: 
-			return
-		elif obj.role == controlTypes.ROLE_BUTTON: 
+	def event_NVDAObject_init(self, obj):
+		if obj.role == controlTypes.ROLE_BUTTON: 
 			if obj.windowControlID in mainWindowButtonNames.keys():
 				obj.name=mainWindowButtonNames[obj.windowControlID]
