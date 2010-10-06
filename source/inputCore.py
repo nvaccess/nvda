@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2010 James Teh <jamie@jantrid.net>
 
+import itertools
 import baseObject
 import scriptHandler
 import queueHandler
@@ -156,3 +157,14 @@ class InputManager(baseObject.AutoPropertyObject):
 #: The singleton input manager instance.
 #: @type: L{InputManager}
 manager = InputManager()
+
+def normalizeGestureIdentifier(identifier):
+	"""Normalize a gesture identifier so that it matches other identifiers for the same gesture.
+	"""
+	prefix, main = identifier.split(":", 1)
+	main = main.split("+")
+	# The order of all parts except the last doesn't matter as far as the user is concerned,
+	# but we need them to be in a determinate order so they will match other gesture identifiers.
+	# Rather than sorting, just use Python's set ordering.
+	main = "+".join(itertools.chain(frozenset(main[:-1]), main[-1:]))
+	return "{1}:{2}".format(prefix, main).lower()

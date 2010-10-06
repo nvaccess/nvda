@@ -8,7 +8,7 @@
 """
 
 import weakref
-from keyUtils import key
+import inputCore
 from logHandler import log
 
 class Getter(object):
@@ -148,7 +148,7 @@ class ScriptableObject(AutoPropertyObject):
 		func = getattr(self, "script_%s" % scriptName, None)
 		if not func:
 			raise LookupError("No such script: %s" % func)
-		self._gestureMap[gestureIdentifier.lower()] = func
+		self._gestureMap[inputCore.normalizeGestureIdentifier(gestureIdentifier)] = func
 
 	def bindGestures(self, gestureMap):
 		"""Bind multiple input gestures to scripts.
