@@ -3,6 +3,23 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2010.3 =
+
+== Nové vlastnosti ==
+- Pre niektoré objekty je možné oznamovať farbu. Automatické oznamovanie zmeny farby je možné z dialógu formátovanie dokumentu. Aktuálnu farbu je tiež možné získať použitím funkcie info o formátovaní (NVDA+f)
+
+
+== Zmeny ==
+
+
+== Opravy ==
+- Pri pridávaní novej položky do jedného z rečových slovníkov, je názov dialógu Pridať položku slovníka namiesto upraviť položku slovníka. (#924)
+- V dialógoch rečové slovníky je obsah stĺpcov Rozlišovať veľké a malé písmená a Regulárny výraz zoznamu položiek oznamovaný v jazyku nastavenom v dialógu všeobecné nastavenia. Doteraz boli tieto informácie dostupné vždy v angličtine.
+- V stromových zoznamoch programu AIM je správne oznamovaná informácia o pozícii.
+- Informácia o pozícii nie je viac čítaná v prípade, kde to nemá zmysel, ako napríklad v mnohých ponukách, na panely bežiacich úloh, v oznamovacej oblasti a pod.
+- V dialógu Nastavenia hlasu je možné použiť klávesy šípka hore a page up na zvíšenie a šípka dolu a page down na zníženie nastavenia v posuvníkoch. Doteraz to fungovalo presne opačne, čo bolo nelogické a nezhodovalo sa so správaním kruhu nastavení hlasového výstupu. (#221)
+
+
 = 2010.2 =
 Významné zmeny v tejto verzií sú výrazne zjednodušená objektová navigácia; virtuálny prehliadač pre obsah Adobe flash; prístup k mnohým doteraz neprístupným prvkom získavaním textu vykresleného na obrazovku; plošné zobrazenie textu na obrazovke; podpora pre dokumenty IBM Lotus Symphony; oznamovanie hlavičiek riadkov a stĺpcov tabuliek v programe Mozilla Firefox; a výrazne prepracovanú používateľskú dokumentáciu.
 

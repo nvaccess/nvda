@@ -81,12 +81,11 @@ def _processSymbol(m):
 RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 
 def processTextSymbols(text,expandPunctuation=False):
-	if text:
-		text = speechDictHandler.processText(text)
 	if (text is None) or (len(text)==0) or (isinstance(text,basestring) and (set(text)<=set(characterSymbols.blankList))):
 		return _("blank") 
 	#Convert non-breaking spaces to spaces
 	text=text.replace(u'\xa0',u' ')
+	text = speechDictHandler.processText(text)
 	if expandPunctuation:
 		text = RE_PROCESS_SYMBOLS.sub(_processSymbol, text)
 	text = RE_CONVERT_WHITESPACE.sub(u" ", text)
@@ -94,7 +93,6 @@ def processTextSymbols(text,expandPunctuation=False):
 
 def processSymbol(symbol):
 	if isinstance(symbol,basestring):
-		symbol=speechDictHandler.processText(symbol)
 		symbol=symbol.replace(u'\xa0',u' ')
 	newSymbol=characterSymbols.names.get(symbol,symbol)
 	return newSymbol

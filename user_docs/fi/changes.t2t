@@ -3,6 +3,24 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2010.3 =
+
+== Uudet ominaisuudet ==
+- Värien ilmoittaminen on nyt mahdollista joissakin säätimissä. Automaattinen lukeminen voidaan määrittää Asiakirjojen muotoiluasetukset -valintaikkunasta. Värit voidaan lisäksi lukea tarvittaessa tekstin muotoilutietojen lukukomennolla (NVDA+F).
+
+
+== Muutokset ==
+- Puhesanastomerkinnät vaikuttavat nyt myös kirjoitettujen merkkien puhumiseen sekä yksittäisiin merkkeihin, kun kohdistin siirretään niiden päälle.
+
+
+== Korjatut virheet ==
+- Uutta puhesanastomerkintää lisättäessä valintaikkunan nimi on nyt "Lisää sanastomerkintä" aiemman "Muokkaa sanastomerkintää" -nimen sijasta. (#924)
+- Puhesanastovalintaikkunoiden sanastomerkintäluettelon Säännöllinen lauseke- ja Sama kirjainkoko-sarakkeiden sisältö  näytetään nyt NVDA:ssa määritetyllä kielellä sen sijaan, että ne näytettäisiin aina englanniksi.
+- Sijaintitiedot luetaan nyt AIM:in puunäkymissä.
+- Sijaintitietoja ei enää lueta  joissakin sellaisissa tapauksissa, joissa ne ovat yleensä virheellisiä, esim. useimmissa valikoissa, käynnissä olevien sovellusten palkissa, ilmoitusalueella jne.
+- Ääniasetukset-valintaikkunan liukusäätimissä ylänuoli/page up/home suurentavat nyt asetusta ja alanuoli/page down/end pienentävät. Aiemmin tapahtui juuri päinvastoin, mikä ei ollut loogista ja oli lisäksi ristiriidassa syntetisaattorin asetusrenkaan kanssa. (#221)
+
+
 = 2010.2 =
 Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkertaistettu objektinavigointi, näennäispuskurit Flash -sisällön käyttämiseksi, pääsy moniin aiemmin saavuttamattomiin säätimiin hakemalla ruudun tekstiä, kokonaistarkastelu ruudulla olevalle tekstille, tuki IBM Lotus Symphony -asiakirjoille, taulukon rivien ja sarakkeiden otsikoiden ilmoittaminen Mozilla Firefoxissa sekä merkittävästi parannellut käyttöohjeet.
 
@@ -15,7 +33,7 @@ Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkerta
 - Eclipse IDE:n muokattavat tekstisäätimet koodimuokkain mukaan lukien ovat nyt esteettömiä. Käytössä on oltava Eclipse 3.6 tai uudempi. (#256, #641)
 - NVDA voi nyt lukea suurimman osan näytöllä olevasta tekstistä. (#40, #643)
  - Tämä mahdollistaa sellaisten säädinten lukemisen, jotka eivät välitä tietoja suoremmilla ja luotettavammilla tavoilla.
- - Tämä ominaisuus tekee esteettömiksi mm. jotkin kuvakkeita näyttävät valikoiden kohdat (esim. Windows XP:n Avaa sovelluksessa -valikko) (#151), Windows Live -sovellusten muokattavat tekstikentät (#200), Outlook Expressin virheluettelo (#582), TextPadin muokattava tekstisäädin (#605), Eudoran luettelot, monet Australian E-tax:in säätimet ja Microsoft Excelin kaavapalkki.
+ - Tämä ominaisuus tekee esteettömiksi mm. jotkin kuvakkeita sisältävät valikoiden kohdat (esim. Windows XP:n Avaa sovelluksessa -valikko) (#151), Windows Live -sovellusten muokattavat tekstikentät (#200), Outlook Expressin virheluettelo (#582), TextPadin muokattava tekstisäädin (#605), Eudoran luettelot, monet Australian E-tax:in säätimet ja Microsoft Excelin kaavapalkki.
 - Tuki Microsoft Visual Studio 2005:n ja 2008:n koodimuokkaimelle. Vaaditaan vähintään Visual Studio Standard, ei toimi Express-versioissa. (#457)
 - Tuki IBM Lotus Symphony -asiakirjoille.
 - Varhaisessa vaiheessa oleva kokeellinen tuki Google Chromelle. Huomaa, ettei Chromen ruudunlukuohjelmatuki ole läheskään valmis, ja että NVDA:ssakin saattavat lisätoimet olla tarpeen. Tämän kokeilemiseksi tarvitaan Chromen uusin kehitysversio.
@@ -24,7 +42,7 @@ Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkerta
 - Lisätty ajuri MDV Lilli -pistenäytölle. (#241)
 - Uusi valinta luetaan nyt Microsoft Excelissä, kun koko rivi tai sarake valitaan pikanäppäimillä Shift+välilyönti tai Ctrl+välilyönti. (#759)
 - Taulukon rivien ja sarakkeiden otsikot voidaan nyt lukea. Asetus on määritettävissä Asiakirjojen muotoiluasetukset -valintaikkunasta.
- - Tätä tuetaan toistaiseksi vain Mozilla-sovelluksissa (Firefox 3.6.10 tai uudempi ja Thunderbird 3.1.5 tai uudempi). (#361)
+ - Tätä tuetaan toistaiseksi vain Mozilla-sovelluksissa (Firefox 3.6.11 tai uudempi ja Thunderbird 3.1.5 tai uudempi). (#361)
 - Otettu käyttöön kokonaistarkastelun komennot: (#58)
  - NVDA+numeroryhmän 7: siirtää kokonaistarkastelutilaan ja sijoittaa tarkastelukohdistimen nykyisen objektin kohdalle, mikä mahdollistaa koko ruudun tai asiakirjan lukemisen tekstinlukukomennoilla.
  - NVDA+numeroryhmän 1: siirtää tarkastelukohdistimen sen kohdalla olevan tekstin sisältävään objektiin, mikä mahdollistaa objekti kerrallaan liikkumisen kyseisestä kohdasta lähtien.
@@ -41,7 +59,7 @@ Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkerta
 - Lokinkatselu- ja Python-konsoli-ikkunat suurennetaan avattaessa.
 - Kun Microsoft Excelissä on työkirja aktiivisena ja kun useampi kuin yksi solu on valittuna, valinnan alue luetaan, eikä vain aktiivista solua. (#763)
 - NVDA:n asetusten tallentaminen ja tiettyjen asetusten muuttaminen on nyt estetty kirjautumis- ja käyttäjätilien valvonnan ja muissa suojatuissa ruuduissa.
-- eSpeak-puhesyntetisaattori päivitetty versioon 1.44.01.
+- eSpeak-puhesyntetisaattori päivitetty versioksi 1.44.03.
 - Jos NVDA on jo käynnissä, työpöydällä olevan NVDA-pikakuvakkeen aktivoiminen (Ctrl+Alt+N-näppäinyhdistelmän painaminen mukaan lukien) käynnistää sen uudelleen.
 - Hiiriasetukset-valintaikkunan Lue hiiren alla oleva teksti -valintaruutu korvattu Käytä hiiren seurantaa -valintaruudulla, joka sopii paremmin yhteen hiiren seurannan päälle ja pois kytkevän NVDA+M-komennon kanssa.
 - Päivitetty kannettavien tietokoneiden näppäimistöasettelua niin, että se sisältää kaikki pöytäkoneilla käytettävissä olevat komennot, ja että se toimii oikein muilla kuin englanninkielisillä näppäimistöillä. (#798, #800)
@@ -49,8 +67,8 @@ Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkerta
 - Liblouis-pistekirjoituskääntäjä päivitetty versioksi 2.1.1. Tämä päivitys korjaa joitakin kiinalaiseen pistekirjoitukseen sekä käännöstaulukossa määrittelemättömiin merkkeihin liittyviä ongelmia. (#484, #499)
 
 
-== Vikojen korjaukset ==
-- µTorrentin torrent-luettelon aktiivista kohtaa ei enää lueta toistuvasti eikä kohdistus enää siirry siihen valikon ollessa auki.
+== Korjatut virheet ==
+- µTorrentin torrent-listan aktiivista kohtaa ei enää lueta toistuvasti eikä kohdistus enää siirry siihen valikon ollessa auki.
 - Torrentin sisältölistan tiedostojen nimet luetaan nyt µTorrentissa.
 - Kohdistus tunnistetaan nyt oikein Mozilla-sovelluksissa siirryttäessä tyhjään taulukkoon tai puunäkymään.
 - Valittavissa olevien säädinten, kuten valittavien taulukon solujen, ei valittu -tila ilmoitetaan nyt oikein Mozilla-sovelluksissa. (#571)
@@ -77,10 +95,13 @@ Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkerta
 - NVDA toimii nyt oikein järjestelmässä, jossa nykyinen työhakemisto on poistettu DLL-hakupolusta (asettamalla CWDIllegalInDllSearch-rekisterimerkinnän arvoksi 0xFFFFFFFF). Huomaa, että useimmille käyttäjille tällä ei ole merkitystä. (#907)
 - Kun taulukossa liikkumiseen tarkoitettuja komentoja käytetään Microsoft Wordissa muualla kuin taulukossa, "ei taulukossa" -ilmoituksen jälkeen ei enää sanota "taulukon reuna". (#921)
 - Kun Microsoft Wordissa ollaan taulukon reunassa, eivätkä taulukossa liikkumiseen tarkoitetut komennot voi siirtää mihinkään, "taulukon reuna" -ilmoitus sanotaan nyt NVDA:ssa määritetyllä kielellä sen sijaan, että se sanottaisiin aina englanniksi. (#921)
+- Näennäispuskureissa navigoitaessa tarkastelukohdistin liikkuu aktiivisen objektin sijasta aina koko asiakirjassa, kuten on tarkoituskin.
+- Viestisääntöluetteloiden valintaruutujen tilat luetaan nyt Outlook Expressissä, Windows Mailissa ja Windows Live Mailissa. (#576)
+- Viestisääntöjen kuvaukset voidaan nyt lukea Windows Live Mail 2010:ssä.
 
 
 == 2010.1 ==
-Tämä julkaisu keskittyy pääasiassa vikojen korjaamiseen ja käyttäjäkokemuksen parantamiseen, mukaan lukien muutamia huomattavia vakauteen liittyviä korjauksia.
+Tämä julkaisu keskittyy pääasiassa virheiden korjaamiseen ja käyttäjäkokemuksen parantamiseen, mukaan lukien muutamia huomattavia vakauteen liittyviä korjauksia.
 
 === Uudet ominaisuudet ===
 - NVDA käynnistyy nyt järjestelmissä, joissa ei ole äänilaitteita. Tietojen tulostamiseen on tällöin käytettävä pistenäyttöä tai Silence-syntetisaattoria yhdessä Näytä puhe -toiminnon kanssa. (#425)
@@ -115,7 +136,7 @@ Tämä julkaisu keskittyy pääasiassa vikojen korjaamiseen ja käyttäjäkokemu
 - Taulukon rivien ja sarakkeiden määrää ei enää lueta kohdistusmuutoksia ilmoitettaessa, koska kyseinen ilmoitus oli melko pitkä ja siitä ei useinkaan ollut hyötyä.
 
 
-=== Vikojen korjaukset ===
+=== Korjatut virheet ===
 - NVDA käynnistyy nyt tilanteessa, jossa UI Automation -tuki on käytettävissä, mutta sen alustus ei jostakin syystä onnistu. (#483)
 - Taulukon rivin koko sisältöä ei enää lueta Mozilla-sovelluksissa siirrettäessä kohdistusta taulukon solussa. (#482)
 - Paljon alakohtia sisältävien puunäkymien laajentaminen ei enää aiheuta pitkää viivettä.
@@ -196,7 +217,7 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin vers
 - Virheestä ilmoittavaa ääntä ei enää toisteta NVDA:n release candidate- ja lopullisissa versioissa. Virheiden tiedot kirjataan edelleen lokiin.
 
 
-=== Vikojen korjaukset ===
+=== Korjatut virheet ===
 - Kun NVDA käynnistetään 8+3-DOS-polusta, mutta se on asennettu saman kansion pitkään polkuun (esim. progra~1 verrattuna program files), NVDA tunnistaa oikein, että se on asennettu ja lataa käyttäjän asetukset asianmukaisesti.
 - Nykyisen ikkunan nimen puhuttaminen NVDA+t:llä toimii nyt valikoissa oikein.
 - Pistenäytöllä ei enää kohdistuksessa näytetä hyödytöntä tietoa, kuten nimettömiä paneeleita.
@@ -264,10 +285,10 @@ Tämän julkaisun tärkeimpiä kohokohtia ovat tuki 64-bittisille Windowsin vers
 - Nykyisen ikkunan nimen puhutuskomento (NVDA+t) lukee nyt vain nimen koko objektin sijasta. Jos objektilla ei ole nimeä, käytetään sovelluksen prosessinimeä.
 - Näennäispuskurin läpivientitila päällä ja pois -ilmoituksen sijaan NVDA ilmoittaa nyt kohdistustila (läpivienti päällä) ja selaustila (läpivienti pois).
 - Puheäänet tallennetaan asetustiedostoon nyt tunnuksen mukaan indeksin sijasta. Tämä tekee ääniasetuksista ja asetusten muutoksista luotettavampia eri järjestelmissä. Puheääniasetusta ei säilytetä vanhoissa asetustiedostoissa, ja lokiin kirjataan virhe ensimmäisellä puhesyntetisaattorin käyttökerralla. (#19)
-- Kaikkien puunäkymien kohdan taso ilmoitetaan nyt ensin  jos se on muuttunut aiemmin kohdistetusta. Tämä koski aiemmin vain Windowsin natiiveja (SysTreeView32) puunäkymiä.
+- Kaikkien puunäkymien kohdan taso ilmoitetaan nyt ensin, jos se on muuttunut aiemmin kohdistetusta. Tämä koski aiemmin vain Windowsin natiiveja (SysTreeView32) puunäkymiä.
 
 
-=== Vikojen korjaukset ===
+=== Korjatut virheet ===
 - Puheen loppuosa ei enää jää pois käytettäessä NVDA:ta eSpeakin kanssa etäyhteydellä.
 - Korjattu puhesanastojen tallennuksessa ilmenneitä ongelmia tietyillä puheäänillä.
 - Viive poistettu Mozilla Gecko -näennäispuskureista siirryttäessä tekstidokumenttien loppua kohti muuten kuin merkki kerrallaan (sana, rivi jne). (#155)

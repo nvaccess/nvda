@@ -938,13 +938,8 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 	DEBUG_MSG(L"Starting at node "<<initNode->getDebugInfo());
 	std::set<int> possibleBreaks;
 	//Find the node at which to limit the search for line endings.
-	VBufStorage_fieldNode_t* limitNode=NULL;
-	if(useScreenLayout) {
-		for(limitNode=initNode->parent;limitNode!=NULL&&!limitNode->isBlock;limitNode=limitNode->parent);
-	} else {
-		limitNode=initNode->parent;
-	}
-	DEBUG_MSG(L"limit node is "<<limitNode->getDebugInfo());
+	VBufStorage_fieldNode_t* limitBlockNode=NULL;
+	for(limitBlockNode=initNode->parent;limitBlockNode!=NULL&&!limitBlockNode->isBlock;limitBlockNode=limitBlockNode->parent);
 	//Some needed variables for searching back and forward
 	VBufStorage_fieldNode_t* node=NULL;
 	int relative, bufferStart, bufferEnd, tempRelativeStart;
@@ -986,7 +981,7 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 			}
 		}
 		//Move on to the next node.
-		node = node->nextNodeInTree(TREEDIRECTION_FORWARD,limitNode,&tempRelativeStart);
+		node = node->nextNodeInTree(TREEDIRECTION_FORWARD,limitBlockNode,&tempRelativeStart);
 		//If not using screen layout, make sure not to pass in to another control field node
 		if(node&&((!useScreenLayout&&node->firstChild)||node->isBlock)) {
 			node=NULL;
@@ -1035,9 +1030,9 @@ bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool us
 			}
 		}
 		//Move on to the previous node.
-		node = node->nextNodeInTree(TREEDIRECTION_SYMMETRICAL_BACK,limitNode,&tempRelativeStart);
+		node = node->nextNodeInTree(TREEDIRECTION_SYMMETRICAL_BACK,useScreenLayout?limitBlockNode:node->parent,&tempRelativeStart);
 		//If not using screen layout, make sure not to pass in to another control field node
-		if(node&&((!useScreenLayout&&node->firstChild)||node->isBlock)) {
+		if(node&&node->isBlock) {
 			node=NULL;
 		}
 		if(node) {

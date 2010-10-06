@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 2010.2-3856\n"
+"Project-Id-Version: main-3874\n"
 "POT-Creation-Date: 2007-03-07 08:26+Central Europe Standard Time\n"
-"PO-Revision-Date: 2010-09-26 16:50+Central Europe Standard Time\n"
+"PO-Revision-Date: 2010-10-03 18:25+Central Europe Standard Time\n"
 "Last-Translator: Peter Vágner <peter.v@datagate.sk>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr "neznáme rozloženie"
 msgid "layout %s"
 msgstr "rozloženie %s"
 
-#: NVDAObjects\IAccessible\__init__.py:1394
+#: NVDAObjects\IAccessible\__init__.py:1446
 msgid "Taskbar"
 msgstr "panel úloh"
 
@@ -48,16 +48,21 @@ msgstr "%d percent"
 msgid "Desktop"
 msgstr "Pracovná plocha"
 
-#: NVDAObjects\window\edit.py:534
+#: NVDAObjects\window\edit.py:252
+#: NVDAObjects\window\edit.py:253
+msgid "default color"
+msgstr "Predvolená farba"
+
+#: NVDAObjects\window\edit.py:541
 #: controlTypes.py:179
 msgid "unknown"
 msgstr "neznámy"
 
-#: NVDAObjects\window\edit.py:536
+#: NVDAObjects\window\edit.py:543
 msgid "%s embedded object"
 msgstr "%s vnorený objekt"
 
-#: NVDAObjects\window\edit.py:538
+#: NVDAObjects\window\edit.py:545
 #: controlTypes.py:243
 msgid "embedded object"
 msgstr "vnorený objekt"
@@ -97,7 +102,7 @@ msgstr "nie v tabuľke"
 #: NVDAObjects\window\winword.py:374
 #: NVDAObjects\window\winword.py:386
 #: NVDAObjects\window\winword.py:398
-#: virtualBuffers\__init__.py:1132
+#: virtualBuffers\__init__.py:1136
 msgid "edge of table"
 msgstr "okraj tabuľky"
 
@@ -116,10 +121,11 @@ msgstr "Chyba v aplikačnom module \"%s\"."
 #: appModules\_default.py:765
 #: appModules\winamp.py:77
 #: appModules\winamp.py:87
+#: gui\settingsDialogs.py:795
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
 #: keyboardHandler.py:59
-#: virtualBuffers\__init__.py:696
+#: virtualBuffers\__init__.py:700
 msgid "on"
 msgstr "zapnuté"
 
@@ -135,11 +141,12 @@ msgstr "zapnuté"
 #: appModules\_default.py:762
 #: appModules\winamp.py:79
 #: appModules\winamp.py:89
-#: gui\settingsDialogs.py:532
+#: gui\settingsDialogs.py:563
+#: gui\settingsDialogs.py:795
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
 #: keyboardHandler.py:59
-#: virtualBuffers\__init__.py:696
+#: virtualBuffers\__init__.py:700
 msgid "off"
 msgstr "vypnuté"
 
@@ -212,9 +219,9 @@ msgstr "nič nie je vybraté"
 
 #: appModules\_default.py:103
 #: compoundDocuments.py:402
-#: speech.py:284 speech.py:381
-#: speech.py:394
-#: virtualBuffers\__init__.py:600
+#: speech.py:287 speech.py:384
+#: speech.py:397
+#: virtualBuffers\__init__.py:604
 msgid "selected %s"
 msgstr "vybrané %s"
 
@@ -896,12 +903,12 @@ msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Aktivuje Python konzolu NVDA, primárne použiteľnú pri vývoji."
 
 #: appModules\_default.py:857
-#: gui\settingsDialogs.py:891
+#: gui\settingsDialogs.py:927
 msgid "review"
 msgstr "prehliadacím kurzorom"
 
 #: appModules\_default.py:860
-#: gui\settingsDialogs.py:891
+#: gui\settingsDialogs.py:927
 msgid "focus"
 msgstr "systémovým kurzorom"
 
@@ -989,57 +996,57 @@ msgstr "Zatiaľ nebola doručená žiadna správa"
 msgid "Displays one of the recent messages"
 msgstr "Prečíta jeden z naposledy prijatých správ"
 
-#: appModules\msimn.py:17
+#: appModules\msimn.py:18
 msgid "Attachments"
 msgstr "Prílohy"
 
-#: appModules\msimn.py:18
+#: appModules\msimn.py:19
 msgid "To:"
 msgstr "Komu"
 
-#: appModules\msimn.py:19
+#: appModules\msimn.py:20
 msgid "Newsgroup:"
 msgstr "Diskusná skupina"
 
-#: appModules\msimn.py:20
+#: appModules\msimn.py:21
 msgid "CC:"
 msgstr "Kópia"
 
-#: appModules\msimn.py:21
+#: appModules\msimn.py:22
 msgid "Subject:"
 msgstr "Predmet"
 
-#: appModules\msimn.py:22
-#: appModules\msimn.py:30
+#: appModules\msimn.py:23
+#: appModules\msimn.py:31
 msgid "From:"
 msgstr "Od"
 
-#: appModules\msimn.py:23
+#: appModules\msimn.py:24
 msgid "Date:"
 msgstr "Dátum"
 
-#: appModules\msimn.py:24
+#: appModules\msimn.py:25
 msgid "Forward to:"
 msgstr "Odoslať ďalej"
 
-#: appModules\msimn.py:25
+#: appModules\msimn.py:26
 msgid "Answer to:"
 msgstr "Odpovedať"
 
-#: appModules\msimn.py:26
+#: appModules\msimn.py:27
 msgid "Organisation:"
 msgstr "Organizácia"
 
-#: appModules\msimn.py:27
+#: appModules\msimn.py:28
 #, fuzzy
 msgid "Distribution:"
 msgstr "Distribúcia:"
 
-#: appModules\msimn.py:28
+#: appModules\msimn.py:29
 msgid "Key words:"
 msgstr "Kľúčové slová:"
 
-#: appModules\msimn.py:29
+#: appModules\msimn.py:30
 msgid "BCC:"
 msgstr "Skrytá kópia:"
 
@@ -1332,16 +1339,16 @@ msgstr "pmnu"
 msgid "( )"
 msgstr "( )"
 
-#: braille.py:222 speech.py:679
+#: braille.py:222 speech.py:682
 msgid "not %s"
 msgstr "ne %s"
 
-#: braille.py:234 speech.py:685
+#: braille.py:234 speech.py:690
 msgid "%s of %s"
 msgstr "%s z %s"
 
-#: braille.py:236 speech.py:690
-#: speech.py:693
+#: braille.py:236 speech.py:695
+#: speech.py:698
 msgid "level %s"
 msgstr "úroveň %s"
 
@@ -1363,8 +1370,8 @@ msgstr "Žiadny zobrazovač"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18
-#: characterSymbols.py:19
-#: speech.py:84 speech.py:629
+#: characterSymbols.py:19 speech.py:87
+#: speech.py:632
 msgid "blank"
 msgstr "prázdny"
 
@@ -1528,6 +1535,74 @@ msgstr "odrážka"
 msgid "dot dot dot"
 msgstr "bodka bodka bodka"
 
+#: colors.py:77
+msgid "black"
+msgstr "čierna"
+
+#: colors.py:78
+msgid "green"
+msgstr "zelená"
+
+#: colors.py:79
+msgid "light grey"
+msgstr "svedošedá"
+
+#: colors.py:80
+msgid "lime"
+msgstr "svetlozelená"
+
+#: colors.py:81
+msgid "grey"
+msgstr "šedá"
+
+#: colors.py:82
+msgid "olive"
+msgstr "olivová"
+
+#: colors.py:83
+msgid "white"
+msgstr "biela"
+
+#: colors.py:84
+msgid "yellow"
+msgstr "žltá"
+
+#: colors.py:85
+msgid "dark red"
+msgstr "tmavočervená"
+
+#: colors.py:86
+msgid "navy blue"
+msgstr "námornícka modrá"
+
+#: colors.py:87
+msgid "red"
+msgstr "červená"
+
+#: colors.py:88
+msgid "blue"
+msgstr "modrá"
+
+#: colors.py:89
+msgid "purple"
+msgstr "fialová"
+
+#: colors.py:90
+msgid "teal"
+msgstr "modrozelená"
+
+#: colors.py:91
+msgid "fuchsia"
+msgstr "purpurová"
+
+#: colors.py:92
+msgid "aqua"
+msgstr "azúrová"
+
+#: colors.py:94
+msgid "orange"
+msgstr "oranžová"
+
 #: config\__init__.py:21
 msgid "Badly formed configuration file"
 msgstr "Nesprávne formovaný konfiguračný súbor"
@@ -1536,11 +1611,11 @@ msgstr "Nesprávne formovaný konfiguračný súbor"
 msgid "%s: %s, defaulting to %s"
 msgstr "%s: %s, nastavujem predvolené %s"
 
-#: config\__init__.py:175
+#: config\__init__.py:176
 msgid "Error parsing configuration file: %s"
 msgstr "Chyba pri čítaní konfiguračného súboru: '%s'."
 
-#: config\__init__.py:182
+#: config\__init__.py:183
 msgid ""
 "Errors in configuration file '%s':\n"
 "%s"
@@ -1621,8 +1696,7 @@ msgstr "bublinková nápoveda"
 msgid "tool tip"
 msgstr "kontextová nápoveda"
 
-#: controlTypes.py:198
-#: speech.py:950
+#: controlTypes.py:198 speech.py:964
 msgid "link"
 msgstr "odkaz"
 
@@ -2039,8 +2113,7 @@ msgstr "názov písma"
 msgid "font size"
 msgstr "veľkosť písma"
 
-#: controlTypes.py:305
-#: speech.py:902
+#: controlTypes.py:305 speech.py:916
 msgid "bold"
 msgstr "tučné"
 
@@ -2056,13 +2129,11 @@ msgstr "farba popredia"
 msgid "background color"
 msgstr "farba pozadia"
 
-#: controlTypes.py:310
-#: speech.py:924
+#: controlTypes.py:310 speech.py:938
 msgid "superscript"
 msgstr "horný index"
 
-#: controlTypes.py:311
-#: speech.py:926
+#: controlTypes.py:311 speech.py:940
 msgid "subscript"
 msgstr "dolný index"
 
@@ -2574,7 +2645,7 @@ msgid "Options"
 msgstr "Možnosti"
 
 #: gui\__init__.py:402
-#: gui\settingsDialogs.py:419
+#: gui\settingsDialogs.py:450
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Používať &Capslock ako kláves NVDA"
 
@@ -2746,356 +2817,364 @@ msgstr "Nemôžem spustiť hlasový výstup \"%s\"."
 msgid "Synthesizer Error"
 msgstr "Chyba hlasového výstupu"
 
-#: gui\settingsDialogs.py:266
+#: gui\settingsDialogs.py:297
 msgid "Voice settings"
 msgstr "Nastavenia hlasu"
 
-#: gui\settingsDialogs.py:322
+#: gui\settingsDialogs.py:353
 msgid "&Speak all punctuation"
 msgstr "Čítať všetku &interpunkciu"
 
-#: gui\settingsDialogs.py:325
+#: gui\settingsDialogs.py:356
 msgid "Raise pitch for capitals"
 msgstr "Veľké písmená čítať &zvýšeným hlasom"
 
-#: gui\settingsDialogs.py:328
+#: gui\settingsDialogs.py:359
 msgid "Say &cap before capitals"
 msgstr "Vysloviť \"veľké\" pred prečítaním veľkého písmena"
 
-#: gui\settingsDialogs.py:331
+#: gui\settingsDialogs.py:362
 msgid "&Beep for capitals"
 msgstr "&Pípať pred hláskovaním veľkých písmen"
 
-#: gui\settingsDialogs.py:334
+#: gui\settingsDialogs.py:365
 msgid "Use &spelling functionality if supported"
 msgstr "&Hláskovanie riadi hlasový výstup (ak je podporované)"
 
-#: gui\settingsDialogs.py:402
+#: gui\settingsDialogs.py:433
 msgid "Keyboard Settings"
 msgstr "Nastavenie klávesnice"
 
-#: gui\settingsDialogs.py:406
+#: gui\settingsDialogs.py:437
 msgid "&Keyboard layout:"
 msgstr "Rozloženie &klávesnice:"
 
-#: gui\settingsDialogs.py:411
+#: gui\settingsDialogs.py:442
 msgid "Keyboard layout"
 msgstr "Rozloženie klávesnice"
 
-#: gui\settingsDialogs.py:422
+#: gui\settingsDialogs.py:453
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Používať &numerický Insert ako kláves NVDA"
 
-#: gui\settingsDialogs.py:425
+#: gui\settingsDialogs.py:456
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Používať &Insert ako kláves NVDA"
 
-#: gui\settingsDialogs.py:428
+#: gui\settingsDialogs.py:459
 msgid "Speak typed &characters"
 msgstr "Čítať napísané &znaky"
 
-#: gui\settingsDialogs.py:431
+#: gui\settingsDialogs.py:462
 msgid "Speak typed &words"
 msgstr "Čítať po &slovách"
 
-#: gui\settingsDialogs.py:434
+#: gui\settingsDialogs.py:465
 msgid "Speak command &keys"
 msgstr "Čítať príkazové s&kratky"
 
-#: gui\settingsDialogs.py:457
+#: gui\settingsDialogs.py:488
 msgid "Mouse settings"
 msgstr "Nastavenia myši"
 
-#: gui\settingsDialogs.py:460
+#: gui\settingsDialogs.py:491
 msgid "Report mouse &shape changes"
 msgstr "Hlásiť zmeny &tvaru kurzora myši"
 
-#: gui\settingsDialogs.py:463
+#: gui\settingsDialogs.py:494
 msgid "Enable mouse &tracking"
 msgstr "Povoliť sledovanie kurzora myši"
 
-#: gui\settingsDialogs.py:467
+#: gui\settingsDialogs.py:498
 msgid "Text &unit resolution:"
 msgstr "&Jednotka oznamovania pri zameraní textu:"
 
-#: gui\settingsDialogs.py:471
+#: gui\settingsDialogs.py:502
 msgid "text reporting unit"
 msgstr "Jednotka oznamovania textu"
 
-#: gui\settingsDialogs.py:479
+#: gui\settingsDialogs.py:510
 msgid "Report &role when mouse enters object"
 msgstr "Oznamovať typ p&rvku pri zameraní kurzorom myši"
 
-#: gui\settingsDialogs.py:482
+#: gui\settingsDialogs.py:513
 msgid "play audio coordinates when mouse moves"
 msgstr "&Signalizovať polohu myši počas posúvania"
 
-#: gui\settingsDialogs.py:485
+#: gui\settingsDialogs.py:516
 msgid "brightness controls audio coordinates volume"
 msgstr "Úroveň jasu ovplyvňuje hlasitosť signalizácie"
 
-#: gui\settingsDialogs.py:503
+#: gui\settingsDialogs.py:534
 msgid "Review cursor settings"
 msgstr "Nastavenia prehliadacieho kurzora"
 
-#: gui\settingsDialogs.py:506
+#: gui\settingsDialogs.py:537
 msgid "Follow &keyboard focus"
 msgstr "Sledovať systémový &fokus"
 
-#: gui\settingsDialogs.py:509
+#: gui\settingsDialogs.py:540
 msgid "Follow System &Caret"
 msgstr "Sledovať sys&témový kurzor"
 
-#: gui\settingsDialogs.py:512
+#: gui\settingsDialogs.py:543
 msgid "Follow &mouse cursor"
 msgstr "Sledovať kurzor &myši"
 
-#: gui\settingsDialogs.py:515
+#: gui\settingsDialogs.py:546
 msgid "Simple review mode"
 msgstr "Jednoduchý režim objektovej navigácie"
 
-#: gui\settingsDialogs.py:530
+#: gui\settingsDialogs.py:561
 msgid "Object presentation"
 msgstr "Prezentácia objektov"
 
-#: gui\settingsDialogs.py:533
+#: gui\settingsDialogs.py:564
 msgid "Speak"
 msgstr "Čítať"
 
-#: gui\settingsDialogs.py:534
+#: gui\settingsDialogs.py:565
 msgid "Beep"
 msgstr "Pípať"
 
-#: gui\settingsDialogs.py:535
+#: gui\settingsDialogs.py:566
 msgid "Speak and beep"
 msgstr "Čítať a pípať"
 
-#: gui\settingsDialogs.py:539
+#: gui\settingsDialogs.py:570
 msgid "Report &tooltips"
 msgstr "Čítať kon&textovú nápovedu"
 
-#: gui\settingsDialogs.py:542
+#: gui\settingsDialogs.py:573
 msgid "Report &help balloons"
 msgstr "Čítať &bublinkovú nápovedu"
 
-#: gui\settingsDialogs.py:545
+#: gui\settingsDialogs.py:576
 msgid "Report object shortcut &keys"
 msgstr "Čítať skratkové &klávesy objektov"
 
-#: gui\settingsDialogs.py:548
+#: gui\settingsDialogs.py:579
 msgid "Report object &position information"
 msgstr "Oznamovať &pozíciu objektu"
 
-#: gui\settingsDialogs.py:551
+#: gui\settingsDialogs.py:582
 msgid "Report object &descriptions"
 msgstr "Oznamovať pop&isky objektov"
 
-#: gui\settingsDialogs.py:555
+#: gui\settingsDialogs.py:586
 msgid "Progress &bar output:"
 msgstr "Oznamovanie aktualizácie prie&behu:"
 
-#: gui\settingsDialogs.py:558
+#: gui\settingsDialogs.py:589
 msgid "Progress bar output"
 msgstr "oznamovanie indikátora priebehu"
 
-#: gui\settingsDialogs.py:567
+#: gui\settingsDialogs.py:598
 msgid "Report background progress bars"
 msgstr "Oznamovať aktualizáciu indikátorov priebehu na pozadí"
 
-#: gui\settingsDialogs.py:585
+#: gui\settingsDialogs.py:616
 msgid "virtual buffers"
 msgstr "Virtuálny prehliadač"
 
-#: gui\settingsDialogs.py:588
+#: gui\settingsDialogs.py:619
 msgid "&Maximum number of characters on one line"
 msgstr "&Maximálny počet znakov na riadku"
 
-#: gui\settingsDialogs.py:593
+#: gui\settingsDialogs.py:624
 msgid "&Number of lines per page"
 msgstr "Maximálny &počet riadkov na jednej stránke"
 
-#: gui\settingsDialogs.py:598
+#: gui\settingsDialogs.py:629
 msgid "Use &screen layout (when supported)"
 msgstr "Zachovať vzhľad ako na obrazovke"
 
-#: gui\settingsDialogs.py:601
+#: gui\settingsDialogs.py:632
 msgid "Report l&ayout tables"
 msgstr "Oznamovať tabuľky formujúce vzhľad"
 
-#: gui\settingsDialogs.py:605
+#: gui\settingsDialogs.py:636
 msgid "Automatic focus mode for focus changes"
 msgstr "Automaticky aktivovať režim fokusu pri zmene fokusu"
 
-#: gui\settingsDialogs.py:608
+#: gui\settingsDialogs.py:639
 msgid "Automatic focus mode for caret movement"
 msgstr "Automaticky aktivovať režim fokusu pri pohybe kurzorom"
 
-#: gui\settingsDialogs.py:611
+#: gui\settingsDialogs.py:642
 msgid "Audio indication of focus and browse modes"
 msgstr "Prehliadací režim a režim fokusu oznamovať zvukom"
 
-#: gui\settingsDialogs.py:639
+#: gui\settingsDialogs.py:670
 msgid "Document formatting"
 msgstr "Nastavenia čítania textu"
 
-#: gui\settingsDialogs.py:642
+#: gui\settingsDialogs.py:673
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Oznamovať zmeny &formátovania pri pohybe kurzorom (môže zaostávať)"
 
-#: gui\settingsDialogs.py:645
+#: gui\settingsDialogs.py:676
 msgid "Report font &name"
 msgstr "Čítať &názov písma"
 
-#: gui\settingsDialogs.py:648
+#: gui\settingsDialogs.py:679
 msgid "Report font &size"
 msgstr "Oznamovať &veľkosť písma"
 
-#: gui\settingsDialogs.py:651
+#: gui\settingsDialogs.py:682
 msgid "Report font attri&butes"
 msgstr "Čítať v&lastnosti písma"
 
-#: gui\settingsDialogs.py:654
+#: gui\settingsDialogs.py:685
 msgid "Report &alignment"
 msgstr "Čítať &zarovnanie"
 
-#: gui\settingsDialogs.py:657
+#: gui\settingsDialogs.py:688
+msgid "Report &colors"
+msgstr "Oznamovať &farby"
+
+#: gui\settingsDialogs.py:691
 msgid "Report st&yle"
 msgstr "Oznamovať š&týl"
 
-#: gui\settingsDialogs.py:660
+#: gui\settingsDialogs.py:694
 msgid "Report spelling errors"
 msgstr "Oznamovať pravopisné &chyby"
 
-#: gui\settingsDialogs.py:663
+#: gui\settingsDialogs.py:697
 msgid "Report &pages"
 msgstr "Oznamovať st&rany"
 
-#: gui\settingsDialogs.py:666
+#: gui\settingsDialogs.py:700
 msgid "Report &line numbers"
 msgstr "Oznamovať čísla ria&dkov"
 
-#: gui\settingsDialogs.py:669
+#: gui\settingsDialogs.py:703
 msgid "Report &tables"
 msgstr "Oznamovať tab&uľky"
 
-#: gui\settingsDialogs.py:672
+#: gui\settingsDialogs.py:706
 msgid "Report table row/column h&eaders"
 msgstr "Oznamovať &hlavičky riadkov / stĺpcov tabuľky"
 
-#: gui\settingsDialogs.py:675
+#: gui\settingsDialogs.py:709
 msgid "Report &links"
 msgstr "Oznamovať od&kazy"
 
-#: gui\settingsDialogs.py:678
+#: gui\settingsDialogs.py:712
 msgid "Report &headings"
 msgstr "Oznamovať n&adpisy"
 
-#: gui\settingsDialogs.py:681
+#: gui\settingsDialogs.py:715
 msgid "Report l&ists"
 msgstr "Oznamovať zoznam&y"
 
-#: gui\settingsDialogs.py:684
+#: gui\settingsDialogs.py:718
 msgid "Report block &quotes"
 msgstr "Oznamovať c&itácie"
 
-#: gui\settingsDialogs.py:687
+#: gui\settingsDialogs.py:721
 msgid "Report lan&dmarks"
 msgstr "Oznamovať o&blasti stránky"
 
-#: gui\settingsDialogs.py:716
+#: gui\settingsDialogs.py:750
 msgid "Edit dictionary entry"
 msgstr "Upraviť položku slovníka"
 
-#: gui\settingsDialogs.py:719
+#: gui\settingsDialogs.py:754
 msgid "&Pattern"
 msgstr "&Vzor"
 
-#: gui\settingsDialogs.py:722
+#: gui\settingsDialogs.py:757
 msgid "&Replacement"
 msgstr "&Nahradiť s"
 
-#: gui\settingsDialogs.py:725
+#: gui\settingsDialogs.py:760
 msgid "&Comment"
 msgstr "&Komentár"
 
-#: gui\settingsDialogs.py:728
+#: gui\settingsDialogs.py:763
 msgid "Case &sensitive"
 msgstr "Rozlišovať malé a veľké pí&smená"
 
-#: gui\settingsDialogs.py:730
+#: gui\settingsDialogs.py:765
 msgid "Regular &expression"
 msgstr "R&egulárny výraz"
 
-#: gui\settingsDialogs.py:752
+#: gui\settingsDialogs.py:787
 msgid "&Dictionary entries"
 msgstr "Položky slovníka"
 
-#: gui\settingsDialogs.py:755
+#: gui\settingsDialogs.py:790
 msgid "Comment"
 msgstr "Komentár"
 
-#: gui\settingsDialogs.py:756
+#: gui\settingsDialogs.py:791
 msgid "Pattern"
 msgstr "Vzor"
 
-#: gui\settingsDialogs.py:757
+#: gui\settingsDialogs.py:792
 msgid "Replacement"
 msgstr "Nahradiť s"
 
-#: gui\settingsDialogs.py:758
+#: gui\settingsDialogs.py:793
 msgid "case sensitive"
 msgstr "Rozlišovať veľké a malé písmená"
 
-#: gui\settingsDialogs.py:759
+#: gui\settingsDialogs.py:794
 msgid "Regular expression"
 msgstr "Regulárny výraz"
 
-#: gui\settingsDialogs.py:766
+#: gui\settingsDialogs.py:802
 msgid "&Add"
 msgstr "&Pridať"
 
-#: gui\settingsDialogs.py:769
+#: gui\settingsDialogs.py:805
 msgid "&edit"
 msgstr "&Upraviť"
 
-#: gui\settingsDialogs.py:772
+#: gui\settingsDialogs.py:808
 msgid "&Remove"
 msgstr "&Odstrániť"
 
-#: gui\settingsDialogs.py:839
+#: gui\settingsDialogs.py:830
+msgid "Add Dictionary Entry"
+msgstr "Pridať položku slovníka"
+
+#: gui\settingsDialogs.py:875
 msgid "Braille Settings"
 msgstr "Nastavenia braillu"
 
-#: gui\settingsDialogs.py:843
+#: gui\settingsDialogs.py:879
 msgid "Braille &display:"
 msgstr "Braillovský ria&dok:"
 
-#: gui\settingsDialogs.py:857
+#: gui\settingsDialogs.py:893
 msgid "Translation &table:"
 msgstr "Prekladová &tabuľka:"
 
-#: gui\settingsDialogs.py:869
+#: gui\settingsDialogs.py:905
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "Slovo, kde sa nachádza kurzor zobraziť počítačovým braillom"
 
-#: gui\settingsDialogs.py:874
+#: gui\settingsDialogs.py:910
 msgid "Cursor blink rate (ms)"
 msgstr "Rýchlosť &blikania kurzora (ms)"
 
-#: gui\settingsDialogs.py:882
+#: gui\settingsDialogs.py:918
 msgid "Message timeout (sec)"
 msgstr "Zobrazovať &správy (sek)"
 
-#: gui\settingsDialogs.py:890
+#: gui\settingsDialogs.py:926
 msgid "Braille tethered to:"
 msgstr "Braillovský kurzor zviazaný s:"
 
-#: gui\settingsDialogs.py:909
+#: gui\settingsDialogs.py:945
 msgid "Braille Display Error"
 msgstr "Chyba braillovského riadku"
 
-#: gui\settingsDialogs.py:909
+#: gui\settingsDialogs.py:945
 msgid "Could not load the %s display."
 msgstr "Nemôžem načítať zobrazovač %s"
 
@@ -3383,139 +3462,143 @@ msgstr "Type exit() to exit the console"
 msgid "NVDA Python Console"
 msgstr "NVDA python konzola"
 
-#: speech.py:180
+#: speech.py:183
 msgid "cap %s"
 msgstr "Veľké %s"
 
-#: speech.py:325
+#: speech.py:328
 msgid "%d characters"
 msgstr "%d znakov"
 
-#: speech.py:376
+#: speech.py:379
 msgid "selecting %s"
 msgstr "Vybrané %s"
 
-#: speech.py:387
+#: speech.py:390
 msgid "unselecting %s"
 msgstr "Nevybrané %s"
 
-#: speech.py:389
+#: speech.py:392
 msgid "selection removed"
 msgstr "Výber vymazaný."
 
-#: speech.py:677
+#: speech.py:680
 msgid "done dragging"
 msgstr "akcia ťahať a pustiť ukončená"
 
-#: speech.py:705 speech.py:995
+#: speech.py:710 speech.py:1009
 msgid "row %s"
 msgstr "Riadok %s"
 
-#: speech.py:711 speech.py:991
+#: speech.py:716 speech.py:1005
 msgid "column %s"
 msgstr "Stĺpec %s"
 
-#: speech.py:716
+#: speech.py:721
 msgid "with %s rows and %s columns"
 msgstr "s %s riadkami a %s stĺpcami"
 
-#: speech.py:718
+#: speech.py:723
 msgid "with %s columns"
 msgstr "má %s riadkov"
 
-#: speech.py:720
+#: speech.py:725
 msgid "with %s rows"
 msgstr "má %s stĺpcov"
 
-#: speech.py:826
+#: speech.py:831
 msgid "with %s items"
 msgstr "má %s položiek"
 
-#: speech.py:843 speech.py:950
+#: speech.py:848 speech.py:964
 msgid "out of %s"
 msgstr "mimo %s"
 
-#: speech.py:867
+#: speech.py:872
 msgid "page %s"
 msgstr "Strana %s"
 
-#: speech.py:874
+#: speech.py:879
 msgid "style %s"
 msgstr "Štýl %s"
 
-#: speech.py:876
+#: speech.py:881
 msgid "default style"
 msgstr "Predvolený štýl"
 
-#: speech.py:896
+#: speech.py:905
+msgid "on {backgroundColor}"
+msgstr "na {farba pozadia}"
+
+#: speech.py:910
 msgid "line %s"
 msgstr "Riadok %s"
 
-#: speech.py:902
+#: speech.py:916
 msgid "no bold"
 msgstr "Nie tučné"
 
-#: speech.py:907
+#: speech.py:921
 msgid "italic"
 msgstr "kurzíva"
 
-#: speech.py:907
+#: speech.py:921
 msgid "no italic"
 msgstr "Nie kurzíva"
 
-#: speech.py:912
+#: speech.py:926
 msgid "no strikethrough"
 msgstr "Neprečiarknuté"
 
-#: speech.py:912
+#: speech.py:926
 msgid "strikethrough"
 msgstr "Prečiarknuté"
 
-#: speech.py:917
+#: speech.py:931
 msgid "not underlined"
 msgstr "Nepodčiarknuté"
 
-#: speech.py:917
+#: speech.py:931
 msgid "underlined"
 msgstr "Podčiarknuté"
 
-#: speech.py:928
+#: speech.py:942
 msgid "baseline"
 msgstr "Bez indexov"
 
-#: speech.py:936
+#: speech.py:950
 msgid "align left"
 msgstr "Zarovnané vľavo"
 
-#: speech.py:938
+#: speech.py:952
 msgid "align center"
 msgstr "Zarovnané na stred"
 
-#: speech.py:940
+#: speech.py:954
 msgid "align right"
 msgstr "Zarovnané vpravo"
 
-#: speech.py:942
+#: speech.py:956
 msgid "align justify"
 msgstr "Zarovnané do bloku"
 
-#: speech.py:944
+#: speech.py:958
 msgid "align default"
 msgstr "Predvolené zarovnanie"
 
-#: speech.py:957
+#: speech.py:971
 msgid "spelling error"
 msgstr "Pravopisná chyba"
 
-#: speech.py:959
+#: speech.py:973
 msgid "out of spelling error"
 msgstr "Mimo pravopisnej chyby"
 
-#: speech.py:977
+#: speech.py:991
 msgid "out of table"
 msgstr "Mimo tabuľky"
 
-#: speech.py:986
+#: speech.py:1000
 msgid "table with %s columns and %s rows"
 msgstr "Tabuľka s %s stĺpcami a %s riadkami"
 
@@ -3622,512 +3705,512 @@ msgstr ""
 "http://www.inzertko.sk/admini/gnu_gpl_sk.htm\n"
 "alebo si prečítajte súbor Copying.txt dodaný spolu s týmto programom."
 
-#: virtualBuffers\__init__.py:198
+#: virtualBuffers\__init__.py:202
 msgid "%s landmark"
 msgstr "oblasť %s"
 
-#: virtualBuffers\__init__.py:216
+#: virtualBuffers\__init__.py:220
 msgid "Lin&ks"
 msgstr "Od&kazy"
 
-#: virtualBuffers\__init__.py:217
+#: virtualBuffers\__init__.py:221
 msgid "&Headings"
 msgstr "&Nadpisy"
 
-#: virtualBuffers\__init__.py:218
+#: virtualBuffers\__init__.py:222
 msgid "Lan&dmarks"
 msgstr "&Oblasti stránky"
 
-#: virtualBuffers\__init__.py:224
+#: virtualBuffers\__init__.py:228
 msgid "Elements List"
 msgstr "Zoznam prvkov"
 
-#: virtualBuffers\__init__.py:227
+#: virtualBuffers\__init__.py:231
 msgid "Type:"
 msgstr "Typ:"
 
-#: virtualBuffers\__init__.py:238
+#: virtualBuffers\__init__.py:242
 msgid "&Filter by:"
 msgstr "&Filter:"
 
-#: virtualBuffers\__init__.py:246
+#: virtualBuffers\__init__.py:250
 msgid "&Activate"
 msgstr "&Aktivovať"
 
-#: virtualBuffers\__init__.py:249
+#: virtualBuffers\__init__.py:253
 msgid "&Move to"
 msgstr "&Prejsť na"
 
-#: virtualBuffers\__init__.py:535
+#: virtualBuffers\__init__.py:539
 msgid "Refreshed"
 msgstr "Obnovené"
 
-#: virtualBuffers\__init__.py:540
+#: virtualBuffers\__init__.py:544
 msgid "Loading document..."
 msgstr "Nahrávam dokument..."
 
-#: virtualBuffers\__init__.py:680
+#: virtualBuffers\__init__.py:684
 msgid "activates the current object in the virtual buffer"
 msgstr "Aktivuje aktuálny objekt virtuálneho prehliadača."
 
-#: virtualBuffers\__init__.py:692
+#: virtualBuffers\__init__.py:696
 msgid "Refreshes the virtual buffer content"
 msgstr "Obnovuje obsah virtuálneho prehliadača"
 
-#: virtualBuffers\__init__.py:697
+#: virtualBuffers\__init__.py:701
 msgid "use screen layout %s"
 msgstr "Zachovať vzhľad ako na obrazovke %s"
 
-#: virtualBuffers\__init__.py:698
+#: virtualBuffers\__init__.py:702
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "virtual buffer content"
 msgstr "Prepína zachovanie vzhľadu ako na obrazovke"
 
-#: virtualBuffers\__init__.py:785
+#: virtualBuffers\__init__.py:789
 msgid "Presents a list of links, headings or landmarks"
 msgstr "Zobrazí zoznam odkazov, nadpisov alebo oblastí stránky"
 
-#: virtualBuffers\__init__.py:1126
+#: virtualBuffers\__init__.py:1130
 msgid "Not in a table cell"
 msgstr "nie v bunke tabuľky"
 
-#: virtualBuffers\__init__.py:1142
+#: virtualBuffers\__init__.py:1146
 msgid "moves to the next table row"
 msgstr "Prejde do nasledujúceho riadku tabuľky."
 
-#: virtualBuffers\__init__.py:1146
+#: virtualBuffers\__init__.py:1150
 msgid "moves to the previous table row"
 msgstr "Prejde do predchádzajúceho riadku tabuľky."
 
-#: virtualBuffers\__init__.py:1150
+#: virtualBuffers\__init__.py:1154
 msgid "moves to the next table column"
 msgstr "Prejde do nasledujúceho stĺpca tabuľky."
 
-#: virtualBuffers\__init__.py:1154
+#: virtualBuffers\__init__.py:1158
 msgid "moves to the previous table column"
 msgstr "Prejde do predchádzajúceho stĺpca tabuľky."
 
-#: virtualBuffers\__init__.py:1214
+#: virtualBuffers\__init__.py:1218
 msgid "moves to the next heading"
 msgstr "Prejde na nasledujúci nadpis."
 
-#: virtualBuffers\__init__.py:1214
+#: virtualBuffers\__init__.py:1218
 msgid "no next heading"
 msgstr "Žiadny ďalší nadpis"
 
-#: virtualBuffers\__init__.py:1215
+#: virtualBuffers\__init__.py:1219
 msgid "moves to the previous heading"
 msgstr "Prejde na predchádzajúci nadpis."
 
-#: virtualBuffers\__init__.py:1215
+#: virtualBuffers\__init__.py:1219
 msgid "no previous heading"
 msgstr "Žiadny predchádzajúci nadpis"
 
-#: virtualBuffers\__init__.py:1216
+#: virtualBuffers\__init__.py:1220
 msgid "moves to the next heading at level 1"
 msgstr "Prejde na nasledujúci nadpis úrovne 1."
 
-#: virtualBuffers\__init__.py:1216
+#: virtualBuffers\__init__.py:1220
 msgid "no next heading at level 1"
 msgstr "Žiadny ďalší nadpis úrovne 1"
 
-#: virtualBuffers\__init__.py:1217
+#: virtualBuffers\__init__.py:1221
 msgid "moves to the previous heading at level 1"
 msgstr "Prejde na predchádzajúci nadpis úrovne 1."
 
-#: virtualBuffers\__init__.py:1217
+#: virtualBuffers\__init__.py:1221
 msgid "no previous heading at level 1"
 msgstr "Žiadny predchádzajúci nadpis úrovne 1"
 
-#: virtualBuffers\__init__.py:1218
+#: virtualBuffers\__init__.py:1222
 msgid "moves to the next heading at level 2"
 msgstr "Prejde na nasledujúci nadpis úrovne 2."
 
-#: virtualBuffers\__init__.py:1218
+#: virtualBuffers\__init__.py:1222
 msgid "no next heading at level 2"
 msgstr "Žiadny ďalší nadpis úrovne 2"
 
-#: virtualBuffers\__init__.py:1219
+#: virtualBuffers\__init__.py:1223
 msgid "moves to the previous heading at level 2"
 msgstr "Prejde na predchádzajúci nadpis úrovne 2"
 
-#: virtualBuffers\__init__.py:1219
+#: virtualBuffers\__init__.py:1223
 msgid "no previous heading at level 2"
 msgstr "Žiadny predchádzajúci nadpis úrovne 2"
 
-#: virtualBuffers\__init__.py:1220
+#: virtualBuffers\__init__.py:1224
 msgid "moves to the next heading at level 3"
 msgstr "Prejde na nasledujúci nadpis úrovne 3."
 
-#: virtualBuffers\__init__.py:1220
+#: virtualBuffers\__init__.py:1224
 msgid "no next heading at level 3"
 msgstr "Žiadny ďalší nadpis úrovne 3"
 
-#: virtualBuffers\__init__.py:1221
+#: virtualBuffers\__init__.py:1225
 msgid "moves to the previous heading at level 3"
 msgstr "Prejde na predchádzajúci nadpis úrovne 3."
 
-#: virtualBuffers\__init__.py:1221
+#: virtualBuffers\__init__.py:1225
 msgid "no previous heading at level 3"
 msgstr "Žiadny predchádzajúci nadpis úrovne 3"
 
-#: virtualBuffers\__init__.py:1222
+#: virtualBuffers\__init__.py:1226
 msgid "moves to the next heading at level 4"
 msgstr "Prejde na nasledujúci nadpis úrovne 4."
 
-#: virtualBuffers\__init__.py:1222
+#: virtualBuffers\__init__.py:1226
 msgid "no next heading at level 4"
 msgstr "Žiadny ďalší nadpis úrovne 4"
 
-#: virtualBuffers\__init__.py:1223
+#: virtualBuffers\__init__.py:1227
 msgid "moves to the previous heading at level 4"
 msgstr "Prejde na predchádzajúci nadpis úrovne 4."
 
-#: virtualBuffers\__init__.py:1223
+#: virtualBuffers\__init__.py:1227
 msgid "no previous heading at level 4"
 msgstr "Žiadny predchádzajúci nadpis úrovne 4"
 
-#: virtualBuffers\__init__.py:1224
+#: virtualBuffers\__init__.py:1228
 msgid "moves to the next heading at level 5"
 msgstr "Prejde na nasledujúci nadpis úrovne 5."
 
-#: virtualBuffers\__init__.py:1224
+#: virtualBuffers\__init__.py:1228
 msgid "no next heading at level 5"
 msgstr "Žiadny ďalší nadpis úrovne 5"
 
-#: virtualBuffers\__init__.py:1225
+#: virtualBuffers\__init__.py:1229
 msgid "moves to the previous heading at level 5"
 msgstr "Prejde na predchádzajúci nadpis úrovne 5."
 
-#: virtualBuffers\__init__.py:1225
+#: virtualBuffers\__init__.py:1229
 msgid "no previous heading at level 5"
 msgstr "Žiadny predchádzajúci nadpis úrovne 5"
 
-#: virtualBuffers\__init__.py:1226
+#: virtualBuffers\__init__.py:1230
 msgid "moves to the next heading at level 6"
 msgstr "Prejde na nasledujúci nadpis úrovne 6."
 
-#: virtualBuffers\__init__.py:1226
+#: virtualBuffers\__init__.py:1230
 msgid "no next heading at level 6"
 msgstr "Žiadny ďalší nadpis úrovne 6"
 
-#: virtualBuffers\__init__.py:1227
+#: virtualBuffers\__init__.py:1231
 msgid "moves to the previous heading at level 6"
 msgstr "Prejde na predchádzajúci nadpis úrovne 6."
 
-#: virtualBuffers\__init__.py:1227
+#: virtualBuffers\__init__.py:1231
 msgid "no previous heading at level 6"
 msgstr "Žiadny predchádzajúci nadpis úrovne 6"
 
-#: virtualBuffers\__init__.py:1228
+#: virtualBuffers\__init__.py:1232
 msgid "moves to the next table"
 msgstr "Prejde do nasledujúcej tabuľky."
 
-#: virtualBuffers\__init__.py:1228
+#: virtualBuffers\__init__.py:1232
 msgid "no next table"
 msgstr "Žiadna ďalšia tabuľka"
 
-#: virtualBuffers\__init__.py:1229
+#: virtualBuffers\__init__.py:1233
 msgid "moves to the previous table"
 msgstr "Prejde do predchádzajúcej tabuľky."
 
-#: virtualBuffers\__init__.py:1229
+#: virtualBuffers\__init__.py:1233
 msgid "no previous table"
 msgstr "Žiadna predchádzajúca tabuľka"
 
-#: virtualBuffers\__init__.py:1230
+#: virtualBuffers\__init__.py:1234
 msgid "moves to the next link"
 msgstr "Prejde na nasledujúci odkaz."
 
-#: virtualBuffers\__init__.py:1230
+#: virtualBuffers\__init__.py:1234
 msgid "no next link"
 msgstr "Žiadny ďalší odkaz"
 
-#: virtualBuffers\__init__.py:1231
+#: virtualBuffers\__init__.py:1235
 msgid "moves to the previous link"
 msgstr "Prejde na predchádzajúci odkaz."
 
-#: virtualBuffers\__init__.py:1231
+#: virtualBuffers\__init__.py:1235
 msgid "no previous link"
 msgstr "Žiadny predchádzajúci odkaz"
 
-#: virtualBuffers\__init__.py:1232
+#: virtualBuffers\__init__.py:1236
 msgid "moves to the next visited link"
 msgstr "Prejde na nasledujúci navštívený odkaz."
 
-#: virtualBuffers\__init__.py:1232
+#: virtualBuffers\__init__.py:1236
 msgid "no next visited link"
 msgstr "Žiadny ďalší navštívený odkaz"
 
-#: virtualBuffers\__init__.py:1233
+#: virtualBuffers\__init__.py:1237
 msgid "moves to the previous visited link"
 msgstr "Prejde na predchádzajúci navštívený odkaz."
 
-#: virtualBuffers\__init__.py:1233
+#: virtualBuffers\__init__.py:1237
 msgid "no previous visited link"
 msgstr "Žiadny predchádzajúci navštívený odkaz"
 
-#: virtualBuffers\__init__.py:1234
+#: virtualBuffers\__init__.py:1238
 msgid "moves to the next unvisited link"
 msgstr "Prejde na nasledujúci nenavštívený odkaz."
 
-#: virtualBuffers\__init__.py:1234
+#: virtualBuffers\__init__.py:1238
 msgid "no next unvisited link"
 msgstr "Žiadny ďalší nenavštívený odkaz"
 
-#: virtualBuffers\__init__.py:1235
+#: virtualBuffers\__init__.py:1239
 msgid "moves to the previous unvisited link"
 msgstr "Prejde na predchádzajúci nenavštívený odkaz."
 
-#: virtualBuffers\__init__.py:1235
+#: virtualBuffers\__init__.py:1239
 msgid "no previous unvisited link"
 msgstr "Žiadny predchádzajúci nenavštívený odkaz"
 
-#: virtualBuffers\__init__.py:1236
+#: virtualBuffers\__init__.py:1240
 msgid "moves to the next form field"
 msgstr "Prejde na predchádzajúci prvok formulára."
 
-#: virtualBuffers\__init__.py:1236
+#: virtualBuffers\__init__.py:1240
 msgid "no next form field"
 msgstr "Žiadny ďalší prvok formulára"
 
-#: virtualBuffers\__init__.py:1237
+#: virtualBuffers\__init__.py:1241
 msgid "moves to the previous form field"
 msgstr "Prejde na predchádzajúci prvok formulára."
 
-#: virtualBuffers\__init__.py:1237
+#: virtualBuffers\__init__.py:1241
 msgid "no previous form field"
 msgstr "Žiadny predchádzajúci prvok formulára"
 
-#: virtualBuffers\__init__.py:1238
+#: virtualBuffers\__init__.py:1242
 msgid "moves to the next list"
 msgstr "Prejde na nasledujúci zoznam."
 
-#: virtualBuffers\__init__.py:1238
+#: virtualBuffers\__init__.py:1242
 msgid "no next list"
 msgstr "Žiadny ďalší zoznam"
 
-#: virtualBuffers\__init__.py:1239
+#: virtualBuffers\__init__.py:1243
 msgid "moves to the previous list"
 msgstr "Prejde na predchádzajúci zoznam."
 
-#: virtualBuffers\__init__.py:1239
+#: virtualBuffers\__init__.py:1243
 msgid "no previous list"
 msgstr "Žiadny predchádzajúci zoznam"
 
-#: virtualBuffers\__init__.py:1240
+#: virtualBuffers\__init__.py:1244
 msgid "moves to the next list item"
 msgstr "Prejde na nasledujúcu položku zoznamu."
 
-#: virtualBuffers\__init__.py:1240
+#: virtualBuffers\__init__.py:1244
 msgid "no next list item"
 msgstr "Žiadna ďalšia položka zoznamu"
 
-#: virtualBuffers\__init__.py:1241
+#: virtualBuffers\__init__.py:1245
 msgid "moves to the previous list item"
 msgstr "Prejde na predchádzajúcu položku zoznamu."
 
-#: virtualBuffers\__init__.py:1241
+#: virtualBuffers\__init__.py:1245
 msgid "no previous list item"
 msgstr "Žiadna predchádzajúca položka zoznamu"
 
-#: virtualBuffers\__init__.py:1242
+#: virtualBuffers\__init__.py:1246
 msgid "moves to the next button"
 msgstr "Prejde na nasledujúce tlačidlo."
 
-#: virtualBuffers\__init__.py:1242
+#: virtualBuffers\__init__.py:1246
 msgid "no next button"
 msgstr "Žiadne ďalšie tlačidlo"
 
-#: virtualBuffers\__init__.py:1243
+#: virtualBuffers\__init__.py:1247
 msgid "moves to the previous button"
 msgstr "Prejde na predchádzajúce tlačidlo."
 
-#: virtualBuffers\__init__.py:1243
+#: virtualBuffers\__init__.py:1247
 msgid "no previous button"
 msgstr "Žiadne predchádzajúce tlačidlo"
 
-#: virtualBuffers\__init__.py:1244
+#: virtualBuffers\__init__.py:1248
 msgid "moves to the next edit field"
 msgstr "Prejde na nasledujúce editačné pole."
 
-#: virtualBuffers\__init__.py:1244
+#: virtualBuffers\__init__.py:1248
 msgid "no next edit field"
 msgstr "Žiadne ďalšie editačné pole"
 
-#: virtualBuffers\__init__.py:1245
+#: virtualBuffers\__init__.py:1249
 msgid "moves to the previous edit field"
 msgstr "Prejde na predchádzajúce editačné pole."
 
-#: virtualBuffers\__init__.py:1245
+#: virtualBuffers\__init__.py:1249
 msgid "no previous edit field"
 msgstr "Žiadne predchádzajúce editačné pole"
 
-#: virtualBuffers\__init__.py:1246
+#: virtualBuffers\__init__.py:1250
 msgid "moves to the next frame"
 msgstr "Prejde do nasledujúceho rámika."
 
-#: virtualBuffers\__init__.py:1246
+#: virtualBuffers\__init__.py:1250
 msgid "no next frame"
 msgstr "Žiadny ďalší rámik"
 
-#: virtualBuffers\__init__.py:1247
+#: virtualBuffers\__init__.py:1251
 msgid "moves to the previous frame"
 msgstr "Prejde do predchádzajúceho rámika."
 
-#: virtualBuffers\__init__.py:1247
+#: virtualBuffers\__init__.py:1251
 msgid "no previous frame"
 msgstr "Žiadny predchádzajúci rámik"
 
-#: virtualBuffers\__init__.py:1248
+#: virtualBuffers\__init__.py:1252
 msgid "moves to the next separator"
 msgstr "Prejde na nasledujúci oddeľovač."
 
-#: virtualBuffers\__init__.py:1248
+#: virtualBuffers\__init__.py:1252
 msgid "no next separator"
 msgstr "Žiadny ďalší oddeľovač"
 
-#: virtualBuffers\__init__.py:1249
+#: virtualBuffers\__init__.py:1253
 msgid "moves to the previous separator"
 msgstr "Prejde na predchádzajúci oddeľovač."
 
-#: virtualBuffers\__init__.py:1249
+#: virtualBuffers\__init__.py:1253
 msgid "no previous separator"
 msgstr "Žiadny predchádzajúci oddeľovač"
 
-#: virtualBuffers\__init__.py:1250
+#: virtualBuffers\__init__.py:1254
 msgid "moves to the next radio button"
 msgstr "Prejde na nasledujúci prepínač."
 
-#: virtualBuffers\__init__.py:1250
+#: virtualBuffers\__init__.py:1254
 msgid "no next radio button"
 msgstr "Žiadny ďalší prepínač"
 
-#: virtualBuffers\__init__.py:1251
+#: virtualBuffers\__init__.py:1255
 msgid "moves to the previous radio button"
 msgstr "Prejde na predchádzajúci prepínač."
 
-#: virtualBuffers\__init__.py:1251
+#: virtualBuffers\__init__.py:1255
 msgid "no previous radio button"
 msgstr "Žiadny predchádzajúci prepínač"
 
-#: virtualBuffers\__init__.py:1252
+#: virtualBuffers\__init__.py:1256
 msgid "moves to the next combo box"
 msgstr "Prejde na nasledujúci zoznamový rámik."
 
-#: virtualBuffers\__init__.py:1252
+#: virtualBuffers\__init__.py:1256
 msgid "no next combo box"
 msgstr "Žiadny ďalší zoznamový rámik"
 
-#: virtualBuffers\__init__.py:1253
+#: virtualBuffers\__init__.py:1257
 msgid "moves to the previous combo box"
 msgstr "Prejde na predchádzajúci zoznamový rámik."
 
-#: virtualBuffers\__init__.py:1253
+#: virtualBuffers\__init__.py:1257
 msgid "no previous combo box"
 msgstr "Žiadny predchádzajúci zoznamový rámik"
 
-#: virtualBuffers\__init__.py:1254
+#: virtualBuffers\__init__.py:1258
 msgid "moves to the next check box"
 msgstr "Prejde na nasledujúce začiarkavacie políčko."
 
-#: virtualBuffers\__init__.py:1254
+#: virtualBuffers\__init__.py:1258
 msgid "no next check box"
 msgstr "Žiadne ďalšie začiarkavacie políčko"
 
-#: virtualBuffers\__init__.py:1255
+#: virtualBuffers\__init__.py:1259
 msgid "moves to the previous check box"
 msgstr "Prejde na predchádzajúce začiarkavacie políčko."
 
-#: virtualBuffers\__init__.py:1255
+#: virtualBuffers\__init__.py:1259
 msgid "no previous check box"
 msgstr "Žiadne predchádzajúce začiarkavacie políčko"
 
-#: virtualBuffers\__init__.py:1256
+#: virtualBuffers\__init__.py:1260
 msgid "moves to the next graphic"
 msgstr "Prejde na nasledujúcu grafiku."
 
-#: virtualBuffers\__init__.py:1256
+#: virtualBuffers\__init__.py:1260
 msgid "no next graphic"
 msgstr "Žiadna ďalšia grafika"
 
-#: virtualBuffers\__init__.py:1257
+#: virtualBuffers\__init__.py:1261
 msgid "moves to the previous graphic"
 msgstr "Prejde na predchádzajúcu grafiku."
 
-#: virtualBuffers\__init__.py:1257
+#: virtualBuffers\__init__.py:1261
 msgid "no previous graphic"
 msgstr "Žiadna predchádzajúca grafika"
 
-#: virtualBuffers\__init__.py:1258
+#: virtualBuffers\__init__.py:1262
 msgid "moves to the next block quote"
 msgstr "Prejde na nasledujúcu citáciu."
 
-#: virtualBuffers\__init__.py:1258
+#: virtualBuffers\__init__.py:1262
 msgid "no next block quote"
 msgstr "Žiadna ďalšia citácia"
 
-#: virtualBuffers\__init__.py:1259
+#: virtualBuffers\__init__.py:1263
 msgid "moves to the previous block quote"
 msgstr "Prejde na predchádzajúcu citáciu."
 
-#: virtualBuffers\__init__.py:1259
+#: virtualBuffers\__init__.py:1263
 msgid "no previous block quote"
 msgstr "Žiadna predchádzajúca citácia"
 
-#: virtualBuffers\__init__.py:1260
+#: virtualBuffers\__init__.py:1264
 msgid "no more text after a block of links"
 msgstr "Žiadny nasledujúci text za skupinou odkazov"
 
-#: virtualBuffers\__init__.py:1260
+#: virtualBuffers\__init__.py:1264
 msgid "skips forward past a block of links"
 msgstr "Preskočí skupinu odkazov"
 
-#: virtualBuffers\__init__.py:1261
+#: virtualBuffers\__init__.py:1265
 msgid "no more text before a block of links"
 msgstr "Žiadny predchádzajúci text pred skupinou odkazov"
 
-#: virtualBuffers\__init__.py:1261
+#: virtualBuffers\__init__.py:1265
 msgid "skips backward past a block of links"
 msgstr "Preskočí skupinu odkazov (smerom hore)"
 
-#: virtualBuffers\__init__.py:1262
+#: virtualBuffers\__init__.py:1266
 msgid "moves to the next landmark"
 msgstr "Prejde do nasledujúcej oblasti stránky."
 
-#: virtualBuffers\__init__.py:1262
+#: virtualBuffers\__init__.py:1266
 msgid "no next landmark"
 msgstr "Žiadna ďalšia oblasť"
 
-#: virtualBuffers\__init__.py:1263
+#: virtualBuffers\__init__.py:1267
 msgid "moves to the previous landmark"
 msgstr "Prejde do predchádzajúcej oblasti stránky."
 
-#: virtualBuffers\__init__.py:1263
+#: virtualBuffers\__init__.py:1267
 msgid "no previous landmark"
 msgstr "Žiadna predchádzajúca oblasť"
 
-#: virtualBuffers\__init__.py:1264
+#: virtualBuffers\__init__.py:1268
 msgid "moves to the next embedded object"
 msgstr "Prejde na nasledujúci vnorený objekt"
 
-#: virtualBuffers\__init__.py:1264
+#: virtualBuffers\__init__.py:1268
 msgid "no next embedded object"
 msgstr "Žiadny ďalší vnorený objekt"
 
-#: virtualBuffers\__init__.py:1265
+#: virtualBuffers\__init__.py:1269
 msgid "moves to the previous embedded object"
 msgstr "prejde na predchádzajúci vnorený objekt"
 
-#: virtualBuffers\__init__.py:1265
+#: virtualBuffers\__init__.py:1269
 msgid "no previous embedded object"
 msgstr "Žiadny predchádzajúci vnorený objekt"
 
-#: virtualBuffers\__init__.py:1278
+#: virtualBuffers\__init__.py:1282
 msgid "browse mode"
 msgstr "prehliadací režim"
 
-#: virtualBuffers\__init__.py:1278
+#: virtualBuffers\__init__.py:1282
 msgid "focus mode"
 msgstr "režim fokusu"
