@@ -8,7 +8,6 @@
 """
 
 import weakref
-import inputCore
 from logHandler import log
 
 class Getter(object):
@@ -148,6 +147,8 @@ class ScriptableObject(AutoPropertyObject):
 		func = getattr(self, "script_%s" % scriptName, None)
 		if not func:
 			raise LookupError("No such script: %s" % func)
+		# Import late to avoid circular import.
+		import inputCore
 		self._gestureMap[inputCore.normalizeGestureIdentifier(gestureIdentifier)] = func
 
 	def bindGestures(self, gestureMap):
