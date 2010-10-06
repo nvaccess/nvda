@@ -109,7 +109,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.pauseSpeech, speechEffect == gesture.SPEECHEFFECT_PAUSE)
 
 		if log.isEnabledFor(log.IO) and not gesture.isModifier:
-			log.io("Input: %s" % gesture.mapKeys[0])
+			log.io("Input: %s" % gesture.identifiers[0])
 
 		if self.isInputHelpActive and not gesture.bypassInputHelp:
 			queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture)
