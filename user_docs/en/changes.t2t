@@ -77,7 +77,6 @@ Notable features of this release include greatly simplified object navigation; v
 - NVDA now functions correctly on a system where the current working directory has been removed from the DLL search path (by setting the CWDIllegalInDllSearch registry entry to 0xFFFFFFFF). Note that this is not relevant to most users. (#907)
 - When the table navigation commands are used outside of a table in Microsoft Word, "edge of table" is no longer spoken after "not in table". (#921)
 - When the table navigation commands cannot move due to being at the edge of a table in Microsoft Word, "edge of table" is now spoken in the configured NVDA language rather than always in English. (#921)
-- When moving the main cursor in virtual buffers, the review cursor will always review the entire document as intended, rather than reviewing the focused object.
 - In Outlook Express, Windows Mail and Windows Live Mail, the state of the checkboxes in message rules lists is now reported. (#576)
 - The description of message rules can now be read in Windows Live Mail 2010.
 
