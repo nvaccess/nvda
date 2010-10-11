@@ -231,41 +231,42 @@ class CursorManager(baseObject.ScriptableObject):
 		if info.copyToClipboard():
 			speech.speakMessage(_("copied to clipboard"))
 
+	__gestures = {
+		"kb:pageUp": "pageUp",
+		"kb:pageDown": "pageDown",
+		"kb:upArrow": "moveByLine_back",
+		"kb:downArrow": "moveByLine_forward",
+		"kb:leftArrow": "moveByCharacter_back",
+		"kb:rightArrow": "moveByCharacter_forward",
+		"kb:control+leftArrow": "moveByWord_back",
+		"kb:control+rightArrow": "moveByWord_forward",
+		"kb:control+upArrow": "moveByParagraph_back",
+		"kb:control+downArrow": "moveByParagraph_forward",
+		"kb:home": "startOfLine",
+		"kb:end": "endOfLine",
+		"kb:control+home": "topOfDocument",
+		"kb:control+end": "bottomOfDocument",
+		"kb:shift+rightArrow": "selectCharacter_forward",
+		"kb:shift+leftArrow": "selectCharacter_back",
+		"kb:shift+control+rightArrow": "selectWord_forward",
+		"kb:shift+control+leftArrow": "selectWord_back",
+		"kb:shift+downArrow": "selectLine_forward",
+		"kb:shift+upArrow": "selectLine_back",
+		"kb:shift+end": "selectToEndOfLine",
+		"kb:shift+home": "selectToBeginningOfLine",
+		"kb:shift+control+end": "selectToBottomOfDocument",
+		"kb:shift+control+home": "selectToTopOfDocument",
+		"kb:control+a": "selectAll",
+		"kb:control+c": "copyToClipboard",
+		"kb:NVDA+Control+f": "find",
+		"kb:NVDA+f3": "findNext",
+		"kb:NVDA+shift+f3": "findPrevious",
+	}
+
 	def bindToStandardKeys(self):
 		"""Bind the standard navigation, selection and copy keys to the cursor manager scripts.
 		"""
-		for keyName, scriptName in (
-			("extendedPrior","pageUp"),
-			("extendedNext","pageDown"),
-			("ExtendedUp","moveByLine_back"),
-			("ExtendedDown","moveByLine_forward"),
-			("ExtendedLeft","moveByCharacter_back"),
-			("ExtendedRight","moveByCharacter_forward"),
-			("Control+ExtendedLeft","moveByWord_back"),
-			("Control+ExtendedRight","moveByWord_forward"),
-			("Control+ExtendedUp","moveByParagraph_back"),
-			("Control+ExtendedDown","moveByParagraph_forward"),
-			("ExtendedHome","startOfLine"),
-			("ExtendedEnd","endOfLine"),
-			("control+ExtendedHome","topOfDocument"),
-			("control+ExtendedEnd","bottomOfDocument"),
-			("shift+extendedRight","selectCharacter_forward"),
-			("shift+extendedLeft","selectCharacter_back"),
-			("control+shift+extendedRight","selectWord_forward"),
-			("control+shift+extendedLeft","selectWord_back"),
-			("shift+extendedDown","selectLine_forward"),
-			("shift+extendedUp","selectLine_back"),
-			("shift+extendedEnd","selectToEndOfLine"),
-			("shift+extendedHome","selectToBeginningOfLine"),
-			("control+shift+extendedEnd","selectToBottomOfDocument"),
-			("control+shift+extendedHome","selectToTopOfDocument"),
-			("control+a","selectAll"),
-			("control+c","copyToClipboard"),
-			("NVDA+Control+f","find"),
-			("NVDA+f3","findNext"),
-			("NVDA+shift+f3","findPrevious"),
-		):
-			self.bindKey_runtime(keyName, scriptName)
+		self.bindGestures(self.__gestures)
 
 class _ReviewCursorManagerTextInfo(textInfos.TextInfo):
 	"""For use with L{ReviewCursorManager}.

@@ -506,6 +506,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		self._lastFocusObj = None
 		self._hadFirstGainFocus = False
 		self._lastProgrammaticScrollTime = None
+		self.bindGestures(self.__gestures)
 		self.loadBuffer()
 
 	def terminate(self):
@@ -765,14 +766,14 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		script.__doc__ = nextDoc
 		script.__name__ = funcName
 		setattr(cls, funcName, script)
-		cls.bindKey(key, scriptName)
+		cls.__gestures["kb:%s" % key] = scriptName
 		scriptName = "previous%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
 		script = lambda self,gesture: self._quickNavScript(gesture, nodeType, "previous", prevError, readUnit)
 		script.__doc__ = prevDoc
 		script.__name__ = funcName
 		setattr(cls, funcName, script)
-		cls.bindKey("shift+%s" % key, scriptName)
+		cls.__gestures["kb:shift+%s" % key] = scriptName
 
 	def script_elementsList(self,gesture):
 		if self.VBufHandle is None:
@@ -1195,22 +1196,22 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"""
 		return False
 
-[VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
-	("Return","activatePosition"),
-	("Space","activatePosition"),
-	("NVDA+f5","refreshBuffer"),
-	("NVDA+v","toggleScreenLayout"),
-	("NVDA+f7","elementsList"),
-	("escape","disablePassThrough"),
-	("alt+extendedUp","collapseOrExpandControl"),
-	("alt+extendedDown","collapseOrExpandControl"),
-	("tab", "tab"),
-	("shift+tab", "shiftTab"),
-	("control+alt+extendedDown", "nextRow"),
-	("control+alt+extendedUp", "previousRow"),
-	("control+alt+extendedRight", "nextColumn"),
-	("control+alt+extendedLeft", "previousColumn"),
-)]
+	__gestures = {
+		"kb:enter": "activatePosition",
+		"kb:space": "activatePosition",
+		"kb:NVDA+f5": "refreshBuffer",
+		"kb:NVDA+v": "toggleScreenLayout",
+		"kb:NVDA+f7": "elementsList",
+		"kb:escape": "disablePassThrough",
+		"kb:alt+upArrow": "collapseOrExpandControl",
+		"kb:alt+downArrow": "collapseOrExpandControl",
+		"kb:tab": "tab",
+		"kb:shift+tab": "shiftTab",
+		"kb:control+alt+downArrow": "nextRow",
+		"kb:control+alt+upArrow": "previousRow",
+		"kb:control+alt+rightArrow": "nextColumn",
+		"kb:control+alt+leftArrow": "previousColumn",
+	}
 
 # Add quick navigation scripts.
 qn = VirtualBuffer.addQuickNav
