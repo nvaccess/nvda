@@ -189,10 +189,9 @@ class GroupingItem(Window):
 		gesture.send()
 		self.event_stateChange()
 
-[GroupingItem.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedLeft","collapseOrExpand"),
-	("ExtendedRight","collapseOrExpand"),
-]]
+	def initOverlayClass(self):
+		for gesture in ("kb:leftArrow", "kb:rightArrow"):
+			self.bindeGesture(gesture, "collapseOrExpand")
 
 class ListItem(IAccessible):
 

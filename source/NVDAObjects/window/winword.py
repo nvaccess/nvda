@@ -396,12 +396,14 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		else:
 			speech.speakMessage(_("edge of table"))
 
-[WordDocument.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("control+alt+extendedUp","previousRow"),
-	("control+alt+extendedDown","nextRow"),
-	("control+alt+extendedLeft","previousColumn"),
-	("control+alt+extendedRight","nextColumn"),
-	("Control+ExtendedPrior","caret_moveByLine"),
-	("Control+ExtendedNext","caret_moveByLine"),
-]]
+	__gestures = {
+		"kb:control+alt+upArrow": "previousRow",
+		"kb:control+alt+downArrow": "nextRow",
+		"kb:control+alt+leftArrow": "previousColumn",
+		"kb:control+alt+rightArrow": "nextColumn",
+		"kb:control+pageUp": "caret_moveByLine",
+		"kb:control+pageDown": "caret_moveByLine",
+	}
 
+	def initOverlayClass(self):
+		self.bindGestures(self.__gestures)

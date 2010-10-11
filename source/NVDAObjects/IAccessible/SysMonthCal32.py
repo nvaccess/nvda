@@ -22,17 +22,19 @@ class SysMonthCal32(IAccessible):
 		gesture.send()
 		self.event_valueChange()
 
-[SysMonthCal32.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedUp","valueChange"),
-	("ExtendedDown","valueChange"),
-	("ExtendedLeft","valueChange"),
-	("ExtendedRight","valueChange"),
-	("extendedHome","valueChange"),
-	("extendedEnd","valueChange"),
-	("control+extendedHome","valueChange"),
-	("control+extendedEnd","valueChange"),
-	("extendedNext","valueChange"),
-	("extendedPrior","valueChange"),
-	]
-]
+	__valueChangeGestures = (
+		"kb:upArrow",
+		"kb:downArrow",
+		"kb:leftArrow",
+		"kb:rightArrow",
+		"kb:home",
+		"kb:end",
+		"kb:control+home",
+		"kb:control+end",
+		"kb:pageDown",
+		"kb:pageUp",
+	)
 
+	def initOverlayClass(self):
+		for gesture in self.__valueChangeGestures:
+			self.bindGesture(gesture, "valueChange")

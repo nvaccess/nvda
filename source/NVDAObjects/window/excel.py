@@ -114,36 +114,40 @@ class ExcelWorksheet(ExcelWindow):
 	script_changeSelection.__doc__=_("Extends the selection and speaks the last selected cell")
 	script_changeSelection.canPropagate=True
 
-[ExcelWorksheet.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("Tab","changeSelection"),
-	("Shift+Tab","changeSelection"),
-	("ExtendedUp","changeSelection"),
-	("ExtendedDown","changeSelection"),
-	("ExtendedLeft","changeSelection"),
-	("ExtendedRight","changeSelection"),
-	("Control+ExtendedUp","changeSelection"),
-	("Control+ExtendedDown","changeSelection"),
-	("Control+ExtendedLeft","changeSelection"),
-	("Control+ExtendedRight","changeSelection"),
-	("ExtendedHome","changeSelection"),
-	("ExtendedEnd","changeSelection"),
-	("Control+ExtendedHome","changeSelection"),
-	("Control+ExtendedEnd","changeSelection"),
-	("Shift+ExtendedUp","changeSelection"),
-	("Shift+ExtendedDown","changeSelection"),
-	("Shift+ExtendedLeft","changeSelection"),
-	("Shift+ExtendedRight","changeSelection"),
-	("Shift+Control+ExtendedUp","changeSelection"),
-	("Shift+Control+ExtendedDown","changeSelection"),
-	("Shift+Control+ExtendedLeft","changeSelection"),
-	("Shift+Control+ExtendedRight","changeSelection"),
-	("Shift+ExtendedHome","changeSelection"),
-	("Shift+ExtendedEnd","changeSelection"),
-	("Shift+Control+ExtendedHome","changeSelection"),
-	("Shift+Control+ExtendedEnd","changeSelection"),
-	("shift+space","changeSelection"),
-	("control+space","changeSelection"),
-]]
+	__changeSelectionGestures = (
+		"kb:tab",
+		"kb:shift+tab",
+		"kb:upArrow",
+		"kb:downArrow",
+		"kb:leftArrow",
+		"kb:rightArrow",
+		"kb:control+upArrow",
+		"kb:control+downArrow",
+		"kb:control+leftArrow",
+		"kb:control+rightArrow",
+		"kb:home",
+		"kb:end",
+		"kb:control+home",
+		"kb:control+end",
+		"kb:shift+upArrow",
+		"kb:shift+downArrow",
+		"kb:shift+leftArrow",
+		"kb:shift+rightArrow",
+		"kb:shift+control+upArrow",
+		"kb:shift+control+downArrow",
+		"kb:shift+control+leftArrow",
+		"kb:shift+control+rightArrow",
+		"kb:shift+home",
+		"kb:shift+end",
+		"kb:shift+control+home",
+		"kb:shift+control+end",
+		"kb:shift+space",
+		"kb:control+space",
+	)
+
+	def initOverlayClass(self):
+		for gesture in self.__changeSelectionGestures:
+			self.bindGesture(gesture, "changeSelection")
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
 
@@ -227,7 +231,8 @@ class ExcelCell(ExcelWindow):
 		cellEditDialog=CellEditDialog(self.excelWindowObject.ActiveCell)
 		cellEditDialog.run()
 
-ExcelCell.bindKey("f2","editCell")
+	def initOverlayClass(self):
+		self.bindGesture("kb:f2", "editCell")
 
 class ExcelSelection(ExcelWindow):
 

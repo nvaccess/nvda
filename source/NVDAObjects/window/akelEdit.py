@@ -73,8 +73,5 @@ class AkelEdit(edit.RichEdit20):
 	TextInfo=AkelEditTextInfo
 
 	def initOverlayClass(self):
-		for keyName,scriptName in (
-			("Control+ExtendedUp","caret_moveByLine"),
-			("Control+ExtendedDown","caret_moveByLine"),
-		):
-			self.bindKey_runtime(keyName,scriptName)
+		for gesture in ("kb:control+upArrow", "kb:control+downArrow"):
+			self.bindGesture(gesture, "caret_moveByLine")
