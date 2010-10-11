@@ -21,7 +21,8 @@ import watchdog
 import inputCore
 
 # Fake vk codes.
-VK_WIN = "win"
+# These constants should be assigned to the name that NVDA will use for the key.
+VK_WIN = "windows"
 
 #: Keys which have been trapped by NVDA and should not be passed to the OS.
 trappedKeys=set()
@@ -180,10 +181,14 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	currentLayout = "desktop"
 
 	@classmethod
-	def getVkName(cls, vkCode):
+	def getVkName(cls, vkCode, isExtended):
 		if isinstance(vkCode, str):
 			return vkCode
-		return vkCodes.byCode.get(vkCode, "").lower()
+		name = vkCodes.byCode.get((vkCode, isExtended))
+		if not name and isExtended is not None:
+			# Whether the key is extended doesn't matter for many keys, so try None.
+			name = vkCodes.byCode.get((vkCode, None))
+		return name if name else ""
 
 	def __init__(self, modifiers, vkCode, scanCode, isExtended):
 		self.modifiers = modifiers = set(modifiers)
@@ -207,18 +212,17 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if self.isNVDAModifierKey:
 			return "nvda"
 
-		prefix = "extended" if self.isExtended else ""
-		name = self.getVkName(self.vkCode)
-		if name and not name.startswith("oem"):
-			return prefix + name
+		name = self.getVkName(self.vkCode, self.isExtended)
+		if name:
+			return name
 
 		if 32 < self.vkCode < 128:
 			return unichr(self.vkCode).lower()
 		vkChar = winUser.user32.MapVirtualKeyW(self.vkCode, winUser.MAPVK_VK_TO_CHAR)
-		if 32 < vkChar < 128:
+		if vkChar:
 			return unichr(vkChar).lower()
 
-		return prefix + winUser.getKeyNameText(self.scanCode, self.isExtended)
+		return winUser.getKeyNameText(self.scanCode, self.isExtended)
 
 	def _get__keyNames(self):
 		mainKey = self.mainKeyName
@@ -231,7 +235,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			if isNVDAModifierKey(modVk, modExt):
 				modTexts.add("nvda")
 			else:
-				modTexts.add(self.getVkName(modVk))
+				modTexts.add(self.getVkName(modVk, None))
 
 		return tuple(modTexts) + (mainKey,)
 
@@ -319,14 +323,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		keyNames = name.split("+")
 		keys = []
 		for keyName in keyNames:
-			if keyName.startswith("extended"):
-				ext = True
-				keyName = keyName[8:]
-			else:
-				ext = False
 			if keyName == VK_WIN:
 				vk = winUser.VK_LWIN
+				ext = False
 			elif len(keyName) == 1:
+				ext = False
 				requiredMods, vk = winUser.VkKeyScan(keyName)
 				if requiredMods & 1:
 					keys.append((winUser.VK_SHIFT, False))
@@ -336,7 +337,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 					keys.append((winUser.VK_MENU, False))
 				# Not sure whether we need to support the Hankaku modifier (& 8).
 			else:
-				vk = vkCodes.byName[keyName.upper()]
+				vk, ext = vkCodes.byName[keyName]
+				if ext is None:
+					ext = False
 			keys.append((vk, ext))
 
 		if not keys:
