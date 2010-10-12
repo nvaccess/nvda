@@ -135,6 +135,7 @@ Var StartMenuFolder
 !insertmacro MUI_LANGUAGE "Dutch"
 !insertmacro MUI_LANGUAGE "Arabic"
 !insertmacro MUI_LANGUAGE "Danish"
+!insertmacro MUI_LANGUAGE "Icelandic"
 
 ;Include installer specific language strings
 !include "locale\ar\langstrings.txt"
@@ -149,6 +150,7 @@ Var StartMenuFolder
 !include "locale\gl\langstrings.txt"
 !include "locale\hu\langstrings.txt"
 !include "locale\hr\langstrings.txt"
+!include "locale\is\langstrings.txt"
 !include "locale\it\langstrings.txt"
 !include "locale\ja\langstrings.txt"
 !include "locale\nl\langstrings.txt"

@@ -75,7 +75,7 @@ class SingleChoiceDialog(ModalDialog):
 		def makeDialog():
 			dialog = wx.Dialog(gui.mainFrame, wx.ID_ANY, title)
 			mainSizer = wx.BoxSizer(wx.VERTICAL)
-			mainSizer.Add(wx.StaticText(dialogD_ANY, label=message))
+			mainSizer.Add(wx.StaticText(dialog, wx.ID_ANY, label=message))
 			self.list = wx.ListView(dialog, wx.ID_ANY, style=wx.LC_LIST | wx.LC_SINGLE_SEL)
 			self.list.Bind(wx.EVT_LIST_ITEM_ACTIVATED, lambda evt: dialog.EndModal(wx.ID_OK))
 			for index, choice in enumerate(choices):

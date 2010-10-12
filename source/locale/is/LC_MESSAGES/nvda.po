@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: main-3545\n"
+"Project-Id-Version: 2010.2-3856\n"
 "POT-Creation-Date: 2010-05-21 19:02+AUSEST\n"
-"PO-Revision-Date: 2010-06-23 HO:MI+ZONE\n"
+"PO-Revision-Date: 2010-09-28 HO:MI+ZONE\n"
 "Last-Translator: Birkir R. Gunnarsson <birkir.gunnarsson@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: IAccessibleHandler.py:684
+#: IAccessibleHandler.py:690
 msgid "Secure Desktop"
 msgstr "Öruggt skjáborð"
 
@@ -26,7 +26,7 @@ msgstr "óþekkt útlit"
 msgid "layout %s"
 msgstr "útlit %s"
 
-#: NVDAObjects\IAccessible\__init__.py:1350
+#: NVDAObjects\IAccessible\__init__.py:1394
 msgid "Taskbar"
 msgstr "verkrein"
 
@@ -39,7 +39,7 @@ msgid "invoke"
 msgstr "kalla"
 
 #: NVDAObjects\behaviors.py:48
-#: appModules\_default.py:764
+#: appModules\_default.py:782
 msgid "%d percent"
 msgstr "%d prósent"
 
@@ -69,32 +69,36 @@ msgstr "Nvda Excel reitaritill"
 msgid "Enter cell contents"
 msgstr "færðu upplýsingar í reit"
 
-#: NVDAObjects\window\excel.py:113
+#: NVDAObjects\window\excel.py:115
 msgid "Extends the selection and speaks the last selected cell"
 msgstr "færir út valið og les síðasta valda reit"
 
-#: NVDAObjects\window\excel.py:122
-msgid "Moves to a cell and speaks its coordinates and content"
-msgstr "færir í reit og les hnit og upplýsingar"
-
-#: NVDAObjects\window\excel.py:214
+#: NVDAObjects\window\excel.py:205
 msgid "has formula"
 msgstr "inniheldur formúlu"
 
-#: NVDAObjects\window\excel.py:252
+#: NVDAObjects\window\excel.py:243
 msgid "selection"
 msgstr "valið"
 
-#: NVDAObjects\window\excel.py:257
+#: NVDAObjects\window\excel.py:248
 msgid "%s %s through %s %s"
 msgstr "%s %s til %s %s"
 
 #: NVDAObjects\window\winword.py:355
-#: NVDAObjects\window\winword.py:366
-#: NVDAObjects\window\winword.py:377
-#: NVDAObjects\window\winword.py:388
+#: NVDAObjects\window\winword.py:367
+#: NVDAObjects\window\winword.py:379
+#: NVDAObjects\window\winword.py:391
 msgid "not in table"
 msgstr "ekki í töflu"
+
+#: NVDAObjects\window\winword.py:362
+#: NVDAObjects\window\winword.py:374
+#: NVDAObjects\window\winword.py:386
+#: NVDAObjects\window\winword.py:398
+#: virtualBuffers\__init__.py:1132
+msgid "edge of table"
+msgstr "brún töflu"
 
 #: appModuleHandler.py:171
 msgid "Error in appModule %s"
@@ -105,16 +109,16 @@ msgstr "villa í Appmodule %s"
 #: appModules\_default.py:165
 #: appModules\_default.py:175
 #: appModules\_default.py:185
-#: appModules\_default.py:665
-#: appModules\_default.py:727
-#: appModules\_default.py:737
-#: appModules\_default.py:747
+#: appModules\_default.py:683
+#: appModules\_default.py:745
+#: appModules\_default.py:755
+#: appModules\_default.py:765
 #: appModules\winamp.py:77
 #: appModules\winamp.py:87
-#: keyboardHandler.py:53
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
-#: virtualBuffers\__init__.py:684
+#: keyboardHandler.py:59
+#: virtualBuffers\__init__.py:696
 msgid "on"
 msgstr "virkt"
 
@@ -123,18 +127,18 @@ msgstr "virkt"
 #: appModules\_default.py:162
 #: appModules\_default.py:172
 #: appModules\_default.py:182
-#: appModules\_default.py:543
-#: appModules\_default.py:662
-#: appModules\_default.py:724
-#: appModules\_default.py:734
-#: appModules\_default.py:744
+#: appModules\_default.py:561
+#: appModules\_default.py:680
+#: appModules\_default.py:742
+#: appModules\_default.py:752
+#: appModules\_default.py:762
 #: appModules\winamp.py:79
 #: appModules\winamp.py:89
-#: gui\settingsDialogs.py:517
-#: keyboardHandler.py:53
+#: gui\settingsDialogs.py:532
 #: keyboardHandler.py:55
 #: keyboardHandler.py:57
-#: virtualBuffers\__init__.py:684
+#: keyboardHandler.py:59
+#: virtualBuffers\__init__.py:696
 msgid "off"
 msgstr "óvirkt"
 
@@ -203,10 +207,10 @@ msgid "no selection"
 msgstr "ekkert valið"
 
 #: appModules\_default.py:103
-#: compoundDocuments.py:354
-#: speech.py:292 speech.py:388
-#: speech.py:401
-#: virtualBuffers\__init__.py:589
+#: compoundDocuments.py:402
+#: speech.py:284 speech.py:381
+#: speech.py:394
+#: virtualBuffers\__init__.py:600
 msgid "selected %s"
 msgstr "valið %s"
 
@@ -305,37 +309,60 @@ msgid ""
 "speaks it"
 msgstr "færir fókus að hlut undir músarbendli og les hann"
 
-#: appModules\_default.py:221
-#: appModules\_default.py:255
-#: appModules\_default.py:291
-#: appModules\_default.py:305
-#: appModules\_default.py:319
-#: appModules\_default.py:333
-#: appModules\_default.py:347
+#: appModules\_default.py:229
+#, fuzzy
+msgid "No flat review for this object"
+msgstr "enginn fókus"
+
+#: appModules\_default.py:230
+msgid ""
+"Switches to flat review for the screen (or document if currently inside one) "
+"and positions the review cursor at the location of the current object"
+msgstr "Skiptir yfir í yfirferðarham fyrir allan skjáinn, (eða skjal ef það er opið) "
+" og setur yfirferðarbendilinn á hlut í fókus."
+
+#: appModules\_default.py:242
+msgid "No object at flat review position"
+msgstr "Engin hlutur undir yfirferðarbendli"
+
+#: appModules\_default.py:243
+#, fuzzy
+msgid ""
+"Moves to the object represented by the text at the position of the review "
+"cursor within flat review"
+msgstr "Færir skrifbendli að yfirferðarbendli í fókus"
+
+#: appModules\_default.py:248
+#: appModules\_default.py:282
+#: appModules\_default.py:320
+#: appModules\_default.py:334
+#: appModules\_default.py:348
+#: appModules\_default.py:362
+#: appModules\_default.py:376
 msgid "no navigator object"
 msgstr "enginn fókus"
 
-#: appModules\_default.py:247
-#: appModules\_default.py:684
+#: appModules\_default.py:274
+#: appModules\_default.py:702
 msgid "%s copied to clipboard"
 msgstr "%s afritað á klippispjald"
 
-#: appModules\_default.py:250
+#: appModules\_default.py:277
 msgid ""
 "Reports the current navigator object or, if pressed three times, Copies name "
 "and value of current navigator object to the clipboard"
 msgstr ""
 "les fókus eða, ef ýtt er þrisvar, afritar name gildi á klippispjald"
 
-#: appModules\_default.py:258
+#: appModules\_default.py:285
 msgid "No location information for navigator object"
 msgstr "engar staðsetningarupplýsingar fyrir fókus"
 
-#: appModules\_default.py:262
+#: appModules\_default.py:289
 msgid "No location information for screen"
 msgstr "engar staðsetningarupplýsingar fyrir skjá"
 
-#: appModules\_default.py:268
+#: appModules\_default.py:295
 msgid ""
 "Object edges positioned %.1f per cent from left edge of screen, %.1f per "
 "cent from top edge of screen, width is %.1f per cent of screen, height is %."
@@ -345,81 +372,83 @@ msgstr ""
 "prósent frá efri brún skjás, breidd er %.1f  prósentaf skjá, hæð er "
 "%.1f prósent af skjá"
 
-#: appModules\_default.py:269
+#: appModules\_default.py:296
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "les upp hæð, breidd og staðsetningu fókus"
 
-#: appModules\_default.py:274
-#: appModules\_default.py:283
-#: appModules\_default.py:643
-msgid "no focus"
-msgstr "enginn fókus"
-
-#: appModules\_default.py:276
+#: appModules\_default.py:305
 msgid "move to focus"
 msgstr "færa að núverandi staðsetningu"
 
-#: appModules\_default.py:278
-msgid "Sets the navigator object to the current focus"
-msgstr "færir fókus að núverandi staðsetningu"
+#: appModules\_default.py:307
+#, fuzzy
+msgid ""
+"Sets the navigator object to the current focus, and the review cursor to the "
+"position of the caret inside it, if possible."
+msgstr "færir fókus að hlut undir músarbendli og les hann"
 
-#: appModules\_default.py:285
+#: appModules\_default.py:312
+#: appModules\_default.py:661
+msgid "no focus"
+msgstr "enginn fókus"
+
+#: appModules\_default.py:314
 msgid "move focus"
 msgstr "færa fókus"
 
-#: appModules\_default.py:286
+#: appModules\_default.py:315
 msgid "Sets the keyboard focus to the navigator object"
 msgstr "færir skrifbendil að fókus"
 
-#: appModules\_default.py:299
+#: appModules\_default.py:328
 msgid "No parents"
 msgstr "engar yfirmöppur"
 
-#: appModules\_default.py:300
+#: appModules\_default.py:329
 msgid ""
 "Sets the navigator object to the parent of the object it is currently on and "
 "speaks it"
 msgstr "færir fókus að yfirmöppu valins hlutar og les hana"
 
-#: appModules\_default.py:313
+#: appModules\_default.py:342
 msgid "No next"
 msgstr "ekkert næst"
 
-#: appModules\_default.py:314
+#: appModules\_default.py:343
 msgid ""
 "Sets the navigator object to the object next to the one it is currently on "
 "and speaks it"
 msgstr "færir fókus að næsta hlut og les hann"
 
-#: appModules\_default.py:327
+#: appModules\_default.py:356
 msgid "No previous"
 msgstr "ekkert fyrra"
 
-#: appModules\_default.py:328
+#: appModules\_default.py:357
 msgid ""
 "Sets the navigator object to the object previous to the one it is currently "
 "on and speaks it"
 msgstr "færir fókus að fyrri hlut og les hann"
 
-#: appModules\_default.py:341
+#: appModules\_default.py:370
 msgid "No children"
 msgstr "engar undirmöppur"
 
-#: appModules\_default.py:342
+#: appModules\_default.py:371
 msgid ""
 "Sets the navigator object to the first child object of the one it is "
 "currently on and speaks it"
 msgstr "færir fókus á fyrsta undirvalkost valins hlutar og les hann"
 
-#: appModules\_default.py:352
+#: appModules\_default.py:381
 msgid "No default action"
 msgstr "engin sjálfgild aðgerð"
 
-#: appModules\_default.py:357
+#: appModules\_default.py:386
 msgid "default action failed"
 msgstr "sjálfgild aðgerð mistókst"
 
-#: appModules\_default.py:360
+#: appModules\_default.py:389
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
@@ -427,25 +456,25 @@ msgstr ""
 "framhvæmir sjálfgilda aðgerð á valinn hlut. Til dæmis: Smellir á ef "
 "hann er hnappur"
 
-#: appModules\_default.py:366
-#: appModules\_default.py:378
-#: appModules\_default.py:419
+#: appModules\_default.py:395
+#: appModules\_default.py:407
+#: appModules\_default.py:448
 msgid "top"
 msgstr "efst"
 
-#: appModules\_default.py:368
+#: appModules\_default.py:397
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
-msgstr "færir sýndarfókus efst í fókus og les hann"
+msgstr "færir yfirferðarbendil efst í fókus og les hana"
 
-#: appModules\_default.py:380
+#: appModules\_default.py:409
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
-msgstr "færir sýndarfókus í fyrri línu í fókus og les hana"
+msgstr "færir yfirferðarbendil í fyrri línu í fókus og les hana"
 
-#: appModules\_default.py:389
+#: appModules\_default.py:418
 msgid ""
 "Reports the line of the current navigator object where the review cursor is "
 "situated. If this key is pressed twice, the current line will be spelled"
@@ -453,31 +482,31 @@ msgstr ""
 "les línu í fókus þar sem sýndarfókus er staðsettur. Ef ýtt tvisvar "
 "er línan stöfuð"
 
-#: appModules\_default.py:399
-#: appModules\_default.py:407
-#: appModules\_default.py:440
+#: appModules\_default.py:428
+#: appModules\_default.py:436
+#: appModules\_default.py:469
 msgid "bottom"
 msgstr "lok"
 
-#: appModules\_default.py:401
+#: appModules\_default.py:430
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
 msgstr "færir sýndarfókus í næstu línu í fókus og les hana"
 
-#: appModules\_default.py:409
+#: appModules\_default.py:438
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
 msgstr "færir sýndarfókus í neðstu línu í fókus og les hana"
 
-#: appModules\_default.py:421
+#: appModules\_default.py:450
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
 msgstr "færir sýndarfókus á fyrra orð í fókus og les það"
 
-#: appModules\_default.py:430
+#: appModules\_default.py:459
 msgid ""
 "Speaks the word of the current navigator object where the review cursor is "
 "situated. If this key is pressed twice, the word will be spelled"
@@ -485,31 +514,31 @@ msgstr ""
 "Les upp orð undir yfirferðarbendli í fókus. Ef ýtt tvisvar er orðið "
 "stafað"
 
-#: appModules\_default.py:442
+#: appModules\_default.py:471
 msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
 msgstr "Færir sýndarfókus á næsta orð í fókus og les það"
 
-#: appModules\_default.py:450
-#: appModules\_default.py:462
+#: appModules\_default.py:479
+#: appModules\_default.py:491
 #: appModules\totalcmd.py:35
 msgid "left"
 msgstr "vinstri"
 
-#: appModules\_default.py:452
+#: appModules\_default.py:481
 msgid ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr "færir sýndarfókus á fyrsta staf í línu og les hann"
 
-#: appModules\_default.py:470
+#: appModules\_default.py:499
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
 msgstr "færir sýndarfókus á fyrri staf í línu og les hann"
 
-#: appModules\_default.py:484
+#: appModules\_default.py:513
 msgid ""
 "Reports the character of the current navigator object where the review "
 "cursor is situated. If this key is pressed twice, ascii and hexadecimal "
@@ -518,57 +547,47 @@ msgstr ""
 "les upp staf undir yfirferðarbendli. Ef ýtt er tvisvar eru Ascii og "
 "Hexadesímal gildi hans lesin"
 
-#: appModules\_default.py:494
-#: appModules\_default.py:511
+#: appModules\_default.py:523
+#: appModules\_default.py:540
 #: appModules\totalcmd.py:37
 msgid "right"
 msgstr "hægri"
 
-#: appModules\_default.py:502
+#: appModules\_default.py:531
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
 msgstr "færir sýndarfókus á næsta staf í línu og les hann"
 
-#: appModules\_default.py:513
+#: appModules\_default.py:542
 msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr "færir sýndarfókus á síðasta staf í línu og les hann"
 
-#: appModules\_default.py:519
-msgid "No caret"
-msgstr "enginn skrifbendill"
-
-#: appModules\_default.py:524
-msgid ""
-"Moves the review cursor to the position of the system caret, in the current "
-"navigator object"
-msgstr "færir sýndarfókus að skrifbendli í fókus"
-
-#: appModules\_default.py:531
+#: appModules\_default.py:549
 msgid "no caret"
 msgstr "enginn skriðbendill"
 
-#: appModules\_default.py:536
+#: appModules\_default.py:554
 msgid ""
 "Moves the system caret to the position of the review cursor , in the current "
 "navigator object"
 msgstr "Færir skrifbendli að yfirferðarbendli í fókus"
 
-#: appModules\_default.py:545
+#: appModules\_default.py:563
 msgid "beeps"
 msgstr "píp"
 
-#: appModules\_default.py:547
+#: appModules\_default.py:565
 msgid "talk"
 msgstr "tal"
 
-#: appModules\_default.py:549
+#: appModules\_default.py:567
 msgid "speech mode %s"
 msgstr "tal hamur %s"
 
-#: appModules\_default.py:551
+#: appModules\_default.py:569
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
 "will not speak anything. If beeps then NVDA will simply beep each time it "
@@ -578,12 +597,12 @@ msgstr ""
 "píp, pípar NVDA alltaf þegar það gæti talað, ef tal talar NVDA "
 "venjulega"
 
-#: appModules\_default.py:567
+#: appModules\_default.py:585
 #, fuzzy
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr "færir fókus að næsta sýndarminni sem hefur fókus"
 
-#: appModules\_default.py:579
+#: appModules\_default.py:597
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
 "pass straight through to the application, allowing you to interact directly "
@@ -595,62 +614,62 @@ msgstr ""
 "Ef í vafraham getur ferðast þú um skjöl með því að nota "
 "lestrarlykla NVDA"
 
-#: appModules\_default.py:583
+#: appModules\_default.py:601
 msgid "Quits NVDA!"
 msgstr "slekkur á NVDA"
 
-#: appModules\_default.py:587
+#: appModules\_default.py:605
 msgid "Shows the NVDA menu"
 msgstr "Kallar fram NVDAvalmynd"
 
-#: appModules\_default.py:592
+#: appModules\_default.py:610
 msgid ""
 "reads from the review cursor  up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
 "les texta til enda frá staðsetningu sýndarfókuss og færir fókus með"
 
-#: appModules\_default.py:604
+#: appModules\_default.py:622
 msgid ""
 "reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
 "les texta til enda frá staðsetningu skrifbendils og færir bendilinn með"
 
-#: appModules\_default.py:630
+#: appModules\_default.py:648
 msgid "No formatting information"
 msgstr "engar upplýsingar um stílsnið"
 
-#: appModules\_default.py:633
+#: appModules\_default.py:651
 msgid ""
 "Reports formatting info for the current cursor position within a document"
 msgstr "les upp stílsniðsupplýsingar fyrir staðsetningu bendils í skjali"
 
-#: appModules\_default.py:644
+#: appModules\_default.py:662
 msgid "reports the object with focus"
 msgstr "les upp hlut undir bendli með fókus"
 
-#: appModules\_default.py:649
+#: appModules\_default.py:667
 msgid "no status bar found"
 msgstr "stöðurein finnst ekki"
 
-#: appModules\_default.py:658
+#: appModules\_default.py:676
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr "les upp stöðurein forrits og færir fókus á hana"
 
-#: appModules\_default.py:667
+#: appModules\_default.py:685
 msgid "Mouse tracking"
 msgstr "músarfylgni"
 
-#: appModules\_default.py:668
+#: appModules\_default.py:686
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "virkjar og óvirkjar lestur meðan músin er hreyfð"
 
-#: appModules\_default.py:676
+#: appModules\_default.py:694
 msgid "no title"
 msgstr "enginn titill"
 
-#: appModules\_default.py:685
+#: appModules\_default.py:703
 msgid ""
 "Reports the title of the current application or foreground window. If "
 "pressed twice, spells the title. If pressed thrice, copies the title to the "
@@ -659,11 +678,11 @@ msgstr ""
 "les upp titil í virkum glugga. Ef ýtt er tvisvar er titill stafaður, ef "
 "ýtt er þrisvar er titill afritaður á klippispjald"
 
-#: appModules\_default.py:692
+#: appModules\_default.py:710
 msgid "speaks the current foreground object"
 msgstr "les upp glugga í forgrunni"
 
-#: appModules\_default.py:703
+#: appModules\_default.py:721
 msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
@@ -672,23 +691,23 @@ msgstr ""
 "leitt til aukinna gæða NVDA og virkjar notkunarvafrann svo hægt sé að "
 "skoða þessar upplýsingar"
 
-#: appModules\_default.py:709
+#: appModules\_default.py:727
 msgid "no progress bar updates"
 msgstr "engin uppfærsla á ferilrein"
 
-#: appModules\_default.py:712
+#: appModules\_default.py:730
 msgid "speak progress bar updates"
 msgstr "les uppfærslur á ferilrein"
 
-#: appModules\_default.py:715
+#: appModules\_default.py:733
 msgid "beep for progress bar updates"
 msgstr "pípir þegar ferilrein uppfærist"
 
-#: appModules\_default.py:718
+#: appModules\_default.py:736
 msgid "beep and speak progress bar updates"
 msgstr "pípa og lesa upp uppfærslur á ferilrein"
 
-#: appModules\_default.py:720
+#: appModules\_default.py:738
 msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
@@ -696,181 +715,181 @@ msgstr ""
 "skiptir á milli píp, tal, píp og tal og óvirkt fyrir lestur á uppfæ"
 "rslum á ferilrein"
 
-#: appModules\_default.py:729
+#: appModules\_default.py:747
 msgid "report dynamic content changes"
 msgstr "lesa dínamískar efnisbreytingar"
 
-#: appModules\_default.py:730
+#: appModules\_default.py:748
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
 msgstr ""
-"virkjar og óvirkjar lestur dínamískra efnisbreytinga svosem nýs texta "
-"í Dos gluggum"
+"virkjar og óvirkjar lestur dínamískra efnisbreytinga svosem nýs texta í "
+"Dos gluggum"
 
-#: appModules\_default.py:739
+#: appModules\_default.py:757
 msgid "caret moves review cursor"
 msgstr "skrifbendill færir sýndarfókus"
 
-#: appModules\_default.py:740
+#: appModules\_default.py:758
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "virkjar og óvirkjar hreyfingar sýndarfókus tengdar skrifbendli"
 
-#: appModules\_default.py:749
+#: appModules\_default.py:767
 msgid "focus moves navigator object"
 msgstr "fókus færir bendil"
 
-#: appModules\_default.py:750
+#: appModules\_default.py:768
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "virkjar og óvirkjar hreyfingar á bendli vegna fókushreyfingar"
 
-#: appModules\_default.py:762
+#: appModules\_default.py:780
 msgid "no system battery"
 msgstr "Engin rafhlaða"
 
-#: appModules\_default.py:765
+#: appModules\_default.py:783
 msgid "AC power on"
 msgstr "straumur á"
 
-#: appModules\_default.py:767
+#: appModules\_default.py:785
 msgid "%d hours and %d minutes remaining"
 msgstr "%d klukkustundir og %d mínútur eftir"
 
-#: appModules\_default.py:769
+#: appModules\_default.py:787
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "Les upp stöðu á rafhlöðu og hversu langur tími er eftir ef vélin er "
 "ekki í sambandi"
 
-#: appModules\_default.py:773
+#: appModules\_default.py:791
 msgid "Pass next key through"
 msgstr "hleypa næsta lykli í gegn"
 
-#: appModules\_default.py:774
+#: appModules\_default.py:792
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
 msgstr "næsti ásláttur fer ekki í gegn um NVDA heldur fer beint í Windows"
 
-#: appModules\_default.py:779
+#: appModules\_default.py:797
 msgid "Currently running application is %s"
 msgstr "forrit sem nú er virkt er %s"
 
-#: appModules\_default.py:782
+#: appModules\_default.py:800
 msgid " and currently loaded module is %s"
 msgstr "hlaðið sniðmát er %s"
 
-#: appModules\_default.py:784
+#: appModules\_default.py:802
 msgid ""
 "Speaks the filename of the active application along with the name of the "
 "currently loaded appModule"
 msgstr "Les nafn sniðmyndarskráar ásamt nafni sniðmáts"
 
-#: appModules\_default.py:788
+#: appModules\_default.py:806
 msgid "Shows the NVDA general settings dialog"
 msgstr "Kallar fram glugga NVDA almennra stillinga"
 
-#: appModules\_default.py:792
+#: appModules\_default.py:810
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "Kallar fram NVDA talgervilsstillingagluggann"
 
-#: appModules\_default.py:796
+#: appModules\_default.py:814
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Kallar fram NVDA raddstillingar"
 
-#: appModules\_default.py:800
+#: appModules\_default.py:818
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "kallar fram NVDA lyklaborðsstillingar"
 
-#: appModules\_default.py:804
+#: appModules\_default.py:822
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "Kallar fram NVDA músarstillingar"
 
-#: appModules\_default.py:808
+#: appModules\_default.py:826
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "kallar fram stillingar valdra hluta"
 
-#: appModules\_default.py:812
+#: appModules\_default.py:830
 msgid "Shows the NVDA virtual buffers settings dialog"
 msgstr "Kallar fram NVDA sýndarminnisstillingar"
 
-#: appModules\_default.py:816
+#: appModules\_default.py:834
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "Kallar fram NVDA stílsniðsstillingar skjala"
 
-#: appModules\_default.py:820
+#: appModules\_default.py:838
 msgid "Saves the current NVDA configuration"
 msgstr "Vistar valdar stillingar í NVDA"
 
-#: appModules\_default.py:824
+#: appModules\_default.py:842
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr "hleður vistaðar stillingar í NVDA hunsar gerðar breytingar"
 
-#: appModules\_default.py:834
+#: appModules\_default.py:852
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr ""
 "virkjar Python stjórnborð NVDA. Aðallega notað í þróun forritsins"
 
-#: appModules\_default.py:839
-#: gui\settingsDialogs.py:872
+#: appModules\_default.py:857
+#: gui\settingsDialogs.py:891
 msgid "review"
 msgstr "yfirferð"
 
-#: appModules\_default.py:842
-#: gui\settingsDialogs.py:872
+#: appModules\_default.py:860
+#: gui\settingsDialogs.py:891
 msgid "focus"
 msgstr "fókus"
 
-#: appModules\_default.py:843
+#: appModules\_default.py:861
 msgid "Braille tethered to %s"
 msgstr "punktaletur bundið %s"
 
-#: appModules\_default.py:844
+#: appModules\_default.py:862
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "skiptir punktaletursfylgni milli Fókus og sýndarfókuss"
 
-#: appModules\_default.py:852
+#: appModules\_default.py:870
 msgid "There is no text on the clipboard"
 msgstr "enginn texti á klippispjaldi"
 
-#: appModules\_default.py:857
+#: appModules\_default.py:875
 msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "Mikill texti er á klippispjaldi. Hann er %s stafa langur"
 
-#: appModules\_default.py:858
+#: appModules\_default.py:876
 msgid "Reports the text on the Windows clipboard"
 msgstr "Les texta af Windows klippispjaldi"
 
-#: appModules\_default.py:862
+#: appModules\_default.py:880
 msgid "Start marked"
 msgstr "Upphaf merkt"
 
-#: appModules\_default.py:863
+#: appModules\_default.py:881
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "copied"
 msgstr "merkir staðsetningu sýndarfókuss sem upphaf texta til afritunar"
 
-#: appModules\_default.py:867
+#: appModules\_default.py:885
 msgid "No start marker set"
 msgstr "ekkert upphafsmerki sett inn"
 
-#: appModules\_default.py:871
+#: appModules\_default.py:889
 msgid "The start marker must reside within the same object"
 msgstr "Upphafsmerki verður að vera inni í völdum hlut"
 
-#: appModules\_default.py:876
+#: appModules\_default.py:894
 msgid "Review selection copied to clipboard"
 msgstr "Skoða valtexta á klippispjaldi"
 
-#: appModules\_default.py:878
+#: appModules\_default.py:896
 msgid "No text to copy"
 msgstr "Enginn texti til afritunar"
 
-#: appModules\_default.py:881
+#: appModules\_default.py:899
 msgid ""
 "Retrieves the text from the previously set start marker up to and including "
 "the current position of the review cursor and copies it to the clipboard"
@@ -955,24 +974,24 @@ msgstr "Lykilorð"
 msgid "BCC:"
 msgstr "Hulið Samrit:"
 
-#: appModules\outlook.py:22
-#: appModules\outlook.py:35
+#: appModules\outlook.py:23
+#: appModules\outlook.py:36
 msgid "subject: %s"
 msgstr "Efni %s"
 
-#: appModules\outlook.py:23
+#: appModules\outlook.py:24
 msgid "received: %s"
 msgstr "Móttekið %s"
 
-#: appModules\outlook.py:27
+#: appModules\outlook.py:28
 msgid "unread"
 msgstr "Ólesið"
 
-#: appModules\outlook.py:29
+#: appModules\outlook.py:30
 msgid "attachment"
 msgstr "Viðhengi"
 
-#: appModules\outlook.py:36
+#: appModules\outlook.py:37
 msgid "sent: %s"
 msgstr "Sent %s"
 
@@ -1244,16 +1263,16 @@ msgstr "submnu"
 msgid "( )"
 msgstr "( )"
 
-#: braille.py:222 speech.py:684
+#: braille.py:222 speech.py:679
 msgid "not %s"
-msgstr "not %s"
+msgstr "ekki %s"
 
-#: braille.py:234 speech.py:690
+#: braille.py:234 speech.py:685
 msgid "%s of %s"
 msgstr "%s af %s"
 
-#: braille.py:236 speech.py:695
-#: speech.py:698
+#: braille.py:236 speech.py:690
+#: speech.py:693
 msgid "level %s"
 msgstr "stig %s"
 
@@ -1265,14 +1284,18 @@ msgstr "ALVA BC640/680 series"
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech punktaletursskjáir"
 
+#: brailleDisplayDrivers\lilli.py:32
+msgid "MDV Lilli"
+msgstr "MDV Lilli"
+
 #: brailleDisplayDrivers\noBraille.py:13
 msgid "No braille"
 msgstr "Ekkert punktaletur"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18
-#: characterSymbols.py:19 speech.py:84
-#: speech.py:634
+#: characterSymbols.py:19
+#: speech.py:84 speech.py:629
 msgid "blank"
 msgstr "Autt"
 
@@ -1426,7 +1449,7 @@ msgstr "hægri slaufusvigi"
 
 #: characterSymbols.py:56
 msgid "tilda"
-msgstr "Tilda"
+msgstr "byljga"
 
 #: characterSymbols.py:57
 msgid "bullet"
@@ -1503,7 +1526,7 @@ msgstr "valkostur"
 #: controlTypes.py:191
 #: controlTypes.py:298
 msgid "menu"
-msgstr "valmyndi"
+msgstr "valmynd"
 
 #: controlTypes.py:192
 msgid "combo box"
@@ -1529,7 +1552,8 @@ msgstr "Hjálparbelgur"
 msgid "tool tip"
 msgstr "ábending"
 
-#: controlTypes.py:198 speech.py:947
+#: controlTypes.py:198
+#: speech.py:950
 msgid "link"
 msgstr "tengill"
 
@@ -1539,11 +1563,11 @@ msgstr "trésýn"
 
 #: controlTypes.py:200
 msgid "tree view item"
-msgstr "trjágrein"
+msgstr "trésýnishlutur"
 
 #: controlTypes.py:202
 msgid "tab control"
-msgstr "tabdrasl"
+msgstr "dálkhlutur"
 
 #: controlTypes.py:203
 msgid "slider"
@@ -1943,9 +1967,10 @@ msgstr "heiti stafagerðar"
 
 #: controlTypes.py:304
 msgid "font size"
-msgstr "stafastærð"
+msgstr "leturstærð"
 
-#: controlTypes.py:305 speech.py:899
+#: controlTypes.py:305
+#: speech.py:902
 msgid "bold"
 msgstr "feitletrað"
 
@@ -1961,11 +1986,13 @@ msgstr "forgrunnslitur"
 msgid "background color"
 msgstr "bakgrunnslitur"
 
-#: controlTypes.py:310 speech.py:921
+#: controlTypes.py:310
+#: speech.py:924
 msgid "superscript"
 msgstr "hækkað"
 
-#: controlTypes.py:311 speech.py:923
+#: controlTypes.py:311
+#: speech.py:926
 msgid "subscript"
 msgstr "lækkað"
 
@@ -2125,11 +2152,12 @@ msgstr "dregur"
 msgid "drop target"
 msgstr "sleppa hlut"
 
-#: core.py:137
-msgid "Loading subsystems, please wait..."
+#: core.py:140
+#, fuzzy
+msgid "Loading NVDA. Please wait..."
 msgstr "hleður undirkerfi, vinsamlegast bíðið"
 
-#: core.py:219
+#: core.py:222
 msgid "NVDA started"
 msgstr "NVDA tilbúið"
 
@@ -2173,92 +2201,97 @@ msgstr "afritað á klippispjald"
 msgid "configuration applied"
 msgstr "stillingar virkjaðar"
 
-#: gui\__init__.py:153
+#: gui\__init__.py:152
+msgid "Cannot save configuration - NVDA in secure mode"
+msgstr "Get ekki vistað stillingar, NVDA er í öryggisham."
+
+#: gui\__init__.py:156
 msgid "configuration saved"
 msgstr "stillingar vistaðar"
 
-#: gui\__init__.py:156
+#: gui\__init__.py:159
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
 "gat ekki vistað stillingar líklega vegna skrárkerfis með skrifvörn"
 
-#: gui\__init__.py:156
-#: gui\logViewer.py:73
+#: gui\__init__.py:159
+#: gui\logViewer.py:74
+#: gui\settingsDialogs.py:158
 msgid "Error"
 msgstr "villa"
 
-#: gui\__init__.py:167
+#: gui\__init__.py:170
 msgid "Default dictionary"
 msgstr "sjálfgefin orðabók"
 
-#: gui\__init__.py:170
+#: gui\__init__.py:173
 msgid "Voice dictionary (%s)"
 msgstr "raddorðabók (%s)"
 
-#: gui\__init__.py:173
+#: gui\__init__.py:176
 msgid "Temporary dictionary"
 msgstr "skammtímaorðabók"
 
-#: gui\__init__.py:181
+#: gui\__init__.py:184
 msgid "Are you sure you want to quit NVDA?"
 msgstr "Ertu viss um að þú viljir hætta í NVDA?"
 
-#: gui\__init__.py:181
-#: gui\__init__.py:331
+#: gui\__init__.py:184
+#: gui\__init__.py:336
 msgid "Exit NVDA"
 msgstr "Hætta í NVDA"
 
-#: gui\__init__.py:227
+#: gui\__init__.py:230
 msgid "copyright"
 msgstr "höfundarréttur"
 
-#: gui\__init__.py:227
+#: gui\__init__.py:230
 msgid "url"
 msgstr "slóð"
 
-#: gui\__init__.py:227
+#: gui\__init__.py:230
 msgid "version"
 msgstr "útgáfa"
 
-#: gui\__init__.py:229
-#: gui\__init__.py:322
+#: gui\__init__.py:232
+#: gui\__init__.py:326
 msgid "About NVDA"
 msgstr "Um NVDA"
 
-#: gui\__init__.py:262
+#: gui\__init__.py:265
 msgid "&General settings..."
 msgstr "&Almennar stillingar"
 
-#: gui\__init__.py:262
+#: gui\__init__.py:265
 #: gui\settingsDialogs.py:89
 msgid "General settings"
 msgstr "almennar stillingar"
 
-#: gui\__init__.py:264
+#: gui\__init__.py:267
 msgid " the synthesizer to use"
 msgstr "Talgervill til notkunar"
 
-#: gui\__init__.py:264
+#: gui\__init__.py:267
 msgid "&Synthesizer..."
 msgstr "&Talgervill"
 
-#: gui\__init__.py:266
+#: gui\__init__.py:269
 msgid "&Voice settings..."
 msgstr "&Raddstillingar"
 
-#: gui\__init__.py:266
+#: gui\__init__.py:269
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "veldu hraða, hljóðstyrk og tónhæð raddar"
 
-#: gui\__init__.py:268
+#: gui\__init__.py:271
 msgid "B&raille settings..."
 msgstr "P&unktaletursstillingar..."
 
-#: gui\__init__.py:270
+#: gui\__init__.py:273
 msgid "&Keyboard Settings..."
 msgstr "&Lyklaborðsstillingar..."
 
-#: gui\__init__.py:270
+#: gui\__init__.py:273
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
@@ -2266,53 +2299,53 @@ msgstr ""
 "stilla lyklaborð fyrir lestur sleginna stafa, orða og innsleginna aðgerð"
 "alykla "
 
-#: gui\__init__.py:272
+#: gui\__init__.py:275
 msgid "&Mouse settings..."
 msgstr "&Músarstillingar"
 
-#: gui\__init__.py:272
+#: gui\__init__.py:275
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr ""
 "breyta stillingum um lestur útlits músarbendils og hlutar undir "
 "músarbendli"
 
-#: gui\__init__.py:274
+#: gui\__init__.py:277
 msgid "&Review cursor..."
 msgstr "&yfirferðarbendill..."
 
-#: gui\__init__.py:274
+#: gui\__init__.py:277
 msgid "Configure how and when the review cursor moves"
 msgstr "stilla hvernig og hvenær sýndarfókus hreyfist"
 
-#: gui\__init__.py:276
+#: gui\__init__.py:279
 msgid "&Object presentation..."
 msgstr "&Atriðakynning..."
 
-#: gui\__init__.py:276
+#: gui\__init__.py:279
 msgid "Change reporting of objects"
 msgstr "breyta upplestri hluta"
 
-#: gui\__init__.py:278
+#: gui\__init__.py:281
 msgid "Change virtual buffers specific settings"
 msgstr "breyta sérstillingum sýndarminnis"
 
-#: gui\__init__.py:278
+#: gui\__init__.py:281
 msgid "Virtual &buffers..."
 msgstr "Sýndar&minni..."
 
-#: gui\__init__.py:280
+#: gui\__init__.py:283
 msgid "Change Settings of document properties"
 msgstr "breyta stillingum eiginda skjala"
 
-#: gui\__init__.py:280
+#: gui\__init__.py:283
 msgid "Document &formatting..."
 msgstr "Stílsnið skjals..."
 
-#: gui\__init__.py:283
+#: gui\__init__.py:287
 msgid "&Default dictionary..."
 msgstr "&sjálfgefin orðabók..."
 
-#: gui\__init__.py:283
+#: gui\__init__.py:287
 msgid ""
 "dialog where you can set default dictionary by adding dictionary entries to "
 "the list"
@@ -2320,11 +2353,11 @@ msgstr ""
 "gluggi þar sem þú getur bætt við sjálfgefnu orðabókina með því að"
 " bæta orðum við listann"
 
-#: gui\__init__.py:285
+#: gui\__init__.py:289
 msgid "&Voice dictionary..."
 msgstr "&raddorðabók"
 
-#: gui\__init__.py:285
+#: gui\__init__.py:289
 msgid ""
 "dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
@@ -2332,11 +2365,11 @@ msgstr ""
 "gluggi þar sem þú getur bætt við raddorðabókina með því að bæta "
 "orðum við listann"
 
-#: gui\__init__.py:287
+#: gui\__init__.py:291
 msgid "&Temporary dictionary..."
 msgstr "&skammtímaorðabók..."
 
-#: gui\__init__.py:287
+#: gui\__init__.py:291
 msgid ""
 "dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
@@ -2344,92 +2377,93 @@ msgstr ""
 "gluggi þar sem þú getur bætt við skammtímaorðabókina með því að "
 "skrifa í skrifsvæðið"
 
-#: gui\__init__.py:289
+#: gui\__init__.py:293
 msgid "Speech &dictionaries"
 msgstr "&Orðabækur"
 
-#: gui\__init__.py:290
+#: gui\__init__.py:294
 msgid "&Preferences"
 msgstr "&Kjörstillingar"
 
-#: gui\__init__.py:294
+#: gui\__init__.py:298
 msgid "View log"
 msgstr "Skoða upplýsingar"
 
-#: gui\__init__.py:296
+#: gui\__init__.py:300
 msgid "Speech viewer"
 msgstr "Tal-Upplýsingar"
 
-#: gui\__init__.py:299
+#: gui\__init__.py:303
 msgid "Python console"
 msgstr "Python stjórnborð"
 
-#: gui\__init__.py:301
+#: gui\__init__.py:305
 msgid "Tools"
 msgstr "Verkfæri"
 
-#: gui\__init__.py:305
+#: gui\__init__.py:309
 msgid "User guide"
 msgstr "Handbók"
 
-#: gui\__init__.py:307
-msgid "Key Command Quick Reference"
+#: gui\__init__.py:311
+#, fuzzy
+msgid "Keyboard Command Quick Reference"
 msgstr "Flýtilyklayfirlit"
 
-#: gui\__init__.py:309
+#: gui\__init__.py:313
 msgid "What's &new"
 msgstr "Hvað er nýtt"
 
-#: gui\__init__.py:311
+#: gui\__init__.py:315
 msgid "Web site"
 msgstr "Vefsíða"
 
-#: gui\__init__.py:313
+#: gui\__init__.py:317
 msgid "Readme"
 msgstr "Lestu mig"
 
-#: gui\__init__.py:315
+#: gui\__init__.py:319
 msgid "License"
 msgstr "Leyfi"
 
-#: gui\__init__.py:317
+#: gui\__init__.py:321
 msgid "Contributors"
 msgstr "Þátttakendur"
 
-#: gui\__init__.py:319
+#: gui\__init__.py:323
 msgid "We&lcome dialog"
 msgstr "Ve&lkomin"
 
-#: gui\__init__.py:322
+#: gui\__init__.py:326
 msgid "About..."
 msgstr "Um forritið..."
 
-#: gui\__init__.py:324
+#: gui\__init__.py:328
 msgid "&Help"
 msgstr "&Hjálp"
 
-#: gui\__init__.py:326
+#: gui\__init__.py:330
 msgid "&Revert to saved configuration"
 msgstr "&Fara til baka í vistaðar stillingar"
 
-#: gui\__init__.py:326
+#: gui\__init__.py:330
 msgid "Reset all settings to saved state"
 msgstr "endursetja allar  stillingar  í vistaðar stillingar"
 
-#: gui\__init__.py:328
+#: gui\__init__.py:333
 msgid "&Save configuration"
 msgstr "&Vista stillingar"
 
-#: gui\__init__.py:328
+#: gui\__init__.py:333
 msgid "Write the current configuration to nvda.ini"
 msgstr "Skrifa núgildandi stillingar í NVDA.ini"
 
-#: gui\__init__.py:331
-#: gui\logViewer.py:33
+#: gui\__init__.py:336
+#: gui\logViewer.py:34
 msgid "E&xit"
 msgstr "&Hætta"
 
-#: gui\__init__.py:382
+#: gui\__init__.py:387
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -2441,24 +2475,33 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 
-#: gui\__init__.py:392
+msgstr "Velkomin í NVDA, \n"
+"Til að framkvæma flestar skipanir í NVDA þarftu að halda niðri NVDA lyklinum "
+"meðan þú styður á aðra lykla.\n"
+"Ef notandi breytir ekki stillingunum er insert lykilinn á talnalyklaborðinu NVDA lykilinn\n"
+"Þú getur einnig valið að nota hástafalás (capslock) lykilinn sem NVDA lykil"
+"Styddu á NVDA lykilinn og n til að fara í NVDA valmynd hvaðan sem er\n"
+"Í þessari valmynd geturðu stilt NVDA, fengið hjálp og framkvæmt aðrar NVDA aðgerðir\n"
+
+
+#: gui\__init__.py:397
 msgid "Welcome to NVDA"
 msgstr "Velkomin í NVDA"
 
-#: gui\__init__.py:396
+#: gui\__init__.py:401
 msgid "Options"
 msgstr "Valkostir"
 
-#: gui\__init__.py:397
-#: gui\settingsDialogs.py:404
+#: gui\__init__.py:402
+#: gui\settingsDialogs.py:419
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Nota hástafalás sem NVDAlykil"
 
-#: gui\__init__.py:400
+#: gui\__init__.py:405
 msgid "Show this dialog when NVDA starts"
 msgstr "opna þennan glugga þegar NVdA er hlaðið "
 
-#: gui\__init__.py:436
+#: gui\__init__.py:441
 #, fuzzy
 msgid ""
 "Your configuration file contains errors. \n"
@@ -2471,7 +2514,7 @@ msgstr ""
 "'hætta við' til þess að lagfæra villurnar handvirkt. Frekari "
 "upplýsingar er að finna í log skránni \r\n"
 
-#: gui\__init__.py:441
+#: gui\__init__.py:446
 msgid "Configuration File Error"
 msgstr "Stilliskrárvilla"
 
@@ -2479,19 +2522,19 @@ msgstr "Stilliskrárvilla"
 msgid "NVDA Log Viewer"
 msgstr "NVDAskráningarskoðandi"
 
-#: gui\logViewer.py:28
+#: gui\logViewer.py:29
 msgid "Refresh\tF5"
 msgstr "endurhlaða\tF5"
 
-#: gui\logViewer.py:35
+#: gui\logViewer.py:36
 msgid "Log"
 msgstr "upplýsingaskrá"
 
-#: gui\logViewer.py:65
+#: gui\logViewer.py:66
 msgid "Save As"
 msgstr "vista sem"
 
-#: gui\logViewer.py:73
+#: gui\logViewer.py:74
 msgid "Error saving log: %s"
 msgstr "villa við skráningu notkunarupplýsinga %s"
 
@@ -2528,50 +2571,73 @@ msgstr ""
 msgid "Language"
 msgstr "&tungumál"
 
-#: gui\settingsDialogs.py:113
+#: gui\settingsDialogs.py:115
 msgid "&Save configuration on exit"
 msgstr "&vista stillingar þegar hætt er"
 
-#: gui\settingsDialogs.py:116
+#: gui\settingsDialogs.py:120
 msgid "&Warn before exiting NVDA"
 msgstr "&viðvörun áður en hætt er í NVDA"
 
-#: gui\settingsDialogs.py:120
+#: gui\settingsDialogs.py:124
 msgid "L&ogging level:"
 msgstr "S&kráningarstig"
 
-#: gui\settingsDialogs.py:123
+#: gui\settingsDialogs.py:127
 msgid "Log level"
 msgstr "skráningarstig"
 
-#: gui\settingsDialogs.py:133
+#: gui\settingsDialogs.py:137
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "&Ræsa NVDA sjálfkrafa þegar Windows er ræst"
 
-#: gui\settingsDialogs.py:138
+#: gui\settingsDialogs.py:142
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr ""
 "Nota NVDa á innskráningarskjá Windows (þarf réttindi aðalnotanda)"
 
-#: gui\settingsDialogs.py:154
+#: gui\settingsDialogs.py:147
+#, fuzzy
+msgid ""
+"Use currently saved settings on the logon and other secure screens (requires "
+"administrator privileges)"
+msgstr ""
+"Nota NVDa á innskráningarskjá Windows (þarf réttindi aðalnotanda)"
+
+#: gui\settingsDialogs.py:158
+#, fuzzy
+msgid "Error copying NVDA user settings"
+msgstr "Villa í afritun notendasstillinga."
+
+
+#: gui\settingsDialogs.py:160
+#, fuzzy
+msgid "Success"
+msgstr "Aðgerð tókst."
+
+#: gui\settingsDialogs.py:160
+msgid "Successfully copied NVDA user settings"
+msgstr "Afritun notendastillinga NVDA tókst."
+
+#: gui\settingsDialogs.py:169
 msgid "Error in %s language file"
 msgstr "villa í %s tungumálaskrá"
 
-#: gui\settingsDialogs.py:154
+#: gui\settingsDialogs.py:169
 msgid "Language Error"
 msgstr "Villa í tungumáli"
 
-#: gui\settingsDialogs.py:170
+#: gui\settingsDialogs.py:185
 msgid "Insufficient Privileges"
 msgstr "réttindi ekki nóg"
 
-#: gui\settingsDialogs.py:170
+#: gui\settingsDialogs.py:185
 msgid "This change requires administrator privileges."
 msgstr ""
 "Réttindi aðalnotanda eru nauðsynleg til að framhvæma þessa breytingu"
 
-#: gui\settingsDialogs.py:172
+#: gui\settingsDialogs.py:187
 msgid ""
 "For the new language to take effect, the configuration must be saved and "
 "NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
@@ -2581,375 +2647,381 @@ msgstr ""
 "sa NVDA. Ýttu á færslulykilinn til að vista og endurræsa eða hætta "
 "til að hætta seinna"
 
-#: gui\settingsDialogs.py:172
+#: gui\settingsDialogs.py:187
 msgid "Language Configuration Change"
 msgstr "Breytingar á stillingum tungumáls"
 
-#: gui\settingsDialogs.py:180
+#: gui\settingsDialogs.py:195
 msgid "Synthesizer"
 msgstr "talgervill"
 
-#: gui\settingsDialogs.py:184
+#: gui\settingsDialogs.py:199
 msgid "&Synthesizer:"
 msgstr "&talgervill"
 
-#: gui\settingsDialogs.py:199
+#: gui\settingsDialogs.py:214
 msgid "Output &device:"
 msgstr "Samskipta&hlutur"
 
-#: gui\settingsDialogs.py:219
+#: gui\settingsDialogs.py:234
 msgid "Could not load the %s synthesizer."
 msgstr "gat ekki hlaðið %s talgervil"
 
-#: gui\settingsDialogs.py:219
+#: gui\settingsDialogs.py:234
 msgid "Synthesizer Error"
 msgstr "villa í talgervli"
 
-#: gui\settingsDialogs.py:251
+#: gui\settingsDialogs.py:266
 msgid "Voice settings"
 msgstr "raddstillingar"
 
-#: gui\settingsDialogs.py:307
+#: gui\settingsDialogs.py:322
 msgid "&Speak all punctuation"
 msgstr "&lesa upp öll greinarmerki"
 
-#: gui\settingsDialogs.py:310
+#: gui\settingsDialogs.py:325
 msgid "Raise pitch for capitals"
 msgstr "hækka tónhæð fyrir lestur hástafa"
 
-#: gui\settingsDialogs.py:313
+#: gui\settingsDialogs.py:328
 msgid "Say &cap before capitals"
 msgstr "segja hástafur áður en hástafur er lesinn"
 
-#: gui\settingsDialogs.py:316
+#: gui\settingsDialogs.py:331
 msgid "&Beep for capitals"
 msgstr "pípa fyrir hástafi"
 
-#: gui\settingsDialogs.py:319
+#: gui\settingsDialogs.py:334
 msgid "Use &spelling functionality if supported"
 msgstr "nota &stöfunarvirkni ef hún er studd "
 
-#: gui\settingsDialogs.py:387
+#: gui\settingsDialogs.py:402
 msgid "Keyboard Settings"
 msgstr "Lyklaborðsstillingar"
 
-#: gui\settingsDialogs.py:391
+#: gui\settingsDialogs.py:406
 msgid "&Keyboard layout:"
 msgstr "&lyklaborðsútlit"
 
-#: gui\settingsDialogs.py:396
+#: gui\settingsDialogs.py:411
 msgid "Keyboard layout"
 msgstr "lyklaborðsútlit"
 
-#: gui\settingsDialogs.py:407
+#: gui\settingsDialogs.py:422
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "nota innsetningarhnapp talnalyklaborðs sem breytilykil NVDA"
 
-#: gui\settingsDialogs.py:410
+#: gui\settingsDialogs.py:425
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "nota framlengdan innsetningarhnapp sem NVDa breytihnapp"
 
-#: gui\settingsDialogs.py:413
+#: gui\settingsDialogs.py:428
 msgid "Speak typed &characters"
 msgstr "lesa ritaða stafi"
 
-#: gui\settingsDialogs.py:416
+#: gui\settingsDialogs.py:431
 msgid "Speak typed &words"
 msgstr "lesa rituð orð"
 
-#: gui\settingsDialogs.py:419
+#: gui\settingsDialogs.py:434
 msgid "Speak command &keys"
 msgstr "lesa aðgerðarlykla"
 
-#: gui\settingsDialogs.py:442
+#: gui\settingsDialogs.py:457
 msgid "Mouse settings"
 msgstr "músarstillingar"
 
-#: gui\settingsDialogs.py:445
+#: gui\settingsDialogs.py:460
 msgid "Report mouse &shape changes"
 msgstr "tilkynna ef útlit músar breytist"
 
-#: gui\settingsDialogs.py:448
-msgid "Report &text under the mouse"
-msgstr "lesa texta undir músinni"
+#: gui\settingsDialogs.py:463
+#, fuzzy
+msgid "Enable mouse &tracking"
+msgstr "músarfylgni"
 
-#: gui\settingsDialogs.py:452
+#: gui\settingsDialogs.py:467
 msgid "Text &unit resolution:"
 msgstr "textaframsetning"
 
-#: gui\settingsDialogs.py:456
+#: gui\settingsDialogs.py:471
 msgid "text reporting unit"
 msgstr "lestur textaeiningar"
 
-#: gui\settingsDialogs.py:464
+#: gui\settingsDialogs.py:479
 msgid "Report &role when mouse enters object"
 msgstr "lesa skrun þegar mús fer á hlut"
 
-#: gui\settingsDialogs.py:467
+#: gui\settingsDialogs.py:482
 msgid "play audio coordinates when mouse moves"
 msgstr "spila hljóðhnit þegarmúsin er hreyfð"
 
-#: gui\settingsDialogs.py:470
+#: gui\settingsDialogs.py:485
 msgid "brightness controls audio coordinates volume"
 msgstr "birta stjórnar hljóðstyrk"
 
-#: gui\settingsDialogs.py:488
+#: gui\settingsDialogs.py:503
 msgid "Review cursor settings"
 msgstr "fara yfir bendilsstillingar"
 
-#: gui\settingsDialogs.py:491
+#: gui\settingsDialogs.py:506
 msgid "Follow &keyboard focus"
 msgstr "elta lyklaborðsfókus"
 
-#: gui\settingsDialogs.py:494
-msgid "Follow &text insertion point"
-msgstr "elta innsettan texta"
+#: gui\settingsDialogs.py:509
+msgid "Follow System &Caret"
+msgstr "Fylgja kerfis &bendli."
 
-#: gui\settingsDialogs.py:497
+#: gui\settingsDialogs.py:512
 msgid "Follow &mouse cursor"
 msgstr "Elta músarbendil"
 
-#: gui\settingsDialogs.py:500
+#: gui\settingsDialogs.py:515
 msgid "Simple review mode"
 msgstr "einföld yfirferð"
 
-#: gui\settingsDialogs.py:515
+#: gui\settingsDialogs.py:530
 msgid "Object presentation"
 msgstr "hlutkynning"
 
-#: gui\settingsDialogs.py:518
+#: gui\settingsDialogs.py:533
 msgid "Speak"
 msgstr "tala"
 
-#: gui\settingsDialogs.py:519
+#: gui\settingsDialogs.py:534
 msgid "Beep"
 msgstr "pípa"
 
-#: gui\settingsDialogs.py:520
+#: gui\settingsDialogs.py:535
 msgid "Speak and beep"
 msgstr "tala og pípa"
 
-#: gui\settingsDialogs.py:524
+#: gui\settingsDialogs.py:539
 msgid "Report &tooltips"
 msgstr "ábending"
 
-#: gui\settingsDialogs.py:527
+#: gui\settingsDialogs.py:542
 msgid "Report &help balloons"
 msgstr "lesa upp hjálparbelgi"
 
-#: gui\settingsDialogs.py:530
+#: gui\settingsDialogs.py:545
 msgid "Report object shortcut &keys"
 msgstr "lesa flýtilykil hlutar"
 
-#: gui\settingsDialogs.py:533
+#: gui\settingsDialogs.py:548
 msgid "Report object &position information"
 msgstr "lesa upp staðsetningu hlutar"
 
-#: gui\settingsDialogs.py:536
+#: gui\settingsDialogs.py:551
 msgid "Report object &descriptions"
 msgstr "lesa upp lýsingu hlutar"
 
-#: gui\settingsDialogs.py:540
+#: gui\settingsDialogs.py:555
 msgid "Progress &bar output:"
 msgstr "ferilrein útkoma:"
 
-#: gui\settingsDialogs.py:543
+#: gui\settingsDialogs.py:558
 msgid "Progress bar output"
 msgstr "ferilrein útkoma"
 
-#: gui\settingsDialogs.py:552
+#: gui\settingsDialogs.py:567
 msgid "Report background progress bars"
 msgstr "lesa ferilrein í bakgrunni"
 
-#: gui\settingsDialogs.py:570
+#: gui\settingsDialogs.py:585
 msgid "virtual buffers"
 msgstr "Sýndarminni"
 
-#: gui\settingsDialogs.py:573
+#: gui\settingsDialogs.py:588
 msgid "&Maximum number of characters on one line"
 msgstr "&hámarks stafafjöldi í línu"
 
-#: gui\settingsDialogs.py:578
+#: gui\settingsDialogs.py:593
 msgid "&Number of lines per page"
 msgstr "&fjöldi lína á blaðsíðu"
 
-#: gui\settingsDialogs.py:583
+#: gui\settingsDialogs.py:598
 msgid "Use &screen layout (when supported)"
 msgstr "Nota útlit skjás (þegar stutt)"
 
-#: gui\settingsDialogs.py:586
+#: gui\settingsDialogs.py:601
 msgid "Report l&ayout tables"
 msgstr "lesa ú&tlitstöflur"
 
-#: gui\settingsDialogs.py:590
+#: gui\settingsDialogs.py:605
 msgid "Automatic focus mode for focus changes"
 msgstr "Sjálfvirkur fókus hamur fyrir fókus breytingar"
 
-#: gui\settingsDialogs.py:593
+#: gui\settingsDialogs.py:608
 msgid "Automatic focus mode for caret movement"
 msgstr "Sjálfvirkur fókus hamur fyrir skrifbendil hreyfingar"
 
-#: gui\settingsDialogs.py:596
+#: gui\settingsDialogs.py:611
 msgid "Audio indication of focus and browse modes"
 msgstr "Hljóðmerki vegna fókus og vafra hams"
 
-#: gui\settingsDialogs.py:624
+#: gui\settingsDialogs.py:639
 msgid "Document formatting"
 msgstr "Skjal stílsnið"
 
-#: gui\settingsDialogs.py:627
+#: gui\settingsDialogs.py:642
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "Tilkynna stílsniðs breytingar eftir bendli (getur valdið töfum)"
 
-#: gui\settingsDialogs.py:630
+#: gui\settingsDialogs.py:645
 msgid "Report font &name"
 msgstr "Tilkynna heiti leturgerðar"
 
-#: gui\settingsDialogs.py:633
+#: gui\settingsDialogs.py:648
 msgid "Report font &size"
 msgstr "Tilkynna leturstærð"
 
-#: gui\settingsDialogs.py:636
+#: gui\settingsDialogs.py:651
 msgid "Report font attri&butes"
 msgstr "Tilkynna eiginleika leturgerðar"
 
-#: gui\settingsDialogs.py:639
+#: gui\settingsDialogs.py:654
 msgid "Report &alignment"
 msgstr "Tilkynna aðlögun"
 
-#: gui\settingsDialogs.py:642
+#: gui\settingsDialogs.py:657
 msgid "Report st&yle"
 msgstr "Tilkynna stíl"
 
-#: gui\settingsDialogs.py:645
+#: gui\settingsDialogs.py:660
 msgid "Report spelling errors"
 msgstr "Tilkynna stafsetningarvillur"
 
-#: gui\settingsDialogs.py:648
+#: gui\settingsDialogs.py:663
 msgid "Report &pages"
 msgstr "Tilkynna &blaðsíður"
 
-#: gui\settingsDialogs.py:651
+#: gui\settingsDialogs.py:666
 msgid "Report &line numbers"
 msgstr "Tilkynna &línunúmer"
 
-#: gui\settingsDialogs.py:654
+#: gui\settingsDialogs.py:669
 msgid "Report &tables"
 msgstr "Tilkynna töflur"
 
-#: gui\settingsDialogs.py:657
+#: gui\settingsDialogs.py:672
+#, fuzzy
+msgid "Report table row/column h&eaders"
+msgstr "Tilkynna &línunúmer"
+
+#: gui\settingsDialogs.py:675
 msgid "Report &links"
 msgstr "Tilkynna tengla"
 
-#: gui\settingsDialogs.py:660
+#: gui\settingsDialogs.py:678
 msgid "Report &headings"
 msgstr "Tilkynna fyrirsagnir"
 
-#: gui\settingsDialogs.py:663
+#: gui\settingsDialogs.py:681
 msgid "Report l&ists"
 msgstr "Tilkynna lista"
 
-#: gui\settingsDialogs.py:666
+#: gui\settingsDialogs.py:684
 msgid "Report block &quotes"
 msgstr "Tilkynna valdan texta"
 
-#: gui\settingsDialogs.py:669
+#: gui\settingsDialogs.py:687
 msgid "Report lan&dmarks"
 msgstr "Tilkynna &kennileiti"
 
-#: gui\settingsDialogs.py:697
+#: gui\settingsDialogs.py:716
 msgid "Edit dictionary entry"
 msgstr "Breyta orðabókar færslu"
 
-#: gui\settingsDialogs.py:700
+#: gui\settingsDialogs.py:719
 msgid "&Pattern"
 msgstr "Mynstur"
 
-#: gui\settingsDialogs.py:703
+#: gui\settingsDialogs.py:722
 msgid "&Replacement"
 msgstr "Skipti"
 
-#: gui\settingsDialogs.py:706
+#: gui\settingsDialogs.py:725
 msgid "&Comment"
 msgstr "&athugasemd"
 
-#: gui\settingsDialogs.py:709
+#: gui\settingsDialogs.py:728
 msgid "Case &sensitive"
 msgstr "Hástafanæmt"
 
-#: gui\settingsDialogs.py:711
+#: gui\settingsDialogs.py:730
 msgid "Regular &expression"
 msgstr "Leitar&mynstur"
 
-#: gui\settingsDialogs.py:733
+#: gui\settingsDialogs.py:752
 msgid "&Dictionary entries"
 msgstr "&Orðabókar færslur"
 
-#: gui\settingsDialogs.py:736
+#: gui\settingsDialogs.py:755
 msgid "Comment"
 msgstr "Athugasemd"
 
-#: gui\settingsDialogs.py:737
+#: gui\settingsDialogs.py:756
 msgid "Pattern"
 msgstr "Mynstur"
 
-#: gui\settingsDialogs.py:738
+#: gui\settingsDialogs.py:757
 msgid "Replacement"
 msgstr "Skipti"
 
-#: gui\settingsDialogs.py:739
+#: gui\settingsDialogs.py:758
 msgid "case sensitive"
 msgstr "hástafanæmt"
 
-#: gui\settingsDialogs.py:740
+#: gui\settingsDialogs.py:759
 msgid "Regular expression"
 msgstr "Leitarmynstur"
 
-#: gui\settingsDialogs.py:747
+#: gui\settingsDialogs.py:766
 msgid "&Add"
 msgstr "Bæt&a við"
 
-#: gui\settingsDialogs.py:750
+#: gui\settingsDialogs.py:769
 msgid "&edit"
 msgstr "&Breyta"
 
-#: gui\settingsDialogs.py:753
+#: gui\settingsDialogs.py:772
 msgid "&Remove"
 msgstr "&Fjarlægja"
 
-#: gui\settingsDialogs.py:820
+#: gui\settingsDialogs.py:839
 msgid "Braille Settings"
 msgstr "Punktaletursstillingar"
 
-#: gui\settingsDialogs.py:824
+#: gui\settingsDialogs.py:843
 msgid "Braille &display:"
 msgstr "Punktaleturs&skjár"
 
-#: gui\settingsDialogs.py:838
+#: gui\settingsDialogs.py:857
 msgid "Translation &table:"
 msgstr "Punktaleturs&tafla"
 
-#: gui\settingsDialogs.py:850
+#: gui\settingsDialogs.py:869
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "B&reyta orðinu við bendilinn í átta punkta letur"
 
-#: gui\settingsDialogs.py:855
+#: gui\settingsDialogs.py:874
 msgid "Cursor blink rate (ms)"
 msgstr "Blikk hraði bendils"
 
-#: gui\settingsDialogs.py:863
+#: gui\settingsDialogs.py:882
 msgid "Message timeout (sec)"
 msgstr "Tímamörk skilaboða (sek)"
 
-#: gui\settingsDialogs.py:871
+#: gui\settingsDialogs.py:890
 msgid "Braille tethered to:"
 msgstr "Punktaletur bundið við"
 
-#: gui\settingsDialogs.py:890
+#: gui\settingsDialogs.py:909
 msgid "Braille Display Error"
 msgstr "Villa í Punktaletursskjá"
 
-#: gui\settingsDialogs.py:890
+#: gui\settingsDialogs.py:909
 msgid "Could not load the %s display."
 msgstr "Gat ekki hlaðið inn skjá %s"
 
@@ -3193,31 +3265,31 @@ msgstr "hægri alt"
 msgid "right windows"
 msgstr "hægri windows"
 
-#: keyboardHandler.py:53
+#: keyboardHandler.py:55
 msgid "caps lock %s"
 msgstr "Hástafalás %s"
 
-#: keyboardHandler.py:55
+#: keyboardHandler.py:57
 msgid "num lock %s"
 msgstr "Talnaborðslás %s"
 
-#: keyboardHandler.py:57
+#: keyboardHandler.py:59
 msgid "scroll lock %s"
 msgstr "Skrunlás %s"
 
-#: keyboardHandler.py:170
+#: keyboardHandler.py:172
 msgid "Description: %s"
 msgstr "lýsing: %s"
 
-#: keyboardHandler.py:173
+#: keyboardHandler.py:175
 msgid "Location: %s"
 msgstr "staður: %s"
 
-#: keyboardHandler.py:188
+#: keyboardHandler.py:189
 msgid "Error in keyboardHandler.internal_keyDownEvent"
 msgstr "Villa í lyklaborðs eða innsláttar úrvinnslu"
 
-#: keyboardHandler.py:226
+#: keyboardHandler.py:227
 msgid "Error in keyboardHandler.internal_keyUpEvent"
 msgstr "Villa í lyklaborðs eða innsláttar úrvinnslu"
 
@@ -3237,139 +3309,139 @@ msgstr "skrifaðu exit() til að loka glugga"
 msgid "NVDA Python Console"
 msgstr "NVDa stjórnborð Python"
 
-#: speech.py:181
+#: speech.py:180
 msgid "cap %s"
 msgstr "hástafur %s"
 
-#: speech.py:332
+#: speech.py:325
 msgid "%d characters"
 msgstr "%d stafir"
 
-#: speech.py:383
+#: speech.py:376
 msgid "selecting %s"
 msgstr "velur %s"
 
-#: speech.py:394
+#: speech.py:387
 msgid "unselecting %s"
 msgstr "afvelja %s"
 
-#: speech.py:396
+#: speech.py:389
 msgid "selection removed"
 msgstr "valið fjarlægt"
 
-#: speech.py:682
+#: speech.py:677
 msgid "done dragging"
-msgstr "hætta að draga"
+msgstr "Búin að draga"
 
-#: speech.py:707 speech.py:988
+#: speech.py:705 speech.py:995
 msgid "row %s"
 msgstr "röð %s"
 
-#: speech.py:710 speech.py:984
+#: speech.py:711 speech.py:991
 msgid "column %s"
 msgstr "dálkur %s"
 
-#: speech.py:715
+#: speech.py:716
 msgid "with %s rows and %s columns"
 msgstr "með %s röðum og %s dálkum"
 
-#: speech.py:717
+#: speech.py:718
 msgid "with %s columns"
 msgstr "með %s dálkum"
 
-#: speech.py:719
+#: speech.py:720
 msgid "with %s rows"
 msgstr "með %s röðum"
 
-#: speech.py:825
+#: speech.py:826
 msgid "with %s items"
 msgstr "með %s hluti"
 
-#: speech.py:840 speech.py:947
+#: speech.py:843 speech.py:950
 msgid "out of %s"
 msgstr "út úr %s"
 
-#: speech.py:864
+#: speech.py:867
 msgid "page %s"
 msgstr "blaðsíða %s"
 
-#: speech.py:871
+#: speech.py:874
 msgid "style %s"
 msgstr "stíll %s"
 
-#: speech.py:873
+#: speech.py:876
 msgid "default style"
 msgstr "sjálfgefinn stíll"
 
-#: speech.py:893
+#: speech.py:896
 msgid "line %s"
 msgstr "lína %s"
 
-#: speech.py:899
+#: speech.py:902
 msgid "no bold"
 msgstr "engin feitletrun"
 
-#: speech.py:904
+#: speech.py:907
 msgid "italic"
 msgstr "skáletrað"
 
-#: speech.py:904
+#: speech.py:907
 msgid "no italic"
 msgstr "engin skáletrun"
 
-#: speech.py:909
+#: speech.py:912
 msgid "no strikethrough"
 msgstr "ekkert gegnumstrik"
 
-#: speech.py:909
+#: speech.py:912
 msgid "strikethrough"
 msgstr "gegnumstrik"
 
-#: speech.py:914
+#: speech.py:917
 msgid "not underlined"
 msgstr "ekki undirstrikað"
 
-#: speech.py:914
+#: speech.py:917
 msgid "underlined"
 msgstr "undirstrikað"
 
-#: speech.py:925
+#: speech.py:928
 msgid "baseline"
 msgstr "grunnlína"
 
-#: speech.py:933
+#: speech.py:936
 msgid "align left"
 msgstr "aðlaga á vinstri brún"
 
-#: speech.py:935
+#: speech.py:938
 msgid "align center"
 msgstr "aðlaga í miðju"
 
-#: speech.py:937
+#: speech.py:940
 msgid "align right"
 msgstr "aðlaga á hægri brún"
 
-#: speech.py:939
+#: speech.py:942
 msgid "align justify"
 msgstr "aðlögun"
 
-#: speech.py:941
+#: speech.py:944
 msgid "align default"
 msgstr "sjálfgefnar brúnir"
 
-#: speech.py:954
+#: speech.py:957
 msgid "spelling error"
 msgstr "stafsetningarvilla"
 
-#: speech.py:956
+#: speech.py:959
 msgid "out of spelling error"
 msgstr "út úr stafsetningarvillu"
 
-#: speech.py:970
+#: speech.py:977
 msgid "out of table"
 msgstr "ekki í töflu"
 
-#: speech.py:979
+#: speech.py:986
 msgid "table with %s columns and %s rows"
 msgstr "tafla með %s dálkum og %s röðum"
 
@@ -3377,27 +3449,27 @@ msgstr "tafla með %s dálkum og %s röðum"
 msgid "NVDA Speech Viewer"
 msgstr "NVdA talskoðandi"
 
-#: synthDriverHandler.py:187
+#: synthDriverHandler.py:185
 msgid "&Voice"
 msgstr "&rödd"
 
-#: synthDriverHandler.py:191
+#: synthDriverHandler.py:189
 msgid "V&ariant"
 msgstr "&breyta"
 
-#: synthDriverHandler.py:196
+#: synthDriverHandler.py:194
 msgid "&Rate"
 msgstr "&hraði"
 
-#: synthDriverHandler.py:200
+#: synthDriverHandler.py:198
 msgid "V&olume"
 msgstr "&hljóðstyrkur"
 
-#: synthDriverHandler.py:204
+#: synthDriverHandler.py:202
 msgid "&Pitch"
 msgstr "&tónhæð"
 
-#: synthDriverHandler.py:209
+#: synthDriverHandler.py:207
 msgid "&Inflection"
 msgstr "áh&ersla"
 
@@ -3437,19 +3509,19 @@ msgstr "ekkert tal"
 msgid "word"
 msgstr "orð"
 
-#: versionInfo.py:40
+#: versionInfo.py:25
 msgid "NonVisual Desktop Access"
 msgstr "nonvisual Desktop Access"
 
-#: versionInfo.py:42
+#: versionInfo.py:27
 msgid "A free and open-source screen reader for MS Windows"
 msgstr "opinn skjálesari fyrir Microsoft Windows sem kostar ekki neitt"
 
-#: versionInfo.py:44
+#: versionInfo.py:29
 msgid "Copyright (C) 2006-2010 NVDA Contributors"
 msgstr "höfundarréttur (C) 2006-2010 styrktaraðilar NVDA"
 
-#: versionInfo.py:45
+#: versionInfo.py:30
 #, fuzzy
 msgid ""
 "%(copyright)s\n"
@@ -3464,72 +3536,72 @@ msgid ""
 "Or see the file Copying.txt that came with this software."
 msgstr ""
 "%(copyright)s\n"
-"%(name)s fellur undir GNU General Public License leyfið  (2. útgáfu). Þ"
-"ú mátt dreifa eða breyta þessu forriti á hvaða hátt sem þú kýst "
+"%(name)s fellur undir GNU General Public License leyfið  (2. útgáfu)."
+"þú mátt dreifa eða breyta þessu forriti á hvaða hátt sem þú kýst "
 "svo lengi sem leyfinu er dreift með forritinu og gerir allan kóða að"
 "gengilegan öðrum. Á það bæði um kóða sem þú sóttir og bfreyttir "
-"auk þeirra forrita sem nota þennan kóða að öllu eða að hluta.N'anri "
+"auk þeirra forrita sem nota þennan kóða að öllu eða að hluta. Nánari "
 "upplýsingar má finna á síðunni\n"
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "Eða í skránni Copying.txt sem kom með þessu forriti."
 
-#: virtualBuffers\__init__.py:187
+#: virtualBuffers\__init__.py:198
 msgid "%s landmark"
 msgstr "%s kennileyti"
 
-#: virtualBuffers\__init__.py:205
+#: virtualBuffers\__init__.py:216
 msgid "Lin&ks"
 msgstr "&Tenglar"
 
-#: virtualBuffers\__init__.py:206
+#: virtualBuffers\__init__.py:217
 msgid "&Headings"
 msgstr "&fyrirsagnir"
 
-#: virtualBuffers\__init__.py:207
+#: virtualBuffers\__init__.py:218
 msgid "Lan&dmarks"
 msgstr "&kennileyti"
 
-#: virtualBuffers\__init__.py:213
+#: virtualBuffers\__init__.py:224
 msgid "Elements List"
 msgstr "efnislisti"
 
-#: virtualBuffers\__init__.py:216
+#: virtualBuffers\__init__.py:227
 msgid "Type:"
 msgstr "rita:"
 
-#: virtualBuffers\__init__.py:227
+#: virtualBuffers\__init__.py:238
 msgid "&Filter by:"
 msgstr "&sía með:"
 
-#: virtualBuffers\__init__.py:235
+#: virtualBuffers\__init__.py:246
 msgid "&Activate"
 msgstr "&virkja"
 
-#: virtualBuffers\__init__.py:238
+#: virtualBuffers\__init__.py:249
 msgid "&Move to"
 msgstr "&færa að"
 
-#: virtualBuffers\__init__.py:524
+#: virtualBuffers\__init__.py:535
 msgid "Refreshed"
 msgstr "endurnýjað"
 
-#: virtualBuffers\__init__.py:529
+#: virtualBuffers\__init__.py:540
 msgid "Loading document..."
 msgstr "hleð skjal"
 
-#: virtualBuffers\__init__.py:668
+#: virtualBuffers\__init__.py:680
 msgid "activates the current object in the virtual buffer"
 msgstr "Virkjar hlut í skyndiminni"
 
-#: virtualBuffers\__init__.py:680
+#: virtualBuffers\__init__.py:692
 msgid "Refreshes the virtual buffer content"
 msgstr "Endurnýjar efni í sýndarminni"
 
-#: virtualBuffers\__init__.py:685
+#: virtualBuffers\__init__.py:697
 msgid "use screen layout %s"
 msgstr "Nota útlit skjás %s"
 
-#: virtualBuffers\__init__.py:686
+#: virtualBuffers\__init__.py:698
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "virtual buffer content"
@@ -3537,454 +3609,451 @@ msgstr ""
 "Slekkur og kveikir á hvort útlit skjámyndar sé varðveitt þegar efni er "
 "hlaðið í sýndarminni"
 
-#: virtualBuffers\__init__.py:773
+#: virtualBuffers\__init__.py:785
 msgid "Presents a list of links, headings or landmarks"
 msgstr "sýnir lista með fyrirsögnum, tenglum eða kennileitum"
 
-#: virtualBuffers\__init__.py:1114
+#: virtualBuffers\__init__.py:1126
 msgid "Not in a table cell"
 msgstr "ekki í töflu"
 
-#: virtualBuffers\__init__.py:1120
-msgid "edge of table"
-msgstr "brún töflu"
-
-#: virtualBuffers\__init__.py:1130
+#: virtualBuffers\__init__.py:1142
 msgid "moves to the next table row"
 msgstr "fer í næstu röð í töflu"
 
-#: virtualBuffers\__init__.py:1134
+#: virtualBuffers\__init__.py:1146
 msgid "moves to the previous table row"
 msgstr "fer í fyrri röð í töflu"
 
-#: virtualBuffers\__init__.py:1138
+#: virtualBuffers\__init__.py:1150
 msgid "moves to the next table column"
 msgstr "fer í næsta dálk í töflu"
 
-#: virtualBuffers\__init__.py:1142
+#: virtualBuffers\__init__.py:1154
 msgid "moves to the previous table column"
 msgstr "fer í fyrr dálk í töflu"
 
-#: virtualBuffers\__init__.py:1202
+#: virtualBuffers\__init__.py:1214
 msgid "moves to the next heading"
 msgstr "fer á næstu fyrirsögn"
 
-#: virtualBuffers\__init__.py:1202
+#: virtualBuffers\__init__.py:1214
 msgid "no next heading"
 msgstr "engin fyrirsögn næst"
 
-#: virtualBuffers\__init__.py:1203
+#: virtualBuffers\__init__.py:1215
 msgid "moves to the previous heading"
 msgstr "fer á fyrri fyrirsögn"
 
-#: virtualBuffers\__init__.py:1203
+#: virtualBuffers\__init__.py:1215
 msgid "no previous heading"
 msgstr "Engin fyrri fyrirsögn"
 
-#: virtualBuffers\__init__.py:1204
+#: virtualBuffers\__init__.py:1216
 msgid "moves to the next heading at level 1"
 msgstr "fer í næstu fyrirsögn á fyrsta stigi"
 
-#: virtualBuffers\__init__.py:1204
+#: virtualBuffers\__init__.py:1216
 msgid "no next heading at level 1"
 msgstr "engin fyrsta stigs fyrirsögn næst"
 
-#: virtualBuffers\__init__.py:1205
+#: virtualBuffers\__init__.py:1217
 msgid "moves to the previous heading at level 1"
 msgstr "fer á fyrri fyrirsögn í fyrsta stigi"
 
-#: virtualBuffers\__init__.py:1205
+#: virtualBuffers\__init__.py:1217
 msgid "no previous heading at level 1"
 msgstr "Engin fyrri fyrirsögn á fyrsta stigi"
 
-#: virtualBuffers\__init__.py:1206
+#: virtualBuffers\__init__.py:1218
 msgid "moves to the next heading at level 2"
 msgstr "Fer á næstu fyrirsögn á öðru stigi"
 
-#: virtualBuffers\__init__.py:1206
+#: virtualBuffers\__init__.py:1218
 msgid "no next heading at level 2"
 msgstr "engin næsta fyrirsögn á öðru stigi"
 
-#: virtualBuffers\__init__.py:1207
+#: virtualBuffers\__init__.py:1219
 msgid "moves to the previous heading at level 2"
 msgstr "fer á fyrri fyrirsögn á öðru stigi"
 
-#: virtualBuffers\__init__.py:1207
+#: virtualBuffers\__init__.py:1219
 msgid "no previous heading at level 2"
 msgstr "engin fyrri fyrirsögn á öðru stigi"
 
-#: virtualBuffers\__init__.py:1208
+#: virtualBuffers\__init__.py:1220
 msgid "moves to the next heading at level 3"
 msgstr "fer á næstu fyrirsögn á þriðja stigi"
 
-#: virtualBuffers\__init__.py:1208
+#: virtualBuffers\__init__.py:1220
 msgid "no next heading at level 3"
 msgstr "engin næsta fyrirsögn á þriðja stigi"
 
-#: virtualBuffers\__init__.py:1209
+#: virtualBuffers\__init__.py:1221
 msgid "moves to the previous heading at level 3"
 msgstr "fer á fyrri fyrirsögn á þriðja stigi"
 
-#: virtualBuffers\__init__.py:1209
+#: virtualBuffers\__init__.py:1221
 msgid "no previous heading at level 3"
 msgstr "engin fyrri fyrirsögn á þriðja stigi"
 
-#: virtualBuffers\__init__.py:1210
+#: virtualBuffers\__init__.py:1222
 msgid "moves to the next heading at level 4"
 msgstr "fer á næstu fyrirsögn á fjórða stigi"
 
-#: virtualBuffers\__init__.py:1210
+#: virtualBuffers\__init__.py:1222
 msgid "no next heading at level 4"
 msgstr "engin næsta fyrirsögn á fjórða stigi"
 
-#: virtualBuffers\__init__.py:1211
+#: virtualBuffers\__init__.py:1223
 msgid "moves to the previous heading at level 4"
 msgstr "fer á fyrri fyrirsögn á fjórða stigi"
 
-#: virtualBuffers\__init__.py:1211
+#: virtualBuffers\__init__.py:1223
 msgid "no previous heading at level 4"
 msgstr "engin fyrri fyrirsögn á fjórða stigi"
 
-#: virtualBuffers\__init__.py:1212
+#: virtualBuffers\__init__.py:1224
 msgid "moves to the next heading at level 5"
 msgstr "fer á næstu fyrirsögn á fimmta stigi"
 
-#: virtualBuffers\__init__.py:1212
+#: virtualBuffers\__init__.py:1224
 msgid "no next heading at level 5"
 msgstr "engin næsta fyrirsögn á fimmta stigi"
 
-#: virtualBuffers\__init__.py:1213
+#: virtualBuffers\__init__.py:1225
 msgid "moves to the previous heading at level 5"
 msgstr "fer á fyrri fyrirsögn á fimmta stigi"
 
-#: virtualBuffers\__init__.py:1213
+#: virtualBuffers\__init__.py:1225
 msgid "no previous heading at level 5"
 msgstr "engin fyrri fyrirsögn á fimmta stigi"
 
-#: virtualBuffers\__init__.py:1214
+#: virtualBuffers\__init__.py:1226
 msgid "moves to the next heading at level 6"
 msgstr "fer í næstu fyrirsögn á sjötta stigi"
 
-#: virtualBuffers\__init__.py:1214
+#: virtualBuffers\__init__.py:1226
 msgid "no next heading at level 6"
 msgstr "Engin næsta fyrirsögn á sjötta stigi"
 
-#: virtualBuffers\__init__.py:1215
+#: virtualBuffers\__init__.py:1227
 msgid "moves to the previous heading at level 6"
 msgstr "fer í fyrri fyrirsögn á sjötta stigi"
 
-#: virtualBuffers\__init__.py:1215
+#: virtualBuffers\__init__.py:1227
 msgid "no previous heading at level 6"
 msgstr "engin fyrri fyrirsögn á sjötta stigi"
 
-#: virtualBuffers\__init__.py:1216
+#: virtualBuffers\__init__.py:1228
 msgid "moves to the next table"
 msgstr "fer í næstu töflu"
 
-#: virtualBuffers\__init__.py:1216
+#: virtualBuffers\__init__.py:1228
 msgid "no next table"
 msgstr "engin næsta tafla"
 
-#: virtualBuffers\__init__.py:1217
+#: virtualBuffers\__init__.py:1229
 msgid "moves to the previous table"
 msgstr "fer í fyrri töflu"
 
-#: virtualBuffers\__init__.py:1217
+#: virtualBuffers\__init__.py:1229
 msgid "no previous table"
 msgstr "engin fyrri tafla"
 
-#: virtualBuffers\__init__.py:1218
+#: virtualBuffers\__init__.py:1230
 msgid "moves to the next link"
 msgstr "fer á næsta tengil"
 
-#: virtualBuffers\__init__.py:1218
+#: virtualBuffers\__init__.py:1230
 msgid "no next link"
 msgstr "enginn næsti tengill"
 
-#: virtualBuffers\__init__.py:1219
+#: virtualBuffers\__init__.py:1231
 msgid "moves to the previous link"
 msgstr "fer á fyrri tengil"
 
-#: virtualBuffers\__init__.py:1219
+#: virtualBuffers\__init__.py:1231
 msgid "no previous link"
 msgstr "enginn fyrri tengill"
 
-#: virtualBuffers\__init__.py:1220
+#: virtualBuffers\__init__.py:1232
 msgid "moves to the next visited link"
 msgstr "Fer á næsta heimsóttan tengil"
 
-#: virtualBuffers\__init__.py:1220
+#: virtualBuffers\__init__.py:1232
 msgid "no next visited link"
 msgstr "enginn næsti heimsótta tengil"
 
-#: virtualBuffers\__init__.py:1221
+#: virtualBuffers\__init__.py:1233
 msgid "moves to the previous visited link"
 msgstr "fer á fyrri heimsóttan tengil"
 
-#: virtualBuffers\__init__.py:1221
+#: virtualBuffers\__init__.py:1233
 msgid "no previous visited link"
 msgstr "enginn fyrri heimsóttur tengill"
 
-#: virtualBuffers\__init__.py:1222
+#: virtualBuffers\__init__.py:1234
 msgid "moves to the next unvisited link"
 msgstr "fer á næsta óheimsóttan tengil"
 
-#: virtualBuffers\__init__.py:1222
+#: virtualBuffers\__init__.py:1234
 msgid "no next unvisited link"
 msgstr "enginn tengill óheimsóttur"
 
-#: virtualBuffers\__init__.py:1223
+#: virtualBuffers\__init__.py:1235
 msgid "moves to the previous unvisited link"
 msgstr "fer á fyrri óheimsóttan tengil"
 
-#: virtualBuffers\__init__.py:1223
+#: virtualBuffers\__init__.py:1235
 msgid "no previous unvisited link"
 msgstr "enginn fyrri óheimsóttur tengill"
 
-#: virtualBuffers\__init__.py:1224
+#: virtualBuffers\__init__.py:1236
 msgid "moves to the next form field"
 msgstr "fer í næsta skrifreit"
 
-#: virtualBuffers\__init__.py:1224
+#: virtualBuffers\__init__.py:1236
 msgid "no next form field"
 msgstr "enginn næsti skrifreitur"
 
-#: virtualBuffers\__init__.py:1225
+#: virtualBuffers\__init__.py:1237
 msgid "moves to the previous form field"
 msgstr "fer í fyrri skrifreit"
 
-#: virtualBuffers\__init__.py:1225
+#: virtualBuffers\__init__.py:1237
 msgid "no previous form field"
 msgstr "enginn fyrri skrifreitur"
 
-#: virtualBuffers\__init__.py:1226
+#: virtualBuffers\__init__.py:1238
 msgid "moves to the next list"
 msgstr "fer á næsta lista"
 
-#: virtualBuffers\__init__.py:1226
+#: virtualBuffers\__init__.py:1238
 msgid "no next list"
 msgstr "enginn næsti listi"
 
-#: virtualBuffers\__init__.py:1227
+#: virtualBuffers\__init__.py:1239
 msgid "moves to the previous list"
 msgstr "fer í fyrri lista"
 
-#: virtualBuffers\__init__.py:1227
+#: virtualBuffers\__init__.py:1239
 msgid "no previous list"
 msgstr "enginn fyrri listi"
 
-#: virtualBuffers\__init__.py:1228
+#: virtualBuffers\__init__.py:1240
 msgid "moves to the next list item"
 msgstr "fer á næsta listahlut"
 
-#: virtualBuffers\__init__.py:1228
+#: virtualBuffers\__init__.py:1240
 msgid "no next list item"
 msgstr "enginn listahlutur"
 
-#: virtualBuffers\__init__.py:1229
+#: virtualBuffers\__init__.py:1241
 msgid "moves to the previous list item"
 msgstr "fer á fyrri listahlut"
 
-#: virtualBuffers\__init__.py:1229
+#: virtualBuffers\__init__.py:1241
 msgid "no previous list item"
 msgstr "enginn fyrri listahlutur"
 
-#: virtualBuffers\__init__.py:1230
+#: virtualBuffers\__init__.py:1242
 msgid "moves to the next button"
 msgstr "fer á næsta hnapp"
 
-#: virtualBuffers\__init__.py:1230
+#: virtualBuffers\__init__.py:1242
 msgid "no next button"
 msgstr "enginn næsti hnappur"
 
-#: virtualBuffers\__init__.py:1231
+#: virtualBuffers\__init__.py:1243
 msgid "moves to the previous button"
 msgstr "fer á fyrri hnapp"
 
-#: virtualBuffers\__init__.py:1231
+#: virtualBuffers\__init__.py:1243
 msgid "no previous button"
 msgstr "enginn fyrri hnappur"
 
-#: virtualBuffers\__init__.py:1232
+#: virtualBuffers\__init__.py:1244
 msgid "moves to the next edit field"
 msgstr "fer í næsta ritsvæði"
 
-#: virtualBuffers\__init__.py:1232
+#: virtualBuffers\__init__.py:1244
 msgid "no next edit field"
 msgstr "ekkert næsta ritsvæði"
 
-#: virtualBuffers\__init__.py:1233
+#: virtualBuffers\__init__.py:1245
 msgid "moves to the previous edit field"
 msgstr "fer í fyrra ritsvæði"
 
-#: virtualBuffers\__init__.py:1233
+#: virtualBuffers\__init__.py:1245
 msgid "no previous edit field"
 msgstr "ekkert fyrra ritsvæði"
 
-#: virtualBuffers\__init__.py:1234
+#: virtualBuffers\__init__.py:1246
 msgid "moves to the next frame"
 msgstr "fer í næsta ramma"
 
-#: virtualBuffers\__init__.py:1234
+#: virtualBuffers\__init__.py:1246
 msgid "no next frame"
 msgstr "enginn næsti rammi"
 
-#: virtualBuffers\__init__.py:1235
+#: virtualBuffers\__init__.py:1247
 msgid "moves to the previous frame"
 msgstr "fer í fyrri ramma"
 
-#: virtualBuffers\__init__.py:1235
+#: virtualBuffers\__init__.py:1247
 msgid "no previous frame"
 msgstr "enginn fyrri rammi"
 
-#: virtualBuffers\__init__.py:1236
+#: virtualBuffers\__init__.py:1248
 msgid "moves to the next separator"
 msgstr "fer á næstu skil"
 
-#: virtualBuffers\__init__.py:1236
+#: virtualBuffers\__init__.py:1248
 msgid "no next separator"
 msgstr "engin næstu skil"
 
-#: virtualBuffers\__init__.py:1237
+#: virtualBuffers\__init__.py:1249
 msgid "moves to the previous separator"
 msgstr "fer á fyrri skil"
 
-#: virtualBuffers\__init__.py:1237
+#: virtualBuffers\__init__.py:1249
 msgid "no previous separator"
 msgstr "engin fyrri skil"
 
-#: virtualBuffers\__init__.py:1238
+#: virtualBuffers\__init__.py:1250
 msgid "moves to the next radio button"
 msgstr "fer á næsta útvarpshnapp"
 
-#: virtualBuffers\__init__.py:1238
+#: virtualBuffers\__init__.py:1250
 msgid "no next radio button"
 msgstr "enginn næsti útvarpshnappur"
 
-#: virtualBuffers\__init__.py:1239
+#: virtualBuffers\__init__.py:1251
 msgid "moves to the previous radio button"
 msgstr "fer á fyrri útvarpshnapp"
 
-#: virtualBuffers\__init__.py:1239
+#: virtualBuffers\__init__.py:1251
 msgid "no previous radio button"
 msgstr "enginn fyrri útvarpshnappur"
 
-#: virtualBuffers\__init__.py:1240
+#: virtualBuffers\__init__.py:1252
 msgid "moves to the next combo box"
 msgstr "fer í næsta fjölvalsreit"
 
-#: virtualBuffers\__init__.py:1240
+#: virtualBuffers\__init__.py:1252
 msgid "no next combo box"
 msgstr "enginn næsti fjölvalsreitur"
 
-#: virtualBuffers\__init__.py:1241
+#: virtualBuffers\__init__.py:1253
 msgid "moves to the previous combo box"
 msgstr "fer í fyrri fjölvalsreit"
 
-#: virtualBuffers\__init__.py:1241
+#: virtualBuffers\__init__.py:1253
 msgid "no previous combo box"
 msgstr "enginn fyrri fjölvalsreitur"
 
-#: virtualBuffers\__init__.py:1242
+#: virtualBuffers\__init__.py:1254
 msgid "moves to the next check box"
 msgstr "fer á næsta gátreit"
 
-#: virtualBuffers\__init__.py:1242
+#: virtualBuffers\__init__.py:1254
 msgid "no next check box"
 msgstr "enginn næsti gátreitur"
 
-#: virtualBuffers\__init__.py:1243
+#: virtualBuffers\__init__.py:1255
 msgid "moves to the previous check box"
 msgstr "fer í fyrri gátreit"
 
-#: virtualBuffers\__init__.py:1243
+#: virtualBuffers\__init__.py:1255
 msgid "no previous check box"
 msgstr "enginn fyrri gátreitur"
 
-#: virtualBuffers\__init__.py:1244
+#: virtualBuffers\__init__.py:1256
 msgid "moves to the next graphic"
 msgstr "fer á næsta myndefnishlut"
 
-#: virtualBuffers\__init__.py:1244
+#: virtualBuffers\__init__.py:1256
 msgid "no next graphic"
 msgstr "enginn næsti myndefnishlutur"
 
-#: virtualBuffers\__init__.py:1245
+#: virtualBuffers\__init__.py:1257
 msgid "moves to the previous graphic"
 msgstr "fer í fyrri myndefnishlut"
 
-#: virtualBuffers\__init__.py:1245
+#: virtualBuffers\__init__.py:1257
 msgid "no previous graphic"
 msgstr "fer í fyrri myndefnishlut"
 
-#: virtualBuffers\__init__.py:1246
+#: virtualBuffers\__init__.py:1258
 msgid "moves to the next block quote"
 msgstr "fer í næstu tilvitnun"
 
-#: virtualBuffers\__init__.py:1246
+#: virtualBuffers\__init__.py:1258
 msgid "no next block quote"
 msgstr "engin næsta tilvitnun"
 
-#: virtualBuffers\__init__.py:1247
+#: virtualBuffers\__init__.py:1259
 msgid "moves to the previous block quote"
 msgstr "fer í fyrri tilvitnun"
 
-#: virtualBuffers\__init__.py:1247
+#: virtualBuffers\__init__.py:1259
 msgid "no previous block quote"
 msgstr "engin fyrri tilvitnun"
 
-#: virtualBuffers\__init__.py:1248
+#: virtualBuffers\__init__.py:1260
 msgid "no more text after a block of links"
-msgstr "ekki meiri texti eftir tenglahóp"
+msgstr "enginn texti eftir tenglahóp"
 
-#: virtualBuffers\__init__.py:1248
+#: virtualBuffers\__init__.py:1260
 msgid "skips forward past a block of links"
 msgstr "fara yfir tenglahóp"
 
-#: virtualBuffers\__init__.py:1249
+#: virtualBuffers\__init__.py:1261
 msgid "no more text before a block of links"
-msgstr "ekki meiri texti framan við tengla"
+msgstr "enginn texti framan við tengla"
 
-#: virtualBuffers\__init__.py:1249
+#: virtualBuffers\__init__.py:1261
 msgid "skips backward past a block of links"
 msgstr "fer aftur yfir tenglahóp"
 
-#: virtualBuffers\__init__.py:1250
+#: virtualBuffers\__init__.py:1262
 msgid "moves to the next landmark"
 msgstr "fer á næsta kennileiti"
 
-#: virtualBuffers\__init__.py:1250
+#: virtualBuffers\__init__.py:1262
 msgid "no next landmark"
 msgstr "ekkert næsta kennileiti"
 
-#: virtualBuffers\__init__.py:1251
+#: virtualBuffers\__init__.py:1263
 msgid "moves to the previous landmark"
 msgstr "fer á fyrra kennileiti"
 
-#: virtualBuffers\__init__.py:1251
+#: virtualBuffers\__init__.py:1263
 msgid "no previous landmark"
 msgstr "ekkert fyrra kennileiti"
 
-#: virtualBuffers\__init__.py:1252
+#: virtualBuffers\__init__.py:1264
 msgid "moves to the next embedded object"
 msgstr "fer á næsta ívafinn hlut"
 
-#: virtualBuffers\__init__.py:1252
+#: virtualBuffers\__init__.py:1264
 msgid "no next embedded object"
 msgstr "enginn næsti ívafinn hlutur"
 
-#: virtualBuffers\__init__.py:1253
+#: virtualBuffers\__init__.py:1265
 msgid "moves to the previous embedded object"
 msgstr "fer á fyrri ívafinn hlut"
 
-#: virtualBuffers\__init__.py:1253
+#: virtualBuffers\__init__.py:1265
 msgid "no previous embedded object"
 msgstr "enginn fyrri ívafinn hlutur"
 
-#: virtualBuffers\__init__.py:1266
+#: virtualBuffers\__init__.py:1278
 msgid "browse mode"
 msgstr "vafrahamur"
 
-#: virtualBuffers\__init__.py:1266
+
+#: virtualBuffers\__init__.py:1278
 msgid "focus mode"
 msgstr "Fókushamur"
