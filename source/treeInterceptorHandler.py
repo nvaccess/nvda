@@ -44,6 +44,7 @@ def killTreeInterceptor(treeInterceptorObject):
 	except KeyError:
 		return
 	treeInterceptorObject.terminate()
+	log.debug("Killed treeInterceptor: %s" % treeInterceptorObject)
 
 def terminate():
 	"""Kills any currently running treeInterceptors"""
