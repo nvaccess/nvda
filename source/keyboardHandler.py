@@ -287,9 +287,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	def send(self):
 		keys = []
 		for vk, ext in self.generalizedModifiers:
-			if vk == VK_WIN and (winUser.getKeyState(winUser.VK_LWIN) & 32768 or winUser.getKeyState(winUser.VK_RWIN) & 32768):
-				# Already down.
-				continue
+			if vk == VK_WIN:
+				if winUser.getKeyState(winUser.VK_LWIN) & 32768 or winUser.getKeyState(winUser.VK_RWIN) & 32768:
+					# Already down.
+					continue
+				vk = winUser.VK_LWIN
 			elif winUser.getKeyState(vk) & 32768:
 				# Already down.
 				continue
