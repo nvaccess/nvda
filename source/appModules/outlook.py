@@ -135,13 +135,17 @@ class MessageList_pre2003(IAccessible):
 				self.curMessageItem=messageItem
 				eventHandler.executeEvent("gainFocus",messageItem)
 
-[MessageList_pre2003.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("extendedDown","moveByMessage"),
-	("extendedUp","moveByMessage"),
-	("extendedHome","moveByMessage"),
-	("extendedEnd","moveByMessage"),
-	("extendedDelete","moveByMessage"),
-]]
+	__moveByMessageGestures = (
+		"kb:downArrow",
+		"kb:upArrow",
+		"kb:home",
+		"kb:end",
+		"kb:delete",
+	)
+
+	def initOverlayClass(self):
+		for gesture in self.__moveByMessageGestures:
+			self.bindGesture(gesture, "moveByMessage")
 
 class MessageItem(Window):
 
@@ -173,10 +177,14 @@ class AddressBookEntry(IAccessible):
 		gesture.send()
 		eventHandler.queueEvent("nameChange",self)
 
-[AddressBookEntry.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("extendedDown","moveByEntry"),
-	("extendedUp","moveByEntry"),
-	("extendedHome","moveByEntry"),
-	("extendedEnd","moveByEntry"),
-	("extendedDelete","moveByEntry"),
-]]
+	__moveByEntryGestures = (
+		"kb:downArrow",
+		"kb:upArrow",
+		"kb:home",
+		"kb:end",
+		"kb:delete",
+	)
+
+	def initOverlayClass(self):
+		for gesture in self.__moveByEntryGestures:
+			self.bindGesture(gesture, "moveByEntry")

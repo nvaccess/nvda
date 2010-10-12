@@ -156,6 +156,20 @@ class mirandaIMContactList(IAccessible):
 			speech.speakObject(self,reason=speech.REASON_FOCUS)
 			braille.handler.handleGainFocus(self)
 
+	__changeItemGestures = (
+		"kb:downArrow",
+		"kb:upArrow",
+		"kb:leftArrow",
+		"kb:rightArrow",
+		"kb:home",
+		"kb:end",
+		"kb:pageUp",
+		"kb:pageDown",
+	)
+
+	def initOverlayClass(self):
+		for gesture in self.__changeItemGestures:
+			self.bindGesture(gesture, "changeItem")
 
 class mirandaIMButton(IAccessible):
 
@@ -171,6 +185,9 @@ class mirandaIMButton(IAccessible):
 
 	def script_doDefaultAction(self,gesture):
 		self.doDefaultAction()
+
+	def initOverlayClass(self):
+		self.bindGesture("enter", "doDefaultAction")
 
 class mirandaIMHyperlink(mirandaIMButton):
 
@@ -224,18 +241,3 @@ class DuplicateFocusListBox(IAccessible):
 		):
 			return False
 		return super(DuplicateFocusListBox, self).shouldAllowIAccessibleFocusEvent
-
-[mirandaIMContactList.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("extendedDown","changeItem"),
-	("extendedUp","changeItem"),
-	("extendedLeft","changeItem"),
-	("extendedRight","changeItem"),
-	("extendedHome","changeItem"),
-	("extendedEnd","changeItem"),
-	("extendedPrior","changeItem"),
-	("extendedNext","changeItem"),
-]]
-
-[mirandaIMButton.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("Return","doDefaultAction"),
-]]

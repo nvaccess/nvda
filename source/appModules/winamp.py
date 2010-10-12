@@ -88,6 +88,14 @@ class winampMainWindow(IAccessible):
 				onOff=_("off")
 			speech.speakMessage(onOff)
 
+	__gestures = {
+		"kb:s": "shuffleToggle",
+		"kb:r": "repeatToggle",
+	}
+
+	def initOverlayClass(self):
+		self.bindGestures(self.__gestures)
+
 class winampPlaylistEditor(winampMainWindow):
 
 	def _get_name(self):
@@ -115,14 +123,13 @@ class winampPlaylistEditor(winampMainWindow):
 	def event_nameChange(self):
 		return super(winampMainWindow,self).event_nameChange()
 
-[winampMainWindow.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("s","shuffleToggle"),
-	("r","repeatToggle"),
-]]
+	__changeItemGestures = (
+		"kb:upArrow",
+		"kb:downArrow",
+		"kb:pageUp",
+		"kb:pageDown",
+	)
 
-[winampPlaylistEditor.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedUp","changeItem"),
-	("ExtendedDown","changeItem"),
-	("extendedPrior","changeItem"),
-	("extendedNext","changeItem"),
-]]
+	def initOverlayClass(self):
+		for gesture in self.__changeItemGestures:
+			self.bindGesture(gesture, "changeItem")

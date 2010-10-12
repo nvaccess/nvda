@@ -26,11 +26,8 @@ class LogonDialog(Dialog):
 class XPPasswordField(IAccessible):
 
 	def initOverlayClass(self):
-		for key, script in (
-			("extendedUp", "changeUser"),
-			("extendedDown", "changeUser"),
-		):
-			self.bindKey_runtime(key, script)
+		for gesture in ("kb:upArrow", "kb:downArrow"):
+			self.bindGesture(gesture, "changeUser")
 
 	def _get_name(self):
 		# Focus automatically jumps to the password field when a user is selected. This field has no name.
