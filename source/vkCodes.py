@@ -1,3 +1,20 @@
+#vkCodes.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2007-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
+
+"""Maps between Windows virtual key (vk) codes and NVDA key names.
+These names are used when binding keyboard gestures to scripts.
+"""
+
+#: Maps vk codes to key names.
+#: The dict key is a tuple of (vkCode, extended),
+#: where vkCode is the vk code and extended is a bool specifying whether the key is an extended key.
+#: If extended is C{None}, the extended state of the key is irrelevant to the mapping;
+#: i.e. the name is the same in either case.
+#: The dict value is the key name.
+#: @type: dict with keys of tuple(int, bool) and values of str
 byCode = {
 	(0x01, None): "leftMouse",
 	(0x02, None): "rightMouse",
@@ -117,4 +134,7 @@ byCode = {
 	(0xB7, None): "launchApp2",
 }
 
+#: Maps key names to vk codes.
+#: This is the inverse of the L{byCode} map.
+#: @type: dict with keys of str and values of tuple(int, bool)
 byName = dict((name, code) for code, name in byCode.iteritems())
