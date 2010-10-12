@@ -72,6 +72,13 @@ A jelenlegi kiadás főbb újdonságai közé tartozik az egyszerűbb és jóval
 - Scintilla vezérlőelemekben (pl. Notepad++) a hosszú sorok most már helyesen kerülnek felolvasásra, ha azok a képernyő szélén túlhaladnak. Ez már Braille kijelzőkön is helyesen jelenik meg.
 - A Loudtalks alkalmazásban a partnerlista most már hozzáférhető.
 - Egy dokumentum URL és "MSAAHTML Registered Handler" attribútumai most már helyesen kerülnek felolvasásra az Internet Explorer és egyéb MSHTML vezérlőelemekben. (#811)
+- Az Eclipse fejlesztői környezet fanézeteiben az előző elem most már nem hangzik el.
+- Az NVDA most már helyesen működik ha az aktuális könyvtár útvonala nem található a Dll elérési útvonalon (a CWDIllegalInDllSearch registry bejegyzés 0xFFFFFFFF-re állításával). Ez a legtöbb felhasználót nem érinti. (#907)
+- A Microsoft Word táblázatnavigációs billentyűparancsainak használatakor a "a táblázat széle" szöveg már nem hangzik el a "csak táblázatban használható" szöveg után. (#921)
+- A Microsoft Word alkalmazásban "a táblázat széle" szöveg már helyesen hangzik el (a beállított nyelvnek megfelelően). Előzőleg ez az üzenet mindig angolul történt meg. (#921)
+- A virtuális bufferekben az áttekintő kurzor mostantól a teljes dokumentumban mozog, nem pedig csak a fókuszban lévő objektumon belül.
+- Az Outlook Express, Windows Mail és Windows Live Mail alkalmazásokban az üzenetszabályok jelölőnégyzet állapota most már helyesen hangzik el. (#576)
+- A Windows Live Mail 2010 alkalmazásban az üzenetszabályok leírása most már helyesen hangzik el.
 
 
 = 2010.1 =
