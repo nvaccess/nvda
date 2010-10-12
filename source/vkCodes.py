@@ -135,6 +135,7 @@ byCode = {
 }
 
 #: Maps key names to vk codes.
-#: This is the inverse of the L{byCode} map.
+#: This is the inverse of the L{byCode} map
+#: except that names are all lower case to make case insensitive lookup easier.
 #: @type: dict with keys of str and values of tuple(int, bool)
-byName = dict((name, code) for code, name in byCode.iteritems())
+byName = dict((name.lower(), code) for code, name in byCode.iteritems())

@@ -340,7 +340,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 					keys.append((winUser.VK_MENU, False))
 				# Not sure whether we need to support the Hankaku modifier (& 8).
 			else:
-				vk, ext = vkCodes.byName[keyName]
+				vk, ext = vkCodes.byName[keyName.lower()]
 				if ext is None:
 					ext = False
 			keys.append((vk, ext))
