@@ -334,9 +334,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 				requiredMods, vk = winUser.VkKeyScan(keyName)
 				if requiredMods & 1:
 					keys.append((winUser.VK_SHIFT, False))
-				elif requiredMods & 2:
+				if requiredMods & 2:
 					keys.append((winUser.VK_CONTROL, False))
-				elif requiredMods & 4:
+				if requiredMods & 4:
 					keys.append((winUser.VK_MENU, False))
 				# Not sure whether we need to support the Hankaku modifier (& 8).
 			else:
