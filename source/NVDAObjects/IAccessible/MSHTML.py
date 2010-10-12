@@ -14,6 +14,7 @@ import winUser
 import oleacc
 import IAccessibleHandler
 import aria
+from keyboardHandler import KeyboardInputGesture
 import api
 import textInfos
 from logHandler import log
@@ -150,10 +151,10 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			selObj=parent.document.selection
 			oldSelRange=selObj.createRange().duplicate()
 			textRange.select()
-			sendKey(key("extendedHome"))
+			KeyboardInputGesture.fromName("home").send()
 			api.processPendingEvents(False)
 			newSelStartMark=selObj.createRange().getBookmark()
-			sendKey(key("extendedEnd"))
+			KeyboardInputGesture.fromName("end").send()
 			api.processPendingEvents(False)
 			newSelEndMark=selObj.createRange().getBookmark()
 			tempRange.moveToBookmark(newSelStartMark)
