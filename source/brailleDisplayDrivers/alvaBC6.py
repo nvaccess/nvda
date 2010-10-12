@@ -157,38 +157,38 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 			KeyboardInputGesture.fromName('shift+tab').send()
 
 		elif _KeyMask == ALVA_SP2 or _KeyMask == ALVA_SPR2: # Alt
-			KeyboardInputGesture.fromName('F10').send()
+			KeyboardInputGesture.fromName('f10').send()
 
 		elif _KeyMask == ALVA_SP3 or _KeyMask == ALVA_SPR3:    # ESC
 			KeyboardInputGesture.fromName('escape').send()
 
 		elif _KeyMask == ALVA_SP4 or _KeyMask == ALVA_SPR4: # Tab
-			KeyboardInputGesture.fromName('Tab').send()
+			KeyboardInputGesture.fromName('tab').send()
 
 		elif _KeyMask == ALVA_SP_UP or _KeyMask == ALVA_SPR_UP: # Arrow up
-			KeyboardInputGesture.fromName('extendedup').send()
+			KeyboardInputGesture.fromName('upArrow').send()
 
 		elif _KeyMask == ALVA_SP_DOWN or _KeyMask == ALVA_SPR_DOWN: # Arrow down
-			KeyboardInputGesture.fromName('extendeddown').send()
+			KeyboardInputGesture.fromName('downArrow').send()
 
 		elif _KeyMask == ALVA_SP_LEFT or _KeyMask == ALVA_SPR_LEFT: #Arrow left
-			KeyboardInputGesture.fromName('extendedleft').send()
+			KeyboardInputGesture.fromName('leftArrow').send()
 
 		elif _KeyMask == ALVA_SP_RIGHT or _KeyMask == ALVA_SPR_RIGHT: #Arrow right
-			KeyboardInputGesture.fromName('extendedright').send()
+			KeyboardInputGesture.fromName('rightArrow').send()
 
 		elif _KeyMask == ALVA_SP_ENTER or _KeyMask == ALVA_SPR_ENTER: # enter key
-			KeyboardInputGesture.fromName('return').send()
+			KeyboardInputGesture.fromName('enter').send()
 
 		elif _KeyMask == (ALVA_SP1 | ALVA_SP3) or _KeyMask == (ALVA_SPR1 | ALVA_SPR3): # control panel
 			import gui
 			gui.showGui()
 
 		elif _KeyMask == (ALVA_SP1 | ALVA_SP4) or _KeyMask == (ALVA_SPR1 | ALVA_SPR4): #Minimiza all apps
-			KeyboardInputGesture.fromName('win+d').send()
+			KeyboardInputGesture.fromName('windows+d').send()
 
 		elif _KeyMask == (ALVA_SP2 | ALVA_SP3) or _KeyMask == (ALVA_SPR2 | ALVA_SPR3): # Start menu
-			KeyboardInputGesture.fromName('extendedlwin').send()
+			KeyboardInputGesture.fromName('windows').send()
 
 		elif _KeyMask == (ALVA_SP2 | ALVA_SP4) or _KeyMask == (ALVA_SPR2 | ALVA_SPR4): #Alt Tab
 			KeyboardInputGesture.fromName('alt+tab').send()

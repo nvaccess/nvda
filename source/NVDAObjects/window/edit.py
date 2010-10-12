@@ -358,16 +358,16 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				return [offset,offset+1]
 			oldSel=self._getSelectionOffsets()
 			self._setSelectionOffsets(offset,offset)
-			KeyboardInputGesture.fromName("control+ExtendedLeft").send()
+			KeyboardInputGesture.fromName("control+leftArrow").send()
 			back=self._getSelectionOffsets()[0]
-			KeyboardInputGesture.fromName("control+ExtendedRight").send()
+			KeyboardInputGesture.fromName("control+rightArrow").send()
 			forward=self._getSelectionOffsets()[0]
 			if (back<=offset) and (forward>offset):
 				start=back
 				end=forward
 			elif (back<offset) and (forward==offset):
 				start=forward
-				KeyboardInputGesture.fromName("control+ExtendedRight").send()
+				KeyboardInputGesture.fromName("control+rightArrow").send()
 	 			forward=self._getSelectionOffsets()[0]
 				end=forward
 			else:
