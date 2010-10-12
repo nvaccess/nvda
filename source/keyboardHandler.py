@@ -11,7 +11,7 @@ import time
 import vkCodes
 import speech
 import ui
-from keyUtils import localizedKeyLabels
+from keyLabels import localizedKeyLabels
 from logHandler import log
 import queueHandler
 import config
