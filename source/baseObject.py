@@ -172,7 +172,7 @@ class ScriptableObject(AutoPropertyObject):
 		""" 
 		for identifier in gesture.identifiers:
 			try:
-				return self._gestureMap[identifier.lower()]
+				return self._gestureMap[identifier]
 			except KeyError:
 				continue
 		else:
