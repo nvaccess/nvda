@@ -268,7 +268,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		return False
 
 	def _get_speechEffectWhenExecuted(self):
-		if self.isExtended and winUser.VK_VOLUME_MUTE <= self.vkCode <= winUser.VK_VOLUME_UP:
+		if not inputCore.manager.isInputHelpActive and self.isExtended and winUser.VK_VOLUME_MUTE <= self.vkCode <= winUser.VK_VOLUME_UP:
 			return None
 		if self.vkCode in (winUser.VK_SHIFT, winUser.VK_LSHIFT, winUser.VK_RSHIFT):
 			return self.SPEECHEFFECT_RESUME if speech.isPaused else self.SPEECHEFFECT_PAUSE
