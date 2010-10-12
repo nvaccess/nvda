@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: r3860\n"
+"Project-Id-Version: r3888\n"
 "POT-Creation-Date: 2007-03-04 15:37+Normaaliaika\n"
-"PO-Revision-Date: 2010-09-23 06:04+0300\n"
+"PO-Revision-Date: 2010-10-05 15:28+0300\n"
 "Last-Translator: Jani Kinnunen <jkinnunen@pp.inet.fi>\n"
 "Language-Team: fi <jkinnunen@pp.inet.fi>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr "tuntematon näppäimistöasettelu"
 msgid "layout %s"
 msgstr "näppäimistöasettelu %s"
 
-#: NVDAObjects\IAccessible\__init__.py:1440
+#: NVDAObjects\IAccessible\__init__.py:1446
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
 
@@ -85,10 +85,16 @@ msgstr "valinta"
 msgid "%s %s through %s %s"
 msgstr "%s %s kautta %s %s"
 
-#: NVDAObjects\window\winword.py:355 NVDAObjects\window\winword.py:366
-#: NVDAObjects\window\winword.py:377 NVDAObjects\window\winword.py:388
+#: NVDAObjects\window\winword.py:355 NVDAObjects\window\winword.py:367
+#: NVDAObjects\window\winword.py:379 NVDAObjects\window\winword.py:391
 msgid "not in table"
 msgstr "ei taulukossa"
+
+#: NVDAObjects\window\winword.py:362 NVDAObjects\window\winword.py:374
+#: NVDAObjects\window\winword.py:386 NVDAObjects\window\winword.py:398
+#: virtualBuffers\__init__.py:1136
+msgid "edge of table"
+msgstr "taulukon reuna"
 
 #: appModuleHandler.py:171
 msgid "Error in appModule %s"
@@ -99,8 +105,8 @@ msgstr "Virhe sovellusmoduulissa %s"
 #: appModules\_default.py:185 appModules\_default.py:683
 #: appModules\_default.py:745 appModules\_default.py:755
 #: appModules\_default.py:765 appModules\winamp.py:77 appModules\winamp.py:87
-#: gui\settingsDialogs.py:813 keyboardHandler.py:55 keyboardHandler.py:57
-#: keyboardHandler.py:59 virtualBuffers\__init__.py:696
+#: gui\settingsDialogs.py:795 keyboardHandler.py:55 keyboardHandler.py:57
+#: keyboardHandler.py:59 virtualBuffers\__init__.py:700
 msgid "on"
 msgstr "päällä"
 
@@ -109,9 +115,9 @@ msgstr "päällä"
 #: appModules\_default.py:182 appModules\_default.py:561
 #: appModules\_default.py:680 appModules\_default.py:742
 #: appModules\_default.py:752 appModules\_default.py:762
-#: appModules\winamp.py:79 appModules\winamp.py:89 gui\settingsDialogs.py:581
-#: gui\settingsDialogs.py:813 keyboardHandler.py:55 keyboardHandler.py:57
-#: keyboardHandler.py:59 virtualBuffers\__init__.py:696
+#: appModules\winamp.py:79 appModules\winamp.py:89 gui\settingsDialogs.py:563
+#: gui\settingsDialogs.py:795 keyboardHandler.py:55 keyboardHandler.py:57
+#: keyboardHandler.py:59 virtualBuffers\__init__.py:700
 msgid "off"
 msgstr "pois"
 
@@ -183,7 +189,7 @@ msgid "no selection"
 msgstr "ei valintaa"
 
 #: appModules\_default.py:103 compoundDocuments.py:402 speech.py:285
-#: speech.py:382 speech.py:395 virtualBuffers\__init__.py:600
+#: speech.py:382 speech.py:395 virtualBuffers\__init__.py:604
 msgid "selected %s"
 msgstr "valittu %s"
 
@@ -862,11 +868,11 @@ msgstr "Lataa NVDA:n tallennetut asetukset kumoten nykyiset muutokset"
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Avaa NVDA:n Python-konsolin, hyödyllinen pääasiassa kehittäjille"
 
-#: appModules\_default.py:857 gui\settingsDialogs.py:945
+#: appModules\_default.py:857 gui\settingsDialogs.py:927
 msgid "review"
 msgstr "tarkastelukohdistinta"
 
-#: appModules\_default.py:860 gui\settingsDialogs.py:945
+#: appModules\_default.py:860 gui\settingsDialogs.py:927
 msgid "focus"
 msgstr "kohdistusta"
 
@@ -954,55 +960,55 @@ msgstr "Ei viestejä"
 msgid "Displays one of the recent messages"
 msgstr "Näyttää yhden viimeisimmistä viesteistä"
 
-#: appModules\msimn.py:17
+#: appModules\msimn.py:18
 msgid "Attachments"
 msgstr "Liitteet"
 
-#: appModules\msimn.py:18
+#: appModules\msimn.py:19
 msgid "To:"
 msgstr "Vastaanottaja:"
 
-#: appModules\msimn.py:19
+#: appModules\msimn.py:20
 msgid "Newsgroup:"
 msgstr "Uutisryhmä:"
 
-#: appModules\msimn.py:20
+#: appModules\msimn.py:21
 msgid "CC:"
 msgstr "Kopio:"
 
-#: appModules\msimn.py:21
+#: appModules\msimn.py:22
 msgid "Subject:"
 msgstr "Aihe:"
 
-#: appModules\msimn.py:22 appModules\msimn.py:30
+#: appModules\msimn.py:23 appModules\msimn.py:31
 msgid "From:"
 msgstr "Lähettäjä:"
 
-#: appModules\msimn.py:23
+#: appModules\msimn.py:24
 msgid "Date:"
 msgstr "Päivämäärä:"
 
-#: appModules\msimn.py:24
+#: appModules\msimn.py:25
 msgid "Forward to:"
 msgstr "Välitä:"
 
-#: appModules\msimn.py:25
+#: appModules\msimn.py:26
 msgid "Answer to:"
 msgstr "Vastaa:"
 
-#: appModules\msimn.py:26
+#: appModules\msimn.py:27
 msgid "Organisation:"
 msgstr "Yritys:"
 
-#: appModules\msimn.py:27
+#: appModules\msimn.py:28
 msgid "Distribution:"
 msgstr "Jakelu:"
 
-#: appModules\msimn.py:28
+#: appModules\msimn.py:29
 msgid "Key words:"
 msgstr "Avainsanat:"
 
-#: appModules\msimn.py:29
+#: appModules\msimn.py:30
 msgid "BCC:"
 msgstr "Piilokopio:"
 
@@ -1025,6 +1031,26 @@ msgstr "liite"
 #: appModules\outlook.py:37
 msgid "sent: %s"
 msgstr "lähetetty: %s"
+
+#: appModules\sndrec32.py:11
+msgid "Rewind"
+msgstr "Kelaa taaksepäin"
+
+#: appModules\sndrec32.py:12
+msgid "Fast forward"
+msgstr "Kelaa eteenpäin"
+
+#: appModules\sndrec32.py:13
+msgid "Play"
+msgstr "Toista"
+
+#: appModules\sndrec32.py:14
+msgid "Stop"
+msgstr "Pysäytä"
+
+#: appModules\sndrec32.py:15
+msgid "Record"
+msgstr "Nauhoita"
 
 #: aria.py:60
 msgid "banner"
@@ -2571,7 +2597,7 @@ msgstr "Tervetuloa käyttämään NVDA:ta"
 msgid "Options"
 msgstr "Asetukset"
 
-#: gui\__init__.py:402 gui\settingsDialogs.py:468
+#: gui\__init__.py:402 gui\settingsDialogs.py:450
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Käytä Caps Lockia  NVDA-näppäimenä"
 
@@ -2741,364 +2767,364 @@ msgstr "Syntetisaattoria %s ei voitu ladata."
 msgid "Synthesizer Error"
 msgstr "Syntetisaattorivirhe"
 
-#: gui\settingsDialogs.py:307
+#: gui\settingsDialogs.py:297
 msgid "Voice settings"
 msgstr "Ääniasetukset"
 
-#: gui\settingsDialogs.py:363
+#: gui\settingsDialogs.py:353
 msgid "&Speak all punctuation"
 msgstr "&Lue kaikki välimerkit"
 
-#: gui\settingsDialogs.py:366
+#: gui\settingsDialogs.py:356
 msgid "Raise pitch for capitals"
 msgstr "Nosta äänenkorkeutta isojen kirjainten kohdalla"
 
-#: gui\settingsDialogs.py:369
+#: gui\settingsDialogs.py:359
 msgid "Say &cap before capitals"
 msgstr "Sano &iso ennen isoja kirjaimia"
 
-#: gui\settingsDialogs.py:372
+#: gui\settingsDialogs.py:362
 msgid "&Beep for capitals"
 msgstr "Anna äänimerkki iso&jen kirjainten kohdalla"
 
-#: gui\settingsDialogs.py:375
+#: gui\settingsDialogs.py:365
 msgid "Use &spelling functionality if supported"
 msgstr "Käytä &tavaustoimintoa, jos sitä tuetaan"
 
-#: gui\settingsDialogs.py:451
+#: gui\settingsDialogs.py:433
 msgid "Keyboard Settings"
 msgstr "Näppäimistöasetukset"
 
-#: gui\settingsDialogs.py:455
+#: gui\settingsDialogs.py:437
 msgid "&Keyboard layout:"
 msgstr "&Näppäimistöasettelu:"
 
-#: gui\settingsDialogs.py:460
+#: gui\settingsDialogs.py:442
 msgid "Keyboard layout"
 msgstr "Näppäimistöasettelu"
 
-#: gui\settingsDialogs.py:471
+#: gui\settingsDialogs.py:453
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Käytä numeroryhmän Insert-näppäintä NVDA-näppäimenä"
 
-#: gui\settingsDialogs.py:474
+#: gui\settingsDialogs.py:456
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Käytä laajennettua Insert-näppäintä NVDA-näppäimenä"
 
-#: gui\settingsDialogs.py:477
+#: gui\settingsDialogs.py:459
 msgid "Speak typed &characters"
 msgstr "Lue &kirjoitetut merkit"
 
-#: gui\settingsDialogs.py:480
+#: gui\settingsDialogs.py:462
 msgid "Speak typed &words"
 msgstr "Lue kirjoitetut &sanat"
 
-#: gui\settingsDialogs.py:483
+#: gui\settingsDialogs.py:465
 msgid "Speak command &keys"
 msgstr "Lue k&omentonäppäimet"
 
-#: gui\settingsDialogs.py:506
+#: gui\settingsDialogs.py:488
 msgid "Mouse settings"
 msgstr "Hiiriasetukset"
 
-#: gui\settingsDialogs.py:509
+#: gui\settingsDialogs.py:491
 msgid "Report mouse &shape changes"
 msgstr "Ilmoita &hiirikohdistimen muutokset"
 
-#: gui\settingsDialogs.py:512
+#: gui\settingsDialogs.py:494
 msgid "Enable mouse &tracking"
 msgstr "Käytä &hiiren seurantaa"
 
-#: gui\settingsDialogs.py:516
+#: gui\settingsDialogs.py:498
 msgid "Text &unit resolution:"
 msgstr "Teksti&yksikön tarkkuus:"
 
-#: gui\settingsDialogs.py:520
+#: gui\settingsDialogs.py:502
 msgid "text reporting unit"
 msgstr "tekstinlukuyksikkö"
 
-#: gui\settingsDialogs.py:528
+#: gui\settingsDialogs.py:510
 msgid "Report &role when mouse enters object"
 msgstr "Ilmoita hiiren alla olevan objektin &rooli"
 
-#: gui\settingsDialogs.py:531
+#: gui\settingsDialogs.py:513
 msgid "play audio coordinates when mouse moves"
 msgstr "Ilmoita hiiren &koordinaatit äänimerkeillä"
 
-#: gui\settingsDialogs.py:534
+#: gui\settingsDialogs.py:516
 msgid "brightness controls audio coordinates volume"
 msgstr "Äänikoordinaattien &voimakkuutta säädetään kirkkauden mukaan"
 
-#: gui\settingsDialogs.py:552
+#: gui\settingsDialogs.py:534
 msgid "Review cursor settings"
 msgstr "Tarkastelukohdistimen asetukset"
 
-#: gui\settingsDialogs.py:555
+#: gui\settingsDialogs.py:537
 msgid "Follow &keyboard focus"
 msgstr "Seu&raa näppäimistökohdistusta"
 
-#: gui\settingsDialogs.py:558
+#: gui\settingsDialogs.py:540
 msgid "Follow System &Caret"
 msgstr "Seuraa järjestelmä&kohdistinta"
 
-#: gui\settingsDialogs.py:561
+#: gui\settingsDialogs.py:543
 msgid "Follow &mouse cursor"
 msgstr "Seuraa &hiirikohdistinta"
 
-#: gui\settingsDialogs.py:564
+#: gui\settingsDialogs.py:546
 msgid "Simple review mode"
 msgstr "Helppo objektinavigointi"
 
-#: gui\settingsDialogs.py:579
+#: gui\settingsDialogs.py:561
 msgid "Object presentation"
 msgstr "Objektien lukeminen"
 
-#: gui\settingsDialogs.py:582
+#: gui\settingsDialogs.py:564
 msgid "Speak"
 msgstr "Lue"
 
-#: gui\settingsDialogs.py:583
+#: gui\settingsDialogs.py:565
 msgid "Beep"
 msgstr "Anna äänimerkki"
 
-#: gui\settingsDialogs.py:584
+#: gui\settingsDialogs.py:566
 msgid "Speak and beep"
 msgstr "Lue ja anna äänimerkki"
 
-#: gui\settingsDialogs.py:588
+#: gui\settingsDialogs.py:570
 msgid "Report &tooltips"
 msgstr "Lue &työkaluvihjeet"
 
-#: gui\settingsDialogs.py:591
+#: gui\settingsDialogs.py:573
 msgid "Report &help balloons"
 msgstr "Lue &kuplailmoitukset"
 
-#: gui\settingsDialogs.py:594
+#: gui\settingsDialogs.py:576
 msgid "Report object shortcut &keys"
 msgstr "Lue objektien &pikanäppäimet"
 
-#: gui\settingsDialogs.py:597
+#: gui\settingsDialogs.py:579
 msgid "Report object &position information"
 msgstr "Lue objektien sij&aintitiedot"
 
-#: gui\settingsDialogs.py:600
+#: gui\settingsDialogs.py:582
 msgid "Report object &descriptions"
 msgstr "Lue objektien k&uvaukset"
 
-#: gui\settingsDialogs.py:604
+#: gui\settingsDialogs.py:586
 msgid "Progress &bar output:"
 msgstr "E&distymispalkkien päivitykset:"
 
-#: gui\settingsDialogs.py:607
+#: gui\settingsDialogs.py:589
 msgid "Progress bar output"
 msgstr "Edistymispalkkien päivitykset"
 
-#: gui\settingsDialogs.py:616
+#: gui\settingsDialogs.py:598
 msgid "Report background progress bars"
 msgstr "Ilmoita taustalla olevien edistymispalkkien päivitykset"
 
-#: gui\settingsDialogs.py:634
+#: gui\settingsDialogs.py:616
 msgid "virtual buffers"
 msgstr "Näennäispuskurit"
 
-#: gui\settingsDialogs.py:637
+#: gui\settingsDialogs.py:619
 msgid "&Maximum number of characters on one line"
 msgstr "Merkk&ien enimmäismäärä rivillä:"
 
-#: gui\settingsDialogs.py:642
+#: gui\settingsDialogs.py:624
 msgid "&Number of lines per page"
 msgstr "R&ivien enimmäismäärä sivulla:"
 
-#: gui\settingsDialogs.py:647
+#: gui\settingsDialogs.py:629
 msgid "Use &screen layout (when supported)"
 msgstr "Käytä &ruutuasettelua"
 
-#: gui\settingsDialogs.py:650
+#: gui\settingsDialogs.py:632
 msgid "Report l&ayout tables"
 msgstr "Ilmoita s&ijoittelutaulukot"
 
-#: gui\settingsDialogs.py:654
+#: gui\settingsDialogs.py:636
 msgid "Automatic focus mode for focus changes"
 msgstr "Automaattinen kohdistustila kohdistusmuutoksille"
 
-#: gui\settingsDialogs.py:657
+#: gui\settingsDialogs.py:639
 msgid "Automatic focus mode for caret movement"
 msgstr "Automaattinen kohdistustila kohdistimen liikuttamiseen"
 
-#: gui\settingsDialogs.py:660
+#: gui\settingsDialogs.py:642
 msgid "Audio indication of focus and browse modes"
 msgstr "Ilmaise kohdistus- ja selaustilat äänimerkeillä"
 
-#: gui\settingsDialogs.py:688
+#: gui\settingsDialogs.py:670
 msgid "Document formatting"
 msgstr "Asiakirjojen muotoilu"
 
-#: gui\settingsDialogs.py:691
+#: gui\settingsDialogs.py:673
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Ilmoita kohdistimen jälkeiset muotoilumuutokset (voi aiheuttaa hidastumista)"
 
-#: gui\settingsDialogs.py:694
+#: gui\settingsDialogs.py:676
 msgid "Report font &name"
 msgstr "Ilmoita &fontti"
 
-#: gui\settingsDialogs.py:697
+#: gui\settingsDialogs.py:679
 msgid "Report font &size"
 msgstr "Ilmoita fo&nttikoko"
 
-#: gui\settingsDialogs.py:700
+#: gui\settingsDialogs.py:682
 msgid "Report font attri&butes"
 msgstr "Ilmoita fontin mää&ritteet"
 
-#: gui\settingsDialogs.py:703
+#: gui\settingsDialogs.py:685
 msgid "Report &alignment"
 msgstr "Ilmoita t&asaus"
 
-#: gui\settingsDialogs.py:706
+#: gui\settingsDialogs.py:688
 msgid "Report &colors"
 msgstr "Ilmoita &värit"
 
-#: gui\settingsDialogs.py:709
+#: gui\settingsDialogs.py:691
 msgid "Report st&yle"
 msgstr "Ilmoita tyylim&ääreet"
 
-#: gui\settingsDialogs.py:712
+#: gui\settingsDialogs.py:694
 msgid "Report spelling errors"
 msgstr "Ilmoita kirjoitusv&irheet"
 
-#: gui\settingsDialogs.py:715
+#: gui\settingsDialogs.py:697
 msgid "Report &pages"
 msgstr "Ilmoita sivunume&rot"
 
-#: gui\settingsDialogs.py:718
+#: gui\settingsDialogs.py:700
 msgid "Report &line numbers"
 msgstr "Ilmoita rivi&numerot"
 
-#: gui\settingsDialogs.py:721
+#: gui\settingsDialogs.py:703
 msgid "Report &tables"
 msgstr "Ilmoita t&aulukot"
 
-#: gui\settingsDialogs.py:724
+#: gui\settingsDialogs.py:706
 msgid "Report table row/column h&eaders"
 msgstr "Lue taulukoiden rivien ja sarakkeiden ot&sikot"
 
-#: gui\settingsDialogs.py:727
+#: gui\settingsDialogs.py:709
 msgid "Report &links"
 msgstr "Ilmoita &linkit"
 
-#: gui\settingsDialogs.py:730
+#: gui\settingsDialogs.py:712
 msgid "Report &headings"
 msgstr "Ilmoita ot&sikot"
 
-#: gui\settingsDialogs.py:733
+#: gui\settingsDialogs.py:715
 msgid "Report l&ists"
 msgstr "Ilmoita l&uettelot"
 
-#: gui\settingsDialogs.py:736
+#: gui\settingsDialogs.py:718
 msgid "Report block &quotes"
 msgstr "Ilmoita kappaleen&vaihdolliset sisennykset"
 
-#: gui\settingsDialogs.py:739
+#: gui\settingsDialogs.py:721
 msgid "Report lan&dmarks"
 msgstr "Ilmoita maa&merkit"
 
-#: gui\settingsDialogs.py:768
+#: gui\settingsDialogs.py:750
 msgid "Edit dictionary entry"
 msgstr "Muokkaa sanastomerkintää"
 
-#: gui\settingsDialogs.py:772
+#: gui\settingsDialogs.py:754
 msgid "&Pattern"
 msgstr "&Korvattava"
 
-#: gui\settingsDialogs.py:775
+#: gui\settingsDialogs.py:757
 msgid "&Replacement"
 msgstr "K&orvaava"
 
-#: gui\settingsDialogs.py:778
+#: gui\settingsDialogs.py:760
 msgid "&Comment"
 msgstr "&Kommentti"
 
-#: gui\settingsDialogs.py:781
+#: gui\settingsDialogs.py:763
 msgid "Case &sensitive"
 msgstr "Sama &kirjainkoko"
 
-#: gui\settingsDialogs.py:783
+#: gui\settingsDialogs.py:765
 msgid "Regular &expression"
 msgstr "Säännöllinen l&auseke"
 
-#: gui\settingsDialogs.py:805
+#: gui\settingsDialogs.py:787
 msgid "&Dictionary entries"
 msgstr "&Sanastomerkinnät"
 
-#: gui\settingsDialogs.py:808
+#: gui\settingsDialogs.py:790
 msgid "Comment"
 msgstr "Kommentti"
 
-#: gui\settingsDialogs.py:809
+#: gui\settingsDialogs.py:791
 msgid "Pattern"
 msgstr "Korvattava"
 
-#: gui\settingsDialogs.py:810
+#: gui\settingsDialogs.py:792
 msgid "Replacement"
 msgstr "Korvaava"
 
-#: gui\settingsDialogs.py:811
+#: gui\settingsDialogs.py:793
 msgid "case sensitive"
 msgstr "Sama kirjainkoko"
 
-#: gui\settingsDialogs.py:812
+#: gui\settingsDialogs.py:794
 msgid "Regular expression"
 msgstr "Säännöllinen lauseke"
 
-#: gui\settingsDialogs.py:820
+#: gui\settingsDialogs.py:802
 msgid "&Add"
 msgstr "&Lisää"
 
-#: gui\settingsDialogs.py:823
+#: gui\settingsDialogs.py:805
 msgid "&edit"
 msgstr "&Muokkaa"
 
-#: gui\settingsDialogs.py:826
+#: gui\settingsDialogs.py:808
 msgid "&Remove"
 msgstr "&Poista"
 
-#: gui\settingsDialogs.py:848
+#: gui\settingsDialogs.py:830
 msgid "Add Dictionary Entry"
 msgstr "Lisää sanastomerkintä"
 
-#: gui\settingsDialogs.py:893
+#: gui\settingsDialogs.py:875
 msgid "Braille Settings"
 msgstr "Pistenäytön asetukset"
 
-#: gui\settingsDialogs.py:897
+#: gui\settingsDialogs.py:879
 msgid "Braille &display:"
 msgstr "Piste&näyttö:"
 
-#: gui\settingsDialogs.py:911
+#: gui\settingsDialogs.py:893
 msgid "Translation &table:"
 msgstr "Piste&taulukko:"
 
-#: gui\settingsDialogs.py:923
+#: gui\settingsDialogs.py:905
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Laajenna kohdistimen kohdalla oleva sana"
 
-#: gui\settingsDialogs.py:928
+#: gui\settingsDialogs.py:910
 msgid "Cursor blink rate (ms)"
 msgstr "&Kohdistimen vilkkumisnopeus (ms):"
 
-#: gui\settingsDialogs.py:936
+#: gui\settingsDialogs.py:918
 msgid "Message timeout (sec)"
 msgstr "&Ilmoitusten aikakatkaisu (sek):"
 
-#: gui\settingsDialogs.py:944
+#: gui\settingsDialogs.py:926
 msgid "Braille tethered to:"
 msgstr "Pistenäyttö seuraa:"
 
-#: gui\settingsDialogs.py:963
+#: gui\settingsDialogs.py:945
 msgid "Braille Display Error"
 msgstr "Pistenäyttövirhe"
 
-#: gui\settingsDialogs.py:963
+#: gui\settingsDialogs.py:945
 msgid "Could not load the %s display."
 msgstr "Pistenäyttöä %s ei voitu ladata."
 
@@ -3624,63 +3650,63 @@ msgstr ""
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html,\n"
 "tai katso tämän ohjelmiston mukana toimitettua Copying.txt-tiedostoa."
 
-#: virtualBuffers\__init__.py:198
+#: virtualBuffers\__init__.py:202
 msgid "%s landmark"
 msgstr "maamerkki %s"
 
-#: virtualBuffers\__init__.py:216
+#: virtualBuffers\__init__.py:220
 msgid "Lin&ks"
 msgstr "Lin&kit"
 
-#: virtualBuffers\__init__.py:217
+#: virtualBuffers\__init__.py:221
 msgid "&Headings"
 msgstr "&Otsikot"
 
-#: virtualBuffers\__init__.py:218
+#: virtualBuffers\__init__.py:222
 msgid "Lan&dmarks"
 msgstr "Maa&merkit"
 
-#: virtualBuffers\__init__.py:224
+#: virtualBuffers\__init__.py:228
 msgid "Elements List"
 msgstr "Elementtiluettelo"
 
-#: virtualBuffers\__init__.py:227
+#: virtualBuffers\__init__.py:231
 msgid "Type:"
 msgstr "Tyyppi:"
 
-#: virtualBuffers\__init__.py:238
+#: virtualBuffers\__init__.py:242
 msgid "&Filter by:"
 msgstr "&Suodata:"
 
-#: virtualBuffers\__init__.py:246
+#: virtualBuffers\__init__.py:250
 msgid "&Activate"
 msgstr "&Avaa"
 
-#: virtualBuffers\__init__.py:249
+#: virtualBuffers\__init__.py:253
 msgid "&Move to"
 msgstr "&Siirry"
 
-#: virtualBuffers\__init__.py:535
+#: virtualBuffers\__init__.py:539
 msgid "Refreshed"
 msgstr "Päivitetty"
 
-#: virtualBuffers\__init__.py:540
+#: virtualBuffers\__init__.py:544
 msgid "Loading document..."
 msgstr "Ladataan sivua..."
 
-#: virtualBuffers\__init__.py:680
+#: virtualBuffers\__init__.py:684
 msgid "activates the current object in the virtual buffer"
 msgstr "Aktivoi kohdalla olevan objektin näennäispuskurissa"
 
-#: virtualBuffers\__init__.py:692
+#: virtualBuffers\__init__.py:696
 msgid "Refreshes the virtual buffer content"
 msgstr "Päivittää näennäispuskurin sisällön"
 
-#: virtualBuffers\__init__.py:697
+#: virtualBuffers\__init__.py:701
 msgid "use screen layout %s"
 msgstr "ruutuasettelu %s"
 
-#: virtualBuffers\__init__.py:698
+#: virtualBuffers\__init__.py:702
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "virtual buffer content"
@@ -3688,454 +3714,450 @@ msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä asetuksen, joka määrittää, "
 "säilytetäänkö näytön ulkoasu näennäispuskurin sisältöä ladattaessa"
 
-#: virtualBuffers\__init__.py:785
+#: virtualBuffers\__init__.py:789
 msgid "Presents a list of links, headings or landmarks"
 msgstr "Näyttää luettelon linkeistä, otsikoista ja maamerkeistä"
 
-#: virtualBuffers\__init__.py:1126
+#: virtualBuffers\__init__.py:1130
 msgid "Not in a table cell"
 msgstr "Ei taulukon solussa"
 
-#: virtualBuffers\__init__.py:1132
-msgid "edge of table"
-msgstr "taulukon reuna"
-
-#: virtualBuffers\__init__.py:1142
+#: virtualBuffers\__init__.py:1146
 msgid "moves to the next table row"
 msgstr "siirtää seuraavan taulukon rivin kohdalle"
 
-#: virtualBuffers\__init__.py:1146
+#: virtualBuffers\__init__.py:1150
 msgid "moves to the previous table row"
 msgstr "siirtää edellisen taulukon rivin kohdalle"
 
-#: virtualBuffers\__init__.py:1150
+#: virtualBuffers\__init__.py:1154
 msgid "moves to the next table column"
 msgstr "siirtää seuraavan taulukon sarakkeen kohdalle"
 
-#: virtualBuffers\__init__.py:1154
+#: virtualBuffers\__init__.py:1158
 msgid "moves to the previous table column"
 msgstr "siirtää edellisen taulukon sarakkeen kohdalle"
 
-#: virtualBuffers\__init__.py:1214
+#: virtualBuffers\__init__.py:1218
 msgid "moves to the next heading"
 msgstr "siirtää seuraavan otsikon kohdalle"
 
-#: virtualBuffers\__init__.py:1214
+#: virtualBuffers\__init__.py:1218
 msgid "no next heading"
 msgstr "ei enempää otsikoita"
 
-#: virtualBuffers\__init__.py:1215
+#: virtualBuffers\__init__.py:1219
 msgid "moves to the previous heading"
 msgstr "siirtää edellisen otsikon kohdalle"
 
-#: virtualBuffers\__init__.py:1215
+#: virtualBuffers\__init__.py:1219
 msgid "no previous heading"
 msgstr "ei edellisiä otsikoita"
 
-#: virtualBuffers\__init__.py:1216
+#: virtualBuffers\__init__.py:1220
 msgid "moves to the next heading at level 1"
 msgstr "siirtää seuraavan otsikon kohdalle tasolla 1"
 
-#: virtualBuffers\__init__.py:1216
+#: virtualBuffers\__init__.py:1220
 msgid "no next heading at level 1"
 msgstr "ei enempää otsikoita tasolla 1"
 
-#: virtualBuffers\__init__.py:1217
+#: virtualBuffers\__init__.py:1221
 msgid "moves to the previous heading at level 1"
 msgstr "siirtää edellisen otsikon kohdalle tasolla 1"
 
-#: virtualBuffers\__init__.py:1217
+#: virtualBuffers\__init__.py:1221
 msgid "no previous heading at level 1"
 msgstr "ei edellisiä otsikoita tasolla 1"
 
-#: virtualBuffers\__init__.py:1218
+#: virtualBuffers\__init__.py:1222
 msgid "moves to the next heading at level 2"
 msgstr "siirtää seuraavan otsikon kohdalle tasolla 2"
 
-#: virtualBuffers\__init__.py:1218
+#: virtualBuffers\__init__.py:1222
 msgid "no next heading at level 2"
 msgstr "ei enempää otsikoita tasolla 2"
 
-#: virtualBuffers\__init__.py:1219
+#: virtualBuffers\__init__.py:1223
 msgid "moves to the previous heading at level 2"
 msgstr "siirtää edellisen otsikon kohdalle tasolla 2"
 
-#: virtualBuffers\__init__.py:1219
+#: virtualBuffers\__init__.py:1223
 msgid "no previous heading at level 2"
 msgstr "ei edellisiä otsikoita tasolla 2"
 
-#: virtualBuffers\__init__.py:1220
+#: virtualBuffers\__init__.py:1224
 msgid "moves to the next heading at level 3"
 msgstr "siirtää seuraavan otsikon kohdalle tasolla 3"
 
-#: virtualBuffers\__init__.py:1220
+#: virtualBuffers\__init__.py:1224
 msgid "no next heading at level 3"
 msgstr "ei enempää otsikoita tasolla 3"
 
-#: virtualBuffers\__init__.py:1221
+#: virtualBuffers\__init__.py:1225
 msgid "moves to the previous heading at level 3"
 msgstr "siirtää edellisen otsikon kohdalle tasolla 3"
 
-#: virtualBuffers\__init__.py:1221
+#: virtualBuffers\__init__.py:1225
 msgid "no previous heading at level 3"
 msgstr "ei edellisiä otsikoita tasolla 3"
 
-#: virtualBuffers\__init__.py:1222
+#: virtualBuffers\__init__.py:1226
 msgid "moves to the next heading at level 4"
 msgstr "siirtää seuraavan otsikon kohdalle tasolla 4"
 
-#: virtualBuffers\__init__.py:1222
+#: virtualBuffers\__init__.py:1226
 msgid "no next heading at level 4"
 msgstr "ei enempää otsikoita tasolla 4"
 
-#: virtualBuffers\__init__.py:1223
+#: virtualBuffers\__init__.py:1227
 msgid "moves to the previous heading at level 4"
 msgstr "siirtää edellisen otsikon kohdalle tasolla 4"
 
-#: virtualBuffers\__init__.py:1223
+#: virtualBuffers\__init__.py:1227
 msgid "no previous heading at level 4"
 msgstr "ei edellisiä otsikoita tasolla 4"
 
-#: virtualBuffers\__init__.py:1224
+#: virtualBuffers\__init__.py:1228
 msgid "moves to the next heading at level 5"
 msgstr "siirtää seuraavan otsikon kohdalle tasolla 5"
 
-#: virtualBuffers\__init__.py:1224
+#: virtualBuffers\__init__.py:1228
 msgid "no next heading at level 5"
 msgstr "ei enempää otsikoita tasolla 5"
 
-#: virtualBuffers\__init__.py:1225
+#: virtualBuffers\__init__.py:1229
 msgid "moves to the previous heading at level 5"
 msgstr "siirtää edellisen otsikon kohdalle tasolla 5"
 
-#: virtualBuffers\__init__.py:1225
+#: virtualBuffers\__init__.py:1229
 msgid "no previous heading at level 5"
 msgstr "ei edellisiä otsikoita tasolla 5"
 
-#: virtualBuffers\__init__.py:1226
+#: virtualBuffers\__init__.py:1230
 msgid "moves to the next heading at level 6"
 msgstr "siirtää seuraavan otsikon kohdalle tasolla 6"
 
-#: virtualBuffers\__init__.py:1226
+#: virtualBuffers\__init__.py:1230
 msgid "no next heading at level 6"
 msgstr "ei enempää otsikoita tasolla 6"
 
-#: virtualBuffers\__init__.py:1227
+#: virtualBuffers\__init__.py:1231
 msgid "moves to the previous heading at level 6"
 msgstr "siirtää edellisen otsikon kohdalle tasolla 6"
 
-#: virtualBuffers\__init__.py:1227
+#: virtualBuffers\__init__.py:1231
 msgid "no previous heading at level 6"
 msgstr "ei edellisiä otsikoita tasolla 6"
 
-#: virtualBuffers\__init__.py:1228
+#: virtualBuffers\__init__.py:1232
 msgid "moves to the next table"
 msgstr "siirtää seuraavan taulukon kohdalle"
 
-#: virtualBuffers\__init__.py:1228
+#: virtualBuffers\__init__.py:1232
 msgid "no next table"
 msgstr "ei enempää taulukoita"
 
-#: virtualBuffers\__init__.py:1229
+#: virtualBuffers\__init__.py:1233
 msgid "moves to the previous table"
 msgstr "siirtää edellisen taulukon kohdalle"
 
-#: virtualBuffers\__init__.py:1229
+#: virtualBuffers\__init__.py:1233
 msgid "no previous table"
 msgstr "ei edellisiä taulukoita"
 
-#: virtualBuffers\__init__.py:1230
+#: virtualBuffers\__init__.py:1234
 msgid "moves to the next link"
 msgstr "siirtää seuraavan linkin kohdalle"
 
-#: virtualBuffers\__init__.py:1230
+#: virtualBuffers\__init__.py:1234
 msgid "no next link"
 msgstr "ei enempää linkkejä"
 
-#: virtualBuffers\__init__.py:1231
+#: virtualBuffers\__init__.py:1235
 msgid "moves to the previous link"
 msgstr "siirtää edellisen linkin kohdalle"
 
-#: virtualBuffers\__init__.py:1231
+#: virtualBuffers\__init__.py:1235
 msgid "no previous link"
 msgstr "ei edellisiä linkkejä"
 
-#: virtualBuffers\__init__.py:1232
+#: virtualBuffers\__init__.py:1236
 msgid "moves to the next visited link"
 msgstr "siirtää seuraavan avatun linkin kohdalle"
 
-#: virtualBuffers\__init__.py:1232
+#: virtualBuffers\__init__.py:1236
 msgid "no next visited link"
 msgstr "ei enempää avattuja linkkejä"
 
-#: virtualBuffers\__init__.py:1233
+#: virtualBuffers\__init__.py:1237
 msgid "moves to the previous visited link"
 msgstr "siirtää edellisen avatun linkin kohdalle"
 
-#: virtualBuffers\__init__.py:1233
+#: virtualBuffers\__init__.py:1237
 msgid "no previous visited link"
 msgstr "ei edellisiä avattuja linkkejä"
 
-#: virtualBuffers\__init__.py:1234
+#: virtualBuffers\__init__.py:1238
 msgid "moves to the next unvisited link"
 msgstr "siirtää seuraavan avaamattoman linkin kohdalle"
 
-#: virtualBuffers\__init__.py:1234
+#: virtualBuffers\__init__.py:1238
 msgid "no next unvisited link"
 msgstr "ei enempää avaamattomia linkkejä"
 
-#: virtualBuffers\__init__.py:1235
+#: virtualBuffers\__init__.py:1239
 msgid "moves to the previous unvisited link"
 msgstr "siirtää edellisen avaamattoman linkin kohdalle"
 
-#: virtualBuffers\__init__.py:1235
+#: virtualBuffers\__init__.py:1239
 msgid "no previous unvisited link"
 msgstr "ei edellisiä avaamattomia linkkejä"
 
-#: virtualBuffers\__init__.py:1236
+#: virtualBuffers\__init__.py:1240
 msgid "moves to the next form field"
 msgstr "siirtää seuraavan lomakekentän kohdalle"
 
-#: virtualBuffers\__init__.py:1236
+#: virtualBuffers\__init__.py:1240
 msgid "no next form field"
 msgstr "ei enempää lomakekenttiä"
 
-#: virtualBuffers\__init__.py:1237
+#: virtualBuffers\__init__.py:1241
 msgid "moves to the previous form field"
 msgstr "siirtää edellisen lomakekentän kohdalle"
 
-#: virtualBuffers\__init__.py:1237
+#: virtualBuffers\__init__.py:1241
 msgid "no previous form field"
 msgstr "ei edellisiä lomakekenttiä"
 
-#: virtualBuffers\__init__.py:1238
+#: virtualBuffers\__init__.py:1242
 msgid "moves to the next list"
 msgstr "siirtää seuraavaan luetteloon"
 
-#: virtualBuffers\__init__.py:1238
+#: virtualBuffers\__init__.py:1242
 msgid "no next list"
 msgstr "ei enempää luetteloita"
 
-#: virtualBuffers\__init__.py:1239
+#: virtualBuffers\__init__.py:1243
 msgid "moves to the previous list"
 msgstr "siirtää edelliseen luetteloon"
 
-#: virtualBuffers\__init__.py:1239
+#: virtualBuffers\__init__.py:1243
 msgid "no previous list"
 msgstr "ei edellisiä luetteloita"
 
-#: virtualBuffers\__init__.py:1240
+#: virtualBuffers\__init__.py:1244
 msgid "moves to the next list item"
 msgstr "siirtää seuraavaan luettelon kohtaan"
 
-#: virtualBuffers\__init__.py:1240
+#: virtualBuffers\__init__.py:1244
 msgid "no next list item"
 msgstr "ei enempää luettelon kohtia"
 
-#: virtualBuffers\__init__.py:1241
+#: virtualBuffers\__init__.py:1245
 msgid "moves to the previous list item"
 msgstr "siirtää edelliseen luettelon kohtaan"
 
-#: virtualBuffers\__init__.py:1241
+#: virtualBuffers\__init__.py:1245
 msgid "no previous list item"
 msgstr "ei edellisiä luettelon kohtia"
 
-#: virtualBuffers\__init__.py:1242
+#: virtualBuffers\__init__.py:1246
 msgid "moves to the next button"
 msgstr "siirtää seuraavan painikkeen kohdalle"
 
-#: virtualBuffers\__init__.py:1242
+#: virtualBuffers\__init__.py:1246
 msgid "no next button"
 msgstr "ei enempää painikkeita"
 
-#: virtualBuffers\__init__.py:1243
+#: virtualBuffers\__init__.py:1247
 msgid "moves to the previous button"
 msgstr "siirtää edellisen painikkeen kohdalle"
 
-#: virtualBuffers\__init__.py:1243
+#: virtualBuffers\__init__.py:1247
 msgid "no previous button"
 msgstr "ei edellisiä painikkeita"
 
-#: virtualBuffers\__init__.py:1244
+#: virtualBuffers\__init__.py:1248
 msgid "moves to the next edit field"
 msgstr "siirtää seuraavan muokkauskentän kohdalle"
 
-#: virtualBuffers\__init__.py:1244
+#: virtualBuffers\__init__.py:1248
 msgid "no next edit field"
 msgstr "ei enempää muokkauskenttiä"
 
-#: virtualBuffers\__init__.py:1245
+#: virtualBuffers\__init__.py:1249
 msgid "moves to the previous edit field"
 msgstr "siirtää edellisen muokkauskentän kohdalle"
 
-#: virtualBuffers\__init__.py:1245
+#: virtualBuffers\__init__.py:1249
 msgid "no previous edit field"
 msgstr "ei edellisiä muokkauskenttiä"
 
-#: virtualBuffers\__init__.py:1246
+#: virtualBuffers\__init__.py:1250
 msgid "moves to the next frame"
 msgstr "siirtää seuraavan kehyksen kohdalle"
 
-#: virtualBuffers\__init__.py:1246
+#: virtualBuffers\__init__.py:1250
 msgid "no next frame"
 msgstr "ei enempää kehyksiä"
 
-#: virtualBuffers\__init__.py:1247
+#: virtualBuffers\__init__.py:1251
 msgid "moves to the previous frame"
 msgstr "siirtää edellisen kehyksen kohdalle"
 
-#: virtualBuffers\__init__.py:1247
+#: virtualBuffers\__init__.py:1251
 msgid "no previous frame"
 msgstr "ei edellisiä kehyksiä"
 
-#: virtualBuffers\__init__.py:1248
+#: virtualBuffers\__init__.py:1252
 msgid "moves to the next separator"
 msgstr "siirtää seuraavan erottimen kohdalle"
 
-#: virtualBuffers\__init__.py:1248
+#: virtualBuffers\__init__.py:1252
 msgid "no next separator"
 msgstr "ei enempää erottimia"
 
-#: virtualBuffers\__init__.py:1249
+#: virtualBuffers\__init__.py:1253
 msgid "moves to the previous separator"
 msgstr "siirtää edellisen erottimen kohdalle"
 
-#: virtualBuffers\__init__.py:1249
+#: virtualBuffers\__init__.py:1253
 msgid "no previous separator"
 msgstr "ei edellisiä erottimia"
 
-#: virtualBuffers\__init__.py:1250
+#: virtualBuffers\__init__.py:1254
 msgid "moves to the next radio button"
 msgstr "siirtää seuraavan valintapainikkeen kohdalle"
 
-#: virtualBuffers\__init__.py:1250
+#: virtualBuffers\__init__.py:1254
 msgid "no next radio button"
 msgstr "ei enempää valintapainikkeita"
 
-#: virtualBuffers\__init__.py:1251
+#: virtualBuffers\__init__.py:1255
 msgid "moves to the previous radio button"
 msgstr "siirtää edellisen valintapainikkeen kohdalle"
 
-#: virtualBuffers\__init__.py:1251
+#: virtualBuffers\__init__.py:1255
 msgid "no previous radio button"
 msgstr "ei edellisiä valintapainikkeita"
 
-#: virtualBuffers\__init__.py:1252
+#: virtualBuffers\__init__.py:1256
 msgid "moves to the next combo box"
 msgstr "siirtää seuraavan yhdistelmäruudun kohdalle"
 
-#: virtualBuffers\__init__.py:1252
+#: virtualBuffers\__init__.py:1256
 msgid "no next combo box"
 msgstr "ei enempää yhdistelmäruutuja"
 
-#: virtualBuffers\__init__.py:1253
+#: virtualBuffers\__init__.py:1257
 msgid "moves to the previous combo box"
 msgstr "siirtää edellisen yhdistelmäruudun kohdalle"
 
-#: virtualBuffers\__init__.py:1253
+#: virtualBuffers\__init__.py:1257
 msgid "no previous combo box"
 msgstr "ei edellisiä yhdistelmäruutuja"
 
-#: virtualBuffers\__init__.py:1254
+#: virtualBuffers\__init__.py:1258
 msgid "moves to the next check box"
 msgstr "siirtää seuraavan valintaruudun kohdalle"
 
-#: virtualBuffers\__init__.py:1254
+#: virtualBuffers\__init__.py:1258
 msgid "no next check box"
 msgstr "ei enempää valintaruutuja"
 
-#: virtualBuffers\__init__.py:1255
+#: virtualBuffers\__init__.py:1259
 msgid "moves to the previous check box"
 msgstr "siirtää edellisen valintaruudun kohdalle"
 
-#: virtualBuffers\__init__.py:1255
+#: virtualBuffers\__init__.py:1259
 msgid "no previous check box"
 msgstr "ei edellisiä valintaruutuja"
 
-#: virtualBuffers\__init__.py:1256
+#: virtualBuffers\__init__.py:1260
 msgid "moves to the next graphic"
 msgstr "siirtää seuraavan kuvan kohdalle"
 
-#: virtualBuffers\__init__.py:1256
+#: virtualBuffers\__init__.py:1260
 msgid "no next graphic"
 msgstr "ei enempää kuvia"
 
-#: virtualBuffers\__init__.py:1257
+#: virtualBuffers\__init__.py:1261
 msgid "moves to the previous graphic"
 msgstr "siirtää edellisen kuvan kohdalle"
 
-#: virtualBuffers\__init__.py:1257
+#: virtualBuffers\__init__.py:1261
 msgid "no previous graphic"
 msgstr "ei edellisiä kuvia"
 
-#: virtualBuffers\__init__.py:1258
+#: virtualBuffers\__init__.py:1262
 msgid "moves to the next block quote"
 msgstr "siirtää seuraavan kappaleenvaihdollisen sisennyksen kohdalle"
 
-#: virtualBuffers\__init__.py:1258
+#: virtualBuffers\__init__.py:1262
 msgid "no next block quote"
 msgstr "ei enempää kappaleenvaihdollisia sisennyksiä"
 
-#: virtualBuffers\__init__.py:1259
+#: virtualBuffers\__init__.py:1263
 msgid "moves to the previous block quote"
 msgstr "siirtää edellisen kappaleenvaihdollisen sisennyksen kohdalle"
 
-#: virtualBuffers\__init__.py:1259
+#: virtualBuffers\__init__.py:1263
 msgid "no previous block quote"
 msgstr "ei edellisiä kappaleenvaihdollisia sisennyksiä"
 
-#: virtualBuffers\__init__.py:1260
+#: virtualBuffers\__init__.py:1264
 msgid "no more text after a block of links"
 msgstr "ei linkkilohkon jälkeistä tekstiä"
 
-#: virtualBuffers\__init__.py:1260
+#: virtualBuffers\__init__.py:1264
 msgid "skips forward past a block of links"
 msgstr "Siirtää eteenpäin linkkilohkon  jälkeiseen tekstiin"
 
-#: virtualBuffers\__init__.py:1261
+#: virtualBuffers\__init__.py:1265
 msgid "no more text before a block of links"
 msgstr "Ei enempää ennen linkkilohkoa olevaa tekstiä"
 
-#: virtualBuffers\__init__.py:1261
+#: virtualBuffers\__init__.py:1265
 msgid "skips backward past a block of links"
 msgstr "Siirtää taaksepäin ennen linkkilohkoa olevaan tekstiin"
 
-#: virtualBuffers\__init__.py:1262
+#: virtualBuffers\__init__.py:1266
 msgid "moves to the next landmark"
 msgstr "siirtää seuraavan maamerkin kohdalle"
 
-#: virtualBuffers\__init__.py:1262
+#: virtualBuffers\__init__.py:1266
 msgid "no next landmark"
 msgstr "ei enempää maamerkkejä"
 
-#: virtualBuffers\__init__.py:1263
+#: virtualBuffers\__init__.py:1267
 msgid "moves to the previous landmark"
 msgstr "siirtää edellisen maamerkin kohdalle"
 
-#: virtualBuffers\__init__.py:1263
+#: virtualBuffers\__init__.py:1267
 msgid "no previous landmark"
 msgstr "ei edellisiä maamerkkejä"
 
-#: virtualBuffers\__init__.py:1264
+#: virtualBuffers\__init__.py:1268
 msgid "moves to the next embedded object"
 msgstr "siirtää seuraavan sulautetun objektin kohdalle"
 
-#: virtualBuffers\__init__.py:1264
+#: virtualBuffers\__init__.py:1268
 msgid "no next embedded object"
 msgstr "ei enempää sulautettuja objekteja"
 
-#: virtualBuffers\__init__.py:1265
+#: virtualBuffers\__init__.py:1269
 msgid "moves to the previous embedded object"
 msgstr "siirtää edellisen sulautetun objektin kohdalle"
 
-#: virtualBuffers\__init__.py:1265
+#: virtualBuffers\__init__.py:1269
 msgid "no previous embedded object"
 msgstr "ei edellisiä sulautettuja objekteja"
 
-#: virtualBuffers\__init__.py:1278
+#: virtualBuffers\__init__.py:1282
 msgid "browse mode"
 msgstr "selaustila"
 
-#: virtualBuffers\__init__.py:1278
+#: virtualBuffers\__init__.py:1282
 msgid "focus mode"
 msgstr "kohdistustila"
