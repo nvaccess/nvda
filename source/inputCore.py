@@ -12,6 +12,7 @@ import api
 import speech
 import braille
 import config
+import watchdog
 from logHandler import log
 
 class NoInputGestureAction(LookupError):
@@ -100,6 +101,11 @@ class InputManager(baseObject.AutoPropertyObject):
 		@type gesture: L{InputGesture}
 		@raise NoInputGestureAction: If there is no action to perform.
 		"""
+		if watchdog.isAttemptingRecovery:
+			# The core is dead, so don't try to perform an action.
+			# This lets gestures pass through unhindered where possible,
+			# as well as stopping a flood of actions when the core revives.
+			raise NoInputGestureAction
 		if api.getFocusObject().appModule.selfVoicing:
 			raise NoInputGestureAction
 

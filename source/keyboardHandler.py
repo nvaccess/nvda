@@ -17,7 +17,6 @@ import queueHandler
 import config
 import api
 import winInputHook
-import watchdog
 import inputCore
 
 # Fake vk codes.
@@ -73,9 +72,6 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			passKeyThroughCount+=1
 			lastPassThroughKeyDown=(vkCode,extended)
 			return True
-		if watchdog.isAttemptingRecovery:
-			# The core is dead, so let keys pass through unhindered.
-			return True
 
 		gesture = KeyboardInputGesture(currentModifiers, vkCode, scanCode, extended)
 		if (vkCode, extended) == lastNVDAModifierKey:
@@ -116,9 +112,6 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 			passKeyThroughCount-=1
 			if passKeyThroughCount==0:
 				passKeyThroughCount=-1
-			return True
-		if watchdog.isAttemptingRecovery:
-			# The core is dead, so let keys pass through unhindered.
 			return True
 
 		if currentNVDAModifierKey and (vkCode,extended)==currentNVDAModifierKey:
