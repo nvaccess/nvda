@@ -29,8 +29,8 @@ trappedKeys=set()
 #: If -1, pass through is disabled.
 #: If 0 or higher then key downs and key ups will be passed straight through.
 passKeyThroughCount=-1
-#: The last key passed through by request of the user.
-lastPassThroughKeyDown=None
+#: The last key down passed through by request of the user.
+lastPassThroughKeyDown = None
 #: The current NVDA modifier key being pressed.
 currentNVDAModifierKey=None
 #: Whether another key has been pressed since the NVDA modifier key was pressed.
@@ -43,10 +43,9 @@ lastNVDAModifierKeyTime=None
 currentModifiers=set()
 
 def passNextKeyThrough():
-	global passKeyThroughCount, lastPassThroughKeyDown
+	global passKeyThroughCount
 	if passKeyThroughCount==-1:
 		passKeyThroughCount=0
-		lastPassThroughKeyDown=None
 
 def isNVDAModifierKey(vkCode,extended):
 	if config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"] and vkCode==winUser.VK_INSERT and not extended:
@@ -66,11 +65,14 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		#Injected keys should be ignored
 		if injected:
 			return True
-		# IF we're passing keys through, increment the pass key through count,
-		# but only if this isn't a repeat of the previous key down, as we don't receive key ups for repeated key downs.
-		if passKeyThroughCount>=0 and lastPassThroughKeyDown!=(vkCode,extended):
-			passKeyThroughCount+=1
-			lastPassThroughKeyDown=(vkCode,extended)
+
+		if passKeyThroughCount >= 0:
+			# We're passing keys through.
+			if lastPassThroughKeyDown != (vkCode, extended):
+				# Increment the pass key through count.
+				# We only do this if this isn't a repeat of the previous key down, as we don't receive key ups for repeated key downs.
+				passKeyThroughCount += 1
+				lastPassThroughKeyDown = (vkCode, extended)
 			return True
 
 		gesture = KeyboardInputGesture(currentModifiers, vkCode, scanCode, extended)
@@ -105,13 +107,17 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyUp.
 	"""
 	try:
-		global currentNVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, currentModifiers
+		global currentNVDAModifierKey, usedNVDAModifierKey, lastNVDAModifierKey, lastNVDAModifierKeyTime, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers
 		if injected:
 			return True
-		if passKeyThroughCount>=1:
-			passKeyThroughCount-=1
-			if passKeyThroughCount==0:
-				passKeyThroughCount=-1
+
+		if passKeyThroughCount >= 1:
+			if lastPassThroughKeyDown == (vkCode, extended):
+				# This key has been released.
+				lastPassThroughKeyDown = None
+			passKeyThroughCount -= 1
+			if passKeyThroughCount == 0:
+				passKeyThroughCount = -1
 			return True
 
 		if currentNVDAModifierKey and (vkCode,extended)==currentNVDAModifierKey:
