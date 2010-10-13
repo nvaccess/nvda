@@ -146,12 +146,9 @@ class InputManager(baseObject.AutoPropertyObject):
 			if scriptName == "toggleInputHelp":
 				runScript = True
 			else:
-				desc = scriptHandler.getScriptDescription(script)
+				desc = script.__doc__
 				if desc:
 					textList.append(desc)
-				location = scriptHandler.getScriptLocation(script)
-				if location:
-					textList.append(_("Location: %s") % location)
 
 		braille.handler.message("\t\t".join(textList))
 		for text in textList:

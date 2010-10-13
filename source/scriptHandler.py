@@ -56,12 +56,6 @@ def findScript_NVDAObjectLevel(gesture):
 def getScriptName(script):
 	return script.__name__[7:]
 
-def getScriptLocation(script):
-	return script.__module__
-
-def getScriptDescription(script):
-	return script.__doc__
-
 def _queueScriptCallback(script,gesture):
 	global _numScriptsQueued
 	_numScriptsQueued-=1
