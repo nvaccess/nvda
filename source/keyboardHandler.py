@@ -35,6 +35,8 @@ lastPassThroughKeyDown = None
 lastNVDAModifier = None
 #: When the last NVDA modifier key was released.
 lastNVDAModifierReleaseTime = None
+#: Indicates that the NVDA modifier's special functionality should be bypassed until a key is next released.
+bypassNVDAModifier = False
 #: The modifiers currently being pressed.
 currentModifiers = set()
 
@@ -57,7 +59,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyDown.
 	"""
 	try:
-		global lastNVDAModifier, lastNVDAModifierReleaseTime, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers
+		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers
 		#Injected keys should be ignored
 		if injected:
 			return True
@@ -72,9 +74,12 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			return True
 
 		gesture = KeyboardInputGesture(currentModifiers, vkCode, scanCode, extended)
-		if (vkCode, extended) == lastNVDAModifier and lastNVDAModifierReleaseTime and time.time() - lastNVDAModifierReleaseTime < 0.5:
+		if bypassNVDAModifier or ((vkCode, extended) == lastNVDAModifier and lastNVDAModifierReleaseTime and time.time() - lastNVDAModifierReleaseTime < 0.5):
 			# The user wants the key to serve its normal function instead of acting as an NVDA modifier key.
+			# There may be key repeats, so ensure we do this until they stop.
+			bypassNVDAModifier = True
 			gesture.isNVDAModifierKey = False
+		lastNVDAModifierReleaseTime = None
 		if gesture.isNVDAModifierKey:
 			lastNVDAModifier = (vkCode, extended)
 		else:
@@ -101,7 +106,7 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyUp.
 	"""
 	try:
-		global lastNVDAModifier, lastNVDAModifierReleaseTime, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers
+		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers
 		if injected:
 			return True
 
@@ -118,6 +123,8 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 			# The last pressed NVDA modifier key is being released and there were no key presses in between.
 			# The user may want to press it again quickly to pass it through.
 			lastNVDAModifierReleaseTime=time.time()
+		# If we were bypassing the NVDA modifier, stop doing so now, as there will be no more repeats.
+		bypassNVDAModifier = False
 
 		currentModifiers.discard((vkCode, extended))
 
