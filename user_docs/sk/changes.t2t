@@ -7,9 +7,16 @@
 
 == Nové vlastnosti ==
 - Pre niektoré objekty je možné oznamovať farbu. Automatické oznamovanie zmeny farby je možné z dialógu formátovanie dokumentu. Aktuálnu farbu je tiež možné získať použitím funkcie info o formátovaní (NVDA+f)
+- Vo virtuálnom prehliadači je možné vyberať po stranách (shift+pageup shift+pagedown) a odsekoch (shift+šípka hore a shift+šípka dolu). (#639)
 
 
 == Zmeny ==
+- Klávesová nápoveda bola premenovaná na nápovedu vstupu pretože poskytuje nápovedu aj pre ostatné vstupné zariadenia okrem klávesnica.
+- Umiestnenie skriptu nie je vo vstupnej nápovede oznamované, pretože to nie je dôležité pre používateľa.
+- Keď NVDA detekuje zamrznutie, naďalej odchytáva stlačenia klávesu NVDA pričom ostatné klávesy prepúšťa do systému. Zabráni to nechcenému prepínaniu klávesu capslock. (#939)
+- Ak po prepustení klávesov operačnému systému sú stlačené nejaké ďalšie klávesy, NVDA ich všetky bude prepúšťať.
+- Ak je kláves NVDA rýchlo stlačený 2 krát za sebou, následné opakovania stlačení budú tiež prepustené.
+- Vo vstupnej nápovede sú oznamované klávesy určené na ovládanie hlasitosti.
 
 
 == Opravy ==
@@ -18,6 +25,8 @@
 - V stromových zoznamoch programu AIM je správne oznamovaná informácia o pozícii.
 - Informácia o pozícii nie je viac čítaná v prípade, kde to nemá zmysel, ako napríklad v mnohých ponukách, na panely bežiacich úloh, v oznamovacej oblasti a pod.
 - V dialógu Nastavenia hlasu je možné použiť klávesy šípka hore a page up na zvíšenie a šípka dolu a page down na zníženie nastavenia v posuvníkoch. Doteraz to fungovalo presne opačne, čo bolo nelogické a nezhodovalo sa so správaním kruhu nastavení hlasového výstupu. (#221)
+- Ak je kláves NVDA stlačený 2 krát rýchlo za sebou a počas toho sú stlačené iné klávesy, NVDA kláves nebude opakovane prepúšťaný systému.
+- Interpunkčné znaky sú oznamované počas nápovedy vstupu aj ak je oznamovanie interpunkcie vypnuté. (#977)
 
 
 = 2010.2 =
