@@ -197,6 +197,18 @@ class CursorManager(baseObject.ScriptableObject):
 	def script_selectLine_back(self,gesture):
 		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=-1)
 
+	def script_selectPage_forward(self,gesture):
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=config.conf["virtualBuffers"]["linesPerPage"])
+
+	def script_selectPage_back(self,gesture):
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=-config.conf["virtualBuffers"]["linesPerPage"])
+
+	def script_selectParagraph_forward(self, gesture):
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_PARAGRAPH, direction=1)
+
+	def script_selectParagraph_back(self, gesture):
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_PARAGRAPH, direction=-1)
+
 	def script_selectToBeginningOfLine(self,gesture):
 		curInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		curInfo.collapse()
@@ -252,6 +264,10 @@ class CursorManager(baseObject.ScriptableObject):
 		"kb:shift+control+leftArrow": "selectWord_back",
 		"kb:shift+downArrow": "selectLine_forward",
 		"kb:shift+upArrow": "selectLine_back",
+		"kb:shift+pageDown": "selectPage_forward",
+		"kb:shift+pageUp": "selectPage_back",
+		"kb:shift+control+downArrow": "selectParagraph_forward",
+		"kb:shift+control+upArrow": "selectParagraph_back",
 		"kb:shift+end": "selectToEndOfLine",
 		"kb:shift+home": "selectToBeginningOfLine",
 		"kb:shift+control+end": "selectToBottomOfDocument",
