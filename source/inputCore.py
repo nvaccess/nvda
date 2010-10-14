@@ -178,4 +178,4 @@ def normalizeGestureIdentifier(identifier):
 	# but we need them to be in a determinate order so they will match other gesture identifiers.
 	# Rather than sorting, just use Python's set ordering.
 	main = "+".join(itertools.chain(frozenset(main[:-1]), main[-1:]))
-	return "{0}:{1}".format(prefix, main).lower()
+	return u"{0}:{1}".format(prefix, main).lower()

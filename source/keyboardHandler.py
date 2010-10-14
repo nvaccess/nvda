@@ -243,8 +243,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	def _get_identifiers(self):
 		keyName = self.keyName.lower()
 		return (
-			"kb({layout}):{key}".format(layout=self.layout, key=keyName),
-			"kb:{key}".format(key=keyName)
+			u"kb({layout}):{key}".format(layout=self.layout, key=keyName),
+			u"kb:{key}".format(key=keyName)
 		)
 
 	def _get_shouldReportAsCommand(self):
@@ -276,7 +276,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	def _reportToggleKey(self):
 		toggleState = winUser.getKeyState(self.vkCode) & 1
 		key = self.mainKeyName
-		ui.message("{key} {state}".format(
+		ui.message(u"{key} {state}".format(
 			key=localizedKeyLabels.get(key, key),
 			state=_("on") if toggleState else _("off")))
 
