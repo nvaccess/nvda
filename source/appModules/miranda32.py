@@ -82,6 +82,8 @@ class AppModule(_default.AppModule):
 	MessageHistoryLength=3
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if obj.role == controlTypes.ROLE_WINDOW: 
+			return
 		windowClass = obj.windowClassName
 		if windowClass == "CListControl":
 			try:
@@ -180,14 +182,21 @@ class mirandaIMButton(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_BUTTON
 
-	def doDefaultAction(self):
+	def getActionName(self):
+		if controlTypes.STATE_FOCUSED not in self.states:
+			return
+		return "Click"
+
+	def doAction(self):
+		if controlTypes.STATE_FOCUSED not in self.states:
+			return
 		KeyboardInputGesture.fromName("space").send()
 
 	def script_doDefaultAction(self,gesture):
-		self.doDefaultAction()
+		self.doAction()
 
 	def initOverlayClass(self):
-		self.bindGesture("enter", "doDefaultAction")
+		self.bindGesture("kb:enter", "doDefaultAction")
 
 class mirandaIMHyperlink(mirandaIMButton):
 
