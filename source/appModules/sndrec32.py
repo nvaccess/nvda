@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import _default
+from appModules import _default
 import controlTypes
 
 mainWindowButtonNames={
@@ -19,5 +19,7 @@ class AppModule(_default.AppModule):
 
 	def event_NVDAObject_init(self, obj):
 		if obj.role == controlTypes.ROLE_BUTTON: 
-			if obj.windowControlID in mainWindowButtonNames.keys():
+			try:
 				obj.name=mainWindowButtonNames[obj.windowControlID]
+			except KeyError:
+				pass
