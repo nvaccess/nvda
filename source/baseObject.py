@@ -151,6 +151,11 @@ class ScriptableObject(AutoPropertyObject):
 		import inputCore
 		self._gestureMap[inputCore.normalizeGestureIdentifier(gestureIdentifier)] = func
 
+	def clearGestureBindings(self):
+		"""Remove all input gesture bindings from this object.
+		"""
+		self._gestureMap.clear()
+
 	def bindGestures(self, gestureMap):
 		"""Bind multiple input gestures to scripts.
 		This is a convenience method which simply calls L{bindGesture} for each gesture and script pair, logging any errors.

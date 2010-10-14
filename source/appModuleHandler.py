@@ -232,6 +232,8 @@ class AppModule(baseObject.ScriptableObject):
 		"""Loads a key map in to this appModule . if the key map exists. It takes in to account what layout NVDA is currently set to.
 		"""  
 		layout=config.conf["keyboard"]["keyboardLayout"]
+		# If the appModule already has a running gesture map, clear it.
+		self.clearGestureBindings()
 		for modClass in reversed(list(itertools.takewhile(lambda x: issubclass(x,AppModule) and x is not AppModule,self.__class__.__mro__))):
 			name=modClass.__module__.split('.')[-1]
 			keyMapFileName=getKeyMapFileName(name,layout)
@@ -239,7 +241,6 @@ class AppModule(baseObject.ScriptableObject):
 				continue
 			keyMapFile=open(keyMapFileName,'r')
 			bindCount=0
-			#If the appModule already has a running keyMap, clear it
 			for line in (x for x in keyMapFile if not x.startswith('#') and not x.isspace()):
 				m=re_keyScript.match(line)
 				if m:
