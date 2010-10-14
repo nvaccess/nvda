@@ -113,10 +113,10 @@ class CursorManager(baseObject.ScriptableObject):
 		self.doFindText(self._lastFindText,reverse=True)
 	script_findPrevious.__doc__ = _("find the previous occurrence of the previously entered text string from the current cursor's position")
 
-	def script_pageUp(self,gesture):
+	def script_moveByPage_back(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_LINE,-config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
 
-	def script_pageDown(self,gesture):
+	def script_moveByPage_forward(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_LINE,config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
 
 	def script_moveByCharacter_back(self,gesture):
@@ -232,8 +232,8 @@ class CursorManager(baseObject.ScriptableObject):
 			speech.speakMessage(_("copied to clipboard"))
 
 	__gestures = {
-		"kb:pageUp": "pageUp",
-		"kb:pageDown": "pageDown",
+		"kb:pageUp": "moveByPage_back",
+		"kb:pageDown": "moveByPage_forward",
 		"kb:upArrow": "moveByLine_back",
 		"kb:downArrow": "moveByLine_forward",
 		"kb:leftArrow": "moveByCharacter_back",
