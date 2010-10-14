@@ -157,7 +157,9 @@ class InputManager(baseObject.AutoPropertyObject):
 					textList.append(desc)
 
 		braille.handler.message("\t\t".join(textList))
-		for text in textList:
+		# Punctuation must be spoken for the gesture name (the first chunk) so that punctuation keys are spoken.
+		speech.speakText(textList[0], reason=speech.REASON_MESSAGE, expandPunctuation=True)
+		for text in textList[1:]:
 			speech.speakMessage(text)
 
 		if runScript:
