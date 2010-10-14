@@ -172,9 +172,6 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		"desktop": _("desktop"),
 		"laptop": _("laptop"),
 	}
-	#: The current keyboard layout.
-	#: @type: str
-	currentLayout = "desktop"
 
 	@classmethod
 	def getVkName(cls, vkCode, isExtended):
@@ -187,6 +184,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		return name if name else ""
 
 	def __init__(self, modifiers, vkCode, scanCode, isExtended):
+		#: The keyboard layout in which this gesture was created.
+		#: @type: str
+		self.layout = config.conf["keyboard"]["keyboardLayout"]
 		self.modifiers = modifiers = set(modifiers)
 		if vkCode in (winUser.VK_DIVIDE, winUser.VK_MULTIPLY, winUser.VK_SUBTRACT, winUser.VK_ADD) and winUser.getKeyState(winUser.VK_NUMLOCK) & 1:
 			# Some numpad keys have the same vkCode regardless of numlock.
@@ -244,7 +244,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	def _get_identifiers(self):
 		keyName = self.keyName.lower()
 		return (
-			"kb({layout}):{key}".format(layout=self.currentLayout, key=keyName),
+			"kb({layout}):{key}".format(layout=self.layout, key=keyName),
 			"kb:{key}".format(key=keyName)
 		)
 
