@@ -80,7 +80,7 @@ def _processSymbol(m):
 		return " %s " % characterSymbols.names[m.group(4)]
 RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 
-def processTextSymbols(text,expandPunctuation=False):
+def processText(text,expandPunctuation=False):
 	if (text is None) or (len(text)==0) or (isinstance(text,basestring) and (set(text)<=set(characterSymbols.blankList))):
 		return _("blank") 
 	#Convert non-breaking spaces to spaces
@@ -103,14 +103,6 @@ def getLastSpeechIndex():
 @rtype: int
 """
 	return getSynth().lastIndex
-
-def processText(text):
-	"""Processes the text using the L{textProcessing} module which converts punctuation so it is suitable to be spoken by the synthesizer. This function makes sure that all punctuation is included if it is configured so in nvda.ini.
-@param text: the text to be processed
-@type text: string
-"""
-	text=processTextSymbols(text,expandPunctuation=config.conf["speech"]["speakPunctuation"])
-	return text
 
 def cancelSpeech():
 	"""Interupts the synthesizer from currently speaking"""
@@ -290,7 +282,7 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
 			speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=reason)
 
-def speakText(text,index=None,reason=REASON_MESSAGE):
+def speakText(text,index=None,reason=REASON_MESSAGE,expandPunctuation=None):
 	"""Speaks some given text.
 This function will not speak if L{speechMode} is false.
 @param text: the message to speak
@@ -312,10 +304,12 @@ This function will not speak if L{speechMode} is false.
 		cancelSpeech()
 	beenCanceled=False
 	log.io("Speaking %r" % text)
+	if expandPunctuation is None:
+		expandPunctuation=config.conf["speech"]["speakPunctuation"]
 	if text is None:
 		text=""
 	else:
-		text=processText(text)
+		text=processText(text,expandPunctuation=expandPunctuation)
 	if not text or not text.isspace():
 		getSynth().speakText(text,index=index)
 
