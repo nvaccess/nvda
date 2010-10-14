@@ -15,6 +15,7 @@
 - When NVDA detects that it has frozen, it continues to intercept NVDA modifier keys, even though it passes all other keys through to the system. This prevents the user from unintentionally toggling caps lock, etc. if they press an NVDA modifier key without realising NVDA has frozen. (#939)
 - If keys are held down after using the pass next key through command, all keys (including key repeats) are now passed through until the last key is released.
 - If an NVDA modifier key is pressed twice in quick succession to pass it through and the second press is held down, all key repeats will now be passed through as well.
+- The volume up, down and mute keys are now reported in input help. This could be helpful if the user is uncertain as to what these keys are.
 
 
 == Bug Fixes ==
