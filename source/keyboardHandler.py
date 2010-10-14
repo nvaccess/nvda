@@ -97,10 +97,9 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				# Never pass the NVDA modifier key to the OS.
 				trappedKeys.add((vkCode,extended))
 				return False
-			return True
 	except:
 		log.error("internal_keyDownEvent", exc_info=True)
-		return True
+	return True
 
 def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyUp.
