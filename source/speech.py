@@ -5,8 +5,6 @@
 #See the file COPYING for more details.
 
 """High-level functions to speak information.
-@var speechMode: allows speech if true
-@type speechMode: boolean
 """ 
 
 import colors
@@ -28,7 +26,8 @@ import speechDictHandler
 speechMode_off=0
 speechMode_beeps=1
 speechMode_talk=2
-speechMode=2
+#: How speech should be handled; one of speechMode_off, speechMode_beeps or speechMode_talk.
+speechMode=speechMode_talk
 speechMode_beeps_ms=15
 beenCanceled=True
 isPaused=False
@@ -128,7 +127,6 @@ def pauseSpeech(switch):
 
 def speakMessage(text,index=None):
 	"""Speaks a given message.
-This function will not speak if L{speechMode} is false.
 @param text: the message to speak
 @type text: string
 @param index: the index to mark this current text with, its best to use the character position of the text if you know it 
@@ -283,13 +281,15 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 			speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=reason)
 
 def speakText(text,index=None,reason=REASON_MESSAGE,expandPunctuation=None):
-	"""Speaks some given text.
-This function will not speak if L{speechMode} is false.
-@param text: the message to speak
-@type text: string
-@param index: the index to mark this current text with, its best to use the character position of the text if you know it 
-@type index: int
-"""
+	"""Speaks some text.
+	@param text: The text to speak.
+	@type text: str
+	@param index: The index to mark this text with, which can be used later to determine whether this piece of text has been spoken.
+	@type index: int
+	@param reason: The reason for this speech; one of the REASON_* constants.
+	@param expandPunctuation: Whether to speak punctuation; C{None} (default) to use the user's configuration.
+	@param expandPunctuation: bool
+	"""
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendText(text)
