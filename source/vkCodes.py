@@ -18,7 +18,7 @@ These names are used when binding keyboard gestures to scripts.
 byCode = {
 	(0x01, None): "leftMouse",
 	(0x02, None): "rightMouse",
-	(0x03, None): "cancel",
+	(0x03, None): "break",
 	(0x04, None): "middleMouse",
 	(0x08, None): "backspace",
 	(0x09, None): "tab",
