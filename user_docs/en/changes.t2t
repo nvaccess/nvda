@@ -10,6 +10,12 @@
 
 
 == Changes ==
+- Keyboard help has been renamed to input help to reflect that it handles input from sources other than the keyboard.
+- The location of a script in the code is no longer reported in input help, as it is irrelevant and cryptic to the user.
+- When NVDA detects that it has frozen, it continues to intercept NVDA modifier keys, even though it passes all other keys through to the system. This prevents the user from unintentionally toggling caps lock, etc. if they press an NVDA modifier key without realising NVDA has frozen. (#939)
+- If keys are held down after using the pass next key through command, all keys (including key repeats) are now passed through until the last key is released.
+- If an NVDA modifier key is pressed twice in quick succession to pass it through and the second press is held down, all key repeats will now be passed through as well.
+- The volume up, down and mute keys are now reported in input help. This could be helpful if the user is uncertain as to what these keys are.
 
 
 == Bug Fixes ==
@@ -18,6 +24,7 @@
 - In AIM, position information is now announced in tree views.
 - Position information is no longer reported in some cases where it was usually incorrect; e.g. most menus, the Running Applications bar, the Notification Area, etc.
 - On sliders in the Voice Settings dialog, up arrow/page up/home now increase the setting and down arrow/page down/end decrease it. Previously, the opposite occurred, which is not logical and is inconsistent with the synth settings ring. (#221)
+- If an NVDA modifier key is pressed twice quickly but there is an intervening key press, the NVDA modifier key is no longer passed through on the second press.
 
 
 = 2010.2 =

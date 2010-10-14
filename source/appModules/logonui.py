@@ -1,4 +1,3 @@
-import keyUtils
 import speech
 import api
 import braille
@@ -27,11 +26,8 @@ class LogonDialog(Dialog):
 class XPPasswordField(IAccessible):
 
 	def initOverlayClass(self):
-		for key, script in (
-			("extendedUp", "changeUser"),
-			("extendedDown", "changeUser"),
-		):
-			self.bindKey_runtime(key, script)
+		for gesture in ("kb:upArrow", "kb:downArrow"):
+			self.bindGesture(gesture, "changeUser")
 
 	def _get_name(self):
 		# Focus automatically jumps to the password field when a user is selected. This field has no name.
@@ -45,10 +41,10 @@ class XPPasswordField(IAccessible):
 		except:
 			return super(XPPasswordField, self).name
 
-	def script_changeUser(self, key):
+	def script_changeUser(self, gesture):
 		# The up and down arrow keys change the selected user, but there's no reliable NVDA event for detecting this.
 		oldName = self.name
-		keyUtils.sendKey(key)
+		gesture.send()
 		if oldName == self.name or controlTypes.STATE_FOCUSED not in self.states:
 			return
 		self.event_gainFocus()

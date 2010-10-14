@@ -21,7 +21,7 @@ import winKernel
 import api
 import winUser
 import textInfos.offsets
-from keyUtils import key, sendKey
+from keyboardHandler import KeyboardInputGesture
 from scriptHandler import isScriptWaiting
 import IAccessibleHandler
 import controlTypes
@@ -358,16 +358,16 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				return [offset,offset+1]
 			oldSel=self._getSelectionOffsets()
 			self._setSelectionOffsets(offset,offset)
-			sendKey(key("control+ExtendedLeft"))
+			KeyboardInputGesture.fromName("control+leftArrow").send()
 			back=self._getSelectionOffsets()[0]
-			sendKey(key("control+ExtendedRight"))
+			KeyboardInputGesture.fromName("control+rightArrow").send()
 			forward=self._getSelectionOffsets()[0]
 			if (back<=offset) and (forward>offset):
 				start=back
 				end=forward
 			elif (back<offset) and (forward==offset):
 				start=forward
-				sendKey(key("control+ExtendedRight"))
+				KeyboardInputGesture.fromName("control+rightArrow").send()
 	 			forward=self._getSelectionOffsets()[0]
 				end=forward
 			else:

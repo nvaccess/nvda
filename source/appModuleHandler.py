@@ -196,6 +196,7 @@ class AppModule(baseObject.ScriptableObject):
 	_overlayClassCache={}
 
 	def __init__(self,processID,appName=None):
+		super(AppModule,self).__init__()
 		self.processID=processID
 		self.helperLocalBindingHandle=NVDAHelper.localLib.createConnection(processID)
 		if appName is None:
@@ -230,9 +231,9 @@ class AppModule(baseObject.ScriptableObject):
 	def loadKeyMap(self):
 		"""Loads a key map in to this appModule . if the key map exists. It takes in to account what layout NVDA is currently set to.
 		"""  
-		if '_keyMap' in self.__dict__:
-			self._keyMap={}
 		layout=config.conf["keyboard"]["keyboardLayout"]
+		# If the appModule already has a running gesture map, clear it.
+		self.clearGestureBindings()
 		for modClass in reversed(list(itertools.takewhile(lambda x: issubclass(x,AppModule) and x is not AppModule,self.__class__.__mro__))):
 			name=modClass.__module__.split('.')[-1]
 			keyMapFileName=getKeyMapFileName(name,layout)
@@ -240,12 +241,11 @@ class AppModule(baseObject.ScriptableObject):
 				continue
 			keyMapFile=open(keyMapFileName,'r')
 			bindCount=0
-			#If the appModule already has a running keyMap, clear it
 			for line in (x for x in keyMapFile if not x.startswith('#') and not x.isspace()):
 				m=re_keyScript.match(line)
 				if m:
 					try:
-						self.bindKey_runtime(m.group('key'),m.group('script'))
+						self.bindGesture("kb:%s"%m.group('key'),m.group('script'))
 						bindCount+=1
 					except:
 						log.error("error binding %s to %s in appModule %s"%(m.group('script'),m.group('key'),self))
