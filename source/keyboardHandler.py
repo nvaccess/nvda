@@ -214,7 +214,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if 32 < self.vkCode < 128:
 			return unichr(self.vkCode).lower()
 		vkChar = winUser.user32.MapVirtualKeyW(self.vkCode, winUser.MAPVK_VK_TO_CHAR)
-		if vkChar:
+		if vkChar>0:
 			return unichr(vkChar).lower()
 
 		return winUser.getKeyNameText(self.scanCode, self.isExtended)
