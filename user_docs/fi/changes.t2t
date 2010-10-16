@@ -6,23 +6,31 @@
 = 2010.3 =
 
 == Uudet ominaisuudet ==
-- Värien ilmoittaminen on nyt mahdollista joissakin säätimissä. Automaattinen lukeminen voidaan määrittää Asiakirjojen muotoiluasetukset -valintaikkunasta. Värit voidaan lisäksi lukea tarvittaessa tekstin muotoilutietojen lukukomennolla (NVDA+F).
+- Värien ilmoittaminen on nyt mahdollista joissakin säätimissä. Automaattinen lukeminen voidaan määrittää Asiakirjojen muotoiluasetukset -valintaikkunasta. Värit voidaan lukea myös tekstin muotoilutietojen lukukomennolla (NVDA+F).
+- Näennäispuskureissa on nyt mahdollista valita tekstiä sivu kerrallaan (näppäimillä Shift+Page down ja Shift+Page up) sekä kappale kerrallaan (näppäimillä Shift+Ctrl+alanuoli ja Shift+Ctrl+ylänuoli). (#639)
 
 
 == Muutokset ==
-- Puhesanastomerkinnät vaikuttavat nyt myös kirjoitettujen merkkien puhumiseen sekä yksittäisiin merkkeihin, kun kohdistin siirretään niiden päälle.
+- Näppäinohjeen uusi nimi on syöteohje, koska se käsittelee muistakin syötelaitteista kuin näppäimistöltä annettavia komentoja.
+- Komennon sijaintia NVDA:n koodissa ei enää sanota syöteohjeessa, koska se ei ole tärkeää käyttäjälle.
+- Kun NVDA havaitsee jääneensä jumiin, NVDA-toimintonäppäinten käsittelyä jatketaan, vaikka kaikki muut näppäimet välitetäänkin suoraan Windowsin käsiteltäväksi. Tämä estää käyttäjää NVDA-toimintonäppäintä painaessaan ottamasta tahattomasti käyttöön esim. Caps Lockia. (#939)
+- Jos näppäimiä pidetään alhaalla "välitä seuraava näppäinpainallus" -komennon jälkeen, kaikki näppäimet (toistuvat painallukset mukaan lukien) välitetään Windowsille, kunnes viimeinen näppäin vapautetaan.
+- Myös kaikki toistuvat näppäinpainallukset välitetään nyt Windowsin käsiteltäväksi, mikäli NVDA-näppäintä painetaan nopeasti kaksi kertaa peräkkäin ja kun sitä pidetään alhaalla toisella painalluksella.
+- Äänenvoimakkuuden lisäys ja vähennys- sekä mykistysnäppäimet  ilmoitetaan nyt syöteohjeessa.
 
 
 == Korjatut virheet ==
-- Uutta puhesanastomerkintää lisättäessä valintaikkunan nimi on nyt "Lisää sanastomerkintä" aiemman "Muokkaa sanastomerkintää" -nimen sijasta. (#924)
+- Kun puhesanastoon lisätään uusi merkintä, valintaikkunan nimi on nyt "Lisää sanastomerkintä" aiemman "Muokkaa sanastomerkintää" -nimen sijasta. (#924)
 - Puhesanastovalintaikkunoiden sanastomerkintäluettelon Säännöllinen lauseke- ja Sama kirjainkoko-sarakkeiden sisältö  näytetään nyt NVDA:ssa määritetyllä kielellä sen sijaan, että ne näytettäisiin aina englanniksi.
-- Sijaintitiedot luetaan nyt AIM:in puunäkymissä.
+- Sijaintitiedot luetaan nyt AIM-pikaviestimen puunäkymissä.
 - Sijaintitietoja ei enää lueta  joissakin sellaisissa tapauksissa, joissa ne ovat yleensä virheellisiä, esim. useimmissa valikoissa, käynnissä olevien sovellusten palkissa, ilmoitusalueella jne.
 - Ääniasetukset-valintaikkunan liukusäätimissä ylänuoli/page up/home suurentavat nyt asetusta ja alanuoli/page down/end pienentävät. Aiemmin tapahtui juuri päinvastoin, mikä ei ollut loogista ja oli lisäksi ristiriidassa syntetisaattorin asetusrenkaan kanssa. (#221)
+- Jos NVDA-näppäintä painetaan kaksi kertaa nopeasti, mutta mitään muuta näppäintä ei paineta sen jälkeen, sen toista painallusta ei enää huomioida.
+- Välimerkkinäppäimet sanotaan nyt syöteohjeessa, vaikka välimerkkien puhuminen on poistettu käytöstä. (#977)
 
 
 = 2010.2 =
-Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkertaistettu objektinavigointi, näennäispuskurit Flash -sisällön käyttämiseksi, pääsy moniin aiemmin saavuttamattomiin säätimiin hakemalla ruudun tekstiä, kokonaistarkastelu ruudulla olevalle tekstille, tuki IBM Lotus Symphony -asiakirjoille, taulukon rivien ja sarakkeiden otsikoiden ilmoittaminen Mozilla Firefoxissa sekä merkittävästi parannellut käyttöohjeet.
+Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkertaistettu objektinavigointi, näennäispuskurit Flash -sisällölle, monien aiemmin saavuttamattomien säädinten käyttäminen ruudun tekstiä kaappaamalla, kokonaistarkastelu ruudulla olevalle tekstille, tuki IBM Lotus Symphony -asiakirjoille, taulukon rivien ja sarakkeiden otsikoiden ilmoittaminen Mozilla Firefoxissa sekä huomattavasti parannellut käyttöohjeet.
 
 == Uudet ominaisuudet ==
 - Tarkastelukohdistimella liikkumista objekteissa on yksinkertaistettu huomattavasti. Tarkastelukohdistin sulkee nyt pois objektit, joista ei ole hyötyä käyttäjälle, esim. vain asettelutarkoituksiin käytettävät ja sellaiset, jotka eivät ole käytettävissä.
@@ -36,7 +44,7 @@ Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkerta
  - Tämä ominaisuus tekee esteettömiksi mm. jotkin kuvakkeita sisältävät valikoiden kohdat (esim. Windows XP:n Avaa sovelluksessa -valikko) (#151), Windows Live -sovellusten muokattavat tekstikentät (#200), Outlook Expressin virheluettelo (#582), TextPadin muokattava tekstisäädin (#605), Eudoran luettelot, monet Australian E-tax:in säätimet ja Microsoft Excelin kaavapalkki.
 - Tuki Microsoft Visual Studio 2005:n ja 2008:n koodimuokkaimelle. Vaaditaan vähintään Visual Studio Standard, ei toimi Express-versioissa. (#457)
 - Tuki IBM Lotus Symphony -asiakirjoille.
-- Varhaisessa vaiheessa oleva kokeellinen tuki Google Chromelle. Huomaa, ettei Chromen ruudunlukuohjelmatuki ole läheskään valmis, ja että NVDA:ssakin saattavat lisätoimet olla tarpeen. Tämän kokeilemiseksi tarvitaan Chromen uusin kehitysversio.
+- Kokeellinen tuki Google Chromelle. Huomaa, ettei Chromen ruudunlukuohjelmatuki ole läheskään valmis, ja että NVDA:ssakin saattavat lisätoimet olla tarpeen. Tämän kokeilemiseksi tarvitaan Chromen uusin kehitysversio.
 - Caps lock-, num lock- ja scroll lock -näppäinten tila näytetään nyt pistenäytöllä niitä painettaessa. (#620)
 - Kuplailmoitukset näytetään nyt pistenäytöllä niiden tullessa näkyviin. (#652)
 - Lisätty ajuri MDV Lilli -pistenäytölle. (#241)
@@ -84,7 +92,7 @@ Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkerta
 - Adobe Acrobat Pro ja Reader 9 eivät enää kaadu tiedostoa suljettaessa tai tiettyjä muita tehtäviä suoritettaessa. (#613)
 - Kaiken tekstin valitseminen ilmoitetaan nyt painettaessa ctrl+A joissakin muokattavissa tekstisäätimissä, kuten Microsoft Wordissa. (#761)
 - Tekstiä ei enää virheellisesti valita Scintilla-säätimissä (esim. Notepad++:ssa) NVDA:n liikuttaessa järjestelmäkohdistinta esim. lue kaikki -toiminnon aikana tai siirrettäessä kohdistinta samaan paikkaan, jossa pistenäytöllä ollaan. (#746)
-- Microsoft Excelin solujen sisällön lukeminen tarkastelukohdistimella on jälleen mahdollista.
+- Microsoft Excelin solujen sisällön tarkasteleminen tarkastelukohdistimella on jälleen mahdollista.
 - NVDA voi jälleen lukea riveittäin tiettyjä ongelmallisia tekstikenttiä Internet Explorer 8:ssa. (#467)
 - Windows Live Messenger 2009 ei enää sulkeudu heti käynnistyttyään NVDA:n ollessa käynnissä. (#677)
 - Sarkaimen painaminen ei ole enää tarpeen internet-selaimissa  sulautettuun objektiin siirtymiseksi (esim. Flash), kun on painettu Enteriä kyseisen objektin kohdalla tai palattu toisesta sovelluksesta. (#775)
