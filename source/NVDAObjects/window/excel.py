@@ -21,6 +21,7 @@ import speech
 from . import Window
 from .. import NVDAObjectTextInfo
 import appModuleHandler
+from logHandler import log
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
 
@@ -95,6 +96,7 @@ class ExcelWorksheet(ExcelWindow):
 		self.excelWindowObject=excelWindowObject
 		self.excelWorksheetObject=excelWorksheetObject
 		super(ExcelWorksheet,self).__init__(windowHandle=windowHandle)
+		self.initOverlayClass()
 
 	def _get_name(self):
 		return self.excelWorksheetObject.name
