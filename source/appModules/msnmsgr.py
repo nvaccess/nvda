@@ -9,6 +9,7 @@ import globalVars
 import winUser
 from NVDAObjects.IAccessible import IAccessible 
 import controlTypes
+import oleacc
 import textInfos
 import _default
 import speech
@@ -38,9 +39,11 @@ class AppModule(_default.AppModule):
 		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name in possibleHistoryWindowNames:
 			from NVDAObjects.window import DisplayModelEditableText 
 			clsList.remove(DisplayModelEditableText)
+			clsList.insert(0, OldMSNHistory)
+		elif obj.windowClassName==u'WLXDUI' and obj.role==controlTypes.ROLE_ALERT and obj.IAccessibleStates&oleacc.STATE_SYSTEM_ALERT_MEDIUM:
 			clsList.insert(0, MSNHistory)
 
-class MSNHistory(cursorManager.ReviewCursorManager,IAccessible):
+class OldMSNHistory(cursorManager.ReviewCursorManager,IAccessible):
 
 	def _get_basicText(self):
 		return "%s - %s\r%s"%(self.name,self.description,self.value)
@@ -65,3 +68,20 @@ class MSNHistory(cursorManager.ReviewCursorManager,IAccessible):
 
 	def reportFocus(self):
 		speech.speakObjectProperties(self,name=True,role=True)
+
+class MSNHistory(IAccessible):
+
+	def _get_value(self):
+		try:
+			value=self.IAccessibleObject.accValue(self.IAccessibleChildID)
+		except COMError:
+			value=None
+		return value or ""
+
+	def event_valueChange(self):
+		global lastMSNHistoryValue
+		if winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
+			value=self.value
+			if value!=lastMSNHistoryValue and globalVars.reportDynamicContentChanges:
+				speech.speakText(value)
+				lastMSNHistoryValue=value
