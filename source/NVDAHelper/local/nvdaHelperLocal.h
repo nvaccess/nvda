@@ -20,5 +20,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 DLLEXPORT handle_t createConnection(int processID);
 DLLEXPORT void destroyConnection(handle_t bindingHandle);
+DLLEXPORT void nvdaHelperLocal_initialize();
+DLLEXPORT void nvdaHelperLocal_terminate();
 
 #endif
