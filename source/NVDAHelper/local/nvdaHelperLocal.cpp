@@ -18,6 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "dllImportTableHooks.h"
 
 DllImportTableHooks* oleaccHooks;
+DllImportTableHooks* uiaCoreHooks;
 
 handle_t createConnection(int processID) {
 	RPC_STATUS rpcStatus;
@@ -55,15 +56,28 @@ void nvdaHelperLocal_initialize() {
 	HMODULE oleacc = LoadLibraryA("oleacc.dll");
 	if (!oleacc)
 		return;
+	HMODULE uiaCore = LoadLibraryA("UIAutomationCore.dll");
+	if (!uiaCore) {
+		FreeLibrary(oleacc);
+		return;
+	}
 	oleaccHooks = new DllImportTableHooks(oleacc);
 	oleaccHooks->requestFunctionHook("USER32.dll", "SendMessageW", fake_SendMessageW);
 	oleaccHooks->requestFunctionHook("USER32.dll", "SendMessageTimeoutW", fake_SendMessageTimeoutW);
+	uiaCoreHooks = new DllImportTableHooks(uiaCore);
+	uiaCoreHooks->requestFunctionHook("USER32.dll", "SendMessageW", fake_SendMessageW);
+	uiaCoreHooks->requestFunctionHook("USER32.dll", "SendMessageTimeoutW", fake_SendMessageTimeoutW);
 	oleaccHooks->hookFunctions();
+	uiaCoreHooks->hookFunctions();
 }
 
 void nvdaHelperLocal_terminate() {
 	oleaccHooks->unhookFunctions();
+	uiaCoreHooks->unhookFunctions();
 	FreeLibrary(oleaccHooks->targetModule);
+	FreeLibrary(uiaCoreHooks->targetModule);
 	delete oleaccHooks;
 	oleaccHooks = NULL;
+	delete uiaCoreHooks;
+	uiaCoreHooks = NULL;
 }
