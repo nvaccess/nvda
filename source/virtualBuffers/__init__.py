@@ -689,7 +689,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		super(VirtualBuffer, self)._caretMovementScriptHelper(*args, **kwargs)
 
 	def script_refreshBuffer(self,gesture):
-		if self.VBufHandle is None:
+		if self.VBufHandle is None or self.isTransitioning:
 			return
 		self.unloadBuffer()
 		self.loadBuffer()
