@@ -35,8 +35,6 @@ void destroyConnection(handle_t bindingHandle) {
 	RpcBindingFree(&bindingHandle);
 }
 
-typedef LRESULT(WINAPI* SendMessage_funcType)(HWND, UINT, WPARAM, LPARAM);
-SendMessage_funcType real_SendMessageW = NULL;
 LRESULT WINAPI fake_SendMessageW(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
 	DWORD_PTR result;
 	if (SendMessageTimeoutW(hwnd, Msg, wParam, lParam, SMTO_ABORTIFHUNG, 1000, &result) == 0 && GetLastError() == ERROR_TIMEOUT) {
@@ -46,12 +44,10 @@ LRESULT WINAPI fake_SendMessageW(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lPar
 	return (LRESULT)result;
 }
 
-typedef LRESULT(WINAPI* SendMessageTimeout_funcType)(HWND, UINT, WPARAM, LPARAM, UINT, UINT, PDWORD_PTR);
-SendMessageTimeout_funcType real_SendMessageTimeoutW = NULL;
 LRESULT WINAPI fake_SendMessageTimeoutW(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
 	if (uTimeout > 2000)
 		uTimeout = 2000;
-	return real_SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
+	return SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
 }
 
 void nvdaHelperLocal_initialize() {
@@ -60,8 +56,8 @@ void nvdaHelperLocal_initialize() {
 	if (!oleacc)
 		return;
 	oleaccHooks = new DllImportTableHooks(oleacc);
-	real_SendMessageW = (SendMessage_funcType)oleaccHooks->requestFunctionHook("USER32.dll", "SendMessageW", fake_SendMessageW);
-	real_SendMessageTimeoutW = (SendMessageTimeout_funcType)oleaccHooks->requestFunctionHook("USER32.dll", "SendMessageTimeoutW", fake_SendMessageTimeoutW);
+	oleaccHooks->requestFunctionHook("USER32.dll", "SendMessageW", fake_SendMessageW);
+	oleaccHooks->requestFunctionHook("USER32.dll", "SendMessageTimeoutW", fake_SendMessageTimeoutW);
 	oleaccHooks->hookFunctions();
 }
 
