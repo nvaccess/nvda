@@ -1,0 +1,540 @@
+﻿Novità in NVDA
+
+
+%!includeconf: ../changes.t2tconf
+
+= 2010.2 =
+Le caratteristiche più importanti in questa versione riguardano la facilitazione nell'utilizzare la navigazione ad oggetti; l'uso dei buffer virtuali nei contenuti Adobe Flash; accedere a controlli prima inaccessibili tramite il recuperare informazioni scritte sullo schermo; supporto ai documenti IBM Lotus Symphony; l'annuncio delle intestazioni riga e colonna nelle tabelle in Firefox; e un miglioramento significativo alla documentazione utente.
+
+== Nuove caratteristiche ==
+- La navigazione ad oggetti tramite il cursore di controllo è stata significativamente semplificata. Ora il cursore di controllo è in grado di escludere oggetti che non sono utili all'utente; ad esempio oggetti non disponibili o utilizzati per funzioni di layout.
+- In applicazioni che si avvalgono di Java Access Bridge (inclusa OpenOffice.org), viene annunciata la formattazione del carattere. (#358, #463)
+- Quando si sposta il Mouse tra le celle in Microsoft Excel, NVDA le annuncerà correttamente.
+- In applicazioni che fanno uso di Java Access Bridge, il testo presente in una finestra di dialogo viene annunciato appena compare sullo schermo. (#554)
+- Il buffer virtuale può essere usato per esplorare contenuti di tipo Adobe Flash. La navigazione ad oggetti e l'interazione diretta con i controlli è ancora supportata (attivando la modalità focus). (#453)
+- I controlli di testo editabili in Eclipse Ide, incluso l'editor di codice, sono ora accessibili. Si noti che si deve utilizzare Eclipse 3.6 o superiore. (#256, #641)
+- NVDA è in grado di recuperare molte informazioni scritte direttamente sullo schermo. (#40, #643)
+ - Questo risulta utile nella lettura di controlli che non generano le informazioni in maniere più dirette o sfruttando i canali dell'accessibilità.
+ - Controlli che vengono resi accessibili attraverso questa caratteristica includono: alcuni elementi di menu che mostrano delle icone (ad esempio la voce apri con, nel menu file in windows XP (#151), campi di testo editabili nelle applicazioni Windows Live (#200), l'elenco errori in Outlook Express (#582), i controlli di testo editabili in Textpad (#605), elenchi in Eudora, molti controlli in Australian E-Tax e la gestione formule in Excel.
+- Supporto al Code Editor in Microsoft Visual Studio 2005 e 2008. E' richiesto almeno Visual Studio Standard; non funziona nell'edizione Express. (#457)
+- Supporto per documenti IBM Lotus Symphony.
+- Supporto embrionale e sperimentale a Google Chrome. Si noti che tale funzione è ben lontana dall'essere considerata completa. Si avrà bisogno di una delle versioni in sviluppo più recenti di Google Chrome.
+- Lo stato dei pulsanti a interruttore (caps lock, num lock e scroll lock) viene ora visualizzato anche in Braille. (#620)
+- I fumetti d'aiuto vengono mostrati anche in braille quando appaiono. (#652)
+- Aggiunto un Driver per la riga Braille Mdv Lilli. (#241)
+- Quando viene selezionata un'intera riga con shift+spazio o una colonna con control+spazio in Excel, la selezione viene annunciata. (#759)
+- Possono essere annunciate le intestazioni di righe e colonne. L'opzione è configurabile dalla finestra formato documento.
+ - Al momento il supporto viene fornito nelle applicazioni Mozilla a partire da Firefox 3.6.11 e successive e Thunderbird 3.1.5 e successive. (#361)
+- Introdotti comandi per la navigazione in linea (#58)
+ - NVDA + 7 del tastierino numerico: Passa alla navigazione in linea, collocando l'utente alla posizione attuale del navigatore ad oggetti, permettendo di esplorare lo schermo (o il documento se ci si trova all'interno di esso) con i consueti comandi di revisione del testo usati dal cursore di controllo.
+ - NVDA+1 del tastierino numerico: Attiva il navigatore ad oggetti a partire dalla posizione corrente nella navigazione in linea, permettendo poi di usare i consueti tasti relativi alla navigazione ad oggetti.
+- Le impostazioni di configurazione possono essere copiate tramite un apposito bottone nella finestra generale del menù preferenze in modo da essere usate anche nelle schermate di logon o UAC. (#730)
+- Supporto a Mozilla Firefox 4.
+- Supporto a Microsoft Internet Explorer 9.
+
+
+== Cambiamenti ==
+- Alcuni tasti relativi alla navigazione ad oggetti (NVDA+shift+numpad6 e NVDA+shift+numpad4) sono stati rimossi a causa del loro mal funzionamento.
+- Nella finestra di dialogo Sintetizzatore, viene mostrato solo il nome reale della sintesi vocale. In precedenza, veniva accompagnato dal nome del driver, il che non serve all'utente finale.
+- In presenza di applicazioni incorporate o di buffer virtuali all'interno di altri buffer virtuali (ad esempio il flash), è ora possibile premere NVDA+control+spazio per uscire dall'applicazione incorporata o dal buffer virtuale e tornare al documento che la contiene. In precedenza, NVDA+spazio veniva usato per tale scopo. Ora NVDA+spazio viene utilizzato per cambiare tra modalità esplorazione e modalità focus nel buffer virtuale.
+- Se viene focalizzato il visualizzatore sintesi vocale (menu strumenti), il nuovo testo non apparirà fino a quando il focus non sarà spostato altrove. Questo permette una selezione del testo molto agevole (ad esempio per copiarlo).
+- Le finestre visualizzatore log e Console Python sono già ingrandite quando vengono attivate.
+- Quando si evidenzia un foglio di lavoro in Excel e c'è più di una cella selezionata, l'intervallo di selezione viene annunciato, piuttosto che solo la cella attiva. (#763)
+- Il salvataggio della configurazione e alcune opzioni importanti sono disabilitate in presenza di schermate logon o UAC.
+- Espeak è aggiornata alla versione 1.44.03.
+- Se NVDA è già in esecuzione, la pressione del tasto rapido ctrl+alt+n provocherà il riavvio dello screen reader.
+- Rimossa la casella di controllo "annuncia il testo sotto il mouse" e sostituita con "attiva trascinamento mouse", che si adatta meglio allo script (nvda+m).
+- Aggiornato il layout laptop che ora contiene tutte le scorciatoie da tastiera e funziona anche su tutte le tastiere non inglesi. (#798, #800)
+- Migliorata in modo significativo la documentazione, con l'aggiunta tra l'altro di tutti i comandi tastiera anche per layout laptop e sincronizzazione automatica con la guida rapida che contiene solo i comandi da tastiera. (#455)
+- Le tabelle liblouis sono aggiornate alla versione 2.1.1. Da notare un sensibile miglioramento al braille cinese e l'aggiunta di caratteri nuovi alle tabelle. (#484, #499)
+
+
+== Bug corretti ==
+- In µTorrent, l'elemento evidenziato nell'elenco dei torrent non viene più ripetuto continuamente e non verrà perso il focus dopo l'apertura di un menu.
+- In µTorrent, ora vengono annunciati i nomi dei files nella lista torrent.
+- Nelle applicazioni Mozilla, il focus viene individuato correttamente quando si finisce in una tabella vuota o in una visualizzazione ad albero.
+- Nelle applicazioni Mozilla, la voce "non attivato" viene correttamente riportata nelle caselle di controllo nelle celle delle tabelle. (#571)
+- Nelle applicazioni Mozilla, il testo presente nelle sezioni Aria ora viene annunciato. (#630)
+- In Internet Explorer e altri controlli MShtml, vengono rispettati i livelli degli attributi nelle sezioni Aria.
+- Corretto un crash abbastanza raro in Internet Explorer nella navigazione tra frames e iframes.
+- Migliorata la gestione tipi e ruoli Aria in Internet Explorer.
+- In Microsoft Word viene letto nuovamente il testo con righe da destra a sinistra, come la scrittura araba. (#267)
+- Decisamente abbassati i tempi d'attesa in presenza di grandi quantità di testo nelle finestre Console sui sistemi a 64 bit. (#622)
+- Se Skype è già attivo quando viene avviato NVDA, non è necessario riavviare Skype per attivare le opzioni di accessibilità. 
+- Nelle applicazioni Microsoft Office, NVDA non crasha più alla pressione del tasto NVDA+b o esplorando le barre degli strumenti. (#616)
+- Corretta la pronuncia inesatta dei numeri che contengono uno 0 dopo il separatore; esempio: 1,023. (#593)
+- Adobe Acrobat Pro e Reader non crashano più in concomitanza della chiusura di un documento o altre operazioni. (#613)
+- Viene correttamente annunciata la selezione del tasto alla pressione della combinazione di tasti control+a in alcuni Editor, ad esempio Microsoft Word. (#761)
+- Nei controlli Scintilla (ad esempio Notepad++), il testo viene ora selezionato in maniera corretta quando NVDA si sposta con comandi dire tutto. (#746)
+- Risulta nuovamente possibile esplorare il testo presente nelle celle di Microsoft Excel con il cursore di controllo.
+- NVDA può nuovamente leggere alcune aree di testo problematiche in Internet Explorer 8. (#467)
+- Windows Live Messenger 2009 non si chiude più all'improvviso non appena lo si esegue se NVDA è in esecuzione. (#677)
+- Nei Browsers web, non è più necessario premere Tab per interagire con gli oggetti incorporati (come i contenuti di tipo flash) dopo aver premuto l'invio sull'oggetto o arrivandoci da un'altra applicazione. (#775)
+- Nei controlli Scintilla (ad esempio Notepad++), l'inizio di una riga lunga non viene più troncato in concomitanza dello scorrimento dello schermo. Inoltre, queste righe verranno visualizzate correttamente in Braille quando sono selezionate.
+- in LoudTalks, è ora possibile accedere all'elenco contatti.
+- L'URL del documento e "MSAAHTML Registered Handler" non vengono più annunciati sporadicamente in Internet Explorer e altri controlli MSHtml. (#811)
+- Nelle visualizzazioni ad albero in Eclipse Ide, l'elemento precedentemente evidenziato non viene più annunciato erroneamente quando il focus si sposta su di un altro elemento.
+- NVDA ora funziona correttamente in quei sistemi dove la directory di lavoro è stata rimossa dal percorso di ricerca DLL (impostando la chiave di registro CWDIllegalInDllSearch al valore 0xFFFFFFFF). Si noti che questo non dovrebbe essere di interesse per la stragrande maggioranza degli utenti. (#907)
+- Quando i comandi di navigazione tabella sono usati al di fuori di una tabella in Microsoft Word, non viene più annunciato "bordo della tabella" dopo "non in una tabella". (#921)
+- Quando non ci si può più spostare in una tabella di Microsoft Word con i comandi di navigazione perche' si è raggiunto il bordo della stessa, la frase "bordo della tabella" viene ora annunciata nella lingua dell'utente piuttosto che soltanto in inglese. (#921)
+- Quando si sposta il cursore principale nei buffers virtuali, il cursore di controllo è in grado di esplorare l'intero documento, non solo l'oggetto evidenziato.
+- In Outlook Express, Windows Mail e Windows Live Mail, lo stato delle caselle di controllo nell'elenco regole viene riportato correttamente. (#576)
+- La descrizione delle regole può essere letta anche in Windows Live Mail 2010.
+
+
+= 2010.1 =
+Questa release si è concentrata principalmente nella risoluzione di bug e in una maggiore facilità di approccio agli utenti, in quanto il programma ora è molto più stabile.
+
+== Nuove caratteristiche ==
+- NVDA non si rifiuterà più di avviarsi in sistemi privi di una scheda audio. Naturalmente, è auspicabile utilizzare un display braille oppure il visualizzatore sintesi vocale. (#425)
+- Una casella di controllo chiamata annuncia sezioni è stata inserita nella finestra di dialogo formato documento, che permette a NVDA di annunciare le sezioni nel buffer virtuale. Per ragioni di compatibilità con le versioni precedenti, l'opzione è attivata di default.
+- Se l'opzione annunciare tasti di comando è attivata, NVDA annuncerà anche i tasti multimediali (play, stop, homepage, etc) presenti in molte tastiere. (#472)
+- NVDA ora annuncia la parola che viene cancellata alla pressione della combinazione ctrl+backspace nei controlli che lo prevedono. (#491)
+- e'  possibile utilizzare le frecce per scorrere il testo anche nelle finestre di Web Formator. (#452)
+- L'elenco contatti nella gestione indirizzi di Microsoft Office Outlook è ora supportata. 
+- NVDA ora supporta meglio alcuni campi editazione incorporati in documenti in Microsoft Internet Explorer. (#402)
+- Un nuovo script (NVDA+Shift+Meno del tastierino numerico) permette di spostare  il cursore di sistema alla posizione del navigatore ad oggetti.
+- Nuovo script per bloccare/sbloccare i pulsanti sinistro/destro del mouse. Utile per operazioni di trascinamento. Shift+numlock+diviso per il tasto sinistro, shift+numlock+moltiplicato per il destro.
+- Nuove tabelle di traduzione Braille: German 8 punti computer braille, German grade 2, Finlandese 8 punti computer braille, Cinese (Hong Kong, Cantonese), Cinese (Taiwan, Mandarino). (#344, #369, #415, #450)
+- Ora è possibile in fase di installazione disabilitare la creazione del tasto caldo per avviare NVDA. (#518)
+- NVDA può avvalersi delle Iaccessible2 quando presenti in applicazioni a 64 bit. (#479)
+- Migliorato il supporto alle live region nelle applicazioni Mozilla. (#246)
+- E' ora presente NVDA Controller Client API, che permette alle applicazioni di interagire con NVDA; ad esempio annunciare del testo, silenziare la sintesi, far apparire messaggi in Braille, etc.
+- Vengono ora annunciati messaggi di informazione e di errore nelle finestre di logon in Windows Vista e Windows7. (#507)
+- In Adobe Reader, i form interattivi pdf prodotti con Adobe LiveCycle sono ora accessibili. (#475)
+- In Miranda Im, NVDA è in grado di annunciare automaticamente i messaggi chat, se la funzione di rilevamento cambiamento contenuto dinamico è attiva. Inoltre, sono stati aggiunti comandi per leggere gli ultimi 3 messaggi (NVDA+control+numeri). (#546)
+- Nei contenuti di tipo Adobe Flash sono supportati i campi editazione. (#461)
+
+
+== Cambiamenti ==
+- Non viene più annunciato il messaggio ridondante di aiuto tastiera in Windows7.
+- La funzione Display Synth è stata sostituita con il visualizzatore sintesi. Per attivarla, selezionare visualizzatore sintesi dal menù strumenti. Può venir utilizzato indipendentemente dal tipo di sintesi in uso. (#44)
+- I messaggi nei Display Braille verranno automaticamente rimossi non appena l'utente preme un tasto che opera un cambiamento come lo spostamento del focus. In precedenza il messaggio sarebbe rimasto per tutta la durata del tempo per il quale era stato configurato.
+- L'impostazione inerente se il display braille deve seguire il focus o il cursore di controllo  (NVDA+control+t) può essere modificata anche dal menù braille presente nel menù preferenze, e viene anche salvata nel file di configurazione.
+- Aggiornata la sintesi Espeak alla versione 1.43.
+- Aggiornato il pacchetto LibLouis alla versione 1.8.0.
+- Nel buffer virtuale, è stato sensibilmente migliorato l'annuncio degli elementi quando ci si sposta o per carattere o a parole. In precedenza, venivano annunciate molte informazioni irrilevanti e il comportamento era molto diverso rispetto a quando ci si spostava riga per riga. (#490)
+- Il tasto Control ora interrompe la sintesi come qualsiasi altro tasto, piuttosto che metterla in pausa. Per metterla in pausa e farla ripartire, usare il tasto shift.
+- I numeri di riga e colonna di una tabella non vengono più annunciati in concomitanza con cambiamenti del focus, in quanto troppo ridondante e poco utile.
+
+
+== Bug Corretti ==
+- NVDA non si rifiuta più di avviarsi nel caso in cui il supporto per Ui Automation sembra esistere ma fallisce nell'inizializzazione per qualche motivo. (#483)
+- L'intero contenuto della riga di una tabella non viene più annunciato sporadicamente quando viene spostato il focus all'interno di una cella nelle applicazioni Mozilla. (#482)
+- NVDA non presenta più lunghi tempi d'attesa nel caso in cui si espandano elementi con visualizzazione ad albero contenenti un gran numero di sotto-elementi.
+- Quando vengono elencate le voci Sapi5, NVDA intercetta voci non valide e non le include nella lista. In precedenza, in presenza di una voce difettosa, il driver Sapi5 si rifiutava di avviarsi.
+- Il buffer virtuale ora rispetta l'impostazione "annuncia tasto caldo dell'oggetto", situata nella finestra di dialogo presentazione oggetti. (#486)
+- Nel Buffer Virtuale, le coordinate riga/colonna non vengono più lette in maniera non corretta per intestazioni di riga e colonna quando l'annuncio delle tabelle è disattivato.
+- Nel Buffer Virtuale, le coordinate riga/colonna vengono lette correttamente quando si esce da una tabella e poi si ritorna nella medesima cella, senza esplorare altre celle; ad esempio premendo freccia su e poi freccia giù nella prima cella di una tabella. (#378)
+- Le linee vuote in documenti Microsoft Word e nei controlli editazione Microsoft HTML vengono ora visualizzate in maniera appropriata in Braille. In precedenza, NVDA mostrava la frase attuale, non la riga. (#420)
+- Risolti molti problemi di sicurezza quando NVDA deve interagire con finestre di Logon e altri controlli UAC. (#515)
+- Viene correttamente aggiornata la posizione del cursore di sistema quando si impartisce il comando dire tutto per cui il cursore arriva a fine schermo e deve scorrere, nei campi editazione standard di Windows e nei documenti Microsoft Word. (#418)
+- Nel Buffer Virtuale, il testo non è più incluso non correttamente per immagini all'interno di links e controlli cliccabili che sono irrilevanti per gli screen readers. (#423)
+- Correzioni al Layout tastiera Laptop. (#517)
+- Quando il Braille segue il cursore di controllo e ci si trova in una finestra Dos, tale cursore può ora esplorare correttamente il testo.
+- Quando si utilizza TeamTalk3 o TeamTalk4 Classic, la barra di avanzamento Vu Meter nella finestra principale non viene più annunciata ogni volta che si aggiorna. Vengono anche letti correttamente caratteri speciali nella finestra dei messaggi ricevuti.
+- Nel Menù Avvio di Windows7, gli elementi non vengono più letti due volte. (#474)
+- L'attivazione di links sulla stessa pagina in Mozilla Firefox 3.6 sposta ora il buffer virtuale nel posto esatto.
+- Risolto un problema che non permetteva la lettura del testo in alcuni documenti pdf.
+- NVDA non interpreta più erroneamente certi numeri scritti col trattino; esempio 500-1000. (#547)
+- In Windows Xp, NVDA non provoca più il rallentamento in Internet Explorer quando vengono attivate/disattivate le caselle di controllo. (#477)
+- Quando viene usata la sintesi interna ESpeak, l'emissione simultanea di parole e beep non provoca più il rallentamento in alcuni sistemi. Questo accadeva soprattutto nella copia di grosse quantità di dati in Windows Explorer.
+- NVDA non annuncia più quando un documento in Firefox diventa occupato (dovuto ad esempio ad un aggiornamento) quando quel documento è in secondo piano. Questo provocava anche l'annuncio sporadico delle barre di stato di alcuni programmi.
+- Quando si cambia il tipo di tastiera con control+Shift o Alt+Shift, viene annunciato il nome completo del layout sia in voce che in braille. In precedenza, veniva annunciato solo dalla sintesi vocale e Layout alternativi come Dvorak non venivano riportati.
+- Se l'annuncio delle tabelle è disattivato, informazioni sulla tabella non vengono più riportate quando il focus cambia.
+- Alcuni controlli standard nelle visualizzazioni ad albero in applicazioni a 64 bit (ad esempio la visualizzazione ad albero in Microsoft HTML Help) sono ora accessibili. (#463)
+- Risolti alcuni problemi mentre vengono loggati messaggi contenenti caratteri non ascii.  Questo causava errori casuali su sistemi non inglesi. (#581)
+- I contenuti presenti nella finestra informazioni vengono ora presentati nella lingua dell'utente e non solo in inglese. (#586)
+- Sono stati risolti i problemi quando si utilizzano le opzioni per cambiare al volo i parametri del sintetizzatore dopo aver cambiato la voce in una che dispone di meno settaggi della precedente.
+- In Skype 4.2, i nomi dei contatti non vengono più annunciati due volte mentre si scorre la lista contatti.
+- Sistemati alcuni potenziali problemi con la memoria con interfacce Gui e con i buffer virtuali. (#590, #591)
+- Risolto un fastidioso bug che provocava il crash quando si utilizzavano alcune voci Sapi4. (#597)
+
+
+= 2009.1 =
+Le maggiori novità di questa release riguardano la capacità di funzionare anche con le versioni a 64 bit di Windows; migliorato sensibilmente il supporto ai documenti Adobe Reader e Microsoft Internet Explorer; supporto a Windows7; lettura delle finestre di Logon, schermate Control+Alt+Canc e UAC (User Account Control); e l'abilità di interagire con i controlli Adobe Flash e Sun Java nelle pagine web. Inoltre ci sono stati grossissimi miglioramenti per quel che riguarda la stabilità e l'interfaccia utente.
+
+== Nuove Caratteristiche ==
+- Supporto ufficiale alle versioni a 64 bit di Windows! (#309)
+- Aggiunto il supporto ai sintetizzatori Newfon. (nota, non commercializzato in Italia, richiede una speciale versione del sintetizzatore e la lingua parlata è russo ed ucraino). (#206)
+- Nel buffer virtuale, le impostazioni della modalità focus o della modalità buffer virtuale possono venir riportate tramite suoni, che e' l'impostazione predefinita, oltre che normalmente annunciate a parole. In pratica, vi saranno dei beep all'attivazione/disattivazione della modalità focus. (#244)
+- La sintesi vocale non smette più di funzionare quando l'utente modifica il volume con la tastiera, naturalmente per quelle tastiere che prevedono tale funzione, permettendo quindi di continuare ad usare lo screen reader correttamente. (#287)
+- totalmente riscritto il supporto per Internet Explorer e Acrobat Reader. Tale funzione è stata inglobata con il supporto per Firefox, cosicche' ora è possibile utilizzare tutte le facilitazioni e i tasti rapidi presenti, nonche' il supporto braille nelle pagine web. Non ci dovrebbero essere più differenze tra Firefox e Internet Explorer in fase di navigazione.
+- migliorata la gestione del controllo della selezione Data/ora in Windows Vista.
+- Migliorato il supporto al nuovo menù di avvio di Windows Xp, in special modo dalla voce tutti i programmi, i livelli vengono pronunciati correttamente.
+- La quantità di testo che viene letta scorrendo con il mouse ora è configurabile dalle impostazioni Mouse: le scelte disponibili sono paragrafo, riga, parola e carattere.
+- In Microsoft Word ora vengono notificati gli errori ortografici della parola corrente.
+- Supporto per il controllo ortografico di Microsoft Word 2007. Altre versioni di Word possono funzionare ma non è garantito.
+- Supporto per Windows Mail, nello specifico, vengono letti correttamente anche i messaggi in testo semplice.
+- In Windows Vista, quando appare la finestra di sicurezza di richiesta di autorizzazione dell'utente, oppure quando l'utente preme ctrl+alt+canc, NVDA notifica che non ci si trova più nell'interfaccia classica ed accessibile.
+- NVDA è in grado di leggere il testo sotto il Mouse anche nelle finestre Dos.
+- Supporto per la tecnologia Ui Automation  presente in Windows7, che renderà la gestione di tale sistema operativo molto più agevole da parte dello screen reader.
+- NVDA può essere impostato in modo da venir eseguito automaticamente all'avvio di Windows, subito dopo aver effettuato il login, sempre che ve ne sia bisogno. L'opzione si trova nella schermata di configurazione generale, solo per NVDA Installer.
+- NVDA è in grado di leggere le videate inerenti la sicurezza, le finestre di login e quelle generate premendo la combinazione di tasti ctrl+alt+canc, a partire da Windows XP in poi. Anche questa impostazione la si trova in preferenze, impostazioni generali, solo per NVDA Installer. (#97)
+- Aggiunto un driver per i display Braille Optelec ALVA BC6 series.
+- In una pagina web, è possibile premere i tasti n e shift+n per saltare interi blocchi di link.
+- In una pagina web, vengono riportate le "sezioni", in inglese ARIA Landmarks. E' possibile passare da una sezione all'altra con i tasti d o Shift+d. (#192)
+- L'elenco dei links che si richiamava con la combinazione di tasti NVDA+f7 è ora diventata una finestra di dialogo con la possibilità da parte dell'utente di filtrare cosa visualizzare tra links, intestazioni e sezioni. Si noti che intestazioni e sezioni vengono presentate in modo gerarchico. (#363)
+ - Questa nuova finestra di dialogo è in grado di filtrare anche gli elementi man mano che l'utente scrive. Esempio aggiuntivo del traduttore di questo documento: se premiamo NVDA+f7, e ci troviamo con un elenco di 55 links ed iniziamo a scrivere qualcosa, per esempio la lettera l, ci verranno mostrati solo quei links che contengono al loro interno la lettera l. Possiamo scrivere qualunque cosa, anche parole intere, in questo modo andremo direttamente sul link o l'elemento specifico, ad esempio se scrivo "video", e tale elemento esiste sulla pagina, mi verrà visualizzato soltanto il link "video" e premendo invio verrà attivato. Si noti che premendo Backspace verranno resettati i filtri e tutti gli elementi saranno visualizzati nuovamente. (#173)
+- La versione portatile di NVDA ora ricerca le configurazioni dell'utente nella cartella user Config situata all'interno della cartella NVDA. In questo modo, come avviene con la versione installer, seppur con percorsi diversi, le configurazioni dell'utente sono indipendenti dalla struttura principale di NVDA.
+- Moduli personalizzati per le applicazioni, driver di sintesi vocali e driver per Display Braille possono essere salvati nella cartella userConfig. (#337)
+- L'elaborazione di lunghi o complessi documenti riguardanti il buffer virtuale vengono effettuati in background, in modo che l'utente possa interagire con il sistema operativo in altro modo, verrà avvisato non appena il documento sarà stato processato e pronto all'uso.
+- Se NVDA si accorge di non funzionare più correttamente, tutti i tasti premuti dall'utente non verranno più intercettati dallo screen reader, in modo da facilitare l'utilizzatore nelle operazioni di recupero del sistema.
+- Supporto per le operazioni di trascinamento nei controlli Aria in Mozilla Gecko. (#239)  
+- Il titolo di un documento e la riga corrente o quella selezionata viene ora annunciato quando il focus viene spostato all'interno del buffer virtuale. (#210)
+- Nel Buffer virtuale, è possibile interagire con gli oggetti Adobe Flash o Sun Java premendo invio su di essi. Se l'oggetto è accessibile, premere tab e comportarsi come con qualsiasi altra applicazione. Per ritornare nel buffer virtuale premere NVDA+spazio. (#431)
+- Nel Buffer Virtuale, premere O oppure Shift O per spostarsi all'oggetto successivo o precedente.
+- NVDA è in grado di funzionare con le applicazioni che richiedono privilegi di amministratore in Windows Vista e successivi. Si noti che questo è valido solo per le versioni installer, non portable. (#397)
+
+
+== Cambiamenti ==
+- NVDA non pronuncia più "NVDA avviato" quando viene lanciato.
+- I suoni di avvio e chiusura dello screen reader vengono eseguiti utilizzando le impostazioni di output scheda audio presenti in NVDA, piuttosto che quelle predefinite di sistema. (#164)
+- Migliorata la gestione delle barre di avanzamento. Ora è possibile selezionare come NVDA deve avvertire l'utente sul loro stato, o con segnali acustici, o a parole, o con entrambe le cose.
+- Alcuni ruoli generici come pannello, applicazione e frame, non vengono più annunciati se evidenziati a meno che il controllo non abbia un nome.
+- Il comando copia dal cursore di controllo (NVDA+f10) copia il testo dal marcatore iniziale fino alla posizione del cursore di controllo, invece di non tenere conto della posizione. Questo permette la copia dell'ultimo carattere di una riga che in precedenza non era possibile. (#430)
+- Lo script navigatorObject_where (ctrl+NVDA+numpad5) è stato rimosso in quanto non funzionava su tutte le tastiere. 
+- Lo script direPosizioneNavigatoreOggetti è stato assegnato alla combinazione di tasti NVDA+Canc del tastierino numerico. Prima non funzionava su tutte le tastiere. Lo script ora annuncia anche altezza e larghezza dell'oggetto.
+- Migliorate le prestazioni (specialmente con i netbooks) quando vi sono molti beeps in rapida successione, ad esempio rapidi movimenti del mouse con coordinate audio attivate. (#396)
+- Il suono di errore di NVDA non viene più riprodotto nelle versioni candidate e definitive, anche se gli errori vengono comunque loggati.
+
+
+== Bug corretti ==
+- Quando NVDA viene eseguito da un percorso Dos standard, nome di 8 caratteri seguito da un punto e estensioni di 3 caratteri, ma è installato nel relativo percorso con nome lungo (esempio:  progra~1 punta a programmi), NVDA  sarà in grado di identificare che si sta eseguendo una versione installata e caricherà i settaggi dell'utente.
+- la funzione insert+t che permette di leggere il titolo della finestra corrente ora funziona anche se premuta all'interno di un menù.
+- non vengono più visualizzate informazioni inutili sulla riga Braille in presenza di elementi non etichettati.
+- Non vengono più annunciate informazioni inutili quando si passa da un elemento ad un altro in applicazioni Java o lotus-notes.
+- Migliorata la gestione delle ricerche nelle finestre di aiuto delle applicazioni (.hlp, .chm).
+- Viene riportato correttamente il numero di pagina nei documenti Word.
+- Migliorato il supporto della gestione dei campi editazione in Microsoft Word nelle finestre di dialogo, ad esempio quella inerente la gestione caratteri/font. Utilizzare i tasti cursore per navigare in questi controlli.
+- Migliorato il supporto alle finestre del prompt dei comandi, soprattutto in quelle circostanze in cui NVDA non riconosceva alcun carattere.
+- In Windows Vista e versioni successive l'Installer di NVDA eseguirà il programma con i privilegi effettivi dell'utente quando la casella di controllo Esegui NVDA è attivata.
+- Il tasto Backspace ora non crea più problemi quando NVDA è configurato per pronunciare le parole digitate.
+- Non viene più riportata erroneamente la voce menù avvio in alcuni menù di contesto in esplora risorse. (#257)
+- NVDA ora interpreta correttamente le etichette Aria in Mozilla Gecko quando non esiste altro contenuto. (#156)
+- NVDA non abilita più automaticamente la modalità focus nei campi editazione di testo che aggiornano il proprio valore quando cambia il focus; ad esempio http://tigerdirect.com/. (#220)
+- NVDA cercherà di recuperare alcune situazioni nelle quali in precedenza si bloccava per lunghi periodi. Sono necessari circa 10 secondi allo screen reader per riavviarsi.
+- Quando la lingua di NVDA è impostata su "User Default", viene usata la lingua scelta dall'utente nelle impostazioni lingua di Windows, piuttosto che altre opzioni. (#353)
+- NVDA ora riconosce l'esistenza di controlli in AIM 7.
+- Il comando passa tasto attraverso non presenta più problemi se un tasto viene tenuto premuto. In precedenza NVDA si rifiutava di accettare comandi quando questo capitava.  (#413)
+- La barra delle applicazioni non viene più ignorata quando viene evidenziata, che accade spesso quando si esce da un programma. In precedenza, NVDA si comportava come se il focus non fosse cambiato affatto.
+- Quando si legge del testo in applicazioni che fanno uso di Java Access Bridge (incluso OpenOffice.org), NVDA ora funziona correttamente quando l'opzione dire i numeri di riga è abilitata.
+- Il comando Copia dal cursore di controllo (NVDA+f10) ora prevede la circostanza in cui venga usato prima del marcatore d'inizio.  In precedenza, questo poteva causare problemi, come il crash in Notepad++.
+- Il carattere di controllo (0x1) non provoca più strani comportamenti di Espeak come cambio di volume o tono quando viene incontrato. (#437)
+- Il comando dire testo selezionato (NVDA+Shift+freccia su) ora avverte che non esiste alcuna selezione in oggetti che non supportano la selezione del testo.
+- Risolto un problema che provocava il blocco di NVDA durante la pressione di alcuni bottoni o links in Miranda IM. (#440)
+- La riga o la selezione corrente viene rispettata quando viene fatto lo spelling o viene copiato l'oggetto attuale del navigatore.
+- Si è cercato di lavorare su un bug di Windows che provocava la lettura di caratteri senza senso dopo il nome dei link nelle finestre di dialogo in Esplora risorse e Internet Explorer. (#451)
+- Risolto un problema con il comando Annuncia data/ora (NVDA+f12). In precedenza, l'annuncio della data veniva troncato in alcuni sistemi. (#471)
+- Risolto un problema che provocava inavvertitamente la cancellazione del flag Screen Reader di sistema dopo aver interagito con le schermate di sicurezza di Windows. Questo poteva creare delle difficoltà a quelle applicazioni che controllano il flag Screen Reader di Sistema come Skype, Adobe Reader e Jart. (#462)
+- Nelle caselle combinate di  Internet Explorer 6, viene annunciato l'elemento attivo quando cambia. (#342)
+
+
+= 0.6P3 =
+
+== Nuove caratteristiche ==
+- Poiche' la gestione Formule in Excel è inacessibile a NVDA, viene fornita una specifica finestra di dialogo con campi editazione modificabili dall'utente.
+- Supporto alla formattazione nei controlli di testo Iaccessible2, comprese le applicazioni Mozilla.
+- Gli errori grammaticali ora possono essere annunciati dove possibile. Questo è configurabile dalla finestra di dialogo formato documento.
+- NVDA può essere configurato ad emettere beep per tutte le barre di progresso o solo per quelle visibili. In alternativa, NVDA può essere configurato ad annunciare il valore delle barre di progresso ogni 10%.
+- I links possono essere individuati nei controlli Richedit.
+- Ora il mouse può essere spostato alla posizione del carattere del cursore di controllo nella maggior parte dei controlli di testo editabili. In precedenza il mouse poteva essere spostato solo al centro del controllo.
+- Nei buffer virtuali, il cursore di controllo ora può esplorare il testo del buffer, piuttosto che soltanto il testo interno del navigatore ad oggetti (che spesso non è utile all'utente). Questo significa che è possibile esplorare la gerarchia del buffer virtuale utilizzando la navigazione ad oggetti e il cursore di controllo si sposterà in quel punto del buffer.
+- Prevista la gestione di alcuni stati aggiuntivi dei controlli Java.
+- Se il comando dire titolo (NVDA+t) viene premuto due volte, verrà fatto lo spelling del titolo. Se premuto tre volte, verrà copiato negli appunti.
+- L'aiuto tastiera ora è in grado di leggere i nomi dei tasti funzione se premuti da soli.
+- I nomi dei tasti annunciati dall'aiuto tastiera sono ora traducibili.
+- Aggiunto il supporto ai campi di testo riconosciuto in SiRecognizer. (#198)
+- Supporto per i Display Braille!
+- Aggiunto un comando (NVDA+c) per annunciare il testo contenuto negli appunti. (#193)
+- Nei Buffers Virtuali, se NVDA passa automaticamente alla modalità Focus, si può usare il tasto Esc per tornare alla modalità esplorazione. NVDA+spazio può ancora essere utilizzato.
+- Nei buffer virtuali, quando il focus cambia o il cursore viene spostato, NVDA può passare automaticamente alla modalità focus o esplorazione a seconda del controllo sul cursore. L'opzione è configurabile dalle impostazioni del buffer virtuale. (#157)
+- Riscritto il Driver per i sintetizzatori Sapi4 che prende il posto dei due driver precedenti Microsoft e Serotek, e che dovrebbe risolvere i problemi che si incontravano con quest'ultimi.
+- L'applicazione NVDA ora include il Manifest, che significa che non viene più eseguita in modalità compatibilità in Windows Vista.
+- Il file di configurazione e i dizionari vengono salvati nella cartella dati applicazione dell'utente se è stato usato l'Installer. Questo è necessario in Windows Vista e permette a più utenti di avere configurazioni diverse di NVDA.
+- Aggiunto il supporto per informazioni sulla posizione per i controlli IAccessible2.
+- Inserita la possibilità di copiare testo negli appunti utilizzando il cursore di controllo. NVDA+f9 imposta il marcatore iniziale alla posizione attuale del cursore di controllo. NVDA+f10 recupera il testo tra il marker iniziale e la posizione attuale del cursore di controllo e lo copia negli appunti. (#240)
+- Aggiunto il supporto ad alcuni campi editazione in Programmi Pinacle Tv.
+- Quando viene annunciata una gran quantità di testo selezionato (sopra i 512 caratteri), NVDA ora dice il numero di caratteri selezionati piuttosto che annunciare l'intera selezione. (#249)
+
+
+== Cambiamenti ==
+- Se il dispositivo d'uscita audio è impostato a quello predefinito di Windows (Microsoft sound mapper), NVDA ora passerà al nuovo dispositivo predefinito per Espeak e i Toni quando il dispositivo predefinito cambia. Ad esempio, NVDA passerà su una scheda audio USB se essa è quella predefinita e viene connessa.
+- Migliorate le prestazioni di Espeak con alcuni drivers audio per Windows Vista.
+- L'annuncio di links, intestazioni, tabelle, elenchi e blocchi tra virgolette può essere configurato dalla finestra di dialogo formato documento. In precedenza per configurare queste impostazioni per il buffer virtuale, questi parametri erano situati nella finestra buffer virtuale. 
+- La velocità ora è l'impostazione predefinita quando si cambiano al volo i parametri del sintetizzatore.
+- Migliorato il caricamento e lo scaricamento di moduli aggiuntivi (appmodules).
+- Il comando dire titolo (NVDA+t) ora annuncia solo il titolo piuttosto che l'intero oggetto. Se l'oggetto in primo piano non ha un nome, viene usato il nome del processo dell'applicazione.
+- Invece della dicitura passa attraverso il buffer virtuale attivato/disattivato, NVDA annuncerà modalità focus o modalità esplorazione.
+- Le voci ora vengono salvate nel file di configurazione con l'ID invece che con l'indice. (#19)
+- Il livello degli elementi nelle visualizzazioni ad albero è ora annunciato per prima se è stato cambiato dall'elemento precedentemente evidenziato per tutte le visualizzazioni ad albero. In precedenza, questo avveniva solo per le finestre di visualizzazioni ad albero native (SysTreeView32).
+
+
+== Bug risolti ==
+- L'ultimo frammento d'audio non viene più troncato quando si usa NVDA con Espeak in un server desktop remoto.
+- Risolto un problema nel salvataggio dizionari per alcune voci.
+- Eliminato il ritardo quando ci si sposta per unità diverse dal carattere (parole, righe, etc) fino alla fine del documento nel buffer virtuale nelle applicazioni Mozilla Gecko. (#155)
+- Se è abilitata la funzione leggi parole digitate, la parola viene annunciata anche quando viene premuto invio.
+- Risolti alcuni problemi con set di caratteri in documenti richedit.
+- Il visualizzatore log di NVDA ora utilizza RichEdit piuttosto che soltanto edit per mostrare i log. Questo migliora la lettura parola per parola in NVdA.
+- Risolti alcuni problemi relativi agli oggetti incorporati in controlli richedit.
+- NVDA ora legge i numeri di pagina in Microsoft Word. (#120)
+- Risolto il problema laddove giungendo con il tab in una casella di controllo attivata con il buffer virtuale in Mozilla Gecko, premendo il tasto spazio non veniva notificato che la casella diventava disattivata.
+- Le caselle di controllo parzialmente attivabili sono ora annunciate correttamente nelle applicazioni Mozilla.
+- Se la selezione del testo si espande o si restringe in entrambe le direzioni, la selezione verrà letta come una sola porzione anziché due.
+- Quando si legge con il mouse, il testo nei campi editazione Mozilla Gecko ora dovrebbe venir annunciato.
+- Dire tutto non dovrebbe più causare crash con sintesi Sapi5.
+- Risolto un problema che faceva in modo che i cambiamenti di selezione del testo non venivano letti nei controlli standard di Windows.
+- Sistemato il trascinamento Mouse negli oggetti Java. (#185)
+- NVDA non annuncia più elementi nella visualizzazione ad albero Java come espandibili se non hanno sottoelementi.
+- Annuncio dell'oggetto con il focus quando una finestra Java appare in primo piano.
+- Il Driver della sintesi Espeak non smette più di parlare dopo un errore.
+- Risolto un problema che non permetteva il salvataggio dei parametri della voce se modificati al volo e non tramite menù.
+- Migliorata la lettura delle parole e dei caratteri digitati.
+- Alcuni frammenti di testo che prima non venivano letti (esempio giochi di avventura nelle console di testo) ora vengono correttamente annunciati.
+- NVDA ora ignora i cambiamenti del focus nelle finestre in secondo piano.
+- Migliorato il rilevamento del focus quando si esce dai menù di contesto.
+- NVDA ora annuncia quando viene attivato un menù di contesto nel menù avvio.
+- Il menù avvio classico di Windows è annunciato come menù avvio invece che menù applicazione.
+- Migliorata la gestione degli avvisi, ad esempio quelli incontrati in Mozilla Firefox. Il testo non verrà più letto molte volte. (#248)
+- Il testo di campi editazione evidenziabili e di sola lettura non verrà più incluso quando vengono recuperate informazioni sulle finestre di dialogo. Questo risolve, ad esempio, la lettura automatica delle intere licenze negli installer.
+- NVDA non annuncia più la deselezione del testo uscendo da certi campi editazione (esempio: barra degli indirizzi di Internet Explorer, campi indirizzi in Thunderbird3).
+- Quando viene aperta un'email solo testo in Outlook Express e Windows Mail, il focus viene correttamente posizionato sul messaggio, che diventa pronto alla lettura. In precedenza l'utente era costretto ad avvalersi del tasto tab per accedere al messaggio.
+- Risolti molti problemi con la funzione "leggi i tasti di comando".
+- NVDA può leggere testi più lunghi di 65535 caratteri nei controlli editazione standard (ad esempio Notepad).
+- Migliorata la lettura delle righe nei controlli editazione MSHTML (campi di immissione testo in Internet Explorer e messaggi modificabili in Microsoft Outlook Express).
+- NVDA non si blocca più quando legge il testo in OpenOffice. (#148, #180)
+
+
+= 0.6p2 (da qui in inglese)=
+- Improved the default ESpeak voice in NVDA
+- Added a laptop keyboard layout. Keyboard layouts can be configured from NVDA's  Keyboard settings dialog. (#60)
+- Support for grouping items in SysListView32 controls, mainly found in Windows Vista. (#27)
+- Report the checked state of treeview items in SysTreeview32 controls.
+- Added shortcut keys for many of NVDA's configuration dialogs
+- Support for IAccessible2 enabled applications such as Mozilla Firefox when running NVDA from portable media, with out having to register any special Dll files
+- Fix a crash with the virtualBuffers Links List in Gecko applications. (#48)
+- NVDA should no longer crash Mozilla Gecko applications such as Firefox and Thunderbird if NVDA is running with higher privilages than the Mozilla Gecko application. E.g. NVDA is  running as Administrator.
+- Speech dictionaries (previously User dictionaries) now can be either case sensitive or insensitive, and the patterns can optionally be regular expressions. (#39)
+- Whether or not NVDA uses a 'screen layout' mode for virtual buffer documents can now be configured from a settings dialog
+- No longer report anchor tags with no href in Gecko documents as links. (#47)
+- The NVDA find command now remembers what you last searched for, across all applications. (#53)
+- Fix issues where the checked state would not be announced for some checkboxes and radio buttons in virtualBuffers
+- VirtualBuffer pass-through mode is now specific to each document, rather than NVDA globally. (#33)
+- Fixed some sluggishness with focus changes and incorrect speech interuption which sometimes occured when using NVDA on a system that had been on standby or was rather slow
+- Improve support for combo boxes in Mozilla Firefox. Specifically when arrowing around them text isn't repeated, and when jumping out of them, ancestor controls are not announced unnecessarily. Also virtualBuffer commands now work when focused on one  when you are in a virtualBuffer.
+- Improve accuracy of finding the statusbar in many applications. (#8)
+- Added the NVDA interactive Python console tool, to enable developers to look at and manipulate NVDA's internals as it is running
+- sayAll, reportSelection and reportCurrentLine scripts now work properly when in virtualBuffer pass-through mode. (#52)
+- The increase rate and decrease rate scripts have been removed. Users should use the synth settings ring scripts (control+nvda+arrows) or the Voice settings dialog
+- Improve the range and scale of the progress bar beeps
+- Added more quick keys to the new virtualBuffers:  l for list, i for list item, e for edit field, b for button, x for checkbox, r for radio button, g for graphic, q for blockquote, c for combo box, 1 through 6 for respective heading levels, s for separator, m for frame. (#67, #102, #108)
+- Canceling the loading of a new document in Mozilla Firefox now allows the user to keep using the old document's virtualBuffer if the old document hadn't yet really been destroyed. (#63)
+- Navigating by words in virtualBuffers is now more accurate as  words do not accidentally contain text from more than one field. (#70)
+- Improved accuracy of focus tracking and focus updating when navigating in Mozilla Gecko virtualBuffers.
+- Added a findPrevious script (shift+NVDA+f3) for use in new virtualBuffers
+- Improved sluggishness in Mozilla Gecko dialogs (in Firefox and Thunderbird). (#66)
+- Add the ability to view the current log file for NVDA. it can be found in the NVDA menu -> Tools
+- Scripts such as say time and date now take the current language in to account; punctuation and ordering of words now reflects the language
+- The language combo box in NVDA's General settings dialog now shows full language names for ease of use
+- When reviewing text in the current navigator object, the text is always up to date if it changes dynamically. E.g. reviewing the text of a list item in Task Manager. (#15)
+- When moving with the mouse, the current paragraph of text under the mouse is now announced, rather than either all the text in that particular object or just the current word. Also audio coordinates, and announcement of object roles is optional, they are turned off by default
+- Support for reading text with the mouse in Microsoft Word
+- Fixed bug where leaving the menu bar in applications such as Wordpad would cause text selection to not be announced anymore
+- In Winamp, the title of the track is no longer announced again and again when switching tracks, or pausing/resuming/stopping playback.
+- In Winamp,  Added ability to announce state of the shuffle and repeat controls as they are switched. Works in the main window and in the playlist editor
+- Improve the ability to activate particular fields in Mozilla Gecko virtualBuffers. May include clickable graphics, links containing paragraphs, and other weird structures
+- Fixed an initial lag when opening NVDA dialogs on some systems. (#65)
+- Add specific support for the Total Commander application
+- Fix bug in the sapi4serotek driver where the pitch could get locked at a particular value, i.e. stays high after reading a capital letter. (#89)
+- Announce clickable text and other fields as clickable in Mozilla Gecko VirtualBuffers. e.g.  a field which has an onclick HTML attribute. (#91)
+- When moving around Mozilla Gecko virtualBuffers, scroll the current field in to view -- useful so sighted peers have an idea of where the user is up to in the document. (#57)
+- Add basic support for ARIA live region show events in IAccessible2 enabled applications. Useful in the Chatzilla IRC application, new messages will now be read automatically
+- Some slight improvements to help use ARIA enabled web applications,  e.g. Google Docs
+- Stop adding extra blank lines to text when copying it from a virtualBuffer
+- Stop the space key from activating a link in the Links List. Now it can be used like other letters in order to  start typing the name of a particular link you wish to go to
+- The moveMouseToNavigator script (NVDA+numpadSlash) now moves the mouse to the centre of the navigator object, rather than the top left
+- Added scripts to click the left and right mouse buttons (numpadSlash and numpadStar respectively)
+- Improve access to the Windows System Tray. Focus hopefully should no longer seem to keep jumping back to one particular item. Reminder: to get to the System Tray use the Windows command WindowsKey+b. (#10)
+- Improve performance and stop announcing extra text when holding down a cursor key in an edit field and it hits the end
+- Stop the ability for NVDA to make the user wait while particular messages are spoken. Fixes some crashes/freezes with particular speech synthesizers. (#117)
+- Added support for the Audiologic Tts3 speech synthesizer, contribution by Gianluca Casalino. (#105)
+- Possibly improve performance when navigating around documents in Microsoft Word
+- Improved accuracy when reading text of alerts in Mozilla Gecko applications
+- Stop possible crashes when trying to save configuration on non-English versions of Windows. (#114)
+- Add an NVDA welcome dialog. This dialog is designed to provide essential information for new users and allows CapsLock to be configured as an NVDA modifier key. This dialog will be displayed when NVDA is started by default until it is disabled.
+- Fix basic support for Adobe Reader so it is possible to read documents  in  versions 8 and 9
+- Fix some errors that may have occured when holding down keys before NVDA is properly initialized
+- If the user has configured NVDA to save configuration on exit, make sure the configuration is properly saved when shutting down or logging out of  Windows.
+- Added an NVDA logo sound to the beginning of the installer, contributed by Victer Tsaran
+- NVDA, both running in the installer and otherwise, should properly clean up its system tray icon when it exits
+- Labels for standard controls in NVDA's dialogs (such as Ok and cancel buttons) should now show in the language NVDA is set to, rather than just staying in English.
+- NVDA's icon should now be  used for  the NVDA shortcuts in the start menu and on the Desktop, rather than a default application icon.
+- Read cells in MS Excel when moving with tab and shift+tab. (#146)
+- Fix some double speaking in particular lists in Skype.
+- Improved caret tracking in IAccessible2 and Java applications; e.g. in Open Office and Lotus Symphony, NVDA properly waits for the caret to move in documents rather than accidentally reading the wrong word or line at the end of some paragraphs. (#119)
+- Support for AkelEdit controls found in Akelpad 4.0
+- NVDA no longer locks up in Lotus Synphony when moving from the document to the menu bar.
+- NVDA no longer freezes in the Windows XP Add/Remove programs applet when launching an uninstaller. (#30)
+- NVDA no longer freezes when opening Spybot Search and Destroy
+
+
+= 0.6p1 =
+
+== Access to web content with new in-process virtualBuffers (so far for Mozilla Gecko applications including Firefox3 and Thunderbird3) ==
+- Load times have been improved almost by a factor of thirty (you no longer have to wait at all for most web pages to load in to the buffer)
+- Added a links list (NVDA+f7)
+- Improved the find dialog (control+nvda+f) so that it performs a case-insencitive search, plus fixed a few focus issues with that dialog box.
+- It is now possible to select and copy text in the new virtualBuffers
+- By default the new virtualBuffers represent the document in a screen layout (links and controls are not on separate lines unless they really are visually). You can toggle this feature with NVDA+v.
+- It is possible to move by paragraph with control+upArrow and control+downArrow.
+- Improved support for dynamic content
+- Improved over all accuracy of reading lines and fields when arrowing up and down.
+
+
+== Internationalization ==
+- It is now possible to type accented characters that rely on a "dead character", while NVDA is running.
+- NVDA now announces when the keyboard layout is changed (when pressing alt+shift).
+- The announce date and time feature now takes the system's current regional and language options in to account.
+- added czech translation (by Tomas Valusek with help from Jaromir Vit)
+- added vietnamese translation by Dang Hoai Phuc
+- Added Africaans (af_ZA) translation, by Willem van der Walt.
+- Added russian translation by Dmitry Kaslin 
+- Added polish translation by DOROTA CZAJKA and friends.
+- Added Japanese translation by Katsutoshi Tsuji.
+- added Thai translation by Amorn Kiattikhunrat
+- added croatian translation by Mario Percinic and Hrvoje Katic  
+- Added galician translation by Juan C. buno 
+- added ukrainian translation by Aleksey Sadovoy 
+
+
+== Speech ==
+- NVDA now comes packaged with eSpeak 1.33 which contains many improvements, among those are improved languages, named variants, ability to speak faster.
+- The voice settings dialog now allows you to change the variant of a synthesizer if it supports one. Variant is usually a slight variation on the current voice. (eSpeak supports variants).
+- Added the ability to change the inflection of a voice in the voice settings dialog if the current synthesizer supports this. (eSpeak supports inflection).
+- Added the ability to turn off speaking of object position information(e.g. 1 of 4). This option can be found in the Object presentation settings dialog.
+- NVDA can now beep when speaking a capital letter. This can be turned on and off with a check box in the voice settings dialog. Also added a raise pitch for capitals check box to configure whether NVDA should actually do its normal pitch raise for capitals. So now you can have either raise pitch, say cap, or beep, for capitals.
+- Added the ability to pause speech in NVDA (like found in Voice Over for the Mac). When NVDA is speaking something, you can press the control or shift keys to silence speech just like normal, but if you then tap the shift key again (as long as you havn't pressed any other keys) speech will continue from exactly where it left off.
+- Added a virtual synthDriver which outputs text to a window instead of speaking via a speech synthesiser. This should be more pleasant for sighted developers who are not used to speech synthesis but want to know what is spoken by NVDA. There are probably still some bugs, so feedback is most definitely welcome.
+- NVDA no longer by default speaks punctuation, you can enable speaking of punctuation with NVDA+p.
+- eSpeak by default now speaks quite a bit slower, which should make it easier for people who are using eSpeak for the first time, when installing or starting to use NVDA.
+- Added user dictionaries to NVDA. These allow you to make NVDA speak certain text differently. There are three dictionaries: default, voice, and temporary. Entries you add to the default dictionary will happen all the time in NVDA. Voice dictionaries are specific to the current synthesizer and voice you currently have set. And temporary dictionary is  for those times you quickly want to set a rule while you are doing a particular task, but you don't want it to be perminant (it will disappear if you close NVDA). For now the rules are regular expressions, not just normal text.
+- Synthesizers can now use any audio output device on your system, by setting the output device combo box in the Synthesizer dialog before selecting the synthesizer you want.
+
+
+== Performance ==
+- NVDA no longer takes up a huge amount of system memory , when editing messages in mshtml edit controls
+- Improved performance when reviewing text inside many controls that do not actually have a real cursor. e.g. MSN Messenger history window, treeview items, listview items etc.
+- Improved performance in rich edit documents.
+- NVDA should no longer slowly creep up in system memory size for no reason
+- Fixed bugs when  trying to focus on a dos console window more than three or so times. NVDA did have a tendency to completely crash.
+
+
+== Key commands ==
+- NVDA+shift+numpad6 and NVDA+shift+numpad4 allow you to navigate to the next or previous object in flow respectively. This means that you can navigate in an application by only using these two keys with out having to worry about going up by parent, or down to first child as you move around the object hyerarchy. For instance in a web browser such as firefox, you could navigate the document by object, by just using these two keys. If next in flow or previous in flow takes you up and out of an object, or down in to an object, ordered beeps indicate the direction.
+- You can now configure voice settings with out opening the voice settings dialog, by using the Synth Settings Ring. The synth settings ring is a group of voice settings you can toggle through by pressing control+NVDA+right and control+NVDA+left. To change a setting use control+NVDA+up and control+NVDA+down.
+- Added a command to report the current selection in edit fields (NVDA+shift+upArrow).
+- Quite a few NVDA commands that speak text (such as report current line etc) now can spell the text if pressed twice quickly.
+- the capslock, numpad insert and extended insert can all be used as the NVDA modifier key. Also if one of these keys is used, pressing the key twice with out pressing any other keys will send the key through to the operating system, just like you'd pressed the key with out NVDA running. To make one of these keys be the NVDA modifier key, check its checkbox in the Keyboard settings dialog (used to be called the keyboard echo dialog).
+
+
+== Application support ==
+- Improved support for Firefox3 and Thunderbird3 documents. Load times have been improved by almost a factor of thirty, a screen layout is used by default (press nvda+v to toggle between this and no screen layout), a links list (nvda+f7 has been added), the find dialog (control+nvda+f) is now case-insensitive, much better support for dynamic content, selecting and copying text is now possible.
+- In the MSN Messenger and Windows Live Messenger history windows, it is now possible to select and copy text.
+- Improved support for the audacity application
+- Added support for a few edit/text controls in Skype
+- Improved support for Miranda instant messenger application
+- Fixed some focus issues when opening html and plain text messages in Outlook Express. 
+- Outlook express newsgroup message fields are now labeled correctly
+- NVDA can now read the addresses in the Outlook Express message fields (to/from/cc etc)
+- NVDA should be now more accurate at announcing the next message in out look express when deleting a message from the message list.
+
+
+== APIs and toolkits ==
+- Improved object navigation for MSAA objects. If a window has a system menu, title bar, or scroll bars, you can now navigate to them.
+- Added support for the IAccessible2 accessibility API. A part from the ability to announce more control types, this also allows NVDA to access the cursor in applications such as Firefox 3 and Thunderbird 3, allowing you to navigate, select or edit text.
+- Added support for Scintilla edit controls (such controls can be found in Notepad++ or Tortoise SVN).
+- Added support for Java applications (via the Java Access Bridge). This can provide basic support for Open Office (if Java is enabled), and any other stand-alone Java application. Note that java applets with in a web browser may not work yet.
+
+
+== Mouse ==
+- Improved support for reading what is under the mouse pointer as it moves. It is now much faster, and it also now has the ability in some controls such as standard edit fields, Java and IAccessible2 controls, to read the current word, not just the current object. This may be of some used to vision impared people who just want to read a specific bit of text with the mouse.
+- Added a new config option, found in the mouse settings dialog. Play audio when mouse moves, when checked, plays a 40 ms beep each time the mouse moves, with its pitch (between 220 and 1760 hz) representing the y axis, and left/right volume, representing the x axis. This enables a blind person to get a rough idea of where the mouse is on the screen as its being moved. This feature also depends on reportObjectUnderMouse also being turned on. So this means that if you quickly need to disable both beeps and announcing of objects, then just press NVDA+m. The beeps are also louder or softer depending on how bright the screen is at that point.
+
+
+== Object presentation and interaction ==
+- Improved support for most common treeview controls. NVDA now tells you how many items are in the branch when you expand it. It also announces the level when moving in and out of branches. And, it announces the current item number and number of items, according to the current branch, not the entire treeview.
+- Improved what is announced when focus changes as you move around applications or the operating system. Now instead of just hearing the control you land on, you hear information about any controls this control is positioned inside of. For instance if you tab and land on a button inside a groupbox, the groupbox will also get announced.
+- NVDA now tries to speak the message inside many dialog boxes as they appear. This is accurate most of the time, though there are still many dialogs that arn't as good as they could be.
+- Added a report object descriptions checkbox to the object presentation settings dialog. Power users may wish to sometimes uncheck this to stop NVDA announcing a lot of extra descriptions on particular controls,  such as in Java applications.
+- NVDA automatically announces selected text in edit controls when focus moves to them. If there isn't any selected text, then it just announces the current line like usual.
+- NVDA is a lot more careful now when it plays beeps to indicate progress bar changes in applications. It no longer goes crazy in Eclipse applications such as Lotus Notes/Symphony, and Accessibility Probe.
+
+
+== User Interface ==
+- Removed the NVDA interface window, and replaced it with a simple NVDA popup menu.
+- NVDA's user interface settings dialog is now called General Settings. It also contains an extra setting: a combo box to set the log level, for what messages should go to NVDA's log file. Note that NVDA's log file is now called nvda.log not debug.log.
+- Removed the report object group names checkBox from the object presentation settings dialog, reporting of group names now is handled differently.
+
+
+= 0.5 =
+- NVDA now has a built-in synthesizer called eSpeak, developed by Jonathan Duddington.It is very responsive and lite-weight, and has support for many different languages. Sapi synthesizers can still be used, but eSpeak will be used by default.
+ - eSpeak does not depend on any special software to be installed, so it can be used with NVDA on any computer, on a USB thumb drive, or anywhere. 
+ - For more info on eSpeak, or to find other versions, go to http://espeak.sourceforge.net/.
+- Fix bug where the wrong character was being announced when pressing delete in Internet Explorer / Outlook Express editable panes.
+- Added support for more edit fields in Skype.
+- VirtualBuffers only get loaded when focus is on the window that needs to be loaded. This fixes some problems when the preview pane is turned on in Outlook Express.
+- Added commandline arguments to NVDA:
+ - -m, --minimal: do not play startup/exit sounds and do not show the interface on startup if set to do so.
+ - -q, --quit: quit any other already running instance of NVDA and then exit
+ - -s, --stderr-file fileName: specify where NVDA should place uncaught errors and exceptions
+ - -d, --debug-file fileName: specify where NVDA should place debug messages
+ - -c, --config-file: specify an alternative configuration file  
+ - -h, -help: show a help message listing commandline arguments
+- Fixed bug where punctuation symbols would not be translated to the appropriate language, when using a language other than english, and when speak typed characters was turned on.
+- Added Slovak language files thanks to Peter Vagner 
+- Added a Virtual Buffer settings dialog and a Document Formatting settings dialog, from Peter Vagner.
+- Added French translation thanks to Michel Such 
+- Added a script to toggle beeping of progress bars on and off (insert+u). Contributed by Peter Vagner.
+- Made more messages in NVDA be translatable for other languages. This includes script descriptions when in keyboard help.
+- Added a find dialog to the virtualBuffers (internet Explorer and Firefox). Pressing control+f when on a page brings up a dialog in which you can type some text to find. Pressing enter will then search for this text and place the virtualBuffer cursor on this line. Pressing f3 will also search for the next occurance of the text.
+- When speak typed characters is turned on, more characters should be now spoken. Technically, now ascii characters from 32 to 255 can now be spoken.
+- Renamed some control types for better readability. Editable text is now edit, outline is now tree view and push button is now button.
+- When arrowing around list items in a list, or tree view items in a tree view, the control type (list item, tree view item) is no longer spoken, to speed up navigation.
+- Has Popup (to indicate that a menu has a submenu) is now spoken as submenu.
+- Where some language use control and alt (or altGR) to enter a special character, NVDA now will speak these characters when speak typed characters is on.
+- Fixed some problems with reviewing static text controls.
+- Added Translation for Traditional Chinese, thanks to Coscell Kao.
+- Re-structured an important part of the NVDA code, which should now fix many issues with NVDA's user interface (including settings dialogs).
+- Added Sapi4 support to NVDA. Currently there are two sapi4 drivers, one based on code contributed by Serotek Corporation, and one using the ActiveVoice.ActiveVoice com Interface. Both these drivers have issues, see which one works best for you.
+- Now when trying to run a new copy of NVDA while an older copy is still running will cause the new copy to just exit. This fixes a major problem where running multiple copies of NVDA makes your system very unusable.
+- Renamed the title of the NVDA user interface from NVDA Interface to NVDA. 
+- Fixed a bug in Outlook Express where pressing backspace at the start of an editable message would cause an error.
+- Added patch from Rui Batista that adds a script to report the current battery status on laptops (insert+shift+b).
+- Added a synth driver called Silence. This is a synth driver that does not speak anything, allowing NVDA to stay completely silent at all times. Eventually this could be used along with Braille support, when we have it.
+- Added capitalPitchChange setting for synthesizers thanks to J.J. Meddaugh
+- Added patch from J.J. Meddaugh that makes the toggle report objects under mouse script more like the other toggle scripts (saying on/off rather than changing the whole statement).
+- Added spanish translation (es) contributed by Juan C. buo.
+- Added Hungarian language file from Tamas Gczy.
+- Added Portuguese language file from Rui Batista.
+- Changing the voice in the voice settings dialog now sets the rate, pitch and volume sliders to the new values according to the synthesizer, rather than forcing the synthesizer to be set to the old values. This fixes issues where a synth like eloquence or viavoice seems to speek at a much faster rate than all other synths.
+- Fixed a bug where either speech would stop, or NVDA would entirely crash, when in a Dos console window.
+- If support for a particular language exists, NVDA now automatically can show its interface and speak its messages in the language Windows is set to. A particular language can still be chosen manualy from the user interface settings dialog as well.
+- Added script 'toggleReportDynamicContentChanges' (insert+5). This toggles whether new text, or other dynamic changes should be automatically announced. So far this only works in Dos Console Windows.
+- Added script 'toggleCaretMovesReviewCursor' (insert+6). This toggles whether the review cursor should be automatically repositioned when the system caret moves. This is useful in Dos console windows when trying to read information as the screen is updating.
+- Added script 'toggleFocusMovesNavigatorObject' (insert+7). This toggles whether the navigator object is repositioned on the object with focus as it changes.
+- Added some documentation translated in to various languages. So far there is French, Spannish and Finish.
+- Removed some developer documentation from the binary distribution of NVDA, it is only now in the source version.
+- Fixed a possible bug in Windows Live Messanger and MSN Messenger where arrowing up and down the contact list would cause errors.
+- New messages are now automatically spoken when in a conversation using Windows Live Messenger. (only works for English versions so far)
+- The history window in a Windows Live Messenger conversation can now be read by using the arrow keys. (Only works for English versions so far) 
+- Added script 'passNextKeyThrough' (insert+f2). Press this key, and then the next key pressed will be passed straight through to Windows. This is useful if you have to press a certain key in an application but NVDA uses that key for something else.
+- NVDA no longer freezes up for more than a minute when opening very large documents in MS Word.
+- Fixed a bug where moving out of a table in MS Word, and then moving back in, caused the current row/column numbers not to be spoken if moving back in to exactly the same cell.
+- When starting NVDA with a synthesizer that doesn't exist, or is not working, the sapi5 synth will try and be loaded in stead, or if sapi5 isn't working, then speech will be set to silence.
+- Increasing and decreasing rate scripts can no longer take the rate above 100 or below 0.
+- If there is an error with a language when choosing it in the User Interface Settings dialog, a message box will alert the user to the fact.
+- NVDA now asks if it should save configuration and restart if the user has just changed the language in the User Interface Settings Dialog. NVDA must be restarted for the language change to fully take effect.
+- If a synthesizer can not be loaded, when choosing it from the synthesizer dialog, a message box alerts the user to the fact.
+- When loading a synthesizer for the first time, NVDA lets the synthesizer choose the most suitable voice, rate and pitch parameters, rather than forcing it to defaults it thinks are ok. This fixes a problem where Eloquence and Viavoice sapi4 synths start speaking way too fast for the first time.
+

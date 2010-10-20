@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2010.2\n"
 "POT-Creation-Date: 2010-09-02 19:02+AUSEST\n"
-"PO-Revision-Date: 2010-09-30 12:07+0100\n"
+"PO-Revision-Date: 2010-10-18 14:28+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@juvox.it>\n"
 "Language-Team: Luca Maianti <lucanight@moleman.como.it>\n"
 "MIME-Version: 1.0\n"
@@ -153,7 +153,7 @@ msgstr "Click sinistro"
 
 #: appModules/_default.py:65
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "Clicca il tasto sinistro del mouse"
+msgstr "Clicca il tasto sinistro del mouse una volta nella posizione corrente del mouse"
 
 #: appModules/_default.py:68
 msgid "right click"
@@ -207,7 +207,7 @@ msgstr "Legge la selezione corrente nelle aree di editazione e nei documenti"
 
 #: appModules/_default.py:112
 msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
-msgstr "Se premuto una volta legge l'ora se premuto due volte la data"
+msgstr "Se premuto una volta legge l'ora, se premuto due volte la data"
 
 #: appModules/_default.py:117
 #: appModules/_default.py:126
@@ -286,7 +286,7 @@ msgstr "Nessuna navigazione in linea disponibile per questo oggetto"
 
 #: appModules/_default.py:230
 msgid "Switches to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object"
-msgstr "Attiva la navigazione in linea per lo schermo (o documento) e sposta il cursore virtuale nella posizione dell'oggetto corrente"
+msgstr "Attiva la navigazione in linea per lo schermo (o documento) e sposta il cursore di controllo nella posizione dell'oggetto corrente"
 
 #: appModules/_default.py:242
 msgid "No object at flat review position"
@@ -321,11 +321,11 @@ msgstr "Non ci sono informazioni di posizione per il navigatore di oggetti"
 
 #: appModules/_default.py:289
 msgid "No location information for screen"
-msgstr "Non ci sono informazioni di posizione"
+msgstr "Non ci sono informazioni di posizione a schermo"
 
 #: appModules/_default.py:295
 msgid "Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen"
-msgstr "I bordi dell'oggetto sono posizionati %.1f per cento a destra dal borrdo destro dello schermo %.1f per cento in basso dal bordo in alto %.1f per cento a sinistra dal bordo a destra %.1f in alto dal bordo in basso"
+msgstr "l'oggetto si trova a %.1f dal lato sinistro dello schermo, a %.1f dal lato superiore, occupa %.1f della larghezza e %.1f dell'altezza"
 
 #: appModules/_default.py:296
 msgid "Reports the hight, width and position of the current navigator object"
@@ -506,11 +506,11 @@ msgstr "Cicla tra le modalità esplorazione e focus. Nella modalità focus, i ta
 
 #: appModules/_default.py:601
 msgid "Quits NVDA!"
-msgstr "Esce da nvda!"
+msgstr "Esce da NVDA!"
 
 #: appModules/_default.py:605
 msgid "Shows the NVDA menu"
-msgstr "Mostra il menu' di nvda"
+msgstr "Mostra il menu' di NVDA"
 
 #: appModules/_default.py:610
 msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
@@ -526,7 +526,7 @@ msgstr "Nessuna informazione di formattazione"
 
 #: appModules/_default.py:651
 msgid "Reports formatting info for the current cursor position within a document"
-msgstr "Legge le informazioni di formattazione nella posizione del cursore in un docuimento"
+msgstr "Legge le informazioni di formattazione nella posizione del cursore in un documento"
 
 #: appModules/_default.py:662
 msgid "reports the object with focus"
@@ -554,7 +554,7 @@ msgstr "Nessun titolo"
 
 #: appModules/_default.py:703
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
-msgstr "Legge il titolo dell'applicazione o della finestra in primo piano se premuto due volte legge lettera per lettera se premuto tre copia negli appunti"
+msgstr "Legge il titolo dell'applicazione o della finestra in primo piano; se premuto due volte legge lettera per lettera; se premuto tre copia negli appunti"
 
 #: appModules/_default.py:710
 msgid "speaks the current foreground object"
@@ -712,7 +712,7 @@ msgstr "Nessun testo negli appunti"
 
 #: appModules/_default.py:875
 msgid "The clipboard contains a large portion of text. It is %s characters long"
-msgstr "Gli appunti contengono molto testo la lunghezza e' %s caratteri"
+msgstr "Gli appunti contengono molto testo. la lunghezza e' %s caratteri"
 
 #: appModules/_default.py:876
 msgid "Reports the text on the Windows clipboard"
@@ -752,7 +752,7 @@ msgstr "Display"
 
 #: appModules/explorer.py:35
 msgid "Start"
-msgstr "menù avvio"
+msgstr "Start"
 
 #: appModules/foobar2000.py:44
 msgid "No track playing"
@@ -1294,7 +1294,7 @@ msgstr "Parentesi graffa aperta"
 
 #: characterSymbols.py:54
 msgid "bar"
-msgstr "pipe"
+msgstr "Barra Verticale"
 
 #: characterSymbols.py:55
 msgid "right brace"
@@ -1589,7 +1589,7 @@ msgstr "Fine nota"
 
 #: controlTypes.py:245
 msgid "footer"
-msgstr "Piede"
+msgstr "Pié di pagina"
 
 #: controlTypes.py:246
 msgid "foot note"
@@ -1625,7 +1625,7 @@ msgstr "Pagina"
 
 #: controlTypes.py:254
 msgid "radio menu item"
-msgstr "Elemento di menu'"
+msgstr "Voce di menù a scelta singola"
 
 #: controlTypes.py:255
 msgid "layered pane"
@@ -1633,7 +1633,7 @@ msgstr "pannello a più livelli"
 
 #: controlTypes.py:256
 msgid "redundant object"
-msgstr "Oggetto"
+msgstr "Oggetto ridondante"
 
 #: controlTypes.py:257
 msgid "root pane"
@@ -1677,7 +1677,7 @@ msgstr "Visualizzazione"
 
 #: controlTypes.py:267
 msgid "tear off menu"
-msgstr "Menu'"
+msgstr "Menu' fluttuante"
 
 #: controlTypes.py:268
 msgid "text frame"
@@ -1875,7 +1875,7 @@ msgstr "Elemento di intestazione"
 
 #: controlTypes.py:319
 msgid "thumb control"
-msgstr "Controllo thumb"
+msgstr "Sfoglia"
 
 #: controlTypes.py:320
 msgid "calendar"
@@ -1971,7 +1971,7 @@ msgstr "A icona"
 
 #: controlTypes.py:346
 msgid "off screen"
-msgstr "Off screen"
+msgstr "Fuori Schermo"
 
 #: controlTypes.py:347
 msgid "selectable"
@@ -1979,7 +1979,7 @@ msgstr "Selezionabile"
 
 #: controlTypes.py:348
 msgid "focusable"
-msgstr "Focalizzabile"
+msgstr "evidenziabile"
 
 #: controlTypes.py:349
 msgid "clickable"
@@ -1991,7 +1991,7 @@ msgstr "Modificabile"
 
 #: controlTypes.py:351
 msgid "checkable"
-msgstr "Selezionabile"
+msgstr "Attivabile"
 
 #: controlTypes.py:352
 msgid "draggable"
@@ -2007,11 +2007,11 @@ msgstr "Rilascia"
 
 #: core.py:127
 msgid "Loading NVDA. Please wait..."
-msgstr "Caricamento di nvda in corso, attendere prego"
+msgstr "Caricamento di NVDA in corso, attendere prego"
 
 #: core.py:209
 msgid "NVDA started"
-msgstr "Nvda attivato"
+msgstr "NVDA attivato"
 
 #: cursorManager.py:80
 msgid "Find"
@@ -2051,7 +2051,7 @@ msgstr "Configurazione applicata"
 
 #: gui/__init__.py:152
 msgid "Cannot save configuration - NVDA in secure mode"
-msgstr "Non posso salvare la configurazione nvda in modalita' sicura"
+msgstr "Non posso salvare la configurazione, NVDA in modalita' sicura"
 
 #: gui/__init__.py:156
 msgid "configuration saved"
@@ -2081,7 +2081,7 @@ msgstr "Dizionario temporaneo"
 
 #: gui/__init__.py:184
 msgid "Are you sure you want to quit NVDA?"
-msgstr "Siete sicuri di voler uscire da Nvda?"
+msgstr "Si è sicuri di voler uscire da NVDA?"
 
 #: gui/__init__.py:184
 #: gui/__init__.py:336
