@@ -49,7 +49,7 @@ class OldMSNHistory(cursorManager.ReviewCursorManager,IAccessible):
 		return "%s - %s\r%s"%(self.name,self.description,self.value)
 
 	def _get_value(self):
-		value=super(MSNHistory,self)._get_value()
+		value=super(OldMSNHistory,self).value
 		if not isinstance(value,basestring):
 			value=""
 		return value
@@ -63,7 +63,7 @@ class OldMSNHistory(cursorManager.ReviewCursorManager,IAccessible):
 				lastMSNHistoryValue=value
 
 	def event_gainFocus(self):
-		super(MSNHistory,self).event_gainFocus()
+		super(OldMSNHistory,self).event_gainFocus()
 		self.selection=self.makeTextInfo(textInfos.POSITION_LAST)
 
 	def reportFocus(self):
