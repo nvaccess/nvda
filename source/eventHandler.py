@@ -104,7 +104,7 @@ def doPreGainFocus(obj):
 	if obj.treeInterceptor is not oldTreeInterceptor:
 		if hasattr(oldTreeInterceptor,"event_treeInterceptor_loseFocus"):
 			oldTreeInterceptor.event_treeInterceptor_loseFocus()
-		if obj.treeInterceptor and not obj.treeInterceptor.isTransitioning and hasattr(obj.treeInterceptor,"event_treeInterceptor_gainFocus"):
+		if obj.treeInterceptor and obj.treeInterceptor.isReady and hasattr(obj.treeInterceptor,"event_treeInterceptor_gainFocus"):
 			obj.treeInterceptor.event_treeInterceptor_gainFocus()
 	return True
  
@@ -129,7 +129,7 @@ def executeEvent_appModuleLevel(name,obj,**kwargs):
 
 def executeEvent_treeInterceptorLevel(name,obj,**kwargs):
 	treeInterceptor=obj.treeInterceptor
-	if hasattr(treeInterceptor,'event_%s'%name) and not treeInterceptor.isTransitioning:
+	if hasattr(treeInterceptor,'event_%s'%name) and treeInterceptor.isReady:
 		getattr(treeInterceptor,'event_%s'%name)(obj,lambda: executeEvent_NVDAObjectLevel(name,obj,**kwargs),**kwargs)
 	else:
 		executeEvent_NVDAObjectLevel(name,obj,**kwargs)

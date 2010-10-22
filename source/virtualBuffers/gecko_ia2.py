@@ -76,6 +76,8 @@ class Gecko_ia2(VirtualBuffer):
 		return self._isNVDAObjectInApplication(obj)
 
 	def _get_isAlive(self):
+		if self.isLoading:
+			return True
 		root=self.rootNVDAObject
 		if not root:
 			return False

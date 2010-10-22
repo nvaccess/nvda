@@ -35,7 +35,7 @@ def update(obj):
 def cleanup():
 	"""Kills off any treeInterceptors that are no longer alive."""
 	for ti in list(runningTable):
-		if not ti.isTransitioning and not ti.isAlive:
+		if not ti.isAlive:
 			killTreeInterceptor(ti)
 
 def killTreeInterceptor(treeInterceptorObject):
@@ -64,9 +64,6 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		#: The root object of the tree wherein events and scripts are intercepted.
 		#: @type: L{NVDAObjects.NVDAObject}
 		self.rootNVDAObject = rootNVDAObject
-		#: Indicates that this interceptor is in a state of transition and should not be killed even if L{isAlive} is C{False}.
-		#: @type: bool
-		self.isTransitioning = False
 
 	def terminate(self):
 		"""Terminate this interceptor.
@@ -78,6 +75,10 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		If it is not alive, it will be removed.
 		"""
 		raise NotImplementedError
+
+	#: Whether this interceptor is ready to be used; i.e. whether it should receive scripts and events.
+	#: @type: bool
+	isReady = True
 
 	def __contains__(self, obj):
 		"""Determine whether an object is encompassed by this interceptor.

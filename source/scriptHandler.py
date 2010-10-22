@@ -35,7 +35,7 @@ def findScript_appModuleLevel(gesture):
 
 def findScript_treeInterceptorLevel(gesture):
 	treeInterceptor=api.getFocusObject().treeInterceptor
-	if treeInterceptor:
+	if treeInterceptor and treeInterceptor.isReady:
 		func=treeInterceptor.getScript(gesture)
 		if func and (not treeInterceptor.passThrough or getattr(func,"ignoreTreeInterceptorPassThrough",False)):
 			return func

@@ -501,6 +501,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		super(VirtualBuffer,self).__init__(rootNVDAObject)
 		self.backendName=backendName
 		self.VBufHandle=None
+		self.isLoading=False
 		self.disableAutoPassThrough = False
 		self.rootDocHandle,self.rootID=self.getIdentifierFromNVDAObject(self.rootNVDAObject)
 		self._lastFocusObj = None
@@ -512,8 +513,11 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	def terminate(self):
 		self.unloadBuffer()
 
+	def _get_isReady(self):
+		return bool(self.VBufHandle and not self.isLoading)
+
 	def loadBuffer(self):
-		self.isTransitioning = True
+		self.isLoading = True
 		self._loadProgressCallLater = wx.CallLater(1000, self._loadProgress)
 		threading.Thread(target=self._loadBuffer).start()
 
@@ -531,7 +535,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	def _loadBufferDone(self, success=True):
 		self._loadProgressCallLater.Stop()
 		del self._loadProgressCallLater
-		self.isTransitioning = False
+		self.isLoading = False
 		if not success:
 			return
 		if self._hadFirstGainFocus:
@@ -677,19 +681,13 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		return controlTypes.STATE_FOCUSABLE in obj.states
 
 	def script_activatePosition(self,gesture):
-		if self.VBufHandle is None:
-			return gesture.send()
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		self._activatePosition(info)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 
-	def _caretMovementScriptHelper(self, *args, **kwargs):
-		if self.VBufHandle is None:
-			return 
-		super(VirtualBuffer, self)._caretMovementScriptHelper(*args, **kwargs)
-
 	def script_refreshBuffer(self,gesture):
-		if self.VBufHandle is None or self.isTransitioning:
+		if scriptHandler.isScriptWaiting():
+			# This script may cause subsequently queued scripts to fail, so don't execute.
 			return
 		self.unloadBuffer()
 		self.loadBuffer()
@@ -735,8 +733,6 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			offset=startOffset
 
 	def _quickNavScript(self,gesture, nodeType, direction, errorMessage, readUnit):
-		if self.VBufHandle is None:
-			return gesture.send()
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		startOffset=info._startOffset
 		endOffset=info._endOffset
@@ -776,8 +772,6 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		cls.__gestures["kb:shift+%s" % key] = scriptName
 
 	def script_elementsList(self,gesture):
-		if self.VBufHandle is None:
-			return
 		# We need this to be a modal dialog, but it mustn't block this script.
 		def run():
 			gui.mainFrame.prePopup()
@@ -866,9 +860,6 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		@return: C{True} if the tab order was overridden, C{False} if not.
 		@rtype: bool
 		"""
-		if self.VBufHandle is None:
-			return False
-
 		focus = api.getFocusObject()
 		try:
 			focusInfo = self.makeTextInfo(focus)
@@ -939,8 +930,6 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
 			# This is not ideal if the user was positioned over a node which cannot receive focus.
 			return
-		if self.VBufHandle is None:
-			return nextHandler()
 		if obj==self.rootNVDAObject:
 			if self.passThrough:
 				return nextHandler()
@@ -1000,9 +989,6 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		@rtype: bool
 		@note: If C{False} is returned, calling events should probably call their nextHandler.
 		"""
-		if not self.VBufHandle:
-			return False
-
 		if self.programmaticScrollMayFireEvent and self._lastProgrammaticScrollTime and time.time() - self._lastProgrammaticScrollTime < 0.4:
 			# This event was probably caused by this buffer's call to scrollIntoView().
 			# Therefore, ignore it. Otherwise, the cursor may bounce back to the scroll point.

@@ -116,6 +116,8 @@ class MSHTML(VirtualBuffer):
 
 
 	def _get_isAlive(self):
+		if self.isLoading:
+			return True
 		root=self.rootNVDAObject
 		if not root:
 			return False
