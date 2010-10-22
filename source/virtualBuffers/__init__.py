@@ -816,7 +816,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if gesture.mainKeyName in ("home", "end"):
 			# Home, end, control+home and control+end should not disable pass through.
 			return nextHandler()
-		script = self.getScript(gesture.keyName)
+		script = self.getScript(gesture)
 		if not script:
 			return nextHandler()
 
