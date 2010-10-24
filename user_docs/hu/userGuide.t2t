@@ -273,10 +273,9 @@ Az áttekintő kurzor billentyűparancsai:
 | Ugrás a sor elejére | Shift+1 a numerikus billentyűzeten | NVDA+shift+u | Az áttekintő kurzort az aktuális sor elejére helyezi. |
 | Ugrás az előző karakterre | 1 a numerikus billentyűzeten | NVDA+m | az áttekintő kurzort az előző karakterhez helyezi. |
 | Jelenlegi karakter felolvasása | 2 a numerikus billentyűzeten | NVDA+vessző | Bemondja azt a karaktert, ahol az áttekintő kurzor található. Háromszori lenyomásra a decimális és a hexadecimális kódját mondja be. |
-| Ugrás a következő karakterre | 3 a numerikus billentyűzeten | NVDA+pont | Az áttekintő kurzort a következő karakterhez helyezi. |
+| Ugrás a következő karakterre | 3 a numerikus billentyűzeten | NVDA+pont | Az áttekintő kurzort a következő, az aktuális sorban lévő  karakterre helyezi. |
 | áttekintő kurzor a sor végéhez | Shift+3 a numerikus billentyűzeten | NVDA+9 | Az áttekintő kurzort a sor végéhez helyezi.
 | Folyamatos felolvasás az áttekintő kurzorral | + (plusz) a numerikus billentyűzeten | NVDA+shift+lenyíl | Folyamatos olvasás az aktuális pozíciótól az elem tartalmának végéig. |
-| Ugrás a következő karakterre | 3 a numerikus billentyűzeten | NVDA+pont | Az áttekintő kurzort a következő, az aktuális sorban lévő  karakterre helyezi. |
 | A kurzor áthelyezése az áttekintő kurzorhoz | control+Mínusz a numerikus billentyűzeten | NVDA+control+backspace | A kurzort az áttekintő kurzor jelenlegi pozíciójához helyezi. |
 | Szöveg másolásának megkezdése az áttekintő kurzorral | NVDA+f9 | NVDA+f9 | Megjelöli az áttekintő kurzor aktuális pozícióját. |
 | A kijelölt szöveg vágólapra másolása | NVDA+f10 | NVDA+f10 | A megadott kezdőponttól az áttekintő kurzor jelenlegi pozíciójáig lévő szöveget a vágólapra másolja. |
@@ -530,7 +529,7 @@ A braille kijelző kombinált listamezőben a kijelző típusát állíthatja be
 
 A Nincs Braille kijelző azt jelenti, hogy nem használ braille kijelzőt.
 
-További információért tekintse meg a [Támogatott braille kijelzők #TámogatottBrailleKijelzők] szekciót.
+További információért tekintse meg a Támogatott braille kijelzők szekciót.
 ===== Fordítási tábla =====
 
 A következő beállítás a braille táblák listája. Itt a különböző nyelvű braille táblákat választhatja ki, a fel és a le nyilak segítségével.
@@ -768,7 +767,6 @@ A beállítások menüben található kivételszótárak menü olyan lehetőség
 - Hangkarakter: az itt megadott szabályok csak az éppen használt hangkarakterre érvényesek.
 - Ideiglenes: az itt megadott szabályok az NVDA minden hangkarakterére érvényesek, de csak a jelenlegi munkameneten belül. A szabályok csak átmeneti jellegűek, melyek az NVDA újraindításakor érvényüket vesztik.
 -
-
 Minden párbeszédablak tartalmaz egy szabálylistát, mely a szöveg feldolgozása közben hajtódik végre. Itt szintén elérhető a hozzáadás, szerkesztés és az eltávolítás gomb is.
 
 Új szabály hozzáadásához használja a hozzáadás gombot. Töltse ki a mezőket a felbukkanó párbeszédablakban, majd nyomja meg az OK gombot. A szabály megjelenik a szabályok listájában. A szótár mentéséhez nyomja meg az OK gombot ha végzett a szabályok hozzáadásával/szerkesztésével.
@@ -796,10 +794,6 @@ A hordozható verziókban az összes beállítás, driver és script egy usercon
 
 Ezzel szemben a telepítős változat fájljai a felhasználó profiljának könyvtárában találhatóak. Ez azt jelenti, hogy ha ugyanazon a gépen több felhasználó is telepítette az NVDA programot, a beállításaikat az NVDA külön kezeli. Ezt a mappát elérheti a start menü-programok-NVDA-A felhasználói beállítások tallózása menüpontot megnyitva.
 
-+ További információk +
-
-Mivel az NVDA-t folyamatosan frissítik, nem lehet szavatolni, hogy az e felhasználói kézikönyvben írott útmutatások mindegyike alkalmazható lesz. Ha bármilyen észrevétele van az e kézikönyvben írott útmutatásokkal kapcsolatban, kérjük, magyar nyelvű javaslata, kérése, kérdése esetén látogassa meg az: [NVDA Honosítási project http://www.nvda.hu] weboldalát, angol nyelvű kérés, kérdés, javaslat esetén pedig az [NVDA hivatalos weboldalát http://www.nvda-project.org/] további segítségért.
-
 + Extra Eszközök +
 
 ++ Naplónéző ++
@@ -818,7 +812,7 @@ A beszédnéző használatakor a lebegő ablak tartalma folyamatosan frissül, a
 Az NVDA Python konzol, mely az NVDA eszközök menüjében található, egy fejlesztői eszköz mely hasznos az NVDA összetevőinek futás közbeni megvizsgálásakor, esetenként egy alkalmazás hozzáférhetőségi hierarchiájának megállapításakor.
 Részletes információért tekintse meg az angol nyelvű [Python Konzol cikket az NVDA weboldalán NVDA_URLwiki/PythonConsole].
 
-+ Támogatott braille kijelzők +[TámogatottBrailleKijelzők]
++ Támogatott braille kijelzők +
 
 Ebben a fejezetben az NVDA által támogatott braille kijelzőkről olvashat.
 
@@ -836,6 +830,19 @@ Az [Optelec http://www.optelec.com/] ALVABC 640 és 6840 kijelzőket támogatja 
 Az NVDA az összes [Handy Tech http://www.handytech.de/] kijelzőt támogatja. 
 Ha ön egy usb-s kijelzőt használ fel kell telepítenie a Handy Tech usb driverét a rendszerére. Továbbá telepítenie kell a Handy Tech általános driverét, amit a következő címről tölthet le:
 ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
+
+++ MDV Lilli ++
+
+Az NVDA támogatja az [MDV http://www.mdvbologna.it/] által forgalmazott Lilli braille kijelzőket. A használathoz nincs szükség semmilyen driver telepítésére, egyszerűen csak csatlakoztassa a kijelzőt a számítógépéhez, és végezze el az NVDA programban a szükséges beállításokat.
+
+++ BRLTTY ++
+
+A [BRLTTY http://mielke.cc/brltty/] egy különálló program, amely jópár braille kijelzőt támogat. A használatához fel kell telepítenie a [BRLTTY Windows-os változatát http://brl.thefreecat.org/brltty/].
+Töltse le az ezen az oldalon található legfrissebb verziót (pl. brltty-win-4.2-2.exe). A kijelző beállításaikor figyeljen oda, hogy melyik portot használja. Ugyanis ez gyártónként változhat, különösen ha usb-s, és már fenn vannak a hozzátartozó driverek.
+
++ További információk +
+
+Mivel az NVDA-t folyamatosan frissítik, nem lehet szavatolni, hogy az e felhasználói kézikönyvben írott útmutatások mindegyike alkalmazható lesz. Ha bármilyen észrevétele van az e kézikönyvben írott útmutatásokkal kapcsolatban, kérjük, magyar nyelvű javaslata, kérése, kérdése esetén látogassa meg az: [NVDA Honosítási project http://www.nvda.hu] weboldalát, angol nyelvű kérés, kérdés, javaslat esetén pedig az [NVDA hivatalos weboldalát http://www.nvda-project.org/] további segítségért.
 
 + Fogalom meghatározások +
 
