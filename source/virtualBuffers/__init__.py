@@ -513,7 +513,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		self.loadBuffer()
 
 	def _get_shouldPrepare(self):
-		return not (self.isLoading or self.VBufHandle)
+		return not self.isLoading and not self.VBufHandle
 
 	def terminate(self):
 		self.unloadBuffer()
