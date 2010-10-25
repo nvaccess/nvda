@@ -19,7 +19,7 @@ A jelenlegi kiadás főbb újdonságai közé tartozik az egyszerűbb és jóval
 	- Ide tartozik néhány menüelem, ami ikonokat tartalmazott (pl. a Windows Xp társítás menüje) (#151), a szerkeszthető mezők a Windows Live alkalmazásban (#200), a hibák listája az Outlook Expressben (#582), a szerkeszthető mező vezérlőeleme a Textpad programban (#605), listák az Eudora programban, néhány vezérlőelem az Ausztrál E-tax programban és a Microsoft excel képletszerkesztőjében.
 - A Visual Studio 2005-2008 kódszerkesztőjének támogatása. A standard verziók használata szükséges, mert ez a funkció az express verziókkal nem működik.  (#457)
 - Az IBM Lotus Symphony dokumentumok támogatása.
-- Kísérleti Google Chrome támogatás. Kérjük vegye figyelembe, hogy a Chrome képernyőolvasó támogatása messze nem teljes, ezért előfordulhat, hogy ennek javításához az NVDA ecélú továbbfejlesztése szükséges. Ennek kipróbálásához egy újnak számító fejlesztői verzió szükséges.
+- Kísérleti Google Chrome támogatás. Kérjük vegye figyelembe, hogy a Chrome képernyőolvasó támogatása messze nem teljes, ezért előfordulhat, hogy ennek javításához az NVDA ecélú továbbfejlesztése szükséges. Ennek kipróbálásához a  Google Chrome 7.0, vagy újabb verziója ajánlott.
 - A ki-be kapcsolható gombok (caps lock, num lock és scroll lock) állapotai már megjelennek a braillle kijelzőn, ha be vannak kapcsolva.  (#620)
 - A súgóbuborékok kijelzésre kerülnek a braille kijelzőn, amikor azok megjelennek.  (#652)
 - Az MDV Lilli braille kijelző driver hozzáadása.  (#241)
@@ -33,6 +33,7 @@ A jelenlegi kiadás főbb újdonságai közé tartozik az egyszerűbb és jóval
 - A Mozilla Firefox 4 támogatása
 - A Microsoft Internet Explorer 9 támogatása
 
+
 == Változások ==
 - A folyamatos felolvasás a navigátor kurzorban (NVDA+ numerikus +), az előző térbeli elemre ugrás (NVDA +sift+ numerikus 4) és a következő térbeli elemre ugrás (NVDA+shift+numerikus 6) el lett távolítva a programból.
 - Az NVDA szintetizátor választó ablakában már csak a szintetizátor neve jelenik meg a listában. Eddig a név elött a driver neve is megjelent.
@@ -44,7 +45,7 @@ A jelenlegi kiadás főbb újdonságai közé tartozik az egyszerűbb és jóval
 - Ha az NVDA már fut, parancsikonjának aktiválása az NVDA újraindítását eredményezi.
 - A 'az egérkurzornál lévő szöveg bemondása' jelölőnégyzet helyett a jelölőnégyzet 'az egérkurzor követése' nevet kapta, amely jobban illik a 'toggle mouse tracking' szkripthez (NVDA+m). 
 - A laptop billentyűzetkiosztás frissítése, mely már tartalmazza az asztali billentyűzetkiosztásban megtalálható parancsokat, valamint jól működik nem angol billentyűzeteken is. (#798, #800)
-- A felhasználói útmutató frissítése, mely a laptop billentyűzetkiosztás dokumentálása mellett egy egységesített billentyűparancs lista is helyet kapott. (#455)
+- A felhasználói útmutató frissítése, melyben a laptop billentyűzetkiosztás dokumentálása mellett egy egységesített billentyűparancs lista is helyet kapott. (#455)
 - A liblouis braille translator 2.1.1 verziójának használata. Ez a kínai braille és a nem definiált karakterkódok hatékonyabb kezelését eredményezi. (#484, #499)
 
 
