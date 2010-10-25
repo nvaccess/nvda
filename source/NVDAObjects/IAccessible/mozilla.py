@@ -75,7 +75,7 @@ class Document(Mozilla):
 		ver=_getGeckoVersion(self)
 		if (not ver or ver.startswith('1.9')) and self.windowClassName!="MozillaContentWindowClass":
 			return super(Document,self).treeInterceptorClass
-		if controlTypes.STATE_READONLY in states and controlTypes.STATE_BUSY not in states:
+		if controlTypes.STATE_READONLY in states:
 			import virtualBuffers.gecko_ia2
 			return virtualBuffers.gecko_ia2.Gecko_ia2
 		return super(Document,self).treeInterceptorClass

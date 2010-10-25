@@ -19,18 +19,19 @@ def getTreeInterceptor(obj):
 def update(obj):
 	#If this object already has a treeInterceptor, just return that and don't bother trying to create one
 	ti=obj.treeInterceptor
-	if ti:
-		return ti
-	try:
-		newClass=obj.treeInterceptorClass
-	except NotImplementedError:
-		return None
-	treeInterceptorObject=newClass(obj)
-	if not treeInterceptorObject.isAlive:
-		return None
-	runningTable.add(treeInterceptorObject)
-	log.debug("Adding new treeInterceptor to runningTable: %s"%treeInterceptorObject)
-	return treeInterceptorObject
+	if not ti:
+		try:
+			newClass=obj.treeInterceptorClass
+		except NotImplementedError:
+			return None
+		ti=newClass(obj)
+		if not ti.isAlive:
+			return None
+		runningTable.add(ti)
+		log.debug("Adding new treeInterceptor to runningTable: %s"%ti)
+	if ti.shouldPrepare:
+		ti.prepare()
+	return ti
 
 def cleanup():
 	"""Kills off any treeInterceptors that are no longer alive."""
@@ -102,3 +103,11 @@ class TreeInterceptor(baseObject.ScriptableObject):
 			braille.handler.handleGainFocus(api.getFocusObject())
 		else:
 			braille.handler.handleGainFocus(self)
+
+	shouldPrepare=False #:True if this treeInterceptor's prepare method should be called in order to make it ready (e.g. load a virtualBuffer, or process the document in some way).
+
+	def prepare(self):
+		"""Prepares this treeInterceptor so that it becomes ready to accept event/script input."""
+		raise NotImplementedError
+
+

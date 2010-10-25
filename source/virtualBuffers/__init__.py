@@ -508,7 +508,12 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		self._hadFirstGainFocus = False
 		self._lastProgrammaticScrollTime = None
 		self.bindGestures(self.__gestures)
+
+	def prepare(self):
 		self.loadBuffer()
+
+	def _get_shouldPrepare(self):
+		return not (self.isLoading or self.VBufHandle)
 
 	def terminate(self):
 		self.unloadBuffer()

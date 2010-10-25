@@ -110,7 +110,7 @@ def doPreGainFocus(obj):
  
 def doPreDocumentLoadComplete(obj):
 	focusObject=api.getFocusObject()
-	if (not obj.treeInterceptor or not obj.treeInterceptor.isAlive) and (obj==focusObject or obj in api.getFocusAncestors()):
+	if (not obj.treeInterceptor or not obj.treeInterceptor.isAlive or obj.treeInterceptor.shouldPrepare) and (obj==focusObject or obj in api.getFocusAncestors()):
 		ti=treeInterceptorHandler.update(obj)
 		if ti:
 			obj.treeInterceptor=ti
