@@ -64,41 +64,43 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		if injected:
 			return True
 
+		keyCode = (vkCode, extended)
+
 		if passKeyThroughCount >= 0:
 			# We're passing keys through.
-			if lastPassThroughKeyDown != (vkCode, extended):
+			if lastPassThroughKeyDown != keyCode:
 				# Increment the pass key through count.
 				# We only do this if this isn't a repeat of the previous key down, as we don't receive key ups for repeated key downs.
 				passKeyThroughCount += 1
-				lastPassThroughKeyDown = (vkCode, extended)
+				lastPassThroughKeyDown = keyCode
 			return True
 
 		gesture = KeyboardInputGesture(currentModifiers, vkCode, scanCode, extended)
-		if bypassNVDAModifier or ((vkCode, extended) == lastNVDAModifier and lastNVDAModifierReleaseTime and time.time() - lastNVDAModifierReleaseTime < 0.5):
+		if bypassNVDAModifier or (keyCode == lastNVDAModifier and lastNVDAModifierReleaseTime and time.time() - lastNVDAModifierReleaseTime < 0.5):
 			# The user wants the key to serve its normal function instead of acting as an NVDA modifier key.
 			# There may be key repeats, so ensure we do this until they stop.
 			bypassNVDAModifier = True
 			gesture.isNVDAModifierKey = False
 		lastNVDAModifierReleaseTime = None
 		if gesture.isNVDAModifierKey:
-			lastNVDAModifier = (vkCode, extended)
+			lastNVDAModifier = keyCode
 		else:
 			# Another key was pressed after the last NVDA modifier key, so it should not be passed through on the next press.
 			lastNVDAModifier = None
 		if gesture.isModifier:
-			if gesture.speechEffectWhenExecuted in (gesture.SPEECHEFFECT_PAUSE, gesture.SPEECHEFFECT_RESUME) and (vkCode, extended) in currentModifiers:
+			if gesture.speechEffectWhenExecuted in (gesture.SPEECHEFFECT_PAUSE, gesture.SPEECHEFFECT_RESUME) and keyCode in currentModifiers:
 				# Ignore key repeats for the pause speech key to avoid speech stuttering as it continually pauses and resumes.
 				return True
-			currentModifiers.add((vkCode, extended))
+			currentModifiers.add(keyCode)
 
 		try:
 			inputCore.manager.executeGesture(gesture)
-			trappedKeys.add((vkCode,extended))
+			trappedKeys.add(keyCode)
 			return False
 		except inputCore.NoInputGestureAction:
 			if gesture.isNVDAModifierKey:
 				# Never pass the NVDA modifier key to the OS.
-				trappedKeys.add((vkCode,extended))
+				trappedKeys.add(keyCode)
 				return False
 	except:
 		log.error("internal_keyDownEvent", exc_info=True)
@@ -112,8 +114,10 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 		if injected:
 			return True
 
+		keyCode = (vkCode, extended)
+
 		if passKeyThroughCount >= 1:
-			if lastPassThroughKeyDown == (vkCode, extended):
+			if lastPassThroughKeyDown == keyCode:
 				# This key has been released.
 				lastPassThroughKeyDown = None
 			passKeyThroughCount -= 1
@@ -121,17 +125,17 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 				passKeyThroughCount = -1
 			return True
 
-		if lastNVDAModifier and (vkCode,extended)==lastNVDAModifier:
+		if lastNVDAModifier and keyCode == lastNVDAModifier:
 			# The last pressed NVDA modifier key is being released and there were no key presses in between.
 			# The user may want to press it again quickly to pass it through.
-			lastNVDAModifierReleaseTime=time.time()
+			lastNVDAModifierReleaseTime = time.time()
 		# If we were bypassing the NVDA modifier, stop doing so now, as there will be no more repeats.
 		bypassNVDAModifier = False
 
-		currentModifiers.discard((vkCode, extended))
+		currentModifiers.discard(keyCode)
 
-		if (vkCode,extended) in trappedKeys:
-			trappedKeys.remove((vkCode,extended))
+		if keyCode in trappedKeys:
+			trappedKeys.remove(keyCode)
 			return False
 	except:
 		log.error("", exc_info=True)
