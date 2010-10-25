@@ -510,6 +510,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		self.bindGestures(self.__gestures)
 
 	def prepare(self):
+		self.shouldPrepare=False
 		self.loadBuffer()
 
 	def _get_shouldPrepare(self):
