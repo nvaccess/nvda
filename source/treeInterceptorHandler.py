@@ -104,6 +104,7 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		else:
 			braille.handler.handleGainFocus(self)
 
+	_cache_shouldPrepare=True
 	shouldPrepare=False #:True if this treeInterceptor's prepare method should be called in order to make it ready (e.g. load a virtualBuffer, or process the document in some way).
 
 	def prepare(self):
