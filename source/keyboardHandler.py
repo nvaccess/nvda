@@ -86,6 +86,9 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			# Another key was pressed after the last NVDA modifier key, so it should not be passed through on the next press.
 			lastNVDAModifier = None
 		if gesture.isModifier:
+			if gesture.speechEffectWhenExecuted in (gesture.SPEECHEFFECT_PAUSE, gesture.SPEECHEFFECT_RESUME) and (vkCode, extended) in currentModifiers:
+				# Ignore key repeats for the pause speech key to avoid speech stuttering as it continually pauses and resumes.
+				return True
 			currentModifiers.add((vkCode, extended))
 
 		try:
@@ -263,7 +266,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		return False
 
 	def _get_speechEffectWhenExecuted(self):
-		if not inputCore.manager.isInputHelpActive and self.isExtended and winUser.VK_VOLUME_MUTE <= self.vkCode <= winUser.VK_VOLUME_UP:
+		if inputCore.manager.isInputHelpActive:
+			return self.SPEECHEFFECT_CANCEL
+		if self.isExtended and winUser.VK_VOLUME_MUTE <= self.vkCode <= winUser.VK_VOLUME_UP:
 			return None
 		if self.vkCode in (winUser.VK_SHIFT, winUser.VK_LSHIFT, winUser.VK_RSHIFT):
 			return self.SPEECHEFFECT_RESUME if speech.isPaused else self.SPEECHEFFECT_PAUSE
