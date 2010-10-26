@@ -2,8 +2,8 @@
 %!PostProc(html): TEXT="black">$  TEXT='black' STYLE='font-family: Simplified Arabic'>
 %!PostProc(html): NVDA_AR NVDA
 
-% add ltr macro
-%!PostProc(html): %ltr{(.*)} <span dir='ltr'>\1</span>
+% add rtl macro
+%!PostProc: %ltr{(.*)} <span dir='ltr'>\1</span>
 
 % reverse the numbering, to be displayed correctly in arabic.
 %!PostProc(html): >([0-9]+)\.([0-9]+)\.([0-9]+)\.  > ar.\3ar.\2ar.\1
