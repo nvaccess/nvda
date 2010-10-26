@@ -472,11 +472,7 @@ class KeyboardSettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		layout=self.kbdNames[self.kbdList.GetSelection()]
-		oldLayout=config.conf['keyboard']['keyboardLayout']
-		if layout!=oldLayout:
-			config.conf['keyboard']['keyboardLayout']=layout
-			for m in appModuleHandler.runningTable.values():
-				m.loadKeyMap()
+		config.conf['keyboard']['keyboardLayout']=layout
 		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]=self.capsAsNVDAModifierCheckBox.IsChecked()
 		config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]=self.numpadInsertAsNVDAModifierCheckBox.IsChecked()
 		config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]=self.extendedInsertAsNVDAModifierCheckBox.IsChecked()

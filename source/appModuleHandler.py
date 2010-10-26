@@ -171,7 +171,6 @@ def fetchAppModule(processID,appName,useDefault=False):
 		ui.message(_("Error in appModule %s")%appName)
 		return None
 
-	mod.loadKeyMap()
 	return mod
 
 def initialize():
@@ -227,26 +226,3 @@ class AppModule(baseObject.ScriptableObject):
 		@param clsList: The list of classes, which will be modified by this method if appropriate.
 		@type clsList: list of L{NVDAObjects.NVDAObject}
 		"""
-
-	def loadKeyMap(self):
-		"""Loads a key map in to this appModule . if the key map exists. It takes in to account what layout NVDA is currently set to.
-		"""  
-		layout=config.conf["keyboard"]["keyboardLayout"]
-		# If the appModule already has a running gesture map, clear it.
-		self.clearGestureBindings()
-		for modClass in reversed(list(itertools.takewhile(lambda x: issubclass(x,AppModule) and x is not AppModule,self.__class__.__mro__))):
-			name=modClass.__module__.split('.')[-1]
-			keyMapFileName=getKeyMapFileName(name,layout)
-			if not keyMapFileName:
-				continue
-			keyMapFile=open(keyMapFileName,'r')
-			bindCount=0
-			for line in (x for x in keyMapFile if not x.startswith('#') and not x.isspace()):
-				m=re_keyScript.match(line)
-				if m:
-					try:
-						self.bindGesture("kb:%s"%m.group('key'),m.group('script'))
-						bindCount+=1
-					except:
-						log.error("error binding %s to %s in appModule %s"%(m.group('script'),m.group('key'),self))
-			log.debug("added %s bindings to appModule %s from file %s"%(bindCount,self,keyMapFileName))
