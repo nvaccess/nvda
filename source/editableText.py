@@ -151,9 +151,6 @@ class EditableText(ScriptableObject):
 		"kb:control+backspace": "caret_backspaceWord",
 	}
 
-	def initClass(self):
-		self.bindGestures(self.__gestures)
-
 	def initAutoSelectDetection(self):
 		"""Initialise automatic detection of selection changes.
 		This should be called when the object gains focus.

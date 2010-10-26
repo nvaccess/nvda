@@ -507,7 +507,6 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		self._lastFocusObj = None
 		self._hadFirstGainFocus = False
 		self._lastProgrammaticScrollTime = None
-		self.bindGestures(self.__gestures)
 
 	def prepare(self):
 		self.shouldPrepare=False

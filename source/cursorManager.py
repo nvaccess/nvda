@@ -46,7 +46,6 @@ class CursorManager(baseObject.ScriptableObject):
 		It is normally called by L{__init__} or L{initOverlayClass}.
 		"""
 		self._lastSelectionMovedStart=False
-		self.bindToStandardKeys()
 
 	def _get_selection(self):
 		return self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -278,11 +277,6 @@ class CursorManager(baseObject.ScriptableObject):
 		"kb:NVDA+f3": "findNext",
 		"kb:NVDA+shift+f3": "findPrevious",
 	}
-
-	def bindToStandardKeys(self):
-		"""Bind the standard navigation, selection and copy keys to the cursor manager scripts.
-		"""
-		self.bindGestures(self.__gestures)
 
 class _ReviewCursorManagerTextInfo(textInfos.TextInfo):
 	"""For use with L{ReviewCursorManager}.
