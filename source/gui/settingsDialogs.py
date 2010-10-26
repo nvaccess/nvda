@@ -439,7 +439,6 @@ class KeyboardSettingsDialog(SettingsDialog):
 		kbdSizer.Add(kbdLabel)
 		kbdListID=wx.NewId()
 		layouts=keyboardHandler.KeyboardInputGesture.LAYOUTS
-		layouts=keyboardHandler.KeyboardInputGesture.LAYOUTS
 		self.kbdNames=sorted(layouts)
 		self.kbdList=wx.Choice(self,kbdListID,name=_("Keyboard layout"),choices=[layouts[layout] for layout in self.kbdNames])
 		try:
