@@ -152,7 +152,9 @@ class ScriptableObject(AutoPropertyObject):
 		@type scriptName: str
 		@raise LookupError: If there is no script with the provided name.
 		"""
-		func = getattr(self, "script_%s" % scriptName, None)
+		# Don't store the instance method, as this causes a circular reference
+		# and instance methods are meant to be generated on retrieval anyway.
+		func = getattr(self.__class__, "script_%s" % scriptName, None)
 		if not func:
 			raise LookupError("No such script: %s" % func)
 		# Import late to avoid circular import.
@@ -185,7 +187,8 @@ class ScriptableObject(AutoPropertyObject):
 		""" 
 		for identifier in gesture.identifiers:
 			try:
-				return self._gestureMap[identifier]
+				# Convert to instance method.
+				return self._gestureMap[identifier].__get__(self, self.__class__)
 			except KeyError:
 				continue
 		else:
