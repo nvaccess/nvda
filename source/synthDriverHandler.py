@@ -422,14 +422,24 @@ class SynthDriver(baseObject.AutoPropertyObject):
 			if s.name=="rate": return i
 		return None
 
-class VoiceInfo(object):
-	"""Provides information about a single synthesizer voice.
+class StringParameterInfo(object):
+	"""
+	The base class used to represent a value of a string synth setting.
 	"""
 
 	def __init__(self,ID,name):
-		#: The unique identifier of the voice.
+		#: The unique identifier of the value.
 		#: @type: str
 		self.ID=ID
-		#: The name of the voice, visible to the user.
+		#: The name of the value, visible to the user.
 		#: @type: str
 		self.name=name
+
+class VoiceInfo(StringParameterInfo):
+	"""Provides information about a single synthesizer voice.
+	"""
+
+	def __init__(self,ID,name,supportedLanguages=None):
+		#:a sequence of language IDs this voice supports, or None.
+		self.supportedLanguages=supportedLanguages
+		super(VoiceInfo,self).__init__(ID,name)
