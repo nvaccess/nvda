@@ -186,8 +186,6 @@ class AppModule(baseObject.ScriptableObject):
 
 	selfVoicing=False #Set to true so all undefined events and script requests are silently dropped.
 
-	_overlayClassCache={}
-
 	def __init__(self,processID,appName=None):
 		super(AppModule,self).__init__()
 		self.processID=processID
