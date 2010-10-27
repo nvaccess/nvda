@@ -147,7 +147,6 @@ setup(
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),
 		("documentation", ['../copying.txt', '../contributors.txt']),
-		("appModules", glob("appModules/*.kbd")),
 		("lib", glob("lib/*")),
 		("lib64", glob("lib64/*")),
 		("waves", glob("waves/*.wav")),
