@@ -48,3 +48,7 @@ class AppModule(_default.AppModule):
 		msg = time.strftime(getOutputFormat(remainingTime),time.gmtime(remainingTime))
 		ui.message(msg)
 	script_reportRemainingTime.__doc__ = _("Reports the remaining time of the currently playing track, if any")
+
+	__gestures = {
+		"kb:control+shift+r": "reportRemainingTime",
+	}
