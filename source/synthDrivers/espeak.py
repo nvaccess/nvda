@@ -78,7 +78,16 @@ class SynthDriver(SynthDriver):
 		_espeak.setParameter(_espeak.espeakVOLUME,volume,0)
 
 	def _getAvailableVoices(self):
-		return OrderedDict((voice.identifier,VoiceInfo(voice.identifier, "%s (%s)" % (voice.name, voice.identifier),supportedLanguages=[voice.identifier.replace('-','_').split('#')[0]])) for voice in _espeak.getVoiceList())
+		voices=OrderedDict()
+		for v in _espeak.getVoiceList():
+			print v.languages
+			l=v.languages[1:].split('-')[0:2]
+			if len(l)==2:
+				language="%s_%s"%(l[0],l[1].upper())
+			else:
+				language=l[0]
+			voices[v.identifier]=VoiceInfo(v.identifier,v.name,[language])
+		return voices
 
 	def _get_voice(self):
 		curVoice = _espeak.getCurrentVoice()
