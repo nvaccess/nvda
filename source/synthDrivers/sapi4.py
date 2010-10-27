@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import locale
 from collections import OrderedDict
 import _winreg
 from comtypes import COMObject, COMError
@@ -209,7 +210,8 @@ class SynthDriver(SynthDriver):
 		for mode in self._enginesList:
 			ID=str(mode.gModeID)
 			name="%s - %s"%(mode.szModeName,mode.szProductName)
-			voices[ID]=VoiceInfo(ID,name)
+			language=locale.windows_locale[mode.language.LanguageID]
+			voices[ID]=VoiceInfo(ID,name,supportedLanguages=[language])
 		return voices
 
 	def _get_rate(self):
