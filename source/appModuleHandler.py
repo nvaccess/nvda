@@ -7,12 +7,9 @@
 """Manages appModules.
 @var runningTable: a dictionary of the currently running appModules, using their application's main window handle as a key.
 @type runningTable: dict
-@var re_keyScript: a compiled regular expression that can grab a keyName and a script name from a line in a NVDA key map file (kbd file).
-@type re_keyScript: regular expression
 """
 
 import itertools
-import re
 import ctypes
 import os
 import pkgutil
@@ -34,9 +31,6 @@ runningTable={}
 #: The process ID of NVDA itself.
 NVDAProcessID=None
 _importers=None
-
-#regexp to collect the key and script from a line in a keyMap file 
-re_keyScript=re.compile(r'^\s*(?P<key>[\S]+)\s*=\s*(?P<script>[\S]+)\s*$')
 
 class processEntry32W(ctypes.Structure):
 	_fields_ = [
