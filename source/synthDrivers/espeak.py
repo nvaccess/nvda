@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from collections import OrderedDict
 import _espeak
 import Queue
 import threading
@@ -77,7 +78,7 @@ class SynthDriver(SynthDriver):
 		_espeak.setParameter(_espeak.espeakVOLUME,volume,0)
 
 	def _getAvailableVoices(self):
-		return [VoiceInfo(voice.identifier, "%s (%s)" % (voice.name, voice.identifier)) for voice in _espeak.getVoiceList()]
+		return OrderedDict((voice.identifier,VoiceInfo(voice.identifier, "%s (%s)" % (voice.name, voice.identifier))) for voice in _espeak.getVoiceList())
 
 	def _get_voice(self):
 		curVoice = _espeak.getCurrentVoice()
@@ -104,4 +105,4 @@ class SynthDriver(SynthDriver):
 		_espeak.setVoiceAndVariant(variant=val)
 
 	def _getAvailableVariants(self):
-		return [VoiceInfo(ID, name) for ID, name in self._variantDict.iteritems()]
+		return OrderedDict((ID,VoiceInfo(ID, name)) for ID, name in self._variantDict.iteritems())

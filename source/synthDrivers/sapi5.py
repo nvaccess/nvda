@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from collections import OrderedDict
 import time
 import os
 import comtypes.client
@@ -44,7 +45,7 @@ class SynthDriver(SynthDriver):
 		del self.tts
 
 	def _getAvailableVoices(self):
-		voices=[]
+		voices=OrderedDict()
 		v=self.tts.GetVoices()
 		for i in range(len(v)):
 			try:
@@ -52,7 +53,7 @@ class SynthDriver(SynthDriver):
 				name=v[i].GetDescription()
 			except COMError:
 				log.warning("Could not get the voice info. Skipping...")
-			voices.append(VoiceInfo(ID,name))
+			voices[ID]=VoiceInfo(ID,name)
 		return voices
 
 	def _get_rate(self):

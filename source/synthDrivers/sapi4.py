@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from collections import OrderedDict
 import _winreg
 from comtypes import COMObject, COMError
 from ctypes import *
@@ -204,11 +205,11 @@ class SynthDriver(SynthDriver):
 		return str(self._currentMode.gModeID)
 
 	def _getAvailableVoices(self):
-		voices=[]
+		voices=OrderedDict()
 		for mode in self._enginesList:
 			ID=str(mode.gModeID)
 			name="%s - %s"%(mode.szModeName,mode.szProductName)
-			voices.append(VoiceInfo(ID,name))
+			voices[ID]=VoiceInfo(ID,name)
 		return voices
 
 	def _get_rate(self):

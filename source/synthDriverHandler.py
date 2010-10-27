@@ -154,7 +154,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@ivar voice: Unique string identifying the current voice.
 	@type voice: str
 	@ivar availableVoices: The available voices.
-	@ivar availableVoices: [L{VoiceInfo}, ...]
+	@type availableVoices: OrderedDict of L{VoiceInfo} keyed by VoiceInfo's ID
 	@ivar pitch: The current pitch; ranges between 0 and 100.
 	@type pitch: int
 	@ivar rate: The current rate; ranges between 0 and 100.
@@ -164,7 +164,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@ivar variant: The current variant of the voice.
 	@type variant: str
 	@ivar availableVariants: The available variants of the voice.
-	@type availableVariants: [L{VoiceInfo}, ...]
+	@type availableVariants: OrderedDict of [L{VoiceInfo} keyed by VoiceInfo's ID
 	@ivar inflection: The current inflection; ranges between 0 and 100.
 	@type inflection: int
 	@ivar lastIndex: The index of the chunk of text which was last spoken or C{None} if no index.
@@ -269,10 +269,11 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		pass
 
 	def _getAvailableVoices(self):
-		"""fetches a list of voices that the synth supports.
-		@returns: a list of L{VoiceInfo} instances representing the available voices
-		@rtype: list
+		"""fetches a ordered dictionary of voices that the synth supports.
+		@returns: a OrderedDict of L{VoiceInfo} instances representing the available voices, keyed by ID
+		@rtype: OrderedDict
 		"""
+		raise NotImplementedError
 
 	def _get_availableVoices(self):
 		if not hasattr(self,'_availableVoices'):
@@ -304,10 +305,11 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		pass
 
 	def _getAvailableVariants(self):
-		"""fetches a list of variants that the synth supports.
-		@returns: a list of L{VoiceInfo} instances representing the available variants
-		@rtype: list
+		"""fetches an ordered dictionary of variants that the synth supports, keyed by ID
+		@returns: an ordered dictionary of L{VoiceInfo} instances representing the available variants
+		@rtype: OrderedDict
 		"""
+		raise NotImplementedError
  
 	def _get_availableVariants(self):
 		if not hasattr(self,'_availableVariants'):
@@ -371,19 +373,6 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		@type max: int
 		"""
 		return int(round(float(percent) / 100 * (max - min) + min))
-
-	def getVoiceInfoByID(self,ID):
-		"""Looks up a L{VoiceInfo} instance representing a particular voice, by its ID.
-		@param ID: the ID of the voice
-		@type ID: string
-		@returns: the voice info instance
-		@rtype: L{VoiceInfo}
-		@raise LookupError: If there was no such voice.
-		"""
-		for v in self.availableVoices:
-			if v.ID==ID:
-				return v
-		raise LookupError("No such voice")
 
 	def isSupported(self,settingName):
 		"""Checks whether given setting is supported by the synthesizer.
