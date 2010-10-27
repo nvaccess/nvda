@@ -55,7 +55,7 @@ class SynthDriver(SynthDriver):
 				language=locale.windows_locale[int(v[i].getattribute('language').split(';')[0],16)]
 			except COMError:
 				log.warning("Could not get the voice info. Skipping...")
-			voices[ID]=VoiceInfo(ID,name,supportedLanguages=[language])
+			voices[ID]=VoiceInfo(ID,name,language)
 		return voices
 
 	def _get_rate(self):

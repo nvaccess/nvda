@@ -86,7 +86,7 @@ class SynthDriver(SynthDriver):
 				language="%s_%s"%(l[0],l[1].upper())
 			else:
 				language=l[0]
-			voices[v.identifier]=VoiceInfo(v.identifier,v.name,[language])
+			voices[v.identifier]=VoiceInfo(v.identifier,v.name,language)
 		return voices
 
 	def _get_voice(self):

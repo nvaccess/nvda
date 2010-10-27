@@ -211,7 +211,7 @@ class SynthDriver(SynthDriver):
 			ID=str(mode.gModeID)
 			name="%s - %s"%(mode.szModeName,mode.szProductName)
 			language=locale.windows_locale[mode.language.LanguageID]
-			voices[ID]=VoiceInfo(ID,name,supportedLanguages=[language])
+			voices[ID]=VoiceInfo(ID,name,language)
 		return voices
 
 	def _get_rate(self):

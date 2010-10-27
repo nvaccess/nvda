@@ -428,7 +428,7 @@ class VoiceInfo(StringParameterInfo):
 	"""Provides information about a single synthesizer voice.
 	"""
 
-	def __init__(self,ID,name,supportedLanguages=None):
-		#:a sequence of language IDs this voice supports, or None.
-		self.supportedLanguages=supportedLanguages
+	def __init__(self,ID,name,language=None):
+		#: The ID of the language this voice speaks, or None if not known or the synth implements language separate from voices
+		self.language=language
 		super(VoiceInfo,self).__init__(ID,name)
