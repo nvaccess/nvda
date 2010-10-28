@@ -23,7 +23,7 @@ def _updateVersionFromVCS():
 
 name="NVDA"
 longName=_("NonVisual Desktop Access")
-version="unknown"
+version="2010.2"
 description=_("A free and open-source screen reader for MS Windows")
 url="http://www.nvda-project.org/"
 copyright=_("Copyright (C) 2006-2010 NVDA Contributors")
