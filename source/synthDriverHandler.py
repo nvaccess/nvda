@@ -180,6 +180,11 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	description = ""
 
 	@classmethod
+	def LanguageSetting(cls):
+		"""Factory function for creating a language setting."""
+		return SynthSetting("language",_("&Language"))
+
+	@classmethod
 	def VoiceSetting(cls):
 		"""Factory function for creating voice setting."""
 		return SynthSetting("voice",_("&Voice"))
@@ -261,6 +266,15 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def cancel(self):
 		"""Silence speech immediately.
 		"""
+
+	def _get_language(self):
+		return self.availableVoices[self.voice].language
+
+	def _set_language(self,language):
+		raise NotImplementedError
+
+	def _get_availableLanguages(self):
+		raise NotImplementedError
 
 	def _get_voice(self):
 		raise NotImplementedError
@@ -432,3 +446,12 @@ class VoiceInfo(StringParameterInfo):
 		#: The ID of the language this voice speaks, or None if not known or the synth implements language separate from voices
 		self.language=language
 		super(VoiceInfo,self).__init__(ID,name)
+
+class LanguageInfo(StringParameterInfo):
+	"""Holds information for a particular language"""
+
+	def __init__(self,ID):
+		"""Given a language ID (locale name) the description is automatically calculated."""
+		name=languageHandler.getLanguageDescription(ID)
+		super(LanguageInfo,self).__init__(ID,name)
+
