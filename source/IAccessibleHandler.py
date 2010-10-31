@@ -358,7 +358,7 @@ def normalizeIAccessible(pacc):
 
 def accessibleObjectFromEvent(window,objectID,childID):
 	wmResult=c_long()
-	if windll.user32.SendMessageTimeoutW(window,wmNVDAPing,0,0,winUser.SMTO_ABORTIFHUNG,2000,byref(wmResult))==0:
+	if windll.user32.SendMessageTimeoutW(window,winUser.WM_NULL,0,0,winUser.SMTO_ABORTIFHUNG,2000,byref(wmResult))==0:
 		log.debugWarning("Window %d dead or not responding: %s" % (window, ctypes.WinError()))
 		return None
 	try:
@@ -576,6 +576,11 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 				return
 		#We never want to see foreground events for the Program Manager or Shell (task bar) 
 		if eventID==winUser.EVENT_SYSTEM_FOREGROUND and windowClassName in ("Progman","Shell_TrayWnd"):
+			return
+		if eventID==winUser.EVENT_OBJECT_NAMECHANGE and windowClassName=="MSNHiddenWindowClass":
+			# HACK: This gets fired by Windows Live Messenger 2009 when it starts.
+			# If we send a WM_NULL to this window at this point (which happens in accessibleObjectFromEvent), Messenger will silently exit (#677).
+			# Therefore, completely ignore the event, which is useless to us anyway.
 			return
 		winEventLimiter.addEvent(eventID,window,objectID,childID,threadID)
 	except:
@@ -801,13 +806,7 @@ def _fakeFocus(oldFocus):
 #Register internal object event with IAccessible
 cWinEventCallback=WINFUNCTYPE(None,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
-#: A window message used to determine whether a window is alive.
-#: We use this instead of WM_NULL because Windows Live Messenger 2009 (and maybe other applications) barf if we send WM_NULL.
-wmNVDAPing = None
 def initialize():
-	global wmNVDAPing
-	if not wmNVDAPing:
-		wmNVDAPing = windll.user32.RegisterWindowMessageW(u"NVDA ping")
 	for eventType in winEventIDsToNVDAEventNames.keys():
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:
