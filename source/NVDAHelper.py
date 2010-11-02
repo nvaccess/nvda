@@ -73,6 +73,20 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 		log.debugWarning("Could not find reg value 'Layout Text' for reg key %s"%layoutString)
 		return None
 
+@WINFUNCTYPE(c_long,c_long,c_long,c_long,c_long,c_long)
+def nvdaControllerInternal_displayModelTextChangeNotify(hwnd,left,top,right,bottom):
+	import api
+	focusObj=api.getFocusObject()
+	import displayModel
+	if hwnd==focusObj.windowHandle:
+		text,rects=displayModel.getWindowTextInRect(focusObj.appModule.helperLocalBindingHandle, hwnd, left, top, right, bottom,32,32)
+		if text:
+			import queueHandler
+			import speech
+			#queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,"left %s, top %s, right %s, bottom %s"%(left,top,right,bottom))
+			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,text)
+	return 0
+
 @WINFUNCTYPE(c_long,c_long,c_long,c_long,c_wchar_p,c_wchar_p,c_long,c_wchar_p)
 def nvdaControllerInternal_logMessage(pid,tid,level,fileName,funcName,lineNo,message):
 	if not log.isEnabledFor(level):
@@ -174,6 +188,7 @@ def initialize():
 		("nvdaController_cancelSpeech",nvdaController_cancelSpeech),
 		("nvdaController_brailleMessage",nvdaController_brailleMessage),
 		("nvdaControllerInternal_inputLangChangeNotify",nvdaControllerInternal_inputLangChangeNotify),
+		("nvdaControllerInternal_displayModelTextChangeNotify",nvdaControllerInternal_displayModelTextChangeNotify),
 		("nvdaControllerInternal_logMessage",nvdaControllerInternal_logMessage),
 	]:
 		try:
