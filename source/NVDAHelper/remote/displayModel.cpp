@@ -16,6 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <string>
 #include <sstream>
 #include <deque>
+#include <list>
 #include <set>
 #include "nvdaControllerInternal.h"
 #include <common/log.h>
@@ -168,48 +169,54 @@ void displayModel_t::clearRectangle(const RECT& rect, BOOL clearForText) {
 	LOG_DEBUG(L"complete");
 }
 
-void displayModel_t::copyRectangleToOtherModel(RECT& rect, displayModel_t* otherModel, BOOL clearEntireRectangle, int otherX, int otherY) {
-	if(!otherModel) otherModel=this;
-	set<displayModelChunk_t*> chunks;
+void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, BOOL opaqueCopy, int destX, int destY, const RECT* destClippingRect, displayModel_t* destModel) {
+	if(!destModel) destModel=this;
 	RECT tempRect;
-	RECT clearRect=rect;
-	int deltaX=otherX-rect.left;
-	int deltaY=otherY-rect.top;
-	//Shift the clearing rectangle so its where it is requested to be in the destination model
-	clearRect.left+=deltaX;
-	clearRect.top+=deltaY;
-	clearRect.right+=deltaX;
-	clearRect.bottom+=deltaY;
-	//Clear the rectangle in the destination model to make space for the chunks
-	if(clearEntireRectangle) otherModel->clearRectangle(clearRect);
-	//Collect all the chunks that should be copied in to a temporary set, and expand the clearing rectangle to bound them all completely.
-	for(displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();i!=chunksByYX.end();++i) {
-		if(IntersectRect(&tempRect,&rect,&(i->second->rect))) {
-			chunks.insert(i->second);
-		}
+	int deltaX=destX-srcRect.left;
+	int deltaY=destY-srcRect.top;
+	RECT destRect={srcRect.left+deltaX,srcRect.top+deltaY,srcRect.right+deltaX,srcRect.bottom+deltaY};
+	//If a clipping rectangle is provided, clip the destination rectangle
+	if(destClippingRect) {
+		IntersectRect(&tempRect,&destRect,destClippingRect);
+		destRect=tempRect;
 	}
-	if(chunks.size()>0) {
-		//Insert each chunk previously selected, in to the destination model shifting the chunk's rectangle to where it should be in the destination model
-		for(set<displayModelChunk_t*>::iterator i=chunks.begin();i!=chunks.end();++i) {
-			displayModelChunk_t* chunk=new displayModelChunk_t(**i);
-			chunk->rect.left=(chunk->rect.left)+deltaX;
-			chunk->rect.top=(chunk->rect.top)+deltaY;
-			chunk->rect.right=(chunk->rect.right)+deltaX;
-			chunk->rect.bottom=(chunk->rect.bottom)+deltaY;
-			for(deque<int>::iterator x=chunk->characterXArray.begin();x!=chunk->characterXArray.end();++x) (*x)+=deltaX;
-			if(chunk->rect.left<clearRect.left) {
-				chunk->truncate(clearRect.left,TRUE);
-			}
-			if(chunk->rect.right>clearRect.right) {
-				chunk->truncate(clearRect.right,FALSE);
-			}
-			if(chunk->text.length()==0) {
-				delete chunk;
-			} else {
-				if(!clearEntireRectangle) otherModel->clearRectangle(chunk->rect);
-				otherModel->insertChunk(chunk);
-			}
+	//Make copies of all the needed chunks, tweek their rectangle coordinates, truncate if needed, and store them in a temporary list
+	list<displayModelChunk_t*> copiedChunks;
+	for(displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();i!=chunksByYX.end();++i) {
+		//We only care about chunks that are overlapped by the source rectangle 
+		if(!IntersectRect(&tempRect,&srcRect,&(i->second->rect))) continue; 
+		//Copy the chunk
+		displayModelChunk_t* chunk=new displayModelChunk_t(*(i->second));
+		//Tweek its rectangle coordinates to match where its going in the destination model
+		(chunk->rect.left)+=deltaX;
+		(chunk->rect.top)+=deltaY;
+		(chunk->rect.right)+=deltaX;
+		(chunk->rect.bottom)+=deltaY;
+		//Tweek its character x coordinates to match where its going in the destination model
+		for(deque<int>::iterator x=chunk->characterXArray.begin();x!=chunk->characterXArray.end();++x) (*x)+=deltaX;
+		//Truncate the chunk so it does not stick outside of the destination rectangle
+		if(chunk->rect.left<destRect.left) {
+			chunk->truncate(destRect.left,TRUE);
 		}
+		if(chunk->rect.right>destRect.right) {
+			chunk->truncate(destRect.right,FALSE);
+		}
+		//if the chunk is now empty due to truncation then just delete it and move on to the next 
+		if(chunk->text.length()==0) {
+			delete chunk;
+			continue;
+		}
+		//Insert the chunk in to the temporary list
+		copiedChunks.insert(copiedChunks.end(),chunk);
+	}
+	//Clear the source rectangle if requested to do so (move rather than copy)
+	if(removeFromSource) this->clearRectangle(srcRect);
+	//Clear the entire destination rectangle if requested to do so
+	if(opaqueCopy) destModel->clearRectangle(destRect);
+	//insert the copied chunks in to the destination model
+	for(list<displayModelChunk_t*>::iterator i=copiedChunks.begin();i!=copiedChunks.end();++i) {
+		if(!opaqueCopy) destModel->clearRectangle((*i)->rect);
+		destModel->insertChunk(*i);
 	}
 }
 

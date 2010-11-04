@@ -90,13 +90,15 @@ class displayModel_t: public LockableAutoFreeObject  {
 
 /**
  * Copies the chunks intersecting the given rectangle, in to the given display model, starting from the given coordinates.
- * @param rect the rectangle intersecting all the chunks in this model that will be copied.
- * @param otherModel a pointer to the displayModel the chunks should be copied to (if NULL then this model is used) 
- * @param clearEntireRectangle if true then the given rectangle will be cleared before inserting any chunks, but if false then only the rectangle  for each chunk will be cleared.
- * @param otherX the x coordinate in the destination model where the rectangle's left edge  starts
- * @param otherY the y coordinate in the destnation model where the rectangle's top edge starts
+ * @param srcRect the rectangle intersecting all the chunks in this model that will be copied.
+ * @param removeFromSource if true then the content will be moved, rather than copied
+ * @param opaqueCopy if true then the entire destination rectangle will be cleared before inserting any chunks, but if false then only space for each chunk will be cleared.
+ * @param destX the x coordinate in the destination model where the rectangle's left edge  starts
+ * @param destY the y coordinate in the destnation model where the rectangle's top edge starts
+ * @param destClippingRect an optional rectangle which will be used to clip all content being copied in to the destination model
+ * @param destModel a pointer to the displayModel the chunks should be copied to (if NULL then this model is used) 
  */
-	void copyRectangleToOtherModel(RECT& rect,displayModel_t* otherModel, BOOL clearEntireRectangle, int otherX, int otherY);
+	void copyRectangle(const RECT& srcRect, BOOL removeFromSource, BOOL opaqueCopy, int destX, int destY, const RECT* destClippingRect, displayModel_t* destModel);
 
 /**
  * Fetches the text contained in all chunks intersecting the given rectangle if provided, otherwize the text from all chunks in the model.
