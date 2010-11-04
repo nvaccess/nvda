@@ -592,6 +592,62 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 	return res;
 }
 
+//ScrollWindow hook function
+typedef BOOL(WINAPI *ScrollWindow_funcType)(HWND,int,int,const RECT*, const RECT*);
+ScrollWindow_funcType real_ScrollWindow=NULL;
+BOOL WINAPI fake_ScrollWindow(HWND hwnd, int XAmount, int YAmount, const RECT* lpRect, const RECT* lpClipRect) {
+	BOOL res=real_ScrollWindow(hwnd,XAmount,YAmount,lpRect,lpClipRect);
+	if(!res) return res;
+	displayModel_t* model=NULL;
+	displayModelsByWindow.acquire();
+	displayModelsMap_t<HWND>::iterator i=displayModelsByWindow.find(hwnd);
+	if(i!=displayModelsByWindow.end()) {
+		model=i->second;
+		model->acquire();
+	}
+	displayModelsByWindow.release();
+	if(!model) return res;
+	RECT clientRect;
+	GetClientRect(hwnd,&clientRect);
+	RECT realScrollRect=lpRect?*lpRect:clientRect;
+	ClientToScreen(hwnd,(LPPOINT)&realScrollRect);
+	ClientToScreen(hwnd,((LPPOINT)&realScrollRect)+1);
+	RECT realClipRect=lpClipRect?*lpClipRect:clientRect;
+	ClientToScreen(hwnd,(LPPOINT)&realClipRect);
+	ClientToScreen(hwnd,((LPPOINT)&realClipRect)+1);
+	model->copyRectangle(realScrollRect,TRUE,TRUE,realScrollRect.left+XAmount,realScrollRect.top+YAmount,&realClipRect,NULL);
+	model->release();
+	return res;
+}
+ 
+//ScrollWindowEx hook function
+typedef BOOL(WINAPI *ScrollWindowEx_funcType)(HWND,int,int,const RECT*, const RECT*, HRGN, LPRECT,UINT);
+ScrollWindowEx_funcType real_ScrollWindowEx=NULL;
+BOOL WINAPI fake_ScrollWindowEx(HWND hwnd, int dx, int dy, const RECT* prcScroll, const RECT* prcClip, HRGN hrgnUpdate, LPRECT prcUpdate, UINT flags) {
+	BOOL res=real_ScrollWindowEx(hwnd,dx,dy,prcScroll,prcClip,hrgnUpdate,prcUpdate,flags);
+	if(!res) return res;
+	displayModel_t* model=NULL;
+	displayModelsByWindow.acquire();
+	displayModelsMap_t<HWND>::iterator i=displayModelsByWindow.find(hwnd);
+	if(i!=displayModelsByWindow.end()) {
+		model=i->second;
+		model->acquire();
+	}
+	displayModelsByWindow.release();
+	if(!model) return res;
+	RECT clientRect;
+	GetClientRect(hwnd,&clientRect);
+	RECT realScrollRect=prcScroll?*prcScroll:clientRect;
+	ClientToScreen(hwnd,(LPPOINT)&realScrollRect);
+	ClientToScreen(hwnd,((LPPOINT)&realScrollRect)+1);
+	RECT realClipRect=prcClip?*prcClip:clientRect;
+	ClientToScreen(hwnd,(LPPOINT)&realClipRect);
+	ClientToScreen(hwnd,((LPPOINT)&realClipRect)+1);
+	model->copyRectangle(realScrollRect,TRUE,TRUE,realScrollRect.left+dx,realScrollRect.top+dy,&realClipRect,NULL);
+	model->release();
+	return res;
+}
+
 //DestroyWindow hook function
 //Hooked so that we can get rid of  displayModels for windows that are being destroied.
 typedef BOOL(WINAPI *DestroyWindow_funcType)(HWND);
@@ -630,6 +686,8 @@ void gdiHooks_inProcess_initialize() {
 	real_BeginPaint=apiHook_hookFunction_safe("USER32.dll",BeginPaint,fake_BeginPaint);
 	real_BitBlt=apiHook_hookFunction_safe("GDI32.dll",BitBlt,fake_BitBlt);
 	real_PatBlt=apiHook_hookFunction_safe("GDI32.dll",PatBlt,fake_PatBlt);
+	real_ScrollWindow=apiHook_hookFunction_safe("USER32.dll",ScrollWindow,fake_ScrollWindow);
+	real_ScrollWindowEx=apiHook_hookFunction_safe("USER32.dll",ScrollWindowEx,fake_ScrollWindowEx);
 	real_DestroyWindow=apiHook_hookFunction_safe("USER32.dll",DestroyWindow,fake_DestroyWindow);
 	real_ScriptStringAnalyse=apiHook_hookFunction_safe("USP10.dll",ScriptStringAnalyse,fake_ScriptStringAnalyse);
 	real_ScriptStringFree=apiHook_hookFunction_safe("USP10.dll",ScriptStringFree,fake_ScriptStringFree);
