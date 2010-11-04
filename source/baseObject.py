@@ -128,12 +128,20 @@ class ScriptableObject(AutoPropertyObject):
 	Input gestures are bound to scripts such that the script will be executed when the appropriate input gesture is received.
 	Scripts are methods named with a prefix of C{script_}; e.g. C{script_foo}.
 	They accept an L{inputCore.InputGesture} as their single argument.
+	Gesture bindings can be specified on the class by creating a C{__gestures} dict which maps gesture identifiers to script names.
+	They can also be bound on an instance using the L{bindGesture} method.
 	"""
 
 	def __init__(self):
 		#: Maps input gestures to script functions.
 		#: @type: dict
 		self._gestureMap = {}
+		# Bind gestures specified on the class.
+		for cls in self.__class__.__mro__:
+			try:
+				self.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))
+			except AttributeError:
+				pass
 		super(ScriptableObject, self).__init__()
 
 	def bindGesture(self, gestureIdentifier, scriptName):
@@ -144,7 +152,9 @@ class ScriptableObject(AutoPropertyObject):
 		@type scriptName: str
 		@raise LookupError: If there is no script with the provided name.
 		"""
-		func = getattr(self, "script_%s" % scriptName, None)
+		# Don't store the instance method, as this causes a circular reference
+		# and instance methods are meant to be generated on retrieval anyway.
+		func = getattr(self.__class__, "script_%s" % scriptName, None)
 		if not func:
 			raise LookupError("No such script: %s" % func)
 		# Import late to avoid circular import.
@@ -177,7 +187,8 @@ class ScriptableObject(AutoPropertyObject):
 		""" 
 		for identifier in gesture.identifiers:
 			try:
-				return self._gestureMap[identifier]
+				# Convert to instance method.
+				return self._gestureMap[identifier].__get__(self, self.__class__)
 			except KeyError:
 				continue
 		else:

@@ -112,7 +112,6 @@ class EditableText(editableText.EditableText, NVDAObject):
 	To handle selection changes, use either L{EditableTextWithAutoSelectDetection} or L{EditableTextWithoutAutoSelectDetection}.
 	"""
 
-	initOverlayClass = editableText.EditableText.initClass
 	shouldFireCaretMovementFailedEvents = True
 
 class EditableTextWithAutoSelectDetection(EditableText):

@@ -161,7 +161,7 @@ void dcPointsToScreenPoints(HDC hdc, POINT* points, int count) {
  * @param cbCount the length of the string in characters.
  * @param resultTextSize an optional pointer to a SIZE structure that will contain the size of the text.
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, wchar_t* lpString, const int* characterWidths, int cbCount, LPSIZE resultTextSize) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const wchar_t* lpString, const int* characterWidths, int cbCount, LPSIZE resultTextSize) {
 	RECT clearRect={0,0,0,0};
 	//If a rectangle was provided, convert it to screen coordinates
 	if(lprc) {
@@ -254,7 +254,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
  * an overload of ExtTextOutHelper to work with ansi strings.
  * @param lpString the string of ansi text you wish to record.
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, char* lpString, const int* characterWidths, int cbCount, LPSIZE resultTextSize) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const char* lpString, const int* characterWidths, int cbCount, LPSIZE resultTextSize) {
 	int newCount=0;
 	wchar_t* newString=NULL;
 	if(lpString&&cbCount) {
@@ -272,14 +272,14 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 //Handles char or wchar_t
 template<typename charType> class hookClass_TextOut {
 	public:
-	typedef bool(WINAPI *funcType)(HDC,int,int, charType*,int);
+	typedef int(WINAPI *funcType)(HDC,int,int, const charType*,int);
 	static funcType realFunction;
-	static BOOL  WINAPI fakeFunction(HDC hdc, int x, int y, charType* lpString, int cbCount);
+	static int  WINAPI fakeFunction(HDC hdc, int x, int y, const charType* lpString, int cbCount);
 };
 
 template<typename charType> typename hookClass_TextOut<charType>::funcType hookClass_TextOut<charType>::realFunction=NULL;
 
-template<typename charType> BOOL  WINAPI hookClass_TextOut<charType>::fakeFunction(HDC hdc, int x, int y, charType* lpString, int cbCount) {
+template<typename charType> int  WINAPI hookClass_TextOut<charType>::fakeFunction(HDC hdc, int x, int y, const charType* lpString, int cbCount) {
 	//Make sure nvdaHelperRemote does not get unloaded in this scope.
 	UINT textAlign=GetTextAlign(hdc);
 	POINT pos={x,y};
@@ -299,26 +299,16 @@ template<typename charType> BOOL  WINAPI hookClass_TextOut<charType>::fakeFuncti
 
 //PolyTextOut hook class template
 
-template<typename charType> struct WA_POLYTEXT {
-	int x;
-	int y;
-	UINT nCount;
-	charType* lpString;
-	UINT uiFlags;
-	RECT rcl;
-	int* pdx;
-};
-
-template<typename charType> class hookClass_PolyTextOut {
+template<typename WA_POLYTEXT> class hookClass_PolyTextOut {
 	public:
-	typedef BOOL(WINAPI *funcType)(HDC,const WA_POLYTEXT<charType>*,int);
+	typedef BOOL(WINAPI *funcType)(HDC,const WA_POLYTEXT*,int);
 	static funcType realFunction;
-	static BOOL WINAPI fakeFunction(HDC hdc,const WA_POLYTEXT<charType>* pptxt,int cStrings);
+	static BOOL WINAPI fakeFunction(HDC hdc,const WA_POLYTEXT* pptxt,int cStrings);
 };
 
-template<typename charType> typename hookClass_PolyTextOut<charType>::funcType hookClass_PolyTextOut<charType>::realFunction=NULL;
+template<typename WA_POLYTEXT> typename hookClass_PolyTextOut<WA_POLYTEXT>::funcType hookClass_PolyTextOut<WA_POLYTEXT>::realFunction=NULL;
 
-template<typename charType> BOOL WINAPI hookClass_PolyTextOut<charType>::fakeFunction(HDC hdc,const WA_POLYTEXT<charType>* pptxt,int cStrings) {
+template<typename WA_POLYTEXT> BOOL WINAPI hookClass_PolyTextOut<WA_POLYTEXT>::fakeFunction(HDC hdc,const WA_POLYTEXT* pptxt,int cStrings) {
 	//Make sure nvdaHelperRemote does not get unloaded in this scope.
 	//Collect text alignment and possibly current position
 	UINT textAlign=GetTextAlign(hdc);
@@ -336,7 +326,7 @@ template<typename charType> BOOL WINAPI hookClass_PolyTextOut<charType>::fakeFun
 	SIZE curTextSize;
 	//For each of the strings, record the text
 	for(int i=0;i<cStrings;++i) {
-		const WA_POLYTEXT<charType>* curPptxt=&pptxt[i];
+		const WA_POLYTEXT* curPptxt=&pptxt[i];
 		RECT curClearRect={curPptxt->rcl.left,curPptxt->rcl.top,curPptxt->rcl.right,curPptxt->rcl.bottom};
 		//Only use the given x and y if DC's current position should not be used
 		if(!(textAlign&TA_UPDATECP)) {
@@ -344,7 +334,7 @@ template<typename charType> BOOL WINAPI hookClass_PolyTextOut<charType>::fakeFun
 			curPos.y=curPptxt->y;
 		}
 		//record the text
-		ExtTextOutHelper(model,hdc,curPos.x,curPos.y,&curClearRect,curPptxt->uiFlags,textAlign,FALSE,curPptxt->lpString,curPptxt->pdx,curPptxt->nCount,&curTextSize);
+		ExtTextOutHelper(model,hdc,curPos.x,curPos.y,&curClearRect,curPptxt->uiFlags,textAlign,FALSE,curPptxt->lpstr,curPptxt->pdx,curPptxt->n,&curTextSize);
 		//If the DC's current position should be used,  move our idea of it by the size of the text just recorded
 		if(textAlign&TA_UPDATECP) {
 			curPos.x+=curTextSize.cx;
@@ -418,14 +408,14 @@ HDC WINAPI fake_BeginPaint(HWND hwnd, LPPAINTSTRUCT lpPaint) {
 //Handles char or wchar_t
 template<typename charType> class hookClass_ExtTextOut {
 	public:
-	typedef BOOL(__stdcall *funcType)(HDC,int,int,UINT,const RECT*,charType*,int,const int*);
+	typedef BOOL(__stdcall *funcType)(HDC,int,int,UINT,const RECT*,const charType*,UINT,const INT*);
 	static funcType realFunction;
-	static BOOL __stdcall fakeFunction(HDC hdc, int x, int y, UINT fuOptions, const RECT* lprc, charType* lpString, int cbCount, const int* lpDx);
+	static BOOL __stdcall fakeFunction(HDC hdc, int x, int y, UINT fuOptions, const RECT* lprc, const charType* lpString, UINT cbCount, const INT* lpDx);
 };
 
 template<typename charType> typename hookClass_ExtTextOut<charType>::funcType hookClass_ExtTextOut<charType>::realFunction=NULL;
 
-template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeFunction(HDC hdc, int x, int y, UINT fuOptions, const RECT* lprc, charType* lpString, int cbCount, const int* lpDx) {
+template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeFunction(HDC hdc, int x, int y, UINT fuOptions, const RECT* lprc, const charType* lpString, UINT cbCount, const INT* lpDx) {
 	//Make sure nvdaHelperRemote does not get unloaded in this scope.
 	UINT textAlign=GetTextAlign(hdc);
 	POINT pos={x,y};
@@ -545,7 +535,7 @@ BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHe
 	dcPointsToScreenPoints(hdcDest,&destPos,1);
 	if(srcModel) {
 		//Copy the requested rectangle from the source model in to the destination model, at the given coordinates.
-		srcModel->copyRectangleToOtherModel(srcRect,destModel,TRUE,destPos.x,destPos.y);
+		srcModel->copyRectangle(srcRect,FALSE,TRUE,destPos.x,destPos.y,NULL,destModel);
 		RECT destRect={(srcRect.right-srcRect.left)+destPos.x,(srcRect.bottom-srcRect.top)+destPos.y};
 		HWND hwnd=WindowFromDC(hdcDest);
 		if(hwnd) queueTextChangeNotify(hwnd,destRect);
@@ -653,6 +643,62 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 	return res;
 }
 
+//ScrollWindow hook function
+typedef BOOL(WINAPI *ScrollWindow_funcType)(HWND,int,int,const RECT*, const RECT*);
+ScrollWindow_funcType real_ScrollWindow=NULL;
+BOOL WINAPI fake_ScrollWindow(HWND hwnd, int XAmount, int YAmount, const RECT* lpRect, const RECT* lpClipRect) {
+	BOOL res=real_ScrollWindow(hwnd,XAmount,YAmount,lpRect,lpClipRect);
+	if(!res) return res;
+	displayModel_t* model=NULL;
+	displayModelsByWindow.acquire();
+	displayModelsMap_t<HWND>::iterator i=displayModelsByWindow.find(hwnd);
+	if(i!=displayModelsByWindow.end()) {
+		model=i->second;
+		model->acquire();
+	}
+	displayModelsByWindow.release();
+	if(!model) return res;
+	RECT clientRect;
+	GetClientRect(hwnd,&clientRect);
+	RECT realScrollRect=lpRect?*lpRect:clientRect;
+	ClientToScreen(hwnd,(LPPOINT)&realScrollRect);
+	ClientToScreen(hwnd,((LPPOINT)&realScrollRect)+1);
+	RECT realClipRect=lpClipRect?*lpClipRect:clientRect;
+	ClientToScreen(hwnd,(LPPOINT)&realClipRect);
+	ClientToScreen(hwnd,((LPPOINT)&realClipRect)+1);
+	model->copyRectangle(realScrollRect,TRUE,TRUE,realScrollRect.left+XAmount,realScrollRect.top+YAmount,&realClipRect,NULL);
+	model->release();
+	return res;
+}
+ 
+//ScrollWindowEx hook function
+typedef BOOL(WINAPI *ScrollWindowEx_funcType)(HWND,int,int,const RECT*, const RECT*, HRGN, LPRECT,UINT);
+ScrollWindowEx_funcType real_ScrollWindowEx=NULL;
+BOOL WINAPI fake_ScrollWindowEx(HWND hwnd, int dx, int dy, const RECT* prcScroll, const RECT* prcClip, HRGN hrgnUpdate, LPRECT prcUpdate, UINT flags) {
+	BOOL res=real_ScrollWindowEx(hwnd,dx,dy,prcScroll,prcClip,hrgnUpdate,prcUpdate,flags);
+	if(!res) return res;
+	displayModel_t* model=NULL;
+	displayModelsByWindow.acquire();
+	displayModelsMap_t<HWND>::iterator i=displayModelsByWindow.find(hwnd);
+	if(i!=displayModelsByWindow.end()) {
+		model=i->second;
+		model->acquire();
+	}
+	displayModelsByWindow.release();
+	if(!model) return res;
+	RECT clientRect;
+	GetClientRect(hwnd,&clientRect);
+	RECT realScrollRect=prcScroll?*prcScroll:clientRect;
+	ClientToScreen(hwnd,(LPPOINT)&realScrollRect);
+	ClientToScreen(hwnd,((LPPOINT)&realScrollRect)+1);
+	RECT realClipRect=prcClip?*prcClip:clientRect;
+	ClientToScreen(hwnd,(LPPOINT)&realClipRect);
+	ClientToScreen(hwnd,((LPPOINT)&realClipRect)+1);
+	model->copyRectangle(realScrollRect,TRUE,TRUE,realScrollRect.left+dx,realScrollRect.top+dy,&realClipRect,NULL);
+	model->release();
+	return res;
+}
+
 //DestroyWindow hook function
 //Hooked so that we can get rid of  displayModels for windows that are being destroied.
 typedef BOOL(WINAPI *DestroyWindow_funcType)(HWND);
@@ -681,23 +727,25 @@ void gdiHooks_inProcess_initialize() {
 	InitializeCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allow_ScriptStringAnalyseArgsByAnalysis=TRUE;
 	//Hook needed functions
-	hookClass_TextOut<char>::realFunction=(hookClass_TextOut<char>::funcType)apiHook_hookFunction("GDI32.dll","TextOutA",hookClass_TextOut<char>::fakeFunction);
-	hookClass_TextOut<wchar_t>::realFunction=(hookClass_TextOut<wchar_t>::funcType)apiHook_hookFunction("GDI32.dll","TextOutW",hookClass_TextOut<wchar_t>::fakeFunction);
-	hookClass_PolyTextOut<char>::realFunction=(hookClass_PolyTextOut<char>::funcType)apiHook_hookFunction("GDI32.dll","PolyTextOutA",hookClass_PolyTextOut<char>::fakeFunction);
-	hookClass_PolyTextOut<wchar_t>::realFunction=(hookClass_PolyTextOut<wchar_t>::funcType)apiHook_hookFunction("GDI32.dll","PolyTextOutW",hookClass_PolyTextOut<wchar_t>::fakeFunction);
-	hookClass_ExtTextOut<char>::realFunction=(hookClass_ExtTextOut<char>::funcType)apiHook_hookFunction("GDI32.dll","ExtTextOutA",hookClass_ExtTextOut<char>::fakeFunction);
-	hookClass_ExtTextOut<wchar_t>::realFunction=(hookClass_ExtTextOut<wchar_t>::funcType)apiHook_hookFunction("GDI32.dll","ExtTextOutW",hookClass_ExtTextOut<wchar_t>::fakeFunction);
-	real_CreateCompatibleDC=(CreateCompatibleDC_funcType)apiHook_hookFunction("GDI32.dll","CreateCompatibleDC",fake_CreateCompatibleDC);
-	real_SelectObject=(SelectObject_funcType)apiHook_hookFunction("GDI32.dll","SelectObject",fake_SelectObject);
-	real_DeleteDC=(DeleteDC_funcType)apiHook_hookFunction("GDI32.dll","DeleteDC",fake_DeleteDC);
-	real_FillRect=(FillRect_funcType)apiHook_hookFunction("USER32.dll","FillRect",fake_FillRect);
-	real_BeginPaint=(BeginPaint_funcType)apiHook_hookFunction("USER32.dll","BeginPaint",fake_BeginPaint);
-	real_BitBlt=(BitBlt_funcType)apiHook_hookFunction("GDI32.dll","BitBlt",fake_BitBlt);
-	real_PatBlt=(PatBlt_funcType)apiHook_hookFunction("GDI32.dll","PatBlt",fake_PatBlt);
-	real_DestroyWindow=(DestroyWindow_funcType)apiHook_hookFunction("USER32.dll","DestroyWindow",fake_DestroyWindow);
-	real_ScriptStringAnalyse=(ScriptStringAnalyse_funcType)apiHook_hookFunction("USP10.dll","ScriptStringAnalyse",fake_ScriptStringAnalyse);
-	real_ScriptStringFree=(ScriptStringFree_funcType)apiHook_hookFunction("USP10.dll","ScriptStringFree",fake_ScriptStringFree);
-	real_ScriptStringOut=(ScriptStringOut_funcType)apiHook_hookFunction("USP10.dll","ScriptStringOut",fake_ScriptStringOut);
+	hookClass_TextOut<char>::realFunction=apiHook_hookFunction_safe("GDI32.dll",TextOutA,hookClass_TextOut<char>::fakeFunction);
+	hookClass_TextOut<wchar_t>::realFunction=apiHook_hookFunction_safe("GDI32.dll",TextOutW,hookClass_TextOut<wchar_t>::fakeFunction);
+	hookClass_PolyTextOut<POLYTEXTA>::realFunction=apiHook_hookFunction_safe("GDI32.dll",PolyTextOutA,hookClass_PolyTextOut<POLYTEXTA>::fakeFunction);
+	hookClass_PolyTextOut<POLYTEXTW>::realFunction=apiHook_hookFunction_safe("GDI32.dll",PolyTextOutW,hookClass_PolyTextOut<POLYTEXTW>::fakeFunction);
+	hookClass_ExtTextOut<char>::realFunction=apiHook_hookFunction_safe("GDI32.dll",ExtTextOutA,hookClass_ExtTextOut<char>::fakeFunction);
+	hookClass_ExtTextOut<wchar_t>::realFunction=apiHook_hookFunction_safe("GDI32.dll",ExtTextOutW,hookClass_ExtTextOut<wchar_t>::fakeFunction);
+	real_CreateCompatibleDC=apiHook_hookFunction_safe("GDI32.dll",CreateCompatibleDC,fake_CreateCompatibleDC);
+	real_SelectObject=apiHook_hookFunction_safe("GDI32.dll",SelectObject,fake_SelectObject);
+	real_DeleteDC=apiHook_hookFunction_safe("GDI32.dll",DeleteDC,fake_DeleteDC);
+	real_FillRect=apiHook_hookFunction_safe("USER32.dll",FillRect,fake_FillRect);
+	real_BeginPaint=apiHook_hookFunction_safe("USER32.dll",BeginPaint,fake_BeginPaint);
+	real_BitBlt=apiHook_hookFunction_safe("GDI32.dll",BitBlt,fake_BitBlt);
+	real_PatBlt=apiHook_hookFunction_safe("GDI32.dll",PatBlt,fake_PatBlt);
+	real_ScrollWindow=apiHook_hookFunction_safe("USER32.dll",ScrollWindow,fake_ScrollWindow);
+	real_ScrollWindowEx=apiHook_hookFunction_safe("USER32.dll",ScrollWindowEx,fake_ScrollWindowEx);
+	real_DestroyWindow=apiHook_hookFunction_safe("USER32.dll",DestroyWindow,fake_DestroyWindow);
+	real_ScriptStringAnalyse=apiHook_hookFunction_safe("USP10.dll",ScriptStringAnalyse,fake_ScriptStringAnalyse);
+	real_ScriptStringFree=apiHook_hookFunction_safe("USP10.dll",ScriptStringFree,fake_ScriptStringFree);
+	real_ScriptStringOut=apiHook_hookFunction_safe("USP10.dll",ScriptStringOut,fake_ScriptStringOut);
 }
 
 void gdiHooks_inProcess_terminate() {

@@ -27,6 +27,7 @@ bool apiHook_initialize();
 
 /**
  * Requests that the given function from the given module should be hooked with the given hook procedure. 
+ * Warning, this function has no safety checks, you should usually use the apiHook_hookFunction_safe macro
  * @param moduleName the name of the module the function you wish to hook is located in.
  * @param functionName the name of the function you wish to hook.
  * @param newHookProc the function you wish  to be called instead of the original one.
@@ -34,6 +35,19 @@ bool apiHook_initialize();
  */ 
 void* apiHook_hookFunction(const char* moduleName, const char* functionName, void* newHookProc);
 
+ /**
+ * a helper template used internally by apiHook_hookFunction_safe
+ */
+template<typename funcType> funcType _apiHook_hookFunction_tpl(const char* moduleName, const char* functionName, funcType funcSyg, funcType fakeFunction) { return (funcType)apiHook_hookFunction(moduleName,functionName,(void*)fakeFunction); }
+
+/**
+ * Safely hooks a given function from a given module with a given fake function.
+ * @param moduleName a string containing the name of the module the function lives in
+ * @param the name/symbol of the function that should be hooked (i.e. the symbole from its header file, not a string) -- the the symbol's type is used for safety, the the function name string looked up in the module is made from this symbol name.
+ * @param fakeFunction the replacement function.
+ */ 
+#define apiHook_hookFunction_safe(moduleName,realFunction,fakeFunction) _apiHook_hookFunction_tpl(moduleName,#realFunction,realFunction,fakeFunction)
+ 
 /**
  * Actually hooks all requested hook functions.
  */

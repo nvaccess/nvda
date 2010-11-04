@@ -404,6 +404,3 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}
-
-	def initOverlayClass(self):
-		self.bindGestures(self.__gestures)
