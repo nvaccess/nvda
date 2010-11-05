@@ -67,6 +67,10 @@ To use the MDV Lilli braille display driver:
 
 To build a binary version of NVDA:
 	* Py2Exe (for Python 2.7), version 0.6.9 or later: http://www.sourceforge.net/projects/py2exe/
+	* SCons, version 2.0.0 or later: http://www.scons.org/
+
+To build a portable archive:
+	* 7-Zip: http://www.7-zip.org/
 
 To build an installer:
 	* Nulsoft Install System, version 2.42 or later: http://nsis.sourceforge.net/
@@ -80,15 +84,27 @@ You should do this again whenever the version of comtypes changes or new languag
 == Running the Source Code ==
 To start NVDA from source code, run nvda.pyw located in the source directory.
 
-== Building a Standalone Binary Version of NVDA ==
-You can use py2exe to make a binary build of NVDA which can be run on a system without Python and all of NVDA's other dependencies installed (as we do for snapshots and releases).
+== Building NVDA ==
+A binary build of NVDA can be run on a system without Python and all of NVDA's other dependencies installed (as we do for snapshots and releases).
 
-Assuming py2exe is installed, open a command prompt, change to the NVDA source directory and type:
-setup.py py2exe
+Binary archives and bundles can be created using scons from the root of the NVDA source distribution/checkout. To build any of the following, open a command prompt and change to this directory.
 
-== Building an NVDA Installer ==
-To build an NVDA installer:
-	1. First build a standalone binary version as described in the previous section.
-	2. Using Windows Explorer, locate nvda.nsi in the installer directory.
-	3. Press the applications key and choose "Compile NSIS Script".
-The installer will be built and placed in the installer directory.
+To make a non-archived binary build (equivalent to an extracted portable archive), type:
+scons dist
+The build will be created in the dist directory.
+
+To create a portable archive, type:
+scons portable
+The archive will be placed in the current directory.
+
+To build an installer, type:
+scons installer
+The installer will be placed in the current directory.
+
+Optionally, the build can  be customised by providing variables on the command line:
+	* version: The version of this build.
+	* isRelease: Whether this is a release version.
+	* publisher: The publisher of this build.
+	* certFile: The certificate file with which to sign executables.
+For example, to build an installer with a specific version, you might type:
+scons installer version=test1

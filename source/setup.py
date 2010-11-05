@@ -148,8 +148,8 @@ setup(
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),
 		("documentation", ['../copying.txt', '../contributors.txt']),
 		("appModules", glob("appModules/*.kbd")),
-		("lib", glob("lib/*")),
-		("lib64", glob("lib64/*")),
+		("lib", glob("lib/*.dll") + glob("lib/*.pdb")),
+		("lib64", glob("lib64/*.dll") + glob("lib64/*.exe") + glob("lib64/*.pdb")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("louis/tables",glob("louis/tables/*"))
