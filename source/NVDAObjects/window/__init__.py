@@ -15,7 +15,7 @@ import api
 import displayModel
 import eventHandler
 from NVDAObjects import NVDAObject
-from NVDAObjects.behaviors import EditableText
+from NVDAObjects.behaviors import EditableText, LiveText
 
 re_WindowsForms=re.compile(r'^WindowsForms[0-9]*\.(.*)\.app\..*$')
 re_ATL=re.compile(r'^ATL:(.*)$')
@@ -360,6 +360,22 @@ class DisplayModelEditableText(EditableText, Window):
 	def event_valueChange(self):
 		# Don't report value changes for editable text fields.
 		pass
+
+class DisplayModelLiveText(LiveText, Window):
+	TextInfo = displayModel.DisplayModelTextInfo
+
+	def startMonitoring(self):
+		# Force the window to be redrawn, as our display model might be out of date.
+		self.redraw()
+		displayModel.requestTextChangeNotifications(self, True)
+		super(DisplayModelLiveText, self).startMonitoring()
+
+	def stopMonitoring(self):
+		super(DisplayModelLiveText, self).stopMonitoring()
+		displayModel.requestTextChangeNotifications(self, False)
+
+	def _getTextLines(self):
+		return self.displayText.splitlines()
 
 windowClassMap={
 	"EDIT":"Edit",
