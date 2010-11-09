@@ -210,34 +210,54 @@ class LiveText(NVDAObject):
 
 	def _calculateNewText(self, newLines, oldLines):
 		outLines = []
-		# Retrieve the lines that have been added or removed.
-		diffLines = [x for x in difflib.ndiff(oldLines, newLines) if (x[0] in ['+', '-'])]
-		for lineNum, line in enumerate(diffLines):
+
+		prevLine = None
+		for line in difflib.ndiff(oldLines, newLines):
+			if line[0] == "?":
+				# We're never interested in these.
+				continue
 			if line[0] != "+":
 				# We're only interested in new lines.
+				prevLine = line
 				continue
 			text = line[2:]
 			if text.isspace():
+				prevLine = line
 				continue
-			prevLine = diffLines[lineNum - 1] if lineNum > 0 else None
-			# FIXME: This is disabled because it causes exceptions if the lines are different lengths.
-			if False and prevLine and prevLine[0] == "-":
-				start = 0
-				end = len(text)
+
+			if prevLine and prevLine[0] == "-":
+				# It's possible that only a few characters have changed in this line.
+				# If so, we want to speak just the changed section, rather than the entire line.
 				prevText = prevLine[2:]
-				for pos, char in enumerate(text):
-					if char != prevText[pos]:
+				textLen = len(text)
+				prevTextLen = len(prevText)
+				# Find the first character that differs between the two lines.
+				for pos in xrange(min(textLen, prevTextLen)):
+					if text[pos] != prevText[pos]:
 						start = pos
 						break
-				for pos in xrange(len(text) - 1, 0, -1):
-					if text[pos] != prevText[pos]:
-						end = pos + 1
-						break
+				else:
+					# We haven't found a differing character so far and we've hit the end of one of the lines.
+					# This means that the differing text starts here.
+					start = pos + 1
+				# Find the end of the differing text.
+				if textLen != prevTextLen:
+					# The lines are different lengths, so assume the rest of the line changed.
+					end = textLen
+				else:
+					for pos in xrange(textLen - 1, start - 1, -1):
+						if text[pos] != prevText[pos]:
+							end = pos + 1
+							break
+
 				if end - start < 15:
 					# Less than 15 characters have changed, so only speak the changed chunk.
 					text = text[start:end]
+
 			if text and not text.isspace():
 				outLines.append(text)
+			prevLine = line
+
 		return outLines
 
 class Terminal(LiveText):
