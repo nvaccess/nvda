@@ -116,19 +116,25 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 		fontStatus = FontInfo_NoInfo;
 	}
 
+	long childCount;
 	if (fontStatus == FontInfo_MixedInfo) {
 		// This node contains text in more than one font.
 		// We need to descend further to get font information.
 		DEBUG_MSG(L"Mixed font info, descending");
-		long childCount;
 		if ((res = domNode->GetChildCount(&childCount)) != S_OK) {
 			DEBUG_MSG(L"IPDDomNode::GetChildCount returned " << res);
 			childCount = 0;
 		}
 		if (childCount == 0) {
-			DEBUG_MSG(L"Child count is 0");
+			// HACK: Child count really shouldn't be 0 if fontStatus is FontInfo_MixedInfo, but it sometimes is.
+			// Therefore, ignore FontInfo_MixedInfo in this case.
+			// Otherwise, the node will be rendered as empty.
+			DEBUG_MSG(L"Child count is 0, ignoring mixed font info");
+			fontStatus = FontInfo_NoInfo;
 		}
+	}
 
+	if (fontStatus == FontInfo_MixedInfo) {
 		// Iterate through the children.
 		for (long childIndex = 0; childIndex < childCount; ++childIndex) {
 			IPDDomNode* domChild;

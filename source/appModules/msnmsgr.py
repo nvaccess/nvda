@@ -56,7 +56,7 @@ class OldMSNHistory(cursorManager.ReviewCursorManager,IAccessible):
 
 	def event_valueChange(self):
 		global lastMSNHistoryValue
-		if isinstance(self,MSNHistory) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
+		if isinstance(self,OldMSNHistory) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
 			value=self.value
 			if value!=lastMSNHistoryValue and globalVars.reportDynamicContentChanges:
 				speech.speakText(value)
