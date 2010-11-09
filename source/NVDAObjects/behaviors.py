@@ -233,11 +233,11 @@ class LiveText(NVDAObject):
 				prevLine = line
 				continue
 			text = line[2:]
-			if text.isspace():
+			if not text or text.isspace():
 				prevLine = line
 				continue
 
-			if prevLine and prevLine[0] == "-":
+			if prevLine and prevLine[0] == "-" and len(prevLine) > 2:
 				# It's possible that only a few characters have changed in this line.
 				# If so, we want to speak just the changed section, rather than the entire line.
 				prevText = prevLine[2:]
