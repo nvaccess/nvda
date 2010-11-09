@@ -1,31 +1,22 @@
 #winConsoleHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+#Copyright (C) 2009-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
 
-import time
-import threading
-import difflib
 import winUser
 import winKernel
 import wincon
 import eventHandler
 from logHandler import log
-import globalVars
 import speech
 import queueHandler
 import textInfos
-from NVDAObjects import NVDAObjectTextInfo
 import api
 
 consoleObject=None #:The console window that is currently in the foreground.
 consoleWinEventHookHandles=[] #:a list of currently registered console win events.
-keepAliveMonitorThread=False #:While true, the monitor thread should continue to run
-monitorThread=None
 consoleOutputHandle=None
-lastConsoleWinEvent=None
-lastConsoleVisibleLines=[] #:The most recent lines in the console (to work out a diff for announcing updates)
 
 @wincon.PHANDLER_ROUTINE
 def _consoleCtrlHandler(event):
@@ -34,7 +25,7 @@ def _consoleCtrlHandler(event):
 	return False
 
 def connectConsole(obj):
-	global consoleObject, consoleOutputHandle, lastConsoleWinEvent, keepAliveMonitorThread, monitorThread, lastConsoleVisibleLines
+	global consoleObject, consoleOutputHandle
 	#Get the process ID of the console this NVDAObject is fore
 	processID,threadID=winUser.getWindowThreadProcessID(obj.windowHandle)
 	#Attach NVDA to this console so we can access its text etc
@@ -45,24 +36,17 @@ def connectConsole(obj):
 		return False
 	wincon.SetConsoleCtrlHandler(_consoleCtrlHandler,True)
 	consoleOutputHandle=winKernel.CreateFile(u"CONOUT$",winKernel.GENERIC_READ|winKernel.GENERIC_WRITE,winKernel.FILE_SHARE_READ|winKernel.FILE_SHARE_WRITE,None,winKernel.OPEN_EXISTING,0,None)                                                     
-	lastConsoleVisibleLines=getConsoleVisibleLines()
 	#Register this callback with all the win events we need, storing the given handles for removal later
-	for eventID in [winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL,winUser.EVENT_CONSOLE_LAYOUT]:
+	for eventID in (winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL,winUser.EVENT_CONSOLE_LAYOUT):
 		handle=winUser.setWinEventHook(eventID,eventID,0,consoleWinEventHook,0,0,0)
 		if not handle:
 			raise OSError("could not register eventID %s"%eventID)
 		consoleWinEventHookHandles.append(handle)
-	#Setup the monitoring thread which will watch a variable, and speak new text at the appropriate time
-	#Each event doesn't individually speak its own text since speaking text is quite intensive due to the diff algorithms  
-	keepAliveMonitorThread=True
-	lastConsoleWinEvent=None
 	consoleObject=obj
-	monitorThread=threading.Thread(target=monitorThreadFunc)
-	monitorThread.start()
 	return True
 
 def disconnectConsole():
-	global consoleObject, consoleOutputHandle, consoleWinEventHookHandles, keepAliveMonitorThread
+	global consoleObject, consoleOutputHandle, consoleWinEventHookHandles
 	if not consoleObject:
 		log.debugWarning("console was not connected")
 		return False
@@ -70,9 +54,7 @@ def disconnectConsole():
 	for handle in consoleWinEventHookHandles:
 		winUser.unhookWinEvent(handle)
 	consoleEventHookHandles=[]
-	#Get ready to stop monitoring - give it a little time to finish
-	keepAliveMonitorThread=False
-	monitorThread.join()
+	consoleObject.stopMonitoring()
 	winKernel.closeHandle(consoleOutputHandle)
 	consoleOutputHandle=None
 	consoleObject=None
@@ -108,58 +90,20 @@ def getConsoleVisibleLines():
 
 @winUser.WINEVENTPROC
 def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestamp):
-	global lastConsoleWinEvent
 	#We don't want to do anything with the event if the event is not for the window this console is in
 	if window!=consoleObject.windowHandle:
 		return
 	if eventID==winUser.EVENT_CONSOLE_CARET:
 		eventHandler.queueEvent("caret",consoleObject)
 	consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
-	#Notify the monitor thread that an event has occurred
-	lastConsoleWinEvent=eventID
+	# It is safe to call this event from this RPC thread.
+	# This avoids an extra core cycle.
+	consoleObject.event_textChange()
 	if eventID==winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
 		x=winUser.LOWORD(objectID)
 		y=winUser.HIWORD(objectID)
 		if x<consoleScreenBufferInfo.dwCursorPosition.x and (y==consoleScreenBufferInfo.dwCursorPosition.y or y==consoleScreenBufferInfo.dwCursorPosition.y+1):  
 			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakTypedCharacters,unichr(winUser.LOWORD(childID)))
-
-def monitorThreadFunc():
-	global lastConsoleWinEvent, lastConsoleVisibleLines, keepAliveMonitorThread
-	try:
-		consoleEvent=None
-		# We want the first event to be handled immediately.
-		timeSinceLast=5
-		checkDead_timer=0
-		#Keep the thread alive while keepMonitoring is true - disconnectConsole will make it false if the focus moves away 
-		while keepAliveMonitorThread:
-			#If there has been a console event lately, remember it and reset the notification to None
-			if lastConsoleWinEvent:
-				consoleEvent=lastConsoleWinEvent
-				lastConsoleWinEvent=None
-			if timeSinceLast<5:
-				timeSinceLast+=1
-			if consoleEvent and timeSinceLast==5:
-				# There is a new event and there has been enough time since the last one was handled, so handle this.
-				timeSinceLast=0
-				if globalVars.reportDynamicContentChanges:
-					newLines=getConsoleVisibleLines()
-					outLines=calculateNewText(newLines,lastConsoleVisibleLines)
-					if not (len(outLines) == 1 and len(outLines[0]) <= 1):
-						for line in outLines:
-							queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, line)
-					lastConsoleVisibleLines=newLines
-				consoleEvent=None
-			#Every 10 times we also make sure the console isn't dead, if so we need to stop the thread ourselves
-			if checkDead_timer>=10:
-				checkDead_timer=0
-				if isConsoleDead():
-					keepAliveMonitorThread=False
-					queueHandler.queueFunction(queueHandler.eventQueue,disconnectConsole)
-			checkDead_timer+=1
-			#Each round of the while loop we wait 10 milliseconds
-			time.sleep(0.01)
-	except:
-		log.error("console monitorThread", exc_info=True)
 
 def initialize():
 	pass
@@ -167,32 +111,6 @@ def initialize():
 def terminate():
 	if consoleObject:
 		disconnectConsole()
-
-def calculateNewText(newLines,oldLines):
-	foundChange=False
-	outLines=[]
-	diffLines=[x for x in difflib.ndiff(oldLines,newLines) if (x[0] in ['+','-'])] 
-	for lineNum in xrange(len(diffLines)):
-		if diffLines[lineNum][0]=="+":
-			text=diffLines[lineNum][2:]
-			if not text.isspace() and (lineNum>0) and (diffLines[lineNum-1][0]=="-"):
-				start=0
-				end=len(text)
-				for pos in xrange(len(text)):
-					if text[pos]!=diffLines[lineNum-1][2:][pos]:
-						start=pos
-						break
-				for pos in xrange(len(text)-1,0,-1):
-					if text[pos]!=diffLines[lineNum-1][2:][pos]:
-						end=pos+1
-						break
-				if end - start < 15:
-					# Less than 15 characters have changed, so only speak the changed chunk.
-					text=text[start:end]
-					foundChange=True
-			if len(text)>0 and not text.isspace():
-				outLines.append(text)
-	return outLines
 
 class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 
