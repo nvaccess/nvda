@@ -577,10 +577,10 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		#We never want to see foreground events for the Program Manager or Shell (task bar) 
 		if eventID==winUser.EVENT_SYSTEM_FOREGROUND and windowClassName in ("Progman","Shell_TrayWnd"):
 			return
-		if eventID==winUser.EVENT_OBJECT_NAMECHANGE and windowClassName=="MSNHiddenWindowClass":
-			# HACK: This gets fired by Windows Live Messenger 2009 when it starts.
+		if windowClassName=="MSNHiddenWindowClass":
+			# HACK: Events get fired by this window in Windows Live Messenger 2009 when it starts.
 			# If we send a WM_NULL to this window at this point (which happens in accessibleObjectFromEvent), Messenger will silently exit (#677).
-			# Therefore, completely ignore the event, which is useless to us anyway.
+			# Therefore, completely ignore these events, which is useless to us anyway.
 			return
 		winEventLimiter.addEvent(eventID,window,objectID,childID,threadID)
 	except:
