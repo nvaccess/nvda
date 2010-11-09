@@ -88,7 +88,7 @@ def isConsoleDead():
 def _checkDead():
 	try:
 		if isConsoleDead():
-		# We must disconnect NVDA from this console so it can close.
+			# We must disconnect NVDA from this console so it can close.
 			disconnectConsole()
 	except:
 		log.exception()
