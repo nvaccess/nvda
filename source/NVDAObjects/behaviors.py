@@ -7,8 +7,12 @@
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 """
 
+import time
+import threading
+import difflib
 import tones
 import queueHandler
+import eventHandler
 import controlTypes
 import speech
 import config
@@ -144,3 +148,106 @@ class EditableTextWithoutAutoSelectDetection(editableText.EditableTextWithoutAut
 	"""
 
 	initOverlayClass = editableText.EditableTextWithoutAutoSelectDetection.initClass
+
+class LiveText(NVDAObject):
+	"""An object for which new text should be reported automatically.
+	These objects present text as a single chunk
+	and only fire an event indicating that some part of the text has changed; i.e. they don't provide the new text.
+	Monitoring must be explicitly started and stopped using the L{startMonitoring} and L{stopMonitoring} methods.
+	The object should notify of text changes using the textChange event.
+	"""
+	#: The minimum time between checks for new text.
+	MIN_CHECK_NEW_INTERVAL = 0
+	# If the text is live, this is definitely content.
+	presentationType = NVDAObject.presType_content
+
+	def initOverlayClass(self):
+		self._event = threading.Event()
+		self._monitorThread = threading.Thread(target=self._monitor)
+		self._keepMonitoring = False
+
+	def startMonitoring(self):
+		self._keepMonitoring = True
+		self._monitorThread.start()
+
+	def stopMonitoring(self):
+		self._keepMonitoring = False
+		self._event.set()
+		self._monitorThread = None
+
+	def event_textChange(self):
+		self._event.set()
+
+	def _getTextLines(self):
+		"""Retrieve the text of this object in lines.
+		This will be used to determine the new text to speak.
+		The base implementation uses the L{TextInfo}.
+		However, subclasses should override this if there is a better way to retrieve the text.
+		@return: The current lines of text.
+		@rtype: list of str
+		"""
+		return list(self.makeTextInfo(textInfos.POSITION_ALL).getTextInChunks(textInfos.UNIT_LINE))
+
+	def _reportNewText(self, line):
+		"""Report a line of new text.
+		"""
+		speech.speakText(line)
+
+	def _monitor(self):
+		oldLines = self._getTextLines()
+		while self._keepMonitoring:
+			self._event.wait()
+			if not self._keepMonitoring:
+				break
+			self._event.clear()
+			newLines = self._getTextLines()
+			for line in self._calculateNewText(newLines, oldLines):
+				queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewText, line)
+			oldLines = newLines
+			time.sleep(self.MIN_CHECK_NEW_INTERVAL)
+
+	def _calculateNewText(self, newLines, oldLines):
+		outLines = []
+		# Retrieve the lines that have been added or removed.
+		diffLines = [x for x in difflib.ndiff(oldLines, newLines) if (x[0] in ['+', '-'])]
+		for lineNum, line in enumerate(diffLines):
+			if line[0] != "+":
+				# We're only interested in new lines.
+				continue
+			text = line[2:]
+			if text.isspace():
+				continue
+			prevLine = diffLines[lineNum - 1] if lineNum > 0 else None
+			# FIXME: This is disabled because it causes exceptions if the lines are different lengths.
+			if False and prevLine and prevLine[0] == "-":
+				start = 0
+				end = len(text)
+				prevText = prevLine[2:]
+				for pos, char in enumerate(text):
+					if char != prevText[pos]:
+						start = pos
+						break
+				for pos in xrange(len(text) - 1, 0, -1):
+					if text[pos] != prevText[pos]:
+						end = pos + 1
+						break
+				if end - start < 15:
+					# Less than 15 characters have changed, so only speak the changed chunk.
+					text = text[start:end]
+			if text and not text.isspace():
+				outLines.append(text)
+		return outLines
+
+class Terminal(LiveText):
+	"""A L{liveText} object which automatically enables and disables monitoring based on whether it has focus.
+	This is useful for objects which accept input as well as producing output,
+	as they will always have focus when the user is interested in their output.
+	"""
+
+	def event_gainFocus(self):
+		super(Terminal, self).event_gainFocus()
+		self.startMonitoring()
+
+	def event_loseFocus(self):
+		self.stopMonitoring()
+		super(Terminal, self).event_loseFocus()
