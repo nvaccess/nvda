@@ -74,17 +74,9 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 		return None
 
 @WINFUNCTYPE(c_long,c_long,c_long,c_long,c_long,c_long)
-def nvdaControllerInternal_displayModelTextChangeNotify(hwnd,left,top,right,bottom):
-	import api
-	focusObj=api.getFocusObject()
+def nvdaControllerInternal_displayModelTextChangeNotify(hwnd, left, top, right, bottom):
 	import displayModel
-	if hwnd==focusObj.windowHandle:
-		text,rects=displayModel.getWindowTextInRect(focusObj.appModule.helperLocalBindingHandle, hwnd, left, top, right, bottom,32,32)
-		if text:
-			import queueHandler
-			import speech
-			#queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,"left %s, top %s, right %s, bottom %s"%(left,top,right,bottom))
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,text)
+	displayModel.textChangeNotify(hwnd, left, top, right, bottom)
 	return 0
 
 @WINFUNCTYPE(c_long,c_long,c_long,c_long,c_wchar_p,c_wchar_p,c_long,c_wchar_p)
