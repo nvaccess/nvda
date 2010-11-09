@@ -362,7 +362,7 @@ class DisplayModelEditableText(EditableText, Window):
 		pass
 
 class DisplayModelLiveText(LiveText, Window):
-	TextInfo = displayModel.DisplayModelTextInfo
+	TextInfo = displayModel.EditableTextDisplayModelTextInfo
 
 	def startMonitoring(self):
 		# Force the window to be redrawn, as our display model might be out of date.
