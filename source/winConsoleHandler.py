@@ -95,13 +95,13 @@ def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestam
 		return
 	if eventID==winUser.EVENT_CONSOLE_CARET:
 		eventHandler.queueEvent("caret",consoleObject)
-	consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 	# It is safe to call this event from this RPC thread.
 	# This avoids an extra core cycle.
 	consoleObject.event_textChange()
 	if eventID==winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
 		x=winUser.LOWORD(objectID)
 		y=winUser.HIWORD(objectID)
+		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 		if x<consoleScreenBufferInfo.dwCursorPosition.x and (y==consoleScreenBufferInfo.dwCursorPosition.y or y==consoleScreenBufferInfo.dwCursorPosition.y+1):  
 			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakTypedCharacters,unichr(winUser.LOWORD(childID)))
 
