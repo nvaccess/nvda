@@ -164,14 +164,19 @@ class LiveText(NVDAObject):
 
 	def initOverlayClass(self):
 		self._event = threading.Event()
-		self._monitorThread = threading.Thread(target=self._monitor)
+		self._monitorThread = None
 		self._keepMonitoring = False
 
 	def startMonitoring(self):
+		if self._monitorThread:
+			return
+		self._monitorThread = threading.Thread(target=self._monitor)
 		self._keepMonitoring = True
 		self._monitorThread.start()
 
 	def stopMonitoring(self):
+		if not self._monitorThread:
+			return
 		self._keepMonitoring = False
 		self._event.set()
 		self._monitorThread = None
