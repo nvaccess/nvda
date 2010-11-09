@@ -175,6 +175,14 @@ An NVDAObject for a window
 		text,rects=displayModel.getWindowTextInRect(self.appModule.helperLocalBindingHandle,self.windowHandle,left,top,left+width,top+height,8,32)
 		return text or ""
 
+	def redraw(self):
+		"""Redraw the display for this object.
+		"""
+		left, top, width, height = self.location
+		winUser.RedrawWindow(self.windowHandle,
+			winUser.RECT(left, top, left + width, top + height), None,
+			winUser.RDW_INVALIDATE | winUser.RDW_UPDATENOW)
+
 	def _get_windowText(self):
 		textLength=winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
 		textBuf=ctypes.create_unicode_buffer(textLength+2)
