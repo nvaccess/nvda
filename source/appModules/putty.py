@@ -8,7 +8,6 @@
 """
 
 import oleacc
-import controlTypes
 from NVDAObjects.behaviors import Terminal
 from NVDAObjects.window import DisplayModelEditableText, DisplayModelLiveText
 from appModules import _default
@@ -16,8 +15,6 @@ from appModules import _default
 class AppModule(_default.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.role == controlTypes.ROLE_WINDOW:
-			return
 		if obj.windowClassName == "PuTTY" and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:
 			try:
 				clsList.remove(DisplayModelEditableText)
