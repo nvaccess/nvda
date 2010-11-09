@@ -46,13 +46,13 @@ wchar_t* WA_strncpy(wchar_t* dest, const wchar_t* source, size_t size) {
 }
 
 map<HWND,int> windowsForTextChangeNotifications;
-list<pair<HWND,RECT> > textChangeNotifyList;
+map<HWND,RECT> textChangeNotifications;
 UINT_PTR textChangeNotifyTimerID=0;
 
 void CALLBACK textChangeNotifyTimerProc(HWND hwnd, UINT msg, UINT_PTR timerID, DWORD time) {
-	list<pair<HWND,RECT> > tempList;
-	textChangeNotifyList.swap(tempList);
-	for(list<pair<HWND,RECT> >::iterator i=tempList.begin();i!=tempList.end();++i) {
+	map<HWND,RECT> tempMap;
+	textChangeNotifications.swap(tempMap);
+	for(map<HWND,RECT>::iterator i=tempMap.begin();i!=tempMap.end();++i) {
 		nvdaControllerInternal_displayModelTextChangeNotify((long)(i->first),i->second.left,i->second.top,i->second.right,i->second.bottom);
 	}
 }
@@ -61,33 +61,18 @@ void queueTextChangeNotify(HWND hwnd, RECT& rc) {
 	//If this window is not supposed to fire text change notifications then do nothing.
 	map<HWND,int>::iterator i=windowsForTextChangeNotifications.find(hwnd);
 	if(i==windowsForTextChangeNotifications.end()||i->second<1) return;
-	for(list<pair<HWND,RECT> >::iterator i=textChangeNotifyList.begin();i!=textChangeNotifyList.end();++i) {
-		//Only look at rectangles in this window
-		if(hwnd!=i->first) continue;
-		//if the existing rectangle completely covers this rectangle then do nothing. 
-		if(rc.left>=i->second.left&&rc.top>=i->second.top&&rc.right<=i->second.right&&rc.bottom<=i->second.bottom) return;
-		//If this rectangle completely covers the existing rectangle
-		//replace the existing rectangle with this rectangle
-		if(i->second.left>=rc.left&&i->second.top>=rc.top&&i->second.right<=rc.right&&i->second.bottom<=rc.bottom) {
-			i->second=rc;
-			return;
-		}
-		//If the rectangles are the same position and hight on the y axis, but overlap on the x axis
-		//Then extend the existing rectangle to cover both 
-		if(rc.top==i->second.top&&rc.bottom==i->second.bottom&&!(rc.right<i->second.left||i->second.right<rc.left)) {
-			if(rc.right>i->second.right) i->second.right=rc.right;
-			if(rc.left<i->second.left) i->second.left=rc.left;
-			return;
-		}
-		//If the rectangles are the same position and width on the x axis, but overlap on the y axis
-		//Then extend the existing rectangle to cover both 
-		if(rc.left==i->second.left&&rc.right==i->second.right&&!(rc.bottom<i->second.top||i->second.bottom<rc.top)) {
-			if(rc.bottom>i->second.bottom) i->second.bottom=rc.bottom;
-			if(rc.top<i->second.top) i->second.top=rc.top;
-			return;
-		}
+	map<HWND,RECT>::iterator n=textChangeNotifications.find(hwnd);
+	if(n==textChangeNotifications.end()) {
+		// There isn't a notification yet for this window.
+		textChangeNotifications.insert(make_pair(hwnd,rc));
+	} else {
+		// There is already a notification for this window,
+		// so expand its rectangle to encompass this new rectangle.
+		n->second.left=min(n->second.left,rc.left);
+		n->second.top=min(n->second.top,rc.top);
+		n->second.right=max(n->second.right,rc.right);
+		n->second.bottom=max(n->second.bottom,rc.bottom);
 	}
-	textChangeNotifyList.insert(textChangeNotifyList.end(),make_pair(hwnd,rc));
 }
 
 displayModelsMap_t<HDC> displayModelsByMemoryDC;
