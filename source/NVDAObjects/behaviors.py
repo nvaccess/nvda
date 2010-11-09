@@ -16,6 +16,7 @@ import eventHandler
 import controlTypes
 import speech
 import config
+import globalVars
 from . import NVDAObject, NVDAObjectTextInfo
 import textInfos
 import editableText
@@ -201,8 +202,9 @@ class LiveText(NVDAObject):
 				break
 			self._event.clear()
 			newLines = self._getTextLines()
-			for line in self._calculateNewText(newLines, oldLines):
-				queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewText, line)
+			if globalVars.reportDynamicContentChanges:
+				for line in self._calculateNewText(newLines, oldLines):
+					queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewText, line)
 			oldLines = newLines
 			time.sleep(self.MIN_CHECK_NEW_INTERVAL)
 
