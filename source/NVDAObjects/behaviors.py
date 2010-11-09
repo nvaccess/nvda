@@ -260,11 +260,12 @@ class LiveText(NVDAObject):
 
 		return outLines
 
-class Terminal(LiveText):
-	"""A L{liveText} object which automatically enables and disables monitoring based on whether it has focus.
-	This is useful for objects which accept input as well as producing output,
-	as they will always have focus when the user is interested in their output.
+class Terminal(LiveText, EditableText):
+	"""An object which both accepts text input and outputs text which should be reported automatically.
+	This is an L{EditableText} object,
+	as well as a L{liveText} object for which monitoring is automatically enabled and disabled based on whether it has focus.
 	"""
+	role = controlTypes.ROLE_TERMINAL
 
 	def event_gainFocus(self):
 		super(Terminal, self).event_gainFocus()
@@ -272,4 +273,3 @@ class Terminal(LiveText):
 
 	def event_loseFocus(self):
 		self.stopMonitoring()
-		super(Terminal, self).event_loseFocus()
