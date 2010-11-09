@@ -200,17 +200,24 @@ class LiveText(NVDAObject):
 		speech.speakText(line)
 
 	def _monitor(self):
-		oldLines = self._getTextLines()
+		try:
+			oldLines = self._getTextLines()
+		except:
+			log.exception("Error getting initial lines")
+			oldLines = []
 		while self._keepMonitoring:
 			self._event.wait()
 			if not self._keepMonitoring:
 				break
 			self._event.clear()
-			newLines = self._getTextLines()
-			if globalVars.reportDynamicContentChanges:
-				for line in self._calculateNewText(newLines, oldLines):
-					queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewText, line)
-			oldLines = newLines
+			try:
+				newLines = self._getTextLines()
+				if globalVars.reportDynamicContentChanges:
+					for line in self._calculateNewText(newLines, oldLines):
+						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewText, line)
+				oldLines = newLines
+			except:
+				log.exception("Error getting lines or calculating new text")
 			time.sleep(self.MIN_CHECK_NEW_INTERVAL)
 
 	def _calculateNewText(self, newLines, oldLines):
