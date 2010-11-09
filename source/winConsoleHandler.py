@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2009-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
 
+import wx
 import winUser
 import winKernel
 import wincon
@@ -14,9 +15,13 @@ import queueHandler
 import textInfos
 import api
 
+#: How often to check whether the console is dead (in ms).
+CHECK_DEAD_INTERVAL = 100
+
 consoleObject=None #:The console window that is currently in the foreground.
 consoleWinEventHookHandles=[] #:a list of currently registered console win events.
 consoleOutputHandle=None
+checkDeadTimer=None
 
 @wincon.PHANDLER_ROUTINE
 def _consoleCtrlHandler(event):
@@ -25,7 +30,7 @@ def _consoleCtrlHandler(event):
 	return False
 
 def connectConsole(obj):
-	global consoleObject, consoleOutputHandle
+	global consoleObject, consoleOutputHandle, checkDeadTimer
 	#Get the process ID of the console this NVDAObject is fore
 	processID,threadID=winUser.getWindowThreadProcessID(obj.windowHandle)
 	#Attach NVDA to this console so we can access its text etc
@@ -43,13 +48,17 @@ def connectConsole(obj):
 			raise OSError("could not register eventID %s"%eventID)
 		consoleWinEventHookHandles.append(handle)
 	consoleObject=obj
+	checkDeadTimer=wx.PyTimer(_checkDead)
+	checkDeadTimer.Start(CHECK_DEAD_INTERVAL)
 	return True
 
 def disconnectConsole():
-	global consoleObject, consoleOutputHandle, consoleWinEventHookHandles
+	global consoleObject, consoleOutputHandle, consoleWinEventHookHandles, checkDeadTimer
 	if not consoleObject:
 		log.debugWarning("console was not connected")
 		return False
+	checkDeadTimer.Stop()
+	checkDeadTimer=None
 	#Unregister any win events we are using
 	for handle in consoleWinEventHookHandles:
 		winUser.unhookWinEvent(handle)
@@ -70,14 +79,19 @@ def disconnectConsole():
 	return True
 
 def isConsoleDead():
-	#Every console should have at least one process associated with it
-	#This console should have two if NVDA is also connected
-	#if there is only one (it must be NVDA) so we free NVDA from it so it can close
+	# Every console should have at least one process associated with it.
+	# This console should have two if NVDA is also connected.
+	# If there is only one, it must be NVDA alone, so it is dead.
 	processList=wincon.GetConsoleProcessList(2)
-	if len(processList)<2:
-		return True
-	else:
-		return False
+	return len(processList) < 2
+
+def _checkDead():
+	try:
+		if isConsoleDead():
+		# We must disconnect NVDA from this console so it can close.
+			disconnectConsole()
+	except:
+		log.exception()
 
 def getConsoleVisibleLines():
 	consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
