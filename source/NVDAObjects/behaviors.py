@@ -20,6 +20,7 @@ import globalVars
 from . import NVDAObject, NVDAObjectTextInfo
 import textInfos
 import editableText
+from logHandler import log
 
 class ProgressBar(NVDAObject):
 
