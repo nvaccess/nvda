@@ -14,6 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <cassert>
 #include <map>
+#include <list>
 #include <windows.h>
 #include <usp10.h>
 #include "nvdaHelperRemote.h"
@@ -22,6 +23,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "displayModel.h"
 #include <common/log.h>
 #include "nvdaControllerInternal.h"
+#include "nvdaController.h"
 #include <common/lock.h>
 #include "gdiHooks.h"
 
@@ -43,6 +45,35 @@ wchar_t* WA_strncpy(wchar_t* dest, const wchar_t* source, size_t size) {
 	return wcsncpy(dest,source,size);
 }
 
+map<HWND,int> windowsForTextChangeNotifications;
+map<HWND,RECT> textChangeNotifications;
+UINT_PTR textChangeNotifyTimerID=0;
+
+void CALLBACK textChangeNotifyTimerProc(HWND hwnd, UINT msg, UINT_PTR timerID, DWORD time) {
+	map<HWND,RECT> tempMap;
+	textChangeNotifications.swap(tempMap);
+	for(map<HWND,RECT>::iterator i=tempMap.begin();i!=tempMap.end();++i) {
+		nvdaControllerInternal_displayModelTextChangeNotify((long)(i->first),i->second.left,i->second.top,i->second.right,i->second.bottom);
+	}
+}
+
+void queueTextChangeNotify(HWND hwnd, RECT& rc) {
+	//If this window is not supposed to fire text change notifications then do nothing.
+	map<HWND,int>::iterator i=windowsForTextChangeNotifications.find(hwnd);
+	if(i==windowsForTextChangeNotifications.end()||i->second<1) return;
+	map<HWND,RECT>::iterator n=textChangeNotifications.find(hwnd);
+	if(n==textChangeNotifications.end()) {
+		// There isn't a notification yet for this window.
+		textChangeNotifications.insert(make_pair(hwnd,rc));
+	} else {
+		// There is already a notification for this window,
+		// so expand its rectangle to encompass this new rectangle.
+		n->second.left=min(n->second.left,rc.left);
+		n->second.top=min(n->second.top,rc.top);
+		n->second.right=max(n->second.right,rc.right);
+		n->second.bottom=max(n->second.bottom,rc.bottom);
+	}
+}
 
 displayModelsMap_t<HDC> displayModelsByMemoryDC;
 displayModelsMap_t<HWND> displayModelsByWindow;
@@ -198,6 +229,8 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//Before recording the text.
 	if(newText.length()>0&&tm.tmCharSet!=SYMBOL_CHARSET) {
 		model->insertChunk(textRect,tm.tmAscent,newText,characterEndXArray,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
+		HWND hwnd=WindowFromDC(hdc);
+		if(hwnd) queueTextChangeNotify(hwnd,textRect);
 	}
 	free(characterEndXArray);
 }
@@ -488,6 +521,9 @@ BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHe
 	if(srcModel) {
 		//Copy the requested rectangle from the source model in to the destination model, at the given coordinates.
 		srcModel->copyRectangle(srcRect,FALSE,TRUE,destPos.x,destPos.y,NULL,destModel);
+		RECT destRect={(srcRect.right-srcRect.left)+destPos.x,(srcRect.bottom-srcRect.top)+destPos.y};
+		HWND hwnd=WindowFromDC(hdcDest);
+		if(hwnd) queueTextChangeNotify(hwnd,destRect);
 	} else {
 		//As there is no source model, still at least clear the rectangle
 		destModel->clearRectangle(srcRect);
@@ -669,6 +705,9 @@ BOOL WINAPI fake_DestroyWindow(HWND hwnd) {
 }
 
 void gdiHooks_inProcess_initialize() {
+	//Initialize the timer for text change notifications
+	textChangeNotifyTimerID=SetTimer(NULL,NULL,50,textChangeNotifyTimerProc);
+	assert(textChangeNotifyTimerID);
 	//Initialize critical sections and access variables for various maps
 	InitializeCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allow_ScriptStringAnalyseArgsByAnalysis=TRUE;
@@ -695,6 +734,8 @@ void gdiHooks_inProcess_initialize() {
 }
 
 void gdiHooks_inProcess_terminate() {
+	//Kill the text change notification timer
+	KillTimer(0,textChangeNotifyTimerID);
 	//Acquire access to the maps and clean them up
 	displayModelsByWindow.acquire();
 	displayModelsMap_t<HWND>::iterator i=displayModelsByWindow.begin();

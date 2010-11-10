@@ -78,3 +78,8 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 	}
 	return 0;
 }
+
+error_status_t displayModelRemote_requestTextChangeNotificationsForWindow(handle_t bindingHandle, const long windowHandle, const BOOL enable) {
+	if(enable) windowsForTextChangeNotifications[(HWND)windowHandle]+=1; else windowsForTextChangeNotifications[(HWND)windowHandle]-=1;
+	return 0;
+}

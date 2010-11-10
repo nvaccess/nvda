@@ -14,4 +14,5 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 interface DisplayModel {
 	[fault_status,comm_status] getWindowTextInRect();
+	[fault_status,comm_status] requestTextChangeNotificationsForWindow();
 }

@@ -29,3 +29,8 @@ __declspec(dllexport) error_status_t(__stdcall *_nvdaControllerInternal_logMessa
 error_status_t __stdcall nvdaControllerInternal_logMessage(const long processID, const long threadID, const long level, const wchar_t* fileName, const wchar_t* funcName, const long lineNo, const wchar_t* message) {
 	return _nvdaControllerInternal_logMessage(processID,threadID,level,fileName,funcName,lineNo,message);
 }
+
+__declspec(dllexport) error_status_t(__stdcall *_nvdaControllerInternal_displayModelTextChangeNotify)(const long, const long, const long, const long, const long);
+error_status_t __stdcall nvdaControllerInternal_displayModelTextChangeNotify(const long hwnd, const long left, const long top, const long right, const long bottom) { 
+	return _nvdaControllerInternal_displayModelTextChangeNotify(hwnd,left,top,right,bottom);
+}
