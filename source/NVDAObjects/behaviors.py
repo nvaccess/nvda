@@ -157,8 +157,8 @@ class LiveText(NVDAObject):
 	Monitoring must be explicitly started and stopped using the L{startMonitoring} and L{stopMonitoring} methods.
 	The object should notify of text changes using the textChange event.
 	"""
-	#: The minimum time between checks for new text.
-	MIN_CHECK_NEW_INTERVAL = 0
+	#: The time to wait before fetching text after a change event.
+	STABILIZE_DELAY = 0
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
 
@@ -205,11 +205,15 @@ class LiveText(NVDAObject):
 		except:
 			log.exception("Error getting initial lines")
 			oldLines = []
+
 		while self._keepMonitoring:
 			self._event.wait()
 			if not self._keepMonitoring:
 				break
+			# wait for the text to stabilise.
+			time.sleep(self.STABILIZE_DELAY)
 			self._event.clear()
+
 			try:
 				newLines = self._getTextLines()
 				if globalVars.reportDynamicContentChanges:
@@ -218,7 +222,6 @@ class LiveText(NVDAObject):
 				oldLines = newLines
 			except:
 				log.exception("Error getting lines or calculating new text")
-			time.sleep(self.MIN_CHECK_NEW_INTERVAL)
 
 	def _calculateNewText(self, newLines, oldLines):
 		outLines = []
