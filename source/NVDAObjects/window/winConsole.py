@@ -7,7 +7,6 @@
 import winConsoleHandler
 from . import Window
 from ..behaviors import Terminal, EditableTextWithoutAutoSelectDetection
-import controlTypes
 import api
 
 class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
