@@ -11,6 +11,7 @@ import controlTypes
 import api
 
 class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
+	STABILIZE_DELAY = 0.03
 
 	def _get_TextInfo(self):
 		consoleObject=winConsoleHandler.consoleObject
