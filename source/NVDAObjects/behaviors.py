@@ -169,6 +169,11 @@ class LiveText(NVDAObject):
 		self._keepMonitoring = False
 
 	def startMonitoring(self):
+		"""Start monitoring for new text.
+		New text will be reported when it is detected.
+		@note: If monitoring has already been started, this will have no effect.
+		@see: L{stopMonitoring}
+		"""
 		if self._monitorThread:
 			return
 		self._monitorThread = threading.Thread(target=self._monitor)
@@ -177,6 +182,10 @@ class LiveText(NVDAObject):
 		self._monitorThread.start()
 
 	def stopMonitoring(self):
+		"""Stop monitoring previously started with L{startMonitoring}.
+		@note: If monitoring has not been started, this will have no effect.
+		@see: L{startMonitoring}
+		"""
 		if not self._monitorThread:
 			return
 		self._keepMonitoring = False
@@ -184,6 +193,9 @@ class LiveText(NVDAObject):
 		self._monitorThread = None
 
 	def event_textChange(self):
+		"""Fired when the text changes.
+		@note: It is safe to call this directly from threads other than the main thread.
+		"""
 		self._event.set()
 
 	def _getTextLines(self):
