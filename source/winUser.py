@@ -462,3 +462,8 @@ def VkKeyScan(ch):
 	if res == -1:
 		raise LookupError
 	return res >> 8, res & 0xFF
+
+def ScreenToClient(hwnd, x, y):
+	point = POINT(x, y)
+	user32.ScreenToClient(hwnd, byref(point))
+	return point.x, point.y

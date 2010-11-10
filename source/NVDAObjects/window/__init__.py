@@ -179,6 +179,7 @@ An NVDAObject for a window
 		"""Redraw the display for this object.
 		"""
 		left, top, width, height = self.location
+		left, top = winUser.ScreenToClient(self.windowHandle, left, top)
 		winUser.RedrawWindow(self.windowHandle,
 			winUser.RECT(left, top, left + width, top + height), None,
 			winUser.RDW_INVALIDATE | winUser.RDW_UPDATENOW)
