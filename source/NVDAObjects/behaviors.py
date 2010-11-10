@@ -173,6 +173,7 @@ class LiveText(NVDAObject):
 			return
 		self._monitorThread = threading.Thread(target=self._monitor)
 		self._keepMonitoring = True
+		self._event.clear()
 		self._monitorThread.start()
 
 	def stopMonitoring(self):
@@ -211,8 +212,12 @@ class LiveText(NVDAObject):
 			self._event.wait()
 			if not self._keepMonitoring:
 				break
-			# wait for the text to stabilise.
-			time.sleep(self.STABILIZE_DELAY)
+			if self.STABILIZE_DELAY > 0:
+				# wait for the text to stabilise.
+				time.sleep(self.STABILIZE_DELAY)
+				if not self._keepMonitoring:
+					# Monitoring was stopped while waiting for the text to stabilise.
+					break
 			self._event.clear()
 
 			try:
