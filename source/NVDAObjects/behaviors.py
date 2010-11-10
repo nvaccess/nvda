@@ -218,7 +218,13 @@ class LiveText(NVDAObject):
 			try:
 				newLines = self._getTextLines()
 				if globalVars.reportDynamicContentChanges:
-					for line in self._calculateNewText(newLines, oldLines):
+					outLines = self._calculateNewText(newLines, oldLines)
+					if len(outLines) == 1 and len(outLines[0]) == 1:
+						# This is only a single character,
+						# which probably means it is just a typed character,
+						# so ignore it.
+						del outLines[0]
+					for line in outLines:
 						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewText, line)
 				oldLines = newLines
 			except:
