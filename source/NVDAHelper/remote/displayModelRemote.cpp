@@ -35,6 +35,7 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 	if(hasDescendantWindows) {
 		tempModel=new displayModel_t;
 		for(deque<HWND>::reverse_iterator i=windowDeque.rbegin();i!=windowDeque.rend();++i) {
+			if(!IsWindowVisible(*i)) continue;
 			displayModelsByWindow.acquire();
 			displayModelsMap_t<HWND>::iterator j=displayModelsByWindow.find(*i);
 			if(j!=displayModelsByWindow.end()) {
