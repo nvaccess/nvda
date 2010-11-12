@@ -16,13 +16,13 @@ Import([
 	'env',
 ])
 
-winIPCUtilsObj=env.Object("./winIPCUtils","#common/winIPCUtils.cpp")
+winIPCUtilsObj=env.Object("./winIPCUtils","../common/winIPCUtils.cpp")
 
 controllerRPCHeader,controllerRPCServerSource=env.MSRPCStubs(
 	target="./nvdaController",
 	source=[
-		"#interfaces/nvdaController/nvdaController.idl",
-		"#interfaces/nvdaController/nvdaController.acf",
+		"../interfaces/nvdaController/nvdaController.idl",
+		"../interfaces/nvdaController/nvdaController.acf",
 	],
 	MSRPCStubs_noClient=True,
 	MSRPCStubs_prefix="nvdaController_",
@@ -31,8 +31,8 @@ controllerRPCHeader,controllerRPCServerSource=env.MSRPCStubs(
 controllerInternalRPCHeader,controllerInternalRPCServerSource=env.MSRPCStubs(
 	target="./nvdaControllerInternal",
 	source=[
-		"#interfaces/nvdaControllerInternal/nvdaControllerInternal.idl",
-		"#interfaces/nvdaControllerInternal/nvdaControllerInternal.acf",
+		"../interfaces/nvdaControllerInternal/nvdaControllerInternal.idl",
+		"../interfaces/nvdaControllerInternal/nvdaControllerInternal.acf",
 	],
 	MSRPCStubs_noClient=True,
 	MSRPCStubs_prefix="nvdaControllerInternal_",
@@ -41,7 +41,7 @@ controllerInternalRPCHeader,controllerInternalRPCServerSource=env.MSRPCStubs(
 vbufRPCHeader,vbufRPCClientSource=env.MSRPCStubs(
 	target="./vbuf",
 	source=[
-		"#interfaces/vbuf/vbuf.idl",
+		"../interfaces/vbuf/vbuf.idl",
 	],
 	MSRPCStubs_noServer=True,
 	MSRPCStubs_prefix="VBuf_",
@@ -50,8 +50,8 @@ vbufRPCHeader,vbufRPCClientSource=env.MSRPCStubs(
 displayModelRPCHeader,displayModelRPCClientSource=env.MSRPCStubs(
 	target="./displayModel",
 	source=[
-		"#interfaces/displayModel/displayModel.idl",
-		"#interfaces/displayModel/displayModel.acf",
+		"../interfaces/displayModel/displayModel.idl",
+		"../interfaces/displayModel/displayModel.acf",
 	],
 	MSRPCStubs_noServer=True,
 	MSRPCStubs_prefix="displayModel_",

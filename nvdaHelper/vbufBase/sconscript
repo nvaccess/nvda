@@ -3,7 +3,7 @@ Import([
 	'remoteLib',
 ])
 
-debugObj=env.Object("./debug","#common/debug.cpp")
+debugObj=env.Object("./debug","../common/debug.cpp")
 
 vbufBaseStaticLib=env.StaticLibrary(
 	target="vbufBase_static",

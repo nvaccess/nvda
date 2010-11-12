@@ -18,13 +18,13 @@ Import([
 	'minHookLib',
 ])
 
-winIPCUtilsObj=env.Object("./winIPCUtils","#common/winIPCUtils.cpp")
+winIPCUtilsObj=env.Object("./winIPCUtils","../common/winIPCUtils.cpp")
 
 controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
 	target="./nvdaController",
 	source=[
-		"#interfaces/nvdaController/nvdaController.idl",
-		"#interfaces/nvdaController/nvdaController.acf",
+		"../interfaces/nvdaController/nvdaController.idl",
+		"../interfaces/nvdaController/nvdaController.acf",
 	],
 	MSRPCStubs_noServer=True,
 	MSRPCStubs_prefix="nvdaController_",
@@ -33,8 +33,8 @@ controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
 controllerInternalRPCHeader,controllerInternalRPCClientSource=env.MSRPCStubs(
 	target="./nvdaControllerInternal",
 	source=[
-		"#interfaces/nvdaControllerInternal/nvdaControllerInternal.idl",
-		"#interfaces/nvdaControllerInternal/nvdaControllerInternal.acf",
+		"../interfaces/nvdaControllerInternal/nvdaControllerInternal.idl",
+		"../interfaces/nvdaControllerInternal/nvdaControllerInternal.acf",
 	],
 	MSRPCStubs_noServer=True,
 	MSRPCStubs_prefix="nvdaControllerInternal_",
@@ -43,8 +43,8 @@ controllerInternalRPCHeader,controllerInternalRPCClientSource=env.MSRPCStubs(
 vbufRPCHeader,vbufRPCServerSource=env.MSRPCStubs(
 	target="./vbufRemote",
 	source=[
-		"#interfaces/vbuf/vbuf.idl",
-		"#interfaces/vbuf/vbuf.acf",
+		"../interfaces/vbuf/vbuf.idl",
+		"../interfaces/vbuf/vbuf.acf",
 	],
 	MSRPCStubs_noClient=True,
 	MSRPCStubs_prefix="VBufRemote_",
@@ -53,14 +53,14 @@ vbufRPCHeader,vbufRPCServerSource=env.MSRPCStubs(
 displayModelRPCHeader,displayModelRPCServerSource=env.MSRPCStubs(
 	target="./displayModelRemote",
 	source=[
-		"#interfaces/displayModel/displayModel.idl",
-		"#interfaces/displayModel/displayModel.acf",
+		"../interfaces/displayModel/displayModel.idl",
+		"../interfaces/displayModel/displayModel.acf",
 	],
 	MSRPCStubs_noClient=True,
 	MSRPCStubs_prefix="displayModelRemote_",
 )
 
-ia2utilsObj=env.Object("./ia2utils","#common/ia2utils.cpp")
+ia2utilsObj=env.Object("./ia2utils","../common/ia2utils.cpp")
 
 remoteLib=env.SharedLibrary(
 	target="nvdaHelperRemote",

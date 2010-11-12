@@ -16,13 +16,13 @@ Import([
 	'env',
 ])
 
-winIPCUtilsObj=env.Object("./winIPCUtils","#common/winIPCUtils.cpp")
+winIPCUtilsObj=env.Object("./winIPCUtils","../common/winIPCUtils.cpp")
 
 controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
 	target="./nvdaController",
 	source=[
-		"#interfaces/nvdaController/nvdaController.idl",
-		"#interfaces/nvdaController/nvdaController.acf",
+		"../interfaces/nvdaController/nvdaController.idl",
+		"../interfaces/nvdaController/nvdaController.acf",
 	],
 	MSRPCStubs_noServer=True,
 	MSRPCStubs_prefix="nvdaController_",

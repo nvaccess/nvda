@@ -56,28 +56,47 @@ pygettext = os.path.join(sys.exec_prefix, "Tools", "i18n", "pygettext.py")
 
 vars = Variables()
 vars.Add("version", "The version of this build", versionInfo.version)
-vars.Add(BoolVariable("isRelease", "Whether this is a release version", False))
+vars.Add(BoolVariable("release", "Whether this is a release version", False))
 vars.Add("publisher", "The publisher of this build", "unknown")
 vars.Add(PathVariable("certFile", "The certificate file with which to sign executables", "",
 	lambda key, val, env: not val or PathVariable.PathIsFile(key, val, env)))
+vars.Add(ListVariable('targetArchitectures','Which architectures should NVDA support?','all',['x86','x86_64']))
+vars.Add(EnumVariable('logLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in xrange(60)]))
 
-env = Environment(variables=vars, tools=["textfile", "default"])
+#Check for any unknown variables
+unknown=vars.UnknownVariables().keys()
+if len(unknown)>0:
+	print "Unknown commandline variables: %s"%unknown
+	Exit(1)
+
+env = Environment(variables=vars,tools=["textfile"])
 version = env["version"]
-isRelease = env["isRelease"]
+release = env["release"]
 certFile = env["certFile"]
 sourceDir = Dir("source")
+Export('sourceDir')
+clientDir=Dir('extras/controllerClient')
+Export('clientDir')
+sourceLibDir=sourceDir.Dir('lib')
+Export('sourceLibDir')
+sourceLibDir64=sourceDir.Dir('lib64')
+Export('sourceLibDir64')
+
 buildDir = Dir("build")
-outFilePrefix = "nvda{type}_{version}".format(type="" if isRelease else "_snapshot", version=version)
+outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot", version=version)
+
+#Process nvdaHelper scons files
+env.SConscript('nvdaHelper/sconscript',exports=['env'])
 
 # A builder to generate an NVDA distribution.
 def NVDADistGenerator(target, source, env, for_signature):
 	buildCmd = ["cd", source[0].path, "&&",
 		sys.executable]
-	if isRelease:
+	if release:
 		buildCmd.append("-O")
 	buildCmd.extend(("setup.py", "build", "--build-base", buildDir.abspath,
 		"py2exe", "--dist-dir", target[0].abspath))
-	if isRelease:
+	if release:
 		buildCmd.append("-O1")
 	action = [buildCmd]
 	if env.get("uiAccess"):
@@ -85,7 +104,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 		for prog in "nvda", "nvda_slave", "nvda_service":
 			action.append(signExec[:-1] + [target[0].File("%s.exe" % prog)])
 	return action
-env["BUILDERS"]["NVDADist"] = Builder(generator=NVDADistGenerator, source_scanner=DirScanner, target_factory=Dir)
+env["BUILDERS"]["NVDADist"] = Builder(generator=NVDADistGenerator, target_factory=Dir)
 
 # A builder to generate a 7-Zip self-extracting archive.
 def SzSfxGenerator(target, source, env, for_signature):
@@ -133,9 +152,8 @@ if certFile:
 	env.AddPostAction(installer, [signExec])
 env.Alias("installer", installer)
 
-nvdaHelperArchive = env.SzSfx("%s_nvdaHelper.exe" % outFilePrefix,
-	env.Glob(r"source\lib\[nV]*.dll") + env.Glob(r"source\lib64\[nV]*.[de][lx][le]"))
-env.Alias("nvdaHelperArchive", nvdaHelperArchive)
+clientArchive = env.SzSfx("%s_controllerClient.exe" % outFilePrefix,clientDir)
+env.Alias("client", clientArchive)
 
 def makePot(target, source, env):
 	# Generate the pot.
