@@ -12,6 +12,7 @@ import baseObject
 import globalVars
 from logHandler import log
 from  synthSettingsRing import SynthSettingsRing
+import languageHandler
 import speechDictHandler
 import synthDrivers
 

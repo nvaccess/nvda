@@ -4,7 +4,9 @@
 #Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-from synthDriverHandler import SynthDriver,VoiceInfo,SynthSetting,NumericSynthSetting
+
+from collections import OrderedDict
+from synthDriverHandler import SynthDriver, VoiceInfo, SynthSetting, LanguageInfo, StringParameterInfo
 from ctypes import *
 import os
 import config
@@ -185,10 +187,10 @@ class SynthDriver(SynthDriver):
 	_accel=0
 	_inflection=50
 	_rate=70
-	availableVoices = OrderedDict((str(index),VoiceInfo(str(index),name)) for index,name in enumerate([_("male 1"),_("female 1"),_("male 2"),_("female 2")])
-	availableAccels=OrderedDict((str(x),VoiceInfo(str(x),str(x))) for x in xrange(8))
+	availableVoices = OrderedDict((str(index),VoiceInfo(str(index),name)) for index,name in enumerate([_("male 1"),_("female 1"),_("male 2"),_("female 2")]))
+	availableAccels=OrderedDict((str(x), StringParameterInfo(str(x),str(x))) for x in xrange(8))
 	pitchTable=[(90,130),(190,330),(60,120),(220,340)]
-	availableLanguages = OrderedDict(("ru",LanguageInfo("ru")), ("uk",LanguageInfo("uk")))
+	availableLanguages = OrderedDict((("ru",LanguageInfo("ru")), ("uk",LanguageInfo("uk"))))
 	newfon_lib = None
 	sdrvxpdbDll = None
 	dictDll = None
