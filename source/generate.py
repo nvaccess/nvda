@@ -21,9 +21,6 @@ sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),lo
 import os
 from glob import glob
 import txt2tags
-__path__ = [os.path.join(sys.exec_prefix, "Tools", "i18n")]
-import msgfmt
-del __path__
 import keyCommandsDoc
 
 COM_INTERFACES = (
@@ -45,15 +42,6 @@ def main():
 			print "done."
 		except:
 			print "not found."
-	print
-
-	print "Language files:"
-	poFiles=glob('locale/*/LC_MESSAGES/nvda.po')
-	for f in poFiles:
-		print f
-		msgfmt.make(f, None)
-		#Clear msgfmt.MESSAGES so that msgfmt.make can safely be called again in the next iteration
-		msgfmt.MESSAGES.clear()
 	print
 
 	print "HTML documentation (except Key Commands):"

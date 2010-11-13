@@ -1,0 +1,43 @@
+###
+#This file is a part of the NVDA project.
+#URL: http://www.nvda-project.org/
+#Copyright 2010 James Teh <jamie@jantrid.net>.
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License version 2.0, as published by
+#the Free Software Foundation.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#This license can be found at:
+#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
+import os
+import sys
+import imp
+import glob
+
+_msgfmt=None
+def loadMsgfmt():
+	global _msgfmt
+	if not _msgfmt:
+		modInfo=imp.find_module('msgfmt',[os.path.join(sys.prefix,'tools/i18n')])
+		_msgfmt=imp.load_module('msgfmt',*modInfo)
+	else:
+		_msgfmt.MESSAGES={}
+	return _msgfmt
+
+def gettextMoFile_actionFunc(target,source,env):
+	msgfmt=loadMsgfmt()
+	msgfmt.make(source[0].abspath,target[0].abspath)
+	return 0
+
+def exists(env):
+	return bool(loadMsgfmt())
+
+def generate(env):
+	env['BUILDERS']['gettextMoFile']=env.Builder(
+		action=env.Action(gettextMoFile_actionFunc,lambda t,s,e: 'Compiling gettext template %s'%s[0].path),
+		suffix='.mo',
+		src_suffix='.po'
+	)

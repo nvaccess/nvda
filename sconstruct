@@ -69,7 +69,7 @@ if len(unknown)>0:
 	print "Unknown commandline variables: %s"%unknown
 	Exit(1)
 
-env = Environment(variables=vars,tools=["textfile"])
+env = Environment(variables=vars,tools=["textfile","gettext"])
 version = env["version"]
 release = env["release"]
 certFile = env["certFile"]
@@ -81,12 +81,16 @@ sourceLibDir=sourceDir.Dir('lib')
 Export('sourceLibDir')
 sourceLibDir64=sourceDir.Dir('lib64')
 Export('sourceLibDir64')
-
 buildDir = Dir("build")
 outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot", version=version)
 
 #Process nvdaHelper scons files
 env.SConscript('nvdaHelper/sconscript',exports=['env'])
+
+#Allow all NVDA's gettext po files to be compiled in source/locale
+print sourceDir.path
+for po in env.Glob(sourceDir.path+'/locale/*/lc_messages/*.po'):
+	m=env.gettextMoFile(po)
 
 # A builder to generate an NVDA distribution.
 def NVDADistGenerator(target, source, env, for_signature):
