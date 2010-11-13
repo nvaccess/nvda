@@ -14,30 +14,15 @@
 
 import os
 import sys
-import imp
-import glob
 
-_msgfmt=None
-def loadMsgfmt():
-	global _msgfmt
-	if not _msgfmt:
-		modInfo=imp.find_module('msgfmt',[os.path.join(sys.prefix,'tools/i18n')])
-		_msgfmt=imp.load_module('msgfmt',*modInfo)
-	else:
-		_msgfmt.MESSAGES={}
-	return _msgfmt
-
-def gettextMoFile_actionFunc(target,source,env):
-	msgfmt=loadMsgfmt()
-	msgfmt.make(source[0].abspath,target[0].abspath)
-	return 0
+msgfmtPath=os.path.join(sys.exec_prefix, "Tools", "i18n", "msgfmt.py")
 
 def exists(env):
-	return bool(loadMsgfmt())
+	return os.path.isfile(msgfmtPath)
 
 def generate(env):
 	env['BUILDERS']['gettextMoFile']=env.Builder(
-		action=env.Action(gettextMoFile_actionFunc,lambda t,s,e: 'Compiling gettext template %s'%s[0].path),
+		action=env.Action([[sys.executable,msgfmtPath,'$SOURCE']],lambda t,s,e: 'Compiling gettext template %s'%s[0].path),
 		suffix='.mo',
 		src_suffix='.po'
 	)
