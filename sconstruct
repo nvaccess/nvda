@@ -15,6 +15,7 @@
 import sys
 import os
 import _winreg
+from glob import glob
 
 # Import NVDA's versionInfo module.
 import gettext
@@ -54,6 +55,21 @@ except WindowsError:
 # Get the path to pygettext.
 pygettext = os.path.join(sys.exec_prefix, "Tools", "i18n", "pygettext.py")
 
+def keyCommandsDocTool(env):
+	import keyCommandsDoc
+	kcdAction=env.Action(
+		lambda target,source,env: not keyCommandsDoc.KeyCommandsMaker(source[0].path,target[0].path).make(),
+		lambda target,source,env: 'Generating %s'%target[0],
+	)
+	kcdBuilder=env.Builder(
+		action=kcdAction,
+		suffix='.t2t',
+		src_suffix='.t2t',
+	)
+	env['BUILDERS']['keyCommandsDoc']=kcdBuilder
+
+keyCommandsLangBlacklist=set(['cs','ja'])
+
 vars = Variables()
 vars.Add("version", "The version of this build", versionInfo.version)
 vars.Add(BoolVariable("release", "Whether this is a release version", False))
@@ -69,10 +85,11 @@ if len(unknown)>0:
 	print "Unknown commandline variables: %s"%unknown
 	Exit(1)
 
-env = Environment(variables=vars,tools=["textfile","gettext"])
+env = Environment(variables=vars,tools=["textfile","gettext","t2t",keyCommandsDocTool])
 version = env["version"]
 release = env["release"]
 certFile = env["certFile"]
+userDocsDir=Dir('user_docs')
 sourceDir = Dir("source")
 Export('sourceDir')
 clientDir=Dir('extras/controllerClient')
@@ -88,9 +105,21 @@ outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot
 env.SConscript('nvdaHelper/sconscript',exports=['env'])
 
 #Allow all NVDA's gettext po files to be compiled in source/locale
-print sourceDir.path
 for po in env.Glob(sourceDir.path+'/locale/*/lc_messages/*.po'):
-	m=env.gettextMoFile(po)
+	env.gettextMoFile(po)
+
+#Allow all key command t2t files to be generated from their userGuide t2t sources
+for lang in os.listdir(userDocsDir.path):
+	if lang in keyCommandsLangBlacklist: continue
+	for ug in glob(os.path.join(userDocsDir.path,lang,'userGuide.t2t')):
+		env.keyCommandsDoc(File(ug).File('keyCommands.t2t'),ug)
+
+#Allow all t2t files to be converted to html in user_docs
+#As we use scons Glob this will also include the keyCommands.t2t files
+for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
+	env.txt2tags(t2tFile)
+
+env.Depends(sourceDir,userDocsDir)
 
 # A builder to generate an NVDA distribution.
 def NVDADistGenerator(target, source, env, for_signature):

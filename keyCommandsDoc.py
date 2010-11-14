@@ -12,7 +12,6 @@ import codecs
 import re
 import txt2tags
 
-KEY_COMMANDS_FILENAME = "keyCommands.t2t"
 LINE_END = u"\r\n"
 
 class KeyCommandsError(Exception):
@@ -78,16 +77,18 @@ class KeyCommandsMaker(object):
 		# Only fetch this once.
 		cls.t2tRe = txt2tags.getRegexes()
 
-	def __init__(self, userGuideFilename):
+	def __init__(self, userGuideFilename,keyCommandsFileName):
 		"""Constructor.
 		@param userGuideFilename: The file name of the User Guide to be used as input.
 		@type userGuideFilename: str
+		@param keyCommandsFilename: The file name of the key commands file to be output. 
+		@type keyCommandsFilename: str
 		"""
 		self._initClass()
 		self.ugFn = userGuideFilename
 		#: The file name of the Key Commands document that will be generated.
 		#: This will be in the same directory as the User Guide.
-		self.kcFn = os.path.join(os.path.dirname(userGuideFilename), KEY_COMMANDS_FILENAME)
+		self.kcFn = keyCommandsFileName
 		#: The current section of the key commands file.
 		self._kcSect = self.KCSECT_HEADER
 		#: The current stack of headings.
@@ -110,12 +111,19 @@ class KeyCommandsMaker(object):
 		@raise IOError:
 		@raise KeyCommandsError:
 		"""
+		tKcFn=self.kcFn+'__'
 		self._ug = codecs.open(self.ugFn, "r", "utf-8-sig")
-		self._kc = codecs.open(self.kcFn, "w", "utf-8-sig")
+		self._kc = codecs.open(tKcFn, "w", "utf-8-sig")
 
+		success=False
 		with self._ug, self._kc:
 			self._make()
-			return self._kc.tell() > 0
+			success=self._kc.tell() > 0
+		if success:
+			os.rename(tKcFn,self.kcFn)
+		else:
+			os.remove(tKcFn)
+		return success
 
 	def _make(self):
 		for line in self._ug:
