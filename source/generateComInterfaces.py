@@ -16,9 +16,6 @@ comtypes.client.gen_dir='.\\comInterfaces'
 import sys
 sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),locals(),[])
 
-import os
-from glob import glob
-
 COM_INTERFACES = (
 	("UI Automation", comtypes.client.GetModule, "UIAutomationCore.dll"),
 	("IAccessible 2", comtypes.client.GetModule, "typelibs/ia2.tlb"),
