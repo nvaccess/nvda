@@ -100,6 +100,7 @@ sourceLibDir64=sourceDir.Dir('lib64')
 Export('sourceLibDir64')
 buildDir = Dir("build")
 outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot", version=version)
+outputDir=Dir('output')
 
 #Process nvdaHelper scons files
 env.SConscript('nvdaHelper/sconscript',exports=['env'])
@@ -171,12 +172,12 @@ env.Clean(installerDist, installerDist)
 # Clean the intermediate build directory.
 env.Clean([portableDist, installerDist], buildDir)
 
-portableArchive = env.SzSfx("%s_portable.exe" % outFilePrefix, portableDist, relativeToSourceDir=True)
+portableArchive = env.SzSfx(outputDir.File("%s_portable.exe" % outFilePrefix), portableDist, relativeToSourceDir=True)
 if certFile:
 	env.AddPostAction(portableArchive, [signExec])
 env.Alias("portable", portableArchive)
 
-installer = env.Command("%s_installer.exe" % outFilePrefix, ["installer/nvda.nsi", installerDist],
+installer = env.Command(outputDir.File("%s_installer.exe" % outFilePrefix), ["installer/nvda.nsi", installerDist],
 	[[makensis, "/V2",
 	"/DVERSION=$version", "/DPUBLISHER=$publisher",
 	"/DNVDASourceDir=${SOURCES[1].abspath}", "/XOutFile ${TARGET.abspath}",
@@ -185,8 +186,11 @@ if certFile:
 	env.AddPostAction(installer, [signExec])
 env.Alias("installer", installer)
 
-clientArchive = env.SzSfx("%s_controllerClient.exe" % outFilePrefix,clientDir)
+clientArchive = env.SzSfx(outputDir.File("%s_controllerClient.exe" % outFilePrefix),clientDir)
 env.Alias("client", clientArchive)
+
+changesFile=env.Command(outputDir.File("%s_changes.html" % outFilePrefix),userDocsDir.File('en/changes.html'),Copy('$TARGET','$SOURCE'))
+env.Alias('changes',changesFile)
 
 def makePot(target, source, env):
 	# Generate the pot.
@@ -214,7 +218,8 @@ def makePot(target, source, env):
 	os.remove(potFn)
 	os.rename(tmpFn, potFn)
 
-pot = env.Command("%s.pot" % outFilePrefix, sourceDir, makePot)
+pot = env.Command(outputDir.File("%s.pot" % outFilePrefix), sourceDir, makePot)
+
 env.Alias("pot", pot)
 
 env.Default(portableDist)
