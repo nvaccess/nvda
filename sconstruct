@@ -76,6 +76,7 @@ vars.Add(BoolVariable("release", "Whether this is a release version", False))
 vars.Add("publisher", "The publisher of this build", "unknown")
 vars.Add(PathVariable("certFile", "The certificate file with which to sign executables", "",
 	lambda key, val, env: not val or PathVariable.PathIsFile(key, val, env)))
+vars.Add(PathVariable("outputDir", "The directory where the final built archives and such will be placed", "output",PathVariable.PathIsDirCreate))
 vars.Add(ListVariable('targetArchitectures','Which architectures should NVDA support?','all',['x86','x86_64']))
 vars.Add(EnumVariable('logLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in xrange(60)]))
 
@@ -100,14 +101,16 @@ sourceLibDir64=sourceDir.Dir('lib64')
 Export('sourceLibDir64')
 buildDir = Dir("build")
 outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot", version=version)
-outputDir=Dir('output')
+outputDir=Dir(env['outputDir'])
 
 #Process nvdaHelper scons files
 env.SConscript('nvdaHelper/sconscript',exports=['env'])
 
 #Allow all NVDA's gettext po files to be compiled in source/locale
 for po in env.Glob(sourceDir.path+'/locale/*/lc_messages/*.po'):
-	env.gettextMoFile(po)
+	moFile=env.gettextMoFile(po)
+	#gettextMoFile can not be run in parallel so make sure scons knows this
+	env.SideEffect('_gettextMoFile',moFile)
 
 #Allow all key command t2t files to be generated from their userGuide t2t sources
 for lang in os.listdir(userDocsDir.path):
