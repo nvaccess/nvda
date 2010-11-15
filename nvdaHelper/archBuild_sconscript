@@ -20,7 +20,7 @@ Import(
 )
 
 TARGET_ARCH=env['TARGET_ARCH']
-release=env['release']
+debug=env['nvdaHelperDebug']
 
 #Some defines and includes for the environment
 env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${logLevel}')])
@@ -29,7 +29,7 @@ env.Append(CPPPATH=['#/include',Dir('.').abspath])
 env.Append(LINKFLAGS='/incremental:no')
 env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
 
-if release:
+if not debug:
 	env.Append(CPPDEFINES=['NDEBUG'])
 	env.Append(CCFLAGS=['/O2','/MT'])
 	env.Append(LINKFLAGS='/release')

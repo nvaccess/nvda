@@ -87,7 +87,7 @@ remoteLib=env.SharedLibrary(
 		"nvdaHelperRemote.def",
 	],
 	LIBS=[
-		minHookLib[1 if env['release'] else 2],
+		minHookLib[1 if not env['nvdaHelperDebug'] else 2],
 		"user32",
 		"gdi32",
 		"ole32",

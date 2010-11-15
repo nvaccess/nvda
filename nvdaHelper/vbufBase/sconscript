@@ -13,7 +13,7 @@ vbufBaseStaticLib=env.StaticLibrary(
 		"lock.cpp",
 		"backend.cpp",
 		debugObj,
-		remoteLib[1] if env['release'] else remoteLib[2],
+		remoteLib[1] if not env['nvdaHelperDebug'] else remoteLib[2],
 	],
 )
 
