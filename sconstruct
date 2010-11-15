@@ -167,6 +167,8 @@ signExec = [signtool, "sign", "/f", certFile, "$TARGET"]
 # Make the NVDA build use the specified version.
 buildVersionFile = env.Textfile(sourceDir.File("_buildVersion.py"), ['version = "$version"'])
 env.Depends(sourceDir, buildVersionFile)
+env.Clean(buildVersionFile,sourceDir.File('_buildVersion.pyc'))
+env.Clean(buildVersionFile,sourceDir.File('_buildVersion.pyo'))
 
 portableDist = env.NVDADist("dist", sourceDir, uiAccess=False)
 if certFile:
