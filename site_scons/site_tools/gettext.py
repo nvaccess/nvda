@@ -15,14 +15,20 @@
 import os
 import sys
 
-msgfmtPath=os.path.join(sys.exec_prefix, "Tools", "i18n", "msgfmt.py")
+__path__=[os.path.join(sys.exec_prefix,'tools','i18n')]
+import msgfmt
+del __path__
+
+def gettextMoFile_actionFunc(target,source,env):
+	msgfmt.make(source[0].path,target[0].path)
+	msgfmt.MESSAGES={}
 
 def exists(env):
-	return os.path.isfile(msgfmtPath)
+	return True
 
 def generate(env):
 	env['BUILDERS']['gettextMoFile']=env.Builder(
-		action=env.Action([[sys.executable,msgfmtPath,'$SOURCE']],lambda t,s,e: 'Compiling gettext template %s'%s[0].path),
+		action=env.Action(gettextMoFile_actionFunc,lambda t,s,e: 'Compiling gettext template %s'%s[0].path),
 		suffix='.mo',
 		src_suffix='.po'
 	)
