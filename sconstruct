@@ -118,7 +118,9 @@ for lang in os.listdir(userDocsDir.path):
 #Allow all t2t files to be converted to html in user_docs
 #As we use scons Glob this will also include the keyCommands.t2t files
 for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
-	env.txt2tags(t2tFile)
+	#txt2tags can not be run in parallel so make sure scons knows this
+	htmlFile=env.txt2tags(t2tFile)
+	env.SideEffect('_txt2tags',htmlFile)
 
 env.Depends(sourceDir,userDocsDir)
 
