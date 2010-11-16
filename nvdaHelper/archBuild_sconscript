@@ -23,7 +23,7 @@ TARGET_ARCH=env['TARGET_ARCH']
 debug=env['nvdaHelperDebug']
 
 #Some defines and includes for the environment
-env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${logLevel}')])
+env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${nvdaHelperLogLevel}')])
 env.Append(CXXFLAGS=['/EHsc'])
 env.Append(CPPPATH=['#/include',Dir('.').abspath])
 env.Append(LINKFLAGS='/incremental:no')

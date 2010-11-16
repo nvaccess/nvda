@@ -32,6 +32,7 @@ archClientInstallDirs={
 
 vars = Variables()
 vars.Add(BoolVariable("nvdaHelperDebug", "If true assertions are enabled, debug libraries are used, debug symbols are produced, and no optimization will occure", False))
+vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in xrange(60)]))
 
 #Build nvdaHelper for needed architectures
 for arch in env['targetArchitectures']: 
