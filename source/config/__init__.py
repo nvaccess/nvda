@@ -355,7 +355,7 @@ def _setSystemConfig(fromPath):
 	import shutil
 	if os.path.isdir(toPath):
 		shutil.rmtree(toPath)
-		shutil.copytree(fromPath,toPath)
+	shutil.copytree(fromPath,toPath)
 
 def setStartOnLogonScreen(enable):
 	if getStartOnLogonScreen() == enable:
