@@ -73,6 +73,12 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 		log.debugWarning("Could not find reg value 'Layout Text' for reg key %s"%layoutString)
 		return None
 
+@WINFUNCTYPE(c_long,c_long,c_long,c_long,c_long,c_long)
+def nvdaControllerInternal_displayModelTextChangeNotify(hwnd, left, top, right, bottom):
+	import displayModel
+	displayModel.textChangeNotify(hwnd, left, top, right, bottom)
+	return 0
+
 @WINFUNCTYPE(c_long,c_long,c_long,c_long,c_wchar_p,c_wchar_p,c_long,c_wchar_p)
 def nvdaControllerInternal_logMessage(pid,tid,level,fileName,funcName,lineNo,message):
 	if not log.isEnabledFor(level):
@@ -174,6 +180,7 @@ def initialize():
 		("nvdaController_cancelSpeech",nvdaController_cancelSpeech),
 		("nvdaController_brailleMessage",nvdaController_brailleMessage),
 		("nvdaControllerInternal_inputLangChangeNotify",nvdaControllerInternal_inputLangChangeNotify),
+		("nvdaControllerInternal_displayModelTextChangeNotify",nvdaControllerInternal_displayModelTextChangeNotify),
 		("nvdaControllerInternal_logMessage",nvdaControllerInternal_logMessage),
 	]:
 		try:

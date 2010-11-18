@@ -35,6 +35,7 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 	if(hasDescendantWindows) {
 		tempModel=new displayModel_t;
 		for(deque<HWND>::reverse_iterator i=windowDeque.rbegin();i!=windowDeque.rend();++i) {
+			if(!IsWindowVisible(*i)) continue;
 			displayModelsByWindow.acquire();
 			displayModelsMap_t<HWND>::iterator j=displayModelsByWindow.find(*i);
 			if(j!=displayModelsByWindow.end()) {
@@ -76,5 +77,10 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 		*characterRectsBuf=SysAllocStringLen(cpTempBuf,cpBufSize);
 		free(cpTempBuf);
 	}
+	return 0;
+}
+
+error_status_t displayModelRemote_requestTextChangeNotificationsForWindow(handle_t bindingHandle, const long windowHandle, const BOOL enable) {
+	if(enable) windowsForTextChangeNotifications[(HWND)windowHandle]+=1; else windowsForTextChangeNotifications[(HWND)windowHandle]-=1;
 	return 0;
 }

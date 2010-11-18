@@ -112,7 +112,8 @@ class InputManager(baseObject.AutoPropertyObject):
 			# This lets gestures pass through unhindered where possible,
 			# as well as stopping a flood of actions when the core revives.
 			raise NoInputGestureAction
-		if api.getFocusObject().appModule.selfVoicing:
+		app = api.getFocusObject().appModule
+		if app and app.selfVoicing:
 			raise NoInputGestureAction
 
 		speechEffect = gesture.speechEffectWhenExecuted

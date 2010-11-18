@@ -266,6 +266,10 @@ OBJID_NATIVEOM=-16
 SW_HIDE = 0
 SW_SHOWNORMAL = 1
 
+# RedrawWindow() flags
+RDW_INVALIDATE = 0x0001
+RDW_UPDATENOW = 0x0100
+
 def setSystemScreenReaderFlag(val):
 	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_UPDATEINIFILE|SPIF_SENDCHANGE)
 
@@ -427,11 +431,9 @@ def getPreviousWindow(hwnd):
 def getKeyboardLayout(idThread=0):
 	return user32.GetKeyboardLayout(idThread)
 
-def updateWindow(hwnd):
-	return user32.UpdateWindow(hwnd)
 
-def invalidateRect(hwnd):
-	return user32.InvalidateRect(hwnd,None,False)
+def RedrawWindow(hwnd, rcUpdate, rgnUpdate, flags):
+	return user32.RedrawWindow(hwnd, byref(rcUpdate), rgnUpdate, flags)
 
 def getKeyNameText(scanCode,extended):
 	buf=create_unicode_buffer(32)
@@ -460,3 +462,8 @@ def VkKeyScan(ch):
 	if res == -1:
 		raise LookupError
 	return res >> 8, res & 0xFF
+
+def ScreenToClient(hwnd, x, y):
+	point = POINT(x, y)
+	user32.ScreenToClient(hwnd, byref(point))
+	return point.x, point.y

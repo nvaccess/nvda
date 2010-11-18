@@ -50,6 +50,11 @@ interface NvdaControllerInternal {
 	error_status_t __stdcall inputLangChangeNotify([in] const long threadID, [in] const unsigned long hkl, [in,string] const wchar_t* layoutString);
 
 /**
+ * Notifies NVDA that text in the given rectangle (in screen coordinates), in the given window, has changed.
+ */
+	error_status_t __stdcall displayModelTextChangeNotify([in] const long hwnd, [in] const long left, [in] const long top, [in] const long right, [in] const long bottom); 
+
+/**
  * Logs a message at the given level to NVDA
  * @param process Id of the process where the message is sent from
  * @param threadID the thread ID of the thread where the message is coming from

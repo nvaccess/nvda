@@ -1356,12 +1356,6 @@ class Tooltip(IAccessible):
 			# TODO: Don't use getBrailleTextForProperties directly.
 			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
 
-class ConsoleWindowClass(IAccessible):
-
-	def event_nameChange(self):
-		pass
-
-
 class List(IAccessible):
 
 	def _get_role(self):
@@ -1516,7 +1510,6 @@ _staticMap={
 	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
 	("TRxRichEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,oleacc.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
-	("ConsoleWindowClass",oleacc.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
 	(None,oleacc.ROLE_SYSTEM_LIST):"List",
 	(None,oleacc.ROLE_SYSTEM_COMBOBOX):"ComboBox",
 	(None,oleacc.ROLE_SYSTEM_OUTLINE):"Outline",
