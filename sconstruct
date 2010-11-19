@@ -134,6 +134,12 @@ env.Depends(comInterfaces,sourceDir.Dir('typelibs'))
 
 # A builder to generate an NVDA distribution.
 def NVDADistGenerator(target, source, env, for_signature):
+	buildVersionFn = os.path.join(str(source[0]), "_buildVersion.py")
+	# Make the NVDA build use the specified version.
+	# We don't do this using normal scons mechanisms because we want it to be cleaned up immediately after this builder
+	# and py2exe will cause bytecode files to be created for it which scons doesn't know about.
+	action = [lambda target, source, env: file(buildVersionFn, "w").write('version = "%s"' % version)]
+
 	buildCmd = ["cd", source[0].path, "&&",
 		sys.executable]
 	if release:
@@ -142,11 +148,16 @@ def NVDADistGenerator(target, source, env, for_signature):
 		"py2exe", "--dist-dir", target[0].abspath))
 	if release:
 		buildCmd.append("-O1")
-	action = [buildCmd]
+	action.append(buildCmd)
+
 	if env.get("uiAccess"):
 		buildCmd.append("--enable-uiAccess")
 		for prog in "nvda", "nvda_slave", "nvda_service":
 			action.append(signExec[:-1] + [target[0].File("%s.exe" % prog)])
+
+	for ext in "", "c", "o":
+		action.append(Delete(buildVersionFn + ext))
+
 	return action
 env["BUILDERS"]["NVDADist"] = Builder(generator=NVDADistGenerator, target_factory=Dir)
 
@@ -162,12 +173,6 @@ env["BUILDERS"]["SzSfx"] = Builder(generator=SzSfxGenerator)
 
 # An action to sign an executable with certFile.
 signExec = [signtool, "sign", "/f", certFile, "$TARGET"]
-
-# Make the NVDA build use the specified version.
-buildVersionFile = env.Textfile(sourceDir.File("_buildVersion.py"), ['version = "$version"'])
-env.Depends(sourceDir, buildVersionFile)
-env.Clean(buildVersionFile,sourceDir.File('_buildVersion.pyc'))
-env.Clean(buildVersionFile,sourceDir.File('_buildVersion.pyo'))
 
 portableDist = env.NVDADist("dist", sourceDir, uiAccess=False)
 if certFile:
