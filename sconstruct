@@ -211,7 +211,7 @@ env.Alias('changes',changesFile)
 
 def makePot(target, source, env):
 	# Generate the pot.
-	if env.Execute([["cd", source[0], "&&",
+	if env.Execute([["cd", sourceDir, "&&",
 			pygettext, "-o", target[0].abspath, "*.py", r"*\*.py", r"*\*\*.py"]]) != 0:
 		raise RuntimeError("pygettext failed")
 
@@ -235,7 +235,11 @@ def makePot(target, source, env):
 	os.remove(potFn)
 	os.rename(tmpFn, potFn)
 
-pot = env.Command(outputDir.File("%s.pot" % outFilePrefix), sourceDir, makePot)
+pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
+	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.
+	# We only depend on the Python files.
+	[f for pattern in ("*.py", r"*\*.py", r"*\*\*.py") for f in env.Glob(os.path.join(sourceDir.path, pattern))],
+	makePot)
 
 env.Alias("pot", pot)
 
