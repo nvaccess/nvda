@@ -203,7 +203,7 @@ if certFile:
 	env.AddPostAction(installer, [signExec])
 env.Alias("installer", installer)
 
-clientArchive = env.SzSfx(outputDir.File("%s_controllerClient.exe" % outFilePrefix),clientDir)
+clientArchive = env.SzSfx(outputDir.File("%s_controllerClient.exe" % outFilePrefix),clientDir, relativeToSourceDir=True)
 env.Alias("client", clientArchive)
 
 changesFile=env.Command(outputDir.File("%s_changes.html" % outFilePrefix),userDocsDir.File('en/changes.html'),Copy('$TARGET','$SOURCE'))
