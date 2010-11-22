@@ -7,6 +7,7 @@
 from logHandler import log
 import baseObject
 import api
+import config
 import braille
 
 runningTable=set()
@@ -100,8 +101,15 @@ class TreeInterceptor(baseObject.ScriptableObject):
 			return
 		self._passThrough = state
 		if state:
+			if config.conf['reviewCursor']['followFocus']:
+				focusObj=api.getFocusObject()
+				if self is focusObj.treeInterceptor:
+					api.setNavigatorObject(focusObj)
 			braille.handler.handleGainFocus(api.getFocusObject())
 		else:
+			obj=api.getNavigatorObject()
+			if config.conf['reviewCursor']['followCaret'] and self is obj.treeInterceptor: 
+				api.setNavigatorObject(self.rootNVDAObject)
 			braille.handler.handleGainFocus(self)
 
 	_cache_shouldPrepare=True
