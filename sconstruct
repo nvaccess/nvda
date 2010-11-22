@@ -212,7 +212,8 @@ env.Alias('changes',changesFile)
 def makePot(target, source, env):
 	# Generate the pot.
 	if env.Execute([["cd", sourceDir, "&&",
-			pygettext, "-o", target[0].abspath, "*.py", r"*\*.py", r"*\*\*.py"]]) != 0:
+			sys.executable, pygettext,
+			"-o", target[0].abspath, "*.py", r"*\*.py", r"*\*\*.py"]]) != 0:
 		raise RuntimeError("pygettext failed")
 
 	# Tweak the headers.
