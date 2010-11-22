@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: http://www.nvda-project.org/
-#Copyright 2006-2010 NVDA contributers.
+#Copyright 2010 James Teh <jamie@jantrid.net>.
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -12,28 +12,20 @@
 #http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
-Import([
-	'env',
-	'vbufBaseStaticLib',
-	'ia2RPCStubs',
-])
+def txt2tags_actionFunc(target,source,env):
+	import txt2tags
+	txt2tags.exec_command_line([str(source[0])])
 
-ia2utilsObj=env.Object("./ia2utils","#common/ia2utils.cpp")
+def exists(env):
+	try:
+		import txt2tags
+		return True
+	except ImportError:
+		return False
 
-geckoBackendLib=env.SharedLibrary(
-	target="VBufBackend_gecko_ia2",
-	source=[
-		"gecko_ia2.cpp",
-		ia2utilsObj,
-		ia2RPCStubs[2],
-	],
-	LIBS=[
-		vbufBaseStaticLib,
-		"user32",
-		"kernel32",
-		"oleacc",
-		"oleaut32",
-	],
-)
-
-Return('geckoBackendLib')
+def generate(env):
+	env['BUILDERS']['txt2tags']=env.Builder(
+		action=env.Action(txt2tags_actionFunc,lambda t,s,e: 'Converting %s to html'%s[0].path),
+		suffix='.html',
+		src_suffix='.t2t'
+	)

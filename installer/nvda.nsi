@@ -15,15 +15,12 @@
 ;Settings
 
 ;defines for product info and paths
-!define VERSION "unknown"
 !define PRODUCT "NVDA"	; Don't change this for no reason, other instructions depend on this constant
-!define PUBLISHER "unknown"
 !define WEBSITE "www.nvda-project.org"
 !define NVDAWindowClass "wxWindowClassNR"
 !define NVDAWindowTitle "NVDA"
 !define NVDAApp "nvda.exe"
 !define NVDATempDir "_nvda_temp_"
-!define NVDASourceDir "..\source\dist"
 !define SNDLogo "nvda_logo.wav"
 !define INSTDIR_REG_ROOT "HKLM"
 !define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}"
@@ -42,7 +39,6 @@ RequestExecutionLevel user /* RequestExecutionLevel REQUIRED! */
 !define MUI_UNINSTALLER ;We want an uninstaller to be generated
 
 ;product branding
-OutFile "${PRODUCT}_${VERSION}.exe"
 InstallDir "$PROGRAMFILES\${PRODUCT}"
 InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 Name "NVDA"

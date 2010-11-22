@@ -14,38 +14,30 @@
 
 Import(
 	'env',
+	'sourceDir',
+	'libInstallDir',
+	'clientInstallDir',
 )
 
 TARGET_ARCH=env['TARGET_ARCH']
-release=env['release']
+debug=env['nvdaHelperDebug']
 
 #Some defines and includes for the environment
-env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${logLevel}')])
+env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${nvdaHelperLogLevel}')])
 env.Append(CXXFLAGS=['/EHsc'])
-env.Append(CPPPATH=['#.','#../include',Dir('.').abspath])
+env.Append(CPPPATH=['#/include',Dir('.').abspath])
 env.Append(LINKFLAGS='/incremental:no')
 env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
 
-if release:
-	print "Building %s release version"%TARGET_ARCH
+if not debug:
 	env.Append(CPPDEFINES=['NDEBUG'])
 	env.Append(CCFLAGS=['/O2','/MT'])
 	env.Append(LINKFLAGS='/release')
 else:
-	print "Building %s debug version"%TARGET_ARCH
 	env.Append(PDB='${TARGET}.pdb')
 	env.Append(CCFLAGS=['/Od','/MTd'])
 
 Export('env')
-
-if TARGET_ARCH=='x86_64':
-	clientInstallDir=Dir('#../../extras/controllerClient/x64')
-	libInstallDir=Dir('#../lib64')
-else:
-	clientInstallDir=Dir('#../../extras/controllerClient/x86')
-	libInstallDir=Dir('#../lib')
-
-buildList=[]
 
 acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
 Export('acrobatAccessRPCStubs')
@@ -57,48 +49,34 @@ if TARGET_ARCH=='x86':
 	localLib=env.SConscript('local/sconscript')
 	Export('localLib')
 	env.Install(libInstallDir,localLib)
-	buildList.append(localLib)
 
 clientLib=env.SConscript('client/sconscript')
 Export('clientLib')
 env.Install(clientInstallDir,clientLib)
-buildList.append(clientLib)
 
 minHookLib=env.SConscript('minHook_sconscript')
 Export('minHookLib')
 env.Install(libInstallDir,minHookLib)
-buildList.append(minHookLib)
 
 remoteLib=env.SConscript('remote/sconscript')
 Export('remoteLib')
 env.Install(libInstallDir,remoteLib)
-buildList.append(remoteLib)
 
 if TARGET_ARCH=='x86_64':
 	remoteLoaderProgram=env.SConscript('remoteLoader/sconscript')
 	env.Install(libInstallDir,remoteLoaderProgram)
-	buildList.append(remoteLoaderProgram)
 
 vbufBaseStaticLib=env.SConscript('vbufBase/sconscript')
 Export('vbufBaseStaticLib')
 
 adobeAcrobatVBufBackend=env.SConscript('vbufBackends/adobeAcrobat/sconscript')
 env.Install(libInstallDir,adobeAcrobatVBufBackend)
-buildList.append(adobeAcrobatVBufBackend)
 
 adobeFlashVBufBackend=env.SConscript('vbufBackends/adobeFlash/sconscript')
 env.Install(libInstallDir,adobeFlashVBufBackend)
-buildList.append(adobeFlashVBufBackend)
 
 geckoVBufBackend=env.SConscript('vbufBackends/gecko_ia2/sconscript')
 env.Install(libInstallDir,geckoVBufBackend)
-buildList.append(geckoVBufBackend)
 
 mshtmlVBufBackend=env.SConscript('vbufBackends/mshtml/sconscript')
 env.Install(libInstallDir,mshtmlVBufBackend)
-buildList.append(mshtmlVBufBackend)
-
-buildTarget=env.Alias('build',buildList)
-installTarget=env.Alias('install',[clientInstallDir,libInstallDir])
-env.Requires(installTarget,buildTarget)
-env.Default(buildTarget)

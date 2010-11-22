@@ -12,13 +12,28 @@
 #http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
-Import('env')
+Import([
+	'env',
+	'vbufBaseStaticLib',
+	'ia2RPCStubs',
+])
 
-idlFile=env.Command("acrobatAccess.idl","#../include/acrobatAccess/acrobatAccess.idl",Copy("$TARGET","$SOURCE"))
+ia2utilsObj=env.Object("./ia2utils","../../common/ia2utils.cpp")
 
-tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFile=env.TypeLibrary(source=idlFile)
-iidObjFile=env.Object(iidSourceFile)
-proxyObjFile=env.Object(proxySourceFile)
-dlldataObjFile=env.Object(dlldataSourceFile)
+geckoBackendLib=env.SharedLibrary(
+	target="VBufBackend_gecko_ia2",
+	source=[
+		"gecko_ia2.cpp",
+		ia2utilsObj,
+		ia2RPCStubs[2],
+	],
+	LIBS=[
+		vbufBaseStaticLib,
+		"user32",
+		"kernel32",
+		"oleacc",
+		"oleaut32",
+	],
+)
 
-Return(['tlbFile','headerFile','iidObjFile','proxyObjFile','dlldataObjFile'])
+Return('geckoBackendLib')

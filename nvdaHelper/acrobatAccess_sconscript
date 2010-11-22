@@ -12,15 +12,13 @@
 #http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
-Import('env','remoteLib')
+Import('env')
 
-env=env.Clone()
-env.Append(LINKFLAGS='/subsystem:windows')
+idlFile=env.Command("acrobatAccess.idl","#/include/acrobatAccess/acrobatAccess.idl",Copy("$TARGET","$SOURCE"))
 
-remoteLoaderProgram=env.Program(
-	target='nvdaHelperRemoteLoader',
-	source=['loader.cpp'],
-	LIBS=[remoteLib[1] if env['release'] else remoteLib[2],'kernel32'],
-)
+tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFile=env.TypeLibrary(source=idlFile)
+iidObjFile=env.Object(iidSourceFile)
+proxyObjFile=env.Object(proxySourceFile)
+dlldataObjFile=env.Object(dlldataSourceFile)
 
-Return('remoteLoaderProgram')
+Return(['tlbFile','headerFile','iidObjFile','proxyObjFile','dlldataObjFile'])
