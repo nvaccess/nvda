@@ -655,7 +655,8 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		super(VirtualBuffer, self)._set_selection(info)
 		if isScriptWaiting() or not info.isCollapsed:
 			return
-		api.setReviewPosition(info)
+		if config.conf['reviewCursor']['followCaret'] and api.getNavigatorObject() is self.rootNVDAObject:
+			api.setReviewPosition(info)
 		if reason == speech.REASON_FOCUS:
 			focusObj = api.getFocusObject()
 			if focusObj==self.rootNVDAObject:

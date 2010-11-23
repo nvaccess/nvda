@@ -18,12 +18,8 @@
 @type navigatorObject: L{NVDAObjects.NVDAObject}
 @var navigatorTracksFocus: if true, the navigator object will follow the focus as it changes
 @type navigatorTracksFocus: boolean
-@var keyboardHelp: if true, when pressing a key, the name of the script (if any) bound to that key will be reported, rather than the actual script being executed.
-@type keyboardHelp: boolean
 @var keyCounter: gets incrimented each time a key is pressed.
 @type keycounter: boolean
-@var lastProgresssValue: Stores the last value from a progress bar
-@type lastProgressValue: int
 """
  
 startTime=0
@@ -38,7 +34,6 @@ mouseOldY=None
 navigatorObject=None
 reviewPosition=None
 reviewPositionObj=None
-keyboardHelp=False
 keyCounter=0
 lastProgressValue=0
 reportDynamicContentChanges=True

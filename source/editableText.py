@@ -60,7 +60,7 @@ class EditableText(ScriptableObject):
 			info = self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
 			return
-		if config.conf["reviewCursor"]["followCaret"]:
+		if config.conf["reviewCursor"]["followCaret"] and api.getNavigatorObject() is self:
 			api.setReviewPosition(info.copy())
 		if speakUnit:
 			info.expand(speakUnit)
