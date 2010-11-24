@@ -93,9 +93,6 @@ class winampMainWindow(IAccessible):
 		"kb:r": "repeatToggle",
 	}
 
-	def initOverlayClass(self):
-		self.bindGestures(self.__gestures)
-
 class winampPlaylistEditor(winampMainWindow):
 
 	def _get_name(self):

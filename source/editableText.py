@@ -60,7 +60,7 @@ class EditableText(ScriptableObject):
 			info = self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
 			return
-		if config.conf["reviewCursor"]["followCaret"]:
+		if config.conf["reviewCursor"]["followCaret"] and api.getNavigatorObject() is self:
 			api.setReviewPosition(info.copy())
 		if speakUnit:
 			info.expand(speakUnit)
@@ -150,9 +150,6 @@ class EditableText(ScriptableObject):
 		"kb:backspace": "caret_backspaceCharacter",
 		"kb:control+backspace": "caret_backspaceWord",
 	}
-
-	def initClass(self):
-		self.bindGestures(self.__gestures)
 
 	def initAutoSelectDetection(self):
 		"""Initialise automatic detection of selection changes.

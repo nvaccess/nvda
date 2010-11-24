@@ -44,7 +44,7 @@ def _queueEventCallback(eventName,obj,kwargs):
 		_pendingEventCountsByNameAndObj[(eventName,obj)]=(curCount-1)
 	elif curCount==1:
 		del _pendingEventCountsByNameAndObj[(eventName,obj)]
-		executeEvent(eventName,obj,**kwargs)
+	executeEvent(eventName,obj,**kwargs)
 
 def isPendingEvents(eventName=None,obj=None):
 	"""Are there currently any events queued?

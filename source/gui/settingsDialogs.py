@@ -22,6 +22,7 @@ import scriptUI
 import queueHandler
 import braille
 import core
+import keyboardHandler
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -437,9 +438,9 @@ class KeyboardSettingsDialog(SettingsDialog):
 		kbdLabel=wx.StaticText(self,-1,label=_("&Keyboard layout:"))
 		kbdSizer.Add(kbdLabel)
 		kbdListID=wx.NewId()
-		self.kbdNames=list(set(os.path.splitext(x)[0].split('_')[-1] for x in glob.glob('appModules/*.kbd')))
-		self.kbdNames.sort()
-		self.kbdList=wx.Choice(self,kbdListID,name=_("Keyboard layout"),choices=self.kbdNames)
+		layouts=keyboardHandler.KeyboardInputGesture.LAYOUTS
+		self.kbdNames=sorted(layouts)
+		self.kbdList=wx.Choice(self,kbdListID,name=_("Keyboard layout"),choices=[layouts[layout] for layout in self.kbdNames])
 		try:
 			index=self.kbdNames.index(config.conf['keyboard']['keyboardLayout'])
 			self.kbdList.SetSelection(index)
