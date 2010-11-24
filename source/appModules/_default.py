@@ -271,7 +271,7 @@ class AppModule(appModuleHandler.AppModule):
 						speech.speakMessage(_("%s copied to clipboard")%text)
 		else:
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
-	script_navigatorObject_current.__doc__=_("Reports the current navigator object or, if pressed three times, Copies name and value of current navigator object to the clipboard")
+	script_navigatorObject_current.__doc__=_("Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard")
 
 	def script_navigatorObject_currentDimensions(self,gesture):
 		obj=api.getNavigatorObject()
