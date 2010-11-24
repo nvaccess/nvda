@@ -4,7 +4,7 @@ This document describes how to prepare and use the NVDA source code. For more in
 http://www.nvda-project.org/
 
 == Dependencies ==
-The NVDA source depends on several other packages to run correctly, as described below. All directories mentioned are relative to the root of the NVDA source distribution/checkout. Please create any directories mentioned that don't already exist.
+The NVDA source depends on several other packages to run correctly, as described below. All directories mentioned are relative to the root of the NVDA source distribution. Please create any directories mentioned that don't already exist.
 
 If you are running a 64 bit version of Windows, you should install the 32 bit versions of any dependencies that provide both 32 bit and 64 bit versions unless otherwise specified.
 
@@ -90,7 +90,7 @@ To build an installer:
 
 == Preparing the Source Tree ==
 Before you can run the NVDA source code, you must prepare the source tree.
-You do this by opening a command prompt, changing to the root of the NVDA source distribution/checkout and typing:
+You do this by opening a command prompt, changing to the root of the NVDA source distribution and typing:
 scons source
 You should do this again whenever the version of comtypes changes or new language files are added.
 
@@ -100,7 +100,7 @@ To start NVDA from source code, run nvda.pyw located in the source directory.
 == Building NVDA ==
 A binary build of NVDA can be run on a system without Python and all of NVDA's other dependencies installed (as we do for snapshots and releases).
 
-Binary archives and bundles can be created using scons from the root of the NVDA source distribution/checkout. To build any of the following, open a command prompt and change to this directory.
+Binary archives and bundles can be created using scons from the root of the NVDA source distribution. To build any of the following, open a command prompt and change to this directory.
 
 To make a non-archived binary build (equivalent to an extracted portable archive), type:
 scons dist
@@ -118,7 +118,7 @@ Optionally, the build can  be customised by providing variables on the command l
 	* version: The version of this build.
 	* release: Whether this is a release version.
 	* publisher: The publisher of this build.
-	* certFile: The certificate file with which to sign executables.
+	* certFile: The certificate file with which to sign executables. The certificate must be in pfx format and contain the private key.
 	* outputDir: The directory where the final built archives and such will be placed.
 	* targetArchitectures: The target architectures that NVDA should support. Possible values are all, x86 and x86_64. This should generally be left as the default.
 
