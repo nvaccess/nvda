@@ -131,7 +131,6 @@ setup(
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),
 		("documentation", ['../copying.txt', '../contributors.txt']),
-		("appModules", glob("appModules/*.kbd")),
 		("lib", glob("lib/*.dll") + glob("lib/*.pdb")),
 		("lib64", glob("lib64/*.dll") + glob("lib64/*.exe") + glob("lib64/*.pdb")),
 		("comInterfaces", glob("comInterfaces/*%s"%compiledModExtention)),

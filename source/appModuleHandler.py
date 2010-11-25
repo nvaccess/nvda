@@ -7,12 +7,9 @@
 """Manages appModules.
 @var runningTable: a dictionary of the currently running appModules, using their application's main window handle as a key.
 @type runningTable: dict
-@var re_keyScript: a compiled regular expression that can grab a keyName and a script name from a line in a NVDA key map file (kbd file).
-@type re_keyScript: regular expression
 """
 
 import itertools
-import re
 import ctypes
 import os
 import pkgutil
@@ -34,9 +31,6 @@ runningTable={}
 #: The process ID of NVDA itself.
 NVDAProcessID=None
 _importers=None
-
-#regexp to collect the key and script from a line in a keyMap file 
-re_keyScript=re.compile(r'^\s*(?P<key>[\S]+)\s*=\s*(?P<script>[\S]+)\s*$')
 
 class processEntry32W(ctypes.Structure):
 	_fields_ = [
@@ -171,7 +165,6 @@ def fetchAppModule(processID,appName,useDefault=False):
 		ui.message(_("Error in appModule %s")%appName)
 		return None
 
-	mod.loadKeyMap()
 	return mod
 
 def initialize():
@@ -192,8 +185,6 @@ class AppModule(baseObject.ScriptableObject):
 	"""
 
 	selfVoicing=False #Set to true so all undefined events and script requests are silently dropped.
-
-	_overlayClassCache={}
 
 	def __init__(self,processID,appName=None):
 		super(AppModule,self).__init__()
@@ -227,26 +218,3 @@ class AppModule(baseObject.ScriptableObject):
 		@param clsList: The list of classes, which will be modified by this method if appropriate.
 		@type clsList: list of L{NVDAObjects.NVDAObject}
 		"""
-
-	def loadKeyMap(self):
-		"""Loads a key map in to this appModule . if the key map exists. It takes in to account what layout NVDA is currently set to.
-		"""  
-		layout=config.conf["keyboard"]["keyboardLayout"]
-		# If the appModule already has a running gesture map, clear it.
-		self.clearGestureBindings()
-		for modClass in reversed(list(itertools.takewhile(lambda x: issubclass(x,AppModule) and x is not AppModule,self.__class__.__mro__))):
-			name=modClass.__module__.split('.')[-1]
-			keyMapFileName=getKeyMapFileName(name,layout)
-			if not keyMapFileName:
-				continue
-			keyMapFile=open(keyMapFileName,'r')
-			bindCount=0
-			for line in (x for x in keyMapFile if not x.startswith('#') and not x.isspace()):
-				m=re_keyScript.match(line)
-				if m:
-					try:
-						self.bindGesture("kb:%s"%m.group('key'),m.group('script'))
-						bindCount+=1
-					except:
-						log.error("error binding %s to %s in appModule %s"%(m.group('script'),m.group('key'),self))
-			log.debug("added %s bindings to appModule %s from file %s"%(bindCount,self,keyMapFileName))

@@ -79,6 +79,7 @@ MESSAGEVIEWERS=(1001,1005,5005)
 class AppModule(_default.AppModule):
 	lastTextLengths={}
 	lastMessages=[]
+	# Must not be > 9.
 	MessageHistoryLength=3
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -115,6 +116,11 @@ class AppModule(_default.AppModule):
 		else:
 			ui.message(_("No message yet"))
 	script_readMessage.__doc__=_("Displays one of the recent messages")
+
+	def __init__(self, *args, **kwargs):
+		super(AppModule, self).__init__(*args, **kwargs)
+		for n in xrange(1, self.MessageHistoryLength + 1):
+			self.bindGesture("kb:NVDA+control+%s" % n, "readMessage")
 
 class mirandaIMContactList(IAccessible):
 

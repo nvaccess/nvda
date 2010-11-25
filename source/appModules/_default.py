@@ -894,3 +894,148 @@ class AppModule(appModuleHandler.AppModule):
 			return
 		self._copyStartMarker = None
 	script_review_copy.__doc__ = _("Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard")
+
+	__gestures = {
+		# Basic
+		"kb:NVDA+n": "showGui",
+		"kb:NVDA+1": "toggleInputHelp",
+		"kb:NVDA+q": "quit",
+		"kb:NVDA+f2": "passNextKeyThrough",
+
+		# System status
+		"kb:NVDA+f12": "dateTime",
+		"kb:NVDA+shift+b": "say_battery_status",
+		"kb:NVDA+c": "reportClipboardText",
+
+		# System focus
+		"kb:NVDA+tab": "reportCurrentFocus",
+		"kb:NVDA+t": "title",
+		"kb:NVDA+b": "speakForeground",
+		"kb:NVDA+end": "reportStatusLine",
+
+		# System caret
+		"kb:NVDA+downArrow": "sayAll",
+		"kb:NVDA+upArrow": "reportCurrentLine",
+		"kb:NVDA+shift+upArrow": "reportCurrentSelection",
+		"kb:NVDA+f": "reportFormatting",
+
+		# Object navigation
+		"kb:NVDA+numpad5": "navigatorObject_current",
+		"kb(laptop):NVDA+control+i": "navigatorObject_current",
+		"kb:NVDA+numpad8": "navigatorObject_parent",
+		"kb(laptop):NVDA+shift+i": "navigatorObject_parent",
+		"kb:NVDA+numpad4": "navigatorObject_previous",
+		"kb(laptop):NVDA+control+j": "navigatorObject_previous",
+		"kb:NVDA+numpad6": "navigatorObject_next",
+		"kb(laptop):NVDA+control+l": "navigatorObject_next",
+		"kb:NVDA+numpad2": "navigatorObject_firstChild",
+		"kb(laptop):NVDA+shift+,": "navigatorObject_firstChild",
+		"kb:NVDA+numpadMinus": "navigatorObject_toFocus",
+		"kb(laptop):NVDA+backspace": "navigatorObject_toFocus",
+		"kb:NVDA+numpadEnter": "navigatorObject_doDefaultAction",
+		"kb(laptop):NVDA+enter": "navigatorObject_doDefaultAction",
+		"kb:NVDA+shift+numpadMinus": "navigatorObject_moveFocus",
+		"kb(laptop):NVDA+shift+backspace": "navigatorObject_moveFocus",
+		"kb:NVDA+numpadDelete": "navigatorObject_currentDimensions",
+		"kb(desktop):NVDA+delete": "navigatorObject_currentDimensions",
+
+		# Review cursor
+		"kb:shift+numpad7": "review_top",
+		"kb(laptop):NVDA+7": "review_top",
+		"kb:numpad7": "review_previousLine",
+		"kb(laptop):NVDA+u": "review_previousLine",
+		"kb:numpad8": "review_currentLine",
+		"kb(laptop):NVDA+i": "review_currentLine",
+		"kb:numpad9": "review_nextLine",
+		"kb(laptop):NVDA+o": "review_nextLine",
+		"kb:shift+numpad9": "review_bottom",
+		"kb(laptop):NVDA+9": "review_bottom",
+		"kb:numpad4": "review_previousWord",
+		"kb(laptop):NVDA+j": "review_previousWord",
+		"kb:numpad5": "review_currentWord",
+		"kb(laptop):NVDA+k": "review_currentWord",
+		"kb:numpad6": "review_nextWord",
+		"kb(laptop):NVDA+l": "review_nextWord",
+		"kb:shift+numpad1": "review_startOfLine",
+		"kb(laptop):NVDA+shift+u": "review_startOfLine",
+		"kb:numpad1": "review_previousCharacter",
+		"kb(laptop):NVDA+m": "review_previousCharacter",
+		"kb:numpad2": "review_currentCharacter",
+		"kb(laptop):NVDA+,": "review_currentCharacter",
+		"kb:numpad3": "review_nextCharacter",
+		"kb(laptop):NVDA+.": "review_nextCharacter",
+		"kb:shift+numpad3": "review_endOfLine",
+		"kb(laptop):NVDA+shift+o": "review_endOfLine",
+		"kb:numpadPlus": "review_sayAll",
+		"kb(laptop):NVDA+shift+downArrow": "review_sayAll",
+		"kb:control+numpadMinus": "review_moveCaretHere",
+		"kb(laptop):NVDA+control+backspace": "review_moveCaretHere",
+		"kb:NVDA+f9": "review_markStartForCopy",
+		"kb:NVDA+f10": "review_copy",
+
+		# Flat review
+		"kb:NVDA+numpad7": "navigatorObject_moveToFlatReviewAtObjectPosition",
+		"kb(laptop):NVDA+pageUp": "navigatorObject_moveToFlatReviewAtObjectPosition",
+		"kb:NVDA+numpad1": "navigatorObject_moveToObjectAtFlatReviewPosition",
+		"kb(laptop):NVDA+pageDown": "navigatorObject_moveToObjectAtFlatReviewPosition",
+
+		# Mouse
+		"kb:numpadDivide": "leftMouseClick",
+		"kb(laptop):NVDA+leftArrow": "leftMouseClick",
+		"kb:shift+numpadDivide": "toggleLeftMouseButton",
+		"kb(laptop):NVDA+shift+leftArrow": "toggleLeftMouseButton",
+		"kb:numpadMultiply": "rightMouseClick",
+		"kb(laptop):NVDA+rightArrow": "rightMouseClick",
+		"kb:shift+numpadMultiply": "toggleRightMouseButton",
+		"kb(laptop):NVDA+shift+rightArrow": "toggleRightMouseButton",
+		"kb:NVDA+numpadDivide": "moveMouseToNavigatorObject",
+		"kb(laptop):NVDA+shift+f9": "moveMouseToNavigatorObject",
+		"kb:NVDA+numpadMultiply": "moveNavigatorObjectToMouse",
+		"kb(laptop):NVDA+shift+f10": "moveNavigatorObjectToMouse",
+
+		# Tree interceptors
+		"kb:NVDA+space": "toggleVirtualBufferPassThrough",
+		"kb:NVDA+control+space": "moveToParentTreeInterceptor",
+
+		# Preferences dialogs
+		"kb:NVDA+control+g": "activateGeneralSettingsDialog",
+		"kb:NVDA+control+s": "activateSynthesizerDialog",
+		"kb:NVDA+control+v": "activateVoiceDialog",
+		"kb:NVDA+control+k": "activateKeyboardSettingsDialog",
+		"kb:NVDA+control+m": "activateMouseSettingsDialog",
+		"kb:NVDA+control+o": "activateObjectPresentationDialog",
+		"kb:NVDA+control+b": "activateVirtualBuffersDialog",
+		"kb:NVDA+control+d": "activateDocumentFormattingDialog",
+
+		# Save/reload configuration
+		"kb:NVDA+control+c": "saveConfiguration",
+		"kb:NVDA+control+r": "revertToSavedConfiguration",
+
+		# Settings
+		"kb:NVDA+2": "toggleSpeakTypedCharacters",
+		"kb:NVDA+3": "toggleSpeakTypedWords",
+		"kb:NVDA+4": "toggleSpeakCommandKeys",
+		"kb:NVDA+p": "toggleSpeakPunctuation",
+		"kb:NVDA+s": "speechMode",
+		"kb(desktop):NVDA+m": "toggleMouseTracking",
+		"kb(laptop):NVDA+shift+m": "toggleMouseTracking",
+		"kb(desktop):NVDA+u": "toggleProgressBarOutput",
+		"kb(laptop):NVDA+control+f2": "toggleProgressBarOutput",
+		"kb:NVDA+5": "toggleReportDynamicContentChanges",
+		"kb:NVDA+6": "toggleCaretMovesReviewCursor",
+		"kb(desktop):NVDA+7": "toggleFocusMovesNavigatorObject",
+		"kb(laptop):NVDA+control+7": "toggleFocusMovesNavigatorObject",
+		"kb:NVDA+control+t": "braille_toggleTether",
+
+		# Synth settings ring
+		"kb:NVDA+control+leftArrow": "previousSynthSetting",
+		"kb:NVDA+control+rightArrow": "nextSynthSetting",
+		"kb:NVDA+control+upArrow": "increaseSynthSetting",
+		"kb:NVDA+control+downArrow": "decreaseSynthSetting",
+
+		# Tools
+		"kb:NVDA+f1": "navigatorObject_devInfo",
+		"kb:NVDA+control+f1": "reportAppModuleInfo",
+		"kb:NVDA+control+z": "activatePythonConsole",
+		"kb(desktop):NVDA+control+f2": "test_navigatorDisplayModelText",
+	}
