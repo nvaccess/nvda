@@ -3,7 +3,7 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2010.3 =
+= 2011.1 =
 
 == Nové vlastnosti ==
 - Pre niektoré objekty je možné oznamovať farbu. Automatické oznamovanie zmeny farby je možné z dialógu formátovanie dokumentu. Aktuálnu farbu je tiež možné získať použitím funkcie info o formátovaní (NVDA+f)
@@ -30,6 +30,7 @@
 - Interpunkčné znaky sú oznamované počas nápovedy vstupu aj ak je oznamovanie interpunkcie vypnuté. (#977)
 - V dialógu nastavenia klávesnice je zoznam rozložení zobrazený v jazyku lokalizácii NVDA nie v angličtine. (#558)
 - Opravený problém, ktorý spôsoboval, že niektoré prvky boli vo virtuálnom prehliadači adobe reader zobrazené ako prázdne, napr. odkazy v používateľskej príručke Apple iPhone IOS 4.1.
+- Tlačidlo "použiť aktuálne nastavenia NVDA na prihlasovacej a zabezpečených obrazovkách" v dialógu všeobecné nastavenia je možné použiť hneď po nainštalovaní NVDA. Doteraz ak nebola pred použitím tohoto tlačidla zobrazená zabezpečená obrazovka, NVDA oznámil, že kopírovanie bolo úspešné, ale akcia nemala žiadny efekt. (#1194)
 
 
 = 2010.2 =
