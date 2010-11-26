@@ -50,6 +50,7 @@
 - The new LiveText and Terminal NVDAObject behaviors facilitate automatic reporting of new text. See those classes in NVDAObjects.behaviors for details. (#936)
  - The NVDAObjects.window.DisplayModelLiveText overlay class can be used for objects which must retrieve text written to the display.
  - See the mirc and putty app modules for usage examples.
+- There is no longer an _default app module. App modules should instead subclass appModuleHandler.AppModule (the base AppModule class).
 
 
 = 2010.2 =

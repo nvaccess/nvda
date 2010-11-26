@@ -1,8 +1,8 @@
-import _default
+import appModuleHandler
 import NVDAObjects.IAccessible
 import speech
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClassName=obj.windowClassName

@@ -49,7 +49,7 @@ from NVDAObjects.window import Window
 
 from NVDAObjects.window import DisplayModelEditableText
 
-import _default
+import appModuleHandler
 
 
 #
@@ -86,7 +86,7 @@ SB_HORZ = 0
 SB_VERT = 1
 
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		# Only use this overlay class if the top level automation object for the IDE can be retrieved,
 		# as it will not work otherwise.

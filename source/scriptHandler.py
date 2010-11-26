@@ -68,6 +68,13 @@ def findScript(gesture):
 		if func and getattr(func, 'canPropagate', False): 
 			return func
 
+	# Global commands.
+	# Import late to avoid circular import.
+	import globalCommands
+	func = _getObjScript(globalCommands.commands, gesture, globalMapScripts)
+	if func:
+		return func
+
 	return None
 
 def getScriptName(script):

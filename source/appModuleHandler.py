@@ -111,8 +111,6 @@ def getAppModuleFromProcessID(processID):
 		appName=getAppNameFromProcessID(processID)
 		mod=fetchAppModule(processID,appName)
 		if not mod:
-			mod=fetchAppModule(processID,appName,useDefault=True)
-		if not mod:
 			raise RuntimeError("error fetching default appModule")
 		runningTable[processID]=mod
 	return mod
@@ -133,7 +131,7 @@ def update(processID):
 def doesAppModuleExist(name):
 	return any(importer.find_module("appModules.%s" % name) for importer in _importers)
 
-def fetchAppModule(processID,appName,useDefault=False):
+def fetchAppModule(processID,appName):
 	"""Returns an appModule found in the appModules directory, for the given application name.
 	@param processID: process ID for it to be associated with
 	@type processID: integer
@@ -143,8 +141,6 @@ def fetchAppModule(processID,appName,useDefault=False):
 	@rtype: AppModule
 	"""  
 	friendlyAppName=appName
-	if useDefault:
-		appName='_default'
 
 	# First, check whether the module exists.
 	# We need to do this separately because even though an ImportError is raised when a module can't be found, it might also be raised for other reasons.
@@ -154,18 +150,16 @@ def fetchAppModule(processID,appName,useDefault=False):
 		# Since Python can't handle unicode characters in module names, we need to decompose unicode string and strip out accents.
 		appName = unicodedata.normalize("NFD", appName)
 		exists = doesAppModuleExist(appName)
-	if not exists:
-		# It is not an error if the module doesn't exist.
-		return None
 
-	try:
-		mod = __import__("appModules.%s" % appName, globals(), locals(), ("appModules",)).AppModule(processID, friendlyAppName)
-	except:
-		log.error("error in appModule %s"%appName, exc_info=True)
-		ui.message(_("Error in appModule %s")%appName)
-		return None
+	if exists:
+		try:
+			return __import__("appModules.%s" % appName, globals(), locals(), ("appModules",)).AppModule(processID, friendlyAppName)
+		except:
+			log.error("error in appModule %s"%appName, exc_info=True)
+			ui.message(_("Error in appModule %s")%appName)
 
-	return mod
+	# Use the base AppModule.
+	return AppModule(processID, friendlyAppName)
 
 def initialize():
 	"""Initializes the appModule subsystem. 

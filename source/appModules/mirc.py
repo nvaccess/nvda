@@ -10,7 +10,7 @@
 import controlTypes
 from NVDAObjects.window import Window, DisplayModelLiveText
 from NVDAObjects.IAccessible import StaticText
-from appModules import _default
+import appModuleHandler
 
 class Input(Window):
 
@@ -30,7 +30,7 @@ class Input(Window):
 		if self._output:
 			self._output.stopMonitoring()
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.role == controlTypes.ROLE_WINDOW:

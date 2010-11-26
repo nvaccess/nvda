@@ -4,10 +4,10 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import _default
+import appModuleHandler
 from NVDAObjects.behaviors import ProgressBar
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		# The richedit control displaying incoming chat does not return correct _isWindowUnicode flag.

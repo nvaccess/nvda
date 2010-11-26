@@ -4,7 +4,7 @@ import braille
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.behaviors import Dialog
-import _default
+import appModuleHandler
 import eventHandler
 
 class LogonDialog(Dialog):
@@ -49,7 +49,7 @@ class XPPasswordField(IAccessible):
 			return
 		self.event_gainFocus()
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self, obj):
 		if obj.windowClassName == "NativeHWNDHost" and obj.parent and not obj.parent.parent:

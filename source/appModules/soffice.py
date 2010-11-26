@@ -6,7 +6,7 @@
 
 from comtypes import COMError
 import IAccessibleHandler
-import _default
+import appModuleHandler
 import controlTypes
 import textInfos
 import colors
@@ -197,7 +197,7 @@ class SymphonyParagraph(SymphonyText):
 	value=None
 	description=None
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		role=obj.role
