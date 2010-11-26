@@ -76,6 +76,7 @@ vars.Add(BoolVariable("release", "Whether this is a release version", False))
 vars.Add("publisher", "The publisher of this build", "unknown")
 vars.Add(PathVariable("certFile", "The certificate file with which to sign executables", "",
 	lambda key, val, env: not val or PathVariable.PathIsFile(key, val, env)))
+vars.Add("certPassword", "The password for the private key in the signing certificate", "")
 vars.Add(PathVariable("outputDir", "The directory where the final built archives and such will be placed", "output",PathVariable.PathIsDirCreate))
 vars.Add(ListVariable('targetArchitectures','Which architectures should NVDA support?','all',['x86','x86_64']))
 
@@ -89,6 +90,7 @@ env = Environment(variables=vars,tools=["textfile","gettext","t2t",keyCommandsDo
 version = env["version"]
 release = env["release"]
 certFile = env["certFile"]
+certPassword = env["certPassword"]
 userDocsDir=Dir('user_docs')
 sourceDir = Dir("source")
 Export('sourceDir')
@@ -172,7 +174,10 @@ def SzSfxGenerator(target, source, env, for_signature):
 env["BUILDERS"]["SzSfx"] = Builder(generator=SzSfxGenerator)
 
 # An action to sign an executable with certFile.
-signExec = [signtool, "sign", "/f", certFile, "$TARGET"]
+signExec = [signtool, "sign", "/f", certFile]
+if certPassword:
+	signExec.extend(("/p", certPassword))
+signExec.append("$TARGET")
 
 portableDist = env.NVDADist("dist", sourceDir, uiAccess=False)
 if certFile:

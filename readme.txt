@@ -119,6 +119,7 @@ Optionally, the build can  be customised by providing variables on the command l
 	* release: Whether this is a release version.
 	* publisher: The publisher of this build.
 	* certFile: The certificate file with which to sign executables. The certificate must be in pfx format and contain the private key.
+	* certPassword: The password for the private key in the signing certificate. If omitted, no password will be assumed.
 	* outputDir: The directory where the final built archives and such will be placed.
 	* targetArchitectures: The target architectures that NVDA should support. Possible values are all, x86 and x86_64. This should generally be left as the default.
 
