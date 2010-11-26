@@ -4,7 +4,10 @@
 #See the file COPYING for more details.
 #Copyright (C) 2010 James Teh <jamie@jantrid.net>
 
+import sys
+import os
 import itertools
+from configobj import ConfigObj
 import baseObject
 import scriptHandler
 import queueHandler
@@ -14,6 +17,8 @@ import braille
 import config
 import watchdog
 from logHandler import log
+import globalVars
+import languageHandler
 
 """Core framework for handling input from the user.
 Every piece of input from the user (e.g. a key press) is represented by an L{InputGesture}.
@@ -91,6 +96,99 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
+class GlobalGestureMap(object):
+	"""Maps gestures to scripts anywhere in NVDA.
+	This is used to allow users and locales to bind gestures in addition to those bound by individual scriptable objects.
+	Map entries will most often be loaded from a file using the L{load} method.
+	See that method for details of the file format.
+	"""
+
+	def __init__(self):
+		self._map = {}
+
+	def clear(self):
+		"""Clear this map.
+		"""
+		self._map.clear()
+
+	def add(self, gesture, module, className, script):
+		"""Add a gesture mapping.
+		@param gesture: The gesture identifier.
+		@type gesture: str
+		@param module: The name of the Python module containing the target script.
+		@type module: str
+		@param className: The name of the class in L{module} containing the target script.
+		@type className: str
+		@param script: The name of the target script
+			or C{None} to unbind the gesture for this class.
+		@type script: str
+		"""
+		gesture = normalizeGestureIdentifier(gesture)
+		try:
+			scripts = self._map[gesture]
+		except KeyError:
+			scripts = self._map[gesture] = []
+		scripts.append((module, className, script))
+
+	def load(self, filename):
+		"""Load map entries from a file.
+		The file is an ini file.
+		Each section contains entries for a particular scriptable object class.
+		The section name must be the full Python module and class name.
+		The key of each entry is the script name and the value is a comma separated list of one or more gestures.
+		If the script name is "None", the gesture will be unbound for this class.
+		For example, the following binds the "a" key to move to the next heading in virtual buffers
+		and removes the default "h" binding::
+			[virtualBuffers.VirtualBuffer]
+			nextHeading = kb:a
+			None = kb:h
+		@param filename: The name of the file to load.
+		@type: str
+		"""
+		conf = ConfigObj(filename, file_error=True, encoding="UTF-8")
+		for locationName, location in conf.iteritems():
+			try:
+				module, className = locationName.rsplit(".", 1)
+			except:
+				log.error("Invalid module/class specification: %s" % locationName)
+				continue
+			for script, gestures in location.iteritems():
+				if script == "None":
+					script = None
+				if gestures == "":
+					gestures = ()
+				elif isinstance(gestures, basestring):
+					gestures = [gestures]
+				for gesture in gestures:
+					try:
+						self.add(gesture, module, className, script)
+					except:
+						log.error("Invalid gesture: %s" % gesture)
+						continue
+
+	def getScriptsForGesture(self, gesture):
+		"""Get the scripts associated with a particular gesture.
+		@param gesture: The gesture identifier.
+		@type gesture: str
+		@return: The Python class and script name for each script;
+			the script name may be C{None} indicating that the gesture should be unbound for this class.
+		@rtype: generator of (class, str)
+		"""
+		try:
+			scripts = self._map[gesture]
+		except KeyError:
+			return
+		for moduleName, className, scriptName in scripts:
+			try:
+				module = sys.modules[moduleName]
+			except KeyError:
+				continue
+			try:
+				cls = getattr(module, className)
+			except AttributeError:
+				continue
+			yield cls, scriptName
+
 class InputManager(baseObject.AutoPropertyObject):
 	"""Manages functionality related to input from the user.
 	Input includes key presses on the keyboard, as well as key presses on Braille displays, etc.
@@ -100,6 +198,14 @@ class InputManager(baseObject.AutoPropertyObject):
 		#: Whether input help is enabled, wherein the function of each key pressed by the user is reported but not executed.
 		#: @type: bool
 		self.isInputHelpActive = False
+		#: The gestures mapped for the NVDA locale.
+		#: @type: L{GlobalGestureMap}
+		self.localeGestureMap = GlobalGestureMap()
+		#: The gestures mapped by the user.
+		#: @type: L{GlobalGestureMap}
+		self.userGestureMap = GlobalGestureMap()
+		self.loadLocaleGestureMap()
+		self.loadUserGestureMap()
 
 	def executeGesture(self, gesture):
 		"""Perform the action associated with a gesture.
@@ -166,9 +272,20 @@ class InputManager(baseObject.AutoPropertyObject):
 		if runScript:
 			script(gesture)
 
-#: The singleton input manager instance.
-#: @type: L{InputManager}
-manager = InputManager()
+	def loadUserGestureMap(self):
+		self.userGestureMap.clear()
+		try:
+			self.userGestureMap.load(os.path.join(globalVars.appArgs.configPath, "gestures.ini"))
+		except IOError:
+			log.debugWarning("No user gesture map")
+
+	def loadLocaleGestureMap(self):
+		self.localeGestureMap.clear()
+		lang = languageHandler.getLanguage()
+		try:
+			self.localeGestureMap.load(os.path.join("locale", lang, "gestures.ini"))
+		except IOError:
+			log.debugWarning("No locale gesture map for language %s" % lang)
 
 def normalizeGestureIdentifier(identifier):
 	"""Normalize a gesture identifier so that it matches other identifiers for the same gesture.
@@ -180,3 +297,7 @@ def normalizeGestureIdentifier(identifier):
 	# Rather than sorting, just use Python's set ordering.
 	main = "+".join(itertools.chain(frozenset(main[:-1]), main[-1:]))
 	return u"{0}:{1}".format(prefix, main).lower()
+
+#: The singleton input manager instance.
+#: @type: L{InputManager}
+manager = InputManager()

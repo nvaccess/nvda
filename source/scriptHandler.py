@@ -11,6 +11,7 @@ import appModuleHandler
 import api
 import queueHandler
 from logHandler import log
+import inputCore
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
 _lastScriptTime=0 #Time in MS of when the last script was executed
@@ -18,39 +19,55 @@ _lastScriptRef=None #Holds a weakref to the last script that was executed
 _lastScriptCount=0 #The amount of times the last script was repeated
 _isScriptRunning=False
 
+def _getObjScript(obj, gesture, globalMapScripts):
+	# Search the scripts from the global gesture maps.
+	for cls, scriptName in globalMapScripts:
+		if isinstance(obj, cls):
+			if scriptName is None:
+				# The global map specified that no script should execute for this gesture and object.
+				return None
+			try:
+				return getattr(obj, "script_%s" % scriptName)
+			except AttributeError:
+				pass
+	# Search the object itself for in-built bindings.
+	return obj.getScript(gesture)
+
 def findScript(gesture):
-	return findScript_appModuleLevel(gesture)
-
-def findScript_appModuleLevel(gesture):
-	focusObject=api.getFocusObject()
-	if not focusObject:
+	focus = api.getFocusObject()
+	if not focus:
 		return None
-	appModule=focusObject.appModule
-	if appModule and appModule.selfVoicing:
-		return
-	func=appModule.getScript(gesture) if appModule else None
-	if func:
-		return func
-	return findScript_treeInterceptorLevel(gesture)
 
-def findScript_treeInterceptorLevel(gesture):
-	treeInterceptor=api.getFocusObject().treeInterceptor
+	globalMapScripts = []
+	for globalMap in inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap:
+		for identifier in gesture.identifiers:
+			globalMapScripts.extend(globalMap.getScriptsForGesture(identifier))
+
+	# App module level.
+	app = focus.appModule
+	if app:
+		if app.selfVoicing:
+			return None
+		func = _getObjScript(app, gesture, globalMapScripts)
+		if func:
+			return func
+
+	# Tree interceptor level.
+	treeInterceptor = focus.treeInterceptor
 	if treeInterceptor and treeInterceptor.isReady:
-		func=treeInterceptor.getScript(gesture)
+		func = _getObjScript(treeInterceptor, gesture, globalMapScripts)
 		if func and (not treeInterceptor.passThrough or getattr(func,"ignoreTreeInterceptorPassThrough",False)):
 			return func
-	return findScript_NVDAObjectLevel(gesture)
 
-def findScript_NVDAObjectLevel(gesture):
-	focusObj=api.getFocusObject()
-	func=focusObj.getScript(gesture)
+	# NVDAObject level.
+	func = _getObjScript(focus, gesture, globalMapScripts)
 	if func:
 		return func
-	ancestors=reversed(api.getFocusAncestors())
-	for obj in ancestors:
-		func=obj.getScript(gesture)
-		if func and getattr(func,'canPropagate',False): 
+	for obj in reversed(api.getFocusAncestors()):
+		func = _getObjScript(obj, gesture, globalMapScripts)
+		if func and getattr(func, 'canPropagate', False): 
 			return func
+
 	return None
 
 def getScriptName(script):
