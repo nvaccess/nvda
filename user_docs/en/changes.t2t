@@ -34,6 +34,24 @@
 - The "Use currently saved settings on the logon and other secure screens" button in NVDA's General Settings dialog now works if used immediately after NVDA is newly installed but before a secure screen has appeared. Previously, NVDA reported that copying was successful, but it actually had no effect. (#1194)
 
 
+== Changes for Developers ==
+- SCons is now used to prepare the source tree and create binary builds, portable archives, installers, etc. See readme.txt at the root of the source distribution for details.
+- The key names used by NVDA (including key maps) have been made more friendly/logical; e.g. upArrow instead of extendedUp and numpadPageUp instead of prior. See the vkCodes module for a list.
+-All input from the user is now represented by an inputCore.InputGesture instance. (#601)
+ - Each source of input subclasses the base InputGesture class. For example, key presses are encompassed by the keyboardHandler.KeyboardInputGesture class.
+- Input gestures are bound to ScriptableObjects using the ScriptableObject.bindGesture() method on an instance or an __gestures dict on the class which maps gesture identifiers to script names. See baseObject.ScriptableObject for details.
+- App modules no longer have key map files. All input gesture bindings must be done in the app module itself.
+- All scripts now take an InputGesture instance instead of a key press.
+ - KeyboardInputGestures can be sent on to the OS using the send() method of the gesture.
+- To send an arbitrary key press, you must now create a KeyboardInputGesture using KeyboardInputGesture.fromName() and then use its send() method.
+- Locales may now provide an input gesture map file to add new bindings or override existing bindings for scripts anywhere in NVDA. (#810)
+ - Locale gesture maps should be placed in locale\LANG\gestures.ini, where LANG is the language code.
+ - See inputCore.GlobalGestureMap for details of the file format.
+- The new LiveText and Terminal NVDAObject behaviors facilitate automatic reporting of new text. See those classes in NVDAObjects.behaviors for details. (#936)
+ - The NVDAObjects.window.DisplayModelLiveText overlay class can be used for objects which must retrieve text written to the display.
+ - See the mirc and putty app modules for usage examples.
+
+
 = 2010.2 =
 Notable features of this release include greatly simplified object navigation; virtual buffers for Adobe Flash content; access to many previously inaccessible controls by retrieving text written to the screen; flat review of screen text; support for IBM Lotus Symphony documents; reporting of table row and column headers in Mozilla Firefox; and significantly improved user documentation.
 
