@@ -18,6 +18,7 @@ import config
 import watchdog
 from logHandler import log
 import globalVars
+import languageHandler
 
 """Core framework for handling input from the user.
 Every piece of input from the user (e.g. a key press) is represented by an L{InputGesture}.
@@ -203,6 +204,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		#: The gestures mapped by the user.
 		#: @type: L{GlobalGestureMap}
 		self.userGestureMap = GlobalGestureMap()
+		self.loadLocaleGestureMap()
 		self.loadUserGestureMap()
 
 	def executeGesture(self, gesture):
@@ -275,11 +277,15 @@ class InputManager(baseObject.AutoPropertyObject):
 		try:
 			self.userGestureMap.load(os.path.join(globalVars.appArgs.configPath, "gestures.ini"))
 		except IOError:
-			pass
+			log.debugWarning("No user gesture map")
 
 	def loadLocaleGestureMap(self):
-		# TODO: Implement this.
-		pass
+		self.localeGestureMap.clear()
+		lang = languageHandler.getLanguage()
+		try:
+			self.localeGestureMap.load(os.path.join("locale", lang, "gestures.ini"))
+		except IOError:
+			log.debugWarning("No locale gesture map for language %s" % lang)
 
 def normalizeGestureIdentifier(identifier):
 	"""Normalize a gesture identifier so that it matches other identifiers for the same gesture.
