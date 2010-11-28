@@ -167,7 +167,7 @@ def initialize():
 	global NVDAProcessID,_importers
 	NVDAProcessID=os.getpid()
 	config.addConfigDirsToPythonPackagePath(appModules)
-	_importers=list(pkgutil.iter_importers("appModules._default"))
+	_importers=list(pkgutil.iter_importers("appModules.__init__"))
 
 #base class for appModules
 class AppModule(baseObject.ScriptableObject):
