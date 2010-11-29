@@ -12,6 +12,7 @@ import treeInterceptorHandler
 import globalVars
 import controlTypes
 from logHandler import log
+import pluginHandler
 
 #Some dicts to store event counts by name and or obj
 _pendingEventCountsByName={}
@@ -90,6 +91,12 @@ class _EventExecuter(object):
 
 	def gen(self, eventName, obj):
 		funcName = "event_%s" % eventName
+
+		# Plugin level.
+		for plugin in pluginHandler.runningPlugins:
+			func = getattr(plugin, funcName, None)
+			if func:
+				yield func, (obj, self.next)
 
 		# App module level.
 		app = obj.appModule
