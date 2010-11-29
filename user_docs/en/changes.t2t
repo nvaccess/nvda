@@ -10,6 +10,7 @@
 - In virtual buffers, you can now select by page (using shift+pageDown and shift+pageUp) and paragraph (using shift+control+downArrow and shift+control+upArrow). (#639)
 - NVDA now automatically reports new text output in mIRC, PuTTY, Tera Term and SecureCRT. (#936)
 - Users can now add new key bindings or override existing ones for any script in NVDA by providing a single user input gesture map. (#194)
+- Support for plugins. Plugins can add new functionality to NVDA which works across all applications. (#281)
 
 
 == Changes ==
@@ -51,6 +52,7 @@
  - The NVDAObjects.window.DisplayModelLiveText overlay class can be used for objects which must retrieve text written to the display.
  - See the mirc and putty app modules for usage examples.
 - There is no longer an _default app module. App modules should instead subclass appModuleHandler.AppModule (the base AppModule class).
+- Support for plugins which can globally bind scripts, handle NVDAObject events and choose NVDAObject overlay classes. (#281) See pluginHandler.Plugin for details.
 
 
 = 2010.2 =
