@@ -21,6 +21,7 @@ def listPlugins():
 			plugin = __import__("plugins.%s" % name, globals(), locals(), ("plugins",)).Plugin
 		except:
 			log.error("Error importing plugin %s" % name, exc_info=True)
+			continue
 		yield plugin
 
 def initialize():
@@ -29,7 +30,7 @@ def initialize():
 		try:
 			runningPlugins.add(plugin())
 		except:
-			log.error("Error initializing plugin %r" % plugin)
+			log.error("Error initializing plugin %r" % plugin, exc_info=True)
 
 def terminate():
 	for plugin in list(runningPlugins):
