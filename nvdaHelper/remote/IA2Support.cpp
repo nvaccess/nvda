@@ -39,6 +39,8 @@ IID ia2Iids[]={
 	IID_IAccessibleImage,
 	IID_IAccessibleRelation,
 	IID_IAccessibleTable,
+	IID_IAccessibleTable2,
+	IID_IAccessibleTableCell,
 	IID_IAccessibleText,
 	IID_IAccessibleValue,
 };
