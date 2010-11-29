@@ -38,6 +38,11 @@ class SettingsDialog(wx.Dialog):
 	@ivar title: The title of the dialog.
 	@type title: str
 	"""
+
+	class MultiInstanceError(RuntimeError): pass
+
+	_hasInstance=False
+
 	title = ""
 
 	def __init__(self, parent):
@@ -45,6 +50,9 @@ class SettingsDialog(wx.Dialog):
 		@param parent: The parent for this dialog; C{None} for no parent.
 		@type parent: wx.Window
 		"""
+		if SettingsDialog._hasInstance:
+			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
+		SettingsDialog._hasInstance=True
 		super(SettingsDialog, self).__init__(parent, wx.ID_ANY, self.title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
@@ -57,6 +65,9 @@ class SettingsDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		self.postInit()
+
+	def __del__(self):
+		SettingsDialog._hasInstance=False
 
 	def makeSettings(self, sizer):
 		"""Populate the dialog with settings controls.

@@ -163,7 +163,10 @@ class MainFrame(wx.Frame):
 
 	def _popupSettingsDialog(self, dialog, *args, **kwargs):
 		self.prePopup()
-		dialog(self, *args, **kwargs).Show()
+		try:
+			dialog(self, *args, **kwargs).Show()
+		except SettingsDialog.MultiInstanceError:
+			wx.MessageDialog(self,_("Please close  the other NVDA settings dialog first"),_("Error"),style=wx.OK | wx.ICON_ERROR).ShowModal()
 		self.postPopup()
 
 	def onDefaultDictionaryCommand(self,evt):
