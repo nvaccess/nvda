@@ -21,6 +21,7 @@ import controlTypes
 import appModuleHandler
 import treeInterceptorHandler
 import braille
+import pluginHandler
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -71,10 +72,14 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			obj.findOverlayClasses(clsList)
 		else:
 			clsList.append(APIClass)
-		# Allow app modules to add overlay classes.
+		# Allow app modules to choose overlay classes.
 		appModule=obj.appModule
 		if appModule and "chooseNVDAObjectOverlayClasses" in appModule.__class__.__dict__:
 			appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
+		# Allow plugins to choose overlay classes.
+		for plugin in pluginHandler.runningPlugins:
+			if "chooseNVDAObjectOverlayClasses" in plugin.__class__.__dict__:
+				plugin.chooseNVDAObjectOverlayClasses(obj, clsList)
 
 		# Determine the bases for the new class.
 		bases=[]
