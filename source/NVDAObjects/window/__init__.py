@@ -266,7 +266,6 @@ An NVDAObject for a window
 	def correctAPIForRelation(self,obj,relation=None):
 		if not obj:
 			return None
-		windowHandle=obj.windowHandle
 		newWindowHandle=obj.windowHandle
 		oldWindowHandle=self.windowHandle
 		if newWindowHandle and oldWindowHandle and newWindowHandle!=oldWindowHandle:
@@ -277,7 +276,6 @@ An NVDAObject for a window
 				return newAPIClass(chooseBestAPI=False,**kwargs)
 		return obj
 
- 
 	def _get_processHandle(self):
 		if not hasattr(self,'_processHandleContainer'):
 			self._processHandleContainer=WindowProcessHandleContainer(self.windowHandle)
