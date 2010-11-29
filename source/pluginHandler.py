@@ -43,6 +43,12 @@ def terminate():
 class Plugin(baseObject.ScriptableObject):
 	"""Base plugin.
 	Each plugin should be a separate Python module in the plugins package containing a C{Plugin} class which inherits from this base class.
+	Plugins can implement and bind gestures to scripts. See L{ScriptableObject} for details.
+	Plugins can also receive NVDAObject events.
+	This is done by implementing methods called C{event_eventName},
+	where C{eventName} is the name of the event; e.g. C{event_gainFocus}.
+	These event methods take two arguments: the NVDAObject on which the event was fired
+	and a callable taking no arguments which calls the next event handler.
 	"""
 
 	def terminate(self):
