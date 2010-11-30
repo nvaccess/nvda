@@ -42,9 +42,12 @@ def terminate():
 
 class GlobalPlugin(baseObject.ScriptableObject):
 	"""Base global plugin.
+	Global plugins facilitate the implementation of new global commands,
+	support for objects which may be found across many applications, etc.
 	Each global plugin should be a separate Python module in the globalPlugins package containing a C{GlobalPlugin} class which inherits from this base class.
-	Global plugins can implement and bind gestures to scripts. See L{ScriptableObject} for details.
-	Global plugins can also receive NVDAObject events.
+	Global plugins can implement and bind gestures to scripts which will take effect at all times.
+	See L{ScriptableObject} for details.
+	Global plugins can also receive NVDAObject events for all NVDAObjects.
 	This is done by implementing methods called C{event_eventName},
 	where C{eventName} is the name of the event; e.g. C{event_gainFocus}.
 	These event methods take two arguments: the NVDAObject on which the event was fired

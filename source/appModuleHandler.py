@@ -171,21 +171,36 @@ def initialize():
 
 #base class for appModules
 class AppModule(baseObject.ScriptableObject):
-	"""AppModule base class
-	@var appName: the application name
-	@type appName: str
-	@var processID: the ID of the process this appModule is for.
-	@type processID: int
+	"""Base app module.
+	App modules provide specific support for a single application.
+	Each app module should be a Python module in the appModules package named according to the executable it supports;
+	e.g. explorer.py for the explorer.exe application.
+	It should containa  C{AppModule} class which inherits from this base class.
+	App modules can implement and bind gestures to scripts.
+	These bindings will only take effect while an object in the associated application has focus.
+	See L{ScriptableObject} for details.
+	App modules can also receive NVDAObject events for objects within the associated application.
+	This is done by implementing methods called C{event_eventName},
+	where C{eventName} is the name of the event; e.g. C{event_gainFocus}.
+	These event methods take two arguments: the NVDAObject on which the event was fired
+	and a callable taking no arguments which calls the next event handler.
 	"""
 
-	selfVoicing=False #Set to true so all undefined events and script requests are silently dropped.
+	#: Whether this application is self-voicing.
+	#: If C{True}, all undefined events and script requests are silently dropped.
+	#: @type: bool
+	selfVoicing=False
 
 	def __init__(self,processID,appName=None):
 		super(AppModule,self).__init__()
+		#: The ID of the process this appModule is for.
+		#: @type: int
 		self.processID=processID
 		self.helperLocalBindingHandle=NVDAHelper.localLib.createConnection(processID)
 		if appName is None:
 			appName=getAppNameFromProcessID(processID)
+		#: The application name.
+		#: @type: str
 		self.appName=appName
 		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 
