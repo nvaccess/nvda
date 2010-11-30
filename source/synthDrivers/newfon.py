@@ -7,7 +7,6 @@
 from synthDriverHandler import SynthDriver,VoiceInfo,SynthSetting,NumericSynthSetting
 from ctypes import *
 import os
-import config
 import nvwave
 import re
 from logHandler import log
@@ -210,7 +209,7 @@ class SynthDriver(SynthDriver):
 
 	def __init__(self):
 		global player
-		player = nvwave.WavePlayer(channels=1, samplesPerSec=10000, bitsPerSample=8, outputDevice=config.conf["speech"]["outputDevice"])
+		player = nvwave.WavePlayer(channels=1, samplesPerSec=10000, bitsPerSample=8)
 		self.hasDictLib = os.path.isfile('synthDrivers/dict.dll')
 		if self.hasDictLib:
 			self.sdrvxpdb_lib = windll.LoadLibrary(r"synthDrivers\sdrvxpdb.dll")

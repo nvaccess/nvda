@@ -241,6 +241,7 @@ class SynthesizerDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		config.conf["speech"]["outputDevice"]=self.deviceList.GetStringSelection()
+		nvwave.setOutputDevice(config.conf["speech"]["outputDevice"])
 		newSynth=self.synthNames[self.synthList.GetSelection()]
 		if not setSynth(newSynth):
 			d = wx.MessageDialog(self,_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING)
