@@ -33,6 +33,8 @@ import virtualBuffers
 from baseObject import ScriptableObject
 
 class GlobalCommands(ScriptableObject):
+	"""Commands that are available at all times, regardless of the current focus.
+	"""
 
 	def script_toggleInputHelp(self,gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
@@ -1041,4 +1043,6 @@ class GlobalCommands(ScriptableObject):
 		"kb(desktop):NVDA+control+f2": "test_navigatorDisplayModelText",
 	}
 
+#: The single global commands instance.
+#: @type: L{GlobalCommands}
 commands = GlobalCommands()
