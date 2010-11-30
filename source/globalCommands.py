@@ -1,8 +1,8 @@
-#appModules/_default.py
+﻿#globalCommands.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>, Peter Vágner <peter.v@datagate.sk>, Aleksey Sadovoy <lex@onm.su>, Rui Batista<ruiandrebatista@gmail.com>
 
 import time
 import tones
@@ -30,8 +30,9 @@ import ui
 import braille
 import inputCore
 import virtualBuffers
+from baseObject import ScriptableObject
 
-class AppModule(appModuleHandler.AppModule):
+class GlobalCommands(ScriptableObject):
 
 	def script_toggleInputHelp(self,gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
@@ -1039,3 +1040,5 @@ class AppModule(appModuleHandler.AppModule):
 		"kb:NVDA+control+z": "activatePythonConsole",
 		"kb(desktop):NVDA+control+f2": "test_navigatorDisplayModelText",
 	}
+
+commands = GlobalCommands()

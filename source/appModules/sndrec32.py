@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from appModules import _default
+import appModuleHandler
 import controlTypes
 
 mainWindowButtonNames={
@@ -15,7 +15,7 @@ mainWindowButtonNames={
 	209:_("Record")
 }
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self, obj):
 		if obj.role == controlTypes.ROLE_BUTTON: 

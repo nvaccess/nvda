@@ -10,7 +10,7 @@ import winKernel
 import winUser
 from scriptHandler import isScriptWaiting
 from NVDAObjects.IAccessible import IAccessible 
-import _default
+import appModuleHandler
 import speech
 import locale
 import controlTypes
@@ -50,7 +50,7 @@ def getRepeat():
 	global hwndWinamp
 	return winUser.sendMessage(hwndWinamp,WM_WA_IPC,0,IPC_GET_REPEAT)
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		global hwndWinamp

@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 
 import time
-import _default
+import appModuleHandler
 import controlTypes
 import winUser
 import speech
@@ -70,7 +70,7 @@ class NotificationArea(IAccessible):
 			return
 		super(NotificationArea, self).event_gainFocus()
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName

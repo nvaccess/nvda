@@ -10,9 +10,9 @@
 import oleacc
 from NVDAObjects.behaviors import Terminal
 from NVDAObjects.window import DisplayModelEditableText, DisplayModelLiveText
-from appModules import _default
+import appModuleHandler
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "VTWin32" and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:

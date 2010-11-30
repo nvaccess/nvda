@@ -12,7 +12,7 @@ import winKernel
 import winUser
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.behaviors import Dialog
-import _default
+import appModuleHandler
 import speech
 import braille
 import controlTypes
@@ -76,7 +76,7 @@ CLM_GETSTATUSMSG=CLM_FIRST+105
 ANSILOGS=(1001,1006)
 MESSAGEVIEWERS=(1001,1005,5005)
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 	lastTextLengths={}
 	lastMessages=[]
 	# Must not be > 9.

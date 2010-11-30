@@ -11,7 +11,7 @@ from NVDAObjects.IAccessible import IAccessible
 import controlTypes
 import oleacc
 import textInfos
-import _default
+import appModuleHandler
 import speech
 import cursorManager
 
@@ -33,7 +33,7 @@ u'Historik',
 u'Előzmények',
 ])
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name in possibleHistoryWindowNames:

@@ -1,3 +1,9 @@
+#eventHandler.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2007-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
+
 import queueHandler
 import api
 import speech
@@ -6,6 +12,7 @@ import treeInterceptorHandler
 import globalVars
 import controlTypes
 from logHandler import log
+import globalPluginHandler
 
 #Some dicts to store event counts by name and or obj
 _pendingEventCountsByName={}
@@ -64,6 +71,54 @@ def isPendingEvents(eventName=None,obj=None):
 	elif eventName and obj:
 		return (eventName,obj) in _pendingEventCountsByNameAndObj
 
+class _EventExecuter(object):
+	"""Facilitates execution of a chain of event functions.
+	L{gen} generates the event functions and positional arguments.
+	L{next} calls the next function in the chain.
+	"""
+
+	def __init__(self, eventName, obj, kwargs):
+		self.kwargs = kwargs
+		self._gen = self.gen(eventName, obj)
+		try:
+			self.next()
+		except StopIteration:
+			pass
+
+	def next(self):
+		func, args = next(self._gen)
+		return func(*args, **self.kwargs)
+
+	def gen(self, eventName, obj):
+		funcName = "event_%s" % eventName
+
+		# Global plugin level.
+		for plugin in globalPluginHandler.runningPlugins:
+			func = getattr(plugin, funcName, None)
+			if func:
+				yield func, (obj, self.next)
+
+		# App module level.
+		app = obj.appModule
+		if app:
+			if app.selfVoicing:
+				return
+			func = getattr(app, funcName, None)
+			if func:
+				yield func, (obj, self.next)
+
+		# Tree interceptor level.
+		treeInterceptor = obj.treeInterceptor
+		if treeInterceptor and treeInterceptor.isReady:
+			func = getattr(treeInterceptor, funcName, None)
+			if func:
+				yield func, (obj, self.next)
+
+		# NVDAObject level.
+		func = getattr(obj, funcName, None)
+		if func:
+			yield func, ()
+
 def executeEvent(eventName,obj,**kwargs):
 	"""Executes an NVDA event.
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
@@ -77,10 +132,9 @@ def executeEvent(eventName,obj,**kwargs):
 			return
 		elif eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
 			return
-		executeEvent_appModuleLevel(eventName,obj,**kwargs)
+		_EventExecuter(eventName,obj,kwargs)
 	except:
 		log.exception("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs))
-
 
 def doPreGainFocus(obj):
 	oldForeground=api.getForegroundObject()
@@ -117,23 +171,3 @@ def doPreDocumentLoadComplete(obj):
 			#Focus may be in this new treeInterceptor, so force focus to look up its treeInterceptor
 			focusObject.treeInterceptor=treeInterceptorHandler.getTreeInterceptor(focusObject)
 	return True
-
-def executeEvent_appModuleLevel(name,obj,**kwargs):
-	appModule=obj.appModule
-	if appModule and appModule.selfVoicing:
-		return
-	if hasattr(appModule,"event_%s"%name):
-		getattr(appModule,"event_%s"%name)(obj,lambda: executeEvent_treeInterceptorLevel(name,obj,**kwargs),**kwargs)
-	else:
-		executeEvent_treeInterceptorLevel(name,obj,**kwargs)
-
-def executeEvent_treeInterceptorLevel(name,obj,**kwargs):
-	treeInterceptor=obj.treeInterceptor
-	if hasattr(treeInterceptor,'event_%s'%name) and treeInterceptor.isReady:
-		getattr(treeInterceptor,'event_%s'%name)(obj,lambda: executeEvent_NVDAObjectLevel(name,obj,**kwargs),**kwargs)
-	else:
-		executeEvent_NVDAObjectLevel(name,obj,**kwargs)
-
-def executeEvent_NVDAObjectLevel(name,obj,**kwargs):
-	if hasattr(obj,'event_%s'%name):
-		getattr(obj,'event_%s'%name)(**kwargs)

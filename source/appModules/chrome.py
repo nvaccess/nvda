@@ -8,7 +8,7 @@
 """
 
 import controlTypes
-from . import _default
+import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible, getNVDAObjectFromEvent
 from virtualBuffers.gecko_ia2 import Gecko_ia2 as GeckoVBuf
 
@@ -25,7 +25,7 @@ class Document(IAccessible):
 			return ChromeVBuf
 		return super(Document, self).treeInterceptorClass
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "Chrome_RenderWidgetHostHWND" and obj.role == controlTypes.ROLE_DOCUMENT:

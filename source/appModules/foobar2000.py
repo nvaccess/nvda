@@ -1,4 +1,4 @@
-import _default
+import appModuleHandler
 import api
 import ui
 import time
@@ -20,7 +20,7 @@ def getOutputFormat(t):
 	else: 
 		return "%H:%M:%S"
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 	statusBar=None
 
 	def event_gainFocus(self, obj, nextHandler):

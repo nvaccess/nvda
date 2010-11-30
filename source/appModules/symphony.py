@@ -4,12 +4,12 @@
 #See the file COPYING for more details.
 #Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>
 
-import _default
+import appModuleHandler
 import controlTypes
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import IAccessible
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_valueChange(self,obj,nextHandler):
 		#Ignore value changes from an annoying progress bar  which is a child of the main window

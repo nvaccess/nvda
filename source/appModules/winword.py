@@ -10,10 +10,10 @@ import controlTypes
 import textInfos
 import winUser
 import speech
-import _default
+import appModuleHandler
 from NVDAObjects.window.winword import WordDocument
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName in ("_WwN","_WwO") and obj.role==controlTypes.ROLE_EDITABLETEXT:

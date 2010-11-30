@@ -4,14 +4,14 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import _default
+import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible
 import speech
 import controlTypes
 
 oldActivePannel=0
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName in ("TMyListBox", "TMyListBox.UnicodeClass"):
