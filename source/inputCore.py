@@ -103,8 +103,14 @@ class GlobalGestureMap(object):
 	See that method for details of the file format.
 	"""
 
-	def __init__(self):
+	def __init__(self, entries=None):
+		"""Constructor.
+		@param entries: Initial entries to add; see L{update} for the format.
+		@type entries: mapping of str to mapping
+		"""
 		self._map = {}
+		if entries:
+			self.update(entries)
 
 	def clear(self):
 		"""Clear this map.
@@ -146,7 +152,27 @@ class GlobalGestureMap(object):
 		@type: str
 		"""
 		conf = ConfigObj(filename, file_error=True, encoding="UTF-8")
-		for locationName, location in conf.iteritems():
+		self.update(conf)
+
+	def update(self, entries):
+		"""Add multiple map entries.
+		C{entries} must be a mapping of mappings.
+		Each inner mapping contains entries for a particular scriptable object class.
+		The key in the outer mapping must be the full Python module and class name.
+		The key of each entry in the inner mappings is the script name and the value is a list of one or more gestures.
+		If the script name is C{None}, the gesture will be unbound for this class.
+		For example, the following binds the "a" key to move to the next heading in virtual buffers
+		and removes the default "h" binding::
+			{
+				"virtualBuffers.VirtualBuffer": {
+					"nextHeading": "kb:a",
+					None: "kb:h",
+				}
+			}
+		@param entries: The items to add.
+		@type entries: mapping of str to mapping
+		"""
+		for locationName, location in entries.iteritems():
 			try:
 				module, className = locationName.rsplit(".", 1)
 			except:
