@@ -7,7 +7,6 @@
 """Utilities to generate and play tones"""
 
 import nvwave
-import config
 import globalVars
 from logHandler import log
 from ctypes import create_string_buffer, byref
@@ -15,7 +14,7 @@ from ctypes import create_string_buffer, byref
 SAMPLE_RATE = 44100
 
 try:
-	player = nvwave.WavePlayer(channels=2, samplesPerSec=int(SAMPLE_RATE), bitsPerSample=16, outputDevice=config.conf["speech"]["outputDevice"])
+	player = nvwave.WavePlayer(channels=2, samplesPerSec=int(SAMPLE_RATE), bitsPerSample=16)
 except:
 	log.warning("Failed to initialize audio for tones")
 	player = None

@@ -1,6 +1,6 @@
 #nvwave.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -12,13 +12,11 @@ from ctypes import *
 from ctypes.wintypes import *
 import winKernel
 import wave
-import config
 
-__all__ = (
-	"WavePlayer", "getOutputDeviceNames", "outputDeviceIDToName", "outputDeviceNameToID",
-)
+__all__ = ("WavePlayer", "getOutputDeviceNames", "outputDeviceIDToName", "outputDeviceNameToID", "playWaveFile")
 
-winmm = windll.winmm
+winmm = None
+outputDeviceID=None
 
 HWAVEOUT = HANDLE
 LPHWAVEOUT = POINTER(HWAVEOUT)
@@ -73,21 +71,47 @@ class WAVEOUTCAPS(Structure):
 		('dwSupport', DWORD),
 	]
 
-	# Set argument types.
-winmm.waveOutOpen.argtypes = (LPHWAVEOUT, UINT, LPWAVEFORMATEX, DWORD, DWORD, DWORD)
-
-# Initialize error checking.
 def _winmm_errcheck(res, func, args):
 	if res != MMSYSERR_NOERROR:
 		buf = create_unicode_buffer(256)
 		winmm.waveOutGetErrorTextW(res, buf, sizeof(buf))
 		raise WindowsError(res, buf.value)
-for func in (
-	winmm.waveOutOpen, winmm.waveOutPrepareHeader, winmm.waveOutWrite, winmm.waveOutUnprepareHeader,
-	winmm.waveOutPause, winmm.waveOutRestart, winmm.waveOutReset, winmm.waveOutClose,
-	winmm.waveOutGetDevCapsW
-):
-	func.errcheck = _winmm_errcheck
+
+def initialize(outputDevice=WAVE_MAPPER):
+	"""Initializes audio subsystem.
+	@param outputDevice: The device ID or name of the audio output device to use.
+	@type outputDevice: int or basestring
+		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
+	"""
+	global winmm, outputDeviceID
+	winmm = windll.winmm
+	if isinstance(outputDevice, basestring):
+		outputDevice = outputDeviceNameToID(outputDevice, True)
+	outputDeviceID = outputDevice
+	# Set argument types.
+	winmm.waveOutOpen.argtypes = (LPHWAVEOUT, UINT, LPWAVEFORMATEX, DWORD, DWORD, DWORD)
+	for func in (
+		winmm.waveOutOpen, winmm.waveOutPrepareHeader, winmm.waveOutWrite, winmm.waveOutUnprepareHeader,
+		winmm.waveOutPause, winmm.waveOutRestart, winmm.waveOutReset, winmm.waveOutClose,
+		winmm.waveOutGetDevCapsW):
+		func.errcheck = _winmm_errcheck
+
+def terminate():
+	"""Closes audio subsystem.
+	"""
+	global winmm
+	winmm=None
+
+def setOutputDevice(outputDevice):
+	"""Set the output device for further playback.
+	@param outputDevice: The device ID or name of the audio output device to use.
+	@type outputDevice: int or basestring
+	@note: currently opened players will continue playback through previous device.
+	"""
+	global outputDeviceID
+	if isinstance(outputDevice, basestring):
+		outputDevice = outputDeviceNameToID(outputDevice)
+	outputDeviceID = outputDevice
 
 class WavePlayer(object):
 	"""Synchronously play a stream of audio.
@@ -96,7 +120,7 @@ class WavePlayer(object):
 	#: A lock to prevent WaveOut* functions from being called simultaneously, as this can cause problems even if they are for different HWAVEOUTs.
 	_global_waveout_lock = threading.RLock()
 
-	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDevice=WAVE_MAPPER, closeWhenIdle=True):
+	def __init__(self, channels, samplesPerSec, bitsPerSample, closeWhenIdle=True):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
 		@type channels: int
@@ -104,19 +128,13 @@ class WavePlayer(object):
 		@type samplesPerSec: int
 		@param bitsPerSample: The number of bits per sample.
 		@type bitsPerSample: int
-		@param outputDevice: The device ID or name of the audio output device to use.
-		@type outputDevice: int or basestring
 		@param closeWhenIdle: If C{True}, close the output device when no audio is being played.
 		@type closeWhenIdle: bool
-		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
 		@raise WindowsError: If there was an error opening the audio output device.
 		"""
 		self.channels=channels
 		self.samplesPerSec=samplesPerSec
 		self.bitsPerSample=bitsPerSample
-		if isinstance(outputDevice, basestring):
-			outputDevice = outputDeviceNameToID(outputDevice, True)
-		self.outputDeviceID = outputDevice
 		#: If C{True}, close the output device when no audio is being played.
 		#: @type: bool
 		self.closeWhenIdle = closeWhenIdle
@@ -142,7 +160,7 @@ class WavePlayer(object):
 			wfx.nBlockAlign = self.bitsPerSample / 8 * self.channels
 			wfx.nAvgBytesPerSec = self.samplesPerSec * wfx.nBlockAlign
 			waveout = HWAVEOUT(0)
-			with self._global_waveout_lock: winmm.waveOutOpen(byref(waveout), self.outputDeviceID, LPWAVEFORMATEX(wfx), self._waveout_event, 0, CALLBACK_EVENT)
+			with self._global_waveout_lock: winmm.waveOutOpen(byref(waveout), outputDeviceID, LPWAVEFORMATEX(wfx), self._waveout_event, 0, CALLBACK_EVENT)
 			self._waveout = waveout.value
 			self._prev_whdr = None
 
@@ -310,7 +328,7 @@ def playWaveFile(fileName, async=True):
 	if f is None: raise RuntimeError("can not open file %s"%fileName)
 	if fileWavePlayer is not None:
 		fileWavePlayer.stop()
-	fileWavePlayer = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"])
+	fileWavePlayer = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8)
 	fileWavePlayer.feed(f.readframes(f.getnframes()))
 	if async:
 		if fileWavePlayerThread is not None:

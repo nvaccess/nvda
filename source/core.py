@@ -1,6 +1,6 @@
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -96,6 +96,7 @@ def resetConfiguration():
 	lang = config.conf["general"]["language"]
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
+	nvwave.setOutputDevice(config.conf["speech"]["outputDevice"])
 	#Speech
 	log.debug("initializing speech")
 	speech.initialize()
@@ -110,6 +111,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("loading config")
 	import config
 	config.load()
+	nvwave.initialize(config.conf["speech"]["outputDevice"])
 	if not globalVars.appArgs.minimal:
 		try:
 			nvwave.playWaveFile("waves\\start.wav")
@@ -336,4 +338,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			nvwave.playWaveFile("waves\\exit.wav",async=False)
 		except:
 			pass
+	try:
+		nvwave.terminate()
+	except:
+		log.error("Error terminating nvwave",exc_info=True)
 	log.debug("core done")
