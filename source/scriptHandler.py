@@ -87,6 +87,13 @@ def findScript(gesture):
 def getScriptName(script):
 	return script.__name__[7:]
 
+def getScriptLocation(script):
+	name=script.__name__
+	for cls in script.__self__.__class__.__mro__:
+		if name in cls.__dict__:
+			return "%s.%s"%(cls.__module__,cls.__name__)
+
+
 def _queueScriptCallback(script,gesture):
 	global _numScriptsQueued
 	_numScriptsQueued-=1
