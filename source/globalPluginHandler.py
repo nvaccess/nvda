@@ -1,4 +1,4 @@
-#pluginHandler.py
+#globalPluginHandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -8,29 +8,29 @@ import pkgutil
 import config
 import baseObject
 from logHandler import log
-import plugins
+import globalPlugins
 
-#: All currently running plugins.
+#: All currently running global plugins.
 runningPlugins = set()
 
 def listPlugins():
-	for loader, name, isPkg in pkgutil.iter_modules(plugins.__path__):
+	for loader, name, isPkg in pkgutil.iter_modules(globalPlugins.__path__):
 		if name.startswith("_"):
 			continue
 		try:
-			plugin = __import__("plugins.%s" % name, globals(), locals(), ("plugins",)).Plugin
+			plugin = __import__("globalPlugins.%s" % name, globals(), locals(), ("globalPlugins",)).GlobalPlugin
 		except:
-			log.error("Error importing plugin %s" % name, exc_info=True)
+			log.error("Error importing global plugin %s" % name, exc_info=True)
 			continue
 		yield plugin
 
 def initialize():
-	config.addConfigDirsToPythonPackagePath(plugins)
+	config.addConfigDirsToPythonPackagePath(globalPlugins)
 	for plugin in listPlugins():
 		try:
 			runningPlugins.add(plugin())
 		except:
-			log.error("Error initializing plugin %r" % plugin, exc_info=True)
+			log.error("Error initializing global plugin %r" % plugin, exc_info=True)
 
 def terminate():
 	for plugin in list(runningPlugins):
@@ -38,13 +38,13 @@ def terminate():
 		try:
 			plugin.terminate()
 		except:
-			log.exception("Error terminating plugin %r" % plugin)
+			log.exception("Error terminating global plugin %r" % plugin)
 
-class Plugin(baseObject.ScriptableObject):
-	"""Base plugin.
-	Each plugin should be a separate Python module in the plugins package containing a C{Plugin} class which inherits from this base class.
-	Plugins can implement and bind gestures to scripts. See L{ScriptableObject} for details.
-	Plugins can also receive NVDAObject events.
+class GlobalPlugin(baseObject.ScriptableObject):
+	"""Base global plugin.
+	Each global plugin should be a separate Python module in the globalPlugins package containing a C{GlobalPlugin} class which inherits from this base class.
+	Global plugins can implement and bind gestures to scripts. See L{ScriptableObject} for details.
+	Global plugins can also receive NVDAObject events.
 	This is done by implementing methods called C{event_eventName},
 	where C{eventName} is the name of the event; e.g. C{event_gainFocus}.
 	These event methods take two arguments: the NVDAObject on which the event was fired
@@ -52,14 +52,14 @@ class Plugin(baseObject.ScriptableObject):
 	"""
 
 	def terminate(self):
-		"""Terminate this plugin.
-		This will be called when NVDA is finished with this plugin.
+		"""Terminate this global plugin.
+		This will be called when NVDA is finished with this global plugin.
 		"""
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		"""Choose NVDAObject overlay classes for a given NVDAObject.
 		This is called when an NVDAObject is being instantiated after L{NVDAObjects.NVDAObject.findOverlayClasses} has been called on the API-level class.
-		This allows a plugin to add or remove overlay classes.
+		This allows a global plugin to add or remove overlay classes.
 		See L{NVDAObjects.NVDAObject.findOverlayClasses} for details about overlay classes.
 		@param obj: The object being created.
 		@type obj: L{NVDAObjects.NVDAObject}

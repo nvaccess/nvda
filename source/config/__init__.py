@@ -274,7 +274,7 @@ def initConfigPath(configPath=None):
 		configPath=globalVars.appArgs.configPath
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
-	for subdir in ("appModules","brailleDisplayDrivers","speechDicts","synthDrivers","plugins"):
+	for subdir in ("appModules","brailleDisplayDrivers","speechDicts","synthDrivers","globalPlugins"):
 		subdir=os.path.join(configPath,subdir)
 		if not os.path.isdir(subdir):
 			os.makedirs(subdir)

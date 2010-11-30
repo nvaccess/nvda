@@ -12,7 +12,7 @@ import api
 import queueHandler
 from logHandler import log
 import inputCore
-import pluginHandler
+import globalPluginHandler
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
 _lastScriptTime=0 #Time in MS of when the last script was executed
@@ -44,8 +44,8 @@ def findScript(gesture):
 		for identifier in gesture.identifiers:
 			globalMapScripts.extend(globalMap.getScriptsForGesture(identifier))
 
-	# Plugin level.
-	for plugin in pluginHandler.runningPlugins:
+	# Global plugin level.
+	for plugin in globalPluginHandler.runningPlugins:
 		func = _getObjScript(plugin, gesture, globalMapScripts)
 		if func:
 			return func

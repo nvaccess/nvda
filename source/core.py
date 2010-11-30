@@ -217,9 +217,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import mouseHandler
 	log.debug("initializing mouse handler")
 	mouseHandler.initialize()
-	import pluginHandler
-	log.debug("Initializing plugin handler")
-	pluginHandler.initialize()
+	import globalPluginHandler
+	log.debug("Initializing global plugin handler")
+	globalPluginHandler.initialize()
 	if not globalVars.appArgs.minimal:
 		try:
 			braille.handler.message(_("NVDA started"))
@@ -284,8 +284,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		treeInterceptorHandler.terminate()
 	except:
 		log.error("Error cleaning up treeInterceptors",exc_info=True)
-	log.debug("Terminating plugin handler")
-	pluginHandler.terminate()
+	log.debug("Terminating global plugin handler")
+	globalPluginHandler.terminate()
 	log.debug("Terminating IAccessible support")
 	try:
 		IAccessibleHandler.terminate()
