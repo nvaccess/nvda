@@ -63,6 +63,7 @@ General dependencies:
 		* On the components page of the installer, make sure to install at least all of the defaults (whatever is already checked).
 		* NVDA only uses the Boost headers; none of the pre-compiled libraries are necessary.
 	* SCons, version 2.0.0 or later: http://www.scons.org/
+		* As the scons command (scons.bat) is installed in to the scripts directory inside the directory where you installed Python, it is necessary to add the scripts  directory to your path variable so that you can run scons from anywhere. The rest of this readme assumes that scons can be run in this way.
 
 To use the brltty braille display driver:
 	* brlapi Python bindings (for Python 2.7), version 0.5.5 or later, distributed with BRLTTY for Windows, version 4.2-2 or later:
