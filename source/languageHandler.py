@@ -33,6 +33,20 @@ def localeNameToWindowsLCID(localeName):
 			LCID=0
 	return LCID
 
+def getLanguageDescription(language):
+	"""Finds out the description (licalized full name) of a given local name"""
+	LCID=localeNameToWindowsLCID(language)
+	buf=ctypes.create_unicode_buffer(1024)
+	#If the original locale didn't have country info (was just language) then make sure we just get language from Windows
+	if '_' not in language:
+		res=ctypes.windll.kernel32.GetLocaleInfoW(LCID,LOCALE_SLANGDISPLAYNAME,buf,1024)
+	else:
+		res=0
+	if res==0:
+		res=ctypes.windll.kernel32.GetLocaleInfoW(LCID,LOCALE_SLANGUAGE,buf,1024)
+	sLanguage=buf.value
+	return sLanguage
+
 def getAvailableLanguages():
 	"""generates a list of locale names, plus their full localized language and country names.
 	@rtype: list of tuples
@@ -47,17 +61,7 @@ def getAvailableLanguages():
 	#For each locale, ask Windows for its human readable display name
 	d=[]
 	for i in l:
-		LCID=localeNameToWindowsLCID(i)
-		buf=ctypes.create_unicode_buffer(1024)
-		#If the original locale didn't have country info (was just language) then make sure we just get language from Windows
-		if '_' not in i:
-			res=ctypes.windll.kernel32.GetLocaleInfoW(LCID,LOCALE_SLANGDISPLAYNAME,buf,1024)
-		else:
-			res=0
-		if res==0:
-			res=ctypes.windll.kernel32.GetLocaleInfoW(LCID,LOCALE_SLANGUAGE,buf,1024)
-		sLanguage=buf.value
-		label="%s, %s"%(sLanguage,i)
+		label="%s, %s"%(getLanguageDescription(i),i)
 		d.append(label)
 	#include a 'user default, windows' language, which just represents the default language for this user account
 	l.append("Windows")

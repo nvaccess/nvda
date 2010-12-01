@@ -12,6 +12,7 @@ import baseObject
 import globalVars
 from logHandler import log
 from  synthSettingsRing import SynthSettingsRing
+import languageHandler
 import speechDictHandler
 import synthDrivers
 
@@ -154,7 +155,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@ivar voice: Unique string identifying the current voice.
 	@type voice: str
 	@ivar availableVoices: The available voices.
-	@ivar availableVoices: [L{VoiceInfo}, ...]
+	@type availableVoices: OrderedDict of L{VoiceInfo} keyed by VoiceInfo's ID
 	@ivar pitch: The current pitch; ranges between 0 and 100.
 	@type pitch: int
 	@ivar rate: The current rate; ranges between 0 and 100.
@@ -164,7 +165,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@ivar variant: The current variant of the voice.
 	@type variant: str
 	@ivar availableVariants: The available variants of the voice.
-	@type availableVariants: [L{VoiceInfo}, ...]
+	@type availableVariants: OrderedDict of [L{VoiceInfo} keyed by VoiceInfo's ID
 	@ivar inflection: The current inflection; ranges between 0 and 100.
 	@type inflection: int
 	@ivar lastIndex: The index of the chunk of text which was last spoken or C{None} if no index.
@@ -178,6 +179,11 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	#: A description of the synth.
 	#: @type: str
 	description = ""
+
+	@classmethod
+	def LanguageSetting(cls):
+		"""Factory function for creating a language setting."""
+		return SynthSetting("language",_("&Language"))
 
 	@classmethod
 	def VoiceSetting(cls):
@@ -262,6 +268,15 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		"""Silence speech immediately.
 		"""
 
+	def _get_language(self):
+		return self.availableVoices[self.voice].language
+
+	def _set_language(self,language):
+		raise NotImplementedError
+
+	def _get_availableLanguages(self):
+		raise NotImplementedError
+
 	def _get_voice(self):
 		raise NotImplementedError
 
@@ -269,10 +284,11 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		pass
 
 	def _getAvailableVoices(self):
-		"""fetches a list of voices that the synth supports.
-		@returns: a list of L{VoiceInfo} instances representing the available voices
-		@rtype: list
+		"""fetches a ordered dictionary of voices that the synth supports.
+		@returns: a OrderedDict of L{VoiceInfo} instances representing the available voices, keyed by ID
+		@rtype: OrderedDict
 		"""
+		raise NotImplementedError
 
 	def _get_availableVoices(self):
 		if not hasattr(self,'_availableVoices'):
@@ -304,10 +320,11 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		pass
 
 	def _getAvailableVariants(self):
-		"""fetches a list of variants that the synth supports.
-		@returns: a list of L{VoiceInfo} instances representing the available variants
-		@rtype: list
+		"""fetches an ordered dictionary of variants that the synth supports, keyed by ID
+		@returns: an ordered dictionary of L{VoiceInfo} instances representing the available variants
+		@rtype: OrderedDict
 		"""
+		raise NotImplementedError
  
 	def _get_availableVariants(self):
 		if not hasattr(self,'_availableVariants'):
@@ -372,19 +389,6 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		"""
 		return int(round(float(percent) / 100 * (max - min) + min))
 
-	def getVoiceInfoByID(self,ID):
-		"""Looks up a L{VoiceInfo} instance representing a particular voice, by its ID.
-		@param ID: the ID of the voice
-		@type ID: string
-		@returns: the voice info instance
-		@rtype: L{VoiceInfo}
-		@raise LookupError: If there was no such voice.
-		"""
-		for v in self.availableVoices:
-			if v.ID==ID:
-				return v
-		raise LookupError("No such voice")
-
 	def isSupported(self,settingName):
 		"""Checks whether given setting is supported by the synthesizer.
 		@rtype: l{bool}
@@ -422,14 +426,33 @@ class SynthDriver(baseObject.AutoPropertyObject):
 			if s.name=="rate": return i
 		return None
 
-class VoiceInfo(object):
-	"""Provides information about a single synthesizer voice.
+class StringParameterInfo(object):
+	"""
+	The base class used to represent a value of a string synth setting.
 	"""
 
 	def __init__(self,ID,name):
-		#: The unique identifier of the voice.
+		#: The unique identifier of the value.
 		#: @type: str
 		self.ID=ID
-		#: The name of the voice, visible to the user.
+		#: The name of the value, visible to the user.
 		#: @type: str
 		self.name=name
+
+class VoiceInfo(StringParameterInfo):
+	"""Provides information about a single synthesizer voice.
+	"""
+
+	def __init__(self,ID,name,language=None):
+		#: The ID of the language this voice speaks, or None if not known or the synth implements language separate from voices
+		self.language=language
+		super(VoiceInfo,self).__init__(ID,name)
+
+class LanguageInfo(StringParameterInfo):
+	"""Holds information for a particular language"""
+
+	def __init__(self,ID):
+		"""Given a language ID (locale name) the description is automatically calculated."""
+		name=languageHandler.getLanguageDescription(ID)
+		super(LanguageInfo,self).__init__(ID,name)
+

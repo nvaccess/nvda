@@ -103,7 +103,7 @@ def loadVoiceDict(synth):
 It handles case when the synthesizer doesn't support voice setting.
 """
 	if synth.isSupported("voice"):
-		voiceName = synth.getVoiceInfoByID(synth.voice).name
+		voiceName = synth.availableVoices[synth.voice].name
 		fileName=r"%s\%s-%s.dic"%(speechDictsPath,synth.name,api.filterFileName(voiceName))
 	else:
 		fileName=r"%s\%s.dic"%(speechDictsPath,synth.name)
