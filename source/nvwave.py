@@ -120,6 +120,8 @@ class WavePlayer(object):
 		@type samplesPerSec: int
 		@param bitsPerSample: The number of bits per sample.
 		@type bitsPerSample: int
+	@param outputDevice: The device ID of the audio output device to use as returned by L{outputDeviceNameToID}
+	@type outputDevice: int
 		@param closeWhenIdle: If C{True}, close the output device when no audio is being played.
 		@type closeWhenIdle: bool
 		@raise WindowsError: If there was an error opening the audio output device.
