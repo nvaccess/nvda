@@ -898,13 +898,12 @@ class GlobalCommands(ScriptableObject):
 		self._copyStartMarker = None
 	script_review_copy.__doc__ = _("Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard")
 
-	def script_reloadAppModules(self, gesture):
-		ui.message(_("Reloading appModules"))
+	def script_reloadPlugins(self, gesture):
+		import globalPluginHandler
 		appModuleHandler.reloadAppModules()
-		#We can't do something like ui.message("appModules reloaded"), 
-		#because after previous line it seems that this module isn't fully loaded anymore.
-		#AttributeError: 'NoneType' object has no attribute 'message'
-	script_reloadAppModules.__doc__=_("Reloads app modules without restarting NVDA, which can be Useful for developers")
+		globalPluginHandler.reloadGlobalPlugins()
+		ui.message(_("Plugins reloaded"))
+	script_reloadPlugins.__doc__=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers")
 
 	__gestures = {
 		# Basic
@@ -1048,7 +1047,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+f1": "navigatorObject_devInfo",
 		"kb:NVDA+control+f1": "reportAppModuleInfo",
 		"kb:NVDA+control+z": "activatePythonConsole",
-		"kb:NVDA+control+f3": "reloadAppModules",
+		"kb:NVDA+control+f3": "reloadPlugins",
 		"kb(desktop):NVDA+control+f2": "test_navigatorDisplayModelText",
 	}
 

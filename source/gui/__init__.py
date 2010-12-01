@@ -256,9 +256,10 @@ class MainFrame(wx.Frame):
 			pythonConsole.initialize()
 		pythonConsole.activate()
 
-	def onReloadAppModulesCommand(self, evt):
-		import appModuleHandler
+	def onReloadPluginsCommand(self, evt):
+		import appModuleHandler, globalPluginHandler
 		appModuleHandler.reloadAppModules()
+		globalPluginHandler.reloadGlobalPlugins()
 
 class SysTrayIcon(wx.TaskBarIcon):
 
@@ -309,8 +310,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
-		item = menu_tools.Append(wx.ID_ANY, _("Reload app modules"))
-		self.Bind(wx.EVT_MENU, frame.onReloadAppModulesCommand, item)
+		item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
+		self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
 
 		menu_help = wx.Menu()
