@@ -22,6 +22,7 @@ import scriptUI
 import queueHandler
 import braille
 import core
+import keyboardHandler
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -37,6 +38,11 @@ class SettingsDialog(wx.Dialog):
 	@ivar title: The title of the dialog.
 	@type title: str
 	"""
+
+	class MultiInstanceError(RuntimeError): pass
+
+	_hasInstance=False
+
 	title = ""
 
 	def __init__(self, parent):
@@ -44,6 +50,9 @@ class SettingsDialog(wx.Dialog):
 		@param parent: The parent for this dialog; C{None} for no parent.
 		@type parent: wx.Window
 		"""
+		if SettingsDialog._hasInstance:
+			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
+		SettingsDialog._hasInstance=True
 		super(SettingsDialog, self).__init__(parent, wx.ID_ANY, self.title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
@@ -56,6 +65,9 @@ class SettingsDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		self.postInit()
+
+	def __del__(self):
+		SettingsDialog._hasInstance=False
 
 	def makeSettings(self, sizer):
 		"""Populate the dialog with settings controls.
@@ -327,7 +339,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
 		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.i18nName)
 		synth=getSynth()
-		setattr(self,"_%ss"%setting.name,getattr(synth,"available%ss"%setting.name.capitalize()))
+		setattr(self,"_%ss"%setting.name,getattr(synth,"available%ss"%setting.name.capitalize()).values())
 		l=getattr(self,"_%ss"%setting.name)###
 		lCombo=wx.Choice(self,wx.ID_ANY,name="%s:"%setting.i18nName,choices=[x.name for x in l])
 		setattr(self,"%sList"%setting.name,lCombo)
@@ -437,9 +449,9 @@ class KeyboardSettingsDialog(SettingsDialog):
 		kbdLabel=wx.StaticText(self,-1,label=_("&Keyboard layout:"))
 		kbdSizer.Add(kbdLabel)
 		kbdListID=wx.NewId()
-		self.kbdNames=list(set(os.path.splitext(x)[0].split('_')[-1] for x in glob.glob('appModules/*.kbd')))
-		self.kbdNames.sort()
-		self.kbdList=wx.Choice(self,kbdListID,name=_("Keyboard layout"),choices=self.kbdNames)
+		layouts=keyboardHandler.KeyboardInputGesture.LAYOUTS
+		self.kbdNames=sorted(layouts)
+		self.kbdList=wx.Choice(self,kbdListID,name=_("Keyboard layout"),choices=[layouts[layout] for layout in self.kbdNames])
 		try:
 			index=self.kbdNames.index(config.conf['keyboard']['keyboardLayout'])
 			self.kbdList.SetSelection(index)
@@ -471,11 +483,7 @@ class KeyboardSettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		layout=self.kbdNames[self.kbdList.GetSelection()]
-		oldLayout=config.conf['keyboard']['keyboardLayout']
-		if layout!=oldLayout:
-			config.conf['keyboard']['keyboardLayout']=layout
-			for m in appModuleHandler.runningTable.values():
-				m.loadKeyMap()
+		config.conf['keyboard']['keyboardLayout']=layout
 		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]=self.capsAsNVDAModifierCheckBox.IsChecked()
 		config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]=self.numpadInsertAsNVDAModifierCheckBox.IsChecked()
 		config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]=self.extendedInsertAsNVDAModifierCheckBox.IsChecked()

@@ -7,14 +7,20 @@
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 """
 
+import time
+import threading
+import difflib
 import tones
 import queueHandler
+import eventHandler
 import controlTypes
 import speech
 import config
+import globalVars
 from . import NVDAObject, NVDAObjectTextInfo
 import textInfos
 import editableText
+from logHandler import log
 
 class ProgressBar(NVDAObject):
 
@@ -112,7 +118,6 @@ class EditableText(editableText.EditableText, NVDAObject):
 	To handle selection changes, use either L{EditableTextWithAutoSelectDetection} or L{EditableTextWithoutAutoSelectDetection}.
 	"""
 
-	initOverlayClass = editableText.EditableText.initClass
 	shouldFireCaretMovementFailedEvents = True
 
 class EditableTextWithAutoSelectDetection(EditableText):
@@ -145,3 +150,165 @@ class EditableTextWithoutAutoSelectDetection(editableText.EditableTextWithoutAut
 	"""
 
 	initOverlayClass = editableText.EditableTextWithoutAutoSelectDetection.initClass
+
+class LiveText(NVDAObject):
+	"""An object for which new text should be reported automatically.
+	These objects present text as a single chunk
+	and only fire an event indicating that some part of the text has changed; i.e. they don't provide the new text.
+	Monitoring must be explicitly started and stopped using the L{startMonitoring} and L{stopMonitoring} methods.
+	The object should notify of text changes using the textChange event.
+	"""
+	#: The time to wait before fetching text after a change event.
+	STABILIZE_DELAY = 0
+	# If the text is live, this is definitely content.
+	presentationType = NVDAObject.presType_content
+
+	def initOverlayClass(self):
+		self._event = threading.Event()
+		self._monitorThread = None
+		self._keepMonitoring = False
+
+	def startMonitoring(self):
+		"""Start monitoring for new text.
+		New text will be reported when it is detected.
+		@note: If monitoring has already been started, this will have no effect.
+		@see: L{stopMonitoring}
+		"""
+		if self._monitorThread:
+			return
+		self._monitorThread = threading.Thread(target=self._monitor)
+		self._keepMonitoring = True
+		self._event.clear()
+		self._monitorThread.start()
+
+	def stopMonitoring(self):
+		"""Stop monitoring previously started with L{startMonitoring}.
+		@note: If monitoring has not been started, this will have no effect.
+		@see: L{startMonitoring}
+		"""
+		if not self._monitorThread:
+			return
+		self._keepMonitoring = False
+		self._event.set()
+		self._monitorThread = None
+
+	def event_textChange(self):
+		"""Fired when the text changes.
+		@note: It is safe to call this directly from threads other than the main thread.
+		"""
+		self._event.set()
+
+	def _getTextLines(self):
+		"""Retrieve the text of this object in lines.
+		This will be used to determine the new text to speak.
+		The base implementation uses the L{TextInfo}.
+		However, subclasses should override this if there is a better way to retrieve the text.
+		@return: The current lines of text.
+		@rtype: list of str
+		"""
+		return list(self.makeTextInfo(textInfos.POSITION_ALL).getTextInChunks(textInfos.UNIT_LINE))
+
+	def _reportNewText(self, line):
+		"""Report a line of new text.
+		"""
+		speech.speakText(line)
+
+	def _monitor(self):
+		try:
+			oldLines = self._getTextLines()
+		except:
+			log.exception("Error getting initial lines")
+			oldLines = []
+
+		while self._keepMonitoring:
+			self._event.wait()
+			if not self._keepMonitoring:
+				break
+			if self.STABILIZE_DELAY > 0:
+				# wait for the text to stabilise.
+				time.sleep(self.STABILIZE_DELAY)
+				if not self._keepMonitoring:
+					# Monitoring was stopped while waiting for the text to stabilise.
+					break
+			self._event.clear()
+
+			try:
+				newLines = self._getTextLines()
+				if globalVars.reportDynamicContentChanges:
+					outLines = self._calculateNewText(newLines, oldLines)
+					if len(outLines) == 1 and len(outLines[0]) == 1:
+						# This is only a single character,
+						# which probably means it is just a typed character,
+						# so ignore it.
+						del outLines[0]
+					for line in outLines:
+						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewText, line)
+				oldLines = newLines
+			except:
+				log.exception("Error getting lines or calculating new text")
+
+	def _calculateNewText(self, newLines, oldLines):
+		outLines = []
+
+		prevLine = None
+		for line in difflib.ndiff(oldLines, newLines):
+			if line[0] == "?":
+				# We're never interested in these.
+				continue
+			if line[0] != "+":
+				# We're only interested in new lines.
+				prevLine = line
+				continue
+			text = line[2:]
+			if not text or text.isspace():
+				prevLine = line
+				continue
+
+			if prevLine and prevLine[0] == "-" and len(prevLine) > 2:
+				# It's possible that only a few characters have changed in this line.
+				# If so, we want to speak just the changed section, rather than the entire line.
+				prevText = prevLine[2:]
+				textLen = len(text)
+				prevTextLen = len(prevText)
+				# Find the first character that differs between the two lines.
+				for pos in xrange(min(textLen, prevTextLen)):
+					if text[pos] != prevText[pos]:
+						start = pos
+						break
+				else:
+					# We haven't found a differing character so far and we've hit the end of one of the lines.
+					# This means that the differing text starts here.
+					start = pos + 1
+				# Find the end of the differing text.
+				if textLen != prevTextLen:
+					# The lines are different lengths, so assume the rest of the line changed.
+					end = textLen
+				else:
+					for pos in xrange(textLen - 1, start - 1, -1):
+						if text[pos] != prevText[pos]:
+							end = pos + 1
+							break
+
+				if end - start < 15:
+					# Less than 15 characters have changed, so only speak the changed chunk.
+					text = text[start:end]
+
+			if text and not text.isspace():
+				outLines.append(text)
+			prevLine = line
+
+		return outLines
+
+class Terminal(LiveText, EditableText):
+	"""An object which both accepts text input and outputs text which should be reported automatically.
+	This is an L{EditableText} object,
+	as well as a L{liveText} object for which monitoring is automatically enabled and disabled based on whether it has focus.
+	"""
+	role = controlTypes.ROLE_TERMINAL
+
+	def event_gainFocus(self):
+		super(Terminal, self).event_gainFocus()
+		self.startMonitoring()
+
+	def event_loseFocus(self):
+		self.stopMonitoring()

@@ -4,11 +4,11 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import _default
+import appModuleHandler
 import controlTypes
 import api
 import winUser
-from keyUtils import key, sendKey
+from keyboardHandler import KeyboardInputGesture
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 
 class AboutBlankDocument(MSHTML):
@@ -25,7 +25,7 @@ class AboutBlankDocument(MSHTML):
 		# This document is useless to us, so don't bother to report it.
 		return
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "Internet Explorer_Server" and obj.role == controlTypes.ROLE_DOCUMENT and obj.HTMLNode and obj.HTMLNode.document.url=="about:blank": 
@@ -40,4 +40,4 @@ class AppModule(_default.AppModule):
 		if obj.windowClassName=="ATH_Note" and obj.event_objectID==winUser.OBJID_CLIENT and obj.IAccessibleChildID==0:
 			api.processPendingEvents()
 			if obj==api.getFocusObject() and controlTypes.STATE_FOCUSED in obj.states:
-				return sendKey(key("SHIFT+TAB"))
+				return KeyboardInputGesture.fromName("shift+tab").send()

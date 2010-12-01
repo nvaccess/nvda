@@ -56,6 +56,9 @@ class Gecko_ia2(VirtualBuffer):
 	def __init__(self,rootNVDAObject):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
 
+	def _get_shouldPrepare(self):
+		return super(Gecko_ia2,self).shouldPrepare and controlTypes.STATE_BUSY not in self.rootNVDAObject.states
+
 	def __contains__(self,obj):
 		#Special code to handle Mozilla combobox lists
 		if obj.windowClassName.startswith('Mozilla') and winUser.getWindowStyle(obj.windowHandle)&winUser.WS_POPUP:
@@ -76,6 +79,8 @@ class Gecko_ia2(VirtualBuffer):
 		return self._isNVDAObjectInApplication(obj)
 
 	def _get_isAlive(self):
+		if self.isLoading:
+			return True
 		root=self.rootNVDAObject
 		if not root:
 			return False

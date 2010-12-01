@@ -15,7 +15,7 @@ import api
 import displayModel
 import eventHandler
 from NVDAObjects import NVDAObject
-from NVDAObjects.behaviors import EditableText
+from NVDAObjects.behaviors import EditableText, LiveText
 
 re_WindowsForms=re.compile(r'^WindowsForms[0-9]*\.(.*)\.app\..*$')
 re_ATL=re.compile(r'^ATL:(.*)$')
@@ -175,6 +175,15 @@ An NVDAObject for a window
 		text,rects=displayModel.getWindowTextInRect(self.appModule.helperLocalBindingHandle,self.windowHandle,left,top,left+width,top+height,8,32)
 		return text or ""
 
+	def redraw(self):
+		"""Redraw the display for this object.
+		"""
+		left, top, width, height = self.location
+		left, top = winUser.ScreenToClient(self.windowHandle, left, top)
+		winUser.RedrawWindow(self.windowHandle,
+			winUser.RECT(left, top, left + width, top + height), None,
+			winUser.RDW_INVALIDATE | winUser.RDW_UPDATENOW)
+
 	def _get_windowText(self):
 		textLength=winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
 		textBuf=ctypes.create_unicode_buffer(textLength+2)
@@ -257,7 +266,6 @@ An NVDAObject for a window
 	def correctAPIForRelation(self,obj,relation=None):
 		if not obj:
 			return None
-		windowHandle=obj.windowHandle
 		newWindowHandle=obj.windowHandle
 		oldWindowHandle=self.windowHandle
 		if newWindowHandle and oldWindowHandle and newWindowHandle!=oldWindowHandle:
@@ -268,7 +276,6 @@ An NVDAObject for a window
 				return newAPIClass(chooseBestAPI=False,**kwargs)
 		return obj
 
- 
 	def _get_processHandle(self):
 		if not hasattr(self,'_processHandleContainer'):
 			self._processHandleContainer=WindowProcessHandleContainer(self.windowHandle)
@@ -352,6 +359,22 @@ class DisplayModelEditableText(EditableText, Window):
 	def event_valueChange(self):
 		# Don't report value changes for editable text fields.
 		pass
+
+class DisplayModelLiveText(LiveText, Window):
+	TextInfo = displayModel.EditableTextDisplayModelTextInfo
+
+	def startMonitoring(self):
+		# Force the window to be redrawn, as our display model might be out of date.
+		self.redraw()
+		displayModel.requestTextChangeNotifications(self, True)
+		super(DisplayModelLiveText, self).startMonitoring()
+
+	def stopMonitoring(self):
+		super(DisplayModelLiveText, self).stopMonitoring()
+		displayModel.requestTextChangeNotifications(self, False)
+
+	def _getTextLines(self):
+		return self.displayText.splitlines()
 
 windowClassMap={
 	"EDIT":"Edit",

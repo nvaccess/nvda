@@ -7,7 +7,7 @@
 u"""App module for µTorrent
 """
 
-import _default
+import appModuleHandler
 import api
 import controlTypes
 import displayModel
@@ -59,7 +59,7 @@ class TorrentContentsListItem(IAccessible):
 			log.debugWarning("Error retrieving name using display model", exc_info=True)
 			return superName
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		role = obj.role

@@ -19,17 +19,19 @@ A jelenlegi kiadás főbb újdonságai közé tartozik az egyszerűbb és jóval
 	- Ide tartozik néhány menüelem, ami ikonokat tartalmazott (pl. a Windows Xp társítás menüje) (#151), a szerkeszthető mezők a Windows Live alkalmazásban (#200), a hibák listája az Outlook Expressben (#582), a szerkeszthető mező vezérlőeleme a Textpad programban (#605), listák az Eudora programban, néhány vezérlőelem az Ausztrál E-tax programban és a Microsoft excel képletszerkesztőjében.
 - A Visual Studio 2005-2008 kódszerkesztőjének támogatása. A standard verziók használata szükséges, mert ez a funkció az express verziókkal nem működik.  (#457)
 - Az IBM Lotus Symphony dokumentumok támogatása.
-- Kísérleti Google Chrome támogatás. Kérjük vegye figyelembe, hogy a Chrome képernyőolvasó támogatása messze nem teljes, ezért előfordulhat, hogy ennek javításához az NVDA ecélú továbbfejlesztése szükséges. Ennek kipróbálásához egy újnak számító fejlesztői verzió szükséges.
+- Kísérleti Google Chrome támogatás. Kérjük vegye figyelembe, hogy a Chrome képernyőolvasó támogatása messze nem teljes, ezért előfordulhat, hogy ennek javításához az NVDA ecélú továbbfejlesztése szükséges. Ennek kipróbálásához a  Google Chrome 7.0, vagy újabb verziója ajánlott.
 - A ki-be kapcsolható gombok (caps lock, num lock és scroll lock) állapotai már megjelennek a braillle kijelzőn, ha be vannak kapcsolva.  (#620)
 - A súgóbuborékok kijelzésre kerülnek a braille kijelzőn, amikor azok megjelennek.  (#652)
 - Az MDV Lilli braille kijelző driver hozzáadása.  (#241)
 - Egy teljes sor vagy oszlop kijelölésekor (shift+szóköz és control+szóköz) az új kijelölés már elhangzik az MS Excel programban. (#759)
 - A táblázat sor- és oszlopfejlécek automatikusan felolvashatóak a táblázatok navigálásakor. Ez tetszőlegesen beállítható a dokumentum formázás párbeszédpanelen.
- - Ez jelenleg a Mozilla alkalmazásokban (pl. Firefox és Thunderbird) érhetőek el. (#361)
+ - Ez jelenleg a Mozilla alkalmazásokban (Firefox 3.6.10 vagy újabb, és Thunderbird 3.1.5 vagy újabb) érhetőek el. (#361)
 - Új parancsok a sík áttekintés használatához: (#58)
  - NVDA+7 a numerikus billentyűzeten átvált sík áttekintés módra, ezzel az áttekintő kurzor a jelenlegi objektum pozíciójához kerül. Ebben a módban, az áttekintő kurzor parancsainak használatával, áttekinthető a teljes képernyő (vagy egy dokumentum, ha épp abban tartózkodik).
  - Az NVDA+1 a numerikus számbillentyűzeten az áttekintő kurzornál található szöveg alapján annak objektumára lép, lehetővé téve az objektumok közötti ugrást.
 - Az NVDA aktuális beállításai használhatóak a Windows biztonsági képernyőin, pl. a bejelentkező és az UAC képernyőkön. (#730)
+- A Mozilla Firefox 4 támogatása
+- A Microsoft Internet Explorer 9 támogatása
 
 
 == Változások ==
@@ -43,8 +45,8 @@ A jelenlegi kiadás főbb újdonságai közé tartozik az egyszerűbb és jóval
 - Ha az NVDA már fut, parancsikonjának aktiválása az NVDA újraindítását eredményezi.
 - A 'az egérkurzornál lévő szöveg bemondása' jelölőnégyzet helyett a jelölőnégyzet 'az egérkurzor követése' nevet kapta, amely jobban illik a 'toggle mouse tracking' szkripthez (NVDA+m). 
 - A laptop billentyűzetkiosztás frissítése, mely már tartalmazza az asztali billentyűzetkiosztásban megtalálható parancsokat, valamint jól működik nem angol billentyűzeteken is. (#798, #800)
-- A felhasználói útmutató frissítése, mely a laptop billentyűzetkiosztás dokumentálása mellett egy egységesített billentyűparancs lista is helyet kapott. (#455)
-- A liblouis braille translator 2.1.0 verziójának haszhnálata. Ez a kínai braille és a nem definiált karakterkódok hatékonyabb kezelését eredményezi. (#484, #499)
+- A felhasználói útmutató frissítése, melyben a laptop billentyűzetkiosztás dokumentálása mellett egy egységesített billentyűparancs lista is helyet kapott. (#455)
+- A liblouis braille translator 2.1.1 verziójának használata. Ez a kínai braille és a nem definiált karakterkódok hatékonyabb kezelését eredményezi. (#484, #499)
 
 
 == Hiba javítások ==
@@ -71,6 +73,13 @@ A jelenlegi kiadás főbb újdonságai közé tartozik az egyszerűbb és jóval
 - Scintilla vezérlőelemekben (pl. Notepad++) a hosszú sorok most már helyesen kerülnek felolvasásra, ha azok a képernyő szélén túlhaladnak. Ez már Braille kijelzőkön is helyesen jelenik meg.
 - A Loudtalks alkalmazásban a partnerlista most már hozzáférhető.
 - Egy dokumentum URL és "MSAAHTML Registered Handler" attribútumai most már helyesen kerülnek felolvasásra az Internet Explorer és egyéb MSHTML vezérlőelemekben. (#811)
+- Az Eclipse fejlesztői környezet fanézeteiben az előző elem most már nem hangzik el.
+- Az NVDA most már helyesen működik ha az aktuális könyvtár útvonala nem található a Dll elérési útvonalon (a CWDIllegalInDllSearch registry bejegyzés 0xFFFFFFFF-re állításával). Ez a legtöbb felhasználót nem érinti. (#907)
+- A Microsoft Word táblázatnavigációs billentyűparancsainak használatakor a "a táblázat széle" szöveg már nem hangzik el a "csak táblázatban használható" szöveg után. (#921)
+- A Microsoft Word alkalmazásban "a táblázat széle" szöveg már helyesen hangzik el (a beállított nyelvnek megfelelően). Előzőleg ez az üzenet mindig angolul történt meg. (#921)
+- A virtuális bufferekben az áttekintő kurzor mostantól a teljes dokumentumban mozog, nem pedig csak a fókuszban lévő objektumon belül.
+- Az Outlook Express, Windows Mail és Windows Live Mail alkalmazásokban az üzenetszabályok jelölőnégyzet állapota most már helyesen hangzik el. (#576)
+- A Windows Live Mail 2010 alkalmazásban az üzenetszabályok leírása most már helyesen hangzik el.
 
 
 = 2010.1 =

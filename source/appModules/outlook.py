@@ -6,10 +6,9 @@
 
 from comtypes import COMError
 import comtypes.client
-import _default
+import appModuleHandler
 import eventHandler
 import controlTypes
-from keyUtils import key, sendKey
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible.MSHTML import MSHTML
@@ -37,7 +36,7 @@ def getSentMessageString(obj):
 	nameList.append(_("sent: %s")%obj.sentOn)
 	return ", ".join(nameList)
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def _get_nativeOm(self):
 		if not getattr(self,'_nativeOm',None):
@@ -118,12 +117,12 @@ class MessageList_pre2003(IAccessible):
 		if msg:
 			eventHandler.executeEvent("gainFocus",self.curMessageItem)
 
-	def script_moveByMessage(self,keyPress):
+	def script_moveByMessage(self,gesture):
 		if hasattr(self,'curMessageItem'):
 			oldEntryID=self.curMessageItem.msg.entryID
 		else:
 			oldEntryID=None
-		sendKey(keyPress)
+		gesture.send()
 		try:
 			msg=self.nativeOm.ActiveExplorer().selection[0]
 		except:
@@ -136,13 +135,17 @@ class MessageList_pre2003(IAccessible):
 				self.curMessageItem=messageItem
 				eventHandler.executeEvent("gainFocus",messageItem)
 
-[MessageList_pre2003.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("extendedDown","moveByMessage"),
-	("extendedUp","moveByMessage"),
-	("extendedHome","moveByMessage"),
-	("extendedEnd","moveByMessage"),
-	("extendedDelete","moveByMessage"),
-]]
+	__moveByMessageGestures = (
+		"kb:downArrow",
+		"kb:upArrow",
+		"kb:home",
+		"kb:end",
+		"kb:delete",
+	)
+
+	def initOverlayClass(self):
+		for gesture in self.__moveByMessageGestures:
+			self.bindGesture(gesture, "moveByMessage")
 
 class MessageItem(Window):
 
@@ -170,14 +173,18 @@ class MessageItem(Window):
 
 class AddressBookEntry(IAccessible):
 
-	def script_moveByEntry(self,keyPress):
-		sendKey(keyPress)
+	def script_moveByEntry(self,gesture):
+		gesture.send()
 		eventHandler.queueEvent("nameChange",self)
 
-[AddressBookEntry.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("extendedDown","moveByEntry"),
-	("extendedUp","moveByEntry"),
-	("extendedHome","moveByEntry"),
-	("extendedEnd","moveByEntry"),
-	("extendedDelete","moveByEntry"),
-]]
+	__moveByEntryGestures = (
+		"kb:downArrow",
+		"kb:upArrow",
+		"kb:home",
+		"kb:end",
+		"kb:delete",
+	)
+
+	def initOverlayClass(self):
+		for gesture in self.__moveByEntryGestures:
+			self.bindGesture(gesture, "moveByEntry")

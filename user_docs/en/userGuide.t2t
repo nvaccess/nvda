@@ -13,17 +13,18 @@ NVDA NVDA_VERSION User Guide
 Providing feedback via synthetic speech and braille, Nonvisual Desktop Access allows blind and vision impaired people to access and interact with the Windows operating system and many third party applications.
 
 Major highlights include:
-- Ability to run entirely from a USB stick or other portable media without the need for installation
-- Easy to use talking installer
-- Browsing the web with Mozilla Firefox or Windows Internet Explorer
-- Working with email using Mozilla Thunderbird, Outlook Express, Windows Mail or Windows Live Mail
-- support for Microsoft Word and Excel
-- Support for accessible Java applications
-- Support for Adobe Reader
-- support for IBM Lotus Symphony
-- support for Windows Command Prompt and console applications
+- Support for popular applications including web browsers, email clients, internet chat programs and office suites
+- Builtin  speech synthesizer supporting over 20 languages
+- announcement of textual formatting where available such as font name and size, style and spelling errors
 - Automatic announcement of text under the mouse and optional audible indication of the mouse position
 - Support for many refreshable braille displays
+- Ability to run entirely from a USB stick or other portable media without the need for installation
+- Easy to use talking installer
+- Translated into many languages
+- Support for modern Windows Operating Systems including both 32 and 64 bit variants
+- Ability to run on Windows logon and other secure screens
+- Support for common accessibility  interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation
+- support for Windows Command Prompt and console applications
 -
 
 ++ Internationalization ++
@@ -124,13 +125,13 @@ By default, both the numpad Insert and Extended Insert keys are set as NVDA modi
 
 If you wish to cause one of the NVDA modifier keys to act like its original key (for instance you wish to turn capslock on when  you have set capslock to be  an NVDA modifier key) you can press the  key twice in quick succession.
 
-+++ Keyboard Help Mode +++
-Many key commands are mentioned through out the rest of this user guide, but an easy way to explore all the different key commands is to turn on keyboard help.
++++ Input Help Mode +++
+Many key commands are mentioned through out the rest of this user guide, but an easy way to explore all the different key commands is to turn on input help.
 
-To turn on keyboard help, press NVDA+1.
+To turn on input help, press NVDA+1.
 To turn it off again, press NVDA+1 again.
-While in keyboard help, pressing any key will announce what it does (if in deed it does do something).
-The keys will not actually perform their function while in keyboard help mode, so you can press what ever keys you like.
+While in input help, pressing any key will announce what it does (if in deed it does do something).
+The keys will not actually perform their function while in input help mode, so you can press what ever keys you like.
 
 +++ Keyboard Layouts +++
 NVDA currently comes with two sets of key commands.
@@ -213,7 +214,7 @@ To navigate by object, use the following keys:
 
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Description |
-| Report current object | NVDA+numpad5 | NVDA+control+i | Reports the current navigator object. Pressing twice spells the information. |
+| Report current object | NVDA+numpad5 | NVDA+control+i | Reports the current navigator object. Pressing twice spells the information, and pressing 3 times copies this object's name and value to the clipboard. |
 | Navigate to parent object | NVDA+numpad8 | NVDA+shift+i | Navigates to the parent (container) of the current navigator object |
 | Navigate to previous object | NVDA+numpad4 | NVDA+control+j | Navigates to the object directly before the current navigator object |
 | Navigate to next object | NVDA+numpad6 | control+NVDA+l | Navigates to the object directly after the current navigator object |

@@ -10,20 +10,21 @@
 + Johdanto +
 
 ++ Yleiset ominaisuudet ++
-NVDA:n (Non-Visual Desktop Access) avulla sokeat ja heikkonäköiset voivat käyttää Windows-käyttöjärjestelmää ja monia kolmannen osapuolen sovelluksia.
+NVDA:n (Non-Visual Desktop Access) synteettisenä puheena ja pistekirjoituksella antaman palautteen avulla sokeat ja heikkonäköiset voivat käyttää Windows-käyttöjärjestelmää ja monia kolmannen osapuolen sovelluksia.
 
 Tärkeimpiin ominaisuuksiin kuuluvat:
-- Mahdollisuus käyttää USB-muistitikulta tai muulta siirrettävältä medialta ilman asennusta
-- Helppokäyttöinen puhuva asennusohjelma
-- Internetin selaaminen mozilla Firefoxilla tai Internet Explorerilla
-- Sähköpostin käyttäminen Mozilla Thunderbirdillä, Outlook Expressillä, Windows Maililla tai Windows Live Maililla
-- Tuki Microsoft Wordille ja Excelille
-- Tuki esteettömille Java-sovelluksille
-- Tuki Adobe Readerille
-- Tuki IBM Lotus Symphonylle
-- Tuki Windowsin komentokehotteelle ja konsolisovelluksille
+- Tuki yleisille sovelluksille, internet-selaimet sekä sähköpostiasiakas-, internet-keskustelu- ja toimisto-ohjelmat mukaan lukien
+- Yli 20 kieltä tukeva sisäänrakennettu puhesyntetisaattori
+- Automaattinen tekstin muotoilutietojen, kuten fontin nimen ja koon, tyylin sekä kirjoitusvirheiden, lukeminen aina kun mahdollista
 - Automaattinen hiiren alla olevan tekstin lukeminen ja valinnainen hiiren sijainnin ilmaiseminen äänimerkeillä
 - Tuki monille pistenäytöille
+- Mahdollisuus käyttää USB-muistitikulta tai muulta siirrettävältä tietovälineeltä ilman asennusta
+- Helppokäyttöinen puhuva asennusohjelma
+- Käännetty useille eri kielille
+- Tuki nykyaikaisille Windows-käyttöjärjestelmille, mukaan lukien sekä 32- että 64-bittiset versiot
+- Mahdollisuus käyttää Windowsin kirjautumis- ja muissa suojatuissa ruuduissa
+- Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation
+- Tuki Windowsin komentokehotteelle ja konsolisovelluksille
 -
 
 ++ Kansainvälistäminen ++
@@ -100,10 +101,13 @@ NVDA voidaan määrittää niin, että joko numeroryhmän Insert-, laajennettua 
 Oletusarvoisesti sekä laajennettu että numeroryhmän Insert toimivat NVDA-näppäimenä.
 Jos haluat jonkin NVDA-näppäimistä  toimivan tavalliseen tapaan (haluat esimerkiksi laittaa Capslockin päälle), voit painaa sitä kaksi kertaa nopeasti peräkkäin.
 
-+++ Näppäinohjetila +++
-Tässä käyttöohjeessa mainitaan useita näppäinkomentoja, mutta helpoin tapa tutkia niitä kaikkia on käyttää näppäinohjetta.
++++ Syöteohjetila +++
+Tässä käyttöohjeessa mainitaan useita näppäinkomentoja, mutta helpoin tapa tutkia niitä kaikkia on käyttää syöteohjetta.
 
-Ota näppäinohje käyttöön painamalla NVDA+1. Poista se käytöstä painamalla uudelleen NVDA+1. Kun näppäinohje on käytössä, minkä tahansa näppäimen painaminen ilmoittaa, mitä kyseinen näppäin tekee. Näppäinohjetilassa näppäimet eivät tee niiden varsinaisia toimintoja, joten voit painaa mitä näppäimiä haluat.
+Ota syöteohje käyttöön painamalla NVDA+1.
+Poista se käytöstä painamalla uudelleen NVDA+1.
+Kun syöteohje on käytössä, NVDA kertoo mitä tahansa näppäintä painettaessa sen suorittaman komennon.
+Syöteohjetilassa näppäimet eivät suorita niiden varsinaisia toimintoja, joten voit painaa mitä näppäimiä haluat.
 
 +++ Näppäimistöasettelut +++
 NVDA:n mukana tulee tällä hetkellä kaksi näppäimistöasettelua, yksi pöytäkoneille ja yksi kannettaville.
@@ -637,6 +641,7 @@ Voit määrittää seuraavien tietojen lukemisen:
 - fontin määreet
 - tyyli
 - tekstin tasaus
+- värit
 - tekstityyli
 - taulukot
 - taulukoiden rivien ja sarakkeiden otsikot

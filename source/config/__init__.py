@@ -274,12 +274,10 @@ def initConfigPath(configPath=None):
 		configPath=globalVars.appArgs.configPath
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
-	for subdir in ("appModules","brailleDisplayDrivers","speechDicts","synthDrivers"):
+	for subdir in ("appModules","brailleDisplayDrivers","speechDicts","synthDrivers","globalPlugins"):
 		subdir=os.path.join(configPath,subdir)
 		if not os.path.isdir(subdir):
 			os.makedirs(subdir)
-
-
 
 RUN_REGKEY = ur"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
@@ -355,7 +353,7 @@ def _setSystemConfig(fromPath):
 	import shutil
 	if os.path.isdir(toPath):
 		shutil.rmtree(toPath)
-		shutil.copytree(fromPath,toPath)
+	shutil.copytree(fromPath,toPath)
 
 def setStartOnLogonScreen(enable):
 	if getStartOnLogonScreen() == enable:

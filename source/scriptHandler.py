@@ -6,12 +6,13 @@
 
 import time
 import weakref
-from keyUtils import sendKey
 import inspect
 import appModuleHandler
 import api
 import queueHandler
 from logHandler import log
+import inputCore
+import globalPluginHandler
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
 _lastScriptTime=0 #Time in MS of when the last script was executed
@@ -19,74 +20,104 @@ _lastScriptRef=None #Holds a weakref to the last script that was executed
 _lastScriptCount=0 #The amount of times the last script was repeated
 _isScriptRunning=False
 
-def findScript(keyPress):
-		return findScript_appModuleLevel(keyPress)
+def _getObjScript(obj, gesture, globalMapScripts):
+	# Search the scripts from the global gesture maps.
+	for cls, scriptName in globalMapScripts:
+		if isinstance(obj, cls):
+			if scriptName is None:
+				# The global map specified that no script should execute for this gesture and object.
+				return None
+			try:
+				return getattr(obj, "script_%s" % scriptName)
+			except AttributeError:
+				pass
+	# Search the object itself for in-built bindings.
+	return obj.getScript(gesture)
 
-def findScript_appModuleLevel(keyPress):
-	focusObject=api.getFocusObject()
-	if not focusObject:
+def findScript(gesture):
+	focus = api.getFocusObject()
+	if not focus:
 		return None
-	appModule=focusObject.appModule
-	if appModule and appModule.selfVoicing:
-		return
-	func=appModule.getScript(keyPress) if appModule else None
-	if func:
-		return func
-	return findScript_treeInterceptorLevel(keyPress)
 
-def findScript_treeInterceptorLevel(keyPress):
-	treeInterceptor=api.getFocusObject().treeInterceptor
-	if treeInterceptor:
-		func=treeInterceptor.getScript(keyPress)
+	globalMapScripts = []
+	for globalMap in inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap:
+		for identifier in gesture.identifiers:
+			globalMapScripts.extend(globalMap.getScriptsForGesture(identifier))
+
+	# Global plugin level.
+	for plugin in globalPluginHandler.runningPlugins:
+		func = _getObjScript(plugin, gesture, globalMapScripts)
+		if func:
+			return func
+
+	# App module level.
+	app = focus.appModule
+	if app:
+		if app.selfVoicing:
+			return None
+		func = _getObjScript(app, gesture, globalMapScripts)
+		if func:
+			return func
+
+	# Tree interceptor level.
+	treeInterceptor = focus.treeInterceptor
+	if treeInterceptor and treeInterceptor.isReady:
+		func = _getObjScript(treeInterceptor, gesture, globalMapScripts)
 		if func and (not treeInterceptor.passThrough or getattr(func,"ignoreTreeInterceptorPassThrough",False)):
 			return func
-	return findScript_NVDAObjectLevel(keyPress)
 
-def findScript_NVDAObjectLevel(keyPress):
-	focusObj=api.getFocusObject()
-	func=focusObj.getScript(keyPress)
+	# NVDAObject level.
+	func = _getObjScript(focus, gesture, globalMapScripts)
 	if func:
 		return func
-	ancestors=reversed(api.getFocusAncestors())
-	for obj in ancestors:
-		func=obj.getScript(keyPress)
-		if func and getattr(func,'canPropagate',False): 
+	for obj in reversed(api.getFocusAncestors()):
+		func = _getObjScript(obj, gesture, globalMapScripts)
+		if func and getattr(func, 'canPropagate', False): 
 			return func
+
+	# Global commands.
+	# Import late to avoid circular import.
+	import globalCommands
+	func = _getObjScript(globalCommands.commands, gesture, globalMapScripts)
+	if func:
+		return func
+
 	return None
 
 def getScriptName(script):
 	return script.__name__[7:]
 
 def getScriptLocation(script):
-	return script.__module__
+	name=script.__name__
+	for cls in script.__self__.__class__.__mro__:
+		if name in cls.__dict__:
+			return "%s.%s"%(cls.__module__,cls.__name__)
 
-def getScriptDescription(script):
-	return script.__doc__
 
-def _queueScriptCallback(script,keyPress):
+def _queueScriptCallback(script,gesture):
 	global _numScriptsQueued
 	_numScriptsQueued-=1
-	executeScript(script,keyPress)
+	executeScript(script,gesture)
 
-def queueScript(script,keyPress):
+def queueScript(script,gesture):
 	global _numScriptsQueued
 	_numScriptsQueued+=1
-	queueHandler.queueFunction(queueHandler.eventQueue,_queueScriptCallback,script,keyPress)
+	queueHandler.queueFunction(queueHandler.eventQueue,_queueScriptCallback,script,gesture)
 
-def executeScript(script,keyPress):
-	"""Executes a given script (function) passing it the given keyPress.
+def executeScript(script,gesture):
+	"""Executes a given script (function) passing it the given gesture.
 	It also keeps track of the execution of duplicate scripts with in a certain amount of time, and counts how many times this happens.
 	Use L{getLastScriptRepeatCount} to find out this count value.
-	@param script: the function or method that should be executed. The function or method must take an argument of 'keyPress'.
+	@param script: the function or method that should be executed. The function or method must take an argument of 'gesture'.
 	@type script: callable.
-	@param keyPress: the key press that activated this script
-	@type keyPress: an NVDA keyPress
+	@param gesture: the input gesture that activated this script
+	@type gesture: L{inputCore.InputGesture}
 	"""
 	global _lastScriptTime, _lastScriptCount, _lastScriptRef, _isScriptRunning 
 	lastScriptRef=_lastScriptRef() if _lastScriptRef else None
 	#We don't allow the same script to be executed from with in itself, but we still should pass the key through
 	if _isScriptRunning and lastScriptRef==script.im_func:
-		return sendKey(keyPress)
+		return gesture.send()
 	_isScriptRunning=True
 	try:
 		scriptTime=time.time()
@@ -97,9 +128,9 @@ def executeScript(script,keyPress):
 			_lastScriptCount=0
 		_lastScriptRef=scriptRef
 		_lastScriptTime=scriptTime
-		script(keyPress)
+		script(gesture)
 	except:
-		log.exception("error executing script: %s with key %s"%(script,keyPress))
+		log.exception("error executing script: %s with gesture %r"%(script,gesture.displayName))
 	finally:
 		_isScriptRunning=False
 
@@ -119,7 +150,7 @@ def isScriptWaiting():
 
 def isCurrentScript(scriptFunc):
 	"""Finds out if the given script is equal to the script that L{isCurrentScript} is being called from.
-	@param scriptFunc: the script retreaved from ScriptableObject.getScript(keyPress)
+	@param scriptFunc: the script retreaved from ScriptableObject.getScript(gesture)
 	@type scriptFunc: Instance method
 	@returns: True if they are equal, False otherwise
 	@rtype: boolean

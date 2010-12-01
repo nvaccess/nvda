@@ -1,9 +1,8 @@
-import _default
-from keyUtils import key, sendKey
+import appModuleHandler
 import NVDAObjects.IAccessible
 import speech
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClassName=obj.windowClassName
@@ -19,11 +18,11 @@ class Display(NVDAObjects.IAccessible.IAccessible):
 
 	calcCommandChars=['!','=','@','#']
 
-	calcCommandKeys=[
-		"back","escape","ExtendedReturn","Return",
-		"f2","f3","f4","f5","f6","f7","f8","f9",
-		"l","n","o","p","r","s","t",
-	]
+	calcCommandGestures=(
+		"kb:back","kb:escape","kb:enter","kb:numpadEnter",
+		"kb:f2","kb:f3","kb:f4","kb:f5","kb:f6","kb:f7","kb:f8","kb:f9",
+		"kb:l","kb:n","kb:o","kb:p","kb:r","kb:s","kb:t",
+	)
 
 	def _get_name(self):
 		name=super(Display,self).name
@@ -36,9 +35,10 @@ class Display(NVDAObjects.IAccessible.IAccessible):
 		if ch in self.calcCommandChars:
 			speech.speakObjectProperties(self,value=True)
 
-	def script_executeAndRead(self,keyPress):
-		sendKey(keyPress)
+	def script_executeAndRead(self,gesture):
+		gesture.send()
 		speech.speakObjectProperties(self,value=True)
 
-for k in Display.calcCommandKeys:
-	Display.bindKey(k,"executeAndRead")
+	def initOverlayClass(self):
+		for g in Display.calcCommandGestures:
+			self.bindGesture(g,"executeAndRead")

@@ -1,12 +1,10 @@
-#speech.py
+﻿#speech.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>, Peter Vágner <peter.v@datagate.sk>, Aleksey Sadovoy <lex@onm.su>
 
 """High-level functions to speak information.
-@var speechMode: allows speech if true
-@type speechMode: boolean
 """ 
 
 import colors
@@ -28,7 +26,8 @@ import speechDictHandler
 speechMode_off=0
 speechMode_beeps=1
 speechMode_talk=2
-speechMode=2
+#: How speech should be handled; one of speechMode_off, speechMode_beeps or speechMode_talk.
+speechMode=speechMode_talk
 speechMode_beeps_ms=15
 beenCanceled=True
 isPaused=False
@@ -80,7 +79,7 @@ def _processSymbol(m):
 		return " %s " % characterSymbols.names[m.group(4)]
 RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 
-def processTextSymbols(text,expandPunctuation=False):
+def processText(text,expandPunctuation=False):
 	if (text is None) or (len(text)==0) or (isinstance(text,basestring) and (set(text)<=set(characterSymbols.blankList))):
 		return _("blank") 
 	#Convert non-breaking spaces to spaces
@@ -104,20 +103,15 @@ def getLastSpeechIndex():
 """
 	return getSynth().lastIndex
 
-def processText(text):
-	"""Processes the text using the L{textProcessing} module which converts punctuation so it is suitable to be spoken by the synthesizer. This function makes sure that all punctuation is included if it is configured so in nvda.ini.
-@param text: the text to be processed
-@type text: string
-"""
-	text=processTextSymbols(text,expandPunctuation=config.conf["speech"]["speakPunctuation"])
-	return text
-
 def cancelSpeech():
 	"""Interupts the synthesizer from currently speaking"""
-	global beenCanceled, isPaused
+	global beenCanceled, isPaused, _speakSpellingGenID
 	# Import only for this function to avoid circular import.
 	import sayAllHandler
 	sayAllHandler.stop()
+	if _speakSpellingGenID:
+		queueHandler.cancelGeneratorObject(_speakSpellingGenID)
+		_speakSpellingGenID=None
 	if beenCanceled:
 		return
 	elif speechMode==speechMode_off:
@@ -136,7 +130,6 @@ def pauseSpeech(switch):
 
 def speakMessage(text,index=None):
 	"""Speaks a given message.
-This function will not speak if L{speechMode} is false.
 @param text: the message to speak
 @type text: string
 @param index: the index to mark this current text with, its best to use the character position of the text if you know it 
@@ -144,8 +137,10 @@ This function will not speak if L{speechMode} is false.
 """
 	speakText(text,index=index,reason=REASON_MESSAGE)
 
+_speakSpellingGenID = None
+
 def speakSpelling(text):
-	global beenCanceled
+	global beenCanceled, _speakSpellingGenID
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendText(text)
@@ -167,10 +162,9 @@ def speakSpelling(text):
 		next(gen)
 	except StopIteration:
 		return
-	queueHandler.registerGeneratorObject(gen)
+	_speakSpellingGenID=queueHandler.registerGeneratorObject(gen)
 
 def _speakSpellingGen(text):
-	lastKeyCount=globalVars.keyCounter
 	textLength=len(text)
 	synth=getSynth()
 	synthConfig=config.conf["speech"][synth.name]
@@ -190,11 +184,9 @@ def _speakSpellingGen(text):
 			synth.speakText(char,index=index)
 		if uppercase and synth.isSupported("pitch") and synthConfig["raisePitchForCapitals"]:
 			synth.pitch=oldPitch
-		while textLength>1 and globalVars.keyCounter==lastKeyCount and (isPaused or getLastSpeechIndex()!=index): 
+		while textLength>1 and (isPaused or getLastSpeechIndex()!=index):
 			yield
 			yield
-		if globalVars.keyCounter!=lastKeyCount:
-			break
 		if uppercase and  synthConfig["beepForCapitals"]:
 			tones.beep(2000,50)
 
@@ -290,14 +282,16 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
 			speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=reason)
 
-def speakText(text,index=None,reason=REASON_MESSAGE):
-	"""Speaks some given text.
-This function will not speak if L{speechMode} is false.
-@param text: the message to speak
-@type text: string
-@param index: the index to mark this current text with, its best to use the character position of the text if you know it 
-@type index: int
-"""
+def speakText(text,index=None,reason=REASON_MESSAGE,expandPunctuation=None):
+	"""Speaks some text.
+	@param text: The text to speak.
+	@type text: str
+	@param index: The index to mark this text with, which can be used later to determine whether this piece of text has been spoken.
+	@type index: int
+	@param reason: The reason for this speech; one of the REASON_* constants.
+	@param expandPunctuation: Whether to speak punctuation; C{None} (default) to use the user's configuration.
+	@param expandPunctuation: bool
+	"""
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendText(text)
@@ -312,10 +306,12 @@ This function will not speak if L{speechMode} is false.
 		cancelSpeech()
 	beenCanceled=False
 	log.io("Speaking %r" % text)
+	if expandPunctuation is None:
+		expandPunctuation=config.conf["speech"]["speakPunctuation"]
 	if text is None:
 		text=""
 	else:
-		text=processText(text)
+		text=processText(text,expandPunctuation=expandPunctuation)
 	if not text or not text.isspace():
 		getSynth().speakText(text,index=index)
 

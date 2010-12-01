@@ -7,6 +7,7 @@
 from logHandler import log
 import baseObject
 import api
+import config
 import braille
 
 runningTable=set()
@@ -19,23 +20,24 @@ def getTreeInterceptor(obj):
 def update(obj):
 	#If this object already has a treeInterceptor, just return that and don't bother trying to create one
 	ti=obj.treeInterceptor
-	if ti:
-		return ti
-	try:
-		newClass=obj.treeInterceptorClass
-	except NotImplementedError:
-		return None
-	treeInterceptorObject=newClass(obj)
-	if not treeInterceptorObject.isAlive:
-		return None
-	runningTable.add(treeInterceptorObject)
-	log.debug("Adding new treeInterceptor to runningTable: %s"%treeInterceptorObject)
-	return treeInterceptorObject
+	if not ti:
+		try:
+			newClass=obj.treeInterceptorClass
+		except NotImplementedError:
+			return None
+		ti=newClass(obj)
+		if not ti.isAlive:
+			return None
+		runningTable.add(ti)
+		log.debug("Adding new treeInterceptor to runningTable: %s"%ti)
+	if ti.shouldPrepare:
+		ti.prepare()
+	return ti
 
 def cleanup():
 	"""Kills off any treeInterceptors that are no longer alive."""
 	for ti in list(runningTable):
-		if not ti.isTransitioning and not ti.isAlive:
+		if not ti.isAlive:
 			killTreeInterceptor(ti)
 
 def killTreeInterceptor(treeInterceptorObject):
@@ -44,6 +46,7 @@ def killTreeInterceptor(treeInterceptorObject):
 	except KeyError:
 		return
 	treeInterceptorObject.terminate()
+	log.debug("Killed treeInterceptor: %s" % treeInterceptorObject)
 
 def terminate():
 	"""Kills any currently running treeInterceptors"""
@@ -63,9 +66,6 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		#: The root object of the tree wherein events and scripts are intercepted.
 		#: @type: L{NVDAObjects.NVDAObject}
 		self.rootNVDAObject = rootNVDAObject
-		#: Indicates that this interceptor is in a state of transition and should not be killed even if L{isAlive} is C{False}.
-		#: @type: bool
-		self.isTransitioning = False
 
 	def terminate(self):
 		"""Terminate this interceptor.
@@ -77,6 +77,10 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		If it is not alive, it will be removed.
 		"""
 		raise NotImplementedError
+
+	#: Whether this interceptor is ready to be used; i.e. whether it should receive scripts and events.
+	#: @type: bool
+	isReady = True
 
 	def __contains__(self, obj):
 		"""Determine whether an object is encompassed by this interceptor.
@@ -97,6 +101,22 @@ class TreeInterceptor(baseObject.ScriptableObject):
 			return
 		self._passThrough = state
 		if state:
+			if config.conf['reviewCursor']['followFocus']:
+				focusObj=api.getFocusObject()
+				if self is focusObj.treeInterceptor:
+					api.setNavigatorObject(focusObj)
 			braille.handler.handleGainFocus(api.getFocusObject())
 		else:
+			obj=api.getNavigatorObject()
+			if config.conf['reviewCursor']['followCaret'] and self is obj.treeInterceptor: 
+				api.setNavigatorObject(self.rootNVDAObject)
 			braille.handler.handleGainFocus(self)
+
+	_cache_shouldPrepare=True
+	shouldPrepare=False #:True if this treeInterceptor's prepare method should be called in order to make it ready (e.g. load a virtualBuffer, or process the document in some way).
+
+	def prepare(self):
+		"""Prepares this treeInterceptor so that it becomes ready to accept event/script input."""
+		raise NotImplementedError
+
+

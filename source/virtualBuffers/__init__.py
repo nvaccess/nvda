@@ -6,7 +6,6 @@ import itertools
 import wx
 import NVDAHelper
 import XMLFormatting
-from keyUtils import sendKey
 import scriptHandler
 from scriptHandler import isScriptWaiting
 import speech
@@ -69,6 +68,10 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		end = ctypes.c_int()
 		NVDAHelper.localLib.VBuf_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
 		return start.value, end.value
+
+	def _getPointFromOffset(self,offset):
+		o=self._getNVDAObjectFromOffset(offset)
+		return textInfos.Point(o.location[0],o.location[1])
 
 	def _getNVDAObjectFromOffset(self,offset):
 		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
@@ -185,11 +188,11 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			return startOffset.value,endOffset.value
 		return super(VirtualBufferTextInfo, self)._getUnitOffsets(unit, offset)
 
-	def copyToClipboard(self):
+	def _get_clipboardText(self):
 		# Blocks should start on a new line, but they don't necessarily have an end of line indicator.
 		# Therefore, get the text in block (paragraph) chunks and join the chunks with \r\n.
 		blocks = (block.strip("\r\n") for block in self.getTextInChunks(textInfos.UNIT_PARAGRAPH))
-		return api.copyToClip("\r\n".join(blocks))
+		return "\r\n".join(blocks)
 
 	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
 		textList = []
@@ -498,18 +501,28 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		super(VirtualBuffer,self).__init__(rootNVDAObject)
 		self.backendName=backendName
 		self.VBufHandle=None
+		self.isLoading=False
 		self.disableAutoPassThrough = False
 		self.rootDocHandle,self.rootID=self.getIdentifierFromNVDAObject(self.rootNVDAObject)
 		self._lastFocusObj = None
 		self._hadFirstGainFocus = False
 		self._lastProgrammaticScrollTime = None
+
+	def prepare(self):
+		self.shouldPrepare=False
 		self.loadBuffer()
+
+	def _get_shouldPrepare(self):
+		return not self.isLoading and not self.VBufHandle
 
 	def terminate(self):
 		self.unloadBuffer()
 
+	def _get_isReady(self):
+		return bool(self.VBufHandle and not self.isLoading)
+
 	def loadBuffer(self):
-		self.isTransitioning = True
+		self.isLoading = True
 		self._loadProgressCallLater = wx.CallLater(1000, self._loadProgress)
 		threading.Thread(target=self._loadBuffer).start()
 
@@ -527,7 +540,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	def _loadBufferDone(self, success=True):
 		self._loadProgressCallLater.Stop()
 		del self._loadProgressCallLater
-		self.isTransitioning = False
+		self.isLoading = False
 		if not success:
 			return
 		if self._hadFirstGainFocus:
@@ -642,7 +655,8 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		super(VirtualBuffer, self)._set_selection(info)
 		if isScriptWaiting() or not info.isCollapsed:
 			return
-		api.setReviewPosition(info)
+		if config.conf['reviewCursor']['followCaret'] and api.getNavigatorObject() is self.rootNVDAObject:
+			api.setReviewPosition(info)
 		if reason == speech.REASON_FOCUS:
 			focusObj = api.getFocusObject()
 			if focusObj==self.rootNVDAObject:
@@ -672,26 +686,20 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"""
 		return controlTypes.STATE_FOCUSABLE in obj.states
 
-	def script_activatePosition(self,keyPress):
-		if self.VBufHandle is None:
-			return sendKey(keyPress)
+	def script_activatePosition(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		self._activatePosition(info)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 
-	def _caretMovementScriptHelper(self, *args, **kwargs):
-		if self.VBufHandle is None:
-			return 
-		super(VirtualBuffer, self)._caretMovementScriptHelper(*args, **kwargs)
-
-	def script_refreshBuffer(self,keyPress):
-		if self.VBufHandle is None:
+	def script_refreshBuffer(self,gesture):
+		if scriptHandler.isScriptWaiting():
+			# This script may cause subsequently queued scripts to fail, so don't execute.
 			return
 		self.unloadBuffer()
 		self.loadBuffer()
 	script_refreshBuffer.__doc__ = _("Refreshes the virtual buffer content")
 
-	def script_toggleScreenLayout(self,keyPress):
+	def script_toggleScreenLayout(self,gesture):
 		config.conf["virtualBuffers"]["useScreenLayout"]=not config.conf["virtualBuffers"]["useScreenLayout"]
 		onOff=_("on") if config.conf["virtualBuffers"]["useScreenLayout"] else _("off")
 		speech.speakMessage(_("use screen layout %s")%onOff)
@@ -730,9 +738,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			yield node, startOffset.value, endOffset.value
 			offset=startOffset
 
-	def _quickNavScript(self,keyPress, nodeType, direction, errorMessage, readUnit):
-		if self.VBufHandle is None:
-			return sendKey(keyPress)
+	def _quickNavScript(self,gesture, nodeType, direction, errorMessage, readUnit):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		startOffset=info._startOffset
 		endOffset=info._endOffset
@@ -758,22 +764,20 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		scriptSuffix = nodeType[0].upper() + nodeType[1:]
 		scriptName = "next%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
-		script = lambda self,keyPress: self._quickNavScript(keyPress, nodeType, "next", nextError, readUnit)
+		script = lambda self,gesture: self._quickNavScript(gesture, nodeType, "next", nextError, readUnit)
 		script.__doc__ = nextDoc
 		script.__name__ = funcName
 		setattr(cls, funcName, script)
-		cls.bindKey(key, scriptName)
+		cls.__gestures["kb:%s" % key] = scriptName
 		scriptName = "previous%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
-		script = lambda self,keyPress: self._quickNavScript(keyPress, nodeType, "previous", prevError, readUnit)
+		script = lambda self,gesture: self._quickNavScript(gesture, nodeType, "previous", prevError, readUnit)
 		script.__doc__ = prevDoc
 		script.__name__ = funcName
 		setattr(cls, funcName, script)
-		cls.bindKey("shift+%s" % key, scriptName)
+		cls.__gestures["kb:shift+%s" % key] = scriptName
 
-	def script_elementsList(self,keyPress):
-		if self.VBufHandle is None:
-			return
+	def script_elementsList(self,gesture):
 		# We need this to be a modal dialog, but it mustn't block this script.
 		def run():
 			gui.mainFrame.prePopup()
@@ -812,13 +816,13 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			return True
 		return False
 
-	def event_caretMovementFailed(self, obj, nextHandler, keyPress=None):
-		if not self.passThrough or not keyPress or not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]:
+	def event_caretMovementFailed(self, obj, nextHandler, gesture=None):
+		if not self.passThrough or not gesture or not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]:
 			return nextHandler()
-		if keyPress[1] in ("extendedhome", "extendedend"):
+		if gesture.mainKeyName in ("home", "end"):
 			# Home, end, control+home and control+end should not disable pass through.
 			return nextHandler()
-		script = self.getScript(keyPress)
+		script = self.getScript(gesture)
 		if not script:
 			return nextHandler()
 
@@ -826,25 +830,25 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		# Therefore, move the virtual caret to the same edge of the field.
 		info = self.makeTextInfo(textInfos.POSITION_CARET)
 		info.expand(info.UNIT_CONTROLFIELD)
-		if keyPress[1] in ("extendedleft", "extendedup", "extendedprior"):
+		if gesture.mainKeyName in ("extendedleft", "extendedup", "extendedprior"):
 			info.collapse()
 		else:
 			info.collapse(end=True)
 			info.move(textInfos.UNIT_CHARACTER, -1)
 		info.updateCaret()
 
-		scriptHandler.queueScript(script, keyPress)
+		scriptHandler.queueScript(script, gesture)
 
-	def script_disablePassThrough(self, keyPress):
+	def script_disablePassThrough(self, gesture):
 		if not self.passThrough or self.disableAutoPassThrough:
-			return sendKey(keyPress)
+			return gesture.send()
 		self.passThrough = False
 		self.disableAutoPassThrough = False
 		reportPassThrough(self)
 	script_disablePassThrough.ignoreTreeInterceptorPassThrough = True
 
-	def script_collapseOrExpandControl(self, keyPress):
-		sendKey(keyPress)
+	def script_collapseOrExpandControl(self, gesture):
+		gesture.send()
 		if not self.passThrough:
 			return
 		self.passThrough = False
@@ -862,9 +866,6 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		@return: C{True} if the tab order was overridden, C{False} if not.
 		@rtype: bool
 		"""
-		if self.VBufHandle is None:
-			return False
-
 		focus = api.getFocusObject()
 		try:
 			focusInfo = self.makeTextInfo(focus)
@@ -901,13 +902,13 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			obj.setFocus()
 		return True
 
-	def script_tab(self, keyPress):
+	def script_tab(self, gesture):
 		if not self._tabOverride("next"):
-			sendKey(keyPress)
+			gesture.send()
 
-	def script_shiftTab(self, keyPress):
+	def script_shiftTab(self, gesture):
 		if not self._tabOverride("previous"):
-			sendKey(keyPress)
+			gesture.send()
 
 	def event_focusEntered(self,obj,nextHandler):
 		if self.passThrough:
@@ -935,8 +936,6 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
 			# This is not ideal if the user was positioned over a node which cannot receive focus.
 			return
-		if self.VBufHandle is None:
-			return nextHandler()
 		if obj==self.rootNVDAObject:
 			if self.passThrough:
 				return nextHandler()
@@ -996,9 +995,6 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		@rtype: bool
 		@note: If C{False} is returned, calling events should probably call their nextHandler.
 		"""
-		if not self.VBufHandle:
-			return False
-
 		if self.programmaticScrollMayFireEvent and self._lastProgrammaticScrollTime and time.time() - self._lastProgrammaticScrollTime < 0.4:
 			# This event was probably caused by this buffer's call to scrollIntoView().
 			# Therefore, ignore it. Otherwise, the cursor may bounce back to the scroll point.
@@ -1137,19 +1133,19 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		info.collapse()
 		self.selection = info
 
-	def script_nextRow(self, keyPress):
+	def script_nextRow(self, gesture):
 		self._tableMovementScriptHelper(axis="row", movement="next")
 	script_nextRow.__doc__ = _("moves to the next table row")
 
-	def script_previousRow(self, keyPress):
+	def script_previousRow(self, gesture):
 		self._tableMovementScriptHelper(axis="row", movement="previous")
 	script_previousRow.__doc__ = _("moves to the previous table row")
 
-	def script_nextColumn(self, keyPress):
+	def script_nextColumn(self, gesture):
 		self._tableMovementScriptHelper(axis="column", movement="next")
 	script_nextColumn.__doc__ = _("moves to the next table column")
 
-	def script_previousColumn(self, keyPress):
+	def script_previousColumn(self, gesture):
 		self._tableMovementScriptHelper(axis="column", movement="previous")
 	script_previousColumn.__doc__ = _("moves to the previous table column")
 
@@ -1192,22 +1188,22 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"""
 		return False
 
-[VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
-	("Return","activatePosition"),
-	("Space","activatePosition"),
-	("NVDA+f5","refreshBuffer"),
-	("NVDA+v","toggleScreenLayout"),
-	("NVDA+f7","elementsList"),
-	("escape","disablePassThrough"),
-	("alt+extendedUp","collapseOrExpandControl"),
-	("alt+extendedDown","collapseOrExpandControl"),
-	("tab", "tab"),
-	("shift+tab", "shiftTab"),
-	("control+alt+extendedDown", "nextRow"),
-	("control+alt+extendedUp", "previousRow"),
-	("control+alt+extendedRight", "nextColumn"),
-	("control+alt+extendedLeft", "previousColumn"),
-)]
+	__gestures = {
+		"kb:enter": "activatePosition",
+		"kb:space": "activatePosition",
+		"kb:NVDA+f5": "refreshBuffer",
+		"kb:NVDA+v": "toggleScreenLayout",
+		"kb:NVDA+f7": "elementsList",
+		"kb:escape": "disablePassThrough",
+		"kb:alt+upArrow": "collapseOrExpandControl",
+		"kb:alt+downArrow": "collapseOrExpandControl",
+		"kb:tab": "tab",
+		"kb:shift+tab": "shiftTab",
+		"kb:control+alt+downArrow": "nextRow",
+		"kb:control+alt+upArrow": "previousRow",
+		"kb:control+alt+rightArrow": "nextColumn",
+		"kb:control+alt+leftArrow": "previousColumn",
+	}
 
 # Add quick navigation scripts.
 qn = VirtualBuffer.addQuickNav

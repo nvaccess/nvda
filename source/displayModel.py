@@ -9,10 +9,14 @@ import textInfos
 from textInfos.offsets import OffsetsTextInfo
 
 _getWindowTextInRect=None
+_requestTextChangeNotificationsForWindow=None
+#: Objects that have registered for text change notifications.
+_textChangeNotificationObjs=[]
 
 def initialize():
-	global _getWindowTextInRect
+	global _getWindowTextInRect,_requestTextChangeNotificationsForWindow
 	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_int,c_int,c_int,c_int,c_int,c_int,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
+	_requestTextChangeNotificationsForWindow=NVDAHelper.localLib.displayModel_requestTextChangeNotificationsForWindow
 
 def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace):
 	text, cpBuf = _getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace)
@@ -24,6 +28,20 @@ def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,mi
 	for cp in cpBufIt:
 		characterRects.append((ord(cp), ord(next(cpBufIt)), ord(next(cpBufIt)), ord(next(cpBufIt))))
 	return text, characterRects
+
+def requestTextChangeNotifications(obj, enable):
+	if not enable:
+		_textChangeNotificationObjs.remove(obj)
+	_requestTextChangeNotificationsForWindow(obj.appModule.helperLocalBindingHandle, obj.windowHandle, enable)
+	if enable:
+		_textChangeNotificationObjs.append(obj)
+
+def textChangeNotify(windowHandle, left, top, right, bottom):
+	for obj in _textChangeNotificationObjs:
+		if windowHandle == obj.windowHandle:
+			# It is safe to call this event from this RPC thread.
+			# This avoids an extra core cycle.
+			obj.event_textChange()
 
 class DisplayModelTextInfo(OffsetsTextInfo):
 
@@ -70,8 +88,6 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		#Return the lowest offset with the shortest distance
 		return d[0][1] if len(d)>0 else 0
 
-
-
 	def _getNVDAObjectFromOffset(self,offset):
 		try:
 			p=self._getPointFromOffset(offset)
@@ -92,6 +108,8 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		offset=self._getClosestOffsetFromPoint(x,y)
 		return offset,offset
 
+	def _get_clipboardText(self):
+		return super(DisplayModelTextInfo,self).clipboardText.replace('\0',' ')
 
 class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 

@@ -3,14 +3,24 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2010.3 =
+= 2011.1 =
 
 == New Features ==
 - Colors can now be reported for some controls. Automatic announcement can be configured in the Document Formatting preferences dialog. It can also be reported on demand using the report text formatting command (NVDA+f).
+- In virtual buffers, you can now select by page (using shift+pageDown and shift+pageUp) and paragraph (using shift+control+downArrow and shift+control+upArrow). (#639)
+- NVDA now automatically reports new text output in mIRC, PuTTY, Tera Term and SecureCRT. (#936)
+- Users can now add new key bindings or override existing ones for any script in NVDA by providing a single user input gesture map. (#194)
+- Support for global plugins. Global plugins can add new functionality to NVDA which works across all applications. (#281)
 - For the convenience of app module developers, app modules can now be reloaded without restarting NVDA. Use tools->Reload app modules in the NVDA menu or NVDA+ctrl+f3. (#544)
 
 
 == Changes ==
+- Keyboard help has been renamed to input help to reflect that it handles input from sources other than the keyboard.
+- The location of a script in the code is no longer reported in input help, as it is irrelevant and cryptic to the user.
+- When NVDA detects that it has frozen, it continues to intercept NVDA modifier keys, even though it passes all other keys through to the system. This prevents the user from unintentionally toggling caps lock, etc. if they press an NVDA modifier key without realising NVDA has frozen. (#939)
+- If keys are held down after using the pass next key through command, all keys (including key repeats) are now passed through until the last key is released.
+- If an NVDA modifier key is pressed twice in quick succession to pass it through and the second press is held down, all key repeats will now be passed through as well.
+- The volume up, down and mute keys are now reported in input help. This could be helpful if the user is uncertain as to what these keys are.
 
 
 == Bug Fixes ==
@@ -19,6 +29,31 @@
 - In AIM, position information is now announced in tree views.
 - Position information is no longer reported in some cases where it was usually incorrect; e.g. most menus, the Running Applications bar, the Notification Area, etc.
 - On sliders in the Voice Settings dialog, up arrow/page up/home now increase the setting and down arrow/page down/end decrease it. Previously, the opposite occurred, which is not logical and is inconsistent with the synth settings ring. (#221)
+- If an NVDA modifier key is pressed twice quickly but there is an intervening key press, the NVDA modifier key is no longer passed through on the second press.
+- Punctuation keys are now spoken in input help even when speaking of punctuation is disabled. (#977)
+- In the Keyboard Settings dialog, the keyboard layout names are now presented in the configured NVDA language instead of always in English. (#558)
+- Fixed an issue where some items were rendered as empty in Adobe Reader documents; e.g. the links in the table of contents of the Apple iPhone IOS 4.1 User Guide.
+- The "Use currently saved settings on the logon and other secure screens" button in NVDA's General Settings dialog now works if used immediately after NVDA is newly installed but before a secure screen has appeared. Previously, NVDA reported that copying was successful, but it actually had no effect. (#1194)
+
+
+== Changes for Developers ==
+- SCons is now used to prepare the source tree and create binary builds, portable archives, installers, etc. See readme.txt at the root of the source distribution for details.
+- The key names used by NVDA (including key maps) have been made more friendly/logical; e.g. upArrow instead of extendedUp and numpadPageUp instead of prior. See the vkCodes module for a list.
+-All input from the user is now represented by an inputCore.InputGesture instance. (#601)
+ - Each source of input subclasses the base InputGesture class. For example, key presses are encompassed by the keyboardHandler.KeyboardInputGesture class.
+- Input gestures are bound to ScriptableObjects using the ScriptableObject.bindGesture() method on an instance or an __gestures dict on the class which maps gesture identifiers to script names. See baseObject.ScriptableObject for details.
+- App modules no longer have key map files. All input gesture bindings must be done in the app module itself.
+- All scripts now take an InputGesture instance instead of a key press.
+ - KeyboardInputGestures can be sent on to the OS using the send() method of the gesture.
+- To send an arbitrary key press, you must now create a KeyboardInputGesture using KeyboardInputGesture.fromName() and then use its send() method.
+- Locales may now provide an input gesture map file to add new bindings or override existing bindings for scripts anywhere in NVDA. (#810)
+ - Locale gesture maps should be placed in locale\LANG\gestures.ini, where LANG is the language code.
+ - See inputCore.GlobalGestureMap for details of the file format.
+- The new LiveText and Terminal NVDAObject behaviors facilitate automatic reporting of new text. See those classes in NVDAObjects.behaviors for details. (#936)
+ - The NVDAObjects.window.DisplayModelLiveText overlay class can be used for objects which must retrieve text written to the display.
+ - See the mirc and putty app modules for usage examples.
+- There is no longer an _default app module. App modules should instead subclass appModuleHandler.AppModule (the base AppModule class).
+- Support for global plugins which can globally bind scripts, handle NVDAObject events and choose NVDAObject overlay classes. (#281) See globalPluginHandler.GlobalPlugin for details.
 
 
 = 2010.2 =
@@ -95,6 +130,8 @@ Notable features of this release include greatly simplified object navigation; v
 - NVDA now functions correctly on a system where the current working directory has been removed from the DLL search path (by setting the CWDIllegalInDllSearch registry entry to 0xFFFFFFFF). Note that this is not relevant to most users. (#907)
 - When the table navigation commands are used outside of a table in Microsoft Word, "edge of table" is no longer spoken after "not in table". (#921)
 - When the table navigation commands cannot move due to being at the edge of a table in Microsoft Word, "edge of table" is now spoken in the configured NVDA language rather than always in English. (#921)
+- In Outlook Express, Windows Mail and Windows Live Mail, the state of the checkboxes in message rules lists is now reported. (#576)
+- The description of message rules can now be read in Windows Live Mail 2010.
 
 
 = 2010.1 =

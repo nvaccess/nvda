@@ -21,6 +21,7 @@ import controlTypes
 import appModuleHandler
 import treeInterceptorHandler
 import braille
+import globalPluginHandler
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -71,10 +72,14 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			obj.findOverlayClasses(clsList)
 		else:
 			clsList.append(APIClass)
-		# Allow app modules to add overlay classes.
+		# Allow app modules to choose overlay classes.
 		appModule=obj.appModule
 		if appModule and "chooseNVDAObjectOverlayClasses" in appModule.__class__.__dict__:
 			appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
+		# Allow global plugins to choose overlay classes.
+		for plugin in globalPluginHandler.runningPlugins:
+			if "chooseNVDAObjectOverlayClasses" in plugin.__class__.__dict__:
+				plugin.chooseNVDAObjectOverlayClasses(obj, clsList)
 
 		# Determine the bases for the new class.
 		bases=[]
@@ -107,6 +112,11 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			initFunc=cls.__dict__.get("initOverlayClass")
 			if initFunc:
 				initFunc(obj)
+			# Bind gestures specified on the class.
+			try:
+				obj.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))
+			except AttributeError:
+				pass
 
 		# Allow app modules to make minor tweaks to the instance.
 		if appModule and hasattr(appModule,"event_NVDAObject_init"):
@@ -786,7 +796,7 @@ This code is executed if a gain focus event is received by this object.
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
-			if config.conf["reviewCursor"]["followCaret"]:
+			if config.conf["reviewCursor"]["followCaret"] and api.getNavigatorObject() is self: 
 				try:
 					api.setReviewPosition(self.makeTextInfo(textInfos.POSITION_CARET))
 				except (NotImplementedError, RuntimeError):

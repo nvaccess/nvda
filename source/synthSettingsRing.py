@@ -37,7 +37,7 @@ class SynthSetting(baseObject.AutoPropertyObject):
 
 class StringSynthSetting(SynthSetting):
 	def __init__(self,synth,setting):
-		self._values=getattr(synth,"available%ss"%setting.name.capitalize())
+		self._values=getattr(synth,"available%ss"%setting.name.capitalize()).values()
 		super(StringSynthSetting,self).__init__(synth,setting,0,len(self._values)-1)
 
 	def _get_value(self):

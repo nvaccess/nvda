@@ -29,6 +29,8 @@
  - NVDA+pavnum1 Amène le curseur de revue dans l'objet représenté par le texte à la position du curseur de revue, vous permettant de naviguer par objets à partir de ce point.
 - Les paramètres courants de NVDA peuvent maintenant être copiés sur
 les écrans sécurisés de Windows tels que l'écran de connexion ou l'écran UAC en pressant un bouton dans le dialogue Paramètres généraux. (#730)
+- Support de Mozilla Firefox 4.
+- Support de Microsoft Internet Explorer 9.
 
 
 == Changements ==
@@ -71,6 +73,14 @@ les écrans sécurisés de Windows tels que l'écran de connexion ou l'écran UA
 - Dans les contrôles Scintilla (ex: Notepad++) le début des longues lignes n'est plus tronqué quand il sort de l'écran. Ces longues lignes sont également correctement affichées en Braille quand elles sont sélectionnées.
 - Sous Loudtalks, il est maintenant possible d'accéder à la liste des contacts.
 - L'url du document et "MSAAHTML Registered Handler" ne sont plus annoncés de manière incongrue sous Internet Explorer et les autres contrôles MSHTML. (#811)
+- Dans les arborescence de l'éditeur d'Eclipse, l'élément précédemment en focus n'est plus annoncé par erreur quand un nouvel élément prend le focus.
+- NVDA fonctionne maintenant correctement sur les systèmes où le répertoire courant a été retiré du chemin de recherche des dlls 
+ (en mettant l'entrée de registre CWWDIllegalInDllSearch à 0xFFFFFFFF). Note :  ceci ne concerne pas la plupart des utilisateurs. (#907)
+- Quand les commandes de navigation dans un tableau sont utilisées hors d'un tableau sous Microsoft word, "limite du tableau" n'est plus annoncé après "hors du tableau". (#921)
+- Sous Microsoft Word, quand les commandes de navigation dans un tableau ne peuvent plus agir parce qu'on a atteint la limite du tableau, "limite du tableau" est maintenant annoncé dans la langue configurée dans NVDA et non systématiquement en anglais. (#921)
+- Quand on déplace le curseur principal dans un tampon virtuel, le curseur de revue donne accès à l'ensemble du document et non plus uniquement à l'objet en focus.
+- Sous Outlook Express, Windows Mail et Windows Live Mail, l'état des cases à cocher dans les listes de règles de messages est maintenant annoncé. (#576)
+- La description des règles de messages peut maintenant être lue sous Windows Live Mail 2010.
 
 
 = 2010.1 =

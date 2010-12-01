@@ -14,7 +14,6 @@ import speech
 import config
 import eventHandler
 from scriptHandler import isScriptWaiting
-from keyUtils import key, sendKey
 import textInfos
 
 class EditableText(ScriptableObject):
@@ -61,41 +60,41 @@ class EditableText(ScriptableObject):
 			info = self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
 			return
-		if config.conf["reviewCursor"]["followCaret"]:
+		if config.conf["reviewCursor"]["followCaret"] and api.getNavigatorObject() is self:
 			api.setReviewPosition(info.copy())
 		if speakUnit:
 			info.expand(speakUnit)
 			speech.speakTextInfo(info, unit=speakUnit, reason=speech.REASON_CARET)
 
-	def _caretMovementScriptHelper(self, keyPress, unit):
+	def _caretMovementScriptHelper(self, gesture, unit):
 		try:
 			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
-			sendKey(keyPress)
+			gesture.send()
 			return
 		bookmark=info.bookmark
-		sendKey(keyPress)
+		gesture.send()
 		if not self._hasCaretMoved(bookmark) and self.shouldFireCaretMovementFailedEvents:
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
+			eventHandler.executeEvent("caretMovementFailed", self, gesture=gesture)
 		self._caretScriptPostMovedHelper(unit)
 
-	def script_caret_moveByLine(self,keyPress):
-		self._caretMovementScriptHelper(keyPress, textInfos.UNIT_LINE)
+	def script_caret_moveByLine(self,gesture):
+		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE)
 
-	def script_caret_moveByCharacter(self,keyPress):
-		self._caretMovementScriptHelper(keyPress, textInfos.UNIT_CHARACTER)
+	def script_caret_moveByCharacter(self,gesture):
+		self._caretMovementScriptHelper(gesture, textInfos.UNIT_CHARACTER)
 
-	def script_caret_moveByWord(self,keyPress):
-		self._caretMovementScriptHelper(keyPress, textInfos.UNIT_WORD)
+	def script_caret_moveByWord(self,gesture):
+		self._caretMovementScriptHelper(gesture, textInfos.UNIT_WORD)
 
-	def script_caret_moveByParagraph(self,keyPress):
-		self._caretMovementScriptHelper(keyPress, textInfos.UNIT_PARAGRAPH)
+	def script_caret_moveByParagraph(self,gesture):
+		self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH)
 
-	def _backspaceScriptHelper(self,unit,keyPress):
+	def _backspaceScriptHelper(self,unit,gesture):
 		try:
 			oldInfo=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
-			sendKey(keyPress)
+			gesture.send()
 			return
 		oldBookmark=oldInfo.bookmark
 		testInfo=oldInfo.copy()
@@ -105,7 +104,7 @@ class EditableText(ScriptableObject):
 			delChunk=testInfo.text
 		else:
 			delChunk=""
-		sendKey(keyPress)
+		gesture.send()
 		if not self._hasCaretMoved(oldBookmark):
 			return
 		if len(delChunk)>1:
@@ -114,45 +113,43 @@ class EditableText(ScriptableObject):
 			speech.speakSpelling(delChunk)
 		self._caretScriptPostMovedHelper(None)
 
-	def script_caret_backspaceCharacter(self,keyPress):
-		self._backspaceScriptHelper(textInfos.UNIT_CHARACTER,keyPress)
+	def script_caret_backspaceCharacter(self,gesture):
+		self._backspaceScriptHelper(textInfos.UNIT_CHARACTER,gesture)
 
-	def script_caret_backspaceWord(self,keyPress):
-		self._backspaceScriptHelper(textInfos.UNIT_WORD,keyPress)
+	def script_caret_backspaceWord(self,gesture):
+		self._backspaceScriptHelper(textInfos.UNIT_WORD,gesture)
 
-	def script_caret_delete(self,keyPress):
+	def script_caret_delete(self,gesture):
 		try:
 			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
-			sendKey(keyPress)
+			gesture.send()
 			return
 		bookmark=info.bookmark
-		sendKey(keyPress)
+		gesture.send()
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		self._hasCaretMoved(bookmark)
 		self._caretScriptPostMovedHelper(textInfos.UNIT_CHARACTER)
 
-	def initClass(self):
-		for keyName, scriptName in (
-			("ExtendedUp", "caret_moveByLine"),
-			("ExtendedDown", "caret_moveByLine"),
-			("ExtendedLeft", "caret_moveByCharacter"),
-			("ExtendedRight", "caret_moveByCharacter"),
-			("ExtendedPrior", "caret_moveByLine"),
-			("ExtendedNext", "caret_moveByLine"),
-			("Control+ExtendedLeft", "caret_moveByWord"),
-			("Control+ExtendedRight", "caret_moveByWord"),
-			("control+extendedUp", "caret_moveByParagraph"),
-			("control+extendedDown", "caret_moveByParagraph"),
-			("ExtendedHome", "caret_moveByCharacter"),
-			("ExtendedEnd", "caret_moveByCharacter"),
-			("control+extendedHome", "caret_moveByLine"),
-			("control+extendedEnd", "caret_moveByLine"),
-			("ExtendedDelete", "caret_delete"),
-			("Back", "caret_backspaceCharacter"),
-			("Control+Back", "caret_backspaceWord"),
-		):
-			self.bindKey_runtime(keyName, scriptName)
+	__gestures = {
+		"kb:upArrow": "caret_moveByLine",
+		"kb:downArrow": "caret_moveByLine",
+		"kb:leftArrow": "caret_moveByCharacter",
+		"kb:rightArrow": "caret_moveByCharacter",
+		"kb:pageUp": "caret_moveByLine",
+		"kb:pageDown": "caret_moveByLine",
+		"kb:control+leftArrow": "caret_moveByWord",
+		"kb:control+rightArrow": "caret_moveByWord",
+		"kb:control+upArrow": "caret_moveByParagraph",
+		"kb:control+downArrow": "caret_moveByParagraph",
+		"kb:home": "caret_moveByCharacter",
+		"kb:end": "caret_moveByCharacter",
+		"kb:control+home": "caret_moveByLine",
+		"kb:control+end": "caret_moveByLine",
+		"kb:delete": "caret_delete",
+		"kb:backspace": "caret_backspaceCharacter",
+		"kb:control+backspace": "caret_backspaceWord",
+	}
 
 	def initAutoSelectDetection(self):
 		"""Initialise automatic detection of selection changes.
@@ -186,13 +183,13 @@ class EditableTextWithoutAutoSelectDetection(EditableText):
 	This should be used when an object does not notify of selection changes.
 	"""
 
-	def script_caret_changeSelection(self,keyPress):
+	def script_caret_changeSelection(self,gesture):
 		try:
 			oldInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except:
-			sendKey(keyPress)
+			gesture.send()
 			return
-		sendKey(keyPress)
+		gesture.send()
 		if isScriptWaiting() or eventHandler.isPendingEvents("gainFocus"):
 			return
 		api.processPendingEvents(processEventQueue=False)
@@ -202,22 +199,24 @@ class EditableTextWithoutAutoSelectDetection(EditableText):
 			return
 		speech.speakSelectionChange(oldInfo,newInfo)
 
+	__changeSelectionGestures = (
+		"kb:shift+upArrow",
+		"kb:shift+downArrow",
+		"kb:shift+leftArrow",
+		"kb:shift+rightArrow",
+		"kb:shift+pageUp",
+		"kb:shift+pageDown",
+		"kb:shift+control+leftArrow",
+		"kb:shift+control+rightArrow",
+		"kb:shift+control+upArrow",
+		"kb:shift+control+downArrow",
+		"kb:shift+home",
+		"kb:shift+end",
+		"kb:shift+control+home",
+		"kb:shift+control+end",
+		"kb:control+a",
+	)
+
 	def initClass(self):
-		for keyName in (
-			"shift+ExtendedUp",
-			"shift+ExtendedDown",
-			"shift+ExtendedLeft",
-			"shift+ExtendedRight",
-			"shift+ExtendedPrior",
-			"shift+ExtendedNext",
-			"shift+Control+ExtendedLeft",
-			"shift+Control+ExtendedRight",
-			"shift+control+extendedUp",
-			"shift+control+extendedDown",
-			"shift+ExtendedHome",
-			"shift+ExtendedEnd",
-			"shift+control+extendedHome",
-			"shift+control+extendedEnd",
-			"control+a",
-		):
-			self.bindKey_runtime(keyName, "caret_changeSelection")
+		for gesture in self.__changeSelectionGestures:
+			self.bindGesture(gesture, "caret_changeSelection")

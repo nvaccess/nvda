@@ -131,7 +131,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	globalVars.focusAncestors=ancestors
 	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
 	if config.conf["reviewCursor"]["followFocus"]:
-		setNavigatorObject(obj)
+		setNavigatorObject(obj if not obj.treeInterceptor or obj.treeInterceptor.passThrough or not obj.treeInterceptor.isReady else obj.treeInterceptor.rootNVDAObject)
 	return True
 
 def getFocusDifferenceLevel():
@@ -164,7 +164,7 @@ def getReviewPosition():
 	else:
 		obj=globalVars.navigatorObject
 		ti=obj.treeInterceptor
-		if ti and ti.rootNVDAObject==obj:
+		if ti and ti.isReady and ti.rootNVDAObject==obj:
 			obj=ti
 		try:
 			globalVars.reviewPosition=obj.makeTextInfo(textInfos.POSITION_CARET)

@@ -1,4 +1,4 @@
-import _default
+import appModuleHandler
 import api
 import ui
 import time
@@ -20,7 +20,7 @@ def getOutputFormat(t):
 	else: 
 		return "%H:%M:%S"
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 	statusBar=None
 
 	def event_gainFocus(self, obj, nextHandler):
@@ -38,7 +38,7 @@ class AppModule(_default.AppModule):
 		totalTime = calendar.timegm(time.strptime(ltime[1].strip(),getFormat(ltime[1])))
 		return elapsedTime,totalTime
 
-	def script_reportRemainingTime(self,keyPress):
+	def script_reportRemainingTime(self,gesture):
 		times=self.getElapsedAndTotal()
 		if times is None:
 			ui.message(_("No track playing"))
@@ -48,3 +48,7 @@ class AppModule(_default.AppModule):
 		msg = time.strftime(getOutputFormat(remainingTime),time.gmtime(remainingTime))
 		ui.message(msg)
 	script_reportRemainingTime.__doc__ = _("Reports the remaining time of the currently playing track, if any")
+
+	__gestures = {
+		"kb:control+shift+r": "reportRemainingTime",
+	}

@@ -23,7 +23,7 @@ def _updateVersionFromVCS():
 
 name="NVDA"
 longName=_("NonVisual Desktop Access")
-version="unknown"
+version="2011.1dev"
 description=_("A free and open-source screen reader for MS Windows")
 url="http://www.nvda-project.org/"
 copyright=_("Copyright (C) 2006-2010 NVDA Contributors")
@@ -33,6 +33,9 @@ For further details, you can view the licence online at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 Or see the file Copying.txt that came with this software.""")%globals()
 
-_updateVersionFromVCS()
+try:
+	from _buildVersion import version
+except ImportError:
+	_updateVersionFromVCS()
 # A test version is anything other than a final or rc release.
 isTestVersion = not version[0].isdigit() or "alpha" in version or "beta" in version

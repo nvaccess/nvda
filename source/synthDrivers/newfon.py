@@ -4,7 +4,9 @@
 #Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-from synthDriverHandler import SynthDriver,VoiceInfo,SynthSetting,NumericSynthSetting
+
+from collections import OrderedDict
+from synthDriverHandler import SynthDriver, VoiceInfo, SynthSetting, LanguageInfo, StringParameterInfo
 from ctypes import *
 import os
 import config
@@ -155,12 +157,12 @@ def preprocessUkrainianText(text):
 def processText(text,language):
 	if len(text) == 1:
 		letter = text.lower()
-		if language == "ukr" and ukrainianLetters.has_key(letter): return ukrainianLetters[letter]
+		if language == "uk" and ukrainianLetters.has_key(letter): return ukrainianLetters[letter]
 		elif letters.has_key(letter): return letters[letter]
 		else: return letter
 	text = re_omittedCharacters.sub(" ", text)
-	text = re_zeros.sub(lambda match: subZeros(match,russianZeros if language=="rus" else ukrainianZeros),text)
-	if language == "ukr":
+	text = re_zeros.sub(lambda match: subZeros(match,russianZeros if language=="ru" else ukrainianZeros),text)
+	if language == "uk":
 		text = preprocessUkrainianText(text)
 	text = re_words.sub(expandAbbreviation,text) #this also lowers the text
 	text = preprocessEnglishText(text)
@@ -172,7 +174,7 @@ class SynthDriver(SynthDriver):
 	description = "Newfon"
 	supportedSettings=(
 		SynthDriver.VoiceSetting(),
-		SynthSetting("language",_("&Language")),
+		SynthDriver.LanguageSetting(),
 		SynthDriver.RateSetting(),
 		SynthSetting("accel",_("&Acceleration")),
 		SynthDriver.PitchSetting(),
@@ -180,15 +182,15 @@ class SynthDriver(SynthDriver):
 		SynthDriver.VolumeSetting(),
 	)
 	_volume = 100
-	_language="rus"
+	_language="ru"
 	_pitch = 50
 	_accel=0
 	_inflection=50
 	_rate=70
-	availableVoices = (VoiceInfo("0", _("male 1")), VoiceInfo("1", _("female 1")), VoiceInfo("2", _("male 2")), VoiceInfo("3", _("female 2")))
-	availableAccels=[VoiceInfo(str(x),str(x)) for x in xrange(8)]
+	availableVoices = OrderedDict((str(index),VoiceInfo(str(index),name)) for index,name in enumerate([_("male 1"),_("female 1"),_("male 2"),_("female 2")]))
+	availableAccels=OrderedDict((str(x), StringParameterInfo(str(x),str(x))) for x in xrange(8))
 	pitchTable=[(90,130),(190,330),(60,120),(220,340)]
-	availableLanguages = (VoiceInfo("rus", u"русский"), VoiceInfo("ukr", u"український"))
+	availableLanguages = OrderedDict((("ru",LanguageInfo("ru")), ("uk",LanguageInfo("uk"))))
 	newfon_lib = None
 	sdrvxpdbDll = None
 	dictDll = None
@@ -292,7 +294,7 @@ class SynthDriver(SynthDriver):
 	def _set_language(self, language):
 		self._language = language
 		if not self.hasDictLib: return
-		if language == "rus": self.newfon_lib.set_dictionary(1)
+		if language == "ru": self.newfon_lib.set_dictionary(1)
 		else: self.newfon_lib.set_dictionary(0)
 
 	def _set_inflection(self,inflection):

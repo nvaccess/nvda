@@ -366,7 +366,6 @@ class CompoundDocument(EditableText, TreeInterceptor):
 
 	def __init__(self, rootNVDAObject):
 		super(CompoundDocument, self).__init__(rootNVDAObject)
-		EditableText.initClass(self)
 
 	def _get_isAlive(self):
 		root = self.rootNVDAObject

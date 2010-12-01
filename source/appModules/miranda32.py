@@ -12,15 +12,15 @@ import winKernel
 import winUser
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.behaviors import Dialog
-import _default
+import appModuleHandler
 import speech
 import braille
 import controlTypes
-from keyUtils import sendKey
 from scriptHandler import isScriptWaiting
 import api
 import mouseHandler
 import oleacc
+from keyboardHandler import KeyboardInputGesture
 
 #contact list window messages
 CLM_FIRST=0x1000    #this is the same as LVM_FIRST
@@ -76,12 +76,15 @@ CLM_GETSTATUSMSG=CLM_FIRST+105
 ANSILOGS=(1001,1006)
 MESSAGEVIEWERS=(1001,1005,5005)
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 	lastTextLengths={}
 	lastMessages=[]
+	# Must not be > 9.
 	MessageHistoryLength=3
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if obj.role == controlTypes.ROLE_WINDOW: 
+			return
 		windowClass = obj.windowClassName
 		if windowClass == "CListControl":
 			try:
@@ -106,13 +109,18 @@ class AppModule(_default.AppModule):
 		elif (obj.windowControlID in ANSILOGS) and (obj.windowClassName=="RichEdit20A"):
 			obj._isWindowUnicode=False
 
-	def script_readMessage(self,keyPress):
-		num=int(keyPress[-1][-1])
+	def script_readMessage(self,gesture):
+		num=int(gesture.keyName[-1])
 		if len(self.lastMessages)>num-1:
 			ui.message(self.lastMessages[num-1])
 		else:
 			ui.message(_("No message yet"))
 	script_readMessage.__doc__=_("Displays one of the recent messages")
+
+	def __init__(self, *args, **kwargs):
+		super(AppModule, self).__init__(*args, **kwargs)
+		for n in xrange(1, self.MessageHistoryLength + 1):
+			self.bindGesture("kb:NVDA+control+%s" % n, "readMessage")
 
 class mirandaIMContactList(IAccessible):
 
@@ -149,13 +157,27 @@ class mirandaIMContactList(IAccessible):
 			newStates.add(controlTypes.STATE_COLLAPSED)
 		return newStates
 
-	def script_changeItem(self,keyPress):
-		sendKey(keyPress)
+	def script_changeItem(self,gesture):
+		gesture.send()
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			speech.speakObject(self,reason=speech.REASON_FOCUS)
 			braille.handler.handleGainFocus(self)
 
+	__changeItemGestures = (
+		"kb:downArrow",
+		"kb:upArrow",
+		"kb:leftArrow",
+		"kb:rightArrow",
+		"kb:home",
+		"kb:end",
+		"kb:pageUp",
+		"kb:pageDown",
+	)
+
+	def initOverlayClass(self):
+		for gesture in self.__changeItemGestures:
+			self.bindGesture(gesture, "changeItem")
 
 class mirandaIMButton(IAccessible):
 
@@ -166,11 +188,21 @@ class mirandaIMButton(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_BUTTON
 
-	def doDefaultAction(self):
-		sendKey(((),"SPACE"))
+	def getActionName(self):
+		if controlTypes.STATE_FOCUSED not in self.states:
+			return
+		return "Click"
 
-	def script_doDefaultAction(self,keyPress):
-		self.doDefaultAction()
+	def doAction(self):
+		if controlTypes.STATE_FOCUSED not in self.states:
+			return
+		KeyboardInputGesture.fromName("space").send()
+
+	def script_doDefaultAction(self,gesture):
+		self.doAction()
+
+	def initOverlayClass(self):
+		self.bindGesture("kb:enter", "doDefaultAction")
 
 class mirandaIMHyperlink(mirandaIMButton):
 
@@ -224,18 +256,3 @@ class DuplicateFocusListBox(IAccessible):
 		):
 			return False
 		return super(DuplicateFocusListBox, self).shouldAllowIAccessibleFocusEvent
-
-[mirandaIMContactList.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("extendedDown","changeItem"),
-	("extendedUp","changeItem"),
-	("extendedLeft","changeItem"),
-	("extendedRight","changeItem"),
-	("extendedHome","changeItem"),
-	("extendedEnd","changeItem"),
-	("extendedPrior","changeItem"),
-	("extendedNext","changeItem"),
-]]
-
-[mirandaIMButton.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("Return","doDefaultAction"),
-]]

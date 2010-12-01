@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import _default
+import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible
 import oleacc
 from NVDAObjects.IAccessible.sysListView32 import ListItem
@@ -29,7 +29,7 @@ class loudTalksContactListItem(ListItem):
 		return keyboardShortcut
 
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.role == controlTypes.ROLE_WINDOW: 

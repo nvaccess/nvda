@@ -416,17 +416,23 @@ the NVDAObject for IAccessible
 			MSHTML.findExtraIAccessibleOverlayClasses(self, clsList)
 
 		#Support for Windowless richEdit
-		pIidITextServices=ctypes.cast(ctypes.windll.msftedit.IID_ITextServices,ctypes.POINTER(GUID))
-		try:
-			pDoc=self.IAccessibleObject.QueryInterface(IServiceProvider).QueryService(pIidITextServices.contents,ITextDocument)
-		except COMError:
-			pDoc=None
-		if pDoc:
-			self._ITextDocumentObject=pDoc
-			self.useITextDocumentSupport=True
-			self.editAPIVersion=2
-			from NVDAObjects.window.edit import Edit
-			clsList.append(Edit)
+		if not hasattr(IAccessible,"IID_ITextServices"):
+			try:
+				IAccessible.IID_ITextServices=ctypes.cast(ctypes.windll.msftedit.IID_ITextServices,ctypes.POINTER(GUID)).contents
+			except WindowsError:
+				log.debugWarning("msftedit not available, couldn't retrieve IID_ITextServices")
+				IAccessible.IID_ITextServices=None
+		if IAccessible.IID_ITextServices:
+			try:
+				pDoc=self.IAccessibleObject.QueryInterface(IServiceProvider).QueryService(IAccessible.IID_ITextServices,ITextDocument)
+			except COMError:
+				pDoc=None
+			if pDoc:
+				self._ITextDocumentObject=pDoc
+				self.useITextDocumentSupport=True
+				self.editAPIVersion=2
+				from NVDAObjects.window.edit import Edit
+				clsList.append(Edit)
 
 		#Window root IAccessibles
 		if self.event_objectID in (None,winUser.OBJID_WINDOW) and self.event_childID==0 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
@@ -1350,12 +1356,6 @@ class Tooltip(IAccessible):
 			# TODO: Don't use getBrailleTextForProperties directly.
 			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
 
-class ConsoleWindowClass(IAccessible):
-
-	def event_nameChange(self):
-		pass
-
-
 class List(IAccessible):
 
 	def _get_role(self):
@@ -1510,7 +1510,6 @@ _staticMap={
 	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
 	("TRxRichEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,oleacc.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
-	("ConsoleWindowClass",oleacc.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
 	(None,oleacc.ROLE_SYSTEM_LIST):"List",
 	(None,oleacc.ROLE_SYSTEM_COMBOBOX):"ComboBox",
 	(None,oleacc.ROLE_SYSTEM_OUTLINE):"Outline",
@@ -1526,7 +1525,7 @@ _staticMap={
 	("SysTreeView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysTreeView32.TreeViewItem",
 	("SysTreeView32",0):"sysTreeView32.BrokenCommctrl5Item",
 	("ATL:SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
-	("TWizardForm",oleacc.ROLE_SYSTEM_CLIENT):"Dialog",
+	("TWizardForm",oleacc.ROLE_SYSTEM_CLIENT):"delphi.Form",
 	("SysLink",oleacc.ROLE_SYSTEM_CLIENT):"SysLinkClient",
 	("SysLink",oleacc.ROLE_SYSTEM_LINK):"SysLink",
 	("#32771",oleacc.ROLE_SYSTEM_LIST):"TaskList",
@@ -1534,9 +1533,10 @@ _staticMap={
 	("#32771",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("TaskSwitcherWnd",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("TGroupBox",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TGroupBox",
-	("TFormOptions",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TFormOptions",
-	("TFormOptions",oleacc.ROLE_SYSTEM_WINDOW):"delphi.TFormOptions",
-	("TTabSheet",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TTabSheet",
+	("TFormOptions",oleacc.ROLE_SYSTEM_CLIENT):"delphi.Form",
+	("TMessageForm",oleacc.ROLE_SYSTEM_CLIENT):"delphi.Form",
+	("TFormOptions",oleacc.ROLE_SYSTEM_WINDOW):"delphi.Form",
+	("TTabSheet",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TabSheet",
 	("MsiDialogCloseClass",oleacc.ROLE_SYSTEM_CLIENT):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("TPTShellList",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",

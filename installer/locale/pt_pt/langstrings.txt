@@ -4,7 +4,7 @@ LangString msg_WelcomePageText ${LANG_PORTUGUESE} "Bem vindo à instalação do ${P
 Copyright 2006-2010 Contribuidores do NVDA.$\n\
 Este assistente irá guiá-lo através da instalação do ${PRODUCT}. É recomendado que feche todas  as outras aplicações antes de continuar com esta instalação.$\n"
 LangString msg_NVDAWebSite ${LANG_PORTUGUESE} "Visitar o website oficial do NVDA"
-LangString msg_NVDARunning ${LANG_PORTUGUESE} "Já existe uma outra cópia do NVDA em execução. Terá que fechá-la antes de continuar com a instalação."
+LangString msg_NVDARunning ${LANG_PORTUGUESE} "Já existe uma outra cópia do NVDA em execução. A mesma vai ser encerrada antes que a instalação possa continuar."
 LangString msg_pagePrevInstallLabel ${LANG_PORTUGUESE} "Foi detectada uma instalação anterior do NVDA no seu sistema. É extremamente recomendado que a remova antes de continuar com a instalação."
 LangString msg_pagePrevInstallUninstallCheckBox ${LANG_PORTUGUESE} "Desinstalar (recomendado)"
 LangString shortcut_uninstall $(LANG_PORTUGUESE) "Desinstalar"
@@ -20,15 +20,15 @@ LangString path_keycomfile $(LANG_PORTUGUESE) "pt_PT\keyCommands.html"
 LangString UNLOG_HEADER ${LANG_PORTUGUESE} "=========== Registo de Desinstalação \
                                          por favor, não edite este fichheiro ==========="
 LangString UNLOG_DAT_NOT_FOUND ${LANG_PORTUGUESE} "O ${UNINST_DAT} não foi encontrado, \
-                                                não é possível executar a desinstalação."
+                                                não é possível continuar com a desinstalação."
 LangString UNLOG_DEL_FILE ${LANG_PORTUGUESE} 'Pretende eliminar o ficheiro "$R9"?'
 LangString UNLOG_DEL_DIR ${LANG_PORTUGUESE} 'Pretende remover a pasta "$R9"?'
 LangString UNLOG_EMPTY_DIR ${LANG_PORTUGUESE} "Foi detectada uma instalação anterior em $0.$\n\
                                             O ficheiro requerido ${UNINSTALL_LOG}.dat está em falta.$\n$\n\
                                             É extremamente recomendado que seleccione uma \
-                                            pasta vazia e executar uma nova instalação."
+                                            pasta vazia e inicie uma nova instalação."
 LangString UNLOG_ERROR_LOG ${LANG_PORTUGUESE} "Erro no registo ${UNINSTALL_LOG}."
 LangString UNLOG_ERROR_CREATE ${LANG_PORTUGUESE} "Erro ao criar o ${UNINSTALL_LOG}."
-LangString section_service ${LANG_PORTUGUESE} "NVDA service (Janela de logon / Suporte aos diálogos de segurança)"
+LangString section_service ${LANG_PORTUGUESE} "Serviço do NVDA (Janela de início de sessão/suporte aos diálogos de segurança)"
 LangString section_desktopShortcut ${LANG_PORTUGUESE} "Criar ícone no ambiente de trabalho com o comando de tecla de atalho (ctrl+alt+n)"
 
