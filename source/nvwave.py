@@ -112,7 +112,7 @@ class WavePlayer(object):
 	#: A lock to prevent WaveOut* functions from being called simultaneously, as this can cause problems even if they are for different HWAVEOUTs.
 	_global_waveout_lock = threading.RLock()
 
-	def __init__(self, channels, samplesPerSec, bitsPerSample, closeWhenIdle=True):
+	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDevice=None, closeWhenIdle=True):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
 		@type channels: int
@@ -127,6 +127,9 @@ class WavePlayer(object):
 		self.channels=channels
 		self.samplesPerSec=samplesPerSec
 		self.bitsPerSample=bitsPerSample
+		if outputDevice is None:
+			outputDevice=outputDeviceID
+		self.outputDeviceID=outputDevice
 		#: If C{True}, close the output device when no audio is being played.
 		#: @type: bool
 		self.closeWhenIdle = closeWhenIdle
@@ -152,7 +155,7 @@ class WavePlayer(object):
 			wfx.nBlockAlign = self.bitsPerSample / 8 * self.channels
 			wfx.nAvgBytesPerSec = self.samplesPerSec * wfx.nBlockAlign
 			waveout = HWAVEOUT(0)
-			with self._global_waveout_lock: winmm.waveOutOpen(byref(waveout), outputDeviceID, LPWAVEFORMATEX(wfx), self._waveout_event, 0, CALLBACK_EVENT)
+			with self._global_waveout_lock: winmm.waveOutOpen(byref(waveout), self.outputDeviceID, LPWAVEFORMATEX(wfx), self._waveout_event, 0, CALLBACK_EVENT)
 			self._waveout = waveout.value
 			self._prev_whdr = None
 
