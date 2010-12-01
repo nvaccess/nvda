@@ -16,7 +16,6 @@ import wave
 __all__ = ("WavePlayer", "getOutputDeviceNames", "outputDeviceIDToName", "outputDeviceNameToID", "playWaveFile")
 
 winmm = None
-outputDeviceID=None
 
 HWAVEOUT = HANDLE
 LPHWAVEOUT = POINTER(HWAVEOUT)
@@ -77,17 +76,12 @@ def _winmm_errcheck(res, func, args):
 		winmm.waveOutGetErrorTextW(res, buf, sizeof(buf))
 		raise WindowsError(res, buf.value)
 
-def initialize(outputDevice=WAVE_MAPPER):
+outputDeviceID=WAVE_MAPPER
+def initialize():
 	"""Initializes audio subsystem.
-	@param outputDevice: The device ID or name of the audio output device to use.
-	@type outputDevice: int or basestring
-		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
 	"""
-	global winmm, outputDeviceID
+	global winmm
 	winmm = windll.winmm
-	if isinstance(outputDevice, basestring):
-		outputDevice = outputDeviceNameToID(outputDevice, True)
-	outputDeviceID = outputDevice
 	# Set argument types.
 	winmm.waveOutOpen.argtypes = (LPHWAVEOUT, UINT, LPWAVEFORMATEX, DWORD, DWORD, DWORD)
 	for func in (
@@ -104,13 +98,11 @@ def terminate():
 
 def setOutputDevice(outputDevice):
 	"""Set the output device for further playback.
-	@param outputDevice: The device ID or name of the audio output device to use.
-	@type outputDevice: int or basestring
+	@param outputDevice: The device ID of the audio output device to use as returned by L{outputDeviceNameToID}
+	@type outputDevice: int
 	@note: currently opened players will continue playback through previous device.
 	"""
 	global outputDeviceID
-	if isinstance(outputDevice, basestring):
-		outputDevice = outputDeviceNameToID(outputDevice)
 	outputDeviceID = outputDevice
 
 class WavePlayer(object):

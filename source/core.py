@@ -96,7 +96,7 @@ def resetConfiguration():
 	lang = config.conf["general"]["language"]
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
-	nvwave.setOutputDevice(config.conf["speech"]["outputDevice"])
+	nvwave.setOutputDevice(nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True))
 	#Speech
 	log.debug("initializing speech")
 	speech.initialize()
@@ -111,7 +111,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("loading config")
 	import config
 	config.load()
-	nvwave.initialize(config.conf["speech"]["outputDevice"])
+	nvwave.initialize()
+	nvwave.setOutputDevice(nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True))
 	if not globalVars.appArgs.minimal:
 		try:
 			nvwave.playWaveFile("waves\\start.wav")
