@@ -714,7 +714,10 @@ Tries to force this object to take the focus.
 
 	def event_typedCharacter(self,ch):
 		speech.speakTypedCharacters(ch)
-
+		import winUser
+		if config.conf["keyboard"]["beepForLowercaseWithCapslock"] and ch.islower() and winUser.getKeyState(winUser.VK_CAPITAL)&1:
+			import tones
+			tones.beep(3000,40)
 
 	def event_mouseMove(self,x,y):
 		if not self._mouseEntered and config.conf['mouse']['reportObjectRoleOnMouseEnter']:
