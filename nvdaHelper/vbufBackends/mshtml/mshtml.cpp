@@ -343,6 +343,8 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	VARIANT tempVar;
 	if(nodeName.compare(L"TABLE")==0) {
 		macro_addHTMLAttributeToMap(L"summary",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	} else if(nodeName.compare(L"A")==0) {
+		macro_addHTMLAttributeToMap(L"href",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	} else if(nodeName.compare(L"INPUT")==0) {
 		macro_addHTMLAttributeToMap(L"type",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 		macro_addHTMLAttributeToMap(L"value",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
@@ -844,7 +846,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			}
 		}
 
-		//A node wwho's rendered children produces no content, or only a small amount of whitespace should render its title
+		//A node who's rendered children produces no content, or only a small amount of whitespace should render its title or URL
 		int length=parentNode->getLength();
 		if(length>0&&length<=3) {
 		contentString=L" ";
@@ -855,10 +857,17 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			contentString=L"";
 			if(!IAName.empty()) {
 				contentString=IAName;
-			} else {
+			}
+			if(contentString.empty()) {
 				tempIter=attribsMap.find(L"HTMLAttrib::title");
 				if(tempIter!=attribsMap.end()) {
 					contentString=tempIter->second;
+				}
+			}
+			if(contentString.empty()) {
+				tempIter=attribsMap.find(L"HTMLAttrib::href");
+				if(tempIter!=attribsMap.end()) {
+					contentString=getNameForURL(tempIter->second);
 				}
 			}
 			if(!contentString.empty()) {
