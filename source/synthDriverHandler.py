@@ -284,8 +284,8 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		pass
 
 	def _getAvailableVoices(self):
-		"""fetches a ordered dictionary of voices that the synth supports.
-		@returns: a OrderedDict of L{VoiceInfo} instances representing the available voices, keyed by ID
+		"""fetches an ordered dictionary of voices that the synth supports.
+		@returns: an OrderedDict of L{VoiceInfo} instances representing the available voices, keyed by ID
 		@rtype: OrderedDict
 		"""
 		raise NotImplementedError
