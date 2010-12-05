@@ -611,7 +611,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 				lastTextOkToMerge=False
 
 	text=" ".join(relativeTextList)
-	if text and (not text.isspace() or "\t" in text):
+	if text and (not text.isspace() or "\t" in text or "\f" in text):
 		textList.append(text)
 
 	#Finally get speech text for any fields left in new controlFieldStack that are common with the old controlFieldStack (for closing), if extra detail is not requested
@@ -631,7 +631,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
 	text=" ".join(textList)
 	# Only speak if there is speakable text. Reporting of blank text is handled above.
-	if text and (not text.isspace() or "\t" in text):
+	if text and (not text.isspace() or "\t" in text or "\f" in text):
 		speakText(text,index=index)
 	else: #We still need to alert the synth of the given index
 		speakText(None,index=index)
