@@ -33,7 +33,9 @@ class SDM(IAccessible):
 			hwndFocus=winUser.getGUIThreadInfo(0).hwndFocus
 			if hwndFocus and hwndFocus!=self.windowHandle and not winUser.getClassName(hwndFocus).startswith('bosa_sdm'):
 				obj=getNVDAObjectFromEvent(hwndFocus,winUser.OBJID_CLIENT,0)
-				obj.name=self.name
+				if not obj: return None
+				if getattr(obj,'parentSDMCanOverrideName',True):
+					obj.name=self.name
 				return obj
 		return None
 
