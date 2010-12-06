@@ -46,7 +46,6 @@ class CursorManager(baseObject.ScriptableObject):
 		It is normally called by L{__init__} or L{initOverlayClass}.
 		"""
 		self._lastSelectionMovedStart=False
-		self.bindToStandardKeys()
 
 	def _get_selection(self):
 		return self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -95,64 +94,64 @@ class CursorManager(baseObject.ScriptableObject):
 			errorDialog.run()
 		CursorManager._lastFindText=text
 
-	def script_find(self,keyPress): 
+	def script_find(self,gesture): 
 		self.doFindTextDialog()
 	script_find.__doc__ = _("find a text string from the current cursor position")
 
-	def script_findNext(self,keyPress):
+	def script_findNext(self,gesture):
 		if not self._lastFindText:
 			self.doFindTextDialog()
 			return
 		self.doFindText(self._lastFindText)
 	script_findNext.__doc__ = _("find the next occurrence of the previously entered text string from the current cursor's position")
 
-	def script_findPrevious(self,keyPress):
+	def script_findPrevious(self,gesture):
 		if not self._lastFindText:
 			self.doFindTextDialog()
 			return
 		self.doFindText(self._lastFindText,reverse=True)
 	script_findPrevious.__doc__ = _("find the previous occurrence of the previously entered text string from the current cursor's position")
 
-	def script_pageUp(self,keyPress):
+	def script_moveByPage_back(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_LINE,-config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
 
-	def script_pageDown(self,keyPress):
+	def script_moveByPage_forward(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_LINE,config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
 
-	def script_moveByCharacter_back(self,keyPress):
+	def script_moveByCharacter_back(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_CHARACTER,-1,extraDetail=True,handleSymbols=True)
 
-	def script_moveByCharacter_forward(self,keyPress):
+	def script_moveByCharacter_forward(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_CHARACTER,1,extraDetail=True,handleSymbols=True)
 
-	def script_moveByWord_back(self,keyPress):
+	def script_moveByWord_back(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_WORD,-1,extraDetail=True,handleSymbols=True)
 
-	def script_moveByWord_forward(self,keyPress):
+	def script_moveByWord_forward(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_WORD,1,extraDetail=True,handleSymbols=True)
 
-	def script_moveByLine_back(self,keyPress):
+	def script_moveByLine_back(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_LINE,-1)
 
-	def script_moveByLine_forward(self,keyPress):
+	def script_moveByLine_forward(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_LINE,1)
 
-	def script_moveByParagraph_back(self,keyPress):
+	def script_moveByParagraph_back(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_PARAGRAPH,-1)
 
-	def script_moveByParagraph_forward(self,keyPress):
+	def script_moveByParagraph_forward(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_PARAGRAPH,1)
 
-	def script_startOfLine(self,keyPress):
+	def script_startOfLine(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_CHARACTER,posUnit=textInfos.UNIT_LINE,extraDetail=True,handleSymbols=True)
 
-	def script_endOfLine(self,keyPress):
+	def script_endOfLine(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_CHARACTER,posUnit=textInfos.UNIT_LINE,posUnitEnd=True,extraDetail=True,handleSymbols=True)
 
-	def script_topOfDocument(self,keyPress):
+	def script_topOfDocument(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_LINE,posConstant=textInfos.POSITION_FIRST)
 
-	def script_bottomOfDocument(self,keyPress):
+	def script_bottomOfDocument(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_LINE,posConstant=textInfos.POSITION_LAST)
 
 	def _selectionMovementScriptHelper(self,unit=None,direction=None,toPosition=None):
@@ -179,25 +178,37 @@ class CursorManager(baseObject.ScriptableObject):
 			self._lastSelectionMovedStart=False
 		speech.speakSelectionChange(oldInfo,newInfo)
 
-	def script_selectCharacter_forward(self,keyPress):
+	def script_selectCharacter_forward(self,gesture):
 		self._selectionMovementScriptHelper(unit=textInfos.UNIT_CHARACTER,direction=1)
 
-	def script_selectCharacter_back(self,keyPress):
+	def script_selectCharacter_back(self,gesture):
 		self._selectionMovementScriptHelper(unit=textInfos.UNIT_CHARACTER,direction=-1)
 
-	def script_selectWord_forward(self,keyPress):
+	def script_selectWord_forward(self,gesture):
 		self._selectionMovementScriptHelper(unit=textInfos.UNIT_WORD,direction=1)
 
-	def script_selectWord_back(self,keyPress):
+	def script_selectWord_back(self,gesture):
 		self._selectionMovementScriptHelper(unit=textInfos.UNIT_WORD,direction=-1)
 
-	def script_selectLine_forward(self,keyPress):
+	def script_selectLine_forward(self,gesture):
 		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=1)
 
-	def script_selectLine_back(self,keyPress):
+	def script_selectLine_back(self,gesture):
 		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=-1)
 
-	def script_selectToBeginningOfLine(self,keyPress):
+	def script_selectPage_forward(self,gesture):
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=config.conf["virtualBuffers"]["linesPerPage"])
+
+	def script_selectPage_back(self,gesture):
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=-config.conf["virtualBuffers"]["linesPerPage"])
+
+	def script_selectParagraph_forward(self, gesture):
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_PARAGRAPH, direction=1)
+
+	def script_selectParagraph_back(self, gesture):
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_PARAGRAPH, direction=-1)
+
+	def script_selectToBeginningOfLine(self,gesture):
 		curInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		curInfo.collapse()
 		tempInfo=curInfo.copy()
@@ -205,7 +216,7 @@ class CursorManager(baseObject.ScriptableObject):
 		if curInfo.compareEndPoints(tempInfo,"startToStart")>0:
 			self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=-1)
 
-	def script_selectToEndOfLine(self,keyPress):
+	def script_selectToEndOfLine(self,gesture):
 		curInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		curInfo.collapse()
 		tempInfo=curInfo.copy()
@@ -214,16 +225,16 @@ class CursorManager(baseObject.ScriptableObject):
 		if curInfo.compareEndPoints(tempInfo,"endToEnd")<0:
 			self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=1)
 
-	def script_selectToTopOfDocument(self,keyPress):
+	def script_selectToTopOfDocument(self,gesture):
 		self._selectionMovementScriptHelper(toPosition=textInfos.POSITION_FIRST)
 
-	def script_selectToBottomOfDocument(self,keyPress):
+	def script_selectToBottomOfDocument(self,gesture):
 		self._selectionMovementScriptHelper(toPosition=textInfos.POSITION_LAST,unit=textInfos.UNIT_CHARACTER,direction=1)
 
-	def script_selectAll(self,keyPress):
+	def script_selectAll(self,gesture):
 		self._selectionMovementScriptHelper(toPosition=textInfos.POSITION_ALL)
 
-	def script_copyToClipboard(self,keyPress):
+	def script_copyToClipboard(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		if info.isCollapsed:
 			speech.speakMessage(_("no selection"))
@@ -231,41 +242,41 @@ class CursorManager(baseObject.ScriptableObject):
 		if info.copyToClipboard():
 			speech.speakMessage(_("copied to clipboard"))
 
-	def bindToStandardKeys(self):
-		"""Bind the standard navigation, selection and copy keys to the cursor manager scripts.
-		"""
-		for keyName, scriptName in (
-			("extendedPrior","pageUp"),
-			("extendedNext","pageDown"),
-			("ExtendedUp","moveByLine_back"),
-			("ExtendedDown","moveByLine_forward"),
-			("ExtendedLeft","moveByCharacter_back"),
-			("ExtendedRight","moveByCharacter_forward"),
-			("Control+ExtendedLeft","moveByWord_back"),
-			("Control+ExtendedRight","moveByWord_forward"),
-			("Control+ExtendedUp","moveByParagraph_back"),
-			("Control+ExtendedDown","moveByParagraph_forward"),
-			("ExtendedHome","startOfLine"),
-			("ExtendedEnd","endOfLine"),
-			("control+ExtendedHome","topOfDocument"),
-			("control+ExtendedEnd","bottomOfDocument"),
-			("shift+extendedRight","selectCharacter_forward"),
-			("shift+extendedLeft","selectCharacter_back"),
-			("control+shift+extendedRight","selectWord_forward"),
-			("control+shift+extendedLeft","selectWord_back"),
-			("shift+extendedDown","selectLine_forward"),
-			("shift+extendedUp","selectLine_back"),
-			("shift+extendedEnd","selectToEndOfLine"),
-			("shift+extendedHome","selectToBeginningOfLine"),
-			("control+shift+extendedEnd","selectToBottomOfDocument"),
-			("control+shift+extendedHome","selectToTopOfDocument"),
-			("control+a","selectAll"),
-			("control+c","copyToClipboard"),
-			("NVDA+Control+f","find"),
-			("NVDA+f3","findNext"),
-			("NVDA+shift+f3","findPrevious"),
-		):
-			self.bindKey_runtime(keyName, scriptName)
+	__gestures = {
+		"kb:pageUp": "moveByPage_back",
+		"kb:pageDown": "moveByPage_forward",
+		"kb:upArrow": "moveByLine_back",
+		"kb:downArrow": "moveByLine_forward",
+		"kb:leftArrow": "moveByCharacter_back",
+		"kb:rightArrow": "moveByCharacter_forward",
+		"kb:control+leftArrow": "moveByWord_back",
+		"kb:control+rightArrow": "moveByWord_forward",
+		"kb:control+upArrow": "moveByParagraph_back",
+		"kb:control+downArrow": "moveByParagraph_forward",
+		"kb:home": "startOfLine",
+		"kb:end": "endOfLine",
+		"kb:control+home": "topOfDocument",
+		"kb:control+end": "bottomOfDocument",
+		"kb:shift+rightArrow": "selectCharacter_forward",
+		"kb:shift+leftArrow": "selectCharacter_back",
+		"kb:shift+control+rightArrow": "selectWord_forward",
+		"kb:shift+control+leftArrow": "selectWord_back",
+		"kb:shift+downArrow": "selectLine_forward",
+		"kb:shift+upArrow": "selectLine_back",
+		"kb:shift+pageDown": "selectPage_forward",
+		"kb:shift+pageUp": "selectPage_back",
+		"kb:shift+control+downArrow": "selectParagraph_forward",
+		"kb:shift+control+upArrow": "selectParagraph_back",
+		"kb:shift+end": "selectToEndOfLine",
+		"kb:shift+home": "selectToBeginningOfLine",
+		"kb:shift+control+end": "selectToBottomOfDocument",
+		"kb:shift+control+home": "selectToTopOfDocument",
+		"kb:control+a": "selectAll",
+		"kb:control+c": "copyToClipboard",
+		"kb:NVDA+Control+f": "find",
+		"kb:NVDA+f3": "findNext",
+		"kb:NVDA+shift+f3": "findPrevious",
+	}
 
 class _ReviewCursorManagerTextInfo(textInfos.TextInfo):
 	"""For use with L{ReviewCursorManager}.

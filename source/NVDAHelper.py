@@ -86,6 +86,12 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 		log.debugWarning("Could not find reg value 'Layout Text' for reg key %s"%layoutString)
 		return None
 
+@WINFUNCTYPE(c_long,c_long,c_long,c_long,c_long,c_long)
+def nvdaControllerInternal_displayModelTextChangeNotify(hwnd, left, top, right, bottom):
+	import displayModel
+	displayModel.textChangeNotify(hwnd, left, top, right, bottom)
+	return 0
+
 @WINFUNCTYPE(c_long,c_long,c_long,c_long,c_wchar_p,c_wchar_p,c_long,c_wchar_p)
 def nvdaControllerInternal_logMessage(pid,tid,level,fileName,funcName,lineNo,message):
 	if not log.isEnabledFor(level):
@@ -187,6 +193,7 @@ def initialize():
 		("nvdaController_cancelSpeech",nvdaController_cancelSpeech),
 		("nvdaController_brailleMessage",nvdaController_brailleMessage),
 		("nvdaControllerInternal_inputLangChangeNotify",nvdaControllerInternal_inputLangChangeNotify),
+		("nvdaControllerInternal_displayModelTextChangeNotify",nvdaControllerInternal_displayModelTextChangeNotify),
 		("nvdaControllerInternal_logMessage",nvdaControllerInternal_logMessage),
 	]:
 		try:
@@ -201,10 +208,15 @@ def initialize():
 	VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(
 		("VBuf_getTextInRange", localLib),
 		((1,), (1,), (1,), (2,), (1,)))
-	_remoteLib=cdll.LoadLibrary('lib/NVDAHelperRemote.dll')
+	#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
+	h=windll.kernel32.LoadLibraryExW(os.path.abspath(ur"lib\nvdaHelperRemote.dll"),0,0x8)
+	if not h:
+		log.critical("Error loading nvdaHelperRemote.dll: %s" % WinError())
+		return
+	_remoteLib=CDLL("nvdaHelperRemote",handle=h)
 	_remoteLib.getWinEvents.argtypes = [WinEventArray, c_uint]
-	if _remoteLib.nvdaHelper_initialize() < 0:
-		raise RuntimeError("Error initializing NVDAHelper")
+	if _remoteLib.injection_initialize() == 0:
+		raise RuntimeError("Error initializing NVDAHelperRemote")
 	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':
 		_remoteLoader64=RemoteLoader64()
 	winEventHookID=winUser.setWinEventHook(EVENT_TYPEDCHARACTER,EVENT_TYPEDCHARACTER,0,winEventCallback,0,0,0)
@@ -212,8 +224,8 @@ def initialize():
 def terminate():
 	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange
 	winUser.unhookWinEvent(winEventHookID)
-	if _remoteLib.nvdaHelper_terminate() < 0:
-		raise RuntimeError("Error terminating NVDAHelper")
+	if _remoteLib.injection_terminate() == 0:
+		raise RuntimeError("Error terminating NVDAHelperRemote")
 	_remoteLib=None
 	if _remoteLoader64:
 		_remoteLoader64.terminate()

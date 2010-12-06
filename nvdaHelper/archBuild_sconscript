@@ -1,0 +1,82 @@
+###
+#This file is a part of the NVDA project.
+#URL: http://www.nvda-project.org/
+#Copyright 2006-2010 NVDA contributers.
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License version 2.0, as published by
+#the Free Software Foundation.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#This license can be found at:
+#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
+Import(
+	'env',
+	'sourceDir',
+	'libInstallDir',
+	'clientInstallDir',
+)
+
+TARGET_ARCH=env['TARGET_ARCH']
+debug=env['nvdaHelperDebug']
+
+#Some defines and includes for the environment
+env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${nvdaHelperLogLevel}')])
+env.Append(CXXFLAGS=['/EHsc'])
+env.Append(CPPPATH=['#/include',Dir('.').abspath])
+env.Append(LINKFLAGS='/incremental:no')
+env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
+
+if not debug:
+	env.Append(CPPDEFINES=['NDEBUG'])
+	env.Append(CCFLAGS=['/O2','/MT'])
+	env.Append(LINKFLAGS='/release')
+else:
+	env.Append(PDB='${TARGET}.pdb')
+	env.Append(CCFLAGS=['/Od','/MTd'])
+
+Export('env')
+
+acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
+Export('acrobatAccessRPCStubs')
+
+ia2RPCStubs=env.SConscript('ia2_sconscript')
+Export('ia2RPCStubs')
+
+if TARGET_ARCH=='x86':
+	localLib=env.SConscript('local/sconscript')
+	Export('localLib')
+	env.Install(libInstallDir,localLib)
+
+clientLib=env.SConscript('client/sconscript')
+Export('clientLib')
+env.Install(clientInstallDir,clientLib)
+
+minHookLib=env.SConscript('minHook_sconscript')
+Export('minHookLib')
+env.Install(libInstallDir,minHookLib)
+
+remoteLib=env.SConscript('remote/sconscript')
+Export('remoteLib')
+env.Install(libInstallDir,remoteLib)
+
+if TARGET_ARCH=='x86_64':
+	remoteLoaderProgram=env.SConscript('remoteLoader/sconscript')
+	env.Install(libInstallDir,remoteLoaderProgram)
+
+vbufBaseStaticLib=env.SConscript('vbufBase/sconscript')
+Export('vbufBaseStaticLib')
+
+adobeAcrobatVBufBackend=env.SConscript('vbufBackends/adobeAcrobat/sconscript')
+env.Install(libInstallDir,adobeAcrobatVBufBackend)
+
+adobeFlashVBufBackend=env.SConscript('vbufBackends/adobeFlash/sconscript')
+env.Install(libInstallDir,adobeFlashVBufBackend)
+
+geckoVBufBackend=env.SConscript('vbufBackends/gecko_ia2/sconscript')
+env.Install(libInstallDir,geckoVBufBackend)
+
+mshtmlVBufBackend=env.SConscript('vbufBackends/mshtml/sconscript')
+env.Install(libInstallDir,mshtmlVBufBackend)

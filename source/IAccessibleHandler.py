@@ -22,6 +22,10 @@ NAVRELATION_LABELLED_BY=0x1002
 NAVRELATION_LABELLED_BY=0x1003
 NAVRELATION_NODE_CHILD_OF=0x1005
 
+# IAccessible2 relations (not included in the typelib)
+IA2_RELATION_FLOWS_FROM = "flowsFrom"
+IA2_RELATION_FLOWS_TO = "flowsTo"
+
 import UIAHandler
 import heapq
 import itertools
@@ -253,7 +257,8 @@ def normalizeIAccessible(pacc):
 def accessibleObjectFromEvent(window,objectID,childID):
 	wmResult=c_long()
 	if windll.user32.SendMessageTimeoutW(window,winUser.WM_NULL,0,0,winUser.SMTO_ABORTIFHUNG,2000,byref(wmResult))==0:
-		raise ctypes.WinError()
+		log.debugWarning("Window %d dead or not responding: %s" % (window, ctypes.WinError()))
+		return None
 	try:
 		pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
 	except Exception as e:
@@ -290,8 +295,16 @@ def accFocus(ia):
 			new_ia=normalizeIAccessible(res)
 			new_child=0
 		elif isinstance(res,int):
-			new_ia=ia
-			new_child=res
+			try:
+				new_ia=ia.accChild(res)
+			except:
+				new_ia=None
+			if new_ia:
+				new_ia=normalizeIAccessible(new_ia)
+				new_child=0
+			else:
+				new_ia=ia
+				new_child=res
 		else:
 			return None
 		return (new_ia,new_child)
@@ -369,6 +382,7 @@ winUser.EVENT_SYSTEM_SWITCHEND:"switchEnd",
 winUser.EVENT_OBJECT_FOCUS:"gainFocus",
 winUser.EVENT_OBJECT_SHOW:"show",
 winUser.EVENT_OBJECT_DESTROY:"destroy",
+winUser.EVENT_OBJECT_HIDE:"hide",
 winUser.EVENT_OBJECT_DESCRIPTIONCHANGE:"descriptionChange",
 winUser.EVENT_OBJECT_LOCATIONCHANGE:"locationChange",
 winUser.EVENT_OBJECT_NAMECHANGE:"nameChange",
@@ -421,7 +435,7 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 		return None
 	#SDM MSAA objects sometimes don't contain enough information to be useful
 	#Sometimes there is a real window that does, so try to get the SDMChild property on the NVDAObject, and if successull use that as obj instead.
-	if obj.windowClassName=='bosa_sdm':
+	if 'bosa_sdm' in obj.windowClassName:
 		SDMChild=getattr(obj,'SDMChild',None)
 		if SDMChild: obj=SDMChild
 	return (NVDAEventName,obj)
@@ -473,12 +487,14 @@ def processFocusWinEvent(window,objectID,childID,force=False):
 	@rtype: boolean
 	"""
 	windowClassName=winUser.getClassName(window)
-	#We must ignore focus on child windows of SDM windows as we only want the SDM MSAA events
-	if not windowClassName.startswith('bosa_sdm') and winUser.getClassName(winUser.getAncestor(window,winUser.GA_PARENT)).startswith('bosa_sdm'):
-		return True
+	# Generally, we must ignore focus on child windows of SDM windows as we only want the SDM MSAA events.
+	# However, we don't want to ignore focus if the child ID isn't 0,
+	# as this is a child control and the SDM MSAA events don't handle child controls.
+	if childID==0 and not windowClassName.startswith('bosa_sdm') and winUser.getClassName(winUser.getAncestor(window,winUser.GA_PARENT)).startswith('bosa_sdm'):
+		return False
 	rootWindow=winUser.getAncestor(window,winUser.GA_ROOT)
-	# If this window's root window is not the foreground window and this window or its root window is not a popup window:
-	if rootWindow!=winUser.getForegroundWindow() and not (winUser.getWindowStyle(window) & winUser.WS_POPUP or winUser.getWindowStyle(rootWindow)&winUser.WS_POPUP):
+	# If this window is not within the foreground window and this window or its root window is not a popup window, and this window's root window is not the highest in the z-order
+	if not winUser.isDescendantWindow(winUser.getForegroundWindow(),window) and not (winUser.getWindowStyle(window) & winUser.WS_POPUP or winUser.getWindowStyle(rootWindow)&winUser.WS_POPUP) and winUser.getPreviousWindow(rootWindow)!=0: 
 		# This is a focus event from a background window, so ignore it.
 		return False
 	#Notify appModuleHandler of this new foreground window
@@ -636,26 +652,13 @@ def _fakeFocus(oldFocus):
 	if oldFocus is not api.getFocusObject():
 		# The focus has changed - no need to fake it.
 		return
-	try:
-		focus = api.getDesktopObject().objectWithFocus()
-	except:
-		log.exception("Error retrieving focus")
+	focus = api.getDesktopObject().objectWithFocus()
+	if not focus:
 		return
 	processFocusNVDAEvent(focus)
 
-#Register internal object event with IAccessible
-
 def initialize():
-	focusObject=api.getDesktopObject().objectWithFocus()
-#eventLog=open("eventlog.txt","w")
-
-def logEvent(e):
-	s=[]
-	s.append(winEventIDsToNVDAEventNames.get(e[0],e[0]))
-	s.append(winUser.getClassName(e[1]))
-	s.append(e[2])
-	s.append(e[3])
-	eventLog.write("%s\n"%str(s))
+	pass
 
 def pumpAll():
 	global winEventArray
@@ -714,9 +717,11 @@ def terminate():
 def getIAccIdentity(pacc,childID):
 	IAccIdentityObject=pacc.QueryInterface(IAccIdentity)
 	stringPtr,stringSize=IAccIdentityObject.getIdentityString(childID)
-	stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
-	identityString=stringPtr.contents.raw
-	fields=struct.unpack('IIiI',identityString)
+	try:
+		stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
+		fields=struct.unpack('IIiI',stringPtr.contents.raw)
+	finally:
+		windll.ole32.CoTaskMemFree(stringPtr)
 	d={}
 	d['childID']=fields[3]
 	if fields[0]&2:
@@ -829,12 +834,13 @@ def splitIA2Attribs(attribsString):
 		elif char == ";":
 			# We're about to move on to a new attribute.
 			if subkey:
-				# This attribute had subattributes.
 				# Add the last subattribute key/value pair to the dict.
 				subattr[subkey] = tmp
+				subkey = ""
+			if subattr:
+				# This attribute had subattributes.
 				# Add the key/subattribute pair to the dict.
 				attribsDict[key] = subattr
-				subkey = ""
 				subattr = {}
 			elif key:
 				# Add this key/value pair to the dict.
@@ -845,9 +851,10 @@ def splitIA2Attribs(attribsString):
 			tmp += char
 	# If there was no trailing semi-colon, we need to handle the last attribute.
 	if subkey:
-		# This attribute had subattributes.
 		# Add the last subattribute key/value pair to the dict.
 		subattr[subkey] = tmp
+	if subattr:
+		# This attribute had subattributes.
 		# Add the key/subattribute pair to the dict.
 		attribsDict[key] = subattr
 	elif key:

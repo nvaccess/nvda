@@ -13,7 +13,6 @@ import winUser
 import oleacc
 import globalVars
 import speech
-from keyUtils import sendKey, key
 import config
 import textInfos
 import textInfos.offsets
@@ -99,17 +98,15 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return True
 
 	def _expandToLineAtCaret(self):
-		from ctypes import c_long, pointer
-		rangeLeft=c_long()
-		rangeTop=c_long()
-		rangeWidth=c_long()
-		rangeHeight=c_long()
-		self.obj.WinwordWindowObject.getPoint(pointer(rangeLeft),pointer(rangeTop),pointer(rangeWidth),pointer(rangeHeight),self._rangeObj)
-		clientLeft,clientTop,clientWidth,clientHeight=self.obj.location
-		tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft,rangeTop)
-		self._rangeObj.Start=tempRange.Start
-		tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft+clientWidth,rangeTop)
-		self._rangeObj.End=tempRange.Start
+		sel=self.obj.WinwordSelectionObject
+		oldSel=sel.range
+		app=sel.application
+		app.ScreenUpdating=False
+		self._rangeObj.select()
+		sel.Expand(wdLine)
+		self._rangeObj=sel.range
+		oldSel.Select()
+		app.ScreenUpdating=True
 
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textInfos.FormatField()
@@ -351,56 +348,59 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			self._WinwordSelectionObject=windowObject.selection
 		return self._WinwordSelectionObject
 
-	def script_nextRow(self,keyPress):
+	def script_nextRow(self,gesture):
 		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
+			return
 		if info._moveInTable(0,1):
 			info.updateCaret()
 			info.expand(textInfos.UNIT_CELL)
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
-			speech.speakMessage("edge of table")
+			speech.speakMessage(_("edge of table"))
 
-	def script_previousRow(self,keyPress):
+	def script_previousRow(self,gesture):
 		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
+			return
 		if info._moveInTable(0,-1):
 			info.updateCaret()
 			info.expand(textInfos.UNIT_CELL)
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
-			speech.speakMessage("edge of table")
+			speech.speakMessage(_("edge of table"))
 
-	def script_nextColumn(self,keyPress):
+	def script_nextColumn(self,gesture):
 		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
+			return
 		if info._moveInTable(1,0):
 			info.updateCaret()
 			info.expand(textInfos.UNIT_CELL)
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
-			speech.speakMessage("edge of table")
+			speech.speakMessage(_("edge of table"))
 
-	def script_previousColumn(self,keyPress):
+	def script_previousColumn(self,gesture):
 		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
  			speech.speakMessage(_("not in table"))
+			return
 		if info._moveInTable(-1,0):
 			info.updateCaret()
 			info.expand(textInfos.UNIT_CELL)
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
-			speech.speakMessage("edge of table")
+			speech.speakMessage(_("edge of table"))
 
-[WordDocument.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("control+alt+extendedUp","previousRow"),
-	("control+alt+extendedDown","nextRow"),
-	("control+alt+extendedLeft","previousColumn"),
-	("control+alt+extendedRight","nextColumn"),
-	("Control+ExtendedPrior","caret_moveByLine"),
-	("Control+ExtendedNext","caret_moveByLine"),
-]]
-
+	__gestures = {
+		"kb:control+alt+upArrow": "previousRow",
+		"kb:control+alt+downArrow": "nextRow",
+		"kb:control+alt+leftArrow": "previousColumn",
+		"kb:control+alt+rightArrow": "nextColumn",
+		"kb:control+pageUp": "caret_moveByLine",
+		"kb:control+pageDown": "caret_moveByLine",
+	}

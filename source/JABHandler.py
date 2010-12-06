@@ -41,7 +41,13 @@ class JABContext(object):
 			#Record  this vm ID and window handle for later use with other objects
 			vmIDsToWindowHandles[vmID]=hwnd
 		elif vmID and not hwnd:
-			hwnd=vmIDsToWindowHandles.get(vmID,0)
+			hwnd=vmIDsToWindowHandles.get(vmID)
+			if not hwnd:
+				topAC=bridgeDll.getTopLevelObject(vmID,accContext)
+				hwnd=bridgeDll.getHWNDFromAccessibleContext(vmID,topAC)
+				bridgeDll.releaseJavaObject(vmID,topAC)
+				#Record  this vm ID and window handle for later use with other objects
+				vmIDsToWindowHandles[vmID]=hwnd
 		self.hwnd=hwnd
 		self.vmID=vmID
 		self.accContext=accContext
@@ -191,6 +197,11 @@ class JABContext(object):
 		bridgeDll.getTextAttributesInRange(self.vmID, self.accContext, startIndex, endIndex, byref(attributes), byref(length))
 		return attributes, length.value
 
+	def getAccessibleRelationSet(self):
+		relations = AccessibleRelationSetInfo()
+		bridgeDll.getAccessibleRelationSet(self.vmID, self.accContext, byref(relations))
+		return relations
+
 class AccessBridgeVersionInfo(Structure):
 	_fields_=[
 		('VMVersion',WCHAR*SHORT_STRING_SIZE),
@@ -272,6 +283,21 @@ class AccessibleTextAttributesInfo(Structure):
 		('fullAttributesString',WCHAR*MAX_STRING_SIZE),
 	]
 
+MAX_RELATION_TARGETS = 25
+MAX_RELATIONS = 5
+
+class AccessibleRelationInfo(Structure):
+	_fields_ = [
+		("key", WCHAR * SHORT_STRING_SIZE),
+		("targetCount", c_int),
+		("targets", c_int * MAX_RELATION_TARGETS),
+	]
+
+class AccessibleRelationSetInfo(Structure):
+	_fields_ = [
+		("relationCount", c_int),
+		("relations", AccessibleRelationInfo * MAX_RELATIONS),
+	]
 
 @CFUNCTYPE(None,c_int,c_int,c_int)
 def internal_event_focusGained(vmID, event,source):
@@ -323,6 +349,8 @@ def event_stateChange(vmID,accContext,oldState,newState):
 	stateList=newState.split(',')
 	if "focused" in stateList or "selected" in stateList:
 		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
+		if not obj:
+			return
 		if focus!=obj and eventHandler.lastQueuedFocusObject!=obj and obj.role in (controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_MENU):
 			eventHandler.queueEvent("gainFocus",obj)
 			return
@@ -330,6 +358,8 @@ def event_stateChange(vmID,accContext,oldState,newState):
 		obj=focus
 	else:
 		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
+		if not obj:
+			return
 	eventHandler.queueEvent("stateChange",obj)
 
 @CFUNCTYPE(None,c_int,c_int,c_int,c_int,c_int)

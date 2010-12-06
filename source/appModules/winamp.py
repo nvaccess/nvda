@@ -8,10 +8,9 @@ from ctypes import *
 from ctypes.wintypes import *
 import winKernel
 import winUser
-from keyUtils import sendKey
 from scriptHandler import isScriptWaiting
 from NVDAObjects.IAccessible import IAccessible 
-import _default
+import appModuleHandler
 import speech
 import locale
 import controlTypes
@@ -51,7 +50,7 @@ def getRepeat():
 	global hwndWinamp
 	return winUser.sendMessage(hwndWinamp,WM_WA_IPC,0,IPC_GET_REPEAT)
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		global hwndWinamp
@@ -69,8 +68,8 @@ class winampMainWindow(IAccessible):
 	def event_nameChange(self):
 		pass
 
-	def script_shuffleToggle(self,keyPress):
-		sendKey(keyPress)
+	def script_shuffleToggle(self,gesture):
+		gesture.send()
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			if getShuffle():
@@ -79,8 +78,8 @@ class winampMainWindow(IAccessible):
 				onOff=_("off")
 			speech.speakMessage(onOff)
 
-	def script_repeatToggle(self,keyPress):
-		sendKey(keyPress)
+	def script_repeatToggle(self,gesture):
+		gesture.send()
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			if getRepeat():
@@ -88,6 +87,11 @@ class winampMainWindow(IAccessible):
 			else:
 				onOff=_("off")
 			speech.speakMessage(onOff)
+
+	__gestures = {
+		"kb:s": "shuffleToggle",
+		"kb:r": "repeatToggle",
+	}
 
 class winampPlaylistEditor(winampMainWindow):
 
@@ -107,8 +111,8 @@ class winampPlaylistEditor(winampMainWindow):
 	def _get_role(self):
 		return controlTypes.ROLE_LISTITEM
 
-	def script_changeItem(self,keyPress):
-		sendKey(keyPress)
+	def script_changeItem(self,gesture):
+		gesture.send()
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			speech.speakObject(self,reason=speech.REASON_FOCUS)
@@ -116,14 +120,13 @@ class winampPlaylistEditor(winampMainWindow):
 	def event_nameChange(self):
 		return super(winampMainWindow,self).event_nameChange()
 
-[winampMainWindow.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("s","shuffleToggle"),
-	("r","repeatToggle"),
-]]
+	__changeItemGestures = (
+		"kb:upArrow",
+		"kb:downArrow",
+		"kb:pageUp",
+		"kb:pageDown",
+	)
 
-[winampPlaylistEditor.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedUp","changeItem"),
-	("ExtendedDown","changeItem"),
-	("extendedPrior","changeItem"),
-	("extendedNext","changeItem"),
-]]
+	def initOverlayClass(self):
+		for gesture in self.__changeItemGestures:
+			self.bindGesture(gesture, "changeItem")

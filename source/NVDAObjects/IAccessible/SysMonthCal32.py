@@ -4,7 +4,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from keyUtils import sendKey
 import controlTypes
 from . import IAccessible
 
@@ -19,21 +18,23 @@ class SysMonthCal32(IAccessible):
 	def _get_value(self):
 		return super(SysMonthCal32,self).name
 
-	def script_valueChange(self,keyPress):
-		sendKey(keyPress)
+	def script_valueChange(self,gesture):
+		gesture.send()
 		self.event_valueChange()
 
-[SysMonthCal32.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedUp","valueChange"),
-	("ExtendedDown","valueChange"),
-	("ExtendedLeft","valueChange"),
-	("ExtendedRight","valueChange"),
-	("extendedHome","valueChange"),
-	("extendedEnd","valueChange"),
-	("control+extendedHome","valueChange"),
-	("control+extendedEnd","valueChange"),
-	("extendedNext","valueChange"),
-	("extendedPrior","valueChange"),
-	]
-]
+	__valueChangeGestures = (
+		"kb:upArrow",
+		"kb:downArrow",
+		"kb:leftArrow",
+		"kb:rightArrow",
+		"kb:home",
+		"kb:end",
+		"kb:control+home",
+		"kb:control+end",
+		"kb:pageDown",
+		"kb:pageUp",
+	)
 
+	def initOverlayClass(self):
+		for gesture in self.__valueChangeGestures:
+			self.bindGesture(gesture, "valueChange")

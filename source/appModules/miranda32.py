@@ -10,17 +10,17 @@ from ctypes import *
 from ctypes.wintypes import *
 import winKernel
 import winUser
-from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.behaviors import Dialog
-import _default
+import appModuleHandler
 import speech
 import braille
 import controlTypes
-from keyUtils import sendKey
 from scriptHandler import isScriptWaiting
 import api
 import mouseHandler
 import oleacc
+from keyboardHandler import KeyboardInputGesture
 
 #contact list window messages
 CLM_FIRST=0x1000    #this is the same as LVM_FIRST
@@ -76,14 +76,21 @@ CLM_GETSTATUSMSG=CLM_FIRST+105
 ANSILOGS=(1001,1006)
 MESSAGEVIEWERS=(1001,1005,5005)
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 	lastTextLengths={}
 	lastMessages=[]
+	# Must not be > 9.
 	MessageHistoryLength=3
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if obj.role == controlTypes.ROLE_WINDOW: 
+			return
 		windowClass = obj.windowClassName
 		if windowClass == "CListControl":
+			try:
+				clsList.remove(ContentGenericClient)
+			except ValueError:
+				pass
 			clsList.insert(0, mirandaIMContactList)
 		elif windowClass in ("MButtonClass", "TSButtonClass", "CLCButtonClass"):
 			clsList.insert(0, mirandaIMButton)
@@ -93,6 +100,8 @@ class AppModule(_default.AppModule):
 			clsList.insert(0, MPropertyPage)
 		elif isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_SCROLLBAR and obj.windowControlID in MESSAGEVIEWERS:
 			clsList.insert(0, MirandaMessageViewerScrollbar)
+		elif windowClass == "ListBox" and obj.windowControlID == 0:
+			clsList.insert(0, DuplicateFocusListBox)
 
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="ColourPicker":
@@ -100,13 +109,18 @@ class AppModule(_default.AppModule):
 		elif (obj.windowControlID in ANSILOGS) and (obj.windowClassName=="RichEdit20A"):
 			obj._isWindowUnicode=False
 
-	def script_readMessage(self,keyPress):
-		num=int(keyPress[-1][-1])
+	def script_readMessage(self,gesture):
+		num=int(gesture.keyName[-1])
 		if len(self.lastMessages)>num-1:
 			ui.message(self.lastMessages[num-1])
 		else:
 			ui.message(_("No message yet"))
 	script_readMessage.__doc__=_("Displays one of the recent messages")
+
+	def __init__(self, *args, **kwargs):
+		super(AppModule, self).__init__(*args, **kwargs)
+		for n in xrange(1, self.MessageHistoryLength + 1):
+			self.bindGesture("kb:NVDA+control+%s" % n, "readMessage")
 
 class mirandaIMContactList(IAccessible):
 
@@ -143,13 +157,27 @@ class mirandaIMContactList(IAccessible):
 			newStates.add(controlTypes.STATE_COLLAPSED)
 		return newStates
 
-	def script_changeItem(self,keyPress):
-		sendKey(keyPress)
+	def script_changeItem(self,gesture):
+		gesture.send()
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			speech.speakObject(self,reason=speech.REASON_FOCUS)
 			braille.handler.handleGainFocus(self)
 
+	__changeItemGestures = (
+		"kb:downArrow",
+		"kb:upArrow",
+		"kb:leftArrow",
+		"kb:rightArrow",
+		"kb:home",
+		"kb:end",
+		"kb:pageUp",
+		"kb:pageDown",
+	)
+
+	def initOverlayClass(self):
+		for gesture in self.__changeItemGestures:
+			self.bindGesture(gesture, "changeItem")
 
 class mirandaIMButton(IAccessible):
 
@@ -160,11 +188,21 @@ class mirandaIMButton(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_BUTTON
 
-	def doDefaultAction(self):
-		sendKey(((),"SPACE"))
+	def getActionName(self):
+		if controlTypes.STATE_FOCUSED not in self.states:
+			return
+		return "Click"
 
-	def script_doDefaultAction(self,keyPress):
-		self.doDefaultAction()
+	def doAction(self):
+		if controlTypes.STATE_FOCUSED not in self.states:
+			return
+		KeyboardInputGesture.fromName("space").send()
+
+	def script_doDefaultAction(self,gesture):
+		self.doAction()
+
+	def initOverlayClass(self):
+		self.bindGesture("kb:enter", "doDefaultAction")
 
 class mirandaIMHyperlink(mirandaIMButton):
 
@@ -203,17 +241,18 @@ class MirandaMessageViewerScrollbar(IAccessible):
 			self.appModule.lastTextLengths[self.windowHandle]=curTextLength
 		super(MirandaMessageViewerScrollbar,self).event_valueChange()
 
-[mirandaIMContactList.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("extendedDown","changeItem"),
-	("extendedUp","changeItem"),
-	("extendedLeft","changeItem"),
-	("extendedRight","changeItem"),
-	("extendedHome","changeItem"),
-	("extendedEnd","changeItem"),
-	("extendedPrior","changeItem"),
-	("extendedNext","changeItem"),
-]]
+class DuplicateFocusListBox(IAccessible):
+	"""A list box which annoyingly fires focus events every second, even when a menu is open.
+	"""
 
-[mirandaIMButton.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("Return","doDefaultAction"),
-]]
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		# Stop annoying duplicate focus events, which are fired even if a menu is open.
+		focus = api.getFocusObject()
+		focusRole = focus.role
+		focusStates = focus.states
+		if (self == focus or
+			(focusRole == controlTypes.ROLE_MENUITEM and controlTypes.STATE_FOCUSED in focusStates) or
+			(focusRole == controlTypes.ROLE_POPUPMENU and controlTypes.STATE_INVISIBLE not in focusStates)
+		):
+			return False
+		return super(DuplicateFocusListBox, self).shouldAllowIAccessibleFocusEvent

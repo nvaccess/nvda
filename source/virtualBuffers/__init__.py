@@ -1,13 +1,11 @@
 import time
 import threading
 import ctypes
-import os
 import collections
 import itertools
 import wx
 import NVDAHelper
 import XMLFormatting
-from keyUtils import sendKey
 import scriptHandler
 from scriptHandler import isScriptWaiting
 import speech
@@ -19,13 +17,14 @@ import textInfos.offsets
 import config
 import cursorManager
 import gui
-import virtualBufferHandler
 import eventHandler
 import braille
 import queueHandler
 from logHandler import log
 import ui
 import aria
+import nvwave
+import treeInterceptorHandler
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
@@ -61,12 +60,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID))
 		return docHandle.value, ID.value
 
-	def _getNVDAObjectFromOffset(self,offset):
-		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
-		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
-
-	def _getOffsetsFromNVDAObject(self,obj):
-		docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
+	def _getOffsetsFromFieldIdentifier(self, docHandle, ID):
 		node = NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(self.obj.VBufHandle, docHandle, ID)
 		if not node:
 			raise LookupError
@@ -75,15 +69,21 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		NVDAHelper.localLib.VBuf_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
 		return start.value, end.value
 
+	def _getPointFromOffset(self,offset):
+		o=self._getNVDAObjectFromOffset(offset)
+		return textInfos.Point(o.location[0],o.location[1])
+
+	def _getNVDAObjectFromOffset(self,offset):
+		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
+		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
+
+	def _getOffsetsFromNVDAObject(self,obj):
+		docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
+		return self._getOffsetsFromFieldIdentifier(docHandle,ID)
+
 	def __init__(self,obj,position):
 		self.obj=obj
-		if isinstance(position,NVDAObjects.NVDAObject):
-			start,end=self._getOffsetsFromNVDAObject(position)
-			position=textInfos.offsets.Offsets(start,end)
 		super(VirtualBufferTextInfo,self).__init__(obj,position)
-
-	def _get_NVDAObjectAtStart(self):
-		return self._getNVDAObjectFromOffset(self._startOffset)
 
 	def _getSelectionOffsets(self):
 		start=ctypes.c_int()
@@ -150,6 +150,23 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		tableLayout=attrs.get('table-layout')
 		if tableLayout:
 			attrs['table-layout']=tableLayout=="1"
+
+		# Handle table row and column headers.
+		for axis in "row", "column":
+			attr = attrs.pop("table-%sheadercells" % axis, None)
+			if not attr:
+				continue
+			cellIdentifiers = [identifier.split(",") for identifier in attr.split(";") if identifier]
+			# Get the text for the header cells.
+			textList = []
+			for docHandle, ID in cellIdentifiers:
+				try:
+					start, end = self._getOffsetsFromFieldIdentifier(int(docHandle), int(ID))
+				except (LookupError, ValueError):
+					continue
+				textList.append(self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text)
+			attrs["table-%sheadertext" % axis] = "\n".join(textList)
+
 		return attrs
 
 	def _normalizeFormatField(self, attrs):
@@ -171,14 +188,11 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			return startOffset.value,endOffset.value
 		return super(VirtualBufferTextInfo, self)._getUnitOffsets(unit, offset)
 
-	def getXMLFieldSpeech(self,attrs,fieldType,extraDetail=False,reason=None):
-		return speech.getXMLFieldSpeech(self,attrs,fieldType,extraDetail=extraDetail,reason=reason)
-
-	def copyToClipboard(self):
+	def _get_clipboardText(self):
 		# Blocks should start on a new line, but they don't necessarily have an end of line indicator.
 		# Therefore, get the text in block (paragraph) chunks and join the chunks with \r\n.
 		blocks = (block.strip("\r\n") for block in self.getTextInChunks(textInfos.UNIT_PARAGRAPH))
-		return api.copyToClip("\r\n".join(blocks))
+		return "\r\n".join(blocks)
 
 	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
 		textList = []
@@ -187,6 +201,18 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
 		textList.append(super(VirtualBufferTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
 		return " ".join(textList)
+
+	def _get_focusableNVDAObjectAtStart(self):
+		try:
+			newNode, newStart, newEnd = next(self.obj._iterNodesByType("focusable", "up", self._startOffset))
+		except StopIteration:
+			return self.obj.rootNVDAObject
+		if not newNode:
+			return self.obj.rootNVDAObject
+		docHandle=ctypes.c_int()
+		ID=ctypes.c_int()
+		NVDAHelper.localLib.VBuf_getIdentifierFromControlFieldNode(self.obj.VBufHandle, newNode, ctypes.byref(docHandle), ctypes.byref(ID))
+		return self.obj.getNVDAObjectFromIdentifier(docHandle.value,ID.value)
 
 class ElementsListDialog(wx.Dialog):
 	ELEMENT_TYPES = (
@@ -464,7 +490,7 @@ class ElementsListDialog(wx.Dialog):
 		speech.cancelSpeech()
 		speech.speakTextInfo(element,reason=speech.REASON_FOCUS)
 
-class VirtualBuffer(cursorManager.CursorManager):
+class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInterceptor):
 
 	REASON_QUICKNAV = "quickNav"
 
@@ -472,28 +498,28 @@ class VirtualBuffer(cursorManager.CursorManager):
 	programmaticScrollMayFireEvent = False
 
 	def __init__(self,rootNVDAObject,backendName=None):
+		super(VirtualBuffer,self).__init__(rootNVDAObject)
 		self.backendName=backendName
-		self.rootNVDAObject=rootNVDAObject
-		super(VirtualBuffer,self).__init__()
 		self.VBufHandle=None
-		self._passThrough=False
+		self.isLoading=False
 		self.disableAutoPassThrough = False
 		self.rootDocHandle,self.rootID=self.getIdentifierFromNVDAObject(self.rootNVDAObject)
 		self._lastFocusObj = None
 		self._hadFirstGainFocus = False
 		self._lastProgrammaticScrollTime = None
 
-	def _get_passThrough(self):
-		return self._passThrough
+	def prepare(self):
+		self.shouldPrepare=False
+		self.loadBuffer()
 
-	def _set_passThrough(self, state):
-		if self._passThrough == state:
-			return
-		self._passThrough = state
-		if state:
-			braille.handler.handleGainFocus(api.getFocusObject())
-		else:
-			braille.handler.handleGainFocus(self)
+	def _get_shouldPrepare(self):
+		return not self.isLoading and not self.VBufHandle
+
+	def terminate(self):
+		self.unloadBuffer()
+
+	def _get_isReady(self):
+		return bool(self.VBufHandle and not self.isLoading)
 
 	def loadBuffer(self):
 		self.isLoading = True
@@ -520,8 +546,8 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if self._hadFirstGainFocus:
 			# If this buffer has already had focus once while loaded, this is a refresh.
 			speech.speakMessage(_("Refreshed"))
-		if api.getFocusObject().virtualBuffer == self:
-			self.event_virtualBuffer_gainFocus()
+		if api.getFocusObject().treeInterceptor == self:
+			self.event_treeInterceptor_gainFocus()
 
 	def _loadProgress(self):
 		ui.message(_("Loading document..."))
@@ -536,12 +562,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
-
-	def isNVDAObjectInVirtualBuffer(self,obj):
-		pass
-
-	def isAlive(self):
-		pass
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		"""Retrieve an NVDAObject for a given node identifier.
@@ -564,7 +584,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		"""
 		raise NotImplementedError
 
-	def event_virtualBuffer_gainFocus(self):
+	def event_treeInterceptor_gainFocus(self):
 		"""Triggered when this virtual buffer gains focus.
 		This event is only fired upon entering this buffer when it was not the current buffer before.
 		This is different to L{event_gainFocus}, which is fired when an object inside this buffer gains focus, even if that object is in the same buffer.
@@ -577,7 +597,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			self.event_gainFocus(focus, lambda: focus.event_gainFocus())
 			if not self.passThrough:
 				speech.cancelSpeech()
-				virtualBufferHandler.reportPassThrough(self)
+				reportPassThrough(self)
 				speech.speakObjectProperties(self.rootNVDAObject,name=True)
 				info=self.makeTextInfo(textInfos.POSITION_CARET)
 				sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
@@ -595,10 +615,10 @@ class VirtualBuffer(cursorManager.CursorManager):
 					info.expand(textInfos.UNIT_LINE)
 					speech.speakTextInfo(info, reason=speech.REASON_CARET)
 
-		virtualBufferHandler.reportPassThrough(self)
+		reportPassThrough(self)
 		braille.handler.handleGainFocus(self)
 
-	def event_virtualBuffer_loseFocus(self):
+	def event_treeInterceptor_loseFocus(self):
 		"""Triggered when this virtual buffer loses focus.
 		This event is only fired when the focus moves to a new object which is not within this virtual buffer; i.e. upon leaving this virtual buffer.
 		"""
@@ -624,7 +644,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 		if self.shouldPassThrough(obj):
 			obj.setFocus()
 			self.passThrough = True
-			virtualBufferHandler.reportPassThrough(self)
+			reportPassThrough(self)
 		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT:
 			obj.setFocus()
 			speech.speakObject(obj, reason=speech.REASON_FOCUS)
@@ -635,25 +655,28 @@ class VirtualBuffer(cursorManager.CursorManager):
 		super(VirtualBuffer, self)._set_selection(info)
 		if isScriptWaiting() or not info.isCollapsed:
 			return
-		api.setReviewPosition(info)
+		if config.conf['reviewCursor']['followCaret'] and api.getNavigatorObject() is self.rootNVDAObject:
+			api.setReviewPosition(info)
 		if reason == speech.REASON_FOCUS:
-			obj = api.getFocusObject()
+			focusObj = api.getFocusObject()
+			if focusObj==self.rootNVDAObject:
+				return
 		else:
-			obj = info.NVDAObjectAtStart
+			focusObj=info.focusableNVDAObjectAtStart
+			obj=info.NVDAObjectAtStart
 			if not obj:
 				log.debugWarning("Invalid NVDAObjectAtStart")
 				return
-		if obj == self.rootNVDAObject:
-			return
-		if reason != speech.REASON_FOCUS:
+			if obj==self.rootNVDAObject:
+				return
+			if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
+				focusObj.setFocus()
 			obj.scrollIntoView()
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
-			if not eventHandler.isPendingEvents("gainFocus") and obj != api.getFocusObject() and self._shouldSetFocusToObj(obj):
-				obj.setFocus()
-		self.passThrough=self.shouldPassThrough(obj,reason=reason)
+		self.passThrough=self.shouldPassThrough(focusObj,reason=reason)
 		# Queue the reporting of pass through mode so that it will be spoken after the actual content.
-		queueHandler.queueFunction(queueHandler.eventQueue, virtualBufferHandler.reportPassThrough, self)
+		queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
 
 	def _shouldSetFocusToObj(self, obj):
 		"""Determine whether an object should receive focus.
@@ -663,26 +686,20 @@ class VirtualBuffer(cursorManager.CursorManager):
 		"""
 		return controlTypes.STATE_FOCUSABLE in obj.states
 
-	def script_activatePosition(self,keyPress):
-		if self.VBufHandle is None:
-			return sendKey(keyPress)
+	def script_activatePosition(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		self._activatePosition(info)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 
-	def _caretMovementScriptHelper(self, *args, **kwargs):
-		if self.VBufHandle is None:
-			return 
-		super(VirtualBuffer, self)._caretMovementScriptHelper(*args, **kwargs)
-
-	def script_refreshBuffer(self,keyPress):
-		if self.VBufHandle is None:
+	def script_refreshBuffer(self,gesture):
+		if scriptHandler.isScriptWaiting():
+			# This script may cause subsequently queued scripts to fail, so don't execute.
 			return
 		self.unloadBuffer()
 		self.loadBuffer()
 	script_refreshBuffer.__doc__ = _("Refreshes the virtual buffer content")
 
-	def script_toggleScreenLayout(self,keyPress):
+	def script_toggleScreenLayout(self,gesture):
 		config.conf["virtualBuffers"]["useScreenLayout"]=not config.conf["virtualBuffers"]["useScreenLayout"]
 		onOff=_("on") if config.conf["virtualBuffers"]["useScreenLayout"] else _("off")
 		speech.speakMessage(_("use screen layout %s")%onOff)
@@ -721,9 +738,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			yield node, startOffset.value, endOffset.value
 			offset=startOffset
 
-	def _quickNavScript(self,keyPress, nodeType, direction, errorMessage, readUnit):
-		if self.VBufHandle is None:
-			return sendKey(keyPress)
+	def _quickNavScript(self,gesture, nodeType, direction, errorMessage, readUnit):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		startOffset=info._startOffset
 		endOffset=info._endOffset
@@ -749,22 +764,20 @@ class VirtualBuffer(cursorManager.CursorManager):
 		scriptSuffix = nodeType[0].upper() + nodeType[1:]
 		scriptName = "next%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
-		script = lambda self,keyPress: self._quickNavScript(keyPress, nodeType, "next", nextError, readUnit)
+		script = lambda self,gesture: self._quickNavScript(gesture, nodeType, "next", nextError, readUnit)
 		script.__doc__ = nextDoc
 		script.__name__ = funcName
 		setattr(cls, funcName, script)
-		cls.bindKey(key, scriptName)
+		cls.__gestures["kb:%s" % key] = scriptName
 		scriptName = "previous%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
-		script = lambda self,keyPress: self._quickNavScript(keyPress, nodeType, "previous", prevError, readUnit)
+		script = lambda self,gesture: self._quickNavScript(gesture, nodeType, "previous", prevError, readUnit)
 		script.__doc__ = prevDoc
 		script.__name__ = funcName
 		setattr(cls, funcName, script)
-		cls.bindKey("shift+%s" % key, scriptName)
+		cls.__gestures["kb:shift+%s" % key] = scriptName
 
-	def script_elementsList(self,keyPress):
-		if self.VBufHandle is None:
-			return
+	def script_elementsList(self,gesture):
 		# We need this to be a modal dialog, but it mustn't block this script.
 		def run():
 			gui.mainFrame.prePopup()
@@ -803,13 +816,13 @@ class VirtualBuffer(cursorManager.CursorManager):
 			return True
 		return False
 
-	def event_caretMovementFailed(self, obj, nextHandler, keyPress=None):
-		if not self.passThrough or not keyPress or not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]:
+	def event_caretMovementFailed(self, obj, nextHandler, gesture=None):
+		if not self.passThrough or not gesture or not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]:
 			return nextHandler()
-		if keyPress[1] in ("extendedhome", "extendedend"):
+		if gesture.mainKeyName in ("home", "end"):
 			# Home, end, control+home and control+end should not disable pass through.
 			return nextHandler()
-		script = self.getScript(keyPress)
+		script = self.getScript(gesture)
 		if not script:
 			return nextHandler()
 
@@ -817,30 +830,30 @@ class VirtualBuffer(cursorManager.CursorManager):
 		# Therefore, move the virtual caret to the same edge of the field.
 		info = self.makeTextInfo(textInfos.POSITION_CARET)
 		info.expand(info.UNIT_CONTROLFIELD)
-		if keyPress[1] in ("extendedleft", "extendedup", "extendedprior"):
+		if gesture.mainKeyName in ("extendedleft", "extendedup", "extendedprior"):
 			info.collapse()
 		else:
 			info.collapse(end=True)
 			info.move(textInfos.UNIT_CHARACTER, -1)
 		info.updateCaret()
 
-		scriptHandler.queueScript(script, keyPress)
+		scriptHandler.queueScript(script, gesture)
 
-	def script_disablePassThrough(self, keyPress):
+	def script_disablePassThrough(self, gesture):
 		if not self.passThrough or self.disableAutoPassThrough:
-			return sendKey(keyPress)
+			return gesture.send()
 		self.passThrough = False
 		self.disableAutoPassThrough = False
-		virtualBufferHandler.reportPassThrough(self)
-	script_disablePassThrough.ignoreVirtualBufferPassThrough = True
+		reportPassThrough(self)
+	script_disablePassThrough.ignoreTreeInterceptorPassThrough = True
 
-	def script_collapseOrExpandControl(self, keyPress):
-		sendKey(keyPress)
+	def script_collapseOrExpandControl(self, gesture):
+		gesture.send()
 		if not self.passThrough:
 			return
 		self.passThrough = False
-		virtualBufferHandler.reportPassThrough(self)
-	script_collapseOrExpandControl.ignoreVirtualBufferPassThrough = True
+		reportPassThrough(self)
+	script_collapseOrExpandControl.ignoreTreeInterceptorPassThrough = True
 
 	def _tabOverride(self, direction):
 		"""Override the tab order if the virtual buffer caret is not within the currently focused node.
@@ -853,9 +866,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 		@return: C{True} if the tab order was overridden, C{False} if not.
 		@rtype: bool
 		"""
-		if self.VBufHandle is None:
-			return False
-
 		focus = api.getFocusObject()
 		try:
 			focusInfo = self.makeTextInfo(focus)
@@ -867,18 +877,17 @@ class VirtualBuffer(cursorManager.CursorManager):
 		caretInfo.expand(textInfos.UNIT_CHARACTER)
 		if focusInfo.isOverlapping(caretInfo):
 			return False
-
 		# If we reach here, we do want to override tab/shift+tab if possible.
 		# Find the next/previous focusable node.
 		try:
 			newNode, newStart, newEnd = next(self._iterNodesByType("focusable", direction, caretInfo._startOffset))
 		except StopIteration:
 			return False
-
-		# Finally, focus the node.
-		# TODO: Better way to get a field identifier from a node.
-		newInfo = self.makeTextInfo(textInfos.offsets.Offsets(newStart, newEnd))
-		obj = newInfo.NVDAObjectAtStart
+		docHandle=ctypes.c_int()
+		ID=ctypes.c_int()
+		NVDAHelper.localLib.VBuf_getIdentifierFromControlFieldNode(self.VBufHandle, newNode, ctypes.byref(docHandle), ctypes.byref(ID))
+		obj=self.getNVDAObjectFromIdentifier(docHandle.value,ID.value)
+		newInfo=self.makeTextInfo(textInfos.offsets.Offsets(newStart,newEnd))
 		if obj == api.getFocusObject():
 			# This node is already focused, so we need to move to and speak this node here.
 			newCaret = newInfo.copy()
@@ -893,13 +902,13 @@ class VirtualBuffer(cursorManager.CursorManager):
 			obj.setFocus()
 		return True
 
-	def script_tab(self, keyPress):
+	def script_tab(self, gesture):
 		if not self._tabOverride("next"):
-			sendKey(keyPress)
+			gesture.send()
 
-	def script_shiftTab(self, keyPress):
+	def script_shiftTab(self, gesture):
 		if not self._tabOverride("previous"):
-			sendKey(keyPress)
+			gesture.send()
 
 	def event_focusEntered(self,obj,nextHandler):
 		if self.passThrough:
@@ -927,8 +936,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
 			# This is not ideal if the user was positioned over a node which cannot receive focus.
 			return
-		if self.VBufHandle is None:
-			return nextHandler()
 		if obj==self.rootNVDAObject:
 			if self.passThrough:
 				return nextHandler()
@@ -944,7 +951,7 @@ class VirtualBuffer(cursorManager.CursorManager):
 			# Automatic pass through should be enabled in certain circumstances where this occurs.
 			if not self.passThrough and self.shouldPassThrough(obj,reason=speech.REASON_FOCUS):
 				self.passThrough=True
-				virtualBufferHandler.reportPassThrough(self)
+				reportPassThrough(self)
 			return nextHandler()
 
 		#We only want to update the caret and speak the field if we're not in the same one as before
@@ -988,9 +995,6 @@ class VirtualBuffer(cursorManager.CursorManager):
 		@rtype: bool
 		@note: If C{False} is returned, calling events should probably call their nextHandler.
 		"""
-		if not self.VBufHandle:
-			return False
-
 		if self.programmaticScrollMayFireEvent and self._lastProgrammaticScrollTime and time.time() - self._lastProgrammaticScrollTime < 0.4:
 			# This event was probably caused by this buffer's call to scrollIntoView().
 			# Therefore, ignore it. Otherwise, the cursor may bounce back to the scroll point.
@@ -1129,19 +1133,19 @@ class VirtualBuffer(cursorManager.CursorManager):
 		info.collapse()
 		self.selection = info
 
-	def script_nextRow(self, keyPress):
+	def script_nextRow(self, gesture):
 		self._tableMovementScriptHelper(axis="row", movement="next")
 	script_nextRow.__doc__ = _("moves to the next table row")
 
-	def script_previousRow(self, keyPress):
+	def script_previousRow(self, gesture):
 		self._tableMovementScriptHelper(axis="row", movement="previous")
 	script_previousRow.__doc__ = _("moves to the previous table row")
 
-	def script_nextColumn(self, keyPress):
+	def script_nextColumn(self, gesture):
 		self._tableMovementScriptHelper(axis="column", movement="next")
 	script_nextColumn.__doc__ = _("moves to the next table column")
 
-	def script_previousColumn(self, keyPress):
+	def script_previousColumn(self, gesture):
 		self._tableMovementScriptHelper(axis="column", movement="previous")
 	script_previousColumn.__doc__ = _("moves to the previous table column")
 
@@ -1184,22 +1188,22 @@ class VirtualBuffer(cursorManager.CursorManager):
 		"""
 		return False
 
-[VirtualBuffer.bindKey(keyName,scriptName) for keyName,scriptName in (
-	("Return","activatePosition"),
-	("Space","activatePosition"),
-	("NVDA+f5","refreshBuffer"),
-	("NVDA+v","toggleScreenLayout"),
-	("NVDA+f7","elementsList"),
-	("escape","disablePassThrough"),
-	("alt+extendedUp","collapseOrExpandControl"),
-	("alt+extendedDown","collapseOrExpandControl"),
-	("tab", "tab"),
-	("shift+tab", "shiftTab"),
-	("control+alt+extendedDown", "nextRow"),
-	("control+alt+extendedUp", "previousRow"),
-	("control+alt+extendedRight", "nextColumn"),
-	("control+alt+extendedLeft", "previousColumn"),
-)]
+	__gestures = {
+		"kb:enter": "activatePosition",
+		"kb:space": "activatePosition",
+		"kb:NVDA+f5": "refreshBuffer",
+		"kb:NVDA+v": "toggleScreenLayout",
+		"kb:NVDA+f7": "elementsList",
+		"kb:escape": "disablePassThrough",
+		"kb:alt+upArrow": "collapseOrExpandControl",
+		"kb:alt+downArrow": "collapseOrExpandControl",
+		"kb:tab": "tab",
+		"kb:shift+tab": "shiftTab",
+		"kb:control+alt+downArrow": "nextRow",
+		"kb:control+alt+upArrow": "previousRow",
+		"kb:control+alt+rightArrow": "nextColumn",
+		"kb:control+alt+leftArrow": "previousColumn",
+	}
 
 # Add quick navigation scripts.
 qn = VirtualBuffer.addQuickNav
@@ -1256,3 +1260,17 @@ qn("landmark", key="d", nextDoc=_("moves to the next landmark"), nextError=_("no
 qn("embeddedObject", key="o", nextDoc=_("moves to the next embedded object"), nextError=_("no next embedded object"),
 	prevDoc=_("moves to the previous embedded object"), prevError=_("no previous embedded object"))
 del qn
+
+def reportPassThrough(virtualBuffer):
+	"""Reports the virtual buffer pass through mode if it has changed.
+	@param virtualBuffer: The current virtual buffer.
+	@type virtualBuffer: L{virtualBuffers.VirtualBuffer}
+	"""
+	if virtualBuffer.passThrough != reportPassThrough.last:
+		if config.conf["virtualBuffers"]["passThroughAudioIndication"]:
+			sound = r"waves\focusMode.wav" if virtualBuffer.passThrough else r"waves\browseMode.wav"
+			nvwave.playWaveFile(sound)
+		else:
+			speech.speakMessage(_("focus mode") if virtualBuffer.passThrough else _("browse mode"))
+		reportPassThrough.last = virtualBuffer.passThrough
+reportPassThrough.last = False

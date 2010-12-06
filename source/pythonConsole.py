@@ -195,6 +195,9 @@ class ConsoleUI(wx.Frame):
 		elif key == wx.WXK_F6:
 			self.outputCtrl.SetFocus()
 			return
+		elif key == wx.WXK_ESCAPE:
+			self.Close()
+			return
 		evt.Skip()
 
 	def onOutputChar(self, evt):
@@ -202,6 +205,8 @@ class ConsoleUI(wx.Frame):
 		if key == wx.WXK_F6:
 			self.inputCtrl.SetFocus()
 			return
+		elif key == wx.WXK_ESCAPE:
+			self.Close()
 		evt.Skip()
 
 	def updateNamespaceSnapshotVars(self):
@@ -248,4 +253,9 @@ def activate():
 	"""
 	global consoleUI
 	consoleUI.Raise()
+	# There is a MAXIMIZE style which can be used on the frame at construction, but it doesn't seem to work the first time it is shown,
+	# probably because it was in the background.
+	# Therefore, explicitly maximise it here.
+	# This also ensures that it will be maximized whenever it is activated, even if the user restored/minimised it.
+	consoleUI.Maximize()
 	consoleUI.Show()

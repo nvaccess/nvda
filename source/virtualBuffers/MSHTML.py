@@ -1,6 +1,6 @@
+from comtypes import COMError
 import eventHandler
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
-import virtualBufferHandler
 import controlTypes
 import NVDAObjects.IAccessible.MSHTML
 import winUser
@@ -17,7 +17,15 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		level=None
 		accRole=attrs.get('IAccessible::role',0)
 		accRole=int(accRole) if isinstance(accRole,basestring) and accRole.isdigit() else accRole
-		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
+		nodeName=attrs.get('IHTMLDOMNode::nodeName',"")
+		ariaRoles=attrs.get("HTMLAttrib::role", "").split(" ")
+		#choose role
+		#Priority is aria role -> HTML tag name -> IAccessible role
+		role=next((aria.ariaRolesToNVDARoles[ar] for ar in ariaRoles if ar in aria.ariaRolesToNVDARoles),controlTypes.ROLE_UNKNOWN)
+		if not role and nodeName:
+			role=NVDAObjects.IAccessible.MSHTML.nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_UNKNOWN)
+		if not role:
+			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		if 'IHTMLElement::isContentEditable' in attrs:
 			states.add(controlTypes.STATE_EDITABLE)
@@ -36,11 +44,8 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_DRAGGABLE)
 		elif ariaGrabbed=='true':
 			states.add(controlTypes.STATE_DRAGGING)
-		nodeName=attrs.get('IHTMLDOMNode::nodeName',"")
 		if nodeName=="TEXTAREA":
 			states.add(controlTypes.STATE_MULTILINE)
-		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE,controlTypes.ROLE_WINDOW):
-			role=NVDAObjects.IAccessible.MSHTML.nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_UNKNOWN)
 		if "H1"<=nodeName<="H6":
 			level=nodeName[1:]
 		if nodeName in ("UL","OL","DL"):
@@ -51,10 +56,12 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			# MSHTML puts the unavailable state on all graphics when the showing of graphics is disabled.
 			# This is rather annoying and irrelevant to our users, so discard it.
 			states.discard(controlTypes.STATE_UNAVAILABLE)
-		ariaRoles=attrs.get("HTMLAttrib::role", "").split(" ")
 		# Get the first landmark role, if any.
 		landmark=next((ar for ar in ariaRoles if ar in aria.landmarkRoles),None)
-
+		ariaLevel=attrs.get('HTMLAttrib::aria-level',None)
+		ariaLevel=int(ariaLevel) if ariaLevel is not None else None
+		if ariaLevel:
+			level=ariaLevel
 		if role:
 			attrs['role']=role
 		attrs['states']=states
@@ -74,7 +81,11 @@ class MSHTML(VirtualBuffer):
 	def _setInitialCaretPos(self):
 		if super(MSHTML,self)._setInitialCaretPos():
 			return
-		url=getattr(self.rootNVDAObject.HTMLNode.document,'url',"").split('#')
+		try:
+			url=getattr(self.rootNVDAObject.HTMLNode.document,'url',"").split('#')
+		except COMError as e:
+			log.debugWarning("Error getting URL from document: %s" % e)
+			return False
 		if not url or len(url)!=2:
 			return False
 		anchorName=url[-1]
@@ -83,7 +94,7 @@ class MSHTML(VirtualBuffer):
 		obj=self._getNVDAObjectByAnchorName(anchorName)
 		self._handleScrollTo(obj)
 
-	def isNVDAObjectInVirtualBuffer(self,obj):
+	def __contains__(self,obj):
 		if not obj.windowClassName.startswith("Internet Explorer_"):
 			return False
 		#Combo box lists etc are popup windows, so rely on accessibility hierarchi instead of window hierarchi for those.
@@ -104,7 +115,9 @@ class MSHTML(VirtualBuffer):
 		return False
 
 
-	def isAlive(self):
+	def _get_isAlive(self):
+		if self.isLoading:
+			return True
 		root=self.rootNVDAObject
 		if not root:
 			return False

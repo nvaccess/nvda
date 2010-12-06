@@ -10,6 +10,7 @@ import ctypes
 import pythoncom
 import win32clipboard
 import oleTypes
+import colors
 import globalVars
 import eventHandler
 import comInterfaces.tom
@@ -20,13 +21,13 @@ import winKernel
 import api
 import winUser
 import textInfos.offsets
-from keyUtils import key, sendKey
+from keyboardHandler import KeyboardInputGesture
 from scriptHandler import isScriptWaiting
 import IAccessibleHandler
 import controlTypes
 from . import Window
 from .. import NVDAObjectTextInfo
-from ..behaviors import EditableText
+from ..behaviors import EditableTextWithAutoSelectDetection
 import braille
 
 selOffsetsAtLastCaretEvent=None
@@ -86,6 +87,8 @@ class TextRangeAStruct(ctypes.Structure):
 	]
 
 CFM_LINK=0x20
+CFE_AUTOBACKCOLOR=0x4000000
+CFE_AUTOCOLOR=0x40000000
 CFE_BOLD=1
 CFE_ITALIC=2
 CFE_UNDERLINE=4
@@ -244,6 +247,10 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				formatField["text-position"]="sub"
 			elif charFormat.dwEffects&CFE_SUPERSCRIPT:
 				formatField["text-position"]="super"
+		if formatConfig["reportColor"]:
+			if charFormat is None: charFormat=self._getCharFormat(offset)
+			formatField["color"]=colors.RGB.fromCOLORREF(charFormat.crTextColor) if not charFormat.dwEffects&CFE_AUTOCOLOR else _("default color")
+			formatField["background-color"]=colors.RGB.fromCOLORREF(charFormat.crBackColor) if not charFormat.dwEffects&CFE_AUTOBACKCOLOR else _("default color")
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
 		if formatConfig["reportLinks"]:
@@ -351,16 +358,16 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				return [offset,offset+1]
 			oldSel=self._getSelectionOffsets()
 			self._setSelectionOffsets(offset,offset)
-			sendKey(key("control+ExtendedLeft"))
+			KeyboardInputGesture.fromName("control+leftArrow").send()
 			back=self._getSelectionOffsets()[0]
-			sendKey(key("control+ExtendedRight"))
+			KeyboardInputGesture.fromName("control+rightArrow").send()
 			forward=self._getSelectionOffsets()[0]
 			if (back<=offset) and (forward>offset):
 				start=back
 				end=forward
 			elif (back<offset) and (forward==offset):
 				start=forward
-				sendKey(key("control+ExtendedRight"))
+				KeyboardInputGesture.fromName("control+rightArrow").send()
 	 			forward=self._getSelectionOffsets()[0]
 				end=forward
 			else:
@@ -566,30 +573,20 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError("position: %s"%position)
 
-	def getInitialFields(self,formatConfig=None):
-		if not formatConfig:
-			formatConfig=config.conf["documentFormatting"]
-		range=self._rangeObj.duplicate
-		range.collapse(True)
-		range.expand(comInterfaces.tom.tomCharacter)
-		return [self._getFormatFieldAtRange(range,formatConfig)]
-
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
-		if not formatConfig["detectFormatAfterCursor"]:
-			return [self._getTextAtRange(self._rangeObj)]
-		commandList=[]
-		endLimit=self._rangeObj.end
 		range=self._rangeObj.duplicate
 		range.collapse(True)
-		hasLoopedOnce=False
+		if not formatConfig["detectFormatAfterCursor"]:
+			range.expand(comInterfaces.tom.tomCharacter)
+			return [textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)),
+				self._getTextAtRange(self._rangeObj)]
+		commandList=[]
+		endLimit=self._rangeObj.end
 		while range.end<endLimit:
 			self._expandFormatRange(range,formatConfig)
-			if hasLoopedOnce:
-				commandList.append(textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
-			else:
-				hasLoopedOnce=True
+			commandList.append(textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
 			commandList.append(self._getTextAtRange(range))
 			end=range.end
 			range.start=end
@@ -680,7 +677,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		self.obj.ITextSelectionObject.start=self._rangeObj.start
 		self.obj.ITextSelectionObject.end=self._rangeObj.end
 
-class Edit(EditableText, Window):
+class Edit(EditableTextWithAutoSelectDetection, Window):
 
 	editAPIVersion=0
 	editAPIUnicode=True
@@ -735,11 +732,7 @@ class Edit(EditableText, Window):
 		self.detectPossibleSelectionChange()
 
 	def event_valueChange(self):
-		self.hasContentChangedSinceLastSelection=True
-
-	def event_gainFocus(self):
-		self.initAutoSelectDetection()
-		super(Edit,self).event_gainFocus()
+		self.event_textChange()
 
 	def _get_states(self):
 		states = super(Edit, self)._get_states()

@@ -18,10 +18,10 @@ import gui.scriptUI
 import winUser
 import controlTypes
 import speech
-from keyUtils import sendKey, key
 from . import Window
 from .. import NVDAObjectTextInfo
 import appModuleHandler
+from logHandler import log
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
 
@@ -81,8 +81,11 @@ class Excel7Window(ExcelWindow):
 		return self.excelWindowObjectFromWindow(self.windowHandle)
 
 	def event_gainFocus(self):
-		activeCell=self.excelWindowObject.ActiveCell
-		obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=activeCell)
+		selection=self.excelWindowObject.Selection
+		if selection.Count>1:
+			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
+		else:
+			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
 		eventHandler.executeEvent("gainFocus",obj)
 
 class ExcelWorksheet(ExcelWindow):
@@ -93,6 +96,7 @@ class ExcelWorksheet(ExcelWindow):
 		self.excelWindowObject=excelWindowObject
 		self.excelWorksheetObject=excelWorksheetObject
 		super(ExcelWorksheet,self).__init__(windowHandle=windowHandle)
+		self.initOverlayClass()
 
 	def _get_name(self):
 		return self.excelWorksheetObject.name
@@ -101,57 +105,53 @@ class ExcelWorksheet(ExcelWindow):
 		cell=self.excelWorksheetObject.cells(1,1)
 		return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=cell)
 
-
-	def script_extendSelection(self,keyPress):
-		sendKey(keyPress)
+	def script_changeSelection(self,gesture):
+		gesture.send()
 		selection=self.excelWindowObject.Selection
 		if selection.Count>1:
 			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
 		else:
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
 		eventHandler.executeEvent("gainFocus",obj)
-	script_extendSelection.__doc__=_("Extends the selection and speaks the last selected cell")
-	script_extendSelection.canPropagate=True
+	script_changeSelection.__doc__=_("Extends the selection and speaks the last selected cell")
+	script_changeSelection.canPropagate=True
 
-	def script_moveByCell(self,keyPress):
-		"""Moves to a cell and speaks its coordinates and content"""
-		sendKey(keyPress)
-		activeCell=self.excelWindowObject.ActiveCell
-		obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=activeCell)
-		eventHandler.executeEvent("gainFocus",obj)
-	script_moveByCell.__doc__=_("Moves to a cell and speaks its coordinates and content")
-	script_moveByCell.canPropagate=True
+	__changeSelectionGestures = (
+		"kb:tab",
+		"kb:shift+tab",
+		"kb:upArrow",
+		"kb:downArrow",
+		"kb:leftArrow",
+		"kb:rightArrow",
+		"kb:control+upArrow",
+		"kb:control+downArrow",
+		"kb:control+leftArrow",
+		"kb:control+rightArrow",
+		"kb:home",
+		"kb:end",
+		"kb:control+home",
+		"kb:control+end",
+		"kb:shift+upArrow",
+		"kb:shift+downArrow",
+		"kb:shift+leftArrow",
+		"kb:shift+rightArrow",
+		"kb:shift+control+upArrow",
+		"kb:shift+control+downArrow",
+		"kb:shift+control+leftArrow",
+		"kb:shift+control+rightArrow",
+		"kb:shift+home",
+		"kb:shift+end",
+		"kb:shift+control+home",
+		"kb:shift+control+end",
+		"kb:shift+space",
+		"kb:control+space",
+	)
 
-[ExcelWorksheet.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("Tab","moveByCell"),
-	("Shift+Tab","moveByCell"),
-	("ExtendedUp","moveByCell"),
-	("ExtendedDown","moveByCell"),
-	("ExtendedLeft","moveByCell"),
-	("ExtendedRight","moveByCell"),
-	("Control+ExtendedUp","moveByCell"),
-	("Control+ExtendedDown","moveByCell"),
-	("Control+ExtendedLeft","moveByCell"),
-	("Control+ExtendedRight","moveByCell"),
-	("ExtendedHome","moveByCell"),
-	("ExtendedEnd","moveByCell"),
-	("Control+ExtendedHome","moveByCell"),
-	("Control+ExtendedEnd","moveByCell"),
-	("Shift+ExtendedUp","extendSelection"),
-	("Shift+ExtendedDown","extendSelection"),
-	("Shift+ExtendedLeft","extendSelection"),
-	("Shift+ExtendedRight","extendSelection"),
-	("Shift+Control+ExtendedUp","extendSelection"),
-	("Shift+Control+ExtendedDown","extendSelection"),
-	("Shift+Control+ExtendedLeft","extendSelection"),
-	("Shift+Control+ExtendedRight","extendSelection"),
-	("Shift+ExtendedHome","extendSelection"),
-	("Shift+ExtendedEnd","extendSelection"),
-	("Shift+Control+ExtendedHome","extendSelection"),
-	("Shift+Control+ExtendedEnd","extendSelection"),
-]]
+	def initOverlayClass(self):
+		for gesture in self.__changeSelectionGestures:
+			self.bindGesture(gesture, "changeSelection")
 
-class ExcelCellTextInfo(textInfos.offsets.OffsetsTextInfo):
+class ExcelCellTextInfo(NVDAObjectTextInfo):
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		formatField=textInfos.FormatField()
@@ -165,10 +165,6 @@ class ExcelCellTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField['italic']=fontObj.italic
 			formatField['underline']=fontObj.underline
 		return formatField,(self._startOffset,self._endOffset)
-
-	def _getTextRange(self,start,end):
-		text=self.obj.excelCellObject.Text
-		return text[start:end]
 
 class ExcelCell(ExcelWindow):
 
@@ -233,11 +229,12 @@ class ExcelCell(ExcelWindow):
 		if previous:
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
 
-	def script_editCell(self,keyPress):
+	def script_editCell(self,gesture):
 		cellEditDialog=CellEditDialog(self.excelWindowObject.ActiveCell)
 		cellEditDialog.run()
 
-ExcelCell.bindKey("f2","editCell")
+	def initOverlayClass(self):
+		self.bindGesture("kb:f2", "editCell")
 
 class ExcelSelection(ExcelWindow):
 

@@ -11,7 +11,6 @@ import oleacc
 import controlTypes
 import speech
 import api
-from keyUtils import sendKey
 import eventHandler
 import winKernel
 import winUser
@@ -20,6 +19,7 @@ from ..window import Window
 
 #Window messages
 LVM_FIRST=0x1000
+LVM_GETITEMSTATE=LVM_FIRST+44
 LVM_GETFOCUSEDGROUP=LVM_FIRST+93
 LVM_GETGROUPINFOBYINDEX=LVM_FIRST+153
 LVM_GETITEMCOUNT=LVM_FIRST+4
@@ -45,7 +45,9 @@ LVGF_GROUPID=0x10
 #Item states
 LVIS_FOCUSED=0x01
 LVIS_SELECTED=0x02
-LVIS_IMAGESTATEMASK=0xF000
+LVIS_STATEIMAGEMASK=0xF000
+
+LVS_OWNERDRAWFIXED=0x0400
 
 class LVGROUP(Structure):
 	_fields_=[
@@ -141,15 +143,15 @@ class List(List):
 					ancestors=api.getFocusAncestors()
 					if api.getFocusDifferenceLevel()==len(ancestors)-1:
 						self.event_focusEntered()
-					groupingObj=GroupingItem(self,info)
+					groupingObj=GroupingItem(windowHandle=self.windowHandle,parentNVDAObject=self,groupInfo=info)
 					return eventHandler.queueEvent("gainFocus",groupingObj)
 		return super(List,self).event_gainFocus()
 
 class GroupingItem(Window):
 
-	def __init__(self,parent,groupInfo):
-		super(GroupingItem,self).__init__(windowHandle=parent.windowHandle)
-		self.parent=parent
+	def __init__(self,windowHandle=None,parentNVDAObject=None,groupInfo=None):
+		super(GroupingItem,self).__init__(windowHandle=windowHandle)
+		self.parent=parentNVDAObject
 		self.groupInfo=groupInfo
 
 	def _isEqual(self,other):
@@ -183,14 +185,13 @@ class GroupingItem(Window):
 			states.add(controlTypes.STATE_EXPANDED)
 		return states
 
-	def script_collapseOrExpand(self,keyPress):
-		sendKey(keyPress)
+	def script_collapseOrExpand(self,gesture):
+		gesture.send()
 		self.event_stateChange()
 
-[GroupingItem.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("ExtendedLeft","collapseOrExpand"),
-	("ExtendedRight","collapseOrExpand"),
-]]
+	def initOverlayClass(self):
+		for gesture in ("kb:leftArrow", "kb:rightArrow"):
+			self.bindeGesture(gesture, "collapseOrExpand")
 
 class ListItem(IAccessible):
 
@@ -219,6 +220,8 @@ class ListItem(IAccessible):
 
 	def _get_value(self):
 		value=super(ListItem,self)._get_description()
+		if (not value or value.isspace()) and self.windowStyle & LVS_OWNERDRAWFIXED:
+			value=self.displayText
 		if not value:
 			return None
 		#Some list view items in Vista can contain annoying left-to-right and right-to-left indicator characters which really should not be there.
@@ -227,10 +230,9 @@ class ListItem(IAccessible):
 		return value
 
 	def _get_positionInfo(self):
-		info=super(ListItem,self)._get_positionInfo()
+		index=self.IAccessibleChildID
 		totalCount=winUser.sendMessage(self.windowHandle,LVM_GETITEMCOUNT,0,0)
-		info['similarItemsInGroup']=totalCount
-		return info
+		return dict(indexInGroup=index,similarItemsInGroup=totalCount) 
 
 	def event_stateChange(self):
 		if self.hasFocus:

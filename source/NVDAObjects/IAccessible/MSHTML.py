@@ -4,19 +4,25 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import time
 from comtypes import COMError
 import comtypes.client
 import comtypes.automation
 from comtypes import IServiceProvider
+import contextlib
+import winUser
 import oleacc
+import IAccessibleHandler
 import aria
-from keyUtils import key, sendKey
+from keyboardHandler import KeyboardInputGesture
 import api
 import textInfos
 from logHandler import log
 import controlTypes
 from . import IAccessible
 from ..behaviors import EditableTextWithoutAutoSelectDetection
+from .. import InvalidNVDAObject
+from ..window import Window
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
@@ -62,6 +68,14 @@ def IAccessibleFromHTMLNode(HTMLNode):
 		raise NotImplementedError
 
 def HTMLNodeFromIAccessible(IAccessibleObject):
+	#Internet Explorer 8 can crash if you try asking for an IHTMLElement from the root MSHTML Registered Handler IAccessible
+	#So only do it if we can get the role, and its not the MSAA client role.
+	try:
+		accRole=IAccessibleObject.accRole(0)
+	except COMError:
+		accRole=0
+	if not accRole or accRole==oleacc.ROLE_SYSTEM_CLIENT:
+		return None
 	try:
 		s=IAccessibleObject.QueryInterface(IServiceProvider)
 		i=s.QueryService(IID_IHTMLElement,comtypes.automation.IDispatch)
@@ -73,26 +87,41 @@ def HTMLNodeFromIAccessible(IAccessibleObject):
 		raise NotImplementedError
 
 def locateHTMLElementByID(document,ID):
-	element=document.getElementById(ID)
+	try:
+		element=document.getElementsByName(ID).item(0)
+	except COMError as e:
+		log.debugWarning("document.getElementsByName failed with COMError %s"%e)
+		element=None
 	if element:
 		return element
-	nodeName=document.body.nodeName
+	try:
+		nodeName=document.body.nodeName
+	except COMError as e:
+		log.debugWarning("document.body.nodeName failed with COMError %s"%e)
+		return None
 	if nodeName=="FRAMESET":
 		tag="frame"
 	else:
 		tag="iframe"
-	frames=document.getElementsByTagName(tag)
+	try:
+		frames=document.getElementsByTagName(tag)
+	except COMError as e:
+		log.debugWarning("document.getElementsByTagName failed with COMError %s"%e)
+		return None
 	for frame in frames:
 		pacc=IAccessibleFromHTMLNode(frame)
-		childPacc=pacc.accChild(1)
-		childElement=HTMLNodeFromIAccessible(childPacc)
+		res=IAccessibleHandler.accChild(pacc,1)
+		if not res: continue
+		childElement=HTMLNodeFromIAccessible(res[0])
+		if not childElement: continue
 		childElement=locateHTMLElementByID(childElement.document,ID)
-		if childElement:
-			return childElement
+		if not childElement: continue
+		return childElement
 
 class MSHTMLTextInfo(textInfos.TextInfo):
 
 	def _expandToLine(self,textRange):
+		#Try to calculate the line range by finding screen coordinates and using moveToPoint
 		parent=textRange.parentElement()
 		if not parent.isMultiline: #fastest solution for single line edits (<input type="text">)
 			textRange.expand("textEdit")
@@ -107,10 +136,32 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		else:
 			lineRight=parentRect.left+parent.clientWidth
 		tempRange=textRange.duplicate()
-		tempRange.moveToPoint(lineLeft,lineTop)
-		textRange.setEndPoint("startToStart",tempRange)
-		tempRange.moveToPoint(lineRight,lineTop)
-		textRange.setEndPoint("endToStart",tempRange)
+		try:
+			tempRange.moveToPoint(lineLeft,lineTop)
+			textRange.setEndPoint("startToStart",tempRange)
+			tempRange.moveToPoint(lineRight,lineTop)
+			textRange.setEndPoint("endToStart",tempRange)
+			return
+		except COMError:
+			pass
+		#MoveToPoint fails on Some (possibly floated) textArea elements.
+		#Instead use the physical selection, by moving it with key presses, to work out the line.
+		#This approach is somewhat slower, and less accurate.
+		with self.obj.suspendCaretEvents():
+			selObj=parent.document.selection
+			oldSelRange=selObj.createRange().duplicate()
+			textRange.select()
+			KeyboardInputGesture.fromName("home").send()
+			api.processPendingEvents(False)
+			newSelStartMark=selObj.createRange().getBookmark()
+			KeyboardInputGesture.fromName("end").send()
+			api.processPendingEvents(False)
+			newSelEndMark=selObj.createRange().getBookmark()
+			tempRange.moveToBookmark(newSelStartMark)
+			textRange.setEndPoint("startToStart",tempRange)
+			tempRange.moveToBookmark(newSelEndMark)
+			textRange.setEndPoint("endToStart",tempRange)
+			oldSelRange.select()
 
 	def __init__(self,obj,position,_rangeObj=None):
 		super(MSHTMLTextInfo,self).__init__(obj,position)
@@ -126,7 +177,8 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		else:
 			self._rangeObj=self.obj.HTMLNode.createTextRange()
 		if position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
-			if self.obj.HTMLNode.uniqueID!=self.obj.HTMLNode.document.activeElement.uniqueID:
+			activeElement=self.obj.HTMLNode.document.activeElement
+			if not activeElement or self.obj.HTMLNode.uniqueID!=activeElement.uniqueID:
 				raise RuntimeError("Only works with currently selected element")
 			if not editableBody:
 				mark=self.obj.HTMLNode.document.selection.createRange().GetBookmark()
@@ -233,6 +285,20 @@ class MSHTML(IAccessible):
 	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD','HTML','PARAM']
 	HTMLNodeNameEmbedList=['OBJECT','EMBED','APPLET','FRAME','IFRAME']
 
+	_ignoreCaretEvents=False #:Set to true when moving the caret to calculate lines, event_caret will be disabled.
+
+	@contextlib.contextmanager
+	def suspendCaretEvents(self):
+		"""Suspends caret events while you need to move the caret to calculate things."""
+		oldVal=self._ignoreCaretEvents
+		self._ignoreCaretEvents=True
+		yield oldVal
+		self._ignoreCaretEvents=oldVal
+
+	def event_caret(self):
+		if self._ignoreCaretEvents: return
+		return super(MSHTML,self).event_caret()
+
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
 		IAccessibleObject=kwargs['IAccessibleObject']
@@ -258,19 +324,22 @@ class MSHTML(IAccessible):
 	def findOverlayClasses(self,clsList):
 		if self.TextInfo == MSHTMLTextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
-		if nodeNamesToNVDARoles.get(self.HTMLNode.nodeName) == controlTypes.ROLE_DOCUMENT:
+		nodeName = self.HTMLNode.nodeName
+		if nodeNamesToNVDARoles.get(nodeName) == controlTypes.ROLE_DOCUMENT:
 			clsList.append(Body)
+		elif nodeName == "OBJECT":
+			clsList.append(Object)
 
 		clsList.append(MSHTML)
 		if not self.HTMLNodeHasAncestorIAccessible:
 			# The IAccessibleObject is for this node (not an ancestor), so IAccessible overlay classes are relevant.
 			super(MSHTML,self).findOverlayClasses(clsList)
 
-	def _get_virtualBufferClass(self):
+	def _get_treeInterceptorClass(self):
 		if self.HTMLNode and self.role==controlTypes.ROLE_DOCUMENT and not self.isContentEditable:
 			import virtualBuffers.MSHTML
 			return virtualBuffers.MSHTML.MSHTML
-		return super(MSHTML,self).virtualBufferClass
+		return super(MSHTML,self).treeInterceptorClass
 
 	def __init__(self,HTMLNode=None,IAccessibleObject=None,IAccessibleChildID=None,**kwargs):
 		self.HTMLNodeHasAncestorIAccessible=False
@@ -291,6 +360,9 @@ class MSHTML(IAccessible):
 					tempNode=tempNode.parentNode
 				except COMError:
 					tempNode=None
+
+		if not IAccessibleObject:
+			raise InvalidNVDAObject("Couldn't get IAccessible, probably dead object")
 
 		super(MSHTML,self).__init__(IAccessibleObject=IAccessibleObject,IAccessibleChildID=IAccessibleChildID,**kwargs)
 		self.HTMLNode=HTMLNode
@@ -617,3 +689,62 @@ class Body(MSHTML):
 			return parent.parent
 		else:
 			return parent
+
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		# We must override this because we override parent to skip the MSAAHTML Registered Handler client,
+		# which might have the focused state.
+		if controlTypes.STATE_FOCUSED in self.states:
+			return True
+		parent = super(Body, self).parent
+		if not parent:
+			return False
+		return parent.shouldAllowIAccessibleFocusEvent
+
+class Object(MSHTML):
+
+	def _get_firstChild(self):
+		# We want firstChild to return the accessible for the embedded object.
+		from objidl import IOleWindow
+		# Try to get the window for the embedded object.
+		try:
+			window = self.HTMLNode.object.QueryInterface(IOleWindow).GetWindow()
+		except COMError:
+			window = None
+		if not window or window == self.windowHandle:
+			return super(Object, self).firstChild
+		return Window(windowHandle=window)
+
+class PluginWindow(IAccessible):
+	"""A window for a plugin.
+	"""
+
+	# MSHTML fires focus on this window after the plugin may already have fired a focus event.
+	# We don't want this to override the focus event fired by the plugin.
+	shouldAllowIAccessibleFocusEvent = False
+
+class RootClient(IAccessible):
+	"""The top level client of an MSHTML control.
+	"""
+
+	# Get rid of the URL.
+	name = None
+	# Get rid of "MSAAHTML Registered Handler".
+	description = None
+
+def findExtraIAccessibleOverlayClasses(obj, clsList):
+	"""Determine the most appropriate class for MSHTML objects.
+	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
+	"""
+	windowClass = obj.windowClassName
+	iaRole = obj.IAccessibleRole
+	if windowClass == "Internet Explorer_TridentCmboBx" and iaRole == oleacc.ROLE_SYSTEM_COMBOBOX:
+		clsList.append(V6ComboBox)
+		return
+
+	if windowClass != "Internet Explorer_Server":
+		return
+
+	if iaRole == oleacc.ROLE_SYSTEM_WINDOW and obj.event_objectID > 0:
+		clsList.append(PluginWindow)
+	elif iaRole == oleacc.ROLE_SYSTEM_CLIENT and obj.event_objectID == winUser.OBJID_CLIENT:
+		clsList.append(RootClient)

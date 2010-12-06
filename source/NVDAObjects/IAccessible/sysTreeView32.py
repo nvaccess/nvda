@@ -196,10 +196,7 @@ class TreeViewItem(IAccessible):
 		return info
 
 	def event_stateChange(self):
-		if self is api.getFocusObject() and controlTypes.STATE_EXPANDED in self.states and not controlTypes.STATE_EXPANDED in getattr(self,'_speakObjectPropertiesCache',set()):
-			announceContains=True
-		else:
-			announceContains=False
+		announceContains = self is api.getFocusObject() and controlTypes.STATE_EXPANDED in self.states and controlTypes.STATE_EXPANDED not in getattr(self,'_speakObjectPropertiesCache',{}).get('states',frozenset())
 		super(TreeViewItem,self).event_stateChange()
 		if announceContains:
 			speech.speakMessage(_("%s items")%self.childCount)
@@ -220,13 +217,15 @@ class BrokenCommctrl5Item(IAccessible):
 
 	def initOverlayClass(self):
 		self._uiaObj = None
-		if UIAHandler.handler and super(BrokenCommctrl5Item, self).parent.hasFocus:
-			try:
-				kwargs = {}
-				UIA.kwargsFromSuper(kwargs, relation="focus")
-				self._uiaObj = UIA(**kwargs)
-			except:
-				log.debugWarning("Retrieving UIA focus failed", exc_info=True)
+		if UIAHandler.handler: 
+			parent=super(BrokenCommctrl5Item, self).parent
+			if parent and parent.hasFocus:
+				try:
+					kwargs = {}
+					UIA.kwargsFromSuper(kwargs, relation="focus")
+					self._uiaObj = UIA(**kwargs)
+				except:
+					log.debugWarning("Retrieving UIA focus failed", exc_info=True)
 
 	def _get_role(self):
 		return self._uiaObj.role if self._uiaObj else controlTypes.ROLE_UNKNOWN

@@ -95,7 +95,6 @@ outputDevice = string(default=default)
 
 [mouse]
 	enableMouseTracking = boolean(default=True) #must be true for any of the other settings to work
-	reportTextUnderMouse = boolean(default=True)
 	mouseTextUnit = string(default="paragraph")
 	reportObjectRoleOnMouseEnter = boolean(default=False)
 	audioCoordinatesOnMouseMove = boolean(default=False)
@@ -115,6 +114,7 @@ outputDevice = string(default=default)
 	keyboardLayout = string(default="desktop")
 	speakTypedCharacters = boolean(default=true)
 	speakTypedWords = boolean(default=false)
+	beepForLowercaseWithCapslock = boolean(default=true)
 	speakCommandKeys = boolean(default=false)
 
 [virtualBuffers]
@@ -132,6 +132,7 @@ outputDevice = string(default=default)
 	reportFontName = boolean(default=false)
 	reportFontSize = boolean(default=false)
 	reportFontAttributes = boolean(default=false)
+	reportColor = boolean(default=False)
 	reportAlignment = boolean(default=false)
 	reportStyle = boolean(default=false)
 	reportSpellingErrors = boolean(default=true)
@@ -139,6 +140,7 @@ outputDevice = string(default=default)
 	reportLineNumber = boolean(default=False)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
+	reportTableHeaders = boolean(default=True)
 	reportLinks = boolean(default=true)
 	reportLists = boolean(default=true)
 	reportHeadings = boolean(default=true)
@@ -201,6 +203,8 @@ def updateSynthConfig(synth):
 def save():
 	"""Saves the configuration to the config file.
 	"""
+	#We never want to save config if runing securely
+	if globalVars.appArgs.secure: return
 	global conf
 	if globalVars.configFileError:
 		raise RuntimeError("config file errors still exist")
@@ -271,12 +275,10 @@ def initConfigPath(configPath=None):
 		configPath=globalVars.appArgs.configPath
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
-	for subdir in ("appModules","brailleDisplayDrivers","speechDicts","synthDrivers"):
+	for subdir in ("appModules","brailleDisplayDrivers","speechDicts","synthDrivers","globalPlugins"):
 		subdir=os.path.join(configPath,subdir)
 		if not os.path.isdir(subdir):
 			os.makedirs(subdir)
-
-
 
 RUN_REGKEY = ur"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
@@ -310,9 +312,12 @@ def isServiceInstalled():
 		return False
 
 def execElevated(path, params=None, wait=False):
+	import subprocess
 	import shellapi
 	import winKernel
 	import winUser
+	if params is not None:
+		params = subprocess.list2cmdline(params)
 	sei = shellapi.SHELLEXECUTEINFO(lpVerb=u"runas", lpFile=os.path.abspath(path), lpParameters=params, nShow=winUser.SW_HIDE)
 	if wait:
 		sei.fMask = shellapi.SEE_MASK_NOCLOSEPROCESS
@@ -339,6 +344,21 @@ def _setStartOnLogonScreen(enable):
 	k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY, 0, _winreg.KEY_WRITE)
 	_winreg.SetValueEx(k, u"startOnLogonScreen", None, _winreg.REG_DWORD, int(enable))
 
+def setSystemConfigToCurrentConfig():
+	fromPath=os.path.abspath(globalVars.appArgs.configPath)
+	try:
+		_setSystemConfig(fromPath)
+		return True
+	except (OSError,WindowsError):
+		return execElevated(SLAVE_FILENAME, (u"setNvdaSystemConfig", fromPath), wait=True)==0
+
+def _setSystemConfig(fromPath):
+	toPath=os.path.join(sys.prefix,'systemConfig')
+	import shutil
+	if os.path.isdir(toPath):
+		shutil.rmtree(toPath)
+	shutil.copytree(fromPath,toPath)
+
 def setStartOnLogonScreen(enable):
 	if getStartOnLogonScreen() == enable:
 		return
@@ -347,7 +367,7 @@ def setStartOnLogonScreen(enable):
 		_setStartOnLogonScreen(enable)
 	except WindowsError:
 		# We probably don't have admin privs, so we need to elevate to do this using the slave.
-		if execElevated(SLAVE_FILENAME, "config_setStartOnLogonScreen %d" % enable, wait=True) != 0:
+		if execElevated(SLAVE_FILENAME, (u"config_setStartOnLogonScreen", u"%d" % enable), wait=True) != 0:
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
 
 def getConfigDirs(subpath=None):

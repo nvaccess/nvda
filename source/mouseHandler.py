@@ -74,7 +74,7 @@ def internal_mouseEvent(msg,x,y,injected):
 		return True
 	try:
 		curMousePos=(x,y)
-		if msg==WM_MOUSEMOVE and (config.conf['mouse']['reportTextUnderMouse'] or config.conf['mouse']['reportObjectRoleOnMouseEnter'] or config.conf['mouse']['audioCoordinatesOnMouseMove']):
+		if msg==WM_MOUSEMOVE: 
 			mouseMoved=True
 		elif msg in (WM_LBUTTONDOWN,WM_RBUTTONDOWN):
 			queueHandler.queueFunction(queueHandler.eventQueue,speech.cancelSpeech)
@@ -112,7 +112,11 @@ def initialize():
 	global curMousePos
 	(x,y)=winUser.getCursorPos()
 	desktopObject=api.getDesktopObject()
-	mouseObject=desktopObject.objectFromPoint(x,y)
+	try:
+		mouseObject=desktopObject.objectFromPoint(x,y)
+	except:
+		log.exception("Error retrieving initial mouse object")
+		mouseObject=None
 	if not mouseObject:
 		mouseObject=api.getDesktopObject()
 	api.setMouseObject(mouseObject)

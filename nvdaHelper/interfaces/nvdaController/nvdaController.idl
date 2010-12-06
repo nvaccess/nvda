@@ -1,0 +1,60 @@
+/*
+This file is a part of the NVDA project.
+URL: http://www.nvda-project.org/
+Copyright 2006-2010 NVDA contributers.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License version 2.1, as published by
+    the Free Software Foundation.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This license can be found at:
+http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+*/
+
+cpp_quote("/*")
+cpp_quote("This file is a part of the NVDA project.")
+cpp_quote("URL: http://www.nvda-project.org/")
+cpp_quote("Copyright 2006-2010 NVDA contributers.")
+cpp_quote("This program is free software: you can redistribute it and/or modify")
+cpp_quote("it under the terms of the GNU Lesser General Public License version 2.1, as published by")
+cpp_quote("the Free Software Foundation.")
+cpp_quote("This program is distributed in the hope that it will be useful,")
+cpp_quote("but WITHOUT ANY WARRANTY; without even the implied warranty of")
+cpp_quote("MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.")
+cpp_quote("This license can be found at:")
+cpp_quote("http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html")
+cpp_quote("*/")
+
+/**
+ * Allows the controling of NVDA from a remote process
+ */
+[
+	uuid(DFF50B99-F7FD-4ca7-A82C-DAEB3E025295),
+	version(1.0),
+]
+interface NvdaController {
+
+/**
+ * Tests if NVDA is running or not.
+ */
+	error_status_t __stdcall testIfRunning();
+
+/**
+ * Instructs NVDA to speak the given text.
+ * @param text the text to speak.
+ */
+	error_status_t __stdcall speakText([in,string] const wchar_t* text);
+
+/**
+ * Instructs NVDA to silence current speech.
+ */
+	error_status_t __stdcall cancelSpeech();
+
+/**
+ * Shows a given message on the braille display.
+ * @param message the message that will be temporarily shown on the display
+ */
+	error_status_t __stdcall brailleMessage([in,string] const wchar_t* message);
+
+};

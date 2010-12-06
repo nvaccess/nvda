@@ -4,10 +4,10 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import _default
+import appModuleHandler
 import controlTypes
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="#32770" and obj.windowControlID==10021:

@@ -15,15 +15,12 @@
 ;Settings
 
 ;defines for product info and paths
-!define VERSION "unknown"
 !define PRODUCT "NVDA"	; Don't change this for no reason, other instructions depend on this constant
-!define PUBLISHER "unknown"
 !define WEBSITE "www.nvda-project.org"
 !define NVDAWindowClass "wxWindowClassNR"
 !define NVDAWindowTitle "NVDA"
 !define NVDAApp "nvda.exe"
 !define NVDATempDir "_nvda_temp_"
-!define NVDASourceDir "..\source\dist"
 !define SNDLogo "nvda_logo.wav"
 !define INSTDIR_REG_ROOT "HKLM"
 !define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}"
@@ -42,7 +39,6 @@ RequestExecutionLevel user /* RequestExecutionLevel REQUIRED! */
 !define MUI_UNINSTALLER ;We want an uninstaller to be generated
 
 ;product branding
-OutFile "${PRODUCT}_${VERSION}.exe"
 InstallDir "$PROGRAMFILES\${PRODUCT}"
 InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 Name "NVDA"
@@ -134,10 +130,13 @@ Var StartMenuFolder
 !insertmacro MUI_LANGUAGE "Galician"
 !insertmacro MUI_LANGUAGE "Dutch"
 !insertmacro MUI_LANGUAGE "Arabic"
+!insertmacro MUI_LANGUAGE "Danish"
+!insertmacro MUI_LANGUAGE "Icelandic"
 
 ;Include installer specific language strings
 !include "locale\ar\langstrings.txt"
 !include "locale\cs\langstrings.txt"
+!include "locale\da\langstrings.txt"
 !include "locale\de\langstrings.txt"
 !include "locale\en\langstrings.txt"
 !include "locale\es_es\langstrings.txt"
@@ -147,6 +146,7 @@ Var StartMenuFolder
 !include "locale\gl\langstrings.txt"
 !include "locale\hu\langstrings.txt"
 !include "locale\hr\langstrings.txt"
+!include "locale\is\langstrings.txt"
 !include "locale\it\langstrings.txt"
 !include "locale\ja\langstrings.txt"
 !include "locale\nl\langstrings.txt"
@@ -240,7 +240,7 @@ ExecWait "$INSTDIR\nvda_slave.exe installer_installService"
 SectionEnd
 
 section "$(section_desktopShortcut)"
-CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
+CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\nvda_slave.exe" "launchNVDA -r" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL \
  CONTROL|ALT|N "Shortcut Ctrl+Alt+N"
 SectionEnd
 

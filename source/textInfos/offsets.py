@@ -1,8 +1,8 @@
 #textInfos/offsets.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+#Copyright (C) 2006 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
 
 import re
 import textInfos
@@ -127,6 +127,23 @@ def findEndOfWord(text,offset,lineLength=None):
 	return offset
 
 class OffsetsTextInfo(textInfos.TextInfo):
+	"""An abstract TextInfo for text implementations which represent ranges using numeric offsets relative to the start of the text.
+	In such implementations, the start of the text is represented by 0 and the end is the length of the entire text.
+	
+	All subclasses must implement L{_getStoryLength}.
+	Aside from this, there are two possible implementations:
+		* If the underlying text implementation does not support retrieval of line offsets, L{_getStoryText} should be implemented.
+		In this case, the base implementation of L{_getLineOffsets} will retrieve the entire text of the object and use text searching algorithms to find line offsets.
+		This is very inefficient and should be avoided if possible.
+		* Otherwise, subclasses must implement at least L{_getTextRange} and L{_getLineOffsets}.
+		Retrieval of other offsets (e.g. L{_getWordOffsets}) should also be implemented if possible for greatest accuracy and efficiency.
+	
+	If a caret and/or selection should be supported, L{_getCaretOffset} and/or L{_getSelectionOffsets} should be implemented, respectively.
+	To support conversion from/to screen points (e.g. for mouse tracking), L{_getOffsetFromPoint}/L{_getPointFromOffset} should be implemented.
+	"""
+
+	detectFormattingAfterCursorMaybeSlow=True #: honours documentFormatting config option if true - set to false if this is not at all slow.
+ 
 
 	def __eq__(self,other):
 		if self is other or (isinstance(other,OffsetsTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
@@ -156,6 +173,10 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		raise NotImplementedError
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
+		"""Retrieve the formatting information for a given offset and the offsets spanned by that field.
+		Subclasses must override this if support for text formatting is desired.
+		The base implementation associates text with line numbers if possible.
+		"""
 		formatField=textInfos.FormatField()
 		startOffset,endOffset=self._startOffset,self._endOffset
 		if formatConfig["reportLineNumber"]:
@@ -198,11 +219,24 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _getOffsetFromPoint(self,x,y):
 		raise NotImplementedError
 
+	def _getNVDAObjectFromOffset(self,offset):
+		raise NotImplementedError
+
+	def _getOffsetsFromNVDAObject(self,obj):
+		raise NotImplementedError
+
 	def __init__(self,obj,position):
+		"""Constructor.
+		Subclasses may extend this to perform implementation specific initialisation, calling their superclass method afterwards.
+		"""
 		super(OffsetsTextInfo,self).__init__(obj,position)
+		from NVDAObjects import NVDAObject
 		if isinstance(position,textInfos.Point):
 			offset=self._getOffsetFromPoint(position.x,position.y)
 			position=Offsets(offset,offset)
+		elif isinstance(position,NVDAObject):
+			start,end=self._getOffsetsFromNVDAObject(position)
+			position=textInfos.offsets.Offsets(start,end)
 		if position==textInfos.POSITION_FIRST:
 			self._startOffset=self._endOffset=0
 		elif position==textInfos.POSITION_LAST:
@@ -220,6 +254,9 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError("position: %s not supported"%position)
 
+	def _get_NVDAObjectAtStart(self):
+		return self._getNVDAObjectFromOffset(self._startOffset)
+
 	def _getUnitOffsets(self,unit,offset):
 		if unit==textInfos.UNIT_CHARACTER:
 			offsetsFunc=self._getCharacterOffsets
@@ -231,6 +268,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			offsetsFunc=self._getParagraphOffsets
 		elif unit==textInfos.UNIT_READINGCHUNK:
 			offsetsFunc=self._getReadingChunkOffsets
+		elif unit==textInfos.UNIT_STORY:
+			return 0,self._getStoryLength()
 		else:
 			raise ValueError("unknown unit: %s"%unit)
 		return offsetsFunc(offset)
@@ -292,7 +331,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
-		if not formatConfig['detectFormatAfterCursor']:
+		if self.detectFormattingAfterCursorMaybeSlow and not formatConfig['detectFormatAfterCursor']:
 			field,(boundStart,boundEnd)=self._getFormatFieldAndOffsets(self._startOffset,formatConfig,calculateOffsets=False)
 			text=self.text
 			return [textInfos.FieldCommand('formatChange',field),text]
@@ -377,7 +416,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		else:
 			# Start searching one past the start to avoid finding the current match.
 			inText=self._getTextRange(self._startOffset+1,self._getStoryLength())
-		m=re.search(re.escape(text),inText,re.IGNORECASE)
+		m=re.search(re.escape(text),inText,(0 if caseSensitive else re.IGNORECASE)|re.UNICODE)
 		if not m:
 			return False
 		if reverse:

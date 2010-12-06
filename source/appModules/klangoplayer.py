@@ -1,7 +1,7 @@
 #appModules/klangoplayer.py
 
-import _default
+import appModuleHandler
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	selfVoicing=True

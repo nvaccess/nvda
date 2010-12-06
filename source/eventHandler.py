@@ -1,11 +1,18 @@
+#eventHandler.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2007-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
+
 import queueHandler
 import api
 import speech
 import appModuleHandler
-import virtualBufferHandler
+import treeInterceptorHandler
 import globalVars
 import controlTypes
 from logHandler import log
+import globalPluginHandler
 
 #Some dicts to store event counts by name and or obj
 _pendingEventCountsByName={}
@@ -44,7 +51,7 @@ def _queueEventCallback(eventName,obj,kwargs):
 		_pendingEventCountsByNameAndObj[(eventName,obj)]=(curCount-1)
 	elif curCount==1:
 		del _pendingEventCountsByNameAndObj[(eventName,obj)]
-		executeEvent(eventName,obj,**kwargs)
+	executeEvent(eventName,obj,**kwargs)
 
 def isPendingEvents(eventName=None,obj=None):
 	"""Are there currently any events queued?
@@ -64,6 +71,54 @@ def isPendingEvents(eventName=None,obj=None):
 	elif eventName and obj:
 		return (eventName,obj) in _pendingEventCountsByNameAndObj
 
+class _EventExecuter(object):
+	"""Facilitates execution of a chain of event functions.
+	L{gen} generates the event functions and positional arguments.
+	L{next} calls the next function in the chain.
+	"""
+
+	def __init__(self, eventName, obj, kwargs):
+		self.kwargs = kwargs
+		self._gen = self.gen(eventName, obj)
+		try:
+			self.next()
+		except StopIteration:
+			pass
+
+	def next(self):
+		func, args = next(self._gen)
+		return func(*args, **self.kwargs)
+
+	def gen(self, eventName, obj):
+		funcName = "event_%s" % eventName
+
+		# Global plugin level.
+		for plugin in globalPluginHandler.runningPlugins:
+			func = getattr(plugin, funcName, None)
+			if func:
+				yield func, (obj, self.next)
+
+		# App module level.
+		app = obj.appModule
+		if app:
+			if app.selfVoicing:
+				return
+			func = getattr(app, funcName, None)
+			if func:
+				yield func, (obj, self.next)
+
+		# Tree interceptor level.
+		treeInterceptor = obj.treeInterceptor
+		if treeInterceptor and treeInterceptor.isReady:
+			func = getattr(treeInterceptor, funcName, None)
+			if func:
+				yield func, (obj, self.next)
+
+		# NVDAObject level.
+		func = getattr(obj, funcName, None)
+		if func:
+			yield func, ()
+
 def executeEvent(eventName,obj,**kwargs):
 	"""Executes an NVDA event.
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
@@ -77,15 +132,14 @@ def executeEvent(eventName,obj,**kwargs):
 			return
 		elif eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
 			return
-		executeEvent_appModuleLevel(eventName,obj,**kwargs)
+		_EventExecuter(eventName,obj,kwargs)
 	except:
 		log.exception("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs))
-
 
 def doPreGainFocus(obj):
 	oldForeground=api.getForegroundObject()
 	oldFocus=api.getFocusObject()
-	oldVirtualBuffer=oldFocus.virtualBuffer if oldFocus else None
+	oldTreeInterceptor=oldFocus.treeInterceptor if oldFocus else None
 	api.setFocusObject(obj)
 	if globalVars.focusDifferenceLevel<=1:
 		newForeground=api.getDesktopObject().objectInForeground()
@@ -101,39 +155,19 @@ def doPreGainFocus(obj):
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
 		executeEvent("focusEntered",parent)
-	if obj.virtualBuffer is not oldVirtualBuffer:
-		if hasattr(oldVirtualBuffer,"event_virtualBuffer_loseFocus"):
-			oldVirtualBuffer.event_virtualBuffer_loseFocus()
-		if obj.virtualBuffer and not obj.virtualBuffer.isLoading and hasattr(obj.virtualBuffer,"event_virtualBuffer_gainFocus"):
-			obj.virtualBuffer.event_virtualBuffer_gainFocus()
+	if obj.treeInterceptor is not oldTreeInterceptor:
+		if hasattr(oldTreeInterceptor,"event_treeInterceptor_loseFocus"):
+			oldTreeInterceptor.event_treeInterceptor_loseFocus()
+		if obj.treeInterceptor and obj.treeInterceptor.isReady and hasattr(obj.treeInterceptor,"event_treeInterceptor_gainFocus"):
+			obj.treeInterceptor.event_treeInterceptor_gainFocus()
 	return True
  
 def doPreDocumentLoadComplete(obj):
 	focusObject=api.getFocusObject()
-	if (not obj.virtualBuffer or not obj.virtualBuffer.isAlive()) and (obj==focusObject or obj in api.getFocusAncestors()):
-		v=virtualBufferHandler.update(obj)
-		if v:
-			obj.virtualBuffer=v
-			#Focus may be in this new virtualBuffer, so force focus to look up its virtualBuffer
-			focusObject.virtualBuffer=virtualBufferHandler.getVirtualBuffer(focusObject)
+	if (not obj.treeInterceptor or not obj.treeInterceptor.isAlive or obj.treeInterceptor.shouldPrepare) and (obj==focusObject or obj in api.getFocusAncestors()):
+		ti=treeInterceptorHandler.update(obj)
+		if ti:
+			obj.treeInterceptor=ti
+			#Focus may be in this new treeInterceptor, so force focus to look up its treeInterceptor
+			focusObject.treeInterceptor=treeInterceptorHandler.getTreeInterceptor(focusObject)
 	return True
-
-def executeEvent_appModuleLevel(name,obj,**kwargs):
-	appModule=obj.appModule
-	if appModule and appModule.selfVoicing:
-		return
-	if hasattr(appModule,"event_%s"%name):
-		getattr(appModule,"event_%s"%name)(obj,lambda: executeEvent_virtualBufferLevel(name,obj,**kwargs),**kwargs)
-	else:
-		executeEvent_virtualBufferLevel(name,obj,**kwargs)
-
-def executeEvent_virtualBufferLevel(name,obj,**kwargs):
-	virtualBuffer=obj.virtualBuffer
-	if hasattr(virtualBuffer,'event_%s'%name) and not virtualBuffer.isLoading and virtualBuffer.VBufHandle:
-		getattr(virtualBuffer,'event_%s'%name)(obj,lambda: executeEvent_NVDAObjectLevel(name,obj,**kwargs),**kwargs)
-	else:
-		executeEvent_NVDAObjectLevel(name,obj,**kwargs)
-
-def executeEvent_NVDAObjectLevel(name,obj,**kwargs):
-	if hasattr(obj,'event_%s'%name):
-		getattr(obj,'event_%s'%name)(**kwargs)

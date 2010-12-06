@@ -7,12 +7,9 @@
 """Manages appModules.
 @var runningTable: a dictionary of the currently running appModules, using their application's main window handle as a key.
 @type runningTable: dict
-@var re_keyScript: a compiled regular expression that can grab a keyName and a script name from a line in a NVDA key map file (kbd file).
-@type re_keyScript: regular expression
 """
 
 import itertools
-import re
 import ctypes
 import os
 import pkgutil
@@ -34,9 +31,6 @@ runningTable={}
 #: The process ID of NVDA itself.
 NVDAProcessID=None
 _importers=None
-
-#regexp to collect the key and script from a line in a keyMap file 
-re_keyScript=re.compile(r'^\s*(?P<key>[\S]+)\s*=\s*(?P<script>[\S]+)\s*$')
 
 class processEntry32W(ctypes.Structure):
 	_fields_ = [
@@ -76,30 +70,7 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	winKernel.kernel32.CloseHandle(FSnapshotHandle)
 	if not includeExt:
 		appName=os.path.splitext(appName)[0].lower()
-	log.debug("appName: %s"%appName)
 	return appName
-
-def getKeyMapFileName(appName,layout):
-	"""Finds the file path for the key map file, given the application name and keyboard layout.
-	@param appName: name of application
-	@type appName: str
-	@returns: file path of key map file (.kbd file)
-	@rtype: str
-	"""
-	for dir in appModules.__path__+['.\\appModules']:
-		# Python's import paths aren't unicode, but we prefer to deal with unicode, so convert them.
-		dir = dir.decode("mbcs")
-		fname = os.path.join(dir, '%s_%s.kbd' % (appName, layout))
-		if os.path.isfile(fname):
-			log.debug("Found keymap file for %s at %s"%(appName,fname)) 
-			return fname
-
-	if layout!='desktop':
-		# Fall back to desktop.
-		return getKeyMapFileName(appName,'desktop')
-
-	log.debug("No keymapFile for %s"%appName)
-	return None
 
 def getAppModuleForNVDAObject(obj):
 	if not isinstance(obj,NVDAObjects.NVDAObject):
@@ -117,8 +88,6 @@ def getAppModuleFromProcessID(processID):
 	if not mod:
 		appName=getAppNameFromProcessID(processID)
 		mod=fetchAppModule(processID,appName)
-		if not mod:
-			mod=fetchAppModule(processID,appName,useDefault=True)
 		if not mod:
 			raise RuntimeError("error fetching default appModule")
 		runningTable[processID]=mod
@@ -140,7 +109,7 @@ def update(processID):
 def doesAppModuleExist(name):
 	return any(importer.find_module("appModules.%s" % name) for importer in _importers)
 
-def fetchAppModule(processID,appName,useDefault=False):
+def fetchAppModule(processID,appName):
 	"""Returns an appModule found in the appModules directory, for the given application name.
 	@param processID: process ID for it to be associated with
 	@type processID: integer
@@ -150,8 +119,6 @@ def fetchAppModule(processID,appName,useDefault=False):
 	@rtype: AppModule
 	"""  
 	friendlyAppName=appName
-	if useDefault:
-		appName='_default'
 
 	# First, check whether the module exists.
 	# We need to do this separately because even though an ImportError is raised when a module can't be found, it might also be raised for other reasons.
@@ -161,19 +128,16 @@ def fetchAppModule(processID,appName,useDefault=False):
 		# Since Python can't handle unicode characters in module names, we need to decompose unicode string and strip out accents.
 		appName = unicodedata.normalize("NFD", appName)
 		exists = doesAppModuleExist(appName)
-	if not exists:
-		# It is not an error if the module doesn't exist.
-		return None
 
-	try:
-		mod = __import__("appModules.%s" % appName, globals(), locals(), ("appModules",)).AppModule(processID, friendlyAppName)
-	except:
-		log.error("error in appModule %s"%appName, exc_info=True)
-		ui.message(_("Error in appModule %s")%appName)
-		return None
+	if exists:
+		try:
+			return __import__("appModules.%s" % appName, globals(), locals(), ("appModules",)).AppModule(processID, friendlyAppName)
+		except:
+			log.error("error in appModule %s"%appName, exc_info=True)
+			ui.message(_("Error in appModule %s")%appName)
 
-	mod.loadKeyMap()
-	return mod
+	# Use the base AppModule.
+	return AppModule(processID, friendlyAppName)
 
 def initialize():
 	"""Initializes the appModule subsystem. 
@@ -181,26 +145,40 @@ def initialize():
 	global NVDAProcessID,_importers
 	NVDAProcessID=os.getpid()
 	config.addConfigDirsToPythonPackagePath(appModules)
-	_importers=list(pkgutil.iter_importers("appModules._default"))
+	_importers=list(pkgutil.iter_importers("appModules.__init__"))
 
 #base class for appModules
 class AppModule(baseObject.ScriptableObject):
-	"""AppModule base class
-	@var appName: the application name
-	@type appName: str
-	@var processID: the ID of the process this appModule is for.
-	@type processID: int
+	"""Base app module.
+	App modules provide specific support for a single application.
+	Each app module should be a Python module in the appModules package named according to the executable it supports;
+	e.g. explorer.py for the explorer.exe application.
+	It should containa  C{AppModule} class which inherits from this base class.
+	App modules can implement and bind gestures to scripts.
+	These bindings will only take effect while an object in the associated application has focus.
+	See L{ScriptableObject} for details.
+	App modules can also receive NVDAObject events for objects within the associated application.
+	This is done by implementing methods called C{event_eventName},
+	where C{eventName} is the name of the event; e.g. C{event_gainFocus}.
+	These event methods take two arguments: the NVDAObject on which the event was fired
+	and a callable taking no arguments which calls the next event handler.
 	"""
 
-	selfVoicing=False #Set to true so all undefined events and script requests are silently dropped.
-
-	_overlayClassCache={}
+	#: Whether this application is self-voicing.
+	#: If C{True}, all undefined events and script requests are silently dropped.
+	#: @type: bool
+	selfVoicing=False
 
 	def __init__(self,processID,appName=None):
+		super(AppModule,self).__init__()
+		#: The ID of the process this appModule is for.
+		#: @type: int
 		self.processID=processID
 		self.helperLocalBindingHandle=NVDAHelper.localLib.createConnection(processID)
 		if appName is None:
 			appName=getAppNameFromProcessID(processID)
+		#: The application name.
+		#: @type: str
 		self.appName=appName
 		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 
@@ -227,27 +205,3 @@ class AppModule(baseObject.ScriptableObject):
 		@param clsList: The list of classes, which will be modified by this method if appropriate.
 		@type clsList: list of L{NVDAObjects.NVDAObject}
 		"""
-
-	def loadKeyMap(self):
-		"""Loads a key map in to this appModule . if the key map exists. It takes in to account what layout NVDA is currently set to.
-		"""  
-		if '_keyMap' in self.__dict__:
-			self._keyMap={}
-		layout=config.conf["keyboard"]["keyboardLayout"]
-		for modClass in reversed(list(itertools.takewhile(lambda x: issubclass(x,AppModule) and x is not AppModule,self.__class__.__mro__))):
-			name=modClass.__module__.split('.')[-1]
-			keyMapFileName=getKeyMapFileName(name,layout)
-			if not keyMapFileName:
-				continue
-			keyMapFile=open(keyMapFileName,'r')
-			bindCount=0
-			#If the appModule already has a running keyMap, clear it
-			for line in (x for x in keyMapFile if not x.startswith('#') and not x.isspace()):
-				m=re_keyScript.match(line)
-				if m:
-					try:
-						self.bindKey_runtime(m.group('key'),m.group('script'))
-						bindCount+=1
-					except:
-						log.error("error binding %s to %s in appModule %s"%(m.group('script'),m.group('key'),self))
-			log.debug("added %s bindings to appModule %s from file %s"%(bindCount,self,keyMapFileName))

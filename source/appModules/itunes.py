@@ -1,39 +1,42 @@
-import _default
-import re
+import appModuleHandler
+from comtypes import COMError
 import controlTypes
+import oleacc
 import NVDAObjects.IAccessible
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if isinstance(obj,NVDAObjects.IAccessible.IAccessible):
 			obj.shouldAllowIAccessibleFocusEvent=True
+			if obj.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW and obj.windowClassName=="WebViewWindowClass":
+				#Disable a safety mechonism in our IAccessible support as in iTunes it causes an infinit ancestry.
+				obj.parentUsesSuperOnWindowRootIAccessible=False
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClassName=obj.windowClassName
 		role=obj.role
-		if ((windowClassName=="iTunesSources" and role==controlTypes.ROLE_TREEVIEWITEM)
-			or (windowClassName=="iTunesTrackList" and role==controlTypes.ROLE_LISTITEM)
-		):
+		if windowClassName in ('iTunesSources','iTunesTrackList') and role in (controlTypes.ROLE_LISTITEM,controlTypes.ROLE_TREEVIEWITEM):
 			clsList.insert(0, ITunesItem)
 
 class ITunesItem(NVDAObjects.IAccessible.IAccessible):
 	"""Retreaves position information encoded in the accDescription"""
 
-	RE_POSITION_INFO = re.compile(r"L(?P<level>\d+), (?P<indexInGroup>\d+) of (?P<similarItemsInGroup>\d+)")
-
-	# The description and value should not be user visible.
-	description = None
+	hasEncodedAccDescription=True
 	value = None
 
-	def _get_positionInfo(self):
-		# iTunes encodes the position info in the accDescription.
+	def _get_next(self):
+		next=super(ITunesItem,self).next
 		try:
-			desc = self.IAccessibleObject.accDescription(self.IAccessibleChildID)
+			parentChildCount=self.IAccessibleObject.accParent.accChildCount
 		except COMError:
-			return super(ITunesItem, self).positionInfo
+			parentChildCount=0
+		if not next and self.IAccessibleChildID>0 and self.IAccessibleChildID<parentChildCount:
+			next=NVDAObjects.IAccessible.IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=self.IAccessibleChildID+1)
+		return next
 
-		if desc:
-			m = self.RE_POSITION_INFO.match(desc)
-			if m:
-				return m.groupdict()
+	def _get_previous(self):
+		previous=super(ITunesItem,self).previous
+		if not previous and self.IAccessibleChildID>1:
+			previous=NVDAObjects.IAccessible.IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=self.IAccessibleChildID-1)
+		return previous

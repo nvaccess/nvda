@@ -8,18 +8,19 @@
 """
 
 import time
+import threading
+import difflib
 import tones
-import api
 import queueHandler
+import eventHandler
 import controlTypes
-import globalVars
 import speech
 import config
-import eventHandler
-from scriptHandler import isScriptWaiting
-from keyUtils import key, sendKey
+import globalVars
 from . import NVDAObject, NVDAObjectTextInfo
 import textInfos
+import editableText
+from logHandler import log
 
 class ProgressBar(NVDAObject):
 
@@ -94,7 +95,7 @@ class Dialog(NVDAObject):
 			childName=child.name
 			#Ignore objects that have another object directly after them with the same name, as this object is probably just a label for that object.
 			#However, graphics, static text, separators and Windows are ok.
-			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW) and children[index+1].name==childName:
+			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANE) and children[index+1].name==childName:
 				continue
 			childText=child.makeTextInfo(textInfos.POSITION_ALL).text
 			if not childText or childText.isspace() and child.TextInfo!=NVDAObjectTextInfo:
@@ -103,238 +104,211 @@ class Dialog(NVDAObject):
 		return " ".join(textList)
 
 	def _get_description(self):
+		superDesc = super(Dialog, self).description
+		if superDesc and not superDesc.isspace():
+			# The object already provides a useful description, so don't override it.
+			return superDesc
 		return self.getDialogText(self)
 
 	value = None
 
-class EditableText(NVDAObject):
+class EditableText(editableText.EditableText, NVDAObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.
-	This assumes the object can automatically detect selection changes and therefore does not handle the selection change keys.
-	Use L{EditableTextWithoutAutoSelectDetection} if your object does not automatically detect selection changes.
+	This does not handle selection changes.
+	To handle selection changes, use either L{EditableTextWithAutoSelectDetection} or L{EditableTextWithoutAutoSelectDetection}.
 	"""
 
-	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=0.03):
-		elapsed = 0
-		while elapsed < timeout:
-			if isScriptWaiting():
-				return False
-			api.processPendingEvents(processEventQueue=False)
-			if eventHandler.isPendingEvents("gainFocus"):
-				oldInCaretMovement=globalVars.inCaretMovement
-				globalVars.inCaretMovement=True
-				try:
-					api.processPendingEvents()
-				finally:
-					globalVars.inCaretMovement=oldInCaretMovement
-				return True
-			#The caret may stop working as the focus jumps, we want to stay in the while loop though
-			try:
-				newBookmark = self.makeTextInfo(textInfos.POSITION_CARET).bookmark
-				if newBookmark!=bookmark:
-					return True
-			except:
-				pass
-			time.sleep(retryInterval)
-			elapsed += retryInterval
-		return False
+	shouldFireCaretMovementFailedEvents = True
 
-	def script_caret_moveByLine(self,keyPress):
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		bookmark=info.bookmark
-		sendKey(keyPress)
-		if not self._hasCaretMoved(bookmark):
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
-		if not isScriptWaiting():
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if config.conf["reviewCursor"]["followCaret"]:
-				api.setReviewPosition(info.copy())
-			info.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(info)
+class EditableTextWithAutoSelectDetection(EditableText):
+	"""In addition to L{EditableText}, handles reporting of selection changes for objects which notify of them.
+	To have selection changes reported, the object must notify of selection changes via the caret event.
+	Optionally, it may notify of changes to content via the textChange, textInsert and textRemove events.
+	If the object supports selection but does not notify of selection changes, L{EditableTextWithoutAutoSelectDetection} should be used instead.
+	"""
 
-	def script_caret_moveByCharacter(self,keyPress):
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		bookmark=info.bookmark
-		sendKey(keyPress)
-		if not self._hasCaretMoved(bookmark):
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
-		if not isScriptWaiting():
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if config.conf["reviewCursor"]["followCaret"]:
-				api.setReviewPosition(info.copy())
-			info.expand(textInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER)
+	def event_gainFocus(self):
+		super(EditableText, self).event_gainFocus()
+		self.initAutoSelectDetection()
 
-	def script_caret_moveByWord(self,keyPress):
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		bookmark=info.bookmark
-		sendKey(keyPress)
-		if not self._hasCaretMoved(bookmark):
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
-		if not isScriptWaiting():
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if config.conf["reviewCursor"]["followCaret"]:
-				api.setReviewPosition(info.copy())
-			info.expand(textInfos.UNIT_WORD)
-			speech.speakTextInfo(info,unit=textInfos.UNIT_WORD)
+	def event_caret(self):
+		super(EditableText, self).event_caret()
+		self.detectPossibleSelectionChange()
 
-	def script_caret_moveByParagraph(self,keyPress):
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		bookmark=info.bookmark
-		sendKey(keyPress)
-		if not self._hasCaretMoved(bookmark):
-			eventHandler.executeEvent("caretMovementFailed", self, keyPress=keyPress)
-		if not isScriptWaiting():
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if config.conf["reviewCursor"]["followCaret"]:
-				api.setReviewPosition(info.copy())
-			info.expand(textInfos.UNIT_PARAGRAPH)
-			speech.speakTextInfo(info)
+	def event_textChange(self):
+		self.hasContentChangedSinceLastSelection = True
 
-	def _backspaceScriptHelper(self,unit,keyPress):
-		try:
-			oldInfo=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		oldBookmark=oldInfo.bookmark
-		testInfo=oldInfo.copy()
-		res=testInfo.move(textInfos.UNIT_CHARACTER,-1)
-		if res<0:
-			testInfo.expand(unit)
-			delChunk=testInfo.text
-		else:
-			delChunk=""
-		sendKey(keyPress)
-		if self._hasCaretMoved(oldBookmark):
-			if len(delChunk)>1:
-				speech.speakMessage(delChunk)
-			else:
-				speech.speakSpelling(delChunk)
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if config.conf["reviewCursor"]["followCaret"]:
-				api.setReviewPosition(info)
+	def event_textInsert(self):
+		self.hasContentChangedSinceLastSelection = True
 
-	def script_caret_backspaceCharacter(self,keyPress):
-		self._backspaceScriptHelper(textInfos.UNIT_CHARACTER,keyPress)
+	def event_textRemove(self):
+		self.hasContentChangedSinceLastSelection = True
 
-	def script_caret_backspaceWord(self,keyPress):
-		self._backspaceScriptHelper(textInfos.UNIT_WORD,keyPress)
-
-	def script_caret_delete(self,keyPress):
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			sendKey(keyPress)
-			return
-		bookmark=info.bookmark
-		sendKey(keyPress)
-		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		self._hasCaretMoved(bookmark)
-		if not isScriptWaiting():
-			focus=api.getFocusObject()
-			try:
-				info=focus.makeTextInfo(textInfos.POSITION_CARET)
-			except:
-				return
-			if config.conf["reviewCursor"]["followCaret"]:
-				api.setReviewPosition(info.copy())
-			info.expand(textInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER)
-
-	def initOverlayClass(self):
-		for keyName, scriptName in (
-			("ExtendedUp", "caret_moveByLine"),
-			("ExtendedDown", "caret_moveByLine"),
-			("ExtendedLeft", "caret_moveByCharacter"),
-			("ExtendedRight", "caret_moveByCharacter"),
-			("ExtendedPrior", "caret_moveByLine"),
-			("ExtendedNext", "caret_moveByLine"),
-			("Control+ExtendedLeft", "caret_moveByWord"),
-			("Control+ExtendedRight", "caret_moveByWord"),
-			("control+extendedUp", "caret_moveByParagraph"),
-			("control+extendedDown", "caret_moveByParagraph"),
-			("ExtendedHome", "caret_moveByCharacter"),
-			("ExtendedEnd", "caret_moveByCharacter"),
-			("control+extendedHome", "caret_moveByLine"),
-			("control+extendedEnd", "caret_moveByLine"),
-			("ExtendedDelete", "caret_delete"),
-			("Back", "caret_backspaceCharacter"),
-			("Control+Back", "caret_backspaceWord"),
-		):
-			self.bindKey_runtime(keyName, scriptName)
-
-class EditableTextWithoutAutoSelectDetection(EditableText):
+class EditableTextWithoutAutoSelectDetection(editableText.EditableTextWithoutAutoSelectDetection, EditableText):
 	"""In addition to L{EditableText}, provides scripts to report appropriately when the selection changes.
-	This should be used when an object cannot automatically detect when the selection changes.
+	This should be used when an object does not notify of selection changes.
 	"""
 
-	def script_caret_changeSelection(self,keyPress):
-		try:
-			oldInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		except:
-			sendKey(keyPress)
-			return
-		sendKey(keyPress)
-		if not isScriptWaiting():
-			api.processPendingEvents()
-			focus=api.getFocusObject()
-			try:
-				newInfo=focus.makeTextInfo(textInfos.POSITION_SELECTION)
-			except:
-				return
-			speech.speakSelectionChange(oldInfo,newInfo)
+	initOverlayClass = editableText.EditableTextWithoutAutoSelectDetection.initClass
+
+class LiveText(NVDAObject):
+	"""An object for which new text should be reported automatically.
+	These objects present text as a single chunk
+	and only fire an event indicating that some part of the text has changed; i.e. they don't provide the new text.
+	Monitoring must be explicitly started and stopped using the L{startMonitoring} and L{stopMonitoring} methods.
+	The object should notify of text changes using the textChange event.
+	"""
+	#: The time to wait before fetching text after a change event.
+	STABILIZE_DELAY = 0
+	# If the text is live, this is definitely content.
+	presentationType = NVDAObject.presType_content
 
 	def initOverlayClass(self):
-		for keyName in (
-			"shift+ExtendedUp",
-			"shift+ExtendedDown",
-			"shift+ExtendedLeft",
-			"shift+ExtendedRight",
-			"shift+ExtendedPrior",
-			"shift+ExtendedNext",
-			"shift+Control+ExtendedLeft",
-			"shift+Control+ExtendedRight",
-			"shift+control+extendedUp",
-			"shift+control+extendedDown",
-			"shift+ExtendedHome",
-			"shift+ExtendedEnd",
-			"shift+control+extendedHome",
-			"shift+control+extendedEnd",
-		):
-			self.bindKey_runtime(keyName, "caret_changeSelection")
+		self._event = threading.Event()
+		self._monitorThread = None
+		self._keepMonitoring = False
+
+	def startMonitoring(self):
+		"""Start monitoring for new text.
+		New text will be reported when it is detected.
+		@note: If monitoring has already been started, this will have no effect.
+		@see: L{stopMonitoring}
+		"""
+		if self._monitorThread:
+			return
+		self._monitorThread = threading.Thread(target=self._monitor)
+		self._keepMonitoring = True
+		self._event.clear()
+		self._monitorThread.start()
+
+	def stopMonitoring(self):
+		"""Stop monitoring previously started with L{startMonitoring}.
+		@note: If monitoring has not been started, this will have no effect.
+		@see: L{startMonitoring}
+		"""
+		if not self._monitorThread:
+			return
+		self._keepMonitoring = False
+		self._event.set()
+		self._monitorThread = None
+
+	def event_textChange(self):
+		"""Fired when the text changes.
+		@note: It is safe to call this directly from threads other than the main thread.
+		"""
+		self._event.set()
+
+	def _getTextLines(self):
+		"""Retrieve the text of this object in lines.
+		This will be used to determine the new text to speak.
+		The base implementation uses the L{TextInfo}.
+		However, subclasses should override this if there is a better way to retrieve the text.
+		@return: The current lines of text.
+		@rtype: list of str
+		"""
+		return list(self.makeTextInfo(textInfos.POSITION_ALL).getTextInChunks(textInfos.UNIT_LINE))
+
+	def _reportNewText(self, line):
+		"""Report a line of new text.
+		"""
+		speech.speakText(line)
+
+	def _monitor(self):
+		try:
+			oldLines = self._getTextLines()
+		except:
+			log.exception("Error getting initial lines")
+			oldLines = []
+
+		while self._keepMonitoring:
+			self._event.wait()
+			if not self._keepMonitoring:
+				break
+			if self.STABILIZE_DELAY > 0:
+				# wait for the text to stabilise.
+				time.sleep(self.STABILIZE_DELAY)
+				if not self._keepMonitoring:
+					# Monitoring was stopped while waiting for the text to stabilise.
+					break
+			self._event.clear()
+
+			try:
+				newLines = self._getTextLines()
+				if globalVars.reportDynamicContentChanges:
+					outLines = self._calculateNewText(newLines, oldLines)
+					if len(outLines) == 1 and len(outLines[0]) == 1:
+						# This is only a single character,
+						# which probably means it is just a typed character,
+						# so ignore it.
+						del outLines[0]
+					for line in outLines:
+						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewText, line)
+				oldLines = newLines
+			except:
+				log.exception("Error getting lines or calculating new text")
+
+	def _calculateNewText(self, newLines, oldLines):
+		outLines = []
+
+		prevLine = None
+		for line in difflib.ndiff(oldLines, newLines):
+			if line[0] == "?":
+				# We're never interested in these.
+				continue
+			if line[0] != "+":
+				# We're only interested in new lines.
+				prevLine = line
+				continue
+			text = line[2:]
+			if not text or text.isspace():
+				prevLine = line
+				continue
+
+			if prevLine and prevLine[0] == "-" and len(prevLine) > 2:
+				# It's possible that only a few characters have changed in this line.
+				# If so, we want to speak just the changed section, rather than the entire line.
+				prevText = prevLine[2:]
+				textLen = len(text)
+				prevTextLen = len(prevText)
+				# Find the first character that differs between the two lines.
+				for pos in xrange(min(textLen, prevTextLen)):
+					if text[pos] != prevText[pos]:
+						start = pos
+						break
+				else:
+					# We haven't found a differing character so far and we've hit the end of one of the lines.
+					# This means that the differing text starts here.
+					start = pos + 1
+				# Find the end of the differing text.
+				if textLen != prevTextLen:
+					# The lines are different lengths, so assume the rest of the line changed.
+					end = textLen
+				else:
+					for pos in xrange(textLen - 1, start - 1, -1):
+						if text[pos] != prevText[pos]:
+							end = pos + 1
+							break
+
+				if end - start < 15:
+					# Less than 15 characters have changed, so only speak the changed chunk.
+					text = text[start:end]
+
+			if text and not text.isspace():
+				outLines.append(text)
+			prevLine = line
+
+		return outLines
+
+class Terminal(LiveText, EditableText):
+	"""An object which both accepts text input and outputs text which should be reported automatically.
+	This is an L{EditableText} object,
+	as well as a L{liveText} object for which monitoring is automatically enabled and disabled based on whether it has focus.
+	"""
+	role = controlTypes.ROLE_TERMINAL
+
+	def event_gainFocus(self):
+		super(Terminal, self).event_gainFocus()
+		self.startMonitoring()
+
+	def event_loseFocus(self):
+		self.stopMonitoring()

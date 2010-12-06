@@ -6,12 +6,12 @@
 
 from comtypes import COMError
 import comtypes.client
-import _default
+import appModuleHandler
 import eventHandler
 import controlTypes
-from keyUtils import key, sendKey
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
+from NVDAObjects.IAccessible.MSHTML import MSHTML
 
 def getContactString(obj):
 		return ", ".join([x for x in [obj.fullName,obj.companyName,obj.jobTitle,obj.email1address] if x and not x.isspace()])
@@ -36,7 +36,7 @@ def getSentMessageString(obj):
 	nameList.append(_("sent: %s")%obj.sentOn)
 	return ", ".join(nameList)
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def _get_nativeOm(self):
 		if not getattr(self,'_nativeOm',None):
@@ -64,14 +64,14 @@ class AppModule(_default.AppModule):
 		if role==controlTypes.ROLE_EDITABLETEXT and windowClassName=="RichEdit20W" and controlID==8224:
 			obj.parent=Window._get_parent(Window._get_parent(obj))
 		#The control that shows HTML messages has stuffed parents. Use the control's parent window as its parent
-		if windowClassName=="Internet Explorer_Server" and role==controlTypes.ROLE_PANE and not getattr(obj,'HTMLNode'):
+		if windowClassName=="Internet Explorer_Server" and role==controlTypes.ROLE_PANE and not isinstance(obj,MSHTML):
 			obj.parent=Window._get_parent(Window._get_parent(obj))
 		if role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_MENUITEM):
 			obj.description=None
 		if role in (controlTypes.ROLE_TREEVIEW,controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LIST,controlTypes.ROLE_LISTITEM):
 			obj.shouldAllowIAccessibleFocusEvent=True
 		if ((windowClassName=="SUPERGRID" and controlID==4704) or (windowClassName=="rctrl_renwnd32" and controlID==109)) and role==controlTypes.ROLE_UNKNOWN:
-			obj.role=controlTypes.ROLE_ICON
+			obj.role=controlTypes.ROLE_LISTITEM
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		role=obj.role
@@ -117,12 +117,12 @@ class MessageList_pre2003(IAccessible):
 		if msg:
 			eventHandler.executeEvent("gainFocus",self.curMessageItem)
 
-	def script_moveByMessage(self,keyPress):
+	def script_moveByMessage(self,gesture):
 		if hasattr(self,'curMessageItem'):
 			oldEntryID=self.curMessageItem.msg.entryID
 		else:
 			oldEntryID=None
-		sendKey(keyPress)
+		gesture.send()
 		try:
 			msg=self.nativeOm.ActiveExplorer().selection[0]
 		except:
@@ -135,13 +135,17 @@ class MessageList_pre2003(IAccessible):
 				self.curMessageItem=messageItem
 				eventHandler.executeEvent("gainFocus",messageItem)
 
-[MessageList_pre2003.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("extendedDown","moveByMessage"),
-	("extendedUp","moveByMessage"),
-	("extendedHome","moveByMessage"),
-	("extendedEnd","moveByMessage"),
-	("extendedDelete","moveByMessage"),
-]]
+	__moveByMessageGestures = (
+		"kb:downArrow",
+		"kb:upArrow",
+		"kb:home",
+		"kb:end",
+		"kb:delete",
+	)
+
+	def initOverlayClass(self):
+		for gesture in self.__moveByMessageGestures:
+			self.bindGesture(gesture, "moveByMessage")
 
 class MessageItem(Window):
 
@@ -169,14 +173,18 @@ class MessageItem(Window):
 
 class AddressBookEntry(IAccessible):
 
-	def script_moveByEntry(self,keyPress):
-		sendKey(keyPress)
+	def script_moveByEntry(self,gesture):
+		gesture.send()
 		eventHandler.queueEvent("nameChange",self)
 
-[AddressBookEntry.bindKey(keyName,scriptName) for keyName,scriptName in [
-	("extendedDown","moveByEntry"),
-	("extendedUp","moveByEntry"),
-	("extendedHome","moveByEntry"),
-	("extendedEnd","moveByEntry"),
-	("extendedDelete","moveByEntry"),
-]]
+	__moveByEntryGestures = (
+		"kb:downArrow",
+		"kb:upArrow",
+		"kb:home",
+		"kb:end",
+		"kb:delete",
+	)
+
+	def initOverlayClass(self):
+		for gesture in self.__moveByEntryGestures:
+			self.bindGesture(gesture, "moveByEntry")

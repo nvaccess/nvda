@@ -48,6 +48,7 @@ GUI_SYSTEMMENUMODE=0x00000008
 GUI_POPUPMENUMODE=0x00000010
 SPI_GETSCREENREADER=70
 SPI_SETSCREENREADER=71
+SPIF_UPDATEINIFILE=1
 SPIF_SENDCHANGE=2
 WS_DISABLED=0x8000000
 WS_VISIBLE=0x10000000
@@ -61,6 +62,9 @@ WS_VSCROLL=0x200000
 WS_CAPTION=0xC00000
 BS_GROUPBOX=7
 ES_MULTILINE=4
+LBS_OWNERDRAWFIXED=0x0010
+LBS_OWNERDRAWVARIABLE=0x0020
+LBS_HASSTRINGS=0x0040
 WM_NULL=0
 WM_COPYDATA=74
 WM_NOTIFY=78
@@ -262,8 +266,12 @@ OBJID_NATIVEOM=-16
 SW_HIDE = 0
 SW_SHOWNORMAL = 1
 
+# RedrawWindow() flags
+RDW_INVALIDATE = 0x0001
+RDW_UPDATENOW = 0x0100
+
 def setSystemScreenReaderFlag(val):
-	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_SENDCHANGE)
+	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_UPDATEINIFILE|SPIF_SENDCHANGE)
 
 def getSystemScreenReaderFlag():
 	val = BOOL()
@@ -415,16 +423,17 @@ def getWindowStyle(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_STYLE)
 
 def getPreviousWindow(hwnd):
-		return user32.GetWindow(hwnd,GW_HWNDPREV)
+		try:
+			return user32.GetWindow(hwnd,GW_HWNDPREV)
+		except WindowsError:
+			return 0
 
 def getKeyboardLayout(idThread=0):
 	return user32.GetKeyboardLayout(idThread)
 
-def updateWindow(hwnd):
-	return user32.UpdateWindow(hwnd)
 
-def invalidateRect(hwnd):
-	return user32.InvalidateRect(hwnd,None,False)
+def RedrawWindow(hwnd, rcUpdate, rgnUpdate, flags):
+	return user32.RedrawWindow(hwnd, byref(rcUpdate), rgnUpdate, flags)
 
 def getKeyNameText(scanCode,extended):
 	buf=create_unicode_buffer(32)
@@ -446,3 +455,15 @@ def MessageBox(hwnd, text, caption, type):
 def PostMessage(hwnd, msg, wParam, lParam):
 	if not user32.PostMessageW(hwnd, msg, wParam, lParam):
 		raise WinError()
+
+user32.VkKeyScanW.restype = SHORT
+def VkKeyScan(ch):
+	res = user32.VkKeyScanW(WCHAR(ch))
+	if res == -1:
+		raise LookupError
+	return res >> 8, res & 0xFF
+
+def ScreenToClient(hwnd, x, y):
+	point = POINT(x, y)
+	user32.ScreenToClient(hwnd, byref(point))
+	return point.x, point.y

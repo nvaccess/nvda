@@ -1,3 +1,4 @@
+from NVDAObjects import behaviors
 import controlTypes
 from . import IAccessible
 
@@ -22,18 +23,15 @@ class TGroupBox(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_GROUPING
 
-class TFormOptions(IAccessible):
+class Form(behaviors.Dialog):
 
-	def _get_role(self):
-		return controlTypes.ROLE_DIALOG
+	role=controlTypes.ROLE_DIALOG
 
-class TTabSheet(IAccessible):
+class TabSheet(behaviors.Dialog):
 
-	def _get_role(self):
-		return controlTypes.ROLE_PROPERTYPAGE
+	role=controlTypes.ROLE_PROPERTYPAGE
 
 class TRxRichEdit(IAccessible):
 
 	def _get_name(self):
 		return None
-

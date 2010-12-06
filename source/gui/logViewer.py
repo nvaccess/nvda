@@ -19,6 +19,7 @@ class LogViewer(wx.Frame):
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		self.outputCtrl = wx.TextCtrl(self, wx.ID_ANY, size=(500, 500), style=wx.TE_MULTILINE | wx.TE_READONLY|wx.TE_RICH)
+		self.outputCtrl.Bind(wx.EVT_CHAR, self.onOutputChar)
 		mainSizer.Add(self.outputCtrl, proportion=1, flag=wx.EXPAND)
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
@@ -72,13 +73,27 @@ class LogViewer(wx.Frame):
 		except (IOError, OSError), e:
 			wx.MessageBox(_("Error saving log: %s") % e.strerror, _("Error"), style=wx.OK | wx.ICON_ERROR)
 
+	def onOutputChar(self, evt):
+		key = evt.GetKeyCode()
+		if key == wx.WXK_ESCAPE:
+			self.Close()
+		evt.Skip()
+
 def activate():
 	"""Activate the log viewer.
 	If the log viewer has not already been created and opened, this will create and open it.
 	Otherwise, it will be brought to the foreground if possible.
 	"""
 	global logViewer
+	if globalVars.appArgs.secure:
+		# The log might expose sensitive information and the Save As dialog in the Log Viewer is a security risk.
+		return
 	if not logViewer:
 		logViewer = LogViewer(gui.mainFrame)
 	logViewer.Raise()
+	# There is a MAXIMIZE style which can be used on the frame at construction, but it doesn't seem to work the first time it is shown,
+	# probably because it was in the background.
+	# Therefore, explicitly maximise it here.
+	# This also ensures that it will be maximized whenever it is activated, even if the user restored/minimised it.
+	logViewer.Maximize()
 	logViewer.Show()

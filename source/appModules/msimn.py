@@ -8,9 +8,10 @@ import winUser
 import controlTypes
 import textInfos
 import api
-import _default
+import appModuleHandler
 import speech
-from keyUtils import key, sendKey
+from keyboardHandler import KeyboardInputGesture
+from NVDAObjects.IAccessible import sysListView32
 
 #Labels for the header fields of an email, by control ID
 envelopeNames={
@@ -30,7 +31,7 @@ envelopeNames={
 	1037:_("From:"),
 }
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		controlID=obj.windowControlID
@@ -44,11 +45,25 @@ class AppModule(_default.AppModule):
 			obj.useITextDocumentSupport=True
 			obj.editValueUnit=textInfos.UNIT_STORY
 
+	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
+		if obj.windowControlID in (128,129,130) and obj.role==controlTypes.ROLE_LISTITEM:
+			clsList.insert(0,MessageRuleListItem)
+
 	def event_gainFocus(self,obj,nextHandler):
 		nextHandler()
 		#Force focus to move to something sane when landing on an outlook express message window
 		if obj.windowClassName=="ATH_Note" and obj.event_objectID==winUser.OBJID_CLIENT and obj.IAccessibleChildID==0:
 			api.processPendingEvents()
 			if obj==api.getFocusObject() and controlTypes.STATE_FOCUSED in obj.states:
-				return sendKey(key("SHIFT+TAB"))
+				return KeyboardInputGesture.fromName("shift+tab").send()
 
+class MessageRuleListItem(sysListView32.ListItem):
+	"""Used for the checkbox list items used to select message rule types in in message filters"""
+
+	role=controlTypes.ROLE_CHECKBOX
+
+	def _get_states(self):
+		states=super(MessageRuleListItem,self).states
+		if (winUser.sendMessage(self.windowHandle,sysListView32.LVM_GETITEMSTATE,self.IAccessibleChildID-1,sysListView32.LVIS_STATEIMAGEMASK)>>12)==8:
+			states.add(controlTypes.STATE_CHECKED)
+		return states
