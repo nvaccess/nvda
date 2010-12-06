@@ -1045,7 +1045,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	routingIndex = None
 
 	def _get_identifiers(self):
-		return (u"br({source}):{id}".format(source=self.source, id=self.id), )
+		return (u"br({source}):{id}".format(source=self.source, id=self.id).lower(),)
 
 	def _get_displayName(self):
 		return self.id
