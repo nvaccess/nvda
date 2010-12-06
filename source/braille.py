@@ -18,6 +18,7 @@ import api
 import textInfos
 import speech
 import brailleDisplayDrivers
+import inputCore
 
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
@@ -1014,3 +1015,34 @@ class BrailleDisplayDriverWithCursor(BrailleDisplayDriver):
 		However, this method (L{_display}) is called to actually display the final cells.
 		"""
 		pass
+
+class BrailleDisplayGesture(inputCore.InputGesture):
+	"""A button, wheel or other control pressed on a braille display.
+	"""
+
+	def _get_source(self):
+		"""The string used to identify all gestures from this display.
+		This should generally be the driver name.
+		This string will be included in the source portion of gesture identifiers.
+		For example, if this was C{alvaBC6},
+		a display specific gesture identifier might be C{br(alvaBC6):etouch1}.
+		@rtype: str
+		"""
+		raise NotImplementedError
+
+	def _get_id(self):
+		"""The unique, display specific id for this gesture.
+		@rtype: str
+		"""
+		raise NotImplementedError
+
+	#: The index of the routing key or C{None} if this is not a routing key.
+	#: @type: int
+	routingIndex = None
+
+	def _get_identifiers(self):
+		return (u"br({source}):{id}".format(source=self.source, id=self.id), )
+
+	def _get_displayName(self):
+		return self.id
+
