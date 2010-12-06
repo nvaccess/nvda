@@ -72,28 +72,6 @@ def getAppNameFromProcessID(processID,includeExt=False):
 		appName=os.path.splitext(appName)[0].lower()
 	return appName
 
-def getKeyMapFileName(appName,layout):
-	"""Finds the file path for the key map file, given the application name and keyboard layout.
-	@param appName: name of application
-	@type appName: str
-	@returns: file path of key map file (.kbd file)
-	@rtype: str
-	"""
-	for dir in appModules.__path__+['.\\appModules']:
-		# Python's import paths aren't unicode, but we prefer to deal with unicode, so convert them.
-		dir = dir.decode("mbcs")
-		fname = os.path.join(dir, '%s_%s.kbd' % (appName, layout))
-		if os.path.isfile(fname):
-			log.debug("Found keymap file for %s at %s"%(appName,fname)) 
-			return fname
-
-	if layout!='desktop':
-		# Fall back to desktop.
-		return getKeyMapFileName(appName,'desktop')
-
-	log.debug("No keymapFile for %s"%appName)
-	return None
-
 def getAppModuleForNVDAObject(obj):
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return
