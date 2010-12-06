@@ -1049,4 +1049,3 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 
 	def _get_displayName(self):
 		return self.id
-
