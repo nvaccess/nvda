@@ -13,7 +13,6 @@ import scriptHandler
 import queueHandler
 import api
 import speech
-import braille
 import config
 import watchdog
 from logHandler import log
@@ -289,6 +288,7 @@ class InputManager(baseObject.AutoPropertyObject):
 				if desc:
 					textList.append(desc)
 
+		import braille
 		braille.handler.message("\t\t".join(textList))
 		# Punctuation must be spoken for the gesture name (the first chunk) so that punctuation keys are spoken.
 		speech.speakText(textList[0], reason=speech.REASON_MESSAGE, expandPunctuation=True)
