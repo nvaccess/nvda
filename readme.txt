@@ -70,7 +70,7 @@ To use the brltty braille display driver:
 		* The brlapi Python bindings can be found in the BRLTTY installation directory and are named brlapi-x.y.z.exe
 
 To use the Alva BC640/680 braille display driver:
-	* ALVA BC6 generic dll, version 2.0.3.0 or later: http://www.nvda-project.org/3rdParty/alvaw32.dll
+	* ALVA BC6 generic dll, version 3.0.4.1 or later: http://www.nvda-project.org/3rdParty/alvaw32.dll
 		* Copy alvaw32.dll into the source\brailleDisplayDrivers directory.
 
 To use the MDV Lilli braille display driver:
