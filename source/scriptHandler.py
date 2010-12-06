@@ -13,6 +13,7 @@ import queueHandler
 from logHandler import log
 import inputCore
 import globalPluginHandler
+import braille
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
 _lastScriptTime=0 #Time in MS of when the last script was executed
@@ -40,7 +41,11 @@ def findScript(gesture):
 		return None
 
 	globalMapScripts = []
-	for globalMap in inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap:
+	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
+	globalMap = braille.handler.display.gestureMap
+	if globalMap:
+		globalMaps.append(globalMap)
+	for globalMap in globalMaps:
 		for identifier in gesture.identifiers:
 			globalMapScripts.extend(globalMap.getScriptsForGesture(identifier))
 

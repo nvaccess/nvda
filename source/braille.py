@@ -945,6 +945,10 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	def _set_cursorBlinkRate(self, rate):
 		pass
 
+	#: Global input gesture map for this display driver.
+	#: @type: L{inputCore.GlobalGestureMap}
+	gestureMap = None
+
 class BrailleDisplayDriverWithCursor(BrailleDisplayDriver):
 	"""Abstract base braille display driver which manages its own cursor.
 	This should be used by braille display drivers where the display or underlying driver does not provide support for a cursor.
