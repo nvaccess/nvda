@@ -1049,3 +1049,9 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 
 	def _get_displayName(self):
 		return self.id
+
+	def _get_scriptableObject(self):
+		display = handler.display
+		if isinstance(display, baseObject.ScriptableObject):
+			return display
+		return super(BrailleDisplayGesture, self).scriptableObject
