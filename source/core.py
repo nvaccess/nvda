@@ -306,6 +306,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		JABHandler.terminate()
 	except:
 		log.error("Error terminating Java Access Bridge support",exc_info=True)
+	log.debug("Terminating app module handler")
+	appModuleHandler.terminate()
 	log.debug("Terminating NVDAHelper")
 	try:
 		NVDAHelper.terminate()

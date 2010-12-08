@@ -11,8 +11,9 @@
 - NVDA now automatically reports new text output in mIRC, PuTTY, Tera Term and SecureCRT. (#936)
 - Users can now add new key bindings or override existing ones for any script in NVDA by providing a single user input gesture map. (#194)
 - Support for global plugins. Global plugins can add new functionality to NVDA which works across all applications. (#281)
-
-
+- A small beep is now heard when typing characters with the shift key while capslock is on. This can be turned off by unchecking the related new option in the Keyboard settings dialog. (#663)
+  
+ 
 == Changes ==
 - Keyboard help has been renamed to input help to reflect that it handles input from sources other than the keyboard.
 - The location of a script in the code is no longer reported in input help, as it is irrelevant and cryptic to the user.
@@ -33,6 +34,8 @@
 - In the Keyboard Settings dialog, the keyboard layout names are now presented in the configured NVDA language instead of always in English. (#558)
 - Fixed an issue where some items were rendered as empty in Adobe Reader documents; e.g. the links in the table of contents of the Apple iPhone IOS 4.1 User Guide.
 - The "Use currently saved settings on the logon and other secure screens" button in NVDA's General Settings dialog now works if used immediately after NVDA is newly installed but before a secure screen has appeared. Previously, NVDA reported that copying was successful, but it actually had no effect. (#1194)
+- On systems with UAC enabled, the "Use currently saved settings on the logon and other secure screens" button in NVDA's General Settings dialog no longer fails after the UAC prompt if the user's account name contains a space. (#918)
+- In Internet Explorer and other MSHTML controls, NVDA now uses the URL as a last resort to determine the name of a link, rather than presenting empty links. (#633)
 
 
 == Changes for Developers ==
@@ -53,6 +56,10 @@
  - See the mirc and putty app modules for usage examples.
 - There is no longer an _default app module. App modules should instead subclass appModuleHandler.AppModule (the base AppModule class).
 - Support for global plugins which can globally bind scripts, handle NVDAObject events and choose NVDAObject overlay classes. (#281) See globalPluginHandler.GlobalPlugin for details.
+- On SynthDriver objects, the available* attributes for string settings (e.g. availableVoices and availableVariants)  are now OrderedDicts keyed by ID instead of lists.
+- synthDriverHandler.VoiceInfo now takes an optional language argument which specifies the language of the voice.
+- SynthDriver objects now provide a language attribute which specifies the language of the current voice.
+ - The base implementation uses the language specified on the VoiceInfo objects in availableVoices. This is suitable for most synthesisers which support one language per voice.
 
 
 = 2010.2 =

@@ -281,6 +281,8 @@ class InputManager(baseObject.AutoPropertyObject):
 		runScript = False
 		if script:
 			scriptName = scriptHandler.getScriptName(script)
+			scriptLocation=scriptHandler.getScriptLocation(script)
+			log.info("Input help: gesture %s, bound to script %s on %s"%(gesture.identifiers[0],scriptName,scriptLocation))
 			if scriptName == "toggleInputHelp":
 				runScript = True
 			else:

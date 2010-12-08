@@ -1,8 +1,8 @@
-#synthDrivers/__init__.py
+﻿#synthDriverHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>, Peter Vágner <peter.v@datagate.sk>, Aleksey Sadovoy <lex@onm.su>
 
 from copy import deepcopy
 import os
@@ -12,6 +12,7 @@ import baseObject
 import globalVars
 from logHandler import log
 from  synthSettingsRing import SynthSettingsRing
+import languageHandler
 import speechDictHandler
 import synthDrivers
 
@@ -154,7 +155,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@ivar voice: Unique string identifying the current voice.
 	@type voice: str
 	@ivar availableVoices: The available voices.
-	@ivar availableVoices: [L{VoiceInfo}, ...]
+	@type availableVoices: OrderedDict of L{VoiceInfo} keyed by VoiceInfo's ID
 	@ivar pitch: The current pitch; ranges between 0 and 100.
 	@type pitch: int
 	@ivar rate: The current rate; ranges between 0 and 100.
@@ -164,12 +165,11 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@ivar variant: The current variant of the voice.
 	@type variant: str
 	@ivar availableVariants: The available variants of the voice.
-	@type availableVariants: [L{VoiceInfo}, ...]
+	@type availableVariants: OrderedDict of [L{VoiceInfo} keyed by VoiceInfo's ID
 	@ivar inflection: The current inflection; ranges between 0 and 100.
 	@type inflection: int
 	@ivar lastIndex: The index of the chunk of text which was last spoken or C{None} if no index.
 	@type lastIndex: int
-	@warning: The has* and *MinStep attributes (e.g. hasPitch and pitchMinStep) are deprecated and should not be used in new drivers.
 	"""
 
 	#: The name of the synth; must be the original module file name.
@@ -178,6 +178,11 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	#: A description of the synth.
 	#: @type: str
 	description = ""
+
+	@classmethod
+	def LanguageSetting(cls):
+		"""Factory function for creating a language setting."""
+		return SynthSetting("language",_("&Language"))
 
 	@classmethod
 	def VoiceSetting(cls):
@@ -191,7 +196,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@classmethod
 	def RateSetting(cls,minStep=1):
 		"""Factory function for creating rate setting."""
-		return NumericSynthSetting("rate",_("&Rate"),minStep)
+		return NumericSynthSetting("rate",_("&Rate"),minStep=minStep)
 	@classmethod
 	def VolumeSetting(cls,minStep=1):
 		"""Factory function for creating volume setting."""
@@ -199,12 +204,12 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@classmethod
 	def PitchSetting(cls,minStep=1):
 		"""Factory function for creating pitch setting."""
-		return NumericSynthSetting("pitch",_("&Pitch"),minStep)
+		return NumericSynthSetting("pitch",_("&Pitch"),minStep=minStep)
 
 	@classmethod
 	def InflectionSetting(cls,minStep=1):
 		"""Factory function for creating inflection setting."""
-		return NumericSynthSetting("inflection",_("&Inflection"),minStep)
+		return NumericSynthSetting("inflection",_("&Inflection"),minStep=minStep)
 
 	@classmethod
 	def check(cls):
@@ -262,6 +267,15 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		"""Silence speech immediately.
 		"""
 
+	def _get_language(self):
+		return self.availableVoices[self.voice].language
+
+	def _set_language(self,language):
+		raise NotImplementedError
+
+	def _get_availableLanguages(self):
+		raise NotImplementedError
+
 	def _get_voice(self):
 		raise NotImplementedError
 
@@ -269,10 +283,11 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		pass
 
 	def _getAvailableVoices(self):
-		"""fetches a list of voices that the synth supports.
-		@returns: a list of L{VoiceInfo} instances representing the available voices
-		@rtype: list
+		"""fetches an ordered dictionary of voices that the synth supports.
+		@returns: an OrderedDict of L{VoiceInfo} instances representing the available voices, keyed by ID
+		@rtype: OrderedDict
 		"""
+		raise NotImplementedError
 
 	def _get_availableVoices(self):
 		if not hasattr(self,'_availableVoices'):
@@ -304,10 +319,11 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		pass
 
 	def _getAvailableVariants(self):
-		"""fetches a list of variants that the synth supports.
-		@returns: a list of L{VoiceInfo} instances representing the available variants
-		@rtype: list
+		"""fetches an ordered dictionary of variants that the synth supports, keyed by ID
+		@returns: an ordered dictionary of L{VoiceInfo} instances representing the available variants
+		@rtype: OrderedDict
 		"""
+		raise NotImplementedError
  
 	def _get_availableVariants(self):
 		if not hasattr(self,'_availableVariants'):
@@ -315,19 +331,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		return self._availableVariants
 
 	def _get_supportedSettings(self):
-		"""This base implementation checks old-style 'has_xxx' and constructs the list of settings.
-		@returns: list of supported settings
-		@rtype: l{tuple}
-		"""
-		result=[]
-		settings=(("voice",self.VoiceSetting),("variant",self.VariantSetting),("rate",self.RateSetting),("pitch",self.PitchSetting),("inflection",self.InflectionSetting),("volume",self.VolumeSetting))
-		for name,setting in settings:
-			if not getattr(self,"has%s"%name.capitalize(),False): continue
-			if hasattr(self,"%sMinStep"%name):
-				result.append(setting(getattr(self,"%sMinStep"%name)))
-			else:
-				result.append(setting())
-		return tuple(result)
+		raise NotImplementedError
 
 	def getConfigSpec(self):
 		spec=deepcopy(config.synthSpec)
@@ -372,19 +376,6 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		"""
 		return int(round(float(percent) / 100 * (max - min) + min))
 
-	def getVoiceInfoByID(self,ID):
-		"""Looks up a L{VoiceInfo} instance representing a particular voice, by its ID.
-		@param ID: the ID of the voice
-		@type ID: string
-		@returns: the voice info instance
-		@rtype: L{VoiceInfo}
-		@raise LookupError: If there was no such voice.
-		"""
-		for v in self.availableVoices:
-			if v.ID==ID:
-				return v
-		raise LookupError("No such voice")
-
 	def isSupported(self,settingName):
 		"""Checks whether given setting is supported by the synthesizer.
 		@rtype: l{bool}
@@ -422,14 +413,33 @@ class SynthDriver(baseObject.AutoPropertyObject):
 			if s.name=="rate": return i
 		return None
 
-class VoiceInfo(object):
-	"""Provides information about a single synthesizer voice.
+class StringParameterInfo(object):
+	"""
+	The base class used to represent a value of a string synth setting.
 	"""
 
 	def __init__(self,ID,name):
-		#: The unique identifier of the voice.
+		#: The unique identifier of the value.
 		#: @type: str
 		self.ID=ID
-		#: The name of the voice, visible to the user.
+		#: The name of the value, visible to the user.
 		#: @type: str
 		self.name=name
+
+class VoiceInfo(StringParameterInfo):
+	"""Provides information about a single synthesizer voice.
+	"""
+
+	def __init__(self,ID,name,language=None):
+		#: The ID of the language this voice speaks, or None if not known or the synth implements language separate from voices
+		self.language=language
+		super(VoiceInfo,self).__init__(ID,name)
+
+class LanguageInfo(StringParameterInfo):
+	"""Holds information for a particular language"""
+
+	def __init__(self,ID):
+		"""Given a language ID (locale name) the description is automatically calculated."""
+		name=languageHandler.getLanguageDescription(ID)
+		super(LanguageInfo,self).__init__(ID,name)
+

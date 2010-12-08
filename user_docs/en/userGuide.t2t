@@ -156,10 +156,18 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 | Stop speech | Control | Instantly stops speaking |
 | Pause Speech | Shift | Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer) |
 | NVDA Menu | NVDA+n | Pops up the NVDA menu to allow you to access preferences, tools and help etc |
+| Toggle Speech Mode | NVDA+s | Toggles speech mode between speech, beeps and off. |
 | Toggle Keyboard Help Mode | NVDA+1 | Pressing any key in this mode will report the key, and the description of any  NVDA command associated with it |
 | Quit NVDA | NVDA+q | Exits NVDA |
-| Report date/time | NVDA+f12 | Pressing once reports the current time, pressing twice reports the date |
 | Pass next key through | NVDA+f2 | Tells NVDA to pass the next key press straight through to the active application, even if it is normally treeted as an NVDA key command |
+%kc:endInclude
+
+++ Reporting System Information ++
+%kc:beginInclude
+|| Name | key | Description |
+| Report date/time | NVDA+f12 | Pressing once reports the current time, pressing twice reports the date |
+| Report battery status | NVDA+shift+b  Reports the battery status i.e. whether AC power is in use or  the current charge percentage. |
+| Report clipboard text | NVDA+c | Reports the Text in the clipboard if there is any. |
 %kc:endInclude
 
 + Navigating with NVDA +
@@ -175,6 +183,7 @@ There are some key commands that are useful when moving with the System focus:
 | Report current focus | NVDA+tab | announces the current object or control that has the System focus. Pressing twice will spell the information  |
 | Report title | NVDA+t | Announces the title of the currently active window. Pressing twice will spell the information. Pressing thrice will copy it to the clipboard |
 | Read active window | NVDA+b | reads all the controls in the currently active window (useful for dialogs) |
+| Report Status Bar | NVDA+end | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location |
 %kc:endInclude
 
 ++ Navigating with the System Caret ++
@@ -554,6 +563,11 @@ When enabled, NVDA will announce all characters you type on the keyboard.
 Key: NVDA+3
 
 When enabled, NVDA will announce all words you type on the keyboard.
+
+==== Beep if Typing Lowercase Letters when Caps Lock is On ====
+When enabled, a warning beep will be heard if a letter is typed with the shift key while caps lock is on.
+Generally, typing shifted letters with caps lock is unintentional and is usually due to not realising that caps lock is enabled.
+Therefore, it can be quite helpful to be warned about this.
 
 %kc:setting
 ==== Speak Command Keys ====

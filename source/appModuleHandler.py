@@ -72,28 +72,6 @@ def getAppNameFromProcessID(processID,includeExt=False):
 		appName=os.path.splitext(appName)[0].lower()
 	return appName
 
-def getKeyMapFileName(appName,layout):
-	"""Finds the file path for the key map file, given the application name and keyboard layout.
-	@param appName: name of application
-	@type appName: str
-	@returns: file path of key map file (.kbd file)
-	@rtype: str
-	"""
-	for dir in appModules.__path__+['.\\appModules']:
-		# Python's import paths aren't unicode, but we prefer to deal with unicode, so convert them.
-		dir = dir.decode("mbcs")
-		fname = os.path.join(dir, '%s_%s.kbd' % (appName, layout))
-		if os.path.isfile(fname):
-			log.debug("Found keymap file for %s at %s"%(appName,fname)) 
-			return fname
-
-	if layout!='desktop':
-		# Fall back to desktop.
-		return getKeyMapFileName(appName,'desktop')
-
-	log.debug("No keymapFile for %s"%appName)
-	return None
-
 def getAppModuleForNVDAObject(obj):
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return
@@ -116,17 +94,22 @@ def getAppModuleFromProcessID(processID):
 	return mod
 
 def update(processID):
-	"""Removes any appModules from te cache who's process has died, and also tries to load a new appModule for the given process ID if need be.
+	"""Removes any appModules from the cache whose process has died, and also tries to load a new appModule for the given process ID if need be.
 	@param processID: the ID of the process.
 	@type processID: int
 	"""
 	for deadMod in [mod for mod in runningTable.itervalues() if not mod.isAlive]:
 		log.debug("application %s closed"%deadMod.appName)
-		del runningTable[deadMod.processID];
+		del runningTable[deadMod.processID]
 		if deadMod in set(o.appModule for o in api.getFocusAncestors()+[api.getFocusObject()] if o and o.appModule):
 			if hasattr(deadMod,'event_appLoseFocus'):
-				deadMod.event_appLoseFocus();
-		getAppModuleFromProcessID(processID)
+				deadMod.event_appLoseFocus()
+		try:
+			deadMod.terminate()
+		except:
+			log.exception("Error terminating app module %r" % deadMod)
+	# This creates a new app module if necessary.
+	getAppModuleFromProcessID(processID)
 
 def doesAppModuleExist(name):
 	return any(importer.find_module("appModules.%s" % name) for importer in _importers)
@@ -168,6 +151,14 @@ def initialize():
 	NVDAProcessID=os.getpid()
 	config.addConfigDirsToPythonPackagePath(appModules)
 	_importers=list(pkgutil.iter_importers("appModules.__init__"))
+
+def terminate():
+	for processID, app in runningTable.iteritems():
+		try:
+			app.terminate()
+		except:
+			log.exception("Error terminating app module %r" % app)
+	runningTable.clear()
 
 #base class for appModules
 class AppModule(baseObject.ScriptableObject):
@@ -213,7 +204,11 @@ class AppModule(baseObject.ScriptableObject):
 	def _get_isAlive(self):
 		return bool(winKernel.waitForSingleObject(self.processHandle,0))
 
-	def __del__(self):
+	def terminate(self):
+		"""Terminate this app module.
+		This is called to perform any clean up when this app module is being destroyed.
+		Subclasses should call the superclass method first.
+		"""
 		winKernel.closeHandle(self.processHandle)
 		NVDAHelper.localLib.destroyConnection(self.helperLocalBindingHandle)
 
