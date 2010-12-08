@@ -315,6 +315,22 @@ class InputManager(baseObject.AutoPropertyObject):
 		except IOError:
 			log.debugWarning("No locale gesture map for language %s" % lang)
 
+	def emulateGesture(self, gesture):
+		"""Convenience method to emulate a gesture.
+		First, an attempt will be made to execute the gesture using L{executeGesture}.
+		If that fails, the gesture will be sent to the operating system if possible using L{InputGesture.send}.
+		@param gesture: The gesture to execute.
+		@type gesture: L{InputGesture}
+		"""
+		try:
+			return self.executeGesture(gesture)
+		except NoInputGestureAction:
+			pass
+		try:
+			gesture.send()
+		except NotImplementedError:
+			pass
+
 def normalizeGestureIdentifier(identifier):
 	"""Normalize a gesture identifier so that it matches other identifiers for the same gesture.
 	"""
