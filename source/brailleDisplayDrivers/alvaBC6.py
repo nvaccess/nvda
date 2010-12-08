@@ -109,7 +109,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
+			"kb:shift+tab": ("br(alvaBC6):sp1",),
+			"kb:alt": ("br(alvaBC6):sp2",),
+			"kb:escape": ("br(alvaBC6):sp3",),
+			"kb:tab": ("br(alvaBC6):sp4",),
+			"kb:upArrow": ("br(alvaBC6):spUp",),
+			"kb:downArrow": ("br(alvaBC6):spDown",),
+			"kb:leftArrow": ("br(alvaBC6):spLeft",),
+			"kb:rightArrow": ("br(alvaBC6):spRight",),
+			"kb:enter": ("br(alvaBC6):spEnter",),
 			"showGui": ("br(alvaBC6):sp1+sp3",),
+			"kb:windows+d": ("br(alvaBC6):sp1+sp4",),
+			"kb:windows": ("br(alvaBC6):sp2+sp3",),
+			"kb:alt+tab": ("br(alvaBC6):sp2+sp4",),
 			"braille_scrollBack": ("br(alvaBC6):t1",),
 			"braille_previousLine": ("br(alvaBC6):t2",),
 			"braille_nextLine": ("br(alvaBC6):t4",),
