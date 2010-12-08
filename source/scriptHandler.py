@@ -62,6 +62,13 @@ def findScript(gesture):
 		for identifier in gesture.identifiers:
 			globalMapScripts.extend(globalMap.getScriptsForGesture(identifier))
 
+	# Gesture specific scriptable object.
+	obj = gesture.scriptableObject
+	if obj:
+		func = _getObjScript(obj, gesture, globalMapScripts)
+		if func:
+			return func
+
 	# Global plugin level.
 	for plugin in globalPluginHandler.runningPlugins:
 		func = _getObjScript(plugin, gesture, globalMapScripts)

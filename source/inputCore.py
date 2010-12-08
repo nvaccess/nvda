@@ -95,6 +95,14 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
+	def _get_scriptableObject(self):
+		"""An object which contains scripts specific to this  gesture or type of gesture.
+		This object will be searched for scripts before any other object when handling this gesture.
+		@return: The gesture specific scriptable object or C{None} if there is none.
+		@rtype: L{baseObject.ScriptableObject}
+		"""
+		return None
+
 class GlobalGestureMap(object):
 	"""Maps gestures to scripts anywhere in NVDA.
 	This is used to allow users and locales to bind gestures in addition to those bound by individual scriptable objects.
