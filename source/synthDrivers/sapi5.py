@@ -9,6 +9,7 @@ from collections import OrderedDict
 import time
 import os
 import comtypes.client
+from comtypes import COMError
 import _winreg
 import globalVars
 from synthDriverHandler import SynthDriver,VoiceInfo
