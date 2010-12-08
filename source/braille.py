@@ -878,6 +878,11 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory containing a BrailleDisplayDriver class which inherits from this base class.
 	
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
+	
+	Drivers should dispatch input such as presses of buttons, wheels or other controls using the L{inputCore} framework.
+	They should subclass L{BrailleDisplayGesture} and execute instances of those gestures using L{inputCore.manager.executeGesture}.
+	These gestures can be mapped in L{gestureMap}.
+	A driver can also inherit L{baseObject.ScriptableObject} to provide display specific scripts.
 	"""
 	#: The name of the braille display; must be the original module file name.
 	#: @type: str
@@ -1022,6 +1027,9 @@ class BrailleDisplayDriverWithCursor(BrailleDisplayDriver):
 
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
+	Subclasses must provide L{source} and L{id}.
+	L{routingIndex} should be provided for routing buttons.
+	If the braille display driver is a L{baseObject.ScriptableObject}, it can provide scripts specific to input gestures from this display.
 	"""
 
 	def _get_source(self):
