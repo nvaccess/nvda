@@ -55,6 +55,7 @@ wdTable=15
 wdGoToAbsolute=1
 wdGoToRelative=2
 wdGoToNext=2
+wdGoToPrevious=3
 #GoTo - units
 wdGoToPage=1
 wdGoToLine=3
@@ -98,15 +99,39 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return True
 
 	def _expandToLineAtCaret(self):
-		sel=self.obj.WinwordSelectionObject
-		oldSel=sel.range
-		app=sel.application
-		app.ScreenUpdating=False
-		self._rangeObj.select()
-		sel.Expand(wdLine)
-		self._rangeObj=sel.range
-		oldSel.Select()
-		app.ScreenUpdating=True
+		import braille
+		if braille.handler.enabled and self.obj.WinwordVersion<12:
+			from ctypes import c_long, pointer
+			rangeLeft=c_long()
+			rangeTop=c_long()
+			rangeWidth=c_long()
+			rangeHeight=c_long()
+			self.obj.WinwordWindowObject.getPoint(pointer(rangeLeft),pointer(rangeTop),pointer(rangeWidth),pointer(rangeHeight),self._rangeObj)
+			clientLeft,clientTop,clientWidth,clientHeight=self.obj.location
+			tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft,rangeTop)
+			self._rangeObj.Start=tempRange.Start
+			tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft+clientWidth,rangeTop)
+			self._rangeObj.End=tempRange.Start
+		elif braille.handler.enabled:
+			curLineNum=self._rangeObj.Information(wdFirstCharacterLineNumber)
+			tempRange=self._rangeObj.goto(wdGoToLine,wdGoToAbsolute,curLineNum)
+			start=tempRange.Start
+			tempRange=self._rangeObj.goto(wdGoToLine,wdGoToAbsolute,curLineNum+1)
+			end=tempRange.End
+			if start==end:
+				tempRange.Move(wdStory,1)
+				end=tempRange.end
+			self._rangeObj.SetRange(start,end)
+		else:
+			sel=self.obj.WinwordSelectionObject
+			oldSel=sel.range
+			app=sel.application
+			app.ScreenUpdating=False
+			self._rangeObj.select()
+			sel.Expand(wdLine)
+			self._rangeObj=sel.range
+			oldSel.Select()
+			app.ScreenUpdating=True
 
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textInfos.FormatField()
@@ -323,6 +348,11 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
 	def _get_role(self):
 		return controlTypes.ROLE_EDITABLETEXT
+
+	def _get_WinwordVersion(self):
+		if not hasattr(self,'_WinwordVersion'):
+			self._WinwordVersion=float(self.WinwordWindowObject.application.version)
+		return self._WinwordVersion
 
 	def _get_WinwordWindowObject(self):
 		if not getattr(self,'_WinwordWindowObject',None): 
