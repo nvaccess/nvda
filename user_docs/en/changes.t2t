@@ -12,7 +12,8 @@
 - Users can now add new key bindings or override existing ones for any script in NVDA by providing a single user input gesture map. (#194)
 - Support for global plugins. Global plugins can add new functionality to NVDA which works across all applications. (#281)
 - A small beep is now heard when typing characters with the shift key while capslock is on. This can be turned off by unchecking the related new option in the Keyboard settings dialog. (#663)
-  
+- hard page breaks are now announced when moving by line in Microsoft Word. (#758)
+- Bullets and numbering are now spoken in Microsoft Word when moving by line. (#208)  
  
 == Changes ==
 - Keyboard help has been renamed to input help to reflect that it handles input from sources other than the keyboard.
@@ -36,8 +37,14 @@
 - The "Use currently saved settings on the logon and other secure screens" button in NVDA's General Settings dialog now works if used immediately after NVDA is newly installed but before a secure screen has appeared. Previously, NVDA reported that copying was successful, but it actually had no effect. (#1194)
 - On systems with UAC enabled, the "Use currently saved settings on the logon and other secure screens" button in NVDA's General Settings dialog no longer fails after the UAC prompt if the user's account name contains a space. (#918)
 - In Internet Explorer and other MSHTML controls, NVDA now uses the URL as a last resort to determine the name of a link, rather than presenting empty links. (#633)
-
-
+- NVDA no longer ignores the focus  in AOL Instant Messenger 7 menus. (#655)
+- Announce the correct label for errors in the Microsoft Word Spell Check dialog (e.g. Not in dictionary, Grammar error, punctuation). Previously  they were all announced as grammar error. (#883)
+- Typing in Microsoft Word while using a braille display should no longer cause garbled text to be typed, and a rare freeze when pressing a braille routing key in Word documents has been fixed. (#1212) However a limitation is that Arabic text can no longer be read in Word 2003 and below, while using a braille display. (#627)
+- When pressing the delete key in an edit field, the text/cursor on a braille display should now always be updated appropriately to reflect the change. (#947)
+ - Changes on dynamic pages in Gecko2 documents (E.g. Firefox 4) while multiple tabs are open is now properly reflected by NVDA. Previously only changes in the first tab were reflected. (Mozilla bug 610985)
+ - NVDA can now properly announce the suggestions for grammar and punctuation errors in Microsoft Word spell check dialog. (#704)
+ 
+ 
 == Changes for Developers ==
 - SCons is now used to prepare the source tree and create binary builds, portable archives, installers, etc. See readme.txt at the root of the source distribution for details.
 - The key names used by NVDA (including key maps) have been made more friendly/logical; e.g. upArrow instead of extendedUp and numpadPageUp instead of prior. See the vkCodes module for a list.
