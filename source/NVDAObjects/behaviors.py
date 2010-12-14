@@ -16,7 +16,6 @@ import eventHandler
 import controlTypes
 import speech
 import config
-import globalVars
 from . import NVDAObject, NVDAObjectTextInfo
 import textInfos
 import editableText
@@ -234,7 +233,7 @@ class LiveText(NVDAObject):
 
 			try:
 				newLines = self._getTextLines()
-				if globalVars.reportDynamicContentChanges:
+				if config.conf["presentation"]["reportDynamicContentChanges"]:
 					outLines = self._calculateNewText(newLines, oldLines)
 					if len(outLines) == 1 and len(outLines[0]) == 1:
 						# This is only a single character,

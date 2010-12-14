@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 
 import ui
-import globalVars
+import config
 from ctypes import *
 from ctypes.wintypes import *
 import winKernel
@@ -236,7 +236,7 @@ class MirandaMessageViewerScrollbar(IAccessible):
 			message=self.windowText[self.appModule.lastTextLengths[self.windowHandle]:]
 			self.appModule.lastMessages.insert(0,message)
 			self.appModule.lastMessages=self.appModule.lastMessages[:self.appModule.MessageHistoryLength]
-			if globalVars.reportDynamicContentChanges:
+			if config.conf["presentation"]["reportDynamicContentChanges"]:
 				ui.message(message)
 			self.appModule.lastTextLengths[self.windowHandle]=curTextLength
 		super(MirandaMessageViewerScrollbar,self).event_valueChange()

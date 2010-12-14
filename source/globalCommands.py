@@ -738,12 +738,12 @@ class GlobalCommands(ScriptableObject):
 	script_toggleProgressBarOutput.__doc__=_("Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates")
 
 	def script_toggleReportDynamicContentChanges(self,gesture):
-		if globalVars.reportDynamicContentChanges:
+		if config.conf["presentation"]["reportDynamicContentChanges"]:
 			onOff=_("off")
-			globalVars.reportDynamicContentChanges=False
+			config.conf["presentation"]["reportDynamicContentChanges"]=False
 		else:
 			onOff=_("on")
-			globalVars.reportDynamicContentChanges=True
+			config.conf["presentation"]["reportDynamicContentChanges"]=True
 		ui.message(_("report dynamic content changes")+" "+onOff)
 	script_toggleReportDynamicContentChanges.__doc__=_("Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows")
 

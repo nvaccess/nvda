@@ -36,7 +36,6 @@ reviewPosition=None
 reviewPositionObj=None
 keyCounter=0
 lastProgressValue=0
-reportDynamicContentChanges=True
 appArgs=None
 settingsRing = None
 speechDictionaryProcessing=True
