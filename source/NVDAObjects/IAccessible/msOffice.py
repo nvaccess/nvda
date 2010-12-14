@@ -16,6 +16,12 @@ from . import IAccessible, getNVDAObjectFromEvent
 
 class SDM(IAccessible):
 
+	def _get_name(self):
+		name=super(SDM,self).name
+		if not name and self.role==controlTypes.ROLE_LISTITEM:
+			name=self.displayText
+		return name
+
 	def _get_positionInfo(self):
 		if self.role!=controlTypes.ROLE_LISTITEM:
 			return {}
