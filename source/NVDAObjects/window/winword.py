@@ -137,6 +137,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		formatField=textInfos.FormatField()
 		fontObj=None
 		paraFormatObj=None
+		listString=range.ListFormat.ListString
+		if listString and range.Paragraphs[1].range.start==range.start:
+			formatField['line-prefix']=listString
 		if formatConfig["reportSpellingErrors"] and range.spellingErrors.count>0: 
 			formatField["invalid-spelling"]=True
 		if formatConfig["reportLineNumber"]:

@@ -56,4 +56,5 @@ None:_("blank"),
 "~":_("tilda"),
 u"\u2022":_("bullet"),
 u"\u2026":_("dot dot dot"),
+u"\uf0b7":_("bullet"),
 }
