@@ -10,8 +10,7 @@ import config
 import textInfos
 import globalVars
 from logHandler import log
-import speech
-import sayAllHandler
+import ui
 import treeInterceptorHandler
 import NVDAObjects
 import NVDAObjects.IAccessible
@@ -112,6 +111,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 		if hasattr(removedMod,'event_appLoseFocus'):
 			removedMod.event_appLoseFocus()
   	for addedMod in newAppModuleSet-oldAppModuleSet:
+		if addedMod.selfVoicing: ui.message(_("self voicing application"))
 		if hasattr(addedMod,'event_appGainFocus'):
 			addedMod.event_appGainFocus()
 	treeInterceptorHandler.cleanup()

@@ -42,6 +42,17 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("input help %s")%state)
 	script_toggleInputHelp.__doc__=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any.")
 
+	def script_toggleCurrentAppSelfVoicing(self,keyPress):
+		curApp=api.getFocusObject().appModule
+		if curApp.selfVoicing:
+			curApp.selfVoicing=False
+			ui.message(_("self voicing off"))
+		else:
+			curApp.selfVoicing=True
+			ui.message(_("self voicing on"))
+	script_toggleCurrentAppSelfVoicing.__doc__=_("Toggles the self-voicing mode of the active application.")
+	script_toggleCurrentAppSelfVoicing.allowInSelfVoicing=True
+
 	def script_reportCurrentLine(self,gesture):
 		obj=api.getFocusObject()
 		treeInterceptor=obj.treeInterceptor
@@ -904,6 +915,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+1": "toggleInputHelp",
 		"kb:NVDA+q": "quit",
 		"kb:NVDA+f2": "passNextKeyThrough",
+		"kb:NVDA+shift+s":"toggleCurrentAppSelfVoicing",
 
 		# System status
 		"kb:NVDA+f12": "dateTime",
