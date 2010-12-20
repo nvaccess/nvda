@@ -11,7 +11,7 @@ If you are running a 64 bit version of Windows, you should install the 32 bit ve
 General dependencies:
 	* Python 2.7, version 2.7.0 or later: http://www.python.org/
 	* comtypes, version 0.6.2 or later: http://www.sourceforge.net/projects/comtypes/
-	* wxPython unicode (for Python 2.7), version 2.8.11.0 or later: http://www.wxpython.org/
+	* wxPython 2.8 unicode (for Python 2.7), version 2.8.11.0 or later: http://www.wxpython.org/
 	* Python Windows Extensions (for Python 2.7), build 214 or later: http://www.sourceforge.net/projects/pywin32/ 
 	* eSpeak, version 1.44.03 or later, Windows dll:
 		* Official web site: http://espeak.sourceforge.net/
