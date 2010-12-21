@@ -11,7 +11,6 @@ from ctypes import *
 from ctypes.wintypes import *
 import time
 import config
-from keyboardHandler import KeyboardInputGesture
 import inputCore
 
 ALVA_RELEASE_MASK = 0x8000
