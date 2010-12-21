@@ -78,8 +78,6 @@ def findScript(gesture):
 	# App module level.
 	app = focus.appModule
 	if app:
-		if app.selfVoicing:
-			return None
 		func = _getObjScript(app, gesture, globalMapScripts)
 		if func:
 			return func

@@ -12,6 +12,29 @@ from ctypes.wintypes import *
 #dll handles
 user32=windll.user32
 
+LRESULT=c_long
+HCURSOR=c_long
+
+#Standard window class stuff
+
+WNDPROC=WINFUNCTYPE(LRESULT,HWND,c_uint,WPARAM,LPARAM)
+
+class WNDCLASSEXW(Structure):
+	_fields_=[
+		('cbSize',c_uint),
+		('style',c_uint),
+		('lpfnWndProc',WNDPROC),
+		('cbClsExtra',c_int),
+		('cbWndExtra',c_int),
+		('hInstance',HINSTANCE),
+		('hIcon',HICON),
+		('HCURSOR',HCURSOR),
+		('hbrBackground',HBRUSH),
+		('lpszMenuName',LPWSTR),
+		('lpszClassName',LPWSTR),
+		('hIconSm',HICON),
+	]
+
 class NMHdrStruct(Structure):
 	_fields_=[
 		('hwndFrom',HWND),

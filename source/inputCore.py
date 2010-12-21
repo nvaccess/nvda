@@ -251,8 +251,10 @@ class InputManager(baseObject.AutoPropertyObject):
 			# This lets gestures pass through unhindered where possible,
 			# as well as stopping a flood of actions when the core revives.
 			raise NoInputGestureAction
+
+		script = gesture.script
 		app = api.getFocusObject().appModule
-		if app and app.selfVoicing:
+		if app and app.selfVoicing and not getattr(script,'allowInSelfVoicing',False):
 			raise NoInputGestureAction
 
 		speechEffect = gesture.speechEffectWhenExecuted
@@ -276,7 +278,6 @@ class InputManager(baseObject.AutoPropertyObject):
 
 		gesture.reportExtra()
 
-		script = gesture.script
 		if script:
 			scriptHandler.queueScript(script, gesture)
 			return

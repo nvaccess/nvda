@@ -1,119 +1,123 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR ORGANIZATION
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"POT-Creation-Date: 2010-12-05 07:17+rodkowoeuropejski czas stand.\n"
-"PO-Revision-Date: 2010-12-12 19:25+0100\n"
-"Last-Translator: killer-of-god[pl] <killer@tyflonet.com>\n"
-"Language-Team:  <killer@tyflonet.com>\n"
+"Project-Id-Version: NVDA R3899\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-16 17:51+0100\n"
+"PO-Revision-Date: 2010-11-01 11:14+0200\n"
+"Last-Translator: \n"
+"Language-Team:  <mihai.craciun@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: pygettext.py 1.5\n"
-"X-Poedit-Language: Polish\n"
-"X-Poedit-Country: POLAND\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Language: Romanian\n"
+"X-Poedit-Country: ROMANIA\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: IAccessibleHandler.py:695
 msgid "Secure Desktop"
-msgstr "Bezpieczny Pulpit"
+msgstr "Asigură ecranul"
 
 #: NVDAHelper.py:117
 msgid "unknown layout"
-msgstr "nieznany układ"
+msgstr "plan necunoscut"
 
 #: NVDAHelper.py:118
+#, python-format
 msgid "layout %s"
-msgstr "układ %s"
+msgstr "plan %s"
 
 #: NVDAObjects\IAccessible\__init__.py:1440
 msgid "Taskbar"
-msgstr "Pasek zadań"
+msgstr "Bara de sarcini"
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:202
+#, python-format
 msgid "%s items"
-msgstr "%s obiektów"
+msgstr "%s elemente"
 
 #: NVDAObjects\UIA\__init__.py:422
 msgid "invoke"
-msgstr "wywołaj"
+msgstr "apelează"
 
-#: NVDAObjects\behaviors.py:54
+#: NVDAObjects\behaviors.py:53
 #: globalCommands.py:782
+#, python-format
 msgid "%d percent"
-msgstr "%d procent"
+msgstr "%d procente"
 
 #: NVDAObjects\window\__init__.py:352
 msgid "Desktop"
-msgstr "Pulpit"
+msgstr "Ecran"
 
 #: NVDAObjects\window\edit.py:252
 #: NVDAObjects\window\edit.py:253
 msgid "default color"
-msgstr "Kolor domyślny"
+msgstr "culoare implicită"
 
 #: NVDAObjects\window\edit.py:541
 #: controlTypes.py:179
 msgid "unknown"
-msgstr "nieznane"
+msgstr "necunoscut"
 
 #: NVDAObjects\window\edit.py:543
+#, python-format
 msgid "%s embedded object"
-msgstr "%s obiekt zagnieżdżony"
+msgstr "%s obiect incorporat"
 
 #: NVDAObjects\window\edit.py:545
 #: controlTypes.py:243
 msgid "embedded object"
-msgstr "obiekt zagnieżdżony"
+msgstr "obiect incorporat"
 
 #: NVDAObjects\window\excel.py:49
 msgid "NVDA Excel Cell Editor"
-msgstr "Edytor komórek Excela"
+msgstr "Editor NVDA în celule de Excel"
 
 #: NVDAObjects\window\excel.py:51
 msgid "Enter cell contents"
-msgstr "Wprowadź zawartość komórki"
+msgstr "Introduceţi conţinutul celulei"
 
 #: NVDAObjects\window\excel.py:116
 msgid "Extends the selection and speaks the last selected cell"
-msgstr "Rozszerza wybór i wypowiada ostatnio zaznaczoną komórkę"
+msgstr "Extinde selecţiunea şi pronunţă ultima celulă selectată"
 
 #: NVDAObjects\window\excel.py:210
 msgid "has formula"
-msgstr "ma formułę"
+msgstr "are formulă"
 
 #: NVDAObjects\window\excel.py:249
 msgid "selection"
-msgstr "zaznaczenie"
+msgstr "selecţiune"
 
 #: NVDAObjects\window\excel.py:254
+#, python-format
 msgid "%s %s through %s %s"
-msgstr "%s %s na %s %s"
+msgstr "%s %s prin %s %s"
 
-#: NVDAObjects\window\winword.py:354
-#: NVDAObjects\window\winword.py:366
-#: NVDAObjects\window\winword.py:378
-#: NVDAObjects\window\winword.py:390
+#: NVDAObjects\window\winword.py:387
+#: NVDAObjects\window\winword.py:399
+#: NVDAObjects\window\winword.py:411
+#: NVDAObjects\window\winword.py:423
 msgid "not in table"
-msgstr "poza tabelą"
+msgstr "nu este în tabel"
 
-#: NVDAObjects\window\winword.py:361
-#: NVDAObjects\window\winword.py:373
-#: NVDAObjects\window\winword.py:385
-#: NVDAObjects\window\winword.py:397
+#: NVDAObjects\window\winword.py:394
+#: NVDAObjects\window\winword.py:406
+#: NVDAObjects\window\winword.py:418
+#: NVDAObjects\window\winword.py:430
 #: virtualBuffers\__init__.py:1128
 msgid "edge of table"
-msgstr "Koniec tabeli"
+msgstr "marginea tabelului"
 
-#: appModuleHandler.py:159
+#: appModuleHandler.py:142
+#, python-format
 msgid "Error in appModule %s"
-msgstr "Błąd w module aplikacji %s"
+msgstr "Eroare în appModule %s"
 
 #: appModules\calc.py:30
 msgid "Display"
-msgstr "Wyświetl"
+msgstr "Ecran"
 
 #: appModules\explorer.py:35
 msgid "Start"
@@ -121,44 +125,44 @@ msgstr "Start"
 
 #: appModules\foobar2000.py:44
 msgid "No track playing"
-msgstr "brak odtwarzanego utworu"
+msgstr "Nu este redată nicio melodie"
 
 #: appModules\foobar2000.py:50
 msgid "Reports the remaining time of the currently playing track, if any"
-msgstr "Odczytuje pozostały czas aktualnie odtwarzanego utworu"
+msgstr "Raportează timpul rămas din melodia redată acum, dacă există"
 
 #: appModules\miranda32.py:117
 msgid "No message yet"
-msgstr "Brak wiadomości"
+msgstr "Încă niciun mesaj"
 
 #: appModules\miranda32.py:118
 msgid "Displays one of the recent messages"
-msgstr "Wyświetla ostatnie wiadomości"
+msgstr "Afişează unul dintre mesajele recente"
 
 #: appModules\msimn.py:18
 msgid "Attachments"
-msgstr "Załączniki"
+msgstr "Ataşamente"
 
 #: appModules\msimn.py:19
 msgid "To:"
-msgstr "Do:"
+msgstr "Către:"
 
 #: appModules\msimn.py:20
 msgid "Newsgroup:"
-msgstr "Grupa dyskusyjna:"
+msgstr "Newsgroup:"
 
 #: appModules\msimn.py:21
 msgid "CC:"
-msgstr "Kopia do:"
+msgstr "CC:"
 
 #: appModules\msimn.py:22
 msgid "Subject:"
-msgstr "Temat:"
+msgstr "Subiect:"
 
 #: appModules\msimn.py:23
 #: appModules\msimn.py:31
 msgid "From:"
-msgstr "Od:"
+msgstr "De la:"
 
 #: appModules\msimn.py:24
 msgid "Date:"
@@ -166,81 +170,83 @@ msgstr "Data:"
 
 #: appModules\msimn.py:25
 msgid "Forward to:"
-msgstr "Prześlij dalej:"
+msgstr "Retrimite către:"
 
 #: appModules\msimn.py:26
 msgid "Answer to:"
-msgstr "Odpowiedz:"
+msgstr "Răspunde la:"
 
 #: appModules\msimn.py:27
 msgid "Organisation:"
-msgstr "Organizacja:"
+msgstr "Organizaţia:"
 
 #: appModules\msimn.py:28
 msgid "Distribution:"
-msgstr "Dystrybucja:"
+msgstr "Distribuţie:"
 
 #: appModules\msimn.py:29
 msgid "Key words:"
-msgstr "Słowa kluczowe:"
+msgstr "Cuvinte cheie:"
 
 #: appModules\msimn.py:30
 msgid "BCC:"
-msgstr "Ukryta kopia do:"
+msgstr "BCC:"
 
 #: appModules\outlook.py:22
 #: appModules\outlook.py:35
+#, python-format
 msgid "subject: %s"
-msgstr "temat: %s"
+msgstr "subiect: %s"
 
 #: appModules\outlook.py:23
+#, python-format
 msgid "received: %s"
-msgstr "odebrano: %s"
+msgstr "primit: %s"
 
 #: appModules\outlook.py:27
 msgid "unread"
-msgstr "nieprzeczytane"
+msgstr "necitit"
 
 #: appModules\outlook.py:29
 msgid "attachment"
-msgstr "załącznik"
+msgstr "ataşament"
 
 #: appModules\outlook.py:36
+#, python-format
 msgid "sent: %s"
-msgstr "wysłano: %s"
+msgstr "trimis: %s"
 
 #: appModules\sndrec32.py:11
 msgid "Rewind"
-msgstr "Przewiń wstecz"
+msgstr "Reia"
 
 #: appModules\sndrec32.py:12
 msgid "Fast forward"
-msgstr "Przewiń w przód"
+msgstr "Înaintare rapidă"
 
 #: appModules\sndrec32.py:13
 msgid "Play"
-msgstr "Odtwarzaj"
+msgstr "Redă"
 
 #: appModules\sndrec32.py:14
-#, fuzzy
 msgid "Stop"
-msgstr "Przerwij"
+msgstr "Stop"
 
 #: appModules\sndrec32.py:15
 msgid "Record"
-msgstr "Nagrywaj"
+msgstr "Înregistrează"
 
 #: appModules\totalcmd.py:35
 #: globalCommands.py:479
 #: globalCommands.py:491
 msgid "left"
-msgstr "lewy"
+msgstr "stânga"
 
 #: appModules\totalcmd.py:37
 #: globalCommands.py:523
 #: globalCommands.py:540
 msgid "right"
-msgstr "prawy"
+msgstr "dreapta"
 
 #: appModules\winamp.py:76
 #: appModules\winamp.py:86
@@ -253,11 +259,11 @@ msgstr "prawy"
 #: globalCommands.py:745
 #: globalCommands.py:755
 #: globalCommands.py:765
-#: gui\settingsDialogs.py:807
+#: gui\settingsDialogs.py:811
 #: keyboardHandler.py:290
 #: virtualBuffers\__init__.py:704
 msgid "on"
-msgstr "włączone"
+msgstr "deschis"
 
 #: appModules\winamp.py:78
 #: appModules\winamp.py:88
@@ -272,11 +278,11 @@ msgstr "włączone"
 #: globalCommands.py:752
 #: globalCommands.py:762
 #: gui\settingsDialogs.py:575
-#: gui\settingsDialogs.py:807
+#: gui\settingsDialogs.py:811
 #: keyboardHandler.py:290
 #: virtualBuffers\__init__.py:704
 msgid "off"
-msgstr "wyłączone"
+msgstr "închis"
 
 #: aria.py:60
 msgid "banner"
@@ -284,203 +290,203 @@ msgstr "banner"
 
 #: aria.py:61
 msgid "complementary"
-msgstr "uzupełnianie"
+msgstr "complementar"
 
 #: aria.py:62
 msgid "content info"
-msgstr "Informacje o treści"
+msgstr "informaţia conţinutului"
 
 #: aria.py:63
 msgid "main"
-msgstr "główne"
+msgstr "principal"
 
 #: aria.py:64
 msgid "navigation"
-msgstr "nawigacja"
+msgstr "navigare"
 
 #: aria.py:65
 msgid "search"
-msgstr "szukaj"
+msgstr "caută"
 
 #: braille.py:27
 msgid "Arabic grade 1"
-msgstr "Arabski (stopień 1)"
+msgstr "arabă grad 1"
 
 #: braille.py:28
 msgid "Bulgarian 8 dot computer braille"
-msgstr "Bułgarski 8-punktowy brajl komputerowy"
+msgstr "bulgară braille cu 8 puncte pentru computere"
 
 #: braille.py:29
 msgid "Welsh grade 1"
-msgstr "Walijski (stopień 1)"
+msgstr "galeză grad 1"
 
 #: braille.py:30
 msgid "Welsh grade 2"
-msgstr "Walijski (stopień 2)"
+msgstr "galeză grad 2"
 
 #: braille.py:31
 msgid "Czech grade 1"
-msgstr "Czeski (stopień 1)"
+msgstr "cehă grad 1"
 
 #: braille.py:32
 msgid "Danish grade 1"
-msgstr "Duński (stopień 1)"
+msgstr "daneză grad 1"
 
 #: braille.py:33
 msgid "German 8 dot computer braille"
-msgstr "Niemiecki 8-punktowy brajl komputerowy"
+msgstr "germană braille cu 8 puncte pentru computere"
 
 #: braille.py:34
 msgid "German grade 0"
-msgstr "Niemiecki (stopień 0)"
+msgstr "germană grad 0"
 
 #: braille.py:35
 msgid "German grade 1"
-msgstr "Niemiecki (stopień 1)"
+msgstr "germană grad 1"
 
 #: braille.py:36
 msgid "German grade 2"
-msgstr "Niemiecki (stopień 2)"
+msgstr "germană grad 2"
 
 #: braille.py:37
 msgid "English (U.K.) grade 1"
-msgstr "Angielski brytyjski (stopień 1)"
+msgstr "engleză britanică grad 1"
 
 #: braille.py:38
 msgid "English (U.K.) grade 2"
-msgstr "Angielski brytyjski (stopień 2)"
+msgstr "engleză britanică grad 2"
 
 #: braille.py:39
 msgid "English (U.S.) 6 dot computer braille"
-msgstr "Angielski amerykański 6-punktowy brajl komputerowy"
+msgstr "engleză americană braille cu 6 puncte pentru computere"
 
 #: braille.py:40
 msgid "English (U.S.) 8 dot computer braille"
-msgstr "Angielski amerykański 8-punktowy brajl komputerowy"
+msgstr "engleză americană braille cu 8 puncte pentru computere"
 
 #: braille.py:41
 msgid "English (U.S.) grade 1"
-msgstr "Angielski amerykański (stopień 1)"
+msgstr "engleză americană grad 1"
 
 #: braille.py:42
 msgid "English (U.S.) grade 2"
-msgstr "Angielski amerykański (stopień 2)"
+msgstr "engleză americană grad 2"
 
 #: braille.py:43
 msgid "Spanish grade 1"
-msgstr "Hiszpański (stopień 1)"
+msgstr "spaniolă grad 1"
 
 #: braille.py:44
 msgid "Finnish 8 dot computer braille"
-msgstr "Fiński 8-punktowy brajl komputerowy"
+msgstr "finlandeză braille cu 8 puncte pentru computere"
 
 #: braille.py:45
 msgid "French (Canada) grade 1"
-msgstr "Francuski kanadyjski (stopień 1)"
+msgstr "franceză canadiană grad 1"
 
 #: braille.py:46
 msgid "French (Canada) grade 2"
-msgstr "Francuski kanadyjski (stopień 2)"
+msgstr "franceză canadiană grad 2"
 
 #: braille.py:47
 msgid "French (unified) 6 dot computer braille"
-msgstr "Francuski (ujednolicony) 6-punktowy brajl komputerowy"
+msgstr "franceză generală braille cu 6 puncte pentru computere"
 
 #: braille.py:48
 msgid "French (unified) 8 dot computer braille"
-msgstr "Francuski (ujednolicony) 8-punktowy brajl komputerowy"
+msgstr "franceză generală braille cu 8 puncte pentru computere"
 
 #: braille.py:49
 msgid "French (unified) Grade 2"
-msgstr "Francuski (ujednolicony) (stopień 2)"
+msgstr "franceză generală grad 2"
 
 #: braille.py:49
 msgid "Greek (Greece) grade 1"
-msgstr "Grecki (stopień 1)"
+msgstr "greacă grad 1"
 
 #: braille.py:50
 msgid "Hebrew 8 dot computer braille"
-msgstr "Hebrajski 8-punktowy brajl komputerowy"
+msgstr "ebraică braille cu 8 puncte pentru computere"
 
 #: braille.py:51
 msgid "Hindi grade 1"
-msgstr "Hindi (stopień 1)"
+msgstr "hindusă grad 1"
 
 #: braille.py:52
 msgid "Croatian 8 dot computer braille"
-msgstr "Chorwacki 8-punktowy brajl komputerowy"
+msgstr "croată braille cu 8 puncte pentru computere"
 
 #: braille.py:53
 msgid "Hungarian 8 dot computer braille"
-msgstr "Węgierski 8-punktowy brajl komputerowy"
+msgstr "maghiară braille cu 8 puncte pentru computere"
 
 #: braille.py:54
 msgid "Italian grade 1"
-msgstr "Włoski (stopień 1)"
+msgstr "italiană grad 1"
 
 #: braille.py:55
 msgid "Latvian grade 1"
-msgstr "Łotewski (stopień 1)"
+msgstr "letonă grad 1"
 
 #: braille.py:56
 msgid "Dutch (Belgium) grade 1"
-msgstr "Holenderski belgijski (stopień 1)"
+msgstr "flamandă belgiană grad 1"
 
 #: braille.py:57
 msgid "Dutch (netherlands) grade 1"
-msgstr "Holenderski (stopień 1)"
+msgstr "flamandă olandeză grad 1"
 
 #: braille.py:58
 msgid "Norwegian grade 0"
-msgstr "Norweski (stopień 0)"
+msgstr "norvegiană grad 0"
 
 #: braille.py:59
 msgid "Norwegian grade 1"
-msgstr "Norweski (stopień 1)"
+msgstr "norvegiană grad 1"
 
 #: braille.py:60
 msgid "Norwegian grade 2"
-msgstr "Norweski (stopień 2)"
+msgstr "norvegiană grad 2"
 
 #: braille.py:61
 msgid "Norwegian grade 3"
-msgstr "Norweski stopień 3"
+msgstr "norvegiană grad 3"
 
 #: braille.py:62
 msgid "Polish grade 1"
-msgstr "Polski (stopień 1)"
+msgstr "poloneză grad 1"
 
 #: braille.py:63
 msgid "Portuguese grade 1"
-msgstr "Portugalski (stopień 1)"
+msgstr "portugheză grad 1"
 
 #: braille.py:64
 msgid "Russian grade 1"
-msgstr "Rosyjski (stopień 1)"
+msgstr "rusă grad 1"
 
 #: braille.py:65
 msgid "Swedish grade 1"
-msgstr "Szwedzki (stopień 1)"
+msgstr "suedeză grad 1"
 
 #: braille.py:66
 msgid "Slovak"
-msgstr "Słowacki (stopień 1)"
+msgstr "slovacă"
 
 #: braille.py:67
 msgid "Unified English Braille Code grade 1"
-msgstr "Ujednolicony brajl angielski (stopień 1)"
+msgstr "engleză generală cod braille grad 1"
 
 #: braille.py:68
 msgid "Unified English Braille Code grade 2"
-msgstr "Ujednolicony brajl angielski (stopień 2)"
+msgstr "engleză generală cod braille grad 2"
 
 #: braille.py:69
 msgid "Chinese (Hong Kong, Cantonese)"
-msgstr "Chiński (Hong Kong, Cantonese)"
+msgstr "chineză cantoneză, Hong Kong"
 
 #: braille.py:70
 msgid "Chinese (Taiwan, Mandarin)"
-msgstr "Chiński (Taiwan, Mandaryn)"
+msgstr "chineză mandarină, Taiwan"
 
 #: braille.py:74
 msgid "edt"
@@ -516,7 +522,7 @@ msgstr "cbo"
 
 #: braille.py:82
 msgid "lnk"
-msgstr "ln"
+msgstr "lnk"
 
 #: braille.py:83
 msgid "dlg"
@@ -528,7 +534,7 @@ msgstr "tv"
 
 #: braille.py:85
 msgid "tb"
-msgstr "tab"
+msgstr "tb"
 
 #: braille.py:89
 msgid "(x)"
@@ -546,79 +552,78 @@ msgstr "submnu"
 msgid "( )"
 msgstr "( )"
 
-#: braille.py:222
-#: speech.py:676
+#: braille.py:222 speech.py:676
+#, python-format
 msgid "not %s"
-msgstr "nie %s"
+msgstr "nu este %s"
 
-#: braille.py:234
-#: speech.py:684
+#: braille.py:234 speech.py:684
+#, python-format
 msgid "%s of %s"
-msgstr "%s z %s"
+msgstr "%s din %s"
 
-#: braille.py:236
-#: speech.py:689
+#: braille.py:236 speech.py:689
 #: speech.py:692
+#, python-format
 msgid "level %s"
-msgstr "poziom %s"
+msgstr "nivel %s"
 
 #: brailleDisplayDrivers\alvaBC6.py:74
 msgid "ALVA BC640/680 series"
-msgstr "ALVA BC640/680 series"
+msgstr "serie ALVA BC640/680"
 
 #: brailleDisplayDrivers\handyTech.py:40
 msgid "Handy Tech braille displays"
-msgstr "Monitory brajlowskie Handy Tech"
+msgstr "ecrane braille Handy Tech"
 
 #: brailleDisplayDrivers\lilli.py:32
 msgid "MDV Lilli"
-msgstr ""
+msgstr "MDV Lilli"
 
 #: brailleDisplayDrivers\noBraille.py:13
 msgid "No braille"
-msgstr "Bez brajla"
+msgstr "Nu există braille"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18
-#: characterSymbols.py:19
-#: speech.py:84
+#: characterSymbols.py:19 speech.py:84
 #: speech.py:626
 msgid "blank"
-msgstr "pusta"
+msgstr "spaţiu gol"
 
 #: characterSymbols.py:20
 #: controlTypes.py:201
 msgid "tab"
-msgstr "tab"
+msgstr "tabulator"
 
 #: characterSymbols.py:21
 msgid "line feed"
-msgstr "nowa linia"
+msgstr "introducere rând"
 
 #: characterSymbols.py:22
 msgid "page break"
-msgstr "podział strony"
+msgstr "pagină nouă"
 
 #: characterSymbols.py:23
 msgid "carriage return"
-msgstr "koniec akapitu"
+msgstr "de la capăt"
 
 #: characterSymbols.py:24
 #: keyLabels.py:35
 msgid "space"
-msgstr "odstęp"
+msgstr "spaţiu"
 
 #: characterSymbols.py:25
 msgid "bang"
-msgstr "wykrzyknik"
+msgstr ""
 
 #: characterSymbols.py:26
 msgid "quote"
-msgstr "cudzysłów"
+msgstr "ghilimele"
 
 #: characterSymbols.py:27
 msgid "number"
-msgstr "hash"
+msgstr "număr"
 
 #: characterSymbols.py:28
 msgid "dollar"
@@ -630,23 +635,23 @@ msgstr "procent"
 
 #: characterSymbols.py:30
 msgid "and"
-msgstr "and"
+msgstr "şi"
 
 #: characterSymbols.py:31
 msgid "tick"
-msgstr "apostrof"
+msgstr "bifă"
 
 #: characterSymbols.py:32
 msgid "left paren"
-msgstr "lewy nawias"
+msgstr "paranteză stânga"
 
 #: characterSymbols.py:33
 msgid "right paren"
-msgstr "prawy nawias"
+msgstr "paranteză dreapta"
 
 #: characterSymbols.py:34
 msgid "star"
-msgstr "gwiazdka"
+msgstr "stea"
 
 #: characterSymbols.py:35
 msgid "plus"
@@ -654,340 +659,342 @@ msgstr "plus"
 
 #: characterSymbols.py:36
 msgid "comma"
-msgstr "przecinek"
+msgstr "virgulă"
 
 #: characterSymbols.py:37
 msgid "dash"
-msgstr "minus"
+msgstr "cratimă"
 
 #: characterSymbols.py:38
 msgid "dot"
-msgstr "kropka"
+msgstr "punct"
 
 #: characterSymbols.py:39
 msgid "slash"
-msgstr "slash"
+msgstr "bară diagonală"
 
 #: characterSymbols.py:40
 msgid "colon"
-msgstr "dwukropek"
+msgstr "două puncte"
 
 #: characterSymbols.py:41
 msgid "semi"
-msgstr "średnik"
+msgstr "punct şi virgulă"
 
 #: characterSymbols.py:42
 msgid "less"
-msgstr "mniejsze"
+msgstr "minus"
 
 #: characterSymbols.py:43
 msgid "equals"
-msgstr "równa się"
+msgstr "egal"
 
 #: characterSymbols.py:44
 msgid "greater"
-msgstr "większe"
+msgstr "plus"
 
 #: characterSymbols.py:45
 msgid "question"
-msgstr "pytajnik"
+msgstr "semn de întrebare"
 
 #: characterSymbols.py:46
 msgid "at"
-msgstr "małpa"
+msgstr "la"
 
 #: characterSymbols.py:47
 msgid "left bracket"
-msgstr "kwadratowy lewy"
+msgstr "paranteză dreaptă stânga"
 
 #: characterSymbols.py:48
 msgid "back slash"
-msgstr "backslash"
+msgstr "bară diagonală inversă"
 
 #: characterSymbols.py:49
 msgid "right bracket"
-msgstr "kwadratowy prawy"
+msgstr "paranteză dreaptă dreapta"
 
 #: characterSymbols.py:50
 #: controlTypes.py:271
 msgid "caret"
-msgstr "daszek"
+msgstr "cursor de scriere"
 
 #: characterSymbols.py:51
 #: controlTypes.py:307
 msgid "underline"
-msgstr "podkreślacz"
+msgstr "subliniere"
 
 #: characterSymbols.py:52
 msgid "graav"
-msgstr "akcent"
+msgstr "accent grav"
 
 #: characterSymbols.py:53
 msgid "left brace"
-msgstr "klamrowy lewy"
+msgstr "acoladă stânga"
 
 #: characterSymbols.py:54
 msgid "bar"
-msgstr "or"
+msgstr "bară"
 
 #: characterSymbols.py:55
 msgid "right brace"
-msgstr "klamrowy prawy"
+msgstr "acoladă dreapta"
 
 #: characterSymbols.py:56
 msgid "tilda"
-msgstr "tylda"
+msgstr "tildă"
 
 #: characterSymbols.py:57
+#: characterSymbols.py:59
 msgid "bullet"
-msgstr "punktor"
+msgstr "bulet"
 
 #: characterSymbols.py:58
 msgid "dot dot dot"
-msgstr "wielokropek"
+msgstr "puncte puncte"
 
 #: colors.py:77
 msgid "black"
-msgstr "Czarny"
+msgstr "negru"
 
 #: colors.py:78
 msgid "green"
-msgstr "Zielony"
+msgstr "verde"
 
 #: colors.py:79
 msgid "light grey"
-msgstr "Jasno szary"
+msgstr "gri deschis"
 
 #: colors.py:80
 msgid "lime"
-msgstr "Limonka"
+msgstr "verde deschis"
 
 #: colors.py:81
 msgid "grey"
-msgstr "Szary"
+msgstr "gri"
 
 #: colors.py:82
 msgid "olive"
-msgstr "Oliwkowy"
+msgstr "oliv"
 
 #: colors.py:83
 msgid "white"
-msgstr "Biały"
+msgstr "alb"
 
 #: colors.py:84
 msgid "yellow"
-msgstr "Żółty"
+msgstr "galben"
 
 #: colors.py:85
 msgid "dark red"
-msgstr "Ciemno czerwony"
+msgstr "roşu închis"
 
 #: colors.py:86
 msgid "navy blue"
-msgstr "Granatowy"
+msgstr "bleumarin"
 
 #: colors.py:87
 msgid "red"
-msgstr "Czerwony"
+msgstr "roşu"
 
 #: colors.py:88
 msgid "blue"
-msgstr "Niebieski"
+msgstr "albastru"
 
 #: colors.py:89
 msgid "purple"
-msgstr "Purpurowy"
+msgstr "violet"
 
 #: colors.py:90
 msgid "teal"
-msgstr "Zielononiebieski"
+msgstr "albastru verzui"
 
 #: colors.py:91
 msgid "fuchsia"
-msgstr "Cyklamenowy"
+msgstr "lila"
 
 #: colors.py:92
 msgid "aqua"
-msgstr "Woda"
+msgstr "bleu"
 
 #: colors.py:94
 msgid "orange"
-msgstr "Pomarańczowy"
+msgstr "portocaliu"
 
 #: compoundDocuments.py:401
-#: globalCommands.py:103
-#: speech.py:277
-#: speech.py:378
-#: speech.py:391
+#: globalCommands.py:103 speech.py:277
+#: speech.py:378 speech.py:391
 #: virtualBuffers\__init__.py:613
+#, python-format
 msgid "selected %s"
-msgstr "zaznaczone %s"
+msgstr "selectat %s"
 
 #: config\__init__.py:21
 msgid "Badly formed configuration file"
-msgstr "Błędnie skonstruowany plik konfiguracyjny"
+msgstr "Fişier de configurare format greşit"
 
 #: config\__init__.py:36
+#, python-format
 msgid "%s: %s, defaulting to %s"
-msgstr "%s: %s, domyślnie do %s"
+msgstr "%s: %s, devine implicit %s"
 
-#: config\__init__.py:177
+#: config\__init__.py:178
+#, python-format
 msgid "Error parsing configuration file: %s"
-msgstr "Błąd przetwarzania pliku konfiguracyjnego %s"
+msgstr "Eroare la analizarea fişierului de configurare: %s"
 
-#: config\__init__.py:184
+#: config\__init__.py:185
+#, python-format
 msgid ""
 "Errors in configuration file '%s':\n"
 "%s"
 msgstr ""
-"Błędy w pliku konfiguracyjnym '%s':\n"
+"Erori în fişierul de configurare '%s':\n"
 "%s"
 
 #: controlTypes.py:180
 msgid "window"
-msgstr "okno"
+msgstr "fereastră"
 
 #: controlTypes.py:181
 msgid "title bar"
-msgstr "pasek tytułu"
+msgstr "bară de titlu"
 
 #: controlTypes.py:182
 msgid "pane"
-msgstr " "
+msgstr "panou"
 
 #: controlTypes.py:183
 msgid "dialog"
-msgstr "dialog"
+msgstr "linie de dialog"
 
 #: controlTypes.py:184
 msgid "check box"
-msgstr "pole wyboru"
+msgstr "căsuţă"
 
 #: controlTypes.py:185
 msgid "radio button"
-msgstr "przycisk opcji"
+msgstr "buton rotativ"
 
 #: controlTypes.py:186
 msgid "text"
-msgstr "tekst"
+msgstr "text"
 
 #: controlTypes.py:187
 msgid "edit"
-msgstr "pole edycji"
+msgstr "editare"
 
 #: controlTypes.py:188
 msgid "button"
-msgstr "przycisk"
+msgstr "buton"
 
 #: controlTypes.py:189
 msgid "menu bar"
-msgstr "pasek menu"
+msgstr "bară meniu"
 
 #: controlTypes.py:190
 msgid "menu item"
-msgstr "pozycja menu"
+msgstr "obiect din meniu"
 
 #: controlTypes.py:191
 #: controlTypes.py:298
 msgid "menu"
-msgstr "menu"
+msgstr "meniu"
 
 #: controlTypes.py:192
 msgid "combo box"
-msgstr "Lista rozwijana"
+msgstr "căsuţă combinată"
 
 #: controlTypes.py:193
 msgid "list"
-msgstr "lista"
+msgstr "listă"
 
 #: controlTypes.py:194
 msgid "list item"
-msgstr "element listy"
+msgstr "obiect din listă"
 
 #: controlTypes.py:195
 msgid "graphic"
-msgstr "grafika"
+msgstr "grafic"
 
 #: controlTypes.py:196
 msgid "help balloon"
-msgstr "dymek powiadomienia"
+msgstr "balon ajutor"
 
 #: controlTypes.py:197
 msgid "tool tip"
-msgstr "dymek"
+msgstr "informaţie instrument"
 
-#: controlTypes.py:198
-#: speech.py:958
+#: controlTypes.py:198 speech.py:958
 msgid "link"
 msgstr "link"
 
 #: controlTypes.py:199
 msgid "tree view"
-msgstr "Widok drzewa"
+msgstr "vedere listă extinsă"
 
 #: controlTypes.py:200
 msgid "tree view item"
-msgstr "element drzewa"
+msgstr "obiect din lista extinsă"
 
 #: controlTypes.py:202
 msgid "tab control"
-msgstr "dialog z zakładkami"
+msgstr "control tabulator"
 
 #: controlTypes.py:203
 msgid "slider"
-msgstr "suwak"
+msgstr "glisor"
 
 #: controlTypes.py:204
 msgid "progress bar"
-msgstr "pasek postępu"
+msgstr "bară progres"
 
 #: controlTypes.py:205
 msgid "scroll bar"
-msgstr "pasek przewijania"
+msgstr "bară listare"
 
 #: controlTypes.py:206
 msgid "status bar"
-msgstr "pasek stanu"
+msgstr "bară stare"
 
 #: controlTypes.py:207
 msgid "table"
-msgstr "tabela"
+msgstr "tabel"
 
 #: controlTypes.py:208
 msgid "cell"
-msgstr "komórka"
+msgstr "celulă"
 
 #: controlTypes.py:209
 msgid "column"
-msgstr "kolumna"
+msgstr "coloană"
 
 #: controlTypes.py:210
 msgid "row"
-msgstr "wiersz"
+msgstr "rând"
 
 #: controlTypes.py:211
 msgid "frame"
-msgstr "ramka"
+msgstr "cadru"
 
 #: controlTypes.py:212
 msgid "tool bar"
-msgstr "pasek narzędzi"
+msgstr "bară instrumente"
 
 #: controlTypes.py:213
 msgid "column header"
-msgstr "nagłówek kolumny"
+msgstr "cap de coloană"
 
 #: controlTypes.py:214
 msgid "row header"
-msgstr "nagłówek wiersza"
+msgstr "cap de rând"
 
 #: controlTypes.py:215
 msgid "drop down button"
-msgstr "przycisk rozwijania"
+msgstr "buton coborâre"
 
 #: controlTypes.py:216
 msgid "clock"
-msgstr "zegar"
+msgstr "ceas"
 
 #: controlTypes.py:217
 msgid "separator"
@@ -995,164 +1002,164 @@ msgstr "separator"
 
 #: controlTypes.py:218
 msgid "form"
-msgstr "formularz"
+msgstr "formă"
 
 #: controlTypes.py:219
 msgid "heading"
-msgstr "nagłówek"
+msgstr "titlu"
 
 #: controlTypes.py:220
 msgid "heading 1"
-msgstr "nagłówek 1"
+msgstr "titlu 1"
 
 #: controlTypes.py:221
 msgid "heading 2"
-msgstr "nagłówek 2"
+msgstr "titlu 2"
 
 #: controlTypes.py:222
 msgid "heading 3"
-msgstr "nagłówek 3"
+msgstr "titlu 3"
 
 #: controlTypes.py:223
 msgid "heading 4"
-msgstr "nagłówek 4"
+msgstr "titlu 4"
 
 #: controlTypes.py:224
 msgid "heading 5"
-msgstr "nagłówek 5"
+msgstr "titlu 5"
 
 #: controlTypes.py:225
 msgid "heading 6"
-msgstr "nagłówek 6"
+msgstr "titlu 6"
 
 #: controlTypes.py:226
 #: textInfos\__init__.py:139
 msgid "paragraph"
-msgstr "akapit"
+msgstr "paragraf"
 
 #: controlTypes.py:227
 msgid "block quote"
-msgstr "cytat"
+msgstr "citat bloc"
 
 #: controlTypes.py:228
 msgid "table header"
-msgstr "nagłówek tabeli"
+msgstr "titlu tabel"
 
 #: controlTypes.py:229
 msgid "table body"
-msgstr "zawartość tabeli"
+msgstr "corp tabel"
 
 #: controlTypes.py:230
 msgid "table footer"
-msgstr "stopka tabeli"
+msgstr "subsol tabel"
 
 #: controlTypes.py:231
 msgid "document"
-msgstr "dokument"
+msgstr "document"
 
 #: controlTypes.py:232
 msgid "animation"
-msgstr "animacja"
+msgstr "animaţie"
 
 #: controlTypes.py:233
 msgid "application"
-msgstr "aplikacja"
+msgstr "aplicaţie"
 
 #: controlTypes.py:234
 msgid "box"
-msgstr "pole"
+msgstr "căsuţă, casetă"
 
 #: controlTypes.py:235
 msgid "grouping"
-msgstr "grupa"
+msgstr "grupare"
 
 #: controlTypes.py:236
 msgid "property page"
-msgstr "karta właściwości"
+msgstr "pagină proprietăţi"
 
 #: controlTypes.py:237
 msgid "canvas"
-msgstr "kanwa"
+msgstr "pânză"
 
 #: controlTypes.py:238
 msgid "caption"
-msgstr "podpis"
+msgstr "legendă"
 
 #: controlTypes.py:239
 msgid "check menu item"
-msgstr "opcja menu"
+msgstr "element din meniul de verificări"
 
 #: controlTypes.py:240
 msgid "date edit"
-msgstr "pole daty"
+msgstr "editare dată"
 
 #: controlTypes.py:241
 msgid "icon"
-msgstr "ikona"
+msgstr "iconiţă"
 
 #: controlTypes.py:242
 msgid "directory pane"
-msgstr "panel folderów"
+msgstr "panou directoare"
 
 #: controlTypes.py:244
 msgid "end note"
-msgstr "notka końcowa"
+msgstr "notă de final"
 
 #: controlTypes.py:245
 msgid "footer"
-msgstr "stopka"
+msgstr "subsol"
 
 #: controlTypes.py:246
 msgid "foot note"
-msgstr "przypis"
+msgstr "notă de subsol"
 
 #: controlTypes.py:247
 msgid "glass pane"
-msgstr "panel przeźroczysty"
+msgstr "panou transparent"
 
 #: controlTypes.py:248
 msgid "header"
-msgstr "nagłówek"
+msgstr "antet"
 
 #: controlTypes.py:249
 msgid "image map"
-msgstr "mapa obrazkowa"
+msgstr "hartă a imaginii"
 
 #: controlTypes.py:250
 msgid "input window"
-msgstr "okno wprowadzania"
+msgstr "fereastră de introducere"
 
 #: controlTypes.py:251
 msgid "label"
-msgstr "etykieta"
+msgstr "etichetă"
 
 #: controlTypes.py:252
 msgid "note"
-msgstr "adnotacja"
+msgstr "notă"
 
 #: controlTypes.py:253
 msgid "page"
-msgstr "strona"
+msgstr "pagină"
 
 #: controlTypes.py:254
 msgid "radio menu item"
-msgstr "opcja menu"
+msgstr "obiect din meniul radio"
 
 #: controlTypes.py:255
 msgid "layered pane"
-msgstr "panel warstwowy"
+msgstr "panou stratificat"
 
 #: controlTypes.py:256
 msgid "redundant object"
-msgstr "obiekt nadmiarowy"
+msgstr "obiect redundant"
 
 #: controlTypes.py:257
 msgid "root pane"
-msgstr "panel główny"
+msgstr "panou rădăcină"
 
 #: controlTypes.py:258
 msgid "edit bar"
-msgstr "pasek edycji"
+msgstr "bară de editare"
 
 #: controlTypes.py:259
 msgid "terminal"
@@ -1160,229 +1167,226 @@ msgstr "terminal"
 
 #: controlTypes.py:260
 msgid "rich edit"
-msgstr "pole edycji z formatem"
+msgstr "editor de text complex"
 
 #: controlTypes.py:261
 msgid "ruler"
-msgstr "linijka"
+msgstr "riglă"
 
 #: controlTypes.py:262
 msgid "scroll pane"
-msgstr "panel przewijania"
+msgstr "panou listare"
 
 #: controlTypes.py:263
 msgid "section"
-msgstr "sekcja"
+msgstr "secţiune"
 
 #: controlTypes.py:264
 msgid "shape"
-msgstr "grafika"
+msgstr "formă"
 
 #: controlTypes.py:265
 msgid "split pane"
-msgstr "podział panelu"
+msgstr "panou împărţit"
 
 #: controlTypes.py:266
 msgid "view port"
-msgstr "widok"
+msgstr "hublou"
 
 #: controlTypes.py:267
 msgid "tear off menu"
-msgstr "menu odłączane"
+msgstr "meniu detaşabil"
 
 #: controlTypes.py:268
 msgid "text frame"
-msgstr "ramka tekstowa"
+msgstr "cadru text"
 
 #: controlTypes.py:269
 msgid "toggle button"
-msgstr "przycisk przełączany"
+msgstr "buton activare"
 
 #: controlTypes.py:270
 msgid "border"
-msgstr "granica"
+msgstr "margine"
 
 #: controlTypes.py:272
 #: textInfos\__init__.py:136
 msgid "character"
-msgstr "znak"
+msgstr "caracter"
 
 #: controlTypes.py:273
 msgid "chart"
-msgstr "wykres"
+msgstr "diagramă"
 
 #: controlTypes.py:274
 msgid "cursor"
-msgstr "kursor"
+msgstr "cursor"
 
 #: controlTypes.py:275
 msgid "diagram"
-msgstr "diagram"
+msgstr "diagramă"
 
 #: controlTypes.py:276
 msgid "dial"
-msgstr "pokrętło"
+msgstr "cadran"
 
 #: controlTypes.py:277
 msgid "drop list"
-msgstr "lista rozwijana"
+msgstr "listă expandabilă"
 
 #: controlTypes.py:278
 msgid "split button"
-msgstr "przycisk podziału"
+msgstr "buton separare"
 
 #: controlTypes.py:279
 msgid "menu button"
-msgstr "przycisk menu"
+msgstr "buton meniu"
 
 #: controlTypes.py:280
 msgid "drop down button grid"
-msgstr "siatka pola rozwijanego"
+msgstr "grilă butoane expandabilă"
 
 #: controlTypes.py:281
 msgid "equation"
-msgstr "równanie"
+msgstr "ecuaţie"
 
 #: controlTypes.py:282
 msgid "grip"
-msgstr "uchwyt"
+msgstr "apucare"
 
 #: controlTypes.py:283
 msgid "hot key field"
-msgstr "pole gorącego klawisza"
+msgstr "câmp tastă activă"
 
 #: controlTypes.py:284
 msgid "indicator"
-msgstr "wskaźnik"
+msgstr "indicator"
 
 #: controlTypes.py:285
 msgid "spin button"
-msgstr "pokrętło"
+msgstr "buton rotativ"
 
 #: controlTypes.py:286
 msgid "sound"
-msgstr "dźwięk"
+msgstr "sunet"
 
 #: controlTypes.py:287
 msgid "white space"
-msgstr "biała spacja"
+msgstr "spaţiu gol"
 
 #: controlTypes.py:288
 msgid "tree view button"
-msgstr "przycisk widoku drzewa"
+msgstr "buton vedere listă extinsă"
 
 #: controlTypes.py:289
 msgid "IP address"
-msgstr "adres IP"
+msgstr "adresă IP"
 
 #: controlTypes.py:290
 msgid "desktop icon"
-msgstr "ikona pulpitu"
+msgstr "iconiţă ecran"
 
 #: controlTypes.py:291
 #: controlTypes.py:315
 msgid "alert"
-msgstr "ostrzeżenie"
+msgstr "alarmă"
 
 #: controlTypes.py:292
 msgid "IFrame"
-msgstr "ramka"
+msgstr "IFrame"
 
 #: controlTypes.py:293
 msgid "desktop pane"
-msgstr "pulpit"
+msgstr "panou ecran"
 
 #: controlTypes.py:294
 msgid "option pane"
-msgstr "panel opcji"
+msgstr "panou opţiuni"
 
 #: controlTypes.py:295
 msgid "color chooser"
-msgstr "wybór kolorów"
+msgstr "selector culori"
 
 #: controlTypes.py:296
 msgid "file chooser"
-msgstr "wybór plików"
+msgstr "selector fişier"
 
 #: controlTypes.py:297
 msgid "filler"
-msgstr "wypełniacz"
+msgstr "instrument umplere"
 
 #: controlTypes.py:299
 msgid "panel"
-msgstr "panel"
+msgstr "panou"
 
 #: controlTypes.py:300
 msgid "password edit"
-msgstr "pole hasła"
+msgstr "editare parolă"
 
 #: controlTypes.py:301
 msgid "font chooser"
-msgstr "wybór czcionek"
+msgstr "alegere stil litere"
 
 #: controlTypes.py:302
 #: textInfos\__init__.py:138
 msgid "line"
-msgstr "linia"
+msgstr "linie"
 
 #: controlTypes.py:303
 msgid "font name"
-msgstr "nazwa czcionki"
+msgstr "nume stil litere"
 
 #: controlTypes.py:304
 msgid "font size"
-msgstr "rozmiar czcionki"
+msgstr "mărime litere"
 
-#: controlTypes.py:305
-#: speech.py:910
+#: controlTypes.py:305 speech.py:910
 msgid "bold"
-msgstr "pogrubienie"
+msgstr "bold"
 
 #: controlTypes.py:306
 msgid "ITALIC"
-msgstr "kursywa"
+msgstr "italice"
 
 #: controlTypes.py:308
 msgid "foreground color"
-msgstr "kolor tekstu"
+msgstr "culoare prim plan"
 
 #: controlTypes.py:309
 msgid "background color"
-msgstr "kolor tła"
+msgstr "culoare fundal"
 
-#: controlTypes.py:310
-#: speech.py:932
+#: controlTypes.py:310 speech.py:932
 msgid "superscript"
-msgstr "indeks górny"
+msgstr "suprascript"
 
-#: controlTypes.py:311
-#: speech.py:934
+#: controlTypes.py:311 speech.py:934
 msgid "subscript"
-msgstr "indeks dolny"
+msgstr "subscript"
 
 #: controlTypes.py:312
 msgid "style"
-msgstr "styl"
+msgstr "stil"
 
 #: controlTypes.py:313
 msgid "indent"
-msgstr "wcięcie"
+msgstr "spaţiator"
 
 #: controlTypes.py:314
 msgid "alignment"
-msgstr "wyrównanie"
+msgstr "aliniere"
 
 #: controlTypes.py:316
 msgid "data grid"
-msgstr "siatka danych"
+msgstr "grilă de date"
 
 #: controlTypes.py:317
 msgid "data item"
-msgstr "obiekt z danymi"
+msgstr "element din date"
 
 #: controlTypes.py:318
 msgid "header item"
-msgstr "nagłówek"
+msgstr "element din antet"
 
 #: controlTypes.py:319
 msgid "thumb control"
@@ -1390,323 +1394,381 @@ msgstr ""
 
 #: controlTypes.py:320
 msgid "calendar"
-msgstr "kalendarz"
+msgstr "calendar"
 
 #: controlTypes.py:324
 msgid "unavailable"
-msgstr "niedostępne"
+msgstr "nedisponibil"
 
 #: controlTypes.py:325
 msgid "focused"
-msgstr "ma punkt uwagi"
+msgstr "focalizat"
 
 #: controlTypes.py:326
 msgid "selected"
-msgstr "zaznaczony"
+msgstr "selectat"
 
 #: controlTypes.py:327
 msgid "busy"
-msgstr "zajęty"
+msgstr "ocupat"
 
 #: controlTypes.py:328
 msgid "pressed"
-msgstr "wciśnięty"
+msgstr "apăsat"
 
 #: controlTypes.py:329
 msgid "checked"
-msgstr "oznaczone"
+msgstr "verificat"
 
 #: controlTypes.py:330
 msgid "half checked"
-msgstr "częściowo oznaczone"
+msgstr "jumătate verificat"
 
 #: controlTypes.py:331
 msgid "read only"
-msgstr "tylko do odczytu"
+msgstr "doar citire"
 
 #: controlTypes.py:332
 msgid "expanded"
-msgstr "rozwinięte"
+msgstr "extins"
 
 #: controlTypes.py:333
 msgid "collapsed"
-msgstr "zwinięte"
+msgstr "redus"
 
 #: controlTypes.py:334
 msgid "invisible"
-msgstr "niewidoczne"
+msgstr "invizibil"
 
 #: controlTypes.py:335
 msgid "visited"
-msgstr "odwiedzony"
+msgstr "vizitat"
 
 #: controlTypes.py:336
 msgid "linked"
-msgstr "połączone"
+msgstr "legat"
 
 #: controlTypes.py:337
 msgid "subMenu"
-msgstr "rozwijane"
+msgstr "subMeniu"
 
 #: controlTypes.py:338
 msgid "protected"
-msgstr "zabezpieczone"
+msgstr "protejat"
 
 #: controlTypes.py:339
 msgid "required"
-msgstr "wymagane"
+msgstr "necesar"
 
 #: controlTypes.py:340
 msgid "defunct"
-msgstr "nieczynne"
+msgstr "defunct"
 
 #: controlTypes.py:341
 msgid "invalid entry"
-msgstr "nieprawidłowy wpis"
+msgstr "intrare invalidă"
 
 #: controlTypes.py:342
 msgid "modal"
-msgstr "modalne"
+msgstr "modal"
 
 #: controlTypes.py:343
 msgid "has auto complete"
-msgstr "z autouzupełnianiem"
+msgstr "are autocompletare"
 
 #: controlTypes.py:344
 msgid "multi line"
-msgstr "wielowierszowe"
+msgstr "linii multiple"
 
 #: controlTypes.py:345
 msgid "iconified"
-msgstr "zminimalizowane"
+msgstr "iconificat"
 
 #: controlTypes.py:346
 msgid "off screen"
-msgstr "poza ekranem"
+msgstr "în afara ecranului"
 
 #: controlTypes.py:347
 msgid "selectable"
-msgstr "do zaznaczania"
+msgstr "selectabil"
 
 #: controlTypes.py:348
 msgid "focusable"
-msgstr "chce zwrócić uwagę"
+msgstr "poate fi focalizat"
 
 #: controlTypes.py:349
 msgid "clickable"
-msgstr "klikalne"
+msgstr "poate fi apăsat"
 
 #: controlTypes.py:350
 msgid "editable"
-msgstr "Edycja"
+msgstr "poate fi editat"
 
 #: controlTypes.py:351
 msgid "checkable"
-msgstr "do zaznaczania"
+msgstr "poate fi verificat"
 
 #: controlTypes.py:352
 msgid "draggable"
-msgstr "do przeciągnięcia"
+msgstr "poate fi tras"
 
 #: controlTypes.py:353
 msgid "dragging"
-msgstr "przeciąganie"
+msgstr "se trage"
 
 #: controlTypes.py:354
 msgid "drop target"
-msgstr "upuszczanie"
+msgstr "lasă ţinta"
 
 #: core.py:140
 msgid "Loading NVDA. Please wait..."
-msgstr "Ładowanie NVDA... proszę czekać..."
+msgstr "Se încarcă NVDA. Vă rog aşteptaţi..."
 
 #: core.py:225
 msgid "NVDA started"
-msgstr "nvda uruchomiony"
+msgstr "NVDA pornit"
 
 #: cursorManager.py:79
 msgid "Find"
-msgstr "Znajdź"
+msgstr "Găseşte"
 
 #: cursorManager.py:79
 msgid "Type the text you wish to find"
-msgstr "Wpisz szukany tekst"
+msgstr "scrieţi textul dorit pentru căutare"
 
 #: cursorManager.py:93
 msgid "Find Error"
-msgstr "Błąd wyszukiwania"
+msgstr "Găseşte eroare"
 
 #: cursorManager.py:93
+#, python-format
 msgid "text \"%s\" not found"
-msgstr "nie znaleziono tekstu \"%s\""
+msgstr "textul \"%s\" nu a fost găsit"
 
 #: cursorManager.py:99
 msgid "find a text string from the current cursor position"
-msgstr "szuka tekstu od bieżącej pozycji kursora"
+msgstr "găseşte un rând de text din poziţia actuală a cursorului"
 
 #: cursorManager.py:106
-msgid "find the next occurrence of the previously entered text string from the current cursor's position"
-msgstr "szuka następnego wystąpienia poprzednio wprowadzonego tekstu od bieżącej pozycji kursora"
+msgid ""
+"find the next occurrence of the previously entered text string from the "
+"current cursor's position"
+msgstr ""
+"găseşte următoarea apariţie a textului scris anterior din poziţia "
+"actuală a cursorului"
 
 #: cursorManager.py:113
-msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
-msgstr "szuka poprzedniego wystąpienia wcześniej wprowadzonego tekstu od bieżącej pozycji kursora"
+msgid ""
+"find the previous occurrence of the previously entered text string from the "
+"current cursor's position"
+msgstr ""
+"găseşte precedenta apariţie a textului scris anterior din poziţia "
+"actuală a cursorului"
 
 #: cursorManager.py:240
 #: globalCommands.py:101
 msgid "no selection"
-msgstr "bez zaznaczenia"
+msgstr "nu există selecţiune"
 
 #: cursorManager.py:243
 msgid "copied to clipboard"
-msgstr "skopiowano do schowka"
+msgstr "copiat pe planşetă"
 
 #: globalCommands.py:42
+#, python-format
 msgid "input help %s"
-msgstr "Pomoc klawiatury %s"
+msgstr "ajutor pentru intrări %s"
 
 #: globalCommands.py:43
-msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
-msgstr "Włącza i wyłącza pomoc klawiatury. Gdy pomoc klawiatury jest włączona, wpisanie dowolnego polecenia poprzez wciśnięcie klawisza lub kombinacji klawiszy spowoduje wypowiedzenie informacji, jaka funkcja  jest skojarzona z tą kombinacją, o ile jakaś jest."
+msgid ""
+"Turns input help on or off. When on, any input such as pressing a key on the "
+"keyboard will tell you what script is associated with that input, if any."
+msgstr ""
+"Porneşte sau opreşte ajutor pentru intrări. Când e pornit, orice intrare "
+"cum ar fi apăsarea unei taste pe tastatură vă va spune ce script e "
+"asociat cu ce intrare, dacă există vreuna."
 
 #: globalCommands.py:59
-msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
-msgstr "Czyta bieżącą linię kursora. Dwukrotne naciśnięcie literuje bieżącą linię"
+msgid ""
+"Reports the current line under the application cursor. Pressing this key "
+"twice will spell the current line"
+msgstr ""
+"Raportează linia curentă de sub cursorul aplicaţiei. Apăsarea tastei de "
+"două ori va citi linia curentă."
 
 #: globalCommands.py:62
 msgid "left click"
-msgstr "lewy"
+msgstr "click stânga"
 
 #: globalCommands.py:65
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "Klika lewym przyciskiem myszy tam, gdzie znajduje się wskaźnik myszy"
+msgstr ""
+"Apasă o dată butonul stânga al mousului la poziţia actuală a mousului."
 
 #: globalCommands.py:68
 msgid "right click"
-msgstr "prawy"
+msgstr "click dreapta"
 
 #: globalCommands.py:71
 msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "Klika prawym przyciskiem myszy tam, gdzie znajduje się wskaźnik myszy"
+msgstr ""
+"Apasă o dată butonul dreapta al mousului la poziţia actuală a mousului."
 
 #: globalCommands.py:75
 msgid "left mouse button unlock"
-msgstr "lewy zwolniony"
+msgstr "deblocarea butonului stânga al mousului"
 
 #: globalCommands.py:78
 msgid "left mouse button lock"
-msgstr "lewy zablokowany"
+msgstr "blocarea butonului stânga al mousului"
 
 #: globalCommands.py:80
 msgid "Locks or unlocks the left mouse button"
-msgstr "Blokuje lub zwalnia lewy przycisk myszy"
+msgstr "blochează sau deblochează butonul stânga al mousului"
 
 #: globalCommands.py:84
 msgid "right mouse button unlock"
-msgstr "prawy zwolniony"
+msgstr "deblocarea butonului dreapta al mousului"
 
 #: globalCommands.py:87
 msgid "right mouse button lock"
-msgstr "prawy zablokowany"
+msgstr "blocarea butonului dreapta al mousului"
 
 #: globalCommands.py:89
 msgid "Locks or unlocks the right mouse button"
-msgstr "Blokuje lub zwalnia prawy przycisk myszy"
+msgstr "blochează sau deblochează butonul dreapta al mousului"
 
 #: globalCommands.py:104
-msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
-msgstr "Czyta bieżące zaznaczenie tekstu w polu edycji lub dokumencie. Jeżeli żadne zaznaczenie nie występuje, użytkownik zostanie o tym poinformowany."
+msgid ""
+"Announces the current selection in edit controls and documents. If there is "
+"no selection it says so."
+msgstr ""
+"Citeşte selectarea curentă în controalele de editare şi documente. Dacă "
+"nu există selectare, anunţă asta."
 
 #: globalCommands.py:112
-msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
-msgstr "Jednokrotne naciśnięcie podaje bieżący czas. Dwukrotne naciśnięcie podaje bieżącą datę"
+msgid ""
+"If pressed once, reports the current time. If pressed twice, reports the "
+"current date"
+msgstr ""
+"Dacă e apăsat o dată, anunţă timpul curent. Dacă e apăsat de două "
+"ori, anunţă data curentă."
 
 #: globalCommands.py:117
 #: globalCommands.py:126
 #: globalCommands.py:135
 #: globalCommands.py:144
 msgid "No settings"
-msgstr "Brak ustawień"
+msgstr "Nu există setări."
 
 #: globalCommands.py:121
 msgid "Increases the currently active setting in the synth settings ring"
-msgstr "Zwiększa aktualnie wybrany parametr w ustawieniach syntezatora"
+msgstr ""
+"Creşte setarea activă curentă din inelul setărilor pentru sintetizare."
 
 #: globalCommands.py:130
 msgid "Decreases the currently active setting in the synth settings ring"
-msgstr "Zmniejsza aktualnie wybrany parametr w ustawieniach syntezatora"
+msgstr ""
+"Scade setarea activă curentă din inelul setărilor pentru sintetizare."
 
 #: globalCommands.py:139
 msgid "Moves to the next available setting in the synth settings ring"
-msgstr "Przechodzi do następnego parametru w ustawieniach syntezatora"
+msgstr ""
+"Trece la următoarea setare disponibilă din inelul setărilor pentru "
+"sintetizare."
 
 #: globalCommands.py:148
 msgid "Moves to the previous available setting in the synth settings ring"
-msgstr "Przechodzi do poprzedniego parametru w ustawieniach syntezatora"
+msgstr ""
+"Trece la anterioara setare disponibilă din inelul setărilor pentru "
+"sintetizare."
 
 #: globalCommands.py:157
 msgid "speak typed characters"
-msgstr "Czytaj pisane znaki"
+msgstr "citeşte caracterele introduse"
 
 #: globalCommands.py:158
 msgid "Toggles on and off the speaking of typed characters"
-msgstr "Włącza i wyłącza czytanie znaków podczas pisania"
+msgstr "Porneşte sau opreşte citirea caracterelor introduse."
 
 #: globalCommands.py:167
 msgid "speak typed words"
-msgstr "Czytaj pisane słowa"
+msgstr "citeşte cuvintele introduse"
 
 #: globalCommands.py:168
 msgid "Toggles on and off the speaking of typed words"
-msgstr "Włącza i wyłącza czytanie słów podczas pisania"
+msgstr "Porneşte sau opreşte citirea cuvintelor introduse."
 
 #: globalCommands.py:177
 msgid "speak command keys"
-msgstr "Czytaj klawisze poleceń"
+msgstr "citeşte tastele de comandă"
 
 #: globalCommands.py:178
-msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
-msgstr "Włącza i wyłącza czytanie naciskanych klawiszy poleceń"
+msgid ""
+"Toggles on and off the speaking of typed keys, that are not specifically "
+"characters"
+msgstr ""
+"Porneşte sau opreşte citirea tastelor de comandă care nu sunt caractere "
+"specifice."
 
 #: globalCommands.py:187
 msgid "speak punctuation"
-msgstr "Czytaj interpunkcję"
+msgstr "citeşte punctuaţia"
 
 #: globalCommands.py:188
-msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"
-msgstr "Włącza i wyłącza czytanie interpunkcji. Jeśli ta funkcja jest włączona, NVDA czyta wprost nazwy znaków przestankowych. Jeśli ta funkcja jest wyłączona, wymowa znaków przestankowych zależy od syntezatora"
+msgid ""
+"Toggles on and off the speaking of punctuation. When on NVDA will say the "
+"names of punctuation symbols, when off it will be up to the synthesizer as "
+"to how it speaks punctuation"
+msgstr ""
+"Porneşte sau opreşte citirea punctuaţiei. Când e pornit, NVDA va spune "
+"numele semnelor de punctuaţie, când e oprit sintetizatorul va alege cum "
+"citeşte punctuaţia."
 
 #: globalCommands.py:203
 msgid "object has no location"
-msgstr "brak danych o lokalizacji obiektu"
+msgstr "obiectul nu are o locaţie"
 
 #: globalCommands.py:209
 msgid "Moves the mouse pointer to the current navigator object"
-msgstr "Przesuwa wskaźnik myszy do bieżącego obiektu w hierarchii nawigacji"
+msgstr "Mută cursorul mousului la obiectul navigator curent"
 
 #: globalCommands.py:212
 msgid "Move navigator object to mouse"
-msgstr "Sprowadź bieżący obiekt do wskaźnika myszy"
+msgstr "Mută obiectul navigator la mouse"
 
 #: globalCommands.py:216
-msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
-msgstr "Sprowadza bieżący obiekt w hierarchii nawigacji do bieżącego obiektu pod wskaźnikiem myszy i wypowiada jego nazwę"
+msgid ""
+"Sets the navigator object to the current object under the mouse pointer and "
+"speaks it"
+msgstr ""
+"Pune obiectul navigator pe obiectul aflat sub cursorul mousului şi îl "
+"pronunţă"
 
 #: globalCommands.py:229
 msgid "No flat review for this object"
-msgstr "Brak możliwości przeglądania tego obiektu w trybie nawigacji"
+msgstr "Nu există descriere simplă pentru acest obiect"
 
 #: globalCommands.py:230
-msgid "Switches to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object"
-msgstr "Przełącza w tryb nawigacyjny danego ekranu (lub dokumentu, o ile się w nim znajduje), po czym umieszcza kursor na bieżącym obiekcie"
+msgid ""
+"Switches to flat review for the screen (or document if currently inside one) "
+"and positions the review cursor at the location of the current object"
+msgstr ""
+"Schimbă pe descrierea simplă pentru ecran (sau document dacă pe moment vă"
+" aflaţi într-unul) şi poziţionează cursorul pentru descrierea simplă "
+"la locaţia obiectului curent"
 
 #: globalCommands.py:242
 msgid "No object at flat review position"
-msgstr "Brak obiektu do przeglądania w trybie nawigacji"
+msgstr "Nu există obiect la poziţia descrierii simple"
 
 #: globalCommands.py:243
-msgid "Moves to the object represented by the text at the position of the review cursor within flat review"
-msgstr "Przenosi do tekstowego obiektu w pozycji kursora w ramach trybu nawigacji"
+msgid ""
+"Moves to the object represented by the text at the position of the review "
+"cursor within flat review"
+msgstr ""
+"Se mută la obiectul reprezentat de text la poziţia cursorului de descriere "
+"din descrierea simplă"
 
 #: globalCommands.py:248
 #: globalCommands.py:282
@@ -1716,770 +1778,969 @@ msgstr "Przenosi do tekstowego obiektu w pozycji kursora w ramach trybu nawigacj
 #: globalCommands.py:362
 #: globalCommands.py:376
 msgid "no navigator object"
-msgstr "Brak obiektu w hierarchii nawigacji"
+msgstr "nu există obiect navigator"
 
 #: globalCommands.py:274
 #: globalCommands.py:702
+#, python-format
 msgid "%s copied to clipboard"
-msgstr "%s skopiowano do schowka"
+msgstr "%s copiat pe planşetă"
 
 #: globalCommands.py:277
 #, fuzzy
-msgid "Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard"
-msgstr "Podaje bieżący obiekt w hierarchii nawigacji. Trzykrotne naciśnięcie kopiuje nazwę i zawartość obiektu do schowka"
+msgid ""
+"Reports the current navigator object. Pressing twice spells this information,"
+"and pressing three times Copies name and value of this  object to the "
+"clipboard"
+msgstr ""
+"Raportează actualul obiect navigator sau, dacă e apăsat de trei ori, "
+"copiază numele şi valoarea actualului obiect navigator pe planşetă"
 
 #: globalCommands.py:285
 msgid "No location information for navigator object"
-msgstr "Brak danych o lokalizacji dla bieżącego obiektu"
+msgstr "Nu există informaţie asupra locaţiei pentru obiectul navigator"
 
 #: globalCommands.py:289
 msgid "No location information for screen"
-msgstr "brak danych o lokalizacji ekranu"
+msgstr "Nu există informaţie asupra locaţiei pentru ecran"
 
 #: globalCommands.py:295
-msgid "Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen"
-msgstr "Położenie krawędzi obiektu na ekranie: %.1f procent od lewej, %.1f procent od góry, %.1f procent od prawej, %.1f procent od dołu"
+#, python-format
+msgid ""
+"Object edges positioned %.1f per cent from left edge of screen, %.1f per "
+"cent from top edge of screen, width is %.1f per cent of screen, height is %."
+"1f per cent of screen"
+msgstr ""
+"Marginile obiectului poziţionate la %.1f procente de marginea stângă a "
+"ecranului, %.1f procente de marginea de sus a ecranului, lăţimea este %.1f "
+"procente din ecran, înălţimea este %.1f procente din ecran"
 
 #: globalCommands.py:296
 msgid "Reports the hight, width and position of the current navigator object"
-msgstr "Podaje wysokość, szerokość oraz pozycję bieżącego obiektu w hierarchii nawigacji"
+msgstr ""
+"Raportează înălţimea, lăţimea şi poziţia obiectului navigator curent"
 
 #: globalCommands.py:305
 msgid "move to focus"
-msgstr "Przejdź do punktu uwagi"
+msgstr "mută pe punctul focalizat"
 
 #: globalCommands.py:307
-msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
-msgstr "sprowadza obiekt w hierarchii nawigacji do punktu uwagi, i przenosi kursor do karetki w ramach tego obiektu, gdy jest to możliwe"
+msgid ""
+"Sets the navigator object to the current focus, and the review cursor to the "
+"position of the caret inside it, if possible."
+msgstr ""
+"Pune obiectul navigator pe punctul focalizat curent, şi cursorul de "
+"descriere la poziţia cursorului de scriere din interiorul său, dacă e "
+"posibil."
 
 #: globalCommands.py:312
 #: globalCommands.py:661
 msgid "no focus"
-msgstr "brak punktu uwagi"
+msgstr "nu există focalizare"
 
 #: globalCommands.py:314
 msgid "move focus"
-msgstr "Przesuń punkt uwagi"
+msgstr "mută focalizarea"
 
 #: globalCommands.py:315
 msgid "Sets the keyboard focus to the navigator object"
-msgstr "Sprowadza punkt uwagi klawiatóry do bierzącego obiektu w hierarchii nawigacji"
+msgstr "Pune punctul focalizat din taste pe obiectul navigator"
 
 #: globalCommands.py:328
 msgid "No parents"
-msgstr "Brak rodzica"
+msgstr "Nu există surse"
 
 #: globalCommands.py:329
-#, fuzzy
-msgid "Sets the navigator object to the parent of the object it is currently on and speaks it"
-msgstr "Sprowadza bieżący obiekt w hierarchii nawigacji do rodzica obiektu, na którym się znajduje, po czym go wypowiada"
+msgid ""
+"Sets the navigator object to the parent of the object it is currently on and "
+"speaks it"
+msgstr ""
+"Pune obiectul navigator pe sursa obiectului pe care se află pe moment şi î"
+"l pronunţă"
 
 #: globalCommands.py:342
 msgid "No next"
-msgstr "brak następnego"
+msgstr "Nu există următor"
 
 #: globalCommands.py:343
-#, fuzzy
-msgid "Sets the navigator object to the object next to the one it is currently on and speaks it"
-msgstr "Sprowadza bieżący obiekt w hierarchii nawigacji do obiektu następującego po tym, na którym się znajduje, po czym go wypowiada"
+msgid ""
+"Sets the navigator object to the object next to the one it is currently on "
+"and speaks it"
+msgstr ""
+"Pune obiectul navigator pe obiectul de după cel pe care se află pe moment "
+"şi îl pronunţă"
 
 #: globalCommands.py:356
 msgid "No previous"
-msgstr "brak poprzedniego"
+msgstr "Nu există anterior"
 
 #: globalCommands.py:357
-#, fuzzy
-msgid "Sets the navigator object to the object previous to the one it is currently on and speaks it"
-msgstr "Sprowadza bieżący obiekt w hierarchii nawigacji do obiektu poprzedzającego ten, na którym się znajduje, po czym go wypowiada"
+msgid ""
+"Sets the navigator object to the object previous to the one it is currently "
+"on and speaks it"
+msgstr ""
+"Pune obiectul navigator pe obiectul dinaintea celui pe care se află pe "
+"moment şi îl pronunţă"
 
 #: globalCommands.py:370
 msgid "No children"
-msgstr "Brak potomków"
+msgstr "Nu există rezultate"
 
 #: globalCommands.py:371
-#, fuzzy
-msgid "Sets the navigator object to the first child object of the one it is currently on and speaks it"
-msgstr "Sprowadza bieżący obiekt w hierarchii nawigacji do pierwszego potomka obiektu, na którym się znajduje, po czym go wypowiada"
+msgid ""
+"Sets the navigator object to the first child object of the one it is "
+"currently on and speaks it"
+msgstr ""
+"Pune obiectul navigator pe primul obiect rezultat din cel pe care se află "
+"pe moment şi îl pronunţă"
 
 #: globalCommands.py:381
 msgid "No default action"
-msgstr "brak domyślnej akcji"
+msgstr "Nu există acţiune implicită"
 
 #: globalCommands.py:386
 msgid "default action failed"
-msgstr "domyślna akcja nie powiodła się"
+msgstr "acţiune implicită eşuată"
 
 #: globalCommands.py:389
-msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
-msgstr "Wykonuje domyślną akcję na bieżącym obiekcie (na przykład: jeśli jest to przycisk, naciska go)."
+msgid ""
+"Performs the default action on the current navigator object (example: "
+"presses it if it is a button)."
+msgstr ""
+"Efectuează acţiunea implicită pe obiectul navigator curent (exemplu: îl "
+"apasă dacă e un buton)."
 
 #: globalCommands.py:395
 #: globalCommands.py:407
 #: globalCommands.py:448
 msgid "top"
-msgstr "początek"
+msgstr "sus"
 
 #: globalCommands.py:397
-msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
-msgstr "Przenosi kursor do pierwszej linii bieżącego obiektu"
+msgid ""
+"Moves the review cursor to the top line of the current navigator object and "
+"speaks it"
+msgstr ""
+"Mută cursorul de descriere pe linia de sus a obiectului navigator curent ş"
+"i o pronunţă"
 
 #: globalCommands.py:409
-msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
-msgstr "Przenosi kursor do poprzedniej linii bieżącego obiektu"
+msgid ""
+"Moves the review cursor to the previous line of the current navigator object "
+"and speaks it"
+msgstr ""
+"Mută cursorul de descriere la linia anterioară a obiectului navigator "
+"curent şi o pronunţă"
 
 #: globalCommands.py:418
-#, fuzzy
-msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled"
-msgstr "Odczytuje wiersz, w którym obecnie znajduje siępunkt przeglądu. Dwukrotne naciśnięcie literuje ten wiersz."
+msgid ""
+"Reports the line of the current navigator object where the review cursor is "
+"situated. If this key is pressed twice, the current line will be spelled"
+msgstr ""
+"Raportează linia obiectului navigator curent unde se află cursorul de "
+"descriere. Dacă tasta e apăsată de două ori, linia curentă va fi "
+"pronunţată pe litere"
 
 #: globalCommands.py:428
 #: globalCommands.py:436
 #: globalCommands.py:469
 msgid "bottom"
-msgstr "koniec"
+msgstr "jos"
 
 #: globalCommands.py:430
-msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
-msgstr "Przenosi kursor do następnej linii bieżącego obiektu"
+msgid ""
+"Moves the review cursor to the next line of the current navigator object and "
+"speaks it"
+msgstr ""
+"Mută cursorul de descriere la linia următoare a obiectului navigator "
+"curent şi o pronunţă"
 
 #: globalCommands.py:438
-msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
-msgstr "Przenosi kursor do ostatniej linii bieżącego obiektu"
+msgid ""
+"Moves the review cursor to the bottom line of the current navigator object "
+"and speaks it"
+msgstr ""
+"Mută cursorul de descriere la linia de jos a obiectului navigator curent ş"
+"i o pronunţă"
 
 #: globalCommands.py:450
-msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
-msgstr "Przenosi kursor do poprzedniego słowa bieżącego obiektu"
+msgid ""
+"Moves the review cursor to the previous word of the current navigator object "
+"and speaks it"
+msgstr ""
+"Mută cursorul de descriere la cuvântul anterior al obiectului navigator "
+"curent şi îl pronunţă"
 
 #: globalCommands.py:459
-msgid "Speaks the word of the current navigator object where the review cursor is situated. If this key is pressed twice, the word will be spelled"
-msgstr "Czyta słowo pod kursorem. Dwukrotne naciśnięcie literuje słowo"
+msgid ""
+"Speaks the word of the current navigator object where the review cursor is "
+"situated. If this key is pressed twice, the word will be spelled"
+msgstr ""
+"Pronunţă cuvântul obiectului navigator curent unde se află cursorul de "
+"descriere. Dacă tasta e apăsată de două ori, cuvântul va fi citit pe "
+"litere"
 
 #: globalCommands.py:471
-msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
-msgstr "Przenosi kursor do następnego słowa bieżącego obiekttu"
+msgid ""
+"Moves the review cursor to the next word of the current navigator object and "
+"speaks it"
+msgstr ""
+"Mută cursorul de descriere la cuvântul următor al obiectului navigator "
+"curent şi îl pronunţă"
 
 #: globalCommands.py:481
-msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
-msgstr "Przenosi kursor do pierwszego znaku bieżącej linii"
+msgid ""
+"Moves the review cursor to the first character of the line where it is "
+"situated in the current navigator object and speaks it"
+msgstr ""
+"Mută cursorul de descriere la primul caracter al linie unde este situat în "
+"obiectul navigator curent şi îl pronunţă"
 
 #: globalCommands.py:499
-msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
-msgstr "Przenosi kursor do poprzedniego znaku bieżącego obiektu"
+msgid ""
+"Moves the review cursor to the previous character of the current navigator "
+"object and speaks it"
+msgstr ""
+"Mută cursorul de descriere la caracterul anterior al obiectului navigator "
+"curent şi îl pronunţă"
 
 #: globalCommands.py:513
-#, fuzzy
-msgid "Reports the character of the current navigator object where the review cursor is situated. If this key is pressed twice, ascii and hexadecimal values are spoken for the character"
-msgstr "Podaje znak bieżącego obiektu w hierarchii nawigacji, w którym znajduje się punkt przeglądu. Dwókrotne naciśnięcie powoduje odczytanie kodu ASCII oraz wartości szesnastkowej tego znaku."
+msgid ""
+"Reports the character of the current navigator object where the review "
+"cursor is situated. If this key is pressed twice, ascii and hexadecimal "
+"values are spoken for the character"
+msgstr ""
+"Raportează caracterul obiectului navigator curent unde se află cursorul de "
+"descriere. Dacă această tastă e apăsată de două ori, sunt pronunţate "
+"valorile ascii şi hexazecimale ale caracterului "
 
 #: globalCommands.py:531
-msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
-msgstr "Przenosi kursor do następnego znaku bieżącego obiektu"
+msgid ""
+"Moves the review cursor to the next character of the current navigator "
+"object and speaks it"
+msgstr ""
+"Mută cursorul de descriere la următorul caracter al obiectului navigator "
+"curent şi îl pronunţă"
 
 #: globalCommands.py:542
-msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
-msgstr "Przenosi kursor do ostatniego znaku bieżącej linii"
+msgid ""
+"Moves the review cursor to the last character of the line where it is "
+"situated in the current navigator object and speaks it"
+msgstr ""
+"Mută cursorul de descriere la ultimul caracter al liniei unde se află în "
+"obiectul navigator curent şi îl pronunţă"
 
 #: globalCommands.py:549
 msgid "no caret"
-msgstr "Brak karetki"
+msgstr "nu există cursor de scriere"
 
 #: globalCommands.py:554
-msgid "Moves the system caret to the position of the review cursor , in the current navigator object"
-msgstr "Przesuwa karetkę systemową do pozycji kursora w bieżącym obiekcie"
+msgid ""
+"Moves the system caret to the position of the review cursor , in the current "
+"navigator object"
+msgstr ""
+"Mută cursorul de scriere al sistemului la poziţia cursorului de descriere "
+"în obiectul navigator curent"
 
 #: globalCommands.py:563
 msgid "beeps"
-msgstr "dźwięki"
+msgstr "semnale sonore"
 
 #: globalCommands.py:565
 msgid "talk"
-msgstr "mowa"
+msgstr "vorbeşte"
 
 #: globalCommands.py:567
+#, python-format
 msgid "speech mode %s"
-msgstr "tryb komunikacji: %s"
+msgstr "mod vorbire %s"
 
 #: globalCommands.py:569
-msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr "Przełącza tryby komunikacji: mowa, dźwięki lub wyłączone. W trybie mowy NVDA czyta normalnie. W trybie dźwięków NVDA wydaje prosty dźwięk zamiast mowy. W trybie wyłączonym NVDA nie mówi nic."
+msgid ""
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA wil just speak normally."
+msgstr ""
+"Comută între modurile de vorbire pe oprit, semnal sonor şi vorbire. Când "
+"e oprit, NVDA nu va pronunţa nimic. Dacă e pus pe semnal sonor, NVDA va "
+"emite un semnal sonor de fiecare dată când va trebui să pronunţe ceva. "
+"Dacă e pe vorbire, atunci NVDA va pronunţa normal."
 
 #: globalCommands.py:585
 msgid "Moves the focus to the next closest document that contains the focus"
-msgstr "Przenosi punkt uwagi do najbliższego dokumentu, posiadającego taki punkt."
+msgstr ""
+"Mută focalizarea pe următorul cel mai apropiat document care conţine "
+"punctul focalizat"
 
 #: globalCommands.py:597
-msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr "Przełącza między trybem formularza i trybem przeglądania. W trybie formularza naciskane klawisze trafiają wprost do pola formularza, pozwalając na przykład na wpisywanie tekstu w polu edycji. Natomiast w trybie przeglądania naciskane klawisze sterują przeglądaniem dokumentu, pozwalając na przykład na szybką nawigację po nagłówkach i innych elementach."
+msgid ""
+"Toggles between browse mode and focus mode. When in focus mode, keys will "
+"pass straight through to the application, allowing you to interact directly "
+"with a control. When in browse mode, you can navigate the document with the "
+"cursor, quick navigation keys, etc."
+msgstr ""
+"Comută între modul de căutare şi de focalizare. Când e în modul de "
+"focalizare, tastele vor trece prin aplicaţie, permiţând să "
+"interacţionaţi direct cu un control. Când e în modul de căutare, puteţ"
+"i naviga documentul cu cursorul, tastele rapide de navigare, etc."
 
 #: globalCommands.py:601
 msgid "Quits NVDA!"
-msgstr "Zamyka NVDA"
+msgstr "Închide NVDA!"
 
 #: globalCommands.py:605
 msgid "Shows the NVDA menu"
-msgstr "Otwiera menu NVDA"
+msgstr "Arată meniul NVDA"
 
 #: globalCommands.py:610
-msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
-msgstr "Czyta od kursora do końca tekstu, przenosząc kursor w miarę czytania"
+msgid ""
+"reads from the review cursor  up to end of current text, moving the review "
+"cursor as it goes"
+msgstr ""
+"citeşte din cursorul de descriere până la sfârşitul textului curent, "
+"mutând cursorul de descriere pe măsură ce citeşte"
 
 #: globalCommands.py:622
-#, fuzzy
-msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
-msgstr "Odczytuje tekst od kursora systemowego do końca, przenosząc kursor w miarę czytania"
+msgid ""
+"reads from the system caret up to the end of the text, moving the caret as "
+"it goes"
+msgstr ""
+"citeşte din cursorul de scriere al sistemului până la sfârşitul "
+"textului, mutând cursorul pe măsură ce citeşte"
 
 #: globalCommands.py:648
 msgid "No formatting information"
-msgstr "Brak informacji o formatowaniu"
+msgstr "Nu există informaţie asupra formatării"
 
 #: globalCommands.py:651
-msgid "Reports formatting info for the current cursor position within a document"
-msgstr "Czyta informacje o formatowaniu dla aktualnej pozycji kursora"
+msgid ""
+"Reports formatting info for the current cursor position within a document"
+msgstr ""
+"Raportează informaţia asupra formatării pentru poziţia curentă a "
+"cursorului în document"
 
 #: globalCommands.py:662
 msgid "reports the object with focus"
-msgstr "odczytuje obiekt posiadający aktualnie punkt uwagi"
+msgstr "raportează obiectul cu punctul focalizat"
 
 #: globalCommands.py:667
 msgid "no status bar found"
-msgstr "Brak paska stanu"
+msgstr "nu a fost găsită bară de stare"
 
 #: globalCommands.py:676
 msgid "reads the current application status bar and moves the navigator to it"
-msgstr "ODczytuje pasek stanu bieżącej aplikacji i przenosi do niego kursor"
+msgstr ""
+"citeşte bara de stare a aplicaţiei curente şi mută navigatorul pe ea"
 
 #: globalCommands.py:685
 msgid "Mouse tracking"
-msgstr "Śledzenie myszy"
+msgstr "urmărire a mousului"
 
 #: globalCommands.py:686
-#, fuzzy
 msgid "Toggles the reporting of information as the mouse moves"
-msgstr "Włącza i wyłącza podawanie informacji o wskazywanych obiektach przy ruchach myszy"
+msgstr "Activează raportarea informaţiei pe măsură ce mousul este mişcat"
 
 #: globalCommands.py:694
 msgid "no title"
-msgstr "Brak tytułu"
+msgstr "nu există titlu"
 
 #: globalCommands.py:703
-msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
-msgstr "Czyta tytuł bieżącej aplikacji lub okna. Dwukrotne naciśnięcie literuje tytuł. Trzykrotne naciśnięcie kopiuje tytuł do schowka"
+msgid ""
+"Reports the title of the current application or foreground window. If "
+"pressed twice, spells the title. If pressed thrice, copies the title to the "
+"clipboard"
+msgstr ""
+"Raportează titlul aplicaţiei curente sau al ferestrei din prim-plan. Dacă "
+"e apăsată de două ori, pronunţă titlul pe litere. Dacă e apăsată de "
+"trei ori, copiază titlul pe planşetă"
 
 #: globalCommands.py:710
 msgid "speaks the current foreground object"
-msgstr "Czyta obiekt na pierwszym planie"
+msgstr "pronunţă obiectul curent din prim-plan"
 
 #: globalCommands.py:721
-#, fuzzy
-msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
-msgstr "Podaje użyteczne dla programistów informacje o bieżącym obiekcie w hierarchii nawigacji."
+msgid ""
+"Logs information about the current navigator object which is useful to "
+"developers and activates the log viewer so the information can be examined."
+msgstr ""
+"Notează în jurnal informaţia despre obiectul navigator curent care este "
+"de folos programatorilor şi afişează jurnalul pentru ca informaţia să "
+"poată fi examinată."
 
 #: globalCommands.py:727
 msgid "no progress bar updates"
-msgstr "nie sygnalizuj zmian na paskach postępu"
+msgstr "nu există actualizări ale barei de progres"
 
 #: globalCommands.py:730
 msgid "speak progress bar updates"
-msgstr "Sygnalizuj mową zmiany na paskach postępu"
+msgstr "pronunţă actualizările barei de progres"
 
 #: globalCommands.py:733
 msgid "beep for progress bar updates"
-msgstr "Sygnalizuj dźwiękiem zmiany na paskach postępu"
+msgstr "emite semnal sonor pentru actualizările barei de progres"
 
 #: globalCommands.py:736
 msgid "beep and speak progress bar updates"
-msgstr "Sygnalizuj dźwiękiem i mową zmiany na paskach postępu"
+msgstr "emite semnal sonor şi pronunţă actualizările barei de progres"
 
 #: globalCommands.py:738
-msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
-msgstr "Przełącza pomiędzy dźwięki, mowa, lub dźwięki i mowa albo wyłącza raportowanie aktualizacji paska postępu"
+msgid ""
+"Toggles between beeps, speech, beeps and speech, and off, for reporting "
+"progress bar updates"
+msgstr ""
+"Comută între semnale sonore, vorbire, semnale sonore şi vorbire, şi "
+"oprit pentru raportarea actualizărilor barei de progres"
 
 #: globalCommands.py:747
 msgid "report dynamic content changes"
-msgstr "Informuj o dynamicznych zmianach treści"
+msgstr "raportează schimbările dinamice ale conţinutului"
 
 #: globalCommands.py:748
-msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
-msgstr "Włącza i wyłącza informowanie o dynamicznie zmieniającej się treści, na przykład nowym tekście w oknie konsoli"
+msgid ""
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
+msgstr ""
+"Activează sau dezactivează raportarea schimbărilor dinamice ale conţ"
+"inutului, cum ar fi textul nou în ferestrele consolei DOS."
 
 #: globalCommands.py:757
-#, fuzzy
 msgid "caret moves review cursor"
-msgstr "Kursor przesuwa punkt przeglądu"
+msgstr "cursorul de scriere mută cursorul de descriere"
 
 #: globalCommands.py:758
-msgid "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "Włącza i wyłącza przesuwanie kursora podczas ruchów kursora klawiatury."
+msgid ""
+"Toggles on and off the movement of the review cursor due to the caret moving."
+msgstr ""
+"Activează sau dezactivează mişcarea cursorului de descriere datorită "
+"mişcării cursorului de scriere"
 
 #: globalCommands.py:767
 msgid "focus moves navigator object"
-msgstr "punkt uwagi zmienia bieżący obiekt"
+msgstr "focalizarea mişcă obiectul navigator"
 
 #: globalCommands.py:768
-msgid "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "Włącza i wyłącza zmianę bieżącego obiektu w hierarchii nawigacji przy przenoszeniu punktu uwagi"
+msgid ""
+"Toggles on and off the movement of the navigator object due to focus changes"
+msgstr ""
+"Activează sau dezactivează mişcarea obiectului navigator datorită "
+"schimbărilor de focalizare"
 
 #: globalCommands.py:780
 msgid "no system battery"
-msgstr "Brak baterii"
+msgstr "nu există baterie pentru sistem"
 
 #: globalCommands.py:783
 msgid "AC power on"
-msgstr "Zasilanie z sieci"
+msgstr "alimentare de la priză pornită"
 
 #: globalCommands.py:785
+#, python-format
 msgid "%d hours and %d minutes remaining"
-msgstr "Pozostało: %d godzin i %d minut"
+msgstr "mai sunt %d ore şi %d minute"
 
 #: globalCommands.py:787
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr "Podaje stan zasilania i pozostały czas przy zasilaniu z baterii"
+msgstr ""
+"raportează starea bateriei şi timpul rămas dacă nu e conectată "
+"alimentarea de la priză"
 
 #: globalCommands.py:791
 msgid "Pass next key through"
-msgstr "Przepuść następny klawisz"
+msgstr "Trece prin următoarea tastă"
 
 #: globalCommands.py:792
-#, fuzzy
-msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
-msgstr "Kolejny wciśnięty klawisz nie zostanie uwzględniony przez NVDA, lecz bezpośrednio przez system Windows"
+msgid ""
+"The next key that is pressed will not be handled at all by NVDA, it will be "
+"passed directly through to Windows."
+msgstr ""
+"Următoarea tastă apăsat nu va fi folosită de NVDA, va trece direct la "
+"Windows."
 
 #: globalCommands.py:797
+#, python-format
 msgid "Currently running application is %s"
-msgstr "Bieżąca aplikacja to %s"
+msgstr "Aplicaţia activă curentă este %s"
 
 #: globalCommands.py:800
+#, python-format
 msgid " and currently loaded module is %s"
-msgstr " załadowany moduł NVDA to %s"
+msgstr "şi modulul încărcat curent este %s"
 
 #: globalCommands.py:802
-msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
-msgstr "Podaje nazwę pliku bieżącej aplikacji oraz ewentualną nazwę załadowanego modułu NVDA do jej obsługi"
+msgid ""
+"Speaks the filename of the active application along with the name of the "
+"currently loaded appModule"
+msgstr ""
+"Pronunţă numele fişierului aplicaţiei active alături de numele "
+"modulului încărcat al aplicaţiei "
 
 #: globalCommands.py:806
 msgid "Shows the NVDA general settings dialog"
-msgstr "Otwiera okno dialogowe Ustawienia ogólne"
+msgstr "Arată fereastra de dialog a setărilor generale ale NVDA"
 
 #: globalCommands.py:810
 msgid "Shows the NVDA synthesizer dialog"
-msgstr "Otwiera okno dialogowe Syntezator"
+msgstr "Arată fereastra de dialog a sintetizatorului NVDA"
 
 #: globalCommands.py:814
 msgid "Shows the NVDA voice settings dialog"
-msgstr "Otwiera okno dialogowe Ustawienia głosu"
+msgstr "Arată fereastra de dialog a setărilor pentru voce din NVDA"
 
 #: globalCommands.py:818
 msgid "Shows the NVDA keyboard settings dialog"
-msgstr "Otwiera okno dialogowe Ustawienia klawiatury"
+msgstr "Arată fereastra de dialog a setărilor tastaturii din NVDA"
 
 #: globalCommands.py:822
 msgid "Shows the NVDA mouse settings dialog"
-msgstr "Otwiera okno dialogowe Ustawienia myszy"
+msgstr "Arată fereastra de dialog a setărilor mousului din NVDA"
 
 #: globalCommands.py:826
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr "Otwiera okno dialogowe Ustawienia prezentacji obiektów"
+msgstr ""
+"Arată fereastra de dialog a setărilor prezentării obiectelor din NVDA"
 
 #: globalCommands.py:830
 msgid "Shows the NVDA virtual buffers settings dialog"
-msgstr "Otwiera okno dialogowe Ustawienia buforów wirtualnych"
+msgstr "Arată fereastra de dialog a setărilor zonei tampon virtuale din NVDA"
 
 #: globalCommands.py:834
 msgid "Shows the NVDA document formatting settings dialog"
-msgstr "Otwiera okno dialogowe Ustawienia formatowania dokumentów"
+msgstr ""
+"Arată fereastra de dialog a setărilor formatării documentului din NVDA"
 
 #: globalCommands.py:838
 msgid "Saves the current NVDA configuration"
-msgstr "Zapisuje bieżące ustawienia NVDA"
+msgstr "Salvează configuraţia curentă a NVDA"
 
 #: globalCommands.py:842
 msgid "loads the saved NVDA configuration, overriding current changes"
-msgstr "Wczytuje zapisane ustawienia NVDA porzucając bieżące"
+msgstr ""
+"încarcă configuraţia salvată a NVDA, suprascriind schimbările curente"
 
 #: globalCommands.py:852
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "Uruchamia konsolę Pythona, głównie do zastosowań deweloperskich"
+msgstr ""
+"Activează consola Python a NVDA, utilă în primul rând pentru dezvoltare"
 
 #: globalCommands.py:857
-#: gui\settingsDialogs.py:939
+#: gui\settingsDialogs.py:943
 msgid "review"
-msgstr "Przeglądanie"
+msgstr "descriere"
 
 #: globalCommands.py:860
-#: gui\settingsDialogs.py:939
+#: gui\settingsDialogs.py:943
 msgid "focus"
-msgstr "punkt uwagi"
+msgstr "focalizare, punct focalizat"
 
 #: globalCommands.py:861
+#, python-format
 msgid "Braille tethered to %s"
-msgstr "Brajl związany z %s"
+msgstr "Braille limitat la %s"
 
 #: globalCommands.py:862
-#, fuzzy
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr "Przełącza tekst prezentowany na monitorze brajlowskim pomiędzy punktem uwagi a punktem przeglądu"
+msgstr ""
+"Activează limitarea braille între punctul focalizat şi poziţia descrierii"
 
 #: globalCommands.py:870
 msgid "There is no text on the clipboard"
-msgstr "Brak tekstu w schowku"
+msgstr "Nu există text pe planşetă"
 
 #: globalCommands.py:875
-msgid "The clipboard contains a large portion of text. It is %s characters long"
-msgstr "W schowku %s znaków"
+#, python-format
+msgid ""
+"The clipboard contains a large portion of text. It is %s characters long"
+msgstr ""
+"Planşeta conţine o porţiune mare de text. Are o lungime de %s caractere"
 
 #: globalCommands.py:876
 msgid "Reports the text on the Windows clipboard"
-msgstr "Czyta tekst ze schowka"
+msgstr "Raportează textul din planşeta Windows"
 
 #: globalCommands.py:880
 msgid "Start marked"
-msgstr "Początek zaznaczenia"
+msgstr "Începutul a fost marcat"
 
 #: globalCommands.py:881
-msgid "Marks the current position of the review cursor as the start of text to be copied"
-msgstr "Ustawia pod kursorem początek zaznaczenia kopiowanego tekstu"
+msgid ""
+"Marks the current position of the review cursor as the start of text to be "
+"copied"
+msgstr ""
+"Marchează poziţia curentă a cursorului de descriere ca începutul "
+"textului care urmează a fi copiat"
 
 #: globalCommands.py:885
 msgid "No start marker set"
-msgstr "Brak początku zaznaczenia"
+msgstr "N-a fost marcat începutul"
 
 #: globalCommands.py:889
 msgid "The start marker must reside within the same object"
-msgstr "Początek zaznaczenia musi być w tym samym obiekcie"
+msgstr "Marcarea începutului trebuie să se afle în acelaşi obiect"
 
 #: globalCommands.py:894
 msgid "Review selection copied to clipboard"
-msgstr "Zaznaczenie skopiowane do schowka"
+msgstr "Descrie selecţiunea copiată pe planşetă"
 
 #: globalCommands.py:896
 msgid "No text to copy"
-msgstr "Brak tekstu do skopiowania"
+msgstr "Nu există text de copiat"
 
 #: globalCommands.py:899
-msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
-msgstr "Kopiuje do schowka tekst od początku zaznaczenia do bieżącego kursora"
+msgid ""
+"Retrieves the text from the previously set start marker up to and including "
+"the current position of the review cursor and copies it to the clipboard"
+msgstr ""
+"Extrage textul din marcajul de început stabilit anterior până la şi "
+"inclusiv poziţia curentă a cursorului de descriere şi îl copiază pe "
+"planşetă"
 
 #: gui\__init__.py:148
 msgid "configuration applied"
-msgstr "Konfiguracja zastosowana"
+msgstr "configurare aplicată"
 
 #: gui\__init__.py:152
 msgid "Cannot save configuration - NVDA in secure mode"
-msgstr "Nie można zapisać konfiguracji - NVDA w zabezpieczonym trybie"
+msgstr "Nu poate fi salvată configurarea - NVDA în modul de siguranţă"
 
 #: gui\__init__.py:156
 msgid "configuration saved"
-msgstr "Ustawienia zapisane"
+msgstr "configurare salvată"
 
 #: gui\__init__.py:159
 msgid "Could not save configuration - probably read only file system"
-msgstr "Nie można zapisać ustawień konfiguracyjnych - prawdopodobnie dysk jest tylko do odczytu"
+msgstr ""
+"Nu a putut fi salvată configurarea - probabil fişier de sistem ce poate fi "
+"doar citit"
 
 #: gui\__init__.py:159
 #: gui\__init__.py:169
 #: gui\logViewer.py:74
 #: gui\settingsDialogs.py:170
 msgid "Error"
-msgstr "Błąd"
+msgstr "Eroare"
 
 #: gui\__init__.py:169
+#, fuzzy
 msgid "Please close  the other NVDA settings dialog first"
-msgstr "najpierw zamknij inne okna ustawień nvda"
+msgstr "Arată fereastra de dialog a setărilor mousului din NVDA"
 
 #: gui\__init__.py:173
 msgid "Default dictionary"
-msgstr "Słownik domyślny"
+msgstr "Dicţionar implicit"
 
 #: gui\__init__.py:176
+#, python-format
 msgid "Voice dictionary (%s)"
-msgstr "Słownik głosu (%s)"
+msgstr "Dicţionar vocal (%s)"
 
 #: gui\__init__.py:179
 msgid "Temporary dictionary"
-msgstr "Słownik tymczasowy"
+msgstr "Dicţionar temporar"
 
 #: gui\__init__.py:187
 msgid "Are you sure you want to quit NVDA?"
-msgstr "Czy na pewno chcesz zakończyć NVDA?"
+msgstr "Sigur doriţi să închideţi NVDA?"
 
 #: gui\__init__.py:187
 #: gui\__init__.py:339
 msgid "Exit NVDA"
-msgstr "Zakończ NVDA"
+msgstr "Închide NVDA"
 
 #: gui\__init__.py:233
 msgid "copyright"
-msgstr "Copyright"
+msgstr "copyright"
 
 #: gui\__init__.py:233
 msgid "url"
-msgstr "URL"
+msgstr "url"
 
 #: gui\__init__.py:233
 msgid "version"
-msgstr "Wersja"
+msgstr "versiune"
 
 #: gui\__init__.py:235
 #: gui\__init__.py:329
 msgid "About NVDA"
-msgstr "Informacje o NVDA"
+msgstr "Despre NVDA"
 
 #: gui\__init__.py:268
 msgid "&General settings..."
-msgstr "Ustawienia ogólne..."
+msgstr "&Setări generale"
 
 #: gui\__init__.py:268
 #: gui\settingsDialogs.py:101
 msgid "General settings"
-msgstr "Ustawienia ogólne"
+msgstr "Setări generale"
 
 #: gui\__init__.py:270
 msgid " the synthesizer to use"
-msgstr "Wybierz używany syntezator"
+msgstr "sintetizatorul de folosit"
 
 #: gui\__init__.py:270
 msgid "&Synthesizer..."
-msgstr "Syntezator..."
+msgstr "&Sintetizator"
 
 #: gui\__init__.py:272
 msgid "&Voice settings..."
-msgstr "Ustawienia głosu..."
+msgstr "&Setări voce..."
 
 #: gui\__init__.py:272
 msgid "Choose the voice, rate, pitch and volume  to use"
-msgstr "ustaw głos, jego szybkość, wysokość i głośność"
+msgstr ""
+"Alegeţi vocea, ritmul, amplitudinea sunetului şi volumul ce vor fi folosite"
 
 #: gui\__init__.py:274
 msgid "B&raille settings..."
-msgstr "Ustawienia brajla..."
+msgstr "Setări B&raille"
 
 #: gui\__init__.py:276
 msgid "&Keyboard Settings..."
-msgstr "Ustawienia klawiatury..."
+msgstr "&Setări tastatură"
 
 #: gui\__init__.py:276
-msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-msgstr "Zmień ustawienia klawiatury oraz wypowiadania znaków, słów i klawiszy"
+msgid ""
+"Configure keyboard layout, speaking of typed characters, words or command "
+"keys"
+msgstr ""
+"Configurează aşezare tastatură, pronunţarea caracterelor scrise, a "
+"cuvintelor şi a tastelor de comandă"
 
 #: gui\__init__.py:278
 msgid "&Mouse settings..."
-msgstr "Ustawienia myszy..."
+msgstr "&Setări mouse..."
 
 #: gui\__init__.py:278
 msgid "Change reporting of mouse shape and object under mouse"
-msgstr "Zmień sposób informowania o wskaźniku myszy i wskazywanych obiektach"
+msgstr "Schimbă raportarea formei mousului şi a obiectului de sub mouse"
 
 #: gui\__init__.py:280
 msgid "&Review cursor..."
-msgstr "&kursor"
+msgstr "&Cursor descriere..."
 
 #: gui\__init__.py:280
 msgid "Configure how and when the review cursor moves"
-msgstr "Skonfiguruj jak i kiedy przemieszcza się kursor"
+msgstr "Configurează cum şi când se mişcă cursorul de descriere"
 
 #: gui\__init__.py:282
 msgid "&Object presentation..."
-msgstr "Prezentacja obiektów..."
+msgstr "&Prezentare obiect..."
 
 #: gui\__init__.py:282
 msgid "Change reporting of objects"
-msgstr "Zmień sposób informowania o obiektach"
+msgstr "Schimbă raportarea obiectelor"
 
 #: gui\__init__.py:284
 msgid "Change virtual buffers specific settings"
-msgstr "Zmień ustawienia wirtualnych buforów"
+msgstr "Schimbă setările specifice ale zonelor tampon virtuale"
 
 #: gui\__init__.py:284
 msgid "Virtual &buffers..."
-msgstr "wirtualne bufory."
+msgstr "&Zone tampon virtuale..."
 
 #: gui\__init__.py:286
 msgid "Change Settings of document properties"
-msgstr "Zmień ustawienia właściwości dokumentu"
+msgstr "Schimbă setările proprietăţilor documentului"
 
 #: gui\__init__.py:286
 msgid "Document &formatting..."
-msgstr "Formatowanie dokumentów..."
+msgstr "&Formatare document..."
 
 #: gui\__init__.py:290
 msgid "&Default dictionary..."
-msgstr "Słownik domyślny..."
+msgstr "&Dicţionar implicit..."
 
 #: gui\__init__.py:290
-#, fuzzy
-msgid "dialog where you can set default dictionary by adding dictionary entries to the list"
-msgstr "Okno dialogowe, w którym można ustawiać słownik domyślny poprzez dodawanie wpisów do listy"
+msgid ""
+"dialog where you can set default dictionary by adding dictionary entries to "
+"the list"
+msgstr ""
+"fereastră de dialog unde puteţi stabili dicţionarul implicit adăugând "
+"intrăi în dicţionar la listă"
 
 #: gui\__init__.py:292
 msgid "&Voice dictionary..."
-msgstr "Słownik głosu..."
+msgstr "&Dicţionar vocal..."
 
 #: gui\__init__.py:292
-msgid "dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
-msgstr "Zmień listę wpisów w słowniku specyficznym dla głosu"
+msgid ""
+"dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr ""
+"fereastră de dialog unde puteţi stabili dicţionar vocal specific adăugâ"
+"nd intrări în dicţionar la listă"
 
 #: gui\__init__.py:294
 msgid "&Temporary dictionary..."
-msgstr "Słownik tymczasowy..."
+msgstr "&Dicţionar temporar..."
 
 #: gui\__init__.py:294
-msgid "dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
-msgstr "Zmień listę wpisów w słowniku tymczasowym"
+msgid ""
+"dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr ""
+"fereastră de dialog unde puteţi stabili dicţionarul temporar adăugând "
+"întrări în dicţionar la caseta de editare"
 
 #: gui\__init__.py:296
 msgid "Speech &dictionaries"
-msgstr "Słowniki wymowy"
+msgstr "&Dicţionare vorbire"
 
 #: gui\__init__.py:297
 msgid "&Preferences"
-msgstr "ustawienia"
+msgstr "&Preferinţe"
 
 #: gui\__init__.py:301
 msgid "View log"
-msgstr "Podgląd logu"
+msgstr "Vezi jurnal"
 
 #: gui\__init__.py:303
 msgid "Speech viewer"
-msgstr "Podgląd mowy"
+msgstr "Afişaj vorbire"
 
 #: gui\__init__.py:306
 msgid "Python console"
-msgstr "Konsola Pythona"
+msgstr "Consolă Python"
 
 #: gui\__init__.py:308
 msgid "Tools"
-msgstr "Narzędzia"
+msgstr "Instrumente"
 
 #: gui\__init__.py:312
 msgid "User guide"
-msgstr "Przewodnik użytkownika"
+msgstr "Ghidul utilizatorului"
 
 #: gui\__init__.py:314
-#, fuzzy
 msgid "Keyboard Command Quick Reference"
-msgstr "Wykaz klawiszy poleceń"
+msgstr "Referinţă Rapidă asupra Comenzii din Tastatură"
 
 #: gui\__init__.py:316
 msgid "What's &new"
-msgstr "Co nowego"
+msgstr "Ce e &nou"
 
 #: gui\__init__.py:318
 msgid "Web site"
-msgstr "Strona WWW"
+msgstr "Web site"
 
 #: gui\__init__.py:320
 msgid "Readme"
-msgstr "CzytajTo"
+msgstr "Citeşte-mă"
 
 #: gui\__init__.py:322
 msgid "License"
-msgstr "Licencja"
+msgstr "Autorizaţie"
 
 #: gui\__init__.py:324
 msgid "Contributors"
-msgstr "Autorzy"
+msgstr "Colaboratori"
 
 #: gui\__init__.py:326
 msgid "We&lcome dialog"
-msgstr "Okno powitalne"
+msgstr "Dialog de în&tâmpinare"
 
 #: gui\__init__.py:329
 msgid "About..."
-msgstr "O programie..."
+msgstr "Despre..."
 
 #: gui\__init__.py:331
 msgid "&Help"
-msgstr "Pomoc"
+msgstr "&Ajutor"
 
 #: gui\__init__.py:333
 msgid "&Revert to saved configuration"
-msgstr "Przywróć zapisane ustawienia"
+msgstr "&Revenire la configurarea salvată"
 
 #: gui\__init__.py:333
 msgid "Reset all settings to saved state"
-msgstr "Przywróć zapisane ustawienia"
+msgstr "Resetează toate setările la starea salvată"
 
 #: gui\__init__.py:336
 msgid "&Save configuration"
-msgstr "Zapisz ustawienia"
+msgstr "&Salvează configurare"
 
 #: gui\__init__.py:336
 msgid "Write the current configuration to nvda.ini"
-msgstr "Zapisz bieżące ustawienia do pliku nvda.ini"
+msgstr "Scrie configurarea curentă în nvda.ini"
 
 #: gui\__init__.py:339
 #: gui\logViewer.py:34
 msgid "E&xit"
-msgstr "Wyjście"
+msgstr "E&xit"
 
 #: gui\__init__.py:390
 msgid ""
 "Welcome to NVDA!\n"
-"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad insert and main insert keys may both be used as the "
+"NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions.\n"
 msgstr ""
-"Witaj w NVDA - programie udźwiękawiającym system Windows.\n"
-"Podczas pracy z tym programem będziesz często korzystać z kombinacji specjalnego klawisza NVDA z innymi klawiszami.\n"
-"Domyślnie rolę klawisza NVDA pełni klawisz Insert obecny w pobliżu klawiszy strzałek lub na klawiaturze numerycznej (numpad).\n"
-"Możesz również zmienić ustawienia tak, aby rolę klawisza NVDA pełnił CapsLock.\n"
-"Większość poleceń programu możesz wydawać trzymając wciśnięty klawisz NVDA i naciskając inne klawisze (podobnie, jak robisz to z Shiftem).\n"
-"Naciśnij NVDA + n w dowolnym momencie, aby wejść do głównego menu programu.\n"
-"W tym menu znajdziesz pomoc, zmienisz ustawienia NVDA i uzyskasz dostęp do innych funkcji.\n"
-"\n"
-"Podręcznik obsługi, porady i kontakt z innymi użytkownikami znajdziesz także na polskiej stronie www.nvda.pl\n"
+"Bun venit în NVDA!\n"
+"Majoritatea comenzilor pentru controlul NVDA cer să ţineţi apăsaţi "
+"tasta NVDA în timp ce apăsaţi alte taste.\n"
+"Implicit, tasta Insert de pe tastele numerice şi tasta Insert principală "
+"pot fi folosite ambele ca tasta NVDA.\n"
+"Apăsaţi NVDA+n în orice moment pentru a activa meniul NVDA.\n"
+"Din acest meniu puteţi configura NVDA, puteţi primi ajutor şi puteţi "
+"accesa alte funcţii NVDA.\n"
 
 #: gui\__init__.py:400
 msgid "Welcome to NVDA"
-msgstr "Witaj w NVDA"
+msgstr "Bun venit în NVDA"
 
 #: gui\__init__.py:404
 msgid "Options"
-msgstr "Opcje"
+msgstr "Opţiuni"
 
 #: gui\__init__.py:405
 #: gui\settingsDialogs.py:462
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Użyj CapsLock jako klawisza NVDA"
+msgstr "Foloseşte CapsLock ca o tastă de modificare NVDA"
 
 #: gui\__init__.py:408
 msgid "Show this dialog when NVDA starts"
-msgstr "Pokazuj to okno przy starcie NVDA"
+msgstr "Arată această fereastră de dialog când porneşte NVDA"
 
 #: gui\__init__.py:444
-#, fuzzy
 msgid ""
 "Your configuration file contains errors. \n"
-"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
+"edit your config file at a later stage to make corrections. More details "
+"about the errors can be found in the log file.\n"
 msgstr ""
-"Twój plik konfiguracyjny zawiera błędy. \n"
-"naciśnij \"Ok\", aby je naprawić, lub \"Anuluj\", jeśli chcesz ręcznie edytować plik konfiguracyjny i dokonać poprawek w terminie późniejszym. Więcej szczegółów o błędach można znaleźć w pliku logu. \n"
+"Fişierul dumneavoastră de configurare conţine erori. \n"
+"Apăsaţi 'OK' pentru repararea acestor erori, sau apăsaţi 'Anulare' dacă "
+"doriţi să editaţi manual fişierul de configurare mai târziu pentru a "
+"face corecturi. Mai multe detalii despre erori pot fi găsite în fişierul "
+"jurnal.\n"
 
 #: gui\__init__.py:449
 msgid "Configuration File Error"
-msgstr "Błąd pliku konfiguracyjnego"
+msgstr "Eroare în fişierul de configurare"
 
 #: gui\logViewer.py:17
 msgid "NVDA Log Viewer"
-msgstr "Podgląd logów NVDA"
+msgstr "Jurnal NVDA"
 
 #: gui\logViewer.py:29
 msgid "Refresh\tF5"
-msgstr "Odśwież\tF5"
+msgstr "Împrospătează\tF5"
 
 #: gui\logViewer.py:36
 msgid "Log"
-msgstr "Log"
+msgstr "Jurnal"
 
 #: gui\logViewer.py:66
 msgid "Save As"
-msgstr "Zapisz jako"
+msgstr "Salvează ca"
 
 #: gui\logViewer.py:74
+#, python-format
 msgid "Error saving log: %s"
-msgstr "Błąd przy zapisie logu: %s"
+msgstr "Eroare la salvarea jurnalului: %s"
 
 #: gui\scriptUI.py:53
 #: gui\scriptUI.py:62
@@ -2489,523 +2750,546 @@ msgstr "NVDA"
 
 #: gui\settingsDialogs.py:103
 msgid "info"
-msgstr "informacje"
+msgstr "info"
 
 #: gui\settingsDialogs.py:104
 msgid "debug warning"
-msgstr "ostrzeżenie debugowania"
+msgstr "avertisment la diagnosticare"
 
 #: gui\settingsDialogs.py:105
 msgid "input/output"
-msgstr "wejście/wyjście"
+msgstr "intrare/rezultat"
 
 #: gui\settingsDialogs.py:106
 msgid "debug"
-msgstr "debugowanie"
+msgstr "diagnosticare"
 
 #: gui\settingsDialogs.py:111
 msgid "&Language (requires restart to fully take affect):"
-msgstr "Język (wymaga restartu NVDA)"
+msgstr "&Limba (cere restart pentru a-şi face efectul integral):"
 
 #: gui\settingsDialogs.py:115
 msgid "Language"
-msgstr "Język"
+msgstr "Limba"
 
 #: gui\settingsDialogs.py:127
 msgid "&Save configuration on exit"
-msgstr "Zapisuj ustawienia przy wyjściu"
+msgstr "&Salvează configurare la închidere"
 
 #: gui\settingsDialogs.py:132
 msgid "&Warn before exiting NVDA"
-msgstr "Ostrzegaj przed zamknięciem NVDA"
+msgstr "&Avertizează înainte de închiderea NVDA"
 
 #: gui\settingsDialogs.py:136
 msgid "L&ogging level:"
-msgstr "Poziom logowania"
+msgstr "L&ogging level:"
 
 #: gui\settingsDialogs.py:139
 msgid "Log level"
-msgstr "Poziom logu"
+msgstr "Nivelul jurnalului"
 
 #: gui\settingsDialogs.py:149
 msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "&Automatycznie uruchom NVDA po zalogowaniu do systemu Windows"
+msgstr "&Porneşte NVDA automat după ce intru în Windows"
 
 #: gui\settingsDialogs.py:154
-msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
-msgstr "Użyj NVDA na ekranie logowania systemu Windows (wymaga uprawnień administratora)"
+msgid ""
+"Use NVDA on the Windows logon screen (requires administrator privileges)"
+msgstr ""
+"Foloseşte NVDA asupra ecranului de autentificare în Windows (cere "
+"privilegii de administrator)"
 
 #: gui\settingsDialogs.py:159
-msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
-msgstr "Używaj zapisanych ustawień NVDA na ekranie logowania i innych zabezpieczonych ekranach (wymaga uprawnień administratora)"
+msgid ""
+"Use currently saved settings on the logon and other secure screens (requires "
+"administrator privileges)"
+msgstr ""
+"Foloseşte setările salvate curente asupra ecranului de autentificare şi "
+"alte ecrane de siguranţă (cere privilegii de administrator)"
 
 #: gui\settingsDialogs.py:170
 msgid "Error copying NVDA user settings"
-msgstr "Błąd podczas kopiowania ustawień użytkownika NVDA"
+msgstr "Eroare la copierea setărilor NVDA de utilizator"
 
 #: gui\settingsDialogs.py:172
 msgid "Success"
-msgstr "Operacja zakończona powodzeniem."
+msgstr "Succes"
 
 #: gui\settingsDialogs.py:172
 msgid "Successfully copied NVDA user settings"
-msgstr "Pomyślnie skopiowano ustawienia użytkownika NVDA."
+msgstr "Copiere reuşită a setărilor NVDA de utilizator"
 
 #: gui\settingsDialogs.py:181
+#, python-format
 msgid "Error in %s language file"
-msgstr "Błąd w pliku językowym %s"
+msgstr "Eroare în fişierul de limbaj %s"
 
 #: gui\settingsDialogs.py:181
 msgid "Language Error"
-msgstr "Błąd języka"
+msgstr "Eroare de limbaj"
 
 #: gui\settingsDialogs.py:197
 msgid "Insufficient Privileges"
-msgstr "Brak wystarczających Uprawnień"
+msgstr "Privilegii insuficiente"
 
 #: gui\settingsDialogs.py:197
 msgid "This change requires administrator privileges."
-msgstr "Zmiana ta wymaga uprawnień administratora."
+msgstr "Această schimbare cere privilegii de administrator."
 
 #: gui\settingsDialogs.py:199
-msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
-msgstr "Aby nowy język zaczął w pełni działać, należy zapisać ustawienia i zrestartować NVDA. Naciśnij enter, aby zapisać i zrestartować NVDA teraz, lub anuluj, żeby zrobić to ręcznie później."
+msgid ""
+"For the new language to take effect, the configuration must be saved and "
+"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
+"manually save and exit at a later time."
+msgstr ""
+"Pentru ca noul limbaj să fie activat, configurarea trebuie salvată şi "
+"NVDA trebuie repornit. Apăsaţi Enter pentru salvare şi repornirea NVDA, "
+"sau anulaţi pentru salvare manuală şi închidere mai târziu."
 
 #: gui\settingsDialogs.py:199
 msgid "Language Configuration Change"
-msgstr "Zmiana ustawień języka"
+msgstr "Schimbare a configurării limbajului"
 
 #: gui\settingsDialogs.py:207
 msgid "Synthesizer"
-msgstr "Syntezator"
+msgstr "Sintetizator"
 
 #: gui\settingsDialogs.py:211
 msgid "&Synthesizer:"
-msgstr "Syntezator"
+msgstr "&Sintetizator:"
 
 #: gui\settingsDialogs.py:226
 msgid "Output &device:"
-msgstr "Urządzenie wyjściowe"
+msgstr "&dispozitiv de ieşire:"
 
 #: gui\settingsDialogs.py:246
+#, python-format
 msgid "Could not load the %s synthesizer."
-msgstr "Nie można załadować syntezatora %s."
+msgstr "%s sintetizatorul nu a putut fi încărcat"
 
 #: gui\settingsDialogs.py:246
 msgid "Synthesizer Error"
-msgstr "Błąd syntezatora"
+msgstr "Eroare în sintetizator"
 
 #: gui\settingsDialogs.py:309
 msgid "Voice settings"
-msgstr "Ustawienia głosu"
+msgstr "Setări voce"
 
 #: gui\settingsDialogs.py:365
 msgid "&Speak all punctuation"
-msgstr "Czytaj całą interpunkcję"
+msgstr "&Pronunţă toate semnele de punctuaţie"
 
 #: gui\settingsDialogs.py:368
 msgid "Raise pitch for capitals"
-msgstr "Wyższy głos dla dużych liter"
+msgstr "Creşte amplitudinea sunetului pentru majuscule"
 
 #: gui\settingsDialogs.py:371
 msgid "Say &cap before capitals"
-msgstr "Czytaj \"duże\" przed dużymi literami"
+msgstr "Spune &cap înaintea majusculelor"
 
 #: gui\settingsDialogs.py:374
 msgid "&Beep for capitals"
-msgstr "Dźwięk przy dużych literach"
+msgstr "&Semnal sonor pentru majuscule"
 
 #: gui\settingsDialogs.py:377
 msgid "Use &spelling functionality if supported"
-msgstr "Użyj funkcji poprawnej pisowni, jeśli jest obsługiwana"
+msgstr "Foloseşte funcţia de &silabisire dacă este suportată"
 
 #: gui\settingsDialogs.py:445
 msgid "Keyboard Settings"
-msgstr "Ustawienia klawiatury"
+msgstr "Setări tastatură"
 
 #: gui\settingsDialogs.py:449
 msgid "&Keyboard layout:"
-msgstr "Układ klawiatury"
+msgstr "&Aşezare tastatură:"
 
 #: gui\settingsDialogs.py:454
 msgid "Keyboard layout"
-msgstr "Układ klawiatury"
+msgstr "Aşezare tastatură"
 
 #: gui\settingsDialogs.py:465
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Użyj numerycznego Insert jako klawisza NVDA"
+msgstr "Foloseşte Insert de pe tastele numerice ca tastă de modificare NVDA"
 
 #: gui\settingsDialogs.py:468
 msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Użyj dodatkowego Insert jako klawisza NVDA"
+msgstr "Foloseşte Insert ca tastă de modificare NVDA"
 
 #: gui\settingsDialogs.py:471
 msgid "Speak typed &characters"
-msgstr "Czytaj pisane znaki"
+msgstr "Pronunţă &caracterele scrise"
 
 #: gui\settingsDialogs.py:474
 msgid "Speak typed &words"
-msgstr "Czytaj pisane słowa"
+msgstr "Pronunţă &cuvintele scrise"
 
 #: gui\settingsDialogs.py:477
 msgid "Beep if typing lowercase letters when caps lock is on"
-msgstr "dźwięk dla małych liter przy włączonym capslok"
+msgstr ""
 
 #: gui\settingsDialogs.py:480
 msgid "Speak command &keys"
-msgstr "Czytaj klawisze poleceń"
+msgstr "Pronunţă &tastele de comandă"
 
 #: gui\settingsDialogs.py:500
 msgid "Mouse settings"
-msgstr "Ustawienia myszy"
+msgstr "Setări mouse"
 
 #: gui\settingsDialogs.py:503
 msgid "Report mouse &shape changes"
-msgstr "Informuj o zmianach kształtu wskaźnika"
+msgstr "Raportează schimbările &formei mousului"
 
 #: gui\settingsDialogs.py:506
 msgid "Enable mouse &tracking"
-msgstr "Włącz śledzenie myszy"
+msgstr "Activează &urmărirea mousului"
 
 #: gui\settingsDialogs.py:510
 msgid "Text &unit resolution:"
-msgstr "Rozdzielczość tekstu:"
+msgstr "Rezoluţia &unităţii de text"
 
 #: gui\settingsDialogs.py:514
 msgid "text reporting unit"
-msgstr "Jednostka oznajmiania tekstu"
+msgstr "unitate de raportare a textului"
 
 #: gui\settingsDialogs.py:522
 msgid "Report &role when mouse enters object"
-msgstr "Podaj typ obiektu wskazanego myszą"
+msgstr "Raportează &rol când mousul intră în obiect"
 
 #: gui\settingsDialogs.py:525
 msgid "play audio coordinates when mouse moves"
-msgstr "Sygnalizuj dźwiękiem położenie myszy"
+msgstr "redă coordonatele audio când se mişcă mousul"
 
 #: gui\settingsDialogs.py:528
 msgid "brightness controls audio coordinates volume"
-msgstr "Głośność dźwięku myszy zależy od jasności obrazu"
+msgstr "volumul coordonatelor audio ale controalelor pentru luminozitate"
 
 #: gui\settingsDialogs.py:546
 msgid "Review cursor settings"
-msgstr "Ustawienia kursora"
+msgstr "Descrie setările cursorului"
 
 #: gui\settingsDialogs.py:549
 msgid "Follow &keyboard focus"
-msgstr "Śledź &kursor"
+msgstr "Urmăreşte &focalizarea din taste"
 
 #: gui\settingsDialogs.py:552
 msgid "Follow System &Caret"
-msgstr "Śledź &karetkę Systemową"
+msgstr "Urmăreşte &cursorul de scriere al sistemului"
 
 #: gui\settingsDialogs.py:555
 msgid "Follow &mouse cursor"
-msgstr "Śledź &kursor myszy"
+msgstr "Urmăreşte &cursorul mousului"
 
 #: gui\settingsDialogs.py:558
 msgid "Simple review mode"
-msgstr "Tryb prostego przeglądania"
+msgstr "Mod descriere simplă"
 
 #: gui\settingsDialogs.py:573
 msgid "Object presentation"
-msgstr "Prezentacja obiektów"
+msgstr "Prezentare obiect"
 
 #: gui\settingsDialogs.py:576
 msgid "Speak"
-msgstr "Mowa"
+msgstr "Vorbeşte"
 
 #: gui\settingsDialogs.py:577
 msgid "Beep"
-msgstr "Dźwięk"
+msgstr "Semnal sonor"
 
 #: gui\settingsDialogs.py:578
 msgid "Speak and beep"
-msgstr "Mowa i dźwięk"
+msgstr "Vorbeşte şi semnal sonor"
 
 #: gui\settingsDialogs.py:582
 msgid "Report &tooltips"
-msgstr "Czytaj dymki podpowiedzi"
+msgstr "Raportează &informaţii instrument"
 
 #: gui\settingsDialogs.py:585
 msgid "Report &help balloons"
-msgstr "Czytaj dymki powiadomień"
+msgstr "Raportează baloane &ajutor"
 
 #: gui\settingsDialogs.py:588
 msgid "Report object shortcut &keys"
-msgstr "Odczytuj klawisze skrótów"
+msgstr "Raportează &tastele directe ale obiectului"
 
 #: gui\settingsDialogs.py:591
 msgid "Report object &position information"
-msgstr "Odczytuj położenie obiektów"
+msgstr "Raportează informaţia &poziţiei obiectului"
 
 #: gui\settingsDialogs.py:594
 msgid "Report object &descriptions"
-msgstr "Czytaj opisy obiektów"
+msgstr "Raportează &descrierile obiectului"
 
 #: gui\settingsDialogs.py:598
 msgid "Progress &bar output:"
-msgstr "Sygnał paska postępu:"
+msgstr "Rezultat &bara de progres:"
 
 #: gui\settingsDialogs.py:601
 msgid "Progress bar output"
-msgstr "Sygnał paska postępu"
+msgstr "Rezultat bara de progres"
 
 #: gui\settingsDialogs.py:610
 msgid "Report background progress bars"
-msgstr "Sygnalizuj paski postępu będące w tle"
+msgstr "Raportează barele de progres din fundal"
 
-#: gui\settingsDialogs.py:628
+#: gui\settingsDialogs.py:613
+#, fuzzy
+msgid "Report dynamic &content changes"
+msgstr "raportează schimbările dinamice ale conţinutului"
+
+#: gui\settingsDialogs.py:632
 msgid "virtual buffers"
-msgstr "wirtualne bufory"
+msgstr "zone tampon virtuale"
 
-#: gui\settingsDialogs.py:631
+#: gui\settingsDialogs.py:635
 msgid "&Maximum number of characters on one line"
-msgstr "Maksymalna liczba znaków w linii"
+msgstr "Număr &maxim de caractere pe un singur rând"
 
-#: gui\settingsDialogs.py:636
+#: gui\settingsDialogs.py:640
 msgid "&Number of lines per page"
-msgstr "Liczba linii na stronie"
+msgstr "&Număr de rânduri per pagină"
 
-#: gui\settingsDialogs.py:641
+#: gui\settingsDialogs.py:645
 msgid "Use &screen layout (when supported)"
-msgstr "Użyj układu ekranu (o ile to możliwe)"
-
-#: gui\settingsDialogs.py:644
-msgid "Report l&ayout tables"
-msgstr "Odczytuj układ tabeli"
+msgstr "Folsoeşte planul &ecranului (când e suportat)"
 
 #: gui\settingsDialogs.py:648
+msgid "Report l&ayout tables"
+msgstr "Raportează tabelele din p&lan"
+
+#: gui\settingsDialogs.py:652
 msgid "Automatic focus mode for focus changes"
-msgstr "Automatyczny tryb formularza przy zmianie punktu uwagi"
+msgstr "Mod de focalizare automată pentru schimbările de focalizare"
 
-#: gui\settingsDialogs.py:651
+#: gui\settingsDialogs.py:655
 msgid "Automatic focus mode for caret movement"
-msgstr "Automatyczny tryb formularza przy ruchach kursora"
+msgstr "Mod de focalizare automată pentru mişcarea cursorului de scriere"
 
-#: gui\settingsDialogs.py:654
+#: gui\settingsDialogs.py:658
 msgid "Audio indication of focus and browse modes"
-msgstr "Sygnalizuj dźwiękiem punkt uwagi i tryby przeglądania"
+msgstr "Indicare audio a punctului de focalizare şi a modurilor de căutare"
 
-#: gui\settingsDialogs.py:682
+#: gui\settingsDialogs.py:686
 msgid "Document formatting"
-msgstr "Formatowanie dokumentów"
+msgstr "Formatare a documentului"
 
-#: gui\settingsDialogs.py:685
+#: gui\settingsDialogs.py:689
 msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "OGłaszaj zmiany formatowania za kursorem (może spowalniać)"
+msgstr ""
+"Anunţă schimbări de formatare în urma cursorului (poate produce o întâ"
+"rizere)"
 
-#: gui\settingsDialogs.py:688
+#: gui\settingsDialogs.py:692
 msgid "Report font &name"
-msgstr "Odczytuj nazwy &czcionek"
+msgstr "Raportează &numele stilului de litere"
 
-#: gui\settingsDialogs.py:691
+#: gui\settingsDialogs.py:695
 msgid "Report font &size"
-msgstr "Odczytuj rozmiar czcionek"
+msgstr "Raportează &dimensiunea stilului de litere"
 
-#: gui\settingsDialogs.py:694
+#: gui\settingsDialogs.py:698
 msgid "Report font attri&butes"
-msgstr "Odczytuj atrybuty czcionek"
+msgstr "Raportează &atributele stilului de litere"
 
-#: gui\settingsDialogs.py:697
+#: gui\settingsDialogs.py:701
 msgid "Report &alignment"
-msgstr "Informuj o wyrównaniu tekstu"
+msgstr "Raportează &alinierea"
 
-#: gui\settingsDialogs.py:700
+#: gui\settingsDialogs.py:704
 msgid "Report &colors"
-msgstr "Sygnalizuj kolory"
+msgstr "Raportează &culori"
 
-#: gui\settingsDialogs.py:703
+#: gui\settingsDialogs.py:707
 msgid "Report st&yle"
-msgstr "Informuj o stylach"
+msgstr "Raportează st&il"
 
-#: gui\settingsDialogs.py:706
+#: gui\settingsDialogs.py:710
 msgid "Report spelling errors"
-msgstr "Informuj o błędach pisowni"
+msgstr "Raportează erorile de ortografie"
 
-#: gui\settingsDialogs.py:709
+#: gui\settingsDialogs.py:713
 msgid "Report &pages"
-msgstr "Odczytuj numery stron"
+msgstr "Raportează &pagini"
 
-#: gui\settingsDialogs.py:712
+#: gui\settingsDialogs.py:716
 msgid "Report &line numbers"
-msgstr "Odczytuj numery linii"
+msgstr "Raportează &numerele liniilor"
 
-#: gui\settingsDialogs.py:715
+#: gui\settingsDialogs.py:719
 msgid "Report &tables"
-msgstr "Informuj o tabelach"
+msgstr "Raportează &tabele"
 
-#: gui\settingsDialogs.py:718
+#: gui\settingsDialogs.py:722
 msgid "Report table row/column h&eaders"
-msgstr "Odczytuj nagłówki tabel"
+msgstr "Raportează t&itlurile rândurilor şi coloanelor din tabel"
 
-#: gui\settingsDialogs.py:721
+#: gui\settingsDialogs.py:725
 msgid "Report &links"
-msgstr "Informuj o linkach"
+msgstr "Raportează &linkuri"
 
-#: gui\settingsDialogs.py:724
+#: gui\settingsDialogs.py:728
 msgid "Report &headings"
-msgstr "Informuj o nagłówkach"
+msgstr "Raportează &titluri"
 
-#: gui\settingsDialogs.py:727
+#: gui\settingsDialogs.py:731
 msgid "Report l&ists"
-msgstr "Informuj o listach"
+msgstr "Raportează l&iste"
 
-#: gui\settingsDialogs.py:730
+#: gui\settingsDialogs.py:734
 msgid "Report block &quotes"
-msgstr "Informuj o cytatach"
+msgstr "Raportează &citate în bloc"
 
-#: gui\settingsDialogs.py:733
+#: gui\settingsDialogs.py:737
 msgid "Report lan&dmarks"
-msgstr "Informuj o punktach orientacyjnych"
-
-#: gui\settingsDialogs.py:762
-msgid "Edit dictionary entry"
-msgstr "Edytuj wpis w słowniku"
+msgstr "Raportează r&epere"
 
 #: gui\settingsDialogs.py:766
+msgid "Edit dictionary entry"
+msgstr "Editează intrarea din dicţionar"
+
+#: gui\settingsDialogs.py:770
 msgid "&Pattern"
-msgstr "Znajdź"
+msgstr "&Şablon"
 
-#: gui\settingsDialogs.py:769
+#: gui\settingsDialogs.py:773
 msgid "&Replacement"
-msgstr "Zamień na:"
+msgstr "&Înlocuire"
 
-#: gui\settingsDialogs.py:772
+#: gui\settingsDialogs.py:776
 msgid "&Comment"
-msgstr "Komentarz:"
+msgstr "&Comentariu"
 
-#: gui\settingsDialogs.py:775
+#: gui\settingsDialogs.py:779
 msgid "Case &sensitive"
-msgstr "Uwzględniaj wielkość liter"
+msgstr ""
 
-#: gui\settingsDialogs.py:777
+#: gui\settingsDialogs.py:781
 msgid "Regular &expression"
-msgstr "Wyrażenie regularne"
-
-#: gui\settingsDialogs.py:799
-msgid "&Dictionary entries"
-msgstr "Wpisy w słowniku"
-
-#: gui\settingsDialogs.py:802
-msgid "Comment"
-msgstr "Komentarz:"
+msgstr "&Expresii obişnuite"
 
 #: gui\settingsDialogs.py:803
-msgid "Pattern"
-msgstr "Znajdź:"
-
-#: gui\settingsDialogs.py:804
-msgid "Replacement"
-msgstr "Zamień na:"
-
-#: gui\settingsDialogs.py:805
-msgid "case sensitive"
-msgstr "Uwzględniaj wielkość liter"
+msgid "&Dictionary entries"
+msgstr "Intrări în &dicţionar"
 
 #: gui\settingsDialogs.py:806
+msgid "Comment"
+msgstr "Comentariu"
+
+#: gui\settingsDialogs.py:807
+msgid "Pattern"
+msgstr "Şablon"
+
+#: gui\settingsDialogs.py:808
+msgid "Replacement"
+msgstr "Înlocuire"
+
+#: gui\settingsDialogs.py:809
+msgid "case sensitive"
+msgstr ""
+
+#: gui\settingsDialogs.py:810
 msgid "Regular expression"
-msgstr "Wyrażenie regularne"
+msgstr "Expresie obişnuită"
 
-#: gui\settingsDialogs.py:814
+#: gui\settingsDialogs.py:818
 msgid "&Add"
-msgstr "Dodaj"
+msgstr "&Adaugă"
 
-#: gui\settingsDialogs.py:817
+#: gui\settingsDialogs.py:821
 msgid "&edit"
-msgstr "Edytuj"
+msgstr "&editează"
 
-#: gui\settingsDialogs.py:820
+#: gui\settingsDialogs.py:824
 msgid "&Remove"
-msgstr "Usuń"
+msgstr "&Elimină"
 
-#: gui\settingsDialogs.py:842
+#: gui\settingsDialogs.py:846
 msgid "Add Dictionary Entry"
-msgstr "Dodaj wpis słownika"
-
-#: gui\settingsDialogs.py:887
-msgid "Braille Settings"
-msgstr "Ustawienia brajla"
+msgstr "Adaugă intrare în dicţionar"
 
 #: gui\settingsDialogs.py:891
+msgid "Braille Settings"
+msgstr "Setări Braiile"
+
+#: gui\settingsDialogs.py:895
 msgid "Braille &display:"
-msgstr "Monitor brajlowski"
+msgstr "&Ecran Braille:"
 
-#: gui\settingsDialogs.py:905
+#: gui\settingsDialogs.py:909
 msgid "Translation &table:"
-msgstr "Tablica brajlowska"
+msgstr "&Tabel traducere:"
 
-#: gui\settingsDialogs.py:917
+#: gui\settingsDialogs.py:921
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr "Rozwiń słowo pod kursorem do brajla komputerowego"
+msgstr "E&xtinde la braille pentru computere pentru cuvântul de la cursor"
 
-#: gui\settingsDialogs.py:922
+#: gui\settingsDialogs.py:926
 msgid "Cursor blink rate (ms)"
-msgstr "Tempo migania kursora (w milisekundach)"
+msgstr "Rata de clipire a cusorului (ms)"
 
-#: gui\settingsDialogs.py:930
+#: gui\settingsDialogs.py:934
 msgid "Message timeout (sec)"
-msgstr "Czas wygasania komunikatów (w sekundach)"
+msgstr "Expirare timp mesaj (sec)"
 
-#: gui\settingsDialogs.py:938
+#: gui\settingsDialogs.py:942
 msgid "Braille tethered to:"
-msgstr "Brajl związany z:"
+msgstr "Braille limitat la:"
 
-#: gui\settingsDialogs.py:957
+#: gui\settingsDialogs.py:961
 msgid "Braille Display Error"
-msgstr "Błąd monitora brajlowskiego"
+msgstr "Eroare ecran Braille"
 
-#: gui\settingsDialogs.py:957
+#: gui\settingsDialogs.py:961
+#, python-format
 msgid "Could not load the %s display."
-msgstr "Nie można załadować urządzenia %s."
+msgstr "Nu s-a putut încărca ecranul %s."
 
 #: keyLabels.py:8
 msgid "back"
-msgstr "wstecz"
+msgstr "înapoi"
 
 #: keyLabels.py:9
 msgid "forward"
-msgstr "Dalej"
+msgstr "înainte"
 
 #: keyLabels.py:10
 msgid "refresh"
-msgstr "Odśwież"
+msgstr "împrospătează"
 
 #: keyLabels.py:11
 msgid "browser stop"
-msgstr "Zatrzymaj przeglądarkę"
+msgstr "stop browser"
 
 #: keyLabels.py:12
 msgid "search page"
-msgstr "Przeszukaj stronę"
+msgstr "pagina de căutare"
 
 #: keyLabels.py:13
 msgid "favorites"
-msgstr "ulubione"
+msgstr "favorite"
 
 #: keyLabels.py:14
 msgid "home page"
-msgstr "strona domowa"
+msgstr "pagina de start"
 
 #: keyLabels.py:15
 msgid "mute"
-msgstr "wycisz"
+msgstr "fără sonor"
 
 #: keyLabels.py:16
 msgid "volume down"
-msgstr "ciszej"
+msgstr "scade volum"
 
 #: keyLabels.py:17
 msgid "volume up"
-msgstr "głośniej"
+msgstr "creşte volum"
 
 #: keyLabels.py:18
 msgid "next track"
-msgstr "następny utwór"
+msgstr "piesa următoare"
 
 #: keyLabels.py:19
 msgid "previous track"
-msgstr "poprzedni utwór"
+msgstr "piesa anterioară"
 
 #: keyLabels.py:20
 msgid "stop"
@@ -3013,35 +3297,35 @@ msgstr "stop"
 
 #: keyLabels.py:21
 msgid "play pause"
-msgstr "play/pauza"
+msgstr "redare pauză"
 
 #: keyLabels.py:22
 msgid "email"
-msgstr "E-mail"
+msgstr "email"
 
 #: keyLabels.py:23
 msgid "media player"
-msgstr "odtwarzacz multimedialny"
+msgstr "media player"
 
 #: keyLabels.py:24
 msgid "custom application 1"
-msgstr "Aplikacja użytkownika 1"
+msgstr "aplicaţie personală 1"
 
 #: keyLabels.py:25
 msgid "custom application 2"
-msgstr "Aplikacja użytkownika 2"
+msgstr "aplicaţie personală 2"
 
 #: keyLabels.py:26
 msgid "backspace"
-msgstr "backspace"
+msgstr "şterge înapoi"
 
 #: keyLabels.py:27
 msgid "caps lock"
-msgstr "caps lock"
+msgstr "alege majuscule"
 
 #: keyLabels.py:28
 msgid "ctrl"
-msgstr "kontrol"
+msgstr "ctrl"
 
 #: keyLabels.py:29
 msgid "alt"
@@ -3061,918 +3345,947 @@ msgstr "enter"
 
 #: keyLabels.py:33
 msgid "numpad enter"
-msgstr "numeryczny enter"
+msgstr "tastă numerică enter"
 
 #: keyLabels.py:34
 msgid "escape"
-msgstr "escape"
+msgstr "ieşire"
 
 #: keyLabels.py:36
 msgid "page up"
-msgstr "page up"
+msgstr "pagină în sus"
 
 #: keyLabels.py:37
 msgid "page down"
-msgstr "page down"
+msgstr "pagină în jos"
 
 #: keyLabels.py:38
 msgid "end"
-msgstr "end"
+msgstr "sfârşit"
 
 #: keyLabels.py:39
 msgid "home"
-msgstr "home"
+msgstr "start"
 
 #: keyLabels.py:40
 msgid "delete"
-msgstr "delete"
+msgstr "şterge înainte"
 
 #: keyLabels.py:41
 msgid "numpad delete"
-msgstr "Numeryczny Del"
+msgstr "tastă numerică şterge înainte"
 
 #: keyLabels.py:42
 msgid "left arrow"
-msgstr "strzałka w lewo"
+msgstr "săgeata stânga"
 
 #: keyLabels.py:43
 msgid "right arrow"
-msgstr "strzałka w prawo"
+msgstr "săgeată dreapta"
 
 #: keyLabels.py:44
 msgid "up arrow"
-msgstr "strzałka w górę"
+msgstr "săgeată sus"
 
 #: keyLabels.py:45
 msgid "down arrow"
-msgstr "strzałka w dół"
+msgstr "săgeată jos"
 
 #: keyLabels.py:46
 msgid "applications"
-msgstr "aplikacje"
+msgstr "aplicaţii"
 
 #: keyLabels.py:47
 msgid "num lock"
-msgstr "num lock"
+msgstr "alege taste numerice"
 
 #: keyLabels.py:48
 msgid "print screen"
-msgstr "print screen"
+msgstr "captură ecran"
 
 #: keyLabels.py:49
 msgid "scroll lock"
-msgstr "scroll lock"
+msgstr "alege listare"
 
 #: keyLabels.py:50
 msgid "numpad 4"
-msgstr "Numeryczne 4"
+msgstr "tastă numerică 4"
 
 #: keyLabels.py:51
 msgid "numpad 6"
-msgstr "Numeryczne 6"
+msgstr "tastă numerică 6"
 
 #: keyLabels.py:52
 msgid "numpad 8"
-msgstr "Numeryczne 8"
+msgstr "tastă numerică 8"
 
 #: keyLabels.py:53
 msgid "numpad 2"
-msgstr "Numeryczne 2"
+msgstr "tastă numerică 2"
 
 #: keyLabels.py:54
 msgid "numpad 9"
-msgstr "Numeryczne 9"
+msgstr "tastă numerică 9"
 
 #: keyLabels.py:55
 msgid "numpad 3"
-msgstr "Numeryczne 3"
+msgstr "tastă numerică 3"
 
 #: keyLabels.py:56
 msgid "numpad 1"
-msgstr "Numeryczne 1"
+msgstr "tastă numerică 1"
 
 #: keyLabels.py:57
 msgid "numpad 7"
-msgstr "Numeryczne 7"
+msgstr "tastă numerică 7"
 
 #: keyLabels.py:58
 msgid "numpad 5"
-msgstr "Numeryczne 5"
+msgstr "tastă numerică 5"
 
 #: keyLabels.py:59
 msgid "numpad divide"
-msgstr "Numeryczny slash"
+msgstr "tastă numerică împărţire"
 
 #: keyLabels.py:60
 msgid "numpad multiply"
-msgstr "Numeryczna gwiazdka"
+msgstr "tastă numerică înmulţire"
 
 #: keyLabels.py:61
 msgid "numpad minus"
-msgstr "szary minus"
+msgstr "tastă numerică minus"
 
 #: keyLabels.py:62
 msgid "numpad plus"
-msgstr "szary plus"
+msgstr "tastă numerică plus"
 
 #: keyLabels.py:63
 msgid "left control"
-msgstr "lewy kontrol"
+msgstr "control stânga"
 
 #: keyLabels.py:64
 msgid "right control"
-msgstr "prawy kontrol"
+msgstr "control dreapta"
 
 #: keyLabels.py:65
 msgid "left windows"
-msgstr "lewy klawisz Windows"
+msgstr "windows stânga"
 
 #: keyLabels.py:66
 msgid "left shift"
-msgstr "lewy shift"
+msgstr "shift stânga"
 
 #: keyLabels.py:67
 msgid "right shift"
-msgstr "prawy shift"
+msgstr "shift dreapta"
 
 #: keyLabels.py:68
 msgid "left alt"
-msgstr "lewy alt"
+msgstr "alt stânga"
 
 #: keyLabels.py:69
 msgid "right alt"
-msgstr "prawy alt"
+msgstr "alt dreapta"
 
 #: keyLabels.py:70
 msgid "right windows"
-msgstr "prawy klawisz Windows"
+msgstr "windows dreapta"
 
 #: keyLabels.py:71
-#, fuzzy
 msgid "break"
-msgstr "podział strony"
+msgstr "spaţiu"
 
 #: keyboardHandler.py:178
 msgid "desktop"
-msgstr "Desktop"
+msgstr "ecran"
 
 #: keyboardHandler.py:179
 msgid "laptop"
-msgstr "Laptop"
+msgstr "laptop"
 
 #: mouseHandler.py:136
+#, python-format
 msgid "%s cursor"
-msgstr "kursor %s"
+msgstr "%s cursor"
 
 #: pythonConsole.py:24
 msgid "Type help(object) to get help about object."
-msgstr "WPisz polecenie help(obiekt), aby uzyskać pomoc na temat obiektu."
+msgstr "scrieţi help(obiect) pentru a primi ajutor despre obiect"
 
 #: pythonConsole.py:43
 msgid "Type exit() to exit the console"
-msgstr "Wpisz exit (), aby wyjść z konsoli"
+msgstr "scrieţi exit() pentru a închide consola"
 
 #: pythonConsole.py:96
 msgid "NVDA Python Console"
-msgstr "Konsola Pythona NVDA"
+msgstr "consola NVDA Python"
 
 #: speech.py:175
+#, python-format
 msgid "cap %s"
-msgstr "duże %s"
+msgstr "cap %s"
 
 #: speech.py:322
+#, python-format
 msgid "%d characters"
-msgstr "%d znaków"
+msgstr "%d caractere"
 
 #: speech.py:373
+#, python-format
 msgid "selecting %s"
-msgstr "zaznaczanie %s"
+msgstr "selectare %s"
 
 #: speech.py:384
+#, python-format
 msgid "unselecting %s"
-msgstr "odznaczanie %s"
+msgstr "deselectare %s"
 
 #: speech.py:386
 msgid "selection removed"
-msgstr "zdjęto zaznaczenie"
+msgstr "selectare îndepărtată"
 
 #: speech.py:674
 msgid "done dragging"
-msgstr "przeciąganie gotowe"
+msgstr "tragere încheiată"
 
-#: speech.py:704
-#: speech.py:1003
+#: speech.py:704 speech.py:1003
+#, python-format
 msgid "row %s"
-msgstr "linia %s"
+msgstr "rând %s"
 
-#: speech.py:710
-#: speech.py:999
+#: speech.py:710 speech.py:999
+#, python-format
 msgid "column %s"
-msgstr "kolumna %s"
+msgstr "coloană %s"
 
 #: speech.py:715
+#, python-format
 msgid "with %s rows and %s columns"
-msgstr "wierszy: %s,, kolumn: %s"
+msgstr "cu %s rânduri şi %s coloane"
 
 #: speech.py:717
+#, python-format
 msgid "with %s columns"
-msgstr "kolumn: %s"
+msgstr "cu %s coloane"
 
 #: speech.py:719
+#, python-format
 msgid "with %s rows"
-msgstr "wierszy: %s"
+msgstr "cu %s rânduri"
 
 #: speech.py:825
+#, python-format
 msgid "with %s items"
-msgstr "elementów: %s"
+msgstr "cu %s obiecte"
 
-#: speech.py:842
-#: speech.py:958
+#: speech.py:842 speech.py:958
+#, python-format
 msgid "out of %s"
-msgstr "Koniec %s"
+msgstr "în afara %s"
 
 #: speech.py:866
+#, python-format
 msgid "page %s"
-msgstr "strona %s"
+msgstr "pagina %s"
 
 #: speech.py:873
+#, python-format
 msgid "style %s"
-msgstr "styl %s"
+msgstr "stil %s"
 
 #: speech.py:875
 msgid "default style"
-msgstr "styl domyślny"
+msgstr "stil implicit"
 
 #: speech.py:899
 msgid "on {backgroundColor}"
-msgstr "w tle {backgroundColor}"
+msgstr ""
 
 #: speech.py:904
+#, python-format
 msgid "line %s"
-msgstr "linia %s"
+msgstr "linie %s"
 
 #: speech.py:910
 msgid "no bold"
-msgstr "nie ma pogrubienia"
+msgstr "fără bold"
 
 #: speech.py:915
 msgid "italic"
-msgstr "kursywa"
+msgstr "italice"
 
 #: speech.py:915
 msgid "no italic"
-msgstr "brak kursywy"
+msgstr "fără italice"
 
 #: speech.py:920
 msgid "no strikethrough"
-msgstr "brak przekreślenia"
+msgstr "fără linie tăiere"
 
 #: speech.py:920
 msgid "strikethrough"
-msgstr "przekreślenie"
+msgstr "linie tăiere"
 
 #: speech.py:925
 msgid "not underlined"
-msgstr "brak podkreślenia"
+msgstr "fără subliniere"
 
 #: speech.py:925
 msgid "underlined"
-msgstr "podkreślenie"
+msgstr "subliniat"
 
 #: speech.py:936
 msgid "baseline"
-msgstr "linia bazowa"
+msgstr ""
 
 #: speech.py:944
 msgid "align left"
-msgstr "wyrównanie do lewej"
+msgstr "aliniere la stânga"
 
 #: speech.py:946
 msgid "align center"
-msgstr "wyśrodkowanie"
+msgstr "aliniere pe centru"
 
 #: speech.py:948
 msgid "align right"
-msgstr "wyrównanie do prawej"
+msgstr "aliniere la dreapta"
 
 #: speech.py:950
 msgid "align justify"
-msgstr "wyjustowanie"
+msgstr "aliniere pe toată lungimea"
 
 #: speech.py:952
 msgid "align default"
-msgstr "wyrównanie domyślne"
+msgstr "aliniere implicită"
 
 #: speech.py:965
 msgid "spelling error"
-msgstr "błąd"
+msgstr "eroare de ortografie"
 
 #: speech.py:967
 msgid "out of spelling error"
-msgstr "koniec błędu"
+msgstr "în afara erorii de ortografie"
 
 #: speech.py:985
 msgid "out of table"
-msgstr "Koniec tabeli"
+msgstr "în afara tabelului"
 
 #: speech.py:994
+#, python-format
 msgid "table with %s columns and %s rows"
-msgstr "tabela kolumn %s, wierszy %s"
+msgstr "tabel cu %s coloane şi %s rânduri"
 
 #: speechViewer.py:13
 msgid "NVDA Speech Viewer"
-msgstr "Podgląd mowy NVDA"
+msgstr "monitor vorbire NVDA"
 
-#: synthDriverHandler.py:186
+#: synthDriverHandler.py:185
 msgid "&Language"
-msgstr "Język"
+msgstr "&Limbaj"
 
-#: synthDriverHandler.py:191
+#: synthDriverHandler.py:190
 msgid "&Voice"
-msgstr "Głos:"
+msgstr "&Voce"
 
-#: synthDriverHandler.py:195
+#: synthDriverHandler.py:194
 msgid "V&ariant"
-msgstr "Wariant:"
+msgstr "V&ariantă"
 
-#: synthDriverHandler.py:200
+#: synthDriverHandler.py:199
 msgid "&Rate"
-msgstr "Prędkość:"
+msgstr "&Viteză"
 
-#: synthDriverHandler.py:204
+#: synthDriverHandler.py:203
 msgid "V&olume"
-msgstr "Głośn&ość:"
+msgstr "V&olum"
 
-#: synthDriverHandler.py:208
+#: synthDriverHandler.py:207
 msgid "&Pitch"
-msgstr "Wysokość:"
+msgstr "&amplitudine sunet"
 
-#: synthDriverHandler.py:213
+#: synthDriverHandler.py:212
 msgid "&Inflection"
-msgstr "Modulacja:"
+msgstr "&intonaţie"
 
 #: synthDrivers\_espeak.py:308
 msgid "none"
-msgstr "brak"
+msgstr "nu există"
 
 #: synthDrivers\newfon.py:179
 msgid "&Acceleration"
-msgstr "Przyspieszenie"
+msgstr "&Accelerare"
 
 #: synthDrivers\newfon.py:190
 msgid "female 1"
-msgstr "żeński 1"
+msgstr "femeie 1"
 
 #: synthDrivers\newfon.py:190
 msgid "female 2"
-msgstr "żeński 2"
+msgstr "femeie 2"
 
 #: synthDrivers\newfon.py:190
 msgid "male 1"
-msgstr "męski 1"
+msgstr "bărbat 1"
 
 #: synthDrivers\newfon.py:190
 msgid "male 2"
-msgstr "męski 2"
+msgstr "bărbat 2"
 
 #: synthDrivers\silence.py:13
 msgid "No speech"
-msgstr "Bez mowy"
+msgstr "Fără vorbire"
 
 #: textInfos\__init__.py:137
 msgid "word"
-msgstr "słowo"
+msgstr "cuvânt"
 
 #: versionInfo.py:25
 msgid "NonVisual Desktop Access"
-msgstr "NonVisual Desktop Access"
+msgstr "Acces Ecran NonVizual"
 
 #: versionInfo.py:27
 msgid "A free and open-source screen reader for MS Windows"
-msgstr "Darmowy i wolny screen reader dla Windows"
+msgstr "Un cititor de ecran gratuit şi open-source pentru MS Windows"
 
 #: versionInfo.py:29
 msgid "Copyright (C) 2006-2010 NVDA Contributors"
-msgstr "Copyright (C) 2006-2010 Współautorzy NVDA"
+msgstr "Copyright (C) 2006-2010 NVDA Contributors"
 
 #: versionInfo.py:30
+#, python-format
 msgid ""
 "%(copyright)s\n"
-"%(name)s is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it. This applies to both origional and modified copies of the software, plus any software that uses code taken from this software.\n"
+"%(name)s is covered by the GNU General Public License (Version 2). You are "
+"free to share or change this software in any way you like as long as you "
+"distribute the licence along with the software, and make all source code "
+"available to anyone who wants it. This applies to both origional and "
+"modified copies of the software, plus any software that uses code taken from "
+"this software.\n"
 "For further details, you can view the licence online at:\n"
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "Or see the file Copying.txt that came with this software."
 msgstr ""
 "%(copyright)s\n"
-"%(name)s podlega pod GNU General Public License (wersja 2). Możesz za darmo udostępniać ten program i dowolnie zmieniać go, pod warunkiem, że dołączysz do niego tę licencję oraz udostępnisz pełny kod źródłowy każdemu zainteresowanemu. Dotyczy to zarówno oryginalnej wersji programu, jak i jego zmienionych kopii, a także każdego innego oprogramowania, które korzysta z kodu zaczerpniętego z tego programu.\n"
-"Dokładne brzmienie licencji znajdziesz online pod adresem:\n"
+"%(name)s este acoperit de GNU Brevetul Public General (Versiunea 2). Puteţi "
+"distribui sau modifica acest program oricum doriţi, atâta timp cât "
+"distribuiţi şi brevetul alături de program şi puneţi la dispoziţia "
+"oricui le doreşte toate codurile sursă. Asta se aplică atât la original "
+"cât şi la copiile modificate ale programului, plus orice alt program care "
+"foloseşte cod preluat din acest program.\n"
+"Pentru alte detalii, puteţi vedea brevetul online la:\n"
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
-"oraz w pliku copying.txt, który został dostarczony wraz z programem."
+"Sau citiţi fişierul copying.txt care face parte din pachetul programului."
 
 #: virtualBuffers\__init__.py:201
+#, python-format
 msgid "%s landmark"
-msgstr "%s punkt orientacyjny"
+msgstr "%s reper"
 
 #: virtualBuffers\__init__.py:219
 msgid "Lin&ks"
-msgstr "linki"
+msgstr "Leg&ături"
 
 #: virtualBuffers\__init__.py:220
 msgid "&Headings"
-msgstr "Nagłówki"
+msgstr "&Titluri"
 
 #: virtualBuffers\__init__.py:221
 msgid "Lan&dmarks"
-msgstr "Punkty orientacyjne"
+msgstr "Rep&ere"
 
 #: virtualBuffers\__init__.py:227
 msgid "Elements List"
-msgstr "Lista elementów"
+msgstr "Lista elementelor"
 
 #: virtualBuffers\__init__.py:230
 msgid "Type:"
-msgstr "Wyświetl:"
+msgstr "Scrie:"
 
 #: virtualBuffers\__init__.py:241
 msgid "&Filter by:"
-msgstr "Filtrowanie:"
+msgstr "&Fltrează după:"
 
 #: virtualBuffers\__init__.py:249
 msgid "&Activate"
-msgstr "Aktywuj link"
+msgstr "&Porneşte"
 
 #: virtualBuffers\__init__.py:252
 msgid "&Move to"
-msgstr "Przejdź do"
+msgstr "&Mută la"
 
 #: virtualBuffers\__init__.py:548
 msgid "Refreshed"
-msgstr "Odświeżone"
+msgstr "Împrospătat"
 
 #: virtualBuffers\__init__.py:553
 msgid "Loading document..."
-msgstr "wczytywanie dokumentu..."
+msgstr "Se încarcă document..."
 
 #: virtualBuffers\__init__.py:692
 msgid "activates the current object in the virtual buffer"
-msgstr "Aktywuje bieżący obiekt w wirtualnym buforze"
+msgstr "porneşte obiectul curent în zona tampon virtuală"
 
 #: virtualBuffers\__init__.py:700
 msgid "Refreshes the virtual buffer content"
-msgstr "Odświeża zawartość wirtualnego bufora"
+msgstr "Împrospătează conţiuntul zonei tampon virtuale"
 
 #: virtualBuffers\__init__.py:705
+#, python-format
 msgid "use screen layout %s"
-msgstr "Użyj układu ekranu %s"
+msgstr "foloseşte aşezarea ecranului %s"
 
 #: virtualBuffers\__init__.py:706
-msgid "Toggles on and off if the screen layout is preserved while rendering the virtual buffer content"
-msgstr "Przełącza układ ekranu podczas renderowania jeżeli jest zachowana zawartość wirtualnego bufora"
+msgid ""
+"Toggles on and off if the screen layout is preserved while rendering the "
+"virtual buffer content"
+msgstr ""
+"Porneşte sau opreşte păstrarea aşezării ecranului în timpul redării "
+"conţinutului zonei tampon virtuale"
 
 #: virtualBuffers\__init__.py:789
 msgid "Presents a list of links, headings or landmarks"
-msgstr "Przedstawia listę linków, nagłówków lub punktów orientacyjnych"
+msgstr "Prezintă o listă de linkuri, titluri şi repere"
 
 #: virtualBuffers\__init__.py:1122
 msgid "Not in a table cell"
-msgstr "poza tabelą"
+msgstr "Nu este într-o celulă de tabel"
 
 #: virtualBuffers\__init__.py:1138
 msgid "moves to the next table row"
-msgstr "Przechodzi do następnego wiersza tabeli"
+msgstr "se mută lal rândul următor din tabel"
 
 #: virtualBuffers\__init__.py:1142
 msgid "moves to the previous table row"
-msgstr "Przechodzi do poprzedniego wiersza tabeli"
+msgstr "se mută la rândul anterior din tabel"
 
 #: virtualBuffers\__init__.py:1146
 msgid "moves to the next table column"
-msgstr "Przechodzi do następnej kolumny tabeli"
+msgstr "se mută la coloana următoare din tabel"
 
 #: virtualBuffers\__init__.py:1150
 msgid "moves to the previous table column"
-msgstr "Przechodzi do poprzedniej kolumny tabeli"
+msgstr "se mută la coloana anterioară din tabel"
 
 #: virtualBuffers\__init__.py:1210
 msgid "moves to the next heading"
-msgstr "Przechodzi do następnego nagłówka"
+msgstr "se mută la titlul următor"
 
 #: virtualBuffers\__init__.py:1210
 msgid "no next heading"
-msgstr "brak nagłówka"
+msgstr "nu există titlu următor"
 
 #: virtualBuffers\__init__.py:1211
 msgid "moves to the previous heading"
-msgstr "Przechodzi do poprzedniego nagłówka"
+msgstr "se mută la titlul anterior"
 
 #: virtualBuffers\__init__.py:1211
 msgid "no previous heading"
-msgstr "brak poprzedniego nagłówka"
+msgstr "nu există titlu anterior"
 
 #: virtualBuffers\__init__.py:1212
 msgid "moves to the next heading at level 1"
-msgstr "Przechodzi do następnego nagłówka 1"
+msgstr "se mută la următorul titlu la nivelul 1"
 
 #: virtualBuffers\__init__.py:1212
 msgid "no next heading at level 1"
-msgstr "brak nagłówka 1"
+msgstr "nu există titlu următor la nivelul 1"
 
 #: virtualBuffers\__init__.py:1213
 msgid "moves to the previous heading at level 1"
-msgstr "Przechodzi do poprzedniego nagłówka 1"
+msgstr "se mută la titlul anterior la nivelul 1"
 
 #: virtualBuffers\__init__.py:1213
 msgid "no previous heading at level 1"
-msgstr "brak poprzedniego nagłówka 1"
+msgstr "nu există titlu anterior la nivelul 1"
 
 #: virtualBuffers\__init__.py:1214
 msgid "moves to the next heading at level 2"
-msgstr "Przechodzi do następnego nagłówka 2"
+msgstr "se mută la următorul titlu la nivelul 2"
 
 #: virtualBuffers\__init__.py:1214
 msgid "no next heading at level 2"
-msgstr "brak nagłówka 2"
+msgstr "nu există titlu următor la nivelul 2"
 
 #: virtualBuffers\__init__.py:1215
 msgid "moves to the previous heading at level 2"
-msgstr "Przechodzi do poprzedniego nagłówka 2"
+msgstr "se mută la titlul anterior la nivelul 2"
 
 #: virtualBuffers\__init__.py:1215
 msgid "no previous heading at level 2"
-msgstr "brak poprzedniego nagłówka 2"
+msgstr "nu există titlu anterior la nivelul 2"
 
 #: virtualBuffers\__init__.py:1216
 msgid "moves to the next heading at level 3"
-msgstr "Przechodzi do następnego nagłówka 3"
+msgstr "se mută la următorul titlu la nivelul 3"
 
 #: virtualBuffers\__init__.py:1216
 msgid "no next heading at level 3"
-msgstr "brak nagłówka 3"
+msgstr "nu există titlu următor la nivelul 3"
 
 #: virtualBuffers\__init__.py:1217
 msgid "moves to the previous heading at level 3"
-msgstr "Przechodzi do poprzedniego nagłówka 3"
+msgstr "se mută la titlul anterior la nivelul 3"
 
 #: virtualBuffers\__init__.py:1217
 msgid "no previous heading at level 3"
-msgstr "brak poprzedniego nagłówka 3"
+msgstr "nu există titlu anterior la nivelul 3"
 
 #: virtualBuffers\__init__.py:1218
 msgid "moves to the next heading at level 4"
-msgstr "Przechodzi do następnego nagłówka 4"
+msgstr "se mută la următorul titlu la nivelul 4"
 
 #: virtualBuffers\__init__.py:1218
 msgid "no next heading at level 4"
-msgstr "brak nagłówka 4"
+msgstr "nu există titlu următor la nivelul 4"
 
 #: virtualBuffers\__init__.py:1219
 msgid "moves to the previous heading at level 4"
-msgstr "Przechodzi do poprzedniego nagłówka 4"
+msgstr "se mută la titlul anterior la nivelul 4"
 
 #: virtualBuffers\__init__.py:1219
 msgid "no previous heading at level 4"
-msgstr "brak poprzedniego nagłówka 4"
+msgstr "nu există titlu anterior la nivelul 4"
 
 #: virtualBuffers\__init__.py:1220
 msgid "moves to the next heading at level 5"
-msgstr "Przechodzi do następnego nagłówka 5"
+msgstr "se mută la următorul titlu la nivelul 5"
 
 #: virtualBuffers\__init__.py:1220
 msgid "no next heading at level 5"
-msgstr "brak nagłówka 5"
+msgstr "nu există titlu următor la nivelul 5"
 
 #: virtualBuffers\__init__.py:1221
 msgid "moves to the previous heading at level 5"
-msgstr "Przechodzi do poprzedniego nagłówka 5"
+msgstr "se mută la titlul anterior la nivelul 5"
 
 #: virtualBuffers\__init__.py:1221
 msgid "no previous heading at level 5"
-msgstr "brak poprzedniego nagłówka 5"
+msgstr "nu există titlu anterior la nivelul 5"
 
 #: virtualBuffers\__init__.py:1222
 msgid "moves to the next heading at level 6"
-msgstr "Przechodzi do następnego nagłówka 6"
+msgstr "se mută la următorul titlu la nivelul 6"
 
 #: virtualBuffers\__init__.py:1222
 msgid "no next heading at level 6"
-msgstr "brak nagłówka 6"
+msgstr "nu există titlu următor la nivelul 6"
 
 #: virtualBuffers\__init__.py:1223
 msgid "moves to the previous heading at level 6"
-msgstr "Przechodzi do poprzedniego nagłówka 6"
+msgstr "se mută la titlul anterior la nivelul 6"
 
 #: virtualBuffers\__init__.py:1223
 msgid "no previous heading at level 6"
-msgstr "brak poprzedniego nagłówka 6"
+msgstr "nu există titlu anterior la nivelul 6"
 
 #: virtualBuffers\__init__.py:1224
 msgid "moves to the next table"
-msgstr "Przechodzi do następnej tabeli"
+msgstr "se mută la tabelul următor"
 
 #: virtualBuffers\__init__.py:1224
 msgid "no next table"
-msgstr "brak tabeli"
+msgstr "nu există tabel următor"
 
 #: virtualBuffers\__init__.py:1225
 msgid "moves to the previous table"
-msgstr "Przechodzi do poprzedniej tabeli"
+msgstr "se mută la tabelul anterior"
 
 #: virtualBuffers\__init__.py:1225
 msgid "no previous table"
-msgstr "brak poprzedniej tabeli"
+msgstr "nu există tabel anterior"
 
 #: virtualBuffers\__init__.py:1226
 msgid "moves to the next link"
-msgstr "Przechodzi do następnego linku"
+msgstr "se mută la linkul următor"
 
 #: virtualBuffers\__init__.py:1226
 msgid "no next link"
-msgstr "brak linku"
+msgstr "nu există link următor"
 
 #: virtualBuffers\__init__.py:1227
 msgid "moves to the previous link"
-msgstr "Przechodzi do poprzedniego linku"
+msgstr "se mută la linkul anterior"
 
 #: virtualBuffers\__init__.py:1227
 msgid "no previous link"
-msgstr "brak poprzedniego linku"
+msgstr "nu există link anterior"
 
 #: virtualBuffers\__init__.py:1228
 msgid "moves to the next visited link"
-msgstr "Przechodzi do następnego odwiedzonego linku"
+msgstr "se mută la următorul link vizitat"
 
 #: virtualBuffers\__init__.py:1228
 msgid "no next visited link"
-msgstr "brak odwiedzonego linku"
+msgstr "nu există link vizitat următor"
 
 #: virtualBuffers\__init__.py:1229
 msgid "moves to the previous visited link"
-msgstr "Przechodzi do poprzedniego odwiedzonego linku"
+msgstr "se mută la anteriorul link vizitat"
 
 #: virtualBuffers\__init__.py:1229
 msgid "no previous visited link"
-msgstr "brak poprzedniego odwiedzonego linku"
+msgstr "nu există link vizitat anterior"
 
 #: virtualBuffers\__init__.py:1230
 msgid "moves to the next unvisited link"
-msgstr "Przechodzi do następnego nieodwiedzonego linku"
+msgstr "se mută la următorul link nevizitat"
 
 #: virtualBuffers\__init__.py:1230
 msgid "no next unvisited link"
-msgstr "brak nieodwiedzonego linku"
+msgstr "nu există link nevizitat următor"
 
 #: virtualBuffers\__init__.py:1231
 msgid "moves to the previous unvisited link"
-msgstr "Przechodzi do poprzedniego nieodwiedzonego linku"
+msgstr "se mută la anteriorul link nevizitat"
 
 #: virtualBuffers\__init__.py:1231
 msgid "no previous unvisited link"
-msgstr "brak poprzedniego nieodwiedzonego linku"
+msgstr "nu există link nevizitat anterior"
 
 #: virtualBuffers\__init__.py:1232
 msgid "moves to the next form field"
-msgstr "Przechodzi do następnego pola formularza"
+msgstr "se mută la câmpul următor din formular"
 
 #: virtualBuffers\__init__.py:1232
 msgid "no next form field"
-msgstr "brak pola formularza"
+msgstr "nu există câmp următor în formular"
 
 #: virtualBuffers\__init__.py:1233
 msgid "moves to the previous form field"
-msgstr "Przechodzi do poprzedniego pola formularza"
+msgstr "se mută la câmpul anterior din formular"
 
 #: virtualBuffers\__init__.py:1233
 msgid "no previous form field"
-msgstr "brak poprzedniego pola formularza"
+msgstr "nu există câmp anterior în formular"
 
 #: virtualBuffers\__init__.py:1234
 msgid "moves to the next list"
-msgstr "Przechodzi do następnej listy"
+msgstr "se mută la lista următoare"
 
 #: virtualBuffers\__init__.py:1234
 msgid "no next list"
-msgstr "brak listy"
+msgstr "nu există listă următoare"
 
 #: virtualBuffers\__init__.py:1235
 msgid "moves to the previous list"
-msgstr "Przechodzi do poprzedniej listy"
+msgstr "se mută la lista anterioară"
 
 #: virtualBuffers\__init__.py:1235
 msgid "no previous list"
-msgstr "brak poprzedniej listy"
+msgstr "nu există listă anterioară"
 
 #: virtualBuffers\__init__.py:1236
 msgid "moves to the next list item"
-msgstr "Przechodzi do następnego elementu listy"
+msgstr "se mută la elementul următor din listă"
 
 #: virtualBuffers\__init__.py:1236
 msgid "no next list item"
-msgstr "brak elementu listy"
+msgstr "nu există element următor în listă"
 
 #: virtualBuffers\__init__.py:1237
 msgid "moves to the previous list item"
-msgstr "Przechodzi do poprzedniego elementu listy"
+msgstr "se mută la elementul anterior din listă"
 
 #: virtualBuffers\__init__.py:1237
 msgid "no previous list item"
-msgstr "brak poprzedniego elementu listy"
+msgstr "nu există element anterior în listă"
 
 #: virtualBuffers\__init__.py:1238
 msgid "moves to the next button"
-msgstr "Przechodzi do następnego przycisku"
+msgstr "se mută la butonul următor"
 
 #: virtualBuffers\__init__.py:1238
 msgid "no next button"
-msgstr "brak przycisku"
+msgstr "nu există buton următor"
 
 #: virtualBuffers\__init__.py:1239
 msgid "moves to the previous button"
-msgstr "Przechodzi do poprzedniego przycisku"
+msgstr "se mută la butonul anterior"
 
 #: virtualBuffers\__init__.py:1239
 msgid "no previous button"
-msgstr "brak poprzedniego przycisku"
+msgstr "nu există buton anterior"
 
 #: virtualBuffers\__init__.py:1240
 msgid "moves to the next edit field"
-msgstr "Przechodzi do następnego pola edycji"
+msgstr "se mută la câmpul de editare următor"
 
 #: virtualBuffers\__init__.py:1240
 msgid "no next edit field"
-msgstr "brak pola edycji"
+msgstr "nu există câmp de editare următor"
 
 #: virtualBuffers\__init__.py:1241
 msgid "moves to the previous edit field"
-msgstr "Przechodzi do poprzedniego pola edycji"
+msgstr "se mută la câmpul de editare anterior"
 
 #: virtualBuffers\__init__.py:1241
 msgid "no previous edit field"
-msgstr "brak poprzedniego pola edycji"
+msgstr "nu există câmp de editare anterior"
 
 #: virtualBuffers\__init__.py:1242
 msgid "moves to the next frame"
-msgstr "Przechodzi do następnej ramki"
+msgstr "se mută la cadrul următor"
 
 #: virtualBuffers\__init__.py:1242
 msgid "no next frame"
-msgstr "brak ramki"
+msgstr "nu există cadru următor"
 
 #: virtualBuffers\__init__.py:1243
 msgid "moves to the previous frame"
-msgstr "Przechodzi do poprzedniej ramki"
+msgstr "se mută la cadrul anterior"
 
 #: virtualBuffers\__init__.py:1243
 msgid "no previous frame"
-msgstr "brak poprzedniej ramki"
+msgstr "nu există cadru anterior"
 
 #: virtualBuffers\__init__.py:1244
 msgid "moves to the next separator"
-msgstr "Przechodzi do następnego separatora"
+msgstr "se mută la separatorul următor"
 
 #: virtualBuffers\__init__.py:1244
 msgid "no next separator"
-msgstr "brak separatora"
+msgstr "nu există separator următor"
 
 #: virtualBuffers\__init__.py:1245
 msgid "moves to the previous separator"
-msgstr "Przechodzi do poprzedniego separatora"
+msgstr "se mută la separatorul anterior"
 
 #: virtualBuffers\__init__.py:1245
 msgid "no previous separator"
-msgstr "brak poprzedniego separatora"
+msgstr "nu există separator anterior"
 
 #: virtualBuffers\__init__.py:1246
 msgid "moves to the next radio button"
-msgstr "Przechodzi do następnego przycisku opcji"
+msgstr "se mută la butonul rotativ următor"
 
 #: virtualBuffers\__init__.py:1246
 msgid "no next radio button"
-msgstr "brak przycisku opcji"
+msgstr "nu există buton rotativ următor"
 
 #: virtualBuffers\__init__.py:1247
 msgid "moves to the previous radio button"
-msgstr "Przechodzi do poprzedniego przycisku opcji"
+msgstr "se mută la butonul rotativ anterior"
 
 #: virtualBuffers\__init__.py:1247
 msgid "no previous radio button"
-msgstr "brak poprzedniego przycisku opcji"
+msgstr "nu există buton rotativ anterior"
 
 #: virtualBuffers\__init__.py:1248
 msgid "moves to the next combo box"
-msgstr "Przechodzi do następnej listy rozwijanej"
+msgstr "se mută la caseta combinată următoare"
 
 #: virtualBuffers\__init__.py:1248
 msgid "no next combo box"
-msgstr "brak listy rozwijanej"
+msgstr "nu există casetă combinată următoare"
 
 #: virtualBuffers\__init__.py:1249
 msgid "moves to the previous combo box"
-msgstr "Przechodzi do poprzedniej listy rozwijanej"
+msgstr "se mută la caseta combinată anterioare"
 
 #: virtualBuffers\__init__.py:1249
 msgid "no previous combo box"
-msgstr "brak poprzedniej listy rozwijanej"
+msgstr "nu există casetă combinată anterioară"
 
 #: virtualBuffers\__init__.py:1250
 msgid "moves to the next check box"
-msgstr "Przechodzi do następnego pola wyboru"
+msgstr "se mută la căsuţa de bifat următoare"
 
 #: virtualBuffers\__init__.py:1250
 msgid "no next check box"
-msgstr "brak pola wyboru"
+msgstr "nu există căsuţă de bifat următoare"
 
 #: virtualBuffers\__init__.py:1251
 msgid "moves to the previous check box"
-msgstr "Przechodzi do poprzedniego pola wyboru"
+msgstr "se mută la căsuţa de bifat anterioară"
 
 #: virtualBuffers\__init__.py:1251
 msgid "no previous check box"
-msgstr "brak poprzedniego pola wyboru"
+msgstr "nu există căsuţă de bifat anterioară"
 
 #: virtualBuffers\__init__.py:1252
 msgid "moves to the next graphic"
-msgstr "Przechodzi do następnej grafiki"
+msgstr "se mută la graficul următor"
 
 #: virtualBuffers\__init__.py:1252
 msgid "no next graphic"
-msgstr "brak grafiki"
+msgstr "nu există grafic următor"
 
 #: virtualBuffers\__init__.py:1253
 msgid "moves to the previous graphic"
-msgstr "Przechodzi do poprzedniej grafiki"
+msgstr "se mută la graficul anterior"
 
 #: virtualBuffers\__init__.py:1253
 msgid "no previous graphic"
-msgstr "brak poprzedniej grafiki"
+msgstr "nu există grafic anterior"
 
 #: virtualBuffers\__init__.py:1254
 msgid "moves to the next block quote"
-msgstr "Przechodzi do następnego bloku cytatu"
+msgstr "se mută la citatul bloc următor"
 
 #: virtualBuffers\__init__.py:1254
 msgid "no next block quote"
-msgstr "brak następnego cytatu"
+msgstr "nu există citat bloc următor"
 
 #: virtualBuffers\__init__.py:1255
 msgid "moves to the previous block quote"
-msgstr "Przechodzi do poprzedniego bloku cytatu"
+msgstr "se mută la citatul bloc anterior"
 
 #: virtualBuffers\__init__.py:1255
 msgid "no previous block quote"
-msgstr "brak poprzedniego cytatu"
+msgstr "nu există citat bloc anterior"
 
 #: virtualBuffers\__init__.py:1256
 msgid "no more text after a block of links"
-msgstr "brak tekstu za grupą linków"
+msgstr "nu există text după un grup de linkuri"
 
 #: virtualBuffers\__init__.py:1256
 msgid "skips forward past a block of links"
-msgstr "Przechodzi do następnej grupy linków"
+msgstr "sare înainte peste un grup de linkuri"
 
 #: virtualBuffers\__init__.py:1257
 msgid "no more text before a block of links"
-msgstr "brak tekstu przed grupą linków"
+msgstr "nu există text înaintea unui grup de linkuri"
 
 #: virtualBuffers\__init__.py:1257
 msgid "skips backward past a block of links"
-msgstr "Przechodzi do wcześniejszej grupy linków"
+msgstr "sare înapoi peste un grup de linkuri"
 
 #: virtualBuffers\__init__.py:1258
 msgid "moves to the next landmark"
-msgstr "Przechodzi do następnego punktu orientacyjnego"
+msgstr "se mută la reperul următor"
 
 #: virtualBuffers\__init__.py:1258
 msgid "no next landmark"
-msgstr "brak punktu orientacyjnego"
+msgstr "nu există reper următor"
 
 #: virtualBuffers\__init__.py:1259
 msgid "moves to the previous landmark"
-msgstr "Przechodzi do poprzedniego punktu orientacyjnego"
+msgstr "se mută la reperul anterior"
 
 #: virtualBuffers\__init__.py:1259
 msgid "no previous landmark"
-msgstr "brak poprzedniego punktu orientacyjnego"
+msgstr "nu există reper anterior"
 
 #: virtualBuffers\__init__.py:1260
 msgid "moves to the next embedded object"
-msgstr "Przechodzi do następnego zagnieżdżonego obiektu"
+msgstr "se mută la obiectul incorporat următor"
 
 #: virtualBuffers\__init__.py:1260
 msgid "no next embedded object"
-msgstr "brak zagnieżdżonego obiektu"
+msgstr "nu există obiect incorporat următor"
 
 #: virtualBuffers\__init__.py:1261
 msgid "moves to the previous embedded object"
-msgstr "Przechodzi do poprzedniego zagnieżdżonego obiektu"
+msgstr "se mută la obiectul incorporat anterior"
 
 #: virtualBuffers\__init__.py:1261
 msgid "no previous embedded object"
-msgstr "brak poprzedniego zagnieżdżonego obiektu"
+msgstr "nu există obiect incorporat anterior"
 
 #: virtualBuffers\__init__.py:1274
 msgid "browse mode"
-msgstr "Tryb przeglądania"
+msgstr "mod căutare"
 
 #: virtualBuffers\__init__.py:1274
 msgid "focus mode"
-msgstr "Tryb formularza"
+msgstr "mod focalizare"

@@ -10,6 +10,7 @@
 import time
 import api
 from baseObject import ScriptableObject
+import braille
 import speech
 import config
 import eventHandler
@@ -130,6 +131,7 @@ class EditableText(ScriptableObject):
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		self._hasCaretMoved(bookmark)
 		self._caretScriptPostMovedHelper(textInfos.UNIT_CHARACTER)
+		braille.handler.handleCaretMove(self)
 
 	__gestures = {
 		"kb:upArrow": "caret_moveByLine",

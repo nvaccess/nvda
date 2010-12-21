@@ -160,6 +160,7 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 | Toggle Keyboard Help Mode | NVDA+1 | Pressing any key in this mode will report the key, and the description of any  NVDA command associated with it |
 | Quit NVDA | NVDA+q | Exits NVDA |
 | Pass next key through | NVDA+f2 | Tells NVDA to pass the next key press straight through to the active application, even if it is normally treeted as an NVDA key command |
+| toggle application self voicing mode on and off | NVDA+shift+s | Self voicing mode disables all NVDA commands and speech/braille output for the current application. This is most useful in applications that provide their own speech or screen reading features. Press  this command again to disable self voicing mode. |
 %kc:endInclude
 
 ++ Reporting System Information ++
@@ -666,6 +667,12 @@ It has the following options:
 ==== Report background progress bars ====
 This is an option that, when checked, tells nvda to keep reporting a progress bar, even if it is not physically in the foreground.
 If you minimize or switch away from a window that contains a progress bar, nvda will keep track of it, allowing you to do other things while nvda tracks the progress bar.
+
+%kc:setting
+==== Report dynamic content changes ====
+Key: NVDA+5
+
+Toggles the announcement of new content in particular objects such as terminals and the history control in chat programs.
 
 +++ Virtual Buffer Settings (NVDA+control+b) +++
 The Virtual Buffer settings dialog can be found in the Preferences menu, under "Virtual Buffers...".

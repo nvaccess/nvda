@@ -9,6 +9,7 @@ from collections import OrderedDict
 import time
 import os
 import comtypes.client
+from comtypes import COMError
 import _winreg
 import globalVars
 from synthDriverHandler import SynthDriver,VoiceInfo
@@ -52,7 +53,10 @@ class SynthDriver(SynthDriver):
 			try:
 				ID=v[i].Id
 				name=v[i].GetDescription()
-				language=locale.windows_locale[int(v[i].getattribute('language').split(';')[0],16)]
+				try:
+					language=locale.windows_locale[int(v[i].getattribute('language').split(';')[0],16)]
+				except KeyError:
+					language=None
 			except COMError:
 				log.warning("Could not get the voice info. Skipping...")
 			voices[ID]=VoiceInfo(ID,name,language)

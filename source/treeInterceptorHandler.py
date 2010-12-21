@@ -18,6 +18,9 @@ def getTreeInterceptor(obj):
 			return ti
 
 def update(obj):
+	#Don't create treeInterceptors in self voicing apps
+	if obj.appModule and obj.appModule.selfVoicing:
+		return None
 	#If this object already has a treeInterceptor, just return that and don't bother trying to create one
 	ti=obj.treeInterceptor
 	if not ti:

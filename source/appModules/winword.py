@@ -12,7 +12,6 @@ import winUser
 import speech
 import appModuleHandler
 from NVDAObjects.window.winword import WordDocument
-from NVDAObjects.IAccessible import ContentGenericClient
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -20,10 +19,6 @@ class AppModule(appModuleHandler.AppModule):
 		if obj.windowClassName in ("_WwN","_WwO") and obj.role==controlTypes.ROLE_EDITABLETEXT:
 			#Word 2003 and above
 			clsList.insert(0, SpellCheckErrorField)
-		elif obj.windowClassName=="_WwO" and obj.role==controlTypes.ROLE_PANE:
-			#Word XP
-			clsList.remove(ContentGenericClient)
- 			clsList.insert(0, SpellCheckErrorField)
 
 class SpellCheckErrorField(WordDocument):
 

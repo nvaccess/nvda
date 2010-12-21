@@ -935,36 +935,35 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		DEBUG_MSG(L"Comparing backends root window "<<rootWindow<<L" with window "<<hwnd);
 		if(rootWindow==hwnd||IsChild(rootWindow,hwnd)) {
 			backend=(*i);
-		}
-	}
-	if(backend==NULL) {
-		return;
-	}
-	DEBUG_MSG(L"found active backend for this window at "<<backend);
-	//Ignore state change events on the root node (document) as it can cause rerendering when the document goes busy
-	if(eventID==EVENT_OBJECT_STATECHANGE&&hwnd==(HWND)(backend->rootDocHandle)&&childID==backend->rootID) return;
-	VBufStorage_controlFieldNode_t* node=backend->getControlFieldNodeWithIdentifier(docHandle,ID);
-	if(node==NULL&&eventID==EVENT_OBJECT_STATECHANGE) {
-		// This event is possibly due to a new document loading in a subframe.
-		// Gecko doesn't fire a reorder on the iframe (Mozilla bug 420845), so we need to use NODE_CHILD_OF in this case so that frames will reload.
-		DEBUG_MSG(L"State change on an unknown node in a subframe, try NODE_CHILD_OF");
-		if (getDocumentFrame(&hwnd, &childID)) {
-			#ifdef DEBUG
-			Beep(2000,50);
-			#endif
-			DEBUG_MSG(L"Got NODE_CHILD_OF, recursing");
-			renderThread_winEventProcHook(hookID,eventID,hwnd,OBJID_CLIENT,childID,threadID,time);
 		} else {
-			DEBUG_MSG(L"NODE_CHILD_OF failed, returning");
+			continue;
 		}
-		return;
+		DEBUG_MSG(L"found active backend for this window at "<<backend);
+		//Ignore state change events on the root node (document) as it can cause rerendering when the document goes busy
+		if(eventID==EVENT_OBJECT_STATECHANGE&&hwnd==(HWND)(backend->rootDocHandle)&&childID==backend->rootID) return;
+		VBufStorage_controlFieldNode_t* node=backend->getControlFieldNodeWithIdentifier(docHandle,ID);
+		if(node==NULL&&eventID==EVENT_OBJECT_STATECHANGE) {
+			// This event is possibly due to a new document loading in a subframe.
+			// Gecko doesn't fire a reorder on the iframe (Mozilla bug 420845), so we need to use NODE_CHILD_OF in this case so that frames will reload.
+			DEBUG_MSG(L"State change on an unknown node in a subframe, try NODE_CHILD_OF");
+			if (getDocumentFrame(&hwnd, &childID)) {
+				#ifdef DEBUG
+				Beep(2000,50);
+				#endif
+				DEBUG_MSG(L"Got NODE_CHILD_OF, recursing");
+				renderThread_winEventProcHook(hookID,eventID,hwnd,OBJID_CLIENT,childID,threadID,time);
+			} else {
+				DEBUG_MSG(L"NODE_CHILD_OF failed, returning");
+			}
+			continue;
+		}
+		if(node==NULL) {
+			DEBUG_MSG(L"No nodes to use, returning");
+			continue;
+		}
+		DEBUG_MSG(L"Invalidating subtree with node at "<<node);
+		backend->invalidateSubtree(node);
 	}
-	if(node==NULL) {
-		DEBUG_MSG(L"No nodes to use, returning");
-		return;
-	}
-	DEBUG_MSG(L"Invalidating subtree with node at "<<node);
-	backend->invalidateSubtree(node);
 }
 
 void GeckoVBufBackend_t::renderThread_initialize() {

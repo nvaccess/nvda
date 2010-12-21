@@ -8,6 +8,7 @@ from ctypes import *
 from ctypes.wintypes import *
 import braille
 import queueHandler
+from winUser import WNDCLASSEXW, WNDPROC, LRESULT, HCURSOR
 
 #Try to load the fs braille dll
 try:
@@ -27,26 +28,6 @@ FB_DISCONNECT=2
 
 LRESULT=c_long
 HCURSOR=c_long
-
-#Standard window class stuff
-
-WNDPROC=WINFUNCTYPE(LRESULT,HWND,c_uint,WPARAM,LPARAM)
-
-class WNDCLASSEXW(Structure):
-	_fields_=[
-		('cbSize',c_uint),
-		('style',c_uint),
-		('lpfnWndProc',WNDPROC),
-		('cbClsExtra',c_int),
-		('cbWndExtra',c_int),
-		('hInstance',HINSTANCE),
-		('hIcon',HICON),
-		('HCURSOR',HCURSOR),
-		('hbrBackground',HBRUSH),
-		('lpszMenuName',LPWSTR),
-		('lpszClassName',LPWSTR),
-		('hIconSm',HICON),
-	]
 
 appInstance=windll.kernel32.GetModuleHandleW(None)
 
