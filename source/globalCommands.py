@@ -202,7 +202,7 @@ class GlobalCommands(ScriptableObject):
 		obj=api.getNavigatorObject() 
 		try:
 			p=api.getReviewPosition().pointAtStart
-		except NotImplementedError:
+		except (NotImplementedError, LookupError):
 			p=None
 		if p:
 			x=p.x
