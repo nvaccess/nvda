@@ -15,3 +15,5 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	@classmethod
 	def check(cls):
 		return True
+
+	supportedSettings=[]

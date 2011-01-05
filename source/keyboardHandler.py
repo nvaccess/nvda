@@ -6,8 +6,9 @@
 
 """Keyboard support"""
 
-import winUser
 import time
+import wx
+import winUser
 import vkCodes
 import speech
 import ui
@@ -280,7 +281,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 	def reportExtra(self):
 		if self.vkCode in self.TOGGLE_KEYS:
-			queueHandler.queueFunction(queueHandler.eventQueue, self._reportToggleKey)
+			wx.CallLater(30, self._reportToggleKey)
 
 	def _reportToggleKey(self):
 		toggleState = winUser.getKeyState(self.vkCode) & 1
@@ -316,7 +317,6 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 		if not queueHandler.isPendingItems(queueHandler.eventQueue):
 			time.sleep(0.01)
-			import wx
 			wx.Yield()
 
 	@classmethod
