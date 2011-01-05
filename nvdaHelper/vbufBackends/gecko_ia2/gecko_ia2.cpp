@@ -905,6 +905,7 @@ bool getDocumentFrame(HWND* hwnd, long* childID) {
 
 void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	switch(eventID) {
+		case IA2_EVENT_TEXT_UPDATED:
 		case IA2_EVENT_TEXT_INSERTED:
 		case IA2_EVENT_TEXT_REMOVED:
 		case EVENT_OBJECT_REORDER:

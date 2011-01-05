@@ -106,6 +106,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	//Ignore all events but a few types
 	switch(eventID) {
 		case EVENT_OBJECT_SHOW:
+		case IA2_EVENT_TEXT_UPDATED:
 		case IA2_EVENT_TEXT_INSERTED:
 		break;
 		default:
@@ -181,7 +182,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	wstring textBuf;
 	if(!allowText&&allowAdditions&&eventID==EVENT_OBJECT_SHOW) {
 		getTextFromIAccessible(textBuf,pacc2,false,true);
-	} else if(allowText&&eventID==IA2_EVENT_TEXT_INSERTED) {
+	} else if(allowText&&(eventID==IA2_EVENT_TEXT_INSERTED||eventID==IA2_EVENT_TEXT_UPDATED)) {
  		getTextFromIAccessible(textBuf,pacc2,true,allowAdditions);
 	}
 	if(!textBuf.empty()) nvdaController_speakText(textBuf.c_str());
