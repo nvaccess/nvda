@@ -961,6 +961,7 @@ class BrailleDisplayDriverWithCursor(BrailleDisplayDriver):
 	"""
 
 	def __init__(self):
+		super(BrailleDisplayDriverWithCursor,self).__init__()
 		self._cursorPos = None
 		self._cursorBlinkRate = 0
 		self._cursorBlinkUp = True
