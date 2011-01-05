@@ -5,7 +5,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import globalVars
+import config
 import winUser
 from NVDAObjects.IAccessible import IAccessible 
 import controlTypes
@@ -58,7 +58,7 @@ class OldMSNHistory(cursorManager.ReviewCursorManager,IAccessible):
 		global lastMSNHistoryValue
 		if isinstance(self,OldMSNHistory) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
 			value=self.value
-			if value!=lastMSNHistoryValue and globalVars.reportDynamicContentChanges:
+			if value!=lastMSNHistoryValue and config.conf["presentation"]["reportDynamicContentChanges"]:
 				speech.speakText(value)
 				lastMSNHistoryValue=value
 
@@ -82,6 +82,6 @@ class MSNHistory(IAccessible):
 		global lastMSNHistoryValue
 		if winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
 			value=self.value
-			if value!=lastMSNHistoryValue and globalVars.reportDynamicContentChanges:
+			if value!=lastMSNHistoryValue and config.conf["presentation"]["reportDynamicContentChanges"]:
 				speech.speakText(value)
 				lastMSNHistoryValue=value

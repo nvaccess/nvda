@@ -85,6 +85,7 @@ outputDevice = string(default=default)
 		reportTooltips = boolean(default=false)
 		reportHelpBalloons = boolean(default=true)
 		reportObjectDescriptions = boolean(default=True)
+		reportDynamicContentChanges = boolean(default=True)
 	[[progressBarUpdates]]
 		reportBackgroundProgressBars = boolean(default=false)
 		#output modes are beep, speak, both, or off
@@ -114,6 +115,7 @@ outputDevice = string(default=default)
 	keyboardLayout = string(default="desktop")
 	speakTypedCharacters = boolean(default=true)
 	speakTypedWords = boolean(default=false)
+	beepForLowercaseWithCapslock = boolean(default=true)
 	speakCommandKeys = boolean(default=false)
 
 [virtualBuffers]
@@ -311,9 +313,12 @@ def isServiceInstalled():
 		return False
 
 def execElevated(path, params=None, wait=False):
+	import subprocess
 	import shellapi
 	import winKernel
 	import winUser
+	if params is not None:
+		params = subprocess.list2cmdline(params)
 	sei = shellapi.SHELLEXECUTEINFO(lpVerb=u"runas", lpFile=os.path.abspath(path), lpParameters=params, nShow=winUser.SW_HIDE)
 	if wait:
 		sei.fMask = shellapi.SEE_MASK_NOCLOSEPROCESS
@@ -346,7 +351,7 @@ def setSystemConfigToCurrentConfig():
 		_setSystemConfig(fromPath)
 		return True
 	except (OSError,WindowsError):
-		return execElevated(SLAVE_FILENAME, "setNvdaSystemConfig %s" % fromPath, wait=True)==0
+		return execElevated(SLAVE_FILENAME, (u"setNvdaSystemConfig", fromPath), wait=True)==0
 
 def _setSystemConfig(fromPath):
 	toPath=os.path.join(sys.prefix,'systemConfig')
@@ -363,7 +368,7 @@ def setStartOnLogonScreen(enable):
 		_setStartOnLogonScreen(enable)
 	except WindowsError:
 		# We probably don't have admin privs, so we need to elevate to do this using the slave.
-		if execElevated(SLAVE_FILENAME, "config_setStartOnLogonScreen %d" % enable, wait=True) != 0:
+		if execElevated(SLAVE_FILENAME, (u"config_setStartOnLogonScreen", u"%d" % enable), wait=True) != 0:
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
 
 def getConfigDirs(subpath=None):

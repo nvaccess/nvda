@@ -474,6 +474,9 @@ class KeyboardSettingsDialog(SettingsDialog):
 		self.wordsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Speak typed &words"))
 		self.wordsCheckBox.SetValue(config.conf["keyboard"]["speakTypedWords"])
 		settingsSizer.Add(self.wordsCheckBox,border=10,flag=wx.BOTTOM)
+		self.beepLowercaseCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Beep if typing lowercase letters when caps lock is on"))
+		self.beepLowercaseCheckBox.SetValue(config.conf["keyboard"]["beepForLowercaseWithCapslock"])
+		settingsSizer.Add(self.beepLowercaseCheckBox,border=10,flag=wx.BOTTOM)
 		self.commandKeysCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Speak command &keys"))
 		self.commandKeysCheckBox.SetValue(config.conf["keyboard"]["speakCommandKeys"])
 		settingsSizer.Add(self.commandKeysCheckBox,border=10,flag=wx.BOTTOM)
@@ -489,6 +492,7 @@ class KeyboardSettingsDialog(SettingsDialog):
 		config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]=self.extendedInsertAsNVDAModifierCheckBox.IsChecked()
 		config.conf["keyboard"]["speakTypedCharacters"]=self.charsCheckBox.IsChecked()
 		config.conf["keyboard"]["speakTypedWords"]=self.wordsCheckBox.IsChecked()
+		config.conf["keyboard"]["beepForLowercaseWithCapslock"]=self.beepLowercaseCheckBox.IsChecked()
 		config.conf["keyboard"]["speakCommandKeys"]=self.commandKeysCheckBox.IsChecked()
 		super(KeyboardSettingsDialog, self).onOk(evt)
 
@@ -606,6 +610,9 @@ class ObjectPresentationDialog(SettingsDialog):
 		self.reportBackgroundProgressBarsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report background progress bars"))
 		self.reportBackgroundProgressBarsCheckBox.SetValue(config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"])
 		settingsSizer.Add(self.reportBackgroundProgressBarsCheckBox,border=10,flag=wx.BOTTOM)
+		self.dynamicContentCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report dynamic &content changes"))
+		self.dynamicContentCheckBox.SetValue(config.conf["presentation"]["reportDynamicContentChanges"])
+		settingsSizer.Add(self.dynamicContentCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.tooltipCheckBox.SetFocus()
@@ -618,6 +625,7 @@ class ObjectPresentationDialog(SettingsDialog):
 		config.conf["presentation"]["reportObjectDescriptions"]=self.descriptionCheckBox.IsChecked()
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=self.progressLabels[self.progressList.GetSelection()][0]
 		config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]=self.reportBackgroundProgressBarsCheckBox.IsChecked()
+		config.conf["presentation"]["reportDynamicContentChanges"]=self.dynamicContentCheckBox.IsChecked()
 		super(ObjectPresentationDialog, self).onOk(evt)
 
 class VirtualBuffersDialog(SettingsDialog):

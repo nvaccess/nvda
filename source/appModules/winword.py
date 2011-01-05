@@ -17,9 +17,12 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName in ("_WwN","_WwO") and obj.role==controlTypes.ROLE_EDITABLETEXT:
+			#Word 2003 and above
 			clsList.insert(0, SpellCheckErrorField)
 
 class SpellCheckErrorField(WordDocument):
+
+	parentSDMCanOverrideName=False
 
 	def _get_WinwordWindowObject(self):
 		if not hasattr(self,'_WinwordWindowObject'):

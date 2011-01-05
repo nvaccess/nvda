@@ -210,7 +210,10 @@ class SynthDriver(SynthDriver):
 		for mode in self._enginesList:
 			ID=str(mode.gModeID)
 			name="%s - %s"%(mode.szModeName,mode.szProductName)
-			language=locale.windows_locale[mode.language.LanguageID]
+			try:
+				language=locale.windows_locale[mode.language.LanguageID]
+			except KeyError:
+				language=None
 			voices[ID]=VoiceInfo(ID,name,language)
 		return voices
 

@@ -42,6 +42,17 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("input help %s")%state)
 	script_toggleInputHelp.__doc__=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any.")
 
+	def script_toggleCurrentAppSelfVoicing(self,keyPress):
+		curApp=api.getFocusObject().appModule
+		if curApp.selfVoicing:
+			curApp.selfVoicing=False
+			ui.message(_("self voicing off"))
+		else:
+			curApp.selfVoicing=True
+			ui.message(_("self voicing on"))
+	script_toggleCurrentAppSelfVoicing.__doc__=_("Toggles the self-voicing mode of the active application.")
+	script_toggleCurrentAppSelfVoicing.allowInSelfVoicing=True
+
 	def script_reportCurrentLine(self,gesture):
 		obj=api.getFocusObject()
 		treeInterceptor=obj.treeInterceptor
@@ -191,7 +202,7 @@ class GlobalCommands(ScriptableObject):
 		obj=api.getNavigatorObject() 
 		try:
 			p=api.getReviewPosition().pointAtStart
-		except NotImplementedError:
+		except (NotImplementedError, LookupError):
 			p=None
 		if p:
 			x=p.x
@@ -738,12 +749,12 @@ class GlobalCommands(ScriptableObject):
 	script_toggleProgressBarOutput.__doc__=_("Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates")
 
 	def script_toggleReportDynamicContentChanges(self,gesture):
-		if globalVars.reportDynamicContentChanges:
+		if config.conf["presentation"]["reportDynamicContentChanges"]:
 			onOff=_("off")
-			globalVars.reportDynamicContentChanges=False
+			config.conf["presentation"]["reportDynamicContentChanges"]=False
 		else:
 			onOff=_("on")
-			globalVars.reportDynamicContentChanges=True
+			config.conf["presentation"]["reportDynamicContentChanges"]=True
 		ui.message(_("report dynamic content changes")+" "+onOff)
 	script_toggleReportDynamicContentChanges.__doc__=_("Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows")
 
@@ -898,6 +909,30 @@ class GlobalCommands(ScriptableObject):
 		self._copyStartMarker = None
 	script_review_copy.__doc__ = _("Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard")
 
+	def script_braille_scrollBack(self, gesture):
+		braille.handler.scrollBack()
+	script_braille_scrollBack.__doc__ = _("Scrolls the braille display back")
+	script_braille_scrollBack.bypassInputHelp = True
+
+	def script_braille_scrollForward(self, gesture):
+		braille.handler.scrollForward()
+	script_braille_scrollForward.__doc__ = _("Scrolls the braille display forward")
+	script_braille_scrollForward.bypassInputHelp = True
+
+	def script_braille_routeTo(self, gesture):
+		braille.handler.routeTo(gesture.routingIndex)
+	script_braille_routeTo.__doc__ = _("Routes the cursor to or activates the object under this braille cell")
+
+	def script_braille_previousLine(self, gesture):
+		if braille.handler.buffer.regions: 
+			braille.handler.buffer.regions[-1].previousLine(start=True)
+	script_braille_previousLine.__doc__ = _("Moves the braille display to the previous line")
+
+	def script_braille_nextLine(self, gesture):
+		if braille.handler.buffer.regions: 
+			braille.handler.buffer.regions[-1].nextLine()
+	script_braille_nextLine.__doc__ = _("Moves the braille display to the next line")
+
 	def script_reloadPlugins(self, gesture):
 		import globalPluginHandler
 		appModuleHandler.reloadAppModules()
@@ -911,6 +946,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+1": "toggleInputHelp",
 		"kb:NVDA+q": "quit",
 		"kb:NVDA+f2": "passNextKeyThrough",
+		"kb:NVDA+shift+s":"toggleCurrentAppSelfVoicing",
 
 		# System status
 		"kb:NVDA+f12": "dateTime",

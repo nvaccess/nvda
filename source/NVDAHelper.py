@@ -4,7 +4,6 @@ import winKernel
 
 from ctypes import *
 from comtypes import BSTR
-import keyboardHandler
 import winUser
 import speech
 import eventHandler

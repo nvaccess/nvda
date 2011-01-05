@@ -80,7 +80,6 @@ class SynthDriver(SynthDriver):
 	def _getAvailableVoices(self):
 		voices=OrderedDict()
 		for v in _espeak.getVoiceList():
-			print v.languages
 			l=v.languages[1:].split('-')[0:2]
 			if len(l)==2:
 				language="%s_%s"%(l[0],l[1].upper())

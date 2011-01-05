@@ -156,10 +156,19 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 | Stop speech | Control | Instantly stops speaking |
 | Pause Speech | Shift | Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer) |
 | NVDA Menu | NVDA+n | Pops up the NVDA menu to allow you to access preferences, tools and help etc |
+| Toggle Speech Mode | NVDA+s | Toggles speech mode between speech, beeps and off. |
 | Toggle Keyboard Help Mode | NVDA+1 | Pressing any key in this mode will report the key, and the description of any  NVDA command associated with it |
 | Quit NVDA | NVDA+q | Exits NVDA |
-| Report date/time | NVDA+f12 | Pressing once reports the current time, pressing twice reports the date |
 | Pass next key through | NVDA+f2 | Tells NVDA to pass the next key press straight through to the active application, even if it is normally treeted as an NVDA key command |
+| toggle application self voicing mode on and off | NVDA+shift+s | Self voicing mode disables all NVDA commands and speech/braille output for the current application. This is most useful in applications that provide their own speech or screen reading features. Press  this command again to disable self voicing mode. |
+%kc:endInclude
+
+++ Reporting System Information ++
+%kc:beginInclude
+|| Name | key | Description |
+| Report date/time | NVDA+f12 | Pressing once reports the current time, pressing twice reports the date |
+| Report battery status | NVDA+shift+b  Reports the battery status i.e. whether AC power is in use or  the current charge percentage. |
+| Report clipboard text | NVDA+c | Reports the Text in the clipboard if there is any. |
 %kc:endInclude
 
 + Navigating with NVDA +
@@ -175,6 +184,7 @@ There are some key commands that are useful when moving with the System focus:
 | Report current focus | NVDA+tab | announces the current object or control that has the System focus. Pressing twice will spell the information  |
 | Report title | NVDA+t | Announces the title of the currently active window. Pressing twice will spell the information. Pressing thrice will copy it to the clipboard |
 | Read active window | NVDA+b | reads all the controls in the currently active window (useful for dialogs) |
+| Report Status Bar | NVDA+end | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location |
 %kc:endInclude
 
 ++ Navigating with the System Caret ++
@@ -555,6 +565,11 @@ Key: NVDA+3
 
 When enabled, NVDA will announce all words you type on the keyboard.
 
+==== Beep if Typing Lowercase Letters when Caps Lock is On ====
+When enabled, a warning beep will be heard if a letter is typed with the shift key while caps lock is on.
+Generally, typing shifted letters with caps lock is unintentional and is usually due to not realising that caps lock is enabled.
+Therefore, it can be quite helpful to be warned about this.
+
 %kc:setting
 ==== Speak Command Keys ====
 Key: NVDA+4
@@ -652,6 +667,12 @@ It has the following options:
 ==== Report background progress bars ====
 This is an option that, when checked, tells nvda to keep reporting a progress bar, even if it is not physically in the foreground.
 If you minimize or switch away from a window that contains a progress bar, nvda will keep track of it, allowing you to do other things while nvda tracks the progress bar.
+
+%kc:setting
+==== Report dynamic content changes ====
+Key: NVDA+5
+
+Toggles the announcement of new content in particular objects such as terminals and the history control in chat programs.
 
 +++ Virtual Buffer Settings (NVDA+control+b) +++
 The Virtual Buffer settings dialog can be found in the Preferences menu, under "Virtual Buffers...".
@@ -850,10 +871,47 @@ You will need the Freedom Scientific braille display drivers installed on your s
 If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Although this page only mentions the Focus 40 Blue display, the driver supports all Freedom Scientific displays.
 
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Toggle left wiz wheel action | leftWizWheelPress |
+| Move back using left wiz wheel action | leftWizWheelUp |
+| Move forward using left wiz wheel action | leftWizWheelDown |
+| Toggle right wiz wheel action | rightWizWheelPress |
+| Move back using right wiz wheel action | rightWizWheelUp |
+| Move forward using right wiz wheel action | rightWizWheelDown |
+| Route to braille cell | routing |
+%kc:endInclude
+
 ++ Optelec ALVA BC640/680 ++
 Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] are supported.
 You do not need any specific drivers to be installed to use these displays.
 Just plug in the display and configure NVDA to use it.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | t1 |
+| Move braille display to previous line | t2 |
+| Move braille display to next line | t4 |
+| Scroll braille display forward | t5 |
+| Route to braille cell | routing |
+| shift+tab key | sp1 |
+| alt key | sp2 |
+| escape key | sp3 |
+| tab key | sp4 |
+| upArrow key | spUp |
+| downArrow key | spDown |
+| leftArrow key | spLeft |
+| rightArrow key | spRight |
+| enter key | spEnter |
+| NVDA Menu | sp1+sp3 |
+| windows+d key (minimise all applications) | sp1+sp4 |
+| windows key | sp2+sp3 |
+| alt+tab key | sp2+sp4 |
+%kc:endInclude
 
 ++ Handy Tech Displays ++
 NVDA supports all displays from [Handy Tech http://www.handytech.de/].
@@ -870,3 +928,14 @@ Just plug in the display and configure NVDA to use it.
 In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
 You should download and install the latest installer package, which will be named, for example, brltty-win-4.2-2.exe.
 When configuring the display and port to use, be sure to pay close attention to the instructions, especially if you are using a USB display and already have the manufacturer's drivers installed.
+
+Following are the BRLTTY command assignments for NVDA.
+Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/drivers/] for information about how BRLTTY commands are mapped to controls on braille displays.
+%kc:beginInclude
+|| Name | BRLTTY command |
+| Scroll braille display back | fwinlt (go left one window) |
+| Scroll braille display forward | fwinrt (go right one window) |
+| Move braille display to previous line | lnup (go up one line) |
+| Move braille display to next line | lndn (go down one line) |
+| Route to braille cell | route (bring cursor to character) |
+%kc:endInclude

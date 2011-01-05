@@ -1,8 +1,8 @@
-#synthDrivers/__init__.py
+﻿#synthDriverHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>, Peter Vágner <peter.v@datagate.sk>, Aleksey Sadovoy <lex@onm.su>
 
 from copy import deepcopy
 import os
@@ -170,7 +170,6 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@type inflection: int
 	@ivar lastIndex: The index of the chunk of text which was last spoken or C{None} if no index.
 	@type lastIndex: int
-	@warning: The has* and *MinStep attributes (e.g. hasPitch and pitchMinStep) are deprecated and should not be used in new drivers.
 	"""
 
 	#: The name of the synth; must be the original module file name.
@@ -197,7 +196,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@classmethod
 	def RateSetting(cls,minStep=1):
 		"""Factory function for creating rate setting."""
-		return NumericSynthSetting("rate",_("&Rate"),minStep)
+		return NumericSynthSetting("rate",_("&Rate"),minStep=minStep)
 	@classmethod
 	def VolumeSetting(cls,minStep=1):
 		"""Factory function for creating volume setting."""
@@ -205,12 +204,12 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@classmethod
 	def PitchSetting(cls,minStep=1):
 		"""Factory function for creating pitch setting."""
-		return NumericSynthSetting("pitch",_("&Pitch"),minStep)
+		return NumericSynthSetting("pitch",_("&Pitch"),minStep=minStep)
 
 	@classmethod
 	def InflectionSetting(cls,minStep=1):
 		"""Factory function for creating inflection setting."""
-		return NumericSynthSetting("inflection",_("&Inflection"),minStep)
+		return NumericSynthSetting("inflection",_("&Inflection"),minStep=minStep)
 
 	@classmethod
 	def check(cls):
@@ -284,8 +283,8 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		pass
 
 	def _getAvailableVoices(self):
-		"""fetches a ordered dictionary of voices that the synth supports.
-		@returns: a OrderedDict of L{VoiceInfo} instances representing the available voices, keyed by ID
+		"""fetches an ordered dictionary of voices that the synth supports.
+		@returns: an OrderedDict of L{VoiceInfo} instances representing the available voices, keyed by ID
 		@rtype: OrderedDict
 		"""
 		raise NotImplementedError
@@ -332,19 +331,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		return self._availableVariants
 
 	def _get_supportedSettings(self):
-		"""This base implementation checks old-style 'has_xxx' and constructs the list of settings.
-		@returns: list of supported settings
-		@rtype: l{tuple}
-		"""
-		result=[]
-		settings=(("voice",self.VoiceSetting),("variant",self.VariantSetting),("rate",self.RateSetting),("pitch",self.PitchSetting),("inflection",self.InflectionSetting),("volume",self.VolumeSetting))
-		for name,setting in settings:
-			if not getattr(self,"has%s"%name.capitalize(),False): continue
-			if hasattr(self,"%sMinStep"%name):
-				result.append(setting(getattr(self,"%sMinStep"%name)))
-			else:
-				result.append(setting())
-		return tuple(result)
+		raise NotImplementedError
 
 	def getConfigSpec(self):
 		spec=deepcopy(config.synthSpec)
