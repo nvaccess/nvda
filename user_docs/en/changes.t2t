@@ -15,6 +15,7 @@
 - hard page breaks are now announced when moving by line in Microsoft Word. (#758)
 - Bullets and numbering are now spoken in Microsoft Word when moving by line. (#208)  
 - A command to toggle self voicing mode for the current application (NVDA+shift+s) is now available. Self voicing mode disables all screen reading functionality in NVDA for a particular application. Very useful for applications that provide their own speech and or screen reading features. Press this command again to disable self voicing mode.
+- Some additional braille display key bindings have been added. See the Supported Braille Displays section of the User Guide for details. (#209)
 
  
 == Changes ==
@@ -50,8 +51,10 @@
 == Changes for Developers ==
 - SCons is now used to prepare the source tree and create binary builds, portable archives, installers, etc. See readme.txt at the root of the source distribution for details.
 - The key names used by NVDA (including key maps) have been made more friendly/logical; e.g. upArrow instead of extendedUp and numpadPageUp instead of prior. See the vkCodes module for a list.
--All input from the user is now represented by an inputCore.InputGesture instance. (#601)
- - Each source of input subclasses the base InputGesture class. For example, key presses are encompassed by the keyboardHandler.KeyboardInputGesture class.
+- All input from the user is now represented by an inputCore.InputGesture instance. (#601)
+ - Each source of input subclasses the base InputGesture class.
+ - Key presses on the system keyboard are encompassed by the keyboardHandler.KeyboardInputGesture class.
+ - Presses of buttons, wheels and other controls on a braille display are encompassed by subclasses of the braille.BrailleDisplayGesture class. These subclasses are provided by each braille display driver.
 - Input gestures are bound to ScriptableObjects using the ScriptableObject.bindGesture() method on an instance or an __gestures dict on the class which maps gesture identifiers to script names. See baseObject.ScriptableObject for details.
 - App modules no longer have key map files. All input gesture bindings must be done in the app module itself.
 - All scripts now take an InputGesture instance instead of a key press.
@@ -69,6 +72,10 @@
 - synthDriverHandler.VoiceInfo now takes an optional language argument which specifies the language of the voice.
 - SynthDriver objects now provide a language attribute which specifies the language of the current voice.
  - The base implementation uses the language specified on the VoiceInfo objects in availableVoices. This is suitable for most synthesisers which support one language per voice.
+- Braille display drivers have been enhanced to allow buttons, wheels and other controls to be bound to NVDA scripts:
+ - Drivers can provide a global input gesture map to add bindings for scripts anywhere in NVDA.
+ - They can also provide their own scripts to perform display specific functions.
+ - See braille.BrailleDisplayDriver for details and existing braille display drivers for examples.
 
 
 = 2010.2 =

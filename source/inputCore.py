@@ -13,7 +13,6 @@ import scriptHandler
 import queueHandler
 import api
 import speech
-import braille
 import config
 import watchdog
 from logHandler import log
@@ -72,10 +71,6 @@ class InputGesture(baseObject.AutoPropertyObject):
 	#: @type: bool
 	isModifier = False
 
-	#: Whether this gesture should bypass input help.
-	#: @type: bool
-	bypassInputHelp = False
-
 	def reportExtra(self):
 		"""Report any extra information about this gesture to the user.
 		This is called just after command gestures are reported.
@@ -96,6 +91,14 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
+	def _get_scriptableObject(self):
+		"""An object which contains scripts specific to this  gesture or type of gesture.
+		This object will be searched for scripts before any other object when handling this gesture.
+		@return: The gesture specific scriptable object or C{None} if there is none.
+		@rtype: L{baseObject.ScriptableObject}
+		"""
+		return None
+
 class GlobalGestureMap(object):
 	"""Maps gestures to scripts anywhere in NVDA.
 	This is used to allow users and locales to bind gestures in addition to those bound by individual scriptable objects.
@@ -103,15 +106,21 @@ class GlobalGestureMap(object):
 	See that method for details of the file format.
 	"""
 
-	def __init__(self):
+	def __init__(self, entries=None):
+		"""Constructor.
+		@param entries: Initial entries to add; see L{update} for the format.
+		@type entries: mapping of str to mapping
+		"""
 		self._map = {}
+		if entries:
+			self.update(entries)
 
 	def clear(self):
 		"""Clear this map.
 		"""
 		self._map.clear()
 
-	def add(self, gesture, module, className, script):
+	def add(self, gesture, module, className, script,replace=False):
 		"""Add a gesture mapping.
 		@param gesture: The gesture identifier.
 		@type gesture: str
@@ -122,12 +131,16 @@ class GlobalGestureMap(object):
 		@param script: The name of the target script
 			or C{None} to unbind the gesture for this class.
 		@type script: str
+		@param replace: if true replaces all existing bindings for this gesture with the given script, otherwise only appends this binding.
+		@type replace: boolean
 		"""
 		gesture = normalizeGestureIdentifier(gesture)
 		try:
 			scripts = self._map[gesture]
 		except KeyError:
 			scripts = self._map[gesture] = []
+		if replace:
+			del scripts[:]
 		scripts.append((module, className, script))
 
 	def load(self, filename):
@@ -146,7 +159,27 @@ class GlobalGestureMap(object):
 		@type: str
 		"""
 		conf = ConfigObj(filename, file_error=True, encoding="UTF-8")
-		for locationName, location in conf.iteritems():
+		self.update(conf)
+
+	def update(self, entries):
+		"""Add multiple map entries.
+		C{entries} must be a mapping of mappings.
+		Each inner mapping contains entries for a particular scriptable object class.
+		The key in the outer mapping must be the full Python module and class name.
+		The key of each entry in the inner mappings is the script name and the value is a list of one or more gestures.
+		If the script name is C{None}, the gesture will be unbound for this class.
+		For example, the following binds the "a" key to move to the next heading in virtual buffers
+		and removes the default "h" binding::
+			{
+				"virtualBuffers.VirtualBuffer": {
+					"nextHeading": "kb:a",
+					None: "kb:h",
+				}
+			}
+		@param entries: The items to add.
+		@type entries: mapping of str to mapping
+		"""
+		for locationName, location in entries.iteritems():
 			try:
 				module, className = locationName.rsplit(".", 1)
 			except:
@@ -233,7 +266,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		if log.isEnabledFor(log.IO) and not gesture.isModifier:
 			log.io("Input: %s" % gesture.identifiers[0])
 
-		if self.isInputHelpActive and not gesture.bypassInputHelp:
+		if self.isInputHelpActive and not getattr(script, "bypassInputHelp", False):
 			queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture)
 			return
 
@@ -257,8 +290,11 @@ class InputManager(baseObject.AutoPropertyObject):
 		runScript = False
 		if script:
 			scriptName = scriptHandler.getScriptName(script)
-			scriptLocation=scriptHandler.getScriptLocation(script)
-			log.info("Input help: gesture %s, bound to script %s on %s"%(gesture.identifiers[0],scriptName,scriptLocation))
+			scriptLocation = scriptHandler.getScriptLocation(script)
+			logMsg = "Input help: gesture %s, bound to script %s" % (gesture.identifiers[0], scriptName)
+			if scriptLocation:
+				logMsg += " on %s" % scriptLocation
+			log.info(logMsg)
 			if scriptName == "toggleInputHelp":
 				runScript = True
 			else:
@@ -266,6 +302,7 @@ class InputManager(baseObject.AutoPropertyObject):
 				if desc:
 					textList.append(desc)
 
+		import braille
 		braille.handler.message("\t\t".join(textList))
 		# Punctuation must be spoken for the gesture name (the first chunk) so that punctuation keys are spoken.
 		speech.speakText(textList[0], reason=speech.REASON_MESSAGE, expandPunctuation=True)
@@ -289,6 +326,22 @@ class InputManager(baseObject.AutoPropertyObject):
 			self.localeGestureMap.load(os.path.join("locale", lang, "gestures.ini"))
 		except IOError:
 			log.debugWarning("No locale gesture map for language %s" % lang)
+
+	def emulateGesture(self, gesture):
+		"""Convenience method to emulate a gesture.
+		First, an attempt will be made to execute the gesture using L{executeGesture}.
+		If that fails, the gesture will be sent to the operating system if possible using L{InputGesture.send}.
+		@param gesture: The gesture to execute.
+		@type gesture: L{InputGesture}
+		"""
+		try:
+			return self.executeGesture(gesture)
+		except NoInputGestureAction:
+			pass
+		try:
+			gesture.send()
+		except NotImplementedError:
+			pass
 
 def normalizeGestureIdentifier(identifier):
 	"""Normalize a gesture identifier so that it matches other identifiers for the same gesture.

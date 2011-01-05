@@ -909,6 +909,30 @@ class GlobalCommands(ScriptableObject):
 		self._copyStartMarker = None
 	script_review_copy.__doc__ = _("Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard")
 
+	def script_braille_scrollBack(self, gesture):
+		braille.handler.scrollBack()
+	script_braille_scrollBack.__doc__ = _("Scrolls the braille display back")
+	script_braille_scrollBack.bypassInputHelp = True
+
+	def script_braille_scrollForward(self, gesture):
+		braille.handler.scrollForward()
+	script_braille_scrollForward.__doc__ = _("Scrolls the braille display forward")
+	script_braille_scrollForward.bypassInputHelp = True
+
+	def script_braille_routeTo(self, gesture):
+		braille.handler.routeTo(gesture.routingIndex)
+	script_braille_routeTo.__doc__ = _("Routes the cursor to or activates the object under this braille cell")
+
+	def script_braille_previousLine(self, gesture):
+		if braille.handler.buffer.regions: 
+			braille.handler.buffer.regions[-1].previousLine(start=True)
+	script_braille_previousLine.__doc__ = _("Moves the braille display to the previous line")
+
+	def script_braille_nextLine(self, gesture):
+		if braille.handler.buffer.regions: 
+			braille.handler.buffer.regions[-1].nextLine()
+	script_braille_nextLine.__doc__ = _("Moves the braille display to the next line")
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",

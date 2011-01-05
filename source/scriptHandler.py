@@ -13,12 +13,22 @@ import queueHandler
 from logHandler import log
 import inputCore
 import globalPluginHandler
+import braille
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
 _lastScriptTime=0 #Time in MS of when the last script was executed
 _lastScriptRef=None #Holds a weakref to the last script that was executed
 _lastScriptCount=0 #The amount of times the last script was repeated
 _isScriptRunning=False
+
+def _makeKbEmulateScript(scriptName):
+	import keyboardHandler
+	keyName = scriptName[3:]
+	emuGesture = keyboardHandler.KeyboardInputGesture.fromName(keyName)
+	func = lambda gesture: inputCore.manager.emulateGesture(emuGesture)
+	func.__name__ = "script_%s" % scriptName
+	func.__doc__ = _("Emulates pressing %s on the system keyboard") % keyName
+	return func
 
 def _getObjScript(obj, gesture, globalMapScripts):
 	# Search the scripts from the global gesture maps.
@@ -27,10 +37,14 @@ def _getObjScript(obj, gesture, globalMapScripts):
 			if scriptName is None:
 				# The global map specified that no script should execute for this gesture and object.
 				return None
+			if scriptName.startswith("kb:"):
+				# Emulate a key press.
+				return _makeKbEmulateScript(scriptName)
 			try:
 				return getattr(obj, "script_%s" % scriptName)
 			except AttributeError:
 				pass
+
 	# Search the object itself for in-built bindings.
 	return obj.getScript(gesture)
 
@@ -40,9 +54,20 @@ def findScript(gesture):
 		return None
 
 	globalMapScripts = []
-	for globalMap in inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap:
+	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
+	globalMap = braille.handler.display.gestureMap
+	if globalMap:
+		globalMaps.append(globalMap)
+	for globalMap in globalMaps:
 		for identifier in gesture.identifiers:
 			globalMapScripts.extend(globalMap.getScriptsForGesture(identifier))
+
+	# Gesture specific scriptable object.
+	obj = gesture.scriptableObject
+	if obj:
+		func = _getObjScript(obj, gesture, globalMapScripts)
+		if func:
+			return func
 
 	# Global plugin level.
 	for plugin in globalPluginHandler.runningPlugins:
@@ -86,11 +111,15 @@ def getScriptName(script):
 	return script.__name__[7:]
 
 def getScriptLocation(script):
+	try:
+		instance = script.__self__
+	except AttributeError:
+		# Not an instance method, so this must be a fake script.
+		return None
 	name=script.__name__
-	for cls in script.__self__.__class__.__mro__:
+	for cls in instance.__class__.__mro__:
 		if name in cls.__dict__:
 			return "%s.%s"%(cls.__module__,cls.__name__)
-
 
 def _queueScriptCallback(script,gesture):
 	global _numScriptsQueued
@@ -114,13 +143,14 @@ def executeScript(script,gesture):
 	global _lastScriptTime, _lastScriptCount, _lastScriptRef, _isScriptRunning 
 	lastScriptRef=_lastScriptRef() if _lastScriptRef else None
 	#We don't allow the same script to be executed from with in itself, but we still should pass the key through
-	if _isScriptRunning and lastScriptRef==script.im_func:
+	scriptFunc=getattr(script,"__func__",script)
+	if _isScriptRunning and lastScriptRef==scriptFunc:
 		return gesture.send()
 	_isScriptRunning=True
 	try:
 		scriptTime=time.time()
-		scriptRef=weakref.ref(script.im_func)
-		if (scriptTime-_lastScriptTime)<=0.5 and script.im_func==lastScriptRef:
+		scriptRef=weakref.ref(scriptFunc)
+		if (scriptTime-_lastScriptTime)<=0.5 and scriptFunc==lastScriptRef:
 			_lastScriptCount+=1
 		else:
 			_lastScriptCount=0

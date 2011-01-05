@@ -18,6 +18,7 @@ import api
 import textInfos
 import speech
 import brailleDisplayDrivers
+import inputCore
 
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
@@ -183,10 +184,11 @@ class Region(object):
 		"""
 		pass
 
-	def previousLine(self):
+	def previousLine(self, start=False):
 		"""Move to the previous line if possible.
+		@param start: C{True} to move to the start of the line, C{False} to move to the end.
+		@type start: bool
 		"""
-		pass
 
 class TextRegion(Region):
 	"""A simple region containing a string of text.
@@ -352,11 +354,11 @@ class TextInfoRegion(Region):
 		dest.collapse()
 		self._setCursor(dest)
 
-	def previousLine(self):
+	def previousLine(self, start=False):
 		dest = self._line.copy()
 		dest.collapse()
-		# Move to the last character of the previous line.
-		moved = dest.move(textInfos.UNIT_CHARACTER, -1)
+		# If the end of the line is desired, move to the last character.
+		moved = dest.move(textInfos.UNIT_LINE if start else textInfos.UNIT_CHARACTER, -1)
 		if not moved:
 			return
 		dest.collapse()
@@ -877,6 +879,11 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory containing a BrailleDisplayDriver class which inherits from this base class.
 	
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
+	
+	Drivers should dispatch input such as presses of buttons, wheels or other controls using the L{inputCore} framework.
+	They should subclass L{BrailleDisplayGesture} and execute instances of those gestures using L{inputCore.manager.executeGesture}.
+	These gestures can be mapped in L{gestureMap}.
+	A driver can also inherit L{baseObject.ScriptableObject} to provide display specific scripts.
 	"""
 	#: The name of the braille display; must be the original module file name.
 	#: @type: str
@@ -944,6 +951,10 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	def _set_cursorBlinkRate(self, rate):
 		pass
 
+	#: Global input gesture map for this display driver.
+	#: @type: L{inputCore.GlobalGestureMap}
+	gestureMap = None
+
 class BrailleDisplayDriverWithCursor(BrailleDisplayDriver):
 	"""Abstract base braille display driver which manages its own cursor.
 	This should be used by braille display drivers where the display or underlying driver does not provide support for a cursor.
@@ -951,6 +962,7 @@ class BrailleDisplayDriverWithCursor(BrailleDisplayDriver):
 	"""
 
 	def __init__(self):
+		super(BrailleDisplayDriverWithCursor,self).__init__()
 		self._cursorPos = None
 		self._cursorBlinkRate = 0
 		self._cursorBlinkUp = True
@@ -1014,3 +1026,42 @@ class BrailleDisplayDriverWithCursor(BrailleDisplayDriver):
 		However, this method (L{_display}) is called to actually display the final cells.
 		"""
 		pass
+
+class BrailleDisplayGesture(inputCore.InputGesture):
+	"""A button, wheel or other control pressed on a braille display.
+	Subclasses must provide L{source} and L{id}.
+	L{routingIndex} should be provided for routing buttons.
+	If the braille display driver is a L{baseObject.ScriptableObject}, it can provide scripts specific to input gestures from this display.
+	"""
+
+	def _get_source(self):
+		"""The string used to identify all gestures from this display.
+		This should generally be the driver name.
+		This string will be included in the source portion of gesture identifiers.
+		For example, if this was C{alvaBC6},
+		a display specific gesture identifier might be C{br(alvaBC6):etouch1}.
+		@rtype: str
+		"""
+		raise NotImplementedError
+
+	def _get_id(self):
+		"""The unique, display specific id for this gesture.
+		@rtype: str
+		"""
+		raise NotImplementedError
+
+	#: The index of the routing key or C{None} if this is not a routing key.
+	#: @type: int
+	routingIndex = None
+
+	def _get_identifiers(self):
+		return (u"br({source}):{id}".format(source=self.source, id=self.id).lower(),)
+
+	def _get_displayName(self):
+		return self.id
+
+	def _get_scriptableObject(self):
+		display = handler.display
+		if isinstance(display, baseObject.ScriptableObject):
+			return display
+		return super(BrailleDisplayGesture, self).scriptableObject
