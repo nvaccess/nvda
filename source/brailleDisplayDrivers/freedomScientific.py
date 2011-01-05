@@ -6,8 +6,10 @@
 
 from ctypes import *
 from ctypes.wintypes import *
+import itertools
 import braille
 import inputCore
+from baseObject import ScriptableObject
 from winUser import WNDCLASSEXW, WNDPROC, LRESULT, HCURSOR
 
 #Try to load the fs braille dll
@@ -71,6 +73,7 @@ def nvdaFsBrlWndProc(hwnd,msg,wParam,lParam):
 					inputCore.manager.executeGesture(gesture)
 				except NoInputGestureAction:
 					pass
+		return 0
 	else:
 		return windll.user32.DefWindowProcW(hwnd,msg,wParam,lParam)
 
@@ -80,7 +83,7 @@ nvdaFsBrlWndCls.lpfnWndProc=nvdaFsBrlWndProc
 nvdaFsBrlWndCls.hInstance=appInstance
 nvdaFsBrlWndCls.lpszClassName=u"nvdaFsBrlWndCls"
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
+class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor,ScriptableObject):
 
 	name="freedomScientific"
 	description="Freedom Scientific Focus/PAC Mate series"
@@ -89,7 +92,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 	def check(cls):
 		return bool(fsbLib)
 
+	wizWheelActions=[
+		(_("display scroll"),("globalCommands","GlobalCommands","braille_scrollBack"),("globalCommands","GlobalCommands","braille_scrollForward")),
+		(_("line scroll"),("globalCommands","GlobalCommands","braille_previousLine"),("globalCommands","GlobalCommands","braille_nextLine")),
+	]
+
 	def __init__(self):
+		self.gestureMap=inputCore.GlobalGestureMap()
+		self.gestureMap.add("br(freedomScientific):routing","globalCommands","GlobalCommands","braille_routeTo")
+		self.leftWizWheelActionCycle=itertools.cycle(self.wizWheelActions)
+		action=self.leftWizWheelActionCycle.next()
+		self.gestureMap.add("br(freedomScientific):leftWizWheelUp",*action[1])
+		self.gestureMap.add("br(freedomScientific):leftWizWheelDown",*action[2])
+		self.rightWizWheelActionCycle=itertools.cycle(self.wizWheelActions)
+		action=self.rightWizWheelActionCycle.next()
+		self.gestureMap.add("br(freedomScientific):rightWizWheelUp",*action[1])
+		self.gestureMap.add("br(freedomScientific):rightWizWheelDown",*action[2])
 		super(BrailleDisplayDriver,self).__init__()
 		self._messageWindowClassAtom=windll.user32.RegisterClassExW(byref(nvdaFsBrlWndCls))
 		self._messageWindow=windll.user32.CreateWindowExW(0,self._messageWindowClassAtom,u"nvdaFsBrlWndCls window",0,0,0,0,0,None,None,appInstance,None)
@@ -115,13 +133,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 		cells="".join([chr(x) for x in cells])
 		fbWrite(self.fbHandle,0,len(cells),cells)
 
-	gestureMap = inputCore.GlobalGestureMap({
-		"globalCommands.GlobalCommands": {
-			"braille_scrollForward": ("br(freedomScientific):leftWizWheelDown","br(freedomScientific):rightWizWheelDown"),
-			"braille_scrollBack": ("br(freedomScientific):leftWizWheelUp","br(freedomScientific):rightWizWheelUp"),
-			"braille_routeTo": ("br(freedomScientific):routing",),
-		}
-	})
+	def script_toggleLeftWizWheelAction(self,gesture):
+		action=self.leftWizWheelActionCycle.next()
+		self.gestureMap.add("br(freedomScientific):leftWizWheelUp",*action[1],replace=True)
+		self.gestureMap.add("br(freedomScientific):leftWizWheelDown",*action[2],replace=True)
+		braille.handler.message(action[0])
+
+	def script_toggleRightWizWheelAction(self,gesture):
+		action=self.rightWizWheelActionCycle.next()
+		self.gestureMap.add("br(freedomScientific):rightWizWheelUp",*action[1],replace=True)
+		self.gestureMap.add("br(freedomScientific):rightWizWheelDown",*action[2],replace=True)
+		braille.handler.message(action[0])
+
+	__gestures={
+		"br(freedomScientific):leftWizWheelPress":"toggleLeftWizWheelAction",
+		"br(freedomScientific):rightWizWheelPress":"toggleRightWizWheelAction",
+	}
 
 class InputGesture(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
