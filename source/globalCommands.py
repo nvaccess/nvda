@@ -923,7 +923,7 @@ class GlobalCommands(ScriptableObject):
 
 	def script_braille_previousLine(self, gesture):
 		if braille.handler.buffer.regions: 
-			braille.handler.buffer.regions[-1].previousLine()
+			braille.handler.buffer.regions[-1].previousLine(start=True)
 	script_braille_previousLine.__doc__ = _("Moves the braille display to the previous line")
 
 	def script_braille_nextLine(self, gesture):

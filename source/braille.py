@@ -184,10 +184,11 @@ class Region(object):
 		"""
 		pass
 
-	def previousLine(self):
+	def previousLine(self, start=False):
 		"""Move to the previous line if possible.
+		@param start: C{True} to move to the start of the line, C{False} to move to the end.
+		@type start: bool
 		"""
-		pass
 
 class TextRegion(Region):
 	"""A simple region containing a string of text.
@@ -353,11 +354,11 @@ class TextInfoRegion(Region):
 		dest.collapse()
 		self._setCursor(dest)
 
-	def previousLine(self):
+	def previousLine(self, start=False):
 		dest = self._line.copy()
 		dest.collapse()
-		# Move to the last character of the previous line.
-		moved = dest.move(textInfos.UNIT_CHARACTER, -1)
+		# If the end of the line is desired, move to the last character.
+		moved = dest.move(textInfos.UNIT_LINE if start else textInfos.UNIT_CHARACTER, -1)
 		if not moved:
 			return
 		dest.collapse()
