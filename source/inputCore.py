@@ -124,7 +124,7 @@ class GlobalGestureMap(object):
 		"""
 		self._map.clear()
 
-	def add(self, gesture, module, className, script):
+	def add(self, gesture, module, className, script,replace=False):
 		"""Add a gesture mapping.
 		@param gesture: The gesture identifier.
 		@type gesture: str
@@ -135,12 +135,16 @@ class GlobalGestureMap(object):
 		@param script: The name of the target script
 			or C{None} to unbind the gesture for this class.
 		@type script: str
+		@param replace: if true replaces all existing bindings for this gesture with the given script, otherwise only appends this binding.
+		@type replace: boolean
 		"""
 		gesture = normalizeGestureIdentifier(gesture)
 		try:
 			scripts = self._map[gesture]
 		except KeyError:
 			scripts = self._map[gesture] = []
+		if replace:
+			del scripts[:]
 		scripts.append((module, className, script))
 
 	def load(self, filename):
