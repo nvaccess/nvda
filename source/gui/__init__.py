@@ -1,6 +1,6 @@
 #gui/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -256,6 +256,13 @@ class MainFrame(wx.Frame):
 			pythonConsole.initialize()
 		pythonConsole.activate()
 
+	def onReloadPluginsCommand(self, evt):
+		import appModuleHandler, globalPluginHandler
+		from NVDAObjects import NVDAObject
+		appModuleHandler.reloadAppModules()
+		globalPluginHandler.reloadGlobalPlugins()
+		NVDAObject.clearDynamicClassCache()
+
 class SysTrayIcon(wx.TaskBarIcon):
 
 	def __init__(self, frame):
@@ -305,6 +312,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
+		item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
+		self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
 
 		menu_help = wx.Menu()

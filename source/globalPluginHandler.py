@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2010 James Teh <jamie@jantrid.net>
 
+import sys
 import pkgutil
 import config
 import baseObject
@@ -24,13 +25,16 @@ def listPlugins():
 			continue
 		yield plugin
 
-def initialize():
-	config.addConfigDirsToPythonPackagePath(globalPlugins)
+def loadGlobalPlugins():
 	for plugin in listPlugins():
 		try:
 			runningPlugins.add(plugin())
 		except:
 			log.error("Error initializing global plugin %r" % plugin, exc_info=True)
+
+def initialize():
+	config.addConfigDirsToPythonPackagePath(globalPlugins)
+	loadGlobalPlugins()
 
 def terminate():
 	for plugin in list(runningPlugins):
@@ -39,6 +43,16 @@ def terminate():
 			plugin.terminate()
 		except:
 			log.exception("Error terminating global plugin %r" % plugin)
+
+def reloadGlobalPlugins():
+	global globalPlugins
+	terminate()
+	del globalPlugins
+	mods=[k for k,v in sys.modules.iteritems() if k.startswith("globalPlugins") and v is not None]
+	for mod in mods:
+		del sys.modules[mod]
+	import globalPlugins
+	loadGlobalPlugins()
 
 class GlobalPlugin(baseObject.ScriptableObject):
 	"""Base global plugin.

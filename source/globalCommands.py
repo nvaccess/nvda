@@ -933,6 +933,14 @@ class GlobalCommands(ScriptableObject):
 			braille.handler.buffer.regions[-1].nextLine()
 	script_braille_nextLine.__doc__ = _("Moves the braille display to the next line")
 
+	def script_reloadPlugins(self, gesture):
+		import globalPluginHandler
+		appModuleHandler.reloadAppModules()
+		globalPluginHandler.reloadGlobalPlugins()
+		NVDAObject.clearDynamicClassCache()
+		ui.message(_("Plugins reloaded"))
+	script_reloadPlugins.__doc__=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers")
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -1076,6 +1084,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+f1": "navigatorObject_devInfo",
 		"kb:NVDA+control+f1": "reportAppModuleInfo",
 		"kb:NVDA+control+z": "activatePythonConsole",
+		"kb:NVDA+control+f3": "reloadPlugins",
 		"kb(desktop):NVDA+control+f2": "test_navigatorDisplayModelText",
 	}
 

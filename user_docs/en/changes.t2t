@@ -16,6 +16,7 @@
 - Bullets and numbering are now spoken in Microsoft Word when moving by line. (#208)  
 - A command to toggle self voicing mode for the current application (NVDA+shift+s) is now available. Self voicing mode disables all screen reading functionality in NVDA for a particular application. Very useful for applications that provide their own speech and or screen reading features. Press this command again to disable self voicing mode.
 - Some additional braille display key bindings have been added. See the Supported Braille Displays section of the User Guide for details. (#209)
+- For the convenience of third party developers, app modules as well as global plugins can now be reloaded without restarting NVDA. Use tools -> Reload plugins in the NVDA menu or NVDA+control+f3. (#544)
 
  
 == Changes ==
