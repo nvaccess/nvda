@@ -912,10 +912,12 @@ class GlobalCommands(ScriptableObject):
 	def script_braille_scrollBack(self, gesture):
 		braille.handler.scrollBack()
 	script_braille_scrollBack.__doc__ = _("Scrolls the braille display back")
+	script_braille_scrollBack.bypassInputHelp = True
 
 	def script_braille_scrollForward(self, gesture):
 		braille.handler.scrollForward()
 	script_braille_scrollForward.__doc__ = _("Scrolls the braille display forward")
+	script_braille_scrollForward.bypassInputHelp = True
 
 	def script_braille_routeTo(self, gesture):
 		braille.handler.routeTo(gesture.routingIndex)
