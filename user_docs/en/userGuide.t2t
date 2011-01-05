@@ -868,6 +868,18 @@ You will need the Freedom Scientific braille display drivers installed on your s
 If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Although this page only mentions the Focus 40 Blue display, the driver supports all Freedom Scientific displays.
 
+Following are the key assignments for this display with NVDA. Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Toggle left wiz wheel action | leftWizWheelPress |
+| Move back using left wiz wheel action | leftWizWheelUp |
+| Move forward using left wiz wheel action | leftWizWheelDown |
+| Toggle right wiz wheel action | rightWizWheelPress |
+| Move back using right wiz wheel action | rightWizWheelUp |
+| Move forward using right wiz wheel action | rightWizWheelDown |
+| Route to braille cell | routing |
+%kc:endInclude
+
 ++ Optelec ALVA BC640/680 ++
 Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] are supported.
 You do not need any specific drivers to be installed to use these displays.
@@ -880,6 +892,7 @@ Following are the key assignments for this display with NVDA. Please see the dis
 | Move braille display to previous line | t2 |
 | Move braille display to next line | t4 |
 | Scroll braille display forward | t5 |
+| Route to braille cell | routing |
 | shift+tab key | sp1 |
 | alt key | sp2 |
 | escape key | sp3 |
