@@ -258,8 +258,10 @@ class MainFrame(wx.Frame):
 
 	def onReloadPluginsCommand(self, evt):
 		import appModuleHandler, globalPluginHandler
+		from NVDAObjects import NVDAObject
 		appModuleHandler.reloadAppModules()
 		globalPluginHandler.reloadGlobalPlugins()
+		NVDAObject.clearDynamicClassCache()
 
 class SysTrayIcon(wx.TaskBarIcon):
 

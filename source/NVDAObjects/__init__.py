@@ -124,6 +124,13 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 
 		return obj
 
+	@classmethod
+	def clearDynamicClassCache(cls):
+		"""Clear the dynamic class cache.
+		This should be called when a plugin is unloaded so that any used overlay classes in the unloaded plugin can be garbage collected.
+		"""
+		cls._dynamicClassCache.clear()
+
 class NVDAObject(baseObject.ScriptableObject):
 	"""NVDA's representation of a single control/widget.
 	Every widget, regardless of how it is exposed by an application or the operating system, is represented by a single NVDAObject instance.

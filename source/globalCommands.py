@@ -937,6 +937,7 @@ class GlobalCommands(ScriptableObject):
 		import globalPluginHandler
 		appModuleHandler.reloadAppModules()
 		globalPluginHandler.reloadGlobalPlugins()
+		NVDAObject.clearDynamicClassCache()
 		ui.message(_("Plugins reloaded"))
 	script_reloadPlugins.__doc__=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers")
 
