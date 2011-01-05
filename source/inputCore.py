@@ -71,10 +71,6 @@ class InputGesture(baseObject.AutoPropertyObject):
 	#: @type: bool
 	isModifier = False
 
-	#: Whether this gesture should bypass input help.
-	#: @type: bool
-	bypassInputHelp = False
-
 	def reportExtra(self):
 		"""Report any extra information about this gesture to the user.
 		This is called just after command gestures are reported.
@@ -270,7 +266,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		if log.isEnabledFor(log.IO) and not gesture.isModifier:
 			log.io("Input: %s" % gesture.identifiers[0])
 
-		if self.isInputHelpActive and not gesture.bypassInputHelp:
+		if self.isInputHelpActive and not getattr(script, "bypassInputHelp", False):
 			queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture)
 			return
 
