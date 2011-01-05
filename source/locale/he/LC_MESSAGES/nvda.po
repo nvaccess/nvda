@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA - R3939\n"
 "POT-Creation-Date: 2010-12-02 19:03+E. Australia Standard Time\n"
-"PO-Revision-Date: 2010-12-11 23:05+0200\n"
-"Last-Translator: Adi Kushnir <adikushnir@gmail.com>\n"
+"PO-Revision-Date: 2010-12-23 17:57+0200\n"
+"Last-Translator: \n"
 "Language-Team: Adi Kushnir, Avi Asher <adikushnir@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -526,7 +526,7 @@ msgstr "תעץ"
 
 #: braille.py:85
 msgid "tb"
-msgstr "tb"
+msgstr "סק"
 
 #: braille.py:89
 msgid "(x)"
@@ -582,7 +582,7 @@ msgstr "ללא ברייל"
 #: speech.py:84
 #: speech.py:626
 msgid "blank"
-msgstr "ריק"
+msgstr "מקום ריק"
 
 #: characterSymbols.py:20
 #: controlTypes.py:201
@@ -742,7 +742,7 @@ msgstr "bullet"
 
 #: characterSymbols.py:58
 msgid "dot dot dot"
-msgstr "נקודה נקודה נקודה"
+msgstr "..."
 
 #: colors.py:77
 msgid "black"
@@ -1030,7 +1030,7 @@ msgstr "פיסקה"
 
 #: controlTypes.py:227
 msgid "block quote"
-msgstr "ציטוט"
+msgstr "ציטוט גוש"
 
 #: controlTypes.py:228
 msgid "table header"
@@ -1078,7 +1078,7 @@ msgstr "caption"
 
 #: controlTypes.py:239
 msgid "check menu item"
-msgstr "פריט מסומן"
+msgstr "פריט תפריט מסומן"
 
 #: controlTypes.py:240
 msgid "date edit"
@@ -1194,7 +1194,7 @@ msgstr "מסגרת טקסט"
 
 #: controlTypes.py:269
 msgid "toggle button"
-msgstr "כפתור הניתן לשינוי"
+msgstr "כפתור מעבר"
 
 #: controlTypes.py:270
 msgid "border"
@@ -1231,7 +1231,7 @@ msgstr "כפתור מפוצל"
 
 #: controlTypes.py:279
 msgid "menu button"
-msgstr "תפריט כפתור"
+msgstr "כפתור תפריט"
 
 #: controlTypes.py:280
 msgid "drop down button grid"
@@ -1275,7 +1275,7 @@ msgstr "כתובת IP"
 
 #: controlTypes.py:290
 msgid "desktop icon"
-msgstr "שולחן עבודה"
+msgstr "סמל שולחן עבודה"
 
 #: controlTypes.py:291
 #: controlTypes.py:315
@@ -1288,7 +1288,7 @@ msgstr "מסגרת"
 
 #: controlTypes.py:293
 msgid "desktop pane"
-msgstr "שולחן עבודה"
+msgstr "סביבה שולחן עבודה"
 
 #: controlTypes.py:294
 msgid "option pane"
@@ -1312,7 +1312,7 @@ msgstr "חלון"
 
 #: controlTypes.py:300
 msgid "password edit"
-msgstr "עריכת סיסמה"
+msgstr "תיבת עריכה סיסמה"
 
 #: controlTypes.py:301
 msgid "font chooser"
@@ -1416,7 +1416,7 @@ msgstr "מסומן"
 
 #: controlTypes.py:330
 msgid "half checked"
-msgstr "חצי מסומן"
+msgstr "מסומן למחצה"
 
 #: controlTypes.py:331
 msgid "read only"
@@ -1424,11 +1424,11 @@ msgstr "קריאה בלבד"
 
 #: controlTypes.py:332
 msgid "expanded"
-msgstr "פתוח"
+msgstr "מורחב"
 
 #: controlTypes.py:333
 msgid "collapsed"
-msgstr "סגור"
+msgstr "מקובץ"
 
 #: controlTypes.py:334
 msgid "invisible"
@@ -1436,7 +1436,7 @@ msgstr "בילתי ניראה"
 
 #: controlTypes.py:335
 msgid "visited"
-msgstr "הופעל בעבר"
+msgstr "הופעל"
 
 #: controlTypes.py:336
 msgid "linked"
@@ -1468,7 +1468,7 @@ msgstr "modal"
 
 #: controlTypes.py:343
 msgid "has auto complete"
-msgstr "מחילה השלמה אוטומטית"
+msgstr "מחיל השלמה אוטומטית"
 
 #: controlTypes.py:344
 msgid "multi line"
@@ -1540,15 +1540,15 @@ msgstr "הטקסט \"%s\" לא נימצא."
 
 #: cursorManager.py:99
 msgid "find a text string from the current cursor position"
-msgstr "find a text string from the current cursor position"
+msgstr "חפש קטע טקסט ממיקום הסמן הנוכחי"
 
 #: cursorManager.py:106
 msgid "find the next occurrence of the previously entered text string from the current cursor's position"
-msgstr "find the next occurrence of the previously entered text string from the current cursor's position"
+msgstr "חפש את ההופעה הבאה של קטע הטקסט שהוקלד ממיקום הסמן הנוכחי"
 
 #: cursorManager.py:113
 msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
-msgstr "find the previous occurrence of the previously entered text string from the current cursor's position"
+msgstr "חפש את ההופעה הקודמת של קטע הטקסט שהוקלד ממיקום הסמן הנוכחי"
 
 #: cursorManager.py:240
 #: globalCommands.py:101
@@ -2257,7 +2257,7 @@ msgstr "Change reporting of mouse shape and object under mouse"
 
 #: gui\__init__.py:280
 msgid "&Review cursor..."
-msgstr "סמן הסריקה"
+msgstr "סמן ה&סקירה"
 
 #: gui\__init__.py:280
 msgid "Configure how and when the review cursor moves"
@@ -2406,8 +2406,8 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
 msgstr ""
 "ברוכים הבאים לNVDA!\n"
-"רוב הפקודות לעבודה עם NVDA דורשות לחיצה על מקש הNVDA ולאחר מיכן על מקשים אחרים.\n"
-"מקש הInsert במקלדת הנומרית ומקש Insert במקלדת הרגילה, מוגדרים כברירת מחדל עבור מקש הNVDA.\n"
+"רוב הפקודות לעבודה עם NVDA דורשות לחיצה על מקש NVDA בצירוף מקשים אחרים.\n"
+"מקש Insert במקלדת הנומרית ומקש Insert במקלדת הרגילה, מוגדרים כברירת מחדל עבור מקש הNVDA.\n"
 "ניתן להגדיר גם את מקש Caps Lock כמקש NVDA.\n"
 "לחץ על NVDA+N בכל זמן לפתיחת תפריט NVDA.\n"
 "מתפריט זה, תוכל לכוון את אפשרויות NVDA, לקבל עזרה, ולקבל מידע בכל הקשור לשימוש בתוכנה.\n"
@@ -2646,11 +2646,11 @@ msgstr "דווח על שינויי &עכבר"
 
 #: gui\settingsDialogs.py:506
 msgid "Enable mouse &tracking"
-msgstr "הפעל דיווח על ה&עכבר"
+msgstr "מעקב אחרי סמן ה&עכבר"
 
 #: gui\settingsDialogs.py:510
 msgid "Text &unit resolution:"
-msgstr "Text &unit resolution:"
+msgstr "&רזולוציית יחידת טקסט"
 
 #: gui\settingsDialogs.py:514
 msgid "text reporting unit"
@@ -2658,7 +2658,7 @@ msgstr "text reporting unit"
 
 #: gui\settingsDialogs.py:522
 msgid "Report &role when mouse enters object"
-msgstr "Report &role when mouse enters object"
+msgstr "דווח על כניסת העכבר לאו&בייקט"
 
 #: gui\settingsDialogs.py:525
 msgid "play audio coordinates when mouse moves"
@@ -2690,7 +2690,7 @@ msgstr "מצב סקירה פשוט"
 
 #: gui\settingsDialogs.py:573
 msgid "Object presentation"
-msgstr "הצגת אובייקט"
+msgstr "תצוגת אובייקט"
 
 #: gui\settingsDialogs.py:576
 msgid "Speak"
@@ -2778,7 +2778,7 @@ msgstr "דווח על שינויי עיצוב לאחר הסמן (יכול לגר
 
 #: gui\settingsDialogs.py:688
 msgid "Report font &name"
-msgstr "אמור את &שם הגופן"
+msgstr "דווח על שם ה&גופן"
 
 #: gui\settingsDialogs.py:691
 msgid "Report font &size"
@@ -2874,7 +2874,7 @@ msgstr "תיאור"
 
 #: gui\settingsDialogs.py:803
 msgid "Pattern"
-msgstr "Pattern"
+msgstr "מילה נוכחית"
 
 #: gui\settingsDialogs.py:804
 msgid "Replacement"
@@ -3956,3 +3956,4 @@ msgstr "מצב דפדוף"
 #: virtualBuffers\__init__.py:1274
 msgid "focus mode"
 msgstr "מצב פוקוס"
+

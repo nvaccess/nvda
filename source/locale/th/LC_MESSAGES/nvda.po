@@ -14,514 +14,2030 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: NVDAObjects\IAccessible\edit.py:528
-msgid "unknown"
-msgstr "ไม่รู้จัก"
+#: IAccessibleHandler.py:695
+msgid "Secure Desktop"
+msgstr ""
 
-#: NVDAObjects\IAccessible\edit.py:530
-msgid "%s embedded object"
-msgstr "%s วัตถุฝังตัว"
+#: NVDAHelper.py:117
+#, fuzzy
+msgid "unknown layout"
+msgstr "วัตถุที่ไม่รู้จัก"
 
-#: NVDAObjects\IAccessible\edit.py:532
-#: controlTypes.py:235
-msgid "embedded object"
-msgstr "วัตถุฝังตัว"
+#: NVDAHelper.py:118
+#, fuzzy
+msgid "layout %s"
+msgstr "ไม่ได้ %s"
 
-#: NVDAObjects\IAccessible\excel.py:46
-msgid "NVDA Excel Cell Editor"
-msgstr "เครื่องมือแก้ไขเซลล์ใน Excel ของ NVDA"
+#: NVDAObjects\IAccessible\__init__.py:1440
+#, fuzzy
+msgid "Taskbar"
+msgstr "แท่ง"
 
-#: NVDAObjects\IAccessible\excel.py:48
-msgid "Enter cell contents"
-msgstr "เข้าสู่เนื้อหาของเซลล์"
-
-#: NVDAObjects\IAccessible\excel.py:100
-msgid "through"
-msgstr "ส่งผ่าน"
-
-#: NVDAObjects\IAccessible\excel.py:100
-#: controlTypes.py:313
-msgid "selected"
-msgstr "เลือก"
-
-#: NVDAObjects\IAccessible\excel.py:104
-msgid "has formula"
-msgstr "มีสมการ"
-
-#: NVDAObjects\IAccessible\excel.py:133
-msgid "Moves to a cell and speaks its coordinates and content"
-msgstr " เลื่อนไปที่เซลล์และอ่านพิกัดที่อยู่รวมถึงเนื้อหาข้างใน "
-
-#: NVDAObjects\IAccessible\excel.py:142
-msgid "font"
-msgstr "แบบอักษร"
-
-#: NVDAObjects\IAccessible\excel.py:143
-msgid "point"
-msgstr "จุด"
-
-#: NVDAObjects\IAccessible\excel.py:145
-#: controlTypes.py:297 speech.py:717
-#: textBuffer.py:266
-#: textBuffer.py:318
-msgid "bold"
-msgstr "หนา"
-
-#: NVDAObjects\IAccessible\excel.py:147
-#: speech.py:722 textBuffer.py:273
-#: textBuffer.py:320
-msgid "italic"
-msgstr "เอียง"
-
-#: NVDAObjects\IAccessible\excel.py:149
-#: characterSymbols.py:50
-#: controlTypes.py:299
-#: textBuffer.py:280
-#: textBuffer.py:322
-msgid "underline"
-msgstr "ขีดเส้นใต้"
-
-#: NVDAObjects\IAccessible\sysTreeView32.py:162
+#: NVDAObjects\IAccessible\sysTreeView32.py:202
 msgid "%s items"
 msgstr "%s ตัวเลือก"
 
-#: NVDAObjects\IAccessible\winword.py:317
-#: NVDAObjects\IAccessible\winword.py:333
-#: NVDAObjects\IAccessible\winword.py:349
-#: NVDAObjects\IAccessible\winword.py:365
+#: NVDAObjects\UIA\__init__.py:422
+#, fuzzy
+msgid "invoke"
+msgstr "ลิ้ง"
+
+#: NVDAObjects\behaviors.py:53
+#: globalCommands.py:793
+msgid "%d percent"
+msgstr "%d เปอร์เซ็นต์"
+
+#: NVDAObjects\window\__init__.py:352
+#, fuzzy
+msgid "Desktop"
+msgstr "บน"
+
+#: NVDAObjects\window\edit.py:252
+#: NVDAObjects\window\edit.py:253
+#, fuzzy
+msgid "default color"
+msgstr "รูปแบบดั้งเดิม"
+
+#: NVDAObjects\window\edit.py:541
+#: controlTypes.py:179
+msgid "unknown"
+msgstr "ไม่รู้จัก"
+
+#: NVDAObjects\window\edit.py:543
+msgid "%s embedded object"
+msgstr "%s วัตถุฝังตัว"
+
+#: NVDAObjects\window\edit.py:545
+#: controlTypes.py:243
+msgid "embedded object"
+msgstr "วัตถุฝังตัว"
+
+#: NVDAObjects\window\excel.py:49
+msgid "NVDA Excel Cell Editor"
+msgstr "เครื่องมือแก้ไขเซลล์ใน Excel ของ NVDA"
+
+#: NVDAObjects\window\excel.py:51
+msgid "Enter cell contents"
+msgstr "เข้าสู่เนื้อหาของเซลล์"
+
+#: NVDAObjects\window\excel.py:116
+msgid "Extends the selection and speaks the last selected cell"
+msgstr "ขยายการเลือกและอ่านเซลล์ที่ถูกเลือกไว้ก่อนหน้านี้"
+
+#: NVDAObjects\window\excel.py:210
+msgid "has formula"
+msgstr "มีสมการ"
+
+#: NVDAObjects\window\excel.py:249
+#, fuzzy
+msgid "selection"
+msgstr "ตอน"
+
+#: NVDAObjects\window\excel.py:254
+msgid "%s %s through %s %s"
+msgstr "%s %s ไปยัง %s %s"
+
+#: NVDAObjects\window\winword.py:387
+#: NVDAObjects\window\winword.py:399
+#: NVDAObjects\window\winword.py:411
+#: NVDAObjects\window\winword.py:423
 msgid "not in table"
 msgstr "นอกตาราง"
 
-#: NVDAObjects\IAccessible\winword.py:326
-msgid "bottom of column"
-msgstr "ท้ายคอลัมน์"
+#: NVDAObjects\window\winword.py:394
+#: NVDAObjects\window\winword.py:406
+#: NVDAObjects\window\winword.py:418
+#: NVDAObjects\window\winword.py:430
+#: virtualBuffers\__init__.py:1128
+#, fuzzy
+msgid "edge of table"
+msgstr "ออกจากตาราง"
 
-#: NVDAObjects\IAccessible\winword.py:342
-msgid "top of column"
-msgstr "ต้นคอลัมน์"
+#: api.py:114
+#, fuzzy
+msgid "self voicing application"
+msgstr "โปรแกรม"
 
-#: NVDAObjects\IAccessible\winword.py:358
-msgid "end of row"
-msgstr "จบแถว"
-
-#: NVDAObjects\IAccessible\winword.py:374
-msgid "beginning of row"
-msgstr "เริ่มแถว"
-
-#: appModuleHandler.py:165
+#: appModuleHandler.py:142
 msgid "Error in appModule %s"
 msgstr "ข้อผิดพลาดในโมดูล %s"
 
-#: appModules\_default.py:55
-#: appModules\_default.py:132
-#: appModules\_default.py:142
-#: appModules\_default.py:152
-#: appModules\_default.py:162
-#: appModules\_default.py:642
-#: appModules\_default.py:718
-#: appModules\_default.py:728
-#: appModules\_default.py:738
-#: appModules\winamp.py:75
-#: appModules\winamp.py:85
-#: keyboardHandler.py:52
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: virtualBuffers\__init__.py:264
+#: appModules\calc.py:30
+#, fuzzy
+msgid "Display"
+msgstr "ทับ"
+
+#: appModules\explorer.py:35
+msgid "Start"
+msgstr "ดอกจัน"
+
+#: appModules\foobar2000.py:44
+#, fuzzy
+msgid "No track playing"
+msgstr "ตามติดเม้าส์"
+
+#: appModules\foobar2000.py:50
+msgid "Reports the remaining time of the currently playing track, if any"
+msgstr "รายงานเวลาที่เหลือบนแถบเสียงที่กำลังเล่นอยู่หากมี"
+
+#: appModules\miranda32.py:117
+#, fuzzy
+msgid "No message yet"
+msgstr "ไม่มีลูกศร"
+
+#: appModules\miranda32.py:118
+msgid "Displays one of the recent messages"
+msgstr "แสดงข้อความล่าสุดจากหลายๆ ข้อความ"
+
+#: appModules\msimn.py:18
+msgid "Attachments"
+msgstr "สิ่งที่ส่งมาด้วย"
+
+#: appModules\msimn.py:19
+msgid "To:"
+msgstr "ถึง:"
+
+#: appModules\msimn.py:20
+msgid "Newsgroup:"
+msgstr "กลุ่มข่าว:"
+
+#: appModules\msimn.py:21
+msgid "CC:"
+msgstr "สำเนาถึง:"
+
+#: appModules\msimn.py:22
+msgid "Subject:"
+msgstr "เรื่อง:"
+
+#: appModules\msimn.py:23
+#: appModules\msimn.py:31
+msgid "From:"
+msgstr "จาก:"
+
+#: appModules\msimn.py:24
+msgid "Date:"
+msgstr "วันที่:"
+
+#: appModules\msimn.py:25
+msgid "Forward to:"
+msgstr "ส่งต่อ ถึง:"
+
+#: appModules\msimn.py:26
+msgid "Answer to:"
+msgstr "ตอบถึง:"
+
+#: appModules\msimn.py:27
+msgid "Organisation:"
+msgstr "องค์กร:"
+
+#: appModules\msimn.py:28
+msgid "Distribution:"
+msgstr "การเผยแพร่:"
+
+#: appModules\msimn.py:29
+msgid "Key words:"
+msgstr "คำสำคัญ:"
+
+#: appModules\msimn.py:30
+msgid "BCC:"
+msgstr "สำเนาซ่อน:"
+
+#: appModules\outlook.py:22
+#: appModules\outlook.py:35
+msgid "subject: %s"
+msgstr "เรื่อง: %s"
+
+#: appModules\outlook.py:23
+msgid "received: %s"
+msgstr "ได้รับ %s"
+
+#: appModules\outlook.py:27
+msgid "unread"
+msgstr "ยังไม่ได้อ่าน"
+
+#: appModules\outlook.py:29
+msgid "attachment"
+msgstr "สิ่งที่ส่งมาด้วย"
+
+#: appModules\outlook.py:36
+msgid "sent: %s"
+msgstr "ส่ง: %s"
+
+#: appModules\sndrec32.py:11
+#, fuzzy
+msgid "Rewind"
+msgstr "end"
+
+#: appModules\sndrec32.py:12
+#, fuzzy
+msgid "Fast forward"
+msgstr "มีสมการ"
+
+#: appModules\sndrec32.py:13
+#, fuzzy
+msgid "Play"
+msgstr "ว่าง"
+
+#: appModules\sndrec32.py:14
+#, fuzzy
+msgid "Stop"
+msgstr "บน"
+
+#: appModules\sndrec32.py:15
+#, fuzzy
+msgid "Record"
+msgstr "โหลดซ้ำ"
+
+#: appModules\totalcmd.py:35
+#: globalCommands.py:490
+#: globalCommands.py:502
+msgid "left"
+msgstr "ซ้าย"
+
+#: appModules\totalcmd.py:37
+#: globalCommands.py:534
+#: globalCommands.py:551
+msgid "right"
+msgstr "ขวา"
+
+#: appModules\winamp.py:76
+#: appModules\winamp.py:86
+#: globalCommands.py:41
+#: globalCommands.py:166
+#: globalCommands.py:176
+#: globalCommands.py:186
+#: globalCommands.py:196
+#: globalCommands.py:694
+#: globalCommands.py:756
+#: globalCommands.py:766
+#: globalCommands.py:776
+#: gui\settingsDialogs.py:811
+#: keyboardHandler.py:290
+#: virtualBuffers\__init__.py:704
 msgid "on"
 msgstr "เปิด"
 
-#: appModules\_default.py:58
-#: appModules\_default.py:129
-#: appModules\_default.py:139
-#: appModules\_default.py:149
-#: appModules\_default.py:159
-#: appModules\_default.py:540
-#: appModules\_default.py:639
-#: appModules\_default.py:698
-#: appModules\_default.py:715
-#: appModules\_default.py:725
-#: appModules\_default.py:735
-#: appModules\winamp.py:77
-#: appModules\winamp.py:87
-#: gui\settingsDialogs.py:457
-#: keyboardHandler.py:52
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: virtualBuffers\__init__.py:264
+#: appModules\winamp.py:78
+#: appModules\winamp.py:88
+#: globalCommands.py:41
+#: globalCommands.py:163
+#: globalCommands.py:173
+#: globalCommands.py:183
+#: globalCommands.py:193
+#: globalCommands.py:572
+#: globalCommands.py:691
+#: globalCommands.py:753
+#: globalCommands.py:763
+#: globalCommands.py:773
+#: gui\settingsDialogs.py:575
+#: gui\settingsDialogs.py:811
+#: keyboardHandler.py:290
+#: virtualBuffers\__init__.py:704
 msgid "off"
 msgstr "ปิด"
 
-#: appModules\_default.py:60
-msgid "keyboard help %s"
-msgstr "ตัวช่วยแป้นพิมพ์ %s"
+#: aria.py:60
+#, fuzzy
+msgid "banner"
+msgstr "แท่ง"
 
-#: appModules\_default.py:61
+#: aria.py:61
+#, fuzzy
+msgid "complementary"
+msgstr "หมายเหตุ"
+
+#: aria.py:62
+msgid "content info"
+msgstr "ข้อมูลเนื้อหา"
+
+#: aria.py:63
+#, fuzzy
+msgid "main"
+msgstr "และ"
+
+#: aria.py:64
+#, fuzzy
+msgid "navigation"
+msgstr "ภาพเคลื่อนไหว"
+
+#: aria.py:65
+#, fuzzy
+msgid "search"
+msgstr "ดอกจัน"
+
+#: braille.py:27
+msgid "Arabic grade 1"
+msgstr "อาระบิกระดับ 1"
+
+#: braille.py:28
+#, fuzzy
+msgid "Bulgarian 8 dot computer braille"
+msgstr "เบรลล์อังกฤษอเมริกัน 8 จุดคอมพิวเตอร์"
+
+#: braille.py:29
+msgid "Welsh grade 1"
+msgstr "เววระดับ 1"
+
+#: braille.py:30
+msgid "Welsh grade 2"
+msgstr "เววระดับ 2"
+
+#: braille.py:31
+msgid "Czech grade 1"
+msgstr "เช็กระดับ 1"
+
+#: braille.py:32
+msgid "Danish grade 1"
+msgstr "ดัชระดับ 1"
+
+#: braille.py:33
+#, fuzzy
+msgid "German 8 dot computer braille"
+msgstr "เบรลล์อังกฤษอเมริกัน 8 จุดคอมพิวเตอร์"
+
+#: braille.py:34
+msgid "German grade 0"
+msgstr "เยอร์มันระดับ 0"
+
+#: braille.py:35
+msgid "German grade 1"
+msgstr "เยอร์มันระดับ 1"
+
+#: braille.py:36
+msgid "German grade 2"
+msgstr "เยอร์มันระดับ 2"
+
+#: braille.py:37
+msgid "English (U.K.) grade 1"
+msgstr "อังกฤษระดับ 1"
+
+#: braille.py:38
+msgid "English (U.K.) grade 2"
+msgstr "อังกฤษระดับ 2"
+
+#: braille.py:39
+msgid "English (U.S.) 6 dot computer braille"
+msgstr "เบรลล์อังกฤษอเมริกัน 6 จุดคอมพิวเตอร์"
+
+#: braille.py:40
+msgid "English (U.S.) 8 dot computer braille"
+msgstr "เบรลล์อังกฤษอเมริกัน 8 จุดคอมพิวเตอร์"
+
+#: braille.py:41
+msgid "English (U.S.) grade 1"
+msgstr "อังกฤษอเมริกันระดับ 1"
+
+#: braille.py:42
+msgid "English (U.S.) grade 2"
+msgstr "อังกฤษอเมริกันระดับ 2"
+
+#: braille.py:43
+msgid "Spanish grade 1"
+msgstr "สเปนระดับ 1"
+
+#: braille.py:44
+#, fuzzy
+msgid "Finnish 8 dot computer braille"
+msgstr "เบรลล์อังกฤษอเมริกัน 8 จุดคอมพิวเตอร์"
+
+#: braille.py:45
+msgid "French (Canada) grade 1"
+msgstr "ฝรั่งเศสแคนนาดาระดับ 1"
+
+#: braille.py:46
+msgid "French (Canada) grade 2"
+msgstr "ฝรั่งเศสแคนนาดาระดับ 2"
+
+#: braille.py:47
+#, fuzzy
+msgid "French (unified) 6 dot computer braille"
+msgstr "เบรลล์อังกฤษอเมริกัน 6 จุดคอมพิวเตอร์"
+
+#: braille.py:48
+#, fuzzy
+msgid "French (unified) 8 dot computer braille"
+msgstr "เบรลล์อังกฤษอเมริกัน 8 จุดคอมพิวเตอร์"
+
+#: braille.py:49
+#, fuzzy
+msgid "French (unified) Grade 2"
+msgstr "ฝรั่งเศสระดับ 2"
+
+#: braille.py:49
+msgid "Greek (Greece) grade 1"
+msgstr "กรีกระดับ 1"
+
+#: braille.py:50
+#, fuzzy
+msgid "Hebrew 8 dot computer braille"
+msgstr "เบรลล์อังกฤษอเมริกัน 8 จุดคอมพิวเตอร์"
+
+#: braille.py:51
+msgid "Hindi grade 1"
+msgstr "ฮินดีระดับ 1"
+
+#: braille.py:52
+#, fuzzy
+msgid "Croatian 8 dot computer braille"
+msgstr "เบรลล์อังกฤษอเมริกัน 8 จุดคอมพิวเตอร์"
+
+#: braille.py:53
+#, fuzzy
+msgid "Hungarian 8 dot computer braille"
+msgstr "เบรลล์อังกฤษอเมริกัน 8 จุดคอมพิวเตอร์"
+
+#: braille.py:54
+msgid "Italian grade 1"
+msgstr "อิตาเลียนระดับ1"
+
+#: braille.py:55
+#, fuzzy
+msgid "Latvian grade 1"
+msgstr "ลัดเวียนระดับ 1"
+
+#: braille.py:56
+msgid "Dutch (Belgium) grade 1"
+msgstr "ดัชเบรเยียมระดับ 1"
+
+#: braille.py:57
+msgid "Dutch (netherlands) grade 1"
+msgstr "ดัชเนเทอร์แลนด์ระดับ 1"
+
+#: braille.py:58
+msgid "Norwegian grade 0"
+msgstr "นอรเวเจียนระดับ 0"
+
+#: braille.py:59
+msgid "Norwegian grade 1"
+msgstr "นอรเวเจียนระดับ 1"
+
+#: braille.py:60
+msgid "Norwegian grade 2"
+msgstr "นอรเวเจียนระดับ 2"
+
+#: braille.py:61
+msgid "Norwegian grade 3"
+msgstr "นอรเวเจียนระดับ 3"
+
+#: braille.py:62
+msgid "Polish grade 1"
+msgstr "โปร์แลนด์ระดับ 1"
+
+#: braille.py:63
+msgid "Portuguese grade 1"
+msgstr "โปร์แลนด์ระดับ 2"
+
+#: braille.py:64
+#, fuzzy
+msgid "Russian grade 1"
+msgstr "ลัดเวียนระดับ 1"
+
+#: braille.py:65
+msgid "Swedish grade 1"
+msgstr "สวิสต์ระดับ 1"
+
+#: braille.py:66
+msgid "Slovak"
+msgstr "สโลวัก"
+
+#: braille.py:67
+msgid "Unified English Braille Code grade 1"
+msgstr "เบรลล์อังกฤษระดับ 1"
+
+#: braille.py:68
+msgid "Unified English Braille Code grade 2"
+msgstr "เบรลล์อังกฤษระดับ 2"
+
+#: braille.py:69
+msgid "Chinese (Hong Kong, Cantonese)"
+msgstr "จีน (ฮ้องกง)"
+
+#: braille.py:70
+msgid "Chinese (Taiwan, Mandarin)"
+msgstr "จีน (ไต้หวัน)"
+
+#: braille.py:74
+msgid "edt"
+msgstr "แก้ไข"
+
+#: braille.py:75
+#, fuzzy
+msgid "lst"
+msgstr "รายชื่อ"
+
+#: braille.py:76
+msgid "mnubar"
+msgstr "แถบรายการ"
+
+#: braille.py:77
+msgid "mnu"
+msgstr "รายการ"
+
+#: braille.py:78
+msgid "btn"
+msgstr "ปุ่ม"
+
+#: braille.py:79
+msgid "chk"
+msgstr "เลือก"
+
+#: braille.py:80
+msgid "rbtn"
+msgstr "ปุ่มวิทยุ"
+
+#: braille.py:81
+msgid "cbo"
+msgstr "กล่องคอมโบ"
+
+#: braille.py:82
+msgid "lnk"
+msgstr "ลิ้งค์"
+
+#: braille.py:83
+msgid "dlg"
+msgstr "ไดอาล๊อก"
+
+#: braille.py:84
+#, fuzzy
+msgid "tv"
+msgstr "แอ๊ด"
+
+#: braille.py:85
+#, fuzzy
+msgid "tb"
+msgstr "tab"
+
+#: braille.py:89
+msgid "(x)"
+msgstr "กล่องเลือก"
+
+#: braille.py:90
+msgid "sel"
+msgstr "เซลล์"
+
+#: braille.py:91
+msgid "submnu"
+msgstr "รายการย่อย"
+
+#: braille.py:94
+msgid "( )"
+msgstr "กล่องเปล่า"
+
+#: braille.py:222 speech.py:676
+msgid "not %s"
+msgstr "ไม่ได้ %s"
+
+#: braille.py:234 speech.py:684
+msgid "%s of %s"
+msgstr "ตัวเลือก %s ใน %s"
+
+#: braille.py:236 speech.py:689
+#: speech.py:692
+msgid "level %s"
+msgstr "ระดับ: %s"
+
+#: brailleDisplayDrivers\alvaBC6.py:74
+msgid "ALVA BC640/680 series"
+msgstr ""
+
+#: brailleDisplayDrivers\handyTech.py:40
+msgid "Handy Tech braille displays"
+msgstr "เครื่องแสดงผลจอภาพเป็นอักษรเบรลล์ของ Handy Tech"
+
+#: brailleDisplayDrivers\lilli.py:32
+msgid "MDV Lilli"
+msgstr ""
+
+#: brailleDisplayDrivers\noBraille.py:13
+msgid "No braille"
+msgstr "ไม่มีเบรลล์"
+
+#: characterSymbols.py:17
+#: characterSymbols.py:18
+#: characterSymbols.py:19 speech.py:84
+#: speech.py:626
+msgid "blank"
+msgstr "ว่าง"
+
+#: characterSymbols.py:20
+#: controlTypes.py:201
+msgid "tab"
+msgstr "tab"
+
+#: characterSymbols.py:21
+msgid "line feed"
+msgstr "จบบรรทัด"
+
+#: characterSymbols.py:22
+#, fuzzy
+msgid "page break"
+msgstr "หน้า %s"
+
+#: characterSymbols.py:23
+msgid "carriage return"
+msgstr "ขึ้นบรรทัดใหม่"
+
+#: characterSymbols.py:24
+#: keyLabels.py:35
+msgid "space"
+msgstr "วรรค"
+
+#: characterSymbols.py:25
+msgid "bang"
+msgstr "bang"
+
+#: characterSymbols.py:26
+msgid "quote"
+msgstr "อ้างถึง"
+
+#: characterSymbols.py:27
+msgid "number"
+msgstr "จำนวน"
+
+#: characterSymbols.py:28
+msgid "dollar"
+msgstr "ดอลล่า"
+
+#: characterSymbols.py:29
+msgid "percent"
+msgstr "เปอร์เซ็น"
+
+#: characterSymbols.py:30
+msgid "and"
+msgstr "และ"
+
+#: characterSymbols.py:31
+msgid "tick"
+msgstr "ติ๊ก"
+
+#: characterSymbols.py:32
+msgid "left paren"
+msgstr "เปิดวงเล็บ"
+
+#: characterSymbols.py:33
+msgid "right paren"
+msgstr "ปิดวงเล็บ"
+
+#: characterSymbols.py:34
+msgid "star"
+msgstr "ดอกจัน"
+
+#: characterSymbols.py:35
+msgid "plus"
+msgstr "บวก"
+
+#: characterSymbols.py:36
+msgid "comma"
+msgstr "จุลภาค"
+
+#: characterSymbols.py:37
+msgid "dash"
+msgstr "ขีด"
+
+#: characterSymbols.py:38
+msgid "dot"
+msgstr "จุด"
+
+#: characterSymbols.py:39
+msgid "slash"
+msgstr "ทับ"
+
+#: characterSymbols.py:40
+msgid "colon"
+msgstr "โคลอน"
+
+#: characterSymbols.py:41
+msgid "semi"
+msgstr "เซมิ"
+
+#: characterSymbols.py:42
+msgid "less"
+msgstr "น้อยกว่า"
+
+#: characterSymbols.py:43
+msgid "equals"
+msgstr "เท่ากับ"
+
+#: characterSymbols.py:44
+msgid "greater"
+msgstr "มากกว่า"
+
+#: characterSymbols.py:45
+msgid "question"
+msgstr "เครื่องหมายคำถาม"
+
+#: characterSymbols.py:46
+msgid "at"
+msgstr "แอ๊ด"
+
+#: characterSymbols.py:47
+msgid "left bracket"
+msgstr "ก้ามปูเปิด"
+
+#: characterSymbols.py:48
+msgid "back slash"
+msgstr "back slash"
+
+#: characterSymbols.py:49
+msgid "right bracket"
+msgstr "ก้ามปูปิด"
+
+#: characterSymbols.py:50
+#: controlTypes.py:271
+msgid "caret"
+msgstr "caret"
+
+#: characterSymbols.py:51
+#: controlTypes.py:307
+msgid "underline"
+msgstr "ขีดเส้นใต้"
+
+#: characterSymbols.py:52
+msgid "graav"
+msgstr "หนอน"
+
+#: characterSymbols.py:53
+msgid "left brace"
+msgstr "ปีกกาเปิด"
+
+#: characterSymbols.py:54
+msgid "bar"
+msgstr "แท่ง"
+
+#: characterSymbols.py:55
+msgid "right brace"
+msgstr "ปีกกาปิด"
+
+#: characterSymbols.py:56
+msgid "tilda"
+msgstr "ทิว-ด้า"
+
+#: characterSymbols.py:57
+#: characterSymbols.py:59
+msgid "bullet"
+msgstr "ลูกปืน"
+
+#: characterSymbols.py:58
+msgid "dot dot dot"
+msgstr "จุด จุด จุด"
+
+#: colors.py:77
+#, fuzzy
+msgid "black"
+msgstr "ว่าง"
+
+#: colors.py:78
+#, fuzzy
+msgid "green"
+msgstr "มากกว่า"
+
+#: colors.py:79
+#, fuzzy
+msgid "light grey"
+msgstr "ปีกกาปิด"
+
+#: colors.py:80
+#, fuzzy
+msgid "lime"
+msgstr "บรรทัด"
+
+#: colors.py:81
+#, fuzzy
+msgid "grey"
+msgstr "มากกว่า"
+
+#: colors.py:82
+#, fuzzy
+msgid "olive"
+msgstr "บรรทัด"
+
+#: colors.py:83
+#, fuzzy
+msgid "white"
+msgstr "shift"
+
+#: colors.py:84
+#, fuzzy
+msgid "yellow"
+msgstr "เซลล์"
+
+#: colors.py:85
+#, fuzzy
+msgid "dark red"
+msgstr "แก้ไขวันที่"
+
+#: colors.py:86
+#, fuzzy
+msgid "navy blue"
+msgstr "ไม่สามารถเลือกได้ "
+
+#: colors.py:87
+#, fuzzy
+msgid "red"
+msgstr "แก้ไข"
+
+#: colors.py:88
+#, fuzzy
+msgid "blue"
+msgstr "ตาราง"
+
+#: colors.py:89
+#, fuzzy
+msgid "purple"
+msgstr "url"
+
+#: colors.py:90
+#, fuzzy
+msgid "teal"
+msgstr "เสียงอ่าน"
+
+#: colors.py:91
+#, fuzzy
+msgid "fuchsia"
+msgstr "โฟกัส"
+
+#: colors.py:92
+#, fuzzy
+msgid "aqua"
+msgstr "เท่ากับ"
+
+#: colors.py:94
+#, fuzzy
+msgid "orange"
+msgstr "เสร็จสมบูรณ์"
+
+#: compoundDocuments.py:401
+#: globalCommands.py:114 speech.py:277
+#: speech.py:378 speech.py:391
+#: virtualBuffers\__init__.py:613
+msgid "selected %s"
+msgstr "เลือก %s"
+
+#: config\__init__.py:21
+#, fuzzy
+msgid "Badly formed configuration file"
+msgstr "บันทึกการตั้งค่า"
+
+#: config\__init__.py:36
+#, fuzzy
+msgid "%s: %s, defaulting to %s"
+msgstr "%s เลือก"
+
+#: config\__init__.py:178
+#, fuzzy
+msgid "Error parsing configuration file: %s"
+msgstr "ผิดพลาดในการเรียกใช้งานภาษา %s"
+
+#: config\__init__.py:185
 msgid ""
-"Turns keyboard help on and off. When on, pressing a key on the keyboard will "
-"tell you what script is associated with it, if any."
+"Errors in configuration file '%s':\n"
+"%s"
+msgstr ""
+"ข้อผิดพลาดจาก file สำหรับตั้งค่า '%s':\n"
+"%s"
+
+#: controlTypes.py:180
+msgid "window"
+msgstr "หน้าต่าง"
+
+#: controlTypes.py:181
+msgid "title bar"
+msgstr "แถบหัวเรื่อง"
+
+#: controlTypes.py:182
+msgid "pane"
+msgstr "พื้นหน้า"
+
+#: controlTypes.py:183
+msgid "dialog"
+msgstr "ไดอาล่อก"
+
+#: controlTypes.py:184
+msgid "check box"
+msgstr "กล่องสัญลักษณ์"
+
+#: controlTypes.py:185
+msgid "radio button"
+msgstr "ปุ่มวิทยุ"
+
+#: controlTypes.py:186
+msgid "text"
+msgstr "ข้อความ"
+
+#: controlTypes.py:187
+msgid "edit"
+msgstr "แก้ไข"
+
+#: controlTypes.py:188
+msgid "button"
+msgstr "ปุ่ม"
+
+#: controlTypes.py:189
+msgid "menu bar"
+msgstr "แถบรายการ"
+
+#: controlTypes.py:190
+msgid "menu item"
+msgstr "ตัวเลือกจากรายการ"
+
+#: controlTypes.py:191
+#: controlTypes.py:298
+msgid "menu"
+msgstr "รายการ"
+
+#: controlTypes.py:192
+msgid "combo box"
+msgstr "กล่องคอมโบ"
+
+#: controlTypes.py:193
+msgid "list"
+msgstr "รายชื่อ"
+
+#: controlTypes.py:194
+msgid "list item"
+msgstr "ตัวเลือกจากรายชื่อ"
+
+#: controlTypes.py:195
+msgid "graphic"
+msgstr "กร๊าฟฟิ่ก"
+
+#: controlTypes.py:196
+msgid "help balloon"
+msgstr "บอลลูนช่วยเหลือ"
+
+#: controlTypes.py:197
+msgid "tool tip"
+msgstr "คำแนะนำเครื่องมือ"
+
+#: controlTypes.py:198 speech.py:958
+msgid "link"
+msgstr "ลิ้งค์"
+
+#: controlTypes.py:199
+msgid "tree view"
+msgstr "มูมมองต้นไม้"
+
+#: controlTypes.py:200
+msgid "tree view item"
+msgstr "ตัวเลือกจากมุมมองต้นไม้"
+
+#: controlTypes.py:202
+msgid "tab control"
+msgstr "แถบควบคุม"
+
+#: controlTypes.py:203
+msgid "slider"
+msgstr "รางเลื่อน"
+
+#: controlTypes.py:204
+msgid "progress bar"
+msgstr "แถบแสดงความคืบหน้า"
+
+#: controlTypes.py:205
+msgid "scroll bar"
+msgstr "แถบเลื่อน"
+
+#: controlTypes.py:206
+msgid "status bar"
+msgstr "แถบสถานะ"
+
+#: controlTypes.py:207
+msgid "table"
+msgstr "ตาราง"
+
+#: controlTypes.py:208
+msgid "cell"
+msgstr "เซลล์"
+
+#: controlTypes.py:209
+msgid "column"
+msgstr "คอลั่ม"
+
+#: controlTypes.py:210
+msgid "row"
+msgstr "แถว"
+
+#: controlTypes.py:211
+msgid "frame"
+msgstr "กรอบ"
+
+#: controlTypes.py:212
+msgid "tool bar"
+msgstr "แถบเครื่องมือ"
+
+#: controlTypes.py:213
+msgid "column header"
+msgstr "หัวคอลั่ม"
+
+#: controlTypes.py:214
+msgid "row header"
+msgstr "หัวแถว"
+
+#: controlTypes.py:215
+msgid "drop down button"
+msgstr "ปุ่มเลื่อนไหล"
+
+#: controlTypes.py:216
+msgid "clock"
+msgstr "นาฬิกา"
+
+#: controlTypes.py:217
+msgid "separator"
+msgstr "เส้นแบ่ง"
+
+#: controlTypes.py:218
+msgid "form"
+msgstr "ฟอร์ม"
+
+#: controlTypes.py:219
+msgid "heading"
+msgstr "หัวข้อ"
+
+#: controlTypes.py:220
+msgid "heading 1"
+msgstr "หัวข้อระดับ 1"
+
+#: controlTypes.py:221
+msgid "heading 2"
+msgstr "หัวข้อระดับ 2"
+
+#: controlTypes.py:222
+msgid "heading 3"
+msgstr "หัวข้อระดับ 3"
+
+#: controlTypes.py:223
+msgid "heading 4"
+msgstr "หัวข้อระดับ 4"
+
+#: controlTypes.py:224
+msgid "heading 5"
+msgstr "หัวข้อระดับ 5"
+
+#: controlTypes.py:225
+msgid "heading 6"
+msgstr "หัวข้อระดับ 6"
+
+#: controlTypes.py:226
+#: textInfos\__init__.py:139
+msgid "paragraph"
+msgstr "ย่อหน้า"
+
+#: controlTypes.py:227
+msgid "block quote"
+msgstr "บร๊อกอ้างอิง"
+
+#: controlTypes.py:228
+msgid "table header"
+msgstr "ส่วนหัวของตาราง"
+
+#: controlTypes.py:229
+msgid "table body"
+msgstr "ส่วนกลางของตาราง"
+
+#: controlTypes.py:230
+msgid "table footer"
+msgstr "ส่วนท้ายของตาราง"
+
+#: controlTypes.py:231
+msgid "document"
+msgstr "เอกสาร"
+
+#: controlTypes.py:232
+msgid "animation"
+msgstr "ภาพเคลื่อนไหว"
+
+#: controlTypes.py:233
+msgid "application"
+msgstr "โปรแกรม"
+
+#: controlTypes.py:234
+msgid "box"
+msgstr "กล่อง"
+
+#: controlTypes.py:235
+msgid "grouping"
+msgstr "จัดกลุ่ม"
+
+#: controlTypes.py:236
+msgid "property page"
+msgstr "ลักษณะของหน้า"
+
+#: controlTypes.py:237
+msgid "canvas"
+msgstr "แคนวาส"
+
+#: controlTypes.py:238
+msgid "caption"
+msgstr "ป้ายอธิบายภาพ"
+
+#: controlTypes.py:239
+msgid "check menu item"
+msgstr "ตัวเลือกของรายการที่เลือก"
+
+#: controlTypes.py:240
+msgid "date edit"
+msgstr "แก้ไขวันที่"
+
+#: controlTypes.py:241
+msgid "icon"
+msgstr "ไอค่อน"
+
+#: controlTypes.py:242
+msgid "directory pane"
+msgstr "พื้นหน้าสารบบ"
+
+#: controlTypes.py:244
+msgid "end note"
+msgstr "อ้างอิงท้ายเรื่อง"
+
+#: controlTypes.py:245
+msgid "footer"
+msgstr "ท้ายกระดาษ"
+
+#: controlTypes.py:246
+msgid "foot note"
+msgstr "เชิงอรรถ"
+
+#: controlTypes.py:247
+msgid "glass pane"
+msgstr "พื้นหน้ากระจก"
+
+#: controlTypes.py:248
+msgid "header"
+msgstr "หัวข้อ"
+
+#: controlTypes.py:249
+msgid "image map"
+msgstr "แผนภาพ"
+
+#: controlTypes.py:250
+msgid "input window"
+msgstr "หน้าต่างรับข้อมูล"
+
+#: controlTypes.py:251
+msgid "label"
+msgstr "ป้ายฉลาก"
+
+#: controlTypes.py:252
+msgid "note"
+msgstr "บันทึกเตือนความจำ"
+
+#: controlTypes.py:253
+msgid "page"
+msgstr "หน้า"
+
+#: controlTypes.py:254
+msgid "radio menu item"
+msgstr "ตัวเลือกจากรายการแบบวิทยุ"
+
+#: controlTypes.py:255
+msgid "layered pane"
+msgstr "พื้นหน้าเป็นชั้นๆ"
+
+#: controlTypes.py:256
+msgid "redundant object"
+msgstr "วัตถุซ้ำซ้อน"
+
+#: controlTypes.py:257
+msgid "root pane"
+msgstr "พื้นหน้ารากฐาน"
+
+#: controlTypes.py:258
+msgid "edit bar"
+msgstr "แถบแก้ไข"
+
+#: controlTypes.py:259
+msgid "terminal"
+msgstr "ท้ายสุด"
+
+#: controlTypes.py:260
+msgid "rich edit"
+msgstr "แก้ไขแบบท่วนถี่"
+
+#: controlTypes.py:261
+msgid "ruler"
+msgstr "ไม้บรรทัด"
+
+#: controlTypes.py:262
+msgid "scroll pane"
+msgstr "พื้นหน้าลางเลื่อน"
+
+#: controlTypes.py:263
+msgid "section"
+msgstr "ตอน"
+
+#: controlTypes.py:264
+msgid "shape"
+msgstr "รูปร่าง"
+
+#: controlTypes.py:265
+msgid "split pane"
+msgstr "พื้นหน้าส่วนย่อย"
+
+#: controlTypes.py:266
+#, fuzzy
+msgid "view port"
+msgstr "ดูพอร์ด"
+
+#: controlTypes.py:267
+msgid "tear off menu"
+msgstr "รายการแยกออก"
+
+#: controlTypes.py:268
+msgid "text frame"
+msgstr "กรอบข้อความ"
+
+#: controlTypes.py:269
+msgid "toggle button"
+msgstr "ปุ่มสลับการทำงาน"
+
+#: controlTypes.py:270
+msgid "border"
+msgstr "กรอบนอก"
+
+#: controlTypes.py:272
+#: textInfos\__init__.py:136
+msgid "character"
+msgstr "อักษร"
+
+#: controlTypes.py:273
+msgid "chart"
+msgstr "แผนภูมิ"
+
+#: controlTypes.py:274
+msgid "cursor"
+msgstr "แถบสว่าง"
+
+#: controlTypes.py:275
+msgid "diagram"
+msgstr "แผนภาพ"
+
+#: controlTypes.py:276
+msgid "dial"
+msgstr "หมุนโทรศัพท์"
+
+#: controlTypes.py:277
+msgid "drop list"
+msgstr "รายชื่อไล่ลง"
+
+#: controlTypes.py:278
+msgid "split button"
+msgstr "ปุ่มแยก"
+
+#: controlTypes.py:279
+msgid "menu button"
+msgstr "ปุ่มรายการ"
+
+#: controlTypes.py:280
+msgid "drop down button grid"
+msgstr "grid สำหรับรายชื่อไล่ลง"
+
+#: controlTypes.py:281
+msgid "equation"
+msgstr "สูตร"
+
+#: controlTypes.py:282
+msgid "grip"
+msgstr "ยึด"
+
+#: controlTypes.py:283
+msgid "hot key field"
+msgstr "ช่องแป้นพิมพ์ลัด"
+
+#: controlTypes.py:284
+msgid "indicator"
+msgstr "ตัวบ่งชี้"
+
+#: controlTypes.py:285
+msgid "spin button"
+msgstr "ปุ่มลูกข่าง"
+
+#: controlTypes.py:286
+msgid "sound"
+msgstr "เสียง"
+
+#: controlTypes.py:287
+msgid "white space"
+msgstr "ช่องว่าง"
+
+#: controlTypes.py:288
+msgid "tree view button"
+msgstr "ปุ่มมุมมองต้นไม้"
+
+#: controlTypes.py:289
+msgid "IP address"
+msgstr "รหัสที่ตั้ง"
+
+#: controlTypes.py:290
+msgid "desktop icon"
+msgstr "ไอคอนบน desktop"
+
+#: controlTypes.py:291
+#: controlTypes.py:315
+#, fuzzy
+msgid "alert"
+msgstr "เตือน"
+
+#: controlTypes.py:292
+#, fuzzy
+msgid "IFrame"
+msgstr "กรอบ"
+
+#: controlTypes.py:293
+msgid "desktop pane"
+msgstr "พื้นหน้าของ Desktop"
+
+#: controlTypes.py:294
+msgid "option pane"
+msgstr "พื้นหน้าของตัวเลือก"
+
+#: controlTypes.py:295
+msgid "color chooser"
+msgstr "ตัวเรียกสี"
+
+#: controlTypes.py:296
+msgid "file chooser"
+msgstr "ตัวเรียกเอกสาร"
+
+#: controlTypes.py:297
+msgid "filler"
+msgstr "ช่อง"
+
+#: controlTypes.py:299
+msgid "panel"
+msgstr "แผง"
+
+#: controlTypes.py:300
+msgid "password edit"
+msgstr "เขียนรหัสผ่าน"
+
+#: controlTypes.py:301
+msgid "font chooser"
+msgstr "ตัวเรียกแบบอักษร"
+
+#: controlTypes.py:302
+#: textInfos\__init__.py:138
+msgid "line"
+msgstr "บรรทัด"
+
+#: controlTypes.py:303
+msgid "font name"
+msgstr "ชื่อของแบบอักษร"
+
+#: controlTypes.py:304
+msgid "font size"
+msgstr "ขนาดแบบอักษร"
+
+#: controlTypes.py:305 speech.py:910
+msgid "bold"
+msgstr "หนา"
+
+#: controlTypes.py:306
+msgid "ITALIC"
+msgstr "เอียง"
+
+#: controlTypes.py:308
+msgid "foreground color"
+msgstr "สีพื้นหน้า"
+
+#: controlTypes.py:309
+msgid "background color"
+msgstr "สีพื้นหลัง"
+
+#: controlTypes.py:310 speech.py:932
+msgid "superscript"
+msgstr "ตัวยก"
+
+#: controlTypes.py:311 speech.py:934
+msgid "subscript"
+msgstr "ตัวห้อย"
+
+#: controlTypes.py:312
+msgid "style"
+msgstr "รูปแบบ"
+
+#: controlTypes.py:313
+msgid "indent"
+msgstr "ย่นย่อ"
+
+#: controlTypes.py:314
+msgid "alignment"
+msgstr "การจัดเรียง"
+
+#: controlTypes.py:316
+#, fuzzy
+msgid "data grid"
+msgstr "แก้ไขวันที่"
+
+#: controlTypes.py:317
+#, fuzzy
+msgid "data item"
+msgstr "ตัวเลือกจากรายชื่อ"
+
+#: controlTypes.py:318
+#, fuzzy
+msgid "header item"
+msgstr "หัวข้อ"
+
+#: controlTypes.py:319
+#, fuzzy
+msgid "thumb control"
+msgstr "แถบควบคุม"
+
+#: controlTypes.py:320
+#, fuzzy
+msgid "calendar"
+msgstr "เตือน"
+
+#: controlTypes.py:324
+msgid "unavailable"
+msgstr "ไม่สามารถเลือกได้ "
+
+#: controlTypes.py:325
+msgid "focused"
+msgstr "โฟกัส"
+
+#: controlTypes.py:326
+msgid "selected"
+msgstr "เลือก"
+
+#: controlTypes.py:327
+msgid "busy"
+msgstr "ยุ่ง"
+
+#: controlTypes.py:328
+msgid "pressed"
+msgstr "กด"
+
+#: controlTypes.py:329
+msgid "checked"
+msgstr "เลือก"
+
+#: controlTypes.py:330
+msgid "half checked"
+msgstr "เลือกครึ่งหนึ่ง"
+
+#: controlTypes.py:331
+msgid "read only"
+msgstr "อ่านอย่างเดียว"
+
+#: controlTypes.py:332
+msgid "expanded"
+msgstr "ขยายออก"
+
+#: controlTypes.py:333
+msgid "collapsed"
+msgstr "พับเก็บ"
+
+#: controlTypes.py:334
+msgid "invisible"
+msgstr "มองไม่เห็น"
+
+#: controlTypes.py:335
+msgid "visited"
+msgstr "เคยเลือก"
+
+#: controlTypes.py:336
+msgid "linked"
+msgstr "ลิ้ง"
+
+#: controlTypes.py:337
+msgid "subMenu"
+msgstr "รายการย่อย"
+
+#: controlTypes.py:338
+msgid "protected"
+msgstr "ปกป้อง"
+
+#: controlTypes.py:339
+msgid "required"
+msgstr "จำเป็น"
+
+#: controlTypes.py:340
+#, fuzzy
+msgid "defunct"
+msgstr "ดั้งเดิม"
+
+#: controlTypes.py:341
+msgid "invalid entry"
+msgstr "ข้อมูลไม่ถูกต้อง"
+
+#: controlTypes.py:342
+#, fuzzy
+msgid "modal"
+msgstr "โมเดล"
+
+#: controlTypes.py:343
+msgid "has auto complete"
+msgstr "เขียนอัตโนมัติ"
+
+#: controlTypes.py:344
+msgid "multi line"
+msgstr "หลายบรรทัด"
+
+#: controlTypes.py:345
+#, fuzzy
+msgid "iconified"
+msgstr "กำหนดไอค่อน"
+
+#: controlTypes.py:346
+#, fuzzy
+msgid "off screen"
+msgstr "นอกจอภาพ"
+
+#: controlTypes.py:347
+msgid "selectable"
+msgstr "เลือกได้"
+
+#: controlTypes.py:348
+msgid "focusable"
+msgstr "โฟกัสได้"
+
+#: controlTypes.py:349
+msgid "clickable"
+msgstr "คลิ้กได้"
+
+#: controlTypes.py:350
+msgid "editable"
+msgstr "แก้ไขได้"
+
+#: controlTypes.py:351
+msgid "checkable"
+msgstr "เลือกได้"
+
+#: controlTypes.py:352
+#, fuzzy
+msgid "draggable"
+msgstr "แก้ไขได้"
+
+#: controlTypes.py:353
+#, fuzzy
+msgid "dragging"
+msgstr "หัวข้อ"
+
+#: controlTypes.py:354
+#, fuzzy
+msgid "drop target"
+msgstr "ไม่มีลูกศร"
+
+#: core.py:140
+#, fuzzy
+msgid "Loading NVDA. Please wait..."
+msgstr "กำลังโหลดระบบย่อย กรุณารอสักครู่"
+
+#: core.py:225
+msgid "NVDA started"
+msgstr "NVDA เริ่มทำงานแล้ว"
+
+#: cursorManager.py:79
+msgid "Find"
+msgstr "ค้นหา"
+
+#: cursorManager.py:79
+msgid "Type the text you wish to find"
+msgstr "กรอกคำที่ต้องการค้นหา"
+
+#: cursorManager.py:93
+msgid "Find Error"
+msgstr "ค้นหาผิดพลาด"
+
+#: cursorManager.py:93
+msgid "text \"%s\" not found"
+msgstr "ไม่พบข้อความ: \"%s\""
+
+#: cursorManager.py:99
+msgid "find a text string from the current cursor position"
+msgstr "ค้นหาข้อความจากตำแหน่งของแถบสว่าง"
+
+#: cursorManager.py:106
+msgid ""
+"find the next occurrence of the previously entered text string from the "
+"current cursor's position"
+msgstr "ค้นหาข้อความถัดไปที่ได้กรอกไว้อีกครั้งจากตำแหน่งแถบสว่างปัจจุบัน"
+
+#: cursorManager.py:113
+msgid ""
+"find the previous occurrence of the previously entered text string from the "
+"current cursor's position"
+msgstr "ค้นหาข้อความก่อนหน้าที่ได้กรอกไว้อีกครั้งจากตำแหน่งแถบสว่างปัจจุบัน"
+
+#: cursorManager.py:240
+#: globalCommands.py:112
+msgid "no selection"
+msgstr "ไม่เลือก"
+
+#: cursorManager.py:243
+msgid "copied to clipboard"
+msgstr "คัดลอกไปยังคลิบบอร์ด"
+
+#: globalCommands.py:42
+#, fuzzy
+msgid "input help %s"
+msgstr "บรรทัด %s"
+
+#: globalCommands.py:43
+#, fuzzy
+msgid ""
+"Turns input help on or off. When on, any input such as pressing a key on the "
+"keyboard will tell you what script is associated with that input, if any."
 msgstr ""
 "ปิดและเปิดการช่วยแป้นพิมพ์ "
 "การกดแป้นพิมพ์จะรายงานข้อมูลที่เกี่ยวข้องถ้ามีการเปิดตัวเลือกนี้ไว้"
 
-#: appModules\_default.py:77
+#: globalCommands.py:49
+#, fuzzy
+msgid "self voicing off"
+msgstr "%s เลือก"
+
+#: globalCommands.py:52
+#, fuzzy
+msgid "self voicing on"
+msgstr "%s เลือก"
+
+#: globalCommands.py:53
+msgid "Toggles the self-voicing mode of the active application."
+msgstr "สลับโหมดอ่านด้วยตัวเองสำหรับโปรแกรมที่กำลังทำงานอยู่"
+
+#: globalCommands.py:70
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
 "twice will spell the current line"
-msgstr ""
+msgstr "สะกดบรรทัดปัจจุบันสองรอบ"
 "รายงานบรรทัดปัจจุบันที่อยู่ใต้แถบสว่าง กดคำสั่งนี้ซ้อนกัน 2 "
 "รอบจะเป็นการสะกดทั้งบรรทัด"
 
-#: appModules\_default.py:80
+#: globalCommands.py:73
 msgid "left click"
 msgstr "คลิกซ้าย"
 
-#: appModules\_default.py:83
+#: globalCommands.py:76
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "คลิกเมาส์ซ้ายหนึ่งครั้งบริเวณตำแหน่งของเมาส์"
 
-#: appModules\_default.py:86
+#: globalCommands.py:79
 msgid "right click"
 msgstr "คลิกขวา"
 
-#: appModules\_default.py:89
+#: globalCommands.py:82
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "คลิกเมาส์ขวาหนึ่งครั้งบริเวณตำแหน่งของเมาส์"
 
-#: appModules\_default.py:98
-#: cursorManager.py:220
-msgid "no selection"
-msgstr "ไม่เลือก"
+#: globalCommands.py:86
+msgid "left mouse button unlock"
+msgstr "ปลดปุ่มเมาส์ซ้าย"
 
-#: appModules\_default.py:100
-#: speech.py:256 speech.py:347
-#: speech.py:360 textBuffer.py:537
-#: textBuffer.py:541
-#: textBuffer.py:543
-#: textBuffer.py:549
-msgid "selected %s"
-msgstr "เลือก %s"
+#: globalCommands.py:89
+#, fuzzy
+msgid "left mouse button lock"
+msgstr "ปุ่มสลับการทำงาน"
 
-#: appModules\_default.py:101
+#: globalCommands.py:91
+#, fuzzy
+msgid "Locks or unlocks the left mouse button"
+msgstr "กลับไปยังปุ่มก่อนหน้า"
+
+#: globalCommands.py:95
+msgid "right mouse button unlock"
+msgstr "ปลดปุ่มเมาส์ขวา"
+
+#: globalCommands.py:98
+#, fuzzy
+msgid "right mouse button lock"
+msgstr "ปุ่มวิทยุ"
+
+#: globalCommands.py:100
+#, fuzzy
+msgid "Locks or unlocks the right mouse button"
+msgstr "กลับไปยังปุ่มก่อนหน้า"
+
+#: globalCommands.py:115
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
 "no selection it says so."
-msgstr ""
+msgstr "บอกด้วยเมื่อไม่ได้เลือก"
 "อ่านข้อความที่มีการเลือกในช่องแก้ไขหรือในเอกสาร "
 "หากไม่มีการเลือกก็จะอ่านด้วยเช่นกัน"
 
-#: appModules\_default.py:109
+#: globalCommands.py:123
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
 msgstr "หากกดหนึ่งครั้งจะอ่านเวลา หากกดสองครั้งจะอ่านวัน"
 
-#: appModules\_default.py:113
+#: globalCommands.py:128
+#: globalCommands.py:137
+#: globalCommands.py:146
+#: globalCommands.py:155
+#, fuzzy
+msgid "No settings"
+msgstr "ตั้งค่าเม้าส์"
+
+#: globalCommands.py:132
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr "เพิ่มค่าปัจจุบันในการตั้งเสียงอ่าน"
 
-#: appModules\_default.py:117
+#: globalCommands.py:141
 msgid "Decreases the currently active setting in the synth settings ring"
 msgstr "ลดค่าปัจจุบันในการตั้งเสียงอ่าน"
 
-#: appModules\_default.py:121
+#: globalCommands.py:150
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr "เลื่อนไปยังการตั้งค่าถัดไปในวงจรตั้งค่าเสียงอ่าน"
 
-#: appModules\_default.py:125
+#: globalCommands.py:159
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "เลื่อนไปยังการตั้งค่าก่อนหน้าในวงจรตั้งค่าเสียงอ่าน"
 
-#: appModules\_default.py:134
+#: globalCommands.py:168
 msgid "speak typed characters"
 msgstr "อ่านตัวอักษร"
 
-#: appModules\_default.py:135
+#: globalCommands.py:169
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "เปิดและปิดการอ่านตัวอักษรที่พิมพ์"
 
-#: appModules\_default.py:144
+#: globalCommands.py:178
 msgid "speak typed words"
 msgstr "อ่านคำ"
 
-#: appModules\_default.py:145
+#: globalCommands.py:179
 msgid "Toggles on and off the speaking of typed words"
 msgstr "เปิดและปิดการอ่านคำที่พิมพ์"
 
-#: appModules\_default.py:154
+#: globalCommands.py:188
 msgid "speak command keys"
 msgstr "อ่านแป้นคำสั่ง"
 
-#: appModules\_default.py:155
+#: globalCommands.py:189
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
 msgstr "เปิดและปิดการอ่านแป้นพิมพ์ที่ไม่ไช่ตัวอักษร"
 
-#: appModules\_default.py:164
+#: globalCommands.py:198
 msgid "speak punctuation"
 msgstr "อ่านสัญลักษณ์"
 
-#: appModules\_default.py:165
+#: globalCommands.py:199
 msgid ""
 "Toggles on and off the speaking of punctuation. When on NVDA will say the "
 "names of punctuation symbols, when off it will be up to the synthesizer as "
 "to how it speaks punctuation"
-msgstr ""
+msgstr "วิธีการพูดสัญลักษณ์"
 "เปิดและปิดการอ่านสัญลักษณ์ NVDA จะอ่านชื่อของสัญลักษณ์ถ้าอยู่ในสถานะเปิด "
 "และถ้าปิด จะขึ้นอยู่กับตัวสังเคราะห์เสียงว่าจะอ่านอย่างไร"
 
-#: appModules\_default.py:168
-msgid "Move mouse to navigator"
-msgstr "เลื่อนเม้าส์ไปยังตัวนำล่อง"
-
-#: appModules\_default.py:180
+#: globalCommands.py:214
 msgid "object has no location"
 msgstr "วัตถุไม่มีที่ตั้ง"
 
-#: appModules\_default.py:183
+#: globalCommands.py:220
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "เลื่อนตำแหน่งของเม้าส์ไปยังวัตถุนำล่อง"
 
-#: appModules\_default.py:186
+#: globalCommands.py:223
 msgid "Move navigator object to mouse"
 msgstr "เลื่อนวัตถุนำล่องไปยังตำแหน่งของเม้าส์"
 
-#: appModules\_default.py:190
+#: globalCommands.py:227
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
 msgstr "กำหนดวัตถุนำล่องไปยังวัตถุใต้เมาส์และอ่าน"
 
-#: appModules\_default.py:195
-#: appModules\_default.py:226
-#: appModules\_default.py:247
-#: appModules\_default.py:260
-#: appModules\_default.py:273
-#: appModules\_default.py:286
-#: appModules\_default.py:299
-#: appModules\_default.py:322
-#: appModules\_default.py:345
-#: appModules\_default.py:354
-#: appModules\_default.py:680
+#: globalCommands.py:240
+#, fuzzy
+msgid "No flat review for this object"
+msgstr "ไม่มีวัตถุนำล่อง"
+
+#: globalCommands.py:241
+msgid ""
+"Switches to flat review for the screen (or document if currently inside one) "
+"and positions the review cursor at the location of the current object"
+msgstr ""
+"สลับไปยัง flat review สำหรับจอภาพ (หรือเอกสารหากอยู่ในตำแหน่งปัจจุบัน) "
+"และตำแหน่งซึ่งเป็นตำแหน่งของแถบทบทวนของวัตถุปัจจุบัน"
+
+#: globalCommands.py:253
+msgid "No object at flat review position"
+msgstr "ไม่มีวัตถุบริเวณตำแหน่งของ flat review"
+
+#: globalCommands.py:254
+#, fuzzy
+msgid ""
+"Moves to the object represented by the text at the position of the review "
+"cursor within flat review"
+msgstr "เลื่อนแถบทบทวนไปยังตำแหน่งลูกศรของวัตถุนำล่อง"
+
+#: globalCommands.py:259
+#: globalCommands.py:293
+#: globalCommands.py:331
+#: globalCommands.py:345
+#: globalCommands.py:359
+#: globalCommands.py:373
+#: globalCommands.py:387
 msgid "no navigator object"
 msgstr "ไม่มีวัตถุนำล่อง"
 
-#: appModules\_default.py:217
-#: appModules\_default.py:661
+#: globalCommands.py:285
+#: globalCommands.py:713
 msgid "%s copied to clipboard"
 msgstr "คัดลอก %s ลงบนคริบบอร์ด"
 
-#: appModules\_default.py:221
+#: globalCommands.py:288
+#, fuzzy
 msgid ""
-"Reports the current navigator object or, if pressed three times, Copies name "
-"and value of current navigator object to the clipboard"
+"Reports the current navigator object. Pressing twice spells this information,"
+"and pressing three times Copies name and value of this  object to the "
+"clipboard"
 msgstr ""
 "รายงานวัตถุนำล่อง หรือถ้ากด 3 "
 "ครั้งคัดลอกชื่อและค่าของวัตถุนำล่องลงบนคลิบบอร์ด"
 
-#: appModules\_default.py:229
+#: globalCommands.py:296
 msgid "No location information for navigator object"
 msgstr "ไม่มีข้อมูลเกี่ยวกับตำแหน่งของวัตถุนำล่อง"
 
-#: appModules\_default.py:232
+#: globalCommands.py:300
+#, fuzzy
+msgid "No location information for screen"
+msgstr "ไม่มีข้อมูลเกี่ยวกับตำแหน่งของวัตถุนำล่อง"
+
+#: globalCommands.py:306
+#, fuzzy
 msgid ""
-"Object edges positioned %.1f per cent right from left of screen, %.1f per "
-"cent down from top of screen, %.1f per cent left from right of screen, %.1f "
-"up from bottom of screen"
+"Object edges positioned %.1f per cent from left edge of screen, %.1f per "
+"cent from top edge of screen, width is %.1f per cent of screen, height is %."
+"1f per cent of screen"
 msgstr ""
 "ตำแหน่งข้างเคียงวัตถุ จากซ้ายไปขวาของจอภาพ %.1f เปอร์เซ็นต์จากบนลงล่างของจ"
 "อภาพ %.1f เปอร์เซ็นต์ จากขวาไปซ้ายของจอภาพ %.1f เปอร์เซ็นต์จากล่างขึ้นบนของจ"
 "อภาพ %.1f เปอร์เซ็นต์"
 
-#: appModules\_default.py:233
+#: globalCommands.py:307
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "รายงานความสูง ความกว้าง และตำแหน่งของวัตถุนำล่อง" 
 
-#: appModules\_default.py:238
-#: appModules\_default.py:620
-msgid "no focus"
-msgstr " ไม่พบตำแหน่งโฟกัส"
-
-#: appModules\_default.py:240
+#: globalCommands.py:316
 msgid "move to focus"
 msgstr "เลื่อนไปยังตำแหน่งโฟกัส"
 
-#: appModules\_default.py:242
-msgid "Sets the navigator object to the current focus"
-msgstr "กำหนดวัตถุนำล่องไปยังตำแหน่งโฟกัส"
+#: globalCommands.py:318
+#, fuzzy
+msgid ""
+"Sets the navigator object to the current focus, and the review cursor to the "
+"position of the caret inside it, if possible."
+msgstr "กำหนดวัตถุนำล่องไปยังวัตถุใต้เมาส์และอ่าน"
 
-#: appModules\_default.py:254
+#: globalCommands.py:323
+#: globalCommands.py:672
+msgid "no focus"
+msgstr " ไม่พบตำแหน่งโฟกัส"
+
+#: globalCommands.py:325
+#, fuzzy
+msgid "move focus"
+msgstr "เลื่อนไปยังตำแหน่งโฟกัส"
+
+#: globalCommands.py:326
+#, fuzzy
+msgid "Sets the keyboard focus to the navigator object"
+msgstr "โฟกัสเลื่อนไปยังวัตถุนำล่อง"
+
+#: globalCommands.py:339
 msgid "No parents"
 msgstr "ไม่มีวัตถุหลัก"
 
-#: appModules\_default.py:255
+#: globalCommands.py:340
 msgid ""
 "Sets the navigator object to the parent of the object it is currently on and "
 "speaks it"
 msgstr "กำหนดวัตถุนำล่องไปยังวัตถุหลักและอ่าน"
 
-#: appModules\_default.py:267
+#: globalCommands.py:353
 msgid "No next"
 msgstr "ไม่มีวัตถุถัดไป"
 
-#: appModules\_default.py:268
+#: globalCommands.py:354
 msgid ""
 "Sets the navigator object to the object next to the one it is currently on "
 "and speaks it"
 msgstr "กำหนดวัตถุนำล่องไปยังวัตถุถัดไปและอ่าน"
 
-#: appModules\_default.py:280
+#: globalCommands.py:367
 msgid "No previous"
 msgstr "ไม่มีวัตถุก่อนหน้า"
 
-#: appModules\_default.py:281
+#: globalCommands.py:368
 msgid ""
 "Sets the navigator object to the object previous to the one it is currently "
 "on and speaks it"
 msgstr "กำหนดวัตถุนำล่องไปยังวัตถุก่อนหน้าและอ่าน"
 
-#: appModules\_default.py:293
+#: globalCommands.py:381
 msgid "No children"
 msgstr "ไม่มีวัตถุรอง"
 
-#: appModules\_default.py:294
+#: globalCommands.py:382
 #, fuzzy
 msgid ""
 "Sets the navigator object to the first child object of the one it is "
 "currently on and speaks it"
 msgstr "กำหนดวัตถุนำล่องไปยังวัตถุรองแรกและอ่าน"
 
-#: appModules\_default.py:316
+#: globalCommands.py:392
 #, fuzzy
-msgid "end of flow"
-msgstr "จบกระบวนการ"
+msgid "No default action"
+msgstr "พจนานุกรมดั้งเดิม"
 
-#: appModules\_default.py:317
+#: globalCommands.py:397
 #, fuzzy
-msgid ""
-"Sets the navigator object to the object this object flows to and speaks it"
-msgstr "กำหนดวัตถุนำล่องไปยังวัตถุที่วัตถุนำล่องเลื่อนหาและอ่าน"
+msgid "default action failed"
+msgstr "พจนานุกรมดั้งเดิม"
 
-#: appModules\_default.py:339
-msgid "Beginning of flow"
-msgstr "เริ่มกระบวนการ"
-
-#: appModules\_default.py:340
-#, fuzzy
-msgid ""
-"Sets the navigator object to the object this object flows from and speaks it"
-msgstr "กำหนดวัตถุนำล่องไปยังวัตถุที่วัตถุนำล่องเลื่อนห่างและอ่าน" 
-
-#: appModules\_default.py:348
+#: globalCommands.py:400
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
 msgstr ""
 "ปฏิบัติตามหน้าที่ดั้งเดิมกับวัตถุนำล่องปัจจุบัน (เช่นกดปุ่มหากเป็นปุ่ม)"
 
-#: appModules\_default.py:359
-msgid "inside"
-msgstr "ด้านใน"
-
-#: appModules\_default.py:362
-msgid ""
-"Reports where the current navigator object is by reporting each of its "
-"ancestors"
-msgstr ""
-"รายงานตำแหน่งปัจจุบันของวัตถุนำล่องโดยรายงานทีละระดับของวัตถุนำล่องก่อนหน้า"
-
-#: appModules\_default.py:368
-#: appModules\_default.py:380
-#: appModules\_default.py:421
-#: textBuffer.py:364
-#: textBuffer.py:391
-#: textBuffer.py:412
-#: textBuffer.py:433
-#: virtualBuffers_old\__init__.py:274
+#: globalCommands.py:406
+#: globalCommands.py:418
+#: globalCommands.py:459
 msgid "top"
 msgstr "บน"
 
-#: appModules\_default.py:370
+#: globalCommands.py:408
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
 msgstr "เลื่อนแถบทบทวนไปยังตอนต้นบรรทัดของวัตถุนำล่องและอ่าน"
 
-#: appModules\_default.py:382
+#: globalCommands.py:420
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
 msgstr "เลื่อนแถบทบทวนไปยังบรรทัดก่อนหน้าของวัตถุนำล่องและอ่าน"
 
-#: appModules\_default.py:391
+#: globalCommands.py:429
 msgid ""
 "Reports the line of the current navigator object where the review cursor is "
 "situated. If this key is pressed twice, the current line will be spelled"
 msgstr ""
 "รายงานบรรทัดของวัตถุนำล่องบริเวณแถบทบทวนหากกด 2 ครั้ง จะสะกดบรรทัดปัจจุบัน"
 
-#: appModules\_default.py:401
-#: appModules\_default.py:409
-#: appModules\_default.py:442
-#: textBuffer.py:369
-#: textBuffer.py:382
-#: textBuffer.py:403
-#: textBuffer.py:424
-#: virtualBuffers_old\__init__.py:289
+#: globalCommands.py:439
+#: globalCommands.py:447
+#: globalCommands.py:480
 msgid "bottom"
 msgstr "ล่าง"
 
-#: appModules\_default.py:403
+#: globalCommands.py:441
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
 msgstr "เลื่อนแถบทบทวนไปยังบรรทัดถัดไปของวัตถุนำล่องและอ่าน"
 
-#: appModules\_default.py:411
+#: globalCommands.py:449
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
 msgstr "เลื่อนแถบทบทวนไปยังบรรทัดสุดท้ายของวัตถุนำล่องและอ่าน"
 
-#: appModules\_default.py:423
+#: globalCommands.py:461
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
 msgstr "เลื่อนแถบทบทวนไปยังคำก่อนหน้าของวัตถุนำล่องและอ่าน"
 
-#: appModules\_default.py:432
+#: globalCommands.py:470
 msgid ""
 "Speaks the word of the current navigator object where the review cursor is "
 "situated. If this key is pressed twice, the word will be spelled"
 msgstr "อ่านคำของวัตถุนำล่องบริเวณตำแหน่งของแถบทบทวนหากกด 2 รอบจะสะกดทั้งคำ"
 
-#: appModules\_default.py:444
+#: globalCommands.py:482
 msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
 msgstr "เลื่อนแถบทบทวนไปยังคำถัดไปของวัตถุนำล่องและอ่าน"
 
-#: appModules\_default.py:452
-#: appModules\_default.py:464
-#: appModules\totalcmd.py:35
-msgid "left"
-msgstr "ซ้าย"
-
-#: appModules\_default.py:454
+#: globalCommands.py:492
 msgid ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr ""
 "เลื่อนแถบทบทวนไปยังตอนต้นบรรทัดที่ตำแหน่งปัจจุบันของวัตถุนำล่องและอ่าน"
 
-#: appModules\_default.py:472
+#: globalCommands.py:510
 #, fuzzy
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
 msgstr "เลื่อนแถบทบทวนไปยังตัวอักษรก่อนหน้าของวัตถุนำล่องและอ่าน"
 
-#: appModules\_default.py:486
+#: globalCommands.py:524
 msgid ""
 "Reports the character of the current navigator object where the review "
 "cursor is situated. If this key is pressed twice, ascii and hexadecimal "
@@ -530,55 +2046,43 @@ msgstr ""
 "รายงานตัวอักษรของวัตถุนำล่องบริเวณแถบทบทวนหากกด 2 "
 "ครั้งจะอ่านรหัสแอสกี้ที่กำกับของตัวอักษร"
 
-#: appModules\_default.py:496
-#: appModules\_default.py:513
-#: appModules\totalcmd.py:37
-msgid "right"
-msgstr "ขวา"
-
-#: appModules\_default.py:504
+#: globalCommands.py:542
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
 msgstr "เลื่อนแถบทบทวนไปยังอักษรถัดไปของวัตถุนำล่องและอ่าน"
 
-#: appModules\_default.py:515
+#: globalCommands.py:553
 msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr ""
 "เลื่อนแถบทบทวนไปยังตัวอักษรสุดท้ายของบรรทัดที่ตำแหน่งปัจจุบันของวัตถุนำล่องและอ่าน"
 
-#: appModules\_default.py:521
+#: globalCommands.py:560
 #, fuzzy
-msgid "No caret"
+msgid "no caret"
 msgstr "ไม่มีลูกศร"
 
-#: appModules\_default.py:526
-msgid ""
-"Moves the review cursor to the position of the system caret, in the current "
-"navigator object"
-msgstr "เลื่อนแถบทบทวนไปยังตำแหน่งลูกศรของวัตถุนำล่อง"
-
-#: appModules\_default.py:533
+#: globalCommands.py:565
 msgid ""
 "Moves the system caret to the position of the review cursor , in the current "
 "navigator object"
 msgstr "เลื่อนแถบทบทวนไปยังตำแหน่งลูกศรของวัตถุนำล่อง"
 
-#: appModules\_default.py:542
+#: globalCommands.py:574
 msgid "beeps"
 msgstr "เสียงปิ๊บๆ"
 
-#: appModules\_default.py:544
+#: globalCommands.py:576
 msgid "talk"
 msgstr "เสียงอ่าน"
 
-#: appModules\_default.py:546
+#: globalCommands.py:578
 msgid "speech mode %s"
 msgstr "โหมดเสียงอ่าน %s"
 
-#: appModules\_default.py:548
+#: globalCommands.py:580
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
 "will not speak anything. If beeps then NVDA will simply beep each time it "
@@ -588,7 +2092,11 @@ msgstr ""
 "จะส่งเสียงปี๊บๆเมื่อเจอข้อความที่สามารถอ่านได้ หรือเลือก เสียงอ่าน เพื่อให้ "
 "NVDA อ่านตามปกติ"
 
-#: appModules\_default.py:556
+#: globalCommands.py:596
+msgid "Moves the focus to the next closest document that contains the focus"
+msgstr "เลื่อนโฟกัสไปยังเอกสารถัดไปที่มีโฟกัสใกล้สุด"
+
+#: globalCommands.py:608
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
 "pass straight through to the application, allowing you to interact directly "
@@ -600,56 +2108,63 @@ msgstr ""
 "ช่วยให้ท่านสามารถทำงานหรือควบคุมโปรแกรมได้โดยตรงเมื่ออยู่ในโหมดการสืบค้น "
 "ท่านสามาถนำล่องเอกสารได้โดยใช้แถบสว่าง"
 
-#: appModules\_default.py:560
+#: globalCommands.py:612
 msgid "Quits NVDA!"
 msgstr "ออกจาก NVDA"
 
-#: appModules\_default.py:564
+#: globalCommands.py:616
 msgid "Shows the NVDA menu"
 msgstr "แสดงรายการของ NVDA"
 
-#: appModules\_default.py:569
+#: globalCommands.py:621
 msgid ""
 "reads from the review cursor  up to end of current text, moving the review "
 "cursor as it goes"
 msgstr "อ่านเริ่มจากแถบทบทวนจนจบข้อความโดยเลื่อนแถบทบทวนไปเรื่อยๆ"
 
-#: appModules\_default.py:574
-msgid "reads from the navigator object "
-msgstr "เริ่มอ่านจากวัตถุนำล่อง"
-
-#: appModules\_default.py:589
+#: globalCommands.py:633
 msgid ""
 "reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr "อ่านจากลูกศรไปยังตอนท้ายของข้อความโดยเลื่อนลูกศรไปเรื่อยๆ"
 
-#: appModules\_default.py:621
+#: globalCommands.py:659
+#, fuzzy
+msgid "No formatting information"
+msgstr "รายงานตำแหน่งและรายละเอียดของวัตถุ"
+
+#: globalCommands.py:662
+#, fuzzy
+msgid ""
+"Reports formatting info for the current cursor position within a document"
+msgstr "ค้นหาข้อความจากตำแหน่งของแถบสว่าง"
+
+#: globalCommands.py:673
 msgid "reports the object with focus"
 msgstr "รายงานวัตถุโฟกัส"
 
-#: appModules\_default.py:626
+#: globalCommands.py:678
 msgid "no status bar found"
 msgstr "ไม่พบแถบสถานะ"
 
-#: appModules\_default.py:635
+#: globalCommands.py:687
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr "อ่านแถบสถานะของโปรแกรมและเลื่อนตัวนำล่องไปยังตำแหน่งของแถบสถานะ"
 
-#: appModules\_default.py:644
+#: globalCommands.py:696
 msgid "Mouse tracking"
 msgstr "ตามติดเม้าส์"
 
-#: appModules\_default.py:645
+#: globalCommands.py:697
 #, fuzzy
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "เปิดหรือปิดการรายงานในขณะที่เม้าส์เคลื่อนที่"
 
-#: appModules\_default.py:653
+#: globalCommands.py:705
 msgid "no title"
 msgstr "ไม่มีหัวเรื่อง"
 
-#: appModules\_default.py:662
+#: globalCommands.py:714
 msgid ""
 "Reports the title of the current application or foreground window. If "
 "pressed twice, spells the title. If pressed thrice, copies the title to the "
@@ -658,72 +2173,51 @@ msgstr ""
 "รายงานหัวเรื่องของโปรแกรมหรือหน้าต่างพื้นหน้า หากกด 2 ครั้ง สะกดหัวเรื่อง "
 "หากกด 3 ครั้ง คัดลอกหัวเรื่องไปยังคลิบอร์ด"
 
-#: appModules\_default.py:669
+#: globalCommands.py:721
 msgid "speaks the current foreground object"
 msgstr "อ่านวัตถุพื้นหน้าของหน้าต่าง"
 
-#: appModules\_default.py:684
-#: cursorManager.py:223
-msgid "copied to clipboard"
-msgstr "คัดลอกไปยังคลิบบอร์ด"
-
-#: appModules\_default.py:688
-msgid "Control ID: %s"
-msgstr "รหัสควบคุม: %s"
-
-#: appModules\_default.py:689
-msgid "Class: %s"
-msgstr "ชั้น %s"
-
-#: appModules\_default.py:691
-msgid "internal text: %s"
-msgstr "ข้อความภายใน %s"
-
-#: appModules\_default.py:692
-msgid "text: %s"
-msgstr "ข้อความ: %s"
-
-#: appModules\_default.py:694
+#: globalCommands.py:732
 msgid ""
-"reports some information about the current navigator object, mainly useful "
-"for developers. When pressed 2 times it copies control id, class and "
-"internal text to the windows clipboard"
+"Logs information about the current navigator object which is useful to "
+"developers and activates the log viewer so the information can be examined."
 msgstr ""
-"รายงานรายละเอียดเกี่ยวกับวัตถุนำล่องปัจจุบัน โดยทั่วไป มักใช้ประโยชน์ก"
-"ับผู้พัฒนา เมื่อกด 2 ครั้งจะคัดลอกรหัสควบคุม "
-"ช่วงชั้นและข้อความภายในไปยังคลิบบอร์ด"
+"เก็บข้อมูลเกี่ยวกับวัตถุนำล่องปัจจุบันที่เป็นประโยชน์ให้กับ"
+"ผู้พัฒนาสำหรับใช้งานตัวอ่านข้อมูลเพื่อการวินิจฉัยข้อมูล"
 
-#: appModules\_default.py:699
-#: gui\settingsDialogs.py:458
-msgid "Beep for visible"
-msgstr "ปิ๊บเพื่อสังเกตเห็น"
+#: globalCommands.py:738
+#, fuzzy
+msgid "no progress bar updates"
+msgstr "รายงานการเปลี่ยนแปลงบริเวณแถบสถานะ"
 
-#: appModules\_default.py:700
-#: gui\settingsDialogs.py:459
-msgid "Beep for all"
-msgstr "ปิ๊บทั้งหมด"
+#: globalCommands.py:741
+#, fuzzy
+msgid "speak progress bar updates"
+msgstr "รายงานการเปลี่ยนแปลงบริเวณแถบสถานะ"
 
-#: appModules\_default.py:701
-#: gui\settingsDialogs.py:460
-msgid "Speak each 10 percent"
-msgstr "อ่านทุก 10 เปอร์เซ็นต์"
+#: globalCommands.py:744
+#, fuzzy
+msgid "beep for progress bar updates"
+msgstr "รายงานการเปลี่ยนแปลงบริเวณแถบสถานะ"
 
-#: appModules\_default.py:711
+#: globalCommands.py:747
+#, fuzzy
+msgid "beep and speak progress bar updates"
+msgstr "รายงานการเปลี่ยนแปลงบริเวณแถบสถานะ"
+
+#: globalCommands.py:749
 msgid ""
-"Toggles how NVDA reports progress bar updates. It can beep for all the "
-"progress bars or just for the progressbars in the foreground. Additionally "
-"it is possible to have current value spoken each 10 percent or it is "
-"possible to completely disable this reporting."
+"Toggles between beeps, speech, beeps and speech, and off, for reporting "
+"progress bar updates"
 msgstr ""
-"ปิดและเปิด การรายงานแถบสถานะของ NVDA "
-"ซึ่งจะเลือกการบีบทั้งหมดหรือสำหรับการเปลี่ยนแปลงสถานะเฉพาะบริเวณหน้าต่างหน้า "
-"หรือจะให้อ่านค่าทุก 10 เปอร์เซ็นต์ หรือจะให้ปิดการรายงานทั้งหมด"
+"สลับไปมาระหว่างเสียงร้อง เสียงอ่านกับเสียงร้อง เสียงอ่าน และปิดเสียงเพื่อรายงาน"
+"สถาณะของ progress bar"
 
-#: appModules\_default.py:720
+#: globalCommands.py:758
 msgid "report dynamic content changes"
 msgstr "รายงานเนื้อหาที่เปลี่ยนไปแบบอิสระ"
 
-#: appModules\_default.py:721
+#: globalCommands.py:759
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
@@ -731,50 +2225,46 @@ msgstr ""
 "เปิดและปิดการรายงานการเปลี่ยนแปลงเนื้อหาแบบอิสระ เช่น ข้อความต่างๆ "
 "ที่ปรากฏในหน้าต่างของ dos console"
 
-#: appModules\_default.py:730
+#: globalCommands.py:768
 msgid "caret moves review cursor"
 msgstr "ลูกศรเลื่อนไปยังแถบทบทวน"
 
-#: appModules\_default.py:731
+#: globalCommands.py:769
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "เปิดและปิดการเคลื่อนไหวของแถบทบทวนอันเนื่องมาจากการเคลื่อนที่ของลูกศร"
 
-#: appModules\_default.py:740
+#: globalCommands.py:778
 msgid "focus moves navigator object"
 msgstr "โฟกัสเลื่อนไปยังวัตถุนำล่อง"
 
-#: appModules\_default.py:741
+#: globalCommands.py:779
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "เปิดและปิดการเคลื่อนที่ของวัตถุนำล่องอันเนื่องมาจากการเปลี่ยนของโฟกัส"
 
-#: appModules\_default.py:753
+#: globalCommands.py:791
 msgid "no system battery"
 msgstr "ไม่พบแถบแสดงแบตเตอรี่"
 
-#: appModules\_default.py:755
-msgid "%d percent"
-msgstr "%d เปอร์เซ็นต์"
-
-#: appModules\_default.py:756
+#: globalCommands.py:794
 msgid "AC power on"
 msgstr "ใช้งานหม้อแปลง"
 
-#: appModules\_default.py:758
+#: globalCommands.py:796
 msgid "%d hours and %d minutes remaining"
 msgstr "คงเหลือแบตเตอรี่ที่ %d ชั่วโมง %d นาที"
 
-#: appModules\_default.py:760
+#: globalCommands.py:798
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "รายงานสถานะของแบตเตอรี่และเวลาที่ยังสามารถใช้งาน ในกรณีที่ไม่ได้เสียบหม้อแปลง"
 
-#: appModules\_default.py:764
+#: globalCommands.py:802
 msgid "Pass next key through"
 msgstr "ส่งผ่านแป้นพิมพ์"
 
-#: appModules\_default.py:765
+#: globalCommands.py:803
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
@@ -782,15 +2272,15 @@ msgstr ""
 "การกดแป้นพิมพ์ใดๆ ต่อจากนี้จะไม่ส่งผ่านไปยัง NVDAแต่จะส่งผ่านไปยัง Windows "
 "โดยตรง"
 
-#: appModules\_default.py:770
+#: globalCommands.py:808
 msgid "Currently running application is %s"
 msgstr "โปรแกรมที่กำลังทำงานอยู่ คือ %s"
 
-#: appModules\_default.py:773
+#: globalCommands.py:811
 msgid " and currently loaded module is %s"
 msgstr "และโมดู่ที่กำลังโหลดอยู่ คือ %s"
 
-#: appModules\_default.py:775
+#: globalCommands.py:813
 msgid ""
 "Speaks the filename of the active application along with the name of the "
 "currently loaded appModule"
@@ -798,1495 +2288,387 @@ msgstr ""
 "อ่านชื่อเอกสารของโปรแกรมที่กำลังทำงานอยู่ "
 "รวมถึงชื่อของโมดู่โปรแกรมที่โหลดอยู่"
 
-#: appModules\_default.py:779
+#: globalCommands.py:817
 msgid "Shows the NVDA general settings dialog"
 msgstr "แสดงหน้าต่างการตั้งค่าทั่วไปของ NVDA"
 
-#: appModules\_default.py:783
+#: globalCommands.py:821
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "แสดงหน้าต่างการตั้งค่าเสียงสังเคราะห์ของ NVDA"
 
-#: appModules\_default.py:787
+#: globalCommands.py:825
 msgid "Shows the NVDA voice settings dialog"
 msgstr "แสดงหน้าต่างการตั้งค่าเสียงของ NVDA"
 
-#: appModules\_default.py:791
+#: globalCommands.py:829
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "แสดงหน้าต่างการตั้งค่าแป้นพิมพ์ของ NVDA"
 
-#: appModules\_default.py:795
+#: globalCommands.py:833
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "แสดงหน้าต่างการตั้งค่าเมาส์ของ NVDA"
 
-#: appModules\_default.py:799
+#: globalCommands.py:837
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "แสดงหน้าต่างการตั้งค่าแสดงวัตถุของ NVDA"
 
-#: appModules\_default.py:803
+#: globalCommands.py:841
 msgid "Shows the NVDA virtual buffers settings dialog"
 msgstr "แสดงหน้าต่างการตั้งค่า virtual buffers ของ NVDA"
 
-#: appModules\_default.py:807
+#: globalCommands.py:845
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "แสดงหน้าต่างการตั้งค่ารูปแบบเอกสารของ NVDA"
 
-#: appModules\_default.py:811
+#: globalCommands.py:849
 msgid "Saves the current NVDA configuration"
 msgstr "บันทึกการตั้งค่าทั้งหมดของ NVDA"
 
-#: appModules\_default.py:815
+#: globalCommands.py:853
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr ""
 "โหลดการตั้งค่าก่อนหน้าของ NVDA ท่านต้องการบันทึกการเปลี่ยนแปลงซ้ำหรือไม่"
 
-#: appModules\_default.py:823
+#: globalCommands.py:863
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "เริ่มต้นการทำงานของ Python Console, เพื่อประโยชน์ในการพัฒนา NVDA"
 
-#: appModules\_default.py:828
+#: globalCommands.py:868
+#: gui\settingsDialogs.py:943
 msgid "review"
 msgstr "ทบทวน"
 
-#: appModules\_default.py:831
+#: globalCommands.py:871
+#: gui\settingsDialogs.py:943
 msgid "focus"
 msgstr "โฟกัส"
 
-#: appModules\_default.py:832
+#: globalCommands.py:872
 msgid "Braille tethered to %s"
 msgstr "ใช้เบรลล์เป็น %s"
 
-#: appModules\_default.py:833
+#: globalCommands.py:873
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "เปิดและปิด การใช้งานเบรลล์ระหว่างตำแหน่งโฟกัสกับตำแหน่งทบทวน"
 
-#: appModules\_default.py:841
+#: globalCommands.py:881
 msgid "There is no text on the clipboard"
 msgstr "ไม่มีข้อความบนคลิบบอร์ด"
 
-#: appModules\_default.py:846
+#: globalCommands.py:886
 msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "มีข้อความจำนวนมากบนคลิบบอร์ด จำนวนอักษรอยู่ที่ %s ตัว"
 
-#: appModules\_default.py:847
+#: globalCommands.py:887
 msgid "Reports the text on the Windows clipboard"
 msgstr "รายงานข้อความบนคลิบบอร์ด"
 
-#: appModules\_default.py:851
+#: globalCommands.py:891
 msgid "Start marked"
 msgstr "เริ่มทำสัญลักษณ์"
 
-#: appModules\_default.py:852
+#: globalCommands.py:892
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "copied"
 msgstr ""
 "ทำสัญลักษณ์ที่ตำแหน่งของแถบทบทวนซึ่งจะเป็นตอนต้นของข้อความที่จะนำไปคัดลอก"
 
-#: appModules\_default.py:856
+#: globalCommands.py:896
 msgid "No start marker set"
 msgstr "ไม่มีการกำหนดตำแหน่งของสัญลักษณ์"
 
-#: appModules\_default.py:860
+#: globalCommands.py:900
 msgid "The start marker must reside within the same object"
 msgstr "สัญลักษณ์เริ่มต้นต้องวางอยู่ในตำแหน่งของวัตถุเดียวกัน"
 
-#: appModules\_default.py:865
+#: globalCommands.py:905
 msgid "Review selection copied to clipboard"
 msgstr "การเลือกแบบทบทวนได้บันทึกลงบนคลิบบอร์ดแล้ว"
 
-#: appModules\_default.py:867
+#: globalCommands.py:907
 msgid "No text to copy"
 msgstr "ไม่มีข้อความให้คัดลอก"
 
-#: appModules\_default.py:870
+#: globalCommands.py:910
+#, fuzzy
 msgid ""
-"Retrieves the text from the previously set start marker to the current "
-"position of the review cursor and copies it to the clipboard"
+"Retrieves the text from the previously set start marker up to and including "
+"the current position of the review cursor and copies it to the clipboard"
 msgstr ""
 "เรียกข้อความจากตำแหน่งตั้งต้นของสัญลักษณ์ไปยังตำแหน่งของแถบทบทวน "
 "และคัดลอกลงบนคลิบบอร์ด"
 
-#: appModules\explorer.py:16
-msgid "Start"
-msgstr "ดอกจัน"
-
-#: appModules\msimn.py:19
-msgid "Attachments"
-msgstr "สิ่งที่ส่งมาด้วย"
-
-#: appModules\msimn.py:20
-msgid "To:"
-msgstr "ถึง:"
-
-#: appModules\msimn.py:21
-msgid "Newsgroup:"
-msgstr "กลุ่มข่าว:"
-
-#: appModules\msimn.py:22
-msgid "CC:"
-msgstr "สำเนาถึง:"
-
-#: appModules\msimn.py:23
-msgid "Subject:"
-msgstr "เรื่อง:"
-
-#: appModules\msimn.py:24
-#: appModules\msimn.py:32
-msgid "From:"
-msgstr "จาก:"
-
-#: appModules\msimn.py:25
-msgid "Date:"
-msgstr "วันที่:"
-
-#: appModules\msimn.py:26
-msgid "Forward to:"
-msgstr "ส่งต่อ ถึง:"
-
-#: appModules\msimn.py:27
-msgid "Answer to:"
-msgstr "ตอบถึง:"
-
-#: appModules\msimn.py:28
-msgid "Organisation:"
-msgstr "องค์กร:"
-
-#: appModules\msimn.py:29
-msgid "Distribution:"
-msgstr "การเผยแพร่:"
-
-#: appModules\msimn.py:30
-msgid "Key words:"
-msgstr "คำสำคัญ:"
-
-#: appModules\msimn.py:31
-msgid "BCC:"
-msgstr "สำเนาซ่อน:"
-
-#: appModules\outlook.py:30
-#: appModules\outlook.py:43
-msgid "subject: %s"
-msgstr "เรื่อง: %s"
-
-#: appModules\outlook.py:31
-msgid "received: %s"
-msgstr "ได้รับ %s"
-
-#: appModules\outlook.py:35
-msgid "unread"
-msgstr "ยังไม่ได้อ่าน"
-
-#: appModules\outlook.py:37
-msgid "attachment"
-msgstr "สิ่งที่ส่งมาด้วย"
-
-#: appModules\outlook.py:44
-msgid "sent: %s"
-msgstr "ส่ง: %s"
-
-#: braille.py:26
-msgid "Arabic grade 1"
-msgstr "อาระบิกระดับ 1"
-
-#: braille.py:27
-msgid "Welsh grade 1"
-msgstr "เววระดับ 1"
-
-#: braille.py:28
-msgid "Welsh grade 2"
-msgstr "เววระดับ 2"
-
-#: braille.py:29
-msgid "Czech grade 1"
-msgstr "เช็กระดับ 1"
-
-#: braille.py:30
-msgid "Danish grade 1"
-msgstr "ดัชระดับ 1"
-
-#: braille.py:31
-msgid "German grade 0"
-msgstr "เยอร์มันระดับ 0"
-
-#: braille.py:32
-msgid "German grade 1"
-msgstr "เยอร์มันระดับ 1"
-
-#: braille.py:33
-msgid "German grade 2"
-msgstr "เยอร์มันระดับ 2"
-
-#: braille.py:34
-msgid "English (U.K.) grade 1"
-msgstr "อังกฤษระดับ 1"
-
-#: braille.py:35
-msgid "English (U.K.) grade 2"
-msgstr "อังกฤษระดับ 2"
-
-#: braille.py:36
-msgid "English (U.S.) 6 dot computer braille"
-msgstr "เบรลล์อังกฤษอเมริกัน 6 จุดคอมพิวเตอร์"
-
-#: braille.py:37
-msgid "English (U.S.) 8 dot computer braille"
-msgstr "เบรลล์อังกฤษอเมริกัน 8 จุดคอมพิวเตอร์"
-
-#: braille.py:38
-msgid "English (U.S.) grade 1"
-msgstr "อังกฤษอเมริกันระดับ 1"
-
-#: braille.py:39
-msgid "English (U.S.) grade 2"
-msgstr "อังกฤษอเมริกันระดับ 2"
-
-#: braille.py:40
-msgid "Spanish grade 1"
-msgstr "สเปนระดับ 1"
-
-#: braille.py:41
-msgid "French (Canada) grade 1"
-msgstr "ฝรั่งเศสแคนนาดาระดับ 1"
-
-#: braille.py:42
-msgid "French (Canada) grade 2"
-msgstr "ฝรั่งเศสแคนนาดาระดับ 2"
-
-#: braille.py:43
-msgid "French (France) grade 1"
-msgstr "ฝรั่งเศสระดับ 1"
-
-#: braille.py:44
-msgid "French (France) grade 2"
-msgstr "ฝรั่งเศสระดับ 2"
-
-#: braille.py:45
-msgid "Greek (Greece) grade 1"
-msgstr "กรีกระดับ 1"
-
-#: braille.py:46
-msgid "Hindi grade 1"
-msgstr "ฮินดีระดับ 1"
-
-#: braille.py:47
-msgid "Italian grade 1"
-msgstr "อิตาเลียนระดับ1"
-
-#: braille.py:48
-#, fuzzy
-msgid "Latvian grade 1"
-msgstr "ลัดเวียนระดับ 1"
-
-#: braille.py:49
-msgid "Dutch (Belgium) grade 1"
-msgstr "ดัชเบรเยียมระดับ 1"
-
-#: braille.py:50
-msgid "Dutch (netherlands) grade 1"
-msgstr "ดัชเนเทอร์แลนด์ระดับ 1"
-
-#: braille.py:51
-msgid "Norwegian grade 0"
-msgstr "นอรเวเจียนระดับ 0"
-
-#: braille.py:52
-msgid "Norwegian grade 1"
-msgstr "นอรเวเจียนระดับ 1"
-
-#: braille.py:53
-msgid "Norwegian grade 2"
-msgstr "นอรเวเจียนระดับ 2"
-
-#: braille.py:54
-msgid "Norwegian grade 3"
-msgstr "นอรเวเจียนระดับ 3"
-
-#: braille.py:55
-msgid "Polish grade 1"
-msgstr "โปร์แลนด์ระดับ 1"
-
-#: braille.py:56
-msgid "Portuguese grade 1"
-msgstr "โปร์แลนด์ระดับ 2"
-
-#: braille.py:57
-msgid "Swedish grade 1"
-msgstr "สวิสต์ระดับ 1"
-
-#: braille.py:58
-msgid "Slovak"
-msgstr "สโลวัก"
-
-#: braille.py:59
-msgid "Unified English Braille Code grade 1"
-msgstr "เบรลล์อังกฤษระดับ 1"
-
-#: braille.py:60
-msgid "Unified English Braille Code grade 2"
-msgstr "เบรลล์อังกฤษระดับ 2"
-
-#: braille.py:64
-msgid "edt"
-msgstr "แก้ไข"
-
-#: braille.py:66
-msgid "mnubar"
-msgstr "แถบรายการ"
-
-#: braille.py:67
-msgid "mnu"
-msgstr "รายการ"
-
-#: braille.py:69
-msgid "btn"
-msgstr "ปุ่ม"
-
-#: braille.py:70
-msgid "chk"
-msgstr "เลือก"
-
-#: braille.py:71
-msgid "rbtn"
-msgstr "ปุ่มวิทยุ"
-
-#: braille.py:72
-msgid "cbo"
-msgstr "กล่องคอมโบ"
-
-#: braille.py:73
-msgid "lnk"
-msgstr "ลิ้งค์"
-
-#: braille.py:74
-msgid "dlg"
-msgstr "ไดอาล๊อก"
-
-#: braille.py:78
-msgid "(x)"
-msgstr "กล่องเลือก"
-
-#: braille.py:79
-msgid "sel"
-msgstr "เซลล์"
-
-#: braille.py:80
-msgid "submnu"
-msgstr "รายการย่อย"
-
-#: braille.py:83
-msgid "( )"
-msgstr "กล่องเปล่า"
-
-#: braille.py:222 speech.py:596
-msgid "%s of %s"
-msgstr "ตัวเลือก %s ใน %s"
-
-#: braille.py:224 speech.py:601
-#: speech.py:604
-msgid "level %s"
-msgstr "ระดับ: %s"
-
-#: brailleDisplayDrivers\handyTech.py:24
-msgid "Handy Tech braille displays"
-msgstr "เครื่องแสดงผลจอภาพเป็นอักษรเบรลล์ของ Handy Tech"
-
-#: brailleDisplayDrivers\noBraille.py:7
-msgid "No braille"
-msgstr "ไม่มีเบรลล์"
-
-#: characterSymbols.py:17
-#: characterSymbols.py:18
-#: speech.py:76 speech.py:552
-msgid "blank"
-msgstr "ว่าง"
-
-#: characterSymbols.py:19
-msgid "null"
-msgstr "ไม่มี"
-
-#: characterSymbols.py:20
-#: controlTypes.py:193
-msgid "tab"
-msgstr "tab"
-
-#: characterSymbols.py:21
-msgid "line feed"
-msgstr "จบบรรทัด"
-
-#: characterSymbols.py:22
-msgid "carriage return"
-msgstr "ขึ้นบรรทัดใหม่"
-
-#: characterSymbols.py:23
-#: keyUtils.py:120
-msgid "space"
-msgstr "วรรค"
-
-#: characterSymbols.py:24
-msgid "bang"
-msgstr "bang"
-
-#: characterSymbols.py:25
-msgid "quote"
-msgstr "อ้างถึง"
-
-#: characterSymbols.py:26
-msgid "number"
-msgstr "จำนวน"
-
-#: characterSymbols.py:27
-msgid "dollar"
-msgstr "ดอลล่า"
-
-#: characterSymbols.py:28
-msgid "percent"
-msgstr "เปอร์เซ็น"
-
-#: characterSymbols.py:29
-msgid "and"
-msgstr "และ"
-
-#: characterSymbols.py:30
-msgid "tick"
-msgstr "ติ๊ก"
-
-#: characterSymbols.py:31
-msgid "left paren"
-msgstr "เปิดวงเล็บ"
-
-#: characterSymbols.py:32
-msgid "right paren"
-msgstr "ปิดวงเล็บ"
-
-#: characterSymbols.py:33
-msgid "star"
-msgstr "ดอกจัน"
-
-#: characterSymbols.py:34
-msgid "plus"
-msgstr "บวก"
-
-#: characterSymbols.py:35
-msgid "comma"
-msgstr "จุลภาค"
-
-#: characterSymbols.py:36
-msgid "dash"
-msgstr "ขีด"
-
-#: characterSymbols.py:37
-msgid "dot"
-msgstr "จุด"
-
-#: characterSymbols.py:38
-msgid "slash"
-msgstr "ทับ"
-
-#: characterSymbols.py:39
-msgid "colon"
-msgstr "โคลอน"
-
-#: characterSymbols.py:40
-msgid "semi"
-msgstr "เซมิ"
-
-#: characterSymbols.py:41
-msgid "less"
-msgstr "น้อยกว่า"
-
-#: characterSymbols.py:42
-msgid "equals"
-msgstr "เท่ากับ"
-
-#: characterSymbols.py:43
-msgid "greater"
-msgstr "มากกว่า"
-
-#: characterSymbols.py:44
-msgid "question"
-msgstr "เครื่องหมายคำถาม"
-
-#: characterSymbols.py:45
-msgid "at"
-msgstr "แอ๊ด"
-
-#: characterSymbols.py:46
-msgid "left bracket"
-msgstr "ก้ามปูเปิด"
-
-#: characterSymbols.py:47
-msgid "back slash"
-msgstr "back slash"
-
-#: characterSymbols.py:48
-msgid "right bracket"
-msgstr "ก้ามปูปิด"
-
-#: characterSymbols.py:49
-#: controlTypes.py:263
-msgid "caret"
-msgstr "caret"
-
-#: characterSymbols.py:51
-msgid "graav"
-msgstr "หนอน"
-
-#: characterSymbols.py:52
-msgid "left brace"
-msgstr "ปีกกาเปิด"
-
-#: characterSymbols.py:53
-msgid "bar"
-msgstr "แท่ง"
-
-#: characterSymbols.py:54
-msgid "right brace"
-msgstr "ปีกกาปิด"
-
-#: characterSymbols.py:55
-msgid "tilda"
-msgstr "ทิว-ด้า"
-
-#: characterSymbols.py:56
-#: virtualBuffers_old\MSHTML.py:264
-#: virtualBuffers_old\MSHTML.py:271
-#: virtualBuffers_old\adobe.py:268
-#: virtualBuffers_old\adobe.py:279
-#: virtualBuffers_old\gecko.py:260
-#: virtualBuffers_old\gecko.py:271
-msgid "bullet"
-msgstr "ลูกปืน"
-
-#: characterSymbols.py:57
-msgid "dot dot dot"
-msgstr "จุด จุด จุด"
-
-#: controlTypes.py:171
-msgid "unknown object"
-msgstr "วัตถุที่ไม่รู้จัก"
-
-#: controlTypes.py:172
-msgid "window"
-msgstr "หน้าต่าง"
-
-#: controlTypes.py:173
-msgid "title bar"
-msgstr "แถบหัวเรื่อง"
-
-#: controlTypes.py:174
-msgid "pane"
-msgstr "พื้นหน้า"
-
-#: controlTypes.py:175
-msgid "dialog"
-msgstr "ไดอาล่อก"
-
-#: controlTypes.py:176
-msgid "check box"
-msgstr "กล่องสัญลักษณ์"
-
-#: controlTypes.py:177
-msgid "radio button"
-msgstr "ปุ่มวิทยุ"
-
-#: controlTypes.py:178
-msgid "text"
-msgstr "ข้อความ"
-
-#: controlTypes.py:179
-msgid "edit"
-msgstr "แก้ไข"
-
-#: controlTypes.py:180
-msgid "button"
-msgstr "ปุ่ม"
-
-#: controlTypes.py:181
-msgid "menu bar"
-msgstr "แถบรายการ"
-
-#: controlTypes.py:182
-msgid "menu item"
-msgstr "ตัวเลือกจากรายการ"
-
-#: controlTypes.py:183
-#: controlTypes.py:290
-msgid "menu"
-msgstr "รายการ"
-
-#: controlTypes.py:184
-msgid "combo box"
-msgstr "กล่องคอมโบ"
-
-#: controlTypes.py:185
-msgid "list"
-msgstr "รายชื่อ"
-
-#: controlTypes.py:186
-msgid "list item"
-msgstr "ตัวเลือกจากรายชื่อ"
-
-#: controlTypes.py:187
-msgid "graphic"
-msgstr "กร๊าฟฟิ่ก"
-
-#: controlTypes.py:188
-msgid "help balloon"
-msgstr "บอลลูนช่วยเหลือ"
-
-#: controlTypes.py:189
-msgid "tool tip"
-msgstr "คำแนะนำเครื่องมือ"
-
-#: controlTypes.py:190 speech.py:765
-msgid "link"
-msgstr "ลิ้งค์"
-
-#: controlTypes.py:191
-msgid "tree view"
-msgstr "มูมมองต้นไม้"
-
-#: controlTypes.py:192
-msgid "tree view item"
-msgstr "ตัวเลือกจากมุมมองต้นไม้"
-
-#: controlTypes.py:194
-msgid "tab control"
-msgstr "แถบควบคุม"
-
-#: controlTypes.py:195
-msgid "slider"
-msgstr "รางเลื่อน"
-
-#: controlTypes.py:196
-msgid "progress bar"
-msgstr "แถบแสดงความคืบหน้า"
-
-#: controlTypes.py:197
-msgid "scroll bar"
-msgstr "แถบเลื่อน"
-
-#: controlTypes.py:198
-msgid "status bar"
-msgstr "แถบสถานะ"
-
-#: controlTypes.py:199
-msgid "table"
-msgstr "ตาราง"
-
-#: controlTypes.py:200
-msgid "cell"
-msgstr "เซลล์"
-
-#: controlTypes.py:201
-msgid "column"
-msgstr "คอลั่ม"
-
-#: controlTypes.py:202
-msgid "row"
-msgstr "แถว"
-
-#: controlTypes.py:203
-msgid "frame"
-msgstr "กรอบ"
-
-#: controlTypes.py:204
-msgid "tool bar"
-msgstr "แถบเครื่องมือ"
-
-#: controlTypes.py:205
-msgid "column header"
-msgstr "หัวคอลั่ม"
-
-#: controlTypes.py:206
-msgid "row header"
-msgstr "หัวแถว"
-
-#: controlTypes.py:207
-msgid "drop down button"
-msgstr "ปุ่มเลื่อนไหล"
-
-#: controlTypes.py:208
-msgid "clock"
-msgstr "นาฬิกา"
-
-#: controlTypes.py:209
-msgid "separator"
-msgstr "เส้นแบ่ง"
-
-#: controlTypes.py:210
-msgid "form"
-msgstr "ฟอร์ม"
-
-#: controlTypes.py:211
-msgid "heading"
-msgstr "หัวข้อ"
-
-#: controlTypes.py:212
-msgid "heading 1"
-msgstr "หัวข้อระดับ 1"
-
-#: controlTypes.py:213
-msgid "heading 2"
-msgstr "หัวข้อระดับ 2"
-
-#: controlTypes.py:214
-msgid "heading 3"
-msgstr "หัวข้อระดับ 3"
-
-#: controlTypes.py:215
-msgid "heading 4"
-msgstr "หัวข้อระดับ 4"
-
-#: controlTypes.py:216
-msgid "heading 5"
-msgstr "หัวข้อระดับ 5"
-
-#: controlTypes.py:217
-msgid "heading 6"
-msgstr "หัวข้อระดับ 6"
-
-#: controlTypes.py:218
-msgid "paragraph"
-msgstr "ย่อหน้า"
-
-#: controlTypes.py:219
-msgid "block quote"
-msgstr "บร๊อกอ้างอิง"
-
-#: controlTypes.py:220
-msgid "table header"
-msgstr "ส่วนหัวของตาราง"
-
-#: controlTypes.py:221
-msgid "table body"
-msgstr "ส่วนกลางของตาราง"
-
-#: controlTypes.py:222
-msgid "table footer"
-msgstr "ส่วนท้ายของตาราง"
-
-#: controlTypes.py:223
-#: virtualBuffers_old\adobe.py:40
-#: virtualBuffers_old\gecko.py:44
-msgid "document"
-msgstr "เอกสาร"
-
-#: controlTypes.py:224
-msgid "animation"
-msgstr "ภาพเคลื่อนไหว"
-
-#: controlTypes.py:225
-msgid "application"
-msgstr "โปรแกรม"
-
-#: controlTypes.py:226
-msgid "box"
-msgstr "กล่อง"
-
-#: controlTypes.py:227
-msgid "grouping"
-msgstr "จัดกลุ่ม"
-
-#: controlTypes.py:228
-msgid "property page"
-msgstr "ลักษณะของหน้า"
-
-#: controlTypes.py:229
-msgid "canvas"
-msgstr "แคนวาส"
-
-#: controlTypes.py:230
-msgid "caption"
-msgstr "ป้ายอธิบายภาพ"
-
-#: controlTypes.py:231
-msgid "check menu item"
-msgstr "ตัวเลือกของรายการที่เลือก"
-
-#: controlTypes.py:232
-msgid "date edit"
-msgstr "แก้ไขวันที่"
-
-#: controlTypes.py:233
-msgid "icon"
-msgstr "ไอค่อน"
-
-#: controlTypes.py:234
-msgid "directory pane"
-msgstr "พื้นหน้าสารบบ"
-
-#: controlTypes.py:236
-msgid "end note"
-msgstr "อ้างอิงท้ายเรื่อง"
-
-#: controlTypes.py:237
-msgid "footer"
-msgstr "ท้ายกระดาษ"
-
-#: controlTypes.py:238
-msgid "foot note"
-msgstr "เชิงอรรถ"
-
-#: controlTypes.py:239
-msgid "glass pane"
-msgstr "พื้นหน้ากระจก"
-
-#: controlTypes.py:240
-msgid "header"
-msgstr "หัวข้อ"
-
-#: controlTypes.py:241
-msgid "image map"
-msgstr "แผนภาพ"
-
-#: controlTypes.py:242
-msgid "input window"
-msgstr "หน้าต่างรับข้อมูล"
-
-#: controlTypes.py:243
-msgid "label"
-msgstr "ป้ายฉลาก"
-
-#: controlTypes.py:244
-msgid "note"
-msgstr "บันทึกเตือนความจำ"
-
-#: controlTypes.py:245
-msgid "page"
-msgstr "หน้า"
-
-#: controlTypes.py:246
-msgid "radio menu item"
-msgstr "ตัวเลือกจากรายการแบบวิทยุ"
-
-#: controlTypes.py:247
-msgid "layered pane"
-msgstr "พื้นหน้าเป็นชั้นๆ"
-
-#: controlTypes.py:248
-msgid "redundant object"
-msgstr "วัตถุซ้ำซ้อน"
-
-#: controlTypes.py:249
-msgid "root pane"
-msgstr "พื้นหน้ารากฐาน"
-
-#: controlTypes.py:250
-msgid "edit bar"
-msgstr "แถบแก้ไข"
-
-#: controlTypes.py:251
-msgid "terminal"
-msgstr "ท้ายสุด"
-
-#: controlTypes.py:252
-msgid "rich edit"
-msgstr "แก้ไขแบบท่วนถี่"
-
-#: controlTypes.py:253
-msgid "ruler"
-msgstr "ไม้บรรทัด"
-
-#: controlTypes.py:254
-msgid "scroll pane"
-msgstr "พื้นหน้าลางเลื่อน"
-
-#: controlTypes.py:255
-msgid "section"
-msgstr "ตอน"
-
-#: controlTypes.py:256
-msgid "shape"
-msgstr "รูปร่าง"
-
-#: controlTypes.py:257
-msgid "split pane"
-msgstr "พื้นหน้าส่วนย่อย"
-
-#: controlTypes.py:258
-#, fuzzy
-msgid "view port"
-msgstr "ดูพอร์ด"
-
-#: controlTypes.py:259
-msgid "tear off menu"
-msgstr "รายการแยกออก"
-
-#: controlTypes.py:260
-msgid "text frame"
-msgstr "กรอบข้อความ"
-
-#: controlTypes.py:261
-msgid "toggle button"
-msgstr "ปุ่มสลับการทำงาน"
-
-#: controlTypes.py:262
-msgid "border"
-msgstr "กรอบนอก"
-
-#: controlTypes.py:264
-msgid "character"
-msgstr "อักษร"
-
-#: controlTypes.py:265
-msgid "chart"
-msgstr "แผนภูมิ"
-
-#: controlTypes.py:266
-msgid "cursor"
-msgstr "แถบสว่าง"
-
-#: controlTypes.py:267
-msgid "diagram"
-msgstr "แผนภาพ"
-
-#: controlTypes.py:268
-msgid "dial"
-msgstr "หมุนโทรศัพท์"
-
-#: controlTypes.py:269
-msgid "drop list"
-msgstr "รายชื่อไล่ลง"
-
-#: controlTypes.py:270
-msgid "split button"
-msgstr "ปุ่มแยก"
-
-#: controlTypes.py:271
-msgid "menu button"
-msgstr "ปุ่มรายการ"
-
-#: controlTypes.py:272
-msgid "drop down button grid"
-msgstr "grid สำหรับรายชื่อไล่ลง"
-
-#: controlTypes.py:273
-msgid "equation"
-msgstr "สูตร"
-
-#: controlTypes.py:274
-msgid "grip"
-msgstr "ยึด"
-
-#: controlTypes.py:275
-msgid "hot key field"
-msgstr "ช่องแป้นพิมพ์ลัด"
-
-#: controlTypes.py:276
-msgid "indicator"
-msgstr "ตัวบ่งชี้"
-
-#: controlTypes.py:277
-msgid "spin button"
-msgstr "ปุ่มลูกข่าง"
-
-#: controlTypes.py:278
-msgid "sound"
-msgstr "เสียง"
-
-#: controlTypes.py:279
-msgid "white space"
-msgstr "ช่องว่าง"
-
-#: controlTypes.py:280
-msgid "tree view button"
-msgstr "ปุ่มมุมมองต้นไม้"
-
-#: controlTypes.py:281
-msgid "IP address"
-msgstr "รหัสที่ตั้ง"
-
-#: controlTypes.py:282
-msgid "desktop icon"
-msgstr "ไอคอนบน desktop"
-
-#: controlTypes.py:283
-#: controlTypes.py:307
-#, fuzzy
-msgid "alert"
-msgstr "เตือน"
-
-#: controlTypes.py:284
-#, fuzzy
-msgid "IFrame"
-msgstr "กรอบ"
-
-#: controlTypes.py:285
-msgid "desktop pane"
-msgstr "พื้นหน้าของ Desktop"
-
-#: controlTypes.py:286
-msgid "option pane"
-msgstr "พื้นหน้าของตัวเลือก"
-
-#: controlTypes.py:287
-msgid "color chooser"
-msgstr "ตัวเรียกสี"
-
-#: controlTypes.py:288
-msgid "file chooser"
-msgstr "ตัวเรียกเอกสาร"
-
-#: controlTypes.py:289
-msgid "filler"
-msgstr "ช่อง"
-
-#: controlTypes.py:291
-msgid "panel"
-msgstr "แผง"
-
-#: controlTypes.py:292
-msgid "password edit"
-msgstr "เขียนรหัสผ่าน"
-
-#: controlTypes.py:293
-msgid "font chooser"
-msgstr "ตัวเรียกแบบอักษร"
-
-#: controlTypes.py:294
-msgid "line"
-msgstr "บรรทัด"
-
-#: controlTypes.py:295
-msgid "font name"
-msgstr "ชื่อของแบบอักษร"
-
-#: controlTypes.py:296
-msgid "font size"
-msgstr "ขนาดแบบอักษร"
-
-#: controlTypes.py:298
-msgid "ITALIC"
-msgstr "เอียง"
-
-#: controlTypes.py:300
-msgid "foreground color"
-msgstr "สีพื้นหน้า"
-
-#: controlTypes.py:301
-msgid "background color"
-msgstr "สีพื้นหลัง"
-
-#: controlTypes.py:302 speech.py:739
-#: textBuffer.py:287
-#: textBuffer.py:294
-#: textBuffer.py:324
-msgid "superscript"
-msgstr "ตัวยก"
-
-#: controlTypes.py:303 speech.py:741
-#: textBuffer.py:326
-msgid "subscript"
-msgstr "ตัวห้อย"
-
-#: controlTypes.py:304
-msgid "style"
-msgstr "รูปแบบ"
-
-#: controlTypes.py:305
-msgid "indent"
-msgstr "ย่นย่อ"
-
-#: controlTypes.py:306
-msgid "alignment"
-msgstr "การจัดเรียง"
-
-#: controlTypes.py:311
-msgid "unavailable"
-msgstr "ไม่สามารถเลือกได้ "
-
-#: controlTypes.py:312
-msgid "focused"
-msgstr "โฟกัส"
-
-#: controlTypes.py:314
-msgid "busy"
-msgstr "ยุ่ง"
-
-#: controlTypes.py:315
-msgid "pressed"
-msgstr "กด"
-
-#: controlTypes.py:316
-msgid "checked"
-msgstr "เลือก"
-
-#: controlTypes.py:317
-msgid "half checked"
-msgstr "เลือกครึ่งหนึ่ง"
-
-#: controlTypes.py:318
-msgid "read only"
-msgstr "อ่านอย่างเดียว"
-
-#: controlTypes.py:319
-msgid "expanded"
-msgstr "ขยายออก"
-
-#: controlTypes.py:320
-msgid "collapsed"
-msgstr "พับเก็บ"
-
-#: controlTypes.py:321
-msgid "invisible"
-msgstr "มองไม่เห็น"
-
-#: controlTypes.py:322
-msgid "visited"
-msgstr "เคยเลือก"
-
-#: controlTypes.py:323
-msgid "linked"
-msgstr "ลิ้ง"
-
-#: controlTypes.py:324
-msgid "subMenu"
-msgstr "รายการย่อย"
-
-#: controlTypes.py:325
-#: virtualBuffers_old\MSHTML.py:306
-msgid "protected"
-msgstr "ปกป้อง"
-
-#: controlTypes.py:326
-msgid "required"
-msgstr "จำเป็น"
-
-#: controlTypes.py:327
-#, fuzzy
-msgid "defunct"
-msgstr "ดั้งเดิม"
-
-#: controlTypes.py:328
-msgid "invalid entry"
-msgstr "ข้อมูลไม่ถูกต้อง"
-
-#: controlTypes.py:329
-#, fuzzy
-msgid "modal"
-msgstr "โมเดล"
-
-#: controlTypes.py:330
-msgid "has auto complete"
-msgstr "เขียนอัตโนมัติ"
-
-#: controlTypes.py:331
-msgid "multi line"
-msgstr "หลายบรรทัด"
-
-#: controlTypes.py:332
-#, fuzzy
-msgid "iconified"
-msgstr "กำหนดไอค่อน"
-
-#: controlTypes.py:333
-#, fuzzy
-msgid "off screen"
-msgstr "นอกจอภาพ"
-
-#: controlTypes.py:334
-msgid "selectable"
-msgstr "เลือกได้"
-
-#: controlTypes.py:335
-msgid "focusable"
-msgstr "โฟกัสได้"
-
-#: controlTypes.py:336
-#: virtualBuffers_old\MSHTML.py:336
-msgid "clickable"
-msgstr "คลิ้กได้"
-
-#: controlTypes.py:337
-msgid "editable"
-msgstr "แก้ไขได้"
-
-#: controlTypes.py:338
-msgid "checkable"
-msgstr "เลือกได้"
-
-#: core.py:82
-msgid "Loading subsystems, please wait..."
-msgstr "กำลังโหลดระบบย่อย กรุณารอสักครู่"
-
-#: core.py:142
-msgid "NVDA started"
-msgstr "NVDA เริ่มทำงานแล้ว"
-
-#: cursorManager.py:71
-#: virtualBuffers_old\__init__.py:464
-msgid "Find"
-msgstr "ค้นหา"
-
-#: cursorManager.py:71
-#: virtualBuffers_old\__init__.py:464
-msgid "Type the text you wish to find"
-msgstr "กรอกคำที่ต้องการค้นหา"
-
-#: cursorManager.py:85
-msgid "text \"%s\" not found"
-msgstr "ไม่พบข้อความ: \"%s\""
-
-#: cursorManager.py:85
-#: virtualBuffers_old\__init__.py:474
-msgid "Find Error"
-msgstr "ค้นหาผิดพลาด"
-
-#: cursorManager.py:91
-msgid "find a text string from the current cursor position"
-msgstr "ค้นหาข้อความจากตำแหน่งของแถบสว่าง"
-
-#: cursorManager.py:98
-msgid ""
-"find the next occurrence of the previously entered text string from the "
-"current cursor's position"
-msgstr "ค้นหาข้อความถัดไปที่ได้กรอกไว้อีกครั้งจากตำแหน่งแถบสว่างปัจจุบัน"
-
-#: cursorManager.py:105
-msgid ""
-"find the previous occurrence of the previously entered text string from the "
-"current cursor's position"
-msgstr "ค้นหาข้อความก่อนหน้าที่ได้กรอกไว้อีกครั้งจากตำแหน่งแถบสว่างปัจจุบัน"
-
-#: gui\__init__.py:146
+#: gui\__init__.py:148
 msgid "configuration applied"
 msgstr "เริ่มใช้งานตามการตั้งค่า"
 
-#: gui\__init__.py:151
+#: gui\__init__.py:152
+msgid "Cannot save configuration - NVDA in secure mode"
+msgstr "ไม่สามารถจัดเก็บการตั้งค่า - NVDA อยู่ในโหมดรักษาความปลอดภัย"
+
+#: gui\__init__.py:156
 msgid "configuration saved"
 msgstr "การตั้งค่าได้บันทึกเรียบร้อยแล้ว"
 
-#: gui\__init__.py:154
+#: gui\__init__.py:159
 msgid "Could not save configuration - probably read only file system"
 msgstr "ไม่สามารถบันทึกการตั้งค่าได้ อาจเป็นเพราะเอกสารอ่านได้เท่านั้น"
 
-#: gui\__init__.py:154
-#: gui\logViewer.py:73
+#: gui\__init__.py:159
+#: gui\__init__.py:169
+#: gui\logViewer.py:74
+#: gui\settingsDialogs.py:170
 msgid "Error"
 msgstr "ผิดพลาด"
 
-#: gui\__init__.py:163
+#: gui\__init__.py:169
+#, fuzzy
+msgid "Please close  the other NVDA settings dialog first"
+msgstr "แสดงหน้าต่างการตั้งค่าเมาส์ของ NVDA"
+
+#: gui\__init__.py:173
 msgid "Default dictionary"
 msgstr "พจนานุกรมดั้งเดิม"
 
-#: gui\__init__.py:166
+#: gui\__init__.py:176
 msgid "Voice dictionary (%s)"
 msgstr "พจนานุกรมเสียง (%s)"
 
-#: gui\__init__.py:169
+#: gui\__init__.py:179
 msgid "Temporary dictionary"
 msgstr "พจนานุกรมชั่วคราว"
 
-#: gui\__init__.py:177
+#: gui\__init__.py:187
 msgid "Are you sure you want to quit NVDA?"
 msgstr "คุณแน่ใจหรือไม่ที่จะออกจาก NVDA"
 
-#: gui\__init__.py:177
-#: gui\__init__.py:305
+#: gui\__init__.py:187
+#: gui\__init__.py:339
 msgid "Exit NVDA"
 msgstr "ออกจาก NVDA"
 
-#: gui\__init__.py:219
+#: gui\__init__.py:233
 msgid "copyright"
 msgstr "สงวนลิขสิทธิ์"
 
-#: gui\__init__.py:219
+#: gui\__init__.py:233
 msgid "url"
 msgstr "url"
 
-#: gui\__init__.py:219
+#: gui\__init__.py:233
 msgid "version"
 msgstr "เวอร์ชัน"
 
-#: gui\__init__.py:221
-#: gui\__init__.py:296
+#: gui\__init__.py:235
+#: gui\__init__.py:329
 msgid "About NVDA"
 msgstr "เกี่ยวกับ NVDA"
 
-#: gui\__init__.py:245
+#: gui\__init__.py:268
 msgid "&General settings..."
 msgstr "ตั้งค่าทั่วไป"
 
-#: gui\__init__.py:245
-#: gui\settingsDialogs.py:88
+#: gui\__init__.py:268
+#: gui\settingsDialogs.py:101
 msgid "General settings"
 msgstr "ตั้งค่าทั่วไป"
 
-#: gui\__init__.py:247
+#: gui\__init__.py:270
 msgid " the synthesizer to use"
 msgstr "เสียงสังเคราะห์ที่ใช้"
 
-#: gui\__init__.py:247
+#: gui\__init__.py:270
 msgid "&Synthesizer..."
 msgstr "เสียงสังเคราะห์..."
 
-#: gui\__init__.py:249
+#: gui\__init__.py:272
 msgid "&Voice settings..."
 msgstr "ตั้งค่าเสียง..."
 
-#: gui\__init__.py:249
+#: gui\__init__.py:272
 msgid "Choose the voice, rate, pitch and volume  to use"
 msgstr "เลือกเสียง ระดับความเร็ว ระดับสูง-ต่ำ และความดังเบาในการใช้งาน"
 
-#: gui\__init__.py:251
+#: gui\__init__.py:274
 msgid "B&raille settings..."
 msgstr "ตั้งค่าเบรลล์..."
 
-#: gui\__init__.py:253
+#: gui\__init__.py:276
 msgid "&Keyboard Settings..."
 msgstr "ตั้งค่าแป้นพิมพ์"
 
-#: gui\__init__.py:253
+#: gui\__init__.py:276
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
 msgstr ""
 "ตั้งค่าแป้นพิมพ์, ให้อ่านคำที่ตัวอักษรที่พิมพ์ คำที่พิมพ์หรือคำสั่ง ที่พิมพ์"
 
-#: gui\__init__.py:255
+#: gui\__init__.py:278
 msgid "&Mouse settings..."
 msgstr "ตั้งค่าเม้าส์..."
 
-#: gui\__init__.py:255
-msgid "Change reporting of mouse sape, object under mouse"
+#: gui\__init__.py:278
+#, fuzzy
+msgid "Change reporting of mouse shape and object under mouse"
 msgstr "เปลี่ยนการรายงานรูปร่างและวัตถุใต้เม้าส์"
 
-#: gui\__init__.py:257
+#: gui\__init__.py:280
+#, fuzzy
+msgid "&Review cursor..."
+msgstr "ลูกศรเลื่อนไปยังแถบทบทวน"
+
+#: gui\__init__.py:280
+msgid "Configure how and when the review cursor moves"
+msgstr "กำหนดให้แถบทบทวนอ่านเมื่อไรและอย่างไร"
+
+#: gui\__init__.py:282
 msgid "&Object presentation..."
 msgstr "แสดงวัตถุ..."
 
-#: gui\__init__.py:257
+#: gui\__init__.py:282
 msgid "Change reporting of objects"
 msgstr "เปลี่ยนการรายงานวัตถุ"
 
-#: gui\__init__.py:259
+#: gui\__init__.py:284
 msgid "Change virtual buffers specific settings"
 msgstr "เปลี่ยนค่าของ virtual buffers อย่างเจาะจง"
 
-#: gui\__init__.py:259
+#: gui\__init__.py:284
 msgid "Virtual &buffers..."
 msgstr "Virtual &buffers..."
 
-#: gui\__init__.py:261
+#: gui\__init__.py:286
 msgid "Change Settings of document properties"
 msgstr "เปลี่ยนการตั้งค่าของลักษณะเอกสาร"
 
-#: gui\__init__.py:261
+#: gui\__init__.py:286
 msgid "Document &formatting..."
 msgstr "รูปแบบเอกสาร..."
 
-#: gui\__init__.py:264
+#: gui\__init__.py:290
 msgid "&Default dictionary..."
 msgstr "พจนานุกรมดั้งเดิม"
 
-#: gui\__init__.py:264
+#: gui\__init__.py:290
 msgid ""
 "dialog where you can set default dictionary by adding dictionary entries to "
 "the list"
 msgstr "หน้าต่างที่มีไว้เพื่อตั้งพจนานุกรมโดยเพิ่มข้อมูลลงไปในรายชื่อ"
 
-#: gui\__init__.py:266
+#: gui\__init__.py:292
 msgid "&Voice dictionary..."
 msgstr "พจนานุกรมเสียง"
 
-#: gui\__init__.py:266
+#: gui\__init__.py:292
 msgid ""
 "dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
 msgstr ""
 "หน้าต่างที่มีไว้เพื่อตั้งค่าพจนานุกรมเสียงโดยเพิ่มข้อมูลพจนานุกรมเสียงลงในรายชื่อ"
 
-#: gui\__init__.py:268
+#: gui\__init__.py:294
 msgid "&Temporary dictionary..."
 msgstr "พจนานุกรมชั่วคราว"
 
-#: gui\__init__.py:268
+#: gui\__init__.py:294
 msgid ""
 "dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
 msgstr ""
 "หน้าต่างที่มีไว้เพื่อตั้งค่าพจนานุกรมชั่วคราวโดยการเพิ่มข้อมูลพจนานุกรมลงในกล่องแก้ไข"
 
-#: gui\__init__.py:270
+#: gui\__init__.py:296
 msgid "Speech &dictionaries"
 msgstr "พจนานุกรมเสียงอ่าน"
 
-#: gui\__init__.py:271
+#: gui\__init__.py:297
 msgid "&Preferences"
 msgstr "ปรับแต่ง"
 
-#: gui\__init__.py:274
+#: gui\__init__.py:301
 msgid "View log"
 msgstr "ตรวจดูล๊อก"
 
-#: gui\__init__.py:276
+#: gui\__init__.py:303
+#, fuzzy
+msgid "Speech viewer"
+msgstr "มูมมองต้นไม้"
+
+#: gui\__init__.py:306
 msgid "Python console"
 msgstr "Python console"
 
-#: gui\__init__.py:278
+#: gui\__init__.py:308
 msgid "Tools"
 msgstr "เครื่องมือ"
 
-#: gui\__init__.py:281
+#: gui\__init__.py:312
 msgid "User guide"
 msgstr "แนะนำสำหรับผู้ใช้" 
 
-#: gui\__init__.py:283
-msgid "Key Command Quick Reference"
+#: gui\__init__.py:314
+#, fuzzy
+msgid "Keyboard Command Quick Reference"
 msgstr "อ้างอิงสำหรับแป้นคำสั่งลัด"
 
-#: gui\__init__.py:285
+#: gui\__init__.py:316
 msgid "What's &new"
 msgstr "สิ่งเพิ่มใหม่" 
 
-#: gui\__init__.py:287
+#: gui\__init__.py:318
 msgid "Web site"
 msgstr "เว็บไซต์"
 
-#: gui\__init__.py:289
+#: gui\__init__.py:320
+#, fuzzy
+msgid "Readme"
+msgstr "หัวข้อ"
+
+#: gui\__init__.py:322
 msgid "License"
 msgstr "ลิขสิทธิ์"  
 
-#: gui\__init__.py:291
+#: gui\__init__.py:324
 msgid "Contributors"
 msgstr "ผู้ให้การสนับสนุน" 
 
-#: gui\__init__.py:293
+#: gui\__init__.py:326
 msgid "We&lcome dialog"
 msgstr "หน้าต่างต้อนรับ"
 
-#: gui\__init__.py:296
+#: gui\__init__.py:329
 msgid "About..."
 msgstr "เกี่ยวกับ..."
 
-#: gui\__init__.py:298
+#: gui\__init__.py:331
 msgid "&Help"
 msgstr "ช่วยเหลือ"
 
-#: gui\__init__.py:300
+#: gui\__init__.py:333
 msgid "&Revert to saved configuration"
 msgstr "กลับสู่การตั้งค่าเดิม"
 
-#: gui\__init__.py:300
+#: gui\__init__.py:333
 msgid "Reset all settings to saved state"
 msgstr "กลับสู่การตั้งค่าปลอดภัย"
 
-#: gui\__init__.py:302
+#: gui\__init__.py:336
 msgid "&Save configuration"
 msgstr "บันทึกการตั้งค่า"
 
-#: gui\__init__.py:302
+#: gui\__init__.py:336
 msgid "Write the current configuration to nvda.ini"
 msgstr "บันทึกการตั้งค่าทั้งหมดลงใน NVDA.ini"
 
-#: gui\__init__.py:305
-#: gui\logViewer.py:33
+#: gui\__init__.py:339
+#: gui\logViewer.py:34
 msgid "E&xit"
 msgstr "ออก"
 
-#: gui\__init__.py:361
+#: gui\__init__.py:390
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -2307,40 +2689,56 @@ msgstr ""
 "จากหน้าต่างนี้ ท่านสามารถตั้งค่า NVDA ขอความช่วยเหลือ และเข้าถึงการใช้งานของ "
 "NVDA ได้โดยตรง"
 
-#: gui\__init__.py:371
+#: gui\__init__.py:400
 msgid "Welcome to NVDA"
 msgstr "ยินดีต้อนรับเข้าสู่ NVDA"
 
-#: gui\__init__.py:375
+#: gui\__init__.py:404
 msgid "Options"
 msgstr "ตัวเลือก"
 
-#: gui\__init__.py:376
-#: gui\settingsDialogs.py:385
+#: gui\__init__.py:405
+#: gui\settingsDialogs.py:462
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "ใช้ปุ่ม CapsLock เป็นแป้นทดแทนของ NVDA"
 
-#: gui\__init__.py:379
+#: gui\__init__.py:408
 msgid "Show this dialog when NVDA starts"
 msgstr "แสดงหน้าต่างนี้เมื่อเริ่มต้น NVDA"
+
+#: gui\__init__.py:444
+msgid ""
+"Your configuration file contains errors. \n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
+"edit your config file at a later stage to make corrections. More details "
+"about the errors can be found in the log file.\n"
+msgstr ""
+"พบข้อผิดพลาดใน file ตั้งค่า\n"
+"กดปุ่ม 'ตกลง' เพื่อแก้ไขข้อผิดพลาดหรือกดปุ่ม 'ยกเลิก' หากท่านต้องการ"
+"แก้ไขข้อผิดพลาดของ file ตั้งค่าด้วยตนเองจากรายละเอียดใน log file"
+
+#: gui\__init__.py:449
+#, fuzzy
+msgid "Configuration File Error"
+msgstr "เริ่มใช้งานตามการตั้งค่า"
 
 #: gui\logViewer.py:17
 msgid "NVDA Log Viewer"
 msgstr "ตัวดูล๊อกของ NVDA"
 
-#: gui\logViewer.py:28
+#: gui\logViewer.py:29
 msgid "Refresh\tF5"
 msgstr "โหลดซ้ำ\tF5"
 
-#: gui\logViewer.py:35
+#: gui\logViewer.py:36
 msgid "Log"
 msgstr "ล๊อก"
 
-#: gui\logViewer.py:65
+#: gui\logViewer.py:66
 msgid "Save As"
 msgstr "บันทึกเป็น"
 
-#: gui\logViewer.py:73
+#: gui\logViewer.py:74
 msgid "Error saving log: %s"
 msgstr "บันทึกล๊อก %s ผิดพลาด"
 
@@ -2350,67 +2748,96 @@ msgstr "บันทึกล๊อก %s ผิดพลาด"
 msgid "NVDA"
 msgstr "NVDA"
 
-#: gui\scriptUI.py:109
-msgid "Links List"
-msgstr "รายชื่อลิ้งค์"
-
-#: gui\scriptUI.py:123
-msgid "&Activate Link"
-msgstr "เริ่มการทำงานลิ้งค์"
-
-#: gui\scriptUI.py:124
-msgid "&Move to link"
-msgstr "เลื่อนไปยังลิ้งค์"
-
-#: gui\settingsDialogs.py:90
+#: gui\settingsDialogs.py:103
 msgid "info"
 msgstr "ข้อมูล"
 
-#: gui\settingsDialogs.py:91
+#: gui\settingsDialogs.py:104
 msgid "debug warning"
 msgstr "เตือนการแก้รหัส"
 
-#: gui\settingsDialogs.py:92
+#: gui\settingsDialogs.py:105
 msgid "input/output"
 msgstr "นำเข้า/ส่งออก"
 
-#: gui\settingsDialogs.py:93
+#: gui\settingsDialogs.py:106
 msgid "debug"
 msgstr "แก้รหัส"
 
-#: gui\settingsDialogs.py:98
-msgid "&Language (requires restart to fully take affect)"
+#: gui\settingsDialogs.py:111
+#, fuzzy
+msgid "&Language (requires restart to fully take affect):"
 msgstr "ภาษา (ต้องเริ่มระบบใหม่เพื่อการส่งผล)"
 
-#: gui\settingsDialogs.py:102
+#: gui\settingsDialogs.py:115
 msgid "Language"
 msgstr "ภาษา"
 
-#: gui\settingsDialogs.py:111
+#: gui\settingsDialogs.py:127
 msgid "&Save configuration on exit"
 msgstr "บันทึกการตั้งค่าก่อนออกจากโปรแกรม"
 
-#: gui\settingsDialogs.py:114
+#: gui\settingsDialogs.py:132
 msgid "&Warn before exiting NVDA"
 msgstr "เตือนก่อนออกจาก NVDA"
 
-#: gui\settingsDialogs.py:118
-msgid "L&ogging level"
+#: gui\settingsDialogs.py:136
+#, fuzzy
+msgid "L&ogging level:"
 msgstr "ระดับการล๊อก"
 
-#: gui\settingsDialogs.py:121
+#: gui\settingsDialogs.py:139
 msgid "Log level"
 msgstr "ระดับการล๊อก"
 
-#: gui\settingsDialogs.py:142
+#: gui\settingsDialogs.py:149
+msgid "&Automatically start NVDA after I log on to Windows"
+msgstr "&เรียกใช้งาน NVDA หลังจากเข้าสู่ Windows"
+
+#: gui\settingsDialogs.py:154
+msgid ""
+"Use NVDA on the Windows logon screen (requires administrator privileges)"
+msgstr "ใช้งาน NVDA เมื่อเข้าสู่หน้าแรกของ Windows (สงวนสิทธิ์เฉพาะผู้ดูแลระบบ)"
+
+#: gui\settingsDialogs.py:159
+msgid ""
+"Use currently saved settings on the logon and other secure screens (requires "
+"administrator privileges)"
+msgstr ""
+"ใช้การตั้งค่าปัจจุบันสำหรับการเข้าสู่ระบบรวมถึงหน้าต่างรักษาความปลอดภัยอื่น (สงวน"
+"สิทธิเฉพาะผู้ดูแลระบบ)"
+
+#: gui\settingsDialogs.py:170
+#, fuzzy
+msgid "Error copying NVDA user settings"
+msgstr "แสดงหน้าต่างการตั้งค่าเมาส์ของ NVDA"
+
+#: gui\settingsDialogs.py:172
+#, fuzzy
+msgid "Success"
+msgstr "น้อยกว่า"
+
+#: gui\settingsDialogs.py:172
+msgid "Successfully copied NVDA user settings"
+msgstr "คัดลอกการตั้งค่าสำหรับผู้ใช้งาน NVDA เรียบร้อยแล้ว"
+
+#: gui\settingsDialogs.py:181
 msgid "Error in %s language file"
 msgstr "ผิดพลาดในการเรียกใช้งานภาษา %s"
 
-#: gui\settingsDialogs.py:142
+#: gui\settingsDialogs.py:181
 msgid "Language Error"
 msgstr "ภาษาผิดพลาด"
 
-#: gui\settingsDialogs.py:151
+#: gui\settingsDialogs.py:197
+msgid "Insufficient Privileges"
+msgstr "สิทธิไม่พอ"
+
+#: gui\settingsDialogs.py:197
+msgid "This change requires administrator privileges."
+msgstr "เฉพาะสิทิ์ของผู้ดูแลระบบ"
+
+#: gui\settingsDialogs.py:199
 msgid ""
 "For the new language to take effect, the configuration must be saved and "
 "NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
@@ -2420,889 +2847,963 @@ msgstr ""
 "่อเริ่มระบบใหม่ เลือก Cancel เพื่อดำเนินการในโอกาสหน้าหรือเลือกออกจาก NVDA "
 "โดยตรง"
 
-#: gui\settingsDialogs.py:151
+#: gui\settingsDialogs.py:199
 msgid "Language Configuration Change"
 msgstr "การตั้งค่าภาษาเปลี่ยนแปลงเรียบร้อยแล้ว"
 
-#: gui\settingsDialogs.py:157
+#: gui\settingsDialogs.py:207
 msgid "Synthesizer"
 msgstr "เสียงสังเคราะห์"
 
-#: gui\settingsDialogs.py:161
-msgid "&Synthesizer"
+#: gui\settingsDialogs.py:211
+#, fuzzy
+msgid "&Synthesizer:"
 msgstr "เสียงสังเคราะห์"
 
-#: gui\settingsDialogs.py:176
-msgid "Output &device"
+#: gui\settingsDialogs.py:226
+#, fuzzy
+msgid "Output &device:"
 msgstr "อุปกรณ์ส่งออก"
 
-#: gui\settingsDialogs.py:196
+#: gui\settingsDialogs.py:246
 msgid "Could not load the %s synthesizer."
 msgstr "ไม่สามารถโหลดเสียงสังเคราะห์ %s ได้"
 
-#: gui\settingsDialogs.py:196
+#: gui\settingsDialogs.py:246
 msgid "Synthesizer Error"
 msgstr "เสียงสังเคราะห์ผิดพลาด"
 
-#: gui\settingsDialogs.py:201
+#: gui\settingsDialogs.py:309
 msgid "Voice settings"
 msgstr "ตั้งค่าเสียง"
 
-#: gui\settingsDialogs.py:211
-msgid "&Voice"
-msgstr "เสียง"
-
-#: gui\settingsDialogs.py:226
-msgid "V&ariant"
-msgstr "แปรปรวน"
-
-#: gui\settingsDialogs.py:240
-msgid "&Rate"
-msgstr "ระดับความเร็ว"
-
-#: gui\settingsDialogs.py:248
-msgid "&Pitch"
-msgstr "ระดับสูง-ต่ำ"
-
-#: gui\settingsDialogs.py:256
-msgid "&Inflection"
-msgstr "ระดับเสียงสูง-ต่ำ"
-
-#: gui\settingsDialogs.py:264
-msgid "V&olume"
-msgstr "ระดับความดัง"
-
-#: gui\settingsDialogs.py:272
+#: gui\settingsDialogs.py:365
 msgid "&Speak all punctuation"
 msgstr "อ่านสัญลักษณ์ทุกชนิด"
 
-#: gui\settingsDialogs.py:275
+#: gui\settingsDialogs.py:368
 msgid "Raise pitch for capitals"
 msgstr "อ่านเน้นเสียงตัวอักษรพิมพ์ใหญ่"
 
-#: gui\settingsDialogs.py:278
+#: gui\settingsDialogs.py:371
 msgid "Say &cap before capitals"
 msgstr "อ่านคำว่า Cap ก่อนตัวอักษรพิมพ์ใหญ่"
 
-#: gui\settingsDialogs.py:281
+#: gui\settingsDialogs.py:374
 msgid "&Beep for capitals"
 msgstr "ปิ๊บ ก่อนตัวอักษรพิมใหญ่"
 
-#: gui\settingsDialogs.py:368
+#: gui\settingsDialogs.py:377
+msgid "Use &spelling functionality if supported"
+msgstr "ใช้&ความสามารถในการสะกดหากมีการรองรับ"
+
+#: gui\settingsDialogs.py:445
 msgid "Keyboard Settings"
 msgstr "ตั้งค่าแป้นพิมพ์"
 
-#: gui\settingsDialogs.py:372
-msgid "&Keyboard layout"
+#: gui\settingsDialogs.py:449
+#, fuzzy
+msgid "&Keyboard layout:"
 msgstr "โครงสร้างแป้นพิมพ์"
 
-#: gui\settingsDialogs.py:377
+#: gui\settingsDialogs.py:454
 msgid "Keyboard layout"
 msgstr "โครงสร้างแป้นพิมพ์"
 
-#: gui\settingsDialogs.py:388
+#: gui\settingsDialogs.py:465
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "ใช้ปุ่ม Insert เป็นปุ่มทดแทนของปุ่ม NVDA"
 
-#: gui\settingsDialogs.py:391
+#: gui\settingsDialogs.py:468
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "ใช้ปุ่ม extended Insert เป็น modifier key ของปุ่ม NVDA"
 
-#: gui\settingsDialogs.py:394
+#: gui\settingsDialogs.py:471
 msgid "Speak typed &characters"
 msgstr "อ่านตัวอักษร"
 
-#: gui\settingsDialogs.py:397
+#: gui\settingsDialogs.py:474
 msgid "Speak typed &words"
 msgstr "อ่านคำ"
 
-#: gui\settingsDialogs.py:400
+#: gui\settingsDialogs.py:477
+msgid "Beep if typing lowercase letters when caps lock is on"
+msgstr "ร้องบี๊บๆ เมื่อพิมพ์ตัวอักษรพิมพ์เล็กในขณะที่ caps lock เปิด"
+
+#: gui\settingsDialogs.py:480
 msgid "Speak command &keys"
 msgstr "อ่านทวนคำสั่ง"
 
-#: gui\settingsDialogs.py:423
+#: gui\settingsDialogs.py:500
 msgid "Mouse settings"
 msgstr "ตั้งค่าเม้าส์"
 
-#: gui\settingsDialogs.py:426
+#: gui\settingsDialogs.py:503
 msgid "Report mouse &shape changes"
 msgstr "รายงานเมื่อรูปร่างของเม้าส์เปลี่ยน"
 
-#: gui\settingsDialogs.py:429
-msgid "Report &text under the mouse"
-msgstr "รายงานข้อความใต้เม้าส์"
+#: gui\settingsDialogs.py:506
+#, fuzzy
+msgid "Enable mouse &tracking"
+msgstr "ตามติดเม้าส์"
 
-#: gui\settingsDialogs.py:432
+#: gui\settingsDialogs.py:510
+msgid "Text &unit resolution:"
+msgstr "ข้อความของ&หน่วยความละเอียด"
+
+#: gui\settingsDialogs.py:514
+#, fuzzy
+msgid "text reporting unit"
+msgstr "เปลี่ยนการรายงานวัตถุ"
+
+#: gui\settingsDialogs.py:522
 msgid "Report &role when mouse enters object"
 msgstr "รายงานแถวเมื่อเมาส์ใกล้วัตถุ"
 
-#: gui\settingsDialogs.py:435
+#: gui\settingsDialogs.py:525
 msgid "play audio coordinates when mouse moves"
 msgstr "เล่นเสียงสูงต่ำให้สัมพันธ์ตามการเคลื่อนที่ของเม้าส์"
 
-#: gui\settingsDialogs.py:438
+#: gui\settingsDialogs.py:528
 msgid "brightness controls audio coordinates volume"
 msgstr "ระดับเสียงดังเบาสัมพันธ์กับการควบคุม"
 
-#: gui\settingsDialogs.py:455
+#: gui\settingsDialogs.py:546
+#, fuzzy
+msgid "Review cursor settings"
+msgstr "ตั้งค่าทั่วไป"
+
+#: gui\settingsDialogs.py:549
+#, fuzzy
+msgid "Follow &keyboard focus"
+msgstr "โครงสร้างแป้นพิมพ์ %s"
+
+#: gui\settingsDialogs.py:552
+msgid "Follow System &Caret"
+msgstr "ทำตามระบบ &Caret"
+
+#: gui\settingsDialogs.py:555
+#, fuzzy
+msgid "Follow &mouse cursor"
+msgstr "%s แถบสว่าง"
+
+#: gui\settingsDialogs.py:558
+msgid "Simple review mode"
+msgstr "โหมดทบทวนอย่างง่าย"
+
+#: gui\settingsDialogs.py:573
 msgid "Object presentation"
 msgstr "แสดงวัตถุ"
 
-#: gui\settingsDialogs.py:464
+#: gui\settingsDialogs.py:576
+#, fuzzy
+msgid "Speak"
+msgstr "สโลวัก"
+
+#: gui\settingsDialogs.py:577
+#, fuzzy
+msgid "Beep"
+msgstr "เสียงปิ๊บๆ"
+
+#: gui\settingsDialogs.py:578
+#, fuzzy
+msgid "Speak and beep"
+msgstr "อ่านทวนคำสั่ง"
+
+#: gui\settingsDialogs.py:582
 msgid "Report &tooltips"
 msgstr "รายงาน &tooltip"
 
-#: gui\settingsDialogs.py:467
+#: gui\settingsDialogs.py:585
 msgid "Report &help balloons"
 msgstr "รายงานบอลลูนช่วยเหลือ"
 
-#: gui\settingsDialogs.py:470
+#: gui\settingsDialogs.py:588
 msgid "Report object shortcut &keys"
 msgstr "รายงานแป้นลัดและแป้นใช้งาน"
 
-#: gui\settingsDialogs.py:473
+#: gui\settingsDialogs.py:591
 msgid "Report object &position information"
 msgstr "รายงานตำแหน่งและรายละเอียดของวัตถุ"
 
-#: gui\settingsDialogs.py:476
+#: gui\settingsDialogs.py:594
 msgid "Report object &descriptions"
 msgstr "รายงานวัตถุและคำอธิบายวัตถุ"
 
-#: gui\settingsDialogs.py:479
-msgid "Say object &state first"
-msgstr "อ่านสถานะของวัตถุก่อน"
+#: gui\settingsDialogs.py:598
+#, fuzzy
+msgid "Progress &bar output:"
+msgstr "แถบแสดงความคืบหน้า"
 
-#: gui\settingsDialogs.py:483
-msgid "Report progress &bar updates"
+#: gui\settingsDialogs.py:601
+#, fuzzy
+msgid "Progress bar output"
+msgstr "แถบแสดงความคืบหน้า"
+
+#: gui\settingsDialogs.py:610
+#, fuzzy
+msgid "Report background progress bars"
 msgstr "รายงานการเปลี่ยนแปลงบริเวณแถบสถานะ"
 
-#: gui\settingsDialogs.py:486
-msgid "Report progress bar updates"
-msgstr "รายงานการเปลี่ยนแปลงบริเวณแถบสถานะ"
+#: gui\settingsDialogs.py:613
+#, fuzzy
+msgid "Report dynamic &content changes"
+msgstr "รายงานเนื้อหาที่เปลี่ยนไปแบบอิสระ"
 
-#: gui\settingsDialogs.py:510
+#: gui\settingsDialogs.py:632
 msgid "virtual buffers"
 msgstr "Virtual buffers"
 
-#: gui\settingsDialogs.py:513
+#: gui\settingsDialogs.py:635
 msgid "&Maximum number of characters on one line"
 msgstr "จำนวนตัวอักษรสูงสุดใน 1 บรรทัด"
 
-#: gui\settingsDialogs.py:518
+#: gui\settingsDialogs.py:640
 msgid "&Number of lines per page"
 msgstr "จำนวนบรรทัดต่อหน้า"
 
-#: gui\settingsDialogs.py:523
+#: gui\settingsDialogs.py:645
 msgid "Use &screen layout (when supported)"
 msgstr "ใช้โครงสร้างหน้าจอ (หากมีให้ใช้)"
 
-#: gui\settingsDialogs.py:527
-msgid "Report &virtual presentation on focus changes"
-msgstr "รายงานการแสดงผลแบบเสมือนในขณะที่โฟกัสมีการเปลี่ยนแปลง"
-
-#: gui\settingsDialogs.py:530
-msgid "Update the content &dynamically"
-msgstr "ปรับเนื้อหาที่เปลี่ยนไปแบบอิสระ"
-
-#: gui\settingsDialogs.py:533
-msgid "Report lin&ks"
-msgstr "รายงานลิ้งค์"
-
-#: gui\settingsDialogs.py:536
-msgid "Report &lists"
-msgstr "รายงานรายชื่อ"
-
-#: gui\settingsDialogs.py:539
-msgid "Report list &items"
-msgstr "รายงานตัวเลือกจากรายชื่อ"
-
-#: gui\settingsDialogs.py:542
-#: gui\settingsDialogs.py:644
-msgid "Report &headings"
-msgstr "รายงานหัวข้อ"
-
-#: gui\settingsDialogs.py:545
-#: gui\settingsDialogs.py:638
-msgid "Report &tables"
+#: gui\settingsDialogs.py:648
+#, fuzzy
+msgid "Report l&ayout tables"
 msgstr "รายงานตาราง"
 
-#: gui\settingsDialogs.py:548
-msgid "Report &graphics"
-msgstr "รายงานกราฟฟิก"
-
-#: gui\settingsDialogs.py:551
-msgid "Report f&orms"
-msgstr "รายงานฟอร์ม"
-
-#: gui\settingsDialogs.py:554
-msgid "Report form &fields"
-msgstr "รายงานช่องในฟอร์ม"
-
-#: gui\settingsDialogs.py:557
-#: gui\settingsDialogs.py:650
-msgid "Report block &quotes"
-msgstr "รายงานแหล่งที่มา (quotes)"
-
-#: gui\settingsDialogs.py:560
-msgid "Report &paragraphs"
-msgstr "รายงานย่อหน้า"
-
-#: gui\settingsDialogs.py:563
-msgid "Report f&rames"
-msgstr "รายงานกรอบ"
-
-#: gui\settingsDialogs.py:566
+#: gui\settingsDialogs.py:652
 msgid "Automatic focus mode for focus changes"
 msgstr "โหมดโฟกัสอัตโนมัติสำหรับการเปลี่ยนแปลงโฟกัส"
 
-#: gui\settingsDialogs.py:569
+#: gui\settingsDialogs.py:655
 msgid "Automatic focus mode for caret movement"
 msgstr "โหมดโฟกัสอัตโนมัติสำหรับการเคลื่อนที่ลูกศร"
 
-#: gui\settingsDialogs.py:608
+#: gui\settingsDialogs.py:658
+msgid "Audio indication of focus and browse modes"
+msgstr "ตัวชี้บ่งเสียงภายใต้โหมดโฟกัสและโหมดสืบค้น"
+
+#: gui\settingsDialogs.py:686
 msgid "Document formatting"
 msgstr "รูปแบบเอกสาร"
 
-#: gui\settingsDialogs.py:611
+#: gui\settingsDialogs.py:689
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "อ่านรูปแบบที่เปลี่ยนแปลงจากแถบสว่าง"
 
-#: gui\settingsDialogs.py:614
+#: gui\settingsDialogs.py:692
 msgid "Report font &name"
 msgstr "รายงานชื่อแบบอักษร "
 
-#: gui\settingsDialogs.py:617
+#: gui\settingsDialogs.py:695
 msgid "Report font &size"
 msgstr "รายงานขนาดแบบอักษร"
 
-#: gui\settingsDialogs.py:620
+#: gui\settingsDialogs.py:698
 msgid "Report font attri&butes"
 msgstr "รายงานคุณสมบัติของแบบอักษร"
 
-#: gui\settingsDialogs.py:623
+#: gui\settingsDialogs.py:701
 msgid "Report &alignment"
 msgstr "รายงานการจัดวาง"
 
-#: gui\settingsDialogs.py:626
+#: gui\settingsDialogs.py:704
+#, fuzzy
+msgid "Report &colors"
+msgstr "รายงานฟอร์ม"
+
+#: gui\settingsDialogs.py:707
 msgid "Report st&yle"
 msgstr "รายงานรูปแบบ"
 
-#: gui\settingsDialogs.py:629
+#: gui\settingsDialogs.py:710
 msgid "Report spelling errors"
 msgstr "รายงานการสะกดผิด"
 
-#: gui\settingsDialogs.py:632
+#: gui\settingsDialogs.py:713
 msgid "Report &pages"
 msgstr "รายงานหน้า"
 
-#: gui\settingsDialogs.py:635
+#: gui\settingsDialogs.py:716
 msgid "Report &line numbers"
 msgstr "รายงานเลขบรรทัด"
 
-#: gui\settingsDialogs.py:641
+#: gui\settingsDialogs.py:719
+msgid "Report &tables"
+msgstr "รายงานตาราง"
+
+#: gui\settingsDialogs.py:722
+#, fuzzy
+msgid "Report table row/column h&eaders"
+msgstr "รายงานเลขบรรทัด"
+
+#: gui\settingsDialogs.py:725
 msgid "Report &links"
 msgstr "รายงานลิ้งค์"
 
-#: gui\settingsDialogs.py:647
+#: gui\settingsDialogs.py:728
+msgid "Report &headings"
+msgstr "รายงานหัวข้อ"
+
+#: gui\settingsDialogs.py:731
 msgid "Report l&ists"
 msgstr "รายงานรายชื่อ"
 
-#: gui\settingsDialogs.py:677
+#: gui\settingsDialogs.py:734
+msgid "Report block &quotes"
+msgstr "รายงานแหล่งที่มา (quotes)"
+
+#: gui\settingsDialogs.py:737
+#, fuzzy
+msgid "Report lan&dmarks"
+msgstr "รายงานลิ้งค์"
+
+#: gui\settingsDialogs.py:766
 msgid "Edit dictionary entry"
 msgstr "แก้ไขตัวเลือกในพจนานุกรม"
 
-#: gui\settingsDialogs.py:680
+#: gui\settingsDialogs.py:770
 msgid "&Pattern"
 msgstr "รูปแบบ"
 
-#: gui\settingsDialogs.py:683
+#: gui\settingsDialogs.py:773
 msgid "&Replacement"
 msgstr "แทนที่"
 
-#: gui\settingsDialogs.py:686
+#: gui\settingsDialogs.py:776
 msgid "&Comment"
 msgstr "หมายเหตุ"
 
-#: gui\settingsDialogs.py:689
+#: gui\settingsDialogs.py:779
 msgid "Case &sensitive"
 msgstr "ส่งผลกับการใช้อักษรพิมพ์ใหญ่หรือเล็ก"
 
-#: gui\settingsDialogs.py:691
+#: gui\settingsDialogs.py:781
 msgid "Regular &expression"
 msgstr "วลีทั่วไป"
 
-#: gui\settingsDialogs.py:713
+#: gui\settingsDialogs.py:803
 msgid "&Dictionary entries"
 msgstr "ตัวเลือกในพจนานุกรม"
 
-#: gui\settingsDialogs.py:716
+#: gui\settingsDialogs.py:806
 msgid "Comment"
 msgstr "หมายเหตุ"
 
-#: gui\settingsDialogs.py:717
+#: gui\settingsDialogs.py:807
 msgid "Pattern"
 msgstr "รูปแบบ"
 
-#: gui\settingsDialogs.py:718
+#: gui\settingsDialogs.py:808
 msgid "Replacement"
 msgstr "แทนที่"
 
-#: gui\settingsDialogs.py:719
+#: gui\settingsDialogs.py:809
 msgid "case sensitive"
 msgstr "ส่งผลกับการใช้อักษรพิมพ์ใหญ่หรือเล็ก"
 
-#: gui\settingsDialogs.py:720
+#: gui\settingsDialogs.py:810
 msgid "Regular expression"
 msgstr "วลีทั่วไป"
 
-#: gui\settingsDialogs.py:727
+#: gui\settingsDialogs.py:818
 msgid "&Add"
 msgstr "เพิ่ม"
 
-#: gui\settingsDialogs.py:730
+#: gui\settingsDialogs.py:821
 msgid "&edit"
 msgstr "แก้ไข"
 
-#: gui\settingsDialogs.py:733
+#: gui\settingsDialogs.py:824
 msgid "&Remove"
 msgstr "ลบ"
 
-#: gui\settingsDialogs.py:800
+#: gui\settingsDialogs.py:846
+#, fuzzy
+msgid "Add Dictionary Entry"
+msgstr "แก้ไขตัวเลือกในพจนานุกรม"
+
+#: gui\settingsDialogs.py:891
 msgid "Braille Settings"
 msgstr "ตั้งค่าเบรลล์"
 
-#: gui\settingsDialogs.py:804
-msgid "Braille &display"
+#: gui\settingsDialogs.py:895
+#, fuzzy
+msgid "Braille &display:"
 msgstr "เครื่องแสดงเป็นอักษรเบรลล์"
 
-#: gui\settingsDialogs.py:818
-msgid "Translation &table"
+#: gui\settingsDialogs.py:909
+#, fuzzy
+msgid "Translation &table:"
 msgstr "ตารางการแปล"
 
-#: gui\settingsDialogs.py:830
+#: gui\settingsDialogs.py:921
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "ขยายเป็นอักษรเบรลล์บริเวณคำที่มีแถบสว่าง"
 
-#: gui\settingsDialogs.py:835
+#: gui\settingsDialogs.py:926
 msgid "Cursor blink rate (ms)"
 msgstr "อัตราการกระพริบของแถบสว่าง (มิลิวินาที)"
 
-#: gui\settingsDialogs.py:843
+#: gui\settingsDialogs.py:934
 msgid "Message timeout (sec)"
 msgstr "หมดเวลาข้อความ (วินาที)"
 
-#: gui\settingsDialogs.py:856
+#: gui\settingsDialogs.py:942
+#, fuzzy
+msgid "Braille tethered to:"
+msgstr "ใช้เบรลล์เป็น %s"
+
+#: gui\settingsDialogs.py:961
 msgid "Braille Display Error"
 msgstr "เครื่องแสดงเป็นอักษรเบรลล์ผิดพลาด"
 
-#: gui\settingsDialogs.py:856
+#: gui\settingsDialogs.py:961
 msgid "Could not load the %s display."
 msgstr "ไม่สามารถโหลดเครื่องแสดงเป็นอักษรเบรรล์ %s ได้"
 
-#: keyUtils.py:111
+#: keyLabels.py:8
+#, fuzzy
+msgid "back"
+msgstr "ว่าง"
+
+#: keyLabels.py:9
+#, fuzzy
+msgid "forward"
+msgstr "ส่งต่อ ถึง:"
+
+#: keyLabels.py:10
+#, fuzzy
+msgid "refresh"
+msgstr "โหลดซ้ำ"
+
+#: keyLabels.py:11
+#, fuzzy
+msgid "browser stop"
+msgstr "โหมดสืบค้น"
+
+#: keyLabels.py:12
+#, fuzzy
+msgid "search page"
+msgstr "รายงานหน้า"
+
+#: keyLabels.py:13
+#, fuzzy
+msgid "favorites"
+msgstr "เสียง"
+
+#: keyLabels.py:14
+#, fuzzy
+msgid "home page"
+msgstr "home"
+
+#: keyLabels.py:15
+#, fuzzy
+msgid "mute"
+msgstr "อ้างถึง"
+
+#: keyLabels.py:16
+#, fuzzy
+msgid "volume down"
+msgstr "ระดับความดังเบา"
+
+#: keyLabels.py:17
+#, fuzzy
+msgid "volume up"
+msgstr "ระดับความดังเบา"
+
+#: keyLabels.py:18
+#, fuzzy
+msgid "next track"
+msgstr "ก้ามปูเปิด"
+
+#: keyLabels.py:19
+#, fuzzy
+msgid "previous track"
+msgstr "ไม่มีกร๊าฟฟิ่กก่อนหน้า"
+
+#: keyLabels.py:20
+#, fuzzy
+msgid "stop"
+msgstr "บน"
+
+#: keyLabels.py:21
+#, fuzzy
+msgid "play pause"
+msgstr "พื้นหน้าเป็นชั้นๆ"
+
+#: keyLabels.py:22
+#, fuzzy
+msgid "email"
+msgstr "เซมิ"
+
+#: keyLabels.py:23
+#, fuzzy
+msgid "media player"
+msgstr "แก้ไขได้"
+
+#: keyLabels.py:24
+#, fuzzy
+msgid "custom application 1"
+msgstr "โปรแกรม"
+
+#: keyLabels.py:25
+#, fuzzy
+msgid "custom application 2"
+msgstr "โปรแกรม"
+
+#: keyLabels.py:26
 msgid "backspace"
 msgstr "ลบก่อนหน้า"
 
-#: keyUtils.py:112
+#: keyLabels.py:27
 msgid "caps lock"
 msgstr "caps lock"
 
-#: keyUtils.py:113
+#: keyLabels.py:28
 msgid "ctrl"
 msgstr "ctrl"
 
-#: keyUtils.py:114
+#: keyLabels.py:29
 msgid "alt"
 msgstr "alt"
 
-#: keyUtils.py:115
+#: keyLabels.py:30
 msgid "shift"
 msgstr "shift"
 
-#: keyUtils.py:116
+#: keyLabels.py:31
 msgid "windows"
 msgstr "windows"
 
-#: keyUtils.py:117
+#: keyLabels.py:32
 msgid "enter"
 msgstr "enter"
 
-#: keyUtils.py:118
+#: keyLabels.py:33
 msgid "numpad enter"
 msgstr "numpad enter"
 
-#: keyUtils.py:119
+#: keyLabels.py:34
 msgid "escape"
 msgstr "escape"
 
-#: keyUtils.py:121
+#: keyLabels.py:36
 msgid "page up"
 msgstr "page up"
 
-#: keyUtils.py:122
+#: keyLabels.py:37
 msgid "page down"
 msgstr "page down"
 
-#: keyUtils.py:123
+#: keyLabels.py:38
 msgid "end"
 msgstr "end"
 
-#: keyUtils.py:124
+#: keyLabels.py:39
 msgid "home"
 msgstr "home"
 
-#: keyUtils.py:125
+#: keyLabels.py:40
 msgid "delete"
 msgstr "delete"
 
-#: keyUtils.py:126
+#: keyLabels.py:41
+#, fuzzy
+msgid "numpad delete"
+msgstr "numpad left"
+
+#: keyLabels.py:42
 msgid "left arrow"
 msgstr "left arrow"
 
-#: keyUtils.py:127
+#: keyLabels.py:43
 msgid "right arrow"
 msgstr "right arrow"
 
-#: keyUtils.py:128
+#: keyLabels.py:44
 msgid "up arrow"
 msgstr "up arrow"
 
-#: keyUtils.py:129
+#: keyLabels.py:45
 msgid "down arrow"
 msgstr "down arrow"
 
-#: keyUtils.py:130
+#: keyLabels.py:46
 msgid "applications"
 msgstr "applications"
 
-#: keyUtils.py:131
+#: keyLabels.py:47
 msgid "num lock"
 msgstr "num lock"
 
-#: keyUtils.py:132
-msgid "snapshot"
-msgstr "snapshot"
+#: keyLabels.py:48
+#, fuzzy
+msgid "print screen"
+msgstr "นอกจอภาพ"
 
-#: keyUtils.py:133
-msgid "scrol lock"
+#: keyLabels.py:49
+#, fuzzy
+msgid "scroll lock"
 msgstr "scroll lock"
 
-#: keyUtils.py:134
-msgid "numpad left"
-msgstr "numpad left"
-
-#: keyUtils.py:135
-msgid "numpad right"
-msgstr "numpad right"
-
-#: keyUtils.py:136
-msgid "numpad up"
+#: keyLabels.py:50
+#, fuzzy
+msgid "numpad 4"
 msgstr "numpad up"
 
-#: keyUtils.py:137
-msgid "numpad down"
-msgstr "numpad down"
+#: keyLabels.py:51
+#, fuzzy
+msgid "numpad 6"
+msgstr "numpad up"
 
-#: keyUtils.py:138
-msgid "numpad page up"
-msgstr "numpad page up"
+#: keyLabels.py:52
+#, fuzzy
+msgid "numpad 8"
+msgstr "numpad up"
 
-#: keyUtils.py:139
-msgid "numpad page down"
-msgstr "numpad page down"
+#: keyLabels.py:53
+#, fuzzy
+msgid "numpad 2"
+msgstr "numpad up"
 
-#: keyUtils.py:140
-msgid "numpad end"
+#: keyLabels.py:54
+#, fuzzy
+msgid "numpad 9"
+msgstr "numpad up"
+
+#: keyLabels.py:55
+#, fuzzy
+msgid "numpad 3"
+msgstr "numpad up"
+
+#: keyLabels.py:56
+#, fuzzy
+msgid "numpad 1"
+msgstr "numpad up"
+
+#: keyLabels.py:57
+#, fuzzy
+msgid "numpad 7"
+msgstr "numpad up"
+
+#: keyLabels.py:58
+#, fuzzy
+msgid "numpad 5"
+msgstr "numpad up"
+
+#: keyLabels.py:59
+#, fuzzy
+msgid "numpad divide"
 msgstr "numpad end"
 
-#: keyUtils.py:141
-msgid "numpad home"
-msgstr "numpad home"
+#: keyLabels.py:60
+#, fuzzy
+msgid "numpad multiply"
+msgstr "numpad up"
 
-#: keyUtils.py:142
-msgid "numpad slash"
-msgstr "numpad slash"
-
-#: keyUtils.py:143
-msgid "numpad star"
-msgstr "numpad star"
-
-#: keyUtils.py:144
+#: keyLabels.py:61
 msgid "numpad minus"
 msgstr "numpad minus"
 
-#: keyUtils.py:145
+#: keyLabels.py:62
 msgid "numpad plus"
 msgstr "numpad plus"
 
-#: keyUtils.py:146
+#: keyLabels.py:63
 msgid "left control"
 msgstr "left control"
 
-#: keyUtils.py:147
+#: keyLabels.py:64
 msgid "right control"
 msgstr "right control"
 
-#: keyUtils.py:148
+#: keyLabels.py:65
 msgid "left windows"
 msgstr "left windows"
 
-#: keyUtils.py:149
+#: keyLabels.py:66
 msgid "left shift"
 msgstr "left shift"
 
-#: keyUtils.py:150
+#: keyLabels.py:67
 msgid "right shift"
 msgstr "right shift"
 
-#: keyUtils.py:151
+#: keyLabels.py:68
 msgid "left alt"
 msgstr "left alt"
 
-#: keyUtils.py:152
+#: keyLabels.py:69
 msgid "right alt"
 msgstr "right alt"
 
-#: keyUtils.py:153
+#: keyLabels.py:70
 msgid "right windows"
 msgstr "right windows"
 
-#: keyboardHandler.py:52
-msgid "caps lock %s"
-msgstr "caps lock  %s "
+#: keyLabels.py:71
+#, fuzzy
+msgid "break"
+msgstr "ว่าง"
 
-#: keyboardHandler.py:54
-msgid "num lock %s"
-msgstr "num lock %s"
+#: keyboardHandler.py:178
+#, fuzzy
+msgid "desktop"
+msgstr "บน"
 
-#: keyboardHandler.py:56
-msgid "scroll lock %s"
-msgstr "scroll lock %s"
+#: keyboardHandler.py:179
+#, fuzzy
+msgid "laptop"
+msgstr "บน"
 
-#: keyboardHandler.py:76
-msgid "%s keyboard layout"
-msgstr "โครงสร้างแป้นพิมพ์ %s"
-
-#: keyboardHandler.py:166
-msgid "Description: %s"
-msgstr "คำอธิบาย: %s"
-
-#: keyboardHandler.py:167
-msgid "Location: %s"
-msgstr "ที่ตั้ง: %s"
-
-#: keyboardHandler.py:180
-msgid "Error in keyboardHandler.internal_keyDownEvent"
-msgstr "keyboardHandler.internal_keyDownEvent ทำงานผิดพลาด"
-
-#: keyboardHandler.py:213
-msgid "Error in keyboardHandler.internal_keyUpEvent"
-msgstr "keyboardHandler.internal_keyUpEvent ทำงานผิดพลาด"
-
-#: mouseHandler.py:156
+#: mouseHandler.py:136
 msgid "%s cursor"
 msgstr "%s แถบสว่าง"
 
-#: pythonConsole.py:63
+#: pythonConsole.py:24
+msgid "Type help(object) to get help about object."
+msgstr "พิมพ์ help(วัตถุ) เพื่อขอความช่วยเหลือเกี่ยวกับวัตถุนั้น"
+
+#: pythonConsole.py:43
+msgid "Type exit() to exit the console"
+msgstr "พิมพ์คำว่า exit เพื่อออกจากหน้าควบคุมนี้"
+
+#: pythonConsole.py:96
 msgid "NVDA Python Console"
 msgstr "NVDA Python Console"
 
-#: sayAllHandler.py:154
-msgid "end of text"
-msgstr "จบข้อความ"
-
-#: speech.py:168
+#: speech.py:175
 msgid "cap %s"
 msgstr "%s พิมพ์ใหญ่"
 
-#: speech.py:291
+#: speech.py:322
 msgid "%d characters"
 msgstr "อักษร %d"
 
-#: speech.py:342
+#: speech.py:373
 msgid "selecting %s"
 msgstr "%s เลือก"
 
-#: speech.py:353
+#: speech.py:384
 msgid "unselecting %s"
 msgstr "%s ไม่เลือก"
 
-#: speech.py:355
+#: speech.py:386
 msgid "selection removed"
 msgstr "ถอนเลือก"
 
-#: speech.py:590
-#: virtualBuffers_old\MSHTML.py:126
-#: virtualBuffers_old\MSHTML.py:314
-#: virtualBuffers_old\MSHTML.py:318
-#: virtualBuffers_old\adobe.py:305
-#: virtualBuffers_old\adobe.py:309
-#: virtualBuffers_old\gecko.py:297
-#: virtualBuffers_old\gecko.py:301
-msgid "not %s"
-msgstr "ไม่ได้ %s"
+#: speech.py:674
+#, fuzzy
+msgid "done dragging"
+msgstr "ตามติดเม้าส์"
 
-#: speech.py:644 speech.py:648
-#: speech.py:652 speech.py:658
-#: speech.py:664 speech.py:765
-#: virtualBuffers_old\__init__.py:195
-msgid "out of %s"
-msgstr "จาก %s"
-
-#: speech.py:646
-#: virtualBuffers_old\MSHTML.py:258
-#: virtualBuffers_old\MSHTML.py:261
-#: virtualBuffers_old\MSHTML.py:268
-#: virtualBuffers_old\adobe.py:262
-#: virtualBuffers_old\adobe.py:273
-#: virtualBuffers_old\gecko.py:254
-#: virtualBuffers_old\gecko.py:265
-msgid "with %s items"
-msgstr "มีตัวเลือก %s"
-
-#: speech.py:662
-msgid "in %s"
-msgstr "ใน %s"
-
-#: speech.py:682
-msgid "page %s"
-msgstr "หน้า %s"
-
-#: speech.py:689 textBuffer.py:242
-#: textBuffer.py:310
-msgid "style %s"
-msgstr "รูปแบบ %s"
-
-#: speech.py:691
-msgid "default style"
-msgstr "รูปแบบดั้งเดิม"
-
-#: speech.py:711
-msgid "line %s"
-msgstr "บรรทัด %s"
-
-#: speech.py:717
-msgid "no bold"
-msgstr "ไม่หนา"
-
-#: speech.py:722
-msgid "no italic"
-msgstr "ไม่เอียง"
-
-#: speech.py:727
-msgid "no strikethrough"
-msgstr "ไม่ตีต่อ"
-
-#: speech.py:727
-msgid "strikethrough"
-msgstr "ตีต่อ"
-
-#: speech.py:732
-msgid "not underlined"
-msgstr "ไม่ขีดเส้นใต้"
-
-#: speech.py:732
-msgid "underlined"
-msgstr "ขีดเส้นใต้"
-
-#: speech.py:743
-msgid "baseline"
-msgstr "บรรทัดรากฐาน"
-
-#: speech.py:751
-msgid "align left"
-msgstr "จัดเรียงทางซ้าย"
-
-#: speech.py:753
-msgid "align center"
-msgstr "จัดเรียงตรงกลาง"
-
-#: speech.py:755
-msgid "align right"
-msgstr "จัดเรียงทางขวา"
-
-#: speech.py:757
-msgid "align justify"
-msgstr "จัดเรียงแบบ justify"
-
-#: speech.py:759
-msgid "align default"
-msgstr "จัดเรียงแบบดั้งเดิม"
-
-#: speech.py:772
-msgid "spelling error"
-msgstr "สะกดผิด"
-
-#: speech.py:774
-msgid "out of spelling error"
-msgstr "ออกจากการสะกดผิด"
-
-#: speech.py:788 textBuffer.py:219
-msgid "out of table"
-msgstr "ออกจากตาราง"
-
-#: speech.py:797
-msgid "table with %s columns and %s rows"
-msgstr "ตารางมี %d คอลั่ม %d แถว"
-
-#: speech.py:802
-msgid "column %s"
-msgstr "%s คอลั่ม"
-
-#: speech.py:806
+#: speech.py:704 speech.py:1003
 msgid "row %s"
 msgstr "%s แถว"
 
-#: synthDrivers\_espeak.py:294
+#: speech.py:710 speech.py:999
+msgid "column %s"
+msgstr "%s คอลั่ม"
+
+#: speech.py:715
+msgid "with %s rows and %s columns"
+msgstr "ประกอบด้วย %s บรรทัดที่มี %s คอลัมน์"
+
+#: speech.py:717
+#, fuzzy
+msgid "with %s columns"
+msgstr "มีตัวเลือก %s"
+
+#: speech.py:719
+#, fuzzy
+msgid "with %s rows"
+msgstr "มีตัวเลือก %s"
+
+#: speech.py:825
+msgid "with %s items"
+msgstr "มีตัวเลือก %s"
+
+#: speech.py:842 speech.py:958
+msgid "out of %s"
+msgstr "จาก %s"
+
+#: speech.py:866
+msgid "page %s"
+msgstr "หน้า %s"
+
+#: speech.py:873
+msgid "style %s"
+msgstr "รูปแบบ %s"
+
+#: speech.py:875
+msgid "default style"
+msgstr "รูปแบบดั้งเดิม"
+
+#: speech.py:899
+#, fuzzy
+msgid "on {backgroundColor}"
+msgstr "สีพื้นหลัง"
+
+#: speech.py:904
+msgid "line %s"
+msgstr "บรรทัด %s"
+
+#: speech.py:910
+msgid "no bold"
+msgstr "ไม่หนา"
+
+#: speech.py:915
+msgid "italic"
+msgstr "เอียง"
+
+#: speech.py:915
+msgid "no italic"
+msgstr "ไม่เอียง"
+
+#: speech.py:920
+msgid "no strikethrough"
+msgstr "ไม่ตีต่อ"
+
+#: speech.py:920
+msgid "strikethrough"
+msgstr "ตีต่อ"
+
+#: speech.py:925
+msgid "not underlined"
+msgstr "ไม่ขีดเส้นใต้"
+
+#: speech.py:925
+msgid "underlined"
+msgstr "ขีดเส้นใต้"
+
+#: speech.py:936
+msgid "baseline"
+msgstr "บรรทัดรากฐาน"
+
+#: speech.py:944
+msgid "align left"
+msgstr "จัดเรียงทางซ้าย"
+
+#: speech.py:946
+msgid "align center"
+msgstr "จัดเรียงตรงกลาง"
+
+#: speech.py:948
+msgid "align right"
+msgstr "จัดเรียงทางขวา"
+
+#: speech.py:950
+msgid "align justify"
+msgstr "จัดเรียงแบบ justify"
+
+#: speech.py:952
+msgid "align default"
+msgstr "จัดเรียงแบบดั้งเดิม"
+
+#: speech.py:965
+msgid "spelling error"
+msgstr "สะกดผิด"
+
+#: speech.py:967
+msgid "out of spelling error"
+msgstr "ออกจากการสะกดผิด"
+
+#: speech.py:985
+msgid "out of table"
+msgstr "ออกจากตาราง"
+
+#: speech.py:994
+msgid "table with %s columns and %s rows"
+msgstr "ตารางมี %d คอลั่ม %d แถว"
+
+#: speechViewer.py:13
+#, fuzzy
+msgid "NVDA Speech Viewer"
+msgstr "ตัวดูล๊อกของ NVDA"
+
+#: synthDriverHandler.py:185
+#, fuzzy
+msgid "&Language"
+msgstr "ภาษา"
+
+#: synthDriverHandler.py:190
+msgid "&Voice"
+msgstr "เสียง"
+
+#: synthDriverHandler.py:194
+msgid "V&ariant"
+msgstr "แปรปรวน"
+
+#: synthDriverHandler.py:199
+msgid "&Rate"
+msgstr "ระดับความเร็ว"
+
+#: synthDriverHandler.py:203
+msgid "V&olume"
+msgstr "ระดับความดัง"
+
+#: synthDriverHandler.py:207
+msgid "&Pitch"
+msgstr "ระดับสูง-ต่ำ"
+
+#: synthDriverHandler.py:212
+msgid "&Inflection"
+msgstr "ระดับเสียงสูง-ต่ำ"
+
+#: synthDrivers\_espeak.py:308
 msgid "none"
 msgstr "ไม่มี"
 
-#: synthDrivers\display.py:31
-msgid "A virtual synth which displays text in a window"
-msgstr "ตัวสังเคราะห์แบบเสมือนที่แสดงข้อความบนหน้าต่าง"
+#: synthDrivers\newfon.py:179
+#, fuzzy
+msgid "&Acceleration"
+msgstr "ป้ายอธิบายภาพ"
+
+#: synthDrivers\newfon.py:190
+#, fuzzy
+msgid "female 1"
+msgstr "ท้ายสุด"
+
+#: synthDrivers\newfon.py:190
+#, fuzzy
+msgid "female 2"
+msgstr "ท้ายสุด"
+
+#: synthDrivers\newfon.py:190
+#, fuzzy
+msgid "male 1"
+msgstr "เตือน"
+
+#: synthDrivers\newfon.py:190
+#, fuzzy
+msgid "male 2"
+msgstr "เตือน"
 
 #: synthDrivers\silence.py:13
 msgid "No speech"
 msgstr "ไม่มีเสียง"
 
-#: synthSettingsRing.py:94
-msgid "rate"
-msgstr "ระดับความเร็ว"
+#: textInfos\__init__.py:137
+#, fuzzy
+msgid "word"
+msgstr "กรอบนอก"
 
-#: synthSettingsRing.py:95
-msgid "pitch"
-msgstr "ระดับสูง-ต่ำ"
-
-#: synthSettingsRing.py:96
-msgid "volume"
-msgstr "ระดับความดังเบา"
-
-#: synthSettingsRing.py:97
-msgid "inflection"
-msgstr "ระดับเสียงสูง-ต่ำ"
-
-#: synthSettingsRing.py:98
-msgid "voice"
-msgstr "เสียง"
-
-#: synthSettingsRing.py:99
-msgid "variant"
-msgstr "แปรปรวน"
-
-#: textBuffer.py:207
-msgid "page %d"
-msgstr "%d หน้า"
-
-#: textBuffer.py:213
-msgid "line %d"
-msgstr "%d บรรทัด"
-
-#: textBuffer.py:225
-msgid "table with %d columns and %d rows"
-msgstr "ตารางมี %d คอลั่ม %d แถว"
-
-#: textBuffer.py:231
-msgid "row %d"
-msgstr "%d แถว"
-
-#: textBuffer.py:236
-msgid "column %d"
-msgstr "%d คอลั่ม"
-
-#: textBuffer.py:248
-#: textBuffer.py:312
-msgid "alignment %s"
-msgstr "การจัดเรียง %s"
-
-#: textBuffer.py:254
-#: textBuffer.py:314
-msgid "font name %s"
-msgstr "ชื่อของแบบอักษร %s"
-
-#: textBuffer.py:260
-#: textBuffer.py:316
-msgid "font size %d"
-msgstr "ขนาดของแบบอักษร %d"
-
-#: textBuffer.py:268
-msgid "not bold"
-msgstr "ไม่หนา"
-
-#: textBuffer.py:275
-msgid "not italic"
-msgstr "ไม่เอียง"
-
-#: textBuffer.py:282
-msgid "not underline"
-msgstr "ไม่ขีดเส้นใต้"
-
-#: textBuffer.py:289
-msgid "not superscript"
-msgstr "ไม่ใช่ตัวยก"
-
-#: textBuffer.py:296
-msgid "not subscript"
-msgstr "ไม่ใช่ตัวห้อย"
-
-#: textBuffer.py:470
-#: textBuffer.py:498
-#: textBuffer.py:506
-msgid "Moves and then reads the current line"
-msgstr "เลื่อนแล้วอ่านบรรทัดปัจจุบัน"
-
-#: textBuffer.py:474
-msgid "reads the current line"
-msgstr "อ่านบรรทัดปัจจุบัน"
-
-#: textBuffer.py:482
-msgid "Moves and reads the current character"
-msgstr "เลื่อนและอ่านตัวอักษรปัจจุบัน"
-
-#: textBuffer.py:490
-msgid "Moves and reads the current word"
-msgstr "เลื่อนและอ่านคำปัจจุบัน"
-
-#: textBuffer.py:514
-msgid "Manually moves to the next paragraph and then speaks it"
-msgstr "เลื่อนไปอ่านย่อหน้าถัดไปด้วยตนเอง"
-
-#: textBuffer.py:522
-msgid "Manually moves to the previous paragraph and then speaks it"
-msgstr "เลื่อนไปอ่านย่อหน้าก่อนหน้านี้ด้วยตนเอง"
-
-#: textBuffer.py:534
-msgid "no selections"
-msgstr "ไม่เลือก"
-
-#: textBuffer.py:545
-#: textBuffer.py:547
-#: textBuffer.py:551
-msgid "unselected %s"
-msgstr "%s ไม่เลือก"
-
-#: textBuffer.py:553
-msgid "Moves and reads the current selection"
-msgstr "เลื่อนและอ่านสิ่งที่เลือก"
-
-#: textBuffer.py:559
-msgid "Deletes the character and reads the new current character"
-msgstr "ลบตัวอักษรและอ่านตัวอักษร"
-
-#: textBuffer.py:573
-msgid "Reads the character before the current character and then deletes it"
-msgstr "อ่านตัวอักษรก่อนตัวอักษรปัจจุบันแล้วลบ"
-
-#: versionInfo.py:40
+#: versionInfo.py:25
 msgid "NonVisual Desktop Access"
 msgstr "การเข้าถึง Desktop โดยไม่ใช้สายตา"
 
-#: versionInfo.py:42
+#: versionInfo.py:27
 msgid "A free and open-source screen reader for MS Windows"
 msgstr "ชุดโปรแกรมอ่านหน้าจอเปิดรหัสสำหรับ MS Windows"
 
-#: versionInfo.py:44
+#: versionInfo.py:29
+msgid "Copyright (C) 2006-2010 NVDA Contributors"
+msgstr "สงวนลิขสิทธิ์ 2006-2010 ผู้สนับสนุน NVDA"
+
+#: versionInfo.py:30
 msgid ""
-"Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>\n"
+"%(copyright)s\n"
 "%(name)s is covered by the GNU General Public License (Version 2). You are "
 "free to share or change this software in any way you like as long as you "
 "distribute the licence along with the software, and make all source code "
@@ -3313,548 +3814,538 @@ msgid ""
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "Or see the file Copying.txt that came with this software."
 msgstr ""
-"สงวนลิขสิทธิ์ (C) พ.ศ. 2550-2551 ผู้อนุเคราะห์โครงการ NVDA   <http://www."
-"nvda-project.org/> NVDA เป็นซอฟแวร์ภายใต้การคุ้มครองของ General Public "
-"License(GNU) "
-"ท่านสามารถเผยแพร่หรือปรับปรุงซอฟต์แวร์นี้ได้อย่างอิสระภายใต้เงื่อนไขที่ท่านต้องเผยแพร่ลิขสิทธ"
-"ิ์และ source code ไปพร้อมกับซอฟแวร์นี้ทุกครั้ง "
-"เงื่อนไขนี้ครอบคลุมถึงการเผยแพร่ซอฟต์แวร์นี้ให้บุคคลอื่นใดที่ต้องการเข้าถึงหรือมีความจำเป็นในการใช้งานซอฟ"
-"ต์แวร์ ทั้งนี้ หมายรวมถึงซอฟต์แวร์ต้นฉบับ ซอฟต์แวร์ที่ได้รับการปรับปรุง "
-"และซอฟต์แวร์อื่นใดที่ใช้งานร่วมกับซอฟต์แวร์นี้ รายละเอียดเพิ่มเติม "
-"ท่านสามารถอ่านลิขสิทธิ์ฉบับออนไลน์ได้ที่ http://www.gnu.org/licenses/gpl."
-"html หรือเอกสาร Copying.txt ที่แนบมาพร้อมกับซอฟต์แวร์นี้"
 
-#: virtualBufferHandler.py:93
-msgid "browse mode"
-msgstr "โหมดสืบค้น"
+#: virtualBuffers\__init__.py:201
+#, fuzzy
+msgid "%s landmark"
+msgstr "ว่าง"
 
-#: virtualBufferHandler.py:93
-msgid "focus mode"
-msgstr "โหมดโฟกัส"
+#: virtualBuffers\__init__.py:219
+#, fuzzy
+msgid "Lin&ks"
+msgstr "ลิ้งค์"
 
-#: virtualBuffers\__init__.py:248
-#: virtualBuffers_old\__init__.py:295
-msgid "activates the current object in the virtual buffer"
-msgstr "เริ่มต้นการทำงานกับวัตถุปัจจุบันภายใน virtual buffer"
+#: virtualBuffers\__init__.py:220
+#, fuzzy
+msgid "&Headings"
+msgstr "หัวข้อ"
 
-#: virtualBuffers\__init__.py:260
+#: virtualBuffers\__init__.py:221
+#, fuzzy
+msgid "Lan&dmarks"
+msgstr "แคนวาส"
+
+#: virtualBuffers\__init__.py:227
+#, fuzzy
+msgid "Elements List"
+msgstr "รายชื่อลิ้งค์"
+
+#: virtualBuffers\__init__.py:230
+#, fuzzy
+msgid "Type:"
+msgstr "ถึง:"
+
+#: virtualBuffers\__init__.py:241
+msgid "&Filter by:"
+msgstr "&กลั่นกรองโดย"
+
+#: virtualBuffers\__init__.py:249
+#, fuzzy
+msgid "&Activate"
+msgstr "เริ่มการทำงานลิ้งค์"
+
+#: virtualBuffers\__init__.py:252
+#, fuzzy
+msgid "&Move to"
+msgstr "เลื่อนไปยังลิ้งค์"
+
+#: virtualBuffers\__init__.py:548
 msgid "Refreshed"
 msgstr "โหลดซ้ำ"
 
-#: virtualBuffers\__init__.py:265
+#: virtualBuffers\__init__.py:553
+#, fuzzy
+msgid "Loading document..."
+msgstr "กำลังโหลดเอกสาร %s"
+
+#: virtualBuffers\__init__.py:692
+msgid "activates the current object in the virtual buffer"
+msgstr "เริ่มต้นการทำงานกับวัตถุปัจจุบันภายใน virtual buffer"
+
+#: virtualBuffers\__init__.py:700
+#, fuzzy
+msgid "Refreshes the virtual buffer content"
+msgstr "แสดงหน้าต่างการตั้งค่า virtual buffers ของ NVDA"
+
+#: virtualBuffers\__init__.py:705
 msgid "use screen layout %s"
 msgstr "ใช้ %s เป็นโครงสร้างหน้าจอ"
 
-#: virtualBuffers\__init__.py:358
-msgid "displays a list of links"
-msgstr "แสดงรายชื่อของลิงค์"
+#: virtualBuffers\__init__.py:706
+msgid ""
+"Toggles on and off if the screen layout is preserved while rendering the "
+"virtual buffer content"
+msgstr ""
+"เปิดหรือปิดหากโครงสร้างของหน้าจอถูกใช้เพื่อการแสดงผล"
+"ของเนื้อหา buffer เสมือน"
 
-#: virtualBuffers\__init__.py:438
-msgid "no next heading"
-msgstr "ไม่มีหัวข้อต่อไป"
+#: virtualBuffers\__init__.py:789
+msgid "Presents a list of links, headings or landmarks"
+msgstr "แสดงรายชื่อของลิงค์ หัวข้อ หรือพื้นที่สัญลักษณ์"
 
-#: virtualBuffers\__init__.py:438
-#: virtualBuffers_old\__init__.py:318
+#: virtualBuffers\__init__.py:1122
+#, fuzzy
+msgid "Not in a table cell"
+msgstr "นอกตาราง"
+
+#: virtualBuffers\__init__.py:1138
+#, fuzzy
+msgid "moves to the next table row"
+msgstr "เลื่อนไปยังตารางถัดไป"
+
+#: virtualBuffers\__init__.py:1142
+#, fuzzy
+msgid "moves to the previous table row"
+msgstr "กลับไปยังตารางก่อนหน้า"
+
+#: virtualBuffers\__init__.py:1146
+#, fuzzy
+msgid "moves to the next table column"
+msgstr "เลื่อนไปยังตารางถัดไป"
+
+#: virtualBuffers\__init__.py:1150
+#, fuzzy
+msgid "moves to the previous table column"
+msgstr "กลับไปยังตารางก่อนหน้า"
+
+#: virtualBuffers\__init__.py:1210
 msgid "moves to the next heading"
 msgstr "เลื่อนไปยังหัวข้อถัดไป"
 
-#: virtualBuffers\__init__.py:439
-msgid "no previous heading"
-msgstr "ไม่มีหัวข้อก่อนหน้า"
+#: virtualBuffers\__init__.py:1210
+msgid "no next heading"
+msgstr "ไม่มีหัวข้อต่อไป"
 
-#: virtualBuffers\__init__.py:439
-#: virtualBuffers_old\__init__.py:329
+#: virtualBuffers\__init__.py:1211
 msgid "moves to the previous heading"
 msgstr "กลับไปยังหัวข้อก่อนหน้า"
 
-#: virtualBuffers\__init__.py:440
+#: virtualBuffers\__init__.py:1211
+msgid "no previous heading"
+msgstr "ไม่มีหัวข้อก่อนหน้า"
+
+#: virtualBuffers\__init__.py:1212
 msgid "moves to the next heading at level 1"
 msgstr "เลื่อนไปยังหัวข้อถัดไปในระดับที่ 1"
 
-#: virtualBuffers\__init__.py:440
+#: virtualBuffers\__init__.py:1212
 msgid "no next heading at level 1"
 msgstr "ไม่มีหัวข้อต่อไปในระดับที่ 1"
 
-#: virtualBuffers\__init__.py:441
+#: virtualBuffers\__init__.py:1213
 msgid "moves to the previous heading at level 1"
 msgstr "กลับไปยังหัวข้อก่อนหน้าในระดับที่ 1"
 
-#: virtualBuffers\__init__.py:441
+#: virtualBuffers\__init__.py:1213
 msgid "no previous heading at level 1"
 msgstr "ไม่มีหัวข้อก่อนหน้าในระดับที่ 1"
 
-#: virtualBuffers\__init__.py:442
+#: virtualBuffers\__init__.py:1214
 msgid "moves to the next heading at level 2"
 msgstr "เลื่อนไปยังหัวข้อถัดไปในระดับที่ 2"
 
-#: virtualBuffers\__init__.py:442
+#: virtualBuffers\__init__.py:1214
 msgid "no next heading at level 2"
 msgstr "ไม่มีหัวข้อต่อไปในระดับที่ 2"
 
-#: virtualBuffers\__init__.py:443
+#: virtualBuffers\__init__.py:1215
 msgid "moves to the previous heading at level 2"
 msgstr "กลับไปยังหัวข้อก่อนหน้าในระดับที่ 2"
 
-#: virtualBuffers\__init__.py:443
+#: virtualBuffers\__init__.py:1215
 msgid "no previous heading at level 2"
 msgstr "ไม่มีหัวข้อก่อนหน้าในระดับที่ 2"
 
-#: virtualBuffers\__init__.py:444
+#: virtualBuffers\__init__.py:1216
 msgid "moves to the next heading at level 3"
 msgstr "เลื่อนไปยังหัวข้อถัดไปในระดับที่ 3"
 
-#: virtualBuffers\__init__.py:444
+#: virtualBuffers\__init__.py:1216
 msgid "no next heading at level 3"
 msgstr "ไม่มีหัวข้อต่อไปในระดับที่ 3"
 
-#: virtualBuffers\__init__.py:445
+#: virtualBuffers\__init__.py:1217
 msgid "moves to the previous heading at level 3"
 msgstr "กลับไปยังหัวข้อก่อนหน้าในระดับที่ 3"
 
-#: virtualBuffers\__init__.py:445
+#: virtualBuffers\__init__.py:1217
 msgid "no previous heading at level 3"
 msgstr "ไม่มีหัวข้อก่อนหน้าในระดับที่ 3"
 
-#: virtualBuffers\__init__.py:446
+#: virtualBuffers\__init__.py:1218
 msgid "moves to the next heading at level 4"
 msgstr "เลื่อนไปยังหัวข้อถัดไปในระดับที่ 4"
 
-#: virtualBuffers\__init__.py:446
+#: virtualBuffers\__init__.py:1218
 msgid "no next heading at level 4"
 msgstr "ไม่มีหัวข้อต่อไปในระดับที่ 4"
 
-#: virtualBuffers\__init__.py:447
+#: virtualBuffers\__init__.py:1219
 msgid "moves to the previous heading at level 4"
 msgstr "กลับไปยังหัวข้อก่อนหน้าในระดับที่ 4"
 
-#: virtualBuffers\__init__.py:447
+#: virtualBuffers\__init__.py:1219
 msgid "no previous heading at level 4"
 msgstr "ไม่มีหัวข้อก่อนหน้าในระดับที่ 4"
 
-#: virtualBuffers\__init__.py:448
+#: virtualBuffers\__init__.py:1220
 msgid "moves to the next heading at level 5"
 msgstr "เลื่อนไปยังหัวข้อถัดไปในระดับที่ 5"
 
-#: virtualBuffers\__init__.py:448
+#: virtualBuffers\__init__.py:1220
 msgid "no next heading at level 5"
 msgstr "ไม่มีหัวข้อต่อไปในระดับที่ 5"
 
-#: virtualBuffers\__init__.py:449
+#: virtualBuffers\__init__.py:1221
 msgid "moves to the previous heading at level 5"
 msgstr "กลับไปยังหัวข้อก่อนหน้าในระดับที่ 5"
 
-#: virtualBuffers\__init__.py:449
+#: virtualBuffers\__init__.py:1221
 msgid "no previous heading at level 5"
 msgstr "ไม่มีหัวข้อก่อนหน้าในระดับที่ 5"
 
-#: virtualBuffers\__init__.py:450
+#: virtualBuffers\__init__.py:1222
 msgid "moves to the next heading at level 6"
 msgstr "เลื่อนไปยังหัวข้อถัดไปในระดับที่ 6"
 
-#: virtualBuffers\__init__.py:450
+#: virtualBuffers\__init__.py:1222
 msgid "no next heading at level 6"
 msgstr "ไม่มีหัวข้อต่อไปในระดับที่ 6"
 
-#: virtualBuffers\__init__.py:451
+#: virtualBuffers\__init__.py:1223
 msgid "moves to the previous heading at level 6"
 msgstr "กลับไปยังหัวข้อก่อนหน้าในระดับที่ 6"
 
-#: virtualBuffers\__init__.py:451
+#: virtualBuffers\__init__.py:1223
 msgid "no previous heading at level 6"
 msgstr "ไม่มีหัวข้อก่อนหน้าในระดับที่ 6"
 
-#: virtualBuffers\__init__.py:452
-msgid "no next table"
-msgstr "ไม่มีตารางต่อไป"
-
-#: virtualBuffers\__init__.py:452
-#: virtualBuffers_old\__init__.py:362
+#: virtualBuffers\__init__.py:1224
 msgid "moves to the next table"
 msgstr "เลื่อนไปยังตารางถัดไป"
 
-#: virtualBuffers\__init__.py:453
-msgid "no previous table"
-msgstr "ไม่มีตารางก่อนหน้า"
+#: virtualBuffers\__init__.py:1224
+msgid "no next table"
+msgstr "ไม่มีตารางต่อไป"
 
-#: virtualBuffers\__init__.py:453
-#: virtualBuffers_old\__init__.py:373
+#: virtualBuffers\__init__.py:1225
 msgid "moves to the previous table"
 msgstr "กลับไปยังตารางก่อนหน้า"
 
-#: virtualBuffers\__init__.py:454
-msgid "no next link"
-msgstr "ไม่มีลิ้งค์ต่อไป"
+#: virtualBuffers\__init__.py:1225
+msgid "no previous table"
+msgstr "ไม่มีตารางก่อนหน้า"
 
-#: virtualBuffers\__init__.py:454
-#: virtualBuffers_old\__init__.py:384
+#: virtualBuffers\__init__.py:1226
 msgid "moves to the next link"
 msgstr "เลื่อนไปยังลิ้งค์ถัดไป"
 
-#: virtualBuffers\__init__.py:455
-msgid "no previous link"
-msgstr "ไม่มีลิงค์ก่อนหน้า"
+#: virtualBuffers\__init__.py:1226
+msgid "no next link"
+msgstr "ไม่มีลิ้งค์ต่อไป"
 
-#: virtualBuffers\__init__.py:455
-#: virtualBuffers_old\__init__.py:395
+#: virtualBuffers\__init__.py:1227
 msgid "moves to the previous link"
 msgstr "กลับไปยังลิ้งค์ก่อนหน้า"
 
-#: virtualBuffers\__init__.py:456
+#: virtualBuffers\__init__.py:1227
+msgid "no previous link"
+msgstr "ไม่มีลิงค์ก่อนหน้า"
+
+#: virtualBuffers\__init__.py:1228
 msgid "moves to the next visited link"
 msgstr "เลื่อนไปยังลิ้งค์ที่เคยเลือกถัดไป"
 
-#: virtualBuffers\__init__.py:456
+#: virtualBuffers\__init__.py:1228
 msgid "no next visited link"
 msgstr "ไม่มีลิ้งค์ที่เคยเลือกต่อไป"
 
-#: virtualBuffers\__init__.py:457
+#: virtualBuffers\__init__.py:1229
 msgid "moves to the previous visited link"
 msgstr "กลับไปยังลิ้งค์ที่เคยเลือกก่อนหน้า"
 
-#: virtualBuffers\__init__.py:457
+#: virtualBuffers\__init__.py:1229
 msgid "no previous visited link"
 msgstr "ไม่มีลิ้งค์ที่เคยเลือกก่อนหน้า"
 
-#: virtualBuffers\__init__.py:458
+#: virtualBuffers\__init__.py:1230
 msgid "moves to the next unvisited link"
 msgstr "เลื่อนไปยังลิ้งค์ที่ไม่เคยเลือกถัดไป"
 
-#: virtualBuffers\__init__.py:458
+#: virtualBuffers\__init__.py:1230
 msgid "no next unvisited link"
 msgstr "ไม่มีลิงค์ที่ไม่เคยเลือกถัดไป"
 
-#: virtualBuffers\__init__.py:459
+#: virtualBuffers\__init__.py:1231
 msgid "moves to the previous unvisited link"
 msgstr "กลับไปยังลิ้งค์ที่ไม่เคยเลือกก่อนหน้า"
 
-#: virtualBuffers\__init__.py:459
+#: virtualBuffers\__init__.py:1231
 msgid "no previous unvisited link"
 msgstr "ไม่มีลิ้งค์ที่ไม่เคยเลือกก่อนหน้า"
 
-#: virtualBuffers\__init__.py:460
+#: virtualBuffers\__init__.py:1232
 msgid "moves to the next form field"
 msgstr "เลื่อนไปยังช่องถัดไปของฟอร์ม"
 
-#: virtualBuffers\__init__.py:460
+#: virtualBuffers\__init__.py:1232
 msgid "no next form field"
 msgstr "ไม่มีช่องของฟอร์มถัดไป"
 
-#: virtualBuffers\__init__.py:461
-msgid "no previous form field"
-msgstr "ไม่มีช่องของฟอร์มก่อนหน้า"
-
-#: virtualBuffers\__init__.py:461
-#: virtualBuffers_old\__init__.py:461
+#: virtualBuffers\__init__.py:1233
 msgid "moves to the previous form field"
 msgstr "เลื่อนไปยังช่องของฟอร์มก่อนหน้า"
 
-#: virtualBuffers\__init__.py:462
-msgid "no next list"
-msgstr "ไม่มีรายชื่อต่อไป"
+#: virtualBuffers\__init__.py:1233
+msgid "no previous form field"
+msgstr "ไม่มีช่องของฟอร์มก่อนหน้า"
 
-#: virtualBuffers\__init__.py:462
-#: virtualBuffers_old\__init__.py:406
+#: virtualBuffers\__init__.py:1234
 msgid "moves to the next list"
 msgstr "เลื่อนไปยังรายชื่อต่อไป"
 
-#: virtualBuffers\__init__.py:463
-msgid "no previous list"
-msgstr "ไม่มีรายชื่อก่อนหน้า"
+#: virtualBuffers\__init__.py:1234
+msgid "no next list"
+msgstr "ไม่มีรายชื่อต่อไป"
 
-#: virtualBuffers\__init__.py:463
-#: virtualBuffers_old\__init__.py:417
+#: virtualBuffers\__init__.py:1235
 msgid "moves to the previous list"
 msgstr "กลับไปยังรายชื่อก่อนหน้า"
 
-#: virtualBuffers\__init__.py:464
-msgid "no next list item"
-msgstr "ไม่มีตัวเลือกในรายชื่อถัดไป"
+#: virtualBuffers\__init__.py:1235
+msgid "no previous list"
+msgstr "ไม่มีรายชื่อก่อนหน้า"
 
-#: virtualBuffers\__init__.py:464
-#: virtualBuffers_old\__init__.py:428
+#: virtualBuffers\__init__.py:1236
 msgid "moves to the next list item"
 msgstr "เลื่อนไปยังตัวเลือกของรายชื่อต่อไป"
 
-#: virtualBuffers\__init__.py:465
-msgid "no previous list item"
-msgstr "ไม่มีตัวเลือกในรายชื่อก่อนหน้า"
+#: virtualBuffers\__init__.py:1236
+msgid "no next list item"
+msgstr "ไม่มีตัวเลือกในรายชื่อถัดไป"
 
-#: virtualBuffers\__init__.py:465
-#: virtualBuffers_old\__init__.py:439
+#: virtualBuffers\__init__.py:1237
 msgid "moves to the previous list item"
 msgstr "กลับไปยังตัวเลือกของรายชื่อก่อนหน้า"
 
-#: virtualBuffers\__init__.py:466
+#: virtualBuffers\__init__.py:1237
+msgid "no previous list item"
+msgstr "ไม่มีตัวเลือกในรายชื่อก่อนหน้า"
+
+#: virtualBuffers\__init__.py:1238
 msgid "moves to the next button"
 msgstr "เลื่อนไปยังปุ่มถัดไป"
 
-#: virtualBuffers\__init__.py:466
+#: virtualBuffers\__init__.py:1238
 msgid "no next button"
 msgstr "ไม่มีปุ่มถัดไป"
 
-#: virtualBuffers\__init__.py:467
+#: virtualBuffers\__init__.py:1239
 msgid "moves to the previous button"
 msgstr "กลับไปยังปุ่มก่อนหน้า"
 
-#: virtualBuffers\__init__.py:467
+#: virtualBuffers\__init__.py:1239
 msgid "no previous button"
 msgstr "ไม่มีปุ่มก่อนหน้า"
 
-#: virtualBuffers\__init__.py:468
+#: virtualBuffers\__init__.py:1240
 msgid "moves to the next edit field"
 msgstr "เลื่อนไปยังช่องแก้ไขต่อไป"
 
-#: virtualBuffers\__init__.py:468
+#: virtualBuffers\__init__.py:1240
 msgid "no next edit field"
 msgstr "ไม่มีช่องแก้ไขถัดไป"
 
-#: virtualBuffers\__init__.py:469
+#: virtualBuffers\__init__.py:1241
 msgid "moves to the previous edit field"
 msgstr "เลื่อนไปยังช่องแก้ไขก่อนหน้า"
 
-#: virtualBuffers\__init__.py:469
+#: virtualBuffers\__init__.py:1241
 msgid "no previous edit field"
 msgstr "ไม่มีช่องแก้ไขก่อนหน้า"
 
-#: virtualBuffers\__init__.py:470
+#: virtualBuffers\__init__.py:1242
 msgid "moves to the next frame"
 msgstr "เลื่อนไปยังกรอบถัดไป"
 
-#: virtualBuffers\__init__.py:470
+#: virtualBuffers\__init__.py:1242
 msgid "no next frame"
 msgstr "ไม่มีกรอบถัดไป"
 
-#: virtualBuffers\__init__.py:471
+#: virtualBuffers\__init__.py:1243
 msgid "moves to the previous frame"
 msgstr "กลับไปยังกรอบก่อนหน้า"
 
-#: virtualBuffers\__init__.py:471
+#: virtualBuffers\__init__.py:1243
 msgid "no previous frame"
 msgstr "ไม่มีกรอบก่อนหน้า"
 
-#: virtualBuffers\__init__.py:472
+#: virtualBuffers\__init__.py:1244
 msgid "moves to the next separator"
 msgstr "เลื่อนไปยังเส้นแบ่งถัดไป"
 
-#: virtualBuffers\__init__.py:472
+#: virtualBuffers\__init__.py:1244
 msgid "no next separator"
 msgstr "ไม่มีเส้นแบ่งถัดไป"
 
-#: virtualBuffers\__init__.py:473
+#: virtualBuffers\__init__.py:1245
 msgid "moves to the previous separator"
 msgstr "กลับไปยังเส้นแบ่งก่อนหน้า"
 
-#: virtualBuffers\__init__.py:473
+#: virtualBuffers\__init__.py:1245
 msgid "no previous separator"
 msgstr "ไม่มีเส้นแบ่งก่อนหน้า"
 
-#: virtualBuffers\__init__.py:474
+#: virtualBuffers\__init__.py:1246
 msgid "moves to the next radio button"
 msgstr "เลื่อนไปยังปุ่มวิทยุถัดไป"
 
-#: virtualBuffers\__init__.py:474
+#: virtualBuffers\__init__.py:1246
 msgid "no next radio button"
 msgstr "ไม่มีปุ่มวิทยุถัดไป"
 
-#: virtualBuffers\__init__.py:475
+#: virtualBuffers\__init__.py:1247
 msgid "moves to the previous radio button"
 msgstr "กลับไปยังปุ่มวิทยุก่อนหน้า"
 
-#: virtualBuffers\__init__.py:475
+#: virtualBuffers\__init__.py:1247
 msgid "no previous radio button"
 msgstr "ไม่มีปุ่มวิทยุก่อนหน้า"
 
-#: virtualBuffers\__init__.py:476
+#: virtualBuffers\__init__.py:1248
 msgid "moves to the next combo box"
 msgstr "เลื่อนไปยังกล่องคอมโบถัดไป"
 
-#: virtualBuffers\__init__.py:476
+#: virtualBuffers\__init__.py:1248
 msgid "no next combo box"
 msgstr "ไม่มีกล่องคอมโบถัดไป"
 
-#: virtualBuffers\__init__.py:477
+#: virtualBuffers\__init__.py:1249
 msgid "moves to the previous combo box"
 msgstr "กลับไปยังกล่องคอมโบก่อนหน้า"
 
-#: virtualBuffers\__init__.py:477
+#: virtualBuffers\__init__.py:1249
 msgid "no previous combo box"
 msgstr "ไม่มีกล่องคอมโบก่อนหน้า"
 
-#: virtualBuffers\__init__.py:478
+#: virtualBuffers\__init__.py:1250
 msgid "moves to the next check box"
 msgstr "เลื่อนไปยังกล่องสัญลักษณ์ถัดไป"
 
-#: virtualBuffers\__init__.py:478
+#: virtualBuffers\__init__.py:1250
 msgid "no next check box"
 msgstr "ไม่มีกล่องสัญลักษณ์ถัดไป"
 
-#: virtualBuffers\__init__.py:479
+#: virtualBuffers\__init__.py:1251
 msgid "moves to the previous check box"
 msgstr "กลับไปยังกล่องสัญลักษณ์ก่อนหน้า"
 
-#: virtualBuffers\__init__.py:479
+#: virtualBuffers\__init__.py:1251
 msgid "no previous check box"
 msgstr "ไม่มีกล่องสัญลักษณ์ก่อนหน้า"
 
-#: virtualBuffers\__init__.py:480
+#: virtualBuffers\__init__.py:1252
 msgid "moves to the next graphic"
 msgstr "เลื่อนไปยังกราฟฟิกถัดไป"
 
-#: virtualBuffers\__init__.py:480
+#: virtualBuffers\__init__.py:1252
 msgid "no next graphic"
 msgstr "ไม่มีกร๊าฟฟิ่กถัดไป"
 
-#: virtualBuffers\__init__.py:481
+#: virtualBuffers\__init__.py:1253
 msgid "moves to the previous graphic"
 msgstr "กลับไปยังกร๊าฟฟิ่กก่อนหน้า"
 
-#: virtualBuffers\__init__.py:481
+#: virtualBuffers\__init__.py:1253
 msgid "no previous graphic"
 msgstr "ไม่มีกร๊าฟฟิ่กก่อนหน้า"
 
-#: virtualBuffers\__init__.py:482
+#: virtualBuffers\__init__.py:1254
 msgid "moves to the next block quote"
 msgstr "เลื่อนไปยังบร๊อกอ้างอิงถัดไป"
 
-#: virtualBuffers\__init__.py:482
+#: virtualBuffers\__init__.py:1254
 msgid "no next block quote"
 msgstr "ไม่มีบร๊อกอ้างอิงถัดไป"
 
-#: virtualBuffers\__init__.py:483
+#: virtualBuffers\__init__.py:1255
 msgid "moves to the previous block quote"
 msgstr "กลับไปยังบร๊อกอ้างอิงก่อนหน้า"
 
-#: virtualBuffers\__init__.py:483
+#: virtualBuffers\__init__.py:1255
 msgid "no previous block quote"
 msgstr "ไม่มีบร๊อกอ้างอิงก่อนหน้า"
 
-#: virtualBuffers_old\MSHTML.py:155
-#: virtualBuffers_old\adobe.py:175
-#: virtualBuffers_old\gecko.py:172
-msgid "loading document %s"
-msgstr "กำลังโหลดเอกสาร %s"
+#: virtualBuffers\__init__.py:1256
+msgid "no more text after a block of links"
+msgstr "ไม่มีข้อความถัดจากชุดของลิงค์"
 
-#: virtualBuffers_old\MSHTML.py:163
-#: virtualBuffers_old\adobe.py:184
-#: virtualBuffers_old\gecko.py:181
-msgid "done"
-msgstr "เสร็จสมบูรณ์"
+#: virtualBuffers\__init__.py:1256
+msgid "skips forward past a block of links"
+msgstr "โดดข้ามชุดของลิงค์"
 
-#: virtualBuffers_old\MSHTML.py:267
-#: virtualBuffers_old\MSHTML.py:274
-#: virtualBuffers_old\adobe.py:272
-#: virtualBuffers_old\adobe.py:285
-#: virtualBuffers_old\gecko.py:264
-#: virtualBuffers_old\gecko.py:277
-msgid "definition"
-msgstr "นิยาม"
+#: virtualBuffers\__init__.py:1257
+msgid "no more text before a block of links"
+msgstr "ไม่มีข้อความก่อนหน้าชุดของลิงค ์"
 
-#: virtualBuffers_old\MSHTML.py:302
-msgid "file upload"
-msgstr "ไฟล์อั้พโหลด"
+#: virtualBuffers\__init__.py:1257
+msgid "skips backward past a block of links"
+msgstr "โดดถอยหลังชุดของลิงค์"
 
-#: virtualBuffers_old\__init__.py:276
-msgid "moves one page up in the virtual buffer's current document"
-msgstr "เลื่อนขึ้นหนึ่งหน้าของเอกสารใน virtual buffer's"
+#: virtualBuffers\__init__.py:1258
+#, fuzzy
+msgid "moves to the next landmark"
+msgstr "เลื่อนไปยังลิ้งค์ถัดไป"
 
-#: virtualBuffers_old\__init__.py:291
-msgid "moves one page down in the virtual buffer's current document"
-msgstr "เลื่อนลงหนึ่งหน้าของเอกสารใน virtual buffer's"
+#: virtualBuffers\__init__.py:1258
+#, fuzzy
+msgid "no next landmark"
+msgstr "ไม่มีลิ้งค์ต่อไป"
 
-#: virtualBuffers_old\__init__.py:317
-#: virtualBuffers_old\__init__.py:328
-msgid "no more headings"
-msgstr "ไม่มีหัวข้อแล้ว"
+#: virtualBuffers\__init__.py:1259
+#, fuzzy
+msgid "moves to the previous landmark"
+msgstr "กลับไปยังลิ้งค์ก่อนหน้า"
 
-#: virtualBuffers_old\__init__.py:339
-#: virtualBuffers_old\__init__.py:350
-msgid "no more paragraphs"
-msgstr "ไม่มีย่อหน้าแล้ว"
+#: virtualBuffers\__init__.py:1259
+#, fuzzy
+msgid "no previous landmark"
+msgstr "ไม่มีลิงค์ก่อนหน้า"
 
-#: virtualBuffers_old\__init__.py:340
-msgid "moves to the next paragraph"
-msgstr "เลื่อนไปย่อหน้าถัดไป"
+#: virtualBuffers\__init__.py:1260
+#, fuzzy
+msgid "moves to the next embedded object"
+msgstr "เลื่อนไปยังกล่องคอมโบถัดไป"
 
-#: virtualBuffers_old\__init__.py:351
-msgid "moves to the previous paragraph"
-msgstr "กลับไปยังย่อหน้าก่อนหน้า"
+#: virtualBuffers\__init__.py:1260
+#, fuzzy
+msgid "no next embedded object"
+msgstr "วัตถุฝังตัว"
 
-#: virtualBuffers_old\__init__.py:361
-#: virtualBuffers_old\__init__.py:372
-msgid "no more tables"
-msgstr "ไม่มีตารางแล้ว"
+#: virtualBuffers\__init__.py:1261
+#, fuzzy
+msgid "moves to the previous embedded object"
+msgstr "กลับไปยังกล่องคอมโบก่อนหน้า"
 
-#: virtualBuffers_old\__init__.py:383
-#: virtualBuffers_old\__init__.py:394
-msgid "no more links"
-msgstr "ไม่มีลิ้งค์แล้ว"
+#: virtualBuffers\__init__.py:1261
+#, fuzzy
+msgid "no previous embedded object"
+msgstr "%s วัตถุฝังตัว"
 
-#: virtualBuffers_old\__init__.py:405
-#: virtualBuffers_old\__init__.py:416
-msgid "no more lists"
-msgstr "ไม่มีรายชื่อแล้ว"
+#: virtualBuffers\__init__.py:1274
+msgid "browse mode"
+msgstr "โหมดสืบค้น"
 
-#: virtualBuffers_old\__init__.py:427
-#: virtualBuffers_old\__init__.py:438
-msgid "no more list items"
-msgstr "ไม่มีตัวเลือกจากรายชื่อแล้ว"
-
-#: virtualBuffers_old\__init__.py:449
-#: virtualBuffers_old\__init__.py:460
-msgid "no more form fields"
-msgstr "ไม่มีช่องของฟอร์มแล้ว"
-
-#: virtualBuffers_old\__init__.py:450
-msgid "Moves to the next form field"
-msgstr "เลื่อนไปยังช่องถัดไปของฟอร์ม"
-
-#: virtualBuffers_old\__init__.py:474
-msgid "text: \"%s\" not found"
-msgstr "ไม่พบข้อความ: \"%s\""
-
-#: virtualBuffers_old\__init__.py:480
-msgid "find a text pattern from the current cursor's position"
-msgstr "หารูปแบบข้อความจากตำแหน่งของแถบสว่างปัจจุบัน"
-
-#: virtualBuffers_old\__init__.py:484
-msgid "find next occurrence of text"
-msgstr "หาข้อความอีกรอบ"
-
-#: virtualBuffers_old\__init__.py:503
-#: virtualBuffers_old\__init__.py:504
-msgid "h=headingQuickKey"
-msgstr "h=แป้นพิมพ์ด่วนของหัวข้อ"
-
-#: virtualBuffers_old\__init__.py:505
-#: virtualBuffers_old\__init__.py:506
-msgid "f=formFieldQuickKey"
-msgstr "f=แป้นพิมพ์ด่วนของช่องว่างในฟอร์ม"
-
-#: virtualBuffers_old\__init__.py:507
-#: virtualBuffers_old\__init__.py:508
-msgid "p=paragraphQuickKey"
-msgstr "p=แป้นพิมพ์ด่วนของย่อหน้า"
-
-#: virtualBuffers_old\__init__.py:509
-#: virtualBuffers_old\__init__.py:510
-msgid "t=tableQuickKey"
-msgstr "t=แป้นพิมพ์ด่วนของตาราง"
-
-#: virtualBuffers_old\__init__.py:511
-#: virtualBuffers_old\__init__.py:512
-msgid "k=linkQuickKey"
-msgstr "k=แป้นพิมพ์ด่วนของลิงค์"
-
-#: virtualBuffers_old\__init__.py:513
-#: virtualBuffers_old\__init__.py:514
-msgid "l=listQuickKey"
-msgstr "l=แป้นพิมพ์ด่วนของรายชื่อ"
-
-#: virtualBuffers_old\__init__.py:515
-#: virtualBuffers_old\__init__.py:516
-msgid "i=listItemQuickKey"
-msgstr "i=แป้นพิมพ์ด่วนของตัวเลือก"
-
-#: virtualBuffers_old\adobe.py:317
-msgid "protected %s"
-msgstr "%s ได้รับการปกป้อง"
+#: virtualBuffers\__init__.py:1274
+msgid "focus mode"
+msgstr "โหมดโฟกัส"
