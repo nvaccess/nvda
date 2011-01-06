@@ -254,7 +254,7 @@ class InputManager(baseObject.AutoPropertyObject):
 
 		script = gesture.script
 		app = api.getFocusObject().appModule
-		if app and app.selfVoicing and not getattr(script,'allowInSelfVoicing',False):
+		if app and app.sleepMode and not getattr(script,'allowInSleepMode',False):
 			raise NoInputGestureAction
 
 		speechEffect = gesture.speechEffectWhenExecuted

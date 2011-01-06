@@ -191,10 +191,10 @@ class AppModule(baseObject.ScriptableObject):
 	and a callable taking no arguments which calls the next event handler.
 	"""
 
-	#: Whether this application is self-voicing.
-	#: If C{True}, all undefined events and script requests are silently dropped.
+	#: Whether NVDA should sleep while in this application (e.g. the application is self-voicing).
+	#: If C{True}, all  events and script requests inside this application are silently dropped.
 	#: @type: bool
-	selfVoicing=False
+	sleepMode=False
 
 	def __init__(self,processID,appName=None):
 		super(AppModule,self).__init__()

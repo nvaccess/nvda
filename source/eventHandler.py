@@ -126,17 +126,17 @@ def executeEvent(eventName,obj,**kwargs):
 	@param kwargs: Additional event parameters as keyword arguments.
 	"""
 	try:
-		selfVoicing=obj.appModule.selfVoicing if obj and obj.appModule else False
-		if eventName=="gainFocus" and not doPreGainFocus(obj,selfVoicing=selfVoicing):
+		sleepMode=obj.appModule.sleepMode if obj and obj.appModule else False
+		if eventName=="gainFocus" and not doPreGainFocus(obj,sleepMode=sleepMode):
 			return
-		elif not selfVoicing and eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
+		elif not sleepMode and eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
 			return
-		elif not selfVoicing:
+		elif not sleepMode:
 			_EventExecuter(eventName,obj,kwargs)
 	except:
 		log.exception("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs))
 
-def doPreGainFocus(obj,selfVoicing=False):
+def doPreGainFocus(obj,sleepMode=False):
 	oldForeground=api.getForegroundObject()
 	oldFocus=api.getFocusObject()
 	oldTreeInterceptor=oldFocus.treeInterceptor if oldFocus else None
@@ -152,7 +152,7 @@ def doPreGainFocus(obj,selfVoicing=False):
 				newForeground=obj
 		api.setForegroundObject(newForeground)
 		executeEvent('foreground',newForeground)
-	if selfVoicing: return True
+	if sleepMode: return True
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
 		executeEvent("focusEntered",parent)

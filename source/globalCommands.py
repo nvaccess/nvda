@@ -42,16 +42,16 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("input help %s")%state)
 	script_toggleInputHelp.__doc__=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any.")
 
-	def script_toggleCurrentAppSelfVoicing(self,keyPress):
+	def script_toggleCurrentAppSleepMode(self,gesture):
 		curApp=api.getFocusObject().appModule
-		if curApp.selfVoicing:
-			curApp.selfVoicing=False
-			ui.message(_("self voicing off"))
+		if curApp.sleepMode:
+			curApp.sleepMode=False
+			ui.message(_("Sleep mode off"))
 		else:
-			curApp.selfVoicing=True
-			ui.message(_("self voicing on"))
-	script_toggleCurrentAppSelfVoicing.__doc__=_("Toggles the self-voicing mode of the active application.")
-	script_toggleCurrentAppSelfVoicing.allowInSelfVoicing=True
+			curApp.sleepMode=True
+			ui.message(_("Sleep mode on"))
+	script_toggleCurrentAppSleepMode.__doc__=_("Toggles  sleep mode on and off for  the active application.")
+	script_toggleCurrentAppSleepMode.allowInSleepMode=True
 
 	def script_reportCurrentLine(self,gesture):
 		obj=api.getFocusObject()
@@ -947,7 +947,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+1": "toggleInputHelp",
 		"kb:NVDA+q": "quit",
 		"kb:NVDA+f2": "passNextKeyThrough",
-		"kb:NVDA+shift+s":"toggleCurrentAppSelfVoicing",
+		"kb:NVDA+shift+s":"toggleCurrentAppSleepMode",
 
 		# System status
 		"kb:NVDA+f12": "dateTime",
