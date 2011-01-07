@@ -18,7 +18,7 @@ except ImportError:
 
 KEY_CHECK_INTERVAL = 50
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
+class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	"""brltty braille display driver.
 	"""
 	name = "brltty"
@@ -61,7 +61,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 	def _get_numCells(self):
 		return self._con.displaySize[0]
 
-	def _display(self, cells):
+	def display(self, cells):
 		cells = "".join(chr(cell) for cell in cells)
 		# HACK: Temporarily work around a bug which causes brltty to freeze if data is written while there are key presses waiting.
 		# Simply consume and act upon any waiting key presses.

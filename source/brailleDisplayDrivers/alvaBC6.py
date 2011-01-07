@@ -39,7 +39,7 @@ try:
 except:
 	AlvaLib=None
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
+class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "alvaBC6"
 	description = _("ALVA BC640/680 series")
 
@@ -80,7 +80,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 			log.info("ALVA BC6xx has %d cells" %self._alva_NumCells)
 		return self._alva_NumCells
 
-	def _display(self, cells):
+	def display(self, cells):
 		#log.info("Display %d cells" %len(cells))
 		cells="".join([chr(x) for x in cells])
 		AlvaLib.AlvaSendBraille(0, cells, 0, len(cells))

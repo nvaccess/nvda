@@ -83,7 +83,7 @@ nvdaFsBrlWndCls.lpfnWndProc=nvdaFsBrlWndProc
 nvdaFsBrlWndCls.hInstance=appInstance
 nvdaFsBrlWndCls.lpszClassName=u"nvdaFsBrlWndCls"
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor,ScriptableObject):
+class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 
 	name="freedomScientific"
 	description="Freedom Scientific Focus/PAC Mate series"
@@ -129,7 +129,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor,ScriptableObje
 	def _get_numCells(self):
 		return fbGetCellCount(self.fbHandle)
 
-	def _display(self,cells):
+	def display(self,cells):
 		cells="".join([chr(x) for x in cells])
 		fbWrite(self.fbHandle,0,len(cells),cells)
 

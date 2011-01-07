@@ -27,7 +27,7 @@ def convertLilliCells(cell):
 		(1<<4 if cell & 1<<7  else 0))
 	return newCell
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
+class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "lilli"
 	description = _("MDV Lilli")
 

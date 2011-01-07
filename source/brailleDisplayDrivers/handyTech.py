@@ -33,7 +33,7 @@ class Sink:
 		elif keys == (constants.KEY_B4, constants.KEY_B8):
 			self.server.startConfigDialog(False)
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
+class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	"""Handy Tech braille display driver.
 	"""
 	name = "handyTech"
@@ -63,5 +63,5 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 	def _get_numCells(self):
 		return self._server.getCurrentTextLength()[0]
 
-	def _display(self, cells):
+	def display(self, cells):
 		self._server.displayText(cells)

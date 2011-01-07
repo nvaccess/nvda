@@ -976,6 +976,5 @@ class BrailleSettingsDialog(SettingsDialog):
 			val = None
 		if 1 <= val <= 20:
 			config.conf["braille"]["messageTimeout"] = val
-		braille.handler.configDisplay()
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		super(BrailleSettingsDialog,  self).onOk(evt)

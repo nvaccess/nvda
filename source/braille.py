@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2010 James Teh <jamie@jantrid.net>, Michael Curran <mick@kulgan.net>
+#Copyright (C) 2008-2011 James Teh <jamie@jantrid.net>, Michael Curran <mick@kulgan.net>
 
 import itertools
 import os
@@ -657,6 +657,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	TETHER_FOCUS = "focus"
 	TETHER_REVIEW = "review"
 
+	cursorShape = 0xc0
+
 	def __init__(self):
 		self.display = None
 		self.displaySize = 0
@@ -664,11 +666,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
 		self.buffer = self.mainBuffer
-		#config.conf["braille"]["tetherTo"] = self.TETHER_FOCUS
 		#: Whether braille is enabled.
 		#: @type: bool
 		self.enabled = False
 		self._keyCounterForLastMessage=0
+		self._cursorPos = None
+		self._cursorBlinkUp = True
+		self._cells = []
+		self._cursorBlinkTimer = None
 
 	def _get_tether(self):
 		return config.conf["braille"]["tetherTo"]
@@ -707,23 +712,42 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.enabled = bool(self.displaySize)
 			config.conf["braille"]["display"] = name
 			log.info("Loaded braille display driver %s" % name)
-			self.configDisplay()
 			return True
 		except:
 			log.error("Error initializing display driver", exc_info=True)
 			self.setDisplayByName("noBraille")
 			return False
 
-	def configDisplay(self):
-		"""Configure the braille display driver based on the user's configuration.
-		@precondition: L{display} has been set.
-		"""
-		self.display.cursorBlinkRate = config.conf["braille"]["cursorBlinkRate"]
-		self.display.cursorShape = 0xc0
+	def _updateDisplay(self):
+		if self._cursorBlinkTimer:
+			self._cursorBlinkTimer.Stop()
+			self._cursorBlinkTimer = None
+		self._cursorBlinkUp = True
+		self._displayWithCursor()
+		blinkRate = config.conf["braille"]["cursorBlinkRate"]
+		if blinkRate and self._cursorPos is not None:
+			self._cursorBlinkTimer = wx.PyTimer(self._blink)
+			self._cursorBlinkTimer.Start(blinkRate)
+
+	def _displayWithCursor(self):
+		if not self._cells:
+			return
+		cells = list(self._cells)
+		if self._cursorPos is not None and self._cursorBlinkUp:
+			cells[self._cursorPos] |= self.cursorShape
+		self.display.display(cells)
+
+	def _blink(self):
+		self._cursorBlinkUp = not self._cursorBlinkUp
+		self._displayWithCursor()
 
 	def update(self):
-		self.display.display(self.buffer.windowBrailleCells)
-		self.display.cursorPos = self.buffer.cursorWindowPos
+		cells = self.buffer.windowBrailleCells
+		# cells might not be the full length of the display.
+		# Therefore, pad it with spaces to fill the display.
+		self._cells = cells + [0] * (self.displaySize - len(cells))
+		self._cursorPos = self.buffer.cursorWindowPos
+		self._updateDisplay()
 
 	def scrollForward(self):
 		self.buffer.scrollForward()
@@ -879,6 +903,7 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory containing a BrailleDisplayDriver class which inherits from this base class.
 	
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
+	To display braille, L{numCells} and L{display} must be implemented.
 	
 	Drivers should dispatch input such as presses of buttons, wheels or other controls using the L{inputCore} framework.
 	They should subclass L{BrailleDisplayGesture} and execute instances of those gestures using L{inputCore.manager.executeGesture}.
@@ -911,8 +936,6 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		"""
 		# Clear the display.
 		try:
-			self.cursorPos = None
-			self.cursorBlinkRate = 0
 			self.display([])
 		except:
 			# The display driver seems to be failing, but we're terminating anyway, so just ignore it.
@@ -931,101 +954,10 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		@param cells: The braille cells to display.
 		@type cells: [int, ...]
 		"""
-		pass
-
-	def _get_cursorPos(self):
-		return None
-
-	def _set_cursorPos(self, pos):
-		pass
-
-	def _get_cursorShape(self):
-		return None
-
-	def _set_cursorShape(self, shape):
-		pass
-
-	def _get_cursorBlinkRate(self):
-		return 0
-
-	def _set_cursorBlinkRate(self, rate):
-		pass
 
 	#: Global input gesture map for this display driver.
 	#: @type: L{inputCore.GlobalGestureMap}
 	gestureMap = None
-
-class BrailleDisplayDriverWithCursor(BrailleDisplayDriver):
-	"""Abstract base braille display driver which manages its own cursor.
-	This should be used by braille display drivers where the display or underlying driver does not provide support for a cursor.
-	Instead of overriding L{display}, subclasses should override L{_display}.
-	"""
-
-	def __init__(self):
-		super(BrailleDisplayDriverWithCursor,self).__init__()
-		self._cursorPos = None
-		self._cursorBlinkRate = 0
-		self._cursorBlinkUp = True
-		self._cursorShape = 0
-		self._cells = []
-		self._cursorBlinkTimer = None
-		self._initCursor()
-
-	def _initCursor(self):
-		if self._cursorBlinkTimer:
-			self._cursorBlinkTimer.Stop()
-			self._cursorBlinkTimer = None
-		self._cursorBlinkUp = True
-		self._displayWithCursor()
-		if self._cursorBlinkRate and self._cursorPos is not None:
-			self._cursorBlinkTimer = wx.PyTimer(self._blink)
-			self._cursorBlinkTimer.Start(self._cursorBlinkRate)
-
-	def _blink(self):
-		self._cursorBlinkUp = not self._cursorBlinkUp
-		self._displayWithCursor()
-
-	def _get_cursorPos(self):
-		return self._cursorPos
-
-	def _set_cursorPos(self, pos):
-		self._cursorPos = pos
-		self._initCursor()
-
-	def _get_cursorBlinkRate(self):
-		return self._cursorBlinkRate
-
-	def _set_cursorBlinkRate(self, rate):
-		self._cursorBlinkRate = rate
-		self._initCursor()
-
-	def _get_cursorShape(self):
-		return self._cursorShape
-
-	def _set_cursorShape(self, shape):
-		self._cursorShape = shape
-		self._initCursor()
-
-	def display(self, cells):
-		# cells might not be the full length of the display.
-		# Therefore, pad it with spaces to fill the display so that the cursor can lie beyond it.
-		self._cells = cells + [0] * (self.numCells - len(cells))
-		self._displayWithCursor()
-
-	def _displayWithCursor(self):
-		if not self._cells:
-			return
-		cells = list(self._cells)
-		if self._cursorPos is not None and self._cursorBlinkUp:
-			cells[self._cursorPos] |= self._cursorShape
-		self._display(cells)
-
-	def _display(self, cells):
-		"""Actually display the given cells to the display.
-		L{display} calls methods to handle the cursor representation as appropriate.
-		However, this method (L{_display}) is called to actually display the final cells.
-		"""
-		pass
 
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
