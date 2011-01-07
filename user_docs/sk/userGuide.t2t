@@ -154,11 +154,20 @@ Po zobrazení ponuky programu môžete použiť šípky na pohyb po položkách,
 | Zastaviť reč | Control | Okamžite zastaví reč |
 | Pozastaviť reč | Shift | Okamžite pozastaví reč. Po nasledujúcom stlačení bude reč pokračovať na prerušenom mieste ak to práve používaný hlasový výstup podporuje |
 | Ponuka NVDA | NVDA+n | Zobrazí ponuku NVDA, odkiaľ je možné pristupovať k nastaveniam, nástrojom a pomocníku |
-| klávesová nápoveda | NVDA+1 | Zapína a vypína klávesovú nápovedu. Keď je zapnutá, nvda prečíta názov a popis skriptu, ktorý je s klávesom asociovaný. Pre vypnutie stlačte znova NVDA+.1 | 
+| Prepnúť režim reči | NVDA+s | Prepína režim reči medzi hovoriť, pípať a vypnuté. |
+| Nápoveda vstupu | NVDA+1 | Zapína a vypína nápovedu vstupu. Keď je zapnutá, nvda prečíta názov a popis skriptu, ktorý je s klávesom asociovaný. Pre vypnutie stlačte znova NVDA+.1 | 
 | Ukončiť NVDA | NVDA+q | Opýta sa či naozaj chcete ukončiť NVDA. V dialógu všeobecné nastavenia je voľba, ktorou sa otázka pred ukončením dá vypnúť. |
-| Čas a dátum | NVDA+f12 | Oznámi čas; stlačené 2 krát rýchlo po sebe prečíta dátum. |
+| Prepustiť nasledujúci kláves | NVDA+f2 | Prinúti NVDA nasledujúci stlačený kláves prepustiť aktívnej aplikácii aj keď sa jedná o príkaz programu NVDA. |
+| Prepnúť režim spánku | NVDA+shift+s | Režim spánku deaktivuje všetky klávesové skratky a hlasový a braillový výstup. Toto je užitočné pre aplikácie, ktoré sami poskytujú niektorý z takýchto druhov výstupu. |
 | Prepustiť nasledujúci kláves | NVDA+f2 | Prepustí nasledujúci stlačený klávesový príkaz aktívnej aplikácii aj v prípade, ak je to štandardný príkaz NVDA |
 %kc:endInclude
+
+++ Oznamovanie systémových informácii ++
+%kc:beginInclude
+| Čas a dátum | NVDA+f12 | Oznámi čas; stlačené 2 krát rýchlo po sebe prečíta dátum. |
+| Stav napájania z batérie | NVDA+shift+b  Oznámy informácie o stave napájania. Buď oznámy stav nabitia batérie v percentách, alebo oznámy nabíjanie zo siete. |
+| Oznámiť text v schránke WIndows | NVDA+c | Ak je v schránke Windows text, NVDA ho prečíta. |
+ %kc:endInclude
 
 + Pohyb v NVDA +
 
@@ -173,6 +182,7 @@ Pri zameraní fokusu možno použiť niekoľko užitočných skratiek:
 | Fokus | NVDA+tab | Oznámi alebo vyhláskuje meno objektu, ktorý má systémový fokus |
 | názov okna | NVDA+t | Prečíta titulok aktuálneho aplikačného okna alebo okna v popredí. Stlačené 2 krát rýchlo za sebou vyhláskuje názov okna a stlačené 3 krát rýchlo za sebou skopíruje názov aktuálneho okna do schránky. |
 | obsah okna v popredí | NVDA+b | Prečíta všetky prvky aktuálneho okna v popredí (užitočné pre dialógy) |
+| Stavový riadok | NVDA+end | Oznámy obsah stavového riadku ak ho NVDA dokáže nájsť. Tiež je možné týmto príkazom premiestniť navigačný objekt na stavový riadok. |
 %kc:endInclude
 
 ++ Pohyb pomocou textového kurzora ++
@@ -557,6 +567,11 @@ Klávesová skratka: NVDA+4
 
 Ak je zapnuté, NVDA bude čítať klávesové skratky použité ako príkazy, teda nie samotné znaky. Do tejto funkcie spadajú kombinácie znakov a klávesov napr. s klávesom Control.
 
+==== Pípať pri písaní malých písmen ak je zapnutý caps lock ====
+Ak je to zapnuté, pri písaní so zapnutým capslockom budete počuť upozornenie v podobe krátkeho pípnutia, ak je pridržaný aj kláves shift.
+Všeobecne sa písanie s preraďovačom pri zapnutom capslocku nepoužíva a vo väčšine prípadov to znamená, že Ste si neuvedomili, že je kláves capslock zapnutý.
+Je teda vhodné byť na túto skutočnosť upozornený.
+
 +++ Nastavenia myši (NVDA+control+m) +++
 Toto dialógové okno nájdeme v možnostiach programu NVDA.
 Dialóg obsahuje nasledujúce prvky:
@@ -648,6 +663,12 @@ Momentálne sú dostupné tieto možnosti:
 ==== Oznamovať aktualizáciu indikátorov priebehu na pozadí ====
 Ak je táto voľba začiarknutá, NVDA bude sledovať aj priebeh takých indikátorov, ktoré nie sú zobrazené v okne v popredí.
 Znamená to, že ak minimalizujete okno, v ktorom je zobrazený indikátor priebehu, môžete robiť niečo úplne iné, zatiaľ čo NVDA naďalej oznamuje aktualizáciu tohoto priebehu.
+
+%kc:setting
+==== Čítať dynamicky menený obsah ====
+Klávesová skratka: NVDA+5
+
+Prepína automatické oznamovanie obsahu v niektorých objektoch ako sú napríklad terminály alebo prichádzajúci text v chatovacích programoch.
 
 +++ Nastavenia virtuálneho prehliadača (NVDA+control+b) +++
 Toto nastavenie nájdeme v možnostiach programu NVDA, pod názvom virtuálny prehliadač.
@@ -791,6 +812,9 @@ Pozastaviť zobrazovanie aktuálneho textu (napr. užitočné pre kopírovanie) 
 Python konzola programu NVDA, dostupná z menu nástroje, je nástroj pre vývojárov, ktorý umožňuje kontrolovať správnosť behu NVDA, zisťovať stav vnútorných premenných NVDA a tiež skúmať hierarchiu prístupnosti aplikácií.
 Viac informácií je dostupných [v článku Python konzola (anglicky) na stránke NVDA NVDA_URLwiki/PythonConsole].
 
+++ Načítať pluginy ++
+Po aktivovaní tejto položky NVDA znovu načíta pluginy a aplikačné moduly bez nutnosti reštartu. Môže byť užitočné pre vývojárov..
+
 + Ako získať viac informácií +
 Ak hľadáte ďalšie informácie o NVDA, o jeho vývoji, alebo hľadáte pomoc, navštívte stránku projektu na adrese NVDA_URL.
 Na tejto stránke môžete tiež nájsť prístup k emailovým konferenciám pojednávajúcich o NVDA a odkazy na ďalšie komunitné projekty a stránky o NVDA.
@@ -840,10 +864,47 @@ Pre správnu funkčnosť musíte mať v systéme nainštalované ovládače brai
 Ak ich ešte nemáte, môžete ich stiahnúť zo stránky: http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Aj keď na stránke sa hovorí len o riadku Focus 40 Blue, ovládač spolupracuje so všetkými zobrazovačmi Freedom scientific.
 
+Nasleduje zoznam klávesových príkazov pre tento typ riadku.
+Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov..
+%kc:beginInclude
+|| Názov | Klávesová skratka |
+| Prepnúť akciu ľavého kolieska | Stlačenie ľavého kolieska |
+| posunúť späť pomocou ľavého kolieska | ľavé koliesko hore |
+| Posunúť vpred použitím ľavého kolieska | ľavé koliesko dolu |
+| Prepnúť akciu pravého kolieska | Stlačenie pravého kolieska |
+| posunúť späť pomocou pravého kolieska | pravé koliesko hore |
+| Posunúť vpred použitím pravého kolieska | pravé koliesko dolu |
+| Prejsť na znak v brailly | smerové tlačidlá |
+%kc:endInclude
+
 ++ Optelec ALVA BC640/680 ++
 Podporované sú oba zobrazovače od [Optelec http://www.optelec.com/], aj ALVA BC640 aj BC680.
 Na ich používanie nie je potrebné inštalovať žiadne ovládače.
 Stačí zapojiť riadok a nastaviť NVDA na jeho používanie.
+
+Nasleduje zoznam klávesových príkazov pre tento typ riadku.
+Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov..
+%kc:beginInclude
+|| Názov | Klávesová skratka |
+| posunúť riadok späť | t1 |
+| predchádzajúci riadok | t2 |
+| nasledujúci riadok | t4 |
+| posunúť riadok vpred | t5 |
+| Prejsť na znak v brailly | smerové tlačidlá |
+| emulácia shift+tab | sp1 |
+| emulácia alt | sp2 |
+| emulácia escape | sp3 |
+| emulácia tab | sp4 |
+| šípka hore | spUp |
+| šípka dolu | spDown |
+| šípka vľavo | spLeft |
+| šípka vpravo | spRight |
+| enter | spEnter |
+| NVDA Menu | sp1+sp3 |
+| klávesová skratka windows+d (minimalizovať všetky aplikácie) | sp1+sp4 |
+| kláves windows | sp2+sp3 |
+| klávesová skratka alt+tab | sp2+sp4 |
+%kc:endInclude
 
 ++ Zobrazovače od spoločnosti Handy Tech ++
 NVDA podporuje všetky zobrazovače od spoločnosti [Handy Tech http://www.handytech.de/].
@@ -860,3 +921,14 @@ Stačí zapojiť riadok a nastaviť NVDA na jeho používanie.
 Na používanie ovládača braillovských riadkov BRLTTY je potrebné nainštalovať [BRLTTY pre Windows http://brl.thefreecat.org/brltty/].
 Mali by ste si stiahnúť najnovšiu inštalačnú verziu, ktorá bude pomenovaná napríklad brltty-win-4.2-2.exe.
 Počas konfigurácie riadku a portu dávajte veľký pozor na presné dodržiavanie inštrukcií, hlavne ak pripájate riadok cez USB a už mátte nainštalované ovládače od výrobcu.
+
+Nasledujú brltty klávesové skratky pre NVDA.
+Prosím prečítajte si [dokumentáciu klávesov brltty http://mielke.cc/brltty/doc/drivers/] pre viac informácií o tom, ako sú príkazy brltty mapované na tlačidlá skutočných zobrazovačov.
+%kc:beginInclude
+|| Názov | príkaz brltty |
+| posunúť riadok späť | fwinlt (go left one window) |
+| posunúť riadok vpred | fwinrt (go right one window) |
+| predchádzajúci riadok | lnup (go up one line) |
+| nasledujúci riadok | lndn (go down one line) |
+| Prejsť na znak v brailly | route (bring cursor to character) |
+%kc:endInclude

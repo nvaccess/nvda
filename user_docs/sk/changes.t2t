@@ -9,6 +9,11 @@
 - Pre niektoré objekty je možné oznamovať farbu. Automatické oznamovanie zmeny farby je možné z dialógu formátovanie dokumentu. Aktuálnu farbu je tiež možné získať použitím funkcie info o formátovaní (NVDA+f)
 - Vo virtuálnom prehliadači je možné vyberať po stranách (shift+pageup shift+pagedown) a odsekoch (shift+šípka hore a shift+šípka dolu). (#639)
 - NVDA odteraz automaticky oznamuje nový text v programoch mIRC, PuTTY, Tera Term and SecureCRT. (#936)
+- Používatelia môžu pridávať nové alebo zmeniť existujúce klávesové skratky pre všetky skripty NVDA napísaním mapy vstupných príkazov. (#194)
+- NVDA krátko zapípa ak je pri písaní zapnutý kláves capslock a pridržaný shift. Je to možné vypnúť odškrtnutím novej voľby v dialógu nastavenia klávesnice. (#663)
+- Číslovanie a odrážky sú oznamované pri navigácii po riadkoch v programe Microsoft word. (#208)  
+- Pridané boli ďalšie skratky braillovských zobrazovačov. Podrobnosti sa dočítate v časti podporované braillovské zobrazovače v používateľskej príručke. (#209)
+- Aby sme uľahčili prácu možným vývojárom, aplikačné moduly a globálne pluginy je možné načítať bez nutnosti reštartu NVDA. Použite položku menu Nástroje -> Načítať pluginy alebo skratku NVDA+control+f3. (#544)
 
 
 == Zmeny ==
@@ -31,6 +36,14 @@
 - V dialógu nastavenia klávesnice je zoznam rozložení zobrazený v jazyku lokalizácii NVDA nie v angličtine. (#558)
 - Opravený problém, ktorý spôsoboval, že niektoré prvky boli vo virtuálnom prehliadači adobe reader zobrazené ako prázdne, napr. odkazy v používateľskej príručke Apple iPhone IOS 4.1.
 - Tlačidlo "použiť aktuálne nastavenia NVDA na prihlasovacej a zabezpečených obrazovkách" v dialógu všeobecné nastavenia je možné použiť hneď po nainštalovaní NVDA. Doteraz ak nebola pred použitím tohoto tlačidla zobrazená zabezpečená obrazovka, NVDA oznámil, že kopírovanie bolo úspešné, ale akcia nemala žiadny efekt. (#1194)
+- V systémoch zo zapnutou kontrolov UAC funkcia "použiť aktuálne nastavenia NVDA na prihlasovacej a zabezpečených obrazovkách" viac nezlihá po zobrazení dialógu UAC ak meno aktuálne prihláseného používateľa systému obsahuje medzerník. (#918)
+- V programe internet explorer a ostatných prvkoch MSHTML NVDA použije URL odkazu v prípade, že nie je k dispozícii žiadny text alebo názov. (#633)
+- NVDA viac neignoruje fokus v ponukách programu AOL Instant Messenger 7. (#655)
+- NVDA oznamuje správne názvy chýb v dialógu kontrola pravopisu programu Microsoft word (napr. nie je v slovníku, gramatická chyba, interpunkcia). Doteraz boli všetky chyby oznamované ako gramatická chyba. (#883)
+- Písanie v programe microsoft word so zapnutým braillovským riadkom by viac nemalo spôsobovať vkladanie náhodného textu, a tiež bola opravená chyba, ktorá pri stlačení smerovacích tlačidieľ na braillovskom riadku spôsobovala mrznutie. (#1212) problémom ostáva fakt, že v programe Word 2003 a starších nie je možné čítať text v smere zprava do ľava spolu s braillovským riadkom. (#627)
+- Pri stlačení klávesu delete je správne aktualizovaný text a pozícia kurzora na braillovskom riadku. (#947)
+- Dynamické zmeny v gecko 2 dokumentoch (napr. Firefox 4) sú správne spracované NVDA. Doteraz boli spracúvané len zmeny na prvej otvorenej karte. (Mozilla bug 610985)
+- NVDA dokáže správne oznamovať zoznam návrhov v dialógu kontrola pravopisu programu Microsoft word. (#704)
 
 
 = 2010.2 =
