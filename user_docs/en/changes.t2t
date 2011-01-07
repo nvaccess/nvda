@@ -78,6 +78,7 @@
  - They can also provide their own scripts to perform display specific functions.
  - See braille.BrailleDisplayDriver for details and existing braille display drivers for examples.
 - The 'selfVoicing' property on AppModule classes has now been renamed to 'sleepMode'.
+- the appModule events: event_appLoseFocus and event_appGainFocus have now been renamed to event_appModule_loseFocus and event_appModule_gainFocus respectivly, in order to keep the naming sintax the same between appModules and treeInterceptors etc.
 
 
 = 2010.2 =
