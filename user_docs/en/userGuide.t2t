@@ -918,6 +918,26 @@ NVDA supports all displays from [Handy Tech http://www.handytech.de/].
 For some USB displays, you will need to install the USB drivers from Handy Tech on your system.
 In addition, you will need to install the Handy Tech universal driver, available at ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left, up |
+| Scroll braille display forward | right, down |
+| Move braille display to previous line | b4 |
+| Move braille display to next line | b5 |
+| Route to braille cell | routing |
+| shift+tab key | esc |
+| alt key | b2+b4+b5 |
+| escape key | b4+b6 |
+| tab key | enter |
+| enter key | esc+enter |
+| upArrow key | leftSpace |
+| downArrow key | rightSpace |
+| NVDA Menu | b2+b4+b5+b6 |
+| Handy Tech configuration | b4+b8 |
+%kc:endInclude
+
 ++ MDV Lilli ++
 The Lilli braille display available from [MDV http://www.mdvbologna.it/] is supported.
 You do not need any specific drivers to be installed to use this display.
