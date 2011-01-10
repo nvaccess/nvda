@@ -1,2119 +1,2455 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-12-15 19:20+0100\n"
-"Last-Translator: Ali Savas <ali-savas@gmx.de>\n"
-"Language-Team: Turkish\n"
+"Project-Id-Version: NVDA main-4009\n"
+"POT-Creation-Date: 2011-01-08 19:03+E. Australia Standard Time\n"
+"PO-Revision-Date: 2011-01-10 16:55+0200\n"
+"Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
+"Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Turkish\n"
+"X-Poedit-Country: TURKEY\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
-#: NVDAObjects\IAccessible\edit.py:528
-msgid "unknown"
-msgstr "Bilinmeyen"
+#: IAccessibleHandler.py:695
+msgid "Secure Desktop"
+msgstr "Güvenli masaüstü"
 
-#: NVDAObjects\IAccessible\edit.py:530
-msgid "%s embedded object"
-msgstr "%s gömülü nesne"
+#: NVDAHelper.py:116
+msgid "unknown layout"
+msgstr "bilinmeyen düzen"
 
-#: NVDAObjects\IAccessible\edit.py:532
-#: controlTypes.py:235
-msgid "embedded object"
-msgstr "Gömülü nesne"
+#: NVDAHelper.py:117
+msgid "layout %s"
+msgstr "%s düzeni"
 
-#: NVDAObjects\IAccessible\excel.py:46
-msgid "NVDA Excel Cell Editor"
-msgstr "NVDA Excel Hücre Düzenleyici"
+#: NVDAObjects\IAccessible\__init__.py:1440
+msgid "Taskbar"
+msgstr "Görev çubuğu"
 
-#: NVDAObjects\IAccessible\excel.py:48
-msgid "Enter cell contents"
-msgstr ""
-
-#: NVDAObjects\IAccessible\excel.py:100
-msgid "through"
-msgstr "doğru"
-
-#: NVDAObjects\IAccessible\excel.py:100
-#: controlTypes.py:313
-msgid "selected"
-msgstr "seçildi"
-
-#: NVDAObjects\IAccessible\excel.py:104
-msgid "has formula"
-msgstr "formülü"
-
-#: NVDAObjects\IAccessible\excel.py:133
-msgid "Moves to a cell and speaks its coordinates and content"
-msgstr ""
-
-#: NVDAObjects\IAccessible\excel.py:142
-msgid "font"
-msgstr "yazıtipi"
-
-#: NVDAObjects\IAccessible\excel.py:143
-msgid "point"
-msgstr "Nokta"
-
-#: NVDAObjects\IAccessible\excel.py:145
-#: controlTypes.py:297
-#: speech.py:711
-#: textBuffer.py:266
-#: textBuffer.py:318
-msgid "bold"
-msgstr "kalın"
-
-#: NVDAObjects\IAccessible\excel.py:147
-#: speech.py:716
-#: textBuffer.py:273
-#: textBuffer.py:320
-msgid "italic"
-msgstr "eğik"
-
-#: NVDAObjects\IAccessible\excel.py:149
-#: characterSymbols.py:50
-#: controlTypes.py:299
-#: textBuffer.py:280
-#: textBuffer.py:322
-msgid "underline"
-msgstr "alt çizgi"
-
-#: NVDAObjects\IAccessible\sysTreeView32.py:162
+#: NVDAObjects\IAccessible\sysTreeView32.py:202
 msgid "%s items"
 msgstr "%s öge"
 
-#: NVDAObjects\IAccessible\winword.py:317
-#: NVDAObjects\IAccessible\winword.py:333
-#: NVDAObjects\IAccessible\winword.py:349
-#: NVDAObjects\IAccessible\winword.py:365
-msgid "not in table"
-msgstr "Bir tabloda değil."
-
-#: NVDAObjects\IAccessible\winword.py:326
-msgid "bottom of column"
-msgstr "Sütun sonu"
-
-#: NVDAObjects\IAccessible\winword.py:342
-msgid "top of column"
-msgstr "Sütun başı"
-
-#: NVDAObjects\IAccessible\winword.py:358
-msgid "end of row"
-msgstr "Satır sonu"
-
-#: NVDAObjects\IAccessible\winword.py:374
-msgid "beginning of row"
-msgstr "Satır başlangıcı"
-
-#: appModuleHandler.py:165
-msgid "Error in appModule %s"
-msgstr "Uygulama Modülü hatası %s"
-
-#: appModules\_default.py:55
-#: appModules\_default.py:132
-#: appModules\_default.py:142
-#: appModules\_default.py:152
-#: appModules\_default.py:162
-#: appModules\_default.py:642
-#: appModules\_default.py:718
-#: appModules\_default.py:728
-#: appModules\_default.py:738
-#: appModules\winamp.py:75
-#: appModules\winamp.py:85
-#: keyboardHandler.py:52
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: virtualBuffers\__init__.py:260
-msgid "on"
-msgstr "Açık"
-
-#: appModules\_default.py:58
-#: appModules\_default.py:129
-#: appModules\_default.py:139
-#: appModules\_default.py:149
-#: appModules\_default.py:159
-#: appModules\_default.py:540
-#: appModules\_default.py:639
-#: appModules\_default.py:698
-#: appModules\_default.py:715
-#: appModules\_default.py:725
-#: appModules\_default.py:735
-#: appModules\winamp.py:77
-#: appModules\winamp.py:87
-#: gui\settingsDialogs.py:457
-#: keyboardHandler.py:52
-#: keyboardHandler.py:54
-#: keyboardHandler.py:56
-#: virtualBuffers\__init__.py:260
-msgid "off"
-msgstr "Kapalı"
-
-#: appModules\_default.py:60
-msgid "keyboard help %s"
-msgstr "Klavier Yardımı %s"
-
-#: appModules\_default.py:61
-#: appModules\_default.py:77
-msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
-msgstr ""
-
-#: appModules\_default.py:80
-msgid "left click"
-msgstr "sol tıklama"
-
-#: appModules\_default.py:83
-msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "şimdiki fare pozisyona bir sol tıklama gerçekleştirir"
-
-#: appModules\_default.py:86
-msgid "right click"
-msgstr "sağ tıklama"
-
-#: appModules\_default.py:89
-msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "şimdiki fare pozisyona bir sağ tıklama gerçekleştirir"
-
-#: appModules\_default.py:98
-#: cursorManager.py:220
-msgid "no selection"
-msgstr "Seçim yok"
-
-#: appModules\_default.py:100
-#: speech.py:256
-#: speech.py:341
-#: speech.py:354
-#: textBuffer.py:537
-#: textBuffer.py:541
-#: textBuffer.py:543
-#: textBuffer.py:549
-msgid "selected %s"
-msgstr "seçili"
-
-#: appModules\_default.py:101
-msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
-msgstr ""
-
-#: appModules\_default.py:109
-msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
-msgstr "eğer birkez basarsanız, saati konuşur. Eğer ikidefa basarsanız, tarihi konuşur"
-
-#: appModules\_default.py:113
-msgid "Increases the currently active setting in the synth settings ring"
-msgstr ""
-
-#: appModules\_default.py:117
-msgid "Decreases the currently active setting in the synth settings ring"
-msgstr ""
-
-#: appModules\_default.py:121
-msgid "Moves to the next available setting in the synth settings ring"
-msgstr ""
-
-#: appModules\_default.py:125
-msgid "Moves to the previous available setting in the synth settings ring"
-msgstr ""
-
-#: appModules\_default.py:134
-msgid "speak typed characters"
-msgstr "Yazılan harfleri seslendir"
-
-#: appModules\_default.py:135
-msgid "Toggles on and off the speaking of typed characters"
-msgstr "Yazılan harflerin seslendirmesini açar/kapatır"
-
-#: appModules\_default.py:144
-msgid "speak typed words"
-msgstr "Yazılan kelimeleri seslendir"
-
-#: appModules\_default.py:145
-msgid "Toggles on and off the speaking of typed words"
-msgstr "Yazılan kelimelerin seslendirmesini açar/kapatır"
-
-#: appModules\_default.py:154
-msgid "speak command keys"
-msgstr "Komuta tuşları seslendir"
-
-#: appModules\_default.py:155
-msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
-msgstr "Harf olmayan komuta tuşların seslendirmesini açar/kapatır"
-
-#: appModules\_default.py:164
-msgid "speak punctuation"
-msgstr "Söz noktalamaları seslendir"
-
-#: appModules\_default.py:165
-msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"
-msgstr ""
-
-#: appModules\_default.py:168
-msgid "Move mouse to navigator"
-msgstr ""
-
-#: appModules\_default.py:180
-msgid "object has no location"
-msgstr "nesnede konum bilgileri yok"
-
-#: appModules\_default.py:183
-msgid "Moves the mouse pointer to the current navigator object"
-msgstr ""
-
-#: appModules\_default.py:186
-msgid "Move navigator object to mouse"
-msgstr ""
-
-#: appModules\_default.py:190
-msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
-msgstr ""
-
-#: appModules\_default.py:195
-#: appModules\_default.py:226
-#: appModules\_default.py:247
-#: appModules\_default.py:260
-#: appModules\_default.py:273
-#: appModules\_default.py:286
-#: appModules\_default.py:299
-#: appModules\_default.py:322
-#: appModules\_default.py:345
-#: appModules\_default.py:354
-#: appModules\_default.py:680
-msgid "no navigator object"
-msgstr ""
-
-#: appModules\_default.py:217
-#: appModules\_default.py:661
-msgid "%s copied to clipboard"
-msgstr "%s clipboard'a Kopyalandı"
-
-#: appModules\_default.py:221
-msgid "Reports the current navigator object or, if pressed three times, Copies name and value of current navigator object to the clipboard"
-msgstr ""
-
-#: appModules\_default.py:229
-msgid "No location information for navigator object"
-msgstr ""
-
-#: appModules\_default.py:232
-msgid "Object edges positioned %.1f per cent right from left of screen, %.1f per cent down from top of screen, %.1f per cent left from right of screen, %.1f up from bottom of screen"
-msgstr ""
-
-#: appModules\_default.py:233
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr ""
-
-#: appModules\_default.py:238
-#: appModules\_default.py:620
-msgid "no focus"
-msgstr "odak yok"
-
-#: appModules\_default.py:240
-msgid "move to focus"
-msgstr "odağa taşı"
-
-#: appModules\_default.py:242
-msgid "Sets the navigator object to the current focus"
-msgstr ""
-
-#: appModules\_default.py:254
-msgid "No parents"
-msgstr ""
-
-#: appModules\_default.py:255
-msgid "Sets the navigator object to the parent of the object it is currently on and speaks it"
-msgstr ""
-
-#: appModules\_default.py:267
-msgid "No next"
-msgstr "Ileride Pencere yok"
-
-#: appModules\_default.py:268
-msgid "Sets the navigator object to the object next to the one it is currently on and speaks it"
-msgstr ""
-
-#: appModules\_default.py:280
-msgid "No previous"
-msgstr "Geride pencere yok"
-
-#: appModules\_default.py:281
-msgid "Sets the navigator object to the object previous to the one it is currently on and speaks it"
-msgstr ""
-
-#: appModules\_default.py:293
-msgid "No children"
-msgstr ""
-
-#: appModules\_default.py:294
-msgid "Sets the navigator object to the first child object of the one it is currently on and speaks it"
-msgstr ""
-
-#: appModules\_default.py:316
-msgid "end of flow"
-msgstr ""
-
-#: appModules\_default.py:317
-msgid "Sets the navigator object to the object this object flows to and speaks it"
-msgstr ""
-
-#: appModules\_default.py:339
-msgid "Beginning of flow"
-msgstr ""
-
-#: appModules\_default.py:340
-msgid "Sets the navigator object to the object this object flows from and speaks it"
-msgstr ""
-
-#: appModules\_default.py:348
-msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
-msgstr ""
-
-#: appModules\_default.py:359
-msgid "inside"
-msgstr "içindeki"
-
-#: appModules\_default.py:362
-msgid "Reports where the current navigator object is by reporting each of its ancestors"
-msgstr ""
-
-#: appModules\_default.py:368
-#: appModules\_default.py:380
-#: appModules\_default.py:421
-#: textBuffer.py:364
-#: textBuffer.py:391
-#: textBuffer.py:412
-#: textBuffer.py:433
-#: virtualBuffers_old\__init__.py:274
-msgid "top"
-msgstr "üst"
-
-#: appModules\_default.py:370
-msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
-msgstr ""
-
-#: appModules\_default.py:382
-msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
-msgstr ""
-
-#: appModules\_default.py:391
-msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled"
-msgstr ""
-
-#: appModules\_default.py:401
-#: appModules\_default.py:409
-#: appModules\_default.py:442
-#: textBuffer.py:369
-#: textBuffer.py:382
-#: textBuffer.py:403
-#: textBuffer.py:424
-#: virtualBuffers_old\__init__.py:289
-msgid "bottom"
-msgstr "alt"
-
-#: appModules\_default.py:403
-msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
-msgstr ""
-
-#: appModules\_default.py:411
-msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
-msgstr ""
-
-#: appModules\_default.py:423
-msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
-msgstr ""
-
-#: appModules\_default.py:432
-msgid "Speaks the word of the current navigator object where the review cursor is situated. If this key is pressed twice, the word will be spelled"
-msgstr ""
-
-#: appModules\_default.py:444
-msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
-msgstr ""
-
-#: appModules\_default.py:452
-#: appModules\_default.py:464
-#: appModules\totalcmd.py:35
-msgid "left"
-msgstr "sol"
-
-#: appModules\_default.py:454
-msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
-msgstr ""
-
-#: appModules\_default.py:472
-msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
-msgstr ""
-
-#: appModules\_default.py:486
-msgid "Reports the character of the current navigator object where the review cursor is situated. If this key is pressed twice, ascii and hexadecimal values are spoken for the character"
-msgstr ""
-
-#: appModules\_default.py:496
-#: appModules\_default.py:513
-#: appModules\totalcmd.py:37
-msgid "right"
-msgstr "sağ"
-
-#: appModules\_default.py:504
-msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
-msgstr ""
-
-#: appModules\_default.py:515
-msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
-msgstr ""
-
-#: appModules\_default.py:521
-msgid "No caret"
-msgstr "düzeltme imi yok"
-
-#: appModules\_default.py:526
-msgid "Moves the review cursor to the position of the system caret, in the current navigator object"
-msgstr ""
-
-#: appModules\_default.py:533
-msgid "Moves the system caret to the position of the review cursor , in the current navigator object"
-msgstr ""
-
-#: appModules\_default.py:542
-msgid "beeps"
-msgstr "bipleme"
-
-#: appModules\_default.py:544
-msgid "talk"
-msgstr "konuşma"
-
-#: appModules\_default.py:546
-msgid "speech mode %s"
-msgstr "konuşma modu %s"
-
-#: appModules\_default.py:548
-msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr ""
-
-#: appModules\_default.py:556
-msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr ""
-
-#: appModules\_default.py:560
-msgid "Quits NVDA!"
-msgstr "NVDA'dan çık"
-
-#: appModules\_default.py:564
-msgid "Shows the NVDA menu"
-msgstr "NVDA menüsünü göster"
-
-#: appModules\_default.py:569
-msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
-msgstr ""
-
-#: appModules\_default.py:574
-msgid "reads from the navigator object "
-msgstr ""
-
-#: appModules\_default.py:589
-msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
-msgstr ""
-
-#: appModules\_default.py:621
-msgid "reports the object with focus"
-msgstr ""
-
-#: appModules\_default.py:626
-msgid "no status bar found"
-msgstr "Durum çubuğu bulunamadı"
-
-#: appModules\_default.py:635
-msgid "reads the current application status bar and moves the navigator to it"
-msgstr ""
-
-#: appModules\_default.py:644
-msgid "Mouse tracking"
-msgstr "Fare izleme"
-
-#: appModules\_default.py:645
-msgid "Toggles the reporting of information as the mouse moves"
-msgstr "Fare hareket bilgilerini raporlar"
-
-#: appModules\_default.py:653
-msgid "no title"
-msgstr "Başlık yok"
-
-#: appModules\_default.py:662
-msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
-msgstr ""
-
-#: appModules\_default.py:669
-msgid "speaks the current foreground object"
-msgstr "Ön alan nesneyi seslendir"
-
-#: appModules\_default.py:684
-#: cursorManager.py:223
-msgid "copied to clipboard"
-msgstr "Clipboard'a kopyalandı"
-
-#: appModules\_default.py:688
-msgid "Control ID: %s"
-msgstr "Kontrol: %s"
-
-#: appModules\_default.py:689
-msgid "Class: %s"
-msgstr "Sınıf: %s"
-
-#: appModules\_default.py:691
-msgid "internal text: %s"
-msgstr "Iç metin: %s"
-
-#: appModules\_default.py:692
-msgid "text: %s"
-msgstr "Metin: %s"
-
-#: appModules\_default.py:694
-msgid "reports some information about the current navigator object, mainly useful for developers. When pressed 2 times it copies control id, class and internal text to the windows clipboard"
-msgstr ""
-
-#: appModules\_default.py:699
-#: gui\settingsDialogs.py:458
-msgid "Beep for visible"
-msgstr "Görünen için biple"
-
-#: appModules\_default.py:700
-#: gui\settingsDialogs.py:459
-msgid "Beep for all"
-msgstr "tümü için biple"
-
-#: appModules\_default.py:701
-#: gui\settingsDialogs.py:460
-msgid "Speak each 10 percent"
-msgstr "Her yüzde 10 konuş"
-
-#: appModules\_default.py:711
-msgid "Toggles how NVDA reports progress bar updates. It can beep for all the progress bars or just for the progressbars in the foreground. Additionally it is possible to have current value spoken each 10 percent or it is possible to completely disable this reporting."
-msgstr ""
-
-#: appModules\_default.py:720
-msgid "report dynamic content changes"
-msgstr "dinamik içerik değişiklikleri raporla"
-
-#: appModules\_default.py:721
-msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
-msgstr ""
-
-#: appModules\_default.py:730
-msgid "caret moves review cursor"
-msgstr ""
-
-#: appModules\_default.py:731
-msgid "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr ""
-
-#: appModules\_default.py:740
-msgid "focus moves navigator object"
-msgstr ""
-
-#: appModules\_default.py:741
-msgid "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr ""
-
-#: appModules\_default.py:753
-msgid "no system battery"
-msgstr "Batarya yok"
-
-#: appModules\_default.py:755
+#: NVDAObjects\UIA\__init__.py:422
+msgid "invoke"
+msgstr "Etkinleştir"
+
+#: NVDAObjects\behaviors.py:53
+#: globalCommands.py:793
 msgid "%d percent"
 msgstr "yüzde %d"
 
-#: appModules\_default.py:756
-msgid "AC power on"
+#: NVDAObjects\window\__init__.py:352
+msgid "Desktop"
+msgstr "masa üstü"
+
+#: NVDAObjects\window\edit.py:252
+#: NVDAObjects\window\edit.py:253
+msgid "default color"
+msgstr "Varsayılan renk"
+
+#: NVDAObjects\window\edit.py:541
+#: controlTypes.py:179
+msgid "unknown"
+msgstr "Bilinmeyen"
+
+#: NVDAObjects\window\edit.py:543
+msgid "%s embedded object"
+msgstr "%s gömülü nesne"
+
+#: NVDAObjects\window\edit.py:545
+#: controlTypes.py:243
+msgid "embedded object"
+msgstr "Gömülü nesne"
+
+#: NVDAObjects\window\excel.py:49
+msgid "NVDA Excel Cell Editor"
+msgstr "NVDA Excel Hücre Düzenleyici"
+
+#: NVDAObjects\window\excel.py:51
+msgid "Enter cell contents"
+msgstr "Hücre içeriğini gir"
+
+#: NVDAObjects\window\excel.py:116
+msgid "Extends the selection and speaks the last selected cell"
+msgstr "Seçimi genişletir ve en son seçilen hücreyi okur"
+
+#: NVDAObjects\window\excel.py:210
+msgid "has formula"
+msgstr "formül var"
+
+#: NVDAObjects\window\excel.py:249
+msgid "selection"
+msgstr "Seçim"
+
+#: NVDAObjects\window\excel.py:254
+msgid "%s %s through %s %s"
 msgstr ""
 
-#: appModules\_default.py:758
-msgid "%d hours and %d minutes remaining"
-msgstr "%d saat ve %d dakika kaldı"
+#: NVDAObjects\window\winword.py:387
+#: NVDAObjects\window\winword.py:399
+#: NVDAObjects\window\winword.py:411
+#: NVDAObjects\window\winword.py:423
+msgid "not in table"
+msgstr "Bir tabloda değil."
 
-#: appModules\_default.py:760
-msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr ""
+#: NVDAObjects\window\winword.py:394
+#: NVDAObjects\window\winword.py:406
+#: NVDAObjects\window\winword.py:418
+#: NVDAObjects\window\winword.py:430
+#: virtualBuffers\__init__.py:1128
+msgid "edge of table"
+msgstr "tablo sınırı"
 
-#: appModules\_default.py:764
-msgid "Pass next key through"
-msgstr ""
+#: appModuleHandler.py:143
+msgid "Error in appModule %s"
+msgstr "Uygulama Modülü hatası %s"
 
-#: appModules\_default.py:765
-msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
-msgstr ""
+#: appModules\calc.py:30
+msgid "Display"
+msgstr "Display"
 
-#: appModules\_default.py:770
-msgid "Currently running application is %s"
-msgstr "Şu Anda %s uygulama çalışıyor"
+#: appModules\explorer.py:35
+msgid "Start"
+msgstr "Başlat"
 
-#: appModules\_default.py:773
-msgid " and currently loaded module is %s"
-msgstr " ve %s şu anda yüklü olan modül"
+#: appModules\foobar2000.py:44
+msgid "No track playing"
+msgstr "Çalan parça yok"
 
-#: appModules\_default.py:775
-msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
-msgstr ""
+#: appModules\foobar2000.py:50
+msgid "Reports the remaining time of the currently playing track, if any"
+msgstr "Çalmakta olan parça için geri kalan kısmın süresini söyler"
 
-#: appModules\_default.py:779
-msgid "Shows the NVDA general settings dialog"
-msgstr "NVDA genel ayarlar iletişim kutusunu göster"
+#: appModules\miranda32.py:117
+msgid "No message yet"
+msgstr "Henüz mesaj yok"
 
-#: appModules\_default.py:783
-msgid "Shows the NVDA synthesizer dialog"
-msgstr "NVDA Sentezleyici iletişim kutusunu göster"
+#: appModules\miranda32.py:118
+msgid "Displays one of the recent messages"
+msgstr "En son iletilerden birini görüntüler"
 
-#: appModules\_default.py:787
-msgid "Shows the NVDA voice settings dialog"
-msgstr "NVDA ses ayarları iletişim kutusunu göster"
-
-#: appModules\_default.py:791
-msgid "Shows the NVDA keyboard settings dialog"
-msgstr "NVDA klavier ayarları iletişim kutusunu göster"
-
-#: appModules\_default.py:795
-msgid "Shows the NVDA mouse settings dialog"
-msgstr "NVDA fare ayarları iletişim kutusunu göster"
-
-#: appModules\_default.py:799
-msgid "Shows the NVDA object presentation settings dialog"
-msgstr "NVDA nesne sunum ayarları iletişim kutusunu göster"
-
-#: appModules\_default.py:803
-msgid "Shows the NVDA virtual buffers settings dialog"
-msgstr "NVDA sanal tampon ayarları iletişim kutusunu göster"
-
-#: appModules\_default.py:807
-msgid "Shows the NVDA document formatting settings dialog"
-msgstr "NVDA belge format ayarları iletişim kutusunu göster"
-
-#: appModules\_default.py:811
-msgid "Saves the current NVDA configuration"
-msgstr "şu anki konfigurasyonu kaydet"
-
-#: appModules\_default.py:815
-msgid "loads the saved NVDA configuration, overriding current changes"
-msgstr ""
-
-#: appModules\_default.py:823
-msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "Python konsulu etkinleştir. Aslında geliştirciler için faydalı"
-
-#: appModules\_default.py:828
-msgid "review"
-msgstr ""
-
-#: appModules\_default.py:831
-msgid "focus"
-msgstr "Odak"
-
-#: appModules\_default.py:832
-msgid "Braille tethered to %s"
-msgstr "Braille %s bağlandı"
-
-#: appModules\_default.py:833
-msgid "Toggle tethering of braille between the focus and the review position"
-msgstr ""
-
-#: appModules\_default.py:841
-msgid "There is no text on the clipboard"
-msgstr "clipboarda metin yok"
-
-#: appModules\_default.py:846
-msgid "The clipboard contains a large portion of text. It is %s characters long"
-msgstr "Clipboardı büyük bir kısım yazı içeriyor. %s karakter"
-
-#: appModules\_default.py:847
-msgid "Reports the text on the Windows clipboard"
-msgstr "Windows Clipboardaki metni raporla"
-
-#: appModules\_default.py:851
-msgid "Start marked"
-msgstr "baş işaretçisi"
-
-#: appModules\_default.py:852
-msgid "Marks the current position of the review cursor as the start of text to be copied"
-msgstr ""
-
-#: appModules\_default.py:856
-msgid "No start marker set"
-msgstr "baş işaretçisi belirlenmedi"
-
-#: appModules\_default.py:860
-msgid "The start marker must reside within the same object"
-msgstr "baş işaretçisi aynı nesnede olması gerekiyor"
-
-#: appModules\_default.py:865
-msgid "Review selection copied to clipboard"
-msgstr ""
-
-#: appModules\_default.py:867
-msgid "No text to copy"
-msgstr "Kopyalana bilir metin yok"
-
-#: appModules\_default.py:870
-msgid "Retrieves the text from the previously set start marker to the current position of the review cursor and copies it to the clipboard"
-msgstr ""
+#: appModules\msimn.py:18
+msgid "Attachments"
+msgstr "Ekler"
 
 #: appModules\msimn.py:19
-msgid "Attachments"
-msgstr "Ek"
-
-#: appModules\msimn.py:20
 msgid "To:"
 msgstr "Kime:"
 
-#: appModules\msimn.py:21
+#: appModules\msimn.py:20
 msgid "Newsgroup:"
-msgstr "Tartışma Grupları:"
+msgstr "Haber Grubu:"
 
-#: appModules\msimn.py:22
+#: appModules\msimn.py:21
 msgid "CC:"
 msgstr "Kopya:"
 
-#: appModules\msimn.py:23
+#: appModules\msimn.py:22
 msgid "Subject:"
 msgstr "Konu:"
 
-#: appModules\msimn.py:24
-#: appModules\msimn.py:32
+#: appModules\msimn.py:23
+#: appModules\msimn.py:31
 msgid "From:"
 msgstr "Kimden:"
 
-#: appModules\msimn.py:25
+#: appModules\msimn.py:24
 msgid "Date:"
 msgstr "Tarih:"
 
-#: appModules\msimn.py:26
+#: appModules\msimn.py:25
 msgid "Forward to:"
-msgstr ""
+msgstr "Yönlendir:"
 
-#: appModules\msimn.py:27
+#: appModules\msimn.py:26
 msgid "Answer to:"
 msgstr "yanıt:"
 
-#: appModules\msimn.py:28
+#: appModules\msimn.py:27
 msgid "Organisation:"
 msgstr "Organizasyon:"
 
-#: appModules\msimn.py:29
+#: appModules\msimn.py:28
 msgid "Distribution:"
 msgstr "dağıtım:"
 
-#: appModules\msimn.py:30
+#: appModules\msimn.py:29
 msgid "Key words:"
-msgstr "anahtar sözcük:"
+msgstr "anahtar sözcükler:"
 
-#: appModules\msimn.py:31
+#: appModules\msimn.py:30
 msgid "BCC:"
-msgstr ""
+msgstr "Gizli:"
 
-#: appModules\outlook.py:30
-#: appModules\outlook.py:43
+#: appModules\outlook.py:22
+#: appModules\outlook.py:35
 msgid "subject: %s"
 msgstr "Konu: %s"
 
-#: appModules\outlook.py:31
+#: appModules\outlook.py:23
 msgid "received: %s"
 msgstr "alındı: %s"
 
-#: appModules\outlook.py:35
+#: appModules\outlook.py:27
 msgid "unread"
 msgstr "okunmamış"
 
-#: appModules\outlook.py:37
+#: appModules\outlook.py:29
 msgid "attachment"
 msgstr "Ek"
 
-#: appModules\outlook.py:44
+#: appModules\outlook.py:36
 msgid "sent: %s"
 msgstr "Gönderildi: %s"
 
-#: braille.py:26
+#: appModules\sndrec32.py:11
+msgid "Rewind"
+msgstr "Geri al"
+
+#: appModules\sndrec32.py:12
+msgid "Fast forward"
+msgstr "Hızlı ileri al"
+
+#: appModules\sndrec32.py:13
+msgid "Play"
+msgstr "Çal"
+
+#: appModules\sndrec32.py:14
+msgid "Stop"
+msgstr "Durdur"
+
+#: appModules\sndrec32.py:15
+msgid "Record"
+msgstr "Kaydet"
+
+#: appModules\totalcmd.py:35
+#: globalCommands.py:490
+#: globalCommands.py:502
+msgid "left"
+msgstr "sol"
+
+#: appModules\totalcmd.py:37
+#: globalCommands.py:534
+#: globalCommands.py:551
+msgid "right"
+msgstr "sağ"
+
+#: appModules\winamp.py:76
+#: appModules\winamp.py:86
+#: globalCommands.py:41
+#: globalCommands.py:166
+#: globalCommands.py:176
+#: globalCommands.py:186
+#: globalCommands.py:196
+#: globalCommands.py:694
+#: globalCommands.py:756
+#: globalCommands.py:766
+#: globalCommands.py:776
+#: gui\settingsDialogs.py:811
+#: keyboardHandler.py:291
+#: virtualBuffers\__init__.py:704
+msgid "on"
+msgstr "Açık"
+
+#: appModules\winamp.py:78
+#: appModules\winamp.py:88
+#: globalCommands.py:41
+#: globalCommands.py:163
+#: globalCommands.py:173
+#: globalCommands.py:183
+#: globalCommands.py:193
+#: globalCommands.py:572
+#: globalCommands.py:691
+#: globalCommands.py:753
+#: globalCommands.py:763
+#: globalCommands.py:773
+#: gui\settingsDialogs.py:575
+#: gui\settingsDialogs.py:811
+#: keyboardHandler.py:291
+#: virtualBuffers\__init__.py:704
+msgid "off"
+msgstr "Kapalı"
+
+#: aria.py:60
+msgid "banner"
+msgstr "benır"
+
+#: aria.py:61
+msgid "complementary"
+msgstr "Tamamlayıcı"
+
+#: aria.py:62
+msgid "content info"
+msgstr "İçerik bilgisi"
+
+#: aria.py:63
+msgid "main"
+msgstr "Ana"
+
+#: aria.py:64
+msgid "navigation"
+msgstr "Nevigasyon"
+
+#: aria.py:65
+msgid "search"
+msgstr "Ara"
+
+#: braille.py:28
 msgid "Arabic grade 1"
 msgstr "Arapça Derece 1"
 
-#: braille.py:27
+#: braille.py:29
+msgid "Bulgarian 8 dot computer braille"
+msgstr "Bulgarian 8 dot computer braille"
+
+#: braille.py:30
 msgid "Welsh grade 1"
 msgstr "Gal dili derece 1"
 
-#: braille.py:28
+#: braille.py:31
 msgid "Welsh grade 2"
 msgstr "Gal dili derece 2"
 
-#: braille.py:29
+#: braille.py:32
 msgid "Czech grade 1"
 msgstr "Çekçe Derece 1"
 
-#: braille.py:30
+#: braille.py:33
 msgid "Danish grade 1"
 msgstr "danimarka derece 1"
 
-#: braille.py:31
+#: braille.py:34
+msgid "German 8 dot computer braille"
+msgstr "German 8 dot computer braille"
+
+#: braille.py:35
 msgid "German grade 0"
 msgstr "Almanca derece 0"
 
-#: braille.py:32
+#: braille.py:36
 msgid "German grade 1"
 msgstr "Almanca derece 1"
 
-#: braille.py:33
+#: braille.py:37
 msgid "German grade 2"
 msgstr "Almanca derece 2"
 
-#: braille.py:34
+#: braille.py:38
 msgid "English (U.K.) grade 1"
 msgstr "B.K. İngilizcesi Derece 1"
 
-#: braille.py:35
+#: braille.py:39
 msgid "English (U.K.) grade 2"
 msgstr "B.K. İngilizcesi Derece 2"
 
-#: braille.py:36
+#: braille.py:40
 msgid "English (U.S.) 6 dot computer braille"
-msgstr ""
+msgstr "English (U.S.) 6 dot computer braille"
 
-#: braille.py:37
+#: braille.py:41
 msgid "English (U.S.) 8 dot computer braille"
-msgstr ""
+msgstr "English (U.S.) 8 dot computer braille"
 
-#: braille.py:38
+#: braille.py:42
 msgid "English (U.S.) grade 1"
 msgstr "A.B.D İngilizcesi Derece 1"
 
-#: braille.py:39
+#: braille.py:43
 msgid "English (U.S.) grade 2"
 msgstr "A.B.D İngilizcesi Derece 2"
 
-#: braille.py:40
+#: braille.py:44
 msgid "Spanish grade 1"
 msgstr "Ispanyolca derece 1"
 
-#: braille.py:41
+#: braille.py:45
+msgid "Finnish 8 dot computer braille"
+msgstr "Finnish 8 dot computer braille"
+
+#: braille.py:46
 msgid "French (Canada) grade 1"
 msgstr "Kanada Fransızcası Derece 1"
 
-#: braille.py:42
+#: braille.py:47
 msgid "French (Canada) grade 2"
 msgstr "Kanada Fransızcası Derece 2"
 
-#: braille.py:43
-msgid "French (France) grade 1"
-msgstr "Fransız Fransızcası Derece 1"
+#: braille.py:48
+msgid "French (unified) 6 dot computer braille"
+msgstr "French (unified) 6 dot computer braille"
 
-#: braille.py:44
-msgid "French (France) grade 2"
-msgstr "Fransız Fransızcası Derece 2"
+#: braille.py:49
+msgid "French (unified) 8 dot computer braille"
+msgstr "French (unified) 8 dot computer braille"
 
-#: braille.py:45
+#: braille.py:50
+msgid "French (unified) Grade 2"
+msgstr "French (unified) Grade 2"
+
+#: braille.py:50
 msgid "Greek (Greece) grade 1"
 msgstr "Yunanca derece 1"
 
-#: braille.py:46
+#: braille.py:51
+msgid "Hebrew 8 dot computer braille"
+msgstr "Hebrew 8 dot computer braille"
+
+#: braille.py:52
 msgid "Hindi grade 1"
 msgstr "Hintçe Derece 1"
 
-#: braille.py:47
+#: braille.py:53
+msgid "Croatian 8 dot computer braille"
+msgstr "Croatian 8 dot computer braille"
+
+#: braille.py:54
+msgid "Hungarian 8 dot computer braille"
+msgstr "Hungarian 8 dot computer braille"
+
+#: braille.py:55
 msgid "Italian grade 1"
 msgstr "Italyanca derece 1"
 
-#: braille.py:48
+#: braille.py:56
 msgid "Latvian grade 1"
 msgstr "Letonya Dili Derece 1"
 
-#: braille.py:49
+#: braille.py:57
 msgid "Dutch (Belgium) grade 1"
 msgstr "Belçika Almancası Derece 1"
 
-#: braille.py:50
+#: braille.py:58
 msgid "Dutch (netherlands) grade 1"
 msgstr "Hollanda Almancası Derece 1"
 
-#: braille.py:51
+#: braille.py:59
 msgid "Norwegian grade 0"
 msgstr "Norveççe Derece 0"
 
-#: braille.py:52
+#: braille.py:60
 msgid "Norwegian grade 1"
 msgstr "Norveççe Derece 1"
 
-#: braille.py:53
+#: braille.py:61
 msgid "Norwegian grade 2"
 msgstr "Norveççe Derece 2"
 
-#: braille.py:54
+#: braille.py:62
 msgid "Norwegian grade 3"
 msgstr "Norveççe Derece 3"
 
-#: braille.py:55
+#: braille.py:63
 msgid "Polish grade 1"
 msgstr "Lehçe Derece 1"
 
-#: braille.py:56
+#: braille.py:64
 msgid "Portuguese grade 1"
 msgstr "Portekizce Derece 1"
 
-#: braille.py:57
+#: braille.py:65
+msgid "Russian grade 1"
+msgstr "Russian grade 1"
+
+#: braille.py:66
 msgid "Swedish grade 1"
 msgstr "Isveççe Derece 1"
 
-#: braille.py:58
+#: braille.py:67
 msgid "Slovak"
 msgstr "Slovakça"
 
-#: braille.py:59
+#: braille.py:68
 msgid "Unified English Braille Code grade 1"
-msgstr ""
+msgstr "Unified English Braille Code grade 1"
 
-#: braille.py:60
+#: braille.py:69
 msgid "Unified English Braille Code grade 2"
-msgstr ""
+msgstr "Unified English Braille Code grade 2"
 
-#: braille.py:64
+#: braille.py:70
+msgid "Chinese (Hong Kong, Cantonese)"
+msgstr "Chinese (Hong Kong, Cantonese)"
+
+#: braille.py:71
+msgid "Chinese (Taiwan, Mandarin)"
+msgstr "Chinese (Taiwan, Mandarin)"
+
+#: braille.py:75
 msgid "edt"
 msgstr "YA"
 
-#: braille.py:66
+#: braille.py:76
+msgid "lst"
+msgstr "lst"
+
+#: braille.py:77
 msgid "mnubar"
 msgstr "MÇ"
 
-#: braille.py:67
+#: braille.py:78
 msgid "mnu"
 msgstr "Mnü"
 
-#: braille.py:69
+#: braille.py:79
 msgid "btn"
 msgstr "btn"
 
-#: braille.py:70
+#: braille.py:80
 msgid "chk"
 msgstr "OK"
 
-#: braille.py:71
+#: braille.py:81
 msgid "rbtn"
 msgstr "RD"
 
-#: braille.py:72
+#: braille.py:82
 msgid "cbo"
 msgstr "bgk"
 
-#: braille.py:73
+#: braille.py:83
 msgid "lnk"
 msgstr "bln"
 
-#: braille.py:74
+#: braille.py:84
 msgid "dlg"
 msgstr "ik"
 
-#: braille.py:78
+#: braille.py:85
+msgid "tv"
+msgstr "tv"
+
+#: braille.py:86
+msgid "tb"
+msgstr "tb"
+
+#: braille.py:90
 msgid "(x)"
 msgstr "[X]"
 
-#: braille.py:79
+#: braille.py:91
 msgid "sel"
-msgstr ""
+msgstr "sel"
 
-#: braille.py:80
+#: braille.py:92
 msgid "submnu"
 msgstr "AM"
 
-#: braille.py:83
+#: braille.py:95
 msgid "( )"
 msgstr "[ ]"
 
-#: braille.py:222
-#: speech.py:590
+#: braille.py:224
+#: speech.py:676
+msgid "not %s"
+msgstr "%s değil"
+
+#: braille.py:236
+#: speech.py:684
 msgid "%s of %s"
 msgstr "%s / %s"
 
-#: braille.py:224
-#: speech.py:595
-#: speech.py:598
+#: braille.py:238
+#: speech.py:689
+#: speech.py:692
 msgid "level %s"
 msgstr "Seviye %s"
 
-#: brailleDisplayDrivers\handyTech.py:24
+#: brailleDisplayDrivers\alvaBC6.py:44
+msgid "ALVA BC640/680 series"
+msgstr "ALVA BC640/680 series"
+
+#: brailleDisplayDrivers\freedomScientific.py:96
+msgid "display scroll"
+msgstr ""
+
+#: brailleDisplayDrivers\freedomScientific.py:97
+msgid "line scroll"
+msgstr "satır kaydır"
+
+#: brailleDisplayDrivers\handyTech.py:46
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech Braille Display"
 
-#: brailleDisplayDrivers\noBraille.py:7
+#: brailleDisplayDrivers\handyTech.py:83
+msgid "Show the Handy Tech driver configuration window."
+msgstr "Handy Tech sürücüsü konfigürasyon penceresini göster."
+
+#: brailleDisplayDrivers\lilli.py:32
+msgid "MDV Lilli"
+msgstr "MDV Lilli"
+
+#: brailleDisplayDrivers\noBraille.py:13
 msgid "No braille"
 msgstr "No Braille"
 
 #: characterSymbols.py:17
 #: characterSymbols.py:18
-#: speech.py:76
-#: speech.py:546
+#: characterSymbols.py:19
+#: speech.py:84
+#: speech.py:626
 msgid "blank"
 msgstr "boşluk"
 
-#: characterSymbols.py:19
-msgid "null"
-msgstr "boşluk"
-
 #: characterSymbols.py:20
-#: controlTypes.py:193
+#: controlTypes.py:201
 msgid "tab"
 msgstr "sekme"
 
 #: characterSymbols.py:21
 msgid "line feed"
-msgstr ""
+msgstr "satır sonu"
 
 #: characterSymbols.py:22
-msgid "carriage return"
-msgstr "Arabacis dönüş"
+msgid "page break"
+msgstr "sayfa işareti"
 
 #: characterSymbols.py:23
-#: keyUtils.py:120
-msgid "space"
-msgstr "boşluk"
+msgid "carriage return"
+msgstr "satır sonu"
 
 #: characterSymbols.py:24
+#: keyLabels.py:35
+msgid "space"
+msgstr "aralık"
+
+#: characterSymbols.py:25
 msgid "bang"
 msgstr "ünlem işareti"
 
-#: characterSymbols.py:25
+#: characterSymbols.py:26
 msgid "quote"
 msgstr "tırnak işareti"
 
-#: characterSymbols.py:26
+#: characterSymbols.py:27
 msgid "number"
 msgstr "Numara"
 
-#: characterSymbols.py:27
+#: characterSymbols.py:28
 msgid "dollar"
 msgstr "Dollar"
 
-#: characterSymbols.py:28
+#: characterSymbols.py:29
 msgid "percent"
 msgstr "yüzde"
 
-#: characterSymbols.py:29
+#: characterSymbols.py:30
 msgid "and"
 msgstr "ve"
 
-#: characterSymbols.py:30
+#: characterSymbols.py:31
 msgid "tick"
 msgstr "apostrof"
 
-#: characterSymbols.py:31
-msgid "left paren"
-msgstr "sol parantez"
-
 #: characterSymbols.py:32
-msgid "right paren"
-msgstr "sağ parantez"
+msgid "left paren"
+msgstr "parantez aç"
 
 #: characterSymbols.py:33
+msgid "right paren"
+msgstr "parantez kapa"
+
+#: characterSymbols.py:34
 msgid "star"
 msgstr "yıldız"
 
-#: characterSymbols.py:34
+#: characterSymbols.py:35
 msgid "plus"
 msgstr "artı"
 
-#: characterSymbols.py:35
+#: characterSymbols.py:36
 msgid "comma"
 msgstr "virgül"
 
-#: characterSymbols.py:36
+#: characterSymbols.py:37
 msgid "dash"
 msgstr "çizgi"
 
-#: characterSymbols.py:37
+#: characterSymbols.py:38
 msgid "dot"
 msgstr "nokta"
 
-#: characterSymbols.py:38
-msgid "slash"
-msgstr "eğik çizgi"
-
 #: characterSymbols.py:39
+msgid "slash"
+msgstr "bölü"
+
+#: characterSymbols.py:40
 msgid "colon"
 msgstr "iki nokta üst üste"
 
-#: characterSymbols.py:40
+#: characterSymbols.py:41
 msgid "semi"
 msgstr "noktalı virgül"
 
-#: characterSymbols.py:41
+#: characterSymbols.py:42
 msgid "less"
 msgstr "küçüktür"
 
-#: characterSymbols.py:42
+#: characterSymbols.py:43
 msgid "equals"
 msgstr "eşittir"
 
-#: characterSymbols.py:43
+#: characterSymbols.py:44
 msgid "greater"
 msgstr "büyüktür"
 
-#: characterSymbols.py:44
+#: characterSymbols.py:45
 msgid "question"
 msgstr "soru işareti"
 
-#: characterSymbols.py:45
+#: characterSymbols.py:46
 msgid "at"
 msgstr "at"
 
-#: characterSymbols.py:46
+#: characterSymbols.py:47
 msgid "left bracket"
 msgstr "sol köşeli parantez"
 
-#: characterSymbols.py:47
-msgid "back slash"
-msgstr "ters eğik çizgi"
-
 #: characterSymbols.py:48
+msgid "back slash"
+msgstr "ters bölü"
+
+#: characterSymbols.py:49
 msgid "right bracket"
 msgstr "sağ köşeli parantez"
 
-#: characterSymbols.py:49
-#: controlTypes.py:263
+#: characterSymbols.py:50
+#: controlTypes.py:271
 msgid "caret"
-msgstr "düzeltme imi"
+msgstr "düzenleme imleci"
 
 #: characterSymbols.py:51
+#: controlTypes.py:307
+msgid "underline"
+msgstr "alt çizgi"
+
+#: characterSymbols.py:52
 msgid "graav"
 msgstr "aksan"
 
-#: characterSymbols.py:52
+#: characterSymbols.py:53
 msgid "left brace"
 msgstr "sol parantez"
 
-#: characterSymbols.py:53
+#: characterSymbols.py:54
 msgid "bar"
 msgstr "düşey çizgi"
 
-#: characterSymbols.py:54
+#: characterSymbols.py:55
 msgid "right brace"
 msgstr "sağ parantez"
 
-#: characterSymbols.py:55
+#: characterSymbols.py:56
 msgid "tilda"
 msgstr "tilda"
 
-#: characterSymbols.py:56
-#: virtualBuffers_old\MSHTML.py:264
-#: virtualBuffers_old\MSHTML.py:271
-#: virtualBuffers_old\adobe.py:268
-#: virtualBuffers_old\adobe.py:279
-#: virtualBuffers_old\gecko.py:260
-#: virtualBuffers_old\gecko.py:271
+#: characterSymbols.py:57
+#: characterSymbols.py:59
 msgid "bullet"
 msgstr "madde imi"
 
-#: characterSymbols.py:57
+#: characterSymbols.py:58
 msgid "dot dot dot"
-msgstr "nokta nokta nokta"
+msgstr "üç nokta"
 
-#: controlTypes.py:171
-msgid "unknown object"
-msgstr "bilinmeyen nesne"
+#: colors.py:77
+msgid "black"
+msgstr "Siyah"
 
-# Deutsche Sprachdatei für NVDA
-# Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
-# Michael Curran <mick@kulgan.net> 2006
-#
-#: controlTypes.py:172
+#: colors.py:78
+msgid "green"
+msgstr "Yeşil"
+
+#: colors.py:79
+msgid "light grey"
+msgstr "Açık gri"
+
+#: colors.py:80
+msgid "lime"
+msgstr "Açık yeşil"
+
+#: colors.py:81
+msgid "grey"
+msgstr "Gri"
+
+#: colors.py:82
+msgid "olive"
+msgstr "Yeşil zeytin rengi"
+
+#: colors.py:83
+msgid "white"
+msgstr "beyaz"
+
+#: colors.py:84
+msgid "yellow"
+msgstr "Sarı"
+
+#: colors.py:85
+msgid "dark red"
+msgstr "Koyu kırmızı"
+
+#: colors.py:86
+msgid "navy blue"
+msgstr "Lacivert"
+
+#: colors.py:87
+msgid "red"
+msgstr "Kırmızı"
+
+#: colors.py:88
+msgid "blue"
+msgstr "Mavi"
+
+#: colors.py:89
+msgid "purple"
+msgstr "Mor"
+
+#: colors.py:90
+msgid "teal"
+msgstr "Turkuaz"
+
+#: colors.py:91
+msgid "fuchsia"
+msgstr "Fuşya"
+
+#: colors.py:92
+msgid "aqua"
+msgstr "aqua"
+
+#: colors.py:94
+msgid "orange"
+msgstr "Turuncu"
+
+#: compoundDocuments.py:401
+#: globalCommands.py:114
+#: speech.py:277
+#: speech.py:378
+#: speech.py:391
+#: virtualBuffers\__init__.py:613
+msgid "selected %s"
+msgstr "%s seçildi"
+
+#: config\__init__.py:21
+msgid "Badly formed configuration file"
+msgstr "bozuk biçimlendirilmiş konfigürasyon dosyası"
+
+#: config\__init__.py:36
+msgid "%s: %s, defaulting to %s"
+msgstr ""
+
+#: config\__init__.py:178
+msgid "Error parsing configuration file: %s"
+msgstr "%s konfigürasyon dosyasının işlenmesinde hata"
+
+#: config\__init__.py:185
+msgid ""
+"Errors in configuration file '%s':\n"
+"%s"
+msgstr ""
+"'%s' konfigürasyon dosyasında hatalar var:\n"
+"%s"
+
+#: controlTypes.py:180
 msgid "window"
 msgstr "pencere"
 
-#: controlTypes.py:173
+#: controlTypes.py:181
 msgid "title bar"
 msgstr "Başlık çubuğu"
 
-#: controlTypes.py:174
+#: controlTypes.py:182
 msgid "pane"
 msgstr "panosu"
 
-#: controlTypes.py:175
+#: controlTypes.py:183
 msgid "dialog"
 msgstr "iletişim kutusu"
 
-#: controlTypes.py:176
+#: controlTypes.py:184
 msgid "check box"
 msgstr "onay kutusu"
 
-#: controlTypes.py:177
+#: controlTypes.py:185
 msgid "radio button"
-msgstr "radyo düğmesi"
+msgstr "seçim düğmesi"
 
-#: controlTypes.py:178
+#: controlTypes.py:186
 msgid "text"
 msgstr "metin"
 
-#: controlTypes.py:179
+#: controlTypes.py:187
 msgid "edit"
-msgstr "yazılım alanı"
+msgstr "yazı alanı"
 
-#: controlTypes.py:180
+#: controlTypes.py:188
 msgid "button"
 msgstr "düğmesi"
 
-#: controlTypes.py:181
+#: controlTypes.py:189
 msgid "menu bar"
 msgstr "Menü çubuğu"
 
-#: controlTypes.py:182
+#: controlTypes.py:190
 msgid "menu item"
 msgstr "menü ögesi"
 
-#: controlTypes.py:183
-#: controlTypes.py:290
+#: controlTypes.py:191
+#: controlTypes.py:298
 msgid "menu"
 msgstr "Menü"
 
-#: controlTypes.py:184
+#: controlTypes.py:192
 msgid "combo box"
 msgstr "birleşik giriş kutusu"
 
-#: controlTypes.py:185
+#: controlTypes.py:193
 msgid "list"
 msgstr "Liste"
 
-#: controlTypes.py:186
+#: controlTypes.py:194
 msgid "list item"
 msgstr "liste ögesi"
 
-#: controlTypes.py:187
+#: controlTypes.py:195
 msgid "graphic"
 msgstr "grafik"
 
-#: controlTypes.py:188
+#: controlTypes.py:196
 msgid "help balloon"
 msgstr "yardım balonu"
 
-#: controlTypes.py:189
+#: controlTypes.py:197
 msgid "tool tip"
-msgstr "İpucuAracı"
+msgstr "İpucu"
 
-#: controlTypes.py:190
-#: speech.py:759
+#: controlTypes.py:198
+#: speech.py:958
 msgid "link"
 msgstr "bağlantı"
 
-#: controlTypes.py:191
+#: controlTypes.py:199
 msgid "tree view"
 msgstr "AĞAÇ görünümü"
 
-#: controlTypes.py:192
+#: controlTypes.py:200
 msgid "tree view item"
 msgstr "AĞAÇ görünüm ögesi"
 
-#: controlTypes.py:194
+#: controlTypes.py:202
 msgid "tab control"
-msgstr "sekme"
+msgstr "kontrol sekmesi"
 
-#: controlTypes.py:195
+#: controlTypes.py:203
 msgid "slider"
 msgstr "Sürgü"
 
-#: controlTypes.py:196
+#: controlTypes.py:204
 msgid "progress bar"
 msgstr "ilerleme çubuğu"
 
-#: controlTypes.py:197
+#: controlTypes.py:205
 msgid "scroll bar"
 msgstr "kaydırma çubuğu"
 
-#: controlTypes.py:198
+#: controlTypes.py:206
 msgid "status bar"
 msgstr "durum çubuğu"
 
-#: controlTypes.py:199
+#: controlTypes.py:207
 msgid "table"
 msgstr "tablo"
 
-#: controlTypes.py:200
+#: controlTypes.py:208
 msgid "cell"
 msgstr "hücre"
 
-#: controlTypes.py:201
+#: controlTypes.py:209
 msgid "column"
 msgstr "sütun"
 
-#: controlTypes.py:202
+#: controlTypes.py:210
 msgid "row"
 msgstr "satır"
 
-#: controlTypes.py:203
+#: controlTypes.py:211
 msgid "frame"
 msgstr "Çerçeve"
 
-#: controlTypes.py:204
+#: controlTypes.py:212
 msgid "tool bar"
 msgstr "araç çubuğu"
 
-#: controlTypes.py:205
+#: controlTypes.py:213
 msgid "column header"
 msgstr "sütun başlığı"
 
-#: controlTypes.py:206
+#: controlTypes.py:214
 msgid "row header"
 msgstr "Satır Başlığı"
 
-#: controlTypes.py:207
+#: controlTypes.py:215
 msgid "drop down button"
 msgstr "Menü düğmesi"
 
-#: controlTypes.py:208
+#: controlTypes.py:216
 msgid "clock"
 msgstr "saat"
 
-#: controlTypes.py:209
+#: controlTypes.py:217
 msgid "separator"
 msgstr "Ayraç"
 
-#: controlTypes.py:210
+#: controlTypes.py:218
 msgid "form"
 msgstr "form"
 
-#: controlTypes.py:211
+#: controlTypes.py:219
 msgid "heading"
 msgstr "başlık"
 
-#: controlTypes.py:212
+#: controlTypes.py:220
 msgid "heading 1"
 msgstr "başlık 2"
 
-#: controlTypes.py:213
+#: controlTypes.py:221
 msgid "heading 2"
 msgstr "başlık 2"
 
-#: controlTypes.py:214
+#: controlTypes.py:222
 msgid "heading 3"
 msgstr "başlık 3"
 
-#: controlTypes.py:215
+#: controlTypes.py:223
 msgid "heading 4"
 msgstr "başlık 4"
 
-#: controlTypes.py:216
+#: controlTypes.py:224
 msgid "heading 5"
 msgstr "başlık 5"
 
-#: controlTypes.py:217
+#: controlTypes.py:225
 msgid "heading 6"
 msgstr "başlık 6"
 
-#: controlTypes.py:218
+#: controlTypes.py:226
+#: textInfos\__init__.py:139
 msgid "paragraph"
 msgstr "Paragraf"
 
-#: controlTypes.py:219
+#: controlTypes.py:227
 msgid "block quote"
 msgstr "alıntı"
 
-#: controlTypes.py:220
+#: controlTypes.py:228
 msgid "table header"
-msgstr "tablo başı"
+msgstr "tablo başlığı"
 
-#: controlTypes.py:221
+#: controlTypes.py:229
 msgid "table body"
-msgstr "tablo"
+msgstr "tablo gövdesi"
 
-#: controlTypes.py:222
+#: controlTypes.py:230
 msgid "table footer"
 msgstr "tablo sonu"
 
-#: controlTypes.py:223
-#: virtualBuffers_old\adobe.py:40
-#: virtualBuffers_old\gecko.py:44
+#: controlTypes.py:231
 msgid "document"
 msgstr "belge"
 
-#: controlTypes.py:224
+#: controlTypes.py:232
 msgid "animation"
 msgstr "animasyon"
 
-#: controlTypes.py:225
+#: controlTypes.py:233
 msgid "application"
 msgstr "Uygulama"
 
-#: controlTypes.py:226
+#: controlTypes.py:234
 msgid "box"
 msgstr "kutusu"
 
-#: controlTypes.py:227
+#: controlTypes.py:235
 msgid "grouping"
 msgstr "gurup"
 
-#: controlTypes.py:228
+#: controlTypes.py:236
 msgid "property page"
-msgstr "tercihler sayfası"
+msgstr "özellikler sayfası"
 
-#: controlTypes.py:229
+#: controlTypes.py:237
 msgid "canvas"
 msgstr "Tuval"
 
-#: controlTypes.py:230
+#: controlTypes.py:238
 msgid "caption"
 msgstr "Başlık"
 
-#: controlTypes.py:231
+#: controlTypes.py:239
 msgid "check menu item"
 msgstr "OnayÖgesi"
 
-#: controlTypes.py:232
+#: controlTypes.py:240
 msgid "date edit"
 msgstr "Tarih alanı"
 
-#: controlTypes.py:233
+#: controlTypes.py:241
 msgid "icon"
 msgstr "Simge"
 
-#: controlTypes.py:234
+#: controlTypes.py:242
 msgid "directory pane"
 msgstr "DizinPanosu"
 
-#: controlTypes.py:236
+#: controlTypes.py:244
 msgid "end note"
 msgstr "son not"
 
-#: controlTypes.py:237
+#: controlTypes.py:245
 msgid "footer"
 msgstr "Dipnot"
 
-#: controlTypes.py:238
+#: controlTypes.py:246
 msgid "foot note"
 msgstr "dipnot"
 
-#: controlTypes.py:239
+#: controlTypes.py:247
 msgid "glass pane"
 msgstr "Cam Pano"
 
-#: controlTypes.py:240
+#: controlTypes.py:248
 msgid "header"
 msgstr "başlık"
 
-#: controlTypes.py:241
+#: controlTypes.py:249
 msgid "image map"
-msgstr "resim haritası bağı"
+msgstr "resim haritası"
 
-#: controlTypes.py:242
+#: controlTypes.py:250
 msgid "input window"
-msgstr "girim penceresi"
+msgstr "girdi penceresi"
 
-#: controlTypes.py:243
+#: controlTypes.py:251
 msgid "label"
 msgstr "Etiket"
 
-#: controlTypes.py:244
+#: controlTypes.py:252
 msgid "note"
 msgstr "not"
 
-#: controlTypes.py:245
+#: controlTypes.py:253
 msgid "page"
 msgstr "Sayfa"
 
-#: controlTypes.py:246
+#: controlTypes.py:254
 msgid "radio menu item"
 msgstr "radyo menü ögesi"
 
-#: controlTypes.py:247
+#: controlTypes.py:255
 msgid "layered pane"
 msgstr "Katmanlı Pano"
 
-#: controlTypes.py:248
+#: controlTypes.py:256
 msgid "redundant object"
-msgstr ""
+msgstr "redundant object"
 
-#: controlTypes.py:249
+#: controlTypes.py:257
 msgid "root pane"
 msgstr "Ana Pano"
 
-#: controlTypes.py:250
+#: controlTypes.py:258
 msgid "edit bar"
 msgstr "düzenleme çubuğu"
 
-#: controlTypes.py:251
+#: controlTypes.py:259
 msgid "terminal"
 msgstr "Uçbirim"
 
-#: controlTypes.py:252
+#: controlTypes.py:260
 msgid "rich edit"
-msgstr "genişletilmiş yazılım alanı"
+msgstr "zengin yazım alanı"
 
-#: controlTypes.py:253
+#: controlTypes.py:261
 msgid "ruler"
 msgstr "cetvel"
 
-#: controlTypes.py:254
+#: controlTypes.py:262
 msgid "scroll pane"
 msgstr "Kaydırma Panosu"
 
-#: controlTypes.py:255
+#: controlTypes.py:263
 msgid "section"
 msgstr "Bölüm"
 
-#: controlTypes.py:256
+#: controlTypes.py:264
 msgid "shape"
 msgstr "şekil"
 
-#: controlTypes.py:257
+#: controlTypes.py:265
 msgid "split pane"
 msgstr "Bölme Panosu"
 
-#: controlTypes.py:258
+#: controlTypes.py:266
 msgid "view port"
-msgstr ""
+msgstr "view port"
 
-#: controlTypes.py:259
+#: controlTypes.py:267
 msgid "tear off menu"
 msgstr "menü ayracı"
 
-#: controlTypes.py:260
+#: controlTypes.py:268
 msgid "text frame"
 msgstr "metin çerçevesi"
 
-#: controlTypes.py:261
+#: controlTypes.py:269
 msgid "toggle button"
 msgstr "aç/kapa düğmesi"
 
-#: controlTypes.py:262
+#: controlTypes.py:270
 msgid "border"
 msgstr "kenar"
 
-#: controlTypes.py:264
+#: controlTypes.py:272
+#: textInfos\__init__.py:136
 msgid "character"
-msgstr "harf"
+msgstr "karakter"
 
-#: controlTypes.py:265
+#: controlTypes.py:273
 msgid "chart"
 msgstr "çizelge"
 
-#: controlTypes.py:266
+#: controlTypes.py:274
 msgid "cursor"
 msgstr "imleç"
 
-#: controlTypes.py:267
+#: controlTypes.py:275
 msgid "diagram"
 msgstr "diyagram"
 
-#: controlTypes.py:268
+#: controlTypes.py:276
 msgid "dial"
-msgstr ""
+msgstr "çevir"
 
-#: controlTypes.py:269
+#: controlTypes.py:277
 msgid "drop list"
 msgstr "seçim kutusu"
 
-#: controlTypes.py:270
+#: controlTypes.py:278
 msgid "split button"
 msgstr "bölme düğmesi"
 
-#: controlTypes.py:271
+#: controlTypes.py:279
 msgid "menu button"
 msgstr "Menü düğmesi"
 
-#: controlTypes.py:272
+#: controlTypes.py:280
 msgid "drop down button grid"
 msgstr "düğmesi"
 
-#: controlTypes.py:273
+#: controlTypes.py:281
 msgid "equation"
 msgstr "eşitlik"
 
-#: controlTypes.py:274
+#: controlTypes.py:282
 msgid "grip"
 msgstr "tutmak"
 
-#: controlTypes.py:275
+#: controlTypes.py:283
 msgid "hot key field"
-msgstr "Klavier kısa yol alanı"
+msgstr "Klavie kısa yol alanı"
 
-#: controlTypes.py:276
+#: controlTypes.py:284
 msgid "indicator"
 msgstr "göstergesi"
 
-#: controlTypes.py:277
+#: controlTypes.py:285
 msgid "spin button"
 msgstr "döndür"
 
-#: controlTypes.py:278
+#: controlTypes.py:286
 msgid "sound"
 msgstr "ses"
 
-#: controlTypes.py:279
+#: controlTypes.py:287
 msgid "white space"
 msgstr "beyaz boşluk"
 
-#: controlTypes.py:280
+#: controlTypes.py:288
 msgid "tree view button"
-msgstr ""
+msgstr "Ağaç görünümü düğmesi"
 
-#: controlTypes.py:281
+#: controlTypes.py:289
 msgid "IP address"
 msgstr "IP Adressi"
 
-#: controlTypes.py:282
+#: controlTypes.py:290
 msgid "desktop icon"
 msgstr "masa üstü simgesi"
 
-#: controlTypes.py:283
-#: controlTypes.py:307
+#: controlTypes.py:291
+#: controlTypes.py:315
 msgid "alert"
 msgstr "alarm"
 
-#: controlTypes.py:284
+#: controlTypes.py:292
 msgid "IFrame"
 msgstr "alt çerçeve"
 
-#: controlTypes.py:285
+#: controlTypes.py:293
 msgid "desktop pane"
 msgstr "masa üstü"
 
-#: controlTypes.py:286
+#: controlTypes.py:294
 msgid "option pane"
 msgstr "Seçenek Panosu"
 
-#: controlTypes.py:287
+#: controlTypes.py:295
 msgid "color chooser"
 msgstr "Renk Seçici"
 
-#: controlTypes.py:288
+#: controlTypes.py:296
 msgid "file chooser"
 msgstr "Dosya Seçici"
 
-#: controlTypes.py:289
+#: controlTypes.py:297
 msgid "filler"
 msgstr "Doldurucu"
 
-#: controlTypes.py:291
+#: controlTypes.py:299
 msgid "panel"
 msgstr "Panel"
 
-#: controlTypes.py:292
+#: controlTypes.py:300
 msgid "password edit"
-msgstr "Parola yazılım alanı"
+msgstr "Parola yazınız"
 
-#: controlTypes.py:293
+#: controlTypes.py:301
 msgid "font chooser"
 msgstr "Yazı tipi Seçici"
 
-#: controlTypes.py:294
+#: controlTypes.py:302
+#: textInfos\__init__.py:138
 msgid "line"
 msgstr "Satır"
 
-#: controlTypes.py:295
+#: controlTypes.py:303
 msgid "font name"
 msgstr "yazı tipi adı"
 
-#: controlTypes.py:296
+#: controlTypes.py:304
 msgid "font size"
 msgstr "yazı tipi büyüklüğü"
 
-#: controlTypes.py:298
-msgid "ITALIC"
-msgstr "eğik"
+#: controlTypes.py:305
+#: speech.py:910
+msgid "bold"
+msgstr "kalın"
 
-#: controlTypes.py:300
+#: controlTypes.py:306
+msgid "ITALIC"
+msgstr "italik"
+
+#: controlTypes.py:308
 msgid "foreground color"
 msgstr "ön alan rengi"
 
-#: controlTypes.py:301
+#: controlTypes.py:309
 msgid "background color"
 msgstr "arkaplan rengi"
 
-#: controlTypes.py:302
-#: speech.py:733
-#: textBuffer.py:287
-#: textBuffer.py:294
-#: textBuffer.py:324
+#: controlTypes.py:310
+#: speech.py:932
 msgid "superscript"
 msgstr "üstsimge"
 
-#: controlTypes.py:303
-#: speech.py:735
-#: textBuffer.py:326
+#: controlTypes.py:311
+#: speech.py:934
 msgid "subscript"
 msgstr "altsimge"
 
-#: controlTypes.py:304
+#: controlTypes.py:312
 msgid "style"
 msgstr "Stil"
 
-#: controlTypes.py:305
+#: controlTypes.py:313
 msgid "indent"
 msgstr "girinti"
 
-#: controlTypes.py:306
+#: controlTypes.py:314
 msgid "alignment"
 msgstr "hiza"
 
-#: controlTypes.py:311
+#: controlTypes.py:316
+msgid "data grid"
+msgstr "data grid"
+
+#: controlTypes.py:317
+msgid "data item"
+msgstr "Veri alanı"
+
+#: controlTypes.py:318
+msgid "header item"
+msgstr "başlık öğesi"
+
+#: controlTypes.py:319
+msgid "thumb control"
+msgstr ""
+
+#: controlTypes.py:320
+msgid "calendar"
+msgstr "Takvim"
+
+#: controlTypes.py:324
 msgid "unavailable"
 msgstr "erişilebilir değil"
 
-#: controlTypes.py:312
+#: controlTypes.py:325
 msgid "focused"
 msgstr "odaklandı"
 
-#: controlTypes.py:314
+#: controlTypes.py:326
+msgid "selected"
+msgstr "seçili"
+
+#: controlTypes.py:327
 msgid "busy"
 msgstr "meşgul"
 
-#: controlTypes.py:315
+#: controlTypes.py:328
 msgid "pressed"
 msgstr "basılı"
 
-#: controlTypes.py:316
+#: controlTypes.py:329
 msgid "checked"
 msgstr "seçili"
 
-#: controlTypes.py:317
+#: controlTypes.py:330
 msgid "half checked"
 msgstr "kısmen seçili"
 
-#: controlTypes.py:318
+#: controlTypes.py:331
 msgid "read only"
 msgstr "salt okunur"
 
-#: controlTypes.py:319
+#: controlTypes.py:332
 msgid "expanded"
 msgstr "genişletilmiş"
 
-#: controlTypes.py:320
+#: controlTypes.py:333
 msgid "collapsed"
 msgstr "kapanmış"
 
-#: controlTypes.py:321
+#: controlTypes.py:334
 msgid "invisible"
 msgstr "görünmez"
 
-#: controlTypes.py:322
+#: controlTypes.py:335
 msgid "visited"
 msgstr "ziyaret edilmiş"
 
-#: controlTypes.py:323
+#: controlTypes.py:336
 msgid "linked"
 msgstr "bağlanmış"
 
-#: controlTypes.py:324
+#: controlTypes.py:337
 msgid "subMenu"
 msgstr "alt menü"
 
-#: controlTypes.py:325
-#: virtualBuffers_old\MSHTML.py:306
+#: controlTypes.py:338
 msgid "protected"
 msgstr "korunmuş"
 
-#: controlTypes.py:326
+#: controlTypes.py:339
 msgid "required"
 msgstr "gerekli"
 
-#: controlTypes.py:327
+#: controlTypes.py:340
 msgid "defunct"
 msgstr "İşlevi"
 
-#: controlTypes.py:328
+#: controlTypes.py:341
 msgid "invalid entry"
 msgstr "Geçersiz giriş"
 
-#: controlTypes.py:329
+#: controlTypes.py:342
 msgid "modal"
-msgstr ""
+msgstr "modal"
 
-#: controlTypes.py:330
+#: controlTypes.py:343
 msgid "has auto complete"
-msgstr "AUTOCOMPLETE Ile uzun metrajlı"
+msgstr "otomatik tamamla"
 
-#: controlTypes.py:331
+#: controlTypes.py:344
 msgid "multi line"
 msgstr "çok satırlı"
 
-#: controlTypes.py:332
+#: controlTypes.py:345
 msgid "iconified"
 msgstr "Sembolik Olarak"
 
-#: controlTypes.py:333
+#: controlTypes.py:346
 msgid "off screen"
 msgstr "ekran dişı"
 
-#: controlTypes.py:334
+#: controlTypes.py:347
 msgid "selectable"
-msgstr "seçilebilen"
+msgstr "seçilebilir"
 
-#: controlTypes.py:335
+#: controlTypes.py:348
 msgid "focusable"
 msgstr "odaklanabilir"
 
-#: controlTypes.py:336
-#: virtualBuffers_old\MSHTML.py:336
+#: controlTypes.py:349
 msgid "clickable"
 msgstr "tıklanabilir"
 
-#: controlTypes.py:337
+#: controlTypes.py:350
 msgid "editable"
 msgstr "düzenlenebilir"
 
-#: controlTypes.py:338
+#: controlTypes.py:351
 msgid "checkable"
 msgstr "seçilebilir"
 
-#: core.py:82
-msgid "Loading subsystems, please wait..."
-msgstr "alt sistemler yükleniyor, lütfen bekleyin..."
+#: controlTypes.py:352
+msgid "draggable"
+msgstr "sürüklenebilir"
 
-#: core.py:142
+#: controlTypes.py:353
+msgid "dragging"
+msgstr "sürükleniyor"
+
+#: controlTypes.py:354
+msgid "drop target"
+msgstr "drop target"
+
+#: core.py:140
+msgid "Loading NVDA. Please wait..."
+msgstr "NVDA açılıyor, lütfen bekleyin..."
+
+#: core.py:225
 msgid "NVDA started"
 msgstr "NVDA başlatıldı"
 
-#: cursorManager.py:71
-#: virtualBuffers_old\__init__.py:464
+#: cursorManager.py:79
 msgid "Find"
 msgstr "ara"
 
-#: cursorManager.py:71
-#: virtualBuffers_old\__init__.py:464
+#: cursorManager.py:79
 msgid "Type the text you wish to find"
 msgstr "Aramak istediğıniz metni giriniz"
 
-#: cursorManager.py:85
-msgid "text \"%s\" not found"
-msgstr "Metin \"%s\" bulunamadı"
-
-#: cursorManager.py:85
-#: virtualBuffers_old\__init__.py:474
+#: cursorManager.py:93
 msgid "Find Error"
 msgstr "Arama hatası"
 
-#: cursorManager.py:91
+#: cursorManager.py:93
+msgid "text \"%s\" not found"
+msgstr "Metin \"%s\" bulunamadı"
+
+#: cursorManager.py:99
 msgid "find a text string from the current cursor position"
-msgstr ""
+msgstr "Metni mevcut imleç konumundan sonra ara"
 
-#: cursorManager.py:98
+#: cursorManager.py:106
 msgid "find the next occurrence of the previously entered text string from the current cursor's position"
-msgstr ""
+msgstr "Sonrakini bul"
 
-#: cursorManager.py:105
+#: cursorManager.py:113
 msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
-msgstr ""
+msgstr "Öncekini bul"
 
-#: gui\__init__.py:146
+#: cursorManager.py:240
+#: globalCommands.py:112
+msgid "no selection"
+msgstr "Seçim yok"
+
+#: cursorManager.py:243
+msgid "copied to clipboard"
+msgstr "panoya kopyalandı"
+
+#: globalCommands.py:42
+msgid "input help %s"
+msgstr "Girdi yardımı %s"
+
+#: globalCommands.py:43
+msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
+msgstr "Girdi yardım kipini açıp kapatır. Açıkken, klavyede bastığınız herhangi bir tuş ya da tuş kombinasyonunun NVDA için işlevi söylenir."
+
+#: globalCommands.py:49
+msgid "Sleep mode off"
+msgstr "Uyku kipi kapalı"
+
+#: globalCommands.py:52
+msgid "Sleep mode on"
+msgstr "Uyku kipi açık"
+
+#: globalCommands.py:53
+msgid "Toggles  sleep mode on and off for  the active application."
+msgstr "Aktif uygulama için uyku kipini açıp kapatır"
+
+#: globalCommands.py:70
+msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
+msgstr "Uygulama imlecinin bulunduğu satırı okur. İki kez basılırsa, satır kodlanarak okunur."
+
+#: globalCommands.py:73
+msgid "left click"
+msgstr "sol tık"
+
+#: globalCommands.py:76
+msgid "Clicks the left mouse button once at the current mouse position"
+msgstr "Mevcut fare konumuna bir kez sol tıklar"
+
+#: globalCommands.py:79
+msgid "right click"
+msgstr "sağ tıklama"
+
+#: globalCommands.py:82
+msgid "Clicks the right mouse button once at the current mouse position"
+msgstr "Mevcut fare konumuna bir kez sağ tıklar"
+
+#: globalCommands.py:86
+msgid "left mouse button unlock"
+msgstr "Sol fare kilitli değil"
+
+#: globalCommands.py:89
+msgid "left mouse button lock"
+msgstr "sol fare kilitli"
+
+#: globalCommands.py:91
+msgid "Locks or unlocks the left mouse button"
+msgstr "Sol fareyi kilitleyip açar"
+
+#: globalCommands.py:95
+msgid "right mouse button unlock"
+msgstr "Sağ fare kilitli değil"
+
+#: globalCommands.py:98
+msgid "right mouse button lock"
+msgstr "sağ fare kilitli"
+
+#: globalCommands.py:100
+msgid "Locks or unlocks the right mouse button"
+msgstr "Sağ fareyi kilitleyip açar"
+
+#: globalCommands.py:115
+msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
+msgstr "Yazı alanlarında ve belgelerde seçili olan kısmı okur. Seçilmiş bir kısım yoksa da seçim bulunmadığını söyler."
+
+#: globalCommands.py:123
+msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
+msgstr "birkez basıldığında saati, iki kez basıldığında da tarihi söyler"
+
+#: globalCommands.py:128
+#: globalCommands.py:137
+#: globalCommands.py:146
+#: globalCommands.py:155
+msgid "No settings"
+msgstr "Ayar mevcut değil"
+
+#: globalCommands.py:132
+msgid "Increases the currently active setting in the synth settings ring"
+msgstr "Sentezleme ayar zincirindeki aktif halka için geçerli değeri artırır"
+
+#: globalCommands.py:141
+msgid "Decreases the currently active setting in the synth settings ring"
+msgstr "Sentezleme ayar zincirindeki aktif halka için geçerli değeri azaltır"
+
+#: globalCommands.py:150
+msgid "Moves to the next available setting in the synth settings ring"
+msgstr "Sentezleyici ayar zincirinde bir sonraki halkaya gider"
+
+#: globalCommands.py:159
+msgid "Moves to the previous available setting in the synth settings ring"
+msgstr "Sentezleyici ayar zincirinde bir önceki halkaya gider"
+
+#: globalCommands.py:168
+msgid "speak typed characters"
+msgstr "Yazılan harfleri seslendir"
+
+#: globalCommands.py:169
+msgid "Toggles on and off the speaking of typed characters"
+msgstr "Yazılan harflerin seslendirmesini açar/kapatır"
+
+#: globalCommands.py:178
+msgid "speak typed words"
+msgstr "Yazılan sözcükleri seslendir"
+
+#: globalCommands.py:179
+msgid "Toggles on and off the speaking of typed words"
+msgstr "Yazılan kelimelerin seslendirmesini açar/kapatır"
+
+#: globalCommands.py:188
+msgid "speak command keys"
+msgstr "Komut tuşlarını seslendir"
+
+#: globalCommands.py:189
+msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
+msgstr "Harf olmayan komut tuşlarının seslendirmesini açar/kapatır"
+
+#: globalCommands.py:198
+msgid "speak punctuation"
+msgstr "noktalama işaretlerini seslendir"
+
+#: globalCommands.py:199
+msgid "Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation"
+msgstr "Noktalama işaretlerinin seslendirilmesiyle ilgili ayarı açıp kapatır. Açıkken NVDA noktalama işaretlerini söyler, kapalıyken seslendirme işi sentezleyiciye bırakılır."
+
+#: globalCommands.py:214
+msgid "object has no location"
+msgstr "nesnede konum bilgileri yok"
+
+#: globalCommands.py:220
+msgid "Moves the mouse pointer to the current navigator object"
+msgstr "Fare imlecini mevcut nesne sunucusunun konumuna taşır"
+
+#: globalCommands.py:223
+msgid "Move navigator object to mouse"
+msgstr "Nesne sunucusunu fare konumuna taşı"
+
+#: globalCommands.py:227
+msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
+msgstr "Nesne sunucusunu fare imlecinin altındaki nesneye taşır ve okur"
+
+#: globalCommands.py:240
+msgid "No flat review for this object"
+msgstr "Bu nesne için  ekran inceleme imleci mevcut değil"
+
+#: globalCommands.py:241
+msgid "Switches to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object"
+msgstr "Ekran (ya da içinde bulunulan belge için) ekran inceleme kipine geçer ve inceleme imlecini mevcut nesne üzerine taşır"
+
+#: globalCommands.py:253
+msgid "No object at flat review position"
+msgstr "Ekran inceleme imlecinin pozisyonunda nesne yok"
+
+#: globalCommands.py:254
+msgid "Moves to the object represented by the text at the position of the review cursor within flat review"
+msgstr "Ekran inceleme kipinde inceleme imlecinin bulunduğu konumdaki nesneye gider"
+
+#: globalCommands.py:259
+#: globalCommands.py:293
+#: globalCommands.py:331
+#: globalCommands.py:345
+#: globalCommands.py:359
+#: globalCommands.py:373
+#: globalCommands.py:387
+msgid "no navigator object"
+msgstr "Nesne sunucusu yok"
+
+#: globalCommands.py:285
+#: globalCommands.py:713
+msgid "%s copied to clipboard"
+msgstr "%s panoya Kopyalandı"
+
+#: globalCommands.py:288
+msgid "Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard"
+msgstr "Mevcut nesne sunucusunu okur. İki kez basılırsa, kodlanır. üç kez basılırsa mevcut nesnenin adı ve değeri panoya kopyalanır."
+
+#: globalCommands.py:296
+msgid "No location information for navigator object"
+msgstr "Nesne sunucusu için konum bilgisi mevcut değil"
+
+#: globalCommands.py:300
+msgid "No location information for screen"
+msgstr "Ekran için konum bilgisi mevcut değil"
+
+#: globalCommands.py:306
+msgid "Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen"
+msgstr "Nesnenin konumu: ekranın solundan yüzde %.1f, ekranın üstünden yüzde %.1f uzaklıkta, genişlik ekranın yüzde %.1f i, yükseklik ekranın yüzde %.1f i"
+
+#: globalCommands.py:307
+msgid "Reports the hight, width and position of the current navigator object"
+msgstr "Mevcut nesne sunucusunun yüksekliğini, genişliğini ve pozisyonunu okur"
+
+#: globalCommands.py:316
+msgid "move to focus"
+msgstr "odağa git"
+
+#: globalCommands.py:318
+msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
+msgstr "Nesne sunucusunu mevcut odağa taşır. Varsa inceleme imlecini de sistem düzenleme imlecine taşır."
+
+#: globalCommands.py:323
+#: globalCommands.py:672
+msgid "no focus"
+msgstr "odak yok"
+
+#: globalCommands.py:325
+msgid "move focus"
+msgstr "odağa git"
+
+#: globalCommands.py:326
+msgid "Sets the keyboard focus to the navigator object"
+msgstr "Odağı nesne sunucusuna taşır"
+
+#: globalCommands.py:339
+msgid "No parents"
+msgstr "üst pencere yok"
+
+#: globalCommands.py:340
+msgid "Sets the navigator object to the parent of the object it is currently on and speaks it"
+msgstr "Nesne sunucusunu, üzerinde bulunduğu nesneyi kapsayan bir üst nesneye taşır ve okur"
+
+#: globalCommands.py:353
+msgid "No next"
+msgstr "Ileride Pencere yok"
+
+#: globalCommands.py:354
+msgid "Sets the navigator object to the object next to the one it is currently on and speaks it"
+msgstr "Nesne sunucusunu bulunduğu nesneden bir sonrakine taşır ve okur"
+
+#: globalCommands.py:367
+msgid "No previous"
+msgstr "Geride pencere yok"
+
+#: globalCommands.py:368
+msgid "Sets the navigator object to the object previous to the one it is currently on and speaks it"
+msgstr "Nesne sunucusunu bulunduğu nesneden bir öncekine taşır ve okur"
+
+#: globalCommands.py:381
+msgid "No children"
+msgstr "alt pencere yok"
+
+#: globalCommands.py:382
+msgid "Sets the navigator object to the first child object of the one it is currently on and speaks it"
+msgstr "Nesne sunucusunu bulunduğu pencerenin ilk alt penceresine taşır ve okur"
+
+#: globalCommands.py:392
+msgid "No default action"
+msgstr "Varsayılan işlem yok"
+
+#: globalCommands.py:397
+msgid "default action failed"
+msgstr "Varsayılan işlem başarısız oldu"
+
+#: globalCommands.py:400
+msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
+msgstr "Mevcut nesne sunucusu üzerinde varsayılan işlemi gerçekleştirir ( yani üzerinde enter ya da aralık tuşuna basılmış gibi bir işlev görür)."
+
+#: globalCommands.py:406
+#: globalCommands.py:418
+#: globalCommands.py:459
+msgid "top"
+msgstr "üst"
+
+#: globalCommands.py:408
+msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
+msgstr "İnceleme imlecini mevcut nesne sunucusunda en üst satıra taşır ve okur"
+
+#: globalCommands.py:420
+msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
+msgstr "İnceleme imlecini mevcut nesne sunucusundaki önceki satıra taşır ve okur"
+
+#: globalCommands.py:429
+msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled"
+msgstr "Mevcut nesne sunucusunda inceleme imlecinin bulunduğu satırı okur. İki kez basılırsa, mevcut satır kodlanarak okunur"
+
+#: globalCommands.py:439
+#: globalCommands.py:447
+#: globalCommands.py:480
+msgid "bottom"
+msgstr "alt"
+
+#: globalCommands.py:441
+msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
+msgstr "İnceleme imlecini mevcut nesne sunucusundaki sonraki satıra taşır ve okur"
+
+#: globalCommands.py:449
+msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
+msgstr "İnceleme imlecini mevcut nesne sunucusunun en alt satırına taşır ve okur"
+
+#: globalCommands.py:461
+msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
+msgstr "İnceleme imlecini mevcut nesne sunucusundaki önceki sözcüğe taşır ve okur"
+
+#: globalCommands.py:470
+msgid "Speaks the word of the current navigator object where the review cursor is situated. If this key is pressed twice, the word will be spelled"
+msgstr "Nesne sunucusunda inceleme  imlecinin üzerinde bulunduğu sözcüğü okur. İki kez basılırsa, sözcük kodlanarak okunur."
+
+#: globalCommands.py:482
+msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
+msgstr "İnceleme imlecini mevcut nesne sunucusundaki sonraki sözcüğe taşır ve okur"
+
+#: globalCommands.py:492
+msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
+msgstr "İnceleme imlecini, mevcut nesne sunucusunda konumlandığı satırın başına taşır ve okur"
+
+#: globalCommands.py:510
+msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
+msgstr "İnceleme imlecini mevcut nesne sunucusundaki önceki karaktere taşır ve okur"
+
+#: globalCommands.py:524
+msgid "Reports the character of the current navigator object where the review cursor is situated. If this key is pressed twice, ascii and hexadecimal values are spoken for the character"
+msgstr "mevcut nesne sunucusunda inceleme imlecinin üzerinde bulunduğu karakteri okur. İki kez basılırsa, mevcut karakterin ascii ve hexadecimal değerleri söylenir"
+
+#: globalCommands.py:542
+msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
+msgstr "İnceleme imlecini mevcut nesne sunucusundaki sonraki karaktere taşır ve okur"
+
+#: globalCommands.py:553
+msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
+msgstr "İnceleme imlecini, mevcut nesne sunucusunda konumlandığı satırın sonuna taşır ve okur"
+
+#: globalCommands.py:560
+msgid "no caret"
+msgstr "düzenleme imleci yok"
+
+#: globalCommands.py:565
+msgid "Moves the system caret to the position of the review cursor , in the current navigator object"
+msgstr "Sistem düzenleme imlecini mevcut nesne sunucusundaki inceleme imlecinin konumuna taşır"
+
+#: globalCommands.py:574
+msgid "beeps"
+msgstr "bipleme"
+
+#: globalCommands.py:576
+msgid "talk"
+msgstr "konuşma"
+
+#: globalCommands.py:578
+msgid "speech mode %s"
+msgstr "konuşma modu %s"
+
+#: globalCommands.py:580
+msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
+msgstr "Kapalı, bip sesi, konuş gibi konuşma kipleri arasında geçiş yapar. Kapalı olarak ayarlandığında NVDA herhangi birşey söylemez. Bip sesi seçildiğinde, NVDA konuşması gereken durumlarda bip sesi çıkarır. Konuş kipi seçildiğinde ise NVDA normalde yaptığı gibi konuşur."
+
+#: globalCommands.py:596
+msgid "Moves the focus to the next closest document that contains the focus"
+msgstr "Odağı mevcut Odağın kapsadığı en yakın belgeye taşır"
+
+#: globalCommands.py:608
+msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
+msgstr "Tarama kipiyle odak kipi  arasında geçiş yapar. Odak kipindeyken, tuşlar doğrudan mevcut uygulamaya gönderilir, bu sizin doğrudan uygulamayla ilgili kontrolle etkileşiminizi sağlar. Tarama kipindeyken, açık belge içerisinde  dolaşabilir, hızlı kısayol tuşlarını kullanabilirsiniz."
+
+#: globalCommands.py:612
+msgid "Quits NVDA!"
+msgstr "NVDA'dan çıkar"
+
+#: globalCommands.py:616
+msgid "Shows the NVDA menu"
+msgstr "NVDA menüsünü gösterir"
+
+#: globalCommands.py:621
+msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
+msgstr "İnceleme imlecinden itibaren imleci de taşıyarak metnin sonuna kadar okur."
+
+#: globalCommands.py:633
+msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
+msgstr "Sistem imlecinin bulunduğu yerden itibaren imleci de taşıyarak metnin sonuna kadar okur"
+
+#: globalCommands.py:659
+msgid "No formatting information"
+msgstr "Yazı biçimi bilgisi mevcut değil"
+
+#: globalCommands.py:662
+msgid "Reports formatting info for the current cursor position within a document"
+msgstr "İmlecin bulunduğu yerle ilgili yazı biçimi bilgisini verir"
+
+#: globalCommands.py:673
+msgid "reports the object with focus"
+msgstr "Odaktaki nesneyi söyler"
+
+#: globalCommands.py:678
+msgid "no status bar found"
+msgstr "Durum çubuğu bulunamadı"
+
+#: globalCommands.py:687
+msgid "reads the current application status bar and moves the navigator to it"
+msgstr "Aktif pencerenin durum çubuğunu okur ve nesne sunucusunu da durum çubuğuna taşır"
+
+#: globalCommands.py:696
+msgid "Mouse tracking"
+msgstr "Fare izleme"
+
+#: globalCommands.py:697
+msgid "Toggles the reporting of information as the mouse moves"
+msgstr "Fare hareketlerinin bildirimiyle ilgili ayarı açıp kapatır"
+
+#: globalCommands.py:705
+msgid "no title"
+msgstr "Başlık yok"
+
+#: globalCommands.py:714
+msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
+msgstr "Mevcut uygulama ya da aktif pencerenin başlığını okur. İki kez basılırsa, başlığı kodlar. Üç kez basılırsa, başlığı panoya kopyalar"
+
+#: globalCommands.py:721
+msgid "speaks the current foreground object"
+msgstr "Mevcut pencere ya da iletişim kutusunun içeriğini seslendirir"
+
+#: globalCommands.py:732
+msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
+msgstr "Özellikle geliştiricilerin faydalanması için, mevcut nesne hakkında log tutar ve bu bilginin incelenmesi için log görüntüleyiciyi açar."
+
+#: globalCommands.py:738
+msgid "no progress bar updates"
+msgstr "İlerleme çubuğu güncellemelerini bildirme"
+
+#: globalCommands.py:741
+msgid "speak progress bar updates"
+msgstr "İlerleme çubuğu güncellemelerini konuşarak bildir"
+
+#: globalCommands.py:744
+msgid "beep for progress bar updates"
+msgstr "İlerleme çubuğu güncellemelerini bip sesiyle bildir"
+
+#: globalCommands.py:747
+msgid "beep and speak progress bar updates"
+msgstr "İlerleme çubuğu güncellemelerini bip sesiyle ve konuşarak bildir"
+
+#: globalCommands.py:749
+msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
+msgstr "İlerleme çubuğunun bildirimiyle ilgili, bip, konuşma, bip ve konuşma ve kapalı kipleri arasında geçiş yapar"
+
+#: globalCommands.py:758
+msgid "report dynamic content changes"
+msgstr "dinamik içerik değişikliklerini bildir"
+
+#: globalCommands.py:759
+msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
+msgstr "Dos konsolunda görüntülenen yeni metinler vb dinamik içeriğin bildirimiyle ilgili ayarı açıp kapatır."
+
+#: globalCommands.py:768
+msgid "caret moves review cursor"
+msgstr "Düzenleme imleci inceleme imlecini taşır"
+
+#: globalCommands.py:769
+msgid "Toggles on and off the movement of the review cursor due to the caret moving."
+msgstr "İnceleme imlecinin sistem düzeltme imlecini takip etmesiyle ilgili ayarı açıp kapatır"
+
+#: globalCommands.py:778
+msgid "focus moves navigator object"
+msgstr "Odak nesne sunucusunu taşır"
+
+#: globalCommands.py:779
+msgid "Toggles on and off the movement of the navigator object due to focus changes"
+msgstr "Nesne sunucusunun sistem odağını takip etmesiyle ilgili ayarı açıp kapatır"
+
+#: globalCommands.py:791
+msgid "no system battery"
+msgstr "Batarya yok"
+
+#: globalCommands.py:794
+msgid "AC power on"
+msgstr "Güç kaynağı takılı"
+
+#: globalCommands.py:796
+msgid "%d hours and %d minutes remaining"
+msgstr "%d saat ve %d dakika kaldı"
+
+#: globalCommands.py:798
+msgid "reports battery status and time remaining if AC is not plugged in"
+msgstr "Güç kaynağı takılı değilse batarya durumunu ve kalan zamanı söyler."
+
+#: globalCommands.py:802
+msgid "Pass next key through"
+msgstr "Sonraki tuşu görmezden gel"
+
+#: globalCommands.py:803
+msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
+msgstr "Bir sonraki tuş kombinasyonu NVDA kısayol tuşu olarak algılanmaz, doğrudan windows işletim sistemine gönderilir."
+
+#: globalCommands.py:808
+msgid "Currently running application is %s"
+msgstr "Şu Anda %s uygulaması çalışıyor"
+
+#: globalCommands.py:811
+msgid " and currently loaded module is %s"
+msgstr " ve %s şu anda yüklü olan modül"
+
+#: globalCommands.py:813
+msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
+msgstr "Aktif uygulama modülüyle birlikte aktif uygulamanın dosya adını seslendirir along with the name of the currently loaded appModule"
+
+#: globalCommands.py:817
+msgid "Shows the NVDA general settings dialog"
+msgstr "NVDA genel ayarlar iletişim kutusunu gösterir"
+
+#: globalCommands.py:821
+msgid "Shows the NVDA synthesizer dialog"
+msgstr "NVDA Sentezleyici iletişim kutusunu gösterir"
+
+#: globalCommands.py:825
+msgid "Shows the NVDA voice settings dialog"
+msgstr "NVDA ses ayarları iletişim kutusunu gösterir"
+
+#: globalCommands.py:829
+msgid "Shows the NVDA keyboard settings dialog"
+msgstr "NVDA klavie ayarları iletişim kutusunu gösterir"
+
+#: globalCommands.py:833
+msgid "Shows the NVDA mouse settings dialog"
+msgstr "NVDA fare ayarları iletişim kutusunu gösterir"
+
+#: globalCommands.py:837
+msgid "Shows the NVDA object presentation settings dialog"
+msgstr "NVDA nesne sunum ayarları iletişim kutusunu gösterir"
+
+#: globalCommands.py:841
+msgid "Shows the NVDA virtual buffers settings dialog"
+msgstr "NVDA sanal tampon ayarları iletişim kutusunu gösterir"
+
+#: globalCommands.py:845
+msgid "Shows the NVDA document formatting settings dialog"
+msgstr "NVDA belge format ayarları iletişim kutusunu gösterir"
+
+#: globalCommands.py:849
+msgid "Saves the current NVDA configuration"
+msgstr "Mevcut konfigürasyonu kaydeder"
+
+#: globalCommands.py:853
+msgid "loads the saved NVDA configuration, overriding current changes"
+msgstr "değişiklikleri geri alarak kaydedilmiş konfigürasyonu yükler"
+
+#: globalCommands.py:863
+msgid "Activates the NVDA Python Console, primarily useful for development"
+msgstr "Python konsolu etkinleştirir. öncelikle geliştiriciler için faydalı"
+
+#: globalCommands.py:868
+#: gui\settingsDialogs.py:943
+msgid "review"
+msgstr "gözden geçir"
+
+#: globalCommands.py:871
+#: gui\settingsDialogs.py:943
+msgid "focus"
+msgstr "Odak"
+
+#: globalCommands.py:872
+msgid "Braille tethered to %s"
+msgstr "Braille %s konumuna getirildi"
+
+#: globalCommands.py:873
+msgid "Toggle tethering of braille between the focus and the review position"
+msgstr "Toggle tethering of braille between the focus and the review position"
+
+#: globalCommands.py:881
+msgid "There is no text on the clipboard"
+msgstr "Panoda metin yok"
+
+#: globalCommands.py:886
+msgid "The clipboard contains a large portion of text. It is %s characters long"
+msgstr "Panoda büyük bir yazı var. %s karakter uzunluğunda"
+
+#: globalCommands.py:887
+msgid "Reports the text on the Windows clipboard"
+msgstr "clipboard yani panodaki metni okur"
+
+#: globalCommands.py:891
+msgid "Start marked"
+msgstr "Başlangıç işareti"
+
+#: globalCommands.py:892
+msgid "Marks the current position of the review cursor as the start of text to be copied"
+msgstr "İnceleme imlecinin mevcut konumunu panoya kopyalanacak metnin başlangıcı olarak işaretler"
+
+#: globalCommands.py:896
+msgid "No start marker set"
+msgstr "Başlangıç işareti konmadı"
+
+#: globalCommands.py:900
+msgid "The start marker must reside within the same object"
+msgstr "Başlangıç işaretinin aynı nesnede olması gerekiyor"
+
+#: globalCommands.py:905
+msgid "Review selection copied to clipboard"
+msgstr "seçiminiz panoya kopyalandı"
+
+#: globalCommands.py:907
+msgid "No text to copy"
+msgstr "Kopyalanabilir metin yok"
+
+#: globalCommands.py:910
+msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
+msgstr "daha önce başlangıç işareti konan yerle, inceleme imlecinin mevcut pozisyonu arasındaki metni panoya kopyalar"
+
+#: globalCommands.py:914
+msgid "Scrolls the braille display back"
+msgstr "Braille ekranını geriye alır"
+
+#: globalCommands.py:919
+msgid "Scrolls the braille display forward"
+msgstr "Braille ekranını ileri alır"
+
+#: globalCommands.py:924
+msgid "Routes the cursor to or activates the object under this braille cell"
+msgstr "İmleci Bu braille hücresine  taşır ya da hücrenin üzerindeki nesneyi etkinleştirir"
+
+#: globalCommands.py:929
+msgid "Moves the braille display to the previous line"
+msgstr "Braille ekranını bir önceki satıra taşır"
+
+#: globalCommands.py:934
+msgid "Moves the braille display to the next line"
+msgstr "Braille ekranını bir sonraki satıra taşır"
+
+#: globalCommands.py:941
+msgid "Plugins reloaded"
+msgstr "Plug-in'ler tekrar yüklendi"
+
+#: globalCommands.py:942
+msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
+msgstr "uygulama modüllerini ve global pluginleri  NVDA'yı yeniden başlatmadan yükler,. geliştiriciler için faydalı olabilir"
+
+#: gui\__init__.py:148
 msgid "configuration applied"
 msgstr "Konfigurasyon uygulandı"
 
-#: gui\__init__.py:151
+#: gui\__init__.py:152
+msgid "Cannot save configuration - NVDA in secure mode"
+msgstr "Güvenli modda NVDA konfigürasyonu kaydedilemez"
+
+#: gui\__init__.py:156
 msgid "configuration saved"
 msgstr "Konfigurasyon kaydedildi"
 
-#: gui\__init__.py:154
+#: gui\__init__.py:159
 msgid "Could not save configuration - probably read only file system"
 msgstr "Konfigurasyon kaydedilemiyor. Muhtemelen salt okunur dosya sistemi"
 
-#: gui\__init__.py:154
-#: gui\logViewer.py:73
+#: gui\__init__.py:159
+#: gui\__init__.py:169
+#: gui\logViewer.py:74
+#: gui\settingsDialogs.py:170
 msgid "Error"
 msgstr "Hata"
 
-#: gui\__init__.py:163
-msgid "Default dictionary"
-msgstr "Öntanımlı sözlük"
+#: gui\__init__.py:169
+msgid "Please close  the other NVDA settings dialog first"
+msgstr "Lütfen önce diğer NVDA ayar iletişim kutusunu kapatın"
 
-#: gui\__init__.py:166
+#: gui\__init__.py:173
+msgid "Default dictionary"
+msgstr "Varsayılan sözlük"
+
+#: gui\__init__.py:176
 msgid "Voice dictionary (%s)"
 msgstr "Ses sözlüğü (%s)"
 
-#: gui\__init__.py:169
+#: gui\__init__.py:179
 msgid "Temporary dictionary"
-msgstr "Süreli sözlük"
+msgstr "Geçici sözlük"
 
-#: gui\__init__.py:177
+#: gui\__init__.py:187
 msgid "Are you sure you want to quit NVDA?"
 msgstr "NVDA'dan çıkmak istediğinize eminmisiniz?"
 
-#: gui\__init__.py:177
-#: gui\__init__.py:305
+#: gui\__init__.py:187
+#: gui\__init__.py:348
 msgid "Exit NVDA"
 msgstr "NVDA'dan çık"
 
-#: gui\__init__.py:219
+#: gui\__init__.py:233
 msgid "copyright"
 msgstr "telif hakkı"
 
-#: gui\__init__.py:219
+#: gui\__init__.py:233
 msgid "url"
 msgstr "websitesi"
 
-#: gui\__init__.py:219
+#: gui\__init__.py:233
 msgid "version"
-msgstr "Versyon"
+msgstr "versiyon"
 
-#: gui\__init__.py:221
-#: gui\__init__.py:296
+#: gui\__init__.py:235
+#: gui\__init__.py:338
 msgid "About NVDA"
 msgstr "NVDA hakkında"
 
-#: gui\__init__.py:245
+#: gui\__init__.py:275
 msgid "&General settings..."
 msgstr "&Genel ayarlar"
 
-#: gui\__init__.py:245
-#: gui\settingsDialogs.py:88
+#: gui\__init__.py:275
+#: gui\settingsDialogs.py:101
 msgid "General settings"
 msgstr "Genel ayarlar"
 
-#: gui\__init__.py:247
+#: gui\__init__.py:277
 msgid " the synthesizer to use"
 msgstr " kullanmak istediğiniz Sentezleyiciyi"
 
-#: gui\__init__.py:247
+#: gui\__init__.py:277
 msgid "&Synthesizer..."
 msgstr "&Sentezleyici..."
 
-#: gui\__init__.py:249
+#: gui\__init__.py:279
 msgid "&Voice settings..."
 msgstr "S&es ayarları..."
 
-#: gui\__init__.py:249
+#: gui\__init__.py:279
 msgid "Choose the voice, rate, pitch and volume  to use"
-msgstr "Kullanmak istediğiniz sesi, hızı, adımını ve ses seviyesini seçin"
+msgstr "Kullanmak istediğiniz sesi, hızını, tonunu ve ses seviyesini belirleyin"
 
-#: gui\__init__.py:251
+#: gui\__init__.py:281
 msgid "B&raille settings..."
 msgstr "B&raille ayarları..."
 
-#: gui\__init__.py:253
+#: gui\__init__.py:283
 msgid "&Keyboard Settings..."
-msgstr "&Klavier ayarları..."
+msgstr "&Klavie ayarları..."
 
-#: gui\__init__.py:253
+#: gui\__init__.py:283
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-msgstr ""
+msgstr "klavye düzeni, yazılan karakterler, sözcükler ya da komut tuşlarıyla ilgili ayarlamaları yap"
 
-#: gui\__init__.py:255
+#: gui\__init__.py:285
 msgid "&Mouse settings..."
 msgstr "&Fare ayarları..."
 
-#: gui\__init__.py:255
-msgid "Change reporting of mouse sape, object under mouse"
-msgstr ""
+#: gui\__init__.py:285
+msgid "Change reporting of mouse shape and object under mouse"
+msgstr "Fare imleci ve şekil değişimleri ile ilgili bildirimleri değiştir"
 
-#: gui\__init__.py:257
+#: gui\__init__.py:287
+msgid "&Review cursor..."
+msgstr "İnceleme imleci..."
+
+#: gui\__init__.py:287
+msgid "Configure how and when the review cursor moves"
+msgstr "İnceleme imlecinin nasıl ve ne zaman hareket edeceğini belirle"
+
+#: gui\__init__.py:289
 msgid "&Object presentation..."
 msgstr "nesne S&unum ayarları..."
 
-#: gui\__init__.py:257
+#: gui\__init__.py:289
 msgid "Change reporting of objects"
-msgstr "nesne raporlamayı değiştir"
+msgstr "Nesne bildirimlerini değiştir"
 
-#: gui\__init__.py:259
+#: gui\__init__.py:291
 msgid "Change virtual buffers specific settings"
-msgstr ""
+msgstr "Sanal tamponlarla ilgili ayarları değiştir"
 
-#: gui\__init__.py:259
+#: gui\__init__.py:291
 msgid "Virtual &buffers..."
 msgstr "Sanal &tamponlar..."
 
-#: gui\__init__.py:261
+#: gui\__init__.py:293
 msgid "Change Settings of document properties"
-msgstr "Belge tercihlerin ayarlarını değiştir"
+msgstr "Belge özellikleriyle ilgili  ayarları değiştir"
 
-#: gui\__init__.py:261
+#: gui\__init__.py:293
 msgid "Document &formatting..."
 msgstr "belge &formatları..."
 
-#: gui\__init__.py:264
+#: gui\__init__.py:297
 msgid "&Default dictionary..."
-msgstr "&Öntanımlı sözlük..."
+msgstr "&Varsayılan sözlük..."
 
-#: gui\__init__.py:264
+#: gui\__init__.py:297
 msgid "dialog where you can set default dictionary by adding dictionary entries to the list"
-msgstr ""
+msgstr "Varsayılan sözlüğü düzenleyebileceğiniz iletişim kutusu"
 
-#: gui\__init__.py:266
+#: gui\__init__.py:299
 msgid "&Voice dictionary..."
 msgstr "Ses sö&zlüğü"
 
-#: gui\__init__.py:266
+#: gui\__init__.py:299
 msgid "dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
-msgstr ""
+msgstr "Listeye sözcük ekleyerek Sese özel sözlük oluşturabileceğiniz İletişim kutusu "
 
-#: gui\__init__.py:268
+#: gui\__init__.py:301
 msgid "&Temporary dictionary..."
-msgstr "sü&reli sözlük..."
+msgstr "Ge&çici sözlük..."
 
-#: gui\__init__.py:268
+#: gui\__init__.py:301
 msgid "dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
-msgstr ""
+msgstr "Geçici sözlük oluşturabileceğiniz iletişim kutusu"
 
-#: gui\__init__.py:270
+#: gui\__init__.py:303
 msgid "Speech &dictionaries"
 msgstr "&Konuşma sözlüğü"
 
-#: gui\__init__.py:271
+#: gui\__init__.py:304
 msgid "&Preferences"
 msgstr "&Tercihler"
 
-#: gui\__init__.py:274
+#: gui\__init__.py:308
 msgid "View log"
 msgstr "Log dosyasını göster"
 
-#: gui\__init__.py:276
-msgid "Python console"
-msgstr "Python konsulu"
+#: gui\__init__.py:310
+msgid "Speech viewer"
+msgstr "Konuşma görüntüleyici"
 
-#: gui\__init__.py:278
+#: gui\__init__.py:313
+msgid "Python console"
+msgstr "Python konsolu"
+
+#: gui\__init__.py:315
+msgid "Reload plugins"
+msgstr "Pluginleri yeniden yükle"
+
+#: gui\__init__.py:317
 msgid "Tools"
 msgstr "araçlar"
 
-#: gui\__init__.py:281
+#: gui\__init__.py:321
 msgid "User guide"
 msgstr "Kullanıcı rehberi"
 
-#: gui\__init__.py:283
-msgid "Key Command Quick Reference"
-msgstr "Komutlar ve kısa Referans"
+#: gui\__init__.py:323
+msgid "Keyboard Command Quick Reference"
+msgstr "Tuş komutları Hızlı klavuz"
 
-#: gui\__init__.py:285
+#: gui\__init__.py:325
 msgid "What's &new"
 msgstr "ne &yeni"
 
-#: gui\__init__.py:287
+#: gui\__init__.py:327
 msgid "Web site"
-msgstr "web site"
+msgstr "web sitesi"
 
-#: gui\__init__.py:289
+#: gui\__init__.py:329
+msgid "Readme"
+msgstr "Beni oku"
+
+#: gui\__init__.py:331
 msgid "License"
 msgstr "lisans"
 
-#: gui\__init__.py:291
+#: gui\__init__.py:333
 msgid "Contributors"
 msgstr "katkıda bulunanlar"
 
-#: gui\__init__.py:293
+#: gui\__init__.py:335
 msgid "We&lcome dialog"
 msgstr "&hoşgeldiniz iletişim kutusu"
 
-#: gui\__init__.py:296
+#: gui\__init__.py:338
 msgid "About..."
 msgstr "Hakkında..."
 
-#: gui\__init__.py:298
+#: gui\__init__.py:340
 msgid "&Help"
 msgstr "y&ardım"
 
-#: gui\__init__.py:300
+#: gui\__init__.py:342
 msgid "&Revert to saved configuration"
-msgstr "Kayıt edilmiş kon&figurasyona yeniden dön"
+msgstr "Kayıt edilmiş kon&figurasyona dön"
 
-#: gui\__init__.py:300
+#: gui\__init__.py:342
 msgid "Reset all settings to saved state"
-msgstr "Tüm ayarları baştaki konumuna getir"
+msgstr "Kaydedilmiş konfigürasyona geri dön"
 
-#: gui\__init__.py:302
+#: gui\__init__.py:345
 msgid "&Save configuration"
 msgstr "Konfi&gurasyonu kaydet"
 
-#: gui\__init__.py:302
+#: gui\__init__.py:345
 msgid "Write the current configuration to nvda.ini"
-msgstr "şu andaki konfigurasyonları NVDA.ini'ye yaz"
+msgstr "Mevcut konfigurasyonu NVDA.ini'ye yaz"
 
-#: gui\__init__.py:305
-#: gui\logViewer.py:33
+#: gui\__init__.py:348
+#: gui\logViewer.py:34
 msgid "E&xit"
 msgstr "&çıkış"
 
-#: gui\__init__.py:361
+#: gui\__init__.py:399
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
@@ -2122,47 +2458,59 @@ msgid ""
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
 msgstr ""
-"Willkommen bei NVDA!\n"
-"Für das Ausführen der meisten NVDA-Befehle müssen Sie die NVDA-Taste gedrückt halten, während\n"
-"Sie die Befehlstaste drücken. Standardmäßig werden beide Einfügetasten als NVDA-Tasten\n"
-"verwendet. Sie können NVDA jedoch so einstellen, dass die Dauergroßschreibtaste als NVDA-Taste\n"
-"verwendet wird. Sie können jederzeit NVDA+N drücken, um das Menü anzuzeigen. Von\n"
-"hier aus können Sie die gewünschten Einstellungen vornehmen, die Hilfe aufrufen oder NVDA-Funktionen nutzen.\n"
+"NVDA'ya hoşgeldiniz!\n"
+"NVDA'nın komutlarının bir çoğu için NVDA tuşuna basılı tutarken diğer tuşlara basmanız gerekir.\n"
+"Varsayılan olarak, numaratördeki insert ve ana insert tuşları NVDA tuşu olarak kullanılabilir.\n"
+"Ek olarak, büyük harf kilidi tuşunu da NVDA tuşu olarak ayarlayabilirsiniz.\n"
+"NVDA menüsü için her zaman NVDA+n tuş kombinasyonunu kullanabilirsiniz.\n"
+"Bu menüde NVDA  ile ilgili ayarları değiştirebilir, yardım alabilir ve diğer NVDA işlevlerine ulaşabilirsiniz.\n"
 
-#: gui\__init__.py:371
+#: gui\__init__.py:409
 msgid "Welcome to NVDA"
 msgstr "NVDA'ya Hoşgeldiniz"
 
-#: gui\__init__.py:375
+#: gui\__init__.py:413
 msgid "Options"
 msgstr "seçenekler"
 
-#: gui\__init__.py:376
-#: gui\settingsDialogs.py:385
+#: gui\__init__.py:414
+#: gui\settingsDialogs.py:462
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "büyük harf kilidini NVDA tuşu olarak kullan"
 
-#: gui\__init__.py:379
+#: gui\__init__.py:417
 msgid "Show this dialog when NVDA starts"
-msgstr "NVDA açıldıktan sonra, bu iletişim kutusunu göster"
+msgstr "NVDA açıldığında, bu iletişim kutusunu göster"
+
+#: gui\__init__.py:453
+msgid ""
+"Your configuration file contains errors. \n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
+msgstr ""
+"Konfigürasyon dosyanızda hatalar var.\n"
+"Bu hataları düzeltmek için 'Tamam', konfig dosyanızı daha sonra elle düzenleyerek hataları düzeltmek istiyorsanız 'İptal' tuşuna basın. Hatalar hakkında daha fazla ayrıntı log dosyasında bulunabilir.\n"
+
+#: gui\__init__.py:458
+msgid "Configuration File Error"
+msgstr "Konfigurasyon dosyasında hata"
 
 #: gui\logViewer.py:17
 msgid "NVDA Log Viewer"
-msgstr "NVDA log göstergesi"
+msgstr "NVDA log görüntüleyici"
 
-#: gui\logViewer.py:28
+#: gui\logViewer.py:29
 msgid "Refresh\tF5"
 msgstr "Güncele\tF5"
 
-#: gui\logViewer.py:35
+#: gui\logViewer.py:36
 msgid "Log"
 msgstr "log"
 
-#: gui\logViewer.py:65
+#: gui\logViewer.py:66
 msgid "Save As"
 msgstr "Farklı kaydet"
 
-#: gui\logViewer.py:73
+#: gui\logViewer.py:74
 msgid "Error saving log: %s"
 msgstr "Kayıt hatası: %s"
 
@@ -2172,1495 +2520,1495 @@ msgstr "Kayıt hatası: %s"
 msgid "NVDA"
 msgstr "NVDA"
 
-#: gui\scriptUI.py:109
-msgid "Links List"
-msgstr "Bağlantı listesi"
-
-#: gui\scriptUI.py:123
-msgid "&Activate Link"
-msgstr "&Bağlantıyı etkinleştir"
-
-#: gui\scriptUI.py:124
-msgid "&Move to link"
-msgstr "B&ağlantıya taşı"
-
-#: gui\settingsDialogs.py:90
+#: gui\settingsDialogs.py:103
 msgid "info"
 msgstr "Bilgi"
 
-#: gui\settingsDialogs.py:91
+#: gui\settingsDialogs.py:104
 msgid "debug warning"
 msgstr "tamir uyarısı"
 
-#: gui\settingsDialogs.py:92
+#: gui\settingsDialogs.py:105
 msgid "input/output"
 msgstr "Giriş/çıkış "
 
-#: gui\settingsDialogs.py:93
+#: gui\settingsDialogs.py:106
 msgid "debug"
 msgstr "Tamir"
 
-#: gui\settingsDialogs.py:98
+#: gui\settingsDialogs.py:111
 msgid "&Language (requires restart to fully take affect):"
-msgstr "&Dil (tam olarak etkili olması için, yeniden başlatılması gerekiyor)"
+msgstr "&Dil değişikliği (tam olarak etkili olması için, yeniden başlatılması gerekiyor)"
 
-#: gui\settingsDialogs.py:102
+#: gui\settingsDialogs.py:115
 msgid "Language"
 msgstr "Dil"
 
-#: gui\settingsDialogs.py:111
+#: gui\settingsDialogs.py:127
 msgid "&Save configuration on exit"
 msgstr "çıkış'da konfigurasyonu kaydet"
 
-#: gui\settingsDialogs.py:114
+#: gui\settingsDialogs.py:132
 msgid "&Warn before exiting NVDA"
 msgstr "&NVDA'dan çıkmadan önce uyar"
 
-#: gui\settingsDialogs.py:118
+#: gui\settingsDialogs.py:136
 msgid "L&ogging level:"
 msgstr "&Logging seviyesi"
 
-#: gui\settingsDialogs.py:121
+#: gui\settingsDialogs.py:139
 msgid "Log level"
 msgstr "Log seviyesi"
 
-#: gui\settingsDialogs.py:142
+#: gui\settingsDialogs.py:149
+msgid "&Automatically start NVDA after I log on to Windows"
+msgstr "NVDA'yı Windows'u açınca otom&atik olarak başlat"
+
+#: gui\settingsDialogs.py:154
+msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
+msgstr "Windows giriş ekranında NVDA'yı kullan (Yönetici yetkisi gerekir)"
+
+#: gui\settingsDialogs.py:159
+msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
+msgstr "Windows giriş ekranı ve diğer güvenli ekranlarda mevcut kaydedilmiş ayarları kullan (yönetici yetkisi gerekir)"
+
+#: gui\settingsDialogs.py:170
+msgid "Error copying NVDA user settings"
+msgstr "NVDA kullanıcı ayarlarının kopyalanmasında hata"
+
+#: gui\settingsDialogs.py:172
+msgid "Success"
+msgstr "başarılı"
+
+#: gui\settingsDialogs.py:172
+msgid "Successfully copied NVDA user settings"
+msgstr "NVDA kullanıcı ayarları başarıyla kopyalandı"
+
+#: gui\settingsDialogs.py:181
 msgid "Error in %s language file"
 msgstr "%s Dil dosyasın'da hata var"
 
-#: gui\settingsDialogs.py:142
+#: gui\settingsDialogs.py:181
 msgid "Language Error"
 msgstr "Dil seçme hatası"
 
-#: gui\settingsDialogs.py:151
-msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
-msgstr ""
+#: gui\settingsDialogs.py:197
+msgid "Insufficient Privileges"
+msgstr "Yetersiz yetki"
 
-#: gui\settingsDialogs.py:151
+#: gui\settingsDialogs.py:197
+msgid "This change requires administrator privileges."
+msgstr "Bu değişiklik yönetici yetkisi gerektirir"
+
+#: gui\settingsDialogs.py:199
+msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
+msgstr "Yeni dilin etkili olması için yeni konfigürasyonun kaydedilmesi ve NVDA'nın yeniden başlatılması gerekiyor. Şimdi kaydedip yeniden başlatmak için entır tuşuna basın. Bu işlemleri daha sonra yapmak için çıkış tuşuna basın."
+
+#: gui\settingsDialogs.py:199
 msgid "Language Configuration Change"
 msgstr "Dil ayarları değiştir"
 
-#: gui\settingsDialogs.py:157
+#: gui\settingsDialogs.py:207
 msgid "Synthesizer"
 msgstr "Sentezleyici"
 
-#: gui\settingsDialogs.py:161
+#: gui\settingsDialogs.py:211
 msgid "&Synthesizer:"
 msgstr "&Sentezleyici"
 
-#: gui\settingsDialogs.py:176
+#: gui\settingsDialogs.py:226
 msgid "Output &device:"
 msgstr "&Çıkış cihazı"
 
-#: gui\settingsDialogs.py:196
+#: gui\settingsDialogs.py:246
 msgid "Could not load the %s synthesizer."
-msgstr "%s Sentezleyici yüklenemiyor"
+msgstr "%s Sentezleyicisi yüklenemiyor"
 
-#: gui\settingsDialogs.py:196
+#: gui\settingsDialogs.py:246
 msgid "Synthesizer Error"
 msgstr "Sentezleyici hatası"
 
-#: gui\settingsDialogs.py:201
+#: gui\settingsDialogs.py:309
 msgid "Voice settings"
 msgstr "Ses ayarları"
 
-#: gui\settingsDialogs.py:211
-msgid "&Voice:"
-msgstr "S&es"
-
-#: gui\settingsDialogs.py:226
-msgid "V&ariant:"
-msgstr "v&aryant"
-
-#: gui\settingsDialogs.py:240
-msgid "&Rate:"
-msgstr "&Hız"
-
-#: gui\settingsDialogs.py:248
-msgid "&Pitch:"
-msgstr "&Adım"
-
-#: gui\settingsDialogs.py:256
-msgid "&Inflection:"
-msgstr "Ses &tonu"
-
-#: gui\settingsDialogs.py:264
-msgid "V&olume:"
-msgstr "Ses se&viyesi"
-
-#: gui\settingsDialogs.py:272
+#: gui\settingsDialogs.py:365
 msgid "&Speak all punctuation"
 msgstr "Tüm noktalama işaretlerini &konuş"
 
-#: gui\settingsDialogs.py:275
+#: gui\settingsDialogs.py:368
 msgid "Raise pitch for capitals"
-msgstr "Büyük ha&rflerde sesi yükselt"
+msgstr "Büyük ha&rflerde sesi incelt"
 
-#: gui\settingsDialogs.py:278
+#: gui\settingsDialogs.py:371
 msgid "Say &cap before capitals"
 msgstr "B&üyük harflerden önce büyük de"
 
-#: gui\settingsDialogs.py:281
+#: gui\settingsDialogs.py:374
 msgid "&Beep for capitals"
 msgstr "Büyük harflerde b&iple"
 
-#: gui\settingsDialogs.py:368
-msgid "Keyboard Settings"
-msgstr "Klavier ayarları"
-
-#: gui\settingsDialogs.py:372
-msgid "&Keyboard layout:"
-msgstr "&Klavier düzeni"
-
 #: gui\settingsDialogs.py:377
+msgid "Use &spelling functionality if supported"
+msgstr "De&sdekleniyorsa kodlama işlevini kullan"
+
+#: gui\settingsDialogs.py:445
+msgid "Keyboard Settings"
+msgstr "Klavie ayarları"
+
+#: gui\settingsDialogs.py:449
+msgid "&Keyboard layout:"
+msgstr "&Klavie düzeni"
+
+#: gui\settingsDialogs.py:454
 msgid "Keyboard layout"
-msgstr "Klavier düzeni"
+msgstr "Klavie düzeni"
 
-#: gui\settingsDialogs.py:388
+#: gui\settingsDialogs.py:465
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr ""
+msgstr "numaratördeki insert tuşunu NVDA tuşu olarak kullan"
 
-#: gui\settingsDialogs.py:391
+#: gui\settingsDialogs.py:468
 msgid "Use extended Insert as an NVDA modifier key"
-msgstr ""
+msgstr "Normal insert tuşunu NVDA tuşu olarak kullan"
 
-#: gui\settingsDialogs.py:394
+#: gui\settingsDialogs.py:471
 msgid "Speak typed &characters"
 msgstr "yazılan &harfleri seslendir"
 
-#: gui\settingsDialogs.py:397
+#: gui\settingsDialogs.py:474
 msgid "Speak typed &words"
-msgstr "yazılan k&elimeleri seslendir"
+msgstr "yazılan s&özcükleri seslendir"
 
-#: gui\settingsDialogs.py:400
+#: gui\settingsDialogs.py:477
+msgid "Beep if typing lowercase letters when caps lock is on"
+msgstr "Büyük harf kilidi açık olduğu halde küçük harfle yazıldığı zaman bip sesi çıkar"
+
+#: gui\settingsDialogs.py:480
 msgid "Speak command &keys"
-msgstr "K&omuta tuşları seslendir"
+msgstr "K&omut tuşlarını seslendir"
 
-#: gui\settingsDialogs.py:423
+#: gui\settingsDialogs.py:500
 msgid "Mouse settings"
 msgstr "Fare ayarları"
 
-#: gui\settingsDialogs.py:426
+#: gui\settingsDialogs.py:503
 msgid "Report mouse &shape changes"
-msgstr "&Fare şekl değişiklikleri raporla"
+msgstr "&Fareyi ve şekil değişikliklerini bildir"
 
-#: gui\settingsDialogs.py:429
-msgid "Report &text under the mouse"
-msgstr "Fare altındaki me&tni seslendir"
+#: gui\settingsDialogs.py:506
+msgid "Enable mouse &tracking"
+msgstr "Fare izlemeyi e&tkinleştir"
 
-#: gui\settingsDialogs.py:432
+#: gui\settingsDialogs.py:510
+msgid "Text &unit resolution:"
+msgstr "Metin &birim çözünürlüğü:"
+
+#: gui\settingsDialogs.py:514
+msgid "text reporting unit"
+msgstr "Metin bildirim birimi"
+
+#: gui\settingsDialogs.py:522
 msgid "Report &role when mouse enters object"
-msgstr "Fare altındaki &nesne tiplerini seslerndir"
+msgstr "Fare altındaki &nesne tiplerini seslendir"
 
-#: gui\settingsDialogs.py:435
+#: gui\settingsDialogs.py:525
 msgid "play audio coordinates when mouse moves"
-msgstr "Fare hareketlerinde Ses koordinatları çal"
+msgstr "Fare hareketlerini bip sesleriyle bildir"
 
-#: gui\settingsDialogs.py:438
+#: gui\settingsDialogs.py:528
 msgid "brightness controls audio coordinates volume"
-msgstr ""
+msgstr "brightness controls audio coordinates volume"
 
-#: gui\settingsDialogs.py:455
+#: gui\settingsDialogs.py:546
+msgid "Review cursor settings"
+msgstr "İnceleme imleci ayarları"
+
+#: gui\settingsDialogs.py:549
+msgid "Follow &keyboard focus"
+msgstr "&Klavye odağını takip et"
+
+#: gui\settingsDialogs.py:552
+msgid "Follow System &Caret"
+msgstr "Sistem düzenleme imle&cini takip et"
+
+#: gui\settingsDialogs.py:555
+msgid "Follow &mouse cursor"
+msgstr "Fare i&mlecini takip et"
+
+#: gui\settingsDialogs.py:558
+msgid "Simple review mode"
+msgstr "Basit İnceleme kipi"
+
+#: gui\settingsDialogs.py:573
 msgid "Object presentation"
 msgstr "Nesne sunumu"
 
-#: gui\settingsDialogs.py:464
+#: gui\settingsDialogs.py:576
+msgid "Speak"
+msgstr "konuş"
+
+#: gui\settingsDialogs.py:577
+msgid "Beep"
+msgstr "bip sesi çıkar"
+
+#: gui\settingsDialogs.py:578
+msgid "Speak and beep"
+msgstr "Konuş ve bip sesi çıkar"
+
+#: gui\settingsDialogs.py:582
 msgid "Report &tooltips"
-msgstr "&Ipuçlarını raporla"
+msgstr "ip&uçlarını bildir"
 
-#: gui\settingsDialogs.py:467
+#: gui\settingsDialogs.py:585
 msgid "Report &help balloons"
-msgstr "&Yardım Balonları raporla"
+msgstr "&Yardım Balonlarını bildir"
 
-#: gui\settingsDialogs.py:470
+#: gui\settingsDialogs.py:588
 msgid "Report object shortcut &keys"
-msgstr "K&ısayol tuşları raporla"
+msgstr "Nesne ile ilgili K&ısayol tuşlarını bildir"
 
-#: gui\settingsDialogs.py:473
+#: gui\settingsDialogs.py:591
 msgid "Report object &position information"
-msgstr "Nesne &posisyonu raporla"
+msgstr "Nesne &konum bilgisini bildir"
 
-#: gui\settingsDialogs.py:476
+#: gui\settingsDialogs.py:594
 msgid "Report object &descriptions"
-msgstr "Nesne &tariflerini raporla"
+msgstr "Nesne &tariflerini bildir"
 
-#: gui\settingsDialogs.py:479
-msgid "Say object &state first"
-msgstr "Ilk önce nesne ve durumu konuş"
+#: gui\settingsDialogs.py:598
+msgid "Progress &bar output:"
+msgstr "İlerleme Çub&uğu bildirimi"
 
-#: gui\settingsDialogs.py:483
-msgid "Report progress &bar updates"
-msgstr "İlerleme &çubuğu günceleştirmeleri raporla"
+#: gui\settingsDialogs.py:601
+msgid "Progress bar output"
+msgstr "İlerleme Çubuğu bildirimi"
 
-#: gui\settingsDialogs.py:486
-msgid "Report progress bar updates"
-msgstr "İlerleme çubuğu günceleştirmeleri raporla"
+#: gui\settingsDialogs.py:610
+msgid "Report background progress bars"
+msgstr "Geri plandaki ilerleme çubuğu güncellemelerini bildir"
 
-#: gui\settingsDialogs.py:510
+#: gui\settingsDialogs.py:613
+msgid "Report dynamic &content changes"
+msgstr "dinamik içerik &değişikliklerini bildir"
+
+#: gui\settingsDialogs.py:632
 msgid "virtual buffers"
-msgstr "Sanal tampon"
+msgstr "Sanal tamponlar"
 
-#: gui\settingsDialogs.py:513
+#: gui\settingsDialogs.py:635
 msgid "&Maximum number of characters on one line"
-msgstr "&Maksimum harf sayısı satırbaşı"
+msgstr "&satır başına Maksimum harf sayısı "
 
-#: gui\settingsDialogs.py:518
+#: gui\settingsDialogs.py:640
 msgid "&Number of lines per page"
-msgstr "&satır sayısı her sayfabaşı"
+msgstr "&sayfa başına satır sayısı "
 
-#: gui\settingsDialogs.py:523
+#: gui\settingsDialogs.py:645
 msgid "Use &screen layout (when supported)"
-msgstr "(Eğer destekleniyorsa) &ekran tipini kullan"
+msgstr "(Destekleniyorsa) &ekran düzenini kullan"
 
-#: gui\settingsDialogs.py:527
-msgid "Report &virtual presentation on focus changes"
-msgstr "&Sanal sunumu odak değiştiğinde raporla"
+#: gui\settingsDialogs.py:648
+msgid "Report l&ayout tables"
+msgstr "Düzenleme tabl&olarını bildir"
 
-#: gui\settingsDialogs.py:530
-msgid "Update the content &dynamically"
-msgstr "içeriği dinamik olarak Güncelle"
-
-#: gui\settingsDialogs.py:533
-msgid "Report lin&ks"
-msgstr "&Bağlantıları raporla"
-
-#: gui\settingsDialogs.py:536
-msgid "Report &lists"
-msgstr "&listeleri raporla"
-
-#: gui\settingsDialogs.py:539
-msgid "Report list &items"
-msgstr "L&iste ögeleri raporla"
-
-#: gui\settingsDialogs.py:542
-#: gui\settingsDialogs.py:644
-msgid "Report &headings"
-msgstr "B&aşlıkları raporla"
-
-#: gui\settingsDialogs.py:545
-#: gui\settingsDialogs.py:638
-msgid "Report &tables"
-msgstr "Tabl&oları raporla"
-
-#: gui\settingsDialogs.py:548
-msgid "Report &graphics"
-msgstr "&Grafikleri raporla"
-
-#: gui\settingsDialogs.py:551
-msgid "Report f&orms"
-msgstr "&Formları raporla"
-
-#: gui\settingsDialogs.py:554
-msgid "Report form &fields"
-msgstr "Form &alanları raporla"
-
-#: gui\settingsDialogs.py:557
-#: gui\settingsDialogs.py:650
-msgid "Report block &quotes"
-msgstr "Alın&tıları raporla"
-
-#: gui\settingsDialogs.py:560
-msgid "Report &paragraphs"
-msgstr "&Paragrafları raporla"
-
-#: gui\settingsDialogs.py:563
-msgid "Report f&rames"
-msgstr "&Çerçeveleri raporla"
-
-#: gui\settingsDialogs.py:566
+#: gui\settingsDialogs.py:652
 msgid "Automatic focus mode for focus changes"
-msgstr ""
+msgstr "Odak değişimlerinde otomatik odak kipi"
 
-#: gui\settingsDialogs.py:569
+#: gui\settingsDialogs.py:655
 msgid "Automatic focus mode for caret movement"
-msgstr ""
+msgstr "Sistem düzenleme imleci için otomatik  Odak kipi."
 
-#: gui\settingsDialogs.py:608
+#: gui\settingsDialogs.py:658
+msgid "Audio indication of focus and browse modes"
+msgstr "Odak kipi ile tarama kipi arasındaki geçişi ses çalarak bildir"
+
+#: gui\settingsDialogs.py:686
 msgid "Document formatting"
 msgstr "Belge Formatları"
 
-#: gui\settingsDialogs.py:611
+#: gui\settingsDialogs.py:689
 msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr ""
+msgstr "İmleçten sonraki yazı biçimi değişikliklerini bildir (NVDA'yı yavaşlatabilir)"
 
-#: gui\settingsDialogs.py:614
+#: gui\settingsDialogs.py:692
 msgid "Report font &name"
-msgstr "Yazı tipi adı&nı raporla"
+msgstr "Yazı tipi adı&nı bildir"
 
-#: gui\settingsDialogs.py:617
+#: gui\settingsDialogs.py:695
 msgid "Report font &size"
-msgstr "Yazı tipi büyüklüğünü raporla"
+msgstr "Yazı tipi büyüklüğünü bildir"
 
-#: gui\settingsDialogs.py:620
+#: gui\settingsDialogs.py:698
 msgid "Report font attri&butes"
-msgstr "Yazı &tipi özellikleri raporla"
+msgstr "Yazı &tipi özelliklerini bildir"
 
-#: gui\settingsDialogs.py:623
+#: gui\settingsDialogs.py:701
 msgid "Report &alignment"
-msgstr "&Hizayı raporla"
+msgstr "&Hizayı bildir"
 
-#: gui\settingsDialogs.py:626
+#: gui\settingsDialogs.py:704
+msgid "Report &colors"
+msgstr "Renk&leri bildir"
+
+#: gui\settingsDialogs.py:707
 msgid "Report st&yle"
-msgstr "stilleri raporla"
+msgstr "stilleri bildir"
 
-#: gui\settingsDialogs.py:629
+#: gui\settingsDialogs.py:710
 msgid "Report spelling errors"
-msgstr "&Yazım hatalarını raporla"
+msgstr "&Yazım hatalarını bildir"
 
-#: gui\settingsDialogs.py:632
+#: gui\settingsDialogs.py:713
 msgid "Report &pages"
-msgstr "&Sayfa değişiklikleri raporla"
+msgstr "&Sayfa değişikliklerini bildir"
 
-#: gui\settingsDialogs.py:635
+#: gui\settingsDialogs.py:716
 msgid "Report &line numbers"
-msgstr "Satır nu&maraları raporla"
+msgstr "Satır nu&maralarını bildir"
 
-#: gui\settingsDialogs.py:641
+#: gui\settingsDialogs.py:719
+msgid "Report &tables"
+msgstr "Tabl&oları bildir"
+
+#: gui\settingsDialogs.py:722
+msgid "Report table row/column h&eaders"
+msgstr "Tablo satır v&e sütun başlıklarını bildir"
+
+#: gui\settingsDialogs.py:725
 msgid "Report &links"
-msgstr "&Bağlantıları raporla"
+msgstr "&Bağlantıları bildir"
 
-#: gui\settingsDialogs.py:647
+#: gui\settingsDialogs.py:728
+msgid "Report &headings"
+msgstr "B&aşlıkları bildir"
+
+#: gui\settingsDialogs.py:731
 msgid "Report l&ists"
-msgstr "&Listeleri raporla"
+msgstr "&Listeleri bildir"
 
-#: gui\settingsDialogs.py:677
+#: gui\settingsDialogs.py:734
+msgid "Report block &quotes"
+msgstr "Alın&tıları bildir"
+
+#: gui\settingsDialogs.py:737
+msgid "Report lan&dmarks"
+msgstr "Sınır İ&mlerini bildir"
+
+#: gui\settingsDialogs.py:766
 msgid "Edit dictionary entry"
 msgstr "Sözlük kayıdını düzenle"
 
-#: gui\settingsDialogs.py:680
+#: gui\settingsDialogs.py:770
 msgid "&Pattern"
 msgstr "ö&rnek"
 
-#: gui\settingsDialogs.py:683
+#: gui\settingsDialogs.py:773
 msgid "&Replacement"
 msgstr "&olarak değiştir"
 
-#: gui\settingsDialogs.py:686
+#: gui\settingsDialogs.py:776
 msgid "&Comment"
 msgstr "&Yorum"
 
-#: gui\settingsDialogs.py:689
+#: gui\settingsDialogs.py:779
 msgid "Case &sensitive"
-msgstr ""
+msgstr "Büyük-küçük harf  &duyarlı"
 
-#: gui\settingsDialogs.py:691
+#: gui\settingsDialogs.py:781
 msgid "Regular &expression"
-msgstr "Normal &söz"
+msgstr "Düzenli &ifade>"
 
-#: gui\settingsDialogs.py:713
+#: gui\settingsDialogs.py:803
 msgid "&Dictionary entries"
 msgstr "&Sözlük kayıtları"
 
-#: gui\settingsDialogs.py:716
+#: gui\settingsDialogs.py:806
 msgid "Comment"
 msgstr "yorum"
 
-#: gui\settingsDialogs.py:717
+#: gui\settingsDialogs.py:807
 msgid "Pattern"
 msgstr "Örnek"
 
-#: gui\settingsDialogs.py:718
+#: gui\settingsDialogs.py:808
 msgid "Replacement"
 msgstr "olarak değiştir"
 
-#: gui\settingsDialogs.py:719
+#: gui\settingsDialogs.py:809
 msgid "case sensitive"
-msgstr ""
+msgstr "Büyük-küçük harf duyarlı"
 
-#: gui\settingsDialogs.py:720
+#: gui\settingsDialogs.py:810
 msgid "Regular expression"
-msgstr "Normal söz"
+msgstr "Düzenli ifade"
 
-#: gui\settingsDialogs.py:727
+#: gui\settingsDialogs.py:818
 msgid "&Add"
 msgstr "&Ekle"
 
-#: gui\settingsDialogs.py:730
+#: gui\settingsDialogs.py:821
 msgid "&edit"
 msgstr "&Düzenle"
 
-#: gui\settingsDialogs.py:733
-msgid "&Kaldır"
-msgstr "&Entfernen"
+#: gui\settingsDialogs.py:824
+msgid "&Remove"
+msgstr "Kaldı&r"
 
-#: gui\settingsDialogs.py:800
+#: gui\settingsDialogs.py:846
+msgid "Add Dictionary Entry"
+msgstr "Sözlük girişi ekle"
+
+#: gui\settingsDialogs.py:891
 msgid "Braille Settings"
 msgstr "Braille ayarları"
 
-#: gui\settingsDialogs.py:804
+#: gui\settingsDialogs.py:895
 msgid "Braille &display:"
 msgstr "Braille &display"
 
-#: gui\settingsDialogs.py:818
+#: gui\settingsDialogs.py:909
 msgid "Translation &table:"
 msgstr "çeviri &tablosu"
 
-#: gui\settingsDialogs.py:830
+#: gui\settingsDialogs.py:921
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr ""
+msgstr "E&xpand to computer braille for the word at the cursor"
 
-#: gui\settingsDialogs.py:835
+#: gui\settingsDialogs.py:926
 msgid "Cursor blink rate (ms)"
 msgstr "Imleç titreşimi (MS)"
 
-#: gui\settingsDialogs.py:843
+#: gui\settingsDialogs.py:934
 msgid "Message timeout (sec)"
 msgstr "Mesaj zaman aşımı (san)"
 
-#: gui\settingsDialogs.py:856
+#: gui\settingsDialogs.py:942
+msgid "Braille tethered to:"
+msgstr "Braille odağa getirildi"
+
+#: gui\settingsDialogs.py:961
 msgid "Braille Display Error"
 msgstr "Braille Display hatası"
 
-#: gui\settingsDialogs.py:856
+#: gui\settingsDialogs.py:961
 msgid "Could not load the %s display."
 msgstr "%s Display yüklenemiyor"
 
-#: keyUtils.py:111
+#: keyLabels.py:8
+msgid "back"
+msgstr "Geri"
+
+#: keyLabels.py:9
+msgid "forward"
+msgstr "İleri"
+
+#: keyLabels.py:10
+msgid "refresh"
+msgstr "Güncelle"
+
+#: keyLabels.py:11
+msgid "browser stop"
+msgstr "Tarama durdur"
+
+#: keyLabels.py:12
+msgid "search page"
+msgstr "Sayfayı ara"
+
+#: keyLabels.py:13
+msgid "favorites"
+msgstr "Sık kullanılanlar"
+
+#: keyLabels.py:14
+msgid "home page"
+msgstr "Ana sayfa"
+
+#: keyLabels.py:15
+msgid "mute"
+msgstr "Sustur"
+
+#: keyLabels.py:16
+msgid "volume down"
+msgstr "Sesi azalt"
+
+#: keyLabels.py:17
+msgid "volume up"
+msgstr "Sesi artır"
+
+#: keyLabels.py:18
+msgid "next track"
+msgstr "Sonraki parça"
+
+#: keyLabels.py:19
+msgid "previous track"
+msgstr "Önceki parça"
+
+#: keyLabels.py:20
+msgid "stop"
+msgstr "Durdur"
+
+#: keyLabels.py:21
+msgid "play pause"
+msgstr "Çal/duraklat"
+
+#: keyLabels.py:22
+msgid "email"
+msgstr "E-posta"
+
+#: keyLabels.py:23
+msgid "media player"
+msgstr "Medya oynatıcı"
+
+#: keyLabels.py:24
+msgid "custom application 1"
+msgstr "özel uygulama 1"
+
+#: keyLabels.py:25
+msgid "custom application 2"
+msgstr "özel uygulama 2"
+
+#: keyLabels.py:26
 msgid "backspace"
 msgstr "geri tuşu"
 
-#: keyUtils.py:112
+#: keyLabels.py:27
 msgid "caps lock"
 msgstr "büyük harf kilidi"
 
-#: keyUtils.py:113
+#: keyLabels.py:28
 msgid "ctrl"
-msgstr "ctrl"
+msgstr "kontrol"
 
-#: keyUtils.py:114
+#: keyLabels.py:29
 msgid "alt"
 msgstr "Alt"
 
-#: keyUtils.py:115
+#: keyLabels.py:30
 msgid "shift"
 msgstr "Kaydır"
 
-# Deutsche Sprachdatei für NVDA
-# Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
-# Michael Curran <mick@kulgan.net> 2006
-#
-#: keyUtils.py:116
+#: keyLabels.py:31
 msgid "windows"
 msgstr "Windows"
 
-#: keyUtils.py:117
+#: keyLabels.py:32
 msgid "enter"
-msgstr "Enter"
+msgstr "Giriş"
 
-#: keyUtils.py:118
+#: keyLabels.py:33
 msgid "numpad enter"
-msgstr ""
+msgstr "numaratör giriş"
 
-#: keyUtils.py:119
+#: keyLabels.py:34
 msgid "escape"
-msgstr "escape"
+msgstr "Çıkış"
 
-#: keyUtils.py:121
+#: keyLabels.py:36
 msgid "page up"
 msgstr "önceki sayfa"
 
-#: keyUtils.py:122
+#: keyLabels.py:37
 msgid "page down"
 msgstr "sonraki sayfa"
 
-#: keyUtils.py:123
+#: keyLabels.py:38
 msgid "end"
-msgstr "End"
+msgstr "Son"
 
-#: keyUtils.py:124
+#: keyLabels.py:39
 msgid "home"
-msgstr "Home"
+msgstr "Baş"
 
-#: keyUtils.py:125
+#: keyLabels.py:40
 msgid "delete"
-msgstr "delete"
+msgstr "sil"
 
-#: keyUtils.py:126
+#: keyLabels.py:41
+msgid "numpad delete"
+msgstr "numaratör sil"
+
+#: keyLabels.py:42
 msgid "left arrow"
-msgstr "Sol ok tuşu"
+msgstr "Sol ok"
 
-#: keyUtils.py:127
+#: keyLabels.py:43
 msgid "right arrow"
-msgstr "Sağ ok tuşu"
+msgstr "Sağ ok"
 
-#: keyUtils.py:128
+#: keyLabels.py:44
 msgid "up arrow"
-msgstr "Yukarı ok tuşu"
+msgstr "Yukarı ok"
 
-#: keyUtils.py:129
+#: keyLabels.py:45
 msgid "down arrow"
-msgstr "Aşağı ok tuşu"
+msgstr "Aşağı ok"
 
-#: keyUtils.py:130
+#: keyLabels.py:46
 msgid "applications"
 msgstr "Uygulama"
 
-#: keyUtils.py:131
+#: keyLabels.py:47
 msgid "num lock"
-msgstr "num lock"
+msgstr "numara kilidi"
 
-#: keyUtils.py:132
-msgid "snapshot"
-msgstr "snapshot"
+#: keyLabels.py:48
+msgid "print screen"
+msgstr "ekran çıktısı"
 
-#: keyUtils.py:133
-msgid "scrol lock"
+#: keyLabels.py:49
+msgid "scroll lock"
 msgstr "scrol lock"
 
-#: keyUtils.py:134
-msgid "numpad left"
-msgstr ""
+#: keyLabels.py:50
+msgid "numpad 4"
+msgstr "numaratör 4"
 
-#: keyUtils.py:135
-msgid "numpad right"
-msgstr ""
+#: keyLabels.py:51
+msgid "numpad 6"
+msgstr "numaratör 6"
 
-#: keyUtils.py:136
-msgid "numpad up"
-msgstr ""
+#: keyLabels.py:52
+msgid "numpad 8"
+msgstr "numaratör 8"
 
-#: keyUtils.py:137
-msgid "numpad down"
-msgstr ""
+#: keyLabels.py:53
+msgid "numpad 2"
+msgstr "numaratör 2"
 
-#: keyUtils.py:138
-msgid "numpad page up"
-msgstr ""
+#: keyLabels.py:54
+msgid "numpad 9"
+msgstr "numaratör 9"
 
-#: keyUtils.py:140
-msgid "numpad end"
-msgstr ""
+#: keyLabels.py:55
+msgid "numpad 3"
+msgstr "numaratör 3"
 
-#: keyUtils.py:141
-msgid "numpad home"
-msgstr ""
+#: keyLabels.py:56
+msgid "numpad 1"
+msgstr "numaratör 1"
 
-#: keyUtils.py:142
-msgid "numpad slash"
-msgstr ""
+#: keyLabels.py:57
+msgid "numpad 7"
+msgstr "numaratör 7"
 
-#: keyUtils.py:143
-msgid "numpad star"
-msgstr ""
+#: keyLabels.py:58
+msgid "numpad 5"
+msgstr "numaratör 5"
 
-#: keyUtils.py:144
+#: keyLabels.py:59
+msgid "numpad divide"
+msgstr "numaratör bölü"
+
+#: keyLabels.py:60
+msgid "numpad multiply"
+msgstr "numaratör çarpı"
+
+#: keyLabels.py:61
 msgid "numpad minus"
-msgstr ""
+msgstr "numaratör eksi"
 
-#: keyUtils.py:145
+#: keyLabels.py:62
 msgid "numpad plus"
-msgstr ""
+msgstr "numaratör artı"
 
-#: keyUtils.py:146
+#: keyLabels.py:63
 msgid "left control"
-msgstr "Sol Control tuşu"
+msgstr "sol Kontrol"
 
-#: keyUtils.py:147
+#: keyLabels.py:64
 msgid "right control"
-msgstr "Sağ Control tuşu"
+msgstr "Sağ kontrol"
 
-# Deutsche Sprachdatei für NVDA
-# Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
-# Michael Curran <mick@kulgan.net> 2006
-#
-#: keyUtils.py:148
+#: keyLabels.py:65
 msgid "left windows"
-msgstr "sol Windows tuşu"
+msgstr "sol Windows"
 
-#: keyUtils.py:149
+#: keyLabels.py:66
 msgid "left shift"
-msgstr "Sol Kaydır tuşu"
+msgstr "Sol Kaydır"
 
-#: keyUtils.py:150
+#: keyLabels.py:67
 msgid "right shift"
-msgstr "Sağ Kaydır tuşu"
+msgstr "Sağ Kaydır"
 
-#: keyUtils.py:151
+#: keyLabels.py:68
 msgid "left alt"
-msgstr "sol Alt tuşu"
+msgstr "sol Alt"
 
-#: keyUtils.py:152
+#: keyLabels.py:69
 msgid "right alt"
-msgstr "sağ Alt tuşu"
+msgstr "sağ Alt"
 
-#: keyUtils.py:153
+#: keyLabels.py:70
 msgid "right windows"
-msgstr "sağ Windows tuşu"
+msgstr "sağ Windows"
 
-#: keyboardHandler.py:52
-msgid "caps lock %s"
-msgstr "büyük harf kilidi %s"
+#: keyLabels.py:71
+msgid "break"
+msgstr "sınır"
 
-#: keyboardHandler.py:54
-msgid "num lock %s"
-msgstr "num lock %s"
-
-#: keyboardHandler.py:56
-msgid "scroll lock %s"
-msgstr "scroll lock %s"
-
-#: keyboardHandler.py:76
-msgid "%s keyboard layout"
-msgstr "%s Klavier düzeni"
-
-#: keyboardHandler.py:166
-msgid "Description: %s"
-msgstr "Tarif: %s"
-
-#: keyboardHandler.py:167
-msgid "Location: %s"
-msgstr "Konum: %s"
+#: keyboardHandler.py:179
+msgid "desktop"
+msgstr "masa üstü"
 
 #: keyboardHandler.py:180
-msgid "Error in keyboardHandler.internal_keyDownEvent"
-msgstr "KeyboardHandler hatası.internal_keyDownEvent"
+msgid "laptop"
+msgstr "dizüstü"
 
-#: keyboardHandler.py:213
-msgid "Error in keyboardHandler.internal_keyUpEvent"
-msgstr "KeyboardHandler hatası.internal_keyUpEvent"
-
-#: mouseHandler.py:156
+#: mouseHandler.py:136
 msgid "%s cursor"
 msgstr "%s imleç"
 
-#: pythonConsole.py:63
+#: pythonConsole.py:24
+msgid "Type help(object) to get help about object."
+msgstr "Nesne hakkında yardım almak için help object yazın"
+
+#: pythonConsole.py:43
+msgid "Type exit() to exit the console"
+msgstr "Konsoldan çıkmak için exit yazın"
+
+#: pythonConsole.py:96
 msgid "NVDA Python Console"
-msgstr "NVDA Python konsulu"
+msgstr "NVDA Python konsolu"
 
-#: sayAllHandler.py:152
-msgid "end of text"
-msgstr "Metin sonu"
+#: scriptHandler.py:30
+msgid "Emulates pressing %s on the system keyboard"
+msgstr ""
 
-#: speech.py:168
+#: speech.py:175
 msgid "cap %s"
 msgstr "Büyük %s"
 
-#: speech.py:336
+#: speech.py:322
+msgid "%d characters"
+msgstr "%d karakter"
+
+#: speech.py:373
 msgid "selecting %s"
 msgstr "%s seçiliyor"
 
-#: speech.py:347
+#: speech.py:384
 msgid "unselecting %s"
 msgstr "%s seçilmiyor"
 
-#: speech.py:349
+#: speech.py:386
 msgid "selection removed"
 msgstr "Seçim kaldırıldı"
 
-#: speech.py:584
-#: virtualBuffers_old\MSHTML.py:126
-#: virtualBuffers_old\MSHTML.py:314
-#: virtualBuffers_old\MSHTML.py:318
-#: virtualBuffers_old\adobe.py:305
-#: virtualBuffers_old\adobe.py:309
-#: virtualBuffers_old\gecko.py:297
-#: virtualBuffers_old\gecko.py:301
-msgid "not %s"
-msgstr "%s değil"
+#: speech.py:674
+msgid "done dragging"
+msgstr "sürükleme başarılı"
 
-#: speech.py:638
-#: speech.py:642
-#: speech.py:646
-#: speech.py:652
-#: speech.py:658
-#: speech.py:759
-#: virtualBuffers_old\__init__.py:195
-msgid "out of %s"
-msgstr "%s dışı"
-
-#: speech.py:640
-#: virtualBuffers_old\MSHTML.py:258
-#: virtualBuffers_old\MSHTML.py:261
-#: virtualBuffers_old\MSHTML.py:268
-#: virtualBuffers_old\adobe.py:262
-#: virtualBuffers_old\adobe.py:273
-#: virtualBuffers_old\gecko.py:254
-#: virtualBuffers_old\gecko.py:265
-msgid "with %s items"
-msgstr "%s öge"
-
-#: speech.py:656
-msgid "in %s"
-msgstr "%s içinde"
-
-#: speech.py:676
-msgid "page %s"
-msgstr "Sayfa %s"
-
-#: speech.py:683
-#: textBuffer.py:242
-#: textBuffer.py:310
-msgid "style %s"
-msgstr "Stil %s"
-
-#: speech.py:685
-msgid "default style"
-msgstr "Öntanımlı stil"
-
-#: speech.py:705
-msgid "line %s"
-msgstr "satır %s"
-
-#: speech.py:711
-msgid "no bold"
-msgstr "Kalın değil"
-
-#: speech.py:716
-msgid "no italic"
-msgstr "eğik değil"
-
-#: speech.py:721
-msgid "no strikethrough"
-msgstr ""
-
-#: speech.py:721
-msgid "strikethrough"
-msgstr ""
-
-#: speech.py:726
-msgid "not underlined"
-msgstr "alt çizgili değil"
-
-#: speech.py:726
-msgid "underlined"
-msgstr "alt çizgili"
-
-#: speech.py:737
-msgid "baseline"
-msgstr "taban çizgisi"
-
-#: speech.py:745
-msgid "align left"
-msgstr "Sol hiza"
-
-#: speech.py:747
-msgid "align center"
-msgstr "Orta hiza"
-
-#: speech.py:749
-msgid "align right"
-msgstr "Sağ hiza"
-
-#: speech.py:751
-msgid "align justify"
-msgstr ""
-
-#: speech.py:753
-msgid "align default"
-msgstr "öntanımlı hiza"
-
-#: speech.py:766
-msgid "spelling error"
-msgstr "Yazım hatası"
-
-#: speech.py:768
-msgid "out of spelling error"
-msgstr "yazım hatası dışında"
-
-#: speech.py:782
-#: textBuffer.py:219
-msgid "out of table"
-msgstr "tablo dışında"
-
-#: speech.py:791
-msgid "table with %s columns and %s rows"
-msgstr "%s sütun ve %s satırlı tablo"
-
-#: speech.py:796
-msgid "column %s"
-msgstr "sütun %s"
-
-#: speech.py:800
+#: speech.py:704
+#: speech.py:1003
 msgid "row %s"
 msgstr "satır %s"
 
-#: synthDrivers\_espeak.py:294
+#: speech.py:710
+#: speech.py:999
+msgid "column %s"
+msgstr "sütun %s"
+
+#: speech.py:715
+msgid "with %s rows and %s columns"
+msgstr "%s satır ve %s sütunlu"
+
+#: speech.py:717
+msgid "with %s columns"
+msgstr "%s sütunlu"
+
+#: speech.py:719
+msgid "with %s rows"
+msgstr "%s satırlı"
+
+#: speech.py:825
+msgid "with %s items"
+msgstr "%s öge"
+
+#: speech.py:842
+#: speech.py:958
+msgid "out of %s"
+msgstr "%s dışı"
+
+#: speech.py:866
+msgid "page %s"
+msgstr "Sayfa %s"
+
+#: speech.py:873
+msgid "style %s"
+msgstr "Stil %s"
+
+#: speech.py:875
+msgid "default style"
+msgstr "Varsayılan stil"
+
+#: speech.py:899
+msgid "on {backgroundColor}"
+msgstr "arkaplan renginde"
+
+#: speech.py:904
+msgid "line %s"
+msgstr "satır %s"
+
+#: speech.py:910
+msgid "no bold"
+msgstr "Kalın değil"
+
+#: speech.py:915
+msgid "italic"
+msgstr "italik"
+
+#: speech.py:915
+msgid "no italic"
+msgstr "İtalik yok"
+
+#: speech.py:920
+msgid "no strikethrough"
+msgstr "no strikethrough"
+
+#: speech.py:920
+msgid "strikethrough"
+msgstr "strikethrough"
+
+#: speech.py:925
+msgid "not underlined"
+msgstr "altı çizili değil"
+
+#: speech.py:925
+msgid "underlined"
+msgstr "altı çizili"
+
+#: speech.py:936
+msgid "baseline"
+msgstr "taban çizgisi"
+
+#: speech.py:944
+msgid "align left"
+msgstr "Sol hiza"
+
+#: speech.py:946
+msgid "align center"
+msgstr "Orta hiza"
+
+#: speech.py:948
+msgid "align right"
+msgstr "Sağ hiza"
+
+#: speech.py:950
+msgid "align justify"
+msgstr "İki yana hizala"
+
+#: speech.py:952
+msgid "align default"
+msgstr "Varsayılan hiza"
+
+#: speech.py:965
+msgid "spelling error"
+msgstr "Yazım hatası"
+
+#: speech.py:967
+msgid "out of spelling error"
+msgstr "yazım hatası dışında"
+
+#: speech.py:985
+msgid "out of table"
+msgstr "tablo dışında"
+
+#: speech.py:994
+msgid "table with %s columns and %s rows"
+msgstr "%s sütun ve %s satırlı tablo"
+
+#: speechViewer.py:13
+msgid "NVDA Speech Viewer"
+msgstr "NVDA konuşma görüntüleyici"
+
+#: synthDriverHandler.py:185
+msgid "&Language"
+msgstr "Di&l"
+
+#: synthDriverHandler.py:190
+msgid "&Voice"
+msgstr "S&es"
+
+#: synthDriverHandler.py:194
+msgid "V&ariant"
+msgstr "K&onuşucu"
+
+#: synthDriverHandler.py:199
+msgid "&Rate"
+msgstr "&Hız"
+
+#: synthDriverHandler.py:203
+msgid "V&olume"
+msgstr "Ses se&viyesi"
+
+#: synthDriverHandler.py:207
+msgid "&Pitch"
+msgstr "&Ses Perdesi"
+
+#: synthDriverHandler.py:212
+msgid "&Inflection"
+msgstr "&tonlama"
+
+#: synthDrivers\_espeak.py:308
 msgid "none"
 msgstr "Hiçbiri"
 
-#: synthDrivers\display.py:31
-msgid "A virtual synth which displays text in a window"
-msgstr "Konuştuğu metni görüntüleyen sanal bir Sentezleyici"
+#: synthDrivers\newfon.py:179
+msgid "&Acceleration"
+msgstr ""
+
+#: synthDrivers\newfon.py:190
+msgid "female 1"
+msgstr "Kadın 1"
+
+#: synthDrivers\newfon.py:190
+msgid "female 2"
+msgstr "Kadın 2"
+
+#: synthDrivers\newfon.py:190
+msgid "male 1"
+msgstr "Erkek 1"
+
+#: synthDrivers\newfon.py:190
+msgid "male 2"
+msgstr "Erkek 2"
 
 #: synthDrivers\silence.py:13
 msgid "No speech"
 msgstr "Sessiz"
 
-#: synthSettingsRing.py:94
-msgid "rate"
-msgstr "Hız"
+#: textInfos\__init__.py:137
+msgid "word"
+msgstr "Sözcük"
 
-#: synthSettingsRing.py:95
-msgid "pitch"
-msgstr "Adım"
-
-#: synthSettingsRing.py:96
-msgid "volume"
-msgstr "Ses sviyesi"
-
-#: synthSettingsRing.py:97
-msgid "inflection"
-msgstr "Ses tonu"
-
-#: synthSettingsRing.py:98
-msgid "voice"
-msgstr "Ses"
-
-#: synthSettingsRing.py:99
-msgid "variant"
-msgstr "Varyant"
-
-#: textBuffer.py:207
-msgid "page %d"
-msgstr "Sayfa %d"
-
-#: textBuffer.py:213
-msgid "line %d"
-msgstr "Satır %d"
-
-#: textBuffer.py:225
-msgid "table with %d columns and %d rows"
-msgstr "%d sütun ve %d satırlı tablo"
-
-#: textBuffer.py:231
-msgid "row %d"
-msgstr "Satır %d"
-
-#: textBuffer.py:236
-msgid "column %d"
-msgstr "Sütun %d"
-
-#: textBuffer.py:248
-#: textBuffer.py:312
-msgid "alignment %s"
-msgstr "Hiza %s"
-
-#: textBuffer.py:254
-#: textBuffer.py:314
-msgid "font name %s"
-msgstr "yazı tipi adı %s"
-
-#: textBuffer.py:260
-#: textBuffer.py:316
-msgid "font size %d"
-msgstr "yazı tipi büyüklüğü %d"
-
-#: textBuffer.py:268
-msgid "not bold"
-msgstr "Kalın değil"
-
-#: textBuffer.py:275
-msgid "not italic"
-msgstr "eğik değil"
-
-#: textBuffer.py:282
-msgid "not underline"
-msgstr "alt çizgili değil"
-
-#: textBuffer.py:289
-msgid "not superscript"
-msgstr "üstsimgeli değil"
-
-#: textBuffer.py:296
-msgid "not subscript"
-msgstr "altsimgeli değil"
-
-#: textBuffer.py:470
-#: textBuffer.py:498
-#: textBuffer.py:506
-msgid "Moves and then reads the current line"
-msgstr "İmleçi taşı ve şu anki satırı oku"
-
-#: textBuffer.py:474
-msgid "reads the current line"
-msgstr "Şu anki satırı oku"
-
-#: textBuffer.py:482
-msgid "Moves and reads the current character"
-msgstr "İmleçi taşı ve şu anki harfi oku"
-
-#: textBuffer.py:490
-msgid "Moves and reads the current word"
-msgstr "İmleçi taşı ve şu anki kelimeyi oku"
-
-#: textBuffer.py:514
-msgid "Manually moves to the next paragraph and then speaks it"
-msgstr "İmleçi sonraki paragrafa taşı ve oku"
-
-#: textBuffer.py:522
-msgid "Manually moves to the previous paragraph and then speaks it"
-msgstr "İmleçi önceki paragrafa taşı ve oku"
-
-#: textBuffer.py:534
-msgid "no selections"
-msgstr "Hiç bir seçim yok"
-
-#: textBuffer.py:545
-#: textBuffer.py:547
-#: textBuffer.py:551
-msgid "unselected %s"
-msgstr "seçilmemiş %s"
-
-#: textBuffer.py:553
-msgid "Moves and reads the current selection"
-msgstr "Imleçi taşı ve seçimi oku"
-
-#: textBuffer.py:559
-msgid "Deletes the character and reads the new current character"
-msgstr "Harfi sil ve şu anki harfi oku"
-
-#: textBuffer.py:573
-msgid "Reads the character before the current character and then deletes it"
-msgstr "önceki harfi okur ve siler"
-
-#: versionInfo.py:40
+#: versionInfo.py:25
 msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
-#: versionInfo.py:42
+#: versionInfo.py:27
 msgid "A free and open-source screen reader for MS Windows"
-msgstr "Microsoft Windows için Açık ve Serbest kaynaklı Ekran Okuyucu"
+msgstr "Microsoft Windows için Açık kaynak ve özgür Ekran Okuyucu"
 
-#: versionInfo.py:44
+#: versionInfo.py:29
+msgid "Copyright (C) 2006-2010 NVDA Contributors"
+msgstr "Copyright (C) 2006-2010 NVDA'ya katkıda bulunanlar"
+
+#: versionInfo.py:30
 msgid ""
-"Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>\n"
+"%(copyright)s\n"
 "%(name)s is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it. This applies to both origional and modified copies of the software, plus any software that uses code taken from this software.\n"
 "For further details, you can view the licence online at:\n"
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "Or see the file Copying.txt that came with this software."
 msgstr ""
 
-#: virtualBufferHandler.py:93
-msgid "browse mode"
-msgstr "Gözatma modu"
+#: virtualBuffers\__init__.py:201
+msgid "%s landmark"
+msgstr "%s sınır imi"
 
-#: virtualBufferHandler.py:93
-msgid "focus mode"
-msgstr "Odak modu"
+#: virtualBuffers\__init__.py:219
+msgid "Lin&ks"
+msgstr "Bağ&lantılar"
 
-#: virtualBuffers\__init__.py:244
-#: virtualBuffers_old\__init__.py:295
-msgid "activates the current object in the virtual buffer"
-msgstr "sanal tampon içindeki Şu anki nesneyi etkinleştirir"
+#: virtualBuffers\__init__.py:220
+msgid "&Headings"
+msgstr "&başlıklar"
 
-#: virtualBuffers\__init__.py:256
+#: virtualBuffers\__init__.py:221
+msgid "Lan&dmarks"
+msgstr "Sını&r imleri"
+
+#: virtualBuffers\__init__.py:227
+msgid "Elements List"
+msgstr "Öğe listesi"
+
+#: virtualBuffers\__init__.py:230
+msgid "Type:"
+msgstr "Tür"
+
+#: virtualBuffers\__init__.py:241
+msgid "&Filter by:"
+msgstr "&Filtreleme kriteri"
+
+#: virtualBuffers\__init__.py:249
+msgid "&Activate"
+msgstr "&Etkinleştir"
+
+#: virtualBuffers\__init__.py:252
+msgid "&Move to"
+msgstr "&Taşı"
+
+#: virtualBuffers\__init__.py:548
 msgid "Refreshed"
-msgstr "Günceleştiridi"
+msgstr "Güncellendi"
 
-#: virtualBuffers\__init__.py:261
+#: virtualBuffers\__init__.py:553
+msgid "Loading document..."
+msgstr "Belge yükleniyor..."
+
+#: virtualBuffers\__init__.py:692
+msgid "activates the current object in the virtual buffer"
+msgstr "sanal tampon içindeki mevcut nesneyi etkinleştirir"
+
+#: virtualBuffers\__init__.py:700
+msgid "Refreshes the virtual buffer content"
+msgstr "Sanal tampondaki içeriği  günceller."
+
+#: virtualBuffers\__init__.py:705
 msgid "use screen layout %s"
-msgstr "%s Ekran tipini kullan"
+msgstr "Ekran düzenini kullan %s"
 
-#: virtualBuffers\__init__.py:354
-msgid "displays a list of links"
-msgstr "Bağlantı listesi göster"
+#: virtualBuffers\__init__.py:706
+msgid "Toggles on and off if the screen layout is preserved while rendering the virtual buffer content"
+msgstr ""
 
-#: virtualBuffers\__init__.py:434
-msgid "no next heading"
-msgstr "Ileride daha fazla başlık yok"
+#: virtualBuffers\__init__.py:789
+msgid "Presents a list of links, headings or landmarks"
+msgstr "Bağlantı, başlık ya da sınır imi listesini gösterir"
 
-#: virtualBuffers\__init__.py:434
-#: virtualBuffers_old\__init__.py:318
+#: virtualBuffers\__init__.py:1122
+msgid "Not in a table cell"
+msgstr "Bir tablo hücresinde değil."
+
+#: virtualBuffers\__init__.py:1138
+msgid "moves to the next table row"
+msgstr "Bir sonraki tablo satırına gider"
+
+#: virtualBuffers\__init__.py:1142
+msgid "moves to the previous table row"
+msgstr "Bir önceki tablo satırına gider"
+
+#: virtualBuffers\__init__.py:1146
+msgid "moves to the next table column"
+msgstr "Bir sonraki tablo sütununa gider"
+
+#: virtualBuffers\__init__.py:1150
+msgid "moves to the previous table column"
+msgstr "Bir önceki tablo sütununa gider"
+
+#: virtualBuffers\__init__.py:1210
 msgid "moves to the next heading"
-msgstr "Bir sonraki başlığa taşı"
+msgstr "Bir sonraki başlığa gider"
 
-#: virtualBuffers\__init__.py:435
-msgid "no previous heading"
-msgstr "Geride daha fazla başlık yok"
+#: virtualBuffers\__init__.py:1210
+msgid "no next heading"
+msgstr "Ileride başlık yok"
 
-#: virtualBuffers\__init__.py:435
-#: virtualBuffers_old\__init__.py:329
+#: virtualBuffers\__init__.py:1211
 msgid "moves to the previous heading"
-msgstr "Önceki başlığa taşı"
+msgstr "Önceki başlığa gider"
 
-#: virtualBuffers\__init__.py:436
+#: virtualBuffers\__init__.py:1211
+msgid "no previous heading"
+msgstr "Geride başlık yok"
+
+#: virtualBuffers\__init__.py:1212
 msgid "moves to the next heading at level 1"
-msgstr "Bir sonraki birinci seviyedeki başlığa taşı"
+msgstr "Bir sonraki birinci seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:436
+#: virtualBuffers\__init__.py:1212
 msgid "no next heading at level 1"
-msgstr "Ileride daha fazla birinci seviyede başlık yok"
+msgstr "Ileride birinci seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:437
+#: virtualBuffers\__init__.py:1213
 msgid "moves to the previous heading at level 1"
-msgstr "Bir önceki birinci seviyedeki başlığa taşı"
+msgstr "Bir önceki birinci seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:437
+#: virtualBuffers\__init__.py:1213
 msgid "no previous heading at level 1"
-msgstr "Geride daha fazla birinci seviyede başlık yok"
+msgstr "Geride birinci seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:438
+#: virtualBuffers\__init__.py:1214
 msgid "moves to the next heading at level 2"
-msgstr "Bir sonraki ikinci seviyedeki başlığa taşı"
+msgstr "Bir sonraki ikinci seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:438
+#: virtualBuffers\__init__.py:1214
 msgid "no next heading at level 2"
-msgstr "Ileride daha fazla ikinci seviyede başlık yok"
+msgstr "Ileride ikinci seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:439
+#: virtualBuffers\__init__.py:1215
 msgid "moves to the previous heading at level 2"
-msgstr "Bir önceki ikinci seviyedeki başlığa taşı"
+msgstr "Bir önceki ikinci seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:439
+#: virtualBuffers\__init__.py:1215
 msgid "no previous heading at level 2"
-msgstr "Geride daha fazla ikinci seviyede Başlık yok"
+msgstr "Geride ikinci seviyede Başlık yok"
 
-#: virtualBuffers\__init__.py:440
+#: virtualBuffers\__init__.py:1216
 msgid "moves to the next heading at level 3"
-msgstr "Bir sonraki üçüncü seviyedeki başlığa taşı"
+msgstr "Bir sonraki üçüncü seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:440
+#: virtualBuffers\__init__.py:1216
 msgid "no next heading at level 3"
-msgstr "Ileride daha fazla üçüncü seviyede başlık yok"
+msgstr "Ileride üçüncü seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:441
+#: virtualBuffers\__init__.py:1217
 msgid "moves to the previous heading at level 3"
-msgstr "Bir önceki üçüncü seviyedeki başlığa taşı"
+msgstr "Bir önceki üçüncü seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:441
+#: virtualBuffers\__init__.py:1217
 msgid "no previous heading at level 3"
-msgstr "Geride daha fazla üçüncü seviyede başlık yok"
+msgstr "Geride üçüncü seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:442
+#: virtualBuffers\__init__.py:1218
 msgid "moves to the next heading at level 4"
-msgstr "Bir sonraki dördüncü seviyedeki başlığa taşı"
+msgstr "Bir sonraki dördüncü seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:442
+#: virtualBuffers\__init__.py:1218
 msgid "no next heading at level 4"
-msgstr "Ileride daha fazla dördüncü seviyede başlık yok"
+msgstr "Ileride dördüncü seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:443
+#: virtualBuffers\__init__.py:1219
 msgid "moves to the previous heading at level 4"
-msgstr "Bir önceki dördüncü seviyedeki başlığa taşı"
+msgstr "Bir önceki dördüncü seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:443
+#: virtualBuffers\__init__.py:1219
 msgid "no previous heading at level 4"
-msgstr "Geride daha fazla dördüncü seviyede başlık yok"
+msgstr "Geride dördüncü seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:444
+#: virtualBuffers\__init__.py:1220
 msgid "moves to the next heading at level 5"
-msgstr "Bir sonraki beşinci seviyedeki başlığa taşı"
+msgstr "Bir sonraki beşinci seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:444
+#: virtualBuffers\__init__.py:1220
 msgid "no next heading at level 5"
-msgstr "Ileride daha fazla beşinci seviyede başlık yok"
+msgstr "Ileride beşinci seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:445
+#: virtualBuffers\__init__.py:1221
 msgid "moves to the previous heading at level 5"
-msgstr "Bir önceki beşinci seviyedeki başlığa taşı"
+msgstr "Bir önceki beşinci seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:445
+#: virtualBuffers\__init__.py:1221
 msgid "no previous heading at level 5"
-msgstr "Geride daha fazla beşinci seviyede başlık yok"
+msgstr "Geride beşinci seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:446
+#: virtualBuffers\__init__.py:1222
 msgid "moves to the next heading at level 6"
-msgstr "Bir sonraki altıncı seviyedeki başlığa taşı"
+msgstr "Bir sonraki altıncı seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:446
+#: virtualBuffers\__init__.py:1222
 msgid "no next heading at level 6"
-msgstr "Ileride daha fazla altıncı seviyede başlık yok"
+msgstr "Ileride altıncı seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:447
+#: virtualBuffers\__init__.py:1223
 msgid "moves to the previous heading at level 6"
-msgstr "Bir önceki altıncı seviyedeki başlığa taşı"
+msgstr "Bir önceki altıncı seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:447
+#: virtualBuffers\__init__.py:1223
 msgid "no previous heading at level 6"
-msgstr "Geride daha fazla altıncı seviyede başlık yok"
+msgstr "Geride altıncı seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:448
-msgid "no next table"
-msgstr "Ileride daha fazla Tablo yok"
-
-#: virtualBuffers\__init__.py:448
-#: virtualBuffers_old\__init__.py:362
+#: virtualBuffers\__init__.py:1224
 msgid "moves to the next table"
-msgstr "Bir sonraki tabloya taşı"
+msgstr "Bir sonraki tabloya gider"
 
-#: virtualBuffers\__init__.py:449
-msgid "no previous table"
-msgstr "Geride daha fazla Tablo yok"
+#: virtualBuffers\__init__.py:1224
+msgid "no next table"
+msgstr "Ileride Tablo yok"
 
-#: virtualBuffers\__init__.py:449
-#: virtualBuffers_old\__init__.py:373
+#: virtualBuffers\__init__.py:1225
 msgid "moves to the previous table"
-msgstr "Bir önceki tabloya taşı"
+msgstr "Bir önceki tabloya gider"
 
-#: virtualBuffers\__init__.py:450
-msgid "no next link"
-msgstr "Ileride daha fazla bağlantı yok"
+#: virtualBuffers\__init__.py:1225
+msgid "no previous table"
+msgstr "Geride Tablo yok"
 
-#: virtualBuffers\__init__.py:450
-#: virtualBuffers_old\__init__.py:384
+#: virtualBuffers\__init__.py:1226
 msgid "moves to the next link"
-msgstr "Bir sonraki bağlantıya taşı"
+msgstr "Bir sonraki bağlantıya gider"
 
-#: virtualBuffers\__init__.py:451
-msgid "no previous link"
-msgstr "Geride daha fazla bağlantı yok"
+#: virtualBuffers\__init__.py:1226
+msgid "no next link"
+msgstr "Ileride bağlantı yok"
 
-#: virtualBuffers\__init__.py:451
-#: virtualBuffers_old\__init__.py:395
+#: virtualBuffers\__init__.py:1227
 msgid "moves to the previous link"
-msgstr "Bir önceki bağlantıya taşı"
+msgstr "Bir önceki bağlantıya gider"
 
-#: virtualBuffers\__init__.py:452
+#: virtualBuffers\__init__.py:1227
+msgid "no previous link"
+msgstr "Geride bağlantı yok"
+
+#: virtualBuffers\__init__.py:1228
 msgid "moves to the next visited link"
-msgstr "Bir sonraki ziyaret edilmiş bağlantıya taşı"
+msgstr "Bir sonraki ziyaret edilmiş bağlantıya gider"
 
-#: virtualBuffers\__init__.py:452
+#: virtualBuffers\__init__.py:1228
 msgid "no next visited link"
-msgstr "Ileride daha fazla ziyaret edilmiş bağlantı yok"
+msgstr "Ileride ziyaret edilmiş bağlantı yok"
 
-#: virtualBuffers\__init__.py:453
+#: virtualBuffers\__init__.py:1229
 msgid "moves to the previous visited link"
-msgstr "Bir önceki ziyaret edilmiş bağlantıya taşı"
+msgstr "Bir önceki ziyaret edilmiş bağlantıya gider"
 
-#: virtualBuffers\__init__.py:453
+#: virtualBuffers\__init__.py:1229
 msgid "no previous visited link"
-msgstr "Geride daha fazla ziyaret edilmiş bağlantı yok"
+msgstr "Geride ziyaret edilmiş bağlantı yok"
 
-#: virtualBuffers\__init__.py:454
+#: virtualBuffers\__init__.py:1230
 msgid "moves to the next unvisited link"
-msgstr "Bir sonraki ziyaret edilmmemiş bağlantıya taşı"
+msgstr "Bir sonraki ziyaret edilmmemiş bağlantıya gider"
 
-#: virtualBuffers\__init__.py:454
+#: virtualBuffers\__init__.py:1230
 msgid "no next unvisited link"
-msgstr "Ileride daha fazla ziyaret edilmemiş bağlantı yok"
+msgstr "Ileride ziyaret edilmemiş bağlantı yok"
 
-#: virtualBuffers\__init__.py:455
+#: virtualBuffers\__init__.py:1231
 msgid "moves to the previous unvisited link"
-msgstr "Bir önceki ziyaret edilmmemiş bağlantıya taşı"
+msgstr "Bir önceki ziyaret edilmmemiş bağlantıya gider"
 
-#: virtualBuffers\__init__.py:455
+#: virtualBuffers\__init__.py:1231
 msgid "no previous unvisited link"
-msgstr "Geride daha fazla ziyaret edilmemiş bağlantı yok"
+msgstr "Geride ziyaret edilmemiş bağlantı yok"
 
-#: virtualBuffers\__init__.py:456
+#: virtualBuffers\__init__.py:1232
 msgid "moves to the next form field"
-msgstr "Bir sonraki form alanına taşı"
+msgstr "Bir sonraki form alanına gider"
 
-#: virtualBuffers\__init__.py:456
+#: virtualBuffers\__init__.py:1232
 msgid "no next form field"
-msgstr "Ileride daha fazla form alanı yok"
+msgstr "Ileride form alanı yok"
 
-#: virtualBuffers\__init__.py:457
-msgid "no previous form field"
-msgstr "Geride daha fazla form alanı yok"
-
-#: virtualBuffers\__init__.py:457
-#: virtualBuffers_old\__init__.py:461
+#: virtualBuffers\__init__.py:1233
 msgid "moves to the previous form field"
-msgstr "Bir önceki form alanına taşı"
+msgstr "Bir önceki form alanına gider"
 
-#: virtualBuffers\__init__.py:458
-msgid "no next list"
-msgstr "Ileride daha fazla liste yok"
+#: virtualBuffers\__init__.py:1233
+msgid "no previous form field"
+msgstr "Geride form alanı yok"
 
-#: virtualBuffers\__init__.py:458
-#: virtualBuffers_old\__init__.py:406
+#: virtualBuffers\__init__.py:1234
 msgid "moves to the next list"
-msgstr "Bir sonraki listeye taşı"
+msgstr "Bir sonraki listeye gider"
 
-#: virtualBuffers\__init__.py:459
-msgid "no previous list"
-msgstr "Geride daha fazla liste yok"
+#: virtualBuffers\__init__.py:1234
+msgid "no next list"
+msgstr "Ileride liste yok"
 
-#: virtualBuffers\__init__.py:459
-#: virtualBuffers_old\__init__.py:417
+#: virtualBuffers\__init__.py:1235
 msgid "moves to the previous list"
-msgstr "Bir önceki listeye taşı"
+msgstr "Bir önceki listeye gider"
 
-#: virtualBuffers\__init__.py:460
-msgid "no next list item"
-msgstr "Ileride daha fazla liste ögesi yok"
+#: virtualBuffers\__init__.py:1235
+msgid "no previous list"
+msgstr "Geride liste yok"
 
-#: virtualBuffers\__init__.py:460
-#: virtualBuffers_old\__init__.py:428
+#: virtualBuffers\__init__.py:1236
 msgid "moves to the next list item"
-msgstr "Bir sonraki liste ögesine taşı"
+msgstr "Bir sonraki liste ögesine gider"
 
-#: virtualBuffers\__init__.py:461
-msgid "no previous list item"
-msgstr "Geride daha fazla liste ögesi yok"
+#: virtualBuffers\__init__.py:1236
+msgid "no next list item"
+msgstr "Ileride liste ögesi yok"
 
-#: virtualBuffers\__init__.py:461
-#: virtualBuffers_old\__init__.py:439
+#: virtualBuffers\__init__.py:1237
 msgid "moves to the previous list item"
-msgstr "Bir önceki liste ögesine taşı"
+msgstr "Bir önceki liste ögesine gider"
 
-#: virtualBuffers\__init__.py:462
+#: virtualBuffers\__init__.py:1237
+msgid "no previous list item"
+msgstr "Geride liste ögesi yok"
+
+#: virtualBuffers\__init__.py:1238
 msgid "moves to the next button"
-msgstr "Bir sonraki düğmeye taşı"
+msgstr "Bir sonraki düğmeye gider"
 
-#: virtualBuffers\__init__.py:462
+#: virtualBuffers\__init__.py:1238
 msgid "no next button"
-msgstr "Ileride daha fazla düğme yok"
+msgstr "Ileride düğme yok"
 
-#: virtualBuffers\__init__.py:463
+#: virtualBuffers\__init__.py:1239
 msgid "moves to the previous button"
-msgstr "Bir önceki düğmeye taşı"
+msgstr "Bir önceki düğmeye gider"
 
-#: virtualBuffers\__init__.py:463
+#: virtualBuffers\__init__.py:1239
 msgid "no previous button"
-msgstr "Geride daha fazla düğme yok"
+msgstr "Geride düğme yok"
 
-#: virtualBuffers\__init__.py:464
+#: virtualBuffers\__init__.py:1240
 msgid "moves to the next edit field"
-msgstr "Bir sonraki yazma alanına taşı"
+msgstr "Bir sonraki yazma alanına gider"
 
-#: virtualBuffers\__init__.py:464
+#: virtualBuffers\__init__.py:1240
 msgid "no next edit field"
-msgstr "Ileride daha fazla yazma alanı yok"
+msgstr "Ileride yazı alanı yok"
 
-#: virtualBuffers\__init__.py:465
+#: virtualBuffers\__init__.py:1241
 msgid "moves to the previous edit field"
-msgstr "Bir önceki yazma alanına taşı"
+msgstr "Bir önceki yazma alanına gider"
 
-#: virtualBuffers\__init__.py:465
+#: virtualBuffers\__init__.py:1241
 msgid "no previous edit field"
-msgstr "Geride daha fazla yazma alanı yok"
+msgstr "Geride yazı alanı yok"
 
-#: virtualBuffers\__init__.py:466
+#: virtualBuffers\__init__.py:1242
 msgid "moves to the next frame"
-msgstr "Bir sonraki çerçeveye taşı"
+msgstr "Bir sonraki çerçeveye gider"
 
-#: virtualBuffers\__init__.py:466
+#: virtualBuffers\__init__.py:1242
 msgid "no next frame"
-msgstr "Ileride daha fazla çerçeve yok"
+msgstr "Ileride çerçeve yok"
 
-#: virtualBuffers\__init__.py:467
+#: virtualBuffers\__init__.py:1243
 msgid "moves to the previous frame"
-msgstr "Bir önceki çerçeveye taşı"
+msgstr "Bir önceki çerçeveye gider"
 
-#: virtualBuffers\__init__.py:467
+#: virtualBuffers\__init__.py:1243
 msgid "no previous frame"
-msgstr "Geride daha fazla çerçeve yok"
+msgstr "Geride çerçeve yok"
 
-#: virtualBuffers\__init__.py:468
+#: virtualBuffers\__init__.py:1244
 msgid "moves to the next separator"
-msgstr "Bir sonraki Ayraça taşı"
+msgstr "Bir sonraki Ayraça gider"
 
-#: virtualBuffers\__init__.py:468
+#: virtualBuffers\__init__.py:1244
 msgid "no next separator"
-msgstr "Ileride daha fazla ayraç yok"
+msgstr "Ileride ayraç yok"
 
-#: virtualBuffers\__init__.py:469
+#: virtualBuffers\__init__.py:1245
 msgid "moves to the previous separator"
-msgstr "Bir önceki Ayraça taşı"
+msgstr "Bir önceki Ayraça gider"
 
-#: virtualBuffers\__init__.py:469
+#: virtualBuffers\__init__.py:1245
 msgid "no previous separator"
-msgstr "Geride daha fazla ayraç yok"
+msgstr "Geride ayraç yok"
 
-#: virtualBuffers\__init__.py:470
+#: virtualBuffers\__init__.py:1246
 msgid "moves to the next radio button"
-msgstr "Bir sonraki radyo düğmesine taşı"
+msgstr "Bir sonraki seçim düğmesine gider"
 
-#: virtualBuffers\__init__.py:470
+#: virtualBuffers\__init__.py:1246
 msgid "no next radio button"
-msgstr "Ilerde daha fazla radyo düğmesi yok"
+msgstr "Ileride seçim düğmesi yok"
 
-#: virtualBuffers\__init__.py:471
+#: virtualBuffers\__init__.py:1247
 msgid "moves to the previous radio button"
-msgstr "Bir önceki radyo düğmesine taşı"
+msgstr "Bir önceki seçim düğmesine gider"
 
-#: virtualBuffers\__init__.py:471
+#: virtualBuffers\__init__.py:1247
 msgid "no previous radio button"
-msgstr "Geride daha fazla radyo düğmesi yok"
+msgstr "Geride seçim düğmesi yok"
 
-#: virtualBuffers\__init__.py:472
+#: virtualBuffers\__init__.py:1248
 msgid "moves to the next combo box"
-msgstr "Bir sonraki birleşik giriş kutusuna taşı"
+msgstr "Bir sonraki birleşik giriş kutusuna gider"
 
-#: virtualBuffers\__init__.py:472
+#: virtualBuffers\__init__.py:1248
 msgid "no next combo box"
-msgstr "Ileride daha fazla birleşik giriş kutusu yok"
+msgstr "Ileride birleşik giriş kutusu yok"
 
-#: virtualBuffers\__init__.py:473
+#: virtualBuffers\__init__.py:1249
 msgid "moves to the previous combo box"
-msgstr "Bir önceki birleşik giriş kutusuna taşı"
+msgstr "Bir önceki birleşik giriş kutusuna gider"
 
-#: virtualBuffers\__init__.py:473
+#: virtualBuffers\__init__.py:1249
 msgid "no previous combo box"
-msgstr "Geride daha fazla birleşik giriş kutusu yok"
+msgstr "Geride birleşik giriş kutusu yok"
 
-#: virtualBuffers\__init__.py:474
+#: virtualBuffers\__init__.py:1250
 msgid "moves to the next check box"
-msgstr "Bir sonraki onay kutusuna taşı"
+msgstr "Bir sonraki onay kutusuna gider"
 
-#: virtualBuffers\__init__.py:474
+#: virtualBuffers\__init__.py:1250
 msgid "no next check box"
-msgstr "Ileride daha fazla onaykutusu yok"
+msgstr "Ileride onaykutusu yok"
 
-#: virtualBuffers\__init__.py:475
+#: virtualBuffers\__init__.py:1251
 msgid "moves to the previous check box"
-msgstr "Bir önceki onay kutusuna taşı"
+msgstr "Bir önceki onay kutusuna gider"
 
-#: virtualBuffers\__init__.py:475
+#: virtualBuffers\__init__.py:1251
 msgid "no previous check box"
-msgstr "Geride daha fazla onaykutusu yok"
+msgstr "Geride onaykutusu yok"
 
-#: virtualBuffers\__init__.py:476
+#: virtualBuffers\__init__.py:1252
 msgid "moves to the next graphic"
-msgstr "Bir sonraki grafike taşı"
+msgstr "Bir sonraki grafike gider"
 
-#: virtualBuffers\__init__.py:476
+#: virtualBuffers\__init__.py:1252
 msgid "no next graphic"
-msgstr "Ileride daha fazla grafik yok"
+msgstr "Ileride grafik yok"
 
-#: virtualBuffers\__init__.py:477
+#: virtualBuffers\__init__.py:1253
 msgid "moves to the previous graphic"
-msgstr "Bir önceki grafike taşı"
+msgstr "Bir önceki grafike gider"
 
-#: virtualBuffers\__init__.py:477
+#: virtualBuffers\__init__.py:1253
 msgid "no previous graphic"
-msgstr "Geride daha fazla grafik yok"
+msgstr "Geride grafik yok"
 
-#: virtualBuffers\__init__.py:478
+#: virtualBuffers\__init__.py:1254
 msgid "moves to the next block quote"
-msgstr "Bir sonraki alıntıya taşı"
+msgstr "Bir sonraki alıntıya gider"
 
-#: virtualBuffers\__init__.py:478
+#: virtualBuffers\__init__.py:1254
 msgid "no next block quote"
-msgstr "Ileride daha fazla alıntı yok"
+msgstr "Ileride alıntı yok"
 
-#: virtualBuffers\__init__.py:479
+#: virtualBuffers\__init__.py:1255
 msgid "moves to the previous block quote"
-msgstr "Bir önceki alıntıya taşı"
+msgstr "Bir önceki alıntıya gider"
 
-#: virtualBuffers\__init__.py:479
+#: virtualBuffers\__init__.py:1255
 msgid "no previous block quote"
-msgstr "Geride daha fazla alıntı yok"
+msgstr "Geride alıntı yok"
 
-#: virtualBuffers_old\MSHTML.py:155
-#: virtualBuffers_old\adobe.py:175
-#: virtualBuffers_old\gecko.py:172
-msgid "loading document %s"
-msgstr "Belge %s yükleniyor"
+#: virtualBuffers\__init__.py:1256
+msgid "no more text after a block of links"
+msgstr "Bir grup bağlantı sonrasında metin bulunamadı"
 
-#: virtualBuffers_old\MSHTML.py:163
-#: virtualBuffers_old\adobe.py:184
-#: virtualBuffers_old\gecko.py:181
-msgid "done"
-msgstr "tamamlandı"
+#: virtualBuffers\__init__.py:1256
+msgid "skips forward past a block of links"
+msgstr "Bir grup bağlantı sonrasındaki metin üzerine gider"
 
-#: virtualBuffers_old\MSHTML.py:267
-#: virtualBuffers_old\MSHTML.py:274
-#: virtualBuffers_old\adobe.py:272
-#: virtualBuffers_old\adobe.py:285
-#: virtualBuffers_old\gecko.py:264
-#: virtualBuffers_old\gecko.py:277
-msgid "definition"
-msgstr "Tanım"
+#: virtualBuffers\__init__.py:1257
+msgid "no more text before a block of links"
+msgstr "Bir grup bağlantı öncesinde metin bulunamadı"
 
-#: virtualBuffers_old\MSHTML.py:302
-msgid "file upload"
-msgstr "Dosya yükleme"
+#: virtualBuffers\__init__.py:1257
+msgid "skips backward past a block of links"
+msgstr "Bir grup bağlantı öncesindeki metin üzerine gider"
 
-#: virtualBuffers_old\__init__.py:276
-msgid "moves one page up in the virtual buffer's current document"
-msgstr "Sanal tamponun şu anki belgede bir sayfa ileri taşı"
+#: virtualBuffers\__init__.py:1258
+msgid "moves to the next landmark"
+msgstr "Bir sonraki sınır imine gider"
 
-#: virtualBuffers_old\__init__.py:291
-msgid "moves one page down in the virtual buffer's current document"
-msgstr "Sanal tamponun şu anki belgede bir sayfa geri taşı"
+#: virtualBuffers\__init__.py:1258
+msgid "no next landmark"
+msgstr "Ileride sınır imi yok"
 
-#: virtualBuffers_old\__init__.py:317
-#: virtualBuffers_old\__init__.py:328
-msgid "no more headings"
-msgstr "Daha fazla başlıklar yok"
+#: virtualBuffers\__init__.py:1259
+msgid "moves to the previous landmark"
+msgstr "Bir önceki sınır imine gider"
 
-#: virtualBuffers_old\__init__.py:339
-#: virtualBuffers_old\__init__.py:350
-msgid "no more paragraphs"
-msgstr "Daha fazla paragraflar yok"
+#: virtualBuffers\__init__.py:1259
+msgid "no previous landmark"
+msgstr "Geride sınır imi yok"
 
-#: virtualBuffers_old\__init__.py:340
-msgid "moves to the next paragraph"
-msgstr "Bir sonraki paragrafa taşı"
+#: virtualBuffers\__init__.py:1260
+msgid "moves to the next embedded object"
+msgstr "Bir sonraki gömülü nesneye gider"
 
-#: virtualBuffers_old\__init__.py:351
-msgid "moves to the previous paragraph"
-msgstr "Bir önceki paragrafa taşı"
+#: virtualBuffers\__init__.py:1260
+msgid "no next embedded object"
+msgstr "Başka Gömülü nesne yok"
 
-#: virtualBuffers_old\__init__.py:361
-#: virtualBuffers_old\__init__.py:372
-msgid "no more tables"
-msgstr "Daha fazla tablolar yok"
+#: virtualBuffers\__init__.py:1261
+msgid "moves to the previous embedded object"
+msgstr "Bir önceki gömülü nesneye gider"
 
-#: virtualBuffers_old\__init__.py:383
-#: virtualBuffers_old\__init__.py:394
-msgid "no more links"
-msgstr "Daha fazla bağlantılar yok"
+#: virtualBuffers\__init__.py:1261
+msgid "no previous embedded object"
+msgstr "Geride gömülü nesne yok"
 
-#: virtualBuffers_old\__init__.py:405
-#: virtualBuffers_old\__init__.py:416
-msgid "no more lists"
-msgstr "Daha fazla listeler yok"
+#: virtualBuffers\__init__.py:1274
+msgid "browse mode"
+msgstr "Tarama kipi"
 
-#: virtualBuffers_old\__init__.py:427
-#: virtualBuffers_old\__init__.py:438
-msgid "no more list items"
-msgstr "Daha fazla liste ögeleri yok"
+#: virtualBuffers\__init__.py:1274
+msgid "focus mode"
+msgstr "Odak kipi"
 
-#: virtualBuffers_old\__init__.py:449
-#: virtualBuffers_old\__init__.py:460
-msgid "no more form fields"
-msgstr "Daha fazla form aalanları yok"
-
-#: virtualBuffers_old\__init__.py:450
-msgid "Moves to the next form field"
-msgstr "Bir sonraki form alanına taşı"
-
-#: virtualBuffers_old\__init__.py:474
-msgid "text: \"%s\" not found"
-msgstr "Metin \"%s\" bulunamadı"
-
-#: virtualBuffers_old\__init__.py:480
-msgid "find a text pattern from the current cursor's position"
-msgstr ""
-
-#: virtualBuffers_old\__init__.py:484
-msgid "find next occurrence of text"
-msgstr ""
-
-#: virtualBuffers_old\__init__.py:503
-#: virtualBuffers_old\__init__.py:504
-msgid "h=headingQuickKey"
-msgstr "h=başlık tuşu"
-
-#: virtualBuffers_old\__init__.py:505
-#: virtualBuffers_old\__init__.py:506
-msgid "f=formFieldQuickKey"
-msgstr "f=form alanı tuşu"
-
-#: virtualBuffers_old\__init__.py:507
-#: virtualBuffers_old\__init__.py:508
-msgid "p=paragraphQuickKey"
-msgstr "p=Paragraf tuşu"
-
-#: virtualBuffers_old\__init__.py:509
-#: virtualBuffers_old\__init__.py:510
-msgid "t=tableQuickKey"
-msgstr "t=tablo tuşu"
-
-#: virtualBuffers_old\__init__.py:511
-#: virtualBuffers_old\__init__.py:512
-msgid "k=linkQuickKey"
-msgstr "k=bağlantı tuşu"
-
-#: virtualBuffers_old\__init__.py:513
-#: virtualBuffers_old\__init__.py:514
-msgid "l=listQuickKey"
-msgstr "l=liste tuşu"
-
-#: virtualBuffers_old\__init__.py:515
-#: virtualBuffers_old\__init__.py:516
-msgid "i=listItemQuickKey"
-msgstr "i=liste ögesi tuşu"
-
-#: virtualBuffers_old\adobe.py:317
-msgid "protected %s"
-msgstr "korunmuş %s"
