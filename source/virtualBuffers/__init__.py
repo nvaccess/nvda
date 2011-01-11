@@ -591,7 +591,9 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"""
 		if not self._hadFirstGainFocus:
 			# This buffer is gaining focus for the first time.
-			self._setInitialCaretPos()
+			initialPos = self._getInitialCaretPos()
+			if initialPos:
+				self.selection = self.makeTextInfo(initialPos)
 			# Fake a focus event on the focus object, as the buffer may have missed the actual focus event.
 			focus = api.getFocusObject()
 			self.event_gainFocus(focus, lambda: focus.event_gainFocus())
@@ -1180,13 +1182,13 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 				yield 0, link2end, link1start
 			link1node, link1start, link1end = link2node, link2start, link2end
 
-	def _setInitialCaretPos(self):
-		"""Set the initial position of the caret after the buffer has been loaded.
-		The return value is primarily used so that overriding methods can determine whether they need to set an initial position.
-		@return: C{True} if an initial position was set.
-		@rtype: bool
+	def _getInitialCaretPos(self):
+		"""Retrieve the initial position of the caret after the buffer has been loaded.
+		This position, if any, will be passed to L{makeTextInfo}.
+		@return: The initial position of the caret, C{None} if there isn't one.
+		@rtype: TextInfo position
 		"""
-		return False
+		return None
 
 	__gestures = {
 		"kb:enter": "activatePosition",
