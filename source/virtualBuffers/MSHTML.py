@@ -205,3 +205,9 @@ class MSHTML(VirtualBuffer):
 			return None
 		obj=NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=HTMLNode)
 		return obj
+
+	def _get_documentConstantIdentifier(self):
+		try:
+			return self.rootNVDAObject.HTMLNode.document.url
+		except COMError:
+			return None

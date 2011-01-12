@@ -219,3 +219,9 @@ class Gecko_ia2(VirtualBuffer):
 			return self.makeTextInfo(cell)
 		except (COMError, RuntimeError):
 			raise LookupError
+
+	def _get_documentConstantIdentifier(self):
+		try:
+			return self.rootNVDAObject.IAccessibleObject.accValue(0)
+		except COMError:
+			return None
