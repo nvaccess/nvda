@@ -606,13 +606,16 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"""
 		if not self._hadFirstGainFocus:
 			# This buffer is gaining focus for the first time.
-			initialPos = self._getInitialCaretPos()
-			if initialPos:
-				self.selection = self.makeTextInfo(initialPos)
 			# Fake a focus event on the focus object, as the buffer may have missed the actual focus event.
 			focus = api.getFocusObject()
 			self.event_gainFocus(focus, lambda: focus.event_gainFocus())
 			if not self.passThrough:
+				# We only set the caret position if in browse mode.
+				# If in focus mode, the document must have forced the focus somewhere,
+				# so we don't want to override it.
+				initialPos = self._getInitialCaretPos()
+				if initialPos:
+					self.selection = self.makeTextInfo(initialPos)
 				speech.cancelSpeech()
 				reportPassThrough(self)
 				speech.speakObjectProperties(self.rootNVDAObject,name=True)
