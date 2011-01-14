@@ -45,8 +45,8 @@
 - Announce the correct label for errors in the Microsoft Word Spell Check dialog (e.g. Not in dictionary, Grammar error, punctuation). Previously  they were all announced as grammar error. (#883)
 - Typing in Microsoft Word while using a braille display should no longer cause garbled text to be typed, and a rare freeze when pressing a braille routing key in Word documents has been fixed. (#1212) However a limitation is that Arabic text can no longer be read in Word 2003 and below, while using a braille display. (#627)
 - When pressing the delete key in an edit field, the text/cursor on a braille display should now always be updated appropriately to reflect the change. (#947)
- - Changes on dynamic pages in Gecko2 documents (E.g. Firefox 4) while multiple tabs are open is now properly reflected by NVDA. Previously only changes in the first tab were reflected. (Mozilla bug 610985)
- - NVDA can now properly announce the suggestions for grammar and punctuation errors in Microsoft Word spell check dialog. (#704)
+- Changes on dynamic pages in Gecko2 documents (E.g. Firefox 4) while multiple tabs are open is now properly reflected by NVDA. Previously only changes in the first tab were reflected. (Mozilla bug 610985)
+- NVDA can now properly announce the suggestions for grammar and punctuation errors in Microsoft Word spell check dialog. (#704)
  
  
 == Changes for Developers ==
