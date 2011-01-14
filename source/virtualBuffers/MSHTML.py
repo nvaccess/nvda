@@ -78,21 +78,21 @@ class MSHTML(VirtualBuffer):
 	def __init__(self,rootNVDAObject):
 		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
 
-	def _setInitialCaretPos(self):
-		if super(MSHTML,self)._setInitialCaretPos():
-			return
+	def _getInitialCaretPos(self):
+		initialPos = super(MSHTML,self)._getInitialCaretPos()
+		if initialPos:
+			return initialPos
 		try:
 			url=getattr(self.rootNVDAObject.HTMLNode.document,'url',"").split('#')
 		except COMError as e:
 			log.debugWarning("Error getting URL from document: %s" % e)
-			return False
+			return None
 		if not url or len(url)!=2:
-			return False
+			return None
 		anchorName=url[-1]
 		if not anchorName:
-			return False
-		obj=self._getNVDAObjectByAnchorName(anchorName)
-		self._handleScrollTo(obj)
+			return None
+		return self._getNVDAObjectByAnchorName(anchorName)
 
 	def __contains__(self,obj):
 		if not obj.windowClassName.startswith("Internet Explorer_"):
@@ -205,3 +205,9 @@ class MSHTML(VirtualBuffer):
 			return None
 		obj=NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=HTMLNode)
 		return obj
+
+	def _get_documentConstantIdentifier(self):
+		try:
+			return self.rootNVDAObject.HTMLNode.document.url
+		except COMError:
+			return None

@@ -507,6 +507,10 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		self._lastFocusObj = None
 		self._hadFirstGainFocus = False
 		self._lastProgrammaticScrollTime = None
+		# We need to cache this because it will be unavailable once the document dies.
+		self.documentConstantIdentifier = self.documentConstantIdentifier
+		if not hasattr(self.rootNVDAObject.appModule, "_vbufRememberedCaretPositions"):
+			self.rootNVDAObject.appModule._vbufRememberedCaretPositions = {}
 
 	def prepare(self):
 		self.shouldPrepare=False
@@ -516,6 +520,17 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		return not self.isLoading and not self.VBufHandle
 
 	def terminate(self):
+		if not self.VBufHandle:
+			return
+
+		if self.shouldRememberCaretPositionAcrossLoads:
+			try:
+				caret = self.selection
+				caret.collapse()
+				self.rootNVDAObject.appModule._vbufRememberedCaretPositions[self.documentConstantIdentifier] = caret.bookmark
+			except:
+				pass
+
 		self.unloadBuffer()
 
 	def _get_isReady(self):
@@ -591,11 +606,16 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"""
 		if not self._hadFirstGainFocus:
 			# This buffer is gaining focus for the first time.
-			self._setInitialCaretPos()
 			# Fake a focus event on the focus object, as the buffer may have missed the actual focus event.
 			focus = api.getFocusObject()
 			self.event_gainFocus(focus, lambda: focus.event_gainFocus())
 			if not self.passThrough:
+				# We only set the caret position if in browse mode.
+				# If in focus mode, the document must have forced the focus somewhere,
+				# so we don't want to override it.
+				initialPos = self._getInitialCaretPos()
+				if initialPos:
+					self.selection = self.makeTextInfo(initialPos)
 				speech.cancelSpeech()
 				reportPassThrough(self)
 				speech.speakObjectProperties(self.rootNVDAObject,name=True)
@@ -1180,13 +1200,40 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 				yield 0, link2end, link1start
 			link1node, link1start, link1end = link2node, link2start, link2end
 
-	def _setInitialCaretPos(self):
-		"""Set the initial position of the caret after the buffer has been loaded.
-		The return value is primarily used so that overriding methods can determine whether they need to set an initial position.
-		@return: C{True} if an initial position was set.
+	def _getInitialCaretPos(self):
+		"""Retrieve the initial position of the caret after the buffer has been loaded.
+		This position, if any, will be passed to L{makeTextInfo}.
+		Subclasses should extend this method.
+		@return: The initial position of the caret, C{None} if there isn't one.
+		@rtype: TextInfo position
+		"""
+		if self.shouldRememberCaretPositionAcrossLoads:
+			try:
+				return self.rootNVDAObject.appModule._vbufRememberedCaretPositions[self.documentConstantIdentifier]
+			except KeyError:
+				pass
+		return None
+
+	def _get_documentConstantIdentifier(self):
+		"""Get the constant identifier for this document.
+		This identifier should uniquely identify all instances (not just one instance) of a document for at least the current session of the hosting application.
+		Generally, the document URL should be used.
+		@return: The constant identifier for this document, C{None} if there is none.
+		"""
+		return None
+
+	def _get_shouldRememberCaretPositionAcrossLoads(self):
+		"""Specifies whether the position of the caret should be remembered when this document is loaded again.
+		This is useful when the browser remembers the scroll position for the document,
+		but does not communicate this information via APIs.
+		The remembered caret position is associated with this document using L{documentConstantIdentifier}.
+		@return: C{True} if the caret position should be remembered, C{False} if not.
 		@rtype: bool
 		"""
-		return False
+		docConstId = self.documentConstantIdentifier
+		# Return True if the URL indicates that this is probably a web browser document.
+		# We do this check because we don't want to remember caret positions for email messages, etc.
+		return isinstance(docConstId, basestring) and docConstId.split("://", 1)[0] in ("http", "https", "ftp", "ftps", "file")
 
 	__gestures = {
 		"kb:enter": "activatePosition",
