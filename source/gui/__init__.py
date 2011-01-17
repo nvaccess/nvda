@@ -1,6 +1,6 @@
 #gui/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2011 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -227,12 +227,8 @@ class MainFrame(wx.Frame):
 
 	def onAboutCommand(self,evt):
 		try:
-			aboutInfo="""%s
-%s: %s
-%s: %s
-%s: %s"""%(versionInfo.longName,_("version"),versionInfo.version,_("url"),versionInfo.url,_("copyright"),versionInfo.copyrightInfo)
 			self.prePopup()
-			d = wx.MessageDialog(self, aboutInfo, _("About NVDA"), wx.OK)
+			d = wx.MessageDialog(self, versionInfo.aboutMessage, _("About NVDA"), wx.OK)
 			d.ShowModal()
 			d.Destroy()
 			self.postPopup()
@@ -344,6 +340,9 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			item = self.menu.Append(wx.ID_SAVE, _("&Save configuration"), _("Write the current configuration to nvda.ini"))
 			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
+		self.menu.AppendSeparator()
+		item = self.menu.Append(wx.ID_ANY, _("Donate"))
+		self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvaccess.org/wiki/Donate"), item)
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
