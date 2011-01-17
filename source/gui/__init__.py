@@ -322,8 +322,6 @@ class SysTrayIcon(wx.TaskBarIcon):
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("changes.html")), item)
 			item = menu_help.Append(wx.ID_ANY, _("Web site"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvda-project.org/"), item)
-			item = menu_help.Append(wx.ID_ANY, _("Readme"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("readme.txt")), item)
 			item = menu_help.Append(wx.ID_ANY, _("License"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("copying.txt", False)), item)
 			item = menu_help.Append(wx.ID_ANY, _("Contributors"))
