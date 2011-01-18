@@ -68,7 +68,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			elif key==13: braille.handler.scrollForward()
 			elif (key >= 257) and (key <= 296): braille.handler.routeTo(key-257)
 
-	def _display(self, cells):
+	def display(self, cells):
 		cells="".join(chr(lilliCellsMap[x]) for x in cells)
 		lilliDll.WriteBuf(create_string_buffer(cells)) 
 		self._handleKeyPresses()
