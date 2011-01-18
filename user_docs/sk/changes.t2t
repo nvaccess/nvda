@@ -11,9 +11,12 @@
 - NVDA odteraz automaticky oznamuje nový text v programoch mIRC, PuTTY, Tera Term and SecureCRT. (#936)
 - Používatelia môžu pridávať nové alebo zmeniť existujúce klávesové skratky pre všetky skripty NVDA napísaním mapy vstupných príkazov. (#194)
 - NVDA krátko zapípa ak je pri písaní zapnutý kláves capslock a pridržaný shift. Je to možné vypnúť odškrtnutím novej voľby v dialógu nastavenia klávesnice. (#663)
+- Zlomy strany sú oznamované pri pohybe po riadkoch v programe Microsoft Word. (#758)
 - Číslovanie a odrážky sú oznamované pri navigácii po riadkoch v programe Microsoft word. (#208)  
+- Pridaný klávesový príkaz na prepínanie režimu spánku pre aktuálnu aplikáciu (NVDA+shift+s). Režim spánku pre aktuálnu aplikáciu doteraz známy ako režim samoozvučenia pozastaví funkcie čítača obrazovky pre pre aplikáciu, ktorej okno je v popredí. Je to užitočné pre aplikácie, ktoré implementujú podporu pre hlasový výstup.
 - Pridané boli ďalšie skratky braillovských zobrazovačov. Podrobnosti sa dočítate v časti podporované braillovské zobrazovače v používateľskej príručke. (#209)
 - Aby sme uľahčili prácu možným vývojárom, aplikačné moduly a globálne pluginy je možné načítať bez nutnosti reštartu NVDA. Použite položku menu Nástroje -> Načítať pluginy alebo skratku NVDA+control+f3. (#544)
+- NVDA si odteraz zapamätá pozíciu vo virtuálnom prehliadači a pri návrate na už navštívenú stránku, túto pozíciu obnový. Toto platí do doby, kým nie je ukončený NVDA alebo prehliadač. (#132)
 
 
 == Zmeny ==
