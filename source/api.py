@@ -101,9 +101,9 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 			break
 		# We're moving backwards along the ancestor chain, so add this to the start of the list.
 		ancestors.insert(0,tempObj)
-		parent=tempObj.parent
-		tempObj.parent=parent # Cache the parent.
-		tempObj=parent
+		container=tempObj.container
+		tempObj.container=container # Cache the parent.
+		tempObj=container
 	#Remove the final new ancestor as this will be the new focus object
 	del ancestors[-1]
 	newAppModuleSet=set(o.appModule for o in ancestors+[obj] if o and o.appModule)

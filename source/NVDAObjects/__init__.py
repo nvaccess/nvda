@@ -423,6 +423,12 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		return None
 
+	def _get_container(self):
+		"""
+		Exactly like parent, however another object at this same sibling level may be retreaved first (e.g. a groupbox). Mostly used when presenting context such as focus ancestry.
+		"""
+		return self.parent
+ 
 	def _get_next(self):
 		"""Retreaves the object directly after this object with the same parent.
 		@return: the next object if it exists else None.

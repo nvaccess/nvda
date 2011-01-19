@@ -836,10 +836,6 @@ the NVDAObject for IAccessible
 	def _get_parent(self):
 		if self.IAccessibleChildID>0:
 			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=0) or super(IAccessible,self).parent
-		#Support for groupbox windows
-		groupboxObj=IAccessibleHandler.findGroupboxObject(self)
-		if groupboxObj:
-			return groupboxObj
 		if self.parentUsesSuperOnWindowRootIAccessible and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
 			return super(IAccessible,self).parent
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
@@ -1284,6 +1280,14 @@ class ContentGenericClient(IAccessible):
 class WindowRoot(IAccessible):
 
 	TextInfo=displayModel.DisplayModelTextInfo
+
+	def _get_container(self):
+		#Support for groupbox windows
+		groupboxObj=IAccessibleHandler.findGroupboxObject(self)
+		if groupboxObj:
+			return groupboxObj
+		return super(WindowRoot,self).container
+
 
 class ShellDocObjectView(IAccessible):
 
