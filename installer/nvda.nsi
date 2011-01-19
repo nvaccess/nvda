@@ -178,7 +178,6 @@ ReserveFile "UAC.dll"
 ;-----
 ;Global variables
 
-Var oldNVDAWindowHandle
 var runAppOnInstSuccess
 var hmci
 var prevUninstallChoice
@@ -309,14 +308,6 @@ Push "$PLUGINSDIR\${NVDATempDir}\${SNDLogo}"
 Call PlaySound
 
 File /r "${NVDASourceDir}\"
-;If NVDA is already running, kill it first before starting a new copy
-call isNVDARunning
-pop $1	; TRUE or FALSE
-pop $oldNVDAWindowHandle
-; Shut down NVDA
-IntCmp $1 1 +1 Continue
-MessageBox MB_OK $(msg_NVDARunning)
-Continue:
 IfFileExists "$APPDATA\nvda\nvda.ini" +1 +4
 GetFullPathName /SHORT $0 "$APPDATA\nvda"
 ExecShell "open" "$PLUGINSDIR\${NVDATempDir}\${NVDAApp}" "-r -m -c $0" SW_SHOWNORMAL
@@ -381,7 +372,6 @@ call isNVDARunning
 pop $1
 pop $2
 intcmp $1 1 +1 End
-intcmp $2 $oldNVDAWindowHandle End +1
 System::Call 'user32.dll::GetWindowThreadProcessId(i r2, *i .r3) i .r4'
 System::Call 'kernel32.dll::OpenProcess(i 1048576, i 0, i r3) i .r4'
 System::Call 'user32.dll::PostMessage(i r2, i ${WM_QUIT}, i 0, i 0)'
