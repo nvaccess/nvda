@@ -18,8 +18,6 @@
 @type navigatorObject: L{NVDAObjects.NVDAObject}
 @var navigatorTracksFocus: if true, the navigator object will follow the focus as it changes
 @type navigatorTracksFocus: boolean
-@var keyCounter: gets incrimented each time a key is pressed.
-@type keycounter: boolean
 """
  
 startTime=0
@@ -34,7 +32,6 @@ mouseOldY=None
 navigatorObject=None
 reviewPosition=None
 reviewPositionObj=None
-keyCounter=0
 lastProgressValue=0
 appArgs=None
 settingsRing = None

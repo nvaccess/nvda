@@ -40,6 +40,10 @@ lastNVDAModifierReleaseTime = None
 bypassNVDAModifier = False
 #: The modifiers currently being pressed.
 currentModifiers = set()
+#: A counter which is incremented each time a key is pressed.
+#: Note that this may be removed in future, so reliance on it should generally be avoided.
+#: @type: int
+keyCounter = 0
 
 def passNextKeyThrough():
 	global passKeyThroughCount
@@ -60,7 +64,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyDown.
 	"""
 	try:
-		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers
+		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter
 		#Injected keys should be ignored
 		if injected:
 			return True
@@ -76,6 +80,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				lastPassThroughKeyDown = keyCode
 			return True
 
+		keyCounter += 1
 		gesture = KeyboardInputGesture(currentModifiers, vkCode, scanCode, extended)
 		if bypassNVDAModifier or (keyCode == lastNVDAModifier and lastNVDAModifierReleaseTime and time.time() - lastNVDAModifierReleaseTime < 0.5):
 			# The user wants the key to serve its normal function instead of acting as an NVDA modifier key.

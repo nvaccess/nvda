@@ -9,7 +9,7 @@ import os
 import pkgutil
 import wx
 import louis
-import globalVars
+import keyboardHandler
 import baseObject
 import config
 from logHandler import log
@@ -669,7 +669,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		#: Whether braille is enabled.
 		#: @type: bool
 		self.enabled = False
-		self._keyCounterForLastMessage=0
+		self._keyCountForLastMessage=0
 		self._cursorPos = None
 		self._cursorBlinkUp = True
 		self._cells = []
@@ -783,7 +783,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.buffer.update()
 		self.update()
 		self._resetMessageTimer()
-		self._keyCountForLastMessage=globalVars.keyCounter
+		self._keyCountForLastMessage=keyboardHandler.keyCounter
 
 	def _resetMessageTimer(self):
 		"""Reset the message timeout.
@@ -825,7 +825,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
 		if self.buffer is self.mainBuffer:
 			self.update()
-		elif self.buffer is self.messageBuffer and globalVars.keyCounter>self._keyCountForLastMessage:
+		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
 	def handleCaretMove(self, obj):
@@ -849,7 +849,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
 		if self.buffer is self.mainBuffer:
 			self.update()
-		elif self.buffer is self.messageBuffer and globalVars.keyCounter>self._keyCountForLastMessage:
+		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
 	def handleUpdate(self, obj):
@@ -869,7 +869,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.restoreWindow(ignoreErrors=True)
 		if self.buffer is self.mainBuffer:
 			self.update()
-		elif self.buffer is self.messageBuffer and globalVars.keyCounter>self._keyCountForLastMessage:
+		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
 	def handleReviewMove(self):
