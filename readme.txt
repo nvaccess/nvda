@@ -70,13 +70,18 @@ To use the brltty braille display driver:
 		* You can download BRLTTY for Windows at http://brl.thefreecat.org/brltty/
 		* The brlapi Python bindings can be found in the BRLTTY installation directory and are named brlapi-x.y.z.exe
 
-To use the Alva BC640/680 braille display driver:
+To use the ALVA BC640/680 braille display driver:
 	* ALVA BC6 generic dll, version 3.0.4.1 or later: http://www.nvda-project.org/3rdParty/alvaw32.dll
 		* Copy alvaw32.dll into the source\brailleDisplayDrivers directory.
 
 To use the MDV Lilli braille display driver:
 	* lilli.dll: http://www.nvda-project.org/3rdParty/lilli.dll
 		* Copy lilli.dll into the source\brailleDisplayDrivers directory.
+
+To use the Handy Tech braille display driver:
+	* Handy Tech Braille SDK: http://www.openbraille.org/tech.html
+		* Copy these files from the SDK's prog directory into NVDA's source\brailleDisplayDrivers\handyTech directory: HtBrailleDriverServer.dll, HtBrailleDriverServer.tlb, sbsupport.dll, dealers.dat
+	* If you want to be able to use this driver when running from source code, you will need to install the Handy Tech universal driver: ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
 To build a binary version of NVDA:
 	* Py2Exe (for Python 2.7), version 0.6.9 or later: http://www.sourceforge.net/projects/py2exe/

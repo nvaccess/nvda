@@ -16,6 +16,34 @@ from py2exe import build_exe
 import wx
 import imp
 
+MAIN_MANIFEST_EXTRA = r"""
+<file name="brailleDisplayDrivers\handyTech\HtBrailleDriverServer.dll">
+	<comClass
+		description="HtBrailleDriver Class"
+		clsid="{209445BA-92ED-4AB2-83EC-F24ACEE77EE0}"
+		threadingModel="Apartment"
+		progid="HtBrailleDriverServer.HtBrailleDriver"
+		tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}" />
+</file>
+<file name="brailleDisplayDrivers\handyTech\HtBrailleDriverServer.tlb">
+	<typelib tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}"
+		version="1.0"
+		helpdir="" />
+</file>
+<comInterfaceExternalProxyStub
+	name="IHtBrailleDriverSink"
+	iid="{EF551F82-1C7E-421F-963D-D9D03548785A}"
+	proxyStubClsid32="{00020420-0000-0000-C000-000000000046}"
+	baseInterface="{00000000-0000-0000-C000-000000000046}"
+	tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}" />
+<comInterfaceExternalProxyStub
+	name="IHtBrailleDriver"
+	iid="{43A71F9B-58EE-42D4-B58E-0F9FBA28D995}"
+	proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"
+	baseInterface="{00000000-0000-0000-C000-000000000046}"
+	tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}" />
+"""
+
 def getModuleExtention(thisModType):
 	for ext,mode,modType in imp.get_suffixes():
 		if modType==thisModType:
@@ -39,6 +67,7 @@ build_exe.isSystemDLL = isSystemDLL
 class py2exe(build_exe.py2exe):
 	"""Overridden py2exe command to:
 		* Add a command line option --enable-uiAccess to enable uiAccess for the main executable
+		* Add extra info to the manifest
 		* Don't copy w9xpopen, as NVDA will never run on Win9x
 	"""
 
@@ -50,15 +79,25 @@ class py2exe(build_exe.py2exe):
 		build_exe.py2exe.initialize_options(self)
 		self.enable_uiAccess = False
 
-	def run(self):
-		if self.enable_uiAccess:
-			mainTarget = self.distribution.windows[0]
-			mainTarget["uac_info"] = (mainTarget["uac_info"][0], True)
-
-		build_exe.py2exe.run(self)
-
 	def copy_w9xpopen(self, modules, dlls):
 		pass
+
+	def build_manifest(self, target, template):
+		if target is self.distribution.windows[0]:
+			# This is the main executable.
+			isMainExec = True
+			if self.enable_uiAccess:
+				target.uac_info = (target.uac_info[0], True)
+		else:
+			isMainExec = False
+
+		mfest, rid = build_exe.py2exe.build_manifest(self, target, template)
+
+		if isMainExec:
+			mfest = mfest[:mfest.rindex("</assembly>")]
+			mfest += MAIN_MANIFEST_EXTRA + "</assembly>"
+
+		return mfest, rid
 
 def getLocaleDataFiles():
 	NVDALocaleFiles=[(os.path.dirname(f), (f,)) for f in glob("locale/*/LC_MESSAGES/*.mo")]

@@ -6,6 +6,7 @@
 
 import _winreg
 import comtypes.client
+from comtypes import GUID
 import braille
 from logHandler import log
 import speech
@@ -48,9 +49,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	@classmethod
 	def check(cls):
 		try:
-			_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,COM_CLASS).Close()
+			GUID.from_progid(COM_CLASS)
 			return True
-		except:
+		except comtypes.COMError:
 			return False
 
 	def __init__(self):
