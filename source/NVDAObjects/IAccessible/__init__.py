@@ -1060,7 +1060,9 @@ the NVDAObject for IAccessible
 			except:
 				log.debugWarning("IAccessible2::scrollTo failed", exc_info=True)
 
-	allowIAccessibleChildIDAndChildCountForPositionInfo=False #: if true position info should fall back to using the childID and the parent's accChildCount for position information if there is nothing better available.
+	def _get_allowIAccessibleChildIDAndChildCountForPositionInfo(self):
+		"""if true position info should fall back to using the childID and the parent's accChildCount for position information if there is nothing better available."""
+		return config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"]
 
 	def _get_positionInfo(self):
 		if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
