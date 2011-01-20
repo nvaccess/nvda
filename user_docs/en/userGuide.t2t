@@ -972,3 +972,48 @@ Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/driv
 | Move braille display to next line | lndn (go down one line) |
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
+
++ Advanced Topics +
+
+++ Remapping key assignments and other Gestures ++
+Users are able to provide or override mappings of input gestures (such as key presses) to scripts in a special file in the user's NVDA user configuration directory. This file is called gestures.ini.
+
+This file uses standard ini sintax, where the section names should be made up of the Python module and class separated by a dot (.) inside NVDA who's scripts you wish to map.
+ 
+ The keys of each section are the names of the scripts you wish to bind to.
+ 
+The value of each key is a comma (,) separated list of gesture identifiers which represent the various input gestures that should be bound to that particular script.
+
+Multiple keys can be provided for each section, and multiple sections can be provided in the file.
+
+In order to find out the appropriate names of scripts, and their related class and module, the simplest way is to turn on Input Help, activate the gesture (press the key) and after turning off Input help, go to the log viewer in the tools menu, and look at the recent log entries. One of these should talk about the input gesture you sent, and it will provide along with it the module.class and script if it is bound to one.
+
+Following is an example of how you could bind NVDA+shift+t to the date time script.
+
+To find out the correct script name, and module.class for date time, you would turn on Input Help, and press NVDA+f12 (as this is the current gesture for the date time script). Then you would turn off Input Help and take a look at the log viewer.
+
+You would see at or near the bottom:
+
+```
+INFO - inputCore.InputManager._handleInputHelp (13:17:22):
+Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
+```
+
+From this we can see that the script name is dateTime, and the module.class is globalCommands.GlobalCommands.
+
+If the file does not yet exist, you would create a text file called gestures.ini in the user configuration directory, and add the following content:
+
+```
+[globalCommands.GlobalCommands]
+	dateTime = kb:NVDA+shift+t
+```
+
+This would bind the key press NVDA+shift+t (in any keyboard layout) to the dateTime script.
+
+You can also use the special script name of None, to unbind an input gesture from what ever script it was bound to in that module.class.
+
+Gesture identifiers consist of a two-leter device code (kb for keyboard, br for braille display), an optional sub device or keyboard layout in brackets, a colon, and then one or more key names separated by a plus (+) sign.
+ 
+ Pressing keys while in Input help and then later viewing the log will also help in aiding you to find out the correct input gesture you may wish to use.
+ 
+ 
