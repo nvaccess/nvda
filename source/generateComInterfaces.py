@@ -1,13 +1,11 @@
-#generate.py
+#generateComInterfaces.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 #Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
 
-"""Script to prepare an NVDA source tree for optimal execution.
-This script:
-* Generates Python code for COM interfaces to avoid doing this at runtime;
-This should be run prior to executing NVDA from a clean source tree for the first time and before building a binary distribution with py2exe.
+"""Script to generate Python code for required COM interfaces.
+This script will be run by SCons as appropriate.
 """
 
 #Bit of a dance to force comtypes generated interfaces in to our directory
