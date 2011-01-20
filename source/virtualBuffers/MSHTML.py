@@ -27,6 +27,9 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		if not role:
 			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		#IE exposes destination anchors as links, this is wrong
+		if nodeName=="A" and role==controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
+			role=controlTypes.ROLE_TEXTFRAME
 		if 'IHTMLElement::isContentEditable' in attrs:
 			states.add(controlTypes.STATE_EDITABLE)
 		if 'HTMLAttrib::onclick' in attrs or 'HTMLAttrib::onmousedown' in attrs or 'HTMLAttrib::onmouseup' in attrs:

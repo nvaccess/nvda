@@ -652,6 +652,12 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		IAName=tempIter->second;
 	}
 
+	//IE exposes state_linked for anchors with no href, this is wrong
+	if((nodeName.compare(L"A")==0)&&(attribsMap.find(L"HTMLAttrib::href")==attribsMap.end())) {
+		if(IAStates&STATE_SYSTEM_LINKED) IAStates-=STATE_SYSTEM_LINKED;
+		if(IAStates&STATE_SYSTEM_FOCUSABLE) IAStates-=STATE_SYSTEM_FOCUSABLE;
+	}
+
 	//Is this node interactive?
 	bool isInteractive=isEditable||(IAStates&STATE_SYSTEM_FOCUSABLE)||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end());
 	//Set up numbering for lists
