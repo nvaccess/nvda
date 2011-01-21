@@ -22,8 +22,9 @@
 
  
 == Changes ==
+- Position information is no longer reported by default in some cases where it was usually incorrect; e.g. most menus, the Running Applications bar, the Notification Area, etc. However, this can be turned on again by an added option in the Object Presentation settings dialog.
 - Keyboard help has been renamed to input help to reflect that it handles input from sources other than the keyboard.
-- The location of a script in the code is no longer reported in input help, as it is irrelevant and cryptic to the user.
+- Input Help no longer reports a script's code location via speech and braille as it is cryptic and erelivant to the user; However it is now logged for developers and advanced users.
 - When NVDA detects that it has frozen, it continues to intercept NVDA modifier keys, even though it passes all other keys through to the system. This prevents the user from unintentionally toggling caps lock, etc. if they press an NVDA modifier key without realising NVDA has frozen. (#939)
 - If keys are held down after using the pass next key through command, all keys (including key repeats) are now passed through until the last key is released.
 - If an NVDA modifier key is pressed twice in quick succession to pass it through and the second press is held down, all key repeats will now be passed through as well.
@@ -34,7 +35,6 @@
 - When adding a new speech dictionary entry, the title of the dialog is now "Add dictionary entry" instead of "Edit dictionary entry". (#924)
 - In speech dictionary dialogs, the content of the Regular expression and Case sensitive columns of the Dictionary entries list is now presented in the configured NVDA language instead of always in English.
 - In AIM, position information is now announced in tree views.
-- Position information is no longer reported in some cases where it was usually incorrect; e.g. most menus, the Running Applications bar, the Notification Area, etc.
 - On sliders in the Voice Settings dialog, up arrow/page up/home now increase the setting and down arrow/page down/end decrease it. Previously, the opposite occurred, which is not logical and is inconsistent with the synth settings ring. (#221)
 - If an NVDA modifier key is pressed twice quickly but there is an intervening key press, the NVDA modifier key is no longer passed through on the second press.
 - Punctuation keys are now spoken in input help even when speaking of punctuation is disabled. (#977)
@@ -49,8 +49,11 @@
 - When pressing the delete key in an edit field, the text/cursor on a braille display should now always be updated appropriately to reflect the change. (#947)
 - Changes on dynamic pages in Gecko2 documents (E.g. Firefox 4) while multiple tabs are open is now properly reflected by NVDA. Previously only changes in the first tab were reflected. (Mozilla bug 610985)
 - NVDA can now properly announce the suggestions for grammar and punctuation errors in Microsoft Word spell check dialog. (#704)
- 
- 
+- In InInternet Explorer and other MSHTML controls, NVDA no longer presents destination anchors as empty links in its virtual buffer, instead these anchors are hidden as they should be. (#1326)
+- Object navigation around and within standard groupbox windows is no longer broken and nonsemetrical.
+- In Firefox and other Gecko-based documents, NVDA will no longer get stuck in a subframe if it finishes loading before the outer document.
+
+
 == Changes for Developers ==
 - SCons is now used to prepare the source tree and create binary builds, portable archives, installers, etc. See readme.txt at the root of the source distribution for details.
 - The key names used by NVDA (including key maps) have been made more friendly/logical; e.g. upArrow instead of extendedUp and numpadPageUp instead of prior. See the vkCodes module for a list.
