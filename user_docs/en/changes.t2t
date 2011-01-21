@@ -52,7 +52,8 @@
 - In InInternet Explorer and other MSHTML controls, NVDA no longer presents destination anchors as empty links in its virtual buffer, instead these anchors are hidden as they should be. (#1326)
 - Object navigation around and within standard groupbox windows is no longer broken and nonsemetrical.
 - In Firefox and other Gecko-based documents, NVDA will no longer get stuck in a subframe if it finishes loading before the outer document.
-
+- NVDA  now appropriately announces the next character when deleting a character with numpadDelete. (#286)
+ 
 
 == Changes for Developers ==
 - SCons is now used to prepare the source tree and create binary builds, portable archives, installers, etc. See readme.txt at the root of the source distribution for details.

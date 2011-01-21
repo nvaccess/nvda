@@ -149,6 +149,7 @@ class EditableText(ScriptableObject):
 		"kb:control+home": "caret_moveByLine",
 		"kb:control+end": "caret_moveByLine",
 		"kb:delete": "caret_delete",
+		"kb:numpadDelete": "caret_delete",
 		"kb:backspace": "caret_backspaceCharacter",
 		"kb:control+backspace": "caret_backspaceWord",
 	}
