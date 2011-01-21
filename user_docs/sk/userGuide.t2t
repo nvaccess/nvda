@@ -92,6 +92,19 @@ V prípade, že inštalátor neponúkne reštart, po potvrdení tlačidla Dokon�
 Ak ste si stiahli prenositeľnú verziu NVDA, jediné čo musíte urobiť je kliknúť na stiahnutý súbor alebo ho spustiť stlačením klávesu enter.
 Samorozbaľovací archív si vyžiada priečinok vo vašom systéme, kde bude prenositeľná verzia umiestnená.
 
++++ Prenositeľná verzia NVDA na USB kľúči +++
+Prenositeľnú verziu NVDA je možné umiestniť na prenositeľný disk alebo USB kľúč tak, aby bol použiteľný aj na rôznych počítačoch.
+
+Keď sa samorozbaľovací archív s prenositeľnou verziou opýta na miesto, kde si želáte rozbaliť NVDA, vpíšte písmeno vašeho USB kľúča nasledované optimálnou cestou, kde nahráte NVDA.
+
+Ak je napr. váš USB kľúč pod písmenom E, môžete napísať e:\nvda a samorozbaľovací archív sa rozbalí do priečinka nvda na vašom kľúči.
+
+Napriek tomu, že na USB kľúči si môžete prenášať NVDA aj s vašimi nastaveniami, len jednoduché zapojeniee USB kľúča nepostačí na to, aby sa NVDA automaticky spustil. 
+NVDA musíte spustiť napr. z dialógu Spustiť... alebo pomocou prieskumníka Windows.
+
+Viacej informácií o konfigurácii automatického spustenia NVDA z kľúča USB sa môžete dočítať v nasledujúcom článku (anglicky): 
+http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
+
 + Začíname pracovať s NVDA +
 
 ++ Spustenie NVDA ++
@@ -643,6 +656,11 @@ Napríklad: menu súbor má skratku Alt +S, takže súčasťou popisu objektu pr
 ==== Oznamovať pozíciu objektu ====
 Táto voľba umožňuje prispôsobenie čítania informácií o pozícii objektu v prípade získania fokusu alebo zamerania objektovou navigáciou. Je to napr. informácia o položke zoznamu (1 z 10) a pod.
 
+==== Odhadnúť pozíciu objektu ak nie je dostupná ====
+Ak je zapnuté oznamovanie pozícii objektu, táto voľba umožňuje NVDA odhadnúť pozíciu aaktuálne zameraného objektu ak informácia o pozícii nie je štandardne dostupná.
+
+Ak je to zaškrtnuté, NVDA bude oznamovať informácie o pozícii pre viacej prvkov, napr. položky v ponukách a panely nástrojov, aj keď tieto informácie nemusia vždy byť dostatočne presné.
+ 
 ==== Oznamovať popisky objektov ====
 Odčiarknite toto políčko, ak si myslíte, že vás popisy objektov obťažujú.
 
@@ -908,8 +926,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 
 ++ Zobrazovače od spoločnosti Handy Tech ++
 NVDA podporuje všetky zobrazovače od spoločnosti [Handy Tech http://www.handytech.de/].
-Pre niektoré USB riadky je potrebné do systému nainštalovať USB ovládače Handy Tech.
-Navyše je potrebné nainštalovať univerzálny ovládač Handy Tech, dostupný na adrese ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
+Pre niektoré staršie USB riadky je potrebné do systému nainštalovať USB ovládače Handy Tech.
 
 Nasleduje zoznam klávesových príkazov pre tento typ riadku.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov..
@@ -952,3 +969,50 @@ Prosím prečítajte si [dokumentáciu klávesov brltty http://mielke.cc/brltty/
 | nasledujúci riadok | lndn (go down one line) |
 | Prejsť na znak v brailly | route (bring cursor to character) |
 %kc:endInclude
+
++ Pre pokročilých +
+
+++ Ako prispôsobiť klávesové skratky a ostatné vstupné príkazy ++
+Používatelia si môžu vytvoriť svoju vlastnú alebo pozmeniť aktuálnu konfiguráciu klávesovýchh príkazov NVDA modifikáciou špeciálne na to určeného súboru v priečinku s používateľskými nastaveniami.
+Tento súbor je nazvaný gestures.ini.
+
+Na zápis tohoto súboru sa používa štandardná syntaks zápisu ini súborov.
+Každá sekcia obsahuje mapovanie vstupných príkazov na skripty v jednom python module a triede NVDA.
+Názov sekcie pozostáva z názvu python modulu a názvu triedy oddelenými bodkou.
+ 
+Kľúčami každej sekcie sú názvy skriptov, na ktoré si želáte namapovať vstupný príkaz.
+Hodnotou každého kľúča je čiarkou (,) oddelený zoznam identifikátorov vstupných príkazov, ktoré majú byť namapované na skript uvedený v kľúči.
+
+Pre každú sekciu je možné zapísať viacero kľúčov a súbor môže obsahovať viacero sekcií.
+
+Na získanie identifikátorov vstupných príkazov, názvov modulov, tried a skriptov je možné aktivovať vstupnú nápovedu, vyvolať požadovaný skript, z menu nástroje zobraziť log a prečítať si posledné riadky.
+Jeden z nich by mal obsahovať vstupný príkaz, ktorý ste vykonali spolu aj s modulom, triedou a skriptom, ku ktorému sú momentálne priradené.
+
+Nasleduje príklad, ktorý vysvetluje, ako je možné príkaz NVDA+shift+t priradiť skriptu čas a dátum.
+
+Aby ste získali správny názov skriptu, názov triedy a modulu, spustíte vstupnú nápovedu stlačením NVDA+1 a následne stlačíte NVDA+F12, pretože toto je aktuálny príkaz pre skript čas a dátum.
+Potom vypnete vstupnú nápovedu opäť stlačením NVDA+1 a prečítate si posledné riadky v okne zobrazovač logu.
+
+Takmer úplne na konci nájdete niečo ako:
+
+```
+INFO - inputCore.InputManager._handleInputHelp (13:17:22):
+Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
+```
+
+Z tohoto výpisu  môžete určiť, že názov skriptu je dateTime a názvy modulu.triedy sú globalCommands.GlobalCommands.
+
+Ak takýto súbor ešte neexistuje, vytvoríte v priečinku s používateľskými nastaveniami NVDA súbor gestures.ini s nasledovným obsahom:
+
+```
+[globalCommands.GlobalCommands]
+	dateTime = kb:NVDA+shift+t
+```
+
+Toto priradí klávesový príkaz NVDA+shift+t skriptu dateTime vo všetkých rozloženiach klávesnice.
+
+Je možné použiť aj špeciálny názov skriptu None, čo spôsobí vymazanie priradenia vstupného príkazu z daného modulu pre konkrétnu triedu.
+
+Identifikátor vstupného príkazu pozostáva z dvoj znakového identifikátora zariadenia (kb pre klávesnicu, br pre braillovský riadok), nepovinného identifikátora subzariadenia alebo rozloženia klávesov v zátvorke, dvojbodky a zoznamu identifikátorov klávesov oddelených znakom plus (+).
+
+Stláčanie klávesov počas zapnutej nápovedy vstupu a následné čítanie textu v okne zobrazovač logu vám umožní získať názvy identifikátorov rôznych vstupných príkazov.

@@ -10,6 +10,7 @@
 - Vo virtuálnom prehliadači je možné vyberať po stranách (shift+pageup shift+pagedown) a odsekoch (shift+šípka hore a shift+šípka dolu). (#639)
 - NVDA odteraz automaticky oznamuje nový text v programoch mIRC, PuTTY, Tera Term and SecureCRT. (#936)
 - Používatelia môžu pridávať nové alebo zmeniť existujúce klávesové skratky pre všetky skripty NVDA napísaním mapy vstupných príkazov. (#194)
+- Podpora globálnych pluginov. Tieto umožňujú pridať funkcionalitu do NVDA, ktorá je spoločná bez ohľadu na to, ktorá aplikácia je v popredí. (#281)
 - NVDA krátko zapípa ak je pri písaní zapnutý kláves capslock a pridržaný shift. Je to možné vypnúť odškrtnutím novej voľby v dialógu nastavenia klávesnice. (#663)
 - Zlomy strany sú oznamované pri pohybe po riadkoch v programe Microsoft Word. (#758)
 - Číslovanie a odrážky sú oznamované pri navigácii po riadkoch v programe Microsoft word. (#208)  
@@ -17,9 +18,12 @@
 - Pridané boli ďalšie skratky braillovských zobrazovačov. Podrobnosti sa dočítate v časti podporované braillovské zobrazovače v používateľskej príručke. (#209)
 - Aby sme uľahčili prácu možným vývojárom, aplikačné moduly a globálne pluginy je možné načítať bez nutnosti reštartu NVDA. Použite položku menu Nástroje -> Načítať pluginy alebo skratku NVDA+control+f3. (#544)
 - NVDA si odteraz zapamätá pozíciu vo virtuálnom prehliadači a pri návrate na už navštívenú stránku, túto pozíciu obnový. Toto platí do doby, kým nie je ukončený NVDA alebo prehliadač. (#132)
+- Braillovské riadky Handy Tech je možné používať bez nutnosti inštalácie univerzálneho ovládača Handy Tech. (#854)
 
 
 == Zmeny ==
+- Pre niektoré prvky nie je predvolene oznamovaná informácia o pozícii, pretože to nie je dostatočne presné. Je to ale možné povoliť v dialógu prezentácia objektov.
+- Position information is no longer reported by default in some cases where it was usually incorrect; e.g. most menus, the Running Applications bar, the Notification Area, etc. However, this can be turned on again by an added option in the Object Presentation settings dialog.
 - Klávesová nápoveda bola premenovaná na nápovedu vstupu pretože poskytuje nápovedu aj pre ostatné vstupné zariadenia okrem klávesnica.
 - Umiestnenie skriptu nie je vo vstupnej nápovede oznamované, pretože to nie je dôležité pre používateľa.
 - Keď NVDA detekuje zamrznutie, naďalej odchytáva stlačenia klávesu NVDA pričom ostatné klávesy prepúšťa do systému. Zabráni to nechcenému prepínaniu klávesu capslock. (#939)
@@ -47,6 +51,10 @@
 - Pri stlačení klávesu delete je správne aktualizovaný text a pozícia kurzora na braillovskom riadku. (#947)
 - Dynamické zmeny v gecko 2 dokumentoch (napr. Firefox 4) sú správne spracované NVDA. Doteraz boli spracúvané len zmeny na prvej otvorenej karte. (Mozilla bug 610985)
 - NVDA dokáže správne oznamovať zoznam návrhov v dialógu kontrola pravopisu programu Microsoft word. (#704)
+- V programe internet explorer a iných prvkoch MSHTML, NVDA nevkladá ciele odkazov do tejto stránky do virtuálneho prehliadača. Sú správne skryté tak, ako by mali byť. (#1326)
+- Objektová navigácia cez a vo vnútri zoskupení nie viac nesimetrická.
+- Vo Firefoxe sa NVDA nezasekne vo vnorenom ráme ak sa jeho obsah nahrá skôr ako obsah rodičovského dokumentu.
+- NVDA správne oznámy vymazaný znak, ak sa na vymazanie použije numerický delete. (#286)
 
 
 = 2010.2 =

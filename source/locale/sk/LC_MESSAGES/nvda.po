@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: main-4016\n"
+"Project-Id-Version: main-4029\n"
 "POT-Creation-Date: 2007-03-07 08:26+Central Europe Standard Time\n"
-"PO-Revision-Date: 2011-01-18 10:40+Central Europe Standard Time\n"
+"PO-Revision-Date: 2011-01-21 11:30+Central Europe Standard Time\n"
 "Last-Translator: Peter Vágner <peter.v@datagate.sk>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr "neznáme rozloženie"
 msgid "layout %s"
 msgstr "rozloženie %s"
 
-#: NVDAObjects\IAccessible\__init__.py:1440
+#: NVDAObjects\IAccessible\__init__.py:1446
 msgid "Taskbar"
 msgstr "panel úloh"
 
@@ -35,12 +35,6 @@ msgstr "panel úloh"
 #: globalCommands.py:713
 msgid "%s copied to clipboard"
 msgstr "\"%s\" okopírované do schránky."
-
-#: NVDAObjects\IAccessible\sysListView32.py:369
-msgid ""
-"Presents a listview column corresponding to the keypress from left to right "
-"starting at 1"
-msgstr ""
 
 #: NVDAObjects\IAccessible\sysTreeView32.py:202
 msgid "%s items"
@@ -264,8 +258,8 @@ msgstr "v pravo"
 #: globalCommands.py:756
 #: globalCommands.py:766
 #: globalCommands.py:776
-#: gui\settingsDialogs.py:811
-#: keyboardHandler.py:291
+#: gui\settingsDialogs.py:815
+#: keyboardHandler.py:296
 #: virtualBuffers\__init__.py:724
 msgid "on"
 msgstr "zapnuté"
@@ -283,8 +277,8 @@ msgstr "zapnuté"
 #: globalCommands.py:763
 #: globalCommands.py:773
 #: gui\settingsDialogs.py:575
-#: gui\settingsDialogs.py:811
-#: keyboardHandler.py:291
+#: gui\settingsDialogs.py:815
+#: keyboardHandler.py:296
 #: virtualBuffers\__init__.py:724
 msgid "off"
 msgstr "vypnuté"
@@ -582,11 +576,11 @@ msgstr "posunúť displej"
 msgid "line scroll"
 msgstr "posunúť riadok"
 
-#: brailleDisplayDrivers\handyTech.py:46
+#: brailleDisplayDrivers\handyTech.py:47
 msgid "Handy Tech braille displays"
 msgstr "Zobrazovače Handy Tech"
 
-#: brailleDisplayDrivers\handyTech.py:83
+#: brailleDisplayDrivers\handyTech.py:84
 msgid "Show the Handy Tech driver configuration window."
 msgstr "Zobrazí konfiguráciu ovládača zariadení Handy Tech"
 
@@ -849,11 +843,11 @@ msgstr "Nesprávne formovaný konfiguračný súbor"
 msgid "%s: %s, defaulting to %s"
 msgstr "%s: %s, nastavujem predvolené %s"
 
-#: config\__init__.py:178
+#: config\__init__.py:179
 msgid "Error parsing configuration file: %s"
 msgstr "Chyba pri čítaní konfiguračného súboru: '%s'."
 
-#: config\__init__.py:185
+#: config\__init__.py:186
 msgid ""
 "Errors in configuration file '%s':\n"
 "%s"
@@ -2326,12 +2320,12 @@ msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Aktivuje Python konzolu NVDA, primárne použiteľnú pri vývoji."
 
 #: globalCommands.py:868
-#: gui\settingsDialogs.py:943
+#: gui\settingsDialogs.py:947
 msgid "review"
 msgstr "prehliadacím kurzorom"
 
 #: globalCommands.py:871
-#: gui\settingsDialogs.py:943
+#: gui\settingsDialogs.py:947
 msgid "focus"
 msgstr "systémovým kurzorom"
 
@@ -3040,227 +3034,231 @@ msgid "Report object &position information"
 msgstr "Oznamovať &pozíciu objektu"
 
 #: gui\settingsDialogs.py:594
+msgid "Guess object &position information when unavailable"
+msgstr "Odhadnúť pozíciu objektu ak nie je dostupná"
+
+#: gui\settingsDialogs.py:597
 msgid "Report object &descriptions"
 msgstr "Oznamovať pop&isky objektov"
 
-#: gui\settingsDialogs.py:598
+#: gui\settingsDialogs.py:601
 msgid "Progress &bar output:"
 msgstr "Oznamovanie aktualizácie prie&behu:"
 
-#: gui\settingsDialogs.py:601
+#: gui\settingsDialogs.py:604
 msgid "Progress bar output"
 msgstr "oznamovanie indikátora priebehu"
 
-#: gui\settingsDialogs.py:610
+#: gui\settingsDialogs.py:613
 msgid "Report background progress bars"
 msgstr "Oznamovať aktualizáciu indikátorov priebehu na pozadí"
 
-#: gui\settingsDialogs.py:613
+#: gui\settingsDialogs.py:616
 msgid "Report dynamic &content changes"
 msgstr "Čítať dynamicky menený obsah"
 
-#: gui\settingsDialogs.py:632
+#: gui\settingsDialogs.py:636
 msgid "virtual buffers"
 msgstr "Virtuálny prehliadač"
 
-#: gui\settingsDialogs.py:635
+#: gui\settingsDialogs.py:639
 msgid "&Maximum number of characters on one line"
 msgstr "&Maximálny počet znakov na riadku"
 
-#: gui\settingsDialogs.py:640
+#: gui\settingsDialogs.py:644
 msgid "&Number of lines per page"
 msgstr "Maximálny &počet riadkov na jednej stránke"
 
-#: gui\settingsDialogs.py:645
+#: gui\settingsDialogs.py:649
 msgid "Use &screen layout (when supported)"
 msgstr "Zachovať vzhľad ako na obrazovke"
 
-#: gui\settingsDialogs.py:648
+#: gui\settingsDialogs.py:652
 msgid "Report l&ayout tables"
 msgstr "Oznamovať tabuľky formujúce vzhľad"
 
-#: gui\settingsDialogs.py:652
+#: gui\settingsDialogs.py:656
 msgid "Automatic focus mode for focus changes"
 msgstr "Automaticky aktivovať režim fokusu pri zmene fokusu"
 
-#: gui\settingsDialogs.py:655
+#: gui\settingsDialogs.py:659
 msgid "Automatic focus mode for caret movement"
 msgstr "Automaticky aktivovať režim fokusu pri pohybe kurzorom"
 
-#: gui\settingsDialogs.py:658
+#: gui\settingsDialogs.py:662
 msgid "Audio indication of focus and browse modes"
 msgstr "Prehliadací režim a režim fokusu oznamovať zvukom"
 
-#: gui\settingsDialogs.py:686
+#: gui\settingsDialogs.py:690
 msgid "Document formatting"
 msgstr "Nastavenia čítania textu"
 
-#: gui\settingsDialogs.py:689
+#: gui\settingsDialogs.py:693
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Oznamovať zmeny &formátovania pri pohybe kurzorom (môže zaostávať)"
 
-#: gui\settingsDialogs.py:692
+#: gui\settingsDialogs.py:696
 msgid "Report font &name"
 msgstr "Čítať &názov písma"
 
-#: gui\settingsDialogs.py:695
+#: gui\settingsDialogs.py:699
 msgid "Report font &size"
 msgstr "Oznamovať &veľkosť písma"
 
-#: gui\settingsDialogs.py:698
+#: gui\settingsDialogs.py:702
 msgid "Report font attri&butes"
 msgstr "Čítať v&lastnosti písma"
 
-#: gui\settingsDialogs.py:701
+#: gui\settingsDialogs.py:705
 msgid "Report &alignment"
 msgstr "Čítať &zarovnanie"
 
-#: gui\settingsDialogs.py:704
+#: gui\settingsDialogs.py:708
 msgid "Report &colors"
 msgstr "Oznamovať &farby"
 
-#: gui\settingsDialogs.py:707
+#: gui\settingsDialogs.py:711
 msgid "Report st&yle"
 msgstr "Oznamovať š&týl"
 
-#: gui\settingsDialogs.py:710
+#: gui\settingsDialogs.py:714
 msgid "Report spelling errors"
 msgstr "Oznamovať pravopisné &chyby"
 
-#: gui\settingsDialogs.py:713
+#: gui\settingsDialogs.py:717
 msgid "Report &pages"
 msgstr "Oznamovať st&rany"
 
-#: gui\settingsDialogs.py:716
+#: gui\settingsDialogs.py:720
 msgid "Report &line numbers"
 msgstr "Oznamovať čísla ria&dkov"
 
-#: gui\settingsDialogs.py:719
+#: gui\settingsDialogs.py:723
 msgid "Report &tables"
 msgstr "Oznamovať tab&uľky"
 
-#: gui\settingsDialogs.py:722
+#: gui\settingsDialogs.py:726
 msgid "Report table row/column h&eaders"
 msgstr "Oznamovať &hlavičky riadkov / stĺpcov tabuľky"
 
-#: gui\settingsDialogs.py:725
+#: gui\settingsDialogs.py:729
 msgid "Report &links"
 msgstr "Oznamovať od&kazy"
 
-#: gui\settingsDialogs.py:728
+#: gui\settingsDialogs.py:732
 msgid "Report &headings"
 msgstr "Oznamovať n&adpisy"
 
-#: gui\settingsDialogs.py:731
+#: gui\settingsDialogs.py:735
 msgid "Report l&ists"
 msgstr "Oznamovať zoznam&y"
 
-#: gui\settingsDialogs.py:734
+#: gui\settingsDialogs.py:738
 msgid "Report block &quotes"
 msgstr "Oznamovať c&itácie"
 
-#: gui\settingsDialogs.py:737
+#: gui\settingsDialogs.py:741
 msgid "Report lan&dmarks"
 msgstr "Oznamovať o&blasti stránky"
 
-#: gui\settingsDialogs.py:766
+#: gui\settingsDialogs.py:770
 msgid "Edit dictionary entry"
 msgstr "Upraviť položku slovníka"
 
-#: gui\settingsDialogs.py:770
+#: gui\settingsDialogs.py:774
 msgid "&Pattern"
 msgstr "&Vzor"
 
-#: gui\settingsDialogs.py:773
+#: gui\settingsDialogs.py:777
 msgid "&Replacement"
 msgstr "&Nahradiť s"
 
-#: gui\settingsDialogs.py:776
+#: gui\settingsDialogs.py:780
 msgid "&Comment"
 msgstr "&Komentár"
 
-#: gui\settingsDialogs.py:779
+#: gui\settingsDialogs.py:783
 msgid "Case &sensitive"
 msgstr "Rozlišovať malé a veľké pí&smená"
 
-#: gui\settingsDialogs.py:781
+#: gui\settingsDialogs.py:785
 msgid "Regular &expression"
 msgstr "R&egulárny výraz"
 
-#: gui\settingsDialogs.py:803
+#: gui\settingsDialogs.py:807
 msgid "&Dictionary entries"
 msgstr "Položky slovníka"
 
-#: gui\settingsDialogs.py:806
+#: gui\settingsDialogs.py:810
 msgid "Comment"
 msgstr "Komentár"
 
-#: gui\settingsDialogs.py:807
+#: gui\settingsDialogs.py:811
 msgid "Pattern"
 msgstr "Vzor"
 
-#: gui\settingsDialogs.py:808
+#: gui\settingsDialogs.py:812
 msgid "Replacement"
 msgstr "Nahradiť s"
 
-#: gui\settingsDialogs.py:809
+#: gui\settingsDialogs.py:813
 msgid "case sensitive"
 msgstr "Rozlišovať veľké a malé písmená"
 
-#: gui\settingsDialogs.py:810
+#: gui\settingsDialogs.py:814
 msgid "Regular expression"
 msgstr "Regulárny výraz"
 
-#: gui\settingsDialogs.py:818
+#: gui\settingsDialogs.py:822
 msgid "&Add"
 msgstr "&Pridať"
 
-#: gui\settingsDialogs.py:821
+#: gui\settingsDialogs.py:825
 msgid "&edit"
 msgstr "&Upraviť"
 
-#: gui\settingsDialogs.py:824
+#: gui\settingsDialogs.py:828
 msgid "&Remove"
 msgstr "&Odstrániť"
 
-#: gui\settingsDialogs.py:846
+#: gui\settingsDialogs.py:850
 msgid "Add Dictionary Entry"
 msgstr "Pridať položku slovníka"
 
-#: gui\settingsDialogs.py:891
+#: gui\settingsDialogs.py:895
 msgid "Braille Settings"
 msgstr "Nastavenia braillu"
 
-#: gui\settingsDialogs.py:895
+#: gui\settingsDialogs.py:899
 msgid "Braille &display:"
 msgstr "Braillovský ria&dok:"
 
-#: gui\settingsDialogs.py:909
+#: gui\settingsDialogs.py:913
 msgid "Translation &table:"
 msgstr "Prekladová &tabuľka:"
 
-#: gui\settingsDialogs.py:921
+#: gui\settingsDialogs.py:925
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "Slovo, kde sa nachádza kurzor zobraziť počítačovým braillom"
 
-#: gui\settingsDialogs.py:926
+#: gui\settingsDialogs.py:930
 msgid "Cursor blink rate (ms)"
 msgstr "Rýchlosť &blikania kurzora (ms)"
 
-#: gui\settingsDialogs.py:934
+#: gui\settingsDialogs.py:938
 msgid "Message timeout (sec)"
 msgstr "Zobrazovať &správy (sek)"
 
-#: gui\settingsDialogs.py:942
+#: gui\settingsDialogs.py:946
 msgid "Braille tethered to:"
 msgstr "Braillovský kurzor zviazaný s:"
 
-#: gui\settingsDialogs.py:961
+#: gui\settingsDialogs.py:965
 msgid "Braille Display Error"
 msgstr "Chyba braillovského riadku"
 
-#: gui\settingsDialogs.py:961
+#: gui\settingsDialogs.py:965
 msgid "Could not load the %s display."
 msgstr "Nemôžem načítať zobrazovač %s"
 
@@ -3516,11 +3514,11 @@ msgstr "pravý windows"
 msgid "break"
 msgstr "break"
 
-#: keyboardHandler.py:179
+#: keyboardHandler.py:184
 msgid "desktop"
 msgstr "desktop"
 
-#: keyboardHandler.py:180
+#: keyboardHandler.py:185
 msgid "laptop"
 msgstr "laptop"
 
@@ -3790,15 +3788,21 @@ msgstr ""
 "{copyright}\n"
 "\n"
 "Distribúcia {name} je možná pod licenciou GNU General Public License 2. "
-"Tento produkt môžete voľne šíriť a meniť rôznym spôsobom, podmienkou však je pripojiť k nemu túto licenciu a sprístupniť zdrojový kód každému, kto si to vyžiada. "
-"Týka sa to oboch pôvodných, aj upravených kópií daného software ako aj ďalších odvodených aplikácií.\n"
-"Pre viac podrobností si v menu pomocník môžete detailnejšie preštudovať licenciu.\n"
-"Kompletná licencia je dostupná aj na stránke: http://www.gnu.org/licenses/old-licenses/"
-"gpl-2.0.html\n"
+"Tento produkt môžete voľne šíriť a meniť rôznym spôsobom, "
+"podmienkou však je pripojiť k nemu túto licenciu a sprístupniť "
+"zdrojový kód každému, kto si to vyžiada. Týka sa to oboch pôvodných, "
+"aj upravených kópií daného software ako aj ďalších odvodených "
+"aplikácií.\n"
+"Pre viac podrobností si v menu pomocník môžete detailnejšie "
+"preštudovať licenciu.\n"
+"Kompletná licencia je dostupná aj na stránke: http://www.gnu.org/licenses/"
+"old-licenses/gpl-2.0.html\n"
 "\n"
-"Vývoj {name} zastrešuje NV Access, nezisková organizácia, "
-"ktorej cieľom je pomoc pri vývoji a propagácii voľne šíriteľných open-source riešení užitočných pre nevidiacich a zrakovo postihnutých.\n"
-"Ak je NVDA užitočný aj pre Vás a chcete aby vývoj napredoval, zvášte možnosť príspevku NV Access. Prispieť môžete z menu pomocník.\n"
+"Vývoj {name} zastrešuje NV Access, nezisková organizácia, ktorej cieľom "
+"je pomoc pri vývoji a propagácii voľne šíriteľných open-source "
+"riešení užitočných pre nevidiacich a zrakovo postihnutých.\n"
+"Ak je NVDA užitočný aj pre Vás a chcete aby vývoj napredoval, zvášte "
+"možnosť príspevku NV Access. Prispieť môžete z menu pomocník.\n"
 
 #: virtualBuffers\__init__.py:201
 msgid "%s landmark"
