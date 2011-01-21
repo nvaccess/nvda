@@ -45,11 +45,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def check(cls):
-		if AlvaLib:
-			log.info("Alva library was loaded")
-		else:
-			log.info("Alva library was not loaded")
-
 		return bool(AlvaLib)
 
 	def __init__(self):
@@ -59,7 +54,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		AlvaLib.AlvaScanDevices(byref(_AlvaNumDevices))
 		if _AlvaNumDevices.value==0:
 			raise RuntimeError("No ALVA display found")
-		log.info("%d devices found" %_AlvaNumDevices.value)
+		log.debug("%d devices found" %_AlvaNumDevices.value)
 		AlvaLib.AlvaOpen(0)
 		self._alva_NumCells = 0
 		self._keysDown = set()
@@ -81,7 +76,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		return self._alva_NumCells
 
 	def display(self, cells):
-		#log.info("Display %d cells" %len(cells))
 		cells="".join([chr(x) for x in cells])
 		AlvaLib.AlvaSendBraille(0, cells, 0, len(cells))
 
