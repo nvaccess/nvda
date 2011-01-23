@@ -253,6 +253,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"braille_previousLine": ("br(baum):d1",),
 			"braille_nextLine": ("br(baum):d4",),
 			"braille_routeTo": ("br(baum):routing",),
+			"kb:upArrow": ("br(baum):up",),
+			"kb:downArrow": ("br(baum):down",),
+			"kb:leftArrow": ("br(baum):left",),
+			"kb:rightArrow": ("br(baum):right",),
+			"kb:enter": ("br(baum):select",),
 		},
 	})
 
