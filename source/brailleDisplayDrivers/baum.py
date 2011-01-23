@@ -44,7 +44,7 @@ BAUM_RSP_LENGTHS = {
 KEY_NAMES = {
 	BAUM_ROUTING_KEYS: None,
 	BAUM_DISPLAY_KEYS: ("d1", "d2", "d3", "d4", "d5", "d6"),
-	BAUM_BRAILLE_KEYS: ("b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "b9", "b10", None, None, "c1", "c2", "c3", "c4"),
+	BAUM_BRAILLE_KEYS: ("b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "b9", "b10", "b11", None, "c1", "c2", "c3", "c4"),
 	BAUM_JOYSTICK_KEYS: ("up", "left", "down", "right", "select"),
 }
 
