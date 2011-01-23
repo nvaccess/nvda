@@ -959,11 +959,16 @@ The Lilli braille display available from [MDV http://www.mdvbologna.it/] is supp
 You do not need any specific drivers to be installed to use this display.
 Just plug in the display and configure NVDA to use it.
 
-++ Baum SuperVario/HumanWare Brailliant ++
-The [Baum http://www.baum.de/cms/en/] SuperVario and [HumanWare http://www.humanware.com/] Brailliant displays are supported when connected via USB or bluetooth.
+++ Baum/Humanware/APH Braille Displays ++
+Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] displays are supported when connected via USB or bluetooth.
 If connecting via USB, you must first install the USB drivers provided by the manufacturer.
 
-Some other Baum and HumanWare displays may also work to some extent with this driver.
+The following displays are supported:
+- Baum: SuperVario, PocketVario
+- HumanWare: Brailliant, BrailleConnect
+- APH: Refreshabraille
+-
+Some other displays manufactured by Baum may also work to some extent, though this is unsupported and has not been tested.
 
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -974,6 +979,14 @@ Please see the display's documentation for descriptions of where these keys can 
 | Move braille display to previous line | d1 |
 | Move braille display to next line | d3 |
 | Route to braille cell | routing |
+
+For displays which have a joystick:
+|| Name | Key |
+| upArrow key | up |
+| downArrow key | down |
+| leftArrow key | left |
+| rightArrow key | right |
+| enter key | select |
 %kc:endInclude
 
 ++ BRLTTY ++

@@ -83,7 +83,7 @@ BLUETOOTH_NAMES = (
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "baum"
-	description = _("Baum SuperVario/HumanWare Brailliant")
+	description = _("Baum/HumanWare/APH braille displays")
 
 	@classmethod
 	def check(cls):
