@@ -162,7 +162,8 @@ setup(
 	}],
 	options = {"py2exe": {
 		"bundle_files": 3,
-		"excludes": ["comInterfaces", "Tkinter"],
+		"excludes": ["comInterfaces", "Tkinter",
+			"serial.loopback_connection", "serial.rfc2217", "serial.serialcli", "serial.serialjava", "serial.serialposix", "serial.socket_connection"],
 		"packages": ["NVDAObjects","virtualBuffers","appModules","brailleDisplayDrivers","synthDrivers"],
 		# Can be removed once included by a bundled module.
 		"includes": ["objbase"],

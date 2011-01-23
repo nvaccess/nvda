@@ -959,6 +959,23 @@ The Lilli braille display available from [MDV http://www.mdvbologna.it/] is supp
 You do not need any specific drivers to be installed to use this display.
 Just plug in the display and configure NVDA to use it.
 
+++ Baum SuperVario/HumanWare Brailliant ++
+The [Baum http://www.baum.de/cms/en/] SuperVario and [HumanWare http://www.humanware.com/] Brailliant displays are supported when connected via USB or bluetooth.
+If connecting via USB, you must first install the USB drivers provided by the manufacturer.
+
+Some other Baum and HumanWare displays may also work to some extent with this driver.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | d2 |
+| Scroll braille display forward | d5 |
+| Move braille display to previous line | d1 |
+| Move braille display to next line | d4 |
+| Route to braille cell | routing |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] is a separate program which can be used to support many more braille displays.
 In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
