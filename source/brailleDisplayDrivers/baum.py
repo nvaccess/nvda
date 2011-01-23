@@ -78,6 +78,7 @@ BLUETOOTH_NAMES = (
 	"HWG Brailliant",
 	"Refreshabraille",
 	"VarioConnect",
+	"BrailleConnect",
 )
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
