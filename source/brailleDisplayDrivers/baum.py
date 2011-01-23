@@ -201,10 +201,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		executeKeys = False
 
 		if command == BAUM_CELL_COUNT:
-			oldNumCells = self.numCells
 			self.numCells = ord(arg)
-			if self.numCells != oldNumCells:
-				log.debug("Cell count: %d" % self.numCells)
 		elif command == BAUM_DEVICE_ID:
 			self._deviceID = arg
 
