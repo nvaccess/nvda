@@ -190,10 +190,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return None, None
 
 		command = self._ser.read(1)
-		try:
-			length = BAUM_RSP_LENGTHS[command]
-		except KeyError:
-			length = 0
+		length = BAUM_RSP_LENGTHS.get(command, 0)
 		if command == BAUM_ROUTING_KEYS:
 			length = self.numCells / 8
 		arg = self._ser.read(length)
