@@ -24,7 +24,9 @@ BAUM_PROTOCOL_ONOFF = "\x15"
 BAUM_COMMUNICATION_CHANNEL = "\x16"
 BAUM_POWERDOWN = "\x17"
 BAUM_ROUTING_KEYS = "\x22"
-BAUM_BUTTONS = "\x24"
+BAUM_DISPLAY_KEYS = "\x24"
+BAUM_BRAILLE_KEYS = "\x33"
+BAUM_JOYSTICK_KEYS = "\x34"
 BAUM_DEVICE_ID = "\x84"
 BAUM_SERIAL_NUMBER = "\x8A"
 
@@ -32,12 +34,19 @@ BAUM_RSP_LENGTHS = {
 	BAUM_CELL_COUNT: 1,
 	BAUM_POWERDOWN: 1,
 	BAUM_COMMUNICATION_CHANNEL: 1,
-	BAUM_BUTTONS: 1,
+	BAUM_DISPLAY_KEYS: 1,
+	BAUM_BRAILLE_KEYS: 2,
+	BAUM_JOYSTICK_KEYS: 1,
 	BAUM_DEVICE_ID: 16,
 	BAUM_SERIAL_NUMBER: 8,
 }
 
-BUTTON_NAMES = ("d1", "d2", "d3", "d4", "d5", "d6")
+KEY_NAMES = {
+	BAUM_ROUTING_KEYS: None,
+	BAUM_DISPLAY_KEYS: ("d1", "d2", "d3", "d4", "d5", "d6"),
+	BAUM_BRAILLE_KEYS: ("b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "b9", "b10", None, None, "c1", "c2", "c3", "c4"),
+	BAUM_JOYSTICK_KEYS: ("up", "left", "down", "right", "select"),
+}
 
 USB_IDS = frozenset((
 	"VID_0403&PID_FE70", # Vario 40
@@ -67,6 +76,8 @@ BLUETOOTH_NAMES = (
 	"Baum PocketVario",
 	"Baum SVario",
 	"HWG Brailliant",
+	"Refreshabraille",
+	"VarioConnect",
 )
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
@@ -133,8 +144,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		self._readTimer = wx.PyTimer(self._handleResponses)
 		self._readTimer.Start(READ_INTERVAL)
-		self._lastButtons = 0
-		self._lastRoutingKeys = 0
+		self._keysDown = {}
 		self._ignoreKeyReleases = False
 
 	def terminate(self):
@@ -190,8 +200,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		return command, arg
 
 	def _handleResponse(self, command, arg):
-		routingKeys = None
-		buttons = None
+		updateKeys = False
+		executeKeys = False
 
 		if command == BAUM_CELL_COUNT:
 			oldNumCells = self.numCells
@@ -201,27 +211,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		elif command == BAUM_DEVICE_ID:
 			self._deviceID = arg
 
-		elif command == BAUM_ROUTING_KEYS:
+		elif command in KEY_NAMES:
+			updateKeys = True
 			arg = sum(ord(byte) << offset * 8 for offset, byte in enumerate(arg))
-			if arg < self._lastRoutingKeys:
+			if arg < self._keysDown.get(command, 0):
 				# Release.
 				if not self._ignoreKeyReleases:
-					routingKeys = self._lastRoutingKeys
+					# The first key released executes the key combination.
+					executeKeys = True
 			else:
 				# Press.
+				# This begins a new key combination.
 				self._ignoreKeyReleases = False
-			self._lastRoutingKeys = arg
-
-		elif command == BAUM_BUTTONS:
-			arg = ord(arg)
-			if arg < self._lastButtons:
-				# Release.
-				if not self._ignoreKeyReleases:
-					buttons = self._lastButtons
-			else:
-				# Press.
-				self._ignoreKeyReleases = False
-			self._lastButtons = arg
 
 		elif command == BAUM_POWERDOWN:
 			log.debug("Power down")
@@ -231,15 +232,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		else:
 			log.debugWarning("Unknown command {command!r}, arg {arg!r}".format(command=command, arg=arg))
 
-		if buttons or routingKeys:
+		if executeKeys:
 			try:
-				inputCore.manager.executeGesture(InputGesture(buttons or self._lastButtons, routingKeys or self._lastRoutingKeys))
+				inputCore.manager.executeGesture(InputGesture(self._keysDown))
 			except inputCore.NoInputGestureAction:
 				pass
-			# The first key released executes the key combination.
 			# Any further releases are just the rest of the keys in the combination being released,
 			# so they should be ignored.
 			self._ignoreKeyReleases = True
+		if updateKeys:
+			# We must update key state after execution instead of before because
+			# execution needs to include the key that was just released.
+			self._keysDown[command] = arg
 
 	def display(self, cells):
 		# cells will already be padded up to numCells.
@@ -259,20 +263,21 @@ class InputGesture(braille.BrailleDisplayGesture):
 
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, buttons, routingKeys):
+	def __init__(self, keysDown):
 		super(InputGesture, self).__init__()
-		self.buttons = buttons
-		self.routingKeys = routingKeys
+		self.keysDown = dict(keysDown)
 
 		self.keyNames = names = set()
-		if buttons:
-			for index, name in enumerate(BUTTON_NAMES):
-				if buttons & (1 << index):
-					names.add(name)
-		if routingKeys:
-			for index in xrange(braille.handler.display.numCells):
-				if routingKeys & (1 << index):
-					self.routingIndex = index
-					names.add("routing")
+		for group, groupKeysDown in keysDown.iteritems():
+			if group == BAUM_ROUTING_KEYS:
+				for index in xrange(braille.handler.display.numCells):
+					if groupKeysDown & (1 << index):
+						self.routingIndex = index
+						names.add("routing")
+						break
+			else:
+				for index, name in enumerate(KEY_NAMES[group]):
+					if groupKeysDown & (1 << index):
+						names.add(name)
 
 		self.id = "+".join(names)
