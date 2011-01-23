@@ -201,7 +201,7 @@ env.Alias("portable", portableArchive)
 
 installer = env.Command(outputDir.File("%s_installer.exe" % outFilePrefix), ["installer/nvda.nsi", installerDist],
 	[[makensis, "/V2",
-	"/DVERSION=$version", "/DPUBLISHER=$publisher",
+	"/DVERSION=$version", '/DPUBLISHER="$publisher"',
 	"/DNVDASourceDir=${SOURCES[1].abspath}", "/XOutFile ${TARGET.abspath}",
 	"$SOURCE"]])
 if certFile:
