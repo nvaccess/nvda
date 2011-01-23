@@ -248,7 +248,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"braille_scrollBack": ("br(baum):d2",),
 			"braille_scrollForward": ("br(baum):d5",),
 			"braille_previousLine": ("br(baum):d1",),
-			"braille_nextLine": ("br(baum):d4",),
+			"braille_nextLine": ("br(baum):d3",),
 			"braille_routeTo": ("br(baum):routing",),
 			"kb:upArrow": ("br(baum):up",),
 			"kb:downArrow": ("br(baum):down",),
