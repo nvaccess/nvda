@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2011.1 =
+Highlights of this release include reporting of colors for some controls; automatic reporting of new text output in mIRC, PuTTY, Tera Term and SecureCRT; the ability for users to add new or override existing key bindings for any script in NVDA; support for global plugins; announcement of bullets and numbering in Microsoft Word; and support for several Baum, HumanWare and APH braille displays.
 
 == New Features ==
 - Colors can now be reported for some controls. Automatic announcement can be configured in the Document Formatting preferences dialog. It can also be reported on demand using the report text formatting command (NVDA+f).
@@ -21,11 +22,11 @@
 - Handy Tech braille displays can now be used without installing the Handy Tech universal driver. (#854)
 - Support for several Baum, HumanWare and APH braille displays. (#937)
 
- 
+
 == Changes ==
 - Position information is no longer reported by default in some cases where it was usually incorrect; e.g. most menus, the Running Applications bar, the Notification Area, etc. However, this can be turned on again by an added option in the Object Presentation settings dialog.
 - Keyboard help has been renamed to input help to reflect that it handles input from sources other than the keyboard.
-- Input Help no longer reports a script's code location via speech and braille as it is cryptic and erelivant to the user; However it is now logged for developers and advanced users.
+- Input Help no longer reports a script's code location via speech and braille as it is cryptic and irrelevant to the user. However, it is now logged for developers and advanced users.
 - When NVDA detects that it has frozen, it continues to intercept NVDA modifier keys, even though it passes all other keys through to the system. This prevents the user from unintentionally toggling caps lock, etc. if they press an NVDA modifier key without realising NVDA has frozen. (#939)
 - If keys are held down after using the pass next key through command, all keys (including key repeats) are now passed through until the last key is released.
 - If an NVDA modifier key is pressed twice in quick succession to pass it through and the second press is held down, all key repeats will now be passed through as well.
@@ -48,14 +49,14 @@
 - Announce the correct label for errors in the Microsoft Word Spell Check dialog (e.g. Not in dictionary, Grammar error, punctuation). Previously  they were all announced as grammar error. (#883)
 - Typing in Microsoft Word while using a braille display should no longer cause garbled text to be typed, and a rare freeze when pressing a braille routing key in Word documents has been fixed. (#1212) However a limitation is that Arabic text can no longer be read in Word 2003 and below, while using a braille display. (#627)
 - When pressing the delete key in an edit field, the text/cursor on a braille display should now always be updated appropriately to reflect the change. (#947)
-- Changes on dynamic pages in Gecko2 documents (E.g. Firefox 4) while multiple tabs are open is now properly reflected by NVDA. Previously only changes in the first tab were reflected. (Mozilla bug 610985)
+- Changes on dynamic pages in Gecko2 documents (E.g. Firefox 4) while multiple tabs are open are now properly reflected by NVDA. Previously only changes in the first tab were reflected. (Mozilla bug 610985)
 - NVDA can now properly announce the suggestions for grammar and punctuation errors in Microsoft Word spell check dialog. (#704)
-- In InInternet Explorer and other MSHTML controls, NVDA no longer presents destination anchors as empty links in its virtual buffer, instead these anchors are hidden as they should be. (#1326)
-- Object navigation around and within standard groupbox windows is no longer broken and nonsemetrical.
-- In Firefox and other Gecko-based documents, NVDA will no longer get stuck in a subframe if it finishes loading before the outer document.
+- In Internet Explorer and other MSHTML controls, NVDA no longer presents destination anchors as empty links in its virtual buffer. Instead, these anchors are hidden as they should be. (#1326)
+- Object navigation around and within standard groupbox windows is no longer broken and asymmetrical.
+- In Firefox and other Gecko-based controls, NVDA will no longer get stuck in a subframe if it finishes loading before the outer document.
 - NVDA  now appropriately announces the next character when deleting a character with numpadDelete. (#286)
 - On the Windows XP logon screen, the user name is once again reported when the selected user is changed.
- 
+
 
 == Changes for Developers ==
 - SCons is now used to prepare the source tree and create binary builds, portable archives, installers, etc. See readme.txt at the root of the source distribution for details.
@@ -86,7 +87,7 @@
  - They can also provide their own scripts to perform display specific functions.
  - See braille.BrailleDisplayDriver for details and existing braille display drivers for examples.
 - The 'selfVoicing' property on AppModule classes has now been renamed to 'sleepMode'.
-- the appModule events: event_appLoseFocus and event_appGainFocus have now been renamed to event_appModule_loseFocus and event_appModule_gainFocus respectivly, in order to keep the naming sintax the same between appModules and treeInterceptors etc.
+- The app module events event_appLoseFocus and event_appGainFocus have now been renamed to event_appModule_loseFocus and event_appModule_gainFocus, respectivly, in order to make the naming convention consistent with app modules and tree interceptors.
 - All braille display drivers should now use braille.BrailleDisplayDriver instead of braille.BrailleDisplayDriverWithCursor.
  - The cursor is now managed outside of the driver.
  - Existing drivers need only change their class statement accordingly and rename their _display method to display.
