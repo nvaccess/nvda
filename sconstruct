@@ -156,7 +156,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 		buildCmd.append("--enable-uiAccess")
 	if certFile:
 		for prog in "nvda", "nvda_slave", "nvda_service":
-			action.append(signExec[:-1] + [target[0].File("%s.exe" % prog)])
+			action.append(signExec[:-1] + [os.path.join(target[0].path, "%s.exe" % prog)])
 
 	for ext in "", "c", "o":
 		action.append(Delete(buildVersionFn + ext))
