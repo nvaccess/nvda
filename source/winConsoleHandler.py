@@ -109,7 +109,7 @@ def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestam
 		return
 	if eventID==winUser.EVENT_CONSOLE_CARET:
 		eventHandler.queueEvent("caret",consoleObject)
-	# It is safe to call this event from this RPC thread.
+	# It is safe to call this event from this callback.
 	# This avoids an extra core cycle.
 	consoleObject.event_textChange()
 	if eventID==winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
