@@ -129,7 +129,11 @@ for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
 env.Depends(sourceDir,userDocsDir)
 
 #Generate all needed comtypes COM interfaces
-comInterfaces=env.Command(sourceDir.Dir('comInterfaces'),None,[['cd',sourceDir.path,'&&',sys.executable,'generateComInterfaces.py']])
+command = ['cd', sourceDir.path, '&&', sys.executable]
+if release:
+	command.append('-O')
+command.append('generateComInterfaces.py')
+comInterfaces = env.Command(sourceDir.Dir('comInterfaces'), None, [command])
 env.AlwaysBuild(comInterfaces)
 env.Depends(comInterfaces,sourceDir.Dir('typelibs'))
 
