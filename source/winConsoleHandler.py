@@ -11,7 +11,6 @@ import wincon
 import eventHandler
 from logHandler import log
 import speech
-import queueHandler
 import textInfos
 import api
 
@@ -117,7 +116,7 @@ def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestam
 		y=winUser.HIWORD(objectID)
 		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 		if x<consoleScreenBufferInfo.dwCursorPosition.x and (y==consoleScreenBufferInfo.dwCursorPosition.y or y==consoleScreenBufferInfo.dwCursorPosition.y+1):  
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakTypedCharacters,unichr(winUser.LOWORD(childID)))
+			eventHandler.queueEvent("typedCharacter",consoleObject,ch=unichr(winUser.LOWORD(childID)))
 
 def initialize():
 	pass
