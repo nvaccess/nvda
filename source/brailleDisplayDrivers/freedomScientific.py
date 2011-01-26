@@ -86,7 +86,7 @@ nvdaFsBrlWndCls.lpszClassName=u"nvdaFsBrlWndCls"
 class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 
 	name="freedomScientific"
-	description="Freedom Scientific Focus/PAC Mate series"
+	description=_("Freedom Scientific Focus/PAC Mate series")
 
 	@classmethod
 	def check(cls):
