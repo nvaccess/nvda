@@ -198,7 +198,7 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getLineNumFromOffset(self,offset):
 		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 		x,y=self._consoleCoordFromOffset(offset)
-		return y-consoleScreenBufferInfo.srWindow.top
+		return y-consoleScreenBufferInfo.srWindow.Top
 
 	def _getStoryLength(self):
 		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
