@@ -25,6 +25,12 @@ class CONSOLE_SELECTION_INFO(Structure):
 		('srSelection',SMALL_RECT),
 	]
 
+class CHAR_INFO(Structure):
+	_fields_ = [
+		('Char', c_wchar), #union of char and wchar_t isn't needed since we deal only with unicode
+		('Attributes', WORD)
+	]
+
 PHANDLER_ROUTINE=WINFUNCTYPE(BOOL,DWORD)
 
 CTRL_C_EVENT=0
@@ -49,6 +55,14 @@ def ReadConsoleOutputCharacter(handle,length,x,y):
 	if windll.kernel32.ReadConsoleOutputCharacterW(handle,buf,length,COORD(x,y),byref(numCharsRead))==0:
 		raise WinError()
 	return buf.value
+
+def ReadConsoleOutput(handle, length, x, y):
+	BufType=CHAR_INFO*length
+	buf=BufType()
+	rect=SMALL_RECT(x, y, x+length-1, y)
+	if windll.kernel32.ReadConsoleOutputW(handle, buf, COORD(length, 1), COORD(0,0), byref(rect))==0:
+		raise WinError()
+	return buf
 
 def GetConsoleScreenBufferInfo(handle):
 	info=CONSOLE_SCREEN_BUFFER_INFO()

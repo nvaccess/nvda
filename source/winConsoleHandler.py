@@ -8,6 +8,7 @@ import wx
 import winUser
 import winKernel
 import wincon
+from colors import RGB
 import eventHandler
 from logHandler import log
 import speech
@@ -21,6 +22,25 @@ consoleObject=None #:The console window that is currently in the foreground.
 consoleWinEventHookHandles=[] #:a list of currently registered console win events.
 consoleOutputHandle=None
 checkDeadTimer=None
+
+CONSOLE_COLORS_TO_RGB=( #http://en.wikipedia.org/wiki/Color_Graphics_Adapter
+	RGB(0x00,0x00,0x00), #black
+	RGB(0x00,0x00,0xAA), #blue
+	RGB(0x00,0xAA,0x00), #green
+	RGB(0x00,0xAA,0xAA), #cyan
+	RGB(0xAA,0x00,0x00), #red
+	RGB(0xAA,0x00,0xAA), #magenta
+	RGB(0xAA,0x55, 0x00), #brown
+	RGB(0xAA,0xAA,0xAA), #white
+	RGB(0x55,0x55,0x55), #gray
+	RGB(0x55,0x55,0xFF), #light blue
+	RGB(0x55,0xFF,0x55), #light green
+	RGB(0x55,0xFF,0xFF), #light cyan
+	RGB(0xFF,0x55,0x55), #light red
+	RGB(0xFF,0x55,0xFF), #light magenta
+	RGB(0xFF,0xFF,0x55), #yellow
+	RGB(0xFF,0xFF,0xFF), #white (high intensity)
+)
 
 @wincon.PHANDLER_ROUTINE
 def _consoleCtrlHandler(event):
@@ -182,6 +202,33 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		else:
 			start=end=self._getCaretOffset()
 		return start,end
+
+	def getTextWithFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf["documentFormatting"]
+		commands=[]
+		x,y=self._consoleCoordFromOffset(self._startOffset)
+		buf=wincon.ReadConsoleOutput(consoleOutputHandle, self._endOffset-self._startOffset, x, y)
+		lastAttr=None
+		lastText=[]
+		boundEnd=self._startOffset
+		for i,c in enumerate(buf):
+			if self._startOffset+i==boundEnd:
+				field,(boundStart,boundEnd)=self._getFormatFieldAndOffsets(boundEnd,formatConfig)
+				commands.append(textInfos.FieldCommand("formatChange",field))
+			if not c.Attributes==lastAttr and formatConfig["reportColor"]:
+				formatField=textInfos.FormatField()
+				formatField["color"]=CONSOLE_COLORS_TO_RGB[c.Attributes&0x0f]
+				formatField["background-color"]=CONSOLE_COLORS_TO_RGB[(c.Attributes>>4)&0x0f]
+				if lastText:
+					commands.append("".join(lastText))
+					lastText=[]
+				command=textInfos.FieldCommand("formatChange", formatField)
+				commands.append(command)
+				lastAttr=c.Attributes
+			lastText.append(c.Char)
+		commands.append("".join(lastText))
+		return commands
 
 	def _getTextRange(self,start,end):
 		startX,startY=self._consoleCoordFromOffset(start)
