@@ -229,13 +229,13 @@ class ElementsListDialog(wx.Dialog):
 
 		child = wx.RadioBox(self, wx.ID_ANY, label=_("Type:"), choices=tuple(et[1] for et in self.ELEMENT_TYPES))
 		child.Bind(wx.EVT_RADIOBOX, self.onElementTypeChange)
-		mainSizer.Add(child)
+		mainSizer.Add(child,proportion=1)
 
 		self.tree = wx.TreeCtrl(self, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE)
 		self.tree.Bind(wx.EVT_SET_FOCUS, self.onTreeSetFocus)
 		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
 		self.treeRoot = self.tree.AddRoot("root")
-		mainSizer.Add(self.tree)
+		mainSizer.Add(self.tree,proportion=7)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		label = wx.StaticText(self, wx.ID_ANY, _("&Filter by:"))
@@ -243,7 +243,7 @@ class ElementsListDialog(wx.Dialog):
 		self.filterEdit = wx.TextCtrl(self, wx.ID_ANY)
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
 		sizer.Add(self.filterEdit)
-		mainSizer.Add(sizer)
+		mainSizer.Add(sizer,proportion=1)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		self.activateButton = wx.Button(self, wx.ID_ANY, _("&Activate"))
@@ -253,7 +253,7 @@ class ElementsListDialog(wx.Dialog):
 		self.moveButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(False))
 		sizer.Add(self.moveButton)
 		sizer.Add(wx.Button(self, wx.ID_CANCEL))
-		mainSizer.Add(sizer)
+		mainSizer.Add(sizer,proportion=1)
 
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
