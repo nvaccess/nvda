@@ -14,6 +14,7 @@ from logHandler import log
 import speech
 import textInfos
 import api
+import config
 
 #: How often to check whether the console is dead (in ms).
 CHECK_DEAD_INTERVAL = 100
@@ -210,8 +211,18 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
 		commands=[]
-		x,y=self._consoleCoordFromOffset(self._startOffset)
-		buf=wincon.ReadConsoleOutput(consoleOutputHandle, self._endOffset-self._startOffset, x, y)
+		left,top=self._consoleCoordFromOffset(self._startOffset)
+		right,bottom=self._consoleCoordFromOffset(self._endOffset-1)
+		rect=wincon.SMALL_RECT(left,top,right,bottom)
+		if bottom-top>0: #offsets span multiple lines
+			rect.Left=0
+			rect.Right=self.consoleScreenBufferInfo.dwSize.x-1
+			length=self.consoleScreenBufferInfo.dwSize.x*(bottom-top+1)
+		else:
+			length=self._endOffset-self._startOffset
+		buf=wincon.ReadConsoleOutput(consoleOutputHandle, length, rect)
+		if bottom-top>0:
+			buf=buf[left:len(buf)-(self.consoleScreenBufferInfo.dwSize.x-right)+1]
 		lastAttr=None
 		lastText=[]
 		boundEnd=self._startOffset

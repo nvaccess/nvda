@@ -56,11 +56,11 @@ def ReadConsoleOutputCharacter(handle,length,x,y):
 		raise WinError()
 	return buf.value
 
-def ReadConsoleOutput(handle, length, x, y):
+def ReadConsoleOutput(handle, length, rect):
 	BufType=CHAR_INFO*length
 	buf=BufType()
-	rect=SMALL_RECT(x, y, x+length-1, y)
-	if windll.kernel32.ReadConsoleOutputW(handle, buf, COORD(length, 1), COORD(0,0), byref(rect))==0:
+	#rect=SMALL_RECT(x, y, x+length-1, y)
+	if windll.kernel32.ReadConsoleOutputW(handle, buf, COORD(rect.Right-rect.Left+1, rect.Bottom-rect.Top+1), COORD(0,0), byref(rect))==0:
 		raise WinError()
 	return buf
 
