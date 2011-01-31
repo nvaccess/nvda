@@ -147,15 +147,19 @@ def terminate():
 
 class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 
+	_cache_consoleScreenBufferInfo=True
+	def _get_consoleScreenBufferInfo(self):
+		return wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+
 	def _offsetFromConsoleCoord(self,x,y):
-		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		val=y-consoleScreenBufferInfo.srWindow.Top
 		val*=consoleScreenBufferInfo.dwSize.x
 		val+=x
 		return val
 
 	def _consoleCoordFromOffset(self,offset):
-		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		x=offset%consoleScreenBufferInfo.dwSize.x
 		y=offset-x
 		y/=consoleScreenBufferInfo.dwSize.x
@@ -163,7 +167,7 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return x,y
 
 	def _getOffsetFromPoint(self,x,y):
-		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		screenLeft,screenTop,screenWidth,screenHeight=self.obj.location
 		relativeX=x-screenLeft
 		relativeY=y-screenTop
@@ -173,11 +177,10 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		characterHeight=screenHeight/numLines
 		characterX=(relativeX/characterWidth)+consoleScreenBufferInfo.srWindow.Left
 		characterY=(relativeY/characterHeight)+consoleScreenBufferInfo.srWindow.Top
-		offset=self._offsetFromConsoleCoord(characterX,characterY)
-		return offset
+		return self._offsetFromConsoleCoord(characterX,characterY)
 
 	def _getPointFromOffset(self,offset):
-		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		characterX,characterY=self._consoleCoordFromOffset(offset)
 		screenLeft,screenTop,screenWidth,screenHeight=self.obj.location
 		lineLength=(consoleScreenBufferInfo.srWindow.Right+1)-consoleScreenBufferInfo.srWindow.Left
@@ -191,7 +194,7 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return textInfos.Point(x,y)
 
 	def _getCaretOffset(self):
-		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		return self._offsetFromConsoleCoord(consoleScreenBufferInfo.dwCursorPosition.x,consoleScreenBufferInfo.dwCursorPosition.y)
 
 	def _getSelectionOffsets(self):
@@ -235,7 +238,7 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return wincon.ReadConsoleOutputCharacter(consoleOutputHandle,end-start,startX,startY)
 
 	def _getLineOffsets(self,offset):
-		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		x,y=self._consoleCoordFromOffset(offset)
 		x=0
 		start=self._offsetFromConsoleCoord(x,y)
@@ -243,12 +246,12 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return start,end
 
 	def _getLineNumFromOffset(self,offset):
-		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		x,y=self._consoleCoordFromOffset(offset)
 		return y-consoleScreenBufferInfo.srWindow.Top
 
 	def _getStoryLength(self):
-		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		return consoleScreenBufferInfo.dwSize.x*((consoleScreenBufferInfo.srWindow.Bottom+1)-consoleScreenBufferInfo.srWindow.Top)
 
 	def _get_clipboardText(self):
