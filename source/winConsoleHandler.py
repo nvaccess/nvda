@@ -229,6 +229,9 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		for i,c in enumerate(buf):
 			if self._startOffset+i==boundEnd:
 				field,(boundStart,boundEnd)=self._getFormatFieldAndOffsets(boundEnd,formatConfig)
+				if lastText:
+					commands.append("".join(lastText))
+					lastText=[]
 				commands.append(textInfos.FieldCommand("formatChange",field))
 			if not c.Attributes==lastAttr and formatConfig["reportColor"]:
 				formatField=textInfos.FormatField()
