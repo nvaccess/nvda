@@ -42,6 +42,8 @@ def terminate():
 			log.exception("Error terminating global plugin %r" % plugin)
 
 def reloadGlobalPlugins():
+	"""Reloads running global plugins.
+	"""
 	global globalPlugins
 	terminate()
 	del globalPlugins

@@ -150,13 +150,14 @@ def reloadAppModules():
 	especially, it clears the cache of running appModules and deletes them from sys.modules.
 	Each appModule will be reloaded immediately as a reaction on a first event coming from the process.
 	"""
-	global runningTable, appModules
-	runningTable={}
+	global appModules
+	terminate()
 	del appModules
 	mods=[k for k,v in sys.modules.iteritems() if k.startswith("appModules") and v is not None]
 	for mod in mods:
 		del sys.modules[mod]
 	import appModules
+	initialize()
 
 def initialize():
 	"""Initializes the appModule subsystem. 
