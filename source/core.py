@@ -85,8 +85,11 @@ def resetConfiguration():
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
 	"""
 	import config
+	import braille
 	import speech
 	import languageHandler
+	log.debug("Terminating braille")
+	braille.terminate()
 	log.debug("terminating speech")
 	speech.terminate()
 	log.debug("Reloading config")
@@ -99,6 +102,9 @@ def resetConfiguration():
 	#Speech
 	log.debug("initializing speech")
 	speech.initialize()
+	#braille
+	log.debug("Initializing braille")
+	braille.initialize()
 	log.info("Reverted to saved configuration")
 
 def main():
