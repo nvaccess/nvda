@@ -356,4 +356,16 @@ def normalizeGestureIdentifier(identifier):
 
 #: The singleton input manager instance.
 #: @type: L{InputManager}
-manager = InputManager()
+manager = None
+
+def initialize():
+	"""Initializes input core, creating a global L{InputManager} singleton.
+	"""
+	global manager
+	manager=InputManager()
+
+def terminate():
+	"""Terminates input core.
+	"""
+	global manager
+	manager=None

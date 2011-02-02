@@ -217,6 +217,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import IAccessibleHandler
 	log.debug("Initializing IAccessible support")
 	IAccessibleHandler.initialize()
+	log.debug("Initializing input core")
+	import inputCore
+	inputCore.initialize()
 	import keyboardHandler
 	log.debug("Initializing keyboard handler")
 	keyboardHandler.initialize()
@@ -329,6 +332,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		mouseHandler.terminate()
 	except:
 		log.error("error terminating mouse handler",exc_info=True)
+	log.debug("Terminating input core")
+	try:
+		inputCore.terminate()
+	except:
+		log.error("error terminating input core",exc_info=True)
 	log.debug("Terminating braille")
 	try:
 		braille.terminate()
