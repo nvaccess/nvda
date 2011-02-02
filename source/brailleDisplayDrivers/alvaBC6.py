@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2010 Optelec B.V. <http://www.optelec.com/>, James Teh <jamie@jantrid.net>
+#Copyright (C) 2009-2011 Optelec B.V. <http://www.optelec.com/>, James Teh <jamie@jantrid.net>
 
 import braille
 import queueHandler
@@ -58,12 +58,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		AlvaLib.AlvaOpen(0)
 		self._alva_NumCells = 0
 		self._keysDown = set()
-		self._keyCallback = ALVA_PKEYCALLBACK(self._keyCallback)
-		AlvaLib.AlvaSetKeyCallback(0, self._keyCallback, None)
+		self._keyCallbackInst = ALVA_PKEYCALLBACK(self._keyCallback)
+		AlvaLib.AlvaSetKeyCallback(0, self._keyCallbackInst, None)
 
 	def terminate(self):
 		super(BrailleDisplayDriver, self).terminate()
 		AlvaLib.AlvaClose(1)
+		# Drop the ctypes function instance for the key callback,
+		# as it is holding a reference to an instance method, which causes a reference cycle.
+		self._keyCallbackInst = None
 
 	def _get_numCells(self):
 		if self._alva_NumCells==0:
