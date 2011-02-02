@@ -74,6 +74,10 @@ def doStartupDialogs():
 		gui.WelcomeDialog.run()
 	if globalVars.configFileError:
 		gui.ConfigFileErrorDialog.run()
+	if globalVars.gestureMapFileError:
+		import wx
+		gui.scriptUI.MessageDialog(_("""Your gesture map file contains errors. 
+More details about the errors can be found in the log file."""), _("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION).run()
 
 def restart():
 	"""Restarts NVDA by starting a new copy with -r."""

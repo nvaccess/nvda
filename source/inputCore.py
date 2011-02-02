@@ -7,7 +7,7 @@
 import sys
 import os
 import itertools
-from configobj import ConfigObj
+import configobj
 import baseObject
 import scriptHandler
 import queueHandler
@@ -158,8 +158,14 @@ class GlobalGestureMap(object):
 		@param filename: The name of the file to load.
 		@type: str
 		"""
-		conf = ConfigObj(filename, file_error=True, encoding="UTF-8")
-		self.update(conf)
+		try:
+			conf = configobj.ConfigObj(filename, file_error=True, encoding="UTF-8")
+		except configobj.ConfigObjError, e:
+			log.warning("Error in gesture map '%s': %s"%(filename, e))
+			globalVars.gestureMapFileError=True
+		else:
+			self.update(conf)
+			globalVars.gestureMapFileError=False
 
 	def update(self, entries):
 		"""Add multiple map entries.
