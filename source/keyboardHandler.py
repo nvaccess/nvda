@@ -232,12 +232,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 		return winUser.getKeyNameText(self.scanCode, self.isExtended)
 
-	def _get__keyNames(self):
-		mainKey = self.mainKeyName
-
-		if self.isModifier:
-			return (mainKey,)
-
+	def _get_modifierNames(self):
 		modTexts = set()
 		for modVk, modExt in self.generalizedModifiers:
 			if isNVDAModifierKey(modVk, modExt):
@@ -245,16 +240,22 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			else:
 				modTexts.add(self.getVkName(modVk, None))
 
-		return tuple(modTexts) + (mainKey,)
+		return modTexts
 
-	def _get_keyName(self):
-		return "+".join(self._keyNames)
+	def _get__keyNamesInDisplayOrder(self):
+		return tuple(self.modifierNames) + (self.mainKeyName,)
+
+	def _get_logIdentifier(self):
+		return u"kb({layout}):{key}".format(layout=self.layout,
+			key="+".join(self._keyNamesInDisplayOrder))
 
 	def _get_displayName(self):
-		return "+".join(localizedKeyLabels.get(key, key) for key in self._keyNames)
+		return "+".join(localizedKeyLabels.get(key, key) for key in self._keyNamesInDisplayOrder)
 
 	def _get_identifiers(self):
-		keyName = self.keyName.lower()
+		keyNames = set(self.modifierNames)
+		keyNames.add(self.mainKeyName)
+		keyName = "+".join(keyNames).lower()
 		return (
 			u"kb({layout}):{key}".format(layout=self.layout, key=keyName),
 			u"kb:{key}".format(key=keyName)

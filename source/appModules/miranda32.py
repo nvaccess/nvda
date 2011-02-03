@@ -110,7 +110,7 @@ class AppModule(appModuleHandler.AppModule):
 			obj._isWindowUnicode=False
 
 	def script_readMessage(self,gesture):
-		num=int(gesture.keyName[-1])
+		num=int(gesture.mainKeyName[-1])
 		if len(self.lastMessages)>num-1:
 			ui.message(self.lastMessages[num-1])
 		else:
