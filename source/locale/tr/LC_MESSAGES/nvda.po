@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA main-4028\n"
-"POT-Creation-Date: 2011-01-20 19:02+E. Australia Standard Time\n"
-"PO-Revision-Date: 2011-01-20 14:30+0200\n"
+"Project-Id-Version: NVDA main-4056\n"
+"POT-Creation-Date: 2011-01-26 11:08+E. Australia Standard Time\n"
+"PO-Revision-Date: 2011-02-01 12:11+0200\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -561,6 +561,10 @@ msgstr "Seviye %s"
 msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680 series"
 
+#: brailleDisplayDrivers\baum.py:87
+msgid "Baum/HumanWare/APH braille displays"
+msgstr "Baum/HumanWare/APH braille displays"
+
 #: brailleDisplayDrivers\freedomScientific.py:96
 msgid "display scroll"
 msgstr "ekran kaydırma"
@@ -665,7 +669,7 @@ msgstr "virgül"
 
 #: characterSymbols.py:37
 msgid "dash"
-msgstr "çizgi"
+msgstr "tire"
 
 #: characterSymbols.py:38
 msgid "dot"
@@ -947,7 +951,7 @@ msgstr "Sürgü"
 
 #: controlTypes.py:204
 msgid "progress bar"
-msgstr "ilerleme çubuğu"
+msgstr "aşama çubuğu"
 
 #: controlTypes.py:205
 msgid "scroll bar"
@@ -1986,23 +1990,23 @@ msgstr "Özellikle geliştiricilerin faydalanması için, mevcut nesne hakkında
 
 #: globalCommands.py:738
 msgid "no progress bar updates"
-msgstr "İlerleme çubuğu güncellemelerini bildirme"
+msgstr "Aşama çubuğu güncellemelerini bildirme"
 
 #: globalCommands.py:741
 msgid "speak progress bar updates"
-msgstr "İlerleme çubuğu güncellemelerini konuşarak bildir"
+msgstr "Aşama çubuğu güncellemelerini konuşarak bildir"
 
 #: globalCommands.py:744
 msgid "beep for progress bar updates"
-msgstr "İlerleme çubuğu güncellemelerini bip sesiyle bildir"
+msgstr "Aşama çubuğu güncellemelerini bip sesiyle bildir"
 
 #: globalCommands.py:747
 msgid "beep and speak progress bar updates"
-msgstr "İlerleme çubuğu güncellemelerini bip sesiyle ve konuşarak bildir"
+msgstr "Aşama çubuğu güncellemelerini bip sesiyle ve konuşarak bildir"
 
 #: globalCommands.py:749
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
-msgstr "İlerleme çubuğunun bildirimiyle ilgili, bip, konuşma, bip ve konuşma ve kapalı kipleri arasında geçiş yapar"
+msgstr "Aşama çubuğunun bildirimiyle ilgili, bip, konuşma, bip ve konuşma ve kapalı kipleri arasında geçiş yapar"
 
 #: globalCommands.py:758
 msgid "report dynamic content changes"
@@ -2770,15 +2774,15 @@ msgstr "Nesne &tariflerini bildir"
 
 #: gui\settingsDialogs.py:601
 msgid "Progress &bar output:"
-msgstr "İlerleme Çub&uğu bildirimi"
+msgstr "Aşama Çub&uğu bildirimi"
 
 #: gui\settingsDialogs.py:604
 msgid "Progress bar output"
-msgstr "İlerleme Çubuğu bildirimi"
+msgstr "Aşama Çubuğu bildirimi"
 
 #: gui\settingsDialogs.py:613
 msgid "Report background progress bars"
-msgstr "Geri plandaki ilerleme çubuğu güncellemelerini bildir"
+msgstr "Geri plandaki aşama çubuğu güncellemelerini bildir"
 
 #: gui\settingsDialogs.py:616
 msgid "Report dynamic &content changes"
@@ -2966,7 +2970,7 @@ msgstr "çeviri &tablosu"
 
 #: gui\settingsDialogs.py:925
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr "E&xpand to computer braille for the word at the cursor"
+msgstr "İmle&ç altındaki sözcüğü bilgisayar braillle olarak genişlet"
 
 #: gui\settingsDialogs.py:930
 msgid "Cursor blink rate (ms)"
@@ -3479,15 +3483,15 @@ msgstr "Sözcük"
 msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
-#: versionInfo.py:27
+#: versionInfo.py:31
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Microsoft Windows için Açık kaynak ve özgür Ekran Okuyucu"
 
-#: versionInfo.py:29
+#: versionInfo.py:33
 msgid "Copyright (C) 2006-2011 NVDA Contributors"
 msgstr "Copyright (C) 2006-2011 NVDA'ya katkıda bulunanlar"
 
-#: versionInfo.py:30
+#: versionInfo.py:34
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
