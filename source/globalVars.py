@@ -37,4 +37,3 @@ appArgs=None
 settingsRing = None
 speechDictionaryProcessing=True
 configFileError=None
-gestureMapFileError=False

@@ -112,6 +112,9 @@ class GlobalGestureMap(object):
 		@type entries: mapping of str to mapping
 		"""
 		self._map = {}
+		#: Indicates that the last load or update contained an error.
+		#: @type: bool
+		self.lastUpdateContainedError = False
 		if entries:
 			self.update(entries)
 
@@ -119,6 +122,7 @@ class GlobalGestureMap(object):
 		"""Clear this map.
 		"""
 		self._map.clear()
+		self.lastUpdateContainedError = False
 
 	def add(self, gesture, module, className, script,replace=False):
 		"""Add a gesture mapping.
@@ -162,10 +166,9 @@ class GlobalGestureMap(object):
 			conf = configobj.ConfigObj(filename, file_error=True, encoding="UTF-8")
 		except configobj.ConfigObjError, e:
 			log.warning("Error in gesture map '%s': %s"%(filename, e))
-			globalVars.gestureMapFileError=True
-		else:
-			self.update(conf)
-			globalVars.gestureMapFileError=False
+			self.lastUpdateContainedError = True
+			return
+		self.update(conf)
 
 	def update(self, entries):
 		"""Add multiple map entries.
@@ -185,11 +188,13 @@ class GlobalGestureMap(object):
 		@param entries: The items to add.
 		@type entries: mapping of str to mapping
 		"""
+		self.lastUpdateContainedError = False
 		for locationName, location in entries.iteritems():
 			try:
 				module, className = locationName.rsplit(".", 1)
 			except:
 				log.error("Invalid module/class specification: %s" % locationName)
+				self.lastUpdateContainedError = True
 				continue
 			for script, gestures in location.iteritems():
 				if script == "None":
@@ -203,6 +208,7 @@ class GlobalGestureMap(object):
 						self.add(gesture, module, className, script)
 					except:
 						log.error("Invalid gesture: %s" % gesture)
+						self.lastUpdateContainedError = True
 						continue
 
 	def getScriptsForGesture(self, gesture):

@@ -74,7 +74,8 @@ def doStartupDialogs():
 		gui.WelcomeDialog.run()
 	if globalVars.configFileError:
 		gui.ConfigFileErrorDialog.run()
-	if globalVars.gestureMapFileError:
+	import inputCore
+	if inputCore.manager.userGestureMap.lastUpdateContainedError:
 		import wx
 		gui.scriptUI.MessageDialog(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
