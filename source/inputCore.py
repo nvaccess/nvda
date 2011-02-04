@@ -7,7 +7,7 @@
 import sys
 import os
 import itertools
-from configobj import ConfigObj
+import configobj
 import baseObject
 import scriptHandler
 import queueHandler
@@ -125,6 +125,9 @@ class GlobalGestureMap(object):
 		@type entries: mapping of str to mapping
 		"""
 		self._map = {}
+		#: Indicates that the last load or update contained an error.
+		#: @type: bool
+		self.lastUpdateContainedError = False
 		if entries:
 			self.update(entries)
 
@@ -132,6 +135,7 @@ class GlobalGestureMap(object):
 		"""Clear this map.
 		"""
 		self._map.clear()
+		self.lastUpdateContainedError = False
 
 	def add(self, gesture, module, className, script,replace=False):
 		"""Add a gesture mapping.
@@ -171,7 +175,12 @@ class GlobalGestureMap(object):
 		@param filename: The name of the file to load.
 		@type: str
 		"""
-		conf = ConfigObj(filename, file_error=True, encoding="UTF-8")
+		try:
+			conf = configobj.ConfigObj(filename, file_error=True, encoding="UTF-8")
+		except configobj.ConfigObjError, e:
+			log.warning("Error in gesture map '%s': %s"%(filename, e))
+			self.lastUpdateContainedError = True
+			return
 		self.update(conf)
 
 	def update(self, entries):
@@ -192,11 +201,13 @@ class GlobalGestureMap(object):
 		@param entries: The items to add.
 		@type entries: mapping of str to mapping
 		"""
+		self.lastUpdateContainedError = False
 		for locationName, location in entries.iteritems():
 			try:
 				module, className = locationName.rsplit(".", 1)
 			except:
 				log.error("Invalid module/class specification: %s" % locationName)
+				self.lastUpdateContainedError = True
 				continue
 			for script, gestures in location.iteritems():
 				if script == "None":
@@ -210,6 +221,7 @@ class GlobalGestureMap(object):
 						self.add(gesture, module, className, script)
 					except:
 						log.error("Invalid gesture: %s" % gesture)
+						self.lastUpdateContainedError = True
 						continue
 
 	def getScriptsForGesture(self, gesture):
@@ -372,4 +384,16 @@ def normalizeGestureIdentifier(identifier):
 
 #: The singleton input manager instance.
 #: @type: L{InputManager}
-manager = InputManager()
+manager = None
+
+def initialize():
+	"""Initializes input core, creating a global L{InputManager} singleton.
+	"""
+	global manager
+	manager=InputManager()
+
+def terminate():
+	"""Terminates input core.
+	"""
+	global manager
+	manager=None

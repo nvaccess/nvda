@@ -74,6 +74,12 @@ def doStartupDialogs():
 		gui.WelcomeDialog.run()
 	if globalVars.configFileError:
 		gui.ConfigFileErrorDialog.run()
+	import inputCore
+	if inputCore.manager.userGestureMap.lastUpdateContainedError:
+		import wx
+		gui.scriptUI.MessageDialog(_("Your gesture map file contains errors.\n"
+				"More details about the errors can be found in the log file."),
+			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION).run()
 
 def restart():
 	"""Restarts NVDA by starting a new copy with -r."""
@@ -217,6 +223,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import IAccessibleHandler
 	log.debug("Initializing IAccessible support")
 	IAccessibleHandler.initialize()
+	log.debug("Initializing input core")
+	import inputCore
+	inputCore.initialize()
 	import keyboardHandler
 	log.debug("Initializing keyboard handler")
 	keyboardHandler.initialize()
@@ -329,6 +338,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		mouseHandler.terminate()
 	except:
 		log.error("error terminating mouse handler",exc_info=True)
+	log.debug("Terminating input core")
+	inputCore.terminate()
 	log.debug("Terminating braille")
 	try:
 		braille.terminate()
