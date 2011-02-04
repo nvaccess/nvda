@@ -106,7 +106,7 @@ def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestam
 	#We don't want to do anything with the event if the event is not for the window this console is in
 	if window!=consoleObject.windowHandle:
 		return
-	if eventID==winUser.EVENT_CONSOLE_CARET:
+	if eventID==winUser.EVENT_CONSOLE_CARET and not eventHandler.isPendingEvents("caret",consoleObject):
 		eventHandler.queueEvent("caret",consoleObject)
 	# It is safe to call this event from this callback.
 	# This avoids an extra core cycle.
