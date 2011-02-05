@@ -65,6 +65,7 @@ Highlights of this release include reporting of colors for some controls; automa
 - NVDA now switches to the appropriate braille display driver when you revert to saved configuration. (#1346)
 - The Visual Studio 2008 Project Wizard is read correctly again. (#974)
 - NVDA no longer completely fails to work in applications which contain non-ASCII characters in their executable name. (#1352)
+- NVDA no longer reads first character of the following line at the end of the current line when reading in the AkelEdit controls (AkelPad) and the word wrap mode is turned on.
 
 
 == Changes for Developers ==

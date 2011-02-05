@@ -4,7 +4,6 @@
 #See the file COPYING for more details.
 
 import edit
-import IAccessibleHandler
 import winUser
 import winKernel
 import ctypes
@@ -19,8 +18,8 @@ AEM_RICHOFFSETTOINDEX =(winUser.WM_USER + 2113)
 
 #AEM_GETINDEX flags
 AEGI_LASTCHAR         =2
-AEGI_NEXTBREAK        =12
-AEGI_PREVBREAK        =13
+AEGI_CARETCHAR             =5
+AEGI_NEXTLINE              =8
 
 
 #Structures
@@ -57,6 +56,19 @@ class AkelEditTextInfo(edit.EditTextInfo):
 		winKernel.readProcessMemory(processHandle,internalCiChar,ctypes.byref(ciChar),ctypes.sizeof(ciChar),None)
 		winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
 		return ciChar.nLine
+
+	def _getLineOffsets(self,offset):
+		(start,end)=super(AkelEditTextInfo,self)._getLineOffsets(offset)
+		if end == self._getStoryLength():
+			return (start,end)
+		ciChar=AECHARINDEX()
+		processHandle=self.obj.processHandle
+		internalCiChar=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(ciChar),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		winUser.sendMessage(self.obj.windowHandle,AEM_GETINDEX,AEGI_CARETCHAR,internalCiChar)
+		winUser.sendMessage(self.obj.windowHandle,AEM_GETINDEX,AEGI_NEXTLINE,internalCiChar)
+		end=winUser.sendMessage(self.obj.windowHandle,AEM_INDEXTORICHOFFSET,0,internalCiChar)-1
+		winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
+		return (start,end)
 
 	def _getStoryLength(self):
 		ciChar=AECHARINDEX()
