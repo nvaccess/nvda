@@ -26,6 +26,7 @@ O máis sinalable inclúe:
 - Soporte para moitas Liñas de Braille efímero
 -
 
+
 ++ Internacionalización ++
 É importante que calquera persoa no mundo, sen importar que lingua fale, teña igual acceso á tecnoloxía. 
 Actualmente NVDA foi traducido a preto cerca de 20 linguas ademáis da lingua inglesa incluíndo: Afrikaans, Alemán, Árabe, Checo, Chinese Tradicional, Croata, eSlovaco, Español, Finlandés, Francés, Galego, Húngaro, Italiano, xaponés, Polaco, Portugués, Portugués do Brasil, Ruso, Ucraniano, Vietnammita e Tailandés.
@@ -92,6 +93,18 @@ Se non se che fixo a pregunta sobre o reinicio, premendo Rematar pecharás o ins
 Se tes a versión portátil do ficheiro do NVDA, entón todo o que tes que facer é premer intro ou facer doble clic sobre o ficheiro, e seguir as indicacións. 
 Preguntaráseche onde desexas colocar no teu sistema os ficheiros. 
 
++++ NVDA Portable nun lápis USB +++
+É posible colocar ó NVDA nunha unidade de memoria USB tal que podas utilizalo noutros sistemas de ordenador.
+
+Cando a versión Portable che pregunte onde desexas desempaquetala, teclea na unidade da túa memoria USB, máis un subdirectorio opcional onde desexes colocar ó NVDA.
+
+Se por exemplo a túa unidade de memoria USB está en E:\, deberías teclear en E:\nvda, o cal colocará ó NVDA no subdirectorio NVDA na túa unidade de memoria USB.
+
+Ten en conta que aíndaque esto agora significa que podes levar contigo ó NVDA e as súas opcións a calquera lugar, sinxelamente enchufando a unidade de memoria USB non arrancará automáticamente ó NVDA; terás que arrancalo manualmente ou dende Windows Explorer ou dende o diálogo Executar.
+
+Para información acerca do arrancado automático do NVDA dende unha unidade de memoria USB, por favor mira este artículo en inglés:
+http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
+
 + Comezando co NVDA +
 
 ++ Lanzando o NVDA ++
@@ -124,22 +137,22 @@ De xeito predeterminado tanto o insert do teclado numérico como o do teclado ex
 
 Se desexas facer que unha das teclas modificadoras de NVDA actúe como a tecla orixinal (por exemplo desexas activar BloqMayus cando tes configurada BloqMayus para que sexa unha tecla modificadora do NVDA) podes premer a tecla dúas veces en sucesión rápida.
 
-+++ Modo Axuda de Teclado +++
-Moitas das teclas de ordes menciónanse ó longo do resto desta guía do usuario, pero un modo sinxelo para explorar todas as diferentes teclas de ordes é activar a axuda de teclado.
++++ Modo Axuda de Entrada +++
+Moitas das teclas de ordes menciónanse ó longo do resto desta guía do usuario, pero un modo sinxelo para explorar todas as diferentes teclas de ordes é activar a axuda de entrada.
 
-Para activar a axuda de teclado, preme NVDA+1. 
+Para activar a axuda de Entrada, preme NVDA+1. 
 Para desactivala de novo, preme NVDA+1 outra vez. 
-Mentres se está na axuda de teclado, premendo calquera tecla anunciará que fai (se fai algo). 
-As teclas non levarán a cabo a súa función mentres se estea no modo de axuda de teclado, así que podes premer as teclas que queiras.
+Mentres se estea na axuda de Entrada, premendo calquera tecla anunciará que fai (se fai algo). 
+As teclas non levarán a cabo a súa función mentres se estea no modo de axuda de Entrada, así que podes premer as teclas que queiras.
 
 +++ Distribucións de Teclado +++
 Actualmente NVDA ven con dous conxuntos de  teclas de ordes. 
 Hai unha distribución para sobremesa e unha distribución para portátiles.
-De xeito predeterminado NVDA configúrase para utilizar a distribución de sobremesa (Desktop), aíndaque podes cambiar á distribución de portátiles (Laptop) nas Opcións de Teclado, que se atopan en Preferencias no menú NVDA.
+De xeito predeterminado NVDA configúrase para utilizar a distribución de sobremesa, aíndaque podes cambiar á distribución de portátiles nas Opcións de Teclado, que se atopan en Preferencias no menú NVDA.
 	
-A distribución sobremesa (Desktop) fai un uso amplo do teclado numérico (co bloqueo numérico desactivado).
+A distribución sobremesa fai un uso amplo do teclado numérico (co bloqueo numérico desactivado).
 Aíndaque a maioría dos portátiles non teñen un teclado numérico físico, algúns portátiles poden emular un mantendo pulsada a tecla FN e premendo letras e números na man dereita do teclado (7 8 9 u i o j k l etc).
-Se o teu portátil non pode facer esto, ou non che permite desactivar o bloqueo numérico, poderás querer cambiar á distribución Laptop no seu lugar.
+Se o teu portátil non pode facer esto, ou non che permite desactivar o bloqueo numérico, poderás querer cambiar á distribución Portátil no seu lugar.
 
 ++ O Menú NVDA ++
 O menú NVDA permíteche controlar as opcións do NVDA, acceder á axuda, gardar/voltar á túa configuración, Modificar os diccionarios da fala, ler o ficheiro do log, e saír do NVDA.
@@ -159,11 +172,20 @@ Cando apareza o menú, podes utilizar as teclas de cursor para navegar polo men�
 | Saír do NVDA | NVDA+q | Sae do NVDA |
 | Anunciar data/hora | NVDA+f12 | Premendo unha vez anuncia a hora actual, premendo dúas veces anuncia a data |
 | Deixar pasar seguinte tecla | NVDA+f2 | Di ó NVDA que deixe pasar a seguinte tecla premeda directamente á aplicación activa, se está normalmente tratada como unha tecla de ordes de NVDA |
+| activar e desactivar modo aplicación durminte | NVDA+shift+s | O modo durminte desactiva todas as ordes de NVDA e a saída de voz/braille para a aplicación actual. Esto é máis útil en aplicacións que proporcionan a súa propria voz ou características de lectura de pantalla. Preme esta orde novamente para desactivar o modo durminte. |
+%kc:endInclude
+
+++ Anunciando Información do Sistema ++
+%kc:beginInclude
+|| Nome | tecla | Descripción |
+| Anunciar data/hora | NVDA+f12 | Preméndoa  unha vez anuncia a hora actual, preméndoa dúas veces anuncia a data. |
+| Anunciar estado da batería | NVDA+shift+b | Anuncia o estado da batería, é dicir se a electricidade se está a utilizar ou a porcentaxe actual da carga. |
+| Anunciar o texto no portapapeis | NVDA+c | Anuncia o Texto no portapapeis se hai algún. |
 %kc:endInclude
 
 + Navegando co NVDA +
 
-++ Navegando co Foco ++
+++ Navegando co Foco do sistema ++
 O modo máis común de navegar por Windows co NVDA, é só moverse cas ordes de teclado normais, como tab e shift tab para moverse cara adiante e atrás entre controis, premendo alt para despregar a barra de menú e logo utilizando as teclas de cursor para navegar polos menús, utilizando alt-tab para moverse entre aplicacións en execución. 
 Esto move o foco do sistema; é dicir, o obxecto que recive teclas escribidas no teclado.
 Cando fagas esto, NVDA anunciará información sobre o que ten o foco, tal como o seu nome, tipo, valor, estado, descripción, atallo de teclado e información posicional.
@@ -174,6 +196,7 @@ Hai algunhas ordes de teclado útis cando nos movamos co foco:
 | Anunciar foco actual | NVDA+tab | anuncia o obxecto actual ou control que teña o foco do sistema. Premendo dúas veces deletreará a información  |
 | Anunciar título | NVDA+t | Anuncia o título da ventá activa actualmente. Premendo dúas veces deletreará a información. Premendo tres veces copiaráa ó portapapeis |
 | Ler a ventá activa | NVDA+b | le todos os controis na ventá actualmente activa (útil para diálogos) |
+| Anunciar Barra de Estado | NVDA+fin | Anuncia a barra de estado se NVDA atopa unha. Tamén move o navegador de obxectos a esta localización |
 %kc:endInclude
 
 ++ Navegando co Cursor do Sistema ++
@@ -554,6 +577,11 @@ Tecla: NVDA+3
 
 Que cando está marcada significa que NVDA anunciará todas as palabras ó se escribir no teclado. 
 
+==== Pitar se se Teclean Letras Minúsculas Cando BloqMaius está Activado ====
+Cando está activada, escoitarase un pitido de aviso se se escrebe unha letra ca tecla shift mentres BloqMaius está activada.
+Xeralmente, escreber letras en maiúsculas co BloqMaius é inintencionado e normalmente é debido a non revisar que o BloqMaius estea activado.
+Polo tanto, pode ser bastante útil ser avisado acerca de esto.
+
 %kc:setting
 ==== Falar teclas de ordes ====
 Tecla: NVDA+4
@@ -570,8 +598,8 @@ O punteiro do ratp en Windows cambia a súa forma para comunicar certa informaci
 
 %kc:setting
 ==== Anunciar texto baixo o Rato ====
-| Tecla Desktop | NVDA+m |
-| Tecla Laptop | NVDA+shift+m |
+| Tecla Escritorio | NVDA+m |
+| Tecla Portátil | NVDA+shift+m |
 
 Que cando está marcada significa que NVDA anunciará o texto actualmente baixo o punteiro do rato, segundo se mova pola pantalla. Esto permíteche atopar cousas na pantalla, movendo físicamente o rato, en lugar de tratar de atopalas a través do navegador de obxectos.
 
@@ -631,6 +659,11 @@ Por exemplo o menú Archivo nunha barra de menú poderá ter unha tecla de atall
 ==== Anunciar Información da Posición do Obxecto ====
 Esta opción permíteche escoller onde desexas ter unha posición do obxecto anunciada (ex.: 1 de 4) cando te moves ó obxecto co foco ou o navegador de obxectos.
 
+==== Adiviñar a información de Posición do Obxecto cando non estea dispoñible ====
+Se o anunciado de información de posición do obxecto está desactivada, esta opción permite ó NVDA adiviñar a información de posición do obxecto cando non estea dispoñible para un control en particular.
+
+Cando estea activada, NVDA anunciará información de posición para máis controis como menús e barras de ferramentas, non obstante esta información poderá ser lixeiramente incorrecta. 
+
 ==== Anunciar Descripcións de Obxectos ====
 Desmarca esta casiña de verificación se coidas que non necesitas escoitar a descripción anunciada xunto cos obxectos.
 
@@ -651,6 +684,12 @@ Ten as seguintes opcións:
 ==== Anunciar Barras de Progreso de fondo ====
 Esta é unha opción que, cando está marcada, di ó nvda que manteña o anunciado de unha barra de progreso, aínda se non está físicamente no primeiro plano. 
 Se minimizas ou cambias a outra ventá que conteña unha barra de progreso, nvda manterá a pista dela, permitíndoche facer outras cousas mentres nvda segue á barra de progreso.
+
+%kc:setting
+==== Anunciar cambios de contido dinámico ====
+Tecla: NVDA+5
+
+Conmuta o anunciado de contido novo en obxectos particulares como terminais e o control de histórico en programas de chat.
 
 +++ Opcións dos Modos Virtuais (NVDA+control+b) +++
 O diálogo de opcións dos Modos Virtuais pode atoparse no menú Preferencias, baixo "Modos Virtuais"...". 
@@ -798,6 +837,9 @@ Non obstante, se fas clic ou colocas o foco dentro do visualizador,  NVDA deter�
 A consola de Python do NVDA, atopada baixo Ferramentas no menú NVDA, é unha ferramenta de desenrolo que é útil para depuración, inspección xeral do interior  do NVDA ou inspeción da xerarquía de accesibilidade de unha aplicación.
 Para máis información, por favor mira [O artigo The Python Console no sitio Web de NVDA NVDA_URLwiki/PythonConsole].
 
+++ Recargar plugins ++
+Este elemento, unha vez activado, recarga app modules e plugins globais sen reiniciar ó NVDA, o cal é útil para desenroladores.
+
 + Información Adicional +
 Se requires información adicional ou asistencia referente ó NVDA, por favor visita o sitio Web de NVDA en NVDA_URL.
 Aquí, podes atopar documentación adicional,  así como soporte técnico e recursos para a comunidade. 
@@ -846,23 +888,169 @@ Necesitarás os controladores de liñas braille de Freedom Scientific instalados
 Se non os tes aínda, podes obtelos dende http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Aíndaque esta páxina só menciona a liña Focus 40 Blue, o controlador soporta todas as liñas de Freedom Scientific.
 
+Seguidamente van as asociacións de teclas para esta liña co NVDA.
+Por favor mira a documentación da liña para descripcións de onde poden atoparse estas teclas.
+%kc:beginInclude
+|| Nome | tecla |
+| Conmutar acción de roda esquerda | premer roda esquerda |
+| Moverse cara atrás utilizando acción de roda esquerda | roda esquerda cara arriba |
+| Moverse cara adiante utilizando acción de roda esquerda | roda esquerda cara abaixo |
+| Conmutar acción de roda dereita | premer roda dereita |
+| Moverse cara atrás utilizando acción de roda dereita | roda dereita cara arriba |
+| Moverse cara adiante utilizando acción de roda dereita | roda dereita cara abaixo |
+| Guiar cara a celda braille | sensor |
+%kc:endInclude
+
 ++ Optelec ALVA BC640/680 ++
 Ambas liñas ALVA BC640 e BC680 de [Optelec http://www.optelec.com/] sopórtanse.
 Non necesitas instalar ningún controlador en especial para utilizar estas liñas.
 Só enchufa a liña e configura NVDA para utilizalas.
 
+Seguidamente van as asignacións de teclas para esta liña co NVDA.
+Por favor mira a documentación da liña para descripcións de onde poden atoparse estas teclas.
+%kc:beginInclude
+|| Nome | Tecla |
+| Desprazar liña braille cara atrás | t1 |
+| Mover a liña braille á liña anterior | t2 |
+| Mover a liña braille á a liña seguinte | t4 |
+| Desprazar liña braille cara adiante | t5 |
+| Guiar á celda braille | sensor |
+| tecla shift+tab | sp1 |
+| tecla alt | sp2 |
+| tecla escape | sp3 |
+| tecla tab | sp4 |
+| tecla flecha arriba | spUp |
+| tecla flecha abaixo | spDown |
+| tecla flecha esquerda | spLeft |
+| tecla flecha dereita | spRight |
+| tecla intro | spEnter |
+| menú NVDA | sp1+sp3 |
+| tecla windows+d (minimizar todas as aplicacións) | sp1+sp4 |
+| tecla windows | sp2+sp3 |
+| tecla alt+tab | sp2+sp4 |
+%kc:endInclude
+
 ++ Liñas Handy Tech ++
 NVDA soporta todas as liñas de [Handy Tech http://www.handytech.de/].
-Para algunhas liñas USB, necesitarás instalar os controladores USB de Handy Tech no teu sistema.
-Ademáis, necesitarás instalar o controlador universal Handy Tech,  dispoñible en ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
+Para algunhas liñas antigas USB, necesitarás instalar os controladores USB de Handy Tech no teu sistema.
+
+Seguidamente van as asignacións de teclas para esta liña co NVDA.
+Por favor mira a documentación da liña para descripcións de onde poden atoparse estas teclas.
+%kc:beginInclude
+|| Nome | Tecla |
+| Desprazar a liña braille cara atrás | esquerda, arriba |
+| Desprazar a liña braille cara adiante | Dereita, abaixo |
+| Mover a liña braille á liña anterior | b4 |
+| Mover a liña braille á liña seguinte | b5 |
+| Guiar á celda braille | sensor |
+| tecla shift+tab | esc |
+| tecla alt | b2+b4+b5 |
+| tecla escape | b4+b6 |
+| tecla tab | enter |
+| tecla intro | esc+enter |
+| tecla flecha arriba | leftSpace |
+| tecla flecha abaixo | rightSpace |
+| menú NVDA | b2+b4+b5+b6 |
+| configuración de Handy Tech | b4+b8 |
+%kc:endInclude
 
 ++ MDV Lilli ++
 A liña braille Lilli dispoñible dende [MDV http://www.mdvbologna.it/] sopórtase.
 Non necesitas instalar ningún controlador específico para utilizar esta liña.
 Só enchufa a liña e configura NVDA para utilizala.
 
+++ Liñas braille Baum/Humanware/APH ++
+Varias liñas braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] e [APH http://www.aph.org/] están soportadas cando se conectan a traverso do USB ou do bluetooth.
+Estas inclúen:
+- Baum: SuperVario, PocketVario
+- HumanWare: Brailliant, BrailleConnect
+- APH: Refreshabraille
+-
+Algunhas outras liñas manufacturadas por Baum tamén poderían funcionar, aíndaque non foron probadas.
+
+Se conectas a traverso do USB, primeiro debes instalar os controladores USB proporcionados polo fabricante.
+Para a APH Refreshabraille, o modo USB debe axustarse a serie.
+
+Seguidamente van as asignacións de teclas para esta liña co NVDA.
+Por favor mira a documentación da liña braille para descripcións de onde se poden atopar estas teclas.
+%kc:beginInclude
+|| Nome | Tecla |
+| Desprazar liña braille cara atrás | d2 |
+| Desprazar liña braille cara adiante | d5 |
+| Mover a liña braille á liña anterior | d1 |
+| Mover a liña brailla á liña seguinte | d3 |
+| Guiar á celda braille | sensor |
+
+Para liñas que teñan un joystick:
+|| Nome | Tecla |
+| Tecla flecha arriba | arriba |
+| Tecla flecha abaixo | abaixo |
+| Tecla flecha esquerda | esquerda |
+| Tecla flecha dereita | dereita |
+| Tecla intro | seleccionar |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] é un programa por separado que pode utilizarse para soportar moitas liñas braille.
 Para utilizar esto, necesitas instalar [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
 Deberías descargar e instalar o último paquete instalable, que se chamará, por exemplo, brltty-win-4.2-2.exe.
 Cando configures a liña e porto a utilizar,  asegúrate de prestar gran atención ás instruccións, especialmente se estás utilizando unha liña USB e xa tes os controladores do fabricante instalados.
+
+Seguidamente van as asignacións a ordes BRLTTY para NVDA.
+Por favor mira [a documentación de táboas de teclas de BRLTTY http://mielke.cc/brltty/doc/drivers/] para información acerca de cómo están mapeadas as ordes de BRLTTY para controlar as liñas braille.
+%kc:beginInclude
+|| Nome | orde de BRLTTY |
+| Desprazar liña braille cara atrás | fwinlt (vai á esquerda unha ventá) |
+| Desprazar liña braille cara a dereita | fwinrt (vai unha ventá cara a dereita) |
+| Mover a liña braille á liña anterior | lnup (vai unha liña cara arriba) |
+| Mover liña braille á seguinte liña | lndn (vai unha liña cara abaixo) |
+| Guiar á celda braille | route (leva o cursor ó caracter) |
+%kc:endInclude
+
++ Temas Avanzados +
+
+++ Remapeando Asignacións de Teclas e outros xestos de Entrada ++
+Os usuarios poderán proporcionar ou sobreescribir mapeados dos xestos de entrada (como premedo de teclas) para scripts nun ficheiro especial no directorio de configuración do usuario do NVDA.
+Este ficheiro chámase gestures.ini.
+
+Este ficheiro utiliza a sintaxis estándar dos ficheiros ini.
+Cada sección proporciona mapeados para scripts nun módulo particular python e clase dentro do NVDA.
+O nome de sección debería ser o módulo Python e clase separados por un punto (.).
+ 
+ As teclas de cada sección son os nomes dos scripts cos que desexas concordar.
+ O valor de cada tecla é unha lista separada con coma (,) de  identificadores del xesto os que representan os distintos xestos de entrada que deberían concordar con ese script en particular.
+
+Pódense proporcionar múltiples teclas para cada sección, e pódense proporcionar múltiples secciones no ficheiro.
+
+De cara a atopar os identificadores de xesto así coma os nomes de scripts e a clase e o módulo no cal están contidos, podes activar a Axuda de entrada, activar o xesto (premer a tecla) e, despois de desactivar a Axuda de Entrada, activar Ver log no menú ferramentas e examinar as entradas recentes do log.
+Unha destas proporcionaría información acerca do xesto de entrada que enviaches, incluíndo o módulo.clase e script se está vinculado a un.
+
+Seguidamente vai un exemplo de cómo poderías vincular NVDA+shift+t ó script data hora.
+
+Para atopar o nome e módulo.clase e script correcto para data hora, activarías Axuda de Entrada e premerías NVDA+f12 (posto que esta é o xesto actual para o script data hora).
+Entón apagarías Axuda de Entrada e examinarías o visualizador do log.
+
+Cara o fondo, poderías ver:
+
+```
+INFO - inputCore.InputManager._handleInputHelp (13:17:22):
+Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
+```
+
+Con esto, podes ver que o nome do script é dateTime e o módulo.clase é globalCommands.GlobalCommands.
+
+Se o ficheiro non existe aínda, crearías un ficheiro de texto chamado gestures.ini no directorio de configuración do usuario e engadirías o contido seguinte:
+
+```
+[globalCommands.GlobalCommands]
+	dateTime = kb:NVDA+shift+t
+```
+
+Esto vincularía o premedo das teclas NVDA+shift+t (en calquera distribución de teclado) ó script dateTime.
+
+Tamén podes utilizar o nome especial de script de None para desvincular un xesto de entrada dende calquera  script que estivera vinculado nese módulo e clase.
+
+Os identificadores de xesto consisten en un código de dispositivo de dúas letras (kb para teclado e br para liña braille), un subdispositivo opcional ou distribución de teclado entre corchetes, uns dous puntos, e despois un ou máis nomes de teclas separados por un signo máis (+).
+ 
+Premendo teclas mentres se está na Axuda de entrada e logo vendo o log posibilitarache descubrir os identificadores de xesto a utilizar.
+ 
