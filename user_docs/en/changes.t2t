@@ -21,7 +21,7 @@ Highlights of this release include reporting of colors for some controls; automa
 - NVDA now remembers the position you were at when returning to a previously visited web page. This applies until either the browser or NVDA is exited. (#132)
 - Handy Tech braille displays can now be used without installing the Handy Tech universal driver. (#854)
 - Support for several Baum, HumanWare and APH braille displays. (#937)
-- Added mpc-hc appmodule which uses the technique imported from the media player classic appmodule to also recognize the statusbar in the media player classic home cynema which is just a media player classic fork.
+- The status bar in Media Player Classic Home Cinema is now recognised.
 
 
 == Changes ==
@@ -66,7 +66,7 @@ Highlights of this release include reporting of colors for some controls; automa
 - NVDA now switches to the appropriate braille display driver when you revert to saved configuration. (#1346)
 - The Visual Studio 2008 Project Wizard is read correctly again. (#974)
 - NVDA no longer completely fails to work in applications which contain non-ASCII characters in their executable name. (#1352)
-- NVDA no longer reads first character of the following line at the end of the current line when reading in the AkelEdit controls (AkelPad) and the word wrap mode is turned on.
+- When reading by line in AkelPad with word wrap enabled, NVDA no longer reads the first character of the following line at the end of the current line.
 
 
 == Changes for Developers ==
