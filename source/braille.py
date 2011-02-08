@@ -936,7 +936,7 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		"""
 		# Clear the display.
 		try:
-			self.display([])
+			self.display([0] * self.numCells)
 		except:
 			# The display driver seems to be failing, but we're terminating anyway, so just ignore it.
 			pass

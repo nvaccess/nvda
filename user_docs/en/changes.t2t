@@ -69,6 +69,7 @@ Highlights of this release include automatic reporting of new text output in mIR
 - NVDA no longer completely fails to work in applications which contain non-ASCII characters in their executable name. (#1352)
 - When reading by line in AkelPad with word wrap enabled, NVDA no longer reads the first character of the following line at the end of the current line.
 - In the Visual Studio 2005/2008 code editor, NVDA no longer reads the entire text after every typed character. (#975)
+- Fixed the issue where some braille displays weren't cleared properly when NVDA was exited or the display was changed.
 
 
 == Changes for Developers ==
