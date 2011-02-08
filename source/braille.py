@@ -675,6 +675,17 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cells = []
 		self._cursorBlinkTimer = None
 
+	def terminate(self):
+		if self._messageCallLater:
+			self._messageCallLater.Stop()
+			self._messageCallLater = None
+		if self._cursorBlinkTimer:
+			self._cursorBlinkTimer.Stop()
+			self._cursorBlinkTimer = None
+		if self.display:
+			self.display.terminate()
+			self.display = None
+
 	def _get_tether(self):
 		return config.conf["braille"]["tetherTo"]
 
@@ -894,8 +905,7 @@ def initialize():
 
 def terminate():
 	global handler
-	if handler.display:
-		handler.display.terminate()
+	handler.terminate()
 	handler = None
 
 class BrailleDisplayDriver(baseObject.AutoPropertyObject):
