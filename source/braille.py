@@ -903,6 +903,15 @@ def initialize():
 	handler = BrailleHandler()
 	handler.setDisplayByName(config.conf["braille"]["display"])
 
+	# Update the display to the current focus/review position.
+	if not handler.enabled or not api.getDesktopObject():
+		# Braille is disabled or focus/review hasn't yet been initialised.
+		return
+	if handler.tether == handler.TETHER_FOCUS:
+		handler.handleGainFocus(api.getFocusObject())
+	else:
+		handler.handleReviewMove()
+
 def terminate():
 	global handler
 	handler.terminate()
