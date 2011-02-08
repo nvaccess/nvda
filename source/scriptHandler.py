@@ -53,6 +53,11 @@ def findScript(gesture):
 	if not focus:
 		return None
 
+	# Import late to avoid circular import.
+	# We need to import this here because this might be the first import of this module
+	# and it might be needed by global maps.
+	import globalCommands
+
 	globalMapScripts = []
 	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
 	globalMap = braille.handler.display.gestureMap
@@ -99,8 +104,6 @@ def findScript(gesture):
 			return func
 
 	# Global commands.
-	# Import late to avoid circular import.
-	import globalCommands
 	func = _getObjScript(globalCommands.commands, gesture, globalMapScripts)
 	if func:
 		return func
