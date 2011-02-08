@@ -1,11 +1,10 @@
-# Copyright (C) 2006-2007 NVDA Contributers
 # Michael Curran <mick@kulgan.net> 2006.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 1863\n"
 "POT-Creation-Date: 2008-12-11 17:39+SE Asia Standard Time\n"
-"PO-Revision-Date: 2011-01-11 23:05+0700\n"
+"PO-Revision-Date: 2011-02-08 15:03+0700\n"
 "Last-Translator: Eakachai Charoenchaimonkon <eakachai_bo@hotmail.com>\n"
 "Language-Team: TAB Team <eakachai@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -297,7 +296,7 @@ msgstr "หลัก"
 
 #: aria.py:64
 msgid "navigation"
-msgstr "การนำล่อง"
+msgstr "การนำร่อง"
 
 #: aria.py:65
 msgid "search"
@@ -1486,9 +1485,8 @@ msgid "iconified"
 msgstr "ทำให้เป็นไอคอน"
 
 #: controlTypes.py:346
-#, fuzzy
 msgid "off screen"
-msgstr "นอกจอภาพ"
+msgstr "หลุดจอภาพ"
 
 #: controlTypes.py:347
 msgid "selectable"
@@ -1700,15 +1698,15 @@ msgstr "วัตถุไม่มีที่ตั้ง"
 
 #: globalCommands.py:220
 msgid "Moves the mouse pointer to the current navigator object"
-msgstr "เลื่อนตำแหน่งของเม้าส์ไปยังวัตถุนำล่องปัจจุบัน"
+msgstr "เลื่อนตำแหน่งของเม้าส์ไปยังวัตถุนำร่องปัจจุบัน"
 
 #: globalCommands.py:223
 msgid "Move navigator object to mouse"
-msgstr "เลื่อนวัตถุนำล่องไปยังตำแหน่งของเม้าส์"
+msgstr "เลื่อนวัตถุนำร่องไปยังตำแหน่งของเม้าส์"
 
 #: globalCommands.py:227
 msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
-msgstr "กำหนดวัตถุนำล่องไปยังวัตถุใต้เมาส์และอ่าน"
+msgstr "กำหนดวัตถุนำร่องไปยังวัตถุใต้เมาส์และอ่าน"
 
 #: globalCommands.py:240
 msgid "No flat review for this object"
@@ -1767,7 +1765,7 @@ msgstr "เลื่อนไปยังตำแหน่งโฟกัส"
 
 #: globalCommands.py:318
 msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
-msgstr "กำหนดวัตถุนำล่องไปยังตำแหน่งโฟกัสและแถบทบทวนไปยังตำแหน่งของ caret ด้านในหากเป็นไปได้ "
+msgstr "กำหนดวัตถุนำร่องไปยังตำแหน่งโฟกัสและแถบทบทวนไปยังตำแหน่งของ caret ด้านในหากเป็นไปได้ "
 
 #: globalCommands.py:323
 #: globalCommands.py:672
@@ -1788,7 +1786,7 @@ msgstr "ไม่มีวัตถุหลัก"
 
 #: globalCommands.py:340
 msgid "Sets the navigator object to the parent of the object it is currently on and speaks it"
-msgstr "กำหนดวัตถุนำล่องไปยังวัตถุหลักและอ่าน"
+msgstr "กำหนดวัตถุนำร่องไปยังวัตถุหลักและอ่าน"
 
 #: globalCommands.py:353
 msgid "No next"
@@ -1796,7 +1794,7 @@ msgstr "ไม่มีถัดไป"
 
 #: globalCommands.py:354
 msgid "Sets the navigator object to the object next to the one it is currently on and speaks it"
-msgstr "กำหนดวัตถุนำล่องไปยังวัตถุถัดไปและอ่าน"
+msgstr "กำหนดวัตถุนำร่องไปยังวัตถุถัดไปและอ่าน"
 
 #: globalCommands.py:367
 msgid "No previous"
@@ -1804,16 +1802,15 @@ msgstr "ไม่มีก่อนหน้า"
 
 #: globalCommands.py:368
 msgid "Sets the navigator object to the object previous to the one it is currently on and speaks it"
-msgstr "กำหนดวัตถุนำล่องไปยังวัตถุก่อนหน้าและอ่าน"
+msgstr "กำหนดวัตถุนำร่องไปยังวัตถุก่อนหน้าและอ่าน"
 
 #: globalCommands.py:381
 msgid "No children"
 msgstr "ไม่มีวัตถุรอง"
 
 #: globalCommands.py:382
-#, fuzzy
 msgid "Sets the navigator object to the first child object of the one it is currently on and speaks it"
-msgstr "กำหนดวัตถุนำล่องไปยังวัตถุรองแรกและอ่าน"
+msgstr "กำหนดวัตถุนำร่องไปยังวัตถุรองแรกและพูด"
 
 #: globalCommands.py:392
 msgid "No default action"
@@ -1825,7 +1822,7 @@ msgstr "การกระทำดั้งเดิมล้มเหลว"
 
 #: globalCommands.py:400
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
-msgstr "ปฏิบัติตามหน้าที่ดั้งเดิมกับวัตถุนำล่องปัจจุบัน (เช่นกดปุ่มหากเป็นปุ่ม)"
+msgstr "ปฏิบัติตามหน้าที่ดั้งเดิมกับวัตถุนำร่องปัจจุบัน (เช่นกดปุ่มหากเป็นปุ่ม)"
 
 #: globalCommands.py:406
 #: globalCommands.py:418
@@ -1835,15 +1832,15 @@ msgstr "บน"
 
 #: globalCommands.py:408
 msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
-msgstr "เลื่อนแถบทบทวนไปยังตอนต้นบรรทัดของวัตถุนำล่องและอ่าน"
+msgstr "เลื่อนแถบทบทวนไปยังตอนต้นบรรทัดของวัตถุนำร่องและอ่าน"
 
 #: globalCommands.py:420
 msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
-msgstr "เลื่อนแถบทบทวนไปยังบรรทัดก่อนหน้าของวัตถุนำล่องและอ่าน"
+msgstr "เลื่อนแถบทบทวนไปยังบรรทัดก่อนหน้าของวัตถุนำร่องและอ่าน"
 
 #: globalCommands.py:429
 msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled"
-msgstr "รายงานบรรทัดของวัตถุนำล่องบริเวณแถบทบทวนหากกด 2 ครั้ง จะสะกดบรรทัดปัจจุบัน"
+msgstr "รายงานบรรทัดของวัตถุนำร่องบริเวณแถบทบทวนหากกด 2 ครั้ง จะสะกดบรรทัดปัจจุบัน"
 
 #: globalCommands.py:439
 #: globalCommands.py:447
@@ -1853,27 +1850,27 @@ msgstr "ล่าง"
 
 #: globalCommands.py:441
 msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
-msgstr "เลื่อนแถบทบทวนไปยังบรรทัดถัดไปของวัตถุนำล่องและอ่าน"
+msgstr "เลื่อนแถบทบทวนไปยังบรรทัดถัดไปของวัตถุนำร่องและอ่าน"
 
 #: globalCommands.py:449
 msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
-msgstr "เลื่อนแถบทบทวนไปยังบรรทัดสุดท้ายของวัตถุนำล่องและอ่าน"
+msgstr "เลื่อนแถบทบทวนไปยังบรรทัดสุดท้ายของวัตถุนำร่องและอ่าน"
 
 #: globalCommands.py:461
 msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
-msgstr "เลื่อนแถบทบทวนไปยังคำก่อนหน้าของวัตถุนำล่องและอ่าน"
+msgstr "เลื่อนแถบทบทวนไปยังคำก่อนหน้าของวัตถุนำร่องและอ่าน"
 
 #: globalCommands.py:470
 msgid "Speaks the word of the current navigator object where the review cursor is situated. If this key is pressed twice, the word will be spelled"
-msgstr "อ่านคำของวัตถุนำล่องบริเวณตำแหน่งของแถบทบทวนหากกด 2 รอบจะสะกดทั้งคำ"
+msgstr "อ่านคำของวัตถุนำร่องบริเวณตำแหน่งของแถบทบทวนหากกด 2 รอบจะสะกดทั้งคำ"
 
 #: globalCommands.py:482
 msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
-msgstr "เลื่อนแถบทบทวนไปยังคำถัดไปของวัตถุนำล่องและอ่าน"
+msgstr "เลื่อนแถบทบทวนไปยังคำถัดไปของวัตถุนำร่องและอ่าน"
 
 #: globalCommands.py:492
 msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
-msgstr "เลื่อนแถบทบทวนไปยังตอนต้นบรรทัดที่ตำแหน่งปัจจุบันของวัตถุนำล่องและอ่าน"
+msgstr "เลื่อนแถบทบทวนไปยังตอนต้นบรรทัดที่ตำแหน่งปัจจุบันของวัตถุนำร่องและอ่าน"
 
 #: globalCommands.py:510
 msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
@@ -1881,15 +1878,15 @@ msgstr "เลื่อนแถบทบทวนไปยังตัวอั
 
 #: globalCommands.py:524
 msgid "Reports the character of the current navigator object where the review cursor is situated. If this key is pressed twice, ascii and hexadecimal values are spoken for the character"
-msgstr "รายงานตัวอักษรของวัตถุนำล่องบริเวณแถบทบทวนหากกด 2 ครั้งจะอ่านรหัสแอสกี้ที่กำกับของตัวอักษร"
+msgstr "รายงานตัวอักษรของวัตถุนำร่องบริเวณแถบทบทวนหากกด 2 ครั้งจะอ่านรหัสแอสกี้ที่กำกับของตัวอักษร"
 
 #: globalCommands.py:542
 msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
-msgstr "เลื่อนแถบทบทวนไปยังอักษรถัดไปของวัตถุนำล่องและอ่าน"
+msgstr "เลื่อนแถบทบทวนไปยังอักษรถัดไปของวัตถุนำร่องและอ่าน"
 
 #: globalCommands.py:553
 msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
-msgstr "เลื่อนแถบทบทวนไปยังตัวอักษรสุดท้ายของบรรทัดที่ตำแหน่งปัจจุบันของวัตถุนำล่องและอ่าน"
+msgstr "เลื่อนแถบทบทวนไปยังตัวอักษรสุดท้ายของบรรทัดที่ตำแหน่งปัจจุบันของวัตถุนำร่องและอ่าน"
 
 #: globalCommands.py:560
 msgid "no caret"
@@ -1897,7 +1894,7 @@ msgstr "ไม่มี caret "
 
 #: globalCommands.py:565
 msgid "Moves the system caret to the position of the review cursor , in the current navigator object"
-msgstr "เลื่อนแถบทบทวนไปยังตำแหน่ง caret ของวัตถุนำล่อง"
+msgstr "เลื่อนแถบทบทวนไปยังตำแหน่ง caret ของวัตถุนำร่อง"
 
 #: globalCommands.py:574
 msgid "beeps"
@@ -1921,7 +1918,7 @@ msgstr "เลื่อนโฟกัสไปยังเอกสารใก
 
 #: globalCommands.py:608
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr "ปิดและเปิด  โหมดการสืบค้นและโหมดโฟกัส เมื่ออยู่ในโหมดโฟกัส แป้นพิมพ์จะส่งผ่านไปยังโปรแกรม ช่วยให้ท่านสามารถทำงานหรือควบคุมโปรแกรมได้โดยตรงเมื่ออยู่ในโหมดการสืบค้น ท่านสามาถนำล่องเอกสารได้โดยใช้แถบสว่าง"
+msgstr "ปิดและเปิด  โหมดการสืบค้นและโหมดโฟกัส เมื่ออยู่ในโหมดโฟกัส แป้นพิมพ์จะส่งผ่านไปยังโปรแกรม ช่วยให้ท่านสามารถทำงานหรือควบคุมโปรแกรมได้โดยตรงเมื่ออยู่ในโหมดการสืบค้น ท่านสามาถนำร่องเอกสารได้โดยใช้แถบสว่าง"
 
 #: globalCommands.py:612
 msgid "Quits NVDA!"
@@ -1957,7 +1954,7 @@ msgstr "ไม่พบแถบสถานะ"
 
 #: globalCommands.py:687
 msgid "reads the current application status bar and moves the navigator to it"
-msgstr "อ่านแถบสถานะของโปรแกรมและเลื่อนตัวนำล่องไปยังตำแหน่งของแถบสถานะ"
+msgstr "อ่านแถบสถานะของโปรแกรมและเลื่อนตัวนำร่องไปยังตำแหน่งของแถบสถานะ"
 
 #: globalCommands.py:696
 msgid "Mouse tracking"
@@ -2147,7 +2144,7 @@ msgstr "ทำสัญลักษณ์ที่ตำแหน่งของ
 
 #: globalCommands.py:896
 msgid "No start marker set"
-msgstr "ไม่มีการกำหนดตำแหน่งของสัญลักษณ์"
+msgstr "ไม่มีการกำหนดสัญลักษณ์เริ่มต้น"
 
 #: globalCommands.py:900
 msgid "The start marker must reside within the same object"
@@ -2537,7 +2534,7 @@ msgstr "ใช้งาน NVDA เมื่อเข้าสู่หน้า
 
 #: gui\settingsDialogs.py:159
 msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
-msgstr "ใช้การตั้งค่าปัจจุบันสำหรับการเข้าสู่ระบบรวมถึงหน้าต่างรักษาความปลอดภัยอื่น (สงวนสิทธิเฉพาะผู้ดูแลระบบ)"
+msgstr "ใช้การตั้งค่าปัจจุบันสำหรับการเข้าสู่ระบบรวมถึงหน้าต่างรักษาความปลอดภัยอื่น (สงวนสิทธิ์เฉพาะผู้ดูแลระบบ)"
 
 #: gui\settingsDialogs.py:170
 msgid "Error copying NVDA user settings"
@@ -2561,7 +2558,7 @@ msgstr "ภาษาผิดพลาด"
 
 #: gui\settingsDialogs.py:197
 msgid "Insufficient Privileges"
-msgstr "สิทธิไม่เพียงพอ"
+msgstr "สิทธิ์ไม่เพียงพอ"
 
 #: gui\settingsDialogs.py:197
 msgid "This change requires administrator privileges."
@@ -2862,7 +2859,7 @@ msgstr "รายงานกรอบ &quotes "
 
 #: gui\settingsDialogs.py:737
 msgid "Report lan&dmarks"
-msgstr "รายงานพื้นที่&สัญลักษณ์"
+msgstr "รายงาน lan&dmarks"
 
 #: gui\settingsDialogs.py:766
 msgid "Edit dictionary entry"
@@ -3477,7 +3474,7 @@ msgstr ""
 
 #: virtualBuffers\__init__.py:201
 msgid "%s landmark"
-msgstr "%s พื้นที่สัญลักษณ์ "
+msgstr "%s landmark"
 
 #: virtualBuffers\__init__.py:219
 msgid "Lin&ks"
@@ -3489,7 +3486,7 @@ msgstr "&หัวข้อ"
 
 #: virtualBuffers\__init__.py:221
 msgid "Lan&dmarks"
-msgstr "พื้นที่&สัญลักษณ์"
+msgstr "Lan&dmarks"
 
 #: virtualBuffers\__init__.py:227
 msgid "Elements List"
@@ -3537,7 +3534,7 @@ msgstr "เปิดหรือปิดหากเค้าโครงขอ
 
 #: virtualBuffers\__init__.py:789
 msgid "Presents a list of links, headings or landmarks"
-msgstr "แสดงรายชื่อของลิงค์ หัวข้อ หรือพื้นที่สัญลักษณ์"
+msgstr "แสดงรายชื่อของลิงค์ หัวข้อ หรือ landmark "
 
 #: virtualBuffers\__init__.py:1122
 msgid "Not in a table cell"
@@ -3945,19 +3942,19 @@ msgstr "โดดถอยหลังชุดของลิงค์"
 
 #: virtualBuffers\__init__.py:1258
 msgid "moves to the next landmark"
-msgstr "เลื่อนไปยังพื้นที่สัญลักษณ์ถัดไป"
+msgstr "เลื่อนไปยัง landmark ถัดไป"
 
 #: virtualBuffers\__init__.py:1258
 msgid "no next landmark"
-msgstr "ไม่มีพื้นที่สัญลักษณ์ถัดไป"
+msgstr "ไม่มี landmark ถัดไป"
 
 #: virtualBuffers\__init__.py:1259
 msgid "moves to the previous landmark"
-msgstr "กลับไปยังพื้นที่สัญลักษณ์ก่อนหน้า"
+msgstr "กลับไปยัง landmark ก่อนหน้า"
 
 #: virtualBuffers\__init__.py:1259
 msgid "no previous landmark"
-msgstr "ไม่มีพื้นที่สัญลักษณ์ก่อนหน้า"
+msgstr "ไม่มี landmark ก่อนหน้า"
 
 #: virtualBuffers\__init__.py:1260
 msgid "moves to the next embedded object"
@@ -3982,4 +3979,3 @@ msgstr "โหมดสืบค้น"
 #: virtualBuffers\__init__.py:1274
 msgid "focus mode"
 msgstr "โหมดโฟกัส"
-
