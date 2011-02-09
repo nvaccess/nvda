@@ -1,12 +1,13 @@
 #brailleDisplayDrivers/freedomScientific.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+#Copyright (C) 2008-2011 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
 
 from ctypes import *
 from ctypes.wintypes import *
 import itertools
+import hwPortUtils
 import braille
 import inputCore
 from baseObject import ScriptableObject
@@ -112,7 +113,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		self._messageWindowClassAtom=windll.user32.RegisterClassExW(byref(nvdaFsBrlWndCls))
 		self._messageWindow=windll.user32.CreateWindowExW(0,self._messageWindowClassAtom,u"nvdaFsBrlWndCls window",0,0,0,0,0,None,None,appInstance,None)
 		fbHandle=-1
-		for port in ("usb","serial"):
+		for port in itertools.chain(("USB",),
+			(portInfo["port"].encode("mbcs") for portInfo in hwPortUtils.listComPorts(onlyAvailable=True)
+				if portInfo.get("bluetoothName") == "Focus 40 BT")
+		):
 			fbHandle=fbOpen(port,self._messageWindow,nvdaFsBrlWm)
 			if fbHandle!=-1:
 				break
