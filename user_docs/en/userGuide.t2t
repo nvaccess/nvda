@@ -1019,6 +1019,8 @@ Alternatively, you can use None to unbind input gestures from a script to which 
 - The entry value is a comma (,) separated list of gesture identifiers for the input gestures that should be bound.
 -
 
+Gesture identifiers consist of a two leter device code (kb for keyboard and br for braille display), an optional sub-device or keyboard layout in brackets, a colon, and then one or more key names separated by a plus (+) sign.
+
 In order to discover gesture identifiers, script names and the class and module in which they are contained, you can:
 + Turn on Input Help.
 + Activate the gesture (press the key).
@@ -1051,10 +1053,13 @@ If the file does not yet exist, you would create a text file called gestures.ini
 
 This would bind the key press NVDA+shift+t (in any keyboard layout) to the dateTime script.
 
-Gesture identifiers consist of a two leter device code (kb for keyboard and br for braille display), an optional sub-device or keyboard layout in brackets, a colon, and then one or more key names separated by a plus (+) sign.
- 
-Pressing keys while in Input help and then viewing the log will enable you to discover the gesture identifiers to use.
- 
+Note that the original NVDA+f12 binding would still work.
+If you wanted to remove this binding, you would add the following line:
+
+```
+	None = kb:NVDA+f12
+```
+
 Although you are free to have scripts bound to any available key, it may be problematic to use the alt key on the keyboard.
 NVDA still sends modifier keys (such as shift, control and alt) to the Operating System, even if they eventuate in a script.
 Thus, if you do use alt in a gesture, pressing this key combination may activate the menu bar, as well as executing the script.
