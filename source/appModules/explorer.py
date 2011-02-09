@@ -88,6 +88,8 @@ class AppModule(appModuleHandler.AppModule):
 
 		if windowClass == "ToolbarWindow32":
 			# Check whether this is the notification area, a.k.a. system tray.
+			if isinstance(obj.parent, ClassicStartMenu):
+				return #This can't be a notification area
 			try:
 				# The toolbar's immediate parent is its window object, so we need to go one further.
 				toolbarParent = obj.parent.parent
