@@ -677,7 +677,7 @@ def processFocusNVDAEvent(obj,force=False):
 	@rtype: boolean
 	"""
 	if not force and isinstance(obj,NVDAObjects.IAccessible.IAccessible):
-		focus=api.getFocusObject()
+		focus=eventHandler.lastQueuedFocusObject
 		if isinstance(focus,NVDAObjects.IAccessible.IAccessible) and focus.isDuplicateIAccessibleEvent(obj):
 			return True
 		if not obj.shouldAllowIAccessibleFocusEvent:
