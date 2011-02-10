@@ -117,6 +117,21 @@ def resetConfiguration():
 	inputCore.manager.loadLocaleGestureMap()
 	log.info("Reverted to saved configuration")
 
+def _setInitialFocus():
+	"""Sets the initial focus if no focus event was received at startup.
+	"""
+	import eventHandler
+	import api
+	if eventHandler.lastQueuedFocusObject:
+		# The focus has already been set or a focus event is pending.
+		return
+	try:
+		focus = api.getDesktopObject().objectWithFocus()
+		if focus:
+			eventHandler.queueEvent('gainFocus', focus)
+	except:
+		log.exception("Error retrieving initial focus")
+
 def main():
 	"""NVDA's core main loop.
 This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and installs the core pump timer, which checks the queues and executes functions every 1 ms. Finally, it starts the wx main loop.
@@ -245,15 +260,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		except:
 			log.error("", exc_info=True)
 		wx.CallAfter(doStartupDialogs)
-	if api.getFocusObject()==api.getDesktopObject():
-		import eventHandler
-		try:
-			focus=api.getDesktopObject().objectWithFocus()
-			if focus:
-				eventHandler.queueEvent('gainFocus',focus)
-		except:
-			log.exception("Error retrieving initial focus")
 	import queueHandler
+	# Queue the handling of initial focus,
+	# as API handlers might need to be pumped to get the first focus event.
+	queueHandler.queueFunction(queueHandler.eventQueue, _setInitialFocus)
 	import watchdog
 	import baseObject
 	class CorePump(wx.Timer):
