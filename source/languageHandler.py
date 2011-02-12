@@ -36,6 +36,7 @@ def localeNameToWindowsLCID(localeName):
 def getLanguageDescription(language):
 	"""Finds out the description (licalized full name) of a given local name"""
 	LCID=localeNameToWindowsLCID(language)
+	if LCID==0: return None
 	buf=ctypes.create_unicode_buffer(1024)
 	#If the original locale didn't have country info (was just language) then make sure we just get language from Windows
 	if '_' not in language:
@@ -61,7 +62,8 @@ def getAvailableLanguages():
 	#For each locale, ask Windows for its human readable display name
 	d=[]
 	for i in l:
-		label="%s, %s"%(getLanguageDescription(i),i)
+		desc=getLanguageDescription(i)
+		label="%s, %s"%(desc,i) if desc else i
 		d.append(label)
 	#include a 'user default, windows' language, which just represents the default language for this user account
 	l.append("Windows")
