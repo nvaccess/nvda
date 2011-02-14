@@ -8,6 +8,9 @@
 %%toc
 
 + Introducción +
+NonVisual Desktop Access (NVDA) es un lector de pantalla libre y de código abierto  para el Sistema Operativo  Microsoft Windows.
+Proporcionando retroalimentación a través de voz sintética y Braille, posibilita a la gente ciega o deficiente visual acceder a ordenadores ejecutando Windows por un coste no mayor al de una persona vidente.
+NVDA está desarrollado por [NV Access http://www.nvaccess.org/], con  colaboraciones de la comunidad.
 
 ++ Características generales ++
 Proporcionando un apoyo de voz sintética, NVDA permite a personas ciegas y deficientes visuales acceder e interactuar con el Sistema Operativo Windows y muchas aplicaciones de terceros. 
@@ -840,11 +843,6 @@ Para más información, por favor mira [el artículo The Python Console en el si
 ++ Recargar plugins ++
 Este elemento, una vez activado, recarga app modules y plugins globales sin reiniciar a NVDA, lo cual es útil para desarrolladores.
 
-+ Información Adicional +
-Si requieres información adicional o asistencia referente a NVDA, por favor visita el sitio Web de NVDA en NVDA_URL.
-Aquí, puedes encontrar documentación adicional,  así como soporte técnico y recursos para la comunidad. 
-Este sitio también proporciona información y recursos concernientes al desarrollo de NVDA.
-
 + Sintetizadores de Voz Soportados +[SupportedSpeechSynths]
 Esta sección contiene información acerca de los sintetizadores de voz soportados por NVDA.
 
@@ -1011,19 +1009,28 @@ Por favor mira [la documentación de tablas de teclas de BRLTTY http://mielke.cc
 
 ++ Remapeando Asignaciones de Teclas y otros Gestos de Entrada ++
 Los usuarios podrán proporcionar o sobreescribir mapeados de los gestos de entrada (tales como presionado de teclas) para scripts en un fichero especial en el directorio de configuración del usuario de NVDA.
-Esfe fichero se llama gestures.ini.
+Este fichero se llama gestures.ini.
 
 Este fichero utiliza la sintaxis estándar de los ficheros ini.
 Cada sección proporciona mapeados para scripts en un módulo particular python y clase dentro de NVDA.
-El nombre de sección debería ser el módulo Python y clase separados por un punto (.).
- 
- Las teclas de cada sección son los nombres de los scripts con los que deseas concordar.
- El valor de cada tecla es una lista separada con coma (,) de  identificadores del gesto los cuales representan los distintos gestos de entrada que deberían concordar con ese script en particular.
+- El nombre de sección debería ser el módulo Python y clase separados por un punto (.).
+- Las teclas de cada sección son los nombres de los scripts con los que deseas concordar.
+ Alternativamente, puedes utilizar None para desvincular gestos de entrada de un script al que estaban vinculados anteriormente.
+ - El valor de cada tecla es una lista separada con coma (,) de  identificadores del gesto los cuales representan los distintos gestos de entrada que deberían vincularse con ese script en particular.
+-
+
+Los identificadores de gesto consisten en un código de dispositivo de dos letras (kb para teclado y br para línea braille), un subdispositivo opcional o distribución de teclado entre corchetes, unos dos puntos, y después uno o más nombres de teclas separados por un signo más (+).
 
 Se pueden proporcionar múltiples teclas para cada sección, y se pueden proporcionar múltiples secciones en el fichero.
 
-De cara a encontrar los identificadores de gesto así como los nombres de scripts y la clase y el módulo en el cual están contenidos, puedes activar la Ayuda de entrada, activar el gesto (presionar la tecla) y, después de desactivar la Ayuda de Entrada, activar Ver log en el menú herramientas y examinar las entradas recientes del log.
+De cara a encontrar los identificadores de gesto así como los nombres de scripts y la clase y el módulo en el cual están contenidos puedes:
++ Activar la Ayuda de entrada.
++ Activar el gesto (presionar la tecla).
++ Desactivar la Ayuda de Entrada.
++ Activar Ver log en el menú herramientas.
++ examinar las entradas recientes del log.
 Una de estas proporcionaría información acerca del gesto de entrada que enviaste, incluyendo el módulo.clase y script si está vinculado a uno.
++
 
 Seguidamente va un ejemplo de cómo podrías vincular NVDA+shift+t al script fecha hora.
 
@@ -1048,9 +1055,20 @@ Si el fichero no esiste aún, crearías un fichero de texto llamado gestures.ini
 
 Esto vincularía el presionado de las teclas NVDA+shift+t (en cualquier distribución de teclado) al script dateTime.
 
-También puedes utilizar el nombre especial de script de None para desvincular un gesto de entrada desde cualquier  script que estuviera vinculado en ese módulo y clase.
+Ten en cuenta que la combinación original NVDA+f12 todavía funcionaría.
+Si quisieras eliminar esta combinación, añadirías la línea siguiente:
 
-Los identificadores de gesto consisten en un código de dispositivo de dos letras (kb para teclado y br para línea braille), un subdispositivo opcional o distribución de teclado entre corchetes, unos dos puntos, y después uno o más nombres de teclas separados por un signo más (+).
- 
-Presionando teclas mientras se está en Ayuda de entrada y luego viendo el log te posibilitará descubrir los identificadores de gesto a utilizar.
- 
+```
+	None = kb:NVDA+f12
+```
+
+Aunque eres libre de tener scripts vinculados a cualquier tecla disponible, podrá ser problemático utilizar la tecla alt en el teclado.
+NVDA todavía envía teclas modificadoras (tales como shift, control y alt) al Sistema Operativo, aún si eventúan en un script.
+De esta manera, si utilizas alt en un gesto, presionando esta tecla la combinación podrá activar la barra de menú, tanto como ejecutar el script.
+Por lo tanto, probablemente es mejor sólo utilizar Shift, control y la tecla modificadora NVDA como modificadores.
+
++ Información Adicional +
+Si requieres de información adicional o asistencia con respecto a NVDA, por favor visita el sitio Web de NVDA en NVDA_URL.
+Aquí, puedes encontrar documentación adicional, así como soporte técnico y recursos de la comunidad.
+Este Sitio también proporciona información y recursos concernientes al desarrollo de NVDA.
+

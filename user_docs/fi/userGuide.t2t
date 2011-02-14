@@ -8,16 +8,19 @@
 %%toc
 
 + Johdanto +
+Non-Visual Desktop Access (NVDA) on vapaa ja avoimen lähdekoodin ruudunlukija Microsoft Windows -käyttöjärjestelmälle.
+Synteettisenä puheena ja pistekirjoituksella annettava palaute mahdollistaa sokeiden ja heikkonäköisten Windows-tietokoneiden käytön samoin kustannuksin kuin näkevätkin.
+NVDA:ta kehittää [NV Access http://www.nvaccess.org/] yhteisön avustuksella.
 
 ++ Yleiset ominaisuudet ++
-NVDA:n (Non-Visual Desktop Access) synteettisenä puheena ja pistekirjoituksella antaman palautteen avulla sokeat ja heikkonäköiset voivat käyttää Windows-käyttöjärjestelmää ja monia kolmannen osapuolen sovelluksia.
+NVDA:n avulla sokeat ja heikkonäköiset voivat käyttää Windows-käyttöjärjestelmää ja monia kolmannen osapuolen sovelluksia.
 
 Tärkeimpiin ominaisuuksiin kuuluvat:
 - Tuki yleisille sovelluksille, internet-selaimet sekä sähköpostiasiakas-, internet-keskustelu- ja toimisto-ohjelmat mukaan lukien
 - Yli 20 kieltä tukeva sisäänrakennettu puhesyntetisaattori
 - Automaattinen tekstin muotoilutietojen, kuten fontin nimen ja koon, tyylin sekä kirjoitusvirheiden, lukeminen aina kun mahdollista
 - Automaattinen hiiren alla olevan tekstin lukeminen ja valinnainen hiiren sijainnin ilmaiseminen äänimerkeillä
-- Tuki monille pistenäytöille
+- Tuki useille pistenäytöille
 - Mahdollisuus käyttää USB-muistitikulta tai muulta siirrettävältä tietovälineeltä ilman asennusta
 - Helppokäyttöinen puhuva asennusohjelma
 - Käännetty useille eri kielille
@@ -31,7 +34,7 @@ Tärkeimpiin ominaisuuksiin kuuluvat:
 On tärkeää, että ihmiset kaikkialla maailmassa voivat käyttää samoja teknologioita riippumatta siitä, mitä kieltä he puhuvat. NVDA on käännetty englannin lisäksi yli 20 kielelle, mukaan lukien arabia, brasilianportugali, kroatia, tsekki, suomi, ranska, galicia, saksa, unkari, italia, japani, portugali, venäjä, slovakki, espanja, thai, perinteinen kiina, ukraina, afrikaans, puola ja vietnam.
 
 ++ Tuetut puhesyntetisaattorit ++
-Sen lisäksi, että NVDA tarjoaa ilmoituksensa ja käyttöliittymänsä useilla kielillä, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu.
+Sen lisäksi, että NVDA:n ilmoitukset ja käyttöliittymä on käännetty useille kielille, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu.
 
 NVDA:n mukana tulee [eSpeak http://espeak.sourceforge.net/], monikielinen, vapaa ja avoimen lähdekoodin puhesyntetisaattori.
 
@@ -46,9 +49,10 @@ NVDA tukee useiden kielten pistekirjoitusjärjestelmiä, mukaan lukien lyhennepi
 ++ Lisenssi ja tekijänoikeustiedot ++
 NVDA on copyright NVDA_COPYRIGHT_YEARS NVDA:n tekijät.
 
-NVDA on suojattu GNU General Public License (versio 2) -lisenssillä. Voit vapaasti jakaa tai muuttaa tätä ohjelmistoa miten tahansa, kunhan jaat lisenssiä sen mukana ja pidät lähdekoodin kaikkien saatavilla. Tämä koskee sekä muokattuja että alkuperäisiä ohjelmistokopioita, kuten myös kaikkia tämän ohjelmiston koodia käyttäviä ohjelmistoja.
-
-Voit [tarkastella koko lisenssiä verkossa saadaksesi lisätietoja. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+NVDA on suojattu GNU General Public License (versio 2) -lisenssillä.
+Voit vapaasti jakaa tai muuttaa tätä ohjelmistoa millä tavalla hyvänsä, kunhan toimitat lisenssiä sen mukana ja pidät lähdekoodin kaikkien saatavilla.
+Tämä koskee sekä alkuperäisiä että muokattuja ohjelmistokopioita, kuten myös kaikkia johdannaisia.
+Voit [tarkastella koko lisenssiä http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] saadaksesi lisätietoja.
 
 + Järjestelmävaatimukset +
 - Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows XP:n, Windows Vistan ja Windows 7:n versiot (palvelinversiot mukaan lukien).
@@ -72,9 +76,17 @@ Edellä mainittujen suojattujen ruutujen lukeminen tai sovellusten käyttäminen
 ++ Asennusohjelma ++
 NVDA voidaan asentaa joko painamalla Enteriä asennustiedoston kohdalla tai kaksoisnapsauttamalla sitä, jolloin asennusohjelma käynnistyy.
 
-Asennusohjelman käynnistyessä kuuluu NVDA:n tunnusmusiikki. Kun asennusohjelma on käynnistynyt, NVDA:n tilapäiskopion avulla voidaan seurata asennusohjelman kehotteita ja asentaa NVDA. Huomaa, että jos asennusohjelman käynnistyksen aikana käytettiin toista NVDA:n kopiota, esiin tulee ilmoitus, jossa kerrotaan, että aikaisempi kopio suljetaan. Kun tämä ilmoitus hyväksytään painamalla Enteriä, asennusohjelma sulkee aiemman kopion ja käynnistää omansa. Tämä on tarpeen, jotta asennusohjelma voi päivittää kaikki muuttuneet tiedostot. Mikäli toinen NVDA:n versio on jo asennettuna, asennusohjelma poistaa sen tässä vaiheessa. Tämän jälkeen NVDA:n asennus alkaa.
+Asennusohjelman käynnistyessä kuuluu NVDA:n tunnusmusiikki.
+Kun asennusohjelma on käynnistynyt, NVDA:n tilapäiskopion avulla voidaan seurata asennusohjelman kehotteita ja asentaa NVDA.
+Huomaa, että jos asennusohjelman käynnistyksen aikana käytettiin toista NVDA:n kopiota, asennusohjelma sulkee sen ja käynnistää omansa.
+Tämä on tarpeen, jotta kaikki muuttuneet tiedostot voidaan päivittää.
+Mikäli toinen NVDA:n versio on jo asennettuna, asennusohjelma poistaa sen tässä vaiheessa.
+Tämän jälkeen NVDA:n asennus alkaa.
 
-Asennusohjelma ilmoittaa, kun asennus on onnistuneesti suoritettu. Mikäli tehtiin NVDA:n uudelleenasennus, asennusohjelma saattaa kehottaa käynnistämään tietokoneen uudelleen. Koneen uudelleenkäynnistäminen on erittäin tärkeää, koska muuten NVDA ei ehkä toimi oikein. Jos uudelleenkäynnistyskehotusta ei tullut, Valmis-painikkeen painaminen sulkee asennusohjelman ja käynnistää asennetun NVDA:n.
+Asennusohjelma ilmoittaa, kun asennus on onnistuneesti suoritettu.
+Mikäli tehtiin NVDA:n uudelleenasennus, asennusohjelma saattaa kehottaa käynnistämään tietokoneen uudelleen.
+Koneen uudelleenkäynnistäminen on erittäin tärkeää, koska muuten NVDA ei ehkä toimi oikein.
+Jos uudelleenkäynnistyskehotusta ei tullut, Valmis-painikkeen painaminen sulkee asennusohjelman ja käynnistää asennetun NVDA:n.
 
 ++ Mukana kuljetettava versio ++
 Riittää, että tiedoston kohdalla painetaan Enteriä tai kaksoisnapsautetaan sitä ja seurataan näyttöön tulevia kehotteita. Ohjelma kysyy, mihin tiedostot sijoitetaan.
@@ -854,12 +866,12 @@ Voit ladata sen venäläisen NVDA-yhteisösivuston lataukset-osiosta osoitteesta
 + Tuetut pistenäytöt +[Tuetutpistenaytot]
 Tässä kappaleessa on tietoja NVDA:n tukemista pistenäytöistä.
 
-++ Freedom Scientific Focus/PAC Mate -sarja ++
-Kaikkia [Freedom Scientificin http://www.freedomscientific.com/] Focus- ja PAC Mate -pistenäyttöjä tuetaan.
+++ Freedom Scientific Focus/PAC Mate ++
+Kaikkia [Freedom Scientificin http://www.freedomscientific.com/] Focus- ja PAC Mate -pistenäyttöjä tuetaan sekä USB-liitännällä että bluetooth-yhteydellä.
 Niiden käyttämiseksi täytyy asentaa ajurit, jotka voi ladata osoitteesta http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Ajuri tukee kaikkia Freedom Scientificin pistenäyttöjä, vaikka sivulla mainitaankin vain Focus 40 Blue.
 
-Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
+Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso pistenäytön käyttöohjeesta kuvaukset siitä, mistä nämä näppäimet löytyvät.
 %kc:beginInclude
 || Nimi | Näppäin |
@@ -873,11 +885,11 @@ Katso pistenäytön käyttöohjeesta kuvaukset siitä, mistä nämä näppäimet
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
-[Optelecin http://www.optelec.com/] ALVA BC640- ja BC680 -pistenäyttöjä tuetaan.
-Näiden pistenäyttöjen käyttämiseksi ei tarvitse asentaa mitään ajureita.
+[Optelecin http://www.optelec.com/] ALVA BC640- ja BC680 -pistenäyttöjä tuetaan sekä USB-liitännällä että bluetooth-yhteydellä.
+Niiden käyttämiseksi ei tarvitse asentaa mitään ajureita.
 Riittää, että pistenäyttö kytketään tietokoneeseen ja määritetään NVDA käyttämään sitä.
 
-Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
+Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso pistenäytön käyttöohjeesta kuvaukset siitä, mistä nämä näppäimet löytyvät.
 %kc:beginInclude
 || Nimi | Näppäin |
@@ -902,10 +914,10 @@ Katso pistenäytön käyttöohjeesta kuvaukset siitä, mistä nämä näppäimet
 %kc:endInclude
 
 ++ Handy Tech ++
-NVDA tukee kaikkia [Handy Techin http://www.handytech.de/] pistenäyttöjä.
+NVDA tukee kaikkia [Handy Techin http://www.handytech.de/] pistenäyttöjä sekä USB-liitännällä että bluetooth-yhteydellä.
 Vanhempia USB-malleja varten tietokoneelle on asennettava Handy Techin USB-ajurit.
 
-Seuraavassa on lueteltu tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
+Seuraavassa on lueteltu näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso pistenäytön käyttöohjeesta kuvaukset siitä, mistä nämä näppäimet löytyvät.
 %kc:beginInclude
 || Nimi | Näppäin |
@@ -929,7 +941,7 @@ Katso pistenäytön käyttöohjeesta kuvaukset siitä, mistä nämä näppäimet
 [MDV:n http://www.mdvbologna.it/] Lilli-pistenäyttöä tuetaan.
 Sen käyttämiseksi ei tarvitse asentaa mitään ajureita, vaan riittää, että pistenäyttö kytketään tietokoneeseen ja määritetään NVDA käyttämään sitä.
 
-++ Baum-, Humanware- ja APH-pistenäytöt ++
+++ Baum/Humanware/APH ++
 Useita [Baum http://www.baum.de/cms/en/]-, [HumanWare http://www.humanware.com/]- ja [APH http://www.aph.org/]-pistenäyttöjä tuetaan, kun ne kytketään tietokoneeseen USB-liitännällä tai bluetooth-yhteydellä.
 Näitä ovat:
 - Baum: SuperVario, PocketVario
@@ -979,27 +991,31 @@ Katso [BRLTTY:n näppäintaulukoiden ohjetta http://mielke.cc/brltty/doc/drivers
 + Edistyneet aiheet +
 
 ++ Näppäin- ja muiden syötekomentojen uudelleenmäärittely ++
-Käyttäjät voivat lisätä omia tai muuttaa nykyisiä NVDA:n komentoihin liitettyjä syötekomentojen määrittelyjä (kuten näppäinpainalluksia) erityiseen käyttäjän asetushakemistossa olevaan tiedostoon.
+Käyttäjät voivat lisätä omia tai muuttaa nykyisiä NVDA:n skripteihin liitettyjä syötekomentojen määrittelyjä (kuten näppäinyhdistelmiä) erityiseen käyttäjän asetushakemistossa olevaan tiedostoon.
 Tämä tiedosto on nimeltään gestures.ini.
 
-Tiedosto käyttää standardia ini-syntaksia.
-Jokaisessa osiossa on määrittelyt tiettyyn NVDA:n Python-moduulissa ja luokassa oleviin komentoihin.
-Osion nimi koostuu Python-moduulin ja luokan nimestä, jotka erotetaan toisistaan pisteellä.
- 
-Jokaisen osion avaimet ovat komentojen nimiä, jotka halutaan määrittää uudelleen.
-Avaimen arvo koostuu pilkulla erotetuista komentotunnisteista, jotka edustavat määrättyyn NVDA:n komentoon liitettäviä syötekomentoja.
+Tiedosto käyttää standardinmukaista ini-syntaksia.
+Tiedostossa voi olla useita osioita ja jokaisessa osiossa voi olla yksi tai useampia merkintöjä.
 
-Osioissa voi olla useita avaimia ja tiedostossa voi olla useita osioita.
+Jokaisessa osiossa on määrittelyt tiettyyn NVDA:n Python-moduulissa ja luokassa oleviin skripteihin.
+Vaihtoehtoisesti voidaan käyttää erikoisskriptin nimeä None poistamaan syötekomentojen määrittelyt skriptistä, johon ne oli aiemmin määritelty.
 
-Komentotunnisteiden ja skriptien sekä luokan ja moduulin nimi, jossa ne ovat, saadaan selville ottamalla käyttöön syöteohje, aktivoimalla haluttu komento painamalla siihen liitettyjä näppäimiä ja avaamalla syöteohjeen käytöstä poistamisen jälkeen Työkalut-valikosta Näytä loki -toiminto sekä tutkimalla viimeisimpiä lokimerkintöjä.
+Komentotunnisteet koostuvat kaksikirjaimisista laitekoodeista (näppäimistöllä kb ja pistenäytöllä br), valinnaisesta alilaitteesta tai aaltosuluissa olevasta näppäimistöasettelusta, kaksoispisteestä sekä yhdestä tai useammasta plus-merkillä erotetusta näppäimen nimestä.
+
+Komentotunnisteiden ja skriptien sekä luokan ja moduulin nimi, jossa ne ovat, saadaan selville seuraavasti:
++ Otetaan syöteohje käyttöön.
++ Aktivoidaan haluttu syötekomento painamalla sen näppäintä.
++ Poistetaan syöteohje käytöstä.
++ Avataan Näytä loki -toiminto NVDA:n Työkalut-valikosta.
++ Tutkitaan viimeisimpiä lokimerkintöjä.
 Jossakin näistä merkinnöistä pitäisi olla tiedot käytetystä syötekomennosta, mukaan lukien moduuli.luokka sekä skripti, mikäli kyseiseen syötekomentoon on sellainen määritelty.
 
-Seuraavassa on esimerkki siitä, miten NVDA+Shift+t määritettäisiin  päiväys ja aika -skriptiin.
+Seuraavassa on esimerkki siitä, miten NVDA+Shift+t-näppäinyhdistelmä määritettäisiin  päiväys ja aika -skriptiin.
 
 Oikea skriptin nimi ja moduuli.luokka saadaan selville ottamalla käyttöön syöteohje ja painamalla NVDA+f12, koska se on nykyinen päiväys ja aika -skriptiin määritelty syötekomento.
 Tämän jälkeen syöteohje poistetaan käytöstä ja tutkitaan lokia.
 
-Lokin loppupuolella näkyy:
+Lokin loppupuolella näkyy seuraavaa:
 
 ```
 INFO - inputCore.InputManager._handleInputHelp (13:17:22):
@@ -1008,25 +1024,26 @@ Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalComm
 
 Tästä nähdään, että skriptin nimi on dateTime ja moduuli.luokka on globalCommands.GlobalCommands.
 
-Mikäli tiedostoa ei vielä ole, you would create a text file called gestures.ini in the user configuration directory and add the following content:
+Mikäli tiedostoa ei vielä ole, käyttäjän asetushakemistoon tulee luoda tekstitiedosto nimeltä gestures.ini, johon lisätään seuraavat rivit:
 
 ```
 [globalCommands.GlobalCommands]
 	dateTime = kb:NVDA+shift+t
 ```
 
-Tämä määrittäisi dateTime-skriptiin näppäinpainalluksen NVDA+Shift+t missä tahansa näppäimistöasettelussa.
-
-Erikoisskriptin nimeä None voidaan myös käyttää poistamaan syötekomennon määrittely mistä tahansa skriptistä, johon se oli määritelty tässä moduulissa ja luokassa.
-
-Komentotunnisteet koostuvat kaksikirjaimisista laitekoodeista (näppäimistöllä kb ja pistenäytöllä br), valinnaisesta alilaitteesta tai aaltosuluissa olevasta näppäimistöasettelusta, kaksoispisteestä sekä yhdestä tai useammasta plus-merkillä erotetusta näppäimen nimestä.
+Tämä määrittäisi dateTime-skriptiin näppäinyhdistelmän NVDA+Shift+t missä tahansa näppäimistöasettelussa.
  
-Käytettävät komentotunnisteet voidaan selvittää painamalla näppäimiä syöteohjeessa ja tutkimalla sitten lokia.
+Huomaa, että alkuperäinen NVDA+f12-näppäinyhdistelmä toimisi edelleen.
+Mikäli tämä määrittely halutaan poistaa, tiedostoon tulee lisätä seuraava rivi:
+
+```
+	None = kb:NVDA+f12
+```
 
 Vaikka skriptejä voidaankin määritellä mihin tahansa käytettävissä olevaan näppäimeen, Alt-näppäinen käyttäminen voi olla ongelmallista.
 NVDA lähettää edelleen toimintonäppäimet (sellaiset kuin Shift, Ctrl ja Alt) käyttöjärjestelmälle, vaikka ne olisivat skriptin käytössä.
-Niinpä, jos syötekomennossa käytetään Alt-näppäintä, tämän näppäinyhdistelmän painaminen voi sekä avata valikkorivin että suorittaa skriptin.
-Tämän vuoksi on luultavasti parasta käyttää toimintonäppäiminä vain Shift-, Ctrl- ja NVDA-näppäintä .
+Niinpä jos syötekomennossa käytetään Alt-näppäintä, tämän näppäinyhdistelmän painaminen voi sekä avata valikkorivin että suorittaa skriptin.
+Tämän vuoksi toimintonäppäimissä on parasta käyttää vain Shift-, Ctrl- ja NVDA-näppäimiä.
 
 + Lisätietoja +
 Mikäli tarvitset lisätietoja tai neuvoja NVDA:han liittyen, käy  sen web-sivustolla osoitteessa NVDA_URL.

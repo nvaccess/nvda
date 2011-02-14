@@ -8,7 +8,8 @@ Lo subrayable en esta versión incluye el anunciado de colores para algunos cont
 
 == Nuevas Características ==
 - Ahora se pueden anunciar los colores para algunos controles. El anunciado automático se puede configurar en el diálogo de preferencias de formateado de documentos. También se pueden anunciar bajo demanda utilizando la orden de anunciado de formato de texto (NVDA+f).
-- En los modos virtuales, ahora puedes seleccionar por página (utilizando shift+AvPág y shift+RePág) y por párrafos (utilizando shift+control+Flecha Abajo y shift+control+Flecha Arriba). (#639)
+ - Inicialmente, esto se soporta en controles de texto estándar IAccessible2 (tales como en aplicaciones de Mozilla), controles RichEdit (tales como en Wordpad) y controles de texto de IBM Lotus Symphony.
+- En los modos virtuales, ahora puedes seleccionar por página (utilizando shift+AvPág y shift+RePág) y por párrafos(utilizando shift+control+Flecha Abajo y shift+control+Flecha Arriba). (#639)
 - NVDA ahora anuncia la salida de texto nuevo en mIRC, PuTTY, Tera Term y SecureCRT. (#936)
 - Los usuarios ahora pueden añadir nuevas combinaciones de teclas o o sobreescribir las existentes para cualquier script en NVDA proporcionando un sencillo mapa de movimientos de entrada del usuario. (#194)
 - Soporte para plugins globales. Los plugins globales pueden añadir nueva funcionalidad a NVDA que funcione en todas las aplicaciones. (#281)
@@ -21,6 +22,8 @@ Lo subrayable en esta versión incluye el anunciado de colores para algunos cont
 - NVDA ahora recuerda la posición donde estabas cuando regresas a una página anteriormente visitada. Esto se aplica hasta que o el navegador o NVDA sean cerrados. (#132)
 - Las líneas braille Handy Tech ahora pueden utilizarse sin instalar el controlador universal de Handy Tech. (#854)
 - Soporte para varias líneas braille Baum, HumanWare y APH. (#937)
+- Ahora se reconoce la barra de estado en Media Player Classic Home Cinema.
+- Ahora la línea braille Freedom Scientific Focus 40 Blue puede utilizarse cuando se conecte a través de bluetooth. (#1345)
 
  
 == Cambios ==
@@ -62,10 +65,17 @@ Lo subrayable en esta versión incluye el anunciado de colores para algunos cont
  - El diálogo de lista de elementos para modos virtuales ahora es utilizable por usuarios videntes.  Todos los controles son visibles en pantalla. (#1321)
 - La lista de entradas en el diálogo Diccionarios del Habla, ahora es más legible por usuarios videntes.  La lista ahora es bastante grande para mostrar todas sus columnas en pantalla. (#90)
 - En líneas braille ALVA BC640/BC680 NVDA ya no hace caso omiso de las teclas de la línea que todavía están siendo pulsadas después que otra tecla sea liberada.
--
+- Adobe Reader X ya no se rompe cuando se cierra un documento sin opciones no etiquetadas antes de que aparezca el diálogo de procesamiento. (#1218)
+- NVDA ahora cambia al controlador de línea braille apropiado cuando vuelvas a la configuración guardada. (#1346)
+- El asistente de proyecto de Visual Studio 2008 se lee correctamente nuevamente. (#974)
+- NVDA ya no falla completamente al trabajar en aplicaciones que contengan caracteres no ASCII en su nombre del ejecutable. (#1352)
+- Cuando se lee por líneas en AkelPad con el salto de palabras activado, NVDA ya no lee el primer caracter de la línea siguiente en el final de la línea actual.
+- En el editor de código de Visual Studio 2005/2008, NVDA ya no lee todo el texto después de cada caracter tecleado. (#975)
+- Corregido el problema donde algunas líneas braille no se limpiaban correctamente cuando NVDA se cerraba o se cambiaba la línea braille.
+- El foco inicial ya no se verbaliza en algunas ocasiones dos veces cuando NVDA arranca. (#1359)
+
  
- 
-== Cambios para Desarrolladores ==
+ == Cambios para Desarrolladores ==
 - Esta sección se deja sin traducir de momento por ser de poca utilidad al usuario normal ya que es demasiado técnico.
 - SCons is now used to prepare the source tree and create binary builds, portable archives, installers, etc. See readme.txt at the root of the source distribution for details.
 - The key names used by NVDA (including key maps) have been made more friendly/logical; e.g. upArrow instead of extendedUp and numpadPageUp instead of prior. See the vkCodes module for a list.

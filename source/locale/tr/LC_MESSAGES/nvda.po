@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA main-4056\n"
-"POT-Creation-Date: 2011-01-26 11:08+E. Australia Standard Time\n"
-"PO-Revision-Date: 2011-02-01 12:11+0200\n"
+"Project-Id-Version: NVDA main-4100\n"
+"POT-Creation-Date: 2011-02-06 18:24+E. Australia Standard Time\n"
+"PO-Revision-Date: 2011-02-08 16:57+0200\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -103,7 +103,7 @@ msgstr "Bir tabloda değil."
 msgid "edge of table"
 msgstr "tablo sınırı"
 
-#: appModuleHandler.py:143
+#: appModuleHandler.py:137
 msgid "Error in appModule %s"
 msgstr "Uygulama Modülü hatası %s"
 
@@ -249,7 +249,7 @@ msgstr "sağ"
 #: globalCommands.py:766
 #: globalCommands.py:776
 #: gui\settingsDialogs.py:815
-#: keyboardHandler.py:296
+#: keyboardHandler.py:297
 #: virtualBuffers\__init__.py:724
 msgid "on"
 msgstr "Açık"
@@ -268,7 +268,7 @@ msgstr "Açık"
 #: globalCommands.py:773
 #: gui\settingsDialogs.py:575
 #: gui\settingsDialogs.py:815
-#: keyboardHandler.py:296
+#: keyboardHandler.py:297
 #: virtualBuffers\__init__.py:724
 msgid "off"
 msgstr "Kapalı"
@@ -564,6 +564,10 @@ msgstr "ALVA BC640/680 series"
 #: brailleDisplayDrivers\baum.py:87
 msgid "Baum/HumanWare/APH braille displays"
 msgstr "Baum/HumanWare/APH braille displays"
+
+#: brailleDisplayDrivers\freedomScientific.py:89
+msgid "Freedom Scientific Focus/PAC Mate series"
+msgstr "Freedom Scientific Focus/PAC Mate serisi"
 
 #: brailleDisplayDrivers\freedomScientific.py:96
 msgid "display scroll"
@@ -1528,11 +1532,23 @@ msgstr "sürükleniyor"
 msgid "drop target"
 msgstr "bırakma yeri"
 
-#: core.py:140
+#: core.py:80
+msgid ""
+"Your gesture map file contains errors.\n"
+"More details about the errors can be found in the log file."
+msgstr ""
+"gesture map dosyanızda hatalar var.\n"
+"Hatalar hakkında daha fazla ayrıntı log dosyasında bulunabilir."
+
+#: core.py:82
+msgid "gesture map File Error"
+msgstr "gesture map dosyasında hata"
+
+#: core.py:156
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA açılıyor, lütfen bekleyin..."
 
-#: core.py:225
+#: core.py:244
 msgid "NVDA started"
 msgstr "NVDA başlatıldı"
 
@@ -2113,12 +2129,12 @@ msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Python konsolu etkinleştirir. öncelikle geliştiriciler için faydalı"
 
 #: globalCommands.py:868
-#: gui\settingsDialogs.py:947
+#: gui\settingsDialogs.py:949
 msgid "review"
 msgstr "gözden geçir"
 
 #: globalCommands.py:871
-#: gui\settingsDialogs.py:947
+#: gui\settingsDialogs.py:949
 msgid "focus"
 msgstr "Odak"
 
@@ -2297,12 +2313,12 @@ msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Fare imleci ve şekil değişimleri ile ilgili bildirimleri değiştir"
 
 #: gui\__init__.py:283
-msgid "&Review cursor..."
-msgstr "İnceleme imleci..."
-
-#: gui\__init__.py:283
 msgid "Configure how and when the review cursor moves"
 msgstr "İnceleme imlecinin nasıl ve ne zaman hareket edeceğini belirle"
+
+#: gui\__init__.py:283
+msgid "Review &cursor..."
+msgstr "İn&celeme imleci..."
 
 #: gui\__init__.py:285
 msgid "&Object presentation..."
@@ -2894,11 +2910,11 @@ msgstr "Sınır İ&mlerini bildir"
 
 #: gui\settingsDialogs.py:770
 msgid "Edit dictionary entry"
-msgstr "Sözlük kayıdını düzenle"
+msgstr "Sözlük kaydını düzenle"
 
 #: gui\settingsDialogs.py:774
 msgid "&Pattern"
-msgstr "ö&rnek"
+msgstr "İ&fade"
 
 #: gui\settingsDialogs.py:777
 msgid "&Replacement"
@@ -2926,69 +2942,69 @@ msgstr "yorum"
 
 #: gui\settingsDialogs.py:811
 msgid "Pattern"
-msgstr "Örnek"
+msgstr "İfade"
 
 #: gui\settingsDialogs.py:812
 msgid "Replacement"
 msgstr "olarak değiştir"
 
 #: gui\settingsDialogs.py:813
-msgid "case sensitive"
-msgstr "Büyük-küçük harf duyarlı"
+msgid "case"
+msgstr "Büyük/küçük harf duyarlılığı"
 
 #: gui\settingsDialogs.py:814
-msgid "Regular expression"
+msgid "Regexp"
 msgstr "Düzenli ifade"
 
-#: gui\settingsDialogs.py:822
+#: gui\settingsDialogs.py:823
 msgid "&Add"
 msgstr "&Ekle"
 
-#: gui\settingsDialogs.py:825
+#: gui\settingsDialogs.py:826
 msgid "&edit"
 msgstr "&Düzenle"
 
-#: gui\settingsDialogs.py:828
+#: gui\settingsDialogs.py:829
 msgid "&Remove"
 msgstr "Kaldı&r"
 
-#: gui\settingsDialogs.py:850
+#: gui\settingsDialogs.py:852
 msgid "Add Dictionary Entry"
 msgstr "Sözlük girişi ekle"
 
-#: gui\settingsDialogs.py:895
+#: gui\settingsDialogs.py:897
 msgid "Braille Settings"
 msgstr "Braille ayarları"
 
-#: gui\settingsDialogs.py:899
+#: gui\settingsDialogs.py:901
 msgid "Braille &display:"
 msgstr "Braille &display"
 
-#: gui\settingsDialogs.py:913
+#: gui\settingsDialogs.py:915
 msgid "Translation &table:"
 msgstr "çeviri &tablosu"
 
-#: gui\settingsDialogs.py:925
+#: gui\settingsDialogs.py:927
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "İmle&ç altındaki sözcüğü bilgisayar braillle olarak genişlet"
 
-#: gui\settingsDialogs.py:930
+#: gui\settingsDialogs.py:932
 msgid "Cursor blink rate (ms)"
 msgstr "Imleç titreşimi (MS)"
 
-#: gui\settingsDialogs.py:938
+#: gui\settingsDialogs.py:940
 msgid "Message timeout (sec)"
 msgstr "Mesaj zaman aşımı (san)"
 
-#: gui\settingsDialogs.py:946
+#: gui\settingsDialogs.py:948
 msgid "Braille tethered to:"
 msgstr "Braille odağa getirildi"
 
-#: gui\settingsDialogs.py:965
+#: gui\settingsDialogs.py:967
 msgid "Braille Display Error"
 msgstr "Braille Display hatası"
 
-#: gui\settingsDialogs.py:965
+#: gui\settingsDialogs.py:967
 msgid "Could not load the %s display."
 msgstr "%s Display yüklenemiyor"
 

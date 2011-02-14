@@ -4,10 +4,11 @@
 %!includeconf: ../changes.t2tconf
 
 = 2011.1 =
-Tämän julkaisun tärkeimpiä uusia ominaisuuksia ovat joidenkin säädinten värien ilmoittaminen, automaattinen uuden tekstin lukeminen mIRC-, PuTTY-, Tera Term- ja SecureCRT-sovelluksissa, tuki yleisliitännäisille, luettelomerkkien ja numeroinnin lukeminen Microsoft Wordissa, lisänäppäinkomennot pistenäytöille, mukaan lukien näppäimet seuraavalle ja edelliselle riville siirtymiseksi sekä tuki useille Baum-, HumanWare- ja APH-pistenäytöille.
+Tämän julkaisun tärkeimpiä uusia ominaisuuksia ovat automaattinen uuden tekstin lukeminen mIRC-, PuTTY-, Tera Term- ja SecureCRT-sovelluksissa, tuki yleisliitännäisille, luettelomerkkien ja numeroinnin lukeminen Microsoft Wordissa, lisänäppäinkomennot pistenäytöille, mukaan lukien näppäimet seuraavalle ja edelliselle riville siirtymiseksi, tuki useille Baum-, HumanWare- ja APH-pistenäytöille sekä joidenkin säädinten värien ilmoittaminen, esim. IBM Lotus Symphonyn tekstisäätimissä.
 
 == Uudet ominaisuudet ==
-- Värien ilmoittaminen on nyt mahdollista joissakin säätimissä. Automaattinen lukeminen voidaan määrittää Asiakirjojen muotoiluasetukset -valintaikkunasta. Värit voidaan lukea myös tekstin muotoilutietojen lukukomennolla (NVDA+F).
+- Värien ilmoittaminen on nyt mahdollista joissakin säätimissä. Automaattinen lukeminen voidaan määrittää Asiakirjojen muotoiluasetukset -valintaikkunasta. Värit voidaan lukea myös tekstin muotoilutietojen lukukomennolla (NVDA+f).
+ - Tätä tuetaan alustavasti standardeissa muokattavissa IAccessible2-tekstisäätimissä (sellaisissa kuin Mozilla-sovelluksissa), RichEdit-säätimissä (sellaisissa kuin WordPadissa) ja IBM Lotus Symphonyn tekstisäätimissä.
 - Näennäispuskureissa on nyt mahdollista valita tekstiä sivu kerrallaan (näppäimillä Shift+Page down ja Shift+Page up) sekä kappale kerrallaan (näppäimillä Shift+Ctrl+alanuoli ja Shift+Ctrl+ylänuoli). (#639)
 - NVDA lukee nyt automaattisesti näytölle tulevan uuden tekstin mIRC:issä, PuTTY:ssä, Tera Termissä ja SecureCRT:ssä. (#936)
 - Uusien näppäinkomentojen lisääminen tai  olemassa olevien muuttaminen on nyt mahdollista  kaikille NVDA:n komennoille käyttäjän syötekomentokartan avulla. (#194)
@@ -21,6 +22,8 @@ Tämän julkaisun tärkeimpiä uusia ominaisuuksia ovat joidenkin säädinten v�
 - NVDA muistaa nyt kohdan, jossa oltiin palattaessa aiemmin vieraillulle web-sivulle. Tämä pätee siihen asti kunnes joko selain tai NVDA suljetaan. (#132)
 - Handy Tech -pistenäyttöjä voidaan nyt käyttää asentamatta yleisajuria. (#854)
 - Tuki useille Baum-, HumanWare- ja APH-pistenäytöille. (#937)
+- NVDA tunnistaa nyt Media Player Classic Home Cinema -mediasoittimen tilarivin.
+- Freedom Scientificin Focus 40 Blue -pistenäyttöä voidaan nyt käyttää bluetooth-yhteydellä. (#1345)
 
 
 == Muutokset ==
@@ -65,6 +68,9 @@ Tämän julkaisun tärkeimpiä uusia ominaisuuksia ovat joidenkin säädinten v�
 - NVDA vaihtaa nyt asianmukaiseen pistenäyttöajuriin tallennettuja asetuksia palautettaessa. (#1346)
 - Visual Studio 2008:n ohjattu projektin luontitoiminto luetaan taas oikein. (#974)
 - NVDA ei enää lakkaa täysin toimimasta sovelluksissa, joiden tiedostonimissä on muita kuin ASCII-merkkejä. (#1352)
+- NVDA ei enää lue seuraavan rivin ensimmäistä merkkiä nykyisen rivin lopussa luettaessa tekstiä rivi kerrallaan AkelPad-tekstieditorissa automaattisen rivityksen ollessa käytössä.
+- NVDA ei enää lue koko tekstiä jokaisen kirjoitetun merkin jälkeen Visual Studio 2005:n ja 2008:n koodieditorissa. (#975)
+- Korjattu ongelma, joka aiheutti sen, että joitakin pistenäyttöjä ei tyhjennetty asianmukaisesti kun NVDA suljettiin tai käytettävää pistenäyttöä vaihdettiin.
 
 
 = 2010.2 =

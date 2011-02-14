@@ -3,10 +3,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA 2010.2\n"
-"POT-Creation-Date: 2011-01-26 11:08+E. Australia Standard Time\n"
-"PO-Revision-Date: 2011-01-31 16:22+0100\n"
-"Last-Translator: Juan Carlos Buño Suárez <quetzatl@eresmas.net>\n"
+"Project-Id-Version: NVDA 2011.1\n"
+"POT-Creation-Date: 2011-02-09 16:17+Hora estándar romance\n"
+"PO-Revision-Date: 2011-02-11 19:42+0100\n"
+"Last-Translator: Juan C. buño <quetzatl@eresmas.net>\n"
 "Language-Team: equipo de traducción al español de NVDA <Quetzatl@eresmas.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -107,7 +107,7 @@ msgstr "no estás en una tabla"
 msgid "edge of table"
 msgstr "borde de la tabla"
 
-#: appModuleHandler.py:143
+#: appModuleHandler.py:137
 msgid "Error in appModule %s"
 msgstr "Error en módulo app %s"
 
@@ -253,7 +253,7 @@ msgstr "derecha"
 #: globalCommands.py:766
 #: globalCommands.py:776
 #: gui\settingsDialogs.py:815
-#: keyboardHandler.py:296
+#: keyboardHandler.py:297
 #: virtualBuffers\__init__.py:724
 msgid "on"
 msgstr "activado"
@@ -272,7 +272,7 @@ msgstr "activado"
 #: globalCommands.py:773
 #: gui\settingsDialogs.py:575
 #: gui\settingsDialogs.py:815
-#: keyboardHandler.py:296
+#: keyboardHandler.py:297
 #: virtualBuffers\__init__.py:724
 msgid "off"
 msgstr "desactivado"
@@ -569,11 +569,15 @@ msgstr "Series de la ALVA BC640/680"
 msgid "Baum/HumanWare/APH braille displays"
 msgstr "Líneas braille Baum/HumanWare/APH"
 
-#: brailleDisplayDrivers\freedomScientific.py:96
+#: brailleDisplayDrivers\freedomScientific.py:90
+msgid "Freedom Scientific Focus/PAC Mate series"
+msgstr "Series de Freedom Scientific Focus/PAC Mate"
+
+#: brailleDisplayDrivers\freedomScientific.py:97
 msgid "display scroll"
 msgstr "desplazar línea braille"
 
-#: brailleDisplayDrivers\freedomScientific.py:97
+#: brailleDisplayDrivers\freedomScientific.py:98
 msgid "line scroll"
 msgstr "desplazar línea"
 
@@ -1532,11 +1536,23 @@ msgstr "arrastrando"
 msgid "drop target"
 msgstr "soltar en destino"
 
-#: core.py:140
+#: core.py:80
+msgid ""
+"Your gesture map file contains errors.\n"
+"More details about the errors can be found in the log file."
+msgstr ""
+"Tu fichero de mapa de gestos contiene errores.\n"
+"Más detalles acerca de los errores se pueden encontrar en el fichero del log."
+
+#: core.py:82
+msgid "gesture map File Error"
+msgstr "error de fichero de mapa de gestos"
+
+#: core.py:156
 msgid "Loading NVDA. Please wait..."
 msgstr "Cargando NVDA. Aguarda por Favor..."
 
-#: core.py:225
+#: core.py:244
 msgid "NVDA started"
 msgstr "NVDA activado"
 
@@ -2117,12 +2133,12 @@ msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Activa la Consola Python de NVDA, principalmente útil para desarrolladores"
 
 #: globalCommands.py:868
-#: gui\settingsDialogs.py:947
+#: gui\settingsDialogs.py:949
 msgid "review"
 msgstr "árl"
 
 #: globalCommands.py:871
-#: gui\settingsDialogs.py:947
+#: gui\settingsDialogs.py:949
 msgid "focus"
 msgstr "fco"
 
@@ -2301,12 +2317,12 @@ msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Cambiar el anunciado de la forma del ratón y del objeto bajo el ratón"
 
 #: gui\__init__.py:283
-msgid "&Review cursor..."
-msgstr "Cursor de &revisión..."
-
-#: gui\__init__.py:283
 msgid "Configure how and when the review cursor moves"
 msgstr "Configura cómo y cuándo el cursor de revisión se mueve"
+
+#: gui\__init__.py:283
+msgid "Review &cursor..."
+msgstr "&Cursor de revisión..."
 
 #: gui\__init__.py:285
 msgid "&Object presentation..."
@@ -2770,7 +2786,7 @@ msgstr "Anunciar información de &posición del objeto"
 
 #: gui\settingsDialogs.py:594
 msgid "Guess object &position information when unavailable"
-msgstr "Adivinar &posición e información de objeto cuando no está disponible"
+msgstr "Deducir información de &posición del objeto cuando no esté disponible"
 
 #: gui\settingsDialogs.py:597
 msgid "Report object &descriptions"
@@ -2937,62 +2953,62 @@ msgid "Replacement"
 msgstr "Reemplazar por"
 
 #: gui\settingsDialogs.py:813
-msgid "case sensitive"
-msgstr "sensible a las mayúsculas"
+msgid "case"
+msgstr "caso"
 
 #: gui\settingsDialogs.py:814
-msgid "Regular expression"
-msgstr "Expresión regular"
+msgid "Regexp"
+msgstr "Regexp"
 
-#: gui\settingsDialogs.py:822
+#: gui\settingsDialogs.py:823
 msgid "&Add"
 msgstr "&Añadir"
 
-#: gui\settingsDialogs.py:825
+#: gui\settingsDialogs.py:826
 msgid "&edit"
 msgstr "&editar"
 
-#: gui\settingsDialogs.py:828
+#: gui\settingsDialogs.py:829
 msgid "&Remove"
 msgstr "E&liminar"
 
-#: gui\settingsDialogs.py:850
+#: gui\settingsDialogs.py:852
 msgid "Add Dictionary Entry"
 msgstr "Añadir Entrada de Diccionario"
 
-#: gui\settingsDialogs.py:895
+#: gui\settingsDialogs.py:897
 msgid "Braille Settings"
 msgstr "Opciones de braille"
 
-#: gui\settingsDialogs.py:899
+#: gui\settingsDialogs.py:901
 msgid "Braille &display:"
 msgstr "&Línea braille"
 
-#: gui\settingsDialogs.py:913
+#: gui\settingsDialogs.py:915
 msgid "Translation &table:"
 msgstr "&tabla de transcripción"
 
-#: gui\settingsDialogs.py:925
+#: gui\settingsDialogs.py:927
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Expandir a braille de ordenador para la palabra en el cursor"
 
-#: gui\settingsDialogs.py:930
+#: gui\settingsDialogs.py:932
 msgid "Cursor blink rate (ms)"
 msgstr "Velocidad del parpadeo del cursor (en MS)"
 
-#: gui\settingsDialogs.py:938
+#: gui\settingsDialogs.py:940
 msgid "Message timeout (sec)"
 msgstr "Duración del mensaje (en seg)"
 
-#: gui\settingsDialogs.py:946
+#: gui\settingsDialogs.py:948
 msgid "Braille tethered to:"
 msgstr "El Braille sigue a:"
 
-#: gui\settingsDialogs.py:965
+#: gui\settingsDialogs.py:967
 msgid "Braille Display Error"
 msgstr "Error de la Línea Braille"
 
-#: gui\settingsDialogs.py:965
+#: gui\settingsDialogs.py:967
 msgid "Could not load the %s display."
 msgstr "No se pudo cargar la línea %s."
 
@@ -3493,7 +3509,7 @@ msgstr "Un lector de pantalla libre y de código abierto para Microsoft Windows"
 
 #: versionInfo.py:33
 msgid "Copyright (C) 2006-2011 NVDA Contributors"
-msgstr "Copyright (C) 2006-2011 colaboradores de NVDA"
+msgstr "Copyright (C) 2006-2011 Colaboradores de NVDA"
 
 #: versionInfo.py:34
 msgid ""
@@ -3510,15 +3526,15 @@ msgid ""
 "If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
 msgstr ""
 "{longName} ({name})\n"
-"Version: {version}\n"
+"Versión: {version}\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.\n"
-"For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"{name} está cubierto por la GNU General Public License (Versión 2). eres libre de compartir o cambiar este programa de cualquier modo que prefieras así como debes acompañarlo por la licencia y hacer disponible todo el código fuente a cualquiera quien lo quiera. Esto se aplica tanto al original y a las copias modificadas de este programa, más cualquier trabajo derivado.\n"
+"Para más detalles, puedes ver la licencia desde el menú Ayuda.\n"
+"También puede verse online en: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
-"{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
+"{name} se desarrolla por NV Access, una organización sin ánimo de lucro que promociona y ayuda soluciones libres y de código abierto para personas ciegas y deficientes visuales.\n"
 "If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
 
 #: virtualBuffers\__init__.py:201

@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R4029\n"
+"Project-Id-Version: 2011.1\n"
 "POT-Creation-Date: 2007-03-10 23:05+0200\n"
-"PO-Revision-Date: 2011-01-20 17:30+0200\n"
+"PO-Revision-Date: 2011-02-07 10:00+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -100,7 +100,7 @@ msgstr "hors du tableau"
 msgid "edge of table"
 msgstr "limite du tableau"
 
-#: appModuleHandler.py:143
+#: appModuleHandler.py:137
 msgid "Error in appModule %s"
 msgstr "Erreur dans appmodule %s"
 
@@ -232,7 +232,7 @@ msgstr "droite"
 #: globalCommands.py:166 globalCommands.py:176 globalCommands.py:186
 #: globalCommands.py:196 globalCommands.py:694 globalCommands.py:756
 #: globalCommands.py:766 globalCommands.py:776 gui\settingsDialogs.py:815
-#: keyboardHandler.py:296 virtualBuffers\__init__.py:724
+#: keyboardHandler.py:297 virtualBuffers\__init__.py:724
 msgid "on"
 msgstr "activé"
 
@@ -241,7 +241,7 @@ msgstr "activé"
 #: globalCommands.py:193 globalCommands.py:572 globalCommands.py:691
 #: globalCommands.py:753 globalCommands.py:763 globalCommands.py:773
 #: gui\settingsDialogs.py:575 gui\settingsDialogs.py:815
-#: keyboardHandler.py:296 virtualBuffers\__init__.py:724
+#: keyboardHandler.py:297 virtualBuffers\__init__.py:724
 msgid "off"
 msgstr "désactivé"
 
@@ -528,6 +528,14 @@ msgstr "niveau %s"
 #: brailleDisplayDrivers\alvaBC6.py:44
 msgid "ALVA BC640/680 series"
 msgstr "ALVA séries BC640/680"
+
+#: brailleDisplayDrivers\baum.py:87
+msgid "Baum/HumanWare/APH braille displays"
+msgstr "Terminaux braille Baum/HumanWare/APH"
+
+#: brailleDisplayDrivers\freedomScientific.py:89
+msgid "Freedom Scientific Focus/PAC Mate series"
+msgstr "Freedom Scientific séries Focus/PAC Mate"
 
 #: brailleDisplayDrivers\freedomScientific.py:96
 msgid "display scroll"
@@ -1471,11 +1479,24 @@ msgstr "glissage en cours"
 msgid "drop target"
 msgstr "déposer"
 
-#: core.py:140
+#: core.py:80
+msgid ""
+"Your gesture map file contains errors.\n"
+"More details about the errors can be found in the log file."
+msgstr ""
+"Votre fichier de définition de gestures contient des erreurs.\n"
+"Vous trouverez plus de détails sur les erreurs dans le fichier journal"
+
+#: core.py:82
+#, fuzzy
+msgid "gesture map File Error"
+msgstr "Erreur dans le fichier de définition de gesture"
+
+#: core.py:156
 msgid "Loading NVDA. Please wait..."
 msgstr "Chargement de NVDA, veuillez patienter..."
 
-#: core.py:225
+#: core.py:244
 msgid "NVDA started"
 msgstr "NVDA démarré"
 
@@ -1525,14 +1546,14 @@ msgstr "copié dans le presse-papier"
 
 #: globalCommands.py:42
 msgid "input help %s"
-msgstr "aide à la saisie %s"
+msgstr "aide des commandes %s"
 
 #: globalCommands.py:43
 msgid ""
 "Turns input help on or off. When on, any input such as pressing a key on the "
 "keyboard will tell you what script is associated with that input, if any."
 msgstr ""
-"Bascule de l'aide à la saisie. Quand l'aide est activée, l'appui sur une "
+"Bascule de l'aide des commandes. Quand l'aide est activée, l'appui sur une "
 "touche annonce le script associé s'il existe."
 
 #: globalCommands.py:49
@@ -2246,11 +2267,11 @@ msgstr ""
 "Active la console Python de NVDA, essentiellement utile pour les "
 "développeurs"
 
-#: globalCommands.py:868 gui\settingsDialogs.py:947
+#: globalCommands.py:868 gui\settingsDialogs.py:949
 msgid "review"
 msgstr "revue"
 
-#: globalCommands.py:871 gui\settingsDialogs.py:947
+#: globalCommands.py:871 gui\settingsDialogs.py:949
 msgid "focus"
 msgstr "focus"
 
@@ -2449,12 +2470,12 @@ msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Modifier l'annonce de la forme de la souris, de l'objet sous la souris"
 
 #: gui\__init__.py:283
-msgid "&Review cursor..."
-msgstr "Curseur de &revue..."
-
-#: gui\__init__.py:283
 msgid "Configure how and when the review cursor moves"
 msgstr "Configure quand et comment le curseur de revue se déplace"
+
+#: gui\__init__.py:283
+msgid "Review &cursor..."
+msgstr "Curseur de &revue..."
 
 #: gui\__init__.py:285
 msgid "&Object presentation..."
@@ -2602,7 +2623,7 @@ msgstr "Faire un don"
 
 #: gui\__init__.py:345 gui\logViewer.py:34
 msgid "E&xit"
-msgstr "E&xit"
+msgstr "&Quitter"
 
 #: gui\__init__.py:396
 msgid ""
@@ -2740,7 +2761,7 @@ msgid ""
 "Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"Utiliser les paramètres NVDAactuellement sauvegardés  sur l'écran de "
+"Utiliser les paramètres NVDA actuellement sauvegardés pour l'écran de "
 "connexion à Windows (nécessite des privilèges administrateur)"
 
 #: gui\settingsDialogs.py:170
@@ -2954,7 +2975,8 @@ msgstr "Annoncer le r&ang de l'objet dans une liste"
 
 #: gui\settingsDialogs.py:594
 msgid "Guess object &position information when unavailable"
-msgstr "Deviner l'information de &position de l'objet quand elle n'est pas disponible"
+msgstr ""
+"Deviner l'information de &position de l'objet quand elle n'est pas disponible"
 
 #: gui\settingsDialogs.py:597
 msgid "Report object &descriptions"
@@ -3123,62 +3145,62 @@ msgid "Replacement"
 msgstr "Remplacement"
 
 #: gui\settingsDialogs.py:813
-msgid "case sensitive"
-msgstr "Tenir compte de la casse"
+msgid "case"
+msgstr "casse"
 
 #: gui\settingsDialogs.py:814
-msgid "Regular expression"
-msgstr "Expression régulière"
+msgid "Regexp"
+msgstr "Regexp"
 
-#: gui\settingsDialogs.py:822
+#: gui\settingsDialogs.py:823
 msgid "&Add"
 msgstr "&Ajouter"
 
-#: gui\settingsDialogs.py:825
+#: gui\settingsDialogs.py:826
 msgid "&edit"
 msgstr "&éditer"
 
-#: gui\settingsDialogs.py:828
+#: gui\settingsDialogs.py:829
 msgid "&Remove"
 msgstr "&Supprimer"
 
-#: gui\settingsDialogs.py:850
+#: gui\settingsDialogs.py:852
 msgid "Add Dictionary Entry"
 msgstr "Ajouter une entrée au dictionnaire"
 
-#: gui\settingsDialogs.py:895
+#: gui\settingsDialogs.py:897
 msgid "Braille Settings"
 msgstr "Paramètres braille"
 
-#: gui\settingsDialogs.py:899
+#: gui\settingsDialogs.py:901
 msgid "Braille &display:"
 msgstr "&Terminal braille:"
 
-#: gui\settingsDialogs.py:913
+#: gui\settingsDialogs.py:915
 msgid "Translation &table:"
 msgstr "Table de &conversion:"
 
-#: gui\settingsDialogs.py:925
+#: gui\settingsDialogs.py:927
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Afficher le mot sous le curseur en braille informatique"
 
-#: gui\settingsDialogs.py:930
+#: gui\settingsDialogs.py:932
 msgid "Cursor blink rate (ms)"
 msgstr "&Vitesse de clignotement du curseur (ms)"
 
-#: gui\settingsDialogs.py:938
+#: gui\settingsDialogs.py:940
 msgid "Message timeout (sec)"
 msgstr "&Durée d'affichage des messages (sec)"
 
-#: gui\settingsDialogs.py:946
+#: gui\settingsDialogs.py:948
 msgid "Braille tethered to:"
 msgstr "&Braille attaché à :"
 
-#: gui\settingsDialogs.py:965
+#: gui\settingsDialogs.py:967
 msgid "Braille Display Error"
 msgstr "Erreur d'affichage braille"
 
-#: gui\settingsDialogs.py:965
+#: gui\settingsDialogs.py:967
 msgid "Could not load the %s display."
 msgstr "Impossible de charger le terminal %s"
 
@@ -3670,15 +3692,15 @@ msgstr "mot"
 msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
-#: versionInfo.py:27
+#: versionInfo.py:31
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Une revue d'écran gratuite et open-source pour Microsoft Windows"
 
-#: versionInfo.py:29
+#: versionInfo.py:33
 msgid "Copyright (C) 2006-2011 NVDA Contributors"
 msgstr "Copyright (C) 2006-2011 NVDA Contributors"
 
-#: versionInfo.py:30
+#: versionInfo.py:34
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
