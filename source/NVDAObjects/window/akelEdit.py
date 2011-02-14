@@ -64,9 +64,9 @@ class AkelEditTextInfo(edit.EditTextInfo):
 		ciChar=AECHARINDEX()
 		processHandle=self.obj.processHandle
 		internalCiChar=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(ciChar),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winUser.sendMessage(self.obj.windowHandle,AEM_GETINDEX,AEGI_CARETCHAR,internalCiChar)
+		winUser.sendMessage(self.obj.windowHandle,AEM_RICHOFFSETTOINDEX,offset,internalCiChar)
 		winUser.sendMessage(self.obj.windowHandle,AEM_GETINDEX,AEGI_NEXTLINE,internalCiChar)
-		end=winUser.sendMessage(self.obj.windowHandle,AEM_INDEXTORICHOFFSET,0,internalCiChar)-1
+		end=winUser.sendMessage(self.obj.windowHandle,AEM_INDEXTORICHOFFSET,0,internalCiChar)
 		winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
 		return (start,end)
 
