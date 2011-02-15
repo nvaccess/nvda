@@ -45,10 +45,10 @@ class SettingsDialog(wx.Dialog):
 
 	title = ""
 
-	def __new__(cls, parent):
+	def __new__(cls, *args, **kwargs):
 		if SettingsDialog._hasInstance:
 			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
-		obj = super(SettingsDialog, cls).__new__(cls, parent)
+		obj = super(SettingsDialog, cls).__new__(cls, *args, **kwargs)
 		SettingsDialog._hasInstance=True
 		return obj
 
