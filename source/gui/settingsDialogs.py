@@ -45,14 +45,18 @@ class SettingsDialog(wx.Dialog):
 
 	title = ""
 
+	def __new__(cls, parent):
+		if SettingsDialog._hasInstance:
+			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
+		obj = super(SettingsDialog, cls).__new__(cls, parent)
+		SettingsDialog._hasInstance=True
+		return obj
+
 	def __init__(self, parent):
 		"""
 		@param parent: The parent for this dialog; C{None} for no parent.
 		@type parent: wx.Window
 		"""
-		if SettingsDialog._hasInstance:
-			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
-		SettingsDialog._hasInstance=True
 		super(SettingsDialog, self).__init__(parent, wx.ID_ANY, self.title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
