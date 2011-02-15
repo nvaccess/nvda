@@ -95,6 +95,9 @@ def resetConfiguration():
 	import speech
 	import languageHandler
 	import inputCore
+	import touchReview
+	log.debug("Terminating touch review")
+	touchReview.terminate()
 	log.debug("Terminating braille")
 	braille.terminate()
 	log.debug("terminating speech")
@@ -115,6 +118,8 @@ def resetConfiguration():
 	log.debug("Reloading user and locale input gesture maps")
 	inputCore.manager.loadUserGestureMap()
 	inputCore.manager.loadLocaleGestureMap()
+	log.debug("Initializing touch review")
+	touchReview.initialize()
 	log.info("Reverted to saved configuration")
 
 def _setInitialFocus():
@@ -251,6 +256,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import mouseHandler
 	log.debug("initializing mouse handler")
 	mouseHandler.initialize()
+	log.debug("Initializing touch review")
+	import touchReview
+	touchReview.initialize()
 	import globalPluginHandler
 	log.debug("Initializing global plugin handler")
 	globalPluginHandler.initialize()
@@ -342,6 +350,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		NVDAHelper.terminate()
 	except:
 		log.error("Error terminating NVDAHelper",exc_info=True)
+	log.debug('Terminating touch review')
+	try:
+		touchReview.terminate()
+	except:
+		log.error("Error terminating touch review", exc_info=True)
 	log.debug("Terminating keyboard handler")
 	try:
 		keyboardHandler.terminate()

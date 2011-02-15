@@ -154,6 +154,10 @@ outputDevice = string(default=default)
 	followFocus = boolean(default=True)
 	followCaret = boolean(default=True)
 	followMouse = boolean(default=False)
+
+[touchReview]
+	active = boolean(default=False)
+	device = string(default="default")
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"
@@ -277,7 +281,7 @@ def initConfigPath(configPath=None):
 		configPath=globalVars.appArgs.configPath
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
-	for subdir in ("appModules","brailleDisplayDrivers","speechDicts","synthDrivers","globalPlugins"):
+	for subdir in ("appModules","brailleDisplayDrivers","speechDicts","synthDrivers","globalPlugins", "touchDeviceDrivers"):
 		subdir=os.path.join(configPath,subdir)
 		if not os.path.isdir(subdir):
 			os.makedirs(subdir)

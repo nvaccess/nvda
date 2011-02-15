@@ -31,6 +31,7 @@ import braille
 import inputCore
 import virtualBuffers
 from baseObject import ScriptableObject
+import touchReview
 
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
@@ -941,6 +942,16 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Plugins reloaded"))
 	script_reloadPlugins.__doc__=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers")
 
+	def script_toggleTouchReview(self,gesture):
+		if touchReview.manager.isActive:
+			touchReview.manager.deactivate()
+			ui.message(_("touch review off"))
+		else:
+			touchReview.manager.activate()
+			ui.message(_("Touch review on"))
+		config.conf["touchReview"]["active"]=touchReview.manager.isActive
+	script_toggleTouchReview.__doc__=_("Toggles touch review on and off. When turned on, NVDA will intercept gestures on the touch device such as touchpad, allowing you review the current window by touch and perform other actions..")
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -1086,6 +1097,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+z": "activatePythonConsole",
 		"kb:NVDA+control+f3": "reloadPlugins",
 		"kb(desktop):NVDA+control+f2": "test_navigatorDisplayModelText",
+		"kb:NVDA+r": "toggleTouchReview",
 	}
 
 #: The single global commands instance.
