@@ -812,36 +812,36 @@ class GlobalCommands(ScriptableObject):
 		ui.message(message)
 	script_reportAppModuleInfo.__doc__ = _("Speaks the filename of the active application along with the name of the currently loaded appModule")
 
-	def script_activateGeneralSettingsDialog(self,gesture):
-		mainFrame.onGeneralSettingsCommand(None)
+	def script_activateGeneralSettingsDialog(self, gesture):
+		wx.CallAfter(mainFrame.onGeneralSettingsCommand, None)
 	script_activateGeneralSettingsDialog.__doc__ = _("Shows the NVDA general settings dialog")
 
-	def script_activateSynthesizerDialog(self,gesture):
-		mainFrame.onSynthesizerCommand(None)
+	def script_activateSynthesizerDialog(self, gesture):
+		wx.CallAfter(mainFrame.onSynthesizerCommand, None)
 	script_activateSynthesizerDialog.__doc__ = _("Shows the NVDA synthesizer dialog")
 
-	def script_activateVoiceDialog(self,gesture):
-		mainFrame.onVoiceCommand(None)
+	def script_activateVoiceDialog(self, gesture):
+		wx.CallAfter(mainFrame.onVoiceCommand, None)
 	script_activateVoiceDialog.__doc__ = _("Shows the NVDA voice settings dialog")
 
-	def script_activateKeyboardSettingsDialog(self,gesture):
-		mainFrame.onKeyboardSettingsCommand(None)
+	def script_activateKeyboardSettingsDialog(self, gesture):
+		wx.CallAfter(mainFrame.onKeyboardSettingsCommand, None)
 	script_activateKeyboardSettingsDialog.__doc__ = _("Shows the NVDA keyboard settings dialog")
 
-	def script_activateMouseSettingsDialog(self,gesture):
-		mainFrame.onMouseSettingsCommand(None)
+	def script_activateMouseSettingsDialog(self, gesture):
+		wx.CallAfter(mainFrame.onMouseSettingsCommand, None)
 	script_activateMouseSettingsDialog.__doc__ = _("Shows the NVDA mouse settings dialog")
 
-	def script_activateObjectPresentationDialog(self,gesture):
-		mainFrame. onObjectPresentationCommand(None)
+	def script_activateObjectPresentationDialog(self, gesture):
+		wx.CallAfter(mainFrame. onObjectPresentationCommand, None)
 	script_activateObjectPresentationDialog.__doc__ = _("Shows the NVDA object presentation settings dialog")
 
-	def script_activateVirtualBuffersDialog(self,gesture):
-		mainFrame.onVirtualBuffersCommand(None)
+	def script_activateVirtualBuffersDialog(self, gesture):
+		wx.CallAfter(mainFrame.onVirtualBuffersCommand, None)
 	script_activateVirtualBuffersDialog.__doc__ = _("Shows the NVDA virtual buffers settings dialog")
 
-	def script_activateDocumentFormattingDialog(self,gesture):
-		mainFrame.onDocumentFormattingCommand(None)
+	def script_activateDocumentFormattingDialog(self, gesture):
+		wx.CallAfter(mainFrame.onDocumentFormattingCommand, None)
 	script_activateDocumentFormattingDialog.__doc__ = _("Shows the NVDA document formatting settings dialog")
 
 	def script_saveConfiguration(self,gesture):
