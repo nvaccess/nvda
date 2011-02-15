@@ -134,7 +134,6 @@ class TouchDeviceDriver(baseObject.AutoPropertyObject):
 	def _get_availableDevices(self):
 		"""Returns list of the connected devices.
 		It is an ordered dictionary where keys are identifiers and values are human-readable descriptions.
-		Identifiers should include the driver name followed by a dot and the ID of the device.
 		@rtype: collections.OrderedDict
 		"""
 		return collections.OrderedDict()
