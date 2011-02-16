@@ -63,7 +63,7 @@ This example shows you the basic layout of an App Module.
 Copy and paste the code between (but not including) the start and end markers into a new text file called notepad.py, which should be saved in the AppModules subdirectory.
 Be very careful to keep all tabs and spaces intact.
 
-Onced saved in the correct location, either restart NVDA or choose Reload Plugins found under Tools in the NVDA menu.
+Once saved in the correct location, either restart NVDA or choose Reload Plugins found under Tools in the NVDA menu.
 
 Finally, open Notepad and move the focus around the application; e.g. move along the menu bar, open some dialog boxes, etc.
 You should hear beeps each time the focus changes.
@@ -119,7 +119,7 @@ This example is only to show you the basic layout of a Global Plugin.
 Copy and paste the code between (but not including) the start and end markers into a new text file with a name of example2.py, which should be saved in the globalPlugins subdirectory.
 Be very careful to keep all tabs and spaces intact.
 
-Onced saved in the right place, either restart NVDA or choose Reload Plugins found under Tools in the NVDA menu.
+Once saved in the right place, either restart NVDA or choose Reload Plugins found under Tools in the NVDA menu.
 
 From anywhere, you can now press NVDA+shift+v to have NVDA's version spoken and brailled.
 
@@ -257,7 +257,7 @@ This example shows you how to define one or more scripts and gesture bindings on
 Copy and paste the code between (but not including) the start and end markers into a new text file with a name of example3.py, which should be saved in the globalPlugins subdirectory.
 Be very careful to keep all tabs and spaces intact.
 
-Onced saved in the right place, either restart NVDA or choose Reload Plugins found under Tools in the NVDA menu.
+Once saved in the right place, either restart NVDA or choose Reload Plugins found under Tools in the NVDA menu.
 
 ```
 --- start ---
@@ -288,6 +288,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	}
 
 --- end ---
+```
 
 ++ Events ++
 When NVDA detects particular toolkit, API or Operating System events, it abstracts these and fires its own internal events on plugins and NVDA Objects.
