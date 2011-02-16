@@ -10,13 +10,76 @@ import baseObject
 import config
 from logHandler import log
 import touchDeviceDrivers
+import inputCore
 
 """Touch review support.
 """
 
+class TouchGesture(inputCore.InputGesture):
+	"""The base class for touch gestures.
+	Every touch gesture should contain position in relative coordinates, representing the place where the gesture was initiated.
+	By definition, the point (0,0) is situated at the upper left corner of the touch surface; x increases to the left and y increases to the bottom.
+	The Largest possible values for x and y are determined by L{TouchDeviceDriver.dimensions} property.
+	"""
+	#: identifier of the gesture e.g. 'tap'
+	#: @type: str
+	id=""
+	#: L{TouchRegion} this gesture coresponds to, if any
+	#: @type: L{TouchRegion} or C{None}
+	region=None
+
+	shouldReportAsCommand=False
+
+	def __init__(self, x,y):
+		"""Creates a new touch gesture.
+		@param x: x component of the gesture in relative coordinates.
+		@type x: int
+		@param y: y component of the gesture in relative coordinates.
+		@type y: int
+		"""
+		self.x=x
+		self.y=y
+
+	def _get_identifiers(self):
+		region="(%s)"%self.region.name if self.region is not None else ""
+		return ("touch%s:%s"%(region,self.id),)
+
+	def _get_scriptableObject(self):
+		if self.region is not None:
+			return self.region
+		else:
+			return manager
+
+
+class TouchRegion(baseObject.ScriptableObject):
+	"""Represents an active zone on touch surface.
+	An example of the touch region can be a rectangle that affects gestures performed  within its bounds.
+	L{TouchReviewManager} calls L{shouldAcceptGesture} on every instantiated gesture for every registered region, in the defined order. On C{True}, it marks the gesture appropriately, i.a. sets the gesture's region property.
+	"""
+	#: an unique name of the region
+	#: @type: str
+	name=""
+
+	def _get_weight(self):
+		"""The "weight" of this region. 
+		Regions are tested in order of their weights. For example, it can be an area of a rectangle.
+		@rtype: int
+		"""
+		raise NonImplementedError
+
+	def shouldAcceptGesture(self, gesture):
+		"""Checks if the gesture is affected by this region.
+		@param gesture: the gesture to check
+		@type gesture: L{TouchGesture}
+		@returns: whether the gesture is accepted
+		@rtype: bool
+		"""
+		raise NonImplementedError
+
+
 class TouchReviewManager(baseObject.ScriptableObject):
 	"""Manages touch review in NVDA.
-	it implements touch review commands and manages touch device drivers.
+	it implements touch review commands, handles touch regions and manages touch device drivers.
 	"""
 
 	def __init__(self):
@@ -26,6 +89,9 @@ class TouchReviewManager(baseObject.ScriptableObject):
 		#: whether touch review is curently active
 		#: @type: bool
 		self.isActive=False
+		#: The list of registered touch regions.
+		#: @type: list
+		self.touchRegions=[]
 
 	def terminate(self):
 		if self.isActive:
@@ -97,15 +163,32 @@ class TouchReviewManager(baseObject.ScriptableObject):
 					log.error("",exc_info=True)
 		return driverList
 
+	def addRegion(self, region):
+		"""Adds a new region to the list of registered regions.
+		@param region: The region to add
+		@type region: L{TouchRegion}
+		"""
+		self.touchRegions.append(region)
+		self.touchRegions.sort(key=lambda r: r.weight)
+
+	def removeRegion(self,region):
+		"""Removes a specified region from the list of registered regions.
+		@param region: The region to remove.
+		@type region: L{TouchRegion}
+		"""
+		self.touchRegions.remove(region)
+
 #: The singleton touch review manager instance.
 #: @type: L{TouchReviewManager}
 manager = None
+
 
 class TouchDeviceDriver(baseObject.AutoPropertyObject):
 	"""An abstract touch device driver.
 	Each touch device driver should be a separate Python module in the root touchDrivers directory containing a TouchDeviceDriver class which inherits from this base class.
 	Touch device drivers are responsive for handling input from the sensor-enabled devices and translating it to the NVDA gestures.
 	each driver supports devices of the particular manufacturer, there can be more than one device connected of one manufacturer.
+	At the very least, subclasses must overwrite L{check} and L{_get_dimensions}.
 	"""
 
 	#: the name of the driver
@@ -117,6 +200,13 @@ class TouchDeviceDriver(baseObject.AutoPropertyObject):
 		"""Checks if this driver can be used e.g. the device is present and appropriate manufacturer drivers are functioning.
 		"""
 		raise NotImplementedError
+
+	def __init__(self, deviceID="default"):
+		"""Initializes the driver and specified device.
+		Postcondition: the device is ready to be acquired.
+		@param deviceID: The driver-specific identifier  of the device to use or 'default'
+		@type deviceID: str
+		"""
 
 	def _set_device(self, ID):
 		"""Sets the device to use.
@@ -137,6 +227,13 @@ class TouchDeviceDriver(baseObject.AutoPropertyObject):
 		@rtype: collections.OrderedDict
 		"""
 		return collections.OrderedDict()
+
+	def _get_dimensions(self):
+		"""The size of the device i.e. the range in which device reports touch gestures.
+		@returns:  tuple consisting of (with, height)
+		@rtype: tuple(int,int)
+		"""
+		raise NotImplementedError
 
 	def acquire(self):
 		"""Start intercepting input from the device.

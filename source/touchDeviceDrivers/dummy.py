@@ -13,3 +13,5 @@ class TouchDeviceDriver(touchReview.TouchDeviceDriver):
 	@classmethod
 	def check(cls):
 		return True
+
+	dimensions=(0,0)
