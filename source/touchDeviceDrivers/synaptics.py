@@ -8,6 +8,7 @@ import collections
 import math
 from comtypes.client import CreateObject, GetEvents
 import comtypes.gen.SYNCTRLLib as synlib
+import config
 from logHandler import log
 import touchReview
 import tones
@@ -34,8 +35,10 @@ class TouchDeviceDriver(touchReview.TouchDeviceDriver):
 
 	def __init__(self, device="default"):
 		self.isAcquired=False
-		self._lastMotionTimestamp=0
-		self._lastTouchCoords=(0,0)
+		self._lastKnownCoords=(0,0)
+		self._lastContactCoords=(0,0)
+		self._lastContactTimestamp=0
+		self._lastTapTimestamp=0
 		self.pad=CreateObject('SynCtrl.SynDeviceCtrl')
 		self.deviceHandle=None
 		self.packet=CreateObject('SynCtrl.SynPacketCtrl')
@@ -89,6 +92,14 @@ class TouchDeviceDriver(touchReview.TouchDeviceDriver):
 	def _get_device(self):
 		return self.pad.GetStringProperty(synlib.SP_ShortName)
 
+	def retrieveDeviceBorders(self):
+		"""Requests and saves the lowest and highest values that can be reported by the device.
+		"""
+		self.xLoBorder=self.pad.GetLongProperty(synlib.SP_XLoRim)
+		self.xHiBorder=self.pad.GetLongProperty(synlib.SP_XHiRim)
+		self.yLoBorder=self.pad.GetLongProperty(synlib.SP_YLoRim)
+		self.yHiBorder=self.pad.GetLongProperty(synlib.SP_YHiRim)
+
 	def _set_device(self, id):
 		handle=-1
 		#The device may change, so unacquire it first
@@ -107,6 +118,7 @@ class TouchDeviceDriver(touchReview.TouchDeviceDriver):
 		finally:
 			if self.deviceHandle is not None:
 				self.pad.select(self.deviceHandle)
+				self.retrieveDeviceBorders()
 			if isAcquired:
 				self.acquire()
 
@@ -130,16 +142,46 @@ class TouchDeviceDriver(touchReview.TouchDeviceDriver):
 			if isAcquired:
 				self.acquire()
 
+	def calibrate(self, x, y):
+		"""Calibrates the borders of the device.
+		Borders received by L{receiveBorders} may be not precise, so it is better to adjust them at runtime.
+		TODO: cache calibration results in the config
+		"""
+		self.xLoBorder=min(x, self.xLoBorder)
+		self.yLoBorder=min(y, self.yLoBorder)
+		self.xHiBorder=max(x, self.xHiBorder)
+		self.yHiBorder=max(y, self.yHiBorder)
+
+	def translateDeviceCoords(self, x,y):
+		"""Converts device-specific coordinates to relative coordinates used by NVDA.
+		@returns: the tuple of relative coordinates
+		@rtype: tuple(int,int)
+		""" 
+		relX=int((float(x-self.xLoBorder))/(self.xHiBorder-self.xLoBorder)*self.dimensions[0])
+		relY=int( self.dimensions[1] -(float(y-self.yLoBorder))/(self.yHiBorder-self.yLoBorder)*self.dimensions[1] )
+		return relX,relY
+
 	def OnPacket(self):
 		self.pad.LoadPacket(self.packet)
+		x=self.packet.x
+		y=self.packet.y
 		fingerState=self.packet.FingerState
 		timestamp=self.packet.TimeStamp
-		if fingerState&synlib.SF_FingerPresent and not fingerState&synlib.SF_FingerPossTap and timestamp-self._lastMotionTimestamp>50: 
-			if self.distance(self._lastTouchCoords, (self.packet.x, self.packet.y))>50:
-				speech.speakMessage('%d, %d'%(self.packet.x, self.packet.y))
-				self._lastTouchCoords=(self.packet.x, self.packet.y)
-				self._lastMotionTimestamp=timestamp
+		if fingerState&synlib.SF_FingerPresent:
+			#save finger coordinates (used for taps and other gestures where coordinates don't come with the gesture itself)
+			self._lastKnownCoords=(x,y)
+			self.calibrate(x,y)
+		#detect finger contact
+		if fingerState&synlib.SF_FingerPresent and not fingerState&synlib.SF_FingerPossTap and timestamp-self._lastContactTimestamp>=50: 
+			if self.distance_sq(self._lastContactCoords, (x, y))>625: #eliminate call to math.sqrt
+				#speech.speakMessage('%d, %d'%(self.translateDeviceCoords(x, y)))
+				touchReview.manager.executeGesture(touchReview.FingerContactGesture(*self.translateDeviceCoords(x,y)))
+				self._lastContactCoords=(x, y)
+				self._lastContactTimestamp=timestamp
+		if fingerState&synlib.SF_FingerTap and timestamp-self._lastTapTimestamp>=175:
+			touchReview.manager.executeGesture(touchReview.FingerTapGesture(*self.translateDeviceCoords(*self._lastKnownCoords)))
+			self._lastTapTimestamp=timestamp
 
 	@staticmethod
-	def distance(a,b):
-		return math.sqrt((b[0]-a[0])**2+(b[1]-a[1])**2)
+	def distance_sq(a,b):
+		return (b[0]-a[0])**2+(b[1]-a[1])**2

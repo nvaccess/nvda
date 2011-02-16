@@ -18,7 +18,7 @@ import inputCore
 class TouchGesture(inputCore.InputGesture):
 	"""The base class for touch gestures.
 	Every touch gesture should contain position in relative coordinates, representing the place where the gesture was initiated.
-	By definition, the point (0,0) is situated at the upper left corner of the touch surface; x increases to the left and y increases to the bottom.
+	By definition, the point (0,0) is situated at the upper left corner of the touch surface; x increases to the right and y increases to the bottom.
 	The Largest possible values for x and y are determined by L{TouchDeviceDriver.dimensions} property.
 	"""
 	#: identifier of the gesture e.g. 'tap'
@@ -37,6 +37,7 @@ class TouchGesture(inputCore.InputGesture):
 		@param y: y component of the gesture in relative coordinates.
 		@type y: int
 		"""
+		super(TouchGesture,self).__init__()
 		self.x=x
 		self.y=y
 
@@ -49,6 +50,28 @@ class TouchGesture(inputCore.InputGesture):
 			return self.region
 		else:
 			return manager
+
+
+class FingerContactGesture(TouchGesture):
+	"""Represents a moderate contact of a finger with a touch surface.
+	It indicates finger presence on the device with middle presure (not a tap) or) soft finger movement.
+	"""
+	id="fingercontact"
+	displayName=_("finger contact")
+
+
+class FingerTapGesture(TouchGesture):
+	"""Represents a single tap on the surface.
+	"""
+	id="fingertap"
+	displayName=_("finger tap")
+
+
+class DoubleFingerTapGesture(TouchGesture):
+	"""Represents a double tap on the surface.
+	"""
+	id="doublefingertap"
+	displayName=_("double finger tap")
 
 
 class TouchRegion(baseObject.ScriptableObject):
@@ -83,6 +106,7 @@ class TouchReviewManager(baseObject.ScriptableObject):
 	"""
 
 	def __init__(self):
+		super(TouchReviewManager,self).__init__()
 		#: The device receiving input from
 		#: @type: L{TouchDeviceDriver}
 		self.device=None
@@ -177,6 +201,19 @@ class TouchReviewManager(baseObject.ScriptableObject):
 		@type region: L{TouchRegion}
 		"""
 		self.touchRegions.remove(region)
+
+	def executeGesture(self, gesture):
+		"""Processes the gesture with touch regions and passes it to the input core.
+		touch device drivers should call this when they have a gesture to execute instead of L{inputCore.InputManager.executeGesture}.
+		@param gesture: the gesture to execute
+		@type gesture: L{TouchGesture}
+		"""
+		for region in self.touchRegions:
+			if region.shouldAcceptGesture(gesture):
+				gesture.region=region
+				break
+		inputCore.manager.executeGesture(gesture)
+
 
 #: The singleton touch review manager instance.
 #: @type: L{TouchReviewManager}
