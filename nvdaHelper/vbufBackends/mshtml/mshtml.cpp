@@ -344,7 +344,7 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	if(nodeName.compare(L"TABLE")==0) {
 		macro_addHTMLAttributeToMap(L"summary",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	} else if(nodeName.compare(L"A")==0) {
-		macro_addHTMLAttributeToMap(L"href",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+		macro_addHTMLAttributeToMap(L"href",true,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	} else if(nodeName.compare(L"INPUT")==0) {
 		macro_addHTMLAttributeToMap(L"type",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 		macro_addHTMLAttributeToMap(L"value",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
@@ -872,7 +872,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			}
 			if(contentString.empty()) {
 				tempIter=attribsMap.find(L"HTMLAttrib::href");
-				if(tempIter!=attribsMap.end()) {
+				if(tempIter!=attribsMap.end()&&!tempIter->second.empty()) {
 					contentString=getNameForURL(tempIter->second);
 				}
 			}
