@@ -47,11 +47,12 @@ Tämän julkaisun tärkeimpiä uusia ominaisuuksia ovat automaattinen uuden teks
 -  Näppäimistöasetteluiden nimet näppäimistöasetukset-valintaikkunassa näytetään nyt NVDA:ssa määritetyllä kielellä sen sijaan, että ne näytettäisiin aina englanniksi. (#558)
 - Korjattu ongelma, joka aiheutti sen, että jotkin kohteet näytettiin tyhjinä Adobe Reader -asiakirjoissa, esim. sisällysluettelon linkit Apple iPhone iOS 4.1 -käyttöohjeessa.
 - NVDA:n Yleiset asetukset -valintaikkunan "Käytä tallennettuja asetuksia kirjautumis- ja muissa suojatuissa ruuduissa" -painike toimii nyt, mikäli sitä on käytetty heti NVDA:n asennuksen jälkeen, mutta ennen kuin mikään suojattu ruutu on tullut näkyviin. NVDA ilmoitti aiemmin, että asetusten kopiointi onnistui, vaikka tosiasiassa ei tapahtunut mitään. (#1194)
+- Kahta NVDA:n asetusvalintaikkunaa ei voi enää olla auki samanaikaisesti. Tämä korjaa ongelmia, jotka aiheuttivat yhden avoimen valintaikkunan riippuvuutta toisesta, esim. syntetisaattorin vaihtaminen samaan aikaan kun Ääniasetukset-valintaikkuna on avoinna. (#603)
 - NVDA:n Yleiset asetukset -valintaikkunan "Käytä nykyisiä tallennettuja asetuksia kirjautumis- ja muissa suojatuissa ruuduissa" -painike ei enää toimi virheellisesti Käyttäjätilien valvonnan kehotteen ilmestymisen jälkeen järjestelmissä, joissa Käyttäjätilien valvonta on käytössä, mikälikäyttäjätilin nimessä on välilyönti. (#918)
 - NVDA käyttää nyt Internet Explorerissa ja muissa MSHTML-säätimissä  linkin nimen selvittämiseen viimeisenä keinona URL-osoitetta sen sijaan, että näyttäisi tyhjiä linkkejä. (#633)
 - NVDA ei enää ohita  kohdistusta AOL Instant Messenger 7:n valikoissa. (#655)
 - Virheiden asianmukaiset nimet luetaan Microsoft Wordin Kieliasun tarkistus -valintaikkunassa (esim. ei ole sanastossa, kielioppivirhe, välimerkit). Aiemmin kaikkia sanottiin kielioppivirheiksi. (#883)
-- Microsoft Wordissa kirjoittamisen pistenäyttöä käytettäessä ei pitäisi enää aiheuttaa tekstisotkua. Lisäksi on korjattu harvinainen jumiutuminen painettaessa pistenäytön kohdistimensiirtämisnäppäintä Word-asiakirjoissa. (#1212) Rajoituksena kuitenkin on, että pistenäyttöä käytettäessä ei voida enää lukea arabiankielistä tekstiä Word 2003:ssa ja sitä vanhemmissa. (#627)
+- Microsoft Wordissa kirjoittamisen pistenäyttöä käytettäessä ei pitäisi enää aiheuttaa tekstisotkua. Lisäksi on korjattu harvinainen jumiutuminen painettaessa pistenäytön kosketuskohdistinnäppäintä Word-asiakirjoissa. (#1212) Rajoituksena kuitenkin on, että pistenäyttöä käytettäessä ei voida enää lukea arabiankielistä tekstiä Word 2003:ssa ja sitä vanhemmissa. (#627)
 - Kun muokkauskentässä painetaan Delete-näppäintä, tekstin/kohdistimen pitäisi nyt aina päivittyä oikein näyttääkseen muutoksen. (#947)
 - Dynaamisten sivujen muutokset käsitellään nyt oikein NVDA:ssa Gecko 2 -asiakirjoissa (eli Firefox 4:ssa) useiden välilehtien ollessa avoimina. Aiemmin vain ensimmäisen välilehden muutokset käsiteltiin. (Mozillan virhe 610985)
 - NVDA lukee nyt oikein kielioppi- ja välimerkkivirheiden ehdotukset Microsoft Wordin Kieliasun tarkistus -valintaikkunassa. (#704)
@@ -71,6 +72,7 @@ Tämän julkaisun tärkeimpiä uusia ominaisuuksia ovat automaattinen uuden teks
 - NVDA ei enää lue seuraavan rivin ensimmäistä merkkiä nykyisen rivin lopussa luettaessa tekstiä rivi kerrallaan AkelPad-tekstieditorissa automaattisen rivityksen ollessa käytössä.
 - NVDA ei enää lue koko tekstiä jokaisen kirjoitetun merkin jälkeen Visual Studio 2005:n ja 2008:n koodieditorissa. (#975)
 - Korjattu ongelma, joka aiheutti sen, että joitakin pistenäyttöjä ei tyhjennetty asianmukaisesti kun NVDA suljettiin tai käytettävää pistenäyttöä vaihdettiin.
+- Alkuperäistä kohdistusta ei enää lueta ajoittain kahta kertaa NVDA:n käynnistyessä. (#1359)
 
 
 = 2010.2 =
