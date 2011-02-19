@@ -192,7 +192,7 @@ class TouchDeviceDriver(touchReview.TouchDeviceDriver):
 						touchReview.manager.executeGesture(touchReview.FingerContactGesture(*self.translateDeviceCoords(x,y)))
 						self._lastContactCoords=(x, y)
 						self._lastContactTimestamp=timestamp
-		else: #finger is not present on the pad
+		elif not fingerState&synlib.SF_FingerAll: #finger is not present on the pad
 			if self._fingerPresent: #finger was removed from the pad
 				self._fingerPresent=False
 				if timestamp-self._fingerTimestamp<=TAP_WAIT_INTERVAL:
