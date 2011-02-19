@@ -61,22 +61,38 @@ class FingerContactGesture(TouchGesture):
 
 
 class FingerTapGesture(TouchGesture):
-	"""Represents a single tap on the surface.
+	"""Represents an one-finger single tap on the surface.
 	"""
 	id="fingertap"
 	displayName=_("finger tap")
 
 
-class DoubleFingerTapGesture(TouchGesture):
-	"""Represents a double tap on the surface.
+class FingerDoubleTapGesture(TouchGesture):
+	"""Represents an one-finger double tap on the surface.
 	"""
-	id="doublefingertap"
-	displayName=_("double finger tap")
+	id="fingerdoubletap"
+	displayName=_("finger double tap")
+
+
+class TwoFingerTapGesture(TouchGesture):
+	"""Represents a two-finger tap on the touch surface.
+	"""
+	id="twofingertap"
+	displayName=_("two finger tap")
+
+
+class ThreeFingerTapGesture(TouchGesture):
+	"""Represents a three-finger tap on the touch surface.
+	"""
+	id="threefingertap"
+	displayName=_("three finger tap")
 
 
 class TouchRegion(baseObject.ScriptableObject):
 	"""Represents an active zone on touch surface.
-	An example of the touch region can be a rectangle that affects gestures performed  within its bounds.
+	An example of the touch region can be a rectangle that affects or executes gestures performed  within its bounds.
+	Affecting means that the region doesn't implement the script itself, it serves only to distinguish gestures of one type with one another.
+	For example, touch(main):threefingertap and touch(bottomside):threefingertap are different gestures due to the fact, that they are related to different regions.
 	L{TouchReviewManager} calls L{shouldAcceptGesture} on every instantiated gesture for every registered region, in the defined order. On C{True}, it marks the gesture appropriately, i.a. sets the gesture's region property.
 	"""
 	#: an unique name of the region
