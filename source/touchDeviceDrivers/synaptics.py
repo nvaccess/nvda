@@ -157,8 +157,10 @@ class TouchDeviceDriver(touchReview.TouchDeviceDriver):
 		@returns: the tuple of relative coordinates
 		@rtype: tuple(int,int)
 		""" 
-		relX=int((float(x-self.xLoBorder))/(self.xHiBorder-self.xLoBorder)*self.dimensions[0])
-		relY=int( self.dimensions[1] -(float(y-self.yLoBorder))/(self.yHiBorder-self.yLoBorder)*self.dimensions[1] )
+		#[loBorder..hiBorder] is a closed range, that is, both ends are included. So, actually, we get hiBorder-loBorder+1 possible values
+		relX=int((float(x-self.xLoBorder))/(self.xHiBorder-self.xLoBorder+1)*self.dimensions[0])
+		#Synaptics y coordinate increases from bottom to top, so invert it appropriately
+		relY=self.dimensions[1]-1 -int((float(y-self.yLoBorder))/(self.yHiBorder-self.yLoBorder+1)*self.dimensions[1] )
 		return relX,relY
 
 	def OnPacket(self):
