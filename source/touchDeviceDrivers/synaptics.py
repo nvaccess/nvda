@@ -14,6 +14,10 @@ import touchReview
 import tones
 import speech
 
+
+TAP_WAIT_INTERVAL=175
+DOUBLE_TAP_INTERVAL=300
+
 class TouchDeviceDriver(touchReview.TouchDeviceDriver):
 	"""Synaptics touchpad driver.
 	"""
@@ -38,6 +42,9 @@ class TouchDeviceDriver(touchReview.TouchDeviceDriver):
 		self._lastKnownCoords=(0,0)
 		self._lastContactCoords=(0,0)
 		self._lastContactTimestamp=0
+		self._fingerPresent=False
+		self._numFingers=0
+		self._fingerTimestamp=0
 		self._lastTapTimestamp=0
 		self.pad=CreateObject('SynCtrl.SynDeviceCtrl')
 		self.deviceHandle=None
@@ -51,9 +58,9 @@ class TouchDeviceDriver(touchReview.TouchDeviceDriver):
 	def configureDevice(self):
 		"""Configures the device as required by this driver.
 		"""
-		#We don't need gestures besides tap, so disable all others to simplify packet recognition.
+		#We don't need driver-generated gestures, so disable them to simplify packet recognition.
 		self._oldGestures=self.pad.GetLongProperty(synlib.SP_Gestures)
-		self.pad.SetLongProperty(synlib.SP_Gestures, synlib.SF_GestureTap)
+		self.pad.SetLongProperty(synlib.SP_Gestures, 0)
 		#Set report rate to low, for touchpad not to anoy NVDA too often
 		self._oldReportRate=self.pad.GetLongProperty(synlib.SP_ReportRate)
 		self.pad.SetLongProperty(synlib.SP_ReportRate, 0)
@@ -169,20 +176,41 @@ class TouchDeviceDriver(touchReview.TouchDeviceDriver):
 		y=self.packet.y
 		fingerState=self.packet.FingerState
 		timestamp=self.packet.TimeStamp
+		numFingers=self.packet.GetLongProperty(synlib.SP_ExtraFingerState)&3
 		if fingerState&synlib.SF_FingerPresent:
 			#save finger coordinates (used for taps and other gestures where coordinates don't come with the gesture itself)
 			self._lastKnownCoords=(x,y)
 			self.calibrate(x,y)
-		#detect finger contact
-		if fingerState&synlib.SF_FingerPresent and not fingerState&synlib.SF_FingerPossTap and timestamp-self._lastContactTimestamp>=50: 
-			if self.distance_sq(self._lastContactCoords, (x, y))>625: #eliminate call to math.sqrt
-				#speech.speakMessage('%d, %d'%(self.translateDeviceCoords(x, y)))
-				touchReview.manager.executeGesture(touchReview.FingerContactGesture(*self.translateDeviceCoords(x,y)))
-				self._lastContactCoords=(x, y)
-				self._lastContactTimestamp=timestamp
-		if fingerState&synlib.SF_FingerTap and timestamp-self._lastTapTimestamp>=175:
-			touchReview.manager.executeGesture(touchReview.FingerTapGesture(*self.translateDeviceCoords(*self._lastKnownCoords)))
-			self._lastTapTimestamp=timestamp
+			self._numFingers=max(numFingers, self._numFingers)
+			if not self._fingerPresent: #we're seeing finger on the pad for a first time
+				self._fingerPresent=True
+				self._fingerTimestamp=timestamp
+			else: #Finger was already there
+				if timestamp-self._fingerTimestamp>TAP_WAIT_INTERVAL: #finger is on the pad longer than it is needed for a tap
+					if timestamp-self._lastContactTimestamp>=50 and self.distance_sq(self._lastContactCoords, (x, y))>625:
+						#speech.speakMessage('%d, %d'%(self.translateDeviceCoords(x, y)))
+						touchReview.manager.executeGesture(touchReview.FingerContactGesture(*self.translateDeviceCoords(x,y)))
+						self._lastContactCoords=(x, y)
+						self._lastContactTimestamp=timestamp
+		else: #finger is not present on the pad
+			if self._fingerPresent: #finger was removed from the pad
+				self._fingerPresent=False
+				if timestamp-self._fingerTimestamp<=TAP_WAIT_INTERVAL:
+					if self._numFingers==1:
+						if timestamp-self._lastTapTimestamp<DOUBLE_TAP_INTERVAL:
+							touchReview.manager.executeGesture(touchReview.FingerDoubleTapGesture(*self.translateDeviceCoords(*self._lastKnownCoords)))
+							self._lastTapTimestamp=0
+						else:
+							self._lastTapTimestamp=timestamp #save tap timestamp, waiting for possible second one
+					elif self._numFingers==2:
+						touchReview.manager.executeGesture(touchReview.TwoFingerTapGesture(*self.translateDeviceCoords(*self._lastKnownCoords)))
+					elif self._numFingers==3:
+						touchReview.manager.executeGesture(touchReview.ThreeFingerTapGesture(*self.translateDeviceCoords(*self._lastKnownCoords)))
+				self._fingerTimestamp=0
+				self._numFingers=0
+			if self._lastTapTimestamp and timestamp-self._lastTapTimestamp>DOUBLE_TAP_INTERVAL: #finger is not on the pad, a second tap is not coming, so report the first one as a single tap
+				touchReview.manager.executeGesture(touchReview.FingerTapGesture(*self.translateDeviceCoords(*self._lastKnownCoords)))
+				self._lastTapTimestamp=0
 
 	@staticmethod
 	def distance_sq(a,b):
