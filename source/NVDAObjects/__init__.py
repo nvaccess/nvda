@@ -545,6 +545,11 @@ class NVDAObject(baseObject.ScriptableObject):
 				return self.presType_layout
 		return self.presType_content
 
+	def _get_whitespaceForTouchReview(self):
+		if self.role in (controlTypes.ROLE_WINDOW, controlTypes.ROLE_PANE,  controlTypes.ROLE_DIALOG, controlTypes.ROLE_LIST, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_FRAME, controlTypes.ROLE_DOCUMENT, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_CANVAS, controlTypes.ROLE_DIRECTORYPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_TERMINAL, controlTypes.ROLE_WHITESPACE, controlTypes.ROLE_DESKTOPPANE, controlTypes.ROLE_OPTIONPANE, controlTypes.ROLE_PANEL):
+			return True
+		return not self.presentationType==self.presType_content
+
 	def _get_simpleParent(self):
 		obj=self.parent
 		while obj and obj.presentationType!=self.presType_content:

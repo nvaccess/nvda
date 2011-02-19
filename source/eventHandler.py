@@ -98,6 +98,10 @@ class _EventExecuter(object):
 			if func:
 				yield func, (obj, self.next)
 
+		if eventName=="foreground":
+			import touchReview
+			yield getattr(touchReview.manager, funcName), (obj, self.next)
+
 		# App module level.
 		app = obj.appModule
 		if app:

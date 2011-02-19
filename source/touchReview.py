@@ -11,6 +11,9 @@ import config
 from logHandler import log
 import touchDeviceDrivers
 import inputCore
+import api
+import speech
+import nvwave
 
 """Touch review support.
 """
@@ -29,6 +32,7 @@ class TouchGesture(inputCore.InputGesture):
 	region=None
 
 	shouldReportAsCommand=False
+	speechEffectWhenExecuted=None
 
 	def __init__(self, x,y):
 		"""Creates a new touch gesture.
@@ -104,7 +108,7 @@ class TouchRegion(baseObject.ScriptableObject):
 		Regions are tested in order of their weights. For example, it can be an area of a rectangle.
 		@rtype: int
 		"""
-		raise NonImplementedError
+		raise NotImplementedError
 
 	def shouldAcceptGesture(self, gesture):
 		"""Checks if the gesture is affected by this region.
@@ -113,7 +117,105 @@ class TouchRegion(baseObject.ScriptableObject):
 		@returns: whether the gesture is accepted
 		@rtype: bool
 		"""
-		raise NonImplementedError
+		raise NotImplementedError
+
+
+class RectangleRegion(TouchRegion):
+	"""Represents an active rectangle on the touch surface.
+	like windows coordinate system, the bottom-right corner is not included in calculations.
+	"""
+
+	def __init__(self, left,top,right,bottom):
+		"""Initializes a new rectangle region.
+		@param left: x coordinate of the upper-left corner of the rectangle
+		@type left: int
+		@param top: y coordinate of the upper-left corner of the rectangle
+		@type top: int
+		@param right: x coordinate of the down-right corner of the rectangle
+		@type right: int
+		@param bottom: y coordinate of the down-right corner of the rectangle
+		@type bottom: int
+		"""
+		super(RectangleRegion,self).__init__()
+		self.left=left
+		self.top=top
+		self.right=right
+		self.bottom=bottom
+
+	def _get_weight(self):
+		return (self.right-self.left)*(self.bottom-self.top)
+
+	def shouldAcceptGesture(self, gesture):
+		"""Checks whether gesture occured in the bounds of this rectangle.
+		@param gesture: the gesture to check
+		@type gesture: L{TouchGesture}
+		@rtype: bool
+		"""
+		return gesture.x>=self.left and gesture.x<self.right and gesture.y>=self.top and gesture.y<self.bottom
+
+
+class NVDAObjectRegion(RectangleRegion):
+	"""Represents a NVDA object or its part on a touch surface.
+	"""
+	name="nvdaobject"
+
+	def __init__(self, obj):
+		super(NVDAObjectRegion,self).__init__(0,0, manager.device.dimensions[0], manager.device.dimensions[1])
+		#: an object this region represents
+		#: @type: L{NVDAObjects.NVDAObject}
+		self._object=obj
+		self._lastReportedObject=None
+
+	def _get_horisontalScale(self):
+		"""Calculates horisontal scale factor for this region based on the object size, configuration etc.
+		@returns: a factor so that screenCoord=factor*relativeCoord
+		@rtype: float
+		"""
+		#for now, simply represent the whole object on the region
+		left,top,right,bottom=self._object.location
+		return (right-left)/(self.right-self.left)
+
+	def _get_verticalScale(self):
+		"""Calculates vertical scale factor for this region based on the object size, configuration etc.
+		@returns: a factor so that screenCoord=factor*relativeCoord
+		@rtype: float
+		"""
+		#for now, simply represent the whole object on the region
+		left,top,right,bottom=self._object.location
+		return (top-bottom)/(self.top-self.bottom)
+
+	def script_reportObject(self,gesture):
+		obj=self._object.objectFromPoint(self._object.location[0]+gesture.x*self.horisontalScale, self._object.location[1]+gesture.y*self.verticalScale)
+		if obj is None:
+			return
+		if obj.whitespaceForTouchReview:
+			nvwave.playWaveFile(r"waves\woody_click.wav")
+		elif not obj==self._lastReportedObject:
+			nvwave.playWaveFile(r"waves\melodic2_click.wav")
+			speech.cancelSpeech()
+			speech.speakObject(obj, reason=speech.REASON_FOCUS)#name=True, states=True,role=True)
+		self._lastReportedObject=obj
+	script_reportObject.__doc__=_("Reports object under finger")
+
+	def script_moveFocus(self,gesture):
+		nvwave.playWaveFile(r"waves\mouse_over3.wav")
+		if self._lastReportedObject is not None:
+			self._lastReportedObject.setFocus()
+	script_moveFocus.__doc__=_("Sets the keyboard focus to the currently chosen object")	
+
+	def script_doDefaultAction(self,gesture):
+		nvwave.playWaveFile(r"waves\analogue_click2.wav")
+		#temporary hack
+		api.setNavigatorObject(self._lastReportedObject)
+		import globalCommands
+		globalCommands.commands.script_navigatorObject_doDefaultAction(gesture)
+	script_doDefaultAction.__doc__=_("Performs the default action on the currently chosen object (example: presses it if it is a button).")
+
+	__gestures={
+		'touch(nvdaobject):fingercontact': 'reportObject',
+		'touch(nvdaobject):fingerdoubletap': 'doDefaultAction',
+		'touch(nvdaobject):fingertap': 'moveFocus',
+	}
 
 
 class TouchReviewManager(baseObject.ScriptableObject):
@@ -132,6 +234,7 @@ class TouchReviewManager(baseObject.ScriptableObject):
 		#: The list of registered touch regions.
 		#: @type: list
 		self.touchRegions=[]
+		self.mainRegion=None
 
 	def terminate(self):
 		if self.isActive:
@@ -145,6 +248,8 @@ class TouchReviewManager(baseObject.ScriptableObject):
 		if not self.isActive:
 			self.device.acquire()
 			self.isActive=True
+			self.mainRegion=NVDAObjectRegion(api.getForegroundObject())
+			self.touchRegions.append(self.mainRegion)
 
 	def deactivate(self):
 		"""Deactivates touch review, releasing the input device.
@@ -152,6 +257,14 @@ class TouchReviewManager(baseObject.ScriptableObject):
 		if self.isActive:
 			self.device.unacquire()
 			self.isActive=False
+			self.touchRegions=[]
+			self.mainRegion=None
+
+	def event_foreground(self, obj, nextHandler):
+		if self.mainRegion is not None:
+			self.mainRegion._object=obj
+		return nextHandler()
+
 
 	def setDeviceByName(self, name):
 		"""Sets the device by its name.
