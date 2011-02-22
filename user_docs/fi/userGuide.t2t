@@ -998,7 +998,11 @@ Tiedosto käyttää standardinmukaista ini-syntaksia.
 Tiedostossa voi olla useita osioita ja jokaisessa osiossa voi olla yksi tai useampia merkintöjä.
 
 Jokaisessa osiossa on määrittelyt tiettyyn NVDA:n Python-moduulissa ja luokassa oleviin skripteihin.
+- Osion nimi koostuu Python-moduulista ja -luokasta, jotka erotetaan toisistaan pisteellä.
+- Jokaisen merkinnän avain on skriptin nimi, jonka syötekomennot halutaan määritellä.
 Vaihtoehtoisesti voidaan käyttää erikoisskriptin nimeä None poistamaan syötekomentojen määrittelyt skriptistä, johon ne oli aiemmin määritelty.
+- Merkinnän arvo koostuu pilkulla erotetuista komentotunnisteista, jotka edustavat määriteltäviä syötekomentoja.
+-
 
 Komentotunnisteet koostuvat kaksikirjaimisista laitekoodeista (näppäimistöllä kb ja pistenäytöllä br), valinnaisesta alilaitteesta tai aaltosuluissa olevasta näppäimistöasettelusta, kaksoispisteestä sekä yhdestä tai useammasta plus-merkillä erotetusta näppäimen nimestä.
 
@@ -1009,6 +1013,7 @@ Komentotunnisteiden ja skriptien sekä luokan ja moduulin nimi, jossa ne ovat, s
 + Avataan Näytä loki -toiminto NVDA:n Työkalut-valikosta.
 + Tutkitaan viimeisimpiä lokimerkintöjä.
 Jossakin näistä merkinnöistä pitäisi olla tiedot käytetystä syötekomennosta, mukaan lukien moduuli.luokka sekä skripti, mikäli kyseiseen syötekomentoon on sellainen määritelty.
++
 
 Seuraavassa on esimerkki siitä, miten NVDA+Shift+t-näppäinyhdistelmä määritettäisiin  päiväys ja aika -skriptiin.
 

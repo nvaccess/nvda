@@ -31,6 +31,7 @@ u'LÆ°á»£c Sá',
 u'è¨˜éŒ',
 u'Historik',
 u'Előzmények',
+u'Geçmiş',
 ])
 
 class AppModule(appModuleHandler.AppModule):

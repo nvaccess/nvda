@@ -1,14 +1,14 @@
-﻿NVDA NVDA_VERSION User Guide
+﻿NVDA NVDA_VERSION Kullanıcı Rehberi
 
 
 %!includeconf: ../userGuide.t2tconf
-%kc:title: NVDA NVDA_VERSION Keyboard Commands Quick Reference
+%kc:title: NVDA NVDA_VERSION Klavye Komutları Hızlı Rehber
 
-= Table of Contents =[toc]
+= İçindekiler =[toc]
 %%toc
 
 + Giriş +
-, Görsel dışı Masaüstü Erişimi anlamına gelen (NVDA) Microsoft Windows işletim sistemi için ücretsiz ve açık kaynak bir ekran okuma programıdır.
+, Görsel olmayan Masaüstü Erişimi anlamına gelen (NVDA) Microsoft Windows işletim sistemi için ücretsiz ve açık kaynak bir ekran okuma programıdır.
 NVDA Sentetik bir ses ya da braille ile geri bildirim sağlayarak,  kör ya da az görenlerin  extra bir ücret ödemeden üzerinde Windows koşan bilgisayarları kullanabilmesini mümkün kılar.
 NVDA [NV Access tarafından http://www.nvaccess.org/], camiadan ilgili birçok insanın katkısıyla  geliştirilmektedir.
 
@@ -51,7 +51,7 @@ NVDA bazı dillerde kısaltmalı, kısaltmasız ve bilgisayar braille kodların�
 NVDA kopya hakkı NVDA_COPYRIGHT_YEARS NVDA katkı sağlayanlarına aittir.
 
 NVDA GNU General Public License (Version 2) (Yeni Genel Kamu Lisansı Sürüm2) tarafından korunmaktadır.
-Programı, kodlarını isteyen kişilerle de paylaştığınız müddetçe, kullanmakta, dağatmakta ve istediğiniz biçimde değiştirmekte özgürsünüz.
+Programı, lisans şartlarına uyduğunuz ve kodlarını isteyen kişilerle de paylaştığınız müddetçe, kullanmakta, dağatmakta ve istediğiniz biçimde değiştirmekte özgürsünüz.
 Bu, Özgün ve değiştirilmiş yazılım kopyaları ile, bu kodları kullanan diğer yazılımlar için geçerlidir. 
 Daha fazla detay için [Tam lisansı görüntüleyebilirsiniz. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
@@ -878,7 +878,7 @@ Bu sentezleyiciyi indirmek için lütfen Rusça NVDA sayfasını ziyaret edin. h
 Bu bölümde NVDA tarafından desteklenen braille ekran bilgileri yer almaktadır.
 
 ++ Freedom Scientific Focus/PAC Mate Serisi ++
-[Freedom Scientific http://www.freedomscientific.com/] tarafından üretilen tüm Focus ve PAC Mate serileri desteklenmektedir.
+USB veya bluetooth ile bağlandıklrında, [Freedom Scientific http://www.freedomscientific.com/] tarafından üretilen tüm Focus ve PAC Mate ekranlar desteklenmektedir.
 Freedom Scientific Braille Ekran sürücülerinin sisteminizde yüklü olması gerekecektir.
 Eğer henüz bu sürücüler elinizde yoksa, bunları http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp . adresinden edinebilirsiniz.
 Bu sayfada Yalnızca Focus 40 Blue sürücülerinden bahsedilmesine karşın, bu sürücüler tüm Freedom Scientific ekranlarını desteklemektedir.
@@ -897,7 +897,7 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
-[Optelec http://www.optelec.com/] tarafından üretilen ALVA BC640 ve BC680 ekranlarının her ikisi de desteklenmektedir.
+USB veya bluetooth ile bağlandıklarında, [Optelec http://www.optelec.com/] tarafından üretilen ALVA BC640 ve BC680 ekranlarının her ikisi de desteklenmektedir.
 Bu ekranları kullanmak için belirli bir sürücüye gereksiniminiz bulunmamaktadır.
 Yalnızca ekranı takın ve kullanmak için NVDA'yı ayarlayın.
 
@@ -926,80 +926,80 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ Handy Tech Displays ++
-NVDA supports all displays from [Handy Tech http://www.handytech.de/] when connected via USB or bluetooth.
-For older USB displays, you will need to install the USB drivers from Handy Tech on your system.
+NVDA USB veya bluetooth ile bağlandıklarında [Handy Tech http://www.handytech.de/] tarafından üretilen tüm ekranları desteklemektedir. Bazı daha eski USB ekranlar için Handy Tech sürücülerini sisteminize yüklemeniz gerekecektir.
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+
+Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
+Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | left, up |
-| Scroll braille display forward | right, down |
-| Move braille display to previous line | b4 |
-| Move braille display to next line | b5 |
-| Route to braille cell | routing |
-| shift+tab key | esc |
-| alt key | b2+b4+b5 |
-| escape key | b4+b6 |
-| tab key | enter |
-| enter key | esc+enter |
-| upArrow key | leftSpace |
-| downArrow key | rightSpace |
-| NVDA Menu | b2+b4+b5+b6 |
-| Handy Tech configuration | b4+b8 |
+|| Ad | Klavye Komutu |
+| Braille ekranı geri kaydırma | Sol, Yukarı |
+| Braille ekranı ileri kaydırma | Sağ, Aşağı |
+| Braille ekranı önceki satıra götürme | b4 |
+| Braille ekranı sonraki satıra götürme | b5 |
+| imleci parmağın üzerinde bulunduğu Braille hücresine taşıma | hücre üzerindeki braille iğnesi |
+| Şift+tab tuşu | eskeyp tuşu |
+| alt tuşu | b2+b4+b5 |
+| eskeyp tuşu | b4+b6 |
+| tab tuşu | enter |
+| enter tuşu | eskeyp+enter |
+| Yukarı yön tuşu | solBoşluk |
+| Aşağı yön tuşu | sağBoşluk |
+| NVDA Menüsü | b2+b4+b5+b6 |
+| Handy Tech ayarları | b4+b8 |
 %kc:endInclude
 
 ++ MDV Lilli ++
-The Lilli braille display available from [MDV http://www.mdvbologna.it/] is supported.
-You do not need any specific drivers to be installed to use this display.
-Just plug in the display and configure NVDA to use it.
+[MDV http://www.mdvbologna.it/] tarafından üretilen Lilli braille ekranı desteklenmektedir.
+Bu ekranı kullanmak için belirli bir sürücüye gereksiniminiz bulunmamaktadır.
+Yalnızca ekranı takın ve kullanmak için NVDA'yı ayarlayın.
 
-++ Baum/Humanware/APH Braille Displays ++
-Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] displays are supported when connected via USB or bluetooth.
-These include:
+++ Baum/Humanware/APH Braille Ekranlar ++
+Birçok [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] ekran USB veya Bluetooth ile bağlandıklarında desteklenmektedir.
+Bunlardan bazıları şunlardır:
 - Baum: SuperVario, PocketVario
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
-Some other displays manufactured by Baum may also work, though this has not been tested.
+henüz test edilmelmemelerine karşın,  Baum tarafından desteklenen başka ekranlar da NVDA ile çalışabilir.
 
-If connecting via USB, you must first install the USB drivers provided by the manufacturer.
-For the APH Refreshabraille, the USB mode must be set to serial.
+Eğer USB ile bağlanılıyorsa, öncelikle üretici tarafından sağlanan sürücüyü yüklemeniz gerekmektedir.
+APH Refreshabraille için USB modu serial olarak ayarlanmalıdır.
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
+Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | d2 |
-| Scroll braille display forward | d5 |
-| Move braille display to previous line | d1 |
-| Move braille display to next line | d3 |
-| Route to braille cell | routing |
+|| Ad | Klavye Komutu |
+| Braille ekranı geri kaydırma | d2 |
+| Braille ekranı ileri kaydırma | d5 |
+| Braille ekranı önceki satıra götürme | d1 |
+| Braille ekranı sonraki satıra götürme | d3 |
+| imleci parmağın üzerinde bulunduğu Braille hücresine taşıma | hücre üzerindeki braille iğnesi |
 
-For displays which have a joystick:
-|| Name | Key |
-| upArrow key | up |
-| downArrow key | down |
-| leftArrow key | left |
-| rightArrow key | right |
-| enter key | select |
+Kumanda kolu olan ekranlar için:
+|| Ad | Klavye Komutu |
+| Yukarı Yön Tuşu  | yukarı |
+| Aşağı Yön Tuşu | aşağı |
+| sol Yön Tuşu | sol |
+| sağ Yön Tuşu | sağ |
+| Enter tuşu | seç |
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] is a separate program which can be used to support many more braille displays.
-In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
-You should download and install the latest installer package, which will be named, for example, brltty-win-4.2-2.exe.
-When configuring the display and port to use, be sure to pay close attention to the instructions, especially if you are using a USB display and already have the manufacturer's drivers installed.
+[BRLTTY http://mielke.cc/brltty/] çok daha fazla farklı braille ekranı destekleyebilmek için kullanılan ayrı bir programdır.
+bunu kullanabilmek için,[BRLTTY for Windows http://brl.thefreecat.org/brltty/] programını yüklemeniz gerekecektir.
+En son kurulum sürümünü indirip kurmalısınız. bunun adı şu biçimde olabilir: brltty-win-4.2-2.exe.
+Ekranı ve kullanılacak portu ayarlarken, özellikle USB sürücüleri kullanıyorsanız ve elinizde üreticilerin sürücüleri varsa, yönergeleri yakından takip ettiğinizden emin olun.
 
-Following are the BRLTTY command assignments for NVDA.
-Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/drivers/] for information about how BRLTTY commands are mapped to controls on braille displays.
+Aşağıda NVDA için BRLTTY tuş komutları bulunmaktadır.
+Lütfen [BRLTTY tuş tabloları yardımına  http://mielke.cc/brltty/doc/drivers/] BRLTTY komutlarının braille ekran kontrollerinde nasıl konumlandığı hakkında daha fazla bilgi almak için bakın.
 %kc:beginInclude
-|| Name | BRLTTY command |
-| Scroll braille display back | fwinlt (go left one window) |
-| Scroll braille display forward | fwinrt (go right one window) |
-| Move braille display to previous line | lnup (go up one line) |
-| Move braille display to next line | lndn (go down one line) |
-| Route to braille cell | route (bring cursor to character) |
+|| Ad | BRLTTY komutu |
+| Braille ekranı geri kaydırma | fwinlt (bir pencere sola git) |
+| Braille ekranı ileri kaydırma | fwinrt (bir pencere sağa git) |
+| Braille ekranı önceki satıra götürme | lnup (bir satır yukarı git) |
+| Braille ekranı sonraki satıra götürme | lndn (bir satır aşağı git) |
+| imleci parmağın üzerinde bulunduğu Braille hücresine taşıma | route (imleci karektere götür) |
 %kc:endInclude
 
 + İleri Düzey Konular +
@@ -1010,59 +1010,60 @@ Bu dosyaya gestures.ini denmektedir.
 
 Bu dosya standart ini sözdizimini kullanmaktadır.
 Dosya birden fazla bölüm içerebilir ve  her bir bölümde bir ya da birden fazla girdi olabilir.
+Dosyada birden fazla bölüm ve her bölümde de birden fazla girdi olabilir.
 
 Her bölüm, NVDA içindeki belirli bir Pithon modül ve sınıfındaki scriptler için tuşları belirtir.
-- The section name should be the Python module and class separated by a dot (.).
-- The key of each entry is the name of the script to which input gestures should be bound.
-Alternatively, you can use None to unbind input gestures from a script to which they were previously bound.
-- The entry value is a comma (,) separated list of gesture identifiers for the input gestures that should be bound.
+- Bölüm adı nokta (.) ile ayrılmış Pithon adı ve Sınıfı olmalıdır.
+- Her girdinin anahtarı , o girdi hareketinin bağlı olduğu scriptin adıdır.
+Alternatif olarak, girdi hareketini daha önce bağlı olduğu scriptten ayırmak için none kullanabilirsiniz.
+- Girdi değeri Virgüldür (,) ve girdi hareketine bağlanacak girdi göstergelerinin listesini  ayırır.
 -
 
-Gesture identifiers consist of a two leter device code (kb for keyboard and br for braille display), an optional sub-device or keyboard layout in brackets, a colon, and then one or more key names separated by a plus (+) sign.
+Tuş göstergeleri 2 harften (Klavye için, kb, braille için, br), parantez içinde isteğe bağlı bir alt araç veya klavye düzeni, bir iki nokta işareti ve artı (+) işaretiyle ayrılmış tuş değerlerinden oluşmaktadır.
 
-In order to discover gesture identifiers, script names and the class and module in which they are contained, you can:
-+ Turn on Input Help.
-+ Activate the gesture (press the key).
-+ Turn off input help.
-+ Activate View log in the NVDA Tools menu.
-+ Examine the recent log entries.
-One of these should provide information about the input gesture you sent, including the module.class and script if it is bound to one.
+Girdi göstergelerini, script adlarını, ve içinde bulundukları class ve modülleri keşfetmek için şunları yapın:
++ Girdi Yardımını açın.
++ Girdi hareketini etkinleştirin (istediğiniz tuşa veya tuş kombinasyonuna basın).
++ Girdi Yardımını kapatın.
++ NVDA araçlar menüsünden kayıt görüntüleyi (log görüntüle) açın.
++ Son girilen kayıtları inceleyin.
+Bu kayıtlardan birisinde, bastığınız tuş kombinasyonu, ve eğer varsa bağlı olduğu script, modül ve sınıf bilgisi yer alacaktır.
 +
 
-Following is an example of how you could bind NVDA+shift+t to the date time script.
+Aşağıda NVDA+Şift+T tuşlarını DateTime (tarih saat) scriptine nasıl bağlayabileceğinizin örneği bulunmaktadır.
 
-To find out the correct script name and module.class for date time, you would turn on Input Help and press NVDA+f12 (as this is the current gesture for the date time script).
-You would then turn off Input Help and examine the log viewer.
+Tarih Saat için doğru script adı, modül ve sınıfı bulmak için, önce girdi yardım kipini açıp, Tarih saatin tuş kombinasyonu olan NVDA+f12'ye basın.
+Daha sonra girdi yardım kipini kapatın ve log (kayıt) görüntüleyicisini inceleyin.
 
-Towards the bottom, you would see:
+Sonlara doğru şunu göreceksiniz:
 
 ```
 INFO - inputCore.InputManager._handleInputHelp (13:17:22):
 Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
 ```
 
->From this, you can see that the script name is dateTime and the module.class is globalCommands.GlobalCommands.
+Buradan, script adının dateTime olduğunu, Modül.sınıfın ise globalCommands.GlobalCommands olduğunu anlayabilirsiniz.
 
-If the file does not yet exist, you would create a text file called gestures.ini in the user configuration directory and add the following content:
+Eğer dosya henüz yoksa, NVDA User Configuration Directory içersinde gestures.ini adında bir metin dosyası oluşturabilir ve içine şunu ekleyebilirsiniz:
 
 ```
 [globalCommands.GlobalCommands]
 	dateTime = kb:NVDA+shift+t
 ```
 
-This would bind the key press NVDA+shift+t (in any keyboard layout) to the dateTime script.
+Bu, tüm klavye düzenlerinde NVDA+Şift+t tuşlarını tarih saati söylemek üzere ayarlayacak ve bu tuşları DateTime scriptine bağlayacaktır.
 
-Note that the original NVDA+f12 binding would still work.
-If you wanted to remove this binding, you would add the following line:
+Halen Özgün NVDA+F12 bağlantısının çalıştığını aklınızda tutun.
+Eğer bu bağlantıyı kaldırmak istiyorsanız, şu satırı ekleyebilirsiniz:
 
 ```
 	None = kb:NVDA+f12
 ```
 
-Although you are free to have scripts bound to any available key, it may be problematic to use the alt key on the keyboard.
-NVDA still sends modifier keys (such as shift, control and alt) to the Operating System, even if they eventuate in a script.
-Thus, if you do use alt in a gesture, pressing this key combination may activate the menu bar, as well as executing the script.
-Therefore, it is probably best to just use Shift, control and the NVDA modifier key as modifiers.
+Scriptleri mevcut tüm tuşlara bağlamakta özgür olmanıza karşın, klavyedeki alt tuşunu kullanmak sorunlu olabilir.
+NVDA bir scripte bağlanmış olsalar bile, Şift, Alt Kontrol gibi değişken tuşları halen işletim sistemine göndermektedir.
+Bu nedenle, Alt tuşunu bir girdi hareketinde kullanırsanız, bu tuşa basmak scriptinizi etkinleştirmenin yanında menü çubuğunu da açabilir.
+Yani, Kontrol, Şift veya NVDA tuşlarını scriptlerde değişken tuş olarak kullanmak daha faydalı olacaktır.
 
 + Daha Detaylı Bilgi +
 Eğer NVDA ile ilgili daha fazla bilgiye veya yardıma ihtiyaç duyarsanız, NVDA_URL adresini ziyaret edebilirsiniz.
