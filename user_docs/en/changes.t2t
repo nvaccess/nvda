@@ -42,6 +42,7 @@ Highlights of this release include automatic reporting of new text output in mIR
 - In speech dictionary dialogs, the content of the Regular expression and Case sensitive columns of the Dictionary entries list is now presented in the configured NVDA language instead of always in English.
 - In AIM, position information is now announced in tree views.
 - On sliders in the Voice Settings dialog, up arrow/page up/home now increase the setting and down arrow/page down/end decrease it. Previously, the opposite occurred, which is not logical and is inconsistent with the synth settings ring. (#221)
+- In virtual buffers with screen layout disabled, some extraneous blank lines no longer appear.
 - If an NVDA modifier key is pressed twice quickly but there is an intervening key press, the NVDA modifier key is no longer passed through on the second press.
 - Punctuation keys are now spoken in input help even when speaking of punctuation is disabled. (#977)
 - In the Keyboard Settings dialog, the keyboard layout names are now presented in the configured NVDA language instead of always in English. (#558)
