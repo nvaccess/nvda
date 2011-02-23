@@ -177,7 +177,7 @@ class GlobalGestureMap(object):
 		"""
 		try:
 			conf = configobj.ConfigObj(filename, file_error=True, encoding="UTF-8")
-		except configobj.ConfigObjError, e:
+		except (configobj.ConfigObjError,UnicodeDecodeError), e:
 			log.warning("Error in gesture map '%s': %s"%(filename, e))
 			self.lastUpdateContainedError = True
 			return
