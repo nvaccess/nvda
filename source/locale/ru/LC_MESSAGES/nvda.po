@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "POT-Creation-Date: 2011-02-06 18:24+E. Australia Standard Time\n"
-"PO-Revision-Date: 2011-02-07 09:48+0200\n"
+"PO-Revision-Date: 2011-02-20 21:51+0200\n"
 "Last-Translator: Aleksey Sadovoy <lex@progger.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1598,19 +1598,19 @@ msgstr "Скопировано в буфер обмена"
 
 #: globalCommands.py:42
 msgid "input help %s"
-msgstr "помощь по вводу %s"
+msgstr "Справка по вводу %s"
 
 #: globalCommands.py:43
 msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
-msgstr "Включает и выключает режим помощи по вводу. При включённом режиме, для любого жеста ввода (например при нажатии клавиш на клавиатуре), читается описание соответствующей команды, закрепленной за жестом."
+msgstr "Включает и выключает режим справки по вводу. При включённом режиме, для любого жеста ввода (например при нажатии клавиш на клавиатуре), читается описание соответствующей команды, закрепленной за жестом."
 
 #: globalCommands.py:49
 msgid "Sleep mode off"
-msgstr "Режим сна выключено"
+msgstr "Режим сна выключен"
 
 #: globalCommands.py:52
 msgid "Sleep mode on"
-msgstr "Режим сна включено"
+msgstr "Режим сна включен"
 
 #: globalCommands.py:53
 msgid "Toggles  sleep mode on and off for  the active application."
@@ -1973,7 +1973,7 @@ msgstr "Нет информации о форматировании"
 
 #: globalCommands.py:662
 msgid "Reports formatting info for the current cursor position within a document"
-msgstr "Сообщает форматирование документа в текущей позиции курсоратекущей позиции курсора"
+msgstr "Сообщает форматирование документа в текущей позиции курсора"
 
 #: globalCommands.py:673
 msgid "reports the object with focus"
@@ -3117,11 +3117,11 @@ msgstr "windows"
 
 #: keyLabels.py:32
 msgid "enter"
-msgstr "enter"
+msgstr "ввод"
 
 #: keyLabels.py:33
 msgid "numpad enter"
-msgstr "numpad enter"
+msgstr "серый ввод"
 
 #: keyLabels.py:34
 msgid "escape"
@@ -3129,11 +3129,11 @@ msgstr "escape"
 
 #: keyLabels.py:36
 msgid "page up"
-msgstr "page up"
+msgstr "страница вверх"
 
 #: keyLabels.py:37
 msgid "page down"
-msgstr "page down"
+msgstr "страница вниз"
 
 #: keyLabels.py:38
 msgid "end"
@@ -3153,26 +3153,26 @@ msgstr "серое удалить"
 
 #: keyLabels.py:42
 msgid "left arrow"
-msgstr "left arrow"
+msgstr "стрелка влево"
 
 #: keyLabels.py:43
 msgid "right arrow"
-msgstr "right arrow"
+msgstr "стрелка вправо"
 
 #: keyLabels.py:44
 msgid "up arrow"
-msgstr "up arrow"
+msgstr "стрелка вверх"
 
 # An open-source (and free) Screen Reader for the Windows Operating System
 # Created by Michael Curran, with help from James Teh and others
 # Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 #: keyLabels.py:45
 msgid "down arrow"
-msgstr "down arrow"
+msgstr "стрелка вниз"
 
 #: keyLabels.py:46
 msgid "applications"
-msgstr "applications"
+msgstr "приложения"
 
 #: keyLabels.py:47
 msgid "num lock"
@@ -3240,38 +3240,38 @@ msgstr "numpad plus"
 
 #: keyLabels.py:63
 msgid "left control"
-msgstr "left control"
+msgstr "левый control"
 
 #: keyLabels.py:64
 msgid "right control"
-msgstr "right control"
+msgstr "правый control"
 
 # An open-source (and free) Screen Reader for the Windows Operating System
 # Created by Michael Curran, with help from James Teh and others
 # Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 #: keyLabels.py:65
 msgid "left windows"
-msgstr "left windows"
+msgstr "левая windows"
 
 #: keyLabels.py:66
 msgid "left shift"
-msgstr "left shift"
+msgstr "левый shift"
 
 #: keyLabels.py:67
 msgid "right shift"
-msgstr "right shift"
+msgstr "правый shift"
 
 #: keyLabels.py:68
 msgid "left alt"
-msgstr "left alt"
+msgstr "левый alt"
 
 #: keyLabels.py:69
 msgid "right alt"
-msgstr "right alt"
+msgstr "правый alt"
 
 #: keyLabels.py:70
 msgid "right windows"
-msgstr "right windows"
+msgstr "правая windows"
 
 #: keyLabels.py:71
 msgid "break"
@@ -3291,11 +3291,11 @@ msgstr "%s курсор"
 
 #: pythonConsole.py:24
 msgid "Type help(object) to get help about object."
-msgstr "Введите help(object) для получения справки по объекту."
+msgstr "Наберите help(object) для получения справки по объекту object."
 
 #: pythonConsole.py:43
 msgid "Type exit() to exit the console"
-msgstr "Введите exit() для выхода из консоли"
+msgstr "Наберите exit() для выхода из консоли"
 
 #: pythonConsole.py:96
 msgid "NVDA Python Console"
