@@ -101,7 +101,7 @@ To build an installer:
 Before you can run the NVDA source code, you must prepare the source tree.
 You do this by opening a command prompt, changing to the root of the NVDA source distribution and typing:
 scons source
-You should do this again whenever the version of comtypes changes or new language files are added.
+You should do this again whenever the version of comtypes changes or language files are added or changed.
 
 == Running the Source Code ==
 To start NVDA from source code, run nvda.pyw located in the source directory.
