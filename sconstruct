@@ -125,8 +125,8 @@ for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
 	#txt2tags can not be run in parallel so make sure scons knows this
 	htmlFile=env.txt2tags(t2tFile)
 	env.SideEffect('_txt2tags',htmlFile)
-#And also build the plugin guide -- which must be moved at some point
-htmlFile=env.txt2tags('pluginGuide.t2t')
+#And also build the developer guide -- which must be moved at some point
+htmlFile=env.txt2tags('developerGuide.t2t')
 env.SideEffect('_txt2tags',htmlFile)
 
 env.Depends(sourceDir,userDocsDir)

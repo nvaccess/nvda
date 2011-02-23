@@ -1,10 +1,20 @@
-NVDA NVDA_VERSION Plugin Guide
+NVDA NVDA_VERSION Developer Guide
 
 
 %!includeconf: user_docs/userGuide.t2tconf
 
 = Table of Contents =[toc]
 %%toc
+
++ Introduction +
+This guide provides information for new developers wishing to developing components for NVDA.
+Note that this is only an introduction.
+Developers should consult the code documentation for a complete reference.
+
+++ A Note About Python ++
+NVDA and its components are primarily written in the Python programming language.
+It is not the goal of this guide to teach you Python, though examples are provided through out this guide which will help to familiarise you with the Python syntax.
+Documentation and other resources related to the Python language can be found at www.python.org/
 
 + Plugins +
 
@@ -16,11 +26,6 @@ They are able to:
 - Customise the behaviour of and implement additional functionality for particular controls.
 - Customise or add new support for text content and complex documents.
 -
-
-++ A Note About Python ++
-Plugins are written in the Python language.
-It is not the goal of this guide to teach you Python, though examples are provided through out this guide which will help to familiarise you with the Python syntax.
-Documentation and other resources related to the Python language can be found at www.python.org/
 
 ++ Types of Plugins ++
 There are two types of plugins. These are:
