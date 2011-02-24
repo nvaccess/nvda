@@ -240,7 +240,7 @@ Nesneler arasında dolaşmak için aşağıdaki tuşları kullanın:
 | Ana nesneye gitme | NVDA+numaratör8 | NVDA+shift+i | nesne sunucusunun Üzerinde bulunduğu nesnenin bir üst düzeyindeki ana nesneye gider |
 | önceki nesneye gitme | NVDA+numaratör4 | NVDA+control+j | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir önceki nesneye taşır |
 | bir sonraki nesneye gitme | NVDA+numaratör6 | control+NVDA+l | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir sonraki nesneye taşır |
-| İlk Yavru nesneye gitme | NVDA+numaratör2 | NVDA+shift+virgül | Nesne sunucusunu, Üzerinde bulunulan nesnenin ilk alt nesnesine taşır ve okur. |
+| İlk Yavru nesneye gitme | NVDA+numaratör2 | NVDA+shift+ö | Nesne sunucusunu, Üzerinde bulunulan nesnenin ilk alt nesnesine taşır ve okur. |
 | Odaktaki nesneye gitme | NVDA+numaratörMinus | NVDA+GeriSil | Nesne sunucusunu, sistem odağının üzerinde bulunduğu nesneye taşır ve eğer varsa, inceleme imlecini de sistem düzenleme imlecinin bulunduğu noktaya konumlandırır |
 | Üzerinde bulunulan nesneyi  etkinleştirme | NVDA+numaratörEnter | NVDA+enter | Sistem odağı bir şeyin üzerindeyken oraya mouse ile tıklamak veya boşluk çubuğuna basılmasına benzer biçimde, nesne sunucusunun üzerinde bulunduğu nesneyi etkinleştirir |
 | Sistem odağını nesne sunucusuna taşıma | NVDA+şift+numaratörEksi | NVDA+şift+GeriSil | Eğer mümkünse, sistem odağını nesne sunucusunun üzerinde bulunduğu nesneye  taşır |
@@ -269,8 +269,8 @@ Metni incelerken, aşağıdaki tuş komutları kullanılabilir:
 | inceleme imlecinde bir sonraki sözcüğe gitme | numaratör6 | NVDA+l | İnceleme imlecini metnin bir sonraki sözcüğüne taşır |
 | inceleme imlecinde satır başına gitme | şift+numaratör1 | NVDA+şift+u | İnceleme imlecini metinde üzerinde bulunduğunuz satırın başına taşır |
 | inceleme imlecinde bir önceki karaktere gitme | numaratör1 | NVDA+m | İnceleme imlecini metinde üzerinde bulunduğunuz satırdaki bir önceki karaktere taşır |
-| İnceleme imlecinde üzerinde bulunulan karakteri belirtme | numaratör2 | NVDA+Virgül | İnceleme imlecinin üzerine konumlandığı karakteri söyler. İki kez basıldığında karakterin değerini numerik olarak ondalık ve onaltılık sistemlerde belirtir. |
-| inceleme imlecinde bir sonraki karaktere gitme | numaratör3 | NVDA+Nokta | İnceleme imlecini metnin üzerinde bulunulan satırdaki bir sonraki karaktere taşır |
+| İnceleme imlecinde üzerinde bulunulan karakteri belirtme | numaratör2 | NVDA+ö | İnceleme imlecinin üzerine konumlandığı karakteri söyler. İki kez basıldığında karakterin değerini numerik olarak ondalık ve onaltılık sistemlerde belirtir. |
+| inceleme imlecinde bir sonraki karaktere gitme | numaratör3 | NVDA+ç | İnceleme imlecini metnin üzerinde bulunulan satırdaki bir sonraki karaktere taşır |
 | inceleme imlecinde satır sonuna gitme | şift+numaratör3 | NVDA+şift+o | İnceleme imlecini metinde üzerinde bulunduğunuz satırın sonuna taşır |
 | İnceleme imlecinde tümünü okuma | numaratörArtı | NVDA+şift+AşağıYönTuşu | İnceleme imlecinde bulunduğunuz noktadan başlayarak metnin gittiği yere kadar okur |
 | Sistem imlecini inceleme imlecine taşıma | kontrol+numaratörEksi | NVDA+kontrol+GeriSil | Sistem imlecini o an inceleme imlecinin bulunduğu pozisyona taşır |
@@ -1014,9 +1014,11 @@ Dosyada birden fazla bölüm ve her bölümde de birden fazla girdi olabilir.
 
 Her bölüm, NVDA içindeki belirli bir Pithon modül ve sınıfındaki scriptler için tuşları belirtir.
 - Bölüm adı nokta (.) ile ayrılmış Pithon adı ve Sınıfı olmalıdır.
-- Her girdinin anahtarı , o girdi hareketinin bağlı olduğu scriptin adıdır.
-Alternatif olarak, girdi hareketini daha önce bağlı olduğu scriptten ayırmak için none kullanabilirsiniz.
-- Girdi değeri Virgüldür (,) ve girdi hareketine bağlanacak girdi göstergelerinin listesini  ayırır.
+- Her girdinin anahtarı , mevcut kısayol tuşuyla  etkinleştirilen scriptin adıdır.
+Alternatif olarak, bir kısayol tuşunu daha önce bağlı olduğu scriptten ayırmak için none kullanabilirsiniz.
+Lütfen, None anahtarını bir dosya içerisinde yalnızca bir kez kullanabileceğinizi not edin. Birden fazla kısayol tuşunu etkisiz kılmak için script adlarını virgül (,) ile ayırarak listeleyip None anahtarına atayabilirsiniz.
+- Script için kullanılacak kısayol tuşlarının  listelenmesinde  ayraç olarak kullanılan girdi değeri (,) virgüldür.
+liste ayracı olarak kullanılan virgülden farklı bir amaçla kullanıldığının anlaşılması için, Virgülün (,) kullanıldığı kısayol belirtenleri tek tırnak (apostrof) içine alınabilir.
 -
 
 Tuş göstergeleri 2 harften (Klavye için, kb, braille için, br), parantez içinde isteğe bağlı bir alt araç veya klavye düzeni, bir iki nokta işareti ve artı (+) işaretiyle ayrılmış tuş değerlerinden oluşmaktadır.
