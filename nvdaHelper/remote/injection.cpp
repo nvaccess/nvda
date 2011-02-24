@@ -38,6 +38,7 @@ HANDLE inprocMgrThreadHandle=NULL;
 HWINEVENTHOOK inprocWinEventHookID=0;
 set<HHOOK> inprocCurrentWindowsHooks;
 long tlsIndex_inThreadInjectionID=0;
+bool isProcessExiting=false;
 
 //Code executed in-process
 
@@ -172,6 +173,11 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 //winEvent callback to inject in-process
 //Only used for foreground/focus winEvents
 void CALLBACK injection_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
+	if(isProcessExiting) {
+		// We shouldn't do anything at all if the process is exiting.
+		// Doing so will probably cause a crash.
+		return;
+	}
 	//We are not at all interested in out-of-context winEvents, even if they were accidental.
 	if(threadID!=GetCurrentThreadId()) return;
 	BOOL threadCreated=FALSE;
@@ -318,6 +324,7 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	RpcBindingFree(&nvdaControllerBindingHandle);
 	RpcBindingFree(&nvdaControllerInternalBindingHandle);
 		if(lpReserved) { // process is terminating
+			isProcessExiting=true;
 			//If the inproc manager thread was killed off due to process termination then at least unregister hooks
 			if(inprocMgrThreadHandle) {
 				#ifndef NDEBUG
