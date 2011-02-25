@@ -869,7 +869,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 
 	def script_collapseOrExpandControl(self, gesture):
 		gesture.send()
-		if not self.passThrough:
+		if not self.passThrough or self.disableAutoPassThrough:
 			return
 		self.passThrough = False
 		reportPassThrough(self)
