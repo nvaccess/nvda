@@ -103,7 +103,8 @@ def getLocaleDataFiles():
 	NVDALocaleFiles=[(os.path.dirname(f), (f,)) for f in glob("locale/*/LC_MESSAGES/*.mo")]
 	wxDir=wx.__path__[0]
 	wxLocaleFiles=[(os.path.dirname(f)[len(wxDir)+1:], (f,)) for f in glob(wxDir+"/locale/*/LC_MESSAGES/*.mo")]
-	return NVDALocaleFiles+wxLocaleFiles
+	NVDALocaleGestureMaps=[(os.path.dirname(f), (f,)) for f in glob("locale/*/gestures.ini")]
+	return NVDALocaleFiles+wxLocaleFiles+NVDALocaleGestureMaps
 
 def getRecursiveDataFiles(dest,source,excludes=()):
 	rulesList=[]

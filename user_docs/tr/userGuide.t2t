@@ -224,27 +224,27 @@ Tablolarda aşağıdaki tuşlar da kullanılabilir:
 böylece, metinler, düğmeler, onay kutuları, kayan göstergeler, listeler ve düzenlenebilir metin alanları gibi kişisel nesneler arasında dolaşabilir ve bunlar hakkında bilgi alabilirsiniz.
 Bir nesneye gittiğinizde, NVDA sistem imlecini hareket ettirdiğinizdekine benzer biçimde sizi bilgilendirecektir.
 
-sistemdeki kişisel nesneler arasında ileri geri gidip gelme zorunluluğu yerine, nesneler hiyerarşik olarak gruplanmıştır.
-Yani, bir nesnenin içinde bulunan diğer nesnelere ulaşmak için o nesne içinde dolaşmanız gerekmektedir.
+Ekrandaki tüm nesneler arasında tek tek dolaşmak yerine, hiyerarşik olarak gruplanmış nesneler arasında dolaşım olanağı sunulmaktadır.
+Yani, bir nesnenin içinde bulunan diğer nesnelere ulaşmak için o nesne içine girip  dolaşmanız gerekmektedir.
 Örneğin, bir listeyle karşılaşıldığında, tüm liste öğeleri arasında dolaşmak yerine, bir liste öğesinin altındaki diğer öğeleri görmek için, bu liste öğesinin yavru nesnesi ya da nesnelerine giderek bu liste öğesi içinde dolaşmanız gerekecektir.
 Bu liste öğesi dışındaki diğer öğeler arasında dolaşabilmeniz için, ilgili liste öğesinin ana nesnesine gidebilirsiniz.
 Benzer biçimde, eğer bir araç çubuğuyla karşılaştıysanız, bu araç çubuğundaki kontrollere erişebilmek için, araç çubuğunun ilk yavru nesnesine giderek, bu araç çubuğu içinde dolaşmanız gerekmektedir.
 
-Varsayılan olarak, nesne sunucusu nesnesi sistem imleciyle birlikte hareket eder; ancak bu özellik kapatılıp açılabilir.
+Varsayılan olarak, nesne sunucusu sistem imleciyle birlikte hareket eder; ancak bu özellik kapatılıp açılabilir.
 
 Nesneler arasında dolaşmak için aşağıdaki tuşları kullanın:
 
 %kc:beginInclude
 || Ad | Masaüstü klavye komutu | Dizüstü klavye komutu | Tanım |
-| Geçerli nesnenin bildirimi | NVDA+numpad5 | NVDA+control+i | Üzerinde bulunulan nesne sunucusunu belirtir. İki kez basıldığında bilgi kodlanır, ve 3 kez basıldığında nesnenin adı ve değeri panoya kopyalanır. |
-| Ana nesneye gitme | NVDA+numpad8 | NVDA+shift+i | Üzerinde bulunulan nesne sunucusunun bir üst düzeyindeki ana nesneye gider |
-| önceki nesneye gitme | NVDA+numpad4 | NVDA+control+j | üzerinde bulunulan nesne sunucusuyla aynı seviyede bulunan bir önceki nesneye gider |
-| bir sonraki nesneye gitme | NVDA+numpad6 | control+NVDA+l | üzerinde bulunulan nesne sunucusuyla aynı seviyede bulunan bir sonraki nesneye gider |
-| İlk Yavru nesneye gitme | NVDA+numpad2 | NVDA+shift+comma | Üzerinde bulunulan nesne sunucusunun içinde bulunan ilk yavru nesneye gider |
-| üzerinde bulunulan nesneye gitme | NVDA+numpadMinus | NVDA+GeriSil | O an sistem odağının üzerinde bulunduğu nesneye gider ve eğer gösteriliyorsa, inceleme imlecini de sistem imlecinin bulunduğu noktaya konumlandırır |
-| Üzerinde bulunulan nesne sunucusunu etkinleştirme | NVDA+numpadEnter | NVDA+enter | Sistem odağı bir şeyin üzerindeyken oraya mouse ile tıklamak veya boşluk çubuğuna basılmasına benzer biçimde, üzerinde bulunulan nesne sunucusunu etkinleştirir |
-| Sistem odağını o anki nesne sunucusuna taşıma | NVDA+şift+numpadEksi | NVDA+şift+GeriSil | Eğer mümkünse, sistem odağını o anki nesne sunucusuna taşır |
-| Geçerli nesne sunucusunun boyutlarını bildirme | NVDA+numpadSil | NVDA+Sil | geçerli nesne sunucusunun ekrandaki genişlik, yükseklik, ekranın soluna ve üstüne mesafesi gibi bilgilerini yüzdelik cinsinden belirtir |
+| Geçerli nesnenin bildirimi | NVDA+numaratör5 | NVDA+control+i | Nesne sunucusunun üzerinde bulunduğu nesneyi okur. İki kez basıldığında bilgi kodlanır, ve 3 kez basıldığında nesnenin adı ve değeri panoya kopyalanır. |
+| Ana nesneye gitme | NVDA+numaratör8 | NVDA+shift+i | nesne sunucusunun Üzerinde bulunduğu nesnenin bir üst düzeyindeki ana nesneye gider |
+| önceki nesneye gitme | NVDA+numaratör4 | NVDA+control+j | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir önceki nesneye taşır |
+| bir sonraki nesneye gitme | NVDA+numaratör6 | control+NVDA+l | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir sonraki nesneye taşır |
+| İlk Yavru nesneye gitme | NVDA+numaratör2 | NVDA+shift+ö | Nesne sunucusunu, Üzerinde bulunulan nesnenin ilk alt nesnesine taşır ve okur. |
+| Odaktaki nesneye gitme | NVDA+numaratörMinus | NVDA+GeriSil | Nesne sunucusunu, sistem odağının üzerinde bulunduğu nesneye taşır ve eğer varsa, inceleme imlecini de sistem düzenleme imlecinin bulunduğu noktaya konumlandırır |
+| Üzerinde bulunulan nesneyi  etkinleştirme | NVDA+numaratörEnter | NVDA+enter | Sistem odağı bir şeyin üzerindeyken oraya mouse ile tıklamak veya boşluk çubuğuna basılmasına benzer biçimde, nesne sunucusunun üzerinde bulunduğu nesneyi etkinleştirir |
+| Sistem odağını nesne sunucusuna taşıma | NVDA+şift+numaratörEksi | NVDA+şift+GeriSil | Eğer mümkünse, sistem odağını nesne sunucusunun üzerinde bulunduğu nesneye  taşır |
+| Geçerli nesne sunucusunun boyutlarını bildirme | NVDA+numaratörSil | NVDA+Sil | nesne sunucusunun konumundaki nesnenin ekrandaki genişlik, yükseklik, ekranın soluna ve üstüne mesafesi gibi bilgilerini yüzdelik cinsinden belirtir |
 %kc:endInclude
 
 Not: Numara pedindeki tuşların düzgün çalışabilmesi için, numara kilidi kapalı olmalıdır.
@@ -259,21 +259,21 @@ Bu özellik açılıp kapatılabilir.
 Metni incelerken, aşağıdaki tuş komutları kullanılabilir:
 %kc:beginInclude
 || Ad | Masaüstü Klavye komutu | Dizüstü klavye komutu | Tanım |
-| inceleme imlecinde en üst satıra gitme | şift+numpad7 | NVDA+7 | İnceleme imlecini metnin en üst satırına taşır |
-| inceleme imlecinde bir önceki satıra gitme | numpad7 | NVDA+u | İnceleme imlecini metnin bir önceki satırına taşır |
-| İnceleme imlecinde üzerinde bulunulan satırı belirtme | numpad8 | NVDA+i | İnceleme imlecinin üzerine konumlandığı satırı söyler. İki kez basıldığında satır harf harf kodlanır. |
-| inceleme imlecinde bir sonraki satıra gitme | numpad9 | NVDA+o | İnceleme imlecini metnin bir sonraki satırına taşır |
-| inceleme imlecinde son satıra gitme | şift+numpad9 | NVDA+9 | İnceleme imlecini metnin son satırına taşır |
-| inceleme imlecinde bir önceki sözcüğe gitme | numpad4 | NVDA+j | İnceleme imlecini metnin bir önceki sözcüğüne taşır |
-| İnceleme imlecinde üzerinde bulunulan sözcüğü belirtme | numpad5 | NVDA+k | İnceleme imlecinin üzerine konumlandığı sözcüğü söyler. İki kez basıldığında sözcük harf harf kodlanır. |
-| inceleme imlecinde bir sonraki sözcüğe gitme | numpad6 | NVDA+l | İnceleme imlecini metnin bir sonraki sözcüğüne taşır |
-| inceleme imlecinde satır başına gitme | şift+numpad1 | NVDA+şift+u | İnceleme imlecini metinde üzerinde bulunduğunuz satırın başına taşır |
-| inceleme imlecinde bir önceki karaktere gitme | numpad1 | NVDA+m | İnceleme imlecini metinde üzerinde bulunduğunuz satırdaki bir önceki karaktere taşır |
-| İnceleme imlecinde üzerinde bulunulan karakteri belirtme | numpad2 | NVDA+Ö | İnceleme imlecinin üzerine konumlandığı karakteri söyler. İki kez basıldığında karakterin değerini numerik olarak ondalık ve onaltılık sistemlerde belirtir. |
-| inceleme imlecinde bir sonraki karaktere gitme | numpad3 | NVDA+ç | İnceleme imlecini metnin üzerinde bulunulan satırdaki bir sonraki karaktere taşır |
-| inceleme imlecinde satır sonuna gitme | şift+numpad3 | NVDA+şift+o | İnceleme imlecini metinde üzerinde bulunduğunuz satırın sonuna taşır |
-| İnceleme imlecinde tümünü okuma | numpadArtı | NVDA+şift+AşağıYönTuşu | İnceleme imlecinde bulunduğunuz noktadan başlayarak metnin gittiği yere kadar okur |
-| Sistem imlecini inceleme imlecine taşıma | kontrol+numpadEksi | NVDA+kontrol+GeriSil | Sistem imlecini o an inceleme imlecinin bulunduğu pozisyona taşır |
+| inceleme imlecinde en üst satıra gitme | şift+numaratör7 | NVDA+7 | İnceleme imlecini metnin en üst satırına taşır |
+| inceleme imlecinde bir önceki satıra gitme | numaratör7 | NVDA+u | İnceleme imlecini metnin bir önceki satırına taşır |
+| İnceleme imlecinde üzerinde bulunulan satırı belirtme | numaratör8 | NVDA+i | İnceleme imlecinin üzerine konumlandığı satırı söyler. İki kez basıldığında satır harf harf kodlanır. |
+| inceleme imlecinde bir sonraki satıra gitme | numaratör9 | NVDA+o | İnceleme imlecini metnin bir sonraki satırına taşır |
+| inceleme imlecinde son satıra gitme | şift+numaratör9 | NVDA+9 | İnceleme imlecini metnin son satırına taşır |
+| inceleme imlecinde bir önceki sözcüğe gitme | numaratör4 | NVDA+j | İnceleme imlecini metnin bir önceki sözcüğüne taşır |
+| İnceleme imlecinde üzerinde bulunulan sözcüğü belirtme | numaratör5 | NVDA+k | İnceleme imlecinin üzerine konumlandığı sözcüğü söyler. İki kez basıldığında sözcük harf harf kodlanır. |
+| inceleme imlecinde bir sonraki sözcüğe gitme | numaratör6 | NVDA+l | İnceleme imlecini metnin bir sonraki sözcüğüne taşır |
+| inceleme imlecinde satır başına gitme | şift+numaratör1 | NVDA+şift+u | İnceleme imlecini metinde üzerinde bulunduğunuz satırın başına taşır |
+| inceleme imlecinde bir önceki karaktere gitme | numaratör1 | NVDA+m | İnceleme imlecini metinde üzerinde bulunduğunuz satırdaki bir önceki karaktere taşır |
+| İnceleme imlecinde üzerinde bulunulan karakteri belirtme | numaratör2 | NVDA+ö | İnceleme imlecinin üzerine konumlandığı karakteri söyler. İki kez basıldığında karakterin değerini numerik olarak ondalık ve onaltılık sistemlerde belirtir. |
+| inceleme imlecinde bir sonraki karaktere gitme | numaratör3 | NVDA+ç | İnceleme imlecini metnin üzerinde bulunulan satırdaki bir sonraki karaktere taşır |
+| inceleme imlecinde satır sonuna gitme | şift+numaratör3 | NVDA+şift+o | İnceleme imlecini metinde üzerinde bulunduğunuz satırın sonuna taşır |
+| İnceleme imlecinde tümünü okuma | numaratörArtı | NVDA+şift+AşağıYönTuşu | İnceleme imlecinde bulunduğunuz noktadan başlayarak metnin gittiği yere kadar okur |
+| Sistem imlecini inceleme imlecine taşıma | kontrol+numaratörEksi | NVDA+kontrol+GeriSil | Sistem imlecini o an inceleme imlecinin bulunduğu pozisyona taşır |
 | İnceleme imlecinin bulunduğu yerden kopyalamayı başlatma | NVDA+f9 | NVDA+f9 | inceleme imlecinde bulunduğunuz pozisyondan itibaren metni kopyalamaya başlar. NVDA'ya metnin nereye kadar kopyalanacağını belirtmeden asıl kopyalama gerçekleşmez |
 | İnceleme imlecinin bulunduğu yere kadar kopyalama | NVDA+f10 | NVDA+f10 | inceleme imlecinde kopyalamanın başladığı yer olarak ayarlanan noktadan, inceleme imlecinin şu an bulunduğu noktaya kadar olan metni kopyalar. Bu tuşa basıldıktan sonra metin panoya kopyalanır |
 %kc:endInclude
@@ -293,8 +293,8 @@ Buna ekran incelemesi diyoruz.
 Aşağıdaki 2 tuş komutuyla, ekran incelemesine geçilebilir veya geri dönülebilir:
 %kc:beginInclude
 || Ad | Masaüstü klavye komutu | Dizüstü klavye komutu | Tanım |
-| Ekran incelemesine geçiş | NVDA+numpad7 | NVDA+sayfa yukarı | Ekran incelemesi kipine geçer ve sizi o anki nesne sunucusunun bulunduğu yere götürür. böylece tüm ekran içeriğini veya eğer içindeyseniz bulunduğunuz belgedeki metni, metin inceleme komutlarını kullanarak dolaşabilirsiniz. |
-| Ekran inceleme kipinden nesneye geçiş | NVDA+numpad1 | NVDA+Sayfa aşağı | Ekran inceleme kipindeki imlecin üzerinde bulunduğu metni içeren nesneye gider |
+| Ekran incelemesine geçiş | NVDA+numaratör7 | NVDA+sayfa yukarı | Ekran incelemesi kipine geçer ve sizi o anki nesne sunucusunun bulunduğu yere götürür. böylece tüm ekran içeriğini veya eğer içindeyseniz bulunduğunuz belgedeki metni, metin inceleme komutlarını kullanarak dolaşabilirsiniz. |
+| Ekran inceleme kipinden nesneye geçiş | NVDA+numaratör1 | NVDA+Sayfa aşağı | Ekran inceleme kipindeki imlecin üzerinde bulunduğu metni içeren nesneye gider |
 %kc:endInclude
 
 ++ Fare ile Dolaşım ++
@@ -312,12 +312,12 @@ Bu ekstra fare seçenekleri varsayılan olarak kapalıdır. ancak bunların avan
 Fareyi hareket ettirmek için, fiziksel mouse veya laptoplarda mouse pedi bölümüne ihtiyaç olmasına karşın, NVDA'nın mouse ile ilgili bir kaç komutu da bulunmaktadır:
 %kc:beginInclude
 || Ad | Masaüstü klavye komutu | Dizüstü Klavye komutu | Tanım |
-| Sol fare tıklaması | numpadBölü | NVDA+Sol Yön Tuşu | Sol fare düğmesine bir kez tıklar çift tıklamak için tuşlara peşpeşe 2 kez basılabilir |
-| Sol fare kilidi | şift+numpadbölü | NVDA+şift+SolYön Tuşu | Sol fareyi kilitler. kilidi açmak için tuşa tekrar basılmalıdır. bulunulan yeri taşımak için, bu tuşla fareyi kilitleyin ve fareyi fiziksel olarak veya diğer fare komutlarıyla hareket ettirin |
-| Sağ fare tıklaması | numpadÇarpı | NVDA+SağYön Tuşu | sağ fare düğmesine bir kez tıklar. |
-| sağ fare kilidi | şift+numpadÇarpı | NVDA+şift+SağYön tuşu | sağ fareyi kilitler. kilidi açmak için tuşa tekrar basılmalıdır. fareyi taşımak için, bu tuşla fareyi kilitleyin ve fareyi fiziksel olarak veya diğer fare komutlarıyla hareket ettirin |
-| Fareyi üzerinde bulunulan nesne sunucusuna taşıma | NVDA+numpadbölü | NVDA+şift+f9 | Fareyi inceleme imlecinde üzerinde bulunulan nesne sunucusu üzerine taşır |
-| farenin altındaki nesneye gitme | NVDA+numpadÇarpı | NVDA+şift+f10 | nesne sunucusu olarak farenin bulunduğu yerdeki nesne ayarlanır. |
+| Sol fare tıklaması | numaratörBölü | NVDA+Sol Yön Tuşu | Sol fare düğmesine bir kez tıklar çift tıklamak için tuşlara peşpeşe 2 kez basılabilir |
+| Sol fare kilidi | şift+numaratörbölü | NVDA+şift+SolYön Tuşu | Sol fareyi kilitler. kilidi açmak için tuşa tekrar basılmalıdır. bulunulan yeri taşımak için, bu tuşla fareyi kilitleyin ve fareyi fiziksel olarak veya diğer fare komutlarıyla hareket ettirin |
+| Sağ fare tıklaması | numaratörÇarpı | NVDA+SağYön Tuşu | sağ fare düğmesine bir kez tıklar. |
+| sağ fare kilidi | şift+numaratörÇarpı | NVDA+şift+SağYön tuşu | sağ fareyi kilitler. kilidi açmak için tuşa tekrar basılmalıdır. fareyi taşımak için, bu tuşla fareyi kilitleyin ve fareyi fiziksel olarak veya diğer fare komutlarıyla hareket ettirin |
+| Fareyi üzerinde bulunulan nesne sunucusuna taşıma | NVDA+numaratörbölü | NVDA+şift+f9 | Fareyi inceleme imlecinde üzerinde bulunulan nesne sunucusu üzerine taşır |
+| farenin altındaki nesneye gitme | NVDA+numaratörÇarpı | NVDA+şift+f10 | nesne sunucusu olarak farenin bulunduğu yerdeki nesne ayarlanır. |
 %kc:endInclude
 
 + Sanal Tamponlar +
@@ -423,7 +423,7 @@ Tamama bastığınızda NVDA yeniden başlayacaktır.
 ==== Çıkışta Ayarları (konfigürasyonu) Kaydet ====
 Bu bir onay kutusudur ve işaretlendiğinde, NVDA'ya çıkışta yapılan ayarların kaydedilmesini söyler.
 
-==== Bu bir onay kutusudur ve işaretlendiğinde, NVDA'ya çıkışta yapılan ayarların kaydedilmesini söyler ====
+==== NVDA'dan Çıkmadan Önce uyar ====
 Bu bir onay kutusudur ve NVDA'yı kapatırken, kapatmak isteyip istemediğinizi soran bir iletişim kutusunun görüntülenip görüntülenmeyeceğini kontrol eder.
 İşaretlendiğinde, NVDA'yı kapatmaya teşebbüs ettiğinizde, gerçekten çıkmak isteyip istemediğinizi soran bir iletişim kutusu açılır.
 
@@ -592,7 +592,7 @@ Etkinleştirildiğinde, NVDA bastığınız karakter olmayan (örnek, kontrol, �
 Fare ayarları iletişim kutusu tercihler menüsü içindeki "Fare Ayarları..." altında bulunur.
 içinde aşağıdaki seçenekler mevcuttur:
 
-==== Report Fare Şekil Değişikliğini Bildir ====
+==== Fare Şekil Değişikliğini Bildir ====
 Bu onay kutusu işaretlendiğinde, fare işaretleyicisinin şekli her değiştiğinde NVDA bunu bildirecektir.
 Fare işaretleyicisi pencerelerde bir alanın yazılabilir olduğu veya bir şeyin yüklendiği gibi bilgileri vermek için şekil değiştirir.
 
@@ -762,7 +762,7 @@ Varsayılan olarak NVDA sistem düzenleme imleci veya inceleme imlecinin bulundu
 Biçimlendirmenin önemli olduğu Microsoft Word belgesi gibi belgelerde düzeltme yaparken bu seçeneği etkinleştirin.
 
 +++ Konuşma Sözlükleri +++
-The speech dictionaries menu (found in the Preferences menu) contains dialogs that allow you to manage the way NVDA pronounces particular words or phrasesTercihler menüsünde bulunan konuşma sözlükleri menüsü, belirli sözcük veya öbeklerin NVDA tarafından nasıl söyleneceğini ayarlayabileceğiniz iletişim kutularını içermektedir.
+Tercihler menüsünde bulunan konuşma sözlükleri menüsü, belirli sözcük veya öbeklerin NVDA tarafından nasıl söyleneceğini ayarlayabileceğiniz iletişim kutularını içermektedir.
 şu an itibariyle 3 farklı konuşma sözlüğü bulunmaktadır.
 bunlar:
 - varsayılan Bu sözlükteki kurallar tüm NVDA konuşmalarını etkiler.
@@ -1014,9 +1014,11 @@ Dosyada birden fazla bölüm ve her bölümde de birden fazla girdi olabilir.
 
 Her bölüm, NVDA içindeki belirli bir Pithon modül ve sınıfındaki scriptler için tuşları belirtir.
 - Bölüm adı nokta (.) ile ayrılmış Pithon adı ve Sınıfı olmalıdır.
-- Her girdinin anahtarı , o girdi hareketinin bağlı olduğu scriptin adıdır.
-Alternatif olarak, girdi hareketini daha önce bağlı olduğu scriptten ayırmak için none kullanabilirsiniz.
-- Girdi değeri Virgüldür (,) ve girdi hareketine bağlanacak girdi göstergelerinin listesini  ayırır.
+- Her girdinin anahtarı , mevcut kısayol tuşuyla  etkinleştirilen scriptin adıdır.
+Alternatif olarak, bir kısayol tuşunu daha önce bağlı olduğu scriptten ayırmak için none kullanabilirsiniz.
+Lütfen, None anahtarını bir dosya içerisinde yalnızca bir kez kullanabileceğinizi not edin. Birden fazla kısayol tuşunu etkisiz kılmak için script adlarını virgül (,) ile ayırarak listeleyip None anahtarına atayabilirsiniz.
+- Script için kullanılacak kısayol tuşlarının  listelenmesinde  ayraç olarak kullanılan girdi değeri (,) virgüldür.
+liste ayracı olarak kullanılan virgülden farklı bir amaçla kullanıldığının anlaşılması için, Virgülün (,) kullanıldığı kısayol belirtenleri tek tırnak (apostrof) içine alınabilir.
 -
 
 Tuş göstergeleri 2 harften (Klavye için, kb, braille için, br), parantez içinde isteğe bağlı bir alt araç veya klavye düzeni, bir iki nokta işareti ve artı (+) işaretiyle ayrılmış tuş değerlerinden oluşmaktadır.
