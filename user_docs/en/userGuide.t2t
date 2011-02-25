@@ -1016,7 +1016,9 @@ Each section provides mappings for scripts in a particular Python module and cla
 - The section name should be the Python module and class separated by a dot (.).
 - The key of each entry is the name of the script to which input gestures should be bound.
 Alternatively, you can use None to unbind input gestures from a script to which they were previously bound.
+Each entry key can only be listed once per section, including None.
 - The entry value is a comma (,) separated list of gesture identifiers for the input gestures that should be bound.
+Gesture identifiers ending in a comma must be enclosed in quotes (" or ').
 -
 
 Gesture identifiers consist of a two leter device code (kb for keyboard and br for braille display), an optional sub-device or keyboard layout in brackets, a colon, and then one or more key names separated by a plus (+) sign.
