@@ -4,9 +4,11 @@
 %!includeconf: ../changes.t2tconf
 
 = 2011.1 =
+Prednosti tejto verzii: Automatické oznamovanie nového textu v programoch mIRC, PuTTY, Tera Term a SecureCRT; podpora pre globálne pluginy; oznamovanie číslovania a odrážok v programe Microsoft word; ďalšie vstupné príkazy braillských riadkov vrátane klávesov určených na posúvanie riadku; podpora pre niektoré riadky Baum, HumanWare a APH; a oznamovanie farieb v niektorých prvkoch napr. editačné polia v programe IBM Lotus Symphony.
 
 == Nové vlastnosti ==
 - Pre niektoré objekty je možné oznamovať farbu. Automatické oznamovanie zmeny farby je možné z dialógu formátovanie dokumentu. Aktuálnu farbu je tiež možné získať použitím funkcie info o formátovaní (NVDA+f)
+ - Nazačiatok je toto podporované v štandardných editačných poliach IAccessible2 (napr. v aplikáciách Mozilla), prvkoch RichEdit (napr. Wordpad) a editačných poliach IBM Lotus Symphony.
 - Vo virtuálnom prehliadači je možné vyberať po stranách (shift+pageup shift+pagedown) a odsekoch (shift+šípka hore a shift+šípka dolu). (#639)
 - NVDA odteraz automaticky oznamuje nový text v programoch mIRC, PuTTY, Tera Term and SecureCRT. (#936)
 - Používatelia môžu pridávať nové alebo zmeniť existujúce klávesové skratky pre všetky skripty NVDA napísaním mapy vstupných príkazov. (#194)
@@ -19,11 +21,13 @@
 - Aby sme uľahčili prácu možným vývojárom, aplikačné moduly a globálne pluginy je možné načítať bez nutnosti reštartu NVDA. Použite položku menu Nástroje -> Načítať pluginy alebo skratku NVDA+control+f3. (#544)
 - NVDA si odteraz zapamätá pozíciu vo virtuálnom prehliadači a pri návrate na už navštívenú stránku, túto pozíciu obnový. Toto platí do doby, kým nie je ukončený NVDA alebo prehliadač. (#132)
 - Braillovské riadky Handy Tech je možné používať bez nutnosti inštalácie univerzálneho ovládača Handy Tech. (#854)
+- Podpora pre niektoré riadky Baum, HumanWare a APH. (#937)
+- Správne je detekovaný stavový riadok programu Mediaplayer classic home cynema.
+- Riadok Freedom Scientific Focus 40 Blue je možné používať aj keď je pripojený cez bluetooth. (#1345)
 
 
 == Zmeny ==
 - Pre niektoré prvky nie je predvolene oznamovaná informácia o pozícii, pretože to nie je dostatočne presné. Je to ale možné povoliť v dialógu prezentácia objektov.
-- Position information is no longer reported by default in some cases where it was usually incorrect; e.g. most menus, the Running Applications bar, the Notification Area, etc. However, this can be turned on again by an added option in the Object Presentation settings dialog.
 - Klávesová nápoveda bola premenovaná na nápovedu vstupu pretože poskytuje nápovedu aj pre ostatné vstupné zariadenia okrem klávesnica.
 - Umiestnenie skriptu nie je vo vstupnej nápovede oznamované, pretože to nie je dôležité pre používateľa.
 - Keď NVDA detekuje zamrznutie, naďalej odchytáva stlačenia klávesu NVDA pričom ostatné klávesy prepúšťa do systému. Zabráni to nechcenému prepínaniu klávesu capslock. (#939)
@@ -36,13 +40,14 @@
 - Pri pridávaní novej položky do jedného z rečových slovníkov, je názov dialógu Pridať položku slovníka namiesto upraviť položku slovníka. (#924)
 - V dialógoch rečové slovníky je obsah stĺpcov Rozlišovať veľké a malé písmená a Regulárny výraz zoznamu položiek oznamovaný v jazyku nastavenom v dialógu všeobecné nastavenia. Doteraz boli tieto informácie dostupné vždy v angličtine.
 - V stromových zoznamoch programu AIM je správne oznamovaná informácia o pozícii.
-- Informácia o pozícii nie je viac čítaná v prípade, kde to nemá zmysel, ako napríklad v mnohých ponukách, na panely bežiacich úloh, v oznamovacej oblasti a pod.
 - V dialógu Nastavenia hlasu je možné použiť klávesy šípka hore a page up na zvíšenie a šípka dolu a page down na zníženie nastavenia v posuvníkoch. Doteraz to fungovalo presne opačne, čo bolo nelogické a nezhodovalo sa so správaním kruhu nastavení hlasového výstupu. (#221)
+- Vo virtuálnom prehliadači počas vypnutého zobrazovania ako na obrazovke sa nezobrazujú nadbitočné prázdne riadky.
 - Ak je kláves NVDA stlačený 2 krát rýchlo za sebou a počas toho sú stlačené iné klávesy, NVDA kláves nebude opakovane prepúšťaný systému.
 - Interpunkčné znaky sú oznamované počas nápovedy vstupu aj ak je oznamovanie interpunkcie vypnuté. (#977)
 - V dialógu nastavenia klávesnice je zoznam rozložení zobrazený v jazyku lokalizácii NVDA nie v angličtine. (#558)
 - Opravený problém, ktorý spôsoboval, že niektoré prvky boli vo virtuálnom prehliadači adobe reader zobrazené ako prázdne, napr. odkazy v používateľskej príručke Apple iPhone IOS 4.1.
 - Tlačidlo "použiť aktuálne nastavenia NVDA na prihlasovacej a zabezpečených obrazovkách" v dialógu všeobecné nastavenia je možné použiť hneď po nainštalovaní NVDA. Doteraz ak nebola pred použitím tohoto tlačidla zobrazená zabezpečená obrazovka, NVDA oznámil, že kopírovanie bolo úspešné, ale akcia nemala žiadny efekt. (#1194)
+- Nie je viac možné mať otvorených niekoľko dialógov nastavení súčasne. Toto opravuje problémy s nastaveniami v otvorenom dialógu, ktoré sú závislé na nastaveniach z druhého otvoreného dialógu (napr. zmena hlasového výstupu pri otvorenom dialógu nastavenia hlasu). (#603)
 - V systémoch zo zapnutou kontrolov UAC funkcia "použiť aktuálne nastavenia NVDA na prihlasovacej a zabezpečených obrazovkách" viac nezlihá po zobrazení dialógu UAC ak meno aktuálne prihláseného používateľa systému obsahuje medzerník. (#918)
 - V programe internet explorer a ostatných prvkoch MSHTML NVDA použije URL odkazu v prípade, že nie je k dispozícii žiadny text alebo názov. (#633)
 - NVDA viac neignoruje fokus v ponukách programu AOL Instant Messenger 7. (#655)
@@ -52,9 +57,22 @@
 - Dynamické zmeny v gecko 2 dokumentoch (napr. Firefox 4) sú správne spracované NVDA. Doteraz boli spracúvané len zmeny na prvej otvorenej karte. (Mozilla bug 610985)
 - NVDA dokáže správne oznamovať zoznam návrhov v dialógu kontrola pravopisu programu Microsoft word. (#704)
 - V programe internet explorer a iných prvkoch MSHTML, NVDA nevkladá ciele odkazov do tejto stránky do virtuálneho prehliadača. Sú správne skryté tak, ako by mali byť. (#1326)
-- Objektová navigácia cez a vo vnútri zoskupení nie viac nesimetrická.
+- Objektová navigácia cez a vo vnútri zoskupení nie je viac nesimetrická.
 - Vo Firefoxe sa NVDA nezasekne vo vnorenom ráme ak sa jeho obsah nahrá skôr ako obsah rodičovského dokumentu.
 - NVDA správne oznámy vymazaný znak, ak sa na vymazanie použije numerický delete. (#286)
+- Pri zmene používateľa na prihlasovacej obrazovke Windows XP je opäť správne čítané meno používateľa.
+- Opravený problém s čítaním textu z príkazového riadku počas zapnutého čítania čísiel riadkov.
+- Dialóg zoznam prvkov vo virtuálnom prehliadači je použiteľný aj pre vidiacich. Všetky prvky sú viditeľné na obrazovke. (#1321)
+- Zoznam položiek v dialógoch rečových slovníkov je čitateľný aj pre vidiacich. Zoznam je dostatočne široký, aby sa všetky stĺpce zmestili na obrazovku. (#90)
+- Na riadkoch ALVA BC640/BC680 NVDA viac nezabúda klávesy, ktoré ostávajú stlačené po pustení iných klávesov.
+- Adobe Reader X viac nepadá po opustení dialógu "neotagovaný dokument" pred tým, než sa začne spracúvanie dokumentu. (#1218)
+- Pri návrate k uloženým nastaveniam, NVDA načíta správny ovládač brailllovského riadku. (#1346)
+- Sprievodca projektom v programe Visual Studio 2008 je opäť správne prečítaný. (#974)
+- NVDA viac neodmieta pracovať v aplikáciách, ktorých názov spustiteľného súboru obsahuje iné než ascii znaky. (#1352)
+- Pri čítaní po riadkoch v programe Akelpad NVDA pri zapnutom zalamovaní viac nečíta na konci riadku prvé písmeno nasledujúceho riadku.
+- V editore kódu programov Visual Studio 2005/2008 NVDA nečíta celý text po každom napísanom znaku. (#975)
+- Opravený problém, keď pri zmene braillovského riadku alebo pri ukončení NVDA niektoré riadky neboli správne zmazané.
+- Pri štarte nie je niekedy informácia o aktívnom prvku oznamovaná dva krát. (#1359)
 
 
 = 2010.2 =

@@ -8,10 +8,12 @@
 %%toc
 
 + Úvod +
+NonVisual Desktop Access (NVDA) je voľnešíriteľný open-source čítač obrazovky pre operačný systém Windows.
+Pomocou hlasového a hmatového výstupu umožňuje nevidiacim a zrakovo postihnutým používateľom pristupovať k PC so systémom Windows za rovnakú cenu ako viadiacim osobám.
+Vývoj NVDA zastrešuje organizácia [NV Access http://www.nvaccess.org/], za pomoci príspevkov od členov komunity.
 
-++ Rýchly prehľad ++
-Nonvisual Desktop Access je odčítavač obrazovky pre systémy Windows, ktorý umožňuje používateľovi sprístupniť prácu s počítačom bez zrakovej kontroly. Informácie, ktoré NVDA získava od systému Windows hovoria používateľovi, v akej pozícii sa nachádza, aké okná a prvky sú zobrazené na obrazovke, NVDA tiež sleduje systémové zmeny, a tak môže prijaté informácie spracovať a sprístupniť, čo sa na obrazovke deje prostredníctvom hlasu.
-
+++ Všeobecné vlastnosti ++
+NVDA umožňuje nevidiacim a zrakovo postihnutým prístup a interakciu s operačným systémom Windows a množstvom ďalších voliteľných aplikácií.
 Najvýznamnejšie prednosti programu:
 - Podpora pre populárne aplikácie vrátane internetových prehliadačov, emailových klientov, programov slúžiacich na okamžitú komunikáciu a kancelárskych balíkov
 - Vstavaný hlasový výstup, ktorý podporuje viac než 20 jazykov
@@ -78,9 +80,7 @@ Ak už máte stiahnutý inštalátor NVDA, jednoducho stlačte enter, alebo klik
 
 Počas spúšťania inštalátora budete počuť zvukový signál.
 Po jeho spustení vás samotnou inštaláciou prevedie automaticky spustená dočasná kópia programu NVDA.
-Inštalátor vás pred spustením tejto dočasnej kópie podľa potreby upozorní, že je nutné ukončiť práve spustenú kópiu programu NVDA nainštalovanú v počítači.
-Ak túto výzvu inštalátora potvrdíte klávesom enter, inštalátor ukončí doteraz používanú kópiu NVDA a spustí svoju vlastnú.
-Toto je nevyhnutné, aby inštalátor mohol korektne aktualizovať súbory, ktoré sa od poslednej inštalácie NVDA zmenili.
+Jej spustenie je nevyhnutné, aby inštalátor mohol korektne aktualizovať súbory, ktoré sa od poslednej inštalácie NVDA zmenili.
 Pred kopírovaním súborov vás inštalátor NVDA vyzve na odinštalovanie predchádzajúcej verzii NVDA a následne spustí inštaláciu.
 
 Po úspešnej inštalácii vás inštalátor na túto skutočnosť upozorní.
@@ -832,11 +832,6 @@ Viac informácií je dostupných [v článku Python konzola (anglicky) na strán
 ++ Načítať pluginy ++
 Po aktivovaní tejto položky NVDA znovu načíta pluginy a aplikačné moduly bez nutnosti reštartu. Môže byť užitočné pre vývojárov..
 
-+ Ako získať viac informácií +
-Ak hľadáte ďalšie informácie o NVDA, o jeho vývoji, alebo hľadáte pomoc, navštívte stránku projektu na adrese NVDA_URL.
-Na tejto stránke môžete tiež nájsť prístup k emailovým konferenciám pojednávajúcich o NVDA a odkazy na ďalšie komunitné projekty a stránky o NVDA.
-Môžete tu tiež nájsť informácie o vývoji, zdrojové kódy a iné súvisiace materiály.
-
 + Podporované hlasové výstupy +[SupportedSpeechSynths]
 Táto časť obsahuje informácie o hlasových výstupoch podporovaných NVDA..
 
@@ -876,7 +871,7 @@ Tento hlasový výstup môžete stiahnúť zo sekcie na stiahnutie ruskej komuni
 Táto sekcia obsahuje informácie o braillovských zobrazovačoch podporovanými NVDA..
 
 ++ Riadky Focus/PAC Mate od spoločnosti Freedom Scientific ++
-Podporované sú všetky braillovské riadky Focus a PAC Mate od spoločnosti [Freedom Scientific http://www.freedomscientific.com/].
+Podporované sú všetky braillovské riadky Focus a PAC Mate od spoločnosti [Freedom Scientific http://www.freedomscientific.com/], ktoré sú k počítaču pripojené cez USB alebo bluetooth.
 Pre správnu funkčnosť musíte mať v systéme nainštalované ovládače braillovských riadkov Freedom scientific.
 Ak ich ešte nemáte, môžete ich stiahnúť zo stránky: http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Aj keď na stránke sa hovorí len o riadku Focus 40 Blue, ovládač spolupracuje so všetkými zobrazovačmi Freedom scientific.
@@ -895,7 +890,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
-Podporované sú oba zobrazovače od [Optelec http://www.optelec.com/], aj ALVA BC640 aj BC680.
+Podporované sú oba zobrazovače od [Optelec http://www.optelec.com/] pripojené cez USB a bluetooth, aj ALVA BC640 aj BC680.
 Na ich používanie nie je potrebné inštalovať žiadne ovládače.
 Stačí zapojiť riadok a nastaviť NVDA na jeho používanie.
 
@@ -924,7 +919,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 %kc:endInclude
 
 ++ Zobrazovače od spoločnosti Handy Tech ++
-NVDA podporuje všetky zobrazovače od spoločnosti [Handy Tech http://www.handytech.de/].
+NVDA podporuje všetky zobrazovače od spoločnosti [Handy Tech http://www.handytech.de/], ak sú pripojené k počítaču cez USB alebo bluetooth.
 Pre niektoré staršie USB riadky je potrebné do systému nainštalovať USB ovládače Handy Tech.
 
 Nasleduje zoznam klávesových príkazov pre tento typ riadku.
@@ -952,6 +947,37 @@ Riadok Lilli od [MDV http://www.mdvbologna.it/] je plne podporovaný.
 Na jeho používanie nie je potrebné inštalovať žiadne ovládače.
 Stačí zapojiť riadok a nastaviť NVDA na jeho používanie.
 
+++ Zobrazovače Baum/Humanware/APH ++
+Podporované sú niektoré riadky od Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] a [APH http://www.aph.org/] pripojené cez USB alebo bluetooth.
+Toto zahŕňa:
+- Baum: SuperVario, PocketVario
+- HumanWare: Brailliant, BrailleConnect
+- APH: Refreshabraille
+-
+Niektoré ďalšie riadky od Baum by mohli tiež fungovať, no zatiaľ toto nebolo dostatočne odskúšané..
+
+Ak pripájate niektorý z týchto riadkov cez USB, mali by Ste najprv nainštalovať ovládače od výrobcu..
+V prípade APH Refreshabraille, režim USB by mal byť nastavený na serial.
+
+Nasleduje zoznam klávesových príkazov pre tieto typy riadkov.
+Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov..
+%kc:beginInclude
+|| Názov | Klávesová skratka |
+| Posunúť riadok späť | d2 |
+| Posunúť riadok vpred | d5 |
+| Predchádzajúci riadok | d1 |
+| Nasledujúci riadok | d3 |
+| Prejsť na znak v brailly | smerové tlačidlá |
+
+Pre zobrazovače, ktoré majú džojstik:
+|| Názov | Klávesová skratka |
+| šípka hore | up |
+| šípka dolu | down |
+| ľavá šípka | left |
+| pravá šípka | right |
+| kláves enter | select |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] je osobitný program, prostredníctvom ktorého je možné použiť množstvo ďalších braillovských zobrazovačov.
 Na používanie ovládača braillovských riadkov BRLTTY je potrebné nainštalovať [BRLTTY pre Windows http://brl.thefreecat.org/brltty/].
@@ -976,16 +1002,25 @@ Používatelia si môžu vytvoriť svoju vlastnú alebo pozmeniť aktuálnu konf
 Tento súbor je nazvaný gestures.ini.
 
 Na zápis tohoto súboru sa používa štandardná syntaks zápisu ini súborov.
+Súbor môže obsahovať viacej sekcií z čoho každá sekcia môže obsahovať jednu alebo viac položiek.
+
 Každá sekcia obsahuje mapovanie vstupných príkazov na skripty v jednom python module a triede NVDA.
-Názov sekcie pozostáva z názvu python modulu a názvu triedy oddelenými bodkou.
- 
-Kľúčami každej sekcie sú názvy skriptov, na ktoré si želáte namapovať vstupný príkaz.
-Hodnotou každého kľúča je čiarkou (,) oddelený zoznam identifikátorov vstupných príkazov, ktoré majú byť namapované na skript uvedený v kľúči.
+- Názov sekcie pozostáva z názvu python modulu a názvu triedy oddelenými bodkou.
+- Kľúčami každej sekcie sú názvy skriptov, na ktoré si želáte namapovať vstupný príkaz.
+Je možné odstrániť mapovanie nejakého už použitého vstupného príkazu a na miesto názvu skriptu uviesť slovo None.
+- Hodnotou každého kľúča je čiarkou (,) oddelený zoznam identifikátorov vstupných príkazov, ktoré majú byť namapované na skript uvedený v kľúči.
+- 
 
-Pre každú sekciu je možné zapísať viacero kľúčov a súbor môže obsahovať viacero sekcií.
+Identifikátor vstupného príkazu pozostáva z dvoj znakového identifikátora zariadenia (kb pre klávesnicu, br pre braillovský riadok), nepovinného identifikátora subzariadenia alebo rozloženia klávesov v zátvorke, dvojbodky a zoznamu identifikátorov klávesov oddelených znakom plus (+).
 
-Na získanie identifikátorov vstupných príkazov, názvov modulov, tried a skriptov je možné aktivovať vstupnú nápovedu, vyvolať požadovaný skript, z menu nástroje zobraziť log a prečítať si posledné riadky.
+Na získanie identifikátorov vstupných príkazov, názvov modulov, tried a skriptov je možné:
++ aktivovať nápovedu vstupu.
++ vyvolať požadovaný skript (stlačiť klávesovú skratku).
++ vypnúť nápovedu vstupu.
++ z menu nástroje otvoriť zobrazovač logu.
++ prečítať si posledné riadky.
 Jeden z nich by mal obsahovať vstupný príkaz, ktorý ste vykonali spolu aj s modulom, triedou a skriptom, ku ktorému sú momentálne priradené.
++
 
 Nasleduje príklad, ktorý vysvetluje, ako je možné príkaz NVDA+shift+t priradiť skriptu čas a dátum.
 
@@ -1010,8 +1045,19 @@ Ak takýto súbor ešte neexistuje, vytvoríte v priečinku s používateľským
 
 Toto priradí klávesový príkaz NVDA+shift+t skriptu dateTime vo všetkých rozloženiach klávesnice.
 
-Je možné použiť aj špeciálny názov skriptu None, čo spôsobí vymazanie priradenia vstupného príkazu z daného modulu pre konkrétnu triedu.
+Všimnite si, že aj pôvodne priradený klávesový príkaz NVDA+F12 bude stále funkčný.
+Ak by ste chceli zrušiť jeho mapovanie, môžete pridať riadok
 
-Identifikátor vstupného príkazu pozostáva z dvoj znakového identifikátora zariadenia (kb pre klávesnicu, br pre braillovský riadok), nepovinného identifikátora subzariadenia alebo rozloženia klávesov v zátvorke, dvojbodky a zoznamu identifikátorov klávesov oddelených znakom plus (+).
+```
+	None = kb:NVDA+f12
+```
 
-Stláčanie klávesov počas zapnutej nápovedy vstupu a následné čítanie textu v okne zobrazovač logu vám umožní získať názvy identifikátorov rôznych vstupných príkazov.
+Vo výbere kombinácií vstupných príkazov máte absolútnu voľnosť, no napriek tomu môže byť v niektorých prípadoch problém používať samotný kláves alt.
+NVDA posiela stlačenie modifikačných klávesov ako sú ctrl, shift a alt operačnému systému aj v prípade, že sú tieto namapované na nejaký skript.
+Ak teda použijete vo vstupnom príkaze kláves alt, jeho vyvolanie môže okrem vykonania požadovaného skriptu v NVDA tiež zobraziť panel ponúk.
+Preto je ako modifikátory vhodné používať najmä klávesy NVDA, ctrl a shift.
+
++ Ako získať viac informácií +
+Ak hľadáte ďalšie informácie o NVDA, o jeho vývoji, alebo hľadáte pomoc, navštívte stránku projektu na adrese NVDA_URL.
+Na tejto stránke môžete tiež nájsť prístup k emailovým konferenciám pojednávajúcich o NVDA a odkazy na ďalšie komunitné projekty a stránky o NVDA.
+Môžete tu tiež nájsť informácie o vývoji, zdrojové kódy a iné súvisiace materiály.
