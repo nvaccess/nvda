@@ -448,7 +448,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 		} else if((it=IA2AttribsMap.find(L"display"))!=IA2AttribsMap.end()) {
 			// If there is a display attribute, we can rely solely on this to determine whether this is a block element or not.
 			DEBUG_MSG(L"IA2Attributes contains display, value "<<it->second);
-			isBlockElement=(it->second!=L"inline");
+			isBlockElement=(it->second!=L"inline"&&it->second!=L"inline-block");
 		} else if((it=IA2AttribsMap.find(L"formatting"))!=IA2AttribsMap.end()&&it->second==L"block") {
 			DEBUG_MSG(L"IA2Attributes contains formatting:block, this is a block element");
 			isBlockElement=TRUE;

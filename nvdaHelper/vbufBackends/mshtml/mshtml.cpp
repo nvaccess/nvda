@@ -296,7 +296,7 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 	if(tempBSTR) {
 		DEBUG_MSG(L"Got display");
 		if (_wcsicmp(tempBSTR,L"none")==0) invisible=true;
-		if (_wcsicmp(tempBSTR,L"inline")==0) isBlock=false;
+		if (_wcsicmp(tempBSTR,L"inline")==0||_wcsicmp(tempBSTR,L"inline-block")==0) isBlock=false;
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
 	} else {
