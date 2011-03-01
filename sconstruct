@@ -86,7 +86,7 @@ if len(unknown)>0:
 	print "Unknown commandline variables: %s"%unknown
 	Exit(1)
 
-env = Environment(variables=vars,tools=["textfile","gettext","t2t",keyCommandsDocTool])
+env = Environment(variables=vars,tools=["textfile","gettext","t2t",keyCommandsDocTool,'doxygen'])
 version = env["version"]
 release = env["release"]
 certFile = env["certFile"]
@@ -103,6 +103,7 @@ Export('sourceLibDir64')
 buildDir = Dir("build")
 outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot", version=version)
 outputDir=Dir(env['outputDir'])
+devDocsOutputDir=outputDir.Dir('devDocs')
 
 #Process nvdaHelper scons files
 env.SConscript('nvdaHelper/sconscript',exports=['env'])
@@ -248,6 +249,11 @@ def makePot(target, source, env):
 			out.write(line)
 	os.remove(potFn)
 	os.rename(tmpFn, potFn)
+
+devDocs_nvdaHelper_temp=env.Doxygen(source='nvdaHelper/doxyfile')
+devDocs_nvdaHelper=env.Command(devDocsOutputDir.Dir('nvdaHelper'),devDocs_nvdaHelper_temp,Copy('$TARGET','$SOURCE'))
+
+env.Alias('devDocs',[devDocs_nvdaHelper])
 
 pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.

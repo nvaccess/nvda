@@ -97,6 +97,9 @@ To build an installer:
 	* NSIS UAC plug-in, version 0.0.11d or later: http://nsis.sourceforge.net/UAC_plug-in
 		* Copy the ANSI build of UAC.dll (found in release\a in the archive) into the installer directory.
 
+To generate developer documentation:
+	* Doxygen Windows installer (1.7.3 or above): http://www.stack.nl/~dimitri/doxygen/download.html 
+
 == Preparing the Source Tree ==
 Before you can run the NVDA source code, you must prepare the source tree.
 You do this by opening a command prompt, changing to the root of the NVDA source distribution and typing:
@@ -122,6 +125,10 @@ The archive will be placed in the output directory.
 To build an installer, type:
 scons installer
 The installer will be placed in the output directory.
+
+To generate developer documentation, type:
+scons devDocs
+The developer docs will be placed in the devDocs folder in the output directory.
 
 Optionally, the build can  be customised by providing variables on the command line:
 	* version: The version of this build.
