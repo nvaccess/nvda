@@ -1,9 +1,118 @@
-﻿Novità in NVDA
+﻿	Novità in NVDA
 
 
 %!includeconf: ../changes.t2tconf
 
-= 2010.2 =
+= 2011.1 =
+Le principali novità di questa versione riguardano l'annuncio automatico del testo in programmi come Mirc, PuTTY, Teraterm e Secure CRT; supporto per plugin globali;  lettura di numeri ed elenchi in Microsoft Word; nuove assegnazioni tasti per i Display Braille, compresi tasti per spostarsi alla riga precedente o successiva; supporto per molti Display Braille Baum, HumanWare e APH; e l'annuncio dei colori in alcuni controlli, compreso il testo in IBM Lotus Symphony.
+
+== Nuove caratteristiche ==
+- I colori possono essere annunciati in alcuni controlli. La lettura automatica può essere configurata  nella finestra di dialogo formattazione documento. Risulta possibile ottenere le stesse informazioni anche manualmente, con il comando NVDA+f.
+- Per ora, questa funzione è supportata nei controlli editazione Iaccessible2 (ad esempio applicazioni Mozilla), controlli RichEdit (come Wordpad), e controlli IBM Lotus Symphony.
+- Quando si utilizza il buffer virtuale, ora è possibile selezionare il testo anche per pagine (Shift+Pagina su e Shift+Pagina giù) oppure per paragrafi (Control+Shift+Freccia su e Control+Shift+Freccia giù). (#639)
+- NVDA annuncia automaticamente il testo in mIRC, PuTTY, Tera Term e SecureCRT. (#936)
+- Gli utenti possono aggiungere o modificare le assegnazioni di tasti per qualsiasi script in NVDA con una mappa utente delle gesture. (#194)
+- Supporto ai plugin globali. I Plugin globali possono aggiungere nuove funzionalità in NVDA per tutte le applicazioni. (#281)
+- Un leggero segnale acustico viene emesso nel caso si digiti un carattere con il tasto shift, mentre il blocca maiuscole è attivo. Il parametro si configura nelle opzioni tastiera. (#663)
+- Vengono annunciate le interruzioni di pagina quando ci si sposta riga per riga in Microsoft Word. (#758)
+- Gli elenchi numerati e i simboli negli elenchi vengono letti correttamente in Microsoft Word quando ci si sposta riga per riga. (#208)
+- E' disponibile un comando per attivare/disattivare la modalità Riposo, SleepMode: NVDA+Shift+S. La modalità riposo, sleep mode disabilita tutti i comandi di NVDA e l'output tramite voce/braille per l'applicazione corrente. Risulta utile se si ha a che fare con programmi che forniscono direttamente indicazioni vocali. Ripremere la combinazione di tasti per disattivare questa funzione.
+- Aggiunte alcune assegnazioni di tastiera per Display Braille. Si veda la sezione Display Braille nella documentazione per tutti i dettagli. (#209)
+- Per agevolare il lavoro degli sviluppatori, è possibile ricaricare i plugin globali e i moduli applicazione AppModules senza riavviare NVDA. Per farlo, usare il comando NVDA+Control+f3, oppure scegliere Strumenti, ricarica plugin nel menu di NVDA. (#544)
+- NVDA ricorda l'ultima posizione in cui ci si trovava quando si ritorna in una pagina web già visitata, ad esempio quando si preme il bottone backspace o il tasto indietro. Questo fino a quando il Browser oppure NVDA verrà chiuso. (#132)
+- I Display Braille HandyTech possono essere utilizzati senza dover installare Handy Tech universal driver. (#854)
+- Supporto a molte barre braille Baum, HumanWare e APH. (#937)
+- La Barra di Stato in Media Player Classic Home Cinema è ora individuata correttamente.
+- Il Display Braille Focus Blue di Freedom Scientific può essere utilizzato anche in modalità BlueTooth. (#1345)
+
+
+== Cambiamenti ==
+- Non vengono più annunciate di default le informazioni sulla posizione in alcune circostanze quando esse possono risultare poco accurate; ad esempio la maggior parte dei menu, la barra delle applicazioni, la system tray etc. In ogni caso, l'opzione può essere riattivata dalle impostazioni presentazione oggetti.
+- Aiuto tastiera è stato rinominato in aiuto immissione dati, per sottolineare che ora i sistemi di input possono essere diversi dalla tastiera.
+- L'aiuto immissione dati non legge più la posizione dello script tramite voce e braille perche' risulta utile soltanto agli sviluppatori. In ogni caso l'informazione viene loggata.
+- Quando NVDA si accorge di essere bloccato, continuerà ad intercettare la pressione del tasto NVDA, anche se poi i tasti vengono passati al sistema. Questo fa in modo che l'utente non disattivi o attivi il tasto blocca maiuscole inavvertitamente. (#939)
+- Se i tasti vengono tenuti premuti dopo aver usato la funzione passa il tasto successivo attraverso, tutti i tasti (inclusi tasti ripetuti) verranno passati al sistema e non a NVDA fino a che l'ultimo tasto sarà stato rilasciato.
+- Se un tasto funzione NVDA viene premuto due volte in rapida successione affinche' venga intercettato dal sistema e viene tenuto premuto alla seconda pressione, verranno passati al sistema anche tutti i tasti ripetuti.
+- I tasti relativi al volume vengono annunciati nell'aiuto immissione dati. Può risultare utile se l'utente non è sicuro sulla loro posizione.  
+- Il tasto caldo per la voce cursore di controllo nel menu preferenze è stato modificato da r a c per eliminare il conflitto con le impostazioni braille.
+
+
+== Bug corretti ==
+- Quando si aggiunge una nuova voce nel dizionario, il titolo della finestra di dialogo è "aggiungi nuova voce" invece che "modifica voce dizionario". ([924)
+- Nella finestra di dialogo dizionari per la voce, elementi come espressione regolare o distingui tra maiuscole e minuscole vengono presentati nella lingua dell'utente e non solo in inglese.
+- Nel programma AIM, viene annunciata la propria posizione nelle visualizzazioni ad albero.
+- Nei cursori d'avanzamento delle impostazioni della voce, freccia su/pagina su/home-inizio aumentano il valore mentre freccia giù/pagina giù/fine-end lo diminuiscono. In precedenza, accadeva l'opposto, il che non era affatto logico. (#221)
+- Nei buffer virtuali con layout schermo disattivato, non appaiono più alcune righe vuote inutili.
+- Se un tasto funzione NVDA viene premuto due volte in rapida successione ma vi è un ulteriore tasto premuto, il tasto NVDA non viene più intercettato una seconda volta per passarlo al sistema.
+- I tasti di punteggiatura vengono annunciati nell'aiuto immissione dati, anche se l'opzione leggi punteggiatura è disattivata. (#977)
+- Nella finestra di dialogo impostazioni tastiera, i nomi dei layout vengono presentati nella lingua scelta dall'utente e non solo in inglese. (#558)
+- Risolto un problema che causava la presentazione di alcune voci come fossero vuote in documenti Adobe Reader; ad esempio i link dell'indice della guida di Apple Iphone IOS 4.1.
+- il Bottone "Utilizza le impostazioni di configurazione salvate nella finestra di logon (richiede privilegi di amministratore)" situato nella finestra di dialogo generale del menu preferenze di NVDA, ora funziona anche se premuto immediatamente dopo che NVDA è stato installato per la prima volta ma prima dell'apparizione di una schermata di login sicuro. In precedenza NVDA annunciava che la copia era avvenuta correttamente, ma in realtà non veniva effettuata. (#1194)
+- Non risulta più possibile avere due finestre di dialogo di impostazioni NVDA aperte allo stesso momento. (#603)
+- Nei sistemi con UAC attivato, il bottone "Utilizza le impostazioni di configurazione salvate nella finestra di logon (richiede privilegi di amministratore)" non fallisce l'operazione dopo la schermata UAC, nel caso il nome utente contenga uno spazio. (#918)
+- In Internet Explorer e altri controlli MSHTML, ora NVDA utilizza l'indirizzo come ultimo tentativo per carpire il nome del link, piuttosto che presentarlo come link vuoto. (#633)
+- NVDA non ignora più il focus nei menu in Aol Instant Messenger 7. (#655)
+- Viene annunciata l'etichetta corretta negli errori in Microsoft Word originati dal controllo ortografico (ad esempio voci come non nel dizionario, errore grammaticale, errore di punteggiatura, etc). In precedenza venivano annunciati tutti come errori grammaticali. (#883)
+- Se si utilizza un Display Braille e si sta scrivendo in Microsoft Word, non dovrebbe più essere prodotto testo pieno di caratteri strani. Inoltre risolto un problema che provocava il blocco di NVDA alla pressione di un cursor routing. (#1212) Comunque, vi è una limitazione, nell'impossibilità di leggere documenti in arabo con Microsoft Word 2003 e precedenti, mentre si usa un display braille. (#627)
+- Quando si preme il tasto Canc in un campo editazione, il testo nel display braille ora si aggiorna in maniera corretta. (#947)
+- Cambiamenti nei documenti Gecko2 contenenti pagine web dinamiche (esempio firefox4). Ora se vi sono più schede aperte esse vengono riportate correttamente. In precedenza venivano intercettati soltanto i cambiamenti della prima scheda. (Mozilla bug 610985)
+- NVDA ora è in grado di annunciare i suggerimenti per gli errori grammaticali e di punteggiatura nelle finestre di dialogo del controllo ortografico in Microsoft Word. (#704)
+- In Internet Explorer e altri controlli MSHTML, NVDA non presenta più le ancore di destinazione come link vuoti. Ora, queste ancore vengono nascoste, come dev'essere. (#1326)
+- La navigazione ad oggetti all'interno e attorno alle finestre raggruppate ora funziona di nuovo.
+- In Firefox e altri controlli Gecko, migliorata la gestione frame multipli quando il documento è in fase di caricamento.
+- NVDA ora annuncia correttamente il carattere successivo quando si elimina un carattere con il tasto canc del tastierino numerico. (#286)
+- Nella finestra di login in Windows Xp, il nome utente viene nuovamente annunciato quando l'utente selezionato viene modificato.
+- Risolti problemi nella lettura del testo nelle finestre del prompt dei comandi quando l'opzione annuncia numeri di riga è attiva.
+- La finestra di dialogo elenco elementi per il buffer virtuale è utilizzabile ora anche da persone vedenti. (#1321)
+- L'elenco delle voci nel dizionario ora risulta più leggibile da persone vedenti in quanto la finestra è più grande. (#90)
+- Risolto un bug nella gestione tasti nei display braille Alva bc640/680.
+- Adobe Reader non crasha più dopo aver evidenziato l'opzione documenti senza tag ed essere passati all'opzione successiva. (#1218)
+- NVDA seleziona il display braille appropriato quando si ritorna alla configurazione salvata. (#1346)
+- La procedura guidata di un nuovo progetto viene ora letta correttamente in  Visual Studio 2008. (#974)
+- NVDA non si rifiuta più di lavorare in applicazioni che contengono caratteri non ASCII nel loro nome eseguibile. (#1352)
+- Quando si legge riga per riga utilizzando AKelpad e l'opzione formato automatico è attiva, NVDA ora si comporta in maniera corretta.
+- Nell'editor di codice in Visual Studio 2005/2008, NVDA non legge più l'intero testo dopo ogni carattere digitato. (#975)
+- Risolto un problema che non permetteva una corretta pulizia dei caratteri dei display braille all'uscita da NVDA.
+- Il focus iniziale non viene più annunciato una volta che NVDA viene attivato. (#1359)
+
+
+== Cambiamenti per sviluppatori ==
+Questa sezione viene lasciata in inglese.
+- SCons is now used to prepare the source tree and create binary builds, portable archives, installers, etc. See readme.txt at the root of the source distribution for details.
+- The key names used by NVDA (including key maps) have been made more friendly/logical; e.g. upArrow instead of extendedUp and numpadPageUp instead of prior. See the vkCodes module for a list.
+- All input from the user is now represented by an inputCore.InputGesture instance. (#601)
+ - Each source of input subclasses the base InputGesture class.
+ - Key presses on the system keyboard are encompassed by the keyboardHandler.KeyboardInputGesture class.
+ - Presses of buttons, wheels and other controls on a braille display are encompassed by subclasses of the braille.BrailleDisplayGesture class. These subclasses are provided by each braille display driver.
+- Input gestures are bound to ScriptableObjects using the ScriptableObject.bindGesture() method on an instance or an __gestures dict on the class which maps gesture identifiers to script names. See baseObject.ScriptableObject for details.
+- App modules no longer have key map files. All input gesture bindings must be done in the app module itself.
+- All scripts now take an InputGesture instance instead of a key press.
+ - KeyboardInputGestures can be sent on to the OS using the send() method of the gesture.
+- To send an arbitrary key press, you must now create a KeyboardInputGesture using KeyboardInputGesture.fromName() and then use its send() method.
+- Locales may now provide an input gesture map file to add new bindings or override existing bindings for scripts anywhere in NVDA. (#810)
+ - Locale gesture maps should be placed in locale\LANG\gestures.ini, where LANG is the language code.
+ - See inputCore.GlobalGestureMap for details of the file format.
+- The new LiveText and Terminal NVDAObject behaviors facilitate automatic reporting of new text. See those classes in NVDAObjects.behaviors for details. (#936)
+ - The NVDAObjects.window.DisplayModelLiveText overlay class can be used for objects which must retrieve text written to the display.
+ - See the mirc and putty app modules for usage examples.
+- There is no longer an _default app module. App modules should instead subclass appModuleHandler.AppModule (the base AppModule class).
+- Support for global plugins which can globally bind scripts, handle NVDAObject events and choose NVDAObject overlay classes. (#281) See globalPluginHandler.GlobalPlugin for details.
+- On SynthDriver objects, the available* attributes for string settings (e.g. availableVoices and availableVariants)  are now OrderedDicts keyed by ID instead of lists.
+- synthDriverHandler.VoiceInfo now takes an optional language argument which specifies the language of the voice.
+- SynthDriver objects now provide a language attribute which specifies the language of the current voice.
+ - The base implementation uses the language specified on the VoiceInfo objects in availableVoices. This is suitable for most synthesisers which support one language per voice.
+- Braille display drivers have been enhanced to allow buttons, wheels and other controls to be bound to NVDA scripts:
+ - Drivers can provide a global input gesture map to add bindings for scripts anywhere in NVDA.
+ - They can also provide their own scripts to perform display specific functions.
+ - See braille.BrailleDisplayDriver for details and existing braille display drivers for examples.
+- The 'selfVoicing' property on AppModule classes has now been renamed to 'sleepMode'.
+- The app module events event_appLoseFocus and event_appGainFocus have now been renamed to event_appModule_loseFocus and event_appModule_gainFocus, respectivly, in order to make the naming convention consistent with app modules and tree interceptors.
+- All braille display drivers should now use braille.BrailleDisplayDriver instead of braille.BrailleDisplayDriverWithCursor.
+ - The cursor is now managed outside of the driver.
+ - Existing drivers need only change their class statement accordingly and rename their _display method to display.
+
+
+ = 2010.2 =
 Le caratteristiche più importanti in questa versione riguardano la facilitazione nell'utilizzare la navigazione ad oggetti; l'uso dei buffer virtuali nei contenuti Adobe Flash; accedere a controlli prima inaccessibili tramite il recuperare informazioni scritte sullo schermo; supporto ai documenti IBM Lotus Symphony; l'annuncio delle intestazioni riga e colonna nelle tabelle in Firefox; e un miglioramento significativo alla documentazione utente.
 
 == Nuove caratteristiche ==
