@@ -129,6 +129,7 @@ for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
 #And also build the developer guide -- which must be moved at some point
 htmlFile=env.txt2tags('developerGuide.t2t')
 env.SideEffect('_txt2tags',htmlFile)
+env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
 
 env.Depends(sourceDir,userDocsDir)
 
@@ -253,7 +254,7 @@ def makePot(target, source, env):
 devDocs_nvdaHelper_temp=env.Doxygen(source='nvdaHelper/doxyfile')
 devDocs_nvdaHelper=env.Command(devDocsOutputDir.Dir('nvdaHelper'),devDocs_nvdaHelper_temp,Copy('$TARGET','$SOURCE'))
 
-env.Alias('devDocs',[devDocs_nvdaHelper])
+env.Alias('devDocs',devDocsOutputDir)
 
 pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.
