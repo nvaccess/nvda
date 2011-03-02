@@ -252,9 +252,10 @@ def makePot(target, source, env):
 	os.rename(tmpFn, potFn)
 
 devDocs_nvdaHelper_temp=env.Doxygen(source='nvdaHelper/doxyfile')
-devDocs_nvdaHelper=env.Command(devDocsOutputDir.Dir('nvdaHelper'),devDocs_nvdaHelper_temp,Copy('$TARGET','$SOURCE'))
+devDocs_nvdaHelper=env.Command(devDocsOutputDir.Dir('nvdaHelper'),devDocs_nvdaHelper_temp,Move('$TARGET','$SOURCE'))
 
 env.Alias('devDocs',devDocsOutputDir)
+env.Clean('devDocs',devDocsOutputDir)
 
 pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.
