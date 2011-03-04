@@ -1,20 +1,19 @@
-﻿NVDA NVDA_VERSION 用户指南
+NVDA NVDA_VERSION 用户指南
 
-(最后刷新日期：2010年10月12日)
+(最后更新日期：2011年3月3日)
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION 快捷键快速参考
 
 == 目录 ==[toc]
 %%toc
-
 + 前言  +
 
 ++ 特色  ++
 透过语音朗读与点字， NVDA(Nonvisual Desktop Access) 可提供视障者操作微软窗口操作系统及其它应用程序。
 
 主要特色包括：
-- 不需安装，可直接利用 usb 随身碟或其它可携式保存媒体来操作
+- 不需安装，可直接利用U盘或其它便携式保存媒体来操作
 - 提供有语音提示的简易安装版
 - 支持 Mozilla Firefox 或者微软 IE 浏览网页
 - 支持 Mozilla Thunderbird、Outlook Express、Windows Mail 或者 Windows Live Mail 收发电子邮件
@@ -28,7 +27,7 @@
 -
 
 ++ 国际化 ++
-让世界上所有的人，不管使用何种语言，都可以无障碍的公平使用科技是极重要的，NVDA 当前除了英文版外，已被翻译成超过20种语言，包括：阿拉伯文、巴西文、克罗地亚文、捷克文、芬兰文、法文、加利西亚文、德文、匈牙利文、义大利文、日文、葡匋牙文、俄文、斯洛伐克文、西班牙文、泰文、繁体中文、乌克兰文、南非文、波兰文及越南文等。
+让世界上所有的人，不管使用何种语言，都可以无障碍的公平使用科技是非常重要的，NVDA 当前除了英文版外，已被翻译成超过20种语言，包括：阿拉伯语、巴西语、克罗地亚语、捷克语、芬兰语、法语、加利西亚语、德语、匈牙利语、义大利语、日语、葡匋牙语、俄语、斯洛伐克语、西班牙语、泰语、繁体中文、简体中文、乌克兰语、南非语、波兰语及越南语等。
 
 ++ 可支持的语音合成器 ++
 除了提供前述多国文本消息与用户接口外，只要能取得到并安装在电脑上，透过语音合成接口程序的选择，NVDA 也提供用户采用不同的语言及不同的语音合成器，以便可读取文档或对象的内容。
@@ -38,14 +37,14 @@
 有关其它 NVDA 有支持的语音合成器的信息请参考 [支持的语音合成器 #SupportedSpeechSynths] 章节。
 
 
-++ 可支持的点字 ++
+++ 可支持的点显器 ++
 对于拥有点字显示器的用户，NVDA 可将信息以点字形式输出到点显器上。
 关于支持的点字显示器信息，请参考[支持点字显示器 #SupportedBrailleDisplays]的章节。
 
 NVDA 提供多语系，通常含括一级与二级点字码、以及电脑点字。
 
 ++ 许可证与著作权 ++
-NVDA 著作权2006-2010 是归属于所有参与的开发者。
+NVDA 著作权2006-2011 归属于所有参与的开发者。
 
 NVDA受到“GNU 通用公共许可证条款(第二版)”所保护。
  只要将此公开许可协议随附于软件，您可以自由的以任何形式分享或改变此软件，并将所有的源代码提供给需要的人，这个槼则适用于原始发布的软件或任何以此软件修改之后发布的软件，以及所有采用此软件内的程序码所生成的软件。
@@ -54,23 +53,20 @@ NVDA受到“GNU 通用公共许可证条款(第二版)”所保护。
 
 + 系统需求 +
 
-- 操作系统：32及64位元微软窗口 XP 、Vista 及窗口 7（含服务器操作系统）
-- RAM 内存：需要 256MB 以上
+- 操作系统：32及64位 microsoft windows XP 、Vista 及windows 7（含服务器操作系统）
+- 内存：需要 256MB 以上
 - CPU 速度：1.0Ghz或以上
-- 约需要50 MB 的保存空间
-
-
+- 约需要50 MB 的磁盘空间
 
 + 如何取得 NVDA +
 如果您尚未取得 NVDA，请至此下载 [www.nvda-project.org http://www.nvda-project.org/]。
 
 在下载区可找到最新版的 NVDA 程序。
+
+当前提供了两种版本的软件，其一是需要安装的版本，它提供语音指引告诉您如何安装，安装后，即可在开始菜单启动 NVDA；另一是可自行解压缩的文件夹，其内含有所有运行 NVDA 所需的程序，您可将其视为一可携式的软件，存入U盘或 CD 内，带至任何有电脑的地方去使用。
  
 
-当前提供了两种版本的软件，其一是需要安装的版本，它提供语音指引告诉您如何安装，安装后，即可在开始菜单启动 NVDA；另一是可自行解压缩的文件夹，其内含有所有运行 NVDA 所需的程序，您可将其视为一可携式的软件，存入随身碟或 CD 内，带至任何有电脑的地方去使用。
- 
-
-为了要让NVDA访问窗口登录界面、 [用户帐户控制] （UAC）界面、其它窗口安全界面与在微软 Vista 以后版本需要以系统管理者身分运作的应用程序，安装 NVDA 时，必须使用安装版，因为可携式版无法在上述界面中使用。
+为了要让NVDA访问windows登录界面、 [用户帐户控制] （UAC）界面、其它windows安全界面与在微软 Vista 以后版本需要以系统管理者身分运作的应用程序，安装 NVDA 时，必须使用安装版，因为可携式版无法在上述界面中使用。
 
 + NVDA 程序安装 +
 
@@ -80,16 +76,16 @@ NVDA受到“GNU 通用公共许可证条款(第二版)”所保护。
 当安装程序加载时，会伴随着音乐声。
 加载后，会生成一个临时的提示消息窗口，以逐步引导安装。
 注意：如果此时有旧版的 NVDA 正在运行，则会跳出一消息窗口，提示需将其关闭，按 [确定] 后，即将正运行的 NVDA 关闭，以便打开安装新的程序。
-此步骤是必要的，如此一来，安装程序才可正确地刷新。
-如果此电脑也已有安装版的 NVDA，则此时会将其解除安装，然后才开始进行安装新版的程序。
+此步骤是必要的，如此一来，安装程序才可正确地更新。
+如果电脑中已有安装版的 NVDA，则此时会将其解除安装，然后才开始进行安装新版的程序。
 
 一旦成功的完成安装步骤，安装程序会提醒您“安装已完成”的消息。
 如果是属于重新安装，则可能会跳出请求“重新开机”的消息，依其提示重新开机是非常重要的。
 若没有依请求运行重新开机，则极有可能会发生难以预料的问题。
 如果它并没有出现要重新开机的消息，则按 [完成] ，接着即自动打开新安装的 NVDA。
 
-++ 可携式版 ++
-如果您已取得可携式版的 NVDA，则只需将其单击解压缩，此时会跳出询问将此文件夹置放于何处的对话框，选定并确定后即完成解压缩。
+++ 便携版本 ++
+如果您已取得便携版的 NVDA，则只需将其单击解压缩，此时会跳出询问将此文件夹置放于何处的对话框，选定并确定后即完成解压缩。
 
 + 开始使用 NVDA +
 
@@ -97,7 +93,7 @@ NVDA受到“GNU 通用公共许可证条款(第二版)”所保护。
 如果您已安装了 NVDA 安装版，最简单打开的方式是利用按快捷键 Ctrl+ Alt+N，或从 [开始菜单] 中的 [程序集] 找到 NVDA 。
 另一种启动它的方式是在 [开始菜单] 中在 [运行] 的对话框中输入 NVDA，然后再按 Enter即可。
 
-至于若是使用可携式版，则只要找到 NVDA 文件夹所存放的位置，将其打开后，利用按英文字母 N，找到 NVDA.exe，再按 Enter即可启动它。
+至于若是使用便携版，则只要找到 NVDA 文件夹所存放的位置，将其打开后，利用按英文字母 N，找到 NVDA.exe，再按 Enter即可启动它。
  
 
 当 NVDA 被启动时，您会听到一串上扬的声音，表示正在加载程序，稍等片刻，听到“NVDA 加载中”，即表示NVDA 已启动了。
@@ -122,17 +118,17 @@ NVDA 可以被设置使用数字键盘 Insert、主键盘上的 Insert、或者 
 
 假如你想使用 NVDA 键原有的功能(举例来说，如果你已设置 CapsLock 键作为 NVDA 键，但又要用它来转换大写锁定状态)，你可以快速连按此键两次。
 
-+++ 快捷键帮助 +++
-多数的 NVDA 组合键将于本使用手册中陆续被提出，但最简单探索其各种功能的方式是启动快捷键帮助的功能。
++++ 输入帮助 +++
+多数的 NVDA 组合键将于本使用手册中陆续被提出，但最简单探索其各种功能的方式是启动输入帮助的功能。
 
-启动快捷键帮助的方式是按 NVDA+ 数字列上的1。
+启动输入帮助的方式是按 NVDA+ 大键盘的1。
 若要将此功能关闭则再按一次即可，此为一切换组合键的功能。
-当此快捷键帮助被启动后，接下来的各单一按键或组合键并不会运行其功能，而是仅读出其所代表的功能而已。
+当此输入帮助被启动后，接下来的各单一按键或组合键并不会运行其功能，而是仅读出其所代表的功能而已。
 因此，您可以试着按任何想按的键，以了解其功能。
 
 +++ 键盘配置 +++
 NVDA 快捷键当前有两种键盘配置，分别用在台式电脑与笔记本电脑上。
-默认配置使用台式电脑，不过你可以从 NVDA 菜单的偏好设置中的键盘设置切换到笔记本电脑配置。
+默认配置使用台式电脑，不过你可以从 NVDA 菜单的选项中的键盘设置切换到笔记本电脑配置。
 
 台式电脑配置大量使用数字键盘（使用时要关掉 NumLock ）。
 虽然大部分的笔记本电脑没有实体的数字键盘，但有一些可以利用 FN 键搭配在键盘右边的英文与数字（如7 8 9 u i o j k l 等等）来模拟数字键盘。
@@ -140,7 +136,7 @@ NVDA 快捷键当前有两种键盘配置，分别用在台式电脑与笔记本
 
 
 ++ NVDA 菜单 ++
-NVDA 菜单提供偏好设置、打开描述档、保存或撤消修改的设置参数、修改读音字库、读取记录档及关闭 NVDA等功能选项。
+NVDA 菜单提供选项、工具、保存或撤消设置、捐赠、退出等功能选项。
 
 当 NVDA 已加载后，在任何窗口下，要打开菜单是按 NVDA+ N，另一种打开的方式是直触点击在通知区域内的 NVDA 图标按钮后，接着按鼠标右键即可。
 若纯以键盘方式操作，则应先按 WINDOWS+ B，将焦点移到通知区域后，再以方向键找到 NVDA 图标按钮，接着按应用程序键（或称属性键），其位置在紧邻右 Ctrl 键的左边一个按键。
@@ -151,7 +147,7 @@ NVDA 菜单提供偏好设置、打开描述档、保存或撤消修改的设置
 || 名称 | 快捷键 | 描述 |
 | 停止朗读 | Ctrl | 立即停止朗读。 |
 | 暂停/继续朗读 | Shift | 立即暂停朗读，再按一次会从原来暂停的地方继续朗读(若使用的语音合成器有支持的话)。 |
-| NVDA 菜单 | NVDA+n | 打开 NVDA 菜单以访问偏好设置、工具及辅助描述等。 |
+| NVDA 菜单 | NVDA+n | 打开 NVDA 菜单以访问选项、工具及辅助描述等。 |
 | 快捷键描述模式 | NVDA+1 | 在这个模式下，按下任何按键组合，即会朗读出相关的 NVDA 的按键名称与功能描述。 |
 | 关闭 NVDA | NVDA+q | 关闭 NVDA。 |
 | 读出日期或时间 | NVDA+F12 | 按一次读出当前时间，连按两次读出当前日期。 |
@@ -809,10 +805,8 @@ NVDA 将停止朗读，此时，可让你很容易地选择或者复制这段原
 在NVDA 菜单内的 [工具] 选项下的 Python 控制台是一个开发工具，它可以用来除错、查看<span lang="EN-US">NVDA内部运作，或者查看某些应用程序的可及性阶层架构（accessibility hierarchy）。
 若要了解更详细的信息，请参考[NVDA 网站上的 Python 控制台文章 NVDA_URLwiki/PythonConsole]。
 
-+ 额外信息 +
-假如你需要 NVDA 进一步的信息或协助，请浏览 NVDA 的网站 [http://www.nvda-project.org/ http://www.nvda-project.org/]，
-你可以从中得到更多的技术支持与社群的资源。
-这个网站也同时提供有关开发 NVDA 的信息与支持。
+++ 重载插件 ++
+在nvda工具菜单里的重载插件菜单允许你在不必停止nvda的情况下，重新加载应用程序模块或者全局插件，这会带给开发人员很大的方便。
 
 + 支持的语音合成器 +[SupportedSpeechSynths]
 这一节的内容包含 NVDA 支持的语音合成器的相关信息。
@@ -849,8 +843,8 @@ SAPI 5 是微软语音合成软件的标准版本。
 Newfon 是一个免费由 Sergey Shishmintzev 提供的语音合成器，当前支持俄国与乌克兰两种语言。
 要下载这个合成器，请浏览俄国 NVDA 社群的网站 http://ru.nvda-community.org/?page_id=10 中的下载页面。
 
-+ 支持点字显示器 +[SupportedBrailleDisplays]
-这一节的内容包含 NVDA 支持的点字显示器的信息。
++ 支持的点字显示器 +[SupportedBrailleDisplays]
+这一节的上下文包含 NVDA 支持的点字显示器的资讯。
 
 ++ Freedom Scientific Focus/PAC Mate 系列 ++
 [Freedom Scientific http://www.freedomscientific.com/] 所有的 Focus 与 PAC Mate 显示器皆可被 NVDA 支持。
@@ -858,25 +852,185 @@ Newfon 是一个免费由 Sergey Shishmintzev 提供的语音合成器，当前�
 假如你尚未安装，你可以从下列的网址取得：http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp。
 虽然在网页中只提到 Focus 40 Blue 显示器，但驱动程序支持所有的 Freedom Scientific 显示器。
 
+下列为此显示器在NVDA的按键配置。
+这些按键的实际位置，请参阅显示器的帮助文档。
+%kc:beginInclude
+|| 名称 | 按键 |
+| Toggle left wiz wheel action | leftWizWheelPress |
+| Move back using left wiz wheel action | leftWizWheelUp |
+| Move forward using left wiz wheel action | leftWizWheelDown |
+| Toggle right wiz wheel action | rightWizWheelPress |
+| Move back using right wiz wheel action | rightWizWheelUp |
+| Move forward using right wiz wheel action | rightWizWheelDown |
+| Route to braille cell | routing |
+%kc:endInclude
+
+
 ++ Optelec ALVA BC640/680 ++
 [Optelec http://www.optelec.com/] 的 ALVA BC640 与 BC680 两种显示器都可被 NVDA 支持。
 使用这些显示器并不需要安装任何特定的驱动程序，只要插上显示器然后设置 NVDA 即可使用。
 
-++ Handy Tech 显示器 ++
-NVDA 支持所有的 [Handy Tech http://www.handytech.de/] 的显示器。
-在一些　USB 显示器中，你必须先安装 Handy Tech 的 USB 驱动程序在你的系统上。
+下列为此显示器在NVDA的按键配置。
+这些按键的实际位置，请参阅显示器的帮助文档。
+%kc:beginInclude
+|| 名称 | 按键 |
+| Scroll braille display back | t1 |
+| Move braille display to previous line | t2 |
+| Move braille display to next line | t4 |
+| Scroll braille display forward | t5 |
+| Route to braille cell | routing |
+| shift+tab 键 | sp1 |
+| alt 键 | sp2 |
+| escape 键 | sp3 |
+| tab 键 | sp4 |
+| 向上键 | spUp |
+| 向下键 | spDown |
+| 向左键 | spLeft |
+| 向右键 | spRight |
+| enter 键 | spEnter |
+| NVDA 功能表 | sp1+sp3 |
+| windows+d 键 (minimise all applications) | sp1+sp4 |
+| windows 键 | sp2+sp3 |
+| alt+tab 键 | sp2+sp4 |
+%kc:endInclude
 
-另外，你将需要安装 Handy Tech 的万用驱动程序。
-这些程序可以从下列的网址取得：ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe。
+++ Handy Tech 显示器 ++
+当透过 USB 或蓝芽连接时，NVDA 支持所有的 [Handy Tech http://www.handytech.de/] 显示器。
+在某些旧型的 USB 显示器，你将需要安装 Handy Tech 的 USB 驱动程序在你的系统上。
+
+下列为此显示器在NVDA的按键配置。
+这些按键的实际位置，请参阅显示器的帮助文档。.
+%kc:beginInclude
+|| 名称 | 按键 |
+| Scroll braille display back | left, up |
+| Scroll braille display forward | right, down |
+| Move braille display to previous line | b4 |
+| Move braille display to next line | b5 |
+| Route to braille cell | routing |
+| shift+tab 键 | esc |
+| alt 键 | b2+b4+b5 |
+| escape 键 | b4+b6 |
+| tab 键 | enter |
+| enter 键 | esc+enter |
+| 向上键 | leftSpace |
+| 向下键 | rightSpace |
+| NVDA Menu | b2+b4+b5+b6 |
+| Handy Tech configuration | b4+b8 |
+%kc:endInclude
 
 ++ MDV Lilli ++
-[MDV http://www.mdvbologna.it/] 的 Lilli 点字显示器可被 NVDA 支持。
+由[MDV http://www.mdvbologna.it/]取得的 Lilli 点字显示器可被 NVDA 支持。
 使用这个显示器不需要安装特定的驱动程序。
 只要插上显示器，并设置 NVDA 后，即可使用。
 
-++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] 是一个独立的程序，可以支持许多点字显示器。
-使用时，必须安装 BRLTTY窗口版本 （[BRLTTY for Windows http://brl.thefreecat.org/brltty/]）。
- 你必须下载并安装最新的安装包，它的名称举例来说为 brltty-win-4.2-2.exe 。
-当设置显视器以及连接埠时，要非常注意安装指令，尤其当你正使用 USB 显示器并已安装制造商的驱动指令的情况下。
+++ Baum/Humanware/APH 点字显示器 ++
+当透过 USB 或蓝芽连接时，一些 [Baum http://www.baum.de/cms/en/]、[HumanWare http://www.humanware.com/] 以及 [APH http://www.aph.org/] 显示器可以被支持。
+这些包括：
+- Baum: SuperVario, PocketVario
+- HumanWare: Brailliant, BrailleConnect
+- APH: Refreshabraille
+-
+虽然还没经过测试，但某些由 Baum 所制造的其他显示器或许也可以运作。
 
+如果透过 USB 连接，你必须先安装厂商所提供的 USB驱动程序。
+在APH Refreshabraille此种显示器上，你必需将USB模式设为“serial”。
+
+下列为此显示器在NVDA的按键配置。
+这些按键的实际位置，请参阅显示器的帮助文档。.
+%kc:beginInclude
+|| 名称 | 按键 |
+| Scroll braille display back | d2 |
+| Scroll braille display forward | d5 |
+| Move braille display to previous line | d1 |
+| Move braille display to next line | d3 |
+| Route to braille cell | routing |
+
+有摇杆的显示器则如下：
+|| 名称 | 按键 |
+| 向上键 | up |
+| 向下键 | down |
+| 向左键 | left |
+| 向右键 | right |
+| enter 键 | select |
+%kc:endInclude
+
+
+++ BRLTTY ++
+[BRLTTY http://mielke.cc/brltty/] 是一个可以用来支持许多点字显示器的应用程序。
+使用时，必须安装 BRLTTY窗口版本 （[BRLTTY for Windows http://brl.thefreecat.org/brltty/]）。
+你必须下置并安装最新版本，它的名称举例来说可能是 brltty-win-4.2-2.exe 。
+当设置显示器以及连接埠时，请仔细阅读安装帮助，尤其当您已经在使用 USB 显示器并安装了制造商提供的驱动程序时。
+
+下列为BRLTTY命令(BRLTTY commands) 在NVDA的配置状况。
+请参阅[BRLTTY key tables 文档 http://mielke.cc/brltty/doc/drivers/]，以便了解BRLTTY命令是如何与点字显示器上的控件链接。
+%kc:beginInclude
+|| 名称 | BRLTTY 命令 |
+| Scroll braille display back | fwinlt (go left one window) |
+| Scroll braille display forward | fwinrt (go right one window) |
+| Move braille display to previous line | lnup (go up one line) |
+| Move braille display to next line | lndn (go down one line) |
+| Route to braille cell | route (bring cursor to character) |
+%kc:endInclude
+
++ 高级主题 +
+
+++ 重新映射按键任务和其他快捷键 ++
+用户可以重新映射或者覆盖nvda的快捷键(例如按键)提供到一个专门的脚本，此脚本位于用户的NVDA配置表中。
+文件名为 gestures.ini。
+
+此文件使用标准ini句法。
+文件可能包含多个部分，每个部分可能有一个或多个小节。
+
+每个小节提供映射给脚本，使用NVDA中特定的Python模块和类。
+- 小节名称必须采用Python模块和类，并以点(.)分隔。
+- 每个项的检索是设定该快捷键的脚本名。
+或者，你也可以使用“None”将原先设定的快捷键从对应的脚本中解除。
+- 项值是一个以逗号分隔的快捷键标识符表单，以对应不同的快捷键。
+-
+
+快捷键标识符由这些部分组成：一个双字母设备码（kb代表键盘,bd代表点显器）,一个写在括弧中的可供选择的辅助设备或键盘设计；一个冒号，以及由加号分隔的一个或多个按键名称。
+
+为了查看快捷键标识符，脚本名称以及所包含的芬类和模块，你可以：
++ 打开输入帮助。
++ 通过按键(按快捷键)。
++ 关闭快捷键帮助。
++ 点击NVDA工具菜单中的记录浏览器。
+以上的一个或多个步骤均可提供你所发出的有关快捷键的信息，包括module.class和可能绑定的脚本。
++
+
+下面是一个如何将NVDA+shift+t添加到日期脚本的例子。
+
+为了找到正确的日期脚本名称和模块.分类，你需要打开快捷键帮助，按下NVDA+F12（这是通常的进入日期脚本的方式）。
+然后关闭快捷键帮助，查看记录浏览器。
+
+在末尾可以看到：
+
+```
+INFO - inputCore.InputManager._handleInputHelp (13:17:22):
+Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
+```
+
+从这里可以看到，脚本名是dateTime模块.类是 globalCommands.GlobalCommands。
+
+如果此文件尚未生成，你需要在用户配置表中建立一个名为gestures.ini的文本文档，并添加下列内容：
+
+```
+[globalCommands.GlobalCommands]
+	dateTime = kb:NVDA+shift+t
+```
+
+此内容将把任意键盘上的快捷键NVDA+shift+t设定在日期脚本当中。
+
+注意，原来设定的NVDA+f12仍然有效。
+如果你想解除这个设定，你需要添加以下内容：
+
+```
+	None = kb:NVDA+f12
+```
+
+虽然你可以随意将脚本和任何可利用的按键绑定，但是使用键盘上的alt键还是存在问题。
+NVDA还提供组合键如 shift,control,alt键给操作系统，即使这些组合键都是设定在一个脚本中。这样的话，如果你在一个快捷键中使用alt，按下此键的组合将可能在激活菜单栏的同时也将执行这个脚本。
+因此，最好还是只使用shift,control和NVDA作为组合键。
+
++ 更多信息 +
+如需更多关于NVDA的信息和帮助，请访问NVDA网站 NVDA_URL。 在此你可以找到更多关于文档、技术支持和共享资源等信息。此网站还提供NVDA开发相关的信息和资源。
