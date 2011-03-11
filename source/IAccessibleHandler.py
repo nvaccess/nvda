@@ -573,6 +573,11 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 		#We never want to see foreground events for the Program Manager or Shell (task bar) 
 		if eventID==winUser.EVENT_SYSTEM_FOREGROUND and windowClassName in ("Progman","Shell_TrayWnd"):
 			return
+		if windowClassName=="MSNHiddenWindowClass":
+			# HACK: Events get fired by this window in Windows Live Messenger 2009 when it starts.
+			# If we send a WM_NULL to this window at this point (which happens in accessibleObjectFromEvent), Messenger will silently exit (#677).
+			# Therefore, completely ignore these events, which is useless to us anyway.
+			return
 		winEventLimiter.addEvent(eventID,window,objectID,childID,threadID)
 	except:
 		log.error("winEventCallback", exc_info=True)
@@ -630,8 +635,8 @@ def processFocusWinEvent(window,objectID,childID,force=False):
 	if childID==0 and not windowClassName.startswith('bosa_sdm') and winUser.getClassName(winUser.getAncestor(window,winUser.GA_PARENT)).startswith('bosa_sdm'):
 		return False
 	rootWindow=winUser.getAncestor(window,winUser.GA_ROOT)
-	# If this window's root window is not the foreground window and this window or its root window is not a popup window:
-	if rootWindow!=winUser.getForegroundWindow() and not (winUser.getWindowStyle(window) & winUser.WS_POPUP or winUser.getWindowStyle(rootWindow)&winUser.WS_POPUP):
+	# If this window is not within the foreground window and this window or its root window is not a popup window, and this window's root window is not the highest in the z-order
+	if not winUser.isDescendantWindow(winUser.getForegroundWindow(),window) and not (winUser.getWindowStyle(window) & winUser.WS_POPUP or winUser.getWindowStyle(rootWindow)&winUser.WS_POPUP) and winUser.getPreviousWindow(rootWindow)!=0: 
 		# This is a focus event from a background window, so ignore it.
 		return False
 	#Notify appModuleHandler of this new foreground window
@@ -668,7 +673,7 @@ def processFocusNVDAEvent(obj,force=False):
 	@rtype: boolean
 	"""
 	if not force and isinstance(obj,NVDAObjects.IAccessible.IAccessible):
-		focus=api.getFocusObject()
+		focus=eventHandler.lastQueuedFocusObject
 		if isinstance(focus,NVDAObjects.IAccessible.IAccessible) and focus.isDuplicateIAccessibleEvent(obj):
 			return True
 		if not obj.shouldAllowIAccessibleFocusEvent:

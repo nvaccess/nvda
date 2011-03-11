@@ -49,7 +49,7 @@ from NVDAObjects.window import Window
 
 from NVDAObjects.window import DisplayModelEditableText
 
-import _default
+import appModuleHandler
 
 
 #
@@ -86,7 +86,7 @@ SB_HORZ = 0
 SB_VERT = 1
 
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		# Only use this overlay class if the top level automation object for the IDE can be retrieved,
 		# as it will not work otherwise.
@@ -242,10 +242,15 @@ class VsTextEditPane(EditableTextWithoutAutoSelectDetection,Window):
 		self.location = (self._window.Top,self._window.Left,self._window.Width,self._window.Height)
 		self._textView = self.appModule._getTextManager().GetActiveView(True, None)
 
+	def event_valueChange(self):
+		pass
+
+
 class IVsTextView(IUnknown):
 	_case_insensitive_ = True
 	_iid_ = GUID('{BB23A14B-7C61-469A-9890-A95648CED5E6}')
 	_idlflags_ = []
+
 
 class IVsTextManager(comtypes.IUnknown):
 	_case_insensitive_ = True

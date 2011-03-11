@@ -1,3 +1,4 @@
+import api
 import controlTypes
 import eventHandler
 import winUser
@@ -127,6 +128,14 @@ class AcrobatTextInfo(NVDAObjectTextInfo):
 
 class AcrobatTextNode(EditableText, AcrobatNode):
 	TextInfo = AcrobatTextInfo
+
+	def _get_parent(self):
+		#hack: This code should be taken out once the crash is fixed in Adobe Reader X.
+		#If going parent on a root text node after saying ok to the accessibility options (untagged) and before the processing document dialog appears, Reader X will crash.
+		if self.event_childID==0:
+			return api.getDesktopObject()
+		else:
+			return super(AcrobatTextNode,self).parent
 
 class AcrobatSDIWindowClient(IAccessible):
 

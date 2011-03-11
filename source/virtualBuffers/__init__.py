@@ -229,13 +229,13 @@ class ElementsListDialog(wx.Dialog):
 
 		child = wx.RadioBox(self, wx.ID_ANY, label=_("Type:"), choices=tuple(et[1] for et in self.ELEMENT_TYPES))
 		child.Bind(wx.EVT_RADIOBOX, self.onElementTypeChange)
-		mainSizer.Add(child)
+		mainSizer.Add(child,proportion=1)
 
 		self.tree = wx.TreeCtrl(self, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE)
 		self.tree.Bind(wx.EVT_SET_FOCUS, self.onTreeSetFocus)
 		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
 		self.treeRoot = self.tree.AddRoot("root")
-		mainSizer.Add(self.tree)
+		mainSizer.Add(self.tree,proportion=7)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		label = wx.StaticText(self, wx.ID_ANY, _("&Filter by:"))
@@ -243,7 +243,7 @@ class ElementsListDialog(wx.Dialog):
 		self.filterEdit = wx.TextCtrl(self, wx.ID_ANY)
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
 		sizer.Add(self.filterEdit)
-		mainSizer.Add(sizer)
+		mainSizer.Add(sizer,proportion=1)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		self.activateButton = wx.Button(self, wx.ID_ANY, _("&Activate"))
@@ -253,7 +253,7 @@ class ElementsListDialog(wx.Dialog):
 		self.moveButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(False))
 		sizer.Add(self.moveButton)
 		sizer.Add(wx.Button(self, wx.ID_CANCEL))
-		mainSizer.Add(sizer)
+		mainSizer.Add(sizer,proportion=1)
 
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
@@ -501,19 +501,43 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		super(VirtualBuffer,self).__init__(rootNVDAObject)
 		self.backendName=backendName
 		self.VBufHandle=None
+		self.isLoading=False
 		self.disableAutoPassThrough = False
 		self.rootDocHandle,self.rootID=self.getIdentifierFromNVDAObject(self.rootNVDAObject)
 		self._lastFocusObj = None
 		self._hadFirstGainFocus = False
 		self._lastProgrammaticScrollTime = None
-		self.bindGestures(self.__gestures)
+		# We need to cache this because it will be unavailable once the document dies.
+		self.documentConstantIdentifier = self.documentConstantIdentifier
+		if not hasattr(self.rootNVDAObject.appModule, "_vbufRememberedCaretPositions"):
+			self.rootNVDAObject.appModule._vbufRememberedCaretPositions = {}
+
+	def prepare(self):
+		self.shouldPrepare=False
 		self.loadBuffer()
 
+	def _get_shouldPrepare(self):
+		return not self.isLoading and not self.VBufHandle
+
 	def terminate(self):
+		if not self.VBufHandle:
+			return
+
+		if self.shouldRememberCaretPositionAcrossLoads:
+			try:
+				caret = self.selection
+				caret.collapse()
+				self.rootNVDAObject.appModule._vbufRememberedCaretPositions[self.documentConstantIdentifier] = caret.bookmark
+			except:
+				pass
+
 		self.unloadBuffer()
 
+	def _get_isReady(self):
+		return bool(self.VBufHandle and not self.isLoading)
+
 	def loadBuffer(self):
-		self.isTransitioning = True
+		self.isLoading = True
 		self._loadProgressCallLater = wx.CallLater(1000, self._loadProgress)
 		threading.Thread(target=self._loadBuffer).start()
 
@@ -531,7 +555,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	def _loadBufferDone(self, success=True):
 		self._loadProgressCallLater.Stop()
 		del self._loadProgressCallLater
-		self.isTransitioning = False
+		self.isLoading = False
 		if not success:
 			return
 		if self._hadFirstGainFocus:
@@ -582,11 +606,16 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"""
 		if not self._hadFirstGainFocus:
 			# This buffer is gaining focus for the first time.
-			self._setInitialCaretPos()
 			# Fake a focus event on the focus object, as the buffer may have missed the actual focus event.
 			focus = api.getFocusObject()
 			self.event_gainFocus(focus, lambda: focus.event_gainFocus())
 			if not self.passThrough:
+				# We only set the caret position if in browse mode.
+				# If in focus mode, the document must have forced the focus somewhere,
+				# so we don't want to override it.
+				initialPos = self._getInitialCaretPos()
+				if initialPos:
+					self.selection = self.makeTextInfo(initialPos)
 				speech.cancelSpeech()
 				reportPassThrough(self)
 				speech.speakObjectProperties(self.rootNVDAObject,name=True)
@@ -646,7 +675,8 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		super(VirtualBuffer, self)._set_selection(info)
 		if isScriptWaiting() or not info.isCollapsed:
 			return
-		api.setReviewPosition(info)
+		if config.conf['reviewCursor']['followCaret'] and api.getNavigatorObject() is self.rootNVDAObject:
+			api.setReviewPosition(info)
 		if reason == speech.REASON_FOCUS:
 			focusObj = api.getFocusObject()
 			if focusObj==self.rootNVDAObject:
@@ -677,19 +707,13 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		return controlTypes.STATE_FOCUSABLE in obj.states
 
 	def script_activatePosition(self,gesture):
-		if self.VBufHandle is None:
-			return gesture.send()
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		self._activatePosition(info)
 	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
 
-	def _caretMovementScriptHelper(self, *args, **kwargs):
-		if self.VBufHandle is None:
-			return 
-		super(VirtualBuffer, self)._caretMovementScriptHelper(*args, **kwargs)
-
 	def script_refreshBuffer(self,gesture):
-		if self.VBufHandle is None:
+		if scriptHandler.isScriptWaiting():
+			# This script may cause subsequently queued scripts to fail, so don't execute.
 			return
 		self.unloadBuffer()
 		self.loadBuffer()
@@ -735,8 +759,6 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			offset=startOffset
 
 	def _quickNavScript(self,gesture, nodeType, direction, errorMessage, readUnit):
-		if self.VBufHandle is None:
-			return gesture.send()
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		startOffset=info._startOffset
 		endOffset=info._endOffset
@@ -776,8 +798,6 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		cls.__gestures["kb:shift+%s" % key] = scriptName
 
 	def script_elementsList(self,gesture):
-		if self.VBufHandle is None:
-			return
 		# We need this to be a modal dialog, but it mustn't block this script.
 		def run():
 			gui.mainFrame.prePopup()
@@ -822,7 +842,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if gesture.mainKeyName in ("home", "end"):
 			# Home, end, control+home and control+end should not disable pass through.
 			return nextHandler()
-		script = self.getScript(gesture.keyName)
+		script = self.getScript(gesture)
 		if not script:
 			return nextHandler()
 
@@ -849,7 +869,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 
 	def script_collapseOrExpandControl(self, gesture):
 		gesture.send()
-		if not self.passThrough:
+		if not self.passThrough or self.disableAutoPassThrough:
 			return
 		self.passThrough = False
 		reportPassThrough(self)
@@ -866,9 +886,6 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		@return: C{True} if the tab order was overridden, C{False} if not.
 		@rtype: bool
 		"""
-		if self.VBufHandle is None:
-			return False
-
 		focus = api.getFocusObject()
 		try:
 			focusInfo = self.makeTextInfo(focus)
@@ -939,8 +956,6 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
 			# This is not ideal if the user was positioned over a node which cannot receive focus.
 			return
-		if self.VBufHandle is None:
-			return nextHandler()
 		if obj==self.rootNVDAObject:
 			if self.passThrough:
 				return nextHandler()
@@ -1000,9 +1015,6 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		@rtype: bool
 		@note: If C{False} is returned, calling events should probably call their nextHandler.
 		"""
-		if not self.VBufHandle:
-			return False
-
 		if self.programmaticScrollMayFireEvent and self._lastProgrammaticScrollTime and time.time() - self._lastProgrammaticScrollTime < 0.4:
 			# This event was probably caused by this buffer's call to scrollIntoView().
 			# Therefore, ignore it. Otherwise, the cursor may bounce back to the scroll point.
@@ -1188,13 +1200,40 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 				yield 0, link2end, link1start
 			link1node, link1start, link1end = link2node, link2start, link2end
 
-	def _setInitialCaretPos(self):
-		"""Set the initial position of the caret after the buffer has been loaded.
-		The return value is primarily used so that overriding methods can determine whether they need to set an initial position.
-		@return: C{True} if an initial position was set.
+	def _getInitialCaretPos(self):
+		"""Retrieve the initial position of the caret after the buffer has been loaded.
+		This position, if any, will be passed to L{makeTextInfo}.
+		Subclasses should extend this method.
+		@return: The initial position of the caret, C{None} if there isn't one.
+		@rtype: TextInfo position
+		"""
+		if self.shouldRememberCaretPositionAcrossLoads:
+			try:
+				return self.rootNVDAObject.appModule._vbufRememberedCaretPositions[self.documentConstantIdentifier]
+			except KeyError:
+				pass
+		return None
+
+	def _get_documentConstantIdentifier(self):
+		"""Get the constant identifier for this document.
+		This identifier should uniquely identify all instances (not just one instance) of a document for at least the current session of the hosting application.
+		Generally, the document URL should be used.
+		@return: The constant identifier for this document, C{None} if there is none.
+		"""
+		return None
+
+	def _get_shouldRememberCaretPositionAcrossLoads(self):
+		"""Specifies whether the position of the caret should be remembered when this document is loaded again.
+		This is useful when the browser remembers the scroll position for the document,
+		but does not communicate this information via APIs.
+		The remembered caret position is associated with this document using L{documentConstantIdentifier}.
+		@return: C{True} if the caret position should be remembered, C{False} if not.
 		@rtype: bool
 		"""
-		return False
+		docConstId = self.documentConstantIdentifier
+		# Return True if the URL indicates that this is probably a web browser document.
+		# We do this check because we don't want to remember caret positions for email messages, etc.
+		return isinstance(docConstId, basestring) and docConstId.split("://", 1)[0] in ("http", "https", "ftp", "ftps", "file")
 
 	__gestures = {
 		"kb:enter": "activatePosition",

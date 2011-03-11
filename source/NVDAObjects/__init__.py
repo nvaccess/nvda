@@ -21,6 +21,7 @@ import controlTypes
 import appModuleHandler
 import treeInterceptorHandler
 import braille
+import globalPluginHandler
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -71,10 +72,14 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			obj.findOverlayClasses(clsList)
 		else:
 			clsList.append(APIClass)
-		# Allow app modules to add overlay classes.
+		# Allow app modules to choose overlay classes.
 		appModule=obj.appModule
 		if appModule and "chooseNVDAObjectOverlayClasses" in appModule.__class__.__dict__:
 			appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
+		# Allow global plugins to choose overlay classes.
+		for plugin in globalPluginHandler.runningPlugins:
+			if "chooseNVDAObjectOverlayClasses" in plugin.__class__.__dict__:
+				plugin.chooseNVDAObjectOverlayClasses(obj, clsList)
 
 		# Determine the bases for the new class.
 		bases=[]
@@ -107,12 +112,24 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			initFunc=cls.__dict__.get("initOverlayClass")
 			if initFunc:
 				initFunc(obj)
+			# Bind gestures specified on the class.
+			try:
+				obj.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))
+			except AttributeError:
+				pass
 
 		# Allow app modules to make minor tweaks to the instance.
 		if appModule and hasattr(appModule,"event_NVDAObject_init"):
 			appModule.event_NVDAObject_init(obj)
 
 		return obj
+
+	@classmethod
+	def clearDynamicClassCache(cls):
+		"""Clear the dynamic class cache.
+		This should be called when a plugin is unloaded so that any used overlay classes in the unloaded plugin can be garbage collected.
+		"""
+		cls._dynamicClassCache.clear()
 
 class NVDAObject(baseObject.ScriptableObject):
 	"""NVDA's representation of a single control/widget.
@@ -406,6 +423,12 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		return None
 
+	def _get_container(self):
+		"""
+		Exactly like parent, however another object at this same sibling level may be retreaved first (e.g. a groupbox). Mostly used when presenting context such as focus ancestry.
+		"""
+		return self.parent
+ 
 	def _get_next(self):
 		"""Retreaves the object directly after this object with the same parent.
 		@return: the next object if it exists else None.
@@ -704,7 +727,10 @@ Tries to force this object to take the focus.
 
 	def event_typedCharacter(self,ch):
 		speech.speakTypedCharacters(ch)
-
+		import winUser
+		if config.conf["keyboard"]["beepForLowercaseWithCapslock"] and ch.islower() and winUser.getKeyState(winUser.VK_CAPITAL)&1:
+			import tones
+			tones.beep(3000,40)
 
 	def event_mouseMove(self,x,y):
 		if not self._mouseEntered and config.conf['mouse']['reportObjectRoleOnMouseEnter']:
@@ -786,7 +812,7 @@ This code is executed if a gain focus event is received by this object.
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
-			if config.conf["reviewCursor"]["followCaret"]:
+			if config.conf["reviewCursor"]["followCaret"] and api.getNavigatorObject() is self: 
 				try:
 					api.setReviewPosition(self.makeTextInfo(textInfos.POSITION_CARET))
 				except (NotImplementedError, RuntimeError):

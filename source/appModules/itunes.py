@@ -1,10 +1,10 @@
-import _default
+import appModuleHandler
 from comtypes import COMError
 import controlTypes
 import oleacc
 import NVDAObjects.IAccessible
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if isinstance(obj,NVDAObjects.IAccessible.IAccessible):

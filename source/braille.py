@@ -2,14 +2,14 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2010 James Teh <jamie@jantrid.net>, Michael Curran <mick@kulgan.net>
+#Copyright (C) 2008-2011 James Teh <jamie@jantrid.net>, Michael Curran <mick@kulgan.net>
 
 import itertools
 import os
 import pkgutil
 import wx
 import louis
-import globalVars
+import keyboardHandler
 import baseObject
 import config
 from logHandler import log
@@ -18,6 +18,7 @@ import api
 import textInfos
 import speech
 import brailleDisplayDrivers
+import inputCore
 
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
@@ -183,10 +184,11 @@ class Region(object):
 		"""
 		pass
 
-	def previousLine(self):
+	def previousLine(self, start=False):
 		"""Move to the previous line if possible.
+		@param start: C{True} to move to the start of the line, C{False} to move to the end.
+		@type start: bool
 		"""
-		pass
 
 class TextRegion(Region):
 	"""A simple region containing a string of text.
@@ -352,11 +354,11 @@ class TextInfoRegion(Region):
 		dest.collapse()
 		self._setCursor(dest)
 
-	def previousLine(self):
+	def previousLine(self, start=False):
 		dest = self._line.copy()
 		dest.collapse()
-		# Move to the last character of the previous line.
-		moved = dest.move(textInfos.UNIT_CHARACTER, -1)
+		# If the end of the line is desired, move to the last character.
+		moved = dest.move(textInfos.UNIT_LINE if start else textInfos.UNIT_CHARACTER, -1)
 		if not moved:
 			return
 		dest.collapse()
@@ -655,6 +657,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	TETHER_FOCUS = "focus"
 	TETHER_REVIEW = "review"
 
+	cursorShape = 0xc0
+
 	def __init__(self):
 		self.display = None
 		self.displaySize = 0
@@ -662,11 +666,25 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
 		self.buffer = self.mainBuffer
-		#config.conf["braille"]["tetherTo"] = self.TETHER_FOCUS
 		#: Whether braille is enabled.
 		#: @type: bool
 		self.enabled = False
-		self._keyCounterForLastMessage=0
+		self._keyCountForLastMessage=0
+		self._cursorPos = None
+		self._cursorBlinkUp = True
+		self._cells = []
+		self._cursorBlinkTimer = None
+
+	def terminate(self):
+		if self._messageCallLater:
+			self._messageCallLater.Stop()
+			self._messageCallLater = None
+		if self._cursorBlinkTimer:
+			self._cursorBlinkTimer.Stop()
+			self._cursorBlinkTimer = None
+		if self.display:
+			self.display.terminate()
+			self.display = None
 
 	def _get_tether(self):
 		return config.conf["braille"]["tetherTo"]
@@ -705,23 +723,42 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.enabled = bool(self.displaySize)
 			config.conf["braille"]["display"] = name
 			log.info("Loaded braille display driver %s" % name)
-			self.configDisplay()
 			return True
 		except:
 			log.error("Error initializing display driver", exc_info=True)
 			self.setDisplayByName("noBraille")
 			return False
 
-	def configDisplay(self):
-		"""Configure the braille display driver based on the user's configuration.
-		@precondition: L{display} has been set.
-		"""
-		self.display.cursorBlinkRate = config.conf["braille"]["cursorBlinkRate"]
-		self.display.cursorShape = 0xc0
+	def _updateDisplay(self):
+		if self._cursorBlinkTimer:
+			self._cursorBlinkTimer.Stop()
+			self._cursorBlinkTimer = None
+		self._cursorBlinkUp = True
+		self._displayWithCursor()
+		blinkRate = config.conf["braille"]["cursorBlinkRate"]
+		if blinkRate and self._cursorPos is not None:
+			self._cursorBlinkTimer = wx.PyTimer(self._blink)
+			self._cursorBlinkTimer.Start(blinkRate)
+
+	def _displayWithCursor(self):
+		if not self._cells:
+			return
+		cells = list(self._cells)
+		if self._cursorPos is not None and self._cursorBlinkUp:
+			cells[self._cursorPos] |= self.cursorShape
+		self.display.display(cells)
+
+	def _blink(self):
+		self._cursorBlinkUp = not self._cursorBlinkUp
+		self._displayWithCursor()
 
 	def update(self):
-		self.display.display(self.buffer.windowBrailleCells)
-		self.display.cursorPos = self.buffer.cursorWindowPos
+		cells = self.buffer.windowBrailleCells
+		# cells might not be the full length of the display.
+		# Therefore, pad it with spaces to fill the display.
+		self._cells = cells + [0] * (self.displaySize - len(cells))
+		self._cursorPos = self.buffer.cursorWindowPos
+		self._updateDisplay()
 
 	def scrollForward(self):
 		self.buffer.scrollForward()
@@ -757,7 +794,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.buffer.update()
 		self.update()
 		self._resetMessageTimer()
-		self._keyCountForLastMessage=globalVars.keyCounter
+		self._keyCountForLastMessage=keyboardHandler.keyCounter
 
 	def _resetMessageTimer(self):
 		"""Reset the message timeout.
@@ -799,7 +836,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
 		if self.buffer is self.mainBuffer:
 			self.update()
-		elif self.buffer is self.messageBuffer and globalVars.keyCounter>self._keyCountForLastMessage:
+		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
 	def handleCaretMove(self, obj):
@@ -823,7 +860,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
 		if self.buffer is self.mainBuffer:
 			self.update()
-		elif self.buffer is self.messageBuffer and globalVars.keyCounter>self._keyCountForLastMessage:
+		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
 	def handleUpdate(self, obj):
@@ -843,7 +880,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.restoreWindow(ignoreErrors=True)
 		if self.buffer is self.mainBuffer:
 			self.update()
-		elif self.buffer is self.messageBuffer and globalVars.keyCounter>self._keyCountForLastMessage:
+		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
 	def handleReviewMove(self):
@@ -866,10 +903,18 @@ def initialize():
 	handler = BrailleHandler()
 	handler.setDisplayByName(config.conf["braille"]["display"])
 
+	# Update the display to the current focus/review position.
+	if not handler.enabled or not api.getDesktopObject():
+		# Braille is disabled or focus/review hasn't yet been initialised.
+		return
+	if handler.tether == handler.TETHER_FOCUS:
+		handler.handleGainFocus(api.getFocusObject())
+	else:
+		handler.handleReviewMove()
+
 def terminate():
 	global handler
-	if handler.display:
-		handler.display.terminate()
+	handler.terminate()
 	handler = None
 
 class BrailleDisplayDriver(baseObject.AutoPropertyObject):
@@ -877,6 +922,12 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory containing a BrailleDisplayDriver class which inherits from this base class.
 	
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
+	To display braille, L{numCells} and L{display} must be implemented.
+	
+	Drivers should dispatch input such as presses of buttons, wheels or other controls using the L{inputCore} framework.
+	They should subclass L{BrailleDisplayGesture} and execute instances of those gestures using L{inputCore.manager.executeGesture}.
+	These gestures can be mapped in L{gestureMap}.
+	A driver can also inherit L{baseObject.ScriptableObject} to provide display specific scripts.
 	"""
 	#: The name of the braille display; must be the original module file name.
 	#: @type: str
@@ -904,9 +955,7 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		"""
 		# Clear the display.
 		try:
-			self.cursorPos = None
-			self.cursorBlinkRate = 0
-			self.display([])
+			self.display([0] * self.numCells)
 		except:
 			# The display driver seems to be failing, but we're terminating anyway, so just ignore it.
 			pass
@@ -924,93 +973,46 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		@param cells: The braille cells to display.
 		@type cells: [int, ...]
 		"""
-		pass
 
-	def _get_cursorPos(self):
-		return None
+	#: Global input gesture map for this display driver.
+	#: @type: L{inputCore.GlobalGestureMap}
+	gestureMap = None
 
-	def _set_cursorPos(self, pos):
-		pass
-
-	def _get_cursorShape(self):
-		return None
-
-	def _set_cursorShape(self, shape):
-		pass
-
-	def _get_cursorBlinkRate(self):
-		return 0
-
-	def _set_cursorBlinkRate(self, rate):
-		pass
-
-class BrailleDisplayDriverWithCursor(BrailleDisplayDriver):
-	"""Abstract base braille display driver which manages its own cursor.
-	This should be used by braille display drivers where the display or underlying driver does not provide support for a cursor.
-	Instead of overriding L{display}, subclasses should override L{_display}.
+class BrailleDisplayGesture(inputCore.InputGesture):
+	"""A button, wheel or other control pressed on a braille display.
+	Subclasses must provide L{source} and L{id}.
+	L{routingIndex} should be provided for routing buttons.
+	If the braille display driver is a L{baseObject.ScriptableObject}, it can provide scripts specific to input gestures from this display.
 	"""
 
-	def __init__(self):
-		self._cursorPos = None
-		self._cursorBlinkRate = 0
-		self._cursorBlinkUp = True
-		self._cursorShape = 0
-		self._cells = []
-		self._cursorBlinkTimer = None
-		self._initCursor()
-
-	def _initCursor(self):
-		if self._cursorBlinkTimer:
-			self._cursorBlinkTimer.Stop()
-			self._cursorBlinkTimer = None
-		self._cursorBlinkUp = True
-		self._displayWithCursor()
-		if self._cursorBlinkRate and self._cursorPos is not None:
-			self._cursorBlinkTimer = wx.PyTimer(self._blink)
-			self._cursorBlinkTimer.Start(self._cursorBlinkRate)
-
-	def _blink(self):
-		self._cursorBlinkUp = not self._cursorBlinkUp
-		self._displayWithCursor()
-
-	def _get_cursorPos(self):
-		return self._cursorPos
-
-	def _set_cursorPos(self, pos):
-		self._cursorPos = pos
-		self._initCursor()
-
-	def _get_cursorBlinkRate(self):
-		return self._cursorBlinkRate
-
-	def _set_cursorBlinkRate(self, rate):
-		self._cursorBlinkRate = rate
-		self._initCursor()
-
-	def _get_cursorShape(self):
-		return self._cursorShape
-
-	def _set_cursorShape(self, shape):
-		self._cursorShape = shape
-		self._initCursor()
-
-	def display(self, cells):
-		# cells might not be the full length of the display.
-		# Therefore, pad it with spaces to fill the display so that the cursor can lie beyond it.
-		self._cells = cells + [0] * (self.numCells - len(cells))
-		self._displayWithCursor()
-
-	def _displayWithCursor(self):
-		if not self._cells:
-			return
-		cells = list(self._cells)
-		if self._cursorPos is not None and self._cursorBlinkUp:
-			cells[self._cursorPos] |= self._cursorShape
-		self._display(cells)
-
-	def _display(self, cells):
-		"""Actually display the given cells to the display.
-		L{display} calls methods to handle the cursor representation as appropriate.
-		However, this method (L{_display}) is called to actually display the final cells.
+	def _get_source(self):
+		"""The string used to identify all gestures from this display.
+		This should generally be the driver name.
+		This string will be included in the source portion of gesture identifiers.
+		For example, if this was C{alvaBC6},
+		a display specific gesture identifier might be C{br(alvaBC6):etouch1}.
+		@rtype: str
 		"""
-		pass
+		raise NotImplementedError
+
+	def _get_id(self):
+		"""The unique, display specific id for this gesture.
+		@rtype: str
+		"""
+		raise NotImplementedError
+
+	#: The index of the routing key or C{None} if this is not a routing key.
+	#: @type: int
+	routingIndex = None
+
+	def _get_identifiers(self):
+		return (u"br({source}):{id}".format(source=self.source, id=self.id).lower(),)
+
+	def _get_displayName(self):
+		return self.id
+
+	def _get_scriptableObject(self):
+		display = handler.display
+		if isinstance(display, baseObject.ScriptableObject):
+			return display
+		return super(BrailleDisplayGesture, self).scriptableObject

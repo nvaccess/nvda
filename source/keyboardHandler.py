@@ -6,8 +6,9 @@
 
 """Keyboard support"""
 
-import winUser
 import time
+import wx
+import winUser
 import vkCodes
 import speech
 import ui
@@ -39,6 +40,10 @@ lastNVDAModifierReleaseTime = None
 bypassNVDAModifier = False
 #: The modifiers currently being pressed.
 currentModifiers = set()
+#: A counter which is incremented each time a key is pressed.
+#: Note that this may be removed in future, so reliance on it should generally be avoided.
+#: @type: int
+keyCounter = 0
 
 def passNextKeyThrough():
 	global passKeyThroughCount
@@ -59,43 +64,49 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyDown.
 	"""
 	try:
-		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers
+		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter
 		#Injected keys should be ignored
 		if injected:
 			return True
 
+		keyCode = (vkCode, extended)
+
 		if passKeyThroughCount >= 0:
 			# We're passing keys through.
-			if lastPassThroughKeyDown != (vkCode, extended):
+			if lastPassThroughKeyDown != keyCode:
 				# Increment the pass key through count.
 				# We only do this if this isn't a repeat of the previous key down, as we don't receive key ups for repeated key downs.
 				passKeyThroughCount += 1
-				lastPassThroughKeyDown = (vkCode, extended)
+				lastPassThroughKeyDown = keyCode
 			return True
 
+		keyCounter += 1
 		gesture = KeyboardInputGesture(currentModifiers, vkCode, scanCode, extended)
-		if bypassNVDAModifier or ((vkCode, extended) == lastNVDAModifier and lastNVDAModifierReleaseTime and time.time() - lastNVDAModifierReleaseTime < 0.5):
+		if bypassNVDAModifier or (keyCode == lastNVDAModifier and lastNVDAModifierReleaseTime and time.time() - lastNVDAModifierReleaseTime < 0.5):
 			# The user wants the key to serve its normal function instead of acting as an NVDA modifier key.
 			# There may be key repeats, so ensure we do this until they stop.
 			bypassNVDAModifier = True
 			gesture.isNVDAModifierKey = False
 		lastNVDAModifierReleaseTime = None
 		if gesture.isNVDAModifierKey:
-			lastNVDAModifier = (vkCode, extended)
+			lastNVDAModifier = keyCode
 		else:
 			# Another key was pressed after the last NVDA modifier key, so it should not be passed through on the next press.
 			lastNVDAModifier = None
 		if gesture.isModifier:
-			currentModifiers.add((vkCode, extended))
+			if gesture.speechEffectWhenExecuted in (gesture.SPEECHEFFECT_PAUSE, gesture.SPEECHEFFECT_RESUME) and keyCode in currentModifiers:
+				# Ignore key repeats for the pause speech key to avoid speech stuttering as it continually pauses and resumes.
+				return True
+			currentModifiers.add(keyCode)
 
 		try:
 			inputCore.manager.executeGesture(gesture)
-			trappedKeys.add((vkCode,extended))
+			trappedKeys.add(keyCode)
 			return False
 		except inputCore.NoInputGestureAction:
 			if gesture.isNVDAModifierKey:
 				# Never pass the NVDA modifier key to the OS.
-				trappedKeys.add((vkCode,extended))
+				trappedKeys.add(keyCode)
 				return False
 	except:
 		log.error("internal_keyDownEvent", exc_info=True)
@@ -109,8 +120,10 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 		if injected:
 			return True
 
+		keyCode = (vkCode, extended)
+
 		if passKeyThroughCount >= 1:
-			if lastPassThroughKeyDown == (vkCode, extended):
+			if lastPassThroughKeyDown == keyCode:
 				# This key has been released.
 				lastPassThroughKeyDown = None
 			passKeyThroughCount -= 1
@@ -118,17 +131,17 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 				passKeyThroughCount = -1
 			return True
 
-		if lastNVDAModifier and (vkCode,extended)==lastNVDAModifier:
+		if lastNVDAModifier and keyCode == lastNVDAModifier:
 			# The last pressed NVDA modifier key is being released and there were no key presses in between.
 			# The user may want to press it again quickly to pass it through.
-			lastNVDAModifierReleaseTime=time.time()
+			lastNVDAModifierReleaseTime = time.time()
 		# If we were bypassing the NVDA modifier, stop doing so now, as there will be no more repeats.
 		bypassNVDAModifier = False
 
-		currentModifiers.discard((vkCode, extended))
+		currentModifiers.discard(keyCode)
 
-		if (vkCode,extended) in trappedKeys:
-			trappedKeys.remove((vkCode,extended))
+		if keyCode in trappedKeys:
+			trappedKeys.remove(keyCode)
 			return False
 	except:
 		log.error("", exc_info=True)
@@ -219,12 +232,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 		return winUser.getKeyNameText(self.scanCode, self.isExtended)
 
-	def _get__keyNames(self):
-		mainKey = self.mainKeyName
-
-		if self.isModifier:
-			return (mainKey,)
-
+	def _get_modifierNames(self):
 		modTexts = set()
 		for modVk, modExt in self.generalizedModifiers:
 			if isNVDAModifierKey(modVk, modExt):
@@ -232,16 +240,22 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			else:
 				modTexts.add(self.getVkName(modVk, None))
 
-		return tuple(modTexts) + (mainKey,)
+		return modTexts
 
-	def _get_keyName(self):
-		return "+".join(self._keyNames)
+	def _get__keyNamesInDisplayOrder(self):
+		return tuple(self.modifierNames) + (self.mainKeyName,)
+
+	def _get_logIdentifier(self):
+		return u"kb({layout}):{key}".format(layout=self.layout,
+			key="+".join(self._keyNamesInDisplayOrder))
 
 	def _get_displayName(self):
-		return "+".join(localizedKeyLabels.get(key, key) for key in self._keyNames)
+		return "+".join(localizedKeyLabels.get(key, key) for key in self._keyNamesInDisplayOrder)
 
 	def _get_identifiers(self):
-		keyName = self.keyName.lower()
+		keyNames = set(self.modifierNames)
+		keyNames.add(self.mainKeyName)
+		keyName = "+".join(keyNames).lower()
 		return (
 			u"kb({layout}):{key}".format(layout=self.layout, key=keyName),
 			u"kb:{key}".format(key=keyName)
@@ -263,7 +277,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		return False
 
 	def _get_speechEffectWhenExecuted(self):
-		if not inputCore.manager.isInputHelpActive and self.isExtended and winUser.VK_VOLUME_MUTE <= self.vkCode <= winUser.VK_VOLUME_UP:
+		if inputCore.manager.isInputHelpActive:
+			return self.SPEECHEFFECT_CANCEL
+		if self.isExtended and winUser.VK_VOLUME_MUTE <= self.vkCode <= winUser.VK_VOLUME_UP:
 			return None
 		if self.vkCode in (winUser.VK_SHIFT, winUser.VK_LSHIFT, winUser.VK_RSHIFT):
 			return self.SPEECHEFFECT_RESUME if speech.isPaused else self.SPEECHEFFECT_PAUSE
@@ -271,7 +287,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 	def reportExtra(self):
 		if self.vkCode in self.TOGGLE_KEYS:
-			queueHandler.queueFunction(queueHandler.eventQueue, self._reportToggleKey)
+			wx.CallLater(30, self._reportToggleKey)
 
 	def _reportToggleKey(self):
 		toggleState = winUser.getKeyState(self.vkCode) & 1
@@ -307,7 +323,6 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 		if not queueHandler.isPendingItems(queueHandler.eventQueue):
 			time.sleep(0.01)
-			import wx
 			wx.Yield()
 
 	@classmethod

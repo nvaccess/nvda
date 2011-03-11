@@ -4,9 +4,12 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import locale
+from collections import OrderedDict
 import time
 import os
 import comtypes.client
+from comtypes import COMError
 import _winreg
 import globalVars
 from synthDriverHandler import SynthDriver,VoiceInfo
@@ -44,15 +47,19 @@ class SynthDriver(SynthDriver):
 		del self.tts
 
 	def _getAvailableVoices(self):
-		voices=[]
+		voices=OrderedDict()
 		v=self.tts.GetVoices()
 		for i in range(len(v)):
 			try:
 				ID=v[i].Id
 				name=v[i].GetDescription()
+				try:
+					language=locale.windows_locale[int(v[i].getattribute('language').split(';')[0],16)]
+				except KeyError:
+					language=None
 			except COMError:
 				log.warning("Could not get the voice info. Skipping...")
-			voices.append(VoiceInfo(ID,name))
+			voices[ID]=VoiceInfo(ID,name,language)
 		return voices
 
 	def _get_rate(self):

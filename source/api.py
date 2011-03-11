@@ -10,8 +10,7 @@ import config
 import textInfos
 import globalVars
 from logHandler import log
-import speech
-import sayAllHandler
+import ui
 import treeInterceptorHandler
 import NVDAObjects
 import NVDAObjects.IAccessible
@@ -102,18 +101,18 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 			break
 		# We're moving backwards along the ancestor chain, so add this to the start of the list.
 		ancestors.insert(0,tempObj)
-		parent=tempObj.parent
-		tempObj.parent=parent # Cache the parent.
-		tempObj=parent
+		container=tempObj.container
+		tempObj.container=container # Cache the parent.
+		tempObj=container
 	#Remove the final new ancestor as this will be the new focus object
 	del ancestors[-1]
 	newAppModuleSet=set(o.appModule for o in ancestors+[obj] if o and o.appModule)
 	for removedMod in oldAppModuleSet-newAppModuleSet:
-		if hasattr(removedMod,'event_appLoseFocus'):
-			removedMod.event_appLoseFocus()
+		if not removedMod.sleepMode and hasattr(removedMod,'event_appModule_loseFocus'):
+			removedMod.event_appModule_loseFocus()
   	for addedMod in newAppModuleSet-oldAppModuleSet:
-		if hasattr(addedMod,'event_appGainFocus'):
-			addedMod.event_appGainFocus()
+		if not addedMod.sleepMode and hasattr(addedMod,'event_appModule_gainFocus'):
+			addedMod.event_appModule_gainFocus()
 	treeInterceptorHandler.cleanup()
 	treeInterceptorObject=None
 	o=None
@@ -131,7 +130,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	globalVars.focusAncestors=ancestors
 	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
 	if config.conf["reviewCursor"]["followFocus"]:
-		setNavigatorObject(obj if not obj.treeInterceptor or obj.treeInterceptor.passThrough or obj.treeInterceptor.isTransitioning else obj.treeInterceptor.rootNVDAObject)
+		setNavigatorObject(obj if not obj.treeInterceptor or obj.treeInterceptor.passThrough or not obj.treeInterceptor.isReady else obj.treeInterceptor.rootNVDAObject)
 	return True
 
 def getFocusDifferenceLevel():
@@ -164,7 +163,7 @@ def getReviewPosition():
 	else:
 		obj=globalVars.navigatorObject
 		ti=obj.treeInterceptor
-		if ti and ti.rootNVDAObject==obj:
+		if ti and ti.isReady and ti.rootNVDAObject==obj:
 			obj=ti
 		try:
 			globalVars.reviewPosition=obj.makeTextInfo(textInfos.POSITION_CARET)

@@ -836,10 +836,6 @@ the NVDAObject for IAccessible
 	def _get_parent(self):
 		if self.IAccessibleChildID>0:
 			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=0) or super(IAccessible,self).parent
-		#Support for groupbox windows
-		groupboxObj=IAccessibleHandler.findGroupboxObject(self)
-		if groupboxObj:
-			return groupboxObj
 		if self.parentUsesSuperOnWindowRootIAccessible and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
 			return super(IAccessible,self).parent
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
@@ -1064,7 +1060,9 @@ the NVDAObject for IAccessible
 			except:
 				log.debugWarning("IAccessible2::scrollTo failed", exc_info=True)
 
-	allowIAccessibleChildIDAndChildCountForPositionInfo=False #: if true position info should fall back to using the childID and the parent's accChildCount for position information if there is nothing better available.
+	def _get_allowIAccessibleChildIDAndChildCountForPositionInfo(self):
+		"""if true position info should fall back to using the childID and the parent's accChildCount for position information if there is nothing better available."""
+		return config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"]
 
 	def _get_positionInfo(self):
 		if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
@@ -1285,6 +1283,14 @@ class WindowRoot(IAccessible):
 
 	TextInfo=displayModel.DisplayModelTextInfo
 
+	def _get_container(self):
+		#Support for groupbox windows
+		groupboxObj=IAccessibleHandler.findGroupboxObject(self)
+		if groupboxObj:
+			return groupboxObj
+		return super(WindowRoot,self).container
+
+
 class ShellDocObjectView(IAccessible):
 
 	def event_gainFocus(self):
@@ -1355,12 +1361,6 @@ class Tooltip(IAccessible):
 			speech.speakObject(self,reason=speech.REASON_FOCUS)
 			# TODO: Don't use getBrailleTextForProperties directly.
 			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
-
-class ConsoleWindowClass(IAccessible):
-
-	def event_nameChange(self):
-		pass
-
 
 class List(IAccessible):
 
@@ -1516,7 +1516,6 @@ _staticMap={
 	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
 	("TRxRichEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,oleacc.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
-	("ConsoleWindowClass",oleacc.ROLE_SYSTEM_WINDOW):"ConsoleWindowClass",
 	(None,oleacc.ROLE_SYSTEM_LIST):"List",
 	(None,oleacc.ROLE_SYSTEM_COMBOBOX):"ComboBox",
 	(None,oleacc.ROLE_SYSTEM_OUTLINE):"Outline",
@@ -1532,7 +1531,7 @@ _staticMap={
 	("SysTreeView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysTreeView32.TreeViewItem",
 	("SysTreeView32",0):"sysTreeView32.BrokenCommctrl5Item",
 	("ATL:SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
-	("TWizardForm",oleacc.ROLE_SYSTEM_CLIENT):"Dialog",
+	("TWizardForm",oleacc.ROLE_SYSTEM_CLIENT):"delphi.Form",
 	("SysLink",oleacc.ROLE_SYSTEM_CLIENT):"SysLinkClient",
 	("SysLink",oleacc.ROLE_SYSTEM_LINK):"SysLink",
 	("#32771",oleacc.ROLE_SYSTEM_LIST):"TaskList",
@@ -1540,9 +1539,10 @@ _staticMap={
 	("#32771",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("TaskSwitcherWnd",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
 	("TGroupBox",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TGroupBox",
-	("TFormOptions",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TFormOptions",
-	("TFormOptions",oleacc.ROLE_SYSTEM_WINDOW):"delphi.TFormOptions",
-	("TTabSheet",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TTabSheet",
+	("TFormOptions",oleacc.ROLE_SYSTEM_CLIENT):"delphi.Form",
+	("TMessageForm",oleacc.ROLE_SYSTEM_CLIENT):"delphi.Form",
+	("TFormOptions",oleacc.ROLE_SYSTEM_WINDOW):"delphi.Form",
+	("TTabSheet",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TabSheet",
 	("MsiDialogCloseClass",oleacc.ROLE_SYSTEM_CLIENT):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("TPTShellList",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",

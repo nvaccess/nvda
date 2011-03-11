@@ -44,6 +44,8 @@ class AdobeAcrobat(VirtualBuffer):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)
 
 	def _get_isAlive(self):
+		if self.isLoading:
+			return True
 		root=self.rootNVDAObject
 		if not root:
 			return False

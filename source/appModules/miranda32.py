@@ -5,14 +5,14 @@
 #See the file COPYING for more details.
 
 import ui
-import globalVars
+import config
 from ctypes import *
 from ctypes.wintypes import *
 import winKernel
 import winUser
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.behaviors import Dialog
-import _default
+import appModuleHandler
 import speech
 import braille
 import controlTypes
@@ -76,9 +76,10 @@ CLM_GETSTATUSMSG=CLM_FIRST+105
 ANSILOGS=(1001,1006)
 MESSAGEVIEWERS=(1001,1005,5005)
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 	lastTextLengths={}
 	lastMessages=[]
+	# Must not be > 9.
 	MessageHistoryLength=3
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -109,12 +110,17 @@ class AppModule(_default.AppModule):
 			obj._isWindowUnicode=False
 
 	def script_readMessage(self,gesture):
-		num=int(gesture.keyName[-1])
+		num=int(gesture.mainKeyName[-1])
 		if len(self.lastMessages)>num-1:
 			ui.message(self.lastMessages[num-1])
 		else:
 			ui.message(_("No message yet"))
 	script_readMessage.__doc__=_("Displays one of the recent messages")
+
+	def __init__(self, *args, **kwargs):
+		super(AppModule, self).__init__(*args, **kwargs)
+		for n in xrange(1, self.MessageHistoryLength + 1):
+			self.bindGesture("kb:NVDA+control+%s" % n, "readMessage")
 
 class mirandaIMContactList(IAccessible):
 
@@ -230,7 +236,7 @@ class MirandaMessageViewerScrollbar(IAccessible):
 			message=self.windowText[self.appModule.lastTextLengths[self.windowHandle]:]
 			self.appModule.lastMessages.insert(0,message)
 			self.appModule.lastMessages=self.appModule.lastMessages[:self.appModule.MessageHistoryLength]
-			if globalVars.reportDynamicContentChanges:
+			if config.conf["presentation"]["reportDynamicContentChanges"]:
 				ui.message(message)
 			self.appModule.lastTextLengths[self.windowHandle]=curTextLength
 		super(MirandaMessageViewerScrollbar,self).event_valueChange()

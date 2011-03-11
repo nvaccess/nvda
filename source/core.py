@@ -74,6 +74,12 @@ def doStartupDialogs():
 		gui.WelcomeDialog.run()
 	if globalVars.configFileError:
 		gui.ConfigFileErrorDialog.run()
+	import inputCore
+	if inputCore.manager.userGestureMap.lastUpdateContainedError:
+		import wx
+		gui.scriptUI.MessageDialog(_("Your gesture map file contains errors.\n"
+				"More details about the errors can be found in the log file."),
+			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION).run()
 
 def restart():
 	"""Restarts NVDA by starting a new copy with -r."""
@@ -85,8 +91,12 @@ def resetConfiguration():
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
 	"""
 	import config
+	import braille
 	import speech
 	import languageHandler
+	import inputCore
+	log.debug("Terminating braille")
+	braille.terminate()
 	log.debug("terminating speech")
 	speech.terminate()
 	log.debug("Reloading config")
@@ -99,7 +109,28 @@ def resetConfiguration():
 	#Speech
 	log.debug("initializing speech")
 	speech.initialize()
+	#braille
+	log.debug("Initializing braille")
+	braille.initialize()
+	log.debug("Reloading user and locale input gesture maps")
+	inputCore.manager.loadUserGestureMap()
+	inputCore.manager.loadLocaleGestureMap()
 	log.info("Reverted to saved configuration")
+
+def _setInitialFocus():
+	"""Sets the initial focus if no focus event was received at startup.
+	"""
+	import eventHandler
+	import api
+	if eventHandler.lastQueuedFocusObject:
+		# The focus has already been set or a focus event is pending.
+		return
+	try:
+		focus = api.getDesktopObject().objectWithFocus()
+		if focus:
+			eventHandler.queueEvent('gainFocus', focus)
+	except:
+		log.exception("Error retrieving initial focus")
 
 def main():
 	"""NVDA's core main loop.
@@ -211,27 +242,28 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import IAccessibleHandler
 	log.debug("Initializing IAccessible support")
 	IAccessibleHandler.initialize()
+	log.debug("Initializing input core")
+	import inputCore
+	inputCore.initialize()
 	import keyboardHandler
 	log.debug("Initializing keyboard handler")
 	keyboardHandler.initialize()
 	import mouseHandler
 	log.debug("initializing mouse handler")
 	mouseHandler.initialize()
+	import globalPluginHandler
+	log.debug("Initializing global plugin handler")
+	globalPluginHandler.initialize()
 	if not globalVars.appArgs.minimal:
 		try:
 			braille.handler.message(_("NVDA started"))
 		except:
 			log.error("", exc_info=True)
 		wx.CallAfter(doStartupDialogs)
-	if api.getFocusObject()==api.getDesktopObject():
-		import eventHandler
-		try:
-			focus=api.getDesktopObject().objectWithFocus()
-			if focus:
-				eventHandler.queueEvent('gainFocus',focus)
-		except:
-			log.exception("Error retrieving initial focus")
 	import queueHandler
+	# Queue the handling of initial focus,
+	# as API handlers might need to be pumped to get the first focus event.
+	queueHandler.queueFunction(queueHandler.eventQueue, _setInitialFocus)
 	import watchdog
 	import baseObject
 	class CorePump(wx.Timer):
@@ -281,6 +313,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		treeInterceptorHandler.terminate()
 	except:
 		log.error("Error cleaning up treeInterceptors",exc_info=True)
+	log.debug("Terminating global plugin handler")
+	globalPluginHandler.terminate()
 	log.debug("Terminating IAccessible support")
 	try:
 		IAccessibleHandler.terminate()
@@ -301,6 +335,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		JABHandler.terminate()
 	except:
 		log.error("Error terminating Java Access Bridge support",exc_info=True)
+	log.debug("Terminating app module handler")
+	appModuleHandler.terminate()
 	log.debug("Terminating NVDAHelper")
 	try:
 		NVDAHelper.terminate()
@@ -316,6 +352,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		mouseHandler.terminate()
 	except:
 		log.error("error terminating mouse handler",exc_info=True)
+	log.debug("Terminating input core")
+	inputCore.terminate()
 	log.debug("Terminating braille")
 	try:
 		braille.terminate()

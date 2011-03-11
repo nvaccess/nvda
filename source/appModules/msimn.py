@@ -8,7 +8,7 @@ import winUser
 import controlTypes
 import textInfos
 import api
-import _default
+import appModuleHandler
 import speech
 from keyboardHandler import KeyboardInputGesture
 from NVDAObjects.IAccessible import sysListView32
@@ -31,7 +31,7 @@ envelopeNames={
 	1037:_("From:"),
 }
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		controlID=obj.windowControlID

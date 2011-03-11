@@ -2,6 +2,102 @@
 
 
 %!includeconf: ../changes.t2tconf
+= 2011.1 =
+
+== Novas Características ==
+- Agora pódense anunciar as cores para algúns controis. O anunciado automático pódese configurar no diálogo de preferencias de formateado de documentos. Tamén se poden anunciar baixo demanda utilizando a orde de anunciado de formato de texto (NVDA+f).
+- Nos modos virtuais, agora podes seleccionar por páxina (utilizando shift+AvPáx e shift+RePáx) e por parágrafos  (utilizando shift+control+Flecha Abaixo e shift+control+Flecha Arriba). (#639)
+- NVDA agora anuncia a saída do texto novo en mIRC, PuTTY, Tera Term e SecureCRT. (#936)
+- Os usuarios agora poden engadir novas combinacións de teclas ou sobreescribir as existentes para calquer script no NVDA proporcionando un sinxelo mapa de movementos de entrada do usuario. (#194)
+- Soporte para plugins globais. Os plugins globais poden engadir nova funcionalidade ó NVDA que funcione en todas as aplicacións. (#281)
+- Agora escóitase un pequeño pitido cando se teclean caracteres ca tecla shift mentres o BloqMaius estea activado. Esto pódese desactivar desmarcando a nova opción relacionada no diálogo de Opcións de Teclado . (#663)
+- Agora anúncianse os saltos de páxina cando nos movemos por liñas en Microsoft Word. (#758)
+- As viñetas e a numeración fálanse agora en Microsoft Word cando nos movemos por liñas. (#208)  
+- Agora está dispoñible unha orde para activar ou desactivar o modo Durminte para a aplicación actual (NVDA+shift+s). O Modo Durminte (anteriormente coñecido como modo de voz propia) desactiva toda a funcionalidade de lectura da pantalla no NVDA para unha aplicación en particular. Moi útil para aplicacións que proporcionan a súa propria voz e ou características de lectura de pantalla. Preme esta orde de novo para desactivar o Modo Durminte.
+- Engadíronse algunhas combinacións de teclas adicionais para liñas braille. Mira a sección Liñas braille Soportadas da Guía do Usuario para detalles. (#209)
+- Para conveniencia de desenroladores de terceiras partes, os app modules así como os plugins globais agora pódense recargar sen reinicializar ó NVDA. Utiliza Herramientas -> Recargar plugins en el menú de NVDA o NVDA+control+f3. (#544)
+- NVDA agora lembra a posición onde estabas cando voltas a unha páxina anteriormente visitada. Esto aplícase ata que ou o navegador ou NVDA sexan pechados. (#132)
+- As liñas braille Handy Tech agora poden utilizarse sen instalar o controlador universal de Handy Tech. (#854)
+- Soporte para varias liñas braille Baum, HumanWare e APH. (#937)
+
+ 
+== Cambios ==
+- A información de posición xa non se anuncia de maneira predeterminada nalgúns casos ónde era normalmente incorrecto; ex.: a maioría dos menús, a barra de aplicacións en execución, a área de notificacións, etc. Nemvargantes, esto pode activarse de novo cunha opción engadida no diálogo de Opcións de presentación de obxectos.
+- Axuda de Teclado renomeouse a Axuda de entrada para refrexar que se manexa entrada dende outras fontes que o teclado.
+- A localización dun script no código xa non se anuncia na axuda de entrada posto que é irrelevante e críptica para o usuario.
+- Cando NVDA detecta que se colgou, continúa interceptando  as teclas modificadoras de NVDA, aíndaque deixa pasar todas as demáis teclas do sistema. Esto prevén ó usuario de conmutar inintencionalmente o BlogMaius, etc. Se premen unha tecla modificadora de NVDA sen realising NVDA has frozen. (#939)
+- Se as teclas se manteñen pulsadas despóis de utilizar a orden de deixar pasar, todas as teclas (incluindo repeticións de teclas) agora pásanse ata que a última tecla  sexa soltada.
+- Se unha tecla modificadora de NVDA se preme dúas veces en sucesión rápida para pasala e a segunda presionada está pulsada, todas as teclas repetidas agora pasaránse tamén.
+- As teclas subir, baixar volume e silenciar agora anúncianse na Axuda de Entrada. Esto podería ser de utilidade se o usuario non sabe que fan esas teclas.
+- A tecla rápida para o elemento Cursor de Revisión no menú de Preferencias do NVDA foi cambiado de r a c para eliminar o conflicto co elemento de Opcións de Braille.
+
+
+== Corrección de Fallos ==
+- Cando se engade unha nova entrada do diccionario da fala, o título do diálogo agora é "Engadir Entrada de Diccionario" en lugar de "Editar entrada de diccionario". (#924)
+- Nos diálogos do diccionario da fala, o contido das columnas da Expresión Regular e sensible ás maiúsculas da lista de entradas de diccionario  preséntase agora na lingua configurada no NVDA en lugar de sempre en Inglés.
+- En AIM, a información de posición agora anúnciase en árbores.
+- A información de posición xa non se anuncia en algúns casos onde normalmente estaba incorrecta; ex.: a maioría dos menús, a barra de aplicacións en execución, a área de notificación, etc.
+- Nas barras de deslizamiento no diálogo Opcións de Voz, flecha arriba/rePáx/inicio agora incrementan a opción e flecha abaixo/AvPáx/fin decreméntana.  Anteriormente, ocurría o oposto, o cal non é lóxico e é inconsistente cas opcións do grupo synth. (#221)
+- Se unha tecla modificadora de NVDA se preme dúas veces rápidamente pero hai unha tecla premeda intervindo, a tecla modificadora de NVDA xa non pasa na segunda presión.
+- As teclas de pontoación agora fálanse na axuda de entrada cando a fala da pontoación estea desactivada. (#977)
+- No diálogo Opcións de Teclado, os nomes de distribución de teclado agora preséntanse na lingua configurada para o NVDA en lugar de sempre en Inglés. (#558)
+- Correxido un problema onde algúns elementos se renderizaban como valdeiros en documentos de Adobe Reader; ex.: as ligas na táboa de contido da Guía do usuario do Apple iPhone IOS 4.1.
+- O botón "Utilizar opcións actuais gardadas no logon e outras pantallas seguras" no diálogo de Opcións Xerais de NVDA, funciona se se utilizou inmediatamente despois de que NVDA sexa instalado novamente pero antes de que unha pantalla segura aparecera.  Anteriormente, NVDA anunciaba que o copiado tivo éxito, pero actualmente non tiña efecto. (#1194)
+- En sistemas co UAC activado, o botón "Utilizar opcións actualmente gardadas no logon e pantallas seguras" no diálogo de Opcións Xerais do NVDA, xa non falla despois do UAC se o nome da conta do usuario contén un espazo. (#918)
+- En Internet Explorer e outros controis MSHTML, NVDA utiliza agora a URL como un derradeiro resorte para determinar o nome dunha liga, máis que presentar ligas valdeiras. (#633)
+- NVDA xa non ignora o foco nos menús de AOL Instant Messenger 7. (#655)
+- Anunciar a etiqueta correcta para erros no diálogo do corrector de ortografía de Microsoft Word (ex.: Non en diccionario, erro gramatical, pontuación). Anteriormente todos se anunciaban como erro gramatical. (#883)
+- Tecleando en Microsoft Word mentres se utiliza unha liña braille xa non debería causar que sexa tecleado texto ilexible, e un extrano colgue cando se preme un sensor de seguemento braille en documentos de Word foi correxido. (#1212) Non obsstante unha limitación é que o texto en árabe pode non lerse xa en Word 2003 e superior, mentres se utiliza unha liña braille. (#627)
+- Cando se preme a tecla supr nun campo de edición, o texto/cursor nunha liña braille agora debería actualizarse sempre apropriadamente para reflexar o cambio. (#947)
+ - Os cambios en páxinas en documentos Gecko2 (Ex.: Firefox 4) mentres se abren múltiples pestanas agora refléxase  adecuadamente por NVDA. Anteriormente só os cambios na primeira pestana se reflexaban. (Mozilla bug 610985)
+ - NVDA agora pode anunciar apropriadamente as suxerencias para erros gramaticais e de pontoación no diálogo do corrector de ortografía de Microsoft Word. (#704)
+- En Internet Explorer e outros controis MSHTML, NVDA xa non presenta áncoras de destiño como ligas valdeiras no seu modo virtual. No seu lugar, estas áncoras agáchanse segundo debería ser. (#1326)
+- A navegación de obxectos sobre e dentro de brupos estándar de windows xa non rompe e é asimétrico.
+- En Firefox e outros controis baseados en Gecko, NVDA xa non se queda pegado nun submarco se remata cargando antes de outro documento.
+- NVDA agora anuncia apropriadamente o seguinte caracter cando se elimina un caracter co suprimir do teclado numérico. (#286)
+- Na pantalla de autentificación de Windows XP, O nome de usuario anúnciase unha vez de novo cando o usuario seleccionado se cambiou.
+- Correxidos problemas cando ó ler texto en consolas de ordes de Windows o anunciado de números de liña está activado.
+ - O diálogo de lista de elementos para modos virtuais agora é utilizable por usuarios videntes.  Todos os controis son visibles en pantalla. (#1321)
+- A lista de entradas no diálogo Diccionarios da fala, agora é máis lexible por usuarios videntes.  A lista agora é bastante grande para amosar todas as súass columnas en pantalla. (#90)
+- En liñas braille ALVA BC640/BC680 NVDA xa non fai caso omiso das teclas da liña que aínda están sendo pulsadas despois que outra tecla sexa liberada.
+-
+ 
+ 
+== Cambios para Desarrolladores ==
+- Esta sección déixase sen traducir de momento por seren de pouca utilidade ó usuario normal xa que é demasiado técnico.
+- SCons is now used to prepare the source tree and create binary builds, portable archives, installers, etc. See readme.txt at the root of the source distribution for details.
+- The key names used by NVDA (including key maps) have been made more friendly/logical; e.g. upArrow instead of extendedUp and numpadPageUp instead of prior. See the vkCodes module for a list.
+- All input from the user is now represented by an inputCore.InputGesture instance. (#601)
+ - Each source of input subclasses the base InputGesture class.
+ - Key presses on the system keyboard are encompassed by the keyboardHandler.KeyboardInputGesture class.
+ - Presses of buttons, wheels and other controls on a braille display are encompassed by subclasses of the braille.BrailleDisplayGesture class. These subclasses are provided by each braille display driver.
+- Input gestures are bound to ScriptableObjects using the ScriptableObject.bindGesture() method on an instance or an __gestures dict on the class which maps gesture identifiers to script names. See baseObject.ScriptableObject for details.
+- App modules no longer have key map files. All input gesture bindings must be done in the app module itself.
+- All scripts now take an InputGesture instance instead of a key press.
+ - KeyboardInputGestures can be sent on to the OS using the send() method of the gesture.
+- To send an arbitrary key press, you must now create a KeyboardInputGesture using KeyboardInputGesture.fromName() and then use its send() method.
+- Locales may now provide an input gesture map file to add new bindings or override existing bindings for scripts anywhere in NVDA. (#810)
+ - Locale gesture maps should be placed in locale\LANG\gestures.ini, where LANG is the language code.
+ - See inputCore.GlobalGestureMap for details of the file format.
+- The new LiveText and Terminal NVDAObject behaviors facilitate automatic reporting of new text. See those classes in NVDAObjects.behaviors for details. (#936)
+ - The NVDAObjects.window.DisplayModelLiveText overlay class can be used for objects which must retrieve text written to the display.
+ - See the mirc and putty app modules for usage examples.
+- There is no longer an _default app module. App modules should instead subclass appModuleHandler.AppModule (the base AppModule class).
+- Support for global plugins which can globally bind scripts, handle NVDAObject events and choose NVDAObject overlay classes. (#281) See globalPluginHandler.GlobalPlugin for details.
+- On SynthDriver objects, the available* attributes for string settings (e.g. availableVoices and availableVariants)  are now OrderedDicts keyed by ID instead of lists.
+- synthDriverHandler.VoiceInfo now takes an optional language argument which specifies the language of the voice.
+- SynthDriver objects now provide a language attribute which specifies the language of the current voice.
+ - The base implementation uses the language specified on the VoiceInfo objects in availableVoices. This is suitable for most synthesisers which support one language per voice.
+- Braille display drivers have been enhanced to allow buttons, wheels and other controls to be bound to NVDA scripts:
+ - Drivers can provide a global input gesture map to add bindings for scripts anywhere in NVDA.
+ - They can also provide their own scripts to perform display specific functions.
+ - See braille.BrailleDisplayDriver for details and existing braille display drivers for examples.
+- The 'selfVoicing' property on AppModule classes has now been renamed to 'sleepMode'.
+- the appModule events: event_appLoseFocus and event_appGainFocus have now been renamed to event_appModule_loseFocus and event_appModule_gainFocus respectivly, in order to keep the naming sintax the same between appModules and treeInterceptors etc.
+- All braille display drivers should now use braille.BrailleDisplayDriver instead of braille.BrailleDisplayDriverWithCursor.
+ - The cursor is now managed outside of the driver.
+ - Existing drivers need only change their class statement accordingly and rename their _display method to display.
+
 
 = 2010.2 =
 As características máis notables de esta versión inclúen unha grande simplificación da navegación de obxectos; modos virtuais para contido de Adobe Flash; acceso a moitos controi anteriormente inaccesibles capturando texto escribido á pantalla; revisión chan de texto na pantalla; soporte para documentos de IBM Lotus Symphony; anunciado de cabeceiras de fila e columna de táboa en Mozilla Firefox; unha mellora significativa da documentación do usuario.

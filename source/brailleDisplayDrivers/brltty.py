@@ -1,21 +1,24 @@
 #brailleDisplayDrivers/brltty.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+#Copyright (C) 2008-2010 James Teh <jamie@jantrid.net>
 
 import time
 import wx
 import braille
 from logHandler import log
+import inputCore
 try:
 	import brlapi
+	BRLAPI_CMD_KEYS = dict((code, name[8:].lower())
+		for name, code in brlapi.__dict__.iteritems() if name.startswith("KEY_CMD_"))
 except ImportError:
 	pass
 
 KEY_CHECK_INTERVAL = 50
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
+class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	"""brltty braille display driver.
 	"""
 	name = "brltty"
@@ -58,7 +61,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 	def _get_numCells(self):
 		return self._con.displaySize[0]
 
-	def _display(self, cells):
+	def display(self, cells):
 		cells = "".join(chr(cell) for cell in cells)
 		# HACK: Temporarily work around a bug which causes brltty to freeze if data is written while there are key presses waiting.
 		# Simply consume and act upon any waiting key presses.
@@ -81,13 +84,28 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 		keyType = key["type"]
 		command = key["command"]
 		argument = key["argument"]
-		try:
-			if keyType == brlapi.KEY_TYPE_CMD:
-				if command == brlapi.KEY_CMD_FWINLT:
-					braille.handler.scrollBack()
-				elif command == brlapi.KEY_CMD_FWINRT:
-					braille.handler.scrollForward()
-				elif command == brlapi.KEY_CMD_ROUTE:
-					braille.handler.routeTo(argument)
-		except:
-			log.error("Error executing key press action", exc_info=True)
+		if keyType == brlapi.KEY_TYPE_CMD:
+			try:
+				inputCore.manager.executeGesture(InputGesture(command, argument))
+			except inputCore.NoInputGestureAction:
+				pass
+
+	gestureMap = inputCore.GlobalGestureMap({
+		"globalCommands.GlobalCommands": {
+			"braille_scrollBack": ("br(brltty):fwinlt",),
+			"braille_scrollForward": ("br(brltty):fwinrt",),
+			"braille_previousLine": ("br(brltty):lnup",),
+			"braille_nextLine": ("br(brltty):lndn",),
+			"braille_routeTo": ("br(brltty):route",),
+		}
+	})
+
+class InputGesture(braille.BrailleDisplayGesture):
+
+	source = BrailleDisplayDriver.name
+
+	def __init__(self, command, argument):
+		super(InputGesture, self).__init__()
+		self.id = BRLAPI_CMD_KEYS[command]
+		if command == brlapi.KEY_CMD_ROUTE:
+			self.routingIndex = argument

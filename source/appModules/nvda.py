@@ -1,9 +1,9 @@
-import _default
+import appModuleHandler
 import api
 import controlTypes
 import gui
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self, obj):
 		# It seems that context menus always get the name "context" and this cannot be overridden.

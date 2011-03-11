@@ -5,13 +5,13 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import globalVars
+import config
 import winUser
 from NVDAObjects.IAccessible import IAccessible 
 import controlTypes
 import oleacc
 import textInfos
-import _default
+import appModuleHandler
 import speech
 import cursorManager
 
@@ -31,9 +31,10 @@ u'LÆ°á»£c Sá',
 u'è¨˜éŒ',
 u'Historik',
 u'Előzmények',
+u'Geçmiş',
 ])
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName=="DirectUIHWND" and obj.role==controlTypes.ROLE_EDITABLETEXT and obj.name in possibleHistoryWindowNames:
@@ -49,21 +50,21 @@ class OldMSNHistory(cursorManager.ReviewCursorManager,IAccessible):
 		return "%s - %s\r%s"%(self.name,self.description,self.value)
 
 	def _get_value(self):
-		value=super(MSNHistory,self)._get_value()
+		value=super(OldMSNHistory,self).value
 		if not isinstance(value,basestring):
 			value=""
 		return value
 
 	def event_valueChange(self):
 		global lastMSNHistoryValue
-		if isinstance(self,MSNHistory) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
+		if isinstance(self,OldMSNHistory) and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
 			value=self.value
-			if value!=lastMSNHistoryValue and globalVars.reportDynamicContentChanges:
+			if value!=lastMSNHistoryValue and config.conf["presentation"]["reportDynamicContentChanges"]:
 				speech.speakText(value)
 				lastMSNHistoryValue=value
 
 	def event_gainFocus(self):
-		super(MSNHistory,self).event_gainFocus()
+		super(OldMSNHistory,self).event_gainFocus()
 		self.selection=self.makeTextInfo(textInfos.POSITION_LAST)
 
 	def reportFocus(self):
@@ -82,6 +83,6 @@ class MSNHistory(IAccessible):
 		global lastMSNHistoryValue
 		if winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
 			value=self.value
-			if value!=lastMSNHistoryValue and globalVars.reportDynamicContentChanges:
+			if value!=lastMSNHistoryValue and config.conf["presentation"]["reportDynamicContentChanges"]:
 				speech.speakText(value)
 				lastMSNHistoryValue=value

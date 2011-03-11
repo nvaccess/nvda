@@ -6,7 +6,7 @@
 
 from comtypes import COMError
 import comtypes.client
-import _default
+import appModuleHandler
 import eventHandler
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
@@ -36,7 +36,7 @@ def getSentMessageString(obj):
 	nameList.append(_("sent: %s")%obj.sentOn)
 	return ", ".join(nameList)
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def _get_nativeOm(self):
 		if not getattr(self,'_nativeOm',None):

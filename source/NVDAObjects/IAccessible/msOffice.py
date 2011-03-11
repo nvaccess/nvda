@@ -16,6 +16,12 @@ from . import IAccessible, getNVDAObjectFromEvent
 
 class SDM(IAccessible):
 
+	def _get_name(self):
+		name=super(SDM,self).name
+		if not name and self.role==controlTypes.ROLE_LISTITEM:
+			name=self.displayText
+		return name
+
 	def _get_positionInfo(self):
 		if self.role!=controlTypes.ROLE_LISTITEM:
 			return {}
@@ -33,7 +39,9 @@ class SDM(IAccessible):
 			hwndFocus=winUser.getGUIThreadInfo(0).hwndFocus
 			if hwndFocus and hwndFocus!=self.windowHandle and not winUser.getClassName(hwndFocus).startswith('bosa_sdm'):
 				obj=getNVDAObjectFromEvent(hwndFocus,winUser.OBJID_CLIENT,0)
-				obj.name=self.name
+				if not obj: return None
+				if getattr(obj,'parentSDMCanOverrideName',True):
+					obj.name=self.name
 				return obj
 		return None
 

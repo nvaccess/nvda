@@ -22,6 +22,7 @@ import scriptUI
 import queueHandler
 import braille
 import core
+import keyboardHandler
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -37,7 +38,19 @@ class SettingsDialog(wx.Dialog):
 	@ivar title: The title of the dialog.
 	@type title: str
 	"""
+
+	class MultiInstanceError(RuntimeError): pass
+
+	_hasInstance=False
+
 	title = ""
+
+	def __new__(cls, *args, **kwargs):
+		if SettingsDialog._hasInstance:
+			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
+		obj = super(SettingsDialog, cls).__new__(cls, *args, **kwargs)
+		SettingsDialog._hasInstance=True
+		return obj
 
 	def __init__(self, parent):
 		"""
@@ -56,6 +69,9 @@ class SettingsDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		self.postInit()
+
+	def __del__(self):
+		SettingsDialog._hasInstance=False
 
 	def makeSettings(self, sizer):
 		"""Populate the dialog with settings controls.
@@ -327,7 +343,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
 		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.i18nName)
 		synth=getSynth()
-		setattr(self,"_%ss"%setting.name,getattr(synth,"available%ss"%setting.name.capitalize()))
+		setattr(self,"_%ss"%setting.name,getattr(synth,"available%ss"%setting.name.capitalize()).values())
 		l=getattr(self,"_%ss"%setting.name)###
 		lCombo=wx.Choice(self,wx.ID_ANY,name="%s:"%setting.i18nName,choices=[x.name for x in l])
 		setattr(self,"%sList"%setting.name,lCombo)
@@ -437,9 +453,9 @@ class KeyboardSettingsDialog(SettingsDialog):
 		kbdLabel=wx.StaticText(self,-1,label=_("&Keyboard layout:"))
 		kbdSizer.Add(kbdLabel)
 		kbdListID=wx.NewId()
-		self.kbdNames=list(set(os.path.splitext(x)[0].split('_')[-1] for x in glob.glob('appModules/*.kbd')))
-		self.kbdNames.sort()
-		self.kbdList=wx.Choice(self,kbdListID,name=_("Keyboard layout"),choices=self.kbdNames)
+		layouts=keyboardHandler.KeyboardInputGesture.LAYOUTS
+		self.kbdNames=sorted(layouts)
+		self.kbdList=wx.Choice(self,kbdListID,name=_("Keyboard layout"),choices=[layouts[layout] for layout in self.kbdNames])
 		try:
 			index=self.kbdNames.index(config.conf['keyboard']['keyboardLayout'])
 			self.kbdList.SetSelection(index)
@@ -462,6 +478,9 @@ class KeyboardSettingsDialog(SettingsDialog):
 		self.wordsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Speak typed &words"))
 		self.wordsCheckBox.SetValue(config.conf["keyboard"]["speakTypedWords"])
 		settingsSizer.Add(self.wordsCheckBox,border=10,flag=wx.BOTTOM)
+		self.beepLowercaseCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Beep if typing lowercase letters when caps lock is on"))
+		self.beepLowercaseCheckBox.SetValue(config.conf["keyboard"]["beepForLowercaseWithCapslock"])
+		settingsSizer.Add(self.beepLowercaseCheckBox,border=10,flag=wx.BOTTOM)
 		self.commandKeysCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Speak command &keys"))
 		self.commandKeysCheckBox.SetValue(config.conf["keyboard"]["speakCommandKeys"])
 		settingsSizer.Add(self.commandKeysCheckBox,border=10,flag=wx.BOTTOM)
@@ -471,16 +490,13 @@ class KeyboardSettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		layout=self.kbdNames[self.kbdList.GetSelection()]
-		oldLayout=config.conf['keyboard']['keyboardLayout']
-		if layout!=oldLayout:
-			config.conf['keyboard']['keyboardLayout']=layout
-			for m in appModuleHandler.runningTable.values():
-				m.loadKeyMap()
+		config.conf['keyboard']['keyboardLayout']=layout
 		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]=self.capsAsNVDAModifierCheckBox.IsChecked()
 		config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]=self.numpadInsertAsNVDAModifierCheckBox.IsChecked()
 		config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]=self.extendedInsertAsNVDAModifierCheckBox.IsChecked()
 		config.conf["keyboard"]["speakTypedCharacters"]=self.charsCheckBox.IsChecked()
 		config.conf["keyboard"]["speakTypedWords"]=self.wordsCheckBox.IsChecked()
+		config.conf["keyboard"]["beepForLowercaseWithCapslock"]=self.beepLowercaseCheckBox.IsChecked()
 		config.conf["keyboard"]["speakCommandKeys"]=self.commandKeysCheckBox.IsChecked()
 		super(KeyboardSettingsDialog, self).onOk(evt)
 
@@ -579,6 +595,9 @@ class ObjectPresentationDialog(SettingsDialog):
 		self.positionInfoCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report object &position information"))
 		self.positionInfoCheckBox.SetValue(config.conf["presentation"]["reportObjectPositionInformation"])
 		settingsSizer.Add(self.positionInfoCheckBox,border=10,flag=wx.BOTTOM)
+		self.guessPositionInfoCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Guess object &position information when unavailable"))
+		self.guessPositionInfoCheckBox.SetValue(config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"])
+		settingsSizer.Add(self.guessPositionInfoCheckBox,border=10,flag=wx.BOTTOM)
 		self.descriptionCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report object &descriptions"))
 		self.descriptionCheckBox.SetValue(config.conf["presentation"]["reportObjectDescriptions"])
 		settingsSizer.Add(self.descriptionCheckBox,border=10,flag=wx.BOTTOM)
@@ -598,6 +617,9 @@ class ObjectPresentationDialog(SettingsDialog):
 		self.reportBackgroundProgressBarsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report background progress bars"))
 		self.reportBackgroundProgressBarsCheckBox.SetValue(config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"])
 		settingsSizer.Add(self.reportBackgroundProgressBarsCheckBox,border=10,flag=wx.BOTTOM)
+		self.dynamicContentCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report dynamic &content changes"))
+		self.dynamicContentCheckBox.SetValue(config.conf["presentation"]["reportDynamicContentChanges"])
+		settingsSizer.Add(self.dynamicContentCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.tooltipCheckBox.SetFocus()
@@ -607,9 +629,11 @@ class ObjectPresentationDialog(SettingsDialog):
 		config.conf["presentation"]["reportHelpBalloons"]=self.balloonCheckBox.IsChecked()
 		config.conf["presentation"]["reportKeyboardShortcuts"]=self.shortcutCheckBox.IsChecked()
 		config.conf["presentation"]["reportObjectPositionInformation"]=self.positionInfoCheckBox.IsChecked()
+		config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"]=self.guessPositionInfoCheckBox.IsChecked()
 		config.conf["presentation"]["reportObjectDescriptions"]=self.descriptionCheckBox.IsChecked()
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=self.progressLabels[self.progressList.GetSelection()][0]
 		config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]=self.reportBackgroundProgressBarsCheckBox.IsChecked()
+		config.conf["presentation"]["reportDynamicContentChanges"]=self.dynamicContentCheckBox.IsChecked()
 		super(ObjectPresentationDialog, self).onOk(evt)
 
 class VirtualBuffersDialog(SettingsDialog):
@@ -786,30 +810,32 @@ class DictionaryDialog(SettingsDialog):
 		entriesSizer=wx.BoxSizer(wx.HORIZONTAL)
 		entriesLabel=wx.StaticText(self,-1,label=_("&Dictionary entries"))
 		entriesSizer.Add(entriesLabel)
-		self.dictList=wx.ListCtrl(self,dictListID,style=wx.LC_REPORT|wx.LC_SINGLE_SEL)
-		self.dictList.InsertColumn(0,_("Comment"))
-		self.dictList.InsertColumn(1,_("Pattern"))
-		self.dictList.InsertColumn(2,_("Replacement"))
-		self.dictList.InsertColumn(3,_("case sensitive"))
-		self.dictList.InsertColumn(4,_("Regular expression"))
+		self.dictList=wx.ListCtrl(self,dictListID,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
+		self.dictList.InsertColumn(0,_("Comment"),width=150)
+		self.dictList.InsertColumn(1,_("Pattern"),width=150)
+		self.dictList.InsertColumn(2,_("Replacement"),width=150)
+		self.dictList.InsertColumn(3,_("case"),width=50)
+		self.dictList.InsertColumn(4,_("Regexp"),width=50)
 		self.offOn = (_("off"),_("on"))
 		for entry in self.tempSpeechDict:
 			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,self.offOn[int(entry.caseSensitive)],self.offOn[int(entry.regexp)]))
 		self.editingIndex=-1
-		entriesSizer.Add(self.dictList)
+		entriesSizer.Add(self.dictList,proportion=8)
 		settingsSizer.Add(entriesSizer)
+		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
 		addButtonID=wx.NewId()
 		addButton=wx.Button(self,addButtonID,_("&Add"),wx.DefaultPosition)
-		settingsSizer.Add(addButton)
+		entryButtonsSizer.Add(addButton)
 		editButtonID=wx.NewId()
 		editButton=wx.Button(self,editButtonID,_("&edit"),wx.DefaultPosition)
-		settingsSizer.Add(editButton)
+		entryButtonsSizer.Add(editButton)
 		removeButtonID=wx.NewId()
 		removeButton=wx.Button(self,removeButtonID,_("&Remove"),wx.DefaultPosition)
-		settingsSizer.Add(removeButton)
+		entryButtonsSizer.Add(removeButton)
 		self.Bind(wx.EVT_BUTTON,self.OnAddClick,id=addButtonID)
 		self.Bind(wx.EVT_BUTTON,self.OnEditClick,id=editButtonID)
 		self.Bind(wx.EVT_BUTTON,self.OnRemoveClick,id=removeButtonID)
+		settingsSizer.Add(entryButtonsSizer)
 
 	def postInit(self):
 		self.dictList.SetFocus()
@@ -960,6 +986,5 @@ class BrailleSettingsDialog(SettingsDialog):
 			val = None
 		if 1 <= val <= 20:
 			config.conf["braille"]["messageTimeout"] = val
-		braille.handler.configDisplay()
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		super(BrailleSettingsDialog,  self).onOk(evt)

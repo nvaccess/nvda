@@ -27,7 +27,7 @@ def convertLilliCells(cell):
 		(1<<4 if cell & 1<<7  else 0))
 	return newCell
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
+class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "lilli"
 	description = _("MDV Lilli")
 
@@ -68,7 +68,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriverWithCursor):
 			elif key==13: braille.handler.scrollForward()
 			elif (key >= 257) and (key <= 296): braille.handler.routeTo(key-257)
 
-	def _display(self, cells):
+	def display(self, cells):
 		cells="".join(chr(lilliCellsMap[x]) for x in cells)
 		lilliDll.WriteBuf(create_string_buffer(cells)) 
 		self._handleKeyPresses()

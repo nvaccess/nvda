@@ -1,11 +1,20 @@
+#appModules/logonui.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2009-2011 James Teh <jamie@jantrid.net>, Michael Curran <mick@kulgan.net>
+
 import speech
 import api
 import braille
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.behaviors import Dialog
-import _default
+import appModuleHandler
 import eventHandler
+
+"""App module for the Windows Logon screen
+"""
 
 class LogonDialog(Dialog):
 
@@ -32,11 +41,9 @@ class XPPasswordField(IAccessible):
 	def _get_name(self):
 		# Focus automatically jumps to the password field when a user is selected. This field has no name.
 		# This means that the new selected user is not reported.
-		# Therefore, override the name of the password field to be the selected user name.
-		# When the user is changed, the parent list item changes.
-		# However, the cached parent isn't updated, so force it to update.
-		self.parent = self._get_parent()
+		# However, the selected user name is the name of the window object for this field.
 		try:
+			self.parent.invalidateCache()
 			return self.parent.name
 		except:
 			return super(XPPasswordField, self).name
@@ -45,11 +52,12 @@ class XPPasswordField(IAccessible):
 		# The up and down arrow keys change the selected user, but there's no reliable NVDA event for detecting this.
 		oldName = self.name
 		gesture.send()
+		self.invalidateCache()
 		if oldName == self.name or controlTypes.STATE_FOCUSED not in self.states:
 			return
 		self.event_gainFocus()
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self, obj):
 		if obj.windowClassName == "NativeHWNDHost" and obj.parent and not obj.parent.parent:
@@ -66,7 +74,7 @@ class AppModule(_default.AppModule):
 
 		if windowClass == "Edit" and not obj.name:
 			parent = obj.parent
-			if parent and parent.role == controlTypes.ROLE_LISTITEM:
+			if parent and parent.role == controlTypes.ROLE_WINDOW:
 				clsList.insert(0, XPPasswordField)
 				return
 

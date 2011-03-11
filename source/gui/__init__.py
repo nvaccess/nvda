@@ -1,6 +1,6 @@
 #gui/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2011 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -163,7 +163,10 @@ class MainFrame(wx.Frame):
 
 	def _popupSettingsDialog(self, dialog, *args, **kwargs):
 		self.prePopup()
-		dialog(self, *args, **kwargs).Show()
+		try:
+			dialog(self, *args, **kwargs).Show()
+		except SettingsDialog.MultiInstanceError:
+			wx.MessageDialog(self,_("Please close  the other NVDA settings dialog first"),_("Error"),style=wx.OK | wx.ICON_ERROR).ShowModal()
 		self.postPopup()
 
 	def onDefaultDictionaryCommand(self,evt):
@@ -224,12 +227,8 @@ class MainFrame(wx.Frame):
 
 	def onAboutCommand(self,evt):
 		try:
-			aboutInfo="""%s
-%s: %s
-%s: %s
-%s: %s"""%(versionInfo.longName,_("version"),versionInfo.version,_("url"),versionInfo.url,_("copyright"),versionInfo.copyrightInfo)
 			self.prePopup()
-			d = wx.MessageDialog(self, aboutInfo, _("About NVDA"), wx.OK)
+			d = wx.MessageDialog(self, versionInfo.aboutMessage, _("About NVDA"), wx.OK)
 			d.ShowModal()
 			d.Destroy()
 			self.postPopup()
@@ -253,6 +252,13 @@ class MainFrame(wx.Frame):
 			pythonConsole.initialize()
 		pythonConsole.activate()
 
+	def onReloadPluginsCommand(self, evt):
+		import appModuleHandler, globalPluginHandler
+		from NVDAObjects import NVDAObject
+		appModuleHandler.reloadAppModules()
+		globalPluginHandler.reloadGlobalPlugins()
+		NVDAObject.clearDynamicClassCache()
+
 class SysTrayIcon(wx.TaskBarIcon):
 
 	def __init__(self, frame):
@@ -274,7 +280,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onKeyboardSettingsCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse shape and object under mouse"))
 		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
-		item = menu_preferences.Append(wx.ID_ANY,_("&Review cursor..."),_("Configure how and when the review cursor moves")) 
+		item = menu_preferences.Append(wx.ID_ANY,_("Review &cursor..."),_("Configure how and when the review cursor moves")) 
 		self.Bind(wx.EVT_MENU, frame.onReviewCursorCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Object presentation..."),_("Change reporting of objects")) 
 		self.Bind(wx.EVT_MENU, frame.onObjectPresentationCommand, item)
@@ -302,6 +308,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
+		item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
+		self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
 
 		menu_help = wx.Menu()
@@ -314,8 +322,6 @@ class SysTrayIcon(wx.TaskBarIcon):
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("changes.html")), item)
 			item = menu_help.Append(wx.ID_ANY, _("Web site"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvda-project.org/"), item)
-			item = menu_help.Append(wx.ID_ANY, _("Readme"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("readme.txt")), item)
 			item = menu_help.Append(wx.ID_ANY, _("License"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("copying.txt", False)), item)
 			item = menu_help.Append(wx.ID_ANY, _("Contributors"))
@@ -332,6 +338,9 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			item = self.menu.Append(wx.ID_SAVE, _("&Save configuration"), _("Write the current configuration to nvda.ini"))
 			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
+		self.menu.AppendSeparator()
+		item = self.menu.Append(wx.ID_ANY, _("Donate"))
+		self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvaccess.org/wiki/Donate"), item)
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)

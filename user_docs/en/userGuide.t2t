@@ -8,9 +8,12 @@ NVDA NVDA_VERSION User Guide
 %%toc
 
 + Introduction +
+NonVisual Desktop Access (NVDA) is a free and open source screen reader for the Microsoft Windows operating system.
+Providing feedback via synthetic speech and Braille, it enables blind or vision impaired people to access computers running Windows for no more cost than a sighted person.
+NVDA is developed by [NV Access http://www.nvaccess.org/], with contributions from the community.
 
 ++ General Features ++
-Providing feedback via synthetic speech and braille, Nonvisual Desktop Access allows blind and vision impaired people to access and interact with the Windows operating system and many third party applications.
+NVDA allows blind and vision impaired people to access and interact with the Windows operating system and many third party applications.
 
 Major highlights include:
 - Support for popular applications including web browsers, email clients, internet chat programs and office suites
@@ -48,9 +51,8 @@ NVDA supports braille codes for many languages, including contracted, uncontract
 NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
 
 NVDA is covered by the GNU General Public License (Version 2).
-You are free to share or change this software in any way you like as long as you distribute the licence along with the software, and make all source code available to anyone who wants it.
-This applies to both original and modified copies of the software, plus any software that uses code taken from this software.
-
+You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it.
+This applies to both original and modified copies of this software, plus any derivative works. 
 For further details, you can [view the full licence. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + System Requirements +
@@ -79,8 +81,7 @@ If you already have the NVDA installer, simply press enter or double click on th
 
 As the installer loads, you will hear the NVDA installation music.
 Once loaded, a temporary copy of NVDA will allow you to follow the prompts of the installer and install NVDA.
-Note that if you were running another copy of NVDA at the time you started the installer, a message will appear telling you that your previous copy of NVDA will be closed.
-When you press enter on this message, the installer will close your previous copy and start its own one.
+Note that if you were running another copy of NVDA at the time you started the installer, the installer will close your previous copy and start its own.
 This is necessary so that the installer can properly update any changed files.
 At this point, if you have another copy of NVDA already installed, the NVDA installer will uninstall it for you, and then it will commence to install NVDA.
 
@@ -92,6 +93,18 @@ If it did not ask you to reboot, pressing Finnish will close the installer and s
 ++ NVDA portable ++
 If you have the portable version of NVDA, then all you have to do is to press enter or double click on the file, and follow the prompts.
 It will ask you where on your system you wish to place the files.
+
++++ NVDA Portable on a USB key +++
+It is possible to place NVDA on a USB thumb drive so that you can use it on other computer systems.
+
+When the Portable version asks where you wish to unpack it, type in the drive of your USB thumb drive, plus an optional subdirectory where you wish to place NVDA.
+
+If for example your USB thumb drive is at E:\, you might wish to type in E:\nvda, which will place NVDA in the NVDA subdirectory on your USB thumb drive.
+
+Note that although this now means you can carry around NVDA and its settings with you anywhere, simply plugging in the USB thumb drive will not automatically start NVDA; You will have to start NVDA manually from either Windows Explorer or the Run Dialog.
+
+For information about automatically starting NVDA from a USB thumb drive, please see this article:
+http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
 
 + Getting started with NVDA +
 
@@ -156,10 +169,19 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 | Stop speech | Control | Instantly stops speaking |
 | Pause Speech | Shift | Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer) |
 | NVDA Menu | NVDA+n | Pops up the NVDA menu to allow you to access preferences, tools and help etc |
+| Toggle Speech Mode | NVDA+s | Toggles speech mode between speech, beeps and off. |
 | Toggle Keyboard Help Mode | NVDA+1 | Pressing any key in this mode will report the key, and the description of any  NVDA command associated with it |
 | Quit NVDA | NVDA+q | Exits NVDA |
-| Report date/time | NVDA+f12 | Pressing once reports the current time, pressing twice reports the date |
 | Pass next key through | NVDA+f2 | Tells NVDA to pass the next key press straight through to the active application, even if it is normally treeted as an NVDA key command |
+| toggle application sleep mode on and off | NVDA+shift+s | sleep mode disables all NVDA commands and speech/braille output for the current application. This is most useful in applications that provide their own speech or screen reading features. Press  this command again to disable self voicing mode. |
+%kc:endInclude
+
+++ Reporting System Information ++
+%kc:beginInclude
+|| Name | key | Description |
+| Report date/time | NVDA+f12 | Pressing once reports the current time, pressing twice reports the date |
+| Report battery status | NVDA+shift+b  Reports the battery status i.e. whether AC power is in use or  the current charge percentage. |
+| Report clipboard text | NVDA+c | Reports the Text in the clipboard if there is any. |
 %kc:endInclude
 
 + Navigating with NVDA +
@@ -175,6 +197,7 @@ There are some key commands that are useful when moving with the System focus:
 | Report current focus | NVDA+tab | announces the current object or control that has the System focus. Pressing twice will spell the information  |
 | Report title | NVDA+t | Announces the title of the currently active window. Pressing twice will spell the information. Pressing thrice will copy it to the clipboard |
 | Read active window | NVDA+b | reads all the controls in the currently active window (useful for dialogs) |
+| Report Status Bar | NVDA+end | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location |
 %kc:endInclude
 
 ++ Navigating with the System Caret ++
@@ -214,7 +237,7 @@ To navigate by object, use the following keys:
 
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Description |
-| Report current object | NVDA+numpad5 | NVDA+control+i | Reports the current navigator object. Pressing twice spells the information. |
+| Report current object | NVDA+numpad5 | NVDA+control+i | Reports the current navigator object. Pressing twice spells the information, and pressing 3 times copies this object's name and value to the clipboard. |
 | Navigate to parent object | NVDA+numpad8 | NVDA+shift+i | Navigates to the parent (container) of the current navigator object |
 | Navigate to previous object | NVDA+numpad4 | NVDA+control+j | Navigates to the object directly before the current navigator object |
 | Navigate to next object | NVDA+numpad6 | control+NVDA+l | Navigates to the object directly after the current navigator object |
@@ -555,6 +578,11 @@ Key: NVDA+3
 
 When enabled, NVDA will announce all words you type on the keyboard.
 
+==== Beep if Typing Lowercase Letters when Caps Lock is On ====
+When enabled, a warning beep will be heard if a letter is typed with the shift key while caps lock is on.
+Generally, typing shifted letters with caps lock is unintentional and is usually due to not realising that caps lock is enabled.
+Therefore, it can be quite helpful to be warned about this.
+
 %kc:setting
 ==== Speak Command Keys ====
 Key: NVDA+4
@@ -632,6 +660,11 @@ For example the File menu on a menu bar may have a shortcut key of alt+f.
 ==== Report object position information ====
 This option lets you choose whether you wish to have an object's position (e.g. 1 of 4) reported when moving to the object with the focus or object navigation.
 
+==== Guess Object Position Information when unavailable ====
+If reporting of object position information is turned on, this option allows NVDA to guess object position information when it is otherwize unavailable for a particular control.
+
+When on, NVDA will announce position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
+ 
 ==== Report Object descriptions ====
 Uncheck this checkbox if you feel you don't need to hear the description announced along with objects.
 
@@ -652,6 +685,12 @@ It has the following options:
 ==== Report background progress bars ====
 This is an option that, when checked, tells nvda to keep reporting a progress bar, even if it is not physically in the foreground.
 If you minimize or switch away from a window that contains a progress bar, nvda will keep track of it, allowing you to do other things while nvda tracks the progress bar.
+
+%kc:setting
+==== Report dynamic content changes ====
+Key: NVDA+5
+
+Toggles the announcement of new content in particular objects such as terminals and the history control in chat programs.
 
 +++ Virtual Buffer Settings (NVDA+control+b) +++
 The Virtual Buffer settings dialog can be found in the Preferences menu, under "Virtual Buffers...".
@@ -799,10 +838,8 @@ However, if you click or focus inside the viewer, NVDA will temporarily stop upd
 The NVDA Python console, found under  Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
 For more information, please see [the Python Console article on the NVDA web site NVDA_URLwiki/PythonConsole].
 
-+ Further Information +
-If you require further information or assistance regarding NVDA, please visit the NVDA web site at NVDA_URL.
-Here, you can find additional documentation, as well as technical support and community resources.
-This site also provides information and resources concerning NVDA development.
+++ Reload plugins ++
+This item, once activated, reloads app modules and global plugins without restarting NVDA, which can be useful for developers.
 
 + Supported Speech Synthesizers +[SupportedSpeechSynths]
 This section contains information about the speech synthesizers  supported by NVDA.
@@ -842,28 +879,195 @@ To download this synthesizer, please visit the downloads section of the Russian 
 This section contains information about the Braille displays supported by NVDA.
 
 ++ Freedom Scientific Focus/PAC Mate Series ++
-All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscientific.com/] are supported.
+All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
 You will need the Freedom Scientific braille display drivers installed on your system.
 If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Although this page only mentions the Focus 40 Blue display, the driver supports all Freedom Scientific displays.
 
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Toggle left wiz wheel action | leftWizWheelPress |
+| Move back using left wiz wheel action | leftWizWheelUp |
+| Move forward using left wiz wheel action | leftWizWheelDown |
+| Toggle right wiz wheel action | rightWizWheelPress |
+| Move back using right wiz wheel action | rightWizWheelUp |
+| Move forward using right wiz wheel action | rightWizWheelDown |
+| Route to braille cell | routing |
+%kc:endInclude
+
 ++ Optelec ALVA BC640/680 ++
-Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] are supported.
+Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] are supported when connected via USB or bluetooth.
 You do not need any specific drivers to be installed to use these displays.
 Just plug in the display and configure NVDA to use it.
 
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | t1 |
+| Move braille display to previous line | t2 |
+| Move braille display to next line | t4 |
+| Scroll braille display forward | t5 |
+| Route to braille cell | routing |
+| shift+tab key | sp1 |
+| alt key | sp2 |
+| escape key | sp3 |
+| tab key | sp4 |
+| upArrow key | spUp |
+| downArrow key | spDown |
+| leftArrow key | spLeft |
+| rightArrow key | spRight |
+| enter key | spEnter |
+| NVDA Menu | sp1+sp3 |
+| windows+d key (minimise all applications) | sp1+sp4 |
+| windows key | sp2+sp3 |
+| alt+tab key | sp2+sp4 |
+%kc:endInclude
+
 ++ Handy Tech Displays ++
-NVDA supports all displays from [Handy Tech http://www.handytech.de/].
-For some USB displays, you will need to install the USB drivers from Handy Tech on your system.
-In addition, you will need to install the Handy Tech universal driver, available at ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
+NVDA supports all displays from [Handy Tech http://www.handytech.de/] when connected via USB or bluetooth.
+For older USB displays, you will need to install the USB drivers from Handy Tech on your system.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left, up |
+| Scroll braille display forward | right, down |
+| Move braille display to previous line | b4 |
+| Move braille display to next line | b5 |
+| Route to braille cell | routing |
+| shift+tab key | esc |
+| alt key | b2+b4+b5 |
+| escape key | b4+b6 |
+| tab key | enter |
+| enter key | esc+enter |
+| upArrow key | leftSpace |
+| downArrow key | rightSpace |
+| NVDA Menu | b2+b4+b5+b6 |
+| Handy Tech configuration | b4+b8 |
+%kc:endInclude
 
 ++ MDV Lilli ++
 The Lilli braille display available from [MDV http://www.mdvbologna.it/] is supported.
 You do not need any specific drivers to be installed to use this display.
 Just plug in the display and configure NVDA to use it.
 
+++ Baum/Humanware/APH Braille Displays ++
+Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] displays are supported when connected via USB or bluetooth.
+These include:
+- Baum: SuperVario, PocketVario
+- HumanWare: Brailliant, BrailleConnect
+- APH: Refreshabraille
+-
+Some other displays manufactured by Baum may also work, though this has not been tested.
+
+If connecting via USB, you must first install the USB drivers provided by the manufacturer.
+For the APH Refreshabraille, the USB mode must be set to serial.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | d2 |
+| Scroll braille display forward | d5 |
+| Move braille display to previous line | d1 |
+| Move braille display to next line | d3 |
+| Route to braille cell | routing |
+
+For displays which have a joystick:
+|| Name | Key |
+| upArrow key | up |
+| downArrow key | down |
+| leftArrow key | left |
+| rightArrow key | right |
+| enter key | select |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] is a separate program which can be used to support many more braille displays.
 In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
 You should download and install the latest installer package, which will be named, for example, brltty-win-4.2-2.exe.
 When configuring the display and port to use, be sure to pay close attention to the instructions, especially if you are using a USB display and already have the manufacturer's drivers installed.
+
+Following are the BRLTTY command assignments for NVDA.
+Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/drivers/] for information about how BRLTTY commands are mapped to controls on braille displays.
+%kc:beginInclude
+|| Name | BRLTTY command |
+| Scroll braille display back | fwinlt (go left one window) |
+| Scroll braille display forward | fwinrt (go right one window) |
+| Move braille display to previous line | lnup (go up one line) |
+| Move braille display to next line | lndn (go down one line) |
+| Route to braille cell | route (bring cursor to character) |
+%kc:endInclude
+
++ Advanced Topics +
+
+++ Remapping Key Assignments and Other Input Gestures ++
+Users are able to provide or override mappings of input gestures (such as key presses) to scripts in a special file in the user's NVDA configuration directory.
+This file is called gestures.ini.
+
+This file uses standard ini syntax.
+The file may contain multiple sections and each section may have one or more entries.
+
+Each section provides mappings for scripts in a particular Python module and class inside NVDA.
+- The section name should be the Python module and class separated by a dot (.).
+- The key of each entry is the name of the script to which input gestures should be bound.
+Alternatively, you can use None to unbind input gestures from a script to which they were previously bound.
+Each entry key can only be listed once per section, including None.
+- The entry value is a comma (,) separated list of gesture identifiers for the input gestures that should be bound.
+Gesture identifiers ending in a comma must be enclosed in quotes (" or ').
+-
+
+Gesture identifiers consist of a two leter device code (kb for keyboard and br for braille display), an optional sub-device or keyboard layout in brackets, a colon, and then one or more key names separated by a plus (+) sign.
+
+In order to discover gesture identifiers, script names and the class and module in which they are contained, you can:
++ Turn on Input Help.
++ Activate the gesture (press the key).
++ Turn off input help.
++ Activate View log in the NVDA Tools menu.
++ Examine the recent log entries.
+One of these should provide information about the input gesture you sent, including the module.class and script if it is bound to one.
++
+
+Following is an example of how you could bind NVDA+shift+t to the date time script.
+
+To find out the correct script name and module.class for date time, you would turn on Input Help and press NVDA+f12 (as this is the current gesture for the date time script).
+You would then turn off Input Help and examine the log viewer.
+
+Towards the bottom, you would see:
+
+```
+INFO - inputCore.InputManager._handleInputHelp (13:17:22):
+Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
+```
+
+From this, you can see that the script name is dateTime and the module.class is globalCommands.GlobalCommands.
+
+If the file does not yet exist, you would create a text file called gestures.ini in the user configuration directory and add the following content:
+
+```
+[globalCommands.GlobalCommands]
+	dateTime = kb:NVDA+shift+t
+```
+
+This would bind the key press NVDA+shift+t (in any keyboard layout) to the dateTime script.
+
+Note that the original NVDA+f12 binding would still work.
+If you wanted to remove this binding, you would add the following line:
+
+```
+	None = kb:NVDA+f12
+```
+
+Although you are free to have scripts bound to any available key, it may be problematic to use the alt key on the keyboard.
+NVDA still sends modifier keys (such as shift, control and alt) to the Operating System, even if they eventuate in a script.
+Thus, if you do use alt in a gesture, pressing this key combination may activate the menu bar, as well as executing the script.
+Therefore, it is probably best to just use Shift, control and the NVDA modifier key as modifiers.
+
++ Further Information +
+If you require further information or assistance regarding NVDA, please visit the NVDA web site at NVDA_URL.
+Here, you can find additional documentation, as well as technical support and community resources.
+This site also provides information and resources concerning NVDA development.

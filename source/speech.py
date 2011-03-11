@@ -1,8 +1,8 @@
-#speech.py
+﻿#speech.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>, Peter Vágner <peter.v@datagate.sk>, Aleksey Sadovoy <lex@onm.su>
 
 """High-level functions to speak information.
 """ 
@@ -105,10 +105,13 @@ def getLastSpeechIndex():
 
 def cancelSpeech():
 	"""Interupts the synthesizer from currently speaking"""
-	global beenCanceled, isPaused
+	global beenCanceled, isPaused, _speakSpellingGenID
 	# Import only for this function to avoid circular import.
 	import sayAllHandler
 	sayAllHandler.stop()
+	if _speakSpellingGenID:
+		queueHandler.cancelGeneratorObject(_speakSpellingGenID)
+		_speakSpellingGenID=None
 	if beenCanceled:
 		return
 	elif speechMode==speechMode_off:
@@ -134,8 +137,10 @@ def speakMessage(text,index=None):
 """
 	speakText(text,index=index,reason=REASON_MESSAGE)
 
+_speakSpellingGenID = None
+
 def speakSpelling(text):
-	global beenCanceled
+	global beenCanceled, _speakSpellingGenID
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendText(text)
@@ -157,10 +162,9 @@ def speakSpelling(text):
 		next(gen)
 	except StopIteration:
 		return
-	queueHandler.registerGeneratorObject(gen)
+	_speakSpellingGenID=queueHandler.registerGeneratorObject(gen)
 
 def _speakSpellingGen(text):
-	lastKeyCount=globalVars.keyCounter
 	textLength=len(text)
 	synth=getSynth()
 	synthConfig=config.conf["speech"][synth.name]
@@ -180,11 +184,9 @@ def _speakSpellingGen(text):
 			synth.speakText(char,index=index)
 		if uppercase and synth.isSupported("pitch") and synthConfig["raisePitchForCapitals"]:
 			synth.pitch=oldPitch
-		while textLength>1 and globalVars.keyCounter==lastKeyCount and (isPaused or getLastSpeechIndex()!=index): 
+		while textLength>1 and (isPaused or getLastSpeechIndex()!=index):
 			yield
 			yield
-		if globalVars.keyCounter!=lastKeyCount:
-			break
 		if uppercase and  synthConfig["beepForCapitals"]:
 			tones.beep(2000,50)
 
@@ -609,7 +611,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 				lastTextOkToMerge=False
 
 	text=" ".join(relativeTextList)
-	if text and (not text.isspace() or "\t" in text):
+	if text and (not text.isspace() or "\t" in text or "\f" in text):
 		textList.append(text)
 
 	#Finally get speech text for any fields left in new controlFieldStack that are common with the old controlFieldStack (for closing), if extra detail is not requested
@@ -629,7 +631,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
 	text=" ".join(textList)
 	# Only speak if there is speakable text. Reporting of blank text is handled above.
-	if text and (not text.isspace() or "\t" in text):
+	if text and (not text.isspace() or "\t" in text or "\f" in text):
 		speakText(text,index=index)
 	else: #We still need to alert the synth of the given index
 		speakText(None,index=index)

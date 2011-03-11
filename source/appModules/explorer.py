@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 
 import time
-import _default
+import appModuleHandler
 import controlTypes
 import winUser
 import speech
@@ -70,7 +70,7 @@ class NotificationArea(IAccessible):
 			return
 		super(NotificationArea, self).event_gainFocus()
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
@@ -88,6 +88,8 @@ class AppModule(_default.AppModule):
 
 		if windowClass == "ToolbarWindow32":
 			# Check whether this is the notification area, a.k.a. system tray.
+			if isinstance(obj.parent, ClassicStartMenu):
+				return #This can't be a notification area
 			try:
 				# The toolbar's immediate parent is its window object, so we need to go one further.
 				toolbarParent = obj.parent.parent

@@ -5,9 +5,9 @@
 #Copyright (C) 2010 James Teh <jamie@jantrid.net>
 
 import controlTypes
-from . import _default
+import appModuleHandler
 
-class AppModule(_default.AppModule):
+class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self, obj):
 		if obj.windowClassName == "SysTreeView32" and obj.role == controlTypes.ROLE_TREEVIEWITEM and controlTypes.STATE_FOCUSED not in obj.states:

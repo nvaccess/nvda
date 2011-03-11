@@ -324,12 +324,17 @@ class MSHTML(IAccessible):
 	def findOverlayClasses(self,clsList):
 		if self.TextInfo == MSHTMLTextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
-		nodeName = self.HTMLNode.nodeName
-		if nodeNamesToNVDARoles.get(nodeName) == controlTypes.ROLE_DOCUMENT:
-			clsList.append(Body)
-		elif nodeName == "OBJECT":
-			clsList.append(Object)
-
+		#fix for #974
+		#this fails on some control in vs2008 new project wizard
+		try:
+			nodeName = self.HTMLNode.nodeName
+		except COMError:
+			pass
+		else:
+			if nodeNamesToNVDARoles.get(nodeName) == controlTypes.ROLE_DOCUMENT:
+				clsList.append(Body)
+			elif nodeName == "OBJECT":
+				clsList.append(Object)
 		clsList.append(MSHTML)
 		if not self.HTMLNodeHasAncestorIAccessible:
 			# The IAccessibleObject is for this node (not an ancestor), so IAccessible overlay classes are relevant.

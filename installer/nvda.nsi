@@ -15,15 +15,12 @@
 ;Settings
 
 ;defines for product info and paths
-!define VERSION "unknown"
 !define PRODUCT "NVDA"	; Don't change this for no reason, other instructions depend on this constant
-!define PUBLISHER "unknown"
 !define WEBSITE "www.nvda-project.org"
 !define NVDAWindowClass "wxWindowClassNR"
 !define NVDAWindowTitle "NVDA"
 !define NVDAApp "nvda.exe"
 !define NVDATempDir "_nvda_temp_"
-!define NVDASourceDir "..\source\dist"
 !define SNDLogo "nvda_logo.wav"
 !define INSTDIR_REG_ROOT "HKLM"
 !define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}"
@@ -42,13 +39,12 @@ RequestExecutionLevel user /* RequestExecutionLevel REQUIRED! */
 !define MUI_UNINSTALLER ;We want an uninstaller to be generated
 
 ;product branding
-OutFile "${PRODUCT}_${VERSION}.exe"
 InstallDir "$PROGRAMFILES\${PRODUCT}"
 InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 Name "NVDA"
 VIProductVersion "0.0.0.0" ;Needs to be here so other version info shows up
 VIAddVersionKey "ProductName" "${PRODUCT}"
-VIAddVersionKey "LegalCopyright" "Copyright 2006 - 2010 NVDA Contributors"
+VIAddVersionKey "LegalCopyright" "Copyright 2006 - 2011 NVDA Contributors"
 VIAddVersionKey "FileDescription" "NVDA installer file"
 VIAddVersionKey "ProductVersion" "${VERSION}"
 
@@ -136,6 +132,8 @@ Var StartMenuFolder
 !insertmacro MUI_LANGUAGE "Arabic"
 !insertmacro MUI_LANGUAGE "Danish"
 !insertmacro MUI_LANGUAGE "Icelandic"
+!insertmacro MUI_LANGUAGE "Serbian"
+!insertmacro MUI_LANGUAGE "Turkish"
 
 ;Include installer specific language strings
 !include "locale\ar\langstrings.txt"
@@ -160,6 +158,8 @@ Var StartMenuFolder
 !include "locale\ru\langstrings.txt"
 ;!include "locale\se\langstrings.txt"
 !include "locale\sk\langstrings.txt"
+!include "locale\sr\langstrings.txt"
+!include "locale\tr\langstrings.txt"
 !include "locale\zh\langstrings.txt"
 !include "locale\zh_tw\langstrings.txt"
 
@@ -180,7 +180,6 @@ ReserveFile "UAC.dll"
 ;-----
 ;Global variables
 
-Var oldNVDAWindowHandle
 var runAppOnInstSuccess
 var hmci
 var prevUninstallChoice
@@ -220,7 +219,6 @@ CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${PRODUCT}.lnk" "$INSTDIR\${PRODUCT}.exe" "" "$INSTDIR\${PRODUCT}.exe" 0 SW_SHOWNORMAL
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(shortcut_exploreUserConfigDir).lnk" "$INSTDIR\nvda_slave.exe" "explore_userConfigPath" "" 0 SW_SHOWNORMAL
 CreateDirectory "$SMPROGRAMS\$StartMenuFolder\$(docFolder)"
-CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(docFolder)\$(shortcut_readme).lnk" "$INSTDIR\documentation\$(path_readmefile)" "" "$INSTDIR\documentation\$(path_readmefile)" 0 SW_SHOWMAXIMIZED
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(docFolder)\$(shortcut_keycom).lnk" "$INSTDIR\documentation\$(path_keycomfile)" "" "$INSTDIR\documentation\$(path_keycomfile)" 0 SW_SHOWMAXIMIZED
 CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(docFolder)\$(shortcut_userguide).lnk" "$INSTDIR\documentation\$(path_userguide)" "" "$INSTDIR\documentation\$(path_userguide)" 0 SW_SHOWMAXIMIZED
 WriteIniStr "$INSTDIR\${PRODUCT}.url" "InternetShortcut" "URL" "${WEBSITE}"
@@ -312,14 +310,6 @@ Push "$PLUGINSDIR\${NVDATempDir}\${SNDLogo}"
 Call PlaySound
 
 File /r "${NVDASourceDir}\"
-;If NVDA is already running, kill it first before starting a new copy
-call isNVDARunning
-pop $1	; TRUE or FALSE
-pop $oldNVDAWindowHandle
-; Shut down NVDA
-IntCmp $1 1 +1 Continue
-MessageBox MB_OK $(msg_NVDARunning)
-Continue:
 IfFileExists "$APPDATA\nvda\nvda.ini" +1 +4
 GetFullPathName /SHORT $0 "$APPDATA\nvda"
 ExecShell "open" "$PLUGINSDIR\${NVDATempDir}\${NVDAApp}" "-r -m -c $0" SW_SHOWNORMAL
@@ -384,7 +374,6 @@ call isNVDARunning
 pop $1
 pop $2
 intcmp $1 1 +1 End
-intcmp $2 $oldNVDAWindowHandle End +1
 System::Call 'user32.dll::GetWindowThreadProcessId(i r2, *i .r3) i .r4'
 System::Call 'kernel32.dll::OpenProcess(i 1048576, i 0, i r3) i .r4'
 System::Call 'user32.dll::PostMessage(i r2, i ${WM_QUIT}, i 0, i 0)'
