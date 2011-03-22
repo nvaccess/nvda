@@ -14,6 +14,7 @@
 - In Gecko (e.g. Firefox) and MSHTML (e.g. Internet Explorer) documents, NVDA now correctly renders certain text on the same line which was previously rendered on separate lines. (#1378)
 - The Donate item in the NVDA menu is now disabled when running on the logon, UAC and other secure Windows screens, as this is a security risk. (#1419)
 - When speaking of command keys is enabled, shifted characters are no longer incorrectly spoken as command keys. (#1422)
+- When speaking of command keys is enabled, pressing space with modifiers other than shift (such as control and alt) is now reported as a command key. (#1424)
 
 
 == Changes for Developers ==

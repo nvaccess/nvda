@@ -265,10 +265,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if self.isExtended and winUser.VK_VOLUME_MUTE <= self.vkCode <= winUser.VK_VOLUME_UP:
 			# Don't report volume controlling keys.
 			return False
-		if self.vkCode == winUser.VK_SPACE:
-			return False
 		# Aside from space, a key name of more than 1 character is a command.
-		if len(self.mainKeyName) > 1:
+		if self.vkCode != winUser.VK_SPACE and len(self.mainKeyName) > 1:
 			return True
 		# If this key has modifiers other than shift, it is a command; e.g. shift+f is text, but control+f is a command.
 		modifiers = self.generalizedModifiers
