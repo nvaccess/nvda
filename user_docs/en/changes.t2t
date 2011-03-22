@@ -13,6 +13,7 @@
 - Collapsing combo boxes in a virtual buffer when focus mode has been forced with NVDA+space no longer auto-switches back to browse mode. (#1386)
 - In Gecko (e.g. Firefox) and MSHTML (e.g. Internet Explorer) documents, NVDA now correctly renders certain text on the same line which was previously rendered on separate lines. (#1378)
 - The Donate item in the NVDA menu is now disabled when running on the logon, UAC and other secure Windows screens, as this is a security risk. (#1419)
+- When speaking of command keys is enabled, shifted characters are no longer incorrectly spoken as command keys. (#1422)
 
 
 == Changes for Developers ==
