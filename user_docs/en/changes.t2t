@@ -3,6 +3,12 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2011.1.1 =
+
+== Bug Fixes ==
+- The Donate item in the NVDA menu is now disabled when running on the logon, UAC and other secure Windows screens, as this is a security risk. (#1419)
+
+
 = 2011.1 =
 Highlights of this release include automatic reporting of new text output in mIRC, PuTTY, Tera Term and SecureCRT; support for global plugins; announcement of bullets and numbering in Microsoft Word; additional key bindings for braille displays, including keys to move to the next and previous line; support for several Baum, HumanWare and APH braille displays; and reporting of colors for some controls, including IBM Lotus Symphony text controls.
 
