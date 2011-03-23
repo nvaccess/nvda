@@ -431,6 +431,7 @@ HDC WINAPI fake_CreateCompatibleDC(HDC hdc) {
 	//If the creation was successful, and the DC that was used in the creation process is a window DC, 
 	//we should create a displayModel for this DC so that text writes can be tracked in case  its ever bit blitted to a window DC. 
 	//We also need to acquire access to the model maps while we do this
+	if(!newHdc) return NULL;
 	displayModel_t* model=new displayModel_t();
 	displayModelsByMemoryDC.acquire();
 	displayModelsByMemoryDC.insert(make_pair(newHdc,model));
