@@ -68,7 +68,7 @@ def keyCommandsDocTool(env):
 	)
 	env['BUILDERS']['keyCommandsDoc']=kcdBuilder
 
-keyCommandsLangBlacklist=set(['cs','ja'])
+keyCommandsLangBlacklist=set(['ja'])
 
 vars = Variables()
 vars.Add("version", "The version of this build", versionInfo.version)

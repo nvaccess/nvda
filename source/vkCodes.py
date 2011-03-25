@@ -110,7 +110,7 @@ byCode = {
 	(0x91, None): "scrollLock",
 	(0xA0, None): "leftShift",
 	(0xA1, None): "rightShift",
-	(0xA2, None): "LleftControl",
+	(0xA2, None): "leftControl",
 	(0xA3, None): "rightControl",
 	(0xA4, None): "leftAlt",
 	(0xA5, None): "rightAlt",

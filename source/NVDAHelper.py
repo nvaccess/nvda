@@ -200,7 +200,7 @@ def initialize():
 		log.critical("Error loading nvdaHelperRemote.dll: %s" % WinError())
 		return
 	_remoteLib=CDLL("nvdaHelperRemote",handle=h)
-	if _remoteLib.injection_initialize() == 0:
+	if _remoteLib.injection_initialize(globalVars.appArgs.secure) == 0:
 		raise RuntimeError("Error initializing NVDAHelperRemote")
 	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':
 		_remoteLoader64=RemoteLoader64()

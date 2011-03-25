@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Nvda\n"
 "POT-Creation-Date: 2011-02-15 19:04+E. Australia Standard Time\n"
-"PO-Revision-Date: 2011-02-15 15:31+0100\n"
-"Last-Translator: Luca Maianti <lucanight@moleman.como.it>\n"
+"PO-Revision-Date: 2011-02-26 09:32+0100\n"
+"Last-Translator: Simone Dal Maso <simone.dalmaso@juvox.it>\n"
 "Language-Team: Luca Maianti <lucanight@moleman.como.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,7 +51,7 @@ msgstr "Desktop"
 #: NVDAObjects\window\edit.py:252
 #: NVDAObjects\window\edit.py:253
 msgid "default color"
-msgstr "Colore di default"
+msgstr "Colore predefinito"
 
 #: NVDAObjects\window\edit.py:541
 #: controlTypes.py:179
@@ -69,7 +69,7 @@ msgstr "Oggetto"
 
 #: NVDAObjects\window\excel.py:49
 msgid "NVDA Excel Cell Editor"
-msgstr "Editor cella exel di nvda"
+msgstr "Editor cella excel di nvda"
 
 #: NVDAObjects\window\excel.py:51
 msgid "Enter cell contents"
@@ -562,7 +562,7 @@ msgstr "Livello %s"
 
 #: brailleDisplayDrivers\alvaBC6.py:44
 msgid "ALVA BC640/680 series"
-msgstr "Alva serie bc640 680"
+msgstr "Alva serie bc640/680"
 
 #: brailleDisplayDrivers\baum.py:87
 msgid "Baum/HumanWare/APH braille displays"
@@ -668,7 +668,7 @@ msgstr "Asterisco"
 
 #: characterSymbols.py:35
 msgid "plus"
-msgstr "Piu'"
+msgstr "Più"
 
 #: characterSymbols.py:36
 msgid "comma"
@@ -823,7 +823,7 @@ msgstr "Teal"
 
 #: colors.py:91
 msgid "fuchsia"
-msgstr "Fichsia"
+msgstr "Fuchsia"
 
 #: colors.py:92
 msgid "aqua"
@@ -1363,7 +1363,7 @@ msgstr "Corsivo"
 
 #: controlTypes.py:308
 msgid "foreground color"
-msgstr "Color in primo piano"
+msgstr "Colore in primo piano"
 
 #: controlTypes.py:309
 msgid "background color"
@@ -1477,7 +1477,7 @@ msgstr "Richiesto"
 
 #: controlTypes.py:340
 msgid "defunct"
-msgstr "Defunct"
+msgstr "Scomparso"
 
 #: controlTypes.py:341
 msgid "invalid entry"
@@ -1540,12 +1540,12 @@ msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"Il tuo map file dei gesti contiene errrori.\n"
+"Il tuo file delle gesture contiene errrori.\n"
 "Ulteriori informazioni nel file di log."
 
 #: core.py:82
 msgid "gesture map File Error"
-msgstr "Errore nel map file dei gesti"
+msgstr "Errore nel file mappatura delle gesture"
 
 #: core.py:171
 msgid "Loading NVDA. Please wait..."
@@ -1594,23 +1594,23 @@ msgstr "Copiato negli appunti"
 
 #: globalCommands.py:42
 msgid "input help %s"
-msgstr "Aiuto tastiera %s"
+msgstr "Aiuto immissione dati %s"
 
 #: globalCommands.py:43
 msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
-msgstr "Attiva o disattiva l'aiuto tastiera. Quando attivo, la pressione di un tasto provochera' la lettura dello script associato ad esso."
+msgstr "Attiva o disattiva l'aiuto immissione dati, o semplicemente aiuto tastiera. Quando attivo, la pressione di un tasto provochera' la lettura dello script associato ad esso."
 
 #: globalCommands.py:49
 msgid "Sleep mode off"
-msgstr "Modalita' sleep off"
+msgstr "Modalità riposo disattivata"
 
 #: globalCommands.py:52
 msgid "Sleep mode on"
-msgstr "Modalita' sleep on"
+msgstr "modalità riposo attivata"
 
 #: globalCommands.py:53
 msgid "Toggles  sleep mode on and off for  the active application."
-msgstr "Attiva o disattiva la modalita' sleep per l'applicazione attiva"
+msgstr "Abilita o disattiva la modalita' riposo per l'applicazione attiva"
 
 #: globalCommands.py:70
 msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
@@ -2041,47 +2041,47 @@ msgstr "Il cursore di controllo segue il cursore di sistema"
 
 #: globalCommands.py:769
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "Attiva o disattiva i movimenti del cursore di controllo in concomitanza con il cursore di sistema"
+msgstr "Attiva o disattiva i movimenti del cursore di controllo in concomitanza con il cursore di sistema."
 
 #: globalCommands.py:778
 msgid "focus moves navigator object"
-msgstr "Il navigatore di oggetti segue il focus"
+msgstr "Il navigatore di oggetti segue il focus;"
 
 #: globalCommands.py:779
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "Attiva o disattiva l'inseguimento del focus, se attivo il navigatore di oggetti seguira' il focus"
+msgstr "Attiva o disattiva l'inseguimento del focus, se attivo il navigatore di oggetti seguira' il focus;"
 
 #: globalCommands.py:791
 msgid "no system battery"
-msgstr "Nessuna batteria di sistema"
+msgstr "Nessuna batteria di sistema;"
 
 #: globalCommands.py:794
 msgid "AC power on"
-msgstr "Alimentazione attiva"
+msgstr "Alimentazione attiva;"
 
 #: globalCommands.py:796
 msgid "%d hours and %d minutes remaining"
-msgstr "%d ore e %d minuti restanti"
+msgstr "%d ore e %d minuti restanti;"
 
 #: globalCommands.py:798
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr "Legge lo stato della batteria e il tempo di autonomia rimasto se l'alimentazione e' disattivata"
+msgstr "Legge lo stato della batteria e il tempo di autonomia rimasto se l'alimentazione e' disattivata;"
 
 #: globalCommands.py:802
 msgid "Pass next key through"
-msgstr "Passa il tasto successivo all'applicazione"
+msgstr "Passa il tasto successivo all'applicazione;"
 
 #: globalCommands.py:803
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
-msgstr "Il tasto successivo premuto non viene riconosciuto da nvda ma passa direttamente al controllo di windows"
+msgstr "Il tasto successivo premuto non viene riconosciuto da nvda ma passa direttamente al controllo di windows."
 
 #: globalCommands.py:808
 msgid "Currently running application is %s"
-msgstr "L'applicazione corrente e' %s"
+msgstr "L'applicazione corrente e' %s;"
 
 #: globalCommands.py:811
 msgid " and currently loaded module is %s"
-msgstr "e il modulo caricato e' %s"
+msgstr "e il modulo caricato e' %s;"
 
 #: globalCommands.py:813
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
@@ -2089,35 +2089,35 @@ msgstr "Legge il nome del file dell'applicazione corrente ed il modulo caricato"
 
 #: globalCommands.py:817
 msgid "Shows the NVDA general settings dialog"
-msgstr "Mostra la finestra impostazioni generali di nvda"
+msgstr "Mostra la finestra impostazioni generali di NVDA"
 
 #: globalCommands.py:821
 msgid "Shows the NVDA synthesizer dialog"
-msgstr "Mostra la finestra sintetizzatore di nvda"
+msgstr "Mostra la finestra sintetizzatore di NVDA"
 
 #: globalCommands.py:825
 msgid "Shows the NVDA voice settings dialog"
-msgstr "Mostra la finestra impostazioni voce di nvda"
+msgstr "Mostra la finestra impostazioni voce di NVDA"
 
 #: globalCommands.py:829
 msgid "Shows the NVDA keyboard settings dialog"
-msgstr "Mostra la finestra impostazioni tastiera di nvda"
+msgstr "Mostra la finestra impostazioni tastiera di NVDA"
 
 #: globalCommands.py:833
 msgid "Shows the NVDA mouse settings dialog"
-msgstr "Mostra la finestra impostazioni mouse di nvda"
+msgstr "Mostra la finestra impostazioni mouse di NVDA"
 
 #: globalCommands.py:837
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr "Mostra la finestra impostazioni presentazione oggetti di nvda"
+msgstr "Mostra la finestra impostazioni presentazione oggetti di NVDA"
 
 #: globalCommands.py:841
 msgid "Shows the NVDA virtual buffers settings dialog"
-msgstr "Mostra la finestra impostazioni del buffer virtuale di nvda"
+msgstr "Mostra la finestra impostazioni del buffer virtuale di NVDA"
 
 #: globalCommands.py:845
 msgid "Shows the NVDA document formatting settings dialog"
-msgstr "Mostra la finestra impostazioni formattazione documento di nvda"
+msgstr "Mostra la finestra impostazioni formattazione documento di NVDA"
 
 #: globalCommands.py:849
 msgid "Saves the current NVDA configuration"
@@ -2129,7 +2129,7 @@ msgstr "Carica la configurazione di nvda da file, sovrascrivendo quella attuale 
 
 #: globalCommands.py:863
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "Attiva la console python di nvda utile soprattutto agli sviluppatori"
+msgstr "Attiva la console python di NVDA, utile soprattutto agli sviluppatori"
 
 #: globalCommands.py:868
 #: gui\settingsDialogs.py:953
@@ -2215,7 +2215,7 @@ msgstr "Plugin ricaricati"
 
 #: globalCommands.py:942
 msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
-msgstr "Ricarica i moduli applicazione e i plugin globali senza riavviare nvda puo' essere utile agli sviluppatori"
+msgstr "Ricarica i moduli applicazione e i plugin globali senza riavviare NVDA, puo' essere utile agli sviluppatori"
 
 #: gui\__init__.py:148
 msgid "configuration applied"
@@ -2263,12 +2263,12 @@ msgstr "Si è sicuri di voler uscire da NVDA?"
 #: gui\__init__.py:187
 #: gui\__init__.py:345
 msgid "Exit NVDA"
-msgstr "Esci da nvda"
+msgstr "Esci da NVDA"
 
 #: gui\__init__.py:231
 #: gui\__init__.py:332
 msgid "About NVDA"
-msgstr "Informazioni su nvda"
+msgstr "Informazioni su NVDA"
 
 #: gui\__init__.py:271
 msgid "&General settings..."
@@ -2293,7 +2293,7 @@ msgstr "Impostazioni &voce..."
 
 #: gui\__init__.py:275
 msgid "Choose the voice, rate, pitch and volume  to use"
-msgstr "Scegli la voce, la velocita', il tono e il volume da usare"
+msgstr "Scegli la voce, la velocità, il tono e il volume da usare"
 
 #: gui\__init__.py:277
 msgid "B&raille settings..."
@@ -2353,7 +2353,7 @@ msgstr "Dizionario pre&definito..."
 
 #: gui\__init__.py:293
 msgid "dialog where you can set default dictionary by adding dictionary entries to the list"
-msgstr "Dialogo dove potete creare il dizionario predefinito aggiungendo voci all'elenco"
+msgstr "Finestra di Dialogo dove potete creare il dizionario predefinito aggiungendo voci all'elenco"
 
 #: gui\__init__.py:295
 msgid "&Voice dictionary..."
@@ -2361,7 +2361,7 @@ msgstr "Dizionario specifico per la &voce..."
 
 #: gui\__init__.py:295
 msgid "dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
-msgstr "Dialogo dove potete creare un dizionario specifico per la voce aggiungendo voci all'elenco"
+msgstr "Finestra di Dialogo dove potete creare un dizionario specifico per la voce aggiungendo voci all'elenco"
 
 #: gui\__init__.py:297
 msgid "&Temporary dictionary..."
@@ -2369,7 +2369,7 @@ msgstr "Dizionario &temporaneo..."
 
 #: gui\__init__.py:297
 msgid "dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
-msgstr "Dialogo dove potete creare un dizionario tempporaneo aggiungendo voci"
+msgstr "Finestra di Dialogo dove potete creare un dizionario tempporaneo aggiungendo voci"
 
 #: gui\__init__.py:299
 msgid "Speech &dictionaries"
@@ -2475,7 +2475,7 @@ msgstr ""
 
 #: gui\__init__.py:406
 msgid "Welcome to NVDA"
-msgstr "Benvenuto in nvda"
+msgstr "Benvenuto in NVDA"
 
 #: gui\__init__.py:410
 msgid "Options"
@@ -2526,7 +2526,7 @@ msgstr "Errore nel salvataggio del log %s"
 #: gui\scriptUI.py:62
 #: gui\scriptUI.py:74
 msgid "NVDA"
-msgstr "Nvda"
+msgstr "NVDA"
 
 #: gui\settingsDialogs.py:107
 msgid "info"
@@ -2950,7 +2950,7 @@ msgstr "Voce in sostituzione"
 
 #: gui\settingsDialogs.py:817
 msgid "case"
-msgstr "case"
+msgstr "Maiuscole"
 
 #: gui\settingsDialogs.py:818
 msgid "Regexp"
@@ -3122,7 +3122,7 @@ msgstr "Pagina su"
 
 #: keyLabels.py:37
 msgid "page down"
-msgstr "Pagina giu'"
+msgstr "Pagina giù"
 
 #: keyLabels.py:38
 msgid "end"
@@ -3154,7 +3154,7 @@ msgstr "Freccia su"
 
 #: keyLabels.py:45
 msgid "down arrow"
-msgstr "Freccia giu'"
+msgstr "Freccia giù"
 
 #: keyLabels.py:46
 msgid "applications"
@@ -3222,7 +3222,7 @@ msgstr "Meno del tastierino numerico"
 
 #: keyLabels.py:62
 msgid "numpad plus"
-msgstr "Piu' del tastierino numerico"
+msgstr "Più del tastierino numerico"
 
 #: keyLabels.py:63
 msgid "left control"
@@ -3275,7 +3275,7 @@ msgstr "%s cursore"
 
 #: pythonConsole.py:24
 msgid "Type help(object) to get help about object."
-msgstr "Digita help (oggetto) per ottenere aiuto su un oggetto"
+msgstr "digita help(object) per ottenere aiuto su un oggetto"
 
 #: pythonConsole.py:43
 msgid "Type exit() to exit the console"
@@ -4042,4 +4042,3 @@ msgstr "Modalita' buffer virtuale"
 #: virtualBuffers\__init__.py:1321
 msgid "focus mode"
 msgstr "Modalita' focus"
-

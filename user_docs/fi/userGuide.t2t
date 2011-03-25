@@ -9,8 +9,8 @@
 
 + Johdanto +
 Non-Visual Desktop Access (NVDA) on vapaa ja avoimen lähdekoodin ruudunlukija Microsoft Windows -käyttöjärjestelmälle.
-Synteettisenä puheena ja pistekirjoituksella annettava palaute mahdollistaa sokeiden ja heikkonäköisten Windows-tietokoneiden käytön samoin kustannuksin kuin näkevätkin.
-NVDA:ta kehittää [NV Access http://www.nvaccess.org/] yhteisön avustuksella.
+Synteettisenä puheena ja pistekirjoituksella annettava palaute mahdollistaa sokeiden ja heikkonäköisten Windows-tietokoneiden käytön samoin kustannuksin kuin näkevienkin.
+NVDA:ta kehittää [NV Access http://www.nvaccess.org/] yhteisön jäsenten avustuksella.
 
 ++ Yleiset ominaisuudet ++
 NVDA:n avulla sokeat ja heikkonäköiset voivat käyttää Windows-käyttöjärjestelmää ja monia kolmannen osapuolen sovelluksia.
@@ -990,7 +990,7 @@ Katso [BRLTTY:n näppäintaulukoiden ohjetta http://mielke.cc/brltty/doc/drivers
 
 + Edistyneet aiheet +
 
-++ Näppäin- ja muiden syötekomentojen uudelleenmäärittely ++
+++ Näppäinyhdistelmien ja muiden syötekomentojen uudelleenmäärittely ++
 Käyttäjät voivat lisätä omia tai muuttaa nykyisiä NVDA:n skripteihin liitettyjä syötekomentojen määrittelyjä (kuten näppäinyhdistelmiä) erityiseen käyttäjän asetushakemistossa olevaan tiedostoon.
 Tämä tiedosto on nimeltään gestures.ini.
 
@@ -999,14 +999,14 @@ Tiedostossa voi olla useita osioita ja jokaisessa osiossa voi olla yksi tai usea
 
 Jokaisessa osiossa on määrittelyt tiettyyn NVDA:n Python-moduulissa ja luokassa oleviin skripteihin.
 - Osion nimi koostuu Python-moduulista ja -luokasta, jotka erotetaan toisistaan pisteellä.
-- Jokaisen merkinnän avain on skriptin nimi, jonka syötekomennot halutaan määritellä.
-Vaihtoehtoisesti voidaan käyttää erikoisskriptin nimeä None poistamaan syötekomentojen määrittelyt skriptistä, johon ne oli aiemmin määritelty.
+- Jokaisen merkinnän avain on skriptin nimi, jonka syötekomennot halutaan määrittää.
+Skripteistä on mahdollista poistaa niille määritellyt syötekomennot käyttämällä erikoisskriptiä None.
 - Merkinnän arvo koostuu pilkulla erotetuista komentotunnisteista, jotka edustavat määriteltäviä syötekomentoja.
 -
 
 Komentotunnisteet koostuvat kaksikirjaimisista laitekoodeista (näppäimistöllä kb ja pistenäytöllä br), valinnaisesta alilaitteesta tai aaltosuluissa olevasta näppäimistöasettelusta, kaksoispisteestä sekä yhdestä tai useammasta plus-merkillä erotetusta näppäimen nimestä.
 
-Komentotunnisteiden ja skriptien sekä luokan ja moduulin nimi, jossa ne ovat, saadaan selville seuraavasti:
+Komentotunnisteiden ja skriptien sekä luokan ja moduulin nimi saadaan selville seuraavasti:
 + Otetaan syöteohje käyttöön.
 + Aktivoidaan haluttu syötekomento painamalla sen näppäintä.
 + Poistetaan syöteohje käytöstä.
@@ -1015,7 +1015,7 @@ Komentotunnisteiden ja skriptien sekä luokan ja moduulin nimi, jossa ne ovat, s
 Jossakin näistä merkinnöistä pitäisi olla tiedot käytetystä syötekomennosta, mukaan lukien moduuli.luokka sekä skripti, mikäli kyseiseen syötekomentoon on sellainen määritelty.
 +
 
-Seuraavassa on esimerkki siitä, miten NVDA+Shift+t-näppäinyhdistelmä määritettäisiin  päiväys ja aika -skriptiin.
+Seuraavassa on esimerkki siitä, miten NVDA+Shift+t-näppäinyhdistelmä määritetään päiväys ja aika -skriptiin.
 
 Oikea skriptin nimi ja moduuli.luokka saadaan selville ottamalla käyttöön syöteohje ja painamalla NVDA+f12, koska se on nykyinen päiväys ja aika -skriptiin määritelty syötekomento.
 Tämän jälkeen syöteohje poistetaan käytöstä ja tutkitaan lokia.
@@ -1036,21 +1036,21 @@ Mikäli tiedostoa ei vielä ole, käyttäjän asetushakemistoon tulee luoda teks
 	dateTime = kb:NVDA+shift+t
 ```
 
-Tämä määrittäisi dateTime-skriptiin näppäinyhdistelmän NVDA+Shift+t missä tahansa näppäimistöasettelussa.
+Tämä määrittää dateTime-skriptiin näppäinyhdistelmän NVDA+Shift+t missä tahansa näppäimistöasettelussa.
  
-Huomaa, että alkuperäinen NVDA+f12-näppäinyhdistelmä toimisi edelleen.
+Huomaa, että alkuperäinen NVDA+f12-näppäinyhdistelmä toimii edelleen.
 Mikäli tämä määrittely halutaan poistaa, tiedostoon tulee lisätä seuraava rivi:
 
 ```
 	None = kb:NVDA+f12
 ```
 
-Vaikka skriptejä voidaankin määritellä mihin tahansa käytettävissä olevaan näppäimeen, Alt-näppäinen käyttäminen voi olla ongelmallista.
-NVDA lähettää edelleen toimintonäppäimet (sellaiset kuin Shift, Ctrl ja Alt) käyttöjärjestelmälle, vaikka ne olisivat skriptin käytössä.
-Niinpä jos syötekomennossa käytetään Alt-näppäintä, tämän näppäinyhdistelmän painaminen voi sekä avata valikkorivin että suorittaa skriptin.
+Vaikka skriptejä voidaankin määritellä periaatteessa mihin tahansa käytettävissä olevaan näppäimeen, voi Alt-näppäimen käyttäminen olla kuitenkin joissakin tapauksissa ongelmallista, koska NVDA lähettää edelleen toimintonäppäimet (sellaiset kuin Shift, Ctrl ja Alt) käyttöjärjestelmälle, vaikka ne olisivat skriptin käytössä.
+Niinpä jos syötekomennossa käytetään Alt-näppäintä, kyseisen näppäinyhdistelmän painaminen voisi sekä avata valikkorivin että suorittaa skriptin.
 Tämän vuoksi toimintonäppäimissä on parasta käyttää vain Shift-, Ctrl- ja NVDA-näppäimiä.
 
 + Lisätietoja +
 Mikäli tarvitset lisätietoja tai neuvoja NVDA:han liittyen, käy  sen web-sivustolla osoitteessa NVDA_URL.
 Täältä löydät lisäohjeita sekä teknistä tukea ja yhteisöresursseja.
 Sivustolla on myös NVDA:n kehitykseen liittyvää tietoa.
+

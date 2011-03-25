@@ -8,6 +8,9 @@
 %%toc
 
 + Introducción +
+Non Visual Desktop Access (NVDA) é un lector de pantalla libre e de código aberto  para o Sistema Operativo  Microsoft Windows.
+Proporcionando retroalimentación a traverso da voz sintética e do Braille, posibilita á xente cega ou deficiente visual acceder ós ordenadores executando Windows por un coste non maior ó de unha persoa vidente.
+NVDA está desenvolvido  por [NV Access http://www.nvaccess.org/], con  colaboracións da comunidade.
 
 ++ Características Xerais ++
 Proporcionando un apoyo de voz sintética, NVDA permite ás persoas cegas e deficentes visuais acceder e interactuar co Sistema Operativo Windows e moitas aplicacións de terceiros. 
@@ -840,11 +843,6 @@ Para máis información, por favor mira [O artigo The Python Console no sitio We
 ++ Recargar plugins ++
 Este elemento, unha vez activado, recarga app modules e plugins globais sen reiniciar ó NVDA, o cal é útil para desenroladores.
 
-+ Información Adicional +
-Se requires información adicional ou asistencia referente ó NVDA, por favor visita o sitio Web de NVDA en NVDA_URL.
-Aquí, podes atopar documentación adicional,  así como soporte técnico e recursos para a comunidade. 
-Este sitio tamén proporciona información e recursos concernintes ó desenrolo do NVDA.
-
 + Sintetizadores de Voz Soportados +[SupportedSpeechSynths]
 Esta sección contén información acerca dos sintetizadores de voz soportados polo NVDA.
 
@@ -1015,15 +1013,24 @@ Este ficheiro chámase gestures.ini.
 
 Este ficheiro utiliza a sintaxis estándar dos ficheiros ini.
 Cada sección proporciona mapeados para scripts nun módulo particular python e clase dentro do NVDA.
-O nome de sección debería ser o módulo Python e clase separados por un punto (.).
- 
- As teclas de cada sección son os nomes dos scripts cos que desexas concordar.
- O valor de cada tecla é unha lista separada con coma (,) de  identificadores del xesto os que representan os distintos xestos de entrada que deberían concordar con ese script en particular.
+- O nome de sección debería ser o módulo Python e clase separados por un punto (.).
+- As teclas de cada sección son os nomes dos scripts cos que desexas concordar.
+ Alternativamente, podes utilizar None para desvincular xestos de entrada dun script ó que estaban vinculados anteriormente.
+- O valor de cada tecla é unha lista separada con coma (,) de  identificadores del xesto os que representan os distintos xestos de entrada que deberían concordar con ese script en particular.
+-
+
+Os identificadores de xesto consisten nun código de dispositivo de dúas letras (kb para teclado e br para liña braille), un subdispositivo opcional ou distribución de teclado entre corchetes, uns dous pontos, e despois un ou máis nomes de teclas separados por un signo máis (+).
 
 Pódense proporcionar múltiples teclas para cada sección, e pódense proporcionar múltiples secciones no ficheiro.
 
-De cara a atopar os identificadores de xesto así coma os nomes de scripts e a clase e o módulo no cal están contidos, podes activar a Axuda de entrada, activar o xesto (premer a tecla) e, despois de desactivar a Axuda de Entrada, activar Ver log no menú ferramentas e examinar as entradas recentes do log.
+De cara a atopar os identificadores de xesto así coma os nomes de scripts e a clase e o módulo no cal están contidos:
++ podes activar a Axuda de entrada.
++ Activar o xesto (premer a tecla).
++ Desactivar a Axuda de Entrada.
++ Activar Ver log no menú ferramentas.
++ Examinar as entradas recentes do log.
 Unha destas proporcionaría información acerca do xesto de entrada que enviaches, incluíndo o módulo.clase e script se está vinculado a un.
++
 
 Seguidamente vai un exemplo de cómo poderías vincular NVDA+shift+t ó script data hora.
 
@@ -1048,9 +1055,20 @@ Se o ficheiro non existe aínda, crearías un ficheiro de texto chamado gestures
 
 Esto vincularía o premedo das teclas NVDA+shift+t (en calquera distribución de teclado) ó script dateTime.
 
-Tamén podes utilizar o nome especial de script de None para desvincular un xesto de entrada dende calquera  script que estivera vinculado nese módulo e clase.
+Ten en conta que a combinación orixinal NVDA+f12 aínda funcionaría.
+Se quixeras eliminar esta combinación, engadirías a liña seguinte:
 
-Os identificadores de xesto consisten en un código de dispositivo de dúas letras (kb para teclado e br para liña braille), un subdispositivo opcional ou distribución de teclado entre corchetes, uns dous puntos, e despois un ou máis nomes de teclas separados por un signo máis (+).
- 
-Premendo teclas mentres se está na Axuda de entrada e logo vendo o log posibilitarache descubrir os identificadores de xesto a utilizar.
- 
+```
+	None = kb:NVDA+f12
+```
+
+Aíndaque eres libre de ter scripts vinculados a calquera tecla dispoñible, poderá seren problemático utilizar a tecla alt no teclado.
+NVDA aínda envía teclas modificadoras (como shift, control e alt) ó Sistema Operativo, aínda se eventúan nun script.
+Desta maneira, se utilizas alt nun xesto, premendo esta tecla a combinación poderá activar a barra de menú, tanto como executar o script.
+Polo tanto, probablemente é mellor só utilizar Shift, control e a tecla modificadora NVDA como modificadores.
+
++ Información Adicional +
+Se requires de información adicional ou asistencia con respecto ó NVDA, por favor visita o sitio Web de NVDA en NVDA_URL.
+Aquí, podes atopar documentación adicional, así coma soporte técnico e recursos da comunidade.
+Este Sitio tamén proporciona información e recursos concernintes ó desenrolo do NVDA.
+

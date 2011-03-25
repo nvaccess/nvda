@@ -1,5 +1,5 @@
 ﻿NVDA NVDA_VERSION Manuale Utente
-Ultimo Aggiornamento del manuale originale: 23 Agosto 2010
+Ultimo Aggiornamento del manuale originale: 2 Febbraio 2011
 traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 
@@ -10,22 +10,23 @@ traduzione a cura di Simone Dal Maso e Gianluca Casalino
 %%toc
 
 + Introduzione +
+NVDA (NonVisual desktop access) è uno screen reader per i sistemi operativi Windows che permette ad un non vedente di interagire con il computer, ricevendo le informazioni attraverso una sintesi vocale o un display braille e permettendo quindi l'accesso al sistema operativo ed a numerose applicazioni di terze parti senza costi aggiuntivi, allo stesso modo delle persone vedenti. 
+Lo screen reader è sviluppato da [NV Access http://www.nvaccess.org/], con contributi dalle varie comunità.
 
-++ Caratteristiche generali ++
-NVDA (NonVisual desktop access) è uno screen reader per i sistemi operativi Windows che permette ad un non vedente di interagire con il computer, ricevendo le informazioni attraverso una sintesi vocale o un display braille e permettendo quindi l'accesso al sistema operativo ed a numerose applicazioni di terze parti.
-
+++Caratteristiche principali++
 Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Capacità di funzionare interamente da una chiavetta USB o altri dispositivi portatili senza bisogno di installazione
 - Installazione guidata semplice ed intuitiva tramite sintesi vocale
-- Navigazione web tramite Mozilla Firefox o Windows Internet Explorer
-- Gestione della posta elettronica tramite Mozilla Thunderbird, Outlook Express, Windows Mail o Windows Live Mail
-- Supporto per Microsoft Word ed Excel
-- Supporto ad applicazioni Java accessibili
-- Supporto ad Adobe Reader
-- Supporto ad IBM Lotus Symphony
+- Supporto alle applicazioni più comuni come browsers web, posta elettronica, wordprocessor e software per chattare.
 - Supporto al prompt dei comandi di Windows e alle applicazioni lanciate da console
 - Annuncio automatico del testo sul quale è posizionato il mouse, con possibilità opzionale di conoscere la posizione del mouse stesso sullo schermo
+- Annuncio automatico della formattazione dei caratteri, ad esempio stile, dimensione, nome e errori ortografici
 - Supporto per molti Display Braille.
+- Tradotto in moltissime lingue
+- Supporto ai sistemi operativi più moderni, comprese le edizioni a 32 e 64 bit
+- Gestione delle videate di logon e quelle relative alla sicurezza
+- Supporto alle più comuni interfacce per l'accessibilità, come Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation
+- sintesi vocale incorporata capace di parlare più di 20 lingue
 -
   
 ++ Internazionalizzazione ++
@@ -84,6 +85,20 @@ Risulta molto importante effettuare questa operazione, in modo da non dover inco
 ++ NVDA versione portable ++
 Se si dispone della versione portable di NVDA, tutto ciò che è necessario fare è lanciare il file autoestraente e seguire le istruzioni riportate a schermo. Ciò consiste semplicemente nello scegliere la cartella dove verranno estratti i files.
 
++++NVDA Portable in una chiavetta USB+++
+E' possibile copiare NVDA in una chiavetta USB in modo da poterlo poi utilizzare in qualsiasi computer.
+
+Quando la versione portable richiede il percorso ove estrarre il programma, digitare la lettera dell'unità della propria chiavetta, seguita opzionalmente dal nome di una sottocartella nella quale si desidera copiare NVDA.
+
+Se ad esempio la lettera della propria chiavetta corrisponde ad e:\, possiamo digitare e:\nvda, ed in questo modo NVDA verrà estratto in e:\nvda nella propria chiavetta USB.
+
+Si noti che sebbene sia possibile quindi utilizzare NVDA in qualsiasi computer, questo non significa che lo screen reader si avvierà non appena sarà inserita la chiavetta sul pc. 
+
+Per informazioni su come avviare NVDA in automatico da una chiavetta, fare riferimento al seguente articolo in inglese:
+http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
+oppure consultare la sezione Faq Domande e risposte nel sito della comunità italiana 
+http://www.nvda.it.
+
 + Iniziare con NVDA +
 
 ++ Avviare NVDA ++
@@ -109,8 +124,8 @@ Da impostazioni predefinite entrambi i tasti Insert, della tastiera estesa e del
 
 Se si desidera che uno dei tasti funzione NVDA agisca usando la sua funzione originale (ad esempio si potrebbe volere attivare il BloccaMaiuscole che però è stato impostato come tasto funzione NVDA) sarà sufficiente premere quel tasto due volte in rapida successione.
 
-+++ Modalità Aiuto Tastiera +++
-La maggior parte dei comandi verranno citati in seguito nella presente guida, ma una maniera pratica per conoscerli, è di attivare l'aiuto tastiera.
++++ Modalità Aiuto immissione +++
+La maggior parte dei comandi verranno citati in seguito nella presente guida, ma una maniera pratica per conoscerli, è di attivare l'aiuto immissione.
 
 Per farlo basta premere NVDA+1 e per disattivarlo basta ripremerlo nuovamente.
 Durante tale modalità, verranno annunciate le funzionalità associate ai vari tasti o combinazioni di essi se presenti senza però eseguirle. Si è perciò liberi di premere ciò che si desidera senza preoccuparsi degli effetti.
@@ -136,10 +151,19 @@ In alternativa, si può ricorrere alla System Tray, premendo Windows+B per raggi
 | Interrompe la Sintesi Vocale | Control | Ferma immediatamente la Sintesi Vocale |
 | Pausa Sintesi Vocale | Shift | Mette in pausa immediatamente la Sintesi Vocale. Premendo nuovamente il tasto la sintesi vocale riprenderà a parlare dal punto in cui era stata fermata (sempre che questo sia supportato dal sintetizzatore utilizzato, in genere non dovrebbe costituire un problema) |
 | Menu NVDA | NVDA+n | Mostra il Menu di NVDA per permettere di accedere alle Preferenze, agli strumenti, all'Aiuto etc |
-| Commuta Modalità Aiuto Tastiera | NVDA+1 | in questa modalità sarà possibile premere qualsiasi tasto e ne verrà annunciato il nome e la propria funzione in NVDA |
+| Commuta modalità voce | NVDA+s | Commuta la modalità di voce tra parlare, disattivato e beeps. |
+| Commuta Modalità Aiuto Immissione | NVDA+1 | in questa modalità sarà possibile premere qualsiasi tasto e ne verrà annunciato il nome e la propria funzione in NVDA |
 | Uscire da NVDA | NVDA+q | Esce da NVDA |
-| Annuncia data/Ora | NVDA+f12 | Premendo una volta questa combinazione di tasti viene annunciato l'orario corrente, mentre premendola due volte verrà annunciata la data |
 | Passa Tasto Successivo a | NVDA+f2 | Questo comando istruisce NVDA a passare la combinazione di tasti successiva all'applicazione attiva, anche se si tratta di un comando di NVDA. |
+| Attiva/disattiva modalità riposo | NVDA+shift+s | La modalità riposo, sleep mode disabilita tutti i comandi di NVDA e l'output tramite voce/braille per l'applicazione corrente. Risulta utile se si ha a che fare con programmi che forniscono direttamente indicazioni vocali. Ripremere la combinazione di tasti per disattivare questa funzione. |
+%kc:endInclude
+
+++ Conoscere Informazioni di sistema ++
+%kc:beginInclude
+|| Nome | Tasto | Descrizione |
+| Annuncia data/Ora | NVDA+f12 | Premendo una volta questa combinazione di tasti viene annunciato l'orario corrente, mentre premendola due volte verrà annunciata la data |
+| Annuncia stato batteria | NVDA+shift+b  Annuncia elementi come la percentuale di carica della batteria, se il computer è collegato alla corrente, etc. |
+| Legge testo negli appunti | NVDA+c | Annuncia il testo contenuto negli appunti, se presente. |
 %kc:endInclude
 
 + Esplorare lo schermo con NVDA +
@@ -190,7 +214,7 @@ Da impostazioni predefinite, il navigatore ad oggetti si sposta in concomitanza 
 Per navigare ad oggetti, utilizzare i tasti seguenti:
 %kc:beginInclude
 || Nome | layout Desktop | layout Laptop | Descrizione |
-| Legge l'oggetto corrente | NVDA+5 del tastierino numerico | NVDA+control+i | Annuncia l'oggetto corrente. Premendolo due volte ne fa lo spelling. |
+| Legge l'oggetto corrente | NVDA+5 del tastierino numerico | NVDA+control+i | Annuncia l'oggetto corrente. Premendolo due volte ne fa lo spelling, mentre premendolo tre volte copia il nome dell'oggetto ed il suo valore negli appunti |
 | Spostarsi all'oggetto genitore | NVDA+8 del tastierino numerico | NVDA+Shift+i | ci si sposta all'oggetto genitore (contenitore) dell'oggetto corrente |
 | Spostarsi all'oggetto precedente | NVDA+4 del tastierino numerico | NVDA+control+j | ci si Sposta all'oggetto precedente (l'oggetto direttamente prima dell'attuale sullo stesso livello) |
 | Spostarsi all'oggetto successivo | NVDA+numpad6 | control+NVDA+l | ci si Sposta all'oggetto successivo (l'oggetto direttamente dopo l'attuale sullo stesso livello) |
@@ -494,6 +518,11 @@ Tasto: NVDA+3
 
 Una casella di controllo che, se attivata, fa in modo che NVDA pronunci tutte le parole che vengono digitate sulla tastiera.
  
+==== Emetti un beep alla scrittura di lettere minuscole quando il tasto blocca maiuscole è attivo ====
+Quando abilitato, si udirà un segnale acustico ogni qualvolta verrà digitata una lettera assieme al tasto Shift (maiuscolo) quando il blocca maiuscole è attivo.
+In genere, scrivere le lettere con il tasto Shift mentre la funzione di Blocca Maiuscole è attivata non è prassi comune e si presume sia non intenzionale, magari perché ci si è scordati di averla abilitata in precedenza.
+In ogni caso, può essere d'aiuto saperlo.
+
 %kc:setting
 ==== Leggi i tasti di comando ====
 Tasto: NVDA+4
@@ -563,6 +592,11 @@ Quando questa casella di controllo è attivata, NVDA pronuncerà il tasto caldo 
 ==== Leggi informazioni sulla posizione dell'oggetto ====
 Questa casella di controllo permette di stabilire se si desideri che NVDA riporti le informazioni sulla posizione dell'oggetto, ad esempio 1 di 4, 2 di 4, etc quando ci si sposta con il cursore di sistema o con il navigatore ad oggetti.
 
+==== Tenta di indovinare le informazioni sulla posizione dell'oggetto quando non sono disponibili ====
+Se questa impostazione viene attivata, NVDA cercherà di individuare le informazioni sulla posizione degli oggetti quando esse non risultano disponibili per un determinato controllo.
+
+Se attiva, NVDA annuncerà informazioni sulla posizione di molti controlli come barre dei menu o barre degli strumenti, ma si tenga presente che potrebbero rivelarsi poco precise. 
+
 ==== Leggi le descrizioni degli oggetti ====
 Disattivare questa casella di controllo se non si desidera ascoltare la descrizione degli oggetti.
 
@@ -582,10 +616,16 @@ Quest'opzione è costituita da una casella ad elenco la cui funzione è controll
 ==== Leggi le barre di progresso in Background ====
 Si tratta di una casella di controllo che, se attivata, istruisce NVDA a continuare a fornire informazioni sulle barre di progresso che non sono fisicamente in primo piano sullo schermo. Se ad esempio un'applicazione che contiene una barra di progresso viene minimizzata, o semplicemente si cambia finestra lavorando quindi con un altro programma, NVDA continuerà a fornire informazioni sull'avanzamento della barra di progresso dell'applicazione precedente, permettendo nel frattempo di svolgere altre attività.
   
-+++ Impostazioni buffer virtuale (NVDA+Control+b) +++
+%kc:setting
+  ==== Leggi i cambiamenti dei contenuti dinamici ====
+  Tasto: NVDA+5
+  
+  Permette di attivare o disattivare  la lettura di alcuni contenuti, in particolare nelle applicazioni che fanno uso di terminali o la cronologia delle chat.
+  
+  ++ Impostazioni buffer virtuale (NVDA+Control+b) +++
 Questa finestra di dialogo si trova nel menu preferenze, sotto la voce Buffer virtuale. Contiene le seguenti opzioni:
 
-=== Numero massimo di caratteri per riga ====
+==== Numero massimo di caratteri per riga ====
 Questo campo imposta la lunghezza massima di una riga in caratteri quando si utilizza il buffer virtuale.
 
 ==== Numero di righe per pagina ====
@@ -622,6 +662,7 @@ la maggior parte delle caselle di controllo in questa finestra di dialogo servon
 - dimensione carattere
 - attributi carattere
 - stile
+- Colori
 - allineamento del testo
 - stile del testo
 - tabelle
@@ -698,14 +739,8 @@ Comunque, se si clicca o si focalizza la finestra, NVDA fermerà temporaneamente
 La Console Python di NVDA, situata nel menu strumenti, è uno strumento per sviluppatori che risulta utile in fase di debug, di diagnosi delle funzioni interne di NVDA o di analisi della gerarchia degli oggetti accessibili presenti in un'applicazione.
 Per ulteriori informazioni, si veda [l'articolo relativo alla Console di Python, in lingua inglese, nel sito web di NVDA NVDA_URLwiki/PythonConsole].
 
-+ Ulteriori Informazioni +
-Se si vogliono trovare maggiori informazioni o richiedere assistenza riguardo NVDA, si prega di visitare o il sito internazionale in lingua inglese su NVDA_URL, oppure quello relativo alla comunità italiana all'indirizzo www.nvda.it.
-In entrambe i siti web sarà possibile reperire documentazione aggiuntiva, supporto tecnico e risorse varie come forum o mailing list. In particolare, per quanto concerne il sito italiano, esiste una lista di discussione alla quale chiunque può iscriversi mandando un messaggio a:
-nvda-request@spazioausili.net
-e nell'oggetto del messaggio scrivere la parola "subscribe" senza le virgolette. Rispondere poi al messaggio di conferma.
-I messaggi che transitano nella mailing list sono tutti consultabili anche dal forum dedicato che si aggiorna in tempo reale, e che permette naturalmente anche di rispondere e di creare nuovi argomenti. Si trova all'indirizzo:
-http://www.spazioausili.net/forum/ausili/screen_reader/nvda
-
+++ Ricarica plugins ++
+Questa voce, una volta attivata, ricarica tutti i plugin e i moduli specifici per le applicazioni senza riavviare NVDA. Risulta utile per gli sviluppatori.
 
 + Sintesi vocali supportate +[SupportedSpeechSynths]
 Questa sezione contiene informazioni sui sintetizzatori vocali supportati da NVDA.
@@ -744,25 +779,140 @@ http://ru.nvda-community.org/?page_id=10
 Questa sezione contiene informazioni sulle barre braille supportate da NVDA.
 
 ++ Freedom Scientific Serie Focus/PAC Mate ++
-Sono supportati Tutti i Display Braille Focus e Pac Mate prodotti da [Freedom Scientific http://www.freedomscientific.com/].
+Sono supportati Tutti i Display Braille Focus e Pac Mate prodotti da [Freedom Scientific http://www.freedomscientific.com/], sia USB che Bluetooth.
 per un corretto funzionamento è necessario avere installati nel proprio sistema i drivers per display Braille Freedom Scientific.
 Nel caso non si sia in possesso di tali drivers, è possibile scaricarli dall'indirizzo http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Sebbene nella pagina sia nominata solo la barra Focus 40, il driver funzionerà per tutti i modelli Freedom.
 
+Segue un elenco dei tasti associati con NVDA:
+Si prega di consultare la documentazione della propria barra braille per avere informazioni sulla loro posizione.
+%kc:beginInclude
+|| Nome | Tasto |
+| Toggle left wiz wheel action | leftWizWheelPress |
+| Move back using left wiz wheel action | leftWizWheelUp |
+| Move forward using left wiz wheel action | leftWizWheelDown |
+| Toggle right wiz wheel action | rightWizWheelPress |
+| Move back using right wiz wheel action | rightWizWheelUp |
+| Move forward using right wiz wheel action | rightWizWheelDown |
+| Route to braille cell | routing |
+%kc:endInclude
+
 ++ Optelec ALVA BC640/680 ++
 Sia i modelli BC640 che BC680 prodotti dalla [Optelec http://www.optelec.com/] sono supportati. Per un corretto funzionamento non si avrà bisogno di alcun driver aggiuntivo. Semplicemente collegare la Barra Braille e configurare NVDA selezionando tale dispositivo.
 
+Segue un elenco dei tasti associati con NVDA:
+Si prega di consultare la documentazione della propria barra braille per avere informazioni sulla loro posizione.
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorrimento display braille indietro | t1 |
+| Sposta il display braille alla riga precedente | t2 |
+| Sposta il Display Braille alla riga successiva | t4 |
+| Scorrimento Display Braille avanti | t5 |
+| Portare cursore sulla cella braille  | routing |
+| Tasto shift+tab | sp1 |
+| Tasto alt | sp2 |
+| Tasto esc | sp3 |
+| Tasto tab | sp4 |
+| Freccia su | spUp |
+| Freccia giù | spDown |
+| Freccia sinistra | spLeft |
+| Freccia destra | spRight |
+| Tasto invio | spEnter |
+| Menu NVDA  | sp1+sp3 |
+| Tasto windows+d  (ridurre ad icona tutte le applicazioni) | sp1+sp4 |
+| Tasto windows | sp2+sp3 |
+| Tasto alt+tab | sp2+sp4 |
+%kc:endInclude
+
 ++ Modelli Handy Tech ++
-NVDA supporta tutte le barre braille prodotte dalla [Handy Tech http://www.handytech.de/]. Per alcuni modelli USB bisogna installare i driver USB fatti dalla Handy Tech.
-Inoltre, bisogna installe il driver universale Handy Tech, prelevabile dall'indirizzo:
+NVDA supporta tutte le barre braille prodotte dalla [Handy Tech http://www.handytech.de/], sia USB che Bluetooth. Per alcuni modelli vecchi USB bisogna installare i driver USB fatti dalla Handy Tech.
+
 ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
 ++ MDV Lilli ++
 NVDA supporta la barra Braille Lilli prodotta dalla [MDV http://www.mdvbologna.it/]. Per un corretto funzionamento non si avrà bisogno di alcun driver aggiuntivo. Semplicemente collegare la Barra Braille e configurare NVDA selezionando tale dispositivo.
+Nota importante! Il driver incluso nella distribuzione ufficiale nvda 2011.1 risulta obsoleto e va aggiornato. Consultare la sezione download di www.nvda.it per scaricare quello corretto.
+
 
 ++ altri drivers non ufficiali ++
-Sul sito della comunità italiana di NVDA sono presenti, alla voce download, drivers che non sono inclusi nello screen reader per ragioni tecniche e che verranno inseriti in seguito. Al momento possono essere scaricati drivers per la barra braille MB408l prodotta dalla MDV (Istituto Cavazza), per i display Papenmeier e per il Braillesense prodotto dalla hims.
+Sul sito della comunità italiana di NVDA sono presenti, alla voce download, drivers che non sono inclusi nello screen reader per ragioni tecniche e che verranno inseriti in seguito. Al momento possono essere scaricati drivers per la barra braille MB408l prodotta dalla MDV (Istituto Cavazza), per i display Papenmeier e per il Braillesense e SyncBraille prodotti dalla hims. Attualmente tali driver funzionano per NVDA 2010.2, ma contiamo presto di renderli compatibili con questa versione.
 
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] è un programma a parte del quale è possibile avvalersi per avere supporto per molte altre barre braille. Per poterlo utilizzare, è necessario installare [BRLTTY per Windows http://brl.thefreecat.org/brltty/].
 Si deve scaricare ed installare l'ultimo pacchetto Installer, che è chiamato, ad esempio, brltty-win-4.2-2.exe. Quando si configura la Barra Braille e la porta da utilizzare, si prega di fare attenzione alle istruzioni presentate a schermo, specialmente in caso si possieda un modello USB e sono già installati nel sistema i Drivers prodotti dalla casa madre.
+
++Argomenti avanzati +
+
+++ Riassegnamento di tasti e note sull'immissione di gesture ++
+
+Gli utenti hanno la possibilità di inserire o sovrascrivere le gesture (ad esempio la pressione di un tasto) in unos peciale file di scripts nella cartella che contiene le configurazioni di NVDA per l'utente.
+Questo file si chiama gestures.ini.
+
+Esso utilizza la sintassi standard dei files .ini.
+Il file può contenere più sezioni e ciascuna sezione può possedere diverse voci.
+
+Ciascuna sezione fornisce le mappature per gli scripts in un modulo e classe particolare in Python all'interno di NVDA.
+- Il nome della sezione dovrà essere composto dal modulo e la classe Python separate da un punto (.).
+- Il tasto di ciascuna voce dovrà essere composto dal nome dello script al quale le gesture saranno  assegnate.
+In alternativa, si può usare la parola none per slegare le gesture da uno script verso il quale erano state legate in precedenza.
+Ciascun tasto può venir elencato solo una volta per sezione, inclusa la parola none.
+- Il valore deve contenere un elenco di identificatori di gesture separate da virgole (,) per le gesture verso cui legarsi.
+Gli identificatori di gesture terminanti con una virgola devonoessere racchiusi tra virgolette o apostrofi (" o ' ).
+-
+
+Gli identificatori di gesture consistono in un codice di due lettere che si riferiscono al dispositivo in questione (kb per la tastiera e br per i display braille), di un dispositivo secondario opzionale o un layout tastiera tra parentesi tonde, il segno dei DuePunti,  ed infine uno o più nomi di tasti separati dal segno più (+).
+
+Per scoprire gli identificatori di gesture, i nomi di script e classe e modulo a cui appartengono, fare come segue:
++ Attivare l'aiuto Immissione dati, conosciuto anche come aiuto tastiera.
++ Attivare la gesture (premere il tasto).
++ Disattivare l'aiuto immissione dati.
++ Attivare il visualizzatore log situato nel menù strumenti di NVDA.
++ Esaminare i valori più recenti.
+Uno di questi dovrebbe fornire informazioni sulla gesture appena eseguita, incluse module.class e script.
++
+
+Segue un esempio di come sia possibile legare la combinazione di tasti NVDA+Shift+T allo script controllo data e ora.
+
+Per rintracciare il nome corretto dello script e l'accoppiata module.class per la funzione Data Ora, è necessario attivare l'aiuto immissione dati e premere NVDA+f12 (in quanto corrisponde alla gesture attuale per lo script data ora).
+Disattivare poi l'aiuto immissione dati ed esaminare il testo nel visualizzatore log.
+
+Verso la fine, incontriamo:
+
+```
+INFO - inputCore.InputManager._handleInputHelp (13:17:22):
+Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
+```
+
+Da ciò si evince che il nome dello script è dateTime, e module.class è globalCommands.GlobalCommands.
+
+Se il file non esiste ancora, è necessario creare un file denominato gestures.ini nella cartella configurazione utente di NVDA ed aggiungere le righe seguenti:
+
+```
+[globalCommands.GlobalCommands]
+	dateTime = kb:NVDA+shift+t
+```
+
+Questo associerà la pressione della combinazione di tasti NVDA+Shift+t (in qualsiasi layout tastiera) allo script dateTime.
+
+Si noti che la combinazione originale NVDA+f12 continuerà a funzionare ancora.
+Nel caso si desideri rimuovere tale associazione, bisogna aggiungere le righe seguenti:
+
+```
+	None = kb:NVDA+f12
+```
+
+Sebbene vi sia la possibilità di associare gli scripts a qualsiasi tasto disponibile, potrebbe risultare complesso servirsi del tasto alt. 
+Infatti, NVDA invia ancora i tasti speciali (come Shift, Control e Alt) al sistema operativo, anche se questi vengono usati in uno script.
+Quindi, se si utilizza il tasto Alt in una gesture, la pressione della combinazione di tasti può attivare la barra dei menu, o anche eseguire lo script.
+Comunque, si consiglia di servirsi dei tasti Shift, Control e NVDA come tasti speciali.
+
+ 
++ Ulteriori Informazioni +
+Se si vogliono trovare maggiori informazioni o richiedere assistenza riguardo NVDA, si prega di visitare o il sito internazionale in lingua inglese su NVDA_URL, oppure quello relativo alla comunità italiana all'indirizzo www.nvda.it.
+In entrambe i siti web sarà possibile reperire documentazione aggiuntiva, supporto tecnico e risorse varie come forum o mailing list. In particolare, per quanto concerne il sito italiano, esiste una lista di discussione alla quale chiunque può iscriversi mandando un messaggio a:
+nvda-request@spazioausili.net
+e nell'oggetto del messaggio scrivere la parola "subscribe" senza le virgolette. Rispondere poi al messaggio di conferma.
+I messaggi che transitano nella mailing list sono tutti consultabili anche dal forum dedicato che si aggiorna in tempo reale, e che permette naturalmente anche di rispondere e di creare nuovi argomenti. Si trova all'indirizzo:
+http://www.spazioausili.net/forum/ausili/screen_reader/nvda
+
+
