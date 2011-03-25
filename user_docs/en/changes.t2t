@@ -7,6 +7,7 @@
 
 == Bug Fixes ==
 - The Donate item in the NVDA menu is now disabled when running on the logon, UAC and other secure Windows screens, as this is a security risk. (#1419)
+- It is now impossible to copy or paste within NVDA's user interface while on secure desktops (lock screen, UAC screen and windows logon) as this is a security risk. (#1421)
 
 
 = 2011.1 =
