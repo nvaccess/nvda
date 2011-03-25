@@ -39,6 +39,7 @@ HWINEVENTHOOK inprocWinEventHookID=0;
 set<HHOOK> inprocCurrentWindowsHooks;
 long tlsIndex_inThreadInjectionID=0;
 bool isProcessExiting=false;
+bool isSecureModeNVDAProcess=false;
 
 //Code executed in-process
 
@@ -70,6 +71,14 @@ void killRunningWindowsHooks() {
 	for(set<HHOOK>::iterator i=inprocCurrentWindowsHooks.begin();i!=inprocCurrentWindowsHooks.end();++i) {
 		UnhookWindowsHookEx(*i);
 	}
+}
+
+//A replacement OpenClipboard function to disable the use of the clipboard in a secure mode NVDA process
+//Simply returns false without calling the original OpenClipboard
+typedef BOOL(WINAPI *OpenClipboard_funcType)(HWND);
+OpenClipboard_funcType real_OpenClipboard=NULL;
+BOOL WINAPI fake_OpenClipboard(HWND hwndOwner) {
+	return false;
 }
 
 //A thread function that runs while  NVDA is injected in a process.
@@ -113,6 +122,8 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 		}
 		//Initialize API hooking
 		apiHook_initialize();
+	//Fore secure mode NVDA process, hook OpenClipboard to disable usage of the clipboard
+	if(isSecureModeNVDAProcess) real_OpenClipboard=apiHook_hookFunction_safe("USER32.dll",OpenClipboard,fake_OpenClipboard);
 		//Initialize in-process subsystems
 		inProcess_initialize();
 		//Enable all registered API hooks
@@ -253,7 +264,12 @@ DWORD outprocMgrThreadID=0;
 BOOL outprocInitialized=FALSE;
 HANDLE injectionDoneEvent=NULL;
 
-BOOL injection_initialize() {
+/**
+ * Initializes the out-of-process code for NVDAHelper 
+ * @param secureMode 1 specifies that NVDA is running in seucre mode, 0 says not.
+ */ 
+BOOL injection_initialize(int secureMode) {
+	if(secureMode) isSecureModeNVDAProcess=true;
 	if(outprocInitialized) {
 		MessageBox(NULL,L"Already initialized",L"nvdaHelperRemote (injection_initialize)",0);
 		return FALSE;
