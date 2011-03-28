@@ -321,9 +321,20 @@ class GlobalCommands(ScriptableObject):
 		obj=api.getNavigatorObject()
 		if not isinstance(obj,NVDAObject):
 			speech.speakMessage(_("no focus"))
-		obj.setFocus()
-		speech.speakMessage(_("move focus"))
-	script_navigatorObject_moveFocus.__doc__=_("Sets the keyboard focus to the navigator object")
+		if scriptHandler.getLastScriptRepeatCount()==0:
+			ui.message(_("move focus"))
+			obj.setFocus()
+		else:
+			review=api.getReviewPosition()
+			try:
+				review.updateCaret()
+			except NotImplementedError:
+				ui.message(_("no caret"))
+				return
+			info=review.copy()
+			info.expand(textInfos.UNIT_LINE)
+			speech.speakTextInfo(info,reason=speech.REASON_CARET)
+	script_navigatorObject_moveFocus.__doc__=_("Pressed once Sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor")
 
 	def script_navigatorObject_parent(self,gesture):
 		curObject=api.getNavigatorObject()
@@ -551,18 +562,6 @@ class GlobalCommands(ScriptableObject):
 		speech.speakMessage(_("right"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
-
-	def script_review_moveCaretHere(self,gesture):
-		review=api.getReviewPosition()
-		try:
-			review.updateCaret()
-		except NotImplementedError:
-			ui.message(_("no caret"))
-			return
-		info=review.copy()
-		info.expand(textInfos.UNIT_LINE)
-		speech.speakTextInfo(info,reason=speech.REASON_CARET)
-	script_review_moveCaretHere.__doc__=_("Moves the system caret to the position of the review cursor , in the current navigator object")
 
 	def script_speechMode(self,gesture):
 		curMode=speech.speechMode
@@ -1015,8 +1014,6 @@ class GlobalCommands(ScriptableObject):
 		"kb(laptop):NVDA+shift+o": "review_endOfLine",
 		"kb:numpadPlus": "review_sayAll",
 		"kb(laptop):NVDA+shift+downArrow": "review_sayAll",
-		"kb:control+numpadMinus": "review_moveCaretHere",
-		"kb(laptop):NVDA+control+backspace": "review_moveCaretHere",
 		"kb:NVDA+f9": "review_markStartForCopy",
 		"kb:NVDA+f10": "review_copy",
 
