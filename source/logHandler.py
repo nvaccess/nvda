@@ -252,10 +252,16 @@ def initialize():
 	global log
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
-	if not globalVars.appArgs.logFileName:
-		globalVars.appArgs.logFileName = _getDefaultLogFilePath()
-	# Our FileHandler always outputs in UTF-8.
-	logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt")
+	if globalVars.appArgs.secure:
+		# Don't log in secure mode.
+		logHandler = logging.NullHandler()
+		# There's no point in logging anything at all, since it'll go nowhere.
+		log.setLevel(100)
+	else:
+		if not globalVars.appArgs.logFileName:
+			globalVars.appArgs.logFileName = _getDefaultLogFilePath()
+		# Our FileHandler always outputs in UTF-8.
+		logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt")
 	logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
@@ -266,8 +272,9 @@ def initialize():
 def setLogLevelFromConfig():
 	"""Set the log level based on the current configuration.
 	"""
-	if globalVars.appArgs.logLevel != 0:
-		# Log level was overridden on the command line, so don't set it.
+	if globalVars.appArgs.logLevel != 0 or globalVars.appArgs.secure:
+		# Log level was overridden on the command line or we're running in secure mode,
+		# so don't set it.
 		return
 	import config
 	levelName=config.conf["general"]["loggingLevel"]
