@@ -119,6 +119,20 @@ def _getGeckoVersion(obj):
 	appMod._geckoVersion = ver
 	return ver
 
+class GeckoPluginWindowRoot(IAccessible):
+
+	def _get_parent(self):
+		parent=super(GeckoPluginWindowRoot,self).parent
+		ver=_getGeckoVersion(parent)
+		if ver and not ver.startswith('1.'):
+			res=IAccessibleHandler.accNavigate(parent.IAccessibleObject,0,IAccessibleHandler.NAVRELATION_EMBEDS)
+			if res:
+				obj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+				if obj and controlTypes.STATE_OFFSCREEN not in obj.states:
+					return obj
+		return parent
+
+ 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.

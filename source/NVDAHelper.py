@@ -1,5 +1,6 @@
 import os
 import _winreg
+import msvcrt
 import winKernel
 
 from ctypes import *
@@ -141,7 +142,7 @@ class RemoteLoader64(object):
 		winKernel.closeHandle(pipeReadOrig)
 		# stdout/stderr of the loader process should go to nul.
 		with file("nul", "w") as nul:
-			nulHandle = self._duplicateAsInheritable(nul.fileno())
+			nulHandle = self._duplicateAsInheritable(msvcrt.get_osfhandle(nul.fileno()))
 		# Set the process to start with the appropriate std* handles.
 		si = winKernel.STARTUPINFO(dwFlags=winKernel.STARTF_USESTDHANDLES, hSTDInput=pipeRead, hSTDOutput=nulHandle, hSTDError=nulHandle)
 		pi = winKernel.PROCESS_INFORMATION()

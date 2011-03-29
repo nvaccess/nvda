@@ -591,7 +591,8 @@ class GlobalCommands(ScriptableObject):
 		if parent:
 			parent.treeInterceptor.rootNVDAObject.setFocus()
 			import eventHandler
-			eventHandler.executeEvent("gainFocus",parent.treeInterceptor.rootNVDAObject)
+			import wx
+			wx.CallLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
 	script_moveToParentTreeInterceptor.__doc__=_("Moves the focus to the next closest document that contains the focus")
 
 	def script_toggleVirtualBufferPassThrough(self,gesture):

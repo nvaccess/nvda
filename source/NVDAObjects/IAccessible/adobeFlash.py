@@ -6,7 +6,7 @@
 
 import winUser
 import oleacc
-from . import IAccessible
+from . import IAccessible, getNVDAObjectFromEvent
 from NVDAObjects import NVDAObjectTextInfo
 from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
 from comtypes import COMError, IServiceProvider, hresult
@@ -50,6 +50,10 @@ class Root(IAccessible):
 	def _get_treeInterceptorClass(self):
 		import virtualBuffers.adobeFlash
 		return virtualBuffers.adobeFlash.AdobeFlash
+
+	#Flash root client has broken accParent, force to return the flash root window root IAccessible
+	def _get_parent(self):
+		return getNVDAObjectFromEvent(self.windowHandle,0,0)
 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Flash object.
