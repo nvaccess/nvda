@@ -388,6 +388,9 @@ the NVDAObject for IAccessible
 				clsList.append(newCls)
 
 		# Some special cases.
+		if windowClassName=="GeckoPluginWindow" and self.event_objectID==0:
+			from mozilla import GeckoPluginWindowRoot
+			clsList.append(GeckoPluginWindowRoot)
 		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2)) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary"):
 			# This is possibly a Flash object.
 			from . import adobeFlash
