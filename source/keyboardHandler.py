@@ -272,7 +272,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			return True
 		# If this key has modifiers other than shift, it is a command; e.g. shift+f is text, but control+f is a command.
 		modifiers = self.generalizedModifiers
-		if modifiers and modifiers != frozenset((winUser.VK_SHIFT,)):
+		if modifiers and (len(modifiers) > 1 or tuple(modifiers)[0][0] != winUser.VK_SHIFT):
 			return True
 		return False
 
