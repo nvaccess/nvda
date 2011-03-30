@@ -110,10 +110,17 @@ elif globalVars.appArgs.check_running:
 	# NVDA is not running.
 	sys.exit(1)
 
+UOI_NAME = 2
+def getInputDesktopName():
+	desktop = ctypes.windll.user32.OpenInputDesktop(0, False, 0)
+	name = ctypes.create_unicode_buffer(256)
+	ctypes.windll.user32.GetUserObjectInformationW(desktop, UOI_NAME, ctypes.byref(name), ctypes.sizeof(name), None)
+	ctypes.windll.user32.CloseDesktop(desktop)
+	return name.value
+
 #Ensure multiple instances are not fully started by using a mutex
-from nvda_service import getInputDesktopName
 ERROR_ALREADY_EXISTS=0XB7
-desktopName=getInputDesktopName().split("\\")[1]
+desktopName=getInputDesktopName()
 mutex=ctypes.windll.kernel32.CreateMutexW(None,True,u"Local\\NVDA_%s"%desktopName)
 if not mutex or ctypes.windll.kernel32.GetLastError()==ERROR_ALREADY_EXISTS:
 	if mutex: ctypes.windll.kernel32.CloseHandle(mutex)
