@@ -80,13 +80,13 @@ if isUIAAvailable: UIAPropertyIdsToNVDAEventNames={
 }
 
 if isUIAAvailable: UIAEventIdsToNVDAEventNames={
-	UIA_Text_TextChangedEventId:"textChanged",
+	#UIA_Text_TextChangedEventId:"textChanged",
 	UIA_SelectionItem_ElementSelectedEventId:"stateChange",
 	#UIA_MenuOpenedEventId:"gainFocus",
 	UIA_SelectionItem_ElementAddedToSelectionEventId:"stateChange",
 	UIA_SelectionItem_ElementRemovedFromSelectionEventId:"stateChange",
 	#UIA_MenuModeEndEventId:"menuModeEnd",
-	UIA_Text_TextSelectionChangedEventId:"caret",
+	#UIA_Text_TextSelectionChangedEventId:"caret",
 	#UIA_ToolTipOpenedEventId:"show",
 	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
 	#UIA_ToolTipClosedEventId:"hide",

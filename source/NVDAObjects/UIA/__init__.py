@@ -12,7 +12,7 @@ import textInfos
 from logHandler import log
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
-from NVDAObjects.behaviors import ProgressBar, EditableTextWithAutoSelectDetection
+from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -126,7 +126,7 @@ class UIA(Window):
 
 	def findOverlayClasses(self,clsList):
 		if self.TextInfo==UIATextInfo:
-			clsList.append(EditableTextWithAutoSelectDetection)
+			clsList.append(EditableTextWithoutAutoSelectDetection)
 
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
