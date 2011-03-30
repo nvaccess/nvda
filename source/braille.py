@@ -65,6 +65,7 @@ TABLES = (
 	("ru-ru-g1.utb", _("Russian grade 1")),
 	("Se-Se-g1.utb", _("Swedish grade 1")),
 	("sk-sk-g1.utb", _("Slovak")),
+	("tr.ctb", _("Turkish grade 1")),
 	("UEBC-g1.utb", _("Unified English Braille Code grade 1")),
 	("UEBC-g2.ctb", _("Unified English Braille Code grade 2")),
 	("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)")),
