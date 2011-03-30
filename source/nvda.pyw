@@ -110,6 +110,15 @@ elif globalVars.appArgs.check_running:
 	# NVDA is not running.
 	sys.exit(1)
 
+#Ensure multiple instances are not fully started by using a mutex
+from nvda_service import getInputDesktopName
+ERROR_ALREADY_EXISTS=0XB7
+desktopName=getInputDesktopName().split("\\")[1]
+mutex=ctypes.windll.kernel32.CreateMutexW(None,True,u"Local\\NVDA_%s"%desktopName)
+if not mutex or ctypes.windll.kernel32.GetLastError()==ERROR_ALREADY_EXISTS:
+	if mutex: ctypes.windll.kernel32.CloseHandle(mutex)
+	sys.exit(1)
+
 #Initialize the config path (make sure it exists)
 config.initConfigPath()
 
@@ -143,5 +152,6 @@ except:
 finally:
 	if globalVars.appArgs.changeScreenReaderFlag:
 		winUser.setSystemScreenReaderFlag(False)
+	ctypes.windll.kernel32.CloseHandle(mutex)
 
 log.info("NVDA exit")
