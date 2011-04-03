@@ -15,5 +15,5 @@ def getCharacterDescription(locale,character):
 	@return:  the found description for the given character
 	@rtype: string
 	"""
-	return %s - %c description"%(locale,character)
+	return "%s - %c description"%(locale,character)
  
