@@ -90,11 +90,7 @@ def processText(text,expandPunctuation=False):
 	text = RE_CONVERT_WHITESPACE.sub(u" ", text)
 	return text.strip()
 
-def processSymbol(symbol,locale,useCharacterDescriptions):
-	if useCharacterDescriptions:
-		from characterProcessing import getCharacterDescription
-		charDesc=getCharacterDescription(locale,symbol)
-		if charDesc: return charDesc
+def processSymbol(symbol):
 	if isinstance(symbol,basestring):
 		symbol=symbol.replace(u'\xa0',u' ')
 	newSymbol=characterSymbols.names.get(symbol,symbol)
@@ -161,7 +157,7 @@ def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 		from languageHandler import getLanguage
 		locale=getLanguage()
 	if not isinstance(text,basestring) or len(text)==0:
-		return getSynth().speakText(processSymbol("",locale,useCharacterDescriptions))
+		return getSynth().speakText(processSymbol(""))
 	if not text.isspace():
 		text=text.rstrip()
 	gen=_speakSpellingGen(text,locale,useCharacterDescriptions)
@@ -178,7 +174,14 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 	synthConfig=config.conf["speech"][synth.name]
 	for count,char in enumerate(text): 
 		uppercase=char.isupper()
-		char=processSymbol(char,locale,useCharacterDescriptions)
+		charDesc=None
+		if useCharacterDescriptions:
+			from characterProcessing import getCharacterDescription
+			charDesc=getCharacterDescription(locale,char.lower())
+		if charDesc:
+			char=charDesc
+		else:
+			char=processSymbol(char)
 		if uppercase and synthConfig["sayCapForCapitals"]:
 			char=_("cap %s")%char
 		if uppercase and synth.isSupported("pitch") and synthConfig["raisePitchForCapitals"]:
