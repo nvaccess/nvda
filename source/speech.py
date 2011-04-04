@@ -90,7 +90,11 @@ def processText(text,expandPunctuation=False):
 	text = RE_CONVERT_WHITESPACE.sub(u" ", text)
 	return text.strip()
 
-def processSymbol(symbol):
+def processSymbol(symbol,locale,useCharacterDescriptions):
+	if useCharacterDescriptions:
+		from characterProcessing import getCharacterDescription
+		charDesc=getCharacterDescription(locale,symbol)
+		if charDesc: return charDesc
 	if isinstance(symbol,basestring):
 		symbol=symbol.replace(u'\xa0',u' ')
 	newSymbol=characterSymbols.names.get(symbol,symbol)
@@ -139,7 +143,7 @@ def speakMessage(text,index=None):
 
 _speakSpellingGenID = None
 
-def speakSpelling(text):
+def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 	global beenCanceled, _speakSpellingGenID
 	import speechViewer
 	if speechViewer.isActive:
@@ -152,11 +156,15 @@ def speakSpelling(text):
 	if isPaused:
 		cancelSpeech()
 	beenCanceled=False
+	locale=getSynth().language
+	if not locale:
+		from languageHandler import getLanguage
+		locale=getLanguage()
 	if not isinstance(text,basestring) or len(text)==0:
-		return getSynth().speakText(processSymbol(""))
+		return getSynth().speakText(processSymbol("",locale,useCharacterDescriptions))
 	if not text.isspace():
 		text=text.rstrip()
-	gen=_speakSpellingGen(text)
+	gen=_speakSpellingGen(text,locale,useCharacterDescriptions)
 	try:
 		# Speak the first character before this function returns.
 		next(gen)
@@ -164,13 +172,13 @@ def speakSpelling(text):
 		return
 	_speakSpellingGenID=queueHandler.registerGeneratorObject(gen)
 
-def _speakSpellingGen(text):
+def _speakSpellingGen(text,locale,useCharacterDescriptions):
 	textLength=len(text)
 	synth=getSynth()
 	synthConfig=config.conf["speech"][synth.name]
 	for count,char in enumerate(text): 
 		uppercase=char.isupper()
-		char=processSymbol(char)
+		char=processSymbol(char,locale,useCharacterDescriptions)
 		if uppercase and synthConfig["sayCapForCapitals"]:
 			char=_("cap %s")%char
 		if uppercase and synth.isSupported("pitch") and synthConfig["raisePitchForCapitals"]:
