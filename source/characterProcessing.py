@@ -77,7 +77,9 @@ class CharacterDescriptions(object):
 		"""
 		Looks up the given character and returns a string containing all the descriptions found.
 		"""
-		return u"\u3002".join(self._entries.get(character))
+		desc=self._entries.get(character)
+		if not desc: return None
+		return u"\u3002".join(desc)
 
 _charDescLocaleDataMap=LocaleDataMap(CharacterDescriptions)
 
