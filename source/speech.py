@@ -152,10 +152,8 @@ def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 	if isPaused:
 		cancelSpeech()
 	beenCanceled=False
-	locale=getSynth().language
-	if not locale:
-		from languageHandler import getLanguage
-		locale=getLanguage()
+	from languageHandler import getLanguage
+	locale=getLanguage()
 	if not isinstance(text,basestring) or len(text)==0:
 		return getSynth().speakText(processSymbol(""))
 	if not text.isspace():
