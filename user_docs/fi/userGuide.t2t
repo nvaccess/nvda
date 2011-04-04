@@ -8,7 +8,7 @@
 %%toc
 
 + Johdanto +
-Non-Visual Desktop Access (NVDA) on vapaa ja avoimen lähdekoodin ruudunlukija Microsoft Windows -käyttöjärjestelmälle.
+Non-Visual Desktop Access (NVDA) on ilmainen ja avoimen lähdekoodin ruudunlukija Microsoft Windows -käyttöjärjestelmälle.
 Synteettisenä puheena ja pistekirjoituksella annettava palaute mahdollistaa sokeiden ja heikkonäköisten Windows-tietokoneiden käytön samoin kustannuksin kuin näkevienkin.
 NVDA:ta kehittää [NV Access http://www.nvaccess.org/] yhteisön jäsenten avustuksella.
 
@@ -36,7 +36,7 @@ On tärkeää, että ihmiset kaikkialla maailmassa voivat käyttää samoja tekn
 ++ Tuetut puhesyntetisaattorit ++
 Sen lisäksi, että NVDA:n ilmoitukset ja käyttöliittymä on käännetty useille kielille, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu.
 
-NVDA:n mukana tulee [eSpeak http://espeak.sourceforge.net/], monikielinen, vapaa ja avoimen lähdekoodin puhesyntetisaattori.
+NVDA:n mukana tulee [eSpeak http://espeak.sourceforge.net/], monikielinen, ilmainen ja avoimen lähdekoodin puhesyntetisaattori.
 
 Tietoja muista NVDA:n tukemista puhesyntetisaattoreista löytyy [Tuetut puhesyntetisaattorit #Tuetutpuhesyntetisaattorit] -kappaleesta.
 
@@ -78,7 +78,7 @@ NVDA voidaan asentaa joko painamalla Enteriä asennustiedoston kohdalla tai kaks
 
 Asennusohjelman käynnistyessä kuuluu NVDA:n tunnusmusiikki.
 Kun asennusohjelma on käynnistynyt, NVDA:n tilapäiskopion avulla voidaan seurata asennusohjelman kehotteita ja asentaa NVDA.
-Huomaa, että jos asennusohjelman käynnistyksen aikana käytettiin toista NVDA:n kopiota, asennusohjelma sulkee sen ja käynnistää omansa.
+HUOM: Jos asennusohjelman käynnistyksen aikana käytettiin toista NVDA:n kopiota, asennusohjelma sulkee sen ja käynnistää omansa.
 Tämä on tarpeen, jotta kaikki muuttuneet tiedostot voidaan päivittää.
 Mikäli toinen NVDA:n versio on jo asennettuna, asennusohjelma poistaa sen tässä vaiheessa.
 Tämän jälkeen NVDA:n asennus alkaa.
@@ -98,7 +98,7 @@ Kun mukana kuljetettava versio kysyy, minne se halutaan purkaa, kirjoita USB-mui
 
 Jos USB-muistitikun asemakirjain on esimerkiksi E:\, voidaan kirjoittaa E:\nvda, joka sijoittaa NVDA:n tiedostot MUISTITIKULLE NVDA-nimiseen alihakemistoon.
 
-Huomaa, että vaikka tämä tarkoittaakin, että NVDA:ta ja sen asetuksia voidaan kuljettaa mukana missä tahansa, pelkkä muistitikun koneeseen kytkeminen ei käynnistä NVDA:ta automaattisesti, vaan se on käynnistettävä käsin joko Windowsin Resurssienhallinnasta tai Suorita-valintaikkunasta.
+HUOM: Vaikka tämä tarkoittaakin, että NVDA:ta ja sen asetuksia voidaan kuljettaa mukana missä tahansa, pelkkä muistitikun koneeseen kytkeminen ei käynnistä NVDA:ta automaattisesti, vaan se on käynnistettävä käsin joko Windowsin Resurssienhallinnasta tai Suorita-valintaikkunasta.
 
 USB-muistitikkujen ja käyttöjärjestelmien tietoturva-asetusten erojen vuoksi  voi olla useampia vaiheita, jotka on tehtävä automaattisen käynnistyksen sallimiseksi. Saattaa myös olla, että Windows ja/tai käytettävä muistitikku eivät tue lainkaan tätä ominaisuutta.
 
@@ -137,7 +137,7 @@ Tässä käyttöohjeessa mainitaan useita näppäinkomentoja, mutta helpoin tapa
 Syöteohje otetaan käyttöön painamalla NVDA+1.
 Se poistetaan käytöstä painamalla uudelleen NVDA+1.
 Kun syöteohje on käytössä, NVDA kertoo mitä tahansa näppäintä painettaessa sen suorittaman komennon, mikäli kyseiseen näppäimeen on sellainen määritelty.
-Syöteohjetilassa näppäimet eivät suorita niiden varsinaisia toimintoja, joten voidaan vapaasti painaa mitä näppäimiä tahansa.
+Syöteohjetilassa näppäimet eivät suorita niiden varsinaisia toimintoja, joten mitä tahansa näppäimiä voidaan painaa vapaasti.
 
 +++ Näppäimistöasettelut +++
 NVDA:n mukana tulee tällä hetkellä kaksi näppäimistöasettelua, yksi pöytäkoneille ja yksi kannettaville.
@@ -403,7 +403,7 @@ Yhdistelmäruutu, josta voidaan valita kieli, jolla NVDA:n käyttöliittymä ja 
 Kieliä on useita.
 Oletusarvoisesti on valittuna vaihtoehto "Windows", mikä tarkoittaa, että NVDA käyttää Windowsin maakohtaisissa asetuksissa määritettyä kieltä (Aluekohtaiset ja kieliasetukset Ohjauspaneelissa).
 
-Huomaa, että NVDA on käynnistettävä uudelleen kieltä vaihdettaessa.
+HUOM: NVDA on käynnistettävä uudelleen kieltä vaihdettaessa.
 Jos kieltä vaihdetaan, NVDA kysyy, käynnistetäänkö se uudelleen.
 Hyväksy painamalla OK.
 
@@ -710,7 +710,7 @@ Nämä asetukset eivät nyt vaikuta pelkästään näennäispuskureihin, vaan my
 Kun tämä valintaruutu on valittuna, kohdistustila otetaan käyttöön jos kohdistus muuttuu.
 Kun esim. siirrytään web-sivulla sarkaimella lomakkeen kohdalle tämän asetuksen ollessa käytössä, kohdistustila otetaan käyttöön automaattisesti.
 
-==== Automaattinen kohdistustila kohdistimen liikuttamiseen ====
+==== Automaattinen kohdistustila kohdistinta liikutettaessa ====
 Kun tämä asetus on käytössä, NVDA siirtyy automaattisesti kohdistustilaan ja pois nuolinäppäimillä liikuttaessa.
 Jos esim. web-sivua nuolinäppäimillä selatessa tullaan muokkauskentän kohdalle, NVDA ottaa kohdistustilan käyttöön automaattisesti.
 Jos siirrytään nuolinäppäimillä pois muokkauskentästä, NVDA vaihtaa takaisin selaustilaan.
@@ -779,9 +779,9 @@ Sääntölauseke on erikoismerkkejä sisältävä merkkiyhdistelmä, jonka avull
 Sääntölausekkeita ei käsitellä tässä käyttöohjeessa, mutta internetistä löytyy useita lisätietoja tarjoavia oppaita.
 
 ++ Asetusten tallentaminen ja palauttaminen ++
-NVDA ei oletusarvoisesti tallenna asetuksia automaattisesti, joten jos NVDA suljetaan ja käynnistetään uudelleen, asetukset muuttuvat takaisin alkuperäisiin arvoihinsa.
+NVDA ei oletusarvoisesti tallenna asetuksia automaattisesti, joten jos se suljetaan ja käynnistetään uudelleen, asetukset muuttuvat takaisin alkuperäisiin arvoihinsa.
 Huomaa kuitenkin, että tämä asetus voidaan muuttaa Yleiset asetukset -valintaikkunassa, joka löytyy Asetukset-valikosta.
-Asetukset voidaan tallentaa valitsemalla NVDA-valikosta Tallenna asetukset -kohta.
+Asetukset voidaan tallentaa valitsemalla NVDA-valikosta Tallenna asetukset -vaihtoehto.
 
 Jos NVDA:ta käytetään vain luku -tiedostojärjestelmästä, kuten CD:ltä, asetuksia ei voida tallentaa, jonka NVDA myös ilmoittaa.
 
@@ -816,8 +816,8 @@ Nämä toiminnot ovat käytettävissä Näytä loki -sovelluksen Tiedosto-valiko
 ++ Näytä puhe ++
 Näkeville ohjelmistokehittäjille tai NVDA:ta näkevälle yleisölle esitteleville on käytettävissä kelluva ikkuna, jonka avulla voidaan näyttää kaikki NVDA:n puhuma teksti.
 
-Toiminto otetaan käyttöön valitsemalla Näytä puhe -kohta NVDA-valikon Työkalut-alavalikosta.
-Toiminto poistetaan käytöstä poistamalla kohdan valinta.
+Toiminto otetaan käyttöön valitsemalla Näytä puhe -vaihtoehto NVDA-valikon Työkalut-alavalikosta.
+Toiminto poistetaan käytöstä poistamalla vaihtoehdon valinta.
 
 Kun Näytä puhe -toiminto on käytössä, sen ikkuna päivittyy ajoittain näyttääkseen uusimman puhutun tekstin.
 Jos ikkunaa kuitenkin napsautetaan hiirellä tai kohdistus siirretään siihen, NVDA keskeyttää  tilapäisesti tekstin päivittämisen, jotta olemassa olevaa sisältöä voidaan helposti valita ja kopioida.
@@ -875,12 +875,12 @@ Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäess�
 Katso pistenäytön käyttöohjeesta kuvaukset siitä, mistä nämä näppäimet löytyvät.
 %kc:beginInclude
 || Nimi | Näppäin |
-| Vaihda vasenta vieritysrullatoimintoa | vasen vieritysrullan painallus |
-| Siirrä taaksepäin vasenta vieritysrullatoimintoa käyttäen | vasen vieritysrulla ylös |
-| Siirrä eteenpäin vasenta vieritysrullatoimintoa käyttäen | vasen vieritysrulla alas |
-| Vaihda oikeaa vieritysrullatoimintoa | oikea vieritysrullan painallus |
-| Siirrä taaksepäin oikeaa vieritysrullatoimintoa käyttäen | oikea vieritysrulla ylös |
-| Siirrä eteenpäin oikeaa vieritysrullatoimintoa käyttäen | oikea vieritysrulla alas |
+| Vaihda vasemman säätörullan toimintoa | vasemman säätörullan painallus |
+| Siirrä taaksepäin vasenta säätörullaa käyttäen | vasen säätörulla ylös |
+| Siirrä eteenpäin vasenta säätörullaa käyttäen | vasen säätörulla alas |
+| Vaihda oikean säätörullan toimintoa | oikean säätörullan painallus |
+| Siirrä taaksepäin oikeaa säätörullaa käyttäen | oikea säätörulla ylös |
+| Siirrä eteenpäin oikeaa säätörullaa käyttäen | oikea säätörulla alas |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
 %kc:endInclude
 
@@ -995,13 +995,15 @@ Käyttäjät voivat lisätä omia tai muuttaa nykyisiä NVDA:n skripteihin liite
 Tämä tiedosto on nimeltään gestures.ini.
 
 Tiedosto käyttää standardinmukaista ini-syntaksia.
-Tiedostossa voi olla useita osioita ja jokaisessa osiossa voi olla yksi tai useampia merkintöjä.
+Tiedostossa voi olla useita osioita ja kussakin osiossa voi olla yksi tai useampia merkintöjä.
 
 Jokaisessa osiossa on määrittelyt tiettyyn NVDA:n Python-moduulissa ja luokassa oleviin skripteihin.
 - Osion nimi koostuu Python-moduulista ja -luokasta, jotka erotetaan toisistaan pisteellä.
-- Jokaisen merkinnän avain on skriptin nimi, jonka syötekomennot halutaan määrittää.
+- Kunkin merkinnän avain on skriptin nimi, jonka syötekomennot halutaan määrittää.
 Skripteistä on mahdollista poistaa niille määritellyt syötekomennot käyttämällä erikoisskriptiä None.
+Kukin merkinnän avain, None mukaan lukien, voi olla samassa osiossa vain kerran.
 - Merkinnän arvo koostuu pilkulla erotetuista komentotunnisteista, jotka edustavat määriteltäviä syötekomentoja.
+Pilkkuun päättyvät komentotunnisteet on laitettava lainaus- (") tai heittomerkkien (') sisään.
 -
 
 Komentotunnisteet koostuvat kaksikirjaimisista laitekoodeista (näppäimistöllä kb ja pistenäytöllä br), valinnaisesta alilaitteesta tai aaltosuluissa olevasta näppäimistöasettelusta, kaksoispisteestä sekä yhdestä tai useammasta plus-merkillä erotetusta näppäimen nimestä.
@@ -1038,7 +1040,7 @@ Mikäli tiedostoa ei vielä ole, käyttäjän asetushakemistoon tulee luoda teks
 
 Tämä määrittää dateTime-skriptiin näppäinyhdistelmän NVDA+Shift+t missä tahansa näppäimistöasettelussa.
  
-Huomaa, että alkuperäinen NVDA+f12-näppäinyhdistelmä toimii edelleen.
+HUOM: Alkuperäinen NVDA+f12-näppäinyhdistelmä toimii edelleen.
 Mikäli tämä määrittely halutaan poistaa, tiedostoon tulee lisätä seuraava rivi:
 
 ```
@@ -1053,4 +1055,3 @@ Tämän vuoksi toimintonäppäimissä on parasta käyttää vain Shift-, Ctrl- j
 Mikäli tarvitset lisätietoja tai neuvoja NVDA:han liittyen, käy  sen web-sivustolla osoitteessa NVDA_URL.
 Täältä löydät lisäohjeita sekä teknistä tukea ja yhteisöresursseja.
 Sivustolla on myös NVDA:n kehitykseen liittyvää tietoa.
-
