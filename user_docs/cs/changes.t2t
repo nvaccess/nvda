@@ -1,51 +1,174 @@
-﻿Co je nového v NVDA 
+﻿Co je nového v programu NVDA 
 
 
 %!includeconf: ../changes.t2tconf
 
-= 2010.2 =
+= 2011.1.1 =
+
+== Opravy ==
+- Položka darovat v nabídce NVDA není zobrazená na přihlašovací a ostatních zabezpečených obrazovkách Windows, protože je to bezpečnostní riziko. (#1419)
+- Při běhu NVDA na přihlašovací nebo jiných zabezpečených obrazovkách Windows není možné používat funkce kopírovat, vyjmout a vložit, protože to představuje bezpečnostní riziko. (#1421)
+- V programu Firefox 4 správně funguje klávesová zkratka NVDA+Ctrl+mezerník na přechod do nadřazeného virtuálního prohlížeče. Tímto způsobem je opět možné opustit vnořené objekty např. prvky Adobe flash. (#1429)
+- Pokud je zapnuté ohlašování příkazových kláves, NVDA už nečte písmena stisknutá v kombinaci s klávesou Shift jako příkazové klávesy. (#1422)
+- Pokud je zapnuté ohlašování příkazových kláves, NVDA nyní správně ohlašuje stisk mezerníku spolu s  jakoukoliv modifikační klávesou kromě shiftu jako příkaz. (#1424)
+- Záznam logu do souboru je při běhu NVDA na přihlašovací a dalších zabezpečených obrazovkách Windows zakázaný, protože je to bezpečnostní riziko. (#1435)
+
+
+= 2011.1 =
+Nejvýznamnější novinky v této verzi jsou:
+Automatické ohlašování nového výstupního textu v aplikacích mIRC, PuTTY, Tera Term a SecureCRT;
+Podpora pro globální zásuvné moduly; Ohlašování odrážek a číslování v aplikaci Microsoft Word; Další vztupní příkazy pro braillské řádky včetně příkazů na posouvání po řádcích; podpora pro některé braillské řádky Baum, HumanWare a APH; a podpora ohlašování barev v některých prvcích např. v editačních polích programu IBM Lotus Symphony.
 
 == Novinky ==
-- Prohlížení objektů čtecím kurzorem bylo výrazně zjednodušeno. Kurzor nyní ignoruje objekty, které nejsou důležité pro uživatele; tj. takové, které plní pouze funkci vylepšení vzhledu, a nepřístupné objekty.
+- Pro některé objekty lze nastavit ohlašování barev. Automatické oznamování změny barvy je možné nastavit v dialogu Ohlašování formátování dokumentu. Aktuální barvu je rovněž možné zjistit použitím funkce informace o formátování (NVDA+F)
+ - Tato funkce je prozatím podporována ve standardních editačních polích IAccessible2 (např. v aplikacích Mozilla), prvcích RichEdit (např. Wordpad) a editačních polích IBM Lotus Symphony.
+- Ve virtuálním prohlížeči nyní můžete označovat po stranách použitím kláves Shift+Pageup a Shift+Pagedown a po odstavcích klávesami Shift+Šipka nahoru a Shift+Šipka dolů. (#639)
+- NVDA nyní automaticky ohlašuje nový text  v programech mIRC, PuTTY, Tera Term a SecureCRT. (#936)
+- Uživatelé si mohou přidat nové nebo upravit existující klávesové zkratky k jakémukoli skriptu vytvořením uživatelské mapy vstupních příkazů. (#194)
+- Podpora pro globální zásuvné moduly. Globální zásuvné moduly mohou přidat nové funkce do NVDA, které jsou potom k dispozici v jakékoli aplikaci (#281)
+- Jestliže je při psaní zapnuta klávesa Caps lock a zároveň je přistisknuta klávesa Shift, NVDA krátce pípne. Tuto funkci lze vypnout odškrtnutím nové volby v dialogu nastavení klávesnice. (#663)
+- Při pohybu po řádcích v programu Microsoft Word jsou nyní oznamovány pevné konce stránek. (#758)
+- Při pohybu po řádcích v programu Microsoft Word jsou nyní čteny odrážky a číslování. (#208)
+- Byl přidán klávesový příkaz na přepínání režimu spánku pro aktuální aplikaci (NVDA+Shift+S). Režim spánku pro aktuální aplikaci doposud známý jako režim samoozvučení pozastaví veškeré funkce odečítače obrazovky pro aplikaci, jejíž okno je v popředí. To je užitečné např. v samoozvučujících aplikacích, které poskytují svoji vlastní podporu pro hlasový výstup. Opětovným stiskem této klávesové zkratky režim spánku vypnete.
+- Byly přidány další klávesové příkazy pro Braillské řádky. Více informací se dočtete v uživatelské příručce v kapitole podporované braillské řádky (#209)
+- Abychom ulehčili práci případným dalšým vývojářům, lze nyní znovu načíst aplikační a globální zásuvné moduly bez nutnosti restartu NVDA. Použijte položku Znovu načíst zásuvné moduly z nabídky nástroje nebo klávesovou zkratku NVDA+Ctrl+F3. (#544)
+- Nyní si NVDA pamatuje pozici ve virtuálním prohlížeči a při návratu na navštívenou stránku, tuto pozici obnový. Toto platí dokud neukončíte NVDA nebo prohlížeč. (#132)
+- Brailské řádky Handy Tech lze nyní používat bez nutnosti instalace univerzálního ovladače Handy Tech. (#854)
+- Podpora pro některé braillské řádky Baum, HumanWare a APH (#937)
+- Stavový řádek v aplikaci Media Player Classic Home Cinema je nyní správně detekován. .
+- Brailský řádek Freedom Scientific Focus 40 Blue lze nyní používat i když je připojen přes Bluetooth. (#1345)
+
+
+== Změny ==
+- Informace o pozici pro některé prvky není standardně ohlašována , protože nebývá dostatečně přesná. Jedná se např. o některé nabídky, nebo o úlohovou či systémovou lištu. Lze to ale povolit v dialogu Prezentace objektů.
+- Klávesová nápověda byla přejmenovaná na výukový režim, protože poskytuje nápovědu nejen pro klávesnici, ale i pro ostatní vstupní zařízení.
+- Ve výukovém režimu už není ohlašováno umístění skriptu, protože to pro uživatele není důležité. Nicméně pro vývojáře nebo pro pokročilé uživatele je tato informace dostupná v log souboru.
+- Když NVDA detekuje zamrznutí i nadále zachytává stisk NVDA klávesy, přičemž ostatní klávesy propouští do systému. To zabrání nechtěnému přepínání klávesy Caps lock. (#939)
+- Pokud po vyvolání příkazu pro propouštění kláves stisknete nějakou kombinaci více kláves a nějaké další přistisknete, nvda je všechny bude propouštět operačnímu systému, dokud neuvolníte poslední stisknutou klávesu
+- Pokud stisknete klávesu NVDA dvakrát rychle po sobě, aby byla propuštěna, tak každé další stisknutí této klávesy bude rovněž propuštěné do operačního systému.
+- Ve výukovém režimu jsou nyní ohlašované klávesy určené na ovládáníhlasitosti.
+
+
+== Opravy ==
+- Dialog pro přidání nové položky do řečového slovníku je nyní pojmenován Přidat položku do slovníku namísto původního názvu Upravit položku slovníku. (#924)
+- V dialozích řečových slovníků je obsah sloupců Rozlišovat velikost písmen a Regulární výraz zobrazován v jazyce nastaveném v programu NVDA. Doposud byli tyto informace dostupné jen v angličtině.
+- Ve stromových seznamech programu AIM je správně oznamovaná informace o pozici.
+- V dialogu Nastavení hlasu je možné použít klávesy šipka nahoru a page up na zvíšení a šipka dolů a page down na snížení nastavení posuvníků. Doposud to fungovalo přesně naopak, což bylo nelogické a nezhodovalo se to s chováním kruhu nastavení hlasového výstupu. (#221)
+- Je-li vypnutá volba zachovat stejný vzhled jako na obrazovce, tak se Ve virtuálním prohlížeči už nezobrazují nadbitečné prázdné řádky.
+- Jestliže stisknete klávesu NVDA  dvakrát rychle po sobě a k tomu stisknete další klávesy, tak každé následné stisknutí klávesy NVDA nebude propuštěné do systému.
+- Ve výukovém režimu jsou nyní čteny interpunkční znaky i když je ohlašování interpunkce vypnuté. (#977)
+- V dialogu nastavení klávesnice jsou názvy  rozložení klávesnice zobrazeny v jazyce nastaveném v programu NVDA a ne v angličtině. (#558)
+- Byl opraven problém, který způsoboval, že některé prvky byli ve virtuálním prohlížeči adobe readeru zobrazené jako prázdné, např. odkazy v uživatelské příručce Apple iPhone IOS 4.1.
+- Tlačítko "Použít aktuální nastavení NVDA pro přihlašovací a další zabezpečené obrazovky" v dialogu obecné nastavení je možné použít hned po instalaci NVDA. Dříve pokud nebyla před použitím tohoto tlačítka zobrazená zabezpečená obrazovka, NVDA oznámil, že kopírování bylo úspěšné, ale akce neměla žádný efekt. (#1194)
+- V této verzi už není možné mít otevřených několik dialogů s nastavením NVDA současně. To opravuje problémy s nastaveními v otevřeném dialogu, která jsou závislá na nastaveních z druhého otevřeného dialogu (např. změna hlasového výstupu při otevřeném dialogu nastavení hlasu). (#603)
+- V systémech se zapnutou kontrolou UAC už tlačítko "Použít aktuální nastavení NVDA pro přihlašovací a další zabezpečené obrazovky" po zobrazení dialogu UAC pracuje správně, i když jméno aktuálně přihlášeného uživatele systému obsahuje mezeru. (#918)
+- V programu internet explorer a ostatních prvcích MSHTML NVDA použije URL odkazu v případě, že není k dispozici žádný text nebo název. (#633)
+- NVDA už neignoruje fokus v nabídkách programu AOL Instant Messenger 7. (#655)
+- NVDA nyní správně ohlašuje názvy chyb v dialogu kontrola pravopisu programu Microsoft word (např. není ve slovníku, pravopisná chyba, interpunkce). Doposud byly všechny chyby ohlašované jako pravopisná chyba. (#883)
+- Psaní v programu microsoft word se zapnutým brailským řádkem by už nemělo způsobovat vkládání náhodného textu, a rovněž byla opravena chyba, která při stisku směrovacích tlačítek na braillském řádku způsobovala zamrznutí NVDA. (#1212) nicméně problémem zůstává fakt, že v programu Word 2003 a starších není možné číst text ve směru zprava do leva (např. arabský text) spolu s braillským řádkem. (#627)
+- Po stisku klávesy delete v editačním poli je správně aktualizovaný text a pozice kurzoru na braillském řádku. (#947)
+- Dynamické změny v gecko 2 dokumentech (např. Firefox 4) jsou nyní Programem NVDA správně zpracované. Doposud byli zpracované jen změny na první otevřené kartě. (Mozilla bug 610985)
+- NVDA dokáže správně oznamovat seznam návrhů v dialogu kontrola pravopisu programu Microsoft word. (#704)
+- V programu internet explorer a jiných prvcích MSHTML už NVDA ve virtuálním prohlížeči nezobrazuje cíle odkazů do této stránky , ale jsou správně skryté tak, jak by měli být. (#1326)
+- Objektová navigace přes a uvnitř seskupení už není nesimetrická.
+- Ve Firefoxu se již NVDA nezasekne ve vnořeném rámci pokud se jeho obsah načte dřív než obsah nadřazeného dokumentu.
+- NVDA správně oznámí následující znak, pokud se pro vymazání aktuálního znaku použije numerický delete. (#286)
+- na přihlašovací obrazovce Windows XP je při změně uživatele opět správně ohlášeno uživatelské jméno.
+- Opraveny problémy při čtení textu z příkazového řádku pokud je zapnuto ohlašování čísel řádků.
+- Dialog seznam prvků ve virtuálním prohlížeči je nyní použitelný i pro vidící uživatele. Všechny prvky jsou viditelné na obrazovce. (#1321)
+- Seznam položek v dialozích řečových slovníků je nyní lépe čitelný  pro vidící uživatele. Seznam je dostatečně široký, aby se všechny sloupce vešli na obrazovku. (#90)
+- Na braillských řádcích ALVA BC640/BC680 už NVDA neopomíná klávesy, které zůstávají stisknuté i po uvolnění jiných kláves.
+- Adobe Reader už nepadá po opuštění dialogu "neotagovaný dokument" před tím, než začne samotné zpracování dokumentu. (#1218)
+- Při znovu načtení konfigurace NVDA je nyní načten správný ovladač braillského řádku. (#1346)
+- průvodce projektem v programu Visual Studio 2008 je opět správně přečtený. (#974)
+- NVDA už neodmítá pracovat v aplikacích, jejichž spustitelný soubor obsahuje v názvu jiné než ascii znaky. (#1352)
+- Při zapnutém zalamování v programu Akelpad NVDA Při čtení po řádcích už nečte na konci řádku první písmeno následujícího řádku.
+- V editoru kódu programů Visual Studio 2005/2008 NVDA už nečte celý text po každém napsaném znaku. (#975)
+- Byl Opraven problém, když při změně braillského řádku nebo při ukončení NVDA nebyly některé řádky správně smazané.
+- Po spuštění NVDA už čas od času není informace o aktivním prvku oznamovaná dvakrát. (#1359)
+
+
+= 2010.2 =
+K nejvýznamnějším změnám v této verzi patří výrazně zjednodušená objektová navigace; virtuální prohlížeč pro obsah Adobe flash; přístup k četným dosud nepřístupným prvkům získáváním textu vykresleného na obrazovku; možnost plošného prohlížení textu na obrazovce; podpora pro dokumenty IBM Lotus Symphony; ohlašování záhlaví řádků a sloupců tabulek v programu Mozilla Firefox; a výrazně přepracovaná uživatelská dokumentace.
+
+== Novinky ==
+- Prohlížení objektů čtecím kurzorem bylo výrazně zjednodušeno. Kurzor nyní ignoruje objekty, které nejsou pro uživatele důležité; tj. nepřístupné objekty a objekty, které plní pouze funkci vylepšení vzhledu.
 - NVDA nyní umí ohlašovat formátování textových prvků i v aplikacích využívajících Java Access Bridge (včetně OpenOffice.org). (#358, #463)
 - Při pohybu myší po buňkách v Microsoft Excelu bude nyní NVDA oznamovat jejich text.
-- V aplikacích využívajících Java Access Bridge bude nyní text dialogů automaticky přečten při jejich objevení. (#554)
+- V aplikacích využívajících Java Access Bridge bude nyní hned při objevení dialogu přečten jeho text. (#554)
 - Ve virtuálním prohlížeči je nyní možné pracovat také s obsahem Adobe Flash. Nadále je podporováno i prohlížení objektů a přímá interakce s prvky (pomocí formulářového režimu). (#453)
-- Editační textové prvky ve vývojovém prostředí Eclipse jsou nyní přístupné, včetně editoru kódu. Musíte však používat Eclipse 3.6 nebo novější. (#256, #641)
-- NVDA již dokáže zachytit většinu textu, vypisovaného na obrazovku. (#40, #643)
+- Editační textové prvky ve vývojovém prostředí Eclipse jsou nyní přístupné včetně editoru kódu. Musíte však používat Eclipse 3.6 nebo novější. (#256, #641)
+- NVDA již dokáže zachytit většinu textu vypisovaného na obrazovku. (#40, #643)
 	- To umožňuje čtení i takových prvků, které nezobrazují informace žádným přímějším nebo spolehlivějším způsobem.
 	- Mezi takto zpřístupněné prvky patří např.: některé položky nabídek, které zobrazují ikony (př. podnabídka otevřít v programu u souborů ve Windows Xp) (#151), editovatelná textová pole v aplikacích Windows Live (#200), seznam chyb v Outlook Expressu (#582), editovatelný textový prvek v TextPadu (#605), seznamy v Eudoře, řada prvků v australském E-taxu a lišta se vzorci v Microsoft Excelu.
 - Doplněna podpora pro editor kódu v Microsoft Visual Studiu 2005 a 2008. Je třeba vlastnit alespoň Visual Studio Standard; tato podpora nefunguje v Express edicích. (#457)
 - Podpora dokumentů IBM Lotus Symphony.
-- Raná experimentální podpora Google Chrome. Berte prosím na vědomí, že podpora odečítačů obrazovky u samotného Chromu zatím zdaleka není kompletní, a tak může být v budoucnu potřeba ještě další práce i na straně NVDA. Abyste tuto podporu mohli vyzkoušet, budete potřebovat některé novější vývojové vydání Chromu.
+- Raná experimentální podpora Google Chrome. Berte, prosím, na vědomí, že podpora odečítačů obrazovky u samotného Chromu zatím zdaleka není kompletní, a tak může být v budoucnu potřeba ještě další práce i na straně NVDA. Abyste tuto podporu mohli vyzkoušet, budete potřebovat některé novější vývojové vydání Chromu.
+- Při stisku přepínacích kláves jako je caps lock, num lock či scroll lock je jejich stav zobrazen i v braillu. (#620)
+- Obsah bublinové nápovědy je nyní rovněž zobrazován v braillu. (#652)
+- Byl Přidán ovladač pro braillský řádek MDV Lilli. (#241)
+- Při označení celého řádku nebo sloupce v programu Microsoft excel stiskem kláves Shift+Mezerník a Ctrl+Mezerník NVDA nyní správně ohlašuje nový výběr. (#759)
+- Byla přidaná možnost ohlašování záhlaví řádků a sloupců v tabulkách. Tuto volbu lze zapnout v dialogu Ohlašování formátování dokumentu.
+ - Zatím je tato možnost dostupná jen v dokumentech aplikací Mozilla. (#361)
+- Byly přidány klávesové zkratky pro plošné prohlížení: (#58)
+ - NVDA+numerická 7 přepíná do plošného prohlížení. Nastaví čtecí kurzor na aktuální pozici právě zaměřeného objektu. Takto můžete začít prohlížet obsah obrazovky či dokumentu, (jste-li zrovna uvnitř nějakého) prostřednictvím příkazů pro prohlížení textu.
+ - NVDA+numerická 1 Zapne objektové prohlížení na aktuální pozici čtecího kurzoru. Je vyhledán objekt, jehož text právě čtete v režimu plošného prohlížení a čtecí kurzor je umístěn do tohoto objektu, aby bylo možno daný objekt prohlížet a pohybovat se po dalších objektech.
+- Aktuální uživatelské nastavení NVDA lze nyní stiskem tlačítka v dialogu Obecné nastavení zkopírovat pro použití na přihlašovací a dalších zabezpečených obrazovkách systému windows.
+- Podpora pro Mozilla Firefox 4.
+- Podpora pro Microsoft Internet Explorer 9.
 
 
 == Změny ==
-- Příkazy pro přečtení celého prohlíženého objektu (NVDA+numerické Plus), následujícího objektu v návaznosti (NVDA+Shift+numerická 6) a předchozího objektu v návaznosti (NVDA+Shift+numerická 4) byly prozatím odstraněny kvůli chybovosti, a také aby byly tyto klávesy uvolněny pro případné pozdější přiřazení k novým funkcím.
+- Příkazy pro přečtení celého prohlíženého objektu (NVDA+numerické Plus), následujícího objektu v návaznosti (NVDA+Shift+numerická 6) a předchozího objektu v návaznosti (NVDA+Shift+numerická 4) byly prozatím odstraněny kvůli chybovosti a také, aby byly tyto klávesy uvolněny pro případné pozdější přiřazení k novým funkcím.
 - V dialogu hlasové výstupy jsou nyní zobrazována pouze jména syntezátorů určená ke zobrazení uživatelům. Dříve jim předcházel ještě název ovladače, který je ale důležitý pouze pro samotný program.
-- Pokud se fokus nachází uvnitř vnořené aplikace nebo ve virtuálním prohlížeči uvnitř jiného virtuálního prohlížeče (např. Flash), můžete nyní pro opuštění tohoto objektu a návrat do domovského dokumentu použít NVDA+Ctrl+mezerník. K tomuto účelu dříve sloužila kombinace pouze NVDA+mezerník, ta však nyní slouží výhradně pro přepínání mezi formulářovým režimem a režimem prohlížení.
+- Pokud se fokus nachází uvnitř vnořené aplikace nebo ve virtuálním prohlížeči uvnitř jiného virtuálního prohlížeče (např. Flash), můžete nyní pro opuštění tohoto objektu a návrat do domovského dokumentu, použít NVDA+Ctrl+mezerník. K tomuto účelu dříve sloužila kombinace pouze NVDA+mezerník, ta však nyní slouží výhradně pro přepínání mezi formulářovým režimem a režimem prohlížení.
 - Pokud se fokus přesune do nástroje pro zobrazení řeči spouštěného z menu nástroje (např. přepnutím do jeho okna), nebude se už v tomto prvku objevovat další text, dokud se fokus opět nezmění. To umožňuje snadnější označování již přítomného textu (např. kvůli kopírování).
 - Pokud bylo aktivováno zobrazení logu nebo Python konzole, budou spuštěny maximalizované.
+- Pokud získá fokus list programu Microsoft Excel a je označeno více buněk, je oznámen rozsah výběru a ne jen aktivní buňka. (#763)
+- Ukládání konfigurace a změna některých nastavení je zablokovaná, pokud NVDA běží na přihlašovací obrazovce.
+- Hlasový výstup eSpeak byl aktualizován na verzi 1.44.03.
+- Pokud je NVDA již spuštěn, aktivace zástupce na ploše nebo stisk klávesové zkratky Ctrl+Alt+N zajistí restart NVDA.
+- Zaškrtávací políčko Oznamovat text pod kurzorem myši bylo v dialogu nastavení myši nahrazeno políčkem Povolit sledování myši, jehož popisek lépe vystihuje chování příslušné funkce.
+- rozložení klávesnice pro laptop bylo aktualizováno tak, že obsahuje všechny klávesové příkazy dostupné v rozložení desktop a funguje i na jiných než anglických systémech. (#798, #800)
+- Byly provedeny Výrazné změny a aktualizace uživatelské dokumentace, je zdokumentováno rozložení klávesnice pro laptop a je zajištěna synchronizace seznamu klávesových zkratek s uživatelskou příručkou. (#455)
+- Překladač do braillova písma liblouis byl aktualizován na verzi 2.1.1. Opravuje to chyby v čínském brailu a zobrazování znaků, které nejsou definovány v aktuální překladové tabulce. (#484, #499)
 
 
 == Opravy ==
 - V programu µTorrent už nebude právě zaměřená položka v seznamu torrentů čtena dvakrát nebo přitahovat fokus při otevření nabídky.
 - V µTorrentu budou nyní ohlašovány názvy souborů v seznamu s obsahem torrentu.
 - V aplikacích Mozilla jsou nyní správně rozpoznávány změny fokusu, pokud je umístěn do prázdné tabulky nebo stromového seznamu.
-- V aplikacích Mozilla je nyní správně oznamován stav "nezaškrtnuto" i pro nestandardní zaškrtnutelné prvky, jako jsou např. buňky tabulky. (#571)
+- V aplikacích Mozilla je nyní správně oznamován stav "nezaškrtnuto" i pro nestandardní zaškrtnutelné prvky jako jsou např. buňky tabulky. (#571)
 - V aplikacích Mozilla už nebude ignorován text náležitě implementovaných dialogů ARIA a bude při objevení takového dialogu přečten.
 - ARIA atribut úrovně bude náležitě reflektován v Internet Exploreru a dalších prvcích MSHTML.
 - V Internet Exploreru a dalších prvcích MSHTML je nyní atribut ARIA role upřednostňován před jinými informacemi o typu, aby tak NVDA umožňoval mnohem přesnější a intuitivnější práci s prvky ARIA.
 - Odstraněno občasné padání Internet Exploreru při pohybu po rámcích nebo prvcích iFrame.
-- V dokumentech Microsoft Wordu je opět možné číst řádky orientované zprava doleva, jako je např. arabský text. (#627)
+- V dokumentech Microsoft Wordu je opět možné číst řádky orientované zprava doleva jako je např. arabský text. (#627)
 - Výrazně snížena prodleva při zobrazování velkého množství textu v 64-bitových konzolových aplikacích. (#622)
-- V aplikacích Microsoft Office už NVDA nepadá při pokusu o přečtení okna aplikace v popředí (NVDA+B) nebo o pohyb po některých objektech na lištách. (#616)
-
+- Je-li při startu NVDA již spuštěn program Skype, není nutné ho restartovat, aby byl přístupný. To může platit i pro ostatní aplikace, které kontrolují systémovou značku přítomnosti odečítače.
+- V aplikacích Microsoft Office už NVDA nepadá při pokusu o přečtení okna aplikace v popředí (NVDA+B) nebo při pohybu po některých objektech na panelu nástrojů. (#616)
+- Bylo opraveno nesprávné vyslovování číslic s nulou po oddělovači jako např. 1,023. (#593)
+- Programy Adobe Acrobat Pro a Reader 9 už nepadají při zavírání souboru a při některých dalších akcích. (#613)
+- V některých editačních polích jako např. v programu Microsoft word je po stisku kláves Ctrl+a přečten označený text. (#761)
+- V prvcích scintilla např. notepad++ už není při pohybu kurzorem nebo při plynulém čtení text nesprávně označován . (#746)
+- Bunky programu Microsoft excel je možné opět číst čtecím kurzorem.
+- NVDA opět dokáže v některých problematických víceřádkových editačních polích programu Internet explorer 8 číst po řádcích . (#467)
+- Windows Live Messenger 2009  se už hned po spuštění automaticky neukončuje, jestliže je spuštěn NVDA. (#677)
+- V internetových prohlížečích  už není nutné po přechodu do vnořeného objektu např. flash stisknout klávesu tab pro další navigaci. (#775)
+- V prvcích scintilla (např. Notepad ++) už nedochází k osekání začátku dlouhých řádků, jestliže se nevejde na obrazovku. Také v brailu je výběr těchto dlouhých řádků správně zobrazován.
+- V programu Loudtalks je nyní možné číst seznam kontaktů.
+- v programu internet explorer a jiných dokumentech MSHTML už není zbytečně oznamovaná adresa dokumentu a "MSAAHTML Registered Handler". (#811)
+- Ve stromových seznamech prostředí Eclipse už při změně fokusu nedochází ke čtení textu předchozí položky.
+- NVDA nyní správně funguje v systému, kde byl z cesty  DLL search path (pomocí nastavení položky registry CWDIllegalInDllSearch na 0xFFFFFFFF) odstraněn aktuální adresář. Toto pro většinu užívatelů není důležité. (#907)
+- Pokud jsou v programu Microsoft Word použity příkazy pro navigaci v tabulce vně tabulky, po hlášce mimo tabulku již není zbytečně vyslovován text okraj tabulky.
+- Pokud pomocí navigačních kláves není možné přejít do další buňky v tabulce programu Microsoft word proto, že kurzor je na okraji tabulky, je hláška okraj tabulky přeložená do aktuálně nastaveného jazyka programu NVDA. Doposud byla tato informace vyslovována jen v angličtině. (#921)
+- V programech Outlook Express, Windows Mail a Windows Live Mail je ohlašovaný stav zaškrtávacích políček v seznamu pravidel pošty. (#576)
+- v programu Windows Live Mail 2010 je možné číst popis pravidel pošty.
 
 
 = 2010.1 =
 
-Toto vydání se zaměřuje především na opravy chyb a vylepšování uživatelského dojmu při práci s programem, včetně několika výrazných zlepšení stability.
+Toto vydání se zaměřuje především na opravy chyb a vylepšování uživatelského dojmu při práci s programem včetně několika výrazných zlepšení stability.
 
 == Novinky ==
 - Spuštění NVDA už nebude selhávat na systémech, které nemají žádná výstupní zvuková zařízení. Aby mohl v takovém případě NVDA předávat uživateli informace, bude pochopitelně třeba použít braillský řádek nebo výstup bez mluvení v kombinaci s novým nástrojem prozobrazení řeči, který nahrazuje předchozí virtuální hlasový výstup Display. (#425)
@@ -102,12 +225,12 @@ Toto vydání se zaměřuje především na opravy chyb a vylepšování uživat
 - Ve Windows XP už NVDA nebude způsobovat zamrzání Internet Exploreru při přepínání zaškrtávacích políček na stránce Windows Update. (#477)
 - Při používání vestavěného hlasového výstupu Espeak už nebude docházet k přerušovanému zamrzání při současném přehrávání pípání a řeči. Tento jev byl nejvíce patrný např. při kopírování velkého množství dat v Průzkumníku Windows.
 - NVDA už neoznamuje, že dokument Firefoxu se stal zaneprázdněným (např. díky aktualizaci nebo obnovení), u dokumentů na pozadí. To také vedlo k mylnému ohlašování stavového řádku aplikace v popředí.
-- Při přepínání rozložení klávesnice Windows (pomocí Ctrl+Shift nebo Alt+Shift) bude nyní ohlášeno plné jméno nového rozložení, a to jak hlasem, tak Braillem. Dříve bylo ohlašováno pouze hlasem a alternativní rozložení (např. Dvorak) nebyla oznamována vůbec.
+- Při přepínání rozložení klávesnice Windows (pomocí Ctrl+Shift nebo Alt+Shift) bude nyní ohlášeno plné jméno nového rozložení a to jak hlasem, tak Braillem. Dříve bylo ohlašováno pouze hlasem a alternativní rozložení (např. Dvorak) nebyla oznamována vůbec.
 - Pokud je vypnuto ohlašování tabulek, nebudou už oznamovány informace o tabulce při změně fokusu.
 - Určité standardní prvky stromového zobrazení v 64 bitových aplikacích (např. stromový seznam obsahu v Microsoft HTML nápovědě) jsou nyní přístupné. (#473)
 - Opraveny problémy s logováním jiných než ascii znaků. Mohlo to způsobovat zbytečné chyby na neanglických systémech. (#581)
 
-- Informace v dialogu O programu se nyní objevují v nastaveném jazyce uživatele, místo aby byly vždy zobrazovány v angličtině. (#586
+- Informace v dialogu O programu se nyní objevují v nastaveném jazyce uživatele, místo, aby byly vždy zobrazovány v angličtině. (#586
 - Přepnutí pomocí kruhu nastavení hlasového výstupu na hlas, který podporuje méně parametrů než dosavadní hlas, už nezpůsobuje problémy.
 - Ve Skype 4.2 už nejsou několikanásobně čteny položky v seznamu kontaktů.
 - Opraveno několik potenciálně závažných paměťových úniků v kódu uživatelského rozhraní a virtuálního prohlížeče. (#590, #591)
@@ -139,7 +262,7 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 - Rychlá navigace ve virtuálním prohlížeči byla rozšířena o klávesy n a shift+n pro přeskočení na následující či předchozí text po skupině odkazů.
 - Ve virtuálním prohlížeči jsou nyní oznamovány tzv. oblasti stránky, po kterých lze v požadovaném směru přecházet klávesami d a shift+d. (#192)
 - Dialog seznam odkazů, jenž lze ve virtuálním prohlížeči vyvolat stiskem kláves NVDA+F7, byl přejmenován na  seznam prvků, ve kterém je možné krom odkazů zobrazit i nadpisy a oblasti stránky. Nadpisy a oblasti stránky jsou zobrazeny jako stromový seznam. (#363)
-- Nový dialog seznam prvků obsahuje i políčko "filtrovat podle", které umožňuje zobrazovat v seznamu pouze prvky obsahující vepsaný text. (#173)
+- Nový dialog seznam prvků obsahuje i políčko "filtrovat, podle", které umožňuje zobrazovat v seznamu pouze prvky obsahující vepsaný text. (#173)
 - Přenosná verze NVDA nyní ukládá uživatelská nastavení do složky 'userConfig', která je umístěna ve složce programu NVDA. Uživatelská nastavení jsou tedy stejně jako u instalační verze NVDA oddělena od ostatních souborů programu.
 - vlastní aplikační moduly, ovladače braillských řádků a ovladače hlasových výstupů jsou nyní ukládány do složky s uživatelským nastavením. (#337)
 - Dokumenty virtuálního prohlížeče jsou nyní načítány na pozadí, což umožňuje do jisté míry pracovat se systémem i během procesu načítání. NVDA oznámí, že se zpracovává dokument, pokud to trvá déle než jednu sekundu.
@@ -154,8 +277,8 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 - Po spuštění NVDA byla odstraněna hláška "NVDA spuštěn". Start NVDA je nyní signalizován pouze úvodní znělkou.
 - Znělky při spuštění a ukončení NVDA jsou nyní přehrávány prostřednictvím výstupního zvukového zařízení nastaveného pro NVDA, nikoli pomocí výchozího výstupního zařízení Windows. Toto nastavení se nachází v dialogu hlasové výstupy, položka výstupní zařízení. (#164)
 - Bylo vylepšeno ohlašování indikátorů průběhu. Nejpatrnější změnou je to, že nyní můžete NVDA nastavit, aby je oznamoval pípáním i hlasem zároveň.
-- Některé obecné informace o typu prvku pod fokusem, jakoje např. panel,aplikace nebo rám, už nejsou oznamovány, pokud je daný prvek pojmenovaný.
-- Příkaz pro kopírování textu čtecím kurzorem (NVDA+F10) nyní skopíruje text od nastavené počáteční značky až po momentální pozici kurzoru, kterou také do kopírovaného úseku textu zahrne, místo aby ji ignoroval. Tak je nyní možné kopírovat i poslední znak daného řádku, což dříve možné nebylo. (#430)
+- Některé obecné informace o typu prvku pod fokusem jakoje např. panel,aplikace nebo rám, už nejsou oznamovány, pokud je daný prvek pojmenovaný.
+- Příkaz pro kopírování textu čtecím kurzorem (NVDA+F10) nyní skopíruje text od nastavené počáteční značky až po momentální pozici kurzoru, kterou také do kopírovaného úseku textu zahrne, místo, aby ji ignoroval. Tak je nyní možné kopírovat i poslední znak daného řádku, což dříve možné nebylo. (#430)
 - Příkaz pro zjištění aktuálně prohlíženého objektu (Ctrl+NVDA+numerická 5) byl odstraněn. Tato klávesová kombinace na některých klávesnicích nefungovala a příkaz ani nebyl shledán příliš užitečným.
 - Příkaz pro zjištění rozměrů aktuálně prohlíženého objektu byl přemapován na NVDA+numerický delete neboli numerická desetinná čárka. Předchozí klávesová zkratka nefungovala na některých klávesnicích. Příkaz navíc také nyní oznamuje skutečnou výšku a šířku objektu namísto pouze pravé a dolní souřadnice.
 - Zvýšen výkon (obzvláště na netboocích) v situacích, kdy se ozývá mnoho pípnutí v rychlém sledu po sobě; např. při pohybu myší se zapnutou zvukovou signalizací. (#397)
@@ -165,10 +288,10 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 
 
 == Opravy ==
-- Pokud je NVDA spuštěn z dosovské cesty 8.3, ale přitom je nainstalován ve složce s odpovídající dlouhou cestou (např. progra~1 proti program files), dokáže správně určit, že se jedná o instalovanou kopii, a načíst uživatelská nastavení.
+- Pokud je NVDA spuštěn z dosovské cesty 8.3, ale přitom je nainstalován ve složce s odpovídající dlouhou cestou (např. progra~1 proti program files), dokáže správně určit, že se jedná o instalovanou kopii a načíst uživatelská nastavení.
 - Ohlašování titulku aktuálního okna v popředí pomocí NVDA+T nyní funguje správně i v nabídkách.
 - Na braillském řádku se už nebudou zobrazovat zbytečné informace jako např. nepojmenované panely.
-- Nejsou nadále oznamovány některé zbytečné informace při změně fokusu, jako jsou třeba kořenové panely, vrstvené panely či posuvné panely v aplikacích Java nebo Lotus.
+- Nejsou nadále oznamovány některé zbytečné informace při změně fokusu jako jsou třeba kořenové panely, vrstvené panely či posuvné panely v aplikacích Java nebo Lotus.
 - Políčko pro vyhledávání klíčových slov v prohlížeči nápovědy (chm) Windows je nyní mnohem přístupnější. Díky chybovosti tohoto prvku by dříve nebylo možné políčko tak, jak bylo, vůbec číst, protože se neustále měnilo.
 - V dokumentech Microsoft Wordu budou nyní oznamována správná čísla stránek, jestliže je číslování stránek v dokumentu konkrétně určeno.
 - Lepší podpora pro editační políčka v dialozích Microsoft Wordu (např. dialog pro nastavení písma). Je nyní možné pohybovat se po těchto prvcích šipkami.
@@ -188,20 +311,20 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 - Určitý řídicí znak (0x1) už nezpůsobuje neočekávané chování eSpeaku (např. změny hlasitosti a výšky hlasu), jestliže se objeví v textu.
 - Příkaz pro přečtení označeného textu (NVDA+shift+šipka nahoru) nyní správně ohlásí, že není vybrán žádný text, pokud daný objekt nepodporuje označování textu.
 - Opravena chyba, kdy NVDA při stisku enteru na některých tlačítkách a odkazech v programu Miranda IM zamrzal. (#430)
-- Při hláskování či kopírování právě prohlíženého objektu do schránky je skutečně brán v potaz jen právě prohlížený objekt a nikoli celý text, jako tomu bylo doposud.
+- Při hláskování či kopírování právě prohlíženého objektu do schránky je skutečně brán v potaz jen právě prohlížený objekt a nikoli celý text jako tomu bylo doposud.
 - NVDA nyní obchází chybu Windows, která způsobovala, že po názvu odkazů v dialozích Průzkumníku Windows a Internet Exploreru byly ohlašovány irelevantní informace navíc. (#451)
 - Opraven problém s příkazem pro ohlášení času a data (NVDA+F¨12). Na některých systémech dříve nebylo ohlašováno datum. (#471)
-- Opravena chyba, která způsobovala, že po ukončení práce se zabezpečenou obrazovkou Windows NVDA někdy náležitě neaktualizoval systémové nastavení odečítače obrazovky. To mohlo vést k problémům v aplikacích, které toto nastavení sledují, jako je Skype, Adobe Reader nebo Jart. (#462)
+- Opravena chyba, která způsobovala, že po ukončení práce se zabezpečenou obrazovkou Windows NVDA někdy náležitě neaktualizoval systémové nastavení odečítače obrazovky. To mohlo vést k problémům v aplikacích, které toto nastavení sledují jako je Skype, Adobe Reader nebo Jart. (#462)
 - V rozbalovacích seznamech Internet Exploreru 6 budou nyní ohlašovány změny aktivní položky. (#342)
 
 
-
 = 0.6p3 =
+
 == Novinky ==
 - Protože lišta se vzorci v Microsoft Excelu je pro NVDA nepřístupná, byl přidán vlastní NVDA editor buněk, který se spustí, pokud uživatel stiskne na kterékoli buňce F2.
 - Podpora formátování v textových prvcích Iaccessible2, včetně aplikací Mozilla.
 - NVDA nyní může oznamovat pravopisné chyby, kde je to možné.Toto nastavení se nachází v dialogu ohlašování formátování dokumentu.
-- NVDA nyní lze nastavit tak, aby pípal buď pro všechny indikátory průběhu nebo pouze pro ty v okně na popředí. Další možností je ohlašovat hodnotu indikátorů průběhu každých 10%.
+- NVDA nyní lze nastavit tak, aby pípal buď pro všechny indikátory průběhu, nebo pouze pro ty v okně na popředí. Další možností je ohlašovat hodnotu indikátorů průběhu každých 10%.
 - Ve víceřádkových textových polích jsou nyní správně identifikovány odkazy.
 - Myš lze nyní u většiny editovatelných textových prvků přesunout na znak pod čtecím kurzorem. Dříve bylo možné umístit myš pouze na střed takového prvku.
 - Čtecí kurzor ve virtuálním prohlížeči nyní zobrazuje samotný text dokumentu v prohlížeči namísto pouze interního textu právě prohlíženého objektu, který je často prouživatele nic neříkající. To znamená, že se můžete do virtuálního prohlížeče přepnout hierarchicky pomocí objektové navigace a čtecí kurzor se přesune na odpovídající místo v textu prohlíženého dokumentu.
@@ -213,14 +336,14 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 - Podpora braillských řádků!
 - Přidán příkaz (NVDA+c) pro přečtení textu ve schránce. (#193)
 - Pokud se NVDA ve virtuálním prohlížeči automaticky přepne do formulářového režimu, můžete se nyní vrátit do režimu prohlížení také stiskem klávesy escape. Stále je možné používat k tomuto účelu i kombinaci kláves NVDA+mezerník.
-- Ve virtuálním prohlížeči se NVDA nyní může při změně fokusu nebo při pohybu textového kurzoru automaticky přepnout buď do formulářového režimu nebo do režimu prohlížení, podle toho, jaký typ prvku se pod kurzorem nachází. Tuto volbu je možné nastavit v dialogu virtuální prohlížeč. (#157)
+- Ve virtuálním prohlížeči se NVDA nyní může při změně fokusu nebo při pohybu textového kurzoru automaticky přepnout buď do formulářového režimu, nebo do režimu prohlížení, podle toho, jaký typ prvku se pod kurzorem nachází. Tuto volbu je možné nastavit v dialogu virtuální prohlížeč. (#157)
 - Byl přepsán ovladač pro syntezátory SAPI4, který nahrazuje dříve používané ovladače sapi4serotek a sapi4activevoice a měl by odstranit problémy, které tyto ovladače vyvolávaly.
-- Apllikace NVDA v sobě nyní obsahuje manifest, což znamená, že už se ve Windows Vista nespouští v režimu kompatibility.
+- Aplikace NVDA v sobě nyní obsahuje manifest, což znamená, že už se ve Windows Vista nespouští v režimu kompatibility.
 - Instalační verze NVDA nyní ukládá konfigurační soubor a řečové slovníky do složky pro data aplikací aktuálního uživatele. To je nezbytné pro správnou funkčnost NVDA v systému Windows Vista a také to umožňuje více uživatelům najednou mít na jednom počítači uložena zvlášť svá individuální nastavení.
 - Doplněna podpora pro informace o pozici u prvků Iaccessible2.
 - Přidána možnost kopírovat text do schránky pomocí čtecího kurzoru. Nejprve nastavte zkratkou NVDA+F9 počáteční značku na aktuální pozici čtecího kurzoru. Poté stiskem NVDA+F10 skopírujete blok textu mezi počáteční značkou a novou aktuální pozicí čtecího kurzoru, kde má kopírovaný úsek končit. Tuto funkci využijete zejména v situaci, kdy není možné text z daného prvku skopírovat běžným způsobem pomocí zkratek ctrl+c a ctrl+v. (#240)
 - Přidána podpora pro některé editovatelné prvky v softwaru pinacle tv.
-- Pokud je označen dlouhý úsek textu (512 znaků nebo více), NVDA nyní pouze oznámí počet označených znaků, místo aby četl celý text. (#249)
+- Pokud je označen dlouhý úsek textu (512 znaků nebo více), NVDA nyní pouze oznámí počet označených znaků, místo, aby četl celý text. (#249)
 
 
 == Změny ==
@@ -238,7 +361,7 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 == Opravy ==
 - Poslední část právě čteného textu už nebude usekávána při použití NVDA s eSpeakem na vzdáleném počítači.
 - Odstraněny problémy s ukládáním řečových slovníků pro některé hlasy.
-- Odstraněna prodleva odezvy při pohybu po jiných jednotkách než znacích (po slovech, řádcích atd) ke konci velkých souborů ve formátu prostého textu ve virtuálním prohlížeči pro dokumenty aplikací Mozilla. (#155)
+- Odstraněna prodleva odezvy při pohybu po jiných jednotkách, než znacích (po slovech, řádcích atd) ke konci velkých souborů ve formátu prostého textu ve virtuálním prohlížeči pro dokumenty aplikací Mozilla. (#155)
 - Je-li zapnuta volba hlásit psaná slova, poslední slovo bude oznámeno i po stisku enteru.
 - Opraveny určité problémy se znakovými sadami v editačních polích richedit.
 - Prohlížeč log souborů NVDA nyní zobrazuje text v richedit poli namísto pouhého editačního políčka. Lze se nyní s NVDA lépe pohybovat v textu po slovech.
@@ -271,30 +394,29 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 - NVDA už nebude občas kompletně zamrzat při editování textu v Open Office. (#148,#180)
 
 
-
 = 0.6p2 =
 - Vylepšen výchozí hlas eSpeaku pro NVDA.
 - Přidáno rozložení klávesnice pro laptopy. Rozložení klávesnice lze nastavit v dialogu nastavení klávesnice. (#60)
 - Podpora seskupování položek v prvcích SysListView32 (tj. seznamy), které se vyskytují hlavně ve Windows Vista. (#27)
 - U položek stromových seznamů je nyní oznamováno zaškrtnutí.
 - Přidány zkratkové klávesy pro většinu konfiguračních dialogů NVDA.
-- Podpora aplikací využívajících standardu Iaccessible2, jako je Mozilla Firefox, i při spouštění NVDA z výměnných médií, bez nutnosti registrovat jakékoli speciální dll knihovny.
+- Podpora aplikací využívajících standardu Iaccessible2 jako je Mozilla Firefox i při spouštění NVDA z výměnných médií bez nutnosti registrovat jakékoli speciální dll knihovny.
 - Odstraněn problém s padajícím seznamem odkazů ve virtuálním prohlížeči v produktech Mozilla. (#48)
-- NVDA by už neměl způsobovat pád aplikací Mozilla, jako jsou třeba Firefox a Thunderbird, pokud běží s vyššími právy než samotná aplikace Mozilla, např. je-li NVDA spuštěn jako administrátor.
-- ŘEčové slovníky (dříve uživatelské slovníky) nyní mohou buď rozlišovat nebo ignorovat velikost písmen a vkládanými položkami mohou být i regulární výrazy. (#39)
+- NVDA by už neměl způsobovat pád aplikací Mozilla jako jsou třeba Firefox a Thunderbird, pokud běží s vyššími právy, než samotná aplikace Mozilla např. je-li NVDA spuštěn jako administrátor.
+- Řečové slovníky (dříve uživatelské slovníky) nyní mohou buď rozlišovat, nebo ignorovat velikost písmen a vkládanými položkami mohou být i regulární výrazy. (#39)
 - V dialogu virtuální prohlížeč je nyní možné nastavit, jestli se má NVDA u dokumentů virtuálního prohlížeče snažit zachovat stejný vzhled jako na obrazovce.
 - HTML značky pro odkaz bez uvedeného atributu href, který určuje cíl, kam má odkaz vést, už nebudou v dokumentech Mozilla čteny jako odkazy. (#47)
-- Příkaz NVDA pro vyhledávání zadaného textu si nyní bude pamatovat poslední výraz, který jste hledali, a to ve všech aplikacích. (#53)
+- Příkaz NVDA pro vyhledávání zadaného textu si nyní bude pamatovat poslední výraz, který jste hledali a to ve všech aplikacích. (#53)
 - Opraven problém, kdy u některých zaškrtávacích políček a přepínačů ve virtuálním prohlížeči NVDA neoznamoval stav zaškrtnutí.
 - Formulářový režim ve virtuálním prohlížeči se nyní nastavuje konkrétně pro každý dokument zvlášť, nikoli globálně pro NVDA. (#33)
 - Odstraněna určitá prodleva odezvy při změnách fokusu a nesprávné přerušování řeči, pokud byl NVDA používán v systému, který je velice pomalý nebose právě probudil z úsporného režimu.
-- Vylepšena podpora rozbalovacích seznamů v Mozilla Firefoxu. Konkrétně, pokud se po nich pohybujete šipkami, nebude už opakován text, a při jejich opuštění nebudou oznamovány nadřazené prvky. Také již fungují příkazy virtuálního prohlížeče i v případě, kdy je některý rozbalovací seznam pod fokusem.
+- Vylepšena podpora rozbalovacích seznamů v Mozilla Firefoxu. Konkrétně, pokud se po nich pohybujete šipkami, nebude už opakován text a při jejich opuštění nebudou oznamovány nadřazené prvky. Také již fungují příkazy virtuálního prohlížeče i v případě, kdy je některý rozbalovací seznam pod fokusem.
 - Zvýšena přesnost lokalizování stavového řádku v mnoha aplikacích. (#8)
 - Přidán nástroj pro interaktivní Python konzoli NVDA, aby vývojáři mohli sledovat a upravovat funkce NVDA i za chodu.
 - Příkazy pro plynulé čtení, čtení označeného textu a pro ohlášení aktuálního řádku nyní fungují správně i ve formulářovém režimu virtuálního prohlížeče. (#52)
-- Odstraněny skripty pro zvýšení a snížení tempa hlasu. K tomuto účelu je nyní třeba použít buď příkazy pro nastavení parametrů v kruhu nastavení hlasového výstupu (Ctrl+NVDA+šipky) nebo přímo dialog nastavení hlasu.
+- Odstraněny skripty pro zvýšení a snížení tempa hlasu. K tomuto účelu je nyní třeba použít buď příkazy pro nastavení parametrů v kruhu nastavení hlasového výstupu (Ctrl+NVDA+šipky,) nebo přímo dialog nastavení hlasu.
 - Vylepšen rozsah a interval pípání pro ohlašování indikátorů průběhu.
-- Do virtuálního prohlížeče byly přidány nové klávesy rychlé navigace: l pro seznam, i pro položku seznamu, e pro editační pole, b pro tlačítko, x pro zaškrtávací políčko, r pro přepínač, g pro grafiku, c pro rozbalovací seznam, q pro citaci, 1 až 6 pro nadpis odpovídající úrovně, s pro oddělovač, m pro rám. Stiskem samotné klávesy se přesunete na další nejbližší prvek daného typu na stránce, stisknete-li klávesu spolu se shiftem, přesune se kurzor naopak na nejbližší předchozí prvek. (#67,#102,#108)
+- Do virtuálního prohlížeče byly přidány nové klávesy rychlé navigace: l pro seznam i pro položku seznamu, e pro editační pole, b pro tlačítko, x pro zaškrtávací políčko, r pro přepínač, g pro grafiku, c pro rozbalovací seznam, q pro citaci, 1 až 6 pro nadpis odpovídající úrovně, s pro oddělovač, m pro rám. Stiskem samotné klávesy se přesunete na další nejbližší prvek daného typu na stránce, stisknete-li klávesu spolu se shiftem, přesune se kurzor naopak na nejbližší předchozí prvek. (#67,#102,#108)
 - Pokud zrušíte v Mozilla Firefoxu načítání stránky, můžete stále pracovat s posledním dokumentem načteným ve virtuálním prohlížeči, pokud již nebyl skutečně smazán. (#63)
 - Pohyb po slovech ve virtuálním prohlížečije nyní přesnější, protože slova již nebudou nedopatřením obsahovat text z více různých polí najednou. (#70)
 - Zvýšena přesnost sledování pohybu a změn fokusu ve virtuálním prohlížeči aplikací Mozilla.
@@ -312,11 +434,11 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 - Vylepšena možnost aktivovat ve virtuálním prohlížeči pro aplikace Mozilla určitá políčka. To se může vztahovat na kliknutelnou grafiku, odkazy obsahující odstavce a jiné netypické struktury.
 - Odstraněna počáteční prodleva při otevírání dialogů NVDA na některých systémech. (#65)
 - Přidána specifická podpora pro aplikaci Total Commander.
-- Opraven problém s ovladačem sapi4serotek, kdy se výška hlasu zasekla na určité hodnotě, např. hlas zůstal vysoký po vyhláskování velkého písmene. (#89)
+- Opraven problém s ovladačem sapi4serotek, kdy se výška hlasu zasekla na určité hodnotě např. hlas zůstal vysoký po vyhláskování velkého písmene. (#89)
 - Kliknutelný text a další pole budou nyní ve virtuálním prohlížeči pro aplikace Mozilla skutečně oznamovány jako kliknutelné. Např. políčko s HTML atributem onclick (při kliknutí). (#91)
 - Při pohybu ve virtuálním prohlížeči se bude posouvat i text na obrazovce, aby měli vidící uživatelé přehled, kde se právě v dokumentu nacházejí. (#57)
 - Doplněna základní podpora pro ARIA "live region show" události. To je užitečné např. v aplikaci Chatzilla IrC, kde již budou automaticky čteny nové zprávy.
-- Drobná vylepšení pro snazší používání webových aplikací ARIA, např. Google Docs.
+- Drobná vylepšení pro snazší používání webových aplikací ARIA např. Google Docs.
 - Při kopírování textu z virtuálního prohlížeče již do něj nebudou přidávány prázdné řádky navíc.
 - Mezerník v seznamu odkazů již nebude aktivovat právě označený odkaz. Místo toho lze nyní mezeru použít stejně jako ostatní klávesy pro vyhledávání konkrétního odkazu.
 - Příkaz pro přesun myši na právě prohlížený objekt (NVDA+numerické lomeno) nyní přesune myš doprostřed objektu místo do levého horního rohu.
@@ -331,14 +453,14 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 - Přidán uvítací dialog. Tento dialog má poskytnout novým uživatelům základnní informace o používání NVDA a také umožňuje nastavit capslock jako NVDA klávesu. Bude se zobrazovat při každém spuštění NVDA, pokud to uživatel nepřenastaví.
 - Opravena základní podpora Adobe readeru, takže je možné číst dokumenty i ve verzích 8 a 9.
 - Odstraněny určité chyby, ke kterým mohlo docházet, pokud uživatel stiskl některou klávesu ještě předtím, než byl NVDA náležitě inicializován.
-- Jestliže je zapnutá volba, aby se při ukončení NVDA ukládala nastavení, NVDA se ujistí, že nastavení byla skutečně správně uložena, i při vypínání počítače nebo odhlašování uživatele z Windows.
-- Při spuštění instalačního programu se nyní přehraje nové zvukové logo NVDA, vytvořené Victerem Tsaranem.
+- Jestliže je zapnutá volba, aby se při ukončení NVDA ukládala nastavení, NVDA se ujistí, že nastavení byla skutečně správně uložena i při vypínání počítače nebo odhlašování uživatele z Windows.
+- Při spuštění instalačního programu se nyní přehraje nové zvukové logo NVDA vytvořené Victerem Tsaranem.
 - Všechny verze NVDA, instalační i přenosná, by nyní měly při ukončení spolehlivě vymazat ze systémové lišty svou ikonu.
-- Názvy standardních prvků v dialozích NVDA (jako jsou tlačítka ok a storno) by se nyní měly zobrazovat v nastaveném jazyce NVDA, místo aby zůstávaly v angličtině.
+- Názvy standardních prvků v dialozích NVDA (jako jsou tlačítka ok a storno) by se nyní měly zobrazovat v nastaveném jazyce NVDA, místo, aby zůstávaly v angličtině.
 - Ikona NVDA nyní bude použita pro zástupce NVDA v nabídce start a na ploše, místo výchozí ikony pro aplikace.
 - Při pohybu klávesami tab a shift+tab v MS Excelu budou čteny buňky. (#146)
-- V některých seznamech ve Skypu už nebudou určité části textu čteny dvakrát.
-- Zlepšeno sledování systémového kurzoru v aplikacích Iaccessible2 a Java; např. v Open Office nebo Lotus Symphony nyní NVDA skutečně počká, až se kurzor přestane pohybovat po dokumentu, místo aby omylem přečetl jakékoli slovo nebo řádek na konci některého odstavce. (#119)
+- V některých seznamech ve Skype už nebudou určité části textu čteny dvakrát.
+- Zlepšeno sledování systémového kurzoru v aplikacích Iaccessible2 a Java; např. v Open Office nebo Lotus Symphony nyní NVDA skutečně počká, až se kurzor přestane pohybovat po dokumentu, místo, aby omylem přečetl jakékoli slovo nebo řádek na konci některého odstavce. (#119)
 - Podpora pro prvky AkelEdit, které se nacházejí v programu Akelpad 4.0.
 - NVDA se už nezasekne v Lotus Symphony při přesunu z dokumentu do aplikačního menu.
 - NVDA už nezamrzne v ovládacím panelu přidat nebo odebrat programy systému Windows XP při spuštění odinstalace některého programu. (#30)
@@ -351,7 +473,7 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 == Přístup k webovému obsahu díky novému, stále vyvíjenému virtuálnímu prohlížeči (zatím pro aplikace Mozilla včetně Firefoxu 3 a Thunderbirdu 3). ==
 - Doba načítání byla téměř třicetkrát zkrácena (u většiny webových stránek teď už vůbec nemusíte čekat, než se načtou do prohlížeče).
 - Přidán dialog pro seznam odkazů (NVDA+F7).
-- Vylepšen NVDA dialog pro vyhledávání (Ctrl+nvda+F), takže nerozlišuje velikost písmen, a opraveny jisté problémy s fokusem v tomto dialogu.
+- Vylepšen NVDA dialog pro vyhledávání (Ctrl+nvda+F), takže nerozlišuje velikost písmen a opraveny jisté problémy s fokusem v tomto dialogu.
 - V novém virtuálním prohlížeči je nyní možné označovat a kopírovat text.
 - Nový virtuální prohlížeč standardně zobrazuje dokumenty ve stejné podobě jako na obrazovce - odkazy a prvky nejsou na samostatných řádcích, pokud tak skutečně nejsou umístěny vizuálně. Tuto funkci můžete přepínat klávesami NVDA+v.
 - Lze se pohybovat po odstavcích pomocí zkratek Ctrl+šipka nahoru a ctrl+šipka dolů.
@@ -359,7 +481,7 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 - Zvýšena celková přesnost čtení řádků a polí při pohybu šipkami nahoru a dolů.
 
 == Internacionalizace ==
-- Nyní je možné psát národní znaky, které závisí na tzv. mrtvém znaku, i za chodu NVDA.
+- Nyní je možné psát národní znaky, které závisí na tzv. mrtvém znaku i za chodu NVDA.
 - NVDA nyní oznamuje změny rozložení klávesnice při stisku Alt+Shift.
 - Oznamování data a času nyní bere v potas systémová místní a jazyková nastavení.
 - Doplněna čeština od Tomáše Valůška za pomoci Jaromíra Víta.
@@ -379,8 +501,8 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 - V dialogu nastavení hlasu je nyní možné nastavit variantu hlasu, pokud daný hlas varianty podporuje. Varianta je v podstatě jen mírná úprava daného hlasu. eSpeak varianty podporuje (v české verzi je pojem varianta překládán jako osoba, vyskytuje se pouze v tomto dialogu).
 - Přidána možnost změnit v dialogu nastavení hlasu intonaci, pokud tuto funkci právě používaný hlas podporuje. Espeak intonaci podporuje.
 - Přidána možnost vypnout oznamování informací o pozici objektu (např. 1 z 4). Tuto volbu je možné nastavit v dialogu prezentace objektů.
-- NVDA nyní může pípat při čtení velkých písmen. Toto nastavení lze ovlivnit zaškrtávacím políčkem v dialogu nastavení hlasu. Bylo také přidáno políčko "zvýšit hlas při čtení velkých písmen", kterým lze pro NVDA nastavit tuto dříve standardní interpretaci velkých písmen. Takže nyní mohou být velká písmena oznamována buď zvýšením hlasu, pípnutím nebo jen slovem velké. Tyto možnosti mohou být libovolně kombinovány.
-- Doplněna možnost pozastavit mluvení (jako je tomu u odečítače Voiceover pro operační systém Mac). Kdykoli NVDA něco říká, můžete stiskem klávesy Ctrl nebo shift přerušit řeč a pokud později opět stisknete shift (jestliže jste do té doby nestiskli nic jiného), řeč bude pokračovat přesně od toho místa, kde byla přerušena.
+- NVDA nyní může pípat při čtení velkých písmen. Toto nastavení lze ovlivnit zaškrtávacím políčkem v dialogu nastavení hlasu. Bylo také přidáno políčko "zvýšit hlas při čtení velkých písmen", kterým lze pro NVDA nastavit tuto dříve standardní interpretaci velkých písmen. Takže nyní mohou být velká písmena oznamována buď zvýšením hlasu, pípnutím, nebo jen slovem velké. Tyto možnosti mohou být libovolně kombinovány.
+- Doplněna možnost pozastavit mluvení (jako je tomu u odečítače Voiceover pro operační systém Mac). Kdykoli NVDA něco říká, můžete stiskem klávesy Ctrl nebo shift přerušit řeč a pokud později opět stisknete shift, (jestliže jste do té doby nestiskli nic jiného), řeč bude pokračovat přesně od toho místa, kde byla přerušena.
 - Přidán ovladač pro virtuální hlasový výstup, který vypisuje text do okna namísto předčítání hlasem. Tento způsob by měl být příjemnější pro vidící vývojáře, kteří nejsou zvyklí na hlasovou syntézu, ale chtějí vědět, co NVDA říká. Tato funkce má pravděpodobně ještě chyby, takže zpětná vazba je rozhodně velice vítána.
 - NVDA už nadále nebude implicitně číst interpunkci. Čtení interpunkce můžete opět povolit zkratkou NVDA+p nebo přímo v dialogu nastavení hlasu.
 - eSpeak nyní standardně mluví o dost pomaleji, takže noví uživatelé, kteří ho slyší poprvé při instalaci NVDA nebo celkově s NVDA teprve začínají, by mu nyní měli snáze rozumět.
@@ -398,9 +520,9 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 
 == Klávesové příkazy ==
 - Nové klávesové zkratky NVDA+Shift+numerická 6 a NVDA+Shift+numerická 4 umožňují přesun na další, resp. předchozí nejbližší objekt v řadě (na stejné úrovni jako aktuální objekt). To znamená, že nyní můžete veškerou objektovou navigaci po aplikaci provádět pouze těmito dvěma klávesami, bez nutnosti strachovat se, že se omylem při procházení objektovou hierarchií přesunete na nadřazený objekt nebo na první z podřazených vzhledem k úrovni aktuálního objektu. Například ve webovém prohlížeči, jako je Firefox, se nyní můžete pohybovat po dokumentu pomocí objektové navigace s využitím pouze těchto dvou kláves. Pokud vás posun po objektech v řadě přemístí v objektové struktuře o úroveň výš nebo níž, NVDA to dá najevo odpovídajícím pípnutím znázorňujícím pohyb v příslušném směru.
-- Nyní je možné měnit nastavení hlasu přímo, bez nutnosti otevírat dialog nastavení hlasu, použitím tzv. kruhu nastavení hlasového výstupu. Jedná se o skupinu jednotlivých parametrů hlasu, mezi nimiž se můžete přepínat kombinacemi kláves Ctrl+NVDA+šipka doprava a Ctrl+NVDA+šipka doleva. Každou z hodnot jednotlivých parametrů pak můžete nastavovat kombinacemi kláves Ctrl+NVDA+šipka nahoru a Ctrl+NVDA+šipka dolů. Změny se projeví okamžitě.
+- Nyní je možné měnit nastavení hlasu přímo bez nutnosti otevírat dialog nastavení hlasu, použitím tzv. kruhu nastavení hlasového výstupu. Jedná se o skupinu jednotlivých parametrů hlasu, mezi nimiž se můžete přepínat kombinacemi kláves Ctrl+NVDA+šipka doprava a Ctrl+NVDA+šipka doleva. Každou z hodnot jednotlivých parametrů pak můžete nastavovat kombinacemi kláves Ctrl+NVDA+šipka nahoru a Ctrl+NVDA+šipka dolů. Změny se projeví okamžitě.
 - Přidán příkaz pro přečtení aktuálně označeného textu v editačním poli (NVDA+Shift+šipka nahoru).
-- Celá řada příkazů NVDA pro přečtení určitého úseku textu, např. aktuální řádek atd, nyní umí text vyhláskovat, pokud jejich zkratkovou klávesu stisknete dvakrát rychle po sobě.
+- Celá řada příkazů NVDA pro přečtení určitého úseku textu např. aktuální řádek atd nyní umí text vyhláskovat, pokud jejich zkratkovou klávesu stisknete dvakrát rychle po sobě.
 - Klávesy capslock, numerický insert a insert nyní mohou být všechny použity jako NVDA klávesa. Pokud je takto některá z těchto kláves použita a stisknete-li ji dvakrát rychle za sebou bez použití dalších kláves, NVDA ji propustí do systému, jako byste ji stiskli, kdyby NVDA nebyl vůbec spuštěn. Pokud chcete kteroukoli z těchto kláves nastavit jako NVDA klávesu, zaškrtněte její odpovídající zaškrtávací políčko v dialogu nastavení klávesnice (dříve byl tento dialog pojmenován odezva klávesnice).
 
 
@@ -417,23 +539,23 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 
 == Rozhraní a vývojová prostředí ==
 - Vylepšena objektová navigace pro objekty MSAA (Microsoft Active Accessibility). Pokud se v okně nachází systémová nabídka, titulkový pruh nebo lišty pro posun, můžete se na ně tímto způsobem dostat.
-- Doplněna podpora pro rozhraní Iaccessible2, vylepšující přístupnost některých aplikací. Nejen, že tak NVDA může číst více typů prvků, ale také díky Iaccessible2 dokáže v aplikacích jako Firefox 3 či Thunderbird 3 manipulovat s kurzorem, což vám umožňuje čtení a označování textu.
+- Doplněna podpora pro rozhraní Iaccessible2 vylepšující přístupnost některých aplikací. Nejen, že tak NVDA může číst více typů prvků, ale také díky Iaccessible2 dokáže v aplikacích jako Firefox 3 či Thunderbird 3 manipulovat s kurzorem, což vám umožňuje čtení a označování textu.
 - Přidána podpora pro editovatelné prvky typu Scintilla (takové prvky se nacházejí např. v programech Notepad++ nebo Tortoise SVN).
-- Doplněna podpora pro aplikace Java prostřednictvím Java Access Bridge. Tak je zajištěna základní podpora pro Open Office (pokud je Java povolena) a kteroukoli jinou samostatnou aplikaci Java. Berte prosím na vědomí, že Java applety ve webových prohlížečích ještě fungovat nemusí.
+- Doplněna podpora pro aplikace Java prostřednictvím Java Access Bridge. Tak je zajištěna základní podpora pro Open Office, (pokud je Java povolena) a kteroukoli jinou samostatnou aplikaci Java. Berte, prosím, na vědomí, že Java applety ve webových prohlížečích ještě fungovat nemusí.
 
 
 == Myš ==
 - Vylepšené čtení textu pod ukazatelem myši při jeho pohybu. Je nyní mnohem rychlejší a také je u některých standardních editovatelných prvků a u prvků Java a Iaccessible2 možné přečíst aktuální slovo, ne jen aktuální objekt. Toho mohou využít slabozrací, kteří si myší chtějí přečíst jen určité místo v textu.
-- Do dialogu nastavení myši byla přidána nová volba. Je-li zaškrtnuto "pohyb myši indikovat zvukovým signálem", pak se při každém pohybu myši přehraje 40 milisekund dlouhé pípnutí, jehož výška (mezi 220 a 1760 Hz) reprezentuje osu y (vertikální pozici na obrazovce) a hlasitost v levém a pravém kanále zase osu x (horizontální pozici na obrazovce). Tak může nevidomý člověk získat při pohybu myší přibližnou představu, kde na obrazovce se právě nachází. Tato funkce také závisí na tom, jestli je zapnuto ohlašování objektu pod kurzorem myši. Pokud budete pottřebovat rychle vypnout jak ohlašování objektu pod myší, tak pípání, stačí stisknout NVDA+m. Pípání je také hlasitější nebo tišší podle toho, jaký jas má dané místo na obrazovce.
+- Do dialogu nastavení myši byla přidána nová volba. Je-li zaškrtnuto "pohyb myši indikovat zvukovým signálem", pak se při každém pohybu myši přehraje 40 milisekund dlouhé pípnutí, jehož výška (mezi 220 a 1760 Hz) reprezentuje osu y (vertikální pozici na obrazovce) a hlasitost v levém a pravém kanále zase osu x (horizontální pozici na obrazovce). Tak může nevidomý člověk získat při pohybu myší přibližnou představu, kde na obrazovce se právě nachází. Tato funkce také závisí na tom, jestli je zapnuto ohlašování objektu pod kurzorem myši. Pokud budete potřebovat rychle vypnout jak ohlašování objektu pod myší, tak pípání, stačí stisknout NVDA+m. Pípání je také hlasitější nebo tišší podle toho, jaký jas má dané místo na obrazovce.
 
 
 == Prezentace objektů a interakce s nimi ==
 - Vylepšena podpora většiny standardních stromových seznamů. NVDA nyní při rozbalení kterékoli větve oznámí, kolik dalších položek obsahuje. Také při rozbalení či sbalení libovolné položky oznamuje úroveň vnoření, číslo aktuální položky a celkový počet všech položek v seznamu vzhledem k aktuální větvi, nikoli k celému seznamu.
-- Vylepšeno oznamování změn fokusu při pohybu po aplikacích a v operačním systému. Nyní už namísto pouhého jména prvku, na němž je fokus nově umístěn, uslyšíte i informace o všech ostatních prvcích, uvnitř kterých se tento prvek nachází. Například pokud umístíte fokus na tlačítko v rámci seskupení, NVDA nyní oznámí i toto seskupení.
+- Vylepšeno oznamování změn fokusu při pohybu po aplikacích a v operačním systému. Nyní už namísto pouhého jména prvku, na němž je fokus nově umístěn, uslyšíte i informace o všech ostatních prvcích, uvnitř kterých se tento prvek nachází. Například, pokud umístíte fokus na tlačítko v rámci seskupení, NVDA nyní oznámí i toto seskupení.
 - NVDA se nyní snaží číst při objevení dialogu i jeho obsah. Většinou se mu to daří poměrně přesně, i když ještě existuje mnoho dialogů, se kterými nepracuje tak dobře, jak by mohl.
-- Do dialogu pro nastavení prezentace objektů byla přidána nová volba "hlásit popisky objektů: Pokročilí uživatelé si ji někdy mohou přát vypnout, aby zabránili NVDA ve čtení mnoha podrobných popisků u některých prvků, jako např. v Java aplikacích.
+- Do dialogu pro nastavení prezentace objektů byla přidána nová volba "hlásit popisky objektů: Pokročilí uživatelé si ji někdy mohou přát vypnout, aby zabránili NVDA ve čtení mnoha podrobných popisků u některých prvků jako např. v Java aplikacích.
 - Pokud se fokus přemístí na editační políčko, NVDA nyní automaticky oznámí v tomto políčku označený text. Jestliže není označen žádný text, bude přečten aktuální řádek.
-- NVDA nyní přehrává pípnutí pro oznámení hodnot indikátorů průběhu v různých aplikacích mnohem opatrněji. Nejvýrazněji to ovlivňuje práci v aplikacích od Eclipse, např. Lotus Symphony, nebo Accessibility Probe.
+- NVDA nyní přehrává pípnutí pro oznámení hodnot indikátorů průběhu v různých aplikacích mnohem opatrněji. Nejvýrazněji to ovlivňuje práci v aplikacích od Eclipse např. Lotus Symphony nebo Accessibility Probe.
 
 
 == Uživatelské rozhraní ==
@@ -447,10 +569,10 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 - NVDA nyní obsahuje vestavěný hlasový syntezátor nazvaný eSpeak, vyvíjený Jonathanem Duddingtonem. Má velice rychlou odezvu, je velmi kompaktní a podporuje mnoho různých jazyků. Je stále možné používat SAPI syntezátory, ale eSpeak bude používán jako výchozí hlas.
 - Espeak není závislý na žádném dalším speciálním softwaru, takže ho můžete použít spolu s NVDA na kterémkoli počítači, na USB klíčence nebo prostě na čemkoli. Pro více informací o eSpeaku nebo pro stažení aktuální verze navštivte http://espeak.sourceforge.net/.
 - Odstraněna chyba při mazání znaku v editačních polích Internet Exploreru a Outlook Expressu, kdy NVDA četl nesprávný znak.
-- Ve Skypu je nyní podporováno více editačních polí.
+- Ve Skype je nyní podporováno více editačních polí.
 - Dokumenty do virtuálního prohlížeče budou nyní načítány teprve v případě, kdy se pod fokusem ocitne okno, které je třeba načíst. Tak byla odstraněna chyba v Outlook Expressu, kdy se tímto způsobem někdy v nesprávnou chvíli aktivoval panel náhledu.
 - Přidány parametry pro spouštění NVDA z příkazového řádku: -m, --minimal: Nepřehrávat při spuštění a ukončení znělky a nezobrazovat po spuštění dialog rozhraní, pokud je NVDA takto nastaven. -q, --quit: Ukončit všechny případné běžící instance NVDA (nejprve všechny ostatní a poté tu aktuální). -s, --stderr-file název_souboru: určit, kam má NVDA ukládat nezachycené chyby a výjimky. -d, --debug-file název souboru: Určit, kam má NVDA ukládat ladicí zprávy. -c, --config-file: Určit alternativní konfigurační soubor. -h, -help: Zobrazit nápovědnou zprávu s výpisem parametrů pro spuštění NVDA z příkazového řádku.
-- Odstraněna chyba, kdy interpunkční znaménka nebyla překládána do správného jazyka, pokud byl jazyk NVDA nastaven na jiný než angličtinu a pokud byla zapnuta volba hlásit psané znaky.
+- Odstraněna chyba, kdy interpunkční znaménka nebyla překládána do správného jazyka, pokud byl jazyk NVDA nastaven na jiný, než angličtinu, a pokud byla zapnuta volba hlásit psané znaky.
 - Díky Peterovi Vágnerovi byly přidány jazykové soubory pro slovenštinu.
 - Přidány dialogy pro nastavení virtuálního prohlížeče a ohlašování formátování dokumentu, vytvořené Peterem Vágnerem.
 - Doplněna francouzština díky Micheli Suchovi.
@@ -476,12 +598,12 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 - Doplněn španělský překlad (es) od Juana C. Buna.
 - Přidán maďarský jazykový soubor od Tamase Gczyho.
 - Přidán portugalský jazykový soubor od Ruie Batisty.
-- Při změně hlasu v dialogu nastavení hlasu jsou posuvníky pro  tempo, hlasitost a výšku hlasu nastaveny na nové hodnoty podle zvoleného hlasu, místo aby byl hlas nucen přizpůsobit se starým hodnotám těchto nastavení. Tak je odstraněna chyba, kdy hlasové výstupy jako eloquence nebo viavoice zdánlivě mluvily rychleji než všechny ostatní syntezátory.
+- Při změně hlasu v dialogu nastavení hlasu jsou posuvníky pro  tempo, hlasitost a výšku hlasu nastaveny na nové hodnoty podle zvoleného hlasu, místo, aby byl hlas nucen přizpůsobit se starým hodnotám těchto nastavení. Tak je odstraněna chyba, kdy hlasové výstupy jako eloquence nebo viavoice zdánlivě mluvily rychleji než všechny ostatní syntezátory.
 - Opravena chyba, kdy by NVDA buď přestal mluvit nebo by úplně spadl v okně dosovské konzole.
 - Pokud existuje podpora pro konkrétní jazyk, NVDA nyní může automaticky zobrazovat své rozhraní a číst své zprávy v jazyce nastaveném ve Windows. Je však stále možné také zvolit určitý jazyk ručně v dialogu nastavení uživatelského rozhraní.
 - Přidán nový příkaz "hlásit dynamicky změněný obsah" (NVDA+5); Přepíná, jestli má být automaticky oznamován nový text a další dynamické změny. Prozatím však funguje pouze v oknech dosovských konzolí.
 - Přidán příkaz "textový kurzor pohybuje čtecím kurzorem" (NVDA+6). Přepíná, zda má být čtecí kurzor automaticky přizpůsobován poloze systémového kurzoru. Je užitečný při čtení textu v oknech dosovských konzolí, když se mění informace na obrazovce.
-- Přidán příkaz "změna fokusu změní prohlížený objekt" (NVDA+7). Určuje, zdali má být při změně fokusu právě prohlížený objekt nastaven na objekt pod fokusem.
+- Přidán příkaz "změna fokusu změní prohlížený objekt" (NVDA+7). Určuje, zda má být při změně fokusu právě prohlížený objekt nastaven na objekt pod fokusem.
 - Doplněny překlady dokumentace do různých jazyků. Prozatím se to týká francouzštiny, španělštiny a finštiny.
 - Odstraněna vývojářská dokumentace zbinární distribuce NVDA. Nyní je dostupná pouze v distribuci zdrojového kódu.
 - Odstraněna potenciální chyba ve Windows Live Messengeru a MSN Messengeru, kde pohyb šipkami nahoru a dolů po seznamu kontaktů způsoboval problémy.
@@ -491,8 +613,8 @@ K tomuto účelu byla vytvořena speciální verze výstupu Newfon pro NVDA. (#2
 - NVDA už nebude zamrzat na déle než minutu při otevírání velmi rozsáhlých dokumentů v Microsoft Wordu.
 - Odstraněna chyba, která při opuštění tabulky v MS Wordu a opětovném vstupu do ní způsobovala, že NVDA už nehlásil čísla aktuálního řádku a sloupce, pokud jste se vrátili přesně do téže buňky.
 - Při spuštění NVDA s nastaveným hlasem, který neexistuje nebo nepracuje správně, se NVDA pokusí načíst výchozí hlas rozhraní Sapi5. Pokud ani to nefunguje, bude spuštěn bez mluvení.
-- Příkazy pro zvýšení a snížení výšky hlasu nyní nemůžou nastavit větší výšku než 100 nebo menší než 0.
+- Příkazy pro zvýšení a snížení výšky hlasu nyní nemohou nastavit větší výšku než 100 nebo menší než 0.
 - Pokud se při volbě jazyka v dialogu nastavení uživatelského rozhraní vyskytne chyba, objeví se zpráva, která na tuto skutečnost uživatele upozorní.
-- NVDA se nyní při změně jazyka v dialogu nastavení uživatelského rozhraní zeptá, zdali má uložit nastavení a restartovat se. ABy se změna jazyka plně projevila, musí být NVDA restartován.
+- NVDA se nyní při změně jazyka v dialogu nastavení uživatelského rozhraní zeptá, zda má uložit nastavení a restartovat se. ABy se změna jazyka plně projevila, musí být NVDA restartován.
 - Pokud není možné při volbě hlasového výstupu v dialogu hlasové výstupy zvolený syntezátor načíst, NVDA na tuto skutečnost upozorní.
-- Při prvním načítání zvoleného syntezátoru nechá NVDA syntezátor, aby si sám zvolil nejvíce vyhovující hlas, tempo a výšku, místo aby mu vnutil svá výchozí nastavení, která mu připadají v pořádku. Tím je odstraněn problém, kdy Sapi4 syntezátory eloquence a viavoice začínaly na to, že byly spouštěny poprvé, mluvit příliš rychle.
+- Při prvním načítání zvoleného syntezátoru nechá NVDA syntezátor, aby si sám zvolil nejvíce vyhovující hlas, tempo a výšku, místo, aby mu vnutil svá výchozí nastavení, která mu připadají v pořádku. Tím je odstraněn problém, kdy Sapi4 syntezátory eloquence a viavoice začínaly na to, že byly spouštěny poprvé, mluvit příliš rychle.

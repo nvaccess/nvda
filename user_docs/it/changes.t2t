@@ -3,6 +3,17 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2011.1.1 =
+
+== Bug Corretti ==
+- Il menù Fai una Donazione ora è disabilitato nelle schermate di Login e UAC, in quanto risultava essere un potenziale rischio per la sicurezza. (#1419)
+- Risulta ora impossibile effettuare operazioni di copia/incolla all'interno dell'interfaccia di NVDA, quando ci si trova in schermate di sicurezza (UAC, login, etc), in quanto risultava essere un potenziale rischio di sicurezza. (#1421)
+- In Firefox 4, il comando Control+NVDA+Spazio ora funziona correttamente, permettendo di abbandonare oggetti flash e tornare al buffer virtuale. (#1429)
+- Quando la funzione leggi i tasti di comando è attivata, i caratteri digitati con il tasto Shift non vengono più letti come tasti di comando. (#1422)
+- Quando la funzione leggi i tasti di comando è attivata, la pressione della barra spazio con altri tasti speciali ad eccezione dello Shift (control, alt), viene ora annunciata come tasto di comando. (#1424)
+- Le funzioni di logging sono completamente disabilitate quando ci si trova in schermate di sicurezza, UAC, logon di Windows, etc, in quanto risultava essere un potenziale rischio per la sicurezza. (#1435)
+
+
 = 2011.1 =
 Le principali novità di questa versione riguardano l'annuncio automatico del testo in programmi come Mirc, PuTTY, Teraterm e Secure CRT; supporto per plugin globali;  lettura di numeri ed elenchi in Microsoft Word; nuove assegnazioni tasti per i Display Braille, compresi tasti per spostarsi alla riga precedente o successiva; supporto per molti Display Braille Baum, HumanWare e APH; e l'annuncio dei colori in alcuni controlli, compreso il testo in IBM Lotus Symphony.
 
