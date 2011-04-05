@@ -12,6 +12,7 @@
 - When speaking of command keys is enabled, shifted characters are no longer incorrectly spoken as command keys. (#1422)
 - When speaking of command keys is enabled, pressing space with modifiers other than shift (such as control and alt) is now reported as a command key. (#1424)
 - Logging is now completely disabled when running on the logon, lock, UAC and other secure Windows screens, as this is a security risk. (#1435)
+- In input help mode, Gestures are now logged even if they are not bound to a script (in accordence with the user guide). (#1425)
 
 
 = 2011.1 =
