@@ -353,29 +353,27 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				start=end
 				end=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
 			return (start,end)
-		elif self.obj==api.getFocusObject():
-			if offset>=(self._getStoryLength()-1):
-				return [offset,offset+1]
-			oldSel=self._getSelectionOffsets()
-			self._setSelectionOffsets(offset,offset)
-			KeyboardInputGesture.fromName("control+leftArrow").send()
-			back=self._getSelectionOffsets()[0]
-			KeyboardInputGesture.fromName("control+rightArrow").send()
-			forward=self._getSelectionOffsets()[0]
-			if (back<=offset) and (forward>offset):
-				start=back
-				end=forward
-			elif (back<offset) and (forward==offset):
-				start=forward
-				KeyboardInputGesture.fromName("control+rightArrow").send()
-	 			forward=self._getSelectionOffsets()[0]
-				end=forward
-			else:
-				return super(EditTextInfo,self)._getWordOffsets(offset)
-			self._setSelectionOffsets(oldSel[0],oldSel[1])
-			return [start,end]
-		else:
-			return super(EditTextInfo,self)._getWordOffsets(offset)
+		else: #Implementation of standard edit field wordbreak behaviour (only breaks on space)
+			text=self.obj.windowText
+			#cariage returns are always treeted as a word by themselves
+			if text[offset]=='\r':
+				return offset,offset+1
+			#Find the start of the word (possibly moving through space to get to the word first)
+			tempOffset=offset
+			while offset>=0 and text[tempOffset].isspace():
+				tempOffset-=1
+			while tempOffset>=0 and not text[tempOffset].isspace():
+				tempOffset-=1
+			start=tempOffset+1
+			#Find the end of the word and trailing space
+			tempOffset=offset
+			textLen=len(text)
+			while tempOffset<textLen and not text[tempOffset].isspace():
+				tempOffset+=1
+			while tempOffset<textLen and text[tempOffset].isspace():
+				tempOffset+=1
+			end=tempOffset
+			return start,end
 
 	def _getLineNumFromOffset(self,offset):
 		if self.obj.editAPIVersion>=1:
