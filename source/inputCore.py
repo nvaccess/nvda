@@ -313,19 +313,21 @@ class InputManager(baseObject.AutoPropertyObject):
 		textList = [gesture.displayName]
 		script = gesture.script
 		runScript = False
+		logMsg = "Input help: gesture %s"%gesture.logIdentifier
 		if script:
 			scriptName = scriptHandler.getScriptName(script)
+			logMsg+=", bound to script %s" % scriptName
 			scriptLocation = scriptHandler.getScriptLocation(script)
-			logMsg = "Input help: gesture %s, bound to script %s" % (gesture.logIdentifier, scriptName)
 			if scriptLocation:
 				logMsg += " on %s" % scriptLocation
-			log.info(logMsg)
 			if scriptName == "toggleInputHelp":
 				runScript = True
 			else:
 				desc = script.__doc__
 				if desc:
 					textList.append(desc)
+
+		log.info(logMsg)
 
 		import braille
 		braille.handler.message("\t\t".join(textList))
