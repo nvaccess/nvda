@@ -3,6 +3,17 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2011.1.1 =
+
+== Corrections de bogues ==
+- L'entréé "Faire un don" du menu NVDA est maintenant grisée quand on se trouve dans un écran sécurisé car ceci représentait un risque de sécurité. (#1419)
+- Il est maintenant impossible de copier/coller dans l'interface utilisateur NVDA en mode sécurisé car ceci représentait un risque de sécurité. (#1421)
+- Sous Firefox 4, la commande "aller au tampon virtuel contenant" (NVDA+control+espace) fonctionne maintenant normalement pour sortir des objets inclus tels que les contenus flash. (#1429)
+- Quand l'annonce des touches de commandes est activée, les caractères en majuscules ne sont plus incorrectement annoncés comme des touches de commande. (#1422)
+- Quand l'annonce des touches de commande est activée, La combinaison "espace" avec un modificateur autre que maj (ctrl ou alt par exemple) est maintenant anoncée comme touche de commande. (#1424)
+- La journalisation est maintenant complètement désactivée quand on se trouve sur un écran sécurisé car ceci représentait une faille de sécurité. (#1435)
+
+
 = 2011.1 =
 Nouveautés marquantes de cette version :
 Annonce automatique du texte dans mIRC, PuTTY, Tera Term et SecureCRT; 

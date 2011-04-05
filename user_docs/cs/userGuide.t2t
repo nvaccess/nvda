@@ -9,7 +9,8 @@
 
 + Úvod +
 NonVisual Desktop Access (NVDA) je otevřený a volně šiřitelný odečítač obrazovky pro operační systém Microsoft Windows.
-Díky zpětné vazbě hlasových výstupů a braillských řádků zpřístupňuje NVDA nevidomým a zrakově postiženým práci s operačním systémem Windows a s dalšími aplikacemi.
+Díky zpětné vazbě hlasových výstupů a braillských řádků zpřístupňuje NVDA nevidomým a zrakově postiženým práci na počítači s operačním systémem Windows za stejnou finanční částku jako vidícím osobám.
+Vývoj NVDA zastřešuje organizace [NV Access http://www.nvaccess.org/], za pomoci příspěvků od členů komunity.
 
 ++ Základní  informace ++
 NVDA je odečítač obrazovky pro operační systém Windows umožňující uživateli pracovat s počítačem bez nutnosti vidět na obrazovku. NVDA získává od operačního systému informace o tom, kde se uživatel právě nachází, jaká okna a ovládací prvky jsou právě na obrazovce, sleduje, k jakým změnám v systému dochází. Získané informace pak zpracovává a prezentuje uživateli formou mluvené řeči tvořené hlasovým výstupem, aby uživatel věděl, co se na obrazovce děje. Texty uživatelského rozhraní a zprávy programu jsou nyní přeloženy do 31 různých jazyků. NVDA by měl být schopen číst texty v libovolném jazyce, pro který je v systému přítomen hlasový výstup.
@@ -33,7 +34,8 @@ Nejvýznamnější přednosti programu:
 
 ++ Mezinárodní podpora ++
 Je nezbytné, aby lidé, kdekoli na světě, hovořící jakýmkoli jazykem, měli stejný přístup k speciálním technologiím. 
-NVDA byl dodnes přeložen do těchto 31 jazyků: afrikánština, arabština, brazilština, čeština, dánština, finština, francouzština, galština, hebrejština, hindština, holandština, chorvatština, italština, islandština, japonština, maďarština, němčina, polština, portugalština, rumunština, ruština, slovenština, srbština, španělština, švédština, thajština, taiwanská čínština, tradiční čínština, turečtina, ukrajinština a vietnamština. 
+NVDA byl dodnes přeložen do těchto 32 jazyků: 
+afrikánština, arabština, brazilština, čeština, dánština, finština, francouzština, galština, gruzínština, hebrejština, hindština, holandština, chorvatština, italština, islandština, japonština, maďarština, němčina, polština, portugalština, rumunština, ruština, slovenština, srbština, španělština, švédština, thajština, taiwanská čínština, tradiční čínština, turečtina, ukrajinština a vietnamština. 
 
 ++ Podpora hlasového výstupu ++
 Bez ohledu na poskytování hlášení a rozhraní v několika jazycích NVDA nabízí možnost čtení textů v jakémkoli jazyce, jestliže je dostupný hlasový výstup pro daný jazyk. 
@@ -740,8 +742,8 @@ Pozastavit zobrazování aktuálního textu (např. užitečné pro kopírován�
 Python konzole programu NVDA, dostupná z nabídky nástroje, je nástroj určený především pro vývojáře, který umožňuje kontrolovat správnost běhu NVDA, zjišťovat stav vnitřních proměnných NVDA a také zkoumat hierarchii přístupnosti aplikací.
 Pro více informací si, prosím, přečtěte [článek Python konzole (anglicky) na stránce NVDA NVDA_URLwiki/PythonConsole].
 
-++ Znovu načíst pluginy ++
-Tato položka aktivuje znovu načtení pluginů a aplikačních modulů bez nutnosti restartovat NVDA. To může být užitečné pro vývojáře..
+++ Znovu načíst zásuvné moduly ++
+Tato položka aktivuje znovu načtení zásuvných a aplikačních modulů bez nutnosti restartovat NVDA. To může být užitečné pro vývojáře..
 
 + Podporované hlasové výstupy +[SupportedSpeechSynths]
 Tato kapitola obsahuje informace o hlasových výstupech podporovaných programem NVDA.
@@ -799,6 +801,18 @@ Braillský řádek Lilli od [MDV http://www.mdvbologna.it/] je programem NVDA pl
 Pro použití tohoto řádku se nemusí instalovat žádné ovladače.
 Stačí řádek zapojit a nastavit NVDA na jeho používání.
 
+++ Braillské řádky Baum/Humanware/APH ++
+NVDA podporuje některé řádky od [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] a [APH http://www.aph.org/] připojené přez USB nebo bluetooth.
+Podporované řádky jsou:
+- Baum: SuperVario, PocketVario
+- HumanWare: Brailliant, BrailleConnect
+- APH: Refreshabraille
+-
+Pravděpodobně by mohly fungovat některé další řádky od Baum, ale zatím to nebylo řádně otestováno..
+
+Pokud připojujete některý z těchto řádků přez USB, měli byste nejprve nainstalovat ovladače od výrobce..
+V případě řádku APH Refreshabraille by měl režim USB být nastavený na serial.
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] je samostatná aplikace, jejímž prostřednictvím je možné použít mnoho dalších braillských řádků.
 pro použití ovladače BRLTTY je nutné nainstalovat [BRLTTY pro Windows http://brl.thefreecat.org/brltty/].
@@ -812,17 +826,20 @@ Uživatelé si mohou vytvořit vlastní nebo pozměnit existující konfiguraci 
 Název tohoto souboru je gestures.ini.
 
 Pro zápis do tohoto souboru se používá standardní syntakse zápisu ini souborů.
-Soubor se skládá z několika sekcí a každá sekce obsahuje mapování vstupních příkazů na skripty v jednom python modulu a třídě NVDA.
-Název sekce se skládá z názvu python modulu a názvu třídy oddělenými tečkou.
- 
-Klíčem každé položky je název skriptu, na který chcete namapovat vstupní příkaz.
-Hodnotou každého klíče je čárkou oddělený seznam identifikátorů vstupních příkazů, které mají být namapovány na skript uvedený v klíči.
+Soubor může obsahovat vícero sekcí a každá sekce může obsahovat jednu nebo několik položek.
 
-Pro každou sekci je možné zapsat vícero klíčů a soubor může obsahovat vícero sekcí.
+Každá sekce obsahuje mapování vstupních příkazů na skripty v jednom python modulu a třídě NVDA.
+- Název sekce se skládá z názvu python modulu a názvu třídy oddělenými tečkou. 
+- Klíčem každé položky je název skriptu, pro který chcete namapovat vstupní příkaz.
+Můžete  rovněž odstranit mapování jakéhokoliv už použitého vstupního příkazu a místo názvu skriptu uvést slovo None.
+- Hodnotou každého klíče je čárkou oddělený seznam identifikátorů vstupních příkazů, které mají být namapovány na skript uvedený v klíči.
+- 
+
+Identifikátor vstupního příkazu se skládá z dvojznakového identifikátoru zařízení (kb pro klávesnici, br pro braillský řádek), nepovinného identifikátoru subzařízení nebo rozložení kláves v závorce, dvojtečky a seznamu identifikátorů kláves oddělených znakem +.
 
 Pro zjištění identifikátorů vstupních příkazů, názvů modulů, tříd a skriptů můžete:
 + Aktivovat výukový režim.
-+ Vyvolat požadovaný skript.
++ Vyvolat požadovaný skript (stisknout klávesovou zkratku).
 + Deaktivovat výukový režim.
 + Z nabídky nástroje zobrazit log a přečíst si poslední řádky.
 Jeden z nich by měl obsahovat vámi vyvolaný vstupní příkaz spolu s informacemi o modulu, třídě a skriptu, které jsou k němu momentálně přiřazeny.
@@ -851,12 +868,16 @@ Pokud tento soubor ještě neexistuje, vytvořte ve složce s uživatelským nas
 
 Takto přiřadíte klávesový příkaz NVDA+Shift+T skriptu dateTime ve všech rozloženích klávesnice.
 
-Je možné použít i speciální název skriptu None, což způsobí vymazání přiřazení vstupního příkazu z daného modulu pro konkrétní třídu.
+Všimněte si, že původní přiřazená klávesová zkratka NVDA+F12 bude stále funkční.
+Pokud byste chtěli zrušit její namapování, můžete přidat následující řádek
 
-Identifikátor vstupního příkazu se skládá z dvojznakového identifikátoru zařízení (kb pro klávesnici, br pro braillský řádek), nepovinného identifikátoru subzařízení nebo rozložení kláves v závorce, dvojtečky a seznamu identifikátorů kláves oddělených znakem +.
+```
+	None = kb:NVDA+f12
+```
 
-Stisknutí kláves ve výukovém režimu a následné čtení textu v okně prohlížeče logu vám umožní zjistit názvy identifikátorů různých vstupních příkazů.
-
+Ačkoli můžete při mapování vstupních příkazů použít  jakoukoli klávesu, tak použití klávesy alt může být v některých případech problematické.
+NVDA posílá stisk modifikačních kláves jako je Ctrl, Shift a Alt operačnímu systému i v případě, že jsou namapované na nějaký skript programu NVDA. Jestliže tedy použijete ve vstupním příkazu klávesu alt, může jeho stisk kromě vyvolání požadovaného skriptu NVDA rovněž zobrazit panel nabídek.
+Proto je jako modifikátory vhodné používat zejména klávesy NVDA, ctrl a shift.
 
 + Jak získat více informací +
 Protože se NVDA neustále vyvíjí, není možné zajistit funkčnost všech klávesových příkazů a postupů tak, jak jsou popsány v této příručce.

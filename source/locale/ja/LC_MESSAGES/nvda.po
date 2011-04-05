@@ -3,29 +3,29 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 2011.1-4106\n"
-"POT-Creation-Date: 2011-02-09 18:18+E. Australia Standard Time\n"
-"PO-Revision-Date: 2011-02-21 13:26+0900\n"
+"Project-Id-Version: 2011.1-4165\n"
+"POT-Creation-Date: 2011-03-30 19:07+E. Australia Standard Time\n"
+"PO-Revision-Date: 2011-04-01 15:10+0900\n"
 "Last-Translator: Katsutoshi Tsuji <tsuji-katsutoshi@mitsue.co.jp>\n"
-"Language-Team: ja\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: IAccessibleHandler.py:695
+#: IAccessibleHandler.py:696
 msgid "Secure Desktop"
 msgstr "セキュアデスクトップ"
 
-#: NVDAHelper.py:116
+#: NVDAHelper.py:117
 msgid "unknown layout"
 msgstr "不明なレイアウト"
 
-#: NVDAHelper.py:117
+#: NVDAHelper.py:118
 msgid "layout %s"
 msgstr "%sレイアウト"
 
-#: NVDAObjects\IAccessible\__init__.py:1446
+#: NVDAObjects\IAccessible\__init__.py:1449
 msgid "Taskbar"
 msgstr "タスクバー"
 
@@ -38,7 +38,7 @@ msgid "invoke"
 msgstr "呼び出し"
 
 #: NVDAObjects\behaviors.py:53
-#: globalCommands.py:793
+#: globalCommands.py:794
 msgid "%d percent"
 msgstr "%dパーセント"
 
@@ -245,12 +245,12 @@ msgstr "右"
 #: globalCommands.py:176
 #: globalCommands.py:186
 #: globalCommands.py:196
-#: globalCommands.py:694
-#: globalCommands.py:756
-#: globalCommands.py:766
-#: globalCommands.py:776
-#: gui\settingsDialogs.py:815
-#: keyboardHandler.py:297
+#: globalCommands.py:695
+#: globalCommands.py:757
+#: globalCommands.py:767
+#: globalCommands.py:777
+#: gui\settingsDialogs.py:819
+#: keyboardHandler.py:295
 #: virtualBuffers\__init__.py:724
 msgid "on"
 msgstr "オン"
@@ -263,13 +263,13 @@ msgstr "オン"
 #: globalCommands.py:183
 #: globalCommands.py:193
 #: globalCommands.py:572
-#: globalCommands.py:691
-#: globalCommands.py:753
-#: globalCommands.py:763
-#: globalCommands.py:773
-#: gui\settingsDialogs.py:575
-#: gui\settingsDialogs.py:815
-#: keyboardHandler.py:297
+#: globalCommands.py:692
+#: globalCommands.py:754
+#: globalCommands.py:764
+#: globalCommands.py:774
+#: gui\settingsDialogs.py:579
+#: gui\settingsDialogs.py:819
+#: keyboardHandler.py:295
 #: virtualBuffers\__init__.py:724
 msgid "off"
 msgstr "オフ"
@@ -1545,11 +1545,11 @@ msgstr ""
 msgid "gesture map File Error"
 msgstr "ジェスチャーマップファイルエラー"
 
-#: core.py:156
+#: core.py:171
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDAを読み込み中です。お待ちください..."
 
-#: core.py:244
+#: core.py:259
 msgid "NVDA started"
 msgstr "NVDA起動"
 
@@ -1760,7 +1760,7 @@ msgid "no navigator object"
 msgstr "ナビゲーターオブジェクトがありません"
 
 #: globalCommands.py:285
-#: globalCommands.py:713
+#: globalCommands.py:714
 msgid "%s copied to clipboard"
 msgstr "%sをクリップボードにコピーしました"
 
@@ -1793,7 +1793,7 @@ msgid "Sets the navigator object to the current focus, and the review cursor to 
 msgstr "ナビゲーターオブジェクトを現在のフォーカスに設定し、可能であればレビューカーソルをそのカレット内の位置に設定します。"
 
 #: globalCommands.py:323
-#: globalCommands.py:672
+#: globalCommands.py:673
 msgid "no focus"
 msgstr "フォーカスなし"
 
@@ -1937,281 +1937,281 @@ msgstr "読み上げモード%s"
 msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr "読み上げモードをオフ、ビープ、トークの順に切り替えます。オフに設定した場合、NVDAはなにも読み上げません。ビープに設定した場合、NVDAは何か音声を発生すべき場面でビープ音を鳴らします。トークに設定した場合、NVDAは通常通りに読み上げを行います。"
 
-#: globalCommands.py:596
+#: globalCommands.py:597
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr "フォーカスを、次に一番近いフォーカスのある仮想バッファーに移動"
 
-#: globalCommands.py:608
+#: globalCommands.py:609
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
 msgstr "ブラウズモードとフォーカスモードの切り替え。フォーカスモードでは、押されたキーの情報は直接アプリケーションに渡され、アプリケーションをコントロールできます。ブラウズモードでは、カーソルキーを使ってページ内を移動したり、クイックナビゲーションを行ったりすることができます。"
 
-#: globalCommands.py:612
+#: globalCommands.py:613
 msgid "Quits NVDA!"
 msgstr "NVDAの終了"
 
-#: globalCommands.py:616
+#: globalCommands.py:617
 msgid "Shows the NVDA menu"
 msgstr "NVDAメニューの表示"
 
-#: globalCommands.py:621
+#: globalCommands.py:622
 msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
 msgstr "レビューカーソルの位置を移動しながら、テキストを最後まで読み上げます"
 
-#: globalCommands.py:633
+#: globalCommands.py:634
 msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
 msgstr "システムカーソル位置を移動しながら、テキストを最後まで読み上げます"
 
-#: globalCommands.py:659
+#: globalCommands.py:660
 msgid "No formatting information"
 msgstr "書式情報なし"
 
-#: globalCommands.py:662
+#: globalCommands.py:663
 msgid "Reports formatting info for the current cursor position within a document"
 msgstr "ドキュメント中の現在カーソルがある位置の書式情報を通知します"
 
-#: globalCommands.py:673
+#: globalCommands.py:674
 msgid "reports the object with focus"
 msgstr "フォーカスのあるオブジェクトの読み上げ"
 
-#: globalCommands.py:678
+#: globalCommands.py:679
 msgid "no status bar found"
 msgstr "ステータスバーなし"
 
-#: globalCommands.py:687
+#: globalCommands.py:688
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr "現在起動中のアプリケーションのステータス情報を読み上げ、ナビゲーションカーソルを移動"
 
-#: globalCommands.py:696
+#: globalCommands.py:697
 msgid "Mouse tracking"
 msgstr "マウスの追跡"
 
-#: globalCommands.py:697
+#: globalCommands.py:698
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "マウス移動時の情報通知の切り替え"
 
-#: globalCommands.py:705
+#: globalCommands.py:706
 msgid "no title"
 msgstr "タイトルなし"
 
-#: globalCommands.py:714
+#: globalCommands.py:715
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
 msgstr "現在使用中のアプリケーションまたは、最前面のウインドウのタイトルを通知します。2回続けて押すと、タイトルをスペルで読み上げます。3回続けて押すと、タイトルをクリップボードにコピーします。"
 
-#: globalCommands.py:721
+#: globalCommands.py:722
 msgid "speaks the current foreground object"
 msgstr "現在前面に表示中のオブジェクト名を通知"
 
-#: globalCommands.py:732
+#: globalCommands.py:733
 msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
 msgstr "現在のナビゲーターオブジェクトに関する情報を、開発者に役立つように記録して、情報が確認できるようにログビュアーを開きます。"
 
-#: globalCommands.py:738
+#: globalCommands.py:739
 msgid "no progress bar updates"
 msgstr "プログレスバーの更新なし"
 
-#: globalCommands.py:741
+#: globalCommands.py:742
 msgid "speak progress bar updates"
 msgstr "プログレスバー更新を読み上げ"
 
-#: globalCommands.py:744
+#: globalCommands.py:745
 msgid "beep for progress bar updates"
 msgstr "プログレスバー更新をビープ音で通知"
 
-#: globalCommands.py:747
+#: globalCommands.py:748
 msgid "beep and speak progress bar updates"
 msgstr "プログレスバー更新をビープ音と読み上げで通知"
 
-#: globalCommands.py:749
+#: globalCommands.py:750
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
 msgstr "プログレスバーの更新通知方法を、ビープ音、読み上げ、ビープ音と読み上げ、オフの間で切り替えます"
 
-#: globalCommands.py:758
+#: globalCommands.py:759
 msgid "report dynamic content changes"
 msgstr "動的コンテンツの変化を通知"
 
-#: globalCommands.py:759
+#: globalCommands.py:760
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
 msgstr "DOSウインドウ上に書き込まれた新しいテキストのような、動的コンテンツの変化の通知のオンオフを切り替え"
 
-#: globalCommands.py:768
+#: globalCommands.py:769
 msgid "caret moves review cursor"
 msgstr "キャレットをレビューカーソルに移動"
 
-#: globalCommands.py:769
+#: globalCommands.py:770
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "キャレットの移動に応じてレビューカーソルを移動する機能のオンオフを切り替えます。"
 
-#: globalCommands.py:778
+#: globalCommands.py:779
 msgid "focus moves navigator object"
 msgstr "フォーカスをナビゲーターオブジェクトに移動"
 
-#: globalCommands.py:779
+#: globalCommands.py:780
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "フォーカスの変化に応じてナビゲーターオブジェクトを移動させる機能のオンオフを切り替え"
 
-#: globalCommands.py:791
+#: globalCommands.py:792
 msgid "no system battery"
 msgstr "システムバッテリーなし"
 
-#: globalCommands.py:794
+#: globalCommands.py:795
 msgid "AC power on"
 msgstr "AC電源オン"
 
-#: globalCommands.py:796
+#: globalCommands.py:797
 msgid "%d hours and %d minutes remaining"
 msgstr "残り%d時間%d分"
 
-#: globalCommands.py:798
+#: globalCommands.py:799
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr "電源未装着時、バッテリー残量と残り時間を通知"
 
-#: globalCommands.py:802
+#: globalCommands.py:803
 msgid "Pass next key through"
 msgstr "次に押したキーを直接渡す"
 
-#: globalCommands.py:803
+#: globalCommands.py:804
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "次に押したキーはNVDAではなくWindowsに直接渡されます。"
 
-#: globalCommands.py:808
+#: globalCommands.py:809
 msgid "Currently running application is %s"
 msgstr "現在動作中のアプリケーションは%s"
 
-#: globalCommands.py:811
+#: globalCommands.py:812
 msgid " and currently loaded module is %s"
 msgstr "、読み込まれているモジュールは%s"
 
-#: globalCommands.py:813
+#: globalCommands.py:814
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
 msgstr "現在起動中のアプリケーションのファイル名を、読み込まれているappModuleの名前とともに読み上げます"
 
-#: globalCommands.py:817
+#: globalCommands.py:818
 msgid "Shows the NVDA general settings dialog"
 msgstr "NVDAの一般設定ダイアログの表示"
 
-#: globalCommands.py:821
+#: globalCommands.py:822
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "NVDAの出力先設定ダイアログの表示"
 
-#: globalCommands.py:825
+#: globalCommands.py:826
 msgid "Shows the NVDA voice settings dialog"
 msgstr "NVDAの音声設定ダイアログを表示"
 
-#: globalCommands.py:829
+#: globalCommands.py:830
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "NVDAのキーボード設定ダイアログを表示"
 
-#: globalCommands.py:833
+#: globalCommands.py:834
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "NVDAのマウス設定ダイアログを表示"
 
-#: globalCommands.py:837
+#: globalCommands.py:838
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "NVDAのオブジェクトの説明設定ダイアログを表示"
 
-#: globalCommands.py:841
+#: globalCommands.py:842
 msgid "Shows the NVDA virtual buffers settings dialog"
 msgstr "NVDAの仮想バッファー設定ダイアログを表示"
 
-#: globalCommands.py:845
+#: globalCommands.py:846
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "NVDAの書式設定ダイアログを表示"
 
-#: globalCommands.py:849
+#: globalCommands.py:850
 msgid "Saves the current NVDA configuration"
 msgstr "現在のNVDAの設定情報を保存"
 
-#: globalCommands.py:853
+#: globalCommands.py:854
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr "NVDAの設定情報を読み込み、現在の変更を上書き"
 
-#: globalCommands.py:863
+#: globalCommands.py:864
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "主に開発に使用されるNVDAのPythonコンソールを開きます"
 
-#: globalCommands.py:868
-#: gui\settingsDialogs.py:949
+#: globalCommands.py:869
+#: gui\settingsDialogs.py:953
 msgid "review"
 msgstr "レビュー"
 
-#: globalCommands.py:871
-#: gui\settingsDialogs.py:949
+#: globalCommands.py:872
+#: gui\settingsDialogs.py:953
 msgid "focus"
 msgstr "フォーカス"
 
-#: globalCommands.py:872
+#: globalCommands.py:873
 msgid "Braille tethered to %s"
 msgstr "点字は%sを表示"
 
-#: globalCommands.py:873
+#: globalCommands.py:874
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "点字のフォーカス位置とレビュー位置の表示切替"
 
-#: globalCommands.py:881
+#: globalCommands.py:882
 msgid "There is no text on the clipboard"
 msgstr "クリップボードにテキストがありません"
 
-#: globalCommands.py:886
+#: globalCommands.py:887
 msgid "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "クリップボードには大きなテキスト情報が含まれています。%s文字の長さです"
 
-#: globalCommands.py:887
+#: globalCommands.py:888
 msgid "Reports the text on the Windows clipboard"
 msgstr "ウインドウズクリップボード内のテキストの通知"
 
-#: globalCommands.py:891
+#: globalCommands.py:892
 msgid "Start marked"
 msgstr "開始位置をマーク"
 
-#: globalCommands.py:892
+#: globalCommands.py:893
 msgid "Marks the current position of the review cursor as the start of text to be copied"
 msgstr "レビューカーソルの現在位置を、コピーするテキストの始点としてマークします"
 
-#: globalCommands.py:896
+#: globalCommands.py:897
 msgid "No start marker set"
 msgstr "スタートマーカーがセットされていません"
 
-#: globalCommands.py:900
+#: globalCommands.py:901
 msgid "The start marker must reside within the same object"
 msgstr "スタートマーカーは同じオブジェクト内に属していなければなりません"
 
-#: globalCommands.py:905
+#: globalCommands.py:906
 msgid "Review selection copied to clipboard"
 msgstr "レビューカーソルの選択中項目をクリップボードへコピーしました"
 
-#: globalCommands.py:907
+#: globalCommands.py:908
 msgid "No text to copy"
 msgstr "コピーすべきテキストがありません"
 
-#: globalCommands.py:910
+#: globalCommands.py:911
 msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
 msgstr "直前に設定したスタートマーカーから、レビューカーソルの現在位置までのテキストを取得してクリップボードにコピーします"
 
-#: globalCommands.py:914
+#: globalCommands.py:915
 msgid "Scrolls the braille display back"
 msgstr "点字表示を前にスクロール"
 
-#: globalCommands.py:919
+#: globalCommands.py:920
 msgid "Scrolls the braille display forward"
 msgstr "点字表示を次にスクロール"
 
-#: globalCommands.py:924
+#: globalCommands.py:925
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "カーソルを移動する、またはこの点字セル上のオブジェクトを有効化する"
 
-#: globalCommands.py:929
+#: globalCommands.py:930
 msgid "Moves the braille display to the previous line"
 msgstr "点字表示を前の行に移動"
 
-#: globalCommands.py:934
+#: globalCommands.py:935
 msgid "Moves the braille display to the next line"
 msgstr "点字表示を次の行に移動"
 
-#: globalCommands.py:941
+#: globalCommands.py:942
 msgid "Plugins reloaded"
 msgstr "プラグインは再読み込みされました"
 
-#: globalCommands.py:942
+#: globalCommands.py:943
 msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
 msgstr "開発者にとって便利なappモジュール及びグローバルプラグインをNVDAを再起動しないで再読み込みする"
 
@@ -2234,7 +2234,7 @@ msgstr "設定情報を保存できませんでした - 読み取り専用ファ
 #: gui\__init__.py:159
 #: gui\__init__.py:169
 #: gui\logViewer.py:74
-#: gui\settingsDialogs.py:170
+#: gui\settingsDialogs.py:174
 msgid "Error"
 msgstr "エラー"
 
@@ -2259,7 +2259,7 @@ msgid "Are you sure you want to quit NVDA?"
 msgstr "本当にNVDAを終了しますか？"
 
 #: gui\__init__.py:187
-#: gui\__init__.py:345
+#: gui\__init__.py:346
 msgid "Exit NVDA"
 msgstr "NVDAの終了"
 
@@ -2273,7 +2273,7 @@ msgid "&General settings..."
 msgstr "一般設定(&G)..."
 
 #: gui\__init__.py:271
-#: gui\settingsDialogs.py:101
+#: gui\settingsDialogs.py:105
 msgid "General settings"
 msgstr "一般設定"
 
@@ -2387,7 +2387,7 @@ msgstr "スピーチビュアー (&S)"
 
 #: gui\__init__.py:309
 msgid "Python console"
-msgstr "Pythonコンソール"
+msgstr "Pythonコンソール (&P)"
 
 #: gui\__init__.py:311
 msgid "Reload plugins"
@@ -2395,7 +2395,7 @@ msgstr "プラグインの再読み込み (&L)"
 
 #: gui\__init__.py:313
 msgid "Tools"
-msgstr "ツール"
+msgstr "ツール (&T)"
 
 #: gui\__init__.py:317
 msgid "User guide"
@@ -2449,16 +2449,16 @@ msgstr "設定情報の保存(&S)"
 msgid "Write the current configuration to nvda.ini"
 msgstr "現在の設定情報をnvda.iniに書き込"
 
-#: gui\__init__.py:342
+#: gui\__init__.py:343
 msgid "Donate"
-msgstr "寄付"
+msgstr "寄付 (&D)"
 
-#: gui\__init__.py:345
+#: gui\__init__.py:346
 #: gui\logViewer.py:34
 msgid "E&xit"
 msgstr "終了(&X)"
 
-#: gui\__init__.py:396
+#: gui\__init__.py:397
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
@@ -2474,24 +2474,24 @@ msgstr ""
 "NVDA+Nキーを押すことで、いつでもNVDAメニューを表示させることができます。\n"
 "このメニューから、NVDAのカスタマイズを行ったり、ヘルプやその他の機能にアクセスすることができます。\n"
 
-#: gui\__init__.py:406
+#: gui\__init__.py:407
 msgid "Welcome to NVDA"
 msgstr "Welcome to NVDA"
 
-#: gui\__init__.py:410
+#: gui\__init__.py:411
 msgid "Options"
 msgstr "オプション"
 
-#: gui\__init__.py:411
-#: gui\settingsDialogs.py:462
+#: gui\__init__.py:412
+#: gui\settingsDialogs.py:466
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "CapsLockキーをNVDAの制御キーとして使用"
 
-#: gui\__init__.py:414
+#: gui\__init__.py:415
 msgid "Show this dialog when NVDA starts"
 msgstr "NVDA起動時にこのダイアログを表示する"
 
-#: gui\__init__.py:450
+#: gui\__init__.py:451
 msgid ""
 "Your configuration file contains errors. \n"
 "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
@@ -2499,7 +2499,7 @@ msgstr ""
 "設定ファイルにエラーが含まれています。\n"
 "OKボタンを押すとこれらのエラーを修復します。また、キャンセルボタンを押すことで、後から手動で設定ファイルを編集することもできます。エラーの詳細はログファイルで確認できます。\n"
 
-#: gui\__init__.py:455
+#: gui\__init__.py:456
 msgid "Configuration File Error"
 msgstr "設定ファイルエラー"
 
@@ -2529,483 +2529,483 @@ msgstr "ログ%s保存時にエラーが発生しました"
 msgid "NVDA"
 msgstr "NVDA"
 
-#: gui\settingsDialogs.py:103
+#: gui\settingsDialogs.py:107
 msgid "info"
 msgstr "情報"
 
-#: gui\settingsDialogs.py:104
+#: gui\settingsDialogs.py:108
 msgid "debug warning"
 msgstr "警告"
 
-#: gui\settingsDialogs.py:105
+#: gui\settingsDialogs.py:109
 msgid "input/output"
 msgstr "入出力"
 
-#: gui\settingsDialogs.py:106
+#: gui\settingsDialogs.py:110
 msgid "debug"
 msgstr "デバッグ"
 
-#: gui\settingsDialogs.py:111
+#: gui\settingsDialogs.py:115
 msgid "&Language (requires restart to fully take affect):"
 msgstr "言語(&L) (設定を有効にするには再起動が必要)"
 
-#: gui\settingsDialogs.py:115
+#: gui\settingsDialogs.py:119
 msgid "Language"
 msgstr "言語"
 
-#: gui\settingsDialogs.py:127
+#: gui\settingsDialogs.py:131
 msgid "&Save configuration on exit"
 msgstr "終了時に設定情報を保存する(&S)"
 
-#: gui\settingsDialogs.py:132
+#: gui\settingsDialogs.py:136
 msgid "&Warn before exiting NVDA"
 msgstr "NVDA終了前に警告する(&W)"
 
-#: gui\settingsDialogs.py:136
+#: gui\settingsDialogs.py:140
 msgid "L&ogging level:"
 msgstr "ログ記録レベル(&L)"
 
-#: gui\settingsDialogs.py:139
+#: gui\settingsDialogs.py:143
 msgid "Log level"
 msgstr "ログ記録レベル"
 
-#: gui\settingsDialogs.py:149
+#: gui\settingsDialogs.py:153
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "Windowsへのログオン後にNVDAを自動的に開始する (&A)"
 
-#: gui\settingsDialogs.py:154
+#: gui\settingsDialogs.py:158
 msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr "ログオン画面でNVDAを使用する（管理者権限が必要です）"
 
-#: gui\settingsDialogs.py:159
+#: gui\settingsDialogs.py:163
 msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
 msgstr "現在保存されている情報をログオンまたはその他のセキュアスクリーンで使用する（管理者権限が必要です）"
 
-#: gui\settingsDialogs.py:170
+#: gui\settingsDialogs.py:174
 msgid "Error copying NVDA user settings"
 msgstr "NVDAのユーザー設定をコピー中にエラーが発生しました"
 
-#: gui\settingsDialogs.py:172
+#: gui\settingsDialogs.py:176
 msgid "Success"
 msgstr "完了"
 
-#: gui\settingsDialogs.py:172
+#: gui\settingsDialogs.py:176
 msgid "Successfully copied NVDA user settings"
 msgstr "NVDAのユーザー設定は正しくコピーされました"
 
-#: gui\settingsDialogs.py:181
+#: gui\settingsDialogs.py:185
 msgid "Error in %s language file"
 msgstr "言語ファイル%sにエラーがあります"
 
-#: gui\settingsDialogs.py:181
+#: gui\settingsDialogs.py:185
 msgid "Language Error"
 msgstr "言語エラー"
 
-#: gui\settingsDialogs.py:197
+#: gui\settingsDialogs.py:201
 msgid "Insufficient Privileges"
 msgstr "権限が十分ではありません"
 
-#: gui\settingsDialogs.py:197
+#: gui\settingsDialogs.py:201
 msgid "This change requires administrator privileges."
 msgstr "この変更には管理者権限が必要です。"
 
-#: gui\settingsDialogs.py:199
+#: gui\settingsDialogs.py:203
 msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
 msgstr "新しい言語設定での読み上げを有効にするには、設定情報を保存しNVDAを再起動する必要があります。エンターキーを押して設定情報を保存しNVDAを再起動するか、キャンセルして手動で設定を保存しNVDAを再起動してください。"
 
-#: gui\settingsDialogs.py:199
+#: gui\settingsDialogs.py:203
 msgid "Language Configuration Change"
 msgstr "言語設定の変更"
 
-#: gui\settingsDialogs.py:207
+#: gui\settingsDialogs.py:211
 msgid "Synthesizer"
 msgstr "出力先"
 
-#: gui\settingsDialogs.py:211
+#: gui\settingsDialogs.py:215
 msgid "&Synthesizer:"
 msgstr "出力先(&S)"
 
-#: gui\settingsDialogs.py:226
+#: gui\settingsDialogs.py:230
 msgid "Output &device:"
 msgstr "出力デバイス(&D)"
 
-#: gui\settingsDialogs.py:246
+#: gui\settingsDialogs.py:250
 msgid "Could not load the %s synthesizer."
 msgstr "%s出力ドライバーを読み込めません。"
 
-#: gui\settingsDialogs.py:246
+#: gui\settingsDialogs.py:250
 msgid "Synthesizer Error"
 msgstr "出力ドライバーエラー"
 
-#: gui\settingsDialogs.py:309
+#: gui\settingsDialogs.py:313
 msgid "Voice settings"
 msgstr "音声設定"
 
-#: gui\settingsDialogs.py:365
+#: gui\settingsDialogs.py:369
 msgid "&Speak all punctuation"
 msgstr "すべての記号を読み上げ(&S)"
 
-#: gui\settingsDialogs.py:368
+#: gui\settingsDialogs.py:372
 msgid "Raise pitch for capitals"
 msgstr "大文字のピッチを上げる"
 
-#: gui\settingsDialogs.py:371
+#: gui\settingsDialogs.py:375
 msgid "Say &cap before capitals"
 msgstr "大文字の前に大文字と読む(&C)"
 
-#: gui\settingsDialogs.py:374
+#: gui\settingsDialogs.py:378
 msgid "&Beep for capitals"
 msgstr "大文字にビープ音を付ける(&B)"
 
-#: gui\settingsDialogs.py:377
+#: gui\settingsDialogs.py:381
 msgid "Use &spelling functionality if supported"
 msgstr "サポートされている場合、スペル読み機能を使用する(&S)"
 
-#: gui\settingsDialogs.py:445
+#: gui\settingsDialogs.py:449
 msgid "Keyboard Settings"
 msgstr "キーボード設定"
 
-#: gui\settingsDialogs.py:449
+#: gui\settingsDialogs.py:453
 msgid "&Keyboard layout:"
 msgstr "キーボードレイアウト(&K)"
 
-#: gui\settingsDialogs.py:454
+#: gui\settingsDialogs.py:458
 msgid "Keyboard layout"
 msgstr "キーボードレイアウト"
 
-#: gui\settingsDialogs.py:465
+#: gui\settingsDialogs.py:469
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "テンキーのInsertキーをNVDAの制御キーとして使用"
 
-#: gui\settingsDialogs.py:468
+#: gui\settingsDialogs.py:472
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "拡張InsertキーをNVDAの制御キーとして使用"
 
-#: gui\settingsDialogs.py:471
+#: gui\settingsDialogs.py:475
 msgid "Speak typed &characters"
 msgstr "入力文字の読み上げ(&C)"
 
-#: gui\settingsDialogs.py:474
+#: gui\settingsDialogs.py:478
 msgid "Speak typed &words"
 msgstr "入力単語の読み上げ(&W)"
 
-#: gui\settingsDialogs.py:477
+#: gui\settingsDialogs.py:481
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "CapsLockがオンのとき、小文字が入力されたらビープ音を鳴らす"
 
-#: gui\settingsDialogs.py:480
+#: gui\settingsDialogs.py:484
 msgid "Speak command &keys"
 msgstr "コマンドキーの読み上げ(&K)"
 
-#: gui\settingsDialogs.py:500
+#: gui\settingsDialogs.py:504
 msgid "Mouse settings"
 msgstr "マウス設定"
 
-#: gui\settingsDialogs.py:503
+#: gui\settingsDialogs.py:507
 msgid "Report mouse &shape changes"
 msgstr "マウスポインター形状の変化を通知(&S)"
 
-#: gui\settingsDialogs.py:506
+#: gui\settingsDialogs.py:510
 msgid "Enable mouse &tracking"
 msgstr "マウスの追跡を有効にする(&T)"
 
-#: gui\settingsDialogs.py:510
+#: gui\settingsDialogs.py:514
 msgid "Text &unit resolution:"
 msgstr "テキストの読み上げ範囲(&U)"
 
-#: gui\settingsDialogs.py:514
+#: gui\settingsDialogs.py:518
 msgid "text reporting unit"
 msgstr "テキストの読み上げ範囲"
 
-#: gui\settingsDialogs.py:522
+#: gui\settingsDialogs.py:526
 msgid "Report &role when mouse enters object"
 msgstr "マウスが重なったオブジェクトの通知(&R)"
 
-#: gui\settingsDialogs.py:525
+#: gui\settingsDialogs.py:529
 msgid "play audio coordinates when mouse moves"
 msgstr "マウス移動時ビープ音で通知"
 
-#: gui\settingsDialogs.py:528
+#: gui\settingsDialogs.py:532
 msgid "brightness controls audio coordinates volume"
 msgstr "マウス位置の明るさをビープ音の音量の変化で通知"
 
-#: gui\settingsDialogs.py:546
+#: gui\settingsDialogs.py:550
 msgid "Review cursor settings"
 msgstr "レビューカーソル設定"
 
-#: gui\settingsDialogs.py:549
+#: gui\settingsDialogs.py:553
 msgid "Follow &keyboard focus"
 msgstr "キーボードを追跡(&K)"
 
-#: gui\settingsDialogs.py:552
+#: gui\settingsDialogs.py:556
 msgid "Follow System &Caret"
 msgstr "システムキャレットを追跡(&C)"
 
-#: gui\settingsDialogs.py:555
+#: gui\settingsDialogs.py:559
 msgid "Follow &mouse cursor"
 msgstr "マウスカーソルを追跡(&M)"
 
-#: gui\settingsDialogs.py:558
+#: gui\settingsDialogs.py:562
 msgid "Simple review mode"
 msgstr "簡易レビューモード"
 
-#: gui\settingsDialogs.py:573
+#: gui\settingsDialogs.py:577
 msgid "Object presentation"
 msgstr "オブジェクト表示"
 
-#: gui\settingsDialogs.py:576
+#: gui\settingsDialogs.py:580
 msgid "Speak"
 msgstr "読み上げ"
 
-#: gui\settingsDialogs.py:577
+#: gui\settingsDialogs.py:581
 msgid "Beep"
 msgstr "ビープ"
 
-#: gui\settingsDialogs.py:578
+#: gui\settingsDialogs.py:582
 msgid "Speak and beep"
 msgstr "ビープ音と読み上げ"
 
-#: gui\settingsDialogs.py:582
+#: gui\settingsDialogs.py:586
 msgid "Report &tooltips"
 msgstr "ツールチップ情報の通知(&T)"
 
-#: gui\settingsDialogs.py:585
+#: gui\settingsDialogs.py:589
 msgid "Report &help balloons"
 msgstr "バルーン情報の通知(&H)"
 
-#: gui\settingsDialogs.py:588
+#: gui\settingsDialogs.py:592
 msgid "Report object shortcut &keys"
 msgstr "オブジェクトのショートカットキーの通知(&K)"
 
-#: gui\settingsDialogs.py:591
+#: gui\settingsDialogs.py:595
 msgid "Report object &position information"
 msgstr "オブジェクト位置情報の通知(&P)"
 
-#: gui\settingsDialogs.py:594
+#: gui\settingsDialogs.py:598
 msgid "Guess object &position information when unavailable"
 msgstr "不可能な場合オブジェクトの位置を予想する(&P)"
 
-#: gui\settingsDialogs.py:597
+#: gui\settingsDialogs.py:601
 msgid "Report object &descriptions"
 msgstr "オブジェクトの説明の通知(&D)"
 
-#: gui\settingsDialogs.py:601
+#: gui\settingsDialogs.py:605
 msgid "Progress &bar output:"
 msgstr "プログレスバーアウトプット(&B)"
 
-#: gui\settingsDialogs.py:604
+#: gui\settingsDialogs.py:608
 msgid "Progress bar output"
 msgstr "プログレスバーアウトプット"
 
-#: gui\settingsDialogs.py:613
+#: gui\settingsDialogs.py:617
 msgid "Report background progress bars"
 msgstr "バックグラウンドのプログレスバーの更新を通知"
 
-#: gui\settingsDialogs.py:616
+#: gui\settingsDialogs.py:620
 msgid "Report dynamic &content changes"
 msgstr "動的コンテンツの変化を通知(&C)"
 
-#: gui\settingsDialogs.py:636
+#: gui\settingsDialogs.py:640
 msgid "virtual buffers"
 msgstr "仮想バッファー"
 
-#: gui\settingsDialogs.py:639
+#: gui\settingsDialogs.py:643
 msgid "&Maximum number of characters on one line"
 msgstr "1行の最大文字数(&M)"
 
-#: gui\settingsDialogs.py:644
+#: gui\settingsDialogs.py:648
 msgid "&Number of lines per page"
 msgstr "1ページの行数(&N)"
 
-#: gui\settingsDialogs.py:649
+#: gui\settingsDialogs.py:653
 msgid "Use &screen layout (when supported)"
 msgstr "（サポートされている場合）画面レイアウトを使用(&S)"
 
-#: gui\settingsDialogs.py:652
+#: gui\settingsDialogs.py:656
 msgid "Report l&ayout tables"
 msgstr "レイアウト目的のテーブルを通知(&A)"
 
-#: gui\settingsDialogs.py:656
+#: gui\settingsDialogs.py:660
 msgid "Automatic focus mode for focus changes"
 msgstr "フォーカスの変化を追跡する自動フォーカスモード"
 
-#: gui\settingsDialogs.py:659
+#: gui\settingsDialogs.py:663
 msgid "Automatic focus mode for caret movement"
 msgstr "キャレットの移動を追跡する自動フォーカスモード"
 
-#: gui\settingsDialogs.py:662
+#: gui\settingsDialogs.py:666
 msgid "Audio indication of focus and browse modes"
 msgstr "音によるフォーカスモードとブラウズモード切替の通知"
 
-#: gui\settingsDialogs.py:690
+#: gui\settingsDialogs.py:694
 msgid "Document formatting"
 msgstr "書式情報"
 
-#: gui\settingsDialogs.py:693
+#: gui\settingsDialogs.py:697
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "カーソル移動後に書式の変化を通知（読み上げ遅延の可能性があります）"
 
-#: gui\settingsDialogs.py:696
+#: gui\settingsDialogs.py:700
 msgid "Report font &name"
 msgstr "フォント名の通知(&N)"
 
-#: gui\settingsDialogs.py:699
+#: gui\settingsDialogs.py:703
 msgid "Report font &size"
 msgstr "フォントサイズの通知(&S)"
 
-#: gui\settingsDialogs.py:702
+#: gui\settingsDialogs.py:706
 msgid "Report font attri&butes"
 msgstr "フォント属性の通知(&B)"
 
-#: gui\settingsDialogs.py:705
+#: gui\settingsDialogs.py:709
 msgid "Report &alignment"
 msgstr "配置の通知(&A)"
 
-#: gui\settingsDialogs.py:708
+#: gui\settingsDialogs.py:712
 msgid "Report &colors"
 msgstr "色を通知(&C)"
 
-#: gui\settingsDialogs.py:711
+#: gui\settingsDialogs.py:715
 msgid "Report st&yle"
 msgstr "書式の通知(&Y)"
 
-#: gui\settingsDialogs.py:714
+#: gui\settingsDialogs.py:718
 msgid "Report spelling errors"
 msgstr "スペルエラーを通知"
 
-#: gui\settingsDialogs.py:717
+#: gui\settingsDialogs.py:721
 msgid "Report &pages"
 msgstr "ページ番号の通知(&P)"
 
-#: gui\settingsDialogs.py:720
+#: gui\settingsDialogs.py:724
 msgid "Report &line numbers"
 msgstr "行番号の通知(&L)"
 
-#: gui\settingsDialogs.py:723
+#: gui\settingsDialogs.py:727
 msgid "Report &tables"
 msgstr "テーブルの通知(&T)"
 
-#: gui\settingsDialogs.py:726
+#: gui\settingsDialogs.py:730
 msgid "Report table row/column h&eaders"
 msgstr "テーブルの行/列ヘッダーを通知(&E)"
 
-#: gui\settingsDialogs.py:729
+#: gui\settingsDialogs.py:733
 msgid "Report &links"
 msgstr "リンクの通知(&L)"
 
-#: gui\settingsDialogs.py:732
+#: gui\settingsDialogs.py:736
 msgid "Report &headings"
 msgstr "見出しの通知(&H)"
 
-#: gui\settingsDialogs.py:735
+#: gui\settingsDialogs.py:739
 msgid "Report l&ists"
 msgstr "リストの通知(&I)"
 
-#: gui\settingsDialogs.py:738
+#: gui\settingsDialogs.py:742
 msgid "Report block &quotes"
 msgstr "引用の通知(&Q)"
 
-#: gui\settingsDialogs.py:741
+#: gui\settingsDialogs.py:745
 msgid "Report lan&dmarks"
 msgstr "ランドマークの通知(&D)"
 
-#: gui\settingsDialogs.py:770
+#: gui\settingsDialogs.py:774
 msgid "Edit dictionary entry"
 msgstr "辞書項目の編集"
 
-#: gui\settingsDialogs.py:774
+#: gui\settingsDialogs.py:778
 msgid "&Pattern"
 msgstr "パターン(&P)"
 
-#: gui\settingsDialogs.py:777
+#: gui\settingsDialogs.py:781
 msgid "&Replacement"
 msgstr "置換(&R)"
 
-#: gui\settingsDialogs.py:780
+#: gui\settingsDialogs.py:784
 msgid "&Comment"
 msgstr "コメント(&C)"
 
-#: gui\settingsDialogs.py:783
+#: gui\settingsDialogs.py:787
 msgid "Case &sensitive"
 msgstr "大文字小文字を区別(&S)"
 
-#: gui\settingsDialogs.py:785
+#: gui\settingsDialogs.py:789
 msgid "Regular &expression"
 msgstr "正規表現(&E)"
 
-#: gui\settingsDialogs.py:807
+#: gui\settingsDialogs.py:811
 msgid "&Dictionary entries"
 msgstr "辞書項目(&D)"
 
-#: gui\settingsDialogs.py:810
+#: gui\settingsDialogs.py:814
 msgid "Comment"
 msgstr "コメント"
 
-#: gui\settingsDialogs.py:811
+#: gui\settingsDialogs.py:815
 msgid "Pattern"
 msgstr "パターン"
 
-#: gui\settingsDialogs.py:812
+#: gui\settingsDialogs.py:816
 msgid "Replacement"
 msgstr "置換"
 
-#: gui\settingsDialogs.py:813
+#: gui\settingsDialogs.py:817
 msgid "case"
 msgstr "大文字小文字"
 
-#: gui\settingsDialogs.py:814
+#: gui\settingsDialogs.py:818
 msgid "Regexp"
 msgstr "正規表現"
 
-#: gui\settingsDialogs.py:823
+#: gui\settingsDialogs.py:827
 msgid "&Add"
 msgstr "追加(&A)"
 
-#: gui\settingsDialogs.py:826
+#: gui\settingsDialogs.py:830
 msgid "&edit"
 msgstr "編集(&E)"
 
-#: gui\settingsDialogs.py:829
+#: gui\settingsDialogs.py:833
 msgid "&Remove"
 msgstr "削除(&R)"
 
-#: gui\settingsDialogs.py:852
+#: gui\settingsDialogs.py:856
 msgid "Add Dictionary Entry"
 msgstr "辞書項目の追加"
 
-#: gui\settingsDialogs.py:897
+#: gui\settingsDialogs.py:901
 msgid "Braille Settings"
 msgstr "点字設定"
 
-#: gui\settingsDialogs.py:901
+#: gui\settingsDialogs.py:905
 msgid "Braille &display:"
 msgstr "点字ディスプレイ(&D)"
 
-#: gui\settingsDialogs.py:915
+#: gui\settingsDialogs.py:919
 msgid "Translation &table:"
 msgstr "変換テーブル(&T)"
 
-#: gui\settingsDialogs.py:927
+#: gui\settingsDialogs.py:931
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "カーソル位置の単語をコンピューター点字に展開(&X)"
 
-#: gui\settingsDialogs.py:932
+#: gui\settingsDialogs.py:936
 msgid "Cursor blink rate (ms)"
 msgstr "カーソル点滅速度(ミリ秒)"
 
-#: gui\settingsDialogs.py:940
+#: gui\settingsDialogs.py:944
 msgid "Message timeout (sec)"
 msgstr "メッセージの表示終了待ち時間(秒)"
 
-#: gui\settingsDialogs.py:948
+#: gui\settingsDialogs.py:952
 msgid "Braille tethered to:"
 msgstr "点字表示切替:"
 
-#: gui\settingsDialogs.py:967
+#: gui\settingsDialogs.py:971
 msgid "Braille Display Error"
 msgstr "点字ディスプレイエラー"
 
-#: gui\settingsDialogs.py:967
+#: gui\settingsDialogs.py:971
 msgid "Could not load the %s display."
 msgstr "%s点字ディスプレイを読み込めません。"
 
