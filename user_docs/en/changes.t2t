@@ -6,11 +6,12 @@
 = 2011.2 =
 
 == New Features ==
-- It is now possible to hear the description for any given character by pressing the review current character script twice in quick succession.  For English characters this is the standard English phonetic alphabet. For languages such as traditional Chinese, example phraises using the given symbol are provided.
+- It is now possible to hear the description for any given character by pressing the review current character script twice in quick succession.  For English characters this is the standard English phonetic alphabet. For languages such as traditional Chinese, example phraises using the given symbol are provided. Also pressing review current word or review current line three times will spell the word/line using these descriptions.
 
 
 == Changes ==
 - To move the caret to the review cursor, now press the move focus to navigator object script (desktop NVDA+shift+numpadMinus, laptop NVDA+shift+backspace) twice in quick succession. This frees up more keys on the keyboard. (#837)
+- To hear the  decimal and hexadecimal representation of the character under the review cursor, now press review current character three times rather than twice, as twice now speaks the character description.
 
 
 == Bug Fixes ==
