@@ -6,6 +6,8 @@
 = 2011.2 =
 
 == New Features ==
+- It is now possible to hear the description for any given character by pressing the review current character script twice in quick succession.  For English characters this is the standard English phonetic alphabet. For languages such as traditional Chinese, example phraises using the given symbol are provided.
+
 
 == Changes ==
 - To move the caret to the review cursor, now press the move focus to navigator object script (desktop NVDA+shift+numpadMinus, laptop NVDA+shift+backspace) twice in quick succession. This frees up more keys on the keyboard. (#837)
@@ -18,6 +20,7 @@
 
 == Changes for Developers ==
 - Developer documentation can now be generated using SCons. See readme.txt at the root of the source distribution for details, including associated dependencies.
+- Translators can now provide descriptions for characters in a characterDescriptions.dic file placed inside their locale directory. The file should be utf8, and contain lines made up of the character, followed by a tab, then one or more descriptions separated by tabs.
 
 
 = 2011.1.1 =
