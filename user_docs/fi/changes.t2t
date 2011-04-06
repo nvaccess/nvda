@@ -3,6 +3,22 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2011.2 =
+
+== Uudet ominaisuudet ==
+- Nyt on mahdollista kuulla minkä tahansa merkin kuvaus painamalla kaksi kertaa nopeasti peräkkäin Lue nykyinen merkki -komentoa.  Englanninkielessä käytettäville merkeille kuvaukset ovat standardeja foneettisia aakkosia. Sellaisille kielille kuin perinteinen kiina on kyseessä olevan symbolin sisältäviä esimerkkilauseita. Lisäksi Lue nykyinen sana- tai Lue nykyinen sana -komennon kolmesti painaminen tavaa sanan/rivin näitä kuvauksia käyttäen.
+
+
+== Muutokset ==
+- Järjestelmäkohdistin siirretään nyt tarkastelukohdistimen kohdalle painamalla Siirrä kohdistus navigointiobjektiin -komentoa (pöytäkoneissa NVDA+Shift+numeroryhmän miinus, kannettavissa NVDA+Shift+askelpalautin) kaksi kertaa nopeasti peräkkäin. Tämä vapauttaa lisää näppäimiä muuhun käyttöön. (#837)
+- Tarkastelukohdistimen alla olevan merkin desimaali- ja heksadesimaaliarvot luetaan nyt painamalla Lue nykyinen merkki -komentoa kolme kertaa kahden sijasta, koska kahdesti painaminen lukee merkin kuvauksen.
+
+
+== Korjatut viat ==
+- Yhdistelmäruutujen avaaminen näennäispuskurissa ei vaihda enää automaattisesti takaisin selaustilaan, kun kohdistustila on pakotettu käyttöön näppäinyhdistelmällä NVDA+välilyönti. (#1386)
+- NVDA näyttää nyt Gecko- ja MSHTML-asiakirjoissa (eli Firefoxissa ja Internet Explorerissa) oikein samalla rivillä tietyn tekstin, joka näytettiin aiemmin eri riveillä. (#1378)
+
+
 = 2011.1.1 =
 
 == Korjatut viat ==

@@ -235,7 +235,7 @@ Seuraavia näppäimiä käytetään objekti kerrallaan liikkumiseen:
 | Siirrä ensimmäiseen alemman tason objektiin | NVDA+numeroryhmän 2 | NVDA+Shift+pilkku | Siirtää ensimmäiseen nykyisessä navigointiobjektissa olevaan alemman tason objektiin |
 | Siirrä kohdistukseen | NVDA+numeroryhmän miinus | NVDA+askelpalautin | Siirtää objektiin, jossa järjestelmän kohdistus on tällä hetkellä, ja sijoittaa tarkastelukohdistimen järjestelmäkohdistimen kohdalle, jos se on näkyvissä |
 | Aktivoi nykyinen navigointiobjekti | NVDA+numeroryhmän Enter | NVDA+Enter | Aktivoi nykyisen navigointiobjektin (vastaa hiiren napsauttamista tai välilyönnin painamista, kun järjestelmän kohdistus on siinä) |
-| Siirrä kohdistus navigointiobjektiin | NVDA+Shift+numeroryhmän miinus | NVDA+Shift+askelpalautin | Siirtää järjestelmän kohdistuksen nykyiseen navigointiobjektiin, mikäli mahdollista |
+| Siirrä järjestelmän kohdistus tai kohdistin tarkastelukohtaan | NVDA+Shift+numeroryhmän miinus | NVDA+Shift+askelpalautin | Siirtää kerran painettaessa järjestelmän kohdistuksen nykyiseen navigointiobjektiin, kahdesti painettaessa siirtää järjestelmäkohdistimen  tarkastelukohdistimen kohdalle |
 | Lue navigointiobjektin mitat | NVDA+numeroryhmän delete | NVDA+delete | Kertoo prosentteina nykyisen navigointiobjektin mitat ruudulla (mukaan lukien etäisyys ruudun vasemmasta ja yläreunasta, sekä sen leveys ja korkeus) |
 %kc:endInclude
 
@@ -252,15 +252,15 @@ tekstin lukemiseen voidaan käyttää seuraavia näppäinkomentoja:
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 | Siirrä ylimmälle riville | Shift+numeroryhmän 7 | NVDA+7 | Siirtää tarkastelukohdistimen tekstin ylimmälle riville |
 | Siirrä edelliselle riville | Numeroryhmän 7 | NVDA+u | Siirtää tarkastelukohdistimen tekstin edelliselle riville |
-| Lue nykyinen rivi | Numeroryhmän 8 | NVDA+i | Lukee nykyisen rivin, jolla tarkastelukohdistin on tekstissä. Kahdesti painettaessa rivi tavataan. |
+| Lue nykyinen rivi | Numeroryhmän 8 | NVDA+i | Lukee nykyisen rivin, jolla tarkastelukohdistin on tekstissä. Kahdesti painettaessa rivi tavataan ja kolmesti painettaessa se tavataan merkkikuvauksia käyttäen. |
 | Siirrä seuraavalle riville | Numeroryhmän 9 | NVDA+o | Siirtää tarkastelukohdistimen tekstin seuraavalle riville |
 | Siirrä alimmalle riville | Shift+numeroryhmän 9 | NVDA+9 | Siirtää tarkastelukohdistimen tekstin alimmalle riville |
 | Siirrä edelliseen sanaan | Numeroryhmän 4 | NVDA+j | Siirtää tarkastelukohdistimen tekstissä edellisen sanan kohdalle |
-| Lue nykyinen sana | Numeroryhmän 5 | NVDA+k | Lukee nykyisen sanan, jonka kohdalla tarkastelukohdistin on tekstissä. Kahdesti painettaessa sana tavataan. |
+| Lue nykyinen sana | Numeroryhmän 5 | NVDA+k | Lukee nykyisen sanan, jonka kohdalla tarkastelukohdistin on tekstissä. Kahdesti painettaessa sana tavataan ja kolmesti painettaessa se tavataan merkkikuvauksia käyttäen. |
 | Siirrä seuraavaan sanaan | Numeroryhmän 6 | NVDA+l | Siirtää tarkastelukohdistimen tekstissä seuraavan sanan kohdalle |
 | Siirrä rivin alkuun | Shift+numeroryhmän 1 | NVDA+Shift+u | Siirtää tarkastelukohdistimen tekstissä nykyisen rivin alkuun |
 | Siirrä edelliseen merkkiin | Numeroryhmän 1 | NVDA+m | Siirtää tarkastelukohdistimen tekstissä nykyisen rivin seuraavan merkin kohdalle |
-| Lue nykyinen merkki | Numeroryhmän 2 | NVDA+pilkku | Lukee nykyisen merkin riviltä, jonka kohdalla tarkastelukohdistin on tekstissä. Kahdesti painettaessa luetaan merkin numeerinen arvo desimaaleina ja heksadesimaaleina. |
+| Lue nykyinen merkki | Numeroryhmän 2 | NVDA+pilkku | Lukee nykyisen merkin riviltä, jonka kohdalla tarkastelukohdistin on tekstissä. Kahdesti painettaessa luetaan merkin kuvaus tai esimerkki sen käytöstä. Kolmesti painettaessa luetaan merkin numeerinen arvo desimaaleina ja heksadesimaaleina. |
 | Siirrä seuraavaan merkkiin | Numeroryhmän 3 | NVDA+piste | Siirtää tarkastelukohdistimen tekstissä nykyisen rivin seuraavan merkin kohdalle |
 | Siirrä rivin loppuun | Shift+numeroryhmän 3 | NVDA+Shift+o | Siirtää tarkastelukohdistimen tekstissä nykyisen rivin loppuun |
 | Lue kaikki | Numeroryhmän plus | NVDA+Shift+alanuoli | Lukee tarkastelukohdistimen nykyisestä kohdasta lähtien siirtäen samalla sitä |
@@ -1001,7 +1001,9 @@ Jokaisessa osiossa on määrittelyt tiettyyn NVDA:n Python-moduulissa ja luokass
 - Osion nimi koostuu Python-moduulista ja -luokasta, jotka erotetaan toisistaan pisteellä.
 - Kunkin merkinnän avain on skriptin nimi, jonka syötekomennot halutaan määrittää.
 Skripteistä on mahdollista poistaa niille määritellyt syötekomennot käyttämällä erikoisskriptiä None.
+Kukin merkinnän avain, None mukaan lukien, voi olla samassa osiossa vain kerran.
 - Merkinnän arvo koostuu pilkulla erotetuista komentotunnisteista, jotka edustavat määriteltäviä syötekomentoja.
+Pilkkuun päättyvät komentotunnisteet on laitettava lainaus- (") tai heittomerkkien (') sisään.
 -
 
 Komentotunnisteet koostuvat kaksikirjaimisista laitekoodeista (näppäimistöllä kb ja pistenäytöllä br), valinnaisesta alilaitteesta tai aaltosuluissa olevasta näppäimistöasettelusta, kaksoispisteestä sekä yhdestä tai useammasta plus-merkillä erotetusta näppäimen nimestä.
