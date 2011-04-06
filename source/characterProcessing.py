@@ -93,7 +93,21 @@ def getCharacterDescription(locale,character):
 	@return:  the found description for the given character
 	@rtype: string
 	"""
-	l=_charDescLocaleDataMap.fetchLocaleData(locale)
+	try:
+		l=_charDescLocaleDataMap.fetchLocaleData(locale)
+	except LookupError:
+		if not locale.startswith('en'):
+			return getCharacterDescription('en',character)
+		raise LookupError("en")
 	desc=l.getCharacterDescription(character)
+	if not desc:
+		if not locale.startswith('en'):
+			desc=getCharacterDescription('en',character)
+		else:
+			import unicodedata
+			try:
+				desc=unicodedata.name(character)
+			except ValueError:
+				return None
 	return desc
  
