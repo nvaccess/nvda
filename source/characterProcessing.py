@@ -100,14 +100,7 @@ def getCharacterDescription(locale,character):
 			return getCharacterDescription('en',character)
 		raise LookupError("en")
 	desc=l.getCharacterDescription(character)
-	if not desc:
-		if not locale.startswith('en'):
-			desc=getCharacterDescription('en',character)
-		else:
-			import unicodedata
-			try:
-				desc=unicodedata.name(character)
-			except ValueError:
-				return None
+	if not desc and not locale.startswith('en'):
+		desc=getCharacterDescription('en',character)
 	return desc
  
