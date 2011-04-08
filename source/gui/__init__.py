@@ -338,9 +338,10 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			item = self.menu.Append(wx.ID_SAVE, _("&Save configuration"), _("Write the current configuration to nvda.ini"))
 			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
-		self.menu.AppendSeparator()
-		item = self.menu.Append(wx.ID_ANY, _("Donate"))
-		self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvaccess.org/wiki/Donate"), item)
+		if not globalVars.appArgs.secure:
+			self.menu.AppendSeparator()
+			item = self.menu.Append(wx.ID_ANY, _("Donate"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvaccess.org/wiki/Donate"), item)
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)

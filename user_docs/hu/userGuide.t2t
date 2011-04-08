@@ -50,17 +50,18 @@ Néhány billentyűparancs a teljesség igénye nélkül:
 
 Az NVDA egy beszédszintetizátor, vagy braille kijelző segítségével hozzáférést bisztosít a Windows operációs rendszerhez, valamint számos egyéb alkalmazáshoz vakok és gyengénlátók számára.
 Főbb jellemzői:
-- Telepítés nélküli futtatás egy USB hordozható eszköz használatával
-- Webböngészés a Mozilla Firefox, Google Chrome, vagy a Microsoft Internet Explorer programokkal
-- Könnyen használható, beszédtámogatást nyújtó telepítő
-- Email-ek használata a Mozilla Thunderbird, Outlook Express, Windows Mail, és Windows live mail programokkal
-- A Microsoft Word és Excel támogatása
-- A vakbarát Java alkalmazások támogatása
-- Az Adobe Reader program támogatása
-- Az IBM Lotus Symphony támogatása
-- A Windows Parancssor és konzolos alkalmazások támogatása
+- Népszerű alkalmazások támogatása (ide tartoznak a webböngészők, az e-mail kliensek, különböző internetes chat programok, és az irodai szoftverek)
+- Beépített beszédszintetizátor, ami több mint 20 nyelvet támogat
+- A szöveg formázásának bemondása ahol elérhető, úgy mint szöveg mérete és betűtipusa, stílus és helyesírási hibák
 - Az egérmutatónál lévő szöveg automatikus bemondása és választható hangjelzés az egér pozíciójának megállapításához
 - A frissíthető braille kijelzők támogatása
+- Telepítés nélküli futtatás egy USB hordozható eszköz használatával
+- Könnyen használható, beszédtámogatást nyújtó telepítő
+- A felület többnyelvű támogatása
+- A Windows 32 és 64 bites verzióinak támogatása
+- A Windows bejelentkező és biztonsági képernyőinek támogatása
+- Általános kisegítő lehetőséget bisztosító felületek támogatása, úgy mint Microsoft Active Accessibility, Java Access Bridge, IAccessible2 és UI Automation
+- A Windows Parancssor és konzolos alkalmazások támogatása
 -
 
 ++ Honosítás ++
@@ -147,10 +148,10 @@ A legtöbb NVDA specifikus billentyűparancshoz szükség van az NVDA billentyű
 
 Alapértelmezettként mind a numerikus Insert, mind pedig a normál Insert billentyű használható NVDA billentyűként. Van lehetőség azonban a capslock billentyű beállítására is NVDA billentyűként (LD feljebb).
 
-+++ A billentyűzet súgó +++
-Rengeteg billentyűparancsról említést teszünk ebben a felhasználói útmutatóban, de a billentyűparancsok legegyszerűbb megismerése a billentyűzet súgó bekapcsolásával érhető el.
++++ A bevitel súgó +++
+Rengeteg billentyűparancsról említést teszünk ebben a felhasználói útmutatóban, de a billentyűparancsok legegyszerűbb megismerése a bevitel súgó bekapcsolásával érhető el.
 
-A billentyűzet súgó bekapcsolásához nyomja meg az NVDA+1 billentyűket. Kikapcsolásához használja ugyanezt a billentyűkombinációt. A billentyűzet súgóban - ha funkcióval van ellátva  bármely billentyű, akkor megnyomása esetén arról rövid tájékoztatást kaphat. A billentyűk nem fognak a megszokott módon működni, lehetővé téve a billentyűk minnél jobb megismerését.
+A bevitel súgó bekapcsolásához nyomja meg az NVDA+1 billentyűket. Kikapcsolásához használja ugyanezt a billentyűkombinációt. A bevitel súgóban - ha funkcióval van ellátva  bármely billentyű, akkor megnyomása esetén arról rövid tájékoztatást kaphat. A billentyűk nem fognak a megszokott módon működni, lehetővé téve a billentyűk minnél jobb megismerését.
 
 +++ Billentyűzet kiosztás beállítása +++
 
@@ -175,9 +176,19 @@ Az NVDA menü a rendszertálcáról is elérhető. Kattintson a jobb egérgombba
 | beszéd leállítása | control | a beszéd leállítása |
 | A beszéd megállítása | Shift | Az első lenyomáskor a beszéd abbamarad, de a gomb újbóli lenyomása után a beszéd a megállítás helyétől folytatódik. Ez csak azokkal a beszédszintetizátorokkal működik, amelyek támogatják ezt a funkciót. |
 | NVDA Menü | NVDA+n | Felugrik az NVDA menüje, ahonnan elérheti a beállításokat, a súgót, stb. |
-| A billentyűzet súgó be-ki kapcsolása | NVDA+1 | Ha a billentyűzet súgó be van kapcsolva, és ha funkcióval van ellátva  bármely billentyű, akkor megnyomása esetén arról rövid tájékoztatást kaphat. |
+| Váltás a beszédmódok között | NVDA+s | Vált a beszédmódok (beszéd, hangjelzés, néma) között. |
+| A beviteli súgó be-ki kapcsolása | NVDA+1 | Ha a billentyűzet súgó be van kapcsolva, és ha funkcióval van ellátva  bármely billentyű, akkor megnyomása esetén arról rövid tájékoztatást kaphat. |
 | Az NVDA bezárása | NVDA+q | Bezárja a programot|
+| Billentyűparancs átadása | NVDA+f2 | Az ezutáni billentyűparancsot az NVDA figyelmen kívül hagyja, és átadja az aktív alkalmazásnak. |
+| Az alvómód be és kikapcsolása| NVDA+shift+s | Az alvómód kikapcsolja az NVDA összes billentyűparancsát és beszéd/braille kimenetét egy adott alkalmazásban. A billentyűparancs újbóli lenyomására visszaállítja azt. Ez azokban az alkalmazásokban előnyös, amik rendelkeznek saját beszéddel, vagy képernyőolvasó tulajdonságokkal. |
+%kc:endInclude
+
+++ Rendszerinformációk bemondása ++
+%kc:beginInclude
+|| név | billentyűparancs | leírás |
 | A jelenlegi idő | NVDA+f12 | Egyszeri megnyomásra a jelenlegi időt, kétszeri (gyors) megnyomásra az aktuális dátumot mondja be. |
+| Telep állapotának bemondása| NVDA+shift+b | Bemondja a telep állapotát és a hátralévő időt, ha töltés alatt van, akkor a töltöttségi szintet. |
+| Vágólap szövegének bemondása| NVDA+c | Bemondja a vágólapon található szöveget, ha van. |
 %kc:endInclude
 
 + Navigáció az NVDA-val +
@@ -200,6 +211,7 @@ Néhány hasznos billentyűparancs a fókusszal történő mozgás esetén:
 | aktuális objektum felolvasása | NVDA+tab | Bemondja az aktuális fókuszban lévő vezérlőelemet, vagy objektumot, kétszeri lenyomásra betűzi.
 | Az aktív ablak felolvasása | NVDA+B | Felolvassa az előtérben lévő ablak tartalmát (hasznos lehet párbeszédpanelek felolvastatásakor) 
 | Az ablak címének bemondása | NVDA+T | Felolvassa az aktív ablak címét 
+| Állapotsor bemondása | NVDA+end | Bemondja az aktív alkalmazás állapotsorát (ha az NVDA megtalálja), és a navigátor kurzort oda  helyezi. |
 %kc:endInclude
 
 ++ Navigáció a rendszerkurzorral ++
@@ -583,6 +595,10 @@ E jelölőnégyzet bejelölése esetén az NVDA minden begépelt karaktert vissz
 Billentyűparancs: NVDA+3
 
 E jelölőnégyzet bejelölése esetén az Nvda elmondja a begépelt szavakat. A szavakat értelemszerűen a szóközök és az írásjelek határolják el egymástól.
+
+===== Hangjelzés kisbetűk gépelésekor a capslock bekapcsolt állapotában =====
+
+A jelölőnégyzet bejelölése után ha a Capslock be van kapcsolva, és a betű gépelésekor lenyomja a shift billentyűt, a program egy éles csippanással figyelmeztet. Egyes helyzetekben a felhasználók nem veszik észre, hogy a caps lock be maradt kapcsolva, ezért került bele a programba ez a funkció.
 
 %kc:setting
 ===== Parancsbillentyűk bemondása  =====

@@ -254,7 +254,10 @@ def copyToClip(text):
 @type text: string
 """
 	if isinstance(text,basestring) and len(text)>0 and not text.isspace():
-		win32clipboard.OpenClipboard()
+		try:
+			win32clipboard.OpenClipboard()
+		except win32clipboard.error:
+			return False
 		try:
 			win32clipboard.EmptyClipboard()
 			win32clipboard.SetClipboardData(win32con.CF_UNICODETEXT, text)

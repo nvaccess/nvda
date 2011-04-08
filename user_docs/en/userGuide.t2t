@@ -180,7 +180,7 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 %kc:beginInclude
 || Name | key | Description |
 | Report date/time | NVDA+f12 | Pressing once reports the current time, pressing twice reports the date |
-| Report battery status | NVDA+shift+b  Reports the battery status i.e. whether AC power is in use or  the current charge percentage. |
+| Report battery status | NVDA+shift+b | Reports the battery status i.e. whether AC power is in use or  the current charge percentage. |
 | Report clipboard text | NVDA+c | Reports the Text in the clipboard if there is any. |
 %kc:endInclude
 
@@ -244,7 +244,7 @@ To navigate by object, use the following keys:
 | Navigate to first child object | NVDA+numpad2 | NVDA+shift+comma | Navigates to the first child object contained by the current navigator object |
 | Navigate to focus object | NVDA+numpadMinus | NVDA+backspace | Navigates to the object that currently has the system focus, and also places  the review cursor at the position of the System caret, if it is showing |
 | Activate current navigator object | NVDA+numpadEnter | NVDA+enter | Activates the current navigator object (similar to  clicking with the mouse or pressing space when it has the system focus) |
-| Move System focus to current navigator object | NVDA+shift+numpadMinus | NVDA+shift+backspace | Moves the System focus to the current navigator object if possible |
+| Move System focus or caret to current review position | NVDA+shift+numpadMinus | NVDA+shift+backspace | pressed once Moves the System focus to the current navigator object, pressed twice moves the system caret to the position of the review cursor |
 | Report navigator object dimensions | NVDA+numpadDelete | NVDA+delete | Announces the current navigator object's dimentions on screen in per centages (including distance from left and top of screen, and its width and height) |
 %kc:endInclude
 
@@ -262,19 +262,18 @@ The following key commands are available for reviewing text:
 || Name | Desktop key | Laptop key | Description |
 | move to  top line in review | shift+numpad7 | NVDA+7 | Moves the review cursor to the top line of the text |
 | Move to previous line in review | numpad7 | NVDA+u | Moves the review cursor to the previous line of text |
-| Report current line in review | numpad8 | NVDA+i | Announces the current line of text where the review cursor is positioned. Pressing twice spells the line. |
+| Report current line in review | numpad8 | NVDA+i | Announces the current line of text where the review cursor is positioned. Pressing twice spells the line. Pressing three times spells the line using character descriptions. |
 | Move to next line in review | numpad9 | NVDA+o | Move the review cursor to the next line of text |
 | Move to bottom line in review | shift+numpad9 | NVDA+9 | Moves the review cursor to the bottom line of text |
 | Move to previous word in review | numpad4 | NVDA+j | Moves the review cursor to the previous word in the  text |
-| Report current word in review | numpad5 | NVDA+k | Announces the current word  in the  text where the review cursor is positioned. Pressing twice spells the word. |
+| Report current word in review | numpad5 | NVDA+k | Announces the current word  in the  text where the review cursor is positioned. Pressing twice spells the word. Pressing three times spells the word using character descriptions. |
 | Move to next word in review | numpad6 | NVDA+l | Move the review cursor to the next word in the text |
 | move to  start of  line in review | shift+numpad1 | NVDA+shift+u | Moves the review cursor to the start of the  current line in the   text |
 | Move to previous character in review | numpad1 | NVDA+m | Moves the review cursor to the previous character on the current line in  the text |
-| Report current character in review | numpad2 | NVDA+comma | Announces the current character on the  line of text where the review cursor is positioned. Pressing twice reports the numeric value of the character in decimal and hexadecimal. |
+| Report current character in review | numpad2 | NVDA+comma | Announces the current character on the  line of text where the review cursor is positioned. Pressing twice reports a description or example of that character. Pressing three times  reports the numeric value of the character in decimal and hexadecimal. |
 | Move to next character in review | numpad3 | NVDA+dot | Move the review cursor to the next character on the current line of text |
 | Move to end of line in review | shift+numpad3 | NVDA+shift+o | Moves the review cursor to the end  of the current line of text |
 | Say all with review | numpadPlus | NVDA+shift+downArrow | Reads from the current position of the review cursor, moving it as it goes |
-| Move caret to review cursor | control+numpadMinus | NVDA+control+backspace | Moves the System caret to the position of the review cursor |
 | copy from review cursor | NVDA+f9 | NVDA+f9 | starts copying text from the current position of the review cursor. The actual copy is not performed until you tell NVDA where to copy to |
 | Copy to review cursor | NVDA+f10 | NVDA+f10 | Copies from the position of the review cursor currently set with Copy from review cursor, to the review cursor's current position. After pressing this key, the text will  be copied to the Windows clipboard |
 %kc:endInclude

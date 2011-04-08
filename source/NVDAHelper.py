@@ -1,5 +1,6 @@
 import os
 import _winreg
+import msvcrt
 import winKernel
 
 from ctypes import *
@@ -141,7 +142,7 @@ class RemoteLoader64(object):
 		winKernel.closeHandle(pipeReadOrig)
 		# stdout/stderr of the loader process should go to nul.
 		with file("nul", "w") as nul:
-			nulHandle = self._duplicateAsInheritable(nul.fileno())
+			nulHandle = self._duplicateAsInheritable(msvcrt.get_osfhandle(nul.fileno()))
 		# Set the process to start with the appropriate std* handles.
 		si = winKernel.STARTUPINFO(dwFlags=winKernel.STARTF_USESTDHANDLES, hSTDInput=pipeRead, hSTDOutput=nulHandle, hSTDError=nulHandle)
 		pi = winKernel.PROCESS_INFORMATION()
@@ -201,7 +202,7 @@ def initialize():
 		log.critical("Error loading nvdaHelperRemote.dll: %s" % WinError())
 		return
 	_remoteLib=CDLL("nvdaHelperRemote",handle=h)
-	if _remoteLib.injection_initialize() == 0:
+	if _remoteLib.injection_initialize(globalVars.appArgs.secure) == 0:
 		raise RuntimeError("Error initializing NVDAHelperRemote")
 	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':
 		_remoteLoader64=RemoteLoader64()

@@ -139,7 +139,7 @@ def speakMessage(text,index=None):
 
 _speakSpellingGenID = None
 
-def speakSpelling(text):
+def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 	global beenCanceled, _speakSpellingGenID
 	import speechViewer
 	if speechViewer.isActive:
@@ -152,11 +152,13 @@ def speakSpelling(text):
 	if isPaused:
 		cancelSpeech()
 	beenCanceled=False
+	from languageHandler import getLanguage
+	locale=getLanguage()
 	if not isinstance(text,basestring) or len(text)==0:
 		return getSynth().speakText(processSymbol(""))
 	if not text.isspace():
 		text=text.rstrip()
-	gen=_speakSpellingGen(text)
+	gen=_speakSpellingGen(text,locale,useCharacterDescriptions)
 	try:
 		# Speak the first character before this function returns.
 		next(gen)
@@ -164,13 +166,20 @@ def speakSpelling(text):
 		return
 	_speakSpellingGenID=queueHandler.registerGeneratorObject(gen)
 
-def _speakSpellingGen(text):
+def _speakSpellingGen(text,locale,useCharacterDescriptions):
 	textLength=len(text)
 	synth=getSynth()
 	synthConfig=config.conf["speech"][synth.name]
 	for count,char in enumerate(text): 
 		uppercase=char.isupper()
-		char=processSymbol(char)
+		charDesc=None
+		if useCharacterDescriptions:
+			from characterProcessing import getCharacterDescription
+			charDesc=getCharacterDescription(locale,char.lower())
+		if charDesc:
+			char=charDesc
+		else:
+			char=processSymbol(char)
 		if uppercase and synthConfig["sayCapForCapitals"]:
 			char=_("cap %s")%char
 		if uppercase and synth.isSupported("pitch") and synthConfig["raisePitchForCapitals"]:

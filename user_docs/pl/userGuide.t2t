@@ -23,7 +23,7 @@ NVDA oferuje między innymi:
 - Łatwy w użyciu udźwiękowiony instalator.
 - Tłumaczenie w wielu językach.
 - Wsparcie dla nowszych systemów operacyjnych Windows, zarówno 32 jak i 64 bitowych
-- Możliwość dostępu do ekranu logowania w systemie oraz innych zabezpieczonych ekranach.
+- Możliwość dostępu do ekranu logowania w systemie oraz innych zabezpieczonych ekranów.
 - Wsparcie dla wspólnych interfejsów dostępności, takich jak Microsoft Active Accessibility, Java Access Bridge, UI Automation i iAccessible2.
 - Wsparcie dla wiersza poleceń systemu Windows i aplikacji konsolowych.
 -
@@ -75,10 +75,21 @@ Na tym etapie instalator usunie poprzednio zainstalowaną kopie programu i rozpo
 
 Po zakończeniu procesu instalator powiadomi cię iż program NVDA został poprawnie zainstalowany, i może poprosić o zrestartowanie komputera. 
 Jeśli system nie zostanie zrestartowany, program może nie działać poprawnie.
+Jeśli instalator nie poprosi o restart systemu, kliknięcie przycisku zakończ zamknie go, i uruchomi nowo zainstalowaną wersję programu.
 
 ++ Przenośna Wersja NVDA ++
 Jeśli pobrana została przenośna wersja NVDA, wszystko co należy zrobić, to nacisnąć klawisz Enter lub kliknąć dwukrotnie na plik, i postępować zgodnie z instrukcjami.
 Jest to archiwum samo rozpakowujące, należy tylko wskazać dowolne miejsce na dysku twardym lub przenośnej pamięci USB (pendrive) bądź innym nośniku (na przykład płycie CD).
+
++++ NVDA na pamięci przenośnej +++
+Możliwe jest umieszczenie nvda na pamięci przenośnej typu flash, tak by używać go na innych komputerach, nie posiadających zainstalowanego programu udźwiękawiającego.
+
+Gdy dekompresor wersji przenośnej zapyta o ścieżkę do wypakowania plików, wskaż literę twojego pendrive'a lub innej przenośnej pamięci, i opcjonalnie katalog, w którym zostaną umieszczone pliki niezbędne do uruchomienia nvda.
+Zatem gdy przykładowo litera twojego pendrive to e:, wpisz e:\nvda, co sprawi, że na twoim pendrivie zostanie utworzony katalog nvda, a w nim pliki programu.
+
+Uwaga:
+Te kroki nie sprawią, że będziesz mógł przenosić nvda wraz z jego ustawieniami i program zadziała automagicznie na każdej maszynie, zaraz po podłączeniu pendrive'a do portu usb. Musisz to zrobić ręcznie. Jeśli chcesz uzyskać pomoc w kwestii automatycznego uruchamiania programu zaraz po podłączeniu pamięci do portu usb, przeczytaj odpowiedni artykół na angielskiej stronie projektu
+http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
 
 
 + Pierwsze Kroki w NVDA +
@@ -91,7 +102,7 @@ Możesz również wpisać NVDA do okna Uruchom w menu Start i nacisnąć klawisz
 Aby uruchomić wersję przenośną NVDA, przejdź do katalogu w którym zostały wypakowane pliki, zaznacz plik  "nvda.exe" i naciśnij klawisz Enter lub dwukrotnie kliknij na nim lewym przyciskiem myszy.
 
 Po uruchomieniu NVDA usłyszysz coraz wyższe dźwięki wskazujące, że program się ładuje. 
-Następnie usłyszysz komunikat: "NVDA uruchomiony". Czas uruchamiania zależy od wydajności twojego komputera oraz od tego, czy program ładuje się z dysku, pamięci USB czy z płyty. 
+Następnie usłyszysz komunikat: "NVDA uruchomiony". Czas uruchamiania zależy od tego, jak szybki jest twój komputer oraz od tego, czy program ładuje się z dysku, pamięci USB czy z płyty. 
 W przypadku korzystania z wolniejszych nośników można usłyszeć komunikat: "Ładowanie NVDA, Proszę czekać..."
 
 Jeśli podczas uruchamiania programu nie zostały odtworzone powyższe komunikaty, ale usłyszysz dźwięk oznaczający błąd systemu Windows lub dźwięki o coraz niższej wysokości oznacza, to iż NVDA nie działa prawidłowo i należy zgłosić powstały problem do twórców programu. Więcej informacji o zgłaszaniu problemów znajdziesz na stronie projektu..
@@ -144,7 +155,7 @@ Ostatnia pozycja to wyjście z programu. Program zakończyć można również wc
 | Zakończ NVDA | NVDA+q | Kończy działanie NVDA |
 | Odczytuje datę/czas | NVDA+f12 | Odczytuje aktualny czas. Szybkie dwukrotne naciśnięcie odczytuje aktualną datę. |
 | Przepuszcza następny klawisz | NVDA+f2 | Jednorazowo przepuszcza następny naciśnięty klawisz wprost do systemu bez przetwarzania go w NVDA. Nawet jeżeli przepuszczony klawisz posiada w NVDA swoją funkcję, nie zostanie ona wykonana. |
-| Włącza i wyłącza tryb autoodczytu dla aktywnej aplikacji | nvda+shift+s | ustawienie trybu autoodczytu dla konkretnej aplikacji sprawia, że nvda przestaje mówić w jej oknie, nie reaguje na wciskane skróty klawiszowe oraz przestaje wyświetlać tekst na monitorze brajlowskim. Może być to użyteczne w przypadku programów posiadających wbudowane funkcje odczytu interface'u jak np. klango player. Aby wyłączyć tryb autoodczytu, w oknie takiej aplikacji należy wcisnąć ten skrót ponownie |
+| Włącza i wyłącza tryb uśpienia dla aktywnej aplikacji | nvda+shift+s | ustawienie trybu uśpienia dla konkretnej aplikacji sprawia, że nvda przestaje mówić w jej oknie, nie reaguje na wciskane skróty klawiszowe oraz przestaje wyświetlać tekst na monitorze brajlowskim. Może być to użyteczne w przypadku programów posiadających wbudowane funkcje odczytu interface'u jak np. klango player. Aby wyłączyć tryb uśpienia, w oknie takiej aplikacji należy wcisnąć ten skrót ponownie |
 %kc:endInclude
 
 ++ odczyt informacji systemowych ++
@@ -567,7 +578,8 @@ Wskaźnik myszy w systemie Windows zmienia się, by przekazać dodatkowe informa
 | Skrót Klawiszowy Laptopa | NVDA+shift+m |
 
 Jeśli zaznaczysz to pole, NVDA będzie czytać tekst znajdujący się aktualnie pod wskaźnikiem myszy. 
-Opcja ta pozwala na odnajdywanie informacji na ekranie poprzez poruszanie fizyczną myszą bez konieczności nawigowania po hierarchii obiektów.
+Opcja ta pozwala na odnajdywanie informacji na ekranie poprzez poruszanie fizyczną myszą bez konieczności nawigowania po hierarchii 
+.
 
 ==== Zakres odczytu ====
 Ta opcja pozwala dokładnie określić ile tekstu znajdującego się aktualnie pod wskaźnikiem myszy zostanie wypowiedziane. 
@@ -616,10 +628,14 @@ Jeśli zaznaczysz to pole, NVDA będzie czytać informacje pojawiające się w p
 Dymki powiadomień są podobne do dymków podpowiedzi, jednak zazwyczaj są większe i sygnalizują zdarzenia systemowe, takie jak odłączenie kabla sieciowego czy brak ochrony antywirusowej, lób inne zdarzenia mające znaczenie dla bezpieczeństwa systemu.
 
 ==== Odczytuj klawisze skrótów ====
-Jeśli zaznaczysz to pole, NVDA informując o obiektach, pozycjach menu lub kontrolkach okien dialogowych będzie wypowiadać również związany z nimi klawisz skrótu, na przykład Alt+litera.
+Jeśli zaznaczysz to pole, NVDA informując o obiektach, pozycjach menu lub kontrolkach okien dialogowych będzie wypowiadać również związany z nimi klawisz skrótu, na przykład menu plik może mieć przypisany skrót alt+f.
 
 ==== Odczytuj położenie obiektów ====
 Ta opcja pozwala zmienić sposób ogłaszania pozycji obiektu po przeniesieniu do obiektu z punktem uwagi lub obiektu nawigacji (np. 1 z 4).
+==== odgadnij pozycję obiektu, gdy nie dostępny ====
+Gdy włączona jest opcja powiadamiania o pozycji obiektu, a z jakichś powodów jest ona niedostępna, nvda może próbować ją odgadnąć.
+Gdy opcja powyższa jest zaznaczona, nvda może odczytywać informacje o więkrzej ilości obiektów, jak niektóre paski narzędziowe czy menu, lecz informacje te mogą być niedokładne.
+
 
 ==== Odczytuj opisy obiektów ====
 Odznacz to pole, jeśli nie chcesz, by program NVDA czytał opisy obiektów
@@ -855,11 +871,30 @@ shift+tab | sp1 |
 
 ++ Monitory Handy Tech ++
 NVDA obsługuje wszystkie monitory firmy [Handy Tech http://www.handytech.de/].
-W przypadku niektórych monitorów USB, należy zainstalować sterowniki USB dla Handy Tech w systemie. 
-Ponadto, należy zainstalować uniwersalny sterownik Handy Tech, dostępny pod adresem ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe .
+W przypadku starszych monitorów USB, należy zainstalować sterowniki USB dla Handy Tech w systemie. 
+
+Poniżej skróty klawiszowe dla tego monitora, które działają w nvda:
+%kc:beginInclude
+|| akcja | klawisz|
+| przewiń brajla do tyłu | left, up |
+| przewiń brajla do przodu | right, down |
+| przenieś monitor do poprzedniej linii | b4 |
+| przenieś monitor do następnej linii | b5 |
+| przenieś kursor nad komórkę | routing |
+| Shift + tab | esc |
+| klawisz alt | b2+b4+b5 |
+| klawisz escape | b4+b6 |
+klawisz tab | enter |
+| klawisz enter | esc+enter |
+| strzałka w górę | left space |
+| strzałka w dół | right space |
+| menu nvda | b2+b4+b5+b6 |
+| konfiguracja handy tech | b4 +b8 |
+%kc:endInclude
+
 
 ++ MDV Lilli ++
-Monitor Lilli Braille jest dostępny od firmy [MDV http://www.mdvbologna.it/] jest obsługiwany przez NVDA, i nie wymaga żadnych specjalnych sterowników do instalacji aby korzystać z tego monitora. 
+Monitor Lilli Braille firmy [MDV http://www.mdvbologna.it/] jest obsługiwany przez NVDA, i nie wymaga żadnych specjalnych sterowników do instalacji aby korzystać z tego monitora. 
 Wystarczy podłączyć monitor i skonfigurować NVDA.
 
 ++ BRLTTY ++
@@ -877,3 +912,25 @@ Poniżej wykas poleceń brltty dla nvda. Zobacz [tabele klawiszy w dokumentacji 
 | Przenieś monitor do następnej linii | lndn (go down one line) |
 | przenieś kursor routing do komórki lub znaku| route (bring cursor to character) |
 %kc:endInclude
+
++ dla zaawansowanych +
+++ redefiniowanie skrutów klawiszowych ++
+Użytkownicy nvda mogą stworzyć lób zmienić istniejące powiązania pomiędzy wciskanymi klawiszami a modółami nvda, przez edycję pliku konfiguracyjnego w podkatalogu user znajdującym się w folderze instalacji nvda.
+Plik nazywa się gestures.ini, i używa standardowej składni. Każda sekcja zawiera definicję dla skryptów i modółów nvda. Aby zobaczyć, jak wyglądają linijki definiujące powiązania, w szczególności nazwy odpowiednich modułów i skryptów wejdź w tryb pomocy klawiatóry, wciśnij klawisz skrótu nvda np. nvda+f12, wyjdź z trybu pomocy i sprawdź, co powstało w podglądzie logów.
+Oto prosty przykład, jak przemapować NVDA+f12, czyli aktualną komendę podającą czas i datę, aby zamiast tego działała po wciśnięciu innych klawiszy np nvda+shift+t.
+Wejdź w tryb pomocy klawiatóry i wciśnij nvda+f12. W podglądzie logu zobaczysz coś takiego:
+```
+INFO - inputCore.InputManager._handleInputHelp (13:17:22):
+Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
+```
+
+Jak widać, skrypt podający czas, nazywa się (datetime), i należy do modółu globalCommands.GlobalCommands.
+Jeśli plik gestures.ini jeszcze nie istnieje, stwórz go i wklej lub wpisz tam następujące linie:
+```
+[globalCommands.GlobalCommands]
+	dateTime = kb:NVDA+shift+t
+```
+Zapisz zmiany i zrestartuj nvda. Wciśnięcie klawiszy nvda+shift+t, powinno teraz odczytywać aktualny czas.
+Istnieje równierz skrypt None, którego użycie powoduje odwrucenie procesu, to znaczy usunięcie dowolnego powiązania.
+Identyfikatory powiązań to:
+kb dla klawiatóry, br dla monitorów brajlowskich, opcjonalnie w nawiasach można podać urządzenie lób układ klawiatóry na który ma działać nasza regółka.
