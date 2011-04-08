@@ -17,6 +17,7 @@
 == Bug Fixes ==
 - Collapsing combo boxes in a virtual buffer when focus mode has been forced with NVDA+space no longer auto-switches back to browse mode. (#1386)
 - In Gecko (e.g. Firefox) and MSHTML (e.g. Internet Explorer) documents, NVDA now correctly renders certain text on the same line which was previously rendered on separate lines. (#1378)
+- When Braille is tethered to review, and when the navigator object is moved to a virtual buffer (web document, pdf, html email message), either manually or due to a focus change, braille will be appropriately showing the content of the virtual buffer. (#1406 and #1407)
 
 
 == Changes for Developers ==
