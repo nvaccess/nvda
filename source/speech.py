@@ -22,6 +22,8 @@ import textInfos
 import characterSymbols
 import queueHandler
 import speechDictHandler
+import characterProcessing
+import languageHandler
 
 speechMode_off=0
 speechMode_beeps=1
@@ -58,43 +60,15 @@ def terminate():
 	setSynth(None)
 	speechViewerObj=None
 
-RE_PROCESS_SYMBOLS = re.compile(
-	# Groups 1-3: expand symbols where the actual symbol should be preserved to provide correct entonation.
-	# Group 1: sentence endings.
-	r"(?:(?<=[^\s.!?])([.!?])(?=[\"')\s]|$))"
-	# Group 2: comma.
-	+ r"|(,)"
-	# Group 3: semi-colon and colon.
-	+ r"|(?:(?<=[^\s;:])([;:])(?=\s|$))"
-	# Group 4: expand all other symbols without preserving.
-	+ r"|([%s])" % re.escape("".join(frozenset(characterSymbols.names) - frozenset(characterSymbols.blankList)))
-)
-def _processSymbol(m):
-	symbol = m.group(1) or m.group(2) or m.group(3)
-	if symbol:
-		# Preserve symbol.
-		return " %s%s " % (characterSymbols.names[symbol], symbol)
-	else:
-		# Expand without preserving.
-		return " %s " % characterSymbols.names[m.group(4)]
 RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 
-def processText(text,expandPunctuation=False):
+def processText(text,symbolLevel):
 	if (text is None) or (len(text)==0) or (isinstance(text,basestring) and (set(text)<=set(characterSymbols.blankList))):
 		return _("blank") 
-	#Convert non-breaking spaces to spaces
-	text=text.replace(u'\xa0',u' ')
 	text = speechDictHandler.processText(text)
-	if expandPunctuation:
-		text = RE_PROCESS_SYMBOLS.sub(_processSymbol, text)
+	text = characterProcessing.processSpeechSymbols(languageHandler.getLanguage(), text, symbolLevel)
 	text = RE_CONVERT_WHITESPACE.sub(u" ", text)
 	return text.strip()
-
-def processSymbol(symbol):
-	if isinstance(symbol,basestring):
-		symbol=symbol.replace(u'\xa0',u' ')
-	newSymbol=characterSymbols.names.get(symbol,symbol)
-	return newSymbol
 
 def getLastSpeechIndex():
 	"""Gets the last index passed by the synthesizer. Indexing is used so that its possible to find out when a certain peace of text has been spoken yet. Usually the character position of the text is passed to speak functions as the index.
@@ -152,10 +126,9 @@ def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 	if isPaused:
 		cancelSpeech()
 	beenCanceled=False
-	from languageHandler import getLanguage
-	locale=getLanguage()
-	if not isinstance(text,basestring) or len(text)==0:
-		return getSynth().speakText(processSymbol(""))
+	locale=languageHandler.getLanguage()
+	if not text:
+		return getSynth().speakText(characterProcessing.processSpeechSymbol(locale,""))
 	if not text.isspace():
 		text=text.rstrip()
 	gen=_speakSpellingGen(text,locale,useCharacterDescriptions)
@@ -174,12 +147,11 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 		uppercase=char.isupper()
 		charDesc=None
 		if useCharacterDescriptions:
-			from characterProcessing import getCharacterDescription
-			charDesc=getCharacterDescription(locale,char.lower())
+			charDesc=characterProcessing.getCharacterDescription(locale,char.lower())
 		if charDesc:
 			char=charDesc
 		else:
-			char=processSymbol(char)
+			char=characterProcessing.processSpeechSymbol(locale,char)
 		if uppercase and synthConfig["sayCapForCapitals"]:
 			char=_("cap %s")%char
 		if uppercase and synth.isSupported("pitch") and synthConfig["raisePitchForCapitals"]:
@@ -291,15 +263,14 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
 			speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=reason)
 
-def speakText(text,index=None,reason=REASON_MESSAGE,expandPunctuation=None):
+def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 	"""Speaks some text.
 	@param text: The text to speak.
 	@type text: str
 	@param index: The index to mark this text with, which can be used later to determine whether this piece of text has been spoken.
 	@type index: int
 	@param reason: The reason for this speech; one of the REASON_* constants.
-	@param expandPunctuation: Whether to speak punctuation; C{None} (default) to use the user's configuration.
-	@param expandPunctuation: bool
+	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
 	"""
 	import speechViewer
 	if speechViewer.isActive:
@@ -315,12 +286,12 @@ def speakText(text,index=None,reason=REASON_MESSAGE,expandPunctuation=None):
 		cancelSpeech()
 	beenCanceled=False
 	log.io("Speaking %r" % text)
-	if expandPunctuation is None:
-		expandPunctuation=config.conf["speech"]["speakPunctuation"]
+	if symbolLevel is None:
+		symbolLevel=characterProcessing.SYMLVL_ALL if config.conf["speech"]["speakPunctuation"] else characterProcessing.SYMLVL_NONE
 	if text is None:
 		text=""
 	else:
-		text=processText(text,expandPunctuation=expandPunctuation)
+		text=processText(text,symbolLevel)
 	if not text or not text.isspace():
 		getSynth().speakText(text,index=index)
 
@@ -374,29 +345,30 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				tempInfo=oldInfo.copy()
 				tempInfo.setEndPoint(newInfo,"startToEnd")
 				unselectedTextList.append(tempInfo.text)
+	locale=languageHandler.getLanguage()
 	if speakSelected:
 		if not generalize:
 			for text in selectedTextList:
 				if  len(text)==1:
-					text=processSymbol(text)
+					text=characterProcessing.processSpeechSymbol(locale,text)
 				speakSelectionMessage(_("selecting %s"),text)
 		elif len(selectedTextList)>0:
 			text=newInfo.text
 			if len(text)==1:
-				text=processSymbol(text)
+				text=characterProcessing.processSpeechSymbol(locale,text)
 			speakSelectionMessage(_("selected %s"),text)
 	if speakUnselected:
 		if not generalize:
 			for text in unselectedTextList:
 				if  len(text)==1:
-					text=processSymbol(text)
+					text=characterProcessing.processSpeechSymbol(locale,text)
 				speakSelectionMessage(_("unselecting %s"),text)
 		elif len(unselectedTextList)>0:
 			speakMessage(_("selection removed"))
 			if not newInfo.isCollapsed:
 				text=newInfo.text
 				if len(text)==1:
-					text=processSymbol(text)
+					text=characterProcessing.processSpeechSymbol(locale,text)
 				speakSelectionMessage(_("selected %s"),text)
 
 def speakTypedCharacters(ch):
@@ -575,7 +547,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 			if unit==textInfos.UNIT_CHARACTER:
 				speakSpelling(text)
 			else:
-				text=processSymbol(text)
+				text=characterProcessing.processSpeechSymbol(languageHandler.getLanguage(),text)
 				speakText(text)
 		else:
 			speakText(text,index=index)
