@@ -19,7 +19,6 @@ import synthDriverHandler
 from synthDriverHandler import *
 import re
 import textInfos
-import characterSymbols
 import queueHandler
 import speechDictHandler
 import characterProcessing
@@ -61,9 +60,11 @@ def terminate():
 	speechViewerObj=None
 
 RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
+#: If a chunk of text contains only these characters, it will be considered blank.
+BLANK_CHUNK_CHARS = frozenset((" ", "\n", "\r", "\0", "", None))
 
 def processText(text,symbolLevel):
-	if (text is None) or (len(text)==0) or (isinstance(text,basestring) and (set(text)<=set(characterSymbols.blankList))):
+	if not text or (isinstance(text, basestring) and set(text) <= BLANK_CHUNK_CHARS):
 		return _("blank") 
 	text = speechDictHandler.processText(text)
 	text = characterProcessing.processSpeechSymbols(languageHandler.getLanguage(), text, symbolLevel)
