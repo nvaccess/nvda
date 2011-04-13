@@ -106,18 +106,25 @@ def getCharacterDescription(locale,character):
 		desc=getCharacterDescription('en',character)
 	return desc
  
+# Speech symbol levels
 SYMLVL_NONE = 0
 SYMLVL_SOME = 100
 SYMLVL_MOST = 200
 SYMLVL_ALL = 300
 SYMLVL_CHAR = 1000
-SYMBOL_LEVELS = {
+SPEECH_SYMBOL_LEVELS = {
 	"none": SYMLVL_NONE,
 	"some": SYMLVL_SOME,
 	"most": SYMLVL_MOST,
 	"all": SYMLVL_ALL,
 	"char": SYMLVL_CHAR,
 }
+USER_SPEECH_SYMBOL_LEVELS = collections.OrderedDict((
+	(SYMLVL_NONE, _("none")),
+	(SYMLVL_SOME, _("some")),
+	(SYMLVL_MOST, _("most")),
+	(SYMLVL_ALL, _("all")),
+))
 
 class SpeechSymbol(object):
 	__slots__ = ("identifier", "pattern", "replacement", "level", "preserve", "displayName")
@@ -207,7 +214,7 @@ class SpeechSymbols(object):
 			# These fields are mandatory.
 			raise ValueError
 		try:
-			level = SYMBOL_LEVELS.get(next(line))
+			level = SPEECH_SYMBOL_LEVELS.get(next(line))
 			preserve = next(line)
 			if preserve == "y":
 				preserve = True
@@ -271,7 +278,7 @@ class SpeechSymbols(object):
 				del symbols[symbol.identifier]
 				continue
 			if symbol.level is None:
-				symbol.level = SYMBOL_LEVELS["all"]
+				symbol.level = SYMLVL_ALL
 			if symbol.preserve is None:
 				symbol.preserve = False
 			if symbol.displayName is None:
