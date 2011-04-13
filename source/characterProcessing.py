@@ -342,3 +342,24 @@ def processSpeechSymbols(locale, text, level):
 			return processSymbols("en", text)
 		raise
 	return ss.processText(text, level)
+
+def processSpeechSymbol(locale, symbol):
+	"""Process a single symbol according to desired pronunciation.
+	@param locale: The locale of the symbol.
+	@type locale: str
+	@param symbol: The symbol.
+	@type symbol: str
+	"""
+	if not symbol:
+		return _("blank")
+	try:
+		ss = _speechSymbolsLocaleDataMap.fetchLocaleData(locale)
+	except LookupError:
+		if not locale.startswith("en"):
+			return processSymbols("en", text)
+		raise
+	try:
+		return ss.computedSymbols[symbol].replacement
+	except KeyError:
+		pass
+	return symbol
