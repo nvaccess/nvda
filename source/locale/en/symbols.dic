@@ -1,0 +1,67 @@
+﻿complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"')\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"')\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+
+symbols:
+# identifier	replacement	[level]	[preserve]	[display name]
+
+# Complex symbols
+. sentence ending	dot	-	y
+! sentence ending	bang	-	y
+? sentence ending	question	-	y
+; phrase ending	semi	-	y
+: phrase ending	colon	-	y
+
+# Whitespace
+\0	blank	char
+\t	tab
+\n	line feed	char
+\f	page break	none
+\r	carriage return	char
+ 	space	char
+
+# Standard punctuation/symbols
+!	bang
+"	quote
+\#	number
+$	dollar
+%	percent
+&	and
+'	tick
+(	left paren
+)	right paren
+*	star
++	plus
+,	comma	-	y
+-	dash
+.	dot
+/	slash
+:	colon
+;	semi
+<	less
+>	greater
+=	equals
+?	question
+@	at
+[	left bracket
+]	right bracket
+"	quote
+\\	backslash
+^	caret
+_	line
+`	graav
+{	left brace
+}	right brace
+|	bar
+~	tilda
+
+# Other characters
+•	bullet
+…	dot dot dot
+·	bullet
