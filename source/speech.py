@@ -288,7 +288,7 @@ def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 	beenCanceled=False
 	log.io("Speaking %r" % text)
 	if symbolLevel is None:
-		symbolLevel=characterProcessing.SYMLVL_ALL if config.conf["speech"]["speakPunctuation"] else characterProcessing.SYMLVL_NONE
+		symbolLevel=config.conf["speech"]["symbolLevel"]
 	if text is None:
 		text=""
 	else:
