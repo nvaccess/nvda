@@ -327,7 +327,7 @@ class SpeechSymbols(object):
 
 _speechSymbolsLocaleDataMap = LocaleDataMap(SpeechSymbols)
 
-def processSymbols(locale, text, level):
+def processSpeechSymbols(locale, text, level):
 	"""Process some text, converting symbols according to desired pronunciation.
 	@param locale: The locale of the text.
 	@type locale: str
