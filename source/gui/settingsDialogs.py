@@ -23,6 +23,7 @@ import queueHandler
 import braille
 import core
 import keyboardHandler
+import characterProcessing
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -366,9 +367,17 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.lastControl=None
 		#Create controls for Synth Settings
 		self.updateVoiceSettings()
-		self.punctuationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Speak all punctuation"))
-		self.punctuationCheckBox.SetValue(config.conf["speech"]["speakPunctuation"])
-		settingsSizer.Add(self.punctuationCheckBox,border=10,flag=wx.BOTTOM)
+		sizer=wx.BoxSizer(wx.HORIZONTAL)
+		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Punctuation/symbol &level:")))
+		self.symbolLevels=characterProcessing.USER_SPEECH_SYMBOL_LEVELS.items()
+		self.symbolLevelList=wx.Choice(self,wx.ID_ANY,choices=[name for level, name in self.symbolLevels])
+		curLevel = config.conf["speech"]["symbolLevel"]
+		for index, (level, name) in enumerate(self.symbolLevels):
+			if level == curLevel:
+				self.symbolLevelList.SetSelection(index)
+				break
+		sizer.Add(self.symbolLevelList)
+		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
 		self.raisePitchForCapsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Raise pitch for capitals"))
 		self.raisePitchForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["raisePitchForCapitals"])
 		settingsSizer.Add(self.raisePitchForCapsCheckBox,border=10,flag=wx.BOTTOM)
@@ -388,7 +397,7 @@ class VoiceSettingsDialog(SettingsDialog):
 			control=getattr(self,"%sSlider"%setting.name) if isinstance(setting,NumericSynthSetting) else getattr(self,"%sList"%setting.name)
 			control.SetFocus()
 		except IndexError:
-			self.punctuationCheckBox.SetFocus()
+			self.symbolLevelList.SetFocus()
 
 	def updateVoiceSettings(self, changedSetting=None):
 		"""Creates, hides or updates existing GUI controls for all of supported settings."""
@@ -438,7 +447,7 @@ class VoiceSettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		getSynth().saveSettings()
-		config.conf["speech"]["speakPunctuation"]=self.punctuationCheckBox.IsChecked()
+		config.conf["speech"]["symbolLevel"]=self.symbolLevels[self.symbolLevelList.GetSelection()][0]
 		config.conf["speech"][getSynth().name]["raisePitchForCapitals"]=self.raisePitchForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
