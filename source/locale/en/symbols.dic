@@ -7,6 +7,8 @@
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
 
 symbols:
 # identifier	replacement	[level]	[preserve]	[display name]
@@ -17,6 +19,7 @@ symbols:
 ? sentence ending	question	-	y
 ; phrase ending	semi	most	y
 : phrase ending	colon	most	y
+decimal point	point	none
 
 # Whitespace
 \0	blank	char
@@ -66,3 +69,8 @@ _	line	most
 •	bullet	some
 …	dot dot dot	all	y
 	bullet	some
+“	left quote	most
+”	right quote	most
+–	en dash	most
+—	em dash	most
+●	circle	most
