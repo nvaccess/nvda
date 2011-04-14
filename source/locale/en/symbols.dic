@@ -15,8 +15,8 @@ symbols:
 . sentence ending	dot	-	y
 ! sentence ending	bang	-	y
 ? sentence ending	question	-	y
-; phrase ending	semi	-	y
-: phrase ending	colon	-	y
+; phrase ending	semi	most	y
+: phrase ending	colon	most	y
 
 # Whitespace
 \0	blank	char
@@ -29,40 +29,40 @@ symbols:
 
 # Standard punctuation/symbols
 !	bang
-"	quote
-\#	number
-$	dollar
-%	percent
-&	and
+"	quote	most
+\#	number	most
+$	dollar	some
+%	percent	some
+&	and	some
 '	tick
-(	left paren
-)	right paren
-*	star
-+	plus
+(	left paren	most
+)	right paren	most
+*	star	most
++	plus	most
 ,	comma	-	y
--	dash
+-	dash	most
 .	dot
-/	slash
-:	colon
-;	semi
-<	less
->	greater
-=	equals
+/	slash	some
+:	colon	most
+;	semi	most
+<	less	most
+>	greater	most
+=	equals	most
 ?	question
-@	at
-[	left bracket
-]	right bracket
-"	quote
-\\	backslash
-^	caret
-_	line
-`	graav
-{	left brace
-}	right brace
-|	bar
-~	tilda
+@	at	some
+[	left bracket	most
+]	right bracket	most
+"	quote	most
+\\	backslash	most
+^	caret	most
+_	line	most
+`	graav	most
+{	left brace	most
+}	right brace	most
+|	bar	most
+~	tilda	most
 
 # Other characters
-•	bullet
-…	dot dot dot
-	bullet
+•	bullet	some
+…	dot dot dot	all	y
+	bullet	some
