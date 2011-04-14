@@ -251,6 +251,9 @@ class SpeechSymbols(object):
 		# Add all complex symbols first, as they take priority.
 		for source in sources:
 			for identifier, pattern in source.rawComplexSymbols.iteritems():
+				if identifier in symbols:
+					# Already defined.
+					continue
 				symbol = SpeechSymbol(identifier, pattern)
 				symbols[identifier] = symbol
 				complexSymbolsList.append(symbol)
