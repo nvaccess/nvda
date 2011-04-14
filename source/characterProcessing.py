@@ -216,7 +216,7 @@ class SpeechSymbols(object):
 		try:
 			level = SPEECH_SYMBOL_LEVELS.get(next(line))
 			preserve = next(line)
-			if preserve == "y":
+			if preserve == "a":
 				preserve = True
 			elif preserve == "n":
 				preserve = False

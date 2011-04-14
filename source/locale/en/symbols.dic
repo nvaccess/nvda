@@ -14,12 +14,12 @@ symbols:
 # identifier	replacement	[level]	[preserve]	[display name]
 
 # Complex symbols
-. sentence ending	dot	-	y
-! sentence ending	bang	-	y
-? sentence ending	question	-	y
-; phrase ending	semi	most	y
-: phrase ending	colon	most	y
-decimal point		none	y
+. sentence ending	dot	-	a
+! sentence ending	bang	-	a
+? sentence ending	question	-	a
+; phrase ending	semi	most	a
+: phrase ending	colon	most	a
+decimal point		none	a
 
 # Whitespace
 \0	blank	char
@@ -42,7 +42,7 @@ $	dollar	some
 )	right paren	most
 *	star	most
 +	plus	most
-,	comma	-	y
+,	comma	-	a
 -	dash	most
 .	dot
 /	slash	some
@@ -67,7 +67,7 @@ _	line	most
 
 # Other characters
 •	bullet	some
-…	dot dot dot	all	y
+…	dot dot dot	all	a
 	bullet	some
 “	left quote	most
 ”	right quote	most
