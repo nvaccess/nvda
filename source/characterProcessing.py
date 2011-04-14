@@ -320,10 +320,10 @@ class SpeechSymbols(object):
 			index = int(group[1:])
 			symbol = self._computedSymbolsList[index]
 			if symbol.preserve:
-				suffix = "%s " % m.group()
+				suffix = "%s" % m.group()
 			else:
 				suffix = " "
-			if self._level >= symbol.level:
+			if self._level >= symbol.level and symbol.replacement:
 				return u" {repl}{suffix}".format(repl=symbol.replacement, suffix=suffix)
 			else:
 				return suffix
