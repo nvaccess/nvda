@@ -241,13 +241,19 @@ class SpeechSymbols(object):
 
 		# The computed symbol information from all sources.
 		symbols = self.computedSymbols = collections.OrderedDict()
+		# An indexable list of complex symbols for use in building/executing the regexp.
+		complexSymbolsList = self._computedComplexSymbolsList = []
+		# A list of simple symbol identifiers for use in building the regexp.
+		simpleSymbolIdentifiers = []
 		# Single character symbols.
 		characters = set()
 
 		# Add all complex symbols first, as they take priority.
 		for source in sources:
 			for identifier, pattern in source.rawComplexSymbols.iteritems():
-				symbols[identifier] = SpeechSymbol(identifier, pattern)
+				symbol = SpeechSymbol(identifier, pattern)
+				symbols[identifier] = symbol
+				complexSymbolsList.append(symbol)
 
 		# Supplement the data for complex symbols and add all simple symbols.
 		for source in sources:
@@ -257,8 +263,8 @@ class SpeechSymbols(object):
 					symbol = symbols[identifier]
 				except KeyError:
 					# This is a simple symbol.
-					# The pattern for a simple symbol is the escaped identifier.
-					symbol = symbols[identifier] = SpeechSymbol(identifier, re.escape(identifier))
+					symbol = symbols[identifier] = SpeechSymbol(identifier)
+					simpleSymbolIdentifiers.append(identifier)
 					if len(identifier) == 1:
 						characters.add(identifier)
 				# If fields weren't explicitly specified, inherit the value from later sources.
@@ -284,8 +290,7 @@ class SpeechSymbols(object):
 			if symbol.displayName is None:
 				symbol.displayName = symbol.identifier
 
-		# We need an indexable symbols list to execute the regexp.
-		symbolsList = self._computedSymbolsList = symbols.values()
+		characters = "".join(characters)
 
 		# Build the regexp.
 		patterns = [
@@ -294,9 +299,17 @@ class SpeechSymbols(object):
 			# Repeated characters.
 			r"(?P<repeated>(?P<repTmp>[%s])(?P=repTmp){3,})" % re.escape("".join(characters))
 		]
+		# Complex symbols.
+		# Each complex symbol has its own named group so we know which symbol matched.
 		patterns.extend(
-			u"(?P<s{index}>{pattern})".format(index=index, pattern=symbol.pattern)
-			for index, symbol in enumerate(symbolsList))
+			u"(?P<c{index}>{pattern})".format(index=index, pattern=symbol.pattern)
+			for index, symbol in enumerate(complexSymbolsList))
+		# Simple symbols.
+		# These are all handled in one named group.
+		# Because the symbols are just text, we know which symbol matched just by looking at the matched text.
+		patterns.append(ur"(?P<simple>{})".format(
+			"|".join(re.escape(identifier) for identifier in simpleSymbolIdentifiers)
+		))
 		pattern = "|".join(patterns)
 		self._pattern = re.compile(pattern, re.UNICODE)
 
@@ -317,10 +330,16 @@ class SpeechSymbols(object):
 
 		else:
 			# One of the defined symbols.
-			index = int(group[1:])
-			symbol = self._computedSymbolsList[index]
+			text = m.group()
+			if group == "simple":
+				# Simple symbol.
+				symbol = self.computedSymbols[text]
+			else:
+				# Complex symbol.
+				index = int(group[1:])
+				symbol = self._computedComplexSymbolsList[index]
 			if symbol.preserve:
-				suffix = "%s" % m.group()
+				suffix = text
 			else:
 				suffix = " "
 			if self._level >= symbol.level and symbol.replacement:
