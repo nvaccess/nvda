@@ -264,8 +264,10 @@ class SpeechSymbols(object):
 				identifier = sourceSymbol.identifier
 				try:
 					symbol = symbols[identifier]
+					# We're updating an already existing symbol.
 				except KeyError:
-					# This is a simple symbol.
+					# This is a new simple symbol.
+					# (All complex symbols have already been added.)
 					symbol = symbols[identifier] = SpeechSymbol(identifier)
 					simpleSymbolIdentifiers.append(identifier)
 					if len(identifier) == 1:
@@ -299,7 +301,7 @@ class SpeechSymbols(object):
 		patterns = [
 			# Strip repeated spaces from the end of the line to stop them from being picked up by repeated.
 			r"(?P<rstripSpace>  +$)",
-			# Repeated characters.
+			# Repeated characters: more than 3 repeats.
 			r"(?P<repeated>(?P<repTmp>[%s])(?P=repTmp){3,})" % re.escape("".join(characters))
 		]
 		# Complex symbols.
@@ -314,9 +316,9 @@ class SpeechSymbols(object):
 			"|".join(re.escape(identifier) for identifier in simpleSymbolIdentifiers)
 		))
 		pattern = "|".join(patterns)
-		self._pattern = re.compile(pattern, re.UNICODE)
+		self._regexp = re.compile(pattern, re.UNICODE)
 
-	def _process(self, m):
+	def _regexpRepl(self, m):
 		group = m.lastgroup
 
 		if group == "rstripSpace":
@@ -352,7 +354,7 @@ class SpeechSymbols(object):
 
 	def processText(self, text, level):
 		self._level = level
-		return self._pattern.sub(self._process, text)
+		return self._regexp.sub(self._regexpRepl, text)
 
 _speechSymbolsLocaleDataMap = LocaleDataMap(SpeechSymbols)
 
