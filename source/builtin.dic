@@ -1,6 +1,4 @@
-﻿#Limit groups of the same character to 5 or less.
-([\W])\1{5,}	\1\1\1\1\1	1	1
-#break up words that use a capital letter to denote another word
+﻿#break up words that use a capital letter to denote another word
 ([a-z])([A-Z])	\1 \2	1	1
 #Break away a word starting with a capital from a fully uppercase word
 ([A-Z])([A-Z][a-z])	\1 \2	1	1
