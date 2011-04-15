@@ -75,23 +75,21 @@ class CharacterDescriptions(object):
 
 	def getCharacterDescription(self, character):
 		"""
-		Looks up the given character and returns a string containing all the descriptions found.
+		Looks up the given character and returns a list containing all the description strings found.
 		"""
-		desc=self._entries.get(character)
-		if not desc: return None
-		return u"\u3002".join(desc)
+		return self._entries.get(character)
 
 _charDescLocaleDataMap=LocaleDataMap(CharacterDescriptions)
 
 def getCharacterDescription(locale,character):
 	"""
-	Finds a description or example for the given character, which makes sence in the given locale.
+	Finds a description or examples for the given character, which makes sence in the given locale.
 	@param locale: the locale (language[_COUNTRY]) the description should be for.
 	@type locale: string
 	@param character: the character  who's description should be retreaved.
 	@type character: string
 	@return:  the found description for the given character
-	@rtype: string
+	@rtype: list of strings
 	"""
 	try:
 		l=_charDescLocaleDataMap.fetchLocaleData(locale)
