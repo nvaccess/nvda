@@ -198,8 +198,14 @@ class SpeechSymbols(object):
 	}
 
 	def _loadSymbol(self, line):
-		line = iter(line.split("\t"))
+		line = line.split("\t")
 		identifier = replacement = level = preserve = displayName = None
+		if line[-1].startswith("#"):
+			# Regardless of how many fields there are,
+			# if the last field is a comment, it is the display name.
+			displayName = line[-1][1:].lstrip()
+			del line[-1]
+		line = iter(line)
 		try:
 			identifier = next(line)
 			if not identifier:
@@ -216,15 +222,12 @@ class SpeechSymbols(object):
 		try:
 			level = SPEECH_SYMBOL_LEVELS.get(next(line))
 			preserve = next(line)
-			if preserve == "a":
+			if preserve == "always":
 				preserve = True
-			elif preserve == "n":
+			elif preserve == "never":
 				preserve = False
 			else:
 				preserve = None
-			displayName = next(line)
-			if displayName == "-":
-				displayName = None
 		except StopIteration:
 			# These fields are optional. Defaults will be used for unspecified fields.
 			pass

@@ -11,15 +11,15 @@
 decimal point	(?<=\d)\.(?=\d)
 
 symbols:
-# identifier	replacement	[level]	[preserve]	[display name]
+# identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	dot	-	a
-! sentence ending	bang	-	a
-? sentence ending	question	-	a
-; phrase ending	semi	most	a
-: phrase ending	colon	most	a
-decimal point		none	a
+. sentence ending	dot	all	always
+! sentence ending	bang	all	always
+? sentence ending	question	all	always
+; phrase ending	semi	most	always
+: phrase ending	colon	most	always
+decimal point		none	always
 
 # Whitespace
 \0	blank	char
@@ -28,30 +28,30 @@ decimal point		none	a
 \f	page break	none
 \r	carriage return	char
  	space	char
- 	space	char	-	no-break space
+ 	space	char	# no-break space
 
 # Standard punctuation/symbols
-!	bang
+!	bang	all
 "	quote	most
 \#	number	most
 $	dollar	some
 %	percent	some
 &	and	some
-'	tick
+'	tick	all
 (	left paren	most
 )	right paren	most
 *	star	most
 +	plus	most
-,	comma	-	a
+,	comma	all	always
 -	dash	most
-.	dot
+.	dot	all
 /	slash	some
 :	colon	most
 ;	semi	most
 <	less	most
 >	greater	most
 =	equals	most
-?	question
+?	question	all
 @	at	some
 [	left bracket	most
 ]	right bracket	most
@@ -67,7 +67,7 @@ _	line	most
 
 # Other characters
 •	bullet	some
-…	dot dot dot	all	a
+…	dot dot dot	all	always
 	bullet	some
 “	left quote	most
 ”	right quote	most
