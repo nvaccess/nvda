@@ -135,7 +135,7 @@ class SpeechSymbol(object):
 		self.replacement = replacement
 		self.level = level
 		self.preserve = preserve
-		self.displayName = None
+		self.displayName = displayName
 
 class SpeechSymbols(object):
 	"""
