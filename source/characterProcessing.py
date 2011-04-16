@@ -1,7 +1,6 @@
 #characterProcessing.py
 #A part of NonVisual Desktop Access (NVDA)
-#URL: http://www.nvda-project.org/
-#Copyright (c) 2010-2011 World Light Information Limited and Hong Kong Blind Union.
+#Copyright (C) 2010-2011 NV Access Inc, World Light Information Limited, Hong Kong Blind Union
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
