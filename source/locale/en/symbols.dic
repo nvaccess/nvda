@@ -9,6 +9,7 @@
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[a-zA-Z0-9])'(?=[a-zA-Z])
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -20,6 +21,7 @@ symbols:
 ; phrase ending	semi	most	always
 : phrase ending	colon	most	always
 decimal point		none	always
+in-word '	tick	all	norep
 
 # Whitespace
 \0	blank	char
