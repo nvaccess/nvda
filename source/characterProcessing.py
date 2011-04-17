@@ -125,6 +125,16 @@ USER_SPEECH_SYMBOL_LEVELS = collections.OrderedDict((
 	(SYMLVL_ALL, _("all")),
 ))
 
+# Speech symbol preserve modes
+SYMPRES_NEVER = 0
+SYMPRES_ALWAYS = 1
+SYMPRES_NOREP = 2
+SPEECH_SYMBOL_PRESERVE_MODES = {
+	"never": SYMPRES_NEVER,
+	"always": SYMPRES_ALWAYS,
+	"norep": SYMPRES_NOREP,
+}
+
 class SpeechSymbol(object):
 	__slots__ = ("identifier", "pattern", "replacement", "level", "preserve", "displayName")
 
@@ -220,13 +230,7 @@ class SpeechSymbols(object):
 			raise ValueError
 		try:
 			level = SPEECH_SYMBOL_LEVELS.get(next(line))
-			preserve = next(line)
-			if preserve == "always":
-				preserve = True
-			elif preserve == "never":
-				preserve = False
-			else:
-				preserve = None
+			preserve = SPEECH_SYMBOL_PRESERVE_MODES.get(next(line))
 		except StopIteration:
 			# These fields are optional. Defaults will be used for unspecified fields.
 			pass
@@ -293,7 +297,7 @@ class SpeechSymbols(object):
 			if symbol.level is None:
 				symbol.level = SYMLVL_ALL
 			if symbol.preserve is None:
-				symbol.preserve = False
+				symbol.preserve = SYMPRES_NEVER
 			if symbol.displayName is None:
 				symbol.displayName = symbol.identifier
 
@@ -345,7 +349,7 @@ class SpeechSymbols(object):
 				# Complex symbol.
 				index = int(group[1:])
 				symbol = self._computedComplexSymbolsList[index]
-			if symbol.preserve:
+			if symbol.preserve == SYMPRES_ALWAYS or (symbol.preserve == SYMPRES_NOREP and self._level < symbol.level):
 				suffix = text
 			else:
 				suffix = " "
