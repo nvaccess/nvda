@@ -14,6 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <cassert>
 #include <map>
+#include <set>
 #include <list>
 #include <windows.h>
 #include <usp10.h>
@@ -48,6 +49,7 @@ wchar_t* WA_strncpy(wchar_t* dest, const wchar_t* source, size_t size) {
 map<HWND,int> windowsForTextChangeNotifications;
 map<HWND,RECT> textChangeNotifications;
 UINT_PTR textChangeNotifyTimerID=0;
+DWORD tls_index_inTextOutHook=TLS_OUT_OF_INDEXES;
 
 void CALLBACK textChangeNotifyTimerProc(HWND hwnd, UINT msg, UINT_PTR timerID, DWORD time) {
 	map<HWND,RECT> tempMap;
@@ -131,6 +133,174 @@ void dcPointsToScreenPoints(HDC hdc, POINT* points, int count) {
 	}
 }
 
+//see SynPdf at http://synopse.info
+//Converts word array to little endian.
+void swapBuffer(WORD* array, int length) {
+	for(int i=0; i<length; i++) array[i]=SWAPWORD(array[i]);
+}
+
+//Retrieves table data from font selected in DC using GetFontData [SynPdf]
+PBYTE getTTFData(HDC hdc, char* tableName, LPDWORD dataSize) {
+	PBYTE res=NULL;
+	DWORD len=GetFontData(hdc,*((LPDWORD)tableName),0,NULL,0);
+	if(len==GDI_ERROR) {
+		LOG_DEBUG("getTTFData for table "<<tableName<<" result GDI_ERROR");
+		if(dataSize!=NULL) *dataSize=0;
+		return NULL;
+	}
+	res=(PBYTE)calloc(len,sizeof(BYTE));
+	if(GetFontData(hdc,*((LPDWORD)tableName),0,res,len)==GDI_ERROR) {
+		//Probably could not happen
+		LOG_DEBUG("getTTFData for table "<<tableName<<", dataSize="<<len<<" result GDI_ERROR");
+		free(res);
+		if(dataSize!=NULL) *dataSize=0;
+		return NULL;
+	}
+	if(dataSize!=NULL) *dataSize=len;
+	LOG_DEBUG("getTTFData for table "<<tableName<<", dataSize="<<len);
+	swapBuffer((WORD*)res,len>>1);
+	return res;
+}
+
+//This class contains glyphIndex to wchar_t mapping. See [cmap], subheading "Format 4: Segment mapping to delta values"
+class GlyphTranslator {
+	private:
+	volatile long _refCount;
+	map<int,wchar_t> _glyphs;
+
+	public:
+
+	long incRef() {
+		return InterlockedIncrement(&_refCount);
+	}
+
+	long decRef() {
+		long refCount=InterlockedDecrement(&_refCount);
+		if(refCount==0) {
+			delete this;
+		}
+		assert(refCount>=0);
+		return refCount;
+	}
+
+	GlyphTranslator(HDC hdc) : _glyphs(), _refCount(0) {
+		incRef();
+		LOG_DEBUG("Creating instance at "<<this);
+		DWORD cmapLen;
+		PBYTE p=getTTFData(hdc,"cmap",&cmapLen);
+		if(p==NULL) return;
+		CmapHeader* header=(CmapHeader*)((DWORD)p);
+		EncodingRecord* encodings=(EncodingRecord*)((DWORD)p+sizeof(CmapHeader));
+		DWORD off=0;
+		LOG_DEBUG("Number of encodings: "<<header->numTables);
+		for(int i=0; i<header->numTables; i++) {
+			EncodingRecord e=encodings[i];
+			if(e.platformID==3 && e.encodingID==1) {
+				off=SWAPLONG(e.offset);
+				LOG_DEBUG("Unicode mapping found at offset "<<off);
+				break;
+			}
+		}
+		if(off==0 || off>cmapLen) {
+			LOG_DEBUG("Offset seems to be out of range ("<<off<<")");
+			free(p);
+			return;
+		}
+		CmapFmt4Header* fmt4=(CmapFmt4Header*)(p+off);
+		if(fmt4->format!=4) {
+			free(p);
+			LOG_DEBUG("No format4 table found, found format "<<fmt4->format);
+			return;
+		}
+		LOG_DEBUG("segCountX2: "<<fmt4->segCountX2<<", format: "<<fmt4->format<<", length: "<<fmt4->length);
+		WORD segCount=fmt4->segCountX2>>1;
+		PBYTE tmpP=p;
+		p+=(off+sizeof(CmapFmt4Header));
+		WORD* endCode=(WORD*)p;
+		WORD* startCode=endCode+segCount+1; //+1 for reservedPad
+		SHORT* idDelta=(SHORT*)startCode+segCount;
+		WORD* idRangeOffset=(WORD*)idDelta+segCount;
+		WORD* glyphIndexArray=idRangeOffset+segCount;
+		p=tmpP;
+		LOG_DEBUG("Mapping glyphs...");
+		for(int i=0; i<segCount; i++) {
+			SHORT delta=idDelta[i];
+			WORD offset=idRangeOffset[i];
+			for(int code=startCode[i]; code<=endCode[i]; code++) {
+				WORD glyphIndex;
+				if(offset!=0) {
+					glyphIndex=*(offset/2+(code-startCode[i])+&idRangeOffset[i]);
+					if(glyphIndex!=0) glyphIndex+=delta;
+				}
+				else glyphIndex=code+delta;
+				_glyphs.insert(make_pair(glyphIndex,(wchar_t)code));
+				LOG_DEBUG("Mapped "<<glyphIndex<<" to "<<(wchar_t)code);
+			}
+		}
+		LOG_DEBUG(_glyphs.size()<<" glyphs were mapped");
+		free(p);
+	}
+
+	~GlyphTranslator() {
+		LOG_DEBUG("Deleting instance at "<<this);
+	}
+
+	bool hasMapping() { return !_glyphs.empty(); }
+
+	bool translateGlyphs(const wchar_t* lpString, int cbCount, wstring& newString) {
+		if(!hasMapping()) return false;
+		wchar_t* newStr=(wchar_t*)calloc(cbCount,sizeof(wchar_t));
+		if(newStr==NULL) return false;
+		for(int i=0; i<cbCount; i++) {
+			map<int,wchar_t>::iterator wchr=_glyphs.find((int)lpString[i]);
+			if(wchr==_glyphs.end()) newStr[i]=' ';
+			else newStr[i]=wchr->second;
+		}
+		newString=wstring(newStr,cbCount);
+		free(newStr);
+		LOG_DEBUG("Translated glyphs: "<<newString);
+		return true;
+	}
+};
+
+class GlyphTranslatorCache : protected LockableObject {
+	private:
+
+	map<int,GlyphTranslator*> _glyphTranslatorsByFontChecksum;
+
+	public:
+
+	GlyphTranslatorCache() : _glyphTranslatorsByFontChecksum(), LockableObject() {}
+
+	GlyphTranslator* fetchGlyphTranslator(HDC hdc) {
+		FontHeader* fh=(FontHeader*)getTTFData(hdc,"head",NULL);
+		GlyphTranslator* gt=NULL;
+		acquire();
+		map<int,GlyphTranslator*>::iterator i=_glyphTranslatorsByFontChecksum.find(fh->checksumAdjustment);
+		if(i!=_glyphTranslatorsByFontChecksum.end()) {
+			gt=i->second;
+		} else {
+			gt=new GlyphTranslator(hdc);
+			_glyphTranslatorsByFontChecksum.insert(make_pair(fh->checksumAdjustment,gt));
+		}
+		if(gt) gt->incRef();
+		release();
+		return gt;
+	}
+
+	void cleanup() {
+		acquire();
+		map<int,GlyphTranslator*>::iterator i=_glyphTranslatorsByFontChecksum.begin();
+		while(i!=_glyphTranslatorsByFontChecksum.end()) {
+			i->second->decRef();
+			_glyphTranslatorsByFontChecksum.erase(i++);
+		}    
+		release();
+	}
+};
+
+GlyphTranslatorCache glyphTranslatorCache;
+
 /**
  * Given a displayModel, this function clears a rectangle, and inserts a chunk, for the given text, using the given offsets and rectangle etc.
  * This function is used by many of the hook functions.
@@ -156,14 +326,24 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		if(fuOptions&ETO_OPAQUE) model->clearRectangle(clearRect);
 	}
 	//If there is no string given, or its only glyphs, then we don't need to go further
-	if(!lpString||cbCount<=0||fuOptions&ETO_GLYPH_INDEX) return;
+	if(!lpString||cbCount<=0) return;
+	wstring newText=L"";
+	bool fromGlyphs=false;
+	if(fuOptions&ETO_GLYPH_INDEX) {
+		GlyphTranslator* gt=glyphTranslatorCache.fetchGlyphTranslator(hdc);
+		if(gt) {
+			fromGlyphs=gt->translateGlyphs(lpString,cbCount,newText);
+			gt->decRef();
+		}
+		if(!fromGlyphs) return;
+	}
 	SIZE _textSize;
 	if(!resultTextSize) resultTextSize=&_textSize;
 	if(resultTextSize) {
 		resultTextSize->cx=0;
 		resultTextSize->cy=0;
 	}
-	wstring newText(lpString,cbCount);
+	if(!fromGlyphs) newText=wstring(lpString,cbCount);
 	//Search for and remove the first & symbol if we have been requested to stip hotkey indicator.
 	if(stripHotkeyIndicator) {
 		size_t pos=newText.find(L'&');
@@ -268,8 +448,10 @@ template<typename charType> int  WINAPI hookClass_TextOut<charType>::fakeFunctio
 	UINT textAlign=GetTextAlign(hdc);
 	POINT pos={x,y};
 	if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
+	TlsSetValue(tls_index_inTextOutHook,(LPVOID)1);
 	//Call the real function
 	BOOL res=realFunction(hdc,x,y,lpString,cbCount);
+	TlsSetValue(tls_index_inTextOutHook,(LPVOID)0);
 	//If the real function did not work, or the arguments are not sane, then stop here
 	if(res==0||!lpString||cbCount<=0) return res;
 	displayModel_t* model=acquireDisplayModel(hdc);
@@ -403,6 +585,8 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 	BOOL res=realFunction(hdc,x,y,fuOptions,lprc,lpString,cbCount,lpDx);
 	//If the real function did not work, or the arguments are not sane, or only glyphs were provided, then stop here. 
 	if(res==0) return res;
+	//If we are being called from within a call to TextOut, do not do anything more as our TextOut code will record the text
+	if((int)TlsGetValue(tls_index_inTextOutHook)==1) return res;
 	//try to get or create a displayModel for this device context
 	displayModel_t* model=acquireDisplayModel(hdc);
 	//If we can't get a display model then stop here
@@ -544,8 +728,10 @@ BOOL allow_ScriptStringAnalyseArgsByAnalysis=FALSE;
 typedef HRESULT(WINAPI *ScriptStringAnalyse_funcType)(HDC,const void*,int,int,int,DWORD,int,SCRIPT_CONTROL*,SCRIPT_STATE*,const int*,SCRIPT_TABDEF*,const BYTE*,SCRIPT_STRING_ANALYSIS*);
 ScriptStringAnalyse_funcType real_ScriptStringAnalyse=NULL;
 HRESULT WINAPI fake_ScriptStringAnalyse(HDC hdc,const void* pString, int cString, int cGlyphs, int iCharset, DWORD dwFlags, int iRectWidth, SCRIPT_CONTROL* psControl, SCRIPT_STATE* psState, const int* piDx, SCRIPT_TABDEF* pTabdef, const BYTE* pbInClass, SCRIPT_STRING_ANALYSIS* pssa) {
+	TlsSetValue(tls_index_inTextOutHook,(LPVOID)1);
 	//Call the real ScriptStringAnalyse
 	HRESULT res=real_ScriptStringAnalyse(hdc,pString,cString,cGlyphs,iCharset,dwFlags,iRectWidth,psControl,psState,piDx,pTabdef,pbInClass,pssa);
+	TlsSetValue(tls_index_inTextOutHook,(LPVOID)0);
 	//We only want to go on if  there's safe arguments
 	//We also need to acquire access to our scriptString analysis map
 	if(res!=S_OK||!pString||cString<=0||!pssa||!allow_ScriptStringAnalyseArgsByAnalysis) return res;
@@ -692,6 +878,7 @@ BOOL WINAPI fake_DestroyWindow(HWND hwnd) {
 }
 
 void gdiHooks_inProcess_initialize() {
+	tls_index_inTextOutHook=TlsAlloc();
 	//Initialize the timer for text change notifications
 	textChangeNotifyTimerID=SetTimer(NULL,NULL,50,textChangeNotifyTimerProc);
 	assert(textChangeNotifyTimerID);
@@ -723,6 +910,8 @@ void gdiHooks_inProcess_initialize() {
 void gdiHooks_inProcess_terminate() {
 	//Kill the text change notification timer
 	KillTimer(0,textChangeNotifyTimerID);
+	//Cleanup glyph mapping.
+	glyphTranslatorCache.cleanup();
 	//Acquire access to the maps and clean them up
 	displayModelsByWindow.acquire();
 	displayModelsMap_t<HWND>::iterator i=displayModelsByWindow.begin();
@@ -742,4 +931,5 @@ void gdiHooks_inProcess_terminate() {
 	allow_ScriptStringAnalyseArgsByAnalysis=FALSE;
 	ScriptStringAnalyseArgsByAnalysis.clear();
 	LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
+	TlsFree(tls_index_inTextOutHook);
 }
