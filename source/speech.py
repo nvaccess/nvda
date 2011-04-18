@@ -178,7 +178,7 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 			charDesc=getCharacterDescription(locale,char.lower())
 		if charDesc:
 			#Consider changing to multiple synth speech calls
-			char=charDesc[0] if textLength>1 else u"\u3302 ".join(charDesc)
+			char=charDesc[0] if textLength>1 else u"\u3001".join(charDesc)
 		else:
 			char=processSymbol(char)
 		if uppercase and synthConfig["sayCapForCapitals"]:
