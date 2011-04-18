@@ -376,7 +376,7 @@ def processSpeechSymbols(locale, text, level):
 		ss = _speechSymbolsLocaleDataMap.fetchLocaleData(locale)
 	except LookupError:
 		if not locale.startswith("en"):
-			return processSymbols("en", text)
+			return processSpeechSymbols("en", text, level)
 		raise
 	return ss.processText(text, level)
 
