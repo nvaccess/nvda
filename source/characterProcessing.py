@@ -391,7 +391,7 @@ def processSpeechSymbol(locale, symbol):
 		ss = _speechSymbolsLocaleDataMap.fetchLocaleData(locale)
 	except LookupError:
 		if not locale.startswith("en"):
-			return processSymbols("en", text)
+			return processSpeechSymbol("en", symbol)
 		raise
 	try:
 		return ss.computedSymbols[symbol].replacement
