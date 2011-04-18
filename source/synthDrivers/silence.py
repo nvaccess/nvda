@@ -17,3 +17,6 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		return True
 
 	supportedSettings=[]
+
+	def speak(self,speechSequence):
+		pass #Its silent
