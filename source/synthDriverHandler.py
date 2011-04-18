@@ -238,7 +238,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def speak(self,speechSequence):
 		"""
 		Speaks the given sequence of text and speech commands.
-		This base implementation will fallback to making use of the old speakText method. But new synths should override this method to support its full functionality.
+		This base implementation will fallback to making use of the old speakText and speakCharacter methods. But new synths should override this method to support its full functionality.
 		@param speechSequence: a list of text strings and SpeechCommand objects (such as index and parameter changes).
 		@type speechSequence: list of string and L{speechCommand}
 		"""
@@ -260,15 +260,18 @@ class SynthDriver(baseObject.AutoPropertyObject):
 
 	def speakText(self, text, index=None):
 		"""Speak some text.
+		This method is deprecated. Instead implement speak.
 		@param text: The chunk of text to speak.
 		@type text: str
 		@param index: An index (bookmark) to associate with this chunk of text, C{None} if no index.
 		@type index: int
 		@note: If C{index} is provided, the C{lastIndex} property should return this index when the synth is speaking this chunk of text.
 		"""
+		raise NotImplementedError
 
 	def speakCharacter(self, character, index=None):
 		"""Speak some character.
+		This method is deprecated. Instead implement speak.
 		@param character: The character to speak.
 		@type character: str
 		@param index: An index (bookmark) to associate with this chunk of speech, C{None} if no index.
