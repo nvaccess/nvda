@@ -11,7 +11,6 @@ import colors
 import XMLFormatting
 import globalVars
 from logHandler import log
-import speechCommands
 import api
 import controlTypes
 import config
@@ -164,9 +163,9 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 		log.io("Speaking character %r"%char)
 		speechSequence=[]
 		if len(char) == 1 and synthConfig["useSpellingFunctionality"]:
-			speechSequence.append(speechCommands.CharacterMode(True))
+			speechSequence.append(CharacterModeCommand(True))
 		if index is not None:
-			speechSequence.append(speechCommands.IndexCommand(index))
+			speechSequence.append(IndexCommand(index))
 		speechSequence.append(char)
 		synth.speak(speechSequence)
 		if uppercase and synth.isSupported("pitch") and synthConfig["raisePitchForCapitals"]:
@@ -301,7 +300,7 @@ def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 	if not text or not text.isspace():
 		speechSequence=[]
 		if index is not None:
-			speechSequence.append(speechCommands.IndexCommand(index))
+			speechSequence.append(IndexCommand(index))
 		speechSequence.append(text)
 		getSynth().speak(speechSequence)
 
@@ -993,3 +992,30 @@ def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
 	if rowNumber!=oldRowNumber:
 		textList.append(_("row %s")%rowNumber)
 	return " ".join(textList)
+
+class SpeechCommand(object):
+	"""
+	The base class for objects that can be inserted between string of text for parituclar speech functions that convey  things such as indexing or voice parameter changes.
+	"""
+
+class IndexCommand(SpeechCommand):
+	"""Represents an index within some speech."""
+
+	def __init__(self,index):
+		"""
+		@param index: the value of this index
+		@type index: integer
+		"""
+		if not isinstance(index,int): raise ValueError("index must be int, not %s"%type(index))
+		self.index=index
+
+class CharacterModeCommand(object):
+	"""Turns character mode on and off for speech synths."""
+
+	def __init__(self,state):
+		"""
+		@param state: if true character mode is on, if false its turned off.
+		@type state: boolean
+		"""
+		if not isinstance(state,bool): raise ValueError("state must be boolean, not %s"%type(state))
+		self.state=state

@@ -8,7 +8,6 @@ from copy import deepcopy
 import os
 import pkgutil
 import config
-import speechCommands
 import baseObject
 import globalVars
 from logHandler import log
@@ -243,17 +242,18 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		@param speechSequence: a list of text strings and SpeechCommand objects (such as index and parameter changes).
 		@type speechSequence: list of string and L{speechCommand}
 		"""
+		import speech
 		lastIndex=None
 		origSpeakFunc=self.speakText
 		for item in speechSequence:
 			if isinstance(item,basestring):
 				origSpeakFunc(item,index=lastIndex)
 				lastIndex=None
-			elif isinstance(item,speechCommands.IndexCommand):
+			elif isinstance(item,speech.IndexCommand):
 				lastIndex=item.index
-			elif isinstance(item,speechCommands.CharacterMode):
+			elif isinstance(item,speech.CharacterModeCommand):
 				origSpeakFunc=self.speakCharacter if item.state else self.speakText
-			elif isinstance(item,speechCommands.SpeechCommand):
+			elif isinstance(item,speech.SpeechCommand):
 				log.debugWarning("Unknown speech command: %s"%item)
 			else:
 				log.error("Unknown item in speech sequence: %s"%item)
