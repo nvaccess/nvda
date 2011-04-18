@@ -11,6 +11,7 @@ import colors
 import XMLFormatting
 import globalVars
 from logHandler import log
+import speechCommands
 import api
 import controlTypes
 import config
@@ -129,7 +130,7 @@ def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 	beenCanceled=False
 	locale=languageHandler.getLanguage()
 	if not text:
-		return getSynth().speakText(characterProcessing.processSpeechSymbol(locale,""))
+		return getSynth().speak(characterProcessing.processSpeechSymbol(locale,""))
 	if not text.isspace():
 		text=text.rstrip()
 	gen=_speakSpellingGen(text,locale,useCharacterDescriptions)
@@ -161,10 +162,13 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 			synth.pitch=max(0,min(oldPitch+synthConfig["capPitchChange"],100))
 		index=count+1
 		log.io("Speaking character %r"%char)
+		speechSequence=[]
 		if len(char) == 1 and synthConfig["useSpellingFunctionality"]:
-			synth.speakCharacter(char,index=index)
-		else:
-			synth.speakText(char,index=index)
+			speechSequence.append(speechCommands.CharacterMode(True))
+		if index is not None:
+			speechSequence.append(speechCommands.IndexCommand(index))
+		speechSequence.append(char)
+		synth.speak(speechSequence)
 		if uppercase and synth.isSupported("pitch") and synthConfig["raisePitchForCapitals"]:
 			synth.pitch=oldPitch
 		while textLength>1 and (isPaused or getLastSpeechIndex()!=index):
@@ -295,7 +299,11 @@ def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 	else:
 		text=processText(text,symbolLevel)
 	if not text or not text.isspace():
-		getSynth().speakText(text,index=index)
+		speechSequence=[]
+		if index is not None:
+			speechSequence.append(speechCommands.IndexCommand(index))
+		speechSequence.append(text)
+		getSynth().speak(speechSequence)
 
 def speakSelectionMessage(message,text):
 	if len(text) < 512:
