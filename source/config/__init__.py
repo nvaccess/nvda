@@ -55,9 +55,9 @@ confspec = ConfigObj(StringIO(
 [speech]
 	# The synthesiser to use
 	synth = string(default=auto)
-	speakPunctuation = boolean(default=False)
+	symbolLevel = integer(default=100)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
-outputDevice = string(default=default)
+	outputDevice = string(default=default)
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)

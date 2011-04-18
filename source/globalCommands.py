@@ -30,6 +30,7 @@ import ui
 import braille
 import inputCore
 import virtualBuffers
+import characterProcessing
 from baseObject import ScriptableObject
 
 class GlobalCommands(ScriptableObject):
@@ -188,15 +189,17 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("speak command keys")+" "+onOff)
 	script_toggleSpeakCommandKeys.__doc__=_("Toggles on and off the speaking of typed keys, that are not specifically characters")
 
-	def script_toggleSpeakPunctuation(self,gesture):
-		if config.conf["speech"]["speakPunctuation"]:
-			onOff=_("off")
-			config.conf["speech"]["speakPunctuation"]=False
+	def script_cycleSpeechSymbolLevel(self,gesture):
+		curLevel = config.conf["speech"]["symbolLevel"]
+		for level, name in characterProcessing.USER_SPEECH_SYMBOL_LEVELS.iteritems():
+			if level > curLevel:
+				break
 		else:
-			onOff=_("on")
-			config.conf["speech"]["speakPunctuation"]=True
-		ui.message(_("speak punctuation")+" "+onOff)
-	script_toggleSpeakPunctuation.__doc__=_("Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation")
+			level = characterProcessing.SYMLVL_NONE
+			name = characterProcessing.USER_SPEECH_SYMBOL_LEVELS[level]
+		config.conf["speech"]["symbolLevel"] = level
+		ui.message(_("symbol level %s") % name)
+	script_cycleSpeechSymbolLevel.__doc__=_("Cycles through speech symbol levels which determine what symbols are spoken")
 
 	def script_moveMouseToNavigatorObject(self,gesture):
 		obj=api.getNavigatorObject() 
@@ -1065,7 +1068,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+2": "toggleSpeakTypedCharacters",
 		"kb:NVDA+3": "toggleSpeakTypedWords",
 		"kb:NVDA+4": "toggleSpeakCommandKeys",
-		"kb:NVDA+p": "toggleSpeakPunctuation",
+		"kb:NVDA+p": "cycleSpeechSymbolLevel",
 		"kb:NVDA+s": "speechMode",
 		"kb(desktop):NVDA+m": "toggleMouseTracking",
 		"kb(laptop):NVDA+shift+m": "toggleMouseTracking",
