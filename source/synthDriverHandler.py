@@ -8,6 +8,7 @@ from copy import deepcopy
 import os
 import pkgutil
 import config
+import speechCommands
 import baseObject
 import globalVars
 from logHandler import log
@@ -234,6 +235,28 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		@precondition: L{initialize} has been called.
 		@postcondition: This driver can no longer be used.
 		"""
+
+	def speak(self,speechSequence):
+		"""
+		Speaks the given sequence of text and speech commands.
+		This base implementation will fallback to making use of the old speakText method. But new synths should override this method to support its full functionality.
+		@param speechSequence: a list of text strings and SpeechCommand objects (such as index and parameter changes).
+		@type speechSequence: list of string and L{speechCommand}
+		"""
+		lastIndex=None
+		origSpeakFunc=self.speakText
+		for item in speechSequence:
+			if isinstance(item,basestring):
+				origSpeakFunc(item,index=lastIndex)
+				lastIndex=None
+			elif isinstance(item,speechCommands.IndexCommand):
+				lastIndex=item.index
+			elif isinstance(item,speechCommands.CharacterMode):
+				origSpeakFunc=self.speakCharacter if item.state else self.speakText
+			elif isinstance(item,speechCommands.SpeechCommand):
+				log.debugWarning("Unknown speech command: %s"%item)
+			else:
+				log.error("Unknown item in speech sequence: %s"%item)
 
 	def speakText(self, text, index=None):
 		"""Speak some text.
