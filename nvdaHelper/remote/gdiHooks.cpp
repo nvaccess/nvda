@@ -274,6 +274,7 @@ class GlyphTranslatorCache : protected LockableObject {
 
 	GlyphTranslator* fetchGlyphTranslator(HDC hdc) {
 		FontHeader* fh=(FontHeader*)getTTFData(hdc,"head",NULL);
+		if(!fh) return NULL;
 		GlyphTranslator* gt=NULL;
 		acquire();
 		map<int,GlyphTranslator*>::iterator i=_glyphTranslatorsByFontChecksum.find(fh->checksumAdjustment);
