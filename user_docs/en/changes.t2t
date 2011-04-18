@@ -25,9 +25,8 @@
 
 == Changes for Developers ==
 - Developer documentation can now be generated using SCons. See readme.txt at the root of the source distribution for details, including associated dependencies.
-- Translators can now provide descriptions for characters in a characterDescriptions.dic file placed inside their locale directory. The file should be utf8, and contain lines made up of the character, followed by a tab, then one or more descriptions separated by tabs.
-- Locales can now provide information about the pronunciation of specific punctuation and other symbols. (#332)
- - This is done by providing a symbols.dic file in the locale directory.
+- Locales can now provide descriptions for characters. See the Character Descriptions section of the Developer Guide for details. (#55)
+- Locales can now provide information about the pronunciation of specific punctuation and other symbols. See the Symbol Pronunciation section of the Developer Guide for details. (#332)
 
 
 = 2011.1.1 =
