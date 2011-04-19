@@ -9,7 +9,7 @@
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<=\d)\.(?=\d)
-in-word '	(?<=[a-zA-Z0-9])'(?=[a-zA-Z])
+in-word '	(?<=[^\W_])'
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
