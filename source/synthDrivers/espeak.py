@@ -10,6 +10,7 @@ import Queue
 import threading
 import languageHandler
 from synthDriverHandler import SynthDriver,VoiceInfo
+import speech
 from logHandler import log
 
 class SynthDriver(SynthDriver):
@@ -33,13 +34,25 @@ class SynthDriver(SynthDriver):
 		self.pitch=40
 		self.inflection=75
 
-	def speakText(self,text,index=None):
-		# Replace \01, as this is used for embedded commands.
-		text = text.replace(u'\01', u' ')
-		_espeak.speak(text, index=index)
-
-	def speakCharacter(self,character,index=None):
-		_espeak.speak(character, index=index,isCharacter=True)
+	def speak(self,speechSequence):
+		textList=[]
+		for item in speechSequence:
+			if isinstance(item,basestring):
+				s=unicode(item)
+				# Replace \01, as this is used for embedded commands.
+				#Also replace < and > as espeak handles xml
+				s.translate({ord(u'\01'):None,ord(u'<'):u'&lt;',ord(u'>'):u'&gt;'})
+				textList.append(s)
+			elif isinstance(item,speech.IndexCommand):
+				textList.append("<mark name=\"%d\" />"%item.index)
+			elif isinstance(item,speech.CharacterModeCommand):
+				textList.append("<say-as type=\"spell-out\">" if item.state else "</say-as>")
+			elif isinstance(item,speech.SpeechCommand):
+				log.debugWarning("Unsupported speech command: %s"%item)
+			else:
+				log.error("Unknown speech: %s"%item)
+		text="".join(textList)
+		_espeak.speak(text)
 
 	def cancel(self):
 		_espeak.stop()
