@@ -182,9 +182,9 @@ class SpeechSymbols(object):
 					try:
 						handler(line)
 					except ValueError:
-						log.warning("Invalid line %r" % line)
+						log.warning("Invalid line: %s" % line)
 				else:
-					log.warning("Invalid line %r" % line)
+					log.warning("Invalid line: %s" % line)
 
 		self.initProcessor()
 
@@ -194,6 +194,17 @@ class SpeechSymbols(object):
 		except TypeError:
 			raise ValueError
 		self.rawComplexSymbols[identifier] = pattern
+
+	def _loadSymbolField(self, input, inputMap=None):
+		if input == "-":
+			# Default.
+			return None
+		if not inputMap:
+			return input
+		try:
+			return inputMap[input]
+		except KeyError:
+			raise ValueError
 
 	IDENTIFIER_ESCAPES = {
 		"0": "\0",
@@ -220,15 +231,13 @@ class SpeechSymbols(object):
 				raise ValueError
 			if len(identifier) == 2 and identifier.startswith("\\"):
 				identifier = self.IDENTIFIER_ESCAPES.get(identifier[1], identifier[1])
-			replacement = next(line)
-			if replacement == "-":
-				replacement = None
+			replacement = self._loadSymbolField(next(line))
 		except StopIteration:
 			# These fields are mandatory.
 			raise ValueError
 		try:
-			level = SPEECH_SYMBOL_LEVELS.get(next(line))
-			preserve = SPEECH_SYMBOL_PRESERVE_MODES.get(next(line))
+			level = self._loadSymbolField(next(line), SPEECH_SYMBOL_LEVELS)
+			preserve = self._loadSymbolField(next(line), SPEECH_SYMBOL_PRESERVE_MODES)
 		except StopIteration:
 			# These fields are optional. Defaults will be used for unspecified fields.
 			pass
