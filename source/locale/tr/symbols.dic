@@ -1,0 +1,81 @@
+﻿complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"')\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"')\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[a-zA-Z0-9])'(?=[a-zA-Z])
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	nokta	all	always
+! sentence ending	ünlem	all	always
+? sentence ending	soru	all	always
+; phrase ending	noktalıvirgül	most	always
+: phrase ending	ikinokta	most	always
+decimal point		none	always
+in-word '	apostrof	all	norep
+
+# Whitespace
+\0	boş	char
+\t	sekme
+\n	yeni satır	char
+\f	sayfa geçişi	none
+\r	satır sonu	char
+ 	aralık	char
+ 	aralık	char	# no-break space
+
+# Standard punctuation/symbols
+!	ünlem	all
+"	tırnak	most
+\#	diyez	most
+$	dolar	some
+£	paund	some
+€	euro	some
+%	yüzde	some
+&	ve	some
+'	apostrof	all
+(	açparantez	most
+)	kapaparantez	most
+*	çarpı	most
++	artı	most
+,	virgül	all	always
+-	tire	most
+.	nokta	all
+/	bölü	some
+:	ikinokta	most
+;	noktalıvirgül	most
+<	küçüktür	most
+>	büyüktür	most
+=	eşittir	most
+?	soru	all
+@	et	some
+[	aç köşeli parantez	most
+]	kapa köşeli parantez	most
+"	tırnak	most
+\\	tersbölü	most
+^	düzeltme imi	most
+_	alt çizgi	most
+`	graav	most
+{	aç küme parantezi	most
+}	kapa küme parantezi	most
+|	dikçizgi	most
+~	tilda	most
+
+# Other characters
+•	madde imi	some
+…	üçnokta	all	always
+	madde imi	some
+“	tırnakaç	most
+”	tırnakkapa	most
+–	en dash	most
+—	uzuntire	most
+●	yıldız	most
+¨	diaeresis	most 
