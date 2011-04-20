@@ -1,0 +1,71 @@
+﻿complexSymbols:
+# identifier	regexp
+# Others
+decimal point	(?<=\d)\,(?=\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	tečka	all	always
+! sentence ending	vykřičník	all	always
+? sentence ending	otazník	all	always
+; phrase ending	středník	most	always
+: phrase ending	dvojtečka	most	always
+decimal point		none	always
+in-word '	apostrof	none	norep
+
+# Whitespace
+\0	prázdný	char
+\t	tab
+\n	konec řádku	char
+\f	zlom strany	none
+\r	konec řádku	char
+ 	mezera	char
+ 	mezera	char	# no-break space
+
+# Standard punctuation/symbols
+!	vykřičník	all
+"	uvozovky	most
+\#	křížek	most
+$	dolar	some
+£	libra	some
+€	euro	some
+%	procento	some
+&	ampersand	some
+'	apostrof	some
+(	levá závorka	most
+)	pravá závorka	most
+*	hvězdička	most
++	plus	most
+,	čárka	all	always
+-	pomlčka	most
+.	tečka	all
+/	lomeno	some
+:	dvojtečka	most
+;	středník	most
+<	menší	most
+>	větší	most
+=	rovná se	most
+?	otazník	all
+@	zavináč	some
+[	levá hranatá	most
+]	pravá hranatá	most
+"	uvozovky	most
+\\	obrácené lomítko	most
+^	stříška	most
+_	podtržení	most
+`	akcent	most
+{	levá složená	most
+}	pravá složená	most
+|	svislá čára	most
+~	vlnovka	most
+
+
+# Other characters
+•	odrážka	some
+…	tečka tečka tečka	all	always
+	odrážka	some
+“	levá uvozovka	most
+”	pravá uvozovka	most
+¨	přehláska	most
