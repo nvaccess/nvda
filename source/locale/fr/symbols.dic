@@ -12,6 +12,7 @@ symbols:
 ; phrase ending	poinvirgule	# ; fin de phrase
 : phrase ending	deupoint	# : fin de phrase
 decimal point		# virgule
+in-word '	apostrophe	all	norep
 
 # Whitespace
 \0	blanc
@@ -46,7 +47,7 @@ $	dollar
 >	supérieur
 =	égal
 ?	poindinterrogation
-@	arobase
+@	arobase	none
 [	crochet gauche
 ]	crochet droit
 "	guillemet

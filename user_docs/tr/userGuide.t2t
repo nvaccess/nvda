@@ -243,7 +243,7 @@ Nesneler arasında dolaşmak için aşağıdaki tuşları kullanın:
 | İlk Yavru nesneye gitme | NVDA+numaratör2 | NVDA+shift+ö | Nesne sunucusunu, Üzerinde bulunulan nesnenin ilk alt nesnesine taşır ve okur. |
 | Odaktaki nesneye gitme | NVDA+numaratörMinus | NVDA+GeriSil | Nesne sunucusunu, sistem odağının üzerinde bulunduğu nesneye taşır ve eğer varsa, inceleme imlecini de sistem düzenleme imlecinin bulunduğu noktaya konumlandırır |
 | Üzerinde bulunulan nesneyi  etkinleştirme | NVDA+numaratörEnter | NVDA+enter | Sistem odağı bir şeyin üzerindeyken oraya mouse ile tıklamak veya boşluk çubuğuna basılmasına benzer biçimde, nesne sunucusunun üzerinde bulunduğu nesneyi etkinleştirir |
-| Sistem odağını nesne sunucusuna taşıma | NVDA+şift+numaratörEksi | NVDA+şift+GeriSil | Eğer mümkünse, sistem odağını nesne sunucusunun üzerinde bulunduğu nesneye  taşır |
+| Sistem odağını nesne sunucusuna taşıma | NVDA+şift+numaratörEksi | NVDA+şift+GeriSil | Eğer mümkünse, bir kez basıldığında sistem odağını nesne sunucusunun konumuna; iki kez basıldığında, sistem düzenleme imlecini inceleme imlecinin konumuna taşır |
 | Geçerli nesne sunucusunun boyutlarını bildirme | NVDA+numaratörSil | NVDA+Sil | nesne sunucusunun konumundaki nesnenin ekrandaki genişlik, yükseklik, ekranın soluna ve üstüne mesafesi gibi bilgilerini yüzdelik cinsinden belirtir |
 %kc:endInclude
 
@@ -261,19 +261,18 @@ Metni incelerken, aşağıdaki tuş komutları kullanılabilir:
 || Ad | Masaüstü Klavye komutu | Dizüstü klavye komutu | Tanım |
 | inceleme imlecinde en üst satıra gitme | şift+numaratör7 | NVDA+7 | İnceleme imlecini metnin en üst satırına taşır |
 | inceleme imlecinde bir önceki satıra gitme | numaratör7 | NVDA+u | İnceleme imlecini metnin bir önceki satırına taşır |
-| İnceleme imlecinde üzerinde bulunulan satırı belirtme | numaratör8 | NVDA+i | İnceleme imlecinin üzerine konumlandığı satırı söyler. İki kez basıldığında satır harf harf kodlanır. |
+| İnceleme imlecinde üzerinde bulunulan satırı belirtme | numaratör8 | NVDA+i | İnceleme imlecinin üzerine konumlandığı satırı söyler. İki kez basıldığında satır harf harf kodlanır. Üç kez basıldığında ise satır Adana, Bolu, Ceyhan gibi karakter tanımlarıyla kodlanır. |
 | inceleme imlecinde bir sonraki satıra gitme | numaratör9 | NVDA+o | İnceleme imlecini metnin bir sonraki satırına taşır |
 | inceleme imlecinde son satıra gitme | şift+numaratör9 | NVDA+9 | İnceleme imlecini metnin son satırına taşır |
 | inceleme imlecinde bir önceki sözcüğe gitme | numaratör4 | NVDA+j | İnceleme imlecini metnin bir önceki sözcüğüne taşır |
-| İnceleme imlecinde üzerinde bulunulan sözcüğü belirtme | numaratör5 | NVDA+k | İnceleme imlecinin üzerine konumlandığı sözcüğü söyler. İki kez basıldığında sözcük harf harf kodlanır. |
+| İnceleme imlecinde üzerinde bulunulan sözcüğü belirtme | numaratör5 | NVDA+k | İnceleme imlecinin üzerine konumlandığı sözcüğü söyler. İki kez basıldığında sözcük harf harf kodlanır. Üç kez basıldığında sözcük, Adana, Bolu, Ceyhan gibi karakter tanımlarıyla kodlanır. |
 | inceleme imlecinde bir sonraki sözcüğe gitme | numaratör6 | NVDA+l | İnceleme imlecini metnin bir sonraki sözcüğüne taşır |
 | inceleme imlecinde satır başına gitme | şift+numaratör1 | NVDA+şift+u | İnceleme imlecini metinde üzerinde bulunduğunuz satırın başına taşır |
 | inceleme imlecinde bir önceki karaktere gitme | numaratör1 | NVDA+m | İnceleme imlecini metinde üzerinde bulunduğunuz satırdaki bir önceki karaktere taşır |
-| İnceleme imlecinde üzerinde bulunulan karakteri belirtme | numaratör2 | NVDA+ö | İnceleme imlecinin üzerine konumlandığı karakteri söyler. İki kez basıldığında karakterin değerini numerik olarak ondalık ve onaltılık sistemlerde belirtir. |
+| İnceleme imlecinde üzerinde bulunulan karakteri belirtme | numaratör2 | NVDA+ö | İnceleme imlecinin üzerine konumlandığı karakteri söyler. İki kez basıldığında, karakter tanımıyla söylenir. Üç kez basıldığında karakterin değerini numerik olarak ondalık ve onaltılık sistemlerde belirtir. |
 | inceleme imlecinde bir sonraki karaktere gitme | numaratör3 | NVDA+ç | İnceleme imlecini metnin üzerinde bulunulan satırdaki bir sonraki karaktere taşır |
 | inceleme imlecinde satır sonuna gitme | şift+numaratör3 | NVDA+şift+o | İnceleme imlecini metinde üzerinde bulunduğunuz satırın sonuna taşır |
 | İnceleme imlecinde tümünü okuma | numaratörArtı | NVDA+şift+AşağıYönTuşu | İnceleme imlecinde bulunduğunuz noktadan başlayarak metnin gittiği yere kadar okur |
-| Sistem imlecini inceleme imlecine taşıma | kontrol+numaratörEksi | NVDA+kontrol+GeriSil | Sistem imlecini o an inceleme imlecinin bulunduğu pozisyona taşır |
 | İnceleme imlecinin bulunduğu yerden kopyalamayı başlatma | NVDA+f9 | NVDA+f9 | inceleme imlecinde bulunduğunuz pozisyondan itibaren metni kopyalamaya başlar. NVDA'ya metnin nereye kadar kopyalanacağını belirtmeden asıl kopyalama gerçekleşmez |
 | İnceleme imlecinin bulunduğu yere kadar kopyalama | NVDA+f10 | NVDA+f10 | inceleme imlecinde kopyalamanın başladığı yer olarak ayarlanan noktadan, inceleme imlecinin şu an bulunduğu noktaya kadar olan metni kopyalar. Bu tuşa basıldıktan sonra metin panoya kopyalanır |
 %kc:endInclude

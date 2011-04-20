@@ -1,0 +1,81 @@
+﻿complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. fim de sentença	(?<=[^\s.])\.(?=[\"')\s]|$)
+! fim de sentença	(?<=[^\s!])\!(?=[\"')\s]|$)
+? fim de sentença	(?<=[^\s?])\?(?=[\"')\s]|$)
+# Phrase endings.
+; fim de período	(?<=[^\s;]);(?=\s|$)
+: fim de período	(?<=[^\s:]):(?=\s|$)
+# Others
+ponto decimal	(?<=\d)\.(?=\d)
+junta palavras '	(?<=[a-zA-Z0-9])'(?=[a-zA-Z])
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. fim de sentença	ponto final	all	always
+! fim de sentença	exclamação	all	always
+? fim de sentença	interrogação	all	always
+; fim de período	ponto e vírgula	most	always
+: fim de período	dois pontos	most	always
+ponto decimal		none	always
+junta palavras '	apóstrofo	all	norep
+
+# Whitespace
+\0	em branco	char
+\t	tab
+\n	nova linha	char
+\f	quebra de página	none
+\r	retôrno	char
+ 	espaço	char
+ 	espaço	char	# espaço sem quebra
+
+# Standard punctuation/symbols
+!	exclamação	all
+"	aspas	most
+\#	cardinal	most
+$	cifrão	some
+£	libra	some
+€	euro	some
+%	porcento	some
+&	êh comercial	some
+'	apóstrofo	all
+(	abre parênteses	most
+)	fecha parênteses	most
+*	asterisco	most
++	mais	most
+,	vírgula	all	always
+-	hífen	most
+.	ponto	all
+/	barra	some
+:	dois pontos	most
+;	ponto e vírgula	most
+<	menor	most
+>	maior	most
+=	igual	most
+?	interrogação	all
+@	arrôba	some
+[	abre colchetes	most
+]	fecha colchetes	most
+"	aspas	most
+\\	barra invertida	most
+^	circunflexo	most
+_	sublinhado	most
+`	grave	most
+{	abre chaves	most
+}	fecha chaves	most
+|	barra vertical	most
+~	til	most
+
+# Other characters
+•	bolinha	some
+…	reticências	all	always
+	bolinha	some
+“	aspas esquerdas	most
+”	aspas direitas	most
+–	travessão N	most
+—	travessão M	most
+●	círculo	most
+¨	trema	most 
