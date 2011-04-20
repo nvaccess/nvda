@@ -56,6 +56,7 @@ TABLES = (
 	("Lv-Lv-g1.utb", _("Latvian grade 1")),
 	("nl-be-g1.utb", _("Dutch (Belgium) grade 1")),
 	("Nl-Nl-g1.utb", _("Dutch (netherlands) grade 1")),
+	("no-no.ctb", _("Norwegian 8 dot computer braille")),
 	("No-No-g0.utb", _("Norwegian grade 0")),
 	("No-No-g1.ctb", _("Norwegian grade 1")),
 	("No-No-g2.ctb", _("Norwegian grade 2")),
