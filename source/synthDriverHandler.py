@@ -404,7 +404,10 @@ class SynthDriver(baseObject.AutoPropertyObject):
 				changeVoice(self,self.voice)
 		else:
 			changeVoice(self,None)
-		[setattr(self,s.name,c[s.name]) for s in self.supportedSettings if not s.name=="voice" and c[s.name] is not None]
+		for s in self.supportedSettings:
+			if s.name=="voice" or c[s.name] is None:
+				continue
+			setattr(self,s.name,c[s.name])
 
 	def _get_initialSettingsRingSetting (self):
 		if not self.isSupported("rate") and len(self.supportedSettings)>0:
