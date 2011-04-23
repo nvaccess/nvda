@@ -24,6 +24,7 @@
 - In Gecko (e.g. Firefox) and MSHTML (e.g. Internet Explorer) documents, NVDA now correctly renders certain text on the same line which was previously rendered on separate lines. (#1378)
 - When Braille is tethered to review, and when the navigator object is moved to a virtual buffer (web document, pdf, html email message), either manually or due to a focus change, braille will be appropriately showing the content of the virtual buffer. (#1406, #1407)
 - When speaking of punctuation is disabled, certain punctuation is no longer incorrectly spoken when using some synthesisers. (#332)
+- Problems no longer occur when loading configuration for synthesisers which do not support the voice setting such as Audiologic Tts3. (#1347)
 
 
 == Changes for Developers ==
