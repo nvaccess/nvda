@@ -120,6 +120,9 @@ def readTextHelper_generator(info,cursor):
 				sendCount+=1
 				cursorIndexMap[index]=bookmark
 				reader.collapse(end=True)
+		else:
+			if spokenIndex==speech.speakWithoutPauses.lastSentIndex:
+				speech.speakWithoutPauses(None)
 		spokenIndex=speech.getLastSpeechIndex()
 		if spokenIndex!=oldSpokenIndex:
 			oldSpokenIndex=spokenIndex

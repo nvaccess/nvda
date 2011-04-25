@@ -1,4 +1,5 @@
 ﻿#speech.py
+#speech.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -84,6 +85,7 @@ def cancelSpeech():
 	# Import only for this function to avoid circular import.
 	import sayAllHandler
 	sayAllHandler.stop()
+	speakWithoutPauses._pendingspeechSequence=[]
 	if _speakSpellingGenID:
 		queueHandler.cancelGeneratorObject(_speakSpellingGenID)
 		_speakSpellingGenID=None
@@ -621,7 +623,14 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
 	text=" ".join(textList)
 	# Only speak if there is speakable text. Reporting of blank text is handled above.
-	if text and (not text.isspace() or "\t" in text or "\f" in text):
+	if reason==REASON_SAYALL:
+		speechSequence=[]
+		if index is not None:
+			speechSequence.append(IndexCommand(index))
+		speechSequence.append(text)
+		if speechSequence:
+			speakWithoutPauses(speechSequence)
+	elif text and (not text.isspace() or "\t" in text or "\f" in text):
 		speakText(text,index=index)
 	else: #We still need to alert the synth of the given index
 		speakText(None,index=index)
@@ -992,6 +1001,56 @@ def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
 	if rowNumber!=oldRowNumber:
 		textList.append(_("row %s")%rowNumber)
 	return " ".join(textList)
+
+re_last_pause=re.compile(r"^(.*(?<=[^\s.!?])[.!?](?:[\"')\s]|$))(.*$)")
+
+def speakWithoutPauses(speechSequence):
+	"""
+	Speaks the speech sequences given over multiple calls, only sending to the synth at acceptable phrase or sentence boundaries, or when given None for the speech sequence.
+	"""
+	finalSpeechSequence=[] #To be spoken now
+	pendingSpeechSequence=[] #To be saved off for speaking  later
+	if speechSequence is None: #Requesting flush
+		if speakWithoutPauses._pendingSpeechSequence: 
+			#Place the last incomplete phrase in to finalSpeechSequence to be spoken now
+			finalSpeechSequence=speakWithoutPauses._pendingSpeechSequence
+			speakWithoutPauses._pendingSpeechSequence=[]
+	else: #Handling normal speech
+		#Scan the given speech and place all completed phrases in finalSpeechSequence to be spoken,
+		#And place the final incomplete phrase in pendingSpeechSequence
+		for index in xrange(len(speechSequence)-1,-1,-1): 
+			item=speechSequence[index]
+			if isinstance(item,basestring):
+				m=re_last_pause.match(item)
+				if m:
+					before,after=m.groups()
+					if after:
+						pendingSpeechSequence.append(after)
+					if before:
+						finalSpeechSequence.extend(speakWithoutPauses._pendingSpeechSequence)
+						speakWithoutPauses._pendingSpeechSequence=[]
+						finalSpeechSequence.extend(speechSequence[0:index])
+						finalSpeechSequence.append(before)
+						break
+				else:
+					pendingSpeechSequence.append(item)
+			else:
+				pendingSpeechSequence.append(item)
+		if pendingSpeechSequence:
+			pendingSpeechSequence.reverse()
+			speakWithoutPauses._pendingSpeechSequence.extend(pendingSpeechSequence)
+	#Scan the final speech sequence backwards
+	for index in xrange(len(finalSpeechSequence)): 
+		item=finalSpeechSequence[index]
+		if isinstance(item,basestring):
+			finalSpeechSequence[index]=processText(item,config.conf["speech"]["symbolLevel"])
+		elif isinstance(item,IndexCommand):
+			speakWithoutPauses.lastSentIndex=item.index
+	if finalSpeechSequence:
+		getSynth().speak(finalSpeechSequence)
+speakWithoutPauses.lastSentIndex=None
+speakWithoutPauses._pendingSpeechSequence=[]
+
 
 class SpeechCommand(object):
 	"""
