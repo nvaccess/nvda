@@ -51,7 +51,7 @@ class SynthDriver(SynthDriver):
 				log.debugWarning("Unsupported speech command: %s"%item)
 			else:
 				log.error("Unknown speech: %s"%item)
-		text="".join(textList)
+		text=u"".join(textList)
 		_espeak.speak(text)
 
 	def cancel(self):
