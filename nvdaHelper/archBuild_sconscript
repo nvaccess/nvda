@@ -20,7 +20,7 @@ Import(
 )
 
 TARGET_ARCH=env['TARGET_ARCH']
-debug=env['nvdaHelperDebug']
+debug=env['nvdaHelperDebugFlags']
 
 #Some defines and includes for the environment
 env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${nvdaHelperLogLevel}')])
@@ -29,13 +29,23 @@ env.Append(CPPPATH=['#/include',Dir('.').abspath])
 env.Append(LINKFLAGS='/incremental:no')
 env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
 
-if not debug:
+if 'assertions' not in debug:
 	env.Append(CPPDEFINES=['NDEBUG'])
-	env.Append(CCFLAGS=['/O2','/MT'])
-	env.Append(LINKFLAGS='/release')
+
+if 'noOptimize' in debug:
+	env.Append(CCFLAGS=['/Od'])
 else:
+	env.Append(CCFLAGS=['/O2'])
+
+if 'debugCRT' in debug:
+	env.Append(CCFLAGS=['/MTd'])
+else:
+	env.Append(CCFLAGS=['/MT'])
+
+if 'symbols' in debug:
 	env.Append(PDB='${TARGET}.pdb')
-	env.Append(CCFLAGS=['/Od','/MTd'])
+else:
+	env.Append(LINKFLAGS='/release')
 
 Export('env')
 
