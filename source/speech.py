@@ -85,7 +85,8 @@ def cancelSpeech():
 	# Import only for this function to avoid circular import.
 	import sayAllHandler
 	sayAllHandler.stop()
-	speakWithoutPauses._pendingspeechSequence=[]
+	speakWithoutPauses._pendingSpeechSequence=[]
+	speakWithoutPauses.lastSentIndex=None
 	if _speakSpellingGenID:
 		queueHandler.cancelGeneratorObject(_speakSpellingGenID)
 		_speakSpellingGenID=None
