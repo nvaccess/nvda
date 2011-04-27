@@ -1053,14 +1053,12 @@ def speakWithoutPauses(speechSequence):
 			pendingSpeechSequence.reverse()
 			speakWithoutPauses._pendingSpeechSequence.extend(pendingSpeechSequence)
 	#Scan the final speech sequence backwards
-	for index in xrange(len(finalSpeechSequence)): 
-		item=finalSpeechSequence[index]
-		if isinstance(item,basestring):
-			finalSpeechSequence[index]=processText(item,config.conf["speech"]["symbolLevel"])
-		elif isinstance(item,IndexCommand):
+	for item in reversed(finalSpeechSequence):
+		if isinstance(item,IndexCommand):
 			speakWithoutPauses.lastSentIndex=item.index
+			break
 	if finalSpeechSequence:
-		getSynth().speak(finalSpeechSequence)
+		speak(finalSpeechSequence)
 speakWithoutPauses.lastSentIndex=None
 speakWithoutPauses._pendingSpeechSequence=[]
 
