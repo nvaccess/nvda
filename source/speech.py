@@ -280,9 +280,23 @@ def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 	@param reason: The reason for this speech; one of the REASON_* constants.
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
 	"""
+	speechSequence=[]
+	if index is not None:
+		speechSequence.append(IndexCommand(index))
+	if text is not None:
+		speechSequence.append(text)
+	speak(speechSequence,symbolLevel=None)
+
+def speak(speechSequence,symbolLevel=None):
+	"""Speaks a sequence of text and speech commands
+	@param speechSequence: the sequence of text and L{SpeechCommand} objects to speak
+	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
+	"""
 	import speechViewer
 	if speechViewer.isActive:
-		speechViewer.appendText(text)
+		for item in speechSequence:
+			if isinstance(item,basestring):
+				speechViewer.appendText(item)
 	global beenCanceled, curWordChars
 	curWordChars=[]
 	if speechMode==speechMode_off:
@@ -293,19 +307,14 @@ def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 	if isPaused:
 		cancelSpeech()
 	beenCanceled=False
-	log.io("Speaking %r" % text)
+	log.io("Speaking %r" % speechSequence)
 	if symbolLevel is None:
 		symbolLevel=config.conf["speech"]["symbolLevel"]
-	if text is None:
-		text=""
-	else:
-		text=processText(text,symbolLevel)
-	if not text or not text.isspace():
-		speechSequence=[]
-		if index is not None:
-			speechSequence.append(IndexCommand(index))
-		speechSequence.append(text)
-		getSynth().speak(speechSequence)
+	for index in xrange(len(speechSequence)):
+		item=speechSequence[index]
+		if isinstance(item,basestring):
+			speechSequence[index]=processText(item,symbolLevel)
+	getSynth().speak(speechSequence)
 
 def speakSelectionMessage(message,text):
 	if len(text) < 512:
