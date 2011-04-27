@@ -114,6 +114,7 @@ def readTextHelper_generator(info,cursor):
 				index=sendCount
 				delta=reader.move(textInfos.UNIT_READINGCHUNK,1,endPoint="end")
 				if delta<=0:
+					speech.speakWithoutPauses(None)
 					keepReading=False
 					continue
 				speech.speakTextInfo(reader,unit=textInfos.UNIT_READINGCHUNK,reason=speech.REASON_SAYALL,index=index)
