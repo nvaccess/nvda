@@ -622,18 +622,21 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)
 		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
 	text=" ".join(textList)
-	# Only speak if there is speakable text. Reporting of blank text is handled above.
+	if text is not None and (text=="" or (text.isspace() and "\t" not in text and "\f" not in text)):
+		# There's no speakable text.
+		# Reporting of blank text is handled above.
+		text=None
+	# Even when there's no speakable text, we still need to notify the synth of the index.
 	if reason==REASON_SAYALL:
 		speechSequence=[]
 		if index is not None:
 			speechSequence.append(IndexCommand(index))
-		speechSequence.append(text)
+		if text:
+			speechSequence.append(text)
 		if speechSequence:
 			speakWithoutPauses(speechSequence)
-	elif text and (not text.isspace() or "\t" in text or "\f" in text):
+	else:
 		speakText(text,index=index)
-	else: #We still need to alert the synth of the given index
-		speakText(None,index=index)
 
 def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	global oldTreeLevel, oldTableID, oldRowNumber, oldColumnNumber
