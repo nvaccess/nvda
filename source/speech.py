@@ -285,7 +285,7 @@ def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 		speechSequence.append(IndexCommand(index))
 	if text is not None:
 		speechSequence.append(text)
-	speak(speechSequence,symbolLevel=None)
+	speak(speechSequence,symbolLevel=symbolLevel)
 
 def speak(speechSequence,symbolLevel=None):
 	"""Speaks a sequence of text and speech commands
