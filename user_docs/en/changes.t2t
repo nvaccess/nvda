@@ -11,6 +11,7 @@
 - It is now possible to choose from several levels of punctuation and symbol announcement. (#332)
 - When punctuation or other symbols are repeated more than four times, the number of repetitions is now announced instead of speaking the repeated symbols. (#43)
 - New braille translation table: Norwegian 8 dot computer braille. (#1456)
+- Speech no longer unnaturally pauses at the end of each line when using the say all command. (#149)
 
 
 == Changes ==
@@ -31,6 +32,10 @@
 - Developer documentation can now be generated using SCons. See readme.txt at the root of the source distribution for details, including associated dependencies.
 - Locales can now provide descriptions for characters. See the Character Descriptions section of the Developer Guide for details. (#55)
 - Locales can now provide information about the pronunciation of specific punctuation and other symbols. See the Symbol Pronunciation section of the Developer Guide for details. (#332)
+- Synth drivers are now passed a sequence of text and speech commands to speak, instead of just text and an index.
+ - This allows for embedded indexes, parameter changes, etc.
+ - Drivers should implement SynthDriver.speak() instead of SynthDriver.speakText() and SynthDriver.speakCharacter().
+ - The old methods will be used if SynthDriver.speak() is not implemented, but they are deprecated and will be removed in a future release.
 
 
 = 2011.1.1 =

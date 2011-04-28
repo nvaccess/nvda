@@ -1,4 +1,5 @@
 ﻿#speech.py
+#speech.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -84,6 +85,8 @@ def cancelSpeech():
 	# Import only for this function to avoid circular import.
 	import sayAllHandler
 	sayAllHandler.stop()
+	speakWithoutPauses._pendingSpeechSequence=[]
+	speakWithoutPauses.lastSentIndex=None
 	if _speakSpellingGenID:
 		queueHandler.cancelGeneratorObject(_speakSpellingGenID)
 		_speakSpellingGenID=None
@@ -129,7 +132,7 @@ def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 	beenCanceled=False
 	locale=languageHandler.getLanguage()
 	if not text:
-		return getSynth().speakText(characterProcessing.processSpeechSymbol(locale,""))
+		return getSynth().speak(characterProcessing.processSpeechSymbol(locale,""))
 	if not text.isspace():
 		text=text.rstrip()
 	gen=_speakSpellingGen(text,locale,useCharacterDescriptions)
@@ -161,10 +164,13 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 			synth.pitch=max(0,min(oldPitch+synthConfig["capPitchChange"],100))
 		index=count+1
 		log.io("Speaking character %r"%char)
+		speechSequence=[]
 		if len(char) == 1 and synthConfig["useSpellingFunctionality"]:
-			synth.speakCharacter(char,index=index)
-		else:
-			synth.speakText(char,index=index)
+			speechSequence.append(CharacterModeCommand(True))
+		if index is not None:
+			speechSequence.append(IndexCommand(index))
+		speechSequence.append(char)
+		synth.speak(speechSequence)
 		if uppercase and synth.isSupported("pitch") and synthConfig["raisePitchForCapitals"]:
 			synth.pitch=oldPitch
 		while textLength>1 and (isPaused or getLastSpeechIndex()!=index):
@@ -274,9 +280,23 @@ def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 	@param reason: The reason for this speech; one of the REASON_* constants.
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
 	"""
+	speechSequence=[]
+	if index is not None:
+		speechSequence.append(IndexCommand(index))
+	if text is not None:
+		speechSequence.append(text)
+	speak(speechSequence,symbolLevel=symbolLevel)
+
+def speak(speechSequence,symbolLevel=None):
+	"""Speaks a sequence of text and speech commands
+	@param speechSequence: the sequence of text and L{SpeechCommand} objects to speak
+	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
+	"""
 	import speechViewer
 	if speechViewer.isActive:
-		speechViewer.appendText(text)
+		for item in speechSequence:
+			if isinstance(item,basestring):
+				speechViewer.appendText(item)
 	global beenCanceled, curWordChars
 	curWordChars=[]
 	if speechMode==speechMode_off:
@@ -287,15 +307,14 @@ def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 	if isPaused:
 		cancelSpeech()
 	beenCanceled=False
-	log.io("Speaking %r" % text)
+	log.io("Speaking %r" % speechSequence)
 	if symbolLevel is None:
 		symbolLevel=config.conf["speech"]["symbolLevel"]
-	if text is None:
-		text=""
-	else:
-		text=processText(text,symbolLevel)
-	if not text or not text.isspace():
-		getSynth().speakText(text,index=index)
+	for index in xrange(len(speechSequence)):
+		item=speechSequence[index]
+		if isinstance(item,basestring):
+			speechSequence[index]=processText(item,symbolLevel)
+	getSynth().speak(speechSequence)
 
 def speakSelectionMessage(message,text):
 	if len(text) < 512:
@@ -613,11 +632,21 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)
 		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
 	text=" ".join(textList)
-	# Only speak if there is speakable text. Reporting of blank text is handled above.
-	if text and (not text.isspace() or "\t" in text or "\f" in text):
+	if text is not None and (text=="" or (text.isspace() and "\t" not in text and "\f" not in text)):
+		# There's no speakable text.
+		# Reporting of blank text is handled above.
+		text=None
+	# Even when there's no speakable text, we still need to notify the synth of the index.
+	if reason==REASON_SAYALL:
+		speechSequence=[]
+		if index is not None:
+			speechSequence.append(IndexCommand(index))
+		if text:
+			speechSequence.append(text)
+		if speechSequence:
+			speakWithoutPauses(speechSequence)
+	else:
 		speakText(text,index=index)
-	else: #We still need to alert the synth of the given index
-		speakText(None,index=index)
 
 def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	global oldTreeLevel, oldTableID, oldRowNumber, oldColumnNumber
@@ -985,3 +1014,78 @@ def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
 	if rowNumber!=oldRowNumber:
 		textList.append(_("row %s")%rowNumber)
 	return " ".join(textList)
+
+re_last_pause=re.compile(r"^(.*(?<=[^\s.!?])[.!?](?:[\"')\s]|$))(.*$)")
+
+def speakWithoutPauses(speechSequence):
+	"""
+	Speaks the speech sequences given over multiple calls, only sending to the synth at acceptable phrase or sentence boundaries, or when given None for the speech sequence.
+	"""
+	finalSpeechSequence=[] #To be spoken now
+	pendingSpeechSequence=[] #To be saved off for speaking  later
+	if speechSequence is None: #Requesting flush
+		if speakWithoutPauses._pendingSpeechSequence: 
+			#Place the last incomplete phrase in to finalSpeechSequence to be spoken now
+			finalSpeechSequence=speakWithoutPauses._pendingSpeechSequence
+			speakWithoutPauses._pendingSpeechSequence=[]
+	else: #Handling normal speech
+		#Scan the given speech and place all completed phrases in finalSpeechSequence to be spoken,
+		#And place the final incomplete phrase in pendingSpeechSequence
+		for index in xrange(len(speechSequence)-1,-1,-1): 
+			item=speechSequence[index]
+			if isinstance(item,basestring):
+				m=re_last_pause.match(item)
+				if m:
+					before,after=m.groups()
+					if after:
+						pendingSpeechSequence.append(after)
+					if before:
+						finalSpeechSequence.extend(speakWithoutPauses._pendingSpeechSequence)
+						speakWithoutPauses._pendingSpeechSequence=[]
+						finalSpeechSequence.extend(speechSequence[0:index])
+						finalSpeechSequence.append(before)
+						break
+				else:
+					pendingSpeechSequence.append(item)
+			else:
+				pendingSpeechSequence.append(item)
+		if pendingSpeechSequence:
+			pendingSpeechSequence.reverse()
+			speakWithoutPauses._pendingSpeechSequence.extend(pendingSpeechSequence)
+	#Scan the final speech sequence backwards
+	for item in reversed(finalSpeechSequence):
+		if isinstance(item,IndexCommand):
+			speakWithoutPauses.lastSentIndex=item.index
+			break
+	if finalSpeechSequence:
+		speak(finalSpeechSequence)
+speakWithoutPauses.lastSentIndex=None
+speakWithoutPauses._pendingSpeechSequence=[]
+
+
+class SpeechCommand(object):
+	"""
+	The base class for objects that can be inserted between string of text for parituclar speech functions that convey  things such as indexing or voice parameter changes.
+	"""
+
+class IndexCommand(SpeechCommand):
+	"""Represents an index within some speech."""
+
+	def __init__(self,index):
+		"""
+		@param index: the value of this index
+		@type index: integer
+		"""
+		if not isinstance(index,int): raise ValueError("index must be int, not %s"%type(index))
+		self.index=index
+
+class CharacterModeCommand(object):
+	"""Turns character mode on and off for speech synths."""
+
+	def __init__(self,state):
+		"""
+		@param state: if true character mode is on, if false its turned off.
+		@type state: boolean
+		"""
+		if not isinstance(state,bool): raise ValueError("state must be boolean, not %s"%type(state))
+		self.state=state

@@ -12,6 +12,7 @@ import comtypes.client
 from comtypes import COMError
 import _winreg
 import globalVars
+import speech
 from synthDriverHandler import SynthDriver,VoiceInfo
 import config
 import nvwave
@@ -108,23 +109,25 @@ class SynthDriver(SynthDriver):
 		self._initTts()
 		self.tts.voice=v[i]
 
-	def performSpeak(self,text,index=None,isCharacter=False):
-		flags=constants.SVSFIsXML
-		text=text.replace("<","&lt;")
+	def speak(self,speechSequence):
+		textList=[]
+		for item in speechSequence:
+			if isinstance(item,basestring):
+				textList.append(item.replace("<","&lt;"))
+			elif isinstance(item,speech.IndexCommand):
+				textList.append("<Bookmark Mark=\"%d\" />"%item.index)
+			elif isinstance(item,speech.CharacterModeCommand):
+				textList.append("<spell>" if item.state else "</spell>")
+			elif isinstance(item,speech.SpeechCommand):
+				log.debugWarning("Unsupported speech command: %s"%item)
+			else:
+				log.error("Unknown speech: %s"%item)
+		text="".join(textList)
+		#Pitch must always be hardcoded
 		pitch=(self._pitch/2)-25
-		if isinstance(index,int):
-			bookmarkXML="<Bookmark Mark=\"%d\" />"%index
-		else:
-			bookmarkXML=""
+		text="<pitch absmiddle=\"%s\">%s</pitch>"%(pitch,text)
 		flags=constants.SVSFIsXML|constants.SVSFlagsAsync
-		if isCharacter: text = "<spell>%s</spell>."%text
-		self.tts.Speak("<pitch absmiddle=\"%s\">%s%s</pitch>"%(pitch,bookmarkXML,text),flags)
-
-	def speakText(self,text,index=None):
-		self.performSpeak(text,index)
-
-	def speakCharacter(self,text,index=None):
-		self.performSpeak(text,index,True)
+		self.tts.Speak(text,flags)
 
 	def cancel(self):
 		#if self.tts.Status.RunningState == 2:
