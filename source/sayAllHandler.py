@@ -122,7 +122,10 @@ def readTextHelper_generator(info,cursor):
 				cursorIndexMap[index]=bookmark
 				reader.collapse(end=True)
 		else:
-			if spokenIndex==speech.speakWithoutPauses.lastSentIndex:
+			# We'll wait for speech to catch up a bit before sending more text.
+			if speech.speakWithoutPauses.lastSentIndex in (spokenIndex,None):
+				# Nothing has been sent to the synth yet.
+				# Force speakWithoutPauses to send text to the synth so we can move on.
 				speech.speakWithoutPauses(None)
 		spokenIndex=speech.getLastSpeechIndex()
 		if spokenIndex!=oldSpokenIndex:
