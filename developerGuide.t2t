@@ -527,3 +527,45 @@ class LabelledEditField(Window):
 
 --- end ---
 ```
+
++ NVDA Python Console +
+
+The NVDA Python console emulates the interactive Python interpreter from within NVDA.
+It is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
+
+++ Usage ++
+The console can be activated in two ways:
+- By pressing NVDA+control+z.
+If activated in this fashion, a snapshot of the current state of NVDA at the time the key was pressed will be taken and saved in certain variables available in the console.
+See [Snapshot Variables #PythonConsoleSnapshotVariables] for more details.
+- By selecting Tools -> Python console from the NVDA system tray menu.
+-
+
+The console is similar to the standard interactive Python interpreter.
+Input is accepted one line at a time.
+The current line is processed when enter is pressed.
+You can navigate through the history of previously entered lines using the up and down arrow keys.
+
+Output (responses from the interpreter) will be spoken when enter is pressed.
+The f6 key toggles between the input and output controls.
+
+Closing the console window simply hides it.
+This allows the user to return to the session as it was left when it was closed, including history and variables.
+
+++ Namespace ++
+
++++ Automatic Imports +++
+For convenience, the following modules and variables are automatically imported in the console:
+sys, os, wx, log (from logHandler), api, queueHandler, speech, braille
+
++++ Snapshot Variables +++[PythonConsoleSnapshotVariables]
+Whenever NVDA+control+z is pressed, certain variables available in the console will be assigned according to the current state of NVDA.
+These variables are:
+- focus: The current focus object
+- focusAnc: The ancestors of the current focus object
+- fdl: Focus difference level; i.e. the level at which the ancestors for the current and previous focus differ
+- fg: The current foreground object
+- nav: The current navigator object
+- mouse: The current mouse object
+- brlRegions: The braille regions from the active braille buffer
+-
