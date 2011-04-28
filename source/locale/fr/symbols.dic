@@ -1,0 +1,72 @@
+﻿complexSymbols:
+# identifier	regexp
+decimal point	(?<=\d)\,(?=\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	point	# . fin de phrase
+! sentence ending	poindexclamation	# ! fin de phrase
+? sentence ending	poindinterrogation	# ? fin de phrase
+; phrase ending	poinvirgule	# ; fin de phrase
+: phrase ending	deupoint	# : fin de phrase
+decimal point		# virgule
+in-word '	apostrophe	all	norep
+
+# Whitespace
+\0	blanc
+\t	tab
+\n	nouvelle ligne
+\f	saut de page
+\r	retour chariot
+ 	espace
+ 	espace	# espace insécable
+
+# Standard punctuation/symbols
+!	poindexclamation
+"	guillemet
+\#	dièse
+$	dollar
+£	livre
+€	euro
+%	pourcent
+&	et
+'	apostrophe
+(	parenthèse gauche
+)	parenthèse droite
+*	astérisque
++	pluss
+,	virgule
+-	tiret
+.	point
+/	baroblique
+:	deupoint
+;	poinvirgule
+<	inférieur
+>	supérieur
+=	égal
+?	poindinterrogation
+@	arobase	none
+[	crochet gauche
+]	crochet droit
+"	guillemet
+\\	barobliquinversée
+^	accencirconflexe
+¨	tréma	all
+_	souligné
+`	accengrave
+{	accolade gauche
+}	accolade droite
+|	barre verticale
+~	tilde
+
+# Other characters
+•	puce
+…	points de suspension
+	puce
+“	guillemet ouvert
+”	guillemet fermé
+–	tiret demicadratin
+—	tiret cadratin
+●	astérisque

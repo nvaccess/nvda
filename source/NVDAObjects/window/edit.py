@@ -355,6 +355,9 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			return (start,end)
 		else: #Implementation of standard edit field wordbreak behaviour (only breaks on space)
 			text=self.obj.windowText
+			textLength=len(text)
+			if offset>=textLength:
+				return offset,offset+1
 			#cariage returns are always treeted as a word by themselves
 			if text[offset]=='\r':
 				return offset,offset+1

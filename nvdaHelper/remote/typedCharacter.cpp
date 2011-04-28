@@ -15,6 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <wchar.h>
 #include "nvdaHelperRemote.h"
+#include "nvdaControllerInternal.h"
 #include "typedCharacter.h"
 
 LRESULT CALLBACK typedCharacter_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
@@ -25,7 +26,7 @@ LRESULT CALLBACK typedCharacter_getMessageHook(int code, WPARAM wParam, LPARAM l
 		charWindow=pmsg->hwnd;
 		lastCharacter=0;
 	} else if((charWindow!=0)&&(pmsg->message==WM_CHAR)&&(pmsg->hwnd==charWindow)&&(pmsg->wParam!=lastCharacter)) { 
-		NotifyWinEvent(EVENT_TYPEDCHARACTER,pmsg->hwnd,pmsg->wParam,pmsg->lParam);
+		nvdaControllerInternal_typedCharacterNotify(GetCurrentThreadId(),(wchar_t)(pmsg->wParam));
 		lastCharacter=pmsg->wParam;
 	}
 	return 0;

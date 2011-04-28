@@ -8,7 +8,6 @@ import queueHandler
 import config
 import speech
 import textInfos
-import characterSymbols
 import globalVars
 import api
 import tones

@@ -24,7 +24,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <sstream>
 #include <vbufBase/backend.h>
 #include <vbufBase/utils.h>
-#include <common/debug.h>
+#include <remote/log.h>
 #include "node.h"
 #include "mshtml.h"
 
@@ -45,13 +45,13 @@ void incBackendLibRefCount() {
 	HMODULE h=NULL;
 	BOOL res=GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)backendLibHandle,&h);
 	assert(res); //Result of upping backend lib ref count
-	DEBUG_MSG(L"Increased backend lib ref count");
+	LOG_DEBUG(L"Increased backend lib ref count");
 }
 
 void decBackendLibRefCount() {
 	BOOL res=FreeLibrary(backendLibHandle);
 	assert(res); //Result of freeing backend lib
-	DEBUG_MSG(L"Decreased backend lib ref count");
+	LOG_DEBUG(L"Decreased backend lib ref count");
 }
 
 VBufStorage_controlFieldNode_t* MshtmlVBufBackend_t::getDeepestControlFieldNodeForHTMLElement(IHTMLElement* pHTMLElement) {
@@ -69,13 +69,13 @@ VBufStorage_controlFieldNode_t* MshtmlVBufBackend_t::getDeepestControlFieldNodeF
 					if(elementNeedsRelease) pHTMLElement->Release();
 					return node;
 				} else {
-					DEBUG_MSG(L"No node for element");
+					LOG_DEBUG(L"No node for element");
 				}
 			} else {
-				DEBUG_MSG(L"Could not get unique number from IHTMLUniqueName");
+				LOG_DEBUG(L"Could not get unique number from IHTMLUniqueName");
 			}
 		} else {
-			DEBUG_MSG(L"Could not queryInterface from IHTMLElement to IHTMLUniqueName");
+			LOG_DEBUG(L"Could not queryInterface from IHTMLElement to IHTMLUniqueName");
 		}
 		IHTMLElement* parentPHTMLElement=NULL;
 		pHTMLElement->get_parentElement(&parentPHTMLElement);
@@ -91,14 +91,14 @@ inline IAccessible* getIAccessibleFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
 	IServiceProvider* pServProv=NULL;
 	res=pHTMLDOMNode->QueryInterface(IID_IServiceProvider,(void**)&pServProv);
 	if(res!=S_OK||!pServProv) {
-		DEBUG_MSG(L"Could not queryInterface to IServiceProvider");
+		LOG_DEBUG(L"Could not queryInterface to IServiceProvider");
 		return NULL;
 	}
 	IAccessible* pacc=NULL;
 	res=pServProv->QueryService(IID_IAccessible,IID_IAccessible,(void**)&pacc);
 	pServProv->Release();
 	if(res!=S_OK||!pacc) {
-		DEBUG_MSG(L"Could not get IAccessible interface");
+		LOG_DEBUG(L"Could not get IAccessible interface");
 		return NULL;
 	}
 	return pacc;
@@ -117,7 +117,7 @@ inline void getIAccessibleInfo(IAccessible* pacc, wstring* name, int* role, wstr
 		SysFreeString(bstrVal);
 		bstrVal=NULL;
 	} else {
-		DEBUG_MSG(L"IAccessible::get_accName failed");
+		LOG_DEBUG(L"IAccessible::get_accName failed");
 	}
 	VARIANT varRole;
 	VariantInit(&varRole);
@@ -125,7 +125,7 @@ inline void getIAccessibleInfo(IAccessible* pacc, wstring* name, int* role, wstr
 	if(res==S_OK&&varRole.vt==VT_I4) {
 		*role=varRole.lVal;
 	} else {
-		DEBUG_MSG(L"Failed to get role");
+		LOG_DEBUG(L"Failed to get role");
 	}
 	VariantClear(&varRole);
 	if(pacc->get_accValue(varChild,&bstrVal)==S_OK&&bstrVal!=NULL) {
@@ -133,7 +133,7 @@ inline void getIAccessibleInfo(IAccessible* pacc, wstring* name, int* role, wstr
 		SysFreeString(bstrVal);
 		bstrVal=NULL;
 	} else {
-		DEBUG_MSG(L"IAccessible::get_accValue failed");
+		LOG_DEBUG(L"IAccessible::get_accValue failed");
 	}
 	VARIANT varState;
 	VariantInit(&varState);
@@ -141,7 +141,7 @@ inline void getIAccessibleInfo(IAccessible* pacc, wstring* name, int* role, wstr
 	if(res==S_OK&&varState.vt==VT_I4) {
 		*states=varState.lVal;
 	} else {
-		DEBUG_MSG(L"Failed to get states");
+		LOG_DEBUG(L"Failed to get states");
 	}
 	VariantClear(&varState);
 	if(pacc->get_accDescription(varChild,&bstrVal)==S_OK&&bstrVal!=NULL) {
@@ -149,13 +149,13 @@ inline void getIAccessibleInfo(IAccessible* pacc, wstring* name, int* role, wstr
 		SysFreeString(bstrVal);
 		bstrVal=NULL;
 	} else {
-		DEBUG_MSG(L"IAccessible::get_accDescription failed");
+		LOG_DEBUG(L"IAccessible::get_accDescription failed");
 	}
 	if(pacc->get_accKeyboardShortcut(varChild,&bstrVal)==S_OK&&bstrVal!=NULL) {
 		keyboardShortcut->append(bstrVal);
 		SysFreeString(bstrVal);
 	} else {
-		DEBUG_MSG(L"IAccessible::get_accKeyboardShortcut failed");
+		LOG_DEBUG(L"IAccessible::get_accKeyboardShortcut failed");
 	}
 }
 
@@ -166,21 +166,21 @@ int res=0;
 	varChild.lVal=1;
 	IDispatch* pDispatch=NULL;
 	if((res=pacc->get_accChild(varChild,&pDispatch))!=S_OK) {
-		DEBUG_MSG(L"IAccessible::accChild failed with return code "<<res);
+		LOG_DEBUG(L"IAccessible::accChild failed with return code "<<res);
 		return NULL;
 	}
 	IServiceProvider* pServProv=NULL;
 	res=pDispatch->QueryInterface(IID_IServiceProvider,(void**)&pServProv);
 	pDispatch->Release();
 	if(res!=S_OK) {
-		DEBUG_MSG(L"QueryInterface to IServiceProvider failed");
+		LOG_DEBUG(L"QueryInterface to IServiceProvider failed");
 		return NULL;
 	}
 	IHTMLDOMNode* pHTMLDOMNode=NULL;
 	res=pServProv->QueryService(IID_IHTMLElement,IID_IHTMLDOMNode,(void**)&pHTMLDOMNode);
 	pServProv->Release();
 	if(res!=S_OK) {
-		DEBUG_MSG(L"QueryService to IHTMLDOMNode failed");
+		LOG_DEBUG(L"QueryService to IHTMLDOMNode failed");
 		return NULL;
 	}
 	return pHTMLDOMNode;
@@ -189,41 +189,41 @@ int res=0;
 inline int getIDFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
 	int res;
 	IHTMLUniqueName* pHTMLUniqueName=NULL;
-	DEBUG_MSG(L"Try to get IHTMLUniqueName");
+	LOG_DEBUG(L"Try to get IHTMLUniqueName");
 	if(pHTMLDOMNode->QueryInterface(IID_IHTMLUniqueName,(void**)&pHTMLUniqueName)!=S_OK) {
-		DEBUG_MSG(L"Failed to get IHTMLUniqueName");
+		LOG_DEBUG(L"Failed to get IHTMLUniqueName");
 		return 0;
 	}
-	DEBUG_MSG(L"Got IHTMLUniqueName");
+	LOG_DEBUG(L"Got IHTMLUniqueName");
 	int ID=0;
-	DEBUG_MSG(L"Getting IHTMLUniqueName::uniqueNumber");
+	LOG_DEBUG(L"Getting IHTMLUniqueName::uniqueNumber");
 	res=pHTMLUniqueName->get_uniqueNumber((long*)&ID);
 	pHTMLUniqueName->Release();
 	if(res!=S_OK||!ID) {
-		DEBUG_MSG(L"Failed to get IHTMLUniqueName::uniqueNumber");
+		LOG_DEBUG(L"Failed to get IHTMLUniqueName::uniqueNumber");
 		return 0;
 	}
-	DEBUG_MSG(L"Got uniqueNumber of "<<ID);
+	LOG_DEBUG(L"Got uniqueNumber of "<<ID);
 	return ID;
 }
 
 inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPreformattedText) {
 	int res=0;
 	IHTMLDOMTextNode* pHTMLDOMTextNode=NULL;
-	DEBUG_MSG(L"Trying to get an IHTMLDOMTextNode interface pointer");
+	LOG_DEBUG(L"Trying to get an IHTMLDOMTextNode interface pointer");
 	if(pHTMLDOMNode->QueryInterface(IID_IHTMLDOMTextNode,(void**)&pHTMLDOMTextNode)!=S_OK) {
-		DEBUG_MSG(L"Not a text node");
+		LOG_DEBUG(L"Not a text node");
 		return L"";
 	}
-	DEBUG_MSG(L"Fetch data of DOMTextNode");
+	LOG_DEBUG(L"Fetch data of DOMTextNode");
 	BSTR data=NULL;
 	res=pHTMLDOMTextNode->get_data(&data);
 	pHTMLDOMTextNode->Release();
 	if(res!=S_OK||!data) {
-		DEBUG_MSG(L"Failed to get IHTMLDOMTextNode::data");
+		LOG_DEBUG(L"Failed to get IHTMLDOMTextNode::data");
 		return L"";
 	}
-	DEBUG_MSG(L"Got data from IHTMLDOMTextNode");
+	LOG_DEBUG(L"Got data from IHTMLDOMTextNode");
 	wstring s;
 	if(allowPreformattedText) {
 		s.append(data);
@@ -246,23 +246,23 @@ inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPref
 #define macro_addHTMLCurrentStyleToNodeAttrs(styleName,attrName,node,currentStyleObj,tempBSTR) {\
 	currentStyleObj->get_##styleName(&tempBSTR);\
 	if(tempBSTR) {\
-		DEBUG_MSG(L"Got "<<L#styleName);\
+		LOG_DEBUG(L"Got "<<L#styleName);\
 		node->addAttribute(L#attrName,tempBSTR);\
 		SysFreeString(tempBSTR);\
 		tempBSTR=NULL;\
 	} else {\
-		DEBUG_MSG(L"Failed to get "<<L#styleName);\
+		LOG_DEBUG(L"Failed to get "<<L#styleName);\
 	}\
 }
 
 #define macro_addHTMLCurrentStyleToNodeAttrs_var(styleName,attrName,node,currentStyleObj,tempVar) {\
 	currentStyleObj->get_##styleName(&tempVar);\
 	if(tempVar.vt==VT_BSTR && tempVar.bstrVal) {\
-		DEBUG_MSG(L"Got "<<L#styleName);\
+		LOG_DEBUG(L"Got "<<L#styleName);\
 		node->addAttribute(L#attrName,tempVar.bstrVal);\
 		VariantClear(&tempVar);\
 	} else {\
-		DEBUG_MSG(L"Failed to get "<<L#styleName);\
+		LOG_DEBUG(L"Failed to get "<<L#styleName);\
 	}\
 }
 
@@ -271,36 +271,36 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 	IHTMLElement2* pHTMLElement2=NULL;
 	int res=pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
 	if(res!=S_OK||!pHTMLElement2) {
-		DEBUG_MSG(L"Could not get IHTMLElement2");
+		LOG_DEBUG(L"Could not get IHTMLElement2");
 		return;
 	}
 	IHTMLCurrentStyle* pHTMLCurrentStyle=NULL;
 	res=pHTMLElement2->get_currentStyle(&pHTMLCurrentStyle);
 	pHTMLElement2->Release();
 	if(res!=S_OK||!pHTMLCurrentStyle) {
-		DEBUG_MSG(L"Could not get IHTMLCurrentStyle");
+		LOG_DEBUG(L"Could not get IHTMLCurrentStyle");
 		return;
 	}
 	//get visibility
 	pHTMLCurrentStyle->get_visibility(&tempBSTR);
 	if(tempBSTR) {
-		DEBUG_MSG(L"Got visibility");
+		LOG_DEBUG(L"Got visibility");
 		invisible=(_wcsicmp(tempBSTR,L"hidden")==0);
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
 	} else {
-		DEBUG_MSG(L"Failed to get visibility");\
+		LOG_DEBUG(L"Failed to get visibility");\
 	}
 	//get display
 	pHTMLCurrentStyle->get_display(&tempBSTR);
 	if(tempBSTR) {
-		DEBUG_MSG(L"Got display");
+		LOG_DEBUG(L"Got display");
 		if (_wcsicmp(tempBSTR,L"none")==0) invisible=true;
 		if (_wcsicmp(tempBSTR,L"inline")==0||_wcsicmp(tempBSTR,L"inline-block")==0) isBlock=false;
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
 	} else {
-		DEBUG_MSG(L"Failed to get display");
+		LOG_DEBUG(L"Failed to get display");
 	}
 	if (pHTMLCurrentStyle) pHTMLCurrentStyle->Release();
 }
@@ -327,16 +327,16 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nodeName, map<wstring,wstring>& attribsMap) {
 	int res=0;
 	IDispatch* pDispatch=NULL;
-	DEBUG_MSG(L"Getting IHTMLDOMNode::attributes");
+	LOG_DEBUG(L"Getting IHTMLDOMNode::attributes");
 	if(pHTMLDOMNode->get_attributes(&pDispatch)!=S_OK||!pDispatch) {
-		DEBUG_MSG(L"pHTMLDOMNode->get_attributes failed");
+		LOG_DEBUG(L"pHTMLDOMNode->get_attributes failed");
 		return;
 	}
 	IHTMLAttributeCollection2* pHTMLAttributeCollection2=NULL;
 	res=pDispatch->QueryInterface(IID_IHTMLAttributeCollection2,(void**)&pHTMLAttributeCollection2);
 	pDispatch->Release();
 	if(res!=S_OK) {
-		DEBUG_MSG(L"Could not get IHTMLAttributesCollection2");
+		LOG_DEBUG(L"Could not get IHTMLAttributesCollection2");
 		return;
 	}
 	IHTMLDOMAttribute* tempAttribNode=NULL;
@@ -372,7 +372,7 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 inline void fillTextFormatting_helper(IHTMLElement2* pHTMLElement2, VBufStorage_fieldNode_t* node) {
 	IHTMLCurrentStyle* pHTMLCurrentStyle=NULL;
 	if(pHTMLElement2->get_currentStyle(&pHTMLCurrentStyle)!=S_OK||!pHTMLCurrentStyle) {
-		DEBUG_MSG(L"Could not get IHTMLCurrentStyle");
+		LOG_DEBUG(L"Could not get IHTMLCurrentStyle");
 		return;
 	}
 	BSTR tempBSTR=NULL;
@@ -384,29 +384,29 @@ inline void fillTextFormatting_helper(IHTMLElement2* pHTMLElement2, VBufStorage_
 	//font style
 	pHTMLCurrentStyle->get_fontStyle(&tempBSTR);
 	if(tempBSTR) {
-		DEBUG_MSG(L"Got fontStyle");
+		LOG_DEBUG(L"Got fontStyle");
 		if (_wcsicmp(tempBSTR,L"normal")!=0) {
 			node->addAttribute((_wcsicmp(tempBSTR,L"oblique")!=0) ? tempBSTR : L"italic", L"1");
 		}
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
 	} else {
-		DEBUG_MSG(L"Failed to get fontStyle");
+		LOG_DEBUG(L"Failed to get fontStyle");
 	}
 	//font weight
 	if (pHTMLCurrentStyle->get_fontWeight(&tempVar)==S_OK && tempVar.vt==VT_I4) {
-		DEBUG_MSG(L"Got fontWeight");
+		LOG_DEBUG(L"Got fontWeight");
 		if (tempVar.lVal >=700) {
 			node->addAttribute(L"bold",L"1");
 		}
 		VariantClear(&tempVar);
 	} else {
-		DEBUG_MSG(L"Failed to get fontWeight");
+		LOG_DEBUG(L"Failed to get fontWeight");
 	}
 	//textDecoration
 	pHTMLCurrentStyle->get_textDecoration(&tempBSTR);
 	if(tempBSTR) {
-		DEBUG_MSG(L"Got textDecoration");
+		LOG_DEBUG(L"Got textDecoration");
 		if (_wcsicmp(tempBSTR,L"none")!=0) {
 			// textDecoration may contain multiple values separated by spaces.
 			wchar_t *token, *tokenContext;
@@ -419,7 +419,7 @@ inline void fillTextFormatting_helper(IHTMLElement2* pHTMLElement2, VBufStorage_
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
 	} else {
-		DEBUG_MSG(L"Failed to get textDecoration");
+		LOG_DEBUG(L"Failed to get textDecoration");
 	}
 	pHTMLCurrentStyle->Release();
 }
@@ -428,7 +428,7 @@ inline void fillTextFormattingForNode(IHTMLDOMNode* pHTMLDOMNode, VBufStorage_fi
 	IHTMLElement2* pHTMLElement2=NULL;
 	int res=pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
 	if(res!=S_OK||!pHTMLElement2) {
-		DEBUG_MSG(L"Could not get IHTMLElement2");
+		LOG_DEBUG(L"Could not get IHTMLElement2");
 		return;
 	}
 	fillTextFormatting_helper(pHTMLElement2,node);
@@ -550,7 +550,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	{ 
 		wstring s=getTextFromHTMLDOMNode(pHTMLDOMNode,allowPreformattedText);
 		if(!s.empty()) {
-			DEBUG_MSG(L"Got text from node");
+			LOG_DEBUG(L"Got text from node");
 			VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,s);
 			fillTextFormattingForTextNode(parentNode,textNode);
 			return textNode;
@@ -560,11 +560,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	//Get node's ID
 	int ID=getIDFromHTMLDOMNode(pHTMLDOMNode);
 	if(ID==0) {
-		DEBUG_MSG(L"Could not get ID");
+		LOG_DEBUG(L"Could not get ID");
 		return NULL;
 	}
 	if(buffer->getControlFieldNodeWithIdentifier(docHandle,ID)!=NULL) {
-		DEBUG_MSG(L"Node already exists with docHandle "<<docHandle<<L" and ID "<<ID<<L", not adding to buffer");
+		LOG_DEBUG(L"Node already exists with docHandle "<<docHandle<<L" and ID "<<ID<<L", not adding to buffer");
 		return NULL;
 	}
 
@@ -573,19 +573,19 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	bool isBlock=true;
 	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode, invisible, isBlock);
 
-	DEBUG_MSG(L"Trying to get IHTMLDOMNode::nodeName");
+	LOG_DEBUG(L"Trying to get IHTMLDOMNode::nodeName");
 	if(pHTMLDOMNode->get_nodeName(&tempBSTR)!=S_OK||!tempBSTR) {
-		DEBUG_MSG(L"Failed to get IHTMLDOMNode::nodeName");
+		LOG_DEBUG(L"Failed to get IHTMLDOMNode::nodeName");
 		return NULL;
 	}
 	wstring nodeName=tempBSTR;
 	SysFreeString(tempBSTR);
 	tempBSTR=NULL;
-	DEBUG_MSG(L"Got IHTMLDOMNode::nodeName of "<<nodeName);
+	LOG_DEBUG(L"Got IHTMLDOMNode::nodeName of "<<nodeName);
 
 	//We can safely ignore script and comment tags
 	if(nodeName.compare(L"#COMMENT")==0||nodeName.compare(L"SCRIPT")==0) {
-		DEBUG_MSG(L"nodeName not supported");
+		LOG_DEBUG(L"nodeName not supported");
 		return NULL;
 	}
 
@@ -777,7 +777,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			attribsMap[L"name"]=IAName;
 		}
 	} else if(nodeName.compare(L"BR")==0) {
-		DEBUG_MSG(L"node is a br tag, adding a line feed as its text.");
+		LOG_DEBUG(L"node is a br tag, adding a line feed as its text.");
 		contentString=L"\n";
 	} else {
 		renderChildren=true;
@@ -810,7 +810,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		bool hasContent=!IAName.empty();
 		//For children of frames we must get the child document via IAccessible
 		if(nodeName.compare(L"FRAME")==0||nodeName.compare(L"IFRAME")==0) {
-			DEBUG_MSG(L"using getRoodDOMNodeOfHTMLFrame to get the frame's child");
+			LOG_DEBUG(L"using getRoodDOMNodeOfHTMLFrame to get the frame's child");
 			if(pacc) {
 				IHTMLDOMNode* childPHTMLDOMNode=getRootDOMNodeFromIAccessibleFrame(pacc);
 				if(childPHTMLDOMNode) {
@@ -820,18 +820,18 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			}
 		} else { //use childNodes
 			IHTMLDOMChildrenCollection* pHTMLDOMChildrenCollection=NULL;
-			DEBUG_MSG(L"Getting IHTMLDOMNode::childNodes");
+			LOG_DEBUG(L"Getting IHTMLDOMNode::childNodes");
 			IDispatch* pDispatch=NULL;
 			if(pHTMLDOMNode->get_childNodes(&pDispatch)==S_OK) {
 				IHTMLDOMChildrenCollection* pHTMLDOMChildrenCollection=NULL;
 				if(pDispatch->QueryInterface(IID_IHTMLDOMChildrenCollection,(void**)&pHTMLDOMChildrenCollection)==S_OK) {
-					DEBUG_MSG(L"Got IHTMLDOMNode::childNodes");
-					DEBUG_MSG(L"Getting IHTMLDOMChildrenCollection::length");
+					LOG_DEBUG(L"Got IHTMLDOMNode::childNodes");
+					LOG_DEBUG(L"Getting IHTMLDOMChildrenCollection::length");
 					long length=0;
 					pHTMLDOMChildrenCollection->get_length(&length);
-					DEBUG_MSG(L"length "<<length);
+					LOG_DEBUG(L"length "<<length);
 					for(int i=0;i<length;++i) {
-						DEBUG_MSG(L"Fetching child "<<i);
+						LOG_DEBUG(L"Fetching child "<<i);
 						IDispatch* childPDispatch=NULL;
 						if(pHTMLDOMChildrenCollection->item(i,&childPDispatch)!=S_OK) {
 							continue;
@@ -926,11 +926,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 }
 
 void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
-	DEBUG_MSG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
-	DEBUG_MSG(L"Getting document from window "<<docHandle);
+	LOG_DEBUG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
+	LOG_DEBUG(L"Getting document from window "<<docHandle);
 	int res=SendMessage((HWND)docHandle,WM_HTML_GETOBJECT,0,0);
 	if(res==0) {
-		DEBUG_MSG(L"Error getting document using WM_HTML_GETOBJECT");
+		LOG_DEBUG(L"Error getting document using WM_HTML_GETOBJECT");
 		return;
 	}
 IHTMLDOMNode* pHTMLDOMNode=NULL;
@@ -941,22 +941,22 @@ IHTMLDOMNode* pHTMLDOMNode=NULL;
 	} else {
 		IHTMLDocument3* pHTMLDocument3=NULL;
 		if(ObjectFromLresult(res,IID_IHTMLDocument3,0,(void**)&pHTMLDocument3)!=S_OK) {
-			DEBUG_MSG(L"Error in ObjectFromLresult");
+			LOG_DEBUG(L"Error in ObjectFromLresult");
 			return;
 		}
-		DEBUG_MSG(L"Locating DOM node with ID");
+		LOG_DEBUG(L"Locating DOM node with ID");
 		IHTMLElement* pHTMLElement=NULL;
 		wostringstream s;
 		s<<L"ms__id"<<ID;
 		if(pHTMLDocument3->getElementById((wchar_t*)(s.str().c_str()),(IHTMLElement**)&pHTMLElement)!=S_OK||!pHTMLElement) {
-			DEBUG_MSG(L"Failed to find element with ID"<<s.str().c_str());
+			LOG_DEBUG(L"Failed to find element with ID"<<ID);
 			pHTMLDocument3->Release();
 			return;
 		}
 		pHTMLDocument3->Release();
-		DEBUG_MSG(L"queryInterface to IHTMLDOMNode from IHTMLElement");
+		LOG_DEBUG(L"queryInterface to IHTMLDOMNode from IHTMLElement");
 		if(pHTMLElement->QueryInterface(IID_IHTMLDOMNode,(void**)&pHTMLDOMNode)!=S_OK) {
-			DEBUG_MSG(L"Could not get IHTMLDOMNode");
+			LOG_DEBUG(L"Could not get IHTMLDOMNode");
 			pHTMLElement->Release();
 			return;
 		}
@@ -968,15 +968,15 @@ IHTMLDOMNode* pHTMLDOMNode=NULL;
 }
 
 MshtmlVBufBackend_t::MshtmlVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID) {
-	DEBUG_MSG(L"Mshtml backend constructor");
+	LOG_DEBUG(L"Mshtml backend constructor");
 }
 
 MshtmlVBufBackend_t::~MshtmlVBufBackend_t() {
-	DEBUG_MSG(L"Mshtml backend destructor");
+	LOG_DEBUG(L"Mshtml backend destructor");
 }
 
 extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
 	VBufBackend_t* backend=new MshtmlVBufBackend_t(docHandle,ID);
-	DEBUG_MSG(L"Created new backend at "<<backend);
+	LOG_DEBUG(L"Created new backend at "<<backend);
 	return backend;
 }

@@ -1,0 +1,85 @@
+﻿#locale/en/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"')\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"')\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])'
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	dot	all	always
+! sentence ending	bang	all	always
+? sentence ending	question	all	always
+; phrase ending	semi	most	always
+: phrase ending	colon	most	always
+decimal point		none	always
+in-word '	tick	all	norep
+
+# Whitespace
+\0	blank	char
+\t	tab
+\n	line feed	char
+\f	page break	none
+\r	carriage return	char
+ 	space	char
+ 	space	char	# no-break space
+
+# Standard punctuation/symbols
+!	bang	all
+"	quote	most
+\#	number	most
+$	dollar	some
+£	pound	some
+€	euro	some
+%	percent	some
+&	and	some
+'	tick	all
+(	left paren	most
+)	right paren	most
+*	star	most
++	plus	most
+,	comma	all	always
+-	dash	most
+.	dot	some
+/	slash	some
+:	colon	most
+;	semi	most
+<	less	most
+>	greater	most
+=	equals	most
+?	question	all
+@	at	some
+[	left bracket	most
+]	right bracket	most
+\\	backslash	most
+^	caret	most
+_	line	most
+`	graav	most
+{	left brace	most
+}	right brace	most
+|	bar	most
+~	tilda	most
+
+# Other characters
+•	bullet	some
+…	dot dot dot	all	always
+	bullet	some
+“	left quote	most
+”	right quote	most
+–	en dash	most
+—	em dash	most
+●	circle	most
+¨	diaeresis	most

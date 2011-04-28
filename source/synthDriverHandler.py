@@ -22,7 +22,9 @@ def initialize():
 	config.addConfigDirsToPythonPackagePath(synthDrivers)
 
 def changeVoice(synth, voice):
-	synth.voice = voice
+	# This function can be called with no voice if the synth doesn't support the voice setting (only has one voice).
+	if voice:
+		synth.voice = voice
 	c=config.conf["speech"][synth.name]
 	c.configspec=synth.getConfigSpec()
 	config.conf.validate(config.val, copy = True,section = c)
@@ -73,20 +75,19 @@ def setSynth(name):
 		prevSynthName = None
 	try:
 		newSynth=_getSynthDriver(name)()
-		updatedConfig=config.updateSynthConfig(newSynth)
-		if not updatedConfig:
+		if name in config.conf["speech"]:
 			newSynth.loadSettings()
 		else:
+			# Create the new section.
+			config.conf["speech"][name]={}
 			if newSynth.isSupported("voice"):
-				#We need to call changeVoice here so voice dictionaries can be managed
-				changeVoice(newSynth,newSynth.voice)
+				voice=newSynth.voice
+			else:
+				voice=None
+			# We need to call changeVoice here so that required initialisation can be performed.
+			changeVoice(newSynth,voice)
 			newSynth.saveSettings() #save defaults
 		_curSynth=newSynth
-		#start or update the synthSettingsRing (for those synths which do not support 'voice')
-		if not newSynth.isSupported('voice'):
-			if globalVars.settingsRing: globalVars.settingsRing.updateSupportedSettings(newSynth)
-			else:  globalVars.settingsRing = SynthSettingsRing(newSynth)
-			speechDictHandler.loadVoiceDict(newSynth)
 		config.conf["speech"]["synth"]=name
 		log.info("Loaded synthDriver %s"%name)
 		return True
@@ -399,9 +400,14 @@ class SynthDriver(baseObject.AutoPropertyObject):
 				log.warning("No such voice: %s" % voice)
 				# Update the configuration with the correct voice.
 				c["voice"]=self.voice
-				# We need to call changeVoice here so voice dictionaries can be managed
+				# We need to call changeVoice here so that required initialisation can be performed.
 				changeVoice(self,self.voice)
-		[setattr(self,s.name,c[s.name]) for s in self.supportedSettings if not s.name=="voice" and c[s.name] is not None]
+		else:
+			changeVoice(self,None)
+		for s in self.supportedSettings:
+			if s.name=="voice" or c[s.name] is None:
+				continue
+			setattr(self,s.name,c[s.name])
 
 	def _get_initialSettingsRingSetting (self):
 		if not self.isSupported("rate") and len(self.supportedSettings)>0:

@@ -55,9 +55,9 @@ confspec = ConfigObj(StringIO(
 [speech]
 	# The synthesiser to use
 	synth = string(default=auto)
-	speakPunctuation = boolean(default=False)
+	symbolLevel = integer(default=100)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
-outputDevice = string(default=default)
+	outputDevice = string(default=default)
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
@@ -186,21 +186,6 @@ def load():
 		globalVars.configFileError=_("Errors in configuration file '%s':\n%s")%(conf.filename,"\n".join(errorList))
 	if globalVars.configFileError:
 		log.warn(globalVars.configFileError)
-
-def updateSynthConfig(synth):
-	"""Makes sure that the config contains a specific synth section for the given synth name and assigns the appropriate config spec.
-@param synth: the synth
-@type synth: l{synthDriverHandler.BaseSynthDriver}
-""" 
-	speech = conf["speech"]
-	# If there are no settings for this synth, make sure there are defaults.
-	if not speech.has_key(synth.name):
-		speech[synth.name] = {}
-		speech[synth.name].configspec=synth.getConfigSpec()
-		conf.validate(val, copy = True,section=speech[synth.name])
-		return True
-	else:
-		return False
 
 def save():
 	"""Saves the configuration to the config file.

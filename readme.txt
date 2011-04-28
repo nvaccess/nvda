@@ -13,7 +13,7 @@ General dependencies:
 	* comtypes, version 0.6.2 or later: http://www.sourceforge.net/projects/comtypes/
 	* wxPython 2.8 unicode (for Python 2.7), version 2.8.11.0 or later: http://www.wxpython.org/
 	* Python Windows Extensions (for Python 2.7), build 214 or later: http://www.sourceforge.net/projects/pywin32/ 
-	* eSpeak, version 1.44.03 or later, Windows dll:
+	* eSpeak, version 1.45.03 or later, Windows dll:
 		* Official web site: http://espeak.sourceforge.net/
 		* The Windows dll is tricky to build, so a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
 		* Copy espeak.dll and espeak-data into the source\synthDrivers directory.
@@ -79,7 +79,7 @@ To use the MDV Lilli braille display driver:
 		* Copy lilli.dll into the source\brailleDisplayDrivers directory.
 
 To use the Handy Tech braille display driver:
-	* Handy Tech Braille SDK: http://www.openbraille.org/tech.html
+	* Handy Tech Braille SDK, version 1.3.0.2 or later: https://www.handytech.de/en/normal/service/downloads/ht-software/brailledriver/
 		* Copy these files from the SDK's prog directory into NVDA's source\brailleDisplayDrivers\handyTech directory: HtBrailleDriverServer.dll, HtBrailleDriverServer.tlb, sbsupport.dll, dealers.dat
 	* If you want to be able to use this driver when running from source code, you will need to install the Handy Tech universal driver: ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
@@ -105,6 +105,18 @@ Before you can run the NVDA source code, you must prepare the source tree.
 You do this by opening a command prompt, changing to the root of the NVDA source distribution and typing:
 scons source
 You should do this again whenever the version of comtypes changes or language files are added or changed.
+
+=== Compiling NVDAHelper with debugging options ===
+A part from compiling language files and generating COM interfaces, this step also builds the NVDAHelper libraries.  
+If trying to debug nvdaHelper, You can control various  debugging options  with the nvdaHelperDebugFlag commandline variable. It takes one or more of the following flags:
+	* symbols: debugging symbols will be added to the DLLs and pdb files will be generated for use with a debugger. (no symbols are produced by default).
+	* assertions: assertions will be enabled. (they are disabled by default).
+	* debugCRT: the libraries will be linked against the debug C runtime. (The normal CRT is used by default).
+	* noOptimize: All compiler optimizations will be disabled. (Optimization 2 [/O2] is used by default). 
+
+The special keywords of none and all can also be used in place of the individual flags.
+An example follows that enables only symbols and assertions:
+scons source nvdaHelperDebugflags=symbols,assertions
 
 == Running the Source Code ==
 To start NVDA from source code, run nvda.pyw located in the source directory.
