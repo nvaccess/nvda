@@ -17,7 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <set>
 #include <windows.h>
 #include <shlwapi.h>
-#include <common/log.h>
+#include "log.h"
 #include "ia2Support.h"
 #include "apiHook.h"
 #include "nvdaController.h"

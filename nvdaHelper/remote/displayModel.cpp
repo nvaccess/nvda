@@ -19,7 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <list>
 #include <set>
 #include "nvdaControllerInternal.h"
-#include <common/log.h>
+#include "log.h"
 #include "displayModel.h"
 
 using namespace std;

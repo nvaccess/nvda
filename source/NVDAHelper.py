@@ -79,12 +79,12 @@ def nvdaControllerInternal_displayModelTextChangeNotify(hwnd, left, top, right, 
 	displayModel.textChangeNotify(hwnd, left, top, right, bottom)
 	return 0
 
-@WINFUNCTYPE(c_long,c_long,c_long,c_long,c_wchar_p,c_wchar_p,c_long,c_wchar_p)
-def nvdaControllerInternal_logMessage(pid,tid,level,fileName,funcName,lineNo,message):
+@WINFUNCTYPE(c_long,c_long,c_long,c_wchar_p)
+def nvdaControllerInternal_logMessage(level,pid,message):
 	if not log.isEnabledFor(level):
 		return 0
 	from appModuleHandler import getAppNameFromProcessID
-	codepath="RPC: %s, %s, %s, line %d"%(getAppNameFromProcessID(pid,includeExt=True),fileName,funcName, lineNo)
+	codepath="RPC process %s (%s)"%(pid,getAppNameFromProcessID(pid,includeExt=True))
 	log._log(level,message,[],codepath=codepath)
 	return 0
 

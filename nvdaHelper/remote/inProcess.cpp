@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "ia2LiveRegions.h"
 #include "nvdaController.h"
 #include "nvdaControllerInternal.h"
-#include <common/log.h>
+#include "log.h"
 #include "gdiHooks.h"
 #include "nvdaHelperRemote.h"
 #include "inProcess.h"

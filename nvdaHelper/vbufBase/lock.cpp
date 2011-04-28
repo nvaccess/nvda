@@ -15,37 +15,37 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #ifdef _WIN32
 #include <windows.h>
 #endif
-#include <common/debug.h>
+#include <remote/log.h>
 #include "lock.h"
 
 VBufLock_t::VBufLock_t() {
-	DEBUG_MSG(L"initializing lock");
+	LOG_DEBUG(L"initializing lock");
 	#ifdef _WIN32
 	lockHandle=new CRITICAL_SECTION;
-	DEBUG_MSG(L"critical section at address "<<lockHandle);
+	LOG_DEBUG(L"critical section at address "<<lockHandle);
 	InitializeCriticalSection(static_cast<LPCRITICAL_SECTION>(lockHandle));
 	#endif
 }
 
 void VBufLock_t::acquire() {
-	DEBUG_MSG(L"acquiring lock...");
+	LOG_DEBUG(L"acquiring lock...");
 	#ifdef _WIN32
 	EnterCriticalSection(static_cast<LPCRITICAL_SECTION>(lockHandle));
 	#endif
-	DEBUG_MSG(L"acquired.");
+	LOG_DEBUG(L"acquired.");
 }
 
 void VBufLock_t::release() {
-	DEBUG_MSG(L"Releasing lock...");
+	LOG_DEBUG(L"Releasing lock...");
 	#ifdef _WIN32
 	LeaveCriticalSection(static_cast<LPCRITICAL_SECTION>(lockHandle));
 	#endif
-	DEBUG_MSG(L"Released.");
+	LOG_DEBUG(L"Released.");
 }
 
 VBufLock_t::~VBufLock_t() {
-	DEBUG_MSG(L"Lock being destroied");
-	DEBUG_MSG(L"Deleting critical section");
+	LOG_DEBUG(L"Lock being destroied");
+	LOG_DEBUG(L"Deleting critical section");
 	#ifdef _WIN32
 	DeleteCriticalSection(static_cast<LPCRITICAL_SECTION>(lockHandle));
 	delete lockHandle;
