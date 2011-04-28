@@ -15,16 +15,12 @@ from logHandler import log
 import time
 import globalVars
 
-EVENT_TYPEDCHARACTER=0X1000
-
 _remoteLib=None
 _remoteLoader64=None
 localLib=None
 generateBeep=None
 VBuf_getTextInRange=None
 lastInputLangChangeTime=0
-
-winEventHookID=None
 
 #utility function to point an exported function pointer in a dll  to a ctypes wrapped python function
 def _setDllFuncPointer(dll,name,cfunc):
@@ -118,19 +114,12 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("layout %s")%layoutName)
 	return 0
 
-def handleTypedCharacter(window,wParam,lParam):
+@WINFUNCTYPE(c_long,c_long,c_wchar)
+def nvdaControllerInternal_typedCharacterNotify(threadID,ch):
 	focus=api.getFocusObject()
 	if focus.windowClassName!="ConsoleWindowClass":
-		eventHandler.queueEvent("typedCharacter",focus,ch=unichr(wParam))
-
-@winUser.WINEVENTPROC
-def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
-	global lastKeyboardLayoutChangeEventTime
-	try:
-		if eventID==EVENT_TYPEDCHARACTER:
-			handleTypedCharacter(window,objectID,childID)
-	except:
-		log.error("helper.winEventCallback", exc_info=True)
+		eventHandler.queueEvent("typedCharacter",focus,ch=ch)
+	return 0
 
 class RemoteLoader64(object):
 
@@ -173,13 +162,14 @@ class RemoteLoader64(object):
 		winKernel.closeHandle(self._process)
 
 def initialize():
-	global _remoteLib, _remoteLoader64, localLib, winEventHookID,generateBeep,VBuf_getTextInRange
+	global _remoteLib, _remoteLoader64, localLib, generateBeep,VBuf_getTextInRange
 	localLib=cdll.LoadLibrary('lib/nvdaHelperLocal.dll')
 	for name,func in [
 		("nvdaController_speakText",nvdaController_speakText),
 		("nvdaController_cancelSpeech",nvdaController_cancelSpeech),
 		("nvdaController_brailleMessage",nvdaController_brailleMessage),
 		("nvdaControllerInternal_inputLangChangeNotify",nvdaControllerInternal_inputLangChangeNotify),
+		("nvdaControllerInternal_typedCharacterNotify",nvdaControllerInternal_typedCharacterNotify),
 		("nvdaControllerInternal_displayModelTextChangeNotify",nvdaControllerInternal_displayModelTextChangeNotify),
 		("nvdaControllerInternal_logMessage",nvdaControllerInternal_logMessage),
 	]:
@@ -205,11 +195,9 @@ def initialize():
 		raise RuntimeError("Error initializing NVDAHelperRemote")
 	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':
 		_remoteLoader64=RemoteLoader64()
-	winEventHookID=winUser.setWinEventHook(EVENT_TYPEDCHARACTER,EVENT_TYPEDCHARACTER,0,winEventCallback,0,0,0)
 
 def terminate():
 	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange
-	winUser.unhookWinEvent(winEventHookID)
 	if _remoteLib.injection_terminate() == 0:
 		raise RuntimeError("Error terminating NVDAHelperRemote")
 	_remoteLib=None

@@ -18,6 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 interface NvdaControllerInternal {
 	[fault_status,comm_status] getNVDAProcessID();
 	[fault_status,comm_status] inputLangChangeNotify();
+	[fault_status,comm_status] typedCharacterNotify();
 	[fault_status,comm_status] displayModelTextChangeNotify();
 	[fault_status,comm_status] logMessage();
 }
