@@ -22,7 +22,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "dllmain.h"
 #include "apiHook.h"
 #include "displayModel.h"
-#include <common/log.h>
+#include "log.h"
 #include "nvdaControllerInternal.h"
 #include "nvdaController.h"
 #include <common/lock.h>

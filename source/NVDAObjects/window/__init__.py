@@ -188,7 +188,7 @@ An NVDAObject for a window
 		textLength=winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
 		textBuf=ctypes.create_unicode_buffer(textLength+2)
 		winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXT,textLength+1,textBuf)
-		return textBuf.value+u"\0"
+		return textBuf.value
 
 	def _get_processID(self):
 		if hasattr(self,"_processIDThreadID"):

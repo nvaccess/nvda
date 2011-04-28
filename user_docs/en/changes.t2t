@@ -6,22 +6,25 @@
 = 2011.2 =
 
 == New Features ==
-- It is now possible to hear the description for any given character by pressing the review current character script twice in quick succession.  For English characters this is the standard English phonetic alphabet. For pictagraphic languages such as traditional Chinese, one or more example phraises using the given symbol are provided. Also pressing review current word or review current line three times will spell the word/line using the first of these descriptions.
+- It is now possible to hear the description for any given character by pressing the review current character script twice in quick succession.  For English characters this is the standard English phonetic alphabet. For pictagraphic languages such as traditional Chinese, one or more example phraises using the given symbol are provided. Also pressing review current word or review current line three times will spell the word/line using the first of these descriptions. (#55)
 - More text can be seen in flat review for applications such as Mozilla Thunderbird  who write their text directly to the display as glyphs.
 - It is now possible to choose from several levels of punctuation and symbol announcement. (#332)
 - When punctuation or other symbols are repeated more than four times, the number of repetitions is now announced instead of speaking the repeated symbols. (#43)
+- New braille translation table: Norwegian 8 dot computer braille. (#1456)
 
 
 == Changes ==
 - To move the caret to the review cursor, now press the move focus to navigator object script (desktop NVDA+shift+numpadMinus, laptop NVDA+shift+backspace) twice in quick succession. This frees up more keys on the keyboard. (#837)
 - To hear the  decimal and hexadecimal representation of the character under the review cursor, now press review current character three times rather than twice, as twice now speaks the character description.
+- Updated eSpeak speech synthesiser to 1.45.03. (#1465)
 
 
 == Bug Fixes ==
 - Collapsing combo boxes in a virtual buffer when focus mode has been forced with NVDA+space no longer auto-switches back to browse mode. (#1386)
 - In Gecko (e.g. Firefox) and MSHTML (e.g. Internet Explorer) documents, NVDA now correctly renders certain text on the same line which was previously rendered on separate lines. (#1378)
-- When Braille is tethered to review, and when the navigator object is moved to a virtual buffer (web document, pdf, html email message), either manually or due to a focus change, braille will be appropriately showing the content of the virtual buffer. (#1406 and #1407)
+- When Braille is tethered to review, and when the navigator object is moved to a virtual buffer (web document, pdf, html email message), either manually or due to a focus change, braille will be appropriately showing the content of the virtual buffer. (#1406, #1407)
 - When speaking of punctuation is disabled, certain punctuation is no longer incorrectly spoken when using some synthesisers. (#332)
+- Problems no longer occur when loading configuration for synthesisers which do not support the voice setting such as Audiologic Tts3. (#1347)
 
 
 == Changes for Developers ==

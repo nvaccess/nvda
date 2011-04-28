@@ -50,20 +50,23 @@ interface NvdaControllerInternal {
 	error_status_t __stdcall inputLangChangeNotify([in] const long threadID, [in] const unsigned long hkl, [in,string] const wchar_t* layoutString);
 
 /**
+ * Notifies NVDA that a character has been typed in this thread.
+ * @param threadID the thread the layout change occured in
+ * @param ch the character typed.
+ */
+	error_status_t __stdcall typedCharacterNotify([in] const long threadID, [in] const wchar_t ch);
+
+/**
  * Notifies NVDA that text in the given rectangle (in screen coordinates), in the given window, has changed.
  */
 	error_status_t __stdcall displayModelTextChangeNotify([in] const long hwnd, [in] const long left, [in] const long top, [in] const long right, [in] const long bottom); 
 
 /**
  * Logs a message at the given level to NVDA
- * @param process Id of the process where the message is sent from
- * @param threadID the thread ID of the thread where the message is coming from
  * @param level the level of the message
- * @param fileName the name of the file where the message was sent
- * @param funcName the full name of the function where the message is coming from 
- * @param lineNo the line number where the message was sent
+ * @param process Id of the process where the message is sent from
  * @param message the log message
  */
-	error_status_t __stdcall logMessage([in] const long processID, [in] const long threadID, [in] const long level, [in,string] const wchar_t* fileName, [in,string] const wchar_t* funcName, [in] const long lineNo, [in,string] const wchar_t* message);
+	error_status_t __stdcall logMessage([in] const long level, [in] const long processID, [in,string] const wchar_t* message);
 
 };

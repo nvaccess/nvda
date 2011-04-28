@@ -1,4 +1,9 @@
-﻿complexSymbols:
+﻿#locale/en/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
 # identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
@@ -9,7 +14,7 @@
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<=\d)\.(?=\d)
-in-word '	(?<=[a-zA-Z0-9])'(?=[a-zA-Z])
+in-word '	(?<=[^\W_])'
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -48,7 +53,7 @@ $	dollar	some
 +	plus	most
 ,	comma	all	always
 -	dash	most
-.	dot	all
+.	dot	some
 /	slash	some
 :	colon	most
 ;	semi	most
@@ -59,7 +64,6 @@ $	dollar	some
 @	at	some
 [	left bracket	most
 ]	right bracket	most
-"	quote	most
 \\	backslash	most
 ^	caret	most
 _	line	most
@@ -78,4 +82,4 @@ _	line	most
 –	en dash	most
 —	em dash	most
 ●	circle	most
-¨	diaeresis	most 
+¨	diaeresis	most

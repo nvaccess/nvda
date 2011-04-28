@@ -18,7 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <libMinHook/MinHook.h>
 #include "nvdaControllerInternal.h"
-#include "common/log.h"
+#include "log.h"
 #include "apiHook.h"
 
 using namespace std;
