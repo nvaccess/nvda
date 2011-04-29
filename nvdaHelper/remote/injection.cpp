@@ -181,16 +181,7 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	return 0;
 }
 
-//winEvent callback to inject in-process
-//Only used for foreground/focus winEvents
-void CALLBACK injection_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
-	if(isProcessExiting) {
-		// We shouldn't do anything at all if the process is exiting.
-		// Doing so will probably cause a crash.
-		return;
-	}
-	//We are not at all interested in out-of-context winEvents, even if they were accidental.
-	if(threadID!=GetCurrentThreadId()) return;
+bool initInprocManagerThreadIfNeeded() {
 	BOOL threadCreated=FALSE;
 	HANDLE waitHandles[2]={0};
 	//Gain exclusive access to all the inproc thread variables for the rest of this function.
@@ -218,12 +209,27 @@ void CALLBACK injection_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	inprocThreadsLock.release();
 	if(threadCreated) {
 		//Wait until the event is set (the thread is past initialization) or until the thread dies.
-		WaitForMultipleObjects(2,waitHandles,FALSE,1000);
-		//Forward this winEvent to the general in-process winEvent callback if necessary, so it sees this initial event.
-		inproc_winEventCallback(inprocWinEventHookID,eventID,hwnd,objectID,childID,threadID,time);
+		WaitForMultipleObjects(2,waitHandles,FALSE,10000);
 	}
 	//Close the event handle, but not the thread handle as the thread itself will do that.
 	if(waitHandles[0]) CloseHandle(waitHandles[0]);
+	return threadCreated;
+}
+
+//winEvent callback to inject in-process
+//Only used for foreground/focus winEvents
+void CALLBACK injection_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
+	if(isProcessExiting) {
+		// We shouldn't do anything at all if the process is exiting.
+		// Doing so will probably cause a crash.
+		return;
+	}
+	//We are not at all interested in out-of-context winEvents, even if they were accidental.
+	if(threadID!=GetCurrentThreadId()) return;
+	if(initInprocManagerThreadIfNeeded()) {
+		//Forward this winEvent to the general in-process winEvent callback if necessary, so it sees this initial event.
+		inproc_winEventCallback(inprocWinEventHookID,eventID,hwnd,objectID,childID,threadID,time);
+	}
 }
 
 //Code for launcher process
