@@ -35,6 +35,7 @@ UINT WM_HTML_GETOBJECT;
 
 BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if(reason==DLL_PROCESS_ATTACH) {
+		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
 		backendLibHandle=hModule;
 		WM_HTML_GETOBJECT=RegisterWindowMessage(L"WM_HTML_GETOBJECT");
 	}

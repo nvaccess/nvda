@@ -325,6 +325,7 @@ BOOL injection_terminate() {
 
 BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if(reason==DLL_PROCESS_ATTACH) {
+		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
 		#ifndef NDEBUG
 		Beep(220,75);
 		#endif

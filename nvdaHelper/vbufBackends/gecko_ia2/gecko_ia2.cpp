@@ -1009,3 +1009,10 @@ extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle
 	LOG_DEBUG(L"Created new backend at "<<backend);
 	return backend;
 }
+
+BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
+	if(reason==DLL_PROCESS_ATTACH) {
+		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
+	}
+	return true;
+}

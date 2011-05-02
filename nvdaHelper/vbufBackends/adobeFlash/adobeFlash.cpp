@@ -17,6 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <map>
 #include <windows.h>
 #include <oleacc.h>
+#include <remote/log.h>
 #include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
 #include "adobeFlash.h"
@@ -205,4 +206,11 @@ AdobeFlashVBufBackend_t::AdobeFlashVBufBackend_t(int docHandle, int ID): VBufBac
 extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
 	VBufBackend_t* backend=new AdobeFlashVBufBackend_t(docHandle,ID);
 	return backend;
+}
+
+BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
+	if(reason==DLL_PROCESS_ATTACH) {
+		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
+	}
+	return true;
 }
