@@ -42,6 +42,9 @@ if 'debugCRT' in debug:
 else:
 	env.Append(CCFLAGS=['/MT'])
 
+if 'RTC' in debug:
+	env.Append(CCFLAGS=['/RTCsu'])
+
 if 'symbols' in debug:
 	env.Append(PDB='${TARGET}.pdb')
 else:

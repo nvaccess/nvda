@@ -113,6 +113,7 @@ If trying to debug nvdaHelper, You can control various  debugging options  with 
 	* assertions: assertions will be enabled. (they are disabled by default).
 	* debugCRT: the libraries will be linked against the debug C runtime. (The normal CRT is used by default).
 	* noOptimize: All compiler optimizations will be disabled. (Optimization 2 [/O2] is used by default). 
+	* RTC: runtime checks (stack corruption, uninitialized variables etc) will be enabled (default is no runtime checks).
 
 The special keywords of none and all can also be used in place of the individual flags.
 An example follows that enables only symbols and assertions:
