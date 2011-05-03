@@ -54,9 +54,10 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
 	static void CALLBACK renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time);
 
 /**
- * the set of control field nodes that should be re-rendered the next time the backend is updated.
+ * the list of control field nodes that should be re-rendered the next time the backend is updated.
+ * the list is in the order the invalidations were requested.
  */
-	VBufStorage_controlFieldNodeSet_t invalidSubtrees;
+	VBufStorage_controlFieldNodeList_t invalidSubtreeList;
 
 	protected:
 

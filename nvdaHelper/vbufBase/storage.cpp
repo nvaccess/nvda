@@ -20,6 +20,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <list>
 #include <set>
 #include <sstream>
+#include <windows.h>
 #include <remote/log.h>
 #include "utils.h"
 #include "storage.h"
@@ -457,7 +458,8 @@ std::wstring VBufStorage_textFieldNode_t::getDebugInfo() const {
 
 void VBufStorage_buffer_t::forgetControlFieldNode(VBufStorage_controlFieldNode_t* node) {
 	assert(node); //Node can't be NULL
-	assert(this->controlFieldNodesByIdentifier.count(node->identifier)==1); //Node must exist in the set
+	if(this->controlFieldNodesByIdentifier.count(node->identifier)==0) DebugBreak(); //Node must exist in the set
+	assert(this->controlFieldNodesByIdentifier[node->identifier]->identifier==node->identifier);
 	assert(this->controlFieldNodesByIdentifier[node->identifier]==node); //Remembered node and this node must be equal
 	this->controlFieldNodesByIdentifier.erase(node->identifier);
 	LOG_DEBUG(L"Forgot controlFieldNode with docHandle "<<node->identifier.docHandle<<L" and ID "<<node->identifier.ID);
@@ -601,29 +603,7 @@ VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage
 	return textFieldNode;
 }
 
-bool VBufStorage_buffer_t::mergeBuffer(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_buffer_t* buffer) {
-	assert(buffer); //Buffer can't be NULL
-	assert(buffer!=this); //cannot merge a buffer into itself
-	assert(!parent||this->isNodeInBuffer(parent));
-	assert(!previous||this->isNodeInBuffer(previous));
-	LOG_DEBUG(L"Merging buffer at "<<buffer<<L" in to this buffer with parent at "<<parent<<L" and previous at "<<previous);
-	if(buffer->rootNode) {
-		LOG_DEBUG(L"Inserting nodes from buffer");
-		insertNode(parent,previous,buffer->rootNode);
-		controlFieldNodesByIdentifier.insert(buffer->controlFieldNodesByIdentifier.begin(),buffer->controlFieldNodesByIdentifier.end());
-		buffer->controlFieldNodesByIdentifier.clear();
-		buffer->rootNode=NULL;
-	} else {
-		LOG_DEBUG(L"Buffer empty");
-	}
-	LOG_DEBUG(L"mergeBuffer complete");
-	return true;
-}
-
-bool VBufStorage_buffer_t::replaceSubtree(VBufStorage_fieldNode_t* node, VBufStorage_buffer_t* buffer) {
-	assert(node);
-	assert(this->isNodeInBuffer(node));
-	assert(buffer);
+bool VBufStorage_buffer_t::replaceSubtrees(const map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>& m) {
 	VBufStorage_controlFieldNode_t* parent=NULL;
 	VBufStorage_fieldNode_t* previous=NULL;
 	//Using the current selection start, record a list of ancestor fields by their identifier, 
@@ -637,17 +617,32 @@ bool VBufStorage_buffer_t::replaceSubtree(VBufStorage_fieldNode_t* node, VBufSto
 			identifierList.push_front(pair<VBufStorage_controlFieldNodeIdentifier_t,int>(parent->identifier,relativeSelectionStart));
 			for(previous=parent->previous;previous!=NULL;relativeSelectionStart+=previous->length,previous=previous->previous);
 		}
-	} 
-	//Remove the given node and replace it with the content of the given buffer
-	parent=node->parent;
-	previous=node->previous;
-	if(!this->removeFieldNode(node)) {
-		LOG_DEBUG(L"Error removing node");
-		return false;
 	}
-	if(!this->mergeBuffer(parent,previous,buffer)) {
-		LOG_DEBUG(L"Error merging buffer");
-		return false;
+	//For each node in the map,
+		//Replace the node on this buffer, with the content of the buffer in the map for that node
+		//Note that controlField info will automatically be removed, but not added again
+	for(map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>::const_iterator i=m.begin();i!=m.end();++i) {
+		VBufStorage_fieldNode_t* node=i->first;
+		VBufStorage_buffer_t* buffer=i->second;
+		parent=node->parent;
+		previous=node->previous;
+		if(!this->removeFieldNode(node)) {
+			LOG_DEBUG(L"Error removing node");
+			return false;
+		}
+		this->insertNode(parent,previous,buffer->rootNode);
+		buffer->rootNode=NULL;
+	}
+	//Update the controlField info on this buffer using all the buffers in the map
+	//We do this all in one go instead of for each replacement in case there are issues with ordering
+	//e.g. an identifier appears in one place before its removed in another
+	for(map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>::const_iterator i=m.begin();i!=m.end();++i) {
+		VBufStorage_buffer_t* buffer=i->second;
+		for(map<VBufStorage_controlFieldNodeIdentifier_t,VBufStorage_controlFieldNode_t*>::iterator j=buffer->controlFieldNodesByIdentifier.begin();j!=buffer->controlFieldNodesByIdentifier.end();++j) {
+			assert(this->controlFieldNodesByIdentifier.count(j->first)==0);
+			this->controlFieldNodesByIdentifier.erase(j->first);
+			this->controlFieldNodesByIdentifier.insert(make_pair(j->first,j->second));
+		}
 	}
 	//Find the deepest field the selection started in that still exists, 
 	//and correct the selection so its still positioned accurately relative to that field. 
@@ -670,9 +665,9 @@ bool VBufStorage_buffer_t::replaceSubtree(VBufStorage_fieldNode_t* node, VBufSto
 			this->selectionStart=lastAncestorStartOffset+min(lastRelativeSelectionStart,max(lastAncestorNode->length-1,0));
 		}
 	}
-	return true;
+	return TRUE;
 }
- 
+
 bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node) {
 	assert(this->isNodeInBuffer(node));
 	LOG_DEBUG(L"Removing subtree starting at "<<node->getDebugInfo());
