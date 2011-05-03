@@ -1,5 +1,4 @@
 ﻿#speech.py
-#speech.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -60,13 +59,20 @@ def terminate():
 	setSynth(None)
 	speechViewerObj=None
 
-RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 #: If a chunk of text contains only these characters, it will be considered blank.
 BLANK_CHUNK_CHARS = frozenset((" ", "\n", "\r", "\0", "", None))
+def isBlank(text):
+	"""Determine whether text should be reported as blank.
+	@param text: The text in question.
+	@type text: str
+	@return: C{True} if the text is blank, C{False} if not.
+	@rtype: bool
+	"""
+	return set(text) <= BLANK_CHUNK_CHARS
+
+RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 
 def processText(text,symbolLevel):
-	if not text or (isinstance(text, basestring) and set(text) <= BLANK_CHUNK_CHARS):
-		return _("blank") 
 	text = speechDictHandler.processText(text)
 	text = characterProcessing.processSpeechSymbols(languageHandler.getLanguage(), text, symbolLevel)
 	text = RE_CONVERT_WHITESPACE.sub(u" ", text)
@@ -284,6 +290,8 @@ def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 	if index is not None:
 		speechSequence.append(IndexCommand(index))
 	if text is not None:
+		if isBlank(text):
+			text=_("blank")
 		speechSequence.append(text)
 	speak(speechSequence,symbolLevel=symbolLevel)
 
@@ -564,7 +572,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 		if text:
 			speakText(text,index=index)
 		text=info.text
-		if len(text)==1:
+		if len(text)<=1:
 			if unit==textInfos.UNIT_CHARACTER:
 				speakSpelling(text)
 			else:
@@ -613,7 +621,8 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 				lastTextOkToMerge=False
 
 	text=" ".join(relativeTextList)
-	if text and (not text.isspace() or "\t" in text or "\f" in text):
+	# Don't add this text if it is blank.
+	if text and not isBlank(text):
 		textList.append(text)
 
 	#Finally get speech text for any fields left in new controlFieldStack that are common with the old controlFieldStack (for closing), if extra detail is not requested
@@ -631,22 +640,19 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 	if useCache:
 		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)
 		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
+
 	text=" ".join(textList)
-	if text is not None and (text=="" or (text.isspace() and "\t" not in text and "\f" not in text)):
-		# There's no speakable text.
-		# Reporting of blank text is handled above.
-		text=None
+	speechSequence=[]
 	# Even when there's no speakable text, we still need to notify the synth of the index.
-	if reason==REASON_SAYALL:
-		speechSequence=[]
-		if index is not None:
-			speechSequence.append(IndexCommand(index))
-		if text:
-			speechSequence.append(text)
-		if speechSequence:
+	if index is not None:
+		speechSequence.append(IndexCommand(index))
+	if text:
+		speechSequence.append(text)
+	if speechSequence:
+		if reason==REASON_SAYALL:
 			speakWithoutPauses(speechSequence)
-	else:
-		speakText(text,index=index)
+		else:
+			speak(speechSequence)
 
 def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	global oldTreeLevel, oldTableID, oldRowNumber, oldColumnNumber
