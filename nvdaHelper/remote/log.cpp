@@ -20,13 +20,17 @@ void logMessage(int level, const wchar_t* msg) {
 }
 
 int NVDALogCrtReportHook(int reportType,const wchar_t *message,int *returnValue) {
+	bool doDebugBreak=false;
 	int level=LOGLEVEL_WARNING;
 	if(reportType==_CRT_ERROR) {
 		level=LOGLEVEL_ERROR;
+		doDebugBreak=true;
 	} else if(reportType==_CRT_ASSERT) {
 		level=LOGLEVEL_CRITICAL;
+		doDebugBreak=true;
 	}
 	logMessage(level,message);
+	if(doDebugBreak) _CrtDbgBreak();
 	*returnValue=0;
 	return true;
 }
