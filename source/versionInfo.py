@@ -23,7 +23,7 @@ def _updateVersionFromVCS():
 
 name="NVDA"
 longName=_("NonVisual Desktop Access")
-version="2011.1.1"
+version="2011.2dev"
 try:
 	from _buildVersion import version
 except ImportError:
