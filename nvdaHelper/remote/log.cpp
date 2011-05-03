@@ -16,7 +16,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "log.h"
 
 void logMessage(int level, const wchar_t* msg) {
-	if(level<=LOGLEVEL_DEBUG||nvdaControllerInternal_logMessage(level,GetCurrentProcessId(),msg)!=0) OutputDebugString(msg);
+	if(level>LOGLEVEL_DEBUG) nvdaControllerInternal_logMessage(level,GetCurrentProcessId(),msg);
+	OutputDebugString(msg);
 }
 
 int NVDALogCrtReportHook(int reportType,const wchar_t *message,int *returnValue) {
