@@ -394,8 +394,6 @@ def processSpeechSymbol(locale, symbol):
 	@param symbol: The symbol.
 	@type symbol: str
 	"""
-	if not symbol:
-		return _("blank")
 	try:
 		ss = _speechSymbolsLocaleDataMap.fetchLocaleData(locale)
 	except LookupError:
