@@ -40,7 +40,7 @@ static LockableObject _logLock;
 
 #define _LOG_MSG_MACRO(level,message) {\
 	_logLock.acquire();\
-	_logStringStream.str()=L"";\
+	_logStringStream.str(L"");\
 	_logStringStream<<L"Thread "<<GetCurrentThreadId()<<L", "<<_STR2WSTR(__FILE__)<<L", "<<_STR2WSTR(__FUNCTION__)<<L", "<<__LINE__<<L":"<<std::endl<<message<<std::endl;\
 	logMessage(level,_logStringStream.str().c_str());\
 	_logLock.release();\
