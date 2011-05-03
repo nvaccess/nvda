@@ -138,7 +138,7 @@ def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 	beenCanceled=False
 	locale=languageHandler.getLanguage()
 	if not text:
-		return getSynth().speak(_("blank"))
+		return getSynth().speak((_("blank"),))
 	if not text.isspace():
 		text=text.rstrip()
 	gen=_speakSpellingGen(text,locale,useCharacterDescriptions)
