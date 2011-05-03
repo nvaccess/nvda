@@ -60,7 +60,7 @@ def terminate():
 	speechViewerObj=None
 
 #: If a chunk of text contains only these characters, it will be considered blank.
-BLANK_CHUNK_CHARS = frozenset((" ", "\n", "\r", "\0", "", None))
+BLANK_CHUNK_CHARS = frozenset((" ", "\n", "\r", "\0", u"\xa0"))
 def isBlank(text):
 	"""Determine whether text should be reported as blank.
 	@param text: The text in question.
@@ -68,7 +68,7 @@ def isBlank(text):
 	@return: C{True} if the text is blank, C{False} if not.
 	@rtype: bool
 	"""
-	return set(text) <= BLANK_CHUNK_CHARS
+	return text and set(text) <= BLANK_CHUNK_CHARS
 
 RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 
