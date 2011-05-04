@@ -140,6 +140,7 @@ confspec = ConfigObj(StringIO(
 	reportSpellingErrors = boolean(default=true)
 	reportPage = boolean(default=true)
 	reportLineNumber = boolean(default=False)
+	reportLineIndentation = boolean(default=False)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
 	reportTableHeaders = boolean(default=True)

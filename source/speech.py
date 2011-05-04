@@ -295,6 +295,32 @@ def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 		speechSequence.append(text)
 	speak(speechSequence,symbolLevel=symbolLevel)
 
+indentationReg1 = re.compile(r'^(\s+)')
+indentationReg2 = re.compile("(\t+|\ +)")
+def calculateTextIndentation(line):
+	""" Calculates number of leading tabs and spaces in the order that they are entered in the given line.
+
+	@param line: the line to be examined.
+	@type line: string
+	"""
+
+	lineSegments = indentationReg1.split(line)
+	# We expect to have 3 segments, 
+	# the first is the empty string, second is the leading whitespace, and the third is the remaining text on the line.
+
+	# Translators: no indentation is spoken when the user moves from a line that has indentation, to one that 
+	# does not.
+	#
+	if not indentationReg2.match(lineSegments[1]): return (_("No indentation"), line)
+	whitespaceList = indentationReg2.split(lineSegments[1])
+	res = []
+	locale=languageHandler.getLanguage()
+	for type in whitespaceList:
+		if type in ('', '\r'): continue
+		symbol = characterProcessing.processSpeechSymbol(locale, type[0])
+		res.append(u"{count} {char}".format(count=len(type), char=symbol))
+	return (" ".join(res), lineSegments[2])
+
 def speak(speechSequence,symbolLevel=None):
 	"""Speaks a sequence of text and speech commands
 	@param speechSequence: the sequence of text and L{SpeechCommand} objects to speak
@@ -621,6 +647,14 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 				lastTextOkToMerge=False
 
 	text=" ".join(relativeTextList)
+	if unit == textInfos.UNIT_LINE and formatConfig["reportLineIndentation"]:
+		(lineIndentation, text) = calculateTextIndentation(text)
+		oldLineIndentation = getattr(info.obj,'_speakTextInfo_lineIndentationCache', '')
+		if lineIndentation != oldLineIndentation:
+			textList.append(lineIndentation)
+			info.obj._speakTextInfo_lineIndentationCache = lineIndentation
+			textListBlankLen += 1 # need to add one so that we continue to say blank for blank lines.
+
 	# Don't add this text if it is blank.
 	if text and not isBlank(text):
 		textList.append(text)
