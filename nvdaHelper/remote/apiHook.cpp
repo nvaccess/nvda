@@ -16,7 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <iostream>
 #include <set>
 #include <windows.h>
-#include <libMinHook/MinHook.h>
+#include <minHook/newMinHook.h>
 #include "nvdaControllerInternal.h"
 #include "log.h"
 #include "apiHook.h"
@@ -67,19 +67,15 @@ void* apiHook_hookFunction(const char* moduleName, const char* functionName, voi
 
 BOOL apiHook_enableHooks() {
 	int res;
-	for(functionSet_t::iterator i=g_hookedFunctions.begin();i!=g_hookedFunctions.end();++i) {
-		res=MH_EnableHook(*i);
-		assert(res==MH_OK);
-	}
+	res=MH_EnableAllHooks();
+	assert(res==MH_OK);
 	return TRUE;
 }
 
 BOOL apiHook_terminate() {
 	int res;
-	for(functionSet_t::iterator i=g_hookedFunctions.begin();i!=g_hookedFunctions.end();++i) {
-		res=MH_DisableHook(*i);
-		assert(res==MH_OK);
-	}
+	res=MH_DisableAllHooks();
+	assert(res==MH_OK);
 	g_hookedFunctions.clear();
 	//Give enough time for all hook functions to complete.
 	Sleep(250);
