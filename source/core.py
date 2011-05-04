@@ -42,6 +42,10 @@ def new__getattr__(self,name):
 		return getattr(comtypes.client.dynamic._Dispatch(self._comobj),name)
 comtypes.client.lazybind.Dispatch.__getattr__=new__getattr__
 
+#Monkeypatch comtypes to allow its basic dynamic Dispatch support to  support invoke 0 (calling the actual IDispatch object itself)
+def new__call__(self,*args,**kwargs):
+	return comtypes.client.dynamic.MethodCaller(0,self)(*args,**kwargs)
+comtypes.client.dynamic._Dispatch.__call__=new__call__
 
 
 import sys
