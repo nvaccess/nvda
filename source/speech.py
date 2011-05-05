@@ -654,7 +654,10 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 	text=" ".join(relativeTextList)
 	if unit == textInfos.UNIT_LINE and formatConfig["reportLineIndentation"]:
 		(lineIndentation, text) = calculateTextIndentation(text)
-		oldLineIndentation = getattr(info.obj,'_speakTextInfo_lineIndentationCache', '')
+		oldLineIndentation = getattr(info.obj,'_speakTextInfo_lineIndentationCache', None)
+		if not oldLineIndentation:
+			# Assume no indent by default.
+			oldLineIndentation = calculateTextIndentation("")[0]
 		if lineIndentation != oldLineIndentation:
 			textList.append(lineIndentation)
 			info.obj._speakTextInfo_lineIndentationCache = lineIndentation
