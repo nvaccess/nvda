@@ -378,6 +378,11 @@ class VBufStorage_buffer_t {
 	VBufStorage_fieldNode_t* rootNode;
 
 /**
+ * Holds pointers to all nodes in the buffer
+ */
+	std::set<VBufStorage_fieldNode_t*> nodes;
+
+/**
  * holds pointers to all control field nodes in this buffer, searchable by  the control's unique identifier.
  */
 	std::map<VBufStorage_controlFieldNodeIdentifier_t,VBufStorage_controlFieldNode_t*> controlFieldNodesByIdentifier;

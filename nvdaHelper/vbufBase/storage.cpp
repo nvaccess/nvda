@@ -510,6 +510,8 @@ void VBufStorage_buffer_t::insertNode(VBufStorage_controlFieldNode_t* parent, VB
 		}
 	}
 	LOG_DEBUG(L"Inserted subtree");
+	nhAssert(this->nodes.count(node)==0);
+	this->nodes.insert(node);
 }
 
 void VBufStorage_buffer_t::deleteSubtree(VBufStorage_fieldNode_t* node) {
@@ -522,12 +524,14 @@ void VBufStorage_buffer_t::deleteSubtree(VBufStorage_fieldNode_t* node) {
 		child=next;
 	}
 	node->disassociateFromBuffer(this);
+	nhAssert(this->nodes.count(node)==1);
+	this->nodes.erase(node);
 	LOG_DEBUG(L"deleting node at "<<node);
 	delete node;
 	LOG_DEBUG(L"Deleted subtree");
 }
 
-VBufStorage_buffer_t::VBufStorage_buffer_t(): rootNode(NULL), controlFieldNodesByIdentifier(), selectionStart(0), selectionLength(0) {
+VBufStorage_buffer_t::VBufStorage_buffer_t(): rootNode(NULL), nodes(), controlFieldNodesByIdentifier(), selectionStart(0), selectionLength(0) {
 	LOG_DEBUG(L"buffer initializing");
 }
 
@@ -1083,16 +1087,7 @@ bool VBufStorage_buffer_t::isDescendantNode(VBufStorage_fieldNode_t* parent, VBu
 }
 
 bool VBufStorage_buffer_t::isNodeInBuffer(VBufStorage_fieldNode_t* node) {
-	nhAssert(node);
-	LOG_DEBUG(L"Walking parents to top from node "<<node);
-	for(;node->parent!=NULL;node=node->parent);
-	LOG_DEBUG(L"Comparing node "<<node<<L" with buffer's root node "<<node);
-	if(node==this->rootNode) {
-		LOG_DEBUG(L"Node is in buffer");
-		return true;
-	}
-	LOG_DEBUG(L"Node is not in buffer");
-	return false;
+	return this->nodes.count(node)?true:false;
 }
 
 std::wstring VBufStorage_buffer_t::getDebugInfo() const {
