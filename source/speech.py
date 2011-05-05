@@ -304,11 +304,11 @@ def calculateTextIndentation(line):
 	"""
 	indentation, text = RE_INDENTATION_SPLIT.match(line).groups()
 
-	# Translators: no indentation is spoken when the user moves from a line that has indentation, to one that 
+	# Translators: no indent is spoken when the user moves from a line that has indentation, to one that 
 	# does not.
 	#
 	if not indentation:
-		return (_("No indentation"), line)
+		return (_("no indent"), line)
 
 	res = []
 	locale=languageHandler.getLanguage()
