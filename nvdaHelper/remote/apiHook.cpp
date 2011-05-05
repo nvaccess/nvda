@@ -12,7 +12,6 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include <cassert>
 #include <iostream>
 #include <set>
 #include <windows.h>
@@ -68,19 +67,19 @@ void* apiHook_hookFunction(const char* moduleName, const char* functionName, voi
 BOOL apiHook_enableHooks() {
 	int res;
 	res=MH_EnableAllHooks();
-	assert(res==MH_OK);
+	nhAssert(res==MH_OK);
 	return TRUE;
 }
 
 BOOL apiHook_terminate() {
 	int res;
 	res=MH_DisableAllHooks();
-	assert(res==MH_OK);
+	nhAssert(res==MH_OK);
 	g_hookedFunctions.clear();
 	//Give enough time for all hook functions to complete.
 	Sleep(250);
 	res=MH_Uninitialize();
-	assert(res==MH_OK);
+	nhAssert(res==MH_OK);
 	for(moduleSet_t::iterator i=g_hookedModules.begin();i!=g_hookedModules.end();++i) {
 		FreeLibrary(*i);
 	}

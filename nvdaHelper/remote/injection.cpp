@@ -96,13 +96,13 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	}
 	WaitForSingleObject(threadMutex,INFINITE);
 	//Stop this dll from unloading while this function is running
-	assert(dllHandle);
+	nhAssert(dllHandle);
 	HINSTANCE tempHandle=NULL;
 	if(!GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)dllHandle,&tempHandle)) {
 		LOG_ERROR(L"GetModuleHandleEx failed, GetLastError returned "<<GetLastError());
 		return 0;
 	}
-	assert(dllHandle==tempHandle);
+	nhAssert(dllHandle==tempHandle);
 	//Try to open handles to both the injectionDone event and NVDA's process handle
 		HANDLE waitHandles[2]={0};
 	long nvdaProcessID=0;
@@ -145,7 +145,7 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 				DispatchMessage(&msg);
 			}
 		} while(MsgWaitForMultipleObjects(2,waitHandles,FALSE,INFINITE,QS_ALLINPUT)==WAIT_OBJECT_0+2);
-		assert(inprocMgrThreadHandle);
+		nhAssert(inprocMgrThreadHandle);
 		inprocThreadsLock.acquire();
 		CloseHandle(inprocMgrThreadHandle);
 		inprocMgrThreadHandle=NULL;
@@ -165,7 +165,7 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 		//Unregister any windows hooks registered so far
 		killRunningWindowsHooks();
 	} else {
-		assert(inprocMgrThreadHandle);
+		nhAssert(inprocMgrThreadHandle);
 		inprocThreadsLock.acquire();
 		CloseHandle(inprocMgrThreadHandle);
 		inprocMgrThreadHandle=NULL;
@@ -280,18 +280,18 @@ BOOL injection_initialize(int secureMode) {
 		MessageBox(NULL,L"Already initialized",L"nvdaHelperRemote (injection_initialize)",0);
 		return FALSE;
 	}
-	assert(dllHandle);
+	nhAssert(dllHandle);
 	if(!IA2Support_initialize()) {
 		MessageBox(NULL,L"Error initializing IA2 support",L"nvdaHelperRemote (injection_initialize)",0);
 		return FALSE;
 	}
-	assert(!injectionDoneEvent);
+	nhAssert(!injectionDoneEvent);
 	{
 		wstringstream s;
 		s<<L"nvdaHelperRemote_injectionDoneEvent_"<<desktopSpecificNamespace;
 		injectionDoneEvent=CreateEvent(NULL,TRUE,FALSE,s.str().c_str());
 	}
-	assert(injectionDoneEvent);
+	nhAssert(injectionDoneEvent);
 	ResetEvent(injectionDoneEvent);
 	outprocMgrThreadHandle=CreateThread(NULL,0,outprocMgrThreadFunc,NULL,0,&outprocMgrThreadID);
 	outprocInitialized=TRUE;
@@ -313,7 +313,7 @@ BOOL injection_terminate() {
 		MessageBox(NULL,L"Error terminating IA2 support",L"nvdaHelperRemote (injection_terminate)",0);
 		return FALSE;
 	}
-	assert(injectionDoneEvent);
+	nhAssert(injectionDoneEvent);
 	SetEvent(injectionDoneEvent);
 	CloseHandle(injectionDoneEvent);
 	injectionDoneEvent=NULL;

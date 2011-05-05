@@ -13,7 +13,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <cstdio>
-#include <cassert>
 #include <cwchar>
 #include <windows.h>
 #include <objbase.h>
@@ -65,7 +64,7 @@ BOOL installIA2Support() {
 		return FALSE;
 	}
 	IA2Dll_DllGetClassObject=(LPFNGETCLASSOBJECT)GetProcAddress(static_cast<HMODULE>(IA2DllHandle),"DllGetClassObject");
-	assert(IA2Dll_DllGetClassObject); //IAccessible2 proxy dll must have this function
+	nhAssert(IA2Dll_DllGetClassObject); //IAccessible2 proxy dll must have this function
 	IUnknown* ia2ClassObjPunk=NULL;
 	if((res=IA2Dll_DllGetClassObject(IAccessible2ProxyIID,IID_IUnknown,(LPVOID*)&ia2ClassObjPunk))!=S_OK) {
 		LOG_ERROR(L"Error calling DllGetClassObject, code "<<res);
@@ -98,7 +97,7 @@ BOOL uninstallIA2Support() {
 		}
 		CoRevokeClassObject(IA2RegCooky);
 		IA2Dll_DllCanUnloadNow=(LPFNDLLCANUNLOADNOW)GetProcAddress(static_cast<HMODULE>(IA2DllHandle),"DllCanUnloadNow");
-		assert(IA2Dll_DllCanUnloadNow); //IAccessible2 proxy dll must have this function
+		nhAssert(IA2Dll_DllCanUnloadNow); //IAccessible2 proxy dll must have this function
 		if(IA2Dll_DllCanUnloadNow()==S_OK) {
 			CoFreeLibrary(IA2DllHandle);
 		}
@@ -109,7 +108,7 @@ BOOL uninstallIA2Support() {
 }
 
 BOOL IA2Support_initialize() {
-	assert(!isIA2Initialized);
+	nhAssert(!isIA2Initialized);
 	wsprintf(IA2DllPath,L"%s\\IAccessible2Proxy.dll",dllDirectory);
 	isIA2Initialized=TRUE;
 	installIA2Support();
@@ -117,7 +116,7 @@ BOOL IA2Support_initialize() {
 }
 
 BOOL IA2Support_terminate() {
-	assert(isIA2Initialized);
+	nhAssert(isIA2Initialized);
 	uninstallIA2Support();
 	return TRUE;
 }

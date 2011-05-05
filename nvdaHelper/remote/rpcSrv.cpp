@@ -12,7 +12,6 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include <cassert>
 #include <cstdio>
 #include <sstream>
 #include <windows.h>

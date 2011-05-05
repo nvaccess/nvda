@@ -12,7 +12,6 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include <cassert>
 #include <map>
 #include <set>
 #include <list>
@@ -179,7 +178,7 @@ class GlyphTranslator {
 		if(refCount==0) {
 			delete this;
 		}
-		assert(refCount>=0);
+		nhAssert(refCount>=0);
 		return refCount;
 	}
 
@@ -882,7 +881,7 @@ void gdiHooks_inProcess_initialize() {
 	tls_index_inTextOutHook=TlsAlloc();
 	//Initialize the timer for text change notifications
 	textChangeNotifyTimerID=SetTimer(NULL,NULL,50,textChangeNotifyTimerProc);
-	assert(textChangeNotifyTimerID);
+	nhAssert(textChangeNotifyTimerID);
 	//Initialize critical sections and access variables for various maps
 	InitializeCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allow_ScriptStringAnalyseArgsByAnalysis=TRUE;

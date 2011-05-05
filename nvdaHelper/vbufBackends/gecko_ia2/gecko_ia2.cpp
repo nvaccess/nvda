@@ -12,7 +12,6 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include <cassert>
 #include <windows.h>
 #include <set>
 #include <string>
@@ -259,9 +258,9 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IAccessibleTable* paccTable, IAccessibleTable2* paccTable2, long tableID) {
 	int res;
 	LOG_DEBUG(L"Entered fillVBuf, with pacc at "<<pacc<<L", parentNode at "<<parentNode<<L", previousNode "<<previousNode);
-	assert(buffer); //buffer can't be NULL
-	assert(!parentNode||buffer->isNodeInBuffer(parentNode)); //parent node must be in buffer
-	assert(!previousNode||buffer->isNodeInBuffer(previousNode)); //Previous node must be in buffer
+	nhAssert(buffer); //buffer can't be NULL
+	nhAssert(!parentNode||buffer->isNodeInBuffer(parentNode)); //parent node must be in buffer
+	nhAssert(!previousNode||buffer->isNodeInBuffer(previousNode)); //Previous node must be in buffer
 	VBufStorage_fieldNode_t* tempNode;
 	bool isBlockElement=TRUE;
 	//all IAccessible methods take a variant for childID, get one ready
@@ -303,7 +302,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 	//Add this node to the buffer
 	LOG_DEBUG(L"Adding Node to buffer");
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,TRUE);
-	assert(parentNode); //new node must have been created
+	nhAssert(parentNode); //new node must have been created
 	previousNode=NULL;
 	LOG_DEBUG(L"Added  node at "<<parentNode);
 	//Get role -- IAccessible2 role

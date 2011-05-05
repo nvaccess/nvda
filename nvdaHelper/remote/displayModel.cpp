@@ -12,7 +12,6 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include <cassert>
 #include <string>
 #include <sstream>
 #include <deque>
@@ -26,7 +25,7 @@ using namespace std;
 
 void displayModelChunk_t::truncate(int truncatePointX, BOOL truncateBefore) {
 	if(text.length()==0) return;
-	assert(characterXArray.size()!=0);
+	nhAssert(characterXArray.size()!=0);
 	deque<int>::iterator c=characterXArray.begin();
 	wstring::iterator t=text.begin();
 	if(truncateBefore&&rect.left<truncatePointX) {

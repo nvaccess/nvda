@@ -12,7 +12,6 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include <cassert>
 #include <map>
 #include <windows.h>
 #include <remote/nvdaHelperRemote.h>
@@ -70,7 +69,7 @@ void CALLBACK VBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID,
 void VBufBackend_t::requestUpdate() {
 	if(renderThreadTimerID==0) {
 		renderThreadTimerID=SetTimer(0,0,250,renderThread_timerProc);
-		assert(renderThreadTimerID);
+		nhAssert(renderThreadTimerID);
 		LOG_DEBUG(L"Set timer with ID "<<renderThreadTimerID);
 	}
 }
@@ -122,7 +121,7 @@ void VBufBackend_t::renderThread_terminate() {
 }
 
 void VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
-	assert(node); //node can not be NULL
+	nhAssert(node); //node can not be NULL
 	LOG_DEBUG(L"Invalidating node "<<node->getDebugInfo());
 	this->lock.acquire();
 	bool needsInsert=true;
@@ -172,7 +171,7 @@ void VBufBackend_t::update() {
 			VBufStorage_controlFieldNode_t* node=*i;
 			LOG_DEBUG(L"re-rendering subtree at "<<node);
 			VBufStorage_buffer_t* tempBuf=new VBufStorage_buffer_t();
-			assert(tempBuf); //tempBuf can't be NULL
+			nhAssert(tempBuf); //tempBuf can't be NULL
 			LOG_DEBUG(L"Created temp buffer at "<<tempBuf);
 			int docHandle=0, ID=0;
 			node->getIdentifier(&docHandle,&ID);
@@ -221,5 +220,5 @@ void VBufBackend_t::destroy() {
 
 VBufBackend_t::~VBufBackend_t() {
 	LOG_DEBUG(L"base Backend destructor called"); 
-	assert(runningBackends.count(this) == 0);
+	nhAssert(runningBackends.count(this) == 0);
 }

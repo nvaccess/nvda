@@ -13,7 +13,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
  
 #include <cstdio>
-#include <cassert>
 #include <list>
 #include <set>
 #include <map>
@@ -68,7 +67,7 @@ bool unregisterWinEventHook(WINEVENTPROC hookProc) {
 	if(i->second>1) {
 		i->second-=1;
 	} else {
-		assert(i->second==1);
+		nhAssert(i->second==1);
 		inProcess_registeredWinEventHooks.erase(i);
 	}
 	return true;
@@ -99,7 +98,7 @@ bool unregisterWindowsHook(int hookType, HOOKPROC hookProc) {
 	if(i->second>1) {
 		i->second-=1;
 	} else {
-		assert(i->second==1);
+		nhAssert(i->second==1);
 		r->erase(i);
 	}
 	return true;

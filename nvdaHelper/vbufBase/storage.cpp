@@ -14,7 +14,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <iostream>
 #include <fstream>
-#include <cassert>
 #include <string>
 #include <map>
 #include <list>
@@ -213,12 +212,12 @@ int VBufStorage_fieldNode_t::calculateOffsetInTree() const {
 VBufStorage_textFieldNode_t* VBufStorage_fieldNode_t::locateTextFieldNodeAtOffset(int offset, int *relativeOffset) {
 	LOG_DEBUG(L"Searching through children to reach offset "<<offset);
 	int tempOffset=0;
-	assert(this->firstChild!=NULL||this->length==0); //Length of a node with out children can not be greater than 0
+	nhAssert(this->firstChild!=NULL||this->length==0); //Length of a node with out children can not be greater than 0
 	for(VBufStorage_fieldNode_t* child=this->firstChild;child!=NULL;child=child->next) {
 		if(offset<tempOffset+child->length) {
 			LOG_DEBUG(L"found child at offset "<<tempOffset);
 			VBufStorage_textFieldNode_t* textFieldNode=child->locateTextFieldNodeAtOffset(offset-tempOffset, relativeOffset);
-			assert(textFieldNode); //textFieldNode can't be NULL
+			nhAssert(textFieldNode); //textFieldNode can't be NULL
 			return textFieldNode;
 		} else {
 			tempOffset+=child->length;
@@ -275,19 +274,19 @@ void VBufStorage_fieldNode_t::getTextInRange(int startOffset, int endOffset, std
 		return;
 	}
 	LOG_DEBUG(L"getting text between offsets "<<startOffset<<L" and "<<endOffset);
-	assert(startOffset>=0); //startOffset can't be negative
-	assert(startOffset<endOffset); //startOffset must be before endOffset
-	assert(endOffset<=this->length); //endOffset can't be bigger than node length
+	nhAssert(startOffset>=0); //startOffset can't be negative
+	nhAssert(startOffset<endOffset); //startOffset must be before endOffset
+	nhAssert(endOffset<=this->length); //endOffset can't be bigger than node length
 	if(useMarkup) {
 		this->generateMarkupOpeningTag(text);
 	}
-	assert(this->firstChild!=NULL||this->length==0); //Length of a node with out children can not be greater than 0
+	nhAssert(this->firstChild!=NULL||this->length==0); //Length of a node with out children can not be greater than 0
 	int childStart=0;
 	int childEnd=0;
 	int childLength=0;
 	for(VBufStorage_fieldNode_t* child=this->firstChild;child!=NULL;child=child->next) {
 		childLength=child->length;
-		assert(childLength>=0); //length can't be negative
+		nhAssert(childLength>=0); //length can't be negative
 		childEnd+=childLength;
 		LOG_DEBUG(L"child with offsets of "<<childStart<<L" and "<<childEnd); 
 		if(childEnd>startOffset&&endOffset>childStart) {
@@ -304,7 +303,7 @@ void VBufStorage_fieldNode_t::getTextInRange(int startOffset, int endOffset, std
 }
 
 void VBufStorage_fieldNode_t::disassociateFromBuffer(VBufStorage_buffer_t* buffer) {
-	assert(buffer); //Buffer can't be NULL
+	nhAssert(buffer); //Buffer can't be NULL
 	LOG_DEBUG(L"Disassociating fieldNode from buffer");
 }
 
@@ -386,7 +385,7 @@ void VBufStorage_controlFieldNode_t::generateAttributesForMarkupOpeningTag(std::
 }
 
 void VBufStorage_controlFieldNode_t::disassociateFromBuffer(VBufStorage_buffer_t* buffer) {
-	assert(buffer); //Must be associated with a buffer
+	nhAssert(buffer); //Must be associated with a buffer
 	LOG_DEBUG(L"Disassociating controlFieldNode from buffer");
 	buffer->forgetControlFieldNode(this);
 	this->VBufStorage_fieldNode_t::disassociateFromBuffer(buffer);
@@ -411,7 +410,7 @@ std::wstring VBufStorage_controlFieldNode_t::getDebugInfo() const {
 //textFieldNode implementation
 
 VBufStorage_textFieldNode_t* VBufStorage_textFieldNode_t::locateTextFieldNodeAtOffset(int offset, int *relativeOffset) {
-	assert(offset<length); //Offset must be in this node
+	nhAssert(offset<length); //Offset must be in this node
 	LOG_DEBUG(L"Node is a textField");
 	*relativeOffset=offset;
 	return this;
@@ -426,9 +425,9 @@ void VBufStorage_textFieldNode_t::getTextInRange(int startOffset, int endOffset,
 	if(useMarkup) {
 		this->generateMarkupOpeningTag(text);
 	}
-	assert(startOffset>=0); //StartOffset must be not negative
-	assert(startOffset<endOffset); //StartOffset must be less than endOffset
-	assert(endOffset<=this->length); //endOffset can't be greater than node length
+	nhAssert(startOffset>=0); //StartOffset must be not negative
+	nhAssert(startOffset<endOffset); //StartOffset must be less than endOffset
+	nhAssert(endOffset<=this->length); //endOffset can't be greater than node length
 	if(useMarkup) {
 		wchar_t c;
 		for(int offset=startOffset;offset<endOffset;++offset) {
@@ -457,18 +456,18 @@ std::wstring VBufStorage_textFieldNode_t::getDebugInfo() const {
 //buffer implementation
 
 void VBufStorage_buffer_t::forgetControlFieldNode(VBufStorage_controlFieldNode_t* node) {
-	assert(node); //Node can't be NULL
-	assert(this->controlFieldNodesByIdentifier.count(node->identifier)==1); //Node must exist in the set
-	assert(this->controlFieldNodesByIdentifier[node->identifier]->identifier==node->identifier);
-	assert(this->controlFieldNodesByIdentifier[node->identifier]==node); //Remembered node and this node must be equal
+	nhAssert(node); //Node can't be NULL
+	nhAssert(this->controlFieldNodesByIdentifier.count(node->identifier)==1); //Node must exist in the set
+	nhAssert(this->controlFieldNodesByIdentifier[node->identifier]->identifier==node->identifier);
+	nhAssert(this->controlFieldNodesByIdentifier[node->identifier]==node); //Remembered node and this node must be equal
 	this->controlFieldNodesByIdentifier.erase(node->identifier);
 	LOG_DEBUG(L"Forgot controlFieldNode with docHandle "<<node->identifier.docHandle<<L" and ID "<<node->identifier.ID);
 }
 
 void VBufStorage_buffer_t::insertNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node) {
 	VBufStorage_fieldNode_t* next=NULL;
-	assert(node); //node can't be NULL
-	assert(previous==NULL||previous!=this->rootNode); //a root node can not have nodes after it on the same level
+	nhAssert(node); //node can't be NULL
+	nhAssert(previous==NULL||previous!=this->rootNode); //a root node can not have nodes after it on the same level
 	//make sure we have a good parent, previous and next
 	if(previous!=NULL) parent=previous->parent;
 	next=(previous?previous->next:(parent?parent->firstChild:NULL));
@@ -476,7 +475,7 @@ void VBufStorage_buffer_t::insertNode(VBufStorage_controlFieldNode_t* parent, VB
 	LOG_DEBUG(L"Using previous: "<<(previous?previous->getDebugInfo():L"NULL"));
 	LOG_DEBUG(L"Using next: "<<(next?next->getDebugInfo():L"NULL"));
 	if(parent==NULL) {
-		assert(this->rootNode==NULL); //A buffer can only have one root node.
+		nhAssert(this->rootNode==NULL); //A buffer can only have one root node.
 		LOG_DEBUG(L"making node root node of buffer");
 		this->rootNode=node;
 	} else { 
@@ -506,7 +505,7 @@ void VBufStorage_buffer_t::insertNode(VBufStorage_controlFieldNode_t* parent, VB
 		for(VBufStorage_fieldNode_t* ancestor=node->parent;ancestor!=NULL;ancestor=ancestor->parent) {
 			LOG_DEBUG(L"Ancestor: "<<ancestor->getDebugInfo());
 			ancestor->length+=node->length;
-			assert(ancestor->length>=0); //length must never be negative
+			nhAssert(ancestor->length>=0); //length must never be negative
 			LOG_DEBUG(L"Ancestor length now"<<ancestor->length);
 		}
 	}
@@ -514,7 +513,7 @@ void VBufStorage_buffer_t::insertNode(VBufStorage_controlFieldNode_t* parent, VB
 }
 
 void VBufStorage_buffer_t::deleteSubtree(VBufStorage_fieldNode_t* node) {
-	assert(node); //node can't be null
+	nhAssert(node); //node can't be null
 	LOG_DEBUG(L"deleting subtree starting at "<<node->getDebugInfo());
 	//Save off next before deleting the subtree 
 	for(VBufStorage_fieldNode_t* child=node->firstChild;child!=NULL;) {
@@ -542,7 +541,7 @@ VBufStorage_buffer_t::~VBufStorage_buffer_t() {
 VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, int docHandle, int ID, bool isBlock) {
 	LOG_DEBUG(L"Adding control field node to buffer with parent at "<<parent<<L", previous at "<<previous<<L", docHandle "<<docHandle<<L", ID "<<ID);
 	VBufStorage_controlFieldNode_t* controlFieldNode=new VBufStorage_controlFieldNode_t(docHandle,ID,isBlock);
-	assert(controlFieldNode); //controlFieldNode must have been allocated
+	nhAssert(controlFieldNode); //controlFieldNode must have been allocated
 	LOG_DEBUG(L"Created controlFieldNode: "<<controlFieldNode->getDebugInfo());
 	if(addControlFieldNode(parent,previous,controlFieldNode)!=controlFieldNode) {
 		LOG_DEBUG(L"Error adding control field node to buffer");
@@ -553,8 +552,8 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 }
 
 VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_controlFieldNode_t* controlFieldNode) {
-	assert(!parent||this->isNodeInBuffer(parent));
-	assert(!previous||this->isNodeInBuffer(previous));
+	nhAssert(!parent||this->isNodeInBuffer(parent));
+	nhAssert(!previous||this->isNodeInBuffer(previous));
 	LOG_DEBUG(L"Add controlFieldNode using parent at "<<parent<<L", previous at "<<previous<<L", node at "<<controlFieldNode);
 	if(previous!=NULL&&previous->parent!=parent) {
 		LOG_DEBUG(L"previous is not a child of parent, returning NULL");
@@ -566,7 +565,7 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 	}
 	LOG_DEBUG(L"Inserting controlFieldNode in to buffer");
 	insertNode(parent, previous, controlFieldNode);
-	assert(controlFieldNodesByIdentifier.count(controlFieldNode->identifier)==0); //node can't be previously remembered
+	nhAssert(controlFieldNodesByIdentifier.count(controlFieldNode->identifier)==0); //node can't be previously remembered
 	controlFieldNodesByIdentifier[controlFieldNode->identifier]=controlFieldNode;
 	LOG_DEBUG(L"Added new controlFieldNode, returning node");
 	return controlFieldNode;
@@ -575,7 +574,7 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, const std::wstring& text) {
 	LOG_DEBUG(L"Add textFieldNode using parent at "<<parent<<L", previous at "<<previous);
 	VBufStorage_textFieldNode_t* textFieldNode=new VBufStorage_textFieldNode_t(text);
-	assert(textFieldNode); //controlFieldNode must have been allocated
+	nhAssert(textFieldNode); //controlFieldNode must have been allocated
 	LOG_DEBUG(L"Created textFieldNode: "<<textFieldNode->getDebugInfo());
 	if(addTextFieldNode(parent,previous,textFieldNode)!=textFieldNode) {
 		LOG_DEBUG(L"Error adding textFieldNode to buffer");
@@ -586,8 +585,8 @@ VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage
 }
 
 VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_textFieldNode_t* textFieldNode) {
-	assert(!parent||this->isNodeInBuffer(parent));
-	assert(!previous||this->isNodeInBuffer(previous));
+	nhAssert(!parent||this->isNodeInBuffer(parent));
+	nhAssert(!previous||this->isNodeInBuffer(previous));
 	LOG_DEBUG(L"Add textFieldNode using parent at "<<parent<<L", previous at "<<previous<<L", node at "<<textFieldNode);
 	if(previous!=NULL&&previous->parent!=parent) {
 		LOG_DEBUG(L"previous is not a child of parent, returning NULL");
@@ -639,7 +638,7 @@ bool VBufStorage_buffer_t::replaceSubtrees(const map<VBufStorage_fieldNode_t*,VB
 	for(map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>::const_iterator i=m.begin();i!=m.end();++i) {
 		VBufStorage_buffer_t* buffer=i->second;
 		for(map<VBufStorage_controlFieldNodeIdentifier_t,VBufStorage_controlFieldNode_t*>::iterator j=buffer->controlFieldNodesByIdentifier.begin();j!=buffer->controlFieldNodesByIdentifier.end();++j) {
-			assert(this->controlFieldNodesByIdentifier.count(j->first)==0);
+			nhAssert(this->controlFieldNodesByIdentifier.count(j->first)==0);
 			this->controlFieldNodesByIdentifier.erase(j->first);
 			this->controlFieldNodesByIdentifier.insert(make_pair(j->first,j->second));
 		}
@@ -669,14 +668,14 @@ bool VBufStorage_buffer_t::replaceSubtrees(const map<VBufStorage_fieldNode_t*,VB
 }
 
 bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node) {
-	assert(this->isNodeInBuffer(node));
+	nhAssert(this->isNodeInBuffer(node));
 	LOG_DEBUG(L"Removing subtree starting at "<<node->getDebugInfo());
 	if(node->length>0) {
 		LOG_DEBUG(L"collapsing length of ancestors by "<<node->length);
 		for(VBufStorage_fieldNode_t* ancestor=node->parent;ancestor!=NULL;ancestor=ancestor->parent) {
 			LOG_DEBUG(L"Ancestor: "<<ancestor->getDebugInfo());
 			ancestor->length-=node->length;
-			assert(ancestor->length>=0); //ancestor length can't be negative
+			nhAssert(ancestor->length>=0); //ancestor length can't be negative
 			LOG_DEBUG(L"Ancestor length now"<<ancestor->length);
 		}
 	}
@@ -714,7 +713,7 @@ bool VBufStorage_buffer_t::clearBuffer() {
 }
 
 bool VBufStorage_buffer_t::getFieldNodeOffsets(VBufStorage_fieldNode_t* node, int *startOffset, int *endOffset) {
-	assert(this->isNodeInBuffer(node));
+	nhAssert(this->isNodeInBuffer(node));
 	*startOffset=node->calculateOffsetInTree();
 	*endOffset=(*startOffset)+node->length;
 	LOG_DEBUG(L"node has offsets "<<*startOffset<<L" and "<<*endOffset<<L", returning true");
@@ -722,7 +721,7 @@ bool VBufStorage_buffer_t::getFieldNodeOffsets(VBufStorage_fieldNode_t* node, in
 }
 
 bool VBufStorage_buffer_t::isFieldNodeAtOffset(VBufStorage_fieldNode_t* node, int offset) {
-	assert(this->isNodeInBuffer(node));
+	nhAssert(this->isNodeInBuffer(node));
 	int startOffset, endOffset;
 	if(!getFieldNodeOffsets(node,&startOffset,&endOffset)) {
 		LOG_DEBUG(L"Could not get offsets for node at "<<node<<L", returning false");
@@ -768,7 +767,7 @@ VBufStorage_controlFieldNode_t* VBufStorage_buffer_t::locateControlFieldNodeAtOf
 		startOffset-=previous->length;
 	}
 	endOffset=startOffset+node->parent->length;
-	assert(startOffset>=0&&endOffset>=startOffset); //Offsets must not be negative
+	nhAssert(startOffset>=0&&endOffset>=startOffset); //Offsets must not be negative
 	VBufStorage_controlFieldNode_t* controlFieldNode = node->parent;
 	*nodeStartOffset=startOffset;
 	*nodeEndOffset=endOffset;
@@ -786,14 +785,14 @@ VBufStorage_controlFieldNode_t* VBufStorage_buffer_t::getControlFieldNodeWithIde
 		return false;
 	}
 	VBufStorage_controlFieldNode_t* node=i->second;
-	assert(node); //Node can not be NULL
+	nhAssert(node); //Node can not be NULL
 	LOG_DEBUG(L"returning node at "<<node);
 	return node;
 }
 
 bool VBufStorage_buffer_t::getIdentifierFromControlFieldNode(VBufStorage_controlFieldNode_t* node, int* docHandle, int* ID) {
-	assert(node);
-	assert(isNodeInBuffer(node));
+	nhAssert(node);
+	nhAssert(isNodeInBuffer(node));
 	*docHandle=node->identifier.docHandle;
 	*ID=node->identifier.ID;
 	return true;
@@ -801,7 +800,7 @@ bool VBufStorage_buffer_t::getIdentifierFromControlFieldNode(VBufStorage_control
 
 
 bool VBufStorage_buffer_t::getSelectionOffsets(int *startOffset, int *endOffset) const {
-	assert(this->selectionStart>=0&&this->selectionLength>=0); //Selection can't be negative
+	nhAssert(this->selectionStart>=0&&this->selectionLength>=0); //Selection can't be negative
 	int minStartOffset=0;
 	int maxEndOffset=(this->rootNode)?this->rootNode->length:0;
 	*startOffset=max(minStartOffset,this->selectionStart);
@@ -1070,8 +1069,8 @@ bool VBufStorage_buffer_t::hasContent() {
 }
 
 bool VBufStorage_buffer_t::isDescendantNode(VBufStorage_fieldNode_t* parent, VBufStorage_fieldNode_t* descendant) {
-	assert(parent);
-	assert(descendant);
+	nhAssert(parent);
+	nhAssert(descendant);
 	LOG_DEBUG(L"is node at "<<descendant<<L" a descendant of node at "<<parent);
 	for(VBufStorage_fieldNode_t* tempNode=descendant->parent;tempNode!=NULL;tempNode=tempNode->parent) {
 		if(tempNode==parent) {
@@ -1084,7 +1083,7 @@ bool VBufStorage_buffer_t::isDescendantNode(VBufStorage_fieldNode_t* parent, VBu
 }
 
 bool VBufStorage_buffer_t::isNodeInBuffer(VBufStorage_fieldNode_t* node) {
-	assert(node);
+	nhAssert(node);
 	LOG_DEBUG(L"Walking parents to top from node "<<node);
 	for(;node->parent!=NULL;node=node->parent);
 	LOG_DEBUG(L"Comparing node "<<node<<L" with buffer's root node "<<node);

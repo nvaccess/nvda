@@ -12,7 +12,6 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include <cassert>
 #include <map>
 #include <algorithm>
 #include <windows.h>
@@ -45,13 +44,13 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 void incBackendLibRefCount() {
 	HMODULE h=NULL;
 	BOOL res=GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)backendLibHandle,&h);
-	assert(res); //Result of upping backend lib ref count
+	nhAssert(res); //Result of upping backend lib ref count
 	LOG_DEBUG(L"Increased backend lib ref count");
 }
 
 void decBackendLibRefCount() {
 	BOOL res=FreeLibrary(backendLibHandle);
-	assert(res); //Result of freeing backend lib
+	nhAssert(res); //Result of freeing backend lib
 	LOG_DEBUG(L"Decreased backend lib ref count");
 }
 
@@ -622,7 +621,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	//Add the node to the buffer
 	VBufStorage_controlFieldNode_t* node=new MshtmlVBufStorage_controlFieldNode_t(docHandle,ID,isBlock,this,pHTMLDOMNode);
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,node);
-	assert(parentNode);
+	nhAssert(parentNode);
 	previousNode=NULL;
 
 	//We do not want to render any content for invisible nodes
@@ -893,7 +892,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 
 	//Update attributes with table info
 	if(nodeName.compare(L"TABLE")==0) {
-		assert(tableInfoPtr);
+		nhAssert(tableInfoPtr);
 		if(!tableInfoPtr->definitData) {
 			attribsMap[L"table-layout"]=L"1";
 		}
@@ -937,7 +936,7 @@ void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, in
 IHTMLDOMNode* pHTMLDOMNode=NULL;
 	if(oldNode!=NULL) {
 		IHTMLElement2* pHTMLElement2=(static_cast<MshtmlVBufStorage_controlFieldNode_t*>(oldNode))->pHTMLElement2;
-		assert(pHTMLElement2);
+		nhAssert(pHTMLElement2);
 		pHTMLElement2->QueryInterface(IID_IHTMLDOMNode,(void**)&pHTMLDOMNode);
 	} else {
 		IHTMLDocument3* pHTMLDocument3=NULL;
@@ -963,7 +962,7 @@ IHTMLDOMNode* pHTMLDOMNode=NULL;
 		}
 		pHTMLElement->Release();
 	}
-	assert(pHTMLDOMNode);
+	nhAssert(pHTMLDOMNode);
 	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,NULL,NULL,true,false);
 	pHTMLDOMNode->Release();
 }

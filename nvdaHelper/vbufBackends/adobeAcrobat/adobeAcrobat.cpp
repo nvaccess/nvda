@@ -205,9 +205,9 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 ) {
 	int res;
 	LOG_DEBUG(L"Entered fillVBuf, with pacc at "<<pacc<<L", parentNode at "<<parentNode<<L", previousNode "<<previousNode);
-	assert(buffer); //buffer can't be NULL
-	assert(!parentNode||buffer->isNodeInBuffer(parentNode)); //parent node must be in buffer
-	assert(!previousNode||buffer->isNodeInBuffer(previousNode)); //Previous node must be in buffer
+	nhAssert(buffer); //buffer can't be NULL
+	nhAssert(!parentNode||buffer->isNodeInBuffer(parentNode)); //parent node must be in buffer
+	nhAssert(!previousNode||buffer->isNodeInBuffer(previousNode)); //Previous node must be in buffer
 	VBufStorage_fieldNode_t* tempNode;
 
 	//all IAccessible methods take a variant for childID, get one ready
@@ -225,7 +225,7 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 
 	// GET ID
 	int ID = getAccID(servprov);
-	assert(ID);
+	nhAssert(ID);
 
 	//Make sure that we don't already know about this object -- protect from loops
 	if(buffer->getControlFieldNodeWithIdentifier(docHandle,ID)!=NULL) {
@@ -237,7 +237,7 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 	//Add this node to the buffer
 	LOG_DEBUG(L"Adding Node to buffer");
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,TRUE);
-	assert(parentNode); //new node must have been created
+	nhAssert(parentNode); //new node must have been created
 	previousNode=NULL;
 	LOG_DEBUG(L"Added  node at "<<parentNode);
 
@@ -523,7 +523,7 @@ bool checkIsXFA(IAccessible* rootPacc) {
 void AdobeAcrobatVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	LOG_DEBUG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
 	IAccessible* pacc=IAccessibleFromIdentifier(docHandle,ID);
-	assert(pacc); //must get a valid IAccessible object
+	nhAssert(pacc); //must get a valid IAccessible object
 	if (!oldNode) {
 		// This is the root node.
 		this->isXFA = checkIsXFA(pacc);

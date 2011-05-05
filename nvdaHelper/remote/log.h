@@ -20,6 +20,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <common/lock.h>
 
+#define nhAssert _ASSERTE
+
 void logMessage(int level, const wchar_t* msg);
 
 int NVDALogCrtReportHook(int reportType, const wchar_t* msg, int* returnVal);
