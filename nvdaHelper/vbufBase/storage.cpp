@@ -458,7 +458,7 @@ std::wstring VBufStorage_textFieldNode_t::getDebugInfo() const {
 
 void VBufStorage_buffer_t::forgetControlFieldNode(VBufStorage_controlFieldNode_t* node) {
 	assert(node); //Node can't be NULL
-	if(this->controlFieldNodesByIdentifier.count(node->identifier)==0) DebugBreak(); //Node must exist in the set
+	assert(this->controlFieldNodesByIdentifier.count(node->identifier)==1); //Node must exist in the set
 	assert(this->controlFieldNodesByIdentifier[node->identifier]->identifier==node->identifier);
 	assert(this->controlFieldNodesByIdentifier[node->identifier]==node); //Remembered node and this node must be equal
 	this->controlFieldNodesByIdentifier.erase(node->identifier);
