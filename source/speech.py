@@ -295,31 +295,36 @@ def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 		speechSequence.append(text)
 	speak(speechSequence,symbolLevel=symbolLevel)
 
-indentationReg1 = re.compile(r'^(\s+)')
-indentationReg2 = re.compile("(\t+|\ +)")
+RE_INDENTATION_SPLIT = re.compile(r"^([^\S\r\n\f\v]*)(.*)$", re.UNICODE | re.DOTALL)
+RE_INDENTATION_CONVERT = re.compile(r"(?P<char>\s)(?P=char)*", re.UNICODE)
 def calculateTextIndentation(line):
 	""" Calculates number of leading tabs and spaces in the order that they are entered in the given line.
-
 	@param line: the line to be examined.
 	@type line: string
 	"""
-
-	lineSegments = indentationReg1.split(line)
-	# We expect to have 3 segments, 
-	# the first is the empty string, second is the leading whitespace, and the third is the remaining text on the line.
+	indentation, text = RE_INDENTATION_SPLIT.match(line).groups()
 
 	# Translators: no indentation is spoken when the user moves from a line that has indentation, to one that 
 	# does not.
 	#
-	if not indentationReg2.match(lineSegments[1]): return (_("No indentation"), line)
-	whitespaceList = indentationReg2.split(lineSegments[1])
+	if not indentation:
+		return (_("No indentation"), line)
+
 	res = []
 	locale=languageHandler.getLanguage()
-	for type in whitespaceList:
-		if type in ('', '\r'): continue
-		symbol = characterProcessing.processSpeechSymbol(locale, type[0])
-		res.append(u"{count} {char}".format(count=len(type), char=symbol))
-	return (" ".join(res), lineSegments[2])
+	for m in RE_INDENTATION_CONVERT.finditer(indentation):
+		raw = m.group()
+		symbol = characterProcessing.processSpeechSymbol(locale, raw[0])
+		count = len(raw)
+		if symbol == raw[0]:
+			# There is no replacement for this character, so do nothing.
+			res.append(raw)
+		elif count == 1:
+			res.append(symbol)
+		else:
+			res.append(u"{count} {symbol}".format(count=count, symbol=symbol))
+
+	return (" ".join(res), text)
 
 def speak(speechSequence,symbolLevel=None):
 	"""Speaks a sequence of text and speech commands
