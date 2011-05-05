@@ -110,8 +110,7 @@ You should do this again whenever the version of comtypes changes or language fi
 A part from compiling language files and generating COM interfaces, this step also builds the NVDAHelper libraries.  
 If trying to debug nvdaHelper, You can control various  debugging options  with the nvdaHelperDebugFlag commandline variable. It takes one or more of the following flags:
 	* symbols: debugging symbols will be added to the DLLs and pdb files will be generated for use with a debugger. (no symbols are produced by default).
-	* assertions: assertions will be enabled. (they are disabled by default).
-	* debugCRT: the libraries will be linked against the debug C runtime. (The normal CRT is used by default).
+	* debugCRT: the libraries will be linked against the debug C runtime and assertions will be enabled. (The normal CRT is used by default and assertions are disabled).
 	* noOptimize: All compiler optimizations will be disabled. (Optimization 2 [/O2] is used by default). 
 	* RTC: runtime checks (stack corruption, uninitialized variables etc) will be enabled (default is no runtime checks).
 

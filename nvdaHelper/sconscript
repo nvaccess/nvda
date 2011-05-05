@@ -31,7 +31,7 @@ archClientInstallDirs={
 }
 
 vars = Variables()
-vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'none', ["symbols","assertions","debugCRT","RTC","noOptimize"]))
+vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'none', ["symbols","debugCRT","RTC","noOptimize"]))
 vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in xrange(60)]))
 
 #Build nvdaHelper for needed architectures

@@ -29,9 +29,6 @@ env.Append(CPPPATH=['#/include',Dir('.').abspath])
 env.Append(LINKFLAGS='/incremental:no')
 env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
 
-if 'assertions' not in debug:
-	env.Append(CPPDEFINES=['NDEBUG'])
-
 if 'noOptimize' in debug:
 	env.Append(CCFLAGS=['/Od'])
 else:
@@ -41,6 +38,7 @@ if 'debugCRT' in debug:
 	env.Append(CCFLAGS=['/MTd'])
 else:
 	env.Append(CCFLAGS=['/MT'])
+	env.Append(CPPDEFINES=['NDEBUG'])
 
 if 'RTC' in debug:
 	env.Append(CCFLAGS=['/RTCsu'])
