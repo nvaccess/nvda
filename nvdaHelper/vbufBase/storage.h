@@ -416,6 +416,12 @@ class VBufStorage_buffer_t {
  */
 	void deleteSubtree(VBufStorage_fieldNode_t* node);
 
+/**
+ * disassociates the given node from this buffer and deletes the node.
+ * @param node the node you wish to delete.
+ */
+	void deleteNode(VBufStorage_fieldNode_t* node);
+
 	friend class VBufStorage_fieldNode_t;
 	friend class VBufStorage_controlFieldNode_t;
 	friend class VBufStorage_textFieldNode_t;

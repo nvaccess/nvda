@@ -536,6 +536,15 @@ bool VBufStorage_buffer_t::insertNode(VBufStorage_controlFieldNode_t* parent, VB
 	return true;
 }
 
+void VBufStorage_buffer_t::deleteNode(VBufStorage_fieldNode_t* node) {
+	nhAssert(node);
+	node->disassociateFromBuffer(this);
+	nhAssert(this->nodes.count(node)==1);
+	this->nodes.erase(node);
+	LOG_DEBUG(L"deleting node at "<<node);
+	delete node;
+}
+
 void VBufStorage_buffer_t::deleteSubtree(VBufStorage_fieldNode_t* node) {
 	nhAssert(node); //node can't be null
 	LOG_DEBUG(L"deleting subtree starting at "<<node->getDebugInfo());
@@ -545,11 +554,7 @@ void VBufStorage_buffer_t::deleteSubtree(VBufStorage_fieldNode_t* node) {
 		deleteSubtree(child);
 		child=next;
 	}
-	node->disassociateFromBuffer(this);
-	nhAssert(this->nodes.count(node)==1);
-	this->nodes.erase(node);
-	LOG_DEBUG(L"deleting node at "<<node);
-	delete node;
+	deleteNode(node);
 	LOG_DEBUG(L"Deleted subtree");
 }
 
