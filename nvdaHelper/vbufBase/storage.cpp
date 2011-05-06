@@ -714,7 +714,10 @@ void VBufStorage_buffer_t::clearBuffer() {
 }
 
 bool VBufStorage_buffer_t::getFieldNodeOffsets(VBufStorage_fieldNode_t* node, int *startOffset, int *endOffset) {
-	nhAssert(this->isNodeInBuffer(node));
+	if(!isNodeInBuffer(node)) {
+		LOG_DEBUGWARNING(L"Node at "<<node<<L" is not in buffer at "<<this<<L". Returnning false");
+		return false;
+	}
 	*startOffset=node->calculateOffsetInTree();
 	*endOffset=(*startOffset)+node->length;
 	LOG_DEBUG(L"node has offsets "<<*startOffset<<L" and "<<*endOffset<<L", returning true");
@@ -722,10 +725,17 @@ bool VBufStorage_buffer_t::getFieldNodeOffsets(VBufStorage_fieldNode_t* node, in
 }
 
 bool VBufStorage_buffer_t::isFieldNodeAtOffset(VBufStorage_fieldNode_t* node, int offset) {
-	nhAssert(this->isNodeInBuffer(node));
+	if(!isNodeInBuffer(node)) {
+		LOG_DEBUGWARNING(L"Node at "<<node<<L" is not in buffer at "<<this<<L". Returnning false");
+		return false;
+	}
+	if(offset<0||offset>=this->getTextLength()) {
+		LOG_DEBUGWARNING(L"Offset "<<offset<<L" out of range. Returnning false");
+		return false;
+	}
 	int startOffset, endOffset;
 	if(!getFieldNodeOffsets(node,&startOffset,&endOffset)) {
-		LOG_DEBUG(L"Could not get offsets for node at "<<node<<L", returning false");
+		LOG_DEBUGWARNING(L"Could not get offsets for node at "<<node<<L", returning false");
 		return false;
 	}
 	if(offset<startOffset||offset>=endOffset) {
@@ -738,17 +748,22 @@ bool VBufStorage_buffer_t::isFieldNodeAtOffset(VBufStorage_fieldNode_t* node, in
 
 VBufStorage_textFieldNode_t* VBufStorage_buffer_t::locateTextFieldNodeAtOffset(int offset, int *nodeStartOffset, int *nodeEndOffset) {
 	if(this->rootNode==NULL) {
-		LOG_DEBUG(L"Buffer is empty, returning NULL");
+		LOG_DEBUGWARNING(L"Buffer is empty, returning NULL");
+		return NULL;
+	}
+	if(offset<0||offset>=this->getTextLength()) {
+		LOG_DEBUGWARNING(L"Offset "<<offset<<L" out of range. Returnning NULL");
 		return NULL;
 	}
 	int relativeOffset=0;
 	VBufStorage_textFieldNode_t* node=this->rootNode->locateTextFieldNodeAtOffset(offset,&relativeOffset);
 	if(node==NULL) {
-		LOG_DEBUG(L"Could not locate node, returning NULL");
+		LOG_DEBUGWARNING(L"Could not locate node, returning NULL");
 		return NULL;
 	}
-	*nodeStartOffset=offset-relativeOffset;
-	*nodeEndOffset=*nodeStartOffset+node->length;
+	int startOffset=offset-relativeOffset;
+	if(nodeStartOffset) *nodeStartOffset=startOffset;
+	if(nodeEndOffset) *nodeEndOffset=startOffset+node->length;
 	LOG_DEBUG(L"Located node, returning node at "<<node);
 	return node;
 }
@@ -757,23 +772,20 @@ VBufStorage_controlFieldNode_t* VBufStorage_buffer_t::locateControlFieldNodeAtOf
 	int startOffset, endOffset;
 	VBufStorage_textFieldNode_t* node=this->locateTextFieldNodeAtOffset(offset,&startOffset,&endOffset);
 	if(node==NULL) {
-		LOG_DEBUG(L"Could not locate node at offset, returning NULL");
+		LOG_DEBUGWARNING(L"Could not locate node at offset, returning NULL");
 		return NULL;
 	}
-	if(node->parent==NULL) {
-		LOG_DEBUG(L"text field node has no parents, returning NULL");
-		return NULL;
-	}
+	nhAssert(node->parent);
 	for(VBufStorage_fieldNode_t* previous=node->previous;previous!=NULL;previous=previous->previous) {
 		startOffset-=previous->length;
 	}
 	endOffset=startOffset+node->parent->length;
 	nhAssert(startOffset>=0&&endOffset>=startOffset); //Offsets must not be negative
 	VBufStorage_controlFieldNode_t* controlFieldNode = node->parent;
-	*nodeStartOffset=startOffset;
-	*nodeEndOffset=endOffset;
-	*docHandle=controlFieldNode->identifier.docHandle;
-	*ID=controlFieldNode->identifier.ID;
+	if(nodeStartOffset) *nodeStartOffset=startOffset;
+	if(nodeEndOffset) *nodeEndOffset=endOffset;
+	if(docHandle) *docHandle=controlFieldNode->identifier.docHandle;
+	if(ID) *ID=controlFieldNode->identifier.ID;
 	LOG_DEBUG(L"Found node, returning "<<controlFieldNode->getDebugInfo()); 
 	return controlFieldNode;
 	}
@@ -783,7 +795,7 @@ VBufStorage_controlFieldNode_t* VBufStorage_buffer_t::getControlFieldNodeWithIde
 	std::map<VBufStorage_controlFieldNodeIdentifier_t,VBufStorage_controlFieldNode_t*>::iterator i=this->controlFieldNodesByIdentifier.find(identifier);
 	if(i==this->controlFieldNodesByIdentifier.end()) {
 		LOG_DEBUG(L"No controlFieldNode with identifier, returning NULL");
-		return false;
+		return NULL;
 	}
 	VBufStorage_controlFieldNode_t* node=i->second;
 	nhAssert(node); //Node can not be NULL
@@ -792,27 +804,28 @@ VBufStorage_controlFieldNode_t* VBufStorage_buffer_t::getControlFieldNodeWithIde
 }
 
 bool VBufStorage_buffer_t::getIdentifierFromControlFieldNode(VBufStorage_controlFieldNode_t* node, int* docHandle, int* ID) {
-	nhAssert(node);
-	nhAssert(isNodeInBuffer(node));
-	*docHandle=node->identifier.docHandle;
-	*ID=node->identifier.ID;
+	if(!isNodeInBuffer(node)) {
+		LOG_DEBUGWARNING(L"Node at "<<node<<L" is not in buffer at "<<this<<L". Returnning false");
+		return false;
+	}
+	if(docHandle) *docHandle=node->identifier.docHandle;
+	if(ID) *ID=node->identifier.ID;
 	return true;
 }
-
 
 bool VBufStorage_buffer_t::getSelectionOffsets(int *startOffset, int *endOffset) const {
 	nhAssert(this->selectionStart>=0&&this->selectionLength>=0); //Selection can't be negative
 	int minStartOffset=0;
 	int maxEndOffset=(this->rootNode)?this->rootNode->length:0;
-	*startOffset=max(minStartOffset,this->selectionStart);
-	*endOffset=min(this->selectionStart+this->selectionLength,maxEndOffset);
+	if(startOffset) *startOffset=max(minStartOffset,this->selectionStart);
+	if(endOffset) *endOffset=min(this->selectionStart+this->selectionLength,maxEndOffset);
 	LOG_DEBUG(L"Selection is "<<*startOffset<<L" and "<<*endOffset<<L", returning true");
 	return true;
 }
 
 bool VBufStorage_buffer_t::setSelectionOffsets(int startOffset, int endOffset) {
 	if(startOffset<0||endOffset<0||endOffset<startOffset) {
-		LOG_DEBUG(L"invalid offsets of "<<startOffset<<L" and "<<endOffset<<L", returning false");
+		LOG_DEBUGWARNING(L"invalid offsets of "<<startOffset<<L" and "<<endOffset<<L", returning false");
 		return false;
 	}
 	this->selectionStart=startOffset;
@@ -829,12 +842,12 @@ int VBufStorage_buffer_t::getTextLength() const {
 
 VBufStorage_textContainer_t*  VBufStorage_buffer_t::getTextInRange(int startOffset, int endOffset, bool useMarkup) {
 	if(this->rootNode==NULL) {
-		LOG_DEBUG(L"buffer is empty, returning false");
-		return false;
+		LOG_DEBUGWARNING(L"buffer is empty, returning NULL");
+		return NULL;
 	}
 	if(startOffset<0||startOffset>=endOffset||endOffset>this->rootNode->length) {
-		LOG_DEBUG(L"Bad offsets of "<<startOffset<<L" and "<<endOffset<<L", returning false");
-		return false;
+		LOG_DEBUGWARNING(L"Bad offsets of "<<startOffset<<L" and "<<endOffset<<L", returning NULL");
+		return NULL;
 	}
 	wstring text;
 	this->rootNode->getTextInRange(startOffset,endOffset,text,useMarkup);
@@ -844,11 +857,11 @@ VBufStorage_textContainer_t*  VBufStorage_buffer_t::getTextInRange(int startOffs
 
 VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, VBufStorage_findDirection_t direction, const std::wstring& attribsString, int *startOffset, int *endOffset) {
 	if(this->rootNode==NULL) {
-		LOG_DEBUG(L"buffer empty, returning NULL");
+		LOG_DEBUGWARNING(L"buffer empty, returning NULL");
 		return NULL;
 	}
 	if(offset>=this->rootNode->length) {
-		LOG_DEBUG(L" offset "<<offset<<L" is past end of buffer, returning NULL");
+		LOG_DEBUGWARNING(L" offset "<<offset<<L" is past end of buffer, returning NULL");
 		return NULL;
 	}
 	LOG_DEBUG(L"find node starting at offset "<<offset<<L", with attributes: "<<attribsString);
@@ -861,11 +874,11 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 	} else if(offset>=0) {
 		node=this->locateTextFieldNodeAtOffset(offset,&bufferStart,&bufferEnd);
 	} else {
-		LOG_DEBUG(L"Invalid offset: "<<offset);
+		LOG_DEBUGWARNING(L"Invalid offset: "<<offset);
 		return NULL;
 	}
 	if(node==NULL) {
-		LOG_DEBUG(L"Could not find node at offset "<<offset<<L", returning NULL");
+		LOG_DEBUGWARNING(L"Could not find node at offset "<<offset<<L", returning NULL");
 		return NULL;
 	}
 	LOG_DEBUG(L"starting from node "<<node->getDebugInfo());
@@ -916,15 +929,15 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 		LOG_DEBUG(L"Could not find node, returning NULL");
 		return NULL;
 	}
-	*startOffset=bufferStart;
-	*endOffset=bufferEnd;
+	if(startOffset) *startOffset=bufferStart;
+	if(endOffset) *endOffset=bufferEnd;
 	LOG_DEBUG(L"returning node at "<<node<<L" with offsets of "<<*startOffset<<L" and "<<*endOffset);
 	return node;
 }
 
 bool VBufStorage_buffer_t::getLineOffsets(int offset, int maxLineLength, bool useScreenLayout, int *startOffset, int *endOffset) {
 	if(this->rootNode==NULL||offset>=this->rootNode->length) {
-		LOG_DEBUG(L"Offset of "<<offset<<L" too big for buffer, returning false");
+		LOG_DEBUGWARNING(L"Offset of "<<offset<<L" too big for buffer, returning false");
 		return false;
 	}
 	LOG_DEBUG(L"Calculating line offsets, using offset "<<offset<<L", with max line length of "<<maxLineLength<<L", useing screen layout "<<useScreenLayout);
