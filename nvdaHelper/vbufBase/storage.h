@@ -479,7 +479,7 @@ class VBufStorage_buffer_t {
 /*
  * Removes all nodes from the buffer.
  */
-	bool clearBuffer();
+	void clearBuffer();
 
 /**
  * Calculates the start and end character offsets of the given node in the buffer.

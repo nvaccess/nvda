@@ -537,9 +537,7 @@ VBufStorage_buffer_t::VBufStorage_buffer_t(): rootNode(NULL), nodes(), controlFi
 
 VBufStorage_buffer_t::~VBufStorage_buffer_t() {
 	LOG_DEBUG(L"buffer being destroied");
-	if(this->rootNode) {
-		this->removeFieldNode(this->rootNode);
-	}
+	this->clearBuffer();
 }
 
 VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, int docHandle, int ID, bool isBlock) {
@@ -704,16 +702,15 @@ bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node) {
 	return true;
 }
 
-bool VBufStorage_buffer_t::clearBuffer() {
-	if(this->rootNode) {
-		if(!this->removeFieldNode(this->rootNode)) {
-			LOG_DEBUG(L"Error removing root node");
-			return false;
-		}
-	} else {
-		LOG_DEBUG(L"Buffer already empty");
+void VBufStorage_buffer_t::clearBuffer() {
+	for(set<VBufStorage_fieldNode_t*>::iterator i=nodes.begin();i!=nodes.end();++i) {
+		nhAssert(*i);
+		delete *i;
 	}
-	return true;
+	nodes.clear();
+	controlFieldNodesByIdentifier.clear();
+	selectionStart=selectionLength=0;
+	this->rootNode=NULL;
 }
 
 bool VBufStorage_buffer_t::getFieldNodeOffsets(VBufStorage_fieldNode_t* node, int *startOffset, int *endOffset) {
