@@ -464,10 +464,32 @@ void VBufStorage_buffer_t::forgetControlFieldNode(VBufStorage_controlFieldNode_t
 	LOG_DEBUG(L"Forgot controlFieldNode with docHandle "<<node->identifier.docHandle<<L" and ID "<<node->identifier.ID);
 }
 
-void VBufStorage_buffer_t::insertNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node) {
+bool VBufStorage_buffer_t::insertNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node) {
+	if(!node) {
+		LOG_DEBUGWARNING(L"Cannot insert a NULL node. Returning false");
+		return false;
+	}
+	if(!parent&&previous) {
+		LOG_DEBUGWARNING(L"Previous cannot be specified with no parent. Returning false");
+		return false;
+	}
+	if(parent&&!isNodeInBuffer(parent)) {
+		LOG_DEBUGWARNING(L"Bad parent: node at "<<parent<<L" not in this buffer at "<<this<<L". Returning false");
+		return false;
+	}
+	if(previous&&!isNodeInBuffer(previous)) {
+		LOG_DEBUGWARNING(L"Bad previous: node at "<<previous<<L" not in this buffer at "<<this<<L". Returning false");
+		return false;
+	}
+	if(parent&&previous&&parent!=previous->parent) {
+		LOG_DEBUGWARNING(L"Bad relation: parent at "<<parent<<L" is not a parent of previous at "<<previous<<L". Returning false");
+		return false;
+	}
+	if(!parent&&this->rootNode) {
+		LOG_DEBUGWARNING(L"No parent specified but the root node already exists at "<<this->rootNode<<L". returning false");
+		return false;
+	}
 	VBufStorage_fieldNode_t* next=NULL;
-	nhAssert(node); //node can't be NULL
-	nhAssert(previous==NULL||previous!=this->rootNode); //a root node can not have nodes after it on the same level
 	//make sure we have a good parent, previous and next
 	if(previous!=NULL) parent=previous->parent;
 	next=(previous?previous->next:(parent?parent->firstChild:NULL));
@@ -475,7 +497,6 @@ void VBufStorage_buffer_t::insertNode(VBufStorage_controlFieldNode_t* parent, VB
 	LOG_DEBUG(L"Using previous: "<<(previous?previous->getDebugInfo():L"NULL"));
 	LOG_DEBUG(L"Using next: "<<(next?next->getDebugInfo():L"NULL"));
 	if(parent==NULL) {
-		nhAssert(this->rootNode==NULL); //A buffer can only have one root node.
 		LOG_DEBUG(L"making node root node of buffer");
 		this->rootNode=node;
 	} else { 
@@ -512,6 +533,7 @@ void VBufStorage_buffer_t::insertNode(VBufStorage_controlFieldNode_t* parent, VB
 	LOG_DEBUG(L"Inserted subtree");
 	nhAssert(this->nodes.count(node)==0);
 	this->nodes.insert(node);
+	return true;
 }
 
 void VBufStorage_buffer_t::deleteSubtree(VBufStorage_fieldNode_t* node) {
@@ -546,7 +568,7 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 	nhAssert(controlFieldNode); //controlFieldNode must have been allocated
 	LOG_DEBUG(L"Created controlFieldNode: "<<controlFieldNode->getDebugInfo());
 	if(addControlFieldNode(parent,previous,controlFieldNode)!=controlFieldNode) {
-		LOG_DEBUG(L"Error adding control field node to buffer");
+		LOG_DEBUGWARNING(L"Error adding control field node to buffer");
 		delete controlFieldNode;
 		return NULL;
 	}
@@ -554,20 +576,20 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 }
 
 VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_controlFieldNode_t* controlFieldNode) {
-	nhAssert(!parent||this->isNodeInBuffer(parent));
-	nhAssert(!previous||this->isNodeInBuffer(previous));
-	LOG_DEBUG(L"Add controlFieldNode using parent at "<<parent<<L", previous at "<<previous<<L", node at "<<controlFieldNode);
-	if(previous!=NULL&&previous->parent!=parent) {
-		LOG_DEBUG(L"previous is not a child of parent, returning NULL");
+	if(!controlFieldNode) {
+		LOG_DEBUGWARNING(L"Node is NULL. Returnning NULL");
 		return NULL;
 	}
-	if(parent==NULL&&previous!=NULL) {
-		LOG_DEBUG(L"Can not add more than one node at root level");
+	LOG_DEBUG(L"Add controlFieldNode using parent at "<<parent<<L", previous at "<<previous<<L", node at "<<controlFieldNode);
+	if(controlFieldNodesByIdentifier.count(controlFieldNode->identifier)>0) {
+		LOG_DEBUGWARNING(L"Buffer at "<<this<<L" already has a node with the same identifier as node "<<controlFieldNode->getDebugInfo()<<L". Returning NULL"); 
 		return NULL;
 	}
 	LOG_DEBUG(L"Inserting controlFieldNode in to buffer");
-	insertNode(parent, previous, controlFieldNode);
-	nhAssert(controlFieldNodesByIdentifier.count(controlFieldNode->identifier)==0); //node can't be previously remembered
+	if(!insertNode(parent, previous, controlFieldNode)) {
+		LOG_DEBUGWARNING(L"Error inserting node at "<<controlFieldNode<<L". Returning NULL");
+		return NULL;
+	}
 	controlFieldNodesByIdentifier[controlFieldNode->identifier]=controlFieldNode;
 	LOG_DEBUG(L"Added new controlFieldNode, returning node");
 	return controlFieldNode;
@@ -579,7 +601,7 @@ VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage
 	nhAssert(textFieldNode); //controlFieldNode must have been allocated
 	LOG_DEBUG(L"Created textFieldNode: "<<textFieldNode->getDebugInfo());
 	if(addTextFieldNode(parent,previous,textFieldNode)!=textFieldNode) {
-		LOG_DEBUG(L"Error adding textFieldNode to buffer");
+		LOG_DEBUGWARNING(L"Error adding textFieldNode to buffer");
 		delete textFieldNode;
 		return NULL;
 	}
@@ -587,19 +609,20 @@ VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage
 }
 
 VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_textFieldNode_t* textFieldNode) {
-	nhAssert(!parent||this->isNodeInBuffer(parent));
-	nhAssert(!previous||this->isNodeInBuffer(previous));
-	LOG_DEBUG(L"Add textFieldNode using parent at "<<parent<<L", previous at "<<previous<<L", node at "<<textFieldNode);
-	if(previous!=NULL&&previous->parent!=parent) {
-		LOG_DEBUG(L"previous is not a child of parent, returning NULL");
+	if(!textFieldNode) {
+		LOG_DEBUGWARNING(L"Node is NULL. Returnning NULL");
 		return NULL;
 	}
+	LOG_DEBUG(L"Add textFieldNode using parent at "<<parent<<L", previous at "<<previous<<L", node at "<<textFieldNode);
 	if(parent==NULL) {
-		LOG_DEBUG(L"Can not add a text field node at the root of the buffer");
+		LOG_DEBUGWARNING(L"Can not add a text field node at the root of the buffer. Returnning NULL");
 		return NULL;
 	}
 	LOG_DEBUG(L"Inserting textFieldNode in to buffer");
-	insertNode(parent, previous, textFieldNode);
+	if(!insertNode(parent, previous, textFieldNode)) {
+		LOG_DEBUGWARNING(L"Error inserting node at "<<textFieldNode<<L". Returning NULL");
+		return NULL;
+	}
 	LOG_DEBUG(L"Added new textFieldNode, returning node");
 	return textFieldNode;
 }

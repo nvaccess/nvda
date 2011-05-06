@@ -408,7 +408,7 @@ class VBufStorage_buffer_t {
  * @param previous the field already in the buffer that the inserted node will come directly after, note previous's parent will always be used over the parent argument.
  * @param node the node being inserted.
  */ 
-	void insertNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node);
+	bool insertNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node);
 
 /**
  * disassociates the given node and its descendants from this buffer and deletes the node and its descendants.
