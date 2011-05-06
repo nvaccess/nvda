@@ -697,10 +697,16 @@ bool VBufStorage_buffer_t::replaceSubtrees(const map<VBufStorage_fieldNode_t*,VB
 	return TRUE;
 }
 
-bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node) {
-	nhAssert(this->isNodeInBuffer(node));
-	LOG_DEBUG(L"Removing subtree starting at "<<node->getDebugInfo());
-	if(node->length>0) {
+bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node,bool removeDescendants) {
+	if(!isNodeInBuffer(node)) {
+		LOG_DEBUGWARNING(L"Node at "<<node<<L" is not in buffer at "<<this<<L". Returnning false");
+		return false;
+	}
+	if(node==this->rootNode&&!removeDescendants) {
+		LOG_DEBUGWARNING(L"Cannot remove the rootNode without removing its descedants. Returnning false");
+		return false;
+	}
+	if((removeDescendants||!node->firstChild)&&node->length>0) {
 		LOG_DEBUG(L"collapsing length of ancestors by "<<node->length);
 		for(VBufStorage_fieldNode_t* ancestor=node->parent;ancestor!=NULL;ancestor=ancestor->parent) {
 			LOG_DEBUG(L"Ancestor: "<<ancestor->getDebugInfo());
@@ -711,17 +717,24 @@ bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node) {
 	}
 	LOG_DEBUG(L"Disconnecting node from its siblings and or parent");
 	if(node->next!=NULL) {
-		node->next->previous=node->previous;
+		node->next->previous=(!removeDescendants&&node->lastChild)?node->lastChild:node->previous;
 	} else if(node->parent) {
-		node->parent->lastChild=node->previous;
+		node->parent->lastChild=(!removeDescendants&&node->lastChild)?node->lastChild:node->previous;
 	}
 	if(node->previous!=NULL) {
-		node->previous->next=node->next;
+		node->previous->next=(!removeDescendants&&node->firstChild)?node->firstChild:node->next;
 	} else if(node->parent) {
-		node->parent->firstChild=node->next;
+		node->parent->firstChild=(!removeDescendants&&node->firstChild)?node->firstChild:node->next;
 	}
-	LOG_DEBUG(L"Deleting subtree");
-	deleteSubtree(node);
+	if(!removeDescendants) {
+		for(VBufStorage_fieldNode_t* child=node->firstChild;child!=NULL;child=child->next) child->parent=node->parent;
+		if(node->firstChild) node->firstChild->previous=node->previous;
+		if(node->lastChild) node->lastChild->next=node->next;
+		deleteNode(node);
+	} else {
+		LOG_DEBUG(L"Deleting subtree");
+		deleteSubtree(node);
+	}
 	if(node==this->rootNode) {
 		LOG_DEBUG(L"Removing root node from buffer ");
 		this->rootNode=NULL;
