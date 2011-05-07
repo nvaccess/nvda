@@ -120,8 +120,11 @@ void VBufBackend_t::renderThread_terminate() {
 	runningBackends.erase(this);
 }
 
-void VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
-	nhAssert(node); //node can not be NULL
+bool VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
+	if(!isNodeInBuffer(node)) {
+		LOG_DEBUGWARNING(L"Node at "<<node<<L" not in buffer at "<<this);
+		return false;
+	}
 	LOG_DEBUG(L"Invalidating node "<<node->getDebugInfo());
 	this->lock.acquire();
 	bool needsInsert=true;
@@ -156,6 +159,7 @@ void VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
 	}
 	this->lock.release();
 	this->requestUpdate();
+	return true;
 }
 
 void VBufBackend_t::update() {
@@ -181,15 +185,12 @@ void VBufBackend_t::update() {
 			LOG_DEBUG(L"Rendered content in temp buffer");
 			replacementSubtreeMap.insert(make_pair(node,tempBuf));
 		}
-		LOG_DEBUG(L"Clearing invalid subtree set");
 		this->lock.acquire();
 		LOG_DEBUG(L"Replacing nodes with content of temp buffers");
-		this->replaceSubtrees(replacementSubtreeMap);
-		this->lock.release();
-		//Delete all the temp buffers
-		for(map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>::iterator i=replacementSubtreeMap.begin();i!=replacementSubtreeMap.end();++i) {
-			delete i->second;
+		if(!this->replaceSubtrees(replacementSubtreeMap)) {
+			LOG_DEBUGWARNING(L"Error replacing one or more subtrees");
 		}
+		this->lock.release();
 	} else {
 		LOG_DEBUG(L"Initial render");
 		this->lock.acquire();

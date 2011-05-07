@@ -473,12 +473,12 @@ class VBufStorage_buffer_t {
  * Removes the given nodes from the buffer and then merges the content of the new buffers in the removed node's position. It also tries to keep the selection relative to the control field it was in before the replacement.
  * @param m the map of nodes to buffers 
  */
-	bool replaceSubtrees(const std::map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>& m);
+	bool replaceSubtrees(std::map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>& m);
 
 /**
- * disassociates from this buffer, and deletes, the given field, and optionally its descendants.
+ * disassociates from this buffer, and deletes, the given field and its descendants.
  * @param node the node you wish to remove.
- * @param removeDescendants whether descendants should also be removed. If not,  the tree is corrected so that the removed node's children are now at the position of the node.
+	* @param removeDescedants true if descendants should be removed, false otherwise.
  * @return true if the node was removed, false otherwise.
  */
 	bool removeFieldNode(VBufStorage_fieldNode_t* node, bool removeDescendants=true);

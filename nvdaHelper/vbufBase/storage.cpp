@@ -457,11 +457,10 @@ std::wstring VBufStorage_textFieldNode_t::getDebugInfo() const {
 
 void VBufStorage_buffer_t::forgetControlFieldNode(VBufStorage_controlFieldNode_t* node) {
 	nhAssert(node); //Node can't be NULL
-	nhAssert(this->controlFieldNodesByIdentifier.count(node->identifier)==1); //Node must exist in the set
-	nhAssert(this->controlFieldNodesByIdentifier[node->identifier]->identifier==node->identifier);
-	nhAssert(this->controlFieldNodesByIdentifier[node->identifier]==node); //Remembered node and this node must be equal
-	this->controlFieldNodesByIdentifier.erase(node->identifier);
-	LOG_DEBUG(L"Forgot controlFieldNode with docHandle "<<node->identifier.docHandle<<L" and ID "<<node->identifier.ID);
+	map<VBufStorage_controlFieldNodeIdentifier_t,VBufStorage_controlFieldNode_t*>::iterator i=controlFieldNodesByIdentifier.find(node->identifier);
+	nhAssert(i!=controlFieldNodesByIdentifier.end());
+	nhAssert(i->second==node);
+	controlFieldNodesByIdentifier.erase(i);
 }
 
 bool VBufStorage_buffer_t::insertNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node) {
@@ -632,7 +631,7 @@ VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage
 	return textFieldNode;
 }
 
-bool VBufStorage_buffer_t::replaceSubtrees(const map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>& m) {
+bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>& m) {
 	VBufStorage_controlFieldNode_t* parent=NULL;
 	VBufStorage_fieldNode_t* previous=NULL;
 	//Using the current selection start, record a list of ancestor fields by their identifier, 
@@ -648,31 +647,68 @@ bool VBufStorage_buffer_t::replaceSubtrees(const map<VBufStorage_fieldNode_t*,VB
 		}
 	}
 	//For each node in the map,
-		//Replace the node on this buffer, with the content of the buffer in the map for that node
-		//Note that controlField info will automatically be removed, but not added again
-	for(map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>::const_iterator i=m.begin();i!=m.end();++i) {
+	//Replace the node on this buffer, with the content of the buffer in the map for that node
+	//Note that controlField info will automatically be removed, but not added again
+	bool failedBuffers=false;
+	for(map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>::iterator i=m.begin();i!=m.end();) {
 		VBufStorage_fieldNode_t* node=i->first;
 		VBufStorage_buffer_t* buffer=i->second;
+		if(buffer==this) {
+			LOG_DEBUGWARNING(L"Cannot replace a subtree on a buffer with the same buffer. Skipping");
+		failedBuffers=true;
+			i=m.erase(i);
+			continue;
+		}
 		parent=node->parent;
 		previous=node->previous;
 		if(!this->removeFieldNode(node)) {
-			LOG_DEBUG(L"Error removing node");
-			return false;
+			LOG_DEBUGWARNING(L"Error removing node. Skipping");
+			failedBuffers=true;
+			buffer->clearBuffer();
+			delete buffer;
+			i=m.erase(i);
+			continue;
 		}
-		this->insertNode(parent,previous,buffer->rootNode);
+		if(!this->insertNode(parent,previous,buffer->rootNode)) {
+			LOG_DEBUGWARNING(L"Error inserting node. Skipping");
+			failedBuffers=true;
+			buffer->clearBuffer();
+			delete buffer;
+			i=m.erase(i);
+			continue;
+		}
+		buffer->nodes.erase(buffer->rootNode);
+		this->nodes.insert(buffer->nodes.begin(),buffer->nodes.end());
+		buffer->nodes.clear();
 		buffer->rootNode=NULL;
+		++i;
 	}
 	//Update the controlField info on this buffer using all the buffers in the map
 	//We do this all in one go instead of for each replacement in case there are issues with ordering
 	//e.g. an identifier appears in one place before its removed in another
-	for(map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>::const_iterator i=m.begin();i!=m.end();++i) {
+	for(map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>::iterator i=m.begin();i!=m.end();++i) {
 		VBufStorage_buffer_t* buffer=i->second;
+		int failedIDs=0;
 		for(map<VBufStorage_controlFieldNodeIdentifier_t,VBufStorage_controlFieldNode_t*>::iterator j=buffer->controlFieldNodesByIdentifier.begin();j!=buffer->controlFieldNodesByIdentifier.end();++j) {
-			nhAssert(this->controlFieldNodesByIdentifier.count(j->first)==0);
-			this->controlFieldNodesByIdentifier.erase(j->first);
+			map<VBufStorage_controlFieldNodeIdentifier_t,VBufStorage_controlFieldNode_t*>::iterator existing=this->controlFieldNodesByIdentifier.find(j->first);
+			if(existing!=this->controlFieldNodesByIdentifier.end()) {
+				++failedIDs;
+				if(!removeFieldNode(existing->second,false)) {
+					LOG_DEBUGWARNING(L"Error removing old node to make when handling ID clash");
+					continue;
+				}
+				nhAssert(this->controlFieldNodesByIdentifier.count(j->first)==0);
+			}
 			this->controlFieldNodesByIdentifier.insert(make_pair(j->first,j->second));
 		}
+		buffer->controlFieldNodesByIdentifier.clear();
+		delete buffer;
+		if(failedIDs>0) {
+			LOG_DEBUGWARNING(L"Duplicate IDs when replacing subtree. Duplicate count "<<failedIDs);
+			failedBuffers=true;
+		}
 	}
+	m.clear();
 	//Find the deepest field the selection started in that still exists, 
 	//and correct the selection so its still positioned accurately relative to that field. 
 	if(!identifierList.empty()) {
@@ -688,13 +724,13 @@ bool VBufStorage_buffer_t::replaceSubtrees(const map<VBufStorage_fieldNode_t*,VB
 		if(lastAncestorNode!=NULL) {
 			int lastAncestorStartOffset, lastAncestorEndOffset;
 			if(!this->getFieldNodeOffsets(lastAncestorNode,&lastAncestorStartOffset,&lastAncestorEndOffset)) {
-				LOG_DEBUG(L"Error getting offsets for last ancestor node");
+				LOG_DEBUGWARNING(L"Error getting offsets for last ancestor node. Returnning false");
 				return false;
 			}
 			this->selectionStart=lastAncestorStartOffset+min(lastRelativeSelectionStart,max(lastAncestorNode->length-1,0));
 		}
 	}
-	return TRUE;
+	return !failedBuffers;
 }
 
 bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node,bool removeDescendants) {
