@@ -10,6 +10,7 @@ import ctypes
 import winUser
 import queueHandler
 import api
+import screenBitmap
 import speech
 import globalVars
 import eventHandler
@@ -29,6 +30,7 @@ curMousePos=(0,0)
 mouseMoved=False
 curMouseShape=""
 mouseShapeChanged=0
+scrBmpObj=None
 #: The time (in seconds) at which the last mouse event occurred.
 #: @type: float
 lastMouseEventTime=0
@@ -45,18 +47,15 @@ def playAudioCoordinates(x, y, screenWidth, screenHeight, detectBrightness=True,
 	maxPitch=config.conf['mouse']['audioCoordinates_maxPitch']
 	curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-y)/float(screenHeight)))
 	if detectBrightness:
-		screenDC=ctypes.windll.user32.GetDC(0)
-		brightness=0
-		for i in range(x-blurFactor,x+blurFactor+1):
-			for j in range(y-blurFactor,y+blurFactor+1):
-				if i>=0 and i<screenWidth and j>=0 and j<screenHeight:
-					p=ctypes.windll.gdi32.GetPixel(screenDC,i,j)
-					grey=0.3*((p>>16)&0xff)+0.59*((p>>8)&0xff)+0.11*(p&0xff)
-					brightness=(brightness+(grey/255))/2
+		startX=min(max(x-blurFactor,0),screenWidth)
+		width=min((x+blurFactor+1)-startX,screenWidth)
+		startY=min(max(y-blurFactor,0),screenHeight)
+		height=min((y+blurFactor+1)-startY,screenHeight)
+		grey=screenBitmap.rgbPixelBrightness(scrBmpObj.captureImage(startX,startY,width,height)[0][0])
+		brightness=grey/255.0
 		minBrightness=config.conf['mouse']['audioCoordinates_minVolume']
 		maxBrightness=config.conf['mouse']['audioCoordinates_maxVolume']
 		brightness=(brightness*(maxBrightness-minBrightness))+minBrightness
-		ctypes.windll.user32.ReleaseDC(0,screenDC)
 	else:
 		brightness=config.conf['mouse']['audioCoordinates_maxVolume']
 	leftVolume=int((85*((screenWidth-float(x))/screenWidth))*brightness)
@@ -109,7 +108,8 @@ def executeMouseMoveEvent(x,y):
 #Register internal mouse event
 
 def initialize():
-	global curMousePos
+	global curMousePos, scrBmpObj
+	scrBmpObj=screenBitmap.ScreenBitmap(1,1)
 	(x,y)=winUser.getCursorPos()
 	desktopObject=api.getDesktopObject()
 	try:
@@ -138,4 +138,6 @@ def pumpAll():
 			mouseShapeChanged+=1
 
 def terminate():
+	global srcBmpObj
+	scrBmpObj=None
 	winInputHook.terminate()
