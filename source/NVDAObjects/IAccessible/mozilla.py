@@ -37,6 +37,15 @@ class Mozilla(IAccessible):
 			states.add(controlTypes.STATE_CHECKABLE)
 		return states
 
+	def _get_presentationType(self):
+		presType=super(Mozilla,self).presentationType
+		if presType==self.presType_content:
+			if self.role==controlTypes.ROLE_TABLE and self.IA2Attributes.get('layout-guess')=='true':
+				presType=self.presType_layout
+			elif self.table and self.table.presentationType==self.presType_layout:
+				presType=self.presType_layout
+		return presType
+
 class Gecko1_9(Mozilla):
 
 	def _get_description(self):
