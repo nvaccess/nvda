@@ -1565,6 +1565,8 @@ _staticMap={
 	("QWidget",oleacc.ROLE_SYSTEM_LIST):"qt.Container",
 	("QWidget",oleacc.ROLE_SYSTEM_OUTLINE):"qt.Container",
 	("QWidget",oleacc.ROLE_SYSTEM_MENUBAR):"qt.Container",
+	("QWidget",oleacc.ROLE_SYSTEM_ROW):"qt.TableRow",
+	("QWidget",oleacc.ROLE_SYSTEM_CELL):"qt.TableCell",
 	("QWidget",oleacc.ROLE_SYSTEM_OUTLINEITEM):"qt.TreeViewItem",
 	("QPopup",oleacc.ROLE_SYSTEM_MENUPOPUP):"qt.Menu",
 	("QWidget",oleacc.ROLE_SYSTEM_IPADDRESS):"qt.LayeredPane",
