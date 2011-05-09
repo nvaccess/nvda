@@ -5,15 +5,16 @@
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
-! sentence ending	(?<=[^\s!])\!(?=[\"')\s]|$)
-? sentence ending	(?<=[^\s?])\?(?=[\"')\s]|$)
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
-decimal point	(?<=\d),(?=\d)
-in-word '	(?<=[a-zA-Z0-9])'(?=[a-zA-Z])
+
+decimal point	(?<=\d).(?=\d)
+in-word '	(?<=[^\W_])['’]
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -75,9 +76,11 @@ _	aláhúzás	most
 # Other characters
 •	listaelem	some
 …	pont pont pont	all	always
+	listaelem	some
 “	bal idézőjel	most
 ”	jobb idézőjel	most
-’	jobb idézőjel	most
+‘	bal aposztrof	most
+’	jobb aposztrof	most
 –	gondolatjel	most
 —	kötőjel	most
 ●	kör	most
