@@ -467,6 +467,14 @@ class MSHTML(IAccessible):
 			if ariaRequired=="true":
 				states.add(controlTypes.STATE_REQUIRED)
 			try:
+				ariaSelected=e.GetAttribute('aria-selected')
+			except (COMError, NameError):
+				ariaSelected=None
+			if ariaSelected=="true":
+				states.add(controlTypes.STATE_SELECTED)
+			elif ariaSelected=="false":
+				states.discard(controlTypes.STATE_SELECTED)
+			try:
 				ariaInvalid=e.GetAttribute('aria-invalid')
 			except (COMError, NameError):
 				ariaInvalid=None

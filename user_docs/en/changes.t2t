@@ -30,7 +30,8 @@
 - The Skype Extras menu is now read correctly. (#648)
 - Checking the Brightness controls volume checkbox in the Mouse Settings dialog should no longer cause a major lag for beeps when moving the mouse around the screen on Windows Vista/Windows 7 with Aero enabled. (#1183)
 - When NVDA is configured to use the laptop keyboard layout, NVDA+delete now works as documented to report the dimensions of the current navigator object.
-
+- NVDA now Appropriately honours the aria-selected attribute in Internet Explorer documents
+ 
 
 == Changes for Developers ==
 - Developer documentation can now be generated using SCons. See readme.txt at the root of the source distribution for details, including associated dependencies.

@@ -36,6 +36,11 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_CLICKABLE)
 		if attrs.get('HTMLAttrib::aria-required','false')=='true':
 			states.add(controlTypes.STATE_REQUIRED)
+		ariaSelected=attrs.get('HTMLAttrib::aria-selected')
+		if ariaSelected=="true":
+			states.add(controlTypes.STATE_SELECTED)
+		elif ariaSelected=="false":
+			states.discard(controlTypes.STATE_SELECTED)
 		if attrs.get('HTMLAttrib::aria-invalid','false')=='true':
 			states.add(controlTypes.STATE_INVALID)
 		if attrs.get('HTMLAttrib::aria-multiline','false')=='true':

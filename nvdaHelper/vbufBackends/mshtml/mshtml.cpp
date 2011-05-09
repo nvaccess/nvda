@@ -359,6 +359,7 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	macro_addHTMLAttributeToMap(L"onmouseup",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	//ARIA properties:
 	macro_addHTMLAttributeToMap(L"role",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-selected",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-level",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-required",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-dropeffect",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
