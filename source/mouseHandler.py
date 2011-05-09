@@ -138,6 +138,6 @@ def pumpAll():
 			mouseShapeChanged+=1
 
 def terminate():
-	global srcBmpObj
+	global scrBmpObj
 	scrBmpObj=None
 	winInputHook.terminate()
