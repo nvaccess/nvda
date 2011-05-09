@@ -68,7 +68,7 @@ def isBlank(text):
 	@return: C{True} if the text is blank, C{False} if not.
 	@rtype: bool
 	"""
-	return text and set(text) <= BLANK_CHUNK_CHARS
+	return not text or set(text) <= BLANK_CHUNK_CHARS
 
 RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 
