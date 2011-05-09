@@ -245,7 +245,7 @@ To navigate by object, use the following keys:
 | Navigate to focus object | NVDA+numpadMinus | NVDA+backspace | Navigates to the object that currently has the system focus, and also places  the review cursor at the position of the System caret, if it is showing |
 | Activate current navigator object | NVDA+numpadEnter | NVDA+enter | Activates the current navigator object (similar to  clicking with the mouse or pressing space when it has the system focus) |
 | Move System focus or caret to current review position | NVDA+shift+numpadMinus | NVDA+shift+backspace | pressed once Moves the System focus to the current navigator object, pressed twice moves the system caret to the position of the review cursor |
-| Report navigator object dimensions | NVDA+numpadDelete | NVDA+delete | Announces the current navigator object's dimentions on screen in per centages (including distance from left and top of screen, and its width and height) |
+| Report navigator object dimensions | NVDA+numpadDelete | NVDA+delete | Announces the current navigator object's dimensions on screen in per centages (including distance from left and top of screen, and its width and height) |
 %kc:endInclude
 
 note: numpad keys require numlock key to be turned off to work properly.
@@ -303,7 +303,7 @@ Where supported, NVDA will read a paragraph's worth of text, though some control
 
 NVDA can also be configured to also announce the type of control or object the mouse is currently over as it moves (e.g. list, button etc), which may be useful for totally blind users as sometimes the text isn't enough.
 
-NVDA provides a way for users to understand where the mouse is in regards to the dimentions of the screen, by playing the current mouse coordinates as audio beeps.
+NVDA provides a way for users to understand where the mouse is in regards to the dimensions of the screen, by playing the current mouse coordinates as audio beeps.
 The higher the mouse is on the screen, the higher the pitch of the beeps.
 The more left or right the mouse is on the screen, the more left or right the sound will seem to come from (assuming the user has stereo speakers).
 
@@ -612,7 +612,7 @@ The options are character, word, line and paragraph.
 If this checkbox is checked, NVDA will announce the role (type) of object as the mouse moves in side it.
 
 ==== Play audio coordinates when mouse moves ====
-Checking this checkbox makes NVDA play beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimentions of the screen.
+Checking this checkbox makes NVDA play beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimensions of the screen.
 
 ==== Brightness controls audio coordinates volume ====
 If the 'play audio coordinates when mouse moves' checkbox is checked, then checking this checkbox means that the volume of the audio coordinates beeps is controled by how bright the screen is under the mouse.
