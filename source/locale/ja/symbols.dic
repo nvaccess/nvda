@@ -5,16 +5,27 @@
 
 complexSymbols:
 # identifier	regexp
+# Sentence endings.
+。 sentence ending	(?<=[^\s。])\。(?=[\"'”’)\s]|$)
+！ sentence ending	(?<=[^\s！])\！(?=[\"'”’)\s]|$)
+？ sentence ending	(?<=[^\s？])\？(?=[\"'”’)\s]|$)
 # Others
-jp decimal point	(?<=[０-９])．(?=[０-９])
+jp decimal point	(?<=[\d])．(?=[\d])
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	ピリオド	all	always
-! sentence ending	カンタンフ	all always
-? sentence ending	クエスチョン	all	always
+. sentence ending	ピリオド	none
+! sentence ending	カンタンフ	none
+? sentence ending	クエスチョン	none
+。 sentence ending	マル	none
+！ sentence ending	カンタンフ	none
+？ sentence ending	ギモンフ	none
+; phrase ending	セミコロン	none
+: phrase ending	コロン	none
+decimal point	テン	none	norep
+jp decimal point	テン	none	norep
 
 # Other characters
 •	バレット
@@ -27,12 +38,6 @@ symbols:
 ●	クロマル
 ¨	ウムラウト
 
-# Japanese Complex symbols
-。 sentence ending	マル	all 	always
-！ sentence ending	カンタンフ	all always
-？ sentence ending	ギモンフ	all always
-jp decimal point	テン	all	always
-
 # Whitespace
 ?0	ブランク
 \t	タブ
@@ -42,37 +47,40 @@ jp decimal point	テン	all	always
  	スペース
 
 # Standard punctuation/symbols
-!	カンタンフ	some
-\#	シャープ	some
-$	ドル	some
-%	パーセント	some
-&	アンド	some
-'	アポストロフィ	some
-(	カッコ	some
-)	トジカッコ	some
-*	アスタリスク	some
-+	プラス	some
-","	カンマ	some
--	ハイフン	some
-.	ピリオド	some
-/	スラッシュ	some
-:	コロン	some
-;	セミコロン	some
-<	ショーナリ	some
->	ダイナリ	some
-=	イコール	some
-?	クエスチョン	some
-@	アット	some
-[	ダイカッコ	some
-]	トジダイカッコ	some
-\\	エンマーク	some
-^	ベキジョー	some
-_	アンダー	some
-`	アクサングラブ	some
-{	チューカッコ	some
-}	トジチューカッコ	some
-|	タテセン	some
-~	チルダ	some
+!	カンタンフ
+"	コーテーション
+\#	シャープ
+$	ドル
+£	ポンド
+€	ユーロ
+%	パーセント
+&	アンド
+'	アポストロフィ
+(	カッコ
+)	トジカッコ
+*	アスタリスク
++	プラス
+,	カンマ
+-	ハイフン
+.	ピリオド
+/	スラッシュ
+:	コロン
+;	セミコロン
+<	ショーナリ
+>	ダイナリ
+=	イコール
+?	クエスチョン
+@	アット
+[	ダイカッコ
+]	トジダイカッコ
+\\	エンマーク
+^	ベキジョー
+_	アンダー
+`	アクサングラーブ
+{	チューカッコ
+}	トジチューカッコ
+|	タテセン
+~	チルダ
 
 #Japanese Double Bytes Symbols
 
@@ -108,48 +116,48 @@ _	アンダー	some
 〃	オナジク	most
 仝	ドージョー	most
 々	クリカエシキゴー	most
-〆	シメ	most
+〆	シメ	some
 〇	カンスージゼロ	most
-―	ダッシュ	most
-‐	ハイフン	most
-／	スラッシュ	most
-＼	バックスラッシュ	most
-～	ナミセン	most
+―	ダッシュ	some
+‐	ハイフン	some
+／	スラッシュ	some
+＼	バックスラッシュ	some
+～	ナミセン	some
 ∥	ヘイコー	most
-｜	タテセン	most
-…	サンテン	most
-‥	ニテン	most
-‘	ヒダリインヨーフ	most
-’	ミギインヨーフ	most
-“	ヒダリニジューインヨーフ	most
-”	ミギニジューインヨーフ	most
-（	カッコヒラキ	most
-）	カッコトジ	most
-〔	キッコー	most
-〕	トジキッコー	most
-［	ダイカッコヒラキ	most
-］	ダイカッコトジ	most
-｛	チューカッコヒラキ	most
-｝	チューカッコトジ	most
-〈	ヤマカッコ	most
-〉	トジヤマカッコ	most
-《	ニジューヤマカッコ	most
-》	トジニジューヤマカッコ	most
-「	カギヒラキ	most
-」	カギトジ	most
-『	ニジューカギ	most
-』	ニジューカギトジ	most
-【	スミツキ	most
-】	スミツキトジ	most
-＋	プラス	most
-－	マイナス	most
+｜	タテセン	some
+…	サンテン	some
+‥	ニテン	some
+‘	ヒダリインヨーフ	some
+’	ミギインヨーフ	some
+“	ヒダリニジューインヨーフ	some
+”	ミギニジューインヨーフ	some
+（	カッコヒラキ	some
+）	カッコトジ	some
+〔	キッコー	some
+〕	トジキッコー	some
+［	ダイカッコ	some
+］	トジダイカッコ	some
+｛	チューカッコ	some
+｝	トジチューカッコ	some
+〈	ヤマカッコ	some
+〉	トジヤマカッコ	some
+《	ニジューヤマカッコ	some
+》	トジニジューヤマカッコ	some
+「	カギヒラキ	some
+」	トジカギ	some
+『	ニジューカギ	some
+』	トジニジューカギ	some
+【	スミツキ	some
+】	トジスミツキ	some
+＋	プラス	some
+－	マイナス	some
 ±	プラスマイナス	most
-×	カケル	most
-÷	ワル	most
-＝	イコール	most
+×	カケル	some
+÷	ワル	some
+＝	イコール	some
 ≠	ノットイコール	most
-＜	ショーナリ	most
-＞	ダイナリ	most
+＜	ショーナリ	some
+＞	ダイナリ	some
 ≦	ショーナリイコール	most
 ≧	ダイナリイコール	most
 ∞	ムゲンダイ	most
@@ -160,60 +168,60 @@ _	アンダー	some
 ′	フン	most
 ″	ビョー	most
 ℃	ドシー	most
-￥	エンマーク	most
-＄	ドル	most
-￠	セント	most
-￡	ポンド	most
-％	パーセント	most
-＃	シャープ	most
-＆	アンパサンド	most
-＊	アスタリスク	most
-＠	アット	most
+￥	エンマーク	some
+＄	ドル	some
+￠	セント	some
+￡	ポンド	some
+％	パーセント	some
+＃	シャープ	some
+＆	アンパサンド	some
+＊	アスタリスク	some
+＠	アット	some
 §	セクション	most
-☆	シロボシ	most
-★	クロボシ	most
-○	シロマル	most
-●	クロマル	most
-◎	ニジューマル	most
-◇	ヒシガタ	most
-◆	クロヒシガタ	most
-□	シカク	most
-■	クロシカク	most
-△	サンカク	most
-▲	クロサンカク	most
-▽	ギャクサンカク	most
-▼	ギャククロサンカク	most
-※	コメジルシ	most
-〒	ユービン	most
-→	ミギヤジルシ	most
-←	ヒダリヤジルシ	most
-↑	ウエヤジルシ	most
-↓	シタヤジルシ	most
-〓	クギリキゴー	most
-∈	ゾクスル	most
-∋	モトトシテフクム	most
-⊆	ブブンシューゴー	most
-⊇	ブブンオフクム	most
-⊂	シンフブンシューゴー	most
-⊃	シンブオフクム	most
-∪	ガッペイシューゴー	most
-∩	キョーツーシューゴー	most
-∧	ゴーセツキゴー	most
-∨	リセツキゴー	most
-￢	ヒテイキゴー	most
-⇒	ゴーイキゴー	most
-⇔	ドーチキゴー	most
-∀	フツーゲンテイシ	most
-∃	ソンザイゲンテイシ	most
-∠	カクキゴー	most
-⊥	スイチョク	most
-⌒	コキゴー	most
-∂	ラウンドディー	most
-∇	ナブラキゴー	most
-≡	ツネニヒトシイキゴー	most
-≒	ホトンドヒトシイ	most
-≪	ヒジョーニチイサイキゴー	most
-≫	ヒジョーニオーキイキゴー	most
+☆	シロボシ	some
+★	クロボシ	some
+○	シロマル	some
+●	クロマル	some
+◎	ニジューマル	some
+◇	ヒシガタ	some
+◆	クロヒシガタ	some
+□	シカク	some
+■	クロシカク	some
+△	サンカク	some
+▲	クロサンカク	some
+▽	ギャクサンカク	some
+▼	ギャククロサンカク	some
+※	コメジルシ	some
+〒	ユービン	some
+→	ミギヤジルシ	some
+←	ヒダリヤジルシ	some
+↑	ウエヤジルシ	some
+↓	シタヤジルシ	some
+〓	クギリキゴー	some
+∈	ゾクスル	some
+∋	モトトシテフクム	some
+⊆	ブブンシューゴー	some
+⊇	ブブンオフクム	some
+⊂	シンフブンシューゴー	some
+⊃	シンブオフクム	some
+∪	ガッペイシューゴー	some
+∩	キョーツーシューゴー	some
+∧	ゴーセツキゴー	some
+∨	リセツキゴー	some
+￢	ヒテイキゴー	some
+⇒	ゴーイキゴー	some
+⇔	ドーチキゴー	some
+∀	フツーゲンテイシ	some
+∃	ソンザイゲンテイシ	some
+∠	カクキゴー	some
+⊥	スイチョク	some
+⌒	コキゴー	some
+∂	ラウンドディー	some
+∇	ナブラキゴー	some
+≡	ツネニヒトシイキゴー	some
+≒	ホトンドヒトシイ	some
+≪	ヒジョーニチイサイキゴー	some
+≫	ヒジョーニオーキイキゴー	some
 √	コンキゴー	most
 ∽	ソージキゴー	most
 ∝	ヒレイキゴー	most
@@ -222,9 +230,9 @@ _	アンダー	some
 ∬	ニジューセキブンキゴー	most
 Å	オングストローム	most
 ‰	パーミル	most
-♯	シャープ	most
-♭	フラット	most
-♪	オンプ	most
+♯	シャープ	some
+♭	フラット	some
+♪	オンプ	some
 †	ダガー	most
 ‡	ダブルダガー	most
 ¶	ダンラクキゴー	most
@@ -368,76 +376,76 @@ _	アンダー	some
 ┥	ヒダリフトタテホソ	most
 ┸	ヨコホソウエフト	most
 ╂	ヨコホソタテフト	most
-①	マルイチ	most
-②	マルニ	most
-③	マルサン	most
-④	マルヨン	most
-⑤	マルゴ	most
-⑥	マルロク	most
-⑦	マルナナ	most
-⑧	マルハチ	most
-⑨	マルキュー	most
-⑩	マルジュー	most
-⑪	マルジューイチ	most
-⑫	マルジューニ	most
-⑬	マルジューサン	most
-⑭	マルジューヨン	most
-⑮	マルジューゴ	most
-⑯	マルジューロク	most
-⑰	マルジューナナ	most
-⑱	マルジューハチ	most
-⑲	マルジューキュー	most
-⑳	マルニジュー	most
-Ⅰ	イチ	most
-Ⅱ	ニー	most
-Ⅲ	サン	most
-Ⅳ	ヨン	most
-Ⅴ	ゴ	most
-Ⅵ	ロク	most
-Ⅶ	ナナ	most
-Ⅷ	ハチ	most
-Ⅸ	キュー	most
-Ⅹ	ジュー	most
-㍉	ミリ	most
-㌔	キロ	most
-㌢	センチ	most
-㍍	メートル	most
-㌘	グラム	most
-㌧	トン	most
-㌃	アール	most
-㌶	ヘクタール	most
-㍑	リットル	most
-㍗	ワット	most
-㌍	カロリー	most
-㌦	ドル	most
-㌣	セント	most
-㌫	パーセント	most
-㍊	ミリバール	most
-㌻	ページ	most
-㎜	ミリメートル	most
-㎝	センチメートル	most
-㎞	キロメートル	most
-㎎	ミリグラム	most
-㎏	キログラム	most
-㏄	シーシー	most
-㎡	ヘイホーメートル	most
-㍻	ヘイセイ	most
-№	ナンバー	most
-㏍	カブシキガイシャ	most
-℡	デンワバンゴウ	most
-㊤	マルノナカニウエ	most
-㊥	マルノナカニチュウ	most
-㊦	マルノナカニシタ	most
-㊧	マルノナカニヒダリ	most
-㊨	マルノナカニミギ	most
-㈱	カブシキガイシャ	most
-㈲	ユウゲンガイシャ	most
-㈹	ダイヒョウ	most
-㍾	メイジ	most
-㍽	タイショー	most
-㍼	ショーワ	most
-≒	キンジマタワトーゴー	most
-≡	ゴードー	most
+①	マルイチ	some
+②	マルニ	some
+③	マルサン	some
+④	マルヨン	some
+⑤	マルゴ	some
+⑥	マルロク	some
+⑦	マルナナ	some
+⑧	マルハチ	some
+⑨	マルキュー	some
+⑩	マルジュー	some
+⑪	マルジューイチ	some
+⑫	マルジューニ	some
+⑬	マルジューサン	some
+⑭	マルジューヨン	some
+⑮	マルジューゴ	some
+⑯	マルジューロク	some
+⑰	マルジューナナ	some
+⑱	マルジューハチ	some
+⑲	マルジューキュー	some
+⑳	マルニジュー	some
+Ⅰ	イチ	some
+Ⅱ	ニー	some
+Ⅲ	サン	some
+Ⅳ	ヨン	some
+Ⅴ	ゴ	some
+Ⅵ	ロク	some
+Ⅶ	ナナ	some
+Ⅷ	ハチ	some
+Ⅸ	キュー	some
+Ⅹ	ジュー	some
+㍉	ミリ	some
+㌔	キロ	some
+㌢	センチ	some
+㍍	メートル	some
+㌘	グラム	some
+㌧	トン	some
+㌃	アール	some
+㌶	ヘクタール	some
+㍑	リットル	some
+㍗	ワット	some
+㌍	カロリー	some
+㌦	ドル	some
+㌣	セント	some
+㌫	パーセント	some
+㍊	ミリバール	some
+㌻	ページ	some
+㎜	ミリメートル	some
+㎝	センチメートル	some
+㎞	キロメートル	some
+㎎	ミリグラム	some
+㎏	キログラム	some
+㏄	シーシー	some
+㎡	ヘイホーメートル	some
+㍻	ヘイセイ	some
+№	ナンバー	some
+㏍	カブシキガイシャ	some
+℡	デンワバンゴウ	some
+㊤	マルノナカニウエ	some
+㊥	マルノナカニチュウ	some
+㊦	マルノナカニシタ	some
+㊧	マルノナカニヒダリ	some
+㊨	マルノナカニミギ	some
+㈱	カブシキガイシャ	some
+㈲	ユウゲンガイシャ	some
+㈹	ダイヒョウ	some
+㍾	メイジ	some
+㍽	タイショー	some
+㍼	ショーワ	some
+≒	キンジマタワトーゴー	some
+≡	ゴードー	some
 ∫	セキブンキゴー	most
 ∮	シューカイセキブン	most
 ∑	シグマ	most
