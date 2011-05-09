@@ -992,7 +992,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+shift+numpadMinus": "navigatorObject_moveFocus",
 		"kb(laptop):NVDA+shift+backspace": "navigatorObject_moveFocus",
 		"kb:NVDA+numpadDelete": "navigatorObject_currentDimensions",
-		"kb(desktop):NVDA+delete": "navigatorObject_currentDimensions",
+		"kb(laptop):NVDA+delete": "navigatorObject_currentDimensions",
 
 		# Review cursor
 		"kb:shift+numpad7": "review_top",
