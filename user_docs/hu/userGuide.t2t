@@ -1,7 +1,7 @@
 ﻿NVDA NVDA_VERSION felhasználói útmutató
 
 
-%!includeconf: ../userGuide.t2tconf
+%!includeconf: ..\userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION billentyűparancsok listája
 
 A fordításban részt vettek:
@@ -66,7 +66,7 @@ Főbb jellemzői:
 
 ++ Honosítás ++
 
-Fontos, hogy az emberek a világ bármely részén, nyelvi korlátok nélkül, egyenlően hozzáférhessenek a különböző, a technológia nyújtotta lehetőségekhez. Az NVDA jelenleg több mint húsz nyelvre lett lefordítva, többek között: Brazil Portugál, Horvát, Cseh, Finn, Francia, Galíciai, Német, Magyar, Olasz, Japán, Portugál, Orosz, Szlovák, Spanyol, Hagyományos Kínai, Afrikai, Lengyel, Tájföldi, Ukrán és Vietnám.
+Fontos, hogy az emberek a világ bármely részén, nyelvi korlátok nélkül, egyenlően hozzáférhessenek a különböző, a technológia nyújtotta lehetőségekhez. Az NVDA jelenleg több mint húsz nyelvre lett lefordítva, többek között: Brazil Portugál, Horvát, Cseh, Finn, Francia, Galíciai, Német, Magyar, Olasz, Japán, Portugál, Orosz, Szlovák, Spanyol, Hagyományos Kínai, Afrikai, Lengyel, Tájföldi, Ukrán és Vietnámi nyelvre, sőt még eszperantóra is.
 
 ++ Beszédszintetizátor Támogatás ++
 
@@ -352,7 +352,7 @@ A virtuális kijelzőben az NVDA kétféleképpen használható. Böngésző mó
 | A virtuális kijelző frissítése | NVDA+f5 | Frissíti a virtuális kijelző tartalmát. Ez akkor lehet hasznos, ha egy oldal hiányosan töltődött be. |
 | Keresés | NVDA+control+f | A felbukkanó ablak segítségével egy szövegrészletre kereshet rá az adott oldalon. |
 | Ugrás a következő találatra | NVDA+f3 | Az ön által keresett kifejezés következő előfordulására ugrik. |
-| Ugrás az előző találatra | NVDA+shift+f3 | Az ön által keresett kifejezés következő előfordulására ugrik. |
+| Ugrás az előző találatra | NVDA+shift+f3 | Az ön által keresett kifejezés előző előfordulására ugrik. |
 %kc:endInclude
 
 Az NVDA jelenleg a Mozilla Firefoxban, a Microsoft Internet Explorerben, a Google chromeban, az Adobe Readerben, és az Adobe flashben használ virtuális kijelzőt a dokumentumok olvasásához. 
@@ -527,7 +527,7 @@ Lehetősége van a beszéd beállítások párbeszédablak megnyitása nélkül 
 || Név | Asztali billentyűparancs | Laptop billentyűparancs| Leírás |
 | Ugrás a következő szintetizátor beállításra | NVDA+control+jobbra nyíl | NVDA+control+jobbra nyíl | A következő beszéd beállításra ugrik. Ha elérte az utolsót, akkor az elsőre lép. |
 | Ugrás az előző szintetizátor beállításra| | NVDA+control+balra nyíl | NVDA+control+balra nyíl | Az előző beszéd beállításra ugrik. Ha elérte az utolsót, akkor az elsőre lép. |
-| Az aktuális beállítás értékének növelése| NVDA+control+fel nyíl | NVDA+control+fel nyíl | A gomb megnyomására csökken az aktuális beszéd beállítás (hangkarakter, intonáció, beszéd tempó, stb.) értéke. |
+| Az aktuális beállítás értékének növelése| NVDA+control+fel nyíl | NVDA+control+fel nyíl | A gomb megnyomására nő az aktuális beszéd beállítás (hangkarakter, intonáció, beszéd tempó, stb.) értéke. |
 | Az aktuális beállítás értékének csökkentése| NVDA+control+le nyíl | NVDA+control+le nyíl | A gomb megnyomására csökken az aktuális beszéd beállítás (hangkarakter, intonáció, beszéd tempó, stb.) értéke. |
 %kc:endInclude
 
@@ -854,7 +854,7 @@ Az NVDA támogatja az [MDV http://www.mdvbologna.it/] által forgalmazott Lilli 
 ++ BRLTTY ++
 
 A [BRLTTY http://mielke.cc/brltty/] egy különálló program, amely jópár braille kijelzőt támogat. A használatához fel kell telepítenie a [BRLTTY Windows-os változatát http://brl.thefreecat.org/brltty/].
-Töltse le az ezen az oldalon található legfrissebb verziót (pl. brltty-win-4.2-2.exe). A kijelző beállításaikor figyeljen oda, hogy melyik portot használja. Ugyanis ez gyártónként változhat, különösen ha usb-s, és már fenn vannak a hozzátartozó driverek.
+Töltse le az ezen az oldalon található legfrissebb verziót (pl. brltty-win-4.2-2.exe). A kijelző beállításaikor figyeljen oda, hogy melyik portot használja. Ugyanis ez gyártónként változhat, különösen ha USB-s, és már fenn vannak a hozzátartozó driverek.
 
 + További információk +
 
@@ -877,7 +877,7 @@ Ebben a dokumentumban a következő fogalmakon az alábbi meghatározásokat ér
 - Elem: Az alkalmazás vagy az operációs rendszer interfészének olyan logikailag elkülönült része, amely meghatározott információt közöl vagy meghatározott vezérlőelemet vagy vezérlőelemeket tartalmaz.
 - Vezérlőelem: Olyan elem, amelynek segítségével tetszőlegesen irányíthatja az alkalmazás működését.
 - Virtuális kijelző: Olyan speciális memóriaterület (puffer), amelyre a képernyőolvasó az összetett dokumentumok (pl. html, pdf) leegyszerűsített, átalakított  képét másolja abból a célból, hogy azt egy látássérült felhasználó könnyebben áttekinthesse.
-- Böngésző mód: A képernyőolvasó olyan módja, amely segítségével a dokumentumot a virtuális kijelzőben olvasható.
+- Böngésző mód: A képernyőolvasó olyan módja, amely segítségével a dokumentum a virtuális kijelzőben olvasható.
 - Interaktív mód: A képernyőolvasónak az a módja, amely közvetlenül lehetővé teszi a böngészőben vagy pdf-olvasóban megjelenő vezérlőelemek kezelését. E mód segítségével lehet űrlapokat (formokat) kitölteni, illetőleg egyéb vezérlő műveleteket végezni (pl. távoli szolgáltatások beállításai).
 - Navigációs gyorsbillentyűk: A böngésző módban használható olyan egybillentyűs parancsok, amelyek az összetett dokumentum meghatározott részére helyezik a képernyőolvasó virtuális (böngésző) kurzorát.
 - parancsikon: olyan speciális fájl, amellyel anélkül indíthat el egy programot vagy végezhet el egy műveletet, hogy a program indítófájlját meg kellene keresnie vagy a művelet parancsait be kellene gépelnie.
@@ -899,7 +899,6 @@ Ebben a dokumentumban a következő fogalmakon az alábbi meghatározásokat ér
 - jelszó bevitelére alkalmas: amely a begépelt karakterek helyett csillagokat jelenít meg a képernyőn, de a programnak a valódi karaktersort adja át).
 - Kombinált: írhat bele, de tetszés szerint a korábban beírt lehetőségeket is kiválaszthatja (az alt le nyíllal megnyitva, korábbi lehetőséget kiválasztva és az alt-felnyíllal bezárva).
 - Léptető: a nyilakkal fel-le lépkedve automatikusan csökkenti vagy növeli a bele írt értéket, de ezt tetszés szerint át is írhatjuk.
-
 -Jelzőpont: A weblap készítője által a látássérültek számára elhelyezett pont, ezek elősegítik a gyorsabb navigációt a weboldalakon.
 -Beágyazott objektum: Adobe Flash vagy Sun Java alkalmazás
 -Objektum: A windows minden, a képernyőn megjelenő eleme. Ez lehet vezérlőelem, elemek csoportosítására szolgáló elemcsoport, gördítősáv, ablak, menü, stb.

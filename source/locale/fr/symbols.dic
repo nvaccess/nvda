@@ -1,5 +1,19 @@
-﻿complexSymbols:
+﻿#locale/fr/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
 # identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=\w(\s|[^\s!]))\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=\w(\s|[^\s?]))\?(?=[\"'”’)\s]|$)
+... sentence ending	(?<=\w(\s|[^\s.]))\.\.\.(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=\w(\s|[^\s;]));(?=\s|$)
+: phrase ending	(?<=\w(\s|[^\s:])):(?=\s|$)
+# Others
 decimal point	(?<=\d)\,(?=\d)
 
 symbols:
@@ -9,10 +23,12 @@ symbols:
 . sentence ending	point	# . fin de phrase
 ! sentence ending	poindexclamation	# ! fin de phrase
 ? sentence ending	poindinterrogation	# ? fin de phrase
+... sentence ending	points de suspension	all	always	# ... fin de phrase
 ; phrase ending	poinvirgule	# ; fin de phrase
 : phrase ending	deupoint	# : fin de phrase
+
 decimal point		# virgule
-in-word '	apostrophe	all	norep
+in-word '	apostrophe
 
 # Whitespace
 \0	blanc
@@ -53,7 +69,6 @@ $	dollar
 "	guillemet
 \\	barobliquinversée
 ^	accencirconflexe
-¨	tréma	all
 _	souligné
 `	accengrave
 {	accolade gauche
@@ -67,6 +82,9 @@ _	souligné
 	puce
 “	guillemet ouvert
 ”	guillemet fermé
+‘	apostrophe gauche
+’	apostrophe droite
 –	tiret demicadratin
 —	tiret cadratin
 ●	astérisque
+¨	tréma
