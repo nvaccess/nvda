@@ -141,7 +141,7 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
  * marks a particular node as invalid, so that its content is re-rendered on next update.
  * @param node the node that should be invalidated.
  */
-	virtual void invalidateSubtree(VBufStorage_controlFieldNode_t*);
+	virtual bool invalidateSubtree(VBufStorage_controlFieldNode_t*);
 
 /**
  * Clears the content of the backend and terminates any code used for rendering.
