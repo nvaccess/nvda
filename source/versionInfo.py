@@ -6,17 +6,25 @@
 
 import os
 
-BZR_LASTREV_PATH = r"..\.bzr\branch\last-revision"
-
 def _updateVersionFromVCS():
 	"""Update the version from version control system metadata if possible.
 	"""
 	global version
-	if os.path.isfile(BZR_LASTREV_PATH):
-		# Running from bzr checkout.
+	branchPath = ".."
+	locationPath = os.path.join(branchPath, ".bzr", "branch", "location")
+	if os.path.isfile(locationPath):
+		# This is a lightweight checkout.
+		# If this references a local branch, use that.
 		try:
-			rev = file(BZR_LASTREV_PATH, "r").read().split(" ")[0]
-			branch = os.path.basename(os.path.abspath(".."))
+			branchPath = file(locationPath, "r").read().split("file:///", 1)[1]
+		except (IOError, IndexError):
+			pass
+	lastRevPath = os.path.join(branchPath, ".bzr", "branch", "last-revision")
+	if os.path.isfile(lastRevPath):
+		# Running from bzr branch.
+		try:
+			rev = file(lastRevPath, "r").read().split(" ")[0]
+			branch = os.path.basename(os.path.abspath(branchPath))
 			version = "bzr-%s-%s" % (branch, rev)
 		except (IOError, IndexError):
 			pass
