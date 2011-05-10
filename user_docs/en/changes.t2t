@@ -19,7 +19,7 @@
 - To hear the  decimal and hexadecimal representation of the character under the review cursor, now press review current character three times rather than twice, as twice now speaks the character description.
 - Updated eSpeak speech synthesiser to 1.45.03. (#1465)
 - Layout tables are no longer announced in Mozilla Gecko applications while moving the focus when in focus mode or outside of a document.
-  
+
 
 == Bug Fixes ==
 - Collapsing combo boxes in a virtual buffer when focus mode has been forced with NVDA+space no longer auto-switches back to browse mode. (#1386)
@@ -30,8 +30,8 @@
 - The Skype Extras menu is now read correctly. (#648)
 - Checking the Brightness controls volume checkbox in the Mouse Settings dialog should no longer cause a major lag for beeps when moving the mouse around the screen on Windows Vista/Windows 7 with Aero enabled. (#1183)
 - When NVDA is configured to use the laptop keyboard layout, NVDA+delete now works as documented to report the dimensions of the current navigator object.
-- NVDA now Appropriately honours the aria-selected attribute in Internet Explorer documents
- 
+- NVDA now Appropriately honours the aria-selected attribute in Internet Explorer documents.
+
 
 == Changes for Developers ==
 - Developer documentation can now be generated using SCons. See readme.txt at the root of the source distribution for details, including associated dependencies.
