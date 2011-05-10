@@ -975,7 +975,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
 		caretInfo.expand(textInfos.UNIT_CHARACTER)
 		if not self._hadFirstGainFocus or not focusInfo.isOverlapping(caretInfo):
-			# The virtual buffer caret has already been moved inside the focus node.
+			# The virtual buffer caret is not within the focus node.
 			if not self.passThrough:
 				# If pass-through is disabled, cancel speech, as a focus change should cause page reading to stop.
 				# This must be done before auto-pass-through occurs, as we want to stop page reading even if pass-through will be automatically enabled by this focus change.
