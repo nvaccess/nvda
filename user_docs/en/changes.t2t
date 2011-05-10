@@ -31,6 +31,7 @@
 - Checking the Brightness controls volume checkbox in the Mouse Settings dialog should no longer cause a major lag for beeps when moving the mouse around the screen on Windows Vista/Windows 7 with Aero enabled. (#1183)
 - When NVDA is configured to use the laptop keyboard layout, NVDA+delete now works as documented to report the dimensions of the current navigator object.
 - NVDA now Appropriately honours the aria-selected attribute in Internet Explorer documents.
+- When NVDA automatically switches to focus mode in virtual buffers, NVDA now announces information about the context of the focus. For example, if a list box item receives focus, the list box will be announced first. (#1491)
 
 
 == Changes for Developers ==
