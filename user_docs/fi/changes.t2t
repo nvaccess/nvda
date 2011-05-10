@@ -18,6 +18,7 @@
 - Järjestelmäkohdistin siirretään nyt tarkastelukohdistimen kohdalle painamalla Siirrä kohdistus navigointiobjektiin -komentoa (pöytäkoneissa NVDA+Shift+numeroryhmän miinus, kannettavissa NVDA+Shift+askelpalautin) kaksi kertaa nopeasti peräkkäin. Tämä vapauttaa lisää näppäimiä muuhun käyttöön. (#837)
 - Tarkastelukohdistimen alla olevan merkin desimaali- ja heksadesimaaliarvot luetaan nyt painamalla Lue nykyinen merkki -komentoa kolme kertaa kahden sijasta, koska kahdesti painaminen lukee merkin kuvauksen.
 - Päivitetty eSpeak-puhesyntetisaattori versioksi 1.45.03. (#1465)
+- Sijoittelutaulukoita ei enää lueta Mozilla Gecko -sovelluksissa siirrettäessä kohdistusta kohdistustilassa tai poissa dokumentista.
 
 
 == Korjatut viat ==
@@ -27,6 +28,9 @@
 - Kun välimerkkien lukeminen on poistettu käytöstä, tiettyjä välimerkkejä ei enää virheellisesti puhuta joitakin syntetisaattoreita käytettäessä. (#332)
 - Sellaisten puhesyntetisaattoreiden asetusten lataaminen, jotka eivät tue puheääniasetusta (kuten Audiologic TTS 3), on jälleen mahdollista. (#1347)
 - Skypen Ekstrat-valikko luetaan nyt oikein. (#648)
+- Äänikoordinaattien voimakkuutta säädetään kirkkauden mukaan -valintaruudun valitsemisen Hiiriasetukset-valintaikkunasta ei pitäisi enää aiheuttaa äänimerkkien huomattavaa hidastumista liikutettaessa hiirtä ruudulla Windows Vistassa ja Windows 7:ssä, kun Aero-tehosteet ovat käytössä. (#1183)
+- Kun NVDA on määritetty käyttämään kannettaville tarkoitettua näppäimistöasettelua, NVDA+delete-komento toimii nyt kuten käyttöohjeessa on mainittu lukiessaan nykyisen navigointiobjektin mittoja.
+- NVDA noudattaa nyt asianmukaisesti aria-valittu-määrettä Internet Explorer -dokumenteissa.
 
 
 = 2011.1.1 =
