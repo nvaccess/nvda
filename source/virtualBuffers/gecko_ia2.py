@@ -76,7 +76,7 @@ class Gecko_ia2(VirtualBuffer):
 			except:
 				return False
 
-		return self._isNVDAObjectInApplication(obj)
+		return not self._isNVDAObjectInApplication(obj)
 
 	def _get_isAlive(self):
 		if self.isLoading:

@@ -1177,9 +1177,9 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"""
 		while obj and obj != self.rootNVDAObject:
 			if obj.role in self.APPLICATION_ROLES:
-				return False
+				return True
 			obj = obj.parent
-		return True
+		return False
 
 	NOT_LINK_BLOCK_MIN_LEN = 30
 	def _iterNotLinkBlock(self, direction="next", offset=-1):
