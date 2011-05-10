@@ -12,22 +12,19 @@ def _updateVersionFromVCS():
 	global version
 	branchPath = ".."
 	locationPath = os.path.join(branchPath, ".bzr", "branch", "location")
-	if os.path.isfile(locationPath):
-		# This is a lightweight checkout.
-		# If this references a local branch, use that.
-		try:
-			branchPath = file(locationPath, "r").read().split("file:///", 1)[1]
-		except (IOError, IndexError):
-			pass
+	try:
+		# If this is a lightweight checkout of a local branch, use that branch.
+		branchPath = file(locationPath, "r").read().split("file:///", 1)[1]
+	except (IOError, IndexError):
+		pass
 	lastRevPath = os.path.join(branchPath, ".bzr", "branch", "last-revision")
-	if os.path.isfile(lastRevPath):
-		# Running from bzr branch.
-		try:
-			rev = file(lastRevPath, "r").read().split(" ")[0]
-			branch = os.path.basename(os.path.abspath(branchPath))
-			version = "bzr-%s-%s" % (branch, rev)
-		except (IOError, IndexError):
-			pass
+	try:
+		# If running from a bzr branch, use version info from that.
+		rev = file(lastRevPath, "r").read().split(" ")[0]
+		branch = os.path.basename(os.path.abspath(branchPath))
+		version = "bzr-%s-%s" % (branch, rev)
+	except (IOError, IndexError):
+		pass
 
 name="NVDA"
 longName=_("NonVisual Desktop Access")
