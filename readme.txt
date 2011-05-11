@@ -109,7 +109,7 @@ You should do this again whenever the version of comtypes changes or language fi
 === Compiling NVDAHelper with debugging options ===
 A part from compiling language files and generating COM interfaces, this step also builds the NVDAHelper libraries.  
 If trying to debug nvdaHelper, You can control various  debugging options  with the nvdaHelperDebugFlag commandline variable. It takes one or more of the following flags:
-	* symbols: debugging symbols will be added to the DLLs and pdb files will be generated for use with a debugger. (no symbols are produced by default).
+	* symbols: debugging symbols will be added to the DLLs and pdb files will be generated for use with a debugger. (symbols are produced by default, but if specifying nvdaHelperDebugFlags and you want symbols it is still necessary to  specify this keyword).
 	* debugCRT: the libraries will be linked against the debug C runtime and assertions will be enabled. (The normal CRT is used by default and assertions are disabled).
 	* noOptimize: All compiler optimizations will be disabled. (Optimization 2 [/O2] is used by default). 
 	* RTC: runtime checks (stack corruption, uninitialized variables etc) will be enabled (default is no runtime checks).
@@ -141,6 +141,11 @@ The installer will be placed in the output directory.
 To generate developer documentation, type:
 scons devDocs
 The developer docs will be placed in the devDocs folder in the output directory.
+
+To generate an archive of debug symbols for the various dll/exe binaries, type:
+scons symbolsArchive
+The archive will be placed in the output directory.
+ 
 
 Optionally, the build can  be customised by providing variables on the command line:
 	* version: The version of this build.

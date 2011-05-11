@@ -265,4 +265,10 @@ pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
 
 env.Alias("pot", pot)
 
+symbolsList=[]
+symbolsList.extend(env.Glob(os.path.join(sourceLibDir.path,'*.pdb')))
+symbolsList.extend(env.Glob(os.path.join(sourceLibDir64.path,'*.pdb')))
+symbolsArchive = env.SzSfx(outputDir.File("%s_debugSymbols.exe" % outFilePrefix), symbolsList)
+env.Alias("symbolsArchive", symbolsArchive)
+
 env.Default(portableDist)

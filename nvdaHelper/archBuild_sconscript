@@ -27,6 +27,7 @@ env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${nvdaH
 env.Append(CXXFLAGS=['/EHsc'])
 env.Append(CPPPATH=['#/include',Dir('.').abspath])
 env.Append(LINKFLAGS='/incremental:no')
+env.Append(LINKFLAGS='/release') #We always want a checksum in the header
 env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
 
 if 'noOptimize' in debug:
@@ -45,8 +46,7 @@ if 'RTC' in debug:
 
 if 'symbols' in debug:
 	env.Append(PDB='${TARGET}.pdb')
-else:
-	env.Append(LINKFLAGS='/release')
+	env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
 
 Export('env')
 
