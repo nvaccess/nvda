@@ -10,13 +10,15 @@ def _updateVersionFromVCS():
 	"""Update the version from version control system metadata if possible.
 	"""
 	global version
-	branchPath = ".."
+	# The root of the bzr working tree will be the parent of this module's directory.
+	branchPath = os.path.dirname(os.path.dirname(__file__))
 	locationPath = os.path.join(branchPath, ".bzr", "branch", "location")
 	try:
 		# If this is a lightweight checkout of a local branch, use that branch.
 		branchPath = file(locationPath, "r").read().split("file:///", 1)[1]
 	except (IOError, IndexError):
 		pass
+
 	lastRevPath = os.path.join(branchPath, ".bzr", "branch", "last-revision")
 	try:
 		# If running from a bzr branch, use version info from that.
