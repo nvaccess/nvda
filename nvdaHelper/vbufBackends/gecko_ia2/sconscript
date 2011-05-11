@@ -25,7 +25,7 @@ geckoBackendLib=env.SharedLibrary(
 	source=[
 		"gecko_ia2.cpp",
 		ia2utilsObj,
-		ia2RPCStubs[2],
+		env.Object('_ia2_i',ia2RPCStubs[3]),
 	],
 	LIBS=[
 		vbufBaseStaticLib,

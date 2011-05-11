@@ -21,11 +21,6 @@ General dependencies:
 		* Extract the archive into the source\synthDrivers directory.
 	* IAccessible2, version 1.1.0.0 or later: http://www.linuxfoundation.org/en/Accessibility/IAccessible2
 		* Download the merged IDL and copy it to include\ia2\ia2.idl.
-		* The proxy dll and typelib are also required.
-			* Pre-built versions have been provided for convenience at http://www.nvda-project.org/3rdParty/
-		* Copy ia2.tlb into the source\typelibs directory.
-		* Copy the 32 bit version of the proxy dll into the source\lib directory, naming it IAccessible2Proxy.dll.
-		* Copy the 64 bit version of the proxy dll into the source\lib64 directory, naming it IAccessible2Proxy.dll.
 	* ConfigObj, version 4.6.0 or later:
 		* Web site: http://www.voidspace.org.uk/python/configobj.html
 		* Copy configobj.py and validate.py into the global Python site-packages directory.
@@ -45,9 +40,6 @@ General dependencies:
 		* This can be found in the client files archive available from http://www.adobe.com/devnet/acrobat/interapplication_communication.html
 			* The archive is named something like Acrobat_Accessibility_9.1.zip.
 		* Extract the AcrobatAccess.idl file into include\AcrobatAccess.
-		* The typelib is also required.
-			* A pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/AcrobatAccess.tlb
-		* Copy AcrobatAccess.tlb into the source\typelibs directory.
 	* Adobe FlashAccessibility interface typelib: http://www.nvda-project.org/3rdParty/FlashAccessibility.tlb
 		* Copy FlashAccessibility.tlb into the source\typelibs directory.
 	* txt2tags, version 2.5 or later: http://txt2tags.sourceforge.net/

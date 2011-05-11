@@ -15,6 +15,7 @@
 Import(
 	'env',
 	'sourceDir',
+	'sourceTypelibDir',
 	'libInstallDir',
 	'clientInstallDir',
 )
@@ -52,9 +53,14 @@ Export('env')
 
 acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
 Export('acrobatAccessRPCStubs')
+if TARGET_ARCH=='x86':
+	env.Install(sourceTypelibDir,acrobatAccessRPCStubs[0]) #typelib
 
 ia2RPCStubs=env.SConscript('ia2_sconscript')
 Export('ia2RPCStubs')
+env.Install(libInstallDir,ia2RPCStubs[0]) #proxy dll
+if TARGET_ARCH=='x86':
+	env.Install(sourceTypelibDir,ia2RPCStubs[1]) #typelib
 
 if TARGET_ARCH=='x86':
 	localLib=env.SConscript('local/sconscript')
