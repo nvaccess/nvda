@@ -13,7 +13,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <list>
- #include <cassert>
 #include <windows.h>
 #include <oleidl.h>
 #include <mshtml.h>
