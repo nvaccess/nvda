@@ -19,7 +19,7 @@ General dependencies:
 		* Copy espeak.dll and espeak-data into the source\synthDrivers directory.
 	* Additional variants for eSpeak: http://www.nvda-project.org/espeak-variants/
 		* Extract the archive into the source\synthDrivers directory.
-	* IAccessible2, version 1.1.0.0 or later: http://www.linuxfoundation.org/en/Accessibility/IAccessible2
+	* IAccessible2, version 1.2.1 or later: http://www.linuxfoundation.org/en/Accessibility/IAccessible2
 		* Download the merged IDL and copy it to include\ia2\ia2.idl.
 	* ConfigObj, version 4.6.0 or later:
 		* Web site: http://www.voidspace.org.uk/python/configobj.html
