@@ -23,7 +23,7 @@ proxyDll=env.SharedLibrary(
 	source=[iidSourceFile,proxySourceFile,dlldataSourceFile],
 	LIBS=['rpcrt4','oleaut32','ole32'],
 	CPPDEFINES=[env['CPPDEFINES'],'WIN32','REGISTER_PROXY_DLL'],
-	LINKFLAGS=[env['LINKFLAGS'],'/export:DllGetClassObject,private'],
+	LINKFLAGS=[env['LINKFLAGS'],'/export:DllGetClassObject,private','/export:DllCanUnloadNow,private'],
 )
 
 Return(['proxyDll','tlbFile','headerFile','iidSourceFile','proxySourceFile','dlldataSourceFile'])
