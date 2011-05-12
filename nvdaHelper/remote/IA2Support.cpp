@@ -52,6 +52,9 @@ IID _ia2PSClsidBackups[ARRAYSIZE(ia2Iids)]={0};
 BOOL isIA2Installed=FALSE;
 HINSTANCE IA2DllHandle=0;
 DWORD IA2RegCooky=0;
+HANDLE IA2UIThreadHandle=NULL;
+HANDLE IA2UIThreadUninstalledEvent=NULL;
+UINT wm_uninstallIA2Support=0;
 BOOL isIA2Initialized=FALSE;
 
 BOOL installIA2Support() {
@@ -125,9 +128,19 @@ void CALLBACK IA2Support_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, H
 	if (eventID != EVENT_SYSTEM_FOREGROUND && eventID != EVENT_OBJECT_FOCUS)
 		return;
 	if (installIA2Support()) {
+		IA2UIThreadHandle=OpenThread(SYNCHRONIZE,false,GetCurrentThreadId());
 		// IA2 support successfully installed, so this hook isn't needed anymore.
 		unregisterWinEventHook(IA2Support_winEventProcHook);
 	}
+}
+
+LRESULT CALLBACK IA2Support_uninstallerHook(int code, WPARAM wParam, LPARAM lParam) {
+	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
+	if(pcwp->message==wm_uninstallIA2Support) {
+		uninstallIA2Support();
+		SetEvent(IA2UIThreadUninstalledEvent);
+	}
+	return 0;
 }
 
 void IA2Support_inProcess_initialize() {
@@ -139,5 +152,24 @@ void IA2Support_inProcess_initialize() {
 void IA2Support_inProcess_terminate() {
 	// This will do nothing if the hook isn't registered.
 	unregisterWinEventHook(IA2Support_winEventProcHook);
-	uninstallIA2Support();
+	if(!isIA2Installed) {
+		return;
+	}
+	//Check if the UI thread is still alive, if not there's nothing for us to do
+	if(WaitForSingleObject(IA2UIThreadHandle,0)!=0) {
+		return;
+	}
+	//Instruct the UI thread to uninstall IA2
+	IA2UIThreadUninstalledEvent=CreateEvent(NULL,true,false,NULL);
+	registerWindowsHook(WH_CALLWNDPROC,IA2Support_uninstallerHook);
+	wm_uninstallIA2Support=RegisterWindowMessage(L"wm_uninstallIA2Support");
+	PostThreadMessage(GetThreadId(IA2UIThreadHandle),wm_uninstallIA2Support,0,0);
+	HANDLE waitHandles[2]={IA2UIThreadUninstalledEvent,IA2UIThreadHandle};
+	int res=WaitForMultipleObjects(2,waitHandles,false,10000);
+	if(res!=WAIT_OBJECT_0&&res!=WAIT_OBJECT_0+1) {
+		LOG_DEBUGWARNING(L"WaitForMultipleObjects returned "<<res);
+	}
+	unregisterWindowsHook(WH_CALLWNDPROC,IA2Support_uninstallerHook);
+	CloseHandle(IA2UIThreadUninstalledEvent);
+	CloseHandle(IA2UIThreadHandle);
 }
