@@ -397,6 +397,12 @@ class MSHTML(IAccessible):
 		return super(MSHTML, self)._isEqual(other)
 
 	def _get_name(self):
+		try:
+			ariaLabel=self.HTMLNode.getAttribute('aria-label')
+		except (COMError,NameError):
+			ariaLabel=None
+		if ariaLabel:
+			return ariaLabel
 		if self.HTMLNodeHasAncestorIAccessible:
 			return ""
 		return super(MSHTML,self).name
