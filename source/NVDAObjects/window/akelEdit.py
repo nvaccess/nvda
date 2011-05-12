@@ -57,19 +57,6 @@ class AkelEditTextInfo(edit.EditTextInfo):
 		winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
 		return ciChar.nLine
 
-	def _getLineOffsets(self,offset):
-		(start,end)=super(AkelEditTextInfo,self)._getLineOffsets(offset)
-		if end == self._getStoryLength():
-			return (start,end)
-		ciChar=AECHARINDEX()
-		processHandle=self.obj.processHandle
-		internalCiChar=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(ciChar),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winUser.sendMessage(self.obj.windowHandle,AEM_RICHOFFSETTOINDEX,offset,internalCiChar)
-		winUser.sendMessage(self.obj.windowHandle,AEM_GETINDEX,AEGI_NEXTLINE,internalCiChar)
-		end=winUser.sendMessage(self.obj.windowHandle,AEM_INDEXTORICHOFFSET,0,internalCiChar)
-		winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
-		return (start,end)
-
 	def _getStoryLength(self):
 		ciChar=AECHARINDEX()
 		processHandle=self.obj.processHandle
