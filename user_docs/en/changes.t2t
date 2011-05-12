@@ -32,6 +32,7 @@
 - When NVDA is configured to use the laptop keyboard layout, NVDA+delete now works as documented to report the dimensions of the current navigator object.
 - NVDA now Appropriately honours the aria-selected attribute in Internet Explorer documents.
 - When NVDA automatically switches to focus mode in virtual buffers, NVDA now announces information about the context of the focus. For example, if a list box item receives focus, the list box will be announced first. (#1491)
+- In Internet Explorer and other MSHTML controls, ARIA listbox controls are now treeted as lists, rather than list items.
 
 
 == Changes for Developers ==

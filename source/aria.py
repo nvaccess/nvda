@@ -26,7 +26,7 @@ ariaRolesToNVDARoles={
 	"img":controlTypes.ROLE_GRAPHIC,
 	"link":controlTypes.ROLE_LINK,
 	"list":controlTypes.ROLE_LIST,
-	"listbox":controlTypes.ROLE_LISTITEM,
+	"listbox":controlTypes.ROLE_LIST,
 	"listitem":controlTypes.ROLE_LISTITEM,
 	"menu":controlTypes.ROLE_POPUPMENU,
 	"menubar":controlTypes.ROLE_MENUBAR,
