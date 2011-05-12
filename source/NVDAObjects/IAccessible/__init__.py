@@ -1394,6 +1394,11 @@ class SysLinkClient(IAccessible):
 	def reportFocus(self):
 		pass
 
+	def _get_role(self):
+		if self.childCount==0:
+			return controlTypes.ROLE_LINK
+		return super(SysLinkClient,self).role
+
 class SysLink(IAccessible):
 
 	def _get_name(self):
