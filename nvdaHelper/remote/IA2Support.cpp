@@ -53,6 +53,7 @@ BOOL isIA2Installed=FALSE;
 HINSTANCE IA2DllHandle=0;
 DWORD IA2RegCooky=0;
 HANDLE IA2UIThreadHandle=NULL;
+DWORD IA2UIThreadID=0;
 HANDLE IA2UIThreadUninstalledEvent=NULL;
 UINT wm_uninstallIA2Support=0;
 BOOL isIA2Initialized=FALSE;
@@ -128,7 +129,8 @@ void CALLBACK IA2Support_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, H
 	if (eventID != EVENT_SYSTEM_FOREGROUND && eventID != EVENT_OBJECT_FOCUS)
 		return;
 	if (installIA2Support()) {
-		IA2UIThreadHandle=OpenThread(SYNCHRONIZE|THREAD_QUERY_LIMITED_INFORMATION,false,GetCurrentThreadId());
+		IA2UIThreadHandle=OpenThread(SYNCHRONIZE,false,threadID);
+		IA2UIThreadID=threadID;
 		// IA2 support successfully installed, so this hook isn't needed anymore.
 		unregisterWinEventHook(IA2Support_winEventProcHook);
 	}
@@ -163,7 +165,7 @@ void IA2Support_inProcess_terminate() {
 	IA2UIThreadUninstalledEvent=CreateEvent(NULL,true,false,NULL);
 	registerWindowsHook(WH_GETMESSAGE,IA2Support_uninstallerHook);
 	wm_uninstallIA2Support=RegisterWindowMessage(L"wm_uninstallIA2Support");
-	PostThreadMessage(GetThreadId(IA2UIThreadHandle),wm_uninstallIA2Support,0,0);
+	PostThreadMessage(IA2UIThreadID,wm_uninstallIA2Support,0,0);
 	HANDLE waitHandles[2]={IA2UIThreadUninstalledEvent,IA2UIThreadHandle};
 	int res=WaitForMultipleObjects(2,waitHandles,false,10000);
 	if(res!=WAIT_OBJECT_0&&res!=WAIT_OBJECT_0+1) {
