@@ -33,6 +33,7 @@
 - NVDA now Appropriately honours the aria-selected attribute in Internet Explorer documents.
 - When NVDA automatically switches to focus mode in virtual buffers, NVDA now announces information about the context of the focus. For example, if a list box item receives focus, the list box will be announced first. (#1491)
 - In Internet Explorer and other MSHTML controls, ARIA listbox controls are now treeted as lists, rather than list items.
+- When a read-only editable text control receives focus, NVDA now reports that it is read-only. (#1436)
 
 
 == Changes for Developers ==
