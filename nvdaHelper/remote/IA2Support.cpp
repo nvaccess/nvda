@@ -62,7 +62,7 @@ BOOL installIA2Support() {
 	LPFNGETCLASSOBJECT IA2Dll_DllGetClassObject;
 	int i;
 	int res;
-	if(isIA2Installed) return TRUE;
+	if(isIA2Installed) return FALSE;
 	if((IA2DllHandle=CoLoadLibrary(IA2DllPath,FALSE))==NULL) {
 		LOG_ERROR(L"CoLoadLibrary failed");
 		return FALSE;
@@ -95,19 +95,19 @@ BOOL installIA2Support() {
 BOOL uninstallIA2Support() {
 	int i;
 	LPFNDLLCANUNLOADNOW IA2Dll_DllCanUnloadNow;
-	if(isIA2Installed) {
+	if(!isIA2Installed)
+		return FALSE;
 	for(i=0;i<ARRAYSIZE(ia2Iids);++i) {
-			CoRegisterPSClsid(ia2Iids[i],_ia2PSClsidBackups[i]);
-		}
-		CoRevokeClassObject(IA2RegCooky);
-		IA2Dll_DllCanUnloadNow=(LPFNDLLCANUNLOADNOW)GetProcAddress(static_cast<HMODULE>(IA2DllHandle),"DllCanUnloadNow");
-		nhAssert(IA2Dll_DllCanUnloadNow); //IAccessible2 proxy dll must have this function
-		if(IA2Dll_DllCanUnloadNow()==S_OK) {
-			CoFreeLibrary(IA2DllHandle);
-		}
-		IA2DllHandle=0;
-		isIA2Installed=FALSE;
+		CoRegisterPSClsid(ia2Iids[i],_ia2PSClsidBackups[i]);
 	}
+	CoRevokeClassObject(IA2RegCooky);
+	IA2Dll_DllCanUnloadNow=(LPFNDLLCANUNLOADNOW)GetProcAddress(static_cast<HMODULE>(IA2DllHandle),"DllCanUnloadNow");
+	nhAssert(IA2Dll_DllCanUnloadNow); //IAccessible2 proxy dll must have this function
+	if(IA2Dll_DllCanUnloadNow()==S_OK) {
+		CoFreeLibrary(IA2DllHandle);
+	}
+	IA2DllHandle=0;
+	isIA2Installed=FALSE;
 	return TRUE;
 }
 
@@ -146,6 +146,8 @@ LRESULT CALLBACK IA2Support_uninstallerHook(int code, WPARAM wParam, LPARAM lPar
 }
 
 void IA2Support_inProcess_initialize() {
+	if (isIA2Installed)
+		return;
 	// Try to install IA2 support on focus/foreground changes.
 	// This hook will be unregistered by the callback once IA2 support is successfully installed.
 	registerWinEventHook(IA2Support_winEventProcHook);
@@ -154,7 +156,7 @@ void IA2Support_inProcess_initialize() {
 void IA2Support_inProcess_terminate() {
 	// This will do nothing if the hook isn't registered.
 	unregisterWinEventHook(IA2Support_winEventProcHook);
-	if(!isIA2Installed) {
+	if(!isIA2Installed||!IA2UIThreadHandle) {
 		return;
 	}
 	//Check if the UI thread is still alive, if not there's nothing for us to do
