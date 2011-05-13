@@ -1250,6 +1250,8 @@ the NVDAObject for IAccessible
 		try:
 			ret = iaObj.accRole(childID)
 			for name, const in oleacc.__dict__.iteritems():
+				if not name.startswith("ROLE_"):
+					continue
 				if ret == const:
 					ret = name
 					break
