@@ -90,7 +90,7 @@ VBufStorage_controlFieldNode_t* MshtmlVBufBackend_t::getDeepestControlFieldNodeF
 	* A utility template function to queryService from a given IUnknown to the given service with the given service ID and interface eing returned.
 	* @param siid the service iid
 	*/
-template<typename toInterface> inline HRESULT queryService(IUnknown* pUnknown, const IID& siid, toInterface* pIface) {
+template<typename toInterface> inline HRESULT queryService(IUnknown* pUnknown, const IID& siid, toInterface** pIface) {
 	HRESULT hRes;
 	IServiceProvider* pServProv=NULL;
 	hRes=pUnknown->QueryInterface(IID_IServiceProvider,(void**)&pServProv);
@@ -98,7 +98,7 @@ template<typename toInterface> inline HRESULT queryService(IUnknown* pUnknown, c
 		LOG_DEBUG(L"Could not queryInterface to IServiceProvider");
 		return NULL;
 	}
-	hRes=pServProv->QueryService(siid,__uuidof(toInterface),(void**)&pIface);
+	hRes=pServProv->QueryService(siid,__uuidof(toInterface),(void**)pIface);
 	pServProv->Release();
 	if(hRes!=S_OK||!pIface) {
 		LOG_DEBUG(L"Could not get requested interface");
@@ -163,7 +163,7 @@ inline void getIAccessibleInfo(IAccessible* pacc, wstring* name, int* role, wstr
 	}
 }
 
-template<typename toInterface> inline HRESULT getHTMLSubdocumentBodyFromIAccessibleFrame(IAccessible* pacc, toInterface* pIface) {
+template<typename toInterface> inline HRESULT getHTMLSubdocumentBodyFromIAccessibleFrame(IAccessible* pacc, toInterface** pIface) {
 HRESULT hRes=0;
 	VARIANT varChild;
 	varChild.vt=VT_I4;
@@ -173,7 +173,106 @@ HRESULT hRes=0;
 		LOG_DEBUG(L"IAccessible::accChild failed with return code "<<res);
 		return hRes;
 	}
-	return queryService(pDispatch,IID_IHTMLElement,&pIface);
+	return queryService(pDispatch,IID_IHTMLElement,pIface);
+}
+
+IHTMLElement* LocateHTMLElementInDocument(IHTMLDocument3* pHTMLDocument3, const wstring& ID) { 
+	HRESULT hRes;
+	IHTMLElement* pHTMLElement=NULL;
+	//First try getting the element directly from this document
+	hRes=pHTMLDocument3->getElementById((wchar_t*)(ID.c_str()),&pHTMLElement);
+	if(hRes==S_OK&&pHTMLElement) {
+		return pHTMLElement;
+	}
+	//As it was not in this document, we need to search for it in all subdocuments
+	//If the body is a frameset then we need to search all frames
+	//If the body is just body, we need to search all iframes
+	IHTMLDocument2* pHTMLDocument2=NULL;
+	hRes=pHTMLDocument3->QueryInterface(IID_IHTMLDocument2,(void**)&pHTMLDocument2);
+	if(hRes!=S_OK||!pHTMLDocument2) {
+		LOG_DEBUG(L"Could not get IHTMLDocument2");
+		return NULL;
+	}
+	hRes=pHTMLDocument2->get_body(&pHTMLElement);
+	pHTMLDocument2->Release();
+	if(hRes!=S_OK||!pHTMLElement) {
+		LOG_DEBUGWARNING(L"Could not get body element from IHTMLDocument2 at "<<pHTMLDocument2);
+		return NULL;
+	}
+	BSTR tagName=NULL;
+	hRes=pHTMLElement->get_tagName(&tagName);
+	wchar_t* embeddingTagName=(tagName&&(wcscmp(tagName,L"FRAMESET"))==0)?L"FRAME":L"IFRAME";
+	SysFreeString(tagName);
+	IHTMLElement2* pHTMLElement2=NULL;
+	hRes=pHTMLElement->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
+	pHTMLElement->Release();
+	if(hRes!=S_OK||!pHTMLElement2) {
+		LOG_DEBUG(L"Could not queryInterface to IHTMLElement2");
+		return NULL;
+	}
+	IHTMLElementCollection* pHTMLElementCollection=NULL;
+	hRes=pHTMLElement2->getElementsByTagName(embeddingTagName,&pHTMLElementCollection);
+	pHTMLElement2->Release();
+	if(hRes!=S_OK||!pHTMLElementCollection) {
+		LOG_DEBUG(L"Could not get collection from getElementsByName");
+		return NULL;
+	}
+	long numElements=0;
+	hRes=pHTMLElementCollection->get_length(&numElements);
+	if(hRes!=S_OK) {
+		LOG_DEBUG(L"Error getting length of collection");
+		numElements=0;
+	}
+	IHTMLElement* pHTMLElementChild=NULL;
+	for(long index=0;index<numElements;++index) {
+		IDispatch* pDispatch=NULL;
+		VARIANT vID;
+		vID.vt=VT_I4;
+		vID.lVal=index;
+		VARIANT vResIndex;
+		vResIndex.vt=VT_I4;
+		vResIndex.lVal=0;
+		hRes=pHTMLElementCollection->item(vID,vResIndex,&pDispatch);
+		if(hRes!=S_OK||!pDispatch) {
+			LOG_DEBUG(L"Could not retreave item "<<index<<L" from collection");
+			continue;
+		}
+		IAccessible* pacc=NULL;
+		queryService(pDispatch,IID_IAccessible,&pacc);
+		pDispatch->Release();
+		pDispatch=NULL;
+		if(!pacc) {
+			LOG_DEBUG(L"Could not queryService to IAccessible");
+			continue;
+		}
+		IHTMLElement* pHTMLElementSubBody=NULL;
+		getHTMLSubdocumentBodyFromIAccessibleFrame(pacc,&pHTMLElementSubBody);
+		pacc->Release();
+		if(!pHTMLElementSubBody) {
+			LOG_DEBUG(L"Could not get IHTMLElement body from frame's subdocument");
+			continue;
+		}
+		hRes=pHTMLElementSubBody->get_document(&pDispatch);
+		pHTMLElementSubBody->Release();
+		if(hRes!=S_OK||!pDispatch) {
+			LOG_DEBUG(L"Could not get document from IHTMLElement");
+			return NULL;
+		}
+		IHTMLDocument3* pHTMLDocument3sub=NULL;
+		hRes=pDispatch->QueryInterface(IID_IHTMLDocument3,(void**)&pHTMLDocument3sub);
+		pDispatch->Release();
+		if(hRes!=S_OK||!pHTMLDocument3sub) {
+			LOG_DEBUG(L"Could not queryInterface to IHTMLDocument3 for document");
+			continue;
+		}
+		pHTMLElementChild=LocateHTMLElementInDocument(pHTMLDocument3sub,ID);
+		pHTMLDocument3sub->Release();
+		if(pHTMLElementChild) {
+			break;
+		}
+	}
+	pHTMLElementCollection->Release();
+	return pHTMLElementChild;
 }
 
 inline int getIDFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
@@ -805,7 +904,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			LOG_DEBUG(L"using getRoodDOMNodeOfHTMLFrame to get the frame's child");
 			if(pacc) {
 				IHTMLDOMNode* childPHTMLDOMNode=NULL;
-				getHTMLSubdocumentBodyFromIAccessibleFrame(pacc,childPHTMLDOMNode);
+				getHTMLSubdocumentBodyFromIAccessibleFrame(pacc,&childPHTMLDOMNode);
 				if(childPHTMLDOMNode) {
 					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,hasContent,allowPreformattedText);
 					childPHTMLDOMNode->Release();
@@ -938,15 +1037,14 @@ IHTMLDOMNode* pHTMLDOMNode=NULL;
 			return;
 		}
 		LOG_DEBUG(L"Locating DOM node with ID");
-		IHTMLElement* pHTMLElement=NULL;
 		wostringstream s;
 		s<<L"ms__id"<<ID;
-		if(pHTMLDocument3->getElementById((wchar_t*)(s.str().c_str()),(IHTMLElement**)&pHTMLElement)!=S_OK||!pHTMLElement) {
-			LOG_DEBUG(L"Failed to find element with ID"<<ID);
-			pHTMLDocument3->Release();
+		IHTMLElement* pHTMLElement=LocateHTMLElementInDocument(pHTMLDocument3,s.str());
+		pHTMLDocument3->Release();
+		if(!pHTMLElement) {
+			LOG_DEBUG(L"Could not locate HTML element in document");
 			return;
 		}
-		pHTMLDocument3->Release();
 		LOG_DEBUG(L"queryInterface to IHTMLDOMNode from IHTMLElement");
 		if(pHTMLElement->QueryInterface(IID_IHTMLDOMNode,(void**)&pHTMLDOMNode)!=S_OK) {
 			LOG_DEBUG(L"Could not get IHTMLDOMNode");

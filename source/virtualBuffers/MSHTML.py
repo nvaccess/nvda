@@ -116,12 +116,14 @@ class MSHTML(VirtualBuffer):
 				parent=newParent
 			if parent and parent.windowClassName.startswith('Internet Explorer_'):
 				obj=parent
-		if obj.windowHandle==self.rootDocHandle:
-			return True
-		if winUser.isDescendantWindow(self.rootDocHandle,obj.windowHandle):
-			return True
+		if not winUser.isDescendantWindow(self.rootDocHandle,obj.windowHandle) and obj.windowHandle!=self.rootDocHandle:
+			return False
+		newObj=obj
+		while newObj and newObj.role not in (controlTypes.ROLE_APPLICATION,controlTypes.ROLE_DIALOG) and isinstance(newObj,NVDAObjects.IAccessible.MSHTML.MSHTML):
+			if newObj==self.rootNVDAObject:
+				return True
+			newObj=newObj.parent 
 		return False
-
 
 	def _get_isAlive(self):
 		if self.isLoading:
@@ -130,7 +132,7 @@ class MSHTML(VirtualBuffer):
 		if not root:
 			return False
 		states=root.states
-		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_DEFUNCT in states or controlTypes.STATE_READONLY not in states:
+		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_EDITABLE in states:
 			return False
 		return True
 
