@@ -821,9 +821,11 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if reason == self.REASON_QUICKNAV:
 			return False
 		states = obj.states
-		if controlTypes.STATE_FOCUSABLE not in states or controlTypes.STATE_READONLY in states:
+		if controlTypes.STATE_FOCUSABLE not in states:
 			return False
 		role = obj.role
+		if controlTypes.STATE_READONLY in states and role != controlTypes.ROLE_EDITABLETEXT:
+			return False
 		if reason == speech.REASON_CARET:
 			return role == controlTypes.ROLE_EDITABLETEXT or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
 		if reason == speech.REASON_FOCUS and role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_RADIOBUTTON):
