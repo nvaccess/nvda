@@ -115,13 +115,6 @@ BOOL IA2Support_initialize() {
 	nhAssert(!isIA2Initialized);
 	wsprintf(IA2DllPath,L"%s\\IAccessible2Proxy.dll",dllDirectory);
 	isIA2Initialized=TRUE;
-	installIA2Support();
-	return TRUE;
-}
-
-BOOL IA2Support_terminate() {
-	nhAssert(isIA2Initialized);
-	uninstallIA2Support();
 	return TRUE;
 }
 

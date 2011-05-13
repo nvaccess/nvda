@@ -193,6 +193,8 @@ def initialize():
 	_remoteLib=CDLL("nvdaHelperRemote",handle=h)
 	if _remoteLib.injection_initialize(globalVars.appArgs.secure) == 0:
 		raise RuntimeError("Error initializing NVDAHelperRemote")
+	if not _remoteLib.installIA2Support():
+		log.error("Error installing IA2 support")
 	#Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
 	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':
@@ -200,6 +202,8 @@ def initialize():
 
 def terminate():
 	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange
+	if not _remoteLib.uninstallIA2Support():
+		log.debugWarning("Error uninstalling IA2 support")
 	if _remoteLib.injection_terminate() == 0:
 		raise RuntimeError("Error terminating NVDAHelperRemote")
 	_remoteLib=None

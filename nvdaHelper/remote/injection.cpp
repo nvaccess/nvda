@@ -309,10 +309,6 @@ BOOL injection_terminate() {
 	}
 	outprocMgrThreadHandle=NULL;
 	outprocMgrThreadID=0;
-	if(!IA2Support_terminate()) {
-		MessageBox(NULL,L"Error terminating IA2 support",L"nvdaHelperRemote (injection_terminate)",0);
-		return FALSE;
-	}
 	nhAssert(injectionDoneEvent);
 	SetEvent(injectionDoneEvent);
 	CloseHandle(injectionDoneEvent);
