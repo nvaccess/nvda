@@ -86,22 +86,26 @@ VBufStorage_controlFieldNode_t* MshtmlVBufBackend_t::getDeepestControlFieldNodeF
 	return NULL;
 }
 
-inline IAccessible* getIAccessibleFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
-	int res=0;
+/**
+	* A utility template function to queryService from a given IUnknown to the given service with the given service ID and interface eing returned.
+	* @param siid the service iid
+	*/
+template<typename toInterface> inline HRESULT queryService(IUnknown* pUnknown, const IID& siid, toInterface* pIface) {
+	HRESULT hRes;
 	IServiceProvider* pServProv=NULL;
-	res=pHTMLDOMNode->QueryInterface(IID_IServiceProvider,(void**)&pServProv);
-	if(res!=S_OK||!pServProv) {
+	hRes=pUnknown->QueryInterface(IID_IServiceProvider,(void**)&pServProv);
+	if(hRes!=S_OK||!pServProv) {
 		LOG_DEBUG(L"Could not queryInterface to IServiceProvider");
 		return NULL;
 	}
-	IAccessible* pacc=NULL;
-	res=pServProv->QueryService(IID_IAccessible,IID_IAccessible,(void**)&pacc);
+	hRes=pServProv->QueryService(siid,__uuidof(toInterface),(void**)&pIface);
 	pServProv->Release();
-	if(res!=S_OK||!pacc) {
-		LOG_DEBUG(L"Could not get IAccessible interface");
+	if(hRes!=S_OK||!pIface) {
+		LOG_DEBUG(L"Could not get requested interface");
+		pIface=NULL;
 		return NULL;
 	}
-	return pacc;
+	return hRes;
 }
 
 inline void getIAccessibleInfo(IAccessible* pacc, wstring* name, int* role, wstring* value, int* states, wstring* description, wstring* keyboardShortcut) {
@@ -159,31 +163,17 @@ inline void getIAccessibleInfo(IAccessible* pacc, wstring* name, int* role, wstr
 	}
 }
 
-inline IHTMLDOMNode* getRootDOMNodeFromIAccessibleFrame(IAccessible* pacc) {
-int res=0;
+template<typename toInterface> inline HRESULT getHTMLSubdocumentBodyFromIAccessibleFrame(IAccessible* pacc, toInterface* pIface) {
+HRESULT hRes=0;
 	VARIANT varChild;
 	varChild.vt=VT_I4;
 	varChild.lVal=1;
 	IDispatch* pDispatch=NULL;
-	if((res=pacc->get_accChild(varChild,&pDispatch))!=S_OK) {
+	if((hRes=pacc->get_accChild(varChild,&pDispatch))!=S_OK) {
 		LOG_DEBUG(L"IAccessible::accChild failed with return code "<<res);
-		return NULL;
+		return hRes;
 	}
-	IServiceProvider* pServProv=NULL;
-	res=pDispatch->QueryInterface(IID_IServiceProvider,(void**)&pServProv);
-	pDispatch->Release();
-	if(res!=S_OK) {
-		LOG_DEBUG(L"QueryInterface to IServiceProvider failed");
-		return NULL;
-	}
-	IHTMLDOMNode* pHTMLDOMNode=NULL;
-	res=pServProv->QueryService(IID_IHTMLElement,IID_IHTMLDOMNode,(void**)&pHTMLDOMNode);
-	pServProv->Release();
-	if(res!=S_OK) {
-		LOG_DEBUG(L"QueryService to IHTMLDOMNode failed");
-		return NULL;
-	}
-	return pHTMLDOMNode;
+	return queryService(pDispatch,IID_IHTMLElement,&pIface);
 }
 
 inline int getIDFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
@@ -637,7 +627,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	int IAStates=0;
 	wstring IADescription=L"";
 	wstring IAKeyboardShortcut=L"";
-	IAccessible* pacc=getIAccessibleFromHTMLDOMNode(pHTMLDOMNode);
+	IAccessible* pacc=NULL;
+	queryService(pHTMLDOMNode,IID_IAccessible,&pacc);
 	if(pacc) {
 		getIAccessibleInfo(pacc,&IAName,&IARole,&IAValue,&IAStates,&IADescription,&IAKeyboardShortcut);
 	}
@@ -813,7 +804,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		if(nodeName.compare(L"FRAME")==0||nodeName.compare(L"IFRAME")==0) {
 			LOG_DEBUG(L"using getRoodDOMNodeOfHTMLFrame to get the frame's child");
 			if(pacc) {
-				IHTMLDOMNode* childPHTMLDOMNode=getRootDOMNodeFromIAccessibleFrame(pacc);
+				IHTMLDOMNode* childPHTMLDOMNode=NULL;
+				getHTMLSubdocumentBodyFromIAccessibleFrame(pacc,childPHTMLDOMNode);
 				if(childPHTMLDOMNode) {
 					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,hasContent,allowPreformattedText);
 					childPHTMLDOMNode->Release();
