@@ -467,6 +467,16 @@ class MSHTML(IAccessible):
 		e=self.HTMLNode
 		if e:
 			try:
+				ariaSorted=e.GetAttribute('aria-sort')
+			except (COMError, NameError):
+				ariaSorted=None
+			if ariaSorted=="ascending":
+				states.add(controlTypes.STATE_SORTED_ASCENDING)
+			elif ariaSorted=="descending":
+				states.add(controlTypes.STATE_SORTED_DESCENDING)
+			elif ariaSorted=="other":
+				states.add(controlTypes.STATE_SORTED)
+			try:
 				ariaRequired=e.GetAttribute('aria-required')
 			except (COMError, NameError):
 				ariaRequired=None

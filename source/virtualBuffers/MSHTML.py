@@ -36,6 +36,13 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_CLICKABLE)
 		if attrs.get('HTMLAttrib::aria-required','false')=='true':
 			states.add(controlTypes.STATE_REQUIRED)
+		ariaSorted=attrs.get('HTMLAttrib::aria-sort')
+		if ariaSorted=="ascending":
+			states.add(controlTypes.STATE_SORTED_ASCENDING)
+		elif ariaSorted=="descending":
+			states.add(controlTypes.STATE_SORTED_DESCENDING)
+		elif ariaSorted=="other":
+			states.add(controlTypes.STATE_SORTED)
 		ariaSelected=attrs.get('HTMLAttrib::aria-selected')
 		if ariaSelected=="true":
 			states.add(controlTypes.STATE_SELECTED)

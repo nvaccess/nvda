@@ -483,6 +483,8 @@ def processNegativeStates(role, states, reason, negativeStates):
 	# Restrict "not checked" in a similar way to "not selected".
 	if (role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKMENUITEM) or controlTypes.STATE_CHECKABLE in states)  and (controlTypes.STATE_HALFCHECKED not in states) and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
 		speakNegatives.add(controlTypes.STATE_CHECKED)
+	if reason==REASON_CHANGE and not controlTypes.STATES_SORTED&states:
+		speakNegatives.add(controlTypes.STATE_SORTED)
 	if reason == REASON_CHANGE:
 		# We want to speak this state only if it is changing to negative.
 		speakNegatives.add(controlTypes.STATE_DROPTARGET)

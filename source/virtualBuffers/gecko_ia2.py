@@ -31,6 +31,13 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_DRAGGABLE)
 		elif grabbed == "true":
 			states.add(controlTypes.STATE_DRAGGING)
+		sorted = attrs.get("IAccessible2::attribute_aria-sorted")
+		if sorted=="ascending":
+			states.add(controlTypes.STATE_SORTED_ASCENDING)
+		elif sorted=="descending":
+			states.add(controlTypes.STATE_SORTED_DESCENDING)
+		elif sorted=="other":
+			states.add(controlTypes.STATE_SORTED)
 		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
 			states.add(controlTypes.STATE_DROPTARGET)
 		if role==controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:

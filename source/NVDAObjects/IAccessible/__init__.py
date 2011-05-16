@@ -762,6 +762,13 @@ the NVDAObject for IAccessible
 				states.add(controlTypes.STATE_DRAGGING)
 			if IA2Attribs.get("dropeffect", "none") != "none":
 				states.add(controlTypes.STATE_DROPTARGET)
+			sorted = IA2Attribs.get("sort")
+			if sorted=="ascending":
+				states.add(controlTypes.STATE_SORTED_ASCENDING)
+			elif sorted=="descending":
+				states.add(controlTypes.STATE_SORTED_DESCENDING)
+			elif sorted=="other":
+				states.add(controlTypes.STATE_SORTED)
 		if controlTypes.STATE_HASPOPUP in states and controlTypes.STATE_AUTOCOMPLETE in states:
 			states.remove(controlTypes.STATE_HASPOPUP)
 		if controlTypes.STATE_HALFCHECKED in states:
