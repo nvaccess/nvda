@@ -394,9 +394,9 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 		free(varChildren);
 	} else {
 
-		// No children, so this is a text leaf node.
-		if (!stdName) {
-			// Text leaf nodes with no stdName are inline.
+		// No children, so this is a leaf node.
+		if (!this->isXFA && !stdName) {
+			// Non-XFA leaf nodes with no stdName are inline.
 			parentNode->setIsBlock(false);
 		}
 
