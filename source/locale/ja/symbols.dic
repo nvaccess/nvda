@@ -10,22 +10,25 @@ complexSymbols:
 ！ sentence ending	(?<=[^\s！])\！(?=[\"'”’)\s]|$)
 ？ sentence ending	(?<=[^\s？])\？(?=[\"'”’)\s]|$)
 # Others
+several dots	(?<=\.)\.|\.(?=\.)
 jp decimal point	(?<=[\d])．(?=[\d])
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	ピリオド	none
-! sentence ending	カンタンフ	none
-? sentence ending	クエスチョン	none
-。 sentence ending	マル	none
-！ sentence ending	カンタンフ	none
-？ sentence ending	ギモンフ	none
-; phrase ending	セミコロン	none
-: phrase ending	コロン	none
+. sentence ending	ピリオド	some
+! sentence ending	カンタンフ	some
+? sentence ending	クエスチョン	some
+。 sentence ending	マル	some
+！ sentence ending	カンタンフ	some
+？ sentence ending	ギモンフ	some
+; phrase ending	セミコロン	some
+: phrase ending	コロン	some
+several dots	ドット	some
 decimal point	テン	none	norep
 jp decimal point	テン	none	norep
+in-word '	アポストロフィ	all	norep
 
 # Other characters
 •	バレット
@@ -47,40 +50,40 @@ jp decimal point	テン	none	norep
  	スペース
 
 # Standard punctuation/symbols
-!	カンタンフ
-"	コーテーション
-\#	シャープ
-$	ドル
-£	ポンド
-€	ユーロ
-%	パーセント
-&	アンド
-'	アポストロフィ
-(	カッコ
-)	トジカッコ
-*	アスタリスク
-+	プラス
-,	カンマ
--	ハイフン
-.	ピリオド
-/	スラッシュ
-:	コロン
-;	セミコロン
-<	ショーナリ
->	ダイナリ
-=	イコール
-?	クエスチョン
-@	アット
-[	ダイカッコ
-]	トジダイカッコ
-\\	エンマーク
-^	ベキジョー
-_	アンダー
-`	アクサングラーブ
-{	チューカッコ
-}	トジチューカッコ
-|	タテセン
-~	チルダ
+!	カンタンフ	some
+"	コーテーション	some
+\#	シャープ	some
+$	ドル	some
+￡	ポンド	some
+€	ユーロ	some
+%	パーセント	some
+&	アンド	some
+'	アポストロフィ	some
+(	カッコ	some
+)	トジカッコ	some
+*	アスタリスク	some
++	プラス	some
+,	カンマ	some
+-	ハイフン	some
+.	ピリオド	some
+/	スラッシュ	some
+:	コロン	some
+;	セミコロン	some
+<	ショーナリ	some
+>	ダイナリ	some
+=	イコール	some
+?	クエスチョン	some
+@	アット	some
+[	ダイカッコ	some
+]	トジダイカッコ	some
+\\	エンマーク	some
+^	ベキジョー	some
+_	アンダー	some
+`	アクサングラーブ	some
+{	チューカッコ	some
+}	トジチューカッコ	some
+|	タテセン	some
+~	チルダ	some
 
 #Japanese Double Bytes Symbols
 
