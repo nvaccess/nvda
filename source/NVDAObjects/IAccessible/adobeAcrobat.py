@@ -132,7 +132,7 @@ class AcrobatTextNode(EditableText, AcrobatNode):
 	def _get_parent(self):
 		#hack: This code should be taken out once the crash is fixed in Adobe Reader X.
 		#If going parent on a root text node after saying ok to the accessibility options (untagged) and before the processing document dialog appears, Reader X will crash.
-		if self.event_childID==0:
+		if self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0:
 			return api.getDesktopObject()
 		else:
 			return super(AcrobatTextNode,self).parent
