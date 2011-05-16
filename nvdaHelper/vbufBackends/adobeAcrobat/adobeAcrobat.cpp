@@ -419,8 +419,10 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 
 		bool useNameAsContent = role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == ROLE_SYSTEM_RADIOBUTTON || role == ROLE_SYSTEM_CHECKBUTTON;
 
-		// If there is a name, render it before this node unless the name will be the content.
 		if (name && !useNameAsContent) {
+			parentNode->addAttribute(L"name", name);
+			// Render the name before this node,
+			// as the label is often not a separate node and thus won't be rendered into the buffer.
 			buffer->addTextFieldNode(parentNode->getParent(), parentNode->getPrevious(), name);
 		}
 
