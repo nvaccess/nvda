@@ -467,15 +467,12 @@ class MSHTML(IAccessible):
 		e=self.HTMLNode
 		if e:
 			try:
-				ariaSorted=e.GetAttribute('aria-sort')
+				ariaSort=e.GetAttribute('aria-sort')
 			except (COMError, NameError):
-				ariaSorted=None
-			if ariaSorted=="ascending":
-				states.add(controlTypes.STATE_SORTED_ASCENDING)
-			elif ariaSorted=="descending":
-				states.add(controlTypes.STATE_SORTED_DESCENDING)
-			elif ariaSorted=="other":
-				states.add(controlTypes.STATE_SORTED)
+				ariaSort=None
+			state=aria.ariaSortValuesToNVDAStates.get(ariaSort)
+			if state is not None:
+				states.add(state)
 			try:
 				ariaRequired=e.GetAttribute('aria-required')
 			except (COMError, NameError):

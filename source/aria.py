@@ -56,6 +56,13 @@ ariaRolesToNVDARoles={
 	"treeitem":controlTypes.ROLE_TREEVIEWITEM,
 }
 
+ariaSortValuesToNVDAStates={
+	'descending':controlTypes.STATE_SORTED_DESCENDING,
+	'ascending':controlTypes.STATE_SORTED_ASCENDING,
+	'other':controlTypes.STATE_SORTED,
+}
+
+
 landmarkRoles = {
 	"banner": _("banner"),
 	"complementary": _("complementary"),
