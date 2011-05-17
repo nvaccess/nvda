@@ -84,6 +84,7 @@ class _EventExecuter(object):
 			self.next()
 		except StopIteration:
 			pass
+		del self._gen
 
 	def next(self):
 		func, args = next(self._gen)
