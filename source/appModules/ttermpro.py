@@ -21,3 +21,8 @@ class AppModule(appModuleHandler.AppModule):
 			except ValueError:
 				pass
 			clsList[0:0] = (Terminal, DisplayModelLiveText)
+
+	#Teraterm changes the name of the terminal window when the directory changes, very annoying
+	def event_nameChange(self,obj,nextHandler):
+		if not isinstance(obj,Terminal):
+			nextHandler()
