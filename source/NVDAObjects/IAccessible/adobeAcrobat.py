@@ -105,6 +105,9 @@ class AcrobatNode(IAccessible):
 			if not obj:
 				return
 			eventHandler.queueEvent("gainFocus",obj)
+			return
+
+		return super(AcrobatNode, self).event_valueChange()
 
 	def scrollIntoView(self):
 		try:
@@ -136,6 +139,9 @@ class AcrobatTextNode(EditableText, AcrobatNode):
 			return api.getDesktopObject()
 		else:
 			return super(AcrobatTextNode,self).parent
+
+	def event_valueChange(self):
+		pass
 
 class AcrobatSDIWindowClient(IAccessible):
 
