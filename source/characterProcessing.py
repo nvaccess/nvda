@@ -14,18 +14,18 @@ from logHandler import log
 class LocaleDataMap(object):
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
 
-	def __init__(self,localeDataClass):
+	def __init__(self,localeDataFactory):
 		"""
-		@param localeDataClass: this class will be used to instanciate data objects representing the requested locale.
+		@param localeDataFactory: the factory to create data objects for the requested locale.
 		""" 
-		self._localeDataClass=localeDataClass
+		self._localeDataFactory=localeDataFactory
 		self._dataMap={}
 
 	def fetchLocaleData(self,locale):
 		"""
 		Fetches a data object for the given locale. 
-		This may mean that the data object is first created and sotred if it does not yet exist in the map.
-		The locale is also simplified (country is dropped) if the full locale can not be used to instanciate a data object.
+		This may mean that the data object is first created and stored if it does not yet exist in the map.
+		The locale is also simplified (country is dropped) if the full locale can not be used to create a data object.
 		@param locale: the locale of the data object requested
 		@type locale: string
 		@return: the data object for the given locale
@@ -37,7 +37,7 @@ class LocaleDataMap(object):
 			data=self._dataMap.get(l)
 			if data: return data
 			try:
-				data=self._localeDataClass(l)
+				data=self._localeDataFactory(l)
 			except LookupError:
 				data=None
 			if not data: continue
