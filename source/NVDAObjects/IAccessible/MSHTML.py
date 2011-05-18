@@ -58,6 +58,7 @@ nodeNamesToNVDARoles={
 	"OBJECT":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"APPLET":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"EMBED":controlTypes.ROLE_EMBEDDEDOBJECT,
+	"FIELDSET":controlTypes.ROLE_GROUPING,
 }
 
 def IAccessibleFromHTMLNode(HTMLNode):
@@ -335,6 +336,8 @@ class MSHTML(IAccessible):
 				clsList.append(Body)
 			elif nodeName == "OBJECT":
 				clsList.append(Object)
+			elif nodeName=="FIELDSET":
+				clsList.append(Fieldset)
 		clsList.append(MSHTML)
 		if not self.HTMLNodeHasAncestorIAccessible:
 			# The IAccessibleObject is for this node (not an ancestor), so IAccessible overlay classes are relevant.
@@ -703,6 +706,20 @@ class V6ComboBox(IAccessible):
 		# This combo box is focused. However, the value change is not fired on the real focus object.
 		# Therefore, redirect this event to the real focus object.
 		focus.event_valueChange()
+
+class Fieldset(MSHTML):
+
+	def _get_name(self):
+		child=self.firstChild
+		if not child or  not isinstance(child,MSHTML) or child.HTMLNodeName!="LEGEND":
+			return super(Fieldset,self).name
+		try:
+			text=child.HTMLNode.innerText
+		except (COMError,NameError):
+			text=None
+		if text:
+			return text
+		return super(Fieldset,self).name
 
 class Body(MSHTML):
 
