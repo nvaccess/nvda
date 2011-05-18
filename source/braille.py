@@ -157,7 +157,10 @@ class Region(object):
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
 		text=unicode(self.rawText).replace('\0','')
-		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate([os.path.join(TABLES_DIR, config.conf["braille"]["translationTable"])], text, mode=mode, cursorPos=self.cursorPos or 0)
+		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate(
+			[os.path.join(TABLES_DIR, config.conf["braille"]["translationTable"]),
+				"braille-patterns.cti"],
+			text, mode=mode, cursorPos=self.cursorPos or 0)
 		# liblouis gives us back a character string of cells, so convert it to a list of ints.
 		# For some reason, the highest bit is set, so only grab the lower 8 bits.
 		self.brailleCells = [ord(cell) & 255 for cell in braille]
