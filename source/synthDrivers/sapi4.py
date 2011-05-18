@@ -81,6 +81,7 @@ class SynthDriver(SynthDriver):
 
 	def speak(self,speechSequence):
 		textList=[]
+		charMode=False
 		for item in speechSequence:
 			if isinstance(item,basestring):
 				textList.append(item.replace('\\','\\\\'))
@@ -88,10 +89,14 @@ class SynthDriver(SynthDriver):
 				textList.append("\\mrk=%d\\"%item.index)
 			elif isinstance(item,speech.CharacterModeCommand):
 				textList.append("\\RmS=1\\" if item.state else "\\RmS=0\\")
+				charMode=item.state
 			elif isinstance(item,speech.SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s"%item)
 			else:
 				log.error("Unknown speech: %s"%item)
+		if charMode:
+			# Some synths stay in character mode if we don't explicitly disable it.
+			textList.append("\\RmS=0\\")
 		text="".join(textList)
 		flags=TTSDATAFLAG_TAGGED
 		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSinkPtr,ITTSBufNotifySink._iid_)
