@@ -39,6 +39,7 @@
 - In Internet Explorer and other MSHTML controls, ARIA listbox controls are now treeted as lists, rather than list items.
 - When a read-only editable text control receives focus, NVDA now reports that it is read-only. (#1436)
 - In virtual buffers, NVDA now behaves correctly with respect to read-only editable text fields.
+- In virtual buffers, NVDA no longer incorrectly switches out of focus mode when aria-activedescendant is set; e.g. when the completion list appeared in some auto complete controls.
 
 
 == Changes for Developers ==
