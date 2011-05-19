@@ -486,11 +486,10 @@ def processNegativeStates(role, states, reason, negativeStates):
 	# Restrict "not checked" in a similar way to "not selected".
 	if (role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKMENUITEM) or controlTypes.STATE_CHECKABLE in states)  and (controlTypes.STATE_HALFCHECKED not in states) and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
 		speakNegatives.add(controlTypes.STATE_CHECKED)
-	if reason==REASON_CHANGE and not controlTypes.STATES_SORTED&states:
-		speakNegatives.add(controlTypes.STATE_SORTED)
 	if reason == REASON_CHANGE:
-		# We want to speak this state only if it is changing to negative.
+		# We want to speak these states only if they are changing to negative.
 		speakNegatives.add(controlTypes.STATE_DROPTARGET)
+		speakNegatives.update(controlTypes.STATES_SORTED)
 		# We were given states which have changed to negative.
 		# Return only those supplied negative states which should be spoken;
 		# i.e. the states in both sets.
@@ -698,6 +697,12 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 			# "not drop target" doesn't make any sense, so use a custom message.
 			textList.append(_("done dragging"))
 			negativeStates.discard(controlTypes.STATE_DROPTARGET)
+		if controlTypes.STATES_SORTED&negativeStates:
+			# If any of the sorted states are negative,
+			# the user doesn't care how it was sorted before,
+			# just that it's not sorted any more.
+			negativeStates-=controlTypes.STATES_SORTED
+			negativeStates.add(controlTypes.STATE_SORTED)
 		textList.extend([_("not %s")%controlTypes.speechStateLabels[x] for x in negativeStates])
 	if 'description' in propertyValues:
 		textList.append(propertyValues['description'])
