@@ -404,12 +404,18 @@ the NVDAObject for IAccessible
 		elif windowClassName == "DirectUIHWND" and role == oleacc.ROLE_SYSTEM_TEXT:
 			from NVDAObjects.window import DisplayModelEditableText
 			clsList.append(DisplayModelEditableText)
-		elif windowClassName == "ListBox" and role == oleacc.ROLE_SYSTEM_LISTITEM:
+		elif windowClassName in ("ListBox","ComboLBox")  and role == oleacc.ROLE_SYSTEM_LISTITEM:
 			windowStyle = self.windowStyle
 			if (windowStyle & winUser.LBS_OWNERDRAWFIXED or windowStyle & winUser.LBS_OWNERDRAWVARIABLE) and not windowStyle & winUser.LBS_HASSTRINGS:
 				# This is an owner drawn ListBox and text has not been set for the items.
 				# See http://msdn.microsoft.com/en-us/library/ms971352.aspx#msaa_sa_listbxcntrls
 				clsList.append(InaccessibleListBoxItem)
+		elif windowClassName == "ComboBox" and role == oleacc.ROLE_SYSTEM_COMBOBOX:
+			windowStyle = self.windowStyle
+			if (windowStyle & winUser.CBS_OWNERDRAWFIXED or windowStyle & winUser.CBS_OWNERDRAWVARIABLE) and not windowStyle & winUser.CBS_HASSTRINGS:
+				# This is an owner drawn ComboBox and text has not been set for the items.
+				# See http://msdn.microsoft.com/en-us/library/ms971352.aspx#msaa_sa_listbxcntrls
+				clsList.append(InaccessibleComboBox)
 		elif windowClassName == "MsoCommandBar":
 			from .msOffice import BrokenMsoCommandBar
 			if BrokenMsoCommandBar.appliesTo(self):
@@ -1477,6 +1483,15 @@ class InaccessibleListBoxItem(IAccessible):
 	"""
 
 	def _get_name(self):
+		return self.displayText
+
+class InaccessibleComboBox(IAccessible):
+	"""
+	Used for inaccessible owner drawn ComboBox controls.
+	Overrides value  to use display model text as MSAA doesn't provide a suitable vale (it's usually either empty or contains garbage).
+	"""
+
+	def _get_value(self):
 		return self.displayText
 
 class StaticText(IAccessible):
