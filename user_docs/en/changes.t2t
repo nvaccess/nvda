@@ -40,7 +40,12 @@
 - When a read-only editable text control receives focus, NVDA now reports that it is read-only. (#1436)
 - In virtual buffers, NVDA now behaves correctly with respect to read-only editable text fields.
 - In virtual buffers, NVDA no longer incorrectly switches out of focus mode when aria-activedescendant is set; e.g. when the completion list appeared in some auto complete controls.
-- owner-drawn Combo boxes such as the ones to choose colors in Outlook Express are now accessible with NVDA.
+- In Adobe Reader, the name of controls is now reported when moving focus or using quick navigation in browse mode.
+- In XFA PDF documents in Adobe Reader, buttons and links are now rendered correctly.
+- In XFA PDF documents in Adobe Reader, all elements are now rendered on separate lines. This change was made because large sections (sometimes even the entire document) were being rendered without breaks due to the general lack of structure in these documents.
+- Fixed problems when moving focus to or away from editable text fields in XFA PDF documents in Adobe Reader.
+- In XFA PDF documents in Adobe Reader, changes to the value of a focused combo box will now be reported.
+- Owner-drawn Combo boxes such as the ones to choose colors in Outlook Express are now accessible with NVDA. (#1340)
 
 
 == Changes for Developers ==
