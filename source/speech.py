@@ -45,6 +45,9 @@ REASON_DEBUG=8
 REASON_ONLYCACHE=9
 REASON_FOCUSENTERED=10
 
+#: The string used to separate distinct chunks of text when multiple chunks should be spoken without pauses.
+CHUNK_SEPARATOR = "  "
+
 oldTreeLevel=None
 oldTableID=None
 oldRowNumber=None
@@ -572,7 +575,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 		textList.append(text)
 
 	if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD):
-		text=" ".join(textList)
+		text=CHUNK_SEPARATOR.join(textList)
 		if text:
 			speakText(text,index=index)
 		text=info.text
@@ -624,7 +627,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 				relativeTextList.append(text)
 				lastTextOkToMerge=False
 
-	text=" ".join(relativeTextList)
+	text=CHUNK_SEPARATOR.join(relativeTextList)
 	# Don't add this text if it is blank.
 	if text and not isBlank(text):
 		textList.append(text)
@@ -645,7 +648,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)
 		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
 
-	text=" ".join(textList)
+	text=CHUNK_SEPARATOR.join(textList)
 	speechSequence=[]
 	# Even when there's no speakable text, we still need to notify the synth of the index.
 	if index is not None:
@@ -742,7 +745,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		oldTableID = None
-	return " ".join([x for x in textList if x])
+	return CHUNK_SEPARATOR.join([x for x in textList if x])
 
 def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
 	if not formatConfig:
@@ -859,7 +862,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		(speakEntry and ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))))
 		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
 	):
-		return " ".join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),levelText,keyboardShortcutText if x])
+		return CHUNK_SEPARATOR.join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),levelText,keyboardShortcutText if x])
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
 		return _("out of %s")%roleText
 
@@ -998,7 +1001,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 	if attrsCache is not None:
 		attrsCache.clear()
 		attrsCache.update(attrs)
-	return " ".join(textList)
+	return CHUNK_SEPARATOR.join(textList)
 
 def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
 	if tableInfo is None and oldTableInfo is None:

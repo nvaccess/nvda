@@ -46,6 +46,7 @@
 - Fixed problems when moving focus to or away from editable text fields in XFA PDF documents in Adobe Reader.
 - In XFA PDF documents in Adobe Reader, changes to the value of a focused combo box will now be reported.
 - Owner-drawn Combo boxes such as the ones to choose colors in Outlook Express are now accessible with NVDA. (#1340)
+- In languages which use a space as a digit group/thousands separator such as French and German, numbers from separate chunks of text are no longer pronounced as a single number. This was particularly problematic for table cells containing numbers. (#555)
 
 
 == Changes for Developers ==
