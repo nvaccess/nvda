@@ -358,7 +358,11 @@ class SpeechSymbolProcessor(object):
 			"|".join(re.escape(identifier) for identifier in simpleSymbolIdentifiers)
 		))
 		pattern = "|".join(patterns)
-		self._regexp = re.compile(pattern, re.UNICODE)
+		try:
+			self._regexp = re.compile(pattern, re.UNICODE)
+		except re.error as e:
+			log.error("Invalid complex symbol regular expression in locale %s: %s" % (locale, e))
+			raise LookupError
 
 	def _regexpRepl(self, m):
 		group = m.lastgroup
