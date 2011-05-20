@@ -10,6 +10,7 @@ import codecs
 import collections
 import re
 from logHandler import log
+import globalVars
 
 class LocaleDataMap(object):
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
@@ -238,19 +239,19 @@ class SpeechSymbols(object):
 			pass
 		self.symbols.append(SpeechSymbol(identifier, None, replacement, level, preserve, displayName))
 
-	@classmethod
-	def fromLocale(cls, locale):
-		"""Construct an instance for the built-in symbol information for the locale.
-		@param locale: The locale in question.
-		@type locale: str
-		@raise LookupError: If there is no symbol information for this locale.
-		"""
-		try:
-			inst = cls()
-			inst.load(os.path.join("locale", locale, "symbols.dic"))
-		except IOError:
-			raise LookupError
-		return inst
+def _getSpeechSymbolsForLocale(locale):
+	builtin = SpeechSymbols()
+	try:
+		builtin.load(os.path.join("locale", locale, "symbols.dic"))
+	except IOError:
+		raise LookupError("No symbol information for locale %s" % locale)
+	user = SpeechSymbols()
+	try:
+		user.load(os.path.join(globalVars.appArgs.configPath, "symbols-%s.dic" % locale))
+	except IOError:
+		# An empty user SpeechSymbols is okay.
+		pass
+	return builtin, user
 
 class SpeechSymbolProcessor(object):
 	"""
@@ -259,7 +260,7 @@ class SpeechSymbolProcessor(object):
 	"""
 
 	#: Caches symbol data for locales.
-	localeSymbols = LocaleDataMap(SpeechSymbols.fromLocale)
+	localeSymbols = LocaleDataMap(_getSpeechSymbolsForLocale)
 
 	def __init__(self, locale):
 		"""Constructor.
@@ -270,17 +271,15 @@ class SpeechSymbolProcessor(object):
 
 		# We need to merge symbol data from several sources.
 		sources = self.sources = []
-		# TODO: User symbols.
-		try:
-			sources.append(self.localeSymbols.fetchLocaleData(locale))
-		except LookupError:
-			pass
-		if len(sources) < 1:
-			raise LookupError("No symbol information for this locale")
+		builtin, user = self.localeSymbols.fetchLocaleData(locale)
+		self.userSymbols = user
+		sources.append(user)
+		sources.append(builtin)
 
 		# Always use English as a base.
 		if locale != "en":
-			sources.append(self.localeSymbols.fetchLocaleData("en"))
+			# Only the builtin data.
+			sources.append(self.localeSymbols.fetchLocaleData("en")[0])
 
 		# The computed symbol information from all sources.
 		symbols = self.computedSymbols = collections.OrderedDict()
