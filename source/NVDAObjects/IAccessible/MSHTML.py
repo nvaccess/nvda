@@ -424,6 +424,20 @@ class MSHTML(IAccessible):
 			return super(MSHTML,self).value
 
 	def _get_description(self):
+		try:
+			ariaDescribedBy=self.HTMLNode.getAttribute('aria-describedBy')
+		except (COMError,NameError):
+			ariaDescribedBy=None
+		if ariaDescribedBy:
+			try:
+				descNode=self.HTMLNode.document.getElementById(ariaDescribedBy)
+			except (COMError,NameError):
+				descNode=None
+			if descNode:
+				try:
+					return descNode.innerText
+				except (COMError,NameError):
+					pass
 		if self.HTMLNodeHasAncestorIAccessible:
 			return ""
 		return super(MSHTML,self).description
