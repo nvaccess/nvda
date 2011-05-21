@@ -710,16 +710,23 @@ class V6ComboBox(IAccessible):
 class Fieldset(MSHTML):
 
 	def _get_name(self):
-		child=self.firstChild
-		if not child or  not isinstance(child,MSHTML) or child.HTMLNodeName!="LEGEND":
+		try:
+			child=self.HTMLNode.children[0]
+		except (COMError,NameError):
+			child=None
+		if not child:
 			return super(Fieldset,self).name
 		try:
-			text=child.HTMLNode.innerText
+			nodeName=child.nodeName
 		except (COMError,NameError):
-			text=None
-		if text:
-			return text
-		return super(Fieldset,self).name
+			return super(Fieldset,self).name
+		if nodeName!="LEGEND":
+			return super(Fieldset,self).name
+		try:
+			text=child.innerText
+		except (COMError,NameError):
+			return super(Fieldset,self).name
+		return text
 
 class Body(MSHTML):
 
