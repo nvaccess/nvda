@@ -66,6 +66,12 @@ class AkelEditTextInfo(edit.EditTextInfo):
 		winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
 		return end+1
 
+	def _getLineOffsets(self,offset):
+		(start,end)=super(AkelEditTextInfo,self)._getLineOffsets(offset)
+		if self._getLineNumFromOffset(start) != self._getLineNumFromOffset(end):
+			return (start,end-1)
+		return (start,end)
+
 
 class AkelEdit(edit.RichEdit20):
 
