@@ -762,6 +762,10 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
+	if reason==REASON_FOCUS or attrs.get('alwaysReportDescription',False):
+		description=attrs.get('description',"")
+	else:
+		description=""
 	level=attrs.get('level',None)
 
 	#Remove the clickable state from controls that are clearly clickable according to their role
@@ -804,6 +808,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
+	descriptionText=getSpeechTextForProperties(reason=reason,description=description)
 	levelText=getSpeechTextForProperties(reason=reason,positionInfo_level=level)
 
 	# Determine under what circumstances this node should be spoken.
@@ -867,7 +872,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		(speakEntry and ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))))
 		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
 	):
-		return CHUNK_SEPARATOR.join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),levelText,keyboardShortcutText if x])
+		return CHUNK_SEPARATOR.join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),descriptionText,levelText,keyboardShortcutText if x])
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
 		return _("out of %s")%roleText
 
