@@ -399,6 +399,15 @@ class MSHTML(IAccessible):
 				pass
 		return super(MSHTML, self)._isEqual(other)
 
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		try:
+			ariaRole=self.HTMLNode.getAttribute('role')
+		except (COMError,NameError):
+			ariaRole=None
+		if ariaRole=="gridcell":
+			return True
+		return super(MSHTML,self).shouldAllowIAccessibleFocusEvent
+
 	def _get_name(self):
 		try:
 			ariaLabel=self.HTMLNode.getAttribute('aria-label')
