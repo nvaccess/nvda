@@ -528,6 +528,14 @@ class MSHTML(IAccessible):
 			elif ariaSelected=="false":
 				states.discard(controlTypes.STATE_SELECTED)
 			try:
+				ariaExpanded=e.GetAttribute('aria-expanded')
+			except (COMError, NameError):
+				ariaExpanded=None
+			if ariaExpanded=="true":
+				states.add(controlTypes.STATE_EXPANDED)
+			elif ariaExpanded=="false":
+				states.add(controlTypes.STATE_COLLAPSED)
+			try:
 				ariaInvalid=e.GetAttribute('aria-invalid')
 			except (COMError, NameError):
 				ariaInvalid=None

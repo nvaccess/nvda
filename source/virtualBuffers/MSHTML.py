@@ -72,6 +72,11 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_SELECTED)
 		elif ariaSelected=="false":
 			states.discard(controlTypes.STATE_SELECTED)
+		ariaExpanded=attrs.get('HTMLAttrib::aria-expanded')
+		if ariaExpanded=="true":
+			states.add(controlTypes.STATE_EXPANDED)
+		elif ariaExpanded=="false":
+			states.add(controlTypes.STATE_COLLAPSED)
 		if attrs.get('HTMLAttrib::aria-invalid','false')=='true':
 			states.add(controlTypes.STATE_INVALID)
 		if attrs.get('HTMLAttrib::aria-multiline','false')=='true':
