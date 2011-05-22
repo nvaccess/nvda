@@ -420,6 +420,13 @@ class MSHTML(IAccessible):
 				pass
 		return super(MSHTML, self)._isEqual(other)
 
+	def _get_presentationType(self):
+		presType=super(MSHTML,self).presentationType
+		if presType==self.presType_content and self.HTMLAttributes['role']=="presentation":
+			presType=self.presType_layout
+		return presType
+
+
 	def _get_shouldAllowIAccessibleFocusEvent(self):
 		ariaRole=self.HTMLAttributes['aria-role']
 		if ariaRole=="gridcell":
