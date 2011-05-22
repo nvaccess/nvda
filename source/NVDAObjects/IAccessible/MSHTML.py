@@ -448,7 +448,17 @@ class MSHTML(IAccessible):
 					return labelNode.innerText
 				except (COMError,NameError):
 					pass
+		title=self.HTMLAttributes['title']
+		if title:
+			return title
+		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_TABLE:
+			summary=self.HTMLAttributes['summary']
+			if summary:
+				return summary
 		if self.HTMLNodeHasAncestorIAccessible:
+			return ""
+		#IE inappropriately generates the name from descendants on some controls
+		if self.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUBAR,oleacc.ROLE_SYSTEM_TOOLBAR,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TABLE,oleacc.ROLE_SYSTEM_DOCUMENT):
 			return ""
 		return super(MSHTML,self).name
 
