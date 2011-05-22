@@ -415,6 +415,20 @@ class MSHTML(IAccessible):
 			ariaLabel=None
 		if ariaLabel:
 			return ariaLabel
+		try:
+			ariaLabelledBy=self.HTMLNode.getAttribute('aria-labelledBy')
+		except (COMError,NameError):
+			ariaLabelledBy=None
+		if ariaLabelledBy:
+			try:
+				labelNode=self.HTMLNode.document.getElementById(ariaLabelledBy)
+			except (COMError,NameError):
+				labelNode=None
+			if labelNode:
+				try:
+					return labelNode.innerText
+				except (COMError,NameError):
+					pass
 		if self.HTMLNodeHasAncestorIAccessible:
 			return ""
 		return super(MSHTML,self).name
