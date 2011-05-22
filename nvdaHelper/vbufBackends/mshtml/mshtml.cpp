@@ -739,6 +739,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		IAStates-=STATE_SYSTEM_READONLY;
 	}
 
+	//IE gives elements with an ARIA role of description a role of edit, probably should be staticText
+	tempIter=attribsMap.find(L"HTMLAttrib::role");
+	if(tempIter!=attribsMap.end()&&(tempIter->second.compare(L"description")==0)) {
+			IARole=ROLE_SYSTEM_STATICTEXT;
+		} 
 	//IE doesn't seem to support aria-label yet so we want to override IAName with it
 	tempIter=attribsMap.find(L"HTMLAttrib::aria-label");
 	if(tempIter!=attribsMap.end()) {
