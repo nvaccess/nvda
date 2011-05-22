@@ -132,7 +132,7 @@ class MSHTML(VirtualBuffer):
 		if api.getFocusObject() is not self.rootNVDAObject:
 			return False
 		try:
-			newNode, newStart, newEnd = next(self._iterNodesByType("focusable", direction,-1))
+			newNode, newStart, newEnd = next(self._iterNodesByType("focusable", direction,0))
 		except StopIteration:
 			return False
 		docHandle=ctypes.c_int()
