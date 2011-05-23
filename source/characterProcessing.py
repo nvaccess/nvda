@@ -10,22 +10,23 @@ import codecs
 import collections
 import re
 from logHandler import log
+import globalVars
 
 class LocaleDataMap(object):
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
 
-	def __init__(self,localeDataClass):
+	def __init__(self,localeDataFactory):
 		"""
-		@param localeDataClass: this class will be used to instanciate data objects representing the requested locale.
+		@param localeDataFactory: the factory to create data objects for the requested locale.
 		""" 
-		self._localeDataClass=localeDataClass
+		self._localeDataFactory=localeDataFactory
 		self._dataMap={}
 
 	def fetchLocaleData(self,locale):
 		"""
 		Fetches a data object for the given locale. 
-		This may mean that the data object is first created and sotred if it does not yet exist in the map.
-		The locale is also simplified (country is dropped) if the full locale can not be used to instanciate a data object.
+		This may mean that the data object is first created and stored if it does not yet exist in the map.
+		The locale is also simplified (country is dropped) if the full locale can not be used to create a data object.
 		@param locale: the locale of the data object requested
 		@type locale: string
 		@return: the data object for the given locale
@@ -37,7 +38,7 @@ class LocaleDataMap(object):
 			data=self._dataMap.get(l)
 			if data: return data
 			try:
-				data=self._localeDataClass(l)
+				data=self._localeDataFactory(l)
 			except LookupError:
 				data=None
 			if not data: continue
@@ -146,26 +147,25 @@ class SpeechSymbol(object):
 
 class SpeechSymbols(object):
 	"""
-	Handles pronunciation of symbols.
-	The data is loaded from a file for the requested locale.
+	Contains raw information about the pronunciation of symbols.
+	It does not handle inheritance of data from other sources, processing of text, etc.
+	This is all handled by L{SpeechSymbolProcessor}.
 	"""
 
-	def __init__(self, locale):
+	def __init__(self):
 		"""Constructor.
-		@param locale: The locale for which to load symbol information.
-		@type locale: str
-		@raise LookupError: If there is no symbol information for this locale.
 		"""
-		self.locale = locale
+		self.complexSymbols = collections.OrderedDict()
+		self.symbols = []
 
-		fileName = os.path.join("locale", locale, "symbols.dic")
-		if not os.path.isfile(fileName): 
-			raise LookupError("No symbol information for locale %s" % locale)
-
-		self.rawComplexSymbols = collections.OrderedDict()
-		self.rawSymbols = []
-
-		# Read data from file.
+	def load(self, fileName, allowComplexSymbols=True):
+		"""Load symbol information from a file.
+		@param fileName: The name of the file from which to load symbol information.
+		@type fileName: str
+		@param allowComplexSymbols: Whether to allow complex symbols.
+		@type allowComplexSymbols: bool
+		@raise IOError: If the file cannot be read.
+		"""
 		with codecs.open(fileName, "r", "utf_8_sig", errors="replace") as f:
 			handler = None
 			for line in f:
@@ -173,7 +173,7 @@ class SpeechSymbols(object):
 					# Whitespace or comment.
 					continue
 				line = line.rstrip("\r\n")
-				if line == "complexSymbols:":
+				if line == "complexSymbols:" and allowComplexSymbols:
 					handler = self._loadComplexSymbol
 				elif line == "symbols:":
 					handler = self._loadSymbol
@@ -186,14 +186,12 @@ class SpeechSymbols(object):
 				else:
 					log.warning("Invalid line: %s" % line)
 
-		self.initProcessor()
-
 	def _loadComplexSymbol(self, line):
 		try:
 			identifier, pattern = line.split("\t")
 		except TypeError:
 			raise ValueError
-		self.rawComplexSymbols[identifier] = pattern
+		self.complexSymbols[identifier] = pattern
 
 	def _loadSymbolField(self, input, inputMap=None):
 		if input == "-":
@@ -241,16 +239,52 @@ class SpeechSymbols(object):
 		except StopIteration:
 			# These fields are optional. Defaults will be used for unspecified fields.
 			pass
-		self.rawSymbols.append(SpeechSymbol(identifier, None, replacement, level, preserve, displayName))
+		self.symbols.append(SpeechSymbol(identifier, None, replacement, level, preserve, displayName))
 
-	def initProcessor(self):
-		"""Initialise the symbol processor.
+def _getSpeechSymbolsForLocale(locale):
+	builtin = SpeechSymbols()
+	try:
+		builtin.load(os.path.join("locale", locale, "symbols.dic"))
+	except IOError:
+		raise LookupError("No symbol information for locale %s" % locale)
+	user = SpeechSymbols()
+	try:
+		# Don't allow users to specify complex symbols
+		# because an error will cause the whole processor to fail.
+		user.load(os.path.join(globalVars.appArgs.configPath, "symbols-%s.dic" % locale),
+			allowComplexSymbols=False)
+	except IOError:
+		# An empty user SpeechSymbols is okay.
+		pass
+	return builtin, user
+
+class SpeechSymbolProcessor(object):
+	"""
+	Handles processing of symbol pronunciation for a locale.
+	Pronunciation information is taken from one or more L{SpeechSymbols} instances.
+	"""
+
+	#: Caches symbol data for locales.
+	localeSymbols = LocaleDataMap(_getSpeechSymbolsForLocale)
+
+	def __init__(self, locale):
+		"""Constructor.
+		@param locale: The locale for which symbol pronunciation should be processed.
+		@type locale: str
 		"""
-		# We need to merge symbol data from several sources, starting with this instance.
-		sources = [self]
+		self.locale = locale
+
+		# We need to merge symbol data from several sources.
+		sources = self.sources = []
+		builtin, user = self.localeSymbols.fetchLocaleData(locale)
+		self.userSymbols = user
+		sources.append(user)
+		sources.append(builtin)
+
 		# Always use English as a base.
-		if self.locale != "en":
-			sources.append(_speechSymbolsLocaleDataMap.fetchLocaleData("en"))
+		if locale != "en":
+			# Only the builtin data.
+			sources.append(self.localeSymbols.fetchLocaleData("en")[0])
 
 		# The computed symbol information from all sources.
 		symbols = self.computedSymbols = collections.OrderedDict()
@@ -263,7 +297,7 @@ class SpeechSymbols(object):
 
 		# Add all complex symbols first, as they take priority.
 		for source in sources:
-			for identifier, pattern in source.rawComplexSymbols.iteritems():
+			for identifier, pattern in source.complexSymbols.iteritems():
 				if identifier in symbols:
 					# Already defined.
 					continue
@@ -273,7 +307,7 @@ class SpeechSymbols(object):
 
 		# Supplement the data for complex symbols and add all simple symbols.
 		for source in sources:
-			for sourceSymbol in source.rawSymbols:
+			for sourceSymbol in source.symbols:
 				identifier = sourceSymbol.identifier
 				try:
 					symbol = symbols[identifier]
@@ -329,7 +363,11 @@ class SpeechSymbols(object):
 			"|".join(re.escape(identifier) for identifier in simpleSymbolIdentifiers)
 		))
 		pattern = "|".join(patterns)
-		self._regexp = re.compile(pattern, re.UNICODE)
+		try:
+			self._regexp = re.compile(pattern, re.UNICODE)
+		except re.error as e:
+			log.error("Invalid complex symbol regular expression in locale %s: %s" % (locale, e))
+			raise LookupError
 
 	def _regexpRepl(self, m):
 		group = m.lastgroup
@@ -369,7 +407,7 @@ class SpeechSymbols(object):
 		self._level = level
 		return self._regexp.sub(self._regexpRepl, text)
 
-_speechSymbolsLocaleDataMap = LocaleDataMap(SpeechSymbols)
+_localeSpeechSymbolProcessors = LocaleDataMap(SpeechSymbolProcessor)
 
 def processSpeechSymbols(locale, text, level):
 	"""Process some text, converting symbols according to desired pronunciation.
@@ -380,7 +418,7 @@ def processSpeechSymbols(locale, text, level):
 	@param level: The symbol level to use; one of the SYMLVL_* constants.
 	"""
 	try:
-		ss = _speechSymbolsLocaleDataMap.fetchLocaleData(locale)
+		ss = _localeSpeechSymbolProcessors.fetchLocaleData(locale)
 	except LookupError:
 		if not locale.startswith("en"):
 			return processSpeechSymbols("en", text, level)
@@ -395,7 +433,7 @@ def processSpeechSymbol(locale, symbol):
 	@type symbol: str
 	"""
 	try:
-		ss = _speechSymbolsLocaleDataMap.fetchLocaleData(locale)
+		ss = _localeSpeechSymbolProcessors.fetchLocaleData(locale)
 	except LookupError:
 		if not locale.startswith("en"):
 			return processSpeechSymbol("en", symbol)
