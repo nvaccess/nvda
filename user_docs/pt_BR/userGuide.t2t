@@ -1,8 +1,6 @@
 ﻿Guia do Usuário do NVDA2011.1
 
 Traduzido por Marlin Rodrigues
-
-
 %!includeconf: ../userGuide.t2tconf
 %kc:title: REFERÊNCIA RÁPIDA DE TECLAS DE ATALHO DO NVDA
 = Sumário =[toc]
@@ -28,7 +26,7 @@ As características principais são:
 - Suporte para as modernas versões do sistema operacional Windows  incluindo variantes de 32 e 64 bit;
 - Possibilidade de uso na  tela de logon do Windows   e outras telas de segurança;
 - Suporte para interfaces comuns de acessibilidade tais como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation;
-- Suporte para o Prompt de comando do Windows e aplicações de console;
+- Suporte para o Prompt de comando do Windows e aplicações de console.
 -
 ++ Internacionalização ++
 É importante que as pessoas tenham o mesmo acesso às tecnologias em qualquer parte do mundo, independentemente do idioma que falem.
@@ -55,7 +53,7 @@ Para mais detalhes, pode [ver a licença completa. http://www.gnu.org/licenses/o
 
 + Requisitos de Sistema +
 - Sistemas Operacionais: Todas as versões de 32 e 64-bit do Windows XP, Windows Vista e Windows 7 (incluindo versões Server);
-- Memória: 256 mb ou mai de RAM
+- Memória: 256 mb ou mais de RAM
 - Velocidade do Processador: 1.0 ghz ou superior;
 - Cerca de 50 MB de espaço livre.
 -
@@ -76,8 +74,7 @@ Se já tem o instalador do NVDA, pressione simplesmente Enter ou um duplo clique
 
 Enquanto a instalação estiver sendo carregada, ouvirá a música de instalação do programa.
 Após estar carregado, uma cópia temporária deste leitor de tela permitirá que prossiga pelas janelas do instalador e oinstale.
- Note que se estiver executando outra cópia deste leitor de tela no momento em que iniciou o instalador, uma mensagem aparecerá avisando-o que a sua cópia anterior do NVDA será encerrada.
-Quando pressionar Enter nesta mensagem, o instalador concluirá a mesma e iniciará a sua própria cópia.
+ Note que se estiver executando outra cópia deste leitor de telas no momento em que o instalador for iniciado, este a incerrará e iniciará a execução de sua própria cópia.
 Isso é necessário para que o instalador possa atualizar adequadamente qualquer arquivo modificado. 
 
 Neste ponto, se já tem outra cópia do NVDA instalada, o instalador desinstalará a mesma automaticamente e procederá ao início da instalação deste software.
@@ -96,7 +93,7 @@ Ser-lhe-á perguntado onde pretende colocar os arquivos em seu sistema.
 Quando a versãon Portátil perguntar onde deseja descompactá-la, digite a unidade de sua memória USB, mais uma sub-pasta o opcional onde pretende colocar o NVDA.
 Si por exemplo sua unidade de memória USB está em E:\, você deve escrever E:\nvda, Colocando assim o NVDA na sub-pasta NVDA em sua unidade de memória USB.
 
-Atente que mesmo podendo agora levar com você o NVDA e suas opções a qualquer lugar, o NVDA não iniciará automaticamente simplesmente inserindo a unidade de memória USB. Terá que iniciá-lo manualmente desde o Windows Explorer ou desde o diálogo Executar.
+Atente que mesmo podendo agora levar consigo o NVDA e suas opções a qualquer lugar, o NVDA não iniciará automaticamente simplesmente inserindo a unidade de memória USB. Terá que iniciá-lo manualmente desde o Windows Explorer ou desde o diálogo Executar.
 
 Para informações sobre o início automático do NVDA desde uma unidade de memória USB, por favor veja este artigo em inglês:
 http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
@@ -112,13 +109,13 @@ Para iniciar a versão portátil, vá para a pasta onde descompactou o NVDA e pr
 
 Assim que o software iniciar, ouvirá primeiramente um conjunto de tons ascendentes (a informá-lo que este está sendo carregado).
 Dependendo da rapidez do seu computador, ou se executa este leitor de tela através de um dispositivo USB ou de outro mais lento, poderá demorar alguns instantes para iniciar.
-Se o NVDA demorar um tempo maior que o previsto, o leitor de tela dirá "carregando o NVDA. Por favor aguarde..."
+Se o NVDA demorar um tempo maior que o previsto, você ouvirá "carregando o NVDA. Por favor aguarde..."
 
 Se não ouvir nada disso, ou escutar um som de erro do Windows, ou um conjunto de sons descendentes, isto quer dizer que o NVDA tem um erro, e possivelmente precisará comunicar a falha aos programadores.
-Por favor acessee a Página do NVDA para saber como deve proceder. 
-Quando este leitor de tela iniciar pela primeira vez, ser-lhe-á apresentada uma caixa de diálogo que lhe fornece alguma informação básica sobre a tecla modificadora do NVDA e também sobre seu menu.
+Por favor acesse a Página do NVDA para saber como deve proceder. 
+Quando este leitor de telas iniciar pela primeira vez, ser-lhe-á apresentada uma caixa de diálogo que lhe fornece alguma informação básica sobre a tecla modificadora do NVDA e também sobre seu menu.
 (Por favor veja as seções seguintes sobre estes tópicos).
-A caixa de diálogo contém também duas caixas de seleção. A primeira permite-lhe controlar se o software utilizará o Caps Lock como uma tecla modificadora do NVDA e a segunda permite configurar se este diálogo de boas vindas aparecerá sempre que este programa for iniciado.
+A caixa de diálogo contém também duas caixas de seleção. A primeira permite-lhe controlar se o software utilizará o Caps Lock como uma de suas teclas modificadoras e a segunda permite configurar se este diálogo de boas vindas aparecerá sempre que o NVDA for iniciado.
 
 ++ Sobre os Comandos De Teclado Do NVDA ++
 
@@ -151,8 +148,8 @@ Se seu computador portátil não pode fazer isso, ou não lhe permite desativar 
 ++ O Menu do NVDA ++
 O Menu do NVDA permite-lhe controlar as opções deste leitor de tela, ir à ajuda, salvar/restaurar a sua configuração, alterar os dicionários de voz, acessar ferramentas adicionais e sair do NVDA. 
 
-Com este em execução, você tem a possibilidade de acessar seu menu a partir de qualquer lugar do Windows pressionando NVDA+N.
-Também pode acessar o mesmo através da área de notificação do Windows.
+Com o mesmo em execução, você tem a possibilidade de acessar seu menu a partir de qualquer lugar do Windows pressionando NVDA+N.
+Também pode acessá-lo  através da área de notificação do Windows.
 Basta clicar com o botão direito no ícone do NVDA que lá se encontra ou mova-se para a área de notificação com a tecla do logótipo do Windows+B, desloque-se com a Seta Abaixo até ao ícone deste leitor de tela e pressione a Tecla de Aplicações que se encontra em muitos teclados antes do Control direito.
 Quando o menu se abrir, pode usar as setas direcionais para navegar pelo mesmo e ativar um item com a tecla Enter. 
 
@@ -187,7 +184,7 @@ Quando fizer isso, o NVDA transmitirá a informação sobre o objeto em foco, ta
 Existem alguns comandos de teclado úteis quando se move com o foco: 
 %kc:beginInclude
 || Nome | Tecla | Descrição |
-| Informar o foco atual | NVDA+tab | Anuncia o objeto atual ou controle que tem o cursor do sistema. Ao pressionar duas vezes soletrará a informação |
+| Informar o foco atual | NVDA+tab | Anuncia o objeto atual ou controle que tem o foco do sistema. Ao pressionar duas vezes soletrará a informação |
 | Anunciar o título | NVDA+t | Anuncia o título da janela atualmente em execução. Ao pressionar duas vezes soletrará a informação. Três vezes copiará o conteúdo para a área de transferência |
 | Ler janela ativa | NVDA+b | Lê todos os controles na janela atual em execução (muito útil para diálogos) |
 | Ler a Barra de Status | NVDA+end | Lê a barra de status caso o NVDA a encontre. Este comando também move a navegação de objetos para sua localização |
@@ -197,7 +194,7 @@ Existem alguns comandos de teclado úteis quando se move com o foco:
 Quando o foco está sobre um objeto que tem um cursor de edição (cursor do sistema), pode andar com as setas e editar normalmente como pretender.
 O NVDA anunciará como se mover por Carácter, palavra, linha e também informará a seleção ou não seleção de texto.
  
-Este leitor de tela fornece os seguintes comandos relativamente ao cursor do sistema:
+Este leitor de telas fornece os seguintes comandos relativamente ao cursor do sistema:
 %kc:beginInclude
 || Nome | Tecla | Descrição |
 | Leitura contínua | NVDA+seta abaixo | Inicia a leitura a partir da posição atual do cursor do sistema, movendo-o pelo texto |
@@ -285,8 +282,8 @@ Isto denomina-se "revisão plana".
 Os seguintes dois comandos são utilizados para alternar entre para e a partir da revisão plana:
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
-| Mudar para a revisão plana | NVDA+7 do Teclado numérico | NVDA+pageUp | Move para a revisão plana, colocando-o na posição do objeto de navegação, permitindo que reveja a tela (ou num documento se estiver atualmente em algum) com os comandos de revisão de texto with the text review commands. |
-| Mover para o objeto a partir da revisão plana | NVDA+1 do teclado numérico | NVDA+pageDown | Navega para o objeto representado pelo texto na posição atual do cursor de exploração na revisão plana |
+| Ativar a revisão plana | NVDA+7 do Teclado numérico | NVDA+pageUp | Move para a revisão plana, colocando-o na posição do objeto de navegação, permitindo que reveja a tela (ou num documento se estiver atualmente em algum) com os comandos de revisão de texto |
+| Mover para o objeto a partir da revisão plana | NVDA+1 do teclado numérico | NVDA+pageDown | Navega para o objeto representado pelo texto na posição atual do cursor de exploração dentro da revisão plana |
 %kc:endInclude
 
 ++ Navegando com o Mouse ++
@@ -827,7 +824,7 @@ Para os programadores com visão ou para as pessoas que demonstram o NVDA para g
 Para ativar o exibidor de fala marque o item de menu "exibidor de fala" nas Ferramentas do Menu do NVDA.
 Ao desmarcar este item desativa-o.
 
-Enquanto o Visualizador de Discurso estiver ativado, o mesmo atualizar-se-á constantemente para apresentar-lhe o texto mais recente que está sendo falado.
+Enquanto o exibidor de fala estiver ativado, o mesmo atualizar-se-á constantemente para apresentar-lhe o texto mais recente que está sendo falado.
 Contudo, se clicar ou se o cursor ficar no visualizador, o NVDA parará temporariamente a atualização do texto, de modo que possa selecionar facilmente ou copiar o conteúdo existente. 
 
 ++ Console Python ++
