@@ -578,6 +578,35 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
 
+	def isNVDAObjectPartOfLayoutTable(self,obj):
+		docHandle,ID=self.getIdentifierFromNVDAObject(obj)
+		ID=unicode(ID)
+		info=self.makeTextInfo(obj)
+		info.collapse()
+		info.expand(textInfos.UNIT_CHARACTER)
+		fieldCommands=[x for x in info.getTextWithFields() if isinstance(x,textInfos.FieldCommand)]
+		tableLayout=None
+		tableID=None
+		for fieldCommand in fieldCommands:
+			fieldID=fieldCommand.field.get("controlIdentifier_ID") if fieldCommand.field else None
+			if fieldID==ID:
+				tableLayout=fieldCommand.field.get('table-layout')
+				if tableLayout is not None:
+					return tableLayout
+				tableID=fieldCommand.field.get('table-id')
+				break
+		if tableID is None:
+			return False
+		for fieldCommand in fieldCommands:
+			fieldID=fieldCommand.field.get("controlIdentifier_ID") if fieldCommand.field else None
+			if fieldID==tableID:
+				tableLayout=fieldCommand.field.get('table-layout',False)
+				break
+		return tableLayout
+
+ 
+
+
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		"""Retrieve an NVDAObject for a given node identifier.
 		Subclasses must override this method.
