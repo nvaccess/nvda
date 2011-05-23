@@ -7,28 +7,50 @@ complexSymbols:
 # identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! sentence ending	(?<=\w(\s|[^\s!]))\!(?=[\"'”’)\s]|$)
-? sentence ending	(?<=\w(\s|[^\s?]))\?(?=[\"'”’)\s]|$)
-... sentence ending	(?<=\w(\s|[^\s.]))\.\.\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])(\s\!|\!)(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s!])(\s\?|\?)(?=[\"'”’)\s]|$)
+... sentence ending	(?<=[^\s!])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
 # Phrase endings.
-; phrase ending	(?<=\w(\s|[^\s;]));(?=\s|$)
-: phrase ending	(?<=\w(\s|[^\s:])):(?=\s|$)
+; phrase ending	(?<=[^\s!])(\s\;|\;)(?=[\"'”’)\s]|$)
+: phrase ending	(?<=[^\s!])(\s\:|\:)(?=[\"'”’)\s]|$)
 # Others
 decimal point	(?<=\d)\,(?=\d)
+negative numbers	\-(?=\d{1,})
+
+# Fix pronunciation for some words
+say nvda	[nN][vV][dD][aA]
+mac	(?<=\b)[mM][cC]
+no francs	F(?=\d|\s\d)
+
+# Break words containing capital letters
+cap-inword	(?<=[a-z])(?=[A-Z])
+begcaps	((?<=\b[A-Z][A-Z])(?=[A-Z][a-z]))|((?<=\b[A-Z])(?=[A-Z]\b))
+3caps	((?<=\b[A-Z])(?=[A-Z][A-Z]\b))|((?<=\b[A-Z][A-Z])(?=[A-Z]\b))
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
 . sentence ending	point	# . fin de phrase
-! sentence ending	poindexclamation	# ! fin de phrase
-? sentence ending	poindinterrogation	# ? fin de phrase
+! sentence ending	point dexclamation	# ! fin de phrase
+? sentence ending	point dinterrogation	# ? fin de phrase
 ... sentence ending	points de suspension	all	always	# ... fin de phrase
-; phrase ending	poinvirgule	# ; fin de phrase
-: phrase ending	deupoint	# : fin de phrase
+; phrase ending	point virgule	# ; fin de phrase
+: phrase ending	deux points	# : fin de phrase
 
 decimal point		# virgule
+negative numbers	moins	none	norep
 in-word '	apostrophe
+
+# Correctly pronounce NVDA with any synthesizer
+say nvda	n v d a  	none	norep
+mac	mac	none	norep
+no francs	f	none	norep
+
+# Break words containing capital letters
+cap-inword	 	none	norep
+begcaps	 	none	norep
+3caps	 	none	norep
 
 # Whitespace
 \0	blanc
@@ -37,40 +59,40 @@ in-word '	apostrophe
 \f	saut de page
 \r	retour chariot
  	espace
- 	espace	# espace insécable
+ 	espace insécable	# espace insécable
 
 # Standard punctuation/symbols
-!	poindexclamation
+!	point dexclamation
 "	guillemet
 \#	dièse
-$	dollar
+$	dollar	none
 £	livre
-€	euro
+€	euro	none
 %	pourcent
-&	et
+&	et	none
 '	apostrophe
 (	parenthèse gauche
 )	parenthèse droite
-*	astérisque
-+	pluss
+*	astérisque	some	norep
++	pluss	some	norep
 ,	virgule
 -	tiret
 .	point
-/	baroblique
-:	deupoint
-;	poinvirgule
+/	barre oblique
+:	deux points	most	norep
+;	point virgule
 <	inférieur
 >	supérieur
 =	égal
-?	poindinterrogation
+?	point dinterrogation
 @	arobase	none
 [	crochet gauche
 ]	crochet droit
 "	guillemet
-\\	barobliquinversée
-^	accencirconflexe
+\\	barre oblique inversée
+^	accent circonflexe
 _	souligné
-`	accengrave
+`	accent grave
 {	accolade gauche
 }	accolade droite
 |	barre verticale
@@ -86,5 +108,8 @@ _	souligné
 ’	apostrophe droite
 –	tiret demicadratin
 —	tiret cadratin
+§	section	most
 ●	astérisque
 ¨	tréma
+‎	gauche à droite	char
+‏	droite à gauche	char

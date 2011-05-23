@@ -466,6 +466,12 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 		LOG_DEBUG(L"IAccessible::get_accName returned "<<res);
 		name=NULL;
 	}
+	LOG_DEBUG(L"getting accDescription");
+	BSTR description=NULL;
+	if((res=pacc->get_accDescription(varChild,&description))==S_OK) {
+		parentNode->addAttribute(L"description",description);
+		SysFreeString(description);
+	}
 	// Handle table cell information.
 	IAccessibleTableCell* paccTableCell = NULL;
 	map<wstring,wstring>::const_iterator IA2AttribsMapIt;

@@ -45,6 +45,9 @@ REASON_DEBUG=8
 REASON_ONLYCACHE=9
 REASON_FOCUSENTERED=10
 
+#: The string used to separate distinct chunks of text when multiple chunks should be spoken without pauses.
+CHUNK_SEPARATOR = "  "
+
 oldTreeLevel=None
 oldTableID=None
 oldRowNumber=None
@@ -483,15 +486,18 @@ def processNegativeStates(role, states, reason, negativeStates):
 	# Restrict "not checked" in a similar way to "not selected".
 	if (role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKMENUITEM) or controlTypes.STATE_CHECKABLE in states)  and (controlTypes.STATE_HALFCHECKED not in states) and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
 		speakNegatives.add(controlTypes.STATE_CHECKED)
-	if reason==REASON_CHANGE and not controlTypes.STATES_SORTED&states:
-		speakNegatives.add(controlTypes.STATE_SORTED)
 	if reason == REASON_CHANGE:
 		# We want to speak this state only if it is changing to negative.
 		speakNegatives.add(controlTypes.STATE_DROPTARGET)
 		# We were given states which have changed to negative.
 		# Return only those supplied negative states which should be spoken;
 		# i.e. the states in both sets.
-		return negativeStates & speakNegatives
+		speakNegatives &= negativeStates
+		if controlTypes.STATES_SORTED & negativeStates and not controlTypes.STATES_SORTED & states:
+			# If the object has just stopped being sorted, just report not sorted.
+			# The user doesn't care how it was sorted before.
+			speakNegatives.add(controlTypes.STATE_SORTED)
+		return speakNegatives
 	else:
 		# This is not a state change; only positive states were supplied.
 		# Return all negative states which should be spoken, excluding the positive states.
@@ -572,7 +578,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 		textList.append(text)
 
 	if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD):
-		text=" ".join(textList)
+		text=CHUNK_SEPARATOR.join(textList)
 		if text:
 			speakText(text,index=index)
 		text=info.text
@@ -624,7 +630,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 				relativeTextList.append(text)
 				lastTextOkToMerge=False
 
-	text=" ".join(relativeTextList)
+	text=CHUNK_SEPARATOR.join(relativeTextList)
 	# Don't add this text if it is blank.
 	if text and not isBlank(text):
 		textList.append(text)
@@ -645,7 +651,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)
 		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
 
-	text=" ".join(textList)
+	text=CHUNK_SEPARATOR.join(textList)
 	speechSequence=[]
 	# Even when there's no speakable text, we still need to notify the synth of the index.
 	if index is not None:
@@ -742,7 +748,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		oldTableID = None
-	return " ".join([x for x in textList if x])
+	return CHUNK_SEPARATOR.join([x for x in textList if x])
 
 def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
 	if not formatConfig:
@@ -756,6 +762,10 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
+	if reason==REASON_FOCUS or attrs.get('alwaysReportDescription',False):
+		description=attrs.get('description',"")
+	else:
+		description=""
 	level=attrs.get('level',None)
 
 	#Remove the clickable state from controls that are clearly clickable according to their role
@@ -798,6 +808,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
+	descriptionText=getSpeechTextForProperties(reason=reason,description=description)
 	levelText=getSpeechTextForProperties(reason=reason,positionInfo_level=level)
 
 	# Determine under what circumstances this node should be spoken.
@@ -807,7 +818,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	# speakExitForOther: When moving by word or character, speak when the user exits the control.
 	speakEntry=speakWithinForLine=speakExitForLine=speakExitForOther=False
 	if (
-		role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_SLIDER,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_COMBOBOX)
+		role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_SLIDER,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_PROGRESSBAR)
 		or (role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
 		or (role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 	):
@@ -851,15 +862,17 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	elif fieldType=="start_addedToControlFieldStack" and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER,controlTypes.ROLE_TABLEROWHEADER) and tableID:
 		# Table cell.
 		reportTableHeaders = formatConfig["reportTableHeaders"]
-		return getSpeechTextForProperties(_tableID=tableID, rowNumber=attrs.get("table-rownumber"), columnNumber=attrs.get("table-columnnumber"),
-			rowHeaderText=attrs.get("table-rowheadertext") if reportTableHeaders else None, columnHeaderText=attrs.get("table-columnheadertext") if reportTableHeaders else None)
+		return " ".join((getSpeechTextForProperties(_tableID=tableID,
+				rowNumber=attrs.get("table-rownumber"), columnNumber=attrs.get("table-columnnumber"),
+				rowHeaderText=attrs.get("table-rowheadertext") if reportTableHeaders else None, columnHeaderText=attrs.get("table-columnheadertext") if reportTableHeaders else None),
+			stateText))
 
 	# General cases
 	elif (
 		(speakEntry and ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))))
 		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
 	):
-		return " ".join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),levelText,keyboardShortcutText if x])
+		return CHUNK_SEPARATOR.join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),descriptionText,levelText,keyboardShortcutText if x])
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
 		return _("out of %s")%roleText
 
@@ -998,7 +1011,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 	if attrsCache is not None:
 		attrsCache.clear()
 		attrsCache.update(attrs)
-	return " ".join(textList)
+	return CHUNK_SEPARATOR.join(textList)
 
 def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
 	if tableInfo is None and oldTableInfo is None:

@@ -448,7 +448,11 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	macro_addHTMLAttributeToMap(L"onmouseup",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	//ARIA properties:
 	macro_addHTMLAttributeToMap(L"role",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-valuenow",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-sort",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-labelledBy",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-describedBy",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-expanded",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-selected",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-level",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-required",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
@@ -738,6 +742,30 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		IAStates-=STATE_SYSTEM_READONLY;
 	}
 
+	tempIter=attribsMap.find(L"HTMLAttrib::role");
+	if(tempIter!=attribsMap.end()) {
+		const wstring& ariaRole=tempIter->second;
+		if(ariaRole.compare(L"description")==0) {
+			//IE gives elements with an ARIA role of description a role of edit, probably should be staticText
+			IARole=ROLE_SYSTEM_STATICTEXT;
+		} else if(ariaRole.compare(L"list")==0) {
+			IARole=ROLE_SYSTEM_LIST;
+			IAStates|=STATE_SYSTEM_READONLY;
+		} else if(ariaRole.compare(L"slider")==0) {
+			IARole=ROLE_SYSTEM_SLIDER;
+			IAStates|=STATE_SYSTEM_FOCUSABLE;
+			tempIter=attribsMap.find(L"aria-valuenow");
+			if(tempIter!=attribsMap.end()) {
+				IAValue=tempIter->second;
+			}
+		} else if(ariaRole.compare(L"progressbar")==0) {
+			IARole=ROLE_SYSTEM_PROGRESSBAR;
+			tempIter=attribsMap.find(L"aria-valuenow");
+			if(tempIter!=attribsMap.end()) {
+				IAValue=tempIter->second;
+			}
+		}
+	} 
 	//IE doesn't seem to support aria-label yet so we want to override IAName with it
 	tempIter=attribsMap.find(L"HTMLAttrib::aria-label");
 	if(tempIter!=attribsMap.end()) {
@@ -773,6 +801,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		contentString=L" ";
 		isBlock=true;
 		IARole=ROLE_SYSTEM_SEPARATOR;
+		} else if(IARole==ROLE_SYSTEM_SLIDER||IARole==ROLE_SYSTEM_PROGRESSBAR) {
+			contentString=IAValue;
 	} else if ((nodeName.compare(L"OBJECT")==0 || nodeName.compare(L"APPLET")==0)) {
 		isBlock=true;
 		contentString=L" ";

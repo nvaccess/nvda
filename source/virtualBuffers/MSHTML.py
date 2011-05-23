@@ -4,10 +4,13 @@ from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
 import controlTypes
 import NVDAObjects.IAccessible.MSHTML
 import winUser
+import NVDAHelper
+import ctypes
 import IAccessibleHandler
 import oleacc
 from logHandler import log
 import textInfos
+import api
 import aria
 import config
 
@@ -36,6 +39,30 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_CLICKABLE)
 		if attrs.get('HTMLAttrib::aria-required','false')=='true':
 			states.add(controlTypes.STATE_REQUIRED)
+		name=None
+		ariaLabelledBy=attrs.get('HTMLAttrib::aria-labelledBy')
+		if ariaLabelledBy:
+			try:
+				labelNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaLabelledBy)
+			except (COMError,NameError):
+				labelNode=None
+			if labelNode:
+				try:
+					name=self.obj.makeTextInfo(NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=labelNode)).text
+				except:
+					pass
+		description=None
+		ariaDescribedBy=attrs.get('HTMLAttrib::aria-describedBy')
+		if ariaDescribedBy:
+			try:
+				descNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaDescribedBy)
+			except (COMError,NameError):
+				escNode=None
+			if descNode:
+				try:
+					description=self.obj.makeTextInfo(NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=descNode)).text
+				except:
+					pass
 		ariaSort=attrs.get('HTMLAttrib::aria-sort')
 		state=aria.ariaSortValuesToNVDAStates.get(ariaSort)
 		if state is not None:
@@ -45,6 +72,11 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_SELECTED)
 		elif ariaSelected=="false":
 			states.discard(controlTypes.STATE_SELECTED)
+		ariaExpanded=attrs.get('HTMLAttrib::aria-expanded')
+		if ariaExpanded=="true":
+			states.add(controlTypes.STATE_EXPANDED)
+		elif ariaExpanded=="false":
+			states.add(controlTypes.STATE_COLLAPSED)
 		if attrs.get('HTMLAttrib::aria-invalid','false')=='true':
 			states.add(controlTypes.STATE_INVALID)
 		if attrs.get('HTMLAttrib::aria-multiline','false')=='true':
@@ -81,6 +113,10 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			attrs["level"] = level
 		if landmark:
 			attrs["landmark"]=landmark
+		if name:
+			attrs["name"]=name
+		if description:
+			attrs["description"]=description
 		return super(MSHTMLTextInfo,self)._normalizeControlField(attrs)
 
 class MSHTML(VirtualBuffer):
@@ -89,6 +125,22 @@ class MSHTML(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
+
+	def _tabOverride(self,direction):
+		if super(MSHTML,self)._tabOverride(direction):
+			return True
+		if api.getFocusObject() is not self.rootNVDAObject:
+			return False
+		try:
+			newNode, newStart, newEnd = next(self._iterNodesByType("focusable", direction,0))
+		except StopIteration:
+			return False
+		docHandle=ctypes.c_int()
+		ID=ctypes.c_int()
+		NVDAHelper.localLib.VBuf_getIdentifierFromControlFieldNode(self.VBufHandle, newNode, ctypes.byref(docHandle), ctypes.byref(ID))
+		obj=self.getNVDAObjectFromIdentifier(docHandle.value,ID.value)
+		obj.setFocus()
+		return True
 
 	def _getInitialCaretPos(self):
 		initialPos = super(MSHTML,self)._getInitialCaretPos()

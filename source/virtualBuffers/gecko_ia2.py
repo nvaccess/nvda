@@ -31,7 +31,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_DRAGGABLE)
 		elif grabbed == "true":
 			states.add(controlTypes.STATE_DRAGGING)
-		sorted = attrs.get("IAccessible2::attribute_aria-sorted")
+		sorted = attrs.get("IAccessible2::attribute_sort")
 		if sorted=="ascending":
 			states.add(controlTypes.STATE_SORTED_ASCENDING)
 		elif sorted=="descending":

@@ -14,6 +14,9 @@
 - Speech no longer unnaturally pauses at the end of each line when using the say all command. (#149)
 - NVDA will now announce whether something is sorted (according to the aria-sort property) in web browsers. (#1500)
 - Unicode Braille Patterns are now displayed correctly on braille displays. (#1505)
+- In Internet Explorer and other MSHTML controls when focus moves inside a group of controls (surrounded by a fieldset), NVDA will now announce the name of the group (the legend). (#535)
+- In Internet Explorer and other MSHTML controls, the aria-labelledBy and aria-describedBy properties are now honoured.
+- in Internet Explorer and other MSHTML controls, support for ARIA list, gridcell, slider and progressbar controls has been improved.
 
 
 == Changes ==
@@ -22,6 +25,9 @@
 - Updated eSpeak speech synthesiser to 1.45.03. (#1465)
 - Layout tables are no longer announced in Mozilla Gecko applications while moving the focus when in focus mode or outside of a document.
 - Updated liblouis braille translator to 2.3.0.
+- When in browse mode  and jumping to a control with quicknav or focus, the description of the control is now announced if it has one.
+- Announce progress bars in brows mode.
+- Nodes marked with an ARIA role of presentation in Internet Explorer and other MSHTML controls are now filtered out of simple review and the focus ancestry.
 
 
 == Bug Fixes ==
@@ -38,6 +44,16 @@
 - In Internet Explorer and other MSHTML controls, ARIA listbox controls are now treeted as lists, rather than list items.
 - When a read-only editable text control receives focus, NVDA now reports that it is read-only. (#1436)
 - In virtual buffers, NVDA now behaves correctly with respect to read-only editable text fields.
+- In virtual buffers, NVDA no longer incorrectly switches out of focus mode when aria-activedescendant is set; e.g. when the completion list appeared in some auto complete controls.
+- In Adobe Reader, the name of controls is now reported when moving focus or using quick navigation in browse mode.
+- In XFA PDF documents in Adobe Reader, buttons and links are now rendered correctly.
+- In XFA PDF documents in Adobe Reader, all elements are now rendered on separate lines. This change was made because large sections (sometimes even the entire document) were being rendered without breaks due to the general lack of structure in these documents.
+- Fixed problems when moving focus to or away from editable text fields in XFA PDF documents in Adobe Reader.
+- In XFA PDF documents in Adobe Reader, changes to the value of a focused combo box will now be reported.
+- Owner-drawn Combo boxes such as the ones to choose colors in Outlook Express are now accessible with NVDA. (#1340)
+- In languages which use a space as a digit group/thousands separator such as French and German, numbers from separate chunks of text are no longer pronounced as a single number. This was particularly problematic for table cells containing numbers. (#555)
+- nodes with an ARIA role of description in Internet Explorer and other MSHTML controls now are classed as static text, not edit fields.
+- Possibly stop the tab key from taking you to the addressbar when first opening Internet Explorer and landing on a document.
 
 
 == Changes for Developers ==

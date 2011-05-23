@@ -26,6 +26,24 @@ from ..window import Window
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
+class HTMLAttribCache(object):
+
+	def __init__(self,HTMLNode):
+		self.HTMLNode=HTMLNode
+		self.cache={}
+
+	def __getitem__(self,item):
+		try:
+			return self.cache[item]
+		except LookupError:
+			pass
+		try:
+			value=self.HTMLNode.getAttribute(item)
+		except (COMError,NameError):
+			value=None
+		self.cache[item]=value
+		return value
+
 nodeNamesToNVDARoles={
 	"FRAME":controlTypes.ROLE_FRAME,
 	"IFRAME":controlTypes.ROLE_FRAME,
@@ -58,6 +76,7 @@ nodeNamesToNVDARoles={
 	"OBJECT":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"APPLET":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"EMBED":controlTypes.ROLE_EMBEDDEDOBJECT,
+	"FIELDSET":controlTypes.ROLE_GROUPING,
 }
 
 def IAccessibleFromHTMLNode(HTMLNode):
@@ -169,7 +188,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			self._rangeObj=_rangeObj.duplicate()
 			return
 		try:
-			editableBody=self.obj.HTMLNode.tagName=="BODY" and self.obj.HTMLNode.isContentEditable
+			editableBody=self.obj.HTMLNodeName=="BODY" and self.obj.isContentEditable
 		except:
 			editableBody=False
 		if editableBody:
@@ -335,16 +354,21 @@ class MSHTML(IAccessible):
 				clsList.append(Body)
 			elif nodeName == "OBJECT":
 				clsList.append(Object)
+			elif nodeName=="FIELDSET":
+				clsList.append(Fieldset)
 		clsList.append(MSHTML)
 		if not self.HTMLNodeHasAncestorIAccessible:
 			# The IAccessibleObject is for this node (not an ancestor), so IAccessible overlay classes are relevant.
 			super(MSHTML,self).findOverlayClasses(clsList)
 
 	def _get_treeInterceptorClass(self):
-		if self.HTMLNode and self.role==controlTypes.ROLE_DOCUMENT and not self.isContentEditable:
+		if self.role==controlTypes.ROLE_DOCUMENT and not self.isContentEditable:
 			import virtualBuffers.MSHTML
 			return virtualBuffers.MSHTML.MSHTML
 		return super(MSHTML,self).treeInterceptorClass
+
+	def _get_HTMLAttributes(self):
+		return HTMLAttribCache(self.HTMLNode)
 
 	def __init__(self,HTMLNode=None,IAccessibleObject=None,IAccessibleChildID=None,**kwargs):
 		self.HTMLNodeHasAncestorIAccessible=False
@@ -396,14 +420,47 @@ class MSHTML(IAccessible):
 				pass
 		return super(MSHTML, self)._isEqual(other)
 
+	def _get_presentationType(self):
+		presType=super(MSHTML,self).presentationType
+		if presType==self.presType_content and self.HTMLAttributes['role']=="presentation":
+			presType=self.presType_layout
+		if self.treeInterceptor and presType==self.presType_content and self.role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEBODY) and self.treeInterceptor.isNVDAObjectPartOfLayoutTable(self):
+			presType=self.presType_layout
+		return presType
+
+
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		ariaRole=self.HTMLAttributes['aria-role']
+		if ariaRole=="gridcell":
+			return True
+		return super(MSHTML,self).shouldAllowIAccessibleFocusEvent
+
 	def _get_name(self):
-		try:
-			ariaLabel=self.HTMLNode.getAttribute('aria-label')
-		except (COMError,NameError):
-			ariaLabel=None
+		ariaLabel=self.HTMLAttributes['aria-label']
 		if ariaLabel:
 			return ariaLabel
+		ariaLabelledBy=self.HTMLAttributes['aria-labelledBy']
+		if ariaLabelledBy:
+			try:
+				labelNode=self.HTMLNode.document.getElementById(ariaLabelledBy)
+			except (COMError,NameError):
+				labelNode=None
+			if labelNode:
+				try:
+					return labelNode.innerText
+				except (COMError,NameError):
+					pass
+		title=self.HTMLAttributes['title']
+		if title:
+			return title
+		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_TABLE:
+			summary=self.HTMLAttributes['summary']
+			if summary:
+				return summary
 		if self.HTMLNodeHasAncestorIAccessible:
+			return ""
+		#IE inappropriately generates the name from descendants on some controls
+		if self.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUBAR,oleacc.ROLE_SYSTEM_TOOLBAR,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TABLE,oleacc.ROLE_SYSTEM_DOCUMENT):
 			return ""
 		return super(MSHTML,self).name
 
@@ -421,6 +478,17 @@ class MSHTML(IAccessible):
 			return super(MSHTML,self).value
 
 	def _get_description(self):
+		ariaDescribedBy=self.HTMLAttributes['aria-describedBy']
+		if ariaDescribedBy:
+			try:
+				descNode=self.HTMLNode.document.getElementById(ariaDescribedBy)
+			except (COMError,NameError):
+				descNode=None
+			if descNode:
+				try:
+					return descNode.innerText
+				except (COMError,NameError):
+					pass
 		if self.HTMLNodeHasAncestorIAccessible:
 			return ""
 		return super(MSHTML,self).description
@@ -439,10 +507,7 @@ class MSHTML(IAccessible):
 
 	def _get_role(self):
 		if self.HTMLNode:
-			try:
-				ariaRole=self.HTMLNode.getAttribute('role')
-			except (COMError, NameError):
-				ariaRole=None
+			ariaRole=self.HTMLAttributes['role']
 			if ariaRole:
 				role=aria.ariaRolesToNVDARoles.get(ariaRole)
 				if role:
@@ -464,74 +529,46 @@ class MSHTML(IAccessible):
 			states=super(MSHTML,self).states
 		else:
 			states=set()
-		e=self.HTMLNode
-		if e:
-			try:
-				ariaSort=e.GetAttribute('aria-sort')
-			except (COMError, NameError):
-				ariaSort=None
-			state=aria.ariaSortValuesToNVDAStates.get(ariaSort)
-			if state is not None:
-				states.add(state)
-			try:
-				ariaRequired=e.GetAttribute('aria-required')
-			except (COMError, NameError):
-				ariaRequired=None
-			if ariaRequired=="true":
-				states.add(controlTypes.STATE_REQUIRED)
-			try:
-				ariaSelected=e.GetAttribute('aria-selected')
-			except (COMError, NameError):
-				ariaSelected=None
-			if ariaSelected=="true":
-				states.add(controlTypes.STATE_SELECTED)
-			elif ariaSelected=="false":
-				states.discard(controlTypes.STATE_SELECTED)
-			try:
-				ariaInvalid=e.GetAttribute('aria-invalid')
-			except (COMError, NameError):
-				ariaInvalid=None
-			if ariaInvalid=="true":
-				states.add(controlTypes.STATE_INVALID)
-			try:
-				ariaGrabbed=e.GetAttribute('aria-grabbed')
-			except (COMError, NameError):
-				ariaGrabbed=None
-			if ariaGrabbed=="true":
-				states.add(controlTypes.STATE_DRAGGING)
-			elif ariaGrabbed=="false":
-				states.add(controlTypes.STATE_DRAGGABLE)
-			try:
-				ariaDropeffect=e.GetAttribute('aria-dropeffect')
-			except (COMError, NameError):
-				ariaDropeffect='none'
-			if ariaDropeffect and ariaDropeffect!="none":
-				states.add(controlTypes.STATE_DROPTARGET)
-			try:
-				isContentEditable=e.isContentEditable
-			except (COMError,NameError):
-				isContentEditable=False
-			if isContentEditable:
-				states.add(controlTypes.STATE_EDITABLE)
-				states.discard(controlTypes.STATE_READONLY)
-			nodeName=self.HTMLNodeName
-			if nodeName=="TEXTAREA":
-				states.add(controlTypes.STATE_MULTILINE)
-			try:
-				required=e.getAttribute('aria-required')
-			except (COMError, NameError):
-				required=None
-			if required and required.lower()=='true':
-				states.add(controlTypes.STATE_REQUIRED)
+		ariaSort=self.HTMLAttributes['aria-sort']
+		state=aria.ariaSortValuesToNVDAStates.get(ariaSort)
+		if state is not None:
+			states.add(state)
+		ariaRequired=self.HTMLAttributes['aria-required']
+		if ariaRequired=="true":
+			states.add(controlTypes.STATE_REQUIRED)
+		ariaSelected=self.HTMLAttributes['aria-selected']
+		if ariaSelected=="true":
+			states.add(controlTypes.STATE_SELECTED)
+		elif ariaSelected=="false":
+			states.discard(controlTypes.STATE_SELECTED)
+		ariaExpanded=self.HTMLAttributes['aria-expanded']
+		if ariaExpanded=="true":
+			states.add(controlTypes.STATE_EXPANDED)
+		elif ariaExpanded=="false":
+			states.add(controlTypes.STATE_COLLAPSED)
+		ariaInvalid=self.HTMLAttributes['aria-invalid']
+		if ariaInvalid=="true":
+			states.add(controlTypes.STATE_INVALID)
+		ariaGrabbed=self.HTMLAttributes['aria-grabbed']
+		if ariaGrabbed=="true":
+			states.add(controlTypes.STATE_DRAGGING)
+		elif ariaGrabbed=="false":
+			states.add(controlTypes.STATE_DRAGGABLE)
+		ariaDropeffect=self.HTMLAttributes['aria-dropeffect']
+		if ariaDropeffect and ariaDropeffect!="none":
+			states.add(controlTypes.STATE_DROPTARGET)
+		if self.isContentEditable:
+			states.add(controlTypes.STATE_EDITABLE)
+			states.discard(controlTypes.STATE_READONLY)
+		nodeName=self.HTMLNodeName
+		if nodeName=="TEXTAREA":
+			states.add(controlTypes.STATE_MULTILINE)
 		return states
 
 	def _get_isContentEditable(self):
-		if self.HTMLNode:
-			try:
-				return bool(self.HTMLNode.isContentEditable)
-			except:
-				return False
-		else:
+		try:
+			return bool(self.HTMLNode.isContentEditable)
+		except:
 			return False
 
 	def _get_parent(self):
@@ -681,15 +718,10 @@ class MSHTML(IAccessible):
 		raise NotImplementedError
 
 	def _get_HTMLNodeName(self):
-		if not self.HTMLNode:
+		try:
+			return self.HTMLNode.nodeName
+		except (COMError,NameError):
 			return ""
-		if not hasattr(self,'_HTMLNodeName'):
-			try:
-				nodeName=self.HTMLNode.nodeName
-			except (COMError,NameError):
-				nodeName=""
-			self._HTMLNodeName=nodeName
-		return self._HTMLNodeName
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
@@ -703,6 +735,27 @@ class V6ComboBox(IAccessible):
 		# This combo box is focused. However, the value change is not fired on the real focus object.
 		# Therefore, redirect this event to the real focus object.
 		focus.event_valueChange()
+
+class Fieldset(MSHTML):
+
+	def _get_name(self):
+		try:
+			child=self.HTMLNode.children[0]
+		except (COMError,NameError):
+			child=None
+		if not child:
+			return super(Fieldset,self).name
+		try:
+			nodeName=child.nodeName
+		except (COMError,NameError):
+			return super(Fieldset,self).name
+		if nodeName!="LEGEND":
+			return super(Fieldset,self).name
+		try:
+			text=child.innerText
+		except (COMError,NameError):
+			return super(Fieldset,self).name
+		return text
 
 class Body(MSHTML):
 

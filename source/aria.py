@@ -7,6 +7,7 @@
 import controlTypes
 
 ariaRolesToNVDARoles={
+	"description":controlTypes.ROLE_STATICTEXT,
 	"alert":controlTypes.ROLE_ALERT,
 	"alertdialog":controlTypes.ROLE_DIALOG,
 	"application":controlTypes.ROLE_APPLICATION,
