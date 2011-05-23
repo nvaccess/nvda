@@ -158,10 +158,12 @@ class SpeechSymbols(object):
 		self.complexSymbols = collections.OrderedDict()
 		self.symbols = []
 
-	def load(self, fileName):
+	def load(self, fileName, allowComplexSymbols=True):
 		"""Load symbol information from a file.
 		@param fileName: The name of the file from which to load symbol information.
 		@type fileName: str
+		@param allowComplexSymbols: Whether to allow complex symbols.
+		@type allowComplexSymbols: bool
 		@raise IOError: If the file cannot be read.
 		"""
 		with codecs.open(fileName, "r", "utf_8_sig", errors="replace") as f:
@@ -171,7 +173,7 @@ class SpeechSymbols(object):
 					# Whitespace or comment.
 					continue
 				line = line.rstrip("\r\n")
-				if line == "complexSymbols:":
+				if line == "complexSymbols:" and allowComplexSymbols:
 					handler = self._loadComplexSymbol
 				elif line == "symbols:":
 					handler = self._loadSymbol
@@ -247,7 +249,10 @@ def _getSpeechSymbolsForLocale(locale):
 		raise LookupError("No symbol information for locale %s" % locale)
 	user = SpeechSymbols()
 	try:
-		user.load(os.path.join(globalVars.appArgs.configPath, "symbols-%s.dic" % locale))
+		# Don't allow users to specify complex symbols
+		# because an error will cause the whole processor to fail.
+		user.load(os.path.join(globalVars.appArgs.configPath, "symbols-%s.dic" % locale),
+			allowComplexSymbols=False)
 	except IOError:
 		# An empty user SpeechSymbols is okay.
 		pass
