@@ -301,7 +301,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 
 class MSHTML(IAccessible):
 
-	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD','HTML','PARAM']
+	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD','HTML','PARAM','STYLE']
 	HTMLNodeNameEmbedList=['OBJECT','EMBED','APPLET','FRAME','IFRAME']
 
 	_ignoreCaretEvents=False #:Set to true when moving the caret to calculate lines, event_caret will be disabled.
