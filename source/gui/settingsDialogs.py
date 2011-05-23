@@ -645,8 +645,8 @@ class ObjectPresentationDialog(SettingsDialog):
 		config.conf["presentation"]["reportDynamicContentChanges"]=self.dynamicContentCheckBox.IsChecked()
 		super(ObjectPresentationDialog, self).onOk(evt)
 
-class VirtualBuffersDialog(SettingsDialog):
-	title = _("virtual buffers")
+class BrowseModeDialog(SettingsDialog):
+	title = _("Browse mode")
 
 	def makeSettings(self, settingsSizer):
 		maxLengthLabel=wx.StaticText(self,-1,label=_("&Maximum number of characters on one line"))
@@ -697,7 +697,7 @@ class VirtualBuffersDialog(SettingsDialog):
 		config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"]=self.autoPassThroughOnFocusChangeCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]=self.autoPassThroughOnCaretMoveCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["passThroughAudioIndication"]=self.passThroughAudioIndicationCheckBox.IsChecked()
-		super(VirtualBuffersDialog, self).onOk(evt)
+		super(BrowseModeDialog, self).onOk(evt)
 
 class DocumentFormattingDialog(SettingsDialog):
 	title = _("Document formatting")

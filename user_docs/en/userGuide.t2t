@@ -320,36 +320,35 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 | navigate to the object under the mouse | NVDA+numpadMultiply | NVDA+shift+f10 | Set the navigator object to the object located at the position of the mouse |
 %kc:endInclude
 
-+ Virtual Buffers +
-Complex read-only documents, such as web pages, are represented in NVDA with in a Virtual Buffer.
++ Browse Mode +
+Complex read-only documents such as web pages are browsed in NVDA using browse mode.
+This includes documents in Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader and Adobe Flash.
 
-A virtual buffer is a flat representation of content such as a web page, that can be moved around in with the arrow keys.
-Information such as whether text is a link, heading etc is announced along with the text as you move.
+In browse mode, the content of the document is made available in a flat representation that can be navigated with the cursor keys as if it were a normal text document.
+All of NVDA's system caret key commands will work in this mode; e.g. say all, report formatting, table navigation commands, etc.
+Information such as whether text is a link, heading, etc. is announced along with the text as you move.
 
-While in a virtual buffer, there are two modes of interaction.
-Browse mode is where you can move around all the text using a virtual cursor, rather like the system caret.
-In fact all of NVDA's system caret key commands will work in this mode (e.g. say all, report formatting, all table navigation commands etc).
-Focus mode is where you can directly interact with the control (edit field, combo box, radio buttons) using what ever keys you would normally use.
-When in Browse mode, NVDA will automatically switch to focus mode if you tab to or click on a particular control that requires it.
-Note that pressing enter or space on controls that require it will also switch to focus mode.
-If NVDA has automatically switched to focus mode, tabbing to, or clicking on, an object that does not need focus mode (such as a link or peace of text) will switch back to browse mode.
-Pressing escape will also switch back to browse mode if it was switched to focus mode automatically.
-You can manually change between focus and browse modes as well.
-Though when changing to focus mode manually, NVDA will lock to that particular mode and no longer automatically switch, unless you manually change back to browse mode.
+Sometimes, you will need to interact directly with controls in these documents.
+You do this by switching to focus mode, where all keys are passed to the control.
+When in Browse mode, by default, NVDA will automatically switch to focus mode if you tab to or click on a particular control that requires it.
+Conversely, tabbing to or clicking on a control that does not require focus mode will switch back to browse mode.
+You can also press enter or space to switch to focus mode on controls that require it.
+Pressing escape will switch back to browse mode.
+In addition, you can manually force focus mode, after which it will remain in effect until you choose to disable it.
+
 %kc:beginInclude
 || Name | Key | Description |
-| Toggle virtual buffer modes | NVDA+space | Toggles between focus mode and browse mode |
+| Toggle browse/focus modes | NVDA+space | Toggles between focus mode and browse mode |
 | Exit focus mode | escape | switches back to browse mode if focus mode was previously switched to automatically |
-| Refresh virtual buffer | NVDA+f5 | Reloads the current virtual buffer (useful if certain content seems to be missing from the page) |
+| Refresh browse mode document | NVDA+f5 | Reloads the current document content (useful if certain content seems to be missing from the document) |
 | Find | NVDA+control+f | Pops up a dialog in which you can type some text to find in the current document |
 | Find next | NVDA+f3 | Finds the next occurence of the text in the document that you previously searched for |
 | Find previous | NVDA+shift+f3 | Finds the previous occurence of the text in the document you previously searched for |
 %kc:endInclude
 
-Currently NVDA uses Virtual Buffers for reading documents in Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader, and Adobe Flash.
 
 ++ Single Letter Navigation ++
-While in browse mode, For quicker navigation NVDA also provides single character keys to jump to certain fields in a virtual buffer.
+While in browse mode, For quicker navigation, NVDA also provides single character keys to jump to certain fields in the document.
 
 %kc:beginInclude
 The following keys by themselves jumpt to the next available element, adding the shift key causes them to jump to the previous element:
@@ -378,24 +377,24 @@ The following keys by themselves jumpt to the next available element, adding the
 %kc:endInclude
 
 ++ The Elements List ++
-The elements list provides access to a list of either links, headings or ARIA landmarks on the page.
+The elements list provides access to a list of either links, headings or ARIA landmarks in the document.
 Radio buttons allow you to switch between these three types of information.
 An edit field is also provided in the dialog which allows you to filter the list to help you search for a particular item on the page.
-Once you have chosen an item, you can use the provided buttons in the dialog to move to, or activate, that item.
+Once you have chosen an item, you can use the provided buttons in the dialog to move to or activate that item.
 %kc:beginInclude
 || Name | Key | Description |
-| Virtual buffer elements list | NVDA+f7 | Brings up the Elements list which contains links, headings and landmarks  from  the current  virtual buffer |
+| Browse mode elements list | NVDA+f7 | Brings up the Elements list which contains links, headings and landmarks  from  the current document |
 %kc:endInclude
 
 ++ Embedded Objects ++
 Pages can include rich content using technologies such as Adobe Flash and Sun Java.
-Where these are encountered in a virtual buffer, NVDA will announce "embedded object".
+Where these are encountered in  browse mode, NVDA will announce "embedded object".
 You can press enter on these objects to interact with them.
 If it is accessible, you can then tab around it and interact with it like any other application.
 A key command is provided to return to the original page containing the embedded object:
 %kc:beginInclude
 || Name | Key | Description |
-| Move to containing  virtual buffer | NVDA+control+space | Moves the focus out of the current embedded object and into the virtual buffer  that contains it |
+| Move to containing  browse mode document | NVDA+control+space | Moves the focus out of the current embedded object and into the document  that contains it |
 %kc:endInclude
 
 + Configuring NVDA +
@@ -692,32 +691,29 @@ Key: NVDA+5
 
 Toggles the announcement of new content in particular objects such as terminals and the history control in chat programs.
 
-+++ Virtual Buffer Settings (NVDA+control+b) +++
-The Virtual Buffer settings dialog can be found in the Preferences menu, under "Virtual Buffers...".
++++ Browse Mode Settings (NVDA+control+b) +++
+The Browse Mode settings dialog can be found in the Preferences menu, under "Browse mode...".
 
 The dialog contains the following options:
 
 ==== Maximum Number of Characters on One Line ====
-This field sets the maximum length of a line of a virtual buffer (in characters).
+This field sets the maximum length of a line in browse mode (in characters).
 
 ==== Maximum Lines Per Page ====
-Although virtual buffers don't really have pages, this field sets the amount of lines you will move by when pressing page up or page down while in a virtual buffer.
+This field sets the amount of lines you will move by when pressing page up or page down while in browse mode.
 
 %kc:setting
 ==== Use screen layout ====
 Key: NVDA+v
 
-This option allows you to specify whether content in the virtual Buffer should place content such as links and other fields on their own line, or if it should keep them in the flow of text as it is visually shown. If the option is enabled then things will stay as they are visually shown, but if it is disabled then fields will be placed on their own line.
+This option allows you to specify whether content in browse mode should place content such as links and other fields on their own line, or if it should keep them in the flow of text as it is visually shown. If the option is enabled then things will stay as they are visually shown, but if it is disabled then fields will be placed on their own line.
 
 ==== Report layout tables ====
 When disabled this option makes NVDA only report tables that contain tabular data (where it makes sense to know that this is a table).
 But if enabled, NVDA will also report tables used purely for visual presentation.
 
 ==== Configuring announcement of fields such as links and headings ====
-Previous versions of NVDA allowed you to use the Virtual Buffer settings dialog to configure whether NVDA should announce the type of field that you entered while reading through web content.
-Examples of field types are links, headings, tables, and lists.
-To configure these, please find new options in the [Document Formatting Settings dialog #DocumentFormattingSettings].
-These options now not only affect virtual Buffers, but any documents that may cause these types of fields to be announced.
+Please see the options in the [Document Formatting Settings dialog #DocumentFormattingSettings] to configure the fields that are spoken when navigating, such as links, headings and tables.
 
 ==== Automatic focus mode for focus changes ====
 This option allows focus mode to be invoked if focus changes.
@@ -728,7 +724,7 @@ This option, when checked, allows NVDA to enter and leave focus mode when using 
 For example, if arrowing down a webpage and you land on an edit box, NVDA will automatically bring you into focus mode. If you arrow out of the edit box, NVDA will put you back in browse mode.
 
 ==== Audio indication of Focus and Browse modes ====
-If this option is enabled, NVDA will play special sounds when it switches between browse mode and focus mode in a virtual Buffer, rather than speaking the change.
+If this option is enabled, NVDA will play special sounds when it switches between browse mode and focus mode, rather than speaking the change.
 
 +++ Document Formatting Settings (NVDA+control+d) +++[DocumentFormattingSettings]
 This dialog box is found in the Preferences menu, under "Document Formatting...".

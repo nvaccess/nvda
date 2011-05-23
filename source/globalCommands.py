@@ -844,9 +844,9 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(mainFrame. onObjectPresentationCommand, None)
 	script_activateObjectPresentationDialog.__doc__ = _("Shows the NVDA object presentation settings dialog")
 
-	def script_activateVirtualBuffersDialog(self, gesture):
-		wx.CallAfter(mainFrame.onVirtualBuffersCommand, None)
-	script_activateVirtualBuffersDialog.__doc__ = _("Shows the NVDA virtual buffers settings dialog")
+	def script_activateBrowseModeDialog(self, gesture):
+		wx.CallAfter(mainFrame.onBrowseModeCommand, None)
+	script_activateBrowseModeDialog.__doc__ = _("Shows the NVDA browse mode settings dialog")
 
 	def script_activateDocumentFormattingDialog(self, gesture):
 		wx.CallAfter(mainFrame.onDocumentFormattingCommand, None)
@@ -1057,7 +1057,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+k": "activateKeyboardSettingsDialog",
 		"kb:NVDA+control+m": "activateMouseSettingsDialog",
 		"kb:NVDA+control+o": "activateObjectPresentationDialog",
-		"kb:NVDA+control+b": "activateVirtualBuffersDialog",
+		"kb:NVDA+control+b": "activateBrowseModeDialog",
 		"kb:NVDA+control+d": "activateDocumentFormattingDialog",
 
 		# Save/reload configuration

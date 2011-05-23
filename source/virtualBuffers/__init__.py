@@ -734,7 +734,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	def script_activatePosition(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		self._activatePosition(info)
-	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
+	script_activatePosition.__doc__ = _("activates the current object in the document")
 
 	def script_refreshBuffer(self,gesture):
 		if scriptHandler.isScriptWaiting():
@@ -742,13 +742,13 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			return
 		self.unloadBuffer()
 		self.loadBuffer()
-	script_refreshBuffer.__doc__ = _("Refreshes the virtual buffer content")
+	script_refreshBuffer.__doc__ = _("Refreshes the document content")
 
 	def script_toggleScreenLayout(self,gesture):
 		config.conf["virtualBuffers"]["useScreenLayout"]=not config.conf["virtualBuffers"]["useScreenLayout"]
 		onOff=_("on") if config.conf["virtualBuffers"]["useScreenLayout"] else _("off")
 		speech.speakMessage(_("use screen layout %s")%onOff)
-	script_toggleScreenLayout.__doc__ = _("Toggles on and off if the screen layout is preserved while rendering the virtual buffer content")
+	script_toggleScreenLayout.__doc__ = _("Toggles on and off if the screen layout is preserved while rendering the document content")
 
 	def _searchableAttributesForNodeType(self,nodeType):
 		pass

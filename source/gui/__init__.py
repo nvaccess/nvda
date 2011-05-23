@@ -219,8 +219,8 @@ class MainFrame(wx.Frame):
 	def onObjectPresentationCommand(self,evt):
 		self._popupSettingsDialog(ObjectPresentationDialog)
 
-	def onVirtualBuffersCommand(self,evt):
-		self._popupSettingsDialog(VirtualBuffersDialog)
+	def onBrowseModeCommand(self,evt):
+		self._popupSettingsDialog(BrowseModeDialog)
 
 	def onDocumentFormattingCommand(self,evt):
 		self._popupSettingsDialog(DocumentFormattingDialog)
@@ -284,8 +284,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onReviewCursorCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Object presentation..."),_("Change reporting of objects")) 
 		self.Bind(wx.EVT_MENU, frame.onObjectPresentationCommand, item)
-		item = menu_preferences.Append(wx.ID_ANY,_("Virtual &buffers..."),_("Change virtual buffers specific settings")) 
-		self.Bind(wx.EVT_MENU, frame.onVirtualBuffersCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("&Browse mode..."),_("Change virtual buffers specific settings")) 
+		self.Bind(wx.EVT_MENU, frame.onBrowseModeCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("Document &formatting..."),_("Change Settings of document properties")) 
 		self.Bind(wx.EVT_MENU, frame.onDocumentFormattingCommand, item)
 		subMenu_speechDicts = wx.Menu()
