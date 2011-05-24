@@ -158,7 +158,7 @@ class SpeechSymbols(object):
 		"""Constructor.
 		"""
 		self.complexSymbols = collections.OrderedDict()
-		self.symbols = []
+		self.symbols = collections.OrderedDict()
 
 	def load(self, fileName, allowComplexSymbols=True):
 		"""Load symbol information from a file.
@@ -241,7 +241,7 @@ class SpeechSymbols(object):
 		except StopIteration:
 			# These fields are optional. Defaults will be used for unspecified fields.
 			pass
-		self.symbols.append(SpeechSymbol(identifier, None, replacement, level, preserve, displayName))
+		self.symbols[identifier] = SpeechSymbol(identifier, None, replacement, level, preserve, displayName)
 
 def _getSpeechSymbolsForLocale(locale):
 	builtin = SpeechSymbols()
@@ -309,8 +309,7 @@ class SpeechSymbolProcessor(object):
 
 		# Supplement the data for complex symbols and add all simple symbols.
 		for source in sources:
-			for sourceSymbol in source.symbols:
-				identifier = sourceSymbol.identifier
+			for identifier, sourceSymbol in source.symbols.iteritems():
 				try:
 					symbol = symbols[identifier]
 					# We're updating an already existing symbol.
