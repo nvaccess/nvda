@@ -1069,4 +1069,5 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.editingItem = None
 		for symbol in self.symbols:
 			self.symbolProcessor.updateSymbol(symbol)
+		characterProcessing._localeSpeechSymbolProcessors.invalidateLocaleData(self.symbolProcessor.locale)
 		super(SpeechSymbolsDialog, self).onOk(evt)

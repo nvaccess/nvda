@@ -46,6 +46,17 @@ class LocaleDataMap(object):
 			return data
 		raise LookupError(locale)
 
+	def invalidateLocaleData(self, locale):
+		"""Invalidate the data object (if any) for the given locale.
+		This will cause a new data object to be created when this locale is next requested.
+		@param locale: The locale for which the data object should be invalidated.
+		@type locale: str
+		"""
+		try:
+			del self._dataMap[locale]
+		except KeyError:
+			pass
+
 class CharacterDescriptions(object):
 	"""
 	Represents a map of characters to one or more descriptions (examples) for that character.
