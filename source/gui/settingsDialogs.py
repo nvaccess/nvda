@@ -6,6 +6,7 @@
 
 import glob
 import os
+import copy
 import wx
 import logHandler
 from synthDriverHandler import *
@@ -1002,12 +1003,21 @@ class SpeechSymbolsDialog(SettingsDialog):
 	title = _("Speech Symbols")
 
 	def makeSettings(self, settingsSizer):
+		try:
+			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData(languageHandler.getLanguage())
+		except LookupError:
+			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
+		self.symbolProcessor = symbolProcessor
+		symbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
+
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Symbols")))
 		self.symbolsList = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT | wx.LC_SINGLE_SEL, size=(350, 350))
 		self.symbolsList.InsertColumn(0, _("Symbol"), width=150)
 		self.symbolsList.InsertColumn(1, _("Replacement"), width=150)
 		self.symbolsList.InsertColumn(2, _("Level"), width=50)
+		for symbol in symbols:
+			self.symbolsList.Append((symbol.displayName, symbol.replacement, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level]))
 		sizer.Add(self.symbolsList)
 		settingsSizer.Add(sizer)
 
@@ -1020,7 +1030,11 @@ class SpeechSymbolsDialog(SettingsDialog):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Level")))
 		symbolLevelLabels = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
-		self.symbolLevelList = wx.Choice(self, wx.ID_ANY, choices=[symbolLevelLabels[level] for level in characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS])
+		self.symbolLevelList = wx.Choice(self, wx.ID_ANY,choices=[
+			symbolLevelLabels[level] for level in characterProcessing.SPEECH_SYMBOL_LEVELS])
 		sizer.Add(self.symbolLevelList)
 		changeSizer.Add(sizer)
 		settingsSizer.Add(changeSizer)
+
+	def postInit(self):
+		self.symbolsList.SetFocus()
