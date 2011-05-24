@@ -159,6 +159,13 @@ class SpeechSymbol(object):
 		self.preserve = preserve
 		self.displayName = displayName
 
+	def __repr__(self):
+		attrs = []
+		for attr in self.__slots__:
+			attrs.append("{name}={val!r}".format(
+				name=attr, val=getattr(self, attr)))
+		return "SpeechSymbol(%s)" % ", ".join(attrs)
+
 class SpeechSymbols(object):
 	"""
 	Contains raw information about the pronunciation of symbols.
