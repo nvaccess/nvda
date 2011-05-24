@@ -1017,6 +1017,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 			item = self.symbolsList.Append((symbol.displayName,))
 			self.updateListItem(item, symbol)
 		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
+		self.symbolsList.Bind(wx.EVT_CHAR, self.onListChar)
 		sizer.Add(self.symbolsList)
 		settingsSizer.Add(sizer)
 
@@ -1063,6 +1064,17 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.editingItem = item
 		self.replacementEdit.SetValue(symbol.replacement)
 		self.levelList.SetSelection(characterProcessing.SPEECH_SYMBOL_LEVELS.index(symbol.level))
+
+	def onListChar(self, evt):
+		if evt.KeyCode == wx.WXK_RETURN:
+			# The enter key should be propagated to the dialog and thus activate the default button,
+			# but this is broken (wx ticket #3725).
+			# Therefore, we must catch the enter key here.
+			# Activate the OK button.
+			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
+
+		else:
+			evt.Skip()
 
 	def onOk(self, evt):
 		self.onSymbolEdited(None)
