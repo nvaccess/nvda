@@ -997,3 +997,30 @@ class BrailleSettingsDialog(SettingsDialog):
 			config.conf["braille"]["messageTimeout"] = val
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		super(BrailleSettingsDialog,  self).onOk(evt)
+
+class SpeechSymbolsDialog(SettingsDialog):
+	title = _("Speech Symbols")
+
+	def makeSettings(self, settingsSizer):
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Symbols")))
+		self.symbolsList = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT | wx.LC_SINGLE_SEL, size=(350, 350))
+		self.symbolsList.InsertColumn(0, _("Symbol"), width=150)
+		self.symbolsList.InsertColumn(1, _("Replacement"), width=150)
+		self.symbolsList.InsertColumn(2, _("Level"), width=50)
+		sizer.Add(self.symbolsList)
+		settingsSizer.Add(sizer)
+
+		changeSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Change symbol")), wx.VERTICAL)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Replacement")))
+		self.replacementEdit = wx.TextCtrl(self, wx.ID_ANY)
+		sizer.Add(self.replacementEdit)
+		changeSizer.Add(sizer)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Level")))
+		self.symbolLevels=characterProcessing.USER_SPEECH_SYMBOL_LEVELS.items()
+		self.symbolLevelList=wx.Choice(self,wx.ID_ANY,choices=[name for level, name in self.symbolLevels])
+		sizer.Add(self.symbolLevelList)
+		changeSizer.Add(sizer)
+		settingsSizer.Add(changeSizer)
