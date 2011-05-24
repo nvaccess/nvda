@@ -373,10 +373,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		symbolLevelLabels=characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
 		self.symbolLevelList=wx.Choice(self,wx.ID_ANY,choices=[symbolLevelLabels[level] for level in characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS])
 		curLevel = config.conf["speech"]["symbolLevel"]
-		for index, level in enumerate(characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS):
-			if level == curLevel:
-				self.symbolLevelList.SetSelection(index)
-				break
+		self.symbolLevelList.SetSelection(characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS.index(curLevel))
 		sizer.Add(self.symbolLevelList)
 		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
 		self.raisePitchForCapsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Raise pitch for capitals"))
