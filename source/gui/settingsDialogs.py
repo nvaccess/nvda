@@ -1018,6 +1018,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.symbolsList.InsertColumn(2, _("Level"), width=50)
 		for symbol in symbols:
 			self.symbolsList.Append((symbol.displayName, symbol.replacement, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level]))
+		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
 		sizer.Add(self.symbolsList)
 		settingsSizer.Add(sizer)
 
@@ -1030,11 +1031,19 @@ class SpeechSymbolsDialog(SettingsDialog):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Level")))
 		symbolLevelLabels = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
-		self.symbolLevelList = wx.Choice(self, wx.ID_ANY,choices=[
+		self.levelList = wx.Choice(self, wx.ID_ANY,choices=[
 			symbolLevelLabels[level] for level in characterProcessing.SPEECH_SYMBOL_LEVELS])
-		sizer.Add(self.symbolLevelList)
+		sizer.Add(self.levelList)
 		changeSizer.Add(sizer)
 		settingsSizer.Add(changeSizer)
 
 	def postInit(self):
 		self.symbolsList.SetFocus()
+
+	def onListItemFocused(self, evt):
+		symbol = self.symbols[evt.GetIndex()]
+		self.replacementEdit.SetValue(symbol.replacement)
+		for index, level in enumerate(characterProcessing.SPEECH_SYMBOL_LEVELS):
+			if symbol.level == level:
+				self.levelList.SetSelection(index)
+				break
