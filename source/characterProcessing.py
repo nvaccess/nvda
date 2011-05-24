@@ -117,12 +117,14 @@ SPEECH_SYMBOL_LEVELS = {
 	"all": SYMLVL_ALL,
 	"char": SYMLVL_CHAR,
 }
-USER_SPEECH_SYMBOL_LEVELS = collections.OrderedDict((
-	(SYMLVL_NONE, _("none")),
-	(SYMLVL_SOME, _("some")),
-	(SYMLVL_MOST, _("most")),
-	(SYMLVL_ALL, _("all")),
-))
+SPEECH_SYMBOL_LEVEL_LABELS = {
+	SYMLVL_NONE: _("none"),
+	SYMLVL_SOME: _("some"),
+	SYMLVL_MOST: _("most"),
+	SYMLVL_ALL: _("all"),
+	SYMLVL_CHAR: _("character"),
+}
+CONFIGURABLE_SPEECH_SYMBOL_LEVELS = (SYMLVL_NONE, SYMLVL_SOME, SYMLVL_MOST, SYMLVL_ALL)
 
 # Speech symbol preserve modes
 SYMPRES_NEVER = 0

@@ -369,10 +369,10 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.updateVoiceSettings()
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Punctuation/symbol &level:")))
-		self.symbolLevels=characterProcessing.USER_SPEECH_SYMBOL_LEVELS.items()
-		self.symbolLevelList=wx.Choice(self,wx.ID_ANY,choices=[name for level, name in self.symbolLevels])
+		symbolLevelLabels=characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
+		self.symbolLevelList=wx.Choice(self,wx.ID_ANY,choices=[symbolLevelLabels[level] for level in characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS])
 		curLevel = config.conf["speech"]["symbolLevel"]
-		for index, (level, name) in enumerate(self.symbolLevels):
+		for index, level in enumerate(characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS):
 			if level == curLevel:
 				self.symbolLevelList.SetSelection(index)
 				break
@@ -447,7 +447,7 @@ class VoiceSettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		getSynth().saveSettings()
-		config.conf["speech"]["symbolLevel"]=self.symbolLevels[self.symbolLevelList.GetSelection()][0]
+		config.conf["speech"]["symbolLevel"]=characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[self.symbolLevelList.GetSelection()]
 		config.conf["speech"][getSynth().name]["raisePitchForCapitals"]=self.raisePitchForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
@@ -1019,8 +1019,8 @@ class SpeechSymbolsDialog(SettingsDialog):
 		changeSizer.Add(sizer)
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Level")))
-		self.symbolLevels=characterProcessing.USER_SPEECH_SYMBOL_LEVELS.items()
-		self.symbolLevelList=wx.Choice(self,wx.ID_ANY,choices=[name for level, name in self.symbolLevels])
+		symbolLevelLabels = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
+		self.symbolLevelList = wx.Choice(self, wx.ID_ANY, choices=[symbolLevelLabels[level] for level in characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS])
 		sizer.Add(self.symbolLevelList)
 		changeSizer.Add(sizer)
 		settingsSizer.Add(changeSizer)
