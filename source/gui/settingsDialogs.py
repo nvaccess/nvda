@@ -1017,7 +1017,8 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.symbolsList.InsertColumn(1, _("Replacement"), width=150)
 		self.symbolsList.InsertColumn(2, _("Level"), width=50)
 		for symbol in symbols:
-			self.symbolsList.Append((symbol.displayName, symbol.replacement, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level]))
+			item = self.symbolsList.Append((symbol.displayName,))
+			self.updateListItem(item, symbol)
 		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
 		sizer.Add(self.symbolsList)
 		settingsSizer.Add(sizer)
@@ -1026,6 +1027,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Replacement")))
 		self.replacementEdit = wx.TextCtrl(self, wx.ID_ANY)
+		self.replacementEdit.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
 		sizer.Add(self.replacementEdit)
 		changeSizer.Add(sizer)
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -1033,17 +1035,34 @@ class SpeechSymbolsDialog(SettingsDialog):
 		symbolLevelLabels = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
 		self.levelList = wx.Choice(self, wx.ID_ANY,choices=[
 			symbolLevelLabels[level] for level in characterProcessing.SPEECH_SYMBOL_LEVELS])
+		self.levelList.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
 		sizer.Add(self.levelList)
 		changeSizer.Add(sizer)
 		settingsSizer.Add(changeSizer)
 
+		self.editingItem = None
+
 	def postInit(self):
 		self.symbolsList.SetFocus()
 
+	def updateListItem(self, item, symbol):
+		self.symbolsList.SetStringItem(item, 1, symbol.replacement)
+		self.symbolsList.SetStringItem(item, 2, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level])
+
+	def onSymbolEdited(self, evt):
+		if self.editingItem is None:
+			return
+		# Update the symbol the user was just editing.
+		item = self.editingItem
+		symbol = self.symbols[item]
+		symbol.replacement = self.replacementEdit.GetValue()
+		symbol.level = characterProcessing.SPEECH_SYMBOL_LEVELS[self.levelList.GetSelection()]
+		self.updateListItem(item, symbol)
+
 	def onListItemFocused(self, evt):
-		symbol = self.symbols[evt.GetIndex()]
+		# Update the editing controls to reflect the newly selected symbol.
+		item = evt.GetIndex()
+		symbol = self.symbols[item]
+		self.editingItem = item
 		self.replacementEdit.SetValue(symbol.replacement)
-		for index, level in enumerate(characterProcessing.SPEECH_SYMBOL_LEVELS):
-			if symbol.level == level:
-				self.levelList.SetSelection(index)
-				break
+		self.levelList.SetSelection(characterProcessing.SPEECH_SYMBOL_LEVELS.index(symbol.level))
