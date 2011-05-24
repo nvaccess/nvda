@@ -1063,3 +1063,10 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.editingItem = item
 		self.replacementEdit.SetValue(symbol.replacement)
 		self.levelList.SetSelection(characterProcessing.SPEECH_SYMBOL_LEVELS.index(symbol.level))
+
+	def onOk(self, evt):
+		self.onSymbolEdited(None)
+		self.editingItem = None
+		for symbol in self.symbols:
+			self.symbolProcessor.updateSymbol(symbol)
+		super(SpeechSymbolsDialog, self).onOk(evt)

@@ -409,6 +409,48 @@ class SpeechSymbolProcessor(object):
 		self._level = level
 		return self._regexp.sub(self._regexpRepl, text)
 
+	def updateSymbol(self, newSymbol):
+		"""Update information for a symbol if it has changed.
+		If there is a change, the changed information will be added to the user's symbol data.
+		These changes do not take effect until the symbol processor is reinitialised.
+		@param newSymbol: The symbol to update.
+		@type newSymbol: L{SpeechSymbol}
+		@return: Whether there was a change.
+		@rtype: bool
+		"""
+		identifier = newSymbol.identifier
+		oldSymbol = self.computedSymbols[identifier]
+		if oldSymbol is newSymbol:
+			return False
+		try:
+			userSymbol = self.userSymbols.symbols[identifier]
+		except KeyError:
+			userSymbol = SpeechSymbol(identifier)
+
+		changed = False
+		if newSymbol.pattern != oldSymbol.pattern:
+			userSymbol.pattern = newSymbol.pattern
+			changed = True
+		if newSymbol.replacement != oldSymbol.replacement:
+			userSymbol.replacement = newSymbol.replacement
+			changed = True
+		if newSymbol.level != oldSymbol.level:
+			userSymbol.level = newSymbol.level
+			changed = True
+		if newSymbol.preserve != oldSymbol.preserve:
+			userSymbol.preserve = newSymbol.preserve
+			changed = True
+		if newSymbol.displayName != oldSymbol.displayName:
+			userSymbol.displayName = newSymbol.displayName
+			changed = True
+
+		if not changed:
+			return False
+
+		# Do this in case the symbol wasn't in userSymbols before.
+		self.userSymbols.symbols[identifier] = userSymbol
+		return True
+
 _localeSpeechSymbolProcessors = LocaleDataMap(SpeechSymbolProcessor)
 
 def processSpeechSymbols(locale, text, level):
