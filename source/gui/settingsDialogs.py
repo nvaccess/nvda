@@ -1053,8 +1053,8 @@ class SpeechSymbolsDialog(SettingsDialog):
 		# Update the symbol the user was just editing.
 		item = self.editingItem
 		symbol = self.symbols[item]
-		symbol.replacement = self.replacementEdit.GetValue()
-		symbol.level = characterProcessing.SPEECH_SYMBOL_LEVELS[self.levelList.GetSelection()]
+		symbol.replacement = self.replacementEdit.Value
+		symbol.level = characterProcessing.SPEECH_SYMBOL_LEVELS[self.levelList.Selection]
 		self.updateListItem(item, symbol)
 
 	def onListItemFocused(self, evt):
@@ -1062,8 +1062,8 @@ class SpeechSymbolsDialog(SettingsDialog):
 		item = evt.GetIndex()
 		symbol = self.symbols[item]
 		self.editingItem = item
-		self.replacementEdit.SetValue(symbol.replacement)
-		self.levelList.SetSelection(characterProcessing.SPEECH_SYMBOL_LEVELS.index(symbol.level))
+		self.replacementEdit.Value = symbol.replacement
+		self.levelList.Selection = characterProcessing.SPEECH_SYMBOL_LEVELS.index(symbol.level)
 
 	def onListChar(self, evt):
 		if evt.KeyCode == wx.WXK_RETURN:
