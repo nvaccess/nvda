@@ -110,7 +110,7 @@ SYMLVL_SOME = 100
 SYMLVL_MOST = 200
 SYMLVL_ALL = 300
 SYMLVL_CHAR = 1000
-SPEECH_SYMBOL_LEVELS = {
+SPEECH_SYMBOL_LEVEL_IDS = {
 	"none": SYMLVL_NONE,
 	"some": SYMLVL_SOME,
 	"most": SYMLVL_MOST,
@@ -125,6 +125,7 @@ SPEECH_SYMBOL_LEVEL_LABELS = {
 	SYMLVL_CHAR: _("character"),
 }
 CONFIGURABLE_SPEECH_SYMBOL_LEVELS = (SYMLVL_NONE, SYMLVL_SOME, SYMLVL_MOST, SYMLVL_ALL)
+SPEECH_SYMBOL_LEVELS = CONFIGURABLE_SPEECH_SYMBOL_LEVELS + (SYMLVL_CHAR,)
 
 # Speech symbol preserve modes
 SYMPRES_NEVER = 0
@@ -236,7 +237,7 @@ class SpeechSymbols(object):
 			# These fields are mandatory.
 			raise ValueError
 		try:
-			level = self._loadSymbolField(next(line), SPEECH_SYMBOL_LEVELS)
+			level = self._loadSymbolField(next(line), SPEECH_SYMBOL_LEVEL_IDS)
 			preserve = self._loadSymbolField(next(line), SPEECH_SYMBOL_PRESERVE_MODES)
 		except StopIteration:
 			# These fields are optional. Defaults will be used for unspecified fields.
