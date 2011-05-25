@@ -121,13 +121,6 @@ SYMLVL_SOME = 100
 SYMLVL_MOST = 200
 SYMLVL_ALL = 300
 SYMLVL_CHAR = 1000
-SPEECH_SYMBOL_LEVEL_IDS = {
-	"none": SYMLVL_NONE,
-	"some": SYMLVL_SOME,
-	"most": SYMLVL_MOST,
-	"all": SYMLVL_ALL,
-	"char": SYMLVL_CHAR,
-}
 SPEECH_SYMBOL_LEVEL_LABELS = {
 	SYMLVL_NONE: _("none"),
 	SYMLVL_SOME: _("some"),
@@ -142,11 +135,6 @@ SPEECH_SYMBOL_LEVELS = CONFIGURABLE_SPEECH_SYMBOL_LEVELS + (SYMLVL_CHAR,)
 SYMPRES_NEVER = 0
 SYMPRES_ALWAYS = 1
 SYMPRES_NOREP = 2
-SPEECH_SYMBOL_PRESERVE_MODES = {
-	"never": SYMPRES_NEVER,
-	"always": SYMPRES_ALWAYS,
-	"norep": SYMPRES_NOREP,
-}
 
 class SpeechSymbol(object):
 	__slots__ = ("identifier", "pattern", "replacement", "level", "preserve", "displayName")
@@ -178,6 +166,7 @@ class SpeechSymbols(object):
 		"""
 		self.complexSymbols = collections.OrderedDict()
 		self.symbols = collections.OrderedDict()
+		self.fileName = None
 
 	def load(self, fileName, allowComplexSymbols=True):
 		"""Load symbol information from a file.
@@ -187,6 +176,7 @@ class SpeechSymbols(object):
 		@type allowComplexSymbols: bool
 		@raise IOError: If the file cannot be read.
 		"""
+		self.fileName = fileName
 		with codecs.open(fileName, "r", "utf_8_sig", errors="replace") as f:
 			handler = None
 			for line in f:
@@ -225,7 +215,7 @@ class SpeechSymbols(object):
 		except KeyError:
 			raise ValueError
 
-	IDENTIFIER_ESCAPES = {
+	IDENTIFIER_ESCAPES_INPUT = {
 		"0": "\0",
 		"t": "\t",
 		"n": "\n",
@@ -233,6 +223,21 @@ class SpeechSymbols(object):
 		"f": "\f",
 		"v": "\v",
 	}
+	IDENTIFIER_ESCAPES_OUTPUT = {v: k for k, v in IDENTIFIER_ESCAPES_INPUT.iteritems()}
+	LEVEL_INPUT = {
+		"none": SYMLVL_NONE,
+		"some": SYMLVL_SOME,
+		"most": SYMLVL_MOST,
+		"all": SYMLVL_ALL,
+		"char": SYMLVL_CHAR,
+	}
+	LEVEL_OUTPUT = {v:k for k, v in LEVEL_INPUT.iteritems()}
+	PRESERVE_INPUT = {
+		"never": SYMPRES_NEVER,
+		"always": SYMPRES_ALWAYS,
+		"norep": SYMPRES_NOREP,
+	}
+	PRESERVE_OUTPUT = {v: k for k, v in PRESERVE_INPUT.iteritems()}
 
 	def _loadSymbol(self, line):
 		line = line.split("\t")
@@ -249,18 +254,75 @@ class SpeechSymbols(object):
 				# Empty identifier is not allowed.
 				raise ValueError
 			if len(identifier) == 2 and identifier.startswith("\\"):
-				identifier = self.IDENTIFIER_ESCAPES.get(identifier[1], identifier[1])
+				identifier = self.IDENTIFIER_ESCAPES_INPUT.get(identifier[1], identifier[1])
 			replacement = self._loadSymbolField(next(line))
 		except StopIteration:
 			# These fields are mandatory.
 			raise ValueError
 		try:
-			level = self._loadSymbolField(next(line), SPEECH_SYMBOL_LEVEL_IDS)
-			preserve = self._loadSymbolField(next(line), SPEECH_SYMBOL_PRESERVE_MODES)
+			level = self._loadSymbolField(next(line), self.LEVEL_INPUT)
+			preserve = self._loadSymbolField(next(line), self.PRESERVE_INPUT)
 		except StopIteration:
 			# These fields are optional. Defaults will be used for unspecified fields.
 			pass
 		self.symbols[identifier] = SpeechSymbol(identifier, None, replacement, level, preserve, displayName)
+
+	def save(self, fileName=None):
+		"""Save symbol information to a file.
+		@param fileName: The name of the file to which to save symbol information,
+			C{None} to use the file name last passed to L{load} or L{save}.
+		@type fileName: str
+		@raise IOError: If the file cannot be written.
+		@raise ValueError: If C{fileName} is C{None}
+			and L{load} or L{save} has not been called.
+		"""
+		if fileName:
+			self.fileName = fileName
+		elif self.fileName:
+			fileName = self.fileName
+		else:
+			raise ValueError("No file name")
+
+		with codecs.open(fileName, "w", "utf_8_sig", errors="replace") as f:
+			if self.complexSymbols:
+				f.write(u"complexSymbols:\r\n")
+				for identifier, pattern in self.complexSymbols.iteritems():
+					f.write(u"%s\t%s\r\n" % (identifier, pattern))
+				f.write(u"\r\n")
+
+			if self.symbols:
+				f.write(u"symbols:\r\n")
+				for symbol in self.symbols.itervalues():
+					f.write(u"%s\r\n" % self._saveSymbol(symbol))
+
+	def _saveSymbolField(self, output, outputMap=None):
+		if output is None:
+			return "-"
+		if not outputMap:
+			return output
+		try:
+			return outputMap[output]
+		except KeyError:
+			raise ValueError
+
+	def _saveSymbol(self, symbol):
+		identifier = symbol.identifier
+		try:
+			identifier = u"\\%s" % self.IDENTIFIER_ESCAPES_OUTPUT[identifier]
+		except KeyError:
+			pass
+		fields = [identifier,
+			self._saveSymbolField(symbol.replacement),
+			self._saveSymbolField(symbol.level, self.LEVEL_OUTPUT),
+			self._saveSymbolField(symbol.preserve, self.PRESERVE_OUTPUT)
+		]
+		# Strip optional fields with default values.
+		for field in reversed(fields[2:]):
+			if field == "-":
+				del fields[-1]
+		if symbol.displayName:
+			fields.append("# %s" % symbol.displayName)
+		return u"\t".join(fields)
 
 def _getSpeechSymbolsForLocale(locale):
 	builtin = SpeechSymbols()
