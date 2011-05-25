@@ -163,7 +163,7 @@ def getReviewPosition():
 	else:
 		obj=globalVars.navigatorObject
 		ti=obj.treeInterceptor
-		if ti and ti.isReady and ti.rootNVDAObject==obj:
+		if ti and not ti.passThrough and ti.isReady and ti.rootNVDAObject==obj:
 			obj=ti
 		try:
 			globalVars.reviewPosition=obj.makeTextInfo(textInfos.POSITION_CARET)
