@@ -300,8 +300,9 @@ class SysTrayIcon(wx.TaskBarIcon):
 		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		menu_preferences.AppendMenu(wx.ID_ANY,_("Speech &dictionaries"),subMenu_speechDicts)
-		item = menu_preferences.Append(wx.ID_ANY, _("&Punctuation/symbols..."))
-		self.Bind(wx.EVT_MENU, frame.onSpeechSymbolsCommand, item)
+		if not globalVars.appArgs.secure:
+			item = menu_preferences.Append(wx.ID_ANY, _("&Punctuation/symbols..."))
+			self.Bind(wx.EVT_MENU, frame.onSpeechSymbolsCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
 
 		menu_tools = wx.Menu()
