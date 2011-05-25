@@ -1009,10 +1009,10 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Symbols")))
-		self.symbolsList = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT | wx.LC_SINGLE_SEL, size=(350, 350))
+		self.symbolsList = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT | wx.LC_SINGLE_SEL, size=(360, 350))
 		self.symbolsList.InsertColumn(0, _("Symbol"), width=150)
 		self.symbolsList.InsertColumn(1, _("Replacement"), width=150)
-		self.symbolsList.InsertColumn(2, _("Level"), width=50)
+		self.symbolsList.InsertColumn(2, _("Level"), width=60)
 		for symbol in symbols:
 			item = self.symbolsList.Append((symbol.displayName,))
 			self.updateListItem(item, symbol)
