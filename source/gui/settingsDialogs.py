@@ -997,7 +997,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		super(BrailleSettingsDialog,  self).onOk(evt)
 
 class SpeechSymbolsDialog(SettingsDialog):
-	title = _("Speech Symbols")
+	title = _("Symbol Pronunciation")
 
 	def makeSettings(self, settingsSizer):
 		try:
