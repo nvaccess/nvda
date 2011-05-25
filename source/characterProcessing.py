@@ -46,6 +46,17 @@ class LocaleDataMap(object):
 			return data
 		raise LookupError(locale)
 
+	def invalidateLocaleData(self, locale):
+		"""Invalidate the data object (if any) for the given locale.
+		This will cause a new data object to be created when this locale is next requested.
+		@param locale: The locale for which the data object should be invalidated.
+		@type locale: str
+		"""
+		try:
+			del self._dataMap[locale]
+		except KeyError:
+			pass
+
 class CharacterDescriptions(object):
 	"""
 	Represents a map of characters to one or more descriptions (examples) for that character.
@@ -110,29 +121,20 @@ SYMLVL_SOME = 100
 SYMLVL_MOST = 200
 SYMLVL_ALL = 300
 SYMLVL_CHAR = 1000
-SPEECH_SYMBOL_LEVELS = {
-	"none": SYMLVL_NONE,
-	"some": SYMLVL_SOME,
-	"most": SYMLVL_MOST,
-	"all": SYMLVL_ALL,
-	"char": SYMLVL_CHAR,
+SPEECH_SYMBOL_LEVEL_LABELS = {
+	SYMLVL_NONE: _("none"),
+	SYMLVL_SOME: _("some"),
+	SYMLVL_MOST: _("most"),
+	SYMLVL_ALL: _("all"),
+	SYMLVL_CHAR: _("character"),
 }
-USER_SPEECH_SYMBOL_LEVELS = collections.OrderedDict((
-	(SYMLVL_NONE, _("none")),
-	(SYMLVL_SOME, _("some")),
-	(SYMLVL_MOST, _("most")),
-	(SYMLVL_ALL, _("all")),
-))
+CONFIGURABLE_SPEECH_SYMBOL_LEVELS = (SYMLVL_NONE, SYMLVL_SOME, SYMLVL_MOST, SYMLVL_ALL)
+SPEECH_SYMBOL_LEVELS = CONFIGURABLE_SPEECH_SYMBOL_LEVELS + (SYMLVL_CHAR,)
 
 # Speech symbol preserve modes
 SYMPRES_NEVER = 0
 SYMPRES_ALWAYS = 1
 SYMPRES_NOREP = 2
-SPEECH_SYMBOL_PRESERVE_MODES = {
-	"never": SYMPRES_NEVER,
-	"always": SYMPRES_ALWAYS,
-	"norep": SYMPRES_NOREP,
-}
 
 class SpeechSymbol(object):
 	__slots__ = ("identifier", "pattern", "replacement", "level", "preserve", "displayName")
@@ -145,6 +147,13 @@ class SpeechSymbol(object):
 		self.preserve = preserve
 		self.displayName = displayName
 
+	def __repr__(self):
+		attrs = []
+		for attr in self.__slots__:
+			attrs.append("{name}={val!r}".format(
+				name=attr, val=getattr(self, attr)))
+		return "SpeechSymbol(%s)" % ", ".join(attrs)
+
 class SpeechSymbols(object):
 	"""
 	Contains raw information about the pronunciation of symbols.
@@ -156,7 +165,8 @@ class SpeechSymbols(object):
 		"""Constructor.
 		"""
 		self.complexSymbols = collections.OrderedDict()
-		self.symbols = []
+		self.symbols = collections.OrderedDict()
+		self.fileName = None
 
 	def load(self, fileName, allowComplexSymbols=True):
 		"""Load symbol information from a file.
@@ -166,6 +176,7 @@ class SpeechSymbols(object):
 		@type allowComplexSymbols: bool
 		@raise IOError: If the file cannot be read.
 		"""
+		self.fileName = fileName
 		with codecs.open(fileName, "r", "utf_8_sig", errors="replace") as f:
 			handler = None
 			for line in f:
@@ -204,7 +215,7 @@ class SpeechSymbols(object):
 		except KeyError:
 			raise ValueError
 
-	IDENTIFIER_ESCAPES = {
+	IDENTIFIER_ESCAPES_INPUT = {
 		"0": "\0",
 		"t": "\t",
 		"n": "\n",
@@ -212,6 +223,21 @@ class SpeechSymbols(object):
 		"f": "\f",
 		"v": "\v",
 	}
+	IDENTIFIER_ESCAPES_OUTPUT = {v: k for k, v in IDENTIFIER_ESCAPES_INPUT.iteritems()}
+	LEVEL_INPUT = {
+		"none": SYMLVL_NONE,
+		"some": SYMLVL_SOME,
+		"most": SYMLVL_MOST,
+		"all": SYMLVL_ALL,
+		"char": SYMLVL_CHAR,
+	}
+	LEVEL_OUTPUT = {v:k for k, v in LEVEL_INPUT.iteritems()}
+	PRESERVE_INPUT = {
+		"never": SYMPRES_NEVER,
+		"always": SYMPRES_ALWAYS,
+		"norep": SYMPRES_NOREP,
+	}
+	PRESERVE_OUTPUT = {v: k for k, v in PRESERVE_INPUT.iteritems()}
 
 	def _loadSymbol(self, line):
 		line = line.split("\t")
@@ -228,18 +254,75 @@ class SpeechSymbols(object):
 				# Empty identifier is not allowed.
 				raise ValueError
 			if len(identifier) == 2 and identifier.startswith("\\"):
-				identifier = self.IDENTIFIER_ESCAPES.get(identifier[1], identifier[1])
+				identifier = self.IDENTIFIER_ESCAPES_INPUT.get(identifier[1], identifier[1])
 			replacement = self._loadSymbolField(next(line))
 		except StopIteration:
 			# These fields are mandatory.
 			raise ValueError
 		try:
-			level = self._loadSymbolField(next(line), SPEECH_SYMBOL_LEVELS)
-			preserve = self._loadSymbolField(next(line), SPEECH_SYMBOL_PRESERVE_MODES)
+			level = self._loadSymbolField(next(line), self.LEVEL_INPUT)
+			preserve = self._loadSymbolField(next(line), self.PRESERVE_INPUT)
 		except StopIteration:
 			# These fields are optional. Defaults will be used for unspecified fields.
 			pass
-		self.symbols.append(SpeechSymbol(identifier, None, replacement, level, preserve, displayName))
+		self.symbols[identifier] = SpeechSymbol(identifier, None, replacement, level, preserve, displayName)
+
+	def save(self, fileName=None):
+		"""Save symbol information to a file.
+		@param fileName: The name of the file to which to save symbol information,
+			C{None} to use the file name last passed to L{load} or L{save}.
+		@type fileName: str
+		@raise IOError: If the file cannot be written.
+		@raise ValueError: If C{fileName} is C{None}
+			and L{load} or L{save} has not been called.
+		"""
+		if fileName:
+			self.fileName = fileName
+		elif self.fileName:
+			fileName = self.fileName
+		else:
+			raise ValueError("No file name")
+
+		with codecs.open(fileName, "w", "utf_8_sig", errors="replace") as f:
+			if self.complexSymbols:
+				f.write(u"complexSymbols:\r\n")
+				for identifier, pattern in self.complexSymbols.iteritems():
+					f.write(u"%s\t%s\r\n" % (identifier, pattern))
+				f.write(u"\r\n")
+
+			if self.symbols:
+				f.write(u"symbols:\r\n")
+				for symbol in self.symbols.itervalues():
+					f.write(u"%s\r\n" % self._saveSymbol(symbol))
+
+	def _saveSymbolField(self, output, outputMap=None):
+		if output is None:
+			return "-"
+		if not outputMap:
+			return output
+		try:
+			return outputMap[output]
+		except KeyError:
+			raise ValueError
+
+	def _saveSymbol(self, symbol):
+		identifier = symbol.identifier
+		try:
+			identifier = u"\\%s" % self.IDENTIFIER_ESCAPES_OUTPUT[identifier]
+		except KeyError:
+			pass
+		fields = [identifier,
+			self._saveSymbolField(symbol.replacement),
+			self._saveSymbolField(symbol.level, self.LEVEL_OUTPUT),
+			self._saveSymbolField(symbol.preserve, self.PRESERVE_OUTPUT)
+		]
+		# Strip optional fields with default values.
+		for field in reversed(fields[2:]):
+			if field == "-":
+				del fields[-1]
+		if symbol.displayName:
+			fields.append("# %s" % symbol.displayName)
+		return u"\t".join(fields)
 
 def _getSpeechSymbolsForLocale(locale):
 	builtin = SpeechSymbols()
@@ -307,8 +390,7 @@ class SpeechSymbolProcessor(object):
 
 		# Supplement the data for complex symbols and add all simple symbols.
 		for source in sources:
-			for sourceSymbol in source.symbols:
-				identifier = sourceSymbol.identifier
+			for identifier, sourceSymbol in source.symbols.iteritems():
 				try:
 					symbol = symbols[identifier]
 					# We're updating an already existing symbol.
@@ -406,6 +488,48 @@ class SpeechSymbolProcessor(object):
 	def processText(self, text, level):
 		self._level = level
 		return self._regexp.sub(self._regexpRepl, text)
+
+	def updateSymbol(self, newSymbol):
+		"""Update information for a symbol if it has changed.
+		If there is a change, the changed information will be added to the user's symbol data.
+		These changes do not take effect until the symbol processor is reinitialised.
+		@param newSymbol: The symbol to update.
+		@type newSymbol: L{SpeechSymbol}
+		@return: Whether there was a change.
+		@rtype: bool
+		"""
+		identifier = newSymbol.identifier
+		oldSymbol = self.computedSymbols[identifier]
+		if oldSymbol is newSymbol:
+			return False
+		try:
+			userSymbol = self.userSymbols.symbols[identifier]
+		except KeyError:
+			userSymbol = SpeechSymbol(identifier)
+
+		changed = False
+		if newSymbol.pattern != oldSymbol.pattern:
+			userSymbol.pattern = newSymbol.pattern
+			changed = True
+		if newSymbol.replacement != oldSymbol.replacement:
+			userSymbol.replacement = newSymbol.replacement
+			changed = True
+		if newSymbol.level != oldSymbol.level:
+			userSymbol.level = newSymbol.level
+			changed = True
+		if newSymbol.preserve != oldSymbol.preserve:
+			userSymbol.preserve = newSymbol.preserve
+			changed = True
+		if newSymbol.displayName != oldSymbol.displayName:
+			userSymbol.displayName = newSymbol.displayName
+			changed = True
+
+		if not changed:
+			return False
+
+		# Do this in case the symbol wasn't in userSymbols before.
+		self.userSymbols.symbols[identifier] = userSymbol
+		return True
 
 _localeSpeechSymbolProcessors = LocaleDataMap(SpeechSymbolProcessor)
 

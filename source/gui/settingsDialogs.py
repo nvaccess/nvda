@@ -6,6 +6,7 @@
 
 import glob
 import os
+import copy
 import wx
 import logHandler
 from synthDriverHandler import *
@@ -369,13 +370,10 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.updateVoiceSettings()
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Punctuation/symbol &level:")))
-		self.symbolLevels=characterProcessing.USER_SPEECH_SYMBOL_LEVELS.items()
-		self.symbolLevelList=wx.Choice(self,wx.ID_ANY,choices=[name for level, name in self.symbolLevels])
+		symbolLevelLabels=characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
+		self.symbolLevelList=wx.Choice(self,wx.ID_ANY,choices=[symbolLevelLabels[level] for level in characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS])
 		curLevel = config.conf["speech"]["symbolLevel"]
-		for index, (level, name) in enumerate(self.symbolLevels):
-			if level == curLevel:
-				self.symbolLevelList.SetSelection(index)
-				break
+		self.symbolLevelList.SetSelection(characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS.index(curLevel))
 		sizer.Add(self.symbolLevelList)
 		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
 		self.raisePitchForCapsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Raise pitch for capitals"))
@@ -447,7 +445,7 @@ class VoiceSettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		getSynth().saveSettings()
-		config.conf["speech"]["symbolLevel"]=self.symbolLevels[self.symbolLevelList.GetSelection()][0]
+		config.conf["speech"]["symbolLevel"]=characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[self.symbolLevelList.GetSelection()]
 		config.conf["speech"][getSynth().name]["raisePitchForCapitals"]=self.raisePitchForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
@@ -997,3 +995,95 @@ class BrailleSettingsDialog(SettingsDialog):
 			config.conf["braille"]["messageTimeout"] = val
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		super(BrailleSettingsDialog,  self).onOk(evt)
+
+class SpeechSymbolsDialog(SettingsDialog):
+	title = _("Symbol Pronunciation")
+
+	def makeSettings(self, settingsSizer):
+		try:
+			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData(languageHandler.getLanguage())
+		except LookupError:
+			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
+		self.symbolProcessor = symbolProcessor
+		symbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Symbols")))
+		self.symbolsList = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT | wx.LC_SINGLE_SEL, size=(350, 350))
+		self.symbolsList.InsertColumn(0, _("Symbol"), width=150)
+		self.symbolsList.InsertColumn(1, _("Replacement"), width=150)
+		self.symbolsList.InsertColumn(2, _("Level"), width=50)
+		for symbol in symbols:
+			item = self.symbolsList.Append((symbol.displayName,))
+			self.updateListItem(item, symbol)
+		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
+		self.symbolsList.Bind(wx.EVT_CHAR, self.onListChar)
+		sizer.Add(self.symbolsList)
+		settingsSizer.Add(sizer)
+
+		changeSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Change symbol")), wx.VERTICAL)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Replacement")))
+		self.replacementEdit = wx.TextCtrl(self, wx.ID_ANY)
+		self.replacementEdit.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
+		sizer.Add(self.replacementEdit)
+		changeSizer.Add(sizer)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Level")))
+		symbolLevelLabels = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
+		self.levelList = wx.Choice(self, wx.ID_ANY,choices=[
+			symbolLevelLabels[level] for level in characterProcessing.SPEECH_SYMBOL_LEVELS])
+		self.levelList.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
+		sizer.Add(self.levelList)
+		changeSizer.Add(sizer)
+		settingsSizer.Add(changeSizer)
+
+		self.editingItem = None
+
+	def postInit(self):
+		self.symbolsList.SetFocus()
+
+	def updateListItem(self, item, symbol):
+		self.symbolsList.SetStringItem(item, 1, symbol.replacement)
+		self.symbolsList.SetStringItem(item, 2, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level])
+
+	def onSymbolEdited(self, evt):
+		if self.editingItem is None:
+			return
+		# Update the symbol the user was just editing.
+		item = self.editingItem
+		symbol = self.symbols[item]
+		symbol.replacement = self.replacementEdit.Value
+		symbol.level = characterProcessing.SPEECH_SYMBOL_LEVELS[self.levelList.Selection]
+		self.updateListItem(item, symbol)
+
+	def onListItemFocused(self, evt):
+		# Update the editing controls to reflect the newly selected symbol.
+		item = evt.GetIndex()
+		symbol = self.symbols[item]
+		self.editingItem = item
+		self.replacementEdit.Value = symbol.replacement
+		self.levelList.Selection = characterProcessing.SPEECH_SYMBOL_LEVELS.index(symbol.level)
+
+	def onListChar(self, evt):
+		if evt.KeyCode == wx.WXK_RETURN:
+			# The enter key should be propagated to the dialog and thus activate the default button,
+			# but this is broken (wx ticket #3725).
+			# Therefore, we must catch the enter key here.
+			# Activate the OK button.
+			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
+
+		else:
+			evt.Skip()
+
+	def onOk(self, evt):
+		self.onSymbolEdited(None)
+		self.editingItem = None
+		for symbol in self.symbols:
+			self.symbolProcessor.updateSymbol(symbol)
+		try:
+			self.symbolProcessor.userSymbols.save()
+		except IOError as e:
+			log.error("Error saving user symbols info: %s" % e)
+		characterProcessing._localeSpeechSymbolProcessors.invalidateLocaleData(self.symbolProcessor.locale)
+		super(SpeechSymbolsDialog, self).onOk(evt)

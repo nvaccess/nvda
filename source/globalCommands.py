@@ -191,12 +191,12 @@ class GlobalCommands(ScriptableObject):
 
 	def script_cycleSpeechSymbolLevel(self,gesture):
 		curLevel = config.conf["speech"]["symbolLevel"]
-		for level, name in characterProcessing.USER_SPEECH_SYMBOL_LEVELS.iteritems():
+		for level in characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS:
 			if level > curLevel:
 				break
 		else:
 			level = characterProcessing.SYMLVL_NONE
-			name = characterProcessing.USER_SPEECH_SYMBOL_LEVELS[level]
+		name = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[level]
 		config.conf["speech"]["symbolLevel"] = level
 		ui.message(_("symbol level %s") % name)
 	script_cycleSpeechSymbolLevel.__doc__=_("Cycles through speech symbol levels which determine what symbols are spoken")

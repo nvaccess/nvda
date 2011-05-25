@@ -225,6 +225,9 @@ class MainFrame(wx.Frame):
 	def onDocumentFormattingCommand(self,evt):
 		self._popupSettingsDialog(DocumentFormattingDialog)
 
+	def onSpeechSymbolsCommand(self, evt):
+		self._popupSettingsDialog(SpeechSymbolsDialog)
+
 	def onAboutCommand(self,evt):
 		try:
 			self.prePopup()
@@ -297,6 +300,9 @@ class SysTrayIcon(wx.TaskBarIcon):
 		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		menu_preferences.AppendMenu(wx.ID_ANY,_("Speech &dictionaries"),subMenu_speechDicts)
+		if not globalVars.appArgs.secure:
+			item = menu_preferences.Append(wx.ID_ANY, _("&Punctuation/symbol pronunciation..."))
+			self.Bind(wx.EVT_MENU, frame.onSpeechSymbolsCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
 
 		menu_tools = wx.Menu()
