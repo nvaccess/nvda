@@ -417,7 +417,9 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 			name = NULL;
 		}
 
-		bool useNameAsContent = role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == ROLE_SYSTEM_RADIOBUTTON || role == ROLE_SYSTEM_CHECKBUTTON;
+		bool useNameAsContent = role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON ||
+			role == ROLE_SYSTEM_RADIOBUTTON || role == ROLE_SYSTEM_CHECKBUTTON ||
+			role == ROLE_SYSTEM_GRAPHIC;
 
 		if (name && !useNameAsContent) {
 			parentNode->addAttribute(L"name", name);
