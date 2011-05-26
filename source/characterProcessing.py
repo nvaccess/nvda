@@ -222,6 +222,7 @@ class SpeechSymbols(object):
 		"r": "\r",
 		"f": "\f",
 		"v": "\v",
+		"#": "#",
 	}
 	IDENTIFIER_ESCAPES_OUTPUT = {v: k for k, v in IDENTIFIER_ESCAPES_INPUT.iteritems()}
 	LEVEL_INPUT = {
@@ -253,8 +254,8 @@ class SpeechSymbols(object):
 			if not identifier:
 				# Empty identifier is not allowed.
 				raise ValueError
-			if len(identifier) == 2 and identifier.startswith("\\"):
-				identifier = self.IDENTIFIER_ESCAPES_INPUT.get(identifier[1], identifier[1])
+			if identifier.startswith("\\"):
+				identifier = self.IDENTIFIER_ESCAPES_INPUT.get(identifier[1], identifier[1]) + identifier[2:]
 			replacement = self._loadSymbolField(next(line))
 		except StopIteration:
 			# These fields are mandatory.
@@ -308,7 +309,8 @@ class SpeechSymbols(object):
 	def _saveSymbol(self, symbol):
 		identifier = symbol.identifier
 		try:
-			identifier = u"\\%s" % self.IDENTIFIER_ESCAPES_OUTPUT[identifier]
+			identifier = u"\\%s%s" % (
+				self.IDENTIFIER_ESCAPES_OUTPUT[identifier[0]], identifier[1:])
 		except KeyError:
 			pass
 		fields = [identifier,
