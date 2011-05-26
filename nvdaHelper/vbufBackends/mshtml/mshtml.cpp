@@ -96,14 +96,14 @@ template<typename toInterface> inline HRESULT queryService(IUnknown* pUnknown, c
 	hRes=pUnknown->QueryInterface(IID_IServiceProvider,(void**)&pServProv);
 	if(hRes!=S_OK||!pServProv) {
 		LOG_DEBUG(L"Could not queryInterface to IServiceProvider");
-		return NULL;
+		return hRes;
 	}
 	hRes=pServProv->QueryService(siid,__uuidof(toInterface),(void**)pIface);
 	pServProv->Release();
 	if(hRes!=S_OK||!pIface) {
 		LOG_DEBUG(L"Could not get requested interface");
-		pIface=NULL;
-		return NULL;
+		*pIface=NULL;
+		return hRes;
 	}
 	return hRes;
 }
@@ -173,7 +173,9 @@ HRESULT hRes=0;
 		LOG_DEBUG(L"IAccessible::accChild failed with return code "<<res);
 		return hRes;
 	}
-	return queryService(pDispatch,IID_IHTMLElement,pIface);
+	hRes=queryService(pDispatch,IID_IHTMLElement,pIface);
+	pDispatch->Release();
+	return hRes;
 }
 
 IHTMLElement* LocateHTMLElementInDocument(IHTMLDocument3* pHTMLDocument3, const wstring& ID) { 
