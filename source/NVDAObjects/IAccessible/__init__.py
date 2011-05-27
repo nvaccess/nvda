@@ -423,6 +423,9 @@ the NVDAObject for IAccessible
 		elif windowClassName.startswith("Internet Explorer_"):
 			from . import MSHTML
 			MSHTML.findExtraIAccessibleOverlayClasses(self, clsList)
+		elif windowClassName == "AVL_AVView":
+			from . import adobeAcrobat
+			adobeAcrobat.findExtraOverlayClasses(self, clsList)
 
 		#Support for Windowless richEdit
 		if not hasattr(IAccessible,"IID_ITextServices"):
@@ -1579,8 +1582,6 @@ _staticMap={
 	(None,oleacc.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("TPTShellList",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TProgressBar",oleacc.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
-	("AVL_AVView",None):"adobeAcrobat.AcrobatNode",
-	("AVL_AVView",oleacc.ROLE_SYSTEM_TEXT):"adobeAcrobat.AcrobatTextNode",
 	("AcrobatSDIWindow",oleacc.ROLE_SYSTEM_CLIENT):"adobeAcrobat.AcrobatSDIWindowClient",
 	("mscandui21.candidate",oleacc.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
 	("SysMonthCal32",oleacc.ROLE_SYSTEM_CLIENT):"SysMonthCal32.SysMonthCal32",

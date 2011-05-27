@@ -44,12 +44,6 @@ def normalizeStdName(stdName):
 
 class AcrobatNode(IAccessible):
 
-	def _get_treeInterceptorClass(self):
-		if self.role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE):
-			import virtualBuffers.adobeAcrobat
-			return virtualBuffers.adobeAcrobat.AdobeAcrobat
-		return super(AcrobatNode,self).treeInterceptorClass
-
 	def initOverlayClass(self):
 		try:
 			serv = self.IAccessibleObject.QueryInterface(IServiceProvider)
@@ -79,12 +73,6 @@ class AcrobatNode(IAccessible):
 			except COMError:
 				pass
 
-	def _get_shouldAllowIAccessibleFocusEvent(self):
-		#Acrobat document root objects do not have their focused state set when they have the focus.
-		if self.event_childID==0:
-			return True
-		return super(AcrobatNode,self).shouldAllowIAccessibleFocusEvent
-
 	def _get_role(self):
 		try:
 			return normalizeStdName(self.pdDomNode.GetStdName())[0]
@@ -97,23 +85,37 @@ class AcrobatNode(IAccessible):
 			role = controlTypes.ROLE_TEXTFRAME
 		return role
 
-	def event_valueChange(self):
-		if self.event_childID==0 and self.event_objectID == winUser.OBJID_CLIENT and winUser.isDescendantWindow(winUser.getForegroundWindow(),self.windowHandle):
-			# Acrobat has indicated that a page has died and been replaced by a new one.
-			# The new page has the same event params, so we must bypass NVDA's IAccessible caching.
-			obj = getNVDAObjectFromEvent(self.windowHandle, -4, 0)
-			if not obj:
-				return
-			eventHandler.queueEvent("gainFocus",obj)
-			return
-
-		return super(AcrobatNode, self).event_valueChange()
-
 	def scrollIntoView(self):
 		try:
 			self.pdDomNode.ScrollTo()
 		except (AttributeError, COMError):
 			log.debugWarning("IPDDomNode::ScrollTo failed", exc_info=True)
+
+class RootNode(AcrobatNode):
+	shouldAllowIAccessibleFocusEvent = True
+
+	def event_valueChange(self):
+		# Acrobat has indicated that a page has died and been replaced by a new one.
+		# The new page has the same event params, so we must bypass NVDA's IAccessible caching.
+		obj = getNVDAObjectFromEvent(self.windowHandle, winUser.OBJID_CLIENT, 0)
+		if not obj:
+			return
+		eventHandler.queueEvent("gainFocus",obj)
+
+class Document(RootNode):
+
+	def _get_treeInterceptorClass(self):
+		import virtualBuffers.adobeAcrobat
+		return virtualBuffers.adobeAcrobat.AdobeAcrobat
+
+class RootTextNode(RootNode):
+	"""The message text node that appears instead of the document when the document is not available.
+	"""
+
+	def _get_parent(self):
+		#hack: This code should be taken out once the crash is fixed in Adobe Reader X.
+		#If going parent on a root text node after saying ok to the accessibility options (untagged) and before the processing document dialog appears, Reader X will crash.
+		return api.getDesktopObject()
 
 class AcrobatTextInfo(NVDAObjectTextInfo):
 
@@ -129,16 +131,8 @@ class AcrobatTextInfo(NVDAObjectTextInfo):
 		except (ValueError, TypeError):
 			raise RuntimeError("Bad caret index")
 
-class AcrobatTextNode(EditableText, AcrobatNode):
+class EditableTextNode(EditableText, AcrobatNode):
 	TextInfo = AcrobatTextInfo
-
-	def _get_parent(self):
-		#hack: This code should be taken out once the crash is fixed in Adobe Reader X.
-		#If going parent on a root text node after saying ok to the accessibility options (untagged) and before the processing document dialog appears, Reader X will crash.
-		if self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0:
-			return api.getDesktopObject()
-		else:
-			return super(AcrobatTextNode,self).parent
 
 	def event_valueChange(self):
 		pass
@@ -153,3 +147,22 @@ class AcrobatSDIWindowClient(IAccessible):
 			# The unnamed object's parent is the named object, but when descending into the named object, the unnamed object is skipped.
 			# Given the brokenness of the unnamed object, just skip it completely and use the parent when it is encountered.
 			self.IAccessibleObject = self.IAccessibleObject.accParent
+
+def findExtraOverlayClasses(obj, clsList):
+	"""Determine the most appropriate class(es) for Acrobat objects.
+	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
+	"""
+	role = obj.role
+	if obj.event_childID == 0 and obj.event_objectID == winUser.OBJID_CLIENT and winUser.isDescendantWindow(winUser.getForegroundWindow(), obj.windowHandle):
+		# Root node.
+		if role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE):
+			clsList.append(Document)
+		elif role == controlTypes.ROLE_EDITABLETEXT:
+			clsList.append(RootTextNode)
+		else:
+			clsList.append(RootNode)
+
+	elif role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_FOCUSABLE in obj.states:
+		clsList.append(EditableTextNode)
+
+	clsList.append(AcrobatNode)
