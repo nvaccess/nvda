@@ -9,23 +9,22 @@ complexSymbols:
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])(\s\!|\!)(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s!])(\s\?|\?)(?=[\"'”’)\s]|$)
-... sentence ending	(?<=[^\s!])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
+... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
+… sentence ending	(?<=[^\s.])\…(?=[\"'”’)\s]|$)
 # Phrase endings.
 ; phrase ending	(?<=[^\s!])(\s\;|\;)(?=[\"'”’)\s]|$)
 : phrase ending	(?<=[^\s!])(\s\:|\:)(?=[\"'”’)\s]|$)
 # Others
 decimal point	(?<=\d)\,(?=\d)
-negative numbers	\-(?=\d{1,})
+in-word -	(?<=[^\W_])[-]
+dates .	((?<=\b\d\d)\.(?=\d\d.(\d{2}|\d{4})\b))|((?<=\b\d\d.\d\d)\.(?=(\d{2}|\d{4})\b))
+dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
+
+before-number -	\-(?=\d{1,})
+after-number %	(?<=\d)\%(?=\s|$)
 
 # Fix pronunciation for some words
-say nvda	[nN][vV][dD][aA]
-mac	(?<=\b)[mM][cC]
 no francs	F(?=\d|\s\d)
-
-# Break words containing capital letters
-cap-inword	(?<=[a-z])(?=[A-Z])
-begcaps	((?<=\b[A-Z][A-Z])(?=[A-Z][a-z]))|((?<=\b[A-Z])(?=[A-Z]\b))
-3caps	((?<=\b[A-Z])(?=[A-Z][A-Z]\b))|((?<=\b[A-Z][A-Z])(?=[A-Z]\b))
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -35,25 +34,20 @@ symbols:
 ! sentence ending	point dexclamation	# ! fin de phrase
 ? sentence ending	point dinterrogation	# ? fin de phrase
 ... sentence ending	points de suspension	all	always	# ... fin de phrase
+… sentence ending	points de suspension	all	always	# … fin de phrase
 ; phrase ending	point virgule	# ; fin de phrase
 : phrase ending	deux points	# : fin de phrase
 
-decimal point		# virgule
-negative numbers	moins	none	norep
+decimal point		# virgule décimale
+dates .	 	all	always
+dates /	 	all	always
+before-number -	moins	none	norep	# - devant un nombre
+after-number %	pourcent	none	norep
 in-word '	apostrophe
-
-# Correctly pronounce NVDA with any synthesizer
-say nvda	n v d a  	none	norep
-mac	mac	none	norep
-no francs	f	none	norep
-
-# Break words containing capital letters
-cap-inword	 	none	norep
-begcaps	 	none	norep
-3caps	 	none	norep
+in-word -	tiret	all	norep
 
 # Whitespace
-\0	blanc
+\0	nul
 \t	tab
 \n	nouvelle ligne
 \f	saut de page
@@ -79,7 +73,7 @@ $	dollar	none
 -	tiret
 .	point
 /	barre oblique
-:	deux points	most	norep
+:	deux points	all	norep
 ;	point virgule
 <	inférieur
 >	supérieur
@@ -108,8 +102,13 @@ _	souligné
 ’	apostrophe droite
 –	tiret demicadratin
 —	tiret cadratin
-§	section	most
+§	paragraphe	most
 ●	astérisque
 ¨	tréma
 ‎	gauche à droite	char
 ‏	droite à gauche	char
+°	degré	none
+©	copyright	some	norep
+
+# Fix pronunciation of some words
+no francs	f	none	norep

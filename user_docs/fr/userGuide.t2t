@@ -155,7 +155,7 @@ Faites un click droit sur l'icône de NVDA située dans la barre des tâches sys
 | Bascule du mode veille | NVDA+maj+s | le mode veille désactive toutes les commandes NVDA ainsi que la parole et le braille pour l'application en cours. Ceci est utile dans les application fournissant leur propre système de revue d'écran. Pressez à nouveau la commande pour désactiver le mode veille. |
 %kc:endInclude
 
-++ Reporting System Information ++
+++ Annonce des Informations Système ++
 %kc:beginInclude
 || Nom | Touche | Description |
 | Annoncer date/heure | NVDA+f12 | Une pression annonce l'heure, deux pression annonce la date |
@@ -293,26 +293,27 @@ Bien qu'une souris physique devrait être utilisée pour naviguer à la souris, 
 | Aller à l'objet sous la souris | NVDA+pavnumMultiplier | NVDA+maj+f10 | Amène l'objet de navigation à l'objet situé à la position de la souris |
 %kc:endInclude
 
-+ Les écrans virtuels +
-Les documents complexes, tels que les pages web, sont représentés dans NVDA au moyen d'un écran Virtuel.
++ Le Mode Navigation +
+Les documents complexes, tels que les pages web, sont représentés sous NVDA en utilisant le Mode Navigation.
+Cela concerne les documents sous Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader et Adobe Flash.
 
-Un écran virtuel est une représentation platement textuelle du document dans laquelle on peut se déplacer avec les flèches de navigation. Des informations indiquant si le texte est un lien, un titre etc sont annoncées avec le texte pendant que vous vous déplacez.
+Le mode navigation offre une représentation platement textuelle du document dans laquelle on peut se déplacer avec les flèches de navigation. Des informations indiquant si le texte est un lien, un titre etc sont annoncées avec le texte pendant que vous vous déplacez.
 
-Dans un écran virtuel, il y a deux modes d'interaction. En mode navigation, vous pouvez vous déplacer dans le texte en utilisant un curseur virtuel. En mode formulaire, vous pouvez interagir directement avec les champs d'édition, les listes déroulantes, les boutons radio en utilisant les touches que vous utiliseriez habituellement. En mode navigation, NVDA passera automatiquement en mode formulaire si vous tabulez ou cliquez sur un champ qui le requiert. Notez que presser la barre d'espace ou la touche entrée passera également NVDA en mode formulaire si le champ le permet. Vous pouvez aussi passer manuellement NVDA en mode formulaire par la combinaison de touches NVDA+Espace. Si NVDA passe automatiquement en mode formulaire suite à un clic, une pression de la touche Tab, Espace, ou Entrée, Il repassera en mode navigation si vous tabulez ou cliquez sur un champ qui le requiert, ou si vous appuyez sur la touche Echap. Cependant, si vous passez manuellement en mode formulaire par la combinaison NVDA+Espace, NVDA restera en mode formulaire jusqu'à ce que vous retourniez manuellement en mode navigation.
+Parfois, vous devrez interagir directement avec les contrôles contenus dans ces documents.
+Cela se fait en passant en mode formulaire, mode dans lequel toutes les touches sont passées directement au contrôle.
+En mode navigation, par défaut, NVDA passera automatiquement en mode formulaire si vous tabulez ou cliquez sur un champ qui le requiert. Notez que presser la barre d'espace ou la touche entrée passera également NVDA en mode formulaire si le champ le permet. Vous pouvez aussi passer manuellement NVDA en mode formulaire par la combinaison de touches NVDA+Espace. Si NVDA passe automatiquement en mode formulaire suite à un clic, une pression de la touche Tab, Espace, ou Entrée, Il repassera en mode navigation si vous tabulez ou cliquez sur un champ qui le requiert, ou si vous appuyez sur la touche Echap. Cependant, si vous passez manuellement en mode formulaire par la combinaison NVDA+Espace, NVDA restera en mode formulaire jusqu'à ce que vous retourniez manuellement en mode navigation.
 %kc:beginInclude
 || Nom | Touche | Description |
-| Bascule entre les modes d'écran virtuel | NVDA+espace | Bascule entre le mode formulaire et le mode navigation |
+| Bascule entre mode formulaire et mode navigation | NVDA+espace | Bascule entre le mode formulaire et le mode navigation |
 | Quitter le mode formulaire | echap | Retourne en mode navigation si lemode formulaire a préalablement été activé automatiquement |
-| Réactualiser l'écran virtuel | NVDA+f5 | Recharge l'écran virtuel en cours, (utile si le contenu de la page semble incomplet) |
+| Réactualiser le document | NVDA+f5 | Recharge le document en cours, (utile si le contenu de la page semble incomplet) |
 | Rechercher | NVDA+control+f | Affiche un dialogue qui vous permet de rechercher du texte dans le document courant |
 | Rechercher suivant | NVDA+f3 | Recherche l'occurrence suivante du texte que vous avez préalablement recherché dans le document |
 | Rechercher précédent | NVDA+maj+f3 | Recherche l'occurrence précédente du texte que vous avez préalablement recherché dans le document |
 %kc:endInclude
 
-Actuellement, NVDA utilise des écrans virtuels pour présenter les documents sous Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader et Adobe Flash.
-
 ++ Les touches de navigation rapide ++
-En mode navigation, pour une navigation plus rapide, NVDA dispose de raccourcis clavier où l'appui d'une seule touche amène à certains champs  dans l'écran virtuel.
+En mode navigation, pour une navigation plus rapide, NVDA dispose de raccourcis clavier où l'appui d'une seule touche amène à certains champs  dans le document.
 
 %kc:beginInclude
 Les touches suivantes permettent d'aller à l'élément suivant, en les combinant avec maj, on retourne à l'élément précédent.
@@ -344,14 +345,14 @@ Les touches suivantes permettent d'aller à l'élément suivant, en les combinan
 La liste d'éléments vous donne accès à une liste de liens, titres, ou repères dans la page. Des boutons radio vous permettent de choisir entre ces trois types d'informations. Une zone d'édition est également présente dans le dialogue, elle vous permet de filtrer la liste pour faciliter la recherche d'un élément particulier dans la page. Quand vous avez choisi un élément, des boutons vous permettent de vous y rendre ou de l'activer.
 %kc:beginInclude
 || Nom | Touche | Description |
-| Liste d'éléments de l'écran virtuel | NVDA+f7 | Affiche une liste d'éléments contenant les liens, titres et repères de l'écran virtuel courant |
+| Liste d'éléments du document | NVDA+f7 | Affiche une liste d'éléments contenant les liens, titres et repères du document courant |
 %kc:endInclude
 
 ++ Les Objets Embarqués ++
-Certaines pages peuvent  inclure du contenu riche utilisant des technologies comme Adobe Flash ou Sun Java. Quand il en rencontre dans un écran virtuel, NVDA annonce "objet embarqué". Vous pouvez presser "entrer" sur ces objets pour interagir avec eux. Si l'objet est accessible, vous pourrez interagir avec lui comme n'importe quelle autre application. Une touche de commande permet de retourner à la page contenant l'objet embarqué.
+Certaines pages peuvent  inclure du contenu riche utilisant des technologies comme Adobe Flash ou Sun Java. Quand il en rencontre dans un document NVDA annonce "objet embarqué". Vous pouvez presser "entrer" sur ces objets pour interagir avec eux. Si l'objet est accessible, vous pourrez interagir avec lui comme n'importe quelle autre application. Une touche de commande permet de retourner à la page contenant l'objet embarqué.
 %kc:beginInclude
 || Nom | Touche | Description |
-| Aller à l'écran virtuel contenant l'objet | NVDA+control+espace | Retire le focus à l'objet embarqué en cours et le rend à l'écran virtuel contenant l'objet |
+| Aller au document contenant l'objet | NVDA+control+espace | Retire le focus à l'objet embarqué en cours et le rend au document contenant l'objet |
 %kc:endInclude
 
 + Configurer NVDA +
@@ -438,10 +439,11 @@ C'est un potentiomètre gradué de 0 à 100, (0 étant le volume le plus bas et 
 Un potentiomètre vous permettant de choisir  le niveau d'inflexion (variation en hauteur de la voix) que le synthétiseur devra utiliser.
 
 %kc:setting
-==== Dire toutes les ponctuations ====
-Touche : NVDA+p
+==== Niveau des Symboles et Ponctuations ====
+Key: NVDA+p
 
-Une case à cocher qui, cochée, indique à NVDA d'énoncer tous les symboles de ponctuation (très utile pour la correction  d'épreuves).
+Ceci vous permet de choisir la quantités de ponctuations et autres symboles qui seront prononcés.
+Par exemple, si vous choisissez Tous, tous les symboles seront annoncés.
 
  ==== Augmenter la hauteur de la voix pour signaler les majuscules ====
 Ce paramètre, s'il est coché, indique à NVDA d'augmenter la hauteur de la voix pour signaler les caractères en majuscule.
@@ -608,16 +610,16 @@ Cette option   vous présente une liste déroulante qui contrôle la manière do
 ==== Suivre les barres de progression en arrière-plan ====
 Cette option quand elle est cochée, dit à NVDA d'annoncer les barres de progression même si elles ne sont pas physiquement sur la fenêtre en avant-plan. Si vous minimisez ou quittez une fenêtre qui contient une barre de progression, NVDA continuera à la surveiller, vous permettant de faire autre chose pendant ce temps.
 
-+++ Paramètres de l'écran Virtuel (NVDA+control+b) +++
-Le dialogue des paramètres des écrans virtuels se trouve dans le menu des Préférences, sous "Écrans virtuels...".
++++ Paramètres du Mode Navigation (NVDA+control+b) +++
+Le dialogue des paramètres du mode navigation se trouve dans le menu des Préférences, sous "Mode Navigation...".
  
 Ce dialogue comporte les options suivantes :
 
 ==== Nombre maximum de caractères par ligne ====
-Ce champ définit, en nombre de caractères, la longueur maximum d'une ligne d'un écran virtuel. Cela ne garantit pas que toutes les lignes se terminent avant ou à ce maximum, mais la plupart doivent le faire.
+Ce champ définit, en nombre de caractères, la longueur maximum d'une ligne en mode navigation.
 
 ==== Nombre maximum de lignes par page ====
-Bien que les écrans virtuels ne soient pas réellement découpés en pages, ce champ définit le nombre de lignes dont on se déplace par appui sur  page préc ou page suiv dans l'écran virtuel.
+ce champ définit le nombre de lignes dont on se déplace par appui sur  page préc ou page suiv en mode navigation.
 
 %kc:setting
 ==== Utiliser l'affichage tel qu'à l'écran ====
@@ -630,7 +632,7 @@ Quand cette option est désactivée, NVDA n'annonce que les tableaux de données
 Quand elle est activée, NVDA annonce également les tableaux utilisés simplement pour la présentation visuelle.
 
 ==== Configurer l'annonce de champs tels que liens et titres ====
-Les versions précédentes de NVDA permettaient d'utiliser le dialogue des paramètres des écrans virtuel pour indiquer si NVDA devait annoncer le type de champs rencontrés à la lecture d'une page web. Les types de champs peuvent être des liens, des titres, des tables ou des listes. Pour les configurer, veuillez trouver les nouvelles options dans le [dialogue des paramètres de mise en forme des documents #DocumentFormattingSettings]. Ces options affectent maintenant tous les documents susceptibles de contenir ce type de champs.
+Les versions précédentes de NVDA permettaient d'utiliser le dialogue des paramètres du mode navigation pour indiquer si NVDA devait annoncer le type de champs rencontrés à la lecture d'une page web. Les types de champs peuvent être des liens, des titres, des tables ou des listes. Pour les configurer, veuillez trouver les nouvelles options dans le [dialogue des paramètres de mise en forme des documents #DocumentFormattingSettings]. Ces options affectent maintenant tous les documents susceptibles de contenir ce type de champs.
 
 ==== Mode formulaire automatique au changement de focus ====
 Cette option permet au mode formulaire d'être invoqué au changement de focus. Par exemple, dans une page web, si vous tabulez et arrivez sur un formulaire : si cette option est cochée, le mode formulaire sera automatiquement activé.
@@ -688,6 +690,15 @@ Les règles des dictionnaires de NVDA vous permettent de remplacer une chaîne d
 
 Cependant, les dictionnaires de NVDA font bien mieux que le simple remplacement de mot. Le dialogue Ajout de règles contient une case à cocher permettant de choisir si vous voulez que la règle respecte la casse pour que NVDA tienne compte des majuscules et minuscules. Par défaut, NVDA ne tient pas compte de la casse.
 Une autre case à cocher vous permet de définir si votre modèle est une expression régulière. Une expression régulière est un modèle contenant des symboles particuliers vous permettant de trouver une correspondance sur plus d'un caractère à la fois, ou seulement sur les lettres ou les chiffres etc. Les expressions régulières ne sont pas expliquées dans ce manuel, mais on trouve, sur le web, beaucoup de tutoriels qui vous donneront plus d'informations.
+
++++ Prononciation des symboles et ponctuations +++
+Ce dialogue vous permet de modifier la façon dont les ponctuations et autres symboles sont prononcés ainsi que le niveau de symbole auquel ils sont annoncés.
+
+Pour modifier un symbole, sélectionnez-le d'abord dans la liste de symboles.
+Le champ Remplacement vous permet de modifier le texte qui doit être prononcé à la place de ce symbole.
+En utilisant le champ Niveau, vous pouvez ajuster le niveau minimum auquel ce symbole doit être annoncé.
+
+Quand vous avez fini, pressez le bouton Accepter pour sauvegarder vos modifications, ou le bouton Annuler pour les supprimer.
 
 ++ Sauvegarder et recharger la configuration ++
 
