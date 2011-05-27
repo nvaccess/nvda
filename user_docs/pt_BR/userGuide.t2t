@@ -282,7 +282,7 @@ Isto denomina-se "revisão plana".
 Os seguintes dois comandos são utilizados para alternar entre para e a partir da revisão plana:
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
-| Ativar a revisão plana | NVDA+7 do Teclado numérico | NVDA+pageUp | Move para a revisão plana, colocando-o na posição do objeto de navegação, permitindo que reveja a tela (ou num documento se estiver atualmente em algum) com os comandos de revisão de texto |
+| Ativar a revisão plana | NVDA+7 do Teclado numérico | NVDA+pageUp | Move para a revisão plana, colocando-o na posição do objeto de navegação, permitindo que explore a tela (ou documento se estiver atualmente em algum) com os comandos de revisão de texto |
 | Mover para o objeto a partir da revisão plana | NVDA+1 do teclado numérico | NVDA+pageDown | Navega para o objeto representado pelo texto na posição atual do cursor de exploração dentro da revisão plana |
 %kc:endInclude
 
@@ -298,7 +298,7 @@ Quanto mais à esquerda ou à direita estiver o mouse na tela, mais parecerá qu
 
 Estas características adicionais do mouse não se encontram ativadas por padrão no NVDA, mas se pretender tirar partido das mesmas, pode configurá-las a partir do diálogo das opções do mouse, que se encontram no menu Preferências do menu deste software. 
 
-Apesar de um mouse físico ou de um touchpad terem de ser utilizados para navegar com o mouse, o NVDA tem alguns comandos fundamentais relacionados com este periférico:%kc:
+Apesar de um mouse físico ou de um touchpad terem de ser utilizados para navegar com o mouse, o NVDA tem alguns comandos fundamentais relacionados a este:
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
 | Clicar com o botão esquerdo do mouse | Barra do teclado numérico | NVDA+seta a esquerda | Clica uma vez com o botão esquerdo do mouse. O habitual dúplo clique pode ser realizado pressionando duas vezes rapidamente este comando |
@@ -309,36 +309,36 @@ Apesar de um mouse físico ou de um touchpad terem de ser utilizados para navega
 | Navegar para o objeto sob o mouse | NVDA+asterisco do teclado numérico | NVDA+shift+f10 | Coloca como objeto de navegação aquele que se encontra sob o ponteiro do mouse |
 %kc:endInclude
 
-+ Buffers Virtuais +
-Documentos complexos só de leitura, tais como páginas Web, são representados no NVDA num Buffer Virtual.
++ Modo de Navegação +
 
-Buffer Virtual é uma representação plana de conteúdo tal como de uma página Web, onde se pode movimentar com as setas.
+Documentos complexos somente leitura, tais como páginas Web, são navegados pelo NVDA usando o modo de Navegação.
+Isso inclui documentos no Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader e Adobe Flash.
+
+No modo de navegação, o conteúdo do  documento é disposto  numa representação plana que pode ser navegada com as teclas do cursor como se ele  fosse um documento de texto qualquer.
+Todas as teclas de comando do NVDA para o cursor do sistema funcionam neste modo (Ex: leitura contínua, informar formatação, comandos de navegação para tabelas, etc).
+
 A informação de que o texto é ou não um link, título etc é anunciada conforme se movimenta pelo mesmo. 
 
-Quando está num Buffer Virtual, existem dois modos de interação.
-O modo de navegação é onde se pode mover por todo o texto utilizando um cursor virtual um pouco parecido com o cursor do sistema.
-De fato, todas as teclas de atalho do cursor de sistema do NVDA funcionam neste modo (Ex: leitura contínua, informar formatação, todos os comandos de navegação para tabelas, etc).
-Já o modo de foco é onde pode interagir diretamente com um controle (campo de edição, caixa de combinação, botões de opção) utilizando adequadamente as teclas que usaria normalmente.
-Quando estiver no modo de navegação, o NVDA alternara automaticamente para o modo de foco caso se mova com Tab ou clicar num controle em particular que exija isso.
-Atente que ao pressionar Enter ou Espaço nos controles que exijam isto, também passará automaticamente para o modo de foco.
-Se tem o NVDA configurado para alterar automaticamente para o modo de foco porque pressionou Tab ou se clicou num objeto que não precisa do modo de foco (tal como um link ou uma parte de um texto) alterará para o modo de navegação.
-Ao pressionar Escape, o NVDA também voltará para o modo de navegação se estiver configurado para alternar para o modo de foco automaticamente.
-Pode alternar manualmente entre os modos de foco e navegação.
-Quando se altera para o modo de foco manualmente, o NVDA bloquea nesse modo específico e já não alterna automaticamente, a menos que altere manualmente para o modo de navegação. 
+Algumas vezes, você precisará interagir diretamente com os controles nesses documentos.
+Pode fazer isso alternando para o modo de foco, onde as teclas são passadas para os controles.
+Quando estiver no modo de navegação, o NVDA por predefinição alternará automaticamente para o modo de foco caso se mova com Tab ou clique num controle em particular que exija isso.
+Contrariamente, movendo-se com Tab ou clicando num controle que não precise do modo de foco, alternará para o modo de navegação.
+Também pode alternar para o modo de foco pressionando Enter ou Espaço em controles que exijam isso.
+Caso pressione Scape retornará ao modo de navegação.
+Adicionalmente, pode alternar manualmente forçando o modo de foco, sendo que assim ele permanecerá até que você o desative manualmente.
+
 %kc:beginInclude
 || Nome | Tecla | Descrição |
-| Alternar entre os modos do Buffer Virtual | NVDA+space | Alterna entre o modo de foco e o modo de navegação |
+| Alternar Modo de Foco e Navegação | NVDA+space | Alterna entre o modo de foco e o modo de navegação |
 | Sair do modo de foco | escape | Volta para o modo de navegação se o modo de foco foi ativado previamente e automaticamente |
-| Atualizar o Buffer Virtual | NVDA+f5 | Recarrega o Buffer Virtual atual (muito útil se faltam determinados elementos da página) |
+| Atualizar Documento no Modo de Navegação | NVDA+f5 | Recarrega o conteúdo do documento atual (muito útil se lhe falta determinado conteúdo. ) |
 | Procurar | NVDA+control+f | Abre uma janela onde pode introduzir texto a ser procurado no documento atual |
 | Procurar seguinte | NVDA+f3 | Procura pela próxima ocorrência de texto já procurada no documento |
 | Procurar anterior | NVDA+shift+f3 | Procura a ocorrência de texto anterior  já procurada no documento |
 %kc:endInclude
 
-Atualmente o NVDA utiliza os Buffers Virtuais para ler documentos no Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader e Adobe Flash. 
-
 ++ Navegação por Carácter ++
-Quando estiver no modo de navegação, o NVDA também fornece teclas de apenas um carácter que permitem saltar para determinados campos no Buffer Virtual, sendo esta uma navegação rápida. 
+Quando estiver no modo de navegação, o NVDA também fornece teclas de apenas um carácter para uma navegação rápida, as quais permitem saltar para determinados campos no documento.   
 
 %kc:beginInclude
 As teclas seguintes só por si saltam para o próximo elemento disponível, adicionando-se a tecla Shift faz com que saltem para o elemento anterior:
@@ -367,24 +367,24 @@ As teclas seguintes só por si saltam para o próximo elemento disponível, adic
 %kc:endInclude
 
 ++ A Lista de Elementos ++
-A lista de elementos fornece o acesso para uma lista de links, cabeçalhos ou marcas aria na página.
+A lista de elementos fornece acesso a uma lista de links, cabeçalhos ou marcas aria no documento.
 Os botões de opção permitem-lhe alterar entre estes três tipos de informação.
 Um campo de edição também se encontra disponível na caixa de diálogo que permite filtrar a lista para o ajudar a procurar um item específico na página.
 Depois de ter escolhido um item, pode utilizar os botões fornecidos no diálogo para mover para ou ativar esse item.
 %kc:beginInclude
 || Nome | Tecla | Descrição |
-| Lista de elementos do Buffer Virtual | NVDA+f7 | Chama a lista de elementos que contém links, títulos e marcadores do Buffer Virtual atual |
+| Lista de elementos do Modo de Navegação | NVDA+f7 | Chama a lista de elementos que contém links, títulos e marcadores do documento atual |
 %kc:endInclude
 
 ++ Objetos Embutidos ++
 As páginas podem incluir conteúdo avançado através de tecnologias tais como o Flash da Adobe e o JAVA da Sun.
-Quando estas são encontradas no Buffer Virtual, o NVDA anuncia "objeto embutido".
-Pode pressionar Enter sobre esses objetos para interagir com os mesmos.
+Quando estas são encontradas no modo de navegação, o NVDA anuncia "objeto embutido".
+Pressione Enter sobre esses objetos para interagir com os mesmos.
 Se forem acessíveis, pode pressionar Tab para navegar por eles e interagir como com qualquer outra aplicação.
 É fornecida uma tecla de atalho para voltar à página original que contém o objeto embutido: 
 %kc:beginInclude
 || Nome | Tecla | Descrição |
-| Mover para o Buffer Virtual que contém objetos embutidos | NVDA+control+espaço | Move o foco para fora do objeto embotido atual e entra no Buffer Virtual que o contém |
+| Mover para o Documento que contém o objeto embutido | NVDA+control+espaço | Move o foco para fora do objeto embutido atual e retorna ao Documento que o contém |
 %kc:endInclude
 
 + Configurando o NVDA +
@@ -683,32 +683,30 @@ Tecla: NVDA+5
 
 Alterna o anúncio de novos conteúdos  em objetos particulares tais como terminais e o controle de históricos em programas de conversação.
 
-+++ Opções do Buffer Virtual (NVDA+control+b) +++
-O diálogo das opções do Buffer Virtual pode ser encontrado no menu Preferências, no item "Exibidores Virtuais...".
++++ Opções do Modo de Navegação (NVDA+control+b) +++
+O diálogo das opções do modo de navegação pode ser encontrado no menu Preferências, no item "Modo de navegação...".
 
 O diálogo contém as seguintes opções:
 
 ==== Máximo de Caracteres Numa Linha ====
-Este campo define o comprimento máximo de uma linha do Buffer Virtual (em caracteres).
+Este campo define o comprimento máximo de uma linha do modo de navegação (em caracteres).
 
 ==== Linhas Por Página ====
-Pois bem, os buffers Virtuais não possuem páginas de fato. Este campo define a quantidade de linhas a mover-se ao pressionar Page Up ou Page Down no Buffer Virtual. 
+ Este campo define a quantidade de linhas a mover-se quando pressionar Page Up ou Page Down no modo de navegação. 
 
 %kc:setting
 ==== Usar Apresentação da Tela ====
 Tecla: NVDA+v
 
-Esta opção permite definir se o conteúdo do Buffer Virtual deve posicionar os elementos como links e outros campos numa linha individual, ou se se deve conservá-los dentro do texto tal como aparece na tela. Se a opção estiver marcada, os elementos ficarão como aparecem visualmente. Mas se estiver desmarcada, os campos serão colocados numa linha separadamente.
+Esta opção permite definir se o conteúdo no modo de navegação deve posicionar os elementos como links e outros campos numa linha individual, ou se se deve conservá-los dentro do texto tal como aparece na tela. Se a opção estiver marcada, os elementos ficarão como aparecem visualmente. Mas se estiver desmarcada, os campos serão colocados numa linha separadamente.
 
 ==== Anunciar Tabelas de Layout ====
 Quando se desmarca esta opção, o NVDA anuncia apenas as tabelas que contêm dados tabulares (o que indica que isso é uma tabela).
 Se a marcar, porém, o NVDA anunciará também tabelas usadas puramente para representação visual.
 
 ==== Configurar O Anúncio de Campos Tais Como Links E Títulos ====
-Versões anteriores deste leitor de tela permitiam-lhe utilizar as opções do diálogo do Buffer Virtual para configurar o anúncio de elementos  quando entrava neles e informava isso através do conteúdo da Web.
-Podem ser dados como exemplo links, títulos, tabelas e listas.
-Para configurá-los, por favor localize as novas opções no diálogo das opções de formatação de documentos.
-Atualmente estas opções não afetam somente o Buffer Virtual, mas sim qualquer documento que possa ter este tipo de campos que são anunciados.
+
+ por favor veja as  opções no diálogo de formatação de documentos para a configuração dos campos que serão falados quando estiver navegando, tais como links, cabeçalhos e tabelas.
 
 ==== Modo de foco automático quando o foco muda ====
 Esta opção permite que o modo de foco seja ativado quando este for modificado.
@@ -719,7 +717,7 @@ Esta opção quando marcada permite que o NVDA ative e desative o modo de foco q
 Por exemplo, se for pressionando a Seta Abaixo numa página Web e encontrar uma área de edição, este leitor de tela ativará automaticamente o modo de foco. Se pressionar as setas para sair da área de edição, o NVDA voltará ao modo de navegação.
 
 ==== Indicação sonora de mudança entre modo de foco e navegação ====
-Se esta opção estiver marcada, o NVDA reproduzirá sons especiais quando alternar entre os modos de navegação e foco no Buffer virtual, em vez de anunciá-lo.
+Se esta opção estiver marcada, o NVDA reproduzirá sons especiais quando alternar entre os modos de navegação e foco, em vez de falar a alteração.
 
 +++ Opções de Formatação de Documentos (NVDA+control+d) +++[DocumentFormattingSettings]
 Esta caixa de diálogo está no menu Preferências, mais propriamente no item "Formatação de Documentos...".
@@ -780,7 +778,17 @@ O diálogo de adicionar regras também contém uma caixa de verificação que de
 O NVDA ignora estes casos por padrão).
 Outra caixa de verificação permite-lhe estabelecer se o texto original é uma "Expressão Regular".
 Uma expressão regular é um texto original que contém símbolos especiais que permitem introduzir mais de um carácter ao mesmo tempo, ou introduzir apenas números, ou só letras, segundo alguns poucos exemplos.
-Expressões regulares não são explicadas neste guia de utilizador, mas existem muitos tutoriais na Web que podem proporcionar-lhe mais informações.
+Expressões regulares não são explicadas neste guia do usuário, mas existem muitos tutoriais na Web que podem proporcionar-lhe mais informações.
+
++++ Pronúncia de Sinais e pontuação +++
+
+Esse diálogo permite-lhe mudar o modo como a pontuação e outros sinais serão ditos, bem como em que grau de sinais eles serão falados.
+
+Para mudar um sinal, selecione-o na lista de sinais.
+  O campo de substituição permite que você altere o texto que será falado no lugar do sinal.
+  Através do campo grau você poderá definir o grau de sinais no qual este será falado.
+  
+Após finalizar, pressione ok para salvar as alterações ou cancelar  caso queira descartá-las.
 
 ++ Salvando e Restaurando Configurações ++
 Este programa não salva automaticamente suas opções. Dessa forma, se sair do NVDA e reiniciá-lo, estas voltarão ao ponto anterior com os valores originais.
