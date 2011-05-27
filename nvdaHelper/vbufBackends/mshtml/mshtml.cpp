@@ -639,7 +639,7 @@ if(nodeName.compare(L"TABLE")==0) {
 	return tableInfoPtr;
 }
 
-VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr, bool parentHasContent, bool allowPreformattedText) {
+VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr, bool interactiveAncestorHasContent, bool allowPreformattedText) {
 	BSTR tempBSTR=NULL;
 	wostringstream tempStringStream;
 
@@ -829,9 +829,9 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	} else if(nodeName.compare(L"IMG")==0) {
 		tempIter=attribsMap.find(L"HTMLAttrib::alt");
 		// If the alt attrib contains text, always use it.
-		// If the parent has content, rely on the alt attrib, even if it is "".
-		// If the parent has no content and the alt attrib is "", don't use it; fall back.
-		if(tempIter!=attribsMap.end()&&(parentHasContent||!tempIter->second.empty())) {
+		// If the interactive ancestor has content, rely on the alt attrib, even if it is "".
+		// If the interactive ancestor has no content and the alt attrib is "", don't use it; fall back.
+		if(tempIter!=attribsMap.end()&&(interactiveAncestorHasContent||!tempIter->second.empty())) {
 			contentString=tempIter->second;
 			if(tempIter->second.empty()) {
 				// alt="", so this isn't really interactive and we don't want it to be rendered at all.
@@ -841,7 +841,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			tempIter=attribsMap.find(L"HTMLAttrib::title");
 			if(tempIter!=attribsMap.end()) {
 				contentString=tempIter->second;
-			} else if(isInteractive&&!parentHasContent&&!IAValue.empty()) {
+			} else if(isInteractive&&!interactiveAncestorHasContent&&!IAValue.empty()) {
 				contentString=getNameForURL(IAValue);
 			} 
 		}
@@ -931,7 +931,10 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 
 	//Render content of children if we are allowed to
 	if(renderChildren) {
-		bool hasContent=!IAName.empty();
+		// Determine what to pass for interactiveAncestorHasContent when recursing.
+		// If this node is interactive, determine whether it has content.
+		// Otherwise, simply pass the value we were given.
+		bool newIntAncHasContent=isInteractive?(!IAName.empty()):interactiveAncestorHasContent;
 		//For children of frames we must get the child document via IAccessible
 		if(nodeName.compare(L"FRAME")==0||nodeName.compare(L"IFRAME")==0) {
 			LOG_DEBUG(L"using getRoodDOMNodeOfHTMLFrame to get the frame's child");
@@ -939,7 +942,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 				IHTMLDOMNode* childPHTMLDOMNode=NULL;
 				getHTMLSubdocumentBodyFromIAccessibleFrame(pacc,&childPHTMLDOMNode);
 				if(childPHTMLDOMNode) {
-					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,hasContent,allowPreformattedText);
+					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,newIntAncHasContent,allowPreformattedText);
 					childPHTMLDOMNode->Release();
 				}
 			}
@@ -963,7 +966,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 						}
 						IHTMLDOMNode* childPHTMLDOMNode=NULL;
 						if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
-							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,hasContent,allowPreformattedText);
+							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,newIntAncHasContent,allowPreformattedText);
 							if(tempNode) {
 								previousNode=tempNode;
 							}
@@ -1087,7 +1090,7 @@ IHTMLDOMNode* pHTMLDOMNode=NULL;
 		pHTMLElement->Release();
 	}
 	nhAssert(pHTMLDOMNode);
-	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,NULL,NULL,true,false);
+	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,NULL,NULL,false,false);
 	pHTMLDOMNode->Release();
 }
 
