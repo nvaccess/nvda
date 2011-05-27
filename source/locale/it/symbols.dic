@@ -6,15 +6,15 @@
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
-? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s\],;:»]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s\]!,;:»]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s\]\?,;:»]|$)
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<=\d)\.(?=\d)
-in-word '	(?<=[^\W_])'
+in-word '	(?<=[^\W_])['’]
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -29,7 +29,7 @@ decimal point		none	always
 in-word '	apostrofo	all	norep
 
 # Whitespace
-\0	vuoto
+\0	vuoto	char
 \t	tab
 \n	nuova riga	char
 \f	fine pagina	none
@@ -87,3 +87,5 @@ _	sottolineato	most	always
 —	trattino lungo	most
 ●	puntato	most
 ¨	dieresi	most
+‎	marcatore da sinistra a destra	char
+‏	marcatore da destra a sinistra	char
