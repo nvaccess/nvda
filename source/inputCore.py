@@ -353,7 +353,10 @@ class InputManager(baseObject.AutoPropertyObject):
 		try:
 			self.localeGestureMap.load(os.path.join("locale", lang, "gestures.ini"))
 		except IOError:
-			log.debugWarning("No locale gesture map for language %s" % lang)
+			try:
+				self.localeGestureMap.load(os.path.join("locale", lang.split('_')[0], "gestures.ini"))
+			except IOError:
+				log.debugWarning("No locale gesture map for language %s" % lang)
 
 	def emulateGesture(self, gesture):
 		"""Convenience method to emulate a gesture.
