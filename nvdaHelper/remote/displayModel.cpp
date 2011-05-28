@@ -58,7 +58,7 @@ displayModel_t::~displayModel_t() {
 	}
 }
 
-int displayModel_t::getChunkCount() {
+size_t displayModel_t::getChunkCount() {
 	return chunksByYX.size();
 }
 
@@ -69,7 +69,7 @@ void displayModel_t::insertChunk(const RECT& rect, int baselineFromTop, const ws
 	chunk->baselineFromTop=baselineFromTop;
 	chunk->text=text;
 	chunk->characterXArray.push_back(rect.left);
-	for(int i=0;i<(text.length()-1);++i) chunk->characterXArray.push_back(characterEndXArray[i]+rect.left); 
+	for(unsigned int i=0;i<(text.length()-1);++i) chunk->characterXArray.push_back(characterEndXArray[i]+rect.left); 
 	LOG_DEBUG(L"filled in chunk with rectangle from "<<rect.left<<L","<<rect.top<<L" to "<<rect.right<<L","<<rect.bottom<<L" with text of "<<text);
 	//If a clipping rect is specified, and the chunk falls outside the clipping rect
 	//Truncate the chunk so that it stays inside the clipping rect.

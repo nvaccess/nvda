@@ -26,7 +26,7 @@ extern "C" {
  * @param buf address of allocated memory that could hold cch characters where the port string should be written to.
  * @param cch the size of buf in characters
  */
-int generateDesktopSpecificNamespace(wchar_t* buf, int cch);
+size_t generateDesktopSpecificNamespace(wchar_t* buf, size_t cch);
 
 #ifdef __cplusplus
 }

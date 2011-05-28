@@ -25,7 +25,7 @@ debug=env['nvdaHelperDebugFlags']
 
 #Some defines and includes for the environment
 env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${nvdaHelperLogLevel}'),('_WIN32_WINNT','_WIN32_WINNT_WINXP')])
-env.Append(CXXFLAGS=['/EHsc'])
+env.Append(CXXFLAGS=['/EHsc','/W3','/WX'])
 env.Append(CPPPATH=['#/include',Dir('.').abspath])
 env.Append(LINKFLAGS='/incremental:no')
 env.Append(LINKFLAGS='/release') #We always want a checksum in the header

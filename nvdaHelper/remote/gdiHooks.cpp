@@ -356,11 +356,11 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	int* characterEndXArray=(int*)calloc(newText.length(),sizeof(int));
 	if(characterWidths) {
 		int ac=0;
-		for(int i=0;i<newText.length();++i) characterEndXArray[i]=(ac+=characterWidths[(fuOptions&ETO_PDY)?(i*2):i]);
+		for(unsigned int i=0;i<newText.length();++i) characterEndXArray[i]=(ac+=characterWidths[(fuOptions&ETO_PDY)?(i*2):i]);
 		resultTextSize->cx=ac;
 		resultTextSize->cy=tm.tmHeight;
 	} else {
-		GetTextExtentExPoint(hdc,newText.c_str(),newText.length(),0,NULL,characterEndXArray,resultTextSize);
+		GetTextExtentExPoint(hdc,newText.c_str(),static_cast<int>(newText.length()),0,NULL,characterEndXArray,resultTextSize);
 	}
 	//are we writing a transparent background?
 	if(tm.tmCharSet!=SYMBOL_CHARSET&&!(fuOptions&ETO_OPAQUE)&&(GetBkMode(hdc)==TRANSPARENT)) {

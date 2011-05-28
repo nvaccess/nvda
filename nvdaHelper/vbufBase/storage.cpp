@@ -443,7 +443,7 @@ void VBufStorage_textFieldNode_t::getTextInRange(int startOffset, int endOffset,
 	LOG_DEBUG(L"generated, text string is now of length "<<text.length());
 }
 
-VBufStorage_textFieldNode_t::VBufStorage_textFieldNode_t(const std::wstring& textArg): VBufStorage_fieldNode_t(textArg.length(),false), text(textArg) {
+VBufStorage_textFieldNode_t::VBufStorage_textFieldNode_t(const std::wstring& textArg): VBufStorage_fieldNode_t(static_cast<int>(textArg.length()),false), text(textArg) {
 	LOG_DEBUG(L"textFieldNode initialization, with text of length "<<length);
 }
 

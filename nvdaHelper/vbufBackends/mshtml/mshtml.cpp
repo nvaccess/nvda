@@ -1056,7 +1056,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	LOG_DEBUG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
 	LOG_DEBUG(L"Getting document from window "<<docHandle);
-	int res=SendMessage((HWND)docHandle,WM_HTML_GETOBJECT,0,0);
+	LRESULT res=SendMessage((HWND)docHandle,WM_HTML_GETOBJECT,0,0);
 	if(res==0) {
 		LOG_DEBUG(L"Error getting document using WM_HTML_GETOBJECT");
 		return;

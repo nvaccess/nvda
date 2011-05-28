@@ -238,7 +238,6 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 };
 
 MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, IHTMLDOMNode* pHTMLDOMNode): VBufStorage_controlFieldNode_t(docHandle,ID,isBlock) {
-	int res;
 	VARIANT_BOOL varBool;
 	nhAssert(backend);
 	nhAssert(pHTMLDOMNode);

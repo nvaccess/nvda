@@ -182,7 +182,7 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 }
 
 bool initInprocManagerThreadIfNeeded() {
-	BOOL threadCreated=FALSE;
+	bool threadCreated=FALSE;
 	HANDLE waitHandles[2]={0};
 	//Gain exclusive access to all the inproc thread variables for the rest of this function.
 	inprocThreadsLock.acquire();

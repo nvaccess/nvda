@@ -63,7 +63,7 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 		} else {
 			tempModel->release();
 		}
-		*textBuf=SysAllocStringLen(text.c_str(),text.size());
+		*textBuf=SysAllocStringLen(text.c_str(),static_cast<UINT>(text.size()));
 		size_t cpBufSize=characterRects.size()*4;
 		// Hackishly use a BSTR to contain points.
 		wchar_t* cpTempBuf=(wchar_t*)malloc(cpBufSize*sizeof(wchar_t));
@@ -74,7 +74,7 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 			*(cpTempBufIt++)=(wchar_t)cpIt->right;
 			*(cpTempBufIt++)=(wchar_t)cpIt->bottom;
 		}
-		*characterRectsBuf=SysAllocStringLen(cpTempBuf,cpBufSize);
+		*characterRectsBuf=SysAllocStringLen(cpTempBuf,static_cast<UINT>(cpBufSize));
 		free(cpTempBuf);
 	}
 	return 0;

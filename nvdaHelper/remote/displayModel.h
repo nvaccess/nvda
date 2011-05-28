@@ -65,7 +65,7 @@ class displayModel_t: public LockableAutoFreeObject  {
 /**
  * Finds out how many chunks this model contains.
  */
-	int getChunkCount();
+	size_t getChunkCount();
 
 /**
  * Inserts a text chunk in to the model.
