@@ -44,7 +44,7 @@ class CDispatchChangeSink : public IDispatch {
 		decBackendLibRefCount();
 	}
 
-	void CDispatchChangeSink::onChange() {
+	void onChange() {
 		if(hasFired||allowDelete) {
 			return;
 		}
