@@ -16,14 +16,13 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <list>
 #include <set>
 #include <map>
+#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include "rpcSrv.h"
 #include "inputLangChange.h"
 #include "typedCharacter.h"
 #include "IA2Support.h"
 #include "ia2LiveRegions.h"
-#include "nvdaController.h"
-#include "nvdaControllerInternal.h"
 #include "log.h"
 #include "gdiHooks.h"
 #include "nvdaHelperRemote.h"

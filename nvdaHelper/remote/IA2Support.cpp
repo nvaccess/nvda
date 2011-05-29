@@ -14,6 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <cstdio>
 #include <cwchar>
+#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include <objbase.h>
 #include <ia2.h>
@@ -49,16 +50,16 @@ IID ia2Iids[]={
 #define IAccessible2ProxyIID IID_IAccessible2
 
 IID _ia2PSClsidBackups[ARRAYSIZE(ia2Iids)]={0};
-BOOL isIA2Installed=FALSE;
+bool isIA2Installed=FALSE;
 HINSTANCE IA2DllHandle=0;
 DWORD IA2RegCooky=0;
 HANDLE IA2UIThreadHandle=NULL;
 DWORD IA2UIThreadID=0;
 HANDLE IA2UIThreadUninstalledEvent=NULL;
 UINT wm_uninstallIA2Support=0;
-BOOL isIA2Initialized=FALSE;
+bool isIA2Initialized=FALSE;
 
-BOOL installIA2Support() {
+bool installIA2Support() {
 	LPFNGETCLASSOBJECT IA2Dll_DllGetClassObject;
 	int i;
 	int res;
@@ -92,7 +93,7 @@ BOOL installIA2Support() {
 	return TRUE;
 }
 
-BOOL uninstallIA2Support() {
+bool uninstallIA2Support() {
 	int i;
 	LPFNDLLCANUNLOADNOW IA2Dll_DllCanUnloadNow;
 	if(!isIA2Installed)
@@ -111,7 +112,7 @@ BOOL uninstallIA2Support() {
 	return TRUE;
 }
 
-BOOL IA2Support_initialize() {
+bool IA2Support_initialize() {
 	nhAssert(!isIA2Initialized);
 	wsprintf(IA2DllPath,L"%s\\IAccessible2Proxy.dll",dllDirectory);
 	isIA2Initialized=TRUE;

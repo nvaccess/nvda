@@ -19,7 +19,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <list>
 #include <set>
 #include <sstream>
-#include <windows.h>
 #include <remote/log.h>
 #include "utils.h"
 #include "storage.h"

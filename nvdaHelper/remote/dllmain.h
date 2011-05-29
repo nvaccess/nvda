@@ -16,7 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define NVDAHELPEREMOTE_DLLMAIN_H
 
 #include <cwchar>
-#include <windows.h>
+#include <windef.h>
 
 extern HINSTANCE dllHandle;
 extern wchar_t dllDirectory[MAX_PATH];

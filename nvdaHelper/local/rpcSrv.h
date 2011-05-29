@@ -15,7 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #ifndef RPCSRV_H
 #define RPCSRV_H
 
-#include <windows.h>
+#include <rpc.h>
 
 #define DLLEXPORT extern "C" __declspec(dllexport)
 

@@ -14,6 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <string>
 #include <sstream>
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <ia2.h>
 #include "nvdaController.h"
@@ -21,8 +22,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "nvdaHelperRemote.h"
 
 using namespace std;
-
-handle_t nvdaControllerBindingHandle;
 
 void getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewText=false, bool recurse=true) {
 	IAccessibleText* paccText=NULL;

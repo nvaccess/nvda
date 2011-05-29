@@ -17,7 +17,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <string>
 #include <sstream>
-#include <windows.h>
 #include <common/lock.h>
 
 #define nhAssert _ASSERTE

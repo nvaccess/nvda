@@ -16,9 +16,10 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define VIRTUALBUFFER_BACKEND_H
 
 #include <set>
+#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include "storage.h"
-#include "lock.h"
+#include <common/lock.h>
 
 class VBufBackend_t;
 
@@ -156,7 +157,7 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
  /**
  * Useful for cerializing access to the buffer
  */
-	VBufLock_t lock;
+	LockableObject lock;
 
 };
 

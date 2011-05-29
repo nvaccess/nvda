@@ -14,7 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #ifndef NVDAHELPERLOCAL_H
 #define NVDAHELPERLOCAL_H
-#include <windows.h>
+#include <rpc.h>
 
 #define DLLEXPORT extern "C" __declspec(dllexport)
 

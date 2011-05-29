@@ -13,10 +13,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <map>
-#include <windows.h>
 #include "vbufRemote.h"
 #include <vbufBase/backend.h>
-#include "nvdaHelperRemote.h"
 #include "dllmain.h"
 
 using namespace std;
