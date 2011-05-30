@@ -87,14 +87,6 @@ def IAccessibleFromHTMLNode(HTMLNode):
 		raise NotImplementedError
 
 def HTMLNodeFromIAccessible(IAccessibleObject):
-	#Internet Explorer 8 can crash if you try asking for an IHTMLElement from the root MSHTML Registered Handler IAccessible
-	#So only do it if we can get the role, and its not the MSAA client role.
-	try:
-		accRole=IAccessibleObject.accRole(0)
-	except COMError:
-		accRole=0
-	if not accRole or accRole==oleacc.ROLE_SYSTEM_CLIENT:
-		return None
 	try:
 		s=IAccessibleObject.QueryInterface(IServiceProvider)
 		i=s.QueryService(IID_IHTMLElement,comtypes.automation.IDispatch)
