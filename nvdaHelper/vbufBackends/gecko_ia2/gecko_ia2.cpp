@@ -910,6 +910,8 @@ bool getDocumentFrame(HWND* hwnd, long* childID) {
 
 void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	switch(eventID) {
+		case EVENT_OBJECT_FOCUS:
+		case EVENT_SYSTEM_ALERT:
 		case IA2_EVENT_TEXT_UPDATED:
 		case IA2_EVENT_TEXT_INSERTED:
 		case IA2_EVENT_TEXT_REMOVED:
@@ -945,6 +947,13 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 			continue;
 		}
 		LOG_DEBUG(L"found active backend for this window at "<<backend);
+
+	//For focus and alert events, force any invalid nodes to be updaed right now
+	if(eventID==EVENT_OBJECT_FOCUS||eventID==EVENT_SYSTEM_ALERT) {
+		backend->forceUpdate();
+		continue;
+	}
+
 		//Ignore state change events on the root node (document) as it can cause rerendering when the document goes busy
 		if(eventID==EVENT_OBJECT_STATECHANGE&&hwnd==(HWND)(backend->rootDocHandle)&&childID==backend->rootID) return;
 		VBufStorage_controlFieldNode_t* node=backend->getControlFieldNodeWithIdentifier(docHandle,ID);
