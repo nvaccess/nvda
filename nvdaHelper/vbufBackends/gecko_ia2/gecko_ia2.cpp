@@ -948,11 +948,11 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		}
 		LOG_DEBUG(L"found active backend for this window at "<<backend);
 
-	//For focus and alert events, force any invalid nodes to be updaed right now
-	if(eventID==EVENT_OBJECT_FOCUS||eventID==EVENT_SYSTEM_ALERT) {
-		backend->forceUpdate();
-		continue;
-	}
+		//For focus and alert events, force any invalid nodes to be updaed right now
+		if(eventID==EVENT_OBJECT_FOCUS||eventID==EVENT_SYSTEM_ALERT) {
+			backend->forceUpdate();
+			continue;
+		}
 
 		//Ignore state change events on the root node (document) as it can cause rerendering when the document goes busy
 		if(eventID==EVENT_OBJECT_STATECHANGE&&hwnd==(HWND)(backend->rootDocHandle)&&childID==backend->rootID) return;
