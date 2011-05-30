@@ -170,7 +170,7 @@ HRESULT hRes=0;
 	varChild.lVal=1;
 	IDispatch* pDispatch=NULL;
 	if((hRes=pacc->get_accChild(varChild,&pDispatch))!=S_OK) {
-		LOG_DEBUG(L"IAccessible::accChild failed with return code "<<res);
+		LOG_DEBUG(L"IAccessible::accChild failed with return code "<<hRes);
 		return hRes;
 	}
 	hRes=queryService(pDispatch,IID_IHTMLElement,pIface);
