@@ -181,9 +181,11 @@ class GeneralSettingsDialog(SettingsDialog):
 					return
 				break
 		if not config.setSystemConfigToCurrentConfig():
-			wx.MessageDialog(self,_("Error copying NVDA user settings"),_("Error"),wx.OK|wx.ICON_ERROR).ShowModal()
+			d=wx.MessageDialog(self,_("Error copying NVDA user settings"),_("Error"),wx.OK|wx.ICON_ERROR)
 		else:
-			wx.MessageDialog(self,_("Successfully copied NVDA user settings"),_("Success"),wx.OK|wx.ICON_INFORMATION).ShowModal()
+			d=wx.MessageDialog(self,_("Successfully copied NVDA user settings"),_("Success"),wx.OK|wx.ICON_INFORMATION).ShowModal()
+		d.ShowModal()
+		d.Destroy()
 
 	def onOk(self,evt):
 		newLanguage=[x[0] for x in self.languageNames][self.languageList.GetSelection()]
