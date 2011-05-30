@@ -747,8 +747,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	tempIter=attribsMap.find(L"HTMLAttrib::role");
 	if(tempIter!=attribsMap.end()) {
 		const wstring& ariaRole=tempIter->second;
-		if(ariaRole.compare(L"description")==0) {
-			//IE gives elements with an ARIA role of description a role of edit, probably should be staticText
+		if(ariaRole.compare(L"description")==0||ariaRole.compare(L"search")==0) {
+			//IE gives elements with an ARIA role of description and search a role of edit, probably should be staticText
 			IARole=ROLE_SYSTEM_STATICTEXT;
 		} else if(ariaRole.compare(L"list")==0) {
 			IARole=ROLE_SYSTEM_LIST;
