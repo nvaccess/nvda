@@ -17,9 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <rpc.h>
 
-#define DLLEXPORT extern "C" __declspec(dllexport)
-
-DLLEXPORT RPC_STATUS startServer();
-DLLEXPORT RPC_STATUS stopServer();
+RPC_STATUS startServer();
+RPC_STATUS stopServer();
  
 #endif

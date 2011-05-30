@@ -70,6 +70,7 @@ localLib=env.SharedLibrary(
 		controllerRPCServerSource,
 		'nvdaControllerInternal.c',
 		controllerInternalRPCServerSource,
+		"nvdaHelperLocal.def",
 	],
 	LIBS=[
 		"user32",
