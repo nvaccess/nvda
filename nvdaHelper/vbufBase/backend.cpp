@@ -41,6 +41,12 @@ void VBufBackend_t::initialize() {
 	unregisterWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
 }
 
+void VBufBackend_t::forceUpdate() {
+	this->cancelPendingUpdate();
+	this->update();
+}
+
+
 LRESULT CALLBACK VBufBackend_t::renderThread_callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
 	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
 	if((pcwp->message==wmRenderThreadInitialize)) {

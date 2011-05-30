@@ -145,6 +145,11 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
 	virtual bool invalidateSubtree(VBufStorage_controlFieldNode_t*);
 
 /**
+ * Forces any invalidated nodes to be updated right now.
+ */
+	virtual void forceUpdate();
+
+/**
  * Clears the content of the backend and terminates any code used for rendering.
  */
 	virtual void terminate();
