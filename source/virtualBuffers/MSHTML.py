@@ -126,22 +126,6 @@ class MSHTML(VirtualBuffer):
 	def __init__(self,rootNVDAObject):
 		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
 
-	def _tabOverride(self,direction):
-		if super(MSHTML,self)._tabOverride(direction):
-			return True
-		if api.getFocusObject() is not self.rootNVDAObject:
-			return False
-		try:
-			newNode, newStart, newEnd = next(self._iterNodesByType("focusable", direction,0))
-		except StopIteration:
-			return False
-		docHandle=ctypes.c_int()
-		ID=ctypes.c_int()
-		NVDAHelper.localLib.VBuf_getIdentifierFromControlFieldNode(self.VBufHandle, newNode, ctypes.byref(docHandle), ctypes.byref(ID))
-		obj=self.getNVDAObjectFromIdentifier(docHandle.value,ID.value)
-		obj.setFocus()
-		return True
-
 	def _getInitialCaretPos(self):
 		initialPos = super(MSHTML,self)._getInitialCaretPos()
 		if initialPos:

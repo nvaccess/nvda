@@ -920,10 +920,13 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			return False
 		# We only want to override the tab order if the caret is not within the focused node.
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
-		# Expand to one character, as isOverlapping() doesn't yield the desired results with collapsed ranges.
-		caretInfo.expand(textInfos.UNIT_CHARACTER)
-		if focusInfo.isOverlapping(caretInfo):
-			return False
+		#Only check that the caret is within the focus for things that ar not documents
+		#As for documents we should always override
+		if focus.role!=controlTypes.ROLE_DOCUMENT or controlTypes.STATE_EDITABLE in focus.states:
+			# Expand to one character, as isOverlapping() doesn't yield the desired results with collapsed ranges.
+			caretInfo.expand(textInfos.UNIT_CHARACTER)
+			if focusInfo.isOverlapping(caretInfo):
+				return False
 		# If we reach here, we do want to override tab/shift+tab if possible.
 		# Find the next/previous focusable node.
 		try:
