@@ -130,6 +130,8 @@ class Gecko_ia2(VirtualBuffer):
 			obj.doAction()
 		except:
 			log.debugWarning("could not programmatically activate field, trying mouse")
+			while obj and controlTypes.STATE_OFFSCREEN in obj.states and obj!=self.rootNVDAObject:
+				obj=obj.parent
 			l=obj.location
 			if l:
 				x=(l[0]+l[2]/2)
