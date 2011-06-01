@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA main-4329\n"
-"POT-Creation-Date: 2011-05-25 19:04+E. Australia Standard Time\n"
-"PO-Revision-Date: 2011-05-25 15:39+0200\n"
+"Project-Id-Version: NVDA main-4362\n"
+"POT-Creation-Date: 2011-05-30 19:03+E. Australia Standard Time\n"
+"PO-Revision-Date: 2011-05-31 10:59+0200\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "bilinmeyen düzen"
 msgid "layout %s"
 msgstr "%s düzeni"
 
-#: NVDAObjects\IAccessible\__init__.py:1469
+#: NVDAObjects\IAccessible\__init__.py:1472
 msgid "Taskbar"
 msgstr "Görev çubuğu"
 
@@ -247,8 +247,8 @@ msgstr "sağ"
 #: globalCommands.py:764
 #: globalCommands.py:774
 #: globalCommands.py:784
-#: gui\settingsDialogs.py:826
-#: keyboardHandler.py:295
+#: gui\settingsDialogs.py:834
+#: keyboardHandler.py:297
 #: virtualBuffers\__init__.py:749
 msgid "on"
 msgstr "Açık"
@@ -264,34 +264,34 @@ msgstr "Açık"
 #: globalCommands.py:761
 #: globalCommands.py:771
 #: globalCommands.py:781
-#: gui\settingsDialogs.py:586
-#: gui\settingsDialogs.py:826
-#: keyboardHandler.py:295
+#: gui\settingsDialogs.py:594
+#: gui\settingsDialogs.py:834
+#: keyboardHandler.py:297
 #: virtualBuffers\__init__.py:749
 msgid "off"
 msgstr "Kapalı"
 
-#: aria.py:68
+#: aria.py:69
 msgid "banner"
 msgstr "benır"
 
-#: aria.py:69
+#: aria.py:70
 msgid "complementary"
 msgstr "Tamamlayıcı"
 
-#: aria.py:70
+#: aria.py:71
 msgid "content info"
 msgstr "İçerik bilgisi"
 
-#: aria.py:71
+#: aria.py:72
 msgid "main"
 msgstr "Ana"
 
-#: aria.py:72
+#: aria.py:73
 msgid "navigation"
 msgstr "Nevigasyon"
 
-#: aria.py:73
+#: aria.py:74
 msgid "search"
 msgstr "Ara"
 
@@ -2004,12 +2004,12 @@ msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Python konsolu etkinleştirir. öncelikle geliştiriciler için faydalı"
 
 #: globalCommands.py:876
-#: gui\settingsDialogs.py:960
+#: gui\settingsDialogs.py:968
 msgid "review"
 msgstr "gözden geçir"
 
 #: globalCommands.py:879
-#: gui\settingsDialogs.py:960
+#: gui\settingsDialogs.py:968
 msgid "focus"
 msgstr "Odak"
 
@@ -2108,7 +2108,7 @@ msgstr "Konfigurasyon kaydedilemiyor. Muhtemelen salt okunur dosya sistemi"
 #: gui\__init__.py:159
 #: gui\__init__.py:169
 #: gui\logViewer.py:74
-#: gui\settingsDialogs.py:176
+#: gui\settingsDialogs.py:184
 msgid "Error"
 msgstr "Hata"
 
@@ -2361,7 +2361,7 @@ msgid "Options"
 msgstr "seçenekler"
 
 #: gui\__init__.py:418
-#: gui\settingsDialogs.py:473
+#: gui\settingsDialogs.py:481
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "büyük harf kilidini NVDA tuşu olarak kullan"
 
@@ -2459,457 +2459,465 @@ msgstr "Windows giriş ekranında NVDA'yı kullan (Yönetici yetkisi gerekir)"
 msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
 msgstr "Windows giriş ekranı ve diğer güvenli ekranlarda mevcut kaydedilmiş ayarları kullan (yönetici yetkisi gerekir)"
 
-#: gui\settingsDialogs.py:176
+#: gui\settingsDialogs.py:177
+msgid "Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"
+msgstr "Kullanıcı konfigürasyon dizininde özel plug-inler algılandı. Bunların sistem profiline kopyalanması güvenlik riski oluşturabilir. Kopyalamaya devam etmek istiyor musunuz?"
+
+#: gui\settingsDialogs.py:177
+msgid "Warning"
+msgstr "Uyarı"
+
+#: gui\settingsDialogs.py:184
 msgid "Error copying NVDA user settings"
 msgstr "NVDA kullanıcı ayarlarının kopyalanmasında hata"
 
-#: gui\settingsDialogs.py:178
+#: gui\settingsDialogs.py:186
 msgid "Success"
 msgstr "başarılı"
 
-#: gui\settingsDialogs.py:178
+#: gui\settingsDialogs.py:186
 msgid "Successfully copied NVDA user settings"
 msgstr "NVDA kullanıcı ayarları başarıyla kopyalandı"
 
-#: gui\settingsDialogs.py:187
+#: gui\settingsDialogs.py:195
 msgid "Error in %s language file"
 msgstr "%s Dil dosyasın'da hata var"
 
-#: gui\settingsDialogs.py:187
+#: gui\settingsDialogs.py:195
 msgid "Language Error"
 msgstr "Dil seçme hatası"
 
-#: gui\settingsDialogs.py:203
+#: gui\settingsDialogs.py:211
 msgid "Insufficient Privileges"
 msgstr "Yetersiz yetki"
 
-#: gui\settingsDialogs.py:203
+#: gui\settingsDialogs.py:211
 msgid "This change requires administrator privileges."
 msgstr "Bu değişiklik yönetici yetkisi gerektirir"
 
-#: gui\settingsDialogs.py:205
+#: gui\settingsDialogs.py:213
 msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
 msgstr "Dil değişikliğinin etkili olması için yeni konfigürasyonun kaydedilmesi ve NVDA'nın yeniden başlatılması gerekiyor. Şimdi kaydedip yeniden başlatmak için entır tuşuna basın. Bu işlemleri daha sonra yapmak için çıkış tuşuna basın."
 
-#: gui\settingsDialogs.py:205
+#: gui\settingsDialogs.py:213
 msgid "Language Configuration Change"
 msgstr "Dil konfigürasyon değişikliği"
 
-#: gui\settingsDialogs.py:213
+#: gui\settingsDialogs.py:221
 msgid "Synthesizer"
 msgstr "Sentezleyici"
 
-#: gui\settingsDialogs.py:217
+#: gui\settingsDialogs.py:225
 msgid "&Synthesizer:"
 msgstr "&Sentezleyici"
 
-#: gui\settingsDialogs.py:232
+#: gui\settingsDialogs.py:240
 msgid "Output &device:"
 msgstr "&Çıkış cihazı"
 
-#: gui\settingsDialogs.py:252
+#: gui\settingsDialogs.py:260
 msgid "Could not load the %s synthesizer."
 msgstr "%s Sentezleyicisi yüklenemiyor"
 
-#: gui\settingsDialogs.py:252
+#: gui\settingsDialogs.py:260
 msgid "Synthesizer Error"
 msgstr "Sentezleyici hatası"
 
-#: gui\settingsDialogs.py:315
+#: gui\settingsDialogs.py:323
 msgid "Voice settings"
 msgstr "Ses ayarları"
 
-#: gui\settingsDialogs.py:372
+#: gui\settingsDialogs.py:380
 msgid "Punctuation/symbol &level:"
 msgstr "İmla Ses&lendirme Düzeyi"
 
-#: gui\settingsDialogs.py:379
+#: gui\settingsDialogs.py:387
 msgid "Raise pitch for capitals"
 msgstr "Büyük ha&rflerde sesi incelt"
 
-#: gui\settingsDialogs.py:382
+#: gui\settingsDialogs.py:390
 msgid "Say &cap before capitals"
 msgstr "B&üyük harflerden önce büyük de"
 
-#: gui\settingsDialogs.py:385
+#: gui\settingsDialogs.py:393
 msgid "&Beep for capitals"
 msgstr "Büyük harflerde b&ip sesi çıkar"
 
-#: gui\settingsDialogs.py:388
+#: gui\settingsDialogs.py:396
 msgid "Use &spelling functionality if supported"
 msgstr "De&stekleniyorsa kodlama işlevini kullan"
 
-#: gui\settingsDialogs.py:456
+#: gui\settingsDialogs.py:464
 msgid "Keyboard Settings"
 msgstr "Klavie ayarları"
 
-#: gui\settingsDialogs.py:460
+#: gui\settingsDialogs.py:468
 msgid "&Keyboard layout:"
 msgstr "&Klavie düzeni"
 
-#: gui\settingsDialogs.py:465
+#: gui\settingsDialogs.py:473
 msgid "Keyboard layout"
 msgstr "Klavie düzeni"
 
-#: gui\settingsDialogs.py:476
+#: gui\settingsDialogs.py:484
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "numaratördeki insert tuşunu NVDA tuşu olarak kullan"
 
-#: gui\settingsDialogs.py:479
+#: gui\settingsDialogs.py:487
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Normal insert tuşunu NVDA tuşu olarak kullan"
 
-#: gui\settingsDialogs.py:482
+#: gui\settingsDialogs.py:490
 msgid "Speak typed &characters"
 msgstr "yazarken &karakterleri seslendir"
 
-#: gui\settingsDialogs.py:485
+#: gui\settingsDialogs.py:493
 msgid "Speak typed &words"
 msgstr "yazarken s&özcükleri seslendir"
 
-#: gui\settingsDialogs.py:488
+#: gui\settingsDialogs.py:496
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "Büyük harf kilidi açık olduğu halde şift tuşu kullanılıyorsa bip sesi çıkar"
 
-#: gui\settingsDialogs.py:491
+#: gui\settingsDialogs.py:499
 msgid "Speak command &keys"
 msgstr "K&omut tuşlarını seslendir"
 
-#: gui\settingsDialogs.py:511
+#: gui\settingsDialogs.py:519
 msgid "Mouse settings"
 msgstr "Fare ayarları"
 
-#: gui\settingsDialogs.py:514
+#: gui\settingsDialogs.py:522
 msgid "Report mouse &shape changes"
 msgstr "&Fare şekil değişikliklerini bildir"
 
-#: gui\settingsDialogs.py:517
+#: gui\settingsDialogs.py:525
 msgid "Enable mouse &tracking"
 msgstr "Fare izlemeyi e&tkinleştir"
 
-#: gui\settingsDialogs.py:521
+#: gui\settingsDialogs.py:529
 msgid "Text &unit resolution:"
 msgstr "Metin &birim çözünürlüğü:"
 
-#: gui\settingsDialogs.py:525
+#: gui\settingsDialogs.py:533
 msgid "text reporting unit"
 msgstr "Metin bildirim birimi"
 
-#: gui\settingsDialogs.py:533
+#: gui\settingsDialogs.py:541
 msgid "Report &role when mouse enters object"
 msgstr "Fare altındaki &nesne tiplerini seslendir"
 
-#: gui\settingsDialogs.py:536
+#: gui\settingsDialogs.py:544
 msgid "play audio coordinates when mouse moves"
 msgstr "Fare hareketlerinde koordinatları ses çalarak bildir"
 
-#: gui\settingsDialogs.py:539
+#: gui\settingsDialogs.py:547
 msgid "brightness controls audio coordinates volume"
 msgstr "Seçili bölgelerde dolaşırken fare koordinat sesini yükselt"
 
-#: gui\settingsDialogs.py:557
+#: gui\settingsDialogs.py:565
 msgid "Review cursor settings"
 msgstr "İnceleme imleci ayarları"
 
-#: gui\settingsDialogs.py:560
+#: gui\settingsDialogs.py:568
 msgid "Follow &keyboard focus"
 msgstr "&Klavye odağını takip et"
 
-#: gui\settingsDialogs.py:563
+#: gui\settingsDialogs.py:571
 msgid "Follow System &Caret"
 msgstr "Sistem düzenleme imle&cini takip et"
 
-#: gui\settingsDialogs.py:566
+#: gui\settingsDialogs.py:574
 msgid "Follow &mouse cursor"
 msgstr "Fare i&mlecini takip et"
 
-#: gui\settingsDialogs.py:569
+#: gui\settingsDialogs.py:577
 msgid "Simple review mode"
 msgstr "Basit İnceleme kipi"
 
-#: gui\settingsDialogs.py:584
+#: gui\settingsDialogs.py:592
 msgid "Object presentation"
 msgstr "Nesne sunumu"
 
-#: gui\settingsDialogs.py:587
+#: gui\settingsDialogs.py:595
 msgid "Speak"
 msgstr "konuş"
 
-#: gui\settingsDialogs.py:588
+#: gui\settingsDialogs.py:596
 msgid "Beep"
 msgstr "bip sesi çıkar"
 
-#: gui\settingsDialogs.py:589
+#: gui\settingsDialogs.py:597
 msgid "Speak and beep"
 msgstr "Konuş ve bip sesi çıkar"
 
-#: gui\settingsDialogs.py:593
+#: gui\settingsDialogs.py:601
 msgid "Report &tooltips"
 msgstr "ip&uçlarını bildir"
 
-#: gui\settingsDialogs.py:596
+#: gui\settingsDialogs.py:604
 msgid "Report &help balloons"
 msgstr "&Yardım Balonlarını bildir"
 
-#: gui\settingsDialogs.py:599
+#: gui\settingsDialogs.py:607
 msgid "Report object shortcut &keys"
 msgstr "Nesne ile ilgili K&ısayol tuşlarını bildir"
 
-#: gui\settingsDialogs.py:602
+#: gui\settingsDialogs.py:610
 msgid "Report object &position information"
 msgstr "Nesne &konum bilgisini bildir"
 
-#: gui\settingsDialogs.py:605
+#: gui\settingsDialogs.py:613
 msgid "Guess object &position information when unavailable"
 msgstr "Mevcut değilse nesne &konum bilgisini tahmin et"
 
-#: gui\settingsDialogs.py:608
+#: gui\settingsDialogs.py:616
 msgid "Report object &descriptions"
 msgstr "Nesne &tariflerini bildir"
 
-#: gui\settingsDialogs.py:612
+#: gui\settingsDialogs.py:620
 msgid "Progress &bar output:"
 msgstr "Aşama Çub&uğu bildirimi"
 
-#: gui\settingsDialogs.py:615
+#: gui\settingsDialogs.py:623
 msgid "Progress bar output"
 msgstr "Aşama Çubuğu bildirimi"
 
-#: gui\settingsDialogs.py:624
+#: gui\settingsDialogs.py:632
 msgid "Report background progress bars"
 msgstr "Geri plandaki aşama çubuğu güncellemelerini bildir"
 
-#: gui\settingsDialogs.py:627
+#: gui\settingsDialogs.py:635
 msgid "Report dynamic &content changes"
 msgstr "dinamik içerik &değişikliklerini bildir"
 
-#: gui\settingsDialogs.py:647
+#: gui\settingsDialogs.py:655
 msgid "Browse mode"
 msgstr "Tarama kipi"
 
-#: gui\settingsDialogs.py:650
+#: gui\settingsDialogs.py:658
 msgid "&Maximum number of characters on one line"
 msgstr "&satır başına Maksimum karakter sayısı "
 
-#: gui\settingsDialogs.py:655
+#: gui\settingsDialogs.py:663
 msgid "&Number of lines per page"
 msgstr "&sayfa başına satır sayısı "
 
-#: gui\settingsDialogs.py:660
+#: gui\settingsDialogs.py:668
 msgid "Use &screen layout (when supported)"
 msgstr "(Destekleniyorsa) &ekran düzenini kullan"
 
-#: gui\settingsDialogs.py:663
+#: gui\settingsDialogs.py:671
 msgid "Report l&ayout tables"
 msgstr "Düzenleme tabl&olarını bildir"
 
-#: gui\settingsDialogs.py:667
+#: gui\settingsDialogs.py:675
 msgid "Automatic focus mode for focus changes"
 msgstr "Odak değişimlerinde otomatik odak kipi"
 
-#: gui\settingsDialogs.py:670
+#: gui\settingsDialogs.py:678
 msgid "Automatic focus mode for caret movement"
 msgstr "Sistem düzenleme imleci için otomatik  Odak kipi."
 
-#: gui\settingsDialogs.py:673
+#: gui\settingsDialogs.py:681
 msgid "Audio indication of focus and browse modes"
 msgstr "Odak kipi ile tarama kipi arasındaki geçişi ses çalarak bildir"
 
-#: gui\settingsDialogs.py:701
+#: gui\settingsDialogs.py:709
 msgid "Document formatting"
 msgstr "Belge Formatları"
 
-#: gui\settingsDialogs.py:704
+#: gui\settingsDialogs.py:712
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "İmleçten sonraki yazı biçimi değişikliklerini bildir (NVDA'yı yavaşlatabilir)"
 
-#: gui\settingsDialogs.py:707
+#: gui\settingsDialogs.py:715
 msgid "Report font &name"
 msgstr "Yazı tipi adı&nı bildir"
 
-#: gui\settingsDialogs.py:710
+#: gui\settingsDialogs.py:718
 msgid "Report font &size"
 msgstr "Yazı tipi büyüklüğünü bildir"
 
-#: gui\settingsDialogs.py:713
+#: gui\settingsDialogs.py:721
 msgid "Report font attri&butes"
 msgstr "Yazı &tipi özelliklerini bildir"
 
-#: gui\settingsDialogs.py:716
+#: gui\settingsDialogs.py:724
 msgid "Report &alignment"
 msgstr "&Hizayı bildir"
 
-#: gui\settingsDialogs.py:719
+#: gui\settingsDialogs.py:727
 msgid "Report &colors"
 msgstr "Renk&leri bildir"
 
-#: gui\settingsDialogs.py:722
+#: gui\settingsDialogs.py:730
 msgid "Report st&yle"
 msgstr "stilleri bildir"
 
-#: gui\settingsDialogs.py:725
+#: gui\settingsDialogs.py:733
 msgid "Report spelling errors"
 msgstr "&Yazım hatalarını bildir"
 
-#: gui\settingsDialogs.py:728
+#: gui\settingsDialogs.py:736
 msgid "Report &pages"
 msgstr "&Sayfa değişikliklerini bildir"
 
-#: gui\settingsDialogs.py:731
+#: gui\settingsDialogs.py:739
 msgid "Report &line numbers"
 msgstr "Satır nu&maralarını bildir"
 
-#: gui\settingsDialogs.py:734
+#: gui\settingsDialogs.py:742
 msgid "Report &tables"
 msgstr "Tabl&oları bildir"
 
-#: gui\settingsDialogs.py:737
+#: gui\settingsDialogs.py:745
 msgid "Report table row/column h&eaders"
 msgstr "Tablo satır v&e sütun başlıklarını bildir"
 
-#: gui\settingsDialogs.py:740
+#: gui\settingsDialogs.py:748
 msgid "Report &links"
 msgstr "&Bağlantıları bildir"
 
-#: gui\settingsDialogs.py:743
+#: gui\settingsDialogs.py:751
 msgid "Report &headings"
 msgstr "B&aşlıkları bildir"
 
-#: gui\settingsDialogs.py:746
+#: gui\settingsDialogs.py:754
 msgid "Report l&ists"
 msgstr "&Listeleri bildir"
 
-#: gui\settingsDialogs.py:749
+#: gui\settingsDialogs.py:757
 msgid "Report block &quotes"
 msgstr "Alın&tıları bildir"
 
-#: gui\settingsDialogs.py:752
+#: gui\settingsDialogs.py:760
 msgid "Report lan&dmarks"
 msgstr "Sınır İ&mlerini bildir"
 
-#: gui\settingsDialogs.py:781
+#: gui\settingsDialogs.py:789
 msgid "Edit dictionary entry"
 msgstr "Sözlük kaydını düzenle"
 
-#: gui\settingsDialogs.py:785
+#: gui\settingsDialogs.py:793
 msgid "&Pattern"
 msgstr "İ&fade"
 
-#: gui\settingsDialogs.py:788
-#: gui\settingsDialogs.py:1026
+#: gui\settingsDialogs.py:796
+#: gui\settingsDialogs.py:1034
 msgid "&Replacement"
 msgstr "&olarak değiştir"
 
-#: gui\settingsDialogs.py:791
+#: gui\settingsDialogs.py:799
 msgid "&Comment"
 msgstr "&Yorum"
 
-#: gui\settingsDialogs.py:794
+#: gui\settingsDialogs.py:802
 msgid "Case &sensitive"
 msgstr "Büyük-küçük harf  &duyarlı"
 
-#: gui\settingsDialogs.py:796
+#: gui\settingsDialogs.py:804
 msgid "Regular &expression"
 msgstr "Düzenli &ifade"
 
-#: gui\settingsDialogs.py:818
+#: gui\settingsDialogs.py:826
 msgid "&Dictionary entries"
 msgstr "&Sözlük kayıtları"
 
-#: gui\settingsDialogs.py:821
+#: gui\settingsDialogs.py:829
 msgid "Comment"
 msgstr "yorum"
 
-#: gui\settingsDialogs.py:822
+#: gui\settingsDialogs.py:830
 msgid "Pattern"
 msgstr "İfade"
 
-#: gui\settingsDialogs.py:823
-#: gui\settingsDialogs.py:1014
+#: gui\settingsDialogs.py:831
+#: gui\settingsDialogs.py:1022
 msgid "Replacement"
 msgstr "olarak değiştir"
 
-#: gui\settingsDialogs.py:824
+#: gui\settingsDialogs.py:832
 msgid "case"
 msgstr "Büyük/küçük harf duyarlılığı"
 
-#: gui\settingsDialogs.py:825
+#: gui\settingsDialogs.py:833
 msgid "Regexp"
 msgstr "Düzenli ifade"
 
-#: gui\settingsDialogs.py:834
+#: gui\settingsDialogs.py:842
 msgid "&Add"
 msgstr "&Ekle"
 
-#: gui\settingsDialogs.py:837
+#: gui\settingsDialogs.py:845
 msgid "&edit"
 msgstr "&Düzenle"
 
-#: gui\settingsDialogs.py:840
+#: gui\settingsDialogs.py:848
 msgid "&Remove"
 msgstr "Kaldı&r"
 
-#: gui\settingsDialogs.py:863
+#: gui\settingsDialogs.py:871
 msgid "Add Dictionary Entry"
 msgstr "Sözlük girişi ekle"
 
-#: gui\settingsDialogs.py:908
+#: gui\settingsDialogs.py:916
 msgid "Braille Settings"
 msgstr "Braille ayarları"
 
-#: gui\settingsDialogs.py:912
+#: gui\settingsDialogs.py:920
 msgid "Braille &display:"
 msgstr "Braille &display"
 
-#: gui\settingsDialogs.py:926
+#: gui\settingsDialogs.py:934
 msgid "Translation &table:"
 msgstr "çeviri &tablosu"
 
-#: gui\settingsDialogs.py:938
+#: gui\settingsDialogs.py:946
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "İmle&ç altındaki sözcüğü bilgisayar braillle olarak genişlet"
 
-#: gui\settingsDialogs.py:943
+#: gui\settingsDialogs.py:951
 msgid "Cursor blink rate (ms)"
 msgstr "Imleç titreşimi (MS)"
 
-#: gui\settingsDialogs.py:951
+#: gui\settingsDialogs.py:959
 msgid "Message timeout (sec)"
 msgstr "Mesaj zaman aşımı (san)"
 
-#: gui\settingsDialogs.py:959
+#: gui\settingsDialogs.py:967
 msgid "Braille tethered to:"
 msgstr "Braille odağa getirildi"
 
-#: gui\settingsDialogs.py:978
+#: gui\settingsDialogs.py:986
 msgid "Braille Display Error"
 msgstr "Braille Display hatası"
 
-#: gui\settingsDialogs.py:978
+#: gui\settingsDialogs.py:986
 msgid "Could not load the %s display."
 msgstr "%s Display yüklenemiyor"
 
-#: gui\settingsDialogs.py:1000
+#: gui\settingsDialogs.py:1008
 msgid "Symbol Pronunciation"
 msgstr "Noktalama/imla sözlüğü"
 
-#: gui\settingsDialogs.py:1011
+#: gui\settingsDialogs.py:1019
 msgid "&Symbols"
 msgstr "&Semboller"
 
-#: gui\settingsDialogs.py:1013
+#: gui\settingsDialogs.py:1021
 msgid "Symbol"
 msgstr "sembol"
 
-#: gui\settingsDialogs.py:1015
+#: gui\settingsDialogs.py:1023
 msgid "Level"
 msgstr "Düzey"
 
-#: gui\settingsDialogs.py:1024
+#: gui\settingsDialogs.py:1032
 msgid "Change symbol"
 msgstr "değiştir"
 
-#: gui\settingsDialogs.py:1032
+#: gui\settingsDialogs.py:1040
 msgid "&Level"
 msgstr "&Düzey"
 
