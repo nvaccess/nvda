@@ -3,8 +3,10 @@ from ctypes.wintypes import *
 import comtypes.client
 from comtypes import *
 import weakref
+import sys
 import threading
 import time
+import config
 import api
 import queueHandler
 import controlTypes
@@ -233,15 +235,24 @@ isUIAAvailable=False
 
 def initialize():
 	global handler, isUIAAvailable
+	if not config.conf["UIA"]["enabled"]:
+		isUIAAvailable=False
+		return
+	winver=sys.getwindowsversion()
+	winver=winver.major+(winver.minor/10.0)
+	if winver<config.conf["UIA"]["minWindowsVersion"]:
+		isUIAAvailable=False
+		return
 	try:
 		handler=UIAHandler()
 	except COMError:
+		isUIAAvailable=False
 		handler=None
 		raise RuntimeError("UIA not available")
-	isUIAAvailable=True
 
 def terminate():
-	global handler
-	handler.terminate()
-	handler=None
-
+	global handler, isUIAAvailable
+	if handler:
+		handler.terminate()
+		handler=None
+		isUIAAvailable=False
