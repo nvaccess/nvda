@@ -137,8 +137,9 @@ def nvdaLauncher():
 	initDebug()
 	desktop = getInputDesktopName()
 	debug("launcher: starting with desktop %s" % desktop)
-	if os.path.basename(desktop) in (u"Default", u"Screen-saver"):
-		debug("launcher: default or screen-saver desktop, exiting")
+	desktopBn = os.path.basename(desktop)
+	if desktopBn != u"Winlogon" and not desktopBn.startswith(u"InfoCard{"):
+		debug("launcher: user or screen-saver desktop, exiting")
 		return
 
 	debug("launcher: starting NVDA")
