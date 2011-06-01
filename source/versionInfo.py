@@ -6,24 +6,31 @@
 
 import os
 
-BZR_LASTREV_PATH = r"..\.bzr\branch\last-revision"
-
 def _updateVersionFromVCS():
 	"""Update the version from version control system metadata if possible.
 	"""
 	global version
-	if os.path.isfile(BZR_LASTREV_PATH):
-		# Running from bzr checkout.
-		try:
-			rev = file(BZR_LASTREV_PATH, "r").read().split(" ")[0]
-			branch = os.path.basename(os.path.abspath(".."))
-			version = "bzr-%s-%s" % (branch, rev)
-		except (IOError, IndexError):
-			pass
+	# The root of the bzr working tree will be the parent of this module's directory.
+	branchPath = os.path.dirname(os.path.dirname(__file__))
+	locationPath = os.path.join(branchPath, ".bzr", "branch", "location")
+	try:
+		# If this is a lightweight checkout of a local branch, use that branch.
+		branchPath = file(locationPath, "r").read().split("file:///", 1)[1]
+	except (IOError, IndexError):
+		pass
+
+	lastRevPath = os.path.join(branchPath, ".bzr", "branch", "last-revision")
+	try:
+		# If running from a bzr branch, use version info from that.
+		rev = file(lastRevPath, "r").read().split(" ")[0]
+		branch = os.path.basename(os.path.abspath(branchPath))
+		version = "bzr-%s-%s" % (branch, rev)
+	except (IOError, IndexError):
+		pass
 
 name="NVDA"
 longName=_("NonVisual Desktop Access")
-version="2011.1.1"
+version="2011.2dev"
 try:
 	from _buildVersion import version
 except ImportError:

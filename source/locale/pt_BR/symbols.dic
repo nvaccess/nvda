@@ -1,27 +1,32 @@
-﻿complexSymbols:
+﻿#locale/pt_BR/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
 # identifier	regexp
 # Sentence endings.
-. fim de sentença	(?<=[^\s.])\.(?=[\"')\s]|$)
-! fim de sentença	(?<=[^\s!])\!(?=[\"')\s]|$)
-? fim de sentença	(?<=[^\s?])\?(?=[\"')\s]|$)
+. fim de sentença	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! fim de sentença	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? fim de sentença	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
 # Phrase endings.
 ; fim de período	(?<=[^\s;]);(?=\s|$)
 : fim de período	(?<=[^\s:]):(?=\s|$)
 # Others
 ponto decimal	(?<=\d)\.(?=\d)
-junta palavras '	(?<=[a-zA-Z0-9])'(?=[a-zA-Z])
+' em palavra	(?<=[^\W_])['’]
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. fim de sentença	ponto final	all	always
+. fim de sentença	ponto	all	always
 ! fim de sentença	exclamação	all	always
 ? fim de sentença	interrogação	all	always
 ; fim de período	ponto e vírgula	most	always
 : fim de período	dois pontos	most	always
 ponto decimal		none	always
-junta palavras '	apóstrofo	all	norep
+' em palavra	apóstrofo	all	norep
 
 # Whitespace
 \0	em branco	char
@@ -30,7 +35,7 @@ junta palavras '	apóstrofo	all	norep
 \f	quebra de página	none
 \r	retôrno	char
  	espaço	char
- 	espaço	char	# espaço sem quebra
+ 	espaço	char	# no-break space
 
 # Standard punctuation/symbols
 !	exclamação	all
@@ -59,7 +64,6 @@ $	cifrão	some
 @	arrôba	some
 [	abre colchetes	most
 ]	fecha colchetes	most
-"	aspas	most
 \\	barra invertida	most
 ^	circunflexo	most
 _	sublinhado	most
@@ -75,7 +79,11 @@ _	sublinhado	most
 	bolinha	some
 “	aspas esquerdas	most
 ”	aspas direitas	most
+‘	apóstrofo esquerdo	most
+’	apóstrofo direito	most
 –	travessão N	most
 —	travessão M	most
 ●	círculo	most
 ¨	trema	most
+‎	esquerda para direita	char
+‏	direita para esquerda	char

@@ -340,10 +340,11 @@ IAccessible2StatesToNVDAStates={
 winEventHookIDs=[]
 
 def normalizeIAccessible(pacc):
-	if isinstance(pacc,comtypes.client.lazybind.Dispatch) or isinstance(pacc,comtypes.client.dynamic._Dispatch) or isinstance(pacc,IUnknown):
-		pacc=pacc.QueryInterface(IAccessible)
-	elif not isinstance(pacc,IAccessible):
-		raise ValueError("pacc %s is not, or can not be converted to, an IAccessible"%str(pacc))
+	if not isinstance(pacc,IAccessible):
+		try:
+			pacc=pacc.QueryInterface(IAccessible)
+		except COMError:
+			raise RuntimeError("%s Not an IAccessible"%pacc)
 	if not isinstance(pacc,IAccessible2):
 		try:
 			s=pacc.QueryInterface(IServiceProvider)

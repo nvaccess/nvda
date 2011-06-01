@@ -17,12 +17,16 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <string>
 #include <sstream>
-#include <windows.h>
 #include <common/lock.h>
-#include "nvdaControllerInternal.h"
+
+#define nhAssert _ASSERTE
+
+void logMessage(int level, const wchar_t* msg);
+
+int NVDALogCrtReportHook(int reportType, const wchar_t* msg, int* returnVal);
 
 #define loglevel_none 60
-#define loglevel_critical 50
+#define LOGLEVEL_CRITICAL 50
 #define LOGLEVEL_ERROR 40
 #define LOGLEVEL_WARNING 30
 #define LOGLEVEL_INFO 20
@@ -37,9 +41,9 @@ static LockableObject _logLock;
 
 #define _LOG_MSG_MACRO(level,message) {\
 	_logLock.acquire();\
-	_logStringStream.str()=L"";\
+	_logStringStream.str(L"");\
 	_logStringStream<<L"Thread "<<GetCurrentThreadId()<<L", "<<_STR2WSTR(__FILE__)<<L", "<<_STR2WSTR(__FUNCTION__)<<L", "<<__LINE__<<L":"<<std::endl<<message<<std::endl;\
-	if(level<=LOGLEVEL_DEBUGWARNING||nvdaControllerInternal_logMessage(level,GetCurrentProcessId(),_logStringStream.str().c_str())!=0) OutputDebugString(_logStringStream.str().c_str());\
+	logMessage(level,_logStringStream.str().c_str());\
 	_logLock.release();\
 }
 

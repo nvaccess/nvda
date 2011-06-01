@@ -16,7 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define NVDAHELPER_REMOTE_GDIHOOKS_H
 
 #include <map>
-#include <windows.h>
+#include <windef.h>
 #include "displayModel.h"
 #include <common/lock.h>
 

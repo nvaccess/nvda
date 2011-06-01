@@ -12,19 +12,22 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include <cassert>
+#include <map>
+#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include <remote/nvdaHelperRemote.h>
 #include <remote/log.h>
 #include "storage.h"
 #include "backend.h"
 
+using namespace std;
+
 const UINT VBufBackend_t::wmRenderThreadInitialize=RegisterWindowMessage(L"VBufBackend_t::wmRenderThreadInitialize");
 const UINT VBufBackend_t::wmRenderThreadTerminate=RegisterWindowMessage(L"VBufBackend_t::wmRenderThreadTerminate");
 
 VBufBackendSet_t VBufBackend_t::runningBackends;
 
-VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): renderThreadID(GetWindowThreadProcessId((HWND)docHandleArg,NULL)), rootDocHandle(docHandleArg), rootID(IDArg), lock(), renderThreadTimerID(0), invalidSubtrees() {
+VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): renderThreadID(GetWindowThreadProcessId((HWND)docHandleArg,NULL)), rootDocHandle(docHandleArg), rootID(IDArg), lock(), renderThreadTimerID(0), invalidSubtreeList() {
 	LOG_DEBUG(L"Initializing backend with docHandle "<<docHandleArg<<L", ID "<<IDArg);
 }
 
@@ -37,6 +40,12 @@ void VBufBackend_t::initialize() {
 	LOG_DEBUG(L"Message sent, unregistering hook");
 	unregisterWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
 }
+
+void VBufBackend_t::forceUpdate() {
+	this->cancelPendingUpdate();
+	this->update();
+}
+
 
 LRESULT CALLBACK VBufBackend_t::renderThread_callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
 	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
@@ -67,7 +76,7 @@ void CALLBACK VBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID,
 void VBufBackend_t::requestUpdate() {
 	if(renderThreadTimerID==0) {
 		renderThreadTimerID=SetTimer(0,0,250,renderThread_timerProc);
-		assert(renderThreadTimerID);
+		nhAssert(renderThreadTimerID);
 		LOG_DEBUG(L"Set timer with ID "<<renderThreadTimerID);
 	}
 }
@@ -118,38 +127,62 @@ void VBufBackend_t::renderThread_terminate() {
 	runningBackends.erase(this);
 }
 
-void VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
-	assert(node); //node can not be NULL
+bool VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
+	if(!isNodeInBuffer(node)) {
+		LOG_DEBUGWARNING(L"Node at "<<node<<L" not in buffer at "<<this);
+		return false;
+	}
 	LOG_DEBUG(L"Invalidating node "<<node->getDebugInfo());
-	for(VBufStorage_controlFieldNodeSet_t::iterator i=invalidSubtrees.begin();i!=invalidSubtrees.end();) {
+	this->lock.acquire();
+	bool needsInsert=true;
+	for(VBufStorage_controlFieldNodeList_t::iterator i=invalidSubtreeList.begin();i!=invalidSubtreeList.end();) {
 		VBufStorage_fieldNode_t* existingNode=*i;
-		if(node==existingNode) {
+		if(node==existingNode) { //Node already invalidated
 			LOG_DEBUG(L"Node already invalidated");
-			return;
-		} else if(isDescendantNode(existingNode,node)) {
+			needsInsert=false;
+			break;
+		} else if(isDescendantNode(existingNode,node)) { //An ancestor is already invalidated
 			LOG_DEBUG(L"An ancestor is already invalidated, returning");
-			return;
-		} else if(isDescendantNode(node,existingNode)) {
+			needsInsert=false;
+			break;
+		} else if(isDescendantNode(node,existingNode)) { //A descedndant has been invalidated
 			LOG_DEBUG(L"removing a descendant node from the invalid nodes");
-			invalidSubtrees.erase(i++);
-		} else {
+			//Remove the old descendant
+			invalidSubtreeList.erase(i++);
+			//If no other descendants have been removed yet, insert the real node here
+			//At the place of the first found descendant
+			if(needsInsert) {
+				invalidSubtreeList.insert(i,node);
+				needsInsert=false;
+			}
+		} else { //Unrelated node
 			++i;
 		}
+	}  
+	//If the node still has not been inserted yet, insert it at the end now
+	if(needsInsert) {
+		LOG_DEBUG(L"Adding node to invalid nodes");
+		invalidSubtreeList.insert(invalidSubtreeList.end(),node);
 	}
-	LOG_DEBUG(L"Adding node to invalid nodes");
-	invalidSubtrees.insert(node);
-	LOG_DEBUG(L"invalid subtree count now "<<invalidSubtrees.size());
+	this->lock.release();
 	this->requestUpdate();
+	return true;
 }
 
 void VBufBackend_t::update() {
 	if(this->hasContent()) {
-		LOG_DEBUG(L"Updating "<<invalidSubtrees.size()<<L" subtrees");
-		for(VBufStorage_controlFieldNodeSet_t::iterator i=invalidSubtrees.begin();i!=invalidSubtrees.end();++i) {
+		VBufStorage_controlFieldNodeList_t tempSubtreeList;
+		this->lock.acquire();
+		LOG_DEBUG(L"Updating "<<invalidSubtreeList.size()<<L" subtrees");
+		invalidSubtreeList.swap(tempSubtreeList);
+		this->lock.release();
+		map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*> replacementSubtreeMap;
+		//render all invalid subtrees, storing each subtree in its own buffer
+		for(VBufStorage_controlFieldNodeList_t::iterator i=tempSubtreeList.begin();i!=tempSubtreeList.end();++i) {
 			VBufStorage_controlFieldNode_t* node=*i;
 			LOG_DEBUG(L"re-rendering subtree at "<<node);
 			VBufStorage_buffer_t* tempBuf=new VBufStorage_buffer_t();
-			assert(tempBuf); //tempBuf can't be NULL
+			nhAssert(tempBuf); //tempBuf can't be NULL
 			LOG_DEBUG(L"Created temp buffer at "<<tempBuf);
 			int docHandle=0, ID=0;
 			node->getIdentifier(&docHandle,&ID);
@@ -157,17 +190,14 @@ void VBufBackend_t::update() {
 			LOG_DEBUG(L"Rendering content");
 			render(tempBuf,docHandle,ID,node);
 			LOG_DEBUG(L"Rendered content in temp buffer");
-			this->lock.acquire();
-			LOG_DEBUG(L"Replacing node with content of temp buffer");
-			this->replaceSubtree(node,tempBuf);
-			LOG_DEBUG(L"Merged");
-			this->lock.release();
-			LOG_DEBUG(L"Deleting temp buffer");
-			delete tempBuf;
-			LOG_DEBUG(L"Re-rendered subtree");
+			replacementSubtreeMap.insert(make_pair(node,tempBuf));
 		}
-		LOG_DEBUG(L"Clearing invalid subtree set");
-		invalidSubtrees.clear();
+		this->lock.acquire();
+		LOG_DEBUG(L"Replacing nodes with content of temp buffers");
+		if(!this->replaceSubtrees(replacementSubtreeMap)) {
+			LOG_DEBUGWARNING(L"Error replacing one or more subtrees");
+		}
+		this->lock.release();
 	} else {
 		LOG_DEBUG(L"Initial render");
 		this->lock.acquire();
@@ -198,5 +228,5 @@ void VBufBackend_t::destroy() {
 
 VBufBackend_t::~VBufBackend_t() {
 	LOG_DEBUG(L"base Backend destructor called"); 
-	assert(runningBackends.count(this) == 0);
+	nhAssert(runningBackends.count(this) == 0);
 }

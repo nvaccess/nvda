@@ -26,9 +26,17 @@ class Mozilla(IAccessible):
 		#Special code to support Mozilla node_child_of relation (for comboboxes)
 		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVRELATION_NODE_CHILD_OF)
 		if res and res!=(self.IAccessibleObject,self.IAccessibleChildID):
-			newObj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-			if newObj:
-				return newObj
+			#Gecko can sometimes give back a broken application node with a windowHandle of 0
+			#The application node is annoying, even if it wasn't broken
+			#So only use the node_child_of object if it has a valid IAccessible2 windowHandle
+			try:
+				windowHandle=res[0].windowHandle
+			except COMError:
+				windowHandle=None
+			if windowHandle:
+				newObj=IAccessible(windowHandle=windowHandle,IAccessibleObject=res[0],IAccessibleChildID=res[1])
+				if newObj:
+					return newObj
 		return super(Mozilla,self).parent
 
 	def _get_states(self):
@@ -36,6 +44,15 @@ class Mozilla(IAccessible):
 		if self.IAccessibleStates & oleacc.STATE_SYSTEM_MARQUEED:
 			states.add(controlTypes.STATE_CHECKABLE)
 		return states
+
+	def _get_presentationType(self):
+		presType=super(Mozilla,self).presentationType
+		if presType==self.presType_content:
+			if self.role==controlTypes.ROLE_TABLE and self.IA2Attributes.get('layout-guess')=='true':
+				presType=self.presType_layout
+			elif self.table and self.table.presentationType==self.presType_layout:
+				presType=self.presType_layout
+		return presType
 
 class Gecko1_9(Mozilla):
 

@@ -404,12 +404,18 @@ the NVDAObject for IAccessible
 		elif windowClassName == "DirectUIHWND" and role == oleacc.ROLE_SYSTEM_TEXT:
 			from NVDAObjects.window import DisplayModelEditableText
 			clsList.append(DisplayModelEditableText)
-		elif windowClassName == "ListBox" and role == oleacc.ROLE_SYSTEM_LISTITEM:
+		elif windowClassName in ("ListBox","ComboLBox")  and role == oleacc.ROLE_SYSTEM_LISTITEM:
 			windowStyle = self.windowStyle
 			if (windowStyle & winUser.LBS_OWNERDRAWFIXED or windowStyle & winUser.LBS_OWNERDRAWVARIABLE) and not windowStyle & winUser.LBS_HASSTRINGS:
 				# This is an owner drawn ListBox and text has not been set for the items.
 				# See http://msdn.microsoft.com/en-us/library/ms971352.aspx#msaa_sa_listbxcntrls
 				clsList.append(InaccessibleListBoxItem)
+		elif windowClassName == "ComboBox" and role == oleacc.ROLE_SYSTEM_COMBOBOX:
+			windowStyle = self.windowStyle
+			if (windowStyle & winUser.CBS_OWNERDRAWFIXED or windowStyle & winUser.CBS_OWNERDRAWVARIABLE) and not windowStyle & winUser.CBS_HASSTRINGS:
+				# This is an owner drawn ComboBox and text has not been set for the items.
+				# See http://msdn.microsoft.com/en-us/library/ms971352.aspx#msaa_sa_listbxcntrls
+				clsList.append(InaccessibleComboBox)
 		elif windowClassName == "MsoCommandBar":
 			from .msOffice import BrokenMsoCommandBar
 			if BrokenMsoCommandBar.appliesTo(self):
@@ -417,6 +423,9 @@ the NVDAObject for IAccessible
 		elif windowClassName.startswith("Internet Explorer_"):
 			from . import MSHTML
 			MSHTML.findExtraIAccessibleOverlayClasses(self, clsList)
+		elif windowClassName == "AVL_AVView":
+			from . import adobeAcrobat
+			adobeAcrobat.findExtraOverlayClasses(self, clsList)
 
 		#Support for Windowless richEdit
 		if not hasattr(IAccessible,"IID_ITextServices"):
@@ -762,6 +771,13 @@ the NVDAObject for IAccessible
 				states.add(controlTypes.STATE_DRAGGING)
 			if IA2Attribs.get("dropeffect", "none") != "none":
 				states.add(controlTypes.STATE_DROPTARGET)
+			sorted = IA2Attribs.get("sort")
+			if sorted=="ascending":
+				states.add(controlTypes.STATE_SORTED_ASCENDING)
+			elif sorted=="descending":
+				states.add(controlTypes.STATE_SORTED_DESCENDING)
+			elif sorted=="other":
+				states.add(controlTypes.STATE_SORTED)
 		if controlTypes.STATE_HASPOPUP in states and controlTypes.STATE_AUTOCOMPLETE in states:
 			states.remove(controlTypes.STATE_HASPOPUP)
 		if controlTypes.STATE_HALFCHECKED in states:
@@ -1250,6 +1266,8 @@ the NVDAObject for IAccessible
 		try:
 			ret = iaObj.accRole(childID)
 			for name, const in oleacc.__dict__.iteritems():
+				if not name.startswith("ROLE_"):
+					continue
 				if ret == const:
 					ret = name
 					break
@@ -1394,6 +1412,11 @@ class SysLinkClient(IAccessible):
 	def reportFocus(self):
 		pass
 
+	def _get_role(self):
+		if self.childCount==0:
+			return controlTypes.ROLE_LINK
+		return super(SysLinkClient,self).role
+
 class SysLink(IAccessible):
 
 	def _get_name(self):
@@ -1463,6 +1486,15 @@ class InaccessibleListBoxItem(IAccessible):
 	"""
 
 	def _get_name(self):
+		return self.displayText
+
+class InaccessibleComboBox(IAccessible):
+	"""
+	Used for inaccessible owner drawn ComboBox controls.
+	Overrides value  to use display model text as MSAA doesn't provide a suitable vale (it's usually either empty or contains garbage).
+	"""
+
+	def _get_value(self):
 		return self.displayText
 
 class StaticText(IAccessible):
@@ -1550,8 +1582,6 @@ _staticMap={
 	(None,oleacc.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("TPTShellList",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TProgressBar",oleacc.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
-	("AVL_AVView",None):"adobeAcrobat.AcrobatNode",
-	("AVL_AVView",oleacc.ROLE_SYSTEM_TEXT):"adobeAcrobat.AcrobatTextNode",
 	("AcrobatSDIWindow",oleacc.ROLE_SYSTEM_CLIENT):"adobeAcrobat.AcrobatSDIWindowClient",
 	("mscandui21.candidate",oleacc.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
 	("SysMonthCal32",oleacc.ROLE_SYSTEM_CLIENT):"SysMonthCal32.SysMonthCal32",
@@ -1565,6 +1595,8 @@ _staticMap={
 	("QWidget",oleacc.ROLE_SYSTEM_LIST):"qt.Container",
 	("QWidget",oleacc.ROLE_SYSTEM_OUTLINE):"qt.Container",
 	("QWidget",oleacc.ROLE_SYSTEM_MENUBAR):"qt.Container",
+	("QWidget",oleacc.ROLE_SYSTEM_ROW):"qt.TableRow",
+	("QWidget",oleacc.ROLE_SYSTEM_CELL):"qt.TableCell",
 	("QWidget",oleacc.ROLE_SYSTEM_OUTLINEITEM):"qt.TreeViewItem",
 	("QPopup",oleacc.ROLE_SYSTEM_MENUPOPUP):"qt.Menu",
 	("QWidget",oleacc.ROLE_SYSTEM_IPADDRESS):"qt.LayeredPane",

@@ -11,26 +11,68 @@
 - It is now possible to choose from several levels of punctuation and symbol announcement. (#332)
 - When punctuation or other symbols are repeated more than four times, the number of repetitions is now announced instead of speaking the repeated symbols. (#43)
 - New braille translation table: Norwegian 8 dot computer braille. (#1456)
+- Speech no longer unnaturally pauses at the end of each line when using the say all command. (#149)
+- NVDA will now announce whether something is sorted (according to the aria-sort property) in web browsers. (#1500)
+- Unicode Braille Patterns are now displayed correctly on braille displays. (#1505)
+- In Internet Explorer and other MSHTML controls when focus moves inside a group of controls (surrounded by a fieldset), NVDA will now announce the name of the group (the legend). (#535)
+- In Internet Explorer and other MSHTML controls, the aria-labelledBy and aria-describedBy properties are now honoured.
+- in Internet Explorer and other MSHTML controls, support for ARIA list, gridcell, slider and progressbar controls has been improved.
+- Users can now change the pronunciation of punctuation and other symbols, as well as the symbol level at which they are spoken. (#271, #1516)
 
 
 == Changes ==
 - To move the caret to the review cursor, now press the move focus to navigator object script (desktop NVDA+shift+numpadMinus, laptop NVDA+shift+backspace) twice in quick succession. This frees up more keys on the keyboard. (#837)
 - To hear the  decimal and hexadecimal representation of the character under the review cursor, now press review current character three times rather than twice, as twice now speaks the character description.
 - Updated eSpeak speech synthesiser to 1.45.03. (#1465)
+- Layout tables are no longer announced in Mozilla Gecko applications while moving the focus when in focus mode or outside of a document.
+- Updated liblouis braille translator to 2.3.0.
+- When in browse mode  and jumping to a control with quicknav or focus, the description of the control is now announced if it has one.
+- Announce progress bars in brows mode.
+- Nodes marked with an ARIA role of presentation in Internet Explorer and other MSHTML controls are now filtered out of simple review and the focus ancestry.
+- NVDA's user interface and documentation now refer to virtual buffers as browse mode, as the term "virtual buffer" is rather meaningless to most users. (#1509)
+- When the user wishes to copy their user settings to the system profile for use on the logon screen etc, and their settings contain custom plugins, they are now warned that this could be a security risk. (#1426)
 
 
 == Bug Fixes ==
-- Collapsing combo boxes in a virtual buffer when focus mode has been forced with NVDA+space no longer auto-switches back to browse mode. (#1386)
+- Collapsing combo boxes in browse mode documents when focus mode has been forced with NVDA+space no longer auto-switches back to browse mode. (#1386)
 - In Gecko (e.g. Firefox) and MSHTML (e.g. Internet Explorer) documents, NVDA now correctly renders certain text on the same line which was previously rendered on separate lines. (#1378)
-- When Braille is tethered to review, and when the navigator object is moved to a virtual buffer (web document, pdf, html email message), either manually or due to a focus change, braille will be appropriately showing the content of the virtual buffer. (#1406, #1407)
+- When Braille is tethered to review and the navigator object is moved to a browse mode document, either manually or due to a focus change, braille will appropriately show the browse mode content. (#1406, #1407)
 - When speaking of punctuation is disabled, certain punctuation is no longer incorrectly spoken when using some synthesisers. (#332)
 - Problems no longer occur when loading configuration for synthesisers which do not support the voice setting such as Audiologic Tts3. (#1347)
+- The Skype Extras menu is now read correctly. (#648)
+- Checking the Brightness controls volume checkbox in the Mouse Settings dialog should no longer cause a major lag for beeps when moving the mouse around the screen on Windows Vista/Windows 7 with Aero enabled. (#1183)
+- When NVDA is configured to use the laptop keyboard layout, NVDA+delete now works as documented to report the dimensions of the current navigator object.
+- NVDA now Appropriately honours the aria-selected attribute in Internet Explorer documents.
+- When NVDA automatically switches to focus mode in browse mode documents, it now announces information about the context of the focus. For example, if a list box item receives focus, the list box will be announced first. (#1491)
+- In Internet Explorer and other MSHTML controls, ARIA listbox controls are now treeted as lists, rather than list items.
+- When a read-only editable text control receives focus, NVDA now reports that it is read-only. (#1436)
+- In browse mode, NVDA now behaves correctly with respect to read-only editable text fields.
+- In browse mode documents, NVDA no longer incorrectly switches out of focus mode when aria-activedescendant is set; e.g. when the completion list appeared in some auto complete controls.
+- In Adobe Reader, the name of controls is now reported when moving focus or using quick navigation in browse mode.
+- In XFA PDF documents in Adobe Reader, buttons, links and graphics are now rendered correctly.
+- In XFA PDF documents in Adobe Reader, all elements are now rendered on separate lines. This change was made because large sections (sometimes even the entire document) were being rendered without breaks due to the general lack of structure in these documents.
+- Fixed problems when moving focus to or away from editable text fields in XFA PDF documents in Adobe Reader.
+- In XFA PDF documents in Adobe Reader, changes to the value of a focused combo box will now be reported.
+- Owner-drawn Combo boxes such as the ones to choose colors in Outlook Express are now accessible with NVDA. (#1340)
+- In languages which use a space as a digit group/thousands separator such as French and German, numbers from separate chunks of text are no longer pronounced as a single number. This was particularly problematic for table cells containing numbers. (#555)
+- nodes with an ARIA role of description in Internet Explorer and other MSHTML controls now are classed as static text, not edit fields.
+- Fix various issues when pressing tab while focus is on a document in browse mode (e.g. tab inappropriately moving to the address bar in Internet Explorer). (#1367) (#720)
+- When entering lists while reading text, NVDA now says, for example, "list with 5 items" instead of "listwith 5 items". (#1515)
+- In input help mode, gestures are logged even if their scripts bypass input help such as the scroll braille display forward and back commands.
+- In input help mode, when a modifier is held down on the keyboard, NVDA no longer reports the modifier as if it is modifying itself; e.g. NVDA+NVDA.
+- In Adobe Reader documents, pressing c or shift+c to navigate to a combo box now works.
+- The selected state of selectable table rows is now reported the same way it is for list and tree view items.
+- Controls in Firefox and other Gecko applications while in browse mode can now be activated even if their inner text has been floated off-screen. 
 
 
 == Changes for Developers ==
 - Developer documentation can now be generated using SCons. See readme.txt at the root of the source distribution for details, including associated dependencies.
 - Locales can now provide descriptions for characters. See the Character Descriptions section of the Developer Guide for details. (#55)
 - Locales can now provide information about the pronunciation of specific punctuation and other symbols. See the Symbol Pronunciation section of the Developer Guide for details. (#332)
+- Synth drivers are now passed a sequence of text and speech commands to speak, instead of just text and an index.
+ - This allows for embedded indexes, parameter changes, etc.
+ - Drivers should implement SynthDriver.speak() instead of SynthDriver.speakText() and SynthDriver.speakCharacter().
+ - The old methods will be used if SynthDriver.speak() is not implemented, but they are deprecated and will be removed in a future release.
 
 
 = 2011.1.1 =

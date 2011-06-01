@@ -13,7 +13,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <list>
- #include <cassert>
 #include <windows.h>
 #include <oleidl.h>
 #include <mshtml.h>
@@ -36,7 +35,7 @@ class CDispatchChangeSink : public IDispatch {
 	refCount(1),
 	hasFired(false),
 	allowDelete(true) {
-		assert(storageNode);
+		nhAssert(storageNode);
 		this->storageNode=storageNode;
 		incBackendLibRefCount();
 	}
@@ -45,7 +44,7 @@ class CDispatchChangeSink : public IDispatch {
 		decBackendLibRefCount();
 	}
 
-	void CDispatchChangeSink::onChange() {
+	void onChange() {
 		if(hasFired||allowDelete) {
 			return;
 		}
@@ -129,7 +128,7 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 	CHTMLChangeSink(MshtmlVBufStorage_controlFieldNode_t* storageNode) {
 		int res;
 		this->refCount=1;
-		assert(storageNode);
+		nhAssert(storageNode);
 		this->storageNode=storageNode;
 		this->pMarkupPointerBegin=NULL;
 		this->pMarkupPointerEnd=NULL;
@@ -173,7 +172,7 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 	}
 
 	ULONG STDMETHODCALLTYPE IUnknown::Release() {
-		assert(this->refCount>0);
+		nhAssert(this->refCount>0);
 		this->refCount--;
 		if(this->refCount==0) {
 			delete this;
@@ -227,7 +226,7 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 					break;
 				}
 			}
-			assert(invalidNode);
+			nhAssert(invalidNode);
 		}
 		if(invalidNode) {
 			this->storageNode->backend->invalidateSubtree(invalidNode);
@@ -239,10 +238,9 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 };
 
 MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, IHTMLDOMNode* pHTMLDOMNode): VBufStorage_controlFieldNode_t(docHandle,ID,isBlock) {
-	int res;
 	VARIANT_BOOL varBool;
-	assert(backend);
-	assert(pHTMLDOMNode);
+	nhAssert(backend);
+	nhAssert(pHTMLDOMNode);
 	this->backend=backend;
 	this->pHTMLElement2=NULL;
 	this->propChangeSink=NULL;
@@ -319,7 +317,7 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int d
  
 MshtmlVBufStorage_controlFieldNode_t::~MshtmlVBufStorage_controlFieldNode_t() {
 	if(this->propChangeSink) {
-		assert(this->pHTMLElement2);
+		nhAssert(this->pHTMLElement2);
 		if(pHTMLElement2->detachEvent(L"onpropertychange",this->propChangeSink)!=S_OK) {
 			LOG_DEBUG(L"Error detaching onpropertychange event sink from IHTMLElement2");
 		}
@@ -327,7 +325,7 @@ MshtmlVBufStorage_controlFieldNode_t::~MshtmlVBufStorage_controlFieldNode_t() {
 		this->propChangeSink->Release();
 	}
 	if(this->loadSink) {
-		assert(this->pHTMLElement2);
+		nhAssert(this->pHTMLElement2);
 		if(pHTMLElement2->detachEvent(L"onload",this->loadSink)!=S_OK) {
 			LOG_DEBUG(L"Error detaching onload event sink from IHTMLElement2");
 		}
@@ -338,7 +336,7 @@ MshtmlVBufStorage_controlFieldNode_t::~MshtmlVBufStorage_controlFieldNode_t() {
 		this->pHTMLElement2->Release();
 	}
 	if(this->pHTMLChangeSink) {
-		assert(this->pMarkupContainer2);
+		nhAssert(this->pMarkupContainer2);
 		if(this->pMarkupContainer2->UnRegisterForDirtyRange(this->HTMLChangeSinkCookey)!=S_OK) {
 			LOG_DEBUG(L"Error unregistering for dirty range notifications on IMarkupContainer2");
 		}

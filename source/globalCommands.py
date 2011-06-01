@@ -191,12 +191,12 @@ class GlobalCommands(ScriptableObject):
 
 	def script_cycleSpeechSymbolLevel(self,gesture):
 		curLevel = config.conf["speech"]["symbolLevel"]
-		for level, name in characterProcessing.USER_SPEECH_SYMBOL_LEVELS.iteritems():
+		for level in characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS:
 			if level > curLevel:
 				break
 		else:
 			level = characterProcessing.SYMLVL_NONE
-			name = characterProcessing.USER_SPEECH_SYMBOL_LEVELS[level]
+		name = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[level]
 		config.conf["speech"]["symbolLevel"] = level
 		ui.message(_("symbol level %s") % name)
 	script_cycleSpeechSymbolLevel.__doc__=_("Cycles through speech symbol levels which determine what symbols are spoken")
@@ -844,9 +844,9 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(mainFrame. onObjectPresentationCommand, None)
 	script_activateObjectPresentationDialog.__doc__ = _("Shows the NVDA object presentation settings dialog")
 
-	def script_activateVirtualBuffersDialog(self, gesture):
-		wx.CallAfter(mainFrame.onVirtualBuffersCommand, None)
-	script_activateVirtualBuffersDialog.__doc__ = _("Shows the NVDA virtual buffers settings dialog")
+	def script_activateBrowseModeDialog(self, gesture):
+		wx.CallAfter(mainFrame.onBrowseModeCommand, None)
+	script_activateBrowseModeDialog.__doc__ = _("Shows the NVDA browse mode settings dialog")
 
 	def script_activateDocumentFormattingDialog(self, gesture):
 		wx.CallAfter(mainFrame.onDocumentFormattingCommand, None)
@@ -992,7 +992,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+shift+numpadMinus": "navigatorObject_moveFocus",
 		"kb(laptop):NVDA+shift+backspace": "navigatorObject_moveFocus",
 		"kb:NVDA+numpadDelete": "navigatorObject_currentDimensions",
-		"kb(desktop):NVDA+delete": "navigatorObject_currentDimensions",
+		"kb(laptop):NVDA+delete": "navigatorObject_currentDimensions",
 
 		# Review cursor
 		"kb:shift+numpad7": "review_top",
@@ -1057,7 +1057,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+k": "activateKeyboardSettingsDialog",
 		"kb:NVDA+control+m": "activateMouseSettingsDialog",
 		"kb:NVDA+control+o": "activateObjectPresentationDialog",
-		"kb:NVDA+control+b": "activateVirtualBuffersDialog",
+		"kb:NVDA+control+b": "activateBrowseModeDialog",
 		"kb:NVDA+control+d": "activateDocumentFormattingDialog",
 
 		# Save/reload configuration

@@ -13,9 +13,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <set>
- #include <sstream>
- #include <iomanip>
- #include <cassert>
+#include <sstream>
+#include <iomanip>
 #include <windows.h>
 #include <oleacc.h>
 #include <remote/nvdaHelperRemote.h>
@@ -102,7 +101,8 @@ inline void processText(BSTR inText, wstring& outText) {
 
 VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 	VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
-	IPDDomNode* domNode
+	IPDDomNode* domNode,
+	bool fallBackToName
 ) {
 	HRESULT res;
 	VBufStorage_fieldNode_t* tempNode;
@@ -143,7 +143,7 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 				continue;
 			}
 			// Recursive call: render text for this child and its descendants.
-			if (tempNode = renderText(buffer, parentNode, previousNode, domChild))
+			if (tempNode = renderText(buffer, parentNode, previousNode, domChild, fallBackToName))
 				previousNode = tempNode;
 			domChild->Release();
 		}
@@ -162,9 +162,14 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 
 		if (!text) {
 			// GetTextContent() failed or returned nothing.
-			// This should mean there is no text, but GetValue() sometimes works nevertheless, so try it.
-			if ((res = domNode->GetValue(&text)) != S_OK) {
-				LOG_DEBUG(L"IPDDomNode::GetTextContent returned " << res);
+			// This should mean there is no text.
+			// However, GetValue() or GetName() sometimes works nevertheless, so try it.
+			if (fallBackToName)
+				res = domNode->GetName(&text);
+			else
+				res = domNode->GetValue(&text);
+			if (res != S_OK) {
+				LOG_DEBUG(L"IPDDomNode::GetName/Value returned " << res);
 				text = NULL;
 			}
 			if (text && SysStringLen(text) == 0) {
@@ -183,8 +188,8 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 				s.setf(ios::fixed);
 				s << setprecision(1) << fontSize << "pt";
 				previousNode->addAttribute(L"font-size", s.str());
-				if (fontFlags&PDDOM_FONTATTR_ITALIC==PDDOM_FONTATTR_ITALIC) previousNode->addAttribute(L"italic", L"1");
-				if (fontFlags&PDDOM_FONTATTR_BOLD==PDDOM_FONTATTR_BOLD) previousNode->addAttribute(L"bold", L"1");
+				if ((fontFlags&PDDOM_FONTATTR_ITALIC)==PDDOM_FONTATTR_ITALIC) previousNode->addAttribute(L"italic", L"1");
+				if ((fontFlags&PDDOM_FONTATTR_BOLD)==PDDOM_FONTATTR_BOLD) previousNode->addAttribute(L"bold", L"1");
 			}
 			SysFreeString(text);
 		} else {
@@ -205,9 +210,9 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 ) {
 	int res;
 	LOG_DEBUG(L"Entered fillVBuf, with pacc at "<<pacc<<L", parentNode at "<<parentNode<<L", previousNode "<<previousNode);
-	assert(buffer); //buffer can't be NULL
-	assert(!parentNode||buffer->isNodeInBuffer(parentNode)); //parent node must be in buffer
-	assert(!previousNode||buffer->isNodeInBuffer(previousNode)); //Previous node must be in buffer
+	nhAssert(buffer); //buffer can't be NULL
+	nhAssert(!parentNode||buffer->isNodeInBuffer(parentNode)); //parent node must be in buffer
+	nhAssert(!previousNode||buffer->isNodeInBuffer(previousNode)); //Previous node must be in buffer
 	VBufStorage_fieldNode_t* tempNode;
 
 	//all IAccessible methods take a variant for childID, get one ready
@@ -225,7 +230,7 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 
 	// GET ID
 	int ID = getAccID(servprov);
-	assert(ID);
+	nhAssert(ID);
 
 	//Make sure that we don't already know about this object -- protect from loops
 	if(buffer->getControlFieldNodeWithIdentifier(docHandle,ID)!=NULL) {
@@ -237,7 +242,7 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 	//Add this node to the buffer
 	LOG_DEBUG(L"Adding Node to buffer");
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,TRUE);
-	assert(parentNode); //new node must have been created
+	nhAssert(parentNode); //new node must have been created
 	previousNode=NULL;
 	LOG_DEBUG(L"Added  node at "<<parentNode);
 
@@ -395,9 +400,9 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 		free(varChildren);
 	} else {
 
-		// No children, so this is a text leaf node.
-		if (!stdName) {
-			// Text leaf nodes with no stdName are inline.
+		// No children, so this is a leaf node.
+		if (!this->isXFA && !stdName) {
+			// Non-XFA leaf nodes with no stdName are inline.
 			parentNode->setIsBlock(false);
 		}
 
@@ -412,8 +417,14 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 			name = NULL;
 		}
 
-		// If there is a name, render it before this node, except for certain controls.
-		if (name && role != ROLE_SYSTEM_LINK && role != ROLE_SYSTEM_PUSHBUTTON && role != ROLE_SYSTEM_RADIOBUTTON && role != ROLE_SYSTEM_CHECKBUTTON) {
+		bool useNameAsContent = role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON ||
+			role == ROLE_SYSTEM_RADIOBUTTON || role == ROLE_SYSTEM_CHECKBUTTON ||
+			role == ROLE_SYSTEM_GRAPHIC;
+
+		if (name && !useNameAsContent) {
+			parentNode->addAttribute(L"name", name);
+			// Render the name before this node,
+			// as the label is often not a separate node and thus won't be rendered into the buffer.
 			buffer->addTextFieldNode(parentNode->getParent(), parentNode->getPrevious(), name);
 		}
 
@@ -424,7 +435,7 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 				previousNode = tempNode;
 			else
 				tempNode = NULL; // Signal no text.
-		} else if (tempNode = renderText(buffer, parentNode, previousNode, domNode))
+		} else if (tempNode = renderText(buffer, parentNode, previousNode, domNode, useNameAsContent))
 			previousNode = tempNode;
 
 		if (name)
@@ -523,7 +534,7 @@ bool checkIsXFA(IAccessible* rootPacc) {
 void AdobeAcrobatVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	LOG_DEBUG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
 	IAccessible* pacc=IAccessibleFromIdentifier(docHandle,ID);
-	assert(pacc); //must get a valid IAccessible object
+	nhAssert(pacc); //must get a valid IAccessible object
 	if (!oldNode) {
 		// This is the root node.
 		this->isXFA = checkIsXFA(pacc);
@@ -545,4 +556,11 @@ extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle
 	VBufBackend_t* backend=new AdobeAcrobatVBufBackend_t(docHandle,ID);
 	LOG_DEBUG(L"Created new backend at "<<backend);
 	return backend;
+}
+
+BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
+	if(reason==DLL_PROCESS_ATTACH) {
+		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
+	}
+	return true;
 }

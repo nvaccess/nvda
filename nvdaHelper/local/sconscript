@@ -71,6 +71,7 @@ localLib=env.SharedLibrary(
 		'nvdaControllerInternal.c',
 		controllerInternalRPCServerSource,
 		"dllImportTableHooks.cpp",
+		"nvdaHelperLocal.def",
 	],
 	LIBS=[
 		"user32",

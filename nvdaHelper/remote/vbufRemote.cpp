@@ -13,10 +13,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <map>
-#include <windows.h>
 #include "vbufRemote.h"
 #include <vbufBase/backend.h>
-#include "nvdaHelperRemote.h"
 #include "dllmain.h"
 
 using namespace std;
@@ -143,10 +141,10 @@ int VBufRemote_getTextLength(VBufRemote_bufferHandle_t buffer) {
 	return res;
 }
 
-int VBufRemote_getTextInRange(VBufRemote_bufferHandle_t buffer, int startOffset, int endOffset, wchar_t** text, int useMarkup) {
+int VBufRemote_getTextInRange(VBufRemote_bufferHandle_t buffer, int startOffset, int endOffset, wchar_t** text, boolean useMarkup) {
 	VBufBackend_t* backend=(VBufBackend_t*)buffer;
 	backend->lock.acquire();
-	VBufStorage_textContainer_t* textContainer=backend->getTextInRange(startOffset,endOffset,useMarkup);
+	VBufStorage_textContainer_t* textContainer=backend->getTextInRange(startOffset,endOffset,useMarkup!=false);
 	backend->lock.release();
 	if(textContainer==NULL) {
 		return false;
@@ -156,10 +154,10 @@ int VBufRemote_getTextInRange(VBufRemote_bufferHandle_t buffer, int startOffset,
 	return true;
 }
 
-int VBufRemote_getLineOffsets(VBufRemote_bufferHandle_t buffer, int offset, int maxLineLength, int useScreenLayout, int *startOffset, int *endOffset) {
+int VBufRemote_getLineOffsets(VBufRemote_bufferHandle_t buffer, int offset, int maxLineLength, boolean useScreenLayout, int *startOffset, int *endOffset) {
 	VBufBackend_t* backend=(VBufBackend_t*)buffer;
 	backend->lock.acquire();
-	int res=backend->getLineOffsets(offset,maxLineLength,useScreenLayout,startOffset,endOffset);
+	int res=backend->getLineOffsets(offset,maxLineLength,useScreenLayout!=false,startOffset,endOffset);
 	backend->lock.release();
 	return res;
 }

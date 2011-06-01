@@ -12,7 +12,6 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include <cassert>
 #include <windows.h>
 #include <set>
 #include <string>
@@ -259,9 +258,9 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IAccessibleTable* paccTable, IAccessibleTable2* paccTable2, long tableID) {
 	int res;
 	LOG_DEBUG(L"Entered fillVBuf, with pacc at "<<pacc<<L", parentNode at "<<parentNode<<L", previousNode "<<previousNode);
-	assert(buffer); //buffer can't be NULL
-	assert(!parentNode||buffer->isNodeInBuffer(parentNode)); //parent node must be in buffer
-	assert(!previousNode||buffer->isNodeInBuffer(previousNode)); //Previous node must be in buffer
+	nhAssert(buffer); //buffer can't be NULL
+	nhAssert(!parentNode||buffer->isNodeInBuffer(parentNode)); //parent node must be in buffer
+	nhAssert(!previousNode||buffer->isNodeInBuffer(previousNode)); //Previous node must be in buffer
 	VBufStorage_fieldNode_t* tempNode;
 	bool isBlockElement=TRUE;
 	//all IAccessible methods take a variant for childID, get one ready
@@ -303,7 +302,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 	//Add this node to the buffer
 	LOG_DEBUG(L"Adding Node to buffer");
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,TRUE);
-	assert(parentNode); //new node must have been created
+	nhAssert(parentNode); //new node must have been created
 	previousNode=NULL;
 	LOG_DEBUG(L"Added  node at "<<parentNode);
 	//Get role -- IAccessible2 role
@@ -466,6 +465,12 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 	if((res=pacc->get_accName(varChild,&name))!=S_OK) {
 		LOG_DEBUG(L"IAccessible::get_accName returned "<<res);
 		name=NULL;
+	}
+	LOG_DEBUG(L"getting accDescription");
+	BSTR description=NULL;
+	if((res=pacc->get_accDescription(varChild,&description))==S_OK) {
+		parentNode->addAttribute(L"description",description);
+		SysFreeString(description);
 	}
 	// Handle table cell information.
 	IAccessibleTableCell* paccTableCell = NULL;
@@ -905,6 +910,8 @@ bool getDocumentFrame(HWND* hwnd, long* childID) {
 
 void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	switch(eventID) {
+		case EVENT_OBJECT_FOCUS:
+		case EVENT_SYSTEM_ALERT:
 		case IA2_EVENT_TEXT_UPDATED:
 		case IA2_EVENT_TEXT_INSERTED:
 		case IA2_EVENT_TEXT_REMOVED:
@@ -940,6 +947,13 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 			continue;
 		}
 		LOG_DEBUG(L"found active backend for this window at "<<backend);
+
+		//For focus and alert events, force any invalid nodes to be updaed right now
+		if(eventID==EVENT_OBJECT_FOCUS||eventID==EVENT_SYSTEM_ALERT) {
+			backend->forceUpdate();
+			continue;
+		}
+
 		//Ignore state change events on the root node (document) as it can cause rerendering when the document goes busy
 		if(eventID==EVENT_OBJECT_STATECHANGE&&hwnd==(HWND)(backend->rootDocHandle)&&childID==backend->rootID) return;
 		VBufStorage_controlFieldNode_t* node=backend->getControlFieldNodeWithIdentifier(docHandle,ID);
@@ -1008,4 +1022,11 @@ extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle
 	VBufBackend_t* backend=new GeckoVBufBackend_t(docHandle,ID);
 	LOG_DEBUG(L"Created new backend at "<<backend);
 	return backend;
+}
+
+BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
+	if(reason==DLL_PROCESS_ATTACH) {
+		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
+	}
+	return true;
 }

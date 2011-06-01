@@ -200,6 +200,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		#: @type: str
 		self.layout = config.conf["keyboard"]["keyboardLayout"]
 		self.modifiers = modifiers = set(modifiers)
+		# Don't double up if this is a modifier key repeat.
+		modifiers.discard((vkCode, isExtended))
 		if vkCode in (winUser.VK_DIVIDE, winUser.VK_MULTIPLY, winUser.VK_SUBTRACT, winUser.VK_ADD) and winUser.getKeyState(winUser.VK_NUMLOCK) & 1:
 			# Some numpad keys have the same vkCode regardless of numlock.
 			# For these keys, treat numlock as a modifier.

@@ -12,6 +12,7 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include <wchar.h>
 #include "nvdaHelperRemote.h"
@@ -20,13 +21,13 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 LRESULT CALLBACK typedCharacter_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
 	static HWND charWindow=0;
-	static wchar_t lastCharacter=0;
+	static WPARAM lastCharacter=0;
 	MSG* pmsg=(MSG*)lParam;
 	if(pmsg->message==WM_KEYDOWN) {
 		charWindow=pmsg->hwnd;
 		lastCharacter=0;
 	} else if((charWindow!=0)&&(pmsg->message==WM_CHAR)&&(pmsg->hwnd==charWindow)&&(pmsg->wParam!=lastCharacter)) { 
-		nvdaControllerInternal_typedCharacterNotify(GetCurrentThreadId(),(wchar_t)(pmsg->wParam));
+		nvdaControllerInternal_typedCharacterNotify(GetCurrentThreadId(),static_cast<wchar_t>(pmsg->wParam));
 		lastCharacter=pmsg->wParam;
 	}
 	return 0;

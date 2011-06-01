@@ -12,7 +12,6 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include <cassert>
 #include <map>
 #include <set>
 #include <list>
@@ -24,7 +23,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "displayModel.h"
 #include "log.h"
 #include "nvdaControllerInternal.h"
-#include "nvdaController.h"
 #include <common/lock.h>
 #include "gdiHooks.h"
 
@@ -179,7 +177,7 @@ class GlyphTranslator {
 		if(refCount==0) {
 			delete this;
 		}
-		assert(refCount>=0);
+		nhAssert(refCount>=0);
 		return refCount;
 	}
 
@@ -357,11 +355,11 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	int* characterEndXArray=(int*)calloc(newText.length(),sizeof(int));
 	if(characterWidths) {
 		int ac=0;
-		for(int i=0;i<newText.length();++i) characterEndXArray[i]=(ac+=characterWidths[(fuOptions&ETO_PDY)?(i*2):i]);
+		for(unsigned int i=0;i<newText.length();++i) characterEndXArray[i]=(ac+=characterWidths[(fuOptions&ETO_PDY)?(i*2):i]);
 		resultTextSize->cx=ac;
 		resultTextSize->cy=tm.tmHeight;
 	} else {
-		GetTextExtentExPoint(hdc,newText.c_str(),newText.length(),0,NULL,characterEndXArray,resultTextSize);
+		GetTextExtentExPoint(hdc,newText.c_str(),static_cast<int>(newText.length()),0,NULL,characterEndXArray,resultTextSize);
 	}
 	//are we writing a transparent background?
 	if(tm.tmCharSet!=SYMBOL_CHARSET&&!(fuOptions&ETO_OPAQUE)&&(GetBkMode(hdc)==TRANSPARENT)) {
@@ -882,7 +880,7 @@ void gdiHooks_inProcess_initialize() {
 	tls_index_inTextOutHook=TlsAlloc();
 	//Initialize the timer for text change notifications
 	textChangeNotifyTimerID=SetTimer(NULL,NULL,50,textChangeNotifyTimerProc);
-	assert(textChangeNotifyTimerID);
+	nhAssert(textChangeNotifyTimerID);
 	//Initialize critical sections and access variables for various maps
 	InitializeCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allow_ScriptStringAnalyseArgsByAnalysis=TRUE;

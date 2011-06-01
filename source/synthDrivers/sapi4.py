@@ -11,6 +11,7 @@ from comtypes import COMObject, COMError
 from ctypes import *
 from synthDriverHandler import SynthDriver,VoiceInfo
 from logHandler import log
+import speech
 from _sapi4 import *
 import config
 import nvwave
@@ -78,22 +79,27 @@ class SynthDriver(SynthDriver):
 	def terminate(self):
 		self._bufSink._allowDelete = True
 
-	def performSpeak(self,text,index=None,isCharacter=False):
-		flags=0
-		if index is not None or isCharacter:
-			text = text.replace('\\','\\\\')
-			flags+=TTSDATAFLAG_TAGGED
-		if index is not None:
-			text="\mrk=%d\\%s"%(index,text)
-		if isCharacter:
-			text = "\\RmS=1\\%s\\RmS=0\\"%text
+	def speak(self,speechSequence):
+		textList=[]
+		charMode=False
+		for item in speechSequence:
+			if isinstance(item,basestring):
+				textList.append(item.replace('\\','\\\\'))
+			elif isinstance(item,speech.IndexCommand):
+				textList.append("\\mrk=%d\\"%item.index)
+			elif isinstance(item,speech.CharacterModeCommand):
+				textList.append("\\RmS=1\\" if item.state else "\\RmS=0\\")
+				charMode=item.state
+			elif isinstance(item,speech.SpeechCommand):
+				log.debugWarning("Unsupported speech command: %s"%item)
+			else:
+				log.error("Unknown speech: %s"%item)
+		if charMode:
+			# Some synths stay in character mode if we don't explicitly disable it.
+			textList.append("\\RmS=0\\")
+		text="".join(textList)
+		flags=TTSDATAFLAG_TAGGED
 		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSinkPtr,ITTSBufNotifySink._iid_)
-
-	def speakText(self,text,index=None):
-		self.performSpeak(text,index)
-
-	def speakCharacter(self,character,index=None):
-		self.performSpeak(character,index,isCharacter=True)
 
 	def cancel(self):
 		self._ttsCentral.AudioReset()

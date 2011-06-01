@@ -45,6 +45,9 @@ REASON_DEBUG=8
 REASON_ONLYCACHE=9
 REASON_FOCUSENTERED=10
 
+#: The string used to separate distinct chunks of text when multiple chunks should be spoken without pauses.
+CHUNK_SEPARATOR = "  "
+
 oldTreeLevel=None
 oldTableID=None
 oldRowNumber=None
@@ -59,13 +62,20 @@ def terminate():
 	setSynth(None)
 	speechViewerObj=None
 
-RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 #: If a chunk of text contains only these characters, it will be considered blank.
-BLANK_CHUNK_CHARS = frozenset((" ", "\n", "\r", "\0", "", None))
+BLANK_CHUNK_CHARS = frozenset((" ", "\n", "\r", "\0", u"\xa0"))
+def isBlank(text):
+	"""Determine whether text should be reported as blank.
+	@param text: The text in question.
+	@type text: str
+	@return: C{True} if the text is blank, C{False} if not.
+	@rtype: bool
+	"""
+	return not text or set(text) <= BLANK_CHUNK_CHARS
+
+RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 
 def processText(text,symbolLevel):
-	if not text or (isinstance(text, basestring) and set(text) <= BLANK_CHUNK_CHARS):
-		return _("blank") 
 	text = speechDictHandler.processText(text)
 	text = characterProcessing.processSpeechSymbols(languageHandler.getLanguage(), text, symbolLevel)
 	text = RE_CONVERT_WHITESPACE.sub(u" ", text)
@@ -84,6 +94,8 @@ def cancelSpeech():
 	# Import only for this function to avoid circular import.
 	import sayAllHandler
 	sayAllHandler.stop()
+	speakWithoutPauses._pendingSpeechSequence=[]
+	speakWithoutPauses.lastSentIndex=None
 	if _speakSpellingGenID:
 		queueHandler.cancelGeneratorObject(_speakSpellingGenID)
 		_speakSpellingGenID=None
@@ -129,7 +141,7 @@ def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 	beenCanceled=False
 	locale=languageHandler.getLanguage()
 	if not text:
-		return getSynth().speakText(characterProcessing.processSpeechSymbol(locale,""))
+		return getSynth().speak((_("blank"),))
 	if not text.isspace():
 		text=text.rstrip()
 	gen=_speakSpellingGen(text,locale,useCharacterDescriptions)
@@ -161,10 +173,13 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 			synth.pitch=max(0,min(oldPitch+synthConfig["capPitchChange"],100))
 		index=count+1
 		log.io("Speaking character %r"%char)
+		speechSequence=[]
 		if len(char) == 1 and synthConfig["useSpellingFunctionality"]:
-			synth.speakCharacter(char,index=index)
-		else:
-			synth.speakText(char,index=index)
+			speechSequence.append(CharacterModeCommand(True))
+		if index is not None:
+			speechSequence.append(IndexCommand(index))
+		speechSequence.append(char)
+		synth.speak(speechSequence)
 		if uppercase and synth.isSupported("pitch") and synthConfig["raisePitchForCapitals"]:
 			synth.pitch=oldPitch
 		while textLength>1 and (isPaused or getLastSpeechIndex()!=index):
@@ -274,9 +289,25 @@ def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 	@param reason: The reason for this speech; one of the REASON_* constants.
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
 	"""
+	speechSequence=[]
+	if index is not None:
+		speechSequence.append(IndexCommand(index))
+	if text is not None:
+		if isBlank(text):
+			text=_("blank")
+		speechSequence.append(text)
+	speak(speechSequence,symbolLevel=symbolLevel)
+
+def speak(speechSequence,symbolLevel=None):
+	"""Speaks a sequence of text and speech commands
+	@param speechSequence: the sequence of text and L{SpeechCommand} objects to speak
+	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
+	"""
 	import speechViewer
 	if speechViewer.isActive:
-		speechViewer.appendText(text)
+		for item in speechSequence:
+			if isinstance(item,basestring):
+				speechViewer.appendText(item)
 	global beenCanceled, curWordChars
 	curWordChars=[]
 	if speechMode==speechMode_off:
@@ -287,15 +318,14 @@ def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 	if isPaused:
 		cancelSpeech()
 	beenCanceled=False
-	log.io("Speaking %r" % text)
+	log.io("Speaking %r" % speechSequence)
 	if symbolLevel is None:
 		symbolLevel=config.conf["speech"]["symbolLevel"]
-	if text is None:
-		text=""
-	else:
-		text=processText(text,symbolLevel)
-	if not text or not text.isspace():
-		getSynth().speakText(text,index=index)
+	for index in xrange(len(speechSequence)):
+		item=speechSequence[index]
+		if isinstance(item,basestring):
+			speechSequence[index]=processText(item,symbolLevel)
+	getSynth().speak(speechSequence)
 
 def speakSelectionMessage(message,text):
 	if len(text) < 512:
@@ -436,9 +466,11 @@ def processPositiveStates(role, states, reason, positiveStates):
 	positiveStates.discard(controlTypes.STATE_OFFSCREEN)
 	positiveStates.discard(controlTypes.STATE_INVISIBLE)
 	if reason in (REASON_FOCUS, REASON_CARET, REASON_SAYALL):
-		positiveStates.difference_update(frozenset((controlTypes.STATE_INVISIBLE, controlTypes.STATE_READONLY, controlTypes.STATE_LINKED)))
-		if role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_MENUITEM) and controlTypes.STATE_SELECTABLE in states:
+		positiveStates.discard(controlTypes.STATE_LINKED)
+		if role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TABLEROW) and controlTypes.STATE_SELECTABLE in states:
 			positiveStates.discard(controlTypes.STATE_SELECTED)
+		if role != controlTypes.ROLE_EDITABLETEXT:
+			positiveStates.discard(controlTypes.STATE_READONLY)
 	if role == controlTypes.ROLE_CHECKBOX:
 		positiveStates.discard(controlTypes.STATE_PRESSED)
 	return positiveStates
@@ -449,7 +481,7 @@ def processNegativeStates(role, states, reason, negativeStates):
 	# but only if it is either focused or this is something other than a change event.
 	# The condition stops "not selected" from being spoken in some broken controls
 	# when the state change for the previous focus is issued before the focus change.
-	if role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_TREEVIEWITEM) and controlTypes.STATE_SELECTABLE in states and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
+	if role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_TABLEROW) and controlTypes.STATE_SELECTABLE in states and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
 		speakNegatives.add(controlTypes.STATE_SELECTED)
 	# Restrict "not checked" in a similar way to "not selected".
 	if (role in (controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKMENUITEM) or controlTypes.STATE_CHECKABLE in states)  and (controlTypes.STATE_HALFCHECKED not in states) and (reason != REASON_CHANGE or controlTypes.STATE_FOCUSED in states):
@@ -460,7 +492,12 @@ def processNegativeStates(role, states, reason, negativeStates):
 		# We were given states which have changed to negative.
 		# Return only those supplied negative states which should be spoken;
 		# i.e. the states in both sets.
-		return negativeStates & speakNegatives
+		speakNegatives &= negativeStates
+		if controlTypes.STATES_SORTED & negativeStates and not controlTypes.STATES_SORTED & states:
+			# If the object has just stopped being sorted, just report not sorted.
+			# The user doesn't care how it was sorted before.
+			speakNegatives.add(controlTypes.STATE_SORTED)
+		return speakNegatives
 	else:
 		# This is not a state change; only positive states were supplied.
 		# Return all negative states which should be spoken, excluding the positive states.
@@ -541,11 +578,11 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 		textList.append(text)
 
 	if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD):
-		text=" ".join(textList)
+		text=CHUNK_SEPARATOR.join(textList)
 		if text:
 			speakText(text,index=index)
 		text=info.text
-		if len(text)==1:
+		if len(text)<=1:
 			if unit==textInfos.UNIT_CHARACTER:
 				speakSpelling(text)
 			else:
@@ -593,8 +630,9 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 				relativeTextList.append(text)
 				lastTextOkToMerge=False
 
-	text=" ".join(relativeTextList)
-	if text and (not text.isspace() or "\t" in text or "\f" in text):
+	text=CHUNK_SEPARATOR.join(relativeTextList)
+	# Don't add this text if it is blank.
+	if text and not isBlank(text):
 		textList.append(text)
 
 	#Finally get speech text for any fields left in new controlFieldStack that are common with the old controlFieldStack (for closing), if extra detail is not requested
@@ -612,12 +650,19 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 	if useCache:
 		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)
 		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
-	text=" ".join(textList)
-	# Only speak if there is speakable text. Reporting of blank text is handled above.
-	if text and (not text.isspace() or "\t" in text or "\f" in text):
-		speakText(text,index=index)
-	else: #We still need to alert the synth of the given index
-		speakText(None,index=index)
+
+	text=CHUNK_SEPARATOR.join(textList)
+	speechSequence=[]
+	# Even when there's no speakable text, we still need to notify the synth of the index.
+	if index is not None:
+		speechSequence.append(IndexCommand(index))
+	if text:
+		speechSequence.append(text)
+	if speechSequence:
+		if reason==REASON_SAYALL:
+			speakWithoutPauses(speechSequence)
+		else:
+			speak(speechSequence)
 
 def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	global oldTreeLevel, oldTableID, oldRowNumber, oldColumnNumber
@@ -703,7 +748,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		oldTableID = None
-	return " ".join([x for x in textList if x])
+	return CHUNK_SEPARATOR.join([x for x in textList if x])
 
 def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
 	if not formatConfig:
@@ -717,6 +762,10 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
+	if reason==REASON_FOCUS or attrs.get('alwaysReportDescription',False):
+		description=attrs.get('description',"")
+	else:
+		description=""
 	level=attrs.get('level',None)
 
 	#Remove the clickable state from controls that are clearly clickable according to their role
@@ -759,6 +808,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
+	descriptionText=getSpeechTextForProperties(reason=reason,description=description)
 	levelText=getSpeechTextForProperties(reason=reason,positionInfo_level=level)
 
 	# Determine under what circumstances this node should be spoken.
@@ -768,8 +818,8 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	# speakExitForOther: When moving by word or character, speak when the user exits the control.
 	speakEntry=speakWithinForLine=speakExitForLine=speakExitForOther=False
 	if (
-		role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_SLIDER,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_COMBOBOX)
-		or (role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and controlTypes.STATE_READONLY not in states)
+		role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_SLIDER,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_PROGRESSBAR)
+		or (role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
 		or (role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 	):
 		# This node is usually a single line.
@@ -781,7 +831,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		speakEntry=True
 	elif (
 		role in (controlTypes.ROLE_BLOCKQUOTE,controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU)
-		or (role==controlTypes.ROLE_EDITABLETEXT and not controlTypes.STATE_READONLY in states and controlTypes.STATE_MULTILINE in states)
+		or (role==controlTypes.ROLE_EDITABLETEXT and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states) and controlTypes.STATE_MULTILINE in states)
 		or (role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states)
 		or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
 		or (role==controlTypes.ROLE_TABLE and tableID)
@@ -805,22 +855,24 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	# Special cases
 	if fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 		# List.
-		return roleText+_("with %s items")%childCount
+		return roleText+" "+_("with %s items")%childCount
 	elif fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
 		# Table.
 		return " ".join((roleText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount"))))
 	elif fieldType=="start_addedToControlFieldStack" and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER,controlTypes.ROLE_TABLEROWHEADER) and tableID:
 		# Table cell.
 		reportTableHeaders = formatConfig["reportTableHeaders"]
-		return getSpeechTextForProperties(_tableID=tableID, rowNumber=attrs.get("table-rownumber"), columnNumber=attrs.get("table-columnnumber"),
-			rowHeaderText=attrs.get("table-rowheadertext") if reportTableHeaders else None, columnHeaderText=attrs.get("table-columnheadertext") if reportTableHeaders else None)
+		return " ".join((getSpeechTextForProperties(_tableID=tableID,
+				rowNumber=attrs.get("table-rownumber"), columnNumber=attrs.get("table-columnnumber"),
+				rowHeaderText=attrs.get("table-rowheadertext") if reportTableHeaders else None, columnHeaderText=attrs.get("table-columnheadertext") if reportTableHeaders else None),
+			stateText))
 
 	# General cases
 	elif (
 		(speakEntry and ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))))
 		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
 	):
-		return " ".join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),levelText,keyboardShortcutText if x])
+		return CHUNK_SEPARATOR.join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),descriptionText,levelText,keyboardShortcutText if x])
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
 		return _("out of %s")%roleText
 
@@ -959,7 +1011,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 	if attrsCache is not None:
 		attrsCache.clear()
 		attrsCache.update(attrs)
-	return " ".join(textList)
+	return CHUNK_SEPARATOR.join(textList)
 
 def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
 	if tableInfo is None and oldTableInfo is None:
@@ -985,3 +1037,78 @@ def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
 	if rowNumber!=oldRowNumber:
 		textList.append(_("row %s")%rowNumber)
 	return " ".join(textList)
+
+re_last_pause=re.compile(ur"^(.*(?<=[^\s.!?])[.!?][\"'”’)]?(?:\s+|$))(.*$)",re.DOTALL|re.UNICODE)
+
+def speakWithoutPauses(speechSequence):
+	"""
+	Speaks the speech sequences given over multiple calls, only sending to the synth at acceptable phrase or sentence boundaries, or when given None for the speech sequence.
+	"""
+	finalSpeechSequence=[] #To be spoken now
+	pendingSpeechSequence=[] #To be saved off for speaking  later
+	if speechSequence is None: #Requesting flush
+		if speakWithoutPauses._pendingSpeechSequence: 
+			#Place the last incomplete phrase in to finalSpeechSequence to be spoken now
+			finalSpeechSequence=speakWithoutPauses._pendingSpeechSequence
+			speakWithoutPauses._pendingSpeechSequence=[]
+	else: #Handling normal speech
+		#Scan the given speech and place all completed phrases in finalSpeechSequence to be spoken,
+		#And place the final incomplete phrase in pendingSpeechSequence
+		for index in xrange(len(speechSequence)-1,-1,-1): 
+			item=speechSequence[index]
+			if isinstance(item,basestring):
+				m=re_last_pause.match(item)
+				if m:
+					before,after=m.groups()
+					if after:
+						pendingSpeechSequence.append(after)
+					if before:
+						finalSpeechSequence.extend(speakWithoutPauses._pendingSpeechSequence)
+						speakWithoutPauses._pendingSpeechSequence=[]
+						finalSpeechSequence.extend(speechSequence[0:index])
+						finalSpeechSequence.append(before)
+						break
+				else:
+					pendingSpeechSequence.append(item)
+			else:
+				pendingSpeechSequence.append(item)
+		if pendingSpeechSequence:
+			pendingSpeechSequence.reverse()
+			speakWithoutPauses._pendingSpeechSequence.extend(pendingSpeechSequence)
+	#Scan the final speech sequence backwards
+	for item in reversed(finalSpeechSequence):
+		if isinstance(item,IndexCommand):
+			speakWithoutPauses.lastSentIndex=item.index
+			break
+	if finalSpeechSequence:
+		speak(finalSpeechSequence)
+speakWithoutPauses.lastSentIndex=None
+speakWithoutPauses._pendingSpeechSequence=[]
+
+
+class SpeechCommand(object):
+	"""
+	The base class for objects that can be inserted between string of text for parituclar speech functions that convey  things such as indexing or voice parameter changes.
+	"""
+
+class IndexCommand(SpeechCommand):
+	"""Represents an index within some speech."""
+
+	def __init__(self,index):
+		"""
+		@param index: the value of this index
+		@type index: integer
+		"""
+		if not isinstance(index,int): raise ValueError("index must be int, not %s"%type(index))
+		self.index=index
+
+class CharacterModeCommand(object):
+	"""Turns character mode on and off for speech synths."""
+
+	def __init__(self,state):
+		"""
+		@param state: if true character mode is on, if false its turned off.
+		@type state: boolean
+		"""
+		if not isinstance(state,bool): raise ValueError("state must be boolean, not %s"%type(state))
+		self.state=state

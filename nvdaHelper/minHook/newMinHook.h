@@ -12,44 +12,12 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#ifndef VIRTUALBUFFER_LOCK_H
-#define VIRTUALBUFFER_LOCK_H
+#ifndef NVDAHELPER_NEWMINHOOK_H
+#define NVDAHELPER_NEWMINHOOK_H
 
-/**
- * a generic locking interface
- */
-class VBufLock_t {
-	private:
+#include <libMinHook/minHook.h>
 
-/**
- * points to the platform-specific locking handle
- */
-	void* lockHandle;
-
-	public:
-
-/**
- * Constructor
- * initializes the lock handle;
- */
-	VBufLock_t();
-
-/**
- * acquires the lock for the caller, until release is called.
- */
-	virtual void acquire();
-
-/**
- * Releases the lock from the caller
- */
-	virtual void release();
-
-/**
- * destructor
- * cleans up the platform-specific locking handle
- */
-	~VBufLock_t();
-
-};
+MH_STATUS MH_EnableAllHooks();
+MH_STATUS MH_DisableAllHooks();
 
 #endif

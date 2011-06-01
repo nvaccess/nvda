@@ -1,0 +1,107 @@
+﻿#locale/fi/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Others
+decimal point	(?<=\d)\,(?=\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	piste	all	always
+! sentence ending	huuto	all	always
+? sentence ending	kysymys	all	always
+; phrase ending	puolipiste	most	always
+: phrase ending	kaksoispiste	most	always
+decimal point		none	always
+in-word '	heitto	all	norep
+
+# Whitespace
+\0	tyhjä	char
+\t	sisennys
+\n	rivinvaihto	char
+\f	sivunvaihto	none
+\r	rivinvaihto	char
+ 	väli	char
+ 	väli	char	# sitova välilyönti
+
+# Standard punctuation/symbols
+!	huuto	all
+"	lainaus	most
+\#	risu	some
+$	dollari	some
+£	punta	some
+€	euro	some
+%	prosentti	some
+&	et	some
+'	heitto	all
+(	alkusulku	all
+)	loppusulku	all
+*	tähti	some
++	plus	some
+,	pilkku	all	always
+-	viiva	most
+.	piste	some
+/	kautta	some
+:	kaksoispiste	most
+;	puolipiste	most
+<	pienempi	some
+>	suurempi	some
+=	yhtä suuri	some
+?	kysymys	all
+@	ät	some
+[	alkuhaka	some
+]	loppuhaka	some
+"	lainaus	most
+\\	keno	some
+^	hattu	some
+_	alaviiva	some
+`	ulkomaan ee	some
+{	alkuaalto	some
+}	loppuaalto	some
+|	pysty	some
+~	tilde	some
+
+# Other characters
+•	luettelomerkki	some
+…	piste piste piste	all	always
+	luettelomerkki	some
+“	alkulainaus	most
+”	loppulainaus	most
+‘	yksinkertainen alkulainaus	most
+’	yksinkertainen loppulainaus	most
+–	pitkä viiva	most
+—	pitempi viiva	most
+¨	treema	most
+­	pehmeä tavuviiva	all
+»	kulmalainaus oikealle	all
+‎	nuoli vasemmalta oikealle	all
+→	nuoli oikealle	all
+−	miinus	some
+►	musta osoitin oikealle	all
+○	valkoinen ympyrä	all
+●	musta ympyrä	some
+♠	musta pata	all
+¡	käänteinen huuto	all
+¦	rikkinäinen palkki	most
+©	copyright	most
+«	kaksoiskulmasulku	most
+¿	käänteinen kysymys	all
+–	pitkä viiva	most
+—	pitempi viiva	most
+†	risti	most
+‡	kaksoisristi	most
+☼	valkoinen aurinko säteineen	most
+●	ympyrä	most
+ǝ	e ylösalaisin
+ɐ	a ylösalaisin
+ɯ	m ylösalaisin
+ʇ	t ylösalaisin
+ʍ	w ylösalaisin
+ʎ	y ylösalaisin
+˜	pieni tilde
+☺	valkoiset hymyilevät kasvot

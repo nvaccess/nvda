@@ -1,61 +1,92 @@
-﻿complexSymbols:
+﻿#locale/fr/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
 # identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])(\s\!|\!)(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s!])(\s\?|\?)(?=[\"'”’)\s]|$)
+... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
+… sentence ending	(?<=[^\s.])\…(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s!])(\s\;|\;)(?=[\"'”’)\s]|$)
+: phrase ending	(?<=[^\s!])(\s\:|\:)(?=[\"'”’)\s]|$)
+# Others
 decimal point	(?<=\d)\,(?=\d)
+in-word -	(?<=[^\W_])[-]
+dates .	((?<=\b\d\d)\.(?=\d\d.(\d{2}|\d{4})\b))|((?<=\b\d\d.\d\d)\.(?=(\d{2}|\d{4})\b))
+dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
+
+before-number -	\-(?=\d{1,})
+after-number %	(?<=\d)\%(?=\s|$)
+
+# Fix pronunciation for some words
+no francs	F(?=\d|\s\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
 . sentence ending	point	# . fin de phrase
-! sentence ending	poindexclamation	# ! fin de phrase
-? sentence ending	poindinterrogation	# ? fin de phrase
-; phrase ending	poinvirgule	# ; fin de phrase
-: phrase ending	deupoint	# : fin de phrase
-decimal point		# virgule
-in-word '	apostrophe	all	norep
+! sentence ending	point dexclamation	# ! fin de phrase
+? sentence ending	point dinterrogation	# ? fin de phrase
+... sentence ending	points de suspension	all	always	# ... fin de phrase
+… sentence ending	points de suspension	all	always	# … fin de phrase
+; phrase ending	point virgule	# ; fin de phrase
+: phrase ending	deux points	# : fin de phrase
+
+decimal point		# virgule décimale
+dates .	 	all	always
+dates /	 	all	always
+before-number -	moins	none	norep	# - devant un nombre
+after-number %	pourcent	none	norep
+in-word '	apostrophe
+in-word -	tiret	all	norep
 
 # Whitespace
-\0	blanc
+\0	nul
 \t	tab
 \n	nouvelle ligne
 \f	saut de page
 \r	retour chariot
  	espace
- 	espace	# espace insécable
+ 	espace insécable	# espace insécable
 
 # Standard punctuation/symbols
-!	poindexclamation
+!	point dexclamation
 "	guillemet
 \#	dièse
-$	dollar
+$	dollar	none
 £	livre
-€	euro
+€	euro	none
 %	pourcent
-&	et
+&	et	none
 '	apostrophe
 (	parenthèse gauche
 )	parenthèse droite
-*	astérisque
-+	pluss
+*	astérisque	some	norep
++	pluss	some	norep
 ,	virgule
 -	tiret
 .	point
-/	baroblique
-:	deupoint
-;	poinvirgule
+/	barre oblique
+:	deux points	all	norep
+;	point virgule
 <	inférieur
 >	supérieur
 =	égal
-?	poindinterrogation
+?	point dinterrogation
 @	arobase	none
 [	crochet gauche
 ]	crochet droit
 "	guillemet
-\\	barobliquinversée
-^	accencirconflexe
-¨	tréma	all
+\\	barre oblique inversée
+^	accent circonflexe
 _	souligné
-`	accengrave
+`	accent grave
 {	accolade gauche
 }	accolade droite
 |	barre verticale
@@ -67,6 +98,17 @@ _	souligné
 	puce
 “	guillemet ouvert
 ”	guillemet fermé
+‘	apostrophe gauche
+’	apostrophe droite
 –	tiret demicadratin
 —	tiret cadratin
+§	paragraphe	most
 ●	astérisque
+¨	tréma
+‎	gauche à droite	char
+‏	droite à gauche	char
+°	degré	none
+©	copyright	some	norep
+
+# Fix pronunciation of some words
+no francs	f	none	norep

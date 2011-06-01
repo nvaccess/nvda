@@ -8,12 +8,12 @@ sourceFiles=[
 	HDESourceFile,
 	'buffer.cpp',
 	'export.cpp',
-	'hook.cpp',
 	'thread.cpp',
 	'trampoline.cpp',
 ]
 
 objFiles=[env.Object('_minHook_%s.obj'%x.replace('/','_'),'#/include/libMinHook/src/%s'%x) for x in sourceFiles]
+objFiles.append(env.Object('newHook.cpp',CPPPATH=['#include/libMinHook/src','${CPPPATH}']))
 
 minHookLib=env.SharedLibrary('minHook',objFiles+['minHook.def'])
 

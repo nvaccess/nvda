@@ -17,8 +17,13 @@ Import('env')
 idlFile=env.Command("ia2.idl","#/include/ia2/ia2.idl",Copy("$TARGET","$SOURCE"))
 
 tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFile=env.TypeLibrary(source=idlFile)
-iidObjFile=env.Object(iidSourceFile)
-proxyObjFile=env.Object(proxySourceFile)
-dlldataObjFile=env.Object(dlldataSourceFile)
 
-Return(['tlbFile','headerFile','iidObjFile','proxyObjFile','dlldataObjFile'])
+proxyDll=env.SharedLibrary(
+	target='IAccessible2Proxy',
+	source=[iidSourceFile,proxySourceFile,dlldataSourceFile],
+	LIBS=['rpcrt4','oleaut32','ole32'],
+	CPPDEFINES=[env['CPPDEFINES'],'WIN32','REGISTER_PROXY_DLL'],
+	LINKFLAGS=[env['LINKFLAGS'],'/export:DllGetClassObject,private','/export:DllCanUnloadNow,private'],
+)
+
+Return(['proxyDll','tlbFile','headerFile','iidSourceFile','proxySourceFile','dlldataSourceFile'])

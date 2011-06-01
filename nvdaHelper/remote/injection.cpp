@@ -15,6 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <string>
 #include <sstream>
 #include <set>
+#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include <shlwapi.h>
 #include "log.h"
@@ -96,13 +97,13 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	}
 	WaitForSingleObject(threadMutex,INFINITE);
 	//Stop this dll from unloading while this function is running
-	assert(dllHandle);
+	nhAssert(dllHandle);
 	HINSTANCE tempHandle=NULL;
 	if(!GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)dllHandle,&tempHandle)) {
 		LOG_ERROR(L"GetModuleHandleEx failed, GetLastError returned "<<GetLastError());
 		return 0;
 	}
-	assert(dllHandle==tempHandle);
+	nhAssert(dllHandle==tempHandle);
 	//Try to open handles to both the injectionDone event and NVDA's process handle
 		HANDLE waitHandles[2]={0};
 	long nvdaProcessID=0;
@@ -145,7 +146,7 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 				DispatchMessage(&msg);
 			}
 		} while(MsgWaitForMultipleObjects(2,waitHandles,FALSE,INFINITE,QS_ALLINPUT)==WAIT_OBJECT_0+2);
-		assert(inprocMgrThreadHandle);
+		nhAssert(inprocMgrThreadHandle);
 		inprocThreadsLock.acquire();
 		CloseHandle(inprocMgrThreadHandle);
 		inprocMgrThreadHandle=NULL;
@@ -165,7 +166,7 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 		//Unregister any windows hooks registered so far
 		killRunningWindowsHooks();
 	} else {
-		assert(inprocMgrThreadHandle);
+		nhAssert(inprocMgrThreadHandle);
 		inprocThreadsLock.acquire();
 		CloseHandle(inprocMgrThreadHandle);
 		inprocMgrThreadHandle=NULL;
@@ -181,17 +182,8 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	return 0;
 }
 
-//winEvent callback to inject in-process
-//Only used for foreground/focus winEvents
-void CALLBACK injection_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
-	if(isProcessExiting) {
-		// We shouldn't do anything at all if the process is exiting.
-		// Doing so will probably cause a crash.
-		return;
-	}
-	//We are not at all interested in out-of-context winEvents, even if they were accidental.
-	if(threadID!=GetCurrentThreadId()) return;
-	BOOL threadCreated=FALSE;
+bool initInprocManagerThreadIfNeeded() {
+	bool threadCreated=FALSE;
 	HANDLE waitHandles[2]={0};
 	//Gain exclusive access to all the inproc thread variables for the rest of this function.
 	inprocThreadsLock.acquire();
@@ -218,12 +210,27 @@ void CALLBACK injection_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	inprocThreadsLock.release();
 	if(threadCreated) {
 		//Wait until the event is set (the thread is past initialization) or until the thread dies.
-		WaitForMultipleObjects(2,waitHandles,FALSE,1000);
-		//Forward this winEvent to the general in-process winEvent callback if necessary, so it sees this initial event.
-		inproc_winEventCallback(inprocWinEventHookID,eventID,hwnd,objectID,childID,threadID,time);
+		WaitForMultipleObjects(2,waitHandles,FALSE,10000);
 	}
 	//Close the event handle, but not the thread handle as the thread itself will do that.
 	if(waitHandles[0]) CloseHandle(waitHandles[0]);
+	return threadCreated;
+}
+
+//winEvent callback to inject in-process
+//Only used for foreground/focus winEvents
+void CALLBACK injection_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
+	if(isProcessExiting) {
+		// We shouldn't do anything at all if the process is exiting.
+		// Doing so will probably cause a crash.
+		return;
+	}
+	//We are not at all interested in out-of-context winEvents, even if they were accidental.
+	if(threadID!=GetCurrentThreadId()) return;
+	if(initInprocManagerThreadIfNeeded()) {
+		//Forward this winEvent to the general in-process winEvent callback if necessary, so it sees this initial event.
+		inproc_winEventCallback(inprocWinEventHookID,eventID,hwnd,objectID,childID,threadID,time);
+	}
 }
 
 //Code for launcher process
@@ -274,18 +281,18 @@ BOOL injection_initialize(int secureMode) {
 		MessageBox(NULL,L"Already initialized",L"nvdaHelperRemote (injection_initialize)",0);
 		return FALSE;
 	}
-	assert(dllHandle);
+	nhAssert(dllHandle);
 	if(!IA2Support_initialize()) {
 		MessageBox(NULL,L"Error initializing IA2 support",L"nvdaHelperRemote (injection_initialize)",0);
 		return FALSE;
 	}
-	assert(!injectionDoneEvent);
+	nhAssert(!injectionDoneEvent);
 	{
 		wstringstream s;
 		s<<L"nvdaHelperRemote_injectionDoneEvent_"<<desktopSpecificNamespace;
 		injectionDoneEvent=CreateEvent(NULL,TRUE,FALSE,s.str().c_str());
 	}
-	assert(injectionDoneEvent);
+	nhAssert(injectionDoneEvent);
 	ResetEvent(injectionDoneEvent);
 	outprocMgrThreadHandle=CreateThread(NULL,0,outprocMgrThreadFunc,NULL,0,&outprocMgrThreadID);
 	outprocInitialized=TRUE;
@@ -303,11 +310,7 @@ BOOL injection_terminate() {
 	}
 	outprocMgrThreadHandle=NULL;
 	outprocMgrThreadID=0;
-	if(!IA2Support_terminate()) {
-		MessageBox(NULL,L"Error terminating IA2 support",L"nvdaHelperRemote (injection_terminate)",0);
-		return FALSE;
-	}
-	assert(injectionDoneEvent);
+	nhAssert(injectionDoneEvent);
 	SetEvent(injectionDoneEvent);
 	CloseHandle(injectionDoneEvent);
 	injectionDoneEvent=NULL;
@@ -319,6 +322,7 @@ BOOL injection_terminate() {
 
 BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if(reason==DLL_PROCESS_ATTACH) {
+		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
 		#ifndef NDEBUG
 		Beep(220,75);
 		#endif

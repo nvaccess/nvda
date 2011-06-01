@@ -31,6 +31,13 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_DRAGGABLE)
 		elif grabbed == "true":
 			states.add(controlTypes.STATE_DRAGGING)
+		sorted = attrs.get("IAccessible2::attribute_sort")
+		if sorted=="ascending":
+			states.add(controlTypes.STATE_SORTED_ASCENDING)
+		elif sorted=="descending":
+			states.add(controlTypes.STATE_SORTED_DESCENDING)
+		elif sorted=="other":
+			states.add(controlTypes.STATE_SORTED)
 		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
 			states.add(controlTypes.STATE_DROPTARGET)
 		if role==controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
@@ -76,7 +83,7 @@ class Gecko_ia2(VirtualBuffer):
 			except:
 				return False
 
-		return self._isNVDAObjectInApplication(obj)
+		return not self._isNVDAObjectInApplication(obj)
 
 	def _get_isAlive(self):
 		if self.isLoading:
@@ -123,6 +130,8 @@ class Gecko_ia2(VirtualBuffer):
 			obj.doAction()
 		except:
 			log.debugWarning("could not programmatically activate field, trying mouse")
+			while obj and controlTypes.STATE_OFFSCREEN in obj.states and obj!=self.rootNVDAObject:
+				obj=obj.parent
 			l=obj.location
 			if l:
 				x=(l[0]+l[2]/2)

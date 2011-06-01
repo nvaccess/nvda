@@ -18,6 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <string>
 #include <map>
 #include <set>
+#include <list>
 
 /**
  * values to indicate a direction for searching
@@ -55,9 +56,9 @@ class VBufStorage_textFieldNode_t;
 class VBufStorage_controlFieldNodeIdentifier_t;
 
 /**
- * a set of control field nodes.
+ * a list of control field nodes.
  */
-typedef std::set<VBufStorage_controlFieldNode_t*> VBufStorage_controlFieldNodeSet_t;
+typedef std::list<VBufStorage_controlFieldNode_t*> VBufStorage_controlFieldNodeList_t; 
 
 /** 
  * Holds values that can together uniquely identify a control field in a buffer. 
@@ -377,6 +378,11 @@ class VBufStorage_buffer_t {
 	VBufStorage_fieldNode_t* rootNode;
 
 /**
+ * Holds pointers to all nodes in the buffer
+ */
+	std::set<VBufStorage_fieldNode_t*> nodes;
+
+/**
  * holds pointers to all control field nodes in this buffer, searchable by  the control's unique identifier.
  */
 	std::map<VBufStorage_controlFieldNodeIdentifier_t,VBufStorage_controlFieldNode_t*> controlFieldNodesByIdentifier;
@@ -402,13 +408,19 @@ class VBufStorage_buffer_t {
  * @param previous the field already in the buffer that the inserted node will come directly after, note previous's parent will always be used over the parent argument.
  * @param node the node being inserted.
  */ 
-	void insertNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node);
+	bool insertNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node);
 
 /**
  * disassociates the given node and its descendants from this buffer and deletes the node and its descendants.
  * @param node the node you wish to delete.
  */
 	void deleteSubtree(VBufStorage_fieldNode_t* node);
+
+/**
+ * disassociates the given node from this buffer and deletes the node.
+ * @param node the node you wish to delete.
+ */
+	void deleteNode(VBufStorage_fieldNode_t* node);
 
 	friend class VBufStorage_fieldNode_t;
 	friend class VBufStorage_controlFieldNode_t;
@@ -458,32 +470,23 @@ class VBufStorage_buffer_t {
 	virtual bool isNodeInBuffer(VBufStorage_fieldNode_t* node);
 
 /**
- * inserts the content of a   buffer in to this buffer at a particular position and sets that buffer's root node to NULL as all the nodes are now in the other buffer.
- * @param parent the control field which should be the new field's parent, note that if also specifying previous parent can be NULL.
- * @param previous the field which the new field  should come directly after, note that previous's parent  will be used over the parent argument, and previous can also not be the buffer's root node (first field added).
- * @param buffer the buffer whos content should be inserted into this buffer.
- * @return true if the content was inserted, false otherwise.
+ * Removes the given nodes from the buffer and then merges the content of the new buffers in the removed node's position. It also tries to keep the selection relative to the control field it was in before the replacement.
+ * @param m the map of nodes to buffers 
  */
-	bool mergeBuffer(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_buffer_t* buffer);
-
-/**
- * Removes the given node from the buffer and then merges the content of the new buffer in the removed node's position. It also tries to keep the selection relative to the control field it was in before the replacement.
- * @param node the node to remove.
- * @param buffer the buffer holding the new content to merge.
- */
-	bool replaceSubtree(VBufStorage_fieldNode_t* node, VBufStorage_buffer_t* buffer);
+	bool replaceSubtrees(std::map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>& m);
 
 /**
  * disassociates from this buffer, and deletes, the given field and its descendants.
  * @param node the node you wish to remove.
+	* @param removeDescedants true if descendants should be removed, false otherwise.
  * @return true if the node was removed, false otherwise.
  */
-	bool removeFieldNode(VBufStorage_fieldNode_t* node);
+	bool removeFieldNode(VBufStorage_fieldNode_t* node, bool removeDescendants=true);
 
 /*
  * Removes all nodes from the buffer.
  */
-	bool clearBuffer();
+	void clearBuffer();
 
 /**
  * Calculates the start and end character offsets of the given node in the buffer.

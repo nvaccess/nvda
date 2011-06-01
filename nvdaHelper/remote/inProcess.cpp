@@ -13,18 +13,16 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
  
 #include <cstdio>
-#include <cassert>
 #include <list>
 #include <set>
 #include <map>
+#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include "rpcSrv.h"
 #include "inputLangChange.h"
 #include "typedCharacter.h"
 #include "IA2Support.h"
 #include "ia2LiveRegions.h"
-#include "nvdaController.h"
-#include "nvdaControllerInternal.h"
 #include "log.h"
 #include "gdiHooks.h"
 #include "nvdaHelperRemote.h"
@@ -68,7 +66,7 @@ bool unregisterWinEventHook(WINEVENTPROC hookProc) {
 	if(i->second>1) {
 		i->second-=1;
 	} else {
-		assert(i->second==1);
+		nhAssert(i->second==1);
 		inProcess_registeredWinEventHooks.erase(i);
 	}
 	return true;
@@ -99,7 +97,7 @@ bool unregisterWindowsHook(int hookType, HOOKPROC hookProc) {
 	if(i->second>1) {
 		i->second-=1;
 	} else {
-		assert(i->second==1);
+		nhAssert(i->second==1);
 		r->erase(i);
 	}
 	return true;

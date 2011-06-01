@@ -19,17 +19,12 @@ General dependencies:
 		* Copy espeak.dll and espeak-data into the source\synthDrivers directory.
 	* Additional variants for eSpeak: http://www.nvda-project.org/espeak-variants/
 		* Extract the archive into the source\synthDrivers directory.
-	* IAccessible2, version 1.1.0.0 or later: http://www.linuxfoundation.org/en/Accessibility/IAccessible2
+	* IAccessible2, version 1.2.1 or later: http://www.linuxfoundation.org/en/Accessibility/IAccessible2
 		* Download the merged IDL and copy it to include\ia2\ia2.idl.
-		* The proxy dll and typelib are also required.
-			* Pre-built versions have been provided for convenience at http://www.nvda-project.org/3rdParty/
-		* Copy ia2.tlb into the source\typelibs directory.
-		* Copy the 32 bit version of the proxy dll into the source\lib directory, naming it IAccessible2Proxy.dll.
-		* Copy the 64 bit version of the proxy dll into the source\lib64 directory, naming it IAccessible2Proxy.dll.
 	* ConfigObj, version 4.6.0 or later:
 		* Web site: http://www.voidspace.org.uk/python/configobj.html
 		* Copy configobj.py and validate.py into the global Python site-packages directory.
-	* liblouis, version 2.1.1 or later, Windows dll and Python bindings:
+	* liblouis, version 2.3.0 or later, Windows dll and Python bindings:
 		* Official web site: http://code.google.com/p/liblouis/
 		* A pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
 		* Copy the louis Python package directory into the source directory.
@@ -45,9 +40,6 @@ General dependencies:
 		* This can be found in the client files archive available from http://www.adobe.com/devnet/acrobat/interapplication_communication.html
 			* The archive is named something like Acrobat_Accessibility_9.1.zip.
 		* Extract the AcrobatAccess.idl file into include\AcrobatAccess.
-		* The typelib is also required.
-			* A pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/AcrobatAccess.tlb
-		* Copy AcrobatAccess.tlb into the source\typelibs directory.
 	* Adobe FlashAccessibility interface typelib: http://www.nvda-project.org/3rdParty/FlashAccessibility.tlb
 		* Copy FlashAccessibility.tlb into the source\typelibs directory.
 	* txt2tags, version 2.5 or later: http://txt2tags.sourceforge.net/
@@ -94,7 +86,9 @@ To build a portable archive:
 
 To build an installer:
 	* Nulsoft Install System, version 2.42 or later: http://nsis.sourceforge.net/
-	* NSIS UAC plug-in, version 0.0.11d or later: http://nsis.sourceforge.net/UAC_plug-in
+	* NSIS UAC plug-in, version 0.0.11d:
+		* Official web site: http://nsis.sourceforge.net/UAC_plug-in
+		* NVDA does not work with recent versions. Direct link to 0.0.11d: http://stashbox.org/560965/UAC%20v0.0.11d.zip
 		* Copy the ANSI build of UAC.dll (found in release\a in the archive) into the installer directory.
 
 To generate developer documentation:
@@ -109,10 +103,10 @@ You should do this again whenever the version of comtypes changes or language fi
 === Compiling NVDAHelper with debugging options ===
 A part from compiling language files and generating COM interfaces, this step also builds the NVDAHelper libraries.  
 If trying to debug nvdaHelper, You can control various  debugging options  with the nvdaHelperDebugFlag commandline variable. It takes one or more of the following flags:
-	* symbols: debugging symbols will be added to the DLLs and pdb files will be generated for use with a debugger. (no symbols are produced by default).
-	* assertions: assertions will be enabled. (they are disabled by default).
-	* debugCRT: the libraries will be linked against the debug C runtime. (The normal CRT is used by default).
+	* symbols: debugging symbols will be added to the DLLs and pdb files will be generated for use with a debugger. (symbols are produced by default, but if specifying nvdaHelperDebugFlags and you want symbols it is still necessary to  specify this keyword).
+	* debugCRT: the libraries will be linked against the debug C runtime and assertions will be enabled. (The normal CRT is used by default and assertions are disabled).
 	* noOptimize: All compiler optimizations will be disabled. (Optimization 2 [/O2] is used by default). 
+	* RTC: runtime checks (stack corruption, uninitialized variables etc) will be enabled (default is no runtime checks).
 
 The special keywords of none and all can also be used in place of the individual flags.
 An example follows that enables only symbols and assertions:
@@ -141,6 +135,11 @@ The installer will be placed in the output directory.
 To generate developer documentation, type:
 scons devDocs
 The developer docs will be placed in the devDocs folder in the output directory.
+
+To generate an archive of debug symbols for the various dll/exe binaries, type:
+scons symbolsArchive
+The archive will be placed in the output directory.
+ 
 
 Optionally, the build can  be customised by providing variables on the command line:
 	* version: The version of this build.

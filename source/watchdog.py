@@ -58,15 +58,15 @@ def _watcher():
 			if _coreAliveEvent.isSet() or _shouldRecoverAfterMinTimeout():
 				break
 		if log.isEnabledFor(log.DEBUGWARNING) and not _coreAliveEvent.isSet():
-			coreFrame=sys._current_frames()[_coreThreadID]
-			log.debugWarning("Trying to recover from freeze, core stack:\n%s"%"".join(traceback.format_stack(coreFrame)))
+			log.debugWarning("Trying to recover from freeze, core stack:\n%s"%
+				"".join(traceback.format_stack(sys._current_frames()[_coreThreadID])))
 		lastTime=time.time()
 		while not _coreAliveEvent.isSet():
 			curTime=time.time()
 			if curTime-lastTime>FROZEN_WARNING_TIMEOUT:
 				lastTime=curTime
-				coreFrame=sys._current_frames()[_coreThreadID]
-				log.warning("Core frozen in stack:\n%s"%"".join(traceback.format_stack(coreFrame)))
+				log.warning("Core frozen in stack:\n%s"%
+					"".join(traceback.format_stack(sys._current_frames()[_coreThreadID])))
 			# The core is dead, so attempt recovery.
 			isAttemptingRecovery = True
 			_recoverAttempt()

@@ -17,8 +17,6 @@ Import('env')
 idlFile=env.Command("acrobatAccess.idl","#/include/acrobatAccess/acrobatAccess.idl",Copy("$TARGET","$SOURCE"))
 
 tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFile=env.TypeLibrary(source=idlFile)
-iidObjFile=env.Object(iidSourceFile)
-proxyObjFile=env.Object(proxySourceFile)
-dlldataObjFile=env.Object(dlldataSourceFile)
 
-Return(['tlbFile','headerFile','iidObjFile','proxyObjFile','dlldataObjFile'])
+Return(['tlbFile','headerFile','iidSourceFile'])
+

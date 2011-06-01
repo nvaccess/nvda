@@ -213,14 +213,14 @@ Taulukoissa ovat käytettävissä lisäksi seuraavat näppäinkomennot:
 
 ++ Objektinavigointi ++
 Jos halutaan liikkua sovelluksessa tai käyttöjärjestelmässä siirtämättä kohdistusta, voidaan käyttää NVDA:n objektinavigointia.
-Tämä mahdollistaa yksittäisten objektien, kuten tekstin, painikkeiden, valintaruutujen, liukusäädinten, luetteloiden ja muokattavien tekstikenttien välillä liikkumisen ja niiden tietojen lukemisen.
+Tämä mahdollistaa yksittäisten objektien, kuten tekstin, painikkeiden, valintaruutujen, liukusäädinten, listojen ja muokattavien tekstikenttien välillä liikkumisen ja niiden tietojen lukemisen.
 Kun objektiin siirrytään, NVDA lukee sen samalla tavalla kuin järjestelmäkohdistuksenkin.
 
 Objektit on ryhmitelty hierarkisesti sen sijaan, että niiden välillä liikuttaisiin edestakaisin.
-Tämä tarkoittaa, että täytyy siirtyä objektien sisään, jotta päästään niiden sisältämiin objekteihin.
-Kun esimerkiksi tullaan luettelon kohdalle, sen sijaan, että luettelon kohtiin pääsemiseksi käytäisiin läpi kaikki sen kohdat, täytyy siirtyä sisälle luetteloon (eli siirtyä luettelon ensimmäiseen alemman tason objektiin).
-Luettelosta voidaan jatkaa eteenpäin (ylemmän tason objektiin) siirtymällä siitä pois.
-Jos vastaavasti ollaan työkalupalkin kohdalla, täytyy siirtyä sen sisään (siirtyä työkalupalkin ensimmäiseen alemman tason objektiin) sen säätimiin pääsemiseksi.
+Tämä tarkoittaa, että on siirryttävä objektien sisään, jotta päästään niiden sisältämiin objekteihin.
+Tultaessa esimerkiksi listan kohdalle, sen sijaan, että sen kohteisiin pääsemiseksi käytäisiin läpi ne kaikki, on siirryttävä listan sisään (eli siirryttävä listan ensimmäiseen alemman tason objektiin).
+Listasta voidaan jatkaa eteenpäin (ylemmän tason objektiin) siirtymällä siitä pois.
+Jos vastaavasti ollaan työkalupalkin kohdalla, on siirryttävä sen sisään (siirtymällä työkalupalkin ensimmäiseen alemman tason objektiin) sen säätimiin pääsemiseksi.
 
 Navigointiobjekti liikkuu oletusarvoisesti järjestelmäkohdistuksen mukana, mutta tämä asetus voidaan ottaa myös pois käytöstä.
 
@@ -291,7 +291,7 @@ Kahta seuraavaa komentoa käytetään kokonaistarkastelutilaan tai siitä pois s
 ++ Hiirellä liikkuminen ++
 Kun hiirtä liikutetaan, NVDA lukee oletusarvoisesti suoraan hiirikohdistimen alla olevan tekstin. Jos toimintoa tuetaan, NVDA lukee myös kappaleen tekstin. Joissakin säätimissä lukeminen on mahdollista vain rivi kerrallaan.
 
-NVDA voidaan määrittää kertomaan myös säätimen tai objektin tyypin, jonka päällä hiiri on (esim. luettelo, painike jne), mistä voi olla hyötyä täysin sokeille käyttäjille, koska joskus pelkän tekstin lukeminen ei riitä.
+NVDA voidaan määrittää kertomaan myös säätimen tai objektin tyypin, jonka päällä hiiri on (esim. lista, painike jne), mistä voi olla hyötyä täysin sokeille käyttäjille, koska joskus pelkän tekstin lukeminen ei riitä.
 
 NVDA tarjoaa käyttäjille tavan ymmärtää, missä hiiri on ruudun mittojen suhteen soittamalla hiiren nykyiset koordinaatit äänimerkkeinä. Mitä ylempänä hiiri on ruudulla, sitä korkeampia äänimerkit ovat. Mitä enemmän vasemmalla tai oikealla hiiri on ruudulla, sitä enemmän vasemmalta tai oikealta ääni kuuluu (olettaen, että käytössä on stereokaiuttimet).
 
@@ -342,8 +342,8 @@ NVDA:ssa on selaustilaa käytettäessä liikkumisen nopeuttamiseksi myös pikana
 %kc:beginInclude
 Sellaisinaan nämä komennot siirtävät seuraavan, ja Shift-näppäimen kanssa painettuna edellisen kentän kohdalle:
 - h: otsikko
-- l: luettelo
-- i: luettelon kohta
+- l: lista
+- i: listan kohde
 - t: taulukko
 - k: linkki
 - n: teksti, joka ei ole linkki
@@ -365,14 +365,14 @@ Sellaisinaan nämä komennot siirtävät seuraavan, ja Shift-näppäimen kanssa 
 -
 %kc:endInclude
 
-++ Elementtiluettelo ++
-Elementtiluettelossa on lista sivulla olevista linkeistä, otsikoista ja ARIA-maamerkeistä.
+++ Elementtilista ++
+Elementtilistassa on luettelo sivulla olevista linkeistä, otsikoista ja ARIA-maamerkeistä.
 Valintapainikkeilla voidaan valita näiden kolmen näytettävän elementtityypin väliltä.
 Valintaikkunassa on myös muokkauskenttä, jonka avulla voidaan suodattaa listaa jonkin tietyn kohdan etsimiseksi sivulta.
 Valittuun kohtaan voidaan siirtyä tai avata sen käyttämällä valintaikkunan painikkeita.
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Näennäispuskurin elementtiluettelo | NVDA+f7 | Avaa elementtiluettelon, joka sisältää nykyisen näennäispuskurin linkit, otsikot ja maamerkit |
+| Näennäispuskurin elementtilista | NVDA+f7 | Avaa elementtilistan, joka sisältää nykyisen näennäispuskurin linkit, otsikot ja maamerkit |
 %kc:endInclude
 
 ++ Sulautetut objektit ++
@@ -478,10 +478,11 @@ Tällä liukusäätimellä voidaan määrittää puhesyntetisaattorin käyttäm�
 ESpeak on tällä hetkellä ainoa syntetisaattori, joka tukee tätä asetusta.
 
 %kc:setting
-==== Lue kaikki välimerkit ====
+==== Välimerkki- ja symbolitaso ====
 Key: NVDA+p
 
-Kun tämä valintaruutu on valittuna, NVDA lukee kaikki välimerkit sanoina (erittäin hyödyllinen oikolukemiseen). Kun tämä ei ole valittuna, NVDA jättää välimerkit entiselleen, joten puhesyntetisaattori lukee silti lauseet oikealla äänensävyllä. Välimerkkejä ei kuitenkaan lueta.
+Tästä voit valita sanoina luettavien välimerkkien ja muiden symboleiden määrän.
+Esimerkiksi kun tasoksi on valittu kaikki, kaikki symbolit luetaan sanoina.
 
 ==== Nosta äänenkorkeutta isojen kirjainten kohdalla ====
 Kun tämä asetus on käytössä, puhesyntetisaattorin äänenkorkeutta nostetaan aina isojen kirjainten kohdalla.
@@ -702,7 +703,7 @@ Jos asetus on käytössä, NVDA ilmoittaa myös taulukot, joita käytetään puh
 
 ==== Kenttien, kuten linkkien ja otsikoiden lukemisen määrittäminen ====
 Aiemmissa NVDA:n versioissa Näennäispuskureiden asetusvalintaikkunassa oli mahdollista määrittää, ilmoitettiinko kohdalla olevan kentän tyyppi web-sisältöä lukiessa.
-Kenttien tyyppejä ovat esimerkiksi linkit, otsikot, taulukot ja luettelot.
+Kenttien tyyppejä ovat esimerkiksi linkit, otsikot, taulukot ja listat.
 Nämä määritetään [Asiakirjojen muotoiluasetukset -valintaikkunasta #Asiakirjojenmuotoiluasetukset] löytyvillä uusilla asetuksilla.
 Nämä asetukset eivät nyt vaikuta pelkästään näennäispuskureihin, vaan myös kaikkiin näitä kenttiä sisältäviin asiakirjoihin.
   
@@ -739,7 +740,7 @@ Seuraavien tietojen lukeminen voidaan määrittää:
 - kirjoitusvirheet
 - linkit
 - otsikot
-- luettelot
+- listat
 - sisennykselliset kappaleenvaihdot
 - maamerkit
 -
@@ -759,7 +760,7 @@ Puhesanastoja on kolmea eri tyyppiä, jotka ovat:
 - Tilapäinen: tämän sanaston säännöt vaikuttavat kaikkeen NVDA:n puhumaan tekstiin, mutta vain nykyisessä istunnossa. Säännöt ovat tilapäisiä ja ne menetetään, jos NVDA käynnistetään uudelleen.
 -
 
-Kaikissa sanastovalintaikkunoissa on luettelo säännöistä, joita käytetään puhutun tekstin käsittelemiseen.
+Kaikissa sanastovalintaikkunoissa on lista säännöistä, joita käytetään puhutun tekstin käsittelemiseen.
 Valintaikkunoissa on myös Lisää-, Muokkaa- ja Poista-painikkeet.
 
 Sanastoon lisätään uusi sääntö painamalla Lisää-painiketta, täyttämällä esiin tulevan valintaikkunan kentät ja painamalla OK.
@@ -844,15 +845,15 @@ Valittavissa on myös useita muunnelmia, jotka saavat puheäänen kuulostamaan e
 ++ Microsoft Speech API versio 4 (SAPI 4) ++
 SAPI4 on Microsoftin vanhempi standardi ohjelmistopuhesyntetisaattoreille.
 Monia tätä standardia noudattavia puhesyntetisaattoreita voidaan ostaa tai ladata ilmaiseksi eri yrityksiltä ja web-sivustoilta.
-Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten luettelo (valitaan [Ääniasetukset-valintaikkunasta #Ääniasetukset] tai [Syntetisaattorin asetusrenkaasta #Syntetisaattorinasetusrengas]) sisältää kaikkien asennettujen SAPI4-syntetisaattoreiden puheäänet.
+Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten lista (valitaan [Ääniasetukset-valintaikkunasta #Ääniasetukset] tai [Syntetisaattorin asetusrenkaasta #Syntetisaattorinasetusrengas]) sisältää kaikkien asennettujen SAPI4-syntetisaattoreiden puheäänet.
 
-Mikäli SAPI 4 -puheääniä on asennettuna, mutta syntetisaattori ei näy NVDA:n syntetisaattoriluettelossa, on asennettava SAPI 4.0:n ajonaikaiset binäärit, jotka ovat ladattavissa osoitteesta http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+Mikäli SAPI 4 -puheääniä on asennettuna, mutta syntetisaattori ei näy NVDA:n syntetisaattorilistassa, on asennettava SAPI 4.0:n ajonaikaiset binäärit, jotka ovat ladattavissa osoitteesta http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
 
 ++ Microsoft Speech API versio 5 (SAPI 5) ++
 SAPI 5 on Microsoftin standardi ohjelmistopuhesyntetisaattoreille.
 Monia tätä standardia noudattavia puhesyntetisaattoreita voidaan ostaa tai ladata ilmaiseksi eri yrityksiltä ja web-sivustoilta.
 Tietokoneellasi on myös luultavasti esiasennettuna vähintään yksi SAPI 5 -puheääni.
-Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten luettelo (valitaan [Ääniasetukset-valintaikkunasta #Ääniasetukset] tai [Syntetisaattorin asetusrenkaasta #Syntetisaattorinasetusrengas]) sisältää kaikkien asennettujen SAPI5-syntetisaattoreiden puheäänet.
+Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten lista (valitaan [Ääniasetukset-valintaikkunasta #Ääniasetukset] tai [Syntetisaattorin asetusrenkaasta #Syntetisaattorinasetusrengas]) sisältää kaikkien asennettujen SAPI5-syntetisaattoreiden puheäänet.
 
 ++ Audiologic TTS 3 ++
 Tämä on kaupallinen italiankielinen puhesyntetisaattori.

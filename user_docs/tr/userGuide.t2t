@@ -319,36 +319,35 @@ Fareyi hareket ettirmek için, fiziksel mouse veya laptoplarda mouse pedi bölü
 | farenin altındaki nesneye gitme | NVDA+numaratörÇarpı | NVDA+şift+f10 | nesne sunucusu olarak farenin bulunduğu yerdeki nesne ayarlanır. |
 %kc:endInclude
 
-+ Sanal Tamponlar +
-Web sayfaları gibi kompleks salt okunur belgeler, NVDA'da sanal tamponlarda gösterilir.
++ Tarama Kipi +
+Web sayfaları gibi kompleks salt okunur belgeler, NVDA'da tarama kipinde gösterilir.
 
-Bir sanal tampon, web sayfası gibi bir içeriğin değişmez biçimde gösterildiği bir inceleme alanıdır ve içerik içinde yön tuşlarıyla dolaşılabilir.
+ Bu, Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader ve Adobe Flash ile açılan belgeler için geçerlidir.
+
+Tarama kipi, web sayfası gibi bir içeriğin değişmez biçimde gösterildiği bir inceleme alanıdır ve içerik içinde yön tuşlarıyla dolaşılabilir.
+NVDA'nın sistem imleci için geçerli olan hepsini okuma, tablo inceleme, yazı biçimini raporlama gibi komutlar bu kip için de geçerlidir.
 Metin içinde hareket ettikçe, metnin bir bağlantı veya başlık olup olmadığı gibi bilgiler de belirtilir.
 
-Sanal tampondayken, iki tür etkileşim kipi bulunmaktadır.
-Gözatma kipinde sistem imleci gibi sanal imleçle içerik içinde dolaşabilirsiniz.
-Hatta, bu kipte NVDA sistem imlecinde kullanılan tüm komutlar kullanılabilir. (örnek: tümünü okuma, metin biçiminin bildirimi, tüm tablo komutları vs.).
-Odak kipi ise, yazma alanları, seçim kutuları, seçim düğmeleri gibi kontrollerle etkileşimde bulunulan kiptir ve bu kipte yukarıdaki kontrollerde kullanılan tuşlar kullanılabilir.
-Gözatma kipindeyken, tab ile veya tıklayarak odak kipinin gerektirdiği bir kontrole gelindiğinde, NVDA otomatik olarak odak kipini açar.
+Bazen, belge içindeki kontrollerle doğrudan etkileşim içinde olmanız gerekebilir.
+Bunu tuşların doğrudan ilgili kontrollere aktarıldığı odak kipine geçerek yapabilirsiniz.
+Tarama kipindeyken, tab ile veya tıklayarak odak kipinin gerektirdiği bir kontrole gelindiğinde, NVDA otomatik olarak odak kipini açar.
 Bu kipin gerektirdiği kontrol üzerinde giriş veya boşluk çubuğuna basılarak da odak kipine geçilebildiğini lütfen not edin.
 NVDA otomatik olarak odak kipine geçtiğinde, tab ile veya tıklayarak odak kipine ihtiyaç olmayan bir yere geçildiğinde, NVDA otomatik olarak gözatma kipine geri döner.
-Eğer odak kipine otomatik geçildiyse, eskeype basılarak da gözatma kipine geri dönülebilir.
-Gözatma ve odak kipleri arasında el ile de geçiş yapabilirsiniz.
-Odak kipine el ile geçilebilmesine karşın, bu durumda, NVDA bu kipte kalır ve siz tekrar el ile gözatma kipine geçmedikçe odak kipi kapanmaz.
+Eğer odak kipine otomatik geçildiyse, eskeyp tuşuyla da tarama kipine geri dönülebilir.
+Tarama ve odak kipleri arasında manuel  olarak da geçiş yapabilirsiniz.
+Odak kipine manuel olarak  geçilebilmesine karşın, bu durumda, NVDA bu kipte kalır ve siz tekrar el ile tarama kipine geçmedikçe odak kipi kapanmaz.
 %kc:beginInclude
 || Ad | Klavye komutu | Tanım |
-| Sanal tampon kipleri arasında geçiş | NVDA+ara çubuğu | Odak ve gözatma kipleri arasında geçiş yapar |
-| Odak kipinden çıkış | eskeyp | Eğer odak kipine otomatik olarak geçildiyse, gözatma kipine geri döner |
-| Sanal tamponu güncelleme | NVDA+f5 | Geçerli sanal tamponu yeniden yükler. (Eğer içeriğin bir kısmı eksik gibi görünüyorsa bu tuşları kullanmak yararlı olabilir.) |
+| Tarama ve odak kipleri arasında geçiş | NVDA+ara çubuğu | Odak ve tarama kipleri arasında geçiş yapar |
+| Odak kipinden çıkış | eskeyp | Eğer odak kipine otomatik olarak geçildiyse, tarama kipine geri döner |
+| Tarama kipinde görüntülenen belgeyi güncelleme | NVDA+f5 | Geçerli belgeyi yeniden yükler. (Eğer içeriğin bir kısmı eksik gibi görünüyorsa bu tuşları kullanmak yararlı olabilir.) |
 | Ara | NVDA+control+f | Geçerli belgede yazıp bir metin arayabileceğiniz bir iletişim kutusu açar |
-| Sonrakini bul | NVDA+f3 | Daha önce aradığınız bir metnin ileride başka olup olmadığını arar |
-| Öncekini bul | NVDA+şift+f3 | Daha önce aradığınız bir metnin geride başka olup olmadığını arar |
+| Sonrakini bul | NVDA+f3 | metni belgenin sonraki kısmında   arar |
+| Öncekini bul | NVDA+şift+f3 | metni belgenin önceki kısmında arar |
 %kc:endInclude
 
-NVDA şu an itibariyle sanal tamponları Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader ve Adobe Flash uygulamalarında kullanmaktadır.
-
 ++ Tek Harf Dolaşımı ++
-Daha seri bir dolaşım amacıyla, NVDA sanal tamponlarda belirli öğelere atlayabilmek için, tek karakterlik tuşlar sağlamaktadır.
+Tarama kipindeyken, NVDA, mevcut belgedeki belirli öğeler arasında daha seri bir dolaşım için, tek karakterlik tuşlar sağlamaktadır.
 
 %kc:beginInclude
 Aşağıdaki tuşlara kendi başlarına basıldığında bir sonraki öğeye gidilirken, bu tuşlara şift ile basıldığında bir önceki öğeye gidilmektedir:
@@ -372,29 +371,29 @@ Aşağıdaki tuşlara kendi başlarına basıldığında bir sonraki öğeye gid
 - g: grafik
 - d: ARIA sınır imi
 - o: gömülü nesne
-- 1 to 6: sırayla başlık birden altıya
+- 1'den 6'ya kadar: sırayla başlık birden altıya
 -
 %kc:endInclude
 
 ++ Öğe Listesi ++
 Öğe listesi, sayfadaki bağlantıların, başlıkların veya AREA sınır imlerinin listesine erişminizi sağlamaktadır.
 Seçim düğmeleri bu üç bilgi arasında geçiş yapmanızı sağlar.
-İletişim kutusuna, bir de sayfada aradığınız şeye göre listeyi daraltabileceğiniz bir yazma alanı eklenmiştir.
+İletişim kutusuna, bir de sayfada aradığınız şeye göre listeyi daraltabileceğiniz bir yazı alanı eklenmiştir.
 Bir öğeyi seçtikten sonra, size sağlanan düğmeleri kullanarak bu öğenin üzerine gidebilir veya bu öğeyi etkinleştirebilirsiniz.
 %kc:beginInclude
 || Ad | Klavye komutu | tanım |
-| Sanal tampon öğe listesi | NVDA+f7 | geçerli sanal imleçteki bağlantı, başlık ve sınır imlerini içeren öğe listesini açar |
+| Tarama kipi öğe listesi | NVDA+f7 | tarama kipinde görüntülenen belge içerisindeki bağlantı, başlık ve sınır imlerini içeren öğe listesini açar |
 %kc:endInclude
 
 ++ Gömülü Nesneler ++
 Sayfalar, Adobe Flash ve Sun Java gibi teknolojiler kullanan zengin içerikleride barındırabilir.
-Bunlarla sanal tamponda karşılaşıldığında NVDA "gömülü nesne" şeklinde bunları belirtecektir.
+Bunlarla tarama kipinde karşılaşıldığında NVDA "gömülü nesne" şeklinde belirtecektir.
 Bu nesneler üzerinde girişe basarak onlarla etkileşime geçebilirsiniz.
 Eğer erişilebilirse, tab tuşuyla içinde dolaşabilir ve diğer uygulamalar gibi etkileşimde bulunabilirsiniz.
 Gömülü nesneyi barındıran sayfaya geri dönmek için bir tuş komutu tanımlanmıştır:
 %kc:beginInclude
 || Ad | Klavye komutu | Tanım |
-| Barındıran sanal tampona geri dönme | NVDA+kontrol+ara çubuğu | odağı geçerli gömülü nesnenin dışına çıkararak bu nesneyi barındıran sayfaya geri döner |
+| Barındıran Tarama kipindeki belgeye geri dönme | NVDA+kontrol+ara çubuğu | odağı geçerli gömülü nesnenin dışına çıkararak bu nesneyi barındıran sayfaya geri döner |
 %kc:endInclude
 
 + NVDA'yı ayarlama +
@@ -691,43 +690,41 @@ Klavye Komutu: NVDA+5
 
 Terminal veya chat programlarının geçmiş alanları gibi belirli nesnelerdeki yeni içeriğin belirtilip belirtilmeyeceğini kontrol eder.
 
-+++ Sanal Tampon Ayarları (NVDA+control+b) +++
-Sanal Tampon Ayarları iletişim kutusu tercihler menüsü içindeki "Sanal tamponlar..." bölümünün altında bulunur.
++++ Odak Kipi Ayarları (NVDA+control+b) +++
+Odak Kipi  Ayarları iletişim kutusu tercihler menüsü içindeki "Odak Kipi..." bölümünün altında bulunur.
 
 içinde aşağıdaki seçenekler mevcuttur:
 
 ==== Satır Başına Düşen Maksimum Karakter sayısı ====
-Bu alan, karakter olarak bir sanal tampon satırının maksimum uzunluğunu ayarlar.
+Bu alan, odak kipinde görüntülenecek  her bir satırın karakter cinsinden maksimum uzunluğunu ayarlar.
 
 ==== Sayfa Başına Düşen Maksimum Satır sayısı ====
-Sanal İmleçlerin gerçekte sayfaları olmamasına karşın, bu alan, sayfa yukarı ve sayfa aşağı tuşlarıyla hareket ettiğinizde, kaç satır gidileceğini belirler.
+Bu değer, önceki sayfa ve sonraki sayfa tuşlarıyla tarama kipinde gösterilen belge içinde hareket ettiğinizde, kaç satır gidileceğini belirler.
 
 %kc:setting
 ==== Destekleniyorsa Ekran Düzenini Kullan ====
 Klavye Komutu: NVDA+v
 
-Bu seçenek, sanal tampondaki bağlantı ve metin gibi içeriklerin her birinin kendi ayrı satırlarına mı koyulmasını, yoksa ekranda görsel olarak nasıl görünüyorsa o biçimde mi yerleştirilmesini belirlemenizi sağlar. Eğer etkinleştirilirse, ekrandaki içerik, görsel olarak nasıl görünüyorsa öyle kalır. ancak devre dışı bırakılırsa, her alan ayrı satırlara yerleştirilir.
+Bu seçenek, tarama kipindeki bağlantı ve metin gibi içeriklerin her birinin ayrı satırlarda gösterilmesi ya da  ekranda görsel olarak nasıl görünüyorsa o biçimde aktarılması  seçenekleri arasında tercih yapmanızı sağlar. Eğer etkinleştirilirse, ekrandaki içerik, görsel olarak nasıl görünüyorsa öyle kalır. ancak devre dışı bırakılırsa, her alan ayrı satırlara yerleştirilir.
 
 ==== Düzenleme Tablolarını Bildir ====
 Devre dışı bırakıldığında, NVDA yalnızca çizelge biçiminde verileri olan ve tablo olduğunu bilmenin bir anlam taşıdığı tabloları belirtecektir.
 Ancak Etkinleştirildiğinde, NVDA salt görsel amaçlı olarak kullanılan tabloları da belirtir.
 
 ==== Başlık ve Bağlantı gibi alanların belirtilmesini ayarlama ====
-NVDA'nın önceki sürümleri web içeriğinde okuma yaparken, girdiğiniz bir alanın türünün söylenmesini ayarlayabilmek için Sanal Tampon Ayarları iletişim kutusunu kullanmanızı sağlıyordu.
-Alan türlerine, Başlıklar, bağlantılar, tablolar ve listeler gibi örnekler verilebilir.
-Bunları ayarlamak için, lütfen  [Metin Biçimi Ayarları İletişim Kutusu #DocumentFormattingSettings] içersindeki yeni seçenekleri bulun.
-Bu seçenekler artık sadece sanal tamponları değil, bu tür alanların söylenebileceği tüm metinleri kapsamaktadır.
+
+ Başlıklar, bağlantılar, tablolar ve listeler gibi kontrollerin seslendirilmesiyle ilgili ayarlar  için, lütfen  [Belge Formatları  İletişim Kutusu #DocumentFormattingSettings] içerisindeki seçeneklere bakın.
 
 ==== Odak Değişiminde Otomatik Odak Kipi ====
 Bu seçenek, odak değişiminde odak kipinin açılmasını sağlar.
 Örneğin, Bir web sayfasında tab tuşuyla bir form alanına geldiyseniz ve bu seçenek işaretliyse, otomatik olarak odak kipi açılacaktır.
 
-==== Sistem düzenleme imleci hareketi için otomatik odak kipi ====
-Bu seçenek eğer işaretliyse, yön tuşlarıyla dolaşırken NVDA'nın odak kipine girmesini ve çıkmasını sağlar.
-Örneğin bir web sayfasında aşağı yön tuşuyla dolaşırken bir yazma alanına gelirseniz, NVDA otomatik olarak sizi odak kipine alacaktır. oklarla yazma alanının dışına çıktığınızda ise sizi tekrar gözatma kipine geri döndürecektir.
+==== Düzenleme İmleci İçin Otomatik Odak Kipi ====
+Bu seçenek işaretliyse, yön tuşlarıyla dolaşırken NVDA'nın odak kipine girmesini ve çıkmasını sağlar.
+Örneğin bir web sayfasında aşağı yön tuşuyla dolaşırken bir yazı alanına gelirseniz, NVDA otomatik olarak sizi odak kipine alacaktır. oklarla yazı alanının dışına çıktığınızda ise sizi tekrar tarama kipine geri döndürecektir.
 
-==== Odak Kipiyle Gözatma Kipi Arasındaki Geçişi Ses Çalarak bildir ====
-Eğer bu seçenek etkinse, bir sanal tamponda odak kipi ve gözatma kipi arasında geçiş yaparken NVDA bunu konuşarak değil, özel bir ses çalarak bildirecektir.
+==== Odak Kipiyle Tarama Kipi Arasındaki Geçişi Ses Çalarak bildir ====
+Bu seçenek etkinse, odak kipi ve tarama kipi arasında geçiş yaparken NVDA bunu konuşarak değil, özel bir ses çalarak bildirecektir.
 
 +++ Belge format Ayarları (NVDA+control+d) +++[DocumentFormattingSettings]
 Bu iletişim kutusu tercihler menüsü içindeki "Belge Formatları..." altında bulunur.
@@ -789,7 +786,16 @@ Bir diğer onay kutusu öbeğinizin düzenli bir ifade olup olmadığını belir
 Bir düzenli ifade, içinde bir seferde birden fazla karakterle eşleştirme yapmanızı sağlayan özel karakterler barındıran bir öbektir.
 bu eşleşme yalnızca rakamlar veya yalnızca harfler de olabilir. Düzenli ifadeler konusu bu kullanıcı rehberinde kapsanmamıştır, ancak webde size konuyla ilgili çok daha fazla bilgi verebilecek eğitimler bulunmaktadır.
 
-++ Ayarları Kaydetme ve Yeniden Yükleme ++
++++ Noktalama/imla sözlüğü +++
+Bu iletişim kutusu, noktalama ve imla işaretlerinin nasıl seslendirileceğini belirlemenizin yanısıra bu işaretlerin seslendirilme düzeylerini ayarlamanızı sağlar.
+
+Önce semboller listesinden değişiklik yapmak istediğiniz sembol/işareti bulun.
+Olarak değiştir alanı, NVDA'nın sözkonusu işaretle karşılaştığında ne demesi gerektiğini belirlemenizi sağlar.
+Düzey alanı ise, işaretin seslendirilmesini istediğiniz en düşük imla seslendirme düzeyini belirlemenize imkan verir.
+
+Bu ayarlamaları yaptıktan sonra tamam düğmesine basarak değişiklikleri kaydedebilir; iptal düğmesiyle de değişiklik öncesi ayarlara geri dönebilirsiniz.
+
+++ Konfigürasyonu Kaydetme ve Yeniden Yükleme ++
 Varsayılan olarak NVDA ayarlarınızı kaydetmez. yani NVDA'yı kapatıp yeniden başlattığınızda ayarlarınızın değerleri ilk hallerine döner.
 Ancak, bu seçenek tercihler menüsündeki genel ayarlar altından değiştirilebilir.
 Ayarları kaydetmek için NVDA menüsündeki Ayarları Kaydet (konfigürasyonu kaydet) öğesini seçin.
