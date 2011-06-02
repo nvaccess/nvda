@@ -65,6 +65,7 @@
 - In Adobe Reader documents, pressing c or shift+c to navigate to a combo box now works.
 - The selected state of selectable table rows is now reported the same way it is for list and tree view items.
 - Controls in Firefox and other Gecko applications while in browse mode can now be activated even if their inner text has been floated off-screen. 
+- You can no longer show an NVDA settings dialog while a message dialog is being shown, as the settings dialog was frozen in this case. (#1451)
 
 
 == Changes for Developers ==

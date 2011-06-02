@@ -9,6 +9,7 @@ Implementation of cursor managers.
 A cursor manager provides caret navigation and selection commands for a virtual text range.
 """
 
+import wx
 import baseObject
 import gui.scriptUI
 import textInfos
@@ -90,8 +91,7 @@ class CursorManager(baseObject.ScriptableObject):
 			info.move(textInfos.UNIT_LINE,1,endPoint="end")
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 		else:
-			errorDialog=gui.scriptUI.MessageDialog(_("text \"%s\" not found")%text,title=_("Find Error"),style=gui.scriptUI.wx.OK|gui.scriptUI.wx.ICON_ERROR)
-			errorDialog.run()
+			wx.CallAfter(gui.messageBox,_('text "%s" not found')%text,_("Find Error"),wx.OK|wx.ICON_ERROR)
 		CursorManager._lastFindText=text
 
 	def script_find(self,gesture): 

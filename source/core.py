@@ -81,9 +81,9 @@ def doStartupDialogs():
 	import inputCore
 	if inputCore.manager.userGestureMap.lastUpdateContainedError:
 		import wx
-		gui.scriptUI.MessageDialog(_("Your gesture map file contains errors.\n"
+		gui.messageBox(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
-			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION).run()
+			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
 
 def restart():
 	"""Restarts NVDA by starting a new copy with -r."""

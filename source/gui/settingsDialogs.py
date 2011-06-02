@@ -174,18 +174,16 @@ class GeneralSettingsDialog(SettingsDialog):
 	def onCopySettings(self,evt):
 		for packageType in ('appModules','globalPlugins','brailleDisplayDrivers','synthDrivers'):
 			if len(os.listdir(os.path.join(globalVars.appArgs.configPath,packageType)))>0:
-				d=wx.MessageDialog(self,_("Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"),_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING)
-				res=d.ShowModal()
-				d.Destroy()
-				if res==wx.ID_NO:
+				if gui.messageBox(
+					_("Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"),
+					_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self
+				)==wx.NO:
 					return
 				break
 		if not config.setSystemConfigToCurrentConfig():
-			d=wx.MessageDialog(self,_("Error copying NVDA user settings"),_("Error"),wx.OK|wx.ICON_ERROR)
+			gui.messageBox(_("Error copying NVDA user settings"),_("Error"),wx.OK|wx.ICON_ERROR,self)
 		else:
-			d=wx.MessageDialog(self,_("Successfully copied NVDA user settings"),_("Success"),wx.OK|wx.ICON_INFORMATION).ShowModal()
-		d.ShowModal()
-		d.Destroy()
+			gui.messageBox(_("Successfully copied NVDA user settings"),_("Success"),wx.OK|wx.ICON_INFORMATION,self)
 
 	def onOk(self,evt):
 		newLanguage=[x[0] for x in self.languageNames][self.languageList.GetSelection()]
@@ -194,9 +192,7 @@ class GeneralSettingsDialog(SettingsDialog):
 				languageHandler.setLanguage(newLanguage)
 			except:
 				log.error("languageHandler.setLanguage", exc_info=True)
-				d = wx.MessageDialog(self,_("Error in %s language file")%newLanguage,_("Language Error"),wx.OK|wx.ICON_WARNING)
-				d.ShowModal()
-				d.Destroy()
+				gui.messageBox(_("Error in %s language file")%newLanguage,_("Language Error"),wx.OK|wx.ICON_WARNING,self)
 				return
 		config.conf["general"]["language"]=newLanguage
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
@@ -210,13 +206,14 @@ class GeneralSettingsDialog(SettingsDialog):
 			try:
 				config.setStartOnLogonScreen(self.startOnLogonScreenCheckBox.GetValue())
 			except (WindowsError, RuntimeError):
-				wx.MessageBox(_("This change requires administrator privileges."), _("Insufficient Privileges"), style=wx.OK | wx.ICON_ERROR)
+				gui.messageBox(_("This change requires administrator privileges."), _("Insufficient Privileges"), style=wx.OK | wx.ICON_ERROR, parent=self)
 		if self.oldLanguage!=newLanguage:
-			d = wx.MessageDialog(self,_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING)
-			if d.ShowModal()==wx.ID_OK:
+			if gui.messageBox(
+				_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),
+				_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING,self
+			)==wx.OK:
 				config.save()
 				queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
-			d.Destroy()
 		super(GeneralSettingsDialog, self).onOk(evt)
 
 class SynthesizerDialog(SettingsDialog):
@@ -259,9 +256,7 @@ class SynthesizerDialog(SettingsDialog):
 		config.conf["speech"]["outputDevice"]=self.deviceList.GetStringSelection()
 		newSynth=self.synthNames[self.synthList.GetSelection()]
 		if not setSynth(newSynth):
-			d = wx.MessageDialog(self,_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING)
-			d.ShowModal()
-			d.Destroy()
+			gui.messageBox(_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING,self)
 			return 
 		super(SynthesizerDialog, self).onOk(evt)
 
@@ -985,9 +980,7 @@ class BrailleSettingsDialog(SettingsDialog):
 	def onOk(self, evt):
 		display = self.displayNames[self.displayList.GetSelection()]
 		if not braille.handler.setDisplayByName(display):
-			d = wx.MessageDialog(self, _("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING)
-			d.ShowModal()
-			d.Destroy()
+			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
 			return 
 		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()

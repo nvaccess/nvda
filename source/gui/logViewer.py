@@ -71,7 +71,7 @@ class LogViewer(wx.Frame):
 			# Therefore, do the encoding manually.
 			file(filename, "w").write(self.outputCtrl.GetValue().encode("UTF-8"))
 		except (IOError, OSError), e:
-			wx.MessageBox(_("Error saving log: %s") % e.strerror, _("Error"), style=wx.OK | wx.ICON_ERROR)
+			gui.messageBox(_("Error saving log: %s") % e.strerror, _("Error"), style=wx.OK | wx.ICON_ERROR, parent=self)
 
 	def onOutputChar(self, evt):
 		key = evt.GetKeyCode()

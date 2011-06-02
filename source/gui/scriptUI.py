@@ -48,15 +48,6 @@ class ModalDialog(object):
 		"""
 		gui.execute(self._run_gui, callback=self._callback)
 
-class MessageDialog(ModalDialog):
-
-	def __init__(self, message, title = _("NVDA"), style=wx.OK, callback=None):
-		self.makeDialog = lambda: wx.MessageDialog(gui.mainFrame, message, title, style)
-		super(MessageDialog, self).__init__(callback)
-
-	def getResponse(self, response):
-		return response in (wx.ID_OK, wx.ID_YES)
-
 class TextEntryDialog(ModalDialog):
 
 	def __init__(self, message, title=_("NVDA"), default="", style=wx.OK | wx.CANCEL, callback=None):

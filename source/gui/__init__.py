@@ -37,8 +37,7 @@ evt_externalExecute = wx.PyEventBinder(evtid_externalExecute, 1)
 
 ### Globals
 mainFrame = None
-isExitDialog=False
-#: A list of top level windows excluding L{mainFrame} which are currently instantiated and which should be destroyed on exit.
+isInMessageBox = False
 
 class ExternalExecuteEvent(wx.PyCommandEvent):
 	def __init__(self, func, args, kwargs, callback):
@@ -155,18 +154,16 @@ class MainFrame(wx.Frame):
 			config.save()
 			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("configuration saved"))
 		except:
-			self.prePopup()
-			d = wx.MessageDialog(self,_("Could not save configuration - probably read only file system"),_("Error"),style=wx.OK | wx.ICON_ERROR)
-			d.ShowModal()
-			d.Destroy()
-			self.postPopup()
+			messageBox(_("Could not save configuration - probably read only file system"),_("Error"),wx.OK | wx.ICON_ERROR)
 
 	def _popupSettingsDialog(self, dialog, *args, **kwargs):
+		if isInMessageBox:
+			return
 		self.prePopup()
 		try:
 			dialog(self, *args, **kwargs).Show()
 		except SettingsDialog.MultiInstanceError:
-			wx.MessageDialog(self,_("Please close  the other NVDA settings dialog first"),_("Error"),style=wx.OK | wx.ICON_ERROR).ShowModal()
+			messageBox(_("Please close  the other NVDA settings dialog first"),_("Error"),style=wx.OK | wx.ICON_ERROR)
 		self.postPopup()
 
 	def onDefaultDictionaryCommand(self,evt):
@@ -179,17 +176,12 @@ class MainFrame(wx.Frame):
 		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
 
 	def onExitCommand(self, evt):
-		global isExitDialog
 		canExit=False
 		if config.conf["general"]["askToExit"]:
-			self.prePopup()
-			isExitDialog=True
-			d = wx.MessageDialog(self, _("Are you sure you want to quit NVDA?"), _("Exit NVDA"), wx.YES|wx.NO|wx.ICON_WARNING)
-			if d.ShowModal() == wx.ID_YES:
+			if isInMessageBox:
+				return
+			if messageBox(_("Are you sure you want to quit NVDA?"), _("Exit NVDA"), wx.YES_NO|wx.ICON_WARNING) == wx.YES:
 				canExit=True
-			isExitDialog=False
-			d.Destroy()
-			self.postPopup()
 		else:
 			canExit=True
 		if canExit:
@@ -229,14 +221,7 @@ class MainFrame(wx.Frame):
 		self._popupSettingsDialog(SpeechSymbolsDialog)
 
 	def onAboutCommand(self,evt):
-		try:
-			self.prePopup()
-			d = wx.MessageDialog(self, versionInfo.aboutMessage, _("About NVDA"), wx.OK)
-			d.ShowModal()
-			d.Destroy()
-			self.postPopup()
-		except:
-			log.error("gui.mainFrame.onAbout", exc_info=True)
+		messageBox(versionInfo.aboutMessage, _("About NVDA"), wx.OK)
 
 	def onViewLogCommand(self, evt):
 		logViewer.activate()
@@ -376,9 +361,7 @@ def showGui():
  	wx.PostEvent(mainFrame, ExternalCommandEvent(id_showGuiCommand))
 
 def quit():
-	global isExitDialog
-	if not isExitDialog:
-		wx.PostEvent(mainFrame, ExternalCommandEvent(wx.ID_EXIT))
+	wx.PostEvent(mainFrame, ExternalCommandEvent(wx.ID_EXIT))
 
 def execute(func, callback=None, *args, **kwargs):
 	"""Execute a function in the GUI thread.
@@ -392,6 +375,33 @@ def execute(func, callback=None, *args, **kwargs):
 	@param kwargs: Keyword arguments for the function.
 """
 	wx.PostEvent(mainFrame, ExternalExecuteEvent(func, args, kwargs, callback))
+
+def messageBox(message, caption=wx.MessageBoxCaptionStr, style=wx.OK | wx.CENTER, parent=None):
+	"""Display a message dialog.
+	This should be used for all message dialogs
+	rather than using C{wx.MessageDialog} and C{wx.MessageBox} directly.
+	@param message: The message text.
+	@type message: str
+	@param caption: The caption (title) of the dialog.
+	@type caption: str
+	@param style: Same as for wx.MessageBox.
+	@type style: int
+	@param parent: The parent window (optional).
+	@type parent: C{wx.Window}
+	@return: Same as for wx.MessageBox.
+	@rtype: int
+	"""
+	global isInMessageBox
+	wasAlready = isInMessageBox
+	isInMessageBox = True
+	if not parent:
+		mainFrame.prePopup()
+	res = wx.MessageBox(message, caption, style, parent or mainFrame)
+	if not parent:
+		mainFrame.postPopup()
+	if not wasAlready:
+		isInMessageBox = False
+	return res
 
 class WelcomeDialog(wx.Dialog):
 	"""The NVDA welcome dialog.
