@@ -135,7 +135,6 @@ class UIAHandler(COMObject):
 			self.MTAThreadInitException=e
 		finally:
 			self.MTAThreadInitEvent.set()
-		import winsound
 		self.MTAThreadStopEvent.wait()
 		self.clientObject.RemoveAllEventHandlers()
 
