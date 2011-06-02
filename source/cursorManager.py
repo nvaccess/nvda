@@ -11,7 +11,7 @@ A cursor manager provides caret navigation and selection commands for a virtual 
 
 import wx
 import baseObject
-import gui.scriptUI
+import gui
 import textInfos
 import api
 import speech
@@ -77,8 +77,12 @@ class CursorManager(baseObject.ScriptableObject):
 			speech.speakSelectionChange(oldInfo,self.selection)
 
 	def doFindTextDialog(self):
-		findDialog=gui.scriptUI.TextEntryDialog(_("Type the text you wish to find"),title=_("Find"),default=self._lastFindText,callback=self.doFindText)
-		findDialog.run()
+		d = wx.TextEntryDialog(gui.mainFrame, _("Type the text you wish to find"), _("Find"), defaultValue=self._lastFindText)
+		def callback(result):
+			if result == wx.ID_OK:
+				# Make sure this happens after focus returns to the document.
+				wx.CallLater(100, self.doFindText, d.GetValue())
+		gui.runScriptModalDialog(d, callback)
 
 	def doFindText(self,text,reverse=False):
 		if not text:

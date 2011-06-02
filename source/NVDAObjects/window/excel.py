@@ -14,7 +14,6 @@ import oleacc
 import textInfos.offsets
 import eventHandler
 import gui
-import gui.scriptUI
 import winUser
 import controlTypes
 import speech
@@ -25,11 +24,21 @@ from logHandler import log
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
 
-class CellEditDialog(gui.scriptUI.ModalDialog):
+class CellEditDialog(wx.Dialog):
 
 	def __init__(self,cell):
-		super(CellEditDialog,self).__init__(None)
+		super(CellEditDialog,self).__init__(gui.mainFrame, wx.ID_ANY, title=_("NVDA Excel Cell Editor"))
 		self._cell=cell
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		mainSizer.Add(wx.StaticText(self,wx.ID_ANY, label=_("Enter cell contents")))
+		self._cellText=wx.TextCtrl(self, wx.ID_ANY, size=(300, 200), style=wx.TE_RICH|wx.TE_MULTILINE)
+		self._cellText.Bind(wx.EVT_KEY_DOWN, self.onCellTextChar)
+		self._cellText.SetValue(self._cell.formulaLocal)
+		mainSizer.Add(self._cellText)
+		mainSizer.Add(self.CreateButtonSizer(wx.OK|wx.CANCEL))
+		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+		self.SetSizer(mainSizer)
+		self._cellText.SetFocus()
 
 	def onCellTextChar(self,evt):
 		if evt.GetKeyCode() == wx.WXK_RETURN:
@@ -43,21 +52,7 @@ class CellEditDialog(gui.scriptUI.ModalDialog):
 
 	def onOk(self,evt):
 		self._cell.formulaLocal=self._cellText.GetValue()
-		self.dialog.EndModal(wx.ID_OK)
-
-	def makeDialog(self):
-		d=wx.Dialog(gui.mainFrame, wx.ID_ANY, title=_("NVDA Excel Cell Editor"))
-		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		mainSizer.Add(wx.StaticText(d,wx.ID_ANY, label=_("Enter cell contents")))
-		self._cellText=wx.TextCtrl(d, wx.ID_ANY, size=(300, 200), style=wx.TE_RICH|wx.TE_MULTILINE)
-		self._cellText.Bind(wx.EVT_KEY_DOWN, self.onCellTextChar)
-		self._cellText.SetValue(self._cell.formulaLocal)
-		mainSizer.Add(self._cellText)
-		mainSizer.Add(d.CreateButtonSizer(wx.OK|wx.CANCEL))
-		d.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
-		d.SetSizer(mainSizer)
-		self._cellText.SetFocus()
-		return d
+		self.EndModal(wx.ID_OK)
 
 class ExcelWindow(Window):
 	"""A base that all Excel NVDAObjects inherit from, which contains some useful static methods."""
@@ -230,8 +225,8 @@ class ExcelCell(ExcelWindow):
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
 
 	def script_editCell(self,gesture):
-		cellEditDialog=CellEditDialog(self.excelWindowObject.ActiveCell)
-		cellEditDialog.run()
+		gui.runScriptModalDialog(
+			CellEditDialog(self.excelWindowObject.ActiveCell))
 
 	def initOverlayClass(self):
 		self.bindGesture("kb:f2", "editCell")

@@ -19,7 +19,6 @@ from logHandler import log
 import nvwave
 import speechDictHandler
 import appModuleHandler
-import scriptUI
 import queueHandler
 import braille
 import core

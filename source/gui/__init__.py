@@ -8,7 +8,6 @@ import time
 import os
 import sys
 import wx
-from wx.lib import newevent
 import globalVars
 import ui
 from logHandler import log
@@ -30,32 +29,9 @@ appTitle = "NVDA"
 NVDA_PATH = os.getcwdu()
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
 
-ExternalCommandEvent, evt_externalCommand = newevent.NewCommandEvent()
-id_showGuiCommand=wx.NewId()
-evtid_externalExecute = wx.NewEventType()
-evt_externalExecute = wx.PyEventBinder(evtid_externalExecute, 1)
-
 ### Globals
 mainFrame = None
 isInMessageBox = False
-
-class ExternalExecuteEvent(wx.PyCommandEvent):
-	def __init__(self, func, args, kwargs, callback):
-		super(ExternalExecuteEvent, self).__init__(evtid_externalExecute, wx.ID_ANY)
-		self._func = func
-		self._args = args
-		self._kwargs = kwargs
-		self._callback = callback
-
-	def run(self):
-		ret = self._func(*self._args, **self._kwargs)
-		if self._callback:
-			queueHandler.registerGeneratorObject(self._callback_gen(ret))
-
-	def _callback_gen(self, ret):
-		for n in xrange(20):
-			yield None
-		self._callback(ret)
 
 def getDocFilePath(fileName, localized=True):
 	if not getDocFilePath.rootPath:
@@ -101,9 +77,6 @@ class MainFrame(wx.Frame):
 		style = wx.DEFAULT_FRAME_STYLE ^ wx.MAXIMIZE_BOX ^ wx.MINIMIZE_BOX | wx.FRAME_NO_TASKBAR
 		super(MainFrame, self).__init__(None, wx.ID_ANY, appTitle, size=(1,1), style=style)
 		self.Bind(wx.EVT_CLOSE, self.onExitCommand)
-		self.Bind(evt_externalCommand, self.onExitCommand, id=wx.ID_EXIT)
-		self.Bind(evt_externalCommand, self.onShowGuiCommand, id=id_showGuiCommand)
-		self.Bind(evt_externalExecute,lambda evt: evt.run())
 		self.sysTrayIcon = SysTrayIcon(self)
 		# This makes Windows return to the previous foreground window and also seems to allow NVDA to be brought to the foreground.
 		self.Show()
@@ -133,7 +106,7 @@ class MainFrame(wx.Frame):
 			self.Show()
 			self.Hide()
 
-	def onShowGuiCommand(self,evt):
+	def showGui(self):
 		# The menu pops up at the location of the mouse, which means it pops up at an unpredictable location.
 		# Therefore, move the mouse to the centre of the screen so that the menu will always pop up there.
 		left, top, width, height = api.getDesktopObject().location
@@ -358,23 +331,10 @@ def terminate():
 	mainFrame.Destroy()
 
 def showGui():
- 	wx.PostEvent(mainFrame, ExternalCommandEvent(id_showGuiCommand))
+ 	wx.CallAfter(mainFrame.showGui)
 
 def quit():
-	wx.PostEvent(mainFrame, ExternalCommandEvent(wx.ID_EXIT))
-
-def execute(func, callback=None, *args, **kwargs):
-	"""Execute a function in the GUI thread.
-	This should be used when scripts need to interact with the user via the GUI.
-	For example, a frame or dialog can be created and this function can then be used to execute its Show method.
-	@param func: The function to execute.
-	@type func: callable
-	@param callback: A function to call in the main thread when C{func} returns. The function will be passed the return value as its only argument.
-	@type callback: callable
-	@param args: Arguments for the function.
-	@param kwargs: Keyword arguments for the function.
-"""
-	wx.PostEvent(mainFrame, ExternalExecuteEvent(func, args, kwargs, callback))
+	wx.CallAfter(mainFrame.onExitCommand, None)
 
 def messageBox(message, caption=wx.MessageBoxCaptionStr, style=wx.OK | wx.CENTER, parent=None):
 	"""Display a message dialog.
@@ -402,6 +362,25 @@ def messageBox(message, caption=wx.MessageBoxCaptionStr, style=wx.OK | wx.CENTER
 	if not wasAlready:
 		isInMessageBox = False
 	return res
+
+def runScriptModalDialog(dialog, callback=None):
+	"""Run a modal dialog from a script.
+	This will not block the caller,
+	but will instead call C{callback} (if provided) with the result from the dialog.
+	The dialog will be destroyed once the callback has returned.
+	@param dialog: The dialog to show.
+	@type dialog: C{wx.Dialog}
+	@param callback: The optional callable to call with the result from the dialog.
+	@type callback: callable
+	"""
+	def run():
+		mainFrame.prePopup()
+		res = dialog.ShowModal()
+		mainFrame.postPopup()
+		if callback:
+			callback(res)
+		dialog.Destroy()
+	wx.CallAfter(run)
 
 class WelcomeDialog(wx.Dialog):
 	"""The NVDA welcome dialog.
