@@ -1,7 +1,13 @@
+#appModules/nvda.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2008-2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 import appModuleHandler
 import api
 import controlTypes
-import gui
+import versionInfo
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -11,7 +17,7 @@ class AppModule(appModuleHandler.AppModule):
 		if obj.role == controlTypes.ROLE_POPUPMENU:
 			parent = obj.parent
 			if parent and parent.parent==api.getDesktopObject():
-				obj.name=gui.appTitle
+				obj.name=versionInfo.name
 
 	def event_gainFocus(self, obj, nextHandler):
 		if obj.role == controlTypes.ROLE_PANE and controlTypes.STATE_INVISIBLE in obj.states:

@@ -25,7 +25,6 @@ import winUser
 import api
 
 ### Constants
-appTitle = "NVDA"
 NVDA_PATH = os.getcwdu()
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
 
@@ -75,7 +74,7 @@ class MainFrame(wx.Frame):
 
 	def __init__(self):
 		style = wx.DEFAULT_FRAME_STYLE ^ wx.MAXIMIZE_BOX ^ wx.MINIMIZE_BOX | wx.FRAME_NO_TASKBAR
-		super(MainFrame, self).__init__(None, wx.ID_ANY, appTitle, size=(1,1), style=style)
+		super(MainFrame, self).__init__(None, wx.ID_ANY, versionInfo.name, size=(1,1), style=style)
 		self.Bind(wx.EVT_CLOSE, self.onExitCommand)
 		self.sysTrayIcon = SysTrayIcon(self)
 		# This makes Windows return to the previous foreground window and also seems to allow NVDA to be brought to the foreground.
@@ -225,7 +224,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 	def __init__(self, frame):
 		super(SysTrayIcon, self).__init__()
 		icon=wx.Icon(ICON_PATH,wx.BITMAP_TYPE_ICO)
-		self.SetIcon(icon, appTitle)
+		self.SetIcon(icon, versionInfo.name)
 
 		self.menu=wx.Menu()
 		menu_preferences=wx.Menu()
