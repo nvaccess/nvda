@@ -79,6 +79,11 @@ vars.Add(PathVariable("certFile", "The certificate file with which to sign execu
 vars.Add("certPassword", "The password for the private key in the signing certificate", "")
 vars.Add(PathVariable("outputDir", "The directory where the final built archives and such will be placed", "output",PathVariable.PathIsDirCreate))
 vars.Add(ListVariable('targetArchitectures','Which architectures should NVDA support?','all',['x86','x86_64']))
+vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'symbols', ["symbols","debugCRT","RTC","noOptimize"]))
+vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in xrange(60)]))
+
+#Base environment for this and sub sconscripts
+env = Environment(variables=vars,tools=["textfile","gettext","t2t",keyCommandsDocTool,'doxygen'])
 
 #Check for any unknown variables
 unknown=vars.UnknownVariables().keys()
@@ -86,7 +91,6 @@ if len(unknown)>0:
 	print "Unknown commandline variables: %s"%unknown
 	Exit(1)
 
-env = Environment(variables=vars,tools=["textfile","gettext","t2t",keyCommandsDocTool,'doxygen'])
 version = env["version"]
 release = env["release"]
 certFile = env["certFile"]
@@ -283,3 +287,4 @@ symbolsArchive = env.SzArchive(outputDir.File("%s_debugSymbols.zip" % outFilePre
 env.Alias("symbolsArchive", symbolsArchive)
 
 env.Default(portableDist)
+
