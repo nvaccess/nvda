@@ -209,7 +209,7 @@ def initDebug():
 class NVDAService(win32serviceutil.ServiceFramework):
 
 	_svc_name_="nvda"
-	_svc_display_name_="nonVisual Desktop Access"
+	_svc_display_name_="NVDA"
 
 	def GetAcceptedControls(self):
 		return win32serviceutil.ServiceFramework.GetAcceptedControls(self) | win32service.SERVICE_ACCEPT_SESSIONCHANGE
