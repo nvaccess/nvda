@@ -21,6 +21,7 @@ from . import Window
 from .. import NVDAObjectTextInfo
 import appModuleHandler
 from logHandler import log
+import scriptHandler
 
 re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
 
@@ -103,6 +104,9 @@ class ExcelWorksheet(ExcelBase):
 
 	def script_changeSelection(self,gesture):
 		gesture.send()
+		if scriptHandler.isScriptWaiting():
+			# Prevent lag if keys are pressed rapidly.
+			return
 		selection=self.excelWindowObject.Selection
 		if selection.Count>1:
 			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
