@@ -308,36 +308,35 @@ Vaikka hiiren avulla liikkumiseen tulisikin käyttää fyysistä hiirtä tai kos
 | Siirrä hiiren alla olevaan objektiin | NVDA+numeroryhmän kertomerkki (*) | NVDA+Shift+f10 | Siirtää navigointiobjektin hiiren alla olevaan objektiin |
 %kc:endInclude
 
-+ Näennäispuskurit +
-Monimutkaiset, ei-muokattavat asiakirjat kuten web-sivut, näytetään NVDA:ssa näennäispuskurissa.
++ Selaustila +
+Monimutkaiset, ei-muokattavat asiakirjat kuten web-sivut, näytetään NVDA:ssa selaustilassa.
+Näihin kuuluvat Mozilla Firefox-, Internet Explorer-, Google Chrome- ja Adobe Reader- dokumentit sekä Flash-sisältö.
 
-Näennäispuskuri on kokonainen esitys esim. web-sivusta, jossa voi liikkua nuolinäppäimillä.
-Liikuttaessa tekstin lisäksi luetaan tiedot, kuten onko kohdalla oleva teksti linkki, otsikko tms.
+Selaustilassa dokumentin sisältö on käytettävissä kokonaisesityksenä, jossa voidaan liikkua nuolinäppäimillä, aivan kuin se olisi tavallinen tekstiasiakirja.
+Kaikki NVDA:n järjestelmäkohdistimen näppäinkomennot, kuten esim. lue kaikki, lue muotoilutiedot, taulukoissa liikkumiseen käytettävät komennot jne, toimivat tässä tilassa.
+Dokumentissa liikuttaessa luetaan siinä olevan tekstin lisäksi myös muita tietoja, kuten onko kohdalla oleva teksti linkki, otsikko tms.
 
-Näennäispuskurissa on kaksi toimintatilaa.
-Selaustilassa tekstissä voidaan liikkua näennäiskohdistinta käyttäen, ikään kuin järjestelmäkohdistimella.
-Kaikki NVDA:n järjestelmäkohdistimella liikuttaessa käytettävät näppäinkomennot toimivat tässä tilassa (esim. lue kaikki, muotoilutietojen ilmoittaminen, kaikki taulukoissa liikkumiseen käytettävät komennot jne).
-Kohdistustilassa voidaan olla suorassa vuorovaikutuksessa säädinten kanssa (esim. muokkauskenttä, yhdistelmäruutu, valintapainike) millä tahansa normaalisti käytettävillä näppäimillä.
-Kun ollaan selaustilassa, NVDA siirtyy automaattisesti kohdistustilaan liikuttaessa sarkaimella tai napsautettaessa hiirellä sellaisen säätimen kohdalla, joka edellyttää sitä.
-Enterin tai välilyönnin painaminen tällaisten säädinten kohdalla siirtää myös kohdistustilaan, tai siihen voidaan siirtyä manuaalisesti.
-Jos NVDA siirtyy automaattisesti kohdistustilaan, takaisin selaustilaan palataan sarkaimella liikuttaessa tai napsautettaessa hiirellä jotakin, joka ei edellytä kohdistustilaa, kuten esim. linkki tai sivun normaali tekstiosa.
-Esc-näppäimen painaminen siirtää myös takaisin selaustilaan.
-Kohdistus- ja selaustiloihin voidaan siirtyä myös manuaalisesti.
-Kun kohdistustilaan siirrytään itse, NVDA pysyy siinä tilassa eikä siirry enää automaattisesti selaustilaan, ellei sitä oteta käyttöön manuaalisesti.
+Toisinaan on tarvetta olla suorassa vuorovaikutuksessa näissä dokumenteisssa olevien säädinten kanssa.
+Tämä tehdään siirtymällä kohdistustilaan, jossa kaikki näppäilyt välitetään kyseessä olevalle säätimelle.
+NVDA siirtyy oletusarvoisesti selaustilassa oltaessa kohdistustilaan automaattisesti liikuttaessa sarkaimella tai napsautettaessa hiirellä sellaisen säätimen kohdalla, joka edellyttää sitä.
+Vastaavasti sarkaimella siirtyminen tai sellaisen säätimen napsauttaminen, joka ei edellytä kohdistustilaa, siirtää takaisin selaustilaan.
+Enterin tai välilyönnin painaminen tällaisten säädinten kohdalla siirtää myös kohdistustilaan.
+Escape-näppäimen painaminen siirtää takaisin selaustilaan.
+Kohdistustila voidaan lisäksi pakottaa käyttöön manuaalisesti, jolloin se pysyy toiminnassa siihen asti kunnes se poistetaan käytöstä.
+
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Vaihda näennäispuskurin tilaa | NVDA+välilyönti | Vaihtaa kohdistus- ja selaustilojen välillä |
-| Poistu kohdistustilasta | Esc | Siirtää takaisin selaustilaan, JOS NVDA siirtyi aiemmin kohdistustilaan automaattisesti |
-| Päivitä näennäispuskuri | NVDA+f5 | Lataa uudelleen nykyisen näennäispuskurin (hyödyllistä, jos sivulta vaikuttaa puuttuvan jotain sisältöä) |
-| Etsi | NVDA+Ctrl+f | Avaa valintaikkunan, jolla voidaan etsiä tekstiä nykyisestä asiakirjasta |
-| Etsi seuraava | NVDA+f3 | Etsii asiakirjasta aiemmin hakemasi tekstin seuraavan esiintymän |
-| Etsi edellinen | NVDA+Shift+f3 | Etsii asiakirjasta aiemmin hakemasi tekstin edellisen esiintymän |
+| Vaihda selaus- ja kohdistustilan välillä | NVDA+välilyönti | Vaihtaa kohdistus- ja selaustilojen välillä |
+| Poistu kohdistustilasta | Esc | Siirtää takaisin selaustilaan, jos NVDA siirtyi aiemmin kohdistustilaan automaattisesti |
+| Päivitä selaustiladokumentti | NVDA+f5 | Lataa uudelleen nykyisen dokumentin sisällön (hyödyllistä, jos sivulta vaikuttaa puuttuvan jotakin) |
+| Etsi | NVDA+Ctrl+f | Avaa valintaikkunan, jolla voidaan etsiä tekstiä nykyisestä dokumentista |
+| Etsi seuraava | NVDA+f3 | Etsii dokumentista aiemmin hakemasi tekstin seuraavan esiintymän |
+| Etsi edellinen | NVDA+Shift+f3 | Etsii dokumentista aiemmin hakemasi tekstin edellisen esiintymän |
 %kc:endInclude
 
-NVDA käyttää tällä hetkellä näennäispuskureita asiakirjojen lukemiseen Mozilla Firefoxissa, Internet Explorerissa, Google Chromessa, Adobe Readerissa sekä Flashissa.
 
 ++ Pikanavigointinäppäimet ++
-NVDA:ssa on selaustilaa käytettäessä liikkumisen nopeuttamiseksi myös pikanavigointikomentoja, joilla voidaan siirtyä näennäispuskurin eri kenttiin.
+NVDA:ssa on selaustilaa käytettäessä liikkumisen nopeuttamiseksi myös pikanavigointikomentoja, joilla voidaan siirtyä dokumentin eri kenttiin.
 
 %kc:beginInclude
 Sellaisinaan nämä komennot siirtävät seuraavan, ja Shift-näppäimen kanssa painettuna edellisen kentän kohdalle:
@@ -366,23 +365,24 @@ Sellaisinaan nämä komennot siirtävät seuraavan, ja Shift-näppäimen kanssa 
 %kc:endInclude
 
 ++ Elementtilista ++
-Elementtilistassa on luettelo sivulla olevista linkeistä, otsikoista ja ARIA-maamerkeistä.
+Elementtilista mahdollistaa pääsyn dokumentissa oleviin linkkeihin, otsikoihin tai ARIA-maamerkkeihin.
 Valintapainikkeilla voidaan valita näiden kolmen näytettävän elementtityypin väliltä.
-Valintaikkunassa on myös muokkauskenttä, jonka avulla voidaan suodattaa listaa jonkin tietyn kohdan etsimiseksi sivulta.
-Valittuun kohtaan voidaan siirtyä tai avata sen käyttämällä valintaikkunan painikkeita.
+Valintaikkunassa on myös muokkauskenttä, jonka avulla listaa voidaan suodattaa jonkin tietyn kohteen etsimiseksi dokumentista.
+Kun haluttu kohde on valittu, sen kohdalle voidaan siirtyä tai se voidaan avata käyttämällä valintaikkunan painikkeita.
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Näennäispuskurin elementtilista | NVDA+f7 | Avaa elementtilistan, joka sisältää nykyisen näennäispuskurin linkit, otsikot ja maamerkit |
+| Selaustilan elementtilista | NVDA+f7 | Avaa elementtilistan, joka sisältää nykyisen dokumentin linkit, otsikot ja maamerkit |
 %kc:endInclude
 
 ++ Sulautetut objektit ++
 Sivut voivat sisältää monipuolista sisältöä, joka käyttää sellaisia tekniikoita kuin Flash ja Java.
-Kun näennäispuskurissa tullaan tällaisen objektin kohdalle, NVDA ilmoittaa "sulautettu objekti". Näihin objekteihin voidaan siirtyä painamalla Enteriä niiden kohdalla.
+Kun selaustilassa tullaan tällaisen objektin kohdalle, NVDA ilmoittaa "sulautettu objekti".
+Näihin objekteihin voidaan siirtyä painamalla Enteriä niiden kohdalla.
 Jos objekti on esteetön, siinä voidaan liikkua sarkaimella ja olla sen kanssa vuorovaikutuksessa kuten missä tahansa muussakin sovelluksessa.
-Seuraavalla näppäinkomennolla voidaan palata Alkuperäiselle sulautetun objektin sisältävälle sivulle:
+Seuraavalla näppäinkomennolla voidaan palata alkuperäiseen sulautetun objektin sisältävään dokumenttiin:
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Siirrä sulautetun objektin sisältävään näennäispuskuriin | NVDA+Ctrl+välilyönti | Siirtää kohdistuksen pois nykyisestä sulautetusta objektista näennäispuskuriin, jossa se on |
+| Siirrä sulautetun objektin sisältävään selaustiladokumenttiin | NVDA+Ctrl+välilyönti | Siirtää kohdistuksen pois nykyisestä sulautetusta objektista dokumenttiin, jossa se on |
 %kc:endInclude
 
 + NVDA:n asetusten määrittäminen +
@@ -481,7 +481,7 @@ ESpeak on tällä hetkellä ainoa syntetisaattori, joka tukee tätä asetusta.
 ==== Välimerkki- ja symbolitaso ====
 Key: NVDA+p
 
-Tästä voit valita sanoina luettavien välimerkkien ja muiden symboleiden määrän.
+Tästä voidaan valita sanoina luettavien välimerkkien ja muiden symboleiden määrä.
 Esimerkiksi kun tasoksi on valittu kaikki, kaikki symbolit luetaan sanoina.
 
 ==== Nosta äänenkorkeutta isojen kirjainten kohdalla ====
@@ -679,33 +679,30 @@ Key: NVDA+5
 
 Ottaa käyttöön tai poistaa käytöstä uuden sisällön lukemisen tietyissä objekteissa, kuten pääteohjelmissa ja keskusteluohjelmien historiasäätimissä.
 
-+++ Näennäispuskurin asetukset (NVDA+Ctrl+b) +++
-Näennäispuskurin asetukset -valintaikkuna löytyy Asetukset-valikon "Näennäispuskurit..." -kohdasta.
++++ Selaustilan asetukset (NVDA+Ctrl+b) +++
+Selaustilan asetukset -valintaikkuna löytyy Asetukset-valikon "Selaustila..." -kohdasta.
 
 Valintaikkuna sisältää seuraavat asetukset:
 
 ==== Merkkien enimmäismäärä rivillä ====
-Tämä asettaa näennäispuskurin rivin enimmäispituuden merkkeinä.
+Tämä asettaa selaustilan rivin enimmäispituuden merkkeinä.
  
 ==== Rivien enimmäismäärä sivulla ====
-Vaikka näennäispuskureilla ei varsinaisesti ole sivuja, tämä asettaa rivimäärän, joka siirrytään näennäispuskurissa painettaessa Page up- tai Page down -näppäintä.
+Tämä asettaa rivimäärän, joka selaustilassa siirrytään painettaessa Page up- tai Page down -näppäintä.
 
 %kc:setting
 ==== Käytä ruutuasettelua ====
 Key: NVDA+v
 
-Tällä asetuksella voidaan määrittää, sijoitetaanko sellainen sisältö kuten linkit ja muut kentät näennäispuskurissa omille riveilleen, vai säilytetäänkö ne sellaisina, kuin ne ruudulla näytetään.
+Tällä asetuksella voidaan määrittää, sijoitetaanko sellainen sisältö kuten linkit ja muut kentät selaustilassa omille riveilleen, vai säilytetäänkö ne sellaisina, kuin ne ruudulla näytetään.
 Jos asetus on käytössä, kentät jätetään sellaisiksi kuin ne ruudulla näytetään, jos asetus poistetaan käytöstä, kentät sijoitetaan omille riveilleen.
 
 ==== Ilmoita sijoittelutaulukot ====
 Kun tämä asetus ei ole käytössä, NVDA ilmoittaa vain taulukot, joissa on taulukoitua tietoa (jolloin on järkevää saada tietää, että kyseessä on taulukko).
 Jos asetus on käytössä, NVDA ilmoittaa myös taulukot, joita käytetään puhtaasti visuaaliseen esittämiseen.
 
-==== Kenttien, kuten linkkien ja otsikoiden lukemisen määrittäminen ====
-Aiemmissa NVDA:n versioissa Näennäispuskureiden asetusvalintaikkunassa oli mahdollista määrittää, ilmoitettiinko kohdalla olevan kentän tyyppi web-sisältöä lukiessa.
-Kenttien tyyppejä ovat esimerkiksi linkit, otsikot, taulukot ja listat.
-Nämä määritetään [Asiakirjojen muotoiluasetukset -valintaikkunasta #Asiakirjojenmuotoiluasetukset] löytyvillä uusilla asetuksilla.
-Nämä asetukset eivät nyt vaikuta pelkästään näennäispuskureihin, vaan myös kaikkiin näitä kenttiä sisältäviin asiakirjoihin.
+==== Kenttien, kuten linkkien ja otsikoiden, lukemisen määrittäminen ====
+Katso [Asiakirjojen muotoiluasetukset -valintaikkunassa #Asiakirjojenmuotoiluasetukset] asetuksia määrittääksesi kentät, jotka puhutaan, kuten linkit, otsikot ja taulukot.
   
 ==== Automaattinen kohdistustila kohdistusmuutoksille ====
 Kun tämä valintaruutu on valittuna, kohdistustila otetaan käyttöön jos kohdistus muuttuu.
@@ -717,7 +714,7 @@ Jos esim. web-sivua nuolinäppäimillä selatessa tullaan muokkauskentän kohdal
 Jos siirrytään nuolinäppäimillä pois muokkauskentästä, NVDA vaihtaa takaisin selaustilaan.
 
 ==== Ilmaise kohdistus- ja selaustilat äänimerkeillä ====
-Jos tämä asetus on käytössä, NVDA soittaa äänimerkin vaihtaessaan näennäispuskurissa selaus- ja kohdistustilojen välillä sen sijaan, että niistä ilmoitettaisiin puheena.
+Jos tämä asetus on käytössä, NVDA soittaa äänimerkin vaihtaessaan selaus- ja kohdistustilojen välillä sen sijaan, että siitä ilmoitettaisiin puheena.
 
 +++ Asiakirjojen muotoiluasetukset (NVDA+Ctrl+d) +++[Asiakirjojenmuotoiluasetukset]
 Tämä valintaikkuna löytyy Asetukset-valikon "Asiakirjojen muotoilu..." -kohdasta.
@@ -778,6 +775,15 @@ NVDA ei oletusarvoisesti huomioi kirjainkokoa.
 Toisella valintaikkunan valintaruudulla voidaan määrittää, onko korvattava merkkijono "sääntölauseke".
 Sääntölauseke on erikoismerkkejä sisältävä merkkiyhdistelmä, jonka avulla voidaan täsmätä useampaan kuin yhteen merkkiin kerrallaan, pelkkiin numeroihin tai pelkkiin kirjaimiin.
 Sääntölausekkeita ei käsitellä tässä käyttöohjeessa, mutta internetistä löytyy useita lisätietoja tarjoavia oppaita.
+
++++ Välimerkkien ja symbolien lausumistapa +++
+Tämän valintaikkunan avulla voidaan muuttaa välimerkkien ja muiden symbolien lausumistapaa sekä tasoa, jolla ne puhutaan.
+
+Symbolia muutetaan valitsemalla se Symbolit-listasta.
+Korvaava-kentän avulla voidaan muuttaa tekstiä, joka puhutaan kyseisen symbolin sijasta.
+Taso-kentän avulla voidaan säätää alin taso, jolla symboli puhutaan.
+
+Muutokset tallennetaan painamalla OK-painiketta tai kumotaan painamalla Peruuta.
 
 ++ Asetusten tallentaminen ja palauttaminen ++
 NVDA ei oletusarvoisesti tallenna asetuksia automaattisesti, joten jos se suljetaan ja käynnistetään uudelleen, asetukset muuttuvat takaisin alkuperäisiin arvoihinsa.

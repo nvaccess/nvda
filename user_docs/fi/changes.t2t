@@ -6,31 +6,63 @@
 = 2011.2 =
 
 == Uudet ominaisuudet ==
-- Nyt on mahdollista kuulla minkä tahansa merkin kuvaus painamalla kaksi kertaa nopeasti peräkkäin Lue nykyinen merkki -komentoa.  Englanninkielessä käytettäville merkeille kuvaukset ovat standardeja foneettisia aakkosia. Kuvakirjoituskielille, kuten perinteinen kiina, on yksi tai useampia kyseessä olevan symbolin sisältäviä esimerkkilauseita. Lisäksi Lue nykyinen sana- tai Lue nykyinen rivi -komennon kolmesti painaminen tavaa sanan/rivin käyttäen ensimmäistä näistä kuvauksista.
+- Nyt on mahdollista kuulla minkä tahansa merkin kuvaus painamalla kaksi kertaa nopeasti peräkkäin Lue nykyinen merkki -komentoa. Kuvakirjoituskielille, kuten perinteinen kiina, on yksi tai useampia kyseessä olevan symbolin sisältäviä esimerkkilauseita. Lisäksi Lue nykyinen sana- tai Lue nykyinen rivi -komennon kolmesti painaminen tavaa sanan/rivin käyttäen ensimmäistä näistä kuvauksista.
 - Kokonaistarkastelutilassa näkyy nyt enemmän tekstiä sellaisissa sovelluksissa, jotka tulostavat tekstiä merkkihahmoina suoraan näytölle (esim. Mozilla Thunderbirdissä). (#55)
 - Nyt on mahdollista valita välimerkkien ja muiden symboleiden lukemisen taso. (#332)
 - Kun välimerkkejä tai muita symboleita on useampi kuin neljä peräkkäin, niiden määrä ilmoitetaan nyt sen sijaan, että merkit luettaisiin. (#43)
 - Lisätty uusi pistetaulukko: norjalainen 8 pisteen tietokonemerkistö. (#1456)
 - Puheessa ei kuulu enää epänormaalia taukoa joka rivin lopussa käytettäessä lue kaikki -komentoa. (#149)
-
+- NVDA kertoo nyt web-selaimissa, onko jokin lajiteltu (aria-sort-ominaisuuden mukaan). (#1500)
+- Unicode-merkkiyhdistelmät näytetään nyt oikein pistenäytöllä. (#1505)
+- Kun kohdistus siirtyy kenttäjoukon ympäröimän säädinryhmän sisään Internet Explorerissa ja muissa MSHTML-säätimissä, NVDA ilmoittaa nyt kyseisen ryhmän nimen (selitteen). (#535)
+- Aria-labeledBy- sekä aria-describedBy-ominaisuuksia noudatetaan nyt Internet Explorerissa ja muissa MSHTML-säätimissä.
+- ARIA-listojen, ruudukkolistojen, liukusäädinten ja edistymispalkkisäädinten tukea on paranneltu Internet Explorerissa ja muissa MSHTML-sovelluksissa.
+- Käyttäjät voivat nyt muuttaa välimerkkien ja muiden symboleiden lausumistapaa samoin kuin tasoa, jolla ne puhutaan. (#271, #1516)
 
 == Muutokset ==
 - Järjestelmäkohdistin siirretään nyt tarkastelukohdistimen kohdalle painamalla Siirrä kohdistus navigointiobjektiin -komentoa (pöytäkoneissa NVDA+Shift+numeroryhmän miinus, kannettavissa NVDA+Shift+askelpalautin) kaksi kertaa nopeasti peräkkäin. Tämä vapauttaa lisää näppäimiä muuhun käyttöön. (#837)
 - Tarkastelukohdistimen alla olevan merkin desimaali- ja heksadesimaaliarvot luetaan nyt painamalla Lue nykyinen merkki -komentoa kolme kertaa kahden sijasta, koska kahdesti painaminen lukee merkin kuvauksen.
-- Päivitetty eSpeak-puhesyntetisaattori versioksi 1.45.03. (#1465)
+- eSpeak-puhesyntetisaattori päivitetty versioksi 1.45.03. (#1465)
 - Sijoittelutaulukoita ei enää lueta Mozilla Gecko -sovelluksissa siirrettäessä kohdistusta kohdistustilassa tai poissa dokumentista.
+- liblouis-pistekääntäjä päivitetty versioksi 2.3.0.
+- Jos säätimellä on kuvaus, se luetaan nyt Hypättäessä selaustilassa sen kohdalle pikanavigoinnilla tai kohdistuksella.
+- Edistymispalkit luetaan nyt selaustilassa.
+- ARIA-esitysroolilla merkityt solmut jätetään nyt pois yksinkertaisesta objektinavigoinnista ja kohdistuksesta.
+- NVDA:n käyttöliittymässä ja ohjeessa viitataan näennäispuskureihin nyt selaustilana, koska suurimmalle osalle käyttäjistä "näennäispuskuri"-termi on melko mitäänsanomaton. (#1509)
+- Kun omia liitännäisiä sisältäviä asetuksia kopioidaan järjestelmäprofiiliin kirjautumisruudussa käytettäväksi jne, käyttäjää varoitetaan nyt, että se voi olla tietoturvariski. (#1426)
+- NVDA:n järjestelmäpalvelu ei enää käynnistä ja sulje NVDA:ta käyttäjäsyötetyöpöydillä (esim. virtuaalityöpöydillä).
+- NVDA ei enää käytä Windows XP:ssä tai Vistassa UI Automation -rajapintaa, vaikka se olisi käytettävissä. Vaikka tämän rajapinnan käyttäminen voi parantaa joidenkin uudenaikaisten sovellusten esteettömyyttä, XP:ssä ja Vistassa oli liian monia hyytymisiä, kaatumisia sekä yleisen suorituskyvyn heikkenemistä sitä käytettäessä. (#1437)
 
 
 == Korjatut viat ==
-- Yhdistelmäruutujen avaaminen näennäispuskurissa ei vaihda enää automaattisesti takaisin selaustilaan, kun kohdistustila on pakotettu käyttöön näppäinyhdistelmällä NVDA+välilyönti. (#1386)
-- NVDA näyttää nyt Gecko- ja MSHTML-asiakirjoissa (eli Firefoxissa ja Internet Explorerissa) oikein samalla rivillä tietyn tekstin, joka näytettiin aiemmin eri riveillä. (#1378)
-- Kun pistenäyttö on asetettu seuraamaan tarkastelukohdistinta, ja kun navigointiobjekti siirretään näennäispuskuriin (web-sivulle, PDF-asiakirjaan, HTML-sähköpostiviestiin) joko manuaalisesti tai kohdistusmuutoksen vuoksi, sen sisältö näytetään asianmukaisesti pistenäytöllä. (#1406, #1407)
+- Yhdistelmäruutujen avaaminen selaustiladokumenteissa ei vaihda enää automaattisesti takaisin selaustilaan, kun kohdistustila on pakotettu käyttöön näppäinyhdistelmällä NVDA+välilyönti. (#1386)
+- NVDA näyttää nyt Gecko- ja MSHTML-asiakirjoissa (eli Firefoxissa ja Internet Explorerissa) oikein samalla rivillä sellaisen tekstin, joka näytettiin aiemmin eri riveillä. (#1378)
+- Kun pistenäyttö on asetettu seuraamaan tarkastelukohdistinta, ja kun navigointiobjekti siirretään selaustiladokumenttiin (web-sivulle, PDF-asiakirjaan, HTML-sähköpostiviestiin) joko manuaalisesti tai kohdistusmuutoksen vuoksi, sen sisältö näytetään asianmukaisesti pistenäytöllä. (#1406, #1407)
 - Kun välimerkkien lukeminen on poistettu käytöstä, tiettyjä välimerkkejä ei enää virheellisesti puhuta joitakin syntetisaattoreita käytettäessä. (#332)
 - Sellaisten puhesyntetisaattoreiden asetusten lataaminen, jotka eivät tue puheääniasetusta (kuten Audiologic TTS 3), on jälleen mahdollista. (#1347)
 - Skypen Ekstrat-valikko luetaan nyt oikein. (#648)
 - Äänikoordinaattien voimakkuutta säädetään kirkkauden mukaan -valintaruudun valitsemisen Hiiriasetukset-valintaikkunasta ei pitäisi enää aiheuttaa äänimerkkien huomattavaa hidastumista liikutettaessa hiirtä ruudulla Windows Vistassa ja Windows 7:ssä, kun Aero-tehosteet ovat käytössä. (#1183)
-- Kun NVDA on määritetty käyttämään kannettaville tarkoitettua näppäimistöasettelua, NVDA+delete-komento toimii nyt kuten käyttöohjeessa on mainittu lukiessaan nykyisen navigointiobjektin mittoja.
+- Kun NVDA on määritetty käyttämään kannettaville tarkoitettua näppäimistöasettelua, NVDA+delete-komento toimii nyt kuten käyttöohjeessa on mainittu nykyisen navigointiobjektin mittojen lukemiseen.
 - NVDA noudattaa nyt asianmukaisesti aria-valittu-määrettä Internet Explorer -dokumenteissa.
+- Kohdistuksen tilannekohtaiset tiedot luetaan nyt NVDA:n siirtyessä selaustiladokumenteissa automaattisesti kohdistustilaan. Jos esimerkiksi listaruutu tulee aktiiviseksi, se ilmoitetaan ensin ennen muita tietoja. (#1491)
+- ARIA-listaruudut käsitellään nyt listan kohteiden sijasta listoina Internet Explorerissa ja muissa MSHTML-säätimissä.
+- Kun kohdistus siirtyy vain luku -tyyppiä olevaan muokattavaan tekstisäätimeen, NVDA ilmoittaa nyt, ettei se ole muokattavissa. (#1436)
+- NVDA toimii nyt oikein selaustiladokumenteissa vain luku -tyyppiä olevissa muokattavissa tekstikentissä.
+- NVDA ei enää virheellisesti siirry pois kohdistustilasta, kun aria-activedescendant-ominaisuus on asetettu, esim. täydennyslistan tullessa näkyviin joissakin automaattisen täydennyksen sisältävissä säätimissä.
+- Säädinten nimet ilmoitetaan nyt Adobe Readerissa kohdistusta siirrettäessä tai käytettäessä pikanavigointia selaustilassa.
+- Painikkeet ja linkit esitetään nyt oikein XFA PDF -asiakirjoissa Adobe Readerissa.
+- Kaikki elementit näytetään nyt omilla riveillään XFA PDF -asiakirjoissa Adobe Readerissa. Tämä muutos tehtiin, koska suuria osia (joskus jopa koko asiakirja) näytettiin ilman välejä yleisen rakenteen puutteen vuoksi.
+- Korjattu ongelmia siirrettäessä kohdistusta muokattaviin tekstikenttiin tai niistä pois XFA PDF -asiakirjoissa Adobe Readerissa.
+- Aktiivisena olevan yhdistelmäruudun arvon muutokset ilmoitetaan nyt XFA PDF -asiakirjoissa Adobe Readerissa.
+- Sellaiset käsin piirrettävät yhdistelmäruudut kuin ne, joilla valitaan värit Outlook Expressissä, ovat nyt esteettömiä. (#1340)
+- Kielissä, joissa käytetään välilyöntiä numeroiden ryhmittelyyn ja tuhaterottimena (kuten ranska ja saksa), eri tekstiosissa olevia numeroita ei enää lueta yksittäisenä numerona. Tämä oli erityisen ongelmallista numeroita sisältävissä taulukon soluissa. (#555)
+- Solmut, joissa on ARIA-kuvausrooli, luokitellaan nyt Internet Explorerissa ja muissa MSHTML-säätimissä kiinteäksi tekstiksi, ei muokkauskentiksi.
+- Estetty mahdollisesti sarkain-näppäintä siirtämästä osoitepalkkiin avattaessa ensin Internet Exploreria ja dokumenttiin tultaessa.
+- Syötekomennot  kirjataan lokiin syöteohjeessa, vaikka niiden skriptit ohittaisivat sen, kuten komennot pistenäytön eteen- ja taaksepäin vierittämiseksi.
+- Kun toimintonäppäintä pidetään alhaalla syöteohjetilassa, NVDA ei enää ilmoita ikään kuin se olisi itsensä toimintonäppäin, esim. NVDA+NVDA.
+- Yhdistelmäruutuihin siirtyminen toimii nyt Adobe Reader -asiakirjoissa C- ja Shift+C-pikanavigointikomennoilla.
+- Valittavissa olevien taulukon rivien tila ilmoitetaan nyt samalla tavalla kuin listan ja puunäkymän kohteissa.
+- Firefoxin ja muiden Gecko-sovellusten säädinten aktivoiminen on nyt mahdollista selaustilassa, vaikka niiden sisäinen teksti olisi floated off-screen.
 
 
 = 2011.1.1 =
