@@ -54,7 +54,7 @@ class CellEditDialog(wx.Dialog):
 		self._cell.formulaLocal=self._cellText.GetValue()
 		self.EndModal(wx.ID_OK)
 
-class ExcelWindow(Window):
+class ExcelBase(Window):
 	"""A base that all Excel NVDAObjects inherit from, which contains some useful static methods."""
 
 	@staticmethod
@@ -69,7 +69,7 @@ class ExcelWindow(Window):
 	def getCellAddress(cell):
 		return re_dollaredAddress.sub(r"\1\2",cell.Address())
 
-class Excel7Window(ExcelWindow):
+class Excel7Window(ExcelBase):
 	"""An overlay class for Window for the EXCEL7 window class, which simply bounces focus to the active excel cell."""
 
 	def _get_excelWindowObject(self):
@@ -83,7 +83,7 @@ class Excel7Window(ExcelWindow):
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
 		eventHandler.executeEvent("gainFocus",obj)
 
-class ExcelWorksheet(ExcelWindow):
+class ExcelWorksheet(ExcelBase):
 
 	role=controlTypes.ROLE_TABLE
 
@@ -161,7 +161,7 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			formatField['underline']=fontObj.underline
 		return formatField,(self._startOffset,self._endOffset)
 
-class ExcelCell(ExcelWindow):
+class ExcelCell(ExcelBase):
 
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
@@ -231,7 +231,7 @@ class ExcelCell(ExcelWindow):
 	def initOverlayClass(self):
 		self.bindGesture("kb:f2", "editCell")
 
-class ExcelSelection(ExcelWindow):
+class ExcelSelection(ExcelBase):
 
 	role=controlTypes.ROLE_GROUPING
 
