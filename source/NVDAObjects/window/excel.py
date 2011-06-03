@@ -4,26 +4,20 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import time
-import re
-import ctypes
 from comtypes import COMError
 import comtypes.automation
 import wx
 import oleacc
-import textInfos.offsets
+import textInfos
 import eventHandler
 import gui
 import winUser
 import controlTypes
-import speech
 from . import Window
 from .. import NVDAObjectTextInfo
-import appModuleHandler
-from logHandler import log
 import scriptHandler
 
-re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
+xlA1 = 1
 
 class CellEditDialog(wx.Dialog):
 
@@ -56,7 +50,7 @@ class CellEditDialog(wx.Dialog):
 		self.EndModal(wx.ID_OK)
 
 class ExcelBase(Window):
-	"""A base that all Excel NVDAObjects inherit from, which contains some useful static methods."""
+	"""A base that all Excel NVDAObjects inherit from, which contains some useful methods."""
 
 	@staticmethod
 	def excelWindowObjectFromWindow(windowHandle):
@@ -67,8 +61,16 @@ class ExcelBase(Window):
 		return comtypes.client.dynamic.Dispatch(pDispatch)
 
 	@staticmethod
-	def getCellAddress(cell):
-		return re_dollaredAddress.sub(r"\1\2",cell.Address())
+	def getCellAddress(cell, external=False):
+		return cell.Address(False, False, xlA1, external)
+
+	def fireFocusOnSelection(self):
+		selection=self.excelWindowObject.Selection
+		if selection.Count>1:
+			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
+		else:
+			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
+		eventHandler.executeEvent("gainFocus",obj)
 
 class Excel7Window(ExcelBase):
 	"""An overlay class for Window for the EXCEL7 window class, which simply bounces focus to the active excel cell."""
@@ -77,12 +79,7 @@ class Excel7Window(ExcelBase):
 		return self.excelWindowObjectFromWindow(self.windowHandle)
 
 	def event_gainFocus(self):
-		selection=self.excelWindowObject.Selection
-		if selection.Count>1:
-			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
-		else:
-			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
-		eventHandler.executeEvent("gainFocus",obj)
+		self.fireFocusOnSelection()
 
 class ExcelWorksheet(ExcelBase):
 
@@ -98,6 +95,11 @@ class ExcelWorksheet(ExcelBase):
 	def _get_name(self):
 		return self.excelWorksheetObject.name
 
+	def _isEqual(self, other):
+		if not super(ExcelWorksheet, self)._isEqual(other):
+			return False
+		return self.excelWorksheetObject.index == other.excelWorksheetObject.index
+
 	def _get_firstChild(self):
 		cell=self.excelWorksheetObject.cells(1,1)
 		return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=cell)
@@ -107,13 +109,7 @@ class ExcelWorksheet(ExcelBase):
 		if scriptHandler.isScriptWaiting():
 			# Prevent lag if keys are pressed rapidly.
 			return
-		selection=self.excelWindowObject.Selection
-		if selection.Count>1:
-			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
-		else:
-			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
-		eventHandler.executeEvent("gainFocus",obj)
-	script_changeSelection.__doc__=_("Extends the selection and speaks the last selected cell")
+		self.fireFocusOnSelection()
 	script_changeSelection.canPropagate=True
 
 	__changeSelectionGestures = (
@@ -145,6 +141,8 @@ class ExcelWorksheet(ExcelBase):
 		"kb:shift+control+end",
 		"kb:shift+space",
 		"kb:control+space",
+		"kb:control+pageUp",
+		"kb:control+pageDown",
 	)
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
@@ -192,8 +190,8 @@ class ExcelCell(ExcelBase):
 	def _isEqual(self,other):
 		if not super(ExcelCell,self)._isEqual(other):
 			return False
-		thisAddr=self.getCellAddress(self.excelCellObject)
-		otherAddr=self.getCellAddress(other.excelCellObject)
+		thisAddr=self.getCellAddress(self.excelCellObject,True)
+		otherAddr=self.getCellAddress(other.excelCellObject,True)
 		return thisAddr==otherAddr
 
 	def _get_name(self):
