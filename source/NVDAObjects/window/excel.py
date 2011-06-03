@@ -91,7 +91,8 @@ class ExcelWorksheet(ExcelBase):
 		self.excelWindowObject=excelWindowObject
 		self.excelWorksheetObject=excelWorksheetObject
 		super(ExcelWorksheet,self).__init__(windowHandle=windowHandle)
-		self.initOverlayClass()
+		for gesture in self.__changeSelectionGestures:
+			self.bindGesture(gesture, "changeSelection")
 
 	def _get_name(self):
 		return self.excelWorksheetObject.name
@@ -141,10 +142,6 @@ class ExcelWorksheet(ExcelBase):
 		"kb:shift+space",
 		"kb:control+space",
 	)
-
-	def initOverlayClass(self):
-		for gesture in self.__changeSelectionGestures:
-			self.bindGesture(gesture, "changeSelection")
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
 
@@ -228,8 +225,9 @@ class ExcelCell(ExcelBase):
 		gui.runScriptModalDialog(
 			CellEditDialog(self.excelWindowObject.ActiveCell))
 
-	def initOverlayClass(self):
-		self.bindGesture("kb:f2", "editCell")
+	__gestures = {
+		"kb:f2": "editCell",
+	}
 
 class ExcelSelection(ExcelBase):
 
