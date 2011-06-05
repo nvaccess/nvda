@@ -360,11 +360,8 @@ def normalizeIAccessible(pacc):
 
 def accessibleObjectFromEvent(window,objectID,childID):
 	wmResult=c_long()
-	if windll.user32.SendMessageTimeoutW(window,winUser.WM_NULL,0,0,winUser.SMTO_ABORTIFHUNG,2000,byref(wmResult))==0:
-		log.debugWarning("Window %d dead or not responding: %s" % (window, ctypes.WinError()))
-		return None
 	try:
-		pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
+		pacc,childID=oleacc.AccessibleObjectFromEvent_safe(window,objectID,childID)
 	except Exception as e:
 		log.debugWarning("oleacc.AccessibleObjectFromEvent with window %s, objectID %s and childID %s: %s"%(window,objectID,childID,e))
 		return None
@@ -1010,3 +1007,15 @@ def splitIA2Attribs(attribsString):
 		# Add this key/value pair to the dict.
 		attribsDict[key] = tmp
 	return attribsDict
+
+def isMarshalledIAccessible(IAccessibleObject):
+	"""Looks at the location of the first function in the IAccessible object's vtable (IUnknown::AddRef) to see if it was implemented in oleacc.dll (its local) or ole32.dll (its marshalled)."""
+	if not isinstance(IAccessibleObject,IAccessible):
+		raise TypeError("object should be of type IAccessible, not %s"%IAccessibleObject)
+	buf=create_unicode_buffer(1024)
+	from comtypes import _compointer_base
+	addr=POINTER(c_void_p).from_address(super(_compointer_base,IAccessibleObject).value).contents.value
+	handle=HANDLE()
+	windll.kernel32.GetModuleHandleExW(6,addr,byref(handle))
+	windll.kernel32.GetModuleFileNameW(handle,buf,1024)
+	return not buf.value.lower().endswith('oleacc.dll')
