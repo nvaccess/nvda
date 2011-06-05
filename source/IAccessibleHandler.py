@@ -99,10 +99,6 @@ class OrderedWinEventLimiter(object):
 		@param threadID: the threadID of the winEvent
 		@type threadID: integer
 		"""
-		#Filter out any events for UIA windows
-		if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
-			return
-
 		if eventID==winUser.EVENT_OBJECT_FOCUS:
 			if objectID in (winUser.OBJID_SYSMENU,winUser.OBJID_MENU) and childID==0:
 				# This is a focus event on a menu bar itself, which is just silly. Ignore it.
@@ -522,6 +518,12 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 		return None
 	#Ignore any events with invalid window handles
 	if not window or not winUser.isWindow(window):
+		return None
+	#Make sure this window does not have a ghost window if possible
+	if NVDAObjects.window.GhostWindowFromHungWindow and NVDAObjects.window.GhostWindowFromHungWindow(window):
+		return None
+	#We do not support MSAA object proxied from native UIA
+	if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
 		return None
 	obj=None
 	if useCache:
