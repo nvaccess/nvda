@@ -182,12 +182,10 @@ class Region(object):
 		@type braillePos: int
 		@note: If routing the cursor, L{brailleToRawPos} can be used to translate L{braillePos} into a position in L{rawText}.
 		"""
-		pass
 
 	def nextLine(self):
 		"""Move to the next line if possible.
 		"""
-		pass
 
 	def previousLine(self, start=False):
 		"""Move to the previous line if possible.
