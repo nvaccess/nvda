@@ -23,7 +23,7 @@ re_ATL=re.compile(r'^ATL:(.*)$')
 try:
 	GhostWindowFromHungWindow=ctypes.windll.user32.GhostWindowFromHungWindow
 except AttributeError:
-	GhostWhindowFromHungWindow=None
+	GhostWindowFromHungWindow=None
 
 def isUsableWindow(windowHandle):
 	if not ctypes.windll.user32.IsWindowEnabled(windowHandle):
