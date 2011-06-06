@@ -445,8 +445,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 					# The position within the region isn't valid,
 					# but the region is valid, so return its start.
 					return start
-				else:
-					break
+				break
 		if allowNearest:
 			# Resort to the start of the last region.
 			return start
