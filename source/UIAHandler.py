@@ -123,7 +123,7 @@ class UIAHandler(COMObject):
 			self.UIAWindowHandleCache={}
 			self.baseTreeWalker=self.clientObject.RawViewWalker
 			self.baseCacheRequest=self.windowCacheRequest.Clone()
-			for propertyId in (UIA_ClassNamePropertyId,UIA_ControlTypePropertyId,UIA_IsKeyboardFocusablePropertyId,UIA_IsPasswordPropertyId,UIA_NativeWindowHandlePropertyId,UIA_ProcessIdPropertyId,UIA_IsSelectionItemPatternAvailablePropertyId,UIA_IsTextPatternAvailablePropertyId):
+			for propertyId in (UIA_ClassNamePropertyId,UIA_ControlTypePropertyId,UIA_IsKeyboardFocusablePropertyId,UIA_IsPasswordPropertyId,UIA_ProviderDescriptionPropertyId,UIA_ProcessIdPropertyId,UIA_IsSelectionItemPatternAvailablePropertyId,UIA_IsTextPatternAvailablePropertyId):
 				self.baseCacheRequest.addProperty(propertyId)
 			self.rootElement=self.clientObject.getRootElementBuildCache(self.baseCacheRequest)
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
@@ -224,10 +224,20 @@ class UIAHandler(COMObject):
 			return False
 		if processID==windll.kernel32.GetCurrentProcessId():
 			return False
-		windowHandle=self.getNearestWindowHandle(UIAElement)
-		if not windowHandle:
-			return False
-		return self.isUIAWindow(windowHandle)
+		#If the element has a window handle, and the window natively supports UIA, then its a native element
+		try:
+			windowHandle=UIAElement.cachedNativeWindowHandle
+		except COMError:
+			windowHandle=None
+		if windowHandle:
+			return self.isUIAWindow(windowHandle)
+		#The element does not have a window, but we can class it as native if the element is not an MSAA proxy (according to provider description)
+		try:
+			providerDescription=UIAElement.cachedProviderDescription
+		except COMError:
+			return True
+		return "Microsoft: MSAA Proxy (unmanaged:uiautomationcore.dll)" not in providerDescription
+
 
 handler=None
 isUIAAvailable=False
