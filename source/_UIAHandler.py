@@ -4,6 +4,7 @@ import comtypes.client
 from comtypes import *
 import weakref
 import threading
+import re
 import time
 import api
 import queueHandler
@@ -14,6 +15,8 @@ import eventHandler
 from logHandler import log
 
 from comtypes.gen.UIAutomationClient import *
+
+re_MSAAProxyProviderDescription=re.compile(r'Microsoft: (Annotation|MSAA) Proxy \(unmanaged:uiautomationcore.dll\)')
 
 badUIAWindowClassNames=[
 	"SysTreeView32",
@@ -234,5 +237,6 @@ class UIAHandler(COMObject):
 			providerDescription=UIAElement.cachedProviderDescription
 		except COMError:
 			return True
-		return "Microsoft: MSAA Proxy (unmanaged:uiautomationcore.dll)" not in providerDescription
+		return not re_MSAAProxyProviderDescription.search(providerDescription)
+
 
