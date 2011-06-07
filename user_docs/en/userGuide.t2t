@@ -308,7 +308,11 @@ As well as reviewing the content of a single [object #Objects], NVDA allows you 
 This is called flat review.
 This is similar to the screen review or mouse cursor functionality in many other Windows screen readers.
 
-Once you have switched to flat review, you can review the text using the [text review commands #ReviewingText].
+When you switch to flat review, you will be positioned at the location of the current [navigator object #ObjectNavigation].
+If you haven't used object navigation, this will usually be the object that has the [focus #SystemFocus].
+For example, if the navigator object was a button, you will usually be positioned on the text of the button in flat review.
+You can then review the text using the [text review commands #ReviewingText].
+You can also navigate directly to the object encompassing the current position of the review cursor, allowing you to use [object navigation #ObjectNavigation] from there.
 
 The following two commands are used for switching to/from flat review:
 %kc:beginInclude
