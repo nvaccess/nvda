@@ -1,7 +1,7 @@
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
 import treeInterceptorHandler
 import controlTypes
-import NVDAObjects.IAccessible
+import NVDAObjects.IAccessible.mozilla
 import NVDAObjects.behaviors
 import winUser
 import IAccessibleHandler
@@ -64,7 +64,12 @@ class Gecko_ia2(VirtualBuffer):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
 
 	def _get_shouldPrepare(self):
-		return super(Gecko_ia2,self).shouldPrepare and controlTypes.STATE_BUSY not in self.rootNVDAObject.states
+		if not super(Gecko_ia2, self).shouldPrepare:
+			return False
+		if isinstance(self.rootNVDAObject, NVDAObjects.IAccessible.mozilla.Gecko1_9) and controlTypes.STATE_BUSY in self.rootNVDAObject.states:
+			# If the document is busy in Gecko 1.9, it isn't safe to create a buffer yet.
+			return False
+		return True
 
 	def __contains__(self,obj):
 		#Special code to handle Mozilla combobox lists
