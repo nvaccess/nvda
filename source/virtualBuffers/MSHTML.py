@@ -184,7 +184,7 @@ class MSHTML(VirtualBuffer):
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
-		ID=obj.HTMLNode.uniqueNumber
+		ID=obj.HTMLNodeUniqueNumber
 		return docHandle,ID
 
 	def _searchableAttribsForNodeType(self,nodeType):

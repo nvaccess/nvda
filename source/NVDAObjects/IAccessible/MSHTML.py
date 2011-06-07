@@ -189,7 +189,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			self._rangeObj=self.obj.HTMLNode.createTextRange()
 		if position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			activeElement=self.obj.HTMLNode.document.activeElement
-			if not activeElement or self.obj.HTMLNode.uniqueID!=activeElement.uniqueID:
+			if not activeElement or self.obj.HTMLNode.uniqueNumber!=activeElement.uniqueNumber:
 				raise RuntimeError("Only works with currently selected element")
 			if not editableBody:
 				mark=self.obj.HTMLNode.document.selection.createRange().GetBookmark()
@@ -407,7 +407,7 @@ class MSHTML(IAccessible):
 	def _isEqual(self, other):
 		if self.HTMLNode and other.HTMLNode:
 			try:
-				return self.windowHandle == other.windowHandle and self.HTMLNode.uniqueNumber == other.HTMLNode.uniqueNumber
+				return self.windowHandle == other.windowHandle and self.HTMLNodeUniqueNumber == other.HTMLNodeUniqueNumber
 			except (COMError,NameError):
 				pass
 		return super(MSHTML, self)._isEqual(other)
@@ -708,6 +708,9 @@ class MSHTML(IAccessible):
 			if HTMLNode.nodeName=="TABLE": return MSHTML(HTMLNode=HTMLNode)
 			HTMLNode=HTMLNode.parentNode
 		raise NotImplementedError
+
+	def _get_HTMLNodeUniqueNumber(self):
+		return self.HTMLNode.uniqueNumber
 
 	def _get_HTMLNodeName(self):
 		try:
