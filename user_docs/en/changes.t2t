@@ -44,7 +44,7 @@
 - Problems no longer occur when loading configuration for synthesisers which do not support the voice setting such as Audiologic Tts3. (#1347)
 - The Skype Extras menu is now read correctly. (#648)
 - Checking the Brightness controls volume checkbox in the Mouse Settings dialog should no longer cause a major lag for beeps when moving the mouse around the screen on Windows Vista/Windows 7 with Aero enabled. (#1183)
-- When NVDA is configured to use the laptop keyboard layout, NVDA+delete now works as documented to report the dimensions of the current navigator object.
+- When NVDA is configured to use the laptop keyboard layout, NVDA+delete now works as documented to report the dimensions of the current navigator object. (#1498)
 - NVDA now Appropriately honours the aria-selected attribute in Internet Explorer documents.
 - When NVDA automatically switches to focus mode in browse mode documents, it now announces information about the context of the focus. For example, if a list box item receives focus, the list box will be announced first. (#1491)
 - In Internet Explorer and other MSHTML controls, ARIA listbox controls are now treeted as lists, rather than list items.
@@ -67,7 +67,7 @@
 - The selected state of selectable table rows is now reported the same way it is for list and tree view items.
 - Controls in Firefox and other Gecko applications can now be activated while in browse mode even if their content has been floated off-screen. (#801)
 - You can no longer show an NVDA settings dialog while a message dialog is being shown, as the settings dialog was frozen in this case. (#1451)
-- Reinstate the NVDA Excel Cell Editor dialog which was accidentally disabled in NVDA 2011.1.
+- Reinstated the NVDA Excel Cell Editor dialog which was accidentally disabled in NVDA 2011.1.
 - In Microsoft Excel, there is no longer a lag when holding down or rapidly pressing keys to move between or select cells.
 - Fixed intermittent crashes of the NVDA service which meant that NVDA stopped running on secure Windows screens.
 - Fixed problems that sometimes occurred with braille displays when a change caused text that was being displayed to disappear.
