@@ -243,7 +243,6 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"rowNumber":True,"columnNumber":True,"columnCount":True,"rowCount":True}
 
 	if reason==REASON_FOCUSENTERED:
-		allowProperties["states"]=False
 		allowProperties["value"]=False
 		allowProperties["keyboardShortcut"]=False
 		allowProperties["positionInfo_level"]=False
