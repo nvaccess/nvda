@@ -260,7 +260,8 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 	if reason!=REASON_QUERY:
 		allowProperties["rowCount"]=False
 		allowProperties["columnCount"]=False
-		if not config.conf["documentFormatting"]["reportTables"] or obj.tableCellCoordsInName:
+		if not config.conf["documentFormatting"]["reportTables"] or \
+			config.conf["documentFormatting"]["reportTableCellCoords"] or obj.tableCellCoordsInName:
 			allowProperties["rowNumber"]=False
 			allowProperties["columnNumber"]=False
 	if isEditable:
@@ -681,6 +682,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	value=propertyValues.get('value') if role not in silentValuesForRoles else None
 	rowNumber=propertyValues.get('rowNumber')
 	columnNumber=propertyValues.get('columnNumber')
+	includeCoords=propertyValues.get('includeCoords')
 	if speakRole and (reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or not (name or value or rowNumber or columnNumber) or role not in silentRolesOnFocus):
 		textList.append(controlTypes.speechRoleLabels[role])
 	if value:
@@ -728,13 +730,15 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 			rowHeaderText = propertyValues.get("rowHeaderText")
 			if rowHeaderText:
 				textList.append(rowHeaderText)
-			textList.append(_("row %s")%rowNumber)
+			if includeCoords: 
+				textList.append(_("row %s")%rowNumber)
 			oldRowNumber = rowNumber
 		if columnNumber and (not sameTable or columnNumber != oldColumnNumber):
 			columnHeaderText = propertyValues.get("columnHeaderText")
 			if columnHeaderText:
 				textList.append(columnHeaderText)
-			textList.append(_("column %s")%columnNumber)
+			if includeCoords:
+				textList.append(_("column %s")%columnNumber)
 			oldColumnNumber = columnNumber
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
@@ -861,10 +865,18 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	elif fieldType=="start_addedToControlFieldStack" and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER,controlTypes.ROLE_TABLEROWHEADER) and tableID:
 		# Table cell.
 		reportTableHeaders = formatConfig["reportTableHeaders"]
-		return " ".join((getSpeechTextForProperties(_tableID=tableID,
-				rowNumber=attrs.get("table-rownumber"), columnNumber=attrs.get("table-columnnumber"),
-				rowHeaderText=attrs.get("table-rowheadertext") if reportTableHeaders else None, columnHeaderText=attrs.get("table-columnheadertext") if reportTableHeaders else None),
-			stateText))
+		reportTableCellCoords = formatConfig["reportTableCellCoords"]
+		getProps = {}
+		# Default to give the coordinates.
+		getProps['rowNumber'] = attrs.get("table-rownumber")
+		getProps['columnNumber'] = attrs.get("table-columnnumber")
+		getProps['includeCoords'] = True
+		if not reportTableCellCoords:
+			getProps['includeCoords'] = False
+		if reportTableHeaders:
+			getProps['rowHeaderText'] = attrs.get("table-rowheadertext")
+			getProps['columnHeaderText'] = attrs.get("table-columnheadertext")
+		return " ".join((getSpeechTextForProperties(_tableID=tableID, **getProps), stateText) )
 
 	# General cases
 	elif (

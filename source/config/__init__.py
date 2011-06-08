@@ -143,6 +143,7 @@ confspec = ConfigObj(StringIO(
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
 	reportTableHeaders = boolean(default=True)
+	reportTableCellCoords = boolean(default=True)
 	reportLinks = boolean(default=true)
 	reportLists = boolean(default=true)
 	reportHeadings = boolean(default=true)
