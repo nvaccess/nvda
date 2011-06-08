@@ -198,7 +198,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		return [start,end]
 
 	def _getLineNumFromOffset(self,offset):
-		raise NotImplementedError
+		return None
+
 
 	def _getLineOffsets(self,offset):
 		text=self._getStoryText()
