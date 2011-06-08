@@ -647,7 +647,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 					self.selection = self.makeTextInfo(initialPos)
 				speech.cancelSpeech()
 				reportPassThrough(self)
-				speech.speakObjectProperties(self.rootNVDAObject,name=True)
+				speech.speakObjectProperties(self.rootNVDAObject,name=True,states=True,reason=speech.REASON_FOCUS)
 				info=self.makeTextInfo(textInfos.POSITION_CARET)
 				sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 			self._hadFirstGainFocus = True
