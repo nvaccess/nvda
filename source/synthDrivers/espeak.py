@@ -122,8 +122,8 @@ class SynthDriver(SynthDriver):
 		return self._variant
 
 	def _set_variant(self,val):
-		self._variant = val if val in self._variantDict else "none"
-		_espeak.setVoiceAndVariant(variant=val)
+		self._variant = val if val in self._variantDict else "max"
+		_espeak.setVoiceAndVariant(variant=self._variant)
 
 	def _getAvailableVariants(self):
 		return OrderedDict((ID,VoiceInfo(ID, name)) for ID, name in self._variantDict.iteritems())
