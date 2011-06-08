@@ -84,6 +84,7 @@ void VBufBackend_t::requestUpdate() {
 void VBufBackend_t::cancelPendingUpdate() {
 	if(renderThreadTimerID>0) {
 		KillTimer(0,renderThreadTimerID);
+		renderThreadTimerID=0;
 		LOG_DEBUG(L"Killed timer with ID "<<renderThreadTimerID);
 	}
 }
