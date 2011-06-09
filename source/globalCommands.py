@@ -351,7 +351,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No parents"))
-	script_navigatorObject_parent.__doc__=_("Sets the navigator object to the parent of the object it is currently on and speaks it")
+	script_navigatorObject_parent.__doc__=_("Moves the navigator object to the object containing it")
 
 	def script_navigatorObject_next(self,gesture):
 		curObject=api.getNavigatorObject()
@@ -365,7 +365,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No next"))
-	script_navigatorObject_next.__doc__=_("Sets the navigator object to the object next to the one it is currently on and speaks it")
+	script_navigatorObject_next.__doc__=_("Moves the navigator object to the next object")
 
 	def script_navigatorObject_previous(self,gesture):
 		curObject=api.getNavigatorObject()
@@ -379,7 +379,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No previous"))
-	script_navigatorObject_previous.__doc__=_("Sets the navigator object to the object previous to the one it is currently on and speaks it")
+	script_navigatorObject_previous.__doc__=_("Moves the navigator object to the previous object")
 
 	def script_navigatorObject_firstChild(self,gesture):
 		curObject=api.getNavigatorObject()
@@ -393,7 +393,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No children"))
-	script_navigatorObject_firstChild.__doc__=_("Sets the navigator object to the first child object of the one it is currently on and speaks it")
+	script_navigatorObject_firstChild.__doc__=_("Moves the navigator object to the first object it contains")
 
 	def script_navigatorObject_doDefaultAction(self,gesture):
 		curObject=api.getNavigatorObject()

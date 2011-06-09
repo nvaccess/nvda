@@ -239,11 +239,11 @@ Object navigation allows you to move between and obtain information about indivi
 When you move to an object, NVDA will report it similarly to the way it reports the system focus.
 For a way to review all text as it appears on the screen, you can instead use [flat review #FlatReview].
 
-Rather than having to move back and forth between every single object on the system, the objects are grouped hierarchically.
-This means that you must move inside some objects to access the objects they contain.
-For example, instead of moving through all list items when a list is encountered, you must move inside the list (i.e. navigate to its first child object) in order to access its items.
-You can move out of the list (navigate to the parent object) to continue past the list.
-Similarly, if you encounter a toolbar, you must move inside the toolbar (navigate to its first child) to access the controls in the toolbar.
+Rather than having to move back and forth between every single object on the system, the objects are organised hierarchically.
+This means that some objects contain other objects and you must move inside them to access the objects they contain.
+For example, a list contains list items, so you must move inside the list in order to access its items.
+If you have moved to a list item, you can move to its containing object to get back to the list and then move past it if you wish.
+Similarly, if you encounter a toolbar, you must move inside the toolbar to access the controls in the toolbar.
 
 The object currently being reviewed is called the navigator object.
 Once you navigate to an object, you can review it using the [text review commands #ReviewingText].
@@ -254,11 +254,11 @@ To navigate by object, use the following keys:
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Description |
 | Report current object | NVDA+numpad5 | NVDA+control+i | Reports the current navigator object. Pressing twice spells the information, and pressing 3 times copies this object's name and value to the clipboard. |
-| Navigate to parent object | NVDA+numpad8 | NVDA+shift+i | Navigates to the parent (container) of the current navigator object |
-| Navigate to previous object | NVDA+numpad4 | NVDA+control+j | Navigates to the object directly before the current navigator object |
-| Navigate to next object | NVDA+numpad6 | control+NVDA+l | Navigates to the object directly after the current navigator object |
-| Navigate to first child object | NVDA+numpad2 | NVDA+shift+comma | Navigates to the first child object contained by the current navigator object |
-| Navigate to focus object | NVDA+numpadMinus | NVDA+backspace | Navigates to the object that currently has the system focus, and also places  the review cursor at the position of the System caret, if it is showing |
+| Move to containing object | NVDA+numpad8 | NVDA+shift+i | Moves to the object containing the current navigator object |
+| Move to previous object | NVDA+numpad4 | NVDA+control+j | Moves to the object before the current navigator object |
+| Move to next object | NVDA+numpad6 | control+NVDA+l | Moves to the object after the current navigator object |
+| Move to first contained object | NVDA+numpad2 | NVDA+shift+comma | Moves to the first object contained by the current navigator object |
+| Move to focus object | NVDA+numpadMinus | NVDA+backspace | Moves to the object that currently has the system focus, and also places  the review cursor at the position of the System caret, if it is showing |
 | Activate current navigator object | NVDA+numpadEnter | NVDA+enter | Activates the current navigator object (similar to  clicking with the mouse or pressing space when it has the system focus) |
 | Move System focus or caret to current review position | NVDA+shift+numpadMinus | NVDA+shift+backspace | pressed once Moves the System focus to the current navigator object, pressed twice moves the system caret to the position of the review cursor |
 | Report navigator object dimensions | NVDA+numpadDelete | NVDA+delete | Announces the current navigator object's dimensions on screen in per centages (including distance from left and top of screen, and its width and height) |
