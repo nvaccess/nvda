@@ -7,7 +7,7 @@
 
 == New Features ==
 - It is now possible to hear the description for any given character by pressing the review current character script twice in quick succession.  For English characters this is the standard English phonetic alphabet. For pictagraphic languages such as traditional Chinese, one or more example phraises using the given symbol are provided. Also pressing review current word or review current line three times will spell the word/line using the first of these descriptions. (#55)
-- More text can be seen in flat review for applications such as Mozilla Thunderbird  who write their text directly to the display as glyphs.
+- More text can be seen in flat review for applications such as Mozilla Thunderbird that write their text directly to the display as glyphs.
 - It is now possible to choose from several levels of punctuation and symbol announcement. (#332)
 - When punctuation or other symbols are repeated more than four times, the number of repetitions is now announced instead of speaking the repeated symbols. (#43)
 - New braille translation table: Norwegian 8 dot computer braille. (#1456)
@@ -74,6 +74,9 @@
 - Fixed intermittent crashes of the NVDA service which meant that NVDA stopped running on secure Windows screens.
 - Fixed problems that sometimes occurred with braille displays when a change caused text that was being displayed to disappear.
 - The downloads window in Internet Explorer 9 can now be navigated and read with NVDA (#1280)
+- It is no longer possible to accidentilly start multiple copies of NVDA at the same time (#507)
+- On slow systems, NVDA no longer inappropriately causes its main window to be shown all the time while running. (#726)
+- NVDA no longer crashes on Windows xP when starting a WPF application (#1437)
 
 
 == Changes for Developers ==
