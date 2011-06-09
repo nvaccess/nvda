@@ -175,6 +175,8 @@ class UIAHandler(COMObject):
 			if self.clientObject.compareElements(sender,lastFocus) and lastFocus.currentHasKeyboardFocus:
 				return
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+		if not obj:
+			return
 		eventHandler.queueEvent("gainFocus",obj)
 
 	def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(self,sender,propertyId,newValue):
