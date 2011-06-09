@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2011.2 =
+Highlights of this release include major improvements concerning punctuation and symbols, including configurable levels, custom labelling and character descriptions; no pauses at the end of lines during say all; improved support for ARIA in Internet Explorer; and better support for XFA/LiveCycle PDF documents in Adobe Reader.
 
 == New Features ==
 - It is now possible to hear the description for any given character by pressing the review current character script twice in quick succession.  For English characters this is the standard English phonetic alphabet. For pictagraphic languages such as traditional Chinese, one or more example phraises using the given symbol are provided. Also pressing review current word or review current line three times will spell the word/line using the first of these descriptions. (#55)
@@ -73,10 +74,10 @@
 - In Microsoft Excel, there is no longer a lag when holding down or rapidly pressing keys to move between or select cells.
 - Fixed intermittent crashes of the NVDA service which meant that NVDA stopped running on secure Windows screens.
 - Fixed problems that sometimes occurred with braille displays when a change caused text that was being displayed to disappear.
-- The downloads window in Internet Explorer 9 can now be navigated and read with NVDA (#1280)
-- It is no longer possible to accidentilly start multiple copies of NVDA at the same time (#507)
+- The downloads window in Internet Explorer 9 can now be navigated and read with NVDA. (#1280)
+- It is no longer possible to accidentally start multiple copies of NVDA at the same time. (#507)
 - On slow systems, NVDA no longer inappropriately causes its main window to be shown all the time while running. (#726)
-- NVDA no longer crashes on Windows xP when starting a WPF application (#1437)
+- NVDA no longer crashes on Windows xP when starting a WPF application. (#1437)
 
 
 == Changes for Developers ==
