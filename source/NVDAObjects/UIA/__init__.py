@@ -21,6 +21,7 @@ class UIATextInfo(textInfos.TextInfo):
 		"word":UIAHandler.TextUnit_Word,
 		"line":UIAHandler.TextUnit_Line,
 		"paragraph":UIAHandler.TextUnit_Paragraph,
+		"readingChunk":UIAHandler.TextUnit_Line,
 	}
 
 	def _getFormatFieldAtRange(self,range,formatConfig):
@@ -44,7 +45,7 @@ class UIATextInfo(textInfos.TextInfo):
 	def __init__(self,obj,position):
 		super(UIATextInfo,self).__init__(obj,position)
 		if isinstance(position,UIAHandler.IUIAutomationTextRange):
-			self._rangeObj=position.Clone()
+			self._rangeObj=position
 		elif position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			sel=self.obj.UIATextPattern.GetSelection()
 			if sel.length>0:
@@ -53,8 +54,21 @@ class UIATextInfo(textInfos.TextInfo):
 				raise NotImplementedError("UIAutomationTextRangeArray is empty")
 			if position==textInfos.POSITION_CARET:
 				self.collapse()
+		elif isinstance(position,UIATextInfo): #bookmark
+			self._rangeObj=position._rangeObj
+		elif position==textInfos.POSITION_FIRST:
+			self._rangeObj=self.obj.UIATextPattern.documentRange
+			self.collapse()
+		elif position==textInfos.POSITION_LAST:
+			self._rangeObj=self.obj.UIATextPattern.documentRange
+			self.collapse(True)
 		else:
-			self._rangeObj=self.obj.UIATextPattern.DocumentRange
+			raise ValueError("Unknown position %s"%position)
+
+	def __eq__(self,other):
+		if self is other: return True
+		if self.__class__ is not other.__class__: return False
+		return bool(self._rangeObj.compare(other._rangeObj))
 
 	def _get_bookmark(self):
 		return self.copy()
@@ -90,7 +104,7 @@ class UIATextInfo(textInfos.TextInfo):
 		return res
 
 	def copy(self):
-		return self.__class__(self.obj,self._rangeObj)
+		return self.__class__(self.obj,self._rangeObj.clone())
 
 	def collapse(self,end=False):
 		if end:
