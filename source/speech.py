@@ -807,7 +807,8 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
-	descriptionText=getSpeechTextForProperties(reason=reason,description=description)
+	descriptionText=(getSpeechTextForProperties(reason=reason,description=description)
+		if config.conf["presentation"]["reportObjectDescriptions"] else "")
 	levelText=getSpeechTextForProperties(reason=reason,positionInfo_level=level)
 
 	# Determine under what circumstances this node should be spoken.
