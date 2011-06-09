@@ -241,7 +241,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakTextInfo(pos)
 		else:
 			speech.speakMessage(_("No flat review for this object"))
-	script_navigatorObject_moveToFlatReviewAtObjectPosition.__doc__=_("Switches to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object")
+	script_navigatorObject_moveToFlatReviewAtObjectPosition.__doc__=_("Moves to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object")
 
 	def script_navigatorObject_moveToObjectAtFlatReviewPosition(self,gesture):
 		pos=api.getReviewPosition()

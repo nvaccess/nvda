@@ -304,11 +304,12 @@ The layout is illustrated as follows:
 | Previous character | Current character | Next character |
 
 ++ Flat Review ++[FlatReview]
-As well as reviewing the content of a single [object #Objects], NVDA allows you to review the entire content of a document or the text of the screen as it appears visually.
+While you can generally only review the content of a single [object #Objects], some objects allow you to review the content of objects inside them.
+This allows you to review the entire content of a document or the text of the screen as it appears visually.
 This is called flat review.
 This is similar to the screen review or mouse cursor functionality in many other Windows screen readers.
 
-When you switch to flat review, you will be positioned at the location of the current [navigator object #ObjectNavigation].
+When you move to flat review, you will be positioned at the location of the current [navigator object #ObjectNavigation].
 If you haven't used object navigation, this will usually be the object that has the [focus #SystemFocus].
 For example, if the navigator object was a button, you will usually be positioned on the text of the button in flat review.
 You can then review the text using the [text review commands #ReviewingText].
@@ -317,7 +318,7 @@ You can also navigate directly to the object encompassing the current position o
 The following two commands are used for switching to/from flat review:
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Description |
-| Switch to flat review | NVDA+numpad7 | NVDA+pageUp | Moves to flat review, placing you at the position of the current navigator object, allowing you to  review the screen (or document if you are currently inside one) with the text review commands. |
+| Move to flat review | NVDA+numpad7 | NVDA+pageUp | Moves to flat review, placing you at the position of the current navigator object, allowing you to  review the screen (or document if you are currently inside one) with the text review commands. |
 | Move to object from flat review | NVDA+numpad1 | NVDA+pageDown | navigates to the object represented by the text at the current position of the review cursor in flat review |
 %kc:endInclude
 
