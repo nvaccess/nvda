@@ -818,7 +818,7 @@ class DictionaryDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		dictListID=wx.NewId()
-		entriesSizer=wx.BoxSizer(wx.HORIZONTAL)
+		entriesSizer=wx.BoxSizer(wx.VERTICAL)
 		entriesLabel=wx.StaticText(self,-1,label=_("&Dictionary entries"))
 		entriesSizer.Add(entriesLabel)
 		self.dictList=wx.ListCtrl(self,dictListID,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
@@ -838,7 +838,7 @@ class DictionaryDialog(SettingsDialog):
 		addButton=wx.Button(self,addButtonID,_("&Add"),wx.DefaultPosition)
 		entryButtonsSizer.Add(addButton)
 		editButtonID=wx.NewId()
-		editButton=wx.Button(self,editButtonID,_("&edit"),wx.DefaultPosition)
+		editButton=wx.Button(self,editButtonID,_("&Edit"),wx.DefaultPosition)
 		entryButtonsSizer.Add(editButton)
 		removeButtonID=wx.NewId()
 		removeButton=wx.Button(self,removeButtonID,_("&Remove"),wx.DefaultPosition)
