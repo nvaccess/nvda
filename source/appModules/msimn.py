@@ -46,7 +46,7 @@ class AppModule(appModuleHandler.AppModule):
 			obj.editValueUnit=textInfos.UNIT_STORY
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if obj.windowControlID in (128,129,130) and obj.role==controlTypes.ROLE_LISTITEM:
+		if obj.windowClassName=="SysListView32" and obj.windowControlID in (128,129,130) and obj.role==controlTypes.ROLE_LISTITEM:
 			clsList.insert(0,MessageRuleListItem)
 
 	def event_gainFocus(self,obj,nextHandler):
