@@ -39,6 +39,7 @@ Highlights of this release include major improvements concerning punctuation and
 - In applications using Mozilla Gecko 2 and later (such as Firefox 4 and later), a document can now be read in browse mode before it is fully finished loading.
 - NVDA now announces the state of a container when focus moves to a control inside it (e.g. if focus moves inside a document that is still loading it will report it as busy).
  - NVDA's user interface and documentation no longer use the terms "first child" and "parent" with respect to object navigation, as these terms are confusing for many users.
+ - Collapsed is no longer reported for some menu items which have sub-menus.
 
 
 == Bug Fixes ==
@@ -82,6 +83,7 @@ Highlights of this release include major improvements concerning punctuation and
 - NVDA no longer crashes on Windows xP when starting a WPF application. (#1437)
 - sayAll and sayall with review cursor is now able to work in some UI automation text controls that support all needed methods. (e.g. you can now use sayAll review on XPS Viewer documents).
 - NVDA no longer inappropriately classes some list items in the Outlook Express / Windows Live Mail message rules Apply Now dialog as being checkboxes. (#576)
+- Combo boxes are no longer reported as having a sub-menu.
 
 
 == Changes for Developers ==

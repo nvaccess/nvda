@@ -457,6 +457,9 @@ def processPositiveStates(role, states, reason, positiveStates):
 	if controlTypes.STATE_DRAGGING in positiveStates:
 		# It's obvious that the control is draggable if it's being dragged.
 		positiveStates.discard(controlTypes.STATE_DRAGGABLE)
+	if role == controlTypes.ROLE_COMBOBOX:
+		# Combo boxes inherently have a popup, so don't report it.
+		positiveStates.discard(controlTypes.STATE_HASPOPUP)
 	if reason == REASON_QUERY:
 		return positiveStates
 	positiveStates.discard(controlTypes.STATE_DEFUNCT)
@@ -472,6 +475,10 @@ def processPositiveStates(role, states, reason, positiveStates):
 			positiveStates.discard(controlTypes.STATE_READONLY)
 	if role == controlTypes.ROLE_CHECKBOX:
 		positiveStates.discard(controlTypes.STATE_PRESSED)
+	if role == controlTypes.ROLE_MENUITEM:
+		# The user doesn't usually care if a menu item is expanded or collapsed.
+		positiveStates.discard(controlTypes.STATE_COLLAPSED)
+		positiveStates.discard(controlTypes.STATE_EXPANDED)
 	return positiveStates
 
 def processNegativeStates(role, states, reason, negativeStates):
