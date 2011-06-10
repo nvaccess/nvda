@@ -228,11 +228,11 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 				newStates=newPropertyValues[name]
 				newPropertyValues['states']=newStates-oldStates
 				newPropertyValues['negativeStates']=oldStates-newStates
-	#Get the speech text for the properties we want to speak, and then speak it
 	#properties such as states need to know the role to speak properly, give it as a _ name
 	newPropertyValues['_role']=newPropertyValues.get('role',obj.role)
 	# The real states are needed also, as the states entry might be filtered.
 	newPropertyValues['_states']=obj.states
+	#Get the speech text for the properties we want to speak, and then speak it
 	text=getSpeechTextForProperties(reason,**newPropertyValues)
 	if text:
 		speakText(text,index=index)
