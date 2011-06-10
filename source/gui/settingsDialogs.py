@@ -741,7 +741,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.tableHeadersCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report table row/column h&eaders"))
 		self.tableHeadersCheckBox.SetValue(config.conf["documentFormatting"]["reportTableHeaders"])
 		settingsSizer.Add(self.tableHeadersCheckBox,border=10,flag=wx.BOTTOM)
-		self.tableCellCoordsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report table cell &coordinates"))
+		self.tableCellCoordsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report table cell c&oordinates"))
 		self.tableCellCoordsCheckBox.SetValue(config.conf["documentFormatting"]["reportTableCellCoords"])
 		settingsSizer.Add(self.tableCellCoordsCheckBox,border=10,flag=wx.BOTTOM)
 		self.linksCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &links"))
