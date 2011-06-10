@@ -537,6 +537,22 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if label and not label.isspace():
 			return label
 		try:
+			dataObj=o.QueryInterface(oleTypes.IDataObject)
+		except comtypes.COMError:
+			dataObj=None
+		if dataObj:
+			try:
+				dataObj=pythoncom._univgw.interface(hash(dataObj),pythoncom.IID_IDataObject)
+				format=(win32clipboard.CF_UNICODETEXT, None, pythoncom.DVASPECT_CONTENT, -1, pythoncom.TYMED_HGLOBAL)
+				medium=dataObj.GetData(format)
+				buf=ctypes.create_string_buffer(medium.data)
+				buf=ctypes.cast(buf,ctypes.c_wchar_p)
+				label=buf.value
+			except:
+				pass
+		if label:
+			return label
+		try:
 			oleObj=o.QueryInterface(oleTypes.IOleObject)
 			label=oleObj.GetUserType(1)
 		except comtypes.COMError:
