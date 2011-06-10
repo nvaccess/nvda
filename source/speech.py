@@ -471,8 +471,8 @@ def processPositiveStates(role, states, reason, positiveStates):
 		positiveStates.discard(controlTypes.STATE_LINKED)
 		if role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TABLEROW) and controlTypes.STATE_SELECTABLE in states:
 			positiveStates.discard(controlTypes.STATE_SELECTED)
-		if role != controlTypes.ROLE_EDITABLETEXT:
-			positiveStates.discard(controlTypes.STATE_READONLY)
+	if role != controlTypes.ROLE_EDITABLETEXT:
+		positiveStates.discard(controlTypes.STATE_READONLY)
 	if role == controlTypes.ROLE_CHECKBOX:
 		positiveStates.discard(controlTypes.STATE_PRESSED)
 	if role == controlTypes.ROLE_MENUITEM:
