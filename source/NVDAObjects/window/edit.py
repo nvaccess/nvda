@@ -515,6 +515,34 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if range.start<startLimit:
 			range.start=startLimit
 
+	def _getEmbeddedObjectLabel(self,embedRangeObj):
+		label=None
+		try:
+			o=embedRangeObj.GetEmbeddedObject()
+		except comtypes.COMError:
+			o=None
+		if not o:
+			return None
+		import oleacc
+		try:
+			label=o.QueryInterface(oleacc.IAccessible).accName(0);
+		except comtypes.COMError:
+			pass
+		if label:
+			return label
+		left,top=embedRangeObj.GetPoint(comInterfaces.tom.tomStart)
+		right,bottom=embedRangeObj.GetPoint(comInterfaces.tom.tomEnd)
+		import displayModel
+		label=displayModel.getWindowTextInRect(self.obj.appModule.helperLocalBindingHandle, self.obj.windowHandle, left, top, right, bottom+10,1,1)[0]
+		if label and not label.isspace():
+			return label
+		try:
+			oleObj=o.QueryInterface(oleTypes.IOleObject)
+			label=oleObj.GetUserType(1)
+		except comtypes.COMError:
+			pass
+		return label
+
 	def _getTextAtRange(self,rangeObj):
 		embedRangeObj=None
 		bufText=rangeObj.text
@@ -525,22 +553,10 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		for offset in range(len(bufText)):
 			if ord(bufText[offset])==0xfffc:
 				if embedRangeObj is None: embedRangeObj=rangeObj.duplicate
-				embedRangeObj.setRange(start+offset,start+offset)
-				try:
-					o=embedRangeObj.GetEmbeddedObject()
-					#Fetch a description for this object
-					o=o.QueryInterface(oleTypes.IOleObject)
-					dataObj=o.GetClipboardData(0)
-					dataObj=pythoncom._univgw.interface(hash(dataObj),pythoncom.IID_IDataObject)
-					format=(win32clipboard.CF_UNICODETEXT, None, pythoncom.DVASPECT_CONTENT, -1, pythoncom.TYMED_HGLOBAL)
-					medium=dataObj.GetData(format)
-					buf=ctypes.create_string_buffer(medium.data)
-					buf=ctypes.cast(buf,ctypes.c_wchar_p)
-					label=buf.value
-				except comtypes.COMError:
-					label=_("unknown")
+				embedRangeObj.setRange(start+offset,start+offset+1)
+				label=self._getEmbeddedObjectLabel(embedRangeObj)
 				if label:
-					newTextList.append(_("%s embedded object")%label)
+					newTextList.append(label)
 				else:
 					newTextList.append(_("embedded object"))
 			else:
@@ -685,7 +701,7 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 	editValueUnit=textInfos.UNIT_LINE
 
 	def _get_TextInfo(self):
-		if self.editAPIVersion>1 and self.useITextDocumentSupport and self.ITextDocumentObject:
+		if self.editAPIVersion>1 and (self.useITextDocumentSupport or self.windowClassName.endswith('PT')) and self.ITextDocumentObject:
 			return ITextDocumentTextInfo
 		else:
 			return EditTextInfo
