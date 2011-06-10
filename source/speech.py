@@ -467,7 +467,7 @@ def processPositiveStates(role, states, reason, positiveStates):
 	positiveStates.discard(controlTypes.STATE_FOCUSED)
 	positiveStates.discard(controlTypes.STATE_OFFSCREEN)
 	positiveStates.discard(controlTypes.STATE_INVISIBLE)
-	if reason in (REASON_FOCUS, REASON_CARET, REASON_SAYALL):
+	if reason != REASON_CHANGE:
 		positiveStates.discard(controlTypes.STATE_LINKED)
 		if role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TABLEROW) and controlTypes.STATE_SELECTABLE in states:
 			positiveStates.discard(controlTypes.STATE_SELECTED)
