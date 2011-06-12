@@ -207,14 +207,14 @@ class UIA(Window):
 		self._doneInit=True
 
 		if not UIAElement:
-			raise ValueError("needs either a UIA element or window handle")
+			raise ValueError("needs a UIA element")
 
 		UIACachedWindowHandle=UIAElement.cachedNativeWindowHandle
 		self.UIAIsWindowElement=bool(UIACachedWindowHandle)
-		if not windowHandle:
+		if UIACachedWindowHandle:
 			windowHandle=UIACachedWindowHandle
-			if not windowHandle:
-				windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
+		if not windowHandle:
+			windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		if not windowHandle:
 			raise InvalidNVDAObject("no windowHandle")
 		super(UIA,self).__init__(windowHandle=windowHandle)
