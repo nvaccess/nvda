@@ -17,7 +17,7 @@ O NonVisual Desktop Access permite às pessoas com deficiência visual acessar e
 As características principais são: 
 - Suporte para aplicações populares incluindo navegadores web, clientes de e-mail, programas de conversação pela internet e suítes de escritório;
 - Sintetizador de voz integrado que suporta mais de 20 idiomas;
-- Anúncio do formato do texto onde esteja disponivel tal como nome e tamanho da fonte, estilo e erros de ortografia;
+- Anúncio da formatação do texto onde esteja disponível tal como nome e tamanho da fonte, estilo e erros de ortografia;
 - Anúncio automático do texto sob o mouse e indicação opcional em áudio de sua posição;
 - Suporte para diversas linhas braille;
 - Capacidade para  ser executado diretamente através de dispositivos USB e outros dispositivos portáteis sem necessitar de instalação;
@@ -29,7 +29,7 @@ As características principais são:
 - Suporte para o Prompt de comando do Windows e aplicações de console.
 -
 ++ Internacionalização ++
-É importante que as pessoas tenham o mesmo acesso às tecnologias em qualquer parte do mundo, independentemente do idioma que falem.
+É importante que as pessoas tenham igual acesso às tecnologias em qualquer parte do mundo, independentemente do idioma que falem.
 Para além do inglês, o NVDA está traduzido para mais de 20 idiomas incluindo: Árabe, Português do Brasil, Croata, Checo, Finlandês, Francês, Galego, Alemão, Húngaro, Italiano, Japonês, Português, Russo, Eslovaco, Espanhol, Tailandês, Chinês Tradicional, Ucraniano, Holandês Sul-Africano, Polonês e Vietnamita. 
 
 ++ Suporte de Sintetizador de Voz ++
@@ -41,7 +41,7 @@ Informações sobre outros sintetizadores de voz que o NVDA suporta podem ser en
 
 ++ Suporte de Braille ++
 Para usuários que tenham uma linha Braille, o NVDA pode transmitir a informação neste sistema de leitura e escrita.
- Veja por favor a seção [Linhas Braille Suportadas #SupportedBrailleDisplays] para informações sobre os terminais Braille compatíveis.
+ Consulte por favor a seção [Linhas Braille Suportadas #SupportedBrailleDisplays] para informações sobre os terminais Braille compatíveis.
 
 O NVDA suporta códigos Braille para diversos idiomas, incluindo os códigos Braille contraídos, não contraídos e de computador para alguns idiomas. 
 ++ Licença e Copyright ++
@@ -61,7 +61,7 @@ Para mais detalhes, pode [ver a licença completa. http://www.gnu.org/licenses/o
 + Obttendo o NVDA +
 Se não tem uma cópia do NVDA, pode baixá-la em [www.nvda-project.org NVDA_URL].
 
-Entre na seção download e procure o link para baixar a última versão deste leitor de telas. 
+Entre na seção download e encontrará o link para baixar a última versão deste leitor de telas. 
 Atualmente, o NVDA é distribuído em duas formas. A primeira é um Instalador que falará através da instalação deste leitor de telas podendo ser executado em qualquer altura a partir do Menu Iniciar.
 A outra é um arquivo comprimido e auto-extraível que contém a versão completa e portátil deste programa, que pode executar a partir de qualquer lugar, incluindo-se os dispositivos USB ou CD.
 Para acessar as telas de logon do Windows, Conta de Controle do Utilizador (UAC) e outras telas de segurança do Windows, bem como aplicações executadas como administrador no Windows Vista e superiores, terá que instalar o NVDA em seu sistema utilizando o instalador. Essas telas não podem ser acessadas através da utilização de uma cópia do NVDA portátil.
@@ -84,16 +84,17 @@ Se reinstalar o NVDA, nesta altura irá questionar se pretende reiniciar o siste
  Caso o NVDA não questione se pretende reiniciar, pressione "Terminar" e ele encerrará o instalador e iniciará a nova versão instalada deste leitor de telas. 
 
 ++ NVDA Portátil ++
-Caso tenha a versão do arquivo comprimido do NVDA, então tudo o que precisa fazer é pressionar Enter ou um duplo clique no arquivo e seguir as janelas.
+Caso tenha a versão do arquivo comprimido do NVDA, então tudo o que precisa fazer é pressionar Enter ou um duplo clique no arquivo e seguir as instruções do diálogo.
 Ser-lhe-á perguntado onde pretende colocar os arquivos em seu sistema. 
 
 +++ NVDA Portable em um Dispositivo USB +++
 É possível colocar o NVDA em uma unidade de memória USB, o que lhe permite utilizá-lo em outros computadores.
 
-Quando a versãon Portátil perguntar onde deseja descompactá-la, digite a unidade de sua memória USB, mais uma sub-pasta o opcional onde pretende colocar o NVDA.
-Si por exemplo sua unidade de memória USB está em E:\, você deve escrever E:\nvda, Colocando assim o NVDA na sub-pasta NVDA em sua unidade de memória USB.
+Quando a versãon Portátil perguntar onde deseja descompactá-la, digite a unidade de sua memória USB, mais uma subpasta opcional onde pretende colocar o NVDA.
+Si por exemplo sua unidade de memória USB está em E:\, você deve escrever E:\nvda, Colocando assim o NVDA na subpasta NVDA em sua unidade de memória USB.
 
-Atente que mesmo podendo agora levar consigo o NVDA e suas opções a qualquer lugar, o NVDA não iniciará automaticamente simplesmente inserindo a unidade de memória USB. Terá que iniciá-lo manualmente desde o Windows Explorer ou desde o diálogo Executar.
+Atente que mesmo podendo agora levar consigo o NVDA e suas opções a qualquer lugar, o NVDA não será iniciado automaticamente simplesmente inserindo a unidade de memória USB.
+Terá que iniciá-lo manualmente desde o Windows Explorer ou desde o diálogo Executar.
 
 Para informações sobre o início automático do NVDA desde uma unidade de memória USB, por favor veja este artigo em inglês:
 http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
@@ -175,11 +176,18 @@ Quando o menu se abrir, pode usar as setas direcionais para navegar pelo mesmo e
 %kc:endInclude
 
 + Navegando com o NVDA +
+O NVDA permite-lhe explorar e navegar pelo sistema de várias formas, incluindo-se a interação normal e exploração.
 
-++ Navegando com o Foco ++
-A forma mais comum de navegar pelo Windows com o NVDA é simplesmente mover-se com os comandos de teclado normais, tais como Tab e Shift+Tab para se mover para a frente e para trás entre controles, pressionar Alt para acessar a barra de menus e usar as setas para navegar pelos menus e Alt+Tab para se mover entre aplicações em execução.
-Isto move o foco, ou seja, o objeto que recebe as teclas digitadas. 
-Quando fizer isso, o NVDA transmitirá a informação sobre o objeto em foco, tal como o seu nome, tipo, valor, estado, descrição, atalho do teclado e informação da posição. 
+++ Objetos ++
+Cada aplicativo e o próprio sistema operacional consiste de vários objetos.
+Objeto é um item individual como um bloco de texto, botão, caixa de seleção, barra deslizante, lista ou campo de texto editável.
+
+++ Navegando com o Foco do Sistema ++[SystemFocus] 
+O foco do sistema, também conhecido simplesmente como foco, é o objeto que recebe as teclas digitadas através do teclado.
+Por exemplo, se você está digitando em um campo de texto editável, este então tem o foco.
+A forma mais comum de navegar pelo Windows com o NVDA é simplesmente mover-se com os comandos de teclado normais do windows, tais como Tab e Shift+Tab para se mover para a frente e para trás entre controles, pressionar Alt para acessar a barra de menus e usar as setas para navegar pelos menus e Alt+Tab para se mover entre aplicações em execução.
+
+Quando você faz isso, o NVDA anuncia  a informação sobre o objeto em foco, tal como o seu nome, tipo, valor, estado, descrição, atalho do teclado e informação da posição. 
 
 Existem alguns comandos de teclado úteis quando se move com o foco: 
 %kc:beginInclude
@@ -191,8 +199,10 @@ Existem alguns comandos de teclado úteis quando se move com o foco:
 %kc:endInclude
 
 ++ Navegando com o Cursor do Sistema ++
-Quando o foco está sobre um objeto que tem um cursor de edição (cursor do sistema), pode andar com as setas e editar normalmente como pretender.
-O NVDA anunciará como se mover por Carácter, palavra, linha e também informará a seleção ou não seleção de texto.
+Quando um [objeto #Objects] que permite navegação e ou edição de texto recebe o [foco #SystemFocus], você pode mover-se pelo texto usando o cursor do sistema, também conhecido como cursor de edição.
+Quando o foco está sobre um objeto que tem o cursor do sistema, pode usar as setas, page up, page down, home, and, etc. para mover-se ao longo do texto.
+Pode também alterar o texto se o controle permitir edição.
+O NVDA anunciará como se mover por Carácter, palavra, linha e também informará quando um texto for selecionado ou desselecionado.
  
 Este leitor de telas fornece os seguintes comandos relativamente ao cursor do sistema:
 %kc:beginInclude
@@ -210,16 +220,23 @@ Quando estiver numa tabela, as seguintes teclas de atalho também estarão dispo
 | Mover para a próxima linha | control+alt+seta abaixo | Move o cursor do sistema para a linha seguinte (permanecendo na mesma coluna) |
 %kc:endInclude
 
-++ Navegação de Objetos ++
-Se pretende explorar a aplicação atual ou o Sistema Operacional sem mover o foco, pode utilizar a navegação de objetos do NVDA.
-Isto permite-lhe mover-se de um objeto para outro e obter informações sobre objetos individuais, tais como texto, botões, caixas de combinação, barras, listas e campos de texto editáveis.
-Quando se move para um objeto, o NVDA o apresenta, de forma semelhante à maneira como ele dá informação do foco do sistema.
+++ Navegação de Objetos ++[ObjectNavigation
+Algumas vezes, você pode pretender explorar o aplicativo atual ou o sistema operacional sem mover o [foco #SystemFocus].
+Pode também querer trabalhar com [objetos #Objects] que não podem ser acessados normalmente usando o teclado.
+Nesses casos, você pode usar a navegação de objetos.
 
-Em vez de ter que se deslocar para trás e para frente entre cada objeto no sistema, os objetos são agrupados hierarquicamente.
-Isto significa que deve mover-se dentro de alguns objetos para acessar os objetos que eles contêm.
-Por exemplo, em vez de se mover através de todos os itens de lista quando a lista for encontrada, deve mover-se dentro da lista (ou seja, navegar para o objeto filho) para acessar os itens.
-Pode sair da lista (navegue até ao objeto pai) se continuar até sair da lista.
-Da mesma forma, se encontrar uma barra de ferramentas, deve mover-se dentro da mesma (navegar para o seu objeto filho) para acessar os controles na barra de ferramentas. 
+A navegação de objetos permite-lhe mover-se entre objetos individuais e obter informações sobre eles.
+Quando se move para um objeto, o NVDA o apresenta, de forma semelhante à maneira como ele dá informação do foco.
+Para uma forma de rever todo o texto tal como aparece na tela, você pode em lugar disso usar a [revisão plana #FlatReview].
+
+Em vez de ter que se deslocar para trás e para frente entre todos os objetos no sistema, os objetos são organizados hierarquicamente.
+Isto significa que alguns objetos contêm outros e você deverá mover-se para dentro deles para acessar os objetos filhos.
+Por exemplo, uma lista contêm itens de lista, então deve mover-se para dentro da lista a fim de acessar seus itens.
+Caso tenha movido para um iten da lista, pode mover-se para o objeto pai a fim de voltar à lista e mover-se ao longo dela se desejar.
+Da mesma forma, se encontrar uma barra de ferramentas, deve mover-se para dentro da mesma para acessar seus controles. 
+
+O objeto que atualmente está sendo revisado chama-se objeto de navegação.
+Uma vez que tenha navegado para um objeto, pode revisá-lo com os comandos de [revisão de texto #ReviewingText].
 
 Por padrão, a navegação de objetos acompanha o foco do sistema, embora esse comportamento possa ser ativado e desativado. 
 
@@ -227,36 +244,36 @@ Para navegar pelos objetos utilize as seguintes teclas de atalho:
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
 | Anunciar o objeto atual | NVDA+5 do teclado numérico | NVDA+control+i | Anuncia o objeto de navegação atual. Se pressionada duas vezes, soletra o objeto. Pressionando-se três vezes, copia o texto para a área de transferência. |
-| Mover para o objeto pai | NVDA+8 do teclado Numérico | NVDA+shift+i | Coloca o objeto pai do atual como objeto de navegação, (ou seja, aquele que o contém) |
-| Mover para o objeto anterior | NVDA+4 do teclado numérico | NVDA+control+j | Coloca como objeto atual de navegação o objeto anterior (ou seja, o objeto antes deste, no mesmo nível) |
-| Mover para o objeto seguinte | NVDA+6 do teclado numérico | control+NVDA+l | Move para o objeto imediatamente seguinte a este (no mesmo nível) |
-| Mover para o primeiro objeto filho | NVDA+2 do teclado numérico | NVDA+shift+vírgula | Coloca como objeto de navegação o primeiro filho (ou seja, o primeiro objeto dentro do mesmo) |
+| Mover para o pai do objeto atual | NVDA+8 do teclado Numérico | NVDA+shift+i | Move para o objeto que contém o atual objeto de navegação |
+| Mover para o objeto anterior | NVDA+4 do teclado numérico | NVDA+control+j | Move para o objeto anterior ao objeto de navegação atual |
+| Mover para o objeto seguinte | NVDA+6 do teclado numérico | control+NVDA+l | Move para o objeto seguinte ao objeto de navegação atual |
+| Mover para o primeiro objeto filho | NVDA+2 do teclado numérico | NVDA+shift+vírgula | Move para o primeiro objeto contido no objeto de navegação atual |
 | Mover para o objeto em foco | NVDA+Menos do teclado numérico | NVDA+backspace | Move para o objeto que tem o foco do sistema atual, e também posiciona o cursor de exploração na posição do cursor do sistema, se o mesmo estiver visível |
-| Ativar objeto atual | NVDA+Enter do teclado numérico | NVDA+enter | Ativa o objeto atual (o mesmo que clicar com o mouse ou pressionar a barra de espaços quando se tem o foco) |
-| Mover o foco ou o cursor do sistema para a posição atual da revisão | NVDA+shift+Menos do teclado numérico | NVDA+shift+backspace | Se pressionada uma vez, coloca o foco sobre o objeto atual. Duas vezes, coloca o cursor do sistema na posição do cursor de exploração |
-| Anunciar dimensões do objeto atual | NVDA+Delete do teclado numérico | NVDA+delete | Anuncia as dimensões atuais dos objetos referentes à tela em percentagens (incluindo a distância da esquerda e do topo da tela, e a sua largura e altura) |
+| Ativar objeto de navegação atual | NVDA+Enter do teclado numérico | NVDA+enter | Ativa o objeto de navegação atual (o mesmo que clicar com o mouse ou pressionar a barra de espaços quando se tem o foco) |
+| Mover o foco ou o cursor do sistema para a posição atual da revisão | NVDA+shift+Menos do teclado numérico | NVDA+shift+backspace | Se pressionada uma vez, coloca o foco sobre o objeto de navegação atual. Duas vezes, coloca o cursor do sistema na posição do cursor de exploração |
+| Anunciar dimensões do objeto de navegação atual | NVDA+Delete do teclado numérico | NVDA+delete | Anuncia as dimensões do objeto de navegação atual em relação à tela em percentagens (incluindo a distância da esquerda e do topo da tela, largura e altura do mesmo|
 %kc:endInclude
 
 Nota: As teclas do bloco numérico requerem que o Num Lock esteja desativado para que possam funcionar adequadamente. 
 
-++ Revendo Texto no Objeto atual ++
-O NVDA permite-lhe ler o conteúdo atual da navegação de objetos por caracteres, palavras ou linhas.
- Isto é muito útil no console do DOS do Windows e noutros locais onde há um cursor do sistema limitado ou inexistente.
+++ Revisando Texto ++[ReviewingText]
+O NVDA permite-lhe ler o conteúdo do atual [objeto de navegação #ObjectNavigation] (inclusive em [revisão plana #FlatReview]) por caracteres, palavras ou linhas.
+ Isto é muito útil no console do DOS do Windows e noutros locais onde há um [cursor do sistema #SystemCaret] limitado ou inexistente.
 Quando o cursor de exploração é movido, o cursor do Sistema não o acompanha, assim pode analisar o texto sem perder a posição de edição.
-No entanto, por padrão, quando se move o cursor do Sistema, o cursor de exploração acompanha-o.
+No entanto, por padrão, quando se move o cursor do Sistema, o cursor de exploração o acompanha.
 Esta opção pode ser ativada ou desativada.
 
-As teclas de atalho seguintes estão disponíveis para a revisão de texto: 
+As seguintes teclas de atalho estão disponíveis para a revisão de texto: 
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
 | Mover para a primeira linha em revisão | shift+7 do teclado numérico | NVDA+7 | Move o cursor de exploração para a primeira linha do texto |
-| Mover para a linha anterior em revisão  | 7 do teclado numérico | NVDA+u | Move o cursor de exploração para a linha anterior do texto |
+| Mover para a linha anterior em revisão | 7 do teclado numérico | NVDA+u | Move o cursor de exploração para a linha anterior do texto |
  | Ler linha atual em revisão | 8 do teclado numérico | NVDA+i | Lê a linha atual do texto onde está posicionado o cursor de exploração. Ao pressionar duas vezes rapidamente soletra a linha. Pressionando-se três vezes, soletra-a usando descrições de caracteres. |
 | Mover para a próxima linha em revisão | 9 do teclado numérico | NVDA+o | Move o cursor de exploração para a próxima linha do texto |
 | Mover para a última linha em revisão | shift+9 do teclado numérico | NVDA+9 | Move o cursor de exploração para a última linha do texto |
 | Mover para a palavra anterior em revisão | 4 do teclado numérico | NVDA+j | Move o cursor de exploração para a palavra anterior no texto |
-| Ler palavra atual em revisão | 5 do teclado numérico| NVDA+k | Anuncia a palavra atual no texto onde está posicionado o cursor de exploração. Ao pressionar duas vezes rapidamente soletra a palavra. Três vezes, soletra usando descrições de caracteres. |
-| Mover para a próxima palavra em revisão | 6 do teclado numérico| NVDA+l | Move o cursor de exploração para a próxima palavra no texto |
+| Ler palavra atual em revisão | 5 do teclado numérico | NVDA+k | Anuncia a palavra atual no texto onde está posicionado o cursor de exploração. Ao pressionar duas vezes rapidamente soletra a palavra. Três vezes, soletra usando descrições de caracteres. |
+| Mover para a próxima palavra em revisão | 6 do teclado numérico | NVDA+l | Move o cursor de exploração para a próxima palavra no texto |
 | mover para o início da linha em revisão | shift+1 do teclado numérico | NVDA+shift+u | Move o cursor de exploração para o início da linha atual no texto |
 | Mover para o carácter anterior em revisão | 1 do teclado numérico | NVDA+m | Move o cursor de exploração para o carácter anterior na linha atual no texto |
 | Ler o carácter atual em revisão | 2 do teclado numérico | NVDA+vírgula | Lê o carácter atual na linha do texto onde está posicionado o cursor de exploração. Ao pressionar duas vezes rapidamente, soletra-o com descrição de caracteres. Pressionado três vezes, informa o valor numérico do carácter em decimal e hexadecimal. |
@@ -264,41 +281,51 @@ As teclas de atalho seguintes estão disponíveis para a revisão de texto:
 | Mover para o fim da linha em revisão | shift+3 do teclado numérico | NVDA+shift+o | Move o cursor de exploração para o carácter seguinte na linha atual do texto |
 | Ler tudo com revisão | Mais do teclado numérico | NVDA+shift+seta abaixo | Lê a partir da posição atual do cursor de exploração, movendo-o até ao fim do texto |
 | Copiar a partir do cursor de exploração | NVDA+f9 | NVDA+f9 | Inicia a cópia do texto a partir da posição atual do cursor de exploração. A cópia atual não será efetuada até que informe ao NVDA onde pretende copiar |
-| Copiar até ao cursor de exploração  | NVDA+f10 | NVDA+f10 | Copia a partir da posição do cursor de exploração definido atualmente com a cópia do cursor de exploração, até a posição do mesmo. Após pressionar esta tecla, o texto será copiado para a área de transferência do Windows  |
+| Copiar até ao cursor de exploração  | NVDA+f10 | NVDA+f10 | Copia a partir da posição do cursor de exploração definida atualmente com a cópia do cursor de exploração, até a posição do mesmo. Após pressionar esta tecla, o texto será copiado para a área de transferência do Windows  |
 %kc:endInclude
 
 Nota: As teclas do bloco numérico requerem que o Num Lock esteja desativado para que possam trabalhar adequadamente. 
 
-Para ajudá-lo a recordar estas teclas de atalho, atente que os comandos básicos de revisão de texto estão organizados numa tabela de três por três, do topo até ao final por linha, palavra e carácter e da esquerda para a direita por anterior, atual e seguinte.
-O layout é ilustrado como se segue: 
-| Linha | Linha atual | Próxima linha |
-| Palavra anterior | Palavra atual | Próxima palavra |
-| Carácter anterior | Carácter atual | Próximo carácter |
+Para ajudá-lo a assimilar estas teclas de atalho, atente que os comandos básicos de revisão de texto estão organizados numa tabela de três por três, do início até ao fim por linha, palavra e carácter e da esquerda para a direita por anterior, atual e seguinte.
+O esquema é ilustrado como se segue: 
+| Linha Anterior | Linha Atual | Próxima Linha |
+| Palavra Anterior | Palavra Atual | Próxima Palavra |
+| Carácter Anterior | Carácter Atual | Próximo Carácter |
 
-++ Revisão Plana ++
-Ao rever o conteúdo de apenas um um objeto, o NVDA permite-lhe rever todo o conteúdo de um documento ou do texto da tela.
-Isto denomina-se "revisão plana".
+++ Revisão Plana ++[FlatReview]
+Enquanto geralmente você pode revisar o conteúdo de apenas um [objeto #Objects] individualmente, há alguns objetos nos quais é possível acessar o conteúdo dos objetos contidos neles.
+Documentos complexos oferecem-lhe a possibilidade de revisar seu conteúdo por completo e nas janelas de aplicações   pode-se rever todo  o texto da tela tal como aparece visualmente.
+ Dá-se a isso o nome de revisão plana.
+É algo semelhante à revisão de tela ou à funcionalidade de cursor do mouse existente  em muitos outros leitores de tela.
 
-Os seguintes dois comandos são utilizados para alternar entre para e a partir da revisão plana:
+Quando alterna para a revisão plana, você é posicionado na localização do atual [objeto de navegação #ObjectNavegation].
+Se não estava usando a navegação de objetos, então esse será o objeto que tem o [foco #SystemFocus].
+Por exemplo, se o objeto de navegação é um botão, você normalmente será posicionado sobre o texto do botão dentro da revisão plana.
+Você poderá, então, rever o texto com os comandos de [revisão de texto #ReviewingText].
+Poderá também navegar diretamente para o objeto que abrange a posição atual do cursor de revisão, permitindo que a partir daí use a [navegação de objetos #ObjectNavigation.
+
+Os seguintes dois comandos são utilizados para alternar para e a partir da revisão plana:
+
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
-| Ativar a revisão plana | NVDA+7 do Teclado numérico | NVDA+pageUp | Move para a revisão plana, colocando-o na posição do objeto de navegação, permitindo que explore a tela (ou documento se estiver atualmente em algum) com os comandos de revisão de texto |
-| Mover para o objeto a partir da revisão plana | NVDA+1 do teclado numérico | NVDA+pageDown | Navega para o objeto representado pelo texto na posição atual do cursor de exploração dentro da revisão plana |
+| Ativar a revisão plana | NVDA+7 do Teclado numérico | NVDA+pageUp | Ativa a revisão plana, colocando-o na posição do objeto de navegação, permitindo que explore a tela (ou documento se estiver atualmente em algum) com os comandos de revisão de texto |
+| Mover para um objeto a partir da revisão plana | NVDA+1 do teclado numérico | NVDA+pageDown | Navega para o objeto representado pelo texto na atual posição do cursor de exploração dentro da revisão plana |
 %kc:endInclude
 
 ++ Navegando com o Mouse ++
 Quando move o ponteiro do mouse, por padrão, o NVDA anuncia o texto sob a posição do ponteiro, enquanto se move por ele.
 Quando suportado, o NVDA pode ler um parágrafo do texto, mas há controles que podem apenas ser lidos por linha. 
 
-O NVDA também pode ser configurado para anunciar o tipo de controle ou o objeto onde está atualmente o mouse conforme se movimente (ex. lista, botão etc.), o que é muito útil para utilizadores totalmente cegos quando algumas vezes o texto não for suficiente. 
+O NVDA também pode ser configurado para anunciar o tipo de controle ou o [objeto #Objects] onde está atualmente o mouse conforme se movimente (ex. lista, botão etc.), o que é muito útil para utilizadores totalmente cegos quando algumas vezes o texto não for suficiente. 
 
 Este programa fornece um modo para que os utilizadores compreendam onde está o mouse no que tange às dimensões da tela através da reprodução das coordenadas atuais do mouse através de beeps.
 Quanto mais alto estiver o mouse na tela, mais agudo será o tom dos beeps. 
 Quanto mais à esquerda ou à direita estiver o mouse na tela, mais parecerá que o som anda à esquerda ou à direita (assumindo-se que o utilizador tem caixas ou fones stereo).
 
-Estas características adicionais do mouse não se encontram ativadas por padrão no NVDA, mas se pretender tirar partido das mesmas, pode configurá-las a partir do diálogo das opções do mouse, que se encontram no menu Preferências do menu deste software. 
+Estas características adicionais do mouse não se encontram ativadas por padrão no NVDA.
+Se pretender tirar partido das mesmas, pode configurá-las a partir do diálogo das [opções do mouse #MouseSettings], que se encontram nas Preferências, no menu do NVDA.
 
-Apesar de um mouse físico ou de um touchpad terem de ser utilizados para navegar com o mouse, o NVDA tem alguns comandos fundamentais relacionados a este:
+Apesar de um mouse físico ou de um touchpad terem de ser utilizados para navegar com o mouse, o NVDA possui alguns comandos relacionados a este:
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
 | Clicar com o botão esquerdo do mouse | Barra do teclado numérico | NVDA+seta a esquerda | Clica uma vez com o botão esquerdo do mouse. O habitual dúplo clique pode ser realizado pressionando duas vezes rapidamente este comando |
@@ -315,7 +342,7 @@ Documentos complexos somente leitura, tais como páginas Web, são navegados pel
 Isso inclui documentos no Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader e Adobe Flash.
 
 No modo de navegação, o conteúdo do  documento é disposto  numa representação plana que pode ser navegada com as teclas do cursor como se ele  fosse um documento de texto qualquer.
-Todas as teclas de comando do NVDA para o cursor do sistema funcionam neste modo (Ex: leitura contínua, informar formatação, comandos de navegação para tabelas, etc).
+Todas as teclas de comando do NVDA para o [cursor do sistema #SystemCaret] funcionam neste modo (Ex: leitura contínua, informar formatação, comandos de navegação para tabelas, etc).
 
 A informação de que o texto é ou não um link, título etc é anunciada conforme se movimenta pelo mesmo. 
 
@@ -652,7 +679,7 @@ Por exemplo o menu Arquivo na barra de menus poderá ter a tecla de atalho Alt+F
 ==== Anunciar Posição do Objeto ====
 Esta opção permite-lhe escolher se terá a informação da posição do objeto (por exemplo, 1 de 4) anunciada quando se move para o mesmo com o foco ou com a navegação de objetos.
 
-==== Guess Object Position Information when unavailable ====
+==== Deduzir posição do objeto quando não disponível ====
 Si o anúncio da posição do objeto estiver desativado, esta opção permite ao NVDA deduzir a posição do objeto cuando não disponível para un controle em particular. 
 
 Caso esteja ativado, o NVDA anunciará a posição para mais controles tais como menús e barras de ferramentas, embora esta informação possa ser ligeiramente incorreta.
@@ -836,8 +863,9 @@ Enquanto o exibidor de fala estiver ativado, o mesmo atualizar-se-á constanteme
 Contudo, se clicar ou se o cursor ficar no visualizador, o NVDA parará temporariamente a atualização do texto, de modo que possa selecionar facilmente ou copiar o conteúdo existente. 
 
 ++ Console Python ++
-o Console Python do NVDA encontra-se dentro das Ferramentas do Menu do NVDA. É uma ferramenta de programação muito útil para deporação, inspeção interna geral do NVDA ou exploração da hierarquia de acessibilidade de uma aplicação.
-Para mais informações, consulte por favor a seção artigo sobre o Console de Python no Web site do NVDA.
+o Console Python do NVDA encontra-se dentro das Ferramentas de seu menu.
+É uma ferramenta de programação muito útil para deporação, inspeção interna geral do NVDA ou exploração da hierarquia de acessibilidade de uma aplicação.
+Para mais informações, consulte por favor o [Guia do Desenvolvedor que encontra-se disponível na seção Desenvolvimento no site do NVDA NVDA_URLwiki/Development].
 
 ++ Recarregar plugins ++
 Esse item, quando ativado, recarrega app modules e global plugins sem reiniciar o NVDA, o que  pode ser muito útil para desenvolvedores.
@@ -1000,13 +1028,7 @@ Deverá baixá-lo  e instalar o último pacote de instalação, que se denominar
 Quando configurar a linha e porta a utilizar, certifique-se de prestar muita atenção às instruções, especialmente se utiliza uma linha USB e já tem os drivers do fabricante instalados.
 
 A seguir encontram-se os comandos BRLTTY para o NVDA.
-Por favor veja a documentação das tabelas de teclas do BRLTTY para informações sobre como estão mapeados os comandos do BRLTTY para controlar as linhas braille. 
-In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
-You should download and install the latest installer package, which will be named, for example, brltty-win-4.2-2.exe.
-When configuring the display and port to use, be sure to pay close attention to the instructions, especially if you are using a USB display and already have the manufacturer's drivers installed.
-
-Following are the BRLTTY command assignments for NVDA.
-Por favor consulte as [tabelas de documentação de teclas para o BRLTTY http://mielke.cc/brltty/doc/drivers/] para informações sobre como estão mapeados os comandos do BRLTTY para controlar as linhas braille. 
+Por favor consulte as [tabelas de documentação de teclas para o BRLTTY http://mielke.cc/brltty/doc/drivers/] para obter informações sobre como estão mapeados os comandos do BRLTTY para controlar cada linha braille.
  
 %kc:beginInclude
 || Nome | Comando BRLTTY |

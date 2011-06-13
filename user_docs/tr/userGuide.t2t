@@ -185,7 +185,16 @@ Menü geldiğinde, menü öğeleri arasında yön tuşlarınızla dolaşabilir v
 
 + NVDA ile Dolaşım +
 
-++ Sistem odağıyla Dolaşım ++
+NVDA, bilinen yöntemlere ek olarak, inceleme imleci gibi sistemi incelemenize ve dolaşmanıza yarayan olanaklar sağlar.
+
+++ Nesneler ++[Objects]
+Her bir uygulama ve işletim sisteminin kendisi birçok nesneden oluşur.
+Bu  bir metin parçası, düğme, onay kutusu ya da yazılabilir metin alanı olabilir.
+
+++ Sistem odağıyla Dolaşım ++[SystemFocus]
+Sistem odağı, sadece "odak" olarak da anılır, klavyede basılacak tuşlardan etkilenecek olan [nesnedir #Objects].
+Örneğin bir yazılabilir metin alanına giriş yapıyorsanız bu yazı alanı sistem odağında demektir.
+
 NVDA ile windows içinde dolaşmanın en yaygın ve kolay yolu, Tab ve şift tab ile kontroller arasında ileri geri gidiş, Alt ile bir uygulamanın menü çubuğuna ulaşım ve yön tuşları kullanılarak menü öğeleri arasında dolaşım, veya alt+tab ile pencereler arasında dolaşım gibi temel windows komutlarını kullanmaktır.
 Bu, sistem odağını hareket ettirir; Örneğin, Bazı nesneler klavyede yazılan tuşlara göre hareket eder.
 Siz yukarıda bahsedilen tuşlara bastıkça, NVDA Üzerine gelinen nesnenin adı, Türü, değeri, durumu, tanımı, klavye kısayolu ve pozisyonuyla ilgili bilgileri belirtecektir.
@@ -199,8 +208,11 @@ Sistem odağıyla dolaşırken, bazı yararlı tuş kombinasyonları bulunmaktad
 | Durum çubuğunun bildirimi | NVDA+end | Eğer NVDA bulabilirse, durum çubuğunu belirtir. Bu komut, ayrıca nesne sunucusunu bu pozisyona taşır |
 %kc:endInclude
 
-++ Sistem imleciyle Dolaşım ++
-Sistem odağı, Sistem imleci olarak da bilinen düzenleme imleci bulunan bir nesnenin üzerindeyse, normalde yaptığınız gibi yön tuşlarını kullanarak metin için dolaşabilir ve metni düzenleyebilirsiniz.
+++ Sistem Düzenleme İmleciyle Dolaşım ++[SystemCaret]
+[Sistem odağı #SystemFocus], sizin üzerinde dolaşmanızı ve/veya giriş yapmanızı mümkün kılan, yani düzenleme imleci bulunan bir [nesnenin #Objects] üzerindeyse, normalde yaptığınız gibi yön tuşlarını kullanarak metin için dolaşabilir ve metni düzenleyebilirsiniz.
+
+Odak sistem düzeltme imleci olan bir nesnedeyken, metin üzerinde önceki sayfa (page up), sonraki sayfa (page down), baş (home), son (end) ve yön tuşlarını kullanarak dolaşabilirsiniz.
+Salt-okunur bir alan değilse, metin üzerinde değişiklik de yapabilirsiniz.
 Siz karakter karakter, sözcük sözcük ve satır satır dolaştıkça NVDA bunu size söyleyecek, ayrıca bir şeyi seçip seçmediğinizi de belirtecektir.
 
 Sistem imleciyle ilişkili olarak NVDA aşağıdaki tuş komutlarını sağlamaktadır:
@@ -220,16 +232,21 @@ Tablolarda aşağıdaki tuşlar da kullanılabilir:
 %kc:endInclude
 
 ++ Nesne Dolaşımı ++
-üzerinde bulunduğunuz uygulamayı veya işletim sisteminizi sistem imlecinin yerini değiştirmeden gezmek isterseniz, NVDA'nın nesne dolaşımını kullanabilirsiniz.
+Bazen aktif uygulamayı veya işletim sistemini [odağı #SystemFocus] değiştirmeden gezmek isteyebilirsiniz. 
+Aynı zamanda, normal şartlarda klavye ile ulaşamayacağınız [nesnelerle #Objects] çalışmak isteyebilirsiniz.
+İşte bu tür durumlar için, NVDA'nın nesne dolaşımını kullanabilirsiniz.
 böylece, metinler, düğmeler, onay kutuları, kayan göstergeler, listeler ve düzenlenebilir metin alanları gibi kişisel nesneler arasında dolaşabilir ve bunlar hakkında bilgi alabilirsiniz.
 Bir nesneye gittiğinizde, NVDA sistem imlecini hareket ettirdiğinizdekine benzer biçimde sizi bilgilendirecektir.
 
+Metni ekranda göründüğü şekliyle incelemek isterseniz, nesne sunucusunu kullanmak yerine [ekran inceleme kipine #FlatReview] geçebilirsiniz.
 Ekrandaki tüm nesneler arasında tek tek dolaşmak yerine, hiyerarşik olarak gruplanmış nesneler arasında dolaşım olanağı sunulmaktadır.
 Yani, bir nesnenin içinde bulunan diğer nesnelere ulaşmak için o nesne içine girip  dolaşmanız gerekmektedir.
 Örneğin, bir listeyle karşılaşıldığında, tüm liste öğeleri arasında dolaşmak yerine, bir liste öğesinin altındaki diğer öğeleri görmek için, bu liste öğesinin yavru nesnesi ya da nesnelerine giderek bu liste öğesi içinde dolaşmanız gerekecektir.
 Bu liste öğesi dışındaki diğer öğeler arasında dolaşabilmeniz için, ilgili liste öğesinin ana nesnesine gidebilirsiniz.
 Benzer biçimde, eğer bir araç çubuğuyla karşılaştıysanız, bu araç çubuğundaki kontrollere erişebilmek için, araç çubuğunun ilk yavru nesnesine giderek, bu araç çubuğu içinde dolaşmanız gerekmektedir.
 
+İncelenmekte olan nesneye dolaşım nesnesi denir. 
+Nesne sunucusuyla  Bir nesne üzerine geldikten sonra, nesneyi [metin inceleme komutlarını #ReviewingText] kullanarak inceleyebilirsiniz.
 Varsayılan olarak, nesne sunucusu sistem imleciyle birlikte hareket eder; ancak bu özellik kapatılıp açılabilir.
 
 Nesneler arasında dolaşmak için aşağıdaki tuşları kullanın:
@@ -249,11 +266,11 @@ Nesneler arasında dolaşmak için aşağıdaki tuşları kullanın:
 
 Not: Numara pedindeki tuşların düzgün çalışabilmesi için, numara kilidi kapalı olmalıdır.
 
-++ Mevcut nesnedeki metni inceleme ++
-NVDA üzerinde bulunduğu nesnenin içeriğini karakter karakter, sözcük sözcük, ya da satır satır incelemenize imkan vermektedir.
+++Metin inceleme ++[ReviewingText]
+NVDA üzerinde bulunduğunuz [nesnenin #ObjectNavigation] içeriğini ya da [ekran inceleme kipiyle #FlatReview] aktif ekranı, karakter karakter, sözcük sözcük, ya da satır satır incelemenize imkan vermektedir.
 Bu, windows komut konsolu ve sistem imlecinin çok kısıtlı olduğu veya hiç bulunmadığı pencereler gibi yerler için oldukça yararlıdır.
-İnceleme imlecini hareket ettirirken, sistem imleci bunu takip etmeyeceğinden, o anki yazma pozisyonunuzu kaybetmeden diğer metni görebilirsiniz.
-Ancak, varsayılan olarak, sistem imleci hareket ettikçe, inceleme imleci de onu takip etmektedir.
+İnceleme imlecini hareket ettirirken, sistem imleci bunu takip etmeyeceğinden, klavye odağını değiştirmeden ekranda görüntülenen metni inceleyebilirsiniz.
+Ancak, varsayılan olarak, sistem odağı hareket ettikçe, inceleme imleci de onu takip etmektedir.
 Bu özellik açılıp kapatılabilir.
 
 Metni incelerken, aşağıdaki tuş komutları kullanılabilir:
@@ -285,11 +302,19 @@ Düzen aşağıdaki biçimde gösterilmiştir:
 | Önceki sözcük | üzerinde bulunulan sözcük | Sonraki sözcük |
 | Önceki karakter | Üzerinde bulunulan karakter | Sonraki karakter |
 
-++ Ekran incelemesi ++
-Tek bir nesnenin içeriğini inceleyebilmenin yanısıra, NVDA, tüm belge içeriğini veya ekrandaki tüm metni incelemenizi de sağlamaktadır.
-Buna ekran incelemesi diyoruz.
+++ Ekran incelemesi ++[FlatReview]
+Genel olarak tek bir [nesnenin #Objects] içeriğini inceleyebilmenize rağmen, bazı nesneler, kapsadıkları nesneleri de incelemenize olanak tanır.
+Karmaşık belgelerin içeriğinin tamamını, ya da uygulama penceresiyle ilgili metnin tamamını, ekranda görüntülendiği şekliyle incelemenizi sağlayan bu özelliğe ekran incelemesi diyoruz.
 
-Aşağıdaki 2 tuş komutuyla, ekran incelemesine geçilebilir veya geri dönülebilir:
+Bu özellik, birçok ekran okuyucuda bulunan inceleme imleci ya da fare imleciyle ilgili işlevlerle benzerlik göstermektedir.
+
+Ekran inceleme kipine geçtiğinizde, [nesne sunucusunun #ObjectNavigation] mevcut pozisyonunda konumlanırsınız.
+Nesne sunucusunu kullanmadıysanız, bu genellikle [sistem odağındaki #SystemFocus] nesne olacaktır.
+Örneğin, nesne sunucusu bir düğmenin üzerindeyse, ekran inceleme kipine geçtiğinizde bu düğmeyle ilgili metnin üzerinde olursunuz.
+Daha sonra, [metin inceleme tuşlarını  #ReviewingText] kullanarak nesneyle ilgili metnin yanısıra nesnenin bulunduğu ekranı inceleyebilirsiniz.
+Bu kipte ekranı incelerken, inceleme imlecinin mevcut pozisyonundaki nesneye atlayarak [nesne sunucusunu #ObjectNavigation] kullanmaya devam etmeniz de mümkündür.
+
+Aşağıdaki 2 tuş komutuyla, ekran incelemesine geçilebilir veya nesne sunucusu ekran inceleme imlecinin mevcut konumundaki nesneye taşınabilir:
 %kc:beginInclude
 || Ad | Masaüstü klavye komutu | Dizüstü klavye komutu | Tanım |
 | Ekran incelemesine geçiş | NVDA+numaratör7 | NVDA+sayfa yukarı | Ekran incelemesi kipine geçer ve sizi o anki nesne sunucusunun bulunduğu yere götürür. böylece tüm ekran içeriğini veya eğer içindeyseniz bulunduğunuz belgedeki metni, metin inceleme komutlarını kullanarak dolaşabilirsiniz. |
@@ -325,7 +350,7 @@ Web sayfaları gibi kompleks salt okunur belgeler, NVDA'da tarama kipinde göste
  Bu, Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader ve Adobe Flash ile açılan belgeler için geçerlidir.
 
 Tarama kipi, web sayfası gibi bir içeriğin değişmez biçimde gösterildiği bir inceleme alanıdır ve içerik içinde yön tuşlarıyla dolaşılabilir.
-NVDA'nın sistem imleci için geçerli olan hepsini okuma, tablo inceleme, yazı biçimini raporlama gibi komutlar bu kip için de geçerlidir.
+NVDA'nın [sistem düzeltme imleci  #SystemCaret] için geçerli olan hepsini okuma, tablo inceleme, yazı biçimini raporlama gibi komutlar bu kip için de geçerlidir.
 Metin içinde hareket ettikçe, metnin bir bağlantı veya başlık olup olmadığı gibi bilgiler de belirtilir.
 
 Bazen, belge içindeki kontrollerle doğrudan etkileşim içinde olmanız gerekebilir.
@@ -587,7 +612,7 @@ Klavye Komutu: NVDA+4
 
 Etkinleştirildiğinde, NVDA bastığınız karakter olmayan (örnek, kontrol, Şift VS.) her tuşu söyleyecektir. Buna kontrolle birlikte basılan harflerden oluşan tuş kombinasyonları da dahildir.
 
-+++ Fare Ayarları (NVDA+control+m) +++
++++ Fare Ayarları (NVDA+control+m) +++[MouseSettings]
 Fare ayarları iletişim kutusu tercihler menüsü içindeki "Fare Ayarları..." altında bulunur.
 içinde aşağıdaki seçenekler mevcuttur:
 
