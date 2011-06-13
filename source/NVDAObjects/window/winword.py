@@ -381,6 +381,13 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			self._WinwordSelectionObject=windowObject.selection
 		return self._WinwordSelectionObject
 
+	def script_tab(self,gesture):
+		gesture.send()
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		if info._rangeObj.tables.count>0:
+			info.expand(textInfos.UNIT_LINE)
+			speech.speakTextInfo(info,reason=speech.REASON_CARET)
+
 	def script_nextRow(self,gesture):
 		info=self.makeTextInfo("caret")
 		if not info._rangeObj.Information(wdWithInTable):
@@ -430,6 +437,8 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			speech.speakMessage(_("edge of table"))
 
 	__gestures = {
+		"kb:tab": "tab",
+		"kb:shift+tab": "tab",
 		"kb:control+alt+upArrow": "previousRow",
 		"kb:control+alt+downArrow": "nextRow",
 		"kb:control+alt+leftArrow": "previousColumn",
