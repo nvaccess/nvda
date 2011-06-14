@@ -371,7 +371,8 @@ class VoiceSettingsDialog(SettingsDialog):
 		"""Same as L{makeSettingControl} but for boolean settings. Returns checkbox."""
 		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.i18nName)
 		setattr(self,"%sCheckbox"%setting.name,checkbox)
-		checkbox.Bind(wx.EVT_CHECKBOX,SynthSettingChanger(setting))
+		checkbox.Bind(wx.EVT_CHECKBOX,
+			lambda evt: setattr(getSynth(),setting.name,evt.IsChecked()))
 		checkbox.SetValue(getattr(getSynth(),setting.name))
 		if self.lastControl:
 			checkbox.MoveAfterInTabOrder(self.lastControl)
