@@ -367,6 +367,17 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.lastControl=lCombo
 		return sizer
 
+	def makeBooleanSettingControl(self,setting):
+		"""Same as L{makeSettingControl} but for boolean settings. Returns checkbox."""
+		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.i18nName)
+		setattr(self,"%sCheckbox"%setting.name,checkbox)
+		checkbox.Bind(wx.EVT_CHECKBOX,SynthSettingChanger(setting))
+		checkbox.SetValue(getattr(getSynth(),setting.name))
+		if self.lastControl:
+			checkbox.MoveAfterInTabOrder(self.lastControl)
+		self.lastControl=checkbox
+		return checkbox
+
 	def makeSettings(self, settingsSizer):
 		self.sizerDict={}
 		self.lastControl=None
@@ -416,11 +427,12 @@ class VoiceSettingsDialog(SettingsDialog):
 			if setting.name == changedSetting:
 				# Changing a setting shouldn't cause that setting's own values to change.
 				continue
-			b=isinstance(setting,NumericSynthSetting)
 			if setting.name in self.sizerDict: #update a value
 				self.settingsSizer.Show(self.sizerDict[setting.name])
-				if b:
+				if isinstance(setting,NumericSynthSetting):
 					getattr(self,"%sSlider"%setting.name).SetValue(getattr(synth,setting.name))
+				elif isinstance(setting,BooleanSynthSetting):
+					getattr(self,"%sCheckbox"%setting.name).SetValue(getattr(synth,setting.name))
 				else:
 					l=getattr(self,"_%ss"%setting.name)
 					lCombo=getattr(self,"%sList"%setting.name)
@@ -431,7 +443,12 @@ class VoiceSettingsDialog(SettingsDialog):
 					except ValueError:
 						pass
 			else: #create a new control
-				settingMaker=self.makeSettingControl if b else self.makeStringSettingControl
+				if isinstance(setting,NumericSynthSetting):
+					settingMaker=self.makeSettingControl
+				elif isinstance(setting,BooleanSynthSetting):
+					settingMaker=self.makeBooleanSettingControl
+				else:
+					settingMaker=self.makeStringSettingControl
 				s=settingMaker(setting)
 				self.sizerDict[setting.name]=s
 				self.settingsSizer.Insert(len(self.sizerDict)-1,s,border=10,flag=wx.BOTTOM)
@@ -441,7 +458,7 @@ class VoiceSettingsDialog(SettingsDialog):
 	def onCancel(self,evt):
 		#unbind change events for string settings as wx closes combo boxes on cancel
 		for setting in getSynth().supportedSettings:
-			if isinstance(setting,NumericSynthSetting): continue
+			if isinstance(setting,(NumericSynthSetting,BooleanSynthSetting)): continue
 			getattr(self,"%sList"%setting.name).Unbind(wx.EVT_CHOICE)
 		#restore settings
 		getSynth().loadSettings()

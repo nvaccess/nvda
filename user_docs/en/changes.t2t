@@ -102,6 +102,7 @@ Highlights of this release include major improvements concerning punctuation and
  - For message dialogs, use wx.CallAfter(gui.messageBox, ...).
  - For all other dialogs, real wx dialogs should be used instead.
  - A new gui.runScriptModalDialog() function simplifies using modal dialogs from scripts.
+- Synth drivers can now support boolean settings. See SynthDriverHandler.BooleanSynthSetting.
 
 
 = 2011.1.1 =
