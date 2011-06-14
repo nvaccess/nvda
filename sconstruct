@@ -126,12 +126,21 @@ for lang in os.listdir(userDocsDir.path):
 	for ug in glob(os.path.join(userDocsDir.path,lang,'userGuide.t2t')):
 		env.keyCommandsDoc(File(ug).File('keyCommands.t2t'),ug)
 
+t2tBuildConf = env.Textfile(userDocsDir.File("build.t2tConf"), [
+	# We need to do this one as PostProc so it gets converted for the title.
+	r"%!PostProc: NVDA_VERSION {}".format(versionInfo.version),
+	r"%!PreProc: NVDA_URL {}".format(versionInfo.url),
+	r"%!PreProc: NVDA_COPYRIGHT_YEARS {}".format(versionInfo.copyrightYears),
+])
+
 #Allow all t2t files to be converted to html in user_docs
 #As we use scons Glob this will also include the keyCommands.t2t files
 for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
-	#txt2tags can not be run in parallel so make sure scons knows this
 	htmlFile=env.txt2tags(t2tFile)
+	#txt2tags can not be run in parallel so make sure scons knows this
 	env.SideEffect('_txt2tags',htmlFile)
+	# All of our t2t files require build.t2tConf.
+	env.Depends(htmlFile,t2tBuildConf)
 #And also build the developer guide -- which must be moved at some point
 htmlFile=env.txt2tags('developerGuide.t2t')
 env.SideEffect('_txt2tags',htmlFile)
