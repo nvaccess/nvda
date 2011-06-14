@@ -128,7 +128,7 @@ for lang in os.listdir(userDocsDir.path):
 
 t2tBuildConf = env.Textfile(userDocsDir.File("build.t2tConf"), [
 	# We need to do this one as PostProc so it gets converted for the title.
-	r"%!PostProc: NVDA_VERSION {}".format(versionInfo.version),
+	r"%!PostProc: NVDA_VERSION {}".format(version),
 	r"%!PreProc: NVDA_URL {}".format(versionInfo.url),
 	r"%!PreProc: NVDA_COPYRIGHT_YEARS {}".format(versionInfo.copyrightYears),
 ])
