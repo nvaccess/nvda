@@ -2,6 +2,8 @@ from ctypes import *
 from ctypes.wintypes import RECT
 from comtypes import BSTR
 import math
+import colors
+import XMLFormatting
 import api
 import winUser
 import NVDAHelper
@@ -15,11 +17,11 @@ _textChangeNotificationObjs=[]
 
 def initialize():
 	global _getWindowTextInRect,_requestTextChangeNotificationsForWindow
-	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_int,c_int,c_int,c_int,c_int,c_int,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
+	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_int,c_int,c_int,c_int,c_int,c_int,c_bool,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
 	_requestTextChangeNotificationsForWindow=NVDAHelper.localLib.displayModel_requestTextChangeNotificationsForWindow
 
-def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace):
-	text, cpBuf = _getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace)
+def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,useXML=False):
+	text, cpBuf = _getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,useXML)
 	if not text or not cpBuf:
 		return "",[]
 
@@ -49,9 +51,9 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	minVerticalWhitespace=32
 
 	_cache__textAndRects = True
-	def _get__textAndRects(self):
+	def _get__textAndRects(self,useXML=False):
 		left, top, width, height = self.obj.location
-		return getWindowTextInRect(self.obj.appModule.helperLocalBindingHandle, self.obj.windowHandle, left, top, left + width, top + height,self.minHorizontalWhitespace,self.minVerticalWhitespace)
+		return getWindowTextInRect(self.obj.appModule.helperLocalBindingHandle, self.obj.windowHandle, left, top, left + width, top + height,self.minHorizontalWhitespace,self.minVerticalWhitespace,useXML)
 
 	def _getStoryText(self):
 		return self._textAndRects[0]
@@ -61,6 +63,57 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 
 	def _getTextRange(self, start, end):
 		return self._getStoryText()[start:end]
+
+	def getTextWithFields(self,formatConfig=None):
+		start=self._startOffset
+		end=self._endOffset
+		if start==end:
+			return ""
+		text=self._get__textAndRects(useXML=True)[0]
+		if not text:
+			return ""
+		text="<control>%s</control>"%text
+		commandList=XMLFormatting.XMLTextParser().parse(text)
+		#Strip  unwanted commands and text from the start and the end to honour the requested offsets
+		stringOffset=0
+		for index in xrange(len(commandList)-1):
+			command=commandList[index]
+			if isinstance(command,basestring):
+				stringLen=len(command)
+				if (stringOffset+stringLen)<=start:
+					stringOffset+=stringLen
+				else:
+					del commandList[1:index-1]
+					commandList[2]=command[start-stringOffset:]
+					break
+		end=end-start
+		stringOffset=0
+		for index in xrange(1,len(commandList)-1):
+			command=commandList[index]
+			if isinstance(command,basestring):
+				stringLen=len(command)
+				if (stringOffset+stringLen)<end:
+					stringOffset+=stringLen
+				else:
+					commandList[index]=command[0:end-stringOffset]
+					del commandList[index+1:-1]
+					break
+		for item in commandList:
+			if isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField):
+				self._normalizeFormatField(item.field)
+		return commandList
+
+	def _normalizeFormatField(self,field):
+		field['bold']=True if field.get('bold')=="true" else False
+		field['italic']=True if field.get('italic')=="true" else False
+		field['underline']=True if field.get('underline')=="true" else False
+		color=field.get('color')
+		if color is not None:
+			field['color']=colors.RGB.fromCOLORREF(int(color))
+		bkColor=field.get('background-color')
+		if bkColor is not None:
+			field['background-color']=colors.RGB.fromCOLORREF(int(bkColor))
+
 
 	def _getPointFromOffset(self, offset):
 		text,rects=self._textAndRects
