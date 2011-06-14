@@ -10,6 +10,7 @@ import api
 import winUser
 from keyboardHandler import KeyboardInputGesture
 from NVDAObjects.IAccessible.MSHTML import MSHTML
+import msimn 
 
 class AboutBlankDocument(MSHTML):
 	"""A document called about:blank which hosts the HTML message composer document using viewlink.
@@ -30,9 +31,10 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "Internet Explorer_Server" and obj.role == controlTypes.ROLE_DOCUMENT and obj.HTMLNode and obj.HTMLNode.document.url=="about:blank": 
 			clsList.insert(0, AboutBlankDocument)
-		elif obj.windowControlID in (128,129,130) and obj.role==controlTypes.ROLE_LISTITEM:
-			import msimn 
+		elif obj.windowClassName=="SysListView32" and obj.windowControlID in (128,129,130) and obj.role==controlTypes.ROLE_LISTITEM:
 			clsList.insert(0,msimn.MessageRuleListItem)
+		elif obj.windowClassName=="SysListView32" and obj.role==controlTypes.ROLE_LISTITEM and obj.parent.name=="Outlook Express Message List":
+			clsList.insert(0,msimn.MessageListItem)
 
 	def event_gainFocus(self,obj,nextHandler):
 		nextHandler()
