@@ -220,7 +220,7 @@ NVDA provides the following key commands in relation to the system caret:
 | Say all | NVDA+downArrow | Starts reading from the current position of the system caret, moving it along as it goes |
 | Read current line | NVDA+upArrow | Reads the line where the system caret is currently situated. Pressing twice spells the line. |
 | Read current text selection | NVDA+Shift+upArrow | Reads any  currently selected text |
-| Report text formatting | NVDA+f | Announces the formatting of the text where the system caret is currently situated |
+
 
 When within a table, the following key commands are also available:
 || Name | Key | Description |
@@ -293,6 +293,7 @@ The following key commands are available for reviewing text:
 | Say all with review | numpadPlus | NVDA+shift+downArrow | Reads from the current position of the review cursor, moving it as it goes |
 | copy from review cursor | NVDA+f9 | NVDA+f9 | starts copying text from the current position of the review cursor. The actual copy is not performed until you tell NVDA where to copy to |
 | Copy to review cursor | NVDA+f10 | NVDA+f10 | Copies from the position of the review cursor currently set with Copy from review cursor, to the review cursor's current position. After pressing this key, the text will  be copied to the Windows clipboard |
+| Report text formatting | NVDA+f | Announces the formatting of the text where the review cursor  is currently situated |
 %kc:endInclude
 
 note: numpad keys require numlock key to be turned off to work properly.

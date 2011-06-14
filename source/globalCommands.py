@@ -649,14 +649,7 @@ class GlobalCommands(ScriptableObject):
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,
 		}
-		o=api.getFocusObject()
-		v=o.treeInterceptor
-		if v and not v.passThrough:
-			o=v
-		try:
-			info=o.makeTextInfo(textInfos.POSITION_CARET)
-		except (NotImplementedError, RuntimeError):
-			info=o.makeTextInfo(textInfos.POSITION_FIRST)
+		info=api.getReviewPosition()
 		info.expand(textInfos.UNIT_CHARACTER)
 		formatField=textInfos.FormatField()
 		for field in info.getTextWithFields(formatConfig):
@@ -667,7 +660,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No formatting information"))
 			return
 		ui.message(text)
-	script_reportFormatting.__doc__ = _("Reports formatting info for the current cursor position within a document")
+	script_reportFormatting.__doc__ = _("Reports formatting info for the current review cursor position within a document")
 
 	def script_reportCurrentFocus(self,gesture):
 		focusObject=api.getFocusObject()
