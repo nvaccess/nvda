@@ -280,7 +280,11 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 			}
 			//Add space before this chunk if necessary
 			if(((chunk->rect.left-lastChunkRight)>=minHorizontalWhitespace)&&(lastChunkRight>rect.left||!stripOuterWhitespace)) {
-				curLineText+=(useXML?L"<text> </text>":L" ");
+				if(useXML) {
+					curLineText+=L"<text> </text>";
+				} else {
+					curLineText+=L'\0';
+				}
 				tempRect.left=lastChunkRight;
 				tempRect.top=curLineBaseline-1;
 				tempRect.right=chunk->rect.left;
