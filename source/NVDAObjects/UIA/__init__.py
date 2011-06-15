@@ -136,6 +136,11 @@ class UIATextInfo(textInfos.TextInfo):
 			target=UIAHandler.TextPatternRangeEndpoint_End
 		self._rangeObj.MoveEndpointByRange(src,other._rangeObj,target)
 
+	def updateSelection(self):
+		self._rangeObj.Select()
+
+	updateCaret = updateSelection
+
 class UIA(Window):
 
 	liveNVDAObjectTable=weakref.WeakValueDictionary()
