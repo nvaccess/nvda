@@ -16,7 +16,7 @@ from logHandler import log
 
 from comtypes.gen.UIAutomationClient import *
 
-re_MSAAProxyProviderDescription=re.compile(r'Microsoft: (Annotation|MSAA) Proxy \(unmanaged:uiautomationcore.dll\)')
+re_MSAAProxyProviderDescription=re.compile(r'Microsoft: (Annotation|MSAA) Proxy \(unmanaged:uiautomationcore.dll\)',re.IGNORECASE)
 
 badUIAWindowClassNames=[
 	"SysTreeView32",
@@ -240,5 +240,3 @@ class UIAHandler(COMObject):
 		except COMError:
 			return True
 		return not re_MSAAProxyProviderDescription.search(providerDescription)
-
-
