@@ -195,8 +195,7 @@ class UIA(Window):
 			obj=super(UIA,cls).__new__(cls)
 			if not obj:
 				return None
-			if runtimeId:
-				cls.liveNVDAObjectTable[runtimeId]=obj
+			obj.UIARuntimeId=runtimeId
 		obj.UIAElement=UIAElement
 		return obj
 
@@ -222,6 +221,12 @@ class UIA(Window):
 		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
 			self.TextInfo=UIATextInfo
 			self.value=""
+
+		# UIARuntimeId is set by __new__.
+		if self.UIARuntimeId:
+			# This must be the last thing in the constructor,
+			# as this object should only be cached if construction succeeds.
+			self.liveNVDAObjectTable[self.UIARuntimeId]=self
 
 	def _isEqual(self,other):
 		if not isinstance(other,UIA):
