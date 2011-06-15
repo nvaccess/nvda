@@ -84,8 +84,15 @@ class MessageListItem(sysListView32.ListItem):
 		return isUnread
 
 	def _get_name(self):
-		name=super(MessageListItem,self).name
+		nameList=[]
+		imageState=winUser.sendMessage(self.windowHandle,sysListView32.LVM_GETITEMSTATE,self.IAccessibleChildID-1,sysListView32.LVIS_STATEIMAGEMASK)>>12
+		if imageState==5:
+			nameList.append(controlTypes.speechStateLabels[controlTypes.STATE_COLLAPSED])
+		elif imageState==6:
+			nameList.append(controlTypes.speechStateLabels[controlTypes.STATE_EXPANDED])
 		if self.isUnread:
-			name="%s %s"%(_("unread"),name)
-		return name
-
+			nameList.append(_("unread"))
+		name=super(MessageListItem,self).name
+		if name:
+			nameList.append(name)
+		return " ".join(nameList)
