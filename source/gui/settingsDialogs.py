@@ -8,6 +8,7 @@ import glob
 import os
 import copy
 import wx
+import winUser
 import logHandler
 from synthDriverHandler import *
 import config
@@ -294,7 +295,11 @@ class VoiceSettingsSlider(wx.Slider):
 		super(VoiceSettingsSlider, self).SetValue(i)
 		evt = wx.CommandEvent(wx.wxEVT_COMMAND_SLIDER_UPDATED,self.GetId())
 		evt.SetInt(i)
-		wx.PostEvent(self,evt)
+		self.ProcessEvent(evt)
+		# HACK: Win events don't seem to be sent for certain explicitly set values,
+		# so send our own win event.
+		# This will cause duplicates in some cases, but NVDA will filter them out.
+		winUser.user32.NotifyWinEvent(winUser.EVENT_OBJECT_VALUECHANGE,self.Handle,winUser.OBJID_CLIENT,winUser.CHILDID_SELF)
 
 	def onSliderChar(self, evt):
 		key = evt.KeyCode
