@@ -288,7 +288,6 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 				curLineCharacterRects.push_back(tempRect);
 			}
 			//Add text from this chunk to the current line
-			//curLineText.append(chunk->text);
 			if(useXML) {
 				chunk->generateXML(curLineText);
 			} else {
