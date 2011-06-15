@@ -191,7 +191,11 @@ class ExcelCell(ExcelBase):
 		if not super(ExcelCell,self)._isEqual(other):
 			return False
 		thisAddr=self.getCellAddress(self.excelCellObject,True)
-		otherAddr=self.getCellAddress(other.excelCellObject,True)
+		try:
+			otherAddr=self.getCellAddress(other.excelCellObject,True)
+		except COMError:
+			#When cutting and pasting the old selection can become broken
+			return False
 		return thisAddr==otherAddr
 
 	def _get_name(self):
