@@ -337,11 +337,8 @@ class MSHTML(IAccessible):
 			clsList.append(EditableTextWithoutAutoSelectDetection)
 		#fix for #974
 		#this fails on some control in vs2008 new project wizard
-		try:
-			nodeName = self.HTMLNode.nodeName
-		except COMError:
-			pass
-		else:
+		nodeName = self.HTMLNodeName
+		if nodeName:
 			if nodeNamesToNVDARoles.get(nodeName) == controlTypes.ROLE_DOCUMENT:
 				clsList.append(Body)
 			elif nodeName == "OBJECT":
@@ -716,13 +713,17 @@ class MSHTML(IAccessible):
 		raise NotImplementedError
 
 	def _get_HTMLNodeUniqueNumber(self):
-		return self.HTMLNode.uniqueNumber
+		if not hasattr(self,'_HTMLNodeUniqueNumber'):
+			self._HTMLNodeUniqueNumber=self.HTMLNode.uniqueNumber
+		return self._HTMLNodeUniqueNumber
 
 	def _get_HTMLNodeName(self):
-		try:
-			return self.HTMLNode.nodeName
-		except (COMError,NameError):
-			return ""
+		if not hasattr(self,'_HTMLNodeName'):
+			try:
+				self._HTMLNodeName=self.HTMLNode.nodeName
+			except (COMError,NameError):
+				return ""
+		return self._HTMLNodeName
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
