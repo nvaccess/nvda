@@ -391,11 +391,17 @@ class MSHTML(IAccessible):
 		#object and embed nodes give back an incorrect IAccessible via queryService, so we must treet it as an ancestor IAccessible
 		if self.HTMLNodeName in ("OBJECT","EMBED"):
 			self.HTMLNodeHasAncestorIAccessible=True
-		try:
-			self.HTMLNode.createTextRange()
-			self.TextInfo=MSHTMLTextInfo
-		except (NameError, COMError):
-			pass
+
+	def _get_TextInfo(self):
+		if not hasattr(self,'_HTMLNodeSupportsTextRanges'):
+			try:
+				self.HTMLNode.createTextRange()
+				self._HTMLNodeSupportsTextRanges=True
+			except (COMError,NameError):
+				self._HTMLNodeSupportsTextRanges=False
+		if self._HTMLNodeSupportsTextRanges:
+			return MSHTMLTextInfo
+		return super(MSHTML,self).TextInfo
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		if not super(MSHTML,self).isDuplicateIAccessibleEvent(obj):
