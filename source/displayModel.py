@@ -52,7 +52,11 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 
 	_cache__textAndRects = True
 	def _get__textAndRects(self,useXML=False):
-		left, top, width, height = self.obj.location
+		try:
+			left, top, width, height = self.obj.location
+		except TypeError:
+			# No location; nothing we can do.
+			return "", []
 		return getWindowTextInRect(self.obj.appModule.helperLocalBindingHandle, self.obj.windowHandle, left, top, left + width, top + height,self.minHorizontalWhitespace,self.minVerticalWhitespace,useXML)
 
 	def _getStoryText(self):
