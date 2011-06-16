@@ -57,7 +57,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			try:
 				descNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaDescribedBy)
 			except (COMError,NameError):
-				escNode=None
+				descNode=None
 			if descNode:
 				try:
 					description=self.obj.makeTextInfo(NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=descNode)).text
