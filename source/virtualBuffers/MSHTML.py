@@ -159,7 +159,7 @@ class MSHTML(VirtualBuffer):
 		if not winUser.isDescendantWindow(self.rootDocHandle,obj.windowHandle) and obj.windowHandle!=self.rootDocHandle:
 			return False
 		newObj=obj
-		while newObj and newObj.role not in (controlTypes.ROLE_APPLICATION,controlTypes.ROLE_DIALOG) and isinstance(newObj,NVDAObjects.IAccessible.MSHTML.MSHTML):
+		while  isinstance(newObj,NVDAObjects.IAccessible.MSHTML.MSHTML) and newObj.role not in (controlTypes.ROLE_APPLICATION,controlTypes.ROLE_DIALOG):
 			if newObj==self.rootNVDAObject:
 				return True
 			newObj=newObj.parent 
