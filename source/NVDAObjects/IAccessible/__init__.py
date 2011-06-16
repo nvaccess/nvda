@@ -1240,9 +1240,6 @@ the NVDAObject for IAccessible
 	def event_selectionRemove(self):
 		return self.event_stateChange()
 
-	def event_selectionWithIn(self):
-		return self.event_stateChange()
-
 	def _get_presentationType(self):
 		if not self.windowHasExtraIAccessibles(self.windowHandle) and self.role==controlTypes.ROLE_WINDOW:
 			return self.presType_layout
