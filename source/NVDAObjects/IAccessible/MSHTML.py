@@ -166,7 +166,9 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		with self.obj.suspendCaretEvents():
 			selObj=parent.document.selection
 			oldSelRange=selObj.createRange().duplicate()
-			textRange.select()
+			# #1566: Calling textRange.select() sometimes throws focus onto the document,
+			# so create a new range from the selection and move the selection using that.
+			selObj.createRange().moveToBookmark(textRange.getBookmark())
 			KeyboardInputGesture.fromName("home").send()
 			api.processPendingEvents(False)
 			newSelStartMark=selObj.createRange().getBookmark()
