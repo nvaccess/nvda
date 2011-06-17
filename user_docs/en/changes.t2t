@@ -93,7 +93,8 @@ Highlights of this release include major improvements concerning punctuation and
 - NVDA is  now able to read the recipiants in the To, CC and BCC fields in Microsoft Outlook. (#421)
 - Fixed the issue in NVDA's Voice Settings dialog where the value of sliders was sometimes not reported when changed. (#1411)
 - NVDA no longer fails to announce the new cell when moving in an Excel spreadsheet after cutting and pasting. (#1567)
-
+- NVDA no longer becomes worse at guessing color names the more colors it announces.
+  
 
 == Changes for Developers ==
 - Developer documentation can now be generated using SCons. See readme.txt at the root of the source distribution for details, including associated dependencies.
