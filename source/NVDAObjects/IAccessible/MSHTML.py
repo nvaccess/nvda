@@ -120,7 +120,12 @@ def locateHTMLElementByID(document,ID):
 		log.debugWarning("document.getElementsByTagName failed with COMError %s"%e)
 		return None
 	for frame in frames:
-		pacc=IAccessibleFromHTMLNode(frame)
+		try:
+			pacc=IAccessibleFromHTMLNode(frame)
+		except NotImplementedError:
+			# #1569: It's not possible to get an IAccessible from frames marked with an ARIA role of presentation.
+			# In this case, just skip this frame.
+			continue
 		res=IAccessibleHandler.accChild(pacc,1)
 		if not res: continue
 		childElement=HTMLNodeFromIAccessible(res[0])

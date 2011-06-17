@@ -94,7 +94,8 @@ Highlights of this release include major improvements concerning punctuation and
 - Fixed the issue in NVDA's Voice Settings dialog where the value of sliders was sometimes not reported when changed. (#1411)
 - NVDA no longer fails to announce the new cell when moving in an Excel spreadsheet after cutting and pasting. (#1567)
 - NVDA no longer becomes worse at guessing color names the more colors it announces.
-  
+- In Internet Explorer and other MSHTML controls, fixed the inability to read parts of rare pages which contain iframes marked with an ARIA role of presentation. (#1569)
+
 
 == Changes for Developers ==
 - Developer documentation can now be generated using SCons. See readme.txt at the root of the source distribution for details, including associated dependencies.
