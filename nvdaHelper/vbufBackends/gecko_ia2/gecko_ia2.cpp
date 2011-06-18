@@ -31,41 +31,6 @@ using namespace std;
 
 #define NAVRELATION_NODE_CHILD_OF 0x1005
 
-//An implementation of AccessibleObjectFromEvent that works  for a window in the same thread, when in a 64 bit process
-//Technically AccessibleObjectFromWindow seems to be the broken function 
-HRESULT _AccessibleObjectFromEvent_fixed(HWND hwnd, long objectID, long childID, IAccessible** pacc, VARIANT* varChild) {
-	if(GetWindowThreadProcessId(hwnd,NULL)!=GetCurrentThreadId()) {
-		return AccessibleObjectFromEvent(hwnd,objectID,childID,pacc,varChild);
-	}
-	//SendMessage is fine as we are in the same thread as the window
-	LRESULT l=SendMessage(hwnd,WM_GETOBJECT,0,objectID);
-	if(l==0) {
-		return E_FAIL;
-	}
-	if(ObjectFromLresult(l,IID_IAccessible,0,(void**)pacc)!=S_OK) {
-		return E_FAIL;
-	}
-	(*varChild).vt=VT_I4;
-	(*varChild).lVal=childID;
-	IDispatch* childDisp=NULL;
-	if((*pacc)->get_accChild(*varChild,&childDisp)==S_OK) {
-		IAccessible* childPacc=NULL;
-		if(childDisp->QueryInterface(IID_IAccessible,(void**)&childPacc)==S_OK) {
-			(*pacc)->Release();
-			*pacc=childPacc;
-			(*varChild).lVal=0;
-		}
-		childDisp->Release();
-	}
-	return S_OK;
-}
-
-#ifdef _WIN64
-#define AccessibleObjectFromEvent_fixed _AccessibleObjectFromEvent_fixed
-#else
-#define AccessibleObjectFromEvent_fixed AccessibleObjectFromEvent
-#endif
-
 HWND findRealMozillaWindow(HWND hwnd) {
 	LOG_DEBUG(L"Finding real window for window "<<hwnd);
 	if(hwnd==0||!IsWindow(hwnd)) {
@@ -101,7 +66,7 @@ IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	IAccessible2* pacc2=NULL;
 	VARIANT varChild;
 	LOG_DEBUG(L"calling AccessibleObjectFromEvent");
-	if((res=AccessibleObjectFromEvent_fixed((HWND)docHandle,OBJID_CLIENT,ID,&pacc,&varChild))!=S_OK) {
+	if((res=AccessibleObjectFromEvent((HWND)docHandle,OBJID_CLIENT,ID,&pacc,&varChild))!=S_OK) {
 		LOG_DEBUG(L"AccessibleObjectFromEvent returned "<<res);
 		return NULL;
 	}
@@ -971,9 +936,6 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 	}
 	if(childID>=0||objectID!=OBJID_CLIENT) {
 		return;
-	}
-	if(eventID==EVENT_OBJECT_FOCUS) {
-		LOG_INFO(L"focus event: hwnd "<<hwnd<<L", objectID "<<objectID<<L", childID "<<childID);
 	}
 	LOG_DEBUG(L"winEvent for window "<<hwnd);
 	hwnd=findRealMozillaWindow(hwnd);
