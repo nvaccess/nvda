@@ -325,7 +325,7 @@ def speak(speechSequence,symbolLevel=None):
 	for index in xrange(len(speechSequence)):
 		item=speechSequence[index]
 		if isinstance(item,basestring):
-			speechSequence[index]=processText(item,symbolLevel)
+			speechSequence[index]=processText(item,symbolLevel)+" "
 	getSynth().speak(speechSequence)
 
 def speakSelectionMessage(message,text):

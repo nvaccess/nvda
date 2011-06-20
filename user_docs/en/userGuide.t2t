@@ -524,6 +524,7 @@ Key: NVDA+p
 
 This allows you to choose the amount of punctuation and other symbols that should be spoken as words.
 For example, when set to all, all symbols will be spoken as words.
+This option applies to all synthesizers, not just the currently active synthesizer.
 
 ==== Raise pitch for capitals ====
 This setting, if checked, will raise the pitch for capitals.
@@ -535,6 +536,16 @@ Usually, NVDA raises the pitch slightly for any capital letter, but some synthes
 ==== Beep for capitals ====
 If this checkbox is checked, NVDA will make a small beep each time it encounters a capitalized character by itself.
 Like the 'say cap for capitals' checkbox, this is useful for Synthesizers that can't change their pitch for capital letters.
+
+==== Use spelling functionality if supported ====[VoiceSpellingFunctionality]
+Some words consist of only one character, but the pronunciation is different depending on whether the character is being spoken as an individual character (such as when spelling) or a word.
+For example, in English, "a" is both a letter and a word.
+This option allows the synthesizer to differentiate between these two cases if the synthesizer supports this.
+Most synthesizers do support it.
+
+This option should generally be enabled.
+However, some Microsoft Speech API synthesizers do not implement this correctly and behave strangely when it is enabled.
+If you are having problems with the pronunciation of individual characters, try disabling this option.
 
 +++ Synth settings ring +++[SynthSettingsRing]
 If you wish to quickly change speech  settings  with out going to the Voice settings dialog, there are some NVDA key commands that allow you to move through the most common speech settings, from anywhere while running NVDA:
@@ -905,9 +916,13 @@ This is a commercial speech synthesizer specifically for the Italian language.
 You must have the synthesizer installed on your system in order for it to be used with NVDA.
 For more information, please visit the Audiologic website at www.audiologic.it.
 
-++ Newfon ++
+This synthesizer does not support [spelling functionality #VoiceSpellingFunctionality].
+
+++ Newfon ++[SynthNewfon
 Newfon is a free commercial synthesizer by Sergey Shishmintzev which supports the Russian and Ukrainian languages.
 To download this synthesizer, please visit the downloads section of the Russian NVDA community site: http://ru.nvda-community.org/?page_id=10
+
+This synthesizer does not support [spelling functionality #VoiceSpellingFunctionality].
 
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.
