@@ -1342,6 +1342,9 @@ class JavaVMRoot(IAccessible):
 			children.append(obj)
 		return children
 
+class NUIDialogClient(Dialog):
+	role=controlTypes.ROLE_DIALOG
+
 class Groupbox(IAccessible):
 
 	def _get_description(self):
@@ -1601,4 +1604,6 @@ _staticMap={
 	("Shell_TrayWnd",oleacc.ROLE_SYSTEM_CLIENT):"Taskbar",
 	("Shell DocObject View",oleacc.ROLE_SYSTEM_CLIENT):"ShellDocObjectView",
 	("listview",oleacc.ROLE_SYSTEM_CLIENT):"ListviewPane",
+	("NUIDialog",oleacc.ROLE_SYSTEM_CLIENT):"NUIDialogClient",
+
 }
