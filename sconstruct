@@ -73,7 +73,7 @@ keyCommandsLangBlacklist=set(['ja'])
 vars = Variables()
 vars.Add("version", "The version of this build", versionInfo.version)
 vars.Add(BoolVariable("release", "Whether this is a release version", False))
-vars.Add("publisher", "The publisher of this build", "unknown")
+vars.Add("publisher", "The publisher of this build", versionInfo.publisher)
 vars.Add(PathVariable("certFile", "The certificate file with which to sign executables", "",
 	lambda key, val, env: not val or PathVariable.PathIsFile(key, val, env)))
 vars.Add("certPassword", "The password for the private key in the signing certificate", "")
@@ -93,6 +93,7 @@ if len(unknown)>0:
 
 version = env["version"]
 release = env["release"]
+publisher = env["publisher"]
 certFile = env["certFile"]
 certPassword = env["certPassword"]
 userDocsDir=Dir('user_docs')
@@ -164,7 +165,10 @@ def NVDADistGenerator(target, source, env, for_signature):
 	# Make the NVDA build use the specified version.
 	# We don't do this using normal scons mechanisms because we want it to be cleaned up immediately after this builder
 	# and py2exe will cause bytecode files to be created for it which scons doesn't know about.
-	action = [lambda target, source, env: file(buildVersionFn, "w").write('version = "%s"' % version)]
+	action = [lambda target, source, env: file(buildVersionFn, "w").write(
+		'version = {version!r}\r\n'
+		'publisher = {publisher!r}\r\n'
+		.format(version=version, publisher=publisher))]
 
 	buildCmd = ["cd", source[0].path, "&&",
 		sys.executable]

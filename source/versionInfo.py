@@ -31,8 +31,9 @@ def _updateVersionFromVCS():
 name="NVDA"
 longName=_("NonVisual Desktop Access")
 version="2011.2dev"
+publisher="unknown"
 try:
-	from _buildVersion import version
+	from _buildVersion import version, publisher
 except ImportError:
 	_updateVersionFromVCS()
 description=_("A free and open source screen reader for Microsoft Windows")
