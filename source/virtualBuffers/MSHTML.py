@@ -171,6 +171,9 @@ class MSHTML(VirtualBuffer):
 		root=self.rootNVDAObject
 		if not root:
 			return False
+		if not root.IAccessibleRole:
+			# The root object is dead.
+			return False
 		states=root.states
 		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_EDITABLE in states:
 			return False
