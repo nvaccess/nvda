@@ -1121,6 +1121,9 @@ class IndexCommand(SpeechCommand):
 		if not isinstance(index,int): raise ValueError("index must be int, not %s"%type(index))
 		self.index=index
 
+	def __repr__(self):
+		return "IndexCommand(%r)" % self.index
+
 class CharacterModeCommand(object):
 	"""Turns character mode on and off for speech synths."""
 
@@ -1131,3 +1134,6 @@ class CharacterModeCommand(object):
 		"""
 		if not isinstance(state,bool): raise ValueError("state must be boolean, not %s"%type(state))
 		self.state=state
+
+	def __repr__(self):
+		return "CharacterModeCommand(%r)" % self.state
