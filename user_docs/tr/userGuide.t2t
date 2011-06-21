@@ -520,6 +520,7 @@ Klavye Komutu: NVDA+p
 
 Bu, noktalama ya da başka işaretlerin ne kadarının sözcük olarak seslendirileceğiyle ilgili ayarı değiştirmenizi sağlar.
 Örneğin, Tümü olarak ayarladığınızda işaretlerin hepsi sözcük olarak seslendirilir.
+Bu ayarlamadan sadece halihazırda kullanılan sentezleyici değil; tüm sentezleyiciler etkilenir.
 
 ==== Büyük Harflerde sesi incelt ====
 Bu ayar işaretlendiğinde, büyük harflerde sesi inceltecektir. Wave tabanlı sentezleyiciler bu özelliği desteklemez.
@@ -529,8 +530,18 @@ Bu ayar bir onay kutusudur ve işaretlendiğinde, metin içinde oklarla dolaşı
 Genellikle, NVDA büyük harflerde sesi bir miktar inceltir. ancak bunu desteklemeyen sentezleyiciler için, bu seçenek oldukça kullanışlı olabilir.
 
 ==== Büyük harflerde Bip sesi çıkar ====
-Eğer bu onay kutusu işaretlenirse, NVDA büyük yazılmış bir karakterle karşılaştığında bip sesi çıkaracaktır.
+Bu onay kutusu işaretlenirse, NVDA büyük yazılmış bir karakterle karşılaştığında bip sesi çıkaracaktır.
 Büyük Harflerden önce Büyük deme onay kutusunda olduğu gibi, büyük harfler için sesini inceltemeyen sentezleyiciler için, bu seçenek yararlıdır.
+
+==== Destekleniyorsa Kodlama İşlevini Kullan ====[VoiceSpellingFunctionality]
+Bazı sözcükler sadece bir karakterden oluşabilir, ancak o karakterin bir sözcüğün içerisinde kodlanırkenki telaffuzu farklılık gösterir.
+Örneğin, İngilizce'de "a" hem bir harftir hem de tek başına bir sözcük. Sözcükken "a" olarak okunurken kodlama sırasında "ey" olarak seslendirilmelidir.
+Bu seçenek, tabii destekliyorsa, mevcut sentezleyicinin bu iki durumu birbirinden ayırt etmesine olanak sağlar.
+Birçok sentezleyici bu işlevi destekler.
+
+Bu seçenek genel olarak etkin olmalıdır.
+Öte yandan, bazı Microsoft SAPI sentezleyiciler bu işlevi desteklemezler ve bu seçenek etkin olduğunda, yazarken ve okurken karakterlerin seslendirilmemesi gibi tuhaf tepkiler verebilirler.
+Eğer karakterlerin seslendirilmemesi gibi bir sorun yaşıyorsanız bu seçeneği etkisizleştirmeniz problemi  çözecektir.
 
 +++ Hızlı Sentezleyici Ayarları +++[SynthSettingsRing]
 Eğer NVDA ile çalışırken ses ayarları iletişim kutusuna gitmeden herhangi bir yerde seri biçimde konuşma ayarlarını değiştirmek istiyorsanız, en sık kullanılan konuşma ayarlarını hızla değiştirebileceğiniz bazı NVDA tuş komutları bulunmaktadır:
@@ -900,10 +911,12 @@ Bu sentezleyicileri NVDA ile kullanırken, [Ses Ayarları iletişim kutusundan #
 Bu, italyanca diline özel ücretli bir konuşma sentezleyicisidir.
 NVDA ile kullanılabilmesi için, sentezleyicinin bilgisayarınızda yüklü olması gerekir.
 Daha fazla bilgi için, lütfen Audiologic web sayfasını www.audiologic.it adresinden ziyaret edin.
+Bu sentezleyici [kodlama işlevini #VoiceSpellingFunctionality] desteklemez.
 
-++ Newfon ++
+++ Newfon ++[SynthNewfon
 Newfon, Sergey Shishmintzev tarafından üretilen, rusça ve Ukraynacayı destekleyen ücretsiz bir sentezleyicidir.
 Bu sentezleyiciyi indirmek için lütfen Rusça NVDA sayfasını ziyaret edin. http://ru.nvda-community.org/?page_id=10
+Bu sentezleyici [kodlama işlevini #VoiceSpellingFunctionality] desteklemez.
 
 + Desteklenen braile ekranlar +[SupportedBrailleDisplays]
 Bu bölümde NVDA tarafından desteklenen braille ekran bilgileri yer almaktadır.
