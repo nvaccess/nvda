@@ -93,8 +93,8 @@ def readText(info,cursor):
 	_startGenerator(readTextHelper_generator(info,cursor))
 
 def readTextHelper_generator(info,cursor):
-	lastSentIndex=-1
-	lastReceivedIndex=-1
+	lastSentIndex=0
+	lastReceivedIndex=0
 	cursorIndexMap={}
 	reader=info.copy()
 	if not reader.isCollapsed:
@@ -122,8 +122,8 @@ def readTextHelper_generator(info,cursor):
 				reader.collapse(end=True)
 		else:
 			# We'll wait for speech to catch up a bit before sending more text.
-			if speech.speakWithoutPauses.lastSentIndex is None or (speech.speakWithoutPauses.lastSentIndex-lastReceivedIndex)<=10:
-				# Nothing has been sent to the synth yet.
+			if speech.speakWithoutPauses.lastSentIndex is None or (lastSentIndex-speech.speakWithoutPauses.lastSentIndex)>=10:				# There is a 
+				# There is a large chunk of pending speech
 				# Force speakWithoutPauses to send text to the synth so we can move on.
 				speech.speakWithoutPauses(None)
 		receivedIndex=speech.getLastSpeechIndex()
