@@ -112,6 +112,7 @@ class UIAHandler(COMObject):
 		index=c_int()
 		#Wait for the MTAA thread to die (while still message pumping)
 		windll.user32.MsgWaitForMultipleObjects(1,byref(MTAThreadHandle),False,5000,0)
+		windll.kernel32.CloseHandle(MTAThreadHandle)
 		del self.MTAThread
 
 	def MTAThreadFunc(self):
