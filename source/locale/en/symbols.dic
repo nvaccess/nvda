@@ -15,6 +15,7 @@ complexSymbols:
 # Others
 decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -27,6 +28,7 @@ symbols:
 : phrase ending	colon	most	always
 decimal point		none	always
 in-word '	tick	all	norep
+negative number	minus	none	norep
 
 # Whitespace
 \0	blank	char
@@ -41,9 +43,9 @@ in-word '	tick	all	norep
 !	bang	all
 "	quote	most
 \#	number	most
-$	dollar	some
-£	pound	some
-€	euro	some
+$	dollar	all	norep
+£	pound	all	norep
+€	euro	all	norep
 %	percent	some
 &	and	some
 '	tick	all
@@ -55,7 +57,7 @@ $	dollar	some
 -	dash	most
 .	dot	some
 /	slash	some
-:	colon	most
+:	colon	most	norep
 ;	semi	most
 <	less	most
 >	greater	most
