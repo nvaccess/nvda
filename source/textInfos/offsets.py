@@ -199,8 +199,11 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		if self.useUniscribe:
 			start=ctypes.c_int()
 			end=ctypes.c_int()
+			#uniscribe does some strange things when you give it a string  with not more than two alphanumeric chars in a row.
+			#Inject two alphanumeric characters at the end to fix this 
+			lineText+="xx"
 			if NVDAHelper.localLib.calculateWordOffsets(lineText,len(lineText),offset-lineStart,ctypes.byref(start),ctypes.byref(end)):
-				return start.value+lineStart,end.value+lineStart
+				return start.value+lineStart,min(end.value+lineStart,lineEnd)
 		#Fall back to the older word offsets detection that only breaks on non alphanumeric
 		start=findStartOfWord(lineText,offset-lineStart)+lineStart
 		end=findEndOfWord(lineText,offset-lineStart)+lineStart
