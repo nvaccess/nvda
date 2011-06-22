@@ -291,6 +291,9 @@ IfFileExists "$PROGRAMFILES\NVDA" 0
 Delete "$PROGRAMFILES\NVDA"
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetUserDefaultUILanguage() i .r0'
+;Force zh-HK to zh-TW as zh-HK uses wrong encoding on Vista/7 #1596 
+StrCmp $0 "3076" 0 +2
+StrCpy $0 "1028"
 StrCpy $LANGUAGE $0
 
 ;prepare log always within .onInit function
@@ -416,6 +419,9 @@ Function un.onInit
 ;!insertmacro MUI_UNGETLANGUAGE
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetUserDefaultUILanguage() i .r0'
+;Force zh-HK to zh-TW as zh-HK uses wrong encoding on Vista/7 #1596 
+StrCmp $0 "3076" 0 +2
+StrCpy $0 "1028"
 StrCpy $LANGUAGE $0
 
 ; Start uninstalling with a log
