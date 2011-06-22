@@ -71,9 +71,11 @@ localLib=env.SharedLibrary(
 		'nvdaControllerInternal.c',
 		controllerInternalRPCServerSource,
 		"nvdaHelperLocal.def",
+		"textUtils.cpp",
 	],
 	LIBS=[
 		"user32",
+		"usp10",
 		"oleaut32",
 		"rpcrt4",
 	],

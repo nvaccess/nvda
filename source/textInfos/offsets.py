@@ -5,6 +5,8 @@
 #Copyright (C) 2006 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
 
 import re
+import ctypes
+import NVDAHelper
 import textInfos
 
 class Offsets(object):
@@ -143,6 +145,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	"""
 
 	detectFormattingAfterCursorMaybeSlow=True #: honours documentFormatting config option if true - set to false if this is not at all slow.
+	useUniscribe=True #Use uniscribe to calculate word offsets etc
  
 
 	def __eq__(self,other):
@@ -193,6 +196,12 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _getWordOffsets(self,offset):
 		lineStart,lineEnd=self._getLineOffsets(offset)
 		lineText=self._getTextRange(lineStart,lineEnd)
+		if self.useUniscribe:
+			start=ctypes.c_int()
+			end=ctypes.c_int()
+			if NVDAHelper.localLib.calculateWordOffsets(lineText,len(lineText),offset-lineStart,ctypes.byref(start),ctypes.byref(end)):
+				return start.value+lineStart,end.value+lineStart
+		#Fall back to the older word offsets detection that only breaks on non alphanumeric
 		start=findStartOfWord(lineText,offset-lineStart)+lineStart
 		end=findEndOfWord(lineText,offset-lineStart)+lineStart
 		return [start,end]
