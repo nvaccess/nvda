@@ -8,6 +8,7 @@ complexSymbols:
 # Others
 decimal point	(?<=\d)\,(?=\d)
 dates	(((0?[1-9]|[12]\d|3[01])\.(0?[13578]|1[02])\.((1[6-9]|[2-9]\d)?\d{2}|\d))|((0?[1-9]|[12]\d|30)\.(0?[13456789]|1[012])\.((1[6-9]|[2-9]\d)?\d{2}|\d))|((0?[1-9]|1\d|2[0-8])\.]0?2\.]((1[6-9]|[2-9]\d)?\d{2}|\d))|(29\.0?2\.((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00|[048])))
+negative number	(?<!\w)-(?=\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -19,11 +20,12 @@ symbols:
 ; phrase ending	puolipiste	most	always
 : phrase ending	kaksoispiste	most	always
 decimal point		none	always
-dates	 	all	always
 in-word '	heitto	all	norep
+negative number	miinus	none	norep
+dates	 	all	always
 
 # Whitespace
-\0	tyhjä	char
+\0	tyhjä	char	# nollamerkki
 \t	sisennys
 \n	rivinvaihto	char
 \f	sivunvaihto	none
@@ -35,21 +37,21 @@ in-word '	heitto	all	norep
 !	huuto	all
 "	lainaus	most
 \#	risu	some
-$	dollari	some
-£	punta	some
-€	euro	some
+$	dollari	all	norep
+£	punta	all	norep
+€	euro	all	norep
 %	prosentti	some
 &	et	some
 '	heitto	all
-(	alkusulku	all
-)	loppusulku	all
+(	alkusulku	most
+)	loppusulku	most
 *	tähti	some
 +	plus	some
 ,	pilkku	all	always
 -	viiva	most
 .	piste	some
 /	kautta	some
-:	kaksoispiste	most
+:	kaksoispiste	most	norep
 ;	puolipiste	most
 <	pienempi	most
 >	suurempi	most
@@ -58,15 +60,14 @@ $	dollari	some
 @	ät	some
 [	alkuhaka	most
 ]	loppuhaka	most
-"	lainaus	most
 \\	keno	some
-^	hattu	some
-_	alaviiva	some
-`	ulkomaan ee	some
+^	hattu	most
+_	alaviiva	most
+`	ulkomaan ee	most
 {	alkuaalto	most
 }	loppuaalto	most
-|	pysty	some
-~	tilde	some
+|	pysty	most
+~	tilde	most
 
 # Other characters
 •	luettelomerkki	most
@@ -78,26 +79,25 @@ _	alaviiva	some
 ’	heitto	most
 –	pitkä viiva	most
 —	pitempi viiva	most
+●	tähti	some
+¨	treema	most
+‎	nuoli vasemmalta oikealle	char
+‏	nuoli oikealta vasemmalle	char
 ­	pehmeä tavuviiva	all
 »	kulmalainaus oikealle	most
 →	nuoli oikealle	most
 −	miinus	some
 ►	musta osoitin oikealle	most
 ○	valkoinen ympyrä	all
-●	tähti	some
 ♠	musta pata	most
 ¡	käänteinen huuto	all
 ¦	rikkinäinen palkki	most
 ©	copyright	most
 «	kaksoiskulmasulku	most
 ¿	käänteinen kysymys	all
-–	pitkä viiva	most
-—	pitempi viiva	most
-¨	treema	most
 †	risti	most
 ‡	kaksoisristi	most
 ☼	valkoinen aurinko säteineen	most
-●	tähti	some
 ǝ	e ylösalaisin
 ɐ	a ylösalaisin
 ɯ	m ylösalaisin
@@ -106,5 +106,3 @@ _	alaviiva	some
 ʎ	y ylösalaisin
 ˜	pieni tilde
 ☺	valkoiset hymyilevät kasvot
-‎	nuoli vasemmalta oikealle	char
-‏	nuoli oikealta vasemmalle	char

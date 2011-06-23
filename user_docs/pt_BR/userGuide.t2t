@@ -1,6 +1,7 @@
-﻿Guia do Usuário do NVDA main-4445
+﻿Guia do Usuário do NVDA 2011.2
 
 Traduzido por Marlin Rodrigues
+
 %!includeconf: ../userGuide.t2tconf
 %kc:title: REFERÊNCIA RÁPIDA DE TECLAS DE ATALHO DO NVDA
 = Sumário =[toc]
@@ -79,7 +80,7 @@ Após estar carregada, uma cópia temporária deste leitor de telas permitirá q
  Note que se estiver executando outra cópia no momento em que o instalador for iniciado, o NVDA a incerrará e iniciará a execução de sua própria cópia.
 Isso é necessário para que o instalador possa atualizar adequadamente qualquer arquivo modificado. 
 
-Neste ponto, se já tem outra cópia do NVDA instalada, o instalador desinstalará a mesma automaticamente e procederá ao início da instalação deste.
+Neste ponto, se já tem outra cópia do NVDA instalada, o instalador desinstalará a mesma automaticamente e procederá ao início da instalação desta.
 Uma vez que tenha completado corretamente a instalação, o instalador alertará que a mesma foi concluída.
 Caso  esteja reinstalando o NVDA, nesta altura será questionado se pretende reiniciar o sistema.
 É muito importante que o reinicie para que não haja conseqüências desagradáveis
@@ -483,7 +484,7 @@ Isto pode ser útil para alguém que deseja utilizar o NVDA somente com Braille,
 Esta opção permite-lhe escolher a placa de som que o NVDA indicará ao sintetizador selecionado para falar.
 
 +++ Opções de Voz (NVDA+control+v) +++[VoiceSettings]
-O diálogo das opções de voz que se encontra no menu Preferências contém opções que lhe permitem alterar o som da voz.  seção Anel de Opções de Voz. 
+O diálogo das opções de voz que se encontra no menu Preferências contém opções que lhe permitem alterar o som da voz.
 Para uma forma alternativa e mais rápida de controlar os parâmetros de voz a partir de qualquer local, por favor consulte a seção [Anel de Opções de Voz #SynthSettingsRing].
  
 Esta caixa de diálogo contém as seguintes opções:
@@ -495,7 +496,7 @@ As setas Acima e Esquerda sobem pela lista, enquanto as Setas Abaixo e Direita d
 
 ==== Variante ====
 Se usa o eSpeak que acompanha o NVDA, esta é uma caixa de combinação que lhe permite selecionar a Variante do sintetizador com a qual deve falar.
-As variantes do eSpeak são parecidas às vozes, mas proporcionam atributos ligeiramente diferentes da voz principal.
+As variantes do eSpeak assemelham-se às vozes, mas proporcionam atributos ligeiramente diferentes da voz principal.
 Algumas variantes são semelhantes a homens, mulheres e outras são similares a sapos.
 
 ==== Velocidade ====
@@ -523,15 +524,25 @@ Por exemplo, quando selecionado tudo, todos os sinais serão falados como palavr
 Se esta opção estiver selecionada, aumentará o tom para as letras maiúsculas.
 
 ==== Dizer "cap" Antes De Letras Maiúsculas ====
-Esta é uma caixa de seleção que quando marcada informa ao NVDA para anunciar a palavra "cap" antes de qualquer letra maiúscula, quando se passa por esta ou a anuncia quando ela é escrita.
+Esta é uma caixa de seleção que se marcada informa ao NVDA para anunciar a palavra "cap" antes de qualquer letra maiúscula, quando falada como  carácter individual, se soletrada, por exemplo.
 Normalmente, o NVDA aumenta ligeiramente o tom para qualquer letra maiúscula, mas alguns sintetizadores não suportam corretamente esta configuração, assim, poderá ser usada  esta opção.
 
 ==== Bipar em maiúsculas ====
 Se esta caixa de seleção estiver marcada, o NVDA reproduzirá um pequeno beep cada vez que falar um Carácter maiúsculo.
-Tal como a caixa de seleção "dizer cap antes de maiúsculas", esta é útil para sintetizadores que não possam alterar seu tom em letras maiúsculas. 
+Tal como a caixa de seleção "dizer cap antes de maiúsculas", esta é útil para sintetizadores que não possam alterar seu tom em letras maiúsculas.
 
+==== Usar Soletragem Melhorada Quando Suportado ====
+Algumas palavras consistem de um único carácter, mas a pronúncia é diferente dependendo de se este está sendo falado como um carácter individual (tal como quando é soletrado) ou como palavra.
+"A", por exemplo, em inglês, tanto pode ser uma letra como uma palavra.
+Essa opção permite ao sintetizador diferenciar entre esses dois casos se o mesmo suportar.
+Maior parte dos sintetizadores o suportam.
+
+ geralmente recomenda-se que essa opção esteja abilitada.
+Todavia, alguns sintetizadores Microsoft Speech API não o implementam corretamente e comportam-se de forma estranha quando esta opção está abilitada.
+  Caso esteja enfrentando problemas com a pronúncia de caracteres individuais, experimente desabilitá-la.
+  
 +++ Anel de Opções de Voz +++[SynthSettingsRing]
-Se desejar alterar rapidamente as opções de voz sem ir ao diálogo das mesmas, alguns comandos deste leitor de telas lhe permitem mover-se através das opções de voz mais comuns, a partir de qualquer local desde que este esteja sendo executado:
+Se desejar alterar rapidamente as opções de voz sem ir ao diálogo das mesmas, alguns comandos do NVDA lhe permitem mover-se através das opções de voz mais comuns, a partir de qualquer local desde que este esteja sendo executado:
 
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
@@ -737,7 +748,7 @@ Se a marcar, porém, o NVDA anunciará também tabelas usadas puramente para rep
 
 ==== Configurar O Anúncio de Campos Tais Como Links E Títulos ====
 
- por favor veja as  opções no diálogo de formatação de documentos para a configuração dos campos que serão falados quando estiver navegando, tais como links, cabeçalhos e tabelas.
+ por favor veja as  opções no diálogo de formatação de documentos [DocumentFormattingSettings] para a configuração dos campos que serão falados quando estiver navegando, tais como links, cabeçalhos e tabelas.
 
 ==== Modo de foco automático quando o foco muda ====
 Esta opção permite que o modo de foco seja ativado quando este for modificado.
@@ -757,26 +768,27 @@ Maior parte das caixas de seleção neste diálogo permitem-lhe configurar que t
 Por exemplo, se marcar a caixa de seleção para informar o nome da fonte a medida que avançar pelo texto com tipos de fonte diferentes, este será anunciado.
 
 Pode configurar o anúncio de: 
-- nome da fonte
-- tamanho da fonte
-- atributos da fonte
-- alinhamento
+- Nome da Fonte
+- Tamanho da Fonte
+- Atributos da Fonte
+- Alinhamento
 - Cores
 - Estilo
-- erros ortográficos
-- número das páginas
-- número das linhas
-- tabelas
-- cabeçalhos de linhas e colunas das tabelas
-- links
-- cabeçalhos
-- listas
-- blocos de citação
-- Marcas de seção
+- Erros Ortográficos
+- Número das Páginas
+- Número das Linhas
+- Tabelas
+- Cabeçalhos de Linhas e Colunas das Tabelas
+- Coordenadas das Células de Tabelas
+- Links
+- Cabeçalhos
+- Listas
+- Blocos de citação
+- Marcas de Seção
 -
 
 ==== Anunciar Mudanças de Formato Após Cursor ====
-Se ativada, esta definição informa ao NVDA para tentar detectar todas as alterações de formatação na linha conforme a anuncia, mesmo que isto possa diminuir o desempenho deste leitor de telas.
+Se ativada, esta opção faz com que o NVDA tente detectar todas as alterações de formatação na linha conforme a anuncia, mesmo que isto possa diminuir seu desempenho.
 
 Por padrão, o NVDA irá detectar a formatação na posição do cursor do sistema/cursor de exploração e em alguns casos poderá detectar a formatação do resto da linha, desde que não diminua o seu desempenho.
 
@@ -805,10 +817,10 @@ No diálogo para adicionar a regra, o modo mais fácil de fazer isto é escrever
 Você pode também pretender digitar uma descrição dessa regra no campo de comentários (algo como: trocar pássaro por rã)
 
 Os dicionários de voz do NVDA vão muito além de uma simples substituição de palavras.
-O diálogo de adicionar regras também contém uma caixa de verificação que define se pretende que a regra seja ou não sensível às maiúsculas (significando que este programa irá levar em conta se os caracteres são ou não maiúsculos .
+O diálogo para a adição de regras também contém uma caixa de seleção onde escolhe se deseja que a regra seja ou não sensível às maiúsculas (indicando que este programa irá levar em conta se os caracteres são ou não maiúsculos.
 O NVDA ignora estes casos por padrão).
-Outra caixa de verificação permite-lhe estabelecer se o texto original é uma "Expressão Regular".
-Uma expressão regular é um texto original que contém símbolos especiais que permitem introduzir mais de um carácter ao mesmo tempo, ou introduzir apenas números, ou só letras, segundo alguns poucos exemplos.
+Outra caixa de seleção permite-lhe estabelecer se o texto original é uma "Expressão Regular".
+Expressão regular é um texto original que contém símbolos especiais que permitem introduzir mais de um carácter ao mesmo tempo, ou introduzir apenas números, ou só letras, segundo alguns poucos exemplos.
 Expressões regulares não são explicadas neste guia do usuário, mas existem muitos tutoriais na Web que podem proporcionar-lhe mais informações.
 
 +++ Pronúncia de Sinais e pontuação +++
@@ -826,9 +838,9 @@ Este programa não salva automaticamente suas opções. Dessa forma, se sair do 
 Atente que pode alterar esta definição que se encontra por padrão no item "Opções gerais..." que está no menu Preferências.
 Para salvar opções escolha o item Salvar opções que se encontra no Menu do NVDA.
 
-Se o NVDA tem um arquivo num sistema só de leitura, como um CD, não será possível salvar suas opções e o leitor de tela informará. 
+Se o NVDA está num sistema só de leitura de arquivos, como um CD, não será possível salvar suas opções e ele o informará. 
 
-Se nunca se engana com suas configurações e precisa retornar _as opções salvas, pode sempre escolher o item "voltar à configuração salva" no menu deste software.
+Se costuma cometer erros  em suas configurações e precisa retornar às opções salvas, pode sempre escolher o item "voltar à configuração salva" no menu deste software.
 
 As seguintes teclas de atalho do NVDA também são úteis:
 
@@ -861,7 +873,7 @@ Estas ações encontram-se disponíveis no menu Registo do visualizador.
 Para os programadores com visão ou para as pessoas que demonstram o NVDA para grupos sem quaisquer problemas relacionados com a visão, está disponível uma janela que lhes permite ver todo o texto que o NVDA fala no momento.
 
 Para ativar o exibidor de fala marque o item de menu "exibidor de fala" nas Ferramentas do Menu do NVDA.
-Ao desmarcar este item desativa-o.
+Ao desmarcar este item você o desativa.
 
 Enquanto o exibidor de fala estiver ativado, o mesmo atualizar-se-á constantemente para apresentar-lhe o texto mais recente que está sendo falado.
 Contudo, se clicar ou se o cursor ficar no visualizador, o NVDA parará temporariamente a atualização do texto, de modo que possa selecionar facilmente ou copiar o conteúdo existente. 
@@ -890,23 +902,19 @@ Existem também muitas variantes que podem ser escolhidas para alterar o som da 
 ++ Microsoft Speech API version 4 (SAPI 4) ++
 SAPI 4 é um standard antigo da Microsoft para os softwares sintetizadores de voz.
 Muitos sintetizadores de voz que trabalham com este standard podem ser comprados ou baixados em várias empresas ou sites da Web.
-Quando este sintetizador é utilizado com o NVDA, as vozes disponíveis (que podem ser encontradas no diálogo de opções de Voz [VoiceSettings] ou desde o Anel de Configurações de Voz [SynthSettingsRing]) contêm todas as vozes dos motores SAPI 4 que se encontram instaladas em seu sistema.
+Quando este sintetizador é utilizado com o NVDA, as vozes disponíveis (que podem ser encontradas no [Diálogo de Opções de Voz #VoiceSettings] ou desde o [Anel de Configurações de Voz #SynthSettingsRing]) contêm todas as vozes dos motores SAPI 4 que se encontram instaladas em seu sistema.
 
 Se possui sintetizadores SAPI 4 instalados mas o sintetizador não aparece na lista do NVDA, instale por favor o runtime binaries do SAPI 4.0, disponível em http://ativex.microsoft.com/ativex/controls/sapi/spchapi.exe.
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++
 O SAPI 5 é um standard da Microsoft para os softwares sintetizadores de voz.
 Muitos sintetizadores de voz que trabalham com este standard podem ser comprados ou baixados em várias empresas ou sites da Web, ainda que seu sistema já venha com pelo menos uma voz SAPI 5 já instalada.
-Quando este sintetizador é utilizado com o NVDA, as vozes disponíveis (que  podem ser encontradas no diálogo de opções de Voz [VoiceSettings] ou desde o Anel de Configurações de Voz [SynthSettingsRing]) contêm todas as vozes dos motores SAPI 5 que se encontram instaladas em seu sistema.
+Quando este sintetizador é utilizado com o NVDA, as vozes disponíveis (que  podem ser encontradas no [Diálogo de Opções de Voz #VoiceSettings] ou desde o [Anel de Configurações de Voz #SynthSettingsRing]) contêm todas as vozes dos motores SAPI 5 que se encontram instaladas em seu sistema.
 
 ++ Audiologic Tts3 ++
 Este é um sintetizador de voz comercial especificamente para o idioma Italiano.
  O mesmo deve estar instalado em seu sistema para que possa utilizá-lo com o NVDA.
 Para mais informações, por favor visite o site Web da Audiologic em www.audiologic.it.
-
-++ Newfon ++
-Newfon é um sintetizador comercial disponibilizado por Sergey Shishmintzev, que suporta os idiomas russo e ucraniano.
-Para fazer o download deste sintetizador, por favor visite a seção de downloads da página da comunidade russa do NVDA: http://ru.nvda-community.org/?page_id=10
 
 + Linhas Braille Suportadas +[SupportedBrailleDisplays]
 Esta seção contém informação sobre as linhas Braille suportadas pelo NVDA.

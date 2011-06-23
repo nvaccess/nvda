@@ -473,13 +473,13 @@ Tästä yhdistelmäruudusta voidaan valita, mitä puhesyntetisaattoria NVDA käy
 
 Lista NVDA:n tukemista puhesyntetisaattoreista on [Tuetut puhesyntetisaattorit #Tuetutpuhesyntetisaattorit] -kappaleessa.
 
-Eräs vaihtoehto, joka näkyy aina tässä listassa on "Ei puhetta", joka mahdollistaa NVDA:n käytön täysin ilman puhetta.
-Tästä voi olla hyötyä jollekulle, joka haluaa käyttää NVDA:ta pelkästään pistenäytön avulla, tai ehkä näkeville kehittäjille, jotka käyttävät vain Näytä puhe -toimintoa.
+Eräs tässä listassa aina näkyvä vaihtoehto on "Ei puhetta", joka mahdollistaa NVDA:n käytön täysin ilman puhetta.
+Tästä voi olla hyötyä jollekulle, joka haluaa käyttää NVDA:ta pelkästään pistenäytön avulla tai näkeville kehittäjille, jotka käyttävät vain Näytä puhe -toimintoa.
  
 ==== Äänilaite ====
 Tästä voidaan valita, mitä äänikorttia NVDA:ssa valittuna olevan puhesyntetisaattorin tulisi käyttää.
 
-+++ Ääniasetukset (NVDA+Ctrl+v) +++
++++ Ääniasetukset (NVDA+Ctrl+v) +++[Aaniasetukset]
 Ääniasetukset-valintaikkuna, joka löytyy Asetukset-valikosta, sisältää asetuksia, joilla voidaan vaikuttaa siihen, miltä puhe kuulostaa.
 Saadaksesi tietoja nopeammasta vaihtoehtoisesta tavasta puheparametrien säätämiseen mistä tahansa, katso [Syntetisaattorin asetusrengas #Syntetisaattorinasetusrengas] -kappaletta.
 
@@ -514,20 +514,31 @@ Key: NVDA+p
 
 Tästä voidaan valita sanoina luettavien välimerkkien ja muiden symboleiden määrä.
 Esimerkiksi kun tasoksi on valittu kaikki, kaikki symbolit luetaan sanoina.
+Tämä asetus vaikuttaa kaikkiin syntetisaattoreihin, eikä pelkästään käytössä olevaan.
 
 ==== Nosta äänenkorkeutta isojen kirjainten kohdalla ====
 Kun tämä asetus on käytössä, puhesyntetisaattorin äänenkorkeutta nostetaan aina isojen kirjainten kohdalla.
 
-==== Sano "ISO" ennen isoja kirjaimia ====
-Kun tämä asetus on käytössä, NVDA sanoo "iso" ennen jokaista isoa kirjainta siirryttäessä nuolinäppäimillä sen kohdalle tai kirjoitettaessa.
+==== Sano "iso" ennen isoja kirjaimia ====
+Kun tämä asetus on käytössä, NVDA sanoo "iso" ennen jokaista yksittäisenä merkkinä puhuttua isoa kirjainta (kuten esim. tavattaessa).
 Tavallisesti NVDA nostaa hieman äänenkorkeutta jokaisen ison kirjaimen kohdalla, mutta jotkin puhesyntetisaattorit eivät ehkä tue sitä kunnolla, joten tälle asetukselle voi olla käyttöä.
 
 ==== Anna äänimerkki isojen kirjainten kohdalla ====
 Jos tämä valintaruutu on valittuna, NVDA antaa pienen äänimerkin joka kerta, kun iso kirjain luetaan.
 Kuten Sano iso ennen isoja kirjaimia -asetus, tämäkin on käyttökelpoinen puhesyntetisaattoreilla, jotka eivät pysty nostamaan äänenkorkeuttaan isojen kirjainten kohdalla.
 
+==== Käytä tavaustoimintoa, mikäli mahdollista ====[Tavaustoiminto]
+Jotkin sanat koostuvat vain yhdestä kirjaimesta, mutta se lausutaan eri tavalla riippuen siitä, puhutaanko se yksittäisenä merkkinä (kuten tavattaessa) tai sanana.
+Esimerkiksi englanninkielessä "a" on sekä kirjain että sana.
+Tämän asetuksen avulla syntetisaattori pystyy erottamaan nämä tilanteet toisistaan, mikäli se vain tukee sitä.
+Useimmat syntetisaattorit tukevat asetusta.
+
+Tämä asetus tulisi tavallisesti ottaa käyttöön.
+Jotkin SAPI-syntetisaattorit toimivat kuitenkin kummallisesti tämän ollessa käytössä, koska sitä ei ole toteutettu niissä kunnolla.
+Asetus kannattaa poistaa käytöstä, jos yksittäisten kirjainten lausumisessa on ongelmia.
+
 +++ Syntetisaattorin asetusrengas +++[Syntetisaattorinasetusrengas]
-Jos halutaan muuttaa puheasetuksia nopeasti menemättä Ääniasetukset-valintaikkunaan, NVDA:ssa on joitakin näppäinkomentoja, joiden avulla voidaan siirtyä yleisimpien asetusten välillä missä tahansa:
+NVDA:ssa on joitakin näppäinkomentoja, joiden avulla voidaan siirtyä missä tahansa yleisimpien puheasetusten välillä, jos niitä halutaan muuttaa nopeasti menemättä Ääniasetukset-valintaikkunaan:
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 | Siirrä seuraavaan syntetisaattorin asetukseen | NVDA+Ctrl+oikea nuoli | NVDA+Ctrl+oikea nuoli | Siirtää nykyisen puheasetuksen jälkeen seuraavana käytettävissä olevaan asetukseen, siirtyen viimeisen jälkeen taas takaisin ensimmäiseen |
@@ -597,9 +608,9 @@ Key: NVDA+3
 Kun tämä valintaruutu on valittuna, NVDA lukee kaikki kirjoitetut sanat.
 
 ==== Anna äänimerkki kirjoitettaessa pieniä kirjaimia Caps Lockin ollessa käytössä ====
-Kun tämä asetus on käytössä, kirjoitettaessa kirjaimia Shift-näppäin pohjassa kuuluu varoitusäänimerkki, jos Caps Lock on päällä.
+Kun tämä asetus on käytössä, kirjoitettaessa kirjaimia Shift-näppäin pohjassa kuuluu varoitusäänimerkki, Jos Caps Lock on päällä.
 Shift-näppäin pohjassa kirjoittaminen Caps Lockin ollessa päällä on yleensä tahatonta ja johtuu tavallisesti siitä, ettei sen tajua olevan käytössä.
-Tämän vuoksi siitä varoittaminen voi olla melko hyödyllistä.
+Tämän vuoksi siitä varoittaminen voi olla varsin hyödyllistä.
 
 %kc:setting
 ==== Lue komentonäppäimet ====
@@ -630,11 +641,12 @@ Vaihtoehtoina ovat merkki, sana, rivi ja kappale.
 ==== Ilmoita hiiren alla olevan objektin rooli ====
 Jos tämä valintaruutu on valittuna, NVDA kertoo objektin roolin (tyypin) hiiren siirtyessä siihen.
 
-==== Ilmoita hiiren koordinaatit äänimerkeillä ====
+==== Ilmaise hiiren koordinaatit äänimerkeillä ====
 Kun tämä valintaruutu on valittuna, NVDA antaa äänimerkkejä hiiren liikkuessa, jotta käyttäjä voi selvittää, missä hiiri on suhteessa ruudun kokoon.
 
 ==== Äänikoordinaatttien voimakkuutta säädetään kirkkauden mukaan ====
-Jos Ilmoita hiiren koordinaatit äänimerkeillä -asetus on käytössä, tämän valintaruudun valitseminen merkitsee, että äänikoordinaattien voimakkuutta säädetään sen mukaan, miten kirkas ruutu on hiiren alla.Tämä voi aiheuttaa suorituskykyongelmia Windows Vistassa, joten oletusarvoisesti se ei ole käytössä.
+Jos Ilmaise hiiren koordinaatit äänimerkeillä -asetus on käytössä, tämän valintaruudun valitseminen merkitsee, että äänikoordinaattien voimakkuutta säädetään sen mukaan, miten kirkas ruutu on hiiren alla.
+Tämä asetus ei ole oletusarvoisesti käytössä.
 
 +++ Tarkastelukohdistimen asetukset +++
 Löytyy Asetukset-valikon kohdasta "Tarkastelukohdistin..."
@@ -898,9 +910,13 @@ Tämä on kaupallinen italiankielinen puhesyntetisaattori.
 Se on asennettava tietokoneelle, jotta sitä voidaan käyttää NVDA:n kanssa.
 Katso lisätietoja Audiologicin web-sivustolta osoitteesta www.audiologic.it.
 
-++ Newfon ++
+Tämä syntetisaattori ei tue [tavaustoimintoa #Tavaustoiminto].
+
+++ Newfon ++[Newfon]
 Newfon on Sergey Shishmintzevin tekemä ilmainen venäjää ja ukrainaa puhuva syntetisaattori.
-Voit ladata sen venäläisen NVDA-yhteisösivuston lataukset-osiosta osoitteesta http://ru.nvda-community.org/?page_id=10
+Se on ladattavissa venäläisen NVDA-yhteisösivuston lataukset-osiosta osoitteesta http://ru.nvda-community.org/?page_id=10
+
+Tämä syntetisaattori ei tue [tavaustoimintoa #Tavaustoiminto].
 
 + Tuetut pistenäytöt +[Tuetutpistenaytot]
 Tässä kappaleessa on tietoja NVDA:n tukemista pistenäytöistä.

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA main-4475\n"
-"POT-Creation-Date: 2011-06-20 19:03+E. Australia Standard Time\n"
-"PO-Revision-Date: 2011-06-20 14:07+0200\n"
+"Project-Id-Version: NVDA main-4487\n"
+"POT-Creation-Date: 2011-06-21 19:03+E. Australia Standard Time\n"
+"PO-Revision-Date: 2011-06-21 12:53+0200\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "bilinmeyen düzen"
 msgid "layout %s"
 msgstr "%s düzeni"
 
-#: NVDAObjects\IAccessible\__init__.py:1469
+#: NVDAObjects\IAccessible\__init__.py:1472
 msgid "Taskbar"
 msgstr "Görev çubuğu"
 
@@ -1766,8 +1766,8 @@ msgid "Moves the review cursor to the previous word of the current navigator obj
 msgstr "İnceleme imlecini mevcut nesne sunucusundaki önceki sözcüğe taşır ve okur"
 
 #: globalCommands.py:486
-msgid "Speaks the word of the current navigator object where the review cursor is situated. If this key is pressed twice, the word will be spelled"
-msgstr "Nesne sunucusunda inceleme  imlecinin üzerinde bulunduğu sözcüğü okur. İki kez basılırsa, sözcük kodlanarak okunur. Üç kez basıldığında ise, sözcük karakter tanımlarıyla (Adana, Bolu, ceyhan gibi) kodlanır."
+msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
+msgstr "Mevcut nesne sunucusunda inceleme imlecinin konumlandığı sözcüğü okur. Bu tuşa iki kez basılırsa, mevcut sözcük harf harf okunur. Üç kez basıldığında ise, karakter tanımları kullanılarak kodlanır (Adana, Bolu, Ceyhan gibi)."
 
 #: globalCommands.py:498
 msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
@@ -1782,7 +1782,7 @@ msgid "Moves the review cursor to the previous character of the current navigato
 msgstr "İnceleme imlecini mevcut nesne sunucusundaki önceki karaktere taşır ve okur"
 
 #: globalCommands.py:543
-msgid "Reports the character of the current navigator object where the review cursor is situated. If this key is pressed twice, ascii and hexadecimal values are spoken for the character"
+msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
 msgstr "mevcut nesne sunucusunda inceleme imlecinin üzerinde bulunduğu karakteri okur. İki kez basılırsa, karakterin tanımı (adana, bolu, ceyhan gibi) okunur. Üç kez basıldığında ise, karakterin ascii ve hexadecimal değerleri söylenir"
 
 #: globalCommands.py:561
@@ -3382,6 +3382,10 @@ msgstr "&Ses Perdesi"
 msgid "&Inflection"
 msgstr "&tonlama"
 
+#: synthDrivers\espeak.py:26
+msgid "Rate boos&t"
+msgstr "hız ar&tırıcı"
+
 #: synthDrivers\newfon.py:179
 msgid "&Acceleration"
 msgstr "Hızl&andırma "
@@ -3414,15 +3418,15 @@ msgstr "Sözcük"
 msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
-#: versionInfo.py:38
+#: versionInfo.py:39
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Microsoft Windows için Açık kaynak ve özgür Ekran Okuyucu"
 
-#: versionInfo.py:41
+#: versionInfo.py:42
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Kopyahakkı (C) {years} NVDA'ya katkıda bulunanlar"
 
-#: versionInfo.py:43
+#: versionInfo.py:44
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"

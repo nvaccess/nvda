@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA Main, 4433\n"
+"Project-Id-Version: NVDA 2011.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-10 19:03+E. Australia Standard Time\n"
-"PO-Revision-Date: 2011-06-10 19:49-0300\n"
+"POT-Creation-Date: 2011-06-20 19:03+E. Australia Standard Time\n"
+"PO-Revision-Date: 2011-06-21 19:33-0300\n"
 "Last-Translator: Cleverson Casarin Uliana <clever92000@yahoo.com.br>\n"
 "Language-Team: pt_BR <clever92000@yahoo.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -20,9 +20,9 @@ msgstr ""
 "X-Poedit-Basepath: e:\\NVDA\n"
 "X-Poedit-SearchPath-0: source\n"
 
-#: IAccessibleHandler.py:699
+#: IAccessibleHandler.py:698
 msgid "Secure Desktop"
-msgstr "Secure Desktop"
+msgstr "Área de trabalho segura"
 
 #: NVDAHelper.py:113
 msgid "unknown layout"
@@ -32,7 +32,7 @@ msgstr "leiaute desconhecido"
 msgid "layout %s"
 msgstr "leiaute %s"
 
-#: NVDAObjects\IAccessible\__init__.py:1472
+#: NVDAObjects\IAccessible\__init__.py:1469
 msgid "Taskbar"
 msgstr "Barra de tarefas"
 
@@ -40,12 +40,12 @@ msgstr "Barra de tarefas"
 msgid "%s items"
 msgstr "%s itens"
 
-#: NVDAObjects\UIA\__init__.py:438
+#: NVDAObjects\UIA\__init__.py:448
 msgid "invoke"
 msgstr "chamar"
 
 #: NVDAObjects\behaviors.py:53
-#: globalCommands.py:801
+#: globalCommands.py:794
 msgid "%d percent"
 msgstr "%d porcento"
 
@@ -71,29 +71,29 @@ msgstr "Editor de célula do Excel do NVDA"
 msgid "Enter cell contents"
 msgstr "Entre com o conteúdo da célula"
 
-#: NVDAObjects\window\excel.py:204
+#: NVDAObjects\window\excel.py:208
 msgid "has formula"
 msgstr "contém fórmula"
 
-#: NVDAObjects\window\excel.py:244
+#: NVDAObjects\window\excel.py:248
 msgid "selection"
 msgstr "seleção"
 
-#: NVDAObjects\window\excel.py:249
+#: NVDAObjects\window\excel.py:253
 msgid "%s %s through %s %s"
 msgstr "%s %s through %s %s"
-
-#: NVDAObjects\window\winword.py:387
-#: NVDAObjects\window\winword.py:399
-#: NVDAObjects\window\winword.py:411
-#: NVDAObjects\window\winword.py:423
-msgid "not in table"
-msgstr "não está numa tabela"
 
 #: NVDAObjects\window\winword.py:394
 #: NVDAObjects\window\winword.py:406
 #: NVDAObjects\window\winword.py:418
 #: NVDAObjects\window\winword.py:430
+msgid "not in table"
+msgstr "não está numa tabela"
+
+#: NVDAObjects\window\winword.py:401
+#: NVDAObjects\window\winword.py:413
+#: NVDAObjects\window\winword.py:425
+#: NVDAObjects\window\winword.py:437
 #: virtualBuffers\__init__.py:1191
 msgid "edge of table"
 msgstr "lado da tabela"
@@ -126,58 +126,63 @@ msgstr "Nenhuma mensagem ainda"
 msgid "Displays one of the recent messages"
 msgstr "Exibe uma mensagem entre as recentes"
 
-#: appModules\msimn.py:18
+#: appModules\msimn.py:19
 msgid "Attachments"
 msgstr "anexos"
 
-#: appModules\msimn.py:19
+#: appModules\msimn.py:20
 msgid "To:"
 msgstr "para:"
 
-#: appModules\msimn.py:20
+#: appModules\msimn.py:21
 msgid "Newsgroup:"
 msgstr "Grupo de Notícias:"
 
-#: appModules\msimn.py:21
+#: appModules\msimn.py:22
 msgid "CC:"
 msgstr "CC:"
 
-#: appModules\msimn.py:22
+#: appModules\msimn.py:23
 msgid "Subject:"
 msgstr "assunto:"
 
-#: appModules\msimn.py:23
-#: appModules\msimn.py:31
+#: appModules\msimn.py:24
+#: appModules\msimn.py:32
 msgid "From:"
 msgstr "de:"
 
-#: appModules\msimn.py:24
+#: appModules\msimn.py:25
 msgid "Date:"
 msgstr "data:"
 
-#: appModules\msimn.py:25
+#: appModules\msimn.py:26
 msgid "Forward to:"
 msgstr "Encaminhar para:"
 
-#: appModules\msimn.py:26
+#: appModules\msimn.py:27
 msgid "Answer to:"
 msgstr "Responder para:"
 
-#: appModules\msimn.py:27
+#: appModules\msimn.py:28
 msgid "Organisation:"
 msgstr "Organização"
 
-#: appModules\msimn.py:28
+#: appModules\msimn.py:29
 msgid "Distribution:"
 msgstr "Distribuição:"
 
-#: appModules\msimn.py:29
+#: appModules\msimn.py:30
 msgid "Key words:"
 msgstr "Palavras chave:"
 
-#: appModules\msimn.py:30
+#: appModules\msimn.py:31
 msgid "BCC:"
 msgstr "CCO:"
+
+#: appModules\msimn.py:94
+#: appModules\outlook.py:27
+msgid "unread"
+msgstr "não lida"
 
 #: appModules\outlook.py:22
 #: appModules\outlook.py:35
@@ -187,10 +192,6 @@ msgstr "assunto: %s"
 #: appModules\outlook.py:23
 msgid "received: %s"
 msgstr "recebido em: %s"
-
-#: appModules\outlook.py:27
-msgid "unread"
-msgstr "não lida"
 
 #: appModules\outlook.py:29
 msgid "attachment"
@@ -238,12 +239,13 @@ msgstr "direita"
 #: globalCommands.py:167
 #: globalCommands.py:177
 #: globalCommands.py:187
-#: globalCommands.py:702
-#: globalCommands.py:764
-#: globalCommands.py:774
-#: globalCommands.py:784
-#: gui\settingsDialogs.py:830
+#: globalCommands.py:695
+#: globalCommands.py:757
+#: globalCommands.py:767
+#: globalCommands.py:777
+#: gui\settingsDialogs.py:857
 #: keyboardHandler.py:297
+#: synthSettingsRing.py:74
 #: virtualBuffers\__init__.py:749
 msgid "on"
 msgstr "ativado"
@@ -255,13 +257,14 @@ msgstr "ativado"
 #: globalCommands.py:174
 #: globalCommands.py:184
 #: globalCommands.py:579
-#: globalCommands.py:699
-#: globalCommands.py:761
-#: globalCommands.py:771
-#: globalCommands.py:781
-#: gui\settingsDialogs.py:590
-#: gui\settingsDialogs.py:830
+#: globalCommands.py:692
+#: globalCommands.py:754
+#: globalCommands.py:764
+#: globalCommands.py:774
+#: gui\settingsDialogs.py:613
+#: gui\settingsDialogs.py:857
 #: keyboardHandler.py:297
+#: synthSettingsRing.py:74
 #: virtualBuffers\__init__.py:749
 msgid "off"
 msgstr "desativado"
@@ -543,18 +546,18 @@ msgid "( )"
 msgstr "( )"
 
 #: braille.py:227
-#: speech.py:710
+#: speech.py:713
 msgid "not %s"
 msgstr "não %s"
 
 #: braille.py:239
-#: speech.py:718
+#: speech.py:721
 msgid "%s of %s"
 msgstr "%s de %s"
 
 #: braille.py:241
-#: speech.py:723
 #: speech.py:726
+#: speech.py:729
 msgid "level %s"
 msgstr "nível %s"
 
@@ -617,79 +620,83 @@ msgstr "tudo"
 msgid "character"
 msgstr "caractere"
 
-#: colors.py:77
+#: colors.py:75
+msgid "unknown color"
+msgstr "cor desconhecida"
+
+#: colors.py:88
 msgid "black"
 msgstr "preto"
 
-#: colors.py:78
+#: colors.py:89
 msgid "green"
 msgstr "verde"
 
-#: colors.py:79
+#: colors.py:90
 msgid "light grey"
 msgstr "cinza claro"
 
-#: colors.py:80
+#: colors.py:91
 msgid "lime"
 msgstr "linha"
 
-#: colors.py:81
+#: colors.py:92
 msgid "grey"
 msgstr "cinza"
 
-#: colors.py:82
+#: colors.py:93
 msgid "olive"
 msgstr "oliva"
 
-#: colors.py:83
+#: colors.py:94
 msgid "white"
 msgstr "branco"
 
-#: colors.py:84
+#: colors.py:95
 msgid "yellow"
 msgstr "amarelo"
 
-#: colors.py:85
+#: colors.py:96
 msgid "dark red"
 msgstr "vermelho escuro"
 
-#: colors.py:86
+#: colors.py:97
 msgid "navy blue"
 msgstr "azul marinho"
 
-#: colors.py:87
+#: colors.py:98
 msgid "red"
 msgstr "vermelho"
 
-#: colors.py:88
+#: colors.py:99
 msgid "blue"
 msgstr "azul"
 
-#: colors.py:89
+#: colors.py:100
 msgid "purple"
 msgstr "púrpura"
 
-#: colors.py:90
+#: colors.py:101
 msgid "teal"
 msgstr "cerceta"
 
-#: colors.py:91
+#: colors.py:102
 msgid "fuchsia"
 msgstr "fúscia"
 
-#: colors.py:92
+#: colors.py:103
 msgid "aqua"
 msgstr "aqua"
 
-#: colors.py:94
+#: colors.py:105
 msgid "orange"
 msgstr "alaranjado"
 
 #: compoundDocuments.py:401
 #: globalCommands.py:115
-#: speech.py:274
-#: speech.py:390
-#: speech.py:403
+#: speech.py:276
+#: speech.py:392
+#: speech.py:405
 #: virtualBuffers\__init__.py:662
 msgid "selected %s"
 msgstr "selecionado %s"
@@ -702,11 +709,11 @@ msgstr "Erro de sintaxe no arquivo de configuração"
 msgid "%s: %s, defaulting to %s"
 msgstr "%s: %s, vou assumir valor padrão %s"
 
-#: config\__init__.py:184
+#: config\__init__.py:185
 msgid "Error parsing configuration file: %s"
 msgstr "Erro a analizar arquivo de configuração: %s"
 
-#: config\__init__.py:191
+#: config\__init__.py:192
 msgid ""
 "Errors in configuration file '%s':\n"
 "%s"
@@ -792,7 +799,7 @@ msgid "tool tip"
 msgstr "dica de ferramenta"
 
 #: controlTypes.py:201
-#: speech.py:1000
+#: speech.py:1012
 msgid "link"
 msgstr "linque"
 
@@ -1212,7 +1219,7 @@ msgid "font size"
 msgstr "tamanho da fonte"
 
 #: controlTypes.py:308
-#: speech.py:952
+#: speech.py:964
 msgid "bold"
 msgstr "negrito"
 
@@ -1233,12 +1240,12 @@ msgid "background color"
 msgstr "cor de fundo"
 
 #: controlTypes.py:313
-#: speech.py:974
+#: speech.py:986
 msgid "superscript"
 msgstr "superescrito"
 
 #: controlTypes.py:314
-#: speech.py:976
+#: speech.py:988
 msgid "subscript"
 msgstr "subescrito"
 
@@ -1637,7 +1644,7 @@ msgid "no navigator object"
 msgstr "nenhum objeto navegação"
 
 #: globalCommands.py:288
-#: globalCommands.py:721
+#: globalCommands.py:714
 msgid "%s copied to clipboard"
 msgstr "%s copiado para área de transferência"
 
@@ -1670,7 +1677,7 @@ msgid "Sets the navigator object to the current focus, and the review cursor to 
 msgstr "Coloca como objeto de navegação aquele atualmente com foco e, se possível, coloca o cursor de exploração na posição do cursor real dentro desse objeto."
 
 #: globalCommands.py:326
-#: globalCommands.py:680
+#: globalCommands.py:673
 msgid "no focus"
 msgstr "sem foco"
 
@@ -1834,257 +1841,257 @@ msgstr "lê a partir do cursor de exploração até o fim do texto atual, movend
 msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
 msgstr "lê a partir do cursor do sistema até o fim do texto, movendo o cursor de modo que ele acompanhe a leitura"
 
-#: globalCommands.py:667
+#: globalCommands.py:660
 msgid "No formatting information"
 msgstr "sem informações de formatação"
 
-#: globalCommands.py:670
-msgid "Reports formatting info for the current cursor position within a document"
-msgstr "Anuncia informações de formatação na posição atual do cursor em um documento"
+#: globalCommands.py:663
+msgid "Reports formatting info for the current review cursor position within a document"
+msgstr "Anuncia informações de formatação na posição atual do cursor de exploração num documento"
 
-#: globalCommands.py:681
+#: globalCommands.py:674
 msgid "reports the object with focus"
 msgstr "Anuncia objeto em foco"
 
-#: globalCommands.py:686
+#: globalCommands.py:679
 msgid "no status bar found"
 msgstr "barra de status não achada"
 
-#: globalCommands.py:695
+#: globalCommands.py:688
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr "lê a barra de status da aplicação atual e move o cursor de navegação para ela"
 
-#: globalCommands.py:704
+#: globalCommands.py:697
 msgid "Mouse tracking"
 msgstr "Captura de mause"
 
-#: globalCommands.py:705
+#: globalCommands.py:698
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Alterna o anúncio de informações conforme o mause é movido."
 
-#: globalCommands.py:713
+#: globalCommands.py:706
 msgid "no title"
 msgstr "sem título"
 
-#: globalCommands.py:722
+#: globalCommands.py:715
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
 msgstr "Anuncia o título da aplicação atual ou janela em primeiro plano. Se pressionada duas vezes, soletra o título. Se pressionada três vezes, copia o título para a área de transferência"
 
-#: globalCommands.py:729
+#: globalCommands.py:722
 msgid "speaks the current foreground object"
 msgstr "fala o objeto atualmente em foco"
 
-#: globalCommands.py:740
+#: globalCommands.py:733
 msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
 msgstr "Registra informações úteis para desenvolvedores sobre o objeto de navegação atual e ativa o visualizador de logs para que as mesmas possam ser examinadas."
 
-#: globalCommands.py:746
+#: globalCommands.py:739
 msgid "no progress bar updates"
 msgstr "Sem atualizações em barras de progresso"
 
-#: globalCommands.py:749
+#: globalCommands.py:742
 msgid "speak progress bar updates"
 msgstr "anunciar barras de progresso"
 
-#: globalCommands.py:752
+#: globalCommands.py:745
 msgid "beep for progress bar updates"
 msgstr "bipar em barras de progresso"
 
-#: globalCommands.py:755
+#: globalCommands.py:748
 msgid "beep and speak progress bar updates"
 msgstr "bipar e falar em barras de progresso"
 
-#: globalCommands.py:757
+#: globalCommands.py:750
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
 msgstr "Alterna entre bipes, fala, bipes e fala, e desativado, para anunciar atualizações em barras de progresso."
 
-#: globalCommands.py:766
+#: globalCommands.py:759
 msgid "report dynamic content changes"
 msgstr "anuncia atualizações nos conteúdos dinâmicos"
 
-#: globalCommands.py:767
+#: globalCommands.py:760
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
 msgstr "Liga e desliga leitura de atualizações em conteúdo dinâmico, como por exemplo novos textos em janelas do prompts de comando"
 
-#: globalCommands.py:776
+#: globalCommands.py:769
 msgid "caret moves review cursor"
 msgstr "Cursor do sistema move o cursor de exploração"
 
-#: globalCommands.py:777
+#: globalCommands.py:770
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "Liga e desliga o movimento do cursor de exploração conforme se move o cursor do sistema"
 
-#: globalCommands.py:786
+#: globalCommands.py:779
 msgid "focus moves navigator object"
 msgstr "foco move objeto de navegação"
 
-#: globalCommands.py:787
+#: globalCommands.py:780
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "Liga e desliga o movimento do objeto de navegação conforme o foco muda"
 
-#: globalCommands.py:799
+#: globalCommands.py:792
 msgid "no system battery"
 msgstr "sem bateria de sistema"
 
-#: globalCommands.py:802
+#: globalCommands.py:795
 msgid "AC power on"
 msgstr "Energia AC ligada"
 
-#: globalCommands.py:804
+#: globalCommands.py:797
 msgid "%d hours and %d minutes remaining"
 msgstr "%d horas e %d minutos restantes"
 
-#: globalCommands.py:806
+#: globalCommands.py:799
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr "Anuncia a carga da bateria e o tempo restante caso o AC não esteja plugado"
 
-#: globalCommands.py:810
+#: globalCommands.py:803
 msgid "Pass next key through"
 msgstr "passar a próxima tecla"
 
-#: globalCommands.py:811
+#: globalCommands.py:804
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "A próxima tecla pressionada não será tratada pelo NVDA; será enviada diretamente ao Windows."
 
-#: globalCommands.py:816
+#: globalCommands.py:809
 msgid "Currently running application is %s"
 msgstr "Aplicação atualmente executando é %s."
 
-#: globalCommands.py:819
+#: globalCommands.py:812
 msgid " and currently loaded module is %s"
 msgstr " e o módulo atualmente carregado é %s"
 
-#: globalCommands.py:821
+#: globalCommands.py:814
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
 msgstr "Fala o nome do executável da aplicação atualmente rodando, bem como o nome do módulo de aplicação atualmente carregado"
 
-#: globalCommands.py:825
+#: globalCommands.py:818
 msgid "Shows the NVDA general settings dialog"
 msgstr "Exibe a janela de opções gerais do NVDA"
 
-#: globalCommands.py:829
+#: globalCommands.py:822
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "Exibe a janela de sintetizadores para o NVDA"
 
-#: globalCommands.py:833
+#: globalCommands.py:826
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Exibe a janela de opções de voz do NVDA"
 
-#: globalCommands.py:837
+#: globalCommands.py:830
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "Exibe a janela de opções de teclado do NVDA"
 
-#: globalCommands.py:841
+#: globalCommands.py:834
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "Exibe a janela de opções de mouse do NVDA"
 
-#: globalCommands.py:845
+#: globalCommands.py:838
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "Exibe a janela de opções para apresentação de objetos no NVDA"
 
-#: globalCommands.py:849
+#: globalCommands.py:842
 msgid "Shows the NVDA browse mode settings dialog"
 msgstr "Exibe a janela de opções de modo de navegação do NVDA"
 
-#: globalCommands.py:853
+#: globalCommands.py:846
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "Exibe a janela de opções para formatação de documentos no NVDA"
 
-#: globalCommands.py:857
+#: globalCommands.py:850
 msgid "Saves the current NVDA configuration"
 msgstr "Salva a configuração atual do NVDA"
 
-#: globalCommands.py:861
+#: globalCommands.py:854
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr "Carrega as configurações salvas do NVDA, desfazendo eventuais mudanças atuais"
 
-#: globalCommands.py:871
+#: globalCommands.py:864
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Ativa o terminal Python do NVDA, útil sobretudo para desenvolvimento"
 
-#: globalCommands.py:876
-#: gui\settingsDialogs.py:964
+#: globalCommands.py:869
+#: gui\settingsDialogs.py:991
 msgid "review"
 msgstr "explorar"
 
-#: globalCommands.py:879
-#: gui\settingsDialogs.py:964
+#: globalCommands.py:872
+#: gui\settingsDialogs.py:991
 msgid "focus"
 msgstr "foco"
 
-#: globalCommands.py:880
+#: globalCommands.py:873
 msgid "Braille tethered to %s"
 msgstr "Braile vinvulado a %s"
 
-#: globalCommands.py:881
+#: globalCommands.py:874
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "Alterna vinculação do braile entre a posição de foco e a de exploração"
 
-#: globalCommands.py:889
+#: globalCommands.py:882
 msgid "There is no text on the clipboard"
 msgstr "Não há texto na área de transferência"
 
-#: globalCommands.py:894
+#: globalCommands.py:887
 msgid "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "A área de transferência contém um texto muito grande, de %s caracteres."
 
-#: globalCommands.py:895
+#: globalCommands.py:888
 msgid "Reports the text on the Windows clipboard"
 msgstr "Anuncia o texto na área de transferência do Windows"
 
-#: globalCommands.py:899
+#: globalCommands.py:892
 msgid "Start marked"
 msgstr "Início marcado"
 
-#: globalCommands.py:900
+#: globalCommands.py:893
 msgid "Marks the current position of the review cursor as the start of text to be copied"
 msgstr "Marca a posição atual do cursor de exploração como o início do texto a ser copiado"
 
-#: globalCommands.py:904
+#: globalCommands.py:897
 msgid "No start marker set"
 msgstr "Sem marca de início"
 
-#: globalCommands.py:908
+#: globalCommands.py:901
 msgid "The start marker must reside within the same object"
 msgstr "A marca de início tem que estar no mesmo objeto"
 
-#: globalCommands.py:913
+#: globalCommands.py:906
 msgid "Review selection copied to clipboard"
 msgstr "Seleção de exploração copiada para área de transferência"
 
-#: globalCommands.py:915
+#: globalCommands.py:908
 msgid "No text to copy"
 msgstr "Sem texto a copiar"
 
-#: globalCommands.py:918
+#: globalCommands.py:911
 msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
 msgstr "Pega o texto a partir da marca inicial já configurada até a posição atual do cursor de exploração (incluindo a mesma) e copia-o para a área de transferência"
 
-#: globalCommands.py:922
+#: globalCommands.py:915
 msgid "Scrolls the braille display back"
 msgstr "Rola a linha braile para trás"
 
-#: globalCommands.py:927
+#: globalCommands.py:920
 msgid "Scrolls the braille display forward"
 msgstr "Rola a linha para frente"
 
-#: globalCommands.py:932
+#: globalCommands.py:925
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "Move o cursor para o objeto sob esta célula braile ou ativa o mesmo"
 
-#: globalCommands.py:937
+#: globalCommands.py:930
 msgid "Moves the braille display to the previous line"
 msgstr "Move a linha braile para a linha anterior"
 
-#: globalCommands.py:942
+#: globalCommands.py:935
 msgid "Moves the braille display to the next line"
 msgstr "Move a linha braile para a próxima linha"
 
-#: globalCommands.py:949
+#: globalCommands.py:942
 msgid "Plugins reloaded"
 msgstr "Plug-ins recarregados"
 
-#: globalCommands.py:950
+#: globalCommands.py:943
 msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
 msgstr "Recarrega módulos de aplicação e plug-ins globais sem reiniciar o NVDA; pode ser útil a desenvolvedores"
 
@@ -2107,7 +2114,7 @@ msgstr "Não foi possível salvar a configuração; provavelmente o sistema de a
 #: gui\__init__.py:129
 #: gui\__init__.py:138
 #: gui\logViewer.py:74
-#: gui\settingsDialogs.py:183
+#: gui\settingsDialogs.py:184
 msgid "Error"
 msgstr "Erro"
 
@@ -2146,7 +2153,7 @@ msgid "&General settings..."
 msgstr "Opções &gerais..."
 
 #: gui\__init__.py:231
-#: gui\settingsDialogs.py:106
+#: gui\settingsDialogs.py:107
 msgid "General settings"
 msgstr "Opções gerais"
 
@@ -2360,7 +2367,7 @@ msgid "Options"
 msgstr "Opções"
 
 #: gui\__init__.py:406
-#: gui\settingsDialogs.py:477
+#: gui\settingsDialogs.py:500
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Usar CapsLock como uma tecla modificadora do NVDA"
 
@@ -2400,517 +2407,521 @@ msgstr "Salvar como"
 msgid "Error saving log: %s"
 msgstr "Erro a salvar log: %s"
 
-#: gui\settingsDialogs.py:108
+#: gui\settingsDialogs.py:109
 msgid "info"
 msgstr "informações"
 
-#: gui\settingsDialogs.py:109
+#: gui\settingsDialogs.py:110
 msgid "debug warning"
 msgstr "alertas de depuração"
 
-#: gui\settingsDialogs.py:110
+#: gui\settingsDialogs.py:111
 msgid "input/output"
 msgstr "entrada/saída"
 
-#: gui\settingsDialogs.py:111
+#: gui\settingsDialogs.py:112
 msgid "debug"
 msgstr "depuração"
 
-#: gui\settingsDialogs.py:116
+#: gui\settingsDialogs.py:117
 msgid "&Language (requires restart to fully take affect):"
 msgstr "Idioma (só é a&lterado ao reiniciar:)"
 
-#: gui\settingsDialogs.py:120
+#: gui\settingsDialogs.py:121
 msgid "Language"
 msgstr "Idioma"
 
-#: gui\settingsDialogs.py:132
+#: gui\settingsDialogs.py:133
 msgid "&Save configuration on exit"
 msgstr "&Salvar configuração ao sair"
 
-#: gui\settingsDialogs.py:137
+#: gui\settingsDialogs.py:138
 msgid "&Warn before exiting NVDA"
 msgstr "aler&tar antes de encerrar o NVDA"
 
-#: gui\settingsDialogs.py:141
+#: gui\settingsDialogs.py:142
 msgid "L&ogging level:"
 msgstr "&Grau de informações no log:"
 
-#: gui\settingsDialogs.py:144
+#: gui\settingsDialogs.py:145
 msgid "Log level"
 msgstr "grau de log"
 
-#: gui\settingsDialogs.py:154
+#: gui\settingsDialogs.py:155
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "Iniciar o NVDA &automaticamente após o logon no Windows"
 
-#: gui\settingsDialogs.py:159
+#: gui\settingsDialogs.py:160
 msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr "Usar o NVDA no logon do Windows (requer privilégios administrativos)"
 
-#: gui\settingsDialogs.py:164
+#: gui\settingsDialogs.py:165
 msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
 msgstr "Usar as opções salvas atuais no logon e outras telas seguras (requer privilégios administrativos)"
 
-#: gui\settingsDialogs.py:177
+#: gui\settingsDialogs.py:178
 msgid "Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"
 msgstr "Foram detectados plug-ins pessoais em seu diretório de usuário; pode ser um risco de segurança copiá-los para o perfil de sistema; quer copiar suas opções mesmo assim?"
 
-#: gui\settingsDialogs.py:178
+#: gui\settingsDialogs.py:179
 msgid "Warning"
 msgstr "Alerta"
 
-#: gui\settingsDialogs.py:183
+#: gui\settingsDialogs.py:184
 msgid "Error copying NVDA user settings"
 msgstr "Erro a copiar as configurações de usuário do NVDA"
 
-#: gui\settingsDialogs.py:185
+#: gui\settingsDialogs.py:186
 msgid "Success"
 msgstr "Êxito"
 
-#: gui\settingsDialogs.py:185
+#: gui\settingsDialogs.py:186
 msgid "Successfully copied NVDA user settings"
 msgstr "Configurações do usuário copiadas com sucesso"
 
-#: gui\settingsDialogs.py:194
+#: gui\settingsDialogs.py:195
 msgid "Error in %s language file"
 msgstr "Erro no arquivo de idioma %s"
 
-#: gui\settingsDialogs.py:194
+#: gui\settingsDialogs.py:195
 msgid "Language Error"
 msgstr "Erro no idioma"
 
-#: gui\settingsDialogs.py:208
+#: gui\settingsDialogs.py:209
 msgid "Insufficient Privileges"
 msgstr "Privilégios insuficientes"
 
-#: gui\settingsDialogs.py:208
+#: gui\settingsDialogs.py:209
 msgid "This change requires administrator privileges."
 msgstr "Esta alteração exige privilégios administrativos no sistema"
 
-#: gui\settingsDialogs.py:211
+#: gui\settingsDialogs.py:212
 msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
 msgstr "Para que o novo idioma seja carregado, a configuração tem de ser salva e o NVDA reiniciado. Pressione Enter para salvar e reiniciar, ou cancelar para fazê-lo manualmente depois."
 
-#: gui\settingsDialogs.py:212
+#: gui\settingsDialogs.py:213
 msgid "Language Configuration Change"
 msgstr "Mudança na configuração de idioma"
 
-#: gui\settingsDialogs.py:219
+#: gui\settingsDialogs.py:220
 msgid "Synthesizer"
 msgstr "Sintetizador"
 
-#: gui\settingsDialogs.py:223
+#: gui\settingsDialogs.py:224
 msgid "&Synthesizer:"
 msgstr "&Sintetizador:"
 
-#: gui\settingsDialogs.py:238
+#: gui\settingsDialogs.py:239
 msgid "Output &device:"
 msgstr "&Dispositivo de saída:"
 
-#: gui\settingsDialogs.py:258
+#: gui\settingsDialogs.py:259
 msgid "Could not load the %s synthesizer."
 msgstr "Não foi possível carregar o sintetizador %s."
 
-#: gui\settingsDialogs.py:258
+#: gui\settingsDialogs.py:259
 msgid "Synthesizer Error"
 msgstr "Erro de sintetizador"
 
-#: gui\settingsDialogs.py:319
+#: gui\settingsDialogs.py:324
 msgid "Voice settings"
 msgstr "Opções de voz"
 
-#: gui\settingsDialogs.py:376
+#: gui\settingsDialogs.py:393
 msgid "Punctuation/symbol &level:"
 msgstr "Grau de sinais de &pontuação:"
 
-#: gui\settingsDialogs.py:383
+#: gui\settingsDialogs.py:400
 msgid "Raise pitch for capitals"
 msgstr "Aumentar tom para maiúsculas"
 
-#: gui\settingsDialogs.py:386
+#: gui\settingsDialogs.py:403
 msgid "Say &cap before capitals"
 msgstr "Dizer &cap antes de maiúsculas"
 
-#: gui\settingsDialogs.py:389
+#: gui\settingsDialogs.py:406
 msgid "&Beep for capitals"
 msgstr "&Bipar em maiúsculas"
 
-#: gui\settingsDialogs.py:392
+#: gui\settingsDialogs.py:409
 msgid "Use &spelling functionality if supported"
 msgstr "Usar soletragem &melhorada quando suportado"
 
-#: gui\settingsDialogs.py:460
+#: gui\settingsDialogs.py:483
 msgid "Keyboard Settings"
 msgstr "Opções de teclado"
 
-#: gui\settingsDialogs.py:464
+#: gui\settingsDialogs.py:487
 msgid "&Keyboard layout:"
 msgstr "&leiaute de teclado:"
 
-#: gui\settingsDialogs.py:469
+#: gui\settingsDialogs.py:492
 msgid "Keyboard layout"
 msgstr "leiaute de teclado"
 
-#: gui\settingsDialogs.py:480
+#: gui\settingsDialogs.py:503
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Usar Insert do teclado numérico como uma tecla modificadora do NVDA"
 
-#: gui\settingsDialogs.py:483
+#: gui\settingsDialogs.py:506
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Usar Insert estendida como uma tecla modificadora do NVDA"
 
-#: gui\settingsDialogs.py:486
+#: gui\settingsDialogs.py:509
 msgid "Speak typed &characters"
 msgstr "Falar caracteres &digitados"
 
-#: gui\settingsDialogs.py:489
+#: gui\settingsDialogs.py:512
 msgid "Speak typed &words"
 msgstr "Falar &palavras digitadas"
 
-#: gui\settingsDialogs.py:492
+#: gui\settingsDialogs.py:515
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "Apita se digitar letras minúsculas com caps lock ligado"
 
-#: gui\settingsDialogs.py:495
+#: gui\settingsDialogs.py:518
 msgid "Speak command &keys"
 msgstr "Falar tec&las de comando"
 
-#: gui\settingsDialogs.py:515
+#: gui\settingsDialogs.py:538
 msgid "Mouse settings"
 msgstr "Opções de mouse"
 
-#: gui\settingsDialogs.py:518
+#: gui\settingsDialogs.py:541
 msgid "Report mouse &shape changes"
 msgstr "A&nunciar mudanças no formato do mouse"
 
-#: gui\settingsDialogs.py:521
+#: gui\settingsDialogs.py:544
 msgid "Enable mouse &tracking"
 msgstr "Habilitar ras&treamento do mouse"
 
-#: gui\settingsDialogs.py:525
+#: gui\settingsDialogs.py:548
 msgid "Text &unit resolution:"
 msgstr "&Unidade de texto:"
 
-#: gui\settingsDialogs.py:529
+#: gui\settingsDialogs.py:552
 msgid "text reporting unit"
 msgstr "unidade mínima de texto a anunciar"
 
-#: gui\settingsDialogs.py:537
+#: gui\settingsDialogs.py:560
 msgid "Report &role when mouse enters object"
 msgstr "Anunciar &tipo do objeto quando o mouse entra nele"
 
-#: gui\settingsDialogs.py:540
+#: gui\settingsDialogs.py:563
 msgid "play audio coordinates when mouse moves"
 msgstr "Tocar sons de coordenada quando o mouse é movido"
 
-#: gui\settingsDialogs.py:543
+#: gui\settingsDialogs.py:566
 msgid "brightness controls audio coordinates volume"
 msgstr "brilho controla volume das coordenadas sonoras"
 
-#: gui\settingsDialogs.py:561
+#: gui\settingsDialogs.py:584
 msgid "Review cursor settings"
 msgstr "Opções do cursor de exploração"
 
-#: gui\settingsDialogs.py:564
+#: gui\settingsDialogs.py:587
 msgid "Follow &keyboard focus"
 msgstr "A&companhar foco do teclado"
 
-#: gui\settingsDialogs.py:567
+#: gui\settingsDialogs.py:590
 msgid "Follow System &Caret"
 msgstr "Acompanhar &Cursor do sistema"
 
-#: gui\settingsDialogs.py:570
+#: gui\settingsDialogs.py:593
 msgid "Follow &mouse cursor"
 msgstr "Acompanhar cursor do &mouse"
 
-#: gui\settingsDialogs.py:573
+#: gui\settingsDialogs.py:596
 msgid "Simple review mode"
 msgstr "Modo simples de exploração"
 
-#: gui\settingsDialogs.py:588
+#: gui\settingsDialogs.py:611
 msgid "Object presentation"
 msgstr "Apresentação de objetos"
 
-#: gui\settingsDialogs.py:591
+#: gui\settingsDialogs.py:614
 msgid "Speak"
 msgstr "Falar"
 
-#: gui\settingsDialogs.py:592
+#: gui\settingsDialogs.py:615
 msgid "Beep"
 msgstr "Bipar"
 
-#: gui\settingsDialogs.py:593
+#: gui\settingsDialogs.py:616
 msgid "Speak and beep"
 msgstr "Falar e bipar"
 
-#: gui\settingsDialogs.py:597
+#: gui\settingsDialogs.py:620
 msgid "Report &tooltips"
 msgstr "Anunciar &dicas de ferramentas"
 
-#: gui\settingsDialogs.py:600
+#: gui\settingsDialogs.py:623
 msgid "Report &help balloons"
 msgstr "Anunciar balões de aj&uda"
 
-#: gui\settingsDialogs.py:603
+#: gui\settingsDialogs.py:626
 msgid "Report object shortcut &keys"
 msgstr "Anunciar te&clas de atalho dos objetos"
 
-#: gui\settingsDialogs.py:606
+#: gui\settingsDialogs.py:629
 msgid "Report object &position information"
 msgstr "anunciar &Posição do objeto "
 
-#: gui\settingsDialogs.py:609
+#: gui\settingsDialogs.py:632
 msgid "Guess object &position information when unavailable"
 msgstr "Deduzir &posição do objeto quando não disponível"
 
-#: gui\settingsDialogs.py:612
+#: gui\settingsDialogs.py:635
 msgid "Report object &descriptions"
 msgstr "anunciar &descrições dos objetos"
 
-#: gui\settingsDialogs.py:616
+#: gui\settingsDialogs.py:639
 msgid "Progress &bar output:"
 msgstr "&Barras de progresso:"
 
-#: gui\settingsDialogs.py:619
+#: gui\settingsDialogs.py:642
 msgid "Progress bar output"
 msgstr "Comportamento em barras de progresso"
 
-#: gui\settingsDialogs.py:628
+#: gui\settingsDialogs.py:651
 msgid "Report background progress bars"
 msgstr "Anunciar barras de progresso não visíveis"
 
-#: gui\settingsDialogs.py:631
+#: gui\settingsDialogs.py:654
 msgid "Report dynamic &content changes"
 msgstr "Anunciar atualizações nos &conteúdos dinâmicos"
 
-#: gui\settingsDialogs.py:651
+#: gui\settingsDialogs.py:674
 msgid "Browse mode"
 msgstr "Modo de navegação"
 
-#: gui\settingsDialogs.py:654
+#: gui\settingsDialogs.py:677
 msgid "&Maximum number of characters on one line"
 msgstr "Má&ximo de caracteres numa linha"
 
-#: gui\settingsDialogs.py:659
+#: gui\settingsDialogs.py:682
 msgid "&Number of lines per page"
 msgstr "&Linhas por página"
 
-#: gui\settingsDialogs.py:664
+#: gui\settingsDialogs.py:687
 msgid "Use &screen layout (when supported)"
 msgstr "U&sar apresentação da tela (quando suportado)"
 
-#: gui\settingsDialogs.py:667
+#: gui\settingsDialogs.py:690
 msgid "Report l&ayout tables"
 msgstr "Anunciar tabelas de &leiaute"
 
-#: gui\settingsDialogs.py:671
+#: gui\settingsDialogs.py:694
 msgid "Automatic focus mode for focus changes"
 msgstr "Modo de foco automático quando o foco muda"
 
-#: gui\settingsDialogs.py:674
+#: gui\settingsDialogs.py:697
 msgid "Automatic focus mode for caret movement"
 msgstr "Modo de foco automático quando o cursor da aplicação muda"
 
-#: gui\settingsDialogs.py:677
+#: gui\settingsDialogs.py:700
 msgid "Audio indication of focus and browse modes"
 msgstr "Indicação sonora de mudança entre modo de foco e de navegação"
 
-#: gui\settingsDialogs.py:705
+#: gui\settingsDialogs.py:728
 msgid "Document formatting"
 msgstr "Formatação de documentos"
 
-#: gui\settingsDialogs.py:708
+#: gui\settingsDialogs.py:731
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "Anuncia mudanças de formato após cursor (pode causar lentidão)"
 
-#: gui\settingsDialogs.py:711
+#: gui\settingsDialogs.py:734
 msgid "Report font &name"
 msgstr "Anunciar nome d&a fonte"
 
-#: gui\settingsDialogs.py:714
+#: gui\settingsDialogs.py:737
 msgid "Report font &size"
 msgstr "Anunciar taman&ho da fonte"
 
-#: gui\settingsDialogs.py:717
+#: gui\settingsDialogs.py:740
 msgid "Report font attri&butes"
 msgstr "Anunciar atri&butos da fonte"
 
-#: gui\settingsDialogs.py:720
+#: gui\settingsDialogs.py:743
 msgid "Report &alignment"
 msgstr "Anunciar &alinhamento"
 
-#: gui\settingsDialogs.py:723
+#: gui\settingsDialogs.py:746
 msgid "Report &colors"
 msgstr "Anunciar &cores"
 
-#: gui\settingsDialogs.py:726
+#: gui\settingsDialogs.py:749
 msgid "Report st&yle"
 msgstr "Anunciar est&ilo"
 
-#: gui\settingsDialogs.py:729
+#: gui\settingsDialogs.py:752
 msgid "Report spelling errors"
 msgstr "Anunciar erros ortográficos"
 
-#: gui\settingsDialogs.py:732
+#: gui\settingsDialogs.py:755
 msgid "Report &pages"
 msgstr "Anunciar &páginas"
 
-#: gui\settingsDialogs.py:735
+#: gui\settingsDialogs.py:758
 msgid "Report &line numbers"
 msgstr "Anunciar o número de cada &linha"
 
-#: gui\settingsDialogs.py:738
+#: gui\settingsDialogs.py:761
 msgid "Report &tables"
 msgstr "Anunciar ta&belas"
 
-#: gui\settingsDialogs.py:741
+#: gui\settingsDialogs.py:764
 msgid "Report table row/column h&eaders"
 msgstr "Anunciar os cab&eçalhos de linhas e colunas das tabelas"
 
-#: gui\settingsDialogs.py:744
+#: gui\settingsDialogs.py:767
+msgid "Report table cell c&oordinates"
+msgstr "Anunciar c&oordenadas de células em tabelas"
+
+#: gui\settingsDialogs.py:770
 msgid "Report &links"
 msgstr "Anunciar lin&ques"
 
-#: gui\settingsDialogs.py:747
+#: gui\settingsDialogs.py:773
 msgid "Report &headings"
 msgstr "Anunciar &cabeçalhos"
 
-#: gui\settingsDialogs.py:750
+#: gui\settingsDialogs.py:776
 msgid "Report l&ists"
 msgstr "Anunciar l&istas"
 
-#: gui\settingsDialogs.py:753
+#: gui\settingsDialogs.py:779
 msgid "Report block &quotes"
 msgstr "Anunciar blocos de cita&ção"
 
-#: gui\settingsDialogs.py:756
+#: gui\settingsDialogs.py:782
 msgid "Report lan&dmarks"
 msgstr "Anunciar &marcas de seção"
 
-#: gui\settingsDialogs.py:785
+#: gui\settingsDialogs.py:812
 msgid "Edit dictionary entry"
 msgstr "Edita uma entrada"
 
-#: gui\settingsDialogs.py:789
+#: gui\settingsDialogs.py:816
 msgid "&Pattern"
 msgstr "&Original"
 
-#: gui\settingsDialogs.py:792
-#: gui\settingsDialogs.py:1028
+#: gui\settingsDialogs.py:819
+#: gui\settingsDialogs.py:1055
 msgid "&Replacement"
 msgstr "&Substituto"
 
-#: gui\settingsDialogs.py:795
+#: gui\settingsDialogs.py:822
 msgid "&Comment"
 msgstr "&Comentário"
 
-#: gui\settingsDialogs.py:798
+#: gui\settingsDialogs.py:825
 msgid "Case &sensitive"
 msgstr "distinguir &maiúsculas de minúsculas"
 
-#: gui\settingsDialogs.py:800
+#: gui\settingsDialogs.py:827
 msgid "Regular &expression"
 msgstr "&Expressão regular"
 
-#: gui\settingsDialogs.py:822
+#: gui\settingsDialogs.py:849
 msgid "&Dictionary entries"
 msgstr "Entradas do &dicionário"
 
-#: gui\settingsDialogs.py:825
+#: gui\settingsDialogs.py:852
 msgid "Comment"
 msgstr "Comentário"
 
-#: gui\settingsDialogs.py:826
+#: gui\settingsDialogs.py:853
 msgid "Pattern"
 msgstr "Original"
 
-#: gui\settingsDialogs.py:827
-#: gui\settingsDialogs.py:1016
+#: gui\settingsDialogs.py:854
+#: gui\settingsDialogs.py:1043
 msgid "Replacement"
 msgstr "Substituto"
 
-#: gui\settingsDialogs.py:828
+#: gui\settingsDialogs.py:855
 msgid "case"
 msgstr "caixa"
 
-#: gui\settingsDialogs.py:829
+#: gui\settingsDialogs.py:856
 msgid "Regexp"
 msgstr "Expressão regular"
 
-#: gui\settingsDialogs.py:838
+#: gui\settingsDialogs.py:865
 msgid "&Add"
 msgstr "&Adicionar"
 
-#: gui\settingsDialogs.py:841
+#: gui\settingsDialogs.py:868
 msgid "&Edit"
 msgstr "&Editar"
 
-#: gui\settingsDialogs.py:844
+#: gui\settingsDialogs.py:871
 msgid "&Remove"
 msgstr "&Remover"
 
-#: gui\settingsDialogs.py:867
+#: gui\settingsDialogs.py:894
 msgid "Add Dictionary Entry"
 msgstr "Adicionar Entrada de Dicionário"
 
-#: gui\settingsDialogs.py:912
+#: gui\settingsDialogs.py:939
 msgid "Braille Settings"
 msgstr "Opções de Braile"
 
-#: gui\settingsDialogs.py:916
+#: gui\settingsDialogs.py:943
 msgid "Braille &display:"
 msgstr "&Linha braile:"
 
-#: gui\settingsDialogs.py:930
+#: gui\settingsDialogs.py:957
 msgid "Translation &table:"
 msgstr "&Tabela de tradução:"
 
-#: gui\settingsDialogs.py:942
+#: gui\settingsDialogs.py:969
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "E&xpandir para braile de computador a palavra sob o cursor"
 
-#: gui\settingsDialogs.py:947
+#: gui\settingsDialogs.py:974
 msgid "Cursor blink rate (ms)"
 msgstr "Velocidade de intermitência do cursor (milésimos)"
 
-#: gui\settingsDialogs.py:955
+#: gui\settingsDialogs.py:982
 msgid "Message timeout (sec)"
 msgstr "Tempo limite de mensagem (segundos)"
 
-#: gui\settingsDialogs.py:963
+#: gui\settingsDialogs.py:990
 msgid "Braille tethered to:"
 msgstr "Braile vinculado a:"
 
-#: gui\settingsDialogs.py:982
+#: gui\settingsDialogs.py:1009
 msgid "Braille Display Error"
 msgstr "Erro na Linha Braile"
 
-#: gui\settingsDialogs.py:982
+#: gui\settingsDialogs.py:1009
 msgid "Could not load the %s display."
 msgstr "Não consegui carregar a linha braile %s."
 
-#: gui\settingsDialogs.py:1002
+#: gui\settingsDialogs.py:1029
 msgid "Symbol Pronunciation"
 msgstr "Pronúncia do Sinal"
 
-#: gui\settingsDialogs.py:1013
+#: gui\settingsDialogs.py:1040
 msgid "&Symbols"
 msgstr "&Sinais"
 
-#: gui\settingsDialogs.py:1015
+#: gui\settingsDialogs.py:1042
 msgid "Symbol"
 msgstr "Sinal"
 
-#: gui\settingsDialogs.py:1017
+#: gui\settingsDialogs.py:1044
 msgid "Level"
 msgstr "Grau"
 
-#: gui\settingsDialogs.py:1026
+#: gui\settingsDialogs.py:1053
 msgid "Change symbol"
 msgstr "Alterar sinal"
 
-#: gui\settingsDialogs.py:1034
+#: gui\settingsDialogs.py:1061
 msgid "&Level"
 msgstr "&Grau"
 
@@ -3199,8 +3210,8 @@ msgid "Emulates pressing %s on the system keyboard"
 msgstr "Emula o pressionar de %s no teclado do sistema"
 
 #: speech.py:144
-#: speech.py:296
-#: speech.py:653
+#: speech.py:298
+#: speech.py:655
 msgid "blank"
 msgstr "em branco"
 
@@ -3208,142 +3219,142 @@ msgstr "em branco"
 msgid "cap %s"
 msgstr "cap %s"
 
-#: speech.py:333
+#: speech.py:335
 msgid "%d characters"
 msgstr "%d caracteres"
 
-#: speech.py:385
+#: speech.py:387
 msgid "selecting %s"
 msgstr "selecionando %s"
 
-#: speech.py:396
+#: speech.py:398
 msgid "unselecting %s"
 msgstr "desselecionando %s"
 
-#: speech.py:398
+#: speech.py:400
 msgid "selection removed"
 msgstr "seleção removida"
 
-#: speech.py:708
+#: speech.py:711
 msgid "done dragging"
 msgstr "sôlto"
 
-#: speech.py:738
-#: speech.py:1045
+#: speech.py:742
+#: speech.py:1057
 msgid "row %s"
 msgstr "linha %s"
 
-#: speech.py:744
-#: speech.py:1041
+#: speech.py:749
+#: speech.py:1053
 msgid "column %s"
 msgstr "coluna %s"
 
-#: speech.py:749
+#: speech.py:754
 msgid "with %s rows and %s columns"
 msgstr "com %s linhas e %s colunas"
 
-#: speech.py:751
+#: speech.py:756
 msgid "with %s columns"
 msgstr "com %s colunas"
 
-#: speech.py:753
+#: speech.py:758
 msgid "with %s rows"
 msgstr "com %s linhas"
 
-#: speech.py:865
+#: speech.py:870
 msgid "with %s items"
 msgstr "com %s itens"
 
-#: speech.py:884
-#: speech.py:1000
+#: speech.py:896
+#: speech.py:1012
 msgid "out of %s"
 msgstr "fora de %s"
 
-#: speech.py:908
+#: speech.py:920
 msgid "page %s"
 msgstr "página %s"
 
-#: speech.py:915
+#: speech.py:927
 msgid "style %s"
 msgstr "estilo %s"
 
-#: speech.py:917
+#: speech.py:929
 msgid "default style"
 msgstr "estilo padrão"
 
-#: speech.py:941
+#: speech.py:953
 msgid "on {backgroundColor}"
 msgstr "na cor de fundo"
 
-#: speech.py:946
+#: speech.py:958
 msgid "line %s"
 msgstr "linha %s"
 
-#: speech.py:952
+#: speech.py:964
 msgid "no bold"
 msgstr "sem negrito"
 
-#: speech.py:957
+#: speech.py:969
 msgid "italic"
 msgstr "itálico"
 
-#: speech.py:957
+#: speech.py:969
 msgid "no italic"
 msgstr "sem itálico"
 
-#: speech.py:962
+#: speech.py:974
 msgid "no strikethrough"
 msgstr "sem cancela"
 
-#: speech.py:962
+#: speech.py:974
 msgid "strikethrough"
 msgstr "cancela"
 
-#: speech.py:967
+#: speech.py:979
 msgid "not underlined"
 msgstr "não sublinhado"
 
-#: speech.py:967
+#: speech.py:979
 msgid "underlined"
 msgstr "sublinhado"
 
-#: speech.py:978
+#: speech.py:990
 msgid "baseline"
 msgstr "linha base"
 
-#: speech.py:986
+#: speech.py:998
 msgid "align left"
 msgstr "alinhamento à esquerda"
 
-#: speech.py:988
+#: speech.py:1000
 msgid "align center"
 msgstr "alinhamento centrado"
 
-#: speech.py:990
+#: speech.py:1002
 msgid "align right"
 msgstr "alinhamento à direita"
 
-#: speech.py:992
+#: speech.py:1004
 msgid "align justify"
 msgstr "alinhamento justificado"
 
-#: speech.py:994
+#: speech.py:1006
 msgid "align default"
 msgstr "alinhamento padrão"
 
-#: speech.py:1007
+#: speech.py:1019
 msgid "spelling error"
 msgstr "erro ortográfico"
 
-#: speech.py:1009
+#: speech.py:1021
 msgid "out of spelling error"
 msgstr "fora do erro"
 
-#: speech.py:1027
+#: speech.py:1039
 msgid "out of table"
 msgstr "fora da tabela"
 
-#: speech.py:1036
+#: speech.py:1048
 msgid "table with %s columns and %s rows"
 msgstr "tabela com %s colunas e %s linhas"
 
@@ -3351,31 +3362,31 @@ msgstr "tabela com %s colunas e %s linhas"
 msgid "NVDA Speech Viewer"
 msgstr "Exibidor da Fala do NVDA"
 
-#: synthDriverHandler.py:186
+#: synthDriverHandler.py:194
 msgid "&Language"
 msgstr "I&dioma"
 
-#: synthDriverHandler.py:191
+#: synthDriverHandler.py:199
 msgid "&Voice"
 msgstr "&Voz"
 
-#: synthDriverHandler.py:195
+#: synthDriverHandler.py:203
 msgid "V&ariant"
 msgstr "V&ariante"
 
-#: synthDriverHandler.py:200
+#: synthDriverHandler.py:208
 msgid "&Rate"
 msgstr "v&elocidade"
 
-#: synthDriverHandler.py:204
+#: synthDriverHandler.py:212
 msgid "V&olume"
 msgstr "v&olume"
 
-#: synthDriverHandler.py:208
+#: synthDriverHandler.py:216
 msgid "&Pitch"
 msgstr "&tom"
 
-#: synthDriverHandler.py:213
+#: synthDriverHandler.py:221
 msgid "&Inflection"
 msgstr "&Inflecção"
 
@@ -3415,11 +3426,11 @@ msgstr "acesso não visual ao ambiente de trabalho"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Leitor de telas livre e aberto para o Microsoft Windows"
 
-#: versionInfo.py:40
-msgid "Copyright (C) 2006-2011 NVDA Contributors"
-msgstr "Copyright (C) 2006-2011 Colaboradores do NVDA"
-
 #: versionInfo.py:41
+msgid "Copyright (C) {years} NVDA Contributors"
+msgstr "Copyright (C) {years} Colaboradores do NVDA"
+
+#: versionInfo.py:43
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
