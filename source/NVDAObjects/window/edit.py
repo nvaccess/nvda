@@ -355,28 +355,35 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				end=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
 			return (start,end)
 		elif sys.getwindowsversion().major<6: #Implementation of standard edit field wordbreak behaviour (only breaks on space)
-			text=self.obj.windowText
-			textLength=len(text)
-			if offset>=textLength:
+			lineStart,lineEnd=self._getLineOffsets(offset)
+			if offset>=lineEnd:
+				return offset,offset+1
+			lineText=self._getTextRange(lineStart,lineEnd)
+			lineTextLen=len(lineText)
+			relativeOffset=offset-lineStart
+			if relativeOffset>=lineTextLen:
 				return offset,offset+1
 			#cariage returns are always treeted as a word by themselves
-			if text[offset] in ['\r','\n']:
+			if lineText[relativeOffset] in ['\r','\n']:
 				return offset,offset+1
 			#Find the start of the word (possibly moving through space to get to the word first)
-			tempOffset=offset
-			while offset>=0 and text[tempOffset].isspace():
+			tempOffset=relativeOffset
+			while tempOffset>0 and lineText[tempOffset].isspace():
 				tempOffset-=1
-			while tempOffset>=0 and not text[tempOffset].isspace():
+			while tempOffset>0 and not lineText[tempOffset].isspace():
 				tempOffset-=1
-			start=tempOffset+1
+			start=lineStart+tempOffset
+			startOnSpace=True if tempOffset<lineTextLen and lineText[tempOffset].isspace() else False
 			#Find the end of the word and trailing space
-			tempOffset=offset
-			textLen=len(text)
-			while tempOffset<textLen and not text[tempOffset].isspace():
+			tempOffset=relativeOffset
+			if startOnSpace:
+				while tempOffset<lineTextLen and lineText[tempOffset].isspace():
+					tempOffset+=1
+			while tempOffset<lineTextLen and not lineText[tempOffset].isspace():
 				tempOffset+=1
-			while tempOffset<textLen and text[tempOffset].isspace():
+			while tempOffset<lineTextLen and lineText[tempOffset].isspace():
 				tempOffset+=1
-			end=tempOffset
+			end=lineStart+tempOffset
 			return start,end
 		else:
 			if self._getTextRange(offset,offset+1) in ['\r','\n']:
