@@ -15,6 +15,7 @@ complexSymbols:
 # Others
 decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -27,9 +28,10 @@ symbols:
 : phrase ending	due punti	most	always
 decimal point		none	always
 in-word '	apostrofo	all	norep
+negative number	meno	none	norep
 
 # Whitespace
-\0	vuoto	char
+\0	vuoto	char	# null
 \t	tab
 \n	nuova riga	char
 \f	fine pagina	none
@@ -41,18 +43,18 @@ in-word '	apostrofo	all	norep
 !	punto esclamativo	all
 "	virgolette	most
 \#	cancelletto	most	always
-$	dollari	some
-£	lire sterline	some	norep
-€	euro	some	norep
+$	dollari	all	norep
+£	lire sterline	all	norep
+€	euro	all	norep
 %	percento	some
 &	and	some	norep
 '	apostrofo	all
 (	aperta parentesi	most
 )	chiusa parentesi	most
 *	asterisco	all
-+	più	all	always
++	più	all	norep	always
 ,	virgola	all	always
--	trattino	most	always
+-	trattino	most	norep	always
 .	punto	some	norep
 /	barra	some	norep
 :	due punti	most
@@ -66,7 +68,7 @@ $	dollari	some
 ]	chiusa parentesi quadra	most
 «	aperte doppie virgolette	most
 »	chiuse doppie virgolette	most
-\\	controbarra	most	always
+\\	controbarra	most	norep	always
 ^	accento circonflesso	most
 _	sottolineato	most	always
 `	accento grave	most
