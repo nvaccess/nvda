@@ -427,7 +427,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def loadSettings(self):
 		c=config.conf["speech"][self.name]
 		if self.isSupported("voice"):
-			voice=c["voice"]
+			voice=c.get("voice",None)
 			try:
 				changeVoice(self,voice)
 			except LookupError:
