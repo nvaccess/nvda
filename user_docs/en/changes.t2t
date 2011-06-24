@@ -98,6 +98,8 @@ Highlights of this release include major improvements concerning punctuation and
 - In Internet Explorer and other MSHTML controls, fixed a rare problem where the focus kept bouncing infinitely between the document and a multi-line editable text field in focus mode. (#1566)
 - In Microsoft Word 2010 NVDA will now automatically read confirmation dialogs. (#1538)
 - The NVDA installer no longer shows garbled text for Hong Kong versions of Windows Vista and Windows 7. (#1596)
+- NVDA no longer fails to load the SAPI 5 synthesizer if the users config contains SAPI 5 settings but is missing the voice setting. (#1599)
+- In firefox brows mode, NVDA no longer refuses to include content that is inside a focusable node with an ARIA role of presentation.
 
 
 == Changes for Developers ==
