@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2011.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-20 19:03+E. Australia Standard Time\n"
-"PO-Revision-Date: 2011-06-21 19:33-0300\n"
+"POT-Creation-Date: 2011-06-25 19:03+E. Australia Standard Time\n"
+"PO-Revision-Date: 2011-06-26 21:22-0300\n"
 "Last-Translator: Cleverson Casarin Uliana <clever92000@yahoo.com.br>\n"
 "Language-Team: pt_BR <clever92000@yahoo.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Poedit-Basepath: e:\\NVDA\n"
 "X-Poedit-SearchPath-0: source\n"
 
-#: IAccessibleHandler.py:698
+#: IAccessibleHandler.py:699
 msgid "Secure Desktop"
 msgstr "Área de trabalho segura"
 
@@ -32,7 +32,7 @@ msgstr "leiaute desconhecido"
 msgid "layout %s"
 msgstr "leiaute %s"
 
-#: NVDAObjects\IAccessible\__init__.py:1469
+#: NVDAObjects\IAccessible\__init__.py:1475
 msgid "Taskbar"
 msgstr "Barra de tarefas"
 
@@ -53,12 +53,12 @@ msgstr "%d porcento"
 msgid "Desktop"
 msgstr "Área de trabalho"
 
-#: NVDAObjects\window\edit.py:252
 #: NVDAObjects\window\edit.py:253
+#: NVDAObjects\window\edit.py:254
 msgid "default color"
 msgstr "cor padrão"
 
-#: NVDAObjects\window\edit.py:577
+#: NVDAObjects\window\edit.py:592
 #: controlTypes.py:246
 msgid "embedded object"
 msgstr "objeto embutido"
@@ -1774,8 +1774,8 @@ msgid "Moves the review cursor to the previous word of the current navigator obj
 msgstr "Move o cursor de exploração para a palavra anterior do objeto atual de navegação e o fala"
 
 #: globalCommands.py:486
-msgid "Speaks the word of the current navigator object where the review cursor is situated. If this key is pressed twice, the word will be spelled"
-msgstr "Fala a palavra do objeto atual de navegação onde está o cursor de exploração. Se pressionada duas vezes, soletra a palavra"
+msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
+msgstr "Fala a palavra do objeto de navegação atual onde se encontra o cursor de exploração. Ao pressionar duas vezes, soletra a palavra. Ao pressionar três vezes, soletra usando descrições de caracteres"
 
 #: globalCommands.py:498
 msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
@@ -1790,8 +1790,8 @@ msgid "Moves the review cursor to the previous character of the current navigato
 msgstr "Move o cursor de exploração para o caractere anterior do objeto atual de navegação e o fala"
 
 #: globalCommands.py:543
-msgid "Reports the character of the current navigator object where the review cursor is situated. If this key is pressed twice, ascii and hexadecimal values are spoken for the character"
-msgstr "Fala o caractere do objeto atual de navegação onde está o cursor de exploração. Se pressionada duas vezes, fala os valores ASCII  e hexadecimal do caractere"
+msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
+msgstr "Anuncia o caractere do objeto de navegação atual onde se encontra o cursor de exploração. Ao pressionar duas vezes, dá uma descrição ou um exemplo do caractere. Ao pressionar três vezes, anuncia o valor numérico decimal e hexadecimal do caractere"
 
 #: globalCommands.py:561
 msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
@@ -3390,6 +3390,10 @@ msgstr "&tom"
 msgid "&Inflection"
 msgstr "&Inflecção"
 
+#: synthDrivers\espeak.py:26
+msgid "Rate boos&t"
+msgstr "Aumen&to especial de velocidade"
+
 #: synthDrivers\newfon.py:179
 msgid "&Acceleration"
 msgstr "A&celeração"
@@ -3422,15 +3426,15 @@ msgstr "palavra"
 msgid "NonVisual Desktop Access"
 msgstr "acesso não visual ao ambiente de trabalho"
 
-#: versionInfo.py:38
+#: versionInfo.py:39
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Leitor de telas livre e aberto para o Microsoft Windows"
 
-#: versionInfo.py:41
+#: versionInfo.py:42
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} Colaboradores do NVDA"
 
-#: versionInfo.py:43
+#: versionInfo.py:44
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
