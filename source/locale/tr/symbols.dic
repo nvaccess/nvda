@@ -10,6 +10,7 @@
 # Others
 decimal point	(?<=\d)\.(?=\d)
 in-word ' (?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -22,9 +23,10 @@ symbols:
 : phrase ending	ikinokta	most	always
 decimal point		none	always
 in-word '	apostrof	all	norep
+negative number	minus	none	norep
 
 # Whitespace
-\0	boş	char
+\0	boş	char	# null
 \t	sekme
 \n	yeni satır	char
 \f	sayfa geçişi	none
@@ -36,9 +38,9 @@ in-word '	apostrof	all	norep
 !	ünlem	all
 "	tırnak	most
 \#	diyez	most
-$	dolar	some
-£	paund	some
-€	euro	some
+$	dolar	all	norep
+£	paund	all	norep
+€	euro	all	norep
 %	yüzde	some
 &	ve	some
 '	apostrof	all
@@ -50,7 +52,7 @@ $	dolar	some
 -	tire	most
 .	nokta	all
 /	bölü	some
-:	ikinokta	most
+:	ikinokta	most	norep
 ;	noktalıvirgül	most
 <	küçüktür	most
 >	büyüktür	most
@@ -76,10 +78,12 @@ _	alt çizgi	most
 ”	tırnakkapa	most
 ‘	tektırnakaç	most
 ’	tektırnakkapa	most
-–	en dash	most
+–	ORTA TİRE	most
 —	uzuntire	most
 ●	yıldız	most
 ¨	diaeresis	most
+���	soldan sağa işareti	char
+���	sağdan sola işareti	char
 ¡	ters ünlem	most
 ¦	kırık çizgi	most
 «	çift kancalı parantezaç	most
