@@ -31,7 +31,7 @@ class Mozilla(IAccessible):
 			#So only use the node_child_of object if it has a valid IAccessible2 windowHandle
 			try:
 				windowHandle=res[0].windowHandle
-			except COMError:
+			except (COMError,AttributeError):
 				windowHandle=None
 			if windowHandle:
 				newObj=IAccessible(windowHandle=windowHandle,IAccessibleObject=res[0],IAccessibleChildID=res[1])
