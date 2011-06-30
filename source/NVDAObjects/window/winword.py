@@ -62,6 +62,8 @@ wdGoToLine=3
 
 winwordWindowIid=GUID('{00020962-0000-0000-C000-000000000046}')
 
+wm_winword_expandToLine=ctypes.windll.user32.RegisterWindowMessageW(u"wm_winword_expandToLine")
+
 NVDAUnitsToWordUnits={
 	textInfos.UNIT_CHARACTER:wdCharacter,
 	textInfos.UNIT_WORD:wdWord,
@@ -99,39 +101,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return True
 
 	def _expandToLineAtCaret(self):
-		import braille
-		if braille.handler.enabled and self.obj.WinwordVersion<12:
-			from ctypes import c_long, pointer
-			rangeLeft=c_long()
-			rangeTop=c_long()
-			rangeWidth=c_long()
-			rangeHeight=c_long()
-			self.obj.WinwordWindowObject.getPoint(pointer(rangeLeft),pointer(rangeTop),pointer(rangeWidth),pointer(rangeHeight),self._rangeObj)
-			clientLeft,clientTop,clientWidth,clientHeight=self.obj.location
-			tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft,rangeTop)
-			self._rangeObj.Start=tempRange.Start
-			tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft+clientWidth,rangeTop)
-			self._rangeObj.End=tempRange.Start
-		elif braille.handler.enabled:
-			curLineNum=self._rangeObj.Information(wdFirstCharacterLineNumber)
-			tempRange=self._rangeObj.goto(wdGoToLine,wdGoToAbsolute,curLineNum)
-			start=tempRange.Start
-			tempRange=self._rangeObj.goto(wdGoToLine,wdGoToAbsolute,curLineNum+1)
-			end=tempRange.End
-			if start==end:
-				tempRange.Move(wdStory,1)
-				end=tempRange.end
-			self._rangeObj.SetRange(start,end)
-		else:
-			sel=self.obj.WinwordSelectionObject
-			oldSel=sel.range
-			app=sel.application
-			app.ScreenUpdating=False
-			self._rangeObj.select()
-			sel.Expand(wdLine)
-			self._rangeObj=sel.range
-			oldSel.Select()
-			app.ScreenUpdating=True
+		wmResult=ctypes.c_long()
+		ctypes.windll.user32.SendMessageTimeoutW(self.obj.windowHandle,wm_winword_expandToLine,oleacc.LresultFromObject(0,self._rangeObj._comobj),0,winUser.SMTO_ABORTIFHUNG,2000,ctypes.byref(wmResult))
 
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textInfos.FormatField()
@@ -373,6 +344,11 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			if not windowObject: return None
 			self._WinwordDocumentObject=windowObject.document
  		return self._WinwordDocumentObject
+
+	def _get_WinwordApplicationObject(self):
+		if not getattr(self,'_WinwordApplicationObject',None): 
+			self._WinwordApplicationObject=self.WinwordWindowObject.application
+ 		return self._WinwordApplicationObject
 
 	def _get_WinwordSelectionObject(self):
 		if not getattr(self,'_WinwordSelectionObject',None):

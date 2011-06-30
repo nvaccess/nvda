@@ -19,6 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include "rpcSrv.h"
+#include "winword.h"
 #include "inputLangChange.h"
 #include "typedCharacter.h"
 #include "IA2Support.h"
@@ -42,6 +43,7 @@ void inProcess_initialize() {
 	ia2LiveRegions_inProcess_initialize();
 	typedCharacter_inProcess_initialize();
 	inputLangChange_inProcess_initialize();
+	winword_inProcess_initialize();
 	gdiHooks_inProcess_initialize();
 	rpcSrv_inProcess_initialize();
 }
@@ -49,6 +51,7 @@ void inProcess_initialize() {
 void inProcess_terminate() {
 	rpcSrv_inProcess_terminate();
 	gdiHooks_inProcess_terminate();
+	winword_inProcess_terminate();
 	inputLangChange_inProcess_terminate();
 	typedCharacter_inProcess_terminate();
 	ia2LiveRegions_inProcess_terminate();
