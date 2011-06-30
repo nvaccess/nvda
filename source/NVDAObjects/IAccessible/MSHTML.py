@@ -311,8 +311,11 @@ class MSHTML(IAccessible):
 		if self._ignoreCaretEvents: return
 		if self.TextInfo is not MSHTMLTextInfo:
 			return
-		newCaretBookmark=self.makeTextInfo(textInfos.POSITION_CARET).bookmark
-		if newCaretBookmark==getattr(self,'_oldCaretBookmark',None):
+		try:
+			newCaretBookmark=self.makeTextInfo(textInfos.POSITION_CARET).bookmark
+		except RuntimeError: #caret events can be fired on the object (focus) when  its not the real MSHTML selection 
+			newCaretBookmark=None
+		if not newCaretBookmark or newCaretBookmark==getattr(self,'_oldCaretBookmark',None):
 			return
 		self._oldCaretBookmark=newCaretBookmark
 		return super(MSHTML,self).event_caret()
