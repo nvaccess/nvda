@@ -309,6 +309,8 @@ class MSHTML(IAccessible):
 
 	def event_caret(self):
 		if self._ignoreCaretEvents: return
+		if self.TextInfo is not MSHTMLTextInfo:
+			return
 		newCaretBookmark=self.makeTextInfo(textInfos.POSITION_CARET).bookmark
 		if newCaretBookmark==getattr(self,'_oldCaretBookmark',None):
 			return
