@@ -22,6 +22,8 @@ from ..behaviors import EditableTextWithoutAutoSelectDetection
  
 #Word constants
 
+wdCollapseEnd=0
+wdCollapseStart=1
 #Indexing
 wdActiveEndAdjustedPageNumber=1
 wdActiveEndPageNumber=3
@@ -267,15 +269,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			return False
 
 	def collapse(self,end=False):
-		a=self._rangeObj.Start
-		b=self._rangeObj.end
-		startOffset=min(a,b)
-		endOffset=max(a,b)
-		if not end:
-			offset=startOffset
-		else:
-			offset=endOffset
-		self._rangeObj.SetRange(offset,offset)
+		self._rangeObj.collapse(wdCollapseEnd if end else wdCollapseStart)
 
 	def copy(self):
 		return WordDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
