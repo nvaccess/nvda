@@ -511,6 +511,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		self.documentConstantIdentifier = self.documentConstantIdentifier
 		if not hasattr(self.rootNVDAObject.appModule, "_vbufRememberedCaretPositions"):
 			self.rootNVDAObject.appModule._vbufRememberedCaretPositions = {}
+		self._lastCaretPosition = None
 
 	def prepare(self):
 		self.shouldPrepare=False
@@ -523,13 +524,8 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if not self.VBufHandle:
 			return
 
-		if self.shouldRememberCaretPositionAcrossLoads:
-			try:
-				caret = self.selection
-				caret.collapse()
-				self.rootNVDAObject.appModule._vbufRememberedCaretPositions[self.documentConstantIdentifier] = caret.bookmark
-			except:
-				pass
+		if self.shouldRememberCaretPositionAcrossLoads and self._lastCaretPosition:
+			self.rootNVDAObject.appModule._vbufRememberedCaretPositions[self.documentConstantIdentifier] = self._lastCaretPosition
 
 		self.unloadBuffer()
 
@@ -700,6 +696,12 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		super(VirtualBuffer, self)._set_selection(info)
 		if isScriptWaiting() or not info.isCollapsed:
 			return
+		# Save the last caret position for use in terminate().
+		# This must be done here because the buffer might be cleared just before terminate() is called,
+		# causing the last caret position to be lost.
+		caret = info.copy()
+		caret.collapse()
+		self._lastCaretPosition = caret.bookmark
 		if config.conf['reviewCursor']['followCaret'] and api.getNavigatorObject() is self.rootNVDAObject:
 			api.setReviewPosition(info)
 		if reason == speech.REASON_FOCUS:
