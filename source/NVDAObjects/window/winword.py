@@ -294,6 +294,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		else:
 			moveFunc=self._rangeObj.Move
 		res=moveFunc(unit,direction)
+		#units higher than character and word expand to contain the last text plus the insertion point offset in the document
+		#However move from a character before will incorrectly move to this offset which makes move/expand contridictory to each other
+		#Make sure that move fails if it lands on the final offset but the unit is bigger than character/word
+		if direction>0 and unit not in (wdCharacter,wdWord)  and (self._rangeObj.start+1)==self.obj.WinwordDocumentObject.characters.count:
+			return 0
 		return res
 
 	def _get_bookmark(self):
