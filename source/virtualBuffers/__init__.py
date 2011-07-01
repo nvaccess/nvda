@@ -525,7 +525,11 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			return
 
 		if self.shouldRememberCaretPositionAcrossLoads and self._lastCaretPosition:
-			self.rootNVDAObject.appModule._vbufRememberedCaretPositions[self.documentConstantIdentifier] = self._lastCaretPosition
+			try:
+				self.rootNVDAObject.appModule._vbufRememberedCaretPositions[self.documentConstantIdentifier] = self._lastCaretPosition
+			except AttributeError:
+				# The app module died.
+				pass
 
 		self.unloadBuffer()
 
