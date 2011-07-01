@@ -119,7 +119,11 @@ def readTextHelper_generator(info,cursor):
 				speech.speakTextInfo(reader,unit=textInfos.UNIT_READINGCHUNK,reason=speech.REASON_SAYALL,index=index)
 				lastSentIndex=index
 				cursorIndexMap[index]=bookmark
-				reader.collapse(end=True)
+				try:
+					reader.collapse(end=True)
+				except RuntimeError: #MS Word when range covers end of document
+					speech.speakWithoutPauses(None)
+					keepReading=False
 		else:
 			# We'll wait for speech to catch up a bit before sending more text.
 			if speech.speakWithoutPauses.lastSentIndex is None or (lastSentIndex-speech.speakWithoutPauses.lastSentIndex)>=10:				# There is a 
