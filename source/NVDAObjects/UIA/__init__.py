@@ -262,6 +262,36 @@ class UIA(Window):
 	def setFocus(self):
 		self.UIAElement.setFocus()
 
+	def _get_devInfo(self):
+		info=super(UIA,self).devInfo
+		info.append("UIAElement: %r"%self.UIAElement)
+		try:
+			ret=self.UIAElement.currentAutomationID
+		except Exception as e:
+			ret="Exception: %s"%e
+		info.append("UIA automationID: %s"%ret)
+		try:
+			ret=self.UIAElement.currentFrameworkID
+		except Exception as e:
+			ret="Exception: %s"%e
+		info.append("UIA frameworkID: %s"%ret)
+		try:
+			ret=str(self.UIAElement.getRuntimeID())
+		except Exception as e:
+			ret="Exception: %s"%e
+		info.append("UIA runtimeID: %s"%ret)
+		try:
+			ret=self.UIAElement.cachedProviderDescription
+		except Exception as e:
+			ret="Exception: %s"%e
+		info.append("UIA providerDescription: %s"%ret)
+		try:
+			ret=self.UIAElement.currentClassName
+		except Exception as e:
+			ret="Exception: %s"%e
+		info.append("UIA className: %s"%ret)
+		return info
+
 	def _get_name(self):
 		try:
 			return self.UIAElement.currentName
