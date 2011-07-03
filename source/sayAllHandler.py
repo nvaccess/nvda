@@ -131,7 +131,7 @@ def readTextHelper_generator(info,cursor):
 				# Force speakWithoutPauses to send text to the synth so we can move on.
 				speech.speakWithoutPauses(None)
 		receivedIndex=speech.getLastSpeechIndex()
-		if receivedIndex!=lastReceivedIndex:
+		if receivedIndex!=lastReceivedIndex and (lastReceivedIndex!=0 or receivedIndex!=None): 
 			lastReceivedIndex=receivedIndex
 			bookmark=cursorIndexMap.get(receivedIndex,None)
 			if bookmark is not None:
