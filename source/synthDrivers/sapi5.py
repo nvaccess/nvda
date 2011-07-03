@@ -80,7 +80,7 @@ class SynthDriver(SynthDriver):
 		if bookmark!="" and bookmark is not None:
 			return int(bookmark)
 		else:
-			return -1
+			return None
 
 	def _set_rate(self,rate):
 		self.tts.Rate = (rate-50)/5
