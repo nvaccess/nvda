@@ -25,6 +25,7 @@ badUIAWindowClassNames=[
 	"msctls_progress32",
 	"Edit",
 	"CommonPlacesWrapperWndClass",
+	"SysMonthCal32",
 ]
 
 UIAControlTypesToNVDARoles={
