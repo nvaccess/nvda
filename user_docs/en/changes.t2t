@@ -101,7 +101,11 @@ Highlights of this release include major improvements concerning punctuation and
 - Improved moving by word in many cases, including browse mode and Windows Edit controls. (#1580)
 - The NVDA installer no longer shows garbled text for Hong Kong versions of Windows Vista and Windows 7. (#1596)
 - NVDA no longer fails to load the Microsoft Speech API version 5 synthesizer if the configuration contains settings for that synthesizer but is missing the voice setting. (#1599)
+- In editable text fields in Internet Explorer and other MSHTML controls, NVDA no longer lags or freezes when braille is enabled.
 - In firefox brows mode, NVDA no longer refuses to include content that is inside a focusable node with an ARIA role of presentation.
+- In Microsoft Word with braille enabled, lines on pages after the first page are now reported correctly. (#1603)
+- In Microsoft Word 2003, lines of right-to-left text can once again be read with braille enabled. (#627)
+- In Microsoft Word, say all now works correctly when the document does not end with a sentence ending.
 
 
 == Changes for Developers ==
