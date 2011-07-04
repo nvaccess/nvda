@@ -96,7 +96,11 @@ Tämän julkaisun tärkeimpiin uusiin ominaisuuksiin kuuluvat merkittävät väl
 - Korjattu ARIA-esitysroolilla merkittyjä upotettuja kehyksiä sisältävien sivujen lukeminen Internet Explorerissa ja muissa MSHTML-säätimissä. (#1569)
 - Korjattu harvinainen ongelma, joka aiheutti loputtomasti kohdistuksen hyppimistä dokumentin ja monirivisen muokattavan tekstikentän välillä kohdistustilassa Internet Explorerissa ja muissa MSHTML-säätimissä. (#1566)
 - NVDA lukee nyt vahvistusvalintaikkunat automaattisesti Microsoft Word 2010:ssä. (#1538)
+- Valinta ilmoitetaan nyt oikein Internet Explorerissa ja muissa MSHTML-säätimissä muillakin riveillä kuin ensimmäisellä muokattavissa monirivisissä tekstikentissä. (#1590)
+- Sana kerrallaan liikkumista paranneltu monissa tilanteissa, mukaan lukien selaustila ja Windowsin muokkaussäätimet. (#1580)
 - NVDA:n asennusohjelma ei näytä enää lukukelvotonta tekstiä Windows Vistan ja Windows 7:n hongkongilaisissa versioissa. (#1596)
+- SAPI 5 -syntetisaattorin lataaminen ei enää epäonnistu, jos asetukset sisältävät sen määrityksiä, mutta joista puheääniasetus puuttuu. (#1599)
+- NVDA ei enää hylkää Firefoxin selaustilassa sisältöä, joka on kohdistettavan alkion sisässä, jossa on ARIA-esitysrooli.
 
 
 = 2011.1.1 =
