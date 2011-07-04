@@ -123,6 +123,7 @@ Highlights of this release include major improvements concerning punctuation and
  - For all other dialogs, real wx dialogs should be used instead.
  - A new gui.runScriptModalDialog() function simplifies using modal dialogs from scripts.
 - Synth drivers can now support boolean settings. See SynthDriverHandler.BooleanSynthSetting.
+- SCons now accepts a certTimestampServer variable specifying the URL of a timestamping server to use to timestamp authenticode signatures. (#1644)
 
 
 = 2011.1.1 =

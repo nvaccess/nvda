@@ -77,6 +77,7 @@ vars.Add("publisher", "The publisher of this build", versionInfo.publisher)
 vars.Add(PathVariable("certFile", "The certificate file with which to sign executables", "",
 	lambda key, val, env: not val or PathVariable.PathIsFile(key, val, env)))
 vars.Add("certPassword", "The password for the private key in the signing certificate", "")
+vars.Add("certTimestampServer", "The URL of the timestamping server to use to timestamp authenticode signatures", "")
 vars.Add(PathVariable("outputDir", "The directory where the final built archives and such will be placed", "output",PathVariable.PathIsDirCreate))
 vars.Add(ListVariable('targetArchitectures','Which architectures should NVDA support?','all',['x86','x86_64']))
 vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'symbols', ["symbols","debugCRT","RTC","noOptimize"]))
@@ -96,6 +97,7 @@ release = env["release"]
 publisher = env["publisher"]
 certFile = env["certFile"]
 certPassword = env["certPassword"]
+certTimestampServer = env["certTimestampServer"]
 userDocsDir=Dir('user_docs')
 sourceDir = Dir("source")
 Export('sourceDir')
@@ -215,6 +217,8 @@ env["BUILDERS"]["SzArchive"] = Builder(generator=SzArchiveGenerator)
 signExec = [signtool, "sign", "/f", certFile]
 if certPassword:
 	signExec.extend(("/p", certPassword))
+if certTimestampServer:
+	signExec.extend(("/t", certTimestampServer))
 signExec.append("$TARGET")
 
 portableDist = env.NVDADist("dist", sourceDir, uiAccess=False)
