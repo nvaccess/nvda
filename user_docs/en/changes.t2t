@@ -113,6 +113,7 @@ Highlights of this release include major improvements concerning punctuation and
 - Developer documentation can now be generated using SCons. See readme.txt at the root of the source distribution for details, including associated dependencies.
 - Locales can now provide descriptions for characters. See the Character Descriptions section of the Developer Guide for details. (#55)
 - Locales can now provide information about the pronunciation of specific punctuation and other symbols. See the Symbol Pronunciation section of the Developer Guide for details. (#332)
+- You can now build NVDAHelper with several debugging options using the nvdaHelperDebugFlags SCons variable. See readme.txt at the root of the source distribution for details. (#1390)
 - Synth drivers are now passed a sequence of text and speech commands to speak, instead of just text and an index.
  - This allows for embedded indexes, parameter changes, etc.
  - Drivers should implement SynthDriver.speak() instead of SynthDriver.speakText() and SynthDriver.speakCharacter().
