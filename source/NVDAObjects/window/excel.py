@@ -19,36 +19,6 @@ import scriptHandler
 
 xlA1 = 1
 
-class CellEditDialog(wx.Dialog):
-
-	def __init__(self,cell):
-		super(CellEditDialog,self).__init__(gui.mainFrame, wx.ID_ANY, title=_("NVDA Excel Cell Editor"))
-		self._cell=cell
-		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		mainSizer.Add(wx.StaticText(self,wx.ID_ANY, label=_("Enter cell contents")))
-		self._cellText=wx.TextCtrl(self, wx.ID_ANY, size=(300, 200), style=wx.TE_RICH|wx.TE_MULTILINE)
-		self._cellText.Bind(wx.EVT_KEY_DOWN, self.onCellTextChar)
-		self._cellText.SetValue(self._cell.formulaLocal)
-		mainSizer.Add(self._cellText)
-		mainSizer.Add(self.CreateButtonSizer(wx.OK|wx.CANCEL))
-		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
-		self.SetSizer(mainSizer)
-		self._cellText.SetFocus()
-
-	def onCellTextChar(self,evt):
-		if evt.GetKeyCode() == wx.WXK_RETURN:
-			if evt.AltDown():
-				i=self._cellText.GetInsertionPoint()
-				self._cellText.Replace(i,i,"\n")
-			else:
-				self.onOk(None)
-			return
-		evt.Skip(True)
-
-	def onOk(self,evt):
-		self._cell.formulaLocal=self._cellText.GetValue()
-		self.EndModal(wx.ID_OK)
-
 class ExcelBase(Window):
 	"""A base that all Excel NVDAObjects inherit from, which contains some useful methods."""
 
@@ -226,14 +196,6 @@ class ExcelCell(ExcelBase):
 			previous=None
 		if previous:
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
-
-	def script_editCell(self,gesture):
-		gui.runScriptModalDialog(
-			CellEditDialog(self.excelWindowObject.ActiveCell))
-
-	__gestures = {
-		"kb:f2": "editCell",
-	}
 
 class ExcelSelection(ExcelBase):
 
