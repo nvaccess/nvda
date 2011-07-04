@@ -39,6 +39,13 @@ class AppModule(appModuleHandler.AppModule):
 	def event_gainFocus(self,obj,nextHandler):
 		nextHandler()
 		#Force focus to move to something sane when landing on a plain text message window
+		if obj.windowClassName=="ME_DocHost" and obj.windowControlID==1000 and obj.role==controlTypes.ROLE_PANE:
+			firstChild=obj.firstChild
+			if firstChild: 
+				firstChild=obj.firstChild
+				if firstChild:
+					firstChild.setFocus()
+				return
 		if obj.windowClassName=="ATH_Note" and obj.event_objectID==winUser.OBJID_CLIENT and obj.IAccessibleChildID==0:
 			api.processPendingEvents()
 			if obj==api.getFocusObject() and controlTypes.STATE_FOCUSED in obj.states:
