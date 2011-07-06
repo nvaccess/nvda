@@ -8,6 +8,7 @@ import ctypes
 from comtypes import COMError, GUID
 import comtypes.client
 import comtypes.automation
+import NVDAHelper
 from logHandler import log
 import winUser
 import oleacc
@@ -103,8 +104,12 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return True
 
 	def _expandToLineAtCaret(self):
-		wmResult=ctypes.c_long()
-		ctypes.windll.user32.SendMessageTimeoutW(self.obj.windowHandle,wm_winword_expandToLine,oleacc.LresultFromObject(0,self._rangeObj._comobj),0,winUser.SMTO_ABORTIFHUNG,2000,ctypes.byref(wmResult))
+		lineStart=ctypes.c_int()
+		lineEnd=ctypes.c_int()
+		res=NVDAHelper.localLib.nvdaInProcUtils_winword_expandToLine(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,self._rangeObj.start,ctypes.byref(lineStart),ctypes.byref(lineEnd))
+		if res!=0:
+			raise ctypes.WinError(res)
+		self._rangeObj.setRange(lineStart.value,lineEnd.value)
 
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textInfos.FormatField()

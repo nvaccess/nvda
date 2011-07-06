@@ -60,6 +60,16 @@ displayModelRPCHeader,displayModelRPCServerSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="displayModelRemote_",
 )
 
+nvdaInProcUtilsRPCHeader,nvdaInProcUtilsRPCServerSource=env.MSRPCStubs(
+	target="./nvdaInProcUtils",
+	source=[
+		"../interfaces/nvdaInProcUtils/nvdaInProcUtils.idl",
+		"../interfaces/nvdaInProcUtils/nvdaInProcUtils.acf",
+	],
+	MSRPCStubs_noClient=True,
+	MSRPCStubs_prefix="nvdaInProcUtils_",
+)
+
 ia2utilsObj=env.Object("./ia2utils","../common/ia2utils.cpp")
 
 remoteLib=env.SharedLibrary(
@@ -86,6 +96,7 @@ remoteLib=env.SharedLibrary(
 		"displayModel.cpp",
 		"displayModelRemote.cpp",
 		displayModelRPCServerSource,
+		nvdaInProcUtilsRPCServerSource,
 		"nvdaHelperRemote.def",
 	],
 	LIBS=[
