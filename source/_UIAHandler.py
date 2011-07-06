@@ -230,16 +230,22 @@ class UIAHandler(COMObject):
 			return False
 		if processID==windll.kernel32.GetCurrentProcessId():
 			return False
-		#If the element has a window handle, and the window natively supports UIA, then its a native element
+		#If the element has a window handle, whether it is a native element depends on whether the window natively supports UIA.
 		try:
 			windowHandle=UIAElement.cachedNativeWindowHandle
 		except COMError:
 			windowHandle=None
 		if windowHandle:
 			return self.isUIAWindow(windowHandle)
-		#The element does not have a window, but we can class it as native if the element is not an MSAA proxy (according to provider description)
 		try:
 			providerDescription=UIAElement.cachedProviderDescription
 		except COMError:
 			return True
-		return not re_MSAAProxyProviderDescription.search(providerDescription)
+		if re_MSAAProxyProviderDescription.search(providerDescription):
+			# This is an MSAA proxy.
+			# Whether this is a native element depends on whether the nearest window handle natively supports UIA.
+			windowHandle=self.getNearestWindowHandle(UIAElement)
+			if not windowHandle:
+				return False
+			return self.isUIAWindow(windowHandle)
+		return True
