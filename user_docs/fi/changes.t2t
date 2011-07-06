@@ -11,7 +11,7 @@ Tämän julkaisun tärkeimpiin uusiin ominaisuuksiin kuuluvat merkittävät väl
 - Kokonaistarkastelussa näkyy nyt enemmän tekstiä sellaisissa sovelluksissa, jotka tulostavat tekstiä merkkihahmoina suoraan näytölle (esim. Mozilla Thunderbirdissä).
 - Nyt on mahdollista valita välimerkkien ja muiden symboleiden lukemisen taso. (#332)
 - Kun välimerkkejä tai muita symboleita on useampi kuin neljä peräkkäin, niiden määrä ilmoitetaan nyt sen sijaan, että merkit luettaisiin. (#43)
-- Lisätty uusi pistetaulukko: norjalainen 8 pisteen tietokonemerkistö. (#1456)
+- Lisätty uusia pistetaulukoita: norjalainen 8 pisteen tietokonemerkistö, etiopialainen taso 1. (#1456)
 - Puheessa ei kuulu enää epänormaalia taukoa joka rivin lopussa käytettäessä lue kaikki -komentoa. (#149)
 - NVDA kertoo nyt web-selaimissa, onko jokin lajiteltu (aria-sort-ominaisuuden mukaan). (#1500)
 - Unicode-merkkiyhdistelmät näytetään nyt oikein pistenäytöllä. (#1505)
@@ -25,6 +25,7 @@ Tämän julkaisun tärkeimpiin uusiin ominaisuuksiin kuuluvat merkittävät väl
 - NVDA havaitsee nyt ruudulla olevan tekstin muotoilun ja värin .
 - NVDA kertoo nyt lukemattomat viestit Outlook Expressin, Windows Mailin ja Windows Live Mailin viestilistassa ja ilmoittaa myös, onko viestiketju suljettu tai avattu. (#868)
 - eSpeakissa on nyt nopeuden tehostusasetus,  joka kolminkertaistaa puhenopeuden.
+- Tuki Windows 7:n kellon päivämäärä ja aika -valintaikkunan kalenterisäätimelle. (#1637)
 
 
 == Muutokset ==
@@ -100,7 +101,12 @@ Tämän julkaisun tärkeimpiin uusiin ominaisuuksiin kuuluvat merkittävät väl
 - Sana kerrallaan liikkumista paranneltu monissa tilanteissa, mukaan lukien selaustila ja Windowsin muokkaussäätimet. (#1580)
 - NVDA:n asennusohjelma ei näytä enää lukukelvotonta tekstiä Windows Vistan ja Windows 7:n hongkongilaisissa versioissa. (#1596)
 - SAPI 5 -syntetisaattorin lataaminen ei enää epäonnistu, jos asetukset sisältävät sen määrityksiä, mutta joista puheääniasetus puuttuu. (#1599)
+- NVDA ei enää hidastu tai hyydy Internet Explorerin ja muiden MSHTML-säädinten muokattavissa tekstikentissä, kun pistenäyttö on käytössä.
 - NVDA ei enää hylkää Firefoxin selaustilassa sisältöä, joka on kohdistettavan alkion sisässä, jossa on ARIA-esitysrooli.
+- Ensimmäisen sivun jälkeisillä sivuilla olevat rivit luetaan nyt oikein Microsoft Wordissa, kun pistenäyttö on käytössä. (#1603)
+- Oikealta vasemmalle luettavaa tekstiä sisältäviä rivejä voidaan taas lukea Microsoft Word 2003:ssa, kun pistenäyttö on käytössä. (#627)
+- Lue kaikki -toiminto toimii nyt oikein Microsoft Wordissa, kun asiakirjan lopussa ei ole lauseen päättävää merkkiä.
+- Kun pelkkää tekstiä sisältävä viesti avataan Windows Live Mail 2011:ssä, NVDA siirtää kohdistuksen asianmukaisesti siihen, mikä mahdollistaa sen lukemisen.
 
 
 = 2011.1.1 =

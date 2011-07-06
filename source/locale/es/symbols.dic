@@ -15,6 +15,7 @@ complexSymbols:
 # Others
 decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -27,6 +28,7 @@ symbols:
 : phrase ending	dos puntos	most	always
 decimal point		none	always
 in-word '	apóstrofe	all	norep
+negative number	minus	none	norep
 
 # Whitespace
 \0	en blanco	char
@@ -40,7 +42,7 @@ in-word '	apóstrofe	all	norep
 # Standard punctuation/symbols
 !	cerrar exclamación	all
 "	comillas	most
-\#	almohadilla	most
+\#	signo de número	most
 $	dólar	some
 £	libras	some
 €	euros	some
