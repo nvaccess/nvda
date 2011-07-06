@@ -87,7 +87,8 @@ LRESULT CALLBACK winword_callWndProcHook(int code, WPARAM wParam, LPARAM lParam)
 
 error_status_t nvdaInProcUtils_winword_expandToLine(handle_t bindingHandle, const long windowHandle, const int offset, int* lineStart, int* lineEnd) {
 	winword_expandToLine_args args={offset,3,4};
-	SendMessage((HWND)windowHandle,wm_winword_expandToLine,(WPARAM)&args,0);
+	DWORD_PTR wmRes=0;
+	SendMessageTimeout((HWND)windowHandle,wm_winword_expandToLine,(WPARAM)&args,0,SMTO_ABORTIFHUNG,2000,&wmRes);
 	*lineStart=args.lineStart;
 	*lineEnd=args.lineEnd;
 	return RPC_S_OK;
