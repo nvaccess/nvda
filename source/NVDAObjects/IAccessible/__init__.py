@@ -447,7 +447,7 @@ the NVDAObject for IAccessible
 				clsList.append(Edit)
 
 		#Window root IAccessibles
-		if self.event_objectID in (None,winUser.OBJID_WINDOW) and self.event_childID==0 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
+		if self.event_objectID==winUser.OBJID_WINDOW and self.event_childID==0 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
 			clsList.append(WindowRoot)
 
 		if self.event_objectID==winUser.OBJID_TITLEBAR and self.event_childID==0:
@@ -850,13 +850,9 @@ the NVDAObject for IAccessible
 		except:
 			return None
 
-	parentUsesSuperOnWindowRootIAccessible=True #: on a window root IAccessible, super should be used instead of accParent
-
 	def _get_parent(self):
 		if self.IAccessibleChildID>0:
 			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=0) or super(IAccessible,self).parent
-		if self.parentUsesSuperOnWindowRootIAccessible and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
-			return super(IAccessible,self).parent
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
 		if res:
 			parentObj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
@@ -870,8 +866,6 @@ the NVDAObject for IAccessible
 		return super(IAccessible,self).parent
 
 	def _get_next(self):
-		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
-			return super(IAccessible,self).next 
 		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_NEXT)
 		if not res:
 			return None
@@ -883,8 +877,6 @@ the NVDAObject for IAccessible
 			return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]))
 
 	def _get_previous(self):
-		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
-			return super(IAccessible,self).previous
 		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_PREVIOUS)
 		if not res:
 			return None
@@ -945,17 +937,13 @@ the NVDAObject for IAccessible
 				children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=IAccessibleChildID,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=IAccessibleChildID))
 				continue
 			try:
-				accRole=IAccessibleObject.accRole(0)
+				identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,0)
 			except COMError:
-				accRole=0
+				identity=None
 			#For Window root IAccessibles, we just want to use the new window handle, but use the best API for that window, rather than IAccessible
 			#If it does happen to be IAccessible though, we only want the client, not the window root IAccessible
-			if accRole==oleacc.ROLE_SYSTEM_WINDOW:
-				try:
-					windowHandle=oleacc.WindowFromAccessibleObject(IAccessibleObject)
-				except WindowsError as e:
-					log.debugWarning("WindowFromAccessibleObject failed: %s" % e)
-					windowHandle=None
+			if identity and identity['objectID']==0 and identity['childID']==0:
+				windowHandle=identity.get('windowHandle',None)
 				if windowHandle:
 					kwargs=dict(windowHandle=windowHandle)
 					APIClass=Window.findBestAPIClass(kwargs,relation="parent") #Need a better relation type for this, but parent works ok -- gives the client
@@ -1304,13 +1292,25 @@ class WindowRoot(IAccessible):
 
 	TextInfo=displayModel.DisplayModelTextInfo
 
+	parentUsesSuperOnWindowRootIAccessible=True #: on a window root IAccessible, super should be used instead of accParent
+
+	def _get_parent(self):
+		if self.parentUsesSuperOnWindowRootIAccessible:
+			return super(IAccessible,self).parent
+		return super(WindowRoot,self).parent
+
+	def _get_next(self):
+		return super(IAccessible,self).next 
+
+	def _get_previous(self):
+		return super(IAccessible,self).previous
+
 	def _get_container(self):
 		#Support for groupbox windows
 		groupboxObj=IAccessibleHandler.findGroupboxObject(self)
 		if groupboxObj:
 			return groupboxObj
 		return super(WindowRoot,self).container
-
 
 class ShellDocObjectView(IAccessible):
 
