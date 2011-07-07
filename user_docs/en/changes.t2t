@@ -44,8 +44,8 @@ Highlights of this release include major improvements concerning punctuation and
 - On Windows XP and Windows Vista, NVDA no longer makes use of UI Automation even if it is available via the platform update. Although using UI Automation can improve the accessibility of some modern applications, on XP and Vista there were too many freezes, crashes and over all performance loss while using it. (#1437)
 - In applications using Mozilla Gecko 2 and later (such as Firefox 4 and later), a document can now be read in browse mode before it is fully finished loading.
 - NVDA now announces the state of a container when focus moves to a control inside it (e.g. if focus moves inside a document that is still loading it will report it as busy).
- - NVDA's user interface and documentation no longer use the terms "first child" and "parent" with respect to object navigation, as these terms are confusing for many users.
- - Collapsed is no longer reported for some menu items which have sub-menus.
+- NVDA's user interface and documentation no longer use the terms "first child" and "parent" with respect to object navigation, as these terms are confusing for many users.
+- Collapsed is no longer reported for some menu items which have sub-menus.
 - The reportCurrentFormatting script (NVDA+f) now reports the formatting at the position of the review cursor rather than the system caret / focus. As  by default the review cursor follows the caret, most people should not notice a difference. However this now enables the user to find out the formatting when moving the review cursor, such as in flat review.
 
  
@@ -107,6 +107,7 @@ Highlights of this release include major improvements concerning punctuation and
 - In Microsoft Word 2003, lines of right-to-left text can once again be read with braille enabled. (#627)
 - In Microsoft Word, say all now works correctly when the document does not end with a sentence ending.
 - When opening a plain text message in Windows Live Mail 2011, NVDA will correctly focus on the message document allowing it to be read.
+- NVDA no longer temporarily freezes or refuses to speak when in the Move to / Copy to dialogs in Windows Live Mail. (#574)
 
 
 == Changes for Developers ==
