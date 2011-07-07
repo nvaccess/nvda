@@ -826,7 +826,7 @@ Another chekbox allows you to state whether your pattern is a "Regular expressio
 A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
 Regular expressions are not covered in this user guide, but there are many tutorials on the web which can provide you with more information.
 
-+++ Punctuation/symbol pronunciation +++
++++ Punctuation/symbol pronunciation +++[SymbolPronunciation]
 This dialog allows you to change the way punctuation and other symbols are pronounced, as well as the symbol level at which they are spoken.
 
 To change a symbol, first select it in the Symbols list.
@@ -1115,6 +1115,15 @@ Although you are free to have scripts bound to any available key, it may be prob
 NVDA still sends modifier keys (such as shift, control and alt) to the Operating System, even if they eventuate in a script.
 Thus, if you do use alt in a gesture, pressing this key combination may activate the menu bar, as well as executing the script.
 Therefore, it is probably best to just use Shift, control and the NVDA modifier key as modifiers.
+
+++ Advanced Customization of Symbol Pronunciation ++
+It is possible to customize the pronunciation of punctuation and other symbols beyond what can be done using the [Punctuation/symbol pronunciation #SymbolPronunciation] dialog.
+For example, you can specify whether the raw symbol should be sent to the synthesizer (e.g. to cause a pause or change in inflection) and you can add custom symbols.
+
+To do this, you must edit the symbol pronunciation information file in your NVDA user configuration directory.
+The file is called symbols-xx.dic, where xx is the language code.
+The format of this file is documented in the Symbol Pronunciation section of the NVDA Developer Guide, which is available from [the Development section of the NVDA web site NVDA_URLwiki/Development].
+However, it is not possible for users to define complex symbols.
 
 + Further Information +
 If you require further information or assistance regarding NVDA, please visit the NVDA web site at NVDA_URL.
