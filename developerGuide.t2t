@@ -104,6 +104,7 @@ This field should be one of the following:
  - always: Always preserve the symbol.
  - norep: Only preserve the symbol if it is not being replaced; i.e. the user has set symbol level lower than the level of this symbol.
  - -: Use the default.
+ -
 The default is to inherit the value or "never" if there is nothing to inherit.
 -
 Finally, a display name for the symbol can be provided in a comment after a tab at the end of the line.
@@ -140,7 +141,6 @@ They are able to:
 - Customise or add new support for text content and complex documents.
 -
 
-+ Plugins +
 This section provides an introduction to developing plugins.
 Developers should consult the code documentation for a complete reference.
 
