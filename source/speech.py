@@ -950,6 +950,10 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		backgroundColor=attrs.get("background-color")
 		oldBackgroundColor=attrsCache.get("background-color") if attrsCache is not None else None
 		if backgroundColor and backgroundColor!=oldBackgroundColor:
+			# Translators: This is used to indicate a background color after the text color.
+			# The {backgroundColor} text will be replaced by the background color.
+			# For example, if the text is white on a black background,
+			# the output of this message in English would be "on black".
 			textList.append(_("on {backgroundColor}").format(backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
 	if  formatConfig["reportLineNumber"]:
 		lineNumber=attrs.get("line-number")
