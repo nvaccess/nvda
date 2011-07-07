@@ -942,7 +942,7 @@ the NVDAObject for IAccessible
 				identity=None
 			#For Window root IAccessibles, we just want to use the new window handle, but use the best API for that window, rather than IAccessible
 			#If it does happen to be IAccessible though, we only want the client, not the window root IAccessible
-			if identity and identity['objectID']==0 and identity['childID']==0:
+			if identity and identity.get('objectID',None)==0 and identity.get('childID',None)==0:
 				windowHandle=identity.get('windowHandle',None)
 				if windowHandle:
 					kwargs=dict(windowHandle=windowHandle)
