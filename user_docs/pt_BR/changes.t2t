@@ -53,7 +53,6 @@ Os destaques desta versão incluem maiores implementações no tocante à  pontu
 
  
 == Correção de Falhas ==
-
 - Quando sob caixas de combinação recolhidas contidas em documentos no modo de navegação o modo de foco é forçado com NVDA+espaço, o NVDA já não retorna automaticamente ao modo de navegação. (#1386)
 - Em documentos Gecko (isto é, Firefox) e MSHTML (ou seja, Internet Explorer), o NVDA agora disponibiliza corretamente certos textos na mesma linha que anteriormente eram dispostos em linhas separadas. (#1378)
 - Quando o braille está vinculado à exploração e a navegação de objetos é movida para um documento no modo de navegação, seja manualmente ou devido a mudança no foco, o braille mostrará apropriadamente o conteúdo do modo de navegação. (#1406, #1407)
@@ -111,14 +110,15 @@ Os destaques desta versão incluem maiores implementações no tocante à  pontu
 - No Microsoft Word 2003, as linhas de texto da direita para a esquerda voltam a poder ser lidas com o braille ativado. (#627)
 - NO Microsoft Word, a leitura contínua agora funciona corretamente quando o documento não termina com um ponto final.
 - Ao abrir uma mensagem de texto plana no Windows Live Mail 2011, o NVDA colocará  corretamente o foco sobre o documento permitindo que este seja lido.
+- O NVDA já não trava ou se recusa a falar nos diálogos Mover para / Copiar para no  Windows Live Mail. (#574)
+
 
 == Alterações específicas para Desenvolvedores ==
 - A documentação para desenvolvedores agora pode ser gerada usando SCons. Consulte o arquivo readme.txt na  raíiz da distribuição do código para detalhes, incluindo dependências associadas.
 - Locales agora podem fornecer descrições para caracteres. Consulte a Seção sobre Descrições de Caracteres no Guia do Desenvolvedor para obter detalhes. (#55)
 - Locales agora podem fornecer informações sobre a pronúncia da pontuação e outros sinais específicos. Consulte a seção sobre Pronúncia de Pontuação no Guia do Desenvolvedor para obter detalhes. (#332)
 - Você agora pode integrar o NVDAHelper com várias opções de depuração usando a variável nvdaHelperDebugFlags SCons. Consulte o arquivo readme.txt na raíz da distribuição do código para obter detalhes. (#1390)
-- Os drivers dos sintetizadores agora transmitem uma sequência de texto e comandos de fala para falar, em lugar de apenas texto e um índice.
- - Isso é possível para índices embutidos, mudanças de parâmetros, etc.
+- Os drivers dos sintetizadores agora transmitem uma sequência de texto e comandos de fala para falar, em lugar de apenas texto e um índice.  - Isso é possível para índices embutidos, mudanças de parâmetros, etc.
  - Os drivers devem implementar SynthDriver.speak() em lugar de SynthDriver.speakText() e SynthDriver.speakCharacter().
  - Os antigos métodos serão usados se SynthDriver.speak() não for implementado, mas eles são reprovados e serão removidos em uma versão futura.
 - gui.execute() foi removido. wx.CalhAfter() deve ser usado em seu lugar.
@@ -128,6 +128,7 @@ Os destaques desta versão incluem maiores implementações no tocante à  pontu
  - A new gui.runScriptModalDialog() function simplifies using modal dialogs from scripts.
 - Os drivers de sintetizador agora podem suportar opções boolean. Consulte SynthDriverHandler.BooleanSynthSetting.
 - SCons agora aceita a variável certTimestampServer especificando a URL de um servidor timestamping  para usar em assinaturas timestamp authenticode. (#1644)
+
 
 = 2011.1.1 =
  Esta versão resolve problemas de segurança entre outros importantes encontrados no NVDA 2011.1.
@@ -734,17 +735,19 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 
 
 = 0.5 =
-- O NVDA ten agora um sintetizador integrado chammado eSpeak, desenvolvido por Jonathan Duddington. é muito ágil e rápido, e ten suporte para muitos idiomas diferentes. Os sintetizadores Sapi todavía poden ser utilizados, mas o eSpeak será utilizado de maneira predeterminada. O eSpeak não depende de nenhum software especial para ser instalados, pelo que pode ser utilizado com o NVDA em qualquer computador, nun dispositivo USB, ou qualquer outro. Para mais informações sobre o eSpeak, ou para encontrar outras versões, visite http://espeak.sourceforge.net/.
+- O NVDA ten agora um sintetizador integrado chammado eSpeak, desenvolvido por Jonathan Duddington. é muito ágil e rápido, e ten suporte para muitos idiomas diferentes. Os sintetizadores Sapi todavía poden ser usados, mas o eSpeak será utilizado por padrão.
+ - O eSpeak não depende de nenhum software especial para ser instalado, pelo que pode ser utilizado com o NVDA em qualquer computador, nun dispositivo USB ou qualquer outro.
+ - Para mais informações sobre o eSpeak, ou para encontrar outras versões, visite http://espeak.sourceforge.net/.
 - Correção da falha onde era anunciado o carácter incorreto quando se pressionava Delete em painéis editáveis do Internet Explorer / Outlook Express.
 - adicionado suporte para mais campos de edição no Skype.
 - Os buffers virtuais só são carregados quando o foco está sobre a janela que necessita ser carregada. isto resolve alguns problemas onde o painel anterior era ativado no Outlook Express.
 - adicionados argumentos de linha de comando ao NVDA:
- --m, --minimal: não reproduz os sons de começo/saír e não mostra a interface ao executar se foi configurada para isso.
- --q, --quit: abandona qualquer outra instância já em execução do NVDA e logo sae
- --s, --stderr-file nomearquivo: especifica onde o NVDA deve colocar os erros e exceções 
- --d, --debug-file nomearquivo: especifica onde o NVDA deve colocar  as mensagens de depuração 
- --c, --config-file: especifica um arquivo de configuração alternativo  
- --h, -help: mostra uma mensagem de ajuda listando os argumentos de linha de comando
+ - -m, --minimal: não reproduz os sons de começo/saír e não mostra a interface ao executar se foi configurada para isso.
+ - -q, --quit: abandona qualquer outra instância já em execução do NVDA e logo sae
+ - -s, --stderr-file nomearquivo: especifica onde o NVDA deve colocar os erros e exceções 
+ - -d, --debug-file nomearquivo: especifica onde o NVDA deve colocar  as mensagens de depuração 
+ - -c, --config-file: especifica um arquivo de configuração alternativo  
+ - -h, -help: mostra uma mensagem de ajuda listando os argumentos de linha de comando
 - corrigida uma falha onde os símbolos de pontuação não eram traduzidos ao idioma apropriado, ao utilizar outro idioma que não o inglês, e quando falar caracteres digitados estava ativado.
 - adicionados arquivos do idioma eslovaco graças a Peter Vagner.
 - adicionado o diálogo de Opções do buffer virtual e um diálogo de opções de formatação de documentos, de Peter Vagner.
@@ -770,7 +773,7 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 - adicionado parche de J.J. Meddaugh que faz com que o script alternar anúncio de objetos sob o mouse seja mais parecido com outros scripts alternáveis (dizendo ativado/desativado em lugar de alternando  todo o estado).
 - adicionada tradução para o espanhol (es) colaboração de Juan C. Buño.
 - adicionado arquivo do idioma Húmgaro de Tamas Gczy.
-- adicionado arquivo do idioma portuguesa de Rui Batista.
+- adicionado arquivo do idioma português de Rui Batista.
 - A alteração de voz no Diálogo de Opções de Voz agora ajusta os controles de velocidade, ton e volume aos novos de acordo com o sintetizador, em lugar de forçar o sintetizador a ser axustado aos valores anteriores. isto resolve problemas de quando um sintetizador como eloquence ou viavoice pareciam falar a uma velocidade muito mais rápida que todos os outros sintetizadores.
 - corrigida uma falha onde o sintetizador de voz parava, o NVDA travava completamente, quando se estaba numa janela de console do Dos.
 - Caso haja suporte para um idioma em particular, o NVDA agora pode mostrar automáticamente súa interface e falar suas mensagens  no idioma no qual o Windows esteja configurado. um idioma particular pode aínda ser escolhido manualmente desde o diálogo de Opções de Interface do usuário.
@@ -791,4 +794,4 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 
 - O NVDA agora pergunta se deve salvar suas configurações e reiniciá-lo quando o usuário altera seu idioma através do Diálogo de Opções da Interface. Para que o novo idioma seja carregado, a configuração tem de ser salva e o NVDA reiniciado.
 - Quando um sintetizador não pode ser carregado ao ser escolhido a partir do Diálogo de Sintetizadores, uma caixa de diálogo agora avisa ao usuário desse fato.
-- Ao carregar um sintetizador pela primeira vez, o NVDA deixa que ele escolha os parâmetros mais adequados de voz, velocidade e tom, rather than forcing it to defaults it thinks are ok. Isso resolve um problema com os sintetizadores  Eloquence e Viavoice sapi4 start speaking way too fast for the first time.
+- Ao carregar um sintetizador pela primeira vez, o NVDA deixa que ele escolha os parâmetros mais adequados de voz, velocidade e tom, em lugar de forçá-lo a usar os padrões que este supõe estar adequados. Isso resolve um problema com os sintetizadores  Eloquence e Viavoice sapi4 que iniciavam a falar de forma excessivamente rápida para uma primeira vez.

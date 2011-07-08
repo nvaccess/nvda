@@ -824,7 +824,7 @@ Outra caixa de seleção permite-lhe estabelecer se o texto original é uma "Exp
 Expressão regular é um texto original que contém símbolos especiais que permitem introduzir mais de um carácter ao mesmo tempo, ou introduzir apenas números, ou só letras, segundo alguns poucos exemplos.
 Expressões regulares não são explicadas neste guia do usuário, mas existem muitos tutoriais na Web que podem proporcionar-lhe mais informações.
 
-+++ Pronúncia de Sinais e pontuação +++
++++ Pronúncia de Sinais e pontuação +++[SymbolPronunciation]
 
 Esse diálogo permite-lhe mudar o modo como a pontuação e outros sinais serão ditos, bem como em que grau de sinais eles serão falados.
 
@@ -1115,6 +1115,15 @@ Mesmo sendo livre para vincular scripts  a cualquer tecla disponível, poderá s
 O NVDA envia teclas modificadoras (tais como shift, control e alt) al Sistema Operacional, embora si encontrem em un script.
 Dessa forma, ao utilizar alt em un gesto, pressionando esta tecla a combinação poderá ativar a barra de menus, tanto quanto executar o script.
 Por isso, é recomendável usar apenas Shift, control e a tecla modificadora do NVDA como modificadores.
+
+++ Personalização avançada da Pronúncia de sinais ++
+É possível personalizar a pronúncia da pontuação e de outros sinais para além do que pode ser feito usando o [Diálogo de Pronúncia de Pontuação e Sinais #SymbolPronunciation].
+Por exemplo, você pode especificar se um sinal puro deve ser enviado para o sintetizador ( isto é, provocar uma pausa ou mudança na inflecção) e também pode adicionar sinais personalizados.
+
+Para fazer isso, é necessário editar o arquivo de informação de pronúncia de sinais na pasta de suas configurações do usuário.
+O arquivo é denominado symbols-xx.dic, onde xx representa o código do idioma.
+O formato desse arquivo está documentado na seção sobre Pronúncia de Sinais do Guia do Desenvolvedor que está disponível [na seção de desenvolvimento na página do NVDA NVDA_URLwiki/Development].
+Não é possível, todavia, definir sinais complexos.
 
 + Informação Adicional +
 
