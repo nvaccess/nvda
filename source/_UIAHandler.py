@@ -26,6 +26,7 @@ badUIAWindowClassNames=[
 	"Edit",
 	"CommonPlacesWrapperWndClass",
 	"SysMonthCal32",
+	"SUPERGRID", #Outlook 2010 message list
 ]
 
 UIAControlTypesToNVDARoles={
