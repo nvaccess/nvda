@@ -67,7 +67,7 @@ To use the ALVA BC640/680 braille display driver:
 		* Copy alvaw32.dll into the source\brailleDisplayDrivers directory.
 
 To use the MDV Lilli braille display driver:
-	* lilli.dll: http://www.nvda-project.org/3rdParty/lilli.dll
+	* lilli.dll, version 2.1.0.0: http://www.nvda-project.org/3rdParty/lilli.dll
 		* Copy lilli.dll into the source\brailleDisplayDrivers directory.
 
 To use the Handy Tech braille display driver:
