@@ -1,6 +1,8 @@
-complexSymbols:
+﻿complexSymbols:
 # identifier	regexp
 decimal point	(?<=\d)\,(?=\d)
+in-word '	апостроф
+negative number	минус
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -11,6 +13,8 @@ symbols:
 ; phrase ending	точка с запятой	# ; в конце фразы
 : phrase ending	двоеточие	# : в конце фразы
 decimal point	запятая	# разделитель десятичного числа
+in-word '	апостроф #апостроф в середине слова
+negative number	минус
 
 # Whitespace
 \0	чисто
@@ -60,9 +64,12 @@ _	подчеркивание
 # Other characters
 •	буллит
 …	многоточие
+...	многоточие
 	буллит
 “	левая кавычка
 ”	правая кавычка
+‘	левая одиночная кавычка
+’	правая одиночная кавычка
 –	тире
 —	тире
 ●	кружок
