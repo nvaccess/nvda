@@ -1,4 +1,6 @@
-﻿NVDA NVDA_VERSION käyttöohje
+﻿NVDA NVDA_VERSION
+
+Käyttöohje
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -819,7 +821,7 @@ Toisella valintaikkunan valintaruudulla voidaan määrittää, onko korvattava m
 Sääntölauseke on erikoismerkkejä sisältävä merkkiyhdistelmä, jonka avulla voidaan täsmätä useampaan kuin yhteen merkkiin kerrallaan, pelkkiin numeroihin tai pelkkiin kirjaimiin.
 Sääntölausekkeita ei käsitellä tässä käyttöohjeessa, mutta internetistä löytyy useita lisätietoja tarjoavia oppaita.
 
-+++ Välimerkkien ja symbolien lausumistapa +++
++++ Välimerkkien ja symbolien lausuminen +++[Symbolienlausuminen]
 Tämän valintaikkunan avulla voidaan muuttaa välimerkkien ja muiden symbolien lausumistapaa sekä tasoa, jolla ne puhutaan.
 
 Symbolia muutetaan valitsemalla se Symbolit-listasta.
@@ -1065,7 +1067,7 @@ Komentotunnisteet koostuvat kaksikirjaimisista laitekoodeista (näppäimistöll�
 
 Komentotunnisteiden ja skriptien sekä luokan ja moduulin nimi saadaan selville seuraavasti:
 + Otetaan syöteohje käyttöön.
-+ Aktivoidaan haluttu syötekomento painamalla sen näppäintä.
++ Aktivoidaan haluttu syötekomento painamalla siihen määritettyä näppäintä.
 + Poistetaan syöteohje käytöstä.
 + Avataan Näytä loki -toiminto NVDA:n Työkalut-valikosta.
 + Tutkitaan viimeisimpiä lokimerkintöjä.
@@ -1105,6 +1107,15 @@ Mikäli tämä määrittely halutaan poistaa, tiedostoon tulee lisätä seuraava
 Vaikka skriptejä voidaankin määritellä periaatteessa mihin tahansa käytettävissä olevaan näppäimeen, voi Alt-näppäimen käyttäminen olla kuitenkin joissakin tapauksissa ongelmallista, koska NVDA lähettää edelleen toimintonäppäimet (sellaiset kuin Shift, Ctrl ja Alt) käyttöjärjestelmälle, vaikka ne olisivat skriptin käytössä.
 Niinpä jos syötekomennossa käytetään Alt-näppäintä, kyseisen näppäinyhdistelmän painaminen voisi sekä avata valikkorivin että suorittaa skriptin.
 Tämän vuoksi toimintonäppäimissä on parasta käyttää vain Shift-, Ctrl- ja NVDA-näppäimiä.
+
+++ edistynyt symbolien lausumisen mukauttaminen ++
+Välimerkkien ja muiden symbolien lausumista voidaan mukauttaa enemmänkin kuin mitä [Välimerkkien ja symbolien lausuminen #Symbolienlausuminen] -valintaikkunassa on mahdollista.
+Voidaan esimerkiksi määrittää, lähetetäänkö symboli syntetisaattorille sellaisenaan (esim. tauon tai äänensävyn muutoksen aikaansaamiseksi) sekä lisätä omia symboleita.
+
+Tämä tehdään muokkaamalla NVDA:n käyttäjän asetushakemistossa olevaa symbolitiedostoa.
+Tiedosto on nimeltään symbols-xx.dic, jossa xx on kielikoodi.
+Sen muoto on dokumentoitu Symboleiden lausuminen -kappaleessa kehittäjän oppaassa, joka on luettavissa [NVDA:n web-sivuston Development-osiossa NVDA_URLwiki/Development].
+Käyttäjät eivät voi kuitenkaan määritellä monimutkaisia symboleita.
 
 + Lisätietoja +
 Mikäli tarvitset lisätietoja tai neuvoja NVDA:han liittyen, käy  sen web-sivustolla osoitteessa NVDA_URL.

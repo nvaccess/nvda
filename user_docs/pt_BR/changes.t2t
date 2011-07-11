@@ -30,6 +30,9 @@ Os destaques desta versão incluem maiores implementações no tocante à  pontu
 - Nas listas de mensagens do Outlook Express/Windows Mail/Windows Live Mail, o NVDA agora anuncia quando uma mensagem é não lida e também se ela está expandida ou recolhida no caso de uma conversação por tópico. (#868)
 - O eSpeak agora possui uma opção de aumento de velocidade que triplica sua velocidade de fala.
 - Suporte para o controle de calendário encontrado no Diálogo de Informações de Data e hora acessado a partir  do relójio do Windows 7. (#1637)
+- Foram adicionadas teclas adicionais vinculadas à linha braille MDV Lilli. (#241)
+- Novos idiomas: Búlgaro, Albanês.
+
 
 == Alterações ==
 - Para mover o cursor do sistema para o cursor de exploração, agora deve pressionar o script mover o foco para o objeto de navegação (desktop NVDA+shift+numpadMenos, laptop NVDA+shift+backspace) duas vezes em rápida sucessão. Isso libera mais comandos de teclado. (#837)
@@ -140,7 +143,7 @@ Os destaques desta versão incluem maiores implementações no tocante à  pontu
 - Quando falar teclas de comando está ativado, teclas pressionadas em conjunto com shift já não são faladas incorretamente como teclas de comando. (#1422)
 - Quando falar teclas de comando está ativado, pressionando-se espaço junto com outras teclas modificadoras que não o shift (tais como control e alt) agora é anunciado como uma  tecla de comando. (#1424)
 - O Log agora é completamente desativado quando se executa o NVDA no logon, lock, UAC e outras telas seguras do Windows, pois isso representa riscos à segurança. (#1435)
-- No modo de ajuda de entrada, os Gestos agora são registrados  mesmo que eles não concordam com um script (de acordo com o guia do Usuário). (#1425)
+- No modo de ajuda de entrada, os Gestos agora são registrados  mesmo que eles não concordem com um script (conforme o guia do Usuário). (#1425)
 
 
 = 2011.1 =
@@ -425,7 +428,7 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 - O NVDA já não anuncia "NVDA ativado" quando inicia.
 - Os sons de início e finalização agora são reproduzidos utilizando o dispositivo de saída de áudio configurado no NVDA em lugar do dispositivo de áudio padrão do Windows. (#164)
 - o anúncio das barras de progresso foi melhorado. O mais notável é que agora pode configurar o NVDA para anunciá-las através de voz e beeps ao mesmo tempo.
-- alguns rols genéricos, como painel, aplicação e marca, já não são anunciados  no foco a menos que o controle não tenha nome.
+- algumas funções genéricos, como painel, aplicação e marca, já não são anunciados  no foco a menos que o controle não tenha nome.
 - O comando copiar com exploração (NVDA+f10) copia o texto desde em cima da marca de início e inclue a posição atual da exploração, em lugar de excluií-la . isto permite que o último carácter de uma linha seja copiado, o que não era possível anteriormente. (#430)
 - O script  navigatorObject_where (ctrl+NVDA+numpad5) foi removido. Esta combinação de teclas não funcionava em alguns teclados, nem o script era considerado útil.
 - O script navigatorObject_currentDimentions foi remapeado para NVDA+delete do teclado numérico. A antiga combinação de teclas não funcionava em alguns teclados. Este script agora também anuncia a largura e a altura do objeto em lugar das coordenadas direita/inferior.
@@ -451,18 +454,16 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 - O NVDA agora tentará recuperar-se de algumas situações que anteriormente o fariam travar completamente. Poderá levar cerca de 10 segundos para que o NVDA detecte e se recupere de tais travamentos.
 - quando o idioma do NVDA está axustado a "User default", utiliza o idioma do usuário do Windows configurado em lugar do local do Windows.
 - O NVDA agora reconhece a existência de controles em AIM 7.
-- O comando de deixar passar a tecla já não se queda atascada se uma tecla é mantida pressionada. Anteriormente, o NVDA detinha o aceptado de ordes se isto ocurria e tinha que ser reiniciado. (#413)
-- A barra de tarefas já não é ignorada quando recebe o foco, o que amenudo ocorre quando se sae de uma aplicação. Anteriormente, o NVDA comportava-se como se o foco não tivesse mudado.
-- quando se len campos de texto em aplicações que utilizam Java Access Bridge (incluindo OpenOffice.org), o NVDA agora funciona corretamente quando o anúncio de números de linha está ativado.
+- O comando de deixar passar a tecla já não bloqueia quando uma tecla é mantida pressionada. Anteriormente, o NVDA deixava de aceitar os comandos nesses casos  e precisava ser reiniciado. (#413)
+- A barra de tarefas já não é ignorada quando recebe o foco, o que muitas vezes ocorre quando se sae de uma aplicação. Anteriormente, o NVDA comportava-se como se o foco não tivesse mudado.
+- Ao ler campos de texto em aplicações que utilizam Java Access Bridge (incluindo OpenOffice.org), o NVDA agora funciona corretamente quando o anúncio de números de linha está ativado.
 - O comando de copiar com exploração (NVDA+f10) controla elegantemente o caso onde seja utilizado numa posição antes do marcador de início. Anteriormente, isto podía causar problemas como travamentos no Notepad++.
-- Certo carácter de control (0x1) já não causa um comportamento extranho no eSpeak (como Alterações  no volume tom) quando encontrado nun texto. (#437)
+- Determinado carácter de controle (0x1) já não causa um comportamento extranho no eSpeak (como Alterações  no volume tom) quando encontrado em um texto. (#437)
 - O comando anunciar seleção de texto (NVDA+shift+seta acima) agora anuncia perfeitamente que não existe seleção em objetos que não suportam seleção.
 - Resolvido o problema no qual pressionando-se a tecla enter em certos botões ou links no Miranda-IM faziam com que o NVDA travasse. (#440)
 - A linha ou seleção atual agora é respeitada ao soletrar ou copiar o objeto de navegação atual.
-- Worked around a Windows bug which was causing garbage to be spoken after the name of link controls in Windows Explorer and Internet Explorer dialogs. (
-#451
-)
-- Resolvido um problema com o comando anunciar data e hora (NVDA+f12). Anteriormente, anunciar data  estava truncad em alguns sistemas. (#471)
+- Realizados trabalhos relativos a um problema do Windows  que fazia com que informações inúteis fossem anunciadas depois do nome de controles com links em diálogos do Windows Explorer e do Internet Explorer. (#451)
+- Resolvido um problema com o comando anunciar data e hora (NVDA+f12). Anteriormente, anunciar data  estava truncado em alguns sistemas. (#471)
 - Resolvido o problema onde o sinal do leitor de telas para o sistema algumas vezes era limpo inapropriadamente depois de interagir com telas seguras do Windows. Isso poderia causar problemas em aplicações que checam o  sinal do leitor de telas, incluindo Skype, Adobe Reader e Jart. (#462)
 - Em caixas de combinação no Internet Explorer 6, o item ativo agora é anunciado quando alterado. (#342)
 -
@@ -664,19 +665,19 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 - O NVDA agora pode bipar quando verbaliza uma letra maiúscula. isto pode ser ativado e desativado  através de uma caixa de seleção  no Diálogo de Opções de Voz. também se engadíu uma caixa de seleção de elevação do ton para maiúsculas para configurar se NVDA atualmente deve ter a súa elevação de ton normal para as maiúsculas. assim agora podes ter o ton elevado, dicir maius, ou pitar, para maiúsculas.
 - adicionada a capacidade para pausar a voz no NVDA (como é encontrada no Voice Over para o Mac). quando o NVDA está falando algo, pode pressionar as teclas control ou shift para silenciar a voz normalmente, mas se então pressionar a tecla shift novamente (caso não tenha pressionado qualquer outra tecla) a voz continuará exatamente de onde parou.
 - adicionado um driver de sintetizador virtual, o qual extrai texto para uma janela em lugar de falá-lo através de um sintetizador de voz. isto deve ser mais agradável para desenvolvedores videntes que não são usuários de síntese de voz mas queren saber o que o NVDA está DIZENDO. Todavía há provavelmente algumas falhas, então respostas são muito bem vindas.
-- NVDA já não fala de maneira predeterminada a pontuação. Você pode habilitar o anúncio da pontuação com NVDA+p.
-- eSpeak de maneira predeterminada agora fala um pouco mais amodo, o que deve facelo mais sinxelo para xente que van a utilizar eSpeak por primeira vez, quando instalan ou começan a utilizar NVDA.
-- adicionados dicionários de usuário ao NVDA. Éstos permítenche facer que NVDA fale certo texto de modo diferente. há tres dicionários: predeterminado, voz, e temporal. As entradas que engadas ao dicionário predeterminado sucederán todo o tempo em NVDA. Os dicionários por voz são específicos ao sintetizador atual e a voz que atualmente tenhas axustada. e o dicionário temporal é para aquelas ocasãos nas que queras fixar rápidamente uma regra enquanto vas a facer uma tarefa em particular, mas não queres que seja permanente (desaparecerá se pechas ao NVDA). Por agora as regras são expresãos regulares, não só texto normal.
-- Os sintetizadores poden agora utilizar qualquer dispositivo de áudio de saída no teu sistema, axustando o cadro combinado de dispositivo de saída no diálogo Sintetizador antes de selecionar o sintetizador que queras.
+- O NVDA já não fala a pontuação por padrão. Você pode habilitar o anúncio da pontuação com NVDA+p.
+- O eSpeak por padrão agora fala um pouco mais lento, o que deve torná-lo mais simples para pessoas que o utilizarão pela primeira vez, quando instalam ou começam a utilizar o NVDA.
+- adicionados dicionários do usuário ao NVDA. Éstes lhe permitem fazer com que o NVDA fale determinado texto de forma diferente. há três dicionários: padrão, voz e temporário. As entradas adicionadas ao dicionário padrão servirão a todo o tempo no NVDA. Os dicionários por voz são específicos para o sintetizador atual e a voz que atualmente esteja configurada. O dicionário temporário funciona para aquelas ocasiões em que pretenda fixar rápidamente uma regra enquanto executa uma tarefa em particular, mas não deseja que seja permanente (desaparecerá quando o NVDA for encerrado). Por agora, as regras são expressões regulares, não apenas texto normal.
+- Os sintetizadores poden agora utilizar qualquer dispositivo de áudio de saída de seu sistema, configurando a caixa de combinação dispositivo de saída no diálogo Sintetizador antes de selecionar o sintetizador desejado.
 -
 
 
-== rendimento ==
-- NVDA já não toma uma grande quantidade de memoria do sistema, quando se editan mensagens em controles de edição mshtml
-- melhorado o rendimento quando se revisa texto dentro de muitos controles que não tenhen atualmente um cursor real. Ex.: janela de históricos de MSN Messenger, elementos de vistas em árvore, elementos de vista de lista etc.
+== Desempenho ==
+- O NVDA já não toma uma grande quantidade de memória do sistema, ao editar mensagens em controles de edição mshtml
+- melhorado o rendimento quando se revisa texto dentro de muitos controles que não tenhen atualmente um cursor real. Ex.: janela de históricos do MSN Messenger, elementos de vistas em árvore, elementos de vista de lista etc.
 - melhorado o rendimento em documentos enriquecidos.
-- NVDA já não deve enlentecerse consumindo tamano de memoria do sistema sen razón
-- corrigidos falhos quando se pon o foco numa janela de console do dos mais de tres vezes ou assim. NVDA tinha uma tendencia a petar completamente.
+- O NVDA já não deve tornar-se lento consumindo demasiada quantidade de memória do sistema sen razãó
+- corrigidas falhas de quando se põe o foco numa janela de console do dos três ou mais vezes. O NVDA tinha uma tendência a travar completamente.
 -
 
 
@@ -698,7 +699,7 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 - corrigidos alguns problemas do foco quando são abertas mensagens html e de texto planno no Outlook Express. 
 - Os campos de mensagens de notícias do Outlook express agora são etiquetados corretamente
 - O NVDA agora pode ler os enderessos nos campos de mensagens do Outlook Express (para/de/cc etc)
-- O NVDA agora deve estár mais preciso ao anunciar a próxima mensagem no outlook express quand  é apagada uma mensagem na a lista de mensagens.
+- O NVDA agora deve estár mais preciso ao anunciar a próxima mensagem no outlook express quando é apagada uma mensagem na lista de mensagens.
 -
 
 
