@@ -30,7 +30,7 @@ def _updateVersionFromVCS():
 
 name="NVDA"
 longName=_("NonVisual Desktop Access")
-version="2011.2dev"
+version="2011.3dev"
 publisher="unknown"
 try:
 	from _buildVersion import version, publisher
