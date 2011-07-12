@@ -86,20 +86,22 @@ Cependant, cela permettra à l'utilisateur de connaître le format du texte quan
 - NVDA ne gèle plus sous Windows XP lors du démarrage d'une application WPF. (#1437)
 - La commande "Dire tout" et "lire tout avec le curseur de revue" sont maintenant en mesure de travailler dans certains contrôles de texte UI automation qui prennent en charge toutes les méthodes requises. (Par exemple vous pouvez maintenant utiliser "Dire tout" avec le curseur de revue pour consulter les documents ouverts dans la Visionneuse XPS).
 - Lors de la création d'une règle de messages, NVDA ne classe plus incorrectement certains éléments de liste de la boîte de dialogue "Appliquer la règle maintenant" sous Outlook Express ou Windows Live Mail. Il ne les considère plus comme étant des cases à cocher. (#576)
-- Les listes déroulantes ne sont plus annoncées comme ayant un sous-menu.
-- NVDA est maintenant capable de lire les destinataire dans les champs "à :", "CC :" et "CCI :" sous Microsoft Outlook. (#421)
-- Correction d'une erreur dans le dialogue "Paramètres vocaux" de NVDA. Le changement de valeur des potentiomètres n'était pas toujours annoncé. (#1411)
-- Dans les feuilles de calcul Excel, NVDA n'échoue plus à l'annonce de la nouvelle cellule quand on se déplace après un copier/coller. (#1567)
-- La reconnaissance des couleurs ne se dégrade plus au fur et à mesure de l'annonce des couleurs.
-- Sous Internet Explorer et autres contrôles MSHTML, correction de l'incapacité à lire certaines parties des rares pages contenant des cadres avec un rôle aria de présentation. (#1569)
-- Sous Internet Explorer et autres contrôles MSHTML, correction d'un problème rare où le focus circulait indéfiniment entre le document et une zone d'édition multi-ligne en mode focus. (#1566)
-- Sous Microsoft Word 2010, NVDA lit maintenant automatiquement les dialogues de confirmation. (#1538)
-- Dans les zones d'édition multi-ligne sous Internet Explorer et autres contrôles MSHTML, la sélection de lignes autres que la première est maintenant annoncée correctement. (#1590)
-- Amélioration du déplacement par mots dans beaucoup de cas, y compris en mode navigation et les zones d'édition Windows. (#1580)
-- L'installateur de NVDA n'affiche plus de texte indésirable pour les version de Windows Vista et Windows 7 por Hong Kong. (#1596)
-- NVDA n'échoue plus à charger le synthétiseurs Sapi 5 quand le fichier de configuration contient des paramètres pour ce synthétiseur mais que le paramètre de voix est manquant. (#1599)
-- En mode navigation sous Firefox, NVDA ne refuse plus d'inclure le contenu qui se trouve à l'intérieur d'un nœud focalisable avec un rôle aria de présentation.
-
+- Les zones de listes déroulantes ne sont plus signalés comme comportant un sous-menu.
+- NVDA est maintenant capable de lire la liste des destinataires inscrits dans les champs à, CC et CCI sous Microsoft Outlook. (#421)
+- Résolution d'un dysfonctionnement dans la boîte de dialogue Paramètres vocaux de NVDA où la valeur des barres de défilement n'était parfois pas annoncée lorsqu'on la changeait. (#1411)
+- NVDA n'échoue plus quand il s'agit d'annoncer la nouvelle cellule lors du déplacement dans une feuille de calcul Excel, après un couper-coller. (#1567)
+- NVDA ne se dégrade plus quand il devine les noms des couleurs quand les annonces de ceux-ci sont de plus en plus nombreuses.
+- Dans Internet Explorer et d'autres contrôles MSHTML, correction de l'incapacité de lire des parties de pages rares, quand elles contiennent des IFrames marquées avec un rôle ARIA de présentation. (#1569)
+- Dans Internet Explorer et autres contrôles MSHTML, élimination d'un dysfonctionnement rare qui faisait que le focus rebondissait infiniment entre le document et une zone d'édition multilignes quand on était en mode formulaire. (#1566)
+- Dans Microsoft Word 2010, NVDA saura désormais lire les boîtes de dialogue de confirmation automatiquement. (#1538)
+- Le programme d'installation de NVDA en Chinois de Hong-Kong n'affiche plus du texte tronqué sous Windows Vista et Windows 7. (#1596)
+- NVDA n'est plus incapable de charger le synthétiseur SAPI 5 si la configuration utilisateurs contient les paramètres SAPI 5 mais qu'il manque un paramètre d'une voix quelconque. (#1599)
+- Dans les zones d'édition sous Internet Explorer et autres contrôles MSHTML, NVDA ne ralentit plus et ne se gèle plus quand le braille est activé.
+- En mode navigation sous FireFox, NVDA ne refuse plus d'inclure du contenu d'un node qui peut recevoir le focus et qu'un rôle ARIA de présentation est présent.
+- Sous Microsoft Word avec le braille activé, Les lignes des pages après la première page sont maintenant annoncées correctement. (#1603)
+- Sous Microsoft Word 2003, les textes de droite à gauche sont de nouveau lues correctement quand le braille est activé. (#627)
+- Sous Microsoft Word, Dire tout fonctionne maintenant correctement quand le document ne finit pas par un signe de fin de phrase.
+- A l'ouverture d'un message en plein texte sous Windows Live Mail 2011, NVDA se positionnera directement sur le document contenant le message permettant ainsi de le lire.
 
 == Changements pour les développeurs ==
 - La documentation pour développeurs peut maintenant être générée en utilisant SCons. Voir readme.txt à la racine de la distribution source pour plus de détails, y compris ceux qui concernent les dépendances associées.
