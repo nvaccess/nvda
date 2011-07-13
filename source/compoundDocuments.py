@@ -161,7 +161,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 			field["table-columnnumber"] = obj.columnNumber
 		return field
 
-	def _iterTextWithEmbeddedObjects(self, text, ti, fieldStart, textLength=None):
+	def _iterTextWithEmbeddedObjects(self, text, ti, fieldStart=0, textLength=None):
 		if textLength is None:
 			textLength = len(text)
 		chunkStart = 0
@@ -181,6 +181,17 @@ class CompoundTextInfo(textInfos.TextInfo):
 
 	def __ne__(self, other):
 		return not self == other
+
+	def _getInitialControlFields(self):
+		fields = []
+		rootObj = self.obj.rootNVDAObject
+		obj = self._startObj
+		while obj and obj != rootObj:
+			field = self._getControlFieldForObject(obj)
+			if field:
+				fields.insert(0, textInfos.FieldCommand("controlStart", field))
+			obj = obj.parent
+		return fields
 
 class TreeCompoundTextInfo(CompoundTextInfo):
 	#: Units contained within a single TextInfo.
@@ -253,15 +264,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		return "".join(ti.text for ti in self._getTextInfos())
 
 	def getTextWithFields(self, formatConfig=None):
-		# Get the initial control fields.
-		fields = []
-		rootObj = self.obj.rootNVDAObject
-		obj = self._startObj
-		while obj and obj != rootObj:
-			field = self._getControlFieldForObject(obj)
-			if field:
-				fields.insert(0, textInfos.FieldCommand("controlStart", field))
-			obj = obj.parent
+		fields = self._getInitialControlFields()
 
 		for ti in self._getTextInfos():
 			fieldStart = 0
@@ -363,6 +366,105 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 
 		return direction - remainingMovement
 
+class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
+
+	def __init__(self, obj, position):
+		super(EmbeddedObjectCompoundTextInfo, self).__init__(obj, position)
+		rootObj = obj.rootNVDAObject
+		if isinstance(position, self.__class__):
+			self._start = position._start.copy()
+			self._startObj = position._startObj
+			if position._end is position._start:
+				self._end = self._start
+			else:
+				self._end = position._end.copy()
+			self._endObj = position._endObj
+		elif position in (textInfos.POSITION_FIRST, textInfos.POSITION_LAST):
+			self._start, self._startObj = self._findContentDescendant(rootObj, position)
+			self._end = self._start
+			self._endObj = self._startObj
+		elif position == textInfos.POSITION_ALL:
+			self._start, self._startObj = self._findContentDescendant(rootObj, textInfos.POSITION_FIRST)
+			self._start.expand(textInfos.UNIT_STORY)
+			self._end, self._endObj = self._findContentDescendant(rootObj, textInfos.POSITION_LAST)
+			self._end.expand(textInfos.UNIT_STORY)
+		elif position == textInfos.POSITION_CARET:
+			self._start, self._startObj = self._findContentDescendant(rootObj.caretObject)
+			self._end = self._start
+			self._endObj = self._startObj
+
+	def _findContentDescendant(self, obj, position):
+		while True:
+			ti = obj.makeTextInfo(position)
+			ti.expand(textInfos.UNIT_CHARACTER)
+			if ti.text == u"\uFFFC":
+				obj = ti.getEmbeddedObject()
+			else:
+				break
+		ti.collapse()
+		return ti, obj
+
+	def _iterRecursiveText(self, ti, withFields, formatConfig):
+		if ti.obj == self._endObj:
+			ti = self._end
+		if withFields:
+			fields = ti.getTextWithFields(formatConfig=formatConfig)
+		else:
+			fields = [ti.text]
+
+		fieldStart = 0
+		for field in fields:
+			if isinstance(field, basestring):
+				textLength = len(field)
+				for chunk in self._iterTextWithEmbeddedObjects(field, ti, fieldStart, textLength=textLength):
+					if isinstance(chunk, basestring):
+						yield chunk
+					else:
+						controlField = self._getControlFieldForObject(chunk)
+						if controlField:
+							yield textInfos.FieldCommand("controlStart", controlField)
+						for subChunk in self._iterRecursiveText(chunk.makeTextInfo("all"), withFields, formatConfig):
+							yield subChunk
+							if subChunk is None:
+								return
+				fieldStart += textLength
+			else:
+				yield field
+
+		if ti is self._end:
+			# None means the end has been reached and text retrieval should stop.
+			yield None
+
+	def _getText(self, withFields, formatConfig=None):
+		ti = self._start
+		obj = self._startObj
+		if withFields:
+			fields = self._getInitialControlFields()
+		else:
+			fields = []
+		fields += list(self._iterRecursiveText(ti, withFields, formatConfig))
+
+		while fields[-1] is not None:
+			# The end hasn't yet been reached, which means it isn't a descendant of obj.
+			# Therefore, continue from where obj was embedded.
+			ti = obj.embeddingTextInfo
+			obj = ti.obj
+			if ti.move(textInfos.UNIT_CHARACTER, 1) == 0:
+				# There's no more text in this object.
+				continue
+			ti.setEndPoint(obj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd")
+			if withFields:
+				fields.append(textInfos.FieldCommand("controlEnd", None))
+			fields.extend(self._iterRecursiveText(ti, withFields, formatConfig))
+		del fields[-1]
+		return fields
+
+	def _get_text(self):
+		return "".join(self._getText(False))
+
+	def getTextWithFields(self, formatConfig=None):
+		return self._getText(True, formatConfig)
+
 class CompoundDocument(EditableText, TreeInterceptor):
 	TextInfo = TreeCompoundTextInfo
 
@@ -431,3 +533,6 @@ class CompoundDocument(EditableText, TreeInterceptor):
 
 	def event_selectionRemove(self, obj, nextHandler):
 		pass
+
+class EmbeddedObjectCompoundDocument(CompoundDocument):
+	TextInfo = EmbeddedObjectCompoundTextInfo
