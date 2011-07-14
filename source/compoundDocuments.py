@@ -466,6 +466,62 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 	def getTextWithFields(self, formatConfig=None):
 		return self._getText(True, formatConfig)
 
+	def expand(self, unit):
+		if unit == textInfos.UNIT_CHARACTER:
+			self._end = self._start
+			self._endObj = self._startObj
+			self._start.expand(unit)
+			return
+
+		start = startObj = end = endObj = None
+		expandTi = self._start
+		obj = self._startObj
+		# Walk up the hierarchy until we find the start and end points.
+		while True:
+			expandTi.expand(unit)
+			allTi = obj.makeTextInfo(textInfos.POSITION_ALL)
+
+			if not start and expandTi.compareEndPoints(allTi, "startToStart") != 0:
+				# The unit definitely starts within this object.
+				start = expandTi.copy()
+				start.expand(textInfos.UNIT_CHARACTER)
+				if start.text == u"\uFFFC":
+					start, startObj = self._findContentDescendant(start.getEmbeddedObject(), textInfos.POSITION_FIRST)
+					start.expand(unit)
+				else:
+					start = expandTi
+					startObj = obj
+
+			if not end and expandTi.compareEndPoints(allTi, "endToEnd") != 0:
+				# The unit definitely ends within this object.
+				end = expandTi.copy()
+				end.collapse(end=True)
+				end.move(textInfos.UNIT_CHARACTER, -1, "start")
+				if end.text == u"\uFFFC":
+					end, endObj = self._findContentDescendant(end.getEmbeddedObject(), textInfos.POSITION_LAST)
+					end.expand(unit)
+				else:
+					end = expandTi
+					endObj = obj
+
+			if start and end:
+				# Both have been found, so stop walking.
+				break
+
+			# Either start or end hasn't yet been found,
+			# so it must be higher in the hierarchy.
+			expandTi = obj.embeddingTextInfo
+			obj = expandTi.obj
+
+		if startObj == endObj:
+			end = start
+			endObj = startObj
+
+		self._start = start
+		self._startObj = startObj
+		self._end = end
+		self._endObj = endObj
+
 class CompoundDocument(EditableText, TreeInterceptor):
 	TextInfo = TreeCompoundTextInfo
 
