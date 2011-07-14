@@ -394,6 +394,21 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			self._endObj = self._startObj
 
 	def _findContentDescendant(self, obj, position):
+		assert position in (textInfos.POSITION_FIRST, textInfos.POSITION_LAST)
+		if isinstance(obj, textInfos.TextInfo):
+			ti = obj.copy()
+			if position == textInfos.POSITION_FIRST:
+				ti.expand(textInfos.UNIT_CHARACTER)
+			else:
+				ti.collapse(end=True)
+				ti.move(textInfos.UNIT_CHARACTER, -1, "start")
+			if ti.text == u"\uFFFC":
+				obj = ti.getEmbeddedObject()
+			else:
+				# The content starts/ends in this TextInfo.
+				# Return the original TextInfo and NVDAObject.
+				return obj, obj.obj
+
 		while True:
 			ti = obj.makeTextInfo(position)
 			ti.expand(textInfos.UNIT_CHARACTER)
@@ -483,26 +498,11 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 
 			if not start and expandTi.compareEndPoints(allTi, "startToStart") != 0:
 				# The unit definitely starts within this object.
-				start = expandTi.copy()
-				start.expand(textInfos.UNIT_CHARACTER)
-				if start.text == u"\uFFFC":
-					start, startObj = self._findContentDescendant(start.getEmbeddedObject(), textInfos.POSITION_FIRST)
-					start.expand(unit)
-				else:
-					start = expandTi
-					startObj = obj
+				start = expandTi
 
 			if not end and expandTi.compareEndPoints(allTi, "endToEnd") != 0:
 				# The unit definitely ends within this object.
-				end = expandTi.copy()
-				end.collapse(end=True)
-				end.move(textInfos.UNIT_CHARACTER, -1, "start")
-				if end.text == u"\uFFFC":
-					end, endObj = self._findContentDescendant(end.getEmbeddedObject(), textInfos.POSITION_LAST)
-					end.expand(unit)
-				else:
-					end = expandTi
-					endObj = obj
+				end = expandTi
 
 			if start and end:
 				# Both have been found, so stop walking.
@@ -510,8 +510,25 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 
 			# Either start or end hasn't yet been found,
 			# so it must be higher in the hierarchy.
-			expandTi = obj.embeddingTextInfo
-			obj = expandTi.obj
+			embedTi = obj.embeddingTextInfo
+			if not embedTi:
+				# There is no embedding object.
+				# The unit starts or ends at the start or end of this last object.
+				if not start:
+					start = expandTi
+				elif not end:
+					end = expandTi
+				break
+
+			obj = embedTi.obj
+			expandTi = embedTi
+
+		start, startObj = self._findContentDescendant(start, textInfos.POSITION_FIRST)
+		if start.isCollapsed:
+			start.expand(unit)
+		end, endObj = self._findContentDescendant(end, textInfos.POSITION_LAST)
+		if end.isCollapsed:
+			end.expand(unit)
 
 		if startObj == endObj:
 			end = start
