@@ -416,6 +416,7 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 				obj = ti.getEmbeddedObject()
 			else:
 				break
+
 		ti.collapse()
 		return ti, obj
 
@@ -443,6 +444,8 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 							yield subChunk
 							if subChunk is None:
 								return
+						if withFields and controlField:
+							yield textInfos.FieldCommand("controlEnd", None)
 				fieldStart += textLength
 			else:
 				yield field
