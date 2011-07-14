@@ -420,9 +420,10 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 					if isinstance(chunk, basestring):
 						yield chunk
 					else:
-						controlField = self._getControlFieldForObject(chunk)
-						if controlField:
-							yield textInfos.FieldCommand("controlStart", controlField)
+						if withFields:
+							controlField = self._getControlFieldForObject(chunk)
+							if controlField:
+								yield textInfos.FieldCommand("controlStart", controlField)
 						for subChunk in self._iterRecursiveText(chunk.makeTextInfo("all"), withFields, formatConfig):
 							yield subChunk
 							if subChunk is None:
