@@ -8,7 +8,7 @@
 Traduzido por Marlin Rodrigues
 
 
-Os destaques desta versão incluem maiores implementações no tocante à  pontuação e sinais, como configuração dos níveis, personalização dos nomes e descrições de caracteres; Leitura contínua sem pausa ao fim das linhas; implementado o suporte ARIA no Internet Explorer; suporte melhorado para documentos XFA/LiveCycle PDF no Adobe Reader; acesso aos textos escritos na tela em mais aplicativos; e acesso a informações de formatação e cor para os textos escritos na tela.
+Os destaques desta versão incluem maiores implementações no tocante à  pontuação e sinais, como configuração dos níveis, personalização dos nomes e descrições de caracteres; Leitura contínua sem pausa ao fim das linhas; melhorado o suporte ARIA no Internet Explorer; suporte melhorado para documentos XFA/LiveCycle PDF no Adobe Reader; acesso aos textos escritos na tela em mais aplicativos; e acesso a informações de formatação e cor para os textos escritos na tela.
 
 == Novas Características ==
 - Agora é possível ouvir a descrição para um determinado carácter pressionando o script anunciar carácter atual duas vezes em rápida sucessão. Para caracteres ingleses esse é o alfabeto fonético standard inglês. Para idiomas pitagráficos tais como Chinês tradicional, um ou mais exemplos de uso desse símbolo são fornecidos. Também ao pressionar Rever a Palavra Atual ou revera linha atual três vezes soletrará a palavra/linha usando descrições de caracteres. (#55)
@@ -47,11 +47,11 @@ Os destaques desta versão incluem maiores implementações no tocante à  pontu
 - A interface do NVDA bem como sua documentação agora referem-se aos buffers virtuais como modo de navegação, pois o termo  "buffer virtual" é inexpressivo para a maioria dos usuários. (#1509)
 - Quando o usuário desejar copiar suas configurações para o perfio do sistema a fim de usá-las na tela de logon etc., caso em suas configurações existam plugins personalizados, ele agora será alertado de que isso pode trazer riscos à segurança. (#1426)
 - O NVDA service já não inicia e encerra o NVDA em entradas do usuário em desktops.
-- No Windows XP e Windows Vista, o NVDA já não usa UI Automation mesmo que ele esteja disponível via platform update. Embora ao usar UI Automation pudesse ser fornecida acessibilidade para algumas aplicaçõess modernas, no XP e Vista havia uma série de problemas quando de seu uso. (#1437)
+- No Windows XP e Windows Vista, o NVDA já não usa UI Automation mesmo que ele esteja disponível via platform update. Embora ao usá-lo pudesse ser melhorada a acessibilidade a algumas aplicações modernas, no XP e Vista havia uma série de problemas quando de seu uso. (#1437)
 - Em aplicações que usam mozilla Gecko 2 e superior (tais como Firefox 4 e superiores), agora um documento pode ser lido no modo de navegação antes que seja completamente carregado.
 - O NVDA agora anuncia o stado de um recipiente quando o foco é movido para um controle dentro dele (isto é, se o foco é movido para dentro de um documento que ainda está carregando, ele anunciará o mesmo como ocupado).
- - A interface do NVDA e sua documentação no idioma original já não usam os termos  "primeiro filho" e "pai" em relação à navegação de objetos, pois esses termos causam confusão para muitos usuários.
- - Recolhido já não é anunciado para alguns itens de menu que possuem sub-menus.
+- A interface do NVDA e sua documentação no idioma original já não usam os termos  "primeiro filho" e "pai" em relação à navegação de objetos, pois esses termos causam confusão para muitos usuários.
+- Recolhido já não é anunciado para alguns itens de menu que possuem sub-menus.
 - O script reportCurrentFormatting (NVDA+f) agora anuncia a formatação na posição do cursor de exploração em lugar de para o cursor do sistema/foco. Como por padrão o cursor de exploração acompanha o cursor do sistema, maior parte das pessoas não deve notar a diferença. Não obstante, isso agora abilita o usuário para localizar a formatação enquanto se move com o cursor de exploração, como na revisão plana.
 
  
@@ -94,7 +94,7 @@ Os destaques desta versão incluem maiores implementações no tocante à  pontu
 - Em sistemas lentos, o NVDA já não faz com que sua janela seja exibida inapropriadamente a todo instante enquanto é executado. (#726)
 - O NVDA já não trava no Windows xP quando é ativada uma aplicação WPF. (#1437)
 - Ler tudo e também ler tudo com o cursor de exploração agora podem funcionar em Controles de Texto UI automation que suportem todas as funcionalidades necessárias. Por exemplo, você agora pode usar a leitura contínua com o cursor de exploração em documentos do visualizador XPS.
-- O NVDA já não classifica inapropriamente alguns itens de lista  no Outlook Express / Windows Live Mail message rules Apply Now dialog como sendo caixas de seleção. (#576)
+- O NVDA já não classifica inapropriamente alguns itens de lista  no Diálogo aplicar regras de mensagens agora do Outlook Express / Windows Live Mail como sendo caixas de seleção. (#576)
 - As caixas de combinação já não são anunciadas como tendo um sub-menu.
 - O NVDA agora pode ler o conteúdo nos campos Para, CC e BCC no Microsoft Outlook. (#421)
 - Resolvido o problema no Diálogo de Opções de Voz do NVDA no qual os valores nas barras deslizantes não eram anunciados quando alterados. (#1411)
@@ -104,7 +104,7 @@ Os destaques desta versão incluem maiores implementações no tocante à  pontu
 - No Internet Explorer e outros controles MSHTML, resolvido um problema incomum onde  o foco saltava infinitamente entre o documento  e um campo de edição multilinha no modo de foco. (#1566)
 - NO Microsoft Word 2010 o NVDA agora lê automaticamente os diálogos de confirmação. (#1538)
 - Em campos de edição multilinha  no Internet Explorer e outros controles MSHTML, a seleção de linhas depois da primeira agora é anunciada corretamente. (#1590)
-- Implementada a função de mover-se por palavras em vários casos, incluindo-se modo de navegação e controles Editáveis do Windows. (#1580)
+- Melhoras na função de mover-se por palavras em vários casos, incluindo-se modo de navegação e controles Editáveis do Windows. (#1580)
 - O instalador do NVDA já não exibe texto danificado em versões para chinês de Hong Kong  do Windows Vista e Windows 7. (#1596)
 - O NVDA já não falha ao carregar o sintetizador Microsoft Speech API versão 5 quando a configuração contém opções para o sintetizador mas faltam as opções de voz. (#1599)
 - Em campos de texto editável no Internet Explorer e outros controles MSHTML, o NVDA já não atrasa ou trava quando o braille  está ativado.
@@ -114,6 +114,8 @@ Os destaques desta versão incluem maiores implementações no tocante à  pontu
 - NO Microsoft Word, a leitura contínua agora funciona corretamente quando o documento não termina com um ponto final.
 - Ao abrir uma mensagem de texto plana no Windows Live Mail 2011, o NVDA colocará  corretamente o foco sobre o documento permitindo que este seja lido.
 - O NVDA já não trava ou se recusa a falar nos diálogos Mover para / Copiar para no  Windows Live Mail. (#574)
+- No Outlook 2010, o NVDA agora orienta corretamente o foco na lista de mensagens. (#1285)
+- Alguns problemas com a linha braille MDV Lilli referentes à conecção USB foram resolvidos. (#241)
 
 
 == Alterações específicas para Desenvolvedores ==
@@ -193,7 +195,7 @@ Os destaques desta versão incluem o anúncio de cores para alguns controles; an
 - No Internet Explorer e outros controles MSHTML, o NVDA utiliza agora a URL como um último lugar para determinar o nome de um link, em lugar de apresentar links vazios. (#633)
 - O NVDA já não ignora o foco nos menus do AOL Instant Messenger 7. (#655)
 - Anúncio da etiqueta correta para erros no diálogo do corretor ortográfico do Microsoft Word (ex.: não existe em dicionário, erro gramatical, pontuação). Anteriormente todos eram anunciados como erro gramatical. (#883)
-- Ao digitar no Microsoft Word enquanto se utiliza uma linha braille já não deve fazer com que seja digitado texto ilegível e um estranho bug quando se pressiona um sensor de seguimento braille em documentos do Word foi corrigido. (#1212) não obsstante uma limitação é que o texto em árabe pode não ser lido já no Word 2003 e superior, enquanto se utiliza uma linha braille. (#627)
+- Ao digitar no Microsoft Word enquanto se utiliza uma linha braille já não deve fazer com que seja digitado texto ilegível e um estranho bug quando se pressiona um sensor de linha braille em documentos do Word foi corrigido. (#1212) não obsstante uma limitação é que o texto em árabe pode não ser lido já no Word 2003 e superior, enquanto se utiliza uma linha braille. (#627)
 - quando se pressiona a tecla delete nun campo de edição, o texto/cursor numa linha braille agora deve atualizarse sempre apropriadamente para atualizar a alteração. (#947)
  - As Alterações  em documentos Gecko2 (Ex.: Firefox 4) enquanto se abren múltiplas abas agora é atualizada  adecuadamente pelo NVDA. Anteriormente só as Alterações na primeira aba se atualizavam. (mozilla bug 610985)
  - O NVDA agora pode anunciar apropriadamente as sugestões para erros gramaticais e de pontuação no diálogo do corretor ortográfico do Microsoft Word. (#704)
@@ -276,10 +278,10 @@ As características mais notáveis desta versão incluen uma grande simplificaç
 -
 
 == Alterações ==
-- Ler tudo no navegador de objetos  (NVDA+mais do teclado numérico), seguinte objeto em fluxo do navegador de objetos (NVDA+shift+6 do teclado numérico) e anterior objeto em fluxo no navegador de objetos (NVDA+shift+4 do teclado numérico) foram removidos de momento, devido a falhas e para liberar as teclas para outras possíveis características.
+- Ler tudo com a navegação de objetos  (NVDA+mais do teclado numérico), seguinte objeto em fluxo do navegador de objetos (NVDA+shift+6 do teclado numérico) e anterior objeto em fluxo no navegador de objetos (NVDA+shift+4 do teclado numérico) foram removidos de momento, devido a falhas e para liberar as teclas para outras possíveis características.
 - No diálogo de sintetizadores do NVDA, agora só se mostra o sintetizador listado. Anteriormente, prefixava-se com nome do driver, que só é relevante internamente.
 - quando se está em aplicações embutidas ou buffers virtuais dentro de outro buffer virtual (ex.: Flash), agora pode pressionar nvda+control+espaço para saír da aplicação embutida ou buffer virtual, para o documento principal. Anteriormente, nvda+espaço   era utilizado para isto. Agora nvda+espaço serve específicamente para alternar os modos de navegação/foco no buffer virtual.
-- Se o exibidor de fala (ativável no menu Ferramentas) recebeu o foco (ex.: ao clicando) o texto novo não aparecerá no controle até que o foco se mova. isto permite selecionar o texto com maior facilidade (ex.: para copiar).
+- Se o exibidor de fala (ativável no menu Ferramentas) recebeu o foco (ex.: ao clicar) o novo texto não aparecerá no controle até que o foco se mova. isto permite selecionar o texto com maior facilidade (ex.: para copiar).
 - O visualizador de Log e o console Python maximizam-se quando são ativados.
 - quando se enfoca uma folha de cálculo em MS Excel, e há mais de uma célula selecionada, anuncia-se o alcance da seleção, em lugar de só a célula ativa. (#763)
 - Salvar a configuração e a alteração de opções sensíveis em particular, agora desativa-se quando se o executa em modo seguro (nas telas de logon/UAC).
@@ -293,27 +295,27 @@ As características mais notáveis desta versão incluen uma grande simplificaç
 
 == Correção de Falhas ==
 - No µTorrent, o elemento enfocado na lista de torrents já não informa repetidamente ou esconde o foco quando se abre um menu.
-- em aplicações da mozilla, agora o foco detecta-se corretamente quando é movido para uma tabela vazia ou árvore.
+- em aplicações da mozilla, agora o foco é corretamente detectado quando é movido para uma tabela vazia ou árvore.
 - em aplicações da mozilla, "não marcado" agora informa-se corretamente para controles marcáveis como células de tabela marcáveis. (#571)
 - em aplicações da mozilla, o texto de diálogos aria corretamente implementados já não se ignora e agora é informado quando o diálogo aparece.
 - no Internet Explorer e outros controles MSHTML, o atributo nível de ARIA agora se cumpre corretamente.
-- no Internet Explorer e outros controles MSHTML, o rol ARIA agora é escolhido sobre outro tipo de informação para dar uma experiência de ARIA muito mais correta e intuitiva.
+- no Internet Explorer e outros controles MSHTML, a função ARIA agora é escolhido sobre outro tipo de informação para dar uma experiência de ARIA muito mais correta e intuitiva.
 - Resolvido um raro bug no Internet Explorer quando se navega por marcas ou iFrames.
-- em documentos do Microsoft Word, as linhas de direita a esquerda (como no texto árabe) poden ler-se novamente. (#627)
+- em documentos do Microsoft Word, as linhas da direita para a esquerda (como no texto árabe) poden novamente ser lidas. (#627)
 - Forte redução do atraso quando grandes quantidades de texto eram exibidas num console de comandos do Windows em sistemas de 64 bits. (#622)
 - em aplicações do Microsoft Office, o NVDA já não trava quando se pressiona falar primeiro plano (NVDA+b) ou quando se navega alguns objetos em barras de ferramentas. (#616)
 - Corrigida a fala incorreta dos números que contém um 0 depois de un separador; ex.: 1.023. (#593)
-- Adobe Acrobat Pro e Reader 9 já não travam quando se fecha um arquivo ou se executa outras certas tarefas. (#613)
-- A seleção anuncia-se agora quando se pressiona control+a para selecionar todo o texto em alguns controles de texto editáveis como em Microsoft Word. (#761)
+- Adobe Acrobat Pro e Reader 9 já não travam quando se fecha um arquivo ou ao executar outras certas tarefas. (#613)
+- A seleção agora é anunciada quando se pressiona control+a para selecionar todo o texto em alguns controles de texto editáveis como no Microsoft Word. (#761)
 - Nos controles de Scintilla (ex.: Notepad++), O texto já não é selecionado incorretamente quando o NVDA move o cursor do sistema tal como durante leitura contínua. (#746)
-- É possível novamente revisar o conteúdo de células no MS Excel com o cursor de exploração.
-- O NVDA pode ler novamente por linhas em certos campos de área de texto problemáticos no Internet Explorer 8. (#467)
+- É novamente possível revisar o conteúdo de células no MS Excel com o cursor de exploração.
+- O NVDA pode novamente ler por linhas em certos campos de área de texto outrora problemáticos no Internet Explorer 8. (#467)
 - O Windows Live Messenger 2009 já não se encerra inmediatamente depois de ser iniciado enquanto o NVDA está em execução. (#677)
 - Nos navegadores web, já não é necessário pressionar tab para interagir com um objeto embutido (tal como conteúdo Flash) depois de pressionar enter no objeto embutido ou voltando de outra aplicação. (#775)
-- em controles de Scintilla (ex.: Notepad++), o início de linhas longas já não xé cortado quando sobrepassam a tela. também, estas linhas longas são mostradas corretamente em braille quando selecionadas.
+- em controles de Scintilla (ex.: Notepad++), o início de linhas longas já não é cortado quando sobrepassam a tela. também, estas linhas longas são mostradas corretamente em braille quando selecionadas.
 - No Loudtalks, agora é possível acessar à lista de contatos.
 - A URL do documento e "MSAAHTML Registered Handler" já não se anuncia algumas vezes falsamente no Internet Explorer e outros controles MSHTML. (#811)
-- em árbores no IDE de Eclipse,  o elemento enfocado anteriormente já não se anuncia incorretamente quando o foco se move a um novo elemento.
+- em árvores no IDE de Eclipse,  o elemento enfocado anteriormente já não se anuncia incorretamente quando o foco se move para um novo elemento.
 
 
 = 2010.1 =
@@ -323,45 +325,45 @@ Esta revisão enfóca-se principalmente em Correção de Falhas e melhoras na ex
 == Novas características ==
 - O NVDA já não falha ao ser executado em un sistema sen dispositivos de saída de áudio. Obviamente, será necessário utilizar uma linha braille ou o Display synthesiser para a saída neste caso. (#425)
 - Foi adicionada uma caixa de seleção Anunciar Zonas ao diálogo de Opções de formatação de Documentos que lhe permite configurar se o NVDA deve anunciar zonas em documentos web. Para compatibilidade com a versão anterior, a opção está ativada de maneira predeterminada.
-- Quando falar teclas de comandos está ativada NVDA agora anuncia os nomes das teclas multimedia (ex.: reproduzir, parar, página de começo, etc.) quando são pressionadas. (#472)
+- Quando falar teclas de comandos está ativado, o NVDA agora anuncia os nomes das teclas multimedia (ex.: reproduzir, parar, página inicial, etc.) quando são pressionadas. (#472)
 - O NVDA agora anuncia a palavra que está sendo apagada quando se pressiona control+backspace em controles que o suportem. (#491)
 - As setas agora poden ser utilizadas na janela do formatador Web para navegar e ler o texto. (#452)
 - Melhor suporte de documentos embutidos editáveis do NVDA (modo de desenho) no Internet Explorer. (#402)
-- um novo script (nvda+shift+menos do teclado numérico) lhe permite mover o foco do sistema ao navegador de objetos atual.
-- Novos scripts para bloquear e desbloquear os botões esquerdo e direito do mouse. Útil para levar a cabo operações de arrastar e soltar. shift+dividir do teclado numérico para bloquear/desbloquear o esquerdo, shift+multiplicar do teclado numérico para bloquear/desbloquear o direito.
-- Novas tabelas de transcripção braille: braille computerizado Alemão de 8 pontos, Alemán grao 2, braille computerizado Finés de 8 pontos, Chinés (Hong Kong, Cantonés), Chinés (Taiwan, Mandarín). (#344, #369, #415, #450)
+- um novo script (nvda+shift+menos do teclado numérico) lhe permite mover o foco do sistema para o navegador de objetos atual.
+- Novos scripts para bloquear e desbloquear os botões esquerdo e direito do mouse. Útil para a execução com operações de arrastar e soltar. shift+dividir do teclado numérico para bloquear/desbloquear o esquerdo, shift+multiplicar do teclado numérico para bloquear/desbloquear o direito.
+- Novas tabelas de tradução braille: braille de computador Alemão de 8 pontos, Alemão grao 2, braille de computador Finlandês de 8 pontos, Chinês (Hong Kong, Cantonês), Chinês (Taiwan, Mandarim). (#344, #369, #415, #450)
 - Agora é possível desativar a criação do atalho da área de trabalho (e assim a tecla de atalho) quando se instala o NVDA. (#518)
-- O NVDA agora pode utilizar IAccessivel2 quando estejam presentes em aplicações de 64 bit. (#479)
-- A API NVDA Controller Client proporcionada agora para permitir ás aplicações controlar o NVDA; ej.: para falar texto, silenciar a voz, mostrar uma mensagen em braille, etc.
+- O NVDA agora pode utilizar IAccessible2 quando presente em aplicações de 64 bit. (#479)
+- A API NVDA Controller Client proporcionada agora para permitir ás aplicações controlar o NVDA; ex.: para falar texto, silenciar a voz, mostrar uma mensagen em braille, etc.
 - As mensagens de informação e erro agora são lidas na tela de logon no Windows Vista e no Windows 7. (#506)
 - No Adobe Reader, os formulários PDF interativos desenvolvidos com Adobe LiveCycle agora são suportados. (#475)
-- No Miranda IM, o NVDA agora lê automáticamente as mensagens de entrada em janelas de chat se o anúncio de Alterações de conteúdo dinámico se ativarão. também, foron adicionados os comandos para anunciar as três mensagens mais recentes (NVDA+control+número). (#546)
+- No Miranda IM, o NVDA agora lê automáticamente as mensagens de entrada em janelas de chat se o anúncio de Alterações nos conteúdos dinámicos estiver ativado. também foram adicionados os comandos para anunciar as três mensagens mais recentes (NVDA+control+número). (#546)
 - Agora são suportados campos de entrada de texto em conteúdo de Adobe Flash. (#461)
 -
 
 == Alterações ==
 - A mensagem de ajuda de teclado de extrema verbosidade no menu iniciar do Windows 7 já não é anunciada.
 - O sintetizador Display agora foi substituido por um novo Exibidor de Fala. Para ativá-lo, escolha Exibidor de Fala desde o menu Ferramentas. O Exibidor de Fala pode ser utilizado independentemente de com que outro sintetizador de voz esteja trabalhando.
-- As mensagens na linha braille serão rexeitadas automáticamente se o usuário pressionar uma tecla que signifique uma mudança  como o movimento do foco. Anteriormente a mensagem sempre permaneceria segundo o seu tempo configurado.
-- A opção para axustar o braille ao foco ou ao cursor de exploração (NVDA+control+t) agora pode ser também configurada desde o diálogo de opções de braille, e agora também pode ser salva nas configurações do usuário.
-- atualizado o sintetizador de voz eSpeak ara a versão 1.42.04.
+- As mensagens na linha braille serão rejeitadas automáticamente se o usuário pressionar uma tecla que signifique uma mudança  como o movimento do foco. Anteriormente a mensagem sempre permaneceria segundo o seu tempo configurado.
+- A opção para vincular o braille ao foco ou ao cursor de exploração (NVDA+control+t) agora pode ser também configurada desde o diálogo de opções de braille, e agora também pode ser salva nas configurações do usuário.
+- atualizado o sintetizador de voz eSpeak para a versão 1.42.04.
 - atualizado o transcritor braille liblouis para a versão 1.8.0.
 - nos buffers virtuais, o anúncio de elementos quando se move por caracteres ou palavras foi sensivelmente melhorado. Anteriormente, era anunciada uma grande quantidade de informação irrelevante e o anúncio era muito diferente a esse quando se move por linhas. (#490)
 - A tecla Control agora simplesmente para a voz como outras teclas, em lugar de pausar a voz. Para pausar/continuar a voz, utilize a tecla shift.
-- já não se anuncia a quantidade de linhas e columnas das tabela quando se anunciam as Alterações do foco, posto que este anúncio traz demasiada verbosidade e normalmente não é útil.
+- já não se anuncia a quantidade de linhas e columnas das tabelas quando se anunciam as Alterações do foco, posto que este anúncio é de demasiada verbosidade e normalmente inútil.
 -
 
 
 == Correção de Falhas ==
 - O NVDA já não falha ao ser executado se o suporte UI Automation parece estár disponível mas falha ao inicializar-se por alguma razão. (#483)
 - Todo o conteúdo de uma linha de uma tabela já não é anunciado algumas vezes quando se move o foco entre células em aplicações da mozilla. (#482)
-- O NVDA já não se atrasa durante um tempo longo quando se expande elementos da vista em árvore que contenham uma quantidade muito grande de sub-itens.
+- O NVDA já não se atrasa durante um tempo longo quando se expande itens de vista em árvore que contenham uma quantidade muito grande de sub-itens.
 - quando se lista vozes SAPI 5, o NVDA agora tenta detectar vozes defeituosas e excluí-las do diálogo de Opções de Voz e do Anel de Opções de Voz. Anteriormente, quando havia uma voz problemática, o driver SAPI 5 do NVDA falhaba algumas vezes ao iniciar-se.
 - Os buffers virtuais agora anunciam as teclas de atalho dos objetos opção que se encontra no diálogo de Apresentação de objetos. (#486)
 - Nos buffers virtuais, as coordenadas de linha/columna já não são lidas incorretamente por cabeçalhos de linha e columna quando o anúncio de tabelas está desativado.
 - nos buffers virtuais, as coordenadas de linha/columna agora são corretamente lidas quando você abandona uma tabela e logo volta a entrar na mesma célula da tabela sen visitar antes outra célula; ex.: pressionando seta acima e logo seta abaixo sobre a primeira célula de uma tabela. (#378)
 - As linhas em branco nos documentos do Microsoft Word e dos controles de edição de Microsoft HTML agora são mostradas apropriadamente em linhas braille. Anteriormente o NVDA mostraba a frase atual na linha, não a linha atual para estas situações. (#420)
-- Múltiplas correcções de segurança quando se executa o NVDA no Logon do Windows e outras Áreas de Trabalho Seguras.
+- Múltiplas correções de segurança quando se executa o NVDA no Logon do Windows e outras Áreas de Trabalho Seguras.
 - A posição do cursor (cursor do sistema) agora atualiza-se corretamente ao fazer uma leitura Completa na qual se passe do final da tela, em campos de edição estándar do Windows e documentos do Microsoft Word. (#418)
 - nos buffers virtuais, o texto já não é incluído incorretamente por imagens dentro de links e clicáveis que são marcados como irrelevantes para os leitores de tela. (#423)
 - Correções para o layout de teclado laptop. (#517)
@@ -432,13 +434,13 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 - O comando copiar com exploração (NVDA+f10) copia o texto desde em cima da marca de início e inclue a posição atual da exploração, em lugar de excluií-la . isto permite que o último carácter de uma linha seja copiado, o que não era possível anteriormente. (#430)
 - O script  navigatorObject_where (ctrl+NVDA+numpad5) foi removido. Esta combinação de teclas não funcionava em alguns teclados, nem o script era considerado útil.
 - O script navigatorObject_currentDimentions foi remapeado para NVDA+delete do teclado numérico. A antiga combinação de teclas não funcionava em alguns teclados. Este script agora também anuncia a largura e a altura do objeto em lugar das coordenadas direita/inferior.
-- melhorado o rendimento (especialmente em netbooks) quando ocorrem muitos beeps em sucessão rápida; ej.: movimentos rápidos com o mouse com as coordenadas de áudio ativadas. (#396)
+- melhorado o rendimento (especialmente em netbooks) quando ocorrem muitos beeps em sucessão rápida; ex.: movimentos rápidos com o mouse com as coordenadas de áudio ativadas. (#396)
 - O som de erro do NVDA já não é reproduzido em release candidates e versões finais. Note que os erros continuam sendo registrados no log.
 -
 
 
 == Correção de Falhas ==
-- quando o NVDA é executado a partir de um caminho de DOS 8.3, mas está instalado no caminho longo relacionado (ej.: progra~1 versus program files) NVDA identifica corretamente que é uma cópia instalada e carrega apropriadamente as opções do usuário.
+- quando o NVDA é executado a partir de um caminho de DOS 8.3, mas está instalado no caminho longo relacionado (ex.: progra~1 versus program files) NVDA identifica corretamente que é uma cópia instalada e carrega apropriadamente as opções do usuário.
 - O anúncio do título da janela atual em primeiro plano com nvda+t funciona agora corretamente quando se está nos menus.
 - O braille já não mostra informações desnecessárias no seu contexto de foco tal como painéis não etiquetados.
 - já não se anuncia  algumas informações desnecessárias quando o foco muda como painéis raíz, painéis solapados e painéis deslizantes em aplicações Java ou Lotus.
@@ -452,7 +454,7 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 - O NVDA agora maneja corretamente etiquetas de ARIA no mozilla Gecko quando não há outro conteúdo útil. (#156)
 - O NVDA já não ativa incorretamente o modo de foco automáticamente para campos de texto editável que atualizam seu valor quando o foco muda; ex.: http://tigerdirect.com/. (#220)
 - O NVDA agora tentará recuperar-se de algumas situações que anteriormente o fariam travar completamente. Poderá levar cerca de 10 segundos para que o NVDA detecte e se recupere de tais travamentos.
-- quando o idioma do NVDA está axustado a "User default", utiliza o idioma do usuário do Windows configurado em lugar do local do Windows.
+- quando o idioma do NVDA está configurado para "User default", utiliza o idioma do usuário do Windows configurado em lugar do local do Windows.
 - O NVDA agora reconhece a existência de controles em AIM 7.
 - O comando de deixar passar a tecla já não bloqueia quando uma tecla é mantida pressionada. Anteriormente, o NVDA deixava de aceitar os comandos nesses casos  e precisava ser reiniciado. (#413)
 - A barra de tarefas já não é ignorada quando recebe o foco, o que muitas vezes ocorre quando se sae de uma aplicação. Anteriormente, o NVDA comportava-se como se o foco não tivesse mudado.
@@ -512,12 +514,12 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 -
 
 
-== Correcção de Erros ==
-- O derradeiro anaco de áudio não é cortado já quando se utilice NVDA com eSpeak nun servidor de área de trabalho remoto.
-- Corríxense problemas com salvado de dicionários da fala para certas vozes.
+== Correção de Falhas ==
+- A última parte do áudio já não é cortado quando o NVDA É utiliZADO com O eSpeak nun servidor de área de trabalho remoto.
+- Corrigidos problemas ocorridos ao salvar dicionários de fala para certas vozes.
 - Resolução do atraso quando se move por outras unidades que não sejam carácter (palavra, linha, etc.) para o final dos documentos de texto plano longos no modo de navegação da mozilla Gecko. (#155)
 - Se falar palavras digitadas estiver ativado, anunciará a palavra quando enter for pressionado.
-- corrigidos alguns grupos de sucessões de caracteres em documentos enriquecidos. preferencias de Formato de Documentos. isto inclui buffers virtuais de mozilla Gecko.
+- corrigidos alguns grupos de sucessões de caracteres em documentos enriquecidos. preferências de Formataçãoo de Documentos. isto inclui buffers virtuais da mozilla Gecko.
 - O visualizador de log do NVDA agora utiliza caixas multilinha em lugar de apenas editar para mostrar o log. isto melhora a leitura por palavras com o NVDA e lhe permite ler o texto do log mais além dos 65535 bytes.
 - corrigidas algumas falhas relacionados com os objetos embutidos em controles de edição multilinha.
 - O NVDA agora lê os números de página no Microsoft Word. (#120)
@@ -534,8 +536,8 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 - Corrigida a falha onde atualizar parámetros de voz (velocidade, ton, etc.) não era salvo quando a voz era alterada desde o Anel de Opções de Voz.
 - melhorada a fala de caracteres e palavras escritas.
 - Alguns textos novos que anteriormente não eram falados em aplicações de console de texto (como alguns texto de jogos conversacionais) são agora falados.
-- O NVDA agora ignora Alterações do foco nas janelas em segundo plano. Anteriormente, uma mudança do foco em segundo plano podia ser tratad como se o foco real fosse alterado.
-- melhorada a detecção do foco quando se sai dos menus de contexto. Anteriormente, NVDA amenudo não reaccionaba de todo quando se abandoaba um menu de contexto.
+- O NVDA agora ignora Alterações do foco nas janelas em segundo plano. Anteriormente, uma mudança do foco em segundo plano poderia ser tratada como se o foco real tivesse sido alterado.
+- melhorada a detecção do foco quando se sai dos menus de contexto. Anteriormente, o NVDA muitas vezes não reagia perfeitamente quando se saía de um menu de contexto.
 - O NVDA agora anuncia quando o menu de contexto é ativado  no menu iniciar.
 - O menu iniciar clássico agora é anunciado como menu iniciar em lugar de menu Aplicação.
 - melhorada a leitura de alertas como aquélas encontradas no mozilla Firefox. O texto já não deve ser lido múltiplas vezes e outra informação extranha já não será lida. (#248)
@@ -576,14 +578,14 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 - Melhorado a ordem e a escala dos beeps da barra de progresso 
 - adicionadas mais teclas de navegação rápida para o novo buffer virtual:  l para lista, i para iten de lista, e para campo de edição, b para botão, x para caixa de seleção, r para botão de opção, g para gráfico, q para citações, c para caixa de combinação, 1 a 6 para os respectivos níveis de cabeçalho, s para separador, m para marca. (#67, #102, #108)
 - O cancelamento do carregamento de um novo documento no mozilla Firefox permite agora ao usuário seguir utilizando o antigo documento do  buffer virtual se o velho documento não foi realmente destruido ainda. (#63)
-- Navegar por palavras no modo de navegação é agora mais exacto enquanto as palavras não contenham acidentalmente texto de mais de um campo. (#70)
+- Navegar por palavras no modo de navegação é agora mais exato enquanto as palavras não contenham acidentalmente texto de mais de um campo. (#70)
 - melhorada a exatidão do seguimento do foco e a atualização do foco quando se navega em buffers virtuais da mozilla Gecko.
 - adicionado um script findNext (shift+NVDA+f3) para utilizar  no novo buffer virtual 
 - melhorada a lentidão em diálogos mozilla Gecko (no Firefox e Thunderbird). (#66)
 - adicionada a capacidade para ver o arquivo log atual para o NVDA. pode ser encontrado no menu NVDA -> Ferramentas
 - Scripts como Data e hora levam em conta agora o idioma atual; pontuação e ordenamento das palavras agora se ajustam ao idioma 
 - A caixa de combinação do idioma no diálogo de Opções gerais do NVDA mostra agora os nomes dos idiomas completos para facilidade de uso
-- quando se revisa texto no objeto de navegação atual, o texto está sempre atualizado se é alterado dinámicamente. Ex.: revisando o texto de um elemento de lista  na Barra de Tarefas. (#15)
+- quando se revisa texto no objeto de navegação atual, o texto está sempre atualizado se é alterado dinámicamente. Ex.: revisando o texto de um item de lista  na Barra de Tarefas. (#15)
 - quando você se move com o mouse, o parágrafo atual de texto sob ele agora é anunciado, em lugar de todo o texto nesse objeto particular ou apenas a palavra atual. também as coordenadas de áudio, e o anúncio das funções do objeto é opcional, são desativados por padrão.
 - suporte para leitura de texto com mouse no Microsoft Word
 - corrigido um erro onde ao abandonar a barra de menu em aplicações como Wordpad podería fazer com que a seleção de texto não fosse mais anunciada.
@@ -628,14 +630,14 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 
 = 0.6p1 =
 
-== Acesso ao conteúdo da web com os novos buffers virtuais em processo (até aquí para aplicaçõesMozilha Gecko incluindo Firefox3 e Thunderbird3) ==
+== Acesso ao conteúdo da web com os novos buffers virtuais em processo (até aquí para aplicações Mozilla Gecko incluindo Firefox3 e Thunderbird3) ==
 - Os tempos de carregamento foram melhorados quase por um fator de trinta (já não é preciso esperar em toda ou maior parte das páginas web para serem carregadas  no buffer virtual)
 - adicionada uma lista de links (NVDA+f7)
-- melhorado o diálogo procurar (control+nvda+f) de forma que se efetua uma procura insensível ás maiúsculas, mais resolução de uns poucos problemas com o foco com essa caixa de diálogo.
+- melhorado o diálogo procurar (control+nvda+f) de forma que se efetua uma procura insensível às maiúsculas, mais resolução de uns poucos problemas com o foco nessa caixa de diálogo.
 - agora é possível selecionar e copiar texto nos novos buffers virtuais 
 - Os novos buffers virtuais por padrão representam o documento numa apresentação de tela (links e controles não estão em linhas separadas a menos que realmente sejam visualmente assim). pode-se alternar esta característica com NVDA+v.
 - É possível mover-se por parágrafos com control+seta acima e control+seta abaixo.
-- melhorado o suporte para conteúdo dinámico
+- melhorado o suporte para conteúdos dinámicos.
 - melhorado por cima toda a precisão da leitura de linhas e campos quando se sobe ou dece com as setas. 
 -
 
@@ -661,32 +663,32 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 - O NVDA agora ven embalado com o eSpeak 1.33 que contén muitas melhoras. Entre as quais estão idiomas melhorados, variantes nomeadas e capacidade para falar mais rápido.
 - O diálogo de opções de voz agora lhe permite alterar a variante de um sintetizador si este o suportar. A variante é normalmente uma ligeira variação da voz atual. (o eSpeak suporta variantes).
 - adicionada a capacidade para alterar a inflexão de uma voz  no Diálogo de Opções de Voz caso o sintetizador atual o suporte. (o eSpeak suporta inflexão).
-- adicionada a capacidade para desativar a verbalização da informação da posição do objeto (ex.:. 1 de 4). Esta opção pode ser encontrada no Diálogo de Opções de Apresentação de objetos.
-- O NVDA agora pode bipar quando verbaliza uma letra maiúscula. isto pode ser ativado e desativado  através de uma caixa de seleção  no Diálogo de Opções de Voz. também se engadíu uma caixa de seleção de elevação do ton para maiúsculas para configurar se NVDA atualmente deve ter a súa elevação de ton normal para as maiúsculas. assim agora podes ter o ton elevado, dicir maius, ou pitar, para maiúsculas.
+- adicionada a capacidade para desativar o anúncio da posição do objeto (ex.:. 1 de 4). Esta opção pode ser encontrada no Diálogo de Opções de Apresentação de objetos.
+- O NVDA agora pode bipar quando verbaliza uma letra maiúscula. isto pode ser ativado e desativado  através de uma caixa de seleção  no Diálogo de Opções de Voz. também foi adicionada uma caixa de seleção de aumento do ton para maiúsculas para configurar se o NVDA atualmente deve ter seu ton aumentado para as maiúsculas. assim, você agora pode escolher entre ter o ton aumentado, dizer CAP, ou bipar, para maiúsculas.
 - adicionada a capacidade para pausar a voz no NVDA (como é encontrada no Voice Over para o Mac). quando o NVDA está falando algo, pode pressionar as teclas control ou shift para silenciar a voz normalmente, mas se então pressionar a tecla shift novamente (caso não tenha pressionado qualquer outra tecla) a voz continuará exatamente de onde parou.
 - adicionado um driver de sintetizador virtual, o qual extrai texto para uma janela em lugar de falá-lo através de um sintetizador de voz. isto deve ser mais agradável para desenvolvedores videntes que não são usuários de síntese de voz mas queren saber o que o NVDA está DIZENDO. Todavía há provavelmente algumas falhas, então respostas são muito bem vindas.
 - O NVDA já não fala a pontuação por padrão. Você pode habilitar o anúncio da pontuação com NVDA+p.
 - O eSpeak por padrão agora fala um pouco mais lento, o que deve torná-lo mais simples para pessoas que o utilizarão pela primeira vez, quando instalam ou começam a utilizar o NVDA.
-- adicionados dicionários do usuário ao NVDA. Éstes lhe permitem fazer com que o NVDA fale determinado texto de forma diferente. há três dicionários: padrão, voz e temporário. As entradas adicionadas ao dicionário padrão servirão a todo o tempo no NVDA. Os dicionários por voz são específicos para o sintetizador atual e a voz que atualmente esteja configurada. O dicionário temporário funciona para aquelas ocasiões em que pretenda fixar rápidamente uma regra enquanto executa uma tarefa em particular, mas não deseja que seja permanente (desaparecerá quando o NVDA for encerrado). Por agora, as regras são expressões regulares, não apenas texto normal.
+- adicionados dicionários do usuário ao NVDA. Estes lhe permitem fazer com que o NVDA fale determinado texto de forma diferente. há três dicionários: padrão, voz e temporário. As entradas adicionadas ao dicionário padrão servirão a todo o tempo no NVDA. Os dicionários por voz são específicos para o sintetizador atual e a voz que atualmente esteja configurada. O dicionário temporário funciona para aquelas ocasiões em que pretenda fixar rápidamente uma regra enquanto executa uma tarefa em particular, mas não deseja que seja permanente (desaparecerá quando o NVDA for encerrado). Por agora, as regras são expressões regulares, não apenas texto normal.
 - Os sintetizadores poden agora utilizar qualquer dispositivo de áudio de saída de seu sistema, configurando a caixa de combinação dispositivo de saída no diálogo Sintetizador antes de selecionar o sintetizador desejado.
 -
 
 
 == Desempenho ==
-- O NVDA já não toma uma grande quantidade de memória do sistema, ao editar mensagens em controles de edição mshtml
-- melhorado o rendimento quando se revisa texto dentro de muitos controles que não tenhen atualmente um cursor real. Ex.: janela de históricos do MSN Messenger, elementos de vistas em árvore, elementos de vista de lista etc.
+- O NVDA já não toma uma grande quantidade de memória do sistema ao editar mensagens em controles de edição mshtml
+- melhorado o desempenho quando se revisa texto dentro de muitos controles que não têm atualmente um cursor real. Ex.: janela de históricos do MSN Messenger, elementos de vistas em árvore, elementos de vista de lista etc.
 - melhorado o rendimento em documentos enriquecidos.
-- O NVDA já não deve tornar-se lento consumindo demasiada quantidade de memória do sistema sen razãó
+- O NVDA já não deve tornar-se lento consumindo demasiada quantidade de memória do sistema sen razão.
 - corrigidas falhas de quando se põe o foco numa janela de console do dos três ou mais vezes. O NVDA tinha uma tendência a travar completamente.
 -
 
 
 == Teclas de comando ==
 - NVDA+shift+numpad6 e NVDA+shift+numpad4 lhe permiten navegar ao seguinte ou ao anterior objeto em fluxo respectivamente. isto significa que pode navegar numa aplicação utilizando apenas estas dúas teclas sen se preocupar em navegar para o pai ou  para o primeiro filho conforme se mova através da hierarquía de objetos. Por exemplo nun navegador web tal como firefox, pode navegar no documento por objetos, utilizando apenas estas dúas teclas. Se o seguinte em fluxo ou o anterior em fluxo lhe coloca e desloca de um objeto, ou abaixo nun objeto, ouvirá beeps indicando a direção.
-- agora é possível configurar opções de voz sem abrir o Diálogo de Opções de Voz, utilizando o Anel de Opções de Voz. Este é um grupo de opções de voz que permite alternar através do presssionamento de control+NVDA+direita e control+NVDA+esquerda. Para alterar uma opção utilize control+NVDA+acima e control+NVDA+abaixo.
+- agora é possível configurar opções de voz sem abrir o Diálogo correspondente, utilizando o Anel de Opções de Voz. Este é um grupo de opções de voz que permite alternar através do presssionamento de control+NVDA+direita e control+NVDA+esquerda. Para alterar uma opção utilize control+NVDA+acima e control+NVDA+abaixo.
 - adicionado um comando para anunciar a seleção atual em campos de edição (NVDA+shift+seta acima).
 - Um bom número de comandos do NVDA que anunciam texto (como anunciar linha atual etc) agora podem soletrar o texto se pressionados dúas vezes rápidamente.
-- O Caps Loc, insert do teclado numérico e insert extendido poden ser todos utilizados como tecla modificadora do NVDA. também se uma destas teclas é utilizada, preméndoa dúas vezes rápidamente sen pressionar ninguma outra tecla enviará a tecla ao sistema operativo, como se premeses a tecla sen NVDA executándose. Para facer que uma destas teclas seja a modificadora do NVDA, marca a súa caixa de seleção  no diálogo de Opções de Teclado (utilizado para seren chamado o diálogo de eco de teclado).
+- O Caps Loc, insert do teclado numérico e insert extendido poden ser todos utilizados como teclas modificadoras do NVDA. também se uma destas teclas for utilizada, pressionando-a dúas vezes rápidamente sen pressionar nenhuma outra, enviará a tecla ao sistema operacional, como se você a pressionasse sen que o NVDA estivesse sendo executado. Para fazer com que uma destas teclas torne-se modificadora do NVDA, marque súa caixa de seleção  no diálogo de Opções de Teclado (utilizado para ser chamado o diálogo de eco de teclado).
 -
 
 
@@ -696,7 +698,7 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 - melhorado o suporte para a aplicação audacity
 - adicionado suporte para alguns controles edit/text no Skype
 - melhorado o suporte para a aplicação Miranda instant messenger 
-- corrigidos alguns problemas do foco quando são abertas mensagens html e de texto planno no Outlook Express. 
+- corrigidos alguns problemas com o foco de quando são abertas mensagens html e de texto planno no Outlook Express. 
 - Os campos de mensagens de notícias do Outlook express agora são etiquetados corretamente
 - O NVDA agora pode ler os enderessos nos campos de mensagens do Outlook Express (para/de/cc etc)
 - O NVDA agora deve estár mais preciso ao anunciar a próxima mensagem no outlook express quando é apagada uma mensagem na lista de mensagens.
@@ -743,7 +745,7 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 - adicionado suporte para mais campos de edição no Skype.
 - Os buffers virtuais só são carregados quando o foco está sobre a janela que necessita ser carregada. isto resolve alguns problemas onde o painel anterior era ativado no Outlook Express.
 - adicionados argumentos de linha de comando ao NVDA:
- - -m, --minimal: não reproduz os sons de começo/saír e não mostra a interface ao executar se foi configurada para isso.
+ - -m, --minimal: não reproduz os sons de início/saír e não mostra a interface ao executar se foi configurada para isso.
  - -q, --quit: abandona qualquer outra instância já em execução do NVDA e logo sae
  - -s, --stderr-file nomearquivo: especifica onde o NVDA deve colocar os erros e exceções 
  - -d, --debug-file nomearquivo: especifica onde o NVDA deve colocar  as mensagens de depuração 
@@ -754,7 +756,7 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 - adicionado o diálogo de Opções do buffer virtual e um diálogo de opções de formatação de documentos, de Peter Vagner.
 - adicionada tradução para o francês graças a Michel Such.
 - adicionado um script para ativar e desativar o beep das barras de progresso (insert+u). Colaboração de Peter Vagner.
-- Possibilitado que mais mensagens no NVDA sejam traduzíveis para outros idiomas. isto inclui descripções de script quando se está  na ajuda de teclado.
+- Foi possibilitado que mais mensagens no NVDA sejam traduzíveis para outros idiomas. isto inclui descrições de scripts quando se está  na ajuda de teclado.
 - adicionado um diálogo de procura aos buffers virtuais (internet Explorer e Firefox). pressionando control+f numa página abre um diálogo  no qual você pode digitar algum texto a localizar. pressionando enter depois procurará este texto e colocará o cursor do buffer virtual sobre esta linha. pressionando f3 também procurará a seguinte ocorrencia do texto.
 - quando falar caracteres digitados está ativado, mais caracteres devem ser falados agora. Técnicamente, agora os caracteres ascii desde o 32 ao 255 poden ser anunciados.
 - Renomeados alguns tipos de controles para uma melhor legibilidade. O Texto editável é agora edição, outline é agora árvore e botão pressionável é agora botão.
@@ -764,8 +766,8 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 - Resolvidos alguns problemas com a exploração em controles de texto estático.
 - adicionada tradução para o Chinês Tradicional, graças a Coscell Kao.
 - Reestruturada uma parte importante do código do NVDA, que agora deve corrigir  muitas falhas com a interface do usuário do NVDA (incluindo opções de diálogos).
-- adicionado suporte Sapi4 para o NVDA. atualmente existem dois drivers sapi4, um baseado no código escrito por Serotek Corporation, e outro utilizando a interface activeVoice.ativeVoice com. Ambos drivers tenhen problemas, veja cal funciona melhor para ti.
-- agora quando se trata de executar uma nova cópia do NVDA enquanto uma cópia anterior já está sendo executada a nova cópia encerrará. isto resolve um problema maior onde ao executar múltiplas cópias do NVDA o sistema fique inutilizável.
+- adicionado suporte ao Sapi4 para o NVDA. atualmente existem dois drivers sapi4, um baseado no código escrito pela Serotek Corporation, e outro utilizando a interface activeVoice.ativeVoice com. Ambos drivers têm problemas, veja como funciona melhor para você.
+- agora quando se trata de executar uma nova cópia do NVDA enquanto uma anterior já está sendo executada a nova cópia encerrará. isto resolve um problema maior onde ao executar múltiplas cópias do NVDA o sistema ficava inutilizável.
 - Renomeado o título da interface do usuário do NVDA de Interface do NVDA para NVDA. 
 - Corrigida uma falha no Outlook Express onde ao pressionar Backspace  no início de uma mensagem edit´ável causava um erro.
 - adicionado um parche de Rui Batista que adiciona um script para anunciar o atual estado da bateria em computadores portáteis (insert+shift+b).
@@ -775,7 +777,7 @@ O mais destacável desta versão inclui o suporte para edições de 64 bit do Wi
 - adicionada tradução para o espanhol (es) colaboração de Juan C. Buño.
 - adicionado arquivo do idioma Húmgaro de Tamas Gczy.
 - adicionado arquivo do idioma português de Rui Batista.
-- A alteração de voz no Diálogo de Opções de Voz agora ajusta os controles de velocidade, ton e volume aos novos de acordo com o sintetizador, em lugar de forçar o sintetizador a ser axustado aos valores anteriores. isto resolve problemas de quando um sintetizador como eloquence ou viavoice pareciam falar a uma velocidade muito mais rápida que todos os outros sintetizadores.
+- A alteração de voz no Diálogo de Opções de Voz agora ajusta os controles de velocidade, ton e volume aos novos de acordo com o sintetizador, em lugar de forçar o sintetizador a ser ajustado aos valores anteriores. isto resolve problemas de quando um sintetizador como eloquence ou viavoice pareciam falar a uma velocidade muito mais rápida que todos os outros sintetizadores.
 - corrigida uma falha onde o sintetizador de voz parava, o NVDA travava completamente, quando se estaba numa janela de console do Dos.
 - Caso haja suporte para um idioma em particular, o NVDA agora pode mostrar automáticamente súa interface e falar suas mensagens  no idioma no qual o Windows esteja configurado. um idioma particular pode aínda ser escolhido manualmente desde o diálogo de Opções de Interface do usuário.
 - adicionado o script 'toggleReportDynamicContentChanges' (insert+5). isto alterna se novos textos, ou outras Alterações dinámicas devem ser anunciados automáticamente. até aquí isto só funcionava em janelas de console do Dos.
