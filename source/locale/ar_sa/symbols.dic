@@ -2,19 +2,21 @@
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (c) 2011 NV Access Inc
 #This file is covered by the GNU General Public License.
-
+complexSymbols:
+؟ sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	نقطة	all	always
-! sentence ending	تعجب	all	always
-? sentence ending	استفهام	all	always
-؟ sentence ending	استفهام	all	always
-; phrase ending	فاصلة منقوطة	most	always
-: phrase ending	نقطتين فوقيتين	most	always
-decimal point		none	always
-in-word '	apostrophe	all	norep
+. sentence ending	نقطة
+! sentence ending	تعجب
+? sentence ending	استفهام
+؟ sentence ending	استفهام
+; phrase ending	فاصلة منقوطة
+: phrase ending	نقطتين فوقيتين
+decimal point		none
+in-word '	apostrophe
+negative number ناقط
 
 # Whitespace
 \0	خالي
@@ -49,7 +51,7 @@ $	دولار
 >	أكبر من
 =	يساوي
 ?	استفهام
-@	آت
+@	at
 [	فَتْحُ قَوْسٍ مُرَبّعْ
 ]	غَلْقُ قَوْسٍ مُرَبّعْ
 \\	قاطعة خلفية
@@ -64,6 +66,7 @@ _	خط سُفْلِي
 # Other characters
 •	bullet
 …	نقطة نقطة نقطة
+...	نقطة نقطة نقطة
 	bullet
 “	فتح تنصيص
 ”	غلق تنصيص
