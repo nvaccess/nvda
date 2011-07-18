@@ -233,9 +233,13 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		except COMError:
 			pass
 		try:
-			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_WORD)[0:2]
+			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_WORD)
 		except COMError:
 			return super(IA2TextTextInfo,self)._getWordOffsets(offset)
+		if start>offset or offset>end:
+			# HACK: Work around buggy implementations which return a range that does not include offset.
+			return offset,offset+1
+		return start,end
 
 	def _getLineOffsets(self,offset):
 		try:
