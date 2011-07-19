@@ -196,6 +196,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _getWordOffsets(self,offset):
 		lineStart,lineEnd=self._getLineOffsets(offset)
 		lineText=self._getTextRange(lineStart,lineEnd)
+		#Convert NULL and non-breaking space to space to make sure that words will break on them
+		lineText=lineText.translate({0:u' ',0xa0:u' '})
 		if self.useUniscribe:
 			start=ctypes.c_int()
 			end=ctypes.c_int()
