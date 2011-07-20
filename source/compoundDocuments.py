@@ -389,29 +389,16 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			self._end, self._endObj = self._findContentDescendant(rootObj, textInfos.POSITION_LAST)
 			self._end.expand(textInfos.UNIT_STORY)
 		elif position == textInfos.POSITION_CARET:
-			self._start, self._startObj = self._findContentDescendant(rootObj.caretObject)
+			self._start, self._startObj = self._findContentDescendant(obj.caretObject, textInfos.POSITION_CARET)
 			self._end = self._start
 			self._endObj = self._startObj
+		else:
+			raise NotImplementedError
 
 	def _findContentDescendant(self, obj, position):
-		assert position in (textInfos.POSITION_FIRST, textInfos.POSITION_LAST)
-		if isinstance(obj, textInfos.TextInfo):
-			ti = obj.copy()
-			if position == textInfos.POSITION_FIRST:
-				ti.expand(textInfos.UNIT_CHARACTER)
-			else:
-				ti.collapse(end=True)
-				ti.move(textInfos.UNIT_CHARACTER, -1, "start")
-			if ti.text == u"\uFFFC":
-				obj = ti.getEmbeddedObject()
-			else:
-				# The content starts/ends in this TextInfo.
-				# Return the original TextInfo and NVDAObject.
-				return obj, obj.obj
-
 		while True:
 			ti = obj.makeTextInfo(position)
-			ti.expand(textInfos.UNIT_CHARACTER)
+			ti.expand(textInfos.UNIT_OFFSET)
 			if ti.text == u"\uFFFC":
 				obj = ti.getEmbeddedObject()
 			else:
@@ -485,27 +472,43 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 		return self._getText(True, formatConfig)
 
 	def expand(self, unit):
-		if unit == textInfos.UNIT_CHARACTER:
+		if unit in ( textInfos.UNIT_CHARACTER, textInfos.UNIT_OFFSET):
 			self._end = self._start
 			self._endObj = self._startObj
 			self._start.expand(unit)
 			return
 
 		start = startObj = end = endObj = None
-		expandTi = self._start
+		baseTi = self._start
+		baseTi.collapse()
 		obj = self._startObj
 		# Walk up the hierarchy until we find the start and end points.
 		while True:
+			expandTi = baseTi.copy()
 			expandTi.expand(unit)
 			allTi = obj.makeTextInfo(textInfos.POSITION_ALL)
 
 			if not start and expandTi.compareEndPoints(allTi, "startToStart") != 0:
 				# The unit definitely starts within this object.
 				start = expandTi
+				startObj = start.obj
+				if baseTi.compareEndPoints(expandTi, "startToStart") == 0:
+					startDescPos = textInfos.POSITION_FIRST
+				else:
+					# The unit expands beyond the base point,
+					# so only include the nearest descendant unit.
+					startDescPos = textInfos.POSITION_LAST
 
 			if not end and expandTi.compareEndPoints(allTi, "endToEnd") != 0:
 				# The unit definitely ends within this object.
 				end = expandTi
+				endObj = end.obj
+				if baseTi.compareEndPoints(expandTi, "endToEnd") == 0:
+					endDescPos = textInfos.POSITION_LAST
+				else:
+					# The unit expands beyond the base point,
+					# so only include the nearest descendant unit.
+					endDescPos = textInfos.POSITION_FIRST
 
 			if start and end:
 				# Both have been found, so stop walking.
@@ -519,18 +522,37 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 				# The unit starts or ends at the start or end of this last object.
 				if not start:
 					start = expandTi
+					startObj = start.obj
+					if baseTi.compareEndPoints(expandTi, "startToStart") == 0:
+						startDescPos = textInfos.POSITION_FIRST
+					else:
+						# The unit expands beyond the base point,
+						# so only include the nearest descendant unit.
+						startDescPos = textInfos.POSITION_LAST
 				elif not end:
 					end = expandTi
+					endObj = end.obj
+					if baseTi.compareEndPoints(expandTi, "endToEnd") == 0:
+						endDescPos = textInfos.POSITION_LAST
+					else:
+						# The unit expands beyond the base point,
+						# so only include the nearest descendant unit.
+						endDescPos = textInfos.POSITION_FIRST
 				break
 
 			obj = embedTi.obj
-			expandTi = embedTi
+			baseTi = embedTi
 
-		start, startObj = self._findContentDescendant(start, textInfos.POSITION_FIRST)
-		if start.isCollapsed:
+		ti = start.copy()
+		ti.expand(textInfos.UNIT_OFFSET)
+		if ti.text == u"\uFFFC":
+			start, startObj = self._findContentDescendant(ti.getEmbeddedObject(), startDescPos)
 			start.expand(unit)
-		end, endObj = self._findContentDescendant(end, textInfos.POSITION_LAST)
-		if end.isCollapsed:
+		ti = end.copy()
+		ti.collapse(end=True)
+		ti.move(textInfos.UNIT_OFFSET, -1, "start")
+		if ti.text == u"\uFFFC":
+			end, endObj = self._findContentDescendant(ti.getEmbeddedObject(), endDescPos)
 			end.expand(unit)
 
 		if startObj == endObj:
