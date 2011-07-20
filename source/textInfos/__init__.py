@@ -194,6 +194,7 @@ UNIT_CELL="cell"
 UNIT_SCREEN="screen"
 UNIT_STORY="story"
 UNIT_READINGCHUNK="readingChunk"
+UNIT_OFFSET="offset"
 
 unitLabels={
 	UNIT_CHARACTER:_("character"),

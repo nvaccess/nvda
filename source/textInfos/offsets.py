@@ -305,6 +305,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			offsetsFunc=self._getReadingChunkOffsets
 		elif unit==textInfos.UNIT_STORY:
 			return 0,self._getStoryLength()
+		elif unit==textInfos.UNIT_OFFSET:
+			return offset,offset+1
 		else:
 			raise ValueError("unknown unit: %s"%unit)
 		return offsetsFunc(offset)
