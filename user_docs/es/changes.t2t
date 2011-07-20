@@ -26,6 +26,8 @@ Lo subrayable en esta revisión incluye mejoras mayores concernientes a la puntu
 - En la lista de mensajes de Outlook Express/Windows Mail/Windows Live Mail, NVDA ahora anunciará el hecho de que un mensaje esté no leído y también si está expandido o contraído en el caso de hilos de conversación. (#868)
 - eSpeak ahora tiene una opción de tasa de aumento que triplica la velocidad de la voz.
 - Soporte para el control calendario que se encuentra en el diálogo de Información de Fhecha y Hora accedido desde el reloj de Windows 7. (#1637)
+- Se han añadido combinaciones de teclas adicionales para la línea braille MDV Lilli. (#241)
+- Nuevos idiomas: Búlgaro, Albanés.
 
 
 == Cambios ==
@@ -107,13 +109,15 @@ Lo subrayable en esta revisión incluye mejoras mayores concernientes a la puntu
 - En Microsoft Word 2003, las líneas de texto de derecha a izquierda pueden leerse una vez de nuevo con el braille activado. (#627)
 - En Microsoft Word, leer todo ahora funciona correctamente cuando el documento no finaliza con un final de frase.
 - Cuando se abre un mensaje de texto plano en Windows Live Mail 2011, NVDA enfocará correctamente el documento de mensaje permitiendo que se lea.
+- NVDA ya no se cuelga o se niega a hablar temporalmente cuando está en los diálogos Mover a / Copiar a en Windows Live Mail. (#574)
+- En Outlook 2010, NVDA ahora seguirá correctamente el foco en la lista de mensajes. (#1285)
+- Se han resuelto algunos problemas de conexión de USB con la línea braille MDV Lilli. (#241)
 
 
 == Cambios para Desarrolladores ==
-Esta zona no se traduce de momento por no ser de interés al usuario normal del programa.
-- Developer documentation can now be generated using SCons. See readme.txt at the root of the source distribution for details, including associated dependencies.
-- Locales can now provide descriptions for characters. See the Character Descriptions section of the Developer Guide for details. (#55)
-- Locales can now provide information about the pronunciation of specific punctuation and other symbols. See the Symbol Pronunciation section of the Developer Guide for details. (#332)
+- La documentación de desarrolladores ahora puede generarse utilizando SCons. mira readme.txt en la raíz de la distribución fuente para detalles, incluyendo dependencias asociadas.
+- Los Locales ahora pueden proporcionar descripciones para carácteres. Mira la sección Character Descriptions de la Developer Guide para detalles. (#55)
+- Los Locales ahora pueden proporcionar información acerca de la pronunciación de puntuación específica y otros símbolos. Mira la sección Symbol Pronunciation de la Developer Guide para detalles. (#332)
 - Synth drivers are now passed a sequence of text and speech commands to speak, instead of just text and an index.
  - This allows for embedded indexes, parameter changes, etc.
  - Drivers should implement SynthDriver.speak() instead of SynthDriver.speakText() and SynthDriver.speakCharacter().
@@ -126,16 +130,16 @@ Esta zona no se traduce de momento por no ser de interés al usuario normal del 
 
 
 = 2011.1.1 =
-This release fixes several security and other important issues found in NVDA 2011.1.
+Esta versión corrige varios problemas de seguridad y otros importantes encontrados en NVDA 2011.1.
 
-== Bug Fixes ==
-- The Donate item in the NVDA menu is now disabled when running on the logon, lock, UAC and other secure Windows screens, as this is a security risk. (#1419)
-- It is now impossible to copy or paste within NVDA's user interface while on secure desktops (lock screen, UAC screen and windows logon) as this is a security risk. (#1421)
-- In Firefox 4, the move to containing virtual buffer command (NVDA+control+space) now works as it should to escape embedded objects such as Flash content. (#1429)
-- When speaking of command keys is enabled, shifted characters are no longer incorrectly spoken as command keys. (#1422)
-- When speaking of command keys is enabled, pressing space with modifiers other than shift (such as control and alt) is now reported as a command key. (#1424)
-- Logging is now completely disabled when running on the logon, lock, UAC and other secure Windows screens, as this is a security risk. (#1435)
-- In input help mode, Gestures are now logged even if they are not bound to a script (in accordance with the user guide). (#1425)
+== Corrección de Fallos ==
+- El elemento Donar en el menú NVDA ahora se desactiva cuando se ejecuta en la autentificación, bloqueo, UAC y otras Ventanas de pantallas seguras, ya que esto es un riesgo de seguridad. (#1419)
+- Ahora es imposible copiar o pegar dentro de la ventana de interface del usuario de NVDA mientras se está en escritorios seguros (Pantalla bloqueada, pantalla del UAC y autentificación de windows) ya que esto es un riesgo de seguridad. (#1421)
+- En Firefox 4, la orden mover al contenido del modo virtual (NVDA+control+space) ahora funciona como debería escapar de objetos empotrados tales como contenido Flash. (#1429)
+- Cuando verbalizar teclas de órdenes esté activado, los caracteres mayusculados ya no se verbalizan incorrectamente como teclas de órdenes. (#1422)
+- Cuando verbalizar teclas de órdenes esté activado,, presionando espacio con otros modificadores que shift (tales como control y alt) ahora se anuncian como una tecla de órdenes. (#1424)
+- El Logging ahora se desactiva completamente cuando se ejecute desde la autentificación, bloqueo, UAC y otras ventanas seguras, ya que esto es un riesgo de seguridad. (#1435)
+- En el modo de ayuda de entrada, los gestos ahora logged even if they are not bound to a script (in accordance with the user guide). (#1425)
 
 
 = 2011.1 =

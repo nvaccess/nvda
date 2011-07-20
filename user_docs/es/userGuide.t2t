@@ -81,7 +81,7 @@ Si ya tienes el instalador de NVDA, simplemente presiona intro o haz doble clic 
 
 Cuando el instalador se cargue, escucharás la música de instalación de NVDA. 
 Una vez cargado, una copia temporal de NVDA te permitirá seguir los indicativos del instalador e instalar NVDA. 
-Ten en cuenta que si hubieras ejecutado otra copia de NVDA al mismo tiempo de iniciar el instalador, el instalador cerrará la copia previa e iniciará su propia copia. 
+Ten en cuenta que si hubieras ejecutado otra copia de NVDA al mismo tiempo de iniciar el instalador, éste cerrará la copia previa e iniciará su propia copia. 
 Esto es necesario para que el instalador pueda actualizar apropiadamente cualquier fichero cambiado. 
 En este punto, si tienes otra copia de NVDA ya instalada, el instalador de NVDA la desinstalará por ti, y entonces comenzará a instalar NVDA. 
 
@@ -212,7 +212,7 @@ Cuando un [objeto #Objects] que permite navegación y/o edición de texto se [en
 
 Cuando el foco esté sobre un objeto que tenga el cursor del sistema, puedes utilizar las teclas de cursor, retroceso de página, avance de página, inicio, fin, etc. para moverte a través del texto.
 También puedes cambiar el texto si el control soporta edición.
-NVDA anunciará según te muevas por caracteres, palabras, líneas, y también anunciará la selección y no selección de texto.
+NVDA anunciará según te muevas por caráccteres, palabras, líneas, y también anunciará la selección y no selección de texto.
 
 NVDA proporciona las siguientes teclas de órdenes en relación al cursor del sistema:
 %kc:beginInclude
@@ -242,7 +242,7 @@ Para una manera de revisar todo el texto según aparezca en la pantalla, puedes 
 Más que moverse atrás y adelante entre cada simple objeto en el sistema, los objetos se agrupan jerárquicamente.
 Esto significa que debes moverte dentro de algunos objetos para acceder a los objetos que contengan.
 Por ejemplo, una lista contiene elementos de lista, así debes moverte dentro de la lista para acceder a sus elementos.
-Si te has movido a un elemento de lista, te puedes mover su objeto contenedor para volver a la lista y entonces pasarla si lo deseas.
+Si te has movido a un elemento de lista, te puedes mover a su objeto contenedor para volver a la lista y entonces pasarla si lo deseas.
 De modo similar, si encuentras una barra de herramientas, debes moverte dentro de ella para acceder a los controles en la barra de herramientas.
 
 El objeto actualmente en revisión se llama navegador de objetos.
@@ -267,7 +267,7 @@ Para navegar por objetos, utiliza las siguientes teclas:
 nota: las teclas del teclado numérico requieren que la tecla BloqNum esté desactivada para funcionar apropiadamente.
 
 ++ Revisando Texto ++[ReviewingText]
-NVDA te permite leer el contenido del actual [navegador de objetos #ObjectNavigation] (incluyendo [revisión plana #FlatReview]) por caracteres, palabras o líneas.
+NVDA te permite leer el contenido del actual [navegador de objetos #ObjectNavigation] (incluyendo [revisión plana #FlatReview]) por carácteres, palabras o líneas.
 Esto es principalmente útil en la consola del Dos de Windows y otros lugares donde no haya la existencia de un  [cursor del sistema #SystemCaret]. o éste sea limitado.
 
 Cuando se mueve el cursor de revisión, el cursor del Sistema no lo sigue, así puedes revisar texto sin perder la posición de edición.
@@ -334,7 +334,7 @@ NVDA proporciona un modo para que los usuarios comprendan dónde está el ratón
 Cuanto más alto el ratón esté más arriba en la pantalla, El tono será más alto en los pitidos. 
 Cuanto más a la izquierda o a la derecha esté el ratón en la pantalla, más a la izquierda o a la derecha parecerá ir el sonido (asumiendo que el usuario tenga altavoces estereofónicos).
 
-Estas características extra del ratón no están activadas de forma predeterminada en NVDA, 
+Estas características extra del ratón no están activadas de forma predeterminada en NVDA. 
 Si deseas sacar partido de ellas, puedes configurarlas desde el diálogo [Opciones del Ratón #MouseSettings], que se encuentra en el menú Preferencias en el menú NVDA.
 
 Si bien un ratón físico o un trackpad se podrían utilizar para navegar con el ratón, NVDA tiene unas pocas teclas de órdenes relacionadas con el ratón:
@@ -605,10 +605,10 @@ Si esta casilla de verificación está marcada, la tecla insert (normalmente enc
 Si esta casilla de verificación está marcada, la tecla insert del teclado numérico puede utilizarse como una tecla modificadora de NVDA.
 
 %kc:setting
-==== Verbalizar caracteres al escribir ====
+==== Verbalizar carácteres al escribir ====
 Tecla: NVDA+2
 
-Cuando está marcada significa que NVDA anunciará todos los caracteres según los escribas en el teclado. 
+Cuando está marcada significa que NVDA anunciará todos los carácteres según los escribas en el teclado. 
 
 %kc:setting
 ==== Verbalizar palabras al escribir ====
@@ -625,7 +625,7 @@ Por lo tanto, puede ser bastante útil ser avisado acerca de esto.
 ==== Verbalizar teclas de órdenes ====
 Tecla: NVDA+4
 
-Cuando está marcada significa que NVDA anunciará todas las teclas que no sean caracteres al escribirlas en el teclado. Esto incluye combinaciones de teclas tales como control más cualquier otra letra. 
+Cuando está marcada significa que NVDA anunciará todas las teclas que no sean carácteres al escribirlas en el teclado. Esto incluye combinaciones de teclas tales como control más cualquier otra letra. 
 
 +++ Opciones del Ratón (NVDA+control+m) +++
 El diálogo de Opciones del Ratón se encuentra en el menú Preferencias, bajo "Opciones del Ratón...". 
@@ -698,8 +698,8 @@ Por ejemplo el menú Archivo en una barra de menú podrá tener una tecla de ata
 ==== Anunciar Información de la Posición del Objeto ====
 Esta opción te permite elegir dónde deseas tener una posición del objeto anunciada (ej.: 1 de 4) cuando te mueves al objeto con el foco o el navegador de objetos.
 
-==== Adivinar la información de Posición del Objeto cuando no esté disponible ====
-Si el anunciado de información de posición del objeto está desactivada, esta opción permite a NVDA adivinar la información de posición del objeto cuando no esté disponible para un control en particular.
+==== Deducir la información de Posición del Objeto cuando no esté disponible ====
+Si el anunciado de información de posición del objeto está desactivada, esta opción permite a NVDA deducir la información de posición del objeto cuando no esté disponible para un control en particular.
 
 Cuando esté activada, NVDA anunciará información de posición para más controles tales como menús y barras de herramientas, no obstante esta información podrá ser ligeramente incorrecta. 
 
@@ -730,16 +730,16 @@ Tecla: NVDA+5
 
 Conmuta el anunciado de contenido nuevo en objetos particulares tales como terminales y el control de histórico en programas de chat.
 
-+++ Opciones de los Modos de Navegación (NVDA+control+b) +++
-El diálogo de opciones de los Modos de navegación puede encontrarse en el menú Preferencias, bajo "Modos Virtuales"...". 
++++ Opciones de Modo Navegación (NVDA+control+b) +++
+El diálogo de opciones de los Modos de navegación puede encontrarse en el menú Preferencias, bajo "Modo Navegación"...". 
 
 El diálogo contiene las siguientes opciones:
 
-==== Máximo Número de Caracteres en Una Línea ====
-Este campo pone la anchura máxima de una línea del modo virtual (en caracteres).
+==== Máximo Número de Carácteres en Una Línea ====
+Este campo pone la anchura máxima de una línea del modo virtual (en carácteres).
 
 ==== Máximo número de Líneas por Página ====
-Si bien en realidad los modos virtuales no tienen páginas, este campo ajusta la cantidad de líneas que moverás cuando presiones Avance de página o Retroceso de página mientras estés en un modo virtual.
+Este campo ajusta la cantidad de líneas que moverás cuando presiones Avance de página o Retroceso de página mientras estés en modo navegación.
 
 %kc:setting
 ==== Utilizar diseño de pantalla ====
@@ -814,13 +814,13 @@ Para añadir una nueva regla al diccionario, presiona el botón Añadir, y relle
 Entonces berás tu nueva regla en la lista de reglas. 
 Asimismo para asegurarte de que tu regla está actualmente guardada, asegúrate de presionar Aceptar para salir completamente del diálogo de diccionario Una vez hayas finalizado de añadir/editar reglas.
 
-Las reglas para los diccionarios de voz de NVDA te permiten cambiar una cadena de caracteres por otra. 
+Las reglas para los diccionarios de voz de NVDA te permiten cambiar una cadena de carácteres por otra. 
 Un ejemplo simple sería que quisieras tener a NVDA diciendo la palabra rana cada vez que tuviera que decir la palabra pájaro. 
 En el diálogo de añadir regla, el modo más fácil de hacer esto es teclear la palabra pájaro en el campo Patrón, y la palabra rana en el campo de reemplazar. 
 podrías también querer teclear una descripción de la regla en el campo Comentario (algo como: cambiar pájaro por rana).
 
 Los diccionarios del habla de NVDA asimismo son mucho más poderosos que un simple reemplazo de palabras. 
-El diálogo de Añadir reglas también contiene Una Casilla de verificación que dice si quieres que sí o que no la regla sea sensible a las mayúsculas (significando que NVDA debería tener en cuenta si los caracteres están en mayúsculas o en minúsculas. 
+El diálogo de Añadir reglas también contiene Una Casilla de verificación que dice si quieres que sí o que no la regla sea sensible a las mayúsculas (significando que NVDA debería tener en cuenta si los carácteres están en mayúsculas o en minúsculas. 
 NVDA ignora los casos de forma predeterminada). 
 Otra casilla de verificación te permite establecer si tu patrón es una "Expresión Regular". 
 Una expresión regular es un patrón que contiene símbolos especiales que te permiten emparejar más de un carácter al mismo tiempo, o emparejar solo números, o solo letras, según unos pocos ejemplos. 
@@ -1004,6 +1004,21 @@ La línea braille Lilli disponible desde [MDV http://www.mdvbologna.it/] se sopo
 No necesitas instalar ningún controlador específico para utilizar esta línea.
 Solo enchufa la línea y configura NVDA para utilizarla.
 
+Seguidamente van las asignaciones de teclas para esta línea con NVDA.
+Porfavor mira la documentación de la línea para descripciones de dónde se pueden encontrar estas teclas.
+%kc:beginInclude
+|| Nombre | tecla |
+| Desplazar hacia atrás línea braille | LF |
+| Desplazar hacia adelante línea braille | RG |
+| Mover línea braille a línea anterior | UP |
+| Mover línea braille a línea siguiente | DN |
+| Enrutar hacia la celda braille | route |
+| Tecla shift+tab | SLF |
+| Tecla tab | SRG |
+| Tecla alt+tab | SDN |
+| Tecla alt+shift+tab | SUP |
+%kc:endInclude
+
 ++ Líneas braille Baum/Humanware/APH ++
 Varias líneas braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] y [APH http://www.aph.org/] están soportadas cuando se conectan a través del USB o del bluetooth.
 Estas incluyen:
@@ -1049,7 +1064,7 @@ Por favor mira [la documentación de tablas de teclas de BRLTTY http://mielke.cc
 | Desplazar línea braille hacia la derecha | fwinrt (va una ventana hacia la derecha) |
 | Mover la línea braille a la línea anterior | lnup (va una línea hacia arriba) |
 | Mover línea braille a la siguiente línea | lndn (va una línea hacia abajo) |
-| Guiar a la celda braille | route (lleva el cursor al caracter) |
+| Guiar a la celda braille | route (lleva el cursor al carácter) |
 %kc:endInclude
 
 + Temas Avanzados +
@@ -1115,6 +1130,15 @@ Aunque eres libre de tener scripts vinculados a cualquier tecla disponible, podr
 NVDA todavía envía teclas modificadoras (tales como shift, control y alt) al Sistema Operativo, aún si eventúan en un script.
 De esta manera, si utilizas alt en un gesto, presionando esta tecla la combinación podrá activar la barra de menú, tanto como ejecutar el script.
 Por lo tanto, probablemente es mejor sólo utilizar Shift, control y la tecla modificadora NVDA como modificadores.
+
+++ Personalización Avanzada de Pronunciación de Símbolos ++
+Es posible personalizar la pronunciación de la puntuación y otros símbolos beyond what can be done using the [Punctuation/symbol pronunciation #SymbolPronunciation] dialog.
+For example, you can specify whether the raw symbol should be sent to the synthesizer (e.g. to cause a pause or change in inflection) and you can add custom symbols.
+
+To do this, you must edit the symbol pronunciation information file in your NVDA user configuration directory.
+The file is called symbols-xx.dic, where xx is the language code.
+The format of this file is documented in the Symbol Pronunciation section of the NVDA Developer Guide, which is available from [the Development section of the NVDA web site NVDA_URLwiki/Development].
+However, it is not possible for users to define complex symbols.
 
 + Información Adicional +
 Si requieres de información adicional o asistencia con respecto a NVDA, por favor visita el sitio Web de NVDA en NVDA_URL.
