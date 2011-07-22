@@ -335,7 +335,10 @@ inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPref
 		}
 	}
 	SysFreeString(data);
-	return notAllWhitespace?s:L"";
+	if(!allowPreformattedText&&!notAllWhitespace) {
+		return L"";
+	}
+	return s;
 }
 
 #define macro_addHTMLCurrentStyleToNodeAttrs(styleName,attrName,node,currentStyleObj,tempBSTR) {\
