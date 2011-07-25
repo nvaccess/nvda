@@ -54,6 +54,15 @@ class Mozilla(IAccessible):
 				presType=self.presType_layout
 		return presType
 
+	def _get_positionInfo(self):
+		info=super(Mozilla,self).positionInfo
+		level=info.get('level',None)
+		if not level:
+			level=self.IA2Attributes.get('level',None)
+			if level:
+				info['level']=level
+		return info
+
 class Gecko1_9(Mozilla):
 
 	def _get_description(self):
