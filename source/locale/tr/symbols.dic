@@ -9,7 +9,7 @@
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<=\d)\.(?=\d)
-in-word ' (?<=[^\W_])['’]
+in-word '	(?<=[^\W_])['’]
 negative number	(?<!\w)-(?=\d)
 
 symbols:

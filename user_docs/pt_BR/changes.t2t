@@ -116,6 +116,7 @@ Os destaques desta versão incluem maiores implementações no tocante à  pontu
 - O NVDA já não trava ou se recusa a falar nos diálogos Mover para / Copiar para no  Windows Live Mail. (#574)
 - No Outlook 2010, o NVDA agora orienta corretamente o foco na lista de mensagens. (#1285)
 - Alguns problemas com a linha braille MDV Lilli referentes à conecção USB foram resolvidos. (#241)
+- No Internet Explorer e outros controles MSHTML, espaços já não são ignorados em certos casos no modo de navegação, ex.: depois de um link.
 
 
 == Alterações específicas para Desenvolvedores ==
@@ -390,10 +391,10 @@ Certos controles de vista em árvore em aplicações de 64 bit (como o conteúdo
 
 
 = 2009.1 =
-O mais destacável desta versão inclui o suporte para edições de 64 bit do Windows; suporte significativamente melhorado para os documentos do Microsoft Internet Explorer e do Adobe Reader; suporte para Windows 7; leitura das telas de  logon do Windows, control+alt+supr e o controle de contas de usuário (UAC); e a capacidade para interagir com os conteúdos do Adobe Flash e de Sun Java em páginas web. também nota-se várias correcções significativas de estabilidade e melhoras na experiencia do usuário em geral.
+O mais destacável desta versão inclui o suporte para versões de 64 bit do Windows; suporte significativamente melhorado para os documentos do Microsoft Internet Explorer e do Adobe Reader; suporte para Windows 7; leitura das telas de  logon do Windows, control+alt+delete e o controle de contas de usuário (UAC); e a capacidade para interagir com os conteúdos do Adobe Flash e de Sun Java em páginas web. também nota-se várias correções significativas de estabilidade e melhoras na experiência do usuário em geral.
 
 == Novas Características ==
-- Suporte oficial para edições de 64 bit do Windows! (#309)
+- Suporte oficial para verções de 64 bit do Windows! (#309)
 - adicionado um driver para o sintetizador Newfon. Tenha em conta que isto requer uma versão especial do Newfon. (#206)
 - nos buffers virtuais, o modo de foco e o modo de navegação agora poden ser anunciados utilizando sons em lugar da voz. isto está ativado por padrão. Pode ser configurado desde o diálogo de Opções do Buffer Virtual. (#244)
 - O NVDA já não interrompe a voz quando as teclas de controle do volume são pressionadas no teclado, permitindo ao usuário alterar o volume e ouvir os resultados atuais imediatamente. (#287)

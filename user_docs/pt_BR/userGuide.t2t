@@ -90,7 +90,7 @@ Caso  esteja reinstalando o NVDA, nesta altura será questionado se pretende rei
 Caso tenha a versão do arquivo comprimido do NVDA, então tudo o que precisa fazer é pressionar Enter ou um duplo clique no arquivo e seguir as instruções do diálogo.
 Ser-lhe-á perguntado onde pretende colocar os arquivos em seu sistema. 
 
-+++ NVDA Portable em um Dispositivo USB +++
++++ NVDA Portátil em um Dispositivo USB +++
 É possível colocar o NVDA em uma unidade de memória USB, o que lhe permite utilizá-lo em outros computadores.
 
 Quando a versãon Portátil perguntar onde deseja descompactá-la, digite a unidade de sua memória USB, mais uma subpasta opcional onde pretende colocar o NVDA.
@@ -167,7 +167,7 @@ Quando o menu se abrir, pode usar as setas direcionais para navegar pelo mesmo e
 | Alternar Modo de Fala | NVDA+s | Alterna o modo de fala entre fala, beep e desativado. |
 | Alternar Modo Ajuda de Entrada | NVDA+1 | Ao pressionar qualquer tecla neste modo, será informada a tecla e a descrição de qualquer comando do NVDA associado com ela |
 | Encerrar o NVDA | NVDA+q | Sai do NVDA |
-| Passar a próxima tecla através de | NVDA+f2 | Informa ao NVDA para deixar passar a próxima tecla pressionada para a aplicação ativa, mesmo se for uma tecla de comando normal |
+| Passar a próxima tecla | NVDA+f2 | Informa ao NVDA para deixar passar a próxima tecla pressionada para a aplicação ativa, mesmo se for uma tecla de comando normal |
 | Alternar Modo Dormir Num Aplicativo entre Ligado e Desligado | NVDA+shift+s | O modo dormir desabilita todos os comandos de teclado do nvda e a saída de voz/braille para o aplicativo atual. Isso é muito útil em programas com voz própria ou recurso de leitura de telas. Pressione novamente este comando para desligar o modo dormir. |
 %kc:endInclude
 
@@ -208,13 +208,13 @@ Quando o foco está sobre um objeto que tem o cursor do sistema, pode usar as se
 Pode também alterar o texto se o controle permitir edição.
 O NVDA anunciará como se mover por Carácter, palavra, linha e também informará quando um texto for selecionado ou desselecionado.
  
-Este leitor de telas fornece os seguintes comandos relativamente ao cursor do sistema:
+Este leitor de telas fornece os seguintes comandos em relação ao cursor do sistema:
 %kc:beginInclude
 || Nome | Tecla | Descrição |
 | Leitura contínua | NVDA+seta abaixo | Inicia a leitura a partir da posição atual do cursor do sistema, movendo-o pelo texto |
 | Ler linha atual | NVDA+seta acima | Lê a linha onde o cursor do sistema está posicionado atualmente. Ao pressionar duas vezes soletra a linha |
 | Ler texto atualmente selecionado | NVDA+Shift+seta acima | Lê qualquer texto selecionado atualmente |
-| Informar formatação de texto | NVDA+f | Anuncia a formatação do texto onde o cursor do sistema está posicionado atualmente |
+
 
 Quando estiver numa tabela, as seguintes teclas de atalho também estarão disponíveis:
 || Nome | Tecla | Descrição |
@@ -258,7 +258,7 @@ Para navegar pelos objetos utilize as seguintes teclas de atalho:
 | Anunciar dimensões do objeto de navegação atual | NVDA+Delete do teclado numérico | NVDA+delete | Anuncia as dimensões do objeto de navegação atual em relação à tela em percentagens (incluindo a distância da esquerda e do topo da tela, largura e altura do mesmo|
 %kc:endInclude
 
-Nota: As teclas do bloco numérico requerem que o Num Lock esteja desativado para que possam funcionar adequadamente. 
+Nota: As teclas do bloco numérico requerem que o Num Lock esteja desativado para que possam desempenhar suas funções adequadamente. 
 
 ++ Revisando Texto ++[ReviewingText]
 O NVDA permite-lhe ler o conteúdo do atual [objeto de navegação #ObjectNavigation] (inclusive em [revisão plana #FlatReview]) por caracteres, palavras ou linhas.
@@ -280,15 +280,16 @@ As seguintes teclas de atalho estão disponíveis para a revisão de texto:
 | Mover para a próxima palavra em revisão | 6 do teclado numérico | NVDA+l | Move o cursor de exploração para a próxima palavra no texto |
 | mover para o início da linha em revisão | shift+1 do teclado numérico | NVDA+shift+u | Move o cursor de exploração para o início da linha atual no texto |
 | Mover para o carácter anterior em revisão | 1 do teclado numérico | NVDA+m | Move o cursor de exploração para o carácter anterior na linha atual no texto |
-| Ler o carácter atual em revisão | 2 do teclado numérico | NVDA+vírgula | Lê o carácter atual na linha do texto onde está posicionado o cursor de exploração. Ao pressionar duas vezes rapidamente, soletra-o com descrição de caracteres. Pressionado três vezes, informa o valor numérico do carácter em decimal e hexadecimal. |
+| Ler o carácter atual em revisão | 2 do teclado numérico | NVDA+vírgula | Anuncia o carácter do objeto de navegação atual onde  se encontra o cursor de exploração. Ao pressionar duas vezes rapidamente, dá uma descrição descrição ou exemplo do carácter. Pressionado três vezes, anuncia o valor numérico decimal e hexadecimal do carácter. |
 | Mover para o próximo carácter em revisão | 3 do teclado numérico | NVDA+ponto | Move o cursor de exploração para o carácter seguinte na linha atual do texto |
 | Mover para o fim da linha em revisão | shift+3 do teclado numérico | NVDA+shift+o | Move o cursor de exploração para o carácter seguinte na linha atual do texto |
 | Ler tudo com revisão | Mais do teclado numérico | NVDA+shift+seta abaixo | Lê a partir da posição atual do cursor de exploração, movendo-o até ao fim do texto |
 | Copiar a partir do cursor de exploração | NVDA+f9 | NVDA+f9 | Inicia a cópia do texto a partir da posição atual do cursor de exploração. A cópia atual não será efetuada até que informe ao NVDA onde pretende copiar |
 | Copiar até ao cursor de exploração  | NVDA+f10 | NVDA+f10 | Copia a partir da posição do cursor de exploração definida atualmente com a cópia do cursor de exploração, até a posição do mesmo. Após pressionar esta tecla, o texto será copiado para a área de transferência do Windows  |
+| Informar formatação de texto | NVDA+f | Anuncia a formatação do texto onde o cursor de exploração está posicionado atualmente |
 %kc:endInclude
 
-Nota: As teclas do bloco numérico requerem que o Num Lock esteja desativado para que possam trabalhar adequadamente. 
+Nota: As teclas do bloco numérico requerem que o Num Lock esteja desativado para que possam desempenhar suas funções adequadamente. 
 
 Para ajudá-lo a assimilar estas teclas de atalho, atente que os comandos básicos de revisão de texto estão organizados numa tabela de três por três, do início até ao fim por linha, palavra e carácter e da esquerda para a direita por anterior, atual e seguinte.
 O esquema é ilustrado como se segue: 
@@ -532,7 +533,7 @@ Normalmente, o NVDA aumenta ligeiramente o tom para qualquer letra maiúscula, m
 Se esta caixa de seleção estiver marcada, o NVDA reproduzirá um pequeno beep cada vez que falar um Carácter maiúsculo.
 Tal como a caixa de seleção "dizer cap antes de maiúsculas", esta é útil para sintetizadores que não possam alterar seu tom em letras maiúsculas.
 
-==== Usar Soletragem Melhorada Quando Suportado ====
+==== Usar Soletragem Melhorada Quando Suportado ====[VoiceSpellingFunctionality]
 Algumas palavras consistem de um único carácter, mas a pronúncia é diferente dependendo de se este está sendo falado como um carácter individual (tal como quando é soletrado) ou como palavra.
 "A", por exemplo, em inglês, tanto pode ser uma letra como uma palavra.
 Essa opção permite ao sintetizador diferenciar entre esses dois casos se o mesmo suportar.
@@ -614,8 +615,8 @@ Quando está selecionada faz com que o NVDA anuncie todas as palavras que introd
 
 ==== Apita se digitar letras minúsculas com caps lock ligado ====
 Quando marcada, um beep de alerta será ouvido caso digite uma letra em conjunto com a tecla shift.
-Geralmente, essa ação é involuntária e recomenda-se para não fazê-lo quando Caps Lock estiver ativado.
-Portanto, esta opção é bastante útil para alertá-lo sobre isso.
+Geralmente, essa ação é involuntária e se deve à desatenção para o fato de que o Caps Lock está ativado.
+Portanto, é bastante útil ser alertado sobre isso.
  
 %kc:setting
 ==== Falar Teclas de Comando ====
@@ -914,8 +915,17 @@ Quando este sintetizador é utilizado com o NVDA, as vozes disponíveis (que  po
 
 ++ Audiologic Tts3 ++
 Este é um sintetizador de voz comercial especificamente para o idioma Italiano.
- O mesmo deve estar instalado em seu sistema para que possa utilizá-lo com o NVDA.
+O mesmo deve estar instalado em seu sistema para que possa utilizá-lo com o NVDA.
 Para mais informações, por favor visite o site Web da Audiologic em www.audiologic.it.
+
+Esse sintetizador não suporta a [funcionalidade de soletragem melhorada #VoiceSpellingFunctionality].
+
+++ Newfon ++
+Newfon é um sintetizador comercial disponibilizado por Sergey Shishmintzev, que suporta os idiomas russo e ucraniano.
+Para fazer o download deste sintetizador, por favor visite a seção de download da página da comunidade russa do NVDA:
+http://ru.nvda-community.org/?page_id=10
+
+Esse sintetizador não suporta a [funcionalidade de soletragem melhorada #VoiceSpellingFunctionality].
 
 + Linhas Braille Suportadas +[SupportedBrailleDisplays]
 Esta seção contém informação sobre as linhas Braille suportadas pelo NVDA.
@@ -1145,3 +1155,7 @@ Não é possível, todavia, definir sinais complexos.
 Se desejar informação adicional ou assistência referente ao NVDA, visite por favor a Página Web do NVDA em [http://www.nvda-project.org/ NVDA_URL].
 Aqui encontrará documentação adicional, bem como suporte técnico e recursos das comunidades.
 Este site também fornece informações e recursos sobre o desenvolvimento do NVDA.
+
+Você pode igualmente obter informações e tirar dúvidas sobre o NVDA na lista de discussão do nvda em português. Para se inscrever nesta lista, envie um e-mail em branco e sem assunto para o enderesso nvdaemportugues+subscribe@googlegroups.com.
+
+Há ainda o cite http://www.megatts.com, onde é possível obter informações sobre a acessibilidade em geral, porém o NVDA recebe apoio e destaque especiais.
