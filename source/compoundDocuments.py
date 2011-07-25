@@ -471,24 +471,18 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 	def getTextWithFields(self, formatConfig=None):
 		return self._getText(True, formatConfig)
 
-	def expand(self, unit):
-		if unit in ( textInfos.UNIT_CHARACTER, textInfos.UNIT_OFFSET):
-			self._end = self._start
-			self._endObj = self._startObj
-			self._start.expand(unit)
-			return
-
+	def _findUnitEndpoints(self, baseTi, unit, findStart=True, findEnd=True):
 		start = startObj = end = endObj = None
-		baseTi = self._start
 		baseTi.collapse()
-		obj = self._startObj
+		obj = baseTi.obj
+
 		# Walk up the hierarchy until we find the start and end points.
 		while True:
 			expandTi = baseTi.copy()
 			expandTi.expand(unit)
 			allTi = obj.makeTextInfo(textInfos.POSITION_ALL)
 
-			if not start and expandTi.compareEndPoints(allTi, "startToStart") != 0:
+			if not start and findStart and expandTi.compareEndPoints(allTi, "startToStart") != 0:
 				# The unit definitely starts within this object.
 				start = expandTi
 				startObj = start.obj
@@ -499,7 +493,7 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 					# so only include the nearest descendant unit.
 					startDescPos = textInfos.POSITION_LAST
 
-			if not end and expandTi.compareEndPoints(allTi, "endToEnd") != 0:
+			if not end and findEnd and expandTi.compareEndPoints(allTi, "endToEnd") != 0:
 				# The unit definitely ends within this object.
 				end = expandTi
 				endObj = end.obj
@@ -510,8 +504,8 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 					# so only include the nearest descendant unit.
 					endDescPos = textInfos.POSITION_FIRST
 
-			if start and end:
-				# Both have been found, so stop walking.
+			if (start or not findStart) and (end or not findEnd):
+				# Required endpoint(s) have been found, so stop walking.
 				break
 
 			# Either start or end hasn't yet been found,
@@ -520,7 +514,7 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			if not embedTi:
 				# There is no embedding object.
 				# The unit starts or ends at the start or end of this last object.
-				if not start:
+				if findStart and not start:
 					start = expandTi
 					startObj = start.obj
 					if baseTi.compareEndPoints(expandTi, "startToStart") == 0:
@@ -529,7 +523,7 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 						# The unit expands beyond the base point,
 						# so only include the nearest descendant unit.
 						startDescPos = textInfos.POSITION_LAST
-				elif not end:
+				elif findEnd and not end:
 					end = expandTi
 					endObj = end.obj
 					if baseTi.compareEndPoints(expandTi, "endToEnd") == 0:
@@ -543,18 +537,34 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			obj = embedTi.obj
 			baseTi = embedTi
 
-		ti = start.copy()
-		ti.expand(textInfos.UNIT_OFFSET)
-		if ti.text == u"\uFFFC":
-			start, startObj = self._findContentDescendant(ti.getEmbeddedObject(), startDescPos)
-			start.expand(unit)
-		ti = end.copy()
-		ti.collapse(end=True)
-		ti.move(textInfos.UNIT_OFFSET, -1, "start")
-		if ti.text == u"\uFFFC":
-			end, endObj = self._findContentDescendant(ti.getEmbeddedObject(), endDescPos)
-			end.expand(unit)
+		if findStart:
+			ti = start.copy()
+			ti.expand(textInfos.UNIT_OFFSET)
+			if ti.text == u"\uFFFC":
+				start, startObj = self._findContentDescendant(ti.getEmbeddedObject(), startDescPos)
+				start.expand(unit)
+			if not findEnd:
+				return start, startObj
+		if findEnd:
+			ti = end.copy()
+			ti.collapse(end=True)
+			ti.move(textInfos.UNIT_OFFSET, -1, "start")
+			if ti.text == u"\uFFFC":
+				end, endObj = self._findContentDescendant(ti.getEmbeddedObject(), endDescPos)
+				end.expand(unit)
+			if not findStart:
+				return end, endObj
 
+		return start, startObj, end, endObj
+
+	def expand(self, unit):
+		if unit in ( textInfos.UNIT_CHARACTER, textInfos.UNIT_OFFSET):
+			self._end = self._start
+			self._endObj = self._startObj
+			self._start.expand(unit)
+			return
+
+		start, startObj, end, endObj = self._findUnitEndpoints(self._start, unit)
 		if startObj == endObj:
 			end = start
 			endObj = startObj
@@ -563,6 +573,73 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 		self._startObj = startObj
 		self._end = end
 		self._endObj = endObj
+
+	def _findNextContent(self, ti, moveBack=False, skipFirstMove=False):
+		obj = ti.obj
+		# Ascend until we can move to the next offset.
+		direction = -1 if moveBack else 1
+		while True:
+			if skipFirstMove:
+				skipFirstMove = False
+			else:
+				if ti.move(textInfos.UNIT_OFFSET, direction) != 0:
+					break
+			ti = obj.embeddingTextInfo
+			if not ti:
+				raise LookupError
+			obj = ti.obj
+
+		ti.expand(textInfos.UNIT_OFFSET)
+		if ti.text == u"\uFFFC":
+			return self._findContentDescendant(ti.getEmbeddedObject(), textInfos.POSITION_LAST if moveBack else textInfos.POSITION_FIRST)
+		return ti, obj
+
+	def move(self, unit, direction, endPoint=None):
+		if direction == 0:
+			return 0
+
+		if not endPoint or endPoint == "start":
+			moveTi = self._start
+			moveObj = self._startObj
+			moveTi.collapse()
+		elif endPoint == "end":
+			moveTi = self._end
+			moveObj = self._endObj
+			moveTi.collapse(end=True)
+
+		remainingMovement = direction
+		moveBack = direction < 0
+		while remainingMovement != 0:
+			if moveBack:
+				# Move back 1 offset to move into the previous unit.
+				try:
+					moveTi, moveObj = self._findNextContent(moveTi, moveBack=True)
+				except LookupError:
+					# Can't move back any further.
+					break
+
+			# Find the edge of the current unit in the requested direction.
+			moveTi, moveObj = self._findUnitEndpoints(moveTi, unit, findStart=moveBack, findEnd=not moveBack)
+
+			if not moveBack:
+				moveTi.collapse(end=True)
+				if moveTi.compareEndPoints(moveObj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd") == 0:
+					# If at the end of the object, move to the start of the next object.
+					try:
+						moveTi, moveObj = self._findNextContent(moveTi, skipFirstMove=True)
+					except LookupError:
+						# Can't move forward any further.
+						break
+
+			remainingMovement -= -1 if moveBack else 1
+
+		if not endPoint or endPoint == "start":
+			self._start = moveTi
+			self._startObj = moveObj
+		if not endPoint or endPoint == "end":
+			self._end = moveTi
+			self._endObj = moveObj
+		return direction - remainingMovement
 
 class CompoundDocument(EditableText, TreeInterceptor):
 	TextInfo = TreeCompoundTextInfo
