@@ -622,6 +622,7 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			moveTi, moveObj = self._findUnitEndpoints(moveTi, unit, findStart=moveBack, findEnd=not moveBack)
 
 			if not moveBack:
+				# Collapse to the start of the next unit.
 				moveTi.collapse(end=True)
 				if moveTi.compareEndPoints(moveObj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd") == 0:
 					# If at the end of the object, move to the start of the next object.
@@ -630,6 +631,12 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 					except LookupError:
 						# Can't move forward any further.
 						break
+				else:
+					# We may have landed on an embedded object.
+					ti = moveTi.copy()
+					ti.expand(textInfos.UNIT_OFFSET)
+					if ti.text == u"\uFFFC":
+						moveTi, moveObj = self._findContentDescendant(ti.getEmbeddedObject(), textInfos.POSITION_FIRST)
 
 			remainingMovement -= -1 if moveBack else 1
 
