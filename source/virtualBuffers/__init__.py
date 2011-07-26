@@ -105,8 +105,8 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getTextRange(self,start,end):
 		if start==end:
-			return ""
-		return NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,False)
+			return u""
+		return NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,False) or u""
 
 	def getTextWithFields(self,formatConfig=None):
 		start=self._startOffset

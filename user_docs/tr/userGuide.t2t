@@ -822,7 +822,7 @@ Bir diğer onay kutusu öbeğinizin düzenli bir ifade olup olmadığını belir
 Bir düzenli ifade, içinde bir seferde birden fazla karakterle eşleştirme yapmanızı sağlayan özel karakterler barındıran bir öbektir.
 bu eşleşme yalnızca rakamlar veya yalnızca harfler de olabilir. Düzenli ifadeler konusu bu kullanıcı rehberinde kapsanmamıştır, ancak webde size konuyla ilgili çok daha fazla bilgi verebilecek eğitimler bulunmaktadır.
 
-+++ Noktalama/imla sözlüğü +++
++++ Noktalama/imla sözlüğü +++[SymbolPronunciation]
 Bu iletişim kutusu, noktalama ve imla işaretlerinin nasıl seslendirileceğini belirlemenizin yanısıra bu işaretlerin seslendirilme düzeylerini ayarlamanızı sağlar.
 
 Önce semboller listesinden değişiklik yapmak istediğiniz sembol/işareti bulun.
@@ -1110,6 +1110,15 @@ Scriptleri mevcut tüm tuşlara bağlamakta özgür olmanıza karşın, klavyede
 NVDA bir scripte bağlanmış olsalar bile, Şift, Alt Kontrol gibi değişken tuşları halen işletim sistemine göndermektedir.
 Bu nedenle, Alt tuşunu bir girdi hareketinde kullanırsanız, bu tuşa basmak scriptinizi etkinleştirmenin yanında menü çubuğunu da açabilir.
 Yani, Kontrol, Şift veya NVDA tuşlarını scriptlerde değişken tuş olarak kullanmak daha faydalı olacaktır.
+
+++ Noktalama/imla Seslendirmesiyle İlgili İleri DÜzey Ayarlamalar ++
+Noktalama ya da başka işaretlerin nasıl seslendirileceğiyle ilgili [Noktalama/imla sözlüğü #SymbolPronunciation] iletişim kutusunu kullanarak değiştirebileceğinizden daha fazla ayarlama da yapmanız mümkündür.
+Örneğin, Bir işaretin (ona rastlandığında bir süre duraksanması ya da tonlamanın değiştirilmesi için) sentezleyiciye gönderilmesini sağlayabilirsiniz ve sözlükte bulunmayan yeni işaretler ekleyebilirsiniz.
+
+Bunun için, NVDA kullanıcı konfigürasyon dizininde bulunan imla sözlük dosyasını düzenlemeniz gerekmektedir.
+Dosya symbols-xx.dic adını taşır; xx dil kodu yerine kullanılmıştır.
+Bu dosyanın nasıl düzenlenmesi gerektiği, [NVDA web sayfasındaki geliştirme (Development) NVDA_URLwiki/Development] bölümünden ulaşabileceğiniz, NVDA geliştirme Rehberinin İmla Seslendirme bölümünde anlatılmaktadır.
+Öte yandan, kullanıcıların karmaşık semboller için giriş yapabilmesi olanaklı değildir.
 
 + Daha Detaylı Bilgi +
 Eğer NVDA ile ilgili daha fazla bilgiye veya yardıma ihtiyaç duyarsanız, NVDA_URL adresini ziyaret edebilirsiniz.

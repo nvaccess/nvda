@@ -15,6 +15,7 @@ complexSymbols:
 # Others
 ponto decimal	(?<=\d)\.(?=\d)
 ' em palavra	(?<=[^\W_])['’]
+número negativo	(?<!\w)-(?=\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -27,9 +28,10 @@ symbols:
 : fim de período	dois pontos	most	always
 ponto decimal		none	always
 ' em palavra	apóstrofo	all	norep
+número negativo	menos	none	norep
 
 # Whitespace
-\0	em branco	char
+\0	em branco	char # null
 \t	tab
 \n	nova linha	char
 \f	quebra de página	none
@@ -41,9 +43,9 @@ ponto decimal		none	always
 !	exclamação	all
 "	aspas	most
 \#	cardinal	most
-$	cifrão	some
-£	libra	some
-€	euro	some
+$	cifrão	all	norep
+£	libra	all	norep
+€	euro	all	norep
 %	porcento	some
 &	êh comercial	some
 '	apóstrofo	all
@@ -53,9 +55,9 @@ $	cifrão	some
 +	mais	most
 ,	vírgula	all	always
 -	hífen	most
-.	ponto	all
+.	ponto	some
 /	barra	some
-:	dois pontos	most
+:	dois pontos	most	norep
 ;	ponto e vírgula	most
 <	menor	most
 >	maior	most
@@ -76,6 +78,7 @@ _	sublinhado	most
 # Other characters
 •	bolinha	some
 …	reticências	all	always
+...	reticências	all	always
 	bolinha	some
 “	aspas esquerdas	most
 ”	aspas direitas	most

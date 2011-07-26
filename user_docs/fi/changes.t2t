@@ -18,9 +18,9 @@ Tämän julkaisun tärkeimpiin uusiin ominaisuuksiin kuuluvat merkittävät väl
 - Kun kohdistus siirtyy kenttäjoukon ympäröimän säädinryhmän sisään Internet Explorerissa ja muissa MSHTML-säätimissä, NVDA ilmoittaa nyt kyseisen ryhmän nimen (selitteen). (#535)
 - Aria-labeledBy- sekä aria-describedBy-ominaisuuksia noudatetaan nyt Internet Explorerissa ja muissa MSHTML-säätimissä.
 - ARIA- ja ruudukkolistojen sekä liuku- ja edistymispalkkisäädinten tukea on paranneltu Internet Explorerissa ja muissa MSHTML-sovelluksissa.
-- Käyttäjät voivat nyt muuttaa välimerkkien ja muiden symboleiden lausumistapaa samoin kuin tasoa, jolla ne puhutaan. (#271, #1516)
+- Käyttäjät voivat nyt muuttaa välimerkkien ja muiden symboleiden lausumistapaa sekä tasoa, jolla ne puhutaan. (#271, #1516)
 - Aktiivisen Excel-taulukon nimi ilmoitetaan nyt vaihdettaessa sitä Ctrl+Page up- tai Ctrl+Page down -näppäimillä. (#760)
-- NVDA kertoo nyt Microsoft Wordissa nykyisen solun liikuttaessa taulukoissa  sarkain-näppäimellä. (#159)
+- NVDA kertoo nyt Microsoft Wordissa nykyisen solun liikuttaessa taulukossa sarkain-näppäimellä. (#159)
 - Asiakirjojen muotoiluasetukset-valintaikkunasta on nyt mahdollista määrittää, ilmoitetaanko taulukon solujen koordinaatit. (#719)
 - NVDA havaitsee nyt ruudulla olevan tekstin muotoilun ja värin .
 - NVDA kertoo nyt lukemattomat viestit Outlook Expressin, Windows Mailin ja Windows Live Mailin viestilistassa ja ilmoittaa myös, onko viestiketju suljettu tai avattu. (#868)
@@ -103,7 +103,7 @@ Tämän julkaisun tärkeimpiin uusiin ominaisuuksiin kuuluvat merkittävät väl
 - NVDA:n asennusohjelma ei näytä enää lukukelvotonta tekstiä Windows Vistan ja Windows 7:n hongkongilaisissa versioissa. (#1596)
 - SAPI 5 -syntetisaattorin lataaminen ei enää epäonnistu, jos asetukset sisältävät sen määrityksiä, mutta joista puheääniasetus puuttuu. (#1599)
 - NVDA ei enää hidastu tai hyydy Internet Explorerin ja muiden MSHTML-säädinten muokattavissa tekstikentissä, kun pistenäyttö on käytössä.
-- NVDA ei enää hylkää Firefoxin selaustilassa sisältöä, joka on kohdistettavan alkion sisässä, jossa on ARIA-esitysrooli.
+- NVDA ei enää jätä huomiotta Firefoxin selaustilassa sisältöä, joka on kohdistettavan alkion sisässä, jossa on ARIA-esitysrooli.
 - Ensimmäisen sivun jälkeisillä sivuilla olevat rivit luetaan nyt oikein Microsoft Wordissa, kun pistenäyttö on käytössä. (#1603)
 - Oikealta vasemmalle luettavaa tekstiä sisältäviä rivejä voidaan taas lukea Microsoft Word 2003:ssa, kun pistenäyttö on käytössä. (#627)
 - Lue kaikki -toiminto toimii nyt oikein Microsoft Wordissa, kun asiakirjan lopussa ei ole lauseen päättävää merkkiä.
@@ -111,6 +111,8 @@ Tämän julkaisun tärkeimpiin uusiin ominaisuuksiin kuuluvat merkittävät väl
 - NVDA ei enää hyydy tai lakkaa puhumasta tilapäisesti Windows Live Mailin Siirrä- tai Kopioi-valintaikkunassa. (#574)
 - NVDA SEURAA NYT KOHDISTUSTA ASIANMUKAISESTI Outlook 2010:N viestilistassa. (#1285)
 - Ratkaistu joitakin MDV Lilli -pistenäytön USB-yhteyden ongelmia. (#241)
+- Selaustilassa ei jätetä enää tietyissä tapauksissa välilyöntejä huomiotta (esim. linkin jälkeen) Internet explorerissa ja muissa MSHTML-säätimissä.
+- HTML-elementit, joissa on None-näyttötyyli, eivät enää aiheuta pakotettua rivinvaihtoa selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä. (#1685)
 
 
 = 2011.1.1 =

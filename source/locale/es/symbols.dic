@@ -9,6 +9,8 @@ complexSymbols:
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
+… sentence ending	(?<=[^\s.])\…(?=[\"'”’)\s]|$)
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
@@ -24,10 +26,12 @@ symbols:
 . sentence ending	punto	all	always
 ! sentence ending	cerrar exclamación	all	always
 ? sentence ending	cerrar interrogación	all	always
+... sentence ending	elipsis	all	always	
+… sentence ending	elipsis	all	always	
 ; phrase ending	punto y coma	most	always
 : phrase ending	dos puntos	most	always
 decimal point		none	always
-in-word '	apóstrofe	all	norep
+in-word '	apóstrofo	all	norep
 negative number	minus	none	norep
 
 # Whitespace
@@ -48,7 +52,7 @@ $	dólar	some
 €	euros	some
 %	porciento	some
 &	anpersán	some
-'	apóstrofe	all
+'	apóstrofo	all
 (	abrir paréntesis	most
 )	cerrar paréntesis	most
 *	asterisco	most
@@ -56,7 +60,7 @@ $	dólar	some
 ,	coma	all	always
 -	guión	most
 .	punto	some
-/	barra inclinada	some
+/	barra 	some
 :	dos puntos	most
 ;	punto y coma	most
 <	menor que	most
@@ -83,11 +87,13 @@ _	subrayado	most
 	viñeta	some
 “	abrir comillas	most
 ”	cerrar comillas	most
-‘	abrir apóstrofe	most
-’	cerrar apóstrofe	most
-–	en dash	most
-—	em dash	most
+‘	apóstrofo	most
+’	apóstrofo	most
+–	guión	most
+—	guión	most
 ●	círculo	most
 ¨	diéresis	most
 ‎	marca de izquierda a derecha	char
 ‏	marca de derecha a izquierda	char
+§	Sección	most
+©	copyright	some	norep

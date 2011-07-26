@@ -298,7 +298,7 @@ inline int getIDFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
 	return ID;
 }
 
-inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPreformattedText) {
+inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPreformattedText, bool isStartOfBlock) {
 	int res=0;
 	IHTMLDOMTextNode* pHTMLDOMTextNode=NULL;
 	LOG_DEBUG(L"Trying to get an IHTMLDOMTextNode interface pointer");
@@ -316,21 +316,28 @@ inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPref
 	}
 	LOG_DEBUG(L"Got data from IHTMLDOMTextNode");
 	wstring s;
+	bool notAllWhitespace=false;
 	if(allowPreformattedText) {
 		s.append(data);
 	} else {
 		bool lastNotWhitespace=false;
+		bool strippingLeft=isStartOfBlock;
 		for(wchar_t* c=data;*c;++c) {
 			if(!iswspace(*c)) {
 				s+=*c;
 				lastNotWhitespace=TRUE;
-			} else if(lastNotWhitespace) {
+				notAllWhitespace=true;
+				strippingLeft=false;
+			} else if(lastNotWhitespace||!strippingLeft) {
 				s+=L' ';
 				lastNotWhitespace=FALSE;
 			} 
 		}
 	}
 	SysFreeString(data);
+	if(!allowPreformattedText&&!notAllWhitespace) {
+		return L"";
+	}
 	return s;
 }
 
@@ -386,7 +393,10 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 	pHTMLCurrentStyle->get_display(&tempBSTR);
 	if(tempBSTR) {
 		LOG_DEBUG(L"Got display");
-		if (_wcsicmp(tempBSTR,L"none")==0) invisible=true;
+		if (_wcsicmp(tempBSTR,L"none")==0) {
+			invisible=true;
+			isBlock=false;
+		}
 		if (_wcsicmp(tempBSTR,L"inline")==0||_wcsicmp(tempBSTR,L"inline-block")==0) isBlock=false;
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
@@ -651,7 +661,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 
 	//Handle text nodes
 	{ 
-		wstring s=getTextFromHTMLDOMNode(pHTMLDOMNode,allowPreformattedText);
+		wstring s=getTextFromHTMLDOMNode(pHTMLDOMNode,allowPreformattedText,(parentNode&&parentNode->getIsBlock()&&!previousNode));
 		if(!s.empty()) {
 			LOG_DEBUG(L"Got text from node");
 			VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,s);
