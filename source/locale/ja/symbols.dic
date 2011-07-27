@@ -1,17 +1,19 @@
 ﻿#locale/ja/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011 NV Access Inc
+#Copyright (C) 1999-2002 Bilingual Emacspeak Project
+#Modified by Mitsue-Links Co., Ltd.
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
-。 sentence ending	(?<=[^\s。])\。(?=[\"'”’)\s]|$)
-！ sentence ending	(?<=[^\s！])\！(?=[\"'”’)\s]|$)
-？ sentence ending	(?<=[^\s？])\？(?=[\"'”’)\s]|$)
+行末の丸	(?<=[^\s。])\。(?=[\"'”’)\s]|$)
+行末の感嘆符	(?<=[^\s！])\！(?=[\"'”’)\s]|$)
+行末の疑問符	(?<=[^\s？])\？(?=[\"'”’)\s]|$)
 # Others
-several dots	(?<=\.)\.|\.(?=\.)
-jp decimal point	(?<=[\d])．(?=[\d])
+複数のピリオド	(?<=\.)\.|\.(?=\.)
+単語中のピリオド	(?<=[\w])\.+(?=[\w])
+数字の間のゼンカクピリオド	(?<=[\d])．(?=[\d])
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -20,15 +22,16 @@ symbols:
 . sentence ending	ピリオド	some
 ! sentence ending	カンタンフ	some
 ? sentence ending	クエスチョン	some
-。 sentence ending	マル	some
-！ sentence ending	カンタンフ	some
-？ sentence ending	ギモンフ	some
 ; phrase ending	セミコロン	some
 : phrase ending	コロン	some
-several dots	ドット	some
 decimal point	テン	none	norep
-jp decimal point	テン	none	norep
 in-word '	アポストロフィ	all	norep
+行末の丸	マル	some
+行末の感嘆符	カンタンフ	some
+行末の疑問符	ギモンフ	some
+複数のピリオド	ドット	some
+単語中のピリオド	ドット	some
+数字の間のゼンカクピリオド	テン	none	norep
 
 # Other characters
 •	バレット
@@ -40,14 +43,17 @@ in-word '	アポストロフィ	all	norep
 —	エムダッシュ
 ●	クロマル
 ¨	ウムラウト
+‎	ヒダリカラみぎマーク
+‏	ミギカラヒダリマーク
 
 # Whitespace
-?0	ブランク
+\0	ブランク
 \t	タブ
 \n	カイギョウ
 \f	カイページ
 \r	フッキ
  	スペース
+ 	スペース	# no-break space
 
 # Standard punctuation/symbols
 !	カンタンフ	some
@@ -55,7 +61,7 @@ in-word '	アポストロフィ	all	norep
 \#	シャープ	some
 $	ドル	some
 ￡	ポンド	some
-€	ユーロ	some
+?	ユーロ	some
 %	パーセント	some
 &	アンド	some
 '	アポストロフィ	some
