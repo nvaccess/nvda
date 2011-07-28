@@ -1,4 +1,9 @@
-﻿complexSymbols:
+﻿#locale/pt_PT/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
 # identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
@@ -9,22 +14,23 @@
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<=\d)\.(?=\d)
-in-word '	(?<=[a-zA-Z0-9])'(?=[a-zA-Z])
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	dot	all	always
-! sentence ending	bang	all	always
-? sentence ending	question	all	always
-; phrase ending	semi	most	always
-: phrase ending	colon	most	always
+. sentence ending	ponto	all	always
+! sentence ending	exclamação	all	always
+? sentence ending	interrogação	all	always
+; phrase ending	ponto e vírgula	most	always
+: phrase ending	dois pontos	most	always
 decimal point		none	always
-in-word '	tick	all	norep
+in-word '	apóstrofo	all	norep
 
 # Whitespace
-\0	em branco	char
+\0	em branco	char	# vazio
 \t	tab
 \n	quebra de linha	char
 \f	quebra de página	none
@@ -59,7 +65,6 @@ $	cifrão	some
 @	arroba	some
 [	abrir parêntesis rectos	most
 ]	fechar parêntesis rectos	most
-"	aspas	most
 \\	barra invertida	most
 ^	circunflexo	most
 _	sublinhado	most
@@ -72,12 +77,15 @@ _	sublinhado	most
 # Other characters
 •	ponto	some
 …	ponto ponto ponto	all	always
-	ponto	some
-«	abrir aspas	most
-»	fechar aspas	most
+...	ponto ponto ponto	all	always
+·	ponto	some
+“	abrir aspas	most
+”	fechar aspas	most
+‘	apóstrofo esquerdo	most
+’	apóstrofo direito	most
 –	travessão	most
 —	travessão	most
 ●	círculo	most
-¨	trema	most
-§	parágrafo	most
-´	agudo	most
+¨	trema	most 
+‎	marca da esquerda para a direita	char
+‏	marca da direita para a esquerda	char

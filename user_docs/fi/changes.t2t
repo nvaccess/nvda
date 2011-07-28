@@ -51,7 +51,7 @@ Tämän julkaisun tärkeimpiin uusiin ominaisuuksiin kuuluvat merkittävät väl
 - Lue muotoilutiedot -skripti (NVDA+f) lukee nyt muotoilut järjestelmäkohdistimen tai -kohdistuksen sijainnin asemesta tarkastelukohdistimen sijainnista. Useimmat eivät huomaa eroa, koska tarkastelukohdistin seuraa oletusarvoisesti järjestelmäkohdistinta. Tämä antaa nyt kuitenkin käyttäjälle mahdollisuuden selvittää muotoilut tarkastelukohdistinta liikutettaessa, kuten esim. kokonaistarkastelussa.
 
 
-== Korjatut viat ==
+== Korjatut ohjelmavirheet ==
 - Yhdistelmäruutujen sulkeminen selaustiladokumenteissa ei vaihda enää automaattisesti takaisin selaustilaan, kun kohdistustila on pakotettu käyttöön näppäinyhdistelmällä NVDA+välilyönti. (#1386)
 - NVDA näyttää nyt Gecko- ja MSHTML-asiakirjoissa (eli Firefoxissa ja Internet Explorerissa) oikein samalla rivillä sellaisen tekstin, joka näytettiin aiemmin eri riveillä. (#1378)
 - Kun navigointiobjekti siirretään selaustiladokumenttiin (web-sivulle, PDF-asiakirjaan, HTML-sähköpostiviestiin) joko manuaalisesti tai kohdistusmuutoksen vuoksi pistenäytön seuratessa tarkastelukohdistinta, dokumentin sisältö näytetään asianmukaisesti pistenäytöllä. (#1406, #1407)
@@ -112,13 +112,14 @@ Tämän julkaisun tärkeimpiin uusiin ominaisuuksiin kuuluvat merkittävät väl
 - NVDA SEURAA NYT KOHDISTUSTA ASIANMUKAISESTI Outlook 2010:N viestilistassa. (#1285)
 - Ratkaistu joitakin MDV Lilli -pistenäytön USB-yhteyden ongelmia. (#241)
 - Selaustilassa ei jätetä enää tietyissä tapauksissa välilyöntejä huomiotta (esim. linkin jälkeen) Internet explorerissa ja muissa MSHTML-säätimissä.
-- HTML-elementit, joissa on None-näyttötyyli, eivät enää aiheuta pakotettua rivinvaihtoa selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä. (#1685)
+- Jätetty huomiotta joitakin ylimääräisiä rivinvaihtoja selaustilassa internet Explorerissa ja muissa MSHTML-säätimissä. Erityisesti HTML-elementit, joissa on None-näyttötyyli, eivät enää aiheuta pakotettua rivinvaihtoa. (#1685)
+- Mikäli NVDA ei pysty käynnistymään, Windowsin kriittisen pysähdyksen äänen soittaminen ei enää aiheuta lokitiedostoon kriittisen virheen ilmoitusta.
 
 
 = 2011.1.1 =
 Tämä julkaisu korjaa muutamia versiosta 2011.1 löydettyjä tietoturva- ja muita merkittäviä ongelmia.
 
-== Korjatut viat ==
+== Korjatut ohjelmavirheet ==
 - NVDA-valikon Lahjoita-vaihtoehto on nyt poissa käytöstä kirjautumis- ja muissa suojatuissa ruuduissa, koska se on tietoturvariski. (#1419)
 - Kopioiminen, leikkaaminen ja liittäminen on nyt estetty suojatulla työpöydällä (kirjautumis- ja muissa suojatuissa ruuduissa), koska se on tietoturvariski. (#1421)
 - Siirrä näennäispuskuriin -komento (NVDA+Ctrl+välilyönti) toimii nyt Firefox 4:ssa kuten pitääkin poistuttaessa upotetuista objekteista, kuten Flash-sisällöstä. (#1429)
@@ -161,7 +162,7 @@ Tämän julkaisun tärkeimpiä uusia ominaisuuksia ovat automaattinen uuden teks
 - Äänenvoimakkuuden lisäys ja vähennys- sekä mykistysnäppäimet  ilmoitetaan nyt syöteohjeessa.
 
 
-== Korjatut viat ==
+== Korjatut ohjelmavirheet ==
 - Kun puhesanastoon lisätään uusi merkintä, valintaikkunan nimi on nyt "Lisää sanastomerkintä" aiemman "Muokkaa sanastomerkintää" -nimen sijasta. (#924)
 - Puhesanastovalintaikkunoiden sanastomerkintälistan Sääntölauseke- ja Sama kirjainkoko-sarakkeiden sisältö  näytetään nyt NVDA:ssa määritetyllä kielellä sen sijaan, että ne näytettäisiin aina englanniksi.
 - Sijaintitiedot luetaan nyt AIM-pikaviestimen puunäkymissä.
@@ -246,7 +247,7 @@ Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkerta
 - Liblouis-pistekääntäjä päivitetty versioksi 2.1.1. Tämä päivitys korjaa joitakin kiinalaiseen pistekirjoitukseen sekä käännöstaulukossa määrittelemättömiin merkkeihin liittyviä ongelmia. (#484, #499)
 
 
-== Korjatut viat ==
+== Korjatut ohjelmavirheet ==
 - µTorrentin torrent-listan aktiivista kohtaa ei enää lueta toistuvasti eikä kohdistus enää siirry siihen valikon ollessa auki.
 - Torrentin sisältölistan tiedostojen nimet luetaan nyt µTorrentissa.
 - Kohdistus tunnistetaan nyt oikein Mozilla-sovelluksissa siirryttäessä tyhjään taulukkoon tai puunäkymään.
@@ -314,7 +315,7 @@ Tämä julkaisu keskittyy pääasiassa virheiden korjaamiseen ja käyttäjäkoke
 - Taulukon rivien ja sarakkeiden määrää ei enää lueta kohdistusmuutoksia ilmoitettaessa, koska kyseinen ilmoitus oli melko pitkä ja siitä ei useinkaan ollut hyötyä.
 
 
-=== Korjatut viat ===
+=== Korjatut ohjelmavirheet ===
 - NVDA käynnistyy nyt tilanteessa, jossa UI Automation -tuki on käytettävissä, mutta sen alustus ei jostakin syystä onnistu. (#483)
 - Taulukon rivin koko sisältöä ei enää lueta Mozilla-sovelluksissa siirrettäessä kohdistusta taulukon solussa. (#482)
 - Paljon alakohtia sisältävien puunäkymien laajentaminen ei enää aiheuta pitkää viivettä.
@@ -395,7 +396,7 @@ Tämän julkaisun tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windo
 - Virheestä ilmoittavaa ääntä ei enää toisteta NVDA:n release candidate- ja lopullisissa versioissa. Virheiden tiedot kirjataan edelleen lokiin.
 
 
-=== Korjatut viat ===
+=== Korjatut ohjelmavirheet ===
 - Kun NVDA käynnistetään 8+3-DOS-polusta, mutta se on asennettu saman kansion pitkään polkuun (esim. progra~1 verrattuna program files), NVDA tunnistaa oikein, että se on asennettu ja lataa käyttäjän asetukset asianmukaisesti.
 - Nykyisen ikkunan nimen puhuttaminen NVDA+t:llä toimii nyt valikoissa oikein.
 - Pistenäytöllä ei enää kohdistuksessa näytetä hyödytöntä tietoa, kuten nimettömiä paneeleita.
@@ -466,7 +467,7 @@ Tämän julkaisun tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windo
 - Kaikkien puunäkymien kohdan taso ilmoitetaan nyt ensin, jos se on muuttunut aiemmin kohdistetusta. Tämä koski aiemmin vain Windowsin natiiveja (SysTreeView32) puunäkymiä.
 
 
-=== Korjatut viat ===
+=== Korjatut ohjelmavirheet ===
 - Puheen loppuosa ei enää jää pois käytettäessä NVDA:ta eSpeakin kanssa etäyhteydellä.
 - Korjattu puhesanastojen tallennuksessa ilmenneitä ongelmia tietyillä puheäänillä.
 - Viive poistettu Mozilla Gecko -näennäispuskureista siirryttäessä tekstidokumenttien loppua kohti muuten kuin merkki kerrallaan (sana, rivi jne). (#155)
