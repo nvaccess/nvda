@@ -280,6 +280,11 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			moveFunc=self._rangeObj.moveEnd
 		else:
 			moveFunc=self._rangeObj.move
+			if direction<0:
+				# #1605: If at the end of a line, moving back seems to land on a blank unit,
+				# which breaks backspacing.
+				# Expanding first seems to fix this.
+				self._rangeObj.expand("character")
 		res=moveFunc(unit,direction)
 		return res
 
