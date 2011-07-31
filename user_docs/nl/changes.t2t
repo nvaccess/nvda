@@ -3,6 +3,43 @@ Nieuw in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2011.2 =
+Belangrijke nieuwe zaken in deze versie zijn onder andere betere afhandeling van interpunctie en symbolen, inclusief configureerbare niveau's, aangepaste labels en tekenomschrijvingen; geen pauzes aan het eind van de regel bij alles lezen; verbeterde ondersteuning voor ARIA in Internet Explorer; betere ondersteuning voor XFA/LiveCycle documenten in Adobe Reader; toegang tot tekst die naar het scherm geschreven wordt in meer applicaties; en toegang tot opmaak- en kleurinformatie voor tekst die naar het scherm geschreven wordt.
+
+== Nieuwe mogelijkheden ==
+- Het is nu mogelijk om de beschrijving van ieder teken te horen door twee maal op de omschrijf huidig teken toets te drukken, voor Nederlands is dit het gangbare phonetisch alfabet, voor grafische talen zoals Traditioneel Chinees worden enkele voorbeeldzinnen gegeven. Ook het drukken van lees huidige regel/woord zal de regel of het woord spellen met tekenbeschrijvingen. (#55)
+- Er is meer tekst zichtbaar in flat review voor applicaties die de tekst direct naar het scherm sturen als symbolen, zoals Mozilla Thunderbird.
+- Het is nu mogelijk om te kiezen uit verschillende niveau's voor interpunctie- en symboolaankondigingen. (#332)
+- Als interpunctie of symbolen meer dan 4 keer worden herhaald, wordt nu het aantal herhalingen uitgesproken in plaats van alle symbolen. (#43)
+- Nieuwe brailletabellen: Noorweegs 8 punts computerbraille, Ethiopisch grade 1, Sloveens grade 1, Servisch grade 1. (#1456)
+- Spraak pauzeert nu niet meer onnatuurlijk aan het eind van een zin bij gebruik van het lees alles commando. (#149)
+- NVDA meldt nu of iets gesorteerd is (volgens de aria-sort eigenschap) in webbrowsers. (#1500)
+- Unicode braillepatronen worden nu correct weergegeven op brailleleesregels. (#1505)
+- Zodra de focus in een groep besturingselementen (opgenomen in een fieldset) komt In Internet Explorer en andere MSHTML elementen, zal NVDA de naam van de groep uitspreken (de legenda). (#535)
+- In Internet Explorer en andere MSHTML elementen worden de aria-labelledBy en aria-describedBy eigenschappen gebruikt.
+- In Internet Explorer en andere MSHTML elementen is de ondersteuning voor ARIA lijsten, tabelcellen, schuif- en voortgangsbalken verbeterd.
+- Gebruikers kunnen de uitspraak van interpunctie en symbolen aanpassen en het niveau waarop deze worden uitgesproken. (#271, #1516)
+- De naam van het actieve werkblad in Microsoft Excel wordt uitgesproken bij gebruik van ctrl+pageUp en ctrl+pageDown. (#760)
+- Bij het navigeren van tabellen in Microsoft Word door middel van de tab-toets wordt de huidige cel uitgesproken. (#159)
+- Het uitspreken van cel-coördinaten in tabellen kan nu worden ingesteld in het document-opmaakvenster. (#719)
+- NVDA kan nu de opmaak en kleur voorlezen van tekst die naar het scherm geschreven wordt.
+- In de berichtenlijst in Outlook Express/Windows Mail/Windows Live Mail zal NVDA nu melden of een bericht ongelezen is en ook of het is samengevouwen of uitgeklapt (in geval van een thread). (#868)
+- Espeak heeft een snelheidsboost isntelling die de spraaksnelheid verdrievoudigd.
+- Ondersteuning voor de kalender in het Windows 7 datum/tijd venster bereikbaar via de klok in Windows 7. (#1637)
+- Verbeterde sneltoetsen voor de MDV Lilli brailleregel. (#241)
+- Nieuwe talen: Bulgaars, Albanisch.
+- 
+
+== Wijzigingen ==
+
+- TODO
+- 
+
+== Bug fixes ==
+
+- TODO
+- 
+
 = 2010.1 =
 
 == Nieuwe mogelijkheden ==

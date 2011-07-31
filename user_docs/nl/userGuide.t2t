@@ -160,12 +160,17 @@ Wanneer het menu is geopend gebruikt u de pijltjestoetsen om door het menu te ga
 %kc:endInclude
 
 + Navigeren met NVDA+
+NVDA stelt u in staat om het systeem op verschillende manieren te navigeren, zowel met normale interactie als review.
 
-++ Navigeren met systeemfocus++
-Om met NVDA in of naar Windows of Windows-toepassingen te navigeren, kunt u de gebruikelijke Windows-toetscommando’s gebruiken, zoals de tab en shift+tab toetsen om naar het volgende of vorige besturingselement (b.v. de iconen op het bureaublad) te gaan.
-Zo gebruikt u de alt-toets om de menubalk te activeren waarna u de pijltjestoetsen gebruikt om door de menu’s te gaan en met alt+tab springt u van de ene naar de andere actieve toepassing.
-Hiermee verplaatst u de systeemfocus, met andere woorden het object waar de toetscommando’s betrekking op hebben.
-Van een op deze wijze gefocuseerd object zal NVDA naam, type, waarde, beschrijving, sneltoetsen en de plaats waar het zich bevindt vermelden.  
+++ Objecten ++[Objects]
+Elk programma en het besturingssysteem zelf bestaat uit uit veel objecten.
+Een object is een enkel item zoals een stuk tekst, knop, aankruisvakje, schuifbalk, lijst of bewerkbaar tekstvak.
+
+++ Navigeren met de systeemfocus ++[SystemFocus]
+De systeemfocus, of kortweg de focus, is het [object #Objects] dat toetsen die op het toetsenbord worde ngetypt ontvangt.
+Als je bijvoorbeeld in een tekstvak typt, heeft dit tekstvak de focus.
+
+De meest gangbare manier om met NVDA te navigeren, is het verplaatsen van de focus met standaard Windows toetsenbordcommando's, zoals het drukken van tab of shift+tab om de focus naar het volgende of vorige element te verplaatsen, het drukken van alt voor de menubalk en vervolgens het gebruik van de pijltoetsen om door menu's te navigeren en het gebruik van alt+tab om tussen applicaties te wisselen. Terwijl je dit doet zal NVDA informatie over het huidige object geven, zoals de naam, type, waarde, status, omschrijving, sneltoets en positie-informatie.
 
 Enkele toetscommando’s die van pas komen bij het verplaatsen van de systeemfocus:
 %kc:beginInclude
@@ -175,10 +180,12 @@ Enkele toetscommando’s die van pas komen bij het verplaatsen van de systeemfoc
 | Actieve venster voorlezen| NVDA+b | Leest de inhoud (knoppen, uitklapnenu’s,selectievakjes, etc.) voor) |
 %kc:endInclude
 
-++ Navigeren met de systeemcursor++
-Wanneer er een object is gefocuseerd dat een tekstcursor heeft (ook wel systeemcursor genoemd), kunt u de cursor met de pijltjestoetsen op de gebruikelijke manier verplaatsen, tekst invoegen en bewerken.
-U kunt NVDA de afzonderlijke letters, een woord of een regel laten voorlezen.
-Het selecteren of een selectie ongedaan maken zal ook door NVDA worden gemeld.
+++ Navigeren met de systeemcursor ++[SystemCaret]
+Wanneer er een [object #Objects] is [gefocuseerd #SystemFocus] dat de mogelijkheid heeft om tekst te lezen of te bewerken, kunt u de systeemcursor gebruiken om door de tekst te navigeren. De systeemcursor wordt ook wel de tekstcursor genoemd.
+
+Als een object met de systeemcursor is gefocuseerd, kunt u de pijltoetsen, pageUp, pageDown, home, end, etc gebruiken om door de tekst te navigeren.
+U kunt de tekst ook wijzigen als het object het wijzigen van tekst ondersteunt.
+NVDA meldt wijzigingen zodra u navigeert per teken, woord of regel en wijzigingen in tekstselectie.
 
 U kunt de volgende NVDA-toetscommando’s gebruiken om met de textcursor te navigeren:
 %kc:beginInclude
@@ -197,16 +204,21 @@ Binnen een tabel kunt u ook de volgende toetscommando’s gebruiken:
 %kc:endInclude
 
 ++ Objectnavigatie ++
-Met objectnavigatie van NVDA kunt u de huidige, actieve toepassing of het besturingssysteem verkennen zonder de focus te verplaatsen (met andere woorden “waar ben ik”informatie krijgen). 
-U springt hiermee van object naar object en hoort informatie over de objecten zoals tekst, knoppen, schuifregelaars, aankruisvakjes, lijsten en tekstinvoervelden.
-De informatie die NVDA geeft wanneer u naar een bepaald object gaat is vergelijkbaar met die welke gegeven wordt over de systeemfocus.
+Soms kan het handig zijn om de huidige aplicatie of het besturingssysteem te verkennen zonder de [focus #SystemFocus] te verplaatsen.
+Ook wilt u soms werken met [objecten #Objects] die niet te bedienen zijn met het toetsenbord.
+In deze gevallen kan objectnavigatie handig zijn.
+
+Objectnavigatie stelt u in staat om te navigeren naar afzonderlijke objecten en informatie over deze objecten op te vragen. NVDA meldt informatie over objecten in objectnavigatie op een soortgelijke manier als informatie over de systeemfocus.
+Om alle tekst zoals deze op het scherm verschijnt te lezen kunt u [flat review #FlatReview] gebruiken.
 
 Met objectnavigatie hoeft u niet steeds heen en terug te springen naar de afzonderlijke objecten op uw computer omdat deze nu hierarchisch zijn gegroepeerd.
 Dit betekent dat u binnen bepaalde objecten bladert om na te gaan welke objecten erin zijn opgenomen.
 Als u zich bij voorbeeld in een lijst bevindt, hoeft u niet door alle lijstitems te bladeren, maar navigeert u binnen de lijst naar het eerste sub-niveau (first child object) om de bijbehorende items te benaderen.
 U kunt de lijst weer verlaten door naar het hoogste niveau (parent object) te navigeren en verder gaan naar een ander object.
-Iets dergelijks geldt als u in een menubalk terecht komt; u blijft binnen de menubalk (navigeert naar het eerste sub-niveau (first child) om toegang te krijgen tot de bijbehorende besturingselementen.
+Iets dergelijks geldt als u in een werkbalk terecht komt; u blijft binnen de werkbalk (navigeert naar het eerste sub-niveau (first child) om toegang te krijgen tot de bijbehorende besturingselementen.
 
+Het object dat op dit moment bekeken wordt in objectnavigatie wordt het navigator object genoemd.
+U kunt de tekst in het navigator object bekijken met de [commando's voor tekstnavigatie (review cursor) #ReviewingText].
 Standaard wordt in NVDA de object navigator (het verkennerobject) tegelijk met de systeemfocus verplaatst, maar deze koppeling kan aan- en uitgezet worden.
 
 Voor objectnavigatie zijn de volgende toetscombinaties beschikbaar:
@@ -225,11 +237,12 @@ Voor objectnavigatie zijn de volgende toetscombinaties beschikbaar:
 
 Let op: voor een goede werking van de numerieke toetsen moet NumLock uitgeschakeld worden.
 
-++ Tekst in het huidige object nalezen ++
-Met NVDA kunt u de inhoud van het huidige object per karakter, per woord of regel nalezen.
-Dit is vooral handig in vensters met Windows-opdrachten en taken of andere plaatsen waar de tekstcursor niet of slechts beperkt beschikbaar is.
-Bij het verplaatsen van de leescursor (review cursor) volgt de tekstcursor niet maar deze blijft op de huidige invoegpositie staan.
-Standaard worden de tekstcursor en de leescursor echter gelijktijdig verplaatst. 
+++ Nalezen van tekst ++[ReviewingText]
+Met NVDA kunt u de inhoud van het huidige [navigator object #ObjectNavigation], inclusief [flat review #FlatReview],  per karakter, per woord of regel nalezen.
+Dit is vooral handig in Windows-opdrachtvensters en taken of andere plaatsen waar de [tekstcursor #SystemCaret] niet of slechts beperkt beschikbaar is.
+
+Bij het verplaatsen van de leescursor (review cursor) volgt de tekstcursor niet maar deze blijft op de huidige invoegpositie staan, zodat u tekst kun bekijken zonder de systeemcursor te verplaatsen.
+Standaard wordt de leescursor echter gelijktijdig verplaatst wanneer de tekstcursor verplaatst wordt. 
 Deze koppeling kan in- en uitgeschakeld worden.
 
 Voor het nalezen van tekst kunt u de volgende toetscombinaties gebruiken:
@@ -253,7 +266,7 @@ Voor het nalezen van tekst kunt u de volgende toetscombinaties gebruiken:
 | Tot leescursor kopiëren| NVDA+f10 | NVDA+f10 |Het tekstgebied dat met NVDA+f9 is gemarkeerd wordt met de opdracht NVDA+f10 naar het klembord gekopieerd.|
 %kc:endInclude
 
-Let op:voor een goede werking van de numerieke toetsen moet NumLock worden uitgeschakeld.
+Let op: voor een goede werking van de numerieke toetsen moet NumLock worden uitgeschakeld.
 
 Om deze commando’s beter te kunnen onthouden zou u zich een tabel kunnen voorstellen met drie kolommen en drie rijen. Van boven naar beneden: regel, woord en karakter, en van links naar rechts; vorig, huidig en volgend. 
 
@@ -262,9 +275,12 @@ Dit ziet er dan als volgt uit:
 | Vorig woord| Huidig woord| Volgend woord|
 | Vorig karakter| Huidige karakter| Volgende karakter|
 
-++ Flat Review (Volledig overzicht)++
-In de leesmodus kunt u met NVDA niet alleen de inhoud van een enkel object beluisteren, maar ook de volledige inhoud van een document of de tekst op het scherm.
+++ Flat Review (Volledig overzicht) ++[FlatReview]
+In de leesmodus kunt u met NVDA niet alleen de inhoud van een enkel [object #Objects\ bekijken, maar ook de volledige inhoud van een document of de tekst op het scherm.
 Dit heet “flat review”.
+Dit is vergelijkbaar met de mogelijkheden voor het verkennen van het scherm of mogelijkheden voor muisbesturing zoals u deze in andere schermlezers aantreft.
+
+Zodra u flat review heeft ingeschakeld, kunt u de [commando's voor tekstnavigatie #ReviewingText] gebruiken om de tekst te lezen.
 
 U kunt de volgende twee commando’s gebruiken om van en naar “flat review” te schakelen:
 %kc:beginInclude
@@ -273,7 +289,7 @@ U kunt de volgende twee commando’s gebruiken om van en naar “flat review” 
 | Terug naar object vanuit flat review modus| NVDA+numeriek1 | NVDA+pageDown | Hiermee navigeert u naar de positie van de leescursor in de tekst (“het object” genoemd)  |
 %kc:endInclude
 
-++ Navigeren met de muis++
+++ Navigeren met de muis ++
 Door de muis over het scherm te verplaatsen wordt tekst die zich onder de muisaanwijzer bevindt voorgelezen.
 Voor zover ondersteund, wordt een hele alinea tekst voorgelezen, maar waar alinea-ondersteuning ontbreekt, leest NVDA de tekst per regel voor.
 
@@ -282,10 +298,10 @@ Dit kan voor mensen die helemaal blind zijn erg handig zijn, omdat soms alleen t
 
 Om een idee te krijgen waar de muis zich op het scherm bevindt kunnen pieptonen worden gebruikt die de muispositie hoorbaar maken.
 Hoe verder de muis naar de bovenkant van het scherm wordt bewogen, hoe hoger de pieptoon wordt.
-Hoe verder de muis naar links wordt bewogen, hoe meer het geluid uit de linker luidspreker lijkt te komen, terwijl het geluid steeds meer van rechts komt als de muis naar rechts wordt bewogen.
-Hierbij wordt ervan uitgegaan dat de gebruiker over stereoluidsprekers beschikt.
+Hoe verder de muis naar links wordt bewogen, hoe meer het geluid uit de linker luidspreker lijkt te komen, terwijl het geluid steeds meer van rechts komt als de muis naar rechts wordt bewogen. Hierbij wordt ervan uitgegaan dat de gebruiker over stereoluidsprekers of een stereohoofdtelefoon beschikt.
 
-Deze optie van de muis staat standaard   “uit” , maar door in het NVDA-menu onder opties en vervolgens Muis te kiezen, kunt u deze inschakelen.
+Deze optie van de muis staat standaard   “uit”.
+Als u deze functionaliteit wilt gebruiken, kunt u deze inschakelen in het [muisinstellingen venster #MouseSettings], bereikbaar vanuit het NVDA opties menu. 
 
 Hoewel u voor het navigeren met de muis een fysieke muis of een muispad moet gebruiken, zijn er een aantal toetscombinaties in NVDA waarmee muisbewegingen en muiskliks kunnen worden gesimuleerd:
 %kc:beginInclude
@@ -301,11 +317,12 @@ Hoewel u voor het navigeren met de muis een fysieke muis of een muispad moet geb
 + Bladermodus +
 
 In bladermodus worden complexe documenten zoals een webpagina weergegeven als platte tekst waarbinnen u kunt navigeren met de pijltjestoetsen.
-U hoort dan de tekst maar daarbij wordt ook aangegeven of het om links, headings (koppen), etc. gaat.
 
 U kunt op twee manieren omgaan met de inhoud in bladermodus.
 In de bladermodus  kunt u door de hele tekst gaanmet behulp van een virtuele  cursor, zoiets als de systeemcursor.
-In deze modus kunnen alle systeemcursorcommando’s  worden gebruikt (bij voorbeeld, alles lezen, opmaakinformatie geven, tabelnavigatie, etc).
+In deze modus kunnen alle [systeemcursorcommando’s  #SystemCaret] worden gebruikt (bij voorbeeld, alles lezen, opmaakinformatie geven, tabelnavigatie, etc).
+U hoort dan de tekst maar daarbij wordt ook aangegeven of het om links, headings (koppen), etc. gaat.
+
 In de focusmodus kunt u bewerkingen uitvoeren op knoppen, combo-boxen, tekstvelden, etc. met de toetsen die u daarvoor gewend bent te gebruiken.
 Wanneer u in de bladermodus bent, zal NVDA automatisch naar de focusmodus omschakelen als u met de Tab-toets naar een element gaat waarvoor deze modus nodig is.
 Door er met de muis op te klikken gebeurt hetzelfde.
@@ -564,7 +581,7 @@ Toets: NVDA+4
 
 Door het selectievakje aan te kruisen worden alle niet-karaktertoetsen (bij voorbeeld de pijltjestoetsen, de DEL-toets, etc.) uitgesproken. Dit geldt ook voor, bij voorbeeld, de Ctrl-toets in combinatie met een letter. 
 
-+++ Muisinstellingen(NVDA+control+m) +++
++++ Muisinstellingen(NVDA+control+m) +++[MouseSettings]
 Het dialoogvenster Muisinstellingen vindt u in het NVDA-menu onder Opties waar u vervolgens Muis selecteert.
 U treft er de volgende keuzemogelijkheden aan:
 
