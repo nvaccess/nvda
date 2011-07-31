@@ -135,9 +135,11 @@ Var StartMenuFolder
 !insertmacro MUI_LANGUAGE "Serbian"
 !insertmacro MUI_LANGUAGE "Turkish"
 !insertmacro MUI_LANGUAGE "Albanian"
+!insertmacro MUI_LANGUAGE "Bulgarian"
 
 ;Include installer specific language strings
 !include "locale\ar\langstrings.txt"
+!include "locale\bg\langstrings.txt"
 !include "locale\cs\langstrings.txt"
 !include "locale\da\langstrings.txt"
 !include "locale\de\langstrings.txt"

@@ -34,7 +34,7 @@ msgstr "Лента на задачите"
 msgid "%s items"
 msgstr "%s елемента"
 
-#: NVDAObjects\UIA\__init__.py:448
+#: NVDAObjects\UIA\__init__.py:478
 msgid "invoke"
 msgstr "Обръщане към"
 
@@ -54,34 +54,26 @@ msgstr "цвят по подразбиране"
 msgid "embedded object"
 msgstr "вграден обект"
 
-#: NVDAObjects\window\excel.py:25
-msgid "NVDA Excel Cell Editor"
-msgstr "редактор за клетки на Excel на NVDA"
-
-#: NVDAObjects\window\excel.py:28
-msgid "Enter cell contents"
-msgstr "Въведете съдържанието на клетката"
-
-#: NVDAObjects\window\excel.py:208
+#: NVDAObjects\window\excel.py:178
 msgid "has formula"
 msgstr "съдържа формула"
 
-#: NVDAObjects\window\excel.py:248
+#: NVDAObjects\window\excel.py:210
 msgid "selection"
 msgstr "селекция"
 
-#: NVDAObjects\window\excel.py:253
+#: NVDAObjects\window\excel.py:215
 msgid "%s %s through %s %s"
 msgstr "%s %s до %s %s"
 
-#: NVDAObjects\window\winword.py:394 NVDAObjects\window\winword.py:406
-#: NVDAObjects\window\winword.py:418 NVDAObjects\window\winword.py:430
+#: NVDAObjects\window\winword.py:378 NVDAObjects\window\winword.py:390
+#: NVDAObjects\window\winword.py:402 NVDAObjects\window\winword.py:414
 msgid "not in table"
 msgstr "извън таблица"
 
-#: NVDAObjects\window\winword.py:401 NVDAObjects\window\winword.py:413
-#: NVDAObjects\window\winword.py:425 NVDAObjects\window\winword.py:437
-#: virtualBuffers\__init__.py:1191
+#: NVDAObjects\window\winword.py:385 NVDAObjects\window\winword.py:397
+#: NVDAObjects\window\winword.py:409 NVDAObjects\window\winword.py:421
+#: virtualBuffers\__init__.py:1197
 msgid "edge of table"
 msgstr "край на таблицата"
 
@@ -167,23 +159,23 @@ msgstr "Ключови думи:"
 msgid "BCC:"
 msgstr "Скрито копие до:"
 
-#: appModules\msimn.py:94 appModules\outlook.py:27
+#: appModules\msimn.py:94 appModules\outlook.py:28
 msgid "unread"
 msgstr "непрочетено"
 
-#: appModules\outlook.py:22 appModules\outlook.py:35
+#: appModules\outlook.py:23 appModules\outlook.py:36
 msgid "subject: %s"
 msgstr "Относно: %s"
 
-#: appModules\outlook.py:23
+#: appModules\outlook.py:24
 msgid "received: %s"
 msgstr "Получено: %s"
 
-#: appModules\outlook.py:29
+#: appModules\outlook.py:30
 msgid "attachment"
 msgstr "прикачен"
 
-#: appModules\outlook.py:36
+#: appModules\outlook.py:37
 msgid "sent: %s"
 msgstr "Изпратени: %s"
 
@@ -219,7 +211,7 @@ msgstr "десен"
 #: globalCommands.py:167 globalCommands.py:177 globalCommands.py:187
 #: globalCommands.py:695 globalCommands.py:757 globalCommands.py:767
 #: globalCommands.py:777 gui\settingsDialogs.py:857 keyboardHandler.py:297
-#: synthSettingsRing.py:74 virtualBuffers\__init__.py:749
+#: synthSettingsRing.py:74 virtualBuffers\__init__.py:755
 msgid "on"
 msgstr "включен"
 
@@ -228,7 +220,7 @@ msgstr "включен"
 #: globalCommands.py:579 globalCommands.py:692 globalCommands.py:754
 #: globalCommands.py:764 globalCommands.py:774 gui\settingsDialogs.py:613
 #: gui\settingsDialogs.py:857 keyboardHandler.py:297 synthSettingsRing.py:74
-#: virtualBuffers\__init__.py:749
+#: virtualBuffers\__init__.py:755
 msgid "off"
 msgstr "изключен"
 
@@ -356,179 +348,189 @@ msgstr ""
 msgid "French (unified) Grade 2"
 msgstr "Френски универсален от втори вид"
 
-#: braille.py:50
+#: braille.py:51
 msgid "Greek (Greece) grade 1"
 msgstr "Гръцки от първи вид"
 
-#: braille.py:51
+#: braille.py:52
+msgid "Ethiopic grade 1"
+msgstr "Етиопски от първи вид"
+
+#: braille.py:53
 msgid "Hebrew 8 dot computer braille"
 msgstr "Иврит 8-точков компютърен брайл"
 
-#: braille.py:52
+#: braille.py:54
 msgid "Hindi grade 1"
 msgstr "Иврит от първи вид"
 
-#: braille.py:53
+#: braille.py:55
 msgid "Croatian 8 dot computer braille"
 msgstr "Хърватски 8-точков компютърен брайл"
 
-#: braille.py:54
+#: braille.py:56
 msgid "Hungarian 8 dot computer braille"
 msgstr "Унгарски 8-точков компютърен брайл"
 
-#: braille.py:55
+#: braille.py:57
 msgid "Italian grade 1"
 msgstr "Италиянски от първи вид"
 
-#: braille.py:56
+#: braille.py:58
 msgid "Latvian grade 1"
 msgstr "Латвийски от първи вид"
 
-#: braille.py:57
+#: braille.py:59
 msgid "Dutch (Belgium) grade 1"
 msgstr "Холандски белгийски  от първи вид"
 
-#: braille.py:58
+#: braille.py:60
 msgid "Dutch (netherlands) grade 1"
 msgstr "Холандски от първи вид"
 
-#: braille.py:59
+#: braille.py:61
 msgid "Norwegian 8 dot computer braille"
 msgstr "Норвежки 8-точков компютърен брайл"
 
-#: braille.py:60
+#: braille.py:62
 msgid "Norwegian grade 0"
 msgstr "Норвежки вид 0"
 
-#: braille.py:61
+#: braille.py:63
 msgid "Norwegian grade 1"
 msgstr "Норвежки от първи вид"
 
-#: braille.py:62
+#: braille.py:64
 msgid "Norwegian grade 2"
 msgstr "Норвежки от втори вид"
 
-#: braille.py:63
+#: braille.py:65
 msgid "Norwegian grade 3"
 msgstr "Норвежки от трети вид"
 
-#: braille.py:64
+#: braille.py:66
 msgid "Polish grade 1"
 msgstr "Полски от първи вид"
 
-#: braille.py:65
+#: braille.py:67
 msgid "Portuguese grade 1"
 msgstr "Португалски от първи вид"
 
-#: braille.py:66
+#: braille.py:68
 msgid "Russian grade 1"
 msgstr "Руски от първи вид"
 
-#: braille.py:67
+#: braille.py:69
 msgid "Swedish grade 1"
 msgstr "Шведски от първи вид"
 
-#: braille.py:68
+#: braille.py:70
 msgid "Slovak"
 msgstr "Словашки"
 
-#: braille.py:69
+#: braille.py:71
+msgid "Slovene grade 1"
+msgstr "Словенски от първи вид"
+
+#: braille.py:72
+msgid "Serbian grade 1"
+msgstr "Сръбски от първи вид"
+
+#: braille.py:73
 msgid "Turkish grade 1"
 msgstr "Турски от първи вид"
 
-#: braille.py:70
+#: braille.py:74
 msgid "Unified English Braille Code grade 1"
 msgstr ""
 "Универсален английски брайлов код от "
 "първи вид"
 
-#: braille.py:71
+#: braille.py:75
 msgid "Unified English Braille Code grade 2"
-msgstr ""
-"Универсален английски брайлов код от втор"
-"о ниво"
+msgstr "Универсален английски брайлов код от втори вид"
 
-#: braille.py:72
+#: braille.py:76
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "Китайски (Хонгконгски, Кантонски)"
 
-#: braille.py:73
+#: braille.py:77
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Китайски (Тайван, Мандарин)"
 
-#: braille.py:77
+#: braille.py:81
 msgid "edt"
 msgstr "промени"
 
-#: braille.py:78
+#: braille.py:82
 msgid "lst"
 msgstr "списък"
 
-#: braille.py:79
+#: braille.py:83
 msgid "mnubar"
 msgstr "лента с менюта"
 
-#: braille.py:80
+#: braille.py:84
 msgid "mnu"
 msgstr "меню"
 
-#: braille.py:81
+#: braille.py:85
 msgid "btn"
 msgstr "бутон"
 
-#: braille.py:82
+#: braille.py:86
 msgid "chk"
-msgstr "кутийка"
+msgstr "поле за отметка"
 
-#: braille.py:83
+#: braille.py:87
 msgid "rbtn"
-msgstr "бутон за избор"
+msgstr "радио бутон"
 
-#: braille.py:84
+#: braille.py:88
 msgid "cbo"
 msgstr "падащ списък"
 
-#: braille.py:85
+#: braille.py:89
 msgid "lnk"
 msgstr "линк"
 
-#: braille.py:86
+#: braille.py:90
 msgid "dlg"
 msgstr "диалог"
 
-#: braille.py:87
+#: braille.py:91
 msgid "tv"
 msgstr "дървовиден списък"
 
-#: braille.py:88
+#: braille.py:92
 msgid "tb"
 msgstr ""
 
-#: braille.py:92
+#: braille.py:96
 msgid "(x)"
 msgstr ""
 
-#: braille.py:93
+#: braille.py:97
 msgid "sel"
 msgstr "клетка"
 
-#: braille.py:94
+#: braille.py:98
 msgid "submnu"
 msgstr "подменю"
 
-#: braille.py:97
+#: braille.py:101
 msgid "( )"
 msgstr ""
 
-#: braille.py:227 speech.py:713
+#: braille.py:231 speech.py:713
 msgid "not %s"
 msgstr "Не %s"
 
-#: braille.py:239 speech.py:721
+#: braille.py:243 speech.py:721
 msgid "%s of %s"
 msgstr "%s от %s"
 
-#: braille.py:241 speech.py:726 speech.py:729
+#: braille.py:245 speech.py:726 speech.py:729
 msgid "level %s"
 msgstr "ниво %s"
 
@@ -562,7 +564,7 @@ msgstr ""
 "Покажи прозореца за настройка на драйвера"
 " на Handy Tech"
 
-#: brailleDisplayDrivers\lilli.py:32
+#: brailleDisplayDrivers\lilli.py:43
 msgid "MDV Lilli"
 msgstr ""
 
@@ -570,7 +572,7 @@ msgstr ""
 msgid "No braille"
 msgstr "Няма брайл"
 
-#: characterProcessing.py:125 synthDrivers\_espeak.py:308
+#: characterProcessing.py:125 synthDrivers\_espeak.py:309
 msgid "none"
 msgstr "изключена"
 
@@ -604,11 +606,11 @@ msgstr "зелен"
 
 #: colors.py:90
 msgid "light grey"
-msgstr "светло-сив"
+msgstr "светлосив"
 
 #: colors.py:91
 msgid "lime"
-msgstr ""
+msgstr "светло резидаво"
 
 #: colors.py:92
 msgid "grey"
@@ -628,7 +630,7 @@ msgstr "жълт"
 
 #: colors.py:96
 msgid "dark red"
-msgstr "тъмно-червен"
+msgstr "тъмно червен"
 
 #: colors.py:97
 msgid "navy blue"
@@ -648,15 +650,15 @@ msgstr "лилав"
 
 #: colors.py:101
 msgid "teal"
-msgstr ""
+msgstr "тъмно зелено"
 
 #: colors.py:102
 msgid "fuchsia"
-msgstr ""
+msgstr "цикламено"
 
 #: colors.py:103
 msgid "aqua"
-msgstr ""
+msgstr "светло синьо"
 
 #: colors.py:105
 msgid "orange"
@@ -711,11 +713,11 @@ msgstr "диалог"
 
 #: controlTypes.py:187
 msgid "check box"
-msgstr "кутийка"
+msgstr "поле за отметка"
 
 #: controlTypes.py:188
 msgid "radio button"
-msgstr "бутон за избор"
+msgstr "радио бутон"
 
 #: controlTypes.py:189
 msgid "text"
@@ -765,7 +767,7 @@ msgstr "помощен балон"
 msgid "tool tip"
 msgstr "подсказка"
 
-#: controlTypes.py:201 speech.py:1012
+#: controlTypes.py:201 speech.py:1016
 msgid "link"
 msgstr "линк"
 
@@ -1181,7 +1183,7 @@ msgstr "име на шрифт"
 msgid "font size"
 msgstr "размер на шрифт"
 
-#: controlTypes.py:308 speech.py:964
+#: controlTypes.py:308 speech.py:968
 msgid "bold"
 msgstr "удебелен"
 
@@ -1201,11 +1203,11 @@ msgstr "цвят на предния план"
 msgid "background color"
 msgstr "цвят на фона"
 
-#: controlTypes.py:313 speech.py:986
+#: controlTypes.py:313 speech.py:990
 msgid "superscript"
 msgstr "повдигнат"
 
-#: controlTypes.py:314 speech.py:988
+#: controlTypes.py:314 speech.py:992
 msgid "subscript"
 msgstr "снишен"
 
@@ -1263,11 +1265,11 @@ msgstr "натиснат"
 
 #: controlTypes.py:332
 msgid "checked"
-msgstr "избран"
+msgstr "отметнат"
 
 #: controlTypes.py:333
 msgid "half checked"
-msgstr "наполовина избран"
+msgstr "наполовина отметнат"
 
 #: controlTypes.py:334
 msgid "read only"
@@ -1886,7 +1888,13 @@ msgid ""
 "Speaks the word of the current navigator object where the review cursor is "
 "situated. Pressing twice spells the word. Pressing three times spells the "
 "word using character descriptions"
-msgstr "Изговаря думата от текущия навигационен обект, върху която е позициониран курсорът за преглед. При двукратно натискане я спелува. При трикратно натискане я спелува, използвайки описанията на буквите."
+msgstr ""
+"Изговаря думата от текущия навигационен "
+"обект, върху която е позициониран "
+"курсорът за преглед. При двукратно "
+"натискане я спелува. При трикратно "
+"натискане я спелува, използвайки "
+"описанията на буквите."
 
 #: globalCommands.py:498
 msgid ""
@@ -1920,7 +1928,14 @@ msgid ""
 "cursor is situated. Pressing twice reports a description or example of that "
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
-msgstr "Докладва знака от текущия навигационен обект, върху който се намира курсорът за преглед. При двукратно натискане изговаря описание или пример за употребата на този знак. При трикратно натискане изговаря цифровата стойност на този знак в десетичен и шестнадесетичен вид."
+msgstr ""
+"Докладва знака от текущия навигационен "
+"обект, върху който се намира курсорът за "
+"преглед. При двукратно натискане изговаря"
+" описание или пример за употребата на този"
+" знак. При трикратно натискане изговаря "
+"цифровата стойност на този знак в десетич"
+"ен и шестнадесетичен вид."
 
 #: globalCommands.py:561
 msgid ""
@@ -2268,7 +2283,7 @@ msgstr "фокус"
 
 #: globalCommands.py:873
 msgid "Braille tethered to %s"
-msgstr "Брайла е обвързан с %s"
+msgstr "Брайлът е обвързан с %s"
 
 #: globalCommands.py:874
 msgid "Toggle tethering of braille between the focus and the review position"
@@ -2433,7 +2448,7 @@ msgstr "&За NVDA"
 
 #: gui\__init__.py:231
 msgid "&General settings..."
-msgstr "&Основни настройки"
+msgstr "&Основни настройки..."
 
 #: gui\__init__.py:231 gui\settingsDialogs.py:107
 msgid "General settings"
@@ -2445,11 +2460,11 @@ msgstr "Използван синтезатор"
 
 #: gui\__init__.py:233
 msgid "&Synthesizer..."
-msgstr "&Синтезатор"
+msgstr "&Синтезатор..."
 
 #: gui\__init__.py:235
 msgid "&Voice settings..."
-msgstr "&Гласови настройки"
+msgstr "&Гласови настройки..."
 
 #: gui\__init__.py:235
 msgid "Choose the voice, rate, pitch and volume  to use"
@@ -2459,11 +2474,11 @@ msgstr ""
 
 #: gui\__init__.py:237
 msgid "B&raille settings..."
-msgstr "&Брайлови настройки"
+msgstr "&Брайлови настройки..."
 
 #: gui\__init__.py:239
 msgid "&Keyboard Settings..."
-msgstr "Настройки на &клавиатурата"
+msgstr "Настройки на &клавиатурата..."
 
 #: gui\__init__.py:239
 msgid ""
@@ -2476,7 +2491,7 @@ msgstr ""
 
 #: gui\__init__.py:241
 msgid "&Mouse settings..."
-msgstr "Настройки на &мишката"
+msgstr "Настройки на &мишката..."
 
 #: gui\__init__.py:241
 msgid "Change reporting of mouse shape and object under mouse"
@@ -2493,11 +2508,11 @@ msgstr ""
 
 #: gui\__init__.py:243
 msgid "Review &cursor..."
-msgstr "Курсор за &преглед"
+msgstr "Курсор за &преглед..."
 
 #: gui\__init__.py:245
 msgid "&Object presentation..."
-msgstr "Представяне на &обектите"
+msgstr "Представяне на &обектите..."
 
 #: gui\__init__.py:245
 msgid "Change reporting of objects"
@@ -2505,7 +2520,7 @@ msgstr "Променя докладването на обектите"
 
 #: gui\__init__.py:247
 msgid "&Browse mode..."
-msgstr "Режим на &разглеждане"
+msgstr "Режим на &разглеждане..."
 
 #: gui\__init__.py:247
 msgid "Change virtual buffers specific settings"
@@ -2521,11 +2536,11 @@ msgstr ""
 
 #: gui\__init__.py:249
 msgid "Document &formatting..."
-msgstr "Форматиране на &документите"
+msgstr "Форматиране на &документите..."
 
 #: gui\__init__.py:253
 msgid "&Default dictionary..."
-msgstr "&Речник по подразбиране"
+msgstr "&Речник по подразбиране..."
 
 #: gui\__init__.py:253
 msgid ""
@@ -2537,7 +2552,7 @@ msgstr ""
 
 #: gui\__init__.py:255
 msgid "&Voice dictionary..."
-msgstr "&Гласов речник"
+msgstr "&Гласов речник..."
 
 #: gui\__init__.py:255
 msgid ""
@@ -2550,7 +2565,7 @@ msgstr ""
 
 #: gui\__init__.py:257
 msgid "&Temporary dictionary..."
-msgstr "&Временен речник"
+msgstr "&Временен речник..."
 
 #: gui\__init__.py:257
 msgid ""
@@ -2566,7 +2581,7 @@ msgstr "Речници"
 
 #: gui\__init__.py:261
 msgid "&Punctuation/symbol pronunciation..."
-msgstr "&Пунктуация/Произнасяне на символите"
+msgstr "&Пунктуация/Произнасяне на символите..."
 
 #: gui\__init__.py:263
 msgid "&Preferences"
@@ -2622,7 +2637,7 @@ msgstr "Начален диалог"
 
 #: gui\__init__.py:295
 msgid "About..."
-msgstr "За програмата"
+msgstr "За програмата..."
 
 #: gui\__init__.py:297
 msgid "&Help"
@@ -2797,7 +2812,7 @@ msgstr ""
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr ""
-"Използвай NVDA в прозореца за вписване в "
+"Използвай NVDA в екрана за вписване в "
 "Windows (изисква административни права)"
 
 #: gui\settingsDialogs.py:165
@@ -2901,7 +2916,7 @@ msgstr "Гласови настройки"
 
 #: gui\settingsDialogs.py:393
 msgid "Punctuation/symbol &level:"
-msgstr "Пунктуация/Символи и нива:"
+msgstr "Пунктуация/Ниво на символите:"
 
 #: gui\settingsDialogs.py:400
 msgid "Raise pitch for capitals"
@@ -2960,7 +2975,7 @@ msgstr ""
 
 #: gui\settingsDialogs.py:518
 msgid "Speak command &keys"
-msgstr "Изговаряй клавишите за управление"
+msgstr "Изговаряй командните клавиши"
 
 #: gui\settingsDialogs.py:538
 msgid "Mouse settings"
@@ -2986,9 +3001,7 @@ msgstr "Единица за докладване на текст"
 
 #: gui\settingsDialogs.py:560
 msgid "Report &role when mouse enters object"
-msgstr ""
-"Докладвай типа, когато мишката застане "
-"върху обект"
+msgstr "Докладвай типа, когато мишката навлезе в обект"
 
 #: gui\settingsDialogs.py:563
 msgid "play audio coordinates when mouse moves"
@@ -3008,7 +3021,7 @@ msgstr "Настройки на курсора за преглед"
 
 #: gui\settingsDialogs.py:587
 msgid "Follow &keyboard focus"
-msgstr "Следвай &фокуса на клавиатурата"
+msgstr "Следвай системния &фокус"
 
 #: gui\settingsDialogs.py:590
 msgid "Follow System &Caret"
@@ -3063,7 +3076,7 @@ msgstr ""
 
 #: gui\settingsDialogs.py:635
 msgid "Report object &descriptions"
-msgstr "Докладвай &описанието на обекта"
+msgstr "Докладвай &описанията на обектите"
 
 #: gui\settingsDialogs.py:639
 msgid "Progress &bar output:"
@@ -3106,7 +3119,7 @@ msgstr ""
 
 #: gui\settingsDialogs.py:690
 msgid "Report l&ayout tables"
-msgstr "Докладвай таблиците част от дизайна"
+msgstr "Докладвай таблиците, които са част от дизайна"
 
 #: gui\settingsDialogs.py:694
 msgid "Automatic focus mode for focus changes"
@@ -3122,9 +3135,7 @@ msgstr ""
 
 #: gui\settingsDialogs.py:700
 msgid "Audio indication of focus and browse modes"
-msgstr ""
-"Звукови индикации за смяната на фокус и "
-"преглед режимите"
+msgstr "Звукови индикации за преминаване между режим на фокус и на разглеждане"
 
 #: gui\settingsDialogs.py:728
 msgid "Document formatting"
@@ -3132,9 +3143,7 @@ msgstr "Форматиране на документите"
 
 #: gui\settingsDialogs.py:731
 msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr ""
-"Съобщавай промени във форматирането след "
-"курсора (може да доведе до забавяне)"
+msgstr "Докладвай промените във форматирането след курсора (може да доведе до забавяне)"
 
 #: gui\settingsDialogs.py:734
 msgid "Report font &name"
@@ -3210,7 +3219,7 @@ msgstr "Докладвай маркерите"
 
 #: gui\settingsDialogs.py:812
 msgid "Edit dictionary entry"
-msgstr "Редактирай запис в речник"
+msgstr "Редактирай запис в речника"
 
 #: gui\settingsDialogs.py:816
 msgid "&Pattern"
@@ -3274,7 +3283,7 @@ msgstr "Добави запис в речника"
 
 #: gui\settingsDialogs.py:939
 msgid "Braille Settings"
-msgstr "Настройки на брайл"
+msgstr "Настройки на брайла"
 
 #: gui\settingsDialogs.py:943
 msgid "Braille &display:"
@@ -3652,11 +3661,11 @@ msgstr "Селекцията е премахната"
 msgid "done dragging"
 msgstr "Влаченето е завършено"
 
-#: speech.py:742 speech.py:1057
+#: speech.py:742 speech.py:1061
 msgid "row %s"
 msgstr "ред %s"
 
-#: speech.py:749 speech.py:1053
+#: speech.py:749 speech.py:1057
 msgid "column %s"
 msgstr "колона %s"
 
@@ -3676,7 +3685,7 @@ msgstr " с %s реда"
 msgid "with %s items"
 msgstr " с %s елемента"
 
-#: speech.py:896 speech.py:1012
+#: speech.py:896 speech.py:1016
 msgid "out of %s"
 msgstr "извън %s"
 
@@ -3692,79 +3701,79 @@ msgstr "Стил %s"
 msgid "default style"
 msgstr "Стил по подразбиране"
 
-#: speech.py:953
+#: speech.py:957
 msgid "on {backgroundColor}"
 msgstr "на {backgroundColor}"
 
-#: speech.py:958
+#: speech.py:962
 msgid "line %s"
 msgstr "Ред %s"
 
-#: speech.py:964
+#: speech.py:968
 msgid "no bold"
 msgstr "не удебелен"
 
-#: speech.py:969
+#: speech.py:973
 msgid "italic"
 msgstr "наклонен"
 
-#: speech.py:969
+#: speech.py:973
 msgid "no italic"
 msgstr "не наклонен"
 
-#: speech.py:974
+#: speech.py:978
 msgid "no strikethrough"
 msgstr "не задраскан"
 
-#: speech.py:974
+#: speech.py:978
 msgid "strikethrough"
 msgstr "задраскан"
 
-#: speech.py:979
+#: speech.py:983
 msgid "not underlined"
 msgstr "не подчертан"
 
-#: speech.py:979
+#: speech.py:983
 msgid "underlined"
 msgstr "подчертан"
 
-#: speech.py:990
+#: speech.py:994
 msgid "baseline"
 msgstr "основна линия"
 
-#: speech.py:998
+#: speech.py:1002
 msgid "align left"
 msgstr "подравнен в ляво"
 
-#: speech.py:1000
+#: speech.py:1004
 msgid "align center"
 msgstr "центрирано подравнен"
 
-#: speech.py:1002
+#: speech.py:1006
 msgid "align right"
 msgstr "подравнен в дясно"
 
-#: speech.py:1004
+#: speech.py:1008
 msgid "align justify"
 msgstr "подравнен двустранно"
 
-#: speech.py:1006
+#: speech.py:1010
 msgid "align default"
 msgstr "подравнен по подразбиране"
 
-#: speech.py:1019
+#: speech.py:1023
 msgid "spelling error"
 msgstr "грешно изписан"
 
-#: speech.py:1021
+#: speech.py:1025
 msgid "out of spelling error"
 msgstr "край на грешното изписване"
 
-#: speech.py:1039
+#: speech.py:1043
 msgid "out of table"
 msgstr "извън таблица"
 
-#: speech.py:1048
+#: speech.py:1052
 msgid "table with %s columns and %s rows"
 msgstr "Таблица с %s колони и %s редове"
 
@@ -3874,9 +3883,8 @@ msgstr ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} се покрива от основния публичен "
-"лиценз на GNU (версия 2). Вие сте свободни да "
-"споделяте или променяте този софтуер по "
+"{name} се покрива от Общото Право на Обществено Ползване ГНУ версия 2 (GNU General Public License version 2 - GNU GPL version 2)."
+"Вие сте свободни да споделяте или променяте този софтуер по "
 "всякакъв начин дотолкова доколкото той "
 "върви със същия лиценз, и да направите изх"
 "одния код достъпен за всеки, който го иска"
@@ -3943,19 +3951,19 @@ msgstr "обновен"
 msgid "Loading document..."
 msgstr "Зареждане на документа ..."
 
-#: virtualBuffers\__init__.py:737
+#: virtualBuffers\__init__.py:743
 msgid "activates the current object in the document"
 msgstr "Активира текущия обект в документа"
 
-#: virtualBuffers\__init__.py:745
+#: virtualBuffers\__init__.py:751
 msgid "Refreshes the document content"
 msgstr "Обновява съдържанието на документа"
 
-#: virtualBuffers\__init__.py:750
+#: virtualBuffers\__init__.py:756
 msgid "use screen layout %s"
 msgstr "Използвай екранния изглед %s"
 
-#: virtualBuffers\__init__.py:751
+#: virtualBuffers\__init__.py:757
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
@@ -3964,531 +3972,527 @@ msgstr ""
 "подредба се взема предвид при "
 "обработването на документа"
 
-#: virtualBuffers\__init__.py:834
+#: virtualBuffers\__init__.py:840
 msgid "Presents a list of links, headings or landmarks"
 msgstr ""
 "Представя списък от линкове, заглавия или "
 "маркери"
 
-#: virtualBuffers\__init__.py:1185
+#: virtualBuffers\__init__.py:1191
 msgid "Not in a table cell"
 msgstr "Извън клетка на таблица"
 
-#: virtualBuffers\__init__.py:1201
+#: virtualBuffers\__init__.py:1207
 msgid "moves to the next table row"
 msgstr ""
 "Премества курсора до следващия ред от "
 "таблица"
 
-#: virtualBuffers\__init__.py:1205
+#: virtualBuffers\__init__.py:1211
 msgid "moves to the previous table row"
 msgstr ""
 "Премества курсора до предишния ред от "
 "таблица"
 
-#: virtualBuffers\__init__.py:1209
+#: virtualBuffers\__init__.py:1215
 msgid "moves to the next table column"
 msgstr ""
 "Премества курсора до следващата колона от"
 " таблица"
 
-#: virtualBuffers\__init__.py:1213
+#: virtualBuffers\__init__.py:1219
 msgid "moves to the previous table column"
 msgstr ""
 "Премества курсора до предишната колона от"
 " таблица"
 
-#: virtualBuffers\__init__.py:1300
+#: virtualBuffers\__init__.py:1306
 msgid "moves to the next heading"
 msgstr ""
 "Премества курсора до следващото заглавие"
 
-#: virtualBuffers\__init__.py:1300
+#: virtualBuffers\__init__.py:1306
 msgid "no next heading"
 msgstr "Няма следващо заглавие"
 
-#: virtualBuffers\__init__.py:1301
+#: virtualBuffers\__init__.py:1307
 msgid "moves to the previous heading"
 msgstr ""
 "Премества курсора до предишното заглавие"
 
-#: virtualBuffers\__init__.py:1301
+#: virtualBuffers\__init__.py:1307
 msgid "no previous heading"
 msgstr "Няма предишно заглавие"
 
-#: virtualBuffers\__init__.py:1302
+#: virtualBuffers\__init__.py:1308
 msgid "moves to the next heading at level 1"
 msgstr ""
 "Премества курсора до следващото заглавие "
 "от първо ниво"
 
-#: virtualBuffers\__init__.py:1302
+#: virtualBuffers\__init__.py:1308
 msgid "no next heading at level 1"
 msgstr "Няма следващо заглавие от първо ниво"
 
-#: virtualBuffers\__init__.py:1303
+#: virtualBuffers\__init__.py:1309
 msgid "moves to the previous heading at level 1"
 msgstr ""
 "Премества курсора до предишното заглавие "
 "от първо ниво"
 
-#: virtualBuffers\__init__.py:1303
+#: virtualBuffers\__init__.py:1309
 msgid "no previous heading at level 1"
 msgstr "Няма предишно заглавие от първо ниво"
 
-#: virtualBuffers\__init__.py:1304
+#: virtualBuffers\__init__.py:1310
 msgid "moves to the next heading at level 2"
 msgstr ""
 "Премества курсора до следващото заглавие "
 "от второ ниво"
 
-#: virtualBuffers\__init__.py:1304
+#: virtualBuffers\__init__.py:1310
 msgid "no next heading at level 2"
 msgstr "Няма следващо заглавие от второ ниво"
 
-#: virtualBuffers\__init__.py:1305
+#: virtualBuffers\__init__.py:1311
 msgid "moves to the previous heading at level 2"
 msgstr ""
 "Премества курсора до предишното заглавие "
 "от второ ниво"
 
-#: virtualBuffers\__init__.py:1305
+#: virtualBuffers\__init__.py:1311
 msgid "no previous heading at level 2"
 msgstr "Няма предишно заглавие от второ ниво"
 
-#: virtualBuffers\__init__.py:1306
+#: virtualBuffers\__init__.py:1312
 msgid "moves to the next heading at level 3"
 msgstr ""
 "премества курсора до следващото заглавие "
 "от трето ниво"
 
-#: virtualBuffers\__init__.py:1306
+#: virtualBuffers\__init__.py:1312
 msgid "no next heading at level 3"
 msgstr "Няма следващо заглавие от трето ниво"
 
-#: virtualBuffers\__init__.py:1307
+#: virtualBuffers\__init__.py:1313
 msgid "moves to the previous heading at level 3"
 msgstr ""
 "премества курсора до предишното заглавие "
 "от трето ниво"
 
-#: virtualBuffers\__init__.py:1307
+#: virtualBuffers\__init__.py:1313
 msgid "no previous heading at level 3"
 msgstr "Няма предишно заглавие от трето ниво"
 
-#: virtualBuffers\__init__.py:1308
+#: virtualBuffers\__init__.py:1314
 msgid "moves to the next heading at level 4"
 msgstr ""
 "премества курсора до следващото заглавие "
 "от четвърто ниво"
 
-#: virtualBuffers\__init__.py:1308
+#: virtualBuffers\__init__.py:1314
 msgid "no next heading at level 4"
 msgstr ""
 "Няма следващо заглавие от четвърто ниво"
 
-#: virtualBuffers\__init__.py:1309
+#: virtualBuffers\__init__.py:1315
 msgid "moves to the previous heading at level 4"
 msgstr ""
 "премества курсора до предишното заглавие "
 "от четвърто ниво"
 
-#: virtualBuffers\__init__.py:1309
+#: virtualBuffers\__init__.py:1315
 msgid "no previous heading at level 4"
 msgstr ""
 "Няма предишно заглавие от четвърто ниво"
 
-#: virtualBuffers\__init__.py:1310
+#: virtualBuffers\__init__.py:1316
 msgid "moves to the next heading at level 5"
 msgstr ""
 "премества курсора до следващото заглавие "
 "от пето ниво"
 
-#: virtualBuffers\__init__.py:1310
+#: virtualBuffers\__init__.py:1316
 msgid "no next heading at level 5"
 msgstr "Няма следващо заглавие от пето ниво"
 
-#: virtualBuffers\__init__.py:1311
+#: virtualBuffers\__init__.py:1317
 msgid "moves to the previous heading at level 5"
 msgstr ""
 "премества курсора до предишното заглавие "
 "от пето ниво"
 
-#: virtualBuffers\__init__.py:1311
+#: virtualBuffers\__init__.py:1317
 msgid "no previous heading at level 5"
 msgstr "Няма предишно заглавие от пето ниво"
 
-#: virtualBuffers\__init__.py:1312
+#: virtualBuffers\__init__.py:1318
 msgid "moves to the next heading at level 6"
 msgstr ""
 "премества курсора до следващото заглавие "
 "от шесто ниво"
 
-#: virtualBuffers\__init__.py:1312
+#: virtualBuffers\__init__.py:1318
 msgid "no next heading at level 6"
 msgstr "Няма следващо заглавие от шесто ниво"
 
-#: virtualBuffers\__init__.py:1313
+#: virtualBuffers\__init__.py:1319
 msgid "moves to the previous heading at level 6"
 msgstr ""
 "премества курсора до предишното заглавие "
 "от шесто ниво"
 
-#: virtualBuffers\__init__.py:1313
+#: virtualBuffers\__init__.py:1319
 msgid "no previous heading at level 6"
 msgstr "Няма предишно заглавие от шесто ниво"
 
-#: virtualBuffers\__init__.py:1314
+#: virtualBuffers\__init__.py:1320
 msgid "moves to the next table"
 msgstr ""
 "Премества курсора до следващата таблица"
 
-#: virtualBuffers\__init__.py:1314
+#: virtualBuffers\__init__.py:1320
 msgid "no next table"
 msgstr "Няма следваща таблица"
 
-#: virtualBuffers\__init__.py:1315
+#: virtualBuffers\__init__.py:1321
 msgid "moves to the previous table"
 msgstr ""
 "Премества курсора до предишната таблица"
 
-#: virtualBuffers\__init__.py:1315
+#: virtualBuffers\__init__.py:1321
 msgid "no previous table"
 msgstr "Няма предишна таблица"
 
-#: virtualBuffers\__init__.py:1316
+#: virtualBuffers\__init__.py:1322
 msgid "moves to the next link"
 msgstr "Премества курсора до следващия линк"
 
-#: virtualBuffers\__init__.py:1316
+#: virtualBuffers\__init__.py:1322
 msgid "no next link"
 msgstr "Няма следващ линк"
 
-#: virtualBuffers\__init__.py:1317
+#: virtualBuffers\__init__.py:1323
 msgid "moves to the previous link"
 msgstr "Премества курсора до предишния линк"
 
-#: virtualBuffers\__init__.py:1317
+#: virtualBuffers\__init__.py:1323
 msgid "no previous link"
 msgstr "Няма предишен линк"
 
-#: virtualBuffers\__init__.py:1318
+#: virtualBuffers\__init__.py:1324
 msgid "moves to the next visited link"
 msgstr ""
 "Премества курсора до следващия посетен "
 "линк"
 
-#: virtualBuffers\__init__.py:1318
+#: virtualBuffers\__init__.py:1324
 msgid "no next visited link"
 msgstr "Няма следващ посетен линк"
 
-#: virtualBuffers\__init__.py:1319
+#: virtualBuffers\__init__.py:1325
 msgid "moves to the previous visited link"
 msgstr ""
 "Премества курсора до предишния посетен "
 "линк"
 
-#: virtualBuffers\__init__.py:1319
+#: virtualBuffers\__init__.py:1325
 msgid "no previous visited link"
 msgstr "Няма предишен посетен линк"
 
-#: virtualBuffers\__init__.py:1320
+#: virtualBuffers\__init__.py:1326
 msgid "moves to the next unvisited link"
 msgstr ""
 "Премества курсора до следващия непосетен "
 "линк"
 
-#: virtualBuffers\__init__.py:1320
+#: virtualBuffers\__init__.py:1326
 msgid "no next unvisited link"
 msgstr "Няма следващ непосетен линк"
 
-#: virtualBuffers\__init__.py:1321
+#: virtualBuffers\__init__.py:1327
 msgid "moves to the previous unvisited link"
 msgstr ""
 "Премества курсора до предишния непосетен "
 "линк"
 
-#: virtualBuffers\__init__.py:1321
+#: virtualBuffers\__init__.py:1327
 msgid "no previous unvisited link"
 msgstr "Няма предишен непосетен линк"
 
-#: virtualBuffers\__init__.py:1322
+#: virtualBuffers\__init__.py:1328
 msgid "moves to the next form field"
 msgstr ""
 "Премества курсора до следващо поле от "
 "форма"
 
-#: virtualBuffers\__init__.py:1322
+#: virtualBuffers\__init__.py:1328
 msgid "no next form field"
 msgstr "Няма следващо поле от форма"
 
-#: virtualBuffers\__init__.py:1323
+#: virtualBuffers\__init__.py:1329
 msgid "moves to the previous form field"
 msgstr ""
 "Премества курсора до предишно поле от "
 "форма"
 
-#: virtualBuffers\__init__.py:1323
+#: virtualBuffers\__init__.py:1329
 msgid "no previous form field"
 msgstr "Няма предишно поле от форма"
 
-#: virtualBuffers\__init__.py:1324
+#: virtualBuffers\__init__.py:1330
 msgid "moves to the next list"
 msgstr "Премества курсора до следващ списък"
 
-#: virtualBuffers\__init__.py:1324
+#: virtualBuffers\__init__.py:1330
 msgid "no next list"
 msgstr "Няма следващ списък"
 
-#: virtualBuffers\__init__.py:1325
+#: virtualBuffers\__init__.py:1331
 msgid "moves to the previous list"
 msgstr "Премества курсора до предишен списък"
 
-#: virtualBuffers\__init__.py:1325
+#: virtualBuffers\__init__.py:1331
 msgid "no previous list"
 msgstr "Няма предишен списък"
 
-#: virtualBuffers\__init__.py:1326
+#: virtualBuffers\__init__.py:1332
 msgid "moves to the next list item"
 msgstr ""
 "Премества курсора до следващ елемент от "
 "списък"
 
-#: virtualBuffers\__init__.py:1326
+#: virtualBuffers\__init__.py:1332
 msgid "no next list item"
 msgstr "Няма следващ елемент от списък"
 
-#: virtualBuffers\__init__.py:1327
+#: virtualBuffers\__init__.py:1333
 msgid "moves to the previous list item"
 msgstr ""
 "Премества курсора до предишен елемент от "
 "списък"
 
-#: virtualBuffers\__init__.py:1327
+#: virtualBuffers\__init__.py:1333
 msgid "no previous list item"
 msgstr "Няма предишен елемент от списък"
 
-#: virtualBuffers\__init__.py:1328
+#: virtualBuffers\__init__.py:1334
 msgid "moves to the next button"
 msgstr "Премества курсора до следващ бутон"
 
-#: virtualBuffers\__init__.py:1328
+#: virtualBuffers\__init__.py:1334
 msgid "no next button"
 msgstr "Няма следващ бутон"
 
-#: virtualBuffers\__init__.py:1329
+#: virtualBuffers\__init__.py:1335
 msgid "moves to the previous button"
 msgstr "Премества курсора до предишен бутон"
 
-#: virtualBuffers\__init__.py:1329
+#: virtualBuffers\__init__.py:1335
 msgid "no previous button"
 msgstr "Няма предишен бутон"
 
-#: virtualBuffers\__init__.py:1330
+#: virtualBuffers\__init__.py:1336
 msgid "moves to the next edit field"
 msgstr ""
 "Премества курсора до следващо поле за "
 "писане"
 
-#: virtualBuffers\__init__.py:1330
+#: virtualBuffers\__init__.py:1336
 msgid "no next edit field"
 msgstr "Няма следващо поле за писане"
 
-#: virtualBuffers\__init__.py:1331
+#: virtualBuffers\__init__.py:1337
 msgid "moves to the previous edit field"
 msgstr ""
 "Премества курсора до предишно поле за "
 "писане"
 
-#: virtualBuffers\__init__.py:1331
+#: virtualBuffers\__init__.py:1337
 msgid "no previous edit field"
 msgstr "Няма предишно поле за писане"
 
-#: virtualBuffers\__init__.py:1332
+#: virtualBuffers\__init__.py:1338
 msgid "moves to the next frame"
 msgstr "Премества курсора до следващ фрейм"
 
-#: virtualBuffers\__init__.py:1332
+#: virtualBuffers\__init__.py:1338
 msgid "no next frame"
 msgstr "Няма следващ фрейм"
 
-#: virtualBuffers\__init__.py:1333
+#: virtualBuffers\__init__.py:1339
 msgid "moves to the previous frame"
 msgstr "Премества курсора до предишен фрейм"
 
-#: virtualBuffers\__init__.py:1333
+#: virtualBuffers\__init__.py:1339
 msgid "no previous frame"
 msgstr "Няма предишен фрейм"
 
-#: virtualBuffers\__init__.py:1334
+#: virtualBuffers\__init__.py:1340
 msgid "moves to the next separator"
 msgstr ""
 "Премества курсора до следващ разделител"
 
-#: virtualBuffers\__init__.py:1334
+#: virtualBuffers\__init__.py:1340
 msgid "no next separator"
 msgstr "Няма следващ разделител"
 
-#: virtualBuffers\__init__.py:1335
+#: virtualBuffers\__init__.py:1341
 msgid "moves to the previous separator"
 msgstr ""
 "Премества курсора до предишен разделител"
 
-#: virtualBuffers\__init__.py:1335
+#: virtualBuffers\__init__.py:1341
 msgid "no previous separator"
 msgstr "Няма предишен разделител"
 
-#: virtualBuffers\__init__.py:1336
+#: virtualBuffers\__init__.py:1342
 msgid "moves to the next radio button"
-msgstr ""
-"Премества курсора до следващ бутон за "
-"избор"
+msgstr "Премества курсора до следващ радио бутон"
 
-#: virtualBuffers\__init__.py:1336
+#: virtualBuffers\__init__.py:1342
 msgid "no next radio button"
-msgstr "Няма следващ бутон за избор"
+msgstr "Няма следващ радио бутон"
 
-#: virtualBuffers\__init__.py:1337
+#: virtualBuffers\__init__.py:1343
 msgid "moves to the previous radio button"
-msgstr ""
-"Премества курсора до предишен бутон за "
-"избор"
+msgstr "Премества курсора до предишен радио бутон"
 
-#: virtualBuffers\__init__.py:1337
+#: virtualBuffers\__init__.py:1343
 msgid "no previous radio button"
-msgstr "Няма предишен бутон за избор"
+msgstr "Няма предишен радио бутон"
 
-#: virtualBuffers\__init__.py:1338
+#: virtualBuffers\__init__.py:1344
 msgid "moves to the next combo box"
 msgstr ""
 "Премества курсора до следващ падащ списък"
 
-#: virtualBuffers\__init__.py:1338
+#: virtualBuffers\__init__.py:1344
 msgid "no next combo box"
 msgstr "Няма следващ падащ списък"
 
-#: virtualBuffers\__init__.py:1339
+#: virtualBuffers\__init__.py:1345
 msgid "moves to the previous combo box"
 msgstr ""
 "Премества курсора до предишен падащ "
 "списък"
 
-#: virtualBuffers\__init__.py:1339
+#: virtualBuffers\__init__.py:1345
 msgid "no previous combo box"
 msgstr "Няма предишен падащ списък"
 
-#: virtualBuffers\__init__.py:1340
+#: virtualBuffers\__init__.py:1346
 msgid "moves to the next check box"
-msgstr "Премества курсора до следваща кутийка"
+msgstr "Премества курсора до следващо поле за отметка"
 
-#: virtualBuffers\__init__.py:1340
+#: virtualBuffers\__init__.py:1346
 msgid "no next check box"
-msgstr "Няма следваща кутийка"
+msgstr "Няма следващо поле за отметка"
 
-#: virtualBuffers\__init__.py:1341
+#: virtualBuffers\__init__.py:1347
 msgid "moves to the previous check box"
-msgstr "Премества курсора до предишна кутийка"
+msgstr "Премества курсора до предишно поле за отметка"
 
-#: virtualBuffers\__init__.py:1341
+#: virtualBuffers\__init__.py:1347
 msgid "no previous check box"
-msgstr "Няма предишна кутийка"
+msgstr "Няма предишно поле за отметка"
 
-#: virtualBuffers\__init__.py:1342
+#: virtualBuffers\__init__.py:1348
 msgid "moves to the next graphic"
 msgstr ""
 "Премества курсора до следващо "
 "изображение"
 
-#: virtualBuffers\__init__.py:1342
+#: virtualBuffers\__init__.py:1348
 msgid "no next graphic"
 msgstr "Няма следващо изображение"
 
-#: virtualBuffers\__init__.py:1343
+#: virtualBuffers\__init__.py:1349
 msgid "moves to the previous graphic"
 msgstr ""
 "Премества курсора до предишно "
 "изображение"
 
-#: virtualBuffers\__init__.py:1343
+#: virtualBuffers\__init__.py:1349
 msgid "no previous graphic"
 msgstr "Няма предишно изображение"
 
-#: virtualBuffers\__init__.py:1344
+#: virtualBuffers\__init__.py:1350
 msgid "moves to the next block quote"
 msgstr ""
 "Премества курсора до следващ блок от "
 "текст"
 
-#: virtualBuffers\__init__.py:1344
+#: virtualBuffers\__init__.py:1350
 msgid "no next block quote"
 msgstr "Няма следващ блок от текст"
 
-#: virtualBuffers\__init__.py:1345
+#: virtualBuffers\__init__.py:1351
 msgid "moves to the previous block quote"
 msgstr ""
 "Премества курсора до предишен блок от "
 "текст"
 
-#: virtualBuffers\__init__.py:1345
+#: virtualBuffers\__init__.py:1351
 msgid "no previous block quote"
 msgstr "Няма предишен блок от текст"
 
-#: virtualBuffers\__init__.py:1346
+#: virtualBuffers\__init__.py:1352
 msgid "no more text after a block of links"
 msgstr "Няма повече текст след блок от линкове"
 
-#: virtualBuffers\__init__.py:1346
+#: virtualBuffers\__init__.py:1352
 msgid "skips forward past a block of links"
 msgstr "Пропуска следващия блок от линкове"
 
-#: virtualBuffers\__init__.py:1347
+#: virtualBuffers\__init__.py:1353
 msgid "no more text before a block of links"
 msgstr "Няма повече текст пред блок от линкове"
 
-#: virtualBuffers\__init__.py:1347
+#: virtualBuffers\__init__.py:1353
 msgid "skips backward past a block of links"
 msgstr "Пропуска предишен блок от линкове"
 
-#: virtualBuffers\__init__.py:1348
+#: virtualBuffers\__init__.py:1354
 msgid "moves to the next landmark"
 msgstr "Премества курсора до следващ маркер"
 
-#: virtualBuffers\__init__.py:1348
+#: virtualBuffers\__init__.py:1354
 msgid "no next landmark"
 msgstr "Няма следващ маркер"
 
-#: virtualBuffers\__init__.py:1349
+#: virtualBuffers\__init__.py:1355
 msgid "moves to the previous landmark"
 msgstr "Премества курсора до предишен маркер"
 
-#: virtualBuffers\__init__.py:1349
+#: virtualBuffers\__init__.py:1355
 msgid "no previous landmark"
 msgstr "Няма предишен маркер"
 
-#: virtualBuffers\__init__.py:1350
+#: virtualBuffers\__init__.py:1356
 msgid "moves to the next embedded object"
 msgstr ""
 "Премества курсора до следващия вграден "
 "обект"
 
-#: virtualBuffers\__init__.py:1350
+#: virtualBuffers\__init__.py:1356
 msgid "no next embedded object"
 msgstr "Няма следващ вграден обект"
 
-#: virtualBuffers\__init__.py:1351
+#: virtualBuffers\__init__.py:1357
 msgid "moves to the previous embedded object"
 msgstr ""
 "Премества курсора до предишния вграден "
 "обект"
 
-#: virtualBuffers\__init__.py:1351
+#: virtualBuffers\__init__.py:1357
 msgid "no previous embedded object"
 msgstr "Няма предишен вграден обект"
 
-#: virtualBuffers\__init__.py:1364
+#: virtualBuffers\__init__.py:1370
 msgid "browse mode"
 msgstr "Режим на разглеждане"
 
-#: virtualBuffers\__init__.py:1364
+#: virtualBuffers\__init__.py:1370
 msgid "focus mode"
 msgstr "Режим на фокус"

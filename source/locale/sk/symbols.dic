@@ -1,4 +1,9 @@
-﻿complexSymbols:
+﻿#locale/sk/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
 # identifier	regexp
 # Others
 decimal point	(?<=\d)\,(?=\d)
@@ -7,22 +12,23 @@ symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	bodka	all	always
-! sentence ending	výkričník	all	always
-? sentence ending	otáznik	all	always
-; phrase ending	bodkočiarka	most	always
-: phrase ending	dvojbodka	most	always
-decimal point		none	always
-in-word '	apostrof	all	norep
+. sentence ending	bodka	all	always	# bodka na konci vety
+! sentence ending	výkričník	all	always	# výkričnik na konci vety
+? sentence ending	otáznik	all	always	# otáznik na konci vety
+; phrase ending	bodkočiarka	most	always	# bodkočiarka v prostriedku vety
+: phrase ending	dvojbodka	most	always	# dvojbodka v prostriedku vety
+decimal point		none	always	# desatinná čiarka
+in-word '	apostrof	all	norep	# apostrof vo vnútri slova
+negative number	mínus	none	norep	# záporné číslo
 
 # Whitespace
-\0	prázdny	char
-\t	tab
-\n	koniec riadku	char
-\f	zlom strany	none
-\r	koniec riadku	char
- 	medzera	char
- 	medzera	char	# tvrdá medzera
+\0	prázdny	char	# znak 0
+\t	tab	# tabulátor
+\n	koniec riadku	char	# koniec riadku
+\f	zlom strany	none	# zlom strany
+\r	koniec riadku	char	# koniec riadku
+ 	medzera	char	# medzera
+ 	medzera	char	# tvrdá medzera	# tvrdá medzera
 
 # Standard punctuation/symbols
 !	výkričník	all
@@ -70,6 +76,8 @@ _	podčiarknutie	most
 —	dlhšia pomlčka	most
 ●	krúžok	most
 ¨	prehláska	most
+‎	znak z ľava do prava 	char
+‏	znak z prava do ľava	char
 ¡	obrátený výkričník	most
 ¦	prerušená čiara	most
 ª	horný index a	most
