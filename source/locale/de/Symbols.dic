@@ -15,8 +15,9 @@ complexSymbols:
 : Satzende	(?<=[^\s:]):(?=\s|$)
 
 # Weitere
-Dezimalpunkt	(?<=\d)\,(?=\d)
+decimal point	(?<=\d)\,(?=\d)
 in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
 
 symbols:
 # Identifizierungszeichen	Ersetzungen[[	Ebene][	Bereich]][	# Angezeigter Name]
@@ -27,11 +28,12 @@ symbols:
 ? Satzende	Fragezeichen	all	always
 ; Satzzeichen für Phrasen	Semikolon	most	always
 : Satzzeichen für Phrasen	Doppelpunkt	most	always
-Dezimalpunkt		none	always
+decimal point		none	always
 in-word '	Apostroph	all	norep
+negative number	Minus	none	norep
 
 # Unsichtbare Zeichen
-\0	leer	char
+\0	leer	char # Null
 \t	Tabulator
 \n	Zeilenumbruch	char
 \f	Seitenumbruch	none
@@ -44,9 +46,13 @@ in-word '	Apostroph	all	norep
 "	Anführungszeichen	most
 \#	Nummernzeichen	most
 §	Paragraf	some
-$	Dollar	some
+$	Dollar	all	norep
+£	Pfund	all	norep
+¥	Yen	all	norep
+€	Euro	all	norep
+¢	Cent	all	norep
 %	Prozent	some
-&	und	some
+&	Und	some
 '	Apostroph	all
 (	runde Klammer auf	most
 )	runde Klammer zu	most
@@ -75,16 +81,11 @@ _	Unterstrich	most
 ~	Tilde	most
 °	Grad	most
 
-# Währungssymbole
-£	Pfund Sterling	some
-€	Euro	some
-¢	Cent	some
-¥	Yen	some
-
 # Weitere Zeichen
 •	sternförmiges Aufzählungszeichen	some
 Þ	pfeilförmiges Aufzählungszeichen	some
 …	Punkt Punkt Punkt	all	always
+...	Punkt Punkt Punkt	all	always
 	rundes Aufzählungszeichen	some
 “	typografisches Anführungszeichen oben	most
 ”	typografisches Anführungszeichen unten	most
@@ -106,3 +107,5 @@ _	Unterstrich	most
 ±	Plus Minus	some
 ×	mal	some
 ÷	Divisionszeichen	some
+‏	Pfeil nach links	char
+‎	Pfeil nach rechts	char
