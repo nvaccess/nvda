@@ -23,5 +23,8 @@ setOutPath "$PLUGINSDIR\app"
 file /R "${NVDADistDir}\"
 ${GetParameters} $0
 Banner::destroy
-execWait "$PLUGINSDIR\app\nvda.exe $0"
+exec:
+execWait "$PLUGINSDIR\app\nvda.exe $0 --launcher" $1
+;If exit code is 2 then execute again (restart)
+intcmp $1 2 exec +1
 SectionEnd

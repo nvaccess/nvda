@@ -87,6 +87,11 @@ def doStartupDialogs():
 
 def restart():
 	"""Restarts NVDA by starting a new copy with -r."""
+	if globalVars.appArgs.launcher:
+		import wx
+		globalVars.exitCode=2
+		wx.GetApp().ExitMainLoop()
+		return
 	import subprocess
 	import shellapi
 	shellapi.ShellExecute(None,None,unicode(sys.executable),unicode(subprocess.list2cmdline(sys.argv+['-r'])),None,0)
