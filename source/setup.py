@@ -144,6 +144,17 @@ setup(
 			"company_name":publisher,
 		},
 		{
+			"script":"nvda.pyw",
+			"uac_info": ("asInvoker", True),
+			"dest_base":"nvda_uiAccess",
+			"icon_resources":[(1,"images/nvda.ico")],
+			"version":"0.0.0.0",
+			"description":"NVDA application",
+			"product_version":version,
+			"copyright":copyright,
+			"company_name":publisher,
+		},
+		{
 			"script": "nvda_slave.pyw",
 			"icon_resources": [(1,"images/nvda.ico")],
 			"version": "0.0.0.0",
