@@ -250,6 +250,15 @@ if certFile:
 	env.AddPostAction(installer, [signExec])
 env.Alias("installer", installer)
 
+launcher = env.Command(outputDir.File("%s_launcher.exe" % outFilePrefix), ["launcher/nvdaLauncher.nsi", portableDist],
+	[[makensis, "/V2",
+	"/DVERSION=$version", '/DPUBLISHER="$publisher"',
+	"/DNVDADistDir=${SOURCES[1].abspath}", "/XOutFile ${TARGET.abspath}",
+	"$SOURCE"]])
+if certFile:
+	env.AddPostAction(launcher, [signExec])
+env.Alias("launcher", launcher)
+
 clientArchive = env.SzArchive(outputDir.File("%s_controllerClient.zip" % outFilePrefix), clientDir, relativeToSourceDir=True)
 env.Alias("client", clientArchive)
 
