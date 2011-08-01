@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2010-2013 NV Access Limited
 
+import itertools
 import winUser
 import textInfos
 import controlTypes
@@ -18,35 +19,6 @@ import api
 import config
 
 class CompoundTextInfo(textInfos.TextInfo):
-
-	def _getObjectPosition(self, obj):
-		indexes = []
-		rootObj = self.obj.rootNVDAObject
-		while obj and obj != rootObj:
-			indexes.insert(0, obj.indexInParent)
-			obj = obj.parent
-		return indexes
-
-	def compareEndPoints(self, other, which):
-		if which in ("startToStart", "startToEnd"):
-			selfTi = self._start
-			selfObj = self._startObj
-		else:
-			selfTi = self._end
-			selfObj = self._endObj
-		if which in ("startToStart", "endToStart"):
-			otherTi = other._start
-			otherObj = other._startObj
-		else:
-			otherTi = other._end
-			otherObj = other._endObj
-
-		if selfObj == otherObj:
-			# Same object, so just compare the two TextInfos normally.
-			return selfTi.compareEndPoints(otherTi, which)
-
-		# Different objects, so we have to compare the hierarchical positions of the objects.
-		return cmp(self._getObjectPosition(selfObj), other._getObjectPosition(otherObj))
 
 	def _normalizeStartAndEnd(self):
 		if self._start.isCollapsed and self._startObj != self._endObj:
@@ -285,6 +257,35 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 				else:
 					fields.append(field)
 		return fields
+
+	def _getObjectPosition(self, obj):
+		indexes = []
+		rootObj = self.obj.rootNVDAObject
+		while obj and obj != rootObj:
+			indexes.insert(0, obj.indexInParent)
+			obj = obj.parent
+		return indexes
+
+	def compareEndPoints(self, other, which):
+		if which in ("startToStart", "startToEnd"):
+			selfTi = self._start
+			selfObj = self._startObj
+		else:
+			selfTi = self._end
+			selfObj = self._endObj
+		if which in ("startToStart", "endToStart"):
+			otherTi = other._start
+			otherObj = other._startObj
+		else:
+			otherTi = other._end
+			otherObj = other._endObj
+
+		if selfObj == otherObj:
+			# Same object, so just compare the two TextInfos normally.
+			return selfTi.compareEndPoints(otherTi, which)
+
+		# Different objects, so we have to compare the hierarchical positions of the objects.
+		return cmp(self._getObjectPosition(selfObj), other._getObjectPosition(otherObj))
 
 	def expand(self, unit):
 		if unit == textInfos.UNIT_READINGCHUNK:
@@ -647,6 +648,47 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			self._end = moveTi
 			self._endObj = moveObj
 		return direction - remainingMovement
+
+	def _getAncestors(self, ti, obj):
+		data = []
+		while True:
+			data.insert(0, (ti, obj))
+			ti = obj.embeddingTextInfo
+			if not ti:
+				break
+			obj = ti.obj
+		return data
+
+	def compareEndPoints(self, other, which):
+		if which in ("startToStart", "startToEnd"):
+			selfTi = self._start
+			selfObj = self._startObj
+		else:
+			selfTi = self._end
+			selfObj = self._endObj
+		if which in ("startToStart", "endToStart"):
+			otherTi = other._start
+			otherObj = other._startObj
+		else:
+			otherTi = other._end
+			otherObj = other._endObj
+
+		if selfObj == otherObj:
+			# Same object, so just compare the two TextInfos normally.
+			return selfTi.compareEndPoints(otherTi, which)
+
+		# Different objects, so we have to compare ancestors.
+		selfAncs = self._getAncestors(selfTi, selfObj)
+		otherAncs = self._getAncestors(otherTi, otherObj)
+		# Find the first common ancestor.
+		maxAncIndex = min(len(selfAncs), len(otherAncs)) - 1
+		for (selfAncTi, selfAncObj), (otherAncTi, otherAncObj) in itertools.izip(selfAncs[maxAncIndex::-1], otherAncs[maxAncIndex::-1]):
+			if selfAncObj == otherAncObj:
+				break
+		else:
+			# No common ancestor.
+			return 1
+		return selfAncTi.compareEndPoints(otherAncTi, which)
 
 class CompoundDocument(EditableText, TreeInterceptor):
 	TextInfo = TreeCompoundTextInfo
