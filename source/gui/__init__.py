@@ -219,6 +219,23 @@ class MainFrame(wx.Frame):
 		globalPluginHandler.reloadGlobalPlugins()
 		NVDAObject.clearDynamicClassCache()
 
+	def onCreatePortableCopyCommand(self,evt):
+		d=wx.DirDialog(self,_("Choose where you wish to place the portable copy of NVDA"))
+		if d.ShowModal()!=wx.ID_OK:
+			return
+		path=d.GetPath()
+		copyUserConfig=messageBox(_("Would you like to include your current NVDA settings in the portable copy?"), _("Copy user configuration"), wx.YES_NO|wx.ICON_QUESTION) == wx.YES
+		import ctypes
+		
+		createAutorun=(ctypes.windll.kernel32.GetDriveTypeW(os.path.splitdrive(path)[0]+u'\\')==2 and messageBox(_("Would you like to create an autorun file for your removable drive to allow NVDA to start automatically?"), _("Removable Drive detected"), wx.YES_NO|wx.ICON_QUESTION) == wx.YES)
+		import installer
+		try:
+			installer.CreatePortableCopy(path,copyUserConfig=copyUserConfig,createAutorun=createAutorun)
+		except OSError:
+			messageBox(_("Failed to create portable copy"),_("Error"))
+			return
+		messageBox(_("Successfully created a portable copy of NVDA at %s")%path,_("Success"))
+
 class SysTrayIcon(wx.TaskBarIcon):
 
 	def __init__(self, frame):
@@ -271,6 +288,9 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
+		if not globalVars.appArgs.secure:
+			item = menu_tools.Append(wx.ID_ANY, _("Create Portable copy..."))
+			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
 		item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
 		self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
