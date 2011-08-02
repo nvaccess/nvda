@@ -106,6 +106,9 @@ class Document(Mozilla):
 				return virtualBuffers.gecko_ia2.Gecko_ia2Pre14
 			else:
 				return virtualBuffers.gecko_ia2.Gecko_ia2
+		if controlTypes.STATE_EDITABLE in states:
+			from compoundDocuments import EmbeddedObjectCompoundDocument
+			return EmbeddedObjectCompoundDocument
 		return super(Document,self).treeInterceptorClass
 
 class ListItem(Mozilla):
