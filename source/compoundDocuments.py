@@ -646,6 +646,9 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 						moveTi, moveObj = self._findNextContent(moveObj)
 					except LookupError:
 						# Can't move forward any further.
+						if endPoint == "end" and moveTi.compareEndPoints(self._end, "endToEnd") != 0:
+							# Moving the end to the end of the document counts as a move.
+							remainingMovement -= 1
 						break
 				else:
 					# We may have landed on an embedded object.
