@@ -21,14 +21,15 @@ import config
 class CompoundTextInfo(textInfos.TextInfo):
 
 	def _normalizeStartAndEnd(self):
-		if self._start.isCollapsed and self._startObj != self._endObj:
-			# The only time start will be collapsed when start and end aren't the same is if it is at the end of the object.
-			# This is equivalent to the start of the next object.
+		if (self._start.isCollapsed and self._startObj != self._endObj
+				and self._start.compareEndPoints(self._startObj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd") == 0):
+			# Start it is at the end of its object.
+			# This is equivalent to the start of the next content.
 			# Aside from being pointless, we don't want a collapsed start object, as this will cause bogus control fields to be emitted.
-			obj = self._startObj.flowsTo
-			if obj:
-				self._startObj = obj
-				self._start = obj.makeTextInfo(textInfos.POSITION_FIRST)
+			try:
+				self._start, self._startObj = self._findNextContent(self._startObj)
+			except LookupError:
+				pass
 
 		if self._startObj == self._endObj:
 			# There should only be a single TextInfo and it should cover the entire range.
@@ -64,14 +65,12 @@ class CompoundTextInfo(textInfos.TextInfo):
 		if end:
 			if self._end.compareEndPoints(self._endObj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd") == 0:
 				# The end TextInfo is at the end of its object.
-				# The end of this object is equivalent to the start of the next.
+				# The end of this object is equivalent to the start of the next content.
 				# As well as being silly, collapsing to the end of  this object causes say all to move the caret to the end of paragraphs.
-				# Therefore, collapse to the start of the next instead.
-				obj = self._endObj.flowsTo
-				if obj:
-					self._endObj = obj
-					self._end = obj.makeTextInfo(textInfos.POSITION_FIRST)
-				else:
+				# Therefore, collapse to the start of the next content instead.
+				try:
+					self._end, self._endObj = self._findNextContent(self._endObj)
+				except LookupError:
 					# There are no more objects, so just collapse to the end of this object.
 					self._end.collapse(end=True)
 			else:
@@ -258,6 +257,13 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 					fields.append(field)
 		return fields
 
+	def _findNextContent(self, origin, moveBack=False):
+		obj = origin.flowsFrom if moveBack else origin.flowsTo
+		if not obj:
+			raise LookupError
+		ti = obj.makeTextInfo(textInfos.POSITION_LAST if moveBack else textInfos.POSITION_FIRST)
+		return ti, obj
+
 	def _getObjectPosition(self, obj):
 		indexes = []
 		rootObj = self.obj.rootNVDAObject
@@ -418,7 +424,9 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 
 		fieldStart = 0
 		for field in fields:
-			if isinstance(field, basestring):
+			if not field:
+				yield u""
+			elif isinstance(field, basestring):
 				textLength = len(field)
 				for chunk in self._iterTextWithEmbeddedObjects(field, ti, fieldStart, textLength=textLength):
 					if isinstance(chunk, basestring):
@@ -575,16 +583,19 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 		self._end = end
 		self._endObj = endObj
 
-	def _findNextContent(self, ti, moveBack=False, skipFirstMove=False):
-		obj = ti.obj
+	def _findNextContent(self, origin, moveBack=False):
+		if isinstance(origin, textInfos.TextInfo):
+			ti = origin
+			obj = ti.obj
+		else:
+			ti = None
+			obj = origin
+
 		# Ascend until we can move to the next offset.
 		direction = -1 if moveBack else 1
 		while True:
-			if skipFirstMove:
-				skipFirstMove = False
-			else:
-				if ti.move(textInfos.UNIT_OFFSET, direction) != 0:
-					break
+			if ti and ti.move(textInfos.UNIT_OFFSET, direction) != 0:
+				break
 			ti = obj.embeddingTextInfo
 			if not ti:
 				raise LookupError
@@ -628,7 +639,7 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 				if moveTi.compareEndPoints(moveObj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd") == 0:
 					# If at the end of the object, move to the start of the next object.
 					try:
-						moveTi, moveObj = self._findNextContent(moveTi, skipFirstMove=True)
+						moveTi, moveObj = self._findNextContent(moveObj)
 					except LookupError:
 						# Can't move forward any further.
 						break
@@ -647,6 +658,7 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 		if not endPoint or endPoint == "end":
 			self._end = moveTi
 			self._endObj = moveObj
+		self._normalizeStartAndEnd()
 		return direction - remainingMovement
 
 	def _getAncestors(self, ti, obj):
