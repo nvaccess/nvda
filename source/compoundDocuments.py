@@ -106,13 +106,16 @@ class CompoundTextInfo(textInfos.TextInfo):
 	def _get_pointAtStart(self):
 		return self._start.pointAtStart
 
+	def _isObjectEditableText(self, obj):
+		return obj.role in (controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_EDITABLETEXT)
+
 	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
-		role = obj.role
-		if ignoreEditableText and role in (controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_EDITABLETEXT):
+		if ignoreEditableText and self._isObjectEditableText(obj):
 			# This is basically just a text node.
 			return None
 		field = textInfos.ControlField()
-		field["role"] = obj.role
+		role = obj.role
+		field["role"] = role
 		states = obj.states
 		# The user doesn't care about certain states, as they are obvious.
 		states.discard(controlTypes.STATE_EDITABLE)
@@ -462,14 +465,15 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 		while fields[-1] is not None:
 			# The end hasn't yet been reached, which means it isn't a descendant of obj.
 			# Therefore, continue from where obj was embedded.
+			if withFields and not self._isObjectEditableText(obj):
+				# Add a controlEnd if this field had a controlStart.
+				fields.append(textInfos.FieldCommand("controlEnd", None))
 			ti = obj.embeddingTextInfo
 			obj = ti.obj
 			if ti.move(textInfos.UNIT_OFFSET, 1) == 0:
 				# There's no more text in this object.
 				continue
 			ti.setEndPoint(obj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd")
-			if withFields:
-				fields.append(textInfos.FieldCommand("controlEnd", None))
 			fields.extend(self._iterRecursiveText(ti, withFields, formatConfig))
 		del fields[-1]
 		return fields
