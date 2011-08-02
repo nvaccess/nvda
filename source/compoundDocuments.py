@@ -464,7 +464,7 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			# Therefore, continue from where obj was embedded.
 			ti = obj.embeddingTextInfo
 			obj = ti.obj
-			if ti.move(textInfos.UNIT_CHARACTER, 1) == 0:
+			if ti.move(textInfos.UNIT_OFFSET, 1) == 0:
 				# There's no more text in this object.
 				continue
 			ti.setEndPoint(obj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd")
