@@ -12,6 +12,7 @@ from comtypes.gen.IAccessible2Lib import IAccessible2
 from comtypes import COMError
 import aria
 import config
+from NVDAObjects.IAccessible import normalizeIA2TextFormatField
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
@@ -55,6 +56,10 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		if landmark:
 			attrs["landmark"]=landmark
 		return super(Gecko_ia2_TextInfo,self)._normalizeControlField(attrs)
+
+	def _normalizeFormatField(self, attrs):
+		normalizeIA2TextFormatField(attrs)
+		return attrs
 
 class Gecko_ia2(VirtualBuffer):
 
