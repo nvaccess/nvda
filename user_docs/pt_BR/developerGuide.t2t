@@ -375,14 +375,14 @@ The order for gesture binding lookup is:
 -
 
 ++ Example 3: A Global Plugin to Find out Window Class and Control ID ++
-The following Global Plugin allows you to press NVDA+leftArrow to have the window class of the current focus announced, and NVDA+rightArrow to have the window control ID of the current focus announced.
-This example shows you how to define one or more scripts and gesture bindings on a class such as an App Module, Global Plugin or NVDA Object.
+O Global Plugin a seguir lhe permite pressionar NVDA+leftArrow para obter o anúncio da classe da janela atualmente em foco, e NVDA+rightArrow para obter o anúncio da identificação do controle atualmente em foco.
+Esse exemplo lhe mostra como definir um ou mais scripts e gestos vinculados numa classe tal como um App Module, Global Plugin o objeto do NVDA.
+
+Copie e cole o código (sem incluir) os marcadores de início e fim para um novo arquivo de texto com o nome de exemplo3.py, que deve ser salvo na sub-pasta globalPlugins.
+Seja bastante cuidadoso para manter todos os tabs e espaços intactos.
+
+Uma vez salvo no lugar correto, então reinicie o NVDA ou selecione Recarregar Plugins localizado em ferramentas no menu do NVDA.
  
-Copy and paste the code between (but not including) the start and end markers into a new text file with a name of example3.py, which should be saved in the globalPlugins subdirectory.
-Be very careful to keep all tabs and spaces intact.
-
-Once saved in the right place, either restart NVDA or choose Reload Plugins found under Tools in the NVDA menu.
-
 ```
 --- start ---
 #Window utility scripts for NVDA
@@ -479,7 +479,7 @@ class AppModule(appModuleHandler.AppModule):
 --- end ---
 ```
  
-++ Providing Custom NVDA Object Classes ++
+++ Proporcionando Classes personalizadas para Objetos do NVDA ++
 Providing custom NVDA Object classes is probably the most powerful and useful way to improve the experience of an application in an NVDA plugin.
 This method allows you to place all the needed logic for a particular control altogether in one NVDA Object class for that control, rather than scattering code for many controls across a plugin's events.
 
@@ -509,7 +509,7 @@ You can also remove classes chosen by NVDA from the class list, although this is
 
 ++ Exemplo 5: Etiquetando os Campos de Edição do Notepad usando um Objeto do NVDA Personalizado ++
 Esse app module para o notepad faz com que o NVDA anuncie os principais campos de edição do Notepad como tendo um nome de "conteúdo".
-That is, quando este receber foco, o NVDA dirá "Edição de Conteúdo".
+Feito isto, quando este receber foco, o NVDA dirá "Edição de Conteúdo".
 
 O código a seguir pode ser copiado e colado em um arquivo de texto, depois salvo na pasta appModules  com o nome de notepad.py.
 
@@ -536,24 +536,24 @@ class LabelledEditField(Window):
  O console pyhton do NVDA emula o interpretador Python interativo de dentro do NVDA.
 Essa é uma ferramenta de desenvolvimento que é muito útil para depuração, inspeção geral interna do NVDA ou inspeção da hierarquia de acessibilidade de um aplicativo.
 
-++ Aplicabilidade ++
-The console can be activated in two ways:
-- By pressing NVDA+control+z.
-If activated in this fashion, a snapshot of the current state of NVDA at the time the key was pressed will be taken and saved in certain variables available in the console.
-See [Snapshot Variables #PythonConsoleSnapshotVariables] for more details.
-- By selecting Tools -> Python console from the NVDA system tray menu.
+++ uso ++
+O console pode ser ativado de duas formas:
+- Pressionando NVDA+control+z.
+Quando ativado dessa forma, um snapshot do atual estado do NVDA referente ao momento em que a tecla foi  presionada será tomado e salvo em certas variáveis disponíveis no console.
+Consulte [ Variáveis Snapshot #PythonConsoleSnapshotVariables] para mais detalhes.
+- Selecionando Ferramentas -> Console Python a partir do menu NVDA na barra do sistema.
 -
 
-The console is similar to the standard interactive Python interpreter.
-Input is accepted one line at a time.
-The current line is processed when enter is pressed.
-You can navigate through the history of previously entered lines using the up and down arrow keys.
+O console é semelhante ao interpretador Python standard interativo.
+A entrada é aceita de uma linha por vez.
+A linha atual é processada quando enter é pressionado.
+Você pode navegar pelo históryco das linhas introduzidas anteriormente usando as setas para cima e para baixo.
 
-Output (responses from the interpreter) will be spoken when enter is pressed.
-The f6 key toggles between the input and output controls.
+Saídas (respostas vindas do interpretador) são anunciadas quando enter é pressionado.
+A tecla f6 alterna entre os controles de entrada e saída.
 
-Closing the console window simply hides it.
-This allows the user to return to the session as it was left when it was closed, including history and variables.
+Encerrando a janela do console simplesmente o oculta.
+Isso permite que o usuário retorne à seção como foi deixada ao ser encerrada, incluindo o histórico e as variáveis.
 
 ++ Namespace ++
 
