@@ -182,7 +182,7 @@ class JAB(Window):
 		windowHandle=kwargs['windowHandle']
 		if relation=="focus":
 			vmID=ctypes.c_int()
-			accContext=ctypes.c_int()
+			accContext=JABHandler.JOBJECT64()
 			JABHandler.bridgeDll.getAccessibleContextWithFocus(windowHandle,ctypes.byref(vmID),ctypes.byref(accContext))
 			jabContext=JABHandler.JABContext(hwnd=windowHandle,vmID=vmID.value,accContext=accContext.value)
 		elif isinstance(relation,tuple):
