@@ -6,6 +6,9 @@
 % Remove double spacing from the beginning of each line as txt2tags seems to indent preformatted text by two spaces
 %!PostProc(html): '^  ' ''
 
+Nota; Alguns termos deverão ser mantidos em Inglês por referirem-se a programação
+
+
 = Índice =[toc]
 %%toc
 
@@ -181,7 +184,7 @@ O App Module é descarregado logo que o aplicativo é fechado ou quando o NVDA �
 O exemplo seguinte de App Module faz com que o NVDA reproduza um beep cada vez que o foco muda dentro do aplicativo notepad.
 Esse exemplo lhe mostra o esquema básico de um App Module.
 
-Copie e cole o código (mas sem incluir) os marcadores inicial e final para um novo arquivo de texto denominado notepad.py, which should be saved in the AppModules subdirectory.
+Copie e cole o código (mas sem incluir) os marcadores inicial e final para um novo arquivo de texto denominado notepad.py, que deve ser salvo na sub-pasta AppModules.
 Seja bastante cuidadoso  para manter todos os tabs e espaços intactos.
 
 Uma vez salvo no local correto, reinicie o NVDA ou selecione Recarregar Plugins localizado em Ferramentas no menu do NVDA.
@@ -216,7 +219,7 @@ Em seguida, ele define uma classe denominada AppModule, que é herdada do appMod
 Dentro dessa classe, ele define 1 ou mais eventos, scripts ou gestos vinculados.
 Nesse exemplo, ele define 1 método de evento para gainFocus events (event_gainFocus), que reproduz um pequeno beep cada vez que é executado.
 A implementação desse evento não é importante para o propóseito desse exemplo.
-A parte mais important é a prórpia classe.
+A parte mais important é a própria classe.
 Eventos serão explicados com mais detalhes noutro momento.
 
 Como com outros exemplos nesse manual, lembramos que ao apagar o app module criado ao terminar o teste depois reiniciar o NVDA ou recarregar os plugins, então a funcionalidade original será restaurada.
@@ -237,7 +240,7 @@ O NVDA carrega todos os global plugins logo que é iniciado, e os descarrega ao 
 O exemplo seguinte de Global Plugin lhe permite pressionar NVDA+shift+v em qualquer lugar do sistema operacional para saber a informação da  versão do NVDA. 
 Esse exemplo serve apenas para lhe mostrar o esquema básico de um Global Plugin.
 
-Copie e cole o código (sem incluir) the os marcadores de início e fim para um novo arquivo de texto com o nome de exemplo2.py, que deve ser salvo na sub-pasta globalPlugins.
+Copie e cole o código (sem incluir) os marcadores de início e fim para um novo arquivo de texto com o nome de exemplo2.py, que deve ser salvo na sub-pasta globalPlugins.
 Seja bastante cuidadoso para manter todos os tabs e espaços intactos.
 
 Uma vez salvo no lugar correto, então reinicie o NVDA ou selecione Recarregar Plugins localizado em ferramentas no menu do NVDA.
@@ -280,13 +283,13 @@ A parte mais importante é a própria classe.
  
 Como com outros exemplos nesse manual, lembramos que ao apagar o Global Plugin criado ao terminar o teste depois reiniciar o NVDA ou recarregar os plugins, então a funcionalidade original será restaurada.
 
-++ NVDA Objects ++
-NVDA represents controls and other GUI elements as NVDA Objects.
-These NVDA Objects contain standardised properties, such as name, role, value, states and description, which allow other parts of NVDA to query or present information about a control in a generalised way.
-For example, the OK button in a dialog would be represented as an NVDA Object with a name of "OK" and a role of button.
-Similarly, a checkbox with a label of "I agree" would have a name of "I agree", a role of checkbox, and if currently checked, a state of checked.
+++ Objetos do NVDA ++
+O NVDA representa controles e outros GUI elementos como seus Objetos.
+Esses Objetos do NVDA contêm propriedades standardisadas, tais como nome, função, valor, estados e descrição, que permitem a outras partes do NVDA consultar ou apresentar informações sobre um controle de uma forma generalizada.
+Por exemplo, o botão OK num diálogo pode ser representado como um Objeto do NVDA com o nome de "OK" e a função de botão.
+Semelhantemente, uma caixa de seleção com a etiqueta de "Eu Concordo" pode ter o nome de "Eu concordo", a função de caixa de seleção, e se atualmente estiver marcada, o estado de marcada.
 
-As there are many different GUI Toolkits and platform and accessibility APIs, NVDA Objects abstract these differences into a standard form that NVDA can use, regardless of the toolkit or API a particular control is made with.
+As there are many differents GUI Toolkits and platform and accessibility APIs, NVDA Objects abstract these differences into a standard form that NVDA can use, regardless of the toolkit or API a particular control is made with.
 For example,  the Ok button just discussed could be a widget in a Java application, an MSAA object, an IAccessible2 object or a UI Automation element. 
 
 NVDA Objects have many properties.
@@ -411,7 +414,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 --- end ---
 ```
 
-++ Events ++
+++ Eventos ++
 When NVDA detects particular toolkit, API or Operating System events, it abstracts these and fires its own internal events on plugins and NVDA Objects.
 
 Although most events are related to a specific NVDA Object (e.g. name change, gain focus, state change, etc.), these events can be handled at various levels. 
@@ -453,17 +456,17 @@ There are  many other events, though those listed above are usually the most use
 
 For an example of an event handled by an App Module, please refer to [example 1 #Example1] (focus beeps in notepad).
 
-++ the App Module SleepMode variable ++
-App Modules have one very useful property called "sleepMode", which if set to true almost completely disables NVDA within that application.
-Sleep Mode is very useful for self voicing applications that have their own screen reading functionality, or perhaps even some games that need full use of the keyboard.
+++ A variável SleepMode dos App Modules ++
+Os App Modules possuem uma propriedade bastante útil denominada "sleepMode" (modo dormir), que se ajustada para "true" desabilitam quase que por completo o NVDA dentro daquele aplicativo.
+O Modo Dormir é muito útil para aplicativos com voz própria que tenham funcionalidade de leitura de tela, ou mesmo possíveis jogos que necesssitam do uso do teclado completo.
 
-Although sleep mode can be toggled on and off by the user with the key command NVDA+shift+s, a developer can choose to have sleep mode enabled by default for an application.
-This is done by providing an App Module for that application which simply sets sleepMode to True in the AppModule class.
+Ainda que o Modo Dormir possa ser alternado entre ligado e desligado pelo usuário com o comando de teclado NVDA+shift+s, um desenvolvedor pode escolher tê-lo ativado por padrão para um determinado aplicativo.
+Isso é feito fornecendo-se um App Module para esse aplicativo que simplesmente ajusta sleepMode para True na classe AppModule.
 
-++ Example 4: A Sleep Mode App Module ++
+++ Exemplo 4: Um App Module para ativar Modo Dormir ++
 
-The following code can be copied and pasted in to a text file, then saved in the appModules directory with the name of the application you wish to enable sleep mode for.
-As always, the file  must have a .py extension.
+O código a seguir pode ser copiado e colado num arquivo de texto, depois salvo na pasta appModules com o nome do aplicativo para o qual você desejar ativar o modo dormir.
+Como sempre, o arquivo deve ter a extensão .py.
 
 ```
 --- start ---
@@ -504,11 +507,11 @@ Inside this method, you should decide which custom NVDA Object class(es) (if any
 If a custom class should be used, it must be inserted into the class list, usually at the beginning. 
 You can also remove classes chosen by NVDA from the class list, although this is rarely required.
 
-++ Example 5: Labelling the Notepad Edit Field using a Custom NVDA Object ++
-This app module for notepad makes NVDA report Notepad's main edit field as having a name of "content".
-That is, when it receives focus, NVDA will say "Content edit".
+++ Exemplo 5: Etiquetando os Campos de Edição do Notepad usando um Objeto do NVDA Personalizado ++
+Esse app module para o notepad faz com que o NVDA anuncie os principais campos de edição do Notepad como tendo um nome de "conteúdo".
+That is, quando este receber foco, o NVDA dirá "Edição de Conteúdo".
 
-The following code can be copied and pasted in to a text file, then saved in the appModules directory with the name of notepad.py.
+O código a seguir pode ser copiado e colado em um arquivo de texto, depois salvo na pasta appModules  com o nome de notepad.py.
 
 ```
 --- start ---
@@ -528,12 +531,12 @@ class LabelledEditField(Window):
 --- end ---
 ```
 
-+ NVDA Python Console +
++ O Console Python do NVDA +
 
-The NVDA Python console emulates the interactive Python interpreter from within NVDA.
-It is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
+ O console pyhton do NVDA emula o interpretador Python interativo de dentro do NVDA.
+Essa é uma ferramenta de desenvolvimento que é muito útil para depuração, inspeção geral interna do NVDA ou inspeção da hierarquia de acessibilidade de um aplicativo.
 
-++ Usage ++
+++ Aplicabilidade ++
 The console can be activated in two ways:
 - By pressing NVDA+control+z.
 If activated in this fashion, a snapshot of the current state of NVDA at the time the key was pressed will be taken and saved in certain variables available in the console.
@@ -554,18 +557,18 @@ This allows the user to return to the session as it was left when it was closed,
 
 ++ Namespace ++
 
-+++ Automatic Imports +++
-For convenience, the following modules and variables are automatically imported in the console:
++++ Importações Automáticas +++
+Por conveniência, os seguintes módulos e variáveis são importados automaticamente no console:
 sys, os, wx, log (from logHandler), api, queueHandler, speech, braille
 
 +++ Snapshot Variables +++[PythonConsoleSnapshotVariables]
-Whenever NVDA+control+z is pressed, certain variables available in the console will be assigned according to the current state of NVDA.
-These variables are:
-- focus: The current focus object
-- focusAnc: The ancestors of the current focus object
-- fdl: Focus difference level; i.e. the level at which the ancestors for the current and previous focus differ
-- fg: The current foreground object
-- nav: The current navigator object
-- mouse: The current mouse object
-- brlRegions: The braille regions from the active braille buffer
+Sempre que o comando NVDA+control+z é pressionado, certas variáveis disponíveis no console são atribuidas de acordo com o estado atual do NVDA.
+Essas variáveis são:
+- focus: O objeto atualmente em foco
+- focusAnc: O objeto ascendente ao atualmente em  foco
+- fdl: Diferença de Níveis no foco ; isto é, o nível ao qual o ascendente do  atual e o atual objeto em foco diferenciam-se
+- fg: O objeto atualmente em primeiro plano
+- nav: O objeto de navegação atual
+- mouse: O objeto atualmente sob o mouse
+- brlRegions: As regiões de braille do buffer braille ativo
 -
