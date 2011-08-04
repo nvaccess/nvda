@@ -51,6 +51,54 @@ def getNVDAObjectFromPoint(x,y):
 	obj=IAccessible(IAccessibleObject=pacc,IAccessibleChildID=child)
 	return obj
 
+def normalizeIA2TextFormatField(formatField):
+	try:
+		textAlign=formatField.pop("text-align")
+	except KeyError:
+		textAlign=None
+	if textAlign:
+		if "right" in textAlign:
+			textAlign="right"
+		elif "center" in textAlign:
+			textAlign="center"
+		elif "justify" in textAlign:
+			textAlign="justify"
+		formatField["text-align"]=textAlign
+	try:
+		fontWeight=formatField.pop("font-weight")
+	except KeyError:
+		fontWeight=None
+	if fontWeight is not None and (fontWeight.lower()=="bold" or (fontWeight.isdigit() and int(fontWeight)>=700)):
+		formatField["bold"]=True
+	else:
+		formatField["bold"]=False
+	try:
+		fontStyle=formatField.pop("font-style")
+	except KeyError:
+		fontStyle=None
+	if fontStyle is not None and fontStyle.lower()=="italic":
+		formatField["italic"]=True
+	else:
+		formatField["italic"]=False
+	try:
+		invalid=formatField.pop("invalid")
+	except KeyError:
+		invalid=None
+	if invalid and invalid.lower()=="spelling":
+		formatField["invalid-spelling"]=True
+	color=formatField.get('color')
+	if color:
+		try:
+			formatField['color']=colors.RGB.fromString(color)
+		except ValueError:
+			pass
+	backgroundColor=formatField.get('background-color')
+	if backgroundColor:
+		try:
+			formatField['background-color']=colors.RGB.fromString(backgroundColor)
+		except ValueError:
+			pass
+
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	detectFormattingAfterCursorMaybeSlow=False
@@ -152,52 +200,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 				pass
 		if attribsString:
 			formatField.update(IAccessibleHandler.splitIA2Attribs(attribsString))
-		try:
-			textAlign=formatField.pop("text-align")
-		except KeyError:
-			textAlign=None
-		if textAlign:
-			if "right" in textAlign:
-				textAlign="right"
-			elif "center" in textAlign:
-				textAlign="center"
-			elif "justify" in textAlign:
-				textAlign="justify"
-			formatField["text-align"]=textAlign
-		try:
-			fontWeight=formatField.pop("font-weight")
-		except KeyError:
-			fontWeight=None
-		if fontWeight is not None and (fontWeight.lower()=="bold" or (fontWeight.isdigit() and int(fontWeight)>=700)):
-			formatField["bold"]=True
-		else:
-			formatField["bold"]=False
-		try:
-			fontStyle=formatField.pop("font-style")
-		except KeyError:
-			fontStyle=None
-		if fontStyle is not None and fontStyle.lower()=="italic":
-			formatField["italic"]=True
-		else:
-			formatField["italic"]=False
-		try:
-			invalid=formatField.pop("invalid")
-		except KeyError:
-			invalid=None
-		if invalid and invalid.lower()=="spelling":
-			formatField["invalid-spelling"]=True
-		color=formatField.get('color')
-		if color:
-			try:
-				formatField['color']=colors.RGB.fromString(color)
-			except ValueError:
-				pass
-		backgroundColor=formatField.get('background-color')
-		if backgroundColor:
-			try:
-				formatField['background-color']=colors.RGB.fromString(backgroundColor)
-			except ValueError:
-				pass
+		normalizeIA2TextFormatField(formatField)
 		return formatField,(startOffset,endOffset)
 
 	def _getCharacterOffsets(self,offset):
