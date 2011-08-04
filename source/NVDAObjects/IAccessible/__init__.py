@@ -98,6 +98,14 @@ def normalizeIA2TextFormatField(formatField):
 			formatField['background-color']=colors.RGB.fromString(backgroundColor)
 		except ValueError:
 			pass
+	lineStyle=formatField.get("text-underline-style")
+	lineType=formatField.get("text-underline-type")
+	if lineStyle or lineType:
+		formatField["underline"]=lineStyle!="none" and lineType!="none"
+	lineStyle=formatField.get("text-line-through-style")
+	lineType=formatField.get("text-line-through-type")
+	if lineStyle or lineType:
+		formatField["strikethrough"]=lineStyle!="none" and lineType!="none"
 
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
