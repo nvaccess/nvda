@@ -1076,14 +1076,14 @@ Käyttäjät voivat lisätä omia tai muuttaa nykyisiä NVDA:n skripteihin liite
 Tämä tiedosto on nimeltään gestures.ini.
 
 Tiedosto käyttää standardinmukaista ini-syntaksia.
-Tiedostossa voi olla useita osioita ja kussakin osiossa voi olla yksi tai useampia merkintöjä.
+Tiedostossa voi olla useita lohkoja ja kussakin lohkossa voi olla yksi tai useampia avainsanoja.
 
-Jokaisessa osiossa on määrittelyt tiettyyn NVDA:n Python-moduulissa ja luokassa oleviin skripteihin.
-- Osion nimi koostuu Python-moduulista ja -luokasta, jotka erotetaan toisistaan pisteellä.
-- Kunkin merkinnän avain on skriptin nimi, jonka syötekomennot halutaan määrittää.
+Kussakin lohkossa on määrittelyt tiettyyn NVDA:n Python-moduulissa ja luokassa oleviin skripteihin.
+Lohkon nimi koostuu Python-moduulista ja -luokasta, jotka erotetaan toisistaan pisteellä.
+- Avainsana on skriptin nimi, jonka syötekomennot halutaan määrittää.
 Skripteistä on mahdollista poistaa niille määritellyt syötekomennot käyttämällä erikoisskriptiä None.
-Kukin merkinnän avain, None mukaan lukien, voi olla samassa osiossa vain kerran.
-- Merkinnän arvo koostuu pilkulla erotetuista komentotunnisteista, jotka edustavat määriteltäviä syötekomentoja.
+Kukin avainsana, None mukaan lukien, voi olla samassa lohkossa vain kerran.
+- Avainsanan arvo koostuu pilkulla erotetuista komentotunnisteista, jotka edustavat määriteltäviä syötekomentoja.
 Pilkkuun päättyvät komentotunnisteet on laitettava lainaus- (") tai heittomerkkien (') sisään.
 -
 

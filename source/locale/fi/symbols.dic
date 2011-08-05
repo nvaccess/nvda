@@ -29,6 +29,7 @@ symbols:
 : phrase ending	kaksoispiste	most	always
 decimal point		none	always
 in-word '	heitto	all	norep
+in-word š	sh	all	norep
 negative number	miinus	none	norep
 percent	prosenttia	none	norep
 dates	 	all	always
@@ -74,7 +75,7 @@ $	dollari	all	norep
 \\	keno	some
 ^	hattu	most
 _	alaviiva	most
-`	ulkomaan ee	most
+`	gravis	all
 {	alkuaalto	most
 }	loppuaalto	most
 |	pysty	most
@@ -96,12 +97,23 @@ _	alaviiva	most
 ‎	nuoli vasemmalta oikealle	char
 ‏	nuoli oikealta vasemmalle	char
 ­	pehmeä tavuviiva	all
-»	kulmalainaus oikealle	most
-→	nuoli oikealle	most
+█	sitova viiva	all
+»	kulmalainaus oikealle	all
+→	nuoli oikealle	all
 −	miinus	some
-►	musta osoitin oikealle	most
+►	musta osoitin oikealle	all
+⇒	kaksoisnuoli oikealle	all
+♥	hertta	all
+♡	valkoinen hertta	all
+♧	valkoinen risti	all
+♢	valkoinen ruutu	all
 ○	valkoinen ympyrä	all
-♠	musta pata	most
+♤	valkoinen pata	all
+☆	valkoinen tähti	all
+♠	musta pata	all
+♣	musta risti all
+♦	musta ruutu	all
+★	musta tähti	all
 ¡	käänteinen huuto	all
 ¦	rikkinäinen palkki	most
 ©	copyright	most
@@ -110,11 +122,86 @@ _	alaviiva	most
 †	risti	most
 ‡	kaksoisristi	most
 ☼	valkoinen aurinko säteineen	most
-ǝ	e ylösalaisin
-ɐ	a ylösalaisin
-ɯ	m ylösalaisin
-ʇ	t ylösalaisin
-ʍ	w ylösalaisin
-ʎ	y ylösalaisin
-˜	pieni tilde
-☺	valkoiset hymyilevät kasvot
+ǝ	e ylösalaisin	some
+ɐ	a ylösalaisin	some
+ɯ	m ylösalaisin	some
+ʇ	t ylösalaisin	some
+ʍ	w ylösalaisin	some
+ʎ	y ylösalaisin	some
+˜	pieni tilde	most
+þ	thorn	some
+æ	aa ee	some
+‰	promille	most
+§	pykälä	some
+÷	jakomerkki	some
+×	kertomerkki	some
+°	aste	some
+¢	sentti	some
+¤	valuuttasymboli	some
+≠	eri suuri kuin	some
+∞	ääretön	some
+√	neliöjuuri	some
+½	puolikas	some
+⅔	kaksi kolmasosaa	some
+⅓	yksi kolmasosa	some
+±	plus miinus	some
+¼	yksi neljäsosa	some
+₨	rupia	some
+™	tavaramerkki	some
+®	rekisteröity	some
+©	copyright	some
+¥	jeni	some
+Α	iso alfa	some
+Β	iso beetta	some
+Γ	iso gamma	some
+Δ	iso delta	some
+Ε	iso epsilon	some
+Ζ	iso zeetta	some
+Η	iso eetta	some
+Θ	iso theetta	some
+Ι	iso joota	some
+Κ	iso kappa	some
+Λ	iso lambda	some
+Μ	iso myy	some
+Ν	iso nyy	some
+Ξ	iso ksii	some
+Ο	iso omikron	some
+Π	iso pii	some
+Ρ	iso roo	some
+Σ	iso sigma	some
+Τ	iso tau	some
+Υ	iso ypsilon	some
+Φ	iso fii	some
+Χ	iso kii	some
+Ψ	iso psii	some
+Ω	iso omega	some
+α	alfa	some
+β	beetta	some
+γ	gamma	some
+δ	delta	some
+ε	epsilon	some
+ζ	zeetta	some
+η	eetta	some
+θ	theetta	some
+ι	joota	some
+κ	kappa	some
+λ	lambda	some
+μ	myy	some
+ν	nyy	some
+ξ	ksii	some
+ο	omikron	some
+π	pii	some
+ρ	roo	some
+ς	loppu sigma	some
+σ	sigma	some
+τ	tau	some
+υ	ypsilon	some
+φ	fii	some
+χ	kii	some
+ψ	psii	some
+ω	omega	some
+☺	valkoiset hymyilevät kasvot	most
+☂	sateenvarjo	most
+♩	neljäsosanuotti	some
+♪	kahdeksasosanuotti	some
+♫	varrellinen kahdeksasosanuotti	some
