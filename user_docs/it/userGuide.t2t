@@ -31,7 +31,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
   
 ++ Internazionalizzazione ++
 è importante che tutte le persone del mondo, indipendentemente dalla loro nazionalità e dalla lingua parlata, abbiano eguale accesso alle informazioni.
-NVDA è stato tradotto in oltre 20 lingue, tra le quali Arabo, brasiliano-portoghese, croato, Ceco, finlandese, ungherese, francese, galiziano, tedesco, italiano, giapponese, portoghese, russo, slovacco, cinese tradizionale, africano, Thai, spagnolo, polacco, ucraino e vietnamita.
+NVDA è stato tradotto in oltre 20 lingue, tra le quali Arabo, portoghese-brasiliano, croato, Ceco, finlandese, ungherese, francese, galiziano, tedesco, italiano, giapponese, portoghese, russo, slovacco, cinese tradizionale, afrikaans, Thai, spagnolo, polacco, ucraino e vietnamita.
   
 ++ Sintesi vocali supportate ++
 Oltre a presentare i messaggi e l'interfaccia in svariate lingue, NVDA fornisce all'utente la possibilità di accedere ai contenuti di qualsiasi linguaggio, a patto che l'utente sia in possesso della sintesi vocale che parla quella determinata lingua.
@@ -76,14 +76,14 @@ Questa tipologia di finestre non risulta accessibile utilizzando la versione Por
 ++ L'installer di NVDA ++
 Se si dispone dell'installer di NVDA, premere semplicemente invio sul file o fare doppio click col mouse e l'installazione inizierà.
  
-Non appena il programma di installazione sarà stato caricato in memoria, verrà emesso il suono di benvenuto di NVDA. A questo punto, ne verrà lanciata una copia temporanea per permettere all'utente di portare a termine l'installazione seguendo le semplici istruzioni. Da notare che se si stava utilizzando già NVDA al momento dell'installazione, apparirà un messaggio a schermo dove l'utente verrà informato che la copia precedente di NVDA verrà chiusa automaticamente. Basterà premere invio per confermare l'operazione. Questo risulta necessario affinché l'installer possa aggiornare tutti i files in maniera corretta. A questo punto, se si disponeva già di una copia di NVDA, questa verrà automaticamente disinstallata, a meno che l'utente non disattivi la relativa casella di controllo, ed inizierà l'installazione della nuova versione.
+Non appena il programma di installazione sarà stato caricato in memoria, verrà emesso il suono di benvenuto di NVDA. A questo punto, ne verrà lanciata una copia temporanea per permettere all'utente di portare a termine l'installazione seguendo le semplici istruzioni. Da notare che se si stava utilizzando già NVDA al momento dell'installazione, apparirà un messaggio a schermo dove l'utente verrà informato che la copia precedente di NVDA verrà chiusa automaticamente. Basterà premere invio per confermare l'operazione. Questo risulta necessario affinché l'installer possa aggiornare tutti i file in maniera corretta. A questo punto, se si disponeva già di una copia di NVDA, questa verrà automaticamente disinstallata, a meno che l'utente non disattivi la relativa casella di controllo, ed inizierà l'installazione della nuova versione.
 
 Alla fine dell'installazione, è possibile che il software richieda il riavvio del computer.
  
 Risulta molto importante effettuare questa operazione, in modo da non dover incorrere in conseguenze indesiderate. Se invece non si riceve alcun messaggio in tal senso, premere semplicemente il pulsante fine e la nuova copia di NVDA funzionerà correttamente.
   
 ++ NVDA versione portable ++
-Se si dispone della versione portable di NVDA, tutto ciò che è necessario fare è lanciare il file autoestraente e seguire le istruzioni riportate a schermo. Ciò consiste semplicemente nello scegliere la cartella dove verranno estratti i files.
+Se si dispone della versione portable di NVDA, tutto ciò che è necessario fare è lanciare il file autoestraente e seguire le istruzioni riportate a schermo. Ciò consiste semplicemente nello scegliere la cartella dove verranno estratti i file.
 
 +++NVDA Portable in una chiavetta USB+++
 E' possibile copiare NVDA in una chiavetta USB in modo da poterlo poi utilizzare in qualsiasi computer.
@@ -140,7 +140,7 @@ Sebbene molti portatili non siano in possesso di un tastierino numerico fisico, 
 Se il portatile in proprio possesso non è in grado di compiere questa operazione, o non permette di impostare il tasto Numlock su spento, può risultare conveniente passare al layout Laptop.
 
 ++ Il menu di NVDA ++
-Il menu di NVDA consente di controllare le impostazioni dello screen reader, accedere all'aiuto in linea, salvare/ricaricare le configurazioni, modificare i dizionari per le sintesi vocali, leggere i files di log e uscire dal programma.
+Il menu di NVDA consente di controllare le impostazioni dello screen reader, accedere all'aiuto in linea, salvare/ricaricare le configurazioni, modificare i dizionari per le sintesi vocali, leggere i file di log e uscire dal programma.
 
 Per accedere al menu di NVDA da qualsiasi punto ci si trovi in Windows mentre NVDA è in esecuzione, basterà premere la combinazione di tasti NVDA+n.
 In alternativa, si può ricorrere alla System Tray, premendo Windows+B per raggiungerla e scorrendo con le frecce sino ad arrivare alla voce NVDA, premendo infine il tasto applicazione, generalmente situato accanto al control di destra. Una volta che il menu appare, è possibile scorrerlo con le frecce direzionali, mentre per attivare un elemento come sempre è sufficiente premere invio.
@@ -252,17 +252,17 @@ Comunque, da impostazioni predefinite, quando il cursore di sistema si sposta, i
 Sono disponibili i seguenti tasti caldi per esplorare il testo:
 %kc:beginInclude
 || Nome | layout Desktop | layout Laptop | Descrizione |
-| Spostarsi alla prima riga, modalità esplorazione | shift+7 del tastierino numerico | NVDA+7 | Sposta il cursore di controllo  alla prima riga del testo |
+| Spostarsi  alla prima riga | shift+7 del tastierino numerico | NVDA+7 | Sposta il cursore di controllo  alla prima riga del testo |
 | Spostarsi alla riga precedente, modalità esplorazione | 7 del tastierino numerico | NVDA+u | Sposta il cursore di controllo alla riga di testo precedente |
-| Legge la riga corrente, modalità esplorazione | 8 del tastierino numerico | NVDA+i | Annuncia la riga di testo sulla quale è posizionato il cursore di controllo. Se premuto due volte ne fa lo spelling. |
+| Legge la riga corrente, modalità esplorazione | 8 del tastierino numerico | NVDA+i | Annuncia la riga di testo sulla quale è posizionato il cursore di controllo. Se premuto due volte ne fa lo spelling. Premuto tre volte effettua lo spelling con la descrizione dei caratteri |
 | Spostarsi alla riga successiva, modalità esplorazione | 9 del tastierino numerico | NVDA+o | Sposta il cursore di controllo alla riga di testo successiva |
 | Spostarsi all'ultima riga, modalità esplorazione | shift+9 del tastierino numerico | NVDA+9 | Sposta il cursore di controllo  all'ultima riga del testo |
 | Spostarsi alla parola precedente, modalità esplorazione | 4 del tastierino numerico | NVDA+j | Sposta il cursore di controllo alla parola precedente nel testo |
-| Legge la parola corrente, modalità esplorazione | 5 del tastierino numerico | NVDA+k | Annuncia la parola del testo sulla quale è posizionato il cursore di controllo. Se premuto due volte ne fa lo spelling. |
+| Legge la parola corrente, modalità esplorazione | 5 del tastierino numerico | NVDA+k | Annuncia la parola del testo sulla quale è posizionato il cursore di controllo. Se premuto due volte ne fa lo spelling. Premuto tre volte effettua lo spelling con la descrizione dei caratteri |
 | Spostarsi alla parola successiva, modalità esplorazione | 6 del tastierino numerico | NVDA+l | Sposta il cursore di controllo alla parola successiva nel testo |
 | Spostarsi all'inizio della riga, modalità esplorazione | shift+1 del tastierino numerico | NVDA+Shift+u | Sposta il cursore di controllo  all'inizio della riga |
 | Spostarsi al carattere precedente, modalità esplorazione | 1 del tastierino numerico | NVDA+m | Sposta il cursore di controllo al carattere precedente nella riga corrente di testo |
-| Legge il carattere corrente, modalità esplorazione | 2 del tastierino numerico | NVDA+virgola | Annuncia il carattere del testo sul quale è posizionato il cursore di controllo. Se premuto due volte fornisce il valore numerico del carattere in decimale e esadecimale. |
+| Legge il carattere corrente, modalità esplorazione | 2 del tastierino numerico | NVDA+virgola | Annuncia il carattere del testo sul quale è posizionato il cursore di controllo. Se premuto due volte effettua lo spelling mediante la sua descrizione. Se premuto tre volte fornisce il valore numerico del carattere in decimale e esadecimale. |
 | Spostarsi al carattere successivo, modalità esplorazione | 3 del tastierino numerico | NVDA+punto | Sposta il cursore di controllo al carattere di testo successivo nella riga corrente |
 | Spostarsi alla fine della riga, modalità esplorazione | shift+3 del tastierino numerico | NVDA+shift+o | Sposta il cursore di controllo alla fine della riga di testo corrente |
 | Dire tutto, modalità esplorazione | Più del tastierino numerico | NVDA+shift+freccia giù | Legge il testo dalla posizione attuale del cursore di controllo, spostando tale cursore man mano che la lettura continua |
@@ -377,7 +377,7 @@ La lista degli elementi consente l'accesso all'elenco dei links, delle intestazi
 Si possono utilizzare i bottoni che si trovano nella finestra di dialogo, per spostarsi su, o attivare quell'elemento.
 %kc:beginInclude
 || Nome | Tasto | Descrizione |
-| Elenco elementi buffer virtuale | NVDA+f7 | Apre la finestra dell'elenco elementi contenente links, intestazioni e sezioni del buffer virtuale |
+| Elenco elementi modalità navigazione | NVDA+f7 | Apre la finestra dell'elenco elementi contenente links, intestazioni e sezioni della modalità navigazione |
 %kc:endInclude
 
 ++ Oggetti incorporati ++
@@ -701,6 +701,7 @@ la maggior parte delle caselle di controllo in questa finestra di dialogo servon
 - stile del testo
 - tabelle
 - intestazioni riga/colonna delle tabelle
+- Coordinate delle celle delle tabelle
 - numeri di pagina
 - numeri di riga
 - errori di ortografia
@@ -753,7 +754,7 @@ I seguenti tasti rapidi risultano molto utili:
 | Torna alla configurazione salvata | NVDA+Control+r | NVDA+Control+r | Ripristina la configurazione di NVDA risalente all'ultima volta che essa è stata salvata |
 %kc:endInclude
 
-++ Files di configurazione e profili utente ++
+++ File di configurazione e profili utente ++
 Le versioni portabili di NVDA registrano tutte le impostazioni, i moduli personalizzati per le applicazioni e i drivers in una cartella chiamata userConfig, situata nella directory di NVDA.
 
 Le versioni installer di NVDA registrano tutte le impostazioni, i moduli personalizzati per le applicazioni e i drivers in una cartella speciale situata nei profili utente di Windows. Ciò significa che ciascun utente del sistema potrà avere le proprie impostazioni. Per accedere a tale cartella, sarà sufficiente aprire il menu avvio, selezionare programmi - NVDA- esplora le impostazioni utente.
@@ -872,20 +873,94 @@ Si prega di consultare la documentazione della propria barra braille per avere i
 
 ++ Modelli Handy Tech ++
 NVDA supporta tutte le barre braille prodotte dalla [Handy Tech http://www.handytech.de/], sia USB che Bluetooth. Per alcuni modelli vecchi USB bisogna installare i driver USB fatti dalla Handy Tech.
+Seguono i tasti che sono stati assegnati con NVDA.
+Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
+%kc:beginInclude
+|| Name | Key |
+| Scorre Display Braille indietro | left, up |
+| Scorre Display Braille avanti | right, down |
+| Sposta il display braille alla riga precedente  | b4 |
+| Sposta il display braille alla riga successiva | b5 |
+| Route to braille cell | routing |
+| Tasto shift+tab  | esc |
+| Tasto alt  | b2+b4+b5 |
+| Tasto esc  | b4+b6 |
+| Tasto tab  | enter |
+| Tasto Invio | esc+enter |
+| FrecciaSu | leftSpace |
+| FrecciaGiù | rightSpace |
+| Menu NVDA  | b2+b4+b5+b6 |
+| Configurazione Handy Tech  | b4+b8 |
+%kc:endInclude
 
-ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
+
 
 ++ MDV Lilli ++
 NVDA supporta la barra Braille Lilli prodotta dalla [MDV http://www.mdvbologna.it/]. Per un corretto funzionamento non si avrà bisogno di alcun driver aggiuntivo. Semplicemente collegare la Barra Braille e configurare NVDA selezionando tale dispositivo.
-Nota importante! Il driver incluso nella distribuzione ufficiale nvda 2011.1 risulta obsoleto e va aggiornato. Consultare la sezione download di www.nvda.it per scaricare quello corretto.
+Seguono i tasti che sono stati assegnati con NVDA.
+Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorre Display Braille indietro | LF |
+| Scorre Display Braille avanti | RG |
+| Sposta il display braille alla riga precedente  | UP |
+| Sposta il display braille alla riga successiva | DN |
+| Route to braille cell | routing |
+| Tasto shift+tab  | SLF |
+| Tasto tab | SRG |
+| Tasto alt+tab | SDN |
+| Tasto alt+shift+tab | SUP |
+%kc:endInclude
+
+++ Display Braille Baum/Humanware/APH  ++
+Molti Display Braille della [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] e [APH http://www.aph.org/] sono supportati sia tramite USB che Bluetooth.
+Essi includono:
+- Baum: SuperVario, PocketVario
+- HumanWare: Brailliant, BrailleConnect
+- APH: Refreshabraille
+-
+Altre barre Braille della Baum potrebbero funzionare, tuttavia non sono stati fatti test in tal senso.
+Nel caso di connessione tramite USB, è necessario installare i driver forniti dal produttore.
+Per i modelli APH Refreshabraille, il parametro USB Mode deve essere settato su Serial.
+Seguono i tasti che sono stati assegnati con NVDA.
+Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorre Display Braille indietro | d2 |
+| Scorre Display Braille avanti | d5 |
+| Sposta il display braille alla riga precedente  | d1 |
+| Sposta il display braille alla riga successiva | d3 |
+| Route to braille cell | routing |
+
+Per i modelli che possiedono un Joystick:
+|| Nome | Tasto |
+| FrecciaSu | up |
+| Frecciagiù | down |
+| FrecciaSinistra | left |
+| FrecciaDestra | right |
+| Tasto Invio | select |
+%kc:endInclude
 
 
 ++ altri drivers non ufficiali ++
-Sul sito della comunità italiana di NVDA sono presenti, alla voce download, drivers che non sono inclusi nello screen reader per ragioni tecniche e che verranno inseriti in seguito. Al momento possono essere scaricati drivers per la barra braille MB408l prodotta dalla MDV (Istituto Cavazza), per i display Papenmeier e per il Braillesense e SyncBraille prodotti dalla hims. Attualmente tali driver funzionano per NVDA 2010.2, ma contiamo presto di renderli compatibili con questa versione.
+Sul sito della comunità italiana di NVDA sono presenti, alla voce download, drivers che non sono inclusi nello screen reader per ragioni tecniche e che verranno inseriti in seguito. Al momento possono essere scaricati drivers per la barra braille MB408l prodotta dalla MDV (Istituto Cavazza), per il Braillesense e SyncBraille prodotti dalla Hims, e per  i display Papenmeier, funzionanti però questi ultimi soltanto con la vecchia versione 2010.2, in quanto nessun utente si è dimostrato interessato per questi driver, e nessuno ci ha mai aiutato con i test. 
+  Pertanto, Il lavoro di riscrittura dei Driver per i Display Braille Papenmeier verrà fatto soltanto se qualche utente si dimostrerà interessato.
+  
 
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] è un programma a parte del quale è possibile avvalersi per avere supporto per molte altre barre braille. Per poterlo utilizzare, è necessario installare [BRLTTY per Windows http://brl.thefreecat.org/brltty/].
 Si deve scaricare ed installare l'ultimo pacchetto Installer, che è chiamato, ad esempio, brltty-win-4.2-2.exe. Quando si configura la Barra Braille e la porta da utilizzare, si prega di fare attenzione alle istruzioni presentate a schermo, specialmente in caso si possieda un modello USB e sono già installati nel sistema i Drivers prodotti dalla casa madre.
+Seguono i tasti che sono stati assegnati con NVDA a Brltty.
+Si legga la [tabella dei tasti di Brltty http://mielke.cc/brltty/doc/drivers/] per comprendere come i comandi di Brltty sono mappati sul Display Braille.
+%kc:beginInclude
+|| Nome | comando BRLTTY  |
+| Scorre Display Braille indietro | fwinlt (go left one window) |
+| Scorre Display Braille avanti | fwinrt (go right one window) |
+| Sposta il Display Braille alla riga precedente  | lnup (go up one line) |
+| Sposta il Display Braille alla riga successiva | lndn (go down one line) |
+| Route to braille cell | route (bring cursor to character) |
+%kc:endInclude
+
 
 +Argomenti avanzati +
 
@@ -894,7 +969,7 @@ Si deve scaricare ed installare l'ultimo pacchetto Installer, che è chiamato, a
 Gli utenti hanno la possibilità di inserire o sovrascrivere le gesture (ad esempio la pressione di un tasto) in unos peciale file di scripts nella cartella che contiene le configurazioni di NVDA per l'utente.
 Questo file si chiama gestures.ini.
 
-Esso utilizza la sintassi standard dei files .ini.
+Esso utilizza la sintassi standard dei file .ini.
 Il file può contenere più sezioni e ciascuna sezione può possedere diverse voci.
 
 Ciascuna sezione fornisce le mappature per gli scripts in un modulo e classe particolare in Python all'interno di NVDA.
@@ -953,7 +1028,17 @@ Quindi, se si utilizza il tasto Alt in una gesture, la pressione della combinazi
 Comunque, si consiglia di servirsi dei tasti Shift, Control e NVDA come tasti speciali.
 
  
-+ Ulteriori Informazioni +
+++ Personalizzazione avanzata dei simboli di punteggiatura ++
+in aggiunta a ciò che abbiamo visto nella [Finestra di dialogo Pronuncia Punteggiatura/Simboli #SymbolPronunciation], è possibile personalizzare la punteggiatura ed altri simboli in maniera diversa.
+Per esempio, è possibile specificare se inviare o meno un simbolo non processato al sintetizzatore, per modificare parametri come l'inflessione o provocare una pausa.
+
+Per far ciò, è necessario modificare il file contenente le informazioni sulla pronuncia dei simboli che si trova nella propria cartella di configurazione utente di NVDA 
+Il file si chiama symbols-xx.dic, dove xx costituisce il codice della lingua.
+Il formato di tale file è documentato nella guida per gli sviluppatori, sezione pronuncia/simboli, che si può leggere sul [sito internazionale di NVDA NVDA_URLwiki/Development].
+Comunque, non è possibile per gli utenti definire simboli troppo complessi.
+ 
+ 
+ + Ulteriori Informazioni +
 Se si vogliono trovare maggiori informazioni o richiedere assistenza riguardo NVDA, si prega di visitare o il sito internazionale in lingua inglese su NVDA_URL, oppure quello relativo alla comunità italiana all'indirizzo www.nvda.it.
 In entrambe i siti web sarà possibile reperire documentazione aggiuntiva, supporto tecnico e risorse varie come forum o mailing list. In particolare, per quanto concerne il sito italiano, esiste una lista di discussione alla quale chiunque può iscriversi mandando un messaggio a:
 nvda-request@spazioausili.net

@@ -117,6 +117,8 @@ Os destaques desta versão incluem maiores implementações no tocante à  pontu
 - No Outlook 2010, o NVDA agora orienta corretamente o foco na lista de mensagens. (#1285)
 - Alguns problemas com a linha braille MDV Lilli referentes à conecção USB foram resolvidos. (#241)
 - No Internet Explorer e outros controles MSHTML, espaços já não são ignorados em certos casos no modo de navegação, ex.: depois de um link.
+- No Internet Explorer e outros controles MSHTML, elementos de HTML com estilo de exibição de nenhum, já não forçam uma quebra de linha no modo de navegação. (#1685)
+- Quando o NVDA não pode ser iniciado, ao tocar o som de parada crítica do Windows, já não é repetida por várias vezes a mensagem de erro crítico no arquivo do log.
 
 
 == Alterações específicas para Desenvolvedores ==

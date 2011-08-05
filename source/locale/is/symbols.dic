@@ -1,0 +1,92 @@
+﻿#locale/en/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d) # should be , instead of .  for Icelandic
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	punktur	all	always
+! sentence ending	upphrópun	all	always
+? sentence ending	spurningamerki	all	always
+; phrase ending	semíkomma	most	always
+: phrase ending	tvípunktur	most	always
+decimal point		none	always
+in-word '	úrfellingarmerki	all	norep
+negative number	mínus	none	norep
+
+# Whitespace
+\0	autt	char	# null
+\t	dálkabil
+\n	ný lína	char
+\f	ný síða	none
+\r	línubil 	char
+ 	bil	char
+ 	bil	char	# no-break space
+
+# Standard punctuation/symbols
+!	upphrópun	all
+"	gæsalöpp	most
+\#	oddakassi	most
+$	dollaramerki	all	norep
+£	pundmerki	all	norep
+€	evrur	all	norep
+%	prósent	some
+&	og	some
+'	úrfellingarmerki	all
+(	svigi opnast	most
+)	svigi lokast	most
+*	stjarna	most
++	plús	most
+,	komma	all	always
+-	bandstrik	most
+.	punktur	some
+/	skástrik	some
+:	tvípunktur	most	norep
+;	semíkomma	most
+<	minna en	most
+>	stærra en	most
+=	samasem	most
+?	spurningamerki	all
+@	hjá	some
+[	hornklofi opnast	most
+]	hornklofi lokast	most
+\\	öfugt skástrik	most
+^	veldismerki	most
+_	undirstrik	most
+`	bylgja	most
+{	slaufusvigi opnast	most
+}	slaufusvigi lokast	most
+|	pípa	most
+~	bylgja	most
+
+# Other characters
+•	upptalningarmerki	some
+…	punktur punktur punktur	all	always
+...	punktur punktur punktur	all	always
+	upptalningarmerki	some
+“	gæsalappir opnast	most
+”	gæsalappir lokast	most
+‘	vinstri komma	most
+’	hægri komma	most
+–	þankastrik lengra	most
+—	þankastrik styttra	most
+●	hringur	most
+¨	diaeresis	most
+‎	vinstri til hægri mark	char
+‏	hægri til vinstri mark	char

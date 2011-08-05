@@ -1,4 +1,9 @@
-﻿complexSymbols:
+#locale/bg/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
 # identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
@@ -10,6 +15,7 @@
 # Others
 decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[a-zA-Z0-9])'(?=[a-zA-Z])
+negative number	(?<!\w)-(?=\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -22,6 +28,7 @@ symbols:
 : phrase ending	двоеточие	most	always
 decimal point	точка	none	always
 in-word '	апостроф	all	norep
+negative number	минус	none	norep
 
 # Whitespace
 \0	празен
@@ -30,7 +37,7 @@ in-word '	апостроф	all	norep
 \f	прекъсване на страница
 \r	връщане на каретката
  	интервал
-
+ 	интервал	char	# no-break space
 
 # Standard punctuation/symbols
 !	удивителен
@@ -72,10 +79,15 @@ _	долна черта
 # Other characters
 •	средна точка
 …	многоточие
+...	многоточие
 	средна точка
 “	леви кавички
 ”	десни кавички
+‘	ляво ударение
+’	дясно ударение
 –	късо тире
 —	дълго тире
 ●	кръг
 ¨	трема
+‎	маркер от ляво надясно
+‏	маркер от дясно наляво

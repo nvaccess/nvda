@@ -85,7 +85,7 @@ class AppModule(appModuleHandler.AppModule):
 			outlookVersion=self.outlookVersion
 			if outlookVersion and outlookVersion<=9:
 				clsList.insert(0, MessageList_pre2003)
-			elif outlookVersion and outlookVersion>=14 and isinstance(obj,IAccessible) and obj.event_objectID==winUser.OBJID_CLIENT:
+			elif isinstance(obj,IAccessible) and obj.event_objectID==winUser.OBJID_CLIENT and obj.event_childID==0:
 				clsList.insert(0,SuperGridClient2010)
 
 class SuperGridClient2010(IAccessible):

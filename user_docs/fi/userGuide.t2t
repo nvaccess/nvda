@@ -11,7 +11,7 @@ Käyttöohje
 
 + Johdanto +
 Non-Visual Desktop Access (NVDA) on ilmainen ja avoimen lähdekoodin ruudunlukija Microsoft Windows -käyttöjärjestelmälle.
-Synteettisenä puheena ja pistekirjoituksella annettava palaute mahdollistaa sokeiden ja heikkonäköisten Windows-tietokoneiden käytön samoin kustannuksin kuin näkevienkin.
+Synteettisenä puheena ja pistekirjoituksella annettava palaute mahdollistaa sen, että sokeat ja heikkonäköiset voivat käyttää Windows-tietokoneita samoin kustannuksin kuin näkevätkin henkilöt.
 NVDA:ta kehittää [NV Access http://www.nvaccess.org/] yhteisön jäsenten avustuksella.
 
 ++ Yleiset ominaisuudet ++
@@ -52,7 +52,7 @@ NVDA tukee useiden kielten pistekirjoitusjärjestelmiä, mukaan lukien lyhennepi
 NVDA on copyright NVDA_COPYRIGHT_YEARS NVDA:n tekijät.
 
 NVDA on suojattu GNU General Public License (versio 2) -lisenssillä.
-Voit vapaasti levittää tai muuttaa tätä ohjelmistoa millä tavalla hyvänsä, kunhan toimitat lisenssiä sen mukana ja pidät lähdekoodin kaikkien saatavilla.
+Voit vapaasti levittää tai muuttaa tätä ohjelmistoa miten tahansa, kunhan toimitat lisenssiä sen mukana ja pidät lähdekoodin kaikkien saatavilla.
 Tämä koskee sekä alkuperäisiä että muokattuja ohjelmistokopioita ja kaikkia johdannaisia.
 Voit [tarkastella koko lisenssiä http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] saadaksesi lisätietoja.
 
@@ -206,7 +206,7 @@ Joitakin hyödyllisiä näppäinkomentoja kohdistuksella navigoitaessa:
 %kc:endInclude
 
 ++ Järjestelmäkohdistimella navigoiminen ++[Jarjestelmakohdistin]
-Kun [kohdistus #Jarjestelmakohdistus] on [objektissa #Objektit], joka mahdollistaa navigoimisen ja/tai tekstin muokkaamisen, tekstissä voidaan liikkua järjestelmäkohdistinta käyttäen (tunnetaan myös muokkauskohdistimena).
+Kun [kohdistus #Jarjestelmakohdistus] on navigoinnin ja/tai tekstin muokkaamisen mahdollistavassa [objektissa #Objektit], tekstissä voidaan liikkua järjestelmäkohdistinta käyttäen (tunnetaan myös muokkauskohdistimena).
 
 Kun kohdistus on objektissa, jossa on järjestelmäkohdistin, tekstissä liikkumiseen voidaan käyttää nuoli-, page up-, page down-, home- sekä end-näppäimiä jne.
 Tekstiä voidaan myös muuttaa, mikäli säädin tukee muokkaamista.
@@ -355,17 +355,17 @@ Kaikki NVDA:n [järjestelmäkohdistimen #Jarjestelmakohdistin] näppäinkomennot
 Dokumentissa liikuttaessa luetaan siinä olevan tekstin lisäksi myös muita tietoja, kuten onko kohdalla oleva teksti linkki, otsikko tms.
 
 Toisinaan on tarvetta olla suorassa vuorovaikutuksessa näissä dokumenteisssa olevien säädinten kanssa.
-Tämä tehdään siirtymällä kohdistustilaan, jossa kaikki näppäilyt välitetään kyseessä olevalle säätimelle.
-NVDA siirtyy oletusarvoisesti selaustilassa oltaessa kohdistustilaan automaattisesti liikuttaessa sarkaimella tai napsautettaessa hiirellä sellaisen säätimen kohdalla, joka edellyttää sitä.
-Vastaavasti sarkaimella siirtyminen tai sellaisen säätimen napsauttaminen, joka ei edellytä kohdistustilaa, siirtää takaisin selaustilaan.
-Enterin tai välilyönnin painaminen tällaisten säädinten kohdalla siirtää myös kohdistustilaan.
-Escape-näppäimen painaminen siirtää takaisin selaustilaan.
-Kohdistustila voidaan lisäksi pakottaa käyttöön manuaalisesti, jolloin se pysyy toiminnassa siihen asti kunnes se poistetaan käytöstä.
+Tämä tehdään siirtymällä vuorovaikutustilaan, jossa kaikki näppäilyt välitetään kyseessä olevalle säätimelle.
+NVDA siirtyy oletusarvoisesti selaustilasta vuorovaikutustilaan automaattisesti liikuttaessa tätä tilaa edellyttävän objektin kohdalle sarkaimella tai napsautettaessa sitä hiirellä.
+Vastaavasti sarkaimella siirtyminen tai sellaisen säätimen napsauttaminen, joka ei edellytä vuorovaikutustilaa, siirtää takaisin selaustilaan.
+Enterin tai välilyönnin painaminen tällaisten säädinten kohdalla siirtää myös vuorovaikutustilaan.
+Takaisin selaustilaan siirrytään painamalla Escape-näppäintä.
+Vuorovaikutustila voidaan lisäksi pakottaa käyttöön manuaalisesti, jolloin se pysyy toiminnassa siihen asti kunnes se poistetaan käytöstä.
 
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Vaihda selaus- ja kohdistustilan välillä | NVDA+välilyönti | Vaihtaa kohdistus- ja selaustilojen välillä |
-| Poistu kohdistustilasta | Esc | Siirtää takaisin selaustilaan, jos NVDA siirtyi aiemmin kohdistustilaan automaattisesti |
+| Vaihda selaus- ja vuorovaikutustilan välillä | NVDA+välilyönti | Vaihtaa vuorovaikutus- ja selaustilojen välillä |
+| Poistu vuorovaikutustilasta | Esc | Siirtää takaisin selaustilaan, mikäli NVDA siirtyi aiemmin automaattisesti vuorovaikutustilaan |
 | Päivitä selaustiladokumentti | NVDA+f5 | Lataa uudelleen nykyisen dokumentin sisällön (hyödyllistä, jos sivulta vaikuttaa puuttuvan jotakin) |
 | Etsi | NVDA+Ctrl+f | Avaa valintaikkunan, jolla voidaan etsiä tekstiä nykyisestä dokumentista |
 | Etsi seuraava | NVDA+f3 | Etsii dokumentista aiemmin hakemasi tekstin seuraavan esiintymän |
@@ -664,7 +664,7 @@ Löytyy Asetukset-valikon kohdasta "Tarkastelukohdistin..."
 Tämä valintaikkuna sisältää seuraavat asetukset:
 
 %kc:setting
-==== Seuraa järjestelmän kohdistusta ====
+==== Seuraa järjestelmäkohdistusta ====
 | Näppäinkomento pöytäkoneissa | NVDA+7 |
 | Näppäinkomento kannettavissa | NVDA+Ctrl+7 |
 
@@ -758,17 +758,17 @@ Jos asetus on käytössä, NVDA lukee myös taulukot, joita käytetään puhtaas
 ==== Kenttien, kuten linkkien ja otsikoiden, lukemisen määrittäminen ====
 Katso [Asiakirjojen muotoiluasetukset -valintaikkunassa #Asiakirjojenmuotoiluasetukset] asetuksia määrittääksesi kentät, jotka puhutaan, kuten linkit, otsikot ja taulukot.
   
-==== Automaattinen kohdistustila kohdistusmuutoksille ====
-Kun tämä valintaruutu on valittuna, kohdistustila otetaan käyttöön jos kohdistus muuttuu.
-Kun esim. siirrytään web-sivulla sarkaimella lomakkeen kohdalle tämän asetuksen ollessa käytössä, kohdistustila otetaan käyttöön automaattisesti.
+==== Automaattinen vuorovaikutustila kohdistuksen muuttuessa ====
+Kun tämä valintaruutu on valittuna, vuorovaikutustila otetaan käyttöön jos kohdistus muuttuu.
+Kun esim. siirrytään web-sivulla sarkaimella lomakkeen kohdalle tämän asetuksen ollessa käytössä, vuorovaikutustila otetaan käyttöön automaattisesti.
 
-==== Automaattinen kohdistustila kohdistinta liikutettaessa ====
-Kun tämä asetus on käytössä, NVDA siirtyy automaattisesti kohdistustilaan ja pois nuolinäppäimillä liikuttaessa.
-Jos esim. web-sivua nuolinäppäimillä selatessa tullaan muokkauskentän kohdalle, NVDA ottaa kohdistustilan käyttöön automaattisesti.
-Jos siitä siirrytään pois nuolinäppäimillä, NVDA vaihtaa takaisin selaustilaan.
+==== Automaattinen vuorovaikutustila kohdistinta liikutettaessa ====
+Kun tämä asetus on käytössä, NVDA siirtyy automaattisesti vuorovaikutustilaan ja siitä pois nuolinäppäimillä liikuttaessa.
+Jos esim. web-sivua nuolinäppäimillä selatessa tullaan muokkauskentän kohdalle, NVDA ottaa vuorovaikutustilan käyttöön automaattisesti.
+Jos kentästä siirrytään pois nuolinäppäimillä, NVDA vaihtaa takaisin selaustilaan.
 
-==== Ilmaise kohdistus- ja selaustilat äänimerkeillä ====
-Jos tämä asetus on käytössä, NVDA soittaa äänimerkin vaihtaessaan selaus- ja kohdistustilojen välillä sen sijaan, että siitä ilmoitettaisiin puheena.
+==== Ilmaise vuorovaikutus- ja selaustilat äänimerkeillä ====
+Jos tämä asetus on käytössä, NVDA soittaa äänimerkin vaihtaessaan selaus- ja vuorovaikutustilojen välillä sen sijaan, että siitä ilmoitettaisiin puheena.
 
 +++ Asiakirjojen muotoiluasetukset (NVDA+Ctrl+d) +++[Asiakirjojenmuotoiluasetukset]
 Tämä valintaikkuna löytyy Asetukset-valikon "Asiakirjojen muotoilu..." -kohdasta.
