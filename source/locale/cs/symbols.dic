@@ -1,4 +1,9 @@
-﻿complexSymbols:
+﻿#locale/cs/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
 # identifier	regexp
 # Others
 decimal point	(?<=\d)\,(?=\d)
@@ -7,22 +12,23 @@ symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	tečka	all	always
-! sentence ending	vykřičník	all	always
-? sentence ending	otazník	all	always
-; phrase ending	středník	most	always
-: phrase ending	dvojtečka	most	always
-decimal point		none	always
-in-word '	apostrof	all	norep
+. sentence ending	tečka	all	always	# tečka na konci věty
+! sentence ending	vykřičník	all	always	# vykřičník na konci věty
+? sentence ending	otazník	all	always	# otazník na konci věty
+; phrase ending	středník	most	always	# středník uprostřed věty
+: phrase ending	dvojtečka	most	always	# dvojtečka uprostřed věty
+decimal point		none	always	# desetinná čárka
+in-word '	apostrof	all	norep	# apostrof uvnitř slova
+negative number	mínus	none	norep	# záporné číslo
 
 # Whitespace
-\0	prázdný	char
-\t	tab
-\n	konec řádku	char
-\f	zlom strany	none
-\r	konec řádku	char
- 	mezera	char
- 	mezera	char	# no-break space
+\0	prázdný	char	# znak 0
+\t	tab	# tabulátor
+\n	nový řádek	char	# line feed
+\f	zlom strany	none	# zlom strany
+\r	konec řádku	char	# konec řádku
+ 	mezera	char	# mezera
+ 	mezera	char	# tvrdá mezera
 
 # Standard punctuation/symbols
 !	vykřičník	all
@@ -74,6 +80,8 @@ _	podtržení	most
 —	delší pomlčka	most
 ●	kroužek	most
 ¨	přehláska	most
+‎	znak zleva doprava 	char
+‏	znak zprava doleva	char
 ¡	obrácený vykřičník	most
 ¦	přerušená čára	most
 «	dvojitá lomená závorka	most
@@ -109,4 +117,3 @@ _	podtržení	most
 ∞	nekonečno	some
 ≠	nerovná se	most
 ß	ostré es	some
-
