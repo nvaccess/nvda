@@ -231,7 +231,12 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	api.setMouseObject(desktopObject)
 	import JABHandler
 	log.debug("initializing Java Access Bridge support")
-	JABHandler.initialize()
+	try:
+		JABHandler.initialize()
+	except NotImplementedError:
+		log.warning("Java Access Bridge not available")
+	except:
+		log.error("Error initializing Java Access Bridge support", exc_info=True)
 	import winConsoleHandler
 	log.debug("Initializing winConsole support")
 	winConsoleHandler.initialize()
