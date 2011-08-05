@@ -3,6 +3,18 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2011.3 =
+
+== Nové vlastnosti ==
+- V oknách Mozilla Gecko je počas objektovej navigácie oznamovaná úroveň nadpisov.
+- V režime prehliadania je možné oznamovať formátovanie textu v produktoch Mozilla.. (#394)
+- NVDA dokáže detekovať podčiarknutý a prečiarknutý text v editačných poliach IAccessible2 (nap. v aplikáciách Mozilla).
+
+
+== Opravy ==
+- V programe internet explorer a ostatných oknách MSHTML NVDA nebude oznamovať odrážky a číslovanie v zoznamoch, ak autor nastavil, že sa tieto nemajú zobrazovať (štýl zoznamu je none). (#1671)
+
+
 = 2011.2 =
 Prednosti tejto verzie zahŕňajú množstvo vylepšení súvisiacich z vyslovovaním interpunkčných a iných špeciálnych znakov; konfigurovateľné úrovne interpunkcie; vlastné pomenovanie pre interpunkčné a špeciálne symboly; fonetické hláskovanie znakov; eliminované pauzy na konci riadku počas plynulého čítania; lepšia podpora pre ARIA v programe Internet explorer; vylepšená podpora pre PDF dokumenty XFA/LiveCycle v programe Adobe Reader; prístup k textu písaného priamo na obrazovku vo väčšom množstve aplikácií; a možnosť získania informácií o farbe a formátovaní textu vypísaného na obrzovku.
 
