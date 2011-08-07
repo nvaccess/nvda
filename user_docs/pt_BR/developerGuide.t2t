@@ -6,7 +6,7 @@
 % Remove double spacing from the beginning of each line as txt2tags seems to indent preformatted text by two spaces
 %!PostProc(html): '^  ' ''
 
-Nota; Alguns termos deverão ser mantidos em Inglês por referirem-se a programação
+Nota; Alguns termos deverão ser mantidos em Inglês por referirem-se a programação e Jargões Técnicos
 
 
 = Índice =[toc]
@@ -189,7 +189,7 @@ Seja bastante cuidadoso  para manter todos os tabs e espaços intactos.
 
 Uma vez salvo no local correto, reinicie o NVDA ou selecione Recarregar Plugins localizado em Ferramentas no menu do NVDA.
 
-Finalmente, abra o Notepad e mova o foco pelo aplicativo; isto é, mova ao longo da barra de menus, abra alguma caixa de diálogo, etc.
+Finalmente, abra o Notepad e mova o foco pelo aplicativo; isto é, mova-o ao longo da barra de menus, abra alguma caixa de diálogo, etc.
 Você deve ouvir beeps a cada vez que o foco mudar.
 Note que se você se mover para uma instância fora do Notepad, para o Windows Explorer - você não ouvirá beeps.
  
@@ -210,7 +210,7 @@ class AppModule(appModuleHandler.AppModule):
 --- end ---
 ```
 
-Esse arquivo de App Module inicia-se com duas linhas de comentário, que descrevem para qual arquivo ele é.
+Esse arquivo de App Module inicia-se com duas linhas de comentário, que descrevem para que o arquivo serve.
 
 Ele então importa o módulo appModuleHandler, de modo que o o App Module então possa ter acesso à classe base do AppModule.
 
@@ -218,7 +218,7 @@ Em seguida, ele define uma classe denominada AppModule, que é herdada do appMod
 
 Dentro dessa classe, ele define 1 ou mais eventos, scripts ou gestos vinculados.
 Nesse exemplo, ele define 1 método de evento para gainFocus events (event_gainFocus), que reproduz um pequeno beep cada vez que é executado.
-A implementação desse evento não é importante para o propóseito desse exemplo.
+A implementação desse evento não é importante para o propósito desse exemplo.
 A parte mais important é a própria classe.
 Eventos serão explicados com mais detalhes noutro momento.
 
@@ -283,7 +283,7 @@ A parte mais importante é a própria classe.
  
 Como com outros exemplos nesse manual, lembramos que ao apagar o Global Plugin criado ao terminar o teste depois reiniciar o NVDA ou recarregar os plugins, então a funcionalidade original será restaurada.
 
-++ Objetos do NVDA ++
+++ Objetos no NVDA ++
 O NVDA representa controles e outros GUI elementos como seus Objetos.
 Esses Objetos do NVDA contêm propriedades standardisadas, tais como nome, função, valor, estados e descrição, que permitem a outras partes do NVDA consultar ou apresentar informações sobre um controle de uma forma generalizada.
 Por exemplo, o botão OK num diálogo pode ser representado como um Objeto do NVDA com o nome de "OK" e a função de botão.
@@ -331,7 +331,7 @@ The code may then retreave information from that object or perhaps even retreave
 
 Just like App Modules and Global Plugins, NVDA Objects can also define events, scripts and gesture bindings. 
  
-++ Scripts and Gesture Bindings ++
+++ Scripts e Gestos Vinculados ++
 App Modules, Global Plugins and NVDA Objects can define special methods which can be bound to a particular piece of input such as a key press.
 NVDA refers to these methods as scripts.
 
@@ -374,8 +374,8 @@ The order for gesture binding lookup is:
 - Global Commands (built in commands like quitting NVDA, object navigation commands, etc.)
 -
 
-++ Example 3: A Global Plugin to Find out Window Class and Control ID ++
-O Global Plugin a seguir lhe permite pressionar NVDA+leftArrow para obter o anúncio da classe da janela atualmente em foco, e NVDA+rightArrow para obter o anúncio da identificação do controle atualmente em foco.
+++ Exemplo 3: Um Global Plugin para Obter  a Classe da Janela e a Identificação do Controle ++
+O Global Plugin a seguir lhe permite pressionar NVDA+seta a esquerda para obter o anúncio da classe da janela atualmente em foco, e NVDA+seta a direita para obter o anúncio da identificação do controle atualmente em foco.
 Esse exemplo lhe mostra como definir um ou mais scripts e gestos vinculados numa classe tal como um App Module, Global Plugin o objeto do NVDA.
 
 Copie e cole o código (sem incluir) os marcadores de início e fim para um novo arquivo de texto com o nome de exemplo3.py, que deve ser salvo na sub-pasta globalPlugins.
@@ -452,9 +452,9 @@ Some common NVDA Object events are:
 - locationChange: physical screen location changes
 -
 
-There are  many other events, though those listed above are usually the most useful.
+Existem muitos outros eventos, mas os listados acima são habitualmente os mais úteis.
 
-For an example of an event handled by an App Module, please refer to [example 1 #Example1] (focus beeps in notepad).
+Para um exemplo de um evento controlado por um App Module, por favor reveja o [exemplo 1 #Example1] (beeps para o foco no notepad).
 
 ++ A variável SleepMode dos App Modules ++
 Os App Modules possuem uma propriedade bastante útil denominada "sleepMode" (modo dormir), que se ajustada para "true" desabilitam quase que por completo o NVDA dentro daquele aplicativo.
@@ -507,7 +507,7 @@ Inside this method, you should decide which custom NVDA Object class(es) (if any
 If a custom class should be used, it must be inserted into the class list, usually at the beginning. 
 You can also remove classes chosen by NVDA from the class list, although this is rarely required.
 
-++ Exemplo 5: Etiquetando os Campos de Edição do Notepad usando um Objeto do NVDA Personalizado ++
+++ Exemplo 5: Etiquetando os Campos de Edição do Notepad usando a Personalização de Objeto do NVDA ++
 Esse app module para o notepad faz com que o NVDA anuncie os principais campos de edição do Notepad como tendo um nome de "conteúdo".
 Feito isto, quando este receber foco, o NVDA dirá "Edição de Conteúdo".
 

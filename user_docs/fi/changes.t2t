@@ -3,6 +3,18 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2011.3 =
+
+== Uudet ominaisuudet ==
+- Otsikkotasot sanotaan nyt objektinavigointia käytettäessä Mozilla Gecko -sovelluksissa (esim. Firefoxissa).
+- Tekstin muotoilutietojen lukeminen on nyt mahdollista käytettäessä selaustilaa Mozilla Gecko -sovelluksissa (esim. Firefoxissa ja Thunderbirdissä). (#394)
+- Alle- ja/tai yliviivatun tekstin havaitseminen ja ilmoittaminen on nyt mahdollista standardinmukaisissa IAccessible2-tekstisäätimissä, esim. sellaisissa kuin Mozilla-sovelluksissa.
+
+
+== Korjatut ohjelmavirheet ==
+- NVDA  ei näytä enää luettelomerkkejä tai numerointia listoissa Internet Explorerissa ja muissa MSHTML-säätimissä, kun sivun tekijä on määrittänyt, ettei niitä tulisi näyttää (ts. listatyyli on "none"). (#1671)
+
+
 = 2011.2 =
 Tämän julkaisun tärkeimpiin uusiin ominaisuuksiin kuuluvat merkittävät välimerkkejä ja muita symboleita koskevat parannukset, mukaan lukien tasojen määrittäminen, omat nimet sekä merkkien kuvaukset, ei taukoja rivien lopussa lue kaikki -toiminnon aikana, paranneltu ARIA-tuki Internet Explorerissa, parempi tuki XFA- ja LiveCycle PDF -asiakirjoille Adobe Readerissa, mahdollisuus lukea ruudulla olevaa tekstiä useammassa sovelluksessa sekä mahdollisuus lukea muotoilutiedot ja värit ruudulla olevasta tekstistä.
 
@@ -44,8 +56,8 @@ Tämän julkaisun tärkeimpiin uusiin ominaisuuksiin kuuluvat merkittävät väl
 - Kun omia liitännäisiä sisältäviä asetuksia kopioidaan järjestelmäprofiiliin kirjautumisruudussa käytettäväksi jne, käyttäjää varoitetaan nyt, että se voi olla tietoturvariski. (#1426)
 - NVDA:n järjestelmäpalvelu ei enää käynnistä ja sulje NVDA:ta käyttäjäsyötetyöpöydillä (esim. virtuaalityöpöydillä).
 - NVDA ei enää käytä Windows XP:ssä tai Vistassa UI Automation -rajapintaa, vaikka se olisi käytettävissä. Tämän rajapinnan käyttäminen voi parantaa joidenkin uudenaikaisten sovellusten esteettömyyttä, mutta XP:ssä ja Vistassa oli liian monia hyytymisiä, kaatumisia sekä yleisen suorituskyvyn heikkenemistä sitä käytettäessä. (#1437)
-- Mozilla Gecko 2-moottoria tai uudempaa käyttävissä sovelluksissa (kuten Firefox 4 ja uudemmat) dokumenttia voidaan lukea selaustilassa ennen kuin se on latautunut kokonaan.
-- NVDA kertoo nyt säilön tilan kohdistuksen siirtyessä sen sisällä olevaan säätimeen (esim. jos kohdistus siirtyy dokumentissa, joka yhä latautuu, NVDA ilmoittaa nyt, että se on varattu).
+- Mozilla Gecko 2-moottoria tai uudempaa käyttävissä sovelluksissa (kuten Firefox 4 ja uudemmat) sivua on nyt mahdollista lukea selaustilassa ennen kuin se on latautunut kokonaan.
+- NVDA kertoo nyt säilön tilan kohdistuksen siirtyessä sen sisällä olevaan säätimeen (esim. jos kohdistus siirtyy sivulla, joka yhä latautuu, NVDA ilmoittaa nyt, että se on varattu).
 - NVDA:n käyttöliittymässä ja käyttöohjeessa ei objektinavigoinnista käytetä enää termejä "ensimmäinen alemman tason objekti" ja "ylemmän tason objekti", koska ne ovat sekavia monille käyttäjille.
 - Joitakin alavalikon sisältäviä valikkokohteita ei enää ilmoiteta suljetuiksi.
 - Lue muotoilutiedot -skripti (NVDA+f) lukee nyt muotoilut järjestelmäkohdistimen tai -kohdistuksen sijainnin asemesta tarkastelukohdistimen sijainnista. Useimmat eivät huomaa eroa, koska tarkastelukohdistin seuraa oletusarvoisesti järjestelmäkohdistinta. Tämä antaa nyt kuitenkin käyttäjälle mahdollisuuden selvittää muotoilut tarkastelukohdistinta liikutettaessa, kuten esim. kokonaistarkastelussa.
@@ -88,7 +100,7 @@ Tämän julkaisun tärkeimpiin uusiin ominaisuuksiin kuuluvat merkittävät väl
 - Useiden NVDA:n kopioiden yhtaikainen käynnistäminen  vahingossa ei ole enää mahdollista. (#507)
 - NVDA ei enää virheellisesti näytä pääikkunaansa hitaissa järjestelmissä koko ajan käynnissä ollessaan. (#726)
 - NVDA ei enää kaadu Windows xP:ssä WPF-sovellusta käynnistettäessä. (#1437)
-- Lue kaikki -komennot  toimivat nyt joissakin UI automation -tekstisäätimissä, jotka tukevat kaikkia tarvittavia toimintoja. (esim. nyt voidaan käyttää tarkastelukohdistimen nykyisestä kohdasta aloittavaa Lue kaikki -komentoa XPS-katseluohjelmassa).
+- Lue kaikki -komennot  toimivat nyt joissakin UI automation -tekstisäätimissä, jotka tukevat kaikkia tarvittavia toimintoja. (esim. tarkastelukohdistimen nykyisestä kohdasta aloittavaa Lue kaikki -komentoa on nyt mahdollista käyttää XPS-katseluohjelmassa).
 - NVDA ei enää luokittele virheellisesti  joitakin Outlook Expressin ja Windows Live Mailin viestisääntöjen Käytä-valintaikkunan listakohteita valintaruuduiksi. (#576)
 - Yhdistelmäruuduissa ei enää ilmoiteta olevan alavalikoita.
 - NVDA voi nyt lukea vastaanottajat Microsoft Outlookin Vastaanottaja-, Kopio- ja Piilokopio-kentissä. (#421)
@@ -105,7 +117,7 @@ Tämän julkaisun tärkeimpiin uusiin ominaisuuksiin kuuluvat merkittävät väl
 - NVDA ei enää hidastu tai hyydy Internet Explorerin ja muiden MSHTML-säädinten muokattavissa tekstikentissä, kun pistenäyttö on käytössä.
 - NVDA ei enää jätä huomiotta Firefoxin selaustilassa sisältöä, joka on kohdistettavan alkion sisässä, jossa on ARIA-esitysrooli.
 - Ensimmäisen sivun jälkeisillä sivuilla olevat rivit luetaan nyt oikein Microsoft Wordissa, kun pistenäyttö on käytössä. (#1603)
-- Oikealta vasemmalle luettavaa tekstiä sisältäviä rivejä voidaan taas lukea Microsoft Word 2003:ssa, kun pistenäyttö on käytössä. (#627)
+- Oikealta vasemmalle luettavaa tekstiä sisältäviä rivejä on jälleen mahdollista lukea Microsoft Word 2003:ssa, kun pistenäyttö on käytössä. (#627)
 - Lue kaikki -toiminto toimii nyt oikein Microsoft Wordissa, kun asiakirjan lopussa ei ole lauseen päättävää merkkiä.
 - Kun pelkkää tekstiä sisältävä viesti avataan Windows Live Mail 2011:ssä, NVDA siirtää kohdistuksen asianmukaisesti siihen, mikä mahdollistaa sen lukemisen.
 - NVDA ei enää hyydy tai lakkaa puhumasta tilapäisesti Windows Live Mailin Siirrä- tai Kopioi-valintaikkunassa. (#574)
@@ -133,8 +145,8 @@ Tämä julkaisu korjaa muutamia versiosta 2011.1 löydettyjä tietoturva- ja mui
 Tämän julkaisun tärkeimpiä uusia ominaisuuksia ovat automaattinen uuden tekstin lukeminen mIRC-, PuTTY-, Tera Term- ja SecureCRT-sovelluksissa, tuki yleisliitännäisille, luettelomerkkien ja numeroinnin lukeminen Microsoft Wordissa, lisänäppäinkomennot pistenäytöille, mukaan lukien näppäimet seuraavalle ja edelliselle riville siirtymiseksi, tuki useille Baum-, HumanWare- ja APH-pistenäytöille sekä joidenkin säädinten värien ilmoittaminen, esim. IBM Lotus Symphonyn tekstisäätimissä.
 
 == Uudet ominaisuudet ==
-- Värien ilmoittaminen on nyt mahdollista joissakin säätimissä. Automaattinen lukeminen voidaan määrittää Asiakirjojen muotoiluasetukset -valintaikkunasta. Värit voidaan lukea myös tekstin muotoilutietojen lukukomennolla (NVDA+f).
- - Tätä tuetaan alustavasti standardeissa muokattavissa IAccessible2-tekstisäätimissä (sellaisissa kuin Mozilla-sovelluksissa), RichEdit-säätimissä (sellaisissa kuin WordPadissa) ja IBM Lotus Symphonyn tekstisäätimissä.
+- Värien ilmoittaminen on nyt mahdollista joissakin säätimissä. Automaattinen lukeminen voidaan määrittää Asiakirjojen muotoiluasetukset -valintaikkunasta. Värit on mahdollista lukea myös tekstin muotoilutietojen lukukomennolla (NVDA+f).
+ - Tätä tuetaan alustavasti standardinmukaisissa muokattavissa IAccessible2-tekstisäätimissä (sellaisissa kuin Mozilla-sovelluksissa), RichEdit-säätimissä (sellaisissa kuin WordPadissa) ja IBM Lotus Symphonyn tekstisäätimissä.
 - Näennäispuskureissa on nyt mahdollista valita tekstiä sivu kerrallaan (näppäimillä Shift+Page down ja Shift+Page up) sekä kappale kerrallaan (näppäimillä Shift+Ctrl+alanuoli ja Shift+Ctrl+ylänuoli). (#639)
 - NVDA lukee nyt automaattisesti näytölle tulevan uuden tekstin mIRC:issä, PuTTY:ssä, Tera Termissä ja SecureCRT:ssä. (#936)
 - Uusien näppäinkomentojen lisääminen tai  olemassa olevien muuttaminen on nyt mahdollista  kaikille NVDA:n komennoille käyttäjän syötekomentokartan avulla. (#194)
@@ -144,12 +156,12 @@ Tämän julkaisun tärkeimpiä uusia ominaisuuksia ovat automaattinen uuden teks
 - Luettelomerkit ja numeroinnit luetaan nyt Microsoft Wordissa rivi kerrallaan liikuttaessa. (#208)  
 - Lisätty komento NVDA+Shift+s, joka ottaa käyttöön tai poistaa käytöstä unitilan nykyisessä sovelluksessa. Tämä toiminto, joka  tunnettiin aiemmin puhuvan sovelluksen tilana, poistaa käytöstä kaikki NVDA:n ruudunlukutoiminnot aktiivisessa sovelluksessa. Tästä on hyötyä sellaisissa sovelluksissa, joissa on oma puhe- tai ruudunlukuominaisuus. Unitila poistetaan käytöstä painamalla samaa näppäinkomentoa uudelleen.
 - Joitakin uusia pistenäyttöjen näppäinkomentoja on lisätty. Katso tarkempia tietoja käyttöohjeen Tuetut pistenäytöt -kappaleesta. (#209)
-- Kolmannen osapuolen kehittäjien mukavuuden vuoksi sovellusmoduulit sekä yleisliitännäiset voidaan nyt ladata uudelleen ilman NVDA:n uudelleenkäynnistystä. Tähän käytetään NVDA-valikon Työkalut-alavalikosta löytyvää Lataa liitännäiset uudelleen -vaihtoehtoa tai näppäinkomentoa NVDA+Ctrl+f3. (#544)
+- Kolmannen osapuolen kehittäjien mukavuuden vuoksi sovellusmoduulit sekä yleisliitännäiset on nyt mahdollista ladata uudelleen ilman NVDA:n uudelleenkäynnistystä. Tähän käytetään NVDA-valikon Työkalut-alavalikosta löytyvää Lataa liitännäiset uudelleen -vaihtoehtoa tai näppäinkomentoa NVDA+Ctrl+f3. (#544)
 - NVDA muistaa nyt kohdan, jossa oltiin palattaessa aiemmin vieraillulle web-sivulle. Tämä pätee siihen asti kunnes joko selain tai NVDA suljetaan. (#132)
-- Handy Tech -pistenäyttöjä voidaan nyt käyttää asentamatta yleisajuria. (#854)
+- Handy Tech -pistenäyttöjä on nyt mahdollista käyttää asentamatta yleisajuria. (#854)
 - Tuki useille Baum-, HumanWare- ja APH-pistenäytöille. (#937)
-- NVDA tunnistaa nyt Media Player Classic Home Cinema -mediasoittimen tilarivin.
-- Freedom Scientificin Focus 40 Blue -pistenäyttöä voidaan nyt käyttää bluetooth-yhteydellä. (#1345)
+- NVDA tunnistaa nyt Media Player Classic Home Cinema -mediasoittimen tilapalkin.
+- Freedom Scientificin Focus 40 Blue -pistenäytön käyttäminen bluetooth-yhteydellä on nyt mahdollista. (#1345)
 
 
 == Muutokset ==
@@ -206,14 +218,14 @@ Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkerta
 
 == Uudet ominaisuudet ==
 - Tarkastelukohdistimella liikkumista objekteissa on yksinkertaistettu huomattavasti. Tarkastelukohdistin sulkee nyt pois objektit, joista ei ole hyötyä käyttäjälle, esim. vain asettelutarkoituksiin käytettävät ja sellaiset, jotka eivät ole käytettävissä.
-- Tekstisäädinten muotoilutiedot voidaan nyt lukea Java Access Bridgeä käyttävissä sovelluksissa, openOffice mukaan lukien. (#358, #463)
+- Tekstisäädinten muotoilutietojen lukeminen on nyt mahdollista Java Access Bridgeä käyttävissä sovelluksissa, openOffice mukaan lukien. (#358, #463)
 - NVDA lukee Solut oikein Microsoft Excelissä, kun hiiri siirretään niiden päälle.
 - Java Access Bridgeä käyttävien sovellusten valintaikkunoiden teksti luetaan nyt automaattisesti valintaikkunoiden tullessa näkyviin. (#554)
-- Näennäispuskuria voidaan nyt käyttää Flash -sisällössä liikkumiseen. Objektinavigointia ja suoraa vuorovaikutusta säädinten kanssa vuorovaikutustilaa käyttäen tuetaan edelleen. (#453)
+- Näennäispuskurin käyttäminen Flash -sisällössä liikkumiseen on nyt mahdollista. Objektinavigointia ja suoraa vuorovaikutusta säädinten kanssa vuorovaikutustilaa käyttäen tuetaan edelleen. (#453)
 - Eclipse-kehitysympäristön muokattavat tekstisäätimet koodieditori mukaan lukien ovat nyt esteettömiä. Käytössä on oltava Eclipse 3.6 tai uudempi. (#256, #641)
 - NVDA voi nyt lukea suurimman osan näytöllä olevasta tekstistä. (#40, #643)
  - Tämä mahdollistaa sellaisten säädinten lukemisen, jotka eivät välitä tietoja suoremmilla ja luotettavammilla tavoilla.
- - Tämä ominaisuus tekee esteettömiksi mm. jotkin kuvakkeita sisältävät valikoiden kohdat (esim. Windows XP:n Avaa sovelluksessa -valikko) (#151), Windows Live -sovellusten muokattavat tekstikentät (#200), Outlook Expressin virheluettelo (#582), TextPadin muokattava tekstisäädin (#605), Eudoran luettelot, monet Australian E-tax:in säätimet ja Microsoft Excelin kaavapalkki.
+ - Tämä ominaisuus tekee esteettömiksi mm. jotkin kuvakkeita sisältävät valikkokohteet (esim. Windows XP:n Avaa sovelluksessa -valikko) (#151), Windows Live -sovellusten muokattavat tekstikentät (#200), Outlook Expressin virheluettelo (#582), TextPadin muokattava tekstisäädin (#605), Eudoran listat, monet Australian E-tax:in säätimet ja Microsoft Excelin kaavapalkki.
 - Tuki Microsoft Visual Studio 2005:n ja 2008:n koodieditorille. Vaaditaan vähintään Visual Studio Standard, ei toimi Express-versioissa. (#457)
 - Tuki IBM Lotus Symphony -asiakirjoille.
 - Kokeellinen tuki Google Chromelle. Huomaa, ettei Chromen ruudunlukijatuki ole läheskään valmis, ja että NVDA:ssakin saattavat lisätoimet olla tarpeen. Tämän kokeilemiseksi tarvitaan Chromen uusin kehitysversio.
@@ -221,7 +233,7 @@ Tämän julkaisun merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkerta
 - Kuplailmoitukset näytetään nyt pistenäytöllä niiden tullessa näkyviin. (#652)
 - Lisätty ajuri MDV Lilli -pistenäytölle. (#241)
 - Uusi valinta luetaan nyt Microsoft Excelissä, kun koko rivi tai sarake valitaan pikanäppäimillä Shift+välilyönti tai Ctrl+välilyönti. (#759)
-- Taulukon rivien ja sarakkeiden otsikot voidaan nyt lukea. Asetus on määritettävissä Asiakirjojen muotoiluasetukset -valintaikkunasta.
+- Taulukon rivien ja sarakkeiden otsikoiden lukeminen on nyt mahdollista. Asetus on määritettävissä Asiakirjojen muotoiluasetukset -valintaikkunasta.
  - Tätä tuetaan toistaiseksi vain Mozilla-sovelluksissa (Firefox 3.6.11 tai uudempi ja Thunderbird 3.1.5 tai uudempi). (#361)
 - Otettu käyttöön kokonaistarkastelun komennot: (#58)
  - NVDA+numeroryhmän 7: siirtää kokonaistarkasteluun ja sijoittaa tarkastelukohdistimen nykyisen objektin kohdalle, mikä mahdollistaa koko ruudun tai asiakirjan lukemisen tekstinlukukomennoilla.
