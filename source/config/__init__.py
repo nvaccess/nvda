@@ -143,6 +143,7 @@ confspec = ConfigObj(StringIO(
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
 	reportTableHeaders = boolean(default=True)
+	reportTableCellCoords = boolean(default=True)
 	reportLinks = boolean(default=true)
 	reportLists = boolean(default=true)
 	reportHeadings = boolean(default=true)
@@ -154,6 +155,11 @@ confspec = ConfigObj(StringIO(
 	followFocus = boolean(default=True)
 	followCaret = boolean(default=True)
 	followMouse = boolean(default=False)
+
+[UIA]
+	minWindowsVersion = float(default=6.1)
+	enabled = boolean(default=true)
+
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"

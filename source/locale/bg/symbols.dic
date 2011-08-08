@@ -1,0 +1,93 @@
+#locale/bg/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"')\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"')\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[a-zA-Z0-9])'(?=[a-zA-Z])
+negative number	(?<!\w)-(?=\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	точка	all	always
+! sentence ending	удивителен	all	always
+? sentence ending	въпросителен	all	always
+; phrase ending	точка и запетая	most	always
+: phrase ending	двоеточие	most	always
+decimal point	точка	none	always
+in-word '	апостроф	all	norep
+negative number	минус	none	norep
+
+# Whitespace
+\0	празен
+\t	таб
+\n	нов ред
+\f	прекъсване на страница
+\r	връщане на каретката
+ 	интервал
+ 	интервал	char	# no-break space
+
+# Standard punctuation/symbols
+!	удивителен
+"	кавички
+\#	диез
+$	долар
+£	паунд
+€	евро
+%	процент
+&	амперсант
+'	апостроф
+(	лява скоба
+)	дясна скоба
+*	звезда
++	плюс
+,	запетая
+-	тире
+.	точка
+/	наклонена черта
+:	двоеточие
+;	точка и запетая
+<	по-малко
+>	по-голямо
+=	равно
+?	въпросителен
+@	кльомба
+[	лява квадратна скоба
+]	дясна квадратна скоба
+"	кавички
+\\	обратна черта
+^	колибка
+_	долна черта
+`	граф
+{	лява вълнообразна скоба
+}	дясна вълнообразна скоба
+|	вертикална черта
+~	вълничка
+
+# Other characters
+•	средна точка
+…	многоточие
+...	многоточие
+	средна точка
+“	леви кавички
+”	десни кавички
+‘	ляво ударение
+’	дясно ударение
+–	късо тире
+—	дълго тире
+●	кръг
+¨	трема
+‎	маркер от ляво надясно
+‏	маркер от дясно наляво

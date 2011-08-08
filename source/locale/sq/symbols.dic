@@ -1,0 +1,90 @@
+﻿#locale/al/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	pikë	all	always
+! sentence ending	pikë çuditëse	all	always
+? sentence ending	pikëpyetje	all	always
+; phrase ending	pikëpresje	most	always
+: phrase ending	dy pika	most	always
+decimal point		none	always
+in-word '	apostrofë	all	norep
+negative number	minus	none	norep
+
+# Whitespace
+\0	bosh	char
+\t	tab
+\n	rresht i ri	char
+\f	fundi i faqes	none
+\r	rreshti tjetër	char
+ 	hapsirë	char
+ 	hapsirë	char	# no-break space
+
+# Standard punctuation/symbols
+!	pikë çuditëse	all
+"	thonjëz	most
+\#	thurje	some
+$	dollar	all	norep
+£	pound	some
+€	euro	all	norep
+%	përqind	some
+&	and	some
+'	apostrofë	all
+(	hap kllapë	most
+)	mbyll kllapë	most
+*	yll	most
++	plus	most
+,	presje	all	always
+-	vizë ndarëse	most
+.	pikë	some
+/	slash	some
+:	dy pika	most	norep
+;	pikëpresje	most
+<	më e vogël	most
+>	më e madhe	most
+=	baraz	most
+?	pikëpyetje	all
+@	at	some
+[	hap kllapë katrore	most
+]	mbyll kllapë katrore	most
+\\	backslash	most
+^	caret	most
+_	nënvizim	most
+`	theks	most
+{	hap kllapë gjarpërore	most
+}	mbyll kllapë gjarpërore	most
+|	bar	most
+~	tilda	most
+
+# Other characters
+•	bullet	some
+…	pika pika	all	always
+	bullet	some
+“	thonjëz e majtë	most
+”	thonjëz e djathtë	most
+‘	apostrofë e majtë	most
+’	apostrofë e djathtë	most
+–	vizë	most
+—	vizë	most
+●	circle	most
+¨	diaeresis	most
+‎	shënues nga e majta në të djathtë	char
+‏	shënues nga e djathta në të majtë	char

@@ -298,7 +298,7 @@ inline int getIDFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
 	return ID;
 }
 
-inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPreformattedText) {
+inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPreformattedText, bool isStartOfBlock) {
 	int res=0;
 	IHTMLDOMTextNode* pHTMLDOMTextNode=NULL;
 	LOG_DEBUG(L"Trying to get an IHTMLDOMTextNode interface pointer");
@@ -316,21 +316,28 @@ inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPref
 	}
 	LOG_DEBUG(L"Got data from IHTMLDOMTextNode");
 	wstring s;
+	bool notAllWhitespace=false;
 	if(allowPreformattedText) {
 		s.append(data);
 	} else {
 		bool lastNotWhitespace=false;
+		bool strippingLeft=isStartOfBlock;
 		for(wchar_t* c=data;*c;++c) {
 			if(!iswspace(*c)) {
 				s+=*c;
 				lastNotWhitespace=TRUE;
-			} else if(lastNotWhitespace) {
+				notAllWhitespace=true;
+				strippingLeft=false;
+			} else if(lastNotWhitespace||!strippingLeft) {
 				s+=L' ';
 				lastNotWhitespace=FALSE;
 			} 
 		}
 	}
 	SysFreeString(data);
+	if(!allowPreformattedText&&!notAllWhitespace) {
+		return L"";
+	}
 	return s;
 }
 
@@ -357,7 +364,7 @@ inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPref
 	}\
 }
 
-inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool& invisible, bool& isBlock) {
+inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool& invisible, bool& isBlock, wstring& listStyle) {
 	BSTR tempBSTR=NULL;
 	IHTMLElement2* pHTMLElement2=NULL;
 	int res=pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
@@ -386,12 +393,21 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 	pHTMLCurrentStyle->get_display(&tempBSTR);
 	if(tempBSTR) {
 		LOG_DEBUG(L"Got display");
-		if (_wcsicmp(tempBSTR,L"none")==0) invisible=true;
+		if (_wcsicmp(tempBSTR,L"none")==0) {
+			invisible=true;
+			isBlock=false;
+		}
 		if (_wcsicmp(tempBSTR,L"inline")==0||_wcsicmp(tempBSTR,L"inline-block")==0) isBlock=false;
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
 	} else {
 		LOG_DEBUG(L"Failed to get display");
+	}
+	BSTR _listStyle;
+	pHTMLCurrentStyle->get_listStyleType(&_listStyle);
+	if(_listStyle) {
+		listStyle.append(_listStyle);
+		SysFreeString(_listStyle);
 	}
 	if (pHTMLCurrentStyle) pHTMLCurrentStyle->Release();
 }
@@ -645,7 +661,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 
 	//Handle text nodes
 	{ 
-		wstring s=getTextFromHTMLDOMNode(pHTMLDOMNode,allowPreformattedText);
+		wstring s=getTextFromHTMLDOMNode(pHTMLDOMNode,allowPreformattedText,(parentNode&&parentNode->getIsBlock()&&!previousNode));
 		if(!s.empty()) {
 			LOG_DEBUG(L"Got text from node");
 			VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,s);
@@ -668,8 +684,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	//Find out block and visibility style
 	bool invisible=false;
 	bool isBlock=true;
-	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode, invisible, isBlock);
-
+	wstring listStyle;
+	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode, invisible, isBlock,listStyle);
 	LOG_DEBUG(L"Trying to get IHTMLDOMNode::nodeName");
 	if(pHTMLDOMNode->get_nodeName(&tempBSTR)!=S_OK||!tempBSTR) {
 		LOG_DEBUG(L"Failed to get IHTMLDOMNode::nodeName");
@@ -784,11 +800,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	bool isInteractive=isEditable||(IAStates&STATE_SYSTEM_FOCUSABLE)||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end());
 	//Set up numbering for lists
 	int LIIndex=0;
-	if(nodeName.compare(L"OL")==0) {
+	if(nodeName.compare(L"OL")==0||nodeName.compare(L"UL")==0) {
 		//Ordered lists should number their list items
 		LIIndex=1;
 		LIIndexPtr=&LIIndex;
-	} else if((nodeName.compare(L"UL")==0||nodeName.compare(L"DL")==0)) {
+	} else if(nodeName.compare(L"DL")==0) {
 		//Unordered lists should not be numbered
 		LIIndexPtr=NULL;
 	}
@@ -810,15 +826,15 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		contentString=L" ";
 	} else if(nodeName.compare(L"LI")==0) {
 		renderChildren=true;
-		if(LIIndexPtr!=NULL) {
+		if(listStyle.compare(L"disc")==0||listStyle.compare(L"circle")==0||listStyle.compare(L"square")==0) {
+			tempStringStream.str(L"");
+			tempStringStream<<L"\x2022 "; //Bullet
+			contentString=tempStringStream.str();
+		} else if(LIIndexPtr!=NULL&&!listStyle.empty()&&listStyle.compare(L"none")!=0) {
 			tempStringStream.str(L"");
 			tempStringStream<<*LIIndexPtr<<L". ";
 			contentString=tempStringStream.str();
 			++(*LIIndexPtr);
-		} else {
-			tempStringStream.str(L"");
-			tempStringStream<<L"\x2022 "; //Bullet
-			contentString=tempStringStream.str();
 		}
 	} else if(nodeName.compare(L"TABLE")==0) {
 		renderChildren=true;

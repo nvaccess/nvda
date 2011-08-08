@@ -57,7 +57,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			try:
 				descNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaDescribedBy)
 			except (COMError,NameError):
-				escNode=None
+				descNode=None
 			if descNode:
 				try:
 					description=self.obj.makeTextInfo(NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=descNode)).text
@@ -159,7 +159,7 @@ class MSHTML(VirtualBuffer):
 		if not winUser.isDescendantWindow(self.rootDocHandle,obj.windowHandle) and obj.windowHandle!=self.rootDocHandle:
 			return False
 		newObj=obj
-		while newObj and newObj.role not in (controlTypes.ROLE_APPLICATION,controlTypes.ROLE_DIALOG) and isinstance(newObj,NVDAObjects.IAccessible.MSHTML.MSHTML):
+		while  isinstance(newObj,NVDAObjects.IAccessible.MSHTML.MSHTML) and newObj.role not in (controlTypes.ROLE_APPLICATION,controlTypes.ROLE_DIALOG):
 			if newObj==self.rootNVDAObject:
 				return True
 			newObj=newObj.parent 
@@ -170,6 +170,9 @@ class MSHTML(VirtualBuffer):
 			return True
 		root=self.rootNVDAObject
 		if not root:
+			return False
+		if not root.IAccessibleRole:
+			# The root object is dead.
 			return False
 		states=root.states
 		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_EDITABLE in states:
@@ -184,7 +187,7 @@ class MSHTML(VirtualBuffer):
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
-		ID=obj.HTMLNode.uniqueNumber
+		ID=obj.HTMLNodeUniqueNumber
 		return docHandle,ID
 
 	def _searchableAttribsForNodeType(self,nodeType):

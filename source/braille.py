@@ -47,7 +47,9 @@ TABLES = (
 	("Fr-Ca-g2.ctb", _("French (Canada) grade 2")),
 	("fr-bfu-comp6.utb", _("French (unified) 6 dot computer braille")),
 	("fr-bfu-comp8.utb", _("French (unified) 8 dot computer braille")),
-	("fr-bfu-g2.ctb", _("French (unified) Grade 2")),	("gr-gr-g1.utb", _("Greek (Greece) grade 1")),
+	("fr-bfu-g2.ctb", _("French (unified) Grade 2")),
+	("gr-gr-g1.utb", _("Greek (Greece) grade 1")),
+	("gez-g1.ctb", _("Ethiopic grade 1")),
 	("he.ctb", _("Hebrew 8 dot computer braille")),
 	("hi-in-g1.utb", _("Hindi grade 1")),
 	("hr.ctb", _("Croatian 8 dot computer braille")),
@@ -66,6 +68,8 @@ TABLES = (
 	("ru-ru-g1.utb", _("Russian grade 1")),
 	("Se-Se-g1.utb", _("Swedish grade 1")),
 	("sk-sk-g1.utb", _("Slovak")),
+	("sl-si-g1.utb", _("Slovene grade 1")),
+	("sr-g1.ctb", _("Serbian grade 1")),
 	("tr.ctb", _("Turkish grade 1")),
 	("UEBC-g1.utb", _("Unified English Braille Code grade 1")),
 	("UEBC-g2.ctb", _("Unified English Braille Code grade 2")),
@@ -182,12 +186,10 @@ class Region(object):
 		@type braillePos: int
 		@note: If routing the cursor, L{brailleToRawPos} can be used to translate L{braillePos} into a position in L{rawText}.
 		"""
-		pass
 
 	def nextLine(self):
 		"""Move to the next line if possible.
 		"""
-		pass
 
 	def previousLine(self, start=False):
 		"""Move to the previous line if possible.
@@ -437,11 +439,20 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 				return region, bufferPos - start
 		raise LookupError("No such position")
 
-	def regionPosToBufferPos(self, region, pos):
+	def regionPosToBufferPos(self, region, pos, allowNearest=False):
 		for testRegion, start, end in self.regionsWithPositions:
 			if region == testRegion:
-				if pos < end:
+				if pos < end - start:
+					# The requested position is still valid within the region.
 					return start + pos
+				elif allowNearest:
+					# The position within the region isn't valid,
+					# but the region is valid, so return its start.
+					return start
+				break
+		if allowNearest:
+			# Resort to the start of the last region.
+			return start
 		raise LookupError("No such position")
 
 	def bufferPosToWindowPos(self, bufferPos):
@@ -558,19 +569,14 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		"""
 		self._savedWindow = self.bufferPosToRegionPos(self.windowStartPos)
 
-	def restoreWindow(self, ignoreErrors=False):
+	def restoreWindow(self):
 		"""Restore the window saved by L{saveWindow}.
-		@param ignoreErrors: Whether to ignore errors.
-		@type ignoreErrors: bool
 		@precondition: L{saveWindow} has been called.
 		@postcondition: If the saved position is valid, the window is restored.
-		@raise LookupError: If C{ignoreErrors} is C{False} and the saved region position is invalid.
+			Otherwise, the nearest position is restored.
 		"""
-		try:
-			self.windowStartPos = self.regionPosToBufferPos(*self._savedWindow)
-		except LookupError:
-			if not ignoreErrors:
-				raise
+		region, pos = self._savedWindow
+		self.windowStartPos = self.regionPosToBufferPos(region, pos, allowNearest=True)
 
 _cachedFocusAncestorsEnd = 0
 def invalidateCachedFocusAncestors(index):
@@ -860,7 +866,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.saveWindow()
 		region.update()
 		self.mainBuffer.update()
-		self.mainBuffer.restoreWindow(ignoreErrors=True)
+		self.mainBuffer.restoreWindow()
 		if region.brailleCursorPos is not None:
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
 		if self.buffer is self.mainBuffer:
@@ -882,7 +888,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.saveWindow()
 		region.update()
 		self.mainBuffer.update()
-		self.mainBuffer.restoreWindow(ignoreErrors=True)
+		self.mainBuffer.restoreWindow()
 		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:

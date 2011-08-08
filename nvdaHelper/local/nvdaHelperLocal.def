@@ -4,6 +4,7 @@ EXPORTS
 	generateBeep
 	startServer
 	stopServer
+	nvdaInProcUtils_winword_expandToLine
 	VBuf_createBuffer
 	VBuf_destroyBuffer
 	VBuf_findNodeByAttributes
@@ -27,3 +28,4 @@ EXPORTS
 	_nvdaController_speakText
 	displayModel_getWindowTextInRect
 	displayModel_requestTextChangeNotificationsForWindow
+	calculateWordOffsets

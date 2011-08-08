@@ -20,8 +20,7 @@ in-word -	(?<=[^\W_])[-]
 dates .	((?<=\b\d\d)\.(?=\d\d.(\d{2}|\d{4})\b))|((?<=\b\d\d.\d\d)\.(?=(\d{2}|\d{4})\b))
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
-before-number -	\-(?=\d{1,})
-after-number %	(?<=\d)\%(?=\s|$)
+after-number %	(?<=\d)\%(?!\w)
 
 # Fix pronunciation for some words
 no francs	F(?=\d|\s\d)
@@ -41,7 +40,7 @@ symbols:
 decimal point		# virgule décimale
 dates .	 	all	always
 dates /	 	all	always
-before-number -	moins	none	norep	# - devant un nombre
+negative number	moins	none	norep	# - devant un nombre
 after-number %	pourcent	none	norep
 in-word '	apostrophe
 in-word -	tiret	all	norep
@@ -68,7 +67,7 @@ $	dollar	none
 (	parenthèse gauche
 )	parenthèse droite
 *	astérisque	some	norep
-+	pluss	some	norep
++	pluce	some	norep
 ,	virgule
 -	tiret
 .	point

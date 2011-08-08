@@ -39,8 +39,13 @@ nvdaExec = os.path.join(sys.prefix,"nvda.exe")
 slaveExec = os.path.join(sys.prefix,"nvda_slave.exe")
 nvdaSystemConfigDir=os.path.join(sys.prefix,'systemConfig')
 
+class AutoHANDLE(HANDLE):
+	"""A HANDLE which is automatically closed when no longer in use.
+	"""
 
-
+	def __del__(self):
+		if self:
+			windll.kernel32.CloseHandle(self)
 
 isDebug = False
 
@@ -91,21 +96,19 @@ class PROCESS_INFORMATION(Structure):
 
 def getLoggedOnUserToken(session):
 	# Only works in Windows XP and above.
-	token = HANDLE()
+	token = AutoHANDLE()
 	windll.wtsapi32.WTSQueryUserToken(session, byref(token))
-	return token.value
+	return token
 
 def duplicateTokenPrimary(token):
-	newToken = HANDLE()
+	newToken = AutoHANDLE()
 	windll.advapi32.DuplicateTokenEx(token, MAXIMUM_ALLOWED, None, SecurityIdentification, TokenPrimary, byref(newToken))
-	windll.kernel32.CloseHandle(token)
-	return newToken.value
+	return newToken
 
 def getOwnToken():
-	process = windll.kernel32.OpenProcess(PROCESS_QUERY_INFORMATION, False, os.getpid())
-	token = HANDLE()
+	process = AutoHANDLE(windll.kernel32.OpenProcess(PROCESS_QUERY_INFORMATION, False, os.getpid()))
+	token = AutoHANDLE()
 	windll.advapi32.OpenProcessToken(process, MAXIMUM_ALLOWED, byref(token))
-	windll.kernel32.CloseHandle(process)
 	return token
 
 def getSessionSystemToken(session):
@@ -126,32 +129,31 @@ def executeProcess(desktop, token, executable, *argStrings):
 			if windll.advapi32.CreateProcessAsUserW(token, None, cmdBuf,None,None,False,CREATE_UNICODE_ENVIRONMENT,env,None,byref(startupInfo),byref(processInformation)) == 0:
 				raise WinError()
 		finally:
-			windll.kernel32.CloseHandle(token)
 			windll.userenv.DestroyEnvironmentBlock(env)
 	else:
 		if windll.kernel32.CreateProcessW(None, cmdBuf,None,None,False,0,None,None,byref(startupInfo),byref(processInformation)) == 0:
 			raise WinError()
-	return processInformation.hProcess
+	windll.kernel32.CloseHandle(processInformation.hThread)
+	return AutoHANDLE(processInformation.hProcess)
 
 def nvdaLauncher():
 	initDebug()
 	desktop = getInputDesktopName()
 	debug("launcher: starting with desktop %s" % desktop)
-	if os.path.basename(desktop) in (u"Default", u"Screen-saver"):
-		debug("launcher: default or screen-saver desktop, exiting")
+	desktopBn = os.path.basename(desktop)
+	if desktopBn != u"Winlogon" and not desktopBn.startswith(u"InfoCard{"):
+		debug("launcher: user or screen-saver desktop, exiting")
 		return
 
 	debug("launcher: starting NVDA")
 	process = startNVDA(desktop)
-	desktopSwitchEvt = windll.kernel32.OpenEventW(SYNCHRONIZE, False, u"WinSta0_DesktopSwitch")
+	desktopSwitchEvt = AutoHANDLE(windll.kernel32.OpenEventW(SYNCHRONIZE, False, u"WinSta0_DesktopSwitch"))
 	windll.kernel32.WaitForSingleObject(desktopSwitchEvt, INFINITE)
-	windll.kernel32.CloseHandle(desktopSwitchEvt)
 	debug("launcher: desktop switch, exiting NVDA on desktop %s" % desktop)
 	exitNVDA(desktop)
 	# NVDA should never ever be left running on other desktops, so make certain it is dead.
 	# It may still be running if it hasn't quite finished initialising yet, in which case -q won't work.
 	windll.kernel32.TerminateProcess(process, 1)
-	windll.kernel32.CloseHandle(process)
 
 def startNVDA(desktop):
 	token=duplicateTokenPrimary(getOwnToken())
@@ -159,18 +161,13 @@ def startNVDA(desktop):
 	args = [desktop, token, nvdaExec, "-m", "-c", nvdaSystemConfigDir, "--no-sr-flag"]
 	if not isDebug:
 		args.append("--secure")
-	try:
-		return executeProcess(*args)
-	finally:
-		windll.kernel32.CloseHandle(token)
+	return executeProcess(*args)
 
 def exitNVDA(desktop):
 	token=duplicateTokenPrimary(getOwnToken())
 	windll.advapi32.SetTokenInformation(token,TokenUIAccess,byref(c_ulong(1)),sizeof(c_ulong))
 	process = executeProcess(desktop, token, nvdaExec, "-q")
 	windll.kernel32.WaitForSingleObject(process, 10000)
-	windll.kernel32.CloseHandle(process)
-	windll.kernel32.CloseHandle(token)
 
 def isUserRunningNVDA(session):
 	token = duplicateTokenPrimary(getSessionSystemToken(session))
@@ -179,8 +176,6 @@ def isUserRunningNVDA(session):
 	windll.kernel32.WaitForSingleObject(process, INFINITE)
 	exitCode = DWORD()
 	windll.kernel32.GetExitCodeProcess(process, byref(exitCode))
-	windll.kernel32.CloseHandle(process)
-	windll.kernel32.CloseHandle(token)
 	return exitCode.value == 0
 
 def isSessionLoggedOn(session):
@@ -214,7 +209,7 @@ def initDebug():
 class NVDAService(win32serviceutil.ServiceFramework):
 
 	_svc_name_="nvda"
-	_svc_display_name_="nonVisual Desktop Access"
+	_svc_display_name_="NVDA"
 
 	def GetAcceptedControls(self):
 		return win32serviceutil.ServiceFramework.GetAcceptedControls(self) | win32service.SERVICE_ACCEPT_SESSIONCHANGE
@@ -248,7 +243,7 @@ class NVDAService(win32serviceutil.ServiceFramework):
 		self.desktopSwitchSupervisorStarted = True
 		origSession = self.session
 		debug("starting desktop switch supervisor, session %d" % origSession)
-		desktopSwitchEvt = windll.kernel32.OpenEventW(SYNCHRONIZE, False, u"Session\%d\WinSta0_DesktopSwitch" % self.session)
+		desktopSwitchEvt = AutoHANDLE(windll.kernel32.OpenEventW(SYNCHRONIZE, False, u"Session\%d\WinSta0_DesktopSwitch" % self.session))
 		if not desktopSwitchEvt:
 			try:
 				raise WinError()
@@ -263,7 +258,6 @@ class NVDAService(win32serviceutil.ServiceFramework):
 			debug("desktop switch, session %r" % self.session)
 			self.handleDesktopSwitch()
 
-		windll.kernel32.CloseHandle(desktopSwitchEvt)
 		debug("desktop switch supervisor terminated, session %d" % origSession)
 
 	def handleDesktopSwitch(self):
@@ -314,7 +308,6 @@ class NVDAService(win32serviceutil.ServiceFramework):
 				process = executeProcess(ur"WinSta0\Winlogon", token, slaveExec, u"service_NVDALauncher")
 				self.launcherStarted = True
 				debug("launcher started on session %d" % self.session)
-				windll.kernel32.CloseHandle(process)
 			except Exception, e:
 				debug("error starting launcher: %s" % e)
 
@@ -355,13 +348,10 @@ def stopService():
 			win32service.ControlService(serv, win32service.SERVICE_CONTROL_STOP)
 
 			# Wait for the process to exit.
-			proc = windll.kernel32.OpenProcess(SYNCHRONIZE, False, pid)
+			proc = AutoHANDLE(windll.kernel32.OpenProcess(SYNCHRONIZE, False, pid))
 			if not proc:
 				return
-			try:
-				windll.kernel32.WaitForSingleObject(proc, INFINITE)
-			finally:
-				windll.kernel32.CloseHandle(proc)
+			windll.kernel32.WaitForSingleObject(proc, INFINITE)
 
 		finally:
 			win32service.CloseServiceHandle(serv)

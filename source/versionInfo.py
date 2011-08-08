@@ -30,14 +30,17 @@ def _updateVersionFromVCS():
 
 name="NVDA"
 longName=_("NonVisual Desktop Access")
-version="2011.2dev"
+version="2011.3dev"
+publisher="unknown"
 try:
-	from _buildVersion import version
+	from _buildVersion import version, publisher
 except ImportError:
 	_updateVersionFromVCS()
 description=_("A free and open source screen reader for Microsoft Windows")
 url="http://www.nvda-project.org/"
-copyright=_("Copyright (C) 2006-2011 NVDA Contributors")
+copyrightYears="2006-2011"
+copyright=_("Copyright (C) {years} NVDA Contributors").format(
+	years=copyrightYears)
 aboutMessage=_(u"""{longName} ({name})
 Version: {version}
 URL: {url}

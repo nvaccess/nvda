@@ -105,8 +105,8 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getTextRange(self,start,end):
 		if start==end:
-			return ""
-		return NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,False)
+			return u""
+		return NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,False) or u""
 
 	def getTextWithFields(self,formatConfig=None):
 		start=self._startOffset
@@ -511,6 +511,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		self.documentConstantIdentifier = self.documentConstantIdentifier
 		if not hasattr(self.rootNVDAObject.appModule, "_vbufRememberedCaretPositions"):
 			self.rootNVDAObject.appModule._vbufRememberedCaretPositions = {}
+		self._lastCaretPosition = None
 
 	def prepare(self):
 		self.shouldPrepare=False
@@ -523,12 +524,11 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if not self.VBufHandle:
 			return
 
-		if self.shouldRememberCaretPositionAcrossLoads:
+		if self.shouldRememberCaretPositionAcrossLoads and self._lastCaretPosition:
 			try:
-				caret = self.selection
-				caret.collapse()
-				self.rootNVDAObject.appModule._vbufRememberedCaretPositions[self.documentConstantIdentifier] = caret.bookmark
-			except:
+				self.rootNVDAObject.appModule._vbufRememberedCaretPositions[self.documentConstantIdentifier] = self._lastCaretPosition
+			except AttributeError:
+				# The app module died.
 				pass
 
 		self.unloadBuffer()
@@ -647,7 +647,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 					self.selection = self.makeTextInfo(initialPos)
 				speech.cancelSpeech()
 				reportPassThrough(self)
-				speech.speakObjectProperties(self.rootNVDAObject,name=True)
+				speech.speakObjectProperties(self.rootNVDAObject,name=True,states=True,reason=speech.REASON_FOCUS)
 				info=self.makeTextInfo(textInfos.POSITION_CARET)
 				sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 			self._hadFirstGainFocus = True
@@ -700,6 +700,12 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		super(VirtualBuffer, self)._set_selection(info)
 		if isScriptWaiting() or not info.isCollapsed:
 			return
+		# Save the last caret position for use in terminate().
+		# This must be done here because the buffer might be cleared just before terminate() is called,
+		# causing the last caret position to be lost.
+		caret = info.copy()
+		caret.collapse()
+		self._lastCaretPosition = caret.bookmark
 		if config.conf['reviewCursor']['followCaret'] and api.getNavigatorObject() is self.rootNVDAObject:
 			api.setReviewPosition(info)
 		if reason == speech.REASON_FOCUS:

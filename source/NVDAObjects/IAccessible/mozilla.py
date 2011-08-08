@@ -31,7 +31,7 @@ class Mozilla(IAccessible):
 			#So only use the node_child_of object if it has a valid IAccessible2 windowHandle
 			try:
 				windowHandle=res[0].windowHandle
-			except COMError:
+			except (COMError,AttributeError):
 				windowHandle=None
 			if windowHandle:
 				newObj=IAccessible(windowHandle=windowHandle,IAccessibleObject=res[0],IAccessibleChildID=res[1])
@@ -53,6 +53,15 @@ class Mozilla(IAccessible):
 			elif self.table and self.table.presentationType==self.presType_layout:
 				presType=self.presType_layout
 		return presType
+
+	def _get_positionInfo(self):
+		info=super(Mozilla,self).positionInfo
+		level=info.get('level',None)
+		if not level:
+			level=self.IA2Attributes.get('level',None)
+			if level:
+				info['level']=level
+		return info
 
 class Gecko1_9(Mozilla):
 

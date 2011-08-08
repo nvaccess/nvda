@@ -120,7 +120,12 @@ def locateHTMLElementByID(document,ID):
 		log.debugWarning("document.getElementsByTagName failed with COMError %s"%e)
 		return None
 	for frame in frames:
-		pacc=IAccessibleFromHTMLNode(frame)
+		try:
+			pacc=IAccessibleFromHTMLNode(frame)
+		except NotImplementedError:
+			# #1569: It's not possible to get an IAccessible from frames marked with an ARIA role of presentation.
+			# In this case, just skip this frame.
+			continue
 		res=IAccessibleHandler.accChild(pacc,1)
 		if not res: continue
 		childElement=HTMLNodeFromIAccessible(res[0])
@@ -161,7 +166,9 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		with self.obj.suspendCaretEvents():
 			selObj=parent.document.selection
 			oldSelRange=selObj.createRange().duplicate()
-			textRange.select()
+			# #1566: Calling textRange.select() sometimes throws focus onto the document,
+			# so create a new range from the selection and move the selection using that.
+			selObj.createRange().moveToBookmark(textRange.getBookmark())
 			KeyboardInputGesture.fromName("home").send()
 			api.processPendingEvents(False)
 			newSelStartMark=selObj.createRange().getBookmark()
@@ -189,17 +196,11 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			self._rangeObj=self.obj.HTMLNode.createTextRange()
 		if position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			activeElement=self.obj.HTMLNode.document.activeElement
-			if not activeElement or self.obj.HTMLNode.uniqueID!=activeElement.uniqueID:
+			if not activeElement or self.obj.HTMLNode.uniqueNumber!=activeElement.uniqueNumber:
 				raise RuntimeError("Only works with currently selected element")
 			if not editableBody:
 				mark=self.obj.HTMLNode.document.selection.createRange().GetBookmark()
 				self._rangeObj.MoveToBookmark(mark)
-				#When the caret is at the end of some edit fields, the rangeObj fetched is actually positioned on a magic position before the start
-				#So if we detect this, force it to the end
-				t=self._rangeObj.duplicate()
-				if not t.expand("word") and t.expand("textedit") and t.compareEndPoints("startToStart",self._rangeObj)<0:
-					self._rangeObj.expand("textedit")
-					self._rangeObj.collapse(False)
 			if position==textInfos.POSITION_CARET:
 				self._rangeObj.collapse()
 			return
@@ -279,6 +280,11 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			moveFunc=self._rangeObj.moveEnd
 		else:
 			moveFunc=self._rangeObj.move
+			if direction<0:
+				# #1605: If at the end of a line, moving back seems to land on a blank unit,
+				# which breaks backspacing.
+				# Expanding first seems to fix this.
+				self._rangeObj.expand("character")
 		res=moveFunc(unit,direction)
 		return res
 
@@ -308,6 +314,15 @@ class MSHTML(IAccessible):
 
 	def event_caret(self):
 		if self._ignoreCaretEvents: return
+		if self.TextInfo is not MSHTMLTextInfo:
+			return
+		try:
+			newCaretBookmark=self.makeTextInfo(textInfos.POSITION_CARET).bookmark
+		except RuntimeError: #caret events can be fired on the object (focus) when  its not the real MSHTML selection 
+			newCaretBookmark=None
+		if not newCaretBookmark or newCaretBookmark==getattr(self,'_oldCaretBookmark',None):
+			return
+		self._oldCaretBookmark=newCaretBookmark
 		return super(MSHTML,self).event_caret()
 
 	@classmethod
@@ -337,11 +352,8 @@ class MSHTML(IAccessible):
 			clsList.append(EditableTextWithoutAutoSelectDetection)
 		#fix for #974
 		#this fails on some control in vs2008 new project wizard
-		try:
-			nodeName = self.HTMLNode.nodeName
-		except COMError:
-			pass
-		else:
+		nodeName = self.HTMLNodeName
+		if nodeName:
 			if nodeNamesToNVDARoles.get(nodeName) == controlTypes.ROLE_DOCUMENT:
 				clsList.append(Body)
 			elif nodeName == "OBJECT":
@@ -391,11 +403,17 @@ class MSHTML(IAccessible):
 		#object and embed nodes give back an incorrect IAccessible via queryService, so we must treet it as an ancestor IAccessible
 		if self.HTMLNodeName in ("OBJECT","EMBED"):
 			self.HTMLNodeHasAncestorIAccessible=True
-		try:
-			self.HTMLNode.createTextRange()
-			self.TextInfo=MSHTMLTextInfo
-		except (NameError, COMError):
-			pass
+
+	def _get_TextInfo(self):
+		if not hasattr(self,'_HTMLNodeSupportsTextRanges'):
+			try:
+				self.HTMLNode.createTextRange()
+				self._HTMLNodeSupportsTextRanges=True
+			except (COMError,NameError):
+				self._HTMLNodeSupportsTextRanges=False
+		if self._HTMLNodeSupportsTextRanges:
+			return MSHTMLTextInfo
+		return super(MSHTML,self).TextInfo
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		if not super(MSHTML,self).isDuplicateIAccessibleEvent(obj):
@@ -407,7 +425,7 @@ class MSHTML(IAccessible):
 	def _isEqual(self, other):
 		if self.HTMLNode and other.HTMLNode:
 			try:
-				return self.windowHandle == other.windowHandle and self.HTMLNode.uniqueNumber == other.HTMLNode.uniqueNumber
+				return self.windowHandle == other.windowHandle and self.HTMLNodeUniqueNumber == other.HTMLNodeUniqueNumber
 			except (COMError,NameError):
 				pass
 		return super(MSHTML, self)._isEqual(other)
@@ -416,7 +434,7 @@ class MSHTML(IAccessible):
 		presType=super(MSHTML,self).presentationType
 		if presType==self.presType_content and self.HTMLAttributes['role']=="presentation":
 			presType=self.presType_layout
-		if self.treeInterceptor and presType==self.presType_content and self.role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEBODY) and self.treeInterceptor.isNVDAObjectPartOfLayoutTable(self):
+		if presType==self.presType_content and self.role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEBODY) and self.treeInterceptor and self.treeInterceptor.isNVDAObjectPartOfLayoutTable(self):
 			presType=self.presType_layout
 		return presType
 
@@ -709,11 +727,18 @@ class MSHTML(IAccessible):
 			HTMLNode=HTMLNode.parentNode
 		raise NotImplementedError
 
+	def _get_HTMLNodeUniqueNumber(self):
+		if not hasattr(self,'_HTMLNodeUniqueNumber'):
+			self._HTMLNodeUniqueNumber=self.HTMLNode.uniqueNumber
+		return self._HTMLNodeUniqueNumber
+
 	def _get_HTMLNodeName(self):
-		try:
-			return self.HTMLNode.nodeName
-		except (COMError,NameError):
-			return ""
+		if not hasattr(self,'_HTMLNodeName'):
+			try:
+				self._HTMLNodeName=self.HTMLNode.nodeName
+			except (COMError,NameError):
+				return ""
+		return self._HTMLNodeName
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.

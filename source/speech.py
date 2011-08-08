@@ -228,11 +228,11 @@ def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties
 				newStates=newPropertyValues[name]
 				newPropertyValues['states']=newStates-oldStates
 				newPropertyValues['negativeStates']=oldStates-newStates
-	#Get the speech text for the properties we want to speak, and then speak it
 	#properties such as states need to know the role to speak properly, give it as a _ name
 	newPropertyValues['_role']=newPropertyValues.get('role',obj.role)
 	# The real states are needed also, as the states entry might be filtered.
 	newPropertyValues['_states']=obj.states
+	#Get the speech text for the properties we want to speak, and then speak it
 	text=getSpeechTextForProperties(reason,**newPropertyValues)
 	if text:
 		speakText(text,index=index)
@@ -243,7 +243,6 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"rowNumber":True,"columnNumber":True,"columnCount":True,"rowCount":True}
 
 	if reason==REASON_FOCUSENTERED:
-		allowProperties["states"]=False
 		allowProperties["value"]=False
 		allowProperties["keyboardShortcut"]=False
 		allowProperties["positionInfo_level"]=False
@@ -261,7 +260,9 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 	if reason!=REASON_QUERY:
 		allowProperties["rowCount"]=False
 		allowProperties["columnCount"]=False
-		if not config.conf["documentFormatting"]["reportTables"] or obj.tableCellCoordsInName:
+		if (not config.conf["documentFormatting"]["reportTables"]
+				or not config.conf["documentFormatting"]["reportTableCellCoords"]
+				or obj.tableCellCoordsInName):
 			allowProperties["rowNumber"]=False
 			allowProperties["columnNumber"]=False
 	if isEditable:
@@ -324,7 +325,7 @@ def speak(speechSequence,symbolLevel=None):
 	for index in xrange(len(speechSequence)):
 		item=speechSequence[index]
 		if isinstance(item,basestring):
-			speechSequence[index]=processText(item,symbolLevel)
+			speechSequence[index]=processText(item,symbolLevel)+" "
 	getSynth().speak(speechSequence)
 
 def speakSelectionMessage(message,text):
@@ -458,6 +459,9 @@ def processPositiveStates(role, states, reason, positiveStates):
 	if controlTypes.STATE_DRAGGING in positiveStates:
 		# It's obvious that the control is draggable if it's being dragged.
 		positiveStates.discard(controlTypes.STATE_DRAGGABLE)
+	if role == controlTypes.ROLE_COMBOBOX:
+		# Combo boxes inherently have a popup, so don't report it.
+		positiveStates.discard(controlTypes.STATE_HASPOPUP)
 	if reason == REASON_QUERY:
 		return positiveStates
 	positiveStates.discard(controlTypes.STATE_DEFUNCT)
@@ -465,14 +469,18 @@ def processPositiveStates(role, states, reason, positiveStates):
 	positiveStates.discard(controlTypes.STATE_FOCUSED)
 	positiveStates.discard(controlTypes.STATE_OFFSCREEN)
 	positiveStates.discard(controlTypes.STATE_INVISIBLE)
-	if reason in (REASON_FOCUS, REASON_CARET, REASON_SAYALL):
+	if reason != REASON_CHANGE:
 		positiveStates.discard(controlTypes.STATE_LINKED)
 		if role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TABLEROW) and controlTypes.STATE_SELECTABLE in states:
 			positiveStates.discard(controlTypes.STATE_SELECTED)
-		if role != controlTypes.ROLE_EDITABLETEXT:
-			positiveStates.discard(controlTypes.STATE_READONLY)
+	if role != controlTypes.ROLE_EDITABLETEXT:
+		positiveStates.discard(controlTypes.STATE_READONLY)
 	if role == controlTypes.ROLE_CHECKBOX:
 		positiveStates.discard(controlTypes.STATE_PRESSED)
+	if role == controlTypes.ROLE_MENUITEM:
+		# The user doesn't usually care if a menu item is expanded or collapsed.
+		positiveStates.discard(controlTypes.STATE_COLLAPSED)
+		positiveStates.discard(controlTypes.STATE_EXPANDED)
 	return positiveStates
 
 def processNegativeStates(role, states, reason, negativeStates):
@@ -682,6 +690,7 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 	value=propertyValues.get('value') if role not in silentValuesForRoles else None
 	rowNumber=propertyValues.get('rowNumber')
 	columnNumber=propertyValues.get('columnNumber')
+	includeTableCellCoords=propertyValues.get('includeTableCellCoords',True)
 	if speakRole and (reason not in (REASON_SAYALL,REASON_CARET,REASON_FOCUS) or not (name or value or rowNumber or columnNumber) or role not in silentRolesOnFocus):
 		textList.append(controlTypes.speechRoleLabels[role])
 	if value:
@@ -729,13 +738,15 @@ def getSpeechTextForProperties(reason=REASON_QUERY,**propertyValues):
 			rowHeaderText = propertyValues.get("rowHeaderText")
 			if rowHeaderText:
 				textList.append(rowHeaderText)
-			textList.append(_("row %s")%rowNumber)
+			if includeTableCellCoords: 
+				textList.append(_("row %s")%rowNumber)
 			oldRowNumber = rowNumber
 		if columnNumber and (not sameTable or columnNumber != oldColumnNumber):
 			columnHeaderText = propertyValues.get("columnHeaderText")
 			if columnHeaderText:
 				textList.append(columnHeaderText)
-			textList.append(_("column %s")%columnNumber)
+			if includeTableCellCoords:
+				textList.append(_("column %s")%columnNumber)
 			oldColumnNumber = columnNumber
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
@@ -754,7 +765,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 
-	childCount=int(attrs['_childcount'])
+	childCount=int(attrs.get('_childcount',"0"))
 	if reason==REASON_FOCUS or attrs.get('alwaysReportName',False):
 		name=attrs.get('name',"")
 	else:
@@ -808,7 +819,8 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
-	descriptionText=getSpeechTextForProperties(reason=reason,description=description)
+	descriptionText=(getSpeechTextForProperties(reason=reason,description=description)
+		if config.conf["presentation"]["reportObjectDescriptions"] else "")
 	levelText=getSpeechTextForProperties(reason=reason,positionInfo_level=level)
 
 	# Determine under what circumstances this node should be spoken.
@@ -862,10 +874,17 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	elif fieldType=="start_addedToControlFieldStack" and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER,controlTypes.ROLE_TABLEROWHEADER) and tableID:
 		# Table cell.
 		reportTableHeaders = formatConfig["reportTableHeaders"]
-		return " ".join((getSpeechTextForProperties(_tableID=tableID,
-				rowNumber=attrs.get("table-rownumber"), columnNumber=attrs.get("table-columnnumber"),
-				rowHeaderText=attrs.get("table-rowheadertext") if reportTableHeaders else None, columnHeaderText=attrs.get("table-columnheadertext") if reportTableHeaders else None),
-			stateText))
+		reportTableCellCoords = formatConfig["reportTableCellCoords"]
+		getProps = {
+			'rowNumber': attrs.get("table-rownumber"),
+			'columnNumber': attrs.get("table-columnnumber"),
+			'includeTableCellCoords': reportTableCellCoords
+		}
+		if reportTableHeaders:
+			getProps['rowHeaderText'] = attrs.get("table-rowheadertext")
+			getProps['columnHeaderText'] = attrs.get("table-columnheadertext")
+		return (getSpeechTextForProperties(_tableID=tableID, **getProps)
+			+ (" %s" % stateText if stateText else ""))
 
 	# General cases
 	elif (
@@ -931,6 +950,10 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		backgroundColor=attrs.get("background-color")
 		oldBackgroundColor=attrsCache.get("background-color") if attrsCache is not None else None
 		if backgroundColor and backgroundColor!=oldBackgroundColor:
+			# Translators: This is used to indicate a background color after the text color.
+			# The {backgroundColor} text will be replaced by the background color.
+			# For example, if the text is white on a black background,
+			# the output of this message in English would be "on black".
 			textList.append(_("on {backgroundColor}").format(backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
 	if  formatConfig["reportLineNumber"]:
 		lineNumber=attrs.get("line-number")
@@ -1102,6 +1125,9 @@ class IndexCommand(SpeechCommand):
 		if not isinstance(index,int): raise ValueError("index must be int, not %s"%type(index))
 		self.index=index
 
+	def __repr__(self):
+		return "IndexCommand(%r)" % self.index
+
 class CharacterModeCommand(object):
 	"""Turns character mode on and off for speech synths."""
 
@@ -1112,3 +1138,6 @@ class CharacterModeCommand(object):
 		"""
 		if not isinstance(state,bool): raise ValueError("state must be boolean, not %s"%type(state))
 		self.state=state
+
+	def __repr__(self):
+		return "CharacterModeCommand(%r)" % self.state

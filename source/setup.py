@@ -141,6 +141,7 @@ setup(
 			"description":"NVDA application",
 			"product_version":version,
 			"copyright":copyright,
+			"company_name":publisher,
 		},
 		{
 			"script": "nvda_slave.pyw",
@@ -149,6 +150,7 @@ setup(
 			"description": "NVDA slave",
 			"product_version": version,
 			"copyright": copyright,
+			"company_name": publisher,
 		},
 	],
 	service=[{
@@ -158,6 +160,7 @@ setup(
 		"description": "NVDA service",
 		"product_version": version,
 		"copyright": copyright,
+		"company_name": publisher,
 		"uac_info": ("requireAdministrator", False),
 		"cmdline_style": "pywin32",
 	}],

@@ -93,45 +93,47 @@ def readText(info,cursor):
 	_startGenerator(readTextHelper_generator(info,cursor))
 
 def readTextHelper_generator(info,cursor):
-	sendCount=0
-	receiveCount=0
+	lastSentIndex=0
+	lastReceivedIndex=0
 	cursorIndexMap={}
 	reader=info.copy()
 	if not reader.isCollapsed:
 		reader.collapse()
 	keepReading=True
 	keepUpdating=True
-	oldSpokenIndex=None
 	while keepUpdating:
 		if not reader.obj:
 			# The object died, so we should too.
 			return
-		# receiveCount might be None if other speech was interspersed with this say all.
+		# lastReceivedIndex might be None if other speech was interspersed with this say all.
 		# In this case, we want to send more text in case this was the last chunk spoken.
-		if receiveCount is None or (sendCount-receiveCount)<=10:
+		if lastReceivedIndex is None or (lastSentIndex-lastReceivedIndex)<=10:
 			if keepReading:
 				bookmark=reader.bookmark
-				index=sendCount
+				index=lastSentIndex+1
 				delta=reader.move(textInfos.UNIT_READINGCHUNK,1,endPoint="end")
 				if delta<=0:
 					speech.speakWithoutPauses(None)
 					keepReading=False
 					continue
 				speech.speakTextInfo(reader,unit=textInfos.UNIT_READINGCHUNK,reason=speech.REASON_SAYALL,index=index)
-				sendCount+=1
+				lastSentIndex=index
 				cursorIndexMap[index]=bookmark
-				reader.collapse(end=True)
+				try:
+					reader.collapse(end=True)
+				except RuntimeError: #MS Word when range covers end of document
+					speech.speakWithoutPauses(None)
+					keepReading=False
 		else:
 			# We'll wait for speech to catch up a bit before sending more text.
-			if speech.speakWithoutPauses.lastSentIndex in (spokenIndex,None):
-				# Nothing has been sent to the synth yet.
+			if speech.speakWithoutPauses.lastSentIndex is None or (lastSentIndex-speech.speakWithoutPauses.lastSentIndex)>=10:				# There is a 
+				# There is a large chunk of pending speech
 				# Force speakWithoutPauses to send text to the synth so we can move on.
 				speech.speakWithoutPauses(None)
-		spokenIndex=speech.getLastSpeechIndex()
-		if spokenIndex!=oldSpokenIndex:
-			oldSpokenIndex=spokenIndex
-			receiveCount=spokenIndex
-			bookmark=cursorIndexMap.get(spokenIndex,None)
+		receivedIndex=speech.getLastSpeechIndex()
+		if receivedIndex!=lastReceivedIndex and (lastReceivedIndex!=0 or receivedIndex!=None): 
+			lastReceivedIndex=receivedIndex
+			bookmark=cursorIndexMap.get(receivedIndex,None)
 			if bookmark is not None:
 				updater=reader.obj.makeTextInfo(bookmark)
 				if cursor==CURSOR_CARET:

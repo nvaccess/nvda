@@ -27,6 +27,7 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 	void fillTableCellInfo_IATable2(VBufStorage_controlFieldNode_t* node, IAccessibleTableCell* paccTableCell);
 
 	bool shouldDisableTableHeaders;
+	bool hasEncodedAccDescription;
 
 	protected:
 

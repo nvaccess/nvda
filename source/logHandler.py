@@ -175,7 +175,10 @@ class FileHandler(logging.StreamHandler):
 		# Only play the error sound if this is a test version.
 		shouldPlayErrorSound = versionInfo and versionInfo.isTestVersion
 		if record.levelno>=logging.CRITICAL:
-			winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
+			try:
+				winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
+			except:
+				pass
 		elif record.levelno>=logging.ERROR and shouldPlayErrorSound:
 			try:
 				nvwave.playWaveFile("waves\\error.wav")

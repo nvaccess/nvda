@@ -92,25 +92,26 @@ class TableCell(IAccessible):
 
 	value=None
 
-	def script_tab(self,gesture):
+	def script_nextColumn(self,gesture):
 		gesture.send()
 		if not isScriptWaiting():
 			next=self.next
 			if next and controlTypes.STATE_FOCUSED in next.states:
 				eventHandler.executeEvent("gainFocus", next)
 
-	def script_shiftTab(self,gesture):
+	def script_previousColumn(self,gesture):
 		gesture.send()
 		if not isScriptWaiting():
 			previous=self.previous
 			if previous and controlTypes.STATE_FOCUSED in previous.states:
 				eventHandler.executeEvent("gainFocus", previous)
 
-	def initOverlayClass(self):
-		self.bindGesture("kb:tab", "tab")
-		self.bindGesture("kb:rightArrow", "tab")
-		self.bindGesture("kb:shift+tab", "shiftTab")
-		self.bindGesture("kb:leftArrow", "shiftTab")
+	__gestures = {
+		"kb:tab": "nextColumn",
+		"kb:rightArrow": "nextColumn",
+		"kb:shift+tab": "previousColumn",
+		"kb:leftArrow": "previousColumn",
+	}
 
 
 class TreeViewItem(IAccessible):

@@ -1,0 +1,92 @@
+﻿#locale/en/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	punktum	all	always
+! sentence ending	udråbstegn	all	always
+? sentence ending	spørgsmålstegn	all	always
+; phrase ending	semikolon	most	always
+: phrase ending	kolon	most	always
+decimal point		none	always
+in-word '	apostrof	all	norep
+negative number	minus	none	norep
+
+# Whitespace
+\0	blank	tegn	# null
+\t	tab
+\n	linjeskift	char
+\f	sideskift	none
+\r	vognretur	char
+ 	mellemrum
+		blødt mellemrum	# no-break space
+
+# Standard punctuation/symbols
+!	udråbstegn	all
+"	anførselstegn	most
+\#	nummertegn	most
+$	dollar	all	norep
+£	pund	all	norep
+€	euro	all	norep
+%	procent	some
+&	og tegn	some
+'	apostrof	all
+(	venstre parentes	most
+)	højre parentes	most
+*	stjerne	most
++	plus	most
+,	komma	all	always
+-	streg	most
+.	prik	some
+/	skråstreg	some
+:	kolon	most	norep
+;	semikolon	most
+<	mindre end	most
+>	større end	most
+=	lig med	most
+?	spørgsmålstegn	all
+@	snabel a	some
+[	venstre kantet parentes	most
+]	højre kantet parentes	most
+\\	omvendt skråstreg	most
+^	accent circonflex	most
+_	understregning	most
+`	accent grave	most
+{	venstre tuborg	most
+}	højre tuborg	most
+|	lodret linje	most
+~	tilde	most
+
+# Other characters
+•	punkttegn	some
+…	prik prik prik	all	always
+...	punktum punktum punktum	all	always
+	punkttegn	some
+“ anførselstegn begynder	most
+”	anførselstegn slutter	most
+‘	venstre apostrof	most
+’	højre apostrof	most
+–	en dash	most
+—	em dash	most
+●	circle	most
+¨	diaeresis	most
+‎	venstre mod højre tegn
+‏	højre mod venstre tegn

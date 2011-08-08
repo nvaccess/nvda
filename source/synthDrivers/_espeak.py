@@ -119,6 +119,8 @@ t_espeak_callback=CFUNCTYPE(c_int,POINTER(c_short),c_int,POINTER(espeak_EVENT))
 def callback(wav,numsamples,event):
 	try:
 		global player, isSpeaking, lastIndex
+		if not isSpeaking:
+			return 1
 		for e in event:
 			if e.type==espeakEVENT_MARK:
 				lastIndex=int(e.id.name)
@@ -128,8 +130,6 @@ def callback(wav,numsamples,event):
 			player.idle()
 			isSpeaking = False
 			return 0
-		if not isSpeaking:
-			return 1
 		if numsamples > 0:
 			try:
 				player.feed(string_at(wav, numsamples * sizeof(c_short)))
@@ -179,7 +179,7 @@ def speak(text):
 	_execWhenDone(_speak, text, mustBeAsync=True)
 
 def stop():
-	global isSpeaking, bgQueue
+	global isSpeaking, bgQueue, lastIndex
 	# Kill all speech from now.
 	# We still want parameter changes to occur, so requeue them.
 	params = []
@@ -196,6 +196,7 @@ def stop():
 		bgQueue.put(item)
 	isSpeaking = False
 	player.stop()
+	lastIndex=None
 
 def pause(switch):
 	global player

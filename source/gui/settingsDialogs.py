@@ -8,6 +8,7 @@ import glob
 import os
 import copy
 import wx
+import winUser
 import logHandler
 from synthDriverHandler import *
 import config
@@ -19,7 +20,6 @@ from logHandler import log
 import nvwave
 import speechDictHandler
 import appModuleHandler
-import scriptUI
 import queueHandler
 import braille
 import core
@@ -174,18 +174,16 @@ class GeneralSettingsDialog(SettingsDialog):
 	def onCopySettings(self,evt):
 		for packageType in ('appModules','globalPlugins','brailleDisplayDrivers','synthDrivers'):
 			if len(os.listdir(os.path.join(globalVars.appArgs.configPath,packageType)))>0:
-				d=wx.MessageDialog(self,_("Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"),_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING)
-				res=d.ShowModal()
-				d.Destroy()
-				if res==wx.ID_NO:
+				if gui.messageBox(
+					_("Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"),
+					_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self
+				)==wx.NO:
 					return
 				break
 		if not config.setSystemConfigToCurrentConfig():
-			d=wx.MessageDialog(self,_("Error copying NVDA user settings"),_("Error"),wx.OK|wx.ICON_ERROR)
+			gui.messageBox(_("Error copying NVDA user settings"),_("Error"),wx.OK|wx.ICON_ERROR,self)
 		else:
-			d=wx.MessageDialog(self,_("Successfully copied NVDA user settings"),_("Success"),wx.OK|wx.ICON_INFORMATION).ShowModal()
-		d.ShowModal()
-		d.Destroy()
+			gui.messageBox(_("Successfully copied NVDA user settings"),_("Success"),wx.OK|wx.ICON_INFORMATION,self)
 
 	def onOk(self,evt):
 		newLanguage=[x[0] for x in self.languageNames][self.languageList.GetSelection()]
@@ -194,9 +192,7 @@ class GeneralSettingsDialog(SettingsDialog):
 				languageHandler.setLanguage(newLanguage)
 			except:
 				log.error("languageHandler.setLanguage", exc_info=True)
-				d = wx.MessageDialog(self,_("Error in %s language file")%newLanguage,_("Language Error"),wx.OK|wx.ICON_WARNING)
-				d.ShowModal()
-				d.Destroy()
+				gui.messageBox(_("Error in %s language file")%newLanguage,_("Language Error"),wx.OK|wx.ICON_WARNING,self)
 				return
 		config.conf["general"]["language"]=newLanguage
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
@@ -210,13 +206,14 @@ class GeneralSettingsDialog(SettingsDialog):
 			try:
 				config.setStartOnLogonScreen(self.startOnLogonScreenCheckBox.GetValue())
 			except (WindowsError, RuntimeError):
-				wx.MessageBox(_("This change requires administrator privileges."), _("Insufficient Privileges"), style=wx.OK | wx.ICON_ERROR)
+				gui.messageBox(_("This change requires administrator privileges."), _("Insufficient Privileges"), style=wx.OK | wx.ICON_ERROR, parent=self)
 		if self.oldLanguage!=newLanguage:
-			d = wx.MessageDialog(self,_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING)
-			if d.ShowModal()==wx.ID_OK:
+			if gui.messageBox(
+				_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),
+				_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING,self
+			)==wx.OK:
 				config.save()
 				queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
-			d.Destroy()
 		super(GeneralSettingsDialog, self).onOk(evt)
 
 class SynthesizerDialog(SettingsDialog):
@@ -259,9 +256,7 @@ class SynthesizerDialog(SettingsDialog):
 		config.conf["speech"]["outputDevice"]=self.deviceList.GetStringSelection()
 		newSynth=self.synthNames[self.synthList.GetSelection()]
 		if not setSynth(newSynth):
-			d = wx.MessageDialog(self,_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING)
-			d.ShowModal()
-			d.Destroy()
+			gui.messageBox(_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING,self)
 			return 
 		super(SynthesizerDialog, self).onOk(evt)
 
@@ -300,7 +295,11 @@ class VoiceSettingsSlider(wx.Slider):
 		super(VoiceSettingsSlider, self).SetValue(i)
 		evt = wx.CommandEvent(wx.wxEVT_COMMAND_SLIDER_UPDATED,self.GetId())
 		evt.SetInt(i)
-		wx.PostEvent(self,evt)
+		self.ProcessEvent(evt)
+		# HACK: Win events don't seem to be sent for certain explicitly set values,
+		# so send our own win event.
+		# This will cause duplicates in some cases, but NVDA will filter them out.
+		winUser.user32.NotifyWinEvent(winUser.EVENT_OBJECT_VALUECHANGE,self.Handle,winUser.OBJID_CLIENT,winUser.CHILDID_SELF)
 
 	def onSliderChar(self, evt):
 		key = evt.KeyCode
@@ -373,6 +372,18 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.lastControl=lCombo
 		return sizer
 
+	def makeBooleanSettingControl(self,setting):
+		"""Same as L{makeSettingControl} but for boolean settings. Returns checkbox."""
+		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.i18nName)
+		setattr(self,"%sCheckbox"%setting.name,checkbox)
+		checkbox.Bind(wx.EVT_CHECKBOX,
+			lambda evt: setattr(getSynth(),setting.name,evt.IsChecked()))
+		checkbox.SetValue(getattr(getSynth(),setting.name))
+		if self.lastControl:
+			checkbox.MoveAfterInTabOrder(self.lastControl)
+		self.lastControl=checkbox
+		return checkbox
+
 	def makeSettings(self, settingsSizer):
 		self.sizerDict={}
 		self.lastControl=None
@@ -422,11 +433,12 @@ class VoiceSettingsDialog(SettingsDialog):
 			if setting.name == changedSetting:
 				# Changing a setting shouldn't cause that setting's own values to change.
 				continue
-			b=isinstance(setting,NumericSynthSetting)
 			if setting.name in self.sizerDict: #update a value
 				self.settingsSizer.Show(self.sizerDict[setting.name])
-				if b:
+				if isinstance(setting,NumericSynthSetting):
 					getattr(self,"%sSlider"%setting.name).SetValue(getattr(synth,setting.name))
+				elif isinstance(setting,BooleanSynthSetting):
+					getattr(self,"%sCheckbox"%setting.name).SetValue(getattr(synth,setting.name))
 				else:
 					l=getattr(self,"_%ss"%setting.name)
 					lCombo=getattr(self,"%sList"%setting.name)
@@ -437,7 +449,12 @@ class VoiceSettingsDialog(SettingsDialog):
 					except ValueError:
 						pass
 			else: #create a new control
-				settingMaker=self.makeSettingControl if b else self.makeStringSettingControl
+				if isinstance(setting,NumericSynthSetting):
+					settingMaker=self.makeSettingControl
+				elif isinstance(setting,BooleanSynthSetting):
+					settingMaker=self.makeBooleanSettingControl
+				else:
+					settingMaker=self.makeStringSettingControl
 				s=settingMaker(setting)
 				self.sizerDict[setting.name]=s
 				self.settingsSizer.Insert(len(self.sizerDict)-1,s,border=10,flag=wx.BOTTOM)
@@ -447,7 +464,7 @@ class VoiceSettingsDialog(SettingsDialog):
 	def onCancel(self,evt):
 		#unbind change events for string settings as wx closes combo boxes on cancel
 		for setting in getSynth().supportedSettings:
-			if isinstance(setting,NumericSynthSetting): continue
+			if isinstance(setting,(NumericSynthSetting,BooleanSynthSetting)): continue
 			getattr(self,"%sList"%setting.name).Unbind(wx.EVT_CHOICE)
 		#restore settings
 		getSynth().loadSettings()
@@ -747,6 +764,9 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.tableHeadersCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report table row/column h&eaders"))
 		self.tableHeadersCheckBox.SetValue(config.conf["documentFormatting"]["reportTableHeaders"])
 		settingsSizer.Add(self.tableHeadersCheckBox,border=10,flag=wx.BOTTOM)
+		self.tableCellCoordsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report table cell c&oordinates"))
+		self.tableCellCoordsCheckBox.SetValue(config.conf["documentFormatting"]["reportTableCellCoords"])
+		settingsSizer.Add(self.tableCellCoordsCheckBox,border=10,flag=wx.BOTTOM)
 		self.linksCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &links"))
 		self.linksCheckBox.SetValue(config.conf["documentFormatting"]["reportLinks"])
 		settingsSizer.Add(self.linksCheckBox,border=10,flag=wx.BOTTOM)
@@ -779,6 +799,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked() 
 		config.conf["documentFormatting"]["reportLinks"]=self.linksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHeadings"]=self.headingsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLists"]=self.listsCheckBox.IsChecked()
@@ -824,7 +845,7 @@ class DictionaryDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		dictListID=wx.NewId()
-		entriesSizer=wx.BoxSizer(wx.HORIZONTAL)
+		entriesSizer=wx.BoxSizer(wx.VERTICAL)
 		entriesLabel=wx.StaticText(self,-1,label=_("&Dictionary entries"))
 		entriesSizer.Add(entriesLabel)
 		self.dictList=wx.ListCtrl(self,dictListID,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
@@ -844,7 +865,7 @@ class DictionaryDialog(SettingsDialog):
 		addButton=wx.Button(self,addButtonID,_("&Add"),wx.DefaultPosition)
 		entryButtonsSizer.Add(addButton)
 		editButtonID=wx.NewId()
-		editButton=wx.Button(self,editButtonID,_("&edit"),wx.DefaultPosition)
+		editButton=wx.Button(self,editButtonID,_("&Edit"),wx.DefaultPosition)
 		entryButtonsSizer.Add(editButton)
 		removeButtonID=wx.NewId()
 		removeButton=wx.Button(self,removeButtonID,_("&Remove"),wx.DefaultPosition)
@@ -985,9 +1006,7 @@ class BrailleSettingsDialog(SettingsDialog):
 	def onOk(self, evt):
 		display = self.displayNames[self.displayList.GetSelection()]
 		if not braille.handler.setDisplayByName(display):
-			d = wx.MessageDialog(self, _("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING)
-			d.ShowModal()
-			d.Destroy()
+			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
 			return 
 		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()

@@ -1,0 +1,129 @@
+﻿Những đặc điểm mới trong NVDA
+
+
+%!includeconf: ../changes.t2tconf
+
+= 2011.2 =
+Điểm nổi bật của phiên bản này bao gồm những cải tiến liên quan đến dấu chấm câu và ký hiệu, bao gồm cả mức độ cấu hình, tùy chỉnh dán nhãn và mô tả ký tự; không dừng lại ở cuối dòng trong lúc nói tất cả; cải thiện phần hỗ trợ cho ARIA trong Internet Explorer; hỗ trợ tốt hơn cho các tài liệu XFA / LiveCycle  dạng PDF, truy cập vào đoạn văn bản được viết cho màn hình trong nhiều ứng dụng; và truy cập vào thông tin định dạng và màu sắc cho văn bản được viết cho màn hình.
+
+== Tính năng mới ==
+- Có thể nghe thấy mô tả của bất kỳ ký tự nào đó bằng cách nhấn kịch bản xem lại ký tự hiện tại hai lần liên tiếp. Đối với các ký tự tiếng Anh thì đây là bảng chữ cái ngữ âm chuẩn tiếng Anh. Đối với các ngôn ngữ tượng hình như tiếng Trung Quốc, một hoặc nhiều cụm từ ví dụ sử dụng biểu tượng nhất định được cung cấp. Cũng với cách nhấn đó để xem lại từ hiện tại hoặc xem lại dòng hiện tại thì nhấn ba lần sẽ đánh vần từ / dòng sử dụng đầu tiên những mô tả này. (#55) 
+- Văn bản có thể được xem trong chế độ flat review cho các ứng dụng chẳng hạn như Mozilla Thunderbird người viết văn bản trực tiếp đến màn hình hiển thị như những nét chạm.
+- Hiện tại có thể lựa chọn nhiều cấp độ của dấu chấm câu và thông báo biểu tượng. (#332)
+- Khi chấm câu hoặc các ký hiệu được lặp đi lặp lại nhiều hơn, Ethiopic cấp độ 1, Slovene cấp độ 1, Serbian cấp độ 1. (#1456)
+- Bộ phát âm không tự nhiên dừng lại ở cuối mỗi dòng khi sử dụng lệnh nói tất cả. (#149)
+- NVDA bây giờ sẽ thông báo xem một cái gì đó được sắp xếp (theo thuộc tính sắp xếp aria) trong các trình duyệt web. (#1500)
+- Những chấm chữ nổi Unicode được hiển thị một cách chính xác trên màn hình chữ nổi. (#1505)
+- Trong trình duyệt Internet Explorer và một số điều khiển khác như MSHTML khi di chuyển con trỏ vào trong một nhóm các điều khiển (bao quanh bởi một fieldset), NVDA sẽ thông báo tên của nhóm. (#535) 
+- Trong trình duyệt Internet Explorer và một số điều khiển khác như MSHTML, các thuộc tính aria-labelledBy và aria-describedBy được đánh gián rất cao.
+- Trong trình duyệt Internet Explorer và một số điều khiển khác như MSHTML, chức năng hỗ trợ danh sách ARIA, gridcell, thanh trượt và thanh điều khiển ProgressBar đã được cải thiện.
+- Người dùng có thể thay đổi cách phát âm của dấu chấm câu và các ký hiệu khác, cũng như mức độ biểu tượng mà họ đang nói. (#271, #1516) 
+- Trong Microsoft Excel, tên của sheet đang kích hoạt được thông báo khi chuyển đổi những sheet tổ hợp phím ctrl + PageUp hoặc ctrl + PageDown. (#760)
+- Khi điều hướng một bảng trong Microsoft Word với phím tab NVDA sẽ thông báo ô hiện tại khi bạn di chuyển. (#159)
+- Bây giờ bạn có thể cấu hình bảng tọa độ ô được thông báo từ hộp thoại định dạng tài liệu. (#719)
+- NVDA bây giờ có thể phát hiện định dạng và màu sắc cho văn bản được viết cho màn hình.
+- Trong danh sách các Outlook Express / Windows Mail / Windows Live mail, NVDA sẽ thông báo thực tế một tin nhắn chưa đọc và có thể nếu được mở rộng hoặc bị méo mó trong trường hợp các chủ đề cuộc trò chuyện. (#868)
+- Espeak hiện nay đã tăng thiết lập tỷ lệ tốc độ nói lên gấp 3 lần.
+- Hỗ trợ cho việc kiểm soát lịch được tìm thấy trong hộp thoại thông tin ngày giờ được truy cập từ đồng hồ của Windows 7. (#1637)
+- Phím kết hợp bổ sung đã được thêm vào để hiển thị màn hình chữ nổi MDV Lilli. (#241)
+- Các ngôn ngữ mới: Bun-ga-ri, tiếng Albania. 
+
+
+== Những tính năng thay đổi ==
+- Để di chuyển dấu nháy đến con trỏ xem lại, bây giờ nhấn phím di chuyển con trỏ đến kịch bản đối tượng điều hướng (phím trên máy tính bàn NVDA + shift + numpadMinus, phím trên máy tính xách tay NVDA + shift + Backspace) hai lần liên tiếp. Điều này giải phóng các phím trên bàn phím. (#837)
+- Để nghe ký tự đại diện ngay tại con trỏ xem lại ở dạng thập phân và thập lục phân, nhấn phím xem lại ký tự hiện tại 3 lần thay vì hai lần, vì nếu nhấn hai lần chương trình sẽ nói những thông tin mô tả ký tự.
+- Cập nhật bộ tổng hợp âm thanh Espeak 1.45.03. (#1465)
+- Bảng bố trí không còn được thông báo trong các ứng dụng Gecko của Mozilla trong khi di chuyển con trỏ ở chế độ con trỏ hoặc ở bên ngoài tài liệu.
+- Trong Internet Explorer và các điều khiển MSHTML khác, chế độ trình duyệt bây giờ sẽ làm việc với những văn bản bên trong các ứng dụng ARIA. (#1452)
+- Cập nhật bảng chuyển dịch chữ nổi liblouis 2.3.0.
+- Khi ở chế độ duyệt web và nhảy vào một điều khiển với quicknav hoặc focus, chương trình sẽ thông báo các mô tả về điều khiển nếu có. 
+- Thanh tiến trình sẽ được thông báo trong chế độ duyệt web.
+- Các nút được đánh dấu với một vai trò ARIA trình bày trong Internet Explorer và các điều khiển MSHTML khác thì được lọc ra khỏi chế độ xem đơn giản và nhóm con trỏ.
+- Hiện tại giao diện người sử dụng NVDA và tài liệu tham khảo bộ đệm ảo như chế độ duyệt. Vì thuật ngữ "bộ đệm ảo" không có nghĩa đối với hầu hết người dùng. (#1509)
+- Khi người sử dụng muốn sao chép chức năng thiết lập người dùng của họ đến cấu hình hệ thống để sử dụng trên màn hình đăng nhập, và các thiết lập của họ có chứa các phần bổ sung, thì họ sẽ được cảnh báo rằng điều này có thể là một nguy cơ bảo mật. (#1426)
+- Dịch vụ NVDA bắt đầu và dừng NVDA không còn tồn tại cho người dùng nhập vào máy tính để bàn.
+- Trên Windows XP và Windows Vista, NVDA không còn tồn tại cho việc sử dụng giao diện người dùng tự động hóa, thậm chí nếu nó có sẵn thông qua bản cập nhật. Mặc dù việc sử dụng giao diện người dùng tự động hóa có thể cải thiện khả năng tiếp cận của một số ứng dụng hiện đại, nhưng vì trên XP và Vista có quá nhiều tính năng bị đóng băng, bị lỗi và mất tất cả các hiệu suất trong khi sử dụng nó. (#1437)
+- Trong các ứng dụng sử dụng Mozilla Gecko 2 và các phiên bản sau đó (chẳng hạn như Firefox 4 và các phiên bản sau đó), một tài liệu có thể được đọc trong chế độ duyệt trước khi nó được tải đầy đủ.
+- NVDA thông báo trạng thái của một container khi con trỏ di chuyển đến một điều khiển bên trong nó (ví dụ như nếu di chuyển con trỏ bên trong một tài liệu mà vẫn còn đang tải nó sẽ thông báo là nó đang bận rộn).
+- Giao diện người sử dụng NVDA và tài liệu không còn sử dụng các từ ngữ "con đầu tiên" và "cha" đối với đối tượng chuyển hướng, vì những từ ngữ này đang gây nhầm lẫn cho nhiều người sử dụng.
+- Chức năng tự động thu nhỏ không còn được thông báo cho số mục trình đơn có sub-menu.
+- Các kịch bản reportCurrentFormatting (NVDA + f) hiện tại thông báo định dạng tại vị trí của con trỏ xem xét chứ không phải là dấu nháy hệ thống / con trỏ. Theo mặc định con trỏ xem lại đi theo sau dấu nháy, hầu hết mọi người không nhận thấy sự khác biệt. Tuy nhiên điều này cho phép người sử dụng tìm ra các định dạng khi di chuyển con trỏ xem lại, chẳng hạn như trong flat review. 
+ 
+== Sửa lỗi ==
+- Thu lại hộp kết hợp trong chế độ trình duyệt các văn bản khi chế độ con trỏ đã được buộc với NVDA + space không còn tự động chuyển trở lại chế độ để trình duyệt. (#1386) 
+-  Trong các tài liệu Gecko (ví dụ như Firefox) và MSHTML (ví dụ như Internet Explorer), NVDA làm cho văn bản trên cùng một dòng được trả lại trên những dòng riêng biệt một cách chính xác và chắc chắn. (#1378)
+- Khi chữ nổi bị giới hạn để xem lại và đối tượng điều hướng được chuyển  đến một tài liệu ở chế độ trình duyệt, hoặc thao tác bằng tay hoặc thay đổi sang dạng con trỏ, chữ nổi sẽ hiển thị các nội dung chế độ duyệt một cách thích hợp. (#1406, #1407)
+- Khi tính năng đọc dấu chấm câu bị vô hiệu hoá, một số dấu chấm câu là không còn được đọc chính xác khi sử dụng bộ tổng hợp âm. (#332)
+- Vấn đề không còn xảy ra khi tải cấu hình cho những bộ đọc không hỗ trợ phần cài đặt của điện thoại như Audiologic Tts3. (#1347)
+- Trình đơn Skype Extras hiện tại đọc rất chính xác. (#648)
+- Với Aero được kích hoạt việc kiểm tra độ sáng bằng cách điều khiển hộp kiểm âm lượng trong hộp thoại thiết lập chuột sẽ không ra tiếng bíp khi di chuyển chuột xung quanh màn hình trên Windows Vista / Windows 7. (#1183)
+- Khi NVDA được cấu hình để sử dụng cách bố trí bàn phím theo máy tính xách tay,thì tổ hợp phím NVDA + delete sẽ làm việc như tài liệu để báo cáo kích thước của các đối tượng điều hướng hiện tại. (#1498)
+- Hiện tại NVDA đánh giá cao thuộc tính lựa chọn aria một cách thích hợp trong các tài liệu Internet Explorer.
+- Khi NVDA tự động chuyển sang chế độ con trỏ trong các văn bản chế độ duyệt, nó sẽ thông báo thông tin về ngữ cảnh của con trỏ. Ví dụ, nếu một mục hộp danh sách nhận được focus, hộp danh sách sẽ được thông báo đầu tiên. (#1491)
+- Trong Internet Explorer và các điều khiển MSHTML khác, các điều khiển hộp danh sách ARIA được phân nhánh như danh sách, chứ không phải là các mục danh sách. 
+- Khi một điều khiển văn bản có thể chỉnh sửa ở chế độ chỉ đọc nhận được con trỏ, NVDA sẽ thông báo rằng nó đang ở trạng thái chỉ đọc. 
+- Trong chế độ duyệt, NVDA rất lưu ý đến các trường văn bản có thể chỉnh sửa đang ở trạng thái chỉ đọc.
+- Trong chế độ duyệt các tài liệu, NVDA không còn chuyển ra ngoài chế độ con trỏ khi aria-activedescendant được thiết lập; ví dụ như khi danh sách hoàn thành xuất hiện trong một số điều khiển hoàn toàn tự động.
+- Trong Adobe Reader, tên của điều khiển được thông báo khi di chuyển con trỏ hoặc sử dụng di chuyển nhanh trong chế độ duyệt.
+- Trong các tài liệu XFA PDF trong Adobe Reader, các nút, các liên kết và những hình ảnh đồ họa được lọc một cách chính xác.
+- Trong các tài liệu XFA PDF trong Adobe Reader, tất cả các yếu tố được lọc ra trên các dòng riêng biệt. Sự thay đổi này đã được thực hiện bởi vì phần lớn (thậm chí đôi khi toàn bộ tài liệu) đã được lọc mà không cần phá vỡ do thiếu các cấu trúc dùng chung trong các tài liệu này.
+- Trong các tài liệu XFA PDF trong Adobe Reader, Vấn đề khi di chuyển con trỏ vào ra các trường văn bản chỉnh sửa đã được sửa.
+- Trong các tài liệu XFA PDF trong Adobe Reader, những thay đổi đến giá trị hộp danh sách có con trỏ sẽ được thông báo.
+- Có thể truy cập hộp danh sách chọn lựa Owner-drawn với NVDA, chẳng hạn như hộp để lựa chọn màu sắc trong Outlook Express. (#1340)
+- Trong một số ngôn ngữ sử dụng một khoảng trắng như là một nhóm chữ số / dấu phân cách hàng ngàn, chẳng hạn như Pháp và Đức, các số từ các khối riêng biệt của văn bản không còn phát âm như một số duy nhất. Điều này đặc biệt có vấn đề cho các ô bảng chứa số. (#555)
+- Các nút với vai trò mô tả ARIA trong Internet Explorer và các điều khiển MSHTML khác được xếp vào loại văn bản tĩnh, không thể chỉnh sửa.
+- Nhiều vấn đề đã được sửa khi nhấn tab trong khi con trỏ đang duyệt tài liệu trong chế độ duyệt web (ví dụ như tab không thích hợp di chuyển vào thanh địa chỉ trong Internet Explorer). (#720, #1367)
+- Duyệt danh sách trong khi đọc văn bản, NVDA sẽ nói, ví dụ, "danh sách với 5 mục" thay vì "listwith 5 mục". (#1515)
+- Trong chế độ trợ giúp đầu vào, các thao tác được đăng nhập ngay cả khi script của chúng bỏ qua sự giúp đỡ đầu vào như lệnh cuộn màn hình hiển thị chữ nổi về phía trước và trở lại.
+- Trong chế độ trợ giúp đầu vào, khi phím bổ trợ được giữ trên bàn phím, NVDA không còn thông báo phần bổ trợ như thể nó sửa đổi chính nó, ví dụ như NVDA + NVDA.
+- Trong tài liệu Adobe reader,  bây giờ có thể nhấn c hoặc shift + c để điều hướng đến một hộp kết hợp. 
+- Trạng thái được chọn của những dòng trong bảng được thông báo theo cùng một cách đó là danh sách và các mục dạng cây.
+- Các điều khiển trong Firefox và các ứng dụng khác của Gecko bây giờ có thể được kích hoạt trong chế độ trình duyệt, ngay cả khi nội dung của chúng đã được thả nổi ngoài màn hình. (#801)
+- Bạn không còn có thể hiển thị một hộp thoại cài đặt NVDA trong khi một hộp thoại thông báo được hiển thị, vì trong trường hợp này hộp thoại thiết lập bị phong tỏa. (#1451)
+- Trong Microsoft Excel, không có sự chậm trễ khi giữ hoặc nhấn phím nhanh để di chuyển giữa hay chọn các ô.
+- Các sự cố làm gián đoạn của các dịch vụ NVDA đã được sửa điều này có nghĩa rằng NVDA ngừng hoạt động trên màn hình Windows an toàn.
+- Các vấn đề đôi khi xảy ra với màn hình chữ nổi đã được sửa đó là khi một văn bản gây ra sự thay đổi làm cho văn bản đang hiển thị thì biến mất. (#1377)
+- Cửa sổ tải trong Internet Explorer 9 có thể điều hướng và đọc với NVDA. (#1280)
+- Không thể tiếp tục chạy nhiều bản sao của NVDA cùng lúc. (#507)
+- Trên các hệ thống chậm, các cửa sổ chính của NVDA không còn hiện ra một cách không thích hợp trong khi đang chạy. (#726)
+- NVDA không còn bị treo trên Windows XP, khi bắt đầu một ứng dụng WPF. (#1437)
+- Chức năng đọc tất cả và đọc tất cả với xem lại hiện có thể thực hiện trong giao diện điều khiển văn bản tự động mà nó hỗ trợ tất cả các chức năng cần thiết. Ví dụ, bạn có thể sử dụng đọc tất cả với xem lại trên tài liệu XPS Viewer.
+- NVDA không còn thích hợp phân lớp một số mục danh sách trong Outlook Express / Windows Live mail, hộp thoại cung cấp quy luật cho tin nhắn như là các hộp kiểm checkbox. (#576)
+- Hộp Combo không còn thông báo là có một trình đơn phụ.
+- Bây giờ NVDA có thể đọc người nhận trong các trường To, CC và BCC trong Microsoft Outlook. (#421)
+- Những lỗi phát sinh ở hộp thoại thiết lập giọng đọc đã được sửa như giá trị thanh trượt thường không được thông báo khi thay đổi. (#1411)
+- NVDA không còn bị lỗi thông báo các ô mới khi di chuyển trong một bảng tính Excel sau khi cắt và dán. (#1567)
+- NVDA không còn trở nên tồi tệ hơn khi đoán tên màu càng nhiều màu sắc nó càng thông báo.
+- Trong Internet Explorer và các điều khiển MSHTML khác, đã sửa chức năng không có khả năng đọc các phần của các trang hiếm có chứa iframe được đánh dấu với một đại diện vai trò ARIA. (#1569)
+- Trong Internet Explorer và các điều khiển MSHTML khác, những vấn đề hiếm gặp đã được ở nơi mà con trỏ giữ  phản xạ vô hạn giữa các tài liệu và trường văn bản chỉnh sửa nhiều dòng trong chế độ con trỏ. (#1566)
+- Trong Microsoft Word 2010 NVDA sẽ tự động đọc các hộp thoại xác nhận. (#1538)
+- Trong các trường văn bản có thể chỉnh sửa nhiều dòng trong Internet Explorer và các điều khiển MSHTML khác, việc lựa chọn trên các dòng sau khi dòng đầu tiên được báo cáo một cách chính xác. (#1590)
+- Cải thiện việc di chuyển bằng từ trong nhiều trường hợp, bao gồm cả trong chế độ duyệt và các điều khiển chỉnh sửa windows. (#1580)
+- Các văn bản tiếng Hồng Công trên windows vista và win 7 không còn bị cắt xén khi cài đặt NVDA. (#1596)
+- NVDA không còn bị lỗi khi tải bộ tổng hợp âm thanh phiên bản 5 nếu cấu hình các thiết lập cho tổng hợp đó bị lỗi phần thiết lập bằng giọng nói. (#1599)
+- Trong các trường văn bản chỉnh sửa trong Internet Explorer và các trình điều khiển MSHTML khác, NVDA không còn bị chậm hoặc đóng băng khi chữ nổi được kích hoạt.
+- Trong chế độ trình duyệt firefox, NVDA không còn từ chối các nội dung có chứa một nút focusable với vai trò đại diện của ARIA.
+- Khi kích hoạt bằng chữ nổi trong MS Word, những dòng trên các trang sau trang đầu tiên được thông báo một cách chính xác. (#1603)
+- Trong Microsoft Word 2003, những dòng văn bản từ phải sang trái có thể được đọc một lần nữa khi kích hoạt bằng chữ nổi. (#627)
+- Trong Microsoft Word, chức năng đọc tất cả bây giờ hoạt động rất chính xác khi các tài liệu không kết thúc với dấu chấm câu.
+- Khi mở một tin nhắn văn bản trong Windows Live Mail 2011, NVDA sẽ di chuyển con trỏ một cách chính xác vào các tài liệu tin nhắn cho phép nó được đọc.
+- NVDA tạm thời không còn bị đóng băng hoặc từ chối đọc khi đang ở trong hộp thoại di chuyển / sao chép trong Windows Live Mail. (#574)
+- Trong Outlook 2010, NVDA sẽ theo dõi một cách chính xác con trỏ trong danh sách tin nhắn. (#1285)
+- Một số vấn đề kết nối USB đã được giải quyết với màn hình hiển thị chữ nổi Lilli MDV. (#241) 
+
+
+== Những thay đổi cho nhà lập trình ==
+- Tài liệu phát triển hiện nay có thể được tạo ra bằng cách sử dụng SCons. Để biết thêm chi tiết Xem tập tin readme.txt tại thư mục gốc của mã nguồn sự phân bố nguồn, bao gồm các phần phụ thuộc liên quan.
+- Hiện tại các bản dịch có thể cung cấp phần mô tả cho các ký tự. Để biết thêm chi tiết Xem phần mô tả ký tự trong phần tài liệu phát triển. (#55)
+- Hiện tại các bản dịch có thể cung cấp thông tin về phần phát âm của dấu chấm câu đặc biệt và những ký hiệu khác. Để biết thêm chi tiết xin xem phần phát âm ký hiệu trong tài liệu phát triển. (#332)
+- Bây giờ bạn có thể xây dựng NVDAHelper với một số tùy chọn gỡ lỗi bằng cách sử dụng biến scons nvdaHelperDebugFlags. Để biết thêm chi tiết xem tập tin readme.txt tại thư mục gốc của mã nguồn . (#1390)- Các Trình điều khiển bộ đọc đã được duyệt qua một chuỗi các lệnh văn bản và âm thanh để đọc, thay vì chỉ là văn bản và chỉ số.
+ - Điều này cho phép chỉ số nhúng, thay đổi tham số ...
+ - Các trình điều khiển cần thực hiện SynthDriver.speak () thay vì SynthDriver.speakText () và SynthDriver.speakCharacter ().
+ - Các phương pháp cũ sẽ được sử dụng nếu SynthDriver.speak () không được thực thi, nhưng tương lai chúng không sẽ được chấp nhận và sẽ bị huỷ trong phiên bản chính thức.
+- Phương thức gui.execute() đã bị loại bỏ. Thay vào đó là wx.CallAfter() 
+- gui.scriptUI bị loại bỏ.
+ - Đối với các hộp thoại thông báo, sử dụng wx.CallAfter (gui.messageBox, ...).
+ - Đối với tất cả các hộp thoại khác, hộp thoại wx nên được sử dụng thay thế.
+ - Một chức năng mới gui.runScriptModalDialog mới () đơn giản hoá bằng cách sử dụng các hộp thoại phương thức từ các script. 
+- Các trình điều khiển Synth có thể hỗ trợ các thiết lập boolean. Xem SynthDriverHandler.
+- SCons giờ chấp nhận một biến certTimestampServer chỉ định URL của một máy chủ timestamping sử dụng chữ ký mã hoá theo dấu thời gian. (#1644) 

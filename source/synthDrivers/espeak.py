@@ -9,7 +9,7 @@ import _espeak
 import Queue
 import threading
 import languageHandler
-from synthDriverHandler import SynthDriver,VoiceInfo
+from synthDriverHandler import SynthDriver,VoiceInfo,BooleanSynthSetting
 import speech
 from logHandler import log
 
@@ -17,7 +17,17 @@ class SynthDriver(SynthDriver):
 	name = "espeak"
 	description = "eSpeak"
 
-	supportedSettings=(SynthDriver.VoiceSetting(),SynthDriver.VariantSetting(),SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.InflectionSetting(),SynthDriver.VolumeSetting())
+	supportedSettings=(
+		SynthDriver.VoiceSetting(),
+		SynthDriver.VariantSetting(),
+		SynthDriver.RateSetting(),
+		# Translators: This is the name of the rate boost voice toggle
+		# which further increases the speaking rate when enabled.
+		BooleanSynthSetting("rateBoost",_("Rate boos&t")),
+		SynthDriver.PitchSetting(),
+		SynthDriver.InflectionSetting(),
+		SynthDriver.VolumeSetting(),
+	)
 
 	@classmethod
 	def check(cls):
@@ -60,12 +70,29 @@ class SynthDriver(SynthDriver):
 	def pause(self,switch):
 		_espeak.pause(switch)
 
+	_rateBoost = False
+	RATE_BOOST_MULTIPLIER = 3
+
+	def _get_rateBoost(self):
+		return self._rateBoost
+
+	def _set_rateBoost(self, enable):
+		if enable == self._rateBoost:
+			return
+		rate = self.rate
+		self._rateBoost = enable
+		self.rate = rate
+
 	def _get_rate(self):
 		val=_espeak.getParameter(_espeak.espeakRATE,1)
+		if self._rateBoost:
+			val=int(val/self.RATE_BOOST_MULTIPLIER)
 		return self._paramToPercent(val,_espeak.minRate,_espeak.maxRate)
 
 	def _set_rate(self,rate):
 		val=self._percentToParam(rate, _espeak.minRate, _espeak.maxRate)
+		if self._rateBoost:
+			val=int(val*self.RATE_BOOST_MULTIPLIER)
 		_espeak.setParameter(_espeak.espeakRATE,val,0)
 
 	def _get_pitch(self):
@@ -122,8 +149,8 @@ class SynthDriver(SynthDriver):
 		return self._variant
 
 	def _set_variant(self,val):
-		self._variant = val if val in self._variantDict else "none"
-		_espeak.setVoiceAndVariant(variant=val)
+		self._variant = val if val in self._variantDict else "max"
+		_espeak.setVoiceAndVariant(variant=self._variant)
 
 	def _getAvailableVariants(self):
 		return OrderedDict((ID,VoiceInfo(ID, name)) for ID, name in self._variantDict.iteritems())

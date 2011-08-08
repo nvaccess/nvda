@@ -13,8 +13,9 @@ complexSymbols:
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 
-decimal point	(?<=\d).(?=\d)
+decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -27,6 +28,7 @@ symbols:
 : phrase ending	kettőspont	most	always
 decimal point		none	always
 in-word '	aposztrof	all	norep
+negative number	minusz	none	norep
 
 # Whitespace
 \0	üres	char
@@ -75,7 +77,8 @@ _	aláhúzás	most
 
 # Other characters
 •	listaelem	some
-…	pont pont pont	all	always
+…	pont pont pont	all	never	# Unicode harompont (egy karakter!!!)
+...	pont pont pont	all	never	# harom normal ASCII pont egymas utan!!!
 	listaelem	some
 “	bal idézőjel	most
 ”	jobb idézőjel	most

@@ -134,9 +134,12 @@ Var StartMenuFolder
 !insertmacro MUI_LANGUAGE "Icelandic"
 !insertmacro MUI_LANGUAGE "Serbian"
 !insertmacro MUI_LANGUAGE "Turkish"
+!insertmacro MUI_LANGUAGE "Albanian"
+!insertmacro MUI_LANGUAGE "Bulgarian"
 
 ;Include installer specific language strings
 !include "locale\ar\langstrings.txt"
+!include "locale\bg\langstrings.txt"
 !include "locale\cs\langstrings.txt"
 !include "locale\da\langstrings.txt"
 !include "locale\de\langstrings.txt"
@@ -159,6 +162,7 @@ Var StartMenuFolder
 ;!include "locale\se\langstrings.txt"
 !include "locale\sk\langstrings.txt"
 !include "locale\sr\langstrings.txt"
+!include "locale\sq\langstrings.txt"
 !include "locale\tr\langstrings.txt"
 !include "locale\zh\langstrings.txt"
 !include "locale\zh_tw\langstrings.txt"
@@ -291,6 +295,9 @@ IfFileExists "$PROGRAMFILES\NVDA" 0
 Delete "$PROGRAMFILES\NVDA"
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetUserDefaultUILanguage() i .r0'
+;Force zh-HK to zh-TW as zh-HK uses wrong encoding on Vista/7 #1596 
+StrCmp $0 "3076" 0 +2
+StrCpy $0 "1028"
 StrCpy $LANGUAGE $0
 
 ;prepare log always within .onInit function
@@ -416,6 +423,9 @@ Function un.onInit
 ;!insertmacro MUI_UNGETLANGUAGE
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetUserDefaultUILanguage() i .r0'
+;Force zh-HK to zh-TW as zh-HK uses wrong encoding on Vista/7 #1596 
+StrCmp $0 "3076" 0 +2
+StrCpy $0 "1028"
 StrCpy $LANGUAGE $0
 
 ; Start uninstalling with a log

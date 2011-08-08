@@ -67,7 +67,7 @@ To use the ALVA BC640/680 braille display driver:
 		* Copy alvaw32.dll into the source\brailleDisplayDrivers directory.
 
 To use the MDV Lilli braille display driver:
-	* lilli.dll: http://www.nvda-project.org/3rdParty/lilli.dll
+	* lilli.dll, version 2.1.0.0: http://www.nvda-project.org/3rdParty/lilli.dll
 		* Copy lilli.dll into the source\brailleDisplayDrivers directory.
 
 To use the Handy Tech braille display driver:
@@ -100,17 +100,17 @@ You do this by opening a command prompt, changing to the root of the NVDA source
 scons source
 You should do this again whenever the version of comtypes changes or language files are added or changed.
 
-=== Compiling NVDAHelper with debugging options ===
-A part from compiling language files and generating COM interfaces, this step also builds the NVDAHelper libraries.  
-If trying to debug nvdaHelper, You can control various  debugging options  with the nvdaHelperDebugFlag commandline variable. It takes one or more of the following flags:
-	* symbols: debugging symbols will be added to the DLLs and pdb files will be generated for use with a debugger. (symbols are produced by default, but if specifying nvdaHelperDebugFlags and you want symbols it is still necessary to  specify this keyword).
-	* debugCRT: the libraries will be linked against the debug C runtime and assertions will be enabled. (The normal CRT is used by default and assertions are disabled).
-	* noOptimize: All compiler optimizations will be disabled. (Optimization 2 [/O2] is used by default). 
-	* RTC: runtime checks (stack corruption, uninitialized variables etc) will be enabled (default is no runtime checks).
+=== Compiling NVDAHelper with Debugging Options ===
+Among other things, preparing the source tree builds the NVDAHelper libraries.  
+If trying to debug nvdaHelper, You can control various  debugging options  with the nvdaHelperDebugFlags command line variable. It takes one or more of the following flags:
+	* symbols: debugging symbols will be added to the DLLs and pdb files will be generated for use with a debugger. (symbols are produced by default, but if specifying nvdaHelperDebugFlags and you want symbols it is still necessary to  specify this keyword.)
+	* debugCRT: the libraries will be linked against the debug C runtime and assertions will be enabled. (By default, the normal CRT is used and assertions are disabled.)
+	* noOptimize: All compiler optimizations will be disabled. (Optimization 2 [/O2] is used by default.)
+	* RTC: runtime checks (stack corruption, uninitialized variables, etc.) will be enabled. (The default is no runtime checks.)
+The special keywords none and all can also be used in place of the individual flags.
 
-The special keywords of none and all can also be used in place of the individual flags.
-An example follows that enables only symbols and assertions:
-scons source nvdaHelperDebugflags=symbols,assertions
+An example follows that enables symbols and disables optimizations:
+scons source nvdaHelperDebugflags=symbols,noOptimize
 
 == Running the Source Code ==
 To start NVDA from source code, run nvda.pyw located in the source directory.
@@ -140,13 +140,13 @@ To generate an archive of debug symbols for the various dll/exe binaries, type:
 scons symbolsArchive
 The archive will be placed in the output directory.
  
-
 Optionally, the build can  be customised by providing variables on the command line:
 	* version: The version of this build.
 	* release: Whether this is a release version.
 	* publisher: The publisher of this build.
 	* certFile: The certificate file with which to sign executables. The certificate must be in pfx format and contain the private key.
 	* certPassword: The password for the private key in the signing certificate. If omitted, no password will be assumed.
+	* certTimestampServer: The URL of the timestamping server to use to timestamp authenticode signatures. If omitted, signatures will not be timestamped.
 	* outputDir: The directory where the final built archives and such will be placed.
 	* targetArchitectures: The target architectures that NVDA should support. Possible values are all, x86 and x86_64. This should generally be left as the default.
 

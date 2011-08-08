@@ -66,11 +66,22 @@ class RGB(namedtuple('RGB',('red','green','blue'))):
 	@property
 	def name(self):
 		foundName=RGBToNames.get(self,None)
-		if not foundName:
-			closestRGB=sorted(RGBToNames.iterkeys(),key=lambda x: math.sqrt((abs(self.red-x.red)*0.3)**2+(abs(self.green-x.green)*0.59)**2+(abs(self.blue-x.blue)*0.11)**2))[0]
-			foundName=RGBToNames[closestRGB]
-			RGBToNames[self]=foundName
-		return foundName
+		if foundName:
+			return foundName
+		foundName=RGBToNamesCache.get(self,None)
+		if foundName:
+			return foundName
+		longestDistance=255.0
+		closestName=_("unknown color")
+		for possibleRGB,possibleName  in RGBToNames.iteritems():
+			distance=math.sqrt(abs(self.red-possibleRGB.red)**2+abs(self.green-possibleRGB.green)**2+abs(self.blue-possibleRGB.blue)**2)
+			if distance<longestDistance:
+				longestDistance=distance
+				closestName=possibleName
+		RGBToNamesCache[self]=closestName
+		return closestName
+
+RGBToNamesCache={}
 
 RGBToNames={
 	#Standard 16 HTML 4 colors

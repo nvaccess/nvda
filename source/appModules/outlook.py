@@ -6,6 +6,7 @@
 
 from comtypes import COMError
 import comtypes.client
+import winUser
 import appModuleHandler
 import eventHandler
 import controlTypes
@@ -84,7 +85,13 @@ class AppModule(appModuleHandler.AppModule):
 			outlookVersion=self.outlookVersion
 			if outlookVersion and outlookVersion<=9:
 				clsList.insert(0, MessageList_pre2003)
-			return
+			elif isinstance(obj,IAccessible) and obj.event_objectID==winUser.OBJID_CLIENT and obj.event_childID==0:
+				clsList.insert(0,SuperGridClient2010)
+
+class SuperGridClient2010(IAccessible):
+
+	def isDuplicateIAccessibleEvent(self,obj):
+		return False
 
 class MessageList_pre2003(IAccessible):
 

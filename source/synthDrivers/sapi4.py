@@ -103,6 +103,7 @@ class SynthDriver(SynthDriver):
 
 	def cancel(self):
 		self._ttsCentral.AudioReset()
+		self.lastIndex=None
 
 	def pause(self,switch):
 		if switch:

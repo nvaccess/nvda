@@ -407,7 +407,22 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//Make sure this is text, and that its not using the symbol charset (e.g. the tick for a checkbox)
 	//Before recording the text.
 	if(newText.length()>0&&tm.tmCharSet!=SYMBOL_CHARSET) {
-		model->insertChunk(textRect,tm.tmAscent,newText,characterEndXArray,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
+		displayModelFormatInfo_t formatInfo;
+		LOGFONT logFont;
+		HGDIOBJ fontObj=GetCurrentObject(hdc,OBJ_FONT);
+		GetObject(fontObj,sizeof(LOGFONT),&logFont);
+		wcsncpy(formatInfo.fontName,logFont.lfFaceName,32);
+		if(logFont.lfHeight!=0) {
+			formatInfo.fontSize=(abs(logFont.lfHeight)*72)/GetDeviceCaps(hdc,LOGPIXELSY);
+		} else {
+			formatInfo.fontSize=0;
+		}
+		formatInfo.bold=(logFont.lfWeight>=700)?true:false;
+		formatInfo.italic=logFont.lfItalic?true:false;
+		formatInfo.underline=logFont.lfUnderline?true:false;
+		formatInfo.color=GetTextColor(hdc);
+		formatInfo.backgroundColor=GetBkColor(hdc);
+		model->insertChunk(textRect,tm.tmAscent,newText,characterEndXArray,formatInfo,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
 		HWND hwnd=WindowFromDC(hdc);
 		if(hwnd) queueTextChangeNotify(hwnd,textRect);
 	}

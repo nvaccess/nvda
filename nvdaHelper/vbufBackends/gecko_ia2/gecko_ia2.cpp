@@ -211,6 +211,7 @@ inline void GeckoVBufBackend_t::fillTableCellInfo_IATable2(VBufStorage_controlFi
 void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	// Defaults.
 	this->shouldDisableTableHeaders = false;
+	this->hasEncodedAccDescription = false;
 
 	IServiceProvider* serv = NULL;
 	if (pacc->QueryInterface(IID_IServiceProvider, (void**)&serv) != S_OK)
@@ -238,16 +239,20 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	iaApp = NULL;
 
 	if (wcscmp(toolkitName, L"Gecko") == 0) {
-		if (wcsncmp(toolkitVersion, L"1.9.2.", 6) == 0) {
-			// Gecko 1.9.2.x.
-			// Retrieve the digits for the final part of the main version number.
-			wstring verPart;
-			for (wchar_t* c = &toolkitVersion[6]; iswdigit(*c); c++)
-				verPart += *c;
-			if (_wtoi(verPart.c_str()) <= 10) {
-				// Gecko <= 1.9.2.10 will crash if we try to retrieve headers on some table cells, so disable them.
-				this->shouldDisableTableHeaders = true;
+		if (wcsncmp(toolkitVersion, L"1.", 2) == 0) {
+			if (wcsncmp(toolkitVersion, L"1.9.2.", 6) == 0) {
+				// Gecko 1.9.2.x.
+				// Retrieve the digits for the final part of the main version number.
+				wstring verPart;
+				for (wchar_t* c = &toolkitVersion[6]; iswdigit(*c); c++)
+					verPart += *c;
+				if (_wtoi(verPart.c_str()) <= 10) {
+					// Gecko <= 1.9.2.10 will crash if we try to retrieve headers on some table cells, so disable them.
+					this->shouldDisableTableHeaders = true;
+				}
 			}
+			// Gecko 1.x uses accDescription to encode position info as well as the description.
+			this->hasEncodedAccDescription = true;
 		}
 	}
 
@@ -469,7 +474,11 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 	LOG_DEBUG(L"getting accDescription");
 	BSTR description=NULL;
 	if((res=pacc->get_accDescription(varChild,&description))==S_OK) {
-		parentNode->addAttribute(L"description",description);
+		if(this->hasEncodedAccDescription) {
+			if(wcsncmp(description,L"Description: ",13)==0)
+				parentNode->addAttribute(L"description",&description[13]);
+		} else
+			parentNode->addAttribute(L"description",description);
 		SysFreeString(description);
 	}
 	// Handle table cell information.
@@ -596,7 +605,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 	}
 	//Get the child count
 	int childCount=0;
-	if(IA2TextIsUnneededSpace||role==ROLE_SYSTEM_COMBOBOX||(role==ROLE_SYSTEM_LIST&&!(states&STATE_SYSTEM_READONLY))||role==IA2_ROLE_UNKNOWN||role==IA2_ROLE_EMBEDDED_OBJECT) {
+	if(IA2TextIsUnneededSpace||role==ROLE_SYSTEM_COMBOBOX||(role==ROLE_SYSTEM_LIST&&!(states&STATE_SYSTEM_READONLY))||role==IA2_ROLE_EMBEDDED_OBJECT) {
 		LOG_DEBUG(L"Forcing childCount to 0 as we don't want this node's children");
 		childCount=0;
 	} else {
@@ -617,35 +626,48 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 		//Look up the IAccessible2 objects at the positions of the embedded object chars
 		//Add the text and IA2 objects in order to a vector for later adding to the buffer
 		if(paccHypertext&&IA2Text!=NULL&&IA2TextLength>0&&!IA2TextIsUnneededSpace) {
-		LOG_DEBUG(L"scanning text for embedded object chars");
-			int textStart=-1;
-			wchar_t* tempText=NULL;
-			for(int i=0;i<IA2TextLength;++i) {
-				LOG_DEBUG(L"offset "<<i);
-				if(IA2Text[i]!=0xfffc) { //is not an embeded object char
-					LOG_DEBUG(L"normal char");
-					if(tempText==NULL) {
-						textStart=i;
-						LOG_DEBUG(L"allocating new tempText memory to hold "<<((IA2TextLength+1)-i)<<L" chars");
-						tempText=(wchar_t*)malloc(sizeof(wchar_t)*((IA2TextLength+1)-i));
-						if(tempText==NULL) {
-							LOG_DEBUG(L"Error allocating tempText memory");
-							return NULL;
-						}
+		LOG_DEBUG(L"scanning text");
+			int chunkStart=0;
+			long attribsStart = 0;
+			long attribsEnd = 0;
+			map<wstring,wstring> textAttribs;
+			for(int i=0;;++i) {
+				if(i!=chunkStart&&(i==IA2TextLength||i==attribsEnd||IA2Text[i]==0xfffc)) {
+					// We've reached the end of the current chunk of text.
+					// (A chunk ends at the end of the text, at the end of an attributes run
+					// or at an embedded object char.)
+					// Add the chunk to the buffer.
+					LOG_DEBUG("Adding text chunk, start="<<chunkStart<<" end="<<i);
+					if((tempNode=buffer->addTextFieldNode(parentNode,previousNode,wstring(IA2Text+chunkStart,i-chunkStart)))!=NULL) {
+						previousNode=tempNode;
+						// Add text attributes.
+						for(map<wstring,wstring>::const_iterator it=textAttribs.begin();it!=textAttribs.end();++it)
+							previousNode->addAttribute(it->first,it->second);
 					}
-					tempText[i-textStart]=IA2Text[i];
-				} else { //is an embedded object char
-					LOG_DEBUG(L"is an embedded object char");
-					if(tempText!=NULL) {
-						LOG_DEBUG(L"there is tempText, terminate it with NULL");
-						tempText[i-textStart]=L'\0';
-						LOG_DEBUG(L"adding tempText of length "<<(i-textStart)+1<<L" to buffer");
-						if((tempNode=buffer->addTextFieldNode(parentNode,previousNode,tempText))!=NULL) {
-							previousNode=tempNode;
+				}
+				if(i==IA2TextLength)
+					break;
+				if(i==attribsEnd) {
+					// We've hit the end of the last attributes run and thus the start of the next.
+					textAttribs.clear();
+					chunkStart=i;
+					BSTR attribsStr;
+					if(paccText->get_attributes(attribsEnd,&attribsStart,&attribsEnd,&attribsStr)==S_OK) {
+						LOG_DEBUG("Start of new attributes run at "<<i);
+						if(attribsStr) {
+							IA2AttribsToMap(attribsStr,textAttribs);
+							SysFreeString(attribsStr);
 						}
-						free(tempText);
-						tempText=NULL;
+					} else {
+						// If attributes fails, assume it'll fail for the entire text.
+						attribsEnd=IA2TextLength;
 					}
+				}
+				if(IA2Text[i]==0xfffc) {
+					// Embedded object char.
+					LOG_DEBUG(L"embedded object char at "<<i);
+					// The next chunk of text shouldn't include this char.
+					chunkStart=i+1;
 					LOG_DEBUG(L"get hyperlinkIndex with IAccessibleHypertext::get_hyperlinkIndex and offset "<<i);
 					int hyperlinkIndex;
 					if((res=paccHypertext->get_hyperlinkIndex(i,(long*)(&hyperlinkIndex)))!=S_OK) {
@@ -694,14 +716,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 				}
 			}
 			LOG_DEBUG(L"End of scan");
-			if(tempText!=NULL) {
-				LOG_DEBUG(L"some tempText left, terminate with NULL");
-				tempText[IA2TextLength-textStart]=L'\0';
-				LOG_DEBUG(L"add tempText of length "<<(IA2TextLength-textStart)+1<<L" to buffer");
-				previousNode=buffer->addTextFieldNode(parentNode,previousNode,tempText);
-				free(tempText);
-				tempText=NULL;
-			}
 		} else  if(IA2TextLength>0&&!IA2TextIsUnneededSpace) {
 			LOG_DEBUG(L"add IA2Text to childVector");
 			if((tempNode=buffer->addTextFieldNode(parentNode,previousNode,IA2Text))!=NULL) {
@@ -797,8 +811,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 				}
 			}
 		}
-		if ((role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_ROWHEADER || role == ROLE_SYSTEM_COLUMNHEADER) && parentNode->getLength() == 0) {
-			// Always render a space for empty table cells.
+		if ((role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_ROWHEADER || role == ROLE_SYSTEM_COLUMNHEADER||role==IA2_ROLE_UNKNOWN) && parentNode->getLength() == 0) {
+			// Always render a space for empty table cells and unknowns.
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
 			parentNode->setIsBlock(false);
 		}

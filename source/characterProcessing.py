@@ -428,6 +428,8 @@ class SpeechSymbolProcessor(object):
 				symbol.displayName = symbol.identifier
 
 		characters = "".join(characters)
+		# The simple symbols must be ordered longest first so that the longer symbols will match.
+		simpleSymbolIdentifiers.sort(key=lambda identifier: len(identifier), reverse=True)
 
 		# Build the regexp.
 		patterns = [
