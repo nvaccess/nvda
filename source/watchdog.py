@@ -101,6 +101,8 @@ def _recoverAttempt():
 		oledll.ole32.CoCancelCall(_coreThreadID,0)
 	except:
 		pass
+	import NVDAHelper
+	NVDAHelper.localLib.cancelSendMessage()
 
 def initialize():
 	"""Initialize the watchdog.
