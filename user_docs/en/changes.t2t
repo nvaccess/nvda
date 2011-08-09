@@ -9,10 +9,12 @@
 - In Mozilla Gecko (e.g. Firefox) Heading levels are now announced  when using object navigation.
 - Text formatting can now be reported when using browse mode in Mozilla Gecko (e.g. Firefox and Thunderbird). (#394)
 - Text with underline and/or strikethrough can now be detected and reported in standard IAccessible2 text controls such as in Mozilla applications.
+- NVDA will now restart itself if it crashes.
 
 
 == Bug Fixes ==
 - NVDA  no longer shows bullets or numbering for lists in Internet Explorer and other MSHTML controls when the author has indicated that these should not be shown (i.e. the list style is "none"). (#1671)
+- Restarting NVDA when it has frozen (e.g. by pressing control+alt+n) no longer exits the previous copy without starting a new one.
 
 
 = 2011.2 =
