@@ -9,10 +9,13 @@
 - V oknách Mozilla Gecko je počas objektovej navigácie oznamovaná úroveň nadpisov.
 - V režime prehliadania je možné oznamovať formátovanie textu v produktoch Mozilla.. (#394)
 - NVDA dokáže detekovať podčiarknutý a prečiarknutý text v editačných poliach IAccessible2 (nap. v aplikáciách Mozilla).
+- NVDA sa automaticky reštartuje po páde.
 
 
 == Opravy ==
 - V programe internet explorer a ostatných oknách MSHTML NVDA nebude oznamovať odrážky a číslovanie v zoznamoch, ak autor nastavil, že sa tieto nemajú zobrazovať (štýl zoznamu je none). (#1671)
+- Reštart NVDA po zamrznutí (napr. stlačením NVDA+Control+n) nespustí NVDA znovu prv, než sa skutočne ukončí zamrznutá kópia..
+
 
 
 = 2011.2 =

@@ -279,10 +279,10 @@ As seguintes teclas de atalho estão disponíveis para a revisão de texto:
 | Ler palavra atual em revisão | 5 do teclado numérico | NVDA+k | Anuncia a palavra atual no texto onde está posicionado o cursor de exploração. Ao pressionar duas vezes rapidamente soletra a palavra. Três vezes, soletra usando descrições de caracteres. |
 | Mover para a próxima palavra em revisão | 6 do teclado numérico | NVDA+l | Move o cursor de exploração para a próxima palavra no texto |
 | mover para o início da linha em revisão | shift+1 do teclado numérico | NVDA+shift+u | Move o cursor de exploração para o início da linha atual no texto |
-| Mover para o carácter anterior em revisão | 1 do teclado numérico | NVDA+m | Move o cursor de exploração para o carácter anterior na linha atual no texto |
-| Ler o carácter atual em revisão | 2 do teclado numérico | NVDA+vírgula | Anuncia o carácter do objeto de navegação atual onde  se encontra o cursor de exploração. Ao pressionar duas vezes rapidamente, dá uma descrição descrição ou exemplo do carácter. Pressionado três vezes, anuncia o valor numérico decimal e hexadecimal do carácter. |
-| Mover para o próximo carácter em revisão | 3 do teclado numérico | NVDA+ponto | Move o cursor de exploração para o carácter seguinte na linha atual do texto |
-| Mover para o fim da linha em revisão | shift+3 do teclado numérico | NVDA+shift+o | Move o cursor de exploração para o carácter seguinte na linha atual do texto |
+| Mover para o caractere anterior em revisão | 1 do teclado numérico | NVDA+m | Move o cursor de exploração para o caractere anterior na linha atual no texto |
+| Ler o caractere atual em revisão | 2 do teclado numérico | NVDA+vírgula | Anuncia o caractere do objeto de navegação atual onde  se encontra o cursor de exploração. Ao pressionar duas vezes rapidamente, dá uma descrição descrição ou exemplo do caractere. Pressionado três vezes, anuncia o valor numérico decimal e hexadecimal do caractere. |
+| Mover para o próximo caractere em revisão | 3 do teclado numérico | NVDA+ponto | Move o cursor de exploração para o caractere seguinte na linha atual do texto |
+| Mover para o fim da linha em revisão | shift+3 do teclado numérico | NVDA+shift+o | Move o cursor de exploração para o caractere seguinte na linha atual do texto |
 | Ler tudo com revisão | Mais do teclado numérico | NVDA+shift+seta abaixo | Lê a partir da posição atual do cursor de exploração, movendo-o até ao fim do texto |
 | Copiar a partir do cursor de exploração | NVDA+f9 | NVDA+f9 | Inicia a cópia do texto a partir da posição atual do cursor de exploração. A cópia atual não será efetuada até que informe ao NVDA onde pretende copiar |
 | Copiar até ao cursor de exploração  | NVDA+f10 | NVDA+f10 | Copia a partir da posição do cursor de exploração definida atualmente com a cópia do cursor de exploração, até a posição do mesmo. Após pressionar esta tecla, o texto será copiado para a área de transferência do Windows  |
@@ -291,7 +291,7 @@ As seguintes teclas de atalho estão disponíveis para a revisão de texto:
 
 Nota: As teclas do bloco numérico requerem que o Num Lock esteja desativado para que possam desempenhar suas funções adequadamente. 
 
-Para ajudá-lo a assimilar estas teclas de atalho, atente que os comandos básicos de revisão de texto estão organizados numa tabela de três por três, do início até ao fim por linha, palavra e carácter e da esquerda para a direita por anterior, atual e seguinte.
+Para ajudá-lo a assimilar estas teclas de atalho, atente que os comandos básicos de revisão de texto estão organizados numa tabela de três por três, do início até ao fim por linha, palavra e caractere e da esquerda para a direita por anterior, atual e seguinte.
 O esquema é ilustrado como se segue: 
 | Linha Anterior | Linha Atual | Próxima Linha |
 | Palavra Anterior | Palavra Atual | Próxima Palavra |
@@ -371,7 +371,7 @@ Adicionalmente, pode alternar manualmente forçando o modo de foco, sendo que as
 %kc:endInclude
 
 ++ Navegação por Carácter ++
-Quando estiver no modo de navegação, o NVDA também fornece teclas de apenas um carácter para uma navegação rápida, as quais permitem saltar para determinados campos no documento.   
+Quando estiver no modo de navegação, o NVDA também fornece teclas de apenas um caractere para uma navegação rápida, as quais permitem saltar para determinados campos no documento.   
 
 %kc:beginInclude
 As teclas seguintes só por si saltam para o próximo elemento disponível, adicionando-se a tecla Shift faz com que saltem para o elemento anterior:
@@ -526,7 +526,7 @@ Isso é aplicado a todos os sintetizadores, não apenas ao que está atualmente 
 Se esta opção estiver selecionada, aumentará o tom para as letras maiúsculas.
 
 ==== Dizer "cap" Antes De Letras Maiúsculas ====
-Esta é uma caixa de seleção que se marcada informa ao NVDA para anunciar a palavra "cap" antes de qualquer letra maiúscula, quando falada como  carácter individual, se soletrada, por exemplo.
+Esta é uma caixa de seleção que se marcada informa ao NVDA para anunciar a palavra "cap" antes de qualquer letra maiúscula, quando falada como  caractere individual, se soletrada, por exemplo.
 Normalmente, o NVDA aumenta ligeiramente o tom para qualquer letra maiúscula, mas alguns sintetizadores não suportam corretamente esta configuração, assim, poderá ser usada  esta opção.
 
 ==== Bipar em maiúsculas ====
@@ -534,7 +534,7 @@ Se esta caixa de seleção estiver marcada, o NVDA reproduzirá um pequeno beep 
 Tal como a caixa de seleção "dizer cap antes de maiúsculas", esta é útil para sintetizadores que não possam alterar seu tom em letras maiúsculas.
 
 ==== Usar Soletragem Melhorada Quando Suportado ====[VoiceSpellingFunctionality]
-Algumas palavras consistem de um único carácter, mas a pronúncia é diferente dependendo de se este está sendo falado como um carácter individual (tal como quando é soletrado) ou como palavra.
+Algumas palavras consistem de um único caractere, mas a pronúncia é diferente dependendo de se este está sendo falado como um caractere individual (tal como quando é soletrado) ou como palavra.
 "A", por exemplo, em inglês, tanto pode ser uma letra como uma palavra.
 Essa opção permite ao sintetizador diferenciar entre esses dois casos se o mesmo suportar.
 Maior parte dos sintetizadores o suportam.
@@ -642,7 +642,7 @@ Isto permite que procure coisas no mesmo, através do movimento físico do mouse
 
 ==== Unidade de Texto ====
 Se o NVDA estiver configurado para anunciar o texto sob o ponteiro do mouse à medida que o move, esta opção permite escolher exatamente quanto texto será anunciado.
-As opções são carácter, palavra, linha e parágrafo. 
+As opções são caractere, palavra, linha e parágrafo. 
 
 ==== Anunciar Tipo do objeto Quando O Mouse Entra Nele ====
 Se esta caixa de seleção estiver ativada, o NVDA anunciará o tipo do objeto quando o mouse se mover sobre ele.
@@ -822,7 +822,7 @@ Os dicionários de voz do NVDA vão muito além de uma simples substituição de
 O diálogo para a adição de regras também contém uma caixa de seleção onde escolhe se deseja que a regra seja ou não sensível às maiúsculas (indicando que este programa irá levar em conta se os caracteres são ou não maiúsculos.
 O NVDA ignora estes casos por padrão).
 Outra caixa de seleção permite-lhe estabelecer se o texto original é uma "Expressão Regular".
-Expressão regular é um texto original que contém símbolos especiais que permitem introduzir mais de um carácter ao mesmo tempo, ou introduzir apenas números, ou só letras, segundo alguns poucos exemplos.
+Expressão regular é um texto original que contém símbolos especiais que permitem introduzir mais de um caractere ao mesmo tempo, ou introduzir apenas números, ou só letras, segundo alguns poucos exemplos.
 Expressões regulares não são explicadas neste guia do usuário, mas existem muitos tutoriais na Web que podem proporcionar-lhe mais informações.
 
 +++ Pronúncia de Sinais e pontuação +++[SymbolPronunciation]
@@ -1074,7 +1074,7 @@ Por favor consulte as [tabelas de documentação de teclas para o BRLTTY http://
 | Mover  linha braille para a frente | fwinrt (Caminha uma janela à direita) |
 | Mover linha braille para a linha anterior | lnup (sobe uma linha) |
 | Mover linha braille para a linha seguinte | lndn (dece uma linha) |
-| Guiar para a cela braille | route (lleva o cursor ao carácter) |
+| Guiar para a cela braille | route (lleva o cursor ao caractere) |
 %kc:endInclude
 
 + Tópicos Avançados +
@@ -1162,5 +1162,5 @@ Há ainda o cite http://www.megatts.com, onde é possível obter informações s
 
 Para conhecer todas as novidades, mudanças e correções introduzidas, consulte o arquivo das novidades que pode ser encontrado no sub-menu ajuda do menu NVDA.
 
-Para informações detalhadas sobre descrições de caracteres, pronúncia de sinais, desenvolvimento de app modules, plugins globais e outros assuntos ligados ao desenvolvimento do nvda, consulte o arquivo developerGuide (Guia do Desenvolvedor) que se encontra na pasta nvda\documentation\pt_BR.
+Para informações detalhadas sobre descrições de caracteres, pronúncia de sinais, desenvolvimento de app modules, plugins globais e outros assuntos ligados ao desenvolvimento do nvda e seus componentes, consulte o arquivo developerGuide (Guia do Desenvolvedor) que se encontra na pasta nvda\documentation\pt_BR.
 OBS: Por ora, o Guia do Desenvolvedor não está completamente traduzido.
