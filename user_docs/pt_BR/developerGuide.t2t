@@ -332,8 +332,8 @@ The code may then retreave information from that object or perhaps even retreave
 Just like App Modules and Global Plugins, NVDA Objects can also define events, scripts and gesture bindings. 
  
 ++ Scripts e Gestos Vinculados ++
-App Modules, Global Plugins and NVDA Objects can define special methods which can be bound to a particular piece of input such as a key press.
-NVDA refers to these methods as scripts.
+App Modules, Global Plugins e Objetos no NVDA podem definir métodos especiais que podem ser vinculados a uma parte de uma entrada tal como o pressionamento de uma tecla.
+O NVDA identifica esses métodos como scripts.
 
 A script is a standard Python instance method with a name starting with "script_"; e.g. "script_sayDateTime".
 
@@ -352,15 +352,15 @@ There are more advanced ways of binding gestures in a more dynamic fashion, thou
 A gesture identifier string is a simple string representation of a piece of input.
 It consists of a two leter character code denoting the source of the input, an optional device in brackets, a colon (:) and one or more names separated by a plus (+) denoting the actual keys or input values.
 
-Some examples of gesture string identifiers are:
+Alguns exemplos de seqüências de identificadores de gesto são:
 - "kb:NVDA+shift+v"
 - "br(freedomScientific):leftWizWheelUp"
 - "kb(laptop):NVDA+t"
 -
 
-Currently, the only input sources in NVDA are:
-- kb: keyboard input
-- br: braille input
+Atualmente, os únicos códigos de entrada no NVDA são:
+- kb: entrada de teclado
+- br: entrada de braille
 -
 
 When NVDA receives input, it looks for a matching gesture binding in a particular order.

@@ -13,21 +13,23 @@ Traduzido por Marlin Rodrigues
 - Textos com sublinhado e/ou taxado agora podem ser detectados e informados em controles de texto standard IAccessible2 tais como em aplicativos da Mozilla.
 - O NVDA agora irá reiniciar por si próprio caso ele trave.
 
+
 == Correção de Falhas ==
 - O NVDA já não mosta marcas ou numerações para listas no Internet Explorer e outros controles MSHTML onde o autor tiver indicado que estes não devem ser mostrados (isto é, o estilo da lista é "none"). (#1671)
+- Ao reiniciar o NVDA quando este trava, (isto é, pressionando control+alt+n) já não encerra a cópia anterior sem iniciar uma nova.
 
 
 == 2011.2 ==
 Os destaques desta versão incluem maiores implementações no tocante à  pontuação e sinais, como configuração dos níveis, personalização dos nomes e descrições de caracteres; Leitura contínua sem pausa ao fim das linhas; melhorado o suporte ARIA no Internet Explorer; suporte melhorado para documentos XFA/LiveCycle PDF no Adobe Reader; acesso aos textos escritos na tela em mais aplicativos; e acesso a informações de formatação e cor para os textos escritos na tela.
 
 == Novas Características ==
-- Agora é possível ouvir a descrição para um determinado caractere pressionando o script anunciar caractere atual duas vezes em rápida sucessão. Para caracteres ingleses esse é o alfabeto fonético standard inglês. Para idiomas pitagráficos tais como Chinês tradicional, um ou mais exemplos de uso desse símbolo são fornecidos. Também ao pressionar Rever a Palavra Atual ou revera linha atual três vezes soletrará a palavra/linha usando descrições de caracteres. (#55)
+- Agora é possível ouvir a descrição para um determinado caractere pressionando o script anunciar caractere atual duas vezes em rápida sucessão. Para caracteres ingleses esse é o alfabeto fonético standard inglês. Para idiomas pitagráficos tais como Chinês tradicional, um ou mais exemplos de uso desse símbolo são fornecidos. Também ao pressionar Rever a Palavra Atual ou rever a linha atual três vezes soletrará a palavra/linha usando descrições de caracteres. (#55)
 - Mais textos podem ser lidos  em revisão plana para aplicativos tais como mozilla Thunderbird, os quais escrevem seus textos diretamente para a tela.
 - Agora é possível escolher entre vários graus de anúncio de pontuação e sinais. (#332)
 - Quando pontuações ou outros sinais são repetidos por mais de 4 vezes, o número de repetições agora é anunciado em lugar de falar o sinal repetido. (#43)
 - Novas Tabelas de Tradução braille: braille de Computador Noroeguês de 8 pontos, etíope grau 1, esloveno grau 1, sérvio grau 1. (#1456)
 - A fala já não sofre pausas não naturais ao fim de cada linha quando se usa o comando de leitura contínua. (#149)
-- O NVDA agora anuncia se algo é classificado  (de acordo com a propriedade de classe Aria) em navegadores web. (#1500)
+- O NVDA agora anuncia se algo é classificado  (de acordo com a propriedade de classe Aria) nos navegadores web. (#1500)
 - O Unicode braille Patterns agora é exibido corretamente nas linhas braille. (#1505)
 - No Internet Explorer e outros controles MSHTML, quando o foco é movido para dentro de um grupo de controles (rodeado por um campo de grupos), o NVDA agora anuncia o nome do grupo (a legenda). (#535)
 - No Internet Explorer e outros controles MSHTML, as  propriedades aria-labelledBy e aria-describedBy agora são reconhecidas.
