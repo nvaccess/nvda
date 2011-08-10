@@ -1,5 +1,5 @@
-import config
 import os
+import sys
 import ctypes
 import locale
 import gettext
@@ -98,7 +98,6 @@ def setLanguage(lang):
 			#Set the windows locale for this thread (NVDA core) to this locale.
 			LCID=localeNameToWindowsLCID(lang)
 			ctypes.windll.kernel32.SetThreadLocale(LCID)
-		config.conf["general"]["language"]=lang
 		return True
 	except IOError:
 		gettext.install("nvda", unicode=True)
