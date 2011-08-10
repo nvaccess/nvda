@@ -15,6 +15,7 @@
 == Bug Fixes ==
 - NVDA  no longer shows bullets or numbering for lists in Internet Explorer and other MSHTML controls when the author has indicated that these should not be shown (i.e. the list style is "none"). (#1671)
 - Restarting NVDA when it has frozen (e.g. by pressing control+alt+n) no longer exits the previous copy without starting a new one.
+- Pressing backspace or arrow keys in a Windows command console no longer causes strange results in some cases. (#1612)
 
 
 = 2011.2 =
