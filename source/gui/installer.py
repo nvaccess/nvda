@@ -67,7 +67,25 @@ class InstallerDialog(wx.Dialog):
 				self.programFolderEdit.Value = d.Path
 
 	def onInstall(self, evt):
+		self.Hide()
+		self.progressDialog = IndeterminateProgressDialog(self, _("Installing NVDA"), _("Please wait while NVDA is being installed."))
+		self.progressDialog.Raise()
+		wx.CallLater(5000, self.installDone)
+
+	def installDone(self):
+		self.progressDialog.done()
 		self.Destroy()
 
 	def onCancel(self, evt):
+		self.Destroy()
+
+class IndeterminateProgressDialog(wx.ProgressDialog):
+
+	def __init__(self, parent, title, message):
+		super(IndeterminateProgressDialog, self).__init__(title, message, parent=parent)
+		self.timer = wx.PyTimer(self.Pulse)
+		self.timer.Start(1000)
+
+	def done(self):
+		self.timer.Stop()
 		self.Destroy()
