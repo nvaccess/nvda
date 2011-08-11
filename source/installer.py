@@ -83,7 +83,7 @@ def copyProgramFiles(destPath):
 				windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)
 
 def copyUserConfig(destPath):
-	sourcePath=globalVars.appArgs.configPath
+	sourcePath=os.path.abspath(globalVars.appArgs.configPath)
 	for curSourceDir,subDirs,files in os.walk(sourcePath):
 		curDestDir=os.path.join(destPath,os.path.relpath(curSourceDir,sourcePath))
 		if not os.path.isdir(curDestDir):
@@ -192,9 +192,9 @@ class CreatePortableCopy(threading.Thread):
 				copyUserConfig(os.path.join(destPath,'userConfig'))
 			if self.createAutorun:
 				drive,relDestPath=os.path.splitdrive(destPath)
-			autorunPath=os.path.join(drive,"autorun.inf")
-			autorunString=autorunTemplate.format(exe=os.path.join(relDestPath,'nvda.exe'),name=versionInfo.name,version=versionInfo.version,icon=os.path.join(relDestPath,'images/nvda.ico'))
-			with open(autorunPath,"wt") as autorunFile:
-				autorunFile.write(autorunString)
+				autorunPath=os.path.join(drive,"autorun.inf")
+				autorunString=autorunTemplate.format(exe=os.path.join(relDestPath,'nvda.exe'),name=versionInfo.name,version=versionInfo.version,icon=os.path.join(relDestPath,'images/nvda.ico'))
+				with open(autorunPath,"wt") as autorunFile:
+					autorunFile.write(autorunString)
 		except Exception as e:
 			self.threadExc=e
