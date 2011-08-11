@@ -23,8 +23,8 @@ class InstallerDialog(wx.Dialog):
 		# FIXME: Don't use os.getenv to get the path to Program Files.
 		ctrl = self.programFolderEdit = wx.TextCtrl(self, value=os.path.join(unicode(os.getenv("ProgramFiles")), versionInfo.name))
 		sizer.Add(ctrl)
-		ctrl = wx.Button(self, label=_("Change"))
-		ctrl.Bind(wx.EVT_BUTTON, self.onChangeProgramFolder)
+		ctrl = wx.Button(self, label=_("Browse..."))
+		ctrl.Bind(wx.EVT_BUTTON, self.onBrowseForProgramFolder)
 		sizer.Add(ctrl)
 		advancedSizer.Add(sizer)
 
@@ -61,12 +61,10 @@ class InstallerDialog(wx.Dialog):
 		self.mainSizer.Show(self.advancedSizer, show=evt.IsChecked(), recursive=True)
 		self.mainSizer.Layout()
 
-	def onChangeProgramFolder(self, evt):
-		self.Disable()
+	def onBrowseForProgramFolder(self, evt):
 		with wx.DirDialog(self, _("Select Installation Folder"), defaultPath=self.programFolderEdit.Value) as d:
 			if d.ShowModal() == wx.ID_OK:
 				self.programFolderEdit.Value = d.Path
-		self.Enable()
 
 	def onInstall(self, evt):
 		self.Destroy()
