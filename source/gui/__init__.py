@@ -242,6 +242,14 @@ class MainFrame(wx.Frame):
 			return
 		messageBox(_("Successfully created a portable copy of NVDA at %s")%path,_("Success"))
 
+	def onInstallCommand(self, evt):
+		if isInMessageBox:
+			return
+		self.prePopup()
+		from gui.installer import InstallerDialog
+		InstallerDialog(self).Show()
+		self.postPopup()
+
 class SysTrayIcon(wx.TaskBarIcon):
 
 	def __init__(self, frame):
@@ -297,6 +305,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			item = menu_tools.Append(wx.ID_ANY, _("Create Portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
+			item = menu_tools.Append(wx.ID_ANY, _("Install NVDA..."))
+			self.Bind(wx.EVT_MENU, frame.onInstallCommand, item)
 		item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
 		self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
