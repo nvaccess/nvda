@@ -80,6 +80,12 @@ class MainFrame(wx.Frame):
 		# This makes Windows return to the previous foreground window and also seems to allow NVDA to be brought to the foreground.
 		self.Show()
 		self.Hide()
+		if winUser.isWindowVisible(self.Handle):
+			# HACK: Work around a wx bug where Hide() doesn't actually hide the window,
+			# but IsShown() returns False and Hide() again doesn't fix it.
+			# This seems to happen if the call takes too long.
+			self.Show()
+			self.Hide()
 
 	def Destroy(self):
 		self.sysTrayIcon.Destroy()

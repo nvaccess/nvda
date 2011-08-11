@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Nvda\n"
 "POT-Creation-Date: 2011-07-05 19:03+E. Australia Standard Time\n"
-"PO-Revision-Date: 2011-07-07 15:02+0100\n"
-"Last-Translator: Luca Maianti <lucanight@moleman.como.it>\n"
+"PO-Revision-Date: 2011-07-26 15:00+0100\n"
+"Last-Translator: Simone Dal Maso <simone.dalmaso@juvox.it>\n"
 "Language-Team: Luca Maianti <lucanight@moleman.como.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -46,7 +46,7 @@ msgstr "%d percento"
 
 #: NVDAObjects\window\__init__.py:368
 msgid "Desktop"
-msgstr "Scrivania"
+msgstr "Desktop"
 
 #: NVDAObjects\window\edit.py:253
 #: NVDAObjects\window\edit.py:254
@@ -681,7 +681,7 @@ msgstr "Teal"
 
 #: colors.py:102
 msgid "fuchsia"
-msgstr "Fichsia"
+msgstr "Fuchsia"
 
 #: colors.py:103
 msgid "aqua"
@@ -1421,7 +1421,7 @@ msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"Il tuo map file dei gesti contiene errrori.\n"
+"Il tuo file dei gesti contiene errrori.\n"
 "Ulteriori informazioni nel file di log."
 
 #: core.py:86
@@ -1462,7 +1462,7 @@ msgstr "Trova la stringa di testo successiva a partire dalla posizione del curso
 
 #: cursorManager.py:117
 msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
-msgstr "Trova l'occorrenza precedente del testo precedentemente inseritodalla posizione del cursore"
+msgstr "Trova l'occorrenza precedente del testo  precedentemente inserito dalla posizione del cursore"
 
 #: cursorManager.py:244
 #: globalCommands.py:113
@@ -1475,23 +1475,23 @@ msgstr "Copiato negli appunti"
 
 #: globalCommands.py:43
 msgid "input help %s"
-msgstr "Aiuto tastiera %s"
+msgstr "Aiuto Immissione %s"
 
 #: globalCommands.py:44
 msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
-msgstr "Attiva o disattiva l'aiuto tastiera. Quando attivo, la pressione di un tasto provochera' la lettura dello script associato ad esso."
+msgstr "Attiva o disattiva l'aiuto immissione. Quando attivo, la pressione di un tasto provochera' la lettura dello script associato ad esso."
 
 #: globalCommands.py:50
 msgid "Sleep mode off"
-msgstr "Modalita' sleep off"
+msgstr "Modalita' Riposo disattivata"
 
 #: globalCommands.py:53
 msgid "Sleep mode on"
-msgstr "Modalita' sleep on"
+msgstr "Modalita' riposo attivata"
 
 #: globalCommands.py:54
 msgid "Toggles  sleep mode on and off for  the active application."
-msgstr "Attiva o disattiva la modalita' sleep per l'applicazione attiva"
+msgstr "Attiva o disattiva la modalita' riposo per l'applicazione attiva"
 
 #: globalCommands.py:71
 msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
@@ -1515,7 +1515,7 @@ msgstr "Clicca il tasto destro del mouse"
 
 #: globalCommands.py:87
 msgid "left mouse button unlock"
-msgstr "Pulsante sinistro del mouse sbloccato"
+msgstr "Pulsante sinistro del mouse rilasciato"
 
 #: globalCommands.py:90
 msgid "left mouse button lock"
@@ -1527,7 +1527,7 @@ msgstr "Blocca o sblocca il pulsante sinistro del mouse"
 
 #: globalCommands.py:96
 msgid "right mouse button unlock"
-msgstr "Pulsante destro del mouse sbloccato"
+msgstr "Pulsante destro del mouse rilasciato"
 
 #: globalCommands.py:99
 msgid "right mouse button lock"
@@ -1539,7 +1539,7 @@ msgstr "Blocca o sblocca il pulsante destro del mouse"
 
 #: globalCommands.py:116
 msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
-msgstr "Legge la selezione corrente nelle aree di editazione e nei documenti"
+msgstr "Legge la selezione corrente nelle aree di editazione e nei documenti. "
 
 #: globalCommands.py:124
 msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
@@ -1598,7 +1598,7 @@ msgstr "Livello punteggiatura %s"
 
 #: globalCommands.py:202
 msgid "Cycles through speech symbol levels which determine what symbols are spoken"
-msgstr "Cambia tra i livelli di punteggiatura che determinano quali simboli vengono pronunciati"
+msgstr "Cicla tra i livelli di punteggiatura che determinano quali simboli vengono pronunciati"
 
 #: globalCommands.py:217
 msgid "object has no location"
@@ -1649,7 +1649,7 @@ msgstr "%s copiato negli appunti"
 
 #: globalCommands.py:291
 msgid "Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard"
-msgstr "Legge l'oggetto attuale nel navigatore o, se premuto tre volte, copia il nome e il valore dell'oggetto attuale negli appunti"
+msgstr "Legge l'oggetto attuale nel navigatore, se premuto due volte legge carattere per carattere o, se premuto tre volte, copia il nome e il valore dell'oggetto attuale negli appunti"
 
 #: globalCommands.py:299
 msgid "No location information for navigator object"
@@ -1690,7 +1690,7 @@ msgstr "Nessun cursore"
 
 #: globalCommands.py:340
 msgid "Pressed once Sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"
-msgstr "Sposta all'oggetto rappresentato dal testo alla posizione del cursore di controllo nella navigazione in linea"
+msgstr "Premuto una volta imposta il focus sul navigatore ad oggetti, premuto due volte imposta il cursore di sistema alla posizione del cursore di controllo"
 
 #: globalCommands.py:353
 msgid "No parents"
@@ -1790,7 +1790,7 @@ msgstr "Sposta il cursore di controllo sul carattere precedente dell'oggetto att
 
 #: globalCommands.py:543
 msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
-msgstr "Legge il carattere dell'oggetto attuale dove e' posizionato il cursore di controllo. Se premuto due volte, verranno annunciati i valori ascii ed esadecimali"
+msgstr "Legge il carattere sul quale è posizionato il cursore di controllo. Premuto due volte legge una descrizione del carattere. Premuto tre volte fornirà il valore esadecimale"
 
 #: globalCommands.py:561
 msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
@@ -1822,7 +1822,7 @@ msgstr "Sposta il focus al documento più vicino che contiene il focus"
 
 #: globalCommands.py:616
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr "Cicla tra le modalità esplorazione e focus. Nella modalità focus, i tasti verranno passati direttamente all'applicazione, di conseguenza sarà possibile interagire con i controlli. Nella modalità esplorazione, verrà attivato il buffer virtuale permettendo l'esplorazione della pagina e l'uso dei tasti rapidi di navigazione"
+msgstr "Cicla tra le modalità navigazione e focus. Nella modalità focus, i tasti verranno passati direttamente all'applicazione, di conseguenza sarà possibile interagire con i controlli. Nella modalità navigazione, verrà attivato un cursore virtuale permettendo l'esplorazione della pagina e l'uso dei tasti rapidi di navigazione"
 
 #: globalCommands.py:620
 msgid "Quits NVDA!"
@@ -2214,7 +2214,7 @@ msgstr "Modalita' navigazione..."
 
 #: gui\__init__.py:247
 msgid "Change virtual buffers specific settings"
-msgstr "Cambia le impostazioni del buffer virtuale"
+msgstr "Cambia le impostazioni della modalità navigazione"
 
 #: gui\__init__.py:249
 msgid "Change Settings of document properties"
@@ -2717,7 +2717,7 @@ msgstr "Modalita' focus automatica per i movimenti del cursore"
 
 #: gui\settingsDialogs.py:700
 msgid "Audio indication of focus and browse modes"
-msgstr "Indicazione audio delle modalita' focus e buffer virtuale"
+msgstr "Indicazione audio delle modalita' focus e navigazione"
 
 #: gui\settingsDialogs.py:728
 msgid "Document formatting"
@@ -3039,7 +3039,7 @@ msgstr "Pagina su"
 
 #: keyLabels.py:37
 msgid "page down"
-msgstr "Pagina giu'"
+msgstr "Pagina giù"
 
 #: keyLabels.py:38
 msgid "end"
@@ -3071,7 +3071,7 @@ msgstr "Freccia su"
 
 #: keyLabels.py:45
 msgid "down arrow"
-msgstr "Freccia giu'"
+msgstr "Freccia giù"
 
 #: keyLabels.py:46
 msgid "applications"
@@ -3139,7 +3139,7 @@ msgstr "Meno del tastierino numerico"
 
 #: keyLabels.py:62
 msgid "numpad plus"
-msgstr "Piu' del tastierino numerico"
+msgstr "Più del tastierino numerico"
 
 #: keyLabels.py:63
 msgid "left control"
@@ -3179,7 +3179,7 @@ msgstr "Break"
 
 #: keyboardHandler.py:184
 msgid "desktop"
-msgstr "Scrivania"
+msgstr "Desktop"
 
 #: keyboardHandler.py:185
 msgid "laptop"
@@ -3958,9 +3958,8 @@ msgstr "Nessun oggetto precedente"
 
 #: virtualBuffers\__init__.py:1370
 msgid "browse mode"
-msgstr "Modalita' buffer virtuale"
+msgstr "Modalita' navigazione"
 
 #: virtualBuffers\__init__.py:1370
 msgid "focus mode"
 msgstr "Modalita' focus"
-

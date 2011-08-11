@@ -307,19 +307,19 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			elif winUser.getKeyState(vk) & 32768:
 				# Already down.
 				continue
-			keys.append((vk, ext))
-		keys.append((self.vkCode, self.isExtended))
+			keys.append((vk, 0, ext))
+		keys.append((self.vkCode, self.scanCode, self.isExtended))
 
 		if winUser.getKeyState(self.vkCode) & 32768:
 			# This key is already down, so send a key up for it first.
-			winUser.keybd_event(self.vkCode, 0, self.isExtended + 2, 0)
+			winUser.keybd_event(self.vkCode, self.scanCode, self.isExtended + 2, 0)
 
 		# Send key down events for these keys.
-		for vk, ext in keys:
-			winUser.keybd_event(vk, 0, ext, 0)
+		for vk, scan, ext in keys:
+			winUser.keybd_event(vk, scan, ext, 0)
 		# Send key up events for the keys in reverse order.
-		for vk, ext in reversed(keys):
-			winUser.keybd_event(vk, 0, ext + 2, 0)
+		for vk, scan, ext in reversed(keys):
+			winUser.keybd_event(vk, scan, ext + 2, 0)
 
 		if not queueHandler.isPendingItems(queueHandler.eventQueue):
 			time.sleep(0.01)

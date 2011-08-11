@@ -2,7 +2,8 @@ import sys
 import traceback
 import time
 import threading
-from ctypes import *
+from ctypes import windll, oledll
+import ctypes.wintypes
 import winUser
 from logHandler import log
 
@@ -102,6 +103,15 @@ def _recoverAttempt():
 	except:
 		pass
 
+@ctypes.WINFUNCTYPE(ctypes.wintypes.LONG, ctypes.c_void_p)
+def _crashHandler(exceptionInfo):
+	# An exception might have been set for this thread.
+	# Clear it so that it doesn't get raised in this function.
+	ctypes.pythonapi.PyThreadState_SetAsyncExc(threading.currentThread().ident, None)
+	import core
+	core.restart()
+	return 1 # EXCEPTION_EXECUTE_HANDLER
+
 def initialize():
 	"""Initialize the watchdog.
 	"""
@@ -109,6 +119,8 @@ def initialize():
 	if isRunning:
 		raise RuntimeError("already running") 
 	isRunning=True
+	# Catch application crashes.
+	windll.kernel32.SetUnhandledExceptionFilter(_crashHandler)
 	oledll.ole32.CoEnableCallCancellation(None)
 	_coreAliveEvent.set()
 	_resumeEvent.set()
