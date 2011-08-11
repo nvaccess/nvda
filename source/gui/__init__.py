@@ -229,7 +229,7 @@ class MainFrame(wx.Frame):
 		if isInMessageBox:
 			return
 		self.prePopup()
-		from gui.installer import createPortableCopy
+		from gui.installerGui import createPortableCopy
 		createPortableCopy()
 		self.postPopup()
 
@@ -237,7 +237,7 @@ class MainFrame(wx.Frame):
 		if isInMessageBox:
 			return
 		self.prePopup()
-		from gui.installer import InstallerDialog
+		from gui.installerGui import InstallerDialog
 		InstallerDialog(self).Show()
 		self.postPopup()
 

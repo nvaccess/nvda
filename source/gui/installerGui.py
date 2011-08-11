@@ -71,7 +71,6 @@ class InstallerDialog(wx.Dialog):
 	def onInstall(self, evt):
 		self.Hide()
 		self.progressDialog = IndeterminateProgressDialog(self, _("Installing NVDA"), _("Please wait while NVDA is being installed."))
-		self.progressDialog.Raise()
 		wx.CallLater(5000, self.installDone)
 
 	def installDone(self):
@@ -87,6 +86,7 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 		super(IndeterminateProgressDialog, self).__init__(title, message, parent=parent)
 		self.timer = wx.PyTimer(self.Pulse)
 		self.timer.Start(1000)
+		self.Raise()
 
 	def done(self):
 		self.timer.Stop()
@@ -100,10 +100,13 @@ def createPortableCopy():
 		copyUserConfig=gui.messageBox(_("Would you like to include your current NVDA settings in the portable copy?"), _("Copy User Configuration"), wx.YES_NO|wx.ICON_QUESTION) == wx.YES
 		createAutorun=(ctypes.windll.kernel32.GetDriveTypeW(os.path.splitdrive(path)[0]+u'\\')==2 and gui.messageBox(_("Would you like to create an autorun file for your removable drive to allow NVDA to start automatically?"), _("Removable Drive Detected"), wx.YES_NO|wx.ICON_QUESTION) == wx.YES)
 
+		d = IndeterminateProgressDialog(gui.mainFrame, _("Creating Portable Copy"), _("Please wait while a portable copy of NVDA is created."))
 		import installer
 		try:
 			installer.CreatePortableCopy(path,copyUserConfig=copyUserConfig,createAutorun=createAutorun)
 		except OSError:
+			d.done()
 			gui.messageBox(_("Failed to create portable copy"),_("Error"))
 			return
+		d.done()
 		gui.messageBox(_("Successfully created a portable copy of NVDA at %s")%path,_("Success"))
