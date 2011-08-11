@@ -305,7 +305,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			item = menu_tools.Append(wx.ID_ANY, _("Create Portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
-			item = menu_tools.Append(wx.ID_ANY, _("Install NVDA..."))
+			item = menu_tools.Append(wx.ID_ANY, _("&Install NVDA..."))
 			self.Bind(wx.EVT_MENU, frame.onInstallCommand, item)
 		item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
 		self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)

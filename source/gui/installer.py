@@ -9,7 +9,7 @@ class InstallerDialog(wx.Dialog):
 		super(InstallerDialog, self).__init__(parent, title=_("Install NVDA"))
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
 
-		ctrl = self.startOnLogonCheckbox = wx.CheckBox(self, label=_("Use NVDA on the Windows logon screen"))
+		ctrl = self.startOnLogonCheckbox = wx.CheckBox(self, label=_("Use NVDA on the Windows &logon screen"))
 		ctrl.Value = config.getStartOnLogonScreen()
 		mainSizer.Add(ctrl)
 		ctrl = self.advancedCheckbox = wx.CheckBox(self, label=_("Show &advanced options"))
@@ -19,12 +19,27 @@ class InstallerDialog(wx.Dialog):
 
 		advancedSizer = self.advancedSizer = wx.BoxSizer(wx.VERTICAL)
 
-		sizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Install to:")), wx.HORIZONTAL)
+		sizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Install &to folder:")), wx.HORIZONTAL)
 		# FIXME: Don't use os.getenv to get the path to Program Files.
 		ctrl = self.programFolderEdit = wx.TextCtrl(self, value=os.path.join(unicode(os.getenv("ProgramFiles")), versionInfo.name))
 		sizer.Add(ctrl)
-		ctrl = wx.Button(self, label=_("Change &folder"))
+		ctrl = wx.Button(self, label=_("Change"))
 		ctrl.Bind(wx.EVT_BUTTON, self.onChangeProgramFolder)
+		sizer.Add(ctrl)
+		advancedSizer.Add(sizer)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer.Add(wx.StaticText(self, label=_("&Start Menu folder:")))
+		ctrl = self.startMenuFolderEdit = wx.TextCtrl(self, value=versionInfo.name)
+		sizer.Add(ctrl)
+		advancedSizer.Add(sizer)
+
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		ctrl = self.createDesktopShortcutCheckbox = wx.CheckBox(self, label=_("Create &desktop icon and shortcut key (control+alt+n)"))
+		ctrl.Value = True
+		sizer.Add(ctrl)
+		ctrl = self.installServiceCheckbox = wx.CheckBox(self, label=_("Install NVDA ser&vice (Windows logon/secure screen support)"))
+		ctrl.Value = True
 		sizer.Add(ctrl)
 		advancedSizer.Add(sizer)
 
