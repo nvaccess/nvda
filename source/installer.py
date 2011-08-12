@@ -1,20 +1,21 @@
 from ctypes import *
 from ctypes.wintypes import *
+import _winreg
 import threading
 import time
 import os
 import tempfile
 import shutil
 import shellapi
-import globalVars
+import languageHandler
 import versionInfo
 
 _wsh=None
 def _getWSH():
 	global _wsh
 	if not _wsh:
-		import comtypes
-		_wsh=comtypes.client.CreateObject("wScript.Shell")
+		import comtypes.client
+		_wsh=comtypes.client.CreateObject("wScript.Shell",dynamic=True)
 	return _wsh
 
 def createShortcut(path,targetPath=None,arguments=None,iconLocation=None,workingDirectory=None,hotkey=None,prependSpecialFolder=None):
@@ -26,10 +27,14 @@ def createShortcut(path,targetPath=None,arguments=None,iconLocation=None,working
 		os.makedirs(path)
 	short=wsh.CreateShortcut(path)
 	short.TargetPath=targetPath
-	short.arguments=arguments
-	short.Hotkey=hotkey
-	short.IconLocation=iconLocation
-	short.workingDirectory=workingDirectory
+	if arguments:
+		short.arguments=arguments
+	if hotkey:
+		short.Hotkey=hotkey
+	if iconLocation:
+		short.IconLocation=iconLocation
+	if workingDirectory:
+		short.workingDirectory=workingDirectory
 	short.Save()
 
 def deleteShortcut(path,prependSpecialFolder=None):
@@ -65,11 +70,13 @@ def getDocFilePath(fileName,installDir):
 
 def copyProgramFiles(destPath):
 	sourcePath=os.getcwdu()
-	sourceConfigPath=globalVars.appArgs.configPath
+	detectUserConfig=True
 	for curSourceDir,subDirs,files in os.walk(sourcePath):
-		if os.stat(curSourceDir)==os.stat(sourceConfigPath):
-			del subDirs[:]
-			continue
+		if detectUserConfig:
+			detectUserConfig=False
+			if os.path.split(curSourceDir)[1].lower()=="userconfig":
+				del subDirs[:]
+				continue
 		curDestDir=os.path.join(destPath,os.path.relpath(curSourceDir,sourcePath))
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
@@ -98,12 +105,12 @@ def copyUserConfig(destPath):
 				windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)
 
 uninstallerRegInfo={
-	"DisplayName":versionInfo.version,
+	"DisplayName":versionInfo.name,
 	"DisplayVersion":versionInfo.version,
 	"DisplayIcon":u"{installDir}\\images\\nvda.ico",
 	"InstallDir":u"{installDir}",
 	"Publisher":versionInfo.publisher,
-	"UninstallDirectory":u"{InstallDir}",
+	"UninstallDirectory":u"{installDir}",
 	"UninstallString":u"{installDir}\\uninstall.exe",
 	"URLInfoAbout":versionInfo.url,
 }
@@ -111,7 +118,7 @@ uninstallerRegInfo={
 def registerInstallation(installDir,startMenuFolder,shouldInstallService,shouldCreateDesktopShortcut,startOnLogonScreen):
 	import _winreg
 	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\NVDA",0,_winreg.KEY_WRITE) as k:
-		for name,value in uninstallerRegInfo: 
+		for name,value in uninstallerRegInfo.iteritems(): 
 			_winreg.SetValueEx(k,name,None,_winreg.REG_SZ,value.format(installDir=installDir))
 	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",0,_winreg.KEY_WRITE) as k:
 		_winreg.SetValueEx(k,"@",None,_winreg.REG_SZ,installDir)
@@ -131,8 +138,8 @@ def registerInstallation(installDir,startMenuFolder,shouldInstallService,shouldC
 	createShortcut(os.path.join(startMenuFolder,_("NVDA Website")+".lnk"),targetPath=versionInfo.url,prependSpecialFolder="AllUsersPrograms")
 	createShortcut(os.path.join(startMenuFolder,_("Uninstall NVDA")+".lnk"),targetPath=os.path.join(installDir,"uninstall.exe"),workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
 	createShortcut(os.path.join(startMenuFolder,_("Explore NVDA user configuration directory")+".lnk"),targetPath=slaveExe,arguments="exploreUserconfigPath",workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
-	createShortcut(os.path.join(startMenuFolder,_("Documentation"),_("Key Command quick reference")+".lnk"),targetPath=getdocFilePath("keycommands.html",installDir),prependSpecialFolder="AllUsersPrograms")
-	createShortcut(os.path.join(startMenuFolder,_("Documentation"),_("User Guide")+".lnk"),targetPath=getdocFilePath("userGuide.html",installDir),prependSpecialFolder="AllUsersPrograms")
+	createShortcut(os.path.join(startMenuFolder,_("Documentation"),_("Key Command quick reference")+".lnk"),targetPath=getDocFilePath("keycommands.html",installDir),prependSpecialFolder="AllUsersPrograms")
+	createShortcut(os.path.join(startMenuFolder,_("Documentation"),_("User Guide")+".lnk"),targetPath=getDocFilePath("userGuide.html",installDir),prependSpecialFolder="AllUsersPrograms")
 
 def unregisterInstallation(forUpdate=False):
 	import nvda_service
@@ -140,23 +147,35 @@ def unregisterInstallation(forUpdate=False):
 		nvda_service.stopService()
 	except:
 		pass
-	nvda_service.removeService()
+	try:
+		nvda_service.removeService()
+	except:
+		pass
 	deleteShortcut(u"nvda.lnk",prependSpecialFolder="AllUsersDesktop")
-	deleteShortcut(os.path.join(startMenuFolder,"NVDA.lnk"),prependSpecialFolder="AllUsersPrograms")
-	deleteShortcut(os.path.join(startMenuFolder,_("NVDA Website")+".lnk"),prependSpecialFolder="AllUsersPrograms")
-	deleteShortcut(os.path.join(startMenuFolder,_("Uninstall NVDA")+".lnk"),prependSpecialFolder="AllUsersPrograms")
-	deleteShortcut(os.path.join(startMenuFolder,_("Explore NVDA user configuration directory")+".lnk"),prependSpecialFolder="AllUsersPrograms")
-	deleteShortcut(os.path.join(startMenuFolder,_("Documentation"),_("Key Command quick reference")+".lnk"),prependSpecialFolder="AllUsersPrograms")
-	deleteShortcut(os.path.join(startMenuFolder,_("Documentation"),_("User Guide")+".lnk"),prependSpecialFolder="AllUsersPrograms")
+	try:
+		with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,u"SOFTWARE\\NVDA") as k:
+			startMenuFolder=_winreg.QueryValueEx(k,u"startMenuFolder")[0]
+	except WindowsError:
+		startMenuFolder=None
+	if startMenuFolder:
+		deleteShortcut(os.path.join(startMenuFolder,"NVDA.lnk"),prependSpecialFolder="AllUsersPrograms")
+		deleteShortcut(os.path.join(startMenuFolder,_("NVDA Website")+".lnk"),prependSpecialFolder="AllUsersPrograms")
+		deleteShortcut(os.path.join(startMenuFolder,_("Uninstall NVDA")+".lnk"),prependSpecialFolder="AllUsersPrograms")
+		deleteShortcut(os.path.join(startMenuFolder,_("Explore NVDA user configuration directory")+".lnk"),prependSpecialFolder="AllUsersPrograms")
+		deleteShortcut(os.path.join(startMenuFolder,_("Documentation"),_("Key Command quick reference")+".lnk"),prependSpecialFolder="AllUsersPrograms")
+		deleteShortcut(os.path.join(startMenuFolder,_("Documentation"),_("User Guide")+".lnk"),prependSpecialFolder="AllUsersPrograms")
 	if not forUpdate:
-		_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\nvda",0,None)
-		_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",0,None)
-		_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\nvda",0,None)
+		try:
+			_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\nvda",0,0)
+			_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",0,0)
+			_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\nvda",0,0)
+		except WindowsError:
+			pass
 
 def install(installDir,startMenuFolder,shouldInstallService=True,shouldCreateDesktopShortcut=True,shouldRunAtLogon=None,forUpdate=False):
 	unregisterInstallation(forUpdate)
 	copyProgramFiles(installDir)
-	registerInstallation(installDir,startMenuFolder,shouldInstallService,shouldCreateDesktopShortcut,startOnLogonScreen)
+	registerInstallation(installDir,startMenuFolder,shouldInstallService,shouldCreateDesktopShortcut,shouldRunAtLogon)
 
 autorunTemplate="""[AutoRun]
 open={exe}
