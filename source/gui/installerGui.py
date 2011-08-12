@@ -71,9 +71,7 @@ class InstallerDialog(wx.Dialog):
 	def onInstall(self, evt):
 		self.Hide()
 		self.progressDialog = IndeterminateProgressDialog(self, _("Installing NVDA"), _("Please wait while NVDA is being installed."))
-		wx.CallLater(5000, self.installDone)
-
-	def installDone(self):
+		config.execElevated("nvda_slave.exe",["install",self.programFolderEdit.Value,self.startMenuFolderEdit.Value,str(int(self.installServiceCheckbox.Value)),str(int(self.createDesktopShortcutCheckbox.Value)),str(int(self.startOnLogonCheckbox.Value))],wait=True)
 		self.progressDialog.done()
 		self.Destroy()
 

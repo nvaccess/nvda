@@ -19,6 +19,9 @@ def main():
 		if action == "service_NVDALauncher":
 			import nvda_service
 			nvda_service.nvdaLauncher()
+		elif action=="install":
+			import installer
+			installer.install(args[0],args[1],bool(int(args[2])),bool(int(args[3])),bool(int(args[4])))
 		elif action=="launchNVDA":
 			import subprocess
 			import shellapi
@@ -62,4 +65,6 @@ def main():
 		sys.exit(e)
 
 if __name__ == "__main__":
+	import languageHandler
+	languageHandler.setLanguage("Windows")
 	main()
