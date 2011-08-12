@@ -3,6 +3,8 @@
 
 import globalVars
 import _winreg
+import ctypes
+import ctypes.wintypes
 from copy import deepcopy
 import os
 import sys
@@ -317,7 +319,12 @@ def execElevated(path, params=None, wait=False):
 	shellapi.ShellExecuteEx(sei)
 	if wait:
 		try:
-			winKernel.waitForSingleObject(sei.hProcess, winKernel.INFINITE)
+			h=ctypes.wintypes.HANDLE(sei.hProcess)
+			msg=ctypes.wintypes.MSG()
+			while ctypes.windll.user32.MsgWaitForMultipleObjects(1,ctypes.byref(h),False,-1,255)==1:
+				while ctypes.windll.user32.PeekMessageW(ctypes.byref(msg),None,0,0,1):
+					ctypes.windll.user32.TranslateMessage(ctypes.byref(msg))
+					ctypes.windll.user32.DispatchMessageW(ctypes.byref(msg))
 			return winKernel.GetExitCodeProcess(sei.hProcess)
 		finally:
 			winKernel.closeHandle(sei.hProcess)
