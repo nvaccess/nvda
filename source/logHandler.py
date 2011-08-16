@@ -272,6 +272,7 @@ def initialize(shouldDoRemoteLogging=False):
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
 	if not shouldDoRemoteLogging:
+		logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
 		if globalVars.appArgs.secure:
 			# Don't log in secure mode.
 			logHandler = logging.NullHandler()
@@ -282,7 +283,6 @@ def initialize(shouldDoRemoteLogging=False):
 				globalVars.appArgs.logFileName = _getDefaultLogFilePath()
 			# Our FileHandler always outputs in UTF-8.
 			logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt")
-			logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
 	else:
 		logHandler = RemoteHandler()
 		logFormatter = Formatter("%(codepath)s:\n%(message)s")
