@@ -71,6 +71,7 @@ def getDocFilePath(fileName,installDir):
 def copyProgramFiles(destPath):
 	sourcePath=os.getcwdu()
 	detectUserConfig=True
+	detectNVDAExe=True
 	for curSourceDir,subDirs,files in os.walk(sourcePath):
 		if detectUserConfig:
 			detectUserConfig=False
@@ -84,10 +85,13 @@ def copyProgramFiles(destPath):
 			sourceFilePath=os.path.join(curSourceDir,f)
 			destFilePath=os.path.join(destPath,os.path.relpath(sourceFilePath,sourcePath))
 			if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
+				log.debugWarning("Unable to copy %s, trying rename and delete on reboot"%sourceFilePath)
 				tempPath=tempfile.mktemp(dir=os.path.dirname(destFilePath))
 				os.rename(destFilePath,tempPath)
-				windll.kernel32.MoveFileExW(u"\\\\?\\"+tempPath,None,4)
-				windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)
+				if windll.kernel32.MoveFileExW(u"\\\\?\\"+tempPath,None,4)==0:
+					raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
+				if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
+					raise OSError("Still unable to copy file %s"%sourceFilePath)
 
 def copyUserConfig(destPath):
 	sourcePath=os.path.abspath(globalVars.appArgs.configPath)
@@ -99,10 +103,13 @@ def copyUserConfig(destPath):
 			sourceFilePath=os.path.join(curSourceDir,f)
 			destFilePath=os.path.join(destPath,os.path.relpath(sourceFilePath,sourcePath))
 			if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
+				log.debugWarning("Unable to copy %s, trying rename and delete on reboot"%sourceFilePath)
 				tempPath=tempfile.mktemp(dir=os.path.dirname(destFilePath))
 				os.rename(destFilePath,tempPath)
-				windll.kernel32.MoveFileExW(u"\\\\?\\"+tempPath,None,4)
-				windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)
+				if windll.kernel32.MoveFileExW(u"\\\\?\\"+tempPath,None,4)==0:
+					raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
+				if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
+					raise OSError("Still unable to copy file %s"%sourceFilePath)
 
 uninstallerRegInfo={
 	"DisplayName":versionInfo.name,
