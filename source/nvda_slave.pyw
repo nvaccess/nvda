@@ -62,9 +62,13 @@ def main():
 			raise ValueError("No such action")
 
 	except Exception, e:
-		sys.exit(e)
+		logHandler.log.error("slave error",exc_info=True)
+		sys.exit(1)
 
 if __name__ == "__main__":
+	import logHandler
+	logHandler.initialize(True)
+	logHandler.log.setLevel(0)
 	import languageHandler
 	languageHandler.setLanguage("Windows")
 	main()
