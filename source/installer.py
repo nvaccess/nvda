@@ -9,6 +9,7 @@ import shutil
 import shellapi
 import languageHandler
 import versionInfo
+from logHandler import log
 
 _wsh=None
 def _getWSH():
@@ -82,6 +83,9 @@ def copyProgramFiles(destPath):
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
 		for f in files:
+			#Never copy nvda.exe as one of the other executables will be renamed later
+			if sourcePath==curSourceDir and f.lower()=="nvda.exe":
+				continue
 			sourceFilePath=os.path.join(curSourceDir,f)
 			destFilePath=os.path.join(destPath,os.path.relpath(sourceFilePath,sourcePath))
 			if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
@@ -181,7 +185,20 @@ def unregisterInstallation(forUpdate=False):
 
 def install(installDir,startMenuFolder,shouldInstallService=True,shouldCreateDesktopShortcut=True,shouldRunAtLogon=None,forUpdate=False):
 	unregisterInstallation(forUpdate)
+	#Remove all the main executables always
+	for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe"):
+		f=os.path.join(installDir,f)
+		if os.path.isfile(f):
+			os.remove(f)
 	copyProgramFiles(installDir)
+	for f in ("nvda_UIAccess.exe","nvda_noUIAccess.exe"):
+		f=os.path.join(installDir,f)
+		if os.path.isfile(f):
+			if windll.kernel32.CopyFileW(u"\\\\?\\"+f,u"\\\\?\\"+os.path.join(installDir,"nvda.exe"),False)==0:
+				raise OSError("Error copying %s to nvda.exe"%f)
+			break
+	else:
+		raise RuntimeError("No available executable to use as nvda.exe")
 	registerInstallation(installDir,startMenuFolder,shouldInstallService,shouldCreateDesktopShortcut,shouldRunAtLogon)
 
 autorunTemplate="""[AutoRun]
@@ -213,7 +230,14 @@ class CreatePortableCopy(threading.Thread):
 	def run(self,*args,**kwargs):
 		try:
 			destPath=os.path.abspath(self.destPath)
+			#Remove all the main executables always
+			for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe"):
+				f=os.path.join(destPath,f)
+				if os.path.isfile(f):
+					os.remove(f)
 			copyProgramFiles(destPath)
+			if windll.kernel32.CopyFileW(u"\\\\?\\"+os.path.join(destPath,"nvda_noUIAccess.exe"),u"\\\\?\\"+os.path.join(destPath,"nvda.exe"),False)==0:
+				raise OSError("Error copying %s to nvda.exe"%f)
 			if self.copyUserConfig:
 				copyUserConfig(os.path.join(destPath,'userConfig'))
 			if self.createAutorun:
