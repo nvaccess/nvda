@@ -293,7 +293,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
-		if not globalVars.appArgs.secure:
+		if not globalVars.appArgs.secure and getattr(sys,'frozen',None):
 			item = menu_tools.Append(wx.ID_ANY, _("Create Portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
 			item = menu_tools.Append(wx.ID_ANY, _("&Install NVDA..."))
