@@ -1,0 +1,75 @@
+﻿complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	წერტილი	all	always
+! sentence ending	ძახილის ნიშანი	all	always
+? sentence ending	კითხვის ნიშანი	all	always
+; phrase ending	წერტილმძიმე	most	always
+: phrase ending	ორწერტილი	most	always
+decimal point		none	always
+in-word '	tick	all	norep
+
+# Whitespace
+\0	სუფთა	char
+\t	ტაბ
+\n	ხაზის გადატანა	char
+\f	გვერდის გამყოფი	none
+ 	ჰარი	char
+ 	ჰარი	char	# no-break space
+
+# Standard punctuation/symbols
+!	ძახილის ნიშანი	all
+"	ბრჭყალები	most
+\#	ნომერი	most
+$	დოლარი	some
+£	ფუნტი	some
+€	ევრო	some
+%	პროცენტი	some
+&	და	some
+'	აპოსტროფი	all
+(	მარცხენა ბრჩხილი	most
+)	მარჯვენა ბრჩხილი	most
+*	ვარსკვლავი	most
++	პლიუსი	most
+,	მძიმე	all	always
+-	მინუსი	most
+.	წერტილი	some
+/	დახრილი ხაზი	some
+:	ორწერტილი	most
+;	წერტილმძიმე	most
+<	ნაკლებია	most
+>	მეტია	most
+=	ტოლია	most
+?	კითხვის ნიშანი	all
+@	ძაღლუკა	some
+[	მარცხენა კვადრატული ბრჩხილი	most
+]	მარჯვენა კვადრატული ბრჩხილი	most
+\\	პირიქიტ დახრილი ხაზი	most
+_	ხაზგასმა	most
+`	უკუღმა აპოსტროფი	most
+{	მარცხენა მრგვალი ბრჩხილი	most
+}	მარჯვენა მრგვალი ბრჩხილი	most
+|	ვერტიკალური ხაზი	most
+~	ტილდა	most
+
+# Other characters
+…	მრავალწერტილი	all	always
+“	მარცხენა ბრჭყალი	most
+”	მარჯვენა ბრჭყალი	most
+–	ტირე	most
+—	ტირე	most
+●	რგოლი	most

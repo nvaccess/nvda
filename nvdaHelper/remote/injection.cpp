@@ -15,6 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <string>
 #include <sstream>
 #include <set>
+#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include <shlwapi.h>
 #include "log.h"
@@ -182,7 +183,7 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 }
 
 bool initInprocManagerThreadIfNeeded() {
-	BOOL threadCreated=FALSE;
+	bool threadCreated=FALSE;
 	HANDLE waitHandles[2]={0};
 	//Gain exclusive access to all the inproc thread variables for the rest of this function.
 	inprocThreadsLock.acquire();
@@ -309,10 +310,6 @@ BOOL injection_terminate() {
 	}
 	outprocMgrThreadHandle=NULL;
 	outprocMgrThreadID=0;
-	if(!IA2Support_terminate()) {
-		MessageBox(NULL,L"Error terminating IA2 support",L"nvdaHelperRemote (injection_terminate)",0);
-		return FALSE;
-	}
 	nhAssert(injectionDoneEvent);
 	SetEvent(injectionDoneEvent);
 	CloseHandle(injectionDoneEvent);

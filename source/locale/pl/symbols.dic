@@ -1,0 +1,75 @@
+﻿complexSymbols:
+# identifier	regexp
+# Others
+decimal point	(?<=\d)\,(?=\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	kropka	all	always
+! sentence ending	wykrzyknik	all	always
+? sentence ending	pytajnik	all	always
+; phrase ending	średnik	most	always
+: phrase ending	dwukropek	most	always
+decimal point		none	always
+in-word '	apostrof	all	norep
+
+# Whitespace
+\0	biała	spacja
+\t	tab
+\n	koniec linii	char
+\f	podział strony	none
+\r	nowy wiersz	char
+ 	spacja	char
+ 	spacja	char	# no-break space
+
+# Standard punctuation/symbols
+!	wykrzyknik	all
+"	cudzysłów	most
+\#	hash	most
+$	dolar	some
+€	euro	some
+%	procent	some
+&	and	some
+'	apostrof	some
+(	lewy nawias	most
+)	prawy nawias	most
+*	gwiazdka	most
++	plus	most
+,	przecinek	all	always
+-	minus	all
+.	kropka	all
+/	slesz	some
+:	dwukropek	most
+;	średnik	most
+<	mniejsze	most
+>	więkrze	most
+=	równe	most
+?	pytajnik	all
+@	małpa	some
+[	lewy kwadratowy	most
+]	prawy kwadratowy	most
+"	cudzysłów	most
+\	bekslesz	most
+^	daszek	most
+_	podkreślacz	most
+`	akcent	most
+{	lewy klamrowy	most
+}	prawy klamrowy	most
+|	kreska pionowa	most
+~	tylda	most
+
+
+# Other characters
+•	punktor	some
+…	wielokropek	all	always
+	podwujny cudzysłów otwierający	most
+»	podwujny cudzysłów zamykający	most
+‰	promil	most
+÷	dzielenie	some
+×	razy	some
+°	stopień	some
+±	plus minus	some
+™	znak handlowy	some
+©	znak praw autorskich	some

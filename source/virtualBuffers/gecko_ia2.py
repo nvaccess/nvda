@@ -1,7 +1,7 @@
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
 import treeInterceptorHandler
 import controlTypes
-import NVDAObjects.IAccessible
+import NVDAObjects.IAccessible.mozilla
 import NVDAObjects.behaviors
 import winUser
 import IAccessibleHandler
@@ -12,6 +12,7 @@ from comtypes.gen.IAccessible2Lib import IAccessible2
 from comtypes import COMError
 import aria
 import config
+from NVDAObjects.IAccessible import normalizeIA2TextFormatField
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
@@ -31,6 +32,13 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_DRAGGABLE)
 		elif grabbed == "true":
 			states.add(controlTypes.STATE_DRAGGING)
+		sorted = attrs.get("IAccessible2::attribute_sort")
+		if sorted=="ascending":
+			states.add(controlTypes.STATE_SORTED_ASCENDING)
+		elif sorted=="descending":
+			states.add(controlTypes.STATE_SORTED_DESCENDING)
+		elif sorted=="other":
+			states.add(controlTypes.STATE_SORTED)
 		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
 			states.add(controlTypes.STATE_DROPTARGET)
 		if role==controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
@@ -49,6 +57,10 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			attrs["landmark"]=landmark
 		return super(Gecko_ia2_TextInfo,self)._normalizeControlField(attrs)
 
+	def _normalizeFormatField(self, attrs):
+		normalizeIA2TextFormatField(attrs)
+		return attrs
+
 class Gecko_ia2(VirtualBuffer):
 
 	TextInfo=Gecko_ia2_TextInfo
@@ -57,7 +69,12 @@ class Gecko_ia2(VirtualBuffer):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
 
 	def _get_shouldPrepare(self):
-		return super(Gecko_ia2,self).shouldPrepare and controlTypes.STATE_BUSY not in self.rootNVDAObject.states
+		if not super(Gecko_ia2, self).shouldPrepare:
+			return False
+		if isinstance(self.rootNVDAObject, NVDAObjects.IAccessible.mozilla.Gecko1_9) and controlTypes.STATE_BUSY in self.rootNVDAObject.states:
+			# If the document is busy in Gecko 1.9, it isn't safe to create a buffer yet.
+			return False
+		return True
 
 	def __contains__(self,obj):
 		#Special code to handle Mozilla combobox lists
@@ -76,7 +93,7 @@ class Gecko_ia2(VirtualBuffer):
 			except:
 				return False
 
-		return self._isNVDAObjectInApplication(obj)
+		return not self._isNVDAObjectInApplication(obj)
 
 	def _get_isAlive(self):
 		if self.isLoading:
@@ -123,6 +140,8 @@ class Gecko_ia2(VirtualBuffer):
 			obj.doAction()
 		except:
 			log.debugWarning("could not programmatically activate field, trying mouse")
+			while obj and controlTypes.STATE_OFFSCREEN in obj.states and obj!=self.rootNVDAObject:
+				obj=obj.parent
 			l=obj.location
 			if l:
 				x=(l[0]+l[2]/2)

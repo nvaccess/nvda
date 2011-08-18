@@ -21,3 +21,8 @@ class AppModule(appModuleHandler.AppModule):
 			except ValueError:
 				pass
 			clsList[0:0] = (Terminal, DisplayModelLiveText)
+
+	def event_nameChange(self,obj,nextHandler):
+		# Don't report changes to the terminal title.
+		if not isinstance(obj,Terminal):
+			nextHandler()

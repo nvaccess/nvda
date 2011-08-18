@@ -86,22 +86,26 @@ VBufStorage_controlFieldNode_t* MshtmlVBufBackend_t::getDeepestControlFieldNodeF
 	return NULL;
 }
 
-inline IAccessible* getIAccessibleFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
-	int res=0;
+/**
+	* A utility template function to queryService from a given IUnknown to the given service with the given service ID and interface eing returned.
+	* @param siid the service iid
+	*/
+template<typename toInterface> inline HRESULT queryService(IUnknown* pUnknown, const IID& siid, toInterface** pIface) {
+	HRESULT hRes;
 	IServiceProvider* pServProv=NULL;
-	res=pHTMLDOMNode->QueryInterface(IID_IServiceProvider,(void**)&pServProv);
-	if(res!=S_OK||!pServProv) {
+	hRes=pUnknown->QueryInterface(IID_IServiceProvider,(void**)&pServProv);
+	if(hRes!=S_OK||!pServProv) {
 		LOG_DEBUG(L"Could not queryInterface to IServiceProvider");
-		return NULL;
+		return hRes;
 	}
-	IAccessible* pacc=NULL;
-	res=pServProv->QueryService(IID_IAccessible,IID_IAccessible,(void**)&pacc);
+	hRes=pServProv->QueryService(siid,__uuidof(toInterface),(void**)pIface);
 	pServProv->Release();
-	if(res!=S_OK||!pacc) {
-		LOG_DEBUG(L"Could not get IAccessible interface");
-		return NULL;
+	if(hRes!=S_OK||!pIface) {
+		LOG_DEBUG(L"Could not get requested interface");
+		*pIface=NULL;
+		return hRes;
 	}
-	return pacc;
+	return hRes;
 }
 
 inline void getIAccessibleInfo(IAccessible* pacc, wstring* name, int* role, wstring* value, int* states, wstring* description, wstring* keyboardShortcut) {
@@ -159,31 +163,118 @@ inline void getIAccessibleInfo(IAccessible* pacc, wstring* name, int* role, wstr
 	}
 }
 
-inline IHTMLDOMNode* getRootDOMNodeFromIAccessibleFrame(IAccessible* pacc) {
-int res=0;
+template<typename toInterface> inline HRESULT getHTMLSubdocumentBodyFromIAccessibleFrame(IAccessible* pacc, toInterface** pIface) {
+HRESULT hRes=0;
 	VARIANT varChild;
 	varChild.vt=VT_I4;
 	varChild.lVal=1;
 	IDispatch* pDispatch=NULL;
-	if((res=pacc->get_accChild(varChild,&pDispatch))!=S_OK) {
-		LOG_DEBUG(L"IAccessible::accChild failed with return code "<<res);
-		return NULL;
+	if((hRes=pacc->get_accChild(varChild,&pDispatch))!=S_OK) {
+		LOG_DEBUG(L"IAccessible::accChild failed with return code "<<hRes);
+		return hRes;
 	}
-	IServiceProvider* pServProv=NULL;
-	res=pDispatch->QueryInterface(IID_IServiceProvider,(void**)&pServProv);
+	hRes=queryService(pDispatch,IID_IHTMLElement,pIface);
 	pDispatch->Release();
-	if(res!=S_OK) {
-		LOG_DEBUG(L"QueryInterface to IServiceProvider failed");
+	return hRes;
+}
+
+IHTMLElement* LocateHTMLElementInDocument(IHTMLDocument3* pHTMLDocument3, const wstring& ID) { 
+	HRESULT hRes;
+	IHTMLElement* pHTMLElement=NULL;
+	//First try getting the element directly from this document
+	hRes=pHTMLDocument3->getElementById((wchar_t*)(ID.c_str()),&pHTMLElement);
+	if(hRes==S_OK&&pHTMLElement) {
+		return pHTMLElement;
+	}
+	//As it was not in this document, we need to search for it in all subdocuments
+	//If the body is a frameset then we need to search all frames
+	//If the body is just body, we need to search all iframes
+	IHTMLDocument2* pHTMLDocument2=NULL;
+	hRes=pHTMLDocument3->QueryInterface(IID_IHTMLDocument2,(void**)&pHTMLDocument2);
+	if(hRes!=S_OK||!pHTMLDocument2) {
+		LOG_DEBUG(L"Could not get IHTMLDocument2");
 		return NULL;
 	}
-	IHTMLDOMNode* pHTMLDOMNode=NULL;
-	res=pServProv->QueryService(IID_IHTMLElement,IID_IHTMLDOMNode,(void**)&pHTMLDOMNode);
-	pServProv->Release();
-	if(res!=S_OK) {
-		LOG_DEBUG(L"QueryService to IHTMLDOMNode failed");
+	hRes=pHTMLDocument2->get_body(&pHTMLElement);
+	pHTMLDocument2->Release();
+	if(hRes!=S_OK||!pHTMLElement) {
+		LOG_DEBUGWARNING(L"Could not get body element from IHTMLDocument2 at "<<pHTMLDocument2);
 		return NULL;
 	}
-	return pHTMLDOMNode;
+	BSTR tagName=NULL;
+	hRes=pHTMLElement->get_tagName(&tagName);
+	wchar_t* embeddingTagName=(tagName&&(wcscmp(tagName,L"FRAMESET"))==0)?L"FRAME":L"IFRAME";
+	SysFreeString(tagName);
+	IHTMLElement2* pHTMLElement2=NULL;
+	hRes=pHTMLElement->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
+	pHTMLElement->Release();
+	if(hRes!=S_OK||!pHTMLElement2) {
+		LOG_DEBUG(L"Could not queryInterface to IHTMLElement2");
+		return NULL;
+	}
+	IHTMLElementCollection* pHTMLElementCollection=NULL;
+	hRes=pHTMLElement2->getElementsByTagName(embeddingTagName,&pHTMLElementCollection);
+	pHTMLElement2->Release();
+	if(hRes!=S_OK||!pHTMLElementCollection) {
+		LOG_DEBUG(L"Could not get collection from getElementsByName");
+		return NULL;
+	}
+	long numElements=0;
+	hRes=pHTMLElementCollection->get_length(&numElements);
+	if(hRes!=S_OK) {
+		LOG_DEBUG(L"Error getting length of collection");
+		numElements=0;
+	}
+	IHTMLElement* pHTMLElementChild=NULL;
+	for(long index=0;index<numElements;++index) {
+		IDispatch* pDispatch=NULL;
+		VARIANT vID;
+		vID.vt=VT_I4;
+		vID.lVal=index;
+		VARIANT vResIndex;
+		vResIndex.vt=VT_I4;
+		vResIndex.lVal=0;
+		hRes=pHTMLElementCollection->item(vID,vResIndex,&pDispatch);
+		if(hRes!=S_OK||!pDispatch) {
+			LOG_DEBUG(L"Could not retreave item "<<index<<L" from collection");
+			continue;
+		}
+		IAccessible* pacc=NULL;
+		queryService(pDispatch,IID_IAccessible,&pacc);
+		pDispatch->Release();
+		pDispatch=NULL;
+		if(!pacc) {
+			LOG_DEBUG(L"Could not queryService to IAccessible");
+			continue;
+		}
+		IHTMLElement* pHTMLElementSubBody=NULL;
+		getHTMLSubdocumentBodyFromIAccessibleFrame(pacc,&pHTMLElementSubBody);
+		pacc->Release();
+		if(!pHTMLElementSubBody) {
+			LOG_DEBUG(L"Could not get IHTMLElement body from frame's subdocument");
+			continue;
+		}
+		hRes=pHTMLElementSubBody->get_document(&pDispatch);
+		pHTMLElementSubBody->Release();
+		if(hRes!=S_OK||!pDispatch) {
+			LOG_DEBUG(L"Could not get document from IHTMLElement");
+			return NULL;
+		}
+		IHTMLDocument3* pHTMLDocument3sub=NULL;
+		hRes=pDispatch->QueryInterface(IID_IHTMLDocument3,(void**)&pHTMLDocument3sub);
+		pDispatch->Release();
+		if(hRes!=S_OK||!pHTMLDocument3sub) {
+			LOG_DEBUG(L"Could not queryInterface to IHTMLDocument3 for document");
+			continue;
+		}
+		pHTMLElementChild=LocateHTMLElementInDocument(pHTMLDocument3sub,ID);
+		pHTMLDocument3sub->Release();
+		if(pHTMLElementChild) {
+			break;
+		}
+	}
+	pHTMLElementCollection->Release();
+	return pHTMLElementChild;
 }
 
 inline int getIDFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
@@ -207,7 +298,7 @@ inline int getIDFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode) {
 	return ID;
 }
 
-inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPreformattedText) {
+inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPreformattedText, bool isStartOfBlock) {
 	int res=0;
 	IHTMLDOMTextNode* pHTMLDOMTextNode=NULL;
 	LOG_DEBUG(L"Trying to get an IHTMLDOMTextNode interface pointer");
@@ -225,21 +316,28 @@ inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPref
 	}
 	LOG_DEBUG(L"Got data from IHTMLDOMTextNode");
 	wstring s;
+	bool notAllWhitespace=false;
 	if(allowPreformattedText) {
 		s.append(data);
 	} else {
 		bool lastNotWhitespace=false;
+		bool strippingLeft=isStartOfBlock;
 		for(wchar_t* c=data;*c;++c) {
 			if(!iswspace(*c)) {
 				s+=*c;
 				lastNotWhitespace=TRUE;
-			} else if(lastNotWhitespace) {
+				notAllWhitespace=true;
+				strippingLeft=false;
+			} else if(lastNotWhitespace||!strippingLeft) {
 				s+=L' ';
 				lastNotWhitespace=FALSE;
 			} 
 		}
 	}
 	SysFreeString(data);
+	if(!allowPreformattedText&&!notAllWhitespace) {
+		return L"";
+	}
 	return s;
 }
 
@@ -266,7 +364,7 @@ inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPref
 	}\
 }
 
-inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool& invisible, bool& isBlock) {
+inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool& invisible, bool& isBlock, wstring& listStyle) {
 	BSTR tempBSTR=NULL;
 	IHTMLElement2* pHTMLElement2=NULL;
 	int res=pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
@@ -295,12 +393,21 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 	pHTMLCurrentStyle->get_display(&tempBSTR);
 	if(tempBSTR) {
 		LOG_DEBUG(L"Got display");
-		if (_wcsicmp(tempBSTR,L"none")==0) invisible=true;
+		if (_wcsicmp(tempBSTR,L"none")==0) {
+			invisible=true;
+			isBlock=false;
+		}
 		if (_wcsicmp(tempBSTR,L"inline")==0||_wcsicmp(tempBSTR,L"inline-block")==0) isBlock=false;
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
 	} else {
 		LOG_DEBUG(L"Failed to get display");
+	}
+	BSTR _listStyle;
+	pHTMLCurrentStyle->get_listStyleType(&_listStyle);
+	if(_listStyle) {
+		listStyle.append(_listStyle);
+		SysFreeString(_listStyle);
 	}
 	if (pHTMLCurrentStyle) pHTMLCurrentStyle->Release();
 }
@@ -359,6 +466,12 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	macro_addHTMLAttributeToMap(L"onmouseup",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	//ARIA properties:
 	macro_addHTMLAttributeToMap(L"role",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-valuenow",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-sort",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-labelledBy",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-describedBy",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-expanded",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-selected",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-level",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-required",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-dropeffect",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
@@ -542,13 +655,13 @@ if(nodeName.compare(L"TABLE")==0) {
 	return tableInfoPtr;
 }
 
-VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr, bool parentHasContent, bool allowPreformattedText) {
+VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr, bool interactiveAncestorHasContent, bool allowPreformattedText) {
 	BSTR tempBSTR=NULL;
 	wostringstream tempStringStream;
 
 	//Handle text nodes
 	{ 
-		wstring s=getTextFromHTMLDOMNode(pHTMLDOMNode,allowPreformattedText);
+		wstring s=getTextFromHTMLDOMNode(pHTMLDOMNode,allowPreformattedText,(parentNode&&parentNode->getIsBlock()&&!previousNode));
 		if(!s.empty()) {
 			LOG_DEBUG(L"Got text from node");
 			VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,s);
@@ -571,8 +684,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	//Find out block and visibility style
 	bool invisible=false;
 	bool isBlock=true;
-	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode, invisible, isBlock);
-
+	wstring listStyle;
+	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode, invisible, isBlock,listStyle);
 	LOG_DEBUG(L"Trying to get IHTMLDOMNode::nodeName");
 	if(pHTMLDOMNode->get_nodeName(&tempBSTR)!=S_OK||!tempBSTR) {
 		LOG_DEBUG(L"Failed to get IHTMLDOMNode::nodeName");
@@ -636,7 +749,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	int IAStates=0;
 	wstring IADescription=L"";
 	wstring IAKeyboardShortcut=L"";
-	IAccessible* pacc=getIAccessibleFromHTMLDOMNode(pHTMLDOMNode);
+	IAccessible* pacc=NULL;
+	queryService(pHTMLDOMNode,IID_IAccessible,&pacc);
 	if(pacc) {
 		getIAccessibleInfo(pacc,&IAName,&IARole,&IAValue,&IAStates,&IADescription,&IAKeyboardShortcut);
 	}
@@ -646,6 +760,30 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		IAStates-=STATE_SYSTEM_READONLY;
 	}
 
+	tempIter=attribsMap.find(L"HTMLAttrib::role");
+	if(tempIter!=attribsMap.end()) {
+		const wstring& ariaRole=tempIter->second;
+		if(ariaRole.compare(L"description")==0||ariaRole.compare(L"search")==0) {
+			//IE gives elements with an ARIA role of description and search a role of edit, probably should be staticText
+			IARole=ROLE_SYSTEM_STATICTEXT;
+		} else if(ariaRole.compare(L"list")==0) {
+			IARole=ROLE_SYSTEM_LIST;
+			IAStates|=STATE_SYSTEM_READONLY;
+		} else if(ariaRole.compare(L"slider")==0) {
+			IARole=ROLE_SYSTEM_SLIDER;
+			IAStates|=STATE_SYSTEM_FOCUSABLE;
+			tempIter=attribsMap.find(L"aria-valuenow");
+			if(tempIter!=attribsMap.end()) {
+				IAValue=tempIter->second;
+			}
+		} else if(ariaRole.compare(L"progressbar")==0) {
+			IARole=ROLE_SYSTEM_PROGRESSBAR;
+			tempIter=attribsMap.find(L"aria-valuenow");
+			if(tempIter!=attribsMap.end()) {
+				IAValue=tempIter->second;
+			}
+		}
+	} 
 	//IE doesn't seem to support aria-label yet so we want to override IAName with it
 	tempIter=attribsMap.find(L"HTMLAttrib::aria-label");
 	if(tempIter!=attribsMap.end()) {
@@ -662,11 +800,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	bool isInteractive=isEditable||(IAStates&STATE_SYSTEM_FOCUSABLE)||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end());
 	//Set up numbering for lists
 	int LIIndex=0;
-	if(nodeName.compare(L"OL")==0) {
+	if(nodeName.compare(L"OL")==0||nodeName.compare(L"UL")==0) {
 		//Ordered lists should number their list items
 		LIIndex=1;
 		LIIndexPtr=&LIIndex;
-	} else if((nodeName.compare(L"UL")==0||nodeName.compare(L"DL")==0)) {
+	} else if(nodeName.compare(L"DL")==0) {
 		//Unordered lists should not be numbered
 		LIIndexPtr=NULL;
 	}
@@ -681,20 +819,22 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		contentString=L" ";
 		isBlock=true;
 		IARole=ROLE_SYSTEM_SEPARATOR;
+		} else if(IARole==ROLE_SYSTEM_SLIDER||IARole==ROLE_SYSTEM_PROGRESSBAR) {
+			contentString=IAValue;
 	} else if ((nodeName.compare(L"OBJECT")==0 || nodeName.compare(L"APPLET")==0)) {
 		isBlock=true;
 		contentString=L" ";
 	} else if(nodeName.compare(L"LI")==0) {
 		renderChildren=true;
-		if(LIIndexPtr!=NULL) {
+		if(listStyle.compare(L"disc")==0||listStyle.compare(L"circle")==0||listStyle.compare(L"square")==0) {
+			tempStringStream.str(L"");
+			tempStringStream<<L"\x2022 "; //Bullet
+			contentString=tempStringStream.str();
+		} else if(LIIndexPtr!=NULL&&!listStyle.empty()&&listStyle.compare(L"none")!=0) {
 			tempStringStream.str(L"");
 			tempStringStream<<*LIIndexPtr<<L". ";
 			contentString=tempStringStream.str();
 			++(*LIIndexPtr);
-		} else {
-			tempStringStream.str(L"");
-			tempStringStream<<L"\x2022 "; //Bullet
-			contentString=tempStringStream.str();
 		}
 	} else if(nodeName.compare(L"TABLE")==0) {
 		renderChildren=true;
@@ -705,9 +845,9 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	} else if(nodeName.compare(L"IMG")==0) {
 		tempIter=attribsMap.find(L"HTMLAttrib::alt");
 		// If the alt attrib contains text, always use it.
-		// If the parent has content, rely on the alt attrib, even if it is "".
-		// If the parent has no content and the alt attrib is "", don't use it; fall back.
-		if(tempIter!=attribsMap.end()&&(parentHasContent||!tempIter->second.empty())) {
+		// If the interactive ancestor has content, rely on the alt attrib, even if it is "".
+		// If the interactive ancestor has no content and the alt attrib is "", don't use it; fall back.
+		if(tempIter!=attribsMap.end()&&(interactiveAncestorHasContent||!tempIter->second.empty())) {
 			contentString=tempIter->second;
 			if(tempIter->second.empty()) {
 				// alt="", so this isn't really interactive and we don't want it to be rendered at all.
@@ -717,7 +857,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			tempIter=attribsMap.find(L"HTMLAttrib::title");
 			if(tempIter!=attribsMap.end()) {
 				contentString=tempIter->second;
-			} else if(isInteractive&&!parentHasContent&&!IAValue.empty()) {
+			} else if(isInteractive&&!interactiveAncestorHasContent&&!IAValue.empty()) {
 				contentString=getNameForURL(IAValue);
 			} 
 		}
@@ -807,14 +947,18 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 
 	//Render content of children if we are allowed to
 	if(renderChildren) {
-		bool hasContent=!IAName.empty();
+		// Determine what to pass for interactiveAncestorHasContent when recursing.
+		// If this node is interactive, determine whether it has content.
+		// Otherwise, simply pass the value we were given.
+		bool newIntAncHasContent=isInteractive?(!IAName.empty()):interactiveAncestorHasContent;
 		//For children of frames we must get the child document via IAccessible
 		if(nodeName.compare(L"FRAME")==0||nodeName.compare(L"IFRAME")==0) {
 			LOG_DEBUG(L"using getRoodDOMNodeOfHTMLFrame to get the frame's child");
 			if(pacc) {
-				IHTMLDOMNode* childPHTMLDOMNode=getRootDOMNodeFromIAccessibleFrame(pacc);
+				IHTMLDOMNode* childPHTMLDOMNode=NULL;
+				getHTMLSubdocumentBodyFromIAccessibleFrame(pacc,&childPHTMLDOMNode);
 				if(childPHTMLDOMNode) {
-					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,hasContent,allowPreformattedText);
+					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,newIntAncHasContent,allowPreformattedText);
 					childPHTMLDOMNode->Release();
 				}
 			}
@@ -838,7 +982,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 						}
 						IHTMLDOMNode* childPHTMLDOMNode=NULL;
 						if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
-							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,hasContent,allowPreformattedText);
+							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,newIntAncHasContent,allowPreformattedText);
 							if(tempNode) {
 								previousNode=tempNode;
 							}
@@ -928,7 +1072,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	LOG_DEBUG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
 	LOG_DEBUG(L"Getting document from window "<<docHandle);
-	int res=SendMessage((HWND)docHandle,WM_HTML_GETOBJECT,0,0);
+	LRESULT res=SendMessage((HWND)docHandle,WM_HTML_GETOBJECT,0,0);
 	if(res==0) {
 		LOG_DEBUG(L"Error getting document using WM_HTML_GETOBJECT");
 		return;
@@ -945,15 +1089,14 @@ IHTMLDOMNode* pHTMLDOMNode=NULL;
 			return;
 		}
 		LOG_DEBUG(L"Locating DOM node with ID");
-		IHTMLElement* pHTMLElement=NULL;
 		wostringstream s;
 		s<<L"ms__id"<<ID;
-		if(pHTMLDocument3->getElementById((wchar_t*)(s.str().c_str()),(IHTMLElement**)&pHTMLElement)!=S_OK||!pHTMLElement) {
-			LOG_DEBUG(L"Failed to find element with ID"<<ID);
-			pHTMLDocument3->Release();
+		IHTMLElement* pHTMLElement=LocateHTMLElementInDocument(pHTMLDocument3,s.str());
+		pHTMLDocument3->Release();
+		if(!pHTMLElement) {
+			LOG_DEBUG(L"Could not locate HTML element in document");
 			return;
 		}
-		pHTMLDocument3->Release();
 		LOG_DEBUG(L"queryInterface to IHTMLDOMNode from IHTMLElement");
 		if(pHTMLElement->QueryInterface(IID_IHTMLDOMNode,(void**)&pHTMLDOMNode)!=S_OK) {
 			LOG_DEBUG(L"Could not get IHTMLDOMNode");
@@ -963,7 +1106,7 @@ IHTMLDOMNode* pHTMLDOMNode=NULL;
 		pHTMLElement->Release();
 	}
 	nhAssert(pHTMLDOMNode);
-	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,NULL,NULL,true,false);
+	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,NULL,NULL,false,false);
 	pHTMLDOMNode->Release();
 }
 

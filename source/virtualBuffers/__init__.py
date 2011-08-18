@@ -105,8 +105,8 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getTextRange(self,start,end):
 		if start==end:
-			return ""
-		return NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,False)
+			return u""
+		return NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,False) or u""
 
 	def getTextWithFields(self,formatConfig=None):
 		start=self._startOffset
@@ -511,6 +511,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		self.documentConstantIdentifier = self.documentConstantIdentifier
 		if not hasattr(self.rootNVDAObject.appModule, "_vbufRememberedCaretPositions"):
 			self.rootNVDAObject.appModule._vbufRememberedCaretPositions = {}
+		self._lastCaretPosition = None
 
 	def prepare(self):
 		self.shouldPrepare=False
@@ -523,12 +524,11 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if not self.VBufHandle:
 			return
 
-		if self.shouldRememberCaretPositionAcrossLoads:
+		if self.shouldRememberCaretPositionAcrossLoads and self._lastCaretPosition:
 			try:
-				caret = self.selection
-				caret.collapse()
-				self.rootNVDAObject.appModule._vbufRememberedCaretPositions[self.documentConstantIdentifier] = caret.bookmark
-			except:
+				self.rootNVDAObject.appModule._vbufRememberedCaretPositions[self.documentConstantIdentifier] = self._lastCaretPosition
+			except AttributeError:
+				# The app module died.
 				pass
 
 		self.unloadBuffer()
@@ -578,6 +578,35 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
 
+	def isNVDAObjectPartOfLayoutTable(self,obj):
+		docHandle,ID=self.getIdentifierFromNVDAObject(obj)
+		ID=unicode(ID)
+		info=self.makeTextInfo(obj)
+		info.collapse()
+		info.expand(textInfos.UNIT_CHARACTER)
+		fieldCommands=[x for x in info.getTextWithFields() if isinstance(x,textInfos.FieldCommand)]
+		tableLayout=None
+		tableID=None
+		for fieldCommand in fieldCommands:
+			fieldID=fieldCommand.field.get("controlIdentifier_ID") if fieldCommand.field else None
+			if fieldID==ID:
+				tableLayout=fieldCommand.field.get('table-layout')
+				if tableLayout is not None:
+					return tableLayout
+				tableID=fieldCommand.field.get('table-id')
+				break
+		if tableID is None:
+			return False
+		for fieldCommand in fieldCommands:
+			fieldID=fieldCommand.field.get("controlIdentifier_ID") if fieldCommand.field else None
+			if fieldID==tableID:
+				tableLayout=fieldCommand.field.get('table-layout',False)
+				break
+		return tableLayout
+
+ 
+
+
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		"""Retrieve an NVDAObject for a given node identifier.
 		Subclasses must override this method.
@@ -618,7 +647,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 					self.selection = self.makeTextInfo(initialPos)
 				speech.cancelSpeech()
 				reportPassThrough(self)
-				speech.speakObjectProperties(self.rootNVDAObject,name=True)
+				speech.speakObjectProperties(self.rootNVDAObject,name=True,states=True,reason=speech.REASON_FOCUS)
 				info=self.makeTextInfo(textInfos.POSITION_CARET)
 				sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
 			self._hadFirstGainFocus = True
@@ -671,6 +700,12 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		super(VirtualBuffer, self)._set_selection(info)
 		if isScriptWaiting() or not info.isCollapsed:
 			return
+		# Save the last caret position for use in terminate().
+		# This must be done here because the buffer might be cleared just before terminate() is called,
+		# causing the last caret position to be lost.
+		caret = info.copy()
+		caret.collapse()
+		self._lastCaretPosition = caret.bookmark
 		if config.conf['reviewCursor']['followCaret'] and api.getNavigatorObject() is self.rootNVDAObject:
 			api.setReviewPosition(info)
 		if reason == speech.REASON_FOCUS:
@@ -705,7 +740,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	def script_activatePosition(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		self._activatePosition(info)
-	script_activatePosition.__doc__ = _("activates the current object in the virtual buffer")
+	script_activatePosition.__doc__ = _("activates the current object in the document")
 
 	def script_refreshBuffer(self,gesture):
 		if scriptHandler.isScriptWaiting():
@@ -713,13 +748,13 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			return
 		self.unloadBuffer()
 		self.loadBuffer()
-	script_refreshBuffer.__doc__ = _("Refreshes the virtual buffer content")
+	script_refreshBuffer.__doc__ = _("Refreshes the document content")
 
 	def script_toggleScreenLayout(self,gesture):
 		config.conf["virtualBuffers"]["useScreenLayout"]=not config.conf["virtualBuffers"]["useScreenLayout"]
 		onOff=_("on") if config.conf["virtualBuffers"]["useScreenLayout"] else _("off")
 		speech.speakMessage(_("use screen layout %s")%onOff)
-	script_toggleScreenLayout.__doc__ = _("Toggles on and off if the screen layout is preserved while rendering the virtual buffer content")
+	script_toggleScreenLayout.__doc__ = _("Toggles on and off if the screen layout is preserved while rendering the document content")
 
 	def _searchableAttributesForNodeType(self,nodeType):
 		pass
@@ -821,9 +856,11 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if reason == self.REASON_QUICKNAV:
 			return False
 		states = obj.states
-		if controlTypes.STATE_FOCUSABLE not in states or controlTypes.STATE_READONLY in states:
+		if controlTypes.STATE_FOCUSABLE not in states and controlTypes.STATE_FOCUSED not in states:
 			return False
 		role = obj.role
+		if controlTypes.STATE_READONLY in states and role != controlTypes.ROLE_EDITABLETEXT:
+			return False
 		if reason == speech.REASON_CARET:
 			return role == controlTypes.ROLE_EDITABLETEXT or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
 		if reason == speech.REASON_FOCUS and role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_RADIOBUTTON):
@@ -889,10 +926,13 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			return False
 		# We only want to override the tab order if the caret is not within the focused node.
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
-		# Expand to one character, as isOverlapping() doesn't yield the desired results with collapsed ranges.
-		caretInfo.expand(textInfos.UNIT_CHARACTER)
-		if focusInfo.isOverlapping(caretInfo):
-			return False
+		#Only check that the caret is within the focus for things that ar not documents
+		#As for documents we should always override
+		if focus.role!=controlTypes.ROLE_DOCUMENT or controlTypes.STATE_EDITABLE in focus.states:
+			# Expand to one character, as isOverlapping() doesn't yield the desired results with collapsed ranges.
+			caretInfo.expand(textInfos.UNIT_CHARACTER)
+			if focusInfo.isOverlapping(caretInfo):
+				return False
 		# If we reach here, we do want to override tab/shift+tab if possible.
 		# Find the next/previous focusable node.
 		try:
@@ -946,6 +986,15 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
 
+	def _replayFocusEnteredEvents(self):
+		# We blocked the focusEntered events because we were in browse mode,
+		# but now that we've switched to focus mode, we need to fire them.
+		for parent in api.getFocusAncestors()[api.getFocusDifferenceLevel():]:
+			try:
+				parent.event_focusEntered()
+			except:
+				log.exception("Error executing focusEntered event: %s" % parent)
+
 	def event_gainFocus(self, obj, nextHandler):
 		if not self.passThrough and self._lastFocusObj==obj:
 			# This was the last non-document node with focus, so don't handle this focus event.
@@ -968,6 +1017,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			if not self.passThrough and self.shouldPassThrough(obj,reason=speech.REASON_FOCUS):
 				self.passThrough=True
 				reportPassThrough(self)
+				self._replayFocusEnteredEvents()
 			return nextHandler()
 
 		#We only want to update the caret and speak the field if we're not in the same one as before
@@ -975,8 +1025,9 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
 		caretInfo.expand(textInfos.UNIT_CHARACTER)
 		if not self._hadFirstGainFocus or not focusInfo.isOverlapping(caretInfo):
-			# The virtual buffer caret has already been moved inside the focus node.
-			if not self.passThrough:
+			# The virtual buffer caret is not within the focus node.
+			oldPassThrough=self.passThrough
+			if not oldPassThrough:
 				# If pass-through is disabled, cancel speech, as a focus change should cause page reading to stop.
 				# This must be done before auto-pass-through occurs, as we want to stop page reading even if pass-through will be automatically enabled by this focus change.
 				speech.cancelSpeech()
@@ -987,6 +1038,8 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,speech.REASON_ONLYCACHE)
 			else:
+				if not oldPassThrough:
+					self._replayFocusEnteredEvents()
 				nextHandler()
 			focusInfo.collapse()
 			self._set_selection(focusInfo,reason=speech.REASON_FOCUS)
@@ -1177,9 +1230,9 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"""
 		while obj and obj != self.rootNVDAObject:
 			if obj.role in self.APPLICATION_ROLES:
-				return False
+				return True
 			obj = obj.parent
-		return True
+		return False
 
 	NOT_LINK_BLOCK_MIN_LEN = 30
 	def _iterNotLinkBlock(self, direction="next", offset=-1):

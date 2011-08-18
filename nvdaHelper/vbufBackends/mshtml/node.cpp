@@ -13,7 +13,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <list>
- #include <cassert>
 #include <windows.h>
 #include <oleidl.h>
 #include <mshtml.h>
@@ -45,7 +44,7 @@ class CDispatchChangeSink : public IDispatch {
 		decBackendLibRefCount();
 	}
 
-	void CDispatchChangeSink::onChange() {
+	void onChange() {
 		if(hasFired||allowDelete) {
 			return;
 		}
@@ -239,7 +238,6 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 };
 
 MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, IHTMLDOMNode* pHTMLDOMNode): VBufStorage_controlFieldNode_t(docHandle,ID,isBlock) {
-	int res;
 	VARIANT_BOOL varBool;
 	nhAssert(backend);
 	nhAssert(pHTMLDOMNode);

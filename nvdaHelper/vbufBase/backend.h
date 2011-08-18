@@ -16,9 +16,10 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define VIRTUALBUFFER_BACKEND_H
 
 #include <set>
+#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include "storage.h"
-#include "lock.h"
+#include <common/lock.h>
 
 class VBufBackend_t;
 
@@ -141,7 +142,12 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
  * marks a particular node as invalid, so that its content is re-rendered on next update.
  * @param node the node that should be invalidated.
  */
-	virtual void invalidateSubtree(VBufStorage_controlFieldNode_t*);
+	virtual bool invalidateSubtree(VBufStorage_controlFieldNode_t*);
+
+/**
+ * Forces any invalidated nodes to be updated right now.
+ */
+	virtual void forceUpdate();
 
 /**
  * Clears the content of the backend and terminates any code used for rendering.
@@ -156,7 +162,7 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
  /**
  * Useful for cerializing access to the buffer
  */
-	VBufLock_t lock;
+	LockableObject lock;
 
 };
 

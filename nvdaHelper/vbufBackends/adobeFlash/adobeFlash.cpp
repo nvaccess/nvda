@@ -177,7 +177,7 @@ void AdobeFlashVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle
 		VARIANT varChild;
 		varChild.vt=VT_I4;
 		HRESULT hRes;
-		for(int i=1;i<1000&&childIDsByLocation.size()<childCount;++i) {
+		for(int i=1;i<1000&&static_cast<long>(childIDsByLocation.size())<childCount;++i) {
 			IDispatch* childDisp=NULL;
 			varChild.lVal=i;
 			hRes=pacc->get_accChild(varChild,&childDisp);

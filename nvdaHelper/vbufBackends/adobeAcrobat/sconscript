@@ -22,7 +22,7 @@ adobeAcrobatBackendLib=env.SharedLibrary(
 	target="VBufBackend_adobeAcrobat",
 	source=[
 		"adobeAcrobat.cpp",
-		acrobatAccessRPCStubs[2],
+		env.Object('_acrobatAccess_i',acrobatAccessRPCStubs[2]),
 	],
 	LIBS=[
 		vbufBaseStaticLib,

@@ -1,44 +1,51 @@
-﻿complexSymbols:
+﻿#locale/pt_BR/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
 # identifier	regexp
 # Sentence endings.
-. fim de sentença	(?<=[^\s.])\.(?=[\"')\s]|$)
-! fim de sentença	(?<=[^\s!])\!(?=[\"')\s]|$)
-? fim de sentença	(?<=[^\s?])\?(?=[\"')\s]|$)
+. fim de sentença	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! fim de sentença	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? fim de sentença	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
 # Phrase endings.
 ; fim de período	(?<=[^\s;]);(?=\s|$)
 : fim de período	(?<=[^\s:]):(?=\s|$)
 # Others
 ponto decimal	(?<=\d)\.(?=\d)
-junta palavras '	(?<=[a-zA-Z0-9])'(?=[a-zA-Z])
+' em palavra	(?<=[^\W_])['’]
+número negativo	(?<!\w)-(?=\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. fim de sentença	ponto final	all	always
+. fim de sentença	ponto	all	always
 ! fim de sentença	exclamação	all	always
 ? fim de sentença	interrogação	all	always
 ; fim de período	ponto e vírgula	most	always
 : fim de período	dois pontos	most	always
 ponto decimal		none	always
-junta palavras '	apóstrofo	all	norep
+' em palavra	apóstrofo	all	norep
+número negativo	menos	none	norep
 
 # Whitespace
-\0	em branco	char
+\0	em branco	char # null
 \t	tab
 \n	nova linha	char
 \f	quebra de página	none
 \r	retôrno	char
  	espaço	char
- 	espaço	char	# espaço sem quebra
+ 	espaço	char	# no-break space
 
 # Standard punctuation/symbols
 !	exclamação	all
 "	aspas	most
 \#	cardinal	most
-$	cifrão	some
-£	libra	some
-€	euro	some
+$	cifrão	all	norep
+£	libra	all	norep
+€	euro	all	norep
 %	porcento	some
 &	êh comercial	some
 '	apóstrofo	all
@@ -48,9 +55,9 @@ $	cifrão	some
 +	mais	most
 ,	vírgula	all	always
 -	hífen	most
-.	ponto	all
+.	ponto	some
 /	barra	some
-:	dois pontos	most
+:	dois pontos	most	norep
 ;	ponto e vírgula	most
 <	menor	most
 >	maior	most
@@ -59,7 +66,6 @@ $	cifrão	some
 @	arrôba	some
 [	abre colchetes	most
 ]	fecha colchetes	most
-"	aspas	most
 \\	barra invertida	most
 ^	circunflexo	most
 _	sublinhado	most
@@ -72,10 +78,15 @@ _	sublinhado	most
 # Other characters
 •	bolinha	some
 …	reticências	all	always
+...	reticências	all	always
 	bolinha	some
 “	aspas esquerdas	most
 ”	aspas direitas	most
+‘	apóstrofo esquerdo	most
+’	apóstrofo direito	most
 –	travessão N	most
 —	travessão M	most
 ●	círculo	most
 ¨	trema	most
+‎	esquerda para direita	char
+‏	direita para esquerda	char

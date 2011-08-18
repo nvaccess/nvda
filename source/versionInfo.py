@@ -6,31 +6,41 @@
 
 import os
 
-BZR_LASTREV_PATH = r"..\.bzr\branch\last-revision"
-
 def _updateVersionFromVCS():
 	"""Update the version from version control system metadata if possible.
 	"""
 	global version
-	if os.path.isfile(BZR_LASTREV_PATH):
-		# Running from bzr checkout.
-		try:
-			rev = file(BZR_LASTREV_PATH, "r").read().split(" ")[0]
-			branch = os.path.basename(os.path.abspath(".."))
-			version = "bzr-%s-%s" % (branch, rev)
-		except (IOError, IndexError):
-			pass
+	# The root of the bzr working tree will be the parent of this module's directory.
+	branchPath = os.path.dirname(os.path.dirname(__file__))
+	locationPath = os.path.join(branchPath, ".bzr", "branch", "location")
+	try:
+		# If this is a lightweight checkout of a local branch, use that branch.
+		branchPath = file(locationPath, "r").read().split("file:///", 1)[1]
+	except (IOError, IndexError):
+		pass
+
+	lastRevPath = os.path.join(branchPath, ".bzr", "branch", "last-revision")
+	try:
+		# If running from a bzr branch, use version info from that.
+		rev = file(lastRevPath, "r").read().split(" ")[0]
+		branch = os.path.basename(os.path.abspath(branchPath))
+		version = "bzr-%s-%s" % (branch, rev)
+	except (IOError, IndexError):
+		pass
 
 name="NVDA"
 longName=_("NonVisual Desktop Access")
-version="2011.2dev"
+version="2011.3dev"
+publisher="unknown"
 try:
-	from _buildVersion import version
+	from _buildVersion import version, publisher
 except ImportError:
 	_updateVersionFromVCS()
 description=_("A free and open source screen reader for Microsoft Windows")
 url="http://www.nvda-project.org/"
-copyright=_("Copyright (C) 2006-2011 NVDA Contributors")
+copyrightYears="2006-2011"
+copyright=_("Copyright (C) {years} NVDA Contributors").format(
+	years=copyrightYears)
 aboutMessage=_(u"""{longName} ({name})
 Version: {version}
 URL: {url}

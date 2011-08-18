@@ -2,7 +2,8 @@ import sys
 import traceback
 import time
 import threading
-from ctypes import *
+from ctypes import windll, oledll
+import ctypes.wintypes
 import winUser
 from logHandler import log
 
@@ -58,15 +59,15 @@ def _watcher():
 			if _coreAliveEvent.isSet() or _shouldRecoverAfterMinTimeout():
 				break
 		if log.isEnabledFor(log.DEBUGWARNING) and not _coreAliveEvent.isSet():
-			coreFrame=sys._current_frames()[_coreThreadID]
-			log.debugWarning("Trying to recover from freeze, core stack:\n%s"%"".join(traceback.format_stack(coreFrame)))
+			log.debugWarning("Trying to recover from freeze, core stack:\n%s"%
+				"".join(traceback.format_stack(sys._current_frames()[_coreThreadID])))
 		lastTime=time.time()
 		while not _coreAliveEvent.isSet():
 			curTime=time.time()
 			if curTime-lastTime>FROZEN_WARNING_TIMEOUT:
 				lastTime=curTime
-				coreFrame=sys._current_frames()[_coreThreadID]
-				log.warning("Core frozen in stack:\n%s"%"".join(traceback.format_stack(coreFrame)))
+				log.warning("Core frozen in stack:\n%s"%
+					"".join(traceback.format_stack(sys._current_frames()[_coreThreadID])))
 			# The core is dead, so attempt recovery.
 			isAttemptingRecovery = True
 			_recoverAttempt()
@@ -102,6 +103,15 @@ def _recoverAttempt():
 	except:
 		pass
 
+@ctypes.WINFUNCTYPE(ctypes.wintypes.LONG, ctypes.c_void_p)
+def _crashHandler(exceptionInfo):
+	# An exception might have been set for this thread.
+	# Clear it so that it doesn't get raised in this function.
+	ctypes.pythonapi.PyThreadState_SetAsyncExc(threading.currentThread().ident, None)
+	import core
+	core.restart()
+	return 1 # EXCEPTION_EXECUTE_HANDLER
+
 def initialize():
 	"""Initialize the watchdog.
 	"""
@@ -109,6 +119,8 @@ def initialize():
 	if isRunning:
 		raise RuntimeError("already running") 
 	isRunning=True
+	# Catch application crashes.
+	windll.kernel32.SetUnhandledExceptionFilter(_crashHandler)
 	oledll.ole32.CoEnableCallCancellation(None)
 	_coreAliveEvent.set()
 	_resumeEvent.set()

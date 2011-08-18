@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 
 import locale
+import sys
 import comtypes.client
 import struct
 import ctypes
@@ -353,30 +354,43 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				start=end
 				end=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
 			return (start,end)
-		else: #Implementation of standard edit field wordbreak behaviour (only breaks on space)
-			text=self.obj.windowText
-			textLength=len(text)
-			if offset>=textLength:
+		elif sys.getwindowsversion().major<6: #Implementation of standard edit field wordbreak behaviour (only breaks on space)
+			lineStart,lineEnd=self._getLineOffsets(offset)
+			if offset>=lineEnd:
+				return offset,offset+1
+			lineText=self._getTextRange(lineStart,lineEnd)
+			lineTextLen=len(lineText)
+			relativeOffset=offset-lineStart
+			if relativeOffset>=lineTextLen:
 				return offset,offset+1
 			#cariage returns are always treeted as a word by themselves
-			if text[offset]=='\r':
+			if lineText[relativeOffset] in ['\r','\n']:
 				return offset,offset+1
 			#Find the start of the word (possibly moving through space to get to the word first)
-			tempOffset=offset
-			while offset>=0 and text[tempOffset].isspace():
+			tempOffset=relativeOffset
+			while tempOffset>0 and lineText[tempOffset].isspace():
 				tempOffset-=1
-			while tempOffset>=0 and not text[tempOffset].isspace():
+			while tempOffset>0 and not lineText[tempOffset].isspace():
 				tempOffset-=1
-			start=tempOffset+1
+			start=lineStart+tempOffset
+			startOnSpace=True if tempOffset<lineTextLen and lineText[tempOffset].isspace() else False
 			#Find the end of the word and trailing space
-			tempOffset=offset
-			textLen=len(text)
-			while tempOffset<textLen and not text[tempOffset].isspace():
+			tempOffset=relativeOffset
+			if startOnSpace:
+				while tempOffset<lineTextLen and lineText[tempOffset].isspace():
+					tempOffset+=1
+			while tempOffset<lineTextLen and not lineText[tempOffset].isspace():
 				tempOffset+=1
-			while tempOffset<textLen and text[tempOffset].isspace():
+			while tempOffset<lineTextLen and lineText[tempOffset].isspace():
 				tempOffset+=1
-			end=tempOffset
+			end=lineStart+tempOffset
 			return start,end
+		else:
+			if self._getTextRange(offset,offset+1) in ['\r','\n']:
+				return offset,offset+1
+			else:
+				return super(EditTextInfo,self)._getWordOffsets(offset)
+
 
 	def _getLineNumFromOffset(self,offset):
 		if self.obj.editAPIVersion>=1:
@@ -516,6 +530,50 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if range.start<startLimit:
 			range.start=startLimit
 
+	def _getEmbeddedObjectLabel(self,embedRangeObj):
+		label=None
+		try:
+			o=embedRangeObj.GetEmbeddedObject()
+		except comtypes.COMError:
+			o=None
+		if not o:
+			return None
+		import oleacc
+		try:
+			label=o.QueryInterface(oleacc.IAccessible).accName(0);
+		except comtypes.COMError:
+			pass
+		if label:
+			return label
+		left,top=embedRangeObj.GetPoint(comInterfaces.tom.tomStart)
+		right,bottom=embedRangeObj.GetPoint(comInterfaces.tom.tomEnd)
+		import displayModel
+		label=displayModel.getWindowTextInRect(self.obj.appModule.helperLocalBindingHandle, self.obj.windowHandle, left, top, right, bottom+10,1,1)[0]
+		if label and not label.isspace():
+			return label
+		try:
+			dataObj=o.QueryInterface(oleTypes.IDataObject)
+		except comtypes.COMError:
+			dataObj=None
+		if dataObj:
+			try:
+				dataObj=pythoncom._univgw.interface(hash(dataObj),pythoncom.IID_IDataObject)
+				format=(win32clipboard.CF_UNICODETEXT, None, pythoncom.DVASPECT_CONTENT, -1, pythoncom.TYMED_HGLOBAL)
+				medium=dataObj.GetData(format)
+				buf=ctypes.create_string_buffer(medium.data)
+				buf=ctypes.cast(buf,ctypes.c_wchar_p)
+				label=buf.value
+			except:
+				pass
+		if label:
+			return label
+		try:
+			oleObj=o.QueryInterface(oleTypes.IOleObject)
+			label=oleObj.GetUserType(1)
+		except comtypes.COMError:
+			pass
+		return label
+
 	def _getTextAtRange(self,rangeObj):
 		embedRangeObj=None
 		bufText=rangeObj.text
@@ -526,22 +584,10 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		for offset in range(len(bufText)):
 			if ord(bufText[offset])==0xfffc:
 				if embedRangeObj is None: embedRangeObj=rangeObj.duplicate
-				embedRangeObj.setRange(start+offset,start+offset)
-				try:
-					o=embedRangeObj.GetEmbeddedObject()
-					#Fetch a description for this object
-					o=o.QueryInterface(oleTypes.IOleObject)
-					dataObj=o.GetClipboardData(0)
-					dataObj=pythoncom._univgw.interface(hash(dataObj),pythoncom.IID_IDataObject)
-					format=(win32clipboard.CF_UNICODETEXT, None, pythoncom.DVASPECT_CONTENT, -1, pythoncom.TYMED_HGLOBAL)
-					medium=dataObj.GetData(format)
-					buf=ctypes.create_string_buffer(medium.data)
-					buf=ctypes.cast(buf,ctypes.c_wchar_p)
-					label=buf.value
-				except comtypes.COMError:
-					label=_("unknown")
+				embedRangeObj.setRange(start+offset,start+offset+1)
+				label=self._getEmbeddedObjectLabel(embedRangeObj)
 				if label:
-					newTextList.append(_("%s embedded object")%label)
+					newTextList.append(label)
 				else:
 					newTextList.append(_("embedded object"))
 			else:
@@ -686,7 +732,7 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 	editValueUnit=textInfos.UNIT_LINE
 
 	def _get_TextInfo(self):
-		if self.editAPIVersion>1 and self.useITextDocumentSupport and self.ITextDocumentObject:
+		if self.editAPIVersion>1 and (self.useITextDocumentSupport or self.windowClassName.endswith('PT')) and self.ITextDocumentObject:
 			return ITextDocumentTextInfo
 		else:
 			return EditTextInfo

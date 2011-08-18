@@ -6,7 +6,9 @@
 
 import glob
 import os
+import copy
 import wx
+import winUser
 import logHandler
 from synthDriverHandler import *
 import config
@@ -18,7 +20,6 @@ from logHandler import log
 import nvwave
 import speechDictHandler
 import appModuleHandler
-import scriptUI
 import queueHandler
 import braille
 import core
@@ -171,10 +172,18 @@ class GeneralSettingsDialog(SettingsDialog):
 		self.languageList.SetFocus()
 
 	def onCopySettings(self,evt):
+		for packageType in ('appModules','globalPlugins','brailleDisplayDrivers','synthDrivers'):
+			if len(os.listdir(os.path.join(globalVars.appArgs.configPath,packageType)))>0:
+				if gui.messageBox(
+					_("Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"),
+					_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self
+				)==wx.NO:
+					return
+				break
 		if not config.setSystemConfigToCurrentConfig():
-			wx.MessageDialog(self,_("Error copying NVDA user settings"),_("Error"),wx.OK|wx.ICON_ERROR).ShowModal()
+			gui.messageBox(_("Error copying NVDA user settings"),_("Error"),wx.OK|wx.ICON_ERROR,self)
 		else:
-			wx.MessageDialog(self,_("Successfully copied NVDA user settings"),_("Success"),wx.OK|wx.ICON_INFORMATION).ShowModal()
+			gui.messageBox(_("Successfully copied NVDA user settings"),_("Success"),wx.OK|wx.ICON_INFORMATION,self)
 
 	def onOk(self,evt):
 		newLanguage=[x[0] for x in self.languageNames][self.languageList.GetSelection()]
@@ -183,9 +192,7 @@ class GeneralSettingsDialog(SettingsDialog):
 				languageHandler.setLanguage(newLanguage)
 			except:
 				log.error("languageHandler.setLanguage", exc_info=True)
-				d = wx.MessageDialog(self,_("Error in %s language file")%newLanguage,_("Language Error"),wx.OK|wx.ICON_WARNING)
-				d.ShowModal()
-				d.Destroy()
+				gui.messageBox(_("Error in %s language file")%newLanguage,_("Language Error"),wx.OK|wx.ICON_WARNING,self)
 				return
 		config.conf["general"]["language"]=newLanguage
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
@@ -199,13 +206,14 @@ class GeneralSettingsDialog(SettingsDialog):
 			try:
 				config.setStartOnLogonScreen(self.startOnLogonScreenCheckBox.GetValue())
 			except (WindowsError, RuntimeError):
-				wx.MessageBox(_("This change requires administrator privileges."), _("Insufficient Privileges"), style=wx.OK | wx.ICON_ERROR)
+				gui.messageBox(_("This change requires administrator privileges."), _("Insufficient Privileges"), style=wx.OK | wx.ICON_ERROR, parent=self)
 		if self.oldLanguage!=newLanguage:
-			d = wx.MessageDialog(self,_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING)
-			if d.ShowModal()==wx.ID_OK:
+			if gui.messageBox(
+				_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),
+				_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING,self
+			)==wx.OK:
 				config.save()
 				queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
-			d.Destroy()
 		super(GeneralSettingsDialog, self).onOk(evt)
 
 class SynthesizerDialog(SettingsDialog):
@@ -248,9 +256,7 @@ class SynthesizerDialog(SettingsDialog):
 		config.conf["speech"]["outputDevice"]=self.deviceList.GetStringSelection()
 		newSynth=self.synthNames[self.synthList.GetSelection()]
 		if not setSynth(newSynth):
-			d = wx.MessageDialog(self,_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING)
-			d.ShowModal()
-			d.Destroy()
+			gui.messageBox(_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING,self)
 			return 
 		super(SynthesizerDialog, self).onOk(evt)
 
@@ -289,7 +295,11 @@ class VoiceSettingsSlider(wx.Slider):
 		super(VoiceSettingsSlider, self).SetValue(i)
 		evt = wx.CommandEvent(wx.wxEVT_COMMAND_SLIDER_UPDATED,self.GetId())
 		evt.SetInt(i)
-		wx.PostEvent(self,evt)
+		self.ProcessEvent(evt)
+		# HACK: Win events don't seem to be sent for certain explicitly set values,
+		# so send our own win event.
+		# This will cause duplicates in some cases, but NVDA will filter them out.
+		winUser.user32.NotifyWinEvent(winUser.EVENT_OBJECT_VALUECHANGE,self.Handle,winUser.OBJID_CLIENT,winUser.CHILDID_SELF)
 
 	def onSliderChar(self, evt):
 		key = evt.KeyCode
@@ -362,6 +372,18 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.lastControl=lCombo
 		return sizer
 
+	def makeBooleanSettingControl(self,setting):
+		"""Same as L{makeSettingControl} but for boolean settings. Returns checkbox."""
+		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.i18nName)
+		setattr(self,"%sCheckbox"%setting.name,checkbox)
+		checkbox.Bind(wx.EVT_CHECKBOX,
+			lambda evt: setattr(getSynth(),setting.name,evt.IsChecked()))
+		checkbox.SetValue(getattr(getSynth(),setting.name))
+		if self.lastControl:
+			checkbox.MoveAfterInTabOrder(self.lastControl)
+		self.lastControl=checkbox
+		return checkbox
+
 	def makeSettings(self, settingsSizer):
 		self.sizerDict={}
 		self.lastControl=None
@@ -369,13 +391,10 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.updateVoiceSettings()
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Punctuation/symbol &level:")))
-		self.symbolLevels=characterProcessing.USER_SPEECH_SYMBOL_LEVELS.items()
-		self.symbolLevelList=wx.Choice(self,wx.ID_ANY,choices=[name for level, name in self.symbolLevels])
+		symbolLevelLabels=characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
+		self.symbolLevelList=wx.Choice(self,wx.ID_ANY,choices=[symbolLevelLabels[level] for level in characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS])
 		curLevel = config.conf["speech"]["symbolLevel"]
-		for index, (level, name) in enumerate(self.symbolLevels):
-			if level == curLevel:
-				self.symbolLevelList.SetSelection(index)
-				break
+		self.symbolLevelList.SetSelection(characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS.index(curLevel))
 		sizer.Add(self.symbolLevelList)
 		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
 		self.raisePitchForCapsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Raise pitch for capitals"))
@@ -414,11 +433,12 @@ class VoiceSettingsDialog(SettingsDialog):
 			if setting.name == changedSetting:
 				# Changing a setting shouldn't cause that setting's own values to change.
 				continue
-			b=isinstance(setting,NumericSynthSetting)
 			if setting.name in self.sizerDict: #update a value
 				self.settingsSizer.Show(self.sizerDict[setting.name])
-				if b:
+				if isinstance(setting,NumericSynthSetting):
 					getattr(self,"%sSlider"%setting.name).SetValue(getattr(synth,setting.name))
+				elif isinstance(setting,BooleanSynthSetting):
+					getattr(self,"%sCheckbox"%setting.name).SetValue(getattr(synth,setting.name))
 				else:
 					l=getattr(self,"_%ss"%setting.name)
 					lCombo=getattr(self,"%sList"%setting.name)
@@ -429,7 +449,12 @@ class VoiceSettingsDialog(SettingsDialog):
 					except ValueError:
 						pass
 			else: #create a new control
-				settingMaker=self.makeSettingControl if b else self.makeStringSettingControl
+				if isinstance(setting,NumericSynthSetting):
+					settingMaker=self.makeSettingControl
+				elif isinstance(setting,BooleanSynthSetting):
+					settingMaker=self.makeBooleanSettingControl
+				else:
+					settingMaker=self.makeStringSettingControl
 				s=settingMaker(setting)
 				self.sizerDict[setting.name]=s
 				self.settingsSizer.Insert(len(self.sizerDict)-1,s,border=10,flag=wx.BOTTOM)
@@ -439,7 +464,7 @@ class VoiceSettingsDialog(SettingsDialog):
 	def onCancel(self,evt):
 		#unbind change events for string settings as wx closes combo boxes on cancel
 		for setting in getSynth().supportedSettings:
-			if isinstance(setting,NumericSynthSetting): continue
+			if isinstance(setting,(NumericSynthSetting,BooleanSynthSetting)): continue
 			getattr(self,"%sList"%setting.name).Unbind(wx.EVT_CHOICE)
 		#restore settings
 		getSynth().loadSettings()
@@ -447,7 +472,7 @@ class VoiceSettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		getSynth().saveSettings()
-		config.conf["speech"]["symbolLevel"]=self.symbolLevels[self.symbolLevelList.GetSelection()][0]
+		config.conf["speech"]["symbolLevel"]=characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[self.symbolLevelList.GetSelection()]
 		config.conf["speech"][getSynth().name]["raisePitchForCapitals"]=self.raisePitchForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
@@ -645,8 +670,8 @@ class ObjectPresentationDialog(SettingsDialog):
 		config.conf["presentation"]["reportDynamicContentChanges"]=self.dynamicContentCheckBox.IsChecked()
 		super(ObjectPresentationDialog, self).onOk(evt)
 
-class VirtualBuffersDialog(SettingsDialog):
-	title = _("virtual buffers")
+class BrowseModeDialog(SettingsDialog):
+	title = _("Browse mode")
 
 	def makeSettings(self, settingsSizer):
 		maxLengthLabel=wx.StaticText(self,-1,label=_("&Maximum number of characters on one line"))
@@ -697,7 +722,7 @@ class VirtualBuffersDialog(SettingsDialog):
 		config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"]=self.autoPassThroughOnFocusChangeCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]=self.autoPassThroughOnCaretMoveCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["passThroughAudioIndication"]=self.passThroughAudioIndicationCheckBox.IsChecked()
-		super(VirtualBuffersDialog, self).onOk(evt)
+		super(BrowseModeDialog, self).onOk(evt)
 
 class DocumentFormattingDialog(SettingsDialog):
 	title = _("Document formatting")
@@ -745,6 +770,9 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.tableHeadersCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report table row/column h&eaders"))
 		self.tableHeadersCheckBox.SetValue(config.conf["documentFormatting"]["reportTableHeaders"])
 		settingsSizer.Add(self.tableHeadersCheckBox,border=10,flag=wx.BOTTOM)
+		self.tableCellCoordsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report table cell c&oordinates"))
+		self.tableCellCoordsCheckBox.SetValue(config.conf["documentFormatting"]["reportTableCellCoords"])
+		settingsSizer.Add(self.tableCellCoordsCheckBox,border=10,flag=wx.BOTTOM)
 		self.linksCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &links"))
 		self.linksCheckBox.SetValue(config.conf["documentFormatting"]["reportLinks"])
 		settingsSizer.Add(self.linksCheckBox,border=10,flag=wx.BOTTOM)
@@ -778,6 +806,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportLineIndentation"]=self.lineIndentationCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked() 
 		config.conf["documentFormatting"]["reportLinks"]=self.linksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHeadings"]=self.headingsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLists"]=self.listsCheckBox.IsChecked()
@@ -823,7 +852,7 @@ class DictionaryDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		dictListID=wx.NewId()
-		entriesSizer=wx.BoxSizer(wx.HORIZONTAL)
+		entriesSizer=wx.BoxSizer(wx.VERTICAL)
 		entriesLabel=wx.StaticText(self,-1,label=_("&Dictionary entries"))
 		entriesSizer.Add(entriesLabel)
 		self.dictList=wx.ListCtrl(self,dictListID,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
@@ -843,7 +872,7 @@ class DictionaryDialog(SettingsDialog):
 		addButton=wx.Button(self,addButtonID,_("&Add"),wx.DefaultPosition)
 		entryButtonsSizer.Add(addButton)
 		editButtonID=wx.NewId()
-		editButton=wx.Button(self,editButtonID,_("&edit"),wx.DefaultPosition)
+		editButton=wx.Button(self,editButtonID,_("&Edit"),wx.DefaultPosition)
 		entryButtonsSizer.Add(editButton)
 		removeButtonID=wx.NewId()
 		removeButton=wx.Button(self,removeButtonID,_("&Remove"),wx.DefaultPosition)
@@ -984,9 +1013,7 @@ class BrailleSettingsDialog(SettingsDialog):
 	def onOk(self, evt):
 		display = self.displayNames[self.displayList.GetSelection()]
 		if not braille.handler.setDisplayByName(display):
-			d = wx.MessageDialog(self, _("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING)
-			d.ShowModal()
-			d.Destroy()
+			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
 			return 
 		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
@@ -1004,3 +1031,95 @@ class BrailleSettingsDialog(SettingsDialog):
 			config.conf["braille"]["messageTimeout"] = val
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		super(BrailleSettingsDialog,  self).onOk(evt)
+
+class SpeechSymbolsDialog(SettingsDialog):
+	title = _("Symbol Pronunciation")
+
+	def makeSettings(self, settingsSizer):
+		try:
+			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData(languageHandler.getLanguage())
+		except LookupError:
+			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
+		self.symbolProcessor = symbolProcessor
+		symbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Symbols")))
+		self.symbolsList = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT | wx.LC_SINGLE_SEL, size=(360, 350))
+		self.symbolsList.InsertColumn(0, _("Symbol"), width=150)
+		self.symbolsList.InsertColumn(1, _("Replacement"), width=150)
+		self.symbolsList.InsertColumn(2, _("Level"), width=60)
+		for symbol in symbols:
+			item = self.symbolsList.Append((symbol.displayName,))
+			self.updateListItem(item, symbol)
+		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
+		self.symbolsList.Bind(wx.EVT_CHAR, self.onListChar)
+		sizer.Add(self.symbolsList)
+		settingsSizer.Add(sizer)
+
+		changeSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Change symbol")), wx.VERTICAL)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Replacement")))
+		self.replacementEdit = wx.TextCtrl(self, wx.ID_ANY)
+		self.replacementEdit.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
+		sizer.Add(self.replacementEdit)
+		changeSizer.Add(sizer)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Level")))
+		symbolLevelLabels = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
+		self.levelList = wx.Choice(self, wx.ID_ANY,choices=[
+			symbolLevelLabels[level] for level in characterProcessing.SPEECH_SYMBOL_LEVELS])
+		self.levelList.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
+		sizer.Add(self.levelList)
+		changeSizer.Add(sizer)
+		settingsSizer.Add(changeSizer)
+
+		self.editingItem = None
+
+	def postInit(self):
+		self.symbolsList.SetFocus()
+
+	def updateListItem(self, item, symbol):
+		self.symbolsList.SetStringItem(item, 1, symbol.replacement)
+		self.symbolsList.SetStringItem(item, 2, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level])
+
+	def onSymbolEdited(self, evt):
+		if self.editingItem is None:
+			return
+		# Update the symbol the user was just editing.
+		item = self.editingItem
+		symbol = self.symbols[item]
+		symbol.replacement = self.replacementEdit.Value
+		symbol.level = characterProcessing.SPEECH_SYMBOL_LEVELS[self.levelList.Selection]
+		self.updateListItem(item, symbol)
+
+	def onListItemFocused(self, evt):
+		# Update the editing controls to reflect the newly selected symbol.
+		item = evt.GetIndex()
+		symbol = self.symbols[item]
+		self.editingItem = item
+		self.replacementEdit.Value = symbol.replacement
+		self.levelList.Selection = characterProcessing.SPEECH_SYMBOL_LEVELS.index(symbol.level)
+
+	def onListChar(self, evt):
+		if evt.KeyCode == wx.WXK_RETURN:
+			# The enter key should be propagated to the dialog and thus activate the default button,
+			# but this is broken (wx ticket #3725).
+			# Therefore, we must catch the enter key here.
+			# Activate the OK button.
+			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
+
+		else:
+			evt.Skip()
+
+	def onOk(self, evt):
+		self.onSymbolEdited(None)
+		self.editingItem = None
+		for symbol in self.symbols:
+			self.symbolProcessor.updateSymbol(symbol)
+		try:
+			self.symbolProcessor.userSymbols.save()
+		except IOError as e:
+			log.error("Error saving user symbols info: %s" % e)
+		characterProcessing._localeSpeechSymbolProcessors.invalidateLocaleData(self.symbolProcessor.locale)
+		super(SpeechSymbolsDialog, self).onOk(evt)

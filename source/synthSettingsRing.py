@@ -59,6 +59,20 @@ class StringSynthSetting(SynthSetting):
 	def _getReportValue(self, val):
 		return self._values[val].name
 
+class BooleanSynthSetting(SynthSetting):
+
+	def __init__(self, synth, setting):
+		super(BooleanSynthSetting, self).__init__(synth, setting, 0, 1)
+
+	def _get_value(self):
+		return int(super(BooleanSynthSetting, self).value)
+
+	def _set_value(self, val):
+		super(BooleanSynthSetting, self)._set_value(bool(val))
+
+	def _getReportValue(self, val):
+		return _("on") if val else _("off")
+
 class SynthSettingsRing(baseObject.AutoPropertyObject):
 	"""
 	 A synth settings ring which enables the user to change to the next and previous settings and ajust the selected one
@@ -120,8 +134,13 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			if not s.availableInSynthSettingsRing: continue
 			if prevName==s.name: #restore the last setting
 				self._current=len(list)
-			p=SynthSetting if isinstance(s,synthDriverHandler.NumericSynthSetting) else StringSynthSetting
-			list.append(p(synth,s))
+			if isinstance(s,synthDriverHandler.NumericSynthSetting):
+				cls=SynthSetting
+			elif isinstance(s,synthDriverHandler.BooleanSynthSetting):
+				cls=BooleanSynthSetting
+			else:
+				cls=StringSynthSetting
+			list.append(cls(synth,s))
 		if len(list) == 0:
 			self._current = None
 			self.settings = None

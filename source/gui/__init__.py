@@ -8,7 +8,6 @@ import time
 import os
 import sys
 import wx
-from wx.lib import newevent
 import globalVars
 import ui
 from logHandler import log
@@ -26,37 +25,12 @@ import winUser
 import api
 
 ### Constants
-appTitle = "NVDA"
 NVDA_PATH = os.getcwdu()
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
 
-ExternalCommandEvent, evt_externalCommand = newevent.NewCommandEvent()
-id_showGuiCommand=wx.NewId()
-evtid_externalExecute = wx.NewEventType()
-evt_externalExecute = wx.PyEventBinder(evtid_externalExecute, 1)
-
 ### Globals
 mainFrame = None
-isExitDialog=False
-#: A list of top level windows excluding L{mainFrame} which are currently instantiated and which should be destroyed on exit.
-
-class ExternalExecuteEvent(wx.PyCommandEvent):
-	def __init__(self, func, args, kwargs, callback):
-		super(ExternalExecuteEvent, self).__init__(evtid_externalExecute, wx.ID_ANY)
-		self._func = func
-		self._args = args
-		self._kwargs = kwargs
-		self._callback = callback
-
-	def run(self):
-		ret = self._func(*self._args, **self._kwargs)
-		if self._callback:
-			queueHandler.registerGeneratorObject(self._callback_gen(ret))
-
-	def _callback_gen(self, ret):
-		for n in xrange(20):
-			yield None
-		self._callback(ret)
+isInMessageBox = False
 
 def getDocFilePath(fileName, localized=True):
 	if not getDocFilePath.rootPath:
@@ -100,15 +74,18 @@ class MainFrame(wx.Frame):
 
 	def __init__(self):
 		style = wx.DEFAULT_FRAME_STYLE ^ wx.MAXIMIZE_BOX ^ wx.MINIMIZE_BOX | wx.FRAME_NO_TASKBAR
-		super(MainFrame, self).__init__(None, wx.ID_ANY, appTitle, size=(1,1), style=style)
+		super(MainFrame, self).__init__(None, wx.ID_ANY, versionInfo.name, size=(1,1), style=style)
 		self.Bind(wx.EVT_CLOSE, self.onExitCommand)
-		self.Bind(evt_externalCommand, self.onExitCommand, id=wx.ID_EXIT)
-		self.Bind(evt_externalCommand, self.onShowGuiCommand, id=id_showGuiCommand)
-		self.Bind(evt_externalExecute,lambda evt: evt.run())
 		self.sysTrayIcon = SysTrayIcon(self)
 		# This makes Windows return to the previous foreground window and also seems to allow NVDA to be brought to the foreground.
 		self.Show()
 		self.Hide()
+		if winUser.isWindowVisible(self.Handle):
+			# HACK: Work around a wx bug where Hide() doesn't actually hide the window,
+			# but IsShown() returns False and Hide() again doesn't fix it.
+			# This seems to happen if the call takes too long.
+			self.Show()
+			self.Hide()
 
 	def Destroy(self):
 		self.sysTrayIcon.Destroy()
@@ -134,7 +111,7 @@ class MainFrame(wx.Frame):
 			self.Show()
 			self.Hide()
 
-	def onShowGuiCommand(self,evt):
+	def showGui(self):
 		# The menu pops up at the location of the mouse, which means it pops up at an unpredictable location.
 		# Therefore, move the mouse to the centre of the screen so that the menu will always pop up there.
 		left, top, width, height = api.getDesktopObject().location
@@ -155,18 +132,16 @@ class MainFrame(wx.Frame):
 			config.save()
 			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("configuration saved"))
 		except:
-			self.prePopup()
-			d = wx.MessageDialog(self,_("Could not save configuration - probably read only file system"),_("Error"),style=wx.OK | wx.ICON_ERROR)
-			d.ShowModal()
-			d.Destroy()
-			self.postPopup()
+			messageBox(_("Could not save configuration - probably read only file system"),_("Error"),wx.OK | wx.ICON_ERROR)
 
 	def _popupSettingsDialog(self, dialog, *args, **kwargs):
+		if isInMessageBox:
+			return
 		self.prePopup()
 		try:
 			dialog(self, *args, **kwargs).Show()
 		except SettingsDialog.MultiInstanceError:
-			wx.MessageDialog(self,_("Please close  the other NVDA settings dialog first"),_("Error"),style=wx.OK | wx.ICON_ERROR).ShowModal()
+			messageBox(_("Please close  the other NVDA settings dialog first"),_("Error"),style=wx.OK | wx.ICON_ERROR)
 		self.postPopup()
 
 	def onDefaultDictionaryCommand(self,evt):
@@ -179,17 +154,12 @@ class MainFrame(wx.Frame):
 		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
 
 	def onExitCommand(self, evt):
-		global isExitDialog
 		canExit=False
 		if config.conf["general"]["askToExit"]:
-			self.prePopup()
-			isExitDialog=True
-			d = wx.MessageDialog(self, _("Are you sure you want to quit NVDA?"), _("Exit NVDA"), wx.YES|wx.NO|wx.ICON_WARNING)
-			if d.ShowModal() == wx.ID_YES:
+			if isInMessageBox:
+				return
+			if messageBox(_("Are you sure you want to quit NVDA?"), _("Exit NVDA"), wx.YES_NO|wx.ICON_WARNING) == wx.YES:
 				canExit=True
-			isExitDialog=False
-			d.Destroy()
-			self.postPopup()
 		else:
 			canExit=True
 		if canExit:
@@ -219,21 +189,17 @@ class MainFrame(wx.Frame):
 	def onObjectPresentationCommand(self,evt):
 		self._popupSettingsDialog(ObjectPresentationDialog)
 
-	def onVirtualBuffersCommand(self,evt):
-		self._popupSettingsDialog(VirtualBuffersDialog)
+	def onBrowseModeCommand(self,evt):
+		self._popupSettingsDialog(BrowseModeDialog)
 
 	def onDocumentFormattingCommand(self,evt):
 		self._popupSettingsDialog(DocumentFormattingDialog)
 
+	def onSpeechSymbolsCommand(self, evt):
+		self._popupSettingsDialog(SpeechSymbolsDialog)
+
 	def onAboutCommand(self,evt):
-		try:
-			self.prePopup()
-			d = wx.MessageDialog(self, versionInfo.aboutMessage, _("About NVDA"), wx.OK)
-			d.ShowModal()
-			d.Destroy()
-			self.postPopup()
-		except:
-			log.error("gui.mainFrame.onAbout", exc_info=True)
+		messageBox(versionInfo.aboutMessage, _("About NVDA"), wx.OK)
 
 	def onViewLogCommand(self, evt):
 		logViewer.activate()
@@ -264,7 +230,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 	def __init__(self, frame):
 		super(SysTrayIcon, self).__init__()
 		icon=wx.Icon(ICON_PATH,wx.BITMAP_TYPE_ICO)
-		self.SetIcon(icon, appTitle)
+		self.SetIcon(icon, versionInfo.name)
 
 		self.menu=wx.Menu()
 		menu_preferences=wx.Menu()
@@ -284,8 +250,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onReviewCursorCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Object presentation..."),_("Change reporting of objects")) 
 		self.Bind(wx.EVT_MENU, frame.onObjectPresentationCommand, item)
-		item = menu_preferences.Append(wx.ID_ANY,_("Virtual &buffers..."),_("Change virtual buffers specific settings")) 
-		self.Bind(wx.EVT_MENU, frame.onVirtualBuffersCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("&Browse mode..."),_("Change virtual buffers specific settings")) 
+		self.Bind(wx.EVT_MENU, frame.onBrowseModeCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("Document &formatting..."),_("Change Settings of document properties")) 
 		self.Bind(wx.EVT_MENU, frame.onDocumentFormattingCommand, item)
 		subMenu_speechDicts = wx.Menu()
@@ -297,6 +263,9 @@ class SysTrayIcon(wx.TaskBarIcon):
 		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		menu_preferences.AppendMenu(wx.ID_ANY,_("Speech &dictionaries"),subMenu_speechDicts)
+		if not globalVars.appArgs.secure:
+			item = menu_preferences.Append(wx.ID_ANY, _("&Punctuation/symbol pronunciation..."))
+			self.Bind(wx.EVT_MENU, frame.onSpeechSymbolsCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
 
 		menu_tools = wx.Menu()
@@ -367,25 +336,56 @@ def terminate():
 	mainFrame.Destroy()
 
 def showGui():
- 	wx.PostEvent(mainFrame, ExternalCommandEvent(id_showGuiCommand))
+ 	wx.CallAfter(mainFrame.showGui)
 
 def quit():
-	global isExitDialog
-	if not isExitDialog:
-		wx.PostEvent(mainFrame, ExternalCommandEvent(wx.ID_EXIT))
+	wx.CallAfter(mainFrame.onExitCommand, None)
 
-def execute(func, callback=None, *args, **kwargs):
-	"""Execute a function in the GUI thread.
-	This should be used when scripts need to interact with the user via the GUI.
-	For example, a frame or dialog can be created and this function can then be used to execute its Show method.
-	@param func: The function to execute.
-	@type func: callable
-	@param callback: A function to call in the main thread when C{func} returns. The function will be passed the return value as its only argument.
+def messageBox(message, caption=wx.MessageBoxCaptionStr, style=wx.OK | wx.CENTER, parent=None):
+	"""Display a message dialog.
+	This should be used for all message dialogs
+	rather than using C{wx.MessageDialog} and C{wx.MessageBox} directly.
+	@param message: The message text.
+	@type message: str
+	@param caption: The caption (title) of the dialog.
+	@type caption: str
+	@param style: Same as for wx.MessageBox.
+	@type style: int
+	@param parent: The parent window (optional).
+	@type parent: C{wx.Window}
+	@return: Same as for wx.MessageBox.
+	@rtype: int
+	"""
+	global isInMessageBox
+	wasAlready = isInMessageBox
+	isInMessageBox = True
+	if not parent:
+		mainFrame.prePopup()
+	res = wx.MessageBox(message, caption, style, parent or mainFrame)
+	if not parent:
+		mainFrame.postPopup()
+	if not wasAlready:
+		isInMessageBox = False
+	return res
+
+def runScriptModalDialog(dialog, callback=None):
+	"""Run a modal dialog from a script.
+	This will not block the caller,
+	but will instead call C{callback} (if provided) with the result from the dialog.
+	The dialog will be destroyed once the callback has returned.
+	@param dialog: The dialog to show.
+	@type dialog: C{wx.Dialog}
+	@param callback: The optional callable to call with the result from the dialog.
 	@type callback: callable
-	@param args: Arguments for the function.
-	@param kwargs: Keyword arguments for the function.
-"""
-	wx.PostEvent(mainFrame, ExternalExecuteEvent(func, args, kwargs, callback))
+	"""
+	def run():
+		mainFrame.prePopup()
+		res = dialog.ShowModal()
+		mainFrame.postPopup()
+		if callback:
+			callback(res)
+		dialog.Destroy()
+	wx.CallAfter(run)
 
 class WelcomeDialog(wx.Dialog):
 	"""The NVDA welcome dialog.

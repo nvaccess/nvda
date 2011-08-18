@@ -1,0 +1,111 @@
+﻿#locale/de/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access, Inc.
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# Sonderzeichen	Regulärer Ausdruck
+# Satzzeichen
+. Satzende	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! Satzende	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? Satzende	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+
+# Satzzeichen für Phrasen
+; Satzende	(?<=[^\s;]);(?=\s|$)
+: Satzende	(?<=[^\s:]):(?=\s|$)
+
+# Weitere
+decimal point	(?<=\d)\,(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
+
+symbols:
+# Identifizierungszeichen	Ersetzungen[[	Ebene][	Bereich]][	# Angezeigter Name]
+
+# Komplexe Symbole
+. Satzende	Punkt	all	always
+! Satzende	Ausrufezeichen	all	always
+? Satzende	Fragezeichen	all	always
+; Satzzeichen für Phrasen	Semikolon	most	always
+: Satzzeichen für Phrasen	Doppelpunkt	most	always
+decimal point		none	always
+in-word '	Apostroph	all	norep
+negative number	Minus	none	norep
+
+# Unsichtbare Zeichen
+\0	leer	char # Null
+\t	Tabulator
+\n	Zeilenumbruch	char
+\f	Seitenumbruch	none
+\r	Neue Zeile	char
+ 	Leerzeichen	char
+ 	Geschütztes Leerzeichen	char
+
+# Standardsymbole und -satzzeichen
+!	Ausrufezeichen	all
+"	Anführungszeichen	most
+\#	Nummernzeichen	most
+§	Paragraf	some
+$	Dollar	all	norep
+£	Pfund	all	norep
+¥	Yen	all	norep
+€	Euro	all	norep
+¢	Cent	all	norep
+%	Prozent	some
+&	Und	some
+'	Apostroph	all
+(	runde Klammer auf	most
+)	runde Klammer zu	most
+*	Stern	most
++	Pluszeichen	most
+,	Komma	all	always
+-	Bindestrich	most
+.	Punkt	some
+/	Schrägstrich	some
+:	Doppelpunkt	most
+;	Semikolon	most
+<	Kleinerzeichen	most
+>	Größerzeichen	most
+=	Gleichheitszeichen	most
+?	Fragezeichen	all
+@	Klammeraffe	some
+[	eckige Klammer auf	most
+]	eckige Klammer zu	most
+\\	Backslash	most
+^	Dach	most
+_	Unterstrich	most
+`	Apostroph	most
+{	geschweifte Klammer auf	most
+}	geschweifte Klammer zu	most
+|	senkrechter Strich	most
+~	Tilde	most
+°	Grad	most
+
+# Weitere Zeichen
+•	sternförmiges Aufzählungszeichen	some
+Þ	pfeilförmiges Aufzählungszeichen	some
+…	Punkt Punkt Punkt	all	always
+...	Punkt Punkt Punkt	all	always
+	rundes Aufzählungszeichen	some
+“	typografisches Anführungszeichen oben	most
+”	typografisches Anführungszeichen unten	most
+‘	Englisches Anführungszeichen oben 	most
+’	Englisches Anführungszeichen unten	most
+«	doppelt gewinkelte Klammer zu	most
+»	doppelt gewinkelte Klammer auf	most
+–	Strich	most
+—	Gedankenstrich	most
+●	Kreis	most
+¨	Trema	most
+µ	My	most
+¹	hoch gestellte Eins	some
+²	hoch gestellte Zwei	some
+³	hoch gestellte Drei	some
+®	Eingetragenes Warenzeichen	some
+™	Eingetragenes Warenzeichen	some
+©	Copyright	some
+±	Plus Minus	some
+×	mal	some
+÷	Divisionszeichen	some
+‏	Pfeil nach links	char
+‎	Pfeil nach rechts	char

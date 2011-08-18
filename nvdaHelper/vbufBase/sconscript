@@ -8,7 +8,6 @@ vbufBaseStaticLib=env.StaticLibrary(
 	source=[
 		"storage.cpp",
 		"utils.cpp",
-		"lock.cpp",
 		"backend.cpp",
 		remoteLib[1] if 'symbols' not in env['nvdaHelperDebugFlags'] else remoteLib[2],
 	],

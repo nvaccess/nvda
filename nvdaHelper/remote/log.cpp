@@ -12,6 +12,7 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+#include <crtdbg.h>
 #include "nvdaControllerInternal.h"
 #include "log.h"
 
@@ -31,7 +32,9 @@ int NVDALogCrtReportHook(int reportType,const wchar_t *message,int *returnValue)
 		doDebugBreak=true;
 	}
 	logMessage(level,message);
-	if(doDebugBreak) _CrtDbgBreak();
+	if(doDebugBreak&&IsDebuggerPresent()) {
+		_CrtDbgBreak();
+	}
 	*returnValue=0;
 	return true;
 }

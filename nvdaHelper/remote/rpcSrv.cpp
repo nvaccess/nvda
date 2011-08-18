@@ -14,14 +14,16 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <cstdio>
 #include <sstream>
-#include <windows.h>
+#include <rpc.h>
 #include "nvdaControllerInternal.h"
 #include "log.h"
 #include "vbufRemote.h"
 #include "displayModelRemote.h"
+#include "nvdaInProcUtils.h"
 #include "rpcSrv.h"
 
 RPC_IF_HANDLE availableInterfaces[]={
+	nvdaInProcUtils_NvdaInProcUtils_v1_0_s_ifspec,
 	displayModelRemote_DisplayModel_v1_0_s_ifspec,
 	VBufRemote_VBuf_v2_0_s_ifspec,
 };

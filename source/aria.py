@@ -7,6 +7,8 @@
 import controlTypes
 
 ariaRolesToNVDARoles={
+	"description":controlTypes.ROLE_STATICTEXT,
+	"search":controlTypes.ROLE_SECTION,
 	"alert":controlTypes.ROLE_ALERT,
 	"alertdialog":controlTypes.ROLE_DIALOG,
 	"application":controlTypes.ROLE_APPLICATION,
@@ -26,7 +28,7 @@ ariaRolesToNVDARoles={
 	"img":controlTypes.ROLE_GRAPHIC,
 	"link":controlTypes.ROLE_LINK,
 	"list":controlTypes.ROLE_LIST,
-	"listbox":controlTypes.ROLE_LISTITEM,
+	"listbox":controlTypes.ROLE_LIST,
 	"listitem":controlTypes.ROLE_LISTITEM,
 	"menu":controlTypes.ROLE_POPUPMENU,
 	"menubar":controlTypes.ROLE_MENUBAR,
@@ -55,6 +57,13 @@ ariaRolesToNVDARoles={
 	"treegrid":controlTypes.ROLE_TREEVIEW,
 	"treeitem":controlTypes.ROLE_TREEVIEWITEM,
 }
+
+ariaSortValuesToNVDAStates={
+	'descending':controlTypes.STATE_SORTED_DESCENDING,
+	'ascending':controlTypes.STATE_SORTED_ASCENDING,
+	'other':controlTypes.STATE_SORTED,
+}
+
 
 landmarkRoles = {
 	"banner": _("banner"),

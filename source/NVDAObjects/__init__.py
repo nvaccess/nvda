@@ -530,10 +530,13 @@ class NVDAObject(baseObject.ScriptableObject):
 			return self.presType_layout
 		name = self.name
 		description = self.description
-		if not name and not description and role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_FORM,controlTypes.ROLE_TABLEBODY):
-			return self.presType_layout
-		if not name and not description and role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and not config.conf["documentFormatting"]["reportTables"]:
-			return self.presType_layout
+		if not name and not description:
+			if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_FORM,controlTypes.ROLE_TABLEBODY):
+				return self.presType_layout
+			if role == controlTypes.ROLE_TABLE and not config.conf["documentFormatting"]["reportTables"]:
+				return self.presType_layout
+			if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and (not config.conf["documentFormatting"]["reportTables"] or not config.conf["documentFormatting"]["reportTableCellCoords"]):
+				return self.presType_layout
 		if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN):
 			try:
 				table=self.table

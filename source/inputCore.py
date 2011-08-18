@@ -292,9 +292,11 @@ class InputManager(baseObject.AutoPropertyObject):
 		if log.isEnabledFor(log.IO) and not gesture.isModifier:
 			log.io("Input: %s" % gesture.logIdentifier)
 
-		if self.isInputHelpActive and not getattr(script, "bypassInputHelp", False):
-			queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture)
-			return
+		if self.isInputHelpActive:
+			bypass = getattr(script, "bypassInputHelp", False)
+			queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture, onlyLog=bypass)
+			if not bypass:
+				return
 
 		if gesture.isModifier:
 			raise NoInputGestureAction
@@ -310,7 +312,7 @@ class InputManager(baseObject.AutoPropertyObject):
 
 		raise NoInputGestureAction
 
-	def _handleInputHelp(self, gesture):
+	def _handleInputHelp(self, gesture, onlyLog=False):
 		textList = [gesture.displayName]
 		script = gesture.script
 		runScript = False
@@ -329,6 +331,8 @@ class InputManager(baseObject.AutoPropertyObject):
 					textList.append(desc)
 
 		log.info(logMsg)
+		if onlyLog:
+			return
 
 		import braille
 		braille.handler.message("\t\t".join(textList))
@@ -353,7 +357,10 @@ class InputManager(baseObject.AutoPropertyObject):
 		try:
 			self.localeGestureMap.load(os.path.join("locale", lang, "gestures.ini"))
 		except IOError:
-			log.debugWarning("No locale gesture map for language %s" % lang)
+			try:
+				self.localeGestureMap.load(os.path.join("locale", lang.split('_')[0], "gestures.ini"))
+			except IOError:
+				log.debugWarning("No locale gesture map for language %s" % lang)
 
 	def emulateGesture(self, gesture):
 		"""Convenience method to emulate a gesture.

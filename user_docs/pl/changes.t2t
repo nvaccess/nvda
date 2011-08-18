@@ -4,6 +4,30 @@ Co nowego w NVDA.
 %!includeconf: ../changes.t2tconf
 
 
+= 2011.2=
+
+== nowe funkcje ==
+- Zaimplementowano do programu mo¿liwoœæ fonetycznego przeliterowania konkretnego znaku przez dwukrotne wciœniêcie klawisza odczytu znaku. W przypadku jêzyka angielskiego jest to alfabet fonetyczny. Mo¿liwe jest tak¿e przeliterowanie konkretnego s³owa lób linii, przez trzykrotne wciœniêcie odpowiednich klawiszy poleceñ NVDA. (#55)
+- W poziomie przegl¹du mo¿na odczytaæ wiêcej tekstu, zw³aszcza w aplikacjach wypisuj¹cych go na ekran bezpoœrednio.
+- U¿ytkownik programu mo¿e ustawiæ poziom odczytywania znaków interpunkcyjnych i innych symboli. (#332)
+- Gdy znaki interpunkcyjne lób inne symbole wyst¹pi¹ jednoczeœnie wiêcej ni¿ 4 razy, odczytywana jest ich liczba. (#43)
+- Dodano tabelê dla Norweskiego oœmiopunktowego brajla komputerowego. (#1456)
+
+== Zmiany ==
+- Aby przesun¹æ karetkê systemow¹ do kursora przegl¹du, od teraz nale¿y wcisn¹æ dwukrotnie: w przypadku komputera PC NVDa+shift+minus numeryczny, w przypadku laptopa NVDA+shift+backspace. Zwalnia to nieco miejsca na klawiatórze. (#837)
+- Aby us³yszeæ wartoœci dziesiêtne i szesnastkowe dla znaku, wciœnij trzykrotnie komendê odczytu znaku. Dwukrotne jej wciœniêcie od teraz literuje znak.
+- Zaktualizowano syntezator mowy espeak do wersji 1.45.03. (#1465).
+
+== Poprawki ==
+Rozwijanie pul kombo w wirtualnych buforach zosta³o wymuszone przy pomocy skrótu nvda+spacja. Program w takim polu nie powruci automatycznie do trybu przegl¹dania. (#1386)
+- W dokumentach gecko i mshtml program renderuje poprawnie teksty jednowierszowe, które do tej pory by³y umieszczane w dwuch oddzielnych liniach. (#1378)
+- Gdy brajl jest zwi¹zany z kursorem przegl¹du, i gdy obiekt w hierarchii nawigacji przenosi siê do wirtualnego bufora jak strona www, wiadomoœæ w programie pocztowym, dokument pdf czy to rêcznie, czy to przez zmianê punktu uwagi, zawartoœæ bufora jest ju¿ wyœwietlana na monitorze brajlowskim. (#1306, #1307)
+- Niektóre znaki interpunkcyjne nie bêd¹ ju¿ odczytywane przez pewne syntezatory  gdy ich odczyt zostanie wy³¹czony. (#332)
+
+
+
+
+
 = 2011.1 =
 
 == nowe funkcje ==

@@ -17,11 +17,30 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <deque>
 #include <list>
 #include <set>
+#include <common/xml.h>
 #include "nvdaControllerInternal.h"
 #include "log.h"
 #include "displayModel.h"
 
 using namespace std;
+
+void displayModelChunk_t::generateXML(wstring& text) {
+	wstringstream s;
+	s<<L"<text";
+	s<<L" font-name=\""<<formatInfo.fontName<<L"\" ";
+	s<<L" font-size=\""<<formatInfo.fontSize<<L"pt\" ";
+	if(this->formatInfo.bold) s<<L" bold=\"true\"";
+	if(this->formatInfo.italic) s<<L" italic=\"true\"";
+	if(this->formatInfo.underline) s<<L" underline=\"true\"";
+	s<<L" color=\""<<this->formatInfo.color<<L"\"";
+	s<<L" background-color=\""<<this->formatInfo.backgroundColor<<L"\"";
+	s<<L">";
+	text.append(s.str());
+	for(wstring::iterator i=this->text.begin();i!=this->text.end();++i) {
+		appendCharToXML(*i,text);
+	}
+	text.append(L"</text>");
+}
 
 void displayModelChunk_t::truncate(int truncatePointX, BOOL truncateBefore) {
 	if(text.length()==0) return;
@@ -58,18 +77,19 @@ displayModel_t::~displayModel_t() {
 	}
 }
 
-int displayModel_t::getChunkCount() {
+size_t displayModel_t::getChunkCount() {
 	return chunksByYX.size();
 }
 
-void displayModel_t::insertChunk(const RECT& rect, int baselineFromTop, const wstring& text, int* characterEndXArray, const RECT* clippingRect) {
+void displayModel_t::insertChunk(const RECT& rect, int baselineFromTop, const wstring& text, int* characterEndXArray, const displayModelFormatInfo_t& formatInfo, const RECT* clippingRect) {
 	displayModelChunk_t* chunk=new displayModelChunk_t;
 	LOG_DEBUG(L"created new chunk at "<<chunk);
 	chunk->rect=rect;
 	chunk->baselineFromTop=baselineFromTop;
 	chunk->text=text;
+	chunk->formatInfo=formatInfo;
 	chunk->characterXArray.push_back(rect.left);
-	for(int i=0;i<(text.length()-1);++i) chunk->characterXArray.push_back(characterEndXArray[i]+rect.left); 
+	for(unsigned int i=0;i<(text.length()-1);++i) chunk->characterXArray.push_back(characterEndXArray[i]+rect.left); 
 	LOG_DEBUG(L"filled in chunk with rectangle from "<<rect.left<<L","<<rect.top<<L" to "<<rect.right<<L","<<rect.bottom<<L" with text of "<<text);
 	//If a clipping rect is specified, and the chunk falls outside the clipping rect
 	//Truncate the chunk so that it stays inside the clipping rect.
@@ -219,7 +239,7 @@ void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, B
 	}
 }
 
-void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitespace, const int minVerticalWhitespace, const bool stripOuterWhitespace, wstring& text, deque<RECT>& characterRects) {
+void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitespace, const int minVerticalWhitespace, const bool stripOuterWhitespace, bool useXML, wstring& text, deque<RECT>& characterRects) {
 	RECT tempRect;
 	wstring curLineText;
 	deque<RECT> curLineCharacterRects;
@@ -260,7 +280,11 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 			}
 			//Add space before this chunk if necessary
 			if(((chunk->rect.left-lastChunkRight)>=minHorizontalWhitespace)&&(lastChunkRight>rect.left||!stripOuterWhitespace)) {
-				curLineText+=L'\0';
+				if(useXML) {
+					curLineText+=L"<text> </text>";
+				} else {
+					curLineText+=L'\0';
+				}
 				tempRect.left=lastChunkRight;
 				tempRect.top=curLineBaseline-1;
 				tempRect.right=chunk->rect.left;
@@ -268,7 +292,11 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 				curLineCharacterRects.push_back(tempRect);
 			}
 			//Add text from this chunk to the current line
-			curLineText.append(chunk->text);
+			if(useXML) {
+				chunk->generateXML(curLineText);
+			} else {
+				curLineText.append(chunk->text);
+			}
 			//Copy the character X positions from this chunk  in to the current line
 			deque<int>::const_iterator cxaIt=chunk->characterXArray.begin();
 			while(cxaIt!=chunk->characterXArray.end()) {
@@ -286,7 +314,7 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 			if(((curLineMinTop-lastLineBottom)>=minVerticalWhitespace)&&(lastLineBottom>rect.top||!stripOuterWhitespace)) {
 				//There is space between this line and the last,
 				//Insert a blank line in between.
-				text+=L"\n";
+				text+=(useXML?L"<text>\n</text>":L"\n");
 				tempRect.left=rect.left;
 				tempRect.top=lastLineBottom;
 				tempRect.right=rect.right;
@@ -297,7 +325,7 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 			text.append(curLineText);
 			characterRects.insert(characterRects.end(),curLineCharacterRects.begin(),curLineCharacterRects.end());
 			//Add a linefeed to complete the line
-			text+=L"\n";
+			text+=(useXML?L"<text>\n</text>":L"\n");
 			tempRect.left=lastChunkRight;
 			tempRect.top=curLineBaseline-1;
 			tempRect.right=rect.right;
@@ -314,7 +342,7 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 	if(!stripOuterWhitespace&&(rect.bottom-lastLineBottom)>=minVerticalWhitespace) {
 		//There is a gap between the bottom of the final line and the bottom of the requested rectangle,
 		//So add a blank line.
-		text+=L"\n";
+		text+=(useXML?L"<text>\n</text>":L"\n");
 		tempRect.left=rect.left;
 		tempRect.top=lastLineBottom;
 		tempRect.right=rect.right;

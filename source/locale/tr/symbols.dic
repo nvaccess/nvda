@@ -1,15 +1,16 @@
 ﻿complexSymbols:
 # identifier	regexp
 # Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
-! sentence ending	(?<=[^\s!])\!(?=[\"')\s]|$)
-? sentence ending	(?<=[^\s?])\?(?=[\"')\s]|$)
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<=\d)\.(?=\d)
-in-word '	(?<=[^\W_])'
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -22,9 +23,10 @@ symbols:
 : phrase ending	ikinokta	most	always
 decimal point		none	always
 in-word '	apostrof	all	norep
+negative number	minus	none	norep
 
 # Whitespace
-\0	boş	char
+\0	boş	char	# null
 \t	sekme
 \n	yeni satır	char
 \f	sayfa geçişi	none
@@ -36,14 +38,12 @@ in-word '	apostrof	all	norep
 !	ünlem	all
 "	tırnak	most
 \#	diyez	most
-$	dolar	some
-£	paund	some
-€	euro	some
+$	dolar	all	norep
+£	paund	all	norep
+€	euro	all	norep
 %	yüzde	some
 &	ve	some
 '	apostrof	all
-’	tektırnak	all
-‘	tektırnak	all
 (	açparantez	most
 )	kapaparantez	most
 *	çarpı	most
@@ -52,7 +52,7 @@ $	dolar	some
 -	tire	most
 .	nokta	all
 /	bölü	some
-:	ikinokta	most
+:	ikinokta	most	norep
 ;	noktalıvirgül	most
 <	küçüktür	most
 >	büyüktür	most
@@ -61,7 +61,6 @@ $	dolar	some
 @	et	some
 [	aç köşeli parantez	most
 ]	kapa köşeli parantez	most
-"	tırnak	most
 \\	tersbölü	most
 ^	düzeltme imi	most
 _	alt çizgi	most
@@ -77,7 +76,57 @@ _	alt çizgi	most
 	madde imi	some
 “	tırnakaç	most
 ”	tırnakkapa	most
-–	en dash	most
+‘	tektırnakaç	most
+’	tektırnakkapa	most
+–	ORTA TİRE	most
 —	uzuntire	most
 ●	yıldız	most
 ¨	diaeresis	most
+���	soldan sağa işareti	char
+���	sağdan sola işareti	char
+¡	ters ünlem	most
+¦	kırık çizgi	most
+«	çift kancalı parantezaç	most
+¸	cedila	most
+»	çift kancalı parantez kapa	most
+¿	ters soru	most
+‣	üçgen madde imi	most
+§	paragraf	most
+÷	bölü	some
+×	çarpı	some
+°	derece	some
+¢	sens	some
+¤	sembol	some
+−	eksi	some
+±	artı eksi	some
+¼	bir bölü dört	some
+½	bir bölü iki	some
+¾	üç bölü dört	some
+¬	seçimli çizgi	some
+æ	ai	some
+þ	şe	some
+™	marka	some
+®	kayıtlı	some
+©	kopyahakkı	some
+¥	yen	some
+√	ve	some
+∞	sekiz	some
+α	alfa	some
+β	beta	some
+γ	gamma	some
+δ	delta	some
+ε	epsilon	some
+ζ	zeta	some
+η	eta	some
+θ	theta	some
+κ	kapa	some
+λ	lambda	some
+μ	mu	some
+ν	nu	some
+π	pi	some
+ρ	ro	some
+σ	sigma	some
+τ	tao	some
+υ	upsilon	some
+φ	fi	some
+ω	omega	some

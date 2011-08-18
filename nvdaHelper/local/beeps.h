@@ -17,6 +17,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include "nvdaHelperLocal.h"
 
-DLLEXPORT unsigned generateBeep(short* buf, const float hz, const unsigned length, const unsigned char left=50, const unsigned char right = 50);
+unsigned generateBeep(short* buf, const float hz, const unsigned length, const unsigned char left=50, const unsigned char right = 50);
 
 #endif

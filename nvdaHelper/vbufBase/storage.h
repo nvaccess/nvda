@@ -286,6 +286,13 @@ class VBufStorage_fieldNode_t {
 	void setIsBlock(bool isBlock);
 
 /**
+ * Getter for isBlock
+ */
+	bool getIsBlock() {
+		return isBlock;
+	}
+
+/**
  * Retreave the length of this node.
  */
 	int getLength();
@@ -378,6 +385,11 @@ class VBufStorage_buffer_t {
 	VBufStorage_fieldNode_t* rootNode;
 
 /**
+ * Holds pointers to all nodes in the buffer
+ */
+	std::set<VBufStorage_fieldNode_t*> nodes;
+
+/**
  * holds pointers to all control field nodes in this buffer, searchable by  the control's unique identifier.
  */
 	std::map<VBufStorage_controlFieldNodeIdentifier_t,VBufStorage_controlFieldNode_t*> controlFieldNodesByIdentifier;
@@ -403,13 +415,19 @@ class VBufStorage_buffer_t {
  * @param previous the field already in the buffer that the inserted node will come directly after, note previous's parent will always be used over the parent argument.
  * @param node the node being inserted.
  */ 
-	void insertNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node);
+	bool insertNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node);
 
 /**
  * disassociates the given node and its descendants from this buffer and deletes the node and its descendants.
  * @param node the node you wish to delete.
  */
 	void deleteSubtree(VBufStorage_fieldNode_t* node);
+
+/**
+ * disassociates the given node from this buffer and deletes the node.
+ * @param node the node you wish to delete.
+ */
+	void deleteNode(VBufStorage_fieldNode_t* node);
 
 	friend class VBufStorage_fieldNode_t;
 	friend class VBufStorage_controlFieldNode_t;
@@ -462,19 +480,20 @@ class VBufStorage_buffer_t {
  * Removes the given nodes from the buffer and then merges the content of the new buffers in the removed node's position. It also tries to keep the selection relative to the control field it was in before the replacement.
  * @param m the map of nodes to buffers 
  */
-	bool replaceSubtrees(const std::map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>& m);
+	bool replaceSubtrees(std::map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>& m);
 
 /**
  * disassociates from this buffer, and deletes, the given field and its descendants.
  * @param node the node you wish to remove.
+	* @param removeDescedants true if descendants should be removed, false otherwise.
  * @return true if the node was removed, false otherwise.
  */
-	bool removeFieldNode(VBufStorage_fieldNode_t* node);
+	bool removeFieldNode(VBufStorage_fieldNode_t* node, bool removeDescendants=true);
 
 /*
  * Removes all nodes from the buffer.
  */
-	bool clearBuffer();
+	void clearBuffer();
 
 /**
  * Calculates the start and end character offsets of the given node in the buffer.

@@ -141,6 +141,7 @@ setup(
 			"description":"NVDA application",
 			"product_version":version,
 			"copyright":copyright,
+			"company_name":publisher,
 		},
 		{
 			"script": "nvda_slave.pyw",
@@ -149,6 +150,7 @@ setup(
 			"description": "NVDA slave",
 			"product_version": version,
 			"copyright": copyright,
+			"company_name": publisher,
 		},
 	],
 	service=[{
@@ -158,6 +160,7 @@ setup(
 		"description": "NVDA service",
 		"product_version": version,
 		"copyright": copyright,
+		"company_name": publisher,
 		"uac_info": ("requireAdministrator", False),
 		"cmdline_style": "pywin32",
 	}],
@@ -172,8 +175,8 @@ setup(
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),
 		("documentation", ['../copying.txt', '../contributors.txt']),
-		("lib", glob("lib/*.dll") + glob("lib/*.pdb")),
-		("lib64", glob("lib64/*.dll") + glob("lib64/*.exe") + glob("lib64/*.pdb")),
+		("lib", glob("lib/*.dll")),
+		("lib64", glob("lib64/*.dll") + glob("lib64/*.exe")),
 		("comInterfaces", glob("comInterfaces/*%s"%compiledModExtention)),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),

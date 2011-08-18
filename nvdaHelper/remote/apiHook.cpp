@@ -14,6 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <iostream>
 #include <set>
+#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include <minHook/newMinHook.h>
 #include "nvdaControllerInternal.h"
@@ -64,14 +65,14 @@ void* apiHook_hookFunction(const char* moduleName, const char* functionName, voi
 	return origFunc;
 }
 
-BOOL apiHook_enableHooks() {
+bool apiHook_enableHooks() {
 	int res;
 	res=MH_EnableAllHooks();
 	nhAssert(res==MH_OK);
 	return TRUE;
 }
 
-BOOL apiHook_terminate() {
+bool apiHook_terminate() {
 	int res;
 	res=MH_DisableAllHooks();
 	nhAssert(res==MH_OK);

@@ -1,0 +1,207 @@
+﻿#locale/fi/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+! sentence ending	(?<=[^\s!])(\s\!|\!)(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s!])(\s\?|\?)(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s!])(\s\;|\;)(?=[\"'”’)\s]|$)
+: phrase ending	(?<=[^\s!])(\s\:|\:)(?=[\"'”’)\s]|$)
+# Others
+decimal point	(?<=\d)\,(?=\d)
+percent	(?<=\d)\ ?\%(?!\w)
+dates	(((0?[1-9]|[12]\d|3[01])\.(0?[13578]|1[02])\.((1[6-9]|[2-9]\d)?\d{2}|\d))|((0?[1-9]|[12]\d|30)\.(0?[13456789]|1[012])\.((1[6-9]|[2-9]\d)?\d{2}|\d))|((0?[1-9]|1\d|2[0-8])\.]0?2\.]((1[6-9]|[2-9]\d)?\d{2}|\d))|(29\.0?2\.((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00|[048])))
+euro	^(0|(([1-9]{1}|[1-9]{1}[0-9]{1}|[1-9]{1}[0-9]{2}){1}(\ [0-9]{3}){0,})),(([0-9]{2})|\-\-)([\ ]{1})(€){1}$
+thousands	(^(((\d)|(\d\d)|(\d\d\d))(\xA0|\x20))*((\d)|(\d\d)|(\d\d\d))([,.]\d*)?$)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	piste	all	always
+! sentence ending	huuto	all	always
+? sentence ending	kysymys	all	always
+; phrase ending	puolipiste	most	always
+: phrase ending	kaksoispiste	most	always
+decimal point		none	always
+in-word '	heitto	all	norep
+in-word š	sh	all	norep
+negative number	miinus	none	norep
+percent	prosenttia	none	norep
+dates	 	all	always
+euro	euroa	all	norep
+thousands	 	all	always
+
+# Whitespace
+\0	tyhjä	char	# nollamerkki
+\t	sisennys
+\n	rivinvaihto	char
+\f	sivunvaihto	none
+\r	rivin loppu	char
+ 	väli	char
+ 	väli	char	# sitova välilyönti
+
+# Standard punctuation/symbols
+!	huuto	all
+"	lainaus	most	norep
+\#	risu	some
+$	dollari	all	norep
+£	punta	all	norep
+€	euro	all	norep
+%	prosentti	some
+&	et	some
+'	heitto	all
+(	alkusulku	most
+)	loppusulku	most
+*	tähti	some
++	plus	some
+,	pilkku	all	always
+-	viiva	most
+.	piste	some
+/	kautta	some
+:	kaksoispiste	most
+;	puolipiste	most
+<	pienempi	most
+>	suurempi	most
+=	yhtä suuri	some
+?	kysymys	all
+@	ät	some
+[	alkuhaka	most
+]	loppuhaka	most
+\\	keno	some
+^	hattu	most
+_	alaviiva	most
+`	gravis	all
+{	alkuaalto	most
+}	loppuaalto	most
+|	pysty	most
+~	tilde	most
+
+# Other characters
+•	luettelomerkki	most
+…	piste piste piste	all	always
+...	piste piste piste	all	always
+	luettelomerkki	most
+“	lainaus	most
+”	lainaus	most
+‘	heitto	most
+’	heitto	most
+–	pitkä viiva	most
+—	pitempi viiva	most
+●	tähti	some
+¨	treema	most
+‎	nuoli vasemmalta oikealle	char
+‏	nuoli oikealta vasemmalle	char
+­	pehmeä tavuviiva	all
+█	sitova viiva	all
+»	kulmalainaus oikealle	all
+→	nuoli oikealle	all
+−	miinus	some
+►	musta osoitin oikealle	all
+⇒	kaksoisnuoli oikealle	all
+♥	hertta	all
+♡	valkoinen hertta	all
+♧	valkoinen risti	all
+♢	valkoinen ruutu	all
+○	valkoinen ympyrä	all
+♤	valkoinen pata	all
+☆	valkoinen tähti	all
+♠	musta pata	all
+♣	musta risti all
+♦	musta ruutu	all
+★	musta tähti	all
+¡	käänteinen huuto	all
+¦	rikkinäinen palkki	most
+©	copyright	most
+«	kaksoiskulmasulku	most
+¿	käänteinen kysymys	all
+†	risti	most
+‡	kaksoisristi	most
+☼	valkoinen aurinko säteineen	most
+ǝ	e ylösalaisin	some
+ɐ	a ylösalaisin	some
+ɯ	m ylösalaisin	some
+ʇ	t ylösalaisin	some
+ʍ	w ylösalaisin	some
+ʎ	y ylösalaisin	some
+˜	pieni tilde	most
+þ	thorn	some
+æ	aa ee	some
+‰	promille	most
+§	pykälä	some
+÷	jakomerkki	some
+×	kertomerkki	some
+°	aste	some
+¢	sentti	some
+¤	valuuttasymboli	some
+≠	eri suuri kuin	some
+∞	ääretön	some
+√	neliöjuuri	some
+½	puolikas	some
+⅔	kaksi kolmasosaa	some
+⅓	yksi kolmasosa	some
+±	plus miinus	some
+¼	yksi neljäsosa	some
+₨	rupia	some
+™	tavaramerkki	some
+®	rekisteröity	some
+©	copyright	some
+¥	jeni	some
+Α	iso alfa	some
+Β	iso beetta	some
+Γ	iso gamma	some
+Δ	iso delta	some
+Ε	iso epsilon	some
+Ζ	iso zeetta	some
+Η	iso eetta	some
+Θ	iso theetta	some
+Ι	iso joota	some
+Κ	iso kappa	some
+Λ	iso lambda	some
+Μ	iso myy	some
+Ν	iso nyy	some
+Ξ	iso ksii	some
+Ο	iso omikron	some
+Π	iso pii	some
+Ρ	iso roo	some
+Σ	iso sigma	some
+Τ	iso tau	some
+Υ	iso ypsilon	some
+Φ	iso fii	some
+Χ	iso kii	some
+Ψ	iso psii	some
+Ω	iso omega	some
+α	alfa	some
+β	beetta	some
+γ	gamma	some
+δ	delta	some
+ε	epsilon	some
+ζ	zeetta	some
+η	eetta	some
+θ	theetta	some
+ι	joota	some
+κ	kappa	some
+λ	lambda	some
+μ	myy	some
+ν	nyy	some
+ξ	ksii	some
+ο	omikron	some
+π	pii	some
+ρ	roo	some
+ς	loppu sigma	some
+σ	sigma	some
+τ	tau	some
+υ	ypsilon	some
+φ	fii	some
+χ	kii	some
+ψ	psii	some
+ω	omega	some
+☺	valkoiset hymyilevät kasvot	most
+☂	sateenvarjo	most
+♩	neljäsosanuotti	some
+♪	kahdeksasosanuotti	some
+♫	varrellinen kahdeksasosanuotti	some

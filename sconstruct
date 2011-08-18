@@ -68,17 +68,23 @@ def keyCommandsDocTool(env):
 	)
 	env['BUILDERS']['keyCommandsDoc']=kcdBuilder
 
-keyCommandsLangBlacklist=set(['ja'])
+keyCommandsLangBlacklist=set([])
 
 vars = Variables()
 vars.Add("version", "The version of this build", versionInfo.version)
 vars.Add(BoolVariable("release", "Whether this is a release version", False))
-vars.Add("publisher", "The publisher of this build", "unknown")
+vars.Add("publisher", "The publisher of this build", versionInfo.publisher)
 vars.Add(PathVariable("certFile", "The certificate file with which to sign executables", "",
 	lambda key, val, env: not val or PathVariable.PathIsFile(key, val, env)))
 vars.Add("certPassword", "The password for the private key in the signing certificate", "")
+vars.Add("certTimestampServer", "The URL of the timestamping server to use to timestamp authenticode signatures", "")
 vars.Add(PathVariable("outputDir", "The directory where the final built archives and such will be placed", "output",PathVariable.PathIsDirCreate))
 vars.Add(ListVariable('targetArchitectures','Which architectures should NVDA support?','all',['x86','x86_64']))
+vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'symbols', ["symbols","debugCRT","RTC","noOptimize"]))
+vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in xrange(60)]))
+
+#Base environment for this and sub sconscripts
+env = Environment(variables=vars,tools=["textfile","gettext","t2t",keyCommandsDocTool,'doxygen'])
 
 #Check for any unknown variables
 unknown=vars.UnknownVariables().keys()
@@ -86,11 +92,12 @@ if len(unknown)>0:
 	print "Unknown commandline variables: %s"%unknown
 	Exit(1)
 
-env = Environment(variables=vars,tools=["textfile","gettext","t2t",keyCommandsDocTool,'doxygen'])
 version = env["version"]
 release = env["release"]
+publisher = env["publisher"]
 certFile = env["certFile"]
 certPassword = env["certPassword"]
+certTimestampServer = env["certTimestampServer"]
 userDocsDir=Dir('user_docs')
 sourceDir = Dir("source")
 Export('sourceDir')
@@ -98,6 +105,8 @@ clientDir=Dir('extras/controllerClient')
 Export('clientDir')
 sourceLibDir=sourceDir.Dir('lib')
 Export('sourceLibDir')
+sourceTypelibDir=sourceDir.Dir('typelibs')
+Export('sourceTypelibDir')
 sourceLibDir64=sourceDir.Dir('lib64')
 Export('sourceLibDir64')
 buildDir = Dir("build")
@@ -120,12 +129,21 @@ for lang in os.listdir(userDocsDir.path):
 	for ug in glob(os.path.join(userDocsDir.path,lang,'userGuide.t2t')):
 		env.keyCommandsDoc(File(ug).File('keyCommands.t2t'),ug)
 
+t2tBuildConf = env.Textfile(userDocsDir.File("build.t2tConf"), [
+	# We need to do this one as PostProc so it gets converted for the title.
+	r"%!PostProc: NVDA_VERSION {}".format(version),
+	r"%!PreProc: NVDA_URL {}".format(versionInfo.url),
+	r"%!PreProc: NVDA_COPYRIGHT_YEARS {}".format(versionInfo.copyrightYears),
+])
+
 #Allow all t2t files to be converted to html in user_docs
 #As we use scons Glob this will also include the keyCommands.t2t files
 for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
-	#txt2tags can not be run in parallel so make sure scons knows this
 	htmlFile=env.txt2tags(t2tFile)
+	#txt2tags can not be run in parallel so make sure scons knows this
 	env.SideEffect('_txt2tags',htmlFile)
+	# All of our t2t files require build.t2tConf.
+	env.Depends(htmlFile,t2tBuildConf)
 #And also build the developer guide -- which must be moved at some point
 htmlFile=env.txt2tags('developerGuide.t2t')
 env.SideEffect('_txt2tags',htmlFile)
@@ -149,7 +167,10 @@ def NVDADistGenerator(target, source, env, for_signature):
 	# Make the NVDA build use the specified version.
 	# We don't do this using normal scons mechanisms because we want it to be cleaned up immediately after this builder
 	# and py2exe will cause bytecode files to be created for it which scons doesn't know about.
-	action = [lambda target, source, env: file(buildVersionFn, "w").write('version = "%s"' % version)]
+	action = [lambda target, source, env: file(buildVersionFn, "w").write(
+		'version = {version!r}\r\n'
+		'publisher = {publisher!r}\r\n'
+		.format(version=version, publisher=publisher))]
 
 	buildCmd = ["cd", source[0].path, "&&",
 		sys.executable]
@@ -173,20 +194,31 @@ def NVDADistGenerator(target, source, env, for_signature):
 	return action
 env["BUILDERS"]["NVDADist"] = Builder(generator=NVDADistGenerator, target_factory=Dir)
 
-# A builder to generate a 7-Zip self-extracting archive.
-def SzSfxGenerator(target, source, env, for_signature):
+# A builder to generate an archive with 7-Zip.
+def SzArchiveGenerator(target, source, env, for_signature):
 	cmd = []
 	relativeToSourceDir = env.get("relativeToSourceDir", False)
 	if relativeToSourceDir:
 		cmd.extend(("cd", source[0], "&&"))
-	cmd.extend((sz, "a", "-mx=9", "-sfx7z.sfx", target[0].abspath, "." if relativeToSourceDir else "$SOURCES"))
+	cmd.extend((sz, "a", "-mx=9"))
+	ext = os.path.splitext(str(target[0]))[1]
+	if ext == ".7z":
+		cmd.append("-t7z")
+	elif ext == ".zip":
+		cmd.append("-tzip")
+	elif ext == ".exe":
+		cmd.append("-sfx7z.sfx")
+	cmd.extend((target[0].abspath,
+		"." if relativeToSourceDir else "$SOURCES"))
 	return [cmd]
-env["BUILDERS"]["SzSfx"] = Builder(generator=SzSfxGenerator)
+env["BUILDERS"]["SzArchive"] = Builder(generator=SzArchiveGenerator)
 
 # An action to sign an executable with certFile.
 signExec = [signtool, "sign", "/f", certFile]
 if certPassword:
 	signExec.extend(("/p", certPassword))
+if certTimestampServer:
+	signExec.extend(("/t", certTimestampServer))
 signExec.append("$TARGET")
 
 portableDist = env.NVDADist("dist", sourceDir, uiAccess=False)
@@ -204,7 +236,7 @@ env.Clean(installerDist, installerDist)
 # Clean the intermediate build directory.
 env.Clean([portableDist, installerDist], buildDir)
 
-portableArchive = env.SzSfx(outputDir.File("%s_portable.exe" % outFilePrefix), portableDist, relativeToSourceDir=True)
+portableArchive = env.SzArchive(outputDir.File("%s_portable.exe" % outFilePrefix), portableDist, relativeToSourceDir=True)
 if certFile:
 	env.AddPostAction(portableArchive, [signExec])
 env.Alias("portable", portableArchive)
@@ -218,7 +250,7 @@ if certFile:
 	env.AddPostAction(installer, [signExec])
 env.Alias("installer", installer)
 
-clientArchive = env.SzSfx(outputDir.File("%s_controllerClient.exe" % outFilePrefix),clientDir, relativeToSourceDir=True)
+clientArchive = env.SzArchive(outputDir.File("%s_controllerClient.zip" % outFilePrefix), clientDir, relativeToSourceDir=True)
 env.Alias("client", clientArchive)
 
 changesFile=env.Command(outputDir.File("%s_changes.html" % outFilePrefix),userDocsDir.File('en/changes.html'),Copy('$TARGET','$SOURCE'))
@@ -265,4 +297,11 @@ pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
 
 env.Alias("pot", pot)
 
+symbolsList=[]
+symbolsList.extend(env.Glob(os.path.join(sourceLibDir.path,'*.pdb')))
+symbolsList.extend(env.Glob(os.path.join(sourceLibDir64.path,'*.pdb')))
+symbolsArchive = env.SzArchive(outputDir.File("%s_debugSymbols.zip" % outFilePrefix), symbolsList)
+env.Alias("symbolsArchive", symbolsArchive)
+
 env.Default(portableDist)
+

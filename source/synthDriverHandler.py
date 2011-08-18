@@ -140,6 +140,14 @@ class NumericSynthSetting(SynthSetting):
 		self.normalStep=max(normalStep,minStep)
 		self.largeStep=max(largeStep,self.normalStep)
 
+class BooleanSynthSetting(SynthSetting):
+	"""Represents a boolean synthesiser setting such as rate boost.
+	"""
+	configSpec = "boolean(default=False)"
+
+	def __init__(self, name, i18nName, availableInSynthSettingsRing=False):
+		super(BooleanSynthSetting, self).__init__(name, i18nName, availableInSynthSettingsRing)
+
 class SynthDriver(baseObject.AutoPropertyObject):
 	"""Abstract base synthesizer driver.
 	Each synthesizer driver should be a separate Python module in the root synthDrivers directory containing a SynthDriver class which inherits from this base class.
@@ -419,7 +427,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def loadSettings(self):
 		c=config.conf["speech"][self.name]
 		if self.isSupported("voice"):
-			voice=c["voice"]
+			voice=c.get("voice",None)
 			try:
 				changeVoice(self,voice)
 			except LookupError:

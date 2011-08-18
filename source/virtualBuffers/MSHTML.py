@@ -4,10 +4,13 @@ from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
 import controlTypes
 import NVDAObjects.IAccessible.MSHTML
 import winUser
+import NVDAHelper
+import ctypes
 import IAccessibleHandler
 import oleacc
 from logHandler import log
 import textInfos
+import api
 import aria
 import config
 
@@ -36,6 +39,44 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_CLICKABLE)
 		if attrs.get('HTMLAttrib::aria-required','false')=='true':
 			states.add(controlTypes.STATE_REQUIRED)
+		name=None
+		ariaLabelledBy=attrs.get('HTMLAttrib::aria-labelledBy')
+		if ariaLabelledBy:
+			try:
+				labelNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaLabelledBy)
+			except (COMError,NameError):
+				labelNode=None
+			if labelNode:
+				try:
+					name=self.obj.makeTextInfo(NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=labelNode)).text
+				except:
+					pass
+		description=None
+		ariaDescribedBy=attrs.get('HTMLAttrib::aria-describedBy')
+		if ariaDescribedBy:
+			try:
+				descNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaDescribedBy)
+			except (COMError,NameError):
+				descNode=None
+			if descNode:
+				try:
+					description=self.obj.makeTextInfo(NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=descNode)).text
+				except:
+					pass
+		ariaSort=attrs.get('HTMLAttrib::aria-sort')
+		state=aria.ariaSortValuesToNVDAStates.get(ariaSort)
+		if state is not None:
+			states.add(state)
+		ariaSelected=attrs.get('HTMLAttrib::aria-selected')
+		if ariaSelected=="true":
+			states.add(controlTypes.STATE_SELECTED)
+		elif ariaSelected=="false":
+			states.discard(controlTypes.STATE_SELECTED)
+		ariaExpanded=attrs.get('HTMLAttrib::aria-expanded')
+		if ariaExpanded=="true":
+			states.add(controlTypes.STATE_EXPANDED)
+		elif ariaExpanded=="false":
+			states.add(controlTypes.STATE_COLLAPSED)
 		if attrs.get('HTMLAttrib::aria-invalid','false')=='true':
 			states.add(controlTypes.STATE_INVALID)
 		if attrs.get('HTMLAttrib::aria-multiline','false')=='true':
@@ -72,6 +113,10 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			attrs["level"] = level
 		if landmark:
 			attrs["landmark"]=landmark
+		if name:
+			attrs["name"]=name
+		if description:
+			attrs["description"]=description
 		return super(MSHTMLTextInfo,self)._normalizeControlField(attrs)
 
 class MSHTML(VirtualBuffer):
@@ -111,12 +156,14 @@ class MSHTML(VirtualBuffer):
 				parent=newParent
 			if parent and parent.windowClassName.startswith('Internet Explorer_'):
 				obj=parent
-		if obj.windowHandle==self.rootDocHandle:
-			return True
-		if winUser.isDescendantWindow(self.rootDocHandle,obj.windowHandle):
-			return True
+		if not winUser.isDescendantWindow(self.rootDocHandle,obj.windowHandle) and obj.windowHandle!=self.rootDocHandle:
+			return False
+		newObj=obj
+		while  isinstance(newObj,NVDAObjects.IAccessible.MSHTML.MSHTML) and newObj.role not in (controlTypes.ROLE_APPLICATION,controlTypes.ROLE_DIALOG):
+			if newObj==self.rootNVDAObject:
+				return True
+			newObj=newObj.parent 
 		return False
-
 
 	def _get_isAlive(self):
 		if self.isLoading:
@@ -124,8 +171,11 @@ class MSHTML(VirtualBuffer):
 		root=self.rootNVDAObject
 		if not root:
 			return False
+		if not root.IAccessibleRole:
+			# The root object is dead.
+			return False
 		states=root.states
-		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_DEFUNCT in states or controlTypes.STATE_READONLY not in states:
+		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_EDITABLE in states:
 			return False
 		return True
 
@@ -137,7 +187,7 @@ class MSHTML(VirtualBuffer):
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
-		ID=obj.HTMLNode.uniqueNumber
+		ID=obj.HTMLNodeUniqueNumber
 		return docHandle,ID
 
 	def _searchableAttribsForNodeType(self,nodeType):

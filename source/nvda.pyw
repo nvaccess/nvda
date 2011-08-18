@@ -84,11 +84,12 @@ def terminateRunningNVDA(window):
 		winKernel.closeHandle(h)
 
 	# The process is refusing to exit gracefully, so kill it forcefully.
-	h = winKernel.openProcess(winKernel.PROCESS_TERMINATE, False, processID)
+	h = winKernel.openProcess(winKernel.PROCESS_TERMINATE | winKernel.SYNCHRONIZE, False, processID)
 	if not h:
 		raise OSError("Could not open process for termination")
 	try:
 		winKernel.TerminateProcess(h, 1)
+		winKernel.waitForSingleObject(h, 2000)
 	finally:
 		winKernel.closeHandle(h)
 

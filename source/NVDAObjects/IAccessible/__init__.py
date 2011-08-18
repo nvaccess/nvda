@@ -51,6 +51,62 @@ def getNVDAObjectFromPoint(x,y):
 	obj=IAccessible(IAccessibleObject=pacc,IAccessibleChildID=child)
 	return obj
 
+def normalizeIA2TextFormatField(formatField):
+	try:
+		textAlign=formatField.pop("text-align")
+	except KeyError:
+		textAlign=None
+	if textAlign:
+		if "right" in textAlign:
+			textAlign="right"
+		elif "center" in textAlign:
+			textAlign="center"
+		elif "justify" in textAlign:
+			textAlign="justify"
+		formatField["text-align"]=textAlign
+	try:
+		fontWeight=formatField.pop("font-weight")
+	except KeyError:
+		fontWeight=None
+	if fontWeight is not None and (fontWeight.lower()=="bold" or (fontWeight.isdigit() and int(fontWeight)>=700)):
+		formatField["bold"]=True
+	else:
+		formatField["bold"]=False
+	try:
+		fontStyle=formatField.pop("font-style")
+	except KeyError:
+		fontStyle=None
+	if fontStyle is not None and fontStyle.lower()=="italic":
+		formatField["italic"]=True
+	else:
+		formatField["italic"]=False
+	try:
+		invalid=formatField.pop("invalid")
+	except KeyError:
+		invalid=None
+	if invalid and invalid.lower()=="spelling":
+		formatField["invalid-spelling"]=True
+	color=formatField.get('color')
+	if color:
+		try:
+			formatField['color']=colors.RGB.fromString(color)
+		except ValueError:
+			pass
+	backgroundColor=formatField.get('background-color')
+	if backgroundColor:
+		try:
+			formatField['background-color']=colors.RGB.fromString(backgroundColor)
+		except ValueError:
+			pass
+	lineStyle=formatField.get("text-underline-style")
+	lineType=formatField.get("text-underline-type")
+	if lineStyle or lineType:
+		formatField["underline"]=lineStyle!="none" and lineType!="none"
+	lineStyle=formatField.get("text-line-through-style")
+	lineType=formatField.get("text-line-through-type")
+	if lineStyle or lineType:
+		formatField["strikethrough"]=lineStyle!="none" and lineType!="none"
+
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	detectFormattingAfterCursorMaybeSlow=False
@@ -152,52 +208,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 				pass
 		if attribsString:
 			formatField.update(IAccessibleHandler.splitIA2Attribs(attribsString))
-		try:
-			textAlign=formatField.pop("text-align")
-		except KeyError:
-			textAlign=None
-		if textAlign:
-			if "right" in textAlign:
-				textAlign="right"
-			elif "center" in textAlign:
-				textAlign="center"
-			elif "justify" in textAlign:
-				textAlign="justify"
-			formatField["text-align"]=textAlign
-		try:
-			fontWeight=formatField.pop("font-weight")
-		except KeyError:
-			fontWeight=None
-		if fontWeight is not None and (fontWeight.lower()=="bold" or (fontWeight.isdigit() and int(fontWeight)>=700)):
-			formatField["bold"]=True
-		else:
-			formatField["bold"]=False
-		try:
-			fontStyle=formatField.pop("font-style")
-		except KeyError:
-			fontStyle=None
-		if fontStyle is not None and fontStyle.lower()=="italic":
-			formatField["italic"]=True
-		else:
-			formatField["italic"]=False
-		try:
-			invalid=formatField.pop("invalid")
-		except KeyError:
-			invalid=None
-		if invalid and invalid.lower()=="spelling":
-			formatField["invalid-spelling"]=True
-		color=formatField.get('color')
-		if color:
-			try:
-				formatField['color']=colors.RGB.fromString(color)
-			except ValueError:
-				pass
-		backgroundColor=formatField.get('background-color')
-		if backgroundColor:
-			try:
-				formatField['background-color']=colors.RGB.fromString(backgroundColor)
-			except ValueError:
-				pass
+		normalizeIA2TextFormatField(formatField)
 		return formatField,(startOffset,endOffset)
 
 	def _getCharacterOffsets(self,offset):
@@ -404,12 +415,18 @@ the NVDAObject for IAccessible
 		elif windowClassName == "DirectUIHWND" and role == oleacc.ROLE_SYSTEM_TEXT:
 			from NVDAObjects.window import DisplayModelEditableText
 			clsList.append(DisplayModelEditableText)
-		elif windowClassName == "ListBox" and role == oleacc.ROLE_SYSTEM_LISTITEM:
+		elif windowClassName in ("ListBox","ComboLBox")  and role == oleacc.ROLE_SYSTEM_LISTITEM:
 			windowStyle = self.windowStyle
 			if (windowStyle & winUser.LBS_OWNERDRAWFIXED or windowStyle & winUser.LBS_OWNERDRAWVARIABLE) and not windowStyle & winUser.LBS_HASSTRINGS:
 				# This is an owner drawn ListBox and text has not been set for the items.
 				# See http://msdn.microsoft.com/en-us/library/ms971352.aspx#msaa_sa_listbxcntrls
 				clsList.append(InaccessibleListBoxItem)
+		elif windowClassName == "ComboBox" and role == oleacc.ROLE_SYSTEM_COMBOBOX:
+			windowStyle = self.windowStyle
+			if (windowStyle & winUser.CBS_OWNERDRAWFIXED or windowStyle & winUser.CBS_OWNERDRAWVARIABLE) and not windowStyle & winUser.CBS_HASSTRINGS:
+				# This is an owner drawn ComboBox and text has not been set for the items.
+				# See http://msdn.microsoft.com/en-us/library/ms971352.aspx#msaa_sa_listbxcntrls
+				clsList.append(InaccessibleComboBox)
 		elif windowClassName == "MsoCommandBar":
 			from .msOffice import BrokenMsoCommandBar
 			if BrokenMsoCommandBar.appliesTo(self):
@@ -417,6 +434,9 @@ the NVDAObject for IAccessible
 		elif windowClassName.startswith("Internet Explorer_"):
 			from . import MSHTML
 			MSHTML.findExtraIAccessibleOverlayClasses(self, clsList)
+		elif windowClassName == "AVL_AVView":
+			from . import adobeAcrobat
+			adobeAcrobat.findExtraOverlayClasses(self, clsList)
 
 		#Support for Windowless richEdit
 		if not hasattr(IAccessible,"IID_ITextServices"):
@@ -438,7 +458,7 @@ the NVDAObject for IAccessible
 				clsList.append(Edit)
 
 		#Window root IAccessibles
-		if self.event_objectID in (None,winUser.OBJID_WINDOW) and self.event_childID==0 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
+		if self.event_objectID==winUser.OBJID_WINDOW and self.event_childID==0 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
 			clsList.append(WindowRoot)
 
 		if self.event_objectID==winUser.OBJID_TITLEBAR and self.event_childID==0:
@@ -762,6 +782,13 @@ the NVDAObject for IAccessible
 				states.add(controlTypes.STATE_DRAGGING)
 			if IA2Attribs.get("dropeffect", "none") != "none":
 				states.add(controlTypes.STATE_DROPTARGET)
+			sorted = IA2Attribs.get("sort")
+			if sorted=="ascending":
+				states.add(controlTypes.STATE_SORTED_ASCENDING)
+			elif sorted=="descending":
+				states.add(controlTypes.STATE_SORTED_DESCENDING)
+			elif sorted=="other":
+				states.add(controlTypes.STATE_SORTED)
 		if controlTypes.STATE_HASPOPUP in states and controlTypes.STATE_AUTOCOMPLETE in states:
 			states.remove(controlTypes.STATE_HASPOPUP)
 		if controlTypes.STATE_HALFCHECKED in states:
@@ -834,13 +861,9 @@ the NVDAObject for IAccessible
 		except:
 			return None
 
-	parentUsesSuperOnWindowRootIAccessible=True #: on a window root IAccessible, super should be used instead of accParent
-
 	def _get_parent(self):
 		if self.IAccessibleChildID>0:
 			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=0) or super(IAccessible,self).parent
-		if self.parentUsesSuperOnWindowRootIAccessible and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
-			return super(IAccessible,self).parent
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
 		if res:
 			parentObj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
@@ -854,8 +877,6 @@ the NVDAObject for IAccessible
 		return super(IAccessible,self).parent
 
 	def _get_next(self):
-		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
-			return super(IAccessible,self).next 
 		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_NEXT)
 		if not res:
 			return None
@@ -867,8 +888,6 @@ the NVDAObject for IAccessible
 			return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]))
 
 	def _get_previous(self):
-		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
-			return super(IAccessible,self).previous
 		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_PREVIOUS)
 		if not res:
 			return None
@@ -929,17 +948,13 @@ the NVDAObject for IAccessible
 				children.append(IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=IAccessibleChildID,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=IAccessibleChildID))
 				continue
 			try:
-				accRole=IAccessibleObject.accRole(0)
+				identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,0)
 			except COMError:
-				accRole=0
+				identity=None
 			#For Window root IAccessibles, we just want to use the new window handle, but use the best API for that window, rather than IAccessible
 			#If it does happen to be IAccessible though, we only want the client, not the window root IAccessible
-			if accRole==oleacc.ROLE_SYSTEM_WINDOW:
-				try:
-					windowHandle=oleacc.WindowFromAccessibleObject(IAccessibleObject)
-				except WindowsError as e:
-					log.debugWarning("WindowFromAccessibleObject failed: %s" % e)
-					windowHandle=None
+			if identity and identity.get('objectID',None)==0 and identity.get('childID',None)==0:
+				windowHandle=identity.get('windowHandle',None)
 				if windowHandle:
 					kwargs=dict(windowHandle=windowHandle)
 					APIClass=Window.findBestAPIClass(kwargs,relation="parent") #Need a better relation type for this, but parent works ok -- gives the client
@@ -1250,6 +1265,8 @@ the NVDAObject for IAccessible
 		try:
 			ret = iaObj.accRole(childID)
 			for name, const in oleacc.__dict__.iteritems():
+				if not name.startswith("ROLE_"):
+					continue
 				if ret == const:
 					ret = name
 					break
@@ -1286,13 +1303,25 @@ class WindowRoot(IAccessible):
 
 	TextInfo=displayModel.DisplayModelTextInfo
 
+	parentUsesSuperOnWindowRootIAccessible=True #: on a window root IAccessible, super should be used instead of accParent
+
+	def _get_parent(self):
+		if self.parentUsesSuperOnWindowRootIAccessible:
+			return super(IAccessible,self).parent
+		return super(WindowRoot,self).parent
+
+	def _get_next(self):
+		return super(IAccessible,self).next 
+
+	def _get_previous(self):
+		return super(IAccessible,self).previous
+
 	def _get_container(self):
 		#Support for groupbox windows
 		groupboxObj=IAccessibleHandler.findGroupboxObject(self)
 		if groupboxObj:
 			return groupboxObj
 		return super(WindowRoot,self).container
-
 
 class ShellDocObjectView(IAccessible):
 
@@ -1326,6 +1355,9 @@ class JavaVMRoot(IAccessible):
 		if obj:
 			children.append(obj)
 		return children
+
+class NUIDialogClient(Dialog):
+	role=controlTypes.ROLE_DIALOG
 
 class Groupbox(IAccessible):
 
@@ -1393,6 +1425,11 @@ class SysLinkClient(IAccessible):
 
 	def reportFocus(self):
 		pass
+
+	def _get_role(self):
+		if self.childCount==0:
+			return controlTypes.ROLE_LINK
+		return super(SysLinkClient,self).role
 
 class SysLink(IAccessible):
 
@@ -1463,6 +1500,15 @@ class InaccessibleListBoxItem(IAccessible):
 	"""
 
 	def _get_name(self):
+		return self.displayText
+
+class InaccessibleComboBox(IAccessible):
+	"""
+	Used for inaccessible owner drawn ComboBox controls.
+	Overrides value  to use display model text as MSAA doesn't provide a suitable vale (it's usually either empty or contains garbage).
+	"""
+
+	def _get_value(self):
 		return self.displayText
 
 class StaticText(IAccessible):
@@ -1550,8 +1596,6 @@ _staticMap={
 	(None,oleacc.ROLE_SYSTEM_MENUITEM):"MenuItem",
 	("TPTShellList",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TProgressBar",oleacc.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
-	("AVL_AVView",None):"adobeAcrobat.AcrobatNode",
-	("AVL_AVView",oleacc.ROLE_SYSTEM_TEXT):"adobeAcrobat.AcrobatTextNode",
 	("AcrobatSDIWindow",oleacc.ROLE_SYSTEM_CLIENT):"adobeAcrobat.AcrobatSDIWindowClient",
 	("mscandui21.candidate",oleacc.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
 	("SysMonthCal32",oleacc.ROLE_SYSTEM_CLIENT):"SysMonthCal32.SysMonthCal32",
@@ -1565,6 +1609,8 @@ _staticMap={
 	("QWidget",oleacc.ROLE_SYSTEM_LIST):"qt.Container",
 	("QWidget",oleacc.ROLE_SYSTEM_OUTLINE):"qt.Container",
 	("QWidget",oleacc.ROLE_SYSTEM_MENUBAR):"qt.Container",
+	("QWidget",oleacc.ROLE_SYSTEM_ROW):"qt.TableRow",
+	("QWidget",oleacc.ROLE_SYSTEM_CELL):"qt.TableCell",
 	("QWidget",oleacc.ROLE_SYSTEM_OUTLINEITEM):"qt.TreeViewItem",
 	("QPopup",oleacc.ROLE_SYSTEM_MENUPOPUP):"qt.Menu",
 	("QWidget",oleacc.ROLE_SYSTEM_IPADDRESS):"qt.LayeredPane",
@@ -1572,4 +1618,6 @@ _staticMap={
 	("Shell_TrayWnd",oleacc.ROLE_SYSTEM_CLIENT):"Taskbar",
 	("Shell DocObject View",oleacc.ROLE_SYSTEM_CLIENT):"ShellDocObjectView",
 	("listview",oleacc.ROLE_SYSTEM_CLIENT):"ListviewPane",
+	("NUIDialog",oleacc.ROLE_SYSTEM_CLIENT):"NUIDialogClient",
+
 }

@@ -88,6 +88,8 @@ class AdobeAcrobat(VirtualBuffer):
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="graphic":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_GRAPHIC]}
+		elif nodeType=="comboBox":
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX]}
 		else:
 			return None
 		return attrs

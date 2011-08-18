@@ -6,6 +6,7 @@
 
 import winUser
 import controlTypes
+import displayModel
 import textInfos
 import api
 import appModuleHandler
@@ -46,8 +47,10 @@ class AppModule(appModuleHandler.AppModule):
 			obj.editValueUnit=textInfos.UNIT_STORY
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if obj.windowControlID in (128,129,130) and obj.role==controlTypes.ROLE_LISTITEM:
+		if obj.windowClassName=="SysListView32" and obj.windowControlID in (128,129,130) and obj.role==controlTypes.ROLE_LISTITEM:
 			clsList.insert(0,MessageRuleListItem)
+		elif "SysListView32" in obj.windowClassName and obj.role==controlTypes.ROLE_LISTITEM and obj.parent.name=="Outlook Express Message List":
+			clsList.insert(0,MessageListItem)
 
 	def event_gainFocus(self,obj,nextHandler):
 		nextHandler()
@@ -67,3 +70,29 @@ class MessageRuleListItem(sysListView32.ListItem):
 		if (winUser.sendMessage(self.windowHandle,sysListView32.LVM_GETITEMSTATE,self.IAccessibleChildID-1,sysListView32.LVIS_STATEIMAGEMASK)>>12)==8:
 			states.add(controlTypes.STATE_CHECKED)
 		return states
+
+class MessageListItem(sysListView32.ListItem):
+
+	def _get_isUnread(self):
+		info=displayModel.DisplayModelTextInfo(self,textInfos.POSITION_FIRST)
+		info.expand(textInfos.UNIT_CHARACTER)
+		fields=info.getTextWithFields()
+		try:
+			isUnread=fields[1].field['bold']
+		except:
+			isUnread=False
+		return isUnread
+
+	def _get_name(self):
+		nameList=[]
+		imageState=winUser.sendMessage(self.windowHandle,sysListView32.LVM_GETITEMSTATE,self.IAccessibleChildID-1,sysListView32.LVIS_STATEIMAGEMASK)>>12
+		if imageState==5:
+			nameList.append(controlTypes.speechStateLabels[controlTypes.STATE_COLLAPSED])
+		elif imageState==6:
+			nameList.append(controlTypes.speechStateLabels[controlTypes.STATE_EXPANDED])
+		if self.isUnread:
+			nameList.append(_("unread"))
+		name=super(MessageListItem,self).name
+		if name:
+			nameList.append(name)
+		return " ".join(nameList)
