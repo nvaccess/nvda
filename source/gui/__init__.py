@@ -498,3 +498,69 @@ Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit y
 		d.ShowModal()
 		d.Destroy()
 		mainFrame.postPopup()
+
+class LauncherDialog(wx.Dialog):
+	"""The dialog that is displayed when NVDA is started from the launcher.
+	This displays the license and allows the user to install or create a portable copy of NVDA.
+	"""
+
+	def __init__(self, parent):
+		super(LauncherDialog, self).__init__(parent, title=versionInfo.name)
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+		sizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("License Agreement")), wx.VERTICAL)
+		ctrl = wx.TextCtrl(self, size=(500, 400), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH)
+		import codecs
+		ctrl.Value = codecs.open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
+		sizer.Add(ctrl)
+		ctrl = self.licenseAgreeCheckbox = wx.CheckBox(self, label=_("I &agree"))
+		ctrl.Value = False
+		sizer.Add(ctrl)
+		ctrl.Bind(wx.EVT_CHECKBOX, self.onLicenseAgree)
+		mainSizer.Add(sizer)
+
+		sizer = wx.GridSizer(rows=2, cols=2)
+		self.actionButtons = []
+		ctrl = wx.Button(self, label=_("&Install NVDA on this computer"))
+		sizer.Add(ctrl)
+		ctrl.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(evt, mainFrame.onInstallCommand))
+		self.actionButtons.append(ctrl)
+		ctrl = wx.Button(self, label=_("Create &portable copy"))
+		sizer.Add(ctrl)
+		ctrl.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(evt, mainFrame.onCreatePortableCopyCommand))
+		self.actionButtons.append(ctrl)
+		ctrl = wx.Button(self, label=_("&Continue running"))
+		sizer.Add(ctrl)
+		ctrl.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(evt, None))
+		self.actionButtons.append(ctrl)
+		sizer.Add(wx.Button(self, label=_("E&xit"), id=wx.ID_CANCEL))
+		# If we bind this on the button, it fails to trigger when the dialog is closed.
+		self.Bind(wx.EVT_BUTTON, self.onExit, id=wx.ID_CANCEL)
+		mainSizer.Add(sizer)
+		for ctrl in self.actionButtons:
+			ctrl.Disable()
+
+		self.Sizer = mainSizer
+		mainSizer.Fit(self)
+
+	def onLicenseAgree(self, evt):
+		for ctrl in self.actionButtons:
+			ctrl.Enable(evt.IsChecked())
+
+	def onAction(self, evt, func):
+		self.Destroy()
+		if func:
+			func(evt)
+
+	def onExit(self, evt):
+		wx.GetApp().ExitMainLoop()
+
+	@classmethod
+	def run(cls):
+		"""Prepare and display an instance of this dialog.
+		This does not require the dialog to be instantiated.
+		"""
+		mainFrame.prePopup()
+		d = cls(mainFrame)
+		d.Show()
+		mainFrame.postPopup()
