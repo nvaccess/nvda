@@ -57,7 +57,7 @@ class InstallerDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		mainSizer.Add(sizer)
 
-		self.SetSizer(mainSizer)
+		self.Sizer = mainSizer
 
 	def onAdvanced(self, evt):
 		self.mainSizer.Show(self.advancedSizer, show=evt.IsChecked(), recursive=True)
