@@ -531,7 +531,7 @@ class LauncherDialog(wx.Dialog):
 		self.actionButtons.append(ctrl)
 		ctrl = wx.Button(self, label=_("&Continue running"))
 		sizer.Add(ctrl)
-		ctrl.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(evt, None))
+		ctrl.Bind(wx.EVT_BUTTON, self.onContinueRunning)
 		self.actionButtons.append(ctrl)
 		sizer.Add(wx.Button(self, label=_("E&xit"), id=wx.ID_CANCEL))
 		# If we bind this on the button, it fails to trigger when the dialog is closed.
@@ -549,8 +549,11 @@ class LauncherDialog(wx.Dialog):
 
 	def onAction(self, evt, func):
 		self.Destroy()
-		if func:
-			func(evt)
+		func(evt)
+
+	def onContinueRunning(self, evt):
+		self.Destroy()
+		core.doStartupDialogs()
 
 	def onExit(self, evt):
 		wx.GetApp().ExitMainLoop()

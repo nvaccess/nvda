@@ -273,7 +273,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			braille.handler.message(_("NVDA started"))
 		except:
 			log.error("", exc_info=True)
-		wx.CallAfter(doStartupDialogs)
+		if globalVars.appArgs.launcher:
+			gui.LauncherDialog.run()
+			# LauncherDialog will call doStartupDialogs() afterwards if required.
+		else:
+			wx.CallAfter(doStartupDialogs)
 	import queueHandler
 	# Queue the handling of initial focus,
 	# as API handlers might need to be pumped to get the first focus event.
