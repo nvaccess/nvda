@@ -3,7 +3,7 @@
 
 %!includeconf: ../changes.t2tconf
 
-Traduzido por Marlin Rodrigues
+Traduzido por Marlin Rodrigues da Silva
 
 = 2011.3 =
 
@@ -17,6 +17,8 @@ Traduzido por Marlin Rodrigues
 == Correção de Falhas ==
 - O NVDA já não mosta marcas ou numerações para listas no Internet Explorer e outros controles MSHTML onde o autor tiver indicado que estes não devem ser mostrados (isto é, o estilo da lista é "none"). (#1671)
 - Ao reiniciar o NVDA quando este trava, (isto é, pressionando control+alt+n) já não encerra a cópia anterior sem iniciar uma nova.
+- Pressionar backspace ou setas em um console de comando do Windows já não causa resultados estranhos em alguns casos. (#1612)
+- O item selecionado em caixas de combinação WPF (e possivelmente algumas outras caixas de combinação expostas usando UI Automation) que não permitem edição de texto agora é anunciado corretamente.
 
 
 == 2011.2 ==
