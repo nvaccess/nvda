@@ -112,7 +112,7 @@ def _recoverAttempt():
 	NVDAHelper.localLib.cancelSendMessage()
 
 @ctypes.WINFUNCTYPE(ctypes.wintypes.LONG, ctypes.c_void_p)
-def crashHandler(exceptionInfo):
+def _crashHandler(exceptionInfo):
 	# An exception might have been set for this thread.
 	# Clear it so that it doesn't get raised in this function.
 	ctypes.pythonapi.PyThreadState_SetAsyncExc(threading.currentThread().ident, None)
@@ -128,7 +128,7 @@ def initialize():
 		raise RuntimeError("already running") 
 	isRunning=True
 	# Catch application crashes.
-	windll.kernel32.SetUnhandledExceptionFilter(crashHandler)
+	windll.kernel32.SetUnhandledExceptionFilter(_crashHandler)
 	oledll.ole32.CoEnableCallCancellation(None)
 	_coreAliveEvent.set()
 	_resumeEvent.set()

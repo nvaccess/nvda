@@ -3,6 +3,20 @@ Co je nového v programu NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2011.3 =
+
+== Novinky ==
+-V aplikacích Mozilla Gecko je pøi použití objektové navigace ohlašovaná úroveò nadpisù. 
+-V aplikacích Mozilla je v režimu prohlížení možné ohlašovat formátování textu. (#394) 
+-NVDA dokáže detekovat podtržený a pøeškrtnutý text v editaèních polích IAccessible2 (napø. v aplikacích Mozilla). 
+-Po pádu se NVDA automaticky restartuje. 
+
+== Opravy ==
+•V programu internet explorer a ostatních prvcích MSHTML NVDA nebude oznamovat odrážky a èíslování v seznamech, pokud autor nastavil, že se tyto informace nemají zobrazovat (styl seznamu je none). (#1671) 
+-Restart NVDA po zamrznutí (napø. stiskem kláves Ctrl+Alt+N) nespustí znovu NVDA døív, než se ukonèí zamrznutá kopie.
+
+
+
 = 2011.2 =
 Mezi hlavní novinky této verze patøí èetná vylepšení v oblasti vyslovování interpunkèních a dalších speciálních znakù; nastavitelné úrovnì vyslovování interpunkce; vlastní pojmenování interpunkèních a dalších znakù; hláskování pomocí hláskovací tabulky; žádné pauzy na koncích øádkù pøi plynulém ètení; vylepšená podpora ARIA v Internet Exploreru; vylepšená podpora pro PDF dokumenty XFA/LifeCycle v Adobe Readeru; pøístup k textu vypsanému pøímo na obrazovku ve více aplikacích než doposud; a pøístup k informacím o formátování a barvì textu vypsaného na obrazovku.
 
@@ -22,10 +36,10 @@ V pøípadì jazykù s obrázkovým písmem jako je tradièní èínština bude ohlášen jede
 - Uživatelé mohou mìnit jak vyslovování interpunkce a dalších znakù, Tak i úroveò výøeènosti, ve které mají být znaky ohlašovány. (#271, #1516)
 - V aplikaci Microsoft Excel je nyní pøi pohybu po sešitech pomocí kláves Ctrl+PageUp a Ctrl+PageDown ohlašováno jméno aktuálního sešitu. (#760)
 - V aplikaci Microsoft Word bude nyní pøi pohybu po tabulce pomocí klávesy Tab NVDA ohlašovat aktuální buòku. (#159)
-- V dialogu ohlašování formátování dokumentu je možné nastavit oznamování souøadnic bunìk v tabu¾kách. (#719)
+- V dialogu ohlašování formátování dokumentu je možné nastavit oznamování souøadnic bunìk v tabulkách. (#719)
 - NVDA nyní dokáže detekovat formátování a barvu textu vypisovaného pøímo na obrazovku.
 - V seznamu správ v programech Outlook express, Windows mail a Windows live bude NVDA ohlašovat, že správa je nepøeètená a rovnìž stav konverzací. (#868)
-- Pøi použití hlasového výstupu eSpeak je v dialogu nastavení hlasu možné aktivovat vo¾bu znásobit tempo, která trojnásobnì zrychlí tempo øeèi eSpeaku.
+- Pøi použití hlasového výstupu eSpeak je v dialogu nastavení hlasu možné aktivovat volbu znásobit tempo, která trojnásobnì zrychlí tempo øeèi eSpeaku.
 - Podpora pro prvek kalendáø v dialogu datum a èas, který je  možné vyvolat z hodin v systému Windows 7. (#1637)
 - Byly pøidané klávesové zkratky pro braillský øádek MDV Lilli. (#241)
 - Nové lokalizace: bulharština, albánština.
@@ -43,12 +57,12 @@ V pøípadì jazykù s obrázkovým písmem jako je tradièní èínština bude ohlášen jede
 - Prvky ARIA oznaèené typem presentation nejsou v Internet Exploreru a ostatních MSHTML prvcích oznamovány ve zjednodušeném režimu objektové navigace ani pøi oznamování fokusu.
 - Uživatelské rozhraní a dokumentace NVDA místo oznaèení virtuální prohlížeè používá oznaèení režim prohlížení, protože termín virtuální prohlížeè vìtšinì uživatelù nic neøíká. (#1509)
 - Pokud chcete zkopírovat své nastavení do systémového profilu napø. pro použití na pøihlašovací obrazovce a vaše nastavení obsahuje uživatelské zásuvné moduly, budete upozornìni, že se mùžete vystavit bezpeènostnímu riziku. (#1426)
-- Služba NVDA už nezastavuje a opìtovnì nnespouští NVDA na uživate¾ských vstupních plochách.
+- Služba NVDA už nezastavuje a opìtovnì nnespouští NVDA na uživatelských vstupních plochách.
 - Na systémech Windows XP a Windows Vista již NVDA nepoužívá UI automation, i když je tato funkce dostupná. Pøestože UI automation vylepšuje pøístupnost nìkterých moderních aplikací, tak pøi jeho použití na tìchto systémech docházelo k mrznutí, pádùm a dalším problémùm. (#1437)
 - v Aplikacích používajících Mozilla Gecko 2 a novìjší, jako je napø. Firefox od verze 4, mùže být dokument v režimu prohlížení pøístupný už pøed tím, než je plnì naèten.
 - NVDA hlásí stav okna, pokud se pohybujete po prvcích uvnitø. Napø. pokud se pohybujete uvnitø dokumentu, který se teprve naèítá, NVDA ohlásí "zaneprázdnìn".
 - Pro nìkteré položky v nabídkách, které mají podnabídky už není hlášeno "sbaleno". 
-- Pøíkaz pro ohlášení formátování NVDA+f už neoznamuje formátování na pozici textového, ale na pozici ètecího kurzoru. Ve výchozím nastavení se ètecí kurzor pohybuje spolu s textovým kurzorem, takže vìtšina uživate¾ù si zmìny ani nevšimne. Nicménì díky této zmìnì je nyní možné zjistit informace o formátování pøi ètení ètecím kurzorem napø. v režimu plošného prohlížení
+- Pøíkaz pro ohlášení formátování NVDA+f už neoznamuje formátování na pozici textového, ale na pozici ètecího kurzoru. Ve výchozím nastavení se ètecí kurzor pohybuje spolu s textovým kurzorem, takže vìtšina uživatelù si zmìny ani nevšimne. Nicménì díky této zmìnì je nyní možné zjistit informace o formátování pøi ètení ètecím kurzorem napø. v režimu plošného prohlížení
 
 
 == Opravy ==
@@ -76,7 +90,22 @@ V pøípadì jazykù s obrázkovým písmem jako je tradièní èínština bude ohlášen jede
 - V dokumentech MSHTML jsou Prvky typu ARIA description zobrazeny jako text a ne jako editaèní pole.
 - Opraveny rùzné problémy s klávesou Tab pøi fokusu v dokumentu Internet Exploreru v režimu prohlížení (napø. nesprávný odskok do adresního øádku pøi stisku klávesy Tab)
 - Ve výukovém režimu jsou do log souboru zaznamenávány i pøíkazy, jejichž skripty vynechávají výukový režim jako napø. pøíkazy na posunutí braillského øádku vpøed èi zpìt.
-
+- Pokud ve výukovém režimu držíte stisknutou NVDA klávesu , již nedochází k hlášení, jako by klávesa pùsobila sama na sebe, napø. NVDA+NVDA. To je nesmysl a bylo to opraveno.
+- Pøesun na další nebo pøedchozí rozbalovací políèko v dokumentech Adobe Reader pomocí kláves c nebo shift+c již funguje.
+- Pokud je možno oznaèit øádky tabulky, je oznámeno jestli jsou vybrány nebo ne, stejnì jako tomu je u položek seznamù a stromových zobrazení.
+- Ve Firefoxu a dalších Gecko aplikacích je možné v režimu prohlížení aktivovat prvek i když již není viditelný na obrazovce. (#801)
+- Pokud je zobrazen dialog se zprávou, nemùžete vyvolat dialog s nastavením NVDA, protože v takovém pøípadì okno s nastavením zpùsobovalo mrznutí programu. (#1451)
+- V aplikaci Microsoft Excel již není patrná prodleva když rychle oznaèujete nebo se pohybujete po buòkách.
+- Opraveny obèasné pády služby NVDA, které zpùsobovaly že NVDA nemluvilo na zabezpeèených obrazovkách.
+- Opraven problém s braillskými øádky, kdy zmìna zpùsobovala zmizení zobrazeného textu.
+- Okno pro stahování v Internet Exploreru 9 je nyní možné používat s NVDA. (#1280)
+- Bylo zabránìno nechtìným spuštìním více instancí NVDA souèasnì. (#507)
+- Na pomalých systémech již NVDA pøi bìhu nezobrazuje své hlavní okno. (#726)
+- Pøi spuštìní WPF aplikace na systémech Windows XP již NVDA nepadá. (#1437)
+- Plynulé ètení a plynulé ètení ètecím kurzorem funguje v nìkterých textových prvcích, které podporují patøièné metody UI automation. Takže je tøeba možné použít plynulé ètení ètecím kurzorem v dokumentech XPS.
+- V aplikacích Outlook Express a Windows Live Mail v dialogu Použít Pravidla už NVDA chybnì neoznaèuje nìkteré seznamy jako zaškrtávací políèka. (#576)
+- U rozbalovacích políèek už není chybnì hlášena podnabídka.
+- NVDA už dokáže èíst pøíjemce v polích komu, kopie a skrytá kopie v aplikaci Microsoft Outlook. (#421)
 
 = 2011.1.1 =
 Tato verze opravuje nìkteré bezpeènostní problémy a jiné závažné chyby ve verzi 2011.1.
@@ -694,4 +723,3 @@ K tomuto úèelu byla vytvoøena speciální verze výstupu Newfon pro NVDA. (#206)
 - NVDA se nyní pøi zmìnì jazyka v dialogu nastavení uživatelského rozhraní zeptá, zda má uložit nastavení a restartovat se. ABy se zmìna jazyka plnì projevila, musí být NVDA restartován.
 - Pokud není možné pøi volbì hlasového výstupu v dialogu hlasové výstupy zvolený syntezátor naèíst, NVDA na tuto skuteènost upozorní.
 - Pøi prvním naèítání zvoleného syntezátoru nechá NVDA syntezátor, aby si sám zvolil nejvíce vyhovující hlas, tempo a výšku, místo, aby mu vnutil svá výchozí nastavení, která mu pøipadají v poøádku. Tím je odstranìn problém, kdy Sapi4 syntezátory eloquence a viavoice zaèínaly na to, že byly spouštìny poprvé, mluvit pøíliš rychle.
-

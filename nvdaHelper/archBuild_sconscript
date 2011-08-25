@@ -12,6 +12,9 @@
 #http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
+import os
+import shutil
+
 Import(
 	'env',
 	'sourceDir',
@@ -34,7 +37,8 @@ env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
 if 'noOptimize' in debug:
 	env.Append(CCFLAGS=['/Od'])
 else:
-	env.Append(CCFLAGS=['/O2'])
+	env.Append(CCFLAGS=['/O2','/GL'])
+	env.Append(LINKFLAGS=['/LTCG'])
 
 if 'debugCRT' in debug:
 	env.Append(CCFLAGS=['/MTd'])
@@ -97,3 +101,13 @@ env.Install(libInstallDir,geckoVBufBackend)
 
 mshtmlVBufBackend=env.SConscript('vbufBackends/mshtml/sconscript')
 env.Install(libInstallDir,mshtmlVBufBackend)
+
+if TARGET_ARCH=='x86' and os.path.isdir(Dir('#include/espeak').abspath):
+	espeakLib=env.SConscript('espeak/sconscript')
+	installedEspeakData=env.Command(
+		target=sourceDir.Dir('synthDrivers/espeak-data'),
+		source=[Dir('#include/espeak/espeak-data'),Dir('espeak/variants')],
+		action=[Delete('$TARGET'),Copy('$TARGET','$SOURCE')]+[Copy('$TARGET/voices/!v/%s'%x.name,x.path) for x in env.Glob('espeak/variants/*')], 
+	)
+	env.AlwaysBuild(installedEspeakData)
+	env.Clean(installedEspeakData,installedEspeakData)

@@ -15,8 +15,8 @@ General dependencies:
 	* Python Windows Extensions (for Python 2.7), build 214 or later: http://www.sourceforge.net/projects/pywin32/ 
 	* eSpeak, version 1.45.03 or later, Windows dll:
 		* Official web site: http://espeak.sourceforge.net/
-		* The Windows dll is tricky to build, so a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
-		* Copy espeak.dll and espeak-data into the source\synthDrivers directory.
+		* Download the espeak source archive (1.45.40 or later)
+		* Extract it in to include/espeak so that include/espeak/src, include/espeak/platforms and include/espeak/espeak-data all exist.
 	* Additional variants for eSpeak: http://www.nvda-project.org/espeak-variants/
 		* Extract the archive into the source\synthDrivers directory.
 	* IAccessible2, version 1.2.1 or later: http://www.linuxfoundation.org/en/Accessibility/IAccessible2

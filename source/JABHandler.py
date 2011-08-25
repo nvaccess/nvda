@@ -25,7 +25,11 @@ def _errcheck(res, func, args):
 	return res
 
 def _fixBridgeFunc(restype,name,*argtypes,**kwargs):
-	func=getattr(bridgeDll,name)
+	try:
+		func=getattr(bridgeDll,name)
+	except AttributeError:
+		log.warning("%s not found in Java Access Bridge dll"%name)
+		return
 	func.restype=restype
 	func.argtypes=argtypes
 	if kwargs.get('errcheck'):

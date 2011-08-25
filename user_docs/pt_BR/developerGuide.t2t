@@ -24,14 +24,14 @@ Documentação e outros recursos relacionados com python podem ser encontrados n
 Para suportar muitos idiomas/localizações, o NVDA deve ser traduzido e devem ser fornecidos dados específicos para a localização.
 
 ++ Descrições de Caracteres ++
-Algumas vezes, é muito difícil ou mesmo impossível distinguir um carácter de outro.
+Algumas vezes, é muito difícil ou mesmo impossível distinguir um caractere de outro.
 Por exemplo, dois caracteres podem ser pronunciados da mesma forma, embora sejam caracteres diferentes.
-Para ajudar aos usuários quando isso ocorre, podem ser fornecidas descrições de caracteres que descrevem o carácter de uma única forma.
+Para ajudar aos usuários quando isso ocorre, podem ser fornecidas descrições de caracteres que descrevem o caractere de uma única forma.
 
 Descrições de caracteres podem ser fornecidas para uma localização em um um arquivo denominado characterDescriptions.dic na pasta desta localização.
 Este é um arquivo de texto codificado em UTF-8.
 Linhas em branco ou iniciadas por cardinal "#" são ignoradas.
-Todas as outras linhas devem conter um carácter seguido de um tab, e em seguida uma ou mais descrições separadas por tab.
+Todas as outras linhas devem conter um caractere seguido de um tab, e em seguida uma ou mais descrições separadas por tab.
 
 Por exemplo:
 ```
@@ -56,7 +56,7 @@ O arquivo contém duas seções.
 
 +++ Definindo Sinais Complexos +++
 A primeira seção é opcional e define expressões regulares originais para sinais complexos.
-Sinais complexos são sinais que não são simplesmente um carácter ou seqüência de caracteres, mas em lugar disso necessitam de uma combinação mais complicada.
+Sinais complexos são sinais que não são simplesmente um caractere ou seqüência de caracteres, mas em lugar disso necessitam de uma combinação mais complicada.
 Um exemplo disso é a parada completa (.) fim de sentença em português.
 O ponto "." é usado para muitos propósitos, então uma checagem mais complicada é necessária para determinar se esse se refere ao fim de uma sentença.
 
@@ -85,7 +85,7 @@ Os únicos campos obrigatórios  são o do identificador e substituto.
 O padrão será usado para campos omitidos.
 Os campos são os seguintes:
 - identificador: O identificador do sinal.
-Na maior parte dos casos, é apenas o carácter ou caracteres do sinal.
+Na maior parte dos casos, é apenas o caractere ou caracteres do sinal.
 Todavia, ele pode também ser o identificador de um sinal complexo.
 Certos caracteres não podem ser digitados dentro do arquivo, então as seguintes  seqüências especiais podem ser usadas:
 - \0: Null
@@ -93,12 +93,12 @@ Certos caracteres não podem ser digitados dentro do arquivo, então as seguinte
 - \n: fim de linha
 - \r: Retorno
 - \f: form feed
-- \#: # carácter (necessário porque cardinal # no início de uma linha denota um comentário)
+- \#: # caractere (necessário porque cardinal # no início de uma linha denota um comentário)
 - substituto: O texto que deve ser falado para o sinal.
 - grau: O grau de sinais no qual o sinal deve ser falado.
 O grau de sinais é configurado pelo usuário e especifica a quantidade de sinais que deve ser falada.
-Esse campo deve conter um dos graus "nada", "pouco", "muito", "tudo" ou "carácter", ou "-" usar o padrão.
-"carácter" significa que o sinal só deve ser pronunciado ao mover-se por carácter.
+Esse campo deve conter um dos graus "nada", "pouco", "muito", "tudo" ou "caractere", ou "-" usar o padrão.
+"caractere" significa que o sinal só deve ser pronunciado ao mover-se por caractere.
 O padrão é para herdar o valor ou "all" se nada existe para herdar.
 - preservar: Se o próprio sinal deve ser preservado para facilitar a pronúncia correta pelo sintetizador.
 Por exemplo, sinais que provocam pausas ou inflecção (tais como a vírgula em português) devem ser preservados.
@@ -110,17 +110,17 @@ Esse campo deve ser um dos seguintes:
   O padrão é para herdar o valor ou "never" se nada existe para herdar.
 -
 Finalmente, um nome para exibição para o sinal pode ser fornecido num comentário depois de um tab ao final da linha.
-Esse será mostrado aos usuários ao editar a informação do sinal e é útil especialmente para os tradutores definirem nomes traduzidos para sinais complexos do inglês.
+Esse será mostrado aos usuários ao editar a informação do sinal e é útil especialmente para os tradutores definirem nomes traduzidos para sinais complexos oriúndos do inglês.
 
 Aqui vão alguns exemplos:
 ```
 (	abre parêntese	most
 ```
-Isso significa que o carácter "(" deve ser falado como "abre parêntese" apenas quando o grau de sinais estiver ajustado para muito ou superior; isto é, muito ou tudo.
+Isso significa que o caractere "(" deve ser falado como "abre parêntese" apenas quando o grau de sinais estiver ajustado para muito ou superior; isto é, muito ou tudo.
 ```
 ,	vírgula	all	always
 ```
-Isso significa que o carácter "," deve ser falado como "vírgula" quando o grau de sinais estiver ajustado para "tudo" e que o próprio carácter sempre deve ser preservado de modo que o sintetizador efetue a pausa apropriadamente.
+Isso significa que o caractere "," deve ser falado como "vírgula" quando o grau de sinais estiver ajustado para "tudo" e que o próprio caractere sempre deve ser preservado de modo que o sintetizador efetue a pausa apropriadamente.
 ```
 . sentence ending	point	# . fin de phrase
 ```
@@ -290,17 +290,17 @@ Por exemplo, o botão OK num diálogo pode ser representado como um Objeto do NV
 Semelhantemente, uma caixa de seleção com a etiqueta de "Eu Concordo" pode ter o nome de "Eu concordo", a função de caixa de seleção, e se atualmente estiver marcada, o estado de marcada.
 
 As there are many differents GUI Toolkits and platform and accessibility APIs, NVDA Objects abstract these differences into a standard form that NVDA can use, regardless of the toolkit or API a particular control is made with.
-For example,  the Ok button just discussed could be a widget in a Java application, an MSAA object, an IAccessible2 object or a UI Automation element. 
+For example, the Ok button, just discussed could be a widget in a Java application, an MSAA object, an IAccessible2 object or a UI Automation element. 
 
-NVDA Objects have many properties.
-Some of the most useful are:
-- name: the label of the control.
+Os Objetos no NVDA  possuem muitas propriedades.
+Algumas das  mais úteis são:
+- name: a etiqueta do controle.
 - role: one of the ROLE_* constants from NVDA's controlTypes module.
-Button, dialog, editableText, window and checkbox are examples of roles.
+Botão, diálogo, texto editável, janela e caixa de seleção são exemplos de funções.
 - states: a set of 0 or more of the STATE_* constants from NVDA's controlTypes module.
-Focusable, focused, selected, selectable, expanded, collapsed and checked are some examples of states.
-- value: the value of the control; e.g. the percentage of a scroll bar or the current setting of a combo box.
-- description: a sentence or two describing what the control does (usually the same as its tooltip).
+Enfocável, enfocado, selecionado, selecionável, expandido, recolhido e marcado são alguns exemplos de estados.
+- value: o valor do controle; isto é, a porcentagem de uma barra de deslocamento ou a configuração atual de uma caixa de combinação.
+- description: uma sentença ou duas descrevendo o que o controle faz (normalmente, o mesmo que sua dica de ferramenta).
 - location: the object's left, top, width and height positions in screen coordinates.  
 - parent: this object's parent object.
 For example, a list item object's parent would be the list containing it.
@@ -332,8 +332,8 @@ The code may then retreave information from that object or perhaps even retreave
 Just like App Modules and Global Plugins, NVDA Objects can also define events, scripts and gesture bindings. 
  
 ++ Scripts e Gestos Vinculados ++
-App Modules, Global Plugins and NVDA Objects can define special methods which can be bound to a particular piece of input such as a key press.
-NVDA refers to these methods as scripts.
+App Modules, Global Plugins e Objetos no NVDA podem definir métodos especiais que podem ser vinculados a uma parte de uma entrada tal como o pressionamento de uma tecla.
+O NVDA identifica esses métodos como scripts.
 
 A script is a standard Python instance method with a name starting with "script_"; e.g. "script_sayDateTime".
 
@@ -352,15 +352,15 @@ There are more advanced ways of binding gestures in a more dynamic fashion, thou
 A gesture identifier string is a simple string representation of a piece of input.
 It consists of a two leter character code denoting the source of the input, an optional device in brackets, a colon (:) and one or more names separated by a plus (+) denoting the actual keys or input values.
 
-Some examples of gesture string identifiers are:
+Alguns exemplos de seqüências de identificadores de gesto são:
 - "kb:NVDA+shift+v"
 - "br(freedomScientific):leftWizWheelUp"
 - "kb(laptop):NVDA+t"
 -
 
-Currently, the only input sources in NVDA are:
-- kb: keyboard input
-- br: braille input
+Atualmente, os únicos códigos de entrada no NVDA são:
+- kb: entrada de teclado
+- br: entrada de braille
 -
 
 When NVDA receives input, it looks for a matching gesture binding in a particular order.
