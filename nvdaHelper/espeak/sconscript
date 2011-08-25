@@ -1,0 +1,41 @@
+Import([
+	'env',
+])
+
+sourceFiles=[
+	"speak_lib.cpp",
+	"readclause.cpp",
+	"compiledict.cpp",
+	"dictionary.cpp",
+	"intonation.cpp",
+	"setlengths.cpp",
+	"numbers.cpp",
+	"synth_mbrola.cpp",
+	"synthdata.cpp",
+	"synthesize.cpp",
+	"translate.cpp",
+	"tr_languages.cpp",
+	"voices.cpp",
+	"wavegen.cpp",
+	"espeak_command.cpp",
+	"event.cpp",
+	"fifo.cpp",
+	"wave.cpp",	"debug.cpp",
+	"phonemelist.cpp",
+	"klatt.cpp",
+	"sonic.cpp",
+]
+
+env=env.Clone()
+env.Append(CXXFLAGS='/W0')
+env.Append(CPPDEFINES=[('BUILDING_DLL',1)])
+env.Prepend(CPPPATH='#include/espeak/platforms/windows/windows_dll/src')
+
+copiedSrc=[env.Command(x.name,x,Copy('$TARGET','$SOURCE')) for x in env.Glob('#include/espeak/src/*.*') if not x.name in ['StdAfx.h','speech.h']]
+copiedSrc.extend([env.Command(x.name,x,Copy('$TARGET','$SOURCE')) for x in env.Glob('#include/espeak/platforms/windows/windows_dll/src/*.*')])
+
+objFile=env.Object(sourceFiles)
+
+espeakLib=env.SharedLibrary('espeak',objFile,LIBS=['advapi32'])
+
+Return('espeakLib')
