@@ -9,6 +9,7 @@ import winUser
 import NVDAHelper
 import textInfos
 from textInfos.offsets import OffsetsTextInfo
+import watchdog
 
 _getWindowTextInRect=None
 _requestTextChangeNotificationsForWindow=None
@@ -21,7 +22,7 @@ def initialize():
 	_requestTextChangeNotificationsForWindow=NVDAHelper.localLib.displayModel_requestTextChangeNotificationsForWindow
 
 def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,useXML=False):
-	text, cpBuf = _getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,useXML)
+	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,useXML)
 	if not text or not cpBuf:
 		return "",[]
 
@@ -34,7 +35,7 @@ def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,mi
 def requestTextChangeNotifications(obj, enable):
 	if not enable:
 		_textChangeNotificationObjs.remove(obj)
-	_requestTextChangeNotificationsForWindow(obj.appModule.helperLocalBindingHandle, obj.windowHandle, enable)
+	watchdog.cancellableExecute(_requestTextChangeNotificationsForWindow, obj.appModule.helperLocalBindingHandle, obj.windowHandle, enable)
 	if enable:
 		_textChangeNotificationObjs.append(obj)
 
