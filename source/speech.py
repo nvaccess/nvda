@@ -584,8 +584,10 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 			# If the TextInfo is considered blank so far, it should still be considered blank if there is only formatting thereafter.
 			textListBlankLen+=1
 		textList.append(text)
-
-	if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD):
+	language=newFormatField.get('language')
+	textList.append(LangChangeCommand(language))
+	textListBlankLen+=1
+	if False: #unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD):
 		text=CHUNK_SEPARATOR.join(textList)
 		if text:
 			speakText(text,index=index)
@@ -613,7 +615,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 		if isinstance(commandList[count],basestring):
 			text=commandList[count]
 			if text:
-				if lastTextOkToMerge:
+				if False: #lastTextOkToMerge:
 					relativeTextList[-1]+=text
 				else:
 					relativeTextList.append(text)
@@ -637,11 +639,19 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 			if text:
 				relativeTextList.append(text)
 				lastTextOkToMerge=False
-
-	text=CHUNK_SEPARATOR.join(relativeTextList)
+			language=commandList[count].field.get('language')
+			if language:
+				relativeTextList.append(LangChangeCommand(language))
+	#text=CHUNK_SEPARATOR.join(relativeTextList)
 	# Don't add this text if it is blank.
-	if text and not isBlank(text):
-		textList.append(text)
+	relativeBlank=True
+	for x in relativeTextList:
+		if isinstance(x,basestring) and not isBlank(x):
+			relativeBlank=False
+			break
+	if not relativeBlank:
+		textList.extend(relativeTextList)
+
 
 	#Finally get speech text for any fields left in new controlFieldStack that are common with the old controlFieldStack (for closing), if extra detail is not requested
 	if not extraDetail:
@@ -659,13 +669,11 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)
 		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
 
-	text=CHUNK_SEPARATOR.join(textList)
 	speechSequence=[]
 	# Even when there's no speakable text, we still need to notify the synth of the index.
 	if index is not None:
 		speechSequence.append(IndexCommand(index))
-	if text:
-		speechSequence.append(text)
+	speechSequence.extend(textList)
 	if speechSequence:
 		if reason==REASON_SAYALL:
 			speakWithoutPauses(speechSequence)
@@ -1141,3 +1149,14 @@ class CharacterModeCommand(object):
 
 	def __repr__(self):
 		return "CharacterModeCommand(%r)" % self.state
+
+class LangChangeCommand(SpeechCommand):
+	"""A command to switch the language within speech."""
+
+	def __init__(self,lang):
+		"""
+		@param lang: the language to switch to: If None then the NVDA locale will be used.
+		@type lang: string
+		"""
+		self.lang=lang # if lang else languageHandler.getLanguage()
+		log.info("language: %s"%self.lang)
