@@ -47,7 +47,6 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 	LRESULT ret;
 	for (UINT remainingTimeout = uTimeout; remainingTimeout > 0; remainingTimeout -= (remainingTimeout > CANCELSENDMESSAGE_CHECK_INTERVAL) ? CANCELSENDMESSAGE_CHECK_INTERVAL : remainingTimeout) {
 		if (shouldCancelSendMessage) {
-			Beep(880, 10);
 			SetLastError(ERROR_CANCELLED);
 			return 0;
 		}
