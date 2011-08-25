@@ -4,7 +4,9 @@ import time
 import threading
 from ctypes import windll, oledll
 import ctypes.wintypes
+import comtypes
 import winUser
+import winKernel
 from logHandler import log
 
 #settings
@@ -32,6 +34,10 @@ _coreAliveEvent = threading.Event()
 _resumeEvent = threading.Event()
 _coreThreadID=windll.kernel32.GetCurrentThreadId()
 _watcherThread=None
+
+class CallCancelled(Exception):
+	"""Raised when a call is cancelled.
+	"""
 
 def alive():
 	"""Inform the watchdog that the core is alive.
@@ -150,3 +156,86 @@ class Suspender(object):
 
 	def __exit__(self,*args):
 		_resumeEvent.set()
+
+class CancellableCallThread(threading.Thread):
+	"""A worker thread used to execute a call which must be made cancellable.
+	If the call is cancelled, this thread must be abandoned.
+	"""
+
+	def __init__(self):
+		super(CancellableCallThread, self).__init__()
+		self.daemon = True
+		self._executeEvent = threading.Event()
+		self._executionDoneEvent = ctypes.windll.kernel32.CreateEventW(None, False, False, None)
+		self.isUsable = True
+
+	def execute(self, func, args, kwargs, pumpMessages=True):
+		# Don't even bother making the call if the core is already dead.
+		if isAttemptingRecovery:
+			raise CallCancelled
+
+		self._func = func
+		self._args = args
+		self._kwargs = kwargs
+		self._result = None
+		self._exc_info = None
+		self._executeEvent.set()
+
+		if pumpMessages:
+			waitHandles = (ctypes.wintypes.HANDLE * 1)(self._executionDoneEvent)
+			waitIndex = ctypes.wintypes.DWORD()
+		timeout = int(1000 * CHECK_INTERVAL)
+		while True:
+			if pumpMessages:
+				try:
+					oledll.ole32.CoWaitForMultipleHandles(0, timeout, 1, waitHandles, ctypes.byref(waitIndex))
+					break
+				except WindowsError:
+					pass
+			else:
+				if windll.kernel32.WaitForSingleObject(self._executionDoneEvent, timeout) != winKernel.WAIT_TIMEOUT:
+					break
+			if isAttemptingRecovery:
+				self.isUsable = False
+				raise CallCancelled
+
+		exc = self._exc_info
+		if exc:
+			raise exc[0], exc[1], exc[2]
+		return self._result
+
+	def run(self):
+		comtypes.CoInitializeEx(comtypes.COINIT_MULTITHREADED)
+		while self.isUsable:
+			self._executeEvent.wait()
+			self._executeEvent.clear()
+			try:
+				self._result = self._func(*self._args, **self._kwargs)
+			except:
+				self._exc_info = sys.exc_info()
+			ctypes.windll.kernel32.SetEvent(self._executionDoneEvent)
+		ctypes.windll.kernel32.CloseHandle(self._executionDoneEvent)
+
+cancellableCallThread = None
+def cancellableExecute(func, *args, **kwargs):
+	"""Execute a function in the main thread, making it cancellable.
+	@param func: The function to execute.
+	@type func: callable
+	@param ccPumpMessages: Whether to pump messages while waiting.
+	@type ccPumpMessages: bool
+	@param args: Positional arguments for the function.
+	@param kwargs: Keyword arguments for the function.
+	@raise CallCancelled: If the call was cancelled.
+	"""
+	global cancellableCallThread
+	pumpMessages = kwargs.pop("ccPumpMessages", True)
+	if not isRunning or not _resumeEvent.isSet() or not isinstance(threading.currentThread(), threading._MainThread):
+		# Watchdog is not running or this is a background thread,
+		# so just execute the call.
+		return func(*args, **kwargs)
+	if not cancellableCallThread or not cancellableCallThread.isUsable:
+		# The thread hasn't yet been created or is not usable.
+		# Create a new one.
+		cancellableCallThread = CancellableCallThread()
+		cancellableCallThread.start()
+	return cancellableCallThread.execute(func, args, kwargs, pumpMessages=pumpMessages)
