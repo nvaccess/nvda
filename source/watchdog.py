@@ -134,6 +134,13 @@ def _notifySendMessageCancelled():
 			raise CallCancelled
 	sys.setprofile(sendMessageCallCanceller)
 
+RPC_E_CALL_CANCELED = -2147418110
+_orig_COMError_init = comtypes.COMError.__init__
+def _COMError_init(self, hresult, text, details):
+	if hresult == RPC_E_CALL_CANCELED:
+		raise CallCancelled
+	_orig_COMError_init(self, hresult, text, details)
+
 def initialize():
 	"""Initialize the watchdog.
 	"""
@@ -147,6 +154,8 @@ def initialize():
 	# Handle cancelled SendMessage calls.
 	import NVDAHelper
 	NVDAHelper._setDllFuncPointer(NVDAHelper.localLib, "_notifySendMessageCancelled", _notifySendMessageCancelled)
+	# Monkey patch comtypes to specially handle cancelled COM calls.
+	comtypes.COMError.__init__ = _COMError_init
 	_coreAliveEvent.set()
 	_resumeEvent.set()
 	_watcherThread=threading.Thread(target=_watcher)
@@ -160,6 +169,7 @@ def terminate():
 		return
 	isRunning=False
 	oledll.ole32.CoDisableCallCancellation(None)
+	comtypes.COMError.__init__ = _orig_COMError_init
 	_resumeEvent.set()
 	_coreAliveEvent.set()
 	_watcherThread.join()

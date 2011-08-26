@@ -20,7 +20,6 @@ RPC_S_CALL_FAILED_DNE = 1727
 E_ACCESSDENIED = -2147024891
 EVENT_E_ALL_SUBSCRIBERS_FAILED = -2147220991
 RPC_E_CALL_REJECTED = -2147418111
-RPC_E_CALL_CANCELED = -2147418110
 RPC_E_DISCONNECTED = -2147417848
 
 moduleCache={}
@@ -142,6 +141,7 @@ class Logger(logging.Logger):
 		"""
 		import comtypes
 		import watchdog
+		from watchdog import RPC_E_CALL_CANCELED
 		if exc_info is True:
 			exc_info = sys.exc_info()
 
