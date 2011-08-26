@@ -87,8 +87,9 @@ def _watcher():
 
 def _shouldRecoverAfterMinTimeout():
 	info=winUser.getGUIThreadInfo(0)
-	#If hwndFocus is 0, then the OS is clearly busy and we don't want to timeout prematurely.
-	if not info.hwndFocus: return False
+	if not info.hwndFocus:
+		# The foreground thread is frozen or there is no foreground thread (probably due to a freeze elsewhere).
+		return True
 	# Import late to avoid circular import.
 	import api
 	#If a system menu has been activated but NVDA's focus is not yet in the menu then use min timeout
