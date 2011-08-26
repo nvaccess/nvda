@@ -135,7 +135,7 @@ class Logger(logging.Logger):
 			return
 		self._log(log.IO, msg, args, **kwargs)
 
-	def exception(self, msg="", exc_info=True):
+	def exception(self, msg="", exc_info=True, **kwargs):
 		"""Log an exception at an appropriate levle.
 		Normally, it will be logged at level "ERROR".
 		However, certain exceptions which aren't considered errors (or aren't errors that we can fix) are expected and will therefore be logged at a lower level.
@@ -155,7 +155,7 @@ class Logger(logging.Logger):
 		else:
 			level = self.ERROR
 
-		self._log(level, msg, (), exc_info=exc_info)
+		self._log(level, msg, (), exc_info=exc_info, **kwargs)
 
 class FileHandler(logging.StreamHandler):
 
@@ -244,7 +244,7 @@ def _getDefaultLogFilePath():
 		return ".\\nvda.log"
 
 def _excepthook(*exc_info):
-	log.error("", exc_info=exc_info, codepath="unhandled exception")
+	log.exception(exc_info=exc_info, codepath="unhandled exception")
 
 def _showwarning(message, category, filename, lineno, file=None, line=None):
 	log.debugWarning(warnings.formatwarning(message, category, filename, lineno, line).rstrip(), codepath="Python warning")
