@@ -2,6 +2,7 @@ import sys
 import traceback
 import time
 import threading
+import inspect
 from ctypes import windll, oledll
 import ctypes.wintypes
 import comtypes
@@ -121,6 +122,18 @@ def _crashHandler(exceptionInfo):
 	core.restart()
 	return 1 # EXCEPTION_EXECUTE_HANDLER
 
+@ctypes.WINFUNCTYPE(None)
+def _notifySendMessageCancelled():
+	caller = inspect.currentframe().f_back
+	if not caller:
+		return
+	# Set a profile function which will raise an exception when returning from the calling frame.
+	def sendMessageCallCanceller(frame, event, arg):
+		if frame == caller:
+			# Raising an exception will also cause the profile function to be deactivated.
+			raise CallCancelled
+	sys.setprofile(sendMessageCallCanceller)
+
 def initialize():
 	"""Initialize the watchdog.
 	"""
@@ -131,6 +144,9 @@ def initialize():
 	# Catch application crashes.
 	windll.kernel32.SetUnhandledExceptionFilter(_crashHandler)
 	oledll.ole32.CoEnableCallCancellation(None)
+	# Handle cancelled SendMessage calls.
+	import NVDAHelper
+	NVDAHelper._setDllFuncPointer(NVDAHelper.localLib, "_notifySendMessageCancelled", _notifySendMessageCancelled)
 	_coreAliveEvent.set()
 	_resumeEvent.set()
 	_watcherThread=threading.Thread(target=_watcher)

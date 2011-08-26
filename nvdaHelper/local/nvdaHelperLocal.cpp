@@ -40,6 +40,8 @@ void destroyConnection(handle_t bindingHandle) {
 bool shouldCancelSendMessage;
 const UINT CANCELSENDMESSAGE_CHECK_INTERVAL = 400;
 
+void(__stdcall *_notifySendMessageCancelled)();
+
 LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
 	fuFlags |= SMTO_BLOCK | SMTO_ABORTIFHUNG;
 	fuFlags &= ~SMTO_NOTIMEOUTIFNOTHUNG;
@@ -47,6 +49,7 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 	LRESULT ret;
 	for (UINT remainingTimeout = uTimeout; remainingTimeout > 0; remainingTimeout -= (remainingTimeout > CANCELSENDMESSAGE_CHECK_INTERVAL) ? CANCELSENDMESSAGE_CHECK_INTERVAL : remainingTimeout) {
 		if (shouldCancelSendMessage) {
+			_notifySendMessageCancelled();
 			SetLastError(ERROR_CANCELLED);
 			return 0;
 		}
