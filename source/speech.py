@@ -75,9 +75,9 @@ def isBlank(text):
 
 RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 
-def processText(text,symbolLevel):
+def processText(locale,text,symbolLevel):
 	text = speechDictHandler.processText(text)
-	text = characterProcessing.processSpeechSymbols(languageHandler.getLanguage(), text, symbolLevel)
+	text = characterProcessing.processSpeechSymbols(locale, text, symbolLevel)
 	text = RE_CONVERT_WHITESPACE.sub(u" ", text)
 	return text.strip()
 
@@ -322,10 +322,15 @@ def speak(speechSequence,symbolLevel=None):
 	log.io("Speaking %r" % speechSequence)
 	if symbolLevel is None:
 		symbolLevel=config.conf["speech"]["symbolLevel"]
+	curLanguage=defaultLanguage=getSynth().language
 	for index in xrange(len(speechSequence)):
 		item=speechSequence[index]
+		if isinstance(item,LangChangeCommand):
+			if not item.lang:
+				speechSequence[index]=item=LangChangeCommand(defaultLanguage)
+			curLanguage=item.lang
 		if isinstance(item,basestring):
-			speechSequence[index]=processText(item,symbolLevel)+" "
+			speechSequence[index]=processText(curLanguage,item,symbolLevel)+" "
 	getSynth().speak(speechSequence)
 
 def speakSelectionMessage(message,text):
