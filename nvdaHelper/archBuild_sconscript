@@ -103,11 +103,4 @@ mshtmlVBufBackend=env.SConscript('vbufBackends/mshtml/sconscript')
 env.Install(libInstallDir,mshtmlVBufBackend)
 
 if TARGET_ARCH=='x86' and os.path.isdir(Dir('#include/espeak').abspath):
-	espeakLib=env.SConscript('espeak/sconscript')
-	installedEspeakData=env.Command(
-		target=sourceDir.Dir('synthDrivers/espeak-data'),
-		source=[Dir('#include/espeak/espeak-data'),Dir('espeak/variants')],
-		action=[Delete('$TARGET'),Copy('$TARGET','$SOURCE')]+[Copy('$TARGET/voices/!v/%s'%x.name,x.path) for x in env.Glob('espeak/variants/*')], 
-	)
-	env.AlwaysBuild(installedEspeakData)
-	env.Clean(installedEspeakData,installedEspeakData)
+	env.SConscript('espeak/sconscript')
