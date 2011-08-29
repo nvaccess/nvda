@@ -139,7 +139,8 @@ def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 	if isPaused:
 		cancelSpeech()
 	beenCanceled=False
-	locale=languageHandler.getLanguage()
+	if not locale:
+		locale=getSynth().language
 	if not text:
 		return getSynth().speak((_("blank"),))
 	if not text.isspace():
@@ -173,7 +174,7 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 			synth.pitch=max(0,min(oldPitch+synthConfig["capPitchChange"],100))
 		index=count+1
 		log.io("Speaking character %r"%char)
-		speechSequence=[]
+		speechSequence=[LangChangeCommand(locale)]
 		if len(char) == 1 and synthConfig["useSpellingFunctionality"]:
 			speechSequence.append(CharacterModeCommand(True))
 		if index is not None:
@@ -592,19 +593,10 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 	language=newFormatField.get('language')
 	textList.append(LangChangeCommand(language))
 	textListBlankLen+=1
-	if False: #unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD):
-		text=CHUNK_SEPARATOR.join(textList)
-		if text:
-			speakText(text,index=index)
-		text=info.text
-		if len(text)<=1:
-			if unit==textInfos.UNIT_CHARACTER:
-				speakSpelling(text)
-			else:
-				text=characterProcessing.processSpeechSymbol(languageHandler.getLanguage(),text)
-				speakText(text)
-		else:
-			speakText(text,index=index)
+	if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and len([x for x in textWithFields if isinstance(x,basestring)])==1:
+		if any(isinstance(x,basestring) for x in textList):
+			speech.speak(textList)
+		speakSpelling(textWithFields[0],locale=language)
 		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)
 		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
 		return
