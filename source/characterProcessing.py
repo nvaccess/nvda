@@ -417,8 +417,14 @@ class SpeechSymbolProcessor(object):
 		# Set defaults for any fields not explicitly set.
 		for symbol in symbols.values():
 			if symbol.replacement is None:
-				# Complex symbols without a replacement specified are useless.
+				# Symbols without a replacement specified are useless.
+				log.warning("Replacement not defined in locale {locale} for symbol: {symbol}".format(
+					symbol=symbol.identifier, locale=self.locale))
 				del symbols[symbol.identifier]
+				try:
+					complexSymbolsList.remove(symbol)
+				except ValueError:
+					pass
 				continue
 			if symbol.level is None:
 				symbol.level = SYMLVL_ALL
