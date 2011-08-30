@@ -206,7 +206,7 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 
 VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
 	VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
-	int indexInParent, long tableID, int rowNumber
+	TableInfo* tableInfo
 ) {
 	int res;
 	LOG_DEBUG(L"Entered fillVBuf, with pacc at "<<pacc<<L", parentNode at "<<parentNode<<L", previousNode "<<previousNode);
@@ -329,27 +329,28 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 	}
 	LOG_DEBUG(L"childCount is "<<childCount);
 
-	// Handle table information.
+	// Handle tables.
 	if (role == ROLE_SYSTEM_TABLE) {
-		LOG_DEBUG(L"This is a table, adding table-id attribute");
+		tableInfo = new TableInfo;
+		tableInfo->tableID = ID;
+		tableInfo->curRowNumber = 0;
+		tableInfo->curColumnNumber = 0;
 		wostringstream s;
 		s << ID;
 		parentNode->addAttribute(L"table-id", s.str());
-		tableID = ID;
 	} else if (role == ROLE_SYSTEM_ROW) {
-		LOG_DEBUG(L"This is a table row, setting rowNumber");
-		rowNumber = indexInParent + 1;
+		++tableInfo->curRowNumber;
+		tableInfo->curColumnNumber = 0;
 	} else if (role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_COLUMNHEADER) {
-		LOG_DEBUG(L"This is a table cell, adding attributes");
+		++tableInfo->curColumnNumber;
 		wostringstream s;
-		s << tableID;
+		s << tableInfo->tableID;
 		parentNode->addAttribute(L"table-id", s.str());
 		s.str(L"");
-		s << ((role == ROLE_SYSTEM_COLUMNHEADER) ? 0 : rowNumber);
+		s << tableInfo->curRowNumber;
 		parentNode->addAttribute(L"table-rownumber", s.str());
 		s.str(L"");
-		// The parent is a row, so indexInParent is the column number.
-		s << indexInParent + 1;
+		s << tableInfo->curColumnNumber;
 		parentNode->addAttribute(L"table-columnnumber", s.str());
 	}
 
@@ -385,7 +386,7 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 						WindowFromAccessibleObject(childPacc, &tempHwnd);
 					}
 					LOG_DEBUG(L"calling filVBuf with child object ");
-					if((tempNode=this->fillVBuf(docHandle,childPacc,buffer,parentNode,previousNode,i,tableID,rowNumber))!=NULL) {
+					if ((tempNode = this->fillVBuf(docHandle, childPacc, buffer, parentNode, previousNode, tableInfo))!=NULL) {
 						previousNode=tempNode;
 					} else {
 						LOG_DEBUG(L"Error in calling fillVBuf");
@@ -447,6 +448,11 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 			if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, L" "))
 				previousNode=tempNode;
 		}
+	}
+
+	if (role == ROLE_SYSTEM_TABLE) {
+		nhAssert(tableInfo);
+		delete tableInfo;
 	}
 
 	if (stdName)

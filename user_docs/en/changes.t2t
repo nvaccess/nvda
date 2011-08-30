@@ -17,6 +17,7 @@
 - Restarting NVDA when it has frozen (e.g. by pressing control+alt+n) no longer exits the previous copy without starting a new one.
 - Pressing backspace or arrow keys in a Windows command console no longer causes strange results in some cases. (#1612)
 - The selected item in WPF combo boxes (and possibly some other combo boxes exposed using UI Automation) which do not allow text editing is now reported correctly.
+- In browse mode in Adobe Reader, it is now always possible to move to the next row from the header row and vice versa using the move to next row and move to previous row commands. Also, the header row is no longer reported as row 0. (#1731)
 
 
 = 2011.2 =
