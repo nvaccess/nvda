@@ -193,7 +193,8 @@ class SpeechSymbols(object):
 					try:
 						handler(line)
 					except ValueError:
-						log.warning("Invalid line: %s" % line)
+						log.warning("Invalid line in file {file}: {line}".format(
+							file=fileName, line=line))
 				else:
 					log.warning("Invalid line: %s" % line)
 
