@@ -911,6 +911,15 @@ SAPI 5 is a Microsoft standard for software speech synthesizers.
 Many speech synthesizers that comply with this standard may be  purchased or downloaded for free from various companies and websites, though your system will probably already come with at least one SAPI 5 voice preinstalled.
 When using this synthesizer with NVDA, the available voices (accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settins Ring #SynthSettingsRing]) will contain all the voices from all the installed SAPI 5 engines found on your system.
 
+++ Microsoft Speech Platform ++
+The Microsoft Speech Platform provides voices for many languages which are normally used in the development of server-based speech applications.
+These voices can also be used with NVDA.
+
+To use these voices, you will need to install two components:
+- Microsoft Speech Platform - Server Runtime (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=10208
+- Microsoft Speech Platform - Server Runtime Languages (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
+-
+
 ++ Audiologic Tts3 ++
 This is a commercial speech synthesizer specifically for the Italian language.
 You must have the synthesizer installed on your system in order for it to be used with NVDA.
