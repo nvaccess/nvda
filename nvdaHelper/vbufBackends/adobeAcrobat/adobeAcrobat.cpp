@@ -450,7 +450,12 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 		}
 	}
 
-	if (role == ROLE_SYSTEM_TABLE) {
+	// Finalise tables.
+	if ((role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_COLUMNHEADER) && parentNode->getLength() == 0) {
+		// Always render a space for empty table cells.
+		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+		parentNode->setIsBlock(false);
+	} else if (role == ROLE_SYSTEM_TABLE) {
 		nhAssert(tableInfo);
 		wostringstream s;
 		s << tableInfo->curRowNumber;
