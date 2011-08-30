@@ -350,8 +350,6 @@ class MSHTML(IAccessible):
 	def findOverlayClasses(self,clsList):
 		if self.TextInfo == MSHTMLTextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
-		#fix for #974
-		#this fails on some control in vs2008 new project wizard
 		nodeName = self.HTMLNodeName
 		if nodeName:
 			if nodeNamesToNVDARoles.get(nodeName) == controlTypes.ROLE_DOCUMENT:
