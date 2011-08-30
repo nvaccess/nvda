@@ -452,6 +452,12 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 
 	if (role == ROLE_SYSTEM_TABLE) {
 		nhAssert(tableInfo);
+		wostringstream s;
+		s << tableInfo->curRowNumber;
+		parentNode->addAttribute(L"table-rowcount", s.str());
+		s.str(L"");
+		s << tableInfo->curColumnNumber;
+		parentNode->addAttribute(L"table-columncount", s.str());
 		delete tableInfo;
 	}
 
