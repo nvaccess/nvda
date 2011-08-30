@@ -106,6 +106,9 @@ def normalizeIA2TextFormatField(formatField):
 	lineType=formatField.get("text-line-through-type")
 	if lineStyle or lineType:
 		formatField["strikethrough"]=lineStyle!="none" and lineType!="none"
+	language=formatField.get('language')
+	if language:
+		formatField['language']=language.replace('-','_')
 
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
