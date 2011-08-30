@@ -324,6 +324,7 @@ def speak(speechSequence,symbolLevel=None):
 	if symbolLevel is None:
 		symbolLevel=config.conf["speech"]["symbolLevel"]
 	curLanguage=defaultLanguage=getSynth().language
+	speechSequence.insert(0,LangChangeCommand(defaultLanguage))
 	for index in xrange(len(speechSequence)):
 		item=speechSequence[index]
 		if isinstance(item,LangChangeCommand):
