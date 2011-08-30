@@ -73,9 +73,10 @@ class SynthDriver(SynthDriver):
 			else:
 				log.error("Unknown speech: %s"%item)
 		if langChanged:
-			#textList.append("<speak xml:lang=\"%s\">"%defaultLanguage.replace('_','-'))
-			textList.append("</voice")
+			textList.append("</voice>")
 		text=u"".join(textList)
+		from logHandler import log
+		log.io(text)
 		_espeak.speak(text)
 
 	def cancel(self):
