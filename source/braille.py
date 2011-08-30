@@ -93,11 +93,25 @@ roleLabels = {
 }
 
 positiveStateLabels = {
+	# Translators: Displayed in braille when an object (e.g. a check box) is checked.
 	controlTypes.STATE_CHECKED: _("(x)"),
+	# Translators: Displayed in braille when an object (e.g. a check box) is half checked.
+	controlTypes.STATE_HALFCHECKED: _("(-)"),
+	# Translators: Displayed in braille when an object is selected.
 	controlTypes.STATE_SELECTED: _("sel"),
+	# Translators: Displayed in braille when an object has a popup (usually a sub-menu).
 	controlTypes.STATE_HASPOPUP: _("submnu"),
+	# Translators: Displayed in braille when an object supports autocompletion.
+	controlTypes.STATE_AUTOCOMPLETE: _("..."),
+	# Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
+	controlTypes.STATE_EXPANDED: _("-"),
+	# Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
+	controlTypes.STATE_COLLAPSED: _("+"),
+	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+	controlTypes.STATE_READONLY: _("ro"),
 }
 negativeStateLabels = {
+	# Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 	controlTypes.STATE_CHECKED: _("( )"),
 }
 
@@ -242,7 +256,9 @@ def getBrailleTextForProperties(**propertyValues):
 		if 'indexInGroup' in positionInfo and 'similarItemsInGroup' in positionInfo:
 			textList.append(_("%s of %s")%(positionInfo['indexInGroup'],positionInfo['similarItemsInGroup']))
 		if 'level' in positionInfo:
-			textList.append(_('level %s')%positionInfo['level'])
+			# Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
+			# %s is replaced with the level.
+			textList.append(_('lv %s')%positionInfo['level'])
 	return " ".join([x for x in textList if x])
 
 class NVDAObjectRegion(Region):
