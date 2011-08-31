@@ -139,8 +139,10 @@ def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 	if isPaused:
 		cancelSpeech()
 	beenCanceled=False
-	if not locale:
-		locale=getSynth().language
+	defaultLanguage=getSynth().language
+	if not locale or (not config.conf['speech']['autoDialectSwitching'] and locale.split('_')[0]==defaultLanguage.split('_')[0]):
+		locale=defaultLanguage
+
 	if not text:
 		return getSynth().speak((_("blank"),))
 	if not text.isspace():
@@ -323,12 +325,14 @@ def speak(speechSequence,symbolLevel=None):
 	log.io("Speaking %r" % speechSequence)
 	if symbolLevel is None:
 		symbolLevel=config.conf["speech"]["symbolLevel"]
+	autoDialectSwitching=config.conf['speech']['autoDialectSwitching']
 	curLanguage=defaultLanguage=getSynth().language
+	defaultLanguageRoot=defaultLanguage.split('_')[0]
 	speechSequence.insert(0,LangChangeCommand(defaultLanguage))
 	for index in xrange(len(speechSequence)):
 		item=speechSequence[index]
 		if isinstance(item,LangChangeCommand):
-			if not item.lang:
+			if not item.lang or (not autoDialectSwitching and item.lang.split('_')[0]==defaultLanguageRoot):
 				speechSequence[index]=item=LangChangeCommand(defaultLanguage)
 			curLanguage=item.lang
 		if isinstance(item,basestring):
@@ -519,6 +523,7 @@ def processNegativeStates(role, states, reason, negativeStates):
 		return speakNegatives - states
 
 def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=False,reason=REASON_QUERY,index=None):
+	autoLanguageSwitching=config.conf['speech']['autoLanguageSwitching']
 	if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD):
 		extraDetail=True
 	if not formatConfig:
@@ -589,13 +594,14 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 	text=getFormatFieldSpeech(newFormatField,formatFieldAttributesCache,formatConfig,unit=unit,extraDetail=extraDetail)
 	if text:
 		textList.append(text)
-	language=newFormatField.get('language')
-	textList.append(LangChangeCommand(language))
+	if autoLanguageSwitching:
+		language=newFormatField.get('language')
+		textList.append(LangChangeCommand(language))
 
 	if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and len([x for x in textWithFields if isinstance(x,basestring)])==1:
 		if any(isinstance(x,basestring) for x in textList):
 			speak(textList)
-		speakSpelling(textWithFields[0],locale=language)
+		speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None)
 		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)
 		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
 		return
@@ -642,9 +648,10 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 				if text:
 					relativeTextList.append(text)
 					lastTextOkToMerge=False
-				language=commandList[count].field.get('language')
-				if language:
-					relativeTextList.append(LangChangeCommand(language))
+				if autoLanguageSwitching:
+					language=commandList[count].field.get('language')
+					if language:
+						relativeTextList.append(LangChangeCommand(language))
 	#text=CHUNK_SEPARATOR.join(relativeTextList)
 	# Don't add this text if it is blank.
 	relativeBlank=True

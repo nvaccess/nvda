@@ -58,6 +58,8 @@ confspec = ConfigObj(StringIO(
 	symbolLevel = integer(default=100)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	outputDevice = string(default=default)
+	autoLanguageSwitching = boolean(default=true)
+	autoDialectSwitching = boolean(default=false)
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)

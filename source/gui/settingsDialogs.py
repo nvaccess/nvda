@@ -389,6 +389,12 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.lastControl=None
 		#Create controls for Synth Settings
 		self.updateVoiceSettings()
+		self.autoLanguageSwitchingCheckbox=wx.CheckBox(self,wx.NewId(),label=_("Automatic language switching (when supported)"))
+		self.autoLanguageSwitchingCheckbox.SetValue(config.conf["speech"]["autoLanguageSwitching"])
+		settingsSizer.Add(self.autoLanguageSwitchingCheckbox,border=10,flag=wx.BOTTOM)
+		self.autoDialectSwitchingCheckbox=wx.CheckBox(self,wx.NewId(),label=_("Automatic dialect switching (when supported)"))
+		self.autoDialectSwitchingCheckbox.SetValue(config.conf["speech"]["autoDialectSwitching"])
+		settingsSizer.Add(self.autoDialectSwitchingCheckbox,border=10,flag=wx.BOTTOM)
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Punctuation/symbol &level:")))
 		symbolLevelLabels=characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
@@ -472,6 +478,8 @@ class VoiceSettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		getSynth().saveSettings()
+		config.conf["speech"]["autoLanguageSwitching"]=self.autoLanguageSwitchingCheckbox.IsChecked()
+		config.conf["speech"]["autoDialectSwitching"]=self.autoDialectSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["symbolLevel"]=characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[self.symbolLevelList.GetSelection()]
 		config.conf["speech"][getSynth().name]["raisePitchForCapitals"]=self.raisePitchForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
