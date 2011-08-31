@@ -144,6 +144,8 @@ class SynthDriver(SynthDriver):
 		return voices
 
 	def _get_voice(self):
+		curVoice=getattr(self,'_voice',None)
+		if curVoice: return curVoice
 		curVoice = _espeak.getCurrentVoice()
 		if not curVoice:
 			return ""
@@ -154,6 +156,7 @@ class SynthDriver(SynthDriver):
 			return
 		_espeak.setVoiceAndVariant(voice=identifier,variant=self._variant)
 		self._language=super(SynthDriver,self).language
+		self._voice=identifier
 
 	def _get_lastIndex(self):
 		return _espeak.lastIndex
