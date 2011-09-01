@@ -1085,8 +1085,13 @@ the NVDAObject for IAccessible
 	def _get_positionInfo(self):
 		if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
 			try:
-				level,similarItemsInGroup,indexInGroup=self.IAccessibleObject.groupPosition
-				return dict(level=level,indexInGroup=indexInGroup,similarItemsInGroup=similarItemsInGroup)
+				info={}
+				info["level"],info["similarItemsInGroup"],info["indexInGroup"]=self.IAccessibleObject.groupPosition
+				# 0 means not applicable, so remove it.
+				for key, val in info.items():
+					if not val:
+						del info[key]
+				return info
 			except COMError:
 				pass
 		if self.hasEncodedAccDescription:
