@@ -253,9 +253,12 @@ def getBrailleTextForProperties(**propertyValues):
 		textList.append(keyboardShortcut)
 	positionInfo = propertyValues.get("positionInfo")
 	if positionInfo:
-		if 'indexInGroup' in positionInfo and 'similarItemsInGroup' in positionInfo:
-			textList.append(_("%s of %s")%(positionInfo['indexInGroup'],positionInfo['similarItemsInGroup']))
-		if 'level' in positionInfo:
+		indexInGroup = positionInfo.get("indexInGroup")
+		similarItemsInGroup = positionInfo.get("similarItemsInGroup")
+		if indexInGroup and similarItemsInGroup:
+			textList.append(_("%s of %s") % (indexInGroup, similarItemsInGroup))
+		level = positionInfo.get("level")
+		if level is not None:
 			# Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 			# %s is replaced with the level.
 			textList.append(_('lv %s')%positionInfo['level'])
