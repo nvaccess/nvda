@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import itertools
 import queueHandler
 import config
 import speech
@@ -59,7 +60,6 @@ def generateObjectSubtreeSpeech(obj,indexGen):
 def readObjectsHelper_generator(obj):
 	lastSentIndex=0
 	lastReceivedIndex=0
-	import itertools
 	speechGen=generateObjectSubtreeSpeech(obj,itertools.count())
 	objIndexMap={}
 	keepReading=True
@@ -83,7 +83,7 @@ def readObjectsHelper_generator(obj):
 				api.setNavigatorObject(lastReceivedObj)
 			#Clear old objects from the map
 			for i in objIndexMap.keys():
-				if False: #i<=lastReceivedIndex:
+				if i<=lastReceivedIndex:
 					del objIndexMap[i]
 		while speech.isPaused:
 			yield
