@@ -313,6 +313,7 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 	}
 
 	BSTR stdName = NULL;
+	wstring* lang = &static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(parentNode)->language;
 	if (domElement) {
 		// Get stdName.
 		if ((res = domElement->GetStdName(&stdName)) != S_OK) {
@@ -328,21 +329,20 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 		}
 
 		// Get language.
-		BSTR lang = NULL;
-		if (domElement->GetAttribute(L"Lang", NULL, &lang) == S_OK && lang) {
-			wstring* outLang = &static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(parentNode)->language;
-			*outLang = lang;
-			SysFreeString(lang);
+		BSTR srcLang = NULL;
+		if (domElement->GetAttribute(L"Lang", NULL, &srcLang) == S_OK && srcLang) {
+			*lang = srcLang;
+			SysFreeString(srcLang);
 			// Replace "-" with "_" as required by NVDA.
-			size_t pos = outLang->find(L'-');
+			size_t pos = lang->find(L'-');
 			if (pos != wstring::npos)
-				outLang->replace(pos, 1, L"_");
+				lang->replace(pos, 1, L"_");
 		}
 	}
 
 	// If this node has no language, inherit it from its parent node.
-	if (oldParentNode && static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(parentNode)->language.empty())
-		static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(parentNode)->language = static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(oldParentNode)->language;
+	if (oldParentNode && lang->empty())
+		*lang = static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(oldParentNode)->language;
 
 	//Get the child count
 	int childCount=0;
@@ -455,7 +455,7 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 			// Render the name before this node,
 			// as the label is often not a separate node and thus won't be rendered into the buffer.
 			tempNode = buffer->addTextFieldNode(parentNode->getParent(), parentNode->getPrevious(), name);
-			tempNode->addAttribute(L"language", static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(parentNode)->language);
+			tempNode->addAttribute(L"language", *lang);
 		}
 
 		// Hereafter, tempNode is the text node (if any).
@@ -470,7 +470,7 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 		if (tempNode) {
 			// There was text.
 			previousNode = tempNode;
-			tempNode->addAttribute(L"language", static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(parentNode)->language);
+			tempNode->addAttribute(L"language", *lang);
 		}
 
 		if (name)
