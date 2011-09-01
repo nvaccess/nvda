@@ -264,3 +264,14 @@ class MSHTML(VirtualBuffer):
 			return self.rootNVDAObject.HTMLNode.document.url
 		except COMError:
 			return None
+
+	def shouldPassThrough(self, obj, reason=None):
+		try:
+			if not reason and not self.passThrough and obj.HTMLNodeName == "INPUT" and obj.HTMLNode.type == "file":
+				# #1720: The user is activating a file input control in browse mode.
+				# The NVDAObject for this is an editable text field,
+				# but we want to activate the browse button instead of editing the field.
+				return False
+		except COMError:
+			pass
+		return super(MSHTML, self).shouldPassThrough(obj, reason)
