@@ -711,18 +711,6 @@ Tries to force this object to take the focus.
 		"""
 		return None
 
-	def speakDescendantObjects(self,hashList=None):
-		"""Speaks all the descendants of this object.
-		"""
-		if hashList is None:
-			hashList=[]
-		for child in self.children:
-			h=hash(child)
-			if h not in hashList:
-				hashList.append(h)
-				speech.speakObject(child)
-				child.speakDescendantObjects(hashList=hashList)
-
 	def reportFocus(self):
 		"""Announces this object in a way suitable such that it gained focus.
 		"""
@@ -844,9 +832,9 @@ This code is executed if a gain focus event is received by this object.
 		newTime=time.time()
 		oldTime=getattr(self,'_basicTextTime',0)
 		if newTime-oldTime>0.5:
-			self._basicText=" ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
+			self._basicText=u" ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
 			if len(self._basicText)==0:
-				self._basicText="\n"
+				self._basicText=u""
 		else:
 			self._basicTextTime=newTime
 		return self._basicText

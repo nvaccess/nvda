@@ -10,6 +10,14 @@
 - Text formatting can now be reported when using browse mode in Mozilla Gecko (e.g. Firefox and Thunderbird). (#394)
 - Text with underline and/or strikethrough can now be detected and reported in standard IAccessible2 text controls such as in Mozilla applications.
 - NVDA will now restart itself if it crashes.
+- In browse mode in Adobe Reader, table row and column counts are now reported.
+- Added support for the Microsoft Speech Platform synthesizer. (#1735)
+- Page and line numbers are now reported for the caret in IBM Lotus Symphony. (#1632)
+
+
+== Changes ==
+- Some information displayed in braille has been abbreviated. (#1288)
+- the Read active window script (NVDA+b) has been improved to filter out unuseful controls   and also is now much more easy to silence. (#1499)
 
 
 == Bug Fixes ==
@@ -17,6 +25,13 @@
 - Restarting NVDA when it has frozen (e.g. by pressing control+alt+n) no longer exits the previous copy without starting a new one.
 - Pressing backspace or arrow keys in a Windows command console no longer causes strange results in some cases. (#1612)
 - The selected item in WPF combo boxes (and possibly some other combo boxes exposed using UI Automation) which do not allow text editing is now reported correctly.
+- In browse mode in Adobe Reader, it is now always possible to move to the next row from the header row and vice versa using the move to next row and move to previous row commands. Also, the header row is no longer reported as row 0. (#1731)
+- In browse mode in Adobe Reader, it is now possible to move to (and therefore past) empty cells in a table.
+- Pointless position information (e.g. 0 of 0 level 0) is no longer reported in braille.
+- When braille is tethered to review, it is now able to show  content in flat review. (#1711)
+- A text control's text is no longer presented twice on a braille display in some cases, e.g. scrolling back from the start of Wordpad documents.
+- In browse mode in Internet Explorer, pressing enter on a file upload button now correctly presents the dialog to choose a file to upload instead of switching to focus mode. (#1720)
+- Dynamic content changes such as in Dos consoles are no longer announced if  sleep mode for that application is currently on. (#1662)
 
 
 = 2011.2 =

@@ -93,13 +93,31 @@ roleLabels = {
 }
 
 positiveStateLabels = {
+	# Translators: Displayed in braille when an object (e.g. a check box) is checked.
 	controlTypes.STATE_CHECKED: _("(x)"),
+	# Translators: Displayed in braille when an object (e.g. a check box) is half checked.
+	controlTypes.STATE_HALFCHECKED: _("(-)"),
+	# Translators: Displayed in braille when an object is selected.
 	controlTypes.STATE_SELECTED: _("sel"),
+	# Translators: Displayed in braille when an object has a popup (usually a sub-menu).
 	controlTypes.STATE_HASPOPUP: _("submnu"),
+	# Translators: Displayed in braille when an object supports autocompletion.
+	controlTypes.STATE_AUTOCOMPLETE: _("..."),
+	# Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
+	controlTypes.STATE_EXPANDED: _("-"),
+	# Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
+	controlTypes.STATE_COLLAPSED: _("+"),
+	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+	controlTypes.STATE_READONLY: _("ro"),
 }
 negativeStateLabels = {
+	# Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 	controlTypes.STATE_CHECKED: _("( )"),
 }
+
+def NVDAObjectHasUsefulText(obj):
+	import displayModel
+	return issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo) or obj.role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states
 
 def _getDisplayDriver(name):
 	return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
@@ -239,10 +257,15 @@ def getBrailleTextForProperties(**propertyValues):
 		textList.append(keyboardShortcut)
 	positionInfo = propertyValues.get("positionInfo")
 	if positionInfo:
-		if 'indexInGroup' in positionInfo and 'similarItemsInGroup' in positionInfo:
-			textList.append(_("%s of %s")%(positionInfo['indexInGroup'],positionInfo['similarItemsInGroup']))
-		if 'level' in positionInfo:
-			textList.append(_('level %s')%positionInfo['level'])
+		indexInGroup = positionInfo.get("indexInGroup")
+		similarItemsInGroup = positionInfo.get("similarItemsInGroup")
+		if indexInGroup and similarItemsInGroup:
+			textList.append(_("%s of %s") % (indexInGroup, similarItemsInGroup))
+		level = positionInfo.get("level")
+		if level is not None:
+			# Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
+			# %s is replaced with the level.
+			textList.append(_('lv %s')%positionInfo['level'])
 	return " ".join([x for x in textList if x])
 
 class NVDAObjectRegion(Region):
@@ -264,7 +287,7 @@ class NVDAObjectRegion(Region):
 
 	def update(self):
 		obj = self.obj
-		text = getBrailleTextForProperties(name=obj.name, role=obj.role, value=obj.value, states=obj.states, description=obj.description, keyboardShortcut=obj.keyboardShortcut, positionInfo=obj.positionInfo)
+		text = getBrailleTextForProperties(name=obj.name, role=obj.role, value=obj.value if not NVDAObjectHasUsefulText(obj) else None , states=obj.states, description=obj.description, keyboardShortcut=obj.keyboardShortcut, positionInfo=obj.positionInfo)
 		self.rawText = text + self.appendText
 		super(NVDAObjectRegion, self).update()
 
@@ -651,7 +674,7 @@ def getFocusRegions(obj, review=False):
 	from cursorManager import CursorManager
 	if isinstance(obj, CursorManager):
 		region2 = (ReviewTextInfoRegion if review else CursorManagerRegion)(obj)
-	elif isinstance(obj, TreeInterceptor) or obj.role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states:
+	elif isinstance(obj, TreeInterceptor) or NVDAObjectHasUsefulText(obj): 
 		region2 = (ReviewTextInfoRegion if review else TextInfoRegion)(obj)
 	else:
 		region2 = None

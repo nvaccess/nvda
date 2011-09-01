@@ -32,6 +32,16 @@ def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,mi
 	return text, characterRects
 
 def requestTextChangeNotifications(obj, enable):
+	"""Request or cancel notifications for when the display text changes in an NVDAObject.
+	A textChange event (event_textChange) will be fired on the object when its text changes.
+	Note that this event does not provide any information about the changed text itself.
+	It is important to request that notifications be cancelled when you no longer require them or when the object is no longer in use,
+	as otherwise, resources will not be released.
+	@param obj: The NVDAObject for which text change notifications are desired.
+	@type obj: NVDAObject
+	@param enable: C{True} to enable notifications, C{False} to disable them.
+	@type enable: bool
+	"""
 	if not enable:
 		_textChangeNotificationObjs.remove(obj)
 	_requestTextChangeNotificationsForWindow(obj.appModule.helperLocalBindingHandle, obj.windowHandle, enable)

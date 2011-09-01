@@ -264,9 +264,9 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 	def _get_text(self):
 		text=self._rangeObj.text
 		if not text:
-			text=""
+			text=u""
 		if controlTypes.STATE_PROTECTED in self.obj.states:
-			text='*'*len(text)
+			text=u'*'*len(text)
 		return text
 
 	def move(self,unit,direction, endPoint=None):
@@ -350,8 +350,6 @@ class MSHTML(IAccessible):
 	def findOverlayClasses(self,clsList):
 		if self.TextInfo == MSHTMLTextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
-		#fix for #974
-		#this fails on some control in vs2008 new project wizard
 		nodeName = self.HTMLNodeName
 		if nodeName:
 			if nodeNamesToNVDARoles.get(nodeName) == controlTypes.ROLE_DOCUMENT:
