@@ -10,6 +10,14 @@
 - V režime prehliadania je možné oznamovať formátovanie textu v produktoch Mozilla.. (#394)
 - NVDA dokáže detekovať podčiarknutý a prečiarknutý text v editačných poliach IAccessible2 (nap. v aplikáciách Mozilla).
 - NVDA sa automaticky reštartuje po páde.
+- Pri čítaní dokumentov v programe Adobe reader sú čítané počty stĺpcov a riadkov tabuľky.
+- Nový ovládač hlasového výstupu pre hlasy Microsoft Speech Platform. (#1735)
+- Pri pohybe systémovým kurzorom sú v programe IBM Lotus Symphony oznamované čísla riadkov a čísla strán. (#1632)
+
+
+== Zmeny ==
+- Pridané skratky pre niektoré informácie zobrazované v brailly. (#1288)
+- Skript prečítať okno v popredí (NVDA+b) bol prepracovaný. Neoznamuje nepotrebné prvky a je možné ho prerušiť. (#1499)
 
 
 == Opravy ==
@@ -17,6 +25,13 @@
 - Reštart NVDA po zamrznutí (napr. stlačením NVDA+Control+n) nespustí NVDA znovu prv, než sa skutočne ukončí zamrznutá kópia..
 - V extrémnych prípadoch stláčanie klávesu backspace a kurzorových klávesov nespôsobuje problémy v okne príkazového riadku windows. (#1612)
 - V zoznámových rámikoch WPF alebo iných zoznamových rámikoch sprístupnených cez UIAccess, v ktorých nemožno editovať text je správne oznamovaná vybratá položka.
+- V programe Adobe reader je pri čítaní dokumentov možné prechádzať po riadkoch v tabuľke. Hlavička tabuľky nie je viac oznamovaná ako riadok 0. (#1731)
+- V programe Adobe Reader je pri čítaní tabuliek možné vojsť do alebo prejsť kurzorom cez prázdne bunky.
+- Zbytočné informácie o pozícii ako napr. 0 z 0 úroveň 0 nie sú viac oznamované v brailly.
+- Ak je braillovský kurzor zviazaný s prehliadacím kurzorom, dokáže NVDA v brailly zobrazovať obsah okna v plošnom prezeraní. (#1711)
+- Text editačných polí nie je v niektorých prípadoch v brailly zobrazovaný 2 krát, napr. pri pokuse o návrat späť ak je kurzor na začiatku dokumentu v programe wordpad.
+- Pri prehliadaní dokumentu v programe internet explorer stlačenie klávesu enter na tlačidle prehľadávať správne zobrazí dialóg na otvorenie súboru namiesto prepnutia do režimu fokusu. (#1720)
+- Dynamicky menený obsah nie je viac oznamovaný v režime spánku. (#1662)
 
 
 
