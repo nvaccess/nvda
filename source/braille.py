@@ -115,6 +115,10 @@ negativeStateLabels = {
 	controlTypes.STATE_CHECKED: _("( )"),
 }
 
+def NVDAObjectHasUsefulText(obj):
+	import displayModel
+	return issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo) or obj.role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states
+
 def _getDisplayDriver(name):
 	return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
 
@@ -283,7 +287,7 @@ class NVDAObjectRegion(Region):
 
 	def update(self):
 		obj = self.obj
-		text = getBrailleTextForProperties(name=obj.name, role=obj.role, value=obj.value, states=obj.states, description=obj.description, keyboardShortcut=obj.keyboardShortcut, positionInfo=obj.positionInfo)
+		text = getBrailleTextForProperties(name=obj.name, role=obj.role, value=obj.value if not NVDAObjectHasUsefulText(obj) else None , states=obj.states, description=obj.description, keyboardShortcut=obj.keyboardShortcut, positionInfo=obj.positionInfo)
 		self.rawText = text + self.appendText
 		super(NVDAObjectRegion, self).update()
 
@@ -670,7 +674,7 @@ def getFocusRegions(obj, review=False):
 	from cursorManager import CursorManager
 	if isinstance(obj, CursorManager):
 		region2 = (ReviewTextInfoRegion if review else CursorManagerRegion)(obj)
-	elif isinstance(obj, TreeInterceptor) or obj.role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states:
+	elif isinstance(obj, TreeInterceptor) or NVDAObjectHasUsefulText(obj): 
 		region2 = (ReviewTextInfoRegion if review else TextInfoRegion)(obj)
 	else:
 		region2 = None
