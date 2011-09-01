@@ -204,6 +204,16 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 	return previousNode;
 }
 
+class AdobeAcrobatVBufStorage_controlFieldNode_t: public VBufStorage_controlFieldNode_t {
+	public:
+	AdobeAcrobatVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock): VBufStorage_controlFieldNode_t(docHandle, ID, isBlock) {
+	}
+
+	protected:
+	wstring language;
+	friend class AdobeAcrobatVBufBackend_t;
+};
+
 VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
 	VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
 	TableInfo* tableInfo
@@ -241,7 +251,9 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 
 	//Add this node to the buffer
 	LOG_DEBUG(L"Adding Node to buffer");
-	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,TRUE);
+	VBufStorage_controlFieldNode_t* oldParentNode = parentNode;
+	parentNode = buffer->addControlFieldNode(parentNode, previousNode, 
+		new AdobeAcrobatVBufStorage_controlFieldNode_t(docHandle, ID, true));
 	nhAssert(parentNode); //new node must have been created
 	previousNode=NULL;
 	LOG_DEBUG(L"Added  node at "<<parentNode);
@@ -300,9 +312,9 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 		domElement = NULL;
 	}
 
-	// Get stdName.
 	BSTR stdName = NULL;
 	if (domElement) {
+		// Get stdName.
 		if ((res = domElement->GetStdName(&stdName)) != S_OK) {
 			LOG_DEBUG(L"IPDDomElement::GetStdName returned " << res);
 			stdName = NULL;
@@ -314,7 +326,23 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 				parentNode->setIsBlock(false);
 			}
 		}
+
+		// Get language.
+		BSTR lang = NULL;
+		if (domElement->GetAttribute(L"Lang", NULL, &lang) == S_OK && lang) {
+			wstring* outLang = &static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(parentNode)->language;
+			*outLang = lang;
+			SysFreeString(lang);
+			// Replace "-" with "_" as required by NVDA.
+			size_t pos = outLang->find(L'-');
+			if (pos != wstring::npos)
+				outLang->replace(pos, 1, L"_");
+		}
 	}
+
+	// If this node has no language, inherit it from its parent node.
+	if (oldParentNode && static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(parentNode)->language.empty())
+		static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(parentNode)->language = static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(oldParentNode)->language;
 
 	//Get the child count
 	int childCount=0;
@@ -426,18 +454,24 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 			parentNode->addAttribute(L"name", name);
 			// Render the name before this node,
 			// as the label is often not a separate node and thus won't be rendered into the buffer.
-			buffer->addTextFieldNode(parentNode->getParent(), parentNode->getPrevious(), name);
+			tempNode = buffer->addTextFieldNode(parentNode->getParent(), parentNode->getPrevious(), name);
+			tempNode->addAttribute(L"language", static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(parentNode)->language);
 		}
 
+		// Hereafter, tempNode is the text node (if any).
+		tempNode = NULL;
 		if (role == ROLE_SYSTEM_RADIOBUTTON || role == ROLE_SYSTEM_CHECKBUTTON) {
 			// Acrobat renders "Checked"/"Unchecked" as the text for radio buttons/check boxes, which is not what we want.
 			// Render the name (if any) as the text for radio buttons and check boxes.
-			if (name && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
-				previousNode = tempNode;
-			else
-				tempNode = NULL; // Signal no text.
-		} else if (tempNode = renderText(buffer, parentNode, previousNode, domNode, useNameAsContent))
+			if (name)
+				tempNode = buffer->addTextFieldNode(parentNode, previousNode, name);
+		} else
+			tempNode = renderText(buffer, parentNode, previousNode, domNode, useNameAsContent);
+		if (tempNode) {
+			// There was text.
 			previousNode = tempNode;
+			tempNode->addAttribute(L"language", static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(parentNode)->language);
+		}
 
 		if (name)
 			SysFreeString(name);
