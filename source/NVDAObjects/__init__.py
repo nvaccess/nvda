@@ -711,18 +711,6 @@ Tries to force this object to take the focus.
 		"""
 		return None
 
-	def speakDescendantObjects(self,hashList=None):
-		"""Speaks all the descendants of this object.
-		"""
-		if hashList is None:
-			hashList=[]
-		for child in self.children:
-			h=hash(child)
-			if h not in hashList:
-				hashList.append(h)
-				speech.speakObject(child)
-				child.speakDescendantObjects(hashList=hashList)
-
 	def reportFocus(self):
 		"""Announces this object in a way suitable such that it gained focus.
 		"""
