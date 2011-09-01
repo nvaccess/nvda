@@ -56,11 +56,8 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 """
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
-	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_loseFocus"):
-		try:
-			globalVars.focusObject.event_loseFocus()
-		except:
-			log.error("event_loseFocus in focusObject", exc_info=True)
+	if globalVars.focusObject:
+		eventHandler.executeEvent("loseFocus",globalVars.focusObject)
 	oldFocusLine=globalVars.focusAncestors
 	#add the old focus to the old focus ancestors, but only if its not None (is none at NVDA initialization)
 	if globalVars.focusObject: 

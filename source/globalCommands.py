@@ -8,6 +8,7 @@ import time
 import tones
 import keyboardHandler
 import mouseHandler
+import eventHandler
 import controlTypes
 import api
 import textInfos
@@ -44,11 +45,14 @@ class GlobalCommands(ScriptableObject):
 	script_toggleInputHelp.__doc__=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any.")
 
 	def script_toggleCurrentAppSleepMode(self,gesture):
-		curApp=api.getFocusObject().appModule
+		curFocus=api.getFocusObject()
+		curApp=curFocus.appModule
 		if curApp.sleepMode:
 			curApp.sleepMode=False
 			ui.message(_("Sleep mode off"))
+			eventHandler.executeEvent("gainFocus",curFocus)
 		else:
+			eventHandler.executeEvent("loseFocus",curFocus)
 			curApp.sleepMode=True
 			ui.message(_("Sleep mode on"))
 	script_toggleCurrentAppSleepMode.__doc__=_("Toggles  sleep mode on and off for  the active application.")
