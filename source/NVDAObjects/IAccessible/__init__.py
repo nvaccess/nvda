@@ -191,8 +191,8 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getTextRange(self,start,end):
 		try:
 			return self.obj.IAccessibleTextObject.text(start,end)
-		except:
-			return ""
+		except COMError:
+			return u""
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		try:
