@@ -717,8 +717,7 @@ class GlobalCommands(ScriptableObject):
 	def script_speakForeground(self,gesture):
 		obj=api.getForegroundObject()
 		if obj:
-			speech.speakObject(obj,reason=speech.REASON_QUERY)
-			obj.speakDescendantObjects()
+			sayAllHandler.readObjects(obj)
 	script_speakForeground.__doc__ = _("speaks the current foreground object")
 
 	def script_test_navigatorDisplayModelText(self,gesture):
