@@ -1172,4 +1172,7 @@ class LangChangeCommand(SpeechCommand):
 		@type lang: string
 		"""
 		self.lang=lang # if lang else languageHandler.getLanguage()
-		log.info("language: %s"%self.lang)
+
+	def __repr__(self):
+		return "LangChangeCommand (%r)"%self.lang
+
