@@ -50,7 +50,7 @@ class SynthDriver(SynthDriver):
 
 	def speak(self,speechSequence):
 		defaultLanguage=self._language
-		textList=[]
+		textList=[u"<voice>"]
 		langChanged=False
 		for item in speechSequence:
 			if isinstance(item,basestring):
@@ -74,9 +74,8 @@ class SynthDriver(SynthDriver):
 				log.error("Unknown speech: %s"%item)
 		if langChanged:
 			textList.append("</voice>")
+		textList.append(u"</voice>")
 		text=u"".join(textList)
-		from logHandler import log
-		log.io(text)
 		_espeak.speak(text)
 
 	def cancel(self):
