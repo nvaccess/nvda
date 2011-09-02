@@ -102,7 +102,7 @@ inline void processText(BSTR inText, wstring& outText) {
 VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 	VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
 	IPDDomNode* domNode,
-	bool fallBackToName
+	bool fallBackToName, wstring& lang
 ) {
 	HRESULT res;
 	VBufStorage_fieldNode_t* tempNode;
@@ -143,7 +143,7 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 				continue;
 			}
 			// Recursive call: render text for this child and its descendants.
-			if (tempNode = renderText(buffer, parentNode, previousNode, domChild, fallBackToName))
+			if (tempNode = renderText(buffer, parentNode, previousNode, domChild, fallBackToName, lang))
 				previousNode = tempNode;
 			domChild->Release();
 		}
@@ -182,14 +182,17 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 			wstring procText;
 			processText(text, procText);
 			previousNode = buffer->addTextFieldNode(parentNode, previousNode, procText);
-			if (previousNode && fontStatus == FontInfo_Valid) {
-				previousNode->addAttribute(L"font-name", fontName);
-				wostringstream s;
-				s.setf(ios::fixed);
-				s << setprecision(1) << fontSize << "pt";
-				previousNode->addAttribute(L"font-size", s.str());
-				if ((fontFlags&PDDOM_FONTATTR_ITALIC)==PDDOM_FONTATTR_ITALIC) previousNode->addAttribute(L"italic", L"1");
-				if ((fontFlags&PDDOM_FONTATTR_BOLD)==PDDOM_FONTATTR_BOLD) previousNode->addAttribute(L"bold", L"1");
+			if (previousNode) {
+				if (fontStatus == FontInfo_Valid) {
+					previousNode->addAttribute(L"font-name", fontName);
+					wostringstream s;
+					s.setf(ios::fixed);
+					s << setprecision(1) << fontSize << "pt";
+					previousNode->addAttribute(L"font-size", s.str());
+					if ((fontFlags&PDDOM_FONTATTR_ITALIC)==PDDOM_FONTATTR_ITALIC) previousNode->addAttribute(L"italic", L"1");
+					if ((fontFlags&PDDOM_FONTATTR_BOLD)==PDDOM_FONTATTR_BOLD) previousNode->addAttribute(L"bold", L"1");
+				}
+				previousNode->addAttribute(L"language", lang);
 			}
 			SysFreeString(text);
 		} else {
@@ -463,14 +466,13 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 		if (role == ROLE_SYSTEM_RADIOBUTTON || role == ROLE_SYSTEM_CHECKBUTTON) {
 			// Acrobat renders "Checked"/"Unchecked" as the text for radio buttons/check boxes, which is not what we want.
 			// Render the name (if any) as the text for radio buttons and check boxes.
-			if (name)
-				tempNode = buffer->addTextFieldNode(parentNode, previousNode, name);
+			if (name && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
+				tempNode->addAttribute(L"language", *lang);
 		} else
-			tempNode = renderText(buffer, parentNode, previousNode, domNode, useNameAsContent);
+			tempNode = renderText(buffer, parentNode, previousNode, domNode, useNameAsContent, *lang);
 		if (tempNode) {
 			// There was text.
 			previousNode = tempNode;
-			tempNode->addAttribute(L"language", *lang);
 		}
 
 		if (name)
