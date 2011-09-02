@@ -16,6 +16,13 @@ import config
 
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
+	def _normalizeFormatField(self, attrs):
+		language=attrs.get('language')
+		if language:
+			language=language.replace('-','_')
+			attrs['language']=language
+		return attrs
+
 	def _normalizeControlField(self,attrs):
 		level=None
 		accRole=attrs.get('IAccessible::role',0)
