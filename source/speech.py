@@ -322,18 +322,34 @@ def speak(speechSequence,symbolLevel=None):
 	if isPaused:
 		cancelSpeech()
 	beenCanceled=False
+	#Filter out redundant LangChangeCommand objects 
+	#And also fill in default values
+	autoDialectSwitching=config.conf['speech']['autoDialectSwitching']
+	curLanguage=defaultLanguage=getSynth().language
+	prevLanguage=None
+	defaultLanguageRoot=defaultLanguage.split('_')[0]
+	oldSpeechSequence=speechSequence
+	speechSequence=[]
+	for item in oldSpeechSequence:
+		if isinstance(item,LangChangeCommand):
+			curLanguage=item.lang
+			if not curLanguage or (not autoDialectSwitching and curLanguage.split('_')[0]==defaultLanguageRoot):
+				curLanguage=defaultLanguage
+		elif isinstance(item,basestring):
+			if not item: continue
+			if curLanguage!=prevLanguage:
+				speechSequence.append(LangChangeCommand(curLanguage))
+				prevLanguage=curLanguage
+			speechSequence.append(item)
+		else:
+			speechSequence.append(item)
 	log.io("Speaking %r" % speechSequence)
 	if symbolLevel is None:
 		symbolLevel=config.conf["speech"]["symbolLevel"]
-	autoDialectSwitching=config.conf['speech']['autoDialectSwitching']
-	curLanguage=defaultLanguage=getSynth().language
-	defaultLanguageRoot=defaultLanguage.split('_')[0]
-	speechSequence.insert(0,LangChangeCommand(defaultLanguage))
+	curLanguage=defaultLanguage
 	for index in xrange(len(speechSequence)):
 		item=speechSequence[index]
 		if isinstance(item,LangChangeCommand):
-			if not item.lang or (not autoDialectSwitching and item.lang.split('_')[0]==defaultLanguageRoot):
-				speechSequence[index]=item=LangChangeCommand(defaultLanguage)
 			curLanguage=item.lang
 		if isinstance(item,basestring):
 			speechSequence[index]=processText(curLanguage,item,symbolLevel)+" "
