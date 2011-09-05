@@ -106,6 +106,9 @@ def normalizeIA2TextFormatField(formatField):
 	lineType=formatField.get("text-line-through-type")
 	if lineStyle or lineType:
 		formatField["strikethrough"]=lineStyle!="none" and lineType!="none"
+	language=formatField.get('language')
+	if language:
+		formatField['language']=language.replace('-','_')
 
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
@@ -192,7 +195,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		try:
 			return self.obj.IAccessibleTextObject.text(start,end)
 		except COMError:
-			return ""
+			return u""
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		try:
@@ -1085,8 +1088,13 @@ the NVDAObject for IAccessible
 	def _get_positionInfo(self):
 		if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
 			try:
-				level,similarItemsInGroup,indexInGroup=self.IAccessibleObject.groupPosition
-				return dict(level=level,indexInGroup=indexInGroup,similarItemsInGroup=similarItemsInGroup)
+				info={}
+				info["level"],info["similarItemsInGroup"],info["indexInGroup"]=self.IAccessibleObject.groupPosition
+				# 0 means not applicable, so remove it.
+				for key, val in info.items():
+					if not val:
+						del info[key]
+				return info
 			except COMError:
 				pass
 		if self.hasEncodedAccDescription:
@@ -1217,18 +1225,6 @@ the NVDAObject for IAccessible
 			return None
 		else:
 			return super(IAccessible,self)._get_groupName()
-
-	def speakDescendantObjects(self,hashList=None):
-		if hashList is None:
-			hashList=[]
-		child=self.firstChild
-		while child and winUser.isDescendantWindow(self.windowHandle,child.windowHandle):
-			h=hash(child)
-			if h not in hashList:
-				hashList.append(h)
-				speech.speakObject(child,reason=speech.REASON_FOCUS)
-				child.speakDescendantObjects(hashList=hashList)
-			child=child.next
 
 	def event_selection(self):
 		return self.event_stateChange()
@@ -1402,25 +1398,6 @@ class List(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_LIST
 
-	def speakDescendantObjects(self,hashList=None):
-		child=self.activeChild
-		if child:
-			speech.speakObject(child,reason=speech.REASON_FOCUS)
-
-class ComboBox(IAccessible):
-
-	def speakDescendantObjects(self,hashList=None):
-		child=self.activeChild
-		if child:
-			speech.speakObject(child,reason=speech.REASON_FOCUS)
-
-class Outline(IAccessible):
-
-	def speakDescendantObjects(self,hashList=None):
-		child=self.activeChild
-		if child:
-			speech.speakObject(child,reason=speech.REASON_FOCUS)
-
 class SysLinkClient(IAccessible):
 
 	def reportFocus(self):
@@ -1566,8 +1543,6 @@ _staticMap={
 	("TRxRichEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,oleacc.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
 	(None,oleacc.ROLE_SYSTEM_LIST):"List",
-	(None,oleacc.ROLE_SYSTEM_COMBOBOX):"ComboBox",
-	(None,oleacc.ROLE_SYSTEM_OUTLINE):"Outline",
 	(None,oleacc.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
 	("TRichView",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRichView",
 	("TRichViewEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRichViewEdit",

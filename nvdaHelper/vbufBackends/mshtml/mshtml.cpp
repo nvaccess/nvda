@@ -483,6 +483,10 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 }
 
 inline void fillTextFormatting_helper(IHTMLElement2* pHTMLElement2, VBufStorage_fieldNode_t* node) {
+	MshtmlVBufStorage_controlFieldNode_t* parentNode=static_cast<MshtmlVBufStorage_controlFieldNode_t*>(node->getParent());
+	if(parentNode&&!parentNode->language.empty()) {
+		node->addAttribute(L"language",parentNode->language);
+	}
 	IHTMLCurrentStyle* pHTMLCurrentStyle=NULL;
 	if(pHTMLElement2->get_currentStyle(&pHTMLCurrentStyle)!=S_OK||!pHTMLCurrentStyle) {
 		LOG_DEBUG(L"Could not get IHTMLCurrentStyle");
@@ -731,8 +735,25 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		}
 	}
 
+	//Find out the language
+	wstring language=L"";
+	IHTMLElement* pHTMLElement=NULL;
+	if(pHTMLDOMNode->QueryInterface(IID_IHTMLElement,(void**)&pHTMLElement)==S_OK) {
+		VARIANT v;
+		if(pHTMLElement->getAttribute(L"lang",2,&v)==S_OK) {
+			if(v.vt==VT_BSTR&&v.bstrVal) {
+				language=v.bstrVal;
+			}
+			VariantClear(&v);
+		}
+		pHTMLElement->Release();
+	}
+	if(parentNode&&language.empty()) {
+		language=static_cast<MshtmlVBufStorage_controlFieldNode_t*>(parentNode)->language;
+	}
+
 	//Add the node to the buffer
-	VBufStorage_controlFieldNode_t* node=new MshtmlVBufStorage_controlFieldNode_t(docHandle,ID,isBlock,this,pHTMLDOMNode);
+	VBufStorage_controlFieldNode_t* node=new MshtmlVBufStorage_controlFieldNode_t(docHandle,ID,isBlock,this,pHTMLDOMNode,language);
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,node);
 	nhAssert(parentNode);
 	previousNode=NULL;

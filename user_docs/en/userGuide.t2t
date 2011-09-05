@@ -518,6 +518,15 @@ This option is a slider which goes from 0 to 100, (0 being the lowest volume and
 ==== Inflection ====
 This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with. (The only synthesizer that provides this option at the present time is eSpeak).
 
+==== Automatic Language switching ====
+This checkbox allows you to toggle whether or not NVDA should switch speech synthesizer languages on the fly, if language markup is available in the text being read.
+This option is enabled by default.
+Currently only the eSpeak synthesizer supports automatic language switching.
+
+==== Automatic Dialect switching ====
+If automatic language switching is turned on, this checkbox allows you to toggle whether or not  dialect changes should be made, rather than just actual language changes. E.g. If reading in an English U.S. voice but a document states some text is in English U.K. then if this feature is enabled the synthesizer will switch accents.
+this option is disabled by default.
+
 %kc:setting
 ==== Punctuation/Symbol Level ====
 Key: NVDA+p
@@ -747,6 +756,10 @@ Key: NVDA+v
 
 This option allows you to specify whether content in browse mode should place content such as links and other fields on their own line, or if it should keep them in the flow of text as it is visually shown. If the option is enabled then things will stay as they are visually shown, but if it is disabled then fields will be placed on their own line.
 
+==== Automatic Say All on page load ====
+This checkbox toggles the automatic reading of a page after it loads in browse mode.
+This option is enabled by default.
+
 ==== Report layout tables ====
 When disabled this option makes NVDA only report tables that contain tabular data (where it makes sense to know that this is a table).
 But if enabled, NVDA will also report tables used purely for visual presentation.
@@ -910,6 +923,15 @@ If you have SAPI 4 voices installed but the synthesizer does not appear in NVDA'
 SAPI 5 is a Microsoft standard for software speech synthesizers.
 Many speech synthesizers that comply with this standard may be  purchased or downloaded for free from various companies and websites, though your system will probably already come with at least one SAPI 5 voice preinstalled.
 When using this synthesizer with NVDA, the available voices (accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settins Ring #SynthSettingsRing]) will contain all the voices from all the installed SAPI 5 engines found on your system.
+
+++ Microsoft Speech Platform ++
+The Microsoft Speech Platform provides voices for many languages which are normally used in the development of server-based speech applications.
+These voices can also be used with NVDA.
+
+To use these voices, you will need to install two components:
+- Microsoft Speech Platform - Server Runtime (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=10208
+- Microsoft Speech Platform - Server Runtime Languages (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
+-
 
 ++ Audiologic Tts3 ++
 This is a commercial speech synthesizer specifically for the Italian language.

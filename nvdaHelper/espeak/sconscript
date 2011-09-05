@@ -22,7 +22,7 @@ def espeak_compileDict_action(target,source,env):
 		return
 	dictPath=os.path.split(source[0].abspath)[0]+'/'
 	if _espeakInstance.espeak_CompileDictionary(dictPath,None,0)!=0:
-		return
+		return 1
 
 synthDriversDir=sourceDir.Dir('synthDrivers')
 espeakDataDir=synthDriversDir.Dir('espeak-data')
@@ -72,10 +72,10 @@ sourceDataPath=Dir('#include/espeak/espeak-data').abspath
 for topDir,subDirs,files in os.walk(sourceDataPath):
 	relTopDir=os.path.relpath(topDir,sourceDataPath)
 	for f in files:
-		if(topDir==sourceDataPath):
-			if f.lower().endswith('_dict'): continue
-			dictDeps.append(espeakDataDir.File(f))
-		env.Command(espeakDataDir.Dir(relTopDir).File(f),Dir(topDir).File(f),Copy('$TARGET','$SOURCE'))
+		if(topDir==sourceDataPath) and f.lower().endswith('_dict'): continue
+		fNode=espeakDataDir.Dir(relTopDir).File(f)
+		dictDeps.append(fNode)
+		env.Command(fNode,Dir(topDir).File(f),Copy('$TARGET','$SOURCE'))
 	if len(files)==0:
 		env.Command(espeakDataDir.Dir(relTopDir),Dir(topDir),Mkdir('$TARGET'))
 

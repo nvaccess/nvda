@@ -170,9 +170,21 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		raise NotImplementedError
 
 	def _getStoryText(self):
+		"""Retrieve the entire text of the object.
+		@return: The entire text of the object.
+		@rtype: unicode
+		"""
 		raise NotImplementedError
 
 	def _getTextRange(self,start,end):
+		"""Retrieve the text in a given offset range.
+		@param start: The start offset.
+		@type start: int
+		@param end: The end offset (exclusive).
+		@type end: int
+		@return: The text contained in the requested range.
+		@rtype: unicode
+		"""
 		raise NotImplementedError
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):

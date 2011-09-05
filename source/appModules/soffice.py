@@ -76,15 +76,16 @@ class JAB_OOTableCell(JAB):
 class SymphonyTextInfo(IA2TextTextInfo):
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
+		obj = self.obj
 		try:
-			startOffset,endOffset,attribsString=self.obj.IAccessibleTextObject.attributes(offset)
+			startOffset,endOffset,attribsString=obj.IAccessibleTextObject.attributes(offset)
 		except COMError:
 			log.debugWarning("could not get attributes",exc_info=True)
 			return textInfos.FormatField(),(self._startOffset,self._endOffset)
 		formatField=textInfos.FormatField()
 		if not attribsString and offset>0:
 			try:
-				attribsString=self.obj.IAccessibleTextObject.attributes(offset-1)[2]
+				attribsString=obj.IAccessibleTextObject.attributes(offset-1)[2]
 			except COMError:
 				pass
 		if attribsString:
@@ -145,7 +146,7 @@ class SymphonyTextInfo(IA2TextTextInfo):
 
 		# optimisation: Assume a hyperlink occupies a full attribute run.
 		try:
-			self.obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext).hyperlinkIndex(offset)
+			obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext).hyperlinkIndex(offset)
 			formatField["link"] = True
 		except COMError:
 			pass
@@ -155,6 +156,24 @@ class SymphonyTextInfo(IA2TextTextInfo):
 			numbering = formatField.get("Numbering")
 			if numbering:
 				formatField["line-prefix"] = numbering.get("NumberingPrefix") or numbering.get("BulletChar")
+
+		if obj.hasFocus:
+			# Symphony exposes some information for the caret position as attributes on the document object.
+			# optimisation: Use the tree interceptor to get the document.
+			try:
+				docAttribs = obj.treeInterceptor.rootNVDAObject.IA2Attributes
+			except AttributeError:
+				# No tree interceptor, so we can't efficiently fetch this info.
+				pass
+			else:
+				try:
+					formatField["page-number"] = docAttribs["page-number"]
+				except KeyError:
+					pass
+				try:
+					formatField["line-number"] = docAttribs["line-number"]
+				except KeyError:
+					pass
 
 		return formatField,(startOffset,endOffset)
 

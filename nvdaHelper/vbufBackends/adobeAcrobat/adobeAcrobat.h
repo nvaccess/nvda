@@ -17,12 +17,18 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <vbufBase/backend.h>
 
+typedef struct {
+	long tableID;
+	int curRowNumber;
+	int curColumnNumber;
+} TableInfo;
+
 class AdobeAcrobatVBufBackend_t: public VBufBackend_t {
 	private:
 
 	VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
 		VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
-		int indexInParent=0, long tableID=0, int rowNumber=0
+		TableInfo* tableInfo = NULL
 	);
 
 	bool isXFA;

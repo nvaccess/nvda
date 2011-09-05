@@ -12,6 +12,14 @@ Traduzido por Marlin Rodrigues da Silva
 - A formatação de textos agora é informada quando se usa o modo de navegação no Mozilla Gecko (isto é, Firefox e Thunderbird). (#394)
 - Textos com sublinhado e/ou taxado agora podem ser detectados e informados em controles de texto standard IAccessible2 tais como em aplicativos da Mozilla.
 - O NVDA agora irá reiniciar por si próprio caso ele trave.
+- No Adobe Reader, em modo de navegação, a quantidade de linhas e colunas das tabelas agora é anunciada.
+- Adicionado suporte para o sintetizador da plataforma de fala da Microsoft. (#1735) 
+- O número de páginas e linhas agora é anunciado pelo cursor do sistema no IBM Lotus Symphony. (#1632)  
+
+
+== Alterações ==
+- Algumas informações exibidas em braille foram abreviadas. (#1288)
+- O script ler janela ativa (NVDA+b) foi aprimorado para excluir objetos inúteis e além disso, agora é bem mais fácil cilenciá-lo.
 
 
 == Correção de Falhas ==
@@ -19,6 +27,13 @@ Traduzido por Marlin Rodrigues da Silva
 - Ao reiniciar o NVDA quando este trava, (isto é, pressionando control+alt+n) já não encerra a cópia anterior sem iniciar uma nova.
 - Pressionar backspace ou setas em um console de comando do Windows já não causa resultados estranhos em alguns casos. (#1612)
 - O item selecionado em caixas de combinação WPF (e possivelmente algumas outras caixas de combinação expostas usando UI Automation) que não permitem edição de texto agora é anunciado corretamente.
+- No Adobe Reader em modo de navegação, agora é sempre possível mover para a próxima linha desde o cabeçalho da linha e vice versa usando os comandos mover para a próxima linha e mover a linha anterior. Além disso, o cabeçalho da linha já não é anunciado como linha 0. (#1731) 
+• No Adobe Reader em modo de navegação, agora é possível mover para (e portanto passar) células vazias em uma tabela.
+- A informação da posição do ponto inicial (isto é, 0 de 0 nível 0) já não é anunciada em braille.
+- O texto de controles já não é apresentado duas vezes em linhas braille em alguns casos, como ao deslocar a linha do início de documentos do Word Pad.
+- Quando o braille está vinculado à exporação, ele agora é capaz de exibir o conteúdo da revisão plana. (#1711)
+- No Internet Explorer, em modo de navegação, ao pressionar enter em um botão de upload de arquivo, agora o diálogo é corretamente apresentado em lugar de alternar para o modo de foco. (#1720)
+- Alterações nos conteúdos dinâmicos tais como em consoles do Dos já não são anunciados se o Modo Dormir estiver ativado para aquele aplicativo. (#1662)
 
 
 == 2011.2 ==

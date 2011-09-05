@@ -102,7 +102,7 @@ inline void processText(BSTR inText, wstring& outText) {
 VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 	VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
 	IPDDomNode* domNode,
-	bool fallBackToName
+	bool fallBackToName, wstring& lang
 ) {
 	HRESULT res;
 	VBufStorage_fieldNode_t* tempNode;
@@ -143,7 +143,7 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 				continue;
 			}
 			// Recursive call: render text for this child and its descendants.
-			if (tempNode = renderText(buffer, parentNode, previousNode, domChild, fallBackToName))
+			if (tempNode = renderText(buffer, parentNode, previousNode, domChild, fallBackToName, lang))
 				previousNode = tempNode;
 			domChild->Release();
 		}
@@ -182,14 +182,17 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 			wstring procText;
 			processText(text, procText);
 			previousNode = buffer->addTextFieldNode(parentNode, previousNode, procText);
-			if (previousNode && fontStatus == FontInfo_Valid) {
-				previousNode->addAttribute(L"font-name", fontName);
-				wostringstream s;
-				s.setf(ios::fixed);
-				s << setprecision(1) << fontSize << "pt";
-				previousNode->addAttribute(L"font-size", s.str());
-				if ((fontFlags&PDDOM_FONTATTR_ITALIC)==PDDOM_FONTATTR_ITALIC) previousNode->addAttribute(L"italic", L"1");
-				if ((fontFlags&PDDOM_FONTATTR_BOLD)==PDDOM_FONTATTR_BOLD) previousNode->addAttribute(L"bold", L"1");
+			if (previousNode) {
+				if (fontStatus == FontInfo_Valid) {
+					previousNode->addAttribute(L"font-name", fontName);
+					wostringstream s;
+					s.setf(ios::fixed);
+					s << setprecision(1) << fontSize << "pt";
+					previousNode->addAttribute(L"font-size", s.str());
+					if ((fontFlags&PDDOM_FONTATTR_ITALIC)==PDDOM_FONTATTR_ITALIC) previousNode->addAttribute(L"italic", L"1");
+					if ((fontFlags&PDDOM_FONTATTR_BOLD)==PDDOM_FONTATTR_BOLD) previousNode->addAttribute(L"bold", L"1");
+				}
+				previousNode->addAttribute(L"language", lang);
 			}
 			SysFreeString(text);
 		} else {
@@ -204,9 +207,19 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 	return previousNode;
 }
 
+class AdobeAcrobatVBufStorage_controlFieldNode_t: public VBufStorage_controlFieldNode_t {
+	public:
+	AdobeAcrobatVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock): VBufStorage_controlFieldNode_t(docHandle, ID, isBlock) {
+	}
+
+	protected:
+	wstring language;
+	friend class AdobeAcrobatVBufBackend_t;
+};
+
 VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
 	VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
-	int indexInParent, long tableID, int rowNumber
+	TableInfo* tableInfo
 ) {
 	int res;
 	LOG_DEBUG(L"Entered fillVBuf, with pacc at "<<pacc<<L", parentNode at "<<parentNode<<L", previousNode "<<previousNode);
@@ -241,7 +254,9 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 
 	//Add this node to the buffer
 	LOG_DEBUG(L"Adding Node to buffer");
-	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,TRUE);
+	VBufStorage_controlFieldNode_t* oldParentNode = parentNode;
+	parentNode = buffer->addControlFieldNode(parentNode, previousNode, 
+		new AdobeAcrobatVBufStorage_controlFieldNode_t(docHandle, ID, true));
 	nhAssert(parentNode); //new node must have been created
 	previousNode=NULL;
 	LOG_DEBUG(L"Added  node at "<<parentNode);
@@ -300,9 +315,10 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 		domElement = NULL;
 	}
 
-	// Get stdName.
 	BSTR stdName = NULL;
+	wstring* lang = &static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(parentNode)->language;
 	if (domElement) {
+		// Get stdName.
 		if ((res = domElement->GetStdName(&stdName)) != S_OK) {
 			LOG_DEBUG(L"IPDDomElement::GetStdName returned " << res);
 			stdName = NULL;
@@ -314,7 +330,22 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 				parentNode->setIsBlock(false);
 			}
 		}
+
+		// Get language.
+		BSTR srcLang = NULL;
+		if (domElement->GetAttribute(L"Lang", NULL, &srcLang) == S_OK && srcLang) {
+			*lang = srcLang;
+			SysFreeString(srcLang);
+			// Replace "-" with "_" as required by NVDA.
+			size_t pos = lang->find(L'-');
+			if (pos != wstring::npos)
+				lang->replace(pos, 1, L"_");
+		}
 	}
+
+	// If this node has no language, inherit it from its parent node.
+	if (oldParentNode && lang->empty())
+		*lang = static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(oldParentNode)->language;
 
 	//Get the child count
 	int childCount=0;
@@ -329,27 +360,28 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 	}
 	LOG_DEBUG(L"childCount is "<<childCount);
 
-	// Handle table information.
+	// Handle tables.
 	if (role == ROLE_SYSTEM_TABLE) {
-		LOG_DEBUG(L"This is a table, adding table-id attribute");
+		tableInfo = new TableInfo;
+		tableInfo->tableID = ID;
+		tableInfo->curRowNumber = 0;
+		tableInfo->curColumnNumber = 0;
 		wostringstream s;
 		s << ID;
 		parentNode->addAttribute(L"table-id", s.str());
-		tableID = ID;
 	} else if (role == ROLE_SYSTEM_ROW) {
-		LOG_DEBUG(L"This is a table row, setting rowNumber");
-		rowNumber = indexInParent + 1;
+		++tableInfo->curRowNumber;
+		tableInfo->curColumnNumber = 0;
 	} else if (role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_COLUMNHEADER) {
-		LOG_DEBUG(L"This is a table cell, adding attributes");
+		++tableInfo->curColumnNumber;
 		wostringstream s;
-		s << tableID;
+		s << tableInfo->tableID;
 		parentNode->addAttribute(L"table-id", s.str());
 		s.str(L"");
-		s << ((role == ROLE_SYSTEM_COLUMNHEADER) ? 0 : rowNumber);
+		s << tableInfo->curRowNumber;
 		parentNode->addAttribute(L"table-rownumber", s.str());
 		s.str(L"");
-		// The parent is a row, so indexInParent is the column number.
-		s << indexInParent + 1;
+		s << tableInfo->curColumnNumber;
 		parentNode->addAttribute(L"table-columnnumber", s.str());
 	}
 
@@ -385,7 +417,7 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 						WindowFromAccessibleObject(childPacc, &tempHwnd);
 					}
 					LOG_DEBUG(L"calling filVBuf with child object ");
-					if((tempNode=this->fillVBuf(docHandle,childPacc,buffer,parentNode,previousNode,i,tableID,rowNumber))!=NULL) {
+					if ((tempNode = this->fillVBuf(docHandle, childPacc, buffer, parentNode, previousNode, tableInfo))!=NULL) {
 						previousNode=tempNode;
 					} else {
 						LOG_DEBUG(L"Error in calling fillVBuf");
@@ -425,18 +457,23 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 			parentNode->addAttribute(L"name", name);
 			// Render the name before this node,
 			// as the label is often not a separate node and thus won't be rendered into the buffer.
-			buffer->addTextFieldNode(parentNode->getParent(), parentNode->getPrevious(), name);
+			tempNode = buffer->addTextFieldNode(parentNode->getParent(), parentNode->getPrevious(), name);
+			tempNode->addAttribute(L"language", *lang);
 		}
 
+		// Hereafter, tempNode is the text node (if any).
+		tempNode = NULL;
 		if (role == ROLE_SYSTEM_RADIOBUTTON || role == ROLE_SYSTEM_CHECKBUTTON) {
 			// Acrobat renders "Checked"/"Unchecked" as the text for radio buttons/check boxes, which is not what we want.
 			// Render the name (if any) as the text for radio buttons and check boxes.
 			if (name && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
-				previousNode = tempNode;
-			else
-				tempNode = NULL; // Signal no text.
-		} else if (tempNode = renderText(buffer, parentNode, previousNode, domNode, useNameAsContent))
+				tempNode->addAttribute(L"language", *lang);
+		} else
+			tempNode = renderText(buffer, parentNode, previousNode, domNode, useNameAsContent, *lang);
+		if (tempNode) {
+			// There was text.
 			previousNode = tempNode;
+		}
 
 		if (name)
 			SysFreeString(name);
@@ -447,6 +484,22 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 			if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, L" "))
 				previousNode=tempNode;
 		}
+	}
+
+	// Finalise tables.
+	if ((role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_COLUMNHEADER) && parentNode->getLength() == 0) {
+		// Always render a space for empty table cells.
+		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+		parentNode->setIsBlock(false);
+	} else if (role == ROLE_SYSTEM_TABLE) {
+		nhAssert(tableInfo);
+		wostringstream s;
+		s << tableInfo->curRowNumber;
+		parentNode->addAttribute(L"table-rowcount", s.str());
+		s.str(L"");
+		s << tableInfo->curColumnNumber;
+		parentNode->addAttribute(L"table-columncount", s.str());
+		delete tableInfo;
 	}
 
 	if (stdName)

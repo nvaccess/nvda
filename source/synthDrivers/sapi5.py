@@ -1,6 +1,6 @@
 #synthDrivers/sapi5.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2011 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -23,10 +23,10 @@ class constants:
 	SVSFPurgeBeforeSpeak = 2
 	SVSFIsXML = 8
 
-COM_CLASS = "SAPI.SPVoice"
-
 class SynthDriver(SynthDriver):
 	supportedSettings=(SynthDriver.VoiceSetting(),SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.VolumeSetting())
+
+	COM_CLASS = "SAPI.SPVoice"
 
 	name="sapi5"
 	description="Microsoft Speech API version 5"
@@ -34,7 +34,7 @@ class SynthDriver(SynthDriver):
 	@classmethod
 	def check(cls):
 		try:
-			r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,COM_CLASS)
+			r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,cls.COM_CLASS)
 			r.Close()
 			return True
 		except:
@@ -93,7 +93,7 @@ class SynthDriver(SynthDriver):
 		self.tts.Volume = value
 
 	def _initTts(self):
-		self.tts=comtypes.client.CreateObject(COM_CLASS)
+		self.tts=comtypes.client.CreateObject(self.COM_CLASS)
 		outputDeviceID=nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
 		if outputDeviceID>=0:
 			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
