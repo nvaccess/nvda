@@ -10,13 +10,13 @@
 - In Mozilla Gecko (e.g. Firefox) Heading levels are now announced  when using object navigation.
 - Text formatting can now be reported when using browse mode in Mozilla Gecko (e.g. Firefox and Thunderbird). (#394)
 - Text with underline and/or strikethrough can now be detected and reported in standard IAccessible2 text controls such as in Mozilla applications.
-- NVDA will now restart itself if it crashes.
 - In browse mode in Adobe Reader, table row and column counts are now reported.
 - Added support for the Microsoft Speech Platform synthesizer. (#1735)
 - Page and line numbers are now reported for the caret in IBM Lotus Symphony. (#1632)
 
 
 == Changes ==
+- NVDA will now restart itself if it crashes.
 - Some information displayed in braille has been abbreviated. (#1288)
 - the Read active window script (NVDA+b) has been improved to filter out unuseful controls   and also is now much more easy to silence. (#1499)
 - Automatic say all when a browse mode document loads is now optional via a setting in the Browse Mode settings dialog. (#414)  
@@ -35,6 +35,7 @@
 - In browse mode in Internet Explorer, pressing enter on a file upload button now correctly presents the dialog to choose a file to upload instead of switching to focus mode. (#1720)
 - Dynamic content changes such as in Dos consoles are no longer announced if  sleep mode for that application is currently on. (#1662)
 - In browse mode, the behaviour of alt+upArrow and alt+downArrow to collapse and expand combo boxes has been improved. (#1630)
+- NVDA now recovers from many more situations such as applications that stop responding which previously caused it to freeze completely. (#1408)
 
 
 = 2011.2 =
