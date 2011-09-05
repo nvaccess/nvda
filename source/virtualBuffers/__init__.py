@@ -25,6 +25,7 @@ import ui
 import aria
 import nvwave
 import treeInterceptorHandler
+import watchdog
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
@@ -570,7 +571,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	def unloadBuffer(self):
 		if self.VBufHandle is not None:
 			try:
-				NVDAHelper.localLib.VBuf_destroyBuffer(ctypes.byref(ctypes.c_int(self.VBufHandle)))
+				watchdog.cancellableExecute(NVDAHelper.localLib.VBuf_destroyBuffer, ctypes.byref(ctypes.c_int(self.VBufHandle)))
 			except WindowsError:
 				pass
 			self.VBufHandle=None

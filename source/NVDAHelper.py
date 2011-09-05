@@ -177,6 +177,7 @@ def initialize():
 			_setDllFuncPointer(localLib,"_%s"%name,func)
 		except AttributeError:
 			log.error("nvdaHelperLocal function pointer for %s could not be found, possibly old nvdaHelperLocal dll"%name)
+	localLib.nvdaHelperLocal_initialize()
 	localLib.startServer()
 	generateBeep=localLib.generateBeep
 	generateBeep.argtypes=[c_char_p,c_float,c_uint,c_ubyte,c_ubyte]
@@ -212,4 +213,5 @@ def terminate():
 		_remoteLoader64=None
 	generateBeep=None
 	VBuf_getTextInRange=None
+	localLib.nvdaHelperLocal_terminate()
 	localLib=None

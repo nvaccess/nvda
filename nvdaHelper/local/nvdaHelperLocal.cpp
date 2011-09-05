@@ -14,7 +14,12 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <cstdio>
 #include <sstream>
+#include <algorithm>
 #include "nvdaHelperLocal.h"
+#include "dllImportTableHooks.h"
+
+DllImportTableHooks* oleaccHooks;
+DllImportTableHooks* uiaCoreHooks;
 
 handle_t createConnection(int processID) {
 	RPC_STATUS rpcStatus;
@@ -30,4 +35,75 @@ handle_t createConnection(int processID) {
 
 void destroyConnection(handle_t bindingHandle) {
 	RpcBindingFree(&bindingHandle);
+}
+
+bool shouldCancelSendMessage;
+const UINT CANCELSENDMESSAGE_CHECK_INTERVAL = 400;
+
+void(__stdcall *_notifySendMessageCancelled)();
+
+LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
+	fuFlags |= SMTO_BLOCK | SMTO_ABORTIFHUNG;
+	fuFlags &= ~SMTO_NOTIMEOUTIFNOTHUNG;
+	shouldCancelSendMessage = false;
+	LRESULT ret;
+	for (UINT remainingTimeout = uTimeout; remainingTimeout > 0; remainingTimeout -= (remainingTimeout > CANCELSENDMESSAGE_CHECK_INTERVAL) ? CANCELSENDMESSAGE_CHECK_INTERVAL : remainingTimeout) {
+		if (shouldCancelSendMessage) {
+			_notifySendMessageCancelled();
+			SetLastError(ERROR_CANCELLED);
+			return 0;
+		}
+		if ((ret = SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), lpdwResult)) != 0 || GetLastError() != ERROR_TIMEOUT) {
+			// Success or error other than timeout.
+			return ret;
+		}
+	}
+	// Timeout.
+	SetLastError(ERROR_TIMEOUT);
+	return 0;
+}
+
+void cancelSendMessage() {
+	shouldCancelSendMessage = true;
+}
+
+LRESULT WINAPI fake_SendMessageW(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
+	DWORD_PTR result;
+	cancellableSendMessageTimeout(hwnd, Msg, wParam, lParam, 0, 60000, &result);
+	return (LRESULT)result;
+}
+
+LRESULT WINAPI fake_SendMessageTimeoutW(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
+	return cancellableSendMessageTimeout(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
+}
+
+void nvdaHelperLocal_initialize() {
+	// TODO: Should we call startServer() here instead of making the caller call it separately?
+	HMODULE oleacc = LoadLibraryA("oleacc.dll");
+	if (!oleacc)
+		return;
+	HMODULE uiaCore = LoadLibraryA("UIAutomationCore.dll");
+	if (!uiaCore) {
+		FreeLibrary(oleacc);
+		return;
+	}
+	oleaccHooks = new DllImportTableHooks(oleacc);
+	oleaccHooks->requestFunctionHook("USER32.dll", "SendMessageW", fake_SendMessageW);
+	oleaccHooks->requestFunctionHook("USER32.dll", "SendMessageTimeoutW", fake_SendMessageTimeoutW);
+	uiaCoreHooks = new DllImportTableHooks(uiaCore);
+	uiaCoreHooks->requestFunctionHook("USER32.dll", "SendMessageW", fake_SendMessageW);
+	uiaCoreHooks->requestFunctionHook("USER32.dll", "SendMessageTimeoutW", fake_SendMessageTimeoutW);
+	oleaccHooks->hookFunctions();
+	uiaCoreHooks->hookFunctions();
+}
+
+void nvdaHelperLocal_terminate() {
+	oleaccHooks->unhookFunctions();
+	uiaCoreHooks->unhookFunctions();
+	FreeLibrary(oleaccHooks->targetModule);
+	FreeLibrary(uiaCoreHooks->targetModule);
+	delete oleaccHooks;
+	oleaccHooks = NULL;
+	delete uiaCoreHooks;
+	uiaCoreHooks = NULL;
 }

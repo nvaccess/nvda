@@ -18,5 +18,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 handle_t createConnection(int processID);
 void destroyConnection(handle_t bindingHandle);
+void cancelSendMessage();
+void nvdaHelperLocal_initialize();
+void nvdaHelperLocal_terminate();
 
 #endif

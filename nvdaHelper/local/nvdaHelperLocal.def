@@ -1,6 +1,10 @@
 EXPORTS
 	createConnection
 	destroyConnection
+	cancelSendMessage
+	_notifySendMessageCancelled
+	nvdaHelperLocal_initialize
+	nvdaHelperLocal_terminate
 	generateBeep
 	startServer
 	stopServer
