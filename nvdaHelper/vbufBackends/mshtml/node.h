@@ -30,7 +30,8 @@ class MshtmlVBufStorage_controlFieldNode_t : public VBufStorage_controlFieldNode
 	IMarkupContainer2* pMarkupContainer2;
 	IHTMLChangeSink* pHTMLChangeSink;
 	DWORD HTMLChangeSinkCookey;
-	MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, IHTMLDOMNode* pHTMLDOMNode);
+	std::wstring language;
+	MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, IHTMLDOMNode* pHTMLDOMNode, const std::wstring& lang);
 	~MshtmlVBufStorage_controlFieldNode_t();
 
 };
