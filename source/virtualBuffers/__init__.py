@@ -901,6 +901,15 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	script_disablePassThrough.ignoreTreeInterceptorPassThrough = True
 
 	def script_collapseOrExpandControl(self, gesture):
+		focus = api.getFocusObject()
+		if not self.passThrough and self.selection.NVDAObjectAtStart != focus:
+			# #1630: Make sure the virtual buffer caret is in the focused object.
+			# Otherwise, if this is a combo box, collapsing it will move focus to the combo box
+			# and thus force focus mode again.
+			try:
+				self.selection = self.makeTextInfo(focus)
+			except LookupError:
+				pass
 		gesture.send()
 		if not self.passThrough or self.disableAutoPassThrough:
 			return
