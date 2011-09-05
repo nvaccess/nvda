@@ -124,6 +124,14 @@ def speakMessage(text,index=None):
 """
 	speakText(text,index=index,reason=REASON_MESSAGE)
 
+def getCurrentLanguage():
+	language=getSynth().language
+	if language:
+		language=language.replace('-','_')
+	else:
+		language=languageHandler.getLanguage()
+	return language
+
 _speakSpellingGenID = None
 
 def speakSpelling(text,locale=None,useCharacterDescriptions=False):
@@ -139,7 +147,7 @@ def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 	if isPaused:
 		cancelSpeech()
 	beenCanceled=False
-	defaultLanguage=getSynth().language
+	defaultLanguage=getCurrentLanguage()
 	if not locale or (not config.conf['speech']['autoDialectSwitching'] and locale.split('_')[0]==defaultLanguage.split('_')[0]):
 		locale=defaultLanguage
 
@@ -325,7 +333,7 @@ def speak(speechSequence,symbolLevel=None):
 	#Filter out redundant LangChangeCommand objects 
 	#And also fill in default values
 	autoDialectSwitching=config.conf['speech']['autoDialectSwitching']
-	curLanguage=defaultLanguage=getSynth().language
+	curLanguage=defaultLanguage=getCurrentLanguage()
 	prevLanguage=None
 	defaultLanguageRoot=defaultLanguage.split('_')[0]
 	oldSpeechSequence=speechSequence
