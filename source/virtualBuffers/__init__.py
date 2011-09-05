@@ -633,6 +633,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		This event is only fired upon entering this buffer when it was not the current buffer before.
 		This is different to L{event_gainFocus}, which is fired when an object inside this buffer gains focus, even if that object is in the same buffer.
 		"""
+		doSayAll=False
 		if not self._hadFirstGainFocus:
 			# This buffer is gaining focus for the first time.
 			# Fake a focus event on the focus object, as the buffer may have missed the actual focus event.
@@ -647,14 +648,15 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 					self.selection = self.makeTextInfo(initialPos)
 				speech.cancelSpeech()
 				reportPassThrough(self)
+				doSayAll=config.conf['virtualBuffers']['autoSayAllOnPageLoad']
+			self._hadFirstGainFocus = True
+
+		if not self.passThrough:
+			if doSayAll:
 				speech.speakObjectProperties(self.rootNVDAObject,name=True,states=True,reason=speech.REASON_FOCUS)
 				info=self.makeTextInfo(textInfos.POSITION_CARET)
 				sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
-			self._hadFirstGainFocus = True
-
-		else:
-			# This buffer has had focus before.
-			if not self.passThrough:
+			else:
 				# Speak it like we would speak focus on any other document object.
 				speech.speakObject(self.rootNVDAObject, reason=speech.REASON_FOCUS)
 				info = self.selection
