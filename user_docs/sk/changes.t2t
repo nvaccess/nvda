@@ -6,18 +6,20 @@
 = 2011.3 =
 
 == Nové vlastnosti ==
+- NVDA dokáže počas čítania niektorých webových a PDF dokumentov s dostatočne presnou informáciou o jazyku textu meniť jazyk hlasového výstupu eSpeak. Automatické prepínanie jazyka a dialektu je možné nastaviť v dialógu nastavenia hlasu. (#845) 
 - V oknách Mozilla Gecko je počas objektovej navigácie oznamovaná úroveň nadpisov.
 - V režime prehliadania je možné oznamovať formátovanie textu v produktoch Mozilla.. (#394)
 - NVDA dokáže detekovať podčiarknutý a prečiarknutý text v editačných poliach IAccessible2 (nap. v aplikáciách Mozilla).
-- NVDA sa automaticky reštartuje po páde.
 - Pri čítaní dokumentov v programe Adobe reader sú čítané počty stĺpcov a riadkov tabuľky.
 - Nový ovládač hlasového výstupu pre hlasy Microsoft Speech Platform. (#1735)
 - Pri pohybe systémovým kurzorom sú v programe IBM Lotus Symphony oznamované čísla riadkov a čísla strán. (#1632)
 
 
 == Zmeny ==
+- NVDA sa automaticky reštartuje po páde.
 - Pridané skratky pre niektoré informácie zobrazované v brailly. (#1288)
 - Skript prečítať okno v popredí (NVDA+b) bol prepracovaný. Neoznamuje nepotrebné prvky a je možné ho prerušiť. (#1499)
+- V dialógu režim prehliadania je možné nastaviť či sa po načítaní dokumentu automaticky spustí plynulé čítanie. (#414)
 
 
 == Opravy ==
@@ -32,6 +34,9 @@
 - Text editačných polí nie je v niektorých prípadoch v brailly zobrazovaný 2 krát, napr. pri pokuse o návrat späť ak je kurzor na začiatku dokumentu v programe wordpad.
 - Pri prehliadaní dokumentu v programe internet explorer stlačenie klávesu enter na tlačidle prehľadávať správne zobrazí dialóg na otvorenie súboru namiesto prepnutia do režimu fokusu. (#1720)
 - Dynamicky menený obsah nie je viac oznamovaný v režime spánku. (#1662)
+- Vylepšená interakcia so zoznamovými rámikmi (alt+šípka hore / alt+šípka dolu) v režime prehliadania. (#1630)
+- NVDA sa dokáže zotaviť z mnohých neočakávaných situácií. Napríklad pád nezávislej aplikácii spôsoboval kompletné pád NVDA. (#1408)
+- NVDA neodmieta pri čítaní dokumentu v režime prehliadania z Gecko2 (Mozilla Firefox a pod) zobraziť špecifické časti stránkey, ktoré sú štýlované ako display:table. (#1373)
 
 
 

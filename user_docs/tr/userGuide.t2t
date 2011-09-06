@@ -514,6 +514,15 @@ Burası 0'dan 100'e giden bir göstergedir, ve 0 en düşük ses seviyesini gös
 ==== Tonlama ====
 Bu seçenek, sentezleyicinin konuşmak için ne kadar tonlama (iniş çıkış) kullanacağını belirlemenizi sağlayan bir göstergedir. Şu an itibariyle bu özelliği sağlayan tek sentezleyici Espeak sentezleyicisidir.
 
+==== Konuşma Dilinin Otomatik Değişimi ====
+Bu onay kutusu, eğer okunmakta olan belgedeki metinlerin dili tanımlandıysa,, NVDA'nın konuşma dilini otomatik olarak değiştirip değiştirmemesiyle ilgili ayarı yapmanızı sağlar.
+Bu seçenek varsayılan olarak etkinleştirilmiştir.
+Şuanda sadece ESpeak sentezleyicisi otomatik dil değişimini desteklemektedir.
+
+==== Otomatik Lehçe Değişimi ====
+Eğer otomatik dil değişimiyle ilgili seçenek etkinse, bu onay kutusu da okunan belgedeki lehçe değişikliklerine göre NVDA'nın da konuşma dilini otomatik olarak değiştirip değiştirmemesiyle ilgili ayarı yapmanızı sağlar. Örneğin,   ABD İngilizcesiyle yazılmış bir belge içinde Büyük Krallık İngilizcesiyle yazılmış kısımlar varsa, NVDA konuşma dilini otomatik olarak ABD İngilizcesinden Büyük Krallık İngilizcesine değiştirebilir.
+Bu seçenek varsayılan olarak etkin değildir.
+
 %kc:setting
 ==== Noktalama İşaretlerini Söyleme düzeyi ====
 Klavye Komutu: NVDA+p
