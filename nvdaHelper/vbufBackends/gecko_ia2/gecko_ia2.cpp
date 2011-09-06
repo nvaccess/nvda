@@ -769,7 +769,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 			}
 			if(childCount==0) {
 				LOG_DEBUG(L"ChildCount is 0, so add accessible value or name as text");
-				if(role==ROLE_SYSTEM_LINK||role==ROLE_SYSTEM_PUSHBUTTON||role==ROLE_SYSTEM_MENUITEM) {
+				if(role==ROLE_SYSTEM_LINK||role==ROLE_SYSTEM_PUSHBUTTON||role==ROLE_SYSTEM_MENUITEM||(role==ROLE_SYSTEM_TEXT&&(states&STATE_SYSTEM_READONLY)&&!(states&STATE_SYSTEM_FOCUSABLE))) {
 					LOG_DEBUG(L"For buttons and links we use the name as the text");
 					if(name!=NULL) {
 						LOG_DEBUG(L"adding name to buffer");
