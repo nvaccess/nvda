@@ -36,6 +36,7 @@
 - Dynamic content changes such as in Dos consoles are no longer announced if  sleep mode for that application is currently on. (#1662)
 - In browse mode, the behaviour of alt+upArrow and alt+downArrow to collapse and expand combo boxes has been improved. (#1630)
 - NVDA now recovers from many more situations such as applications that stop responding which previously caused it to freeze completely. (#1408)
+- For Mozilla Gecko (Firefox etc) browse mode documents NVDA will no longer fail to render text in a very specific situation where an element is styled as display:table. (#1373)
 
 
 = 2011.2 =
