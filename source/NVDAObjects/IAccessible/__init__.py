@@ -798,14 +798,16 @@ the NVDAObject for IAccessible
 			states.discard(controlTypes.STATE_CHECKED)
 		return states
 
-	re_positionInfoEncodedAccDescription=re.compile(r"L(?P<level>\d+), (?P<indexInGroup>\d+) of (?P<similarItemsInGroup>\d+)")
+	re_positionInfoEncodedAccDescription=re.compile(r"L(?P<level>\d+)(?:, (?P<indexInGroup>\d+) of (?P<similarItemsInGroup>\d+))?")
 
 	def _get_decodedAccDescription(self):
 		try:
 			description=self.IAccessibleObject.accDescription(self.IAccessibleChildID)
 		except COMError:
 			return None
-		if description.startswith('description:'):
+		if not description:
+			return None
+		if description.lower().startswith('description:'):
 			return description[12:].strip()
 		m=self.re_positionInfoEncodedAccDescription.match(description)
 		if m:
@@ -1101,7 +1103,7 @@ the NVDAObject for IAccessible
 			d=self.decodedAccDescription
 			if d and not isinstance(d,basestring):
 				groupdict=d.groupdict()
-				return dict(level=int(groupdict.get('level','0')),indexInGroup=int(groupdict.get('indexInGroup','0')),similarItemsInGroup=int(groupdict.get('similarItemsInGroup','0')))
+				return {x:int(y) for x,y in groupdict.iteritems() if y is not None}
 		if self.allowIAccessibleChildIDAndChildCountForPositionInfo and self.IAccessibleChildID>0:
 			indexInGroup=self.IAccessibleChildID
 			parent=self.parent
