@@ -419,7 +419,7 @@ class SpeechSymbolProcessor(object):
 		for symbol in symbols.values():
 			if symbol.replacement is None:
 				# Symbols without a replacement specified are useless.
-				log.warning("Replacement not defined in locale {locale} for symbol: {symbol}".format(
+				log.warning(u"Replacement not defined in locale {locale} for symbol: {symbol}".format(
 					symbol=symbol.identifier, locale=self.locale))
 				del symbols[symbol.identifier]
 				try:
