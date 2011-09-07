@@ -184,19 +184,19 @@ class SpeechSymbols(object):
 					# Whitespace or comment.
 					continue
 				line = line.rstrip("\r\n")
-				if line == "complexSymbols:" and allowComplexSymbols:
-					handler = self._loadComplexSymbol
-				elif line == "symbols:":
-					handler = self._loadSymbol
-				elif handler:
-					# This is a line within a section, so handle it according to which section we're in.
-					try:
+				try:
+					if line == "complexSymbols:" and allowComplexSymbols:
+						handler = self._loadComplexSymbol
+					elif line == "symbols:":
+						handler = self._loadSymbol
+					elif handler:
+						# This is a line within a section, so handle it according to which section we're in.
 						handler(line)
-					except ValueError:
-						log.warning("Invalid line in file {file}: {line}".format(
-							file=fileName, line=line))
-				else:
-					log.warning("Invalid line: %s" % line)
+					else:
+						raise ValueError
+				except ValueError:
+					log.warning(u"Invalid line in file {file}: {line}".format(
+						file=fileName, line=line))
 
 	def _loadComplexSymbol(self, line):
 		try:
