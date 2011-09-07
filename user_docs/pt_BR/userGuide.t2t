@@ -295,7 +295,7 @@ Para ajudá-lo a assimilar estas teclas de atalho, atente que os comandos básic
 O esquema é ilustrado como se segue: 
 | Linha Anterior | Linha Atual | Próxima Linha |
 | Palavra Anterior | Palavra Atual | Próxima Palavra |
-| Carácter Anterior | Carácter Atual | Próximo Carácter |
+| Caractere Anterior | Caractere Atual | Próximo Caractere |
 
 ++ Revisão Plana ++[FlatReview]
 Enquanto geralmente você pode revisar o conteúdo de apenas um [objeto #Objects] individualmente, há alguns objetos nos quais é possível acessar o conteúdo dos objetos contidos neles.
@@ -335,9 +335,9 @@ Ainda que um mouse físico ou um touchpad precisem ser utilizados para navegar c
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
 | Clicar com o botão esquerdo do mouse | Barra do teclado numérico | NVDA+seta a esquerda | Clica uma vez com o botão esquerdo do mouse. O habitual dúplo clique pode ser realizado pressionando duas vezes rapidamente este comando |
-| Bloquear botão esquerdo do mouse | shift+barra do teclado numérico | NVDA+shift+seta a esquerda | Mantém o botão esquerdo do mouse pressionado. Prima novamente para desbloqueá-lo. Para arrastar o mouse, pressione esta tecla de atalho e em seguida mova o mouse quer seja fisicamente ou utilizando qualquer comando que o movimente |
-| Clicar com o botão direito do mouse | Asterisco do teclado numérico | NVDA+seta a esquerda | Clica uma vez com o botão direito do mouse |
-| Bloquear o botão direito do mouse | shift+asterisco do teclado numérico | NVDA+shift+seta a direita | Mantém o botão direito do mouse pressionado. Prima novamente para desbloqueá-lo. Para arrastar o mouse, pressione esta tecla de atalho e em seguida mova-o quer seja fisicamente ou utilizando qualquer comando que movimente o mesmo |
+| Pressionar o botão esquerdo do mouse | shift+barra do teclado numérico | NVDA+shift+seta a esquerda | Mantém o botão esquerdo do mouse pressionado. Execute-o novamente para desbloqueá-lo. Para arrastar o mouse, pressione esta tecla de atalho e em seguida mova o mouse quer seja fisicamente ou utilizando qualquer comando que o movimente |
+| Clicar com o botão direito do mouse | Asterisco do teclado numérico | NVDA+seta a direita | Clica uma vez com o botão direito do mouse |
+| Pressionar o botão direito do mouse | shift+asterisco do teclado numérico | NVDA+shift+seta a direita | Mantém o botão direito do mouse pressionado. Execute-o novamente para desbloqueá-lo. Para arrastar o mouse, pressione esta tecla de atalho e em seguida mova-o quer seja fisicamente ou utilizando qualquer comando que movimente o mesmo |
 | Mover o mouse para o objeto de navegação atual | NVDA+barra do teclado numérico | NVDA+shift+f9 | Move o mouse Move o mouse para a localização do objeto de navegação atual e do cursor de exploração |
 | Navegar para o objeto sob o mouse | NVDA+asterisco do teclado numérico | NVDA+shift+f10 | Coloca como objeto de navegação aquele que se encontra sob o ponteiro do mouse |
 %kc:endInclude
@@ -513,6 +513,16 @@ Esta opção é uma barra de controle que lhe permite andar  de 0 a 100, (sendo 
 
 ==== Inflecção ====
 Uma barra de controle que lhe permite escolher a inflecção (mais alta ou mais baixa do tom) que o sintetizador utilizará para falar. (Até o momento somente o eSpeak oferece essa opção por padrão).
+
+==== Alternância Automática de Idioma ====
+Essa caixa de seleção lhe permite escolher se o NVDA deve ou não alterar o idioma do sintetizador de voz, desde que o atributo do idioma esteja disponível no texto que está sendo lido.
+Por padrão, essa opção está ativada.
+Atualmente, apenas o eSpeak suporta alternância automática de idioma.
+
+==== Alternância Automática de Dialeto ====
+Se a alternância automática de Idioma estiver ativada, essa caixa de seleção lhe permite escolher se as alterações nos dialetos devem ser processadas em lugar de alterar apenas o idioma atual.
+Isto é, caso esteja lendo com um sintetizador de voz em Inglês Americano mas o texto aparece como Inglês britânico e estando este recurso ativado, o sintetizador alterará a pronúncia.
+Por padrão, essa opção está desativada.
 
 %kc:setting
 ==== Grau de Sinais de Pontuação ====
@@ -743,6 +753,10 @@ Este campo define o comprimento máximo de uma linha do modo de navegação (em 
 Tecla: NVDA+v
 
 Esta opção permite definir se o conteúdo no modo de navegação deve posicionar os elementos como links e outros campos numa linha individual, ou se se deve conservá-los dentro do texto tal como aparece na tela. Se a opção estiver marcada, os elementos ficarão como aparecem visualmente. Mas se estiver desmarcada, os campos serão colocados numa linha separadamente.
+
+==== Efetuar Leitura Contínua Quando a Página For Carregada ====
+Essa caixa de seleção alterna a leitura automática das páginas depois que estas são carregadas no Modo de Navegação.
+Por padrão, essa opção está ativada.
 
 ==== Anunciar Tabelas de Layout ====
 Quando se desmarca esta opção, o NVDA anuncia apenas as tabelas que contêm dados tabulares (o que indica que isso é uma tabela).
