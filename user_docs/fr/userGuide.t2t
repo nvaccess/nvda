@@ -238,7 +238,7 @@ Pour naviguer par objet, utilisez les touches suivantes :
 | Aller à l'objet parent | NVDA+pavnum8 | NVDA+maj+i | Va à l'objet parent (qui contient l'objet navigateur courant) |
 | Aller à l'objet précédent | NVDA+pavnum4 | NVDA+control+j | Va à l'objet précédent l'objet navigateur courant |
 | Aller à l'objet suivant | NVDA+pavnum6 | control+NVDA+l | Va à l'objet suivant de l'objet navigateur courant |
-| Aller au premier enfant | NVDA+pavnum2 | NVDA+shift+virgule | Va au premier objet enfant (contenu dans l'objet navigateur courant |
+| Aller au premier objet inclus | NVDA+pavnum2 | NVDA+shift+virgule | Va au premier objet inclus dans l'objet navigateur courant |
 | Aller à l'objet en focus | NVDA+pavnumMoins | NVDA+retourArrière | Va à l'objet ayant le focus système, et place le curseur de revue sur le curseur système s'il est présent |
 | Activer l'objet navigateur courant | NVDA+pavnumEntrer | NVDA+entrer | Active l'objet navigateur courant (similaire à un click de souris ou à presser la barre d'espace quand l'objet a le focus système) |
 | Amener le focus système à l'objet navigateur courant | NVDA+maj+pavnumMoins | NVDA+maj+retourArrière | Amène le focus système à l'objet navigateur courant si c'est possible |
@@ -270,9 +270,9 @@ Vous disposez des commandes suivantes pour explorer du texte :
 | Aller au caractère suivant en revue | pavnum3 | NVDA+deuxPoints | Amène le curseur de revue au caractère suivant de la ligne courante |
 | Aller en fin de ligne en revue | maj+pavnum3 | NVDA+maj+o | Amène le curseur de revue à la fin de la ligne courante |
 | Dire tout en revue | pavnumPlus | NVDA+maj+flècheBas | Lit en partant de la position du curseur de revue, celui-ci suivant la lecture |
-| Amener le curseur système au curseur de revue | control+pavnumMoins | NVDA+control+retourArrière | Amène le curseur système à la position du curseur de revue |
 | copier à partir du curseur de revue | NVDA+f9 | NVDA+f9 | Commence à copier le texte depuis la position du curseur de revue. La copie ne s'effectue pas jusqu'à ce qu'on indique la fin du texte à copier |
 | Copier jusqu'au curseur de revue | NVDA+f10 | NVDA+f10 | Copie depuis la position du curseur de revue préalablement définie par "copier à partir du curseur de revue" jusqu'à la position actuelle du curseur de revue. après l'appui sur cette touche, le texte est copié dans le presse-papier de Windows. |
+| Annonce du formatage du texte | NVDA+f | NVDA+f | Annonce le formatage du texte à la position du curseur de revue |
 %kc:endInclude
 
 Note : Les touches du pavé numérique nécessitent de désactiver le verrouillage numérique pour fonctionner correctement.
@@ -467,6 +467,20 @@ C'est un potentiomètre gradué de 0 à 100, (0 étant le volume le plus bas et 
 
 ==== Inflexion ====
 Un potentiomètre vous permettant de choisir  le niveau d'inflexion (variation en hauteur de la voix) que le synthétiseur devra utiliser.
+
+==== Changement automatique de langue ====
+Cette case à cocher vous permet de choisir si NVDA doit changer de langue à la volée 
+si une balise de langue est présente dans le texte en cours de lecture.
+Par défaut, cette option est activée.
+À l'heure actuelle, seul le synthétiseur eSpeak prend en charge le changement automatique de langue.
+
+==== Changement automatique de Dialecte switching ====
+Si le changement automatique de langue est activé,
+cette case à cocher vous permet de choisir si les changements de dialecte doivent être pris en compte 
+en plus des changements de langues réels.
+Par exemple, un texte peut être en Anglais Américain et comporter des passages marqués comme Anglais Britannique.
+Si cette option est activée, le synthétiseur respectera les changements d'accent.
+Par défaut, cette option est désactivée.
 
 %kc:setting
 ==== Niveau des Symboles et Ponctuations ====

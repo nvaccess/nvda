@@ -3,6 +3,53 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2011.3 =
+
+== Nouvelles fonctionnalités ==
+- NVDA peut maintenant changer la langue du synthétiseur eSpeak à la volée 
+quand on lit des documents web/pdf contenant les informations de langue appropriées.
+Le changement automatique de langue ou de dialecte peut être activé ou désactivé
+dans le dialogue Paramètres Vocaux. (#845)
+- Sous Mozilla Gecko (ex : Firefox) Les niveaux de titre sont maintenant annoncés quand on utilise la navigation par objet.
+- Le formatage du text peut maintenant être annoncé quand on utilise le mode navigation sous Mozilla Gecko (ex : Firefox et ThunderBird). (#394)
+- Les textes soulignés et/ou biffés peuvent maintenant être détectés et annoncés dans les contrôles de texte IAccessible2 standards tels qu'on en trouve dans les applications Mozilla.
+- En mode navigation sous Adobe Reader, 
+le nombre de ligne et de colonnes d'un tableau est maintenant annoncé.
+- Le synthétiseur Microsoft Speech Platform est maintenant supporté. (#1735)
+- Les numéros de ligne et de colonne sont maintenant annoncés pour le curseur sous IBM Lotus Symphony. (#1632)
+
+
+== Changements ==
+- NVDA redémarre maintenant automatiquement en cas de plantage.
+- Quelques informations affichées en Braille ont été abrégées. (#1288)
+- le script de lecture de la fenêtre active (NVDA+B) a été amélioré
+pour filtrer les contrôles inutiles et est maintenant beaucoup plus facile à interrompre. (#1499)
+- La lecture automatique au chargement d'un document navigable est maintenant optionnelle via un paramètre dans le dialogue Mode Navigation. (#1414)
+
+
+== Corrrections de bogues ==
+-NVDA ne montre plus les puces ou les numérotations dans les listes sous Internet Explorer et autres contrôles MSHTML
+quand l'auteur a spécifié que celles-ci ne doivent pas être montrées (ex : style de liste "none"). (#1671)
+- Le redémarrage de NVDA après blocage (ex : en pressant control+alt+n) n'arrête plus la copie en cours sans en démarrer une nouvelle.
+- Dans la console de commandes Windows, l'appui sur retour-arrière ou les flèches ne provoque plus de résultats bizarres dans certains cas. (#1612)
+- L'élément sélectionné dans les listes déroulantes WPF 
+(et possiblement d'autres listes déroulantes présentées par UI Automation)
+qui n'autorisent pas l'édition de texte est maintenant annoncé correctement.
+- En mode navigation sous adobe Reader, il est maintenant toujours possible d'aller de la ligne d'en-tête à la ligne suivante et vice-versa
+en utilisant les commandes de déplacement à la ligne suivante et de déplacement à la ligne précédente.
+En outre, la ligne d'en-tête n'est plus annoncée comme ligne 0.
+- En mode navigation sous Adobe Reader, il est maintenant possible d'entrer et des ressortir des cellules vides d'un tableau.
+- Les informations de position sans signification (ex : 0 sur 0 niveau 0) ne sont plus affichées en Braille.
+- Quand le Braille suit le curseur de revue, il peut maintenant afficher le contenu en revue à plat. (#1711)
+- Le texte d'un contrôle texte n'est plus affiché deux fois sur le terminal braille dans certains cas (ex : défilement arrière depuis le début d'un document Wordpad).
+- En mode navigation sous Internet Explorer, l'appui sur la touche Entrer sur un bouton de téléchargement de fichier affiche maintenant correctement le dialogue permettant de choisir le fichier à envoyer au lieu de passer en mode formulaire. (#1720)
+- Le changement dynamique de contenu, par exemple dans les consoles DOS, ne sont plus annoncés si le mode veille est activé pour l'application en cours. (#1662)
+- En mode navigation, le comportement de alt+flèchehaute et alt+flèchebasse pour réduire et développer les listes déroulantes a été amélioré. 
+- NVDA s'accommode maintenant de beaucoup plus de situations telles que des applications cessant de répondre et qui le gelaient complètement. (#1408)
+- Dans les documents navigables sous Mozilla Gecko (Firefox etc),
+NVDA n'échoue plus à présenter le texte dans le cas très spécial où un élément est stylé comme display:table. (#1373)
+
+
 = 2011.2 =
 
 Les apports majeurs de cette version incluent des améliorations notables concernant la ponctuation et les symboles, y compris leurs niveaux de prononciation désormais configurables, l'étiquetage personnalisé ainsi que la descriptions des caractères; la suppression des pauses à la fin des lignes en cours de lecture avec la commande "Dire tout"; le support amélioré des ARIA dans Internet Explorer ; un meilleur support pour les documents XFA/LiveCycle PDF dans Adobe Reader ; la possibilité d'exploiter le texte écrit à l'écran sous encore plus de logiciels; et enfin, l'accès à l'information de mise en forme et la couleur du texte écrit à l'écran.
