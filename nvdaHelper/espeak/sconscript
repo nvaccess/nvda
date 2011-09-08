@@ -87,6 +87,8 @@ for f in env.Glob('variants/*'):
 for f in env.Glob('#include/espeak/dictsource/*_list'):
 	dictFile=env.Command(espeakDataDir.File(f.name.split('_')[0]+'_dict'),[f,f.File(f.name.split('_')[0]+'_rules')],espeak_compileDict_action)
 	env.Depends(dictFile,dictDeps)
+	#Dictionaries can not be compiled in parallel, force SCons not to do this
+	env.SideEffect('_espeak_compileDict',dictFile)
 
 env.Requires(synthDriversDir,espeakDataDir)
 env.Install(synthDriversDir,espeakLib)
