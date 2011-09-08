@@ -15,7 +15,7 @@ General dependencies:
 	* Python Windows Extensions (for Python 2.7), build 214 or later: http://www.sourceforge.net/projects/pywin32/ 
 	* eSpeak, version 1.45.03 or later, Windows dll:
 		* Official web site: http://espeak.sourceforge.net/
-		* Download the espeak source archive (1.45.40 or later). Note that it must be an official source archive from the espeak website containing already compiled phoneme data, not straight from svn. 
+		* Download the espeak source archive (1.45.41 or later). Note that it must be an official source archive from the espeak website containing already compiled phoneme data, not straight from svn. 
 		* Extract it in to include/espeak so that include/espeak/src, include/espeak/dictsource, include/espeak/platforms and include/espeak/espeak-data all exist.
 	* IAccessible2, version 1.2.1 or later: http://www.linuxfoundation.org/en/Accessibility/IAccessible2
 		* Download the merged IDL and copy it to include\ia2\ia2.idl.
