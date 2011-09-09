@@ -266,3 +266,12 @@ def cancellableExecute(func, *args, **kwargs):
 		cancellableCallThread = CancellableCallThread()
 		cancellableCallThread.start()
 	return cancellableCallThread.execute(func, args, kwargs, pumpMessages=pumpMessages)
+
+def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
+	"""Send a window message, making the call cancellable.
+	@raise CallCancelled: If the call was cancelled.
+	"""
+	import NVDAHelper
+	result = ctypes.wintypes.DWORD()
+	NVDAHelper.localLib.cancellableSendMessageTimeout(hwnd, msg, wParam, lParam, flags, timeout, ctypes.byref(result))
+	return result.value
