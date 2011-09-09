@@ -7,6 +7,7 @@ import IAccessibleHandler
 import oleacc
 from logHandler import log
 import textInfos
+import languageHandler
 
 class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 
@@ -32,6 +33,13 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 		if level:
 			attrs["level"] = level
 		return super(AdobeAcrobat_TextInfo, self)._normalizeControlField(attrs)
+
+	def _normalizeFormatField(self, attrs):
+		try:
+			attrs["language"] = languageHandler.normalizeLanguage(attrs["language"])
+		except KeyError:
+			pass
+		return attrs
 
 class AdobeAcrobat(VirtualBuffer):
 	TextInfo = AdobeAcrobat_TextInfo

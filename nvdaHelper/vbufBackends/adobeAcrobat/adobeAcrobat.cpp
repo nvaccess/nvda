@@ -336,10 +336,6 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 		if (domElement->GetAttribute(L"Lang", NULL, &srcLang) == S_OK && srcLang) {
 			*lang = srcLang;
 			SysFreeString(srcLang);
-			// Replace "-" with "_" as required by NVDA.
-			size_t pos = lang->find(L'-');
-			if (pos != wstring::npos)
-				lang->replace(pos, 1, L"_");
 		}
 	}
 
