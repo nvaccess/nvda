@@ -647,7 +647,6 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 				initialPos = self._getInitialCaretPos()
 				if initialPos:
 					self.selection = self.makeTextInfo(initialPos)
-				speech.cancelSpeech()
 				reportPassThrough(self)
 				doSayAll=config.conf['virtualBuffers']['autoSayAllOnPageLoad']
 			self._hadFirstGainFocus = True
@@ -1008,6 +1007,10 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 				log.exception("Error executing focusEntered event: %s" % parent)
 
 	def event_gainFocus(self, obj, nextHandler):
+		if not self.isReady:
+			if self.passThrough:
+				nexthandler()
+			return
 		if not self.passThrough and self._lastFocusObj==obj:
 			# This was the last non-document node with focus, so don't handle this focus event.
 			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
@@ -1065,6 +1068,8 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 				return nextHandler()
 
 		self._postGainFocus(obj)
+
+	event_gainFocus.ignoreIsReady=True
 
 	def _handleScrollTo(self, obj):
 		"""Handle scrolling the buffer to a given object in response to an event.
