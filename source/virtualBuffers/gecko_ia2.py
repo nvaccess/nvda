@@ -87,11 +87,11 @@ class Gecko_ia2(VirtualBuffer):
 		if not (isinstance(obj,NVDAObjects.IAccessible.IAccessible) and isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2)) or not obj.windowClassName.startswith('Mozilla') or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
 			return False
 		if self.rootNVDAObject.windowHandle==obj.windowHandle:
-			ID=obj.IAccessibleObject.uniqueID
+			ID=obj.IA2UniqueID
 			try:
 				self.rootNVDAObject.IAccessibleObject.accChild(ID)
-			except:
-				return False
+			except COMError:
+				return ID==self.rootNVDAObject.IA2UniqueID
 
 		return not self._isNVDAObjectInApplication(obj)
 
@@ -105,7 +105,7 @@ class Gecko_ia2(VirtualBuffer):
 		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_DEFUNCT in states or controlTypes.STATE_READONLY not in states:
 			return False
 		try:
-			if not NVDAObjects.IAccessible.getNVDAObjectFromEvent(root.windowHandle,winUser.OBJID_CLIENT,root.IAccessibleObject.uniqueID):
+			if not NVDAObjects.IAccessible.getNVDAObjectFromEvent(root.windowHandle,winUser.OBJID_CLIENT,root.IA2UniqueID):
 				return False
 		except:
 			return False
@@ -116,7 +116,7 @@ class Gecko_ia2(VirtualBuffer):
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
-		ID=obj.IAccessibleObject.uniqueID
+		ID=obj.IA2UniqueID
 		return docHandle,ID
 
 	def _shouldIgnoreFocus(self, obj):

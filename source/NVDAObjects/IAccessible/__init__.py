@@ -305,6 +305,7 @@ the NVDAObject for IAccessible
 """
 
 	IAccessibleTableUsesTableCellIndexAttrib=False #: Should the table-cell-index IAccessible2 object attribute be used rather than indexInParent?
+	IA2UniqueID=None #: The cached IAccessible2::uniqueID if its implemented
 
 	@classmethod
 	def getPossibleAPIClasses(cls,kwargs,relation=None):
@@ -524,18 +525,22 @@ the NVDAObject for IAccessible
 		if not windowHandle:
 			raise InvalidNVDAObject("Can't get a window handle from IAccessible")
 
+		if isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
+			try:
+				self.IA2UniqueID=IAccessibleObject.uniqueID
+			except COMError:
+				log.debugWarning("could not get IAccessible2::uniqueID to use as IA2UniqueID",exc_info=True)
+
 		# Set the event params based on our calculated/construction info if we must.
 		if event_windowHandle is None:
 			event_windowHandle=windowHandle
 		if event_objectID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
 			event_objectID=winUser.OBJID_CLIENT
-		if event_childID is None and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
-			try:
-				event_childID=IAccessibleObject.uniqueID
-			except COMError:
-				log.debugWarning("could not get IAccessible2::uniqueID to use as event_childID",exc_info=True)
 		if event_childID is None:
-			event_childID=IAccessibleChildID
+			if self.IA2UniqueID is not None:
+				event_childID=self.IA2UniqueID
+			else:
+				event_childID=IAccessibleChildID
 
 		self.IAccessibleObject=IAccessibleObject
 		self.IAccessibleChildID=IAccessibleChildID
@@ -601,14 +606,14 @@ the NVDAObject for IAccessible
 				# These are both IAccessible2 objects, so we can test unique ID.
 				# Unique ID is only guaranteed to be unique within a given window, so we must check window handle as well.
 				selfIA2Window=self.IAccessibleObject.windowHandle
-				selfIA2ID=self.IAccessibleObject.uniqueID
+				selfIA2ID=self.IA2UniqueID
 				otherIA2Window=other.IAccessibleObject.windowHandle
-				otherIA2ID=other.IAccessibleObject.uniqueID
+				otherIA2ID=other.IA2UniqueID
 				if selfIA2Window!=otherIA2Window:
 					# The window handles are different, so these are definitely different windows.
 					return False
 				# At this point, we know that the window handles are equal.
-				if selfIA2Window and (selfIA2ID or otherIA2ID):
+				if selfIA2Window and (selfIA2ID or self.otherIA2ID):
 					# The window handles are valid and one of the objects has a valid unique ID.
 					# Therefore, we can safely determine equality or inequality based on unique ID.
 					return selfIA2ID==otherIA2ID
