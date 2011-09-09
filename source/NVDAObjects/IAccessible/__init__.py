@@ -613,7 +613,7 @@ the NVDAObject for IAccessible
 					# The window handles are different, so these are definitely different windows.
 					return False
 				# At this point, we know that the window handles are equal.
-				if selfIA2Window and (selfIA2ID or self.otherIA2ID):
+				if selfIA2Window and (selfIA2ID or otherIA2ID):
 					# The window handles are valid and one of the objects has a valid unique ID.
 					# Therefore, we can safely determine equality or inequality based on unique ID.
 					return selfIA2ID==otherIA2ID
