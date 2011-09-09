@@ -535,8 +535,10 @@ This allows you to choose the amount of punctuation and other symbols that shoul
 For example, when set to all, all symbols will be spoken as words.
 This option applies to all synthesizers, not just the currently active synthesizer.
 
-==== Raise pitch for capitals ====
-This setting, if checked, will raise the pitch for capitals.
+==== Capital pitch change percentage ==
+This edit field  allows you to type the amount that the pitch of the voice will change when speaking a capital letter.
+This value is a percentage, where a negative value lowers the pitch and a positive value raises it.
+For no pitch change you would use 0.
 
 ==== Say "cap" before capitals ====
 This setting is a checkbox that, when checked, tells NVDA to say the word "cap" before any capital letter when spoken as an individual character such as when spelling.

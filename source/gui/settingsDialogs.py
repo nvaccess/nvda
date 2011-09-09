@@ -403,9 +403,11 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.symbolLevelList.SetSelection(characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS.index(curLevel))
 		sizer.Add(self.symbolLevelList)
 		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
-		self.raisePitchForCapsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Raise pitch for capitals"))
-		self.raisePitchForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["raisePitchForCapitals"])
-		settingsSizer.Add(self.raisePitchForCapsCheckBox,border=10,flag=wx.BOTTOM)
+		capPitchChangeLabel=wx.StaticText(self,-1,label=_("Capital pitch change percentage"))
+		settingsSizer.Add(capPitchChangeLabel)
+		self.capPitchChangeEdit=wx.TextCtrl(self,wx.NewId())
+		self.capPitchChangeEdit.SetValue(str(config.conf["speech"][getSynth().name]["capPitchChange"]))
+		settingsSizer.Add(self.capPitchChangeEdit,border=10,flag=wx.BOTTOM)
 		self.sayCapForCapsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Say &cap before capitals"))
 		self.sayCapForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["sayCapForCapitals"])
 		settingsSizer.Add(self.sayCapForCapsCheckBox,border=10,flag=wx.BOTTOM)
@@ -481,7 +483,12 @@ class VoiceSettingsDialog(SettingsDialog):
 		config.conf["speech"]["autoLanguageSwitching"]=self.autoLanguageSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["autoDialectSwitching"]=self.autoDialectSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["symbolLevel"]=characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[self.symbolLevelList.GetSelection()]
-		config.conf["speech"][getSynth().name]["raisePitchForCapitals"]=self.raisePitchForCapsCheckBox.IsChecked()
+		capPitchChange=self.capPitchChangeEdit.Value
+		try:
+			capPitchChange=int(capPitchChange)
+		except ValueError:
+			capPitchChange=0
+		config.conf["speech"][getSynth().name]["capPitchChange"]=min(max(capPitchChange,-100),100)
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()

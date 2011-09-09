@@ -63,7 +63,6 @@ confspec = ConfigObj(StringIO(
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
-		raisePitchForCapitals = boolean(default=true)
 		sayCapForCapitals = boolean(default=false)
 		beepForCapitals = boolean(default=false)
 		useSpellingFunctionality = boolean(default=true)
