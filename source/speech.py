@@ -127,7 +127,7 @@ def speakMessage(text,index=None):
 def getCurrentLanguage():
 	language=getSynth().language
 	if language:
-		language=language.replace('-','_')
+		language=languageHandler.normalizeLanguage(language)
 	else:
 		language=languageHandler.getLanguage()
 	return language

@@ -7,6 +7,7 @@ import winUser
 import NVDAHelper
 import ctypes
 import IAccessibleHandler
+import languageHandler
 import oleacc
 from logHandler import log
 import textInfos
@@ -19,8 +20,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 	def _normalizeFormatField(self, attrs):
 		language=attrs.get('language')
 		if language:
-			language=language.replace('-','_')
-			attrs['language']=language
+			attrs['language']=languageHandler.normalizeLanguage(language)
 		return attrs
 
 	def _normalizeControlField(self,attrs):

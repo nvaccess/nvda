@@ -10,6 +10,7 @@ import os
 import re
 from comInterfaces.tom import ITextDocument
 import tones
+import languageHandler
 import textInfos.offsets
 import colors
 import time
@@ -108,7 +109,7 @@ def normalizeIA2TextFormatField(formatField):
 		formatField["strikethrough"]=lineStyle!="none" and lineType!="none"
 	language=formatField.get('language')
 	if language:
-		formatField['language']=language.replace('-','_')
+		formatField['language']=languageHandler.normalizeLanguage(language)
 
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
