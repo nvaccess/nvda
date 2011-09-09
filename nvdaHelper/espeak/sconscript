@@ -6,6 +6,19 @@ Import([
 import os
 import ctypes
 
+class espeak_VOICE(ctypes.Structure):
+	_fields_=[
+		('name',ctypes.c_char_p),
+		('languages',ctypes.c_char_p),
+		('identifier',ctypes.c_char_p),
+		('gender',ctypes.c_byte),
+		('age',ctypes.c_byte),
+		('variant',ctypes.c_byte),
+		('xx1',ctypes.c_byte),
+		('score',ctypes.c_int),
+		('spare',ctypes.c_void_p),
+	]
+
 env=env.Clone()
 env.Append(CXXFLAGS='/W0')
 env.Append(CPPDEFINES=[('BUILDING_DLL',1)])
@@ -18,7 +31,9 @@ def espeak_compileDict_action(target,source,env):
 		_espeakInstance=ctypes.cdll.LoadLibrary(espeakLib[0].abspath)
 		_espeakInstance.espeak_Initialize(0,0,synthDriversDir.abspath,0x8000)
 	lang=source[0].name.split('_')[0]
-	if _espeakInstance.espeak_SetVoiceByName(lang)!=0:
+	v=espeak_VOICE(languages=lang+'\x00')
+	if _espeakInstance.espeak_SetVoiceByProperties(ctypes.byref(v))!=0:
+		print "espeak_compileDict_action: failed to switch to language %s, skipping compilation"%lang
 		return
 	dictPath=os.path.split(source[0].abspath)[0]+'/'
 	if _espeakInstance.espeak_CompileDictionary(dictPath,None,0)!=0:
@@ -84,8 +99,9 @@ for f in env.Glob('variants/*'):
 	env.Command(espeakDataDir.File('voices/!v/%s'%f.name),f,Copy('$TARGET','$SOURCE'))
 
 #Compile all dictionaries
-for f in env.Glob('#include/espeak/dictsource/*_list'):
-	dictFile=env.Command(espeakDataDir.File(f.name.split('_')[0]+'_dict'),[f,f.File(f.name.split('_')[0]+'_rules')],espeak_compileDict_action)
+for f in env.Glob('#include/espeak/dictsource/*_rules'):
+	extras=[f.File(f.name.split('_')[0]+x) for x in '_list','_listx']
+	dictFile=env.Command(espeakDataDir.File(f.name.split('_')[0]+'_dict'),[f,[x for x in extras if os.path.isfile(x.abspath)]],espeak_compileDict_action)
 	env.Depends(dictFile,dictDeps)
 	#Dictionaries can not be compiled in parallel, force SCons not to do this
 	env.SideEffect('_espeak_compileDict',dictFile)
