@@ -179,7 +179,7 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 			char=characterProcessing.processSpeechSymbol(locale,char)
 		if uppercase and synthConfig["sayCapForCapitals"]:
 			char=_("cap %s")%char
-		if uppercase and synth.isSupported("pitch") and synthConfig["raisePitchForCapitals"]:
+		if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
 			oldPitch=synthConfig["pitch"]
 			synth.pitch=max(0,min(oldPitch+synthConfig["capPitchChange"],100))
 		index=count+1
@@ -191,7 +191,7 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 			speechSequence.append(IndexCommand(index))
 		speechSequence.append(char)
 		synth.speak(speechSequence)
-		if uppercase and synth.isSupported("pitch") and synthConfig["raisePitchForCapitals"]:
+		if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
 			synth.pitch=oldPitch
 		while textLength>1 and (isPaused or getLastSpeechIndex()!=index):
 			yield
