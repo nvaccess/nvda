@@ -15,6 +15,7 @@ Traduzido por Marlin Rodrigues da Silva
 - No Adobe Reader, em modo de navegação, a quantidade de linhas e colunas das tabelas agora é anunciada.
 - Adicionado suporte para o sintetizador da plataforma de fala da Microsoft. (#1735) 
 - O número de páginas e linhas agora é anunciado pelo cursor do sistema no IBM Lotus Symphony. (#1632)  
+- A porcentagem da mudança de tom ao anunciar uma letra maiúscula agora é configurável a partir do Diálogo de Opções de Voz. Todavia, esta substituirá a antiga caixa de seleção Aumentar Tom Para Maiúsculas. (portanto para desativar esse recurso, ajuste a porcentagem para 0). (#255)
 
 
 == Alterações ==
@@ -37,8 +38,8 @@ Traduzido por Marlin Rodrigues da Silva
 - No Internet Explorer, em modo de navegação, ao pressionar enter em um botão de upload de arquivo, agora o diálogo é corretamente apresentado em lugar de alternar para o modo de foco. (#1720)
 - Alterações nos conteúdos dinâmicos tais como em consoles do Dos já não são anunciados se o Modo Dormir estiver ativado para aquele aplicativo. (#1662)
 - No modo de navegação, foi melhorado o comportamento dos comandos alt+seta acima e alt+seta abaixo para recolher e expandir caixas de combinação.
-- O NVDA agora recupera-se de muito mais situações tais como aplicativos que cessam de responder, o que anteriormente faziam-no travar por completo. (#1408) 
-- Em documentos no modo de navegação da Mozilla Gecko (Firefox etc.) o NVDA já não falhará ao expor textos em uma situação muito específica onde um elemento é desenhado como tabela. (#1373) 
+- O NVDA agora recupera-se de muito mais situações tais como aplicativos que cessam de responder, o que anteriormente faziam-no travar por completo. (#1408)
+- Em documentos no modo de navegação da Mozilla Gecko (Firefox etc.) o NVDA já não falhará ao expor textos em uma situação muito específica onde um elemento é desenhado como tabela. (#1373)
 
 
 == 2011.2 ==

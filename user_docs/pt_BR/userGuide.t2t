@@ -295,7 +295,7 @@ Para ajudá-lo a assimilar estas teclas de atalho, atente que os comandos básic
 O esquema é ilustrado como se segue: 
 | Linha Anterior | Linha Atual | Próxima Linha |
 | Palavra Anterior | Palavra Atual | Próxima Palavra |
-| Caractere Anterior | Caractere Atual | Próximo Caractere |
+| Carácter Anterior | Carácter Atual | Próximo Carácter |
 
 ++ Revisão Plana ++[FlatReview]
 Enquanto geralmente você pode revisar o conteúdo de apenas um [objeto #Objects] individualmente, há alguns objetos nos quais é possível acessar o conteúdo dos objetos contidos neles.
@@ -532,8 +532,12 @@ Essa opção permite-lhe escolher a quantidade de pontuação e outros sinais qu
 Por exemplo, quando selecionado tudo, todos os sinais serão falados como palavras.
 Isso é aplicado a todos os sintetizadores, não apenas ao que está atualmente em uso.
 
-==== Aumentar Tom Para Maiúsculas ====
-Se esta opção estiver selecionada, aumentará o tom para as letras maiúsculas.
+==== Capital pitch change percentage ==
+This edit field  allows you to type the amount that the pitch of the voice will change when speaking a capital letter.
+
+This value is a percentage, where a negative value lowers the pitch and a positive value raises it.
+
+Para não alterar o tom você deve usar em 0.
 
 ==== Dizer "cap" Antes De Letras Maiúsculas ====
 Esta é uma caixa de seleção que se marcada informa ao NVDA para anunciar a palavra "cap" antes de qualquer letra maiúscula, quando falada como  caractere individual, se soletrada, por exemplo.
@@ -754,7 +758,7 @@ Tecla: NVDA+v
 
 Esta opção permite definir se o conteúdo no modo de navegação deve posicionar os elementos como links e outros campos numa linha individual, ou se se deve conservá-los dentro do texto tal como aparece na tela. Se a opção estiver marcada, os elementos ficarão como aparecem visualmente. Mas se estiver desmarcada, os campos serão colocados numa linha separadamente.
 
-==== Efetuar Leitura Contínua Quando a Página For Carregada ====
+==== Leitura Contínua Automática ao Carregar a Página ====
 Essa caixa de seleção alterna a leitura automática das páginas depois que estas são carregadas no Modo de Navegação.
 Por padrão, essa opção está ativada.
 
@@ -1184,6 +1188,3 @@ Você pode igualmente obter informações e tirar dúvidas sobre o NVDA na lista
 Há ainda o cite http://www.megatts.com, onde é possível obter informações sobre a acessibilidade em geral, porém o NVDA recebe apoio e destaque especiais.
 
 Para conhecer todas as novidades, mudanças e correções introduzidas, consulte o arquivo das novidades que pode ser encontrado no sub-menu ajuda do menu NVDA.
-
-Para informações detalhadas sobre descrições de caracteres, pronúncia de sinais, desenvolvimento de app modules, plugins globais e outros assuntos ligados ao desenvolvimento do nvda e seus componentes, consulte o arquivo developerGuide (Guia do Desenvolvedor) que se encontra na pasta nvda\documentation\pt_BR.
-OBS: Por ora, o Guia do Desenvolvedor não está completamente traduzido.
