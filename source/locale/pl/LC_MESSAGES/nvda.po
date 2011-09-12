@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2011-09-08 21:28+rodkowoeuropejski czas letni\n"
-"PO-Revision-Date: 2011-09-09 18:54+0100\n"
+"PO-Revision-Date: 2011-09-11 18:31+0100\n"
 "Last-Translator: Hubert Meyer <killer@tyflonet.com>\n"
 "Language-Team:  <killer@tyflonet.com>\n"
 "MIME-Version: 1.0\n"
@@ -1725,7 +1725,6 @@ msgid "No next"
 msgstr "brak następnego"
 
 #: globalCommands.py:372
-#, fuzzy
 msgid "Moves the navigator object to the next object"
 msgstr "Sprowadź bieżący obiekt do wskaźnika myszy"
 
@@ -1734,7 +1733,6 @@ msgid "No previous"
 msgstr "brak poprzedniego"
 
 #: globalCommands.py:386
-#, fuzzy
 msgid "Moves the navigator object to the previous object"
 msgstr "Sprowadź bieżący obiekt do wskaźnika myszy"
 
@@ -1743,7 +1741,6 @@ msgid "No children"
 msgstr "Brak potomków"
 
 #: globalCommands.py:400
-#, fuzzy
 msgid "Moves the navigator object to the first object it contains"
 msgstr "Sprowadza bieżący obiekt w hierarchii nawigacji do rodzica obiektu, na którym się znajduje, po czym go wypowiada"
 
@@ -1774,7 +1771,6 @@ msgid "Moves the review cursor to the previous line of the current navigator obj
 msgstr "Przenosi kursor do poprzedniej linii bieżącego obiektu"
 
 #: globalCommands.py:448
-#, fuzzy
 msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
 msgstr "Odczytuje wiersz, w którym obecnie znajduje siępunkt przeglądu. Dwukrotne naciśnięcie literuje ten wiersz."
 
@@ -1797,7 +1793,6 @@ msgid "Moves the review cursor to the previous word of the current navigator obj
 msgstr "Przenosi kursor do poprzedniego słowa bieżącego obiektu"
 
 #: globalCommands.py:490
-#, fuzzy
 msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
 msgstr "Odczytuje wiersz, w którym obecnie znajduje siępunkt przeglądu. Dwukrotne naciśnięcie literuje ten wiersz."
 
@@ -1814,7 +1809,6 @@ msgid "Moves the review cursor to the previous character of the current navigato
 msgstr "Przenosi kursor do poprzedniego znaku bieżącego obiektu"
 
 #: globalCommands.py:547
-#, fuzzy
 msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
 msgstr "Podaje znak bieżącego obiektu w hierarchii nawigacji, w którym znajduje się punkt przeglądu. Dwókrotne naciśnięcie powoduje odczytanie kodu ASCII oraz wartości szesnastkowej tego znaku."
 
@@ -1863,7 +1857,6 @@ msgid "reads from the review cursor  up to end of current text, moving the revie
 msgstr "Czyta od kursora do końca tekstu, przenosząc kursor w miarę czytania"
 
 #: globalCommands.py:645
-#, fuzzy
 msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
 msgstr "Odczytuje tekst od kursora systemowego do końca, przenosząc kursor w miarę czytania"
 
@@ -1872,7 +1865,6 @@ msgid "No formatting information"
 msgstr "Brak informacji o formatowaniu"
 
 #: globalCommands.py:667
-#, fuzzy
 msgid "Reports formatting info for the current review cursor position within a document"
 msgstr "Czyta informacje o formatowaniu dla aktualnej pozycji kursora"
 
@@ -1893,7 +1885,6 @@ msgid "Mouse tracking"
 msgstr "Śledzenie myszy"
 
 #: globalCommands.py:702
-#, fuzzy
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Włącza i wyłącza podawanie informacji o wskazywanych obiektach przy ruchach myszy"
 
@@ -1910,7 +1901,6 @@ msgid "speaks the current foreground object"
 msgstr "Czyta obiekt na pierwszym planie"
 
 #: globalCommands.py:736
-#, fuzzy
 msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
 msgstr "Podaje użyteczne dla programistów informacje o bieżącym obiekcie w hierarchii nawigacji."
 
@@ -1943,7 +1933,6 @@ msgid "Toggles on and off the reporting of dynamic content changes, such as new 
 msgstr "Włącza i wyłącza informowanie o dynamicznie zmieniającej się treści, na przykład nowym tekście w oknie konsoli"
 
 #: globalCommands.py:772
-#, fuzzy
 msgid "caret moves review cursor"
 msgstr "Kursor przesuwa punkt przeglądu"
 
@@ -1980,7 +1969,6 @@ msgid "Pass next key through"
 msgstr "Przepuść następny klawisz"
 
 #: globalCommands.py:807
-#, fuzzy
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "Kolejny wciśnięty klawisz nie zostanie uwzględniony przez NVDA, lecz bezpośrednio przez system Windows"
 
@@ -2021,9 +2009,8 @@ msgid "Shows the NVDA object presentation settings dialog"
 msgstr "Otwiera okno dialogowe Ustawienia prezentacji obiektów"
 
 #: globalCommands.py:845
-#, fuzzy
 msgid "Shows the NVDA browse mode settings dialog"
-msgstr "Otwiera okno dialogowe Ustawienia myszy"
+msgstr "Otwiera okno dialogowe ustawień dotyczących trybu przeglądania"
 
 #: globalCommands.py:849
 msgid "Shows the NVDA document formatting settings dialog"
@@ -2056,9 +2043,8 @@ msgid "Braille tethered to %s"
 msgstr "Brajl związany z %s"
 
 #: globalCommands.py:877
-#, fuzzy
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr "Przełącza tekst prezentowany na monitorze brajlowskim pomiędzy punktem uwagi a punktem przeglądu"
+msgstr "Przełącza powiązanie tekstu prezentowanego na monitorze brajlowskim pomiędzy punktem uwagi a punktem przeglądu"
 
 #: globalCommands.py:885
 msgid "There is no text on the clipboard"
@@ -2263,7 +2249,6 @@ msgid "&Default dictionary..."
 msgstr "Słownik domyślny..."
 
 #: gui\__init__.py:259
-#, fuzzy
 msgid "dialog where you can set default dictionary by adding dictionary entries to the list"
 msgstr "Okno dialogowe, w którym można ustawiać słownik domyślny poprzez dodawanie wpisów do listy"
 
@@ -2320,7 +2305,6 @@ msgid "User guide"
 msgstr "przewodnik użytkownika"
 
 #: gui\__init__.py:288
-#, fuzzy
 msgid "Keyboard Command Quick Reference"
 msgstr "Wykaz klawiszy poleceń"
 
@@ -2412,7 +2396,6 @@ msgid "Show this dialog when NVDA starts"
 msgstr "Pokazuj to okno przy starcie NVDA"
 
 #: gui\__init__.py:451
-#, fuzzy
 msgid ""
 "Your configuration file contains errors. \n"
 "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
@@ -2501,9 +2484,8 @@ msgid "Custom plugins were detected in your user settings directory. Copying the
 msgstr "W katalogu ustawień tego użytkownika wykryto wtyczki. Skopiowanie ich do profilu systemowego może stanowić zagrożenie bezpieczeństwa. Czy nadal chcesz skopiować swoje ustawienia?"
 
 #: gui\settingsDialogs.py:179
-#, fuzzy
 msgid "Warning"
-msgstr "ostrzeżenie debugowania"
+msgstr "ostrzeżenie"
 
 #: gui\settingsDialogs.py:184
 msgid "Error copying NVDA user settings"
@@ -2734,12 +2716,10 @@ msgid "Report background progress bars"
 msgstr "Sygnalizuj paski postępu będące w tle"
 
 #: gui\settingsDialogs.py:662
-#, fuzzy
 msgid "Report dynamic &content changes"
 msgstr "Informuj o dynamicznych zmianach treści"
 
 #: gui\settingsDialogs.py:682
-#, fuzzy
 msgid "Browse mode"
 msgstr "Tryb przeglądania"
 
@@ -2828,9 +2808,8 @@ msgid "Report table row/column h&eaders"
 msgstr "Odczytuj nagłówki tabel"
 
 #: gui\settingsDialogs.py:779
-#, fuzzy
 msgid "Report table cell c&oordinates"
-msgstr "Odczytuj nagłówki tabel"
+msgstr "odczytuj współrzędne komurek tabeli"
 
 #: gui\settingsDialogs.py:782
 msgid "Report &links"
@@ -2907,7 +2886,6 @@ msgid "&Add"
 msgstr "Dodaj"
 
 #: gui\settingsDialogs.py:880
-#, fuzzy
 msgid "&Edit"
 msgstr "Edytuj"
 
@@ -3232,7 +3210,6 @@ msgid "right windows"
 msgstr "prawy klawisz Windows"
 
 #: keyLabels.py:71
-#, fuzzy
 msgid "break"
 msgstr "podział strony"
 
@@ -3491,7 +3468,6 @@ msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Darmowy i wolny screen reader dla Microsoft Windows"
 
 #: versionInfo.py:42
-#, fuzzy
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) 2006-2011 Współautorzy NVDA"
 
@@ -3573,7 +3549,6 @@ msgid "use screen layout %s"
 msgstr "Użyj układu ekranu %s"
 
 #: virtualBuffers\__init__.py:760
-#, fuzzy
 msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
 msgstr "Przełącza układ ekranu podczas renderowania jeżeli jest zachowana zawartość wirtualnego bufora"
 

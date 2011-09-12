@@ -37,7 +37,8 @@
 - Dynamicky menený obsah nie je viac oznamovaný v režime spánku. (#1662)
 - Vylepšená interakcia so zoznamovými rámikmi (alt+šípka hore / alt+šípka dolu) v režime prehliadania. (#1630)
 - NVDA sa dokáže zotaviť z mnohých neočakávaných situácií. Napríklad pád nezávislej aplikácii spôsoboval kompletné pád NVDA. (#1408)
-- NVDA neodmieta pri čítaní dokumentu v režime prehliadania z Gecko2 (Mozilla Firefox a pod) zobraziť špecifické časti stránkey, ktoré sú štýlované ako display:table. (#1373)
+- NVDA neodmieta pri čítaní dokumentu v režime prehliadania z Gecko2 (Mozilla Firefox a pod) zobraziť špecifické časti stránky, ktoré sú štýlované ako display:table. (#1373)
+- NVDA neoznamuje obsah štítkov, keď ich podradené objekty získajú fokus. Zabraňuje to viacnásobnému oznamovaniu názvov niektorých prvkov formulára v programoch Firefox (gecko) a internet explorer (MSHTML). (#1650)
 
 
 
