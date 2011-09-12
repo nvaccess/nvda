@@ -115,12 +115,9 @@ def normalizeLanguage(lang):
 	"""
 	lang=lang.replace('-','_')
 	ld=lang.split('_')
-	ldLen=len(ld)
-	if ldLen==2:
-		return "%s_%s"%(ld[0].lower(),ld[1].upper())
-	elif ldLen==1:
-		return ld[0].lower()
-	else:
-		raise ValueError("badly formatted language: %s"%lang)
- 
+	ld[0]=ld[0].lower()
+	if len(ld)>=2:
+		ld[1]=ld[1].upper()
+	return "_".join(ld)
+
 
