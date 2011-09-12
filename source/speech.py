@@ -128,7 +128,7 @@ def getCurrentLanguage():
 	language=getSynth().language
 	if language:
 		language=languageHandler.normalizeLanguage(language)
-	else:
+	if not language:
 		language=languageHandler.getLanguage()
 	return language
 

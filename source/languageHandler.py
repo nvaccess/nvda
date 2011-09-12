@@ -116,6 +116,9 @@ def normalizeLanguage(lang):
 	lang=lang.replace('-','_')
 	ld=lang.split('_')
 	ld[0]=ld[0].lower()
+	#Filter out meta languages such as x-western
+	if ld[0]=='x':
+		return None
 	if len(ld)>=2:
 		ld[1]=ld[1].upper()
 	return "_".join(ld)
