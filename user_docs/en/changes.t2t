@@ -38,6 +38,7 @@
 - In browse mode, the behaviour of alt+upArrow and alt+downArrow to collapse and expand combo boxes has been improved. (#1630)
 - NVDA now recovers from many more situations such as applications that stop responding which previously caused it to freeze completely. (#1408)
 - For Mozilla Gecko (Firefox etc) browse mode documents NVDA will no longer fail to render text in a very specific situation where an element is styled as display:table. (#1373)
+- NVDA will no longer announce label controls when focus moves inside of them. Stops double announcements of labels for some form fields in Firefox (Gecko) and Internet Explorer (MSHTML). (#1650)
 
 
 = 2011.2 =
