@@ -39,6 +39,7 @@
 - NVDA now recovers from many more situations such as applications that stop responding which previously caused it to freeze completely. (#1408)
 - For Mozilla Gecko (Firefox etc) browse mode documents NVDA will no longer fail to render text in a very specific situation where an element is styled as display:table. (#1373)
 - NVDA will no longer announce label controls when focus moves inside of them. Stops double announcements of labels for some form fields in Firefox (Gecko) and Internet Explorer (MSHTML). (#1650)
+- NVDA no longer fails to read a cell in Microsoft Excel after pasting in to it with control+v. (#1781)
 
 
 = 2011.2 =
