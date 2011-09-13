@@ -9,6 +9,7 @@ import comtypes.automation
 import wx
 import oleacc
 import textInfos
+import colors
 import eventHandler
 import gui
 import winUser
@@ -129,6 +130,15 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			formatField['bold']=fontObj.bold
 			formatField['italic']=fontObj.italic
 			formatField['underline']=fontObj.underline
+		if formatConfig['reportColor']:
+			try:
+				formatField['color']=colors.RGB.fromCOLORREF(int(fontObj.color))
+			except COMError:
+				pass
+			try:
+				formatField['background-color']=colors.RGB.fromCOLORREF(int(self.obj.excelCellObject.interior.color))
+			except COMError:
+				pass
 		return formatField,(self._startOffset,self._endOffset)
 
 class ExcelCell(ExcelBase):
