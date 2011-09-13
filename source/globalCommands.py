@@ -679,16 +679,28 @@ class GlobalCommands(ScriptableObject):
 
 	def script_reportStatusLine(self,gesture):
 		obj = api.getStatusBar()
-		if not obj:
-			ui.message(_("no status bar found"))
+		found=False
+		if obj:
+			text = api.getStatusBarText(obj)
+			api.setNavigatorObject(obj)
+			found=True
+		else:
+			info=api.getForegroundObject().flatReviewPosition
+			if info:
+				info.expand(textInfos.UNIT_STORY)
+				info.collapse(True)
+				info.expand(textInfos.UNIT_LINE)
+				text=info.text
+				info.collapse()
+				api.setReviewPosition(info)
+				found=True
+		if not found:
+			ui.message(_("No status line found"))
 			return
-		text = api.getStatusBarText(obj)
-
 		if scriptHandler.getLastScriptRepeatCount()==0:
 			ui.message(text)
 		else:
 			speech.speakSpelling(text)
-		api.setNavigatorObject(obj)
 	script_reportStatusLine.__doc__ = _("reads the current application status bar and moves the navigator to it")
 
 	def script_toggleMouseTracking(self,gesture):
