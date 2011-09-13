@@ -104,6 +104,10 @@ class RootNode(AcrobatNode):
 
 	def event_valueChange(self):
 		# Acrobat has indicated that a page has died and been replaced by a new one.
+		if not self.inForeground:
+			# If this isn't in the foreground, it doesn't matter,
+			# as focus will be fired on the correct object when it is in the foreground again.
+			return
 		# The new page has the same event params, so we must bypass NVDA's IAccessible caching.
 		obj = getNVDAObjectFromEvent(self.windowHandle, winUser.OBJID_CLIENT, 0)
 		if not obj:
@@ -161,7 +165,7 @@ def findExtraOverlayClasses(obj, clsList):
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
 	role = obj.role
-	if obj.event_childID == 0 and obj.event_objectID == winUser.OBJID_CLIENT and winUser.isDescendantWindow(winUser.getForegroundWindow(), obj.windowHandle):
+	if obj.event_childID == 0 and obj.event_objectID == winUser.OBJID_CLIENT:
 		# Root node.
 		if role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE):
 			clsList.append(Document)
