@@ -104,7 +104,7 @@ class RootNode(AcrobatNode):
 
 	def event_valueChange(self):
 		# Acrobat has indicated that a page has died and been replaced by a new one.
-		if not self.inForeground:
+		if not self.isInForeground:
 			# If this isn't in the foreground, it doesn't matter,
 			# as focus will be fired on the correct object when it is in the foreground again.
 			return
