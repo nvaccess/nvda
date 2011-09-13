@@ -120,6 +120,18 @@ class Document(RootNode):
 		import virtualBuffers.adobeAcrobat
 		return virtualBuffers.adobeAcrobat.AdobeAcrobat
 
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		# HACK: #1659: When moving the focus, Acrobat sometimes fires focus on the document before firing it on the real focus;
+		# e.g. when tabbing through a multi-page form.
+		# This causes extraneous verbosity.
+		# Therefore, if already focused inside this document, only allow focus on the document if it has no active descendant.
+		if api.getFocusObject().windowHandle == self.windowHandle:
+			try:
+				return self.IAccessibleObject.accFocus in (None, 0)
+			except COMError:
+				pass
+		return super(Document, self).shouldAllowIAccessibleFocusEvent
+
 class RootTextNode(RootNode):
 	"""The message text node that appears instead of the document when the document is not available.
 	"""
