@@ -51,13 +51,16 @@ class AcrobatNode(IAccessible):
 			log.debugWarning("Could not get IServiceProvider")
 			return
 
-		if self.event_objectID is None:
-			# This object does not have real event parameters.
-			# Get the real child ID using IAccID.
+		if self.event_objectID > 0:
+			self.accID = self.event_objectID
+		elif self.event_childID > 0:
+			self.accID = self.event_childID
+		else:
 			try:
-				self.event_childID = serv.QueryService(SID_AccID, IAccID).get_accID()
+				self.accID = serv.QueryService(SID_AccID, IAccID).get_accID()
 			except COMError:
 				log.debugWarning("Failed to get ID from IAccID", exc_info=True)
+				self.accID = None
 
 		# Get the IPDDomNode.
 		try:
@@ -90,6 +93,11 @@ class AcrobatNode(IAccessible):
 			self.pdDomNode.ScrollTo()
 		except (AttributeError, COMError):
 			log.debugWarning("IPDDomNode::ScrollTo failed", exc_info=True)
+
+	def _isEqual(self, other):
+		if self.windowHandle == other.windowHandle and self.accID and other.accID:
+			return self.accID == other.accID
+		return super(AcrobatNode, self)._isEqual(other)
 
 class RootNode(AcrobatNode):
 	shouldAllowIAccessibleFocusEvent = True

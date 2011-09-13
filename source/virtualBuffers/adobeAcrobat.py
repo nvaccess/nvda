@@ -65,7 +65,7 @@ class AdobeAcrobat(VirtualBuffer):
 		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
 
 	def getIdentifierFromNVDAObject(self,obj):
-		return obj.windowHandle, obj.event_objectID if obj.event_objectID > 0 else obj.event_childID
+		return obj.windowHandle, obj.accID
 
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType in ("link", "unvisitedLink"):
