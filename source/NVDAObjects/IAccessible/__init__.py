@@ -463,8 +463,8 @@ the NVDAObject for IAccessible
 				clsList.append(Edit)
 
 		#Window root IAccessibles
-		if self.event_objectID==winUser.OBJID_WINDOW and self.event_childID==0 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
-			clsList.append(WindowRoot)
+		if self.event_childID==0 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
+			clsList.append(WindowRoot if self.event_objectID==winUser.OBJID_WINDOW else GenericWindow)
 
 		if self.event_objectID==winUser.OBJID_TITLEBAR and self.event_childID==0:
 			clsList.append(Titlebar)
@@ -1303,9 +1303,10 @@ class ContentGenericClient(IAccessible):
 			return u"%s\u2026"%val[:200]
 		return val
 
-class WindowRoot(IAccessible):
-
+class GenericWindow(IAccessible):
 	TextInfo=displayModel.DisplayModelTextInfo
+
+class WindowRoot(GenericWindow):
 
 	parentUsesSuperOnWindowRootIAccessible=True #: on a window root IAccessible, super should be used instead of accParent
 
