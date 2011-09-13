@@ -737,16 +737,33 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 
 	//Find out the language
 	wstring language=L"";
-	IHTMLElement* pHTMLElement=NULL;
-	if(pHTMLDOMNode->QueryInterface(IID_IHTMLElement,(void**)&pHTMLElement)==S_OK) {
-		VARIANT v;
-		if(pHTMLElement->getAttribute(L"lang",2,&v)==S_OK) {
-			if(v.vt==VT_BSTR&&v.bstrVal) {
-				language=v.bstrVal;
+	//Try getting it from this DOMNode,
+	//Else if this is the root of our buffer, then keep going up the actual DOM
+	//E.g. will hit HTML tag etc
+	IHTMLDOMNode* pHTMLDOMNodeTemp=pHTMLDOMNode;
+	pHTMLDOMNodeTemp->AddRef();
+	while(pHTMLDOMNodeTemp) {
+		IHTMLElement* pHTMLElement=NULL;
+		if(pHTMLDOMNodeTemp->QueryInterface(IID_IHTMLElement,(void**)&pHTMLElement)==S_OK&&pHTMLElement) {
+			VARIANT v;
+			if(pHTMLElement->getAttribute(L"lang",2,&v)==S_OK) {
+				if(v.vt==VT_BSTR&&v.bstrVal) {
+					language=v.bstrVal;
+				}
+				VariantClear(&v);
 			}
-			VariantClear(&v);
+			pHTMLElement->Release();
 		}
-		pHTMLElement->Release();
+		if(!parentNode&&language.empty()) {
+			IHTMLDOMNode* pHTMLDOMNodeTempParent=NULL;
+			if(pHTMLDOMNodeTemp->get_parentNode(&pHTMLDOMNodeTempParent)==S_OK&&pHTMLDOMNodeTempParent) {
+				pHTMLDOMNodeTemp->Release();
+				pHTMLDOMNodeTemp=pHTMLDOMNodeTempParent;
+				continue;
+			}
+		}
+		pHTMLDOMNodeTemp->Release();
+		pHTMLDOMNodeTemp=NULL;
 	}
 	if(parentNode&&language.empty()) {
 		language=static_cast<MshtmlVBufStorage_controlFieldNode_t*>(parentNode)->language;
