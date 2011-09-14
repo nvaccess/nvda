@@ -210,17 +210,19 @@ class ExcelCell(ExcelBase):
 
 class ExcelSelection(ExcelBase):
 
-	role=controlTypes.ROLE_GROUPING
+	role=controlTypes.ROLE_TABLECELL
 
 	def __init__(self,windowHandle=None,excelWindowObject=None,excelRangeObject=None):
 		self.excelWindowObject=excelWindowObject
 		self.excelRangeObject=excelRangeObject
 		super(ExcelSelection,self).__init__(windowHandle=windowHandle)
 
-	def _get_name(self):
-		return _("selection")
+	def _get_states(self):
+		states=super(ExcelSelection,self).states
+		states.add(controlTypes.STATE_SELECTED)
+		return states
 
-	def _get_value(self):
+	def _get_name(self):
 		firstCell=self.excelRangeObject.Item(1)
 		lastCell=self.excelRangeObject.Item(self.excelRangeObject.Count)
 		return _("%s %s through %s %s")%(self.getCellAddress(firstCell),firstCell.Text,self.getCellAddress(lastCell),lastCell.Text)
