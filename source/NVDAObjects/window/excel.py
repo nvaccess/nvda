@@ -231,3 +231,8 @@ class ExcelSelection(ExcelBase):
 		worksheet=self.excelRangeObject.Worksheet
 		return ExcelWorksheet(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelWorksheetObject=worksheet)
 
+	#Its useful for an excel selection to be announced with reportSelection script
+	def makeTextInfo(self,position):
+		if position==textInfos.POSITION_SELECTION:
+			position=textInfos.POSITION_ALL
+		return super(ExcelSelection,self).makeTextInfo(position)
