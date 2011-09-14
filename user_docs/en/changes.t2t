@@ -23,6 +23,7 @@
 - the Read active window script (NVDA+b) has been improved to filter out unuseful controls   and also is now much more easy to silence. (#1499)
 - Automatic say all when a browse mode document loads is now optional via a setting in the Browse Mode settings dialog. (#414)  
 - When trying to read the status bar (Desktop NVDA+end), If a real status bar object cannot be located, NVDA will instead resort to using the bottom line of text written to the display for the active application. (#649)
+- When reading with say all in browse mode documents, NVDA will now pause at the end of headings and other block-level elements, rather than speaking the text together with the next lot of text as one long sentence.
 
 
 == Bug Fixes ==

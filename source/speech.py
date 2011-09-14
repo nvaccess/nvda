@@ -592,10 +592,15 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 			break
 
 	#Get speech text for any fields in the old controlFieldStack that are not in the new controlFieldStack 
+	endingBlock=False
 	for count in reversed(range(commonFieldCount,len(controlFieldStackCache))):
 		text=info.getControlFieldSpeech(controlFieldStackCache[count],controlFieldStackCache[0:count],"end_removedFromControlFieldStack",formatConfig,extraDetail,reason=reason)
 		if text:
 			textList.append(text)
+		if not endingBlock and reason==REASON_SAYALL:
+			endingBlock=bool(int(controlFieldStackCache[count].get('isBlock',0)))
+	if endingBlock:
+		textList.append(BreakCommand())
 	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't entering any new fields and there is no text).
 	isTextListBlank=True
 
@@ -1108,10 +1113,22 @@ def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
 
 re_last_pause=re.compile(ur"^(.*(?<=[^\s.!?])[.!?][\"'”’)]?(?:\s+|$))(.*$)",re.DOTALL|re.UNICODE)
 
-def speakWithoutPauses(speechSequence):
+def speakWithoutPauses(speechSequence,detectBreaks=True):
 	"""
 	Speaks the speech sequences given over multiple calls, only sending to the synth at acceptable phrase or sentence boundaries, or when given None for the speech sequence.
 	"""
+	lastStartIndex=0
+	#Break on all explicit break commands
+	if detectBreaks and speechSequence:
+		sequenceLen=len(speechSequence)
+		for index in xrange(sequenceLen):
+			if index>0 and lastStartIndex<index and isinstance(speechSequence[index],BreakCommand):
+				speakWithoutPauses(speechSequence[lastStartIndex:index],detectBreaks=False)
+				speakWithoutPauses(None)
+				lastStartIndex=index+1
+		if lastStartIndex<sequenceLen:
+			speakWithoutPauses(speechSequence[lastStartIndex:],detectBreaks=False)
+		return
 	finalSpeechSequence=[] #To be spoken now
 	pendingSpeechSequence=[] #To be saved off for speaking  later
 	if speechSequence is None: #Requesting flush
@@ -1200,3 +1217,5 @@ class LangChangeCommand(SpeechCommand):
 	def __repr__(self):
 		return "LangChangeCommand (%r)"%self.lang
 
+class BreakCommand(object):
+	"""Forces speakWithoutPauses to flush its buffer and therefore break the sentence at this point."""
