@@ -830,7 +830,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	level=attrs.get('level',None)
 
 	#Remove the clickable state from controls that are clearly clickable according to their role
-	if role in (controlTypes.ROLE_LINK,controlTypes.ROLE_BUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_RADIOBUTTON):
+	if role in (controlTypes.ROLE_LINK,controlTypes.ROLE_BUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_TOGGLEBUTTON):
 		states=states.copy()
 		states.discard(controlTypes.STATE_CLICKABLE)
 
@@ -880,7 +880,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	# speakExitForOther: When moving by word or character, speak when the user exits the control.
 	speakEntry=speakWithinForLine=speakExitForLine=speakExitForOther=False
 	if (
-		role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_SLIDER,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_PROGRESSBAR)
+		role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_SLIDER,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_PROGRESSBAR,controlTypes.ROLE_TOGGLEBUTTON)
 		or (role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
 		or (role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 	):
