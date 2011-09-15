@@ -829,8 +829,9 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		description=""
 	level=attrs.get('level',None)
 
-	#Remove the clickable state from controls that are clearly clickable according to their role
-	if role in (controlTypes.ROLE_LINK,controlTypes.ROLE_BUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_SLIDER):
+	# Remove the clickable state from controls that are clearly clickable according to their role
+	# or where it just isn't useful.
+	if role in (controlTypes.ROLE_LINK,controlTypes.ROLE_BUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_SLIDER,controlTypes.ROLE_DOCUMENT):
 		states=states.copy()
 		states.discard(controlTypes.STATE_CLICKABLE)
 
