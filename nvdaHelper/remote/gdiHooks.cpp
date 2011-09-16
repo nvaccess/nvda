@@ -742,10 +742,8 @@ BOOL allow_ScriptStringAnalyseArgsByAnalysis=FALSE;
 typedef HRESULT(WINAPI *ScriptStringAnalyse_funcType)(HDC,const void*,int,int,int,DWORD,int,SCRIPT_CONTROL*,SCRIPT_STATE*,const int*,SCRIPT_TABDEF*,const BYTE*,SCRIPT_STRING_ANALYSIS*);
 ScriptStringAnalyse_funcType real_ScriptStringAnalyse=NULL;
 HRESULT WINAPI fake_ScriptStringAnalyse(HDC hdc,const void* pString, int cString, int cGlyphs, int iCharset, DWORD dwFlags, int iRectWidth, SCRIPT_CONTROL* psControl, SCRIPT_STATE* psState, const int* piDx, SCRIPT_TABDEF* pTabdef, const BYTE* pbInClass, SCRIPT_STRING_ANALYSIS* pssa) {
-	TlsSetValue(tls_index_inTextOutHook,(LPVOID)1);
 	//Call the real ScriptStringAnalyse
 	HRESULT res=real_ScriptStringAnalyse(hdc,pString,cString,cGlyphs,iCharset,dwFlags,iRectWidth,psControl,psState,piDx,pTabdef,pbInClass,pssa);
-	TlsSetValue(tls_index_inTextOutHook,(LPVOID)0);
 	//We only want to go on if  there's safe arguments
 	//We also need to acquire access to our scriptString analysis map
 	if(res!=S_OK||!pString||cString<=0||!pssa||!allow_ScriptStringAnalyseArgsByAnalysis) return res;
@@ -788,7 +786,9 @@ typedef HRESULT(WINAPI *ScriptStringOut_funcType)(SCRIPT_STRING_ANALYSIS,int,int
 ScriptStringOut_funcType real_ScriptStringOut=NULL;
 HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UINT uOptions,const RECT *prc,int iMinSel,int iMaxSel,BOOL fDisabled) {
 	//Call the real ScriptStringOut
+	TlsSetValue(tls_index_inTextOutHook,(LPVOID)1);
 	HRESULT res=real_ScriptStringOut(ssa,iX,iY,uOptions,prc,iMinSel,iMaxSel,fDisabled);
+	TlsSetValue(tls_index_inTextOutHook,(LPVOID)0);
 	//If ScriptStringOut was successful we can go on
 	//We also need to acquire access to our Script analysis map
 	if(res!=S_OK||!ssa||!allow_ScriptStringAnalyseArgsByAnalysis) return res;
