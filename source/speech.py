@@ -552,7 +552,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 		extraDetail=True
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
-	textList=[]
+	speechSequence=[]
 	#Fetch the last controlFieldStack, or make a blank one
 	controlFieldStackCache=getattr(info.obj,'_speakTextInfo_controlFieldStackCache',[]) if useCache else {}
 	formatFieldAttributesCache=getattr(info.obj,'_speakTextInfo_formatFieldAttributesCache',{}) if useCache else {}
@@ -596,40 +596,40 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 	for count in reversed(range(commonFieldCount,len(controlFieldStackCache))):
 		text=info.getControlFieldSpeech(controlFieldStackCache[count],controlFieldStackCache[0:count],"end_removedFromControlFieldStack",formatConfig,extraDetail,reason=reason)
 		if text:
-			textList.append(text)
+			speechSequence.append(text)
 		if not endingBlock and reason==REASON_SAYALL:
 			endingBlock=bool(int(controlFieldStackCache[count].get('isBlock',0)))
 	if endingBlock:
-		textList.append(BreakCommand())
+		speechSequence.append(BreakCommand())
 	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't entering any new fields and there is no text).
-	isTextListBlank=True
+	isTextBlank=True
 
 	#Get speech text for any fields that are in both controlFieldStacks, if extra detail is not requested
 	if not extraDetail:
 		for count in range(commonFieldCount):
 			text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
-				textList.append(text)
+				speechSequence.append(text)
 
 	#Get speech text for any fields in the new controlFieldStack that are not in the old controlFieldStack
 	for count in range(commonFieldCount,len(newControlFieldStack)):
 		text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"start_addedToControlFieldStack",formatConfig,extraDetail,reason=reason)
 		if text:
-			textList.append(text)
-			isTextListBlank=False
+			speechSequence.append(text)
+			isTextBlank=False
 		commonFieldCount+=1
 
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
 	text=getFormatFieldSpeech(newFormatField,formatFieldAttributesCache,formatConfig,unit=unit,extraDetail=extraDetail)
 	if text:
-		textList.append(text)
+		speechSequence.append(text)
 	if autoLanguageSwitching:
 		language=newFormatField.get('language')
-		textList.append(LangChangeCommand(language))
+		speechSequence.append(LangChangeCommand(language))
 
 	if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and len([x for x in textWithFields if isinstance(x,basestring)])==1:
-		if any(isinstance(x,basestring) for x in textList):
-			speak(textList)
+		if any(isinstance(x,basestring) for x in speechSequence):
+			speak(speechSequence)
 		speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None)
 		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)
 		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
@@ -641,7 +641,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 	#But also keep newControlFieldStack up to date as we will need it for the ends
 	# Add any text to a separate list, as it must be handled differently.
 	#Also make sure that LangChangeCommand objects are added before any controlField or formatField speech
-	relativeTextList=[]
+	relativeSpeechSequence=[]
 	lastTextOkToMerge=False
 	lastWasText=False
 	for count in range(len(commandList)):
@@ -650,71 +650,69 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,extraDetail=Fal
 			text=commandList[count]
 			if text:
 				if False: #lastTextOkToMerge:
-					relativeTextList[-1]+=text
+					relativeSpeechSequence[-1]+=text
 				else:
-					relativeTextList.append(text)
+					relativeSpeechSequence.append(text)
 					lastTextOkToMerge=True
 		else:
 			if lastWasText:
-				relativeTextList.append(LangChangeCommand(None))
+				relativeSpeechSequence.append(LangChangeCommand(None))
 				lastWasText=False
 			if isinstance(commandList[count],textInfos.FieldCommand) and commandList[count].command=="controlStart":
 				lastTextOkToMerge=False
 				text=info.getControlFieldSpeech(commandList[count].field,newControlFieldStack,"start_relative",formatConfig,extraDetail,reason=reason)
 				if text:
-					relativeTextList.append(text)
+					relativeSpeechSequence.append(text)
 				newControlFieldStack.append(commandList[count].field)
 			elif isinstance(commandList[count],textInfos.FieldCommand) and commandList[count].command=="controlEnd":
 				lastTextOkToMerge=False
 				text=info.getControlFieldSpeech(newControlFieldStack[-1],newControlFieldStack[0:-1],"end_relative",formatConfig,extraDetail,reason=reason)
 				if text:
-					relativeTextList.append(text)
+					relativeSpeechSequence.append(text)
 				del newControlFieldStack[-1]
 				if commonFieldCount>len(newControlFieldStack):
 					commonFieldCount=len(newControlFieldStack)
 			elif isinstance(commandList[count],textInfos.FieldCommand) and commandList[count].command=="formatChange":
 				text=getFormatFieldSpeech(commandList[count].field,formatFieldAttributesCache,formatConfig,unit=unit,extraDetail=extraDetail)
 				if text:
-					relativeTextList.append(text)
+					relativeSpeechSequence.append(text)
 					lastTextOkToMerge=False
 				if autoLanguageSwitching:
 					language=commandList[count].field.get('language')
 					if language:
-						relativeTextList.append(LangChangeCommand(language))
-	#text=CHUNK_SEPARATOR.join(relativeTextList)
+						relativeSpeechSequence.append(LangChangeCommand(language))
+	#text=CHUNK_SEPARATOR.join(relativeSpeechSequence)
 	# Don't add this text if it is blank.
 	relativeBlank=True
-	for x in relativeTextList:
+	for x in relativeSpeechSequence:
 		if isinstance(x,basestring) and not isBlank(x):
 			relativeBlank=False
 			break
 	if not relativeBlank:
-		textList.extend(relativeTextList)
-		isTextListBlank=False
+		speechSequence.extend(relativeSpeechSequence)
+		isTextBlank=False
 
 	#Finally get speech text for any fields left in new controlFieldStack that are common with the old controlFieldStack (for closing), if extra detail is not requested
-	textList.append(LangChangeCommand(None))
+	speechSequence.append(LangChangeCommand(None))
 	if not extraDetail:
 		for count in reversed(range(min(len(newControlFieldStack),commonFieldCount))):
 			text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"end_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
-				textList.append(text)
-				isTextListBlank=False
+				speechSequence.append(text)
+				isTextBlank=False
 
 				# If there is nothing  that should cause the TextInfo to be considered non-blank, blank should be reported, unless we are doing a say all.
-	if reason != REASON_SAYALL and isTextListBlank:
-		textList.append(_("blank"))
+	if reason != REASON_SAYALL and isTextBlank:
+		speechSequence.append(_("blank"))
 
 	#Cache a copy of the new controlFieldStack for future use
 	if useCache:
 		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)
 		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
 
-	speechSequence=[]
 	# Even when there's no speakable text, we still need to notify the synth of the index.
 	if index is not None:
-		speechSequence.append(IndexCommand(index))
-	speechSequence.extend(textList)
+		speechSequence.insert(0,IndexCommand(index))
 	if speechSequence:
 		if reason==REASON_SAYALL:
 			speakWithoutPauses(speechSequence)
