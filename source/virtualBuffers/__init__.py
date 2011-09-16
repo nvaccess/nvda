@@ -558,6 +558,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		del self._loadProgressCallLater
 		self.isLoading = False
 		if not success:
+			self.passThrough=True
 			return
 		if self._hadFirstGainFocus:
 			# If this buffer has already had focus once while loaded, this is a refresh.
