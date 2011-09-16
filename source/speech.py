@@ -625,6 +625,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=REASON_Q
 	if autoLanguageSwitching:
 		language=newFormatField.get('language')
 		speechSequence.append(LangChangeCommand(language))
+		lastLanguage=language
 
 	if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and len([x for x in textWithFields if isinstance(x,basestring)])==1:
 		if any(isinstance(x,basestring) for x in speechSequence):
@@ -639,45 +640,48 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=REASON_Q
 	# Add any text to a separate list, as it must be handled differently.
 	#Also make sure that LangChangeCommand objects are added before any controlField or formatField speech
 	relativeSpeechSequence=[]
-	lastTextOkToMerge=False
-	lastWasText=False
+	inTextChunk=False
 	for command in textWithFields:
 		if isinstance(command,basestring):
-			lastWasText=True
 			if command:
-				if False: #lastTextOkToMerge:
+				if inTextChunk:
 					relativeSpeechSequence[-1]+=command
 				else:
 					relativeSpeechSequence.append(command)
-					lastTextOkToMerge=True
-		else:
-			if lastWasText:
-				relativeSpeechSequence.append(LangChangeCommand(None))
-				lastWasText=False
-			if isinstance(command,textInfos.FieldCommand) and command.command=="controlStart":
-				lastTextOkToMerge=False
-				text=info.getControlFieldSpeech(command.field,newControlFieldStack,"start_relative",formatConfig,extraDetail,reason=reason)
-				if text:
-					relativeSpeechSequence.append(text)
+					inTextChunk=True
+		elif isinstance(command,textInfos.FieldCommand):
+			newLanguage=None
+			if  command.command=="controlStart":
+				# Control fields always start a new chunk, even if they have no field text.
+				inTextChunk=False
+				fieldText=info.getControlFieldSpeech(command.field,newControlFieldStack,"start_relative",formatConfig,extraDetail,reason=reason)
 				newControlFieldStack.append(command.field)
-			elif isinstance(command,textInfos.FieldCommand) and command.command=="controlEnd":
-				lastTextOkToMerge=False
-				text=info.getControlFieldSpeech(newControlFieldStack[-1],newControlFieldStack[0:-1],"end_relative",formatConfig,extraDetail,reason=reason)
-				if text:
-					relativeSpeechSequence.append(text)
+			elif command.command=="controlEnd":
+				# Control fields always start a new chunk, even if they have no field text.
+				inTextChunk=False
+				fieldText=info.getControlFieldSpeech(newControlFieldStack[-1],newControlFieldStack[0:-1],"end_relative",formatConfig,extraDetail,reason=reason)
 				del newControlFieldStack[-1]
 				if commonFieldCount>len(newControlFieldStack):
 					commonFieldCount=len(newControlFieldStack)
-			elif isinstance(command,textInfos.FieldCommand) and command.command=="formatChange":
-				text=getFormatFieldSpeech(command.field,formatFieldAttributesCache,formatConfig,unit=unit,extraDetail=extraDetail)
-				if text:
-					relativeSpeechSequence.append(text)
-					lastTextOkToMerge=False
+			elif command.command=="formatChange":
+				fieldText=getFormatFieldSpeech(command.field,formatFieldAttributesCache,formatConfig,unit=unit,extraDetail=extraDetail)
+				if fieldText:
+					inTextChunk=False
 				if autoLanguageSwitching:
-					language=command.field.get('language')
-					if language:
-						relativeSpeechSequence.append(LangChangeCommand(language))
-	#text=CHUNK_SEPARATOR.join(relativeSpeechSequence)
+					newLanguage=command.field.get('language')
+					if lastLanguage!=newLanguage:
+						# The language has changed, so this starts a new text chunk.
+						inTextChunk=False
+			if not inTextChunk:
+				if fieldText:
+					if autoLanguageSwitching and lastLanguage is not None:
+						# Fields must be spoken in the default language.
+						relativeSpeechSequence.append(LangChangeCommand(None))
+						lastLanguage=None
+					relativeSpeechSequence.append(fieldText)
+				if autoLanguageSwitching and newLanguage!=lastLanguage:
+					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
+					lastLanguage=newLanguage
 	# Don't add this text if it is blank.
 	relativeBlank=True
 	for x in relativeSpeechSequence:
