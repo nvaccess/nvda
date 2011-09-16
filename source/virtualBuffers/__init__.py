@@ -1009,7 +1009,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	def event_gainFocus(self, obj, nextHandler):
 		if not self.isReady:
 			if self.passThrough:
-				nexthandler()
+				nextHandler()
 			return
 		if not self.passThrough and self._lastFocusObj==obj:
 			# This was the last non-document node with focus, so don't handle this focus event.
