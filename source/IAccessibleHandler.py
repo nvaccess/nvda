@@ -806,7 +806,11 @@ def _fakeFocus(oldFocus):
 #Register internal object event with IAccessible
 cWinEventCallback=WINFUNCTYPE(None,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
+accPropServices=None
+
 def initialize():
+	global accPropServices
+	accPropServices=comtypes.client.CreateObject(CAccPropServices)
 	for eventType in winEventIDsToNVDAEventNames.keys():
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:
@@ -865,18 +869,10 @@ def getIAccIdentity(pacc,childID):
 	IAccIdentityObject=pacc.QueryInterface(IAccIdentity)
 	stringPtr,stringSize=IAccIdentityObject.getIdentityString(childID)
 	try:
-		stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
-		fields=struct.unpack('IIiI',stringPtr.contents.raw)
+		hwnd,objectID,childID=accPropServices.DecomposeHwndIdentityString(stringPtr,stringSize)
 	finally:
 		windll.ole32.CoTaskMemFree(stringPtr)
-	d={}
-	d['childID']=fields[3]
-	if fields[0]&2:
-		d['menuHandle']=fields[2]
-	else:
-		d['objectID']=fields[2]
-		d['windowHandle']=fields[1]
-	return d
+	return dict(windowHandle=hwnd,objectID=objectID,childID=childID)
 
 def findGroupboxObject(obj):
 	prevWindow=winUser.getPreviousWindow(obj.windowHandle)
