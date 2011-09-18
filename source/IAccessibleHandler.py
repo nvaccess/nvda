@@ -874,7 +874,7 @@ def getIAccIdentity(pacc,childID):
 	try:
 		if accPropServices:
 			hwnd,objectID,childID=accPropServices.DecomposeHwndIdentityString(stringPtr,stringSize)
-			return dict(windowHandle=hwnd,objectID=objectID,childID=childID)
+			return dict(windowHandle=hwnd,objectID=c_int(objectID).value,childID=childID)
 		stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
 		fields=struct.unpack('IIiI',stringPtr.contents.raw)
 		d={}
