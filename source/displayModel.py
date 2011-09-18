@@ -24,7 +24,7 @@ def initialize():
 def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,useXML=False):
 	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,useXML)
 	if not text or not cpBuf:
-		return "",[]
+		return u"",[]
 
 	characterRects = []
 	cpBufIt = iter(cpBuf)
@@ -67,7 +67,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			left, top, width, height = self.obj.location
 		except TypeError:
 			# No location; nothing we can do.
-			return "", []
+			return u"", []
 		return getWindowTextInRect(self.obj.appModule.helperLocalBindingHandle, self.obj.windowHandle, left, top, left + width, top + height,self.minHorizontalWhitespace,self.minVerticalWhitespace,useXML)
 
 	def _getStoryText(self):
@@ -83,10 +83,10 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		start=self._startOffset
 		end=self._endOffset
 		if start==end:
-			return ""
+			return u""
 		text=self._get__textAndRects(useXML=True)[0]
 		if not text:
-			return ""
+			return u""
 		text="<control>%s</control>"%text
 		commandList=XMLFormatting.XMLTextParser().parse(text)
 		#Strip  unwanted commands and text from the start and the end to honour the requested offsets
