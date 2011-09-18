@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA main-4627\n"
-"POT-Creation-Date: 2011-09-11 19:03+E. Australia Standard Time\n"
-"PO-Revision-Date: 2011-09-12 12:15+0200\n"
+"Project-Id-Version: NVDA main-4680\n"
+"POT-Creation-Date: 2011-09-15 19:03+E. Australia Standard Time\n"
+"PO-Revision-Date: 2011-09-15 12:36+0200\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "bilinmeyen düzen"
 msgid "layout %s"
 msgstr "%s düzeni"
 
-#: NVDAObjects\IAccessible\__init__.py:1471
+#: NVDAObjects\IAccessible\__init__.py:1472
 msgid "Taskbar"
 msgstr "Görev çubuğu"
 
@@ -37,7 +37,7 @@ msgid "invoke"
 msgstr "Etkinleştir"
 
 #: NVDAObjects\behaviors.py:53
-#: globalCommands.py:797
+#: globalCommands.py:809
 msgid "%d percent"
 msgstr "yüzde %d"
 
@@ -55,15 +55,11 @@ msgstr "Varsayılan renk"
 msgid "embedded object"
 msgstr "Gömülü nesne"
 
-#: NVDAObjects\window\excel.py:178
+#: NVDAObjects\window\excel.py:189
 msgid "has formula"
 msgstr "formül var"
 
-#: NVDAObjects\window\excel.py:210
-msgid "selection"
-msgstr "Seçim"
-
-#: NVDAObjects\window\excel.py:215
+#: NVDAObjects\window\excel.py:228
 msgid "%s %s through %s %s"
 msgstr "%s %s den %s %s e kadar"
 
@@ -223,10 +219,10 @@ msgstr "sağ"
 #: globalCommands.py:171
 #: globalCommands.py:181
 #: globalCommands.py:191
-#: globalCommands.py:699
-#: globalCommands.py:760
-#: globalCommands.py:770
-#: globalCommands.py:780
+#: globalCommands.py:711
+#: globalCommands.py:772
+#: globalCommands.py:782
+#: globalCommands.py:792
 #: gui\settingsDialogs.py:876
 #: keyboardHandler.py:297
 #: synthSettingsRing.py:74
@@ -241,10 +237,10 @@ msgstr "Açık"
 #: globalCommands.py:178
 #: globalCommands.py:188
 #: globalCommands.py:583
-#: globalCommands.py:696
-#: globalCommands.py:757
-#: globalCommands.py:767
-#: globalCommands.py:777
+#: globalCommands.py:708
+#: globalCommands.py:769
+#: globalCommands.py:779
+#: globalCommands.py:789
 #: gui\settingsDialogs.py:628
 #: gui\settingsDialogs.py:876
 #: keyboardHandler.py:297
@@ -562,12 +558,12 @@ msgid "( )"
 msgstr "( )"
 
 #: braille.py:249
-#: speech.py:757
+#: speech.py:762
 msgid "not %s"
 msgstr "%s değil"
 
 #: braille.py:263
-#: speech.py:765
+#: speech.py:770
 msgid "%s of %s"
 msgstr "%s / %s"
 
@@ -813,7 +809,7 @@ msgid "tool tip"
 msgstr "İpucu"
 
 #: controlTypes.py:201
-#: speech.py:1061
+#: speech.py:1066
 msgid "link"
 msgstr "bağlantı"
 
@@ -1233,7 +1229,7 @@ msgid "font size"
 msgstr "yazı tipi büyüklüğü"
 
 #: controlTypes.py:308
-#: speech.py:1013
+#: speech.py:1018
 msgid "bold"
 msgstr "kalın"
 
@@ -1254,12 +1250,12 @@ msgid "background color"
 msgstr "arkaplan rengi"
 
 #: controlTypes.py:313
-#: speech.py:1035
+#: speech.py:1040
 msgid "superscript"
 msgstr "üstsimge"
 
 #: controlTypes.py:314
-#: speech.py:1037
+#: speech.py:1042
 msgid "subscript"
 msgstr "altsimge"
 
@@ -1658,7 +1654,7 @@ msgid "no navigator object"
 msgstr "Nesne sunucusu yok"
 
 #: globalCommands.py:292
-#: globalCommands.py:718
+#: globalCommands.py:730
 msgid "%s copied to clipboard"
 msgstr "%s panoya Kopyalandı"
 
@@ -1867,245 +1863,245 @@ msgstr "İnceleme imlecinin bulunduğu yerle ilgili yazı biçimi bilgisini veri
 msgid "reports the object with focus"
 msgstr "Odaktaki nesneyi söyler"
 
-#: globalCommands.py:683
-msgid "no status bar found"
-msgstr "Durum çubuğu bulunamadı"
+#: globalCommands.py:698
+msgid "No status line found"
+msgstr "Durum satırı bulunamadı"
 
-#: globalCommands.py:692
+#: globalCommands.py:704
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr "Aktif pencerenin durum çubuğunu okur ve nesne sunucusunu da durum çubuğuna taşır"
 
-#: globalCommands.py:701
+#: globalCommands.py:713
 msgid "Mouse tracking"
 msgstr "Fare izleme"
 
-#: globalCommands.py:702
+#: globalCommands.py:714
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Fare hareketlerinin bildirimiyle ilgili ayarı açıp kapatır"
 
-#: globalCommands.py:710
+#: globalCommands.py:722
 msgid "no title"
 msgstr "Başlık yok"
 
-#: globalCommands.py:719
+#: globalCommands.py:731
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
 msgstr "Mevcut uygulama ya da aktif pencerenin başlığını okur. İki kez basılırsa, başlığı kodlar. Üç kez basılırsa, başlığı panoya kopyalar"
 
-#: globalCommands.py:725
+#: globalCommands.py:737
 msgid "speaks the current foreground object"
 msgstr "Mevcut pencere ya da iletişim kutusunun içeriğini seslendirir"
 
-#: globalCommands.py:736
+#: globalCommands.py:748
 msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
 msgstr "Özellikle geliştiricilerin faydalanması için, mevcut nesne hakkında log tutar ve bu bilginin incelenmesi için log görüntüleyiciyi açar."
 
-#: globalCommands.py:742
+#: globalCommands.py:754
 msgid "no progress bar updates"
 msgstr "Aşama çubuğu güncellemelerini bildirme"
 
-#: globalCommands.py:745
+#: globalCommands.py:757
 msgid "speak progress bar updates"
 msgstr "Aşama çubuğu güncellemelerini konuşarak bildir"
 
-#: globalCommands.py:748
+#: globalCommands.py:760
 msgid "beep for progress bar updates"
 msgstr "Aşama çubuğu güncellemelerini bip sesiyle bildir"
 
-#: globalCommands.py:751
+#: globalCommands.py:763
 msgid "beep and speak progress bar updates"
 msgstr "Aşama çubuğu güncellemelerini bip sesiyle ve konuşarak bildir"
 
-#: globalCommands.py:753
+#: globalCommands.py:765
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
 msgstr "Aşama çubuğunun bildirimiyle ilgili, bip, konuşma, bip ve konuşma ve kapalı kipleri arasında geçiş yapar"
 
-#: globalCommands.py:762
+#: globalCommands.py:774
 msgid "report dynamic content changes"
 msgstr "dinamik içerik değişikliklerini bildir"
 
-#: globalCommands.py:763
+#: globalCommands.py:775
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
 msgstr "Dos konsolunda görüntülenen yeni metinler vb dinamik içeriğin bildirimiyle ilgili ayarı açıp kapatır."
 
-#: globalCommands.py:772
+#: globalCommands.py:784
 msgid "caret moves review cursor"
 msgstr "Düzenleme imleci inceleme imlecini taşır"
 
-#: globalCommands.py:773
+#: globalCommands.py:785
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "İnceleme imlecinin sistem düzeltme imlecini takip etmesiyle ilgili ayarı açıp kapatır"
 
-#: globalCommands.py:782
+#: globalCommands.py:794
 msgid "focus moves navigator object"
 msgstr "Odak nesne sunucusunu taşır"
 
-#: globalCommands.py:783
+#: globalCommands.py:795
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "Nesne sunucusunun sistem odağını takip etmesiyle ilgili ayarı açıp kapatır"
 
-#: globalCommands.py:795
+#: globalCommands.py:807
 msgid "no system battery"
 msgstr "Batarya yok"
 
-#: globalCommands.py:798
+#: globalCommands.py:810
 msgid "AC power on"
 msgstr "Güç kaynağı takılı"
 
-#: globalCommands.py:800
+#: globalCommands.py:812
 msgid "%d hours and %d minutes remaining"
 msgstr "%d saat ve %d dakika kaldı"
 
-#: globalCommands.py:802
+#: globalCommands.py:814
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr "Güç kaynağı takılı değilse batarya durumunu ve kalan zamanı söyler."
 
-#: globalCommands.py:806
+#: globalCommands.py:818
 msgid "Pass next key through"
 msgstr "Sonraki tuşu görmezden gel"
 
-#: globalCommands.py:807
+#: globalCommands.py:819
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "Bir sonraki tuş kombinasyonu NVDA kısayol tuşu olarak algılanmaz, doğrudan windows işletim sistemine gönderilir."
 
-#: globalCommands.py:812
+#: globalCommands.py:824
 msgid "Currently running application is %s"
 msgstr "Şu Anda %s uygulaması çalışıyor"
 
-#: globalCommands.py:815
+#: globalCommands.py:827
 msgid " and currently loaded module is %s"
 msgstr " ve %s şu anda yüklü olan modül"
 
-#: globalCommands.py:817
+#: globalCommands.py:829
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
 msgstr "Aktif uygulama modülüyle birlikte aktif uygulamanın dosya adını seslendirir"
 
-#: globalCommands.py:821
+#: globalCommands.py:833
 msgid "Shows the NVDA general settings dialog"
 msgstr "NVDA genel ayarlar iletişim kutusunu gösterir"
 
-#: globalCommands.py:825
+#: globalCommands.py:837
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "NVDA Sentezleyici iletişim kutusunu gösterir"
 
-#: globalCommands.py:829
+#: globalCommands.py:841
 msgid "Shows the NVDA voice settings dialog"
 msgstr "NVDA ses ayarları iletişim kutusunu gösterir"
 
-#: globalCommands.py:833
+#: globalCommands.py:845
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "NVDA klavye ayarları iletişim kutusunu gösterir"
 
-#: globalCommands.py:837
+#: globalCommands.py:849
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "NVDA fare ayarları iletişim kutusunu gösterir"
 
-#: globalCommands.py:841
+#: globalCommands.py:853
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "NVDA nesne sunum ayarları iletişim kutusunu gösterir"
 
-#: globalCommands.py:845
+#: globalCommands.py:857
 msgid "Shows the NVDA browse mode settings dialog"
 msgstr "NVDA tarama kipi ayarlarıyla ilgili iletişim kutusunu  gösterir"
 
-#: globalCommands.py:849
+#: globalCommands.py:861
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "NVDA belge format ayarları iletişim kutusunu gösterir"
 
-#: globalCommands.py:853
+#: globalCommands.py:865
 msgid "Saves the current NVDA configuration"
 msgstr "Mevcut konfigürasyonu kaydeder"
 
-#: globalCommands.py:857
+#: globalCommands.py:869
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr "değişiklikleri geri alarak kaydedilmiş konfigürasyonu yükler"
 
-#: globalCommands.py:867
+#: globalCommands.py:879
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Python konsolu etkinleştirir. öncelikle geliştiriciler için faydalı"
 
-#: globalCommands.py:872
+#: globalCommands.py:884
 #: gui\settingsDialogs.py:1010
 msgid "review"
 msgstr "inceleme imleci"
 
-#: globalCommands.py:875
+#: globalCommands.py:887
 #: gui\settingsDialogs.py:1010
 msgid "focus"
 msgstr "Sistem odağı"
 
-#: globalCommands.py:876
+#: globalCommands.py:888
 msgid "Braille tethered to %s"
 msgstr "Braille %s konumunda"
 
-#: globalCommands.py:877
+#: globalCommands.py:889
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "Braille ekranın sistem odağını mı yoksa inceleme imlecini mi takip edeceğiyle ilgili ayarı değiştirir"
 
-#: globalCommands.py:885
+#: globalCommands.py:897
 msgid "There is no text on the clipboard"
 msgstr "Panoda metin yok"
 
-#: globalCommands.py:890
+#: globalCommands.py:902
 msgid "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "Panoda büyük bir yazı var. %s karakter uzunluğunda"
 
-#: globalCommands.py:891
+#: globalCommands.py:903
 msgid "Reports the text on the Windows clipboard"
 msgstr "clipboard yani panodaki metni okur"
 
-#: globalCommands.py:895
+#: globalCommands.py:907
 msgid "Start marked"
 msgstr "Başlangıç işareti"
 
-#: globalCommands.py:896
+#: globalCommands.py:908
 msgid "Marks the current position of the review cursor as the start of text to be copied"
 msgstr "İnceleme imlecinin mevcut konumunu panoya kopyalanacak metnin başlangıcı olarak işaretler"
 
-#: globalCommands.py:900
+#: globalCommands.py:912
 msgid "No start marker set"
 msgstr "Başlangıç işareti konmadı"
 
-#: globalCommands.py:904
+#: globalCommands.py:916
 msgid "The start marker must reside within the same object"
 msgstr "Başlangıç işaretinin aynı nesnede olması gerekiyor"
 
-#: globalCommands.py:909
+#: globalCommands.py:921
 msgid "Review selection copied to clipboard"
 msgstr "seçiminiz panoya kopyalandı"
 
-#: globalCommands.py:911
+#: globalCommands.py:923
 msgid "No text to copy"
 msgstr "Kopyalanabilir metin yok"
 
-#: globalCommands.py:914
+#: globalCommands.py:926
 msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
 msgstr "daha önce başlangıç işareti konan yerle, inceleme imlecinin mevcut pozisyonu arasındaki metni panoya kopyalar"
 
-#: globalCommands.py:918
+#: globalCommands.py:930
 msgid "Scrolls the braille display back"
 msgstr "Braille ekranını geriye alır"
 
-#: globalCommands.py:923
+#: globalCommands.py:935
 msgid "Scrolls the braille display forward"
 msgstr "Braille ekranını ileri alır"
 
-#: globalCommands.py:928
+#: globalCommands.py:940
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "İmleci Bu braille hücresine  taşır ya da hücrenin üzerindeki nesneyi etkinleştirir"
 
-#: globalCommands.py:933
+#: globalCommands.py:945
 msgid "Moves the braille display to the previous line"
 msgstr "Braille ekranını bir önceki satıra taşır"
 
-#: globalCommands.py:938
+#: globalCommands.py:950
 msgid "Moves the braille display to the next line"
 msgstr "Braille ekranını bir sonraki satıra taşır"
 
-#: globalCommands.py:945
+#: globalCommands.py:957
 msgid "Plugins reloaded"
 msgstr "Plug-in'ler tekrar yüklendi"
 
-#: globalCommands.py:946
+#: globalCommands.py:958
 msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
 msgstr "uygulama modüllerini ve global pluginleri  NVDA'yı yeniden başlatmadan yükler,. geliştiriciler için faydalı olabilir"
 
@@ -3237,7 +3233,7 @@ msgstr "Emulates pressing %s on the system keyboard"
 
 #: speech.py:155
 #: speech.py:309
-#: speech.py:701
+#: speech.py:706
 msgid "blank"
 msgstr "boşluk"
 
@@ -3261,131 +3257,131 @@ msgstr "%s seçilmedi"
 msgid "selection removed"
 msgstr "Seçim iptal edildi"
 
-#: speech.py:755
+#: speech.py:760
 msgid "done dragging"
 msgstr "sürükleme başarılı"
 
-#: speech.py:771
-#: speech.py:774
+#: speech.py:776
+#: speech.py:779
 msgid "level %s"
 msgstr "Seviye %s"
 
-#: speech.py:787
-#: speech.py:1106
+#: speech.py:792
+#: speech.py:1111
 msgid "row %s"
 msgstr "satır %s"
 
-#: speech.py:794
-#: speech.py:1102
+#: speech.py:799
+#: speech.py:1107
 msgid "column %s"
 msgstr "sütun %s"
 
-#: speech.py:799
+#: speech.py:804
 msgid "with %s rows and %s columns"
 msgstr "%s satır ve %s sütunlu"
 
-#: speech.py:801
+#: speech.py:806
 msgid "with %s columns"
 msgstr "%s sütunlu"
 
-#: speech.py:803
+#: speech.py:808
 msgid "with %s rows"
 msgstr "%s satırlı"
 
-#: speech.py:915
+#: speech.py:920
 msgid "with %s items"
 msgstr "%s öge"
 
-#: speech.py:941
-#: speech.py:1061
+#: speech.py:946
+#: speech.py:1066
 msgid "out of %s"
 msgstr "%s dışı"
 
-#: speech.py:965
+#: speech.py:970
 msgid "page %s"
 msgstr "Sayfa %s"
 
-#: speech.py:972
+#: speech.py:977
 msgid "style %s"
 msgstr "Stil %s"
 
-#: speech.py:974
+#: speech.py:979
 msgid "default style"
 msgstr "Varsayılan stil"
 
-#: speech.py:1002
+#: speech.py:1007
 msgid "on {backgroundColor}"
 msgstr "arkaplan renginde"
 
-#: speech.py:1007
+#: speech.py:1012
 msgid "line %s"
 msgstr "satır %s"
 
-#: speech.py:1013
+#: speech.py:1018
 msgid "no bold"
 msgstr "Kalın değil"
 
-#: speech.py:1018
+#: speech.py:1023
 msgid "italic"
 msgstr "italik"
 
-#: speech.py:1018
+#: speech.py:1023
 msgid "no italic"
 msgstr "İtalik yok"
 
-#: speech.py:1023
+#: speech.py:1028
 msgid "no strikethrough"
 msgstr "no strikethrough"
 
-#: speech.py:1023
+#: speech.py:1028
 msgid "strikethrough"
 msgstr "strikethrough"
 
-#: speech.py:1028
+#: speech.py:1033
 msgid "not underlined"
 msgstr "altı çizili değil"
 
-#: speech.py:1028
+#: speech.py:1033
 msgid "underlined"
 msgstr "altı çizili"
 
-#: speech.py:1039
+#: speech.py:1044
 msgid "baseline"
 msgstr "taban çizgisi"
 
-#: speech.py:1047
+#: speech.py:1052
 msgid "align left"
 msgstr "Sol hiza"
 
-#: speech.py:1049
+#: speech.py:1054
 msgid "align center"
 msgstr "Orta hiza"
 
-#: speech.py:1051
+#: speech.py:1056
 msgid "align right"
 msgstr "Sağ hiza"
 
-#: speech.py:1053
+#: speech.py:1058
 msgid "align justify"
 msgstr "İki yana hizala"
 
-#: speech.py:1055
+#: speech.py:1060
 msgid "align default"
 msgstr "Varsayılan hiza"
 
-#: speech.py:1068
+#: speech.py:1073
 msgid "spelling error"
 msgstr "Yazım hatası"
 
-#: speech.py:1070
+#: speech.py:1075
 msgid "out of spelling error"
 msgstr "yazım hatası dışında"
 
-#: speech.py:1088
+#: speech.py:1093
 msgid "out of table"
 msgstr "tablo dışında"
 
-#: speech.py:1097
+#: speech.py:1102
 msgid "table with %s columns and %s rows"
 msgstr "%s sütun ve %s satırlı tablo"
 
@@ -3998,3 +3994,202 @@ msgstr "Tarama kipi"
 #: virtualBuffers\__init__.py:1387
 msgid "focus mode"
 msgstr "Odak kipi"
+
+#~ msgid "selection"
+#~ msgstr "Seçim"
+
+#~ msgid "Raise pitch for capitals"
+#~ msgstr "Büyük ha&rflerde sesi incelt"
+
+#~ msgid "NVDA Excel Cell Editor"
+#~ msgstr "NVDA Excel Hücre Düzenleyici"
+
+#~ msgid "Enter cell contents"
+#~ msgstr "Hücre içeriğini gir"
+
+#~ msgid ""
+#~ "Speaks the word of the current navigator object where the review cursor "
+#~ "is situated. If this key is pressed twice, the word will be spelled"
+#~ msgstr ""
+#~ "Nesne sunucusunda inceleme  imlecinin üzerinde bulunduğu sözcüğü okur. "
+#~ "İki kez basılırsa, sözcük kodlanarak okunur. Üç kez basıldığında ise, "
+#~ "sözcük karakter tanımlarıyla (Adana, Bolu, ceyhan gibi) kodlanır."
+
+#~ msgid "%s embedded object"
+#~ msgstr "%s gömülü nesne"
+
+#~ msgid ""
+#~ "Sets the navigator object to the object previous to the one it is "
+#~ "currently on and speaks it"
+#~ msgstr "Nesne sunucusunu bulunduğu nesneden bir öncekine taşır ve okur"
+
+#~ msgid ""
+#~ "Sets the navigator object to the first child object of the one it is "
+#~ "currently on and speaks it"
+#~ msgstr "Nesne sunucusunu bulunduğu nesnenin ilk alt nesnesine taşır ve okur"
+
+#~ msgid "Extends the selection and speaks the last selected cell"
+#~ msgstr "Seçimi genişletir ve en son seçilen hücreyi okur"
+
+#~ msgid "NVDA"
+#~ msgstr "NVDA"
+
+#~ msgid "Shows the NVDA virtual buffers settings dialog"
+#~ msgstr "NVDA sanal tampon ayarları iletişim kutusunu gösterir"
+
+#~ msgid "Virtual &buffers..."
+#~ msgstr "Sanal &tamponlar..."
+
+#~ msgid "virtual buffers"
+#~ msgstr "Sanal tamponlar"
+
+#~ msgid "line feed"
+#~ msgstr "satır sonu"
+
+#~ msgid "page break"
+#~ msgstr "sayfa işareti"
+
+#~ msgid "carriage return"
+#~ msgstr "satır sonu"
+
+#~ msgid "bang"
+#~ msgstr "ünlem işareti"
+
+#~ msgid "quote"
+#~ msgstr "tırnak işareti"
+
+#~ msgid "number"
+#~ msgstr "Numara"
+
+#~ msgid "dollar"
+#~ msgstr "Dollar"
+
+#~ msgid "percent"
+#~ msgstr "yüzde"
+
+#~ msgid "and"
+#~ msgstr "ve"
+
+#~ msgid "tick"
+#~ msgstr "apostrof"
+
+#~ msgid "left paren"
+#~ msgstr "parantez aç"
+
+#~ msgid "right paren"
+#~ msgstr "parantez kapa"
+
+#~ msgid "star"
+#~ msgstr "yıldız"
+
+#~ msgid "plus"
+#~ msgstr "artı"
+
+#~ msgid "comma"
+#~ msgstr "virgül"
+
+#~ msgid "dash"
+#~ msgstr "tire"
+
+#~ msgid "dot"
+#~ msgstr "nokta"
+
+#~ msgid "slash"
+#~ msgstr "bölü"
+
+#~ msgid "colon"
+#~ msgstr "iki nokta üst üste"
+
+#~ msgid "semi"
+#~ msgstr "noktalı virgül"
+
+#~ msgid "less"
+#~ msgstr "küçüktür"
+
+#~ msgid "equals"
+#~ msgstr "eşittir"
+
+#~ msgid "greater"
+#~ msgstr "büyüktür"
+
+#~ msgid "question"
+#~ msgstr "soru işareti"
+
+#~ msgid "at"
+#~ msgstr "at"
+
+#~ msgid "left bracket"
+#~ msgstr "sol köşeli parantez"
+
+#~ msgid "back slash"
+#~ msgstr "ters bölü"
+
+#~ msgid "right bracket"
+#~ msgstr "sağ köşeli parantez"
+
+#~ msgid "graav"
+#~ msgstr "aksan"
+
+#~ msgid "left brace"
+#~ msgstr "sol parantez"
+
+#~ msgid "bar"
+#~ msgstr "düşey çizgi"
+
+#~ msgid "right brace"
+#~ msgstr "sağ parantez"
+
+#~ msgid "tilda"
+#~ msgstr "tilda"
+
+#~ msgid "bullet"
+#~ msgstr "madde imi"
+
+#~ msgid "dot dot dot"
+#~ msgstr "üç nokta"
+
+#~ msgid "speak punctuation"
+#~ msgstr "noktalama işaretlerini seslendir"
+
+#~ msgid ""
+#~ "Toggles on and off the speaking of punctuation. When on NVDA will say the "
+#~ "names of punctuation symbols, when off it will be up to the synthesizer "
+#~ "as to how it speaks punctuation"
+#~ msgstr ""
+#~ "Noktalama işaretlerinin seslendirilmesiyle ilgili ayarı açıp kapatır. "
+#~ "Açıkken NVDA noktalama işaretlerini söyler, kapalıyken seslendirme işi "
+#~ "sentezleyiciye bırakılır"
+
+#~ msgid "&Speak all punctuation"
+#~ msgstr "Tüm noktalama işaretlerini &konuş"
+
+#~ msgid "Sets the keyboard focus to the navigator object"
+#~ msgstr "Odağı nesne sunucusuna taşır"
+
+#~ msgid ""
+#~ "Moves the system caret to the position of the review cursor , in the "
+#~ "current navigator object"
+#~ msgstr ""
+#~ "Sistem düzenleme imlecini mevcut nesne sunucusundaki inceleme imlecinin "
+#~ "konumuna taşır"
+
+#~ msgid "case sensitive"
+#~ msgstr "Büyük-küçük harf duyarlı"
+
+#~ msgid "Regular expression"
+#~ msgstr "Düzenli ifade"
+
+#~ msgid "Baum SuperVario/HumanWare Brailliant"
+#~ msgstr "Baum SuperVario/HumanWare Brailliant"
+
+#~ msgid "Readme"
+#~ msgstr "Beni oku"
+
+#~ msgid "copyright"
+#~ msgstr "telif hakkı"
+
+#~ msgid "url"
+#~ msgstr "websitesi"
+
+#~ msgid "version"
+#~ msgstr "versiyon"
