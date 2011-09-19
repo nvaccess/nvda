@@ -2,9 +2,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: main-4659\n"
-"POT-Creation-Date: 2011-09-11 19:03+E. Australia Standard Time\n"
-"PO-Revision-Date: 2011-09-11 22:10-0000\n"
+"Project-Id-Version: main-4675\n"
+"POT-Creation-Date: 2011-09-13 19:03+E. Australia Standard Time\n"
+"PO-Revision-Date: 2011-09-14 07:38-0000\n"
 "Last-Translator: Diogo Costa & Elton Lopes <diogo@megatts.com & elton@megatts.com>\n"
 "Language-Team: pt-PT <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "layout desconhecido"
 msgid "layout %s"
 msgstr "layout %s"
 
-#: NVDAObjects\IAccessible\__init__.py:1471
+#: NVDAObjects\IAccessible\__init__.py:1472
 msgid "Taskbar"
 msgstr "Barra de tarefas"
 
@@ -40,7 +40,7 @@ msgid "invoke"
 msgstr "chamar"
 
 #: NVDAObjects\behaviors.py:53
-#: globalCommands.py:797
+#: globalCommands.py:809
 msgid "%d percent"
 msgstr "%d porcento"
 
@@ -58,15 +58,15 @@ msgstr "cor predefinida"
 msgid "embedded object"
 msgstr "objecto embutido"
 
-#: NVDAObjects\window\excel.py:178
+#: NVDAObjects\window\excel.py:189
 msgid "has formula"
 msgstr "tem fórmula"
 
-#: NVDAObjects\window\excel.py:210
+#: NVDAObjects\window\excel.py:221
 msgid "selection"
 msgstr "selecção"
 
-#: NVDAObjects\window\excel.py:215
+#: NVDAObjects\window\excel.py:226
 msgid "%s %s through %s %s"
 msgstr "%s %s até %s %s"
 
@@ -226,10 +226,10 @@ msgstr "direita"
 #: globalCommands.py:171
 #: globalCommands.py:181
 #: globalCommands.py:191
-#: globalCommands.py:699
-#: globalCommands.py:760
-#: globalCommands.py:770
-#: globalCommands.py:780
+#: globalCommands.py:711
+#: globalCommands.py:772
+#: globalCommands.py:782
+#: globalCommands.py:792
 #: gui\settingsDialogs.py:876
 #: keyboardHandler.py:297
 #: synthSettingsRing.py:74
@@ -244,10 +244,10 @@ msgstr "ligado"
 #: globalCommands.py:178
 #: globalCommands.py:188
 #: globalCommands.py:583
-#: globalCommands.py:696
-#: globalCommands.py:757
-#: globalCommands.py:767
-#: globalCommands.py:777
+#: globalCommands.py:708
+#: globalCommands.py:769
+#: globalCommands.py:779
+#: globalCommands.py:789
 #: gui\settingsDialogs.py:628
 #: gui\settingsDialogs.py:876
 #: keyboardHandler.py:297
@@ -1661,7 +1661,7 @@ msgid "no navigator object"
 msgstr "Sem objecto de navegação"
 
 #: globalCommands.py:292
-#: globalCommands.py:718
+#: globalCommands.py:730
 msgid "%s copied to clipboard"
 msgstr "%s copiado para a área de transferência"
 
@@ -1870,245 +1870,245 @@ msgstr "Anuncia informação de formatação para a posição actual do cursor d
 msgid "reports the object with focus"
 msgstr "Anuncia o objecto com o foco"
 
-#: globalCommands.py:683
-msgid "no status bar found"
-msgstr "A barra de estado não foi encontrada"
+#: globalCommands.py:698
+msgid "No status line found"
+msgstr "A linha de estado não foi encontrada"
 
-#: globalCommands.py:692
+#: globalCommands.py:704
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr "Lê a barra de estado da aplicação actual e move o cursor de navegação para lá"
 
-#: globalCommands.py:701
+#: globalCommands.py:713
 msgid "Mouse tracking"
 msgstr "Acompanhar o rato"
 
-#: globalCommands.py:702
+#: globalCommands.py:714
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Alterna entre anunciar ou não informação quando o rato se move"
 
-#: globalCommands.py:710
+#: globalCommands.py:722
 msgid "no title"
 msgstr "sem título"
 
-#: globalCommands.py:719
+#: globalCommands.py:731
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
 msgstr "Anuncia o título da aplicação actual ou janela em primeiro plano. Se for pressionado duas vezes, soletra o título. Se for pressionado três vezes, copia o título para a área de transferência"
 
-#: globalCommands.py:725
+#: globalCommands.py:737
 msgid "speaks the current foreground object"
 msgstr "Anuncia o objecto em primeiro plano"
 
-#: globalCommands.py:736
+#: globalCommands.py:748
 msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
 msgstr "Regista informações sobre o objecto de navegação actual e activa o visualizador de registo assim que a informação possa ser verificada, útil para programadores."
 
-#: globalCommands.py:742
+#: globalCommands.py:754
 msgid "no progress bar updates"
 msgstr "sem actualizações em barras de progresso"
 
-#: globalCommands.py:745
+#: globalCommands.py:757
 msgid "speak progress bar updates"
 msgstr "Falar actualizações de barras de progresso"
 
-#: globalCommands.py:748
+#: globalCommands.py:760
 msgid "beep for progress bar updates"
 msgstr "Beep para actualizações de barras de progresso"
 
-#: globalCommands.py:751
+#: globalCommands.py:763
 msgid "beep and speak progress bar updates"
 msgstr "Beep e falar actualizações em barras de progresso"
 
-#: globalCommands.py:753
+#: globalCommands.py:765
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
 msgstr "Alterna entre beeps, voz, beeps e voz, e desactivar, para informar actualizações de barras de progresso"
 
-#: globalCommands.py:762
+#: globalCommands.py:774
 msgid "report dynamic content changes"
 msgstr "Anunciar alterações em conteúdos dinâmicos"
 
-#: globalCommands.py:763
+#: globalCommands.py:775
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
 msgstr "Alterna entre activar ou desactivar o anúncio de mudanças de conteúdos dinâmicos, como novo texto em janelas de consola do MS-DOS"
 
-#: globalCommands.py:772
+#: globalCommands.py:784
 msgid "caret moves review cursor"
 msgstr "Ponto de inserção move o cursor de revisão"
 
-#: globalCommands.py:773
+#: globalCommands.py:785
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "alterna entre activar ou desactivar o movimento do cursor de revisão devido aos movimentos do ponto de inserção"
 
-#: globalCommands.py:782
+#: globalCommands.py:794
 msgid "focus moves navigator object"
 msgstr "Foco move objecto de navegação"
 
-#: globalCommands.py:783
+#: globalCommands.py:795
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "Alterna entre activar ou desactivar o movimento do objecto de navegação devido a mudanças no foco"
 
-#: globalCommands.py:795
+#: globalCommands.py:807
 msgid "no system battery"
 msgstr "Sem bateria no sistema"
 
-#: globalCommands.py:798
+#: globalCommands.py:810
 msgid "AC power on"
 msgstr "Conectado à fonte de alimentação"
 
-#: globalCommands.py:800
+#: globalCommands.py:812
 msgid "%d hours and %d minutes remaining"
 msgstr "%d horas e %d minutos restantes"
 
-#: globalCommands.py:802
+#: globalCommands.py:814
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr "Anuncia o estado da bateria e o tempo restante se a fonte de alimentação não estiver conectada"
 
-#: globalCommands.py:806
+#: globalCommands.py:818
 msgid "Pass next key through"
 msgstr "passar a próxima tecla através"
 
-#: globalCommands.py:807
+#: globalCommands.py:819
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "O próximo comando não será interpretado pelo NVDA. Este comando será processado directamente pelo Windows"
 
-#: globalCommands.py:812
+#: globalCommands.py:824
 msgid "Currently running application is %s"
 msgstr "A aplicação actual em execução é %s"
 
-#: globalCommands.py:815
+#: globalCommands.py:827
 msgid " and currently loaded module is %s"
 msgstr " e o módulo actual em execução é %s"
 
-#: globalCommands.py:817
+#: globalCommands.py:829
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
 msgstr "Fala os nomes do ficheiro da aplicação e o do appmodule actual em execução"
 
-#: globalCommands.py:821
+#: globalCommands.py:833
 msgid "Shows the NVDA general settings dialog"
 msgstr "Mostra o diálogo com as definições gerais do NVDA"
 
-#: globalCommands.py:825
+#: globalCommands.py:837
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "Mostra o diálogo dos sintetizadores do NVDA"
 
-#: globalCommands.py:829
+#: globalCommands.py:841
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Mostra o diálogo com as definições de voz do NVDA"
 
-#: globalCommands.py:833
+#: globalCommands.py:845
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "Mostra o diálogo com as definições do teclado do NVDA"
 
-#: globalCommands.py:837
+#: globalCommands.py:849
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "Mostra o diálogo com as definições do rato do NVDA"
 
-#: globalCommands.py:841
+#: globalCommands.py:853
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "Mostra o diálogo das definições da apresentação de objectos do NVDA"
 
-#: globalCommands.py:845
+#: globalCommands.py:857
 msgid "Shows the NVDA browse mode settings dialog"
 msgstr "Mostra o diálogo com as definições do modo de navegação do NVDA"
 
-#: globalCommands.py:849
+#: globalCommands.py:861
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "Mostra o diálogo com as definições da formatação de documentos do NVDA"
 
-#: globalCommands.py:853
+#: globalCommands.py:865
 msgid "Saves the current NVDA configuration"
 msgstr "Guarda a configuração actual do NVDA"
 
-#: globalCommands.py:857
+#: globalCommands.py:869
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr "Carrega as definições do NVDA e reescreve as alterações actuais"
 
-#: globalCommands.py:867
+#: globalCommands.py:879
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Activa a consola de Python do NVDA , primeiramente muito útil para a programação"
 
-#: globalCommands.py:872
+#: globalCommands.py:884
 #: gui\settingsDialogs.py:1010
 msgid "review"
 msgstr "cursor de revisão"
 
-#: globalCommands.py:875
+#: globalCommands.py:887
 #: gui\settingsDialogs.py:1010
 msgid "focus"
 msgstr "foco"
 
-#: globalCommands.py:876
+#: globalCommands.py:888
 msgid "Braille tethered to %s"
 msgstr "Braille acompanha o %s"
 
-#: globalCommands.py:877
+#: globalCommands.py:889
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "Alterna entre o Braille acompanhar o foco e a posição do cursor de revisão"
 
-#: globalCommands.py:885
+#: globalCommands.py:897
 msgid "There is no text on the clipboard"
 msgstr "Não existe nenhum texto na área de transferência"
 
-#: globalCommands.py:890
+#: globalCommands.py:902
 msgid "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "A área de transferência contém uma grande quantidade de texto. Tem %s caracteres"
 
-#: globalCommands.py:891
+#: globalCommands.py:903
 msgid "Reports the text on the Windows clipboard"
 msgstr "Anuncia o texto que se encontra na área de transferência do Windows"
 
-#: globalCommands.py:895
+#: globalCommands.py:907
 msgid "Start marked"
 msgstr "Iniciar marcação"
 
-#: globalCommands.py:896
+#: globalCommands.py:908
 msgid "Marks the current position of the review cursor as the start of text to be copied"
 msgstr "Marca a posição actual do cursor de revisão como o início de texto a ser copiado"
 
-#: globalCommands.py:900
+#: globalCommands.py:912
 msgid "No start marker set"
 msgstr "Sem marcador definido"
 
-#: globalCommands.py:904
+#: globalCommands.py:916
 msgid "The start marker must reside within the same object"
 msgstr "O marcador inicial tem de residir no mesmo objecto"
 
-#: globalCommands.py:909
+#: globalCommands.py:921
 msgid "Review selection copied to clipboard"
 msgstr "Selecção de revisão copiada para a área de transferência"
 
-#: globalCommands.py:911
+#: globalCommands.py:923
 msgid "No text to copy"
 msgstr "Sem texto para copiar"
 
-#: globalCommands.py:914
+#: globalCommands.py:926
 msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
 msgstr "Recupera o texto do marcador inicial previamente definido para a posição actual do cursor de revisão, e copia-o para a área de transferência"
 
-#: globalCommands.py:918
+#: globalCommands.py:930
 msgid "Scrolls the braille display back"
 msgstr "Avança a linha braille para trás"
 
-#: globalCommands.py:923
+#: globalCommands.py:935
 msgid "Scrolls the braille display forward"
 msgstr "Avança a linha braille para a frente"
 
-#: globalCommands.py:928
+#: globalCommands.py:940
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "Move o cursor para esta célula braille ou activa o objecto sob a mesma"
 
-#: globalCommands.py:933
+#: globalCommands.py:945
 msgid "Moves the braille display to the previous line"
 msgstr "Move a linha braille para a linha anterior"
 
-#: globalCommands.py:938
+#: globalCommands.py:950
 msgid "Moves the braille display to the next line"
 msgstr "Move a linha braille para a linha seguinte"
 
-#: globalCommands.py:945
+#: globalCommands.py:957
 msgid "Plugins reloaded"
 msgstr "Plugins recarregados"
 
-#: globalCommands.py:946
+#: globalCommands.py:958
 msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
 msgstr "Recarrega os app modules e plugins globais sem reiniciar o NVDA, pode ser útil para programadores"
 
