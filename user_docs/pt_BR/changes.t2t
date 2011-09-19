@@ -8,7 +8,7 @@ Traduzido por Marlin Rodrigues da Silva
 = 2011.3 =
 
 == Novas Características ==
-- O NVDA agora pode alterar o idioma do sintetizador eSpeak no fly ao ler certos documentos da web/pdf que forneçam a informação apropriada do idioma. A mudança automática do idioma//dialeto pode ser ativada ou desativada através do Diálogo de Opções de Voz. (#845)
+- O NVDA agora pode alterar o idioma do sintetizador eSpeak ao ler certos documentos da web/pdf que forneçam a informação apropriada do idioma. A mudança automática do idioma//dialeto pode ser ativada ou desativada através do Diálogo de Opções de Voz. (#845)
 - No Mozilla Gecko (isto é, Firefox) os níveis dos cabeçalhos agora são anunciados quando se usa a navegação de objetos.
 - A formatação de textos agora é informada quando se usa o modo de navegação no Mozilla Gecko (isto é, Firefox e Thunderbird). (#394)
 - Textos com sublinhado e/ou taxado agora podem ser detectados e informados em controles de texto standard IAccessible2 tais como em aplicativos da Mozilla.
@@ -16,6 +16,8 @@ Traduzido por Marlin Rodrigues da Silva
 - Adicionado suporte para o sintetizador da plataforma de fala da Microsoft. (#1735) 
 - O número de páginas e linhas agora é anunciado pelo cursor do sistema no IBM Lotus Symphony. (#1632)  
 - A porcentagem da mudança de tom ao anunciar uma letra maiúscula agora é configurável a partir do Diálogo de Opções de Voz. Todavia, esta substituirá a antiga caixa de seleção Aumentar Tom Para Maiúsculas. (portanto para desativar esse recurso, ajuste a porcentagem para 0). (#255)
+- Textos e a cor de fundo agora são inclusos no anúncio de formatação de células no Microsoft Excel. (#1655)
+- Em aplicativos que usam Java Access Bridge, o comando ativar objeto  de navegação atual agora funciona em controles onde é apropriado. (#1744)
 
 
 == Alterações ==
@@ -23,6 +25,8 @@ Traduzido por Marlin Rodrigues da Silva
 - Algumas informações exibidas em braille foram abreviadas. (#1288)
 - O script ler janela ativa (NVDA+b) foi aprimorado para excluir objetos inúteis e além disso, agora é bem mais fácil cilenciá-lo.
 - A automatização da leitura contínua de um documento quando este é carregado no modo de navegação foi tornada opcional mediante uma configuração no Diálogo de Opções do Modo de Navegação. (#414)
+- Ao tentar ler a barra de status (Desktop NVDA+end), caso o objeto real da barra de status não possa ser encontrado, o NVDA em seu lugar irá usar a última linha de texto escrita na tela para o aplicativo ativo. (#649)
+- Ao efetuar leitura contínua em documentos no modo de navegação, o NVDA agora irá fazer pausa ao fim de cabeçalhos e outros elementos no bloco de seu nível, em lugar de ler o texto junto com  o próximo bloco de texto como uma sentença longa.
 
 
 == Correção de Falhas ==
@@ -41,6 +45,9 @@ Traduzido por Marlin Rodrigues da Silva
 - O NVDA agora recupera-se de muito mais situações tais como aplicativos que cessam de responder, o que anteriormente faziam-no travar por completo. (#1408)
 - Em documentos no modo de navegação da Mozilla Gecko (Firefox etc.) o NVDA já não falhará ao expor textos em uma situação muito específica onde um elemento é desenhado como tabela. (#1373)
 - O NVDA já não anunciará etiquetas dos controles quando o foco for movido para dentro deles. Cessado o duplo anúncio de etiquetas para alguns campos de edição no Firefox (Gecko) e Internet Explorer (MSHTML). (#1650)
+- O NVDA já não falha ao ler uma célula no Microsoft Excel depois de algo ser colado na mesma usando control+v. (#1781)
+- No Adobe Reader, informações estranhas sobre o documento já não são anunciadas ao mover-se para um controle numa página different no modo de foco. (#1659)
+- Em aplicativos que usam Mozilla Gecko (tal como o Firefox), em modo de navegação, botões de alternância agora são detectados e anunciados corretamente. (#1757)
 
 
 == 2011.2 ==
