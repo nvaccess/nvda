@@ -8,11 +8,14 @@ NVDA NVDA_VERSION ユーザーガイド
 %%toc
 
 + はじめに +
-NonVisual Desktop Access（NVDA）は、無料でオープンソースのMicrosoft Windowsオペレーティングシステム用のスクリーン・リーダーです。合成音声や点字によるフィードバックを通して、NVDAは視覚障害者が晴眼者以上に出費をしなくてもWindowsが動作しているコンピューターを使用できるようにします。
+NonVisual Desktop Access（NVDA）は、無料でオープンソースのMicrosoft Windowsオペレーティングシステム用のスクリーン・リーダーです。
+合成音声や点字によるフィードバックを通して、NVDAは視覚障害者が晴眼者以上に出費をしなくてもWindowsが動作しているコンピューターを使用できるようにします。
 NVDAは、コミュニティーの援助により[NV Access http://www.nvaccess.org/]が開発しました。
 
 ++ 一般的な機能 ++
-NVDAによって、視覚障害者はWindowsオペレーティングシステムやサードパーティー製のアプリケーションを利用できるようになります。NVDAの主な特徴は以下の通りです。
+NVDAによって、視覚障害者はWindowsオペレーティングシステムやサードパーティー製のアプリケーションを利用できるようになります。
+
+NVDAの主な特徴は以下の通りです。
 - Webブラウザー、電子メールクライアント、インターネットチャットプログラム及びオフィス関連アプリケーションを含む主要なアプリケーションのサポート
 - 20ヶ国語以上の言語に対応した音声エンジンを同梱
 - 利用可能な場合、フォント名、サイズ、スタイル及びスペルミスといった書式情報を通知可能
@@ -28,25 +31,28 @@ NVDAによって、視覚障害者はWindowsオペレーティングシステム
 -
 
 ++ 国際化 ++
-世界中の誰もが、話している言語に関わらず、等しくテクノロジーにアクセスできるということが重要です。NVDAは現在、次の言語を含む20ヶ国語以上の言語に翻訳されています: ブラジルポルトガル語、クロアチア語、チェコ語、フィンランド語、フランス語、ガリシア語、ドイツ語、ハンガリー語、イタリア語、日本語、ポルトガル語、ロシア語、スロバキア語、スペイン語、繁体字中国語、アフリカーンス語、ポーランド語、タイ語、ウクライナ語、ベトナム語
+世界中の誰もが、話している言語に関わらず、等しくテクノロジーにアクセスできるということが重要です。
+NVDAは現在、次の言語を含む34ヶ国語に翻訳されています: アフリカーンス語、アルバニア語、アラビア語、ブラジルポルトガル語、ブルガリア語、クロアチア語、チェコ語、デンマーク語、オランダ語、フィンランド語、フランス語、ガリシア語、グルジア語、ドイツ語、ヘブライ語、ヒンディー語、ハンガリー語、アイスランド語、イタリア語、日本語、ポーランド語、ポルトガル語、ルーマニア語、ロシア語、セルビア語、スロバキア語、スペイン語、スウェーデン語、タイ語、繁体字中国語、中国語（中国）、中国語（台湾）、トルコ語、ウクライナ語及びベトナム語。
 
 ++ 音声合成サポート ++
 メッセージやインターフェースを複数の言語で提供できるだけでなく、使用したい言語に対応した音声エンジンがある場合、NVDAではどんな言語のコンテンツも読ませることができます。
 
 NVDAは、無料でオープンソースの多言語対応音声合成ソフトウェアである[eSpeak http://espeak.sourceforge.net/]をバンドルしています。
+
 NVDAでサポートしているその他の音声エンジンについては[サポートされている音声エンジン #SupportedSpeechSynths]セクションを参照してください。
 
 ++ 点字ディスプレーサポート ++
 点字ディスプレーがあれば、NVDAは情報を点字で出力することができます。
 サポートされているディスプレーの詳細は、[サポートされている点字ディスプレー #SupportedBrailleDisplays]セクションを参照してください。
 
-NVDAでは、多くの点字コードとさまざまな言語をサポートしています。多くの場合、1級と2級のコードが利用可能です。
+NVDAでは、多くの言語の点字コードをサポートしており、そのいくつかは、略字、標準点字及びコンピューター点字にも対応しています。
 
 ++ ライセンスと著作権 ++
 NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
 
-NVDAはGNU 一般公衆利用許諾契約書（Version 2）によって保護されています。この内容に同意いただき、必要としている方にソースコードを提供していただける場合、本ソフトウェアの配布や改良は自由に行うことができます。この規定は、オリジナルのソフトウェアと改良販を含むソフトウェアのコピー、さらにこのソフトウェアのコードを利用したソフトウェアにも適用されます。
-
+NVDAはGNU 一般公衆利用許諾契約書（Version 2）によって保護されています。
+この内容に同意いただき、必要としている方にソースコードを提供していただける場合、本ソフトウェアの配布や改良は自由に行うことができます。
+この規定は、オリジナルのソフトウェアと改良販を含むソフトウェアのコピー、さらにこのソフトウェアのコードを利用したソフトウェアにも適用されます。
 本ライセンスについての詳細は、[オンライン http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]で確認してください。
 
 + システム要件 +		
@@ -57,7 +63,9 @@ NVDAはGNU 一般公衆利用許諾契約書（Version 2）によって保護さ
 -
 
 + NVDAの入手 +
-もしまだNVDAをお持ちでない場合は、[www.nvda-project.org NVDA_URL]から入手することができます。ダウンロードセクションに移動することで、最新版のNVDAへのリンクをみつけることができます。
+もしまだNVDAをお持ちでない場合は、[www.nvda-project.org NVDA_URL]から入手することができます。
+
+ダウンロードセクションに移動することで、最新版のNVDAへのリンクをみつけることができます。
 
 現在NVDAには2種類のパッケージが用意されています。
 ひとつはインストーラー版で、NVDAインストール中の画面の内容を読み上げることができ、インストール後はスタートメニューなどから起動していつでも利用することができます。
@@ -70,12 +78,17 @@ Windowsのログオンスクリーン、ユーザーアクセスコントロー�
 
 ++ NVDAインストーラー ++
 もしNVDAインストーラーを持っている場合は、Enterキーやダブルクリックでファイルを開くと、インストーラーが起動します。
+
 インストーラーが起動すると、NVDAインストーラーの起動音が聞こえます。
 インストーラー起動後には仮のNVDAが起動し、インストール中にでてくる選択肢などの読み上げを行うことができます。
-注意： インストーラー起動時にすでに別のNVDAを実行していた場合、動作中のNVDAは終了され、インストーラーが新しいNVDAを起動します。この作業は、インストーラーがNVDAを正しくアップデートするために必要です。
+注意： インストーラー起動時にすでに別のNVDAを実行していた場合、動作中のNVDAは終了され、インストーラーが新しいNVDAを起動します。
+この作業は、インストーラーがNVDAを正しくアップデートするために必要です。
 もしこのとき、インストール済みのNVDAがある場合、インストーラーはそれを削除して新しいNVDAをインストールします。
 
-インストールが正常に終了すると、インストーラーはNVDAのインストールが終了したことを知らせます。もしNVDAを再インストールしている場合は、ここでシステムを再起動するかどうかを尋ねられるかもしれません。動作に影響があるかもしれませんので、必ず再起動してください。もし再起動を指示されなかった場合、完了をクリックするとインストーラーが終了し、新しくインストールされたNVDAが起動します。
+インストールが正常に終了すると、インストーラーはNVDAのインストールが終了したことを知らせます。
+もしNVDAを再インストールしている場合は、ここでシステムを再起動するかどうかを尋ねられるかもしれません。
+動作に影響があるかもしれませんので、必ず再起動してください。
+もし再起動を指示されなかった場合、完了をクリックするとインストーラーが終了し、新しくインストールされたNVDAが起動します。
 
 ++ NVDAポータブル ++
 NVDAポータブル版を持っている場合、Enterキーを押すかダブルクリックでファイルを開き、指示に従ってください。
@@ -83,10 +96,15 @@ NVDAポータブル版を持っている場合、Enterキーを押すかダブ�
 
 +++ NVDAポータブルをUSBメモリーから実行 +++
 NVDAはUSBメモリーに解凍して他のコンピューター上でも実行することができます。
+
 ポータブル版がNVDAをどこに解凍するかを尋ねたときに、USBメモリーのドライブ名とNVDAを解凍する任意のフォルダ名を指定してください。
+
 もし、お使いのUSBメモリーのドライブ名がE:\なら、E:\NVDAと入力することで、NVDAをUSBメモリー内のNVDAというフォルダに解凍することができます。
-これにより、NVDAだけでなく、個人設定の内容も持ち歩けるようになります。ただ、USBメモリーをコンピューターに接続しただけでは、NVDAは自動的には起動しません。NVDAは、手動でWindowsエクスプローラーか「ファイル名を指定して実行」ダイアログから起動してください。
-USBメモリー装着時にNVDAを自動起動する方法につきましては、[NVDA - RunningAutomaticallyFromAUSBDrive http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive]を参照してください。
+
+これにより、NVDAだけでなく、個人設定の内容も持ち歩けるようになりますが、USBメモリーをコンピューターに接続しただけでは、NVDAは自動的には起動しません。NVDAは、手動でWindowsエクスプローラーか「ファイル名を指定して実行」ダイアログから起動してください。
+
+USBメモリー装着時にNVDAを自動起動する方法については、[NVDA - RunningAutomaticallyFromAUSBDrive http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive]を参照してください。
+
 
 + NVDA入門 +
 
@@ -96,41 +114,55 @@ USBメモリー装着時にNVDAを自動起動する方法につきましては�
 
 ポータブル版を起動するには、NVDAを解凍したディレクトリーで、nvda.exeファイル上でEnterキーを押すかダブルクリックして下さい。
 
-NVDAを起動すると、最初に上り調子の音が聞こえます（読み込み中であることを伝えています）。コンピューターの性能や、USBメモリー等のメディアからNVDAを起動しているかどうかによって、起動時間が異なります。起動に長い時間がかかる場合、「お待ちください、NVDAを読み込み中です...」と通知されます。
+NVDAを起動すると、最初に上り調子の音が聞こえます（読み込み中であることを伝えています）。
+コンピューターの性能や、USBメモリー等のメディアからNVDAを起動しているかどうかによって、起動時間が異なります。
+起動に長い時間がかかる場合、「お待ちください、NVDAを読み込み中です...」と通知されます。
 
-何も聞こえないか、Windowsエラー音または下り調子の音が聞こえた場合、NVDAにエラーが起こっています。エラーをNVDA開発者に報告して頂けると助かります。その方法についてはNVDAのWebサイトをチェックしてください。
+何も聞こえないか、Windowsエラー音または下り調子の音が聞こえた場合、NVDAにエラーが起こっています。
+エラーをNVDA開発者に報告して頂けると助かります。
+方法については、NVDAのWebサイトをチェックしてください。
 
-NVDAを初めて起動すると、NVDAキーの代替キーとNVDAメニューに関する基本情報を表示するダイアログボックスが表示されます。これらのトピックについては、この後のセクションを参照してください。
-ダイアログボックス内にはふたつのチェックボックスがあり、１つめは「Caps LockキーをNVDAの制御キーとして使用する」かどうかの切り替え、ふたつめは「NVDA起動時にこのダイアログを表示する」かどうかを切り替えます。
-
+NVDAを初めて起動すると、NVDAキーの代替キーとNVDAメニューに関する基本情報を表示するダイアログボックスが表示されます。
+これらのトピックについては、この後のセクションを参照してください。
+ダイアログボックス内にはふたつのチェックボックスがあります。
+１つめは「Caps LockキーをNVDAの制御キーとして使用する」かどうかの切り替え、ふたつめは「NVDA起動時にこのダイアログを表示する」かどうかを切り替えます。
 
 ++ NVDAのキーボードコマンドについて ++
 
 +++ NVDAキー +++
-
-ほとんどのNVDA制御用のキーボードコマンドは、NVDAキーと他のキーを組み合わせて押すことで構成されています。例外は、単独でテンキーのみを使うテキストレビューコマンドです。
+ほとんどのNVDA制御用のキーボードコマンドは、NVDAキーと他のキーを組み合わせて押すことで構成されています。
+例外は、単独でテンキーのみを使うテキストレビューコマンドです。
 
 テンキーのInsertキーと拡張Insertキー及びCaps LockキーをNVDAキーとして利用するように設定できます。
 初期状態では、テンキーのInsertキー及び拡張InsertキーがNVDAの制御に利用できます。
+
 
 いずれかのNVDAキーを本来のそのキーとして使用したい場合（例えばCaps LockキーをNVDAキーとして使用しているときにCaps LockをOnにしたい場合）は、そのキーを素早く2度押してください。
 
 +++ 入力ヘルプモード +++
 このユーザーガイドの中では多くのキーコマンドについて紹介しますが、機能の異なるすべてのキーコマンドを知る簡単な方法は、入力ヘルプを使うことです。
-入力ヘルプを有効にするにはNVDA+1を押します。また無効にするには、もう一度NVDA+1を押してください。入力ヘルプが有効な間は何かキーを押すと、機能が割り当てられていればそれがどう機能するかを案内します。このモード内では、どのキーも実際に機能することはないので、自由に押してください。
+
+入力ヘルプを有効にするにはNVDA+1を押します。
+また無効にするには、もう一度NVDA+1を押してください。
+入力ヘルプが有効な間は、何かキーを押すと、機能が割り当てられていればそれがどう機能するかを案内します。
+このモード内では、どのキーも実際に機能することはないので、キーを自由に押して試してください。
 
 +++ キーボードレイアウト +++
-現在、NVDAにはデスクトップ向けのレイアウトとラップトップ向けのレイアウトの2種類のキーコマンドが用意されています。
+現在、NVDAには二つのキーコマンドの形態があります。
+一つはデスクトップ向けのレイアウトで、もう一つはラップトップ向けのレイアウトです。
 デフォルトのNVDAのキーコマンドはデスクトップレイアウトに設定されていますが、NVDAメニュー内のキーボード設定から変更することができます。
+
 デスクトップレイアウトでは（NumLock Off状態の）テンキーを頻繁に使用します。
 ほとんどのラップトップには物理的なテンキーはありませんが、中にはFNキーとキーボードの右手側にあるキーを同時に押すことでテンキーをエミュレートできるものもあります（7 8 9 U I O J K L等のキーを使用）。
-
-ご使用のラップトップでそれが不可能な場合や、NumLockをOffにできないような場合は、代わりにラップトップレイアウトに変更できます。
+使用中のラップトップでそれが不可能な場合や、NumLockをOffにできないような場合は、代わりにラップトップレイアウトに変更できます。
 
 ++ NVDAのメニュー ++
 NVDAメニューでは、NVDAの設定変更、ヘルプへのアクセス、設定情報の保存/読み込み、読み上げ辞書の編集、その他の追加のツールの使用、NVDAの終了ができます。
 
-NVDA実行中に、Windowsの任意の状態からNVDAメニューを開くには、NVDA+Nを押します。また、NVDAメニューには、Windowsのシステムと例にあるNVDAアイコンからもアクセスできます。アイコンをマウスで右クリックする方法と、Windowsキー+Bを押してシステムトレイに移動し、カーソルキーでNVDAアイコンを選択してアプリケーションキーを押す方法のどちらも利用できます。メニューが開いたら、カーソルキーでメニュー項目間を移動し、Enterキーで項目を開くことができます。
+NVDA実行中に、Windowsの任意の状態からNVDAメニューを開くには、NVDA+Nを押します。
+また、NVDAメニューには、Windowsのシステムと例にあるNVDAアイコンからもアクセスできます。
+アイコンをマウスで右クリックする方法と、Windowsキー+Bを押してシステムトレイに移動し、カーソルキーでNVDAアイコンを選択してアプリケーションキーを押す方法のどちらも利用できます。
+メニューが開いたら、カーソルキーでメニュー項目間を移動し、Enterキーで項目を開くことができます。
 
 ++ 基本的なキーコマンド ++
 %kc:beginInclude
@@ -160,18 +192,18 @@ NVDAでは、通常の操作やレビューカーソルを含むさまざまな�
 個々のアプリケーションやオペレーティングシステム自身はたくさんのオブジェクトで構成されています。
 オブジェクトとは、テキストの一部、ボタン、チェックボックス、スライダー、リストまたはテキストフィールドといった個別の項目のことです。
 
-++ フォーカスによる移動 ++
-
+++ システムフォーカスによる移動 ++[SystemFocus]
 システムフォーカス（または単にフォーカスとも呼ばれます）とは、 [オブジェクト #Objects]で、キーボードからの入力を受け取るもののことです。
 例えば、テキストフィールドに文字を入力している場合は、そのテキストフィールドにフォーカスがあります。
 
-NVDAによるWindows操作の最も一般的な方法は、通常のキーボードコマンドによる移動、 すなわちTabキーとShift+Tabキーによる前後移動、Altキーによるメニューバー呼び出しとメニュー操作、Alt+Tabキーによるアプリケーション間の移動です。 これらの操作を行うと、NVDAはフォーカスされている項目を通知します。
-フォーカスが移動すると、オブジェクトの名前、タイプ、状態、値、説明、キーボードショートカット、位置情報を通知します。
+NVDAによるWindows操作の最も一般的な方法は、通常のキーボードコマンドによる移動、 すなわちTabキーとShift+Tabキーによる前後移動、Altキーによるメニューバー呼び出しとメニュー操作、Alt+Tabキーによるアプリケーション間の移動です。
+これらの操作を行うと、NVDAはフォーカスされている項目に関する、オブジェクトの名前、タイプ、状態、値、説明、キーボードショートカット、位置といった情報を通知します。
+
 システムフォーカス移動時に役立つコマンドは以下の通りです。
 %kc:beginInclude
 || 名称 | キー | 説明 |
 | 現在のフォーカスを通知 | NVDA+Tab | システムフォーカスのある現在のオブジェクトまたはコントロールを通知します。2度続けて押すとスペルを読み上げます。 |
-| タイトルの通知 | NVDA+T | 現在アクティブなウインドウタイトルを通知します。2度続けて押すとスペルを読み上げます。3度続けて押すとをクリップボードにコピーします。 |
+| タイトルの通知 | NVDA+T | 現在アクティブなウインドウタイトルを通知します。2度続けて押すとスペルを読み上げます。3度続けて押すとクリップボードにコピーします。 |
 | アクティブウインドウの読み上げ | NVDA+B | 現在アクティブなウインドウ内のすべてのコントロールを読み上げます（ダイアログ内の項目読み上げ時に便利）。 |
 | ステータスバーの通知 | NVDA+End | みつかった場合にステータスバー情報を通知します。また、ナビゲーターオブジェクトをその場所に移動します。 |
 %kc:endInclude
@@ -191,8 +223,7 @@ NVDAには、以下のシステムキャレットに関するコマンドがあ�
 | 選択中テキストの読み上げ | NVDA+Shift+上矢印 | 現在選択されている任意のテキストを読み上げます。 |
 
 また、テーブル内では以下のキーコマンドが利用可能です。
-
-|| 名称 | キー | 説明 |
+ | 名称 | キー | 説明 |
 | 前の列に移動 | Ctrl+Alt+左矢印 | システムキャレットを同じ行内の前の列に移動します |
 | 次の列に移動 | Ctrl+Alt+右矢印 | システムキャレットを同じ行内の次の列に移動します |
 | 前の行に移動 | Ctrl+Alt+上矢印 | システムキャレットを同じ列内の前の行に移動します |
@@ -236,7 +267,6 @@ NVDAには、以下のシステムキャレットに関するコマンドがあ�
 注意: テンキー操作を実行するには、NumLockキーがOffになっている必要があります。
 
 ++ テキストの確認 ++[ReviewingText]
-
 NVDAでは、コンテンツの現在の[ナビゲーターオブジェクト #ObjectNavigation]を（[フラットレビュー #FlatReview]を含めて）文字単位、単語単位及び行単位で読むことができます。
 
 この機能は特に、Windowsのコンソールウインドウやその他の[システムキャレット #SystemCaret]に制限があったり、存在しないような場所で最も効果を発揮します。
@@ -261,7 +291,7 @@ NVDAでは、コンテンツの現在の[ナビゲーターオブジェクト #O
 | レビュー内の現在の文字を通知 | テンキー2 | NVDA+コンマ | テキスト内の現在行のレビューカーソル位置の文字を通知します。2度続けて押すとその文字の説明や例を通知します。3度続けて押すと10進数や16進数による文字コードを通知します。 |
 | レビュー内の次の文字に移動します。 | テンキー3 | NVDA+ピリオド | レビューカーソルをテキスト内の現在行の次の文字に移動します。 |
 | レビュー内の行末に移動 | Shift+テンキー3 | NVDA+Shift+O | レビューカーソルをテキスト内の現在行の行末に移動します。 |
-| レビューですべて読み上げ | テンキープラス | NVDA+Shift+下矢印 | レビューカーソルの現在位置から移動しながら読み上げます。 || レビューカーソルからコピー | NVDA+F9 | NVDA+F9 | レビューカーソルの現在位置からテキストをコピーします。実際のコピーはコピー終了位置を指定するまで行われない |
+| レビューですべて読み上げ | テンキープラス | NVDA+Shift+下矢印 | レビューカーソルの現在位置から移動しながら読み上げます。 || レビューカーソルからコピー | NVDA+F9 | NVDA+F9 | レビューカーソルの現在位置からテキストをコピーします。実際のコピーはコピー終了位置を指定するまで行われません。 |
 | レビューカーソルまでコピー | NVDA+F10 | NVDA+F10 | レビューカーソルからコピーで指定したレビューカーソル位置から、現在レビューカーソルのある位置までをコピーします。このキーを押すと、テキストがWindowsクリップボードにコピーされます。 |
 | 書式情報を通知 | NVDA+F | NVDA+F | レビューカーソル位置のテキストの書式情報を通知します。 |
 %kc:endInclude
@@ -270,7 +300,6 @@ NVDAでは、コンテンツの現在の[ナビゲーターオブジェクト #O
 
 これらのコマンドを覚える場合、基本的なテキストレビュー用のコマンドは3×3のグリッドで表現されており、上から下に向かって、行、タンゴ、文字の順に並んでおり、左から右に向かって、前、現在、次の順に並んでいます。
 レイアウトは、次のように表現できます。
-
 | 前の行 | 現在行 | 次の行 |
 | 前の単語 | 現在の単語 | 次の単語 |
 | 前の文字 | 現在の文字 | 次の文字 |
@@ -288,7 +317,6 @@ NVDAでは、コンテンツの現在の[ナビゲーターオブジェクト #O
 You can also navigate directly to the object encompassing the current position of the review cursor, allowing you to use [object navigation #ObjectNavigation] from there.
 
 以下のふたつのコマンドは、フラットレビューから、またはフラットレビューへの切り替えに使用されます。
-
 %kc:beginInclude
 || 名称 | デスクトップ用キー | ラップトップ用キー | 説明 |
 | フラットレビューに移動 | NVDA+テンキー7 | NVDA+pageUp | フラットレビューに移動し、現在のナビゲーターオブジェクトに移動してスクリーン（または現在表示中のドキュメント内）をテキスト読み上げコマンドを使って移動できるようにします。 |
@@ -298,9 +326,16 @@ You can also navigate directly to the object encompassing the current position o
 ++ マウスによる移動 ++
 NVDAはデフォルトの設定の場合、マウスを動かすと、マウスポインターの直下にあるテキストをその移動に応じて通知します。
 サポートされている場合、テキストを段落単位で読むことができますが、一部のコントロールでは1行単位での読み上げしか行えないこともあります。
-またNVDAは、（リストやボタンなどの）マウスが通過したコントロール項目の種類や[オブジェクト #Objects]の種類を通知することもできます。この機能は、全盲のNVDA利用者がテキストだけでは情報が不十分だと感じるときに利用できるかもしれません。
-NVDAは、ビープ音の変化によってマウスポインターが画面上のどこに位置しているかを利用者に通知する機能を持っています。音程が高くなることでマウスポインターが画面上の上に移動していることを表し、音が右よりまたは左よりに移動することでマウスの左右への移動を表します（利用者がステレオ出力できるスピーカーを使用している場合に有効です）。
-これらの追加機能はデフォルト設定では有効化されていませんが、もしこれらの機能を利用したい場合は、NVDAの設定メニューにある[マウス設定 #MouseSettings]ダイアログから動作を変更できます。
+
+またNVDAは、（リストやボタンなどの）マウスが通過したコントロール項目の種類や[オブジェクト #Objects]の種類を通知することもできます。
+この機能は、全盲のNVDA利用者がテキストだけでは情報が不十分だと感じるときに利用できるかもしれません。
+
+NVDAは、ビープ音の変化によってマウスポインターが画面上のどこに位置しているかを利用者に通知する機能を持っています。
+音程が高くなることでマウスポインターが画面上の上に移動していることを表します。
+ビープ音が右より、または左よりに移動することでマウスの左右への移動を表します（利用者がステレオ出力できるスピーカーを使用している場合に有効です）。
+
+これらの追加機能はデフォルト設定では有効化されていません。
+もしこれらの機能を利用したい場合は、NVDAの設定メニューにある[マウス設定 #MouseSettings]ダイアログから動作を変更してください。
 
 マウスによる移動には、物理的なマウスやトラックパッドが使用されるべきですが、NVDAにはマウス関連のコマンドがいくつかあります。
 %kc:beginInclude
@@ -316,13 +351,19 @@ NVDAは、ビープ音の変化によってマウスポインターが画面上�
 + ブラウズモード +
 ウェブページのような、複雑で読み込み専用の文書は、NVDAではブラウズモードを用いて閲覧します。
 これには、Mozilla Firefox、Microsoft Internet Explorer、Google Chrome、Adobe Reader及びAdobe Flash上のドキュメントが含まれます。
+
 ブラウズモードでは、文書のコンテンツはフラットに表現され、通常のテキスト文書と同じようにカーソルキーを使って移動できます。
 このブラウズモードでは、「すべて読み上げ」、「書式の通知」、「テーブル内の移動」といったすべてのNVDAの[システムキャレット #SystemCaret]用のキーコマンドが使用できます。
 テキストが、リンクなのか見出しなのかといった情報は、移動するごとに通知されます。
-ときどき、これらのドキュメント内のコントロールを直接操作しなければならないことがあります。それは、すべての押されたキーが、直接コントロールに渡されるフォーカスモードに切り替えることで可能です。
-ブラウズモード使用中にTabキーやクリックなどで特定のコントロールに移動した場合、デフォルトではNVDAは必要に応じて自動的にフォーカスモードに変更します。
-Tab操作やクリックによってフォーカスモードが必要ない部分に移動した場合は、自動的にブラウズモードに戻ります。また、変更が必要なコントロール上でEnterやスペースを押した場合もフォーカスモードに変更されます。Escキーを押すとブラウズモードに戻ります。
+
+ときどき、これらのドキュメント内のコントロールを直接操作しなければならないことがあります。
+この処理は、すべての押されたキーを直接コントロールに渡すことのできるフォーカスモードに切り替えることで可能です。
+ブラウズモード使用中にTabキーやクリックなどで特定のコントロールに移動した場合、NVDAは必要に応じて自動的にフォーカスモードに変更します。
+Tab操作やクリックによってフォーカスモードが必要ない部分に移動した場合は、自動的にブラウズモードに戻ります。
+また、変更が必要なコントロール上でEnterやスペースを押した場合もフォーカスモードに変更されます。
+Escキーを押すとブラウズモードに戻ります。
 手動でフォーカスモードを有効にした場合は、手動で無効化するまではその状態が続きます。
+
 %kc:beginInclude
 || 名称 | キー | 説明 |
 | ブラウズモード/フォーカスモードの切り替え | NVDA+スペース | フォーカスモードとブラウズモード間を切り替えます。 |
@@ -333,8 +374,10 @@ Tab操作やクリックによってフォーカスモードが必要ない部�
 | 前を検索 | NVDA+Shift+F3 | 先に検索した文字列と同じ前の文字列をドキュメント内で検索する
 %kc:endInclude
 
+
 ++ 一文字ナビゲーション ++
 より素早い操作を可能とするため、NVDAにはブラウズモード上の特定のフィールドにジャンプするための単一文字による移動コマンドがあります。
+
 %kc:beginInclude
 以下のキーを単独で押すと次の要素に移動し、Shiftキーを付加すると前の要素に移動します。
 - H: 見出し
@@ -362,7 +405,7 @@ Tab操作やクリックによってフォーカスモードが必要ない部�
 %kc:endInclude
 
 ++ 要素リスト ++
-NVDA+F7を押して利用できる要素リストから、文書内のリンク、見出し及びARIAランドマークの一覧にアクセスできます。
+要素リストから、文書内のリンク、見出し及びARIAランドマークの一覧にアクセスできます。
 ラジオボタンを使って、これらのみっつの要素情報を切り替えることができます。
 ダイアログには、ページ内の特定の項目を検索するためのフィルターで使用できるエディットフィールドも提供されています。
 項目を選択したら、ダイアログ内で提供されているボタンを使ってその項目に移動するか有効化できます。
@@ -372,7 +415,9 @@ NVDA+F7を押して利用できる要素リストから、文書内のリンク�
 %kc:endInclude
 
 ++ 埋め込みオブジェクト ++
-ページには、Adobe Flash や Sun Java のような技術を使った リッチコンテンツが含まれていることがあります。ブラウズモード内でこれらを検知すると、NVDAは"埋め込みオブジェクト"と通知します。そこでEnterキーを押すと、オブジェクトを操作できます。
+ページには、Adobe Flash や Sun Java のような技術を使ったリッチコンテンツが含まれていることがあります。
+ブラウズモード内でこれらを検知すると、NVDAは"埋め込みオブジェクト"と通知します。
+そこでEnterキーを押すと、オブジェクトを操作できます。
 もしオブジェクトがアクセシブルであれば、周辺をTabで移動して、他のアプリケーションと同じように操作できます。
 上位の埋め込みオブジェクトやそれを含んでいるページに戻るには以下のコマンドを使用します。
 %kc:beginInclude
@@ -385,20 +430,19 @@ NVDA+F7を押して利用できる要素リストから、文書内のリンク�
 ++ 設定メニュー ++
 %kc:settingsSection: || 名称 | デスクトップ用キー | ラップトップ用キー | 説明 |
 ほとんどのNVDAの設定はNVDAメニュー内の設定サブメニューからアクセスできるダイアログボックス内で変更できます。
-すべてのNVDAの設定ダイアログでは、OKボタンを押すことで設定が適用できます。変更をキャンセルするには、キャンセルボタンを押すかEscキーを押してください。
+すべてのNVDAの設定ダイアログでは、OKボタンを押すことで設定が適用できます。
+変更をキャンセルするには、キャンセルボタンを押すかEscキーを押してください。
 以下の一覧の中のいくつかの設定は、ショートカットキーを用いて変更することもできます。
 
 +++ 一般設定（NVDA+Ctrl+G）+++
-一般設定ダイアログは、設定メニューの中にあります。
+一般設定ダイアログは、	設定メニューの中にあります。
 このダイアログには以下のオプションが含まれています。
 
 ==== 言語 ====
 NVDAのユーザーインターフェースやメッセージをどの言語で表示させるかを選択できるコンボボックスです。
 多くの言語が選択できますが、デフォルトのオプションは"User Default, Windows"となっています。
-
 このオプションは、NVDAに現在のWindowsの設定言語を使用するように指示するものです。
 
-言語設定の変更後はNVDAを再起動しなければならないことに注意してください。
 言語設定を変更した場合、NVDAは再起動するかどうかを確認します。
 OKボタンを押すとNVDAが再起動します。
 
@@ -411,7 +455,8 @@ OKボタンを押すとNVDAが再起動します。
 
 ==== ログ記録レベル ====
 これはコンボボックスで、NVDAがどの程度の実行記録を行うかを設定します。
-一般的には、冗長な記録を行わないために、利用者はこの設定を変更すべきではありません。しかしながら、このオプションは利用者がバグ報告を行う場合に有効です。
+一般的には、冗長な記録を行わないために、利用者はこの設定を変更すべきではありません。
+しかしながら、このオプションは利用者がバグ報告を行う場合に有効です。
 
 ==== Windowsへのログオン後にNVDAを自動的に開始する ====
 このオプションが有効な場合、NVDAはWindowsへのログオン後に自動的に開始されます。
@@ -446,39 +491,57 @@ NVDAでサポートされている音声エンジンの一覧は、[サポート
 +++ 音声設定（NVDA+Ctrl+V） +++[VoiceSettings]
 設定メニュー内の音声設定ダイアログでは、読み上げ音声に関するオプションが変更できます。
 どこからでも簡単に音声設定を変更する方法につきましては、[簡単音声設定 #SynthSettingsRing]のセクションを参照してください。
+
 音声設定ダイアログには以下のオプションが含まれています。
  
 ==== 音声 ====
-このダイアログの最初のオプションは、現在選択されている音声エンジンにインストールされている音声の一覧のコンボボックスです。矢印キーを使ってすべての音声の種類を聞くことができます。左と上矢印は、リスト項目を上に移動し、右と下矢印は、リスト項目を下に移動します。
+このダイアログの最初のオプションは、現在選択されている音声エンジンにインストールされている音声の一覧のコンボボックスです。
+矢印キーを使ってすべての音声の種類を聞くことができます。
+左と上矢印は、リスト項目を上に移動し、右と下矢印は、リスト項目を下に移動します。
 
 ==== 声色 ====
 NVDAに同梱されているeSpeakでは、このコンボボックスで声色を選択できます。
-声色は音声と似ていますが、eSpeakの音声とは違った属性の変化を提供します。声色のいくつかは男性のような音だったり、他のいくつかは女性に似ていたり、蛙に似ている音もあります。
+声色は音声と似ていますが、eSpeakの音声とは違った属性の変化を提供します。
+声色のいくつかは男性のような音だったり、他のいくつかは女性に似ていたり、蛙に似ている音もあります。
 
 ==== 速さ ====
-このオプションで音声の速さを変更できます。0から100の間を移動するスライダーで、０はもっとも遅く100はもっとも早い値を示します。
+このオプションで音声の速さを変更できます。
+0から100の間を移動するスライダーで、０はもっとも遅く100はもっとも早い値を示します。
 
 ==== 高さ ====
-このオプションで音声の高さを変更できます。0から100の間を移動するスライダーで、0は最も低く、100はもっとも高い値を示します。
+このオプションで音声の高さを変更できます。
+0から100の間を移動するスライダーで、0は最も低く、100はもっとも高い値を示します。
 
 ==== 音量 ====
 このオプションは0から100の間を移動するスライダーで、0がもっとも低く、100がもっとも高い値を示します。
 
 ==== 抑揚 ====
-このオプションはスライダーで、音声エンジンがどれだけの抑揚で話すかを設定できます。なお、現在このオプションに対応しているのはeSpeakだけです。
+このオプションはスライダーで、音声エンジンがどれだけの抑揚で話すかを設定できます（なお、現在このオプションに対応しているのはeSpeakだけです）。
+
+==== 自動言語切り換え ====
+このチェックボックスで、もし読もうとしているテキストに原語の指定がある場合、NVDAに音声エンジンの原語を自動的に切り替えさせるかどうかを変更できます。
+このオプションはデフォルトで有効化されています。
+現在この自動原語切り替えは、eSpeakでのみサポートされています。
+
+==== 自動方言切り換え ====
+もし自動言語切り換えが有効な場合、このチェックボックスで言語だけでなく、方言を自動的に切り換えるかどうかを選択できます。例えば、アメリカ英語の音声を使用中でドキュメントの一部にイギリス英語が指定されていた場合、この機能はシンセサイザーのアクセントを切り替えます。
+このオプションはデフォルトでは無効化されています。
 
 %kc:setting
 ==== 句読点/記号レベル ====
 キー: NVDA+p
 
-このオプションでは、句読点及び記号を単語として読み上げる際のレベルを変更できます。もし「すべて」が選択されていれば、すべての記号が単語として読み上げられます。
+このオプションでは、句読点及び記号を単語として読み上げる際のレベルを変更できます。
+もし「すべて」が選択されていれば、すべての記号が単語として読み上げられます。
 このオプションは現在使用中の音声エンジンだけでなく、すべての音声エンジンに対して有効です。
 
-==== 大文字のピッチを上げる ====
-このチェックボックスがチェックされていると、大文字のピッチを上げて読み上げます
+==== 大文字のピッチ変更率 ==
+This edit field  allows you to type the amount that the pitch of the voice will change when speaking a capital letter.
+This value is a percentage, where a negative value lowers the pitch and a positive value raises it.
+For no pitch change you would use 0.
 
 ==== 大文字の前にキャップと読む ====
-この設定はチェックボックスで、チェックされている場合はNVDAに大文字の前に"キャップ"と読むように指示します。カーソルが移動したときや入力されたときにも機能します。
+この設定はチェックボックスで、チェックされている場合はNVDAに大文字の前に"キャップ"と読むように指示します。
 通常、NVDAはすべての大文字に対して音声のピッチを上げますが、一部の音声エンジンではそれが十分機能しないので、このオプションが有効かもしれません。
 
 ==== 大文字にビープ音をつける ====
@@ -490,13 +553,13 @@ NVDAに同梱されているeSpeakでは、このコンボボックスで声色�
 例えば英語では、"a"は文字でもあり単語でもあります。
 このオプションにより、もし音声エンジンがサポートしている場合は、これらのふたつの場合を区別することができます。
 ほとんどの音声エンジンでこの機能はサポートされています。
+
 一般的に、このオプションは有効化しておくべきです。
 しかしながら、Microsoft Speech API用の音声エンジンの中にはこの機能を正確に実装していないものがあり、この機能が有効な時に奇妙な動作をすることがあります。
 個々の文字の発音に問題がある場合は、このオプションを無効化してください。
 
 +++ 簡単音声設定 +++[SynthSettingsRing]
 音声設定ダイアログを開くことなく、簡単に音声に関する項目を変更したい場合、NVDA起動中であればどこからでも使用できるいくつかの音声に関するコマンドがあります。
-
 %kc:beginInclude
 || 名称 | デスクトップ用キー | ラップトップ用キー | 説明 |
 | 次の音声設定に移動 | NVDA+Ctrl+右矢印 | NVDA+Ctrl+右矢印 | 現在の項目の次にある音声設定項目に移動します。最後まで移動した場合は最初の設定項目に戻ります。 |
@@ -512,12 +575,14 @@ NVDAに同梱されているeSpeakでは、このコンボボックスで声色�
 点字設定ダイアログの中の最初のオプションは、"点字ディスプレー"です。
 システム上で利用可能な点字ディスプレードライバーに応じて、いくつかのオプションが表示されます。
 矢印キーを使ってオプション間を移動してください。
+
 点字なしは、点字ディスプレーを使用しないことを意味します。
 
 サポートされている点字ディスプレーの一覧は、[サポートされている点字ディスプレー #SupportedBrailleDisplays]セクションを参照してください。
 
 ==== 変換テーブル ====
-このダイアログの次のオプションは点字の変換テーブルを選択するコンボボックスです。このコンボボックスでは、異なる言語の点字の変換テーブルを選択できます。点字のテーブル間は矢印キーを使って移動できます。
+このダイアログの次のオプションは点字の変換テーブルを選択するコンボボックスです。
+このコンボボックスでは、異なる言語の点字の変換テーブルを選択できます。点字のテーブル間は矢印キーを使って移動できます。
 
 ==== カーソル位置の単語をコンピューター点字に展開 ====
 このオプションは、カーソル位置の単語を略字ではないコンピューター点字として表示できるようにします。
@@ -539,7 +604,8 @@ NVDAに同梱されているeSpeakでは、このコンボボックスで声色�
 ここには、以下のオプションが含まれています。
 
 ==== キーボードレイアウト ====
-このコンボボックスでは、NVDAでどのキーボードレイアウトを使用するかを選ぶことができます。現在、NVDAにあるのはデスクトップとラップトップレイアウトです。
+このコンボボックスでは、NVDAでどのキーボードレイアウトを使用するかを選ぶことができます。
+現在、NVDAにあるのはデスクトップとラップトップレイアウトです。
 
 ==== Caps LockキーをNVDAキーとして使用する ====
 このチェックボックスがチェックされている場合、Caps LockキーがNVDAキーとして動作します。
@@ -570,20 +636,23 @@ NVDAに同梱されているeSpeakでは、このコンボボックスで声色�
 ==== コマンドキーの読み上げ ====
 キー: NVDA+4
 
-有効な場合、NVDAは文字以外のキーの名称を読み上げます。このキーの名称には、Ctrlキーとその他のキーのような、キーの組み合わせも含まれます。
+有効な場合、NVDAは文字以外のキーの名称を読み上げます。このキーの名称には、Ctrlキーとその他のキーのようなキーの組み合わせも含まれます。
 
 +++ マウス設定（NVDA+Ctrl+M） +++[MouseSettings]
-マウス設定ダイアログは、設定メニューの"マウス設定..."の中にあります。この中には以下のオプションが含まれています。
+マウス設定ダイアログは、設定メニューの"マウス設定..."の中にあります。
+この中には以下のオプションが含まれています。
 
 ==== マウスポインター形状の変化を通知 ====
-このチェックボックスがチェックされていると、NVDAはマウスポインターの形状が変化するたびにそれを通知します。Windowsのマウスポインターは、例えば編集可能や読み込み中のように、その変化で情報を表すことがあります。
+このチェックボックスがチェックされていると、NVDAはマウスポインターの形状が変化するたびにそれを通知します。
+Windowsのマウスポインターは、例えば編集可能や読み込み中のように、その変化で情報を表すことがあります。
 
 %kc:setting
 ==== マウスの追跡を有効化 ====
 | デスクトップ用キー | NVDA+M |
 | ラップトップ用キー | NVDA+Shift+M |
 
-有効な場合、NVDAはスクリーン内での移動に伴ってマウスポインターが重なったテキストを読み上げます。これにより、マウスを直接動かすか、オブジェクトナビゲーションを用いてスクリーン上にある物を探すことができます。
+有効な場合、NVDAはスクリーン内での移動に伴ってマウスポインターが重なったテキストを読み上げます。
+これにより、マウスを直接動かすか、オブジェクトナビゲーションを用いてスクリーン上にある物を探すことができます。
 
 ==== テキストの読み上げ範囲 ====
 もしNVDAがマウス位置のテキストを通知するように設定されていれば、このオプションではマウス移動時のテキストの読み上げ範囲を選択できます。
@@ -593,7 +662,8 @@ NVDAに同梱されているeSpeakでは、このコンボボックスで声色�
 このチェックボックスがチェックされていると、NVDAはマウスが重なったオブジェクトのロール（種類）を通知します。
 
 ==== マウス移動時ビープ音で通知 ====
-このチェックボックスをチェックすると、NVDAはマウスの移動をビープ音で通知します。利用者は、マウスポインターが画面上のどこに位置しているかを知ることができます。
+このチェックボックスをチェックすると、NVDAはマウスの移動をビープ音で通知します。
+利用者は、マウスポインターが画面上のどこに位置しているかを知ることができます。
 
 ==== マウス位置の明るさをビープ音の音量の変化で通知 ====
 'マウス移動時ビープ音で通知'のチェックボックスがチェックされていて、このチェックボックスをチェックした場合、ビープ音のボリュームは、画面上でマウスポインターのある場所の明るさによって制御されます。
@@ -625,7 +695,8 @@ NVDAに同梱されているeSpeakでは、このコンボボックスで声色�
 このダイアログボックスには、設定メニューの中の"オブジェクトの通知設定..."からアクセスすることができます。
 
 ==== ツールチップの通知 ====
-チェックされている場合、NVDAはツールチップが表示されたときにその内容を読み上げます。多くのWindowsのコントロールは、マウスポインターをそれらに重ねたり、それらにフォーカスしたりしたとき、簡単なメッセージ（またはツールチップ）を表示します。
+チェックされている場合、NVDAはツールチップが表示されたときにその内容を読み上げます。
+多くのWindowsのコントロールは、マウスポインターをそれらに重ねたり、それらにフォーカスしたりしたとき、簡単なメッセージ（またはツールチップ）を表示します。
 
 ==== バルーン情報の通知 ====
 このチェックボックスがチェックされている場合、NVDAはバルーン情報が表示されたときにその内容を通知します。
@@ -654,9 +725,8 @@ NVDAに同梱されているeSpeakでは、このコンボボックスで声色�
 このオプションはプログレスバーの更新をどのように通知するかを設定します。
 
 以下のようなオプションがあります。
-
 - オフ： プログレスバーの変化は通知されません。
-- 読み上げ： このオプションは、NVDAにプログレスバーの変化の割合を読み上げるように指示します。プログレスバーに変化があると、NVDAは新しい値を読み上げます。
+- 読み上げ： このオプションは、NVDAにプログレスバーの変化の割合を読み上げるように指示します。プログレスバーが変化するごとに、NVDAは新しい値を読み上げます。
 - ビープ音： これは、NVDAにプログレスバーの変化をビープ音で通知するように指示します。ビープ音が高くなると、プログレスバーが完了に近づいていることを表します。
 - ビープ音と読み上げ： このオプションは、NVDAにプログレスバーの変化をビープ音と読み上げの両方で通知するように指示します。
 -
@@ -688,6 +758,10 @@ NVDAに同梱されているeSpeakでは、このコンボボックスで声色�
 
 このオプションでは、ブラウズモード内のコンテンツがリンクやその他のフィールドをそれぞれ独立した行として表示するか、画面に表示されているのと同じようにリンクなどをテキストどおりに表示するかを設定できます。有効な場合は画面に表示されているのと同じように表現し、無効な場合はフィールドはそれぞれ個別の行として表現されます。
 
+==== ページ読み込み時に自動読み上げ ====
+このチェックボックスは、ブラウズモード内でページが読み込まれた際にそれを自動で読み上げるかどうかを切り替えます。
+このオプションはデフォルトで有効化されています。
+
 ==== レイアウトテーブルを通知 ====
 このオプションを無効にした場合、NVDAは表形式のデータを含むテーブル（表として認識されたもの）だけを通知するようになります。
 しかし、オプションを有効にした場合、NVDAは通常視覚的な表現のために用いられるようなテーブルも通知します。
@@ -700,7 +774,8 @@ NVDAに同梱されているeSpeakでは、このコンボボックスで声色�
 例えば、オプションが有効でWebページにいるときに、Tabキーを押し、もしフォームがフォーカスされたら自動的にフォーカスモードが呼び出されます。
 
 ==== キャレットの移動を追跡する自動フォーカスモード ====
-このオプションがチェックされている場合、NVDAは矢印キーの移動に応じてフォーカスモードに入ったり、フォーカスモードから出たりします。例えば、Webページの中で下矢印キーで進んでいる時、エディットボックスに到達したら、NVDAは自動的にフォーカスモードを有効にします。もし、上矢印キーを押してエディットボックスから出ると、NVDAはブラウズモードに戻ります。
+このオプションがチェックされている場合、NVDAは矢印キーの移動に応じてフォーカスモードに入ったり、フォーカスモードから出たりします。
+例えば、Webページの中で下矢印キーで読み進んでいてエディットボックスに到達した場合、NVDAは自動的にフォーカスモードを有効にします。もし、上矢印キーを押してエディットボックスから出ると、NVDAはブラウズモードに戻ります。
 
 ==== 音によるフォーカスモードとブラウズモード切替の通知 ====
 このオプションが有効な場合、NVDAは音声による通知ではなく、特別な音によってフォーカスモードとブラウズモードが切り換えられたことを通知します。
@@ -715,13 +790,15 @@ NVDAに同梱されているeSpeakでは、このコンボボックスで声色�
 - フォント名
 - フォントサイズ
 - フォント属性
-- 書式
-- 配置
+- テキスト配置
+- 色
 - テキストの書式
-- 表
+- スペルミス
 - ページ番号
 - 行番号
-- スペルミス
+- 表
+- 表の行/列見出し
+- 表のセル座標
 - リンク
 - 見出し
 - リスト
@@ -731,6 +808,7 @@ NVDAに同梱されているeSpeakでは、このコンボボックスで声色�
 
 ==== カーソル移動後に書式変化を通知 ====
 この設定が有効な場合、NVDAのパフォーマンスが低下したとしても、すべての書式の変化を取得して通知します。
+
 デフォルトでは、NVDAはすべてのシステムキャレット及びレビューカーソルの書式情報を取得し、その一部をNVDAのパフォーマンスが低下しない範囲で通知します。
  
 この機能は、Microsoft Wordでの文章校正など、書式情報が重要な場合に有効化してください。
@@ -738,36 +816,29 @@ NVDAに同梱されているeSpeakでは、このコンボボックスで声色�
 +++ 読み上げ辞書 +++
 設定メニューの中の読み上げ辞書メニューには、NVDAが特定の単語やフレーズをどのように読み上げるかを設定できるダイアログがあります。
 現在のところ、3種類の読み上げ辞書が用意されています。
+
 - デフォルト： この辞書の読み方は、NVDAのすべての読み上げに適用されます。
 - 音声： この辞書の読み方は、現在使用中の特定の読み上げ音声に適用されます。
 - 一時辞書： この辞書の読み方は、NVDAのすべての読み上げに適用されますが、現在のセッション内に限定されます。これらの読み方は一時的なもので、NVDAを再起動すると失われます。
 -
 
-すべての辞書のダイアログには、読み上げの過程で使用される読み方の一覧が含まれています。ダイアログにはまた、追加、編集及び削除ボタンがあります。
+すべての辞書のダイアログには、読み上げの過程で使用される読み方の一覧が含まれています。
+ダイアログにはまた、追加、編集及び削除ボタンがあります。
 
-辞書に新しい読み方を追加するには、追加ボタンを押し、出てきたダイアログのフィールドに入力し、最後にOKを押してください。作成した読み方が、読み方の一覧に表示されます。実際に読み方を保存するために、追加や編集が終了したら、OKボタンを押して辞書ダイアログを終了してください。
+辞書に新しい読み方を追加するには、追加ボタンを押し、出てきたダイアログのフィールドに入力し、最後にOKを押してください。
+作成した読み方が、読み方の一覧に表示されます。
+実際に読み方を保存するために、追加や編集が終了したら、OKボタンを押して辞書ダイアログを終了してください。
 
-NVDAの読み上げ辞書の読み方は、一つの文字列の読み方をほかのものに変更します。簡単な例として、NVDAが「鳥」と読み上げるべき単語を、毎回「蛙」と読ませることができます。簡単にこれを実現するには、読み方を追加するダイアログで、"鳥"という単語をパターンのフィールドに入力し、置き換えフィールドに"蛙"と入力します。また、説明フィールドに、「鳥を蛙に変更」といったような説明を入力することもできます。
+NVDAの読み上げ辞書の読み方は、一つの文字列の読み方をほかのものに変更します。
+簡単な例として、NVDAが「鳥」と読み上げるべき単語を、毎回「蛙」と読ませることができます。
+簡単にこれを実現するには、読み方を追加するダイアログで、"鳥"という単語をパターンのフィールドに入力し、置き換えフィールドに"蛙"と入力します。
+また、説明フィールドに、「鳥を蛙に変更」といったような説明を入力することもできます。
 
-NVDAの読み上げ辞書は、単純な単語の読み変えとは違い、より強力です。追加のダイアログには、読み方が大文字と小文字を区別するかどうかを示すチェックボックスがあります。NVDAは、デフォルトでは大文字小文字を区別しません。
-もう一つのチェックボックスは、置き換えようとしているパターンが正規表現かどうかの状況を示します。正規表現では、特別な文字を含んだパターンが、文字列にマッチしているか、または数値だけにマッチしているか、または文字だけにマッチしているかを調べることができます。
-- Default: rules in this dictionary affect all speech in NVDA.
-- Voice: rules in this dictionary affect speech for the synthesizer voice currently being used.
-- Temporary: rules in this dictionary affect all speech in NVDA, but only for the current session. These rules are temporary and will be lost if NVDA is restarted.
--
-
-すべての辞書のダイアログには、読み上げの過程で使用される読み方の一覧が含まれています。ダイアログにはまた、追加、編集及び削除ボタンがあります。
-
-辞書に新しい読み方を追加するには、追加ボタンを押し、出てきたダイアログのフィールドに入力し、最後にOKを押してください。作成した読み方が、読み方の一覧に表示されます。実際に読み方を保存するために、追加や編集が終了したら、OKボタンを押して辞書ダイアログを終了してください。
-
-NVDAの読み上げ辞書の読み方は、一つの文字列の読み方をほかのものに変更します。簡単な例として、NVDAが「鳥」と読み上げるべき単語を、毎回「蛙」と読ませることができます。簡単にこれを実現するには、読み方を追加するダイアログで、"鳥"という単語をパターンのフィールドに入力し、置き換えフィールドに"蛙"と入力します。また、説明フィールドに、「鳥を蛙に変更」といったような説明を入力することもできます。
-
-NVDAの読み上げ辞書は、単純な単語の読み変えとは違い、より強力です。追加のダイアログには、読み方が大文字と小文字を区別するかどうかを示すチェックボックスがあります。NVDAは、デフォルトでは大文字小文字を区別しません。
-もう一つのチェックボックスは、置き換えようとしているパターンが正規表現かどうかの状況を示します。正規表現では、特別な文字を含んだパターンが、文字列にマッチしているか、または数値だけにマッチしているか、または文字だけにマッチしているかを調べることができます。
-
-NVDAの読み上げ辞書は、単純な単語の読み変えとは違い、より強力です。追加のダイアログには、読み方が大文字と小文字を区別するかどうかを示すチェックボックスがあります。
+NVDAの読み上げ辞書は、単純な単語の読み変えとは違い、より強力です。
+追加のダイアログには、読み方が大文字と小文字を区別するかどうかを示すチェックボックスがあります。
 NVDAは、デフォルトでは大文字小文字を区別しません。
-もう一つのチェックボックスは、置き換えようとしているパターンが正規表現かどうかの状況を示します。正規表現では、特別な文字を含んだパターンが、文字列にマッチしているか、または数値だけにマッチしているか、または文字だけにマッチしているかを調べることができます。
+もう一つのチェックボックスは、置き換えようとしているパターンが正規表現かどうかの状況を示します。
+正規表現では、特別な文字を含んだパターンが、文字列にマッチしているか、または数値だけにマッチしているか、または文字だけにマッチしているかを調べることができます。
 このユーザーガイドでは正規表現について詳しく解説していませんが、Web上にはより詳しい情報がたくさんあります。
 
 +++ 句読点/記号読み辞書の編集 +++
@@ -801,35 +872,36 @@ NVDAは自動的に変更された設定項目を保存することはありま�
 インストール版のNVDAでは、すべての設定項目、カスタムアプリケーションモジュール及びカスタムドライバーを、Windowsのユーザープロファイル内の特別なNVDAディレクトリー内に保存します。
 つまり、そのシステムを使用しているすべての利用者が、個別のNVDA設定を保持することができるのです。
 インストール版のNVDAで、現在のユーザー用のNVDA設定ディレクトリーを開くには、スタートメニューの[プログラム] -> [NVDA] -> [ユーザー設定ディレクトリーを開く]の順に進んでください。
+
 ログオンまたはUACスクリーンを読み上げるNVDA用の設定は、NVDAをインストールしたディレクトリー内のsystemConfigにあります。
 通常、この設定は手動で変更しないでください。
 ログオンまたはUACスクリーン上のNVDAの設定を変更したい場合は、いったん現在起動中のNVDAを使ってログオンウインドウ用のNVDA向けの設定を作って保存した後、一般設定ダイアログ内の"現在保存されている情報をログオンまたはその他のセキュアスクリーンで使用する"ボタンを使用して設定をコピーしてください。
 
-+ Extra Tools +
++ 追加のツール +
 
-++ Log Viewer ++
-The log viewer, found under Tools in the NVDA menu, allows you to view all the logging output that has occured up until now from when you last started NVDA.
+++ ログビュアー ++
+NVDAメニュー内のツールの下にあるログビュアーでは、最後にNVDAを起動したときから現在までに記録されたすべてのログを閲覧できます。	
 
-Apart from reading the content, you can also Save a copy of the log file, or refresh the viewer so that it shows the most recent output since the Log viewer was opened.
-These actions are available under the viewer's Log menu.
+コンテンツを読んでいるときに、ログファイルを保存したり、ビュアーを更新することができるので、ログビュアーを開いた後からも最新の出力を得ることができます。
+これらのオプションは、ビュアーのログメニューから利用できます。
 
-++ Speech Viewer ++
-For sighted software developers or people demoing NVDA to sighted audiences, a floating window is available that allows you to  view all the text that NVDA is currently speaking.
+++ スピーチビュアー ++
+目の見える開発者や目の見える聴衆にNVDAのデモを行う人たち向けに、NVDAが現在読み上げているすべてのテキストを表示できる流動的なウインドウがあります。
 
-To enable the speech viewer, check  the "Speech Viewer" menu item under Tools in the NVDA menu.
-Uncheck the menu item to disable it.
+スピーチビュアーを有効化するには、NVDAメニュー内のツールにある項目、"スピーチビュアー"をチェックしてください。
+無効化するにはこのチェックを外してください。
 
-While the speech viewer is enabled, it constantly updates to show you the most current text being spoken.
-However, if you click or focus inside the viewer, NVDA will temporarily stop updating the text, so that you are able to easily select or copy the existing content.
+スピーチビュアーが有効な間、それは読み上げられた最新のテキストの更新を続けます。
+しかしながら、もしウインドウ内をクリックするかビュアーにフォーカスした場合、NVDAは一時的にテキストの更新を停止しますので、簡単に既存のコンテンツを選択したりコピーすることができます。
 
-++ Python Console ++
-The NVDA Python console, found under  Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
-For more information, please see the Developer Guide available from [the Development section of the NVDA web site NVDA_URLwiki/Development].
+++ Pythonコンソール ++
+NVDAメニュー内のツールにあるPythonコンソールは開発用のツールで、デバッグや一般的なNVDA内部の動作検証、アプリケーションのアクセシビリティ階層構造の検査などに使用できます。
+詳細は、[NVDA Webサイトの開発者向けセクション NVDA_URLwiki/Development]を参照してください。
 
-++ Reload plugins ++
-This item, once activated, reloads app modules and global plugins without restarting NVDA, which can be useful for developers.
+++ プラグインの再読み込み ++
+この項目をアクティベートすると、アプリケーションモジュールとグローバルプラグインをNVDAを再起動することなく再読み込みできます。これは、開発者にとって便利です。
 
-+ Supported Speech Synthesizers +[SupportedSpeechSynths]
++ サポートされている音声エンジン +[SupportedSpeechSynths]
 This section contains information about the speech synthesizers  supported by NVDA.
 
 ++ eSpeak ++
@@ -840,19 +912,28 @@ As this synthesizer is built into NVDA, this is a great choice for when running 
 Each voice that comes with eSpeak speaks a different language.
 There are over 20 different languages supported by eSpeak.
 
-There are also many variants which can be chosen to Alter the sound of the voice.
+There are also many variants which can be chosen to alter the sound of the voice.
 
-++ Microsoft Speech API version 4（SAPI 4）++
+++ Microsoft Speech API version 4 (SAPI 4) ++
 SAPI 4 is an older Microsoft standard for software speech synthesizers.
 Many speech synthesizers that comply with this standard may be  purchased or downloaded for free from various companies and websites.
-When using this synthesizer with NVDA, the available voices（accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settins Ring #SynthSettingsRing]）will contain all the voices from all the installed SAPI 4 engines found on your system.
+When using this synthesizer with NVDA, the available voices (accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settins Ring #SynthSettingsRing]) will contain all the voices from all the installed SAPI 4 engines found on your system.
 
-If you have SAPI 4 voices installed but the synthesizer does not appear in NVDA's list of synthesizers, please install the SAPI 4.0 runtime binaries, available at http://activex.microsoft.com/activex/Ctrls/sapi/spchapi.exe.
+If you have SAPI 4 voices installed but the synthesizer does not appear in NVDA's list of synthesizers, please install the SAPI 4.0 runtime binaries, available at http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
 
-++ Microsoft Speech API version 5（SAPI 5）++
+++ Microsoft Speech API version 5 (SAPI 5) ++
 SAPI 5 is a Microsoft standard for software speech synthesizers.
 Many speech synthesizers that comply with this standard may be  purchased or downloaded for free from various companies and websites, though your system will probably already come with at least one SAPI 5 voice preinstalled.
-When using this synthesizer with NVDA, the available voices（accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settins Ring #SynthSettingsRing]）will contain all the voices from all the installed SAPI 5 engines found on your system.
+When using this synthesizer with NVDA, the available voices (accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settins Ring #SynthSettingsRing]) will contain all the voices from all the installed SAPI 5 engines found on your system.
+
+++ Microsoft Speech Platform ++
+The Microsoft Speech Platform provides voices for many languages which are normally used in the development of server-based speech applications.
+These voices can also be used with NVDA.
+
+To use these voices, you will need to install two components:
+- Microsoft Speech Platform - Server Runtime (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=10208
+- Microsoft Speech Platform - Server Runtime Languages (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
+-
 
 ++ Audiologic Tts3 ++
 This is a commercial speech synthesizer specifically for the Italian language.
@@ -861,7 +942,7 @@ For more information, please visit the Audiologic website at www.audiologic.it.
 
 This synthesizer does not support [spelling functionality #VoiceSpellingFunctionality].
 
-++ Newfon ++[SynthNewfon]
+++ Newfon ++
 Newfon is a free commercial synthesizer by Sergey Shishmintzev which supports the Russian and Ukrainian languages.
 To download this synthesizer, please visit the downloads section of the Russian NVDA community site: http://ru.nvda-community.org/?page_id=10
 
@@ -870,7 +951,7 @@ This synthesizer does not support [spelling functionality #VoiceSpellingFunction
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.
 
-++ Freedom Scientific社製Focus/PAC Mateシリーズ  ++
+++ Freedom Scientific Focus/PAC Mate Series ++
 All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
 You will need the Freedom Scientific braille display drivers installed on your system.
 If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
@@ -879,17 +960,17 @@ Although this page only mentions the Focus 40 Blue display, the driver supports 
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
-|| 名称 | キー |
-| 左ウィズホイール動作の切り替え | 左ウィズホイールを押す |
-| 左ウィズホイールの動作を使用して戻ます。 | 左ウィズホイールを上に移動 |
-| 左ウィズホイール動作を使用して進む | 左ウィズホイールを下に移動 |
-| 右ウィズホイール動作を切り替え | 右ウィズホイールを押す |
-| 右ウィズホイール動作を使用して戻ます。 | 右ウィズホイールを上に移動 |
-| 右ウィズホイールの動作を使用して進む | 右ウィズホイールを下に移動 |
-| 点字セルに移動 | タッチカーソル |
+|| Name | Key |
+| Toggle left wiz wheel action | leftWizWheelPress |
+| Move back using left wiz wheel action | leftWizWheelUp |
+| Move forward using left wiz wheel action | leftWizWheelDown |
+| Toggle right wiz wheel action | rightWizWheelPress |
+| Move back using right wiz wheel action | rightWizWheelUp |
+| Move forward using right wiz wheel action | rightWizWheelDown |
+| Route to braille cell | routing |
 %kc:endInclude
 
-++ Optelec社製 ALVA BC640/680 ++
+++ Optelec ALVA BC640/680 ++
 Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] are supported when connected via USB or bluetooth.
 You do not need any specific drivers to be installed to use these displays.
 Just plug in the display and configure NVDA to use it.
@@ -897,49 +978,49 @@ Just plug in the display and configure NVDA to use it.
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
-|| 名称 | キー |
-| 点字表示を前にスクロール | t1 |
-| 点字表示を前の行に移動 | t2 |
-| 点字表示を次の行に移動 | t4 |
-| 点字表示を次にスクロール | t5 |
-| 点字セルに移動 | タッチカーソル |
-| Shift+Tabキー | sp1 |
-| Altキー | sp2 |
-| Escキー | sp3 |
-| Tabキー | sp4 |
-| 上矢印キー | spUp |
-| 下矢印キー | spDown |
-| 左矢印キー | spLeft |
-| 右矢印キー | spRight |
-| Enterキー | spEnter |
-| NVDAメニュー | sp1+Sp3 |
-| Windows+Dキー（すべてのアプリケーションを最小化） | sp1+Sp4 |
-| Windowsキー | sp2+Sp3 |
-| Alt+Tabキー | sp2+Sp4 |
+|| Name | Key |
+| Scroll braille display back | t1 |
+| Move braille display to previous line | t2 |
+| Move braille display to next line | t4 |
+| Scroll braille display forward | t5 |
+| Route to braille cell | routing |
+| shift+tab key | sp1 |
+| alt key | sp2 |
+| escape key | sp3 |
+| tab key | sp4 |
+| upArrow key | spUp |
+| downArrow key | spDown |
+| leftArrow key | spLeft |
+| rightArrow key | spRight |
+| enter key | spEnter |
+| NVDA Menu | sp1+sp3 |
+| windows+d key (minimise all applications) | sp1+sp4 |
+| windows key | sp2+sp3 |
+| alt+tab key | sp2+sp4 |
 %kc:endInclude
 
-++ Handy Tech社製ディスプレー ++
+++ Handy Tech Displays ++
 NVDA supports all displays from [Handy Tech http://www.handytech.de/] when connected via USB or bluetooth.
 For older USB displays, you will need to install the USB drivers from Handy Tech on your system.
 
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
-|| 名称 | キー |
-| 点字表示を前にスクロール | left, up |
-| 点字表示を後にスクロール | right, down |
-| 点字表示を前の行に移動 | B4 |
-| 点字表示を次の行に移動 | B5 |
-| 点字セルに移動 | タッチカーソル |
-| Shift+Tabキー | esc |
-| Altキー | B2+B4+B5 |
-| Escキー | B4+B6 |
-| Tabキー | Enter |
-| Enterキー | esc+Enter |
-| 上矢印キー | leftSpace |
-| 下矢印キー | rightSpace |
-| NVDAメニュー | B2+B4+B5+B6 |
-| Handy Tech設定 | B4+B8 |
+|| Name | Key |
+| Scroll braille display back | left, up |
+| Scroll braille display forward | right, down |
+| Move braille display to previous line | b4 |
+| Move braille display to next line | b5 |
+| Route to braille cell | routing |
+| shift+tab key | esc |
+| alt key | b2+b4+b5 |
+| escape key | b4+b6 |
+| tab key | enter |
+| enter key | esc+enter |
+| upArrow key | leftSpace |
+| downArrow key | rightSpace |
+| NVDA Menu | b2+b4+b5+b6 |
+| Handy Tech configuration | b4+b8 |
 %kc:endInclude
 
 ++ MDV Lilli ++
@@ -947,8 +1028,22 @@ The Lilli braille display available from [MDV http://www.mdvbologna.it/] is supp
 You do not need any specific drivers to be installed to use this display.
 Just plug in the display and configure NVDA to use it.
 
-++ Baum社/Humanware社/APH社製点字ディスプレー ++
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display backward | LF |
+| Scroll braille display forward | RG |
+| Move braille display to previous line | UP |
+| Move braille display to next line | DN |
+| Route to braille cell | route |
+| shift+tab key | SLF |
+| tab key | SRG |
+| alt+tab key | SDN |
+| alt+shift+tab key | SUP |
+%kc:endInclude
 
+++ Baum/Humanware/APH Braille Displays ++
 Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] displays are supported when connected via USB or bluetooth.
 These include:
 - Baum: SuperVario, PocketVario
@@ -963,20 +1058,20 @@ For the APH Refreshabraille, the USB mode must be set to serial.
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
-|| 名称 | キー |
-| 点字表示を前にスクロール | d2 |
-| 点字表示を後にスクロール | d5 |
-| 点字表示を前の行に移動 | d1 |
-| 点字表示を次の行に移動 | d3 |
-| 点字セルに移動 | タッチカーソル |
+|| Name | Key |
+| Scroll braille display back | d2 |
+| Scroll braille display forward | d5 |
+| Move braille display to previous line | d1 |
+| Move braille display to next line | d3 |
+| Route to braille cell | routing |
 
 For displays which have a joystick:
-|| 名称 | キー |
-| 上矢印キー | 上 |
-| 下矢印キー | 下 |
-| 左矢印キー | 左 |
-| 右矢印キー | 右 |
-| Enterキー | select |
+|| Name | Key |
+| upArrow key | up |
+| downArrow key | down |
+| leftArrow key | left |
+| rightArrow key | right |
+| enter key | select |
 %kc:endInclude
 
 ++ BRLTTY ++
@@ -986,55 +1081,55 @@ You should download and install the latest installer package, which will be name
 When configuring the display and port to use, be sure to pay close attention to the instructions, especially if you are using a USB display and already have the manufacturer's drivers installed.
 
 Following are the BRLTTY command assignments for NVDA.
-Please see the [BRLTTY key Tables documentation http://mielke.cc/brltty/doc/drivers/] for information about how BRLTTY commands are mapped to Ctrls on braille displays.
+Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/drivers/] for information about how BRLTTY commands are mapped to controls on braille displays.
 %kc:beginInclude
-|| 名称 | BRLTTYコマンド |
-| 点字表示を前にスクロール | fwinlt（左に1画面進む） |
-| 点字表示を後にスクロール | fwinrt（右に1画面進む） |
-| 点字表示を前の行に移動 | lnup（上に1行進む） |
-| 点字表示を次の行に移動 | lndn（下に1行進む） |
-| 点字セルに移動 | タッチカーソル（カーソルを文字に移動 |
+|| Name | BRLTTY command |
+| Scroll braille display back | fwinlt (go left one window) |
+| Scroll braille display forward | fwinrt (go right one window) |
+| Move braille display to previous line | lnup (go up one line) |
+| Move braille display to next line | lndn (go down one line) |
+| Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
 
 + Advanced Topics +
 
 ++ Remapping Key Assignments and Other Input Gestures ++
-Users are able to provide or override mappings of input gestures（such as key presses）to scripts in a special file in the user's NVDA configuration directory.
+Users are able to provide or override mappings of input gestures (such as key presses) to scripts in a special file in the user's NVDA configuration directory.
 This file is called gestures.ini.
 
 This file uses standard ini syntax.
 The file may contain multiple sections and each section may have one or more entries.
 
 Each section provides mappings for scripts in a particular Python module and class inside NVDA.
-- The section name should be the Python module and class separated by a dot（.）.
+- The section name should be the Python module and class separated by a dot (.).
 - The key of each entry is the name of the script to which input gestures should be bound.
 Alternatively, you can use None to unbind input gestures from a script to which they were previously bound.
 Each entry key can only be listed once per section, including None.
-- The entry value is a comma（,）separated list of gesture identifiers for the input gestures that should be bound.
-Gesture identifiers ending in a comma must be enclosed in quotes（" or '）.
+- The entry value is a comma (,) separated list of gesture identifiers for the input gestures that should be bound.
+Gesture identifiers ending in a comma must be enclosed in quotes (" or ').
 -
 
-Gesture identifiers consist of a two leter device code（kb for keyboard and br for braille display）, an optional sub-device or keyboard layout in brackets, a colon, and then one or more key names separated by a plus（+）sign.
+Gesture identifiers consist of a two leter device code (kb for keyboard and br for braille display), an optional sub-device or keyboard layout in brackets, a colon, and then one or more key names separated by a plus (+) sign.
 
 In order to discover gesture identifiers, script names and the class and module in which they are contained, you can:
 + Turn on Input Help.
-+ Activate the gesture（press the key）.
++ Activate the gesture (press the key).
 + Turn off input help.
 + Activate View log in the NVDA Tools menu.
 + Examine the recent log entries.
 One of these should provide information about the input gesture you sent, including the module.class and script if it is bound to one.
 +
 
-Following is an example of how you could bind NVDA+Shift+T to the date time script.
+Following is an example of how you could bind NVDA+shift+t to the date time script.
 
-To find out the correct script name and module.class for date time, you would turn on Input Help and press NVDA+F12（as this is the current gesture for the date time script）.
+To find out the correct script name and module.class for date time, you would turn on Input Help and press NVDA+f12 (as this is the current gesture for the date time script).
 You would then turn off Input Help and examine the log viewer.
 
 Towards the bottom, you would see:
 
 ```
-INFO - inputCore.InputManager._handleInputHelp（13:17:22）:
-Input help: gesture kb（desktop）:nvda+F12, bound to script dateTime on globalCommands.GlobalCommands
+INFO - inputCore.InputManager._handleInputHelp (13:17:22):
+Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
 ```
 
 From this, you can see that the script name is dateTime and the module.class is globalCommands.GlobalCommands.
@@ -1043,22 +1138,31 @@ If the file does not yet exist, you would create a text file called gestures.ini
 
 ```
 [globalCommands.GlobalCommands]
-	dateTime = kb:NVDA+Shift+T
+	dateTime = kb:NVDA+shift+t
 ```
 
-This would bind the key press NVDA+Shift+T（in any keyboard layout）to the dateTime script.
+This would bind the key press NVDA+shift+t (in any keyboard layout) to the dateTime script.
 
-Note that the original NVDA+F12 binding would still work.
+Note that the original NVDA+f12 binding would still work.
 If you wanted to remove this binding, you would add the following line:
 
 ```
-	None = kb:NVDA+F12
+	None = kb:NVDA+f12
 ```
 
-Although you are free to have scripts bound to any available key, it may be problematic to use the Alt key on the keyboard.
-NVDA still sends modifier keys（such as Shift, Ctrl and Alt）to the Operating System, even if they eventuate in a script.
-Thus, if you do use Alt in a gesture, pressing this key combination may activate the menu bar, as well as executing the script.
-Therefore, it is probably best to just use Shift, Ctrl and the NVDA modifier key as modifiers.
+Although you are free to have scripts bound to any available key, it may be problematic to use the alt key on the keyboard.
+NVDA still sends modifier keys (such as shift, control and alt) to the Operating System, even if they eventuate in a script.
+Thus, if you do use alt in a gesture, pressing this key combination may activate the menu bar, as well as executing the script.
+Therefore, it is probably best to just use Shift, control and the NVDA modifier key as modifiers.
+
+++ Advanced Customization of Symbol Pronunciation ++
+It is possible to customize the pronunciation of punctuation and other symbols beyond what can be done using the [Punctuation/symbol pronunciation #SymbolPronunciation] dialog.
+For example, you can specify whether the raw symbol should be sent to the synthesizer (e.g. to cause a pause or change in inflection) and you can add custom symbols.
+
+To do this, you must edit the symbol pronunciation information file in your NVDA user configuration directory.
+The file is called symbols-xx.dic, where xx is the language code.
+The format of this file is documented in the Symbol Pronunciation section of the NVDA Developer Guide, which is available from [the Development section of the NVDA web site NVDA_URLwiki/Development].
+However, it is not possible for users to define complex symbols.
 
 + さらに詳細な情報 +
 NVDAに関して、さらに詳細な情報や助けが必要な場合は、NVDAのサイト、NVDA_URLを参照してください。

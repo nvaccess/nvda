@@ -1,18 +1,15 @@
 ﻿Podręcznik Użytkownika - NVDA NVDA_VERSION
 
 
-%!includeconf: ..\userGuide.t2tconf
+%!includeconf: ../userGuide.t2tconf
 %kc:title: Skróty Poleceń klawiszowych NVDA NVDA_VERSION
 
 = Spis treści =[toc]
 %%toc
 
 + Wprowadzenie +
-
-
 NonVisual Desktop Access (NVDA) to darmowy i wolny screenreader dla systemu operacyjnego Microsoft Windows. Program pozwala osobom niewidomym i niedowidzącym korzystać z komputera bez ponoszenia większych kosztów niż osoby widzące. Informacja o tym, co jest widoczne na ekranie, przekazywana jest przez syntezator mowy lub monitor brajlowski.
 Program rozwijany jest przez organizację NV Access (http://www.nvaccess.org), oraz społeczność użytkowników. 
-
 
 NVDA oferuje między innymi:
 - Wsparcie dla popularnych aplikacji, w tym przeglądarek internetowych, klientów poczty, komunikatorów, programów i pakietów biurowych.
@@ -31,7 +28,7 @@ NVDA oferuje między innymi:
 
 ++ Wersje Językowe ++
 Ważne jest, by ludzie z całego świata, bez względu na ojczysty język, mogli mieć równy dostęp do technologii.
-Poza angielskim, NVDA został przetłumaczony na ponad 34 języków, w tym: afrikaans, albański, arabski, portugalski, brazylijski, chorwacki, czeski,   duński, holenderski,  fiński, francuski, gruziński, galicyjski, niemiecki, hebrajski, hindi,  węgierski, islandzki,  włoski, japoński, portugalski, polski, rosyjski, rumuński,  słowacki, serbski, szwedzki, hiszpański, tajski, chiński, tajwański, mandaryński, turecki, ukraiński i wietnamski.
+Poza angielskim, NVDA został przetłumaczony na ponad 34 języków, w tym: afrykanerski, albański, arabski, portugalski, brazylijski, chorwacki, czeski,   duński, holenderski,  fiński, francuski, gruziński, galicyjski, niemiecki, hebrajski, hindi,  węgierski, islandzki,  włoski, japoński, portugalski, polski, rosyjski, rumuński,  słowacki, serbski, szwedzki, hiszpański, tajski, chiński, tajwański, mandaryński, turecki, ukraiński i wietnamski.
 
 ++ Obsługa Syntezatora Mowy ++
 NVDA oferuje wiele wersji językowych interfejsu i daje możliwość odczytywania treści w każdym języku wspieranym przez zainstalowany w systemie syntezator mowy.
@@ -61,8 +58,6 @@ Program NVDA można pobrać ze strony internetowej znajdującej sie pod adresem:
 Przejdź na stronie do sekcji "Download" gdzie znajduje się link do najnowszej wersji programu. Możesz udać się także na polską stronę społeczności nvda pod adresem
 www.nvda.pl
 
-
-
 Obecnie dostępne są do pobrania dwie wersje NVDA. Jedna umożliwia instalację programu w systemie, dzięki czemu może on w każdej chwili zostać uruchomiony z Menu Start. lub skrótem klawiszowym Kontrol+Alt+N. 
 Druga przenośna wersja programu, dostępna jest w postaci archiwum zip, nie wymaga instalacji i może zostać uruchomiona z pamięci USB lub płyty CD.owszej wersji NVDA.
 
@@ -77,22 +72,14 @@ Jeśli podczas instalacji inna kopia programu NVDA była uruchomiona, instalator
 Zamknięcie poprzedniej kopii programu jest konieczne w celu poprawnego zainstalowania nowej wersji NVDA. 
 Na tym etapie instalator usunie poprzednio zainstalowaną kopie programu i rozpocznie instalowanie nowej.
 
-<<<<<<< TREE
-Po zakończeniu procesu instalator powiadomi, cię iż program NVDA został poprawnie zainstalowany i jeśli nvda był nainstalowywany na poprzednią kopię np w celu wykonania aktualizacji, poprosi o zrestartowanie komputera. 
-=======
 Po zakończeniu procesu instalator powiadomi cię iż program NVDA został poprawnie zainstalowany, i może poprosić o zrestartowanie komputera. 
->>>>>>> MERGE-SOURCE
+
 Jeśli system nie zostanie zrestartowany, program może nie działać poprawnie.
 Jeśli instalator nie poprosi o restart systemu, kliknięcie przycisku zakończ zamknie go, i uruchomi nowo zainstalowaną wersję programu.
 
 ++ Przenośna Wersja NVDA ++
-<<<<<<< TREE
-Jeśli pobrana została przenośna wersja NVDA, wszystko co należy zrobić, to nacisnąć klawisz Enter lub kliknąć dwukrotnie na plik, i postępować zgodnie z instrukcjami.
-Jest to archiwum samorozpakowujące, należy tylko wskazać dowolne miejsce na dysku twardym lub przenośnej pamięci USB (pendrive) bądź innym nośniku (na przykład płycie CD).
-=======
 Jeśli pobrana została przenośna wersja NVDA, wszystko co należy zrobić, to nacisnąć klawisz Enter lub kliknąć dwukrotnie na plik, i postępować zgodnie z instrukcjami.
 Jest to archiwum samo rozpakowujące, należy tylko wskazać dowolne miejsce na dysku twardym lub przenośnej pamięci USB (pendrive) bądź innym nośniku (na przykład płycie CD).
->>>>>>> MERGE-SOURCE
 
 +++ NVDA na pamięci przenośnej +++
 Możliwe jest umieszczenie nvda na pamięci przenośnej typu flash, tak by używać go na innych komputerach, nie posiadających zainstalowanego programu udźwiękawiającego.
@@ -104,18 +91,12 @@ Uwaga:
 Te kroki nie sprawią, że będziesz mógł przenosić nvda wraz z jego ustawieniami i program zadziała automagicznie na każdej maszynie, zaraz po podłączeniu pendrive'a do portu usb. Musisz to zrobić ręcznie. Jeśli chcesz uzyskać pomoc w kwestii automatycznego uruchamiania programu zaraz po podłączeniu pamięci do portu usb, przeczytaj odpowiedni artykół na angielskiej stronie projektu
 http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
 
-
 + Pierwsze Kroki w NVDA +
 
 ++ Uruchomienie NVDA ++
 W celu uruchomienia programu zainstalowanego za pomocą instalatora wybierz NVDA z menu Programy w Menu Start lub użyj skrótu Kontrol+Alt+N.
-<<<<<<< TREE
-Ten skrót jednak może sprawiać niektórym kłopoty przy próbie wpisania litery "ń" (ALT+N) w tym przypadku należy zaznaczyć na pulpicie ikonę NVDA nacisnąć klawisz meni kontekstowego i wybrać "Właściwości" a następnie kombinacją klawiszy Kontrol+TAB przejdź do zakładki "Skrót" teraz poruszając się klawiszem TAB odnajdź pole "Klawisz skrótu" a następnie zmień go na inny.
-Możesz również wpisać NVDA do okna Uruchom w menu Start i nacisnąć klawisz Enter, a program zostanie uruchomiony.
-=======
 W przypadku polskich użytkowników, skrót ten powoduje problemy z wpisaniem litery „ń”. (ALT+N) Zaleca się zatem jego zmianę na inny. W tym celu należy zaznaczyć na pulpicie ikonę NVDA, nacisnąć klawisz menu kontekstowego i wybrać "Właściwości" a następnie przy pomocy klawisza tab dotrzeć do pola „klawisz skrótu i zmienić istniejący skrót na inny, przez wciśnięcie we wzmiankowanym polu pożądanej kombinacji klawiszy.
 Możesz również wpisać NVDA do okna Uruchom w menu Start i nacisnąć klawisz Enter, a program zostanie uruchomiony.
->>>>>>> MERGE-SOURCE
 
 Aby uruchomić wersję przenośną NVDA, przejdź do katalogu w którym zostały wypakowane pliki, zaznacz plik  "nvda.exe" i naciśnij klawisz Enter lub dwukrotnie kliknij na nim lewym przyciskiem myszy.
 
@@ -123,7 +104,7 @@ Po uruchomieniu NVDA usłyszysz coraz wyższe dźwięki wskazujące, że program
 Następnie usłyszysz komunikat: "NVDA uruchomiony". Czas uruchamiania zależy od tego, jak szybki jest twój komputer oraz od tego, czy program ładuje się z dysku, pamięci USB czy z płyty. 
 W przypadku korzystania z wolniejszych nośników można usłyszeć komunikat: "Ładowanie NVDA, Proszę czekać..."
 
-Jeśli podczas uruchamiania programu nie zostały odtworzone powyższe komunikaty, ale usłyszysz dźwięk oznaczający błąd systemu Windows lub dźwięki o coraz niższej wysokości oznacza, to iż NVDA nie działa prawidłowo i należy zgłosić powstały problem do twórców programu. Więcej informacji o zgłaszaniu problemów znajdziesz na stronie projektu..
+Jeśli podczas uruchamiania programu nie usłyszałeś/aś powyższych komunikatów, ale dźwięk oznaczający błąd systemu Windows lub dźwięki o coraz niższej wysokości oznacza, to iż NVDA nie działa prawidłowo i należy zgłosić powstały problem do twórców programu. Więcej informacji o zgłaszaniu problemów znajdziesz na stronie projektu..
 
 Przy pierwszym uruchomieniu NVDA wyświetli ekran powitalny z podstawowymi informacjami o działaniu programu.  W oknie powitalnym możesz także za pomocą dwóch pól wyboru ustalić, czy klawisz CapsLock ma zostać użyty jako specjalny klawisz NVDA oraz czy ekran powitalny ma być wyświetlany przy każdym uruchomieniu NVDA. Ustawienia te możesz w każdej chwili zmienić oraz wyświetlić okno powitalne ponownie za pomocą menu NVDA 
 (więcej informacji w kolejnych rozdziałach).
@@ -183,7 +164,6 @@ Ostatnia pozycja to wyjście z programu. Program zakończyć można również wc
 | odczytaj tekst w schowku | nvda+c | czyta tekst znajdujący się aktualnie w schowku. |
 %kc:endInclude
 
-
 + Nawigacja z NVDA +
 
 ++ Nawigacja Fokusem ++
@@ -201,7 +181,6 @@ Przydatne skróty klawiszowe do nawigacji za pomocą punktu uwagi:
 %kc:endInclude
 
 ++ Nawigacja Kursorem ++
-
 
 NVDA wykorzystuje następujące klawisze poleceń do nawigacji kursorem klawiatury:
 %kc:beginInclude
