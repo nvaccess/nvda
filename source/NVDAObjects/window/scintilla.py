@@ -11,6 +11,7 @@ from . import Window
 from .. import NVDAObjectTextInfo
 from ..behaviors import EditableTextWithAutoSelectDetection
 import locale
+import watchdog
 
 #Window messages
 SCI_POSITIONFROMPOINT=2022
@@ -62,12 +63,12 @@ class TextRangeStruct(ctypes.Structure):
 class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
-		return winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,x,y)
+		return watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,x,y)
 
 	def _getPointFromOffset(self,offset):
 		point=textInfos.Point(
-		winUser.sendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
-		winUser.sendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
+		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
+		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
 		)
 		if point.x and point.y:
 			return point
@@ -75,20 +76,20 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 			raise NotImplementedError
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
-		style=winUser.sendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,offset,0)
+		style=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,offset,0)
 		if calculateOffsets:
 			#we need to manually see how far the style goes, limit to line
 			lineStart,lineEnd=self._getLineOffsets(offset)
 			startOffset=offset
 			while startOffset>lineStart:
-				curStyle=winUser.sendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,startOffset-1,0)
+				curStyle=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,startOffset-1,0)
 				if curStyle==style:
 					startOffset-=1
 				else:
 					break
 			endOffset=offset+1
 			while endOffset<lineEnd:
-				curStyle=winUser.sendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,endOffset,0)
+				curStyle=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETSTYLEAT,endOffset,0)
 				if curStyle==style:
 					endOffset+=1
 				else:
@@ -100,33 +101,33 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 			#To get font name, We need to allocate memory with in Scintilla's process, and then copy it out
 			fontNameBuf=ctypes.create_string_buffer(32)
 			internalBuf=winKernel.virtualAllocEx(self.obj.processHandle,None,len(fontNameBuf),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-			winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETFONT,style, internalBuf)
+			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_STYLEGETFONT,style, internalBuf)
 			winKernel.readProcessMemory(self.obj.processHandle,internalBuf,fontNameBuf,len(fontNameBuf),None)
 			winKernel.virtualFreeEx(self.obj.processHandle,internalBuf,0,winKernel.MEM_RELEASE)
 			formatField["font-name"]=fontNameBuf.value
 		if formatConfig["reportFontSize"]:
-			formatField["font-size"]="%spt"%winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETSIZE,style,0)
+			formatField["font-size"]="%spt"%watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_STYLEGETSIZE,style,0)
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
 		if formatConfig["reportFontAttributes"]:
-			formatField["bold"]=bool(winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETBOLD,style,0))
-			formatField["italic"]=bool(winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETITALIC,style,0))
-			formatField["underline"]=bool(winUser.sendMessage(self.obj.windowHandle,SCI_STYLEGETUNDERLINE,style,0))
+			formatField["bold"]=bool(watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_STYLEGETBOLD,style,0))
+			formatField["italic"]=bool(watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_STYLEGETITALIC,style,0))
+			formatField["underline"]=bool(watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_STYLEGETUNDERLINE,style,0))
 		return formatField,(startOffset,endOffset)
 
 	def _getCaretOffset(self):
-		return winUser.sendMessage(self.obj.windowHandle,SCI_GETCURRENTPOS,0,0)
+		return watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCURRENTPOS,0,0)
 
 	def _setCaretOffset(self,offset):
-		winUser.sendMessage(self.obj.windowHandle,SCI_GOTOPOS,offset,0)
+		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GOTOPOS,offset,0)
 
 	def _getSelectionOffsets(self):
-		start=winUser.sendMessage(self.obj.windowHandle,SCI_GETSELECTIONSTART,0,0)
-		end=winUser.sendMessage(self.obj.windowHandle,SCI_GETSELECTIONEND,0,0)
+		start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETSELECTIONSTART,0,0)
+		end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETSELECTIONEND,0,0)
 		return (start,end)
 
 	def _setSelectionOffsets(self,start,end):
-		winUser.sendMessage(self.obj.windowHandle,SCI_SETSEL,start,end)
+		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_SETSEL,start,end)
 
 	def _getStoryText(self):
 		if not hasattr(self,'_storyText'):
@@ -136,11 +137,11 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getStoryLength(self):
 		if not hasattr(self,'_storyLength'):
-			self._storyLength=winUser.sendMessage(self.obj.windowHandle,SCI_GETTEXTLENGTH,0,0)
+			self._storyLength=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETTEXTLENGTH,0,0)
 		return self._storyLength
 
 	def _getLineCount(self):
-		return winUser.sendMessage(self.obj.windowHandle,SCI_GETLINECOUNT,0,0)
+		return watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETLINECOUNT,0,0)
 
 	def _getTextRange(self,start,end):
 		bufLen=(end-start)+1
@@ -152,39 +153,39 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		textRange.lpstrText=internalBuf
 		internalTextRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(textRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		winKernel.writeProcessMemory(processHandle,internalTextRange,ctypes.byref(textRange),ctypes.sizeof(textRange),None)
-		winUser.sendMessage(self.obj.windowHandle,SCI_GETTEXTRANGE,0,internalTextRange)
+		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETTEXTRANGE,0,internalTextRange)
 		winKernel.virtualFreeEx(processHandle,internalTextRange,0,winKernel.MEM_RELEASE)
 		buf=ctypes.create_string_buffer(bufLen)
 		winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
 		winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-		cp=winUser.sendMessage(self.obj.windowHandle,SCI_GETCODEPAGE,0,0)
+		cp=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCODEPAGE,0,0)
 		if cp==SC_CP_UTF8:
 			return unicode(buf.value, errors="replace", encoding="utf-8")
 		else:
 			return unicode(buf.value, errors="replace", encoding=locale.getlocale()[1])
 
 	def _getWordOffsets(self,offset):
-		start=winUser.sendMessage(self.obj.windowHandle,SCI_WORDSTARTPOSITION,offset,0)
-		end=winUser.sendMessage(self.obj.windowHandle,SCI_WORDENDPOSITION,start,0)
+		start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDSTARTPOSITION,offset,0)
+		end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDENDPOSITION,start,0)
 		if end<=offset:
 			start=end
-			end=winUser.sendMessage(self.obj.windowHandle,SCI_WORDENDPOSITION,offset,0)
+			end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDENDPOSITION,offset,0)
 		return [start,end]
 
 	def _getLineNumFromOffset(self,offset):
-		return winUser.sendMessage(self.obj.windowHandle,SCI_LINEFROMPOSITION,offset,0)
+		return watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_LINEFROMPOSITION,offset,0)
 
 	def _getLineOffsets(self,offset):
-		line=winUser.sendMessage(self.obj.windowHandle,SCI_LINEFROMPOSITION,offset,0)
-		start=winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONFROMLINE,line,0)
-		end=start+winUser.sendMessage(self.obj.windowHandle,SCI_LINELENGTH,line,0)
+		line=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_LINEFROMPOSITION,offset,0)
+		start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONFROMLINE,line,0)
+		end=start+watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_LINELENGTH,line,0)
 		return (start,end)
 
 	def _getParagraphOffsets(self,offset):
 		return self._getLineOffsets(offset)
 
 	def _getCharacterOffsets(self,offset):
-		return [offset,winUser.sendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,offset,0)]
+		return [offset,watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,offset,0)]
 
 #The Scintilla NVDA object, inherists the generic MSAA NVDA object
 class Scintilla(EditableTextWithAutoSelectDetection, Window):

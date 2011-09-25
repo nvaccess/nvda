@@ -13,6 +13,7 @@ import appModuleHandler
 import speech
 from keyboardHandler import KeyboardInputGesture
 from NVDAObjects.IAccessible import sysListView32
+import watchdog
 
 #Labels for the header fields of an email, by control ID
 envelopeNames={
@@ -67,7 +68,7 @@ class MessageRuleListItem(sysListView32.ListItem):
 
 	def _get_states(self):
 		states=super(MessageRuleListItem,self).states
-		if (winUser.sendMessage(self.windowHandle,sysListView32.LVM_GETITEMSTATE,self.IAccessibleChildID-1,sysListView32.LVIS_STATEIMAGEMASK)>>12)==8:
+		if (watchdog.cancellableSendMessage(self.windowHandle,sysListView32.LVM_GETITEMSTATE,self.IAccessibleChildID-1,sysListView32.LVIS_STATEIMAGEMASK)>>12)==8:
 			states.add(controlTypes.STATE_CHECKED)
 		return states
 
@@ -85,7 +86,7 @@ class MessageListItem(sysListView32.ListItem):
 
 	def _get_name(self):
 		nameList=[]
-		imageState=winUser.sendMessage(self.windowHandle,sysListView32.LVM_GETITEMSTATE,self.IAccessibleChildID-1,sysListView32.LVIS_STATEIMAGEMASK)>>12
+		imageState=watchdog.cancellableSendMessage(self.windowHandle,sysListView32.LVM_GETITEMSTATE,self.IAccessibleChildID-1,sysListView32.LVIS_STATEIMAGEMASK)>>12
 		if imageState==5:
 			nameList.append(controlTypes.speechStateLabels[controlTypes.STATE_COLLAPSED])
 		elif imageState==6:

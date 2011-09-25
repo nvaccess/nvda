@@ -15,6 +15,7 @@ import speech
 import locale
 import controlTypes
 import api
+import watchdog
 
 # message used to sent many messages to winamp's main window. 
 # most all of the IPC_* messages involve sending the message in the form of:
@@ -44,11 +45,11 @@ hwndWinamp=0
 
 def getShuffle():
 	global hwndWinamp
-	return winUser.sendMessage(hwndWinamp,WM_WA_IPC,0,IPC_GET_SHUFFLE)
+	return watchdog.cancellableSendMessage(hwndWinamp,WM_WA_IPC,0,IPC_GET_SHUFFLE)
 
 def getRepeat():
 	global hwndWinamp
-	return winUser.sendMessage(hwndWinamp,WM_WA_IPC,0,IPC_GET_REPEAT)
+	return watchdog.cancellableSendMessage(hwndWinamp,WM_WA_IPC,0,IPC_GET_REPEAT)
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -96,14 +97,14 @@ class winampMainWindow(IAccessible):
 class winampPlaylistEditor(winampMainWindow):
 
 	def _get_name(self):
-		curIndex=winUser.sendMessage(hwndWinamp,WM_WA_IPC,-1,IPC_PLAYLIST_GET_NEXT_SELECTED)
+		curIndex=watchdog.cancellableSendMessage(hwndWinamp,WM_WA_IPC,-1,IPC_PLAYLIST_GET_NEXT_SELECTED)
 		if curIndex <0:
 			return None
 		info=fileinfo2()
 		info.fileindex=curIndex
 		internalInfo=winKernel.virtualAllocEx(self.processHandle,None,sizeof(info),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		winKernel.writeProcessMemory(self.processHandle,internalInfo,byref(info),sizeof(info),None)
-		winUser.sendMessage(self.windowHandle,WM_WA_IPC,IPC_PE_GETINDEXTITLE,internalInfo)
+		watchdog.cancellableSendMessage(self.windowHandle,WM_WA_IPC,IPC_PE_GETINDEXTITLE,internalInfo)
 		winKernel.readProcessMemory(self.processHandle,internalInfo,byref(info),sizeof(info),None)
 		winKernel.virtualFreeEx(self.processHandle,internalInfo,0,winKernel.MEM_RELEASE)
 		return unicode("%d.\t%s\t%s"%(curIndex+1,info.filetitle,info.filelength), errors="replace", encoding=locale.getlocale()[1])
