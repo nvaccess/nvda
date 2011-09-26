@@ -269,6 +269,8 @@ def cancellableExecute(func, *args, **kwargs):
 
 def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
 	"""Send a window message, making the call cancellable.
+	The C{timeout} and C{flags} arguments should usually be left at their default values.
+	The call will still be cancelled if appropriate even if the specified timeout has not yet been reached.
 	@raise CallCancelled: If the call was cancelled.
 	"""
 	import NVDAHelper
