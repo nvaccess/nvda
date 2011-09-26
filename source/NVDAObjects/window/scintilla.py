@@ -101,9 +101,11 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 			#To get font name, We need to allocate memory with in Scintilla's process, and then copy it out
 			fontNameBuf=ctypes.create_string_buffer(32)
 			internalBuf=winKernel.virtualAllocEx(self.obj.processHandle,None,len(fontNameBuf),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_STYLEGETFONT,style, internalBuf)
-			winKernel.readProcessMemory(self.obj.processHandle,internalBuf,fontNameBuf,len(fontNameBuf),None)
-			winKernel.virtualFreeEx(self.obj.processHandle,internalBuf,0,winKernel.MEM_RELEASE)
+			try:
+				watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_STYLEGETFONT,style, internalBuf)
+				winKernel.readProcessMemory(self.obj.processHandle,internalBuf,fontNameBuf,len(fontNameBuf),None)
+			finally:
+				winKernel.virtualFreeEx(self.obj.processHandle,internalBuf,0,winKernel.MEM_RELEASE)
 			formatField["font-name"]=fontNameBuf.value
 		if formatConfig["reportFontSize"]:
 			formatField["font-size"]="%spt"%watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_STYLEGETSIZE,style,0)
@@ -150,14 +152,18 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		textRange.chrg.cpMax=end
 		processHandle=self.obj.processHandle
 		internalBuf=winKernel.virtualAllocEx(processHandle,None,bufLen,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		textRange.lpstrText=internalBuf
-		internalTextRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(textRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winKernel.writeProcessMemory(processHandle,internalTextRange,ctypes.byref(textRange),ctypes.sizeof(textRange),None)
-		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETTEXTRANGE,0,internalTextRange)
-		winKernel.virtualFreeEx(processHandle,internalTextRange,0,winKernel.MEM_RELEASE)
-		buf=ctypes.create_string_buffer(bufLen)
-		winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
-		winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
+		try:
+			textRange.lpstrText=internalBuf
+			internalTextRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(textRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			try:
+				winKernel.writeProcessMemory(processHandle,internalTextRange,ctypes.byref(textRange),ctypes.sizeof(textRange),None)
+				watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETTEXTRANGE,0,internalTextRange)
+			finally:
+				winKernel.virtualFreeEx(processHandle,internalTextRange,0,winKernel.MEM_RELEASE)
+			buf=ctypes.create_string_buffer(bufLen)
+			winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
 		cp=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCODEPAGE,0,0)
 		if cp==SC_CP_UTF8:
 			return unicode(buf.value, errors="replace", encoding="utf-8")

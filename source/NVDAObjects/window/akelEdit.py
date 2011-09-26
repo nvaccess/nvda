@@ -53,18 +53,22 @@ class AkelEditTextInfo(edit.EditTextInfo):
 		ciChar=AECHARINDEX()
 		processHandle=self.obj.processHandle
 		internalCiChar=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(ciChar),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_RICHOFFSETTOINDEX,offset,internalCiChar)
-		winKernel.readProcessMemory(processHandle,internalCiChar,ctypes.byref(ciChar),ctypes.sizeof(ciChar),None)
-		winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
+		try:
+			watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_RICHOFFSETTOINDEX,offset,internalCiChar)
+			winKernel.readProcessMemory(processHandle,internalCiChar,ctypes.byref(ciChar),ctypes.sizeof(ciChar),None)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
 		return ciChar.nLine
 
 	def _getStoryLength(self):
 		ciChar=AECHARINDEX()
 		processHandle=self.obj.processHandle
 		internalCiChar=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(ciChar),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_GETINDEX,AEGI_LASTCHAR,internalCiChar)
-		end=watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_INDEXTORICHOFFSET,0,internalCiChar)
-		winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
+		try:
+			watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_GETINDEX,AEGI_LASTCHAR,internalCiChar)
+			end=watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_INDEXTORICHOFFSET,0,internalCiChar)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
 		return end+1
 
 	def _getLineOffsets(self,offset):
@@ -74,10 +78,12 @@ class AkelEditTextInfo(edit.EditTextInfo):
 		ciChar=AECHARINDEX()
 		processHandle=self.obj.processHandle
 		internalCiChar=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(ciChar),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_RICHOFFSETTOINDEX,offset,internalCiChar)
-		watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_GETINDEX,AEGI_NEXTLINE,internalCiChar)
-		end=watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_INDEXTORICHOFFSET,0,internalCiChar)
-		winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
+		try:
+			watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_RICHOFFSETTOINDEX,offset,internalCiChar)
+			watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_GETINDEX,AEGI_NEXTLINE,internalCiChar)
+			end=watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_INDEXTORICHOFFSET,0,internalCiChar)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
 		return (start,end)
 
 

@@ -111,10 +111,12 @@ def getListGroupInfo(windowHandle,groupIndex):
 	localInfo.mask=LVGF_HEADER|LVGF_FOOTER|LVGF_STATE|LVGF_ALIGN|LVGF_GROUPID
 	localInfo.stateMask=0xffffffff
 	remoteInfo=winKernel.virtualAllocEx(processHandle,None,sizeof(LVGROUP),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-	winKernel.writeProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(LVGROUP),None)
-	messageRes=watchdog.cancellableSendMessage(windowHandle,LVM_GETGROUPINFOBYINDEX,groupIndex,remoteInfo)
-	winKernel.readProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(LVGROUP),None)
-	winKernel.virtualFreeEx(processHandle,remoteInfo,0,winKernel.MEM_RELEASE)
+	try:
+		winKernel.writeProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(LVGROUP),None)
+		messageRes=watchdog.cancellableSendMessage(windowHandle,LVM_GETGROUPINFOBYINDEX,groupIndex,remoteInfo)
+		winKernel.readProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(LVGROUP),None)
+	finally:
+		winKernel.virtualFreeEx(processHandle,remoteInfo,0,winKernel.MEM_RELEASE)
 	localHeader=create_unicode_buffer(localInfo.cchHeader)
 	winKernel.readProcessMemory(processHandle,localInfo.pszHeader,localHeader,localInfo.cchHeader*2,None)
 	localFooter=create_unicode_buffer(localInfo.cchFooter)
@@ -201,19 +203,23 @@ class ListItem(IAccessible):
 		(processID,threadID)=winUser.getWindowThreadProcessID(self.windowHandle)
 		processHandle=self.processHandle
 		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(LVItemStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
-		watchdog.cancellableSendMessage(self.windowHandle,LVM_GETITEM,0,internalItem)
-		dispInfo=NMLVDispInfoStruct()
-		dispInfo.item=internalItem
-		dispInfo.hdr.hwndFrom=self.windowHandle
-		dispInfo.hdr.idFrom=self.windowControlID
-		dispInfo.hdr.code=LVN_GETDISPINFO
-		internalDispInfo=winKernel.virtualAllocEx(processHandle,None,sizeof(NMLVDispInfoStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winKernel.writeProcessMemory(processHandle,internalDispInfo,byref(dispInfo),sizeof(NMLVDispInfoStruct),None)
-		watchdog.cancellableSendMessage(self.parent.parent.windowHandle,winUser.WM_NOTIFY,LVN_GETDISPINFO,internalDispInfo)
-		winKernel.virtualFreeEx(processHandle,internalDispInfo,0,winKernel.MEM_RELEASE)
-		winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
-		winKernel.virtualFreeEx(processHandle,internalItem,0,winKernel.MEM_RELEASE)
+		try:
+			winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
+			watchdog.cancellableSendMessage(self.windowHandle,LVM_GETITEM,0,internalItem)
+			dispInfo=NMLVDispInfoStruct()
+			dispInfo.item=internalItem
+			dispInfo.hdr.hwndFrom=self.windowHandle
+			dispInfo.hdr.idFrom=self.windowControlID
+			dispInfo.hdr.code=LVN_GETDISPINFO
+			internalDispInfo=winKernel.virtualAllocEx(processHandle,None,sizeof(NMLVDispInfoStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			try:
+				winKernel.writeProcessMemory(processHandle,internalDispInfo,byref(dispInfo),sizeof(NMLVDispInfoStruct),None)
+				watchdog.cancellableSendMessage(self.parent.parent.windowHandle,winUser.WM_NOTIFY,LVN_GETDISPINFO,internalDispInfo)
+			finally:
+				winKernel.virtualFreeEx(processHandle,internalDispInfo,0,winKernel.MEM_RELEASE)
+			winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalItem,0,winKernel.MEM_RELEASE)
 		return item.iImage
 
 	def _get_description(self):

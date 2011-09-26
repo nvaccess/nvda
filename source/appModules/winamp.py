@@ -103,10 +103,12 @@ class winampPlaylistEditor(winampMainWindow):
 		info=fileinfo2()
 		info.fileindex=curIndex
 		internalInfo=winKernel.virtualAllocEx(self.processHandle,None,sizeof(info),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winKernel.writeProcessMemory(self.processHandle,internalInfo,byref(info),sizeof(info),None)
-		watchdog.cancellableSendMessage(self.windowHandle,WM_WA_IPC,IPC_PE_GETINDEXTITLE,internalInfo)
-		winKernel.readProcessMemory(self.processHandle,internalInfo,byref(info),sizeof(info),None)
-		winKernel.virtualFreeEx(self.processHandle,internalInfo,0,winKernel.MEM_RELEASE)
+		try:
+			winKernel.writeProcessMemory(self.processHandle,internalInfo,byref(info),sizeof(info),None)
+			watchdog.cancellableSendMessage(self.windowHandle,WM_WA_IPC,IPC_PE_GETINDEXTITLE,internalInfo)
+			winKernel.readProcessMemory(self.processHandle,internalInfo,byref(info),sizeof(info),None)
+		finally:
+			winKernel.virtualFreeEx(self.processHandle,internalInfo,0,winKernel.MEM_RELEASE)
 		return unicode("%d.\t%s\t%s"%(curIndex+1,info.filetitle,info.filelength), errors="replace", encoding=locale.getlocale()[1])
 
 	def _get_role(self):
