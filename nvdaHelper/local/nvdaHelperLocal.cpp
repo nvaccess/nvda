@@ -18,8 +18,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "nvdaHelperLocal.h"
 #include "dllImportTableHooks.h"
 
-DllImportTableHooks* oleaccHooks;
-DllImportTableHooks* uiaCoreHooks;
+DllImportTableHooks* oleaccHooks = NULL;
+DllImportTableHooks* uiaCoreHooks = NULL;
 
 handle_t createConnection(int processID) {
 	RPC_STATUS rpcStatus;
@@ -83,28 +83,31 @@ void nvdaHelperLocal_initialize() {
 	HMODULE oleacc = LoadLibraryA("oleacc.dll");
 	if (!oleacc)
 		return;
-	HMODULE uiaCore = LoadLibraryA("UIAutomationCore.dll");
-	if (!uiaCore) {
-		FreeLibrary(oleacc);
-		return;
-	}
 	oleaccHooks = new DllImportTableHooks(oleacc);
 	oleaccHooks->requestFunctionHook("USER32.dll", "SendMessageW", fake_SendMessageW);
 	oleaccHooks->requestFunctionHook("USER32.dll", "SendMessageTimeoutW", fake_SendMessageTimeoutW);
-	uiaCoreHooks = new DllImportTableHooks(uiaCore);
-	uiaCoreHooks->requestFunctionHook("USER32.dll", "SendMessageW", fake_SendMessageW);
-	uiaCoreHooks->requestFunctionHook("USER32.dll", "SendMessageTimeoutW", fake_SendMessageTimeoutW);
 	oleaccHooks->hookFunctions();
-	uiaCoreHooks->hookFunctions();
+	HMODULE uiaCore = LoadLibraryA("UIAutomationCore.dll");
+	// It is not an error if UIA isn't present.
+	if (uiaCore) {
+		uiaCoreHooks = new DllImportTableHooks(uiaCore);
+		uiaCoreHooks->requestFunctionHook("USER32.dll", "SendMessageW", fake_SendMessageW);
+		uiaCoreHooks->requestFunctionHook("USER32.dll", "SendMessageTimeoutW", fake_SendMessageTimeoutW);
+		uiaCoreHooks->hookFunctions();
+	}
 }
 
 void nvdaHelperLocal_terminate() {
-	oleaccHooks->unhookFunctions();
-	uiaCoreHooks->unhookFunctions();
-	FreeLibrary(oleaccHooks->targetModule);
-	FreeLibrary(uiaCoreHooks->targetModule);
-	delete oleaccHooks;
-	oleaccHooks = NULL;
-	delete uiaCoreHooks;
-	uiaCoreHooks = NULL;
+	if (uiaCoreHooks) {
+		uiaCoreHooks->unhookFunctions();
+		FreeLibrary(uiaCoreHooks->targetModule);
+		delete uiaCoreHooks;
+		uiaCoreHooks = NULL;
+	}
+	if (oleaccHooks) {
+		oleaccHooks->unhookFunctions();
+		FreeLibrary(oleaccHooks->targetModule);
+		delete oleaccHooks;
+		oleaccHooks = NULL;
+	}
 }
