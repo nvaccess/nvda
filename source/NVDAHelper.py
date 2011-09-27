@@ -178,7 +178,6 @@ def initialize():
 		except AttributeError:
 			log.error("nvdaHelperLocal function pointer for %s could not be found, possibly old nvdaHelperLocal dll"%name)
 	localLib.nvdaHelperLocal_initialize()
-	localLib.startServer()
 	generateBeep=localLib.generateBeep
 	generateBeep.argtypes=[c_char_p,c_float,c_uint,c_ubyte,c_ubyte]
 	generateBeep.restype=c_uint

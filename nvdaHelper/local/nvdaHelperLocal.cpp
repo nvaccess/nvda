@@ -17,6 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <algorithm>
 #include "nvdaHelperLocal.h"
 #include "dllImportTableHooks.h"
+#include "rpcsrv.h"
 
 DllImportTableHooks* oleaccHooks = NULL;
 DllImportTableHooks* uiaCoreHooks = NULL;
@@ -79,7 +80,7 @@ LRESULT WINAPI fake_SendMessageTimeoutW(HWND hwnd, UINT Msg, WPARAM wParam, LPAR
 }
 
 void nvdaHelperLocal_initialize() {
-	// TODO: Should we call startServer() here instead of making the caller call it separately?
+	startServer();
 	HMODULE oleacc = LoadLibraryA("oleacc.dll");
 	if (!oleacc)
 		return;
@@ -110,4 +111,5 @@ void nvdaHelperLocal_terminate() {
 		delete oleaccHooks;
 		oleaccHooks = NULL;
 	}
+	stopServer();
 }
