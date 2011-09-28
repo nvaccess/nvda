@@ -17,7 +17,7 @@ General dependencies:
 		* Official web site: http://espeak.sourceforge.net/
 		* Download the espeak source archive. Note that it must be an official source archive from the espeak website containing already compiled phoneme data, not straight from svn. 
 		* Extract it in to include/espeak so that include/espeak/src, include/espeak/dictsource, include/espeak/platforms and include/espeak/espeak-data all exist.
-	* IAccessible2, version 1.2.1 or later: http://www.linuxfoundation.org/en/Accessibility/IAccessible2
+	* IAccessible2, version 1.2.1 or later: http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2
 		* Download the merged IDL and copy it to include\ia2\ia2.idl.
 	* ConfigObj, version 4.6.0 or later:
 		* Web site: http://www.voidspace.org.uk/python/configobj.html
