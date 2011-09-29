@@ -77,6 +77,7 @@ nodeNamesToNVDARoles={
 	"APPLET":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"EMBED":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"FIELDSET":controlTypes.ROLE_GROUPING,
+	"OPTION":controlTypes.ROLE_LISTITEM,
 }
 
 def IAccessibleFromHTMLNode(HTMLNode):
