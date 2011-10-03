@@ -7,6 +7,7 @@
 import re
 import ctypes
 import NVDAHelper
+import config
 import textInfos
 
 class Offsets(object):
