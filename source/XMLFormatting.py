@@ -34,7 +34,11 @@ class XMLTextParser(object):
 			raise ValueError("unknown tag name: %s"%tagName)
 
 	def _CharacterDataHandler(self,data):
-		self._commandList.append(data)
+		cmdList=self._commandList
+		if cmdList and isinstance(cmdList[-1],basestring):
+			cmdList[-1]+=data
+		else:
+			cmdList.append(data)
 
 	def parse(self,XMLText):
 		try:
@@ -42,4 +46,3 @@ class XMLTextParser(object):
 		except:
 			log.error("XML: %s"%XMLText,exc_info=True)
 		return self._commandList
-
