@@ -136,7 +136,6 @@ NVDAを初めて起動すると、NVDAキーの代替キーとNVDAメニュー�
 テンキーのInsertキーと拡張Insertキー及びCaps LockキーをNVDAキーとして利用するように設定できます。
 初期状態では、テンキーのInsertキー及び拡張InsertキーがNVDAの制御に利用できます。
 
-
 いずれかのNVDAキーを本来のそのキーとして使用したい場合（例えばCaps LockキーをNVDAキーとして使用しているときにCaps LockをOnにしたい場合）は、そのキーを素早く2度押してください。
 
 +++ 入力ヘルプモード +++
@@ -222,6 +221,7 @@ NVDAには、以下のシステムキャレットに関するコマンドがあ�
 | 現在行の読み上げ | NVDA+上矢印 | 現在システムキャレットのある行を読み上げます。続けて2度押すと現在行のスペルを読み上げます。 |
 | 選択中テキストの読み上げ | NVDA+Shift+上矢印 | 現在選択されている任意のテキストを読み上げます。 |
 
+
 また、テーブル内では以下のキーコマンドが利用可能です。
  | 名称 | キー | 説明 |
 | 前の列に移動 | Ctrl+Alt+左矢印 | システムキャレットを同じ行内の前の列に移動します |
@@ -231,7 +231,6 @@ NVDAには、以下のシステムキャレットに関するコマンドがあ�
 %kc:endInclude
 
 ++ オブジェクト内のナビゲーション ++
-
 場合によっては、現在作業中のアプリケーションやオペレーティングシステム上の情報を[フォーカス #SystemFocus]を動かすことなく確認したいことがあるかもしれません。
 また、通常はキーボードからアクセスできない[オブジェクト #objects]上で作業する必要があるかもしれません。
 このような場合、オブジェクトナビゲーション（移動コマンド）が使用できます。
@@ -291,7 +290,8 @@ NVDAでは、コンテンツの現在の[ナビゲーターオブジェクト #O
 | レビュー内の現在の文字を通知 | テンキー2 | NVDA+コンマ | テキスト内の現在行のレビューカーソル位置の文字を通知します。2度続けて押すとその文字の説明や例を通知します。3度続けて押すと10進数や16進数による文字コードを通知します。 |
 | レビュー内の次の文字に移動します。 | テンキー3 | NVDA+ピリオド | レビューカーソルをテキスト内の現在行の次の文字に移動します。 |
 | レビュー内の行末に移動 | Shift+テンキー3 | NVDA+Shift+O | レビューカーソルをテキスト内の現在行の行末に移動します。 |
-| レビューですべて読み上げ | テンキープラス | NVDA+Shift+下矢印 | レビューカーソルの現在位置から移動しながら読み上げます。 || レビューカーソルからコピー | NVDA+F9 | NVDA+F9 | レビューカーソルの現在位置からテキストをコピーします。実際のコピーはコピー終了位置を指定するまで行われません。 |
+| レビューですべて読み上げ | テンキープラス | NVDA+Shift+下矢印 | レビューカーソルの現在位置から移動しながら読み上げます。 |
+| レビューカーソルからコピー | NVDA+F9 | NVDA+F9 | レビューカーソルの現在位置からテキストをコピーします。実際のコピーはコピー終了位置を指定するまで行われません。 |
 | レビューカーソルまでコピー | NVDA+F10 | NVDA+F10 | レビューカーソルからコピーで指定したレビューカーソル位置から、現在レビューカーソルのある位置までをコピーします。このキーを押すと、テキストがWindowsクリップボードにコピーされます。 |
 | 書式情報を通知 | NVDA+F | NVDA+F | レビューカーソル位置のテキストの書式情報を通知します。 |
 %kc:endInclude
@@ -443,6 +443,7 @@ NVDAのユーザーインターフェースやメッセージをどの言語で�
 多くの言語が選択できますが、デフォルトのオプションは"User Default, Windows"となっています。
 このオプションは、NVDAに現在のWindowsの設定言語を使用するように指示するものです。
 
+原語を変更した場合、NVDAを再起動しなければならないことに注意してください。
 言語設定を変更した場合、NVDAは再起動するかどうかを確認します。
 OKボタンを押すとNVDAが再起動します。
 
@@ -463,7 +464,6 @@ OKボタンを押すとNVDAが再起動します。
 このオプションはインストールされたNVDAでのみ有効です。
 
 ==== ログオン画面でNVDAを使用する（管理者権限が必要） ====
-
 もしユーザー名とパスワードを指定してWindowsにログオンしている場合、このオプションを有効にすることでNVDAをWindows起動時のログオン画面で自動的に開始できます。
 このオプションはインストールされたNVDAでのみ有効です。
 
@@ -536,9 +536,9 @@ NVDAに同梱されているeSpeakでは、このコンボボックスで声色�
 このオプションは現在使用中の音声エンジンだけでなく、すべての音声エンジンに対して有効です。
 
 ==== 大文字のピッチ変更率 ==
-This edit field  allows you to type the amount that the pitch of the voice will change when speaking a capital letter.
-This value is a percentage, where a negative value lowers the pitch and a positive value raises it.
-For no pitch change you would use 0.
+このエディットフィールドでは大文字を読み上げる際の高さの変化率を指定します。
+値はパーセントで指定し、負の値を指定すると大文字の高さは小文字よりも低くなりますし、正の値を指定すると高くなります。
+高さを変更したくない場合は、０を指定してください。
 
 ==== 大文字の前にキャップと読む ====
 この設定はチェックボックスで、チェックされている場合はNVDAに大文字の前に"キャップ"と読むように指示します。
@@ -902,193 +902,193 @@ NVDAメニュー内のツールにあるPythonコンソールは開発用のツ�
 この項目をアクティベートすると、アプリケーションモジュールとグローバルプラグインをNVDAを再起動することなく再読み込みできます。これは、開発者にとって便利です。
 
 + サポートされている音声エンジン +[SupportedSpeechSynths]
-This section contains information about the speech synthesizers  supported by NVDA.
+このセクションには、NVDAでサポートされている音声エンジンの情報があります。
 
 ++ eSpeak ++
-The [eSpeak http://espeak.sourceforge.net/] synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
-NVDA starts using eSpeak by default.
-As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive or CD on other systems.
+音声エンジン[eSpeak http://espeak.sourceforge.net/]はNVDAに内蔵されているので、追加のドライバーやコンポーネントをインストールする必要はありません。
+NVDAはデフォルトで、このeSpeakを使用して起動します。
+この音声エンジンがNVDAに同梱されていることで、別のシステム上でUSBメモリーやCDからNVDAを実行することは良い選択と言えます。
 
-Each voice that comes with eSpeak speaks a different language.
-There are over 20 different languages supported by eSpeak.
+eSpeakのそれぞれの音声は、異なる原語で話すことができます。
+eSpeakでは、20ヶ国語以上の原語をサポートしています。
 
-There are also many variants which can be chosen to alter the sound of the voice.
+また、音質の代替として、多くの声色を選択できます。
 
 ++ Microsoft Speech API version 4 (SAPI 4) ++
-SAPI 4 is an older Microsoft standard for software speech synthesizers.
-Many speech synthesizers that comply with this standard may be  purchased or downloaded for free from various companies and websites.
-When using this synthesizer with NVDA, the available voices (accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settins Ring #SynthSettingsRing]) will contain all the voices from all the installed SAPI 4 engines found on your system.
+SAPI 4は、Microsoftの古い音声エンジン向けの標準規格です。
+この規格に対応した多くの音声エンジンは、複数のメーカーやWebサイトから購入もしくは無料で入手できるかもしれません。
+NVDAでこのシンセサイザーを使用する場合、利用可能な音声（[音声設定 #VoiceSettings]や[簡単音声設定 #SynthSettingsRing]からアクセスできます）には、システムにインストールされていて利用可能なすべてのSAPI 4の音声が含まれています。
 
-If you have SAPI 4 voices installed but the synthesizer does not appear in NVDA's list of synthesizers, please install the SAPI 4.0 runtime binaries, available at http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+もしSAPI4用の音声をインストールしているにも関わらず、音声エンジンがNVDAの出力先ダイアログに表示されない場合は、[SAPI 4.0 runtime binaries http://activex.microsoft.com/activex/controls/sapi/spchapi.exe]をインストールしてください。
 
-++ Microsoft Speech API version 5 (SAPI 5) ++
-SAPI 5 is a Microsoft standard for software speech synthesizers.
-Many speech synthesizers that comply with this standard may be  purchased or downloaded for free from various companies and websites, though your system will probably already come with at least one SAPI 5 voice preinstalled.
-When using this synthesizer with NVDA, the available voices (accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settins Ring #SynthSettingsRing]) will contain all the voices from all the installed SAPI 5 engines found on your system.
+	++ Microsoft Speech API version 5 (SAPI 5) ++
+SAPI 5はMicrosoftの音声エンジン向けの標準規格です。
+この規格に対応した多くの音声エンジンは、複数のメーカーやWebサイトから購入もしくは無料で入手できる他、少なくとも一つ以上の音声がすでにシステムにプリインストールされています。
+NVDAでこのシンセサイザーを使用する場合、利用可能な音声（[音声設定 #VoiceSettings]や[簡単音声設定 #SynthSettingsRing]からアクセスできます）には、システムにインストールされていて利用可能なすべてのSAPI 5用の音声が含まれています。
 
-++ Microsoft Speech Platform ++
-The Microsoft Speech Platform provides voices for many languages which are normally used in the development of server-based speech applications.
-These voices can also be used with NVDA.
+++ Microsoft Speech Platform ++	
+Microsoft Speech Platformでは、通常はサーバーベースの読み上げアプリケーション開発に使用されるような多くの原語の音声を提供します。
+これらの音声がNVDAでも使用できます。
 
-To use these voices, you will need to install two components:
+これらの音声を使用するには、二つのコンポーネントをインストールしてください。
 - Microsoft Speech Platform - Server Runtime (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=10208
 - Microsoft Speech Platform - Server Runtime Languages (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
 -
 
 ++ Audiologic Tts3 ++
-This is a commercial speech synthesizer specifically for the Italian language.
-You must have the synthesizer installed on your system in order for it to be used with NVDA.
-For more information, please visit the Audiologic website at www.audiologic.it.
+これは、イタリア語向けの商用音声エンジンです。
+この音声エンジンをNVDAで使用するには、それをシステムにインストールする必要があります。
+詳細については、Audiologic社のWebサイト、www.audiologic.itを参照してください。
 
-This synthesizer does not support [spelling functionality #VoiceSpellingFunctionality].
+この音声エンジンは、[スペル読み機能 #VoiceSpellingFunctionality]をサポートしていません。
 
 ++ Newfon ++
-Newfon is a free commercial synthesizer by Sergey Shishmintzev which supports the Russian and Ukrainian languages.
-To download this synthesizer, please visit the downloads section of the Russian NVDA community site: http://ru.nvda-community.org/?page_id=10
+NewfonはSergey Shishmintzev氏作の無料の商用音声エンジンで、ロシア語とウクライナ語をサポートしています。
+この音声エンジンをダウンロードするには、ロシア語向けのNVDAコミュニティーサイトのダウンロードセクション、http://ru.nvda-community.org/?page_id=10を参照してください。
 
-This synthesizer does not support [spelling functionality #VoiceSpellingFunctionality].
+この音声エンジンは、[スペル読み機能 #VoiceSpellingFunctionality]をサポートしていません。
 
-+ Supported Braille Displays +[SupportedBrailleDisplays]
-This section contains information about the Braille displays supported by NVDA.
++ サポートされている点字ディスプレー +[SupportedBrailleDisplays]
+この章では、NVDAでサポートされている点字ディスプレーについて述べます。
 
-++ Freedom Scientific Focus/PAC Mate Series ++
-All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
-You will need the Freedom Scientific braille display drivers installed on your system.
-If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Although this page only mentions the Focus 40 Blue display, the driver supports all Freedom Scientific displays.
-
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+++ Freedom Scientific社のFocus/PAC Mateシリーズ ++
+NVDAは、USBまたはbluetooth接続されたすべての[Freedom Scientific http://www.freedomscientific.com/]社製のFocus及びPAC Mateディスプレーをサポートしています。
+使用するには、Freedom Scientific社製の点字ディスプレー用ドライバーが必要です。
+お持ちでない場合は、http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.aspから入手できます。
+このページではFocus 40 Blueディスプレーにしか言及していませんが、このドライバーはすべてのFreedom Scientific社製のディスプレーをサポートしています。
+ 
+以下は、このディスプレー上で使用できるNVDA用のキー割り当てです。
+それぞれのキーがどこに位置しているかの情報は、ディスプレーの説明書を参照してください。
 %kc:beginInclude
-|| Name | Key |
-| Toggle left wiz wheel action | leftWizWheelPress |
-| Move back using left wiz wheel action | leftWizWheelUp |
-| Move forward using left wiz wheel action | leftWizWheelDown |
-| Toggle right wiz wheel action | rightWizWheelPress |
-| Move back using right wiz wheel action | rightWizWheelUp |
-| Move forward using right wiz wheel action | rightWizWheelDown |
-| Route to braille cell | routing |
+|| 名称 | キー |
+| 左ウィズホイール動作の切り替え | 左ウィズホイールを押す |
+| 左ウィズホイールの動作を使用して戻ます。 | 左ウィズホイールを上に移動 |
+| 左ウィズホイール動作を使用して進む | 左ウィズホイールを下に移動 |
+| 右ウィズホイール動作を切り替え | 右ウィズホイールを押す |
+| 右ウィズホイール動作を使用して戻ます。 | 右ウィズホイールを上に移動 |
+| 右ウィズホイールの動作を使用して進む | 右ウィズホイールを下に移動 |
+| 点字セルに移動 | タッチカーソル |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++
-Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] are supported when connected via USB or bluetooth.
-You do not need any specific drivers to be installed to use these displays.
-Just plug in the display and configure NVDA to use it.
+++ Optelec社製 ALVA BC640/680 ++
+NVDAは、USBまたはbluetooth接続されている[Optelec http://www.optelec.com/]社製のALVA BC640及びBC680ディスプレーの両方をサポートします。
+これらのディスプレーを使用するために、特別なドライバーは必要ありません。
+ディスプレーを接続して、NVDAでそれが使用できるように設定するだけです。
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+以下は、このディスプレー上で使用できるNVDA用のキー割り当てです。
+それぞれのキーがどこに位置しているかの情報は、ディスプレーの説明書を参照してください。
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | t1 |
-| Move braille display to previous line | t2 |
-| Move braille display to next line | t4 |
-| Scroll braille display forward | t5 |
-| Route to braille cell | routing |
-| shift+tab key | sp1 |
-| alt key | sp2 |
-| escape key | sp3 |
-| tab key | sp4 |
-| upArrow key | spUp |
-| downArrow key | spDown |
-| leftArrow key | spLeft |
-| rightArrow key | spRight |
-| enter key | spEnter |
-| NVDA Menu | sp1+sp3 |
-| windows+d key (minimise all applications) | sp1+sp4 |
-| windows key | sp2+sp3 |
-| alt+tab key | sp2+sp4 |
+|| 名称 | キー |
+| 点字表示を前にスクロール | t1 |
+| 点字表示を前の行に移動 | t2 |
+| 点字表示を次の行に移動 | t4 |
+| 点字表示を次にスクロール | t5 |
+| 点字セルに移動 | タッチカーソル |
+| Shift+Tabキー | sp1 |
+| Altキー | sp2 |
+| Escキー | sp3 |
+| Tabキー | sp4 |
+| 上矢印キー | spUp |
+| 下矢印キー | spDown |
+| 左矢印キー | spLeft |
+| 右矢印キー | spRight |
+| Enterキー | spEnter |
+| NVDAメニュー | sp1+Sp3 |
+| Windows+Dキー（すべてのアプリケーションを最小化） | sp1+Sp4 |
+| Windowsキー | sp2+Sp3 |
+| Alt+Tabキー | sp2+Sp4 |
 %kc:endInclude
 
-++ Handy Tech Displays ++
-NVDA supports all displays from [Handy Tech http://www.handytech.de/] when connected via USB or bluetooth.
-For older USB displays, you will need to install the USB drivers from Handy Tech on your system.
+++ Handy Tech社製ディスプレー ++
+NVDAは、すべてのUSBまたはbluetooth接続された[Handy Tech http://www.handytech.de/] 社製ディスプレーをサポートしています。
+旧いUSB接続のディスプレーを使用する場合は、Handy Tech社からUSBドライバーを入手してインストールする必要があります。
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+以下は、このディスプレー上で使用できるNVDA用のキー割り当てです。
+それぞれのキーがどこに位置しているかの情報は、ディスプレーの説明書を参照してください。
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | left, up |
-| Scroll braille display forward | right, down |
-| Move braille display to previous line | b4 |
-| Move braille display to next line | b5 |
-| Route to braille cell | routing |
-| shift+tab key | esc |
-| alt key | b2+b4+b5 |
-| escape key | b4+b6 |
-| tab key | enter |
-| enter key | esc+enter |
-| upArrow key | leftSpace |
-| downArrow key | rightSpace |
-| NVDA Menu | b2+b4+b5+b6 |
-| Handy Tech configuration | b4+b8 |
+|| 名称 | キー |
+| 点字表示を前にスクロール | left, up |
+| 点字表示を後にスクロール | right, down |
+| 点字表示を前の行に移動 | B4 |
+| 点字表示を次の行に移動 | B5 |
+| 点字セルに移動 | タッチカーソル |
+| Shift+Tabキー | esc |
+| Altキー | B2+B4+B5 |
+| Escキー | B4+B6 |
+| Tabキー | Enter |
+| Enterキー | esc+Enter |
+| 上矢印キー | leftSpace |
+| 下矢印キー | rightSpace |
+| NVDAメニュー | B2+B4+B5+B6 |
+| Handy Tech設定 | B4+B8 |
 %kc:endInclude
 
 ++ MDV Lilli ++
-The Lilli braille display available from [MDV http://www.mdvbologna.it/] is supported.
-You do not need any specific drivers to be installed to use this display.
-Just plug in the display and configure NVDA to use it.
+NVDAは、[MDV http://www.mdvbologna.it/]社製のLilliディスプレーをサポートしています。
+ これらのディスプレーを使用するために、特別なドライバーは必要ありません。
+ディスプレーを接続して、NVDAでそれが使用できるように設定するだけです。
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+以下は、このディスプレー上で使用できるNVDA用のキー割り当てです。
+それぞれのキーがどこに位置しているかの情報は、ディスプレーの説明書を参照してください。
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display backward | LF |
-| Scroll braille display forward | RG |
-| Move braille display to previous line | UP |
-| Move braille display to next line | DN |
-| Route to braille cell | route |
-| shift+tab key | SLF |
-| tab key | SRG |
-| alt+tab key | SDN |
-| alt+shift+tab key | SUP |
+|| 名称 | キー |
+| 点字表示を前にスクロール | LF |
+| 点字表示を後にスクロール | RG |
+| 点字表示を前の行に移動 | UP |
+| 点字表示を次の行に移動 | DN |
+| 点字セルに移動 | route |
+| shift+tabキー | SLF |
+| tabキー | SRG |
+| alt+tabキー | SDN |
+| alt+shift+tabキー | SUP |
 %kc:endInclude
 
-++ Baum/Humanware/APH Braille Displays ++
-Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] displays are supported when connected via USB or bluetooth.
-These include:
-- Baum: SuperVario, PocketVario
-- HumanWare: Brailliant, BrailleConnect
+++ Baum社/Humanware社/APH社製点字ディスプレー ++
+ NVDAは、USBまたはbluetooth接続されたいくつかの[Baum http://www.baum.de/cms/en/]社、[HumanWare http://www.humanware.com/]社及び[APH http://www.aph.org/]製のディスプレーをサポートしています。
+以下のものが含まれています。
+ - Baum社: SuperVario, PocketVario
+- HumanWare社: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
-Some other displays manufactured by Baum may also work, though this has not been tested.
+その他のいくつかのBaum社製ディスプレーでも動作する可能性がありますが、テストは行っていません。
 
-If connecting via USB, you must first install the USB drivers provided by the manufacturer.
-For the APH Refreshabraille, the USB mode must be set to serial.
+もしUSBで接続する場合は、製造元が提供するUSBドライバーを最初にインストールしてください。
+APH製のRefreshabrailleを使用する場合、USBモードをシリアルにセットしなければなりません。
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+以下は、このディスプレー上で使用できるNVDA用のキー割り当てです。
+それぞれのキーがどこに位置しているかの情報は、ディスプレーの説明書を参照してください。
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | d2 |
-| Scroll braille display forward | d5 |
-| Move braille display to previous line | d1 |
-| Move braille display to next line | d3 |
-| Route to braille cell | routing |
+|| 名称 | キー |
+| 点字表示を前にスクロール | d2 |
+| 点字表示を後にスクロール | d5 |
+| 点字表示を前の行に移動 | d1 |
+| 点字表示を次の行に移動 | d3 |
+| 点字セルに移動 | タッチカーソル |
 
-For displays which have a joystick:
-|| Name | Key |
-| upArrow key | up |
-| downArrow key | down |
-| leftArrow key | left |
-| rightArrow key | right |
-| enter key | select |
+ジョイスティックが付いているディスプレーの場合:
+|| 名称 | キー |
+| 上矢印キー | 上 |
+| 下矢印キー | 下 |
+| 左矢印キー | 左 |
+| 右矢印キー | 右 |
+| Enterキー | select |
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] is a separate program which can be used to support many more braille displays.
-In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
-You should download and install the latest installer package, which will be named, for example, brltty-win-4.2-2.exe.
-When configuring the display and port to use, be sure to pay close attention to the instructions, especially if you are using a USB display and already have the manufacturer's drivers installed.
+[BRLTTY http://mielke.cc/brltty/]は別のプログラムで、より多くの点字ディスプレーをサポートしています。
+使用するには、[BRLTTY for Windows http://brl.thefreecat.org/brltty/]をインストールする必要があります。
+  例えば、brltty-win-4.2-2.exeのような名前の最新のパッケージをダウンロードしてインストールしてください。
+ディスプレーで使用するポートの設定を行う際、特にUSB接続のディスプレーを使用する場合で製造元のドライバーをインストールしている場合、インストラクションを注意深く確認してください。
 
-Following are the BRLTTY command assignments for NVDA.
-Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/drivers/] for information about how BRLTTY commands are mapped to controls on braille displays.
+以下はNVDA用に割り当てられたBRLTTYのコマンドです。
+ BRLTTY用のコマンドが、ディスプレーのコントロールにどのように割り当てられているかに関しては、[BRLTTY key tables documentation http://mielke.cc/brltty/doc/drivers/]を確認してください。
 %kc:beginInclude
-|| Name | BRLTTY command |
-| Scroll braille display back | fwinlt (go left one window) |
-| Scroll braille display forward | fwinrt (go right one window) |
-| Move braille display to previous line | lnup (go up one line) |
-| Move braille display to next line | lndn (go down one line) |
-| Route to braille cell | route (bring cursor to character) |
+|| 名称 | BRLTTYコマンド |
+| 点字表示を前にスクロール | fwinlt（左に1画面進む） |
+| 点字表示を後にスクロール | fwinrt（右に1画面進む） |
+| 点字表示を前の行に移動 | lnup（上に1行進む） |
+| 点字表示を次の行に移動 | lndn（下に1行進む） |
+| 点字セルに移動 | タッチカーソル（カーソルを文字に移動 |
 %kc:endInclude
 
 + Advanced Topics +
