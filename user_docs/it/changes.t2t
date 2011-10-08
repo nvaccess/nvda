@@ -1,7 +1,31 @@
-﻿	Novità in NVDA
+﻿Novità in NVDA
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2011.3 =
+== Novità ==
+- NVDA ora è in grado di modificare la lingua di Espeak al volo, quando vengono letti documenti pdf oppure pagine web, purché essi contengano informazioni appropriate per la lingua. Le opzioni sul cambio automatico della lingua/dialetto possono essere modificate nelle impostazioni voce. (#845)
+- Viene supportato Java Access Bridge 2.0.2, che include il supporto per RunTime Java a 64 bit.
+- Nelle applicazioni Mozilla Gecko (ad esempio Firefox), vengono annunciati i livelli di intestazione anche nella navigazione ad oggetti.
+- Le informazioni di formattazione vengono annunciate anche quando si utilizza la modalità navigazione nelle applicazioni Mozilla Gecko, ad esempio Firefox o Thunderbird. (#394)
+- Le applicazioni con controlli Iaccessible2 come quelle di Mozilla  ora sono in grado di rilevare il testo sottolineato o barrato.
+- Nella modalità navigazione in Adobe Reader, viene riportata la quantità di righe e colonne in una tabella.
+- Aggiunto il supporto alle sintesi vocali Microsoft Speech platform. (#1735)
+- Vengono annunciati i numeri di pagina e di riga relativi al cursore in Ibm Lotus Symphony. (#1632)
+- E' possibile configurare dalle impostazioni voce in percentuale di quanto debba aumentare l'altezza della voce in concomitanza con lettere maiuscole. Di conseguenza, la vecchia opzione viene sostituita da questo nuovo parametro. (Per disattivare questa caratteristica impostare l'opzione a 0). (#255)
+- Il colore del testo e dello sfondo ora sono compresi nell'annuncio delle informazioni di formattazione nelle celle di Microsoft Excel. (#1655)
+- Nelle applicazioni dove si utilizza Java Access Bridge, il comando attiva l'oggetto alla posizione del navigatore ora funziona nei controlli appropriati. (#1744)
+
+
+== Cambiamenti ==
+- NVDA verrà riavviato nel caso si pianti.
+- Alcune informazioni mostrate in braille sono state abbreviate. (#1288)
+- Il comando per leggere il contenuto della finestra attiva NVDA+b è stato migliorato in modo da eliminare informazioni superflue ed inoltre risulta molto più agevole da silenziare. (#1499)
+- La caratteristica dire tutto nei documenti in modalità navigazione può essere attivata o disattivata tramite un'opzione presente nella finestra impostazioni navigazione. (#414)
+- Nel caso il comando per leggere la barra di stato non funzioni, verrà letta l'ultima riga dello schermo dell'applicazione attiva. (#649)
+- Durante la lettura di un documento in modalità navigazione, NVDA effettuerà le pause alla fine delle intestazioni o di altri elementi con blocco di testo, piuttosto di leggere un enorme quantità di testo tutta assieme.
+
 
 = 2011.2 =
 Le principali novità di questa versione riguardano una gestione avanzata della punteggiatura e dei simboli, con possibilità di avere livelli configurabili, etichette personalizzabili e descrizione dei caratteri; durante la lettura in modalità "dire tutto", non verranno più effettuate pause alla fine di ciascuna riga; migliorato il supporto Aria in Internet Explorer; supporto migliorato per i documenti pdf XFA/LiveCycle in Adobe Reader; accesso al testo presente a video in un maggior numero di applicazioni; aggiunte informazioni sul carattere, sui colori e sulla formattazione del testo presente a schermo.
