@@ -184,7 +184,7 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 			synth.pitch=max(0,min(oldPitch+synthConfig["capPitchChange"],100))
 		index=count+1
 		log.io("Speaking character %r"%char)
-		speechSequence=[LangChangeCommand(locale)]
+		speechSequence=[LangChangeCommand(locale)] if config.conf['speech']['autoLanguageSwitching'] else []
 		if len(char) == 1 and synthConfig["useSpellingFunctionality"]:
 			speechSequence.append(CharacterModeCommand(True))
 		if index is not None:
@@ -332,6 +332,7 @@ def speak(speechSequence,symbolLevel=None):
 	beenCanceled=False
 	#Filter out redundant LangChangeCommand objects 
 	#And also fill in default values
+	autoLanguageSwitching=config.conf['speech']['autoLanguageSwitching']
 	autoDialectSwitching=config.conf['speech']['autoDialectSwitching']
 	curLanguage=defaultLanguage=getCurrentLanguage()
 	prevLanguage=None
@@ -340,12 +341,13 @@ def speak(speechSequence,symbolLevel=None):
 	speechSequence=[]
 	for item in oldSpeechSequence:
 		if isinstance(item,LangChangeCommand):
+			if not autoLanguageSwitching: continue
 			curLanguage=item.lang
 			if not curLanguage or (not autoDialectSwitching and curLanguage.split('_')[0]==defaultLanguageRoot):
 				curLanguage=defaultLanguage
 		elif isinstance(item,basestring):
 			if not item: continue
-			if curLanguage!=prevLanguage:
+			if autoLanguageSwitching and curLanguage!=prevLanguage:
 				speechSequence.append(LangChangeCommand(curLanguage))
 				prevLanguage=curLanguage
 			speechSequence.append(item)
@@ -357,7 +359,7 @@ def speak(speechSequence,symbolLevel=None):
 	curLanguage=defaultLanguage
 	for index in xrange(len(speechSequence)):
 		item=speechSequence[index]
-		if isinstance(item,LangChangeCommand):
+		if autoLanguageSwitching and isinstance(item,LangChangeCommand):
 			curLanguage=item.lang
 		if isinstance(item,basestring):
 			speechSequence[index]=processText(curLanguage,item,symbolLevel)+" "
