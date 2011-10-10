@@ -611,6 +611,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=REASON_Q
 			text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
 				speechSequence.append(text)
+				isTextBlank=False
 
 	#Get speech text for any fields in the new controlFieldStack that are not in the old controlFieldStack
 	for count in xrange(commonFieldCount,len(newControlFieldStack)):
