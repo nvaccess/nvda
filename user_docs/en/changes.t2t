@@ -26,6 +26,7 @@
 - Automatic say all when a browse mode document loads is now optional via a setting in the Browse Mode settings dialog. (#414)  
 - When trying to read the status bar (Desktop NVDA+end), If a real status bar object cannot be located, NVDA will instead resort to using the bottom line of text written to the display for the active application. (#649)
 - When reading with say all in browse mode documents, NVDA will now pause at the end of headings and other block-level elements, rather than speaking the text together with the next lot of text as one long sentence.
+- In browse mode, pressing enter or space on a tab now activates it instead of switching to focus mode. (#1760)
 
 
 == Bug Fixes ==
