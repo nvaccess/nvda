@@ -67,6 +67,7 @@ class Gecko_ia2(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
+		self._initialScrollObj = None
 
 	def _get_shouldPrepare(self):
 		if not super(Gecko_ia2, self).shouldPrepare:
@@ -209,8 +210,12 @@ class Gecko_ia2(VirtualBuffer):
 		return nextHandler()
 
 	def event_scrollingStart(self, obj, nextHandler):
+		if not self.isReady:
+			self._initialScrollObj = obj
+			return nextHandler()
 		if not self._handleScrollTo(obj):
 			return nextHandler()
+	event_scrollingStart.ignoreIsReady = True
 
 	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
 		if not axis:
@@ -244,3 +249,9 @@ class Gecko_ia2(VirtualBuffer):
 			return self.rootNVDAObject.IAccessibleObject.accValue(0)
 		except COMError:
 			return None
+
+	def _getInitialCaretPos(self):
+		initialPos = super(Gecko_ia2,self)._getInitialCaretPos()
+		if initialPos:
+			return initialPos
+		return self._initialScrollObj
