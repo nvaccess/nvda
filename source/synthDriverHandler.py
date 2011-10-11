@@ -253,11 +253,23 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		"""
 		import speech
 		lastIndex=None
+		text=""
 		origSpeakFunc=self.speakText
-		for item in speechSequence:
-			if isinstance(item,basestring):
-				origSpeakFunc(item,index=lastIndex)
+		speechSequence=iter(speechSequence)
+		while True:
+			item = next(speechSequence,None)
+			if text and (item is None or isinstance(item,(speech.IndexCommand,speech.CharacterModeCommand))):
+				# Either we're about to handle a command or this is the end of the sequence.
+				# Speak the text since the last command we handled.
+				origSpeakFunc(text,index=lastIndex)
+				text=""
 				lastIndex=None
+			if item is None:
+				# No more items.
+				break
+			if isinstance(item,basestring):
+				# Merge the text between commands into a single chunk.
+				text+=item
 			elif isinstance(item,speech.IndexCommand):
 				lastIndex=item.index
 			elif isinstance(item,speech.CharacterModeCommand):
