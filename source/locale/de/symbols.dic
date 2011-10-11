@@ -11,11 +11,12 @@ complexSymbols:
 ? Satzende	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
 
 # Satzzeichen für Phrasen
-; Satzende	(?<=[^\s;]);(?=\s|$)
-: Satzende	(?<=[^\s:]):(?=\s|$)
+; Phrasenende	(?<=[^\s;]);(?=\s|$)
+: Phrasenende	(?<=[^\s:]):(?=\s|$)
 
 # Weitere
 decimal point	(?<=\d)\,(?=\d)
+date separator	(?<=\d\d)\.(?=\d\d)
 in-word '	(?<=[^\W_])['’]
 negative number	(?<!\w)-(?=\d)
 
@@ -26,14 +27,15 @@ symbols:
 . Satzende	Punkt	all	always
 ! Satzende	Ausrufezeichen	all	always
 ? Satzende	Fragezeichen	all	always
-; Satzzeichen für Phrasen	Semikolon	most	always
-: Satzzeichen für Phrasen	Doppelpunkt	most	always
+; Phrasenende	Semikolon	most	always
+: Phrasenende	Doppelpunkt	most	always
 decimal point		none	always
+date separator		none	always
 in-word '	Apostroph	all	norep
 negative number	Minus	none	norep
 
 # Unsichtbare Zeichen
-\0	leer	char # Null
+\0	leer	char	# Null
 \t	Tabulator
 \n	Zeilenumbruch	char
 \f	Seitenumbruch	none
