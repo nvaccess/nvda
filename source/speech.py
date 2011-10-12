@@ -605,6 +605,10 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=REASON_Q
 	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't entering any new fields and there is no text).
 	isTextBlank=True
 
+	# Even when there's no speakable text, we still need to notify the synth of the index.
+	if index is not None:
+		speechSequence.append(IndexCommand(index))
+
 	#Get speech text for any fields that are in both controlFieldStacks, if extra detail is not requested
 	if not extraDetail:
 		for count in xrange(commonFieldCount):
@@ -713,9 +717,6 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=REASON_Q
 		info.obj._speakTextInfo_controlFieldStackCache=list(newControlFieldStack)
 		info.obj._speakTextInfo_formatFieldAttributesCache=formatFieldAttributesCache
 
-	# Even when there's no speakable text, we still need to notify the synth of the index.
-	if index is not None:
-		speechSequence.insert(0,IndexCommand(index))
 	if speechSequence:
 		if reason==REASON_SAYALL:
 			speakWithoutPauses(speechSequence)
@@ -1124,8 +1125,9 @@ def speakWithoutPauses(speechSequence,detectBreaks=True):
 	if detectBreaks and speechSequence:
 		sequenceLen=len(speechSequence)
 		for index in xrange(sequenceLen):
-			if index>0 and lastStartIndex<index and isinstance(speechSequence[index],BreakCommand):
-				speakWithoutPauses(speechSequence[lastStartIndex:index],detectBreaks=False)
+			if isinstance(speechSequence[index],BreakCommand):
+				if index>0 and lastStartIndex<index:
+					speakWithoutPauses(speechSequence[lastStartIndex:index],detectBreaks=False)
 				speakWithoutPauses(None)
 				lastStartIndex=index+1
 		if lastStartIndex<sequenceLen:
