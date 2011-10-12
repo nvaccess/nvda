@@ -315,6 +315,8 @@ def speak(speechSequence,symbolLevel=None):
 	@param speechSequence: the sequence of text and L{SpeechCommand} objects to speak
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
 	"""
+	if not speechSequence: #Pointless - nothing to speak 
+		return
 	import speechViewer
 	if speechViewer.isActive:
 		for item in speechSequence:
