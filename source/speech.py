@@ -706,7 +706,9 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=REASON_Q
 		isTextBlank=False
 
 	#Finally get speech text for any fields left in new controlFieldStack that are common with the old controlFieldStack (for closing), if extra detail is not requested
-	speechSequence.append(LangChangeCommand(None))
+	if autoLanguageSwitching and lastLanguage is not None:
+		speechSequence.append(LangChangeCommand(None))
+		lastLanguage=None
 	if not extraDetail:
 		for count in reversed(xrange(min(len(newControlFieldStack),commonFieldCount))):
 			text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"end_inControlFieldStack",formatConfig,extraDetail,reason=reason)
