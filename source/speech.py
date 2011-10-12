@@ -355,6 +355,10 @@ def speak(speechSequence,symbolLevel=None):
 			speechSequence.append(item)
 		else:
 			speechSequence.append(item)
+	if not speechSequence:
+		# After normalisation, the sequence is empty.
+		# There's nothing to speak.
+		return
 	log.io("Speaking %r" % speechSequence)
 	if symbolLevel is None:
 		symbolLevel=config.conf["speech"]["symbolLevel"]
