@@ -10,6 +10,7 @@
 quand on lit des documents web/pdf contenant les informations de langue appropriées.
 Le changement automatique de langue ou de dialecte peut être activé ou désactivé
 dans le dialogue Paramètres Vocaux. (#845)
+- Java Access Bridge 2.0.2 est maintenant supporté ce qui inclut les environnements Java Runtime 64 bits.
 - Sous Mozilla Gecko (ex : Firefox) Les niveaux de titre sont maintenant annoncés quand on utilise la navigation par objet.
 - Le formatage du text peut maintenant être annoncé quand on utilise le mode navigation sous Mozilla Gecko (ex : Firefox et ThunderBird). (#394)
 - Les textes soulignés et/ou biffés peuvent maintenant être détectés et annoncés dans les contrôles de texte IAccessible2 standards tels qu'on en trouve dans les applications Mozilla.
@@ -17,6 +18,11 @@ dans le dialogue Paramètres Vocaux. (#845)
 le nombre de ligne et de colonnes d'un tableau est maintenant annoncé.
 - Le synthétiseur Microsoft Speech Platform est maintenant supporté. (#1735)
 - Les numéros de ligne et de colonne sont maintenant annoncés pour le curseur sous IBM Lotus Symphony. (#1632)
+- Le pourcentage de changement de hauteur de voix quand une lettre majuscule est prononcée est maintenant configurable dans le dialogue Paramètres vocaux.
+Cela remplace l'ancienne case à cocher "Augmenter la hauteur de la voix pour signaler les majuscules".
+Pour désactiver cette fonction, mettez le pourcentage à 0. (#255)
+- L'annonce de la couleur du texte et de l'arrière-plan est maintenant inclus dans l'annonce du formatage du texte des cellulessous Mcrosoft Excel. (#1655)
+- Dans les applications utilisant Java Access Bridge, la commande d'activation de l'objet de navigation courant fonctionne maintenant pour les contrôles qui le nécessitent. (#1744)
 
 
 == Changements ==
@@ -25,6 +31,9 @@ le nombre de ligne et de colonnes d'un tableau est maintenant annoncé.
 - le script de lecture de la fenêtre active (NVDA+B) a été amélioré
 pour filtrer les contrôles inutiles et est maintenant beaucoup plus facile à interrompre. (#1499)
 - La lecture automatique au chargement d'un document navigable est maintenant optionnelle via un paramètre dans le dialogue Mode Navigation. (#1414)
+- Quand on essaie de lire la barre d'état (NVDA=fin en configuration clavier ordinateur de bureau), NVDA lira la dernière ligne de texte à l'écran s'il ne peut trouver de vraie barre d'état. (#649)
+- Dans les documents navigables, pendant la lecture avec la commande dire tout, NVDA marquera maintenant une pause après les titres et les autres marques de blocs au lieu de lire tout le texte comme une seule longue phrase.
+- En mode navigation, l'appui sur entrée ou espace quand on se trouve sur un onglet active celui-ci plutôt que de passer en mode formulaire. (#1760)
 
 
 == Corrrections de bogues ==
@@ -48,6 +57,14 @@ En outre, la ligne d'en-tête n'est plus annoncée comme ligne 0.
 - NVDA s'accommode maintenant de beaucoup plus de situations telles que des applications cessant de répondre et qui le gelaient complètement. (#1408)
 - Dans les documents navigables sous Mozilla Gecko (Firefox etc),
 NVDA n'échoue plus à présenter le texte dans le cas très spécial où un élément est stylé comme display:table. (#1373)
+- NVDA n'annonce plus les contrôles d'étiquette quand le focus entre dans l'une d'entre elles.
+Cela supprime la double annonce de l'étiquette pour certains champs de formulaire sous Firefox (Gecko) et Internet Explorer (MSHTML). (#1650)
+- NVDA réussit maintenant à lire le contenu d'une cellule Microsoft Excel après qu'on y ait collé du contenu par Ctrl+v. (#781)
+- Sous Adobe Reader, des informations irrelevantes concernant le document ne sont plus annoncées quand on se déplace à un contrôle sur une autre page en mode formulaire. (#1659)
+- En mode navigation dans les applications Mozilla Gecko telles que Firefox, les boutons à deux états sont maintenant correctement détectés et annoncés. (#1757)
+- NVDA peut maintenant lire correctement la barre d'adresse de l'explorateur Windows dans la préversion pour développeur de Windows 8.
+- NVDA ne plante plus certaines applications telles que Winver et Wordpad de la préversion pour développeur de Windows 8 en raison d'une mauvaise traduction de certains glyphes.
+- En mode navigation dans les applications utilisant Mozilla Gecko 10 ou au-delà (comme Firefox 10), le curseur se positionne plus souvent correctement quand on charge une page avec une ancre cible. (#360)
 
 
 = 2011.2 =
