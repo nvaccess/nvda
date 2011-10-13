@@ -713,6 +713,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 				}
 			}
 			LOG_DEBUG(L"End of scan");
+		} else if (role==ROLE_SYSTEM_GRAPHIC&&childCount>0&&name) {
+			// This is an image map with a name, so render the name.
+			previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
 		}
 		if(IA2Text!=NULL) {
 			LOG_DEBUG(L"Freeing IA2Text");
