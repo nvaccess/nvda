@@ -1603,5 +1603,5 @@ _staticMap={
 	("Shell DocObject View",oleacc.ROLE_SYSTEM_CLIENT):"ShellDocObjectView",
 	("listview",oleacc.ROLE_SYSTEM_CLIENT):"ListviewPane",
 	("NUIDialog",oleacc.ROLE_SYSTEM_CLIENT):"NUIDialogClient",
-
+	("WebViewWindowClass",oleacc.ROLE_SYSTEM_DOCUMENT):"webKit.Document",
 }
