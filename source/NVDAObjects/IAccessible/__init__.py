@@ -442,6 +442,9 @@ the NVDAObject for IAccessible
 		elif windowClassName == "AVL_AVView":
 			from . import adobeAcrobat
 			adobeAcrobat.findExtraOverlayClasses(self, clsList)
+		elif windowClassName == "WebViewWindowClass":
+			from . import webKit
+			webKit.findExtraOverlayClasses(self, clsList)
 
 		#Support for Windowless richEdit
 		if not hasattr(IAccessible,"IID_ITextServices"):
@@ -1603,5 +1606,4 @@ _staticMap={
 	("Shell DocObject View",oleacc.ROLE_SYSTEM_CLIENT):"ShellDocObjectView",
 	("listview",oleacc.ROLE_SYSTEM_CLIENT):"ListviewPane",
 	("NUIDialog",oleacc.ROLE_SYSTEM_CLIENT):"NUIDialogClient",
-	("WebViewWindowClass",oleacc.ROLE_SYSTEM_DOCUMENT):"webKit.Document",
 }
