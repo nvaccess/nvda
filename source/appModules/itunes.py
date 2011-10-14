@@ -8,7 +8,12 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if isinstance(obj,NVDAObjects.IAccessible.IAccessible):
-			obj.shouldAllowIAccessibleFocusEvent=True
+			if obj.windowClassName=="iTunesWebViewControl":
+				# This is a wrapper around the real WebKit document and should be ignored.
+				obj.shouldAllowIAccessibleFocusEvent=False
+				obj.presentationType=obj.presType_layout
+			else:
+				obj.shouldAllowIAccessibleFocusEvent=True
 			if obj.windowClassName=="WebViewWindowClass":
 				if obj.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
 					#Disable a safety mechonism in our IAccessible support as in iTunes it causes an infinit ancestry.
