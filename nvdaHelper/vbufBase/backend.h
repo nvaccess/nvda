@@ -150,6 +150,15 @@ class VBufBackend_t  : public VBufStorage_buffer_t {
 	virtual void forceUpdate();
 
 /**
+ * Retrieve the native handle for the object underlying a node.
+ * This handle is used to retrieve the object out-of-process.
+ * The way in which it is used is implementation specific.
+ * @param node The node in question.
+ * @return the handle or 0 on error.
+ */
+	virtual int getNativeHandleForNode(VBufStorage_controlFieldNode_t*);
+
+/**
  * Clears the content of the backend and terminates any code used for rendering.
  */
 	virtual void terminate();

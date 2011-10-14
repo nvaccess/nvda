@@ -208,6 +208,10 @@ void VBufBackend_t::update() {
 	LOG_DEBUG(L"Update complete");
 }
 
+int VBufBackend_t::getNativeHandleForNode(VBufStorage_controlFieldNode_t* node) {
+	return 0;
+}
+
 void VBufBackend_t::terminate() {
 	if(runningBackends.count(this)>0) {
 		LOG_DEBUG(L"Render thread not terminated yet");
