@@ -56,6 +56,12 @@ Highlights of this release include automatic speech language switching when read
 - In browse mode in Mozilla Gecko applications (e.g. Firefox), labels for image maps are now rendered.
 
 
+== Changes for Developers ==
+- NVDA can now instruct speech synthesizers to switch languages for particular sections of speech.
+ - To support this, drivers must handle speech.LangChangeCommand in sequences past to SynthDriver.speak().
+ - SynthDriver objects should also provide the language argument to VoiceInfo objects (or override the language attribute to retrieve the current language). Otherwise, NVDA's user interface language will be used.
+
+
 = 2011.2 =
 Highlights of this release include major improvements concerning punctuation and symbols, including configurable levels, custom labelling and character descriptions; no pauses at the end of lines during say all; improved support for ARIA in Internet Explorer; better support for XFA/LiveCycle PDF documents in Adobe Reader; access to text written to the screen in more applications; and access to formatting and color information for text written to the screen.
 
