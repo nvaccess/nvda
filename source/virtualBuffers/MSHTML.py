@@ -14,6 +14,7 @@ import textInfos
 import api
 import aria
 import config
+import watchdog
 
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
@@ -184,8 +185,13 @@ class MSHTML(VirtualBuffer):
 		root=self.rootNVDAObject
 		if not root:
 			return False
-		if not root.IAccessibleRole:
-			# The root object is dead.
+		try:
+			if not root.IAccessibleRole:
+				# The root object is dead.
+				return False
+		except watchdog.CallCancelled:
+			# #1831: If the root object isn't responding, treat the buffer as dead.
+			# Otherwise, we'll keep querying it on every focus change and freezing.
 			return False
 		states=root.states
 		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_EDITABLE in states:
