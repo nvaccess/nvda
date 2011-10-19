@@ -22,6 +22,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
+const UINT WM_LRESULT_FROM_IACCESSIBLE = RegisterWindowMessage(L"VBufBackend_lresultFromIAccessible");
+
 int idCounter = 0;
 
 IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
@@ -178,10 +180,25 @@ void WebKitVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, in
 WebKitVBufBackend_t::WebKitVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID) {
 }
 
+LRESULT CALLBACK callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
+	CWPSTRUCT* pcwp = (CWPSTRUCT*)lParam;
+	if (pcwp->message == WM_LRESULT_FROM_IACCESSIBLE) {
+		*(LRESULT*)pcwp->lParam = LresultFromObject(IID_IAccessible, 0,
+			(IUnknown*)pcwp->wParam);
+	}
+	return 0;
+}
+
 int WebKitVBufBackend_t::getNativeHandleForNode(VBufStorage_controlFieldNode_t* node) {
 	if (!this->isNodeInBuffer(node))
 		return 0;
-	LRESULT res = LresultFromObject(IID_IAccessible, 0, static_cast<WebKitVBufStorage_controlFieldNode_t*>(node)->accessibleObj);
+	LRESULT res = 0;
+	// This method will be called in an RPC thread.
+		// LresultFromObject must be called in the thread in which the object was created.
+	registerWindowsHook(WH_CALLWNDPROC, callWndProcHook);
+	SendMessage((HWND)rootDocHandle, WM_LRESULT_FROM_IACCESSIBLE,
+		(WPARAM)static_cast<WebKitVBufStorage_controlFieldNode_t*>(node)->accessibleObj, (LPARAM)&res);
+	unregisterWindowsHook(WH_CALLWNDPROC, callWndProcHook);
 	if (res <= 0)
 		return 0;
 	return res;
