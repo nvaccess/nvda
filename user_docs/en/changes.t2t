@@ -28,6 +28,7 @@ Highlights of this release include automatic speech language switching when read
 - When trying to read the status bar (Desktop NVDA+end), If a real status bar object cannot be located, NVDA will instead resort to using the bottom line of text written to the display for the active application. (#649)
 - When reading with say all in browse mode documents, NVDA will now pause at the end of headings and other block-level elements, rather than speaking the text together with the next lot of text as one long sentence.
 - In browse mode, pressing enter or space on a tab now activates it instead of switching to focus mode. (#1760)
+- Updated eSpeak speech synthesizer to 1.45.46.
 
 
 == Bug Fixes ==
@@ -53,6 +54,13 @@ Highlights of this release include automatic speech language switching when read
 - NVDA will no longer crash apps such as winver and wordpad in Windows 8 developer preview due to bad glyph translations.
 - In browse mode in applications using Mozilla Gecko 10 and later (e.g. Firefox 10), the cursor is more often positioned correctly when loading a page with a target anchor. (#360)
 - In browse mode in Mozilla Gecko applications (e.g. Firefox), labels for image maps are now rendered.
+- With mouse tracking enabled, moving the mouse over certain editable text fields (such as in Synaptics Pointing Device Settings and SpeechLab SpeakText) no longer causes the application to crash. (#672)
+
+
+== Changes for Developers ==
+- NVDA can now instruct speech synthesizers to switch languages for particular sections of speech.
+ - To support this, drivers must handle speech.LangChangeCommand in sequences past to SynthDriver.speak().
+ - SynthDriver objects should also provide the language argument to VoiceInfo objects (or override the language attribute to retrieve the current language). Otherwise, NVDA's user interface language will be used.
 
 
 = 2011.2 =

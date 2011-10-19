@@ -22,7 +22,7 @@ CHECK_INTERVAL=0.1
 #: How long to wait for the core to be alive under normal circumstances
 NORMAL_CORE_ALIVE_TIMEOUT=10
 #: The minimum time to wait for the core to be alive
-MIN_CORE_ALIVE_TIMEOUT=0.3
+MIN_CORE_ALIVE_TIMEOUT=0.5
 #: How long to wait between recovery attempts
 RECOVER_ATTEMPT_INTERVAL = 0.05
 #: The amount of time before the core should be considered severely frozen and a warning logged.

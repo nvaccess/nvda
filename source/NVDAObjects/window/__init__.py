@@ -407,7 +407,7 @@ windowClassMap={
 	"TSpinEdit":"Edit",
 	"ThunderRT6TextBox":"Edit",
 	"TMemo":"Edit",
-	"RICHEDIT":"Edit",
+	"RICHEDIT":"RichEdit",
 	"TPasswordEdit":"Edit",
 	"THppEdit.UnicodeClass":"Edit",
 	"TUnicodeTextEdit.UnicodeClass":"Edit",

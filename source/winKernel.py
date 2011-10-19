@@ -90,7 +90,10 @@ def openProcess(*args):
 	return kernel32.OpenProcess(*args)
 
 def virtualAllocEx(*args):
-	return kernel32.VirtualAllocEx(*args)
+	res = kernel32.VirtualAllocEx(*args)
+	if res == 0:
+		raise WinError()
+	return res
 
 def virtualFreeEx(*args):
 	return kernel32.VirtualFreeEx(*args)
