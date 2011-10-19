@@ -957,6 +957,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	} else if(nodeName.compare(L"BR")==0) {
 		LOG_DEBUG(L"node is a br tag, adding a line feed as its text.");
 		contentString=L"\n";
+	} else if (nodeName.compare(L"math")==0) {
+		contentString=IAName;
 	} else {
 		renderChildren=true;
 	}
