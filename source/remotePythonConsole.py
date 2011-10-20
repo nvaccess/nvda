@@ -5,6 +5,9 @@
 #Copyright (C) 2011 NV Access Inc
 
 """Provides an interactive Python console run inside NVDA which can be accessed via TCP.
+To use, call L{initialize} to start the server.
+Then, connect to it using TCP port L{PORT}.
+The server will only handle one connection at a time.
 """
 
 import threading
@@ -12,6 +15,10 @@ import SocketServer
 import wx
 import pythonConsole
 from logHandler import log
+
+#: The TCP port on which the server will run.
+#: @type: int
+PORT = 6832
 
 server = None
 
@@ -62,7 +69,7 @@ class RequestHandler(SocketServer.StreamRequestHandler):
 
 def initialize():
 	global server
-	server = SocketServer.TCPServer(("", 6832), RequestHandler)
+	server = SocketServer.TCPServer(("", PORT), RequestHandler)
 	server.daemon_threads = True
 	thread = threading.Thread(target=server.serve_forever)
 	thread.daemon = True
