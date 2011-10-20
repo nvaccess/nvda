@@ -17,9 +17,6 @@ server = None
 
 class RequestHandler(SocketServer.StreamRequestHandler):
 
-	def echo(self, data):
-		pass
-
 	def setPrompt(self, prompt):
 		if not self._keepRunning:
 			# We're about to exit, so don't output the prompt.
@@ -39,7 +36,7 @@ class RequestHandler(SocketServer.StreamRequestHandler):
 
 		try:
 			self.wfile.write("NVDA Remote Python Console\n")
-			self.console = pythonConsole.PythonConsole(outputFunc=self.wfile.write, echoFunc=self.echo, setPromptFunc=self.setPrompt, exitFunc=self.exit)
+			self.console = pythonConsole.PythonConsole(outputFunc=self.wfile.write, setPromptFunc=self.setPrompt, exitFunc=self.exit)
 			self.console.namespace.update({
 				"snap": self.console.updateNamespaceSnapshotVars,
 				"rmSnap": self.console.removeNamespaceSnapshotVars,

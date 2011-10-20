@@ -56,7 +56,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 	and can be updated with a snapshot of NVDA's state using L{updateNamespaceSnapshotVars}.
 	"""
 
-	def __init__(self, outputFunc, echoFunc, setPromptFunc, exitFunc, **kwargs):
+	def __init__(self, outputFunc, setPromptFunc, exitFunc, echoFunc=None, **kwargs):
 		self._output = outputFunc
 		self._echo = echoFunc
 		self._setPrompt = setPromptFunc
@@ -97,7 +97,8 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		self._output(data)
 
 	def push(self, line):
-		self._echo("%s %s\n" % (self.prompt, line))
+		if self._echo:
+			self._echo("%s %s\n" % (self.prompt, line))
 		# Capture stdout/stderr output as well as code interaction.
 		stdout, stderr = sys.stdout, sys.stderr
 		sys.stdout = sys.stderr = self
