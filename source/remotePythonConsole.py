@@ -23,10 +23,18 @@ class RequestHandler(SocketServer.StreamRequestHandler):
 	def setPrompt(self, prompt):
 		self.wfile.write(prompt + " ")
 
+	def exit(self):
+		self._keepRunning = False
+
 	def handle(self):
 		try:
 			self.wfile.write("NVDA Remote Python Console\n")
-			self.console = pythonConsole.PythonConsole(outputFunc=self.wfile.write, echoFunc=self.echo, setPromptFunc=self.setPrompt, locals={})
+			console = pythonConsole.PythonConsole(outputFunc=self.wfile.write, echoFunc=self.echo, setPromptFunc=self.setPrompt, exitFunc=self.exit)
+			console.namespace.update({
+				"snap": console.updateNamespaceSnapshotVars,
+				"rmSnap": console.removeNamespaceSnapshotVars,
+			})
+
 			self._keepRunning = True
 			while self._keepRunning:
 				line = self.rfile.readline()
@@ -34,7 +42,8 @@ class RequestHandler(SocketServer.StreamRequestHandler):
 					break
 				line = line.rstrip("\r\n")
 				# Execute in the main thread.
-				wx.CallAfter(self.console.push, line)
+				wx.CallAfter(console.push, line)
+
 		except:
 			log.exception("Error handling remote Python console request")
 

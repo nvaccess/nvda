@@ -874,7 +874,7 @@ class GlobalCommands(ScriptableObject):
 		import pythonConsole
 		if not pythonConsole.consoleUI:
 			pythonConsole.initialize()
-		pythonConsole.consoleUI.updateNamespaceSnapshotVars()
+		pythonConsole.consoleUI.console.updateNamespaceSnapshotVars()
 		pythonConsole.activate()
 	script_activatePythonConsole.__doc__ = _("Activates the NVDA Python Console, primarily useful for development")
 
