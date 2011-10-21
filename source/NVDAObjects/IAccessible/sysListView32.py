@@ -158,7 +158,7 @@ class GroupingItem(Window):
 		self.groupInfo=groupInfo
 
 	def _isEqual(self,other):
-		return isinstance(other,self.__class__) and self.groupInfo==othergroupInfo
+		return isinstance(other,self.__class__) and self.groupInfo==other.groupInfo
 
 	def _set_groupInfo(self,info):
 		self._groupInfoTime=time.time()
@@ -194,7 +194,7 @@ class GroupingItem(Window):
 
 	def initOverlayClass(self):
 		for gesture in ("kb:leftArrow", "kb:rightArrow"):
-			self.bindeGesture(gesture, "collapseOrExpand")
+			self.bindGesture(gesture, "collapseOrExpand")
 
 class ListItem(IAccessible):
 
