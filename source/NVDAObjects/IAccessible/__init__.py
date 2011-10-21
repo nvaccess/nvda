@@ -843,7 +843,7 @@ the NVDAObject for IAccessible
 		return res if isinstance(res,basestring) and not res.isspace() else None
 
 	def _get_childCount(self):
-		if self.IAccessibleChildID>0:
+		if self.IAccessibleChildID!=0:
 			return 0
 		try:
 			return max(self.IAccessibleObject.accChildCount,0)
@@ -873,7 +873,7 @@ the NVDAObject for IAccessible
 			return None
 
 	def _get_parent(self):
-		if self.IAccessibleChildID>0:
+		if self.IAccessibleChildID!=0:
 			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=0) or super(IAccessible,self).parent
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
 		if res:
@@ -945,7 +945,7 @@ the NVDAObject for IAccessible
 				return self.correctAPIForRelation(obj)
 
 	def _get_children(self):
-		if self.IAccessibleChildID>0:
+		if self.IAccessibleChildID!=0:
 			return []
 		try:
 			childCount= self.IAccessibleObject.accChildCount
