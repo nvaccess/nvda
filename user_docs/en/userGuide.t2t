@@ -1110,7 +1110,10 @@ Each entry key can only be listed once per section, including None.
 Gesture identifiers ending in a comma must be enclosed in quotes (" or ').
 -
 
-Gesture identifiers consist of a two leter device code (kb for keyboard and br for braille display), an optional sub-device or keyboard layout in brackets, a colon, and then one or more key names separated by a plus (+) sign.
+Gesture identifiers consist of a two leter device code (kb for keyboard and br for braille display), a sub-device or layout in brackets, a colon, and then one or more key names separated by a plus (+) sign.
+For keyboard gestures, the part in brackets is the keyboard layout and is optional.
+If not specified, the gesture will apply to all keyboard layouts.
+For braille display gestures, the part in brackets identifies the specific braille display and is mandatory.
 
 In order to discover gesture identifiers, script names and the class and module in which they are contained, you can:
 + Turn on Input Help.
