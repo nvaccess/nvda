@@ -312,18 +312,27 @@ def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 
 RE_INDENTATION_SPLIT = re.compile(r"^([^\S\r\n\f\v]*)(.*)$", re.UNICODE | re.DOTALL)
 RE_INDENTATION_CONVERT = re.compile(r"(?P<char>\s)(?P=char)*", re.UNICODE)
-def calculateTextIndentation(line):
-	""" Calculates number of leading tabs and spaces in the order that they are entered in the given line.
-	@param line: the line to be examined.
-	@type line: string
-	"""
-	indentation, text = RE_INDENTATION_SPLIT.match(line).groups()
 
+def splitTextIndentation(text):
+	"""Splits indentation from the rest of the text.
+	@param text: The text to split.
+	@type text: basestring
+	@return: Tuple of indentation and content.
+	@rtype: (basestring, basestring)
+	"""
+	return RE_INDENTATION_SPLIT.match(text).groups()
+
+def getIndentationSpeech(indentation):
+	"""Retrieves the phrase to be spoken for a given string of indentation.
+	@param indentation: The string of indentation.
+	@type indentation: basestring
+	@return: The phrase to be spoken.
+	@rtype: unicode
+	"""
 	# Translators: no indent is spoken when the user moves from a line that has indentation, to one that 
 	# does not.
-	#
 	if not indentation:
-		return (_("no indent"), line)
+		return _("no indent")
 
 	res = []
 	locale=languageHandler.getLanguage()
@@ -339,7 +348,7 @@ def calculateTextIndentation(line):
 		else:
 			res.append(u"{count} {symbol}".format(count=count, symbol=symbol))
 
-	return (" ".join(res), text)
+	return " ".join(res)
 
 def speak(speechSequence,symbolLevel=None):
 	"""Speaks a sequence of text and speech commands
