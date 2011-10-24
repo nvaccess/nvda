@@ -6,15 +6,44 @@
 = 2011.3 =
 
 == Nové vlastnosti ==
+- NVDA dokáže počas čítania niektorých webových a PDF dokumentov s dostatočne presnou informáciou o jazyku textu meniť jazyk hlasového výstupu eSpeak. Automatické prepínanie jazyka a dialektu je možné nastaviť v dialógu nastavenia hlasu. (#845) 
 - V oknách Mozilla Gecko je počas objektovej navigácie oznamovaná úroveň nadpisov.
 - V režime prehliadania je možné oznamovať formátovanie textu v produktoch Mozilla.. (#394)
 - NVDA dokáže detekovať podčiarknutý a prečiarknutý text v editačných poliach IAccessible2 (nap. v aplikáciách Mozilla).
-- NVDA sa automaticky reštartuje po páde.
+- Pri čítaní dokumentov v programe Adobe reader sú čítané počty stĺpcov a riadkov tabuľky.
+- Nový ovládač hlasového výstupu pre hlasy Microsoft Speech Platform. (#1735)
+- Pri pohybe systémovým kurzorom sú v programe IBM Lotus Symphony oznamované čísla riadkov a čísla strán. (#1632)
+- V dialógu nastavenia hlasu je možné nastaviť počet percent, o ktoré sa zvýši hlas pri vyslovovaní veľkých písmen. Toto je náhrada za voľbu Veľké písmená čítať zvýšeným hlasom a teda ak túto vlastnosť chcete vypnúť nastavte počet percent na 0. (#255)
+- Pri oznamovaní formátovania v programe Microsoft excel sú zahrnuté informácie o farbe textu a pozadia. (#1655)
+- V prístupných java aplikáciách je možné použiť príkaz aktivovať navigačný objekt (NVDA+numpad enter). (#1744)
 
+
+== Zmeny ==
+- NVDA sa automaticky reštartuje po páde.
+- Pridané skratky pre niektoré informácie zobrazované v brailly. (#1288)
+- Skript prečítať okno v popredí (NVDA+b) bol prepracovaný. Neoznamuje nepotrebné prvky a je možné ho prerušiť. (#1499)
+- V dialógu režim prehliadania je možné nastaviť či sa po načítaní dokumentu automaticky spustí plynulé čítanie. (#414)
+- Ak pri pokuse o prečítanie stavového riadku nie je možné zamerať skutočný objekt stavového riadku, NVDA prečíta spodný riadok aplikačného okna vypísaný na obrazovku. (#649)
+- Počas plynulého čítania v režime prehliadania NVDA urobí prestávku v čítaní na konci nadpisov a iných blokov. Doteraz bol celý text prečítaný v jednom kuse.
 
 == Opravy ==
 - V programe internet explorer a ostatných oknách MSHTML NVDA nebude oznamovať odrážky a číslovanie v zoznamoch, ak autor nastavil, že sa tieto nemajú zobrazovať (štýl zoznamu je none). (#1671)
 - Reštart NVDA po zamrznutí (napr. stlačením NVDA+Control+n) nespustí NVDA znovu prv, než sa skutočne ukončí zamrznutá kópia..
+- V extrémnych prípadoch stláčanie klávesu backspace a kurzorových klávesov nespôsobuje problémy v okne príkazového riadku windows. (#1612)
+- V zoznámových rámikoch WPF alebo iných zoznamových rámikoch sprístupnených cez UIAccess, v ktorých nemožno editovať text je správne oznamovaná vybratá položka.
+- V programe Adobe reader je pri čítaní dokumentov možné prechádzať po riadkoch v tabuľke. Hlavička tabuľky nie je viac oznamovaná ako riadok 0. (#1731)
+- V programe Adobe Reader je pri čítaní tabuliek možné vojsť do alebo prejsť kurzorom cez prázdne bunky.
+- Zbytočné informácie o pozícii ako napr. 0 z 0 úroveň 0 nie sú viac oznamované v brailly.
+- Ak je braillovský kurzor zviazaný s prehliadacím kurzorom, dokáže NVDA v brailly zobrazovať obsah okna v plošnom prezeraní. (#1711)
+- Text editačných polí nie je v niektorých prípadoch v brailly zobrazovaný 2 krát, napr. pri pokuse o návrat späť ak je kurzor na začiatku dokumentu v programe wordpad.
+- Pri prehliadaní dokumentu v programe internet explorer stlačenie klávesu enter na tlačidle prehľadávať správne zobrazí dialóg na otvorenie súboru namiesto prepnutia do režimu fokusu. (#1720)
+- Dynamicky menený obsah nie je viac oznamovaný v režime spánku. (#1662)
+- Vylepšená interakcia so zoznamovými rámikmi (alt+šípka hore / alt+šípka dolu) v režime prehliadania. (#1630)
+- NVDA sa dokáže zotaviť z mnohých neočakávaných situácií. Napríklad pád nezávislej aplikácii spôsoboval kompletné pád NVDA. (#1408)
+- NVDA neodmieta pri čítaní dokumentu v režime prehliadania z Gecko2 (Mozilla Firefox a pod) zobraziť špecifické časti stránky, ktoré sú štýlované ako display:table. (#1373)
+- NVDA neoznamuje obsah štítkov, keď ich podradené objekty získajú fokus. Zabraňuje to viacnásobnému oznamovaniu názvov niektorých prvkov formulára v programoch Firefox (gecko) a internet explorer (MSHTML). (#1650)
+- V režime fokusu v programe Adobe reader nie sú oznamované nadbitočné informácie pri prechode na prvok na ďalšej / predchádzajúcej stránke. (#1659)
+- V aplikáciách Mozilla / Gecko napr. Firefox, sú správne oznamované stavové tlačidlá. (#1757)
 
 
 

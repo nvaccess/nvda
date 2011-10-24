@@ -20,6 +20,7 @@ import win32clipboard
 import win32con
 import eventHandler
 import braille
+import watchdog
 
 #User functions
 
@@ -56,11 +57,8 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 """
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
-	if globalVars.focusObject and hasattr(globalVars.focusObject,"event_loseFocus"):
-		try:
-			globalVars.focusObject.event_loseFocus()
-		except:
-			log.error("event_loseFocus in focusObject", exc_info=True)
+	if globalVars.focusObject:
+		eventHandler.executeEvent("loseFocus",globalVars.focusObject)
 	oldFocusLine=globalVars.focusAncestors
 	#add the old focus to the old focus ancestors, but only if its not None (is none at NVDA initialization)
 	if globalVars.focusObject: 
@@ -84,6 +82,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 			tempObj=getDesktopObject()
 		# Scan backwards through the old ancestors looking for a match.
 		for index in xrange(oldFocusLineLength-1,-1,-1):
+			watchdog.alive()
 			if tempObj==oldFocusLine[index]:
 				# Match! The old and new focus ancestors converge at this point.
 				# Copy the old ancestors up to and including this object.
@@ -109,13 +108,20 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	newAppModuleSet=set(o.appModule for o in ancestors+[obj] if o and o.appModule)
 	for removedMod in oldAppModuleSet-newAppModuleSet:
 		if not removedMod.sleepMode and hasattr(removedMod,'event_appModule_loseFocus'):
-			removedMod.event_appModule_loseFocus()
-  	for addedMod in newAppModuleSet-oldAppModuleSet:
+			try:
+				removedMod.event_appModule_loseFocus()
+			except watchdog.CallCancelled:
+				pass
+	for addedMod in newAppModuleSet-oldAppModuleSet:
 		if not addedMod.sleepMode and hasattr(addedMod,'event_appModule_gainFocus'):
 			addedMod.event_appModule_gainFocus()
-	treeInterceptorHandler.cleanup()
+	try:
+		treeInterceptorHandler.cleanup()
+	except watchdog.CallCancelled:
+		pass
 	treeInterceptorObject=None
 	o=None
+	watchdog.alive()
 	for o in ancestors[focusDifferenceLevel:]+[obj]:
 		treeInterceptorObject=treeInterceptorHandler.update(o)
 	#Always make sure that the focus object's treeInterceptor is forced to either the found treeInterceptor (if its in it) or to None
@@ -236,7 +242,6 @@ def processPendingEvents(processEventQueue=True):
 	import JABHandler
 	import wx
 	import queueHandler
-	import watchdog
 	watchdog.alive()
 	wx.Yield()
 	JABHandler.pumpAll()

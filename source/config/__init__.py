@@ -58,10 +58,11 @@ confspec = ConfigObj(StringIO(
 	symbolLevel = integer(default=100)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	outputDevice = string(default=default)
+	autoLanguageSwitching = boolean(default=true)
+	autoDialectSwitching = boolean(default=false)
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
-		raisePitchForCapitals = boolean(default=true)
 		sayCapForCapitals = boolean(default=false)
 		beepForCapitals = boolean(default=false)
 		useSpellingFunctionality = boolean(default=true)
@@ -126,6 +127,7 @@ confspec = ConfigObj(StringIO(
 	autoPassThroughOnFocusChange = boolean(default=true)
 	autoPassThroughOnCaretMove = boolean(default=false)
 	passThroughAudioIndication = boolean(default=true)
+	autoSayAllOnPageLoad = boolean(default=true)
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]

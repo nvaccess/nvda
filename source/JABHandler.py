@@ -25,7 +25,11 @@ def _errcheck(res, func, args):
 	return res
 
 def _fixBridgeFunc(restype,name,*argtypes,**kwargs):
-	func=getattr(bridgeDll,name)
+	try:
+		func=getattr(bridgeDll,name)
+	except AttributeError:
+		log.warning("%s not found in Java Access Bridge dll"%name)
+		return
 	func.restype=restype
 	func.argtypes=argtypes
 	if kwargs.get('errcheck'):
@@ -149,6 +153,26 @@ class AccessibleRelationSetInfo(Structure):
 		("relations", AccessibleRelationInfo * MAX_RELATIONS),
 	]
 
+MAX_ACTION_INFO = 256
+MAX_ACTIONS_TO_DO = 32
+
+class AccessibleActionInfo(Structure):
+	_fields_ = (
+		("name", c_wchar * SHORT_STRING_SIZE),
+	)
+
+class AccessibleActions(Structure):
+	_fields_ = (
+		("actionsCount", jint),
+		("actionInfo", AccessibleActionInfo * MAX_ACTION_INFO),
+	)
+
+class AccessibleActionsToDo(Structure):
+	_fields_ = (
+		("actionsCount", jint),
+		("actions", AccessibleActionInfo * MAX_ACTIONS_TO_DO),
+	)
+
 AccessBridge_FocusGainedFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64)
 AccessBridge_PropertyStateChangeFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64,c_wchar_p,c_wchar_p)
 AccessBridge_PropertyCaretChangeFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64,c_int,c_int)
@@ -188,6 +212,8 @@ if bridgeDll:
 	_fixBridgeFunc(BOOL,'requestFocus',c_long,JOBJECT64,errcheck=True)
 	_fixBridgeFunc(BOOL,'setCaretPosition',c_long,JOBJECT64,c_int,errcheck=True)
 	_fixBridgeFunc(BOOL,'getCaretLocation',c_long,JOBJECT64,POINTER(AccessibleTextRectInfo),jint,errcheck=True)
+	_fixBridgeFunc(BOOL,'getAccessibleActions',c_long,JOBJECT64,POINTER(AccessibleActions),errcheck=True)
+	_fixBridgeFunc(BOOL,'doAccessibleActions',c_long,JOBJECT64,POINTER(AccessibleActionsToDo),POINTER(jint),errcheck=True)
 
 #NVDA specific code
 

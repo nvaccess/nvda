@@ -107,3 +107,20 @@ def setLanguage(lang):
 
 def getLanguage():
 	return curLang
+
+def normalizeLanguage(lang):
+	"""
+	Normalizes a  language-dialect string  in to a standard form we can deal with.
+	Converts  any dash to underline, and makes sure that language is lowercase and dialect is upercase.
+	"""
+	lang=lang.replace('-','_')
+	ld=lang.split('_')
+	ld[0]=ld[0].lower()
+	#Filter out meta languages such as x-western
+	if ld[0]=='x':
+		return None
+	if len(ld)>=2:
+		ld[1]=ld[1].upper()
+	return "_".join(ld)
+
+

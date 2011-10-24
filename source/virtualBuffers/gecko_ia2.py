@@ -67,6 +67,7 @@ class Gecko_ia2(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
+		self._initialScrollObj = None
 
 	def _get_shouldPrepare(self):
 		if not super(Gecko_ia2, self).shouldPrepare:
@@ -87,11 +88,11 @@ class Gecko_ia2(VirtualBuffer):
 		if not (isinstance(obj,NVDAObjects.IAccessible.IAccessible) and isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2)) or not obj.windowClassName.startswith('Mozilla') or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
 			return False
 		if self.rootNVDAObject.windowHandle==obj.windowHandle:
-			ID=obj.IAccessibleObject.uniqueID
+			ID=obj.IA2UniqueID
 			try:
 				self.rootNVDAObject.IAccessibleObject.accChild(ID)
-			except:
-				return False
+			except COMError:
+				return ID==self.rootNVDAObject.IA2UniqueID
 
 		return not self._isNVDAObjectInApplication(obj)
 
@@ -105,7 +106,7 @@ class Gecko_ia2(VirtualBuffer):
 		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_DEFUNCT in states or controlTypes.STATE_READONLY not in states:
 			return False
 		try:
-			if not NVDAObjects.IAccessible.getNVDAObjectFromEvent(root.windowHandle,winUser.OBJID_CLIENT,root.IAccessibleObject.uniqueID):
+			if not NVDAObjects.IAccessible.getNVDAObjectFromEvent(root.windowHandle,winUser.OBJID_CLIENT,root.IA2UniqueID):
 				return False
 		except:
 			return False
@@ -116,7 +117,7 @@ class Gecko_ia2(VirtualBuffer):
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
-		ID=obj.IAccessibleObject.uniqueID
+		ID=obj.IA2UniqueID
 		return docHandle,ID
 
 	def _shouldIgnoreFocus(self, obj):
@@ -209,8 +210,12 @@ class Gecko_ia2(VirtualBuffer):
 		return nextHandler()
 
 	def event_scrollingStart(self, obj, nextHandler):
+		if not self.isReady:
+			self._initialScrollObj = obj
+			return nextHandler()
 		if not self._handleScrollTo(obj):
 			return nextHandler()
+	event_scrollingStart.ignoreIsReady = True
 
 	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
 		if not axis:
@@ -244,3 +249,9 @@ class Gecko_ia2(VirtualBuffer):
 			return self.rootNVDAObject.IAccessibleObject.accValue(0)
 		except COMError:
 			return None
+
+	def _getInitialCaretPos(self):
+		initialPos = super(Gecko_ia2,self)._getInitialCaretPos()
+		if initialPos:
+			return initialPos
+		return self._initialScrollObj

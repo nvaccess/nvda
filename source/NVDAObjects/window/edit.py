@@ -30,6 +30,7 @@ from . import Window
 from .. import NVDAObjectTextInfo
 from ..behaviors import EditableTextWithAutoSelectDetection
 import braille
+import watchdog
 
 selOffsetsAtLastCaretEvent=None
 
@@ -171,14 +172,16 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if self.obj.editAPIVersion==1:
 			processHandle=self.obj.processHandle
 			internalP=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(PointLStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-			p=PointLStruct(0,0)
-			winKernel.writeProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
-			winUser.sendMessage(self.obj.windowHandle,EM_POSFROMCHAR,internalP,offset)
-			winKernel.readProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
-			winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
+			try:
+				p=PointLStruct(0,0)
+				winKernel.writeProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
+				watchdog.cancellableSendMessage(self.obj.windowHandle,EM_POSFROMCHAR,internalP,offset)
+				winKernel.readProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
+			finally:
+				winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
 			point=textInfos.Point(p.x,p.y)
 		else:
-			res=winUser.sendMessage(self.obj.windowHandle,EM_POSFROMCHAR,offset,None)
+			res=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_POSFROMCHAR,offset,None)
 			point=textInfos.Point(winUser.LOWORD(res),winUser.HIWORD(res))
 		(left,top,width,height)=self.obj.location
 		if point.x and point.y:
@@ -193,13 +196,15 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if self.obj.editAPIVersion>=1:
 			processHandle=self.obj.processHandle
 			internalP=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(PointLStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-			p=PointLStruct(x-left,y-top)
-			winKernel.writeProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
-			offset=winUser.sendMessage(self.obj.windowHandle,EM_CHARFROMPOS,0,internalP)
-			winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
+			try:
+				p=PointLStruct(x-left,y-top)
+				winKernel.writeProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
+				offset=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_CHARFROMPOS,0,internalP)
+			finally:
+				winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
 		else:
 			p=(x-left)+((y-top)<<16)
-			offset=winUser.sendMessage(self.obj.windowHandle,EM_CHARFROMPOS,0,p)&0xffff
+			offset=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_CHARFROMPOS,0,p)&0xffff
 		return offset
 
 	def _getCharFormat(self,offset):
@@ -214,10 +219,12 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		charFormat.cbSize=ctypes.sizeof(charFormatStruct)
 		processHandle=self.obj.processHandle
 		internalCharFormat=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charFormat),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winKernel.writeProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
-		winUser.sendMessage(self.obj.windowHandle,EM_GETCHARFORMAT,SCF_SELECTION, internalCharFormat)
-		winKernel.readProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
-		winKernel.virtualFreeEx(processHandle,internalCharFormat,0,winKernel.MEM_RELEASE)
+		try:
+			winKernel.writeProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
+			watchdog.cancellableSendMessage(self.obj.windowHandle,EM_GETCHARFORMAT,SCF_SELECTION, internalCharFormat)
+			winKernel.readProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalCharFormat,0,winKernel.MEM_RELEASE)
 		if oldSel!=(offset,offset+1):
 			self._setSelectionOffsets(oldSel[0],oldSel[1])
 		return charFormat
@@ -264,14 +271,16 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			charRange=CharRangeStruct()
 			processHandle=self.obj.processHandle
 			internalCharRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-			winUser.sendMessage(self.obj.windowHandle,EM_EXGETSEL,0, internalCharRange)
-			winKernel.readProcessMemory(processHandle,internalCharRange,ctypes.byref(charRange),ctypes.sizeof(charRange),None)
-			winKernel.virtualFreeEx(processHandle,internalCharRange,0,winKernel.MEM_RELEASE)
+			try:
+				watchdog.cancellableSendMessage(self.obj.windowHandle,EM_EXGETSEL,0, internalCharRange)
+				winKernel.readProcessMemory(processHandle,internalCharRange,ctypes.byref(charRange),ctypes.sizeof(charRange),None)
+			finally:
+				winKernel.virtualFreeEx(processHandle,internalCharRange,0,winKernel.MEM_RELEASE)
 			return (charRange.cpMin,charRange.cpMax)
 		else:
 			start=ctypes.c_uint()
 			end=ctypes.c_uint()
-			res=winUser.sendMessage(self.obj.windowHandle,EM_GETSEL,ctypes.byref(start),ctypes.byref(end))
+			res=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_GETSEL,ctypes.byref(start),ctypes.byref(end))
 			return start.value,end.value
 
 	def _setSelectionOffsets(self,start,end):
@@ -281,13 +290,15 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			charRange.cpMax=end
 			processHandle=self.obj.processHandle
 			internalCharRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-			winKernel.writeProcessMemory(processHandle,internalCharRange,ctypes.byref(charRange),ctypes.sizeof(charRange),None)
-			winUser.sendMessage(self.obj.windowHandle,EM_EXSETSEL,0, internalCharRange)
-			winKernel.virtualFreeEx(processHandle,internalCharRange,0,winKernel.MEM_RELEASE)
+			try:
+				winKernel.writeProcessMemory(processHandle,internalCharRange,ctypes.byref(charRange),ctypes.sizeof(charRange),None)
+				watchdog.cancellableSendMessage(self.obj.windowHandle,EM_EXSETSEL,0, internalCharRange)
+			finally:
+				winKernel.virtualFreeEx(processHandle,internalCharRange,0,winKernel.MEM_RELEASE)
 		else:
-			winUser.sendMessage(self.obj.windowHandle,EM_SETSEL,start,end)
+			watchdog.cancellableSendMessage(self.obj.windowHandle,EM_SETSEL,start,end)
 		#Make sure the Window is always scrolled to the caret
-		winUser.sendMessage(self.obj.windowHandle,EM_SCROLLCARET,0,0)
+		watchdog.cancellableSendMessage(self.obj.windowHandle,EM_SCROLLCARET,0,0)
 
 	def _getCaretOffset(self):
 		return self._getSelectionOffsets()[0]
@@ -310,15 +321,17 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				info.codepage=0
 			processHandle=self.obj.processHandle
 			internalInfo=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(info),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-			winKernel.writeProcessMemory(processHandle,internalInfo,ctypes.byref(info),ctypes.sizeof(info),None)
-			textLen=winUser.sendMessage(self.obj.windowHandle,EM_GETTEXTLENGTHEX,internalInfo,0)
-			winKernel.virtualFreeEx(processHandle,internalInfo,0,winKernel.MEM_RELEASE)
+			try:
+				winKernel.writeProcessMemory(processHandle,internalInfo,ctypes.byref(info),ctypes.sizeof(info),None)
+				textLen=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_GETTEXTLENGTHEX,internalInfo,0)
+			finally:
+				winKernel.virtualFreeEx(processHandle,internalInfo,0,winKernel.MEM_RELEASE)
 			return textLen+1
 		else:
-			return winUser.sendMessage(self.obj.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)+1
+			return watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)+1
 
 	def _getLineCount(self):
-		return winUser.sendMessage(self.obj.windowHandle,EM_GETLINECOUNT,0,0)
+		return watchdog.cancellableSendMessage(self.obj.windowHandle,EM_GETLINECOUNT,0,0)
 
 	def _getTextRange(self,start,end):
 		if self.obj.editAPIVersion>=2:
@@ -331,14 +344,18 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			textRange.chrg.cpMax=end
 			processHandle=self.obj.processHandle
 			internalBuf=winKernel.virtualAllocEx(processHandle,None,bufLen,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-			textRange.lpstrText=internalBuf
-			internalTextRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(textRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-			winKernel.writeProcessMemory(processHandle,internalTextRange,ctypes.byref(textRange),ctypes.sizeof(textRange),None)
-			res=winUser.sendMessage(self.obj.windowHandle,EM_GETTEXTRANGE,0,internalTextRange)
-			winKernel.virtualFreeEx(processHandle,internalTextRange,0,winKernel.MEM_RELEASE)
-			buf=(ctypes.c_byte*bufLen)()
-			winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
-			winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
+			try:
+				textRange.lpstrText=internalBuf
+				internalTextRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(textRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+				try:
+					winKernel.writeProcessMemory(processHandle,internalTextRange,ctypes.byref(textRange),ctypes.sizeof(textRange),None)
+					res=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_GETTEXTRANGE,0,internalTextRange)
+				finally:
+					winKernel.virtualFreeEx(processHandle,internalTextRange,0,winKernel.MEM_RELEASE)
+				buf=(ctypes.c_byte*bufLen)()
+				winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
+			finally:
+				winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
 			if self.obj.isWindowUnicode or (res>1 and (buf[res]!=0 or buf[res+1]!=0)): 
 				return ctypes.cast(buf,ctypes.c_wchar_p).value
 			else:
@@ -348,11 +365,11 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getWordOffsets(self,offset):
 		if self.obj.editAPIVersion>=2:
-			start=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDLEFT,offset)
-			end=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,start)
+			start=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDLEFT,offset)
+			end=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,start)
 			if end<=offset:
 				start=end
-				end=winUser.sendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
+				end=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
 			return (start,end)
 		elif sys.getwindowsversion().major<6: #Implementation of standard edit field wordbreak behaviour (only breaks on space)
 			lineStart,lineEnd=self._getLineOffsets(offset)
@@ -394,15 +411,15 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getLineNumFromOffset(self,offset):
 		if self.obj.editAPIVersion>=1:
-			res=winUser.sendMessage(self.obj.windowHandle,EM_EXLINEFROMCHAR,0,offset)
+			res=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_EXLINEFROMCHAR,0,offset)
 			return res
 		else:
-			return winUser.sendMessage(self.obj.windowHandle,EM_LINEFROMCHAR,offset,0)
+			return watchdog.cancellableSendMessage(self.obj.windowHandle,EM_LINEFROMCHAR,offset,0)
 
 	def _getLineOffsets(self,offset):
 		lineNum=self._getLineNumFromOffset(offset)
-		start=winUser.sendMessage(self.obj.windowHandle,EM_LINEINDEX,lineNum,0)
-		length=winUser.sendMessage(self.obj.windowHandle,EM_LINELENGTH,offset,0)
+		start=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_LINEINDEX,lineNum,0)
+		length=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_LINELENGTH,offset,0)
 		end=start+length
 		#If we just seem to get invalid line info, calculate manually
 		if start<=0 and end<=0 and lineNum<=0 and self._getLineCount()<=0 and self._getStoryLength()>0:
@@ -461,10 +478,12 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		charFormat.cbSize=ctypes.sizeof(charFormatStruct)
 		processHandle=self.obj.processHandle
 		internalCharFormat=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charFormat),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winKernel.writeProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
-		winUser.sendMessage(self.obj.windowHandle,EM_GETCHARFORMAT,SCF_SELECTION, internalCharFormat)
-		winKernel.readProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
-		winKernel.virtualFreeEx(processHandle,internalCharFormat,0,winKernel.MEM_RELEASE)
+		try:
+			winKernel.writeProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
+			watchdog.cancellableSendMessage(self.obj.windowHandle,EM_GETCHARFORMAT,SCF_SELECTION, internalCharFormat)
+			winKernel.readProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalCharFormat,0,winKernel.MEM_RELEASE)
 		if not (oldSel.start==range.start and oldSel.end==range.end):
 			self.obj.ITextSelectionObject.start=oldSel.start
 			self.obj.ITextSelectionObject.end=oldSel.end

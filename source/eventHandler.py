@@ -108,9 +108,9 @@ class _EventExecuter(object):
 
 		# Tree interceptor level.
 		treeInterceptor = obj.treeInterceptor
-		if treeInterceptor and treeInterceptor.isReady:
+		if treeInterceptor:
 			func = getattr(treeInterceptor, funcName, None)
-			if func:
+			if func and (getattr(func,'ignoreIsReady',False) or treeInterceptor.isReady):
 				yield func, (obj, self.next)
 
 		# NVDAObject level.

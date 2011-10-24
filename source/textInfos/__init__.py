@@ -181,6 +181,8 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _get_text(self):
 		"""The text with in this range.
 		Subclasses must implement this.
+		@return: The text.
+		@rtype: unicode
 		@note: The text is not guaranteed to be the exact length of the range in offsets.
 		"""
 		raise NotImplementedError
@@ -191,7 +193,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@param formatConfig: Document formatting configuration, useful if you wish to force a particular configuration for a particular task.
 		@type formatConfig: dict
 		@return: A sequence of text strings interspersed with associated field commands.
-		@rtype: list of str and L{FieldCommand}
+		@rtype: list of unicode and L{FieldCommand}
 		""" 
 		return [self.text]
 

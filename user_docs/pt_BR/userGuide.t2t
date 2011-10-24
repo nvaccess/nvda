@@ -31,7 +31,7 @@ As características principais são:
 -
 ++ Internacionalização ++
 É importante que as pessoas tenham igual acesso às tecnologias em qualquer parte do mundo, independentemente do idioma que falem.
-Além do inglês, o NVDA está traduzido para mais de 20 idiomas incluindo: Árabe, Português do Brasil, Croata, Checo, Finlandês, Francês, Galego, Alemão, Húngaro, Italiano, Japonês, Português, Russo, Eslovaco, Espanhol, Tailandês, Chinês Tradicional, Ucraniano, Holandês Sul-Africano, Polonês e Vietnamita. 
+Além do inglês, o NVDA está traduzido para 34 idiomas, estando inclusos: Africâner, Albanês, Alemão, Árabe, Búlgaro, Chinês Simplificado, Chinês Tradicional, Croata, Dinamarquês, Eslovaco, Espanhol, Finlandês, Francês, Galego, Georgiano, Hebraico, Hindiano, Holandês, Húngaro, Islandês, Italiano, Japonês, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tcheco, Turco, Ucraniano e Vietnamita. 
 
 ++ Suporte de Sintetizador de Voz ++
 Além de fornecer as mensagens e interface em diversos idiomas, o NVDA também permite ao usuário ler o conteúdo em qualquer língua, desde que tenha um sintetizador de voz que fale esse idioma em particular. 
@@ -48,7 +48,8 @@ O NVDA suporta códigos Braille para diversos idiomas, incluindo os códigos Bra
 ++ Licença e Copyright ++
 NVDA copyright 2006-2011 Coolaboradores do NVDA.
 O NVDA encontra-se sob a licença pública GNU General Public License (Versão 2).
-É livre para partilhar ou alterar este programa da forma que pretender desde que distribua sempre a licença, software e todo o respetivo código disponível. Para quem pretender este programa, as regras anteriormente mencionadas aplicam-se ao software original e a todas as cópias modificadas, incluindo todos os programas que contenham código descendente deste. 
+Você é livre para partilhar ou alterar este programa da forma que pretender desde que distribua sempre a licença, software e todo o respetivo código disponível para quem o queira. 
+ As regras anteriormente mencionadas aplicam-se ao software original e a todas as cópias modificadas, incluindo todos os programas que contenham código descendente deste. 
 
 Para mais detalhes, pode [ver a licença completa. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
@@ -335,9 +336,9 @@ Ainda que um mouse físico ou um touchpad precisem ser utilizados para navegar c
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
 | Clicar com o botão esquerdo do mouse | Barra do teclado numérico | NVDA+seta a esquerda | Clica uma vez com o botão esquerdo do mouse. O habitual dúplo clique pode ser realizado pressionando duas vezes rapidamente este comando |
-| Bloquear botão esquerdo do mouse | shift+barra do teclado numérico | NVDA+shift+seta a esquerda | Mantém o botão esquerdo do mouse pressionado. Prima novamente para desbloqueá-lo. Para arrastar o mouse, pressione esta tecla de atalho e em seguida mova o mouse quer seja fisicamente ou utilizando qualquer comando que o movimente |
-| Clicar com o botão direito do mouse | Asterisco do teclado numérico | NVDA+seta a esquerda | Clica uma vez com o botão direito do mouse |
-| Bloquear o botão direito do mouse | shift+asterisco do teclado numérico | NVDA+shift+seta a direita | Mantém o botão direito do mouse pressionado. Prima novamente para desbloqueá-lo. Para arrastar o mouse, pressione esta tecla de atalho e em seguida mova-o quer seja fisicamente ou utilizando qualquer comando que movimente o mesmo |
+| Pressionar o botão esquerdo do mouse | shift+barra do teclado numérico | NVDA+shift+seta a esquerda | Mantém o botão esquerdo do mouse pressionado. Execute-o novamente para desbloqueá-lo. Para arrastar o mouse, pressione esta tecla de atalho e em seguida mova o mouse quer seja fisicamente ou utilizando qualquer comando que o movimente |
+| Clicar com o botão direito do mouse | Asterisco do teclado numérico | NVDA+seta a direita | Clica uma vez com o botão direito do mouse |
+| Pressionar o botão direito do mouse | shift+asterisco do teclado numérico | NVDA+shift+seta a direita | Mantém o botão direito do mouse pressionado. Execute-o novamente para desbloqueá-lo. Para arrastar o mouse, pressione esta tecla de atalho e em seguida mova-o quer seja fisicamente ou utilizando qualquer comando que movimente o mesmo |
 | Mover o mouse para o objeto de navegação atual | NVDA+barra do teclado numérico | NVDA+shift+f9 | Move o mouse Move o mouse para a localização do objeto de navegação atual e do cursor de exploração |
 | Navegar para o objeto sob o mouse | NVDA+asterisco do teclado numérico | NVDA+shift+f10 | Coloca como objeto de navegação aquele que se encontra sob o ponteiro do mouse |
 %kc:endInclude
@@ -514,6 +515,16 @@ Esta opção é uma barra de controle que lhe permite andar  de 0 a 100, (sendo 
 ==== Inflecção ====
 Uma barra de controle que lhe permite escolher a inflecção (mais alta ou mais baixa do tom) que o sintetizador utilizará para falar. (Até o momento somente o eSpeak oferece essa opção por padrão).
 
+==== Alternância Automática de Idioma ====
+Essa caixa de seleção lhe permite escolher se o NVDA deve ou não alterar o idioma do sintetizador de voz, desde que o atributo do idioma esteja disponível no texto que está sendo lido.
+Por padrão, essa opção está ativada.
+Atualmente, apenas o eSpeak suporta alternância automática de idioma.
+
+==== Alternância Automática de Dialeto ====
+Se a alternância automática de Idioma estiver ativada, essa caixa de seleção lhe permite escolher se as alterações nos dialetos devem ser processadas em lugar de alterar apenas o idioma atual.
+Isto é, caso esteja lendo com um sintetizador de voz em Inglês Americano mas o texto aparece como Inglês britânico e estando este recurso ativado, o sintetizador alterará a pronúncia.
+Por padrão, essa opção está desativada.
+
 %kc:setting
 ==== Grau de Sinais de Pontuação ====
 Tecla: NVDA+p
@@ -522,8 +533,12 @@ Essa opção permite-lhe escolher a quantidade de pontuação e outros sinais qu
 Por exemplo, quando selecionado tudo, todos os sinais serão falados como palavras.
 Isso é aplicado a todos os sintetizadores, não apenas ao que está atualmente em uso.
 
-==== Aumentar Tom Para Maiúsculas ====
-Se esta opção estiver selecionada, aumentará o tom para as letras maiúsculas.
+==== Percentagem para Mudança de Tom em Maiúsculas ====
+É um campo de edição que lhe permite digitar a quantidade em percentagem que o tom da voz irá alterar ao anunciar uma letra maiúscula.
+
+Esse valor é uma porcentagem, onde um número negativo diminui o tom e um número positivo o aumenta.
+
+Para não alterar o tom você deve usar em 0.
 
 ==== Dizer "cap" Antes De Letras Maiúsculas ====
 Esta é uma caixa de seleção que se marcada informa ao NVDA para anunciar a palavra "cap" antes de qualquer letra maiúscula, quando falada como  caractere individual, se soletrada, por exemplo.
@@ -744,6 +759,10 @@ Tecla: NVDA+v
 
 Esta opção permite definir se o conteúdo no modo de navegação deve posicionar os elementos como links e outros campos numa linha individual, ou se se deve conservá-los dentro do texto tal como aparece na tela. Se a opção estiver marcada, os elementos ficarão como aparecem visualmente. Mas se estiver desmarcada, os campos serão colocados numa linha separadamente.
 
+==== Leitura Contínua Automática ao Carregar a Página ====
+Essa caixa de seleção alterna a leitura automática das páginas depois que estas são carregadas no Modo de Navegação.
+Por padrão, essa opção está ativada.
+
 ==== Anunciar Tabelas de Layout ====
 Quando se desmarca esta opção, o NVDA anuncia apenas as tabelas que contêm dados tabulares (o que indica que isso é uma tabela).
 Se a marcar, porém, o NVDA anunciará também tabelas usadas puramente para representação visual.
@@ -912,6 +931,15 @@ Se possui sintetizadores SAPI 4 instalados mas o sintetizador não aparece na li
 O SAPI 5 é um standard da Microsoft para os softwares sintetizadores de voz.
 Muitos sintetizadores de voz que trabalham com este standard podem ser comprados ou baixados em várias empresas ou sites da Web, ainda que seu sistema já venha com pelo menos uma voz SAPI 5 já instalada.
 Quando este sintetizador é utilizado com o NVDA, as vozes disponíveis (que  podem ser encontradas no [Diálogo de Opções de Voz #VoiceSettings] ou desde o [Anel de Configurações de Voz #SynthSettingsRing]) contêm todas as vozes dos motores SAPI 5 que se encontram instaladas em seu sistema.
+
+++ A Plataforma de Fala da Microsoft ++
+A Plataforma de Fala da Microsoft disponibiliza vozes para muitos idiomas que são normalmente usadas no desenvolvimento de aplicativos baseados no servidor de fala.
+Essas vozes também podem ser usadas com o NVDA.
+
+Para usá-las, você necessitará instalar dois componentes:
+- Microsoft Speech Platform - Server Runtime (Versão 10.2): http://www.microsoft.com/download/en/details.aspx?id=10208
+• Microsoft Speech Platform - Server Runtime Languages (Versão 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
+-
 
 ++ Audiologic Tts3 ++
 Este é um sintetizador de voz comercial especificamente para o idioma Italiano.
@@ -1161,6 +1189,3 @@ Você pode igualmente obter informações e tirar dúvidas sobre o NVDA na lista
 Há ainda o cite http://www.megatts.com, onde é possível obter informações sobre a acessibilidade em geral, porém o NVDA recebe apoio e destaque especiais.
 
 Para conhecer todas as novidades, mudanças e correções introduzidas, consulte o arquivo das novidades que pode ser encontrado no sub-menu ajuda do menu NVDA.
-
-Para informações detalhadas sobre descrições de caracteres, pronúncia de sinais, desenvolvimento de app modules, plugins globais e outros assuntos ligados ao desenvolvimento do nvda e seus componentes, consulte o arquivo developerGuide (Guia do Desenvolvedor) que se encontra na pasta nvda\documentation\pt_BR.
-OBS: Por ora, o Guia do Desenvolvedor não está completamente traduzido.

@@ -202,6 +202,7 @@ VBufStorage_textFieldNode_t* VBufStorage_fieldNode_t::locateTextFieldNodeAtOffse
 
 void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring& text) {
 	wostringstream s;
+	s<<L"isBlock=\""<<this->isBlock<<L"\" ";
 	int childCount=0;
 	for(VBufStorage_fieldNode_t* child=this->firstChild;child!=NULL;child=child->next) {
 		++childCount;

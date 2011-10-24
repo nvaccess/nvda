@@ -16,6 +16,7 @@ import winKernel
 import winUser
 from . import IAccessible, List
 from ..window import Window 
+import watchdog
 
 #Window messages
 LVM_FIRST=0x1000
@@ -110,10 +111,12 @@ def getListGroupInfo(windowHandle,groupIndex):
 	localInfo.mask=LVGF_HEADER|LVGF_FOOTER|LVGF_STATE|LVGF_ALIGN|LVGF_GROUPID
 	localInfo.stateMask=0xffffffff
 	remoteInfo=winKernel.virtualAllocEx(processHandle,None,sizeof(LVGROUP),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-	winKernel.writeProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(LVGROUP),None)
-	messageRes=winUser.sendMessage(windowHandle,LVM_GETGROUPINFOBYINDEX,groupIndex,remoteInfo)
-	winKernel.readProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(LVGROUP),None)
-	winKernel.virtualFreeEx(processHandle,remoteInfo,0,winKernel.MEM_RELEASE)
+	try:
+		winKernel.writeProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(LVGROUP),None)
+		messageRes=watchdog.cancellableSendMessage(windowHandle,LVM_GETGROUPINFOBYINDEX,groupIndex,remoteInfo)
+		winKernel.readProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(LVGROUP),None)
+	finally:
+		winKernel.virtualFreeEx(processHandle,remoteInfo,0,winKernel.MEM_RELEASE)
 	localHeader=create_unicode_buffer(localInfo.cchHeader)
 	winKernel.readProcessMemory(processHandle,localInfo.pszHeader,localHeader,localInfo.cchHeader*2,None)
 	localFooter=create_unicode_buffer(localInfo.cchFooter)
@@ -136,7 +139,7 @@ class List(List):
 		#See if this object is the focus and the focus is on a group item.
 		#if so, then morph this object to a groupingItem object
 		if self is api.getFocusObject():
-			groupIndex=winUser.sendMessage(self.windowHandle,LVM_GETFOCUSEDGROUP,0,0)
+			groupIndex=watchdog.cancellableSendMessage(self.windowHandle,LVM_GETFOCUSEDGROUP,0,0)
 			if groupIndex>=0:
 				info=getListGroupInfo(self.windowHandle,groupIndex)
 				if info is not None:
@@ -155,7 +158,7 @@ class GroupingItem(Window):
 		self.groupInfo=groupInfo
 
 	def _isEqual(self,other):
-		return isinstance(other,self.__class__) and self.groupInfo==othergroupInfo
+		return isinstance(other,self.__class__) and self.groupInfo==other.groupInfo
 
 	def _set_groupInfo(self,info):
 		self._groupInfoTime=time.time()
@@ -191,7 +194,7 @@ class GroupingItem(Window):
 
 	def initOverlayClass(self):
 		for gesture in ("kb:leftArrow", "kb:rightArrow"):
-			self.bindeGesture(gesture, "collapseOrExpand")
+			self.bindGesture(gesture, "collapseOrExpand")
 
 class ListItem(IAccessible):
 
@@ -200,19 +203,23 @@ class ListItem(IAccessible):
 		(processID,threadID)=winUser.getWindowThreadProcessID(self.windowHandle)
 		processHandle=self.processHandle
 		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(LVItemStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
-		winUser.sendMessage(self.windowHandle,LVM_GETITEM,0,internalItem)
-		dispInfo=NMLVDispInfoStruct()
-		dispInfo.item=internalItem
-		dispInfo.hdr.hwndFrom=self.windowHandle
-		dispInfo.hdr.idFrom=self.windowControlID
-		dispInfo.hdr.code=LVN_GETDISPINFO
-		internalDispInfo=winKernel.virtualAllocEx(processHandle,None,sizeof(NMLVDispInfoStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winKernel.writeProcessMemory(processHandle,internalDispInfo,byref(dispInfo),sizeof(NMLVDispInfoStruct),None)
-		winUser.sendMessage(self.parent.parent.windowHandle,winUser.WM_NOTIFY,LVN_GETDISPINFO,internalDispInfo)
-		winKernel.virtualFreeEx(processHandle,internalDispInfo,0,winKernel.MEM_RELEASE)
-		winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
-		winKernel.virtualFreeEx(processHandle,internalItem,0,winKernel.MEM_RELEASE)
+		try:
+			winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
+			watchdog.cancellableSendMessage(self.windowHandle,LVM_GETITEM,0,internalItem)
+			dispInfo=NMLVDispInfoStruct()
+			dispInfo.item=internalItem
+			dispInfo.hdr.hwndFrom=self.windowHandle
+			dispInfo.hdr.idFrom=self.windowControlID
+			dispInfo.hdr.code=LVN_GETDISPINFO
+			internalDispInfo=winKernel.virtualAllocEx(processHandle,None,sizeof(NMLVDispInfoStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			try:
+				winKernel.writeProcessMemory(processHandle,internalDispInfo,byref(dispInfo),sizeof(NMLVDispInfoStruct),None)
+				watchdog.cancellableSendMessage(self.parent.parent.windowHandle,winUser.WM_NOTIFY,LVN_GETDISPINFO,internalDispInfo)
+			finally:
+				winKernel.virtualFreeEx(processHandle,internalDispInfo,0,winKernel.MEM_RELEASE)
+			winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalItem,0,winKernel.MEM_RELEASE)
 		return item.iImage
 
 	def _get_description(self):
@@ -231,7 +238,7 @@ class ListItem(IAccessible):
 
 	def _get_positionInfo(self):
 		index=self.IAccessibleChildID
-		totalCount=winUser.sendMessage(self.windowHandle,LVM_GETITEMCOUNT,0,0)
+		totalCount=watchdog.cancellableSendMessage(self.windowHandle,LVM_GETITEMCOUNT,0,0)
 		return dict(indexInGroup=index,similarItemsInGroup=totalCount) 
 
 	def event_stateChange(self):

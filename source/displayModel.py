@@ -9,6 +9,7 @@ import winUser
 import NVDAHelper
 import textInfos
 from textInfos.offsets import OffsetsTextInfo
+import watchdog
 
 _getWindowTextInRect=None
 _requestTextChangeNotificationsForWindow=None
@@ -21,9 +22,9 @@ def initialize():
 	_requestTextChangeNotificationsForWindow=NVDAHelper.localLib.displayModel_requestTextChangeNotificationsForWindow
 
 def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,useXML=False):
-	text, cpBuf = _getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,useXML)
+	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,useXML)
 	if not text or not cpBuf:
-		return "",[]
+		return u"",[]
 
 	characterRects = []
 	cpBufIt = iter(cpBuf)
@@ -32,9 +33,19 @@ def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,mi
 	return text, characterRects
 
 def requestTextChangeNotifications(obj, enable):
+	"""Request or cancel notifications for when the display text changes in an NVDAObject.
+	A textChange event (event_textChange) will be fired on the object when its text changes.
+	Note that this event does not provide any information about the changed text itself.
+	It is important to request that notifications be cancelled when you no longer require them or when the object is no longer in use,
+	as otherwise, resources will not be released.
+	@param obj: The NVDAObject for which text change notifications are desired.
+	@type obj: NVDAObject
+	@param enable: C{True} to enable notifications, C{False} to disable them.
+	@type enable: bool
+	"""
 	if not enable:
 		_textChangeNotificationObjs.remove(obj)
-	_requestTextChangeNotificationsForWindow(obj.appModule.helperLocalBindingHandle, obj.windowHandle, enable)
+	watchdog.cancellableExecute(_requestTextChangeNotificationsForWindow, obj.appModule.helperLocalBindingHandle, obj.windowHandle, enable)
 	if enable:
 		_textChangeNotificationObjs.append(obj)
 
@@ -56,7 +67,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			left, top, width, height = self.obj.location
 		except TypeError:
 			# No location; nothing we can do.
-			return "", []
+			return u"", []
 		return getWindowTextInRect(self.obj.appModule.helperLocalBindingHandle, self.obj.windowHandle, left, top, left + width, top + height,self.minHorizontalWhitespace,self.minVerticalWhitespace,useXML)
 
 	def _getStoryText(self):
@@ -72,10 +83,10 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		start=self._startOffset
 		end=self._endOffset
 		if start==end:
-			return ""
+			return u""
 		text=self._get__textAndRects(useXML=True)[0]
 		if not text:
-			return ""
+			return u""
 		text="<control>%s</control>"%text
 		commandList=XMLFormatting.XMLTextParser().parse(text)
 		#Strip  unwanted commands and text from the start and the end to honour the requested offsets

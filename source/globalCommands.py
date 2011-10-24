@@ -8,6 +8,7 @@ import time
 import tones
 import keyboardHandler
 import mouseHandler
+import eventHandler
 import controlTypes
 import api
 import textInfos
@@ -44,11 +45,14 @@ class GlobalCommands(ScriptableObject):
 	script_toggleInputHelp.__doc__=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any.")
 
 	def script_toggleCurrentAppSleepMode(self,gesture):
-		curApp=api.getFocusObject().appModule
+		curFocus=api.getFocusObject()
+		curApp=curFocus.appModule
 		if curApp.sleepMode:
 			curApp.sleepMode=False
 			ui.message(_("Sleep mode off"))
+			eventHandler.executeEvent("gainFocus",curFocus)
 		else:
+			eventHandler.executeEvent("loseFocus",curFocus)
 			curApp.sleepMode=True
 			ui.message(_("Sleep mode on"))
 	script_toggleCurrentAppSleepMode.__doc__=_("Toggles  sleep mode on and off for  the active application.")
@@ -675,16 +679,28 @@ class GlobalCommands(ScriptableObject):
 
 	def script_reportStatusLine(self,gesture):
 		obj = api.getStatusBar()
-		if not obj:
-			ui.message(_("no status bar found"))
+		found=False
+		if obj:
+			text = api.getStatusBarText(obj)
+			api.setNavigatorObject(obj)
+			found=True
+		else:
+			info=api.getForegroundObject().flatReviewPosition
+			if info:
+				info.expand(textInfos.UNIT_STORY)
+				info.collapse(True)
+				info.expand(textInfos.UNIT_LINE)
+				text=info.text
+				info.collapse()
+				api.setReviewPosition(info)
+				found=True
+		if not found:
+			ui.message(_("No status line found"))
 			return
-		text = api.getStatusBarText(obj)
-
 		if scriptHandler.getLastScriptRepeatCount()==0:
 			ui.message(text)
 		else:
 			speech.speakSpelling(text)
-		api.setNavigatorObject(obj)
 	script_reportStatusLine.__doc__ = _("reads the current application status bar and moves the navigator to it")
 
 	def script_toggleMouseTracking(self,gesture):
@@ -717,8 +733,7 @@ class GlobalCommands(ScriptableObject):
 	def script_speakForeground(self,gesture):
 		obj=api.getForegroundObject()
 		if obj:
-			speech.speakObject(obj,reason=speech.REASON_QUERY)
-			obj.speakDescendantObjects()
+			sayAllHandler.readObjects(obj)
 	script_speakForeground.__doc__ = _("speaks the current foreground object")
 
 	def script_test_navigatorDisplayModelText(self,gesture):

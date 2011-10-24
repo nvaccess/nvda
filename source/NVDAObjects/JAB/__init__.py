@@ -388,3 +388,29 @@ class JAB(Window):
 		if self.role in [controlTypes.ROLE_LIST] and isinstance(parent,JAB) and parent.role==controlTypes.ROLE_COMBOBOX:
 			return
 		super(JAB,self).reportFocus()
+
+	def _get__actions(self):
+		actions = JABHandler.AccessibleActions()
+		JABHandler.bridgeDll.getAccessibleActions(self.jabContext.vmID, self.jabContext.accContext, actions)
+		return actions.actionInfo[:actions.actionsCount]
+
+	def _get_actionCount(self):
+		return len(self._actions)
+
+	def getActionName(self, index=None):
+		if index is None:
+			index = self.defaultActionIndex
+		try:
+			return self._actions[index].name
+		except IndexError:
+			raise NotImplementedError
+
+	def doAction(self, index=None):
+		if index is None:
+			index = self.defaultActionIndex
+		try:
+			JABHandler.bridgeDll.doAccessibleActions(self.jabContext.vmID, self.jabContext.accContext,
+				JABHandler.AccessibleActionsToDo(actionsCount=1, actions=(self._actions[index],)),
+				JABHandler.jint())
+		except (IndexError, RuntimeError):
+			raise NotImplementedError

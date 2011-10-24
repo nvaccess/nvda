@@ -6,13 +6,49 @@
 = 2011.3 =
 
 == Uudet ominaisuudet ==
+- NVDA voi nyt vaihtaa eSpeak-syntetisaattorin kieltä lennossa luettaessa tiettyjä web/PDF-dokumentteja, joissa on asianmukainen kielimääritys. Automaattinen kielen/murteen vaihtaminen voidaan ottaa käyttöön ja poistaa käytöstä Ääniasetukset-valintaikkunasta. (#845)
+- NVDA tukee nyt Java Access Bridgen 2.0.2-versiota, johon sisältyy 64-bittisten ajonaikaisten Java-ympäristöjen tuki.
 - Otsikkotasot sanotaan nyt objektinavigointia käytettäessä Mozilla Gecko -sovelluksissa (esim. Firefoxissa).
 - Tekstin muotoilutietojen lukeminen on nyt mahdollista käytettäessä selaustilaa Mozilla Gecko -sovelluksissa (esim. Firefoxissa ja Thunderbirdissä). (#394)
 - Alle- ja/tai yliviivatun tekstin havaitseminen ja ilmoittaminen on nyt mahdollista standardinmukaisissa IAccessible2-tekstisäätimissä, esim. sellaisissa kuin Mozilla-sovelluksissa.
+- Taulukon rivien ja sarakkeiden määrä ilmoitetaan nyt selaustilassa Adobe Readerissa.
+- Lisätty tuki Microsoft Speech Platform -syntetisaattorille. (#1735)
+- Sivu- ja rivinumerot ilmoitetaan nyt järjestelmäkohdistimen sijainnista IBM Lotus Symphonyssa. (#1632)
+- Äänenkorkeuden muutoksen prosenttiarvo isoja kirjaimia luettaessa on nyt määritettävissä Ääniasetukset-valintaikkunasta. Tämä korvaa aiemman "Nosta äänenkorkeutta isojen kirjainten kohdalla" -asetuksen, joten jos asetus halutaan poistaa käytöstä, arvoksi on asetettava 0. (#255)
+- Tekstin ja taustan väri kerrotaan nyt luettaessa solujen muotoilutietoja Microsoft Excelissä. (#1655)
+- Aktivoi nykyinen navigointiobjekti -komento toimii nyt sellaisissa Java Access Bridgeä käyttävien sovellusten  säätimissä, joissa sitä on mahdollista käyttää. (#1744)
+
+
+== Muutokset ==
+- NVDA käynnistää nyt itsensä uudelleen, mikäli se kaatuu.
+- Joitakin pistenäytöllä näytettäviä tietoja on lyhennetty. (#1288)
+- Lue aktiivinen ikkuna -skriptiä (NVDA+b) on paranneltu suodattamaan hyödyttömiä säätimiä, ja lisäksi sen mykistäminen on nyt paljon helpompaa. (#1499)
+- Automaattinen lue kaikki -toiminto selaustiladokumentin avautuessa on nyt mahdollista poistaa käytöstä Selaustila-valintaikkunasta löytyvällä asetuksella. (#414)
+- Jos aktiivisen sovelluksen tilapalkkia luettaessa (pöytäkoneissa NVDA+end) ei löydy todellista tilapalkkiobjektia, NVDA turvautuu sen sijaan näytön alimmalla rivillä olevaan tekstiin. (#649)
+- NVDA pitää nyt tauon otsikoiden ja muiden lohkoelementtien lopussa sen sijaan, että lukisi ne seuraavana olevan tekstin kanssa yhtenä pitkänä lauseena luettaessa dokumentteja selaustilassa Lue kaikki -toiminnolla.
 
 
 == Korjatut ohjelmavirheet ==
 - NVDA  ei näytä enää luettelomerkkejä tai numerointia listoissa Internet Explorerissa ja muissa MSHTML-säätimissä, kun sivun tekijä on määrittänyt, ettei niitä tulisi näyttää (ts. listatyyli on "none"). (#1671)
+- Kun NVDA jää jumiin, sen uudelleenkäynnistäminen (esim. painamalla Ctrl+Alt+n) ei enää sulje aiempaa kopiota käynnistämättä uutta.
+- Askelpalauttimen tai nuolinäppäinten painaminen Windowsin komentokehotteessa ei enää aiheuta kummallisia tuloksia joissakin tapauksissa. (#1612)
+- WPF- ja mahdollisesti muidenkin UI Automation -rajapintaa hyödyntävien yhdistelmäruutujen, joissa tekstin muokkaaminen ei ole mahdollista, valittu kohde ilmoitetaan nyt oikein.
+- Siirtyminen taulukon otsikkoriviltä seuraavalle riville ja päinvastoin on nyt aina mahdollista selaustilassa käytettäessä siirrä seuraavalle riville- ja siirrä edelliselle riville -komentoja Adobe Readerissa. Lisäksi otsikkoriviä ei enää ilmoiteta rivi 0:ksi. (#1731)
+- Selaustilassa on nyt mahdollista siirtyä taulukon tyhjiin soluihin ja niistä pois Adobe Readerissa.
+- Pistenäytöllä ei enää näytetä turhia sijaintitietoja (esim. 0 / 0 taso 0).
+- Kokonaistarkastelun sisältö näytetään nyt pistenäytöllä, kun se on asetettu seuraamaan tarkastelukohdistinta. (#1711)
+- Tekstisäätimen tekstiä ei enää näytetä pistenäytöllä kahta kertaa joissakin tapauksissa, esim. vieritettäessä taaksepäin WordPad-asiakirjojen alusta.
+- Enterin painaminen tiedostonlähetyspainikkeen kohdalla selaustilassa näyttää nyt asianmukaisesti valintaikkunan tiedoston valitsemiseksi vuorovaikutustilaan siirtymisen sijaan Internet Explorerissa. (#1720)
+- Dynaamisen sisällön muutoksia, kuten esim. DOS-konsoleissa, ei enää lueta, jos unitila on käytössä kyseisessä sovelluksessa. (#1662)
+- Alt+ylä- ja alt+alanuolten käyttäytymistä paranneltu selaustilassa yhdistelmäruutuja suljettaessa ja avattaessa. (#1630)
+- NVDA palautuu nyt paljon useammista tilanteista, kuten esim. vastaamasta lakanneista sovelluksista, jotka aiemmin aiheuttivat täydellisen jumiutumisen. (#1408)
+- NVDA lukee nyt Mozilla Geckon (Firefoxin jne) selaustiladokumenttien tietyt osat sellaisessa tilanteessa, jossa elementin tyyli on display:table. (#1373)
+- NVDA ei enää lue nimisäätimiä kohdistuksen siirtyessä niiden sisään. Tämä saa loppumaan joidenkin lomakekenttien nimien kahteen kertaan lukemisen Firefoxissa (Gecko) ja Internet Explorerissa (MSHTML). (#1650)
+- NVDA lukee nyt Microsoft Excelissä solun, kun siihen  on liitetty tietoa Ctrl+v:llä. (#1781)
+- Adobe Readerissa ei enää lueta dokumentista epäolennaista tietoa siirryttäessä vuorovaikutustilassa eri sivulla olevaan säätimeen. (#1659)
+- Tilanvaihtopainikkeet havaitaan ja luetaan nyt oikein selaustilassa Mozilla Gecko -sovelluksissa (esim. Firefoxissa). (#1757)
+- NVDA lukee nyt oikein Resurssienhallinnan osoitepalkin Windows 8:n kehittäjille tarkoitetussa esiversiossa.
+- NVDA ei enää kaada Windows 8:n kehittäjille tarkoitetussa esiversiossa sellaisia sovelluksia kuin winver ja WordPad virheellisten merkkihahmokäännösten vuoksi.
 
 
 = 2011.2 =

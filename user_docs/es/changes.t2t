@@ -3,6 +3,40 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2011.3 =
+
+== Nuevas Características ==
+- NVDA ahora puede cambiar el idioma del sintetizador eSpeak al vuelo cuando lee ciertos documentos web/pdf con la información de idioma apropiada. El cambio automático de idioma/dialecto puede activarse o desactivarse desde el diálogo Opciones de Voz. (#845) 
+- En Mozilla Gecko (ej.: Firefox) los niveles de encabezado ahora se anuncian cuando se utiliza la navegación de objetos.
+- El formato de texto ahora se puede anunciar cuando se utiliza el modo navegación en Mozilla Gecko (ej.: Firefox y Thunderbird). (#394)
+- El texto con subrayado y/o tachado ahora puede detectarse y anunciarse en controles de texto estándar IAccessible2 tal como en aplicaciones de Mozilla.
+- NVDA ahora se reiniciará si se cuelga.
+- En modo Navegación en Adobe Reader, ahora se informa de la cuenta de las filas y las columnas.
+- Se añadió soporte para la Plataforma de Síntesis de Voz de Microsoft. (#1735)
+- Los números de línea y de página ahora se anuncian para el cursor en IBM Lotus Symphony. (#1632)
+
+
+== Cambios ==
+- Alguna información mostrada en braille ha sido abreviada. (#1288)
+- El script Leer Ventana activa (NVDA+b) ha sido mejorado para filtrar controles inútiles y ahora también es mucho más fácil de silenciar. (#1499)
+- Leer Todo automáticamente cuando se carga un documento en Modo Navegación ahora es opcional a través de una opción en el diálogo Opciones de Modo Navegación. (#414)  
+
+
+== Corrección de Fallos ==
+- NVDA ya no muestra viñetas o numeración para listas en Internet Explorer y otros controles MSHTML cuando el autor ha indicado que éstas no deberíam mostrarse (es decir, el estilo de lista es "none"). (#1671)
+- Reiniciar NVDA cuando se ha colgado (ej.: presionando control+alt+n) ya no sale de la copia previa sin comenzar otra nueva.
+- Presionar retroceso o flechas en una consola de órdenes de Windows ya no causa resultados extraños en algunos casos. (#1612)
+- El elemento seleccionado en cuadros combinados WPF (y posiblemente algunos otros cuadros combinados mostrados utilizando UI Automation) que no permiten edición de texto ahora se anuncia correctamente.
+- En modo Navegación en Adobe Reader, ahora siempre es posible moverte a la siguiente fila desde la fila de encabezado y viceversa utilizando las órdenes moverse a la siguiente fila y moverse a la fila anterior. También,  la fila de encabezado ya no se anuncia como fila 0. (#1731)
+- En modo navegación en Adobe Reader, ahora es posible mover a (y por lo tanto pasar) celdas vacías en una tabla.
+- Información de posición sin sentido  (ej.: 0 de 0 nivel 0) ya no se anuncia en braille.
+- Cuando el braille siga a la revisión, ahora podrá mostrarse contenido en revisión planan. (#1711)
+- Un texto del control de texto ya no se presenta dos veces en una línea braille en algunos casos, ej.: desplazándose atrás desde el comienzo de documentos de Wordpad.
+- En modo navegación en Internet Explorer, presionando intro sobre un botón de subir un fichero ahora se presenta correctamente el diálogo para elegir un fichero para subir en lugar de cambiar a modo foco.  (#1720)
+- Los cambios de contenido dinámico tales como en consolas del Dos ya no se anuncian si  el modo durmiente para esa aplicación está actualmente activado. (#1662)
+- En modo navegación, el comportamiento de alt+flecha arriba y alt+flecha abajo para contraer y expandir cuadros combinados ha sido mejorado. (#1630)
+
+
 = 2011.2 =
 Lo subrayable en esta revisión incluye mejoras mayores concernientes a la puntuación y símbolos, incluyendo niveles configurables, etiquetado y descripciones de carácteres personalizados; sin pausas al final de las líneas durante la lectura completa; soporte mejorado para ARIA en Internet Explorer; y mucho mejor soporte para documentos PDF XFA/LiveCycle en Adobe Reader; acceso a texto escrito en la pantalla en más aplicaciones; y acceso a formato e información de color para texto escrito en la pantalla.
 

@@ -184,18 +184,19 @@ class SpeechSymbols(object):
 					# Whitespace or comment.
 					continue
 				line = line.rstrip("\r\n")
-				if line == "complexSymbols:" and allowComplexSymbols:
-					handler = self._loadComplexSymbol
-				elif line == "symbols:":
-					handler = self._loadSymbol
-				elif handler:
-					# This is a line within a section, so handle it according to which section we're in.
-					try:
+				try:
+					if line == "complexSymbols:" and allowComplexSymbols:
+						handler = self._loadComplexSymbol
+					elif line == "symbols:":
+						handler = self._loadSymbol
+					elif handler:
+						# This is a line within a section, so handle it according to which section we're in.
 						handler(line)
-					except ValueError:
-						log.warning("Invalid line: %s" % line)
-				else:
-					log.warning("Invalid line: %s" % line)
+					else:
+						raise ValueError
+				except ValueError:
+					log.warning(u"Invalid line in file {file}: {line}".format(
+						file=fileName, line=line))
 
 	def _loadComplexSymbol(self, line):
 		try:
@@ -417,8 +418,14 @@ class SpeechSymbolProcessor(object):
 		# Set defaults for any fields not explicitly set.
 		for symbol in symbols.values():
 			if symbol.replacement is None:
-				# Complex symbols without a replacement specified are useless.
+				# Symbols without a replacement specified are useless.
+				log.warning(u"Replacement not defined in locale {locale} for symbol: {symbol}".format(
+					symbol=symbol.identifier, locale=self.locale))
 				del symbols[symbol.identifier]
+				try:
+					complexSymbolsList.remove(symbol)
+				except ValueError:
+					pass
 				continue
 			if symbol.level is None:
 				symbol.level = SYMLVL_ALL
@@ -549,7 +556,7 @@ def processSpeechSymbols(locale, text, level):
 	try:
 		ss = _localeSpeechSymbolProcessors.fetchLocaleData(locale)
 	except LookupError:
-		if not locale.startswith("en"):
+		if not locale.startswith("en_"):
 			return processSpeechSymbols("en", text, level)
 		raise
 	return ss.processText(text, level)
@@ -564,7 +571,7 @@ def processSpeechSymbol(locale, symbol):
 	try:
 		ss = _localeSpeechSymbolProcessors.fetchLocaleData(locale)
 	except LookupError:
-		if not locale.startswith("en"):
+		if not locale.startswith("en_"):
 			return processSpeechSymbol("en", symbol)
 		raise
 	try:
