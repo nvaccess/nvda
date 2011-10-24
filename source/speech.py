@@ -311,8 +311,6 @@ def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 	speak(speechSequence,symbolLevel=symbolLevel)
 
 RE_INDENTATION_SPLIT = re.compile(r"^([^\S\r\n\f\v]*)(.*)$", re.UNICODE | re.DOTALL)
-RE_INDENTATION_CONVERT = re.compile(r"(?P<char>\s)(?P=char)*", re.UNICODE)
-
 def splitTextIndentation(text):
 	"""Splits indentation from the rest of the text.
 	@param text: The text to split.
@@ -322,6 +320,7 @@ def splitTextIndentation(text):
 	"""
 	return RE_INDENTATION_SPLIT.match(text).groups()
 
+RE_INDENTATION_CONVERT = re.compile(r"(?P<char>\s)(?P=char)*", re.UNICODE)
 def getIndentationSpeech(indentation):
 	"""Retrieves the phrase to be spoken for a given string of indentation.
 	@param indentation: The string of indentation.
