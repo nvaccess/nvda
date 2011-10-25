@@ -152,6 +152,10 @@ class Region(object):
 		#: The translated braille representation of this region.
 		#: @type: [int, ...]
 		self.brailleCells = []
+		#: liblouis typeform flags for each character in L{rawText},
+		#: C{None} if no typeform info.
+		#: @type: [int, ...]
+		self.rawTextTypeforms = None
 		#: A list mapping positions in L{rawText} to positions in L{brailleCells}.
 		#: @type: [int, ...]
 		self.rawToBraillePos = []
@@ -171,7 +175,9 @@ class Region(object):
 	def update(self):
 		"""Update this region.
 		Subclasses should extend this to update L{rawText} and L{cursorPos} if necessary.
-		The base class method handles translation of L{rawText} into braille, placing the result in L{brailleCells}. L{rawToBraillePos} and L{brailleToRawPos} are updated according to the translation.
+		The base class method handles translation of L{rawText} into braille, placing the result in L{brailleCells}.
+		Typeform information from L{rawTextTypeforms} is used, if any.
+		L{rawToBraillePos} and L{brailleToRawPos} are updated according to the translation.
 		L{brailleCursorPos} is similarly updated based on L{cursorPos}.
 		@postcondition: L{brailleCells} and L{brailleCursorPos} are updated and ready for rendering.
 		"""
@@ -182,7 +188,10 @@ class Region(object):
 		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate(
 			[os.path.join(TABLES_DIR, config.conf["braille"]["translationTable"]),
 				"braille-patterns.cti"],
-			text, mode=mode, cursorPos=self.cursorPos or 0)
+			text,
+			# liblouis mutates typeform if it is a list.
+			typeform=tuple(self.rawTextTypeforms) if isinstance(self.rawTextTypeforms, list) else self.rawTextTypeforms,
+			mode=mode, cursorPos=self.cursorPos or 0)
 		# liblouis gives us back a character string of cells, so convert it to a list of ints.
 		# For some reason, the highest bit is set, so only grab the lower 8 bits.
 		self.brailleCells = [ord(cell) & 255 for cell in braille]
