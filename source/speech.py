@@ -746,8 +746,14 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=REASON_Q
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage=newLanguage
 	if reportIndentation and allIndentation!=getattr(info.obj,"_speakTextInfo_lineIndentationCache",""):
-		# TODO: Make sure indentation is spoken in the default language.
-		speechSequence.append(getIndentationSpeech(allIndentation))
+		indentationSpeech=getIndentationSpeech(allIndentation)
+		if autoLanguageSwitching and speechSequence[-1].lang is not None:
+			# Indentation must be spoken in the default language,
+			# but the initial format field specified a different language.
+			# Insert the indentation before the LangChangeCommand.
+			speechSequence.insert(-1, indentationSpeech)
+		else:
+			speechSequence.append(indentationSpeech)
 		info.obj._speakTextInfo_lineIndentationCache=allIndentation
 	# Don't add this text if it is blank.
 	relativeBlank=True
