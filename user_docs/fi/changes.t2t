@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2011.3 =
+Tämän julkaisun tärkeimpiä uusia ominaisuuksia ovat automaattinen puhesyntetisaattorin kielen vaihtaminen luettaessa asianmukaisen kielimäärityksen sisältäviä dokumentteja, tuki 64-bittisille ajonaikaisille Java-ympäristöille, tekstin muotoilutietojen lukeminen selaustilassa Mozilla-sovelluksissa, parempi sovellusten kaatumisten ja jumittumisten käsittely ja alustavat Windows 8:n käyttöön liittyvät korjaukset.
 
 == Uudet ominaisuudet ==
 - NVDA voi nyt vaihtaa eSpeak-syntetisaattorin kieltä lennossa luettaessa tiettyjä web/PDF-dokumentteja, joissa on asianmukainen kielimääritys. Automaattinen kielen/murteen vaihtaminen voidaan ottaa käyttöön ja poistaa käytöstä Ääniasetukset-valintaikkunasta. (#845)
@@ -17,6 +18,7 @@
 - Äänenkorkeuden muutoksen prosenttiarvo isoja kirjaimia luettaessa on nyt määritettävissä Ääniasetukset-valintaikkunasta. Tämä korvaa aiemman "Nosta äänenkorkeutta isojen kirjainten kohdalla" -asetuksen, joten jos asetus halutaan poistaa käytöstä, arvoksi on asetettava 0. (#255)
 - Tekstin ja taustan väri kerrotaan nyt luettaessa solujen muotoilutietoja Microsoft Excelissä. (#1655)
 - Aktivoi nykyinen navigointiobjekti -komento toimii nyt sellaisissa Java Access Bridgeä käyttävien sovellusten  säätimissä, joissa sitä on mahdollista käyttää. (#1744)
+- Alkeellinen tuki Design Science MathPlayerille.
 
 
 == Muutokset ==
@@ -26,6 +28,8 @@
 - Automaattinen lue kaikki -toiminto selaustiladokumentin avautuessa on nyt mahdollista poistaa käytöstä Selaustila-valintaikkunasta löytyvällä asetuksella. (#414)
 - Jos aktiivisen sovelluksen tilapalkkia luettaessa (pöytäkoneissa NVDA+end) ei löydy todellista tilapalkkiobjektia, NVDA turvautuu sen sijaan näytön alimmalla rivillä olevaan tekstiin. (#649)
 - NVDA pitää nyt tauon otsikoiden ja muiden lohkoelementtien lopussa sen sijaan, että lukisi ne seuraavana olevan tekstin kanssa yhtenä pitkänä lauseena luettaessa dokumentteja selaustilassa Lue kaikki -toiminnolla.
+- Kun selaustilassa painetaan Enteriä tai välilyöntiä välilehden kohdalla, se aktivoidaan sen sijaan, että siirryttäisiin vuorovaikutustilaan. (#1760)
+- eSpeak-puhesyntetisaattori päivitetty versioksi 1.45.46.
 
 
 == Korjatut ohjelmavirheet ==
@@ -49,6 +53,10 @@
 - Tilanvaihtopainikkeet havaitaan ja luetaan nyt oikein selaustilassa Mozilla Gecko -sovelluksissa (esim. Firefoxissa). (#1757)
 - NVDA lukee nyt oikein Resurssienhallinnan osoitepalkin Windows 8:n kehittäjille tarkoitetussa esiversiossa.
 - NVDA ei enää kaada Windows 8:n kehittäjille tarkoitetussa esiversiossa sellaisia sovelluksia kuin winver ja WordPad virheellisten merkkihahmokäännösten vuoksi.
+- Mozilla Gecko 10 -moottoria ja uudempaa käyttävissä sovelluksissa (esim. Firefox 10:ssä) kohdistin sijoitetaan nyt selaustilassa oikein useammin ladattaessa sivua, jolla on kohdeankkuri. (#360)
+- Kuvakarttojen nimet luetaan nyt selaustilassa Mozilla Gecko -sovelluksissa (esim. Firefoxissa).
+- Hiiren siirtäminen tiettyjen tekstikenttien päälle (sellaisien kuin Synaptics-osoitinlaitteen asetuksissa ja SpeechLab SpeakTextissä) ei enää aiheuta sovelluksen kaatumista hiiren seurannan ollessa käytössä. (#672)
+- NVDA toimii nyt oikein useiden Windows XP:n mukana toimitettujen sovellusten Tietoja-valintaikkunoissa, mukaan lukien Muistion Tietoja Muistiosta ja Tietoja Windowsista. (#1853, #1855)
 
 
 = 2011.2 =
