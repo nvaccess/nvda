@@ -28,7 +28,8 @@ NVDA biedt o.a.
 -
 
 ++ Internationalisering ++
-Het is belangrijk dat mensen overal ter wereld, ongeacht de taal die zij spreken, gelijkelijk toegang krijgen tot technologie.Behalve de Engelse versie van NVDA is het programma beschikbaar in meer dan 20 talen, waaronder Arabisch, Portugees (Brazilië), Croatisch, Frans, Duits, Italiaans, Spaans, Nederlands, Thai, Russisch, Traditioneel Chinees, Japans, etc. 
+Het is belangrijk dat mensen overal ter wereld, ongeacht de taal die zij spreken, gelijkelijk toegang krijgen tot technologie.
+Behalve de Engelse versie van NVDA is het programma beschikbaar in 34 talen, waaronder Afrikaans, Albanisch, Arabisch, Portugees (Brazilië), Bulgaars, Croatisch, Tsjechisch, Deens, Fins, Frans, Galician, Georgisch, Duits, Hebreeuws, Hindi, Hongaars, IJslands, Italiaans, Japans, Pools, Portugees, Roemeens, Serbisch, Slowaaks, Spaans, Zweeds, Nederlands, Thai, Russisch, Traditioneel Chinees, etc. 
 
 ++ Ondersteuning via Spraaksynthese++
 U kunt een van de momenteel beschikbare talen kiezen om meldingen van NVDA, de interface of de inhoud van documenten te laten voorlezen. Bovendien is het mogelijk de inhoud van een document te laten voorlezen in een willekeurige andere taal  als op de computer een spraakmodule is geïnstalleerd die die taal spreekt.
@@ -193,7 +194,7 @@ U kunt de volgende NVDA-toetscommando’s gebruiken om met de textcursor te navi
 | Alles voorlezen| NVDA+pijl omlaag | Voorlezen starten vanaf de huidige positie van de tekstcursor die tijdens het lezen wordt verplaatst. |
 | Deze regel lezen | NVDA+pijl omhoog |Hiermee wordt de regel waarin de tekstcursor zich momenteel bevindt voorgelezen.Bij tweemaal drukken wordt regel gespeld. |
 | Geselecteerde tekst lezen| NVDA+Shift+pijl omhoog | Hiermee wordt geselecteerde tekst voorgelezen.|
-| Tekstopmaak weergeven| NVDA+f | NVDA laat horen hoe de tekst waarin de tekstcursor zich bevindt, is opgemaakt|
+
 
 Binnen een tabel kunt u ook de volgende toetscommando’s gebruiken:
 || Naam | Toets| Beschrijving|
@@ -213,8 +214,8 @@ Om alle tekst zoals deze op het scherm verschijnt te lezen kunt u [flat review #
 
 Met objectnavigatie hoeft u niet steeds heen en terug te springen naar de afzonderlijke objecten op uw computer omdat deze nu hierarchisch zijn gegroepeerd.
 Dit betekent dat u binnen bepaalde objecten bladert om na te gaan welke objecten erin zijn opgenomen.
-Als u zich bij voorbeeld in een lijst bevindt, hoeft u niet door alle lijstitems te bladeren, maar navigeert u binnen de lijst naar het eerste sub-niveau (first child object) om de bijbehorende items te benaderen.
-U kunt de lijst weer verlaten door naar het hoogste niveau (parent object) te navigeren en verder gaan naar een ander object.
+Een lijst bevat bijvoorbeeld lijst items, u dient dus de lijst binnen te gaan om de onderliggende items te lezen.
+Als u zich op een lijst item bevind, kunt u terug naar het bovenliggend object om weer op de lijst terecht te komen. Nu kunt u verder gaan naar een ander object.
 Iets dergelijks geldt als u in een werkbalk terecht komt; u blijft binnen de werkbalk (navigeert naar het eerste sub-niveau (first child) om toegang te krijgen tot de bijbehorende besturingselementen.
 
 Het object dat op dit moment bekeken wordt in objectnavigatie wordt het navigator object genoemd.
@@ -264,6 +265,7 @@ Voor het nalezen van tekst kunt u de volgende toetscombinaties gebruiken:
 | Alles voorlezen in leesmodus| numeriekPlus| NVDA+shift+pijl omlaag | Leest vanaf de huidige positie van de leescursor waarbij de leescursor zi|
 | Vanaf de leescursor kopiëren| NVDA+f9 | NVDA+f9 |Er wordt tekst gekopieerd vanaf de huidige leescursorpositie. Het feitelijke kopiëren gebeurt pas nadat hebt aangegeven waarheen gekopieerd moet worden |
 | Tot leescursor kopiëren| NVDA+f10 | NVDA+f10 |Het tekstgebied dat met NVDA+f9 is gemarkeerd wordt met de opdracht NVDA+f10 naar het klembord gekopieerd.|
+| Tekstopmaak weergeven| NVDA+f | NVDA laat horen hoe de tekst waarin de leescursor zich bevindt, is opgemaakt|
 %kc:endInclude
 
 Let op: voor een goede werking van de numerieke toetsen moet NumLock worden uitgeschakeld.
@@ -276,11 +278,16 @@ Dit ziet er dan als volgt uit:
 | Vorig karakter| Huidige karakter| Volgende karakter|
 
 ++ Flat Review (Volledig overzicht) ++[FlatReview]
-In de leesmodus kunt u met NVDA niet alleen de inhoud van een enkel [object #Objects\ bekijken, maar ook de volledige inhoud van een document of de tekst op het scherm.
+Meestal kunt u alleen de inhoud van een enkel [object #Objects] bekijken, voor sommige objecten is het echter mogelijk om de inhoud van onderliggende objecten te bekijken.
+In complexe documenten kunt u de gehele inhoud van het document lezen en in applicatie vensters kunt u de tekst binnen het venster lezen zoals deze visueel op het scherm wordt weergegeven.
 Dit heet “flat review”.
 Dit is vergelijkbaar met de mogelijkheden voor het verkennen van het scherm of mogelijkheden voor muisbesturing zoals u deze in andere schermlezers aantreft.
 
-Zodra u flat review heeft ingeschakeld, kunt u de [commando's voor tekstnavigatie #ReviewingText] gebruiken om de tekst te lezen.
+U wordt op het [navigator object #ObjectNavigation] gepositioneerd wanneer flat review wordt ingeschakeld.
+Als u objectnavigatie nog niet gebruikt hebt, zal dit meestal het object met [focus #SystemFocus] zijn.
+Als het navigator object bijvoorbeeld een knop is, zal flat review de tekst van deze knop aangeven.
+U kunt vervolgens de tekst lezen met de [commando's voor tekstnavigatie #ReviewingText].
+U kunt ook direct naar het object op de huidige positie van de reviewcursor navigeren, zo kunt u [objectnavigatie #ObjectNavigation] vanaf daar gebruiken.
 
 U kunt de volgende twee commando’s gebruiken om van en naar “flat review” te schakelen:
 %kc:beginInclude
@@ -370,7 +377,7 @@ Om naar het eerstvolgende element te springen gebruikt u uitsluitend één van d
 - g: graphic (afbeelding)
 - d: ARIA oriëntatiepunt in een Internetomgeving
 - o: embedded object (ingevoegd object)
-- 1 tot en met 6: respectievelijk kop 1 t/m 6-
+- 1 tot en met 6: respectievelijk kop op niveau 1 t/m 6
 -
 %kc:endInclude
 
@@ -488,14 +495,27 @@ Met de schuifregelaar kunt u het volume van de stem instellen waarbij 0 het laag
 ==== Intonatie====
 Met de schuifregelaar kunt u instellen welk intonatieniveau de stem moet gebruiken, dus hoe sterk de stem in toonhoogte moet variëren. De enige synthesizer die op het moment deze mogelijkheid biedt is eSpeak.
 
+==== Automatisch van taal wisselen ====
+Dit aankruisvakje bepaalt of NVDA automatisch van taal moet wisselen bij het lezen van documenten met taalinformatie.
+Deze optie is standaard ingeschakeld.
+Op dit moment wordt het automatisch wisselen van taal enkel door de Espeak synthesizer ondersteund.
+
+==== Automatisch van dialect wisselen ====
+Indien automatisch van taal wisselen is ingeschakeld, kan deze optie gebruikt worden om aan te geven dat er van dialect gewisselt moet worden in plaats van enkel taalwiselingen. Als een tekst bijvoorbeeld als Brits Engels is gemarkeerd zal de synthesizer een Brits dialect gebruiken indien deze optie is ingeschakeld.
+Deze optie is standaard uitgeschakeld.
+
 %kc:setting
-==== Alle leestekens uitspreken====
+==== Interpunctie uitspreken====
 Toets: NVDA+p
 
-Wanneer deze optie is ingeschakeld zal NVDA de naam van alle leestekens uitspreken, wat erg handig kan zijn bij het nakijken en corrigeren van tekst.
+Deze optie bepaalt welke leestekens en symbolen als woorden worden uitgesproken.
+Als deze optie bijvoorbeeld op alles staat, zullen alle symbolen als woorden worden uitgesproken.
+Deze optie geldt voor alle synthesizers, niet enkel de actieve synthesizer.
 
-==== Toonhoogte verhogen bij hoofletters====
-Als het selectievakje wordt aangekruist, zullen hoofdletters op hogere toon worden uitgesproken.
+==== Toonhoogteveranderingspercentage bij hoofdletters ====
+Dit tekstvak stelt u in staat om de mate waarin de toonhoogte van de stem verandert zodra een hoofdletter wordt gelezen in te stellen.
+Deze waarde is een percentage, een negatieve waarde verlaagt de toonhoogte en een positieve waarde verhoogt de toonhoogte.
+Om de toonhoogte niet te veranderen voert u 0 in.
 
 ==== Het woord hoofdletter gebruiken bij hoofletters====
 Als het selectievakje is aangevinkt zal NVDA, waar nodig, het woord “hoofdletter”  zeggen bij het lezen en typen.
@@ -504,6 +524,16 @@ Bij het gebruik van hoofletters wordt door NVDA normaal gesproken de toonhoogte 
 ==== Pieptoon bij gebruik hoofdletters====
 Als het selectievakje is aangevinkt zal NVDA een korte pieptoon laten horen telkens wanneer er sprake is van een hoofdletter.
 Net als bij de optie “Het woord hoofdletter uitspreken bij gebruik hoofdletters” kan dit nuttig zijn als de gebruikte synthesizer het verhogen van de toonhoogte bij hoofdletters niet ondersteund.
+
+==== Gebruik spellingsfunctionaliteit indien ondersteund ====[VoiceSpellingFunctionality]
+Sommige woorden bestaan uit slechts 1 teken, maar de uitspraak is anders afhankelijk van het feit of er als enkel teken (zoals bijvoorbeeld bij spellen) of woord gelezen wordt.
+In het Engels is "a" bijvoorbeeld een letter en een woord.
+Deze optie maakt het mogelijk voor de spraaksynthesizer om onderscheid te maken tussen deze twee gevallen als dit door de synthesizer wordt ondersteund.
+De meeste synthesizers ondersteunen deze functie.
+
+Over het algemeen moet deze optie ingeschakeld zijn.
+Er zijn echter een aantal Microsoft SAPI synthesizers die zich raar gedragen als deze optie is ingeschakeld.
+Als u problemen ondervind bij het lezen van tekens kunt u deze optie uitschakelen.
 
 +++ Synth settings ring +++[SynthSettingsRing]
 Om spraakinstellingen snel aan te passen zonder dat u gebruik maakt van het dialoogvenster “Steminstellingen”, kunt u te allen tijde beschikken over een aantal toetscombinaties terwijl u met NVDA werkt:
@@ -690,6 +720,9 @@ Toets: NVDA+v
 
 Hiermee kunt u bepalen hoe de inhoud van een document in bladermodus moet worden weergegeven. Wilt u dat inhoud zoals links en andere velden op een aparte regel komen te staan of moet alles blijven zoals het wordt getoond. Als het selectievakje is aangekruist blijft alles staan zoals weergegeven. Als u het vinkje weghaalt, worden de velden op aparte regels getoond.
 
+==== Automatisch lezen zodra een pagina geladen is ====
+Deze optie bepaalt of een pagina die geladne is in bladermodus automatisch wordt gelezen.
+
 ==== Layouttabellen weergeven====
 Als het selectievakje niet is aangekruist zal NVDA alleen dan tabelinformatie geven wanneer dat van belang is. Als het selectievakje is aangevinkt, zal NVDA ook tabellen melden die louter optisch van aard zijn. 
 
@@ -728,6 +761,7 @@ U kunt de vermelding laten horen van:
 - regelnummers
 - tabellen
 - rij/kolomkoppen van tabellen
+- tabel celcoördinaten
 - links
 - headings (koppen)
 - lijsten
@@ -767,7 +801,7 @@ Er is nog een selectievakje dat gebruikt kan worden om aan te geven of de ingevo
 Een regular expression is een reeks waarin speciale tekens worden gebruikt om aan te geven hoe en in welke mate de reeks moet worden toegepast (op specifieke tekens, alleen getallen of alleen letters, bij voorbeeld).
 In deze handleiding wordt niet verder ingegaan op “regular expressions”, maar op het internet zijn allerlei tutorials te vinden die meer informatie geven.  
 
-+++ Uitspraak van interpunctie/symbolen +++
++++ Uitspraak van interpunctie/symbolen +++[SymbolPronunciation]
 
 In dit dialoogvenster kan de manier waarop interpunctie en symbolen worden gemeld worden aangepast, alsmede het interpunctieniveau waarop deze worden uitgesproken.
 
@@ -775,7 +809,7 @@ Selecteer een symbool uit de symbolenlijst om het aan te passen.
 Het vervangen door veld stelt je in staat om de uitspraak van het symbool aan te passen.
 Het niveau veld bepaalt het minimumniveau waarop dit symbool wordt uitgesproken.
 
-Als je klaar bent kunnen de wijzigingen met de OK knop worden opgeslagen, of door middel van de Annuleren knop worden teruggedraaid.
+Als u klaar bent kunnen de wijzigingen met de OK knop worden opgeslagen, of door middel van de Annuleren knop worden teruggedraaid.
 
 ++ De configuratie opslaan en opnieuw ladenn ++
 Als wijzigingen worden aangebracht in de instellingen van NVDA worden deze niet automatisch opgeslagen. Als u NVDA afsluit en later weer opstart zal NVDA de oorspronkelijke instellingen gebruiken en zijn eventueel aangebrachte wijzigingen verloren gegaan.
@@ -821,7 +855,10 @@ Maar klikt u in of verplaatst u de focus naar het viewer venster, dan wordt het 
 
 ++ Python Console ++
 Met de Python console die u vindt onder Extra in het NVDA-menu kunnen fouten in de programma-code worden opgespoord en hersteld, algemene inspecties van de programmatuur worden uitgevoerd of om de mate van toegankelijkheid van een toepassing te controleren.
-Zie voor meer informatie het artikel op de website van NVDA  [the Python Console article on the NVDA web site NVDA_URLwiki/PythonConsole].
+Zie voor meer informatie de handleiding voor ontwikkelaars, dit document is beschikbaar in [de sectie voor ontwikkelaars op de NVDA website (engelstalig) NVDA_URLwiki/Development].
+
+++ Plugins herladen ++
+Zodra deze optie wordt geactiveerd, zullen alle app modules en globale plugins opnieuw worden geladen. Dit is handig voor ontwikkelaars.
 
 + Verdere informatie+
 Voor nadere informatie over NVDA of voor hulp kunt u terecht op de website NVDA_URL.
@@ -852,14 +889,25 @@ Sapi 5 is een Microsoft standaard voor softwarematige spraaksynthesizers.
 Op het internet zijn veel spraaksynthesizers te koop of gratis te downloaden die compatibel zijn met deze standaard. Waarschijnlijk is er op uw computer al minstens 1 SAPI 5 stem geïnstalleerd.
 Als hiervan gebruik wordt gemaakt in NVDA dan treft u alle geïnstalleerde spraakgenerators met de beschikbare stemmen aan onder Stem in het NVDA-menu [Voice Settings dialog #VoiceSettings] of in [Synth Settins Ring #SynthSettingsRing].
 
+++ Microsoft Speech Platform ++
+Het Microsoft Speech Platform biedt stemmen voor veel talen die normaalgesproken gebruikt worden bij de ontwikkeling van server-gebaseerd spraaktoepassingen.
+Deze stemmen kunnen ook met NVDA gebruikt worden.
+
+Om van deze stemmen gebruik te maken dient u 2 componenten te installeren:
+- Microsoft Speech Platform - Server Runtime (Version 10.2), x86: http://www.microsoft.com/download/en/details.aspx?id=10208
+- Microsoft Speech Platform - Server Runtime Languages (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
+- 
+
 ++ Audiologic Tts3 ++
 Dit is een commerciële spraaksynthesizer die speciaal ontwikkeld is voor het Italiaans.
 U moet de synthesizer op uw pc installeren als u deze voor NVDA wilt gebruiken.
 Meer informatie is te vinden op www.audiologic.it, de website van Audiologic.
 
-++ Newfon ++
+++ Newfon ++[SynthNewfon]
 NewFon is een gratis, commerciële synthesizer die ontwikkeld is door Shishmintzev voor het Russisch en het Oekraïnsch. 
 U kunt deze synthesizer downloaden op http://ru.nvda-community.org/?page_id=10, de community site van NVDA.
+
+Deze synthesizer heeft geen ondersteuning voor [spelling functionaliteit #VoiceSpellingFunctionality].
 
 + Ondersteunde Braille-leesregels +[SupportedBrailleDisplays]
 In deze rubriek treft u informatie aan over de braille-leesregels die door NVDA worden ondersteund.
@@ -868,7 +916,8 @@ In deze rubriek treft u informatie aan over de braille-leesregels die door NVDA 
 Alle Focus en PAC Mate leesregels van [Freedom Scientific http://www.freedomscientific.com/] worden ondersteund.
 De drivers voor de braille-leesregels van Freedom Scientific moeten op uw computer worden geïnstalleerd.
 Zonodig kunt u de drivers downloaden van http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Hoewel op deze pagina alleen de Focus 40 wordt genoemd, ondersteunt deze driver alle leesregels van Freedom Scientific.
+Hoewel op deze pagina alleen de Focus 40 Blue wordt genoemd, ondersteunt deze driver alle leesregels van Freedom Scientific.
+Als u een 64-bits versie van Windows gebruikt en de drivers zijn al geïnstalleerd door een andere schermlezer heeft u wellicht toch de drivers van bovenstaande link nodig om dat mogelijk niet alle vereiste bestanden zijn geïnstalleerd.
 
 ++ Optelec ALVA BC640/680 ++
 Zowel de ALVA BC640 als de BC680 leesregel van [Optelec http://www.optelec.com/] worden ondersteund.
@@ -877,7 +926,7 @@ Sluit de leesregel aan en pas de configuratie van NVDA aan voor het gebruik van 
 
 ++ Handy Tech Displays ++
 NVDA ondersteunt alle leesregels van [Handy Tech http://www.handytech.de/].
-Voor sommige USB-leesregels moet de USB-drivers van Handy Tech op uw computer worden geïnstalleerd.
+Voor sommige USB-leesregels moeten de USB-drivers van Handy Tech op uw computer worden geïnstalleerd.
 Bovendien moet u de universele driver van Handy Tech installeren. Deze vindt u op ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
 ++ MDV Lilli ++
