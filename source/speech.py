@@ -598,6 +598,8 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=REASON_Q
 	extraDetail=unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD)
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
+	reportIndentation=unit==textInfos.UNIT_LINE and formatConfig["reportLineIndentation"]
+
 	speechSequence=[]
 	#Fetch the last controlFieldStack, or make a blank one
 	controlFieldStackCache=getattr(info.obj,'_speakTextInfo_controlFieldStackCache',[]) if useCache else []
@@ -693,8 +695,17 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=REASON_Q
 	#Also make sure that LangChangeCommand objects are added before any controlField or formatField speech
 	relativeSpeechSequence=[]
 	inTextChunk=False
+	allIndentation=""
+	indentationDone=False
 	for command in textWithFields:
 		if isinstance(command,basestring):
+			if reportIndentation and not indentationDone:
+				indentation,command=splitTextIndentation(command)
+				# Combine all indentation into one string for later processing.
+				allIndentation+=indentation
+				if command:
+					# There was content after the indentation, so there is no more indentation.
+					indentationDone=True
 			if command:
 				if inTextChunk:
 					relativeSpeechSequence[-1]+=command
@@ -734,6 +745,10 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=REASON_Q
 				if autoLanguageSwitching and newLanguage!=lastLanguage:
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage=newLanguage
+	if reportIndentation and allIndentation!=getattr(info.obj,"_speakTextInfo_lineIndentationCache",""):
+		# TODO: Make sure indentation is spoken in the default language.
+		speechSequence.append(getIndentationSpeech(allIndentation))
+		info.obj._speakTextInfo_lineIndentationCache=allIndentation
 	# Don't add this text if it is blank.
 	relativeBlank=True
 	for x in relativeSpeechSequence:
