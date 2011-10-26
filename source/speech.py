@@ -125,7 +125,7 @@ def speakMessage(text,index=None):
 	speakText(text,index=index,reason=REASON_MESSAGE)
 
 def getCurrentLanguage():
-	language=getSynth().language
+	language=getSynth().language if config.conf['speech']['autoLanguageSwitching'] else None
 	if language:
 		language=languageHandler.normalizeLanguage(language)
 	if not language:
