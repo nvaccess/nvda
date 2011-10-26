@@ -185,14 +185,18 @@ class VBufStorage_fieldNode_t {
 /**
  * Generates the attributes within a markup opening tag.
  * @param text where to place the generated text
+ * @param the offset within the node where text is being requested from 
+ * @param the offset within the node the text is being requested to. 
  */
-	virtual void generateAttributesForMarkupOpeningTag(std::wstring& text);
+	virtual void generateAttributesForMarkupOpeningTag(std::wstring& text, int startOffset, int endOffset);
 
 /**
  * generates a markup opening tag for this field.
  * @param text a string to append the tag to.
+ * @param the offset within the node where text is being requested from 
+ * @param the offset within the node the text is being requested to. 
  */
-	 void generateMarkupOpeningTag(std::wstring& text);
+	 void generateMarkupOpeningTag(std::wstring& text,int startOffset, int endOffset);
 
 /**
  * generates a markup closing tag for this field.
@@ -313,7 +317,7 @@ class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
 
 	virtual void generateMarkupTagName(std::wstring& text);
 
-	virtual void generateAttributesForMarkupOpeningTag(std::wstring& text);
+	virtual void generateAttributesForMarkupOpeningTag(std::wstring& text, int startOffset, int endOffset);
 
 	virtual void disassociateFromBuffer(VBufStorage_buffer_t* buffer);
 
