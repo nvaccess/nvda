@@ -383,14 +383,14 @@ class TextInfoRegion(Region):
 	def update(self):
 		formatConfig = config.conf["documentFormatting"]
 		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
-		# so use the original caret TextInfo for line and copy for caret.
+		# so use the original cursor TextInfo for line and copy for cursor.
 		self._line = line = self._getCursor()
-		caret = line.copy()
-		# Get the line at the caret.
+		cursor = line.copy()
+		# Get the line at the cursor.
 		line.expand(textInfos.UNIT_LINE)
 		# Get the selection.
 		sel = self._getSelection()
-		# Restrict the selection to the line at the caret.
+		# Restrict the selection to the line at the cursor.
 		if sel.compareEndPoints(line, "startToStart") < 0:
 			sel.setEndPoint(line, "startToStart")
 		if sel.compareEndPoints(line, "endToEnd") > 0:
@@ -405,7 +405,7 @@ class TextInfoRegion(Region):
 		chunk.collapse()
 		chunk.setEndPoint(sel, "endToStart")
 		self._addTextWithFields(chunk.getTextWithFields(formatConfig=formatConfig))
-		# The selection ends at this position.
+		# The selection starts at this position.
 		selStart = len(self.rawText)
 		# Now, the selection itself.
 		self._addTextWithFields(sel.getTextWithFields(formatConfig=formatConfig))
@@ -415,7 +415,7 @@ class TextInfoRegion(Region):
 		chunk.setEndPoint(line, "endToEnd")
 		chunk.setEndPoint(sel, "startToEnd")
 		self._addTextWithFields(chunk.getTextWithFields(formatConfig=formatConfig))
-		# Strip line ending characters, but add a space in case the caret is at the end of the line.
+		# Strip line ending characters, but add a space in case the cursor is at the end of the line.
 		self.rawText = self.rawText.rstrip("\r\n\0\v\f") + " "
 		del self.rawTextTypeforms[len(self.rawText) - 1:]
 		self.rawTextTypeforms.append(louis.plain_text)
@@ -427,7 +427,7 @@ class TextInfoRegion(Region):
 			self.cursorPos = None
 
 		# If this is not the first line, hide all previous regions.
-		start = caret.obj.makeTextInfo(textInfos.POSITION_FIRST)
+		start = cursor.obj.makeTextInfo(textInfos.POSITION_FIRST)
 		self.hidePreviousRegions = (start.compareEndPoints(line, "startToStart") < 0)
 		# If this is a multiline control, position it at the absolute left of the display when focused.
 		self.focusToHardLeft = self._isMultiline()
