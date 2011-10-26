@@ -104,9 +104,9 @@ class NMLVDispInfoStruct(Structure):
 	]
 
 def getListGroupInfo(windowHandle,groupIndex):
-	(processID,threadID)=winUser.getWindowThreadProcessID(windowHandle)
 	processHandle=oleacc.GetProcessHandleFromHwnd(windowHandle)
-	localInfo=LVGROUP()
+	if not processHandle:
+		return None
 	localInfo.cbSize=sizeof(LVGROUP)
 	localInfo.mask=LVGF_HEADER|LVGF_FOOTER|LVGF_STATE|LVGF_ALIGN|LVGF_GROUPID
 	localInfo.stateMask=0xffffffff
@@ -200,7 +200,6 @@ class ListItem(IAccessible):
 
 	def _get_lvAppImageID(self):
 		item=LVItemStruct(iItem=self.IAccessibleChildID-1,mask=LVIF_IMAGE)
-		(processID,threadID)=winUser.getWindowThreadProcessID(self.windowHandle)
 		processHandle=self.processHandle
 		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(LVItemStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		try:
