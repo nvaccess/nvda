@@ -346,7 +346,28 @@ class TextInfoRegion(Region):
 		except NotImplementedError:
 			log.debugWarning("", exc_info=True)
 
+	def _getTypeformFromFormatField(self, field):
+		typeform = louis.plain_text
+		if field.get("bold", False):
+			typeform |= louis.bold
+		if field.get("italic", False):
+			typeform |= louis.italic
+		if field.get("underline", False):
+			typeform |= louis.underline
+		return typeform
+
+	def _addTextWithFields(self, fields):
+		typeform = louis.plain_text
+		for command in fields:
+			if isinstance(command, basestring):
+				self.rawText += command
+				self.rawTextTypeforms.extend((typeform,) * len(command))
+			elif isinstance(command, textInfos.FieldCommand):
+				if command.command == "formatChange":
+					typeform = self._getTypeformFromFormatField(command.field)
+
 	def update(self):
+		formatConfig = config.conf["documentFormatting"]
 		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
 		# so use the original caret TextInfo for line and copy for caret.
 		self._line = line = self._getSelection()
@@ -354,20 +375,27 @@ class TextInfoRegion(Region):
 		caret = line.copy()
 		# Get the line at the caret.
 		line.expand(textInfos.UNIT_LINE)
+		self.rawText = ""
+		self.rawTextTypeforms = []
+
 		# Not all text APIs support offsets, so we can't always get the offset of the caret relative to the start of the line.
 		# Therefore, grab the line in two parts.
 		# First, the chunk from the start of the line up to the caret.
 		chunk = line.copy()
 		chunk.collapse()
 		chunk.setEndPoint(caret, "endToEnd")
-		self.rawText = chunk.text or ""
+		self._addTextWithFields(chunk.getTextWithFields(formatConfig=formatConfig))
 		# The cursor position is the length of this chunk, as its end is the caret.
 		self.cursorPos = len(self.rawText)
 		# Now, get the chunk from the caret to the end of the line.
 		chunk.setEndPoint(line, "endToEnd")
 		chunk.setEndPoint(caret, "startToStart")
+		self._addTextWithFields(chunk.getTextWithFields(formatConfig=formatConfig))
 		# Strip line ending characters, but add a space in case the caret is at the end of the line.
-		self.rawText += (chunk.text or "").rstrip("\r\n\0\v\f") + " "
+		self.rawText = self.rawText.rstrip("\r\n\0\v\f") + " "
+		del self.rawTextTypeforms[len(self.rawText) - 1:]
+		self.rawTextTypeforms.append(louis.plain_text)
+
 		# If this is not the first line, hide all previous regions.
 		start = caret.obj.makeTextInfo(textInfos.POSITION_FIRST)
 		self.hidePreviousRegions = (start.compareEndPoints(line, "startToStart") < 0)
