@@ -115,6 +115,9 @@ negativeStateLabels = {
 	controlTypes.STATE_CHECKED: _("( )"),
 }
 
+DOT7 = 64
+DOT8 = 128
+
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
 	return issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo) or obj.role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states
@@ -326,8 +329,19 @@ class TextInfoRegion(Region):
 		# Terminals are inherently multiline, so they don't have the multiline state.
 		return (self.obj.role == controlTypes.ROLE_TERMINAL or controlTypes.STATE_MULTILINE in self.obj.states)
 
+	def _getCursor(self):
+		"""Retrieve the collapsed cursor.
+		This should be the start or end of the selection returned by L{_getSelection}.
+		@return: The cursor.
+		"""
+		try:
+			return self.obj.makeTextInfo(textInfos.POSITION_CARET)
+		except:
+			return self.obj.makeTextInfo(textInfos.POSITION_FIRST)
+
 	def _getSelection(self):
 		"""Retrieve the selection.
+		The start or end of this should be the cursor returned by L{_getCursor}.
 		@return: The selection.
 		@rtype: L{textInfos.TextInfo}
 		"""
@@ -370,31 +384,47 @@ class TextInfoRegion(Region):
 		formatConfig = config.conf["documentFormatting"]
 		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
 		# so use the original caret TextInfo for line and copy for caret.
-		self._line = line = self._getSelection()
-		line.collapse()
+		self._line = line = self._getCursor()
 		caret = line.copy()
 		# Get the line at the caret.
 		line.expand(textInfos.UNIT_LINE)
+		# Get the selection.
+		sel = self._getSelection()
+		# Restrict the selection to the line at the caret.
+		if sel.compareEndPoints(line, "startToStart") < 0:
+			sel.setEndPoint(line, "startToStart")
+		if sel.compareEndPoints(line, "endToEnd") > 0:
+			sel.setEndPoint(line, "endToEnd")
 		self.rawText = ""
 		self.rawTextTypeforms = []
 
-		# Not all text APIs support offsets, so we can't always get the offset of the caret relative to the start of the line.
-		# Therefore, grab the line in two parts.
-		# First, the chunk from the start of the line up to the caret.
+		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the line.
+		# Therefore, grab the line in three parts.
+		# First, the chunk from the start of the line to the start of the selection.
 		chunk = line.copy()
 		chunk.collapse()
-		chunk.setEndPoint(caret, "endToEnd")
+		chunk.setEndPoint(sel, "endToStart")
 		self._addTextWithFields(chunk.getTextWithFields(formatConfig=formatConfig))
-		# The cursor position is the length of this chunk, as its end is the caret.
-		self.cursorPos = len(self.rawText)
-		# Now, get the chunk from the caret to the end of the line.
+		# The selection ends at this position.
+		selStart = len(self.rawText)
+		# Now, the selection itself.
+		self._addTextWithFields(sel.getTextWithFields(formatConfig=formatConfig))
+		# The selection ends at this position.
+		selEnd = len(self.rawText)
+		# Finally, get the chunk from the end of the selection to the end of the line.
 		chunk.setEndPoint(line, "endToEnd")
-		chunk.setEndPoint(caret, "startToStart")
+		chunk.setEndPoint(sel, "startToEnd")
 		self._addTextWithFields(chunk.getTextWithFields(formatConfig=formatConfig))
 		# Strip line ending characters, but add a space in case the caret is at the end of the line.
 		self.rawText = self.rawText.rstrip("\r\n\0\v\f") + " "
 		del self.rawTextTypeforms[len(self.rawText) - 1:]
 		self.rawTextTypeforms.append(louis.plain_text)
+
+		if selStart == selEnd:
+			# No selection, just a cursor.
+			self.cursorPos = selStart
+		else:
+			self.cursorPos = None
 
 		# If this is not the first line, hide all previous regions.
 		start = caret.obj.makeTextInfo(textInfos.POSITION_FIRST)
@@ -402,6 +432,15 @@ class TextInfoRegion(Region):
 		# If this is a multiline control, position it at the absolute left of the display when focused.
 		self.focusToHardLeft = self._isMultiline()
 		super(TextInfoRegion, self).update()
+
+		if selStart != selEnd:
+			# Mark the selection with dots 7 and 8.
+			if selEnd >= len(self.rawText):
+				brailleSelEnd = len(self.brailleCells)
+			else:
+				brailleSelEnd = self.rawToBraillePos[selEnd]
+			for pos in xrange(self.rawToBraillePos[selStart], brailleSelEnd):
+				self.brailleCells[pos] |= DOT7 | DOT8
 
 	def routeTo(self, braillePos):
 		pos = self.brailleToRawPos[braillePos]
@@ -444,8 +483,10 @@ class CursorManagerRegion(TextInfoRegion):
 
 class ReviewTextInfoRegion(TextInfoRegion):
 
-	def _getSelection(self):
+	def _getCursor(self):
 		return api.getReviewPosition().copy()
+
+	_getSelection = _getCursor
 
 	def _setCursor(self, info):
 		api.setReviewPosition(info)
