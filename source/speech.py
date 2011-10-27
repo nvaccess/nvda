@@ -8,7 +8,6 @@
 """ 
 
 import colors
-import XMLFormatting
 import globalVars
 from logHandler import log
 import api
