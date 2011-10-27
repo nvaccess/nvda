@@ -107,6 +107,7 @@ def getListGroupInfo(windowHandle,groupIndex):
 	processHandle=oleacc.GetProcessHandleFromHwnd(windowHandle)
 	if not processHandle:
 		return None
+	localInfo=LVGROUP()
 	localInfo.cbSize=sizeof(LVGROUP)
 	localInfo.mask=LVGF_HEADER|LVGF_FOOTER|LVGF_STATE|LVGF_ALIGN|LVGF_GROUPID
 	localInfo.stateMask=0xffffffff
