@@ -20,6 +20,8 @@ import api
 import winInputHook
 import inputCore
 
+ignoreInjected=False
+
 # Fake vk codes.
 # These constants should be assigned to the name that NVDA will use for the key.
 VK_WIN = "windows"
@@ -66,7 +68,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter
 		#Injected keys should be ignored
-		if injected:
+		if ignoreInjected and injected:
 			return True
 
 		keyCode = (vkCode, extended)
@@ -117,7 +119,7 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers
-		if injected:
+		if ignoreInjected and injected:
 			return True
 
 		keyCode = (vkCode, extended)
@@ -297,33 +299,38 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			state=_("on") if toggleState else _("off")))
 
 	def send(self):
-		keys = []
-		for vk, ext in self.generalizedModifiers:
-			if vk == VK_WIN:
-				if winUser.getKeyState(winUser.VK_LWIN) & 32768 or winUser.getKeyState(winUser.VK_RWIN) & 32768:
+		global ignoreInjected
+		try:
+			ignoreInjected=True
+			keys = []
+			for vk, ext in self.generalizedModifiers:
+				if vk == VK_WIN:
+					if winUser.getKeyState(winUser.VK_LWIN) & 32768 or winUser.getKeyState(winUser.VK_RWIN) & 32768:
+						# Already down.
+						continue
+					vk = winUser.VK_LWIN
+				elif winUser.getKeyState(vk) & 32768:
 					# Already down.
 					continue
-				vk = winUser.VK_LWIN
-			elif winUser.getKeyState(vk) & 32768:
-				# Already down.
-				continue
-			keys.append((vk, 0, ext))
-		keys.append((self.vkCode, self.scanCode, self.isExtended))
+				keys.append((vk, 0, ext))
+			keys.append((self.vkCode, self.scanCode, self.isExtended))
 
-		if winUser.getKeyState(self.vkCode) & 32768:
-			# This key is already down, so send a key up for it first.
-			winUser.keybd_event(self.vkCode, self.scanCode, self.isExtended + 2, 0)
+			if winUser.getKeyState(self.vkCode) & 32768:
+				# This key is already down, so send a key up for it first.
+				winUser.keybd_event(self.vkCode, self.scanCode, self.isExtended + 2, 0)
 
-		# Send key down events for these keys.
-		for vk, scan, ext in keys:
-			winUser.keybd_event(vk, scan, ext, 0)
-		# Send key up events for the keys in reverse order.
-		for vk, scan, ext in reversed(keys):
-			winUser.keybd_event(vk, scan, ext + 2, 0)
+			# Send key down events for these keys.
+			for vk, scan, ext in keys:
+				winUser.keybd_event(vk, scan, ext, 0)
+			# Send key up events for the keys in reverse order.
+			for vk, scan, ext in reversed(keys):
+				winUser.keybd_event(vk, scan, ext + 2, 0)
 
-		if not queueHandler.isPendingItems(queueHandler.eventQueue):
-			time.sleep(0.01)
-			wx.Yield()
+			if not queueHandler.isPendingItems(queueHandler.eventQueue):
+				time.sleep(0.01)
+				wx.Yield()
+		finally:
+			ignoreInjected=False
 
 	@classmethod
 	def fromName(cls, name):
