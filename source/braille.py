@@ -314,6 +314,20 @@ class ReviewNVDAObjectRegion(NVDAObjectRegion):
 	def routeTo(self, braillePos):
 		pass
 
+def getControlFieldBraille(field, reportStart):
+	# If this isn't the requested endpoint of the node, there's nothing to report.
+	if reportStart:
+		if field.get("_startOfNode") != "1":
+			return None
+	else:
+		if field.get("_endOfNode") != "1":
+			return None
+
+	# FIXME
+	if field.get("role") == controlTypes.ROLE_LINK:
+		return u"lnk"
+	return None
+
 class TextInfoRegion(Region):
 
 	def __init__(self, obj):
@@ -376,9 +390,25 @@ class TextInfoRegion(Region):
 			if isinstance(command, basestring):
 				self.rawText += command
 				self.rawTextTypeforms.extend((typeform,) * len(command))
+				endPos = self._currentContentPos + len(command)
+				self._rawToContentPos.extend(xrange(self._currentContentPos, endPos))
+				self._currentContentPos = endPos
 			elif isinstance(command, textInfos.FieldCommand):
 				if command.command == "formatChange":
 					typeform = self._getTypeformFromFormatField(command.field)
+				elif command.command == "controlStart":
+					text = getControlFieldBraille(command.field, True)
+					if text:
+						# Separate this field text from the rest of the text.
+						if self.rawText:
+							text = " %s " % text
+						else:
+							text += " "
+						self.rawText += text
+						textLen = len(text)
+						self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
+						# Map this field text to the start of the field's content.
+						self._rawToContentPos.extend((self._currentContentPos,) * textLen)
 
 	def update(self):
 		formatConfig = config.conf["documentFormatting"]
@@ -397,6 +427,10 @@ class TextInfoRegion(Region):
 			sel.setEndPoint(line, "endToEnd")
 		self.rawText = ""
 		self.rawTextTypeforms = []
+		# The output includes text representing fields which isn't part of the real content in the control.
+		# Therefore, maintain a map of positions in the output to positions in the content.
+		self._rawToContentPos = []
+		self._currentContentPos = 0
 
 		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the line.
 		# Therefore, grab the line in three parts.
@@ -443,7 +477,7 @@ class TextInfoRegion(Region):
 				self.brailleCells[pos] |= DOT7 | DOT8
 
 	def routeTo(self, braillePos):
-		pos = self.brailleToRawPos[braillePos]
+		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
 		# pos is relative to the start of the line.
 		# Therefore, get the start of the line...
 		dest = self._line.copy()
