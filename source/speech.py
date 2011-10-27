@@ -8,7 +8,6 @@
 """ 
 
 import colors
-import XMLFormatting
 import globalVars
 from logHandler import log
 import api
@@ -125,7 +124,7 @@ def speakMessage(text,index=None):
 	speakText(text,index=index,reason=REASON_MESSAGE)
 
 def getCurrentLanguage():
-	language=getSynth().language
+	language=getSynth().language if config.conf['speech']['autoLanguageSwitching'] else None
 	if language:
 		language=languageHandler.normalizeLanguage(language)
 	if not language:
@@ -563,10 +562,27 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=REASON_Q
 	#Fetch the last controlFieldStack, or make a blank one
 	controlFieldStackCache=getattr(info.obj,'_speakTextInfo_controlFieldStackCache',[]) if useCache else []
 	formatFieldAttributesCache=getattr(info.obj,'_speakTextInfo_formatFieldAttributesCache',{}) if useCache else {}
+	textWithFields=info.getTextWithFields(formatConfig)
+	# We don't care about node bounds, especially when comparing fields.
+	# Remove them.
+	for command in textWithFields:
+		if not isinstance(command,textInfos.FieldCommand):
+			continue
+		field=command.field
+		if not field:
+			continue
+		try:
+			del field["_startOfNode"]
+		except KeyError:
+			pass
+		try:
+			del field["_endOfNode"]
+		except KeyError:
+			pass
+
 	#Make a new controlFieldStack and formatField from the textInfo's initialFields
 	newControlFieldStack=[]
 	newFormatField=textInfos.FormatField()
-	textWithFields=info.getTextWithFields(formatConfig)
 	initialFields=[]
 	for field in textWithFields:
 		if isinstance(field,textInfos.FieldCommand) and field.command in ("controlStart","formatChange"):

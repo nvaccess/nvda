@@ -8,29 +8,31 @@
 %%toc
 
 + Einleitung +
-NonVisual Desktop Access (NVDA) ist ein freier und quelloffener Screenreader für das Microsoft Windows-Betriebssystem. Es bietet Feedback via synthetischer Sprache und Braille. Dabei erhalten Blinde und hochgradig Sehbehinderte Menschen kostenlos gleichermaßen Zugriff wie ein Sehender auf Windows. Entwickelt wird NVDA von [NV Access http://www.nvaccess.org/] und allen Mitwirkenden aus der Community.
+NonVisual Desktop Access (NVDA) ist ein freier und quelloffener Screenreader für das Betriebssystem Windows von Microsoft.
+Es bietet Feedback via synthetischer Sprache und Braille. Dabei erhalten Blinde und hochgradig Sehbehinderte Menschen kostenlos gleichermaßen Zugriff wie ein Sehender auf Windows.
+Entwickelt wird NVDA von [NV Access http://www.nvaccess.org/] und allen Mitwirkenden aus der Community.
 
 ++ Allgemeine Features ++
 NVDA ermöglicht den blinden und sehbehinderten Menschen das Arbeiten mit den Windows-Betriebssystemen und zahlreichen Anwendungen von Drittanbietern.
 
 Die wichtigsten Highlights sind:
 - Unterstützung der am weitesten verbreiteten Anwendungen einschließlich Web-Browser, E-Mail-Clients, Programme für Internet-Chats und Office-Pakete.
-- Integrierte Sprachausgaben; unterstützt werden über 20 Landessprachen.
+- Integrierte Sprachausgabe; unterstützt werden über 20 Landessprachen.
 - Ansagen der Textformatierungen wie zum Beispiel Namen der Schriftarten, Schriftgröße, Textausrichtung und Rechtschreibfehler.
 - Automatische Ansage der Mausposition und optionaler Audiokoordinaten.
 - Unterstützung für zahlreiche Braillezeilen.
-- Ausführen von einem USB-Stick oder anderen transportablen Medien.
-- Einfache Bedienung während der Installation mit Unterstützung der Sprachausgaben.
+- Ausführen von einem USB-Stick oder anderen transportablen Medien möglich.
+- Einfach zu benutzendes, sprechendes Installationsprogramm
 - Übersetzt in mehreren Sprachen.
-- Unterstützung für moderne Windows-Betriebssystemvarianten (für 32- / 64-Bit).
+- Unterstützung für moderne Windows-Betriebssysteme einschließlich 32- und 64-Bit-Varianten
 - Lauffähig im Windows-Anmeldebildschirm sowie in den Dialogen der Sicherheitshinweise.
 - Unterstützung für übliche Schnittstellen zur Barrierefreiheit wie zum Beispiel Microsoft Active Accessibility, Java Access Bridge, IAccessible2 und ui automation.
 - Unterstützung für die Windows-Eingabeaufforderung und Konsolenanwendungen.
-- Unterstützung im Anmeldebildschirm und anderen geschützten Desktops
 -
 
 ++ Internationalisierung ++
-Bei all den Menschen auf der Welt ist es wichtig, egal welche Sprache sie sprechen, dass sie den gleichen Zugang zu Technologien erhalten. NVDA wurde bislang in 340 Sprachen übersetzt, darunter sind neben englisch: Afrikanisch, Albanisch, Arabisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch,, tschechisch, dänisch, Niederländisch, Finnisch, Französisch, Gälisch, Georgisch, Deutsch, Hebräisch, Hindi, Ungarisch, Isländisch, Italienisch, Japanisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, Spanisch, Schwedisch, Thailändisch, Traditionelles Chinesisch, taiwanesisches Mandarin, Türkisch, Ukrainisch und Vietnamesisch.
+Bei all den Menschen auf der Welt ist es wichtig, egal welche Sprache sie sprechen, dass sie den gleichen Zugang zu Technologien erhalten. 
+NVDA wurde bislang in 340 Sprachen übersetzt, darunter sind neben englisch: Afrikanisch, Albanisch, Arabisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch,, tschechisch, dänisch, Niederländisch, Finnisch, Französisch, Gälisch, Georgisch, Deutsch, Hebräisch, Hindi, Ungarisch, Isländisch, Italienisch, Japanisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, Spanisch, Schwedisch, Thailändisch, Traditionelles Chinesisch, taiwanesisches Mandarin, Türkisch, Ukrainisch und Vietnamesisch.
 
 ++ Unterstützung mit der Sprachausgabe ++
 Abgesehen von der Bereitstellung der Schnittstelle für Meldungen in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern dieser über eine Sprachausgabe für dessen Sprache verfügt.
@@ -40,20 +42,24 @@ NVDA wird standardmäßig mit einer freien multilingualen Sprachausgabe, der [eS
 Informationen über weitere Sprachausgaben, die NVDA unterstützt, können Sie im Bereich "[Unterstützte Sprachausgaben #SupportedSpeechSynths]" nachlesen.
 
 ++ Unterstützung mit Braille-Ausgabe ++
-Für Anwender, die eine eigene Braillezeile besitzen, kann NVDA die Informationen in Braille-Schrift ausgeben. Für weitere Informationen schauen Sie bitte im Bereich "[Unterstützte Braillezeilen #SupportedBrailleDisplays]" nach.
+Für Anwender, die eine eigene Braillezeile besitzen, kann NVDA die Informationen in Braille-Schrift ausgeben. 
+Für weitere Informationen schauen Sie bitte im Bereich "[Unterstützte Braillezeilen #SupportedBrailleDisplays]" nach.
 
 NVDA unterstützt Braille-Übersetzungsmodi für viele Sprachen; darunter vereinfachte und vereinheitlichte Darstellungen sowie in Computer-Braille.
 
 ++ Lizenzbestimmungen und Copyright ++
 Copyright NVDA_COPYRIGHT_YEARS NVDA-Mitwirkende.
 
-NVDA steht unter der GNU General Public License, Version 2.0. Sie sind berechtigt, diese Software nach belieben weiterzugeben und zu ändern, solange Sie die Software zusammen mit einer Kopie dieser Lizenz und den ursprünglichen Quellcode herausgeben. Dies bezieht sich sowohl auf das Original sowie auch auf die von Ihnen modifizierte Kopie und sämtliche Software, die Code-Fragmente von Software verwendet. Für weitere Informationen können Sie entweder die [englischsprachige http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] Lizenz oder die inoffizielle [deutsche http://www.gnu.de/documents/gpl-2.0.de.html] Übersetzung lesen. Die englische Originalversion besitzt nach wie vor die offizielle Rechtsgültigkeit.
+NVDA steht unter der GNU General Public License, Version 2.0. 
+Sie sind berechtigt, diese Software nach belieben weiterzugeben und zu ändern, solange Sie die Software zusammen mit einer Kopie dieser Lizenz und den ursprünglichen Quellcode herausgeben.
+Dies bezieht sich sowohl auf das Original sowie auch auf die von Ihnen modifizierte Kopie und sämtliche Software, die Code-Fragmente von Software verwendet.
+Für weitere Informationen können Sie entweder die [englischsprachige http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] Lizenz oder die inoffizielle [deutsche http://www.gnu.de/documents/gpl-2.0.de.html] Übersetzung lesen. Die englische Originalversion besitzt nach wie vor die offizielle Rechtsgültigkeit.
 
 + Systemvoraussetzungen +
 - Microsoft Windows XP, Windows Vista und Windows 7 (alle 32-/64-Bit-Versionen, inkl. Server-Betriebssysteme).
-- Speicher: Mindestens 256 Megabyte RAM oder mehr.
-- Prozessorgeschwindigkeit: 1,0 Gigahertz oder schneller.
-- Mindestens 50 Megabyte Festplattenspeicher.
+- Arbeitspeicher: Mindestens 256 MB RAM oder mehr.
+- Prozessorgeschwindigkeit: 1,0 GHZ oder schneller.
+- Mindestens 50 MB Festplattenspeicher.
 -
 
 + NVDA beziehen +
@@ -65,7 +71,8 @@ Aktuell stehen zwei Paketvarianten zum Download:
 Das eine Paket ist ein Installationsprogramm. Es spricht bereits während der Installation, so dass Sie NVDA jederzeit aus dem Startmenü ausführen können.
 Das andere Paket ist eine ausführbare Archivdatei, die Sie in einen Ordner Ihrer Wahl (USB-Stick, etc.) entpacken lassen können, sodass Sie NVDA überall hin mitnehmen können.
 
-Hinweis: Wenn Sie den Zugriff im Windows-Anmeldedialog, in der eingeschalteten Benutzerkontensteuerung oder weiteren Zugriff bei laufenden Anwendungen wünschen, die unter administrativen Berechtigungen ausgeführt werden, benötigen Sie hierzu von NVDA unbedingt das Installationsprogramm. Diese Dialogfelder können NICHT mit der portablen Version von NVDA ausgelesen werden!
+Wenn Sie den Zugriff im Windows-Anmeldedialog, in der eingeschalteten Benutzerkontensteuerung oder weiteren Zugriff bei laufenden Anwendungen wünschen, die unter administrativen Berechtigungen ausgeführt werden, benötigen Sie hierzu von NVDA unbedingt das Installationsprogramm.
+Diese Dialogfelder können NICHT mit der portablen Version von NVDA ausgelesen werden!
 
 + NVDA installieren +
 
@@ -73,10 +80,12 @@ Hinweis: Wenn Sie den Zugriff im Windows-Anmeldedialog, in der eingeschalteten B
 Wenn Sie bereits das Installationsprogramm von NVDA heruntergeladen haben, drücken Sie zum Starten des Installationsvorgangs entweder einfach die Eingabetaste oder doppelklicken Sie auf die Datei.
 
 Sobald das Installationsprogramm gestartet ist, hören Sie zu Beginn eine kurze Melodie.
-Eine temporäre Kopie von NVDA wird gestartet, welche Ihnen den weiteren Fortgang ermöglicht und NVDA auf Ihrem System installiert. Wird während der Installation eine bereits installierte Version entdeckt, so werden Sie zu Beginn aufgefordert, dass Sie diese vorherige Version erst deinstallieren müssen, bevor Sie die neue Installation fortsetzen können. Nach Bestätigen des Dialogs wird die Version beendet und anschließend automatisch von Ihrem System entfernt. Dies ist notwendig, um wichtige Dateien aktualisieren zu können.
+Eine temporäre Kopie von NVDA wird gestartet, welche Ihnen den weiteren Fortgang ermöglicht und NVDA auf Ihrem System installiert.
+Bitte beachten sie, dass das Installationsprogramm eine bereits laufende Version von NVDA  beendet, um dessen eigene Version zu starten.
+Dies ist notwendig, um wichtige Dateien aktualisieren zu können.
+Wenn sie NVDA bereits auf Ihrem Computer installiert haben, wird NVDA vom Installationsprogramm deinstalliert, worauf hin die Installation fortgesetzt wird.
 
 Wenn die Installation erfolgreich abgeschlossen ist, werden Sie hierüber ebenfalls benachrichtigt.
-
 Bei einer erneuten Installation werden Sie gefragt, ob das System im Anschluss neu gestartet werden soll.
 Dies ist sehr empfehlenswert, um unerwünschte Fehlermeldungen zu vermeiden.
 Wenn die Frage nach dem Neustart nicht erscheint, betätigen Sie einfach den Schalter "Fertig stellen", um den Installationsvorgang abzuschließen und die neuere installierte Version von NVDA automatisch zu starten.
@@ -86,7 +95,7 @@ Wenn Sie die ausführbare Archivdatei (engl.: Portable Edition) heruntergeladen 
 Dabei werden Sie nach dem Speicherort gefragt, in welchem Ordner Sie die Dateien entpackt haben möchten.
 
 +++ NVDA Portable auf einem USB-Stick +++
-Um bei der Arbeit mehr Flexibilität mit NVDA unter verschiedenen Systemen beizubehalten, können Sie NVDA auch auf einen USB-Stick entpacken.
+Es ist möglich NVDA auf einen USB-Stick zu entpacken, sodass Sie es auf anderen Computern nutzen können.
 
 Beim Entpacken der ausführbaren Archivdatei auf den USB-Laufwerk, werden Sie nach dem Zielort gefragt. Hier können Sie einen Speicherort nach Ihrer Wahl festlegen.
 
@@ -97,20 +106,25 @@ Bitte beachten Sie, dass Sie NVDA somit überall bei sich führen können, jedoc
 Für Informationen zum automatischen Starten von NVDA von einem U3-Stick lesen Sie den folgenden englischsprachigen Artikel:
 http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
 
-
 + Erste Schritte mit NVDA +
 
 ++ NVDA starten ++
-Wenn Sie NVDA bereits installiert haben, können Sie es entweder vom Desktop aus mit Steuerung+Alt+N aufrufen oder wählen Sie NVDA aus dem Startmenü unter Programme "NVDA" aus. Optional können Sie auch im Dialog "Ausführen..." (Windows-Taste+R) den Befehl "NVDA" (ohne Anführungszeichen) eingeben und mit der Eingabetaste aufrufen.
+Wenn Sie NVDA bereits installiert haben, können Sie es entweder vom Desktop aus mit Steuerung+Alt+N aufrufen oder wählen Sie NVDA aus dem Startmenü unter Programme "NVDA" aus.
+Optional können Sie auch im Dialog "Ausführen..." (Windows-Taste+R) den Befehl "NVDA" (ohne Anführungszeichen) eingeben und mit der Eingabetaste aufrufen.
 
 Um die Portable Edition von NVDA zu starten, wechseln Sie in den Ordner, in welchem Sie die Dateien entpackt haben und starten anschließend die Datei "NVDA.exe" mit der Eingabetaste oder mit einem Doppelklick.
 
-Während des Startvorgangs, hören Sie als Erstes eine aufsteigende Melodie. Je nach dem, wie schnell Ihr Computer ist oder wenn Sie NVDA von einem USB-Stick oder einem anderen Medium aus starten, so kann das einen Moment dauern, bis der Prozess komplett abgeschlossen ist. Sollte der Vorgang dennoch sehr lange dauern, erhalten Sie von NVDA automatisch die Benachrichtigung, dass es geladen wird.
+Während des Startvorgangs, hören Sie als Erstes eine aufsteigende Melodie.
+Je nach dem, wie schnell Ihr Computer ist oder wenn Sie NVDA von einem USB-Stick oder einem anderen langsamen Medium aus starten, so kann das einen Moment dauern, bis der Prozess komplett abgeschlossen ist.
+Sollte der Vorgang dennoch sehr lange dauern, erhalten Sie von NVDA automatisch die Benachrichtigung, dass es geladen wird.
 
-Wenn Sie entweder nichts hören oder von Windows bzw. von NVDA einen Fehlerton oder eine absteigende Melodie hören, bedeutet das, dass eventuell ein Fehler aufgetreten ist. Bitte schauen Sie erst auf der Homepage nach, ob ggf. etwas darüber bekannt ist bzw. wie das Problem zu beheben ist. Ansonsten melden Sie den Fehler bitte den Entwicklern.
+Wenn Sie entweder nichts hören oder von Windows bzw. von NVDA einen Fehlerton oder eine absteigende Melodie hören, bedeutet das, dass eventuell ein Fehler aufgetreten ist.
+Bitte schauen Sie erst auf der Homepage nach, ob ggf. etwas darüber bekannt ist bzw. wie das Problem zu beheben ist. Ansonsten melden Sie den Fehler bitte den Entwicklern.
 
-Beim ersten Start von NVDA wird Ihnen eine Dialogbox mit einigen grundlegenden Informationen über die NVDA-Taste und dem NVDA-Menü angezeigt. (Bitte beachten Sie weitere Themenabschnitte.)
-Das Dialogfeld enthält zudem zwei Kontrollfelder. Mit dem Ersten können Sie festlegen, ob die Capslock-Taste (Dauergroßschreibtaste) als so genannte NVDA-Taste agieren soll. Mit dem Zweiten legen Sie fest, ob bei jedem Start der Willkommensdialog angezeigt werden soll.
+Beim ersten Start von NVDA wird Ihnen eine Dialogbox mit einigen grundlegenden Informationen über die NVDA-Taste und dem NVDA-Menü angezeigt.
+(Bitte beachten Sie weitere Themenabschnitte.)
+Das Dialogfeld enthält zudem zwei Kontrollfelder.
+Mit dem Ersten können Sie festlegen, ob die Capslock-Taste (Dauergroßschreibtaste) als so genannte NVDA-Taste agieren soll. Mit dem Zweiten legen Sie fest, ob bei jedem Start der Willkommensdialog angezeigt werden soll.
 
 ++ Über die NVDA-Tastenbefehle ++
 
@@ -125,30 +139,28 @@ Die Einfüge-Taste des Nummernblocks sowie die Einfüge-Taste der erweiterten Ta
 Bei Bedarf können Sie an Stelle der NVDA-Taste die Originalfunktion auslösen, indem Sie sie zwei Mal kurz hintereinander betätigen. Beispielsweise, wenn sie die Dauergroßschreib-Taste auslösen möchten.
 
 +++ Modus der Eingabehilfe +++
-Viele Tastenkombinationen sind durchweg situationsbedingt; können aber allesamt bei eingeschalteter Tastaturhilfe abgefragt werden.
+Viele Tastenkombinationen werden in den folgenden Abschnitten des Handbuches erwähnt. Mit der Eingabehilfe können Sie auf einfache Weise alle Tastenkombinationen erkunden.
 
-Zum Einschalten der Tastaturhilfe, drücken Sie NVDA+1.
+Um die  Eingabehilfe einzuschalten, drücken Sie NVDA+1.
 Zum Ausschalten, die Tastenkombination erneut betätigen.
+Im Modus der Tastaturhilfe erhalten Sie bei jedem Tastendruck oder Drücken einer Kombination Informationen über deren zugewiesenen Funktionen, fals eine Funktion zugewiesen wurde.
+Es werden dabei keine Funktionen unmittelbar ausgeführt, sodass sie jede beliebige Taste bzw. Tastenkombination drücken können.!
 
-Im Modus der Tastaturhilfe erhalten Sie bei jedem Tastendruck oder Drücken einer Kombination Informationen über deren zugewiesenen Funktionen.
-Es werden dabei keine Funktionen unmittelbar ausgeführt!
-
-+++ Die Tastaturschemen +++
++++ Tastaturschemen +++
 NVDA ist derzeit mit zwei Tastaturschemen ausgestattet.
 Es gibt eines für Desktops und eines für Laptops.
 Voreingestellt ist das Tastaturschema Desktop. Sie können natürlich das Schema im NVDA-Einstellungsmenü unter Tastatureinstellungen auch auf Laptop umschalten.
 
-Das Desktop-Schema erschwert die Nutzung des ausgeschalteten Numlocks.
-Obwohl meistens die Laptop-Tastaturen keinen physikalischen Nummernblock haben, besitzen einige eine so genannte FN-Taste, wo mit den Buchstaben des rechten Tastenfelds die Zahlen emuliert werden können (es sind die Tasten: 7, 8, 9, u, i, o, j, k, l, etc.).
+Das Desktop-Schema verwendet viele Tasten des Nummernblocks bei ausgeschaltetem Nummernblock.
+Obwohl die meisten Laptop-Tastaturen keinen physikalischen Nummernblock haben, besitzen einige eine so genannte FN-Taste, wo mit den Buchstaben des rechten Tastenfelds die Zahlen emuliert werden können (es sind die Tasten: 7, 8, 9, u, i, o, j, k, l, etc.).
 Wenn Ihr Laptop dies nicht kann oder die Deaktivierung des Numlocks nicht unterstützt wird, können Sie an Stelle das Tastaturlayout auf Laptop umstellen.
 
 ++ Das NVDA-Menü ++
 In diesem Menü können Sie alle Einstellungen von NVDA ändern, die Einstellungen speichern bzw. zurücksetzen, die Hilfe aufrufen, die Wörterbücher für die Aussprache bearbeiten oder das Protokoll anzeigen lassen oder auch NVDA komplett beenden.
 
-Mit der Tastenkombination "NVDA+N" können Sie von überall aus das Menü anzeigen lassen. Das Menü kann auch über einen Rechtsklick auf das NVDA-Symbol im Infobereich erreicht werden.
-
+Mit der Tastenkombination "NVDA+N" können Sie von überall in Windows aus das Menü anzeigen lassen, während NVDA läuft.
+Das Menü kann auch über einen Rechtsklick auf das NVDA-Symbol im Infobereich erreicht werden.
 Alternativ können Sie auch auf der Tastatur "Windows+B" drücken und mit den "Pfeiltasten nach oben" oder "Pfeiltasten nach unten" zum NVDA-Symbol navigieren und das Menü mit der Anwendungstaste öffnen.
-
 In den Menüs bewegen Sie sich einfach mit den Pfeiltasten. Mit der Eingabetaste öffnen Sie die Menüpunkte.
 
 ++ Allgemeine Tastenkombinationen ++
@@ -167,9 +179,10 @@ In den Menüs bewegen Sie sich einfach mit den Pfeiltasten. Mit der Eingabetaste
 ++ Informationen des Systems ausgeben ++
 %kc:beginInclude
 || Name | Tastenkombination | Beschreibung |
-| Datum/Uhrzeit ansagen | NVDA+F12 | Bei ein mal Drücken wird die aktuelle Uhrzeit angesagt. Bei zwei Mal Das Datum. Diese Daten werden auch als Blitzmeldung in Braille angezeigt. |
-| Akku Status ansagen | NVDA+Umschalt+B | Sagt den Ladezustand des Akkus an und wenn kein Akkumulator angeschlossen ist. Diese information wird auch in Braille als Blitzmeldung angezeigt. |
-| Text der Zwischenablage ansagen | NVDA+C | Sagt den Text an, der sich in der Zwischenablage befindet und wenn kein Text gefunden wurde. Diese Information wird auch in Braille als Blitzmeldung angezeigt. |
+| Datum/Uhrzeit ausgeben | NVDA+F12 | Bei ein mal Drücken wird die aktuelle Uhrzeit ausgegeben. Bei zwei Mal Das Datum. |
+| Akku Status ausgeben | NVDA+Umschalt+B | gibt den Ladezustand des Akkus aus und wenn kein Akkumulator angeschlossen ist. |
+| Text der Zwischenablage ausgeben | NVDA+C | Gibt den Text aus, der sich in der Zwischenablage befindet und wenn kein Text gefunden wurde. |
+%kc:endInclude
 
 + Die Navigationsmöglichkeiten +
 
@@ -958,7 +971,7 @@ die auf Ihrem System gefunden werden können.
 Die "Microsoft Speech Platform" stellt Stimmen für viele Sprachen zur Verfügung, welche normalerweise in der Entwicklung für serverbasierte Sprachanwendungen zum Einsatz kommen. Diese Stimmen können auch in  NVDA eingebunden werden.
 
 Um diese Stimmen verwenden zu können, müssen Sie folgende 2 Komponenten installieren:
-- Microsoft Speech Platform - Server Runtime (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=10208
+- Microsoft Speech Platform - Server Runtime (Version 10.2 x86): http://www.microsoft.com/download/en/details.aspx?id=10208
 - Microsoft Speech Platform - Server Runtime Languages (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
 -
 
