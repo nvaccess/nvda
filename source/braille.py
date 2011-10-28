@@ -207,7 +207,9 @@ class Region(object):
 			# HACK: Work around a liblouis bug whereby the returned cursor position is not within the braille cells returned.
 			if brailleCursorPos >= len(self.brailleCells):
 				brailleCursorPos = len(self.brailleCells) - 1
-			self.brailleCursorPos = brailleCursorPos
+		else:
+			brailleCursorPos = None
+		self.brailleCursorPos = brailleCursorPos
 
 	def routeTo(self, braillePos):
 		"""Handle a cursor routing request.
