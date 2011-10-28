@@ -386,15 +386,29 @@ class TextInfoRegion(Region):
 			typeform |= louis.underline
 		return typeform
 
-	def _addTextWithFields(self, fields):
+	def _addTextWithFields(self, fields, isSelection=False):
+		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
 		typeform = louis.plain_text
 		for command in fields:
 			if isinstance(command, basestring):
+				if not command:
+					continue
+				if isSelection and self._selectionStart is None:
+					# This is where the content begins.
+					self._selectionStart = len(self.rawText)
+				elif shouldMoveCursorToFirstContent:
+					# This is the first piece of content after the cursor.
+					# Position the cursor here, as it may currently be positioned on control field text.
+					self.cursorPos = len(self.rawText)
+					shouldMoveCursorToFirstContent = False
 				self.rawText += command
 				self.rawTextTypeforms.extend((typeform,) * len(command))
 				endPos = self._currentContentPos + len(command)
 				self._rawToContentPos.extend(xrange(self._currentContentPos, endPos))
 				self._currentContentPos = endPos
+				if isSelection:
+					# The last time this is set will be the end of the content.
+					self._selectionEnd = len(self.rawText)
 			elif isinstance(command, textInfos.FieldCommand):
 				if command.command == "formatChange":
 					typeform = self._getTypeformFromFormatField(command.field)
@@ -411,6 +425,9 @@ class TextInfoRegion(Region):
 						self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
 						# Map this field text to the start of the field's content.
 						self._rawToContentPos.extend((self._currentContentPos,) * textLen)
+		if isSelection and self._selectionStart is None:
+			# There is no selection. This is a cursor.
+			self.cursorPos = len(self.rawText)
 
 	def update(self):
 		formatConfig = config.conf["documentFormatting"]
@@ -429,10 +446,12 @@ class TextInfoRegion(Region):
 			sel.setEndPoint(line, "endToEnd")
 		self.rawText = ""
 		self.rawTextTypeforms = []
+		self.cursorPos = None
 		# The output includes text representing fields which isn't part of the real content in the control.
 		# Therefore, maintain a map of positions in the output to positions in the content.
 		self._rawToContentPos = []
 		self._currentContentPos = 0
+		self._selectionStart = self._selectionEnd = None
 
 		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the line.
 		# Therefore, grab the line in three parts.
@@ -441,12 +460,8 @@ class TextInfoRegion(Region):
 		chunk.collapse()
 		chunk.setEndPoint(sel, "endToStart")
 		self._addTextWithFields(chunk.getTextWithFields(formatConfig=formatConfig))
-		# The selection starts at this position.
-		selStart = len(self.rawText)
 		# Now, the selection itself.
-		self._addTextWithFields(sel.getTextWithFields(formatConfig=formatConfig))
-		# The selection ends at this position.
-		selEnd = len(self.rawText)
+		self._addTextWithFields(sel.getTextWithFields(formatConfig=formatConfig), isSelection=True)
 		# Finally, get the chunk from the end of the selection to the end of the line.
 		chunk.setEndPoint(line, "endToEnd")
 		chunk.setEndPoint(sel, "startToEnd")
@@ -456,12 +471,6 @@ class TextInfoRegion(Region):
 		del self.rawTextTypeforms[len(self.rawText) - 1:]
 		self.rawTextTypeforms.append(louis.plain_text)
 
-		if selStart == selEnd:
-			# No selection, just a cursor.
-			self.cursorPos = selStart
-		else:
-			self.cursorPos = None
-
 		# If this is not the first line, hide all previous regions.
 		start = cursor.obj.makeTextInfo(textInfos.POSITION_FIRST)
 		self.hidePreviousRegions = (start.compareEndPoints(line, "startToStart") < 0)
@@ -469,13 +478,13 @@ class TextInfoRegion(Region):
 		self.focusToHardLeft = self._isMultiline()
 		super(TextInfoRegion, self).update()
 
-		if selStart != selEnd:
+		if self._selectionStart is not None:
 			# Mark the selection with dots 7 and 8.
-			if selEnd >= len(self.rawText):
+			if self._selectionEnd >= len(self.rawText):
 				brailleSelEnd = len(self.brailleCells)
 			else:
-				brailleSelEnd = self.rawToBraillePos[selEnd]
-			for pos in xrange(self.rawToBraillePos[selStart], brailleSelEnd):
+				brailleSelEnd = self.rawToBraillePos[self._selectionEnd]
+			for pos in xrange(self.rawToBraillePos[self._selectionStart], brailleSelEnd):
 				self.brailleCells[pos] |= DOT7 | DOT8
 
 	def routeTo(self, braillePos):
