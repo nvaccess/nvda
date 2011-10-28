@@ -326,8 +326,14 @@ def getControlFieldBraille(field, reportStart):
 			return None
 
 	# FIXME
-	if field.get("role") == controlTypes.ROLE_LINK:
+	role = field.get("role")
+	if reportStart and role == controlTypes.ROLE_LINK:
 		return u"lnk"
+	elif role == controlTypes.ROLE_LIST:
+		text = u"list"
+		if not reportStart:
+			text += u" end"
+		return text
 	return None
 
 class TextInfoRegion(Region):
@@ -388,6 +394,7 @@ class TextInfoRegion(Region):
 
 	def _addTextWithFields(self, fields, isSelection=False):
 		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
+		ctrlFields = []
 		typeform = louis.plain_text
 		for command in fields:
 			if isinstance(command, basestring):
@@ -410,21 +417,37 @@ class TextInfoRegion(Region):
 					# The last time this is set will be the end of the content.
 					self._selectionEnd = len(self.rawText)
 			elif isinstance(command, textInfos.FieldCommand):
-				if command.command == "formatChange":
-					typeform = self._getTypeformFromFormatField(command.field)
-				elif command.command == "controlStart":
-					text = getControlFieldBraille(command.field, True)
-					if text:
-						# Separate this field text from the rest of the text.
-						if self.rawText:
-							text = " %s " % text
-						else:
-							text += " "
-						self.rawText += text
-						textLen = len(text)
-						self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
-						# Map this field text to the start of the field's content.
-						self._rawToContentPos.extend((self._currentContentPos,) * textLen)
+				cmd = command.command
+				field = command.field
+				if cmd == "formatChange":
+					typeform = self._getTypeformFromFormatField(field)
+				elif cmd == "controlStart":
+					# Place this field on a stack so we can access it for controlEnd.
+					ctrlFields.append(field)
+					text = getControlFieldBraille(field, True)
+					if not text:
+						continue
+					# Separate this field text from the rest of the text.
+					if self.rawText:
+						text = " %s " % text
+					else:
+						text += " "
+					self.rawText += text
+					textLen = len(text)
+					self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
+					# Map this field text to the start of the field's content.
+					self._rawToContentPos.extend((self._currentContentPos,) * textLen)
+				elif cmd == "controlEnd":
+					field = ctrlFields.pop()
+					text = getControlFieldBraille(field, False)
+					if not text:
+						continue
+					# Separate this field text from the rest of the text.
+					self.rawText += " %s " % text
+					textLen = len(text)
+					self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
+					# Map this field text to the end of the field's content.
+					self._rawToContentPos.extend((self._currentContentPos - 1,) * textLen)
 		if isSelection and self._selectionStart is None:
 			# There is no selection. This is a cursor.
 			self.cursorPos = len(self.rawText)
